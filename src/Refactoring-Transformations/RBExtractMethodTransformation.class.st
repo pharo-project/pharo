@@ -111,7 +111,6 @@ RBExtractMethodTransformation >> buildMessageSendWith: aSelector and: argsAndVal
 RBExtractMethodTransformation >> buildTransformationFor: newMethodName [
 
 	| messageSend |
-	newMethod := self generateNewMethodWith: newMethodName.
 	messageSend := self messageSendWith: newMethodName.
 
 	^ OrderedCollection new
@@ -136,24 +135,25 @@ RBExtractMethodTransformation >> buildTransformationFor: newMethodName [
 { #category : 'executing' }
 RBExtractMethodTransformation >> buildTransformations [
 
-"	| existingMethod |
+	| newMethodName existingMethod checker messageSend |
+	checker := EquivalentTreeChecker new
+					model: model;
+					on: class;
+					extractedFromSelector: selector.
+					
+	newMethodName := self newMethodName.
+	newMethod := self generateNewMethodWith: newMethodName.
+	existingMethod := checker checkEquivalentTreeFor: newMethod.
+	existingMethod ifNil: [ ^ self buildTransformationFor: newMethodName ].
 	
-	existingMethod := self findMethodWithSimilarBody.
-	existingMethod 
-		ifNotNil: [
-			self halt.
-			^ OrderedCollection with: 
-					(self  
-					   replaceCode: subtree
-					   byMessageSendTo: existingMethod
-					   in:
-					   (self definingClass methodFor: self sourceMethodTree selector)
-						) ]
-		ifNil: ["
-			  | newMethodName |
-			  newMethodName := self newMethodName.
-			  newMethodName ifNil: [ ^ OrderedCollection new ].
-			  ^ self buildTransformationFor: newMethodName "]"
+	messageSend := self messageSendWith: existingMethod ast.
+	^ OrderedCollection with: 
+				(RBReplaceSubtreeTransformation
+				   model: self model
+				   replace: sourceCode
+				   to: messageSend
+				   inMethod: selector
+				   inClass: class)
 ]
 
 { #category : 'querying' }
