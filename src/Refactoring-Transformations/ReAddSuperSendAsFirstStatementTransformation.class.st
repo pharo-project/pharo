@@ -1,3 +1,17 @@
+"
+I am a small transformation that adds super call to given method as a first statement.
+
+You can use me like this:
+```
+ReAddSuperSendAsFirstStatementTransformation 
+	model: self model
+	methodTree: method
+	inClass: class) execute
+```
+I will take `method`'s selector and do `super methodsSelector` as first statement.
+
+I am used to add super call to setUp method for example, I can be also used to add missing `initialize` super calls.
+"
 Class {
 	#name : 'ReAddSuperSendAsFirstStatementTransformation',
 	#superclass : 'RBMethodTransformation',
