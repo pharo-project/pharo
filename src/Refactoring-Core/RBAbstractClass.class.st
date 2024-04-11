@@ -585,8 +585,7 @@ RBAbstractClass >> parseTreeFor: aSymbol [
 RBAbstractClass >> parseTreeForSelector: aSelector [
 
 	| class method |
-
-	class := self whoDefinesMethod: aSelector.
+	class := self whichClassIncludesSelector: aSelector.
 	class ifNil: [ ^ nil ].
 	method := class methodFor: aSelector.
 	method ifNil: [ ^ nil ].
@@ -735,10 +734,9 @@ RBAbstractClass >> soleInstance [
 RBAbstractClass >> sourceCodeFor: aSelector [
 
 	| class |
-
-	class := self whoDefinesMethod: aSelector.
+	class := self whichClassIncludesSelector: aSelector.
 	class ifNil: [ ^ nil ].
-	^ ( class methodFor: aSelector ) source
+	^ (class methodFor: aSelector) source
 ]
 
 { #category : 'storing' }

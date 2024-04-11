@@ -52,20 +52,22 @@ RBRealizeClassTransformation >> theClass [
 { #category : 'accessing' }
 RBRealizeClassTransformation >> transform: aClass [
 	"Transform all the subclassResponsibilities (inherited or not) methods of the class in the class."
-	
-	| definingClass method parseTree  |
+
+	| definingClass method parseTree |
 	"get all the methods even the ones of the superclasses"
-	
 	aClass allSelectors do: [ :selector |
-		definingClass := aClass whoDefinesMethod: selector.
+		definingClass := aClass whichClassIncludesSelector: selector.
 		(definingClass isNotNil and: [ definingClass ~= aClass ]) ifTrue: [
 			method := definingClass methodFor: selector.
-			(method isNotNil and: [ method refersToSymbol: #subclassResponsibility ]) ifTrue: [
+			(method isNotNil and: [
+				 method refersToSymbol: #subclassResponsibility ]) ifTrue: [
 				parseTree := method parseTree.
 				parseTree body
 					temporaries: OrderedCollection new;
 					statements: OrderedCollection new;
-					addNode: (RBMessageNode receiver: RBVariableNode selfNode selector: #shouldBeImplemented).
+					addNode: (RBMessageNode
+							 receiver: RBVariableNode selfNode
+							 selector: #shouldBeImplemented).
 				"Note that we compile in the class (a subclass compared to superclass having abstract methods) 
 				so we are doing a kind of copy-down but transforming a self subclassResp into shouldBe"
 				aClass compile: parseTree newSource withAttributesFrom: method ] ] ]
