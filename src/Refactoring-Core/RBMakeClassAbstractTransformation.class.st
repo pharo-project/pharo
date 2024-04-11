@@ -48,12 +48,12 @@ RBMakeClassAbstractTransformation >> preconditions [
 { #category : 'transforming' }
 RBMakeClassAbstractTransformation >> privateTransform [
 
-	(RBAddMethodTransformation
+	self generateChangesFor: (RBAddMethodTransformation
 		 sourceCode: 'isAbstract
 
 	^ self == ' , targetClass asString
 		 in: targetClass classSide
-		 withProtocol: #testing) execute
+		 withProtocol: #testing)
 ]
 
 { #category : 'preconditions' }
