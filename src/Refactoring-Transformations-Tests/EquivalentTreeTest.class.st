@@ -45,7 +45,7 @@ EquivalentTreeTest >> testEquivalentTreeWithMethodContainingSuperSendInSameClass
 	checker extractedFromSelector: #methodToExtractFrom.
 	"Here we have equivalent method in the same class as #methodToExtractFrom, and we can replace with it"
 	methodNode := RBParser parseMethod: 'testtest ^ 7 raisedTo: super someNumber'.
-	equivalentTree := checker checkEquivalentTreeFor: methodNode.
+	equivalentTree := checker findEquivalentTreeFor: methodNode.
 	self assert: equivalentTree isNotNil
 ]
 
@@ -61,7 +61,7 @@ EquivalentTreeTest >> testEquivalentTreeWithMethodHasSuperSendInSuperClassExpect
 	"Thre is equivalent method, but it is in super class, and we cannot replace it since 
 	it has super sends and we're not sure that it will preserve MRO."
 	methodNode := RBParser parseMethod: 'testtest ^ 11 raisedTo: super someNumber factorial'.
-	equivalentTree := checker checkEquivalentTreeFor: methodNode.
+	equivalentTree := checker findEquivalentTreeFor: methodNode.
 	self assert: equivalentTree isNil
 ]
 
@@ -75,7 +75,7 @@ EquivalentTreeTest >> testEquivalentTreeWithMethodNodeWhenUniqueMethodExpectNil 
 	checker extractedFromSelector: #simpleLocalMethodReturn.
 	"There is no method similar to this one."
 	methodNode := RBParser parseMethod: 'testMethod: anArg ^ anArg + 7 raisedTo: 2'.
-	equivalentTree := checker checkEquivalentTreeFor: methodNode.
+	equivalentTree := checker findEquivalentTreeFor: methodNode.
 	
 	self assert: equivalentTree isNil
 
@@ -92,7 +92,7 @@ EquivalentTreeTest >> testEquivalentTreeWithMethodNodeWithDuplicateMethodExpectF
 	checker extractedFromSelector: #simpleLocalMethodReturn.
 	"Equivalent method exists in EquivalentMethodSubclassHolder superclass"
 	methodNode := RBParser parseMethod: 'testtest ^ 42'.
-	equivalentTree := checker checkEquivalentTreeFor: methodNode.
+	equivalentTree := checker findEquivalentTreeFor: methodNode.
 	self assert: equivalentTree isNotNil
 ]
 

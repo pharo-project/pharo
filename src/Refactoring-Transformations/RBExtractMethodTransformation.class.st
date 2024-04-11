@@ -143,7 +143,7 @@ RBExtractMethodTransformation >> buildTransformations [
 					
 	newMethodName := self newMethodName.
 	newMethod := self generateNewMethodWith: newMethodName.
-	existingMethod := checker checkEquivalentTreeFor: newMethod.
+	existingMethod := checker findEquivalentTreeFor: newMethod.
 	existingMethod ifNil: [ ^ self buildTransformationFor: newMethodName ].
 	
 	messageSend := self messageSendWith: existingMethod ast.

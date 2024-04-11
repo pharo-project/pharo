@@ -18,18 +18,6 @@ EquivalentTreeChecker >> allMethodsInHierarchy [
 ]
 
 { #category : 'executing' }
-EquivalentTreeChecker >> checkEquivalentTreeFor: aMethodNode [
-
-	| equivalentMethods |
-	equivalentMethods := self methodsToBeChecked select: [ :method |
-		                     self
-			                     checkIfMethodNode: aMethodNode 
-			                     isEquivalentMethodNode: method ast ].
-	equivalentMethods ifNotEmpty: [ ^ equivalentMethods first ].
-	^ nil
-]
-
-{ #category : 'executing' }
 EquivalentTreeChecker >> checkIfMethodNode: aMethodNode isEquivalentMethodNode: anAnotherMethodNode [
 
 	| anotherMethodsClass |
@@ -62,6 +50,18 @@ EquivalentTreeChecker >> extractedFromSelector: aString [
 	so that it is excluded from the search."
 
 	extractedFromSelector := aString
+]
+
+{ #category : 'executing' }
+EquivalentTreeChecker >> findEquivalentTreeFor: aMethodNode [
+
+	| equivalentMethods |
+	equivalentMethods := self methodsToBeChecked select: [ :method |
+		                     self
+			                     checkIfMethodNode: aMethodNode 
+			                     isEquivalentMethodNode: method ast ].
+	equivalentMethods ifNotEmpty: [ ^ equivalentMethods first ].
+	^ nil
 ]
 
 { #category : 'query' }
