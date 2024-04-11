@@ -10,8 +10,8 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : 'SycCopyClassCommand',
-	#superclass : 'CmdCommand',
+	#name : 'SycDuplicateClassCommand',
+	#superclass : 'SycClassCommand',
 	#instVars : [
 		'originalClass',
 		'newClassName',
@@ -21,55 +21,50 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : 'testing' }
-SycCopyClassCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isClassSelected
-]
-
 { #category : 'execution' }
-SycCopyClassCommand >> applyResultInContext: aToolContext [
+SycDuplicateClassCommand >> applyResultInContext: aToolContext [
 	super applyResultInContext: aToolContext.
 	aToolContext showClass: resultClass
 ]
 
 { #category : 'accessing' }
-SycCopyClassCommand >> defaultMenuIconName [
+SycDuplicateClassCommand >> defaultMenuIconName [
 	^#smallCopy
 ]
 
 { #category : 'accessing' }
-SycCopyClassCommand >> defaultMenuItemName [
-	^'Copy'
+SycDuplicateClassCommand >> defaultMenuItemName [
+	^'Duplicate'
 ]
 
 { #category : 'execution' }
-SycCopyClassCommand >> execute [
+SycDuplicateClassCommand >> execute [
 
 	resultClass := originalClass duplicateClassWithNewName: newClassName
 ]
 
 { #category : 'accessing' }
-SycCopyClassCommand >> newClassName [
+SycDuplicateClassCommand >> newClassName [
 	^ newClassName
 ]
 
 { #category : 'accessing' }
-SycCopyClassCommand >> newClassName: anObject [
+SycDuplicateClassCommand >> newClassName: anObject [
 	newClassName := anObject
 ]
 
 { #category : 'accessing' }
-SycCopyClassCommand >> originalClass [
+SycDuplicateClassCommand >> originalClass [
 	^ originalClass
 ]
 
 { #category : 'accessing' }
-SycCopyClassCommand >> originalClass: anObject [
+SycDuplicateClassCommand >> originalClass: anObject [
 	originalClass := anObject
 ]
 
 { #category : 'execution' }
-SycCopyClassCommand >> prepareFullExecutionInContext: aToolContext [
+SycDuplicateClassCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	originalClass := aToolContext lastSelectedClass.
 

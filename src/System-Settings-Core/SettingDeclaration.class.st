@@ -117,6 +117,7 @@ SettingDeclaration >> addToList: anItem [
 { #category : 'accessing' }
 SettingDeclaration >> default [
 	^ default
+		ifNil: [ default := String empty ]
 ]
 
 { #category : 'accessing' }

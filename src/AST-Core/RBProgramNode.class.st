@@ -511,7 +511,14 @@ RBProgramNode >> equalTo: aNode withMapping: aDictionary [
 RBProgramNode >> errorNotices [
 	"The errors attached to the receiver"
 
-	^ self notices select: #isError
+	| notices |
+	
+	notices := self notices.
+	
+	"Optimization to avoid select in an empty collection"
+	notices ifEmpty: [ ^ #() ].
+
+	^ notices select: [ :e | e isError ]
 ]
 
 { #category : 'testing' }

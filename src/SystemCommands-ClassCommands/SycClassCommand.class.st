@@ -44,6 +44,13 @@ SycClassCommand >> classes: anObject [
 	classes := anObject
 ]
 
+{ #category : 'accessing' }
+SycClassCommand >> description [
+	"Answer a <String> describing the receiver, useful for instance in menu items pop-ups"
+
+	^ self class comment.
+]
+
 { #category : 'activation - drag and drop' }
 SycClassCommand >> prepareExecutionInDragContext: aToolContext [
 	super prepareExecutionInDragContext: aToolContext.

@@ -29,6 +29,33 @@ SDLOSXPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
 	ObjCLibrary uniqueInstance release: aParam
 ]
 
+{ #category : 'private - initialization' }
+SDLOSXPlatform >> allowTouchpadInertia [
+
+	| nsUserDefaultsClass standardUserDefaultsSel standardUserDefaults key setBoolForKeySel |
+	nsUserDefaultsClass := ObjCLibrary uniqueInstance lookupClass: 'NSUserDefaults'.
+
+	standardUserDefaultsSel := ObjCLibrary uniqueInstance
+		                           lookupSelector: 'standardUserDefaults'.
+
+	standardUserDefaults := ObjCLibrary uniqueInstance
+		                        sendMessage: standardUserDefaultsSel
+		                        to: nsUserDefaultsClass.
+
+	key := ObjCLibrary uniqueInstance nsStringOf: 'AppleMomentumScrollSupported'.
+
+	setBoolForKeySel := ObjCLibrary uniqueInstance lookupSelector:
+		                    'setBool:forKey:'.
+
+	ObjCLibrary uniqueInstance
+		sendMessage: setBoolForKeySel
+		to: standardUserDefaults
+		with: (ExternalAddress fromAddress: 1)
+		with: key.
+		
+	ObjCLibrary uniqueInstance release: key.
+]
+
 { #category : 'initialization' }
 SDLOSXPlatform >> initPlatformSpecific [
 
@@ -38,5 +65,7 @@ SDLOSXPlatform >> initPlatformSpecific [
 	ObjCLibrary uniqueInstance sendMessage: (ObjCLibrary uniqueInstance lookupSelector: 'finishLaunching') to: sharedApplication.
 	
 	SDLOSXPharoMenu uniqueInstance installInOSXWindow.
+	
+	self allowTouchpadInertia.
 
 ]

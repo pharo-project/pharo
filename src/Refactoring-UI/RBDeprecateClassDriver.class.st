@@ -80,12 +80,10 @@ RBDeprecateClassDriver >> requestClassToMigrateReferencesTo [
 
 	newClassName := SpSelectDialog new
 		                title: 'Class to migrate ' , className;
-		                label:
-			                'The new class that will be used to migrate all references of the old class to it.';
-		                items: Smalltalk allClassesAndTraits;
+		                label: 'The new class that will be used to migrate all references of the old class to it.';
+		                items: self class environment allClasses; "This should probably check in the environment of the class to deprecate but I don't know how to get it here"
 		                display: [ :each | each name ];
-		                displayIcon: [ :each |
-			                self iconNamed: each systemIconName ];
+		                displayIcon: [ :each | self iconNamed: each systemIconName ];
 		                openModal.
 	^ newClassName name
 ]

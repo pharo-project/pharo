@@ -350,7 +350,7 @@ ClyBrowserMorph >> ignoreNavigationDuring: aBlock [
 
 { #category : 'initialization' }
 ClyBrowserMorph >> initialExtent [
-	^ 850@620 * self currentWorld displayScaleFactor
+	^ 915@620 * self currentWorld displayScaleFactor
 ]
 
 { #category : 'initialization' }

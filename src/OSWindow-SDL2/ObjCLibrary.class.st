@@ -86,6 +86,12 @@ ObjCLibrary >> sendMessage: sel to: rcv with: aParam [
 ]
 
 { #category : 'utilities - objectiveC' }
+ObjCLibrary >> sendMessage: sel to: rcv with: aParam1 with:aParam2 [
+
+	^ self ffiCall: #(void* objc_msgSend(void* rcv, void* sel, void* aParam1, void* aParam2))
+]
+
+{ #category : 'utilities - objectiveC' }
 ObjCLibrary >> sendMessage: sel to: rcv with: aParam1 with:aParam2 with:aParam3 [
 
 	^ self ffiCall: #(void* objc_msgSend(void* rcv, void* sel, void* aParam1, void* aParam2, void* aParam3))
