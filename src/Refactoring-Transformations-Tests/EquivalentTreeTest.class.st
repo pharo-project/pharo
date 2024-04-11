@@ -35,34 +35,64 @@ EquivalentTreeTest >> testAllMethodsInHierarchy [
 ]
 
 { #category : 'tests' }
-EquivalentTreeTest >> testEquivalentTreeWithMethodNodeWhenUniqueMethodExpectNil [
+EquivalentTreeTest >> testEquivalentTreeWithMethodContainingSuperSendInSameClassExpectFound [
 
-	| checker  methodNode equivlentTree |
+	| checker methodNode equivalentTree |
+
 	checker := EquivalentTreeChecker new.
 	checker model: RBNamespace new.
 	checker on: RBEquivalentMethodSubclassHolder.
-	checker selector: #simpleLocalMethodReturn.
+	checker extractedFromSelector: #methodToExtractFrom.
+
+	methodNode := RBParser parseMethod: 'testtest ^ 7 raisedTo: super someNumber'.
+	equivalentTree := checker checkEquivalentTreeFor: methodNode.
+	self assert: equivalentTree isNotNil
+]
+
+{ #category : 'tests' }
+EquivalentTreeTest >> testEquivalentTreeWithMethodHasSuperSendInSuperClassExpectNil [
+
+	| checker methodNode equivalentTree |
+
+	checker := EquivalentTreeChecker new.
+	checker model: RBNamespace new.
+	checker on: RBEquivalentMethodSubclassHolder.
+	checker extractedFromSelector: #methodToExtractFromWithSuperAndSimilarMethodInSuper.
+
+	methodNode := RBParser parseMethod: 'testtest ^ 11 raisedTo: super someNumber factorial'.
+	equivalentTree := checker checkEquivalentTreeFor: methodNode.
+	self assert: equivalentTree isNil
+]
+
+{ #category : 'tests' }
+EquivalentTreeTest >> testEquivalentTreeWithMethodNodeWhenUniqueMethodExpectNil [
+
+	| checker  methodNode equivalentTree |
+	checker := EquivalentTreeChecker new.
+	checker model: RBNamespace new.
+	checker on: RBEquivalentMethodSubclassHolder.
+	checker extractedFromSelector: #simpleLocalMethodReturn.
 	
 	methodNode := RBParser parseMethod: 'testMethod: anArg ^ anArg + 7 raisedTo: 2'.
-	equivlentTree := checker checkEquivalentTreeFor: methodNode.
+	equivalentTree := checker checkEquivalentTreeFor: methodNode.
 	
-	self assert: equivlentTree isNil
+	self assert: equivalentTree isNil
 
 ]
 
 { #category : 'tests' }
 EquivalentTreeTest >> testEquivalentTreeWithMethodNodeWithDuplicateMethodExpectFound [
 
-	| checker methodNode equivlentTree |
+	| checker methodNode equivalentTree |
 
 	checker := EquivalentTreeChecker new.
 	checker model: RBNamespace new.
 	checker on: RBEquivalentMethodSubclassHolder.
-	checker selector: #simpleLocalMethodReturn.
+	checker extractedFromSelector: #simpleLocalMethodReturn.
 
 	methodNode := RBParser parseMethod: 'testtest ^ 42'.
-	equivlentTree := checker checkEquivalentTreeFor: methodNode.
-	self assert: equivlentTree isNotNil
+	equivalentTree := checker checkEquivalentTreeFor: methodNode.
+	self assert: equivalentTree isNotNil
 ]
 
 { #category : 'tests' }
@@ -74,7 +104,7 @@ EquivalentTreeTest >> testMethodsToBeCheckedExceptSelector [
 	checker := EquivalentTreeChecker new.
 	checker model: model.
 	checker on: RBEquivalentMethodSubclassHolder.
-	checker selector: #simpleLocalMethodReturn.
+	checker extractedFromSelector: #simpleLocalMethodReturn.
 	
 	methodsToBeChecked := checker methodsToBeChecked.
 	
