@@ -15,7 +15,7 @@ ReSemanticsOfExtractMethodTransformationTest >> extractSource: sourceToExtract f
 	| method |
 	method := class compile: source classified: '#test data'.
 
-	^ RBExtractMethodTransformation new
+	^ ReCompositeExtractMethodRefactoring new
 		  model: model;
 		  extract: sourceToExtract
 		  from: method selector
