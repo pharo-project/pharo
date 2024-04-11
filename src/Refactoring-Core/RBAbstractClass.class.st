@@ -815,9 +815,8 @@ RBAbstractClass >> typeOfClassVariable: aSymbol [
 RBAbstractClass >> whichClassIncludesSelector: aSelector [
 
 	(self directlyDefinesMethod: aSelector) ifTrue: [ ^ self ].
-	^ self superclass isNil
-		  ifFalse: [ self superclass whichClassIncludesSelector: aSelector ]
-		  ifTrue: [ nil ]
+	^ self superclass ifNotNil: [
+		  self superclass whichClassIncludesSelector: aSelector ]
 ]
 
 { #category : 'method accessing' }
@@ -957,10 +956,11 @@ RBAbstractClass >> whoDefinesInstanceVariable: aString [
 
 { #category : 'method accessing' }
 RBAbstractClass >> whoDefinesMethod: aSelector [
-	| sprClass |
-	(self directlyDefinesMethod: aSelector) ifTrue: [ ^ self ].
-	sprClass := self superclass.
-	^ sprClass ifNotNil: [ sprClass whoDefinesMethod: aSelector ]
+
+	self
+		deprecated: 'Use whichClassIncludesSelector: instead of current one'
+		transformWith: '`@rec whoDefinesMethod: `@arg' -> '`@rec whichClassIncludesSelector: `@arg'.
+	^ self whichClassIncludesSelector: aSelector 
 ]
 
 { #category : 'accessing' }
