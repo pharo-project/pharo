@@ -90,23 +90,6 @@ ReCompositeExtractMethodRefactoring >> breakingChangePreconditions [
 	  ^ self preconditionHasSameExitPoint 
 ]
 
-{ #category : 'utilities' }
-ReCompositeExtractMethodRefactoring >> buildMessageSendWith: aSelector and: argsAndValues needsReturn: aBoolean [
-
-	^ String streamContents: [ :string |
-		aBoolean ifTrue: [ string nextPutAll: '^ ' ].
-
-		string nextPutAll: 'self '.
-		argsAndValues
-			ifEmpty: [ string nextPutAll: aSelector asString ]
-			ifNotEmpty: [
-				aSelector keywords with: argsAndValues associations
-					do: [ :key :arg |
-						string nextPutAll: key asString; nextPut: $ .
-						string nextPutAll: (argsAndValues at: arg key).
-						string nextPut: $ ] ] ]
-]
-
 { #category : 'executing' }
 ReCompositeExtractMethodRefactoring >> buildTransformationFor: newMethodName [
 
@@ -248,23 +231,6 @@ ReCompositeExtractMethodRefactoring >> extract: aString from: aSelector to: aNew
 	
 ]
 
-{ #category : 'preconditions' }
-ReCompositeExtractMethodRefactoring >> findMethodWithSimilarBody [
-
-	| searchSpace |
-	searchSpace := (self class allMethodsInHierarchyOf:
-		                self definingClass) reject: [ :m |
-		               m selector = selector ].
-
-	^ (self parseTreeSearcherClass
-		   whichMethodIn: searchSpace
-		   matches: subtree)
-		  ifNotEmpty: [ :opportunities | "we found one method with similar body so we will use it instead of creating a new one"
-			  ^ opportunities anyOne ]
-		  ifEmpty: [ ^ nil ]
-		
-]
-
 { #category : 'executing' }
 ReCompositeExtractMethodRefactoring >> generateNewMethodWith: aMethodName [
 
@@ -298,41 +264,8 @@ ReCompositeExtractMethodRefactoring >> generateNewMethodWith: aMethodName [
 ]
 
 { #category : 'utilities' }
-ReCompositeExtractMethodRefactoring >> isMethodEquivalentTo: aSelector [
-	
-	self halt: 'Does not work for now'.
-	selector == aSelector ifTrue: [^false].
-	aSelector numArgs ~~ arguments size ifTrue: [^false].
-
-	(self isParseTreeEquivalentTo: aSelector) ifFalse: [^false].
-	"self reorderParametersToMatch: aSelector."
-	^true
-]
-
-{ #category : 'utilities' }
-ReCompositeExtractMethodRefactoring >> isParseTreeEquivalentTo: aSelector [
-	self flag: #toredo.
-	"| tree definingClass |
-	definingClass := class whoDefinesMethod: aSelector.
-	tree := definingClass parseTreeForSelector: aSelector.
-	tree ifNil: [^false].
-	tree isPrimitive ifTrue: [^false].
-	needsReturn ifFalse: [ tree := self removeReturnsOf: tree ].
-	(tree body equalTo: extractedParseTree body
-		exceptForVariables: (tree arguments collect: [:each | each name]))
-			ifFalse: [^false].
-	(definingClass = class or:
-			[(tree superMessages anySatisfy:
-					[:each |
-					(class superclass whichClassIncludesSelector: aSelector)
-						~= (definingClass superclass whichClassIncludesSelector: each)]) not])
-		ifFalse: [^false].
-	^ true"
-]
-
-{ #category : 'utilities' }
 ReCompositeExtractMethodRefactoring >> mapArguments: args toValues: values in: aTree [
-
+	self flag: #toRemove.
 	^ (args size = values size)
 		"map directly"
 		ifTrue: [
@@ -371,32 +304,6 @@ ReCompositeExtractMethodRefactoring >> messageSendWith: aMethodName [
 								do: [ :key :arg |
 									string nextPutAll: key asString; nextPut: $ .
 									string nextPutAll: arg asString.
-								string nextPut: $ ] ] ] ]
-]
-
-{ #category : 'executing' }
-ReCompositeExtractMethodRefactoring >> messageSendWith: aMethodName and: newArguments needsReturn: aBoolean [
-
-	^ String streamContents: [ :string |
-		aBoolean ifTrue: [ string nextPutAll: '^ ' ].
-
-		assignments size = 1
-			ifTrue: [ string
-				nextPutAll: assignments first asString;
-				nextPutAll: ' := ' ].
-
-		string nextPutAll: 'self '.
-		aMethodName arguments
-			ifEmpty: [ string nextPutAll: aMethodName selector asString ]
-			ifNotEmpty: [
-				(aMethodName selector keywords size = aMethodName arguments size)
-					ifTrue: [ aMethodName selector keywords
-								with: aMethodName arguments
-								do: [ :key :arg |
-									string nextPutAll: key asString; nextPut: $ .
-									(newArguments includesKey: arg asString)
-										ifTrue: [ string nextPutAll: (newArguments at: arg asString) ]
-										ifFalse: [ string nextPutAll: arg asString ].
 								string nextPut: $ ] ] ] ]
 ]
 
@@ -502,25 +409,6 @@ ReCompositeExtractMethodRefactoring >> prepareForExecution [
 		assignments := self calculateAssignments.
 		arguments := self calculateArguments.
 		needsReturn := self calculateIfReturnIsNeededInCaller]
-]
-
-{ #category : 'utilities' }
-ReCompositeExtractMethodRefactoring >> replaceCodeByMessageSendTo: aMethod in: aCompiledMethod [
-
-	| argsAndValues newSourceCode |
-	self flag:#todo.  "fix when support for existing methods is reintroduced"
-	argsAndValues := self mapArguments: aMethod ast arguments
-								toValues: (subtree allChildren select: #isLiteralNode)
-								in: subtree.
-	newSourceCode := self buildMessageSendWith: aMethod selector
-			and: argsAndValues asDictionary
-			needsReturn: subtree isReturn.
-
-	^ RBReplaceSubtreeTransformation
-		replace: subtree sourceCode
-		to: newSourceCode
-		inMethod: aCompiledMethod selector
-		inClass: aCompiledMethod methodClass
 ]
 
 { #category : 'utilities' }
