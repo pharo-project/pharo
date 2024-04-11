@@ -14,21 +14,13 @@ Class {
 { #category : 'query' }
 EquivalentTreeChecker >> allMethodsInHierarchy [
 	^ ((class withAllSuperclassesUntil: Object) 
-			flatCollect: [ :class | class methods]) 
+			flatCollect: [ :aClass | aClass methods]) 
 ]
 
-{ #category : 'as yet unclassified' }
-EquivalentTreeChecker >> allMethodsInHierarchyOf: aRBClass [
-
-	^ ((aRBClass withAllSuperclassesUntil: Object) 
-			flatCollect: [ :class | class methods collect: [ :each | each method ] ]) 
-]
-
-{ #category : 'as yet unclassified' }
+{ #category : 'query' }
 EquivalentTreeChecker >> methodsToBeChecked [
 
-	^ (self allMethodsInHierarchyOf: self definingClass) reject: [
-		  :m | m selector = selector ]
+	^ self allMethodsInHierarchy reject: [ :m | m selector = selector ]
 ]
 
 { #category : 'instance creation' }
@@ -41,10 +33,4 @@ EquivalentTreeChecker >> model: aModel [
 EquivalentTreeChecker >> on: aClass [ 
 	
 	class := model classNamed: aClass name
-]
-
-{ #category : 'instance creation' }
-EquivalentTreeChecker >> rbClassFor: aClass [
-
-	^ model classNamed: aClass name
 ]
