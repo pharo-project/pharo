@@ -253,13 +253,12 @@ RBRefactoryChangeManager >> undoChange [
 
 { #category : 'menu' }
 RBRefactoryChangeManager >> undoLastRefactoring [
-	| manager |
-	manager := RBRefactoryChangeManager instance.
-	manager undoPointers ifNotEmpty: [
+
+	self undoPointers ifNotEmpty: [
 	[ |limit list|
 	list := OrderedCollection new.
-	limit := manager lastUndoPointer .
-	1 to: limit do:[ :i | list add: manager undoChange ].
+	limit := self lastUndoPointer .
+	1 to: limit do:[ :i | list add: self undoChange ].
 	list do: [ :e | e execute ].
 	^ list
 	 ] asJob
