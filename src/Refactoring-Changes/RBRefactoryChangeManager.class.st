@@ -216,6 +216,16 @@ RBRefactoryChangeManager >> performChange: aRefactoringChange [
 ]
 
 { #category : 'public access' }
+RBRefactoryChangeManager >> performChanges: aRefactoringChangesList [
+	
+	self ignoreChangesWhile: [ 
+		aRefactoringChangesList do: [ :change |
+		 self addUndo: change execute.
+		 self addUndoPointer: self class nextCounter ]
+	]
+]
+
+{ #category : 'public access' }
 RBRefactoryChangeManager >> redoChange [
 	^ redo last
 ]
