@@ -88,6 +88,14 @@ RBRefactoryChangeManager class >> resetCounter [
 	Counter := nil
 ]
 
+{ #category : 'menu' }
+RBRefactoryChangeManager class >> undoLastRefactoring [
+
+	self deprecated: 'Use instance side method instead'
+		transformWith: '`@rec undoLastRefactoring' -> '`@rec instance undoLastRefactoring'.
+	^ self instance undoLastRefactoring 
+]
+
 { #category : 'class initialization' }
 RBRefactoryChangeManager class >> undoSize [
 
