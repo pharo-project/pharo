@@ -214,6 +214,14 @@ RBRefactoryChangeManager >> performChanges: aRefactoringChangesList [
 ]
 
 { #category : 'public access' }
+RBRefactoryChangeManager >> performCompositeChange: aCompositeChange [
+
+	self ignoreChangesWhile: [
+		self addUndo: aCompositeChange execute.
+		self addUndoPointer: self class nextCounter ]
+]
+
+{ #category : 'public access' }
 RBRefactoryChangeManager >> redoChange [
 	^ redo last
 ]
