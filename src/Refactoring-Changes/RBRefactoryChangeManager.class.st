@@ -248,7 +248,8 @@ RBRefactoryChangeManager >> undoLastRefactoring [
 	list := OrderedCollection new.
 	limit := manager lastUndoPointer .
 	1 to: limit do:[ :i | list add: manager undoChange ].
-	list do: [ :e | e execute ]
+	list do: [ :e | e execute ].
+	^ list
 	 ] asJob
 		title: 'Refactoring';
 		run]

@@ -11,7 +11,7 @@ Class {
 { #category : 'instance creation' }
 RBRefactoringChangeManagerPerformChangesTest >> listOfMockChangesWithSize: aNumber [
 
-	^ (1 to: aNumber) collect: [ :i | RBRefactoringChangeMock new ]
+	^ (1 to: aNumber) collect: [ :i | RBRefactoringChangeMock new name: i asString ]
 ]
 
 { #category : 'instance creation' }
@@ -38,4 +38,28 @@ RBRefactoringChangeManagerPerformChangesTest >> testPerformChanges [
 	manager undoLastRefactoring.
 	
 	self deny: manager hasUndoableOperations
+]
+
+{ #category : 'tests' }
+RBRefactoringChangeManagerPerformChangesTest >> testPerformChangesWhenChangesBiggerThanUndoSizeExpectCorrectChangesUndone [
+
+	| changes undoneChanges |
+	changes := self listOfMockChangesWithSize: manager class undoSize + 1.
+	manager performChanges: changes.
+	
+	undoneChanges := manager undoLastRefactoring.
+	
+	self assertCollection: undoneChanges first changes asArray equals: changes reversed asArray
+]
+
+{ #category : 'tests' }
+RBRefactoringChangeManagerPerformChangesTest >> testPerformChangesWhenChangesSmallerThanUndoSizeExpectCorrectChangesUndone [
+
+	| changes undoneChanges |
+	changes := self listOfMockChangesWithSize: 5.
+	manager performChanges: changes.
+	
+	undoneChanges := manager undoLastRefactoring.
+	
+	self assertCollection: undoneChanges first changes asArray equals: changes reversed asArray
 ]
