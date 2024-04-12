@@ -53,7 +53,7 @@ RBRefactoryChangeManager class >> instance [
 RBRefactoryChangeManager class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Undo last refactoring')
-				action: [self undoLastRefactoring];
+				action: [self instance undoLastRefactoring];
 				parent: #Refactoring;
 				help: 'Undo last refactoring';
 				order: 10;
@@ -86,22 +86,6 @@ RBRefactoryChangeManager class >> nuke [
 RBRefactoryChangeManager class >> resetCounter [
 
 	Counter := nil
-]
-
-{ #category : 'menu' }
-RBRefactoryChangeManager class >> undoLastRefactoring [
-	| manager |
-	manager := RBRefactoryChangeManager instance.
-	manager undoPointers ifNotEmpty: [
-	[ |limit list|
-	list := OrderedCollection new.
-	limit := manager lastUndoPointer .
-	1 to: limit do:[ :i | list add: manager undoChange ].
-	list do: [ :e | e execute ]
-	 ] asJob
-		title: 'Refactoring';
-		run]
-	ifEmpty: [ self inform: 'There aren''t refactorings to undo.'  ]
 ]
 
 { #category : 'class initialization' }
@@ -249,6 +233,22 @@ RBRefactoryChangeManager >> release [
 RBRefactoryChangeManager >> undoChange [
 
 	^ undo pop
+]
+
+{ #category : 'menu' }
+RBRefactoryChangeManager >> undoLastRefactoring [
+	| manager |
+	manager := RBRefactoryChangeManager instance.
+	manager undoPointers ifNotEmpty: [
+	[ |limit list|
+	list := OrderedCollection new.
+	limit := manager lastUndoPointer .
+	1 to: limit do:[ :i | list add: manager undoChange ].
+	list do: [ :e | e execute ]
+	 ] asJob
+		title: 'Refactoring';
+		run]
+	ifEmpty: [ self inform: 'There aren''t refactorings to undo.'  ]
 ]
 
 { #category : 'public access' }
