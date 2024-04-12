@@ -54,7 +54,7 @@ StRewriteRuleChangesBrowserPresenter >> accept [
 	self okToChange
 		ifFalse: [ ^ self ].
 	self selectedChanges isEmptyOrNil ifTrue: [ ^self ].
-	[ self selectedChanges do: [ :change | RBRefactoryChangeManager instance performChange: change ] ] asJob
+	[ RBRefactoryChangeManager instance performChanges: self selectedChanges ] asJob
 		title: 'Refactoring';
 		run.
 	self window delete

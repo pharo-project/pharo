@@ -327,8 +327,7 @@ RBAbstractTransformation >> performChanges: aCompositeChange [
 	"Perform the changes contained in a composite change"
 	
 	RBRefactoryChangeManager instance
-		performChange: aCompositeChange;
-		addUndoPointer: RBRefactoryChangeManager nextCounter
+		performCompositeChange: aCompositeChange
 ]
 
 { #category : 'accessing' }

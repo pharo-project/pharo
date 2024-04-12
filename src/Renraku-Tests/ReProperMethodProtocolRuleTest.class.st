@@ -83,7 +83,7 @@ ReProperMethodProtocolRuleTest >> testAutomatedFix [
 
 	critiques := self defaultTestClass new check: method.
 	refactoring := critiques first refactoring generateChanges.
-	RBRefactoryChangeManager instance performChange: refactoring changes.
+	refactoring performChanges.
 
 	self assert: method protocolName equals: self properProtocolName asSymbol
 ]
