@@ -415,6 +415,11 @@ ReCompositeExtractMethodRefactoring >> prepareForExecution [
 		needsReturn := self calculateIfReturnIsNeededInCaller]
 ]
 
+{ #category : 'accessing' }
+ReCompositeExtractMethodRefactoring >> selector: aString [ 
+	newSelector := aString
+]
+
 { #category : 'utilities' }
 ReCompositeExtractMethodRefactoring >> selectorStartingFrom: aString argumentsSize: aNumber [
 
