@@ -201,12 +201,16 @@ RBRefactoryChangeManager >> performChange: aRefactoringChange [
 
 { #category : 'public access' }
 RBRefactoryChangeManager >> performChanges: aRefactoringChangesList [
-	
-	self ignoreChangesWhile: [ 
-		aRefactoringChangesList do: [ :change |
-		 self addUndo: change execute.
-		 self addUndoPointer: self class nextCounter ]
-	]
+
+	| compositeChange |
+	aRefactoringChangesList ifEmpty: [ ^ self ].
+	compositeChange := RBCompositeRefactoryChange new.
+	compositeChange onSystemDictionary:
+		aRefactoringChangesList first onSystemDictionary.
+	compositeChange changes: aRefactoringChangesList.
+	self ignoreChangesWhile: [
+		self addUndo: compositeChange execute.
+		self addUndoPointer: self class nextCounter ]
 ]
 
 { #category : 'public access' }
