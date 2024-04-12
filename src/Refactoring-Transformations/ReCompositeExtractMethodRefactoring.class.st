@@ -57,11 +57,34 @@ ReCompositeExtractMethodRefactoring class >> extract: aString from: aSelector to
 ]
 
 { #category : 'api' }
+ReCompositeExtractMethodRefactoring class >> extractInterval: anInterval from: aSelector to: aNewSelector in: aClassName [
+
+	^ self new
+		extractInterval: anInterval
+		from: aSelector
+		to: aNewSelector
+		in: aClassName;
+		yourself
+]
+
+{ #category : 'api' }
 ReCompositeExtractMethodRefactoring class >> model: aRBModel extract: aString from: aSelector to: aNewSelector in: aClassName [
 
 	^ self new
 		model: aRBModel;
 		extract: aString
+		from: aSelector
+		to: aNewSelector
+		in: aClassName;
+		yourself
+]
+
+{ #category : 'api' }
+ReCompositeExtractMethodRefactoring class >> model: aRBModel extractInterval: anInterval from: aSelector to: aNewSelector in: aClassName [
+
+	^ self new
+		model: aRBModel;
+		extractInterval: anInterval
 		from: aSelector
 		to: aNewSelector
 		in: aClassName;
@@ -230,6 +253,8 @@ ReCompositeExtractMethodRefactoring >> checkPreconditions [
 
 { #category : 'instance creation' }
 ReCompositeExtractMethodRefactoring >> extract: aString from: aSelector in: aClassName [ 
+	"partial instantiation."
+	
 	class := self model classNamed: aClassName.
 	selector := aSelector.
 	sourceCode := aString
@@ -237,9 +262,25 @@ ReCompositeExtractMethodRefactoring >> extract: aString from: aSelector in: aCla
 
 { #category : 'api' }
 ReCompositeExtractMethodRefactoring >> extract: aString from: aSelector to: aNewSelector in: aClassName [
-	"partial instantiation."
 	
 	self extract: aString from: aSelector in: aClassName.
+	newSelector := aNewSelector.
+	
+]
+
+{ #category : 'instance creation' }
+ReCompositeExtractMethodRefactoring >> extractInterval: anInterval from: aSelector in: aClassName [ 
+	"partial instantiation."
+	
+	class := self model classNamed: aClassName.
+	selector := aSelector.
+	sourceCode := self getSourceFromInterval: anInterval
+]
+
+{ #category : 'api' }
+ReCompositeExtractMethodRefactoring >> extractInterval: anInterval from: aSelector to: aNewSelector in: aClassName [
+	
+	self extractInterval: anInterval from: aSelector in: aClassName.
 	newSelector := aNewSelector.
 	
 ]
@@ -265,6 +306,16 @@ ReCompositeExtractMethodRefactoring >> generateNewMethodWith: aMethodName [
 	self addReturnIfNeeded: newMethodNode.
 
 	^ newMethodNode
+]
+
+{ #category : 'instance creation' }
+ReCompositeExtractMethodRefactoring >> getSourceFromInterval: anInterval [
+	| source |
+	source := class sourceCodeFor: selector.
+	((anInterval first between: 1 and: source size)
+		and: [anInterval last between: 1 and: source size])
+			ifFalse: [self refactoringError: 'Invalid interval'].
+	^source copyFrom: anInterval first to: anInterval last
 ]
 
 { #category : 'utilities' }
