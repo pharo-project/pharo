@@ -195,8 +195,12 @@ RBRefactoryChangeManager >> lastUndoPointer [
 
 { #category : 'public access' }
 RBRefactoryChangeManager >> performChange: aRefactoringChange [
-	
-	self ignoreChangesWhile: [ self addUndo: aRefactoringChange execute ]
+
+	self
+		deprecated: 'Use `performCompositeChange:` if you have CompositeChange or use `performChanges:` if you have a list of changes instead of current one'
+		transformWith: '`@rec performChange: `@arg' -> '`@rec performCompositeChange: `@arg'.
+
+	self performCompositeChange: aRefactoringChange.
 ]
 
 { #category : 'public access' }
