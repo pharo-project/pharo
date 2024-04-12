@@ -43,6 +43,12 @@ StRewriteRuleChangesBrowserPresenter class >> defaultLayout [
 		yourself
 ]
 
+{ #category : 'testing' }
+StRewriteRuleChangesBrowserPresenter class >> isDeprecated [ 
+
+	^ true
+]
+
 { #category : 'actions' }
 StRewriteRuleChangesBrowserPresenter >> accept [
 	self okToChange
