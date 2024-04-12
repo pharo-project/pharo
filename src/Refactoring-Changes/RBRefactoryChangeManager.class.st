@@ -212,9 +212,7 @@ RBRefactoryChangeManager >> performChanges: aRefactoringChangesList [
 	compositeChange onSystemDictionary:
 		aRefactoringChangesList first onSystemDictionary.
 	compositeChange changes: aRefactoringChangesList.
-	self ignoreChangesWhile: [
-		self addUndo: compositeChange execute.
-		self addUndoPointer: self class nextCounter ]
+	self performCompositeChange: compositeChange
 ]
 
 { #category : 'public access' }
@@ -256,11 +254,11 @@ RBRefactoryChangeManager >> undoLastRefactoring [
 
 	self undoPointers ifNotEmpty: [
 	[ |limit list|
-	list := OrderedCollection new.
-	limit := self lastUndoPointer .
-	1 to: limit do:[ :i | list add: self undoChange ].
-	list do: [ :e | e execute ].
-	^ list
+		list := OrderedCollection new.
+		limit := self lastUndoPointer .
+		1 to: limit do:[ :i | list add: self undoChange ].
+		list do: [ :e | e execute ].
+		^ list
 	 ] asJob
 		title: 'Refactoring';
 		run]
