@@ -39,6 +39,36 @@ ReSemanticsOfExtractSetUpMethodRefactoringTest >> setUp [
 ]
 
 { #category : 'tests' }
+ReSemanticsOfExtractSetUpMethodRefactoringTest >> testExtractSetUpWhenInstVarSelectedExpectExtracted [
+
+		| refactoring |
+	refactoring := self 
+extractSource: '| temp |
+		temp := self localSetUp.
+		instVar2 := instVar + 1' 
+fromSource: 'testSomething
+		| temp |
+		temp := self localSetUp.
+		instVar2 := instVar + 1.
+		self assert: instVar2 > instVar'.
+
+	refactoring generateChanges.
+	
+	self 
+		assert: (class parseTreeForSelector: #setUp)
+		equals: (self parseMethod: 'setUp
+					| temp |
+					super setUp.
+					temp := self localSetUp.
+					instVar2 := instVar + 1').
+		
+	self 
+		assert: (class parseTreeForSelector: #testSomething)
+		equals: (self parseMethod: 'testSomething
+		self assert: instVar2 > instVar')
+]
+
+{ #category : 'tests' }
 ReSemanticsOfExtractSetUpMethodRefactoringTest >> testExtractSetUpWhenSingleMessageSendSelectedExpectExtracted [
 
 		| refactoring |
@@ -56,6 +86,64 @@ fromSource: 'testSomething
 		equals: (self parseMethod: 'setUp
 					super setUp.
 					self localSetUp').
+		
+	self 
+		assert: (class parseTreeForSelector: #testSomething)
+		equals: (self parseMethod: 'testSomething
+		instVar2 := instVar + 1.
+		self assert: instVar2 > instVar')
+]
+
+{ #category : 'tests' }
+ReSemanticsOfExtractSetUpMethodRefactoringTest >> testExtractSetUpWhenTemporaryReferencedOutsideOfSelectionExpectExtractedAndTurnedInstoInstVar [
+
+		| refactoring |
+	refactoring := self 
+extractSource: '
+		temp := self localSetUp.
+		tempToo := self localSetUp' 
+fromSource: 'testSomething
+		| temp tempToo |
+		temp := self localSetUp.
+		tempToo := self localSetUp.
+		self assert: temp > tempToo'.
+
+	refactoring generateChanges.
+	
+	self 
+		assert: (class parseTreeForSelector: #setUp)
+		equals: (self parseMethod: 'setUp
+			super setUp.
+			temp := self localSetUp.
+			tempToo := self localSetUp').
+		
+	self 
+		assert: (class parseTreeForSelector: #testSomething)
+		equals: (self parseMethod: 'testSomething
+		self assert: temp > tempToo')
+]
+
+{ #category : 'tests' }
+ReSemanticsOfExtractSetUpMethodRefactoringTest >> testExtractSetUpWhenTemporarySelectedExpectExtracted [
+
+		| refactoring |
+	refactoring := self 
+extractSource: '| temp |
+		temp := self localSetUp' 
+fromSource: 'testSomething
+		| temp |
+		temp := self localSetUp.
+		instVar2 := instVar + 1.
+		self assert: instVar2 > instVar'.
+
+	refactoring generateChanges.
+	
+	self 
+		assert: (class parseTreeForSelector: #setUp)
+		equals: (self parseMethod: 'setUp
+					| temp |
+					super setUp.
+					temp := self localSetUp').
 		
 	self 
 		assert: (class parseTreeForSelector: #testSomething)
