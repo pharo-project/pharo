@@ -9,7 +9,7 @@ Class {
 	#tag : 'Test'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'utilities' }
 ReSemanticsOfExtractSetUpMethodRefactoringTest >> extractSource: sourceToExtract fromSource: source [
 
 	| method |
