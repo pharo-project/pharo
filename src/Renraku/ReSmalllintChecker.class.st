@@ -169,10 +169,9 @@ ReSmalllintChecker >> manifestBuilderOfMethod: aMethod [
 { #category : 'accessing' }
 ReSmalllintChecker >> manifestBuilderOfPackage: aPackage [
 
-	^ manifestClassCache at: aPackage name ifAbsentPut: [
-		  self builderManifestClass allManifestClasses
-			  detect: [ :class | class package = aPackage ]
-			  ifNone: [ nil ] ]
+	^ manifestClassCache
+		  at: aPackage name
+		  ifAbsentPut: [ self builderManifestClass ofPackage: aPackage ]
 ]
 
 { #category : 'private' }
