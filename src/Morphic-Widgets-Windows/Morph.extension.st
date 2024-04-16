@@ -51,6 +51,13 @@ Morph >> embeddedInMorphicWindowLabeled: labelString [
 ]
 
 { #category : '*Morphic-Widgets-Windows' }
+Morph >> handleCloseByShortcut [
+	
+	"Entry point, if one of the morphs inside a window want to catch the close window shortcut"
+	^ false
+]
+
+{ #category : '*Morphic-Widgets-Windows' }
 Morph >> isInSystemWindow [
 	"answer if the receiver is in a system window"
 	^ owner isMorph and:[owner isSystemWindow or:[owner isInSystemWindow]]

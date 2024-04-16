@@ -55,7 +55,7 @@ SystemWindow class >> buildShortcutsOn: aBuilder [
 	(aBuilder shortcut: #close)
 		category: #WindowShortcuts
 		default: PharoShortcuts current closeWindowShortcut
-		do: [ :target | SystemWindow closeTopWindow ]
+		do: [ :target | self closeTopWindowByShortcut ]
 		description: 'Close this window'
 ]
 
@@ -275,11 +275,11 @@ SystemWindow class >> closeBoxImage [
 ]
 
 { #category : 'top window' }
-SystemWindow class >> closeTopWindow [
+SystemWindow class >> closeTopWindowByShortcut [
 	"Try to close the top window.  It may of course decline"
 	TopWindow ifNotNil: [ :window |
 		TopWindow := nil.
-		window delete.
+		window closeByShortcut.
 	]
 ]
 
@@ -764,6 +764,15 @@ SystemWindow >> changeColor [
 
 { #category : 'open/close' }
 SystemWindow >> close [
+	^ self delete
+]
+
+{ #category : 'closing' }
+SystemWindow >> closeByShortcut [
+
+	self submorphsDo: [ :m | 
+		m handleCloseByShortcut ifTrue: [ ^ self ] ].
+
 	^ self delete
 ]
 

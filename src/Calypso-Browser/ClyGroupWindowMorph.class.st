@@ -41,6 +41,15 @@ ClyGroupWindowMorph >> dragTab: aSystemWindow event: anEvent in: aTabLabel [
 	anEvent hand grabMorph: aSystemWindow
 ]
 
+{ #category : 'closing' }
+ClyGroupWindowMorph >> handleCloseByShortcut [ 
+	
+	self activeWindow ifNotNil: [ :page | self removeWindow: page ].
+	
+	"Returns true to stop handling"
+	^ tabGroup pages isNotEmpty
+]
+
 { #category : 'updating' }
 ClyGroupWindowMorph >> update: aSymbol [
 	"Handle tab changes."
