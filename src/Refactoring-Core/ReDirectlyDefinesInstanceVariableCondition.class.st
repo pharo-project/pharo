@@ -2,8 +2,7 @@ Class {
 	#name : 'ReDirectlyDefinesInstanceVariableCondition',
 	#superclass : 'ReClassCondition',
 	#instVars : [
-		'instanceVariables',
-		'class'
+		'instanceVariables'
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
@@ -46,7 +45,7 @@ ReDirectlyDefinesInstanceVariableCondition >> class: aRBAbstractClass inModel: a
 
 { #category : 'private' }
 ReDirectlyDefinesInstanceVariableCondition >> errorBlock [
-	^ [ aClass printString
+	^ [ class printString
 				, ' <1?: > directly define <1?s:> instance variable ' , instanceVariables ]
 ]
 
