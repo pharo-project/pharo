@@ -16,6 +16,13 @@ ToolShortcutsCategory class >> isGlobalCategory [
 ]
 
 { #category : 'keymaps' }
+ToolShortcutsCategory >> openPlayground [
+
+	<shortcut>
+	^ KMKeymap shortcut: PharoShortcuts current openPlaygroundShortcut action: [ self tools workspace open ]
+]
+
+{ #category : 'keymaps' }
 ToolShortcutsCategory >> openSettings [
 	<shortcut>
 	^ KMKeymap shortcut: PharoShortcuts current openSettingsShortcut action: [ SettingBrowser open ]
@@ -46,15 +53,6 @@ ToolShortcutsCategory >> openUnitTestRunner [
 	^ KMKeymap
 		  shortcut: PharoShortcuts current openTestRunnerShortcut
 		  action: [ self tools openTestRunner ]
-]
-
-{ #category : 'keymaps' }
-ToolShortcutsCategory >> openWorkspace [
-
-	<shortcut>
-	^ KMKeymap
-		  shortcut: PharoShortcuts current openPlaygroundShortcut
-		  action: [ self tools workspace open ]
 ]
 
 { #category : 'keymaps' }
