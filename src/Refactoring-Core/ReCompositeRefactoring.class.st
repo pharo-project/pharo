@@ -13,20 +13,6 @@ Class {
 	#tag : 'Refactorings'
 }
 
-{ #category : 'preconditions' }
-ReCompositeRefactoring >> applicabilityPreconditions [
-	"Return the list of the all the applicabilityPreconditions of the composite"
-
-	^ #(  )
-]
-
-{ #category : 'preconditions' }
-ReCompositeRefactoring >> breakingChangePreconditions [
-	"Return the list of the all the breakingChangePreconditions of the composite"
-
-	^ #(  )
-]
-
 { #category : 'scripting api - executing' }
 ReCompositeRefactoring >> generateChanges [
 	
