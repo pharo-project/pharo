@@ -123,10 +123,9 @@ ReSmalllintChecker >> initialize [
 { #category : 'manifest' }
 ReSmalllintChecker >> isFalsePositive: aCritic forRuleId: ruleId versionId: versionId [
 
-	| mb |
-
-	mb := self manifestBuilderOf: aCritic.
-	^ mb ifNil: [ false ] ifNotNil: [ mb isFalsePositive: aCritic onRule: ruleId version: versionId ]
+	^ (self manifestBuilderOf: aCritic)
+		  ifNil: [ false ]
+		  ifNotNil: [ :manifestBuilder | manifestBuilder isFalsePositive: aCritic onRule: ruleId version: versionId ]
 ]
 
 { #category : 'manifest' }
