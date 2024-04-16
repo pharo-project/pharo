@@ -9,8 +9,11 @@ Class {
 	#tag : 'Refactorings'
 }
 
-{ #category : 'preconditions' }
+{ #category : 'transforming' }
 ReCompositeContinuingRefactoring >> privateTransform [
 
-	refactorings do: [ :each | [ each generateChanges] on: RBRefactoringError do: [ :ex | ] ]
+	refactorings do: [ :each |
+		[ each generateChanges ]
+			on: RBRefactoringError
+			do: [ :ex |  ] ]
 ]

@@ -28,8 +28,8 @@ RBRemoveAssignmentTransformationTest >> testAssignmentDoesNotExist [
 	refactoring := (RBAddTemporaryVariableTransformation
 		                variable: 'variable2'
 		                inMethod: #methodBefore
-		                inClass: #RBRemoveAssignmentTransformationTest)
-		               generateChanges.
+		                inClass: #RBRemoveAssignmentTransformationTest).
+	refactoring generateChanges.
 
 	self shouldFail: (RBRemoveAssignmentTransformation
 			 model: refactoring model
@@ -67,8 +67,8 @@ RBRemoveAssignmentTransformationTest >> testRefactoring [
 		                variable: 'variable'
 		                value: '1 asString'
 		                inMethod: #methodBefore
-		                inClass: #RBRemoveAssignmentTransformationTest)
-		               generateChanges.
+		                inClass: #RBRemoveAssignmentTransformationTest).
+	refactoring generateChanges.
 
 	self assert: refactoring model changes changes size equals: 1.
 
@@ -87,7 +87,8 @@ RBRemoveAssignmentTransformationTest >> testTransform [
 		                   variable: 'variable'
 		                   value: '1 asString'
 		                   inMethod: #methodBefore
-		                   inClass: self class name) generateChanges.
+		                   inClass: self class name).
+	transformation generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 

@@ -46,8 +46,8 @@ RBRemoveReturnStatementTransformationTest >> testRefactoring [
 	refactoring := (RBRemoveReturnStatementTransformation
 		                return: '^ variable'
 		                inMethod: #methodBefore
-		                inClass: #RBRemoveReturnStatementTransformationTest)
-		               generateChanges.
+		                inClass: #RBRemoveReturnStatementTransformationTest).
+	refactoring generateChanges.
 
 	self assert: refactoring model changes changes size equals: 1.
 
@@ -74,7 +74,8 @@ RBRemoveReturnStatementTransformationTest >> testTransform [
 	transformation := (RBRemoveReturnStatementTransformation new
 		                   return: '^ variable'
 		                   inMethod: #methodBefore
-		                   inClass: self class name) generateChanges.
+		                   inClass: self class name).
+	transformation generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 

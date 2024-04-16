@@ -48,8 +48,8 @@ RBProtectVariableTransformationTest >> testClassVariable [
 	| refactoring class |
 	refactoring := (RBProtectVariableTransformation
 		                classVariable: 'RecursiveSelfRule'
-		                class: #RBTransformationRuleTestData)
-		               generateChanges.
+		                class: #RBTransformationRuleTestData).
+	refactoring generateChanges.
 
 	class := (refactoring model classNamed: #RBTransformationRuleTestData)
 		         classSide.
@@ -169,8 +169,8 @@ RBProtectVariableTransformationTest >> testRefactoring [
 	| refactoring class |
 	refactoring := (RBProtectVariableTransformation
 		                instanceVariable: 'builder'
-		                class: #RBTransformationRuleTestData)
-		               generateChanges.
+		                class: #RBTransformationRuleTestData).
+	refactoring generateChanges.
 
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
 	self
@@ -205,8 +205,8 @@ RBProtectVariableTransformationTest >> testTransform [
 	| transformation class |
 	transformation := (RBProtectVariableTransformation
 		                   instanceVariable: 'class'
-		                   class: #RBTransformationRuleTestData)
-		                  generateChanges.
+		                   class: #RBTransformationRuleTestData).
+	transformation generateChanges.
 
 	class := transformation model classNamed:
 		         #RBTransformationRuleTestData.
@@ -289,11 +289,11 @@ RBProtectVariableTransformationTest >> testVariableNotDirectlyDefined [
 { #category : 'tests' }
 RBProtectVariableTransformationTest >> testWithAssignment [
 
-	| refactoring class |
-	refactoring := (RBProtectVariableTransformation
-		                model: model
-		                instanceVariable: 'instVarName2'
-		                class: #Foo) generateChanges.
+	| class |
+	(RBProtectVariableTransformation
+                model: model
+                instanceVariable: 'instVarName2'
+                class: #Foo) generateChanges.
 
 	class := model classNamed: #Foo.
 	self

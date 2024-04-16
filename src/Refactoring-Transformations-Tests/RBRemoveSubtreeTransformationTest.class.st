@@ -55,8 +55,8 @@ RBRemoveSubtreeTransformationTest >> testRefactoring [
 	transformation := (RBRemoveSubtreeTransformation
 		                   code: 'selector := aSelector'
 		                   from: #selector:from:
-		                   in: #RBRemoveMethodTransformation)
-		                  generateChanges.
+		                   in: #RBRemoveMethodTransformation).
+	transformation generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 
@@ -76,7 +76,8 @@ RBRemoveSubtreeTransformationTest >> testTransform [
 	transformation := (RBRemoveSubtreeTransformation
 		                   code: '^ 1'
 		                   from: #one
-		                   in: self changeMockClass name) generateChanges.
+		                   in: self changeMockClass name).
+	transformation generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 

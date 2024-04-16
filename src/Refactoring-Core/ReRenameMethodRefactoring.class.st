@@ -90,19 +90,6 @@ ReRenameMethodRefactoring >> breakingChangePreconditions [
 		   selector: newSelector) }
 ]
 
-{ #category : 'redefined locally waiting for superclass migration' }
-ReRenameMethodRefactoring >> generateChanges [
-	"Prepare, check the preconditions, and perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message). This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
-
-	self prepareForExecution.
-
-	self checkApplicabilityPreconditions.
-	self checkBreakingChangePreconditions.
-		
-	self privateTransform.
-	^ self changes
-]
-
 { #category : 'torevisit' }
 ReRenameMethodRefactoring >> hasPermutedArguments [
 	"We will have to unify with areArgumentsPermuted"

@@ -22,8 +22,8 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinition [
 	transformation := (RBMoveTemporaryVariableDefinitionTransformation
 		                   variable: #temp
 		                   inMethod: #moveDefinition
-		                   inClass: #RBClassDataForRefactoringTest)
-		                  generateChanges.
+		                   inClass: #RBClassDataForRefactoringTest).
+	transformation generateChanges.
 
 	class := transformation model classNamed:
 		         #RBClassDataForRefactoringTest.
@@ -49,8 +49,8 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinitionIntoBlo
 	transformation := (RBMoveTemporaryVariableDefinitionTransformation
 		                   variable: #association
 		                   inMethod: #referencesConditionFor:
-		                   inClass: #RBClassDataForRefactoringTest)
-		                  generateChanges.
+		                   inClass: #RBClassDataForRefactoringTest).
+	transformation generateChanges.
 
 	class := transformation model classNamed:
 		         #RBClassDataForRefactoringTest.

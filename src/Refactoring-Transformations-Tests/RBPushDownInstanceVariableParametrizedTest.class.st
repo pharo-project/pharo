@@ -6,13 +6,13 @@ Class {
 	#tag : 'Parametrized'
 }
 
-{ #category : 'tests' }
+{ #category : 'building suites' }
 RBPushDownInstanceVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBPushDownInstanceVariableRefactoring .
-					  #constructor -> #variable:class: };
 		addCase: { #rbClass -> RBPushDownVariableTransformation .
 					  #constructor -> #instanceVariable:class: };
+		addCase: { #rbClass -> RBPushDownInstanceVariableRefactoring .
+					  #constructor -> #variable:class: };
 		yourself
 ]
 

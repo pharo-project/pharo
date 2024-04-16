@@ -36,14 +36,15 @@ RBRemoveTemporaryVariableTransformationTest >> testTransform [
 									Transcript show: temp printString; cr.
 									^temp * temp'
 		                   in: self changeMockClass name
-		                   withProtocol: #accessing ) generateChanges.
+		                   withProtocol: #accessing ).
+	transformation generateChanges.
 
 	transformation := (RBRemoveTemporaryVariableTransformation
 		                   model: transformation model
 		                   variable: 'temp'
 		                   inMethod: #foo
-		                   inClass: self changeMockClass name)
-		                  generateChanges.
+		                   inClass: self changeMockClass name).
+	transformation generateChanges.
 
 	self assert: transformation model changes changes size equals: 2.
 

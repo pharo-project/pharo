@@ -54,8 +54,8 @@ RBReplaceSubtreeTransformationTest >> testRefactoring [
 		                   replace: 'selector := aSelector'
 		                   to: '^ selector'
 		                   inMethod: #selector:from:
-		                   inClass: #RBRemoveMethodTransformation)
-		                  generateChanges.
+		                   inClass: #RBRemoveMethodTransformation).
+	transformation generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 
@@ -79,8 +79,8 @@ RBReplaceSubtreeTransformationTest >> testTransform [
 		                   replace: '^ 1'
 		                   to: '^ 123'
 		                   inMethod: #one
-		                   inClass: self changeMockClass name)
-		                  generateChanges.
+		                   inClass: self changeMockClass name).
+	transformation generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 
@@ -108,8 +108,8 @@ RBReplaceSubtreeTransformationTest >> testTransformOneOfManyStatements [
 		                   to:
 		                   'self assert: (class parseTreeForSelector:  #selector:from:) body statements size = 2'
 		                   inMethod: #testRefactoring
-		                   inClass: #RBReplaceSubtreeTransformationTest)
-		                  generateChanges.
+		                   inClass: #RBReplaceSubtreeTransformationTest).
+	transformation generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 
@@ -119,10 +119,10 @@ RBReplaceSubtreeTransformationTest >> testTransformOneOfManyStatements [
 	self
 		assert:
 		(class parseTreeForSelector: #testRefactoring) body statements size
-		equals: 6.
+		equals: 7.
 	self assert:
 		((((class parseTreeForSelector: #testRefactoring) body statements
-			   at: 5) sourceCode withBlanksCondensed
+			   at: 6) sourceCode withBlanksCondensed
 			  copyReplaceAll: String cr
 			  with: ' ') includesSubstring:
 			 'assert: (class parseTreeForSelector: #selector:from:) body statements size = 2')

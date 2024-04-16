@@ -49,7 +49,7 @@ RBAbstractVariablesTransformation >> abstractClassVariable: aString [
 		                   model: self model
 		                   variable: aString
 		                   class: nonMetaClass
-		                   classVariable: true) generateChanges.
+		                   classVariable: true) generateChanges; yourself.
 	rewriter := self parseTreeRewriter.
 	fromClass isMeta
 		ifTrue: [
@@ -89,7 +89,7 @@ RBAbstractVariablesTransformation >> abstractInstanceVariable: aString [
 		                   model: self model
 		                   variable: aString
 		                   class: fromClass
-		                   classVariable: false) generateChanges.
+		                   classVariable: false) generateChanges; yourself.
 	rewriter := self parseTreeRewriter.
 	rewriter
 		replace: aString , ' := ``@object'
@@ -115,17 +115,16 @@ RBAbstractVariablesTransformation >> abstractInstanceVariables [
 { #category : 'executing' }
 RBAbstractVariablesTransformation >> abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection ignoring: aVariableName [
 
-	| poolTransformation |
 	tree := aBRProgramNode.
 	fromClass := self model classObjectFor: fromBehavior.
 	toClasses := behaviorCollection collect: [ :each |
 		             self model classObjectFor: each ].
 	ignore := aVariableName.
-	poolTransformation := (RBExpandReferencedPoolsTransformation
-		                       model: self model
-		                       forMethod: tree
-		                       fromClass: fromClass
-		                       toClasses: toClasses) generateChanges.
+	(RBExpandReferencedPoolsTransformation
+		 model: self model
+		 forMethod: tree
+		 fromClass: fromClass
+		 toClasses: toClasses) generateChanges.
 	self computeVariablesToAbstract
 ]
 

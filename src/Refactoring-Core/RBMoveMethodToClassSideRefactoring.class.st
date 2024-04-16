@@ -84,23 +84,6 @@ RBMoveMethodToClassSideRefactoring >> checkVariableNamed: aString [
 	^ (self parseTree allDefinedVariables includes: aString)
 ]
 
-{ #category : 'executing' }
-RBMoveMethodToClassSideRefactoring >> generateChanges [
-	"Prepare, check the preconditions, and perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message). This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
-	
-	self prepareForExecution.
-
-	self applicabilityPreconditions check ifFalse: [
-		^ RBApplicabilityChecksFailedError signal:
-			  self applicabilityPreconditions errorString ].
-	self breakingChangePreconditions check ifFalse: [
-		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangePreconditions errorString ].
-
-	self privateTransform.
-	^ self changes
-]
-
 { #category : 'transforming' }
 RBMoveMethodToClassSideRefactoring >> getNewInstSideSource [
 	| sender |
