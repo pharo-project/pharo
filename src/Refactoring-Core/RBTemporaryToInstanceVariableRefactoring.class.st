@@ -99,12 +99,14 @@ RBTemporaryToInstanceVariableRefactoring class >> model: aRBSmalltalk class: aCl
 RBTemporaryToInstanceVariableRefactoring >> applicabilityPreconditions [
 
 	^ {
+		  (RBCondition withBlock: [parseTree isNotNil]).
 		  (RBCondition definesSelector: selector in: class).
 		  (RBCondition
 			   definesInstanceVariable: temporaryVariableName asString
 			   in: class) not.
 		  (RBCondition withBlock: [
-			   self checkForValidTemporaryVariable.
+				parseTree ifNotNil: [ .
+				   self checkForValidTemporaryVariable ].
 			   true ]) }
 ]
 

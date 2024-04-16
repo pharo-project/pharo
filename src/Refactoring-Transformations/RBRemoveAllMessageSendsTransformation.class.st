@@ -74,6 +74,12 @@ RBRemoveAllMessageSendsTransformation >> applicabilityPreconditions [
 					    with: message)) }
 ]
 
+{ #category : 'scripting api - conditions' }
+RBRemoveAllMessageSendsTransformation >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
+]
+
 { #category : 'preconditions' }
 RBRemoveAllMessageSendsTransformation >> classExist [
 

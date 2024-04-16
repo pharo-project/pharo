@@ -91,6 +91,12 @@ RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> checkParseTree [
 		ifFalse: [ self refactoringError: 'Variable is possibly read before written' ]
 ]
 
+{ #category : 'scripting api - conditions' }
+RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
+]
+
 { #category : 'initialization' }
 RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> class: aClass selector: aSelector interval: anInterval [
 	interval := anInterval.

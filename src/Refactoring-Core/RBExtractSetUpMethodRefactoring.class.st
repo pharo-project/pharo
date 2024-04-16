@@ -73,6 +73,12 @@ RBExtractSetUpMethodRefactoring >> applicabilityPreconditions [
 			   true ]) }
 ]
 
+{ #category : 'scripting api - conditions' }
+RBExtractSetUpMethodRefactoring >> checkApplicabilityPreconditions [
+
+	self eagerlyCheckApplicabilityPreconditions 
+]
+
 { #category : 'transforming' }
 RBExtractSetUpMethodRefactoring >> checkAssignments: variableNames [
 	| node outsideVars removeAssigned |

@@ -65,6 +65,12 @@ RBRemoveReturnStatementTransformation >> applicabilityPreconditions [
 					    expandMacrosWith: selector)) }
 ]
 
+{ #category : 'scripting api - conditions' }
+RBRemoveReturnStatementTransformation >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
+]
+
 { #category : 'preconditions' }
 RBRemoveReturnStatementTransformation >> classExist [
 

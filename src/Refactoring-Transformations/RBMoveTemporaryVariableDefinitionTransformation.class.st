@@ -159,6 +159,12 @@ RBMoveTemporaryVariableDefinitionTransformation >> checkMethodForBlocks [
 	self checkLocationsIn: (self checkAllBlocksIn: definingNode)
 ]
 
+{ #category : 'scripting api - conditions' }
+RBMoveTemporaryVariableDefinitionTransformation >> checkPreconditions [
+
+	self eagerlyCheckApplicabilityPreconditions 
+]
+
 { #category : 'private' }
 RBMoveTemporaryVariableDefinitionTransformation >> definingBlock [
 

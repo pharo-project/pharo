@@ -71,6 +71,12 @@ RBAddMessageSendTransformation >> applicabilityPreconditions [
 					    expandMacrosWith: selector)) }
 ]
 
+{ #category : 'scripting api - conditions' }
+RBAddMessageSendTransformation >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
+]
+
 { #category : 'preconditions' }
 RBAddMessageSendTransformation >> classExist [
 

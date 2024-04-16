@@ -68,6 +68,12 @@ RBAddPragmaTransformation >> applicabilityPreconditions [
 					    with: (self parserClass parsePragma: pragma) selector)) }
 ]
 
+{ #category : 'scripting api - conditions' }
+RBAddPragmaTransformation >> checkPreconditions [
+
+	self eagerlyCheckApplicabilityPreconditions 
+]
+
 { #category : 'preconditions' }
 RBAddPragmaTransformation >> classExist [
 

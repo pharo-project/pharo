@@ -74,6 +74,12 @@ RBAddAssignmentTransformation >> applicabilityPreconditions [
 					    with: variableName)) }
 ]
 
+{ #category : 'scripting api - conditions' }
+RBAddAssignmentTransformation >> checkPreconditions [
+
+	self eagerlyCheckApplicabilityPreconditions 
+]
+
 { #category : 'preconditions' }
 RBAddAssignmentTransformation >> classExist [
 

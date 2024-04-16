@@ -51,6 +51,12 @@ RBAddProtocolTransformation >> applicabilityPreconditions [
 		  self protocolExist }
 ]
 
+{ #category : 'scripting api - conditions' }
+RBAddProtocolTransformation >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
+]
+
 { #category : 'preconditions' }
 RBAddProtocolTransformation >> classExist [
 

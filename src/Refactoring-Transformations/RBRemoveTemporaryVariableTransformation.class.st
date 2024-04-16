@@ -67,6 +67,12 @@ RBRemoveTemporaryVariableTransformation >> applicabilityPreconditions [
 				   , ' cannot be removed because it is an argument in this method') }
 ]
 
+{ #category : 'scripting api - conditions' }
+RBRemoveTemporaryVariableTransformation >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
+]
+
 { #category : 'preconditions' }
 RBRemoveTemporaryVariableTransformation >> classExist [
 

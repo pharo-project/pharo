@@ -61,6 +61,12 @@ RBRemoveProtocolTransformation >> applicabilityPreconditions [
 				   , ' is not empty and it cannot be removed') }
 ]
 
+{ #category : 'scripting api - conditions' }
+RBRemoveProtocolTransformation >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
+]
+
 { #category : 'preconditions' }
 RBRemoveProtocolTransformation >> classExist [
 

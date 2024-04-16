@@ -2,12 +2,23 @@ Class {
 	#name : 'ReDirectlyDefinesInstanceVariableCondition',
 	#superclass : 'ReClassCondition',
 	#instVars : [
-		'instanceVariables'
+		'instanceVariables',
+		'class'
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
 }
+
+{ #category : 'instance creation' }
+ReDirectlyDefinesInstanceVariableCondition class >> class: aRBAbstractClass inModel: aRBNamespace instanceVariables: aCollection [
+
+	^ self new
+		  class: aRBAbstractClass
+		  inModel: aRBNamespace
+		  instanceVariables: aCollection;
+		  yourself
+]
 
 { #category : 'instance creation' }
 ReDirectlyDefinesInstanceVariableCondition class >> classNamed: aString inModel: aRBNamespace instanceVariables: aCollection [ 
@@ -20,8 +31,17 @@ ReDirectlyDefinesInstanceVariableCondition class >> classNamed: aString inModel:
 { #category : 'checking' }
 ReDirectlyDefinesInstanceVariableCondition >> check [
 	
-	violators := instanceVariables reject: [ :shared | aClass directlyDefinesInstanceVariable: shared ].
+	violators := instanceVariables reject: [ :shared | class directlyDefinesInstanceVariable: shared ].
 	^ violators isEmpty
+]
+
+{ #category : 'instance creation' }
+ReDirectlyDefinesInstanceVariableCondition >> class: aRBAbstractClass inModel: aRBNamespace instanceVariables: aCollection [ 
+
+	class := aRBAbstractClass.
+	model := aRBNamespace.
+	instanceVariables := aCollection 
+	
 ]
 
 { #category : 'private' }

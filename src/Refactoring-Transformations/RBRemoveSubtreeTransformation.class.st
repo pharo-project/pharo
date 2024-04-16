@@ -70,6 +70,12 @@ RBRemoveSubtreeTransformation >> applicabilityPreconditions [
 			   true ]) }
 ]
 
+{ #category : 'scripting api - conditions' }
+RBRemoveSubtreeTransformation >> checkPreconditions [
+
+	self eagerlyCheckApplicabilityPreconditions 
+]
+
 { #category : 'api' }
 RBRemoveSubtreeTransformation >> code: aString from: aSelector in: aClassName [
 

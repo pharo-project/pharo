@@ -64,6 +64,12 @@ RBMethodProtocolTransformation >> applicabilityPreconditions [
 				    className)) }
 ]
 
+{ #category : 'scripting api - conditions' }
+RBMethodProtocolTransformation >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
+]
+
 { #category : 'preconditions' }
 RBMethodProtocolTransformation >> classExist [
 

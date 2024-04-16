@@ -238,10 +238,11 @@ RBExtractMethodTransformation >> calculateTree [
 { #category : 'scripting api - conditions' }
 RBExtractMethodTransformation >> checkPreconditions [
 
-	super checkPreconditions.
-	self breakingChangePreconditions check ifFalse: [
-		self refactoringWarning:
-			self breakingChangePreconditions errorString ]
+	| failedPreconditions |
+	self eagerlyCheckApplicabilityPreconditions.
+	failedPreconditions := self breakingChangePreconditions reject: [ :cond | cond check ].
+	failedPreconditions ifEmpty: [ ^ self ].
+	RBRefactoringWarning signalFor: failedPreconditions
 ]
 
 { #category : 'api' }
