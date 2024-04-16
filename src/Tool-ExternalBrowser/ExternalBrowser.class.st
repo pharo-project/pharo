@@ -1,16 +1,17 @@
 "
 Browser the current image:
 
-	ExternalBrowser openOn: Smalltalk image.
+`ExternalBrowser openOn: Smalltalk image.`
 
 Browse a FileOut
 
-	| internalStream |
-	internalStream := (String new: 1000) writeStream.
-	SystemOrganization 
-		fileOutCategory: 'Tool-ExternalBrowser'
-		on: internalStream.
-	ExternalBrowser browseStream: internalStream contents readStream.
+```
+| pkgName |
+
+pkgName := 'Tool-ExternalBrowser'.
+pkgName asPackage fileOut.
+ExternalBrowser browseStream: (pkgName , '.st') asFileReference readStream.
+```
 "
 Class {
 	#name : 'ExternalBrowser',
