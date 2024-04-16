@@ -11,7 +11,8 @@ Class {
 
 { #category : 'testing' }
 ReRefersToClassRuleTest class >> isAbstract [
-	"I can refer to RBRefersToClassRuleTest without error"
+	"I can refer to RBRefersToClassRuleTest without error
+	This method is present for the test of this class"
 	'It is ok to refert to', ReRefersToClassRuleTest name.
 	^ false
 ]
