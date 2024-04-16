@@ -99,10 +99,10 @@ RBMoveMethodRefactoring >> applicabilityPreconditions [
 { #category : 'preconditions' }
 RBMoveMethodRefactoring >> breakingChangePreconditions [
 
-	^ RBCondition withBlock: [
-		  self getArgumentNameForSelf.
-		  self getNewMethodName.
-		  true ]
+	^ { (RBCondition withBlock: [
+		   self getArgumentNameForSelf.
+		   self getNewMethodName.
+		   true ]) }
 ]
 
 { #category : 'preconditions' }

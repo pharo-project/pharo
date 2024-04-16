@@ -53,7 +53,7 @@ RBRefactoring >> asRefactoring [
 { #category : 'preconditions' }
 RBRefactoring >> breakingChangePreconditions [
 
-	^ #( ) 
+	^ #(  )
 ]
 
 { #category : 'testing' }

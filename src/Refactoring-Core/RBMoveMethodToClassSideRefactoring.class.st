@@ -72,8 +72,7 @@ RBMoveMethodToClassSideRefactoring >> applicabilityPreconditions [
 { #category : 'preconditions' }
 RBMoveMethodToClassSideRefactoring >> breakingChangePreconditions [
 
-	^ (RBCondition definesSelector: method selector in: class classSide)
-		  not
+	^ { (RBCondition definesSelector: method selector in: class classSide) not }
 ]
 
 { #category : 'checking' }

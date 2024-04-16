@@ -80,9 +80,9 @@ RBExtractMethodTransformation >> applicabilityPreconditions [
 ]
 
 { #category : 'preconditions' }
-RBExtractMethodTransformation >> breakingChangePreconditions [ 
+RBExtractMethodTransformation >> breakingChangePreconditions [
 
-	  ^ self preconditionHasSameExitPoint 
+	^ { self preconditionHasSameExitPoint }
 ]
 
 { #category : 'executing' }

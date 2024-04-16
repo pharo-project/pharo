@@ -59,9 +59,9 @@ RBCreateCascadeRefactoring >> applicabilityPreconditions [
 { #category : 'preconditions' }
 RBCreateCascadeRefactoring >> breakingChangePreconditions [
 
-	^ RBCondition withBlock: [
-		  self findReceiverNode.
-		  true ]
+	^ { (RBCondition withBlock: [
+		   self findReceiverNode.
+		   true ]) }
 ]
 
 { #category : 'initialization' }

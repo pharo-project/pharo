@@ -50,9 +50,9 @@ ReRemoveClassRefactoring >> applicabilityPreconditions [
 ReRemoveClassRefactoring >> breakingChangePreconditions [
 	"Empty error blocks are here so that warnings are raised. This is a ugly hack..."
 
-	^ { self preconditionHaveNoReferences .
-		 self preconditionHaveNoSubclasses |
-		 self preconditionEmptyClasses }
+	^ {
+		  self preconditionHaveNoReferences.
+		  (self preconditionHaveNoSubclasses | self preconditionEmptyClasses) }
 ]
 
 { #category : 'preconditions' }

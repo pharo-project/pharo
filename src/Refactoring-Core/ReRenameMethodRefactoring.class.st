@@ -85,9 +85,9 @@ ReRenameMethodRefactoring >> areNamesTheSame [
 { #category : 'preconditions' }
 ReRenameMethodRefactoring >> breakingChangePreconditions [
 
-	^ { ReUpToRootDoesNotDefinesMethod new
-		  classes: self implementors;
-		  selector: newSelector }
+	^ { (ReUpToRootDoesNotDefinesMethod new
+		   classes: self implementors;
+		   selector: newSelector) }
 ]
 
 { #category : 'redefined locally waiting for superclass migration' }

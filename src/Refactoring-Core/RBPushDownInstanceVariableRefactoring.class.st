@@ -18,18 +18,26 @@ RBPushDownInstanceVariableRefactoring >> applicabilityPreconditions [
 ]
 
 { #category : 'preconditions' }
-RBPushDownInstanceVariableRefactoring >> breakingChangePreconditions [ 
+RBPushDownInstanceVariableRefactoring >> breakingChangePreconditions [
 
 	| references |
-	references := RBCondition referencesInstanceVariable: variableName in: class.
+	references := RBCondition
+		              referencesInstanceVariable: variableName
+		              in: class.
 	class realClass
-		ifNil: [ references errorMacro: ( '<1s> is referenced.' expandMacrosWith: variableName ) ]
-		ifNotNil: [ references
-				errorMacro: ( '<1s> is referenced.<n>Browse references?' expandMacrosWith: variableName );
-				errorBlock:
-						[ self openBrowserOn: ( RBBrowserEnvironment new instVarRefsTo: variableName in: class realClass ) ]
-			].
-	^ references not
+		ifNil: [
+			references errorMacro:
+				('<1s> is referenced.' expandMacrosWith: variableName) ]
+		ifNotNil: [
+			references
+				errorMacro:
+					('<1s> is referenced.<n>Browse references?' expandMacrosWith:
+							 variableName);
+				errorBlock: [
+					self openBrowserOn: (RBBrowserEnvironment new
+								 instVarRefsTo: variableName
+								 in: class realClass) ] ].
+	^ { references not }
 ]
 
 { #category : 'preconditions' }

@@ -21,10 +21,10 @@ ReCompositeRefactoring >> applicabilityPreconditions [
 ]
 
 { #category : 'preconditions' }
-ReCompositeRefactoring >> breakingChangePreconditions [ 
-		"Return the list of the all the breakingChangePreconditions of the composite"
-		
-	^ #()
+ReCompositeRefactoring >> breakingChangePreconditions [
+	"Return the list of the all the breakingChangePreconditions of the composite"
+
+	^ #(  )
 ]
 
 { #category : 'scripting api - executing' }

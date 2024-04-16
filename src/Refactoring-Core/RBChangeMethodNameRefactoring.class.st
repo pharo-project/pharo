@@ -40,10 +40,10 @@ RBChangeMethodNameRefactoring >> applicabilityPreconditions [
 ]
 
 { #category : 'preconditions' }
-RBChangeMethodNameRefactoring >> breakingChangePreconditions [ 
+RBChangeMethodNameRefactoring >> breakingChangePreconditions [
 	"This refactoring only preserves behavior if all implementors are renamed."
 
-	^ self doesNotOverrideExistingMethodPrecondition 
+	^ { self doesNotOverrideExistingMethodPrecondition }
 ]
 
 { #category : 'preconditions' }

@@ -81,15 +81,15 @@ RBInlineMethodRefactoring >> applicabilityPreconditions [
 { #category : 'preconditions' }
 RBInlineMethodRefactoring >> breakingChangePreconditions [
 
-	^ RBCondition withBlock: [
-		  self checkOverridden ifTrue: [
-			  self isOverridden ifTrue: [
-				  self refactoringWarning:
-					  ('<1p>>><2s> is overriden. Do you want to inline it anyway?'
-					   , String cr , 'You can break you hooks with this inline.'
-						   expandMacrosWith: self classOfTheMethodToInline
-						   with: self inlineSelector) ] ].
-		  true ]
+	^ { (RBCondition withBlock: [
+		   self checkOverridden ifTrue: [
+			   self isOverridden ifTrue: [
+				   self refactoringWarning:
+					   ('<1p>>><2s> is overriden. Do you want to inline it anyway?'
+					    , String cr , 'You can break you hooks with this inline.'
+						    expandMacrosWith: self classOfTheMethodToInline
+						    with: self inlineSelector) ] ].
+		   true ]) }
 ]
 
 { #category : 'accessing' }

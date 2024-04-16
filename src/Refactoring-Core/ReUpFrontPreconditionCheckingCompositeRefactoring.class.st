@@ -21,8 +21,9 @@ ReUpFrontPreconditionCheckingCompositeRefactoring >> applicabilityPreconditions 
 { #category : 'preconditions' }
 ReUpFrontPreconditionCheckingCompositeRefactoring >> breakingChangePreconditions [
 	"Return the list of the all the breakingChangePreconditions of the composite"
-	
-	^ refactorings collect: [ :each | each breakingChangePreconditions ]
+
+	^ refactorings flatCollect: [ :each |
+		  each breakingChangePreconditions ]
 ]
 
 { #category : 'accessing' }

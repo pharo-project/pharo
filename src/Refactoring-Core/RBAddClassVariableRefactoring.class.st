@@ -23,9 +23,9 @@ RBAddClassVariableRefactoring >> applicabilityPreconditions [
 { #category : 'preconditions' }
 RBAddClassVariableRefactoring >> breakingChangePreconditions [
 
-	^ (RBCondition
+	^ { (RBCondition
 		   hierarchyOf: class
-		   definesVariable: variableName asString) not
+		   definesVariable: variableName asString) not }
 ]
 
 { #category : 'preconditions' }
