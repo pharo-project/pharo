@@ -15,10 +15,10 @@ Class {
 
 { #category : 'preconditions' }
 RBChangeMethodNameTransformation >> applicabilityPreconditions [
-		
-	^ (RBCondition definesSelector: oldSelector in: class)
-				& (RBCondition isValidMethodName: newSelector for: class).
 
+	^ {
+		  (RBCondition definesSelector: oldSelector in: class).
+		  (RBCondition isValidMethodName: newSelector for: class) }
 ]
 
 { #category : 'support' }

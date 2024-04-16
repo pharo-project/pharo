@@ -34,12 +34,12 @@ RBRemoveParameterTransformation >> applicabilityPreconditions [
 	| imps |
 	self getNewSelector.
 	imps := self model allImplementorsOf: oldSelector.
-	^ imps inject: super applicabilityPreconditions 
-		into:
-			[:cond :each |
-			cond & (RBCondition 
-						withBlock: [ (self hasReferencesToTemporaryIn: each) not ]
-						errorString: 'This argument is still referenced in at least one implementor!!')]
+	^  super applicabilityPreconditions
+			addAll: (imps collect: [ :each |
+				(RBCondition 
+					withBlock: [ (self hasReferencesToTemporaryIn: each) not ]
+					errorString: 'This argument is still referenced in at least one implementor!!')]);
+			yourself
 ]
 
 { #category : 'private' }

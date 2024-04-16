@@ -49,19 +49,18 @@ RBPullUpMethodRefactoring class >> pullUp: selectorCollection from: aClass to: a
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodRefactoring >> applicabilityPreconditions [ 
+RBPullUpMethodRefactoring >> applicabilityPreconditions [
 
-	^(selectors 
-		inject: (RBCondition hasSuperclass: class)
-		into: [:cond :each | 
-			cond 
-			& (RBCondition definesSelector: each in: class)])
-			& (RBCondition withBlock:
-						[
-						self checkClassVars.
-						self checkSuperclass.
-						self checkSuperMessages.
-						true])
+	^ {
+		  (RBCondition hasSuperclass: class).
+		  (ReDefinesSelectorsCondition new
+			   definesSelectors: selectors
+			   in: class).
+		  (RBCondition withBlock: [
+			   self checkClassVars.
+			   self checkSuperclass.
+			   self checkSuperMessages.
+			   true ]) }
 ]
 
 { #category : 'preconditions' }

@@ -55,7 +55,9 @@ RBPushDownMethodRefactoring >> allClasses [
 RBPushDownMethodRefactoring >> applicabilityPreconditions [
 	"Check that all selectors are defined in `class`"
 
-	^ { ReDefinesSelectorsCondition new definesSelectors: selectors in: class }
+	^ { (ReDefinesSelectorsCondition new
+		   definesSelectors: selectors
+		   in: class) }
 ]
 
 { #category : 'preconditions' }

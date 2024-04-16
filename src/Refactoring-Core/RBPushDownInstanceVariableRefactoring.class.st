@@ -14,7 +14,7 @@ Class {
 { #category : 'preconditions' }
 RBPushDownInstanceVariableRefactoring >> applicabilityPreconditions [
 
-	^ RBCondition definesInstanceVariable: variableName in: class
+	^ { (RBCondition definesInstanceVariable: variableName in: class) }
 ]
 
 { #category : 'preconditions' }

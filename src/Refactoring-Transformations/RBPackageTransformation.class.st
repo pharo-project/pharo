@@ -32,10 +32,11 @@ RBPackageTransformation class >> packageName: aName [
 { #category : 'preconditions' }
 RBPackageTransformation >> applicabilityPreconditions [
 
-	^ RBCondition
-		  withBlock: [ "Cyril: I am not sure we should use #packageOrganizer. Maybe we should ask the environment the package manager. But currently the image does not know yet how to work with multiple package managers/modules."
-			  self packageOrganizer hasPackage: packageName ]
-		  errorString: 'The package ' , packageName , ' does not exsit in the system.'
+	^ { (RBCondition
+		   withBlock: [ "Cyril: I am not sure we should use #packageOrganizer. Maybe we should ask the environment the package manager. But currently the image does not know yet how to work with multiple package managers/modules."
+			   self packageOrganizer hasPackage: packageName ]
+		   errorString:
+		   'The package ' , packageName , ' does not exsit in the system.') }
 ]
 
 { #category : 'executing' }

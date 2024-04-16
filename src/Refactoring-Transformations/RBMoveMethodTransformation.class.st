@@ -93,8 +93,9 @@ RBMoveMethodTransformation >> addSelfReturn [
 { #category : 'preconditions' }
 RBMoveMethodTransformation >> applicabilityPreconditions [
 
-	^ (RBCondition definesSelector: selector in: class)
-	  & (RBCondition withBlock: [
+	^ {
+		  (RBCondition definesSelector: selector in: class).
+		  (RBCondition withBlock: [
 			   self buildParseTree.
 			   self checkForPrimitiveMethod.
 			   self checkForSuperReferences.
@@ -103,7 +104,7 @@ RBMoveMethodTransformation >> applicabilityPreconditions [
 			   self getArgumentNameForSelf.
 			   self checkTemporaryVariableNames.
 			   self getNewMethodName.
-			   true ])
+			   true ]) }
 ]
 
 { #category : 'transforming' }

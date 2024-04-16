@@ -38,17 +38,18 @@ RBPullUpMethodTransformation class >> pullUp: selectorCollection from: aClass to
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodTransformation >> applicabilityPreconditions [ 
+RBPullUpMethodTransformation >> applicabilityPreconditions [
 
-	^ (selectors 
-			inject: (RBCondition hasSuperclass: class)
-			into: [:cond :each | cond & (RBCondition definesSelector: each in: class)])
-					& (RBCondition withBlock:
-							[self checkInstVars.
-							self checkClassVars.
-							self checkSuperclass.
-							self checkSuperMessages.
-							true])
+	| conds |
+	conds := selectors collect: [ :each |
+		         RBCondition definesSelector: each in: class ].
+	conds add: (RBCondition withBlock: [
+			 self checkInstVars.
+			 self checkClassVars.
+			 self checkSuperclass.
+			 self checkSuperMessages.
+			 true ]).
+	^ conds
 ]
 
 { #category : 'executing' }

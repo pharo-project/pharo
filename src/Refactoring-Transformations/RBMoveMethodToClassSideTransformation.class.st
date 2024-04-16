@@ -43,15 +43,13 @@ RBMoveMethodToClassSideTransformation >> addMethod: rbMethod to: aClass toProtoc
 		withProtocol: protocol) generateChanges
 ]
 
-{ #category : 'refactoring' }
+{ #category : 'preconditions' }
 RBMoveMethodToClassSideTransformation >> applicabilityPreconditions [
-	^ (RBCondition
-			definesSelector: method selector
-			in: class classSide) not
-		& (RBCondition withBlock: [ class isMeta not ])
-		
-	
 
+	^ {
+		  (RBCondition definesSelector: method selector in: class classSide)
+			  not.
+		  (RBCondition withBlock: [ class isMeta not ]) }
 ]
 
 { #category : 'refactoring' }

@@ -81,15 +81,20 @@ RBInlineParameterRefactoring >> allExpressionsToInline [
 
 { #category : 'preconditions' }
 RBInlineParameterRefactoring >> applicabilityPreconditions [
+
 	self getNewSelector.
 	expressions := self allExpressionsToInline.
 	^ super applicabilityPreconditions
-		& ((RBCondition withBlock: [expressions isNotEmpty ])
-				errorMacro: 'No callers. Use Remove Method instead.')
-			& ((RBCondition withBlock: [expressions size = 1])
-					errorMacro: 'All values passed as this argument must be identical.')
-			& ((RBCondition withBlock: [expressions first isLiteralNode])
-					errorMacro: 'All values passed must be literal.')
+		  add:
+			  ((RBCondition withBlock: [ expressions isNotEmpty ]) errorMacro:
+					   'No callers. Use Remove Method instead.');
+		  add:
+			  ((RBCondition withBlock: [ expressions size = 1 ]) errorMacro:
+					   'All values passed as this argument must be identical.');
+		  add:
+			  ((RBCondition withBlock: [ expressions first isLiteralNode ])
+				   errorMacro: 'All values passed must be literal.');
+		  yourself
 ]
 
 { #category : 'private' }

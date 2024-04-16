@@ -34,15 +34,17 @@ RBRemoveParameterRefactoring class >> removeParameter: aString in: aClass select
 
 { #category : 'preconditions' }
 RBRemoveParameterRefactoring >> applicabilityPreconditions [
-	| imps |
+
+	| imps conds |
 	imps := self model allImplementorsOf: oldSelector.
 	self getNewSelector.
-	^imps inject: (super applicabilityPreconditions)
-		into:
-			[:cond :each |
-			cond
-				& (RBCondition withBlock: [(self hasReferencesToTemporaryIn: each) not]
-						errorString: 'This argument is still referenced in at least one implementor!!')]
+	conds := { super applicabilityPreconditions }.
+	conds addAll: (imps collect:
+			[ :each |
+				(RBCondition withBlock: [(self hasReferencesToTemporaryIn: each) not]
+						errorString: 'This argument is still referenced in at least one implementor!!')]).
+	^ conds
+					
 ]
 
 { #category : 'transforming' }

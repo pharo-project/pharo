@@ -96,12 +96,16 @@ RBTemporaryToInstanceVariableRefactoring class >> model: aRBSmalltalk class: aCl
 ]
 
 { #category : 'preconditions' }
-RBTemporaryToInstanceVariableRefactoring >> applicabilityPreconditions [ 
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition definesInstanceVariable: temporaryVariableName asString in: class) not
-		& (RBCondition withBlock:
-				[self checkForValidTemporaryVariable.
-				true])
+RBTemporaryToInstanceVariableRefactoring >> applicabilityPreconditions [
+
+	^ {
+		  (RBCondition definesSelector: selector in: class).
+		  (RBCondition
+			   definesInstanceVariable: temporaryVariableName asString
+			   in: class) not.
+		  (RBCondition withBlock: [
+			   self checkForValidTemporaryVariable.
+			   true ]) }
 ]
 
 { #category : 'preconditions' }

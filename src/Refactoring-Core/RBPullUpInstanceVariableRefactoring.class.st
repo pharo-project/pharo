@@ -12,10 +12,10 @@ Class {
 { #category : 'preconditions' }
 RBPullUpInstanceVariableRefactoring >> applicabilityPreconditions [
 
-	^ RBCondition withBlock: [
-		  (class hierarchyDefinesInstanceVariable: variableName) ifFalse: [
-			  self refactoringError: 'No subclass defines ' , variableName ].
-		  true ]
+	^ { (RBCondition withBlock: [
+		   (class hierarchyDefinesInstanceVariable: variableName) ifFalse: [
+			   self refactoringError: 'No subclass defines ' , variableName ].
+		   true ]) }
 ]
 
 { #category : 'preconditions' }

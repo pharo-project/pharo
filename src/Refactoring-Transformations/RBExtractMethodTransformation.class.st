@@ -70,12 +70,13 @@ RBExtractMethodTransformation class >> model: aRBModel extract: aString from: aS
 { #category : 'preconditions' }
 RBExtractMethodTransformation >> applicabilityPreconditions [
 
-	^ self preconditionParsableSubtree
-	  & self preconditionNotInCascadedMessage
-	  & self preconditionTemporariesAreNotReadBeforeWritten
-	  & self preconditionOneAssignmentMaximum
-	  & self preconditionAssignmentsNotReadBeforeWritten
-	  & self preconditionSubtreeDoesNotContainsReturn
+	^ {
+		  self preconditionParsableSubtree.
+		  self preconditionNotInCascadedMessage.
+		  self preconditionTemporariesAreNotReadBeforeWritten.
+		  self preconditionOneAssignmentMaximum.
+		  self preconditionAssignmentsNotReadBeforeWritten.
+		  self preconditionSubtreeDoesNotContainsReturn }
 ]
 
 { #category : 'preconditions' }

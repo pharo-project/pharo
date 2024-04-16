@@ -105,12 +105,14 @@ RBTemporaryToInstanceVariableTransformation class >> model: aRBSmalltalk class: 
 { #category : 'preconditions' }
 RBTemporaryToInstanceVariableTransformation >> applicabilityPreconditions [
 
-	^ (RBCondition definesSelector: selector in: class) & (RBCondition
-		   definesInstanceVariable: temporaryVariableName asString
-		   in: class) not
-	  & (RBCondition withBlock: [
+	^ {
+		  (RBCondition definesSelector: selector in: class).
+		  (RBCondition
+			   definesInstanceVariable: temporaryVariableName asString
+			   in: class) not.
+		  (RBCondition withBlock: [
 			   self checkForValidTemporaryVariable.
-			   true ])
+			   true ]) }
 ]
 
 { #category : 'preconditions' }

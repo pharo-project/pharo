@@ -9,26 +9,33 @@ Class {
 { #category : 'preconditions' }
 RBMergeInstanceVariableIntoAnotherTransformation >> applicabilityPreconditions [
 
+	| conds |
 	class := self model classObjectFor: className.
 
-	^ (RBCondition withBlock: [
-		   variableName = newVariableName ifTrue: [
-			   self refactoringError: 'The variable merged must be different' ].
-		   true ]) & (isClassVariable
-		   ifTrue: [
-			   (RBCondition isMetaclass: class) not
-			   &
-			   (RBCondition
-				    definesClassVariable: newVariableName asString
-				    in: class)
-			   &
-			   (RBCondition
-				    definesClassVariable: variableName asString
-				    in: class) ]
-		   ifFalse: [
-			   (RBCondition definesInstanceVariable: newVariableName in: class)
-			   & (RBCondition definesInstanceVariable: variableName in: class) ])
-	  & self isNotGlobal
+	conds := { (RBCondition withBlock: [
+		          variableName = newVariableName ifTrue: [
+			          self refactoringError:
+				          'The variable merged must be different' ].
+		          true ]) }.
+	isClassVariable
+		ifTrue: [
+			conds
+				add: (RBCondition isMetaclass: class) not;
+				add:
+					(RBCondition
+						 definesClassVariable: newVariableName asString
+						 in: class);
+				add:
+					(RBCondition
+						 definesClassVariable: variableName asString
+						 in: class) ]
+		ifFalse: [
+			conds
+				add:
+					(RBCondition definesInstanceVariable: newVariableName in: class);
+				add: (RBCondition definesInstanceVariable: variableName in: class) ].
+	conds add: self isNotGlobal.
+	^ conds
 ]
 
 { #category : 'executing' }

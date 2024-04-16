@@ -66,7 +66,7 @@ RBMoveMethodToClassSideRefactoring >> addMethod: rbMethod to: aClass toProtocol:
 { #category : 'preconditions' }
 RBMoveMethodToClassSideRefactoring >> applicabilityPreconditions [
 
-	^ (RBCondition isMetaclass: class) not
+	^ { (RBCondition isMetaclass: class) not }
 ]
 
 { #category : 'preconditions' }

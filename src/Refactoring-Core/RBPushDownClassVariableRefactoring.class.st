@@ -12,9 +12,9 @@ Class {
 }
 
 { #category : 'preconditions' }
-RBPushDownClassVariableRefactoring >> applicabilityPreconditions [ 
+RBPushDownClassVariableRefactoring >> applicabilityPreconditions [
 
-	^ RBCondition definesClassVariable: variableName in: class
+	^ { (RBCondition definesClassVariable: variableName in: class) }
 ]
 
 { #category : 'preconditions' }

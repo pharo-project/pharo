@@ -41,7 +41,9 @@ ReRemoveClassRefactoring class >> model: aRBSmalltalk classNames: aClassNameColl
 { #category : 'preconditions' }
 ReRemoveClassRefactoring >> applicabilityPreconditions [
 
-	^ { ReClassesExistCondition new classes: classesDictionary . self preconditionAreNotMeta }
+	^ {
+		  (ReClassesExistCondition new classes: classesDictionary).
+		  self preconditionAreNotMeta }
 ]
 
 { #category : 'preconditions' }

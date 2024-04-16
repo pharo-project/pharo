@@ -22,18 +22,18 @@ Class {
 { #category : 'preconditions' }
 RBPullUpVariableTransformation >> applicabilityPreconditions [
 
-	^ isClassVariable
-		  ifTrue: [
-			  (self definingClass hierarchyDefinesClassVariable: variableName)
-				  ifFalse: [
-				  self refactoringError: 'No subclass defines ' , variableName ].
-			  (RBCondition isMetaclass: self definingClass) not ]
-		  ifFalse: [
-			  RBCondition withBlock: [
-				  (self definingClass hierarchyDefinesInstanceVariable:
-					   variableName) ifFalse: [
-					  self refactoringError: 'No subclass defines ' , variableName ].
-				  true ] ]
+	^ { (isClassVariable
+		   ifTrue: [
+			   (self definingClass hierarchyDefinesClassVariable: variableName)
+				   ifFalse: [
+				   self refactoringError: 'No subclass defines ' , variableName ].
+			   (RBCondition isMetaclass: self definingClass) not ]
+		   ifFalse: [
+			   RBCondition withBlock: [
+				   (self definingClass hierarchyDefinesInstanceVariable:
+					    variableName) ifFalse: [
+					   self refactoringError: 'No subclass defines ' , variableName ].
+				   true ] ]) }
 ]
 
 { #category : 'executing' }

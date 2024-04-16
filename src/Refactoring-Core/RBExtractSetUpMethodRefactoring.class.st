@@ -55,20 +55,22 @@ Class {
 }
 
 { #category : 'preconditions' }
-RBExtractSetUpMethodRefactoring >> applicabilityPreconditions [ 
+RBExtractSetUpMethodRefactoring >> applicabilityPreconditions [
 
-	^ (RBCondition definesSelector: selector in: class)
-	& (self requestExistingSelector 
-		ifNil: [ (RBCondition definesSelector: #setUp in: class) not ]
-		ifNotNil: [ self trueCondition ]) 
-	& (RBCondition withBlock: [ class allSuperclasses anySatisfy: [ :e | e name = #TestCase ] ])
-	& (RBCondition withBlock:
-		[self extractMethod.
-		self checkSpecialExtractions.
-		self checkReturn.
-		needsReturn ifTrue: [extractedParseTree addReturn].
-		self checkTemporaries.
-		true])
+	^ {
+		  (RBCondition definesSelector: selector in: class).
+		  (self requestExistingSelector
+			   ifNil: [ (RBCondition definesSelector: #setUp in: class) not ]
+			   ifNotNil: [ self trueCondition ]).
+		  (RBCondition withBlock: [
+			   class allSuperclasses anySatisfy: [ :e | e name = #TestCase ] ]).
+		  (RBCondition withBlock: [
+			   self extractMethod.
+			   self checkSpecialExtractions.
+			   self checkReturn.
+			   needsReturn ifTrue: [ extractedParseTree addReturn ].
+			   self checkTemporaries.
+			   true ]) }
 ]
 
 { #category : 'transforming' }

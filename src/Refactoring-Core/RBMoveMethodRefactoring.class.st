@@ -85,14 +85,15 @@ RBMoveMethodRefactoring >> addSelfReturn [
 { #category : 'preconditions' }
 RBMoveMethodRefactoring >> applicabilityPreconditions [
 
-	^ (RBCondition definesSelector: selector in: class)
-	  & (RBCondition withBlock: [
+	^ {
+		  (RBCondition definesSelector: selector in: class).
+		  (RBCondition withBlock: [
 			   self checkForPrimitiveMethod.
 			   self checkForSuperReferences.
 			   self checkAssignmentsToVariable.
 			   self getClassesToMoveTo.
 			   self checkTemporaryVariableNames.
-			   true ])
+			   true ]) }
 ]
 
 { #category : 'preconditions' }

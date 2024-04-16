@@ -63,11 +63,11 @@ ReRenameMethodRefactoring class >> renameMethod: aSelector in: aClass to: newSel
 { #category : 'preconditions' }
 ReRenameMethodRefactoring >> applicabilityPreconditions [
 
-	^ { 
-		self validSelectorCondition .
-		self methodDefinedInClassCondition . 
-		self newNameDoesNotRequireRefactoringPrecondition not . 
-		self selectorsHaveSameArity }
+	^ {
+		  self validSelectorCondition.
+		  self methodDefinedInClassCondition.
+		  self newNameDoesNotRequireRefactoringPrecondition not.
+		  self selectorsHaveSameArity }
 ]
 
 { #category : 'torevisit' }
