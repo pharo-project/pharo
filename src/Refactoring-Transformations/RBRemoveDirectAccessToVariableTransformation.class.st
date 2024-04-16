@@ -49,14 +49,13 @@ RBRemoveDirectAccessToVariableTransformation >> applicabilityPreconditions [
 			         { (RBCondition
 				          directlyDefinesInstanceVariable: variableName
 				          in: class) } ].
-	conds
-		add: (RBCondition
-				 canUnderstand: self getterMethodSelector
-				 in: self definingClass);
-		add: (RBCondition
-				 canUnderstand: self setterMethodSelector
-				 in: self definingClass).
-	^ conds
+	^ conds , 
+		{ (RBCondition
+		   canUnderstand: self getterMethodSelector
+		   in: self definingClass).
+		(RBCondition
+		   canUnderstand: self setterMethodSelector
+		   in: self definingClass)}
 ]
 
 { #category : 'accessing' }

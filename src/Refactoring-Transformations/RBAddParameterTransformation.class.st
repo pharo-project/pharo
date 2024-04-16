@@ -45,15 +45,14 @@ RBAddParameterTransformation >> addParameterToMethod: aSelector in: aClass newSe
 { #category : 'preconditions' }
 RBAddParameterTransformation >> applicabilityPreconditions [ 
 	
-	^ super applicabilityPreconditions
-		add: (RBCondition withBlock:
+	^ super applicabilityPreconditions ,
+		{ (RBCondition withBlock:
 			[ oldSelector numArgs < newSelector numArgs
 				ifFalse:
 					[ self refactoringError: newSelector printString,
 					' doesn''t have the proper number of arguments.'].
 			self newArgs do: [	:arg | self verifyInitializationExpressionOf: arg argValue ].
-			true]);
-		yourself
+			true]) }
 ]
 
 { #category : 'adding' }

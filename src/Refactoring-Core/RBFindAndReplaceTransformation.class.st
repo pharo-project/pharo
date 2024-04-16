@@ -90,13 +90,13 @@ RBFindAndReplaceTransformation >> applicabilityPreconditions [
 
 	| condition rbMethod |
 	rbMethod := class methodFor: selector.
-	condition := RBCondition definesSelector: selector in: class.
+	condition := { RBCondition definesSelector: selector in: class }.
 	replacesAllHierarchy ifTrue: [
-		class allSubclasses do: [ :aClass |
+		condition := condition , (class allSubclasses collect: [ :aClass |
 			(RBCondition
 				 definesSelector: selector
 				 in: aClass
-				 orIsSimilarTo: rbMethod) not ] ].
+				 orIsSimilarTo: rbMethod) not ] ) ].
 	^ condition
 ]
 

@@ -43,13 +43,12 @@ RBPullUpMethodTransformation >> applicabilityPreconditions [
 	| conds |
 	conds := selectors collect: [ :each |
 		         RBCondition definesSelector: each in: class ].
-	conds add: (RBCondition withBlock: [
+	^ conds , { (RBCondition withBlock: [
 			 self checkInstVars.
 			 self checkClassVars.
 			 self checkSuperclass.
 			 self checkSuperMessages.
-			 true ]).
-	^ conds
+			 true ]) }
 ]
 
 { #category : 'executing' }

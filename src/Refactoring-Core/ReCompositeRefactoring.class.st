@@ -28,7 +28,7 @@ ReCompositeRefactoring >> generateChanges [
 ReCompositeRefactoring >> preconditions [
 	"Return the list of all the preconditions."
 	
-	^ self applicabilityPreconditions addAll: self breakingChangePreconditions ; yourself
+	^ self applicabilityPreconditions , self breakingChangePreconditions
 ]
 
 { #category : 'preparation' }
