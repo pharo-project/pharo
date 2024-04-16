@@ -77,9 +77,10 @@ RBChildrenToSiblingsRefactoring >> applicabilityPreconditions [
 		         (RBCondition isValidClassName: className).
 		         (RBCondition isGlobal: className in: self model) not }.
 	subclasses do: [ :each |
-		conds add: ((RBCondition isMetaclass: each) errorMacro:
+		conds := conds , { 
+			((RBCondition isMetaclass: each) errorMacro:
 				 'Subclass must <1?not :>be a metaclass') not.
-		conds add: (RBCondition isImmediateSubclass: each of: parent) ].
+			(RBCondition isImmediateSubclass: each of: parent) } ].
 	^ conds
 ]
 

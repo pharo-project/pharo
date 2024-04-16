@@ -116,12 +116,10 @@ RBRenameVariableTransformation >> applicabilityPreconditions [
 				         (RBCondition
 					          definesInstanceVariable: variableName
 					          in: class) } ].
-	conds
-		add:
-			(RBCondition hierarchyOf: class definesVariable: newVariableName)
-				not;
-		add: self isNotGlobal.
-	^ conds
+	^ conds , {
+		(RBCondition hierarchyOf: class definesVariable: newVariableName)
+				not.
+		self isNotGlobal }
 ]
 
 { #category : 'preconditions' }

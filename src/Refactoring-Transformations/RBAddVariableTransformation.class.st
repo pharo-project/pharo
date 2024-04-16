@@ -37,12 +37,11 @@ RBAddVariableTransformation >> applicabilityPreconditions [
 				          isValidInstanceVariableName: variableName
 				          for: class) } ].
 
-	conds add: self isNotGlobal.
-	conds add:
+	^ conds , {
+		self isNotGlobal.
 		(RBCondition
 			 hierarchyOf: class
-			 definesVariable: variableName asString) not.
-	^ conds
+			 definesVariable: variableName asString) not }
 ]
 
 { #category : 'preconditions' }
