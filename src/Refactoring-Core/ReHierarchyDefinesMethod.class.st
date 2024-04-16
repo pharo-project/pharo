@@ -30,8 +30,8 @@ ReHierarchyDefinesMethod >> doesClass: argClass definesMethod: aSelector [
 { #category : 'checking' }
 ReHierarchyDefinesMethod >> hierarchyDefinesMethod [
 
-	(self doesClass: aClass definesMethod: selector) ifTrue: [ ^ true ].
-	^ self subclassOf: aClass redefines: selector
+	(self doesClass: class definesMethod: selector) ifTrue: [ ^ true ].
+	^ self subclassOf: class redefines: selector
 ]
 
 { #category : 'accessing' }
