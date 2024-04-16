@@ -72,6 +72,27 @@ TraitTest >> createT3 [
 ]
 
 { #category : 'tests' }
+TraitTest >> testAddingATraitToAClassWithSubclasses [
+	"This is a regression test when adding a trait to a class without traits and with subclasses was not possible."
+
+	| c1 c2 t1 |
+	c1 := self newClass: #C1.
+	c2 := self newClass: #C2 superclass: c1 traits: {  }.
+	t1 := self newTrait: #T1.
+
+	self
+		shouldnt: [
+			self class classInstaller make: [ :aBuilder |
+				aBuilder
+					fillFor: c1;
+					traits: t1 ] ]
+		raise: Error.
+
+	self assert: (c1 includesTrait: t1).
+	self deny: (c2 includesTrait: t1)
+]
+
+{ #category : 'tests' }
 TraitTest >> testClassHavingAnInstanceVariableUsersDifferenThanUsers [
 
 	| t1 aClass |
