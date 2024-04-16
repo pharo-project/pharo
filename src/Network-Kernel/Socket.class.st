@@ -1731,18 +1731,21 @@ Socket >> waitForSendDoneFor: timeout ifClosed: closedBlock ifTimedOut: timedOut
 	"Wait up until the given deadline for the current send operation to complete.
 	If it does not, execute <timedOutBlock>. If the connection is closed before
 	the send completes, execute <closedBlock>."
-	| startTime msecsDelta msecsElapsed sendDone |
-	
+
+	| startTime msecsDelta msecsElapsed |
 	startTime := Time millisecondClockValue.
 	msecsDelta := (timeout * 1000) truncated.
 	"Connection end and final data can happen fast, so test in this order"
-	[ sendDone := self sendDone ] whileFalse: [
+	[ self sendDone ] whileFalse: [
 		self isConnected ifFalse: [ ^ closedBlock value ].
 		(msecsElapsed := Time millisecondsSince: startTime) < msecsDelta
 			ifFalse: [ ^ timedOutBlock value ].
 		writeSemaphore waitTimeoutMilliseconds: msecsDelta - msecsElapsed ].
-	
-	^ sendDone
+
+	"For backward compatibility with Pharo <= 11, return a boolean indicating
+	whether the send is completed. The loop will only terminate when this
+	is the case, so simply return true."
+	^ true
 ]
 
 { #category : 'accessing' }
