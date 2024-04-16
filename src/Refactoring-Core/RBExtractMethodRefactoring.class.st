@@ -62,15 +62,17 @@ RBExtractMethodRefactoring class >> model: aRBSmalltalk extractSource: aString f
 ]
 
 { #category : 'preconditions' }
-RBExtractMethodRefactoring >> applicabilityPreconditions [ 
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition withBlock:
-					[self extractMethod.
-					self checkSpecialExtractions.
-					self checkReturn.
-					needsReturn ifTrue: [extractedParseTree addReturn].
-					self checkTemporaries.
-					true])
+RBExtractMethodRefactoring >> applicabilityPreconditions [
+
+	^ {
+		  (RBCondition definesSelector: selector in: class).
+		  (RBCondition withBlock: [
+			   self extractMethod.
+			   self checkSpecialExtractions.
+			   self checkReturn.
+			   needsReturn ifTrue: [ extractedParseTree addReturn ].
+			   self checkTemporaries.
+			   true ]) }
 ]
 
 { #category : 'transforming' }

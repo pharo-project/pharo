@@ -40,8 +40,9 @@ RBMoveVariableDefinitionToSmallestValidScopeRefactoring class >> model: aRBSmall
 { #category : 'preconditions' }
 RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> applicabilityPreconditions [
 
-	^ (RBCondition definesSelector: selector in: class)
-	  & (RBCondition withBlock: [
+	^ {
+		  (RBCondition definesSelector: selector in: class).
+		  (RBCondition withBlock: [
 			   | methodSource |
 			   interval first <= interval last ifFalse: [
 				   self refactoringError: 'You must select a variable name' ].
@@ -54,7 +55,7 @@ RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> applicabilityPrecondi
 					   name , ' does not seem to be a valid variable name.' ].
 			   parseTree := class parseTreeForSelector: selector.
 			   self checkParseTree.
-			   true ])
+			   true ]) }
 ]
 
 { #category : 'transforming' }

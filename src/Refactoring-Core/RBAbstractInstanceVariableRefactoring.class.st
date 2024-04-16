@@ -52,9 +52,11 @@ RBAbstractInstanceVariableRefactoring >> accessorsRefactoring [
 ]
 
 { #category : 'preconditions' }
-RBAbstractInstanceVariableRefactoring >> applicabilityPreconditions [ 
+RBAbstractInstanceVariableRefactoring >> applicabilityPreconditions [
 
-	^ RBCondition directlyDefinesInstanceVariable: variableName in: class
+	^ { (RBCondition
+		   directlyDefinesInstanceVariable: variableName
+		   in: class) }
 ]
 
 { #category : 'transforming' }

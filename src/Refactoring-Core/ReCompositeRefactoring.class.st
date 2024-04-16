@@ -16,7 +16,8 @@ Class {
 { #category : 'preconditions' }
 ReCompositeRefactoring >> applicabilityPreconditions [
 	"Return the list of the all the applicabilityPreconditions of the composite"
-	^ #()
+
+	^ #(  )
 ]
 
 { #category : 'preconditions' }

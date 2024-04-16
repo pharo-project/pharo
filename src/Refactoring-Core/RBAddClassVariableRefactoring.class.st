@@ -14,9 +14,10 @@ Class {
 { #category : 'preconditions' }
 RBAddClassVariableRefactoring >> applicabilityPreconditions [
 
-	^ (RBCondition isMetaclass: class) not
-	  & (RBCondition isValidClassVarName: variableName for: class)
-	  & (RBCondition isGlobal: variableName in: self model) not
+	^ {
+		  (RBCondition isMetaclass: class) not.
+		  (RBCondition isValidClassVarName: variableName for: class).
+		  (RBCondition isGlobal: variableName in: self model) not }
 ]
 
 { #category : 'preconditions' }

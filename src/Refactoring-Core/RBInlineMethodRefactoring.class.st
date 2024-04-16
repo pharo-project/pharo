@@ -62,8 +62,9 @@ RBInlineMethodRefactoring >> addTemporary: sourceNode assignedTo: replacementNod
 RBInlineMethodRefactoring >> applicabilityPreconditions [
 	"Even though it looks complex it only does preconditions and set up. `transform` does actual refactoring"
 
-	^ (RBCondition definesSelector: sourceSelector in: class)
-	  & (RBCondition withBlock: [
+	^ {
+		  (RBCondition definesSelector: sourceSelector in: class).
+		  (RBCondition withBlock: [
 			   self checkSelectedMessage.
 			   self parseInlineMethod.
 			   self isPrimitive ifTrue: [
@@ -74,7 +75,7 @@ RBInlineMethodRefactoring >> applicabilityPreconditions [
 				    self hasMultipleReturns not ]) ifFalse: [
 				   self refactoringError:
 					   'Cannot inline method since it contains multiple returns that cannot be rewritten' ].
-			   true ])
+			   true ]) }
 ]
 
 { #category : 'preconditions' }

@@ -22,17 +22,17 @@ Class {
 { #category : 'preconditions' }
 RBPushDownVariableTransformation >> applicabilityPreconditionsForClassVariable [
 
-	^ RBCondition
+	^ { RBCondition
 		  definesClassVariable: variableName
-		  in: self definingClass
+		  in: self definingClass }
 ]
 
 { #category : 'preconditions' }
 RBPushDownVariableTransformation >> applicabilityPreconditionsForInstanceVariable [
 
-	^ RBCondition
+	^ { RBCondition
 		  definesInstanceVariable: variableName
-		  in: self definingClass
+		  in: self definingClass }
 ]
 
 { #category : 'executing' }

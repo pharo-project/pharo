@@ -26,13 +26,15 @@ Class {
 }
 
 { #category : 'preconditions' }
-RBAddVariableAccessorTransformation >> applicabilityPreconditions [ 
+RBAddVariableAccessorTransformation >> applicabilityPreconditions [
 
 	class := self model classObjectFor: className.
 
-	^ isClassVariable
-		ifTrue: [RBCondition definesClassVariable: variableName asSymbol in: class]
-		ifFalse: [RBCondition definesInstanceVariable: variableName in: class]
+	^ { (isClassVariable
+		   ifTrue: [
+				RBCondition definesClassVariable: variableName asSymbol in: class ]
+		   ifFalse: [
+				RBCondition definesInstanceVariable: variableName in: class ]) }
 ]
 
 { #category : 'private' }

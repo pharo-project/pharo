@@ -25,20 +25,24 @@ Class {
 { #category : 'preconditions' }
 RBAddVariableTransformation >> applicabilityPreconditions [
 
+	| conds |
 	class := self definingClass.
+	conds := isClassVariable
+		         ifTrue: [
+			         {
+				         (RBCondition isMetaclass: class) not.
+				         (RBCondition isValidClassVarName: variableName for: class) } ]
+		         ifFalse: [
+			         { (RBCondition
+				          isValidInstanceVariableName: variableName
+				          for: class) } ].
 
-	^ (isClassVariable
-		   ifTrue: [
-			   (RBCondition isMetaclass: class) not
-			   & (RBCondition isValidClassVarName: variableName for: class) ]
-		   ifFalse: [
-			   (RBCondition
-				    isValidInstanceVariableName: variableName
-				    for: class) ])
-	  & self isNotGlobal
-	  & (RBCondition
-			   hierarchyOf: class
-			   definesVariable: variableName asString) not	
+	conds add: self isNotGlobal.
+	conds add:
+		(RBCondition
+			 hierarchyOf: class
+			 definesVariable: variableName asString) not.
+	^ conds
 ]
 
 { #category : 'preconditions' }

@@ -34,7 +34,7 @@ RBRemoveMethodRefactoring class >> selector: aSelector from: aClass [
 { #category : 'preconditions' }
 RBRemoveMethodRefactoring >> applicabilityPreconditions [ 
 
-	^ transformation applicabilityPreconditions 
+	^ { transformation applicabilityPreconditions }
 ]
 
 { #category : 'preconditions' }

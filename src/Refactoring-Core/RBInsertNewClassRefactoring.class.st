@@ -27,17 +27,20 @@ Class {
 RBInsertNewClassRefactoring >> applicabilityPreconditions [
 
 	| cond |
-	cond := ((RBCondition isMetaclass: superclass) errorMacro:
-		         'Superclass must not be a metaclass') not.
-	cond := subclasses inject: cond into: [ :sub :each |
-		        sub & ((RBCondition isMetaclass: each) errorMacro:
-			         'Subclass must <1?not :>be a metaclass') not
-		        & (RBCondition isImmediateSubclass: each of: superclass) ].
-	^ cond & (RBCondition isValidClassName: className)
-	  & (RBCondition isGlobal: className in: self model) not
-	  & (RBCondition isSymbol: packageName)
-	  & ((RBCondition withBlock: [ packageName isNotEmpty ]) errorMacro:
-			   'Invalid package name')
+	cond := { ((RBCondition isMetaclass: superclass) errorMacro:
+		         'Superclass must not be a metaclass') not }.
+	cond := subclasses do: [ :sub |
+		        cond add: ((RBCondition isMetaclass: sub) errorMacro:
+				         'Subclass must <1?not :>be a metaclass') not.
+		        cond add:
+			        (RBCondition isImmediateSubclass: sub of: superclass) ].
+	cond addAll: {
+			(RBCondition isValidClassName: className).
+			(RBCondition isGlobal: className in: self model) not.
+			(RBCondition isSymbol: packageName).
+			((RBCondition withBlock: [ packageName isNotEmpty ]) errorMacro:
+				 'Invalid package name') }.
+	^ cond
 ]
 
 { #category : 'accessing' }

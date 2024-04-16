@@ -39,12 +39,24 @@ RBInsertNewClassTransformation >> applicabilityPreconditions [
 	Each subclass should be immediate subclass of superclass."
 
 	| cond |
-	cond := ((RBCondition isMetaclass: (self model classObjectFor: superclass)) errorMacro: 'Superclass must not be a metaclass') not.
-	cond := subclasses inject: cond into: [ :sub :each |
-		        sub & ((RBCondition isMetaclass: (self model classObjectFor: each)) errorMacro: 'Subclass must <1?not :>be a metaclass') not
-		        & (RBCondition isImmediateSubclass: (self model classObjectFor: each) of: (self model classObjectFor: superclass)) ].
-	^ cond & self isValidClassName & self isNotGlobal & (RBCondition isSymbol: packageName)
-	  & ((RBCondition withBlock: [ packageName isNotEmpty ]) errorMacro: 'Invalid package name')
+	cond := { ((RBCondition isMetaclass:
+		          (self model classObjectFor: superclass)) errorMacro:
+		         'Superclass must not be a metaclass') not }.
+	subclasses do: [ :each |
+		cond add:
+			((RBCondition isMetaclass: (self model classObjectFor: each))
+				 errorMacro: 'Subclass must <1?not :>be a metaclass') not.
+		cond add: (RBCondition
+				 isImmediateSubclass: (self model classObjectFor: each)
+				 of: (self model classObjectFor: superclass)) ].
+	^ cond
+		  add: self isValidClassName;
+		  add: self isNotGlobal;
+		  add: (RBCondition isSymbol: packageName);
+		  add:
+			  ((RBCondition withBlock: [ packageName isNotEmpty ]) errorMacro:
+					   'Invalid package name');
+		  yourself
 ]
 
 { #category : 'initialization' }

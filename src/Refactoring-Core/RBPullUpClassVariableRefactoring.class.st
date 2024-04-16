@@ -10,13 +10,14 @@ Class {
 }
 
 { #category : 'preconditions' }
-RBPullUpClassVariableRefactoring >> applicabilityPreconditions [ 
+RBPullUpClassVariableRefactoring >> applicabilityPreconditions [
 
-	^ ((RBCondition isMetaclass: class) not)
-	& (RBCondition withBlock: [
-		  (class hierarchyDefinesClassVariable: variableName) ifFalse: [
-			  self refactoringError: 'No subclass defines ' , variableName ].
-		  true ])
+	^ {
+		  (RBCondition isMetaclass: class) not.
+		  (RBCondition withBlock: [
+			   (class hierarchyDefinesClassVariable: variableName) ifFalse: [
+				   self refactoringError: 'No subclass defines ' , variableName ].
+			   true ]) }
 ]
 
 { #category : 'preconditions' }

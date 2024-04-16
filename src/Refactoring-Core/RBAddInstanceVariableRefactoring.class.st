@@ -14,8 +14,9 @@ Class {
 { #category : 'preconditions' }
 RBAddInstanceVariableRefactoring >> applicabilityPreconditions [
 
-	^ (RBCondition isValidInstanceVariableName: variableName for: class)
-	  & (RBCondition isGlobal: variableName in: self model) not
+	^ {
+		  (RBCondition isValidInstanceVariableName: variableName for: class).
+		  (RBCondition isGlobal: variableName in: self model) not }
 ]
 
 { #category : 'preconditions' }

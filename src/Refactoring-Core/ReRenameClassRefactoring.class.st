@@ -52,9 +52,11 @@ ReRenameClassRefactoring class >> rename: aClassName to: aNewName [
 { #category : 'preconditions' }
 ReRenameClassRefactoring >> applicabilityPreconditions [
 
-	^ (RBCondition withBlock: [
-		   self doesClassToBeRenamedExist and: [ self isNotMetaclass ] ])
-	  & self isValidClassName & self isNotGlobal
+	^ {
+		  (RBCondition withBlock: [
+			   self doesClassToBeRenamedExist and: [ self isNotMetaclass ] ]).
+		  self isValidClassName.
+		  self isNotGlobal }
 ]
 
 { #category : 'initialization' }

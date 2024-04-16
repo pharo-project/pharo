@@ -31,12 +31,13 @@ RBInlineTemporaryTransformation class >> model: aRBNamespace inline: anInterval 
 ]
 
 { #category : 'preconditions' }
-RBInlineTemporaryTransformation >> applicabilityPreconditions [ 
+RBInlineTemporaryTransformation >> applicabilityPreconditions [
 
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition withBlock:
-					[self verifySelectedInterval.
-					true])
+	^ {
+		  (RBCondition definesSelector: selector in: class).
+		  (RBCondition withBlock: [
+			   self verifySelectedInterval.
+			   true ]) }
 ]
 
 { #category : 'executing' }

@@ -51,8 +51,9 @@ RBInlineMethodTransformation >> addTemporary: sourceNode assignedTo: replacement
 { #category : 'preconditions' }
 RBInlineMethodTransformation >> applicabilityPreconditions [
 
-	^ (RBCondition definesSelector: sourceSelector in: class)
-	  & (RBCondition withBlock: [
+	^ {
+		  (RBCondition definesSelector: sourceSelector in: class).
+		  (RBCondition withBlock: [
 			   self findSelectedMessage.
 			   self checkOverridden ifTrue: [
 				   self isOverridden ifTrue: [
@@ -69,7 +70,7 @@ RBInlineMethodTransformation >> applicabilityPreconditions [
 				    self hasMultipleReturns not ]) ifFalse: [
 				   self refactoringError:
 					   'Cannot inline method since it contains multiple returns that cannot be rewritten' ].
-			   true ])
+			   true ]) }
 ]
 
 { #category : 'adding' }

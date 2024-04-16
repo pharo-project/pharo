@@ -55,7 +55,7 @@ RBAddMethodRefactoring class >> sourceCode: aString in: aClass withProtocol: aPr
 { #category : 'preconditions' }
 RBAddMethodRefactoring >> applicabilityPreconditions [ 
 
-	^ transformation applicabilityPreconditions 
+	^ { transformation applicabilityPreconditions } 
 ]
 
 { #category : 'preconditions' }
