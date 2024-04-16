@@ -86,9 +86,9 @@ RBAbstractTransformation class >> refactoringOptions [
 ]
 
 { #category : 'preconditions' }
-RBAbstractTransformation >> applicabilityPreconditions [ 
-	
-	^ self trueCondition 
+RBAbstractTransformation >> applicabilityPreconditions [
+
+	^ #(  )
 ]
 
 { #category : 'private' }
@@ -143,15 +143,12 @@ RBAbstractTransformation >> changes [
 
 { #category : 'scripting api - conditions' }
 RBAbstractTransformation >> checkApplicabilityPreconditions [
-
-	| conditions errorStrings |
-	conditions := self applicabilityPreconditions.
-	conditions := conditions reject: [ :cond | cond check ].
-	conditions ifEmpty: [ ^ self ].
-	errorStrings := String streamContents: [ :aStream |
-		                conditions do: [ :cond |
-			                cond violationMessageOn: aStream ] ].
-	self refactoringError: errorStrings
+	"Check a preconditions and raise an error on violations. This method is part of the scripting API since it raises an error."
+	
+	| failedPreconditions |
+	failedPreconditions := self failedApplicabilityPreconditions.
+	failedPreconditions ifEmpty: [ ^ self ].
+	RBRefactoringError signalFor: failedPreconditions
 ]
 
 { #category : 'condition definitions' }
@@ -167,14 +164,7 @@ RBAbstractTransformation >> checkMethodName: aName in: aClass [
 { #category : 'scripting api - conditions' }
 RBAbstractTransformation >> checkPreconditions [
 
-	| conditions block |
-	conditions := self preconditions.
-	conditions check ifTrue: [ ^ self ].
-	block := conditions errorBlock.
-	block
-		ifNotNil: [
-		self refactoringWarning: conditions errorString with: block ]
-		ifNil: [ self refactoringError: conditions errorString ]
+	self checkApplicabilityPreconditions
 ]
 
 { #category : 'preconditions' }
@@ -231,6 +221,13 @@ RBAbstractTransformation >> execute [
 	
 	self generateChanges.
 	self performChanges
+]
+
+{ #category : 'preconditions' }
+RBAbstractTransformation >> failedApplicabilityPreconditions [
+	"Returne the failed preconditions without raising error. It should only be called by drivers."
+	
+	^ self applicabilityPreconditions reject: [ :cond | cond check ]
 ]
 
 { #category : 'scripting api - executing' }
