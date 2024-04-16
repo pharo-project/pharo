@@ -5,10 +5,6 @@ The variable should not be used obviously.
 Class {
 	#name : 'ReRemoveInstanceVariableRefactoring',
 	#superclass : 'RBVariableRefactoring',
-	#instVars : [
-		'applicabilityPreconditions',
-		'breakingChangePreconditions'
-	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
 	#tag : 'Refactorings'
@@ -34,21 +30,18 @@ ReRemoveInstanceVariableRefactoring class >> remove: variable from: class [
 ReRemoveInstanceVariableRefactoring >> applicabilityPreconditions [
 	"we store it because the violators are computed during check so we should not recreate it each time."
 
-	^ applicabilityPreconditions ifNil: [
-		  applicabilityPreconditions := { 
-				(ReDirectlyDefinesInstanceVariableCondition
-					classNamed: class name
-					inModel: self model
-					instanceVariables: { variableName }) } ]
+	^ { (ReDirectlyDefinesInstanceVariableCondition
+		   classNamed: class name
+		   inModel: self model
+		   instanceVariables: { variableName }) }
 ]
 
 { #category : 'preconditions' }
-ReRemoveInstanceVariableRefactoring >> breakingChangePreconditions [ 
+ReRemoveInstanceVariableRefactoring >> breakingChangePreconditions [
 
-	^ breakingChangePreconditions ifNil: [  breakingChangePreconditions := 
-		(ReInstanceVariableHasReferences new 
-			hierarchyOf: class referencesInstanceVariable: variableName) not ]
-	
+	^ { (ReInstanceVariableHasReferences new
+		   hierarchyOf: class
+		   referencesInstanceVariable: variableName) not }
 ]
 
 { #category : 'executing' }

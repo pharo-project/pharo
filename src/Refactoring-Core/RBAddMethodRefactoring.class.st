@@ -59,11 +59,9 @@ RBAddMethodRefactoring >> applicabilityPreconditions [
 ]
 
 { #category : 'preconditions' }
-RBAddMethodRefactoring >> breakingChangePreconditions [ 
+RBAddMethodRefactoring >> breakingChangePreconditions [
 
-	^ ((RBCondition canUnderstand: transformation selector in: class) 
-		errorBlock: [ "this is here so a warning is raised until we refactor all precondition checking logic" ])
-		not
+	^ { (RBCondition canUnderstand: transformation selector in: class) not }
 ]
 
 { #category : 'preconditions' }

@@ -66,10 +66,9 @@ RBPullUpMethodRefactoring >> applicabilityPreconditions [
 { #category : 'preconditions' }
 RBPullUpMethodRefactoring >> breakingChangePreconditions [
 
-	^ selectors 
-		inject: self trueCondition 
-		into: [ :cond :each |
-		  	cond & (RBCondition withBlock: [ self checkInstVars. true ]) ]
+	^ { (RBCondition withBlock: [
+		   self checkInstVars.
+		   true ]) }
 ]
 
 { #category : 'preconditions' }

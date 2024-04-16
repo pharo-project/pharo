@@ -4,9 +4,6 @@ A simple refactoring to remove a shared variable.
 Class {
 	#name : 'ReRemoveSharedVariableRefactoring',
 	#superclass : 'RBVariableRefactoring',
-	#instVars : [
-		'breakingChangePreconditions'
-	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
 	#tag : 'Refactorings'
@@ -43,10 +40,9 @@ ReRemoveSharedVariableRefactoring >> applicabilityPreconditions [
 { #category : 'preconditions' }
 ReRemoveSharedVariableRefactoring >> breakingChangePreconditions [
 
-	^ breakingChangePreconditions ifNil: [  breakingChangePreconditions := 
-		(ReSharedVariableHasReferences new 
-			hierarchyOf: class referencesSharedVariable: variableName) not ]
-	
+	^ { (ReSharedVariableHasReferences new
+		   hierarchyOf: class
+		   referencesSharedVariable: variableName) not }
 ]
 
 { #category : 'executing' }

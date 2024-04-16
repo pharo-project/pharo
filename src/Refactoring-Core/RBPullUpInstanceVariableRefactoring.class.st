@@ -21,14 +21,14 @@ RBPullUpInstanceVariableRefactoring >> applicabilityPreconditions [
 { #category : 'preconditions' }
 RBPullUpInstanceVariableRefactoring >> breakingChangePreconditions [
 
-	^ RBCondition withBlock: [
-		  (class subclasses anySatisfy: [ :each |
-			   (each directlyDefinesInstanceVariable: variableName) not ])
-			  ifTrue: [
-				  self refactoringWarning:
-					  'Not all subclasses have an instance variable named.<n> Do you want pull up this variable anyway?'
-					  , variableName , '.' ].
-		  true ]
+	^ { (RBCondition withBlock: [
+		   (class subclasses anySatisfy: [ :each |
+			    (each directlyDefinesInstanceVariable: variableName) not ])
+			   ifTrue: [
+				   self refactoringWarning:
+					   'Not all subclasses have an instance variable named.<n> Do you want pull up this variable anyway?'
+					   , variableName , '.' ].
+		   true ]) }
 ]
 
 { #category : 'preconditions' }

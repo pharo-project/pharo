@@ -40,11 +40,11 @@ RBRemoveMethodRefactoring >> applicabilityPreconditions [
 { #category : 'preconditions' }
 RBRemoveMethodRefactoring >> breakingChangePreconditions [
 
-	^ ((RBCondition withBlock: [ self checkSuperMethods ]) errorBlock: [ ])
-	& ((RBCondition
-		   withBlock: [ self senders isEmpty ]
-		   errorString: 'Cannot remove method because it has senders')
-		errorBlock: [ ])
+	^ {
+		  (RBCondition withBlock: [ self checkSuperMethods ]).
+		  (RBCondition
+			   withBlock: [ self senders isEmpty ]
+			   errorString: 'Cannot remove method because it has senders') }
 ]
 
 { #category : 'preconditions' }
