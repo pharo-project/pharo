@@ -119,6 +119,7 @@ RBTemporaryToInstanceVariableTransformation >> applicabilityPreconditions [
 RBTemporaryToInstanceVariableTransformation >> checkForValidTemporaryVariable [
 	| parseTree |
 	parseTree := class parseTreeForSelector: selector.
+	parseTree ifNil: [ self refactoringError: 'Could not create parse tree for ' class name , '>>' , selector ].
 	(parseTree allTemporaryVariables includes: temporaryVariableName)
 		ifFalse:
 			[self refactoringError: temporaryVariableName

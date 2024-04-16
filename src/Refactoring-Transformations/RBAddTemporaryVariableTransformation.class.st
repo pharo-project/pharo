@@ -77,6 +77,12 @@ RBAddTemporaryVariableTransformation >> applicabilityPreconditions [
 				   , ' already defines an argument named ' , variableName) }
 ]
 
+{ #category : 'scripting api - conditions' }
+RBAddTemporaryVariableTransformation >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
+]
+
 { #category : 'executing' }
 RBAddTemporaryVariableTransformation >> privateTransform [
 

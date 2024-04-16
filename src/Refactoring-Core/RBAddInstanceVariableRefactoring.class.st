@@ -16,13 +16,8 @@ RBAddInstanceVariableRefactoring >> applicabilityPreconditions [
 
 	^ {
 		  (RBCondition isValidInstanceVariableName: variableName for: class).
-		  (RBCondition isGlobal: variableName in: self model) not }
-]
-
-{ #category : 'preconditions' }
-RBAddInstanceVariableRefactoring >> breakingChangePreconditions [
-
-	^ { (RBCondition hierarchyOf: class definesVariable: variableName) not }
+		  (RBCondition isGlobal: variableName in: self model) not.
+		  (RBCondition hierarchyOf: class definesVariable: variableName) not }
 ]
 
 { #category : 'preconditions' }

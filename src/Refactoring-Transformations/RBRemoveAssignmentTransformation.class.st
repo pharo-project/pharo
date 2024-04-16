@@ -83,6 +83,12 @@ RBRemoveAssignmentTransformation >> applicabilityPreconditions [
 					    with: variableName)) }
 ]
 
+{ #category : 'scripting api - conditions' }
+RBRemoveAssignmentTransformation >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
+]
+
 { #category : 'preconditions' }
 RBRemoveAssignmentTransformation >> classExist [
 

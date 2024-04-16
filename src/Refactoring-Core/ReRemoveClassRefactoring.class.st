@@ -55,20 +55,7 @@ ReRemoveClassRefactoring >> breakingChangePreconditions [
 		  (self preconditionHaveNoSubclasses | self preconditionEmptyClasses) }
 ]
 
-{ #category : 'preconditions' }
-ReRemoveClassRefactoring >> checkBreakingChangePreconditions [
-
-	| conditions errorStrings |
-	conditions := self breakingChangePreconditions.
-	conditions := conditions reject: [ :cond | cond check ].
-	conditions ifEmpty: [ ^ self ].
-	errorStrings := String streamContents: [ :aStream |
-		                conditions do: [ :cond |
-			                cond violationMessageOn: aStream ] ].
-	self refactoringWarning: errorStrings
-]
-
-{ #category : 'preconditions' }
+{ #category : 'scripting api - conditions' }
 ReRemoveClassRefactoring >> checkPreconditions [
 
 	self eagerlyCheckApplicabilityPreconditions.

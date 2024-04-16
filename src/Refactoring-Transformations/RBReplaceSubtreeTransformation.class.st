@@ -76,6 +76,12 @@ RBReplaceSubtreeTransformation >> applicabilityPreconditions [
 			   true ]) }
 ]
 
+{ #category : 'scripting api - conditions' }
+RBReplaceSubtreeTransformation >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
+]
+
 { #category : 'executing' }
 RBReplaceSubtreeTransformation >> privateTransform [
 	| tree oldTree newTree |

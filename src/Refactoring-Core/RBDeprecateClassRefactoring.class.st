@@ -59,7 +59,7 @@ RBDeprecateClassRefactoring >> applicabilityPreconditions [
 		  (ReValidClassNameCondition new className: newName) }
 ]
 
-{ #category : 'preconditions' }
+{ #category : 'scripting api - conditions' }
 RBDeprecateClassRefactoring >> checkPreconditions [ 
 
 	self checkApplicabilityPreconditions 

@@ -267,6 +267,7 @@ RBExtractMethodRefactoring >> extractedParseTree [
 RBExtractMethodRefactoring >> getExtractedSource [
 	| source |
 	source := class sourceCodeFor: selector.
+	source ifNil: [ self refactoringError: 'Invalid source' ].
 	((extractionInterval first between: 1 and: (self startLimit: source size))
 		and: [extractionInterval last between: 1 and: source size])
 			ifFalse: [self refactoringError: 'Invalid interval'].

@@ -122,15 +122,6 @@ RBRefactoring >> convertClasses: classSet select: aBlock using: searchReplacer [
 ]
 
 { #category : 'preconditions' }
-RBRefactoring >> eagerlyCheckApplicabilityPreconditions [
-
-	self applicabilityPreconditions
-		do: [ :cond | cond check ifFalse:
-				[ self refactoringError:
-					(String streamContents: [ :aStream | cond violationMessageOn: aStream ] ) ] ]
-]
-
-{ #category : 'preconditions' }
 RBRefactoring >> failedBreakingChangePreconditions [
 	"Returne the failed preconditions without raising error. It should only be called by drivers."
 	

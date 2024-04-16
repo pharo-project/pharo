@@ -95,12 +95,6 @@ RBRenameAndDeprecateClassTransformation >> buildTransformations [
 						className: className)]
 ]
 
-{ #category : 'preconditions' }
-RBRenameAndDeprecateClassTransformation >> checkPreconditions [ 
-
-	self checkApplicabilityPreconditions 
-]
-
 { #category : 'api' }
 RBRenameAndDeprecateClassTransformation >> className: aClassName [
 

@@ -209,6 +209,13 @@ RBAbstractTransformation >> defaultEnvironment [
 	^ RBBrowserEnvironment new
 ]
 
+{ #category : 'preconditions' }
+RBAbstractTransformation >> eagerlyCheckApplicabilityPreconditions [
+
+	self applicabilityPreconditions do: [ :cond |
+		cond check ifFalse: [ RBRefactoringError signalFor: { cond } ] ]
+]
+
 { #category : 'condition definitions' }
 RBAbstractTransformation >> emptyCondition [
 	self deprecated: 'Use trueCondition' transformWith: '`@rec emptyCondition' -> '`@rec trueCondition'. 

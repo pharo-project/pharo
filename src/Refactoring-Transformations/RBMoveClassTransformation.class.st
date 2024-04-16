@@ -64,6 +64,12 @@ RBMoveClassTransformation >> applicabilityPreconditions [
 					    ifNotNil: [ :name | ' with tag named ' , name ])) }
 ]
 
+{ #category : 'scripting api - conditions' }
+RBMoveClassTransformation >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
+]
+
 { #category : 'preconditions' }
 RBMoveClassTransformation >> classExist [
 

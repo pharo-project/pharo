@@ -73,6 +73,12 @@ RBAddReturnStatementTransformation >> applicabilityPreconditions [
 					     expandMacrosWith: selector))) }
 ]
 
+{ #category : 'scripting api - conditions' }
+RBAddReturnStatementTransformation >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
+]
+
 { #category : 'preconditions' }
 RBAddReturnStatementTransformation >> classExist [
 
