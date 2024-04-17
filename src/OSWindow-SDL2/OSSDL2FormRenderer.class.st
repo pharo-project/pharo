@@ -71,6 +71,12 @@ OSSDL2FormRenderer >> initialize [
 	mutex := Mutex new
 ]
 
+{ #category : 'accessing' }
+OSSDL2FormRenderer >> outputExtent [
+
+	^ renderer outputExtent
+]
+
 { #category : 'private' }
 OSSDL2FormRenderer >> primitiveUpdateRectangle: rectangle externalForm: externalForm [
 
