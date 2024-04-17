@@ -2171,7 +2171,7 @@ RubTextEditor >> selectWord [
 			[hereChar := string at: (here := here + direction).
 			match = 0
 				ifTrue: ["token scan goes left, then right"
-					(hereChar tokenish or: [ hereChar = $# ])
+					(hereChar tokenish)
 						ifTrue: [here = 1
 								ifTrue:
 									[start := 1.

@@ -24,8 +24,8 @@ MenuRegistrationExample class >> mostUsedToolsOn: aBuilder [
 			(aBuilder item: #'System browser')
 				selector: #openClassBrowser;
 				icon: (aBuilder iconNamed: Smalltalk tools browser taskbarIconName).
-			(aBuilder item: #Workspace)
-				selector: #openWorkspace;
+			(aBuilder item: #Playground)
+				selector: #openPlayground;
 				icon: (aBuilder iconNamed: Smalltalk tools workspace taskbarIconName).
 			]
 ]
