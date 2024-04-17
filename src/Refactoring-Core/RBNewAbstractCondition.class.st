@@ -19,8 +19,7 @@ RBNewAbstractCondition >> check [
 { #category : 'accessing' }
 RBNewAbstractCondition >> errorString [ 
 
-	| errorMessage |
-	^ errorMessage 
+	^ String streamContents: [ :stream | self violationMessageOn: stream ] 
 ]
 
 { #category : 'logical operations' }
