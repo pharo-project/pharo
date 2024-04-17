@@ -54,12 +54,15 @@ OSWorldRenderer class >> settingsOn: aBuilder [
 
 	<systemsettings>
 
-	(aBuilder pickOne: #canvasScaleFactor)
+	(aBuilder group: #canvasScaleFactorGroup)
 		parent: #appearance;
-		label: 'Canvas scale factor for OSWorldRenderer';
-		target: self;
-		domainValues: (1 to: 5);
-		default: 1
+		label: 'World renderer canvas scaling';
+		with: [
+			(aBuilder pickOne: #canvasScaleFactor)
+				label: 'Canvas scale factor';
+				target: self;
+				domainValues: (1 to: 5);
+				default: 1 ]
 ]
 
 { #category : 'accessing' }
