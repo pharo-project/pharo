@@ -1691,16 +1691,18 @@ Socket >> waitForSendDoneFor: timeout ifClosed: closedBlock ifTimedOut: timedOut
 	"Wait up until the given deadline for the current send operation to complete.
 	If it does not, execute <timedOutBlock>. If the connection is closed before
 	the send completes, execute <closedBlock>."
-
-	| startTime msecsDelta msecsElapsed |
+	| startTime msecsDelta msecsElapsed sendDone |
+	
 	startTime := Time millisecondClockValue.
 	msecsDelta := (timeout * 1000) truncated.
 	"Connection end and final data can happen fast, so test in this order"
-	[ self sendDone ] whileFalse: [
+	[ sendDone := self sendDone ] whileFalse: [
 		self isConnected ifFalse: [ ^ closedBlock value ].
 		(msecsElapsed := Time millisecondsSince: startTime) < msecsDelta
 			ifFalse: [ ^ timedOutBlock value ].
-		self writeSemaphore waitTimeoutMilliseconds: msecsDelta - msecsElapsed ]
+		self writeSemaphore waitTimeoutMilliseconds: msecsDelta - msecsElapsed ].
+	
+	^ sendDone
 ]
 
 { #category : 'accessing' }

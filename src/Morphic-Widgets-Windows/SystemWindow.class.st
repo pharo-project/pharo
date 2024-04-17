@@ -1672,6 +1672,18 @@ SystemWindow >> reframePanesAdjoining: growingPane along: side to: aDisplayBox [
 	self extent: self extent
 ]
 
+{ #category : 'dropping/grabbing' }
+SystemWindow >> rejectDropMorphEvent: evt [
+
+	super rejectDropMorphEvent: evt.
+
+	self formerOwner acceptDroppingMorph: self event: evt.
+	self position: self formerPosition.
+	
+	self formerOwner: nil.
+	self formerPosition: nil.
+]
+
 { #category : 'label' }
 SystemWindow >> relabel [
 	| newLabel |

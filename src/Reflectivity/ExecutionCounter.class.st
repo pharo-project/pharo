@@ -27,16 +27,6 @@ ExecutionCounter class >> allCounters [
 	^ Counters ifNil: [ Counters := WeakKeyDictionary new ]
 ]
 
-{ #category : 'all' }
-ExecutionCounter class >> debugWorldMenuOn: aBuilder [
-	<worldMenu>
-	(aBuilder item: #'Reset Counters')
-		order: 1;
-		parent: #Counters;
-		help: 'Reset the counters on the executions counters.';
-		action: [ ExecutionCounter resetAll ]
-]
-
 { #category : 'system annoucements' }
 ExecutionCounter class >> handleClassRemoved: anAnnouncement [
 	self allCounters copy do: [ :breakpoint |

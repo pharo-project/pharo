@@ -33,6 +33,7 @@ WorldState class >> browseWorldMenuOn: aBuilder [
 
 { #category : '*Morphic-Base' }
 WorldState class >> debugWorldMenuOn: aBuilder [
+
 	<worldMenu>
 	(aBuilder item: #Debug)
 		order: 30;
@@ -42,9 +43,7 @@ WorldState class >> debugWorldMenuOn: aBuilder [
 				withSeparatorAfter.
 			(aBuilder group: #Profiling)
 				order: 2;
-				withSeparatorAfter.
-			(aBuilder group: #Counters)
-				order: 3]
+				withSeparatorAfter ]
 ]
 
 { #category : '*Morphic-Base' }
