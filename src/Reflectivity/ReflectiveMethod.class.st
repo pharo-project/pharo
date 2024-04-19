@@ -73,7 +73,7 @@ ReflectiveMethod >> createTwin [
 
 { #category : 'invalidate' }
 ReflectiveMethod >> decreaseLinkCount [
-	linkCount := linkCount - 1
+	self ast decreaseLinkCount
 ]
 
 { #category : 'invalidate' }
@@ -132,7 +132,7 @@ ReflectiveMethod >> hasMetaLinks [
 
 { #category : 'invalidate' }
 ReflectiveMethod >> increaseLinkCount [
-	linkCount := self linkCount + 1
+	self ast increaseLinkCount
 ]
 
 { #category : 'invalidate' }
@@ -171,12 +171,12 @@ ReflectiveMethod >> isFromTrait [
 
 { #category : 'accessing' }
 ReflectiveMethod >> linkCount [
-	^linkCount ifNil: [ linkCount := 0 ]
+	^self ast linkCount
 ]
 
 { #category : 'accessing' }
 ReflectiveMethod >> linkCount: aNumber [
-	linkCount := aNumber
+	self ast linkCount: aNumber
 ]
 
 { #category : 'invalidate' }
