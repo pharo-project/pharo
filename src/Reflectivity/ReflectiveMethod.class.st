@@ -13,8 +13,7 @@ Class {
 	#type : 'variable',
 	#instVars : [
 		'ast',
-		'compiledMethod',
-		'linkCount'
+		'compiledMethod'
 	],
 	#category : 'Reflectivity-Core',
 	#package : 'Reflectivity',
