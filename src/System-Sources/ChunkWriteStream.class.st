@@ -36,10 +36,16 @@ ChunkWriteStream >> duplicateTerminatorMarkOn: aString [
 
 	| string start bangIndex newStringStream |
 	string := aString asString.
-	newStringStream := WriteStream on: (string species new: string size * 2).
 	start := 1.
+	bangIndex := string indexOf: self terminatorMark startingAt: start.
+	
+	"We check the bang ahead, so we can avoid two allocations of the string!"
+	(bangIndex = 0) 
+		ifTrue: [ ^ string copyWith: self terminatorMark ].
 
-	[ (bangIndex := string indexOf: self terminatorMark startingAt: start) = 0 ]
+	newStringStream := WriteStream on: (string species new: string size * 2).
+
+	[ bangIndex = 0 ]
 		whileFalse: [
 			newStringStream
 				next: bangIndex - start + 1
@@ -47,7 +53,8 @@ ChunkWriteStream >> duplicateTerminatorMarkOn: aString [
 				startingAt: start.
 
 			newStringStream nextPut: self terminatorMark. "double it"
-			start := bangIndex + 1 ].
+			start := bangIndex + 1.
+			bangIndex := string indexOf: self terminatorMark startingAt: start ].
 
 	newStringStream
 		next: string size - start + 1
