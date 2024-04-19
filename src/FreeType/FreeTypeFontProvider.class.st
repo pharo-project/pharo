@@ -121,18 +121,6 @@ FreeTypeFontProvider >> cacheFileInfo: aFreeTypeFileInfo index: i [
 		add:  aFreeTypeFileInfo
 ]
 
-{ #category : 'error handling' }
-FreeTypeFontProvider >> failedToOpen: face from: path index: i [
-	"Transcript cr; show: 'Failed : ', path asString, '[', i asString,']'."
-	"remove all cache entries for path with index >= i"
-]
-
-{ #category : 'error handling' }
-FreeTypeFontProvider >> failedToOpen: face index: i [
-	"Transcript cr; show: 'Failed : ', path asString, '[', i asString,']'."
-	"remove all cache entries for path with index >= i"
-]
-
 { #category : 'font families' }
 FreeTypeFontProvider >> families [
 
