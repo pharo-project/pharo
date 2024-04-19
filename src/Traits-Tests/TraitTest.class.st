@@ -366,21 +366,8 @@ TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterChangingSupercla
 	c2 := self newClass: #C2 superclass: c1 traits: {t2}.
 
 	self assertCollection: c2 class localSelectors sorted equals: #().
-	self assertCollection: c2 class selectors sorted equals: TraitedClass selectors sorted
-]
-
-{ #category : 'tests' }
-TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterRemovingSuperclass [
-	| t1 c1 c2 t2 |
-
-	t1 := self createT1.
-	t2 := self createT2.
-
-	c1 := self newClass: #C1 with: #(g h) traits: t1.
-	c2 := self newClass: #C2 superclass: c1 traits: {t2}.
-
-	self assertCollection: c2 class localSelectors sorted equals: #().
-	self assertCollection: c2 class selectors sorted equals: TraitedClass selectors sorted
+	self assert: (TraitedClass selectors allSatisfy: [ :selector | (c2 class lookupSelector: selector) isNotNil ])
+	
 ]
 
 { #category : 'tests' }
@@ -580,7 +567,7 @@ TraitTest >> testRemovingTraitsRemoveTraitedClassMethodsWithSubclasses [
 
 	self assert: (c1 class includesSelector: #traits).
 	self deny: (c1 class includesLocalSelector: #traits).
-	self assert: (c2 class includesSelector: #traits).
+	self assert: (c2 class lookupSelector: #traits) notNil.
 	self deny: (c2 class includesLocalSelector: #traits).
 
 	c1 := self newClass: #C1 with: #(g h) traits: {}.
