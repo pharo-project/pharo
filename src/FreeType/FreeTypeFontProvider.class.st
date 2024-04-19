@@ -62,14 +62,6 @@ FreeTypeFontProvider class >> initialize [
 	self current "this creates an instance of me, and updates from the system"
 ]
 
-{ #category : 'extra fonts registration' }
-FreeTypeFontProvider class >> registerFont: aClassWithFont [
-	"Do nothing if freetype is disabled currently"
-
-	FreeTypeSystemSettings loadFt2Library ifTrue: [
-		aClassWithFont installFontsIn: self current ]
-]
-
 { #category : 'accessing' }
 FreeTypeFontProvider class >> resetCurrent [
 	"I reset all provider contents.
