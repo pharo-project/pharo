@@ -328,8 +328,12 @@ TraitedMetaclass >> traitComposition [
 	
 	Internally use directly the instance variable `composition`"
 
-	(composition includesTrait: TraitedClass) ifTrue: [ ^ composition ].
-	^ composition + TraitedClass asTraitComposition
+	(composition includesTrait: TraitedClass) 
+		ifTrue: [ ^ composition ].
+	self isTrait 
+		ifTrue: [ ^ composition + TraitedClass asTraitComposition ].
+	
+	^ composition
 ]
 
 { #category : 'accessing' }
