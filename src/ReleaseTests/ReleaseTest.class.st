@@ -289,6 +289,18 @@ ReleaseTest >> testMethodsContainNoHalt [
 				print: methods ] ]
 ]
 
+{ #category : 'tests - announcer' }
+ReleaseTest >> testNoDeadSubscriptions [
+
+	| dead |
+	"we skip this on the ci as it impact all other ci checks, open issue https://github.com/pharo-project/pharo/issues/2471"
+	3 timesRepeat: [ Smalltalk garbageCollect ].
+
+	dead := self class codeChangeAnnouncer subscriptions subscriptions select: [ :sub | sub subscriber isNil ].
+
+	self assert: dead asArray equals: #(  )
+]
+
 { #category : 'tests' }
 ReleaseTest >> testNoEmptyPackages [
 	"Test that we have no empty packages left"
@@ -413,6 +425,16 @@ ReleaseTest >> testObsoleteClasses [
 				s
 					nextPutAll: 'Obsolete classes remaining: ';
 					print: obsoleteClasses ]]
+]
+
+{ #category : 'tests - announcer' }
+ReleaseTest >> testOnlyWeakSubscriptions [
+
+	| strong |
+	"only weak subscriptions should be allowed to be added to the SystemAnnouncer..."
+	strong := self class codeChangeAnnouncer subscriptions subscriptions reject: [ :each | each isKindOf: WeakAnnouncementSubscription ].
+
+	self assert: strong asArray equals: #(  )
 ]
 
 { #category : 'tests - package' }
