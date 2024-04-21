@@ -293,7 +293,7 @@ ReleaseTest >> testMethodsContainNoHalt [
 ReleaseTest >> testNoDeadSubscriptions [
 
 	| dead |
-	"we skip this on the ci as it impact all other ci checks, open issue https://github.com/pharo-project/pharo/issues/2471"
+	"we skiped this on the ci in the past: https://github.com/pharo-project/pharo/issues/2471"
 	3 timesRepeat: [ Smalltalk garbageCollect ].
 
 	dead := self class codeChangeAnnouncer subscriptions subscriptions select: [ :sub | sub subscriber isNil ].
