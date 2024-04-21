@@ -59,16 +59,13 @@ SlotAnnouncementsTest >> setUp [
 { #category : 'helpers' }
 SlotAnnouncementsTest >> subscribeOn: anAnnouncement [
 
-	SystemAnnouncer uniqueInstance weak
-		when: anAnnouncement
-		send: #add:
-		to: collectedAnnouncements
+	self class codeChangeAnnouncer weak when: anAnnouncement send: #add: to: collectedAnnouncements
 ]
 
 { #category : 'running' }
 SlotAnnouncementsTest >> tearDown [
 
-	SystemAnnouncer uniqueInstance unsubscribe: collectedAnnouncements.
+	self class codeChangeAnnouncer unsubscribe: collectedAnnouncements.
 	super tearDown
 ]
 

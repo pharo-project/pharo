@@ -20,7 +20,7 @@ ShClassInstallerAnnouncementsTest >> setUp [
 { #category : 'running' }
 ShClassInstallerAnnouncementsTest >> tearDown [
 
-	SystemAnnouncer uniqueInstance unsubscribe: self.
+	self class codeChangeAnnouncer unsubscribe: self.
 	super tearDown
 ]
 
@@ -70,7 +70,7 @@ ShClassInstallerAnnouncementsTest >> testRecompilingClassUsingTraitsDoesNotAnnou
 { #category : 'protocol' }
 ShClassInstallerAnnouncementsTest >> when: anAnnouncement do: aBlock [
 
-	SystemAnnouncer uniqueInstance
+	self class codeChangeAnnouncer
 		when: anAnnouncement
 		do: [ :ann |
 			numberOfAnnouncements := numberOfAnnouncements + 1.

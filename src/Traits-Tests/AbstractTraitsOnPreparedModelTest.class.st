@@ -151,7 +151,7 @@ AbstractTraitsOnPreparedModelTest >> setUp [
 	"SetUpCount := SetUpCount + 1."
 
 	super setUp.
-	SystemAnnouncer uniqueInstance suspendAllWhile:
+	self class codeChangeAnnouncer suspendAllWhile:
 			[self t1: (self newTrait: #T1
 						traits: { }).
 			self t1 comment: 'I am the trait T1'.

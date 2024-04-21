@@ -19,7 +19,7 @@ PackageAnnouncementsTest >> setUp [
 { #category : 'running' }
 PackageAnnouncementsTest >> tearDown [
 
-	SystemAnnouncer uniqueInstance unsubscribe: self.
+	self class codeChangeAnnouncer unsubscribe: self.
 	super tearDown
 ]
 
@@ -58,6 +58,23 @@ PackageAnnouncementsTest >> testAddExtensionMethodHasTheRightPackage [
 
 	class compile: 'testMethod ^ #kheego' classified: '*' , yPackage name.
 	
+	self assert: numberOfAnnouncements equals: 1
+]
+
+{ #category : 'tests - classes' }
+PackageAnnouncementsTest >> testAnnouncementClassRemovedIsRaisedOnRemoveFromSystem [
+
+	| xPackage class |
+	xPackage := self ensureXPackage.
+
+	class := self newClassNamed: #NewClass in: xPackage.
+
+	self when: ClassRemoved do: [ :ann |
+		self assert: ann classRemoved originalName equals: #NewClass.
+		self assert: ann packageAffected identicalTo: xPackage ].
+
+	class removeFromSystem.
+
 	self assert: numberOfAnnouncements equals: 1
 ]
 
@@ -215,7 +232,7 @@ PackageAnnouncementsTest >> testSetPackageOfClassAnnounceClassRepackaged [
 { #category : 'running' }
 PackageAnnouncementsTest >> when: anAnnouncement do: aBlock [
 
-	SystemAnnouncer uniqueInstance
+	self class codeChangeAnnouncer
 		when: anAnnouncement
 		do: [ :ann |
 			numberOfAnnouncements := numberOfAnnouncements + 1.
