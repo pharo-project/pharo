@@ -4,9 +4,6 @@ SUnit tests for Package
 Class {
 	#name : 'PackageObsoleteTest',
 	#superclass : 'PackageTestCase',
-	#instVars : [
-		'notRun'
-	],
 	#category : 'Kernel-CodeModel-Tests-Packages',
 	#package : 'Kernel-CodeModel-Tests',
 	#tag : 'Packages'
