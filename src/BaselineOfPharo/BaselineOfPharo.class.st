@@ -146,7 +146,7 @@ BaselineOfPharo class >> welcomeBrowser [
 		newName: 'WelcomeBrowser' 
 		owner: 'pharo-spec' 
 		project: 'NewTools-WelcomeBrowser' 
-		version: 'Pharo12'
+		version: 'v1.1.0'
 ]
 
 { #category : 'repository urls' }
