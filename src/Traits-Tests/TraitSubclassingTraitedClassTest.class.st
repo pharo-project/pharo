@@ -49,8 +49,8 @@ TraitSubclassingTraitedClassTest >> testCreatingMethodInTraitClassSide [
 
 { #category : 'tests' }
 TraitSubclassingTraitedClassTest >> testRedefinedTraitedClassSubclassClassTraitCompositionIncludesTraitedMetaclass [
-
 	| t1 c1 c2 |
+
 	t1 := self newTrait: #T1.
 	c1 := self newClass: #C1 traits: t1.
 
@@ -64,7 +64,9 @@ TraitSubclassingTraitedClassTest >> testRedefinedTraitedClassSubclassClassTraitC
 			fillClassSideFromEnvironment: self class environment;
 			yourself ].
 
-	self assert: c2 class traitComposition equals: ({} asTraitComposition + TraitedClass)
+	self 
+		assert: c2 class traitComposition 
+		equals: {} asTraitComposition
 ]
 
 { #category : 'tests' }
@@ -82,7 +84,7 @@ TraitSubclassingTraitedClassTest >> testRedefinedTraitedClassSubclassClassTraitC
 
 	self
 		assert: c2 class traitComposition
-		equals: {  } asTraitComposition + TraitedClass
+		equals: {  } asTraitComposition
 ]
 
 { #category : 'tests' }
@@ -166,7 +168,9 @@ TraitSubclassingTraitedClassTest >> testTraitedClassSubclassClassTraitCompositio
 
 	c2 := self newClass: #C2 superclass: c1 traits: {  }.
 
-	self assert: c2 class traitComposition equals: ({} asTraitComposition + TraitedClass)
+	self 
+		assert: c2 class traitComposition 
+		equals: {} asTraitComposition
 ]
 
 { #category : 'tests' }

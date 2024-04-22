@@ -1,6 +1,6 @@
 Class {
 	#name : 'ReClassesCondition',
-	#superclass : 'RBCondition',
+	#superclass : 'ReReifiedCondition',
 	#instVars : [
 		'classes',
 		'violators'
@@ -32,10 +32,4 @@ ReClassesCondition >> isFalse [
 ReClassesCondition >> isTrue [ 
 
 	^ self check
-]
-
-{ #category : 'accessing' }
-ReClassesCondition >> violators [
-
-	^ self subclassResponsibility
 ]

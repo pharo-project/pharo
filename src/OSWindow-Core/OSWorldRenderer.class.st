@@ -12,12 +12,25 @@ Class {
 		'previousFrameRenderingTime'
 	],
 	#classInstVars : [
-		'canvasScaleFactor'
+		'canvasScaleFactor',
+		'autoSetCanvasScaleFactor'
 	],
 	#category : 'OSWindow-Core-Morphic',
 	#package : 'OSWindow-Core',
 	#tag : 'Morphic'
 }
+
+{ #category : 'accessing' }
+OSWorldRenderer class >> autoSetCanvasScaleFactor [
+
+	^ autoSetCanvasScaleFactor ifNil: [ autoSetCanvasScaleFactor := false ]
+]
+
+{ #category : 'accessing' }
+OSWorldRenderer class >> autoSetCanvasScaleFactor: boolean [
+
+	autoSetCanvasScaleFactor := boolean
+]
 
 { #category : 'accessing' }
 OSWorldRenderer class >> canvasScaleFactor [
@@ -54,12 +67,19 @@ OSWorldRenderer class >> settingsOn: aBuilder [
 
 	<systemsettings>
 
-	(aBuilder pickOne: #canvasScaleFactor)
+	(aBuilder group: #canvasScaleFactorGroup)
 		parent: #appearance;
-		label: 'Canvas scale factor for OSWorldRenderer';
-		target: self;
-		domainValues: (1 to: 5);
-		default: 1
+		label: 'World renderer canvas scaling';
+		with: [
+			(aBuilder pickOne: #canvasScaleFactor)
+				label: 'Canvas scale factor';
+				target: self;
+				domainValues: (1 to: 5);
+				default: 1.
+			(aBuilder setting: #autoSetCanvasScaleFactor)
+				label: 'Set canvas scale factor automatically';
+				target: self;
+				default: false ]
 ]
 
 { #category : 'accessing' }
@@ -98,6 +118,9 @@ OSWorldRenderer >> checkForNewScreenSize [
 	 skip the check. "
 	windowRenderer := self osWindowRenderer.
 	windowRenderer ifNil: [ ^ self ].
+
+	(world == World and: [ self class autoSetCanvasScaleFactor ]) ifTrue: [
+		self class canvasScaleFactor: (windowRenderer outputExtent / self windowExtent) min * self screenScaleFactor ].
 
 	(display isNil or: [ display extent = self actualDisplaySize and: [ world worldState realWindowExtent = self actualScreenSize ] ])
 		ifTrue: [ ^ self ].

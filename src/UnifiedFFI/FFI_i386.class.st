@@ -14,7 +14,7 @@ FFI_i386 class >> isActive [
 	^ Smalltalk vm wordSize = 4
 ]
 
-{ #category : 'callback' }
+{ #category : 'callbacks' }
 FFI_i386 >> newCallbackArgumentReaderForCallback: aCallback inContext: aCallbackContext [
 
 	^ FFIi386CallbackArgumentReader
