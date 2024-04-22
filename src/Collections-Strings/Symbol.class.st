@@ -109,8 +109,7 @@ Symbol class >> intern: aStringOrSymbol [
 
 	| internedSymbol |
 	self symbolTableSemaphore critical: [
-		internedSymbol := (self findInterned: aStringOrSymbol) ifNil: [
-			         NewSymbols add: aStringOrSymbol createSymbol ] ].
+		internedSymbol := self rawIntern: aStringOrSymbol ].
 	^ internedSymbol
 ]
 
@@ -158,6 +157,13 @@ Symbol class >> possibleSelectorsFor: misspelled [
 		binary := misspelled, ':'.		"try for missing colon"
 		Symbol hasInterned: binary ifTrue: [:him | best addFirst: him]].
 	^ best
+]
+
+{ #category : 'symbol table' }
+Symbol class >> rawIntern: aStringOrSymbol [
+
+	^ (self findInterned: aStringOrSymbol) ifNil: [
+		  NewSymbols add: aStringOrSymbol createSymbol ]
 ]
 
 { #category : 'instance creation' }
