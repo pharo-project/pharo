@@ -1,6 +1,6 @@
 Class {
 	#name : 'ReValidClassNameCondition',
-	#superclass : 'RBCondition',
+	#superclass : 'ReReifiedCondition',
 	#instVars : [
 		'className'
 	],
