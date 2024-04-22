@@ -32,3 +32,13 @@ ReClassVariableCapitalizationRuleTest >> testPoolVariableNameStartWithLowerCase 
 	critiques := self myCritiquesOnClass: myClass.
 	self assert: critiques size equals: 1
 ]
+
+{ #category : 'tests' }
+ReClassVariableCapitalizationRuleTest >> testRuleNotViolated [
+
+	| critiques myClass |
+	myClass := classFactory make: [ :builder |
+		           builder sharedVariables: { #Pool } ].
+	critiques := self myCritiquesOnClass: myClass.
+	self assertEmpty: critiques 
+]

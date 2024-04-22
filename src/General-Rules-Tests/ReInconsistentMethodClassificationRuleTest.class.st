@@ -6,20 +6,35 @@ Class {
 	#tag : 'Migrated'
 }
 
-{ #category : 'accessing' }
-ReInconsistentMethodClassificationRuleTest >> initialize [ 
-]
+{ #category : 'tests' }
+ReInconsistentMethodClassificationRuleTest >> testRule [
 
-{ #category : 'initalize' }
-ReInconsistentMethodClassificationRuleTest >> myCritiques [ 
-^ super myCritiques. 
+	| critiques |
+	self class
+		compile: 'myCritiques super myCritiques'
+		classified: 'accessing'.
+	critiques := self myCritiquesOnMethod: self class >> #myCritiques.
+	self assert: critiques size equals: 1.
+	[ "code of the test" ] ensure: [
+		(self class >> #myCritiques) removeFromSystem ].
+	self class
+		compile: 'initialize super initialize'
+		classified: 'accessing'.
+	critiques := self myCritiquesOnMethod: self class >> #initialize.
+	self assert: critiques size equals: 1.
+	[ "code of the test" ] ensure: [
+		(self class >> #initialize) removeFromSystem ]
 ]
 
 { #category : 'tests' }
-ReInconsistentMethodClassificationRuleTest >> testRule [
-	|critiques|
-	critiques := self myCritiquesOnMethod: self class >> #myCritiques.
-	self assert: critiques size equals: 1.
+ReInconsistentMethodClassificationRuleTest >> testRuleNotViolated [
+
+	| critiques |
+	self class
+		compile: 'initialize super initialize'
+		classified: 'initialization'.
 	critiques := self myCritiquesOnMethod: self class >> #initialize.
-	self assert: critiques size equals: 1.
+	self assertEmpty: critiques.
+	[ "code of the test" ] ensure: [
+		(self class >> #initialize) removeFromSystem ]
 ]
