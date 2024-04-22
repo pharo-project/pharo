@@ -180,20 +180,20 @@ DockingBarToggleMenuItemMorph >> stringBoundsToUse [
 ]
 
 { #category : 'accessing' }
-DockingBarToggleMenuItemMorph >> subMenuMarker [
-	"private - answer the form to be used as submenu marker"
+DockingBarToggleMenuItemMorph >> subMenuMarkerFormSet [
+	"private - answer the form set to be used as submenu marker"
 
 	owner isFloating
-		ifTrue: [ ^ self bottomArrow ].
+		ifTrue: [ ^ self bottomArrowFormSet ].
 	owner isAdheringToTop
-		ifTrue: [ ^ self bottomArrow ].
+		ifTrue: [ ^ self bottomArrowFormSet ].
 	owner isAdheringToBottom
-		ifTrue: [ ^ self upArrow ].
+		ifTrue: [ ^ self upArrowFormSet ].
 	owner isAdheringToLeft
-		ifTrue: [ ^ self rightArrow ].
+		ifTrue: [ ^ self rightArrowFormSet ].
 	owner isAdheringToRight
-		ifTrue: [ ^ self leftArrow ].
-	^ self rightArrow
+		ifTrue: [ ^ self leftArrowFormSet ].
+	^ self rightArrowFormSet
 ]
 
 { #category : 'accessing' }

@@ -135,9 +135,9 @@ MenuItemMorph >> arguments: aCollection [
 ]
 
 { #category : 'private' }
-MenuItemMorph >> bottomArrow [
+MenuItemMorph >> bottomArrowFormSet [
 
-	^ BottomArrow
+	^ FormSet form: BottomArrow
 ]
 
 { #category : 'accessing' }
@@ -480,9 +480,9 @@ MenuItemMorph >> keyText: anObject [
 ]
 
 { #category : 'private' }
-MenuItemMorph >> leftArrow [
+MenuItemMorph >> leftArrowFormSet [
 
-	^ LeftArrow
+	^ FormSet form: LeftArrow
 ]
 
 { #category : 'drawing' }
@@ -601,9 +601,9 @@ MenuItemMorph >> onImage [
 ]
 
 { #category : 'private' }
-MenuItemMorph >> rightArrow [
+MenuItemMorph >> rightArrowFormSet [
 
-	^ SubMenuMarker
+	^ FormSet form: SubMenuMarker
 ]
 
 { #category : 'selecting' }
@@ -670,8 +670,14 @@ MenuItemMorph >> subMenu: aMenuMorph [
 
 { #category : 'private' }
 MenuItemMorph >> subMenuMarker [
-	"private - answer the form to be used as submenu marker"
-	 ^ self rightArrow
+
+	 ^ self subMenuMarkerFormSet asForm
+]
+
+{ #category : 'private' }
+MenuItemMorph >> subMenuMarkerFormSet [
+	"private - answer the form set to be used as submenu marker"
+	 ^ self rightArrowFormSet
 ]
 
 { #category : 'accessing' }
@@ -707,9 +713,9 @@ MenuItemMorph >> toggledIconFormSet [
 ]
 
 { #category : 'private' }
-MenuItemMorph >> upArrow [
+MenuItemMorph >> upArrowFormSet [
 
-	^ UpArrow
+	^ FormSet form: UpArrow
 ]
 
 { #category : 'copying' }
