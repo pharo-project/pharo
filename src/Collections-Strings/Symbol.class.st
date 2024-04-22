@@ -107,11 +107,11 @@ Symbol class >> initialize [
 { #category : 'symbol table' }
 Symbol class >> intern: aStringOrSymbol [
 
-	| found |
+	| internedSymbol |
 	self symbolTableSemaphore critical: [
-		found := (self findInterned: aStringOrSymbol) ifNil: [
+		internedSymbol := (self findInterned: aStringOrSymbol) ifNil: [
 			         NewSymbols add: aStringOrSymbol createSymbol ] ].
-	^ found
+	^ internedSymbol
 ]
 
 { #category : 'instance creation' }
