@@ -4,7 +4,7 @@ I am a command to remove given methods and the ones in the subclasses.
 "
 Class {
 	#name : 'SycRemoveMethodsInHierarchyCommand',
-	#superclass : 'SysRefactoringMethodCommand',
+	#superclass : 'SycRefactoringMethodCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }

@@ -5,7 +5,7 @@ I am responsible for delegating execution to `RBPushDownMethodInSomeClassesDrive
 "
 Class {
 	#name : 'SycPushDownMethodInSomeClassesCommand',
-	#superclass : 'SysRefactoringMethodCommand',
+	#superclass : 'SycRefactoringMethodCommand',
 	#instVars : [
 		'refactoringScopes'
 	],
