@@ -41,17 +41,26 @@ Class {
 { #category : 'class initialization' }
 MenuItemMorph class >> initialize [
 
-	| rectangle form |
+	| forms rotatedFormSets |
 
-	rectangle := (0 @ -1) corner: (1@2) * 4 + 1.
-	form := (FormCanvas extent: 5@9)
-		drawPolygon: { rectangle topLeft. rectangle rightCenter. rectangle bottomLeft }
-			fillStyle: (SolidFillStyle color: Color black);
-		form.
-	SubMenuMarkerFormSet := FormSet form: form.
-	BottomArrowFormSet := FormSet form: (form rotateBy: 90).
-	LeftArrowFormSet := FormSet form: (form rotateBy: 180).
-	UpArrowFormSet := FormSet form: (form rotateBy: 270)
+	forms := (1 to: 2) collect: [ :scale |
+		| rectangle |
+		rectangle := (0 @ -1) corner: (1@2) * 4 * scale + 1.
+		(FormCanvas extent: (5@9) * scale)
+			drawPolygon: { rectangle topLeft. rectangle rightCenter. rectangle bottomLeft }
+				fillStyle: (SolidFillStyle color: Color black);
+			form ].
+	SubMenuMarkerFormSet := FormSet forms: forms.
+	rotatedFormSets := #(90 180 270) collect: [ :degrees |
+		| form1 form2 |
+		form1 := forms first rotateBy: degrees.
+		form2 := (FormCanvas extent: form1 extent * 2)
+			drawImage: (forms second rotateBy: degrees) at: 0@0;
+			form.
+		FormSet forms: { form1. form2 } ].
+	BottomArrowFormSet := rotatedFormSets first.
+	LeftArrowFormSet := rotatedFormSets second.
+	UpArrowFormSet := rotatedFormSets third
 ]
 
 { #category : 'grabbing' }
