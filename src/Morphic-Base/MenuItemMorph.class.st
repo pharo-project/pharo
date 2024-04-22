@@ -28,10 +28,10 @@ Class {
 		'keyText'
 	],
 	#classVars : [
-		'BottomArrow',
-		'LeftArrow',
-		'SubMenuMarker',
-		'UpArrow'
+		'BottomArrowFormSet',
+		'LeftArrowFormSet',
+		'SubMenuMarkerFormSet',
+		'UpArrowFormSet'
 	],
 	#category : 'Morphic-Base-Menus',
 	#package : 'Morphic-Base',
@@ -41,16 +41,17 @@ Class {
 { #category : 'class initialization' }
 MenuItemMorph class >> initialize [
 
-	| rectangle |
+	| rectangle form |
 
 	rectangle := (0 @ -1) corner: (1@2) * 4 + 1.
-	SubMenuMarker := (FormCanvas extent: 5@9)
+	form := (FormCanvas extent: 5@9)
 		drawPolygon: { rectangle topLeft. rectangle rightCenter. rectangle bottomLeft }
 			fillStyle: (SolidFillStyle color: Color black);
 		form.
-	BottomArrow := SubMenuMarker rotateBy: 90.
-	LeftArrow := SubMenuMarker rotateBy: 180.
-	UpArrow := SubMenuMarker rotateBy: 270
+	SubMenuMarkerFormSet := FormSet form: form.
+	BottomArrowFormSet := FormSet form: (form rotateBy: 90).
+	LeftArrowFormSet := FormSet form: (form rotateBy: 180).
+	UpArrowFormSet := FormSet form: (form rotateBy: 270)
 ]
 
 { #category : 'grabbing' }
@@ -137,7 +138,7 @@ MenuItemMorph >> arguments: aCollection [
 { #category : 'private' }
 MenuItemMorph >> bottomArrowFormSet [
 
-	^ FormSet form: BottomArrow
+	^ BottomArrowFormSet
 ]
 
 { #category : 'accessing' }
@@ -482,7 +483,7 @@ MenuItemMorph >> keyText: anObject [
 { #category : 'private' }
 MenuItemMorph >> leftArrowFormSet [
 
-	^ FormSet form: LeftArrow
+	^ LeftArrowFormSet
 ]
 
 { #category : 'drawing' }
@@ -603,7 +604,7 @@ MenuItemMorph >> onImage [
 { #category : 'private' }
 MenuItemMorph >> rightArrowFormSet [
 
-	^ FormSet form: SubMenuMarker
+	^ SubMenuMarkerFormSet
 ]
 
 { #category : 'selecting' }
@@ -715,7 +716,7 @@ MenuItemMorph >> toggledIconFormSet [
 { #category : 'private' }
 MenuItemMorph >> upArrowFormSet [
 
-	^ FormSet form: UpArrow
+	^ UpArrowFormSet
 ]
 
 { #category : 'copying' }
