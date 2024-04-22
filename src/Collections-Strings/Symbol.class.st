@@ -32,7 +32,8 @@ Class {
 	#classVars : [
 		'NewSymbols',
 		'SelectorTable',
-		'SymbolTable'
+		'SymbolTable',
+		'SymbolTableSemaphore'
 	],
 	#category : 'Collections-Strings-Base',
 	#package : 'Collections-Strings',
@@ -106,8 +107,11 @@ Symbol class >> initialize [
 { #category : 'symbol table' }
 Symbol class >> intern: aStringOrSymbol [
 
-	^ (self findInterned: aStringOrSymbol) ifNil: [
-		  NewSymbols add: aStringOrSymbol createSymbol ]
+	| found |
+	self symbolTableSemaphore critical: [
+		found := (self findInterned: aStringOrSymbol) ifNil: [
+			         NewSymbols add: aStringOrSymbol createSymbol ] ].
+	^ found
 ]
 
 { #category : 'instance creation' }
@@ -229,6 +233,13 @@ Symbol class >> shutDown: aboutToQuit [
 { #category : 'accessing' }
 Symbol class >> streamSpecies [
 	^ String
+]
+
+{ #category : 'accessing' }
+Symbol class >> symbolTableSemaphore [
+
+	^ SymbolTableSemaphore ifNil: [
+		  ^ SymbolTableSemaphore := Semaphore forMutualExclusion ]
 ]
 
 { #category : 'symbol table' }
