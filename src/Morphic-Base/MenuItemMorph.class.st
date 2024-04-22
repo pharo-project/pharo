@@ -41,13 +41,13 @@ Class {
 { #category : 'class initialization' }
 MenuItemMorph class >> initialize [
 
-	| f |
-	f := Form
-		extent: 5@9
-		fromArray: #(2147483648 3221225472 3758096384 4026531840 4160749568 4026531840 3758096384 3221225472 2147483648)
-		offset: 0@0.
+	| rectangle |
 
-	SubMenuMarker := (ColorForm mappingWhiteToTransparentFrom: f) asFormOfDepth: 32.
+	rectangle := (0 @ -1) corner: (1@2) * 4 + 1.
+	SubMenuMarker := (FormCanvas extent: 5@9)
+		drawPolygon: { rectangle topLeft. rectangle rightCenter. rectangle bottomLeft }
+			fillStyle: (SolidFillStyle color: Color black);
+		form.
 	BottomArrow := SubMenuMarker rotateBy: 90.
 	LeftArrow := SubMenuMarker rotateBy: 180.
 	UpArrow := SubMenuMarker rotateBy: 270
