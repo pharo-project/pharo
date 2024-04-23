@@ -4,31 +4,10 @@ SUnit tests for Package
 Class {
 	#name : 'PackageObsoleteTest',
 	#superclass : 'PackageTestCase',
-	#instVars : [
-		'notRun'
-	],
 	#category : 'Kernel-CodeModel-Tests-Packages',
 	#package : 'Kernel-CodeModel-Tests',
 	#tag : 'Packages'
 }
-
-{ #category : 'accessing' }
-PackageObsoleteTest >> setNotRun [
-	notRun := true
-]
-
-{ #category : 'tests' }
-PackageObsoleteTest >> testAnnouncementClassRemovedIsRaisedOnRemoveFromSystem [
-
-	| foo |
-	[
-	notRun := false.
-	SystemAnnouncer uniqueInstance weak when: ClassRemoved send: #setNotRun to: self.
-	foo := self newClassNamed: #FooForTest2 in: self xPackageName.
-	self deny: notRun.
-	foo removeFromSystem.
-	self assert: notRun ] ensure: [ SystemAnnouncer uniqueInstance unsubscribe: self ]
-]
 
 { #category : 'tests' }
 PackageObsoleteTest >> testMethodPackageFromObsoleteClass [

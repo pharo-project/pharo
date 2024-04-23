@@ -1,23 +1,23 @@
 Class {
-	#name : 'SysRefactoringMethodCommand',
+	#name : 'SycRefactoringMethodCommand',
 	#superclass : 'SycMethodCommand',
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
 
 { #category : 'execution' }
-SysRefactoringMethodCommand >> execute [
+SycRefactoringMethodCommand >> execute [
 
 	self executeRefactorings
 ]
 
 { #category : 'testing' }
-SysRefactoringMethodCommand >> isComplexRefactoring [
+SycRefactoringMethodCommand >> isComplexRefactoring [
 	^true
 ]
 
 { #category : 'execution' }
-SysRefactoringMethodCommand >> prepareFullExecutionInContext: aToolContext [
+SycRefactoringMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	self setUpModelFromContext: aToolContext
 ]
