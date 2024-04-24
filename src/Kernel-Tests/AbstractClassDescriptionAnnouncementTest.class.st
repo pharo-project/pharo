@@ -19,7 +19,7 @@ AbstractClassDescriptionAnnouncementTest >> setUp [
 { #category : 'running' }
 AbstractClassDescriptionAnnouncementTest >> tearDown [
 
-	SystemAnnouncer uniqueInstance unsubscribe: self.
+	self class codeChangeAnnouncer unsubscribe: self.
 	super tearDown
 ]
 

@@ -7,8 +7,7 @@ Class {
 	#name : 'SystemNavigationTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'classFactory',
-		'oldSystemAnnouncer'
+		'classFactory'
 	],
 	#category : 'System-Support-Tests-Image',
 	#package : 'System-Support-Tests',
@@ -27,12 +26,16 @@ SystemNavigationTest >> createClassFactory [
 	^ ClassFactoryForTestCase environment: self systemNavigationToTest environment
 ]
 
+{ #category : 'private' }
+SystemNavigationTest >> performTest [
+
+	self class codeChangeAnnouncer suspendAllWhile: [ ^ super performTest ]
+]
+
 { #category : 'running' }
 SystemNavigationTest >> setUp [
 
 	super setUp.
-	oldSystemAnnouncer := SystemAnnouncer uniqueInstance.
-	SystemAnnouncer announcer: nil.
 	classFactory := self createClassFactory
 ]
 
@@ -46,7 +49,6 @@ SystemNavigationTest >> systemNavigationToTest [
 SystemNavigationTest >> tearDown [
 
 	self classFactory cleanUp.
-	SystemAnnouncer announcer: oldSystemAnnouncer.
 	super tearDown
 ]
 

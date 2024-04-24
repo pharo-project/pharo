@@ -323,53 +323,44 @@ DebugPointManager class >> installNew: aDebugPointClass on: aNode withBehaviors:
 DebugPointManager class >> notifyDebugPointAdded: aDebugPoint [
 
 	| announcement |
-	announcement := DebugPointAdded 
-		on: aDebugPoint
-		nodes: aDebugPoint link nodes.
-	SystemAnnouncer uniqueInstance announce: announcement
+	announcement := DebugPointAdded on: aDebugPoint nodes: aDebugPoint link nodes.
+	self codeSupportAnnouncer announce: announcement
 ]
 
 { #category : 'announcements' }
 DebugPointManager class >> notifyDebugPointChanged: aDebugPoint [
-	
+
 	| announcement |
-	announcement := DebugPointChanged
-		on: aDebugPoint
-		nodes: aDebugPoint link nodes.
-	SystemAnnouncer uniqueInstance announce: announcement
+	announcement := DebugPointChanged on: aDebugPoint nodes: aDebugPoint link nodes.
+	self codeSupportAnnouncer announce: announcement
 ]
 
 { #category : 'announcements' }
 DebugPointManager class >> notifyDebugPointHit: aDebugPoint inContext: aContext [
 
 	| announcement |
-	announcement := aDebugPoint
-		                hitAnnouncementOn: aDebugPoint
-		                inContext: aContext.
-	SystemAnnouncer uniqueInstance announce: announcement
+	announcement := aDebugPoint hitAnnouncementOn: aDebugPoint inContext: aContext.
+	self codeSupportAnnouncer announce: announcement
 ]
 
 { #category : 'announcements' }
 DebugPointManager class >> notifyDebugPointRemoved: aDebugPoint fromNodes: nodes [
 	"nodes have to be seperate because they will be removed from the debugpoint before this method is called"
+
 	| announcement |
-	announcement := DebugPointRemoved
-		on: aDebugPoint 
-		nodes: nodes.
-	SystemAnnouncer uniqueInstance announce: announcement.
-
-		
-
+	announcement := DebugPointRemoved on: aDebugPoint nodes: nodes.
+	self codeSupportAnnouncer announce: announcement
 ]
 
 { #category : 'announcements - registration' }
 DebugPointManager class >> registerInterestToSystemAnnouncement [
-	<systemEventRegistration>
 
-	SystemAnnouncer uniqueInstance unsubscribe: self.
-	SystemAnnouncer uniqueInstance weak when: MethodRemoved send: #handleMethodRemoved: to: self.
-	SystemAnnouncer uniqueInstance weak when: MethodModified send: #handleMethodModified: to: self.
-	SystemAnnouncer uniqueInstance weak when: ClassRemoved send: #handleClassRemoved: to: self
+	<systemEventRegistration>
+	self codeChangeAnnouncer unsubscribe: self.
+	self codeChangeAnnouncer weak
+		when: MethodRemoved send: #handleMethodRemoved: to: self;
+		when: MethodModified send: #handleMethodModified: to: self;
+		when: ClassRemoved send: #handleClassRemoved: to: self
 ]
 
 { #category : 'removing' }

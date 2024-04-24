@@ -539,7 +539,7 @@ EpMonitor >> subscribeToSystemAnnouncer [
 { #category : 'private' }
 EpMonitor >> systemAnnouncer [
 
-	^ SystemAnnouncer uniqueInstance
+	^ self class codeChangeAnnouncer
 ]
 
 { #category : 'private' }

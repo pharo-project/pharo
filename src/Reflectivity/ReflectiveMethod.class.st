@@ -78,11 +78,13 @@ ReflectiveMethod >> decreaseLinkCount [
 
 { #category : 'invalidate' }
 ReflectiveMethod >> destroyTwin [
-	(ast hasProperty: #wrapperMethod) ifTrue: [  ast :=  compiledMethod parseTree].
+
+	(ast hasProperty: #wrapperMethod) ifTrue: [ ast := compiledMethod parseTree ].
 	self recompileAST.
 	self installCompiledMethod.
 	compiledMethod reflectiveMethod: nil.
-	SystemAnnouncer uniqueInstance unsubscribe: self
+	self class codeSupportAnnouncer unsubscribe: self.
+	self class codeChangeAnnouncer unsubscribe: self
 ]
 
 { #category : 'forwarding' }
