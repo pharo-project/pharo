@@ -3,16 +3,11 @@ this smell arise when we use initialize instead of setUp in a TestCase
 "
 Class {
 	#name : 'ReUseSetUpRule',
-	#superclass : 'ReAbstractRule',
+	#superclass : 'ReNodeRewriteRule',
 	#category : 'General-Rules-Migrated',
 	#package : 'General-Rules',
 	#tag : 'Migrated'
 }
-
-{ #category : 'testing - interest' }
-ReUseSetUpRule class >> checksClass [ 
-	^ true
-]
 
 { #category : 'manifest' }
 ReUseSetUpRule class >> uniqueIdentifierName [
@@ -21,23 +16,21 @@ ReUseSetUpRule class >> uniqueIdentifierName [
 	^ 'UseSetUpRule'
 ]
 
-{ #category : 'running' }
-ReUseSetUpRule >> basicCheck: aClass [
-	
-	aClass isTestCase ifFalse: [ ^ false ].
-	^ aClass selectors includes: #initialize
-]
-
 { #category : 'accessing' }
 ReUseSetUpRule >> group [
 
 	^ 'Design Flaws'
 ]
 
-{ #category : 'testing' }
-ReUseSetUpRule >> isRewriteRule [
+{ #category : 'initialization' }
+ReUseSetUpRule >> initialize [
 
-	^ true
+	super initialize.
+	self
+		addMatchingMethod:
+		'initialize |`@temps| super initialize. `.@statements'
+		rewriteTo: 'setUp |`@temps| super setUp. `.@statements'.
+	self addMatchingMethod: 'initialize' rewriteTo: 'setUp'
 ]
 
 { #category : 'accessing' }
@@ -47,7 +40,13 @@ ReUseSetUpRule >> name [
 ]
 
 { #category : 'accessing' }
-ReUseSetUpRule >> severity [ 
+ReUseSetUpRule >> severity [
 
-	^ #error
+	^ #error 
+]
+
+{ #category : 'testing' }
+ReUseSetUpRule >> shouldCheckMethod: aMethod [ 
+
+	^ aMethod selector = #initialize and: [ aMethod methodClass isTestCase ]
 ]
