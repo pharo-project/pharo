@@ -17,7 +17,7 @@ Class {
 		'SecondsInDay',
 		'SecondsInHour',
 		'SecondsInMinute',
-		'SqueakEpoch'
+		'Epoch'
 	],
 	#category : 'System-Time',
 	#package : 'System-Time'
@@ -26,7 +26,7 @@ Class {
 { #category : 'class initialization' }
 ChronologyConstants class >> initialize [
 	"ChronologyConstants initialize"
-	SqueakEpoch := 2415386. 		"Julian day number of 1 Jan 1901"
+	Epoch := 2415386. 		"Julian day number of 1 Jan 1901"
 	SecondsInDay := 86400.
 	MicrosecondsInDay := SecondsInDay * 1e6.
 	SecondsInHour := 3600.
