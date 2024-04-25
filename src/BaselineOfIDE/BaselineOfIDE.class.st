@@ -179,7 +179,7 @@ BaselineOfIDE >> loadExtraTools [
 	"Hack: Document Browser is loaded in 2 steps because of the dependency of some packages to Iceberg.
 	The 2nd load is done through Metacello that adds new project registrations in Iceberg (user, not system).
 	We then remove these last registrations."
-	#('NewTools-DocumentBrowser' 'Iceberg') do: [ :repositoryName | | foundRepo |
+	#('NewTools-DocumentBrowser' 'iceberg') do: [ :repositoryName | | foundRepo |
 		foundRepo := IceRepository registry 
 			detect: [ :repo | repo name = repositoryName ]
 			ifNone: [ self error: repositoryName , ' not found in Iceberg registry!' ].
