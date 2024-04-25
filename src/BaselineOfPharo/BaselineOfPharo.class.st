@@ -28,7 +28,7 @@ BaselineOfPharo class >> documentBrowser [
 		newName: 'DocumentBrowser' 
 		owner: 'pharo-spec' 
 		project: 'NewTools-DocumentBrowser' 
-		version: 'Pharo12'
+		version: 'v1.1.0'
 ]
 
 { #category : 'repository urls' }
@@ -60,7 +60,7 @@ BaselineOfPharo class >> iceberg [
 		newName: 'Iceberg' 
 		owner: 'pharo-vcs' 
 		project: 'iceberg' 
-		version: 'Pharo12' 
+		version: 'v2.3.0' 
 		sourceDir: nil
 ]
 
@@ -78,7 +78,7 @@ BaselineOfPharo class >> microdown [
 		newName: 'Microdown' 
 		owner: 'pillar-markup' 
 		project: 'Microdown' 
-		version: 'Pharo12'
+		version: 'v2.6.0'
 ]
 
 { #category : 'repository urls' }
@@ -95,7 +95,7 @@ BaselineOfPharo class >> newTools [
 		newName: 'NewTools' 
 		owner: 'pharo-spec' 
 		project: 'NewTools' 
-		version: 'Pharo12'
+		version: 'v0.9.0'
 ]
 
 { #category : 'repository urls' }
@@ -129,7 +129,7 @@ BaselineOfPharo class >> spec [
 		newName: 'Spec2' 
 		owner: 'pharo-spec' 
 		project:'Spec' 
-		version: 'Pharo12'
+		version: 'v1.3.0'
 ]
 
 { #category : 'repository urls' }
@@ -163,7 +163,7 @@ BaselineOfPharo class >> welcomeBrowser [
 		newName: 'WelcomeBrowser' 
 		owner: 'pharo-spec' 
 		project: 'NewTools-WelcomeBrowser' 
-		version: 'Pharo12'
+		version: 'v1.1.0'
 ]
 
 { #category : 'repository urls' }
