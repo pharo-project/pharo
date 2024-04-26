@@ -11,9 +11,8 @@ ReUseSetUpRuleTest >> testRule [
 
 	| critiques |
 	self class compile: 'initialize' classified: 'initialization'.
-	critiques := self myCritiquesOnMethod: self class >> #initialize.
-	self assert: critiques size equals: 1.
-	[ "code of the test" ] ensure: [
+	[ critiques := self myCritiquesOnMethod: self class >> #initialize.
+	self assert: critiques size equals: 1 ] ensure: [
 		(self class >> #initialize) removeFromSystem ]
 ]
 
