@@ -13,21 +13,21 @@ ReYourselfNotUsedRuleTest >> testRule [
 	self class
 		compile: 'methodTest self class yourself'
 		classified: 'test-helper'.
-	critiques := self myCritiquesOnMethod: self class >> #methodTest.
+	[ critiques := self myCritiquesOnMethod: self class >> #methodTest.
 	self assert: critiques size equals: 1.
-	[ "code of the test" ] ensure: [
+	 ] ensure: [
 		(self class >> #methodTest) removeFromSystem ]
 ]
 
 { #category : 'tests' }
-ReYourselfNotUsedRuleTest >> testRuleNotViolated [ 
+ReYourselfNotUsedRuleTest >> testRuleNotViolated [
 
 	| critiques |
 	self class
 		compile: 'methodTest ^ self yourself'
 		classified: 'test-helper'.
-	critiques := self myCritiquesOnMethod: self class >> #methodTest.
+	[critiques := self myCritiquesOnMethod: self class >> #methodTest.
 	self assertEmpty: critiques.
-	[ "code of the test" ] ensure: [
+	] ensure: [
 		(self class >> #methodTest) removeFromSystem ]
 ]

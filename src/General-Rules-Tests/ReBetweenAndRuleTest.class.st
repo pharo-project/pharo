@@ -11,17 +11,19 @@ ReBetweenAndRuleTest >> testRule [
 
 	| critiques |
 	self class compile: 'a:a b:b c:c a >= b and: [a <= c]'.
-	critiques := self myCritiquesOnMethod: self class >> #a:b:c:.
-	self assert: critiques size equals: 1.
-	[ "code of the test" ] ensure: [ (self class >> #a:b:c:) removeFromSystem ]
+	[ critiques := self myCritiquesOnMethod: self class >> #a:b:c:.
+	self assert: critiques size equals: 1
+	] ensure: [
+		(self class >> #a:b:c:) removeFromSystem ]
 ]
 
 { #category : 'tests' }
-ReBetweenAndRuleTest >> testRuleNotViolated [ 
+ReBetweenAndRuleTest >> testRuleNotViolated [
 
 	| critiques |
 	self class compile: 'a:a b:b c:c a between: b and: c'.
+	[
 	critiques := self myCritiquesOnMethod: self class >> #a:b:c:.
-	self assertEmpty: critiques.
-	[ "code of the test" ] ensure: [ (self class >> #a:b:c:) removeFromSystem ]
+	self assertEmpty: critiques ] ensure: [
+		(self class >> #a:b:c:) removeFromSystem ]
 ]

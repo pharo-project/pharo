@@ -11,18 +11,21 @@ ReTemporaryNeitherReadNorWrittenRuleTest >> testRule [
 
 	| critiques |
 	self class compile: 'method |unused|' classified: 'test-helper'.
-	critiques:= self myCritiquesOnMethod: self class >> #method.
-	self assert: critiques size equals: 1.
-	[ "code of the test" ] ensure: [ (self class >> #method) removeFromSystem ]
+	[
+	critiques := self myCritiquesOnMethod: self class >> #method.
+	self assert: critiques size equals: 1 ] ensure: [
+		(self class >> #method) removeFromSystem ]
 ]
 
 { #category : 'tests' }
-ReTemporaryNeitherReadNorWrittenRuleTest >> testRuleNotViolated [ 
+ReTemporaryNeitherReadNorWrittenRuleTest >> testRuleNotViolated [
 
 	| critiques |
-	self class compile: 'method |used| used := 1. ^used' classified: 'test-helper'.
+	self class
+		compile: 'method |used| used := 1. ^used'
+		classified: 'test-helper'.
+	[
 	critiques := self myCritiquesOnMethod: self class >> #method.
-	self assertEmpty: critiques.
-	[ "code of the test" ] ensure: [
+	self assertEmpty: critiques ] ensure: [
 		(self class >> #method) removeFromSystem ]
 ]
