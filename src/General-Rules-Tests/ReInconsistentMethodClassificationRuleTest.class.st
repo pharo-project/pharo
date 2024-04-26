@@ -13,16 +13,14 @@ ReInconsistentMethodClassificationRuleTest >> testRule [
 	self class
 		compile: 'myCritiques super myCritiques'
 		classified: 'accessing'.
-	critiques := self myCritiquesOnMethod: self class >> #myCritiques.
-	self assert: critiques size equals: 1.
-	[ "code of the test" ] ensure: [
+	[ critiques := self myCritiquesOnMethod: self class >> #myCritiques.
+	self assert: critiques size equals: 1 ] ensure: [
 		(self class >> #myCritiques) removeFromSystem ].
 	self class
 		compile: 'initialize super initialize'
 		classified: 'accessing'.
-	critiques := self myCritiquesOnMethod: self class >> #initialize.
-	self assert: critiques size equals: 1.
-	[ "code of the test" ] ensure: [
+	[ critiques := self myCritiquesOnMethod: self class >> #initialize.
+	self assert: critiques size equals: 1 ] ensure: [
 		(self class >> #initialize) removeFromSystem ]
 ]
 
