@@ -208,17 +208,15 @@ ReRuleManager class >> setDefaultProfile [
 
 { #category : 'event subscriptions' }
 ReRuleManager class >> subscribe [
+
 	<systemEventRegistration>
 	self unsubscribe.
 
-	SystemAnnouncer uniqueInstance weak
-		when: ClassAdded   send: #classAddedOrRemoved: to: self;
+	self codeChangeAnnouncer weak
+		when: ClassAdded send: #classAddedOrRemoved: to: self;
 		when: ClassRemoved send: #classAddedOrRemoved: to: self.
 
-	ReSystemAnnouncer uniqueInstance weak
-		when: ReCritiqueBanned
-		send: #critiqueBanned:
-		to: self
+	ReSystemAnnouncer uniqueInstance weak when: ReCritiqueBanned send: #critiqueBanned: to: self
 ]
 
 { #category : 'instance creation' }
@@ -236,7 +234,7 @@ ReRuleManager class >> unload [
 { #category : 'event subscriptions' }
 ReRuleManager class >> unsubscribe [
 
-	SystemAnnouncer uniqueInstance unsubscribe: self.
+	self codeChangeAnnouncer unsubscribe: self.
 	ReSystemAnnouncer uniqueInstance unsubscribe: self
 ]
 
