@@ -81,6 +81,11 @@ AthensCairoStrokePaint >> joinRound [
 	joinStyle := CAIRO_LINE_JOIN_ROUND
 ]
 
+{ #category : 'drawing' }
+AthensCairoStrokePaint >> loadOnCairoCanvas: aCanvas [
+
+]
+
 { #category : 'private' }
 AthensCairoStrokePaint >> prepareForDrawingOn: aCanvas [
 
