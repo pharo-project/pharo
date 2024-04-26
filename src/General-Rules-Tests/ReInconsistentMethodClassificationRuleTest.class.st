@@ -33,8 +33,7 @@ ReInconsistentMethodClassificationRuleTest >> testRuleNotViolated [
 	self class
 		compile: 'initialize super initialize'
 		classified: 'initialization'.
-	critiques := self myCritiquesOnMethod: self class >> #initialize.
-	self assertEmpty: critiques.
-	[ "code of the test" ] ensure: [
+	[ critiques := self myCritiquesOnMethod: self class >> #initialize.
+	self assertEmpty: critiques ] ensure: [
 		(self class >> #initialize) removeFromSystem ]
 ]
