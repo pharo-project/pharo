@@ -21,8 +21,7 @@ ReUseSetUpRuleTest >> testRuleNotViolated [
 
 	| critiques |
 	self class compile: 'setUp'.
-	critiques := self myCritiquesOnClass: self class.
-	self assertEmpty: critiques.
-	[ "code of the test" ] ensure: [
+	[ critiques := self myCritiquesOnClass: self class.
+	self assertEmpty: critiques ] ensure: [
 		(self class >> #setUp) removeFromSystem ]
 ]
