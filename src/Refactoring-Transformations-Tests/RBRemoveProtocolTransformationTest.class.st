@@ -13,7 +13,7 @@ RBRemoveProtocolTransformationTest >> testRefactoring [
 	refactoring := (RBAddProtocolTransformation
 		                protocol: 'transforming'
 		                inClass: #RBDummyEmptyClass) generateChanges.
-	RBRefactoryChangeManager instance performChange: refactoring changes.
+	refactoring performChanges.
 
 	refactoring := (RBRemoveProtocolTransformation
 		                protocol: 'transforming'

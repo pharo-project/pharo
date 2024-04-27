@@ -49,6 +49,16 @@ RBRefactoringChangeMock >> one [
 	^ 1
 ]
 
+{ #category : 'printing' }
+RBRefactoringChangeMock >> printOn: aStream [
+	"Generate a string representation of the receiver based on its instance variables."
+
+	super printOn: aStream.
+	aStream
+		nextPutAll: ' name: ';
+		print: name
+]
+
 { #category : 'accessing' }
 RBRefactoringChangeMock >> renameChangesForClass: oldClassName to: newClassName [
 	"I'm a mock, I do nothing"

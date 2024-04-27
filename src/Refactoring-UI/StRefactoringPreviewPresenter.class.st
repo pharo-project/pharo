@@ -205,18 +205,16 @@ StRefactoringPreviewPresenter >> initializeWindow: aWindowPresenter [
 ]
 
 { #category : 'action' }
-StRefactoringPreviewPresenter >> performChanges [ 
+StRefactoringPreviewPresenter >> performChanges [
 	"the following behavior should not be kept in the UI. 
 	It should be moved to the driver or the refactoring itself because the driver is a model of interaction.
 	May be this should be in the refactoring."
-	
-	[
-	selectedChanges do: [ :change |
-			RBRefactoryChangeManager instance
-				performChange: change;
-				addUndoPointer: RBRefactoryChangeManager nextCounter ] ] asJob
+
+	[ RBRefactoryChangeManager instance
+			performChanges: selectedChanges ]
+		asJob
 		title: 'Refactoring';
-		run.
+		run
 ]
 
 { #category : 'accessing' }
