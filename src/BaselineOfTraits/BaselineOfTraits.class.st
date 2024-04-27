@@ -42,7 +42,7 @@ BaselineOfTraits >> baseline: spec [
 
 		spec group: 'core' with: #( 'Traits' ).
 
-		spec group: 'core-traits' with: #( 'Kernel-Traits' 'Collections-Abstract-Traits' 'CodeImport-Traits' ).
+		spec group: 'core-traits' with: #( 'Kernel-Traits' 'CodeImport-Traits' ).
 
 		spec group: 'default' with: #( 'core-traits' ).
 		spec group: 'traits-tests' with: #( 'default' 'Traits-Tests' ) ]
