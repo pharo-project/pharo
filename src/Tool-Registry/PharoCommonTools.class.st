@@ -44,9 +44,9 @@ PharoCommonTools class >> menuToploOn: aBuilder [
 		help: 'Load Toplo, a widget framework on top of Bloc.';
 		order: 100;
 		action: [
-			Metacello new
+			(Smalltalk classNamed: #Metacello) new
 				baseline: 'Toplo';
-				repository: BaselineOfPharo toploRepository;
+				repository: (Smalltalk classNamed: #BaselineOfPharo) toploRepository;
 				onConflictUseIncoming;
 				load ]
 ]
