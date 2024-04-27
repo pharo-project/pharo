@@ -191,7 +191,7 @@ BaselineOfPharo >> baseline: spec [
 
 		spec
 			package: 'Gofer-Deprecated';
-			package: 'Deprecated12' ]
+			package: 'Deprecated13' ]
 ]
 
 { #category : 'actions' }
