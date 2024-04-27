@@ -98,11 +98,14 @@ RBInlineMethodTransformation >> checkSuperMessages [
 RBInlineMethodTransformation >> classOfTheMethodToInline [
 
 	^ classOfTheMethodToInline
-		ifNil: [ classOfTheMethodToInline := ( sourceMessage receiver name = 'super'
-				ifTrue: [ class superclass ]
-				ifFalse: [ class ] ) whoDefinesMethod: self inlineSelector
-			]
-		ifNotNil: [ classOfTheMethodToInline ]
+		  ifNil: [
+			  classOfTheMethodToInline := (sourceMessage receiver name
+			                               = 'super'
+				                               ifTrue: [ class superclass ]
+				                               ifFalse: [ class ])
+				                              whichClassIncludesSelector:
+				                              self inlineSelector ]
+		  ifNotNil: [ classOfTheMethodToInline ]
 ]
 
 { #category : 'adding' }

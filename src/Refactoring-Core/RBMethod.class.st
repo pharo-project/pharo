@@ -27,11 +27,12 @@ Class {
 
 { #category : 'instance creation' }
 RBMethod class >> for: aRBClass fromMethod: aCompiledMethod andSelector: aSymbol [
+
 	^ self new
-		modelClass: aRBClass;
-		method: aCompiledMethod;
-		selector: aSymbol;
-		yourself
+		  modelClass: aRBClass;
+		  compiledMethod: aCompiledMethod;
+		  selector: aSymbol;
+		  yourself
 ]
 
 { #category : 'instance creation' }
@@ -70,6 +71,17 @@ RBMethod >> compileTree: aBRMethodNode [
 ]
 
 { #category : 'accessing' }
+RBMethod >> compiledMethod [
+	^compiledMethod
+]
+
+{ #category : 'accessing' }
+RBMethod >> compiledMethod: aCompiledMethod [
+	compiledMethod := aCompiledMethod.
+	self isFromTrait: compiledMethod isFromTrait
+]
+
+{ #category : 'accessing' }
 RBMethod >> isFromTrait [
 	^ isFromTrait ifNil: [ isFromTrait := false ]
 ]
@@ -90,13 +102,15 @@ RBMethod >> literal: anObject containsReferenceTo: aSymbol [
 
 { #category : 'accessing' }
 RBMethod >> method [
+	self deprecated: 'Use compiledMethod' transformWith: '`@rec method' -> '`@rec compiledMethod'.
 	^compiledMethod
 ]
 
 { #category : 'accessing' }
 RBMethod >> method: aCompiledMethod [
-	compiledMethod := aCompiledMethod.
-	self isFromTrait: compiledMethod isFromTrait
+	self deprecated: 'Use compiledMethod' transformWith: '`@rec method: `@arg' -> '`@rec compiledMethod: `@arg'.
+	
+	self compiledMethod: aCompiledMethod
 ]
 
 { #category : 'accessing' }
