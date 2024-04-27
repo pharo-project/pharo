@@ -37,7 +37,6 @@ BaselineOfTraits >> baseline: spec [
 		spec
 			package: 'Traits';
 			package: 'Kernel-Traits' with: [ spec requires: #( 'Traits' ) ];
-			package: 'Collections-Abstract-Traits' with: [ spec requires: #( 'Traits' ) ];
 			package: 'CodeImport-Traits' with: [ spec requires: #( 'Traits' ) ];
 			package: 'Traits-Tests' with: [ spec requires: #( 'Traits' ) ].
 
