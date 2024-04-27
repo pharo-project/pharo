@@ -7,9 +7,9 @@ Class {
 	#classVars : [
 		'ExternalProjects'
 	],
-	#category : 'BaselineOfPharo-Base',
+	#category : 'BaselineOfPharo-Baseline',
 	#package : 'BaselineOfPharo',
-	#tag : 'Base'
+	#tag : 'Baseline'
 }
 
 { #category : 'private' }
