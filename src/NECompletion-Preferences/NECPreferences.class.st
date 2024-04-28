@@ -20,7 +20,8 @@ Class {
 		'popupShowWithShortcut',
 		'smartCharactersWithSingleSpace',
 		'smartCharactersWithDoubleSpace',
-		'showCompletionDetails'
+		'showCompletionDetails',
+		'overwriteAutocompletedCharacters'
 	],
 	#category : 'NECompletion-Preferences',
 	#package : 'NECompletion-Preferences'
@@ -64,6 +65,12 @@ NECPreferences class >> caseSensitive: aBoolean [
 { #category : 'defaults' }
 NECPreferences class >> defaultBackgroundColor [
 	^ self theme menuColor
+]
+
+{ #category : 'defaults' }
+NECPreferences class >> defaultOverwriteAutocompletedCharacters [
+
+	^ false
 ]
 
 { #category : 'defaults' }
@@ -142,6 +149,16 @@ NECPreferences class >> initialize [
 	popupAutomaticDelay := self defaultPopupDelay.
 	showCompletionDetails := self defaultShowCompletionDetails.
 	NECEntry spaceAfterCompletion: true
+]
+
+{ #category : 'accessing' }
+NECPreferences class >> overwriteAutocompletedCharacters [
+	^ overwriteAutocompletedCharacters
+]
+
+{ #category : 'accessing' }
+NECPreferences class >> overwriteAutocompletedCharacters: aBoolean [
+	overwriteAutocompletedCharacters := aBoolean
 ]
 
 { #category : 'accessing' }

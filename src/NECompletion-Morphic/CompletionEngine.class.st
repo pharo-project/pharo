@@ -478,8 +478,11 @@ CompletionEngine >> smartCharacterWithEvent: anEvent [
 			"if the character is not a special character"
 			self smartInverseMapping at: char ifAbsent: [ ^ nil ].	"if the character is not a closing special character do nothing"	"The character is special"
 			editor blinkPrevParen: char.
+			
+			NECPreferences overwriteAutocompletedCharacters ifFalse: [ ^ nil ].
 			(editor nextCharacterIfAbsent: [ ^ nil ]) = char
-				ifFalse: [ ^ nil ].	"do not get this test but if we comment it out we cannot type closing ) anymore"
+				ifFalse: [ ^ nil ].	
+					
 			editor selectFrom: editor startIndex + 1 to: editor startIndex.
 			self invalidateEditorMorph.
 			^ true ].
