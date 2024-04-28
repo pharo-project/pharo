@@ -30,19 +30,21 @@ RBMethodProtocolTransformationTest >> testRefactoring [
 	| refactoring |
 	self deny: (RBDummyEmptyClass hasProtocol: 'empty protocol 2').
 
-	refactoring := (RBMethodProtocolTransformation
-		                protocol: 'empty protocol 2'
-		                inMethod: #someMethod
-		                inClass: #RBDummyEmptyClass) generateChanges.
+	refactoring := RBMethodProtocolTransformation
+		               protocol: 'empty protocol 2'
+		               inMethod: #someMethod
+		               inClass: #RBDummyEmptyClass.
+	refactoring generateChanges.
 	RBRefactoryChangeManager instance performChange: refactoring changes.
 
 	self deny:
 		(RBDummyEmptyClass protocolNamed: 'empty protocol 2') isEmpty.
 
-	refactoring := (RBMethodProtocolTransformation
-		                protocol: 'empty protocol 1'
-		                inMethod: #someMethod
-		                inClass: #RBDummyEmptyClass) generateChanges.
+	refactoring := RBMethodProtocolTransformation
+		               protocol: 'empty protocol 1'
+		               inMethod: #someMethod
+		               inClass: #RBDummyEmptyClass.
+	refactoring generateChanges.
 	RBRefactoryChangeManager instance performChange: refactoring changes.
 
 	self deny: (RBDummyEmptyClass hasProtocol: 'empty protocol 2')
@@ -54,20 +56,22 @@ RBMethodProtocolTransformationTest >> testTransform [
 	| transformation |
 	self deny: (RBDummyEmptyClass hasProtocol: 'empty protocol 2').
 
-	transformation := (RBMethodProtocolTransformation new
-		                   protocol: 'empty protocol 2'
-		                   inMethod: #someMethod
-		                   inClass: #RBDummyEmptyClass) generateChanges.
+	transformation := RBMethodProtocolTransformation new
+		                  protocol: 'empty protocol 2'
+		                  inMethod: #someMethod
+		                  inClass: #RBDummyEmptyClass.
+	transformation generateChanges.
 	RBRefactoryChangeManager instance performChange:
 		transformation changes.
 
 	self deny:
 		(RBDummyEmptyClass protocolNamed: 'empty protocol 2') isEmpty.
 
-	transformation := (RBMethodProtocolTransformation new
-		                   protocol: 'empty protocol 1'
-		                   inMethod: #someMethod
-		                   inClass: #RBDummyEmptyClass) generateChanges.
+	transformation := RBMethodProtocolTransformation new
+		                  protocol: 'empty protocol 1'
+		                  inMethod: #someMethod
+		                  inClass: #RBDummyEmptyClass.
+	transformation generateChanges.
 	RBRefactoryChangeManager instance performChange:
 		transformation changes.
 	self deny: (RBDummyEmptyClass hasProtocol: 'empty protocol 2')

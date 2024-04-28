@@ -36,11 +36,11 @@ RBMoveMethodToClassSideTransformation >> accessorsFor: variableName [
 { #category : 'refactoring' }
 RBMoveMethodToClassSideTransformation >> addMethod: rbMethod to: aClass toProtocol: protocol [
 
-	(RBAddMethodTransformation
+	self generateChangesFor: (RBAddMethodTransformation
 		model: self model
 		sourceCode: rbMethod source
 		in: aClass
-		withProtocol: protocol) generateChanges
+		withProtocol: protocol)
 ]
 
 { #category : 'preconditions' }
@@ -127,7 +127,7 @@ RBMoveMethodToClassSideTransformation >> removeInstVariableReferences [
 	references do: [ :e |
 		| replacer accessorsRefactoring |
 		accessorsRefactoring := self accessorsFor: e.
-		accessorsRefactoring generateChanges.
+		self generateChangesFor: accessorsRefactoring.
 		replacer := self parseTreeRewriterClass
 			            variable: e
 			            getter: accessorsRefactoring getterMethod
@@ -138,10 +138,10 @@ RBMoveMethodToClassSideTransformation >> removeInstVariableReferences [
 { #category : 'transforming' }
 RBMoveMethodToClassSideTransformation >> removeMethod: aSelector from: aRBClass [
 
-	(RBRemoveMethodTransformation
+	self generateChangesFor: (RBRemoveMethodTransformation
 		model: self model
 		selector: aSelector
-		from: aRBClass ) generateChanges
+		from: aRBClass )
 ]
 
 { #category : 'storing' }

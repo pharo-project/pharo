@@ -100,10 +100,10 @@ RBChangeMethodNameTransformation >> removeRenamedImplementors [
 		ifTrue: [ ^ self ].
 	self implementors
 		do: [ :each | 
-			(RBRemoveMethodTransformation
+			self generateChangesFor: (RBRemoveMethodTransformation
 				model: self model
 				selector: oldSelector
-				from: each) generateChanges ]
+				from: each) ]
 ]
 
 { #category : 'support' }

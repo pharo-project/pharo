@@ -307,10 +307,10 @@ RBPullUpMethodTransformation >> removeDuplicatesOf: aSelector [
 							[removeDuplicates := self refactoringConfirmWarning:
 							'Do you want to remove duplicate subclass methods?'].
 					removeDuplicates ifTrue:[
-						(RBRemoveMethodTransformation
+						self generateChangesFor: (RBRemoveMethodTransformation
 							model: self model
 							selector: aClass
-							from: aSelector) generateChanges ]]]]
+							from: aSelector) ]]]]
 ]
 
 { #category : 'executing' }
