@@ -253,7 +253,10 @@ NECPreferences class >> settingsOn: aBuilder [
 						label: 'Smart Characters with Double Space';
 						default: '[]{}';
 				 		description: 'Enumerate the characters which are automatically inserted with a two spaces in between.'.
-					(aBuilder setting: #popupShowAutomatic)
+					(aBuilder setting: #overwriteAutocompletedCharacters)
+						label: 'Overwrite autocompleted characters';
+						default: false;
+				 		description: 'When you type a character that has been auto-completed, the editor should not insert it again but instead overwrite the existing one.'.					(aBuilder setting: #popupShowAutomatic)
 						default: self defaultPopupShowAutomatic;
 						label: 'Popup is automatic'.
 					(aBuilder setting: #popupAutomaticDelay)
