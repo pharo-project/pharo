@@ -62,6 +62,6 @@ ReDirectlyDefinesInstanceVariableCondition >> violationMessageOn: aStream [
 		  aStream
 			nextPutAll: 
 				('The variable {1} is not directly defined in the class {2}' 
-					format: { violator. className });
+					format: { violator. class name });
 			nextPut: Character cr ]
 ]
