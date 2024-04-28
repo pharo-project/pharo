@@ -244,6 +244,7 @@ RBAbstractTransformation >> generateChanges [
 	self prepareForExecution.
 	self checkPreconditions.
 	self privateTransform.
+	^ self changes
 	
 	
 ]

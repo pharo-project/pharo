@@ -13,17 +13,6 @@ Class {
 	#tag : 'Refactorings'
 }
 
-{ #category : 'scripting api - executing' }
-ReCompositeRefactoring >> generateChanges [
-	
-	self prepareForExecution.
-	self checkApplicabilityPreconditions.
-	self checkBreakingChangePreconditions.
-
-	self privateTransform.
-	^ self changes
-]
-
 { #category : 'preconditions' }
 ReCompositeRefactoring >> preconditions [
 	"Return the list of all the preconditions."
