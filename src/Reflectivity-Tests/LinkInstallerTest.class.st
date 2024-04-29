@@ -142,6 +142,29 @@ LinkInstallerTest >> testLinkOnRBProgramNode [
 ]
 
 { #category : 'permalinks' }
+LinkInstallerTest >> testLinkOnSlotDefinedBySuperclassForObject [
+
+	| link obj |
+	link := MetaLink new.
+	obj := ReflectivityExamples2Subclass2 new.
+
+	link
+		installOnVariableNamed: #instVar2
+		for: obj
+		option: #read
+		instanceSpecific: true.
+	self assert: link nodes size equals: 1.
+	self assert: (link nodes allSatisfy: [ :node | node isRead ]).
+	self assert:
+		(link nodes allSatisfy: [ :node | node name = #instVar2 ]).
+	"There is a second accessing node in a brother class (ReflectivityExamples2Sublcass) and the metalink should not be installed on this node because the class is not in the class hierarchy of ReflectivityExamples2Subclass2"
+	self assert: (link nodes noneSatisfy: [ :node |
+			 node methodNode selector == #useInstVarInSubclass ]).
+	link uninstall.
+	self assert: link nodes isEmpty
+]
+
+{ #category : 'permalinks' }
 LinkInstallerTest >> testLinkOnTempVar [
 	| methodNode link variable |
 	methodNode := (ReflectivityExamples2 >> #methodWithTempVarAccess) ast.

@@ -289,13 +289,19 @@ MetaLinkInstaller >> recursiveRemoveMethodNode: methodNode fromPermaLinks: perma
 
 { #category : 'permalinks' }
 MetaLinkInstaller >> registerAndInstallPermaLink: aPermaLink forTarget: aSlotOrVar [
-	| nodes |
-	(linksRegistry canReinstallPermaLink: aPermaLink)
-		ifFalse: [ ^ self ].
+
+	| nodes targetClass |
+	(linksRegistry canReinstallPermaLink: aPermaLink) ifFalse: [ ^ self ].
 
 	linksRegistry registerPermaLink: aPermaLink.
 
-	nodes := (aSlotOrVar accessingNodesFor: aPermaLink persistenceType) asIdentitySet.
+	targetClass := aPermaLink slotOrVarClass.
+	nodes := ((aSlotOrVar accessingNodesFor: aPermaLink persistenceType)
+		          select: [ :aNode |
+			          | nodeClass |
+			          nodeClass := aNode methodNode methodClass.
+			          targetClass == nodeClass or: [
+				          targetClass inheritsFrom: nodeClass ] ]) asIdentitySet.
 	aPermaLink targetObjectOrClass link: aPermaLink link toNodes: nodes
 ]
 
