@@ -21,6 +21,8 @@ ReIfTrueIfFalseUselessRule >> initialize [
 	super initialize.
 	self
 		replace: ' (`@condition) ifTrue: [ ^ true ] ifFalse: [ ^ false ] '
+		with: '^ (`@condition)';
+		replace: ' (`@condition) ifFalse: [ ^ false ] ifTrue: [ ^ true ] '
 		with: '^ (`@condition)'
 ]
 
