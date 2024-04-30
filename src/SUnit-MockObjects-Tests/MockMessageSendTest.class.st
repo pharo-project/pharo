@@ -27,7 +27,7 @@ MockMessageSendTest >> testBinaryMessagePrintOn [
 	
 	mockMessage printOn: testStream.
 	
-	self assert: (testStream contents includesSubstring: '#binaryMsg: true')
+	self assert: (testStream contents includesSubstring: 'binaryMsg: true')
 ]
 
 { #category : 'running' }
@@ -36,7 +36,7 @@ MockMessageSendTest >> testKeywordMessageArrayPrintOn [
 	
 	mockMessage printOn: testStream.
 	
-	self assert: (testStream contents includesSubstring: '#keyWord:msg: ( ''hello'', #(1 2 3) )')
+	self assert: (testStream contents includesSubstring: 'keyWord:msg: ( ''hello'', #(1 2 3) )')
 ]
 
 { #category : 'running' }
@@ -45,7 +45,7 @@ MockMessageSendTest >> testKeywordMessagePrintOn [
 	
 	mockMessage printOn: testStream.
 	
-	self assert: (testStream contents includesSubstring: '#keyWord:msg: ( ''hello'', ''world'' )')
+	self assert: (testStream contents includesSubstring: 'keyWord:msg: ( ''hello'', ''world'' )')
 ]
 
 { #category : 'running' }
@@ -54,5 +54,5 @@ MockMessageSendTest >> testUnaryMessagePrintOn [
 	
 	mockMessage printOn: testStream.
 	
-	self assert: (testStream contents includesSubstring: '#unaryMsg')
+	self assert: (testStream contents includesSubstring: 'unaryMsg')
 ]

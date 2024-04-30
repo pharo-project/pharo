@@ -58,8 +58,7 @@ MockMessageSend >> on: aSymbol with: anArray do: aBlock [
 { #category : 'printing' }
 MockMessageSend >> printOn: aStream [
 
-	aStream nextPutAll: 'Expected Message: '.
-	selector printOn: aStream.
+	aStream nextPutAll: selector.
 	
 	arguments isEmptyOrNil ifFalse: [
 		arguments size > 1 ifTrue: [ aStream nextPutAll: ' (' ].
