@@ -189,12 +189,14 @@ ExternalAddress >> fromAddress: aNumber [
 
 { #category : '*UnifiedFFI' }
 ExternalAddress class >> fromString: aString [
-	| result |
+	| result utf8Encoded |
+	
+	utf8Encoded := aString utf8Encoded. 
 
-	result := self allocate: aString size + 1.
+	result := self allocate: utf8Encoded size + 1.
 	(self assert: result isNotNil).
-	result writeString: aString.
-	result unsignedByteAt: aString size + 1 put: 0.
+	result writeString: utf8Encoded.
+	result unsignedByteAt: utf8Encoded size + 1 put: 0.
 	^ result
 ]
 
