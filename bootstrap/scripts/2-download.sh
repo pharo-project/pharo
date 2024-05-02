@@ -52,6 +52,7 @@ if [ ! -e "${BOOTSTRAP_DOWNLOADS}/vmBootstrap/pharo" ]; then
 fi 
 
 if [ ! -e "${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip" ]; then
+	# This link must be updated after the PharoBootstrap repo has been updated
 	download_to https://github.com/carolahp/PharoBootstrap/releases/download/symbolTableDt1/bootstrapImage.zip ${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip 
 fi 
 
