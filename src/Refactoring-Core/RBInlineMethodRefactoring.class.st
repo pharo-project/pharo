@@ -126,18 +126,15 @@ RBInlineMethodRefactoring >> checkSelectedMessage [
 { #category : 'transforming' }
 RBInlineMethodRefactoring >> checkSuperMessages [
 
-	self classOfTheMethodToInline = class
-		ifTrue: [ ^ self ].
+	self classOfTheMethodToInline = class ifTrue: [ ^ self ].
 	self classOfTheMethodToInline superclass ifNil: [ ^ self ].
-	inlineParseTree superMessages
-		do: [ :each |
-			( self classOfTheMethodToInline superclass whoDefinesMethod: each ) = ( class superclass whoDefinesMethod: each )
-				ifFalse: [ self
-						refactoringError:
-							( 'Cannot inline method since it sends a super message <1s> that is overriden'
-								expandMacrosWith: each )
-					]
-			]
+	inlineParseTree superMessages do: [ :each |
+		(self classOfTheMethodToInline superclass
+			 whichClassIncludesSelector: each)
+		= (class superclass whichClassIncludesSelector: each) ifFalse: [
+			self refactoringError:
+				('Cannot inline method since it sends a super message <1s> that is overriden'
+					 expandMacrosWith: each) ] ]
 ]
 
 { #category : 'transforming' }

@@ -15,13 +15,13 @@ ReCompositeExtractSetUpMethodRefactoring >> addReturnIfNeeded: aMethodNode [
 { #category : 'preconditions' }
 ReCompositeExtractSetUpMethodRefactoring >> applicabilityPreconditions [
 
-	^ self preconditionParsableSubtree
-	  & self preconditionNotInCascadedMessage
-	  & self preconditionTemporariesAreNotReadBeforeWritten
-	  & self preconditionAssignmentsNotReadBeforeWritten
-	  & self preconditionSubtreeDoesNotContainsReturn
-	  & (RBCondition definesSelector: #setUp in: class) not "we can remove here since add override method checks it"
-	  & (RBCondition withBlock: [class allSuperclasses anySatisfy: [ :e | e name = #TestCase ]])
+	^ { self preconditionParsableSubtree.
+	    self preconditionNotInCascadedMessage.
+	    self preconditionTemporariesAreNotReadBeforeWritten.
+	    self preconditionAssignmentsNotReadBeforeWritten.
+	    self preconditionSubtreeDoesNotContainsReturn.
+	    (RBCondition definesSelector: #setUp in: class) not. "we can remove here since add override method checks it"
+	    (RBCondition withBlock: [class allSuperclasses anySatisfy: [ :e | e name = #TestCase ]]) }
 ]
 
 { #category : 'executing' }
@@ -64,4 +64,19 @@ ReCompositeExtractSetUpMethodRefactoring >> extractSetUpCode: sourceCodeString f
 	selector := aSelector.
 	class := self model classNamed: aClassName.
 	newSelector := #setUp
+]
+
+{ #category : 'storing' }
+ReCompositeExtractSetUpMethodRefactoring >> storeOn: aStream [
+
+	aStream nextPut: $(.
+	self class storeOn: aStream.
+	aStream
+		nextPutAll: ' extractSetUpCode: ''';
+		nextPutAll: sourceCode;
+		nextPutAll: ''' fromMethod: ''';
+		nextPutAll: selector;
+		nextPutAll: ''' inClass: '.
+	class storeOn: aStream.
+	aStream nextPut: $)
 ]

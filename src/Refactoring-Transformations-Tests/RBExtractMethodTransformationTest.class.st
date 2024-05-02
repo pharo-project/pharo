@@ -199,7 +199,7 @@ RBExtractMethodTransformationTest >> testTransform [
 		                   withProtocol: #accessing.
 	transformation generateChanges.
 
-	transformation := (ReCompositeExtractMethodRefactoring
+	transformation := ReCompositeExtractMethodRefactoring
 		                   model: transformation model
 		                   extract: 'bar := 5.
 							temp := bar * bar.
