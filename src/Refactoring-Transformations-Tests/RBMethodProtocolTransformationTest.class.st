@@ -34,8 +34,7 @@ RBMethodProtocolTransformationTest >> testRefactoring [
 		               protocol: 'empty protocol 2'
 		               inMethod: #someMethod
 		               inClass: #RBDummyEmptyClass.
-	refactoring generateChanges.
-	RBRefactoryChangeManager instance performChange: refactoring changes.
+	refactoring execute.
 
 	self deny:
 		(RBDummyEmptyClass protocolNamed: 'empty protocol 2') isEmpty.
@@ -44,8 +43,7 @@ RBMethodProtocolTransformationTest >> testRefactoring [
 		               protocol: 'empty protocol 1'
 		               inMethod: #someMethod
 		               inClass: #RBDummyEmptyClass.
-	refactoring generateChanges.
-	RBRefactoryChangeManager instance performChange: refactoring changes.
+	refactoring execute.
 
 	self deny: (RBDummyEmptyClass hasProtocol: 'empty protocol 2')
 ]
@@ -60,9 +58,7 @@ RBMethodProtocolTransformationTest >> testTransform [
 		                  protocol: 'empty protocol 2'
 		                  inMethod: #someMethod
 		                  inClass: #RBDummyEmptyClass.
-	transformation generateChanges.
-	RBRefactoryChangeManager instance performChange:
-		transformation changes.
+	transformation execute.
 
 	self deny:
 		(RBDummyEmptyClass protocolNamed: 'empty protocol 2') isEmpty.
@@ -71,8 +67,6 @@ RBMethodProtocolTransformationTest >> testTransform [
 		                  protocol: 'empty protocol 1'
 		                  inMethod: #someMethod
 		                  inClass: #RBDummyEmptyClass.
-	transformation generateChanges.
-	RBRefactoryChangeManager instance performChange:
-		transformation changes.
+	transformation execute.
 	self deny: (RBDummyEmptyClass hasProtocol: 'empty protocol 2')
 ]

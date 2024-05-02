@@ -25,8 +25,7 @@ StChangesBrowserPresenter >> accept [
 
 	self okToChange ifFalse: [ ^ self ].
 
-	[ self pickedChanges do: [ :change |
-			RBRefactoryChangeManager instance performChange: change ] ] asJob
+	[ RBRefactoryChangeManager instance performChanges: self pickedChanges ] asJob
 		title: 'Refactoring';
 		run
 ]

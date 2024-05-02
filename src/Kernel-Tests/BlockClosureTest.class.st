@@ -142,6 +142,44 @@ BlockClosureTest >> testCullCullCullCull [
 		equals: 4
 ]
 
+{ #category : 'tests - loops' }
+BlockClosureTest >> testDoWhileFalse [
+
+	| result number |
+	
+	number := 1.
+	result := [ number := number + 1. number * 2 ] doWhileFalse: [ number > 5 ].
+	self assert: number equals: 6.
+	self assert: result equals: 12.
+	
+	number := 1.
+	result := [ number := number + 1. number * 2 ] doWhileFalse: [ number < 5 ].
+	self assert: number equals: 2.
+	self assert: result equals: 4.
+	
+	result := [ ] doWhileFalse: [ true ].
+	self assert: result equals: nil
+]
+
+{ #category : 'tests - loops' }
+BlockClosureTest >> testDoWhileTrue [
+
+	| result number |
+	
+	number := 1.
+	result := [ number := number + 1. number * 2 ] doWhileTrue: [ number < 5 ].
+	self assert: number equals: 5.
+	self assert: result equals: 10.
+	
+	number := 1.
+	result := [ number := number + 1. number * 2 ] doWhileTrue: [ number > 5 ].
+	self assert: number equals: 2.
+	self assert: result equals: 4.
+	
+	result := [ ] doWhileTrue: [ false ].
+	self assert: result equals: nil
+]
+
 { #category : 'tests - evaluating' }
 BlockClosureTest >> testHasNonLocalReturn [
 

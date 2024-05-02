@@ -7,7 +7,8 @@ Class {
 	#traits : 'TRefactoringCommandSupport',
 	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
-		'selectedTextInterval'
+		'selectedTextInterval',
+		'refactoringScopes'
 	],
 	#category : 'SystemCommands-SourceCodeCommands',
 	#package : 'SystemCommands-SourceCodeCommands'
@@ -16,7 +17,7 @@ Class {
 { #category : 'testing' }
 SycExtractMethodCommand class >> canBeExecutedInContext: aSourceCodeContext [
 
-	^ false. "(super canBeExecutedInContext: aSourceCodeContext) and: [
+	^ true. "(super canBeExecutedInContext: aSourceCodeContext) and: [
 		  aSourceCodeContext isMethodSelected not ]"
 ]
 
@@ -30,19 +31,13 @@ SycExtractMethodCommand class >> methodEditorShortcutActivation [
 { #category : 'converting' }
 SycExtractMethodCommand >> asRefactorings [
 
-	| selectedInterval refactoring |
-	selectedInterval := selectedTextInterval ifEmpty: [
-		                    sourceNode sourceInterval ].
+	^{self createRefactoring}
+]
 
-	refactoring := RBExtractMethodTransformation
-		               extract: (method sourceCode
-				                copyFrom: selectedInterval first
-				                to: selectedInterval last)
-		               from: method selector
-		               to: self getNewSelector selector
-		               in: method origin name.
-	self setUpOptionsOf: refactoring.
-	^ { refactoring }
+{ #category : 'converting' }
+SycExtractMethodCommand >> createRefactoring [
+	"not used"
+	^ self
 ]
 
 { #category : 'accessing' }
@@ -53,7 +48,25 @@ SycExtractMethodCommand >> defaultMenuIconName [
 { #category : 'accessing' }
 SycExtractMethodCommand >> defaultMenuItemName [
 
-	^ 'Extract method'
+	^ '(T) Extract method'
+]
+
+{ #category : 'converting' }
+SycExtractMethodCommand >> execute [
+
+	| selectedInterval driver |
+	selectedInterval := selectedTextInterval ifEmpty: [
+		                    sourceNode sourceInterval ].
+	driver := ReExtractMethodDriver new 
+							scopes: refactoringScopes;
+							model: model;
+		               extract: (method sourceCode
+				                		copyFrom: selectedInterval first
+				               			to: selectedInterval last)
+		               from: method
+		               in: method origin.
+	driver runRefactoring.
+	
 ]
 
 { #category : 'converting' }
@@ -74,11 +87,27 @@ SycExtractMethodCommand >> getNewSelector [
 	^ methodName
 ]
 
+{ #category : 'testing' }
+SycExtractMethodCommand >> isComplexRefactoring [
+	^ false
+]
+
 { #category : 'execution' }
 SycExtractMethodCommand >> readParametersFromContext: aSourceCodeContext [
 	super readParametersFromContext: aSourceCodeContext.
 	self setUpModelFromContext: aSourceCodeContext.
 	selectedTextInterval := aSourceCodeContext selectedTextInterval
+]
+
+{ #category : 'initialization' }
+SycExtractMethodCommand >> setUpModelFromContext: aContext [
+	| browser scope |
+	
+	browser := aContext browser.
+	scope := browser defaultNavigationScope.
+	scope isCurrentImage ifTrue: [ scope := ScopesManager defaultScope ].
+	model := RBNamespace onEnvironment: scope asRBEnvironment.
+	refactoringScopes := aContext refactoringScopes.
 ]
 
 { #category : 'execution' }

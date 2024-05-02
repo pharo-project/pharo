@@ -14,7 +14,7 @@ RBRemoveProtocolTransformationTest >> testRefactoring [
 		                protocol: 'transforming'
 		                inClass: #RBDummyEmptyClass).
 	refactoring generateChanges.
-	RBRefactoryChangeManager instance performChange: refactoring changes.
+	refactoring performChanges.
 
 	refactoring := (RBRemoveProtocolTransformation
 		                protocol: 'transforming'

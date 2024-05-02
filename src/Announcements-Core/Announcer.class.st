@@ -27,16 +27,22 @@ Class {
 Announcer >> announce: anAnnouncement [
 
 	^ self isSuspended
-		  ifFalse: [
-			  | announcement |
-			  announcement := anAnnouncement asAnnouncement.
+		ifFalse: [
+			| announcement |
+			announcement := anAnnouncement asAnnouncement.
 
-			  "If the user required to prevent the current announcement, we stop here."
-			  (self preventedAnnouncements handlesAnnouncement: announcement) ifTrue: [ ^ self ].
+			"Stop if there isn't any subscriber"
+			registry isEmpty ifTrue: [ ^ announcement ].
 
-			  registry ifNotNil: [ registry deliver: announcement ].
-			  announcement ]
-		  ifTrue: [ storedAnnouncements ifNotNil: [ storedAnnouncements add: anAnnouncement ] ]
+			"If the user required to prevent the current announcement, we stop here."
+			(self preventedAnnouncements handlesAnnouncement: announcement)
+				ifTrue: [ ^ announcement ].
+
+			registry deliver: announcement.
+			announcement ]
+		ifTrue: [
+			storedAnnouncements ifNotNil: [
+				storedAnnouncements add: anAnnouncement ] ]
 ]
 
 { #category : 'private' }

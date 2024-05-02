@@ -15,7 +15,6 @@ Class {
 		'cachedDescent',
 		'subPixelPositioned',
 		'symbolFont',
-		'mutex',
 		'characterWidthCache'
 	],
 	#pools : [
@@ -661,12 +660,6 @@ FreeTypeFont >> mode41GlyphOf: aCharacter colorValue: aColorValue mono: monoBool
 				subpixelPosition: sub
 				font: self
 				scale: scale ]
-]
-
-{ #category : 'accessing' }
-FreeTypeFont >> mutex [
-
-	^ mutex ifNil: [ mutex := Semaphore forMutualExclusion ]
 ]
 
 { #category : 'measuring' }

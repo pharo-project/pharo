@@ -59,10 +59,8 @@ SycRefactoringPreviewPresenter class >> title [
 SycRefactoringPreviewPresenter >> accept [
 	self okToChange ifFalse: [ ^ self ].
 	
-	[ self pickedChanges do: [ :change |
-		RBRefactoryChangeManager instance
-			performChange: change;
-			addUndoPointer: (RBRefactoryChangeManager nextCounter) ] ] asJob
+	[ RBRefactoryChangeManager instance
+			performChanges: self pickedChanges ] asJob
 		title: 'Refactoring';
 		run
 ]

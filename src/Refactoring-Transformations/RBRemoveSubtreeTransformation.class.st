@@ -26,23 +26,23 @@ Class {
 }
 
 { #category : 'api' }
-RBRemoveSubtreeTransformation class >> code: aString from: aSelector in: aClass [
+RBRemoveSubtreeTransformation class >> model: aRBModel remove: aString fromMethod: aSelector inClass: aClass [
 
 	^ self new
-		code: aString
-		from: aSelector
-		in: aClass;
+		model: aRBModel;
+		remove: aString
+		fromMethod: aSelector
+		inClass: aClass;
 		yourself
 ]
 
 { #category : 'api' }
-RBRemoveSubtreeTransformation class >> model: aRBModel code: aString from: aSelector in: aClass [
+RBRemoveSubtreeTransformation class >> remove: aString fromMethod: aSelector inClass: aClass [
 
 	^ self new
-		model: aRBModel;
-		code: aString
-		from: aSelector
-		in: aClass;
+		remove: aString
+		fromMethod: aSelector
+		inClass: aClass;
 		yourself
 ]
 
@@ -76,14 +76,6 @@ RBRemoveSubtreeTransformation >> checkPreconditions [
 	self eagerlyCheckApplicabilityPreconditions 
 ]
 
-{ #category : 'api' }
-RBRemoveSubtreeTransformation >> code: aString from: aSelector in: aClassName [
-
-	self className: aClassName.
-	selector := aSelector.
-	sourceCode := aString
-]
-
 { #category : 'executing' }
 RBRemoveSubtreeTransformation >> privateTransform [
 
@@ -104,6 +96,14 @@ RBRemoveSubtreeTransformation >> privateTransform [
 	"(subtree := parseTree extractSubtreeWith: sourceCode) ifNil: [ ^ self ].
 	parseTree := parseTree removeSubtree: subtree.
 	self definingClass compileTree: parseTree"
+]
+
+{ #category : 'api' }
+RBRemoveSubtreeTransformation >> remove: aString fromMethod: aSelector inClass: aClassName [
+
+	self className: aClassName.
+	selector := aSelector.
+	sourceCode := aString
 ]
 
 { #category : 'private' }
