@@ -4,7 +4,7 @@ When I am executed I will disable the debug point to which I am attached.
 "
 Class {
 	#name : 'OnceBehavior',
-	#superclass : 'DebugPointSideEffectBehavior',
+	#superclass : 'DebugPointMetaBehavior',
 	#category : 'DebugPoints-Behaviors',
 	#package : 'DebugPoints',
 	#tag : 'Behaviors'
