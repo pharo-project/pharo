@@ -106,6 +106,8 @@ Symbol class >> initialize [
 { #category : 'symbol table' }
 Symbol class >> intern: aStringOrSymbol [
 
+	SymbolTableSemaphore enabled ifFalse: [
+		^ self rawIntern: aStringOrSymbol ].
 	SymbolTableSemaphore singleInstance critical: [
 		^ self rawIntern: aStringOrSymbol ]
 ]
