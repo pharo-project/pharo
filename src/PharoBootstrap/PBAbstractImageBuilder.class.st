@@ -713,6 +713,10 @@ PBAbstractImageBuilder >> initializeImage [
 
 			process := objectSpace createProcessWithPriority: 40 doing: 'PharoBootstrapInitialization initializeCommandLineHandlerAndErrorHandling'.
 			objectSpace installAsActiveProcess: process.
+			
+			"Enable protection of SymbolTable from concurrent access"
+			self bootstrapInterpreter evaluateCode: 'SymbolTableSemaphore enable'
+
 
 			self followForwardingPointers.
 
