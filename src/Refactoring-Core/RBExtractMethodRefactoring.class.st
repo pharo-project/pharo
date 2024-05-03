@@ -323,22 +323,21 @@ RBExtractMethodRefactoring >> isMethodEquivalentTo: aSelector [
 
 { #category : 'transforming' }
 RBExtractMethodRefactoring >> isParseTreeEquivalentTo: aSelector [
-
 	| tree definingClass |
-	definingClass := class whichClassIncludesSelector: aSelector.
+	definingClass := class whoDefinesMethod: aSelector.
 	tree := definingClass parseTreeForSelector: aSelector.
-	tree ifNil: [ ^ false ].
-	tree isPrimitive ifTrue: [ ^ false ].
+	tree ifNil: [^false].
+	tree isPrimitive ifTrue: [^false].
 	needsReturn ifFalse: [ tree := self removeReturnsOf: tree ].
-	(tree body
-		 equalTo: extractedParseTree body
-		 exceptForVariables: (tree arguments collect: [ :each | each name ]))
-		ifFalse: [ ^ false ].
-	(definingClass = class or: [
-		 (tree superMessages anySatisfy: [ :each |
-			  (class superclass whichClassIncludesSelector: aSelector)
-			  ~= (definingClass superclass whichClassIncludesSelector: each) ])
-			 not ]) ifFalse: [ ^ false ].
+	(tree body equalTo: extractedParseTree body
+		exceptForVariables: (tree arguments collect: [:each | each name]))
+			ifFalse: [^false].
+	(definingClass = class or:
+			[(tree superMessages anySatisfy:
+					[:each |
+					(class superclass whichClassIncludesSelector: aSelector)
+						~= (definingClass superclass whichClassIncludesSelector: each)]) not])
+		ifFalse: [^false].
 	^ true
 ]
 

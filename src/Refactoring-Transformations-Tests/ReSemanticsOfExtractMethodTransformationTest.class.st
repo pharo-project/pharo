@@ -1,5 +1,5 @@
 Class {
-	#name : 'ReSemanticsOfCompositeExtractMethodRefactoringTest',
+	#name : 'ReSemanticsOfExtractMethodTransformationTest',
 	#superclass : 'RBAbstractTransformationTest',
 	#instVars : [
 		'class'
@@ -10,21 +10,20 @@ Class {
 }
 
 { #category : 'private - testing' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> extractSource: sourceToExtract fromSource: source withNewSelector: newSelector [
+ReSemanticsOfExtractMethodTransformationTest >> extractSource: sourceToExtract fromSource: source withNewSelector: newSelector [
 
-	| method |
-	method := class compile: source classified: '#test data'.
+	class compile: source classified: '#test data'.
 
-	^ ReCompositeExtractMethodRefactoring new
+	^ RBExtractMethodTransformation new
 		  model: model;
-		  extract: sourceToExtract
-		  from: method selector
+		  extractSource: sourceToExtract
+		  fromMethodSource: source
 		  to: newSelector
 		  in: class name
 ]
 
 { #category : 'running' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> setUp [
+ReSemanticsOfExtractMethodTransformationTest >> setUp [
 
 	| package |
 	super setUp.
@@ -40,7 +39,7 @@ ReSemanticsOfCompositeExtractMethodRefactoringTest >> setUp [
 ]
 
 { #category : 'tests' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testArgumentIsNotUsedInExtractedCodeExpectGotExtracted [
+ReSemanticsOfExtractMethodTransformationTest >> testArgumentIsNotUsedInExtractedCodeExpectGotExtracted [
 
 	| transformation |
 	transformation := self 
@@ -69,7 +68,7 @@ withNewSelector: #extractedMethod.
 ]
 
 { #category : 'tests' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testArgumentUsedInExtractedCodeExpectGotExtracted [
+ReSemanticsOfExtractMethodTransformationTest >> testArgumentUsedInExtractedCodeExpectGotExtracted [
 
 	| transformation |
 	transformation := self 
@@ -98,7 +97,7 @@ withNewSelector: #extractedMethod:.
 ]
 
 { #category : 'tests' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testBeginningExpressionsOfASequenceGotExtracted [
+ReSemanticsOfExtractMethodTransformationTest >> testBeginningExpressionsOfASequenceGotExtracted [
 
 	| transformation |
 	transformation := self 
@@ -120,38 +119,7 @@ self
 ]
 
 { #category : 'tests' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testBeginningExpressionsOfASequenceGotExtracted2 [
-
-	| transformation |
-	transformation := self 
-extractSource: 'self bar.
-		self end.' 
-fromSource: 'm 
-		self foo.
-		self bar.
-		self end.
-		self zoo'
-withNewSelector: #extractedMethod.
-	transformation generateChanges.
-	
-self 
-		assert: (class parseTreeForSelector: #extractedMethod)
-		equals: (self parseMethod: ' extractedMethod
-
-	self bar.
-	^ self end').
-		
-	self 
-		assert: (class parseTreeForSelector: #m) 
-		equals: (self parseMethod: 'm
-
-	self foo.
-	self extractedMethod.
-	self zoo')
-]
-
-{ #category : 'tests' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testCompleteSequenceGotExtracted [
+ReSemanticsOfExtractMethodTransformationTest >> testCompleteSequenceGotExtracted [
 
 	| transformation |
 	transformation := self 
@@ -173,35 +141,7 @@ self
 ]
 
 { #category : 'tests' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testExtractClass [
-
-	| transformation |
-	transformation := self 
-extractSource: 'Point' 
-fromSource: 'm: arg
-		| a |
-		a := Point new.
-		^ a'
-withNewSelector: #extractedMethod.
-
-	transformation generateChanges.
-
-	self 
-		assert: (class parseTreeForSelector: #extractedMethod)
-		equals: (self parseMethod: 'extractedMethod 
-					
-					^ Point').
-		
-	self 
-		assert: (class parseTreeForSelector: #m:)
-		equals: (self parseMethod: 'm: arg
-				| a |
-				a := self extractedMethod new.
-				^ a')
-]
-
-{ #category : 'tests' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testExtractClassFromAssignmentExpectExtracted [
+ReSemanticsOfExtractMethodTransformationTest >> testExtractClassFromAssignmentExpectExtracted [
 
 	| transformation |
 	transformation := self 
@@ -225,7 +165,7 @@ self
 ]
 
 { #category : 'tests' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testExtractClassFromMessageExpectGotExtracted [
+ReSemanticsOfExtractMethodTransformationTest >> testExtractClassFromMessageExpectGotExtracted [
 
 	| transformation |
 	transformation := self 
@@ -248,7 +188,7 @@ withNewSelector: #extractedMethod.
 ]
 
 { #category : 'tests' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testExtractLiteralExpectGotExtracted [
+ReSemanticsOfExtractMethodTransformationTest >> testExtractLiteralExpectGotExtracted [
 
 	| transformation |
 	transformation := self 
@@ -271,7 +211,7 @@ withNewSelector: #extractedMethod.
 ]
 
 { #category : 'tests' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testExtractSequenceEndingWithReturnExpectExtracted [
+ReSemanticsOfExtractMethodTransformationTest >> testExtractSequenceEndingWithReturnExpectExtracted [
 
 	| transformation |
 	transformation := self 
@@ -297,7 +237,7 @@ self
 ]
 
 { #category : 'tests' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testExtractSuperExpectExtracted [
+ReSemanticsOfExtractMethodTransformationTest >> testExtractSuperExpectExtracted [
 
 	| transformation |
 	transformation := self 
@@ -319,7 +259,7 @@ self
 ]
 
 { #category : 'tests - failures' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testExtractedCodeHasMoreThanOneExitPointExpectFailure [
+ReSemanticsOfExtractMethodTransformationTest >> testExtractedCodeHasMoreThanOneExitPointExpectFailure [
 
 	| transformation |
 	transformation := self 
@@ -335,7 +275,7 @@ withNewSelector: #extractedMethod:.
 ]
 
 { #category : 'tests - failures' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testExtractedCodeHasTwoExitPointExpectFailure [
+ReSemanticsOfExtractMethodTransformationTest >> testExtractedCodeHasTwoExitPointExpectFailure [
 
 	| transformation |
 	transformation := self 
@@ -350,7 +290,7 @@ withNewSelector: #extractedMethod:.
 ]
 
 { #category : 'tests' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testInstanceVariableIsAssignedInExtractedCodeExpectGotExtracted [
+ReSemanticsOfExtractMethodTransformationTest >> testInstanceVariableIsAssignedInExtractedCodeExpectGotExtracted [
 
 	| transformation |
 	transformation := self 
@@ -373,7 +313,7 @@ withNewSelector: #extractedMethod.
 ]
 
 { #category : 'tests' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testInstanceVariableIsUsedInExtractedCodeExpectGotExtracted [
+ReSemanticsOfExtractMethodTransformationTest >> testInstanceVariableIsUsedInExtractedCodeExpectGotExtracted [
 
 	| transformation |
 	transformation := self 
@@ -402,7 +342,7 @@ withNewSelector: #extractedMethod.
 ]
 
 { #category : 'tests' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testMiddleExpressionsOfASequenceGotExtracted [
+ReSemanticsOfExtractMethodTransformationTest >> testMiddleExpressionsOfASequenceGotExtracted [
 
 	| transformation |
 	transformation := self 
@@ -424,7 +364,7 @@ self
 ]
 
 { #category : 'tests' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testMultipleInstanceVariableAssignmentsInExtractedCodeExpectGotExtracted [
+ReSemanticsOfExtractMethodTransformationTest >> testMultipleInstanceVariableAssignmentsInExtractedCodeExpectGotExtracted [
 
 	| transformation |
 	transformation := self 
@@ -449,7 +389,7 @@ withNewSelector: #extractedMethod.
 ]
 
 { #category : 'tests' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testMultipleTempAssignmentWithOneReferencedAfterExtractedCodeExpectGotExtracted [
+ReSemanticsOfExtractMethodTransformationTest >> testMultipleTempAssignmentWithOneReferencedAfterExtractedCodeExpectGotExtracted [
 
 	| transformation |
 	transformation := self 
@@ -480,7 +420,7 @@ withNewSelector: #extractedMethod.
 ]
 
 { #category : 'tests - failures' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testMultipleTempAssignmentWithReferencesAfterExtractedCodeExpectFailure [
+ReSemanticsOfExtractMethodTransformationTest >> testMultipleTempAssignmentWithReferencesAfterExtractedCodeExpectFailure [
 
 	| transformation |
 	transformation := self 
@@ -497,7 +437,7 @@ withNewSelector: #extractedMethod.
 ]
 
 { #category : 'tests' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testMultipleTempAssignmentWithoutReferencesAfterExtractedCodeExpectGotExtracted [
+ReSemanticsOfExtractMethodTransformationTest >> testMultipleTempAssignmentWithoutReferencesAfterExtractedCodeExpectGotExtracted [
 
 	| transformation |
 	transformation := self 
@@ -525,7 +465,7 @@ self
 ]
 
 { #category : 'tests' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testTempAssignmentAndReferenceAfterExtractedCodeExpectGotExtracted [
+ReSemanticsOfExtractMethodTransformationTest >> testTempAssignmentAndReferenceAfterExtractedCodeExpectGotExtracted [
 
 	| transformation |
 	transformation := self 
@@ -555,7 +495,7 @@ self
 ]
 
 { #category : 'tests' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testTempAssignmentAndReferenceExpectGotExtracted [
+ReSemanticsOfExtractMethodTransformationTest >> testTempAssignmentAndReferenceExpectGotExtracted [
 
 	| transformation |
 	transformation := self 
@@ -581,7 +521,7 @@ self
 ]
 
 { #category : 'tests' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testTempAssignmentAndReturnWithTempReferenceExpectGotExtracted [
+ReSemanticsOfExtractMethodTransformationTest >> testTempAssignmentAndReturnWithTempReferenceExpectGotExtracted [
 
 	| transformation |
 	transformation := self 
@@ -607,7 +547,7 @@ self
 ]
 
 { #category : 'tests' }
-ReSemanticsOfCompositeExtractMethodRefactoringTest >> testTwoLastExpressionsOfASequenceGotExtracted [
+ReSemanticsOfExtractMethodTransformationTest >> testTwoLastExpressionsOfASequenceGotExtracted [
 
 	| transformation |
 	transformation := self 

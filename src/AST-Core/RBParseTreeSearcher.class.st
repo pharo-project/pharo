@@ -145,29 +145,25 @@ RBParseTreeSearcher class >> setterMethod: aVarName [
 
 { #category : 'accessing' }
 RBParseTreeSearcher class >> treeMatching: aString in: aParseTree [
-	self new
+	(self new)
 		matches: aString do: [:aNode :answer | ^aNode];
 		executeTree: aParseTree.
 	^nil
 ]
 
 { #category : 'accessing' }
-RBParseTreeSearcher class >> treeMatchingStatements: subtreeSourceString in: aParseTree [
-	| notifier subtree |
+RBParseTreeSearcher class >> treeMatchingStatements: aString in: aParseTree [
+	| notifier tree |
 	notifier := self new.
-	subtree := RBParser parseExpression: subtreeSourceString.
-	subtree isSequence
-		ifFalse: [subtree := RBSequenceNode statements: (Array with: subtree)].
-	subtree temporaries: (Array with: (RBPatternVariableNode named: '`@temps')).
-	subtree addNodeFirst: (RBPatternVariableNode named: '`@.S1').
-	subtree lastIsReturn
-		ifFalse: [subtree addNode: (RBPatternVariableNode named: '`@.S2')].
-	notifier matchesTree: subtree
-		do: [:aNode :answer |
-				| sub | 
-				sub := RBParser parseExpression: subtreeSourceString.
-				sub parent: aNode parent. 
-				^ sub].
+	tree := RBParser parseExpression: aString.
+	tree isSequence
+		ifFalse: [tree := RBSequenceNode statements: (Array with: tree)].
+	tree temporaries: (Array with: (RBPatternVariableNode named: '`@temps')).
+	tree addNodeFirst: (RBPatternVariableNode named: '`@.S1').
+	tree lastIsReturn
+		ifFalse: [tree addNode: (RBPatternVariableNode named: '`@.S2')].
+	notifier matchesTree: tree
+		do: [:aNode :answer | ^RBParser parseExpression: aString].
 	notifier executeTree: aParseTree.
 	^nil
 ]

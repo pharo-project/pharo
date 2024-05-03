@@ -18,7 +18,7 @@ RBExtractMethodTransformationTest >> testExtractUsingExistingMethodRefactoring [
 
 	| transformation class |
 	model := self modelOnClasses: { RBTransformationRuleTestData }.
-	transformation := ReCompositeExtractMethodRefactoring
+	transformation := RBExtractMethodTransformation
 		                  model: model
 		                  extract: 'rewriteRule tree printString'
 		                  from: #checkMethod:
@@ -47,12 +47,12 @@ RBExtractMethodTransformationTest >> testExtractUsingExistingMethodRefactoring [
 { #category : 'tests - failures' }
 RBExtractMethodTransformationTest >> testFailureBadInterval [
 
-	self shouldFail: (ReCompositeExtractMethodRefactoring
+	self shouldFail: (RBExtractMethodTransformation
 							extract: 'whatever'
 							from: #testMethod to: #bla
 							in: #RBClassDataForRefactoringTest).
 
-	self shouldFail: (ReCompositeExtractMethodRefactoring
+	self shouldFail: (RBExtractMethodTransformation
 							extract: (self sourceCodeAt: (80 to: 147)
 								forMethod: #subclassOf:overrides: in: RBBasicLintRuleTestData class)
 							from: #subclassOf:overrides: to: #bla
@@ -62,7 +62,7 @@ RBExtractMethodTransformationTest >> testFailureBadInterval [
 { #category : 'tests - failures' }
 RBExtractMethodTransformationTest >> testFailureCannotExtractProperSubtreeFromInterval [
 
-	self shouldFail: (ReCompositeExtractMethodRefactoring
+	self shouldFail: (RBExtractMethodTransformation
 			 extract: (self
 					  sourceCodeAt: (80 to: 269)
 					  forMethod: #subclassOf:overrides:
@@ -71,7 +71,7 @@ RBExtractMethodTransformationTest >> testFailureCannotExtractProperSubtreeFromIn
 			 to: #foo
 			 in: #'RBBasicLintRuleTestData class').
 
-	self shouldFail: (ReCompositeExtractMethodRefactoring
+	self shouldFail: (RBExtractMethodTransformation
 			 extract: (self
 					  sourceCodeAt: (53 to: 56)
 					  forMethod: #subclassOf:overrides:
@@ -84,7 +84,7 @@ RBExtractMethodTransformationTest >> testFailureCannotExtractProperSubtreeFromIn
 { #category : 'tests' }
 RBExtractMethodTransformationTest >> testFailureCannotExtractTwoAssignmentsToTemporaries [
 
-	self shouldFail: (ReCompositeExtractMethodRefactoring
+	self shouldFail: (RBExtractMethodTransformation
 			 extract: (self
 					  sourceCodeAt: (77 to: 222)
 					  forMethod: #subclassResponsibilityNotDefined
@@ -97,7 +97,7 @@ RBExtractMethodTransformationTest >> testFailureCannotExtractTwoAssignmentsToTem
 { #category : 'tests - failures' }
 RBExtractMethodTransformationTest >> testFailureWhenMethodDoesNotExist [
 
-	self shouldFail: (ReCompositeExtractMethodRefactoring
+	self shouldFail: (RBExtractMethodTransformation
 			extract: 'bla'
 			from: #checkClass1:
 			to: #bla
@@ -121,7 +121,7 @@ RBExtractMethodTransformationTest >> testFailureWhenTemporaryReadBeforeWritten [
 
 	self
 		should: [
-			(ReCompositeExtractMethodRefactoring
+			(RBExtractMethodTransformation
 				 model: model
 				 extract: '
 			bar := temp.
@@ -140,7 +140,7 @@ RBExtractMethodTransformationTest >> testNeedsReturn [
 
 	| refactoring class |
 	model := self modelOnClasses: { RBDummyLintRuleTest }.
-	refactoring := [(ReCompositeExtractMethodRefactoring
+	refactoring := [(RBExtractMethodTransformation
 		                model: model
 		                extract: 'rules isEmpty ifTrue: [^self].
 						rules size == 1 ifTrue: [^rules first viewResults]'
@@ -166,20 +166,6 @@ RBExtractMethodTransformationTest >> testNeedsReturn [
 				^ rules size == 1 ifTrue: [^rules first viewResults]')
 ]
 
-{ #category : 'tests - utilities' }
-RBExtractMethodTransformationTest >> testSelectorStartingFromArgumentsSize [
-
-	self 
-		assert: (ReCompositeExtractMethodRefactoring new selectorStartingFrom: 'foo' argumentsSize: 2)
-		equals: #'foo_:_:'.
-	self 
-		assert: (ReCompositeExtractMethodRefactoring new selectorStartingFrom: 'foo' argumentsSize: 0)
-		equals: #foo.
-	self 
-		assert: (ReCompositeExtractMethodRefactoring new selectorStartingFrom: '' argumentsSize: 2)
-		equals: #_:_:.
-]
-
 { #category : 'tests' }
 RBExtractMethodTransformationTest >> testTransform [
 
@@ -197,7 +183,7 @@ RBExtractMethodTransformationTest >> testTransform [
 		                   in: self changeMockClass name
 		                   withProtocol: #accessing) generateChanges.
 
-	transformation := (ReCompositeExtractMethodRefactoring
+	transformation := (RBExtractMethodTransformation
 		                   model: transformation model
 		                   extract: 'bar := 5.
 							temp := bar * bar.
@@ -230,7 +216,7 @@ RBExtractMethodTransformationTest >> testWhenTemporaryVariableBecomesArgumentOfE
 
 	| refactoring class |
 	model := self modelOnClasses: { RBDummyLintRuleTest }.
-	refactoring := (ReCompositeExtractMethodRefactoring
+	refactoring := (RBExtractMethodTransformation
 							 model: model
 		                extract: (self
 				                 sourceCodeAt: (78 to: 197)
@@ -265,7 +251,7 @@ RBExtractMethodTransformationTest >> testWithArgument [
 	| refactoring class |
 	model := self modelOnClasses: { RBTransformationRuleTestData }.
 
-	refactoring := (ReCompositeExtractMethodRefactoring
+	refactoring := (RBExtractMethodTransformation
 		                model: model
 		                extract:
 			                '(RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
@@ -306,7 +292,7 @@ RBExtractMethodTransformationTest >> testWithTemporariesSelected [
 		compile: 'foo [| temp | temp := 5. temp * temp] value'
 		classified: #( #accessing ).
 
-	refactoring := (ReCompositeExtractMethodRefactoring
+	refactoring := (RBExtractMethodTransformation
 		                model: model
 		                extract: '| temp | temp := 5. temp * temp'
 		                from: #foo
@@ -338,7 +324,7 @@ RBExtractMethodTransformationTest >> testWithTemporaryAssigned [
 			^temp * temp'.
 	class compile: method classified: #( #accessing ).
 
-	refactoring := (ReCompositeExtractMethodRefactoring
+	refactoring := (RBExtractMethodTransformation
 		                model: model
 		                extract: 'bar := 5.
 			temp := bar * bar.
@@ -363,7 +349,7 @@ RBExtractMethodTransformationTest >> testWithTemporaryVariable [
 
 	| refactoring class |
 	model := self modelOnClasses: { RBTransformationRuleTestData }.
-	refactoring := (ReCompositeExtractMethodRefactoring
+	refactoring := (RBExtractMethodTransformation
 		                model: model
 		                extract: (self
 				                 sourceCodeAt: (22 to: 280)

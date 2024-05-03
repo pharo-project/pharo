@@ -99,8 +99,8 @@ RBAbstractClass >> allInstanceVariableNames [
 RBAbstractClass >> allMethods [
 
 	^ self allSelectors
-		  collect: [ :selector | self methodFor: selector ]
-		  thenSelect: [ :each | each isNotNil ]
+		collect: [ :selector | self methodFor: selector ]
+		thenSelect: #isNotNil
 ]
 
 { #category : 'accessing' }
@@ -153,7 +153,7 @@ RBAbstractClass >> allSuperclasses [
 
 { #category : 'accessing' }
 RBAbstractClass >> allSuperclassesUntil: aClass [
-	"aClass is excluded."
+
 	| supers sprClass |
 	supers := OrderedCollection new.
 	sprClass := self superclass.
@@ -585,7 +585,8 @@ RBAbstractClass >> parseTreeFor: aSymbol [
 RBAbstractClass >> parseTreeForSelector: aSelector [
 
 	| class method |
-	class := self whichClassIncludesSelector: aSelector.
+
+	class := self whoDefinesMethod: aSelector.
 	class ifNil: [ ^ nil ].
 	method := class methodFor: aSelector.
 	method ifNil: [ ^ nil ].
@@ -734,9 +735,10 @@ RBAbstractClass >> soleInstance [
 RBAbstractClass >> sourceCodeFor: aSelector [
 
 	| class |
-	class := self whichClassIncludesSelector: aSelector.
+
+	class := self whoDefinesMethod: aSelector.
 	class ifNil: [ ^ nil ].
-	^ (class methodFor: aSelector) source
+	^ ( class methodFor: aSelector ) source
 ]
 
 { #category : 'storing' }
@@ -813,8 +815,9 @@ RBAbstractClass >> typeOfClassVariable: aSymbol [
 RBAbstractClass >> whichClassIncludesSelector: aSelector [
 
 	(self directlyDefinesMethod: aSelector) ifTrue: [ ^ self ].
-	^ self superclass ifNotNil: [
-		  self superclass whichClassIncludesSelector: aSelector ]
+	^ self superclass isNil
+		  ifFalse: [ self superclass whichClassIncludesSelector: aSelector ]
+		  ifTrue: [ nil ]
 ]
 
 { #category : 'method accessing' }
@@ -954,11 +957,10 @@ RBAbstractClass >> whoDefinesInstanceVariable: aString [
 
 { #category : 'method accessing' }
 RBAbstractClass >> whoDefinesMethod: aSelector [
-
-	self
-		deprecated: 'Use whichClassIncludesSelector: instead of current one'
-		transformWith: '`@rec whoDefinesMethod: `@arg' -> '`@rec whichClassIncludesSelector: `@arg'.
-	^ self whichClassIncludesSelector: aSelector 
+	| sprClass |
+	(self directlyDefinesMethod: aSelector) ifTrue: [ ^ self ].
+	sprClass := self superclass.
+	^ sprClass ifNotNil: [ sprClass whoDefinesMethod: aSelector ]
 ]
 
 { #category : 'accessing' }
@@ -977,8 +979,7 @@ RBAbstractClass >> withAllSuperclasses [
 
 { #category : 'accessing' }
 RBAbstractClass >> withAllSuperclassesUntil: aClass [
-	"Excluding aClass"
-	
+
 	^ (self allSuperclassesUntil: aClass)
 		add: self;
 		yourself

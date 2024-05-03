@@ -89,11 +89,8 @@ RBVariableNode >> copyInContext: aDictionary [
 
 { #category : 'comparing' }
 RBVariableNode >> equalTo: anObject withMapping: aDictionary [
-	"If we have two variables make sure that the dictionary associates both names."
-	
-	^ self class = anObject class 
-		and: [ (aDictionary at: self name ifAbsentPut: [ anObject name ])
-		  = anObject name ]
+	^self class = anObject class and:
+			[(aDictionary at: self name ifAbsentPut: [anObject name]) = anObject name]
 ]
 
 { #category : 'testing' }

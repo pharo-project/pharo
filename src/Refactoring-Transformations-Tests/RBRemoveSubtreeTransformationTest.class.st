@@ -10,42 +10,42 @@ Class {
 RBRemoveSubtreeTransformationTest >> testEmptyCode [
 
 	self shouldFail: (RBRemoveSubtreeTransformation
-			 remove: ''
-			 fromMethod: #one
-			 inClass: self changeMockClass name).
+			 code: ''
+			 from: #one
+			 in: self changeMockClass name).
 
 	self shouldFail: (RBRemoveSubtreeTransformation
-			 remove: ''
-			 fromMethod: #selector:from:
-			 inClass: #RBRemoveMethodTransformation)
+			 code: ''
+			 from: #selector:from:
+			 in: #RBRemoveMethodTransformation)
 ]
 
 { #category : 'tests' }
 RBRemoveSubtreeTransformationTest >> testFailureExtract [
 
 	self shouldFail: (RBRemoveSubtreeTransformation
-			 remove: ':= anInterval'
-			 fromMethod: #one
-			 inClass: self changeMockClass name).
+			 code: ':= anInterval'
+			 from: #one
+			 in: self changeMockClass name).
 
 	self shouldFail: (RBRemoveSubtreeTransformation
-			 remove: ':= aSelector'
-			 fromMethod: #selector:from:
-			 inClass: #RBRemoveMethodTransformation)
+			 code: ':= aSelector'
+			 from: #selector:from:
+			 in: #RBRemoveMethodTransformation)
 ]
 
 { #category : 'tests' }
 RBRemoveSubtreeTransformationTest >> testMethodDoesNotExist [
 
 	self shouldFail: (RBRemoveSubtreeTransformation
-			 remove: 'selector := aSelector'
-			 fromMethod: #two
-			 inClass: self changeMockClass name).
+			 code: 'selector := aSelector'
+			 from: #two
+			 in: self changeMockClass name).
 
 	self shouldFail: (RBRemoveSubtreeTransformation
-			 remove: 'selector := aSelector'
-			 fromMethod: #selector:for:
-			 inClass: #RBRemoveMethodTransformation)
+			 code: 'selector := aSelector'
+			 from: #selector:for:
+			 in: #RBRemoveMethodTransformation)
 ]
 
 { #category : 'tests' }
@@ -53,9 +53,9 @@ RBRemoveSubtreeTransformationTest >> testRefactoring [
 
 	| transformation class |
 	transformation := (RBRemoveSubtreeTransformation
-		                   remove: 'selector := aSelector'
-		                   fromMethod: #selector:from:
-		                   inClass: #RBRemoveMethodTransformation)
+		                   code: 'selector := aSelector'
+		                   from: #selector:from:
+		                   in: #RBRemoveMethodTransformation)
 		                  generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
@@ -74,9 +74,9 @@ RBRemoveSubtreeTransformationTest >> testTransform [
 
 	| transformation class |
 	transformation := (RBRemoveSubtreeTransformation
-		                   remove: '^ 1'
-		                   fromMethod: #one
-		                   inClass: self changeMockClass name) generateChanges.
+		                   code: '^ 1'
+		                   from: #one
+		                   in: self changeMockClass name) generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 
@@ -97,9 +97,9 @@ RBRemoveSubtreeTransformationTest >> testTransformNotSequenceNode [
 					                    in: self changeMockClass name
 					                    withProtocol: #accessing )
 			                   with: (RBRemoveSubtreeTransformation
-					                    remove: 'super printString'
-					                    fromMethod: #printString1
-					                    inClass: self changeMockClass name)).
+					                    code: 'super printString'
+					                    from: #printString1
+					                    in: self changeMockClass name)).
 	transformation generateChanges.
 
 	self assert: transformation model changes changes size equals: 2.

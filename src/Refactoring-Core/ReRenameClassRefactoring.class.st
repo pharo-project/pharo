@@ -132,21 +132,14 @@ ReRenameClassRefactoring >> renameReferences [
 		            replace: className with: newName;
 		            replaceArgument: newName withValueFrom: [ :aNode |
 			            self refactoringError:
-					            newName
-					            , ' already exists within the reference scope' ];
+					            newName , ' already exists within the reference scope' ];
 		            yourself.
 	self model allReferencesToClass: class do: [ :method |
 		(method modelClass hierarchyDefinesVariable: newName) ifTrue: [
-			self refactoringError:
-				newName , ' is already defined in hierarchy of '
-				, method modelClass printString ].
-		(method compiledMethod
+			self refactoringError: newName , ' is already defined in hierarchy of ' , method modelClass printString ].
+		(method method
 			 ifNil: [ false ]
-			 ifNotNil: [ :m | m isFromTrait ]) ifFalse: [
-			self
-				convertMethod: method selector
-				for: method modelClass
-				using: replacer ] ]
+			 ifNotNil: [ :m | m isFromTrait]) ifFalse: [ self convertMethod: method selector for: method modelClass using: replacer ] ]
 ]
 
 { #category : 'storing' }
