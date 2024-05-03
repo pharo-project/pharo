@@ -715,7 +715,7 @@ PBAbstractImageBuilder >> initializeImage [
 			objectSpace installAsActiveProcess: process.
 			
 			"Enable protection of SymbolTable from concurrent access"
-			self bootstrapInterpreter evaluateCode: 'SymbolTableSemaphore enable'
+			self bootstrapInterpreter evaluateCode: 'SymbolTableSemaphore enable'.
 
 
 			self followForwardingPointers.
