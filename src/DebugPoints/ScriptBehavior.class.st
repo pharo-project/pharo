@@ -4,7 +4,7 @@ I execute arbitrary code that is saved in my script variable.
 "
 Class {
 	#name : 'ScriptBehavior',
-	#superclass : 'DebugPointSideEffectBehavior',
+	#superclass : 'DebugPointMetaBehavior',
 	#instVars : [
 		'script'
 	],
