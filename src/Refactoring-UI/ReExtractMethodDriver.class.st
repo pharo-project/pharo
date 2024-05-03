@@ -3,13 +3,11 @@ Class {
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'class',
-		'originalMessage',
 		'newMessage',
 		'shouldEscape',
 		'methodNameEditorPresenterClass',
 		'body',
-		'sourceMethod',
-		'newMethod'
+		'sourceMethod'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
