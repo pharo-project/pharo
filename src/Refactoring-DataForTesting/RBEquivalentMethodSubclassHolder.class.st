@@ -12,7 +12,7 @@ RBEquivalentMethodSubclassHolder >> anotherMethod: arg [
 	^ arg raisedTo: 5
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'for tests' }
 RBEquivalentMethodSubclassHolder >> methodToExtractFrom [
 
 	| a |
@@ -20,7 +20,7 @@ RBEquivalentMethodSubclassHolder >> methodToExtractFrom [
 	^ a * 1
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'for tests' }
 RBEquivalentMethodSubclassHolder >> methodToExtractFromWithSuperAndSimilarMethodInSuper [
 
 	| a |
@@ -28,7 +28,7 @@ RBEquivalentMethodSubclassHolder >> methodToExtractFromWithSuperAndSimilarMethod
 	^ a * 1
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'for tests' }
 RBEquivalentMethodSubclassHolder >> methodWithSuperSend [
 
 	^ 7 raisedTo: super someNumber
@@ -40,7 +40,7 @@ RBEquivalentMethodSubclassHolder >> simpleLocalMethodReturn [
 	^ 42 + 33
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'for tests' }
 RBEquivalentMethodSubclassHolder >> someNumber [
 
 	^ 1
