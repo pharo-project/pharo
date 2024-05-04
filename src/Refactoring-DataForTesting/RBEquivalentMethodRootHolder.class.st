@@ -6,7 +6,7 @@ Class {
 	#tag : 'MiniHierarchy'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'for tests' }
 RBEquivalentMethodRootHolder >> methodWithSuper [
 
 	^ 11 raisedTo: super someNumber factorial
@@ -18,7 +18,7 @@ RBEquivalentMethodRootHolder >> simpleMethodReturn [
 	^ 42
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'for tests' }
 RBEquivalentMethodRootHolder >> someNumber [
 
 	^ 2

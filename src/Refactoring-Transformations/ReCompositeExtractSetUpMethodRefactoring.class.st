@@ -80,12 +80,12 @@ ReCompositeExtractSetUpMethodRefactoring >> storeOn: aStream [
 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
+	aStream nextPutAll: ' extractSetUpCode: '''.
+	sourceCode storeOn: aStream.
 	aStream
-		nextPutAll: ' extractSetUpCode: ''';
-		nextPutAll: sourceCode;
-		nextPutAll: ''' fromMethod: ''';
-		nextPutAll: selector;
-		nextPutAll: ''' inClass: '.
+		nextPutAll: ''' fromMethod: #';
+		nextPutAll: selector asString;
+		nextPutAll: ' inClass: '.
 	class storeOn: aStream.
 	aStream nextPut: $)
 ]
