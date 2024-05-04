@@ -65,3 +65,18 @@ ReCompositeExtractSetUpMethodRefactoring >> extractSetUpCode: sourceCodeString f
 	class := self model classNamed: aClassName.
 	newSelector := #setUp
 ]
+
+{ #category : 'storing' }
+ReCompositeExtractSetUpMethodRefactoring >> storeOn: aStream [
+
+	aStream nextPut: $(.
+	self class storeOn: aStream.
+	aStream nextPutAll: ' extractSetUpCode: '''.
+	sourceCode storeOn: aStream.
+	aStream
+		nextPutAll: ''' fromMethod: #';
+		nextPutAll: selector asString;
+		nextPutAll: ' inClass: '.
+	class storeOn: aStream.
+	aStream nextPut: $)
+]
