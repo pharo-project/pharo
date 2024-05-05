@@ -513,6 +513,30 @@ SymbolTest >> testNumArgsUnary [
 ]
 
 { #category : 'tests' }
+SymbolTest >> testPrecedence [
+	self assert: #x precedence equals: 1.
+	self assert: #abs precedence equals: 1.
+	self assert: #_abs precedence equals: 1.
+
+	self assert: #+ precedence equals: 2.
+	self assert: #+- precedence equals: 2.
+	self assert: #>>> precedence equals: 2.
+
+	self assert: #x: precedence equals: 3.
+	self assert: #abs: precedence equals: 3.
+	self assert: #_abs: precedence equals: 3.
+
+	self assert: #x:y: precedence equals: 3.
+	self assert: #abs:y: precedence equals: 3.
+	self assert: #_abs:y: precedence equals: 3.
+
+	self assert: #'0' precedence equals: 0.
+	self assert: #'.' precedence equals: 0.
+	self assert: #':' precedence equals: 0.
+
+]
+
+{ #category : 'tests' }
 SymbolTest >> testPrintOn [
 
 	| printed allElementsAsString |

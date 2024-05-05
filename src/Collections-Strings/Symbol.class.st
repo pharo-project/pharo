@@ -526,7 +526,12 @@ Symbol >> precedence [
 	2 for binary and 3 for keyword selectors."
 
 	self size = 0 ifTrue: [^ 0].
-	(self first isLetter or: [ self first = $_ ]) ifFalse: [^ 2].
+	(self first isLetter or: [ self first = $_ ]) ifFalse: [
+		| special |
+		special := Character specialCharacters.
+		^ (self allSatisfy: [ :char | special includes: char ])
+			ifTrue: [ 2 ]
+			ifFalse: [ 0 ] ].
 	self last = $: ifTrue: [^ 3].
 	^ 1
 ]
