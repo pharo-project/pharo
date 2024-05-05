@@ -286,6 +286,16 @@ SymbolTest >> subCollectionNotIn [
 ]
 
 { #category : 'tests' }
+SymbolTest >> testAsAccessor [
+	self assert: #x: asAccessor equals: #x.
+	self assert: #x asAccessor equals: #x.
+	self should: [ self assert: #x:: asAccessor ] raise: Error.	
+	self should: [ self assert: #keyword:selector: asAccessor ] raise: Error.
+	self should: [ self assert: #+ asAccessor ] raise: Error.
+	self should: [ self assert: #'' asAccessor ] raise: Error.	
+]
+
+{ #category : 'tests' }
 SymbolTest >> testAsMutator [
 	self assert: #x asMutator equals: #x:.
 	"return receiver if it is already a mutator"
