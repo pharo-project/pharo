@@ -75,7 +75,7 @@ LessonView >> doItReceiver [
 	^ nil
 ]
 
-{ #category : 'accessing' }
+{ #category : 'testing' }
 LessonView >> hasBindingOf: aString [
 
  	^ self bindings includesKey: aString
