@@ -75,6 +75,12 @@ LessonView >> doItReceiver [
 	^ nil
 ]
 
+{ #category : 'accessing' }
+LessonView >> hasBindingOf: aString [
+
+ 	^ self bindings includesKey: aString
+]
+
 { #category : 'initialization' }
 LessonView >> initialize [
 
