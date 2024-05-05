@@ -317,6 +317,23 @@ Symbol >> = aSymbol [
 ]
 
 { #category : 'converting' }
+Symbol >> asAccessor [
+	"Return a accessor (getter) message from a setter message.
+	Return self if it is already a getter."
+
+	"#name asAccessor >>> #name"
+	"#name: asAccessor >>> #name"
+	
+	(((self count: [ :char | char = $: ]) > 1) 
+		or: [ self isEmpty 
+		or: [ self isBinary ]]) ifTrue: [ 
+		self error: 'This symbol cannot be converted to an accessor' ].
+
+	self endsWithAColon ifFalse:[ ^ self ].
+	^ (self withoutSuffix: ':') asSymbol
+]
+
+{ #category : 'converting' }
 Symbol >> asMutator [
 	"Return a setter message from a getter message.
 	Return self if it is already a setter.
