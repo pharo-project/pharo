@@ -315,7 +315,7 @@ TestCase class >> hasErrorTest [
 { #category : 'testing' }
 TestCase class >> hasFailedTest [
 
-	^ (self history at: #failures) isEmpty not
+	^ (self history at: #failures) isNotEmpty
 ]
 
 { #category : 'testing' }
