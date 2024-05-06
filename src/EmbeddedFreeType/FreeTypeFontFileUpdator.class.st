@@ -1,10 +1,28 @@
+"
+update Free Types Fonts from a file.
+"
 Class {
 	#name : 'FreeTypeFontFileUpdator',
-	#superclass : 'FreeTypeFontFileInstaller',
+	#superclass : 'AbstractFreeTypeFontFile',
 	#category : 'EmbeddedFreeType-Installation',
 	#package : 'EmbeddedFreeType',
 	#tag : 'Installation'
 }
+
+{ #category : 'instance creation' }
+FreeTypeFontFileUpdator class >> withFileInfoProvider: anFreeTypeFontProvider [
+
+	^ self new fileInfoProvider: anFreeTypeFontProvider 
+]
+
+{ #category : 'loading and updating' }
+FreeTypeFontFileUpdator >> addAndCacheFileInfoFromPath: path file: aFile [
+
+	| info |
+	info := self fileInfoFromPath: path file: aFile.
+	self fileInfoProvider addFileInfo: info index: index.
+	self fileInfoProvider cacheFileInfo: info index: index
+]
 
 { #category : 'error handling' }
 FreeTypeFontFileUpdator >> failedToOpen: face from: path index: i [
@@ -33,10 +51,25 @@ FreeTypeFontFileUpdator >> fileInfoFromPath: path file: aFile [
 		  yourself
 ]
 
+{ #category : 'instance creation' }
+FreeTypeFontFileUpdator >> newFaceFromPath: path [
+
+	| newFace |
+	newFace := FreeTypeFace basicNew
+		           filename: path;
+		           index: index.
+	^ [
+	  newFace newFaceFromFile: path index: index.
+	  newFace loadFields.
+	  newFace ]
+		  on: FT2Error , PrimitiveFailed
+		  do: [ :e | nil ]
+]
+
 { #category : 'loading and updating' }
 FreeTypeFontFileUpdator >> updateFromFile: aFile [
 
-	| info cachedNumFaces path |
+	| cachedNumFaces path |
 	index := 0.
 	cachedNumFaces := self cachedNumFacesFromData: aFile.
 
@@ -44,20 +77,12 @@ FreeTypeFontFileUpdator >> updateFromFile: aFile [
 
 	path := aFile fullName utf8Encoded asString.
 	[
-	[face := FreeTypeFace basicNew filename: path; index: index.
-	face newFaceFromFile: path index: index.
-	face loadFields]
-		on: FT2Error, PrimitiveFailed
-		do: [:e | ^self failedToOpen: face from: path index: index ].
-	(self isValidFace )
+	face := self newFaceFromPath: path.
+	self isValidFace
 		ifFalse: [ ^ self failedToOpen: face from: path index: index ]
 		ifTrue: [
 			numFaces ifNil: [ numFaces := face numFaces ].
-			info := self fileInfoFromPath: path file: aFile. 
-			self fileInfoProvider addFileInfo: info index: index.
-			self fileInfoProvider cacheFileInfo: info index: index
-			"Transcript show: 'from file : ', info asString." ].
+			self addAndCacheFileInfoFromPath: path file: aFile ].
 	index := index + 1.
-	index < numFaces "note, we use < rather than <= , because i is zero based" ]
-		whileTrue: [  ]
+	index < numFaces ] whileTrue: [  ]
 ]

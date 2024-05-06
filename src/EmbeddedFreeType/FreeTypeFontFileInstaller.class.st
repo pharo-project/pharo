@@ -3,13 +3,7 @@ Install Free Types Fonts from a file.
 "
 Class {
 	#name : 'FreeTypeFontFileInstaller',
-	#superclass : 'Object',
-	#instVars : [
-		'fileInfoProvider',
-		'face',
-		'numFaces',
-		'index'
-	],
+	#superclass : 'AbstractFreeTypeFontFile',
 	#category : 'EmbeddedFreeType-Installation',
 	#package : 'EmbeddedFreeType',
 	#tag : 'Installation'
@@ -53,20 +47,6 @@ FreeTypeFontFileInstaller >> addFromFileContents: bytes baseName: originalFileBa
 	index < numFaces ] whileTrue: [  ]
 ]
 
-{ #category : 'accessing' }
-FreeTypeFontFileInstaller >> cachedNumFacesFromData: bytes [
-
-	| cachedInfo cachedNumFaces |
-	[
-	(cachedInfo := self fileInfoProvider
-		               validEmbeddedCachedInfoFor: bytes
-		               index: index) isNotNil ] whileTrue: [
-		index = 0 ifTrue: [ cachedNumFaces := cachedInfo numFaces ].
-		self fileInfoProvider addFirstFileInfo: cachedInfo index: index.
-		index := index + 1 ].
-	^ cachedNumFaces
-]
-
 { #category : 'error handling' }
 FreeTypeFontFileInstaller >> failedToOpen: face index: index [
 	"Transcript cr; show: 'Failed : ', path asString, '[', i asString,']'."
@@ -89,33 +69,6 @@ FreeTypeFontFileInstaller >> fileInfoFromBytes: bytes filename: originalFileBase
 		  numFaces: numFaces;
 		  extractAttributesFromNames;
 		  yourself
-]
-
-{ #category : 'accessing' }
-FreeTypeFontFileInstaller >> fileInfoProvider [
-
-	^ fileInfoProvider
-]
-
-{ #category : 'accessing' }
-FreeTypeFontFileInstaller >> fileInfoProvider: anObject [
-
-	fileInfoProvider := anObject
-]
-
-{ #category : 'accessing' }
-FreeTypeFontFileInstaller >> isAlreadyCached: cachedNumFaces [
-
-	^ cachedNumFaces isNotNil and: [ index >= cachedNumFaces ]
-]
-
-{ #category : 'accessing' }
-FreeTypeFontFileInstaller >> isValidFace [
-
-	^ face isNotNil and: [
-		  face height isNotNil and: [
-			  face hasFamilyName and: [
-				  face hasStyleName and: [ face isValid ] ] ] ]
 ]
 
 { #category : 'accessing' }
