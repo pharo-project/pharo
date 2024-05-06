@@ -309,7 +309,7 @@ TestCase class >> hasComment [
 { #category : 'testing' }
 TestCase class >> hasErrorTest [
 
-	^ (self history at: #errors) isEmpty not
+	^ (self history at: #errors) isNotEmpty
 ]
 
 { #category : 'testing' }
