@@ -83,13 +83,6 @@ ReflectivityExamples2 >> modifyMethodWithInstVarAccess [
 	instVar > 5 ifTrue:[^ instVar raisedTo: 2]'
 ]
 
-{ #category : 'example' }
-ReflectivityExamples2 >> newMethodWithInstVarAccess [
-	instVar := 5.
-	instVar := 6.
-	instVar > 5 ifTrue:[^ instVar raisedTo: 2]
-]
-
 { #category : 'removing' }
 ReflectivityExamples2 >> removeModifiedMethodWithInstVarAccess [
 	self class removeSelector: #modifiedMethodWithInstVarAccess
