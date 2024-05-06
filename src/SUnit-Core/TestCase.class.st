@@ -401,9 +401,14 @@ TestCase class >> lastRun [
 { #category : 'history' }
 TestCase class >> lastRunMethodNamed: aSelector [
 
-	^ String streamContents: [:str |
-		str nextPutAll: aSelector asString ;cr.
-		str tab; nextPutAll: '^ ', (self lastRun) storeString]
+	^ String streamContents: [ :str |
+		  str
+			  nextPutAll: aSelector asString;
+			  cr.
+		  str
+			  tab;
+			  nextPutAll: '^ ';
+			  nextPutAll: self lastRun storeString ]
 ]
 
 { #category : 'history' }
