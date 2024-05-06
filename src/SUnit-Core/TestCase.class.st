@@ -329,7 +329,7 @@ TestCase class >> hasMethodBeenRun: aSelector [
 { #category : 'testing' }
 TestCase class >> hasPassedTest [
 
-	^ (self history at: #passed) isEmpty not
+	^ (self history at: #passed) isNotEmpty
 ]
 
 { #category : 'testing' }
