@@ -14,7 +14,7 @@ ClassHierarchyPrinter new
 		doNotShowState;
 		doNotShowSuperclasses;
 		excludedClasses: (ASTNode withAllSubclasses select: [ :each | each name beginsWith: 'RBPattern' ]);
-		limitedToClasses: (ASTNode withAllSubclasses select: [:each | each name beginsWith: 'AST' or: [ each name beginsWith: 'RB' ]]]).
+		limitedToClasses: (ASTNode withAllSubclasses select: [:each | (each name beginsWith: 'AST') or: [ each name beginsWith: 'RB' ]]]).
 ```
 
 produces 
