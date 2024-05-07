@@ -57,12 +57,12 @@ Class {
 { #category : 'preconditions' }
 RBExtractSetUpMethodRefactoring >> applicabilityPreconditions [
 
-	^ (RBCondition definesSelector: selector in: class)
-	& (self requestExistingSelector 
+	^ { (RBCondition definesSelector: selector in: class).
+	  (self requestExistingSelector 
 		ifNil: [ (RBCondition definesSelector: #setUp in: class) not ]
-		ifNotNil: [ self trueCondition ]) 
-	& (RBCondition withBlock: [ class allSuperclasses anySatisfy: [ :e | e name = #TestCase ] ])
-	& (RBCondition withBlock:
+		ifNotNil: [ self trueCondition ]).
+	  (RBCondition withBlock: [ class allSuperclasses anySatisfy: [ :e | e name = #TestCase ] ]).
+	  (RBCondition withBlock:
 		[self extractMethod.
 		self checkSpecialExtractions.
 		self checkReturn.
