@@ -107,12 +107,13 @@ ReCompositeExtractMethodRefactoring >> addReturnIfNeeded: newMethodNode [
 { #category : 'preconditions' }
 ReCompositeExtractMethodRefactoring >> applicabilityPreconditions [
 
-	^ self preconditionParsableSubtree
-	  & self preconditionNotInCascadedMessage
-	  & self preconditionTemporariesAreNotReadBeforeWritten
-	  & self preconditionOneAssignmentMaximum
-	  & self preconditionAssignmentsNotReadBeforeWritten
-	  & self preconditionSubtreeDoesNotContainsReturn
+	^ {
+		  self preconditionParsableSubtree.
+		  self preconditionNotInCascadedMessage.
+		  self preconditionTemporariesAreNotReadBeforeWritten.
+		  self preconditionOneAssignmentMaximum.
+		  self preconditionAssignmentsNotReadBeforeWritten.
+		  self preconditionSubtreeDoesNotContainsReturn }
 ]
 
 { #category : 'accessing' }
@@ -123,7 +124,7 @@ ReCompositeExtractMethodRefactoring >> arguments [
 { #category : 'preconditions' }
 ReCompositeExtractMethodRefactoring >> breakingChangePreconditions [ 
 
-	  ^ self preconditionHasSameExitPoint 
+	^ { self preconditionHasSameExitPoint }
 ]
 
 { #category : 'executing' }
@@ -245,10 +246,11 @@ ReCompositeExtractMethodRefactoring >> calculateTemporaries [
 { #category : 'scripting api - conditions' }
 ReCompositeExtractMethodRefactoring >> checkPreconditions [
 
-	super checkPreconditions.
-	self breakingChangePreconditions check ifFalse: [
-		self refactoringWarning:
-			self breakingChangePreconditions errorString ]
+	| failedPreconditions |
+	self eagerlyCheckApplicabilityPreconditions.
+	failedPreconditions := self breakingChangePreconditions reject: [ :cond | cond check ].
+	failedPreconditions ifEmpty: [ ^ self ].
+	RBRefactoringWarning signalFor: failedPreconditions
 ]
 
 { #category : 'instance creation' }

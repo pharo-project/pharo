@@ -53,11 +53,13 @@ RBAddMessageSendTransformation class >> model: aRBModel messageSend: aString inM
 { #category : 'preconditions' }
 RBAddMessageSendTransformation >> applicabilityPreconditions [
 
-	^ self classExist & (RBCondition
-		   withBlock: [ self definingClass canUnderstand: selector ]
-		   errorString:
-		   ('Method named <1s> does not exist' expandMacrosWith: selector))
-	  & (RBCondition
+	^ {
+		  self classExist.
+		  (RBCondition
+			   withBlock: [ self definingClass canUnderstand: selector ]
+			   errorString:
+			   ('Method named <1s> does not exist' expandMacrosWith: selector)).
+		  (RBCondition
 			   withBlock: [
 				   | messageNode |
 				   messageNode := self parserClass parseExpression: message.
@@ -66,7 +68,13 @@ RBAddMessageSendTransformation >> applicabilityPreconditions [
 						   self definingMethod hasTemporaryNamed: e name ] ] ]
 			   errorString:
 				   ('Some variables in this message send are not defined in method named <1s>.'
-					    expandMacrosWith: selector))
+					    expandMacrosWith: selector)) }
+]
+
+{ #category : 'scripting api - conditions' }
+RBAddMessageSendTransformation >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
 ]
 
 { #category : 'preconditions' }

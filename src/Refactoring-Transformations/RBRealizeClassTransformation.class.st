@@ -25,8 +25,9 @@ RBRealizeClassTransformation class >> isTransformation [
 ]
 
 { #category : 'preconditions' }
-RBRealizeClassTransformation >> applicabilityPreconditions [ 
-	^ (RBCondition isClassNamed: className definedIn: model)
+RBRealizeClassTransformation >> applicabilityPreconditions [
+
+	^ { (RBCondition isClassNamed: className definedIn: model) }
 ]
 
 { #category : 'executing' }

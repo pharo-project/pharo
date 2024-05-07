@@ -62,15 +62,17 @@ RBExtractMethodRefactoring class >> model: aRBSmalltalk extractSource: aString f
 ]
 
 { #category : 'preconditions' }
-RBExtractMethodRefactoring >> applicabilityPreconditions [ 
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition withBlock:
-					[self extractMethod.
-					self checkSpecialExtractions.
-					self checkReturn.
-					needsReturn ifTrue: [extractedParseTree addReturn].
-					self checkTemporaries.
-					true])
+RBExtractMethodRefactoring >> applicabilityPreconditions [
+
+	^ {
+		  (RBCondition definesSelector: selector in: class).
+		  (RBCondition withBlock: [
+			   self extractMethod.
+			   self checkSpecialExtractions.
+			   self checkReturn.
+			   needsReturn ifTrue: [ extractedParseTree addReturn ].
+			   self checkTemporaries.
+			   true ]) }
 ]
 
 { #category : 'transforming' }
@@ -265,6 +267,7 @@ RBExtractMethodRefactoring >> extractedParseTree [
 RBExtractMethodRefactoring >> getExtractedSource [
 	| source |
 	source := class sourceCodeFor: selector.
+	source ifNil: [ self refactoringError: 'Invalid source' ].
 	((extractionInterval first between: 1 and: (self startLimit: source size))
 		and: [extractionInterval last between: 1 and: source size])
 			ifFalse: [self refactoringError: 'Invalid interval'].

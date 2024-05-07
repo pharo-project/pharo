@@ -62,8 +62,9 @@ RBInlineMethodRefactoring >> addTemporary: sourceNode assignedTo: replacementNod
 RBInlineMethodRefactoring >> applicabilityPreconditions [
 	"Even though it looks complex it only does preconditions and set up. `transform` does actual refactoring"
 
-	^ (RBCondition definesSelector: sourceSelector in: class)
-	  & (RBCondition withBlock: [
+	^ {
+		  (RBCondition definesSelector: sourceSelector in: class).
+		  (RBCondition withBlock: [
 			   self checkSelectedMessage.
 			   self parseInlineMethod.
 			   self isPrimitive ifTrue: [
@@ -74,21 +75,21 @@ RBInlineMethodRefactoring >> applicabilityPreconditions [
 				    self hasMultipleReturns not ]) ifFalse: [
 				   self refactoringError:
 					   'Cannot inline method since it contains multiple returns that cannot be rewritten' ].
-			   true ])
+			   true ]) }
 ]
 
 { #category : 'preconditions' }
 RBInlineMethodRefactoring >> breakingChangePreconditions [
 
-	^ RBCondition withBlock: [
-		  self checkOverridden ifTrue: [
-			  self isOverridden ifTrue: [
-				  self refactoringWarning:
-					  ('<1p>>><2s> is overriden. Do you want to inline it anyway?'
-					   , String cr , 'You can break you hooks with this inline.'
-						   expandMacrosWith: self classOfTheMethodToInline
-						   with: self inlineSelector) ] ].
-		  true ]
+	^ { (RBCondition withBlock: [
+		   self checkOverridden ifTrue: [
+			   self isOverridden ifTrue: [
+				   self refactoringWarning:
+					   ('<1p>>><2s> is overriden. Do you want to inline it anyway?'
+					    , String cr , 'You can break you hooks with this inline.'
+						    expandMacrosWith: self classOfTheMethodToInline
+						    with: self inlineSelector) ] ].
+		   true ]) }
 ]
 
 { #category : 'accessing' }
@@ -125,18 +126,15 @@ RBInlineMethodRefactoring >> checkSelectedMessage [
 { #category : 'transforming' }
 RBInlineMethodRefactoring >> checkSuperMessages [
 
-	self classOfTheMethodToInline = class
-		ifTrue: [ ^ self ].
+	self classOfTheMethodToInline = class ifTrue: [ ^ self ].
 	self classOfTheMethodToInline superclass ifNil: [ ^ self ].
-	inlineParseTree superMessages
-		do: [ :each |
-			( self classOfTheMethodToInline superclass whoDefinesMethod: each ) = ( class superclass whoDefinesMethod: each )
-				ifFalse: [ self
-						refactoringError:
-							( 'Cannot inline method since it sends a super message <1s> that is overriden'
-								expandMacrosWith: each )
-					]
-			]
+	inlineParseTree superMessages do: [ :each |
+		(self classOfTheMethodToInline superclass
+			 whichClassIncludesSelector: each)
+		= (class superclass whichClassIncludesSelector: each) ifFalse: [
+			self refactoringError:
+				('Cannot inline method since it sends a super message <1s> that is overriden'
+					 expandMacrosWith: each) ] ]
 ]
 
 { #category : 'transforming' }

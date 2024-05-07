@@ -445,6 +445,12 @@ RBCondition >> errorBlock: anObject [
 	errorBlock := anObject
 ]
 
+{ #category : 'displaying' }
+RBCondition >> violationMessageOn: aWriteStream [ 
+
+	aWriteStream nextPutAll: self errorString
+]
+
 { #category : 'initialization' }
 RBCondition >> withBlock: aBlock [
 	block := aBlock

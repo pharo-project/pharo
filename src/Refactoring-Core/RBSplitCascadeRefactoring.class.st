@@ -42,13 +42,14 @@ RBSplitCascadeRefactoring class >> split: anInterval from: aSelector in: aClass 
 { #category : 'preconditions' }
 RBSplitCascadeRefactoring >> applicabilityPreconditions [
 
-	^ (RBCondition definesSelector: selector in: class)
-	  & (RBCondition withBlock: [
+	^ {
+		  (RBCondition definesSelector: selector in: class).
+		  (RBCondition withBlock: [
 			   self
 				   findCascadeNode;
 				   findAncestorNode;
 				   findMessageNodes.
-			   true ])
+			   true ]) }
 ]
 
 { #category : 'transforming' }

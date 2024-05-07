@@ -39,7 +39,7 @@ RBMoveMethodToClassRefactoring class >> model: aRBSmalltalk method: aMethod clas
 { #category : 'preconditions' }
 RBMoveMethodToClassRefactoring >> applicabilityPreconditions [
 
-	^ (RBCondition definesSelector: method selector in: class) not
+	^ { (RBCondition definesSelector: method selector in: class) not }
 ]
 
 { #category : 'transforming' }

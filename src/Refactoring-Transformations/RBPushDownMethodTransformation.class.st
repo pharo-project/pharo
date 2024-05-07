@@ -43,14 +43,10 @@ RBPushDownMethodTransformation >> allClasses [
 ]
 
 { #category : 'preconditions' }
-RBPushDownMethodTransformation >> applicabilityPreconditions [ 
+RBPushDownMethodTransformation >> applicabilityPreconditions [
 
-	| condition |
-	condition := selectors
-		             inject: (RBCondition true)
-		             into: [ :cond :each |
-			             cond & (RBCondition definesSelector: each in: class)].
-	^ condition 
+	^ selectors collect: [ :each |
+		  RBCondition definesSelector: each in: class ]
 ]
 
 { #category : 'executing' }

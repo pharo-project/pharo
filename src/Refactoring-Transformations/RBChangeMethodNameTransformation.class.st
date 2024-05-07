@@ -15,10 +15,10 @@ Class {
 
 { #category : 'preconditions' }
 RBChangeMethodNameTransformation >> applicabilityPreconditions [
-		
-	^ (RBCondition definesSelector: oldSelector in: class)
-				& (RBCondition isValidMethodName: newSelector for: class).
 
+	^ {
+		  (RBCondition definesSelector: oldSelector in: class).
+		  (RBCondition isValidMethodName: newSelector for: class) }
 ]
 
 { #category : 'support' }
@@ -100,10 +100,10 @@ RBChangeMethodNameTransformation >> removeRenamedImplementors [
 		ifTrue: [ ^ self ].
 	self implementors
 		do: [ :each | 
-			(RBRemoveMethodTransformation
+			self generateChangesFor: (RBRemoveMethodTransformation
 				model: self model
 				selector: oldSelector
-				from: each) generateChanges ]
+				from: each) ]
 ]
 
 { #category : 'support' }

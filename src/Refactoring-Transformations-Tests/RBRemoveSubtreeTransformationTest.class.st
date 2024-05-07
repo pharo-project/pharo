@@ -52,11 +52,11 @@ RBRemoveSubtreeTransformationTest >> testMethodDoesNotExist [
 RBRemoveSubtreeTransformationTest >> testRefactoring [
 
 	| transformation class |
-	transformation := (RBRemoveSubtreeTransformation
-		                   remove: 'selector := aSelector'
-		                   fromMethod: #selector:from:
-		                   inClass: #RBRemoveMethodTransformation)
-		                  generateChanges.
+	transformation := RBRemoveSubtreeTransformation
+		                  remove: 'selector := aSelector'
+		                  fromMethod: #selector:from:
+		                  inClass: #RBRemoveMethodTransformation.
+	transformation generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 
@@ -73,15 +73,15 @@ RBRemoveSubtreeTransformationTest >> testRefactoring [
 RBRemoveSubtreeTransformationTest >> testTransform [
 
 	| transformation class |
-	transformation := (RBRemoveSubtreeTransformation
-		                   remove: '^ 1'
-		                   fromMethod: #one
-		                   inClass: self changeMockClass name) generateChanges.
+	transformation := RBRemoveSubtreeTransformation
+		                  remove: '^ 1'
+		                  fromMethod: #one
+		                  inClass: self changeMockClass name.
+	transformation generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 
-	class := transformation model classNamed:
-		         self changeMockClass name.
+	class := transformation model classNamed: self changeMockClass name.
 	self assert: (class directlyDefinesMethod: #one).
 	self assertEmpty: (class parseTreeForSelector: #one) body statements
 ]

@@ -51,8 +51,9 @@ RBInlineMethodTransformation >> addTemporary: sourceNode assignedTo: replacement
 { #category : 'preconditions' }
 RBInlineMethodTransformation >> applicabilityPreconditions [
 
-	^ (RBCondition definesSelector: sourceSelector in: class)
-	  & (RBCondition withBlock: [
+	^ {
+		  (RBCondition definesSelector: sourceSelector in: class).
+		  (RBCondition withBlock: [
 			   self findSelectedMessage.
 			   self checkOverridden ifTrue: [
 				   self isOverridden ifTrue: [
@@ -69,7 +70,7 @@ RBInlineMethodTransformation >> applicabilityPreconditions [
 				    self hasMultipleReturns not ]) ifFalse: [
 				   self refactoringError:
 					   'Cannot inline method since it contains multiple returns that cannot be rewritten' ].
-			   true ])
+			   true ]) }
 ]
 
 { #category : 'adding' }
@@ -80,18 +81,15 @@ RBInlineMethodTransformation >> checkOverridden [
 { #category : 'adding' }
 RBInlineMethodTransformation >> checkSuperMessages [
 
-	self classOfTheMethodToInline = class
-		ifTrue: [ ^ self ].
+	self classOfTheMethodToInline = class ifTrue: [ ^ self ].
 	self classOfTheMethodToInline superclass ifNil: [ ^ self ].
-	inlineParseTree superMessages
-		do: [ :each |
-			( self classOfTheMethodToInline superclass whoDefinesMethod: each ) = ( class superclass whoDefinesMethod: each )
-				ifFalse: [ self
-						refactoringError:
-							( 'Cannot inline method since it sends a super message <1s> that is overriden'
-								expandMacrosWith: each )
-					]
-			]
+	inlineParseTree superMessages do: [ :each |
+		(self classOfTheMethodToInline superclass
+			 whichClassIncludesSelector: each)
+		= (class superclass whichClassIncludesSelector: each) ifFalse: [
+			self refactoringError:
+				('Cannot inline method since it sends a super message <1s> that is overriden'
+					 expandMacrosWith: each) ] ]
 ]
 
 { #category : 'adding' }

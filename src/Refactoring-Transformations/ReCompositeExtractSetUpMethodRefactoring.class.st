@@ -15,13 +15,13 @@ ReCompositeExtractSetUpMethodRefactoring >> addReturnIfNeeded: aMethodNode [
 { #category : 'preconditions' }
 ReCompositeExtractSetUpMethodRefactoring >> applicabilityPreconditions [
 
-	^ self preconditionParsableSubtree
-	  & self preconditionNotInCascadedMessage
-	  & self preconditionTemporariesAreNotReadBeforeWritten
-	  & self preconditionAssignmentsNotReadBeforeWritten
-	  & self preconditionSubtreeDoesNotContainsReturn
-	  & (RBCondition definesSelector: #setUp in: class) not "we can remove here since add override method checks it"
-	  & (RBCondition withBlock: [class allSuperclasses anySatisfy: [ :e | e name = #TestCase ]])
+	^ { self preconditionParsableSubtree.
+	    self preconditionNotInCascadedMessage.
+	    self preconditionTemporariesAreNotReadBeforeWritten.
+	    self preconditionAssignmentsNotReadBeforeWritten.
+	    self preconditionSubtreeDoesNotContainsReturn.
+	    (RBCondition definesSelector: #setUp in: class) not. "we can remove here since add override method checks it"
+	    (RBCondition withBlock: [class allSuperclasses anySatisfy: [ :e | e name = #TestCase ]]) }
 ]
 
 { #category : 'executing' }
@@ -63,6 +63,15 @@ ReCompositeExtractSetUpMethodRefactoring >> extractSetUpCode: sourceCodeString f
 	sourceCode := sourceCodeString.
 	selector := aSelector.
 	class := self model classNamed: aClassName.
+	newSelector := #setUp
+]
+
+{ #category : 'instance creation' }
+ReCompositeExtractSetUpMethodRefactoring >> extractSetUpInterval: anInterval fromMethod: aSelector inClass: aClassName [ 
+	
+	class := self model classNamed: aClassName.
+	selector := aSelector.
+	sourceCode := self getSourceFromInterval: anInterval.
 	newSelector := #setUp
 ]
 

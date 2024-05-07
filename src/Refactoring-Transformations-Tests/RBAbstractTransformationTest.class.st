@@ -54,7 +54,7 @@ RBAbstractTransformationTest >> setUp [
 
 { #category : 'tests' }
 RBAbstractTransformationTest >> testAPI [
-	"all classes must implement #storeOn: and #transform"
+	"all classes must implement #storeOn: and #privateTransform"
 
 	| incompleteTransformations |
 	incompleteTransformations := RBTransformation allSubclasses

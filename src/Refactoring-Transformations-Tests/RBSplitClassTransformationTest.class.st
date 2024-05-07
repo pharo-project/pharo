@@ -30,14 +30,14 @@ RBSplitClassTransformationTest >> testNonExistantName [
 RBSplitClassTransformationTest >> testTransform [
 
 	| transformation class |
-	transformation := (RBSplitClassTransformation
-		                   class:
-		                   #RBRemoveDirectAccessToVariableTransformation
-		                   instanceVariables: #( receiver )
-		                   newClassName:
-		                   #RBRemoveDirectAccessWithReceiverTransformation
-		                   referenceVariableName: #newReceiver)
-		                  generateChanges.
+	transformation := RBSplitClassTransformation
+		                  class:
+		                  #RBRemoveDirectAccessToVariableTransformation
+		                  instanceVariables: #( receiver )
+		                  newClassName:
+		                  #RBRemoveDirectAccessWithReceiverTransformation
+		                  referenceVariableName: #newReceiver.
+	transformation generateChanges.
 
 	class := transformation model classNamed:
 		         #RBRemoveDirectAccessToVariableTransformation.

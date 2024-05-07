@@ -38,17 +38,17 @@ RBPullUpMethodTransformation class >> pullUp: selectorCollection from: aClass to
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodTransformation >> applicabilityPreconditions [ 
+RBPullUpMethodTransformation >> applicabilityPreconditions [
 
-	^ (selectors 
-			inject: (RBCondition hasSuperclass: class)
-			into: [:cond :each | cond & (RBCondition definesSelector: each in: class)])
-					& (RBCondition withBlock:
-							[self checkInstVars.
-							self checkClassVars.
-							self checkSuperclass.
-							self checkSuperMessages.
-							true])
+	| conds |
+	conds := selectors collect: [ :each |
+		         RBCondition definesSelector: each in: class ].
+	^ conds , { (RBCondition withBlock: [
+			 self checkInstVars.
+			 self checkClassVars.
+			 self checkSuperclass.
+			 self checkSuperMessages.
+			 true ]) }
 ]
 
 { #category : 'executing' }
@@ -307,10 +307,10 @@ RBPullUpMethodTransformation >> removeDuplicatesOf: aSelector [
 							[removeDuplicates := self refactoringConfirmWarning:
 							'Do you want to remove duplicate subclass methods?'].
 					removeDuplicates ifTrue:[
-						(RBRemoveMethodTransformation
+						self generateChangesFor: (RBRemoveMethodTransformation
 							model: self model
 							selector: aClass
-							from: aSelector) generateChanges ]]]]
+							from: aSelector) ]]]]
 ]
 
 { #category : 'executing' }

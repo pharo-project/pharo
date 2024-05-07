@@ -50,11 +50,13 @@ RBAddPragmaTransformation class >> pragma: aString inMethod: aSelector inClass: 
 { #category : 'preconditions' }
 RBAddPragmaTransformation >> applicabilityPreconditions [
 
-	^ self classExist & (RBCondition
-		   withBlock: [ self definingClass canUnderstand: selector ]
-		   errorString:
-		   ('Method named <1s> does not exist' expandMacrosWith: selector))
-	  & (RBCondition
+	^ {
+		  self classExist.
+		  (RBCondition
+			   withBlock: [ self definingClass canUnderstand: selector ]
+			   errorString:
+			   ('Method named <1s> does not exist' expandMacrosWith: selector)).
+		  (RBCondition
 			   withBlock: [
 				   | pragmaNode |
 				   pragmaNode := self parserClass parsePragma: pragma.
@@ -63,7 +65,13 @@ RBAddPragmaTransformation >> applicabilityPreconditions [
 			   errorString:
 				   ('Method named <1s> already has a pragma named <2s>'
 					    expandMacrosWith: selector
-					    with: (self parserClass parsePragma: pragma) selector))
+					    with: (self parserClass parsePragma: pragma) selector)) }
+]
+
+{ #category : 'scripting api - conditions' }
+RBAddPragmaTransformation >> checkPreconditions [
+
+	self eagerlyCheckApplicabilityPreconditions 
 ]
 
 { #category : 'preconditions' }

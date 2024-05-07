@@ -26,13 +26,15 @@ Class {
 }
 
 { #category : 'preconditions' }
-RBAddVariableAccessorTransformation >> applicabilityPreconditions [ 
+RBAddVariableAccessorTransformation >> applicabilityPreconditions [
 
 	class := self model classObjectFor: className.
 
-	^ isClassVariable
-		ifTrue: [RBCondition definesClassVariable: variableName asSymbol in: class]
-		ifFalse: [RBCondition definesInstanceVariable: variableName in: class]
+	^ { (isClassVariable
+		   ifTrue: [
+				RBCondition definesClassVariable: variableName asSymbol in: class ]
+		   ifFalse: [
+				RBCondition definesInstanceVariable: variableName in: class ]) }
 ]
 
 { #category : 'private' }
@@ -53,11 +55,11 @@ RBAddVariableAccessorTransformation >> createSetterAccessor [
 RBAddVariableAccessorTransformation >> defineGetterMethod [
 
 	getterMethod := self safeMethodNameFor: self definingClass basedOn: variableName asString.
-	(RBAddMethodTransformation
+	self generateChangesFor: (RBAddMethodTransformation
 		model: self model 
 		sourceCode: ('<1s><r><r><t>^ <2s>' expandMacrosWith: getterMethod with: variableName)
 		in: self definingClass
-		withProtocol: 'accessing') generateChanges.
+		withProtocol: 'accessing').
 
 	^ getterMethod
 ]
@@ -68,11 +70,11 @@ RBAddVariableAccessorTransformation >> defineSetterMethod [
 	|  sourceCode |
 	sourceCode := '<1s> anObject<r><r><t><2s> := anObject'.
 	setterMethod := self safeMethodNameFor: self definingClass basedOn: variableName asString , ':'.
-	(RBAddMethodTransformation 
+	self generateChangesFor: (RBAddMethodTransformation 
 		model: self model
 		sourceCode: (sourceCode expandMacrosWith: setterMethod with: variableName)
 		in: self definingClass 
-		withProtocol: 'accessing') generateChanges.
+		withProtocol: 'accessing').
 	^ setterMethod
 ]
 
