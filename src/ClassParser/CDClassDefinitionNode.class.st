@@ -62,10 +62,10 @@ CDClassDefinitionNode >> packageNameNode [
 ]
 
 { #category : 'accessing' }
-CDClassDefinitionNode >> packageNameNode: aRBNode astNode: astNode [
+CDClassDefinitionNode >> packageNameNode: aNode astNode: astNode [
 
-	packageNameNode := (CDPackageNode on: aRBNode) packageName: aRBNode value.
-	self addChild: aRBNode
+	packageNameNode := (CDPackageNode on: aNode) packageName: aNode value.
+	self addChild: aNode
 ]
 
 { #category : 'accessing' }

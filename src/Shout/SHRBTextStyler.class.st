@@ -628,9 +628,9 @@ SHRBTextStyler >> addASTTransformationPlugin: aPlugin [
 ]
 
 { #category : 'formatting' }
-SHRBTextStyler >> addAttributes: attributes forNode: anRBNode [
+SHRBTextStyler >> addAttributes: attributes forNode: aNode [
 
-	self addAttributes: attributes from: anRBNode startWithoutParentheses to: anRBNode stopWithoutParentheses
+	self addAttributes: attributes from: aNode startWithoutParentheses to: aNode stopWithoutParentheses
 ]
 
 { #category : 'formatting' }
@@ -666,15 +666,15 @@ SHRBTextStyler >> addStyle: styleSymbol attribute: additionalAttribute from: sta
 ]
 
 { #category : 'formatting' }
-SHRBTextStyler >> addStyle: styleSymbol attributes: additionalAttributes forNode: anRBNode [
+SHRBTextStyler >> addStyle: styleSymbol attributes: additionalAttributes forNode: aNode [
 	self
 		addAttributes: (self attributesFor: styleSymbol), additionalAttributes
-		forNode: anRBNode
+		forNode: aNode
 ]
 
 { #category : 'formatting' }
-SHRBTextStyler >> addStyle: styleSymbol forNode: anRBNode [
-	self addAttributes: (self attributesFor: styleSymbol) forNode: anRBNode
+SHRBTextStyler >> addStyle: styleSymbol forNode: aNode [
+	self addAttributes: (self attributesFor: styleSymbol) forNode: aNode
 ]
 
 { #category : 'formatting' }

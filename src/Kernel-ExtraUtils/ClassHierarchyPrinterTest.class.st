@@ -40,9 +40,9 @@ ClassHierarchyPrinterTest >> testOnlyRBASTNodes [
 		doNotShowState;
 		doNotShowSuperclasses;
 		excludedClasses: (ASTNode withAllSubclasses select: [ :each | each name beginsWith: 'RBPattern' ]);
-		limitedToClasses: (ASTNode withAllSubclasses select: [:each | each name beginsWith: 'RB']).
+		limitedToClasses: (ASTNode withAllSubclasses select: [:each | each name beginsWith: 'RB' or: [ each name beginsWith: 'AST' ]]).
 	self assert: printer print equals:
-	'RBNode
+	'ASTNode
 	RBProgramNode
 		RBComment
 		RBMethodNode
