@@ -24,6 +24,20 @@ FreeTypeFontFileUpdator >> addAndCacheFileInfoFromPath: path file: aFile [
 	self fileInfoProvider cacheFileInfo: info index: index
 ]
 
+{ #category : 'accessing' }
+FreeTypeFontFileUpdator >> cachedNumFacesFromData: bytes [
+
+	| cachedInfo cachedNumFaces |
+	[
+	(cachedInfo := self fileInfoProvider
+		               validCachedInfoFor: bytes
+		               index: index) isNotNil ] whileTrue: [
+		index = 0 ifTrue: [ cachedNumFaces := cachedInfo numFaces ].
+		self fileInfoProvider addFirstFileInfo: cachedInfo index: index.
+		index := index + 1 ].
+	^ cachedNumFaces
+]
+
 { #category : 'error handling' }
 FreeTypeFontFileUpdator >> failedToOpen: face from: path index: i [
 	"Transcript cr; show: 'Failed : ', path asString, '[', i asString,']'."

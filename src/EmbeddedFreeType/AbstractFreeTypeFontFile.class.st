@@ -21,18 +21,9 @@ AbstractFreeTypeFontFile class >> isAbstract [
 	^ self == AbstractFreeTypeFontFile
 ]
 
-{ #category : 'accessing' }
-AbstractFreeTypeFontFile >> cachedNumFacesFromData: bytes [
-
-	| cachedInfo cachedNumFaces |
-	[
-	(cachedInfo := self fileInfoProvider
-		               validEmbeddedCachedInfoFor: bytes
-		               index: index) isNotNil ] whileTrue: [
-		index = 0 ifTrue: [ cachedNumFaces := cachedInfo numFaces ].
-		self fileInfoProvider addFirstFileInfo: cachedInfo index: index.
-		index := index + 1 ].
-	^ cachedNumFaces
+{ #category : 'instance creation' }
+AbstractFreeTypeFontFile class >> withFileInfoProvider: anFreeTypeFontProvider [ 
+	^ self subclassResponsibility
 ]
 
 { #category : 'accessing' }

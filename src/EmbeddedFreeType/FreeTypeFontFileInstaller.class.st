@@ -12,7 +12,7 @@ Class {
 { #category : 'instance creation' }
 FreeTypeFontFileInstaller class >> withFileInfoProvider: anEmbeddedFreeTypeFontInstaller [
 
-	^ self new fileInfoProvider: anEmbeddedFreeTypeFontInstaller
+	^ self new fileInfoProvider: anEmbeddedFreeTypeFontInstaller 
 ]
 
 { #category : 'adding' }
@@ -45,6 +45,20 @@ FreeTypeFontFileInstaller >> addFromFileContents: bytes baseName: originalFileBa
 			self addAndCacheFileInfoFromBytes: bytes filename: originalFileBaseName ].
 	index := index + 1.
 	index < numFaces ] whileTrue: [  ]
+]
+
+{ #category : 'accessing' }
+FreeTypeFontFileInstaller >> cachedNumFacesFromData: bytes [
+
+	| cachedInfo cachedNumFaces |
+	[
+	(cachedInfo := self fileInfoProvider
+		               validEmbeddedCachedInfoFor: bytes
+		               index: index) isNotNil ] whileTrue: [
+		index = 0 ifTrue: [ cachedNumFaces := cachedInfo numFaces ].
+		self fileInfoProvider addFirstFileInfo: cachedInfo index: index.
+		index := index + 1 ].
+	^ cachedNumFaces
 ]
 
 { #category : 'error handling' }
