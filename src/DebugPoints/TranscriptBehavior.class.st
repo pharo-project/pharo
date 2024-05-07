@@ -21,7 +21,7 @@ TranscriptBehavior class >> isAbstract [
 
 { #category : 'execution' }
 TranscriptBehavior >> execute [
-	Transcript show: self text.
+	self text trace.
 	^true
 ]
 
