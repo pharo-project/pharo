@@ -309,13 +309,13 @@ TestCase class >> hasComment [
 { #category : 'testing' }
 TestCase class >> hasErrorTest [
 
-	^ (self history at: #errors) isEmpty not
+	^ (self history at: #errors) isNotEmpty
 ]
 
 { #category : 'testing' }
 TestCase class >> hasFailedTest [
 
-	^ (self history at: #failures) isEmpty not
+	^ (self history at: #failures) isNotEmpty
 ]
 
 { #category : 'testing' }
@@ -329,7 +329,7 @@ TestCase class >> hasMethodBeenRun: aSelector [
 { #category : 'testing' }
 TestCase class >> hasPassedTest [
 
-	^ (self history at: #passed) isEmpty not
+	^ (self history at: #passed) isNotEmpty
 ]
 
 { #category : 'testing' }
