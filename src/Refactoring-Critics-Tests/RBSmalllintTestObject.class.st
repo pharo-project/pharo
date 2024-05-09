@@ -480,7 +480,9 @@ RBSmalllintTestObject >> toDoWithIncrement [
 
 { #category : 'methods' }
 RBSmalllintTestObject >> transcriptMentioned [
-	'message' trace
+	"Please keep the Transcript reference since this is used for a test."
+
+	Transcript show: 'message'
 ]
 
 { #category : 'accessing - good' }
