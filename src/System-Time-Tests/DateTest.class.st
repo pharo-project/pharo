@@ -82,8 +82,11 @@ DateTest >> testAddDays [
 { #category : 'tests' }
 DateTest >> testAddMonths [
 
+	| dateOutOfTimeZone |
 	self assert: (january23rd2004 addMonths: 0) equals: (Date readFrom: '23-1-2004' pattern: 'd-m-y').
 	self assert: (january23rd2004 addMonths: 1) equals: (Date readFrom: '23-2-2004' pattern: 'd-m-y').
+	dateOutOfTimeZone := january23rd2004 offset: (january23rd2004 offset + 1 hour).
+	self assert: (dateOutOfTimeZone addMonths: 1) offset equals: dateOutOfTimeZone offset.
 	self assert: (january23rd2004 addMonths: 12) equals: (Date readFrom: '23-1-2005' pattern: 'd-m-y')
 ]
 

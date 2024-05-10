@@ -7,6 +7,7 @@ Class {
 	#classVars : [
 		'DayNames',
 		'DaysInMonth',
+		'Epoch',
 		'HoursInDay',
 		'MicrosecondsInDay',
 		'MinutesInHour',
@@ -16,8 +17,7 @@ Class {
 		'NanosInSecond',
 		'SecondsInDay',
 		'SecondsInHour',
-		'SecondsInMinute',
-		'Epoch'
+		'SecondsInMinute'
 	],
 	#category : 'System-Time',
 	#package : 'System-Time'
