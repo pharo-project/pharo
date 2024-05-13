@@ -1,6 +1,11 @@
 "
-The implementation uses a threadsafe subscription registry, in the sense that registering, unregistering, and announcing from an announcer at the same time in different threads should never cause failures.
+I am the main implementation of the Announcement Design Pattern, equivalent to the Observer Design Pattern in other languages.
 
+This design pattern allows the creation of a subscription mechanism to notify subscribing objects about event happening to the system and allows them to react to it.
+
+Users can create subclasses of Announcement, then objects can register to an announcer declaring that they want to react of the announcer is announcing this specific announcement. When the announcer will annouce it, it will notify all listeners of the announcement.
+
+The implementation uses a threadsafe subscription registry, in the sense that registering, unregistering, and announcing from an announcer at the same time in different threads should never cause failures.
 
 The method #prevent:during: allows one to prevent the firing of some announcements during the execution of a block wile letting the other announcements go throuht.
 "
@@ -9,7 +14,9 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'registry',
-		'preventedAnnouncements'
+		'preventedAnnouncements',
+		'suspended',
+		'storedAnnouncements'
 	],
 	#category : 'Announcements-Core-Base',
 	#package : 'Announcements-Core',
@@ -19,19 +26,36 @@ Class {
 { #category : 'announce' }
 Announcer >> announce: anAnnouncement [
 
-	| announcement |
-	announcement := anAnnouncement asAnnouncement.
+	^ self isSuspended
+		ifFalse: [
+			| announcement |
+			announcement := anAnnouncement asAnnouncement.
 
-	"If the user required to prevent the current announcement, we stop here."
-	(self preventedAnnouncements handlesAnnouncement: announcement) ifTrue: [ ^ self ].
+			"Stop if there isn't any subscriber"
+			registry isEmpty ifTrue: [ ^ announcement ].
 
-	registry ifNotNil: [ registry deliver: announcement ].
-	^ announcement
+			"If the user required to prevent the current announcement, we stop here."
+			(self preventedAnnouncements handlesAnnouncement: announcement)
+				ifTrue: [ ^ announcement ].
+
+			registry deliver: announcement.
+			announcement ]
+		ifTrue: [
+			storedAnnouncements ifNotNil: [
+				storedAnnouncements add: anAnnouncement ] ]
 ]
 
 { #category : 'private' }
 Announcer >> basicSubscribe: subscription [
 	^ registry add: subscription
+]
+
+{ #category : 'announce' }
+Announcer >> delayAnnouncementsAfter: aBlock [
+	"I will execute a block and store all the announcements I am making during the execution of this block.
+	Once the execution is done, I will announce everything at once."
+
+	(self suspendAllWhileStoring: aBlock) do: [ :announcement | self announce: announcement ]
 ]
 
 { #category : 'testing' }
@@ -52,6 +76,11 @@ Announcer >> hasSubscriber: anObject [
 Announcer >> initialize [
 	super initialize.
 	registry := SubscriptionRegistry new
+]
+
+{ #category : 'testing' }
+Announcer >> isSuspended [
+	^suspended ifNil: [ suspended := false ]
 ]
 
 { #category : 'statistics' }
@@ -99,6 +128,35 @@ Announcer >> subscriptions [
 Announcer >> subscriptionsForClass: subscriberClass [
 	"Return the list of subscription for a given class"
 	^ self subscriptions subscriptionsForClass: subscriberClass
+]
+
+{ #category : 'announce' }
+Announcer >> suspendAllWhile: aBlock [
+	| oldSuspended |
+	oldSuspended := self isSuspended.
+	suspended := true.
+	^aBlock ensure: [ suspended := oldSuspended ]
+]
+
+{ #category : 'announce' }
+Announcer >> suspendAllWhileStoring: aBlock [
+	| reentring |
+	" Suspend all the announcements, storing them in an OrderedCollection, then returns this collection"
+
+	reentring := storedAnnouncements isNotNil.
+
+	reentring ifFalse:[
+		storedAnnouncements := OrderedCollection new.
+	].
+
+	[
+		self suspendAllWhile: aBlock.
+		^ storedAnnouncements.
+	] ensure:[
+		reentring ifFalse:[
+			storedAnnouncements := nil.
+		]
+	]
 ]
 
 { #category : 'subscription' }

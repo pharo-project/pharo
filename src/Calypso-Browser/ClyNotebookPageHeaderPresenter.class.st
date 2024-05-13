@@ -15,12 +15,13 @@ Class {
 }
 
 { #category : 'layout' }
-ClyNotebookPageHeaderPresenter class >> defaultLayout [
+ClyNotebookPageHeaderPresenter >> defaultLayout [
+
 	^ SpBoxLayout newLeftToRight
 		spacing: 3;
-		add: #iconImage expand: false;
-		add: #titleLabel;
-		addLast: #closeImage expand: false;
+		add: iconImage expand: false;
+		add: titleLabel;
+		add: closeImage expand: false;
 		yourself
 ]
 

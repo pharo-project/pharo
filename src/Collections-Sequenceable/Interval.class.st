@@ -429,7 +429,7 @@ Interval >> stop [
 	^ stop
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Interval >> storeOn: aStream [
 	aStream nextPut: $(;
 	 	store: start;

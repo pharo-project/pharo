@@ -3,7 +3,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'instVarName1',
-		'instVarName2'
+		'unusedVar1',
+		'unusedVar2'
 	],
 	#classVars : [
 		'Shared1',
@@ -37,6 +38,6 @@ MyClassARoot >> accessingSharedVariable [
 MyClassARoot >> initialize [
 
 	<ignoreUnusedClassVariables: #( ClassVarName2 ClassVarName1 )>
-	<ignoreUnusedVariables: #( instVarName1 instVarName2 )>
+	<ignoreUnusedVariables: #( #unusedVar1 #unusedVar2 )>
 	super initialize
 ]

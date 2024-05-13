@@ -102,3 +102,23 @@ TraitWithConflictsTest >> testSameSourceButDifferentMethodsAreConflict [
 
 	self should: [ c1 new m1 ] raise: Error
 ]
+
+{ #category : 'tests' }
+TraitWithConflictsTest >> testTraitCompositionSelectorsDoesNotHaveDuplicates [
+
+	<ignoreNotImplementedSelectors: #( m1 )>
+	| t1 t2 c1 t3 t4 t5 t6 |
+	t1 := self newTrait: #T1.
+	t2 := self newTrait: #T2 traits: { t1 }.
+	t3 := self newTrait: #T3 traits: { t1 }.
+	t4 := self newTrait: #T4 traits: { (t2 + t3) }.
+	t5 := self newTrait: #T5 traits: { t3 }.
+	t6 := self newTrait: #T6 traits: { (t5 + t4) }.
+
+	t1 compile: 'm1 ^42'.
+
+	c1 := self newClass: #C1 with: #( aSlot ) traits: t6 + t1.
+
+	{  t2 . t3 . t4 . t5 . t6 . c1 } do: [ :behavior | self assert: behavior traitComposition selectors equals: { #m1 } ].
+	self assertEmpty: t1 traitComposition selectors
+]

@@ -53,23 +53,27 @@ RBAddMethodRefactoring class >> sourceCode: aString in: aClass withProtocol: aPr
 ]
 
 { #category : 'preconditions' }
-RBAddMethodRefactoring >> checkPreconditions [
-	"We should have same preconditions checking API for all refactorings.
-	Some of them do it like: 
-	preconditions
-	^ self applicabilityPreconditions & self breakingChangePreconditions
-	
-	and refactorings that are decorators do it like this method:
-	"
+RBAddMethodRefactoring >> applicabilityPreconditions [ 
 
-	transformation checkPreconditions.
-	super checkPreconditions 
+	^ transformation applicabilityPreconditions
 ]
 
 { #category : 'preconditions' }
-RBAddMethodRefactoring >> preconditions [
+RBAddMethodRefactoring >> breakingChangePreconditions [
 
-	^ (RBCondition canUnderstand: transformation selector in: class) not
+	^ { (RBCondition canUnderstand: transformation selector in: class) not }
+]
+
+{ #category : 'preconditions' }
+RBAddMethodRefactoring >> preconditions [ 
+
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
+]
+
+{ #category : 'transforming' }
+RBAddMethodRefactoring >> prepareForExecution [ 
+
+	transformation prepareForExecution 
 ]
 
 { #category : 'transforming' }
@@ -90,7 +94,7 @@ RBAddMethodRefactoring >> sourceCode: aString in: aClass withProtocol: aProtocol
 								withProtocol: aProtocol 
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBAddMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

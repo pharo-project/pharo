@@ -86,7 +86,7 @@ ClyMainItemCellMorph >> addBarForLabelIndentation [
 ClyMainItemCellMorph >> addExtraIcon: iconName [
 
 	| icon |
-	icon := self iconNamed: iconName.
+	icon := self iconFormSetNamed: iconName.
 	^self addExtraTool: icon asMorph
 ]
 
@@ -159,7 +159,7 @@ ClyMainItemCellMorph >> collapsedButton [
 		target: item;
 		actionSelector: #expand;
 		arguments: {};
-		labelGraphic: self theme treeUnexpandedForm;
+		labelFormSet: self theme treeUnexpandedFormSet;
 		color: Color transparent;
 		helpText: 'Expand Item';
 		borderWidth: 0
@@ -179,7 +179,7 @@ ClyMainItemCellMorph >> currentExpansionButton [
 ClyMainItemCellMorph >> definitionIcon: iconName [
 
 	| icon |
-	icon := self iconNamed: iconName.
+	icon := self iconFormSetNamed: iconName.
 	^self definitionMorph: icon asMorph
 ]
 
@@ -212,7 +212,7 @@ ClyMainItemCellMorph >> expandedButton [
 		target: item;
 		actionSelector: #collapse;
 		arguments: {};
-		labelGraphic: self theme treeExpandedForm;
+		labelFormSet: self theme treeExpandedFormSet;
 		color: Color transparent;
 		helpText: 'Unexpand Item';
 		borderWidth: 0

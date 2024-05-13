@@ -113,13 +113,13 @@ ZnStringEntity >> encoder [
 
 { #category : 'accessing' }
 ZnStringEntity >> encoder: anEncoding [
-	(encoder notNil and: [ anEncoding ~= encoder ]) ifTrue: [ self invalidateContentLength ].
+	(encoder isNotNil and: [ anEncoding ~= encoder ]) ifTrue: [ self invalidateContentLength ].
 	encoder := anEncoding
 ]
 
 { #category : 'private' }
 ZnStringEntity >> hasEncoder [
-	^ encoder notNil
+	^ encoder isNotNil
 ]
 
 { #category : 'comparing' }
@@ -213,7 +213,7 @@ ZnStringEntity >> string [
 
 { #category : 'accessing' }
 ZnStringEntity >> string: aString [
-	(string notNil and: [ aString ~= string ]) ifTrue: [ self invalidateContentLength ].
+	(string isNotNil and: [ aString ~= string ]) ifTrue: [ self invalidateContentLength ].
 	string := aString
 ]
 

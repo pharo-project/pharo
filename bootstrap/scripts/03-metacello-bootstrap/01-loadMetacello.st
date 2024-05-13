@@ -4,11 +4,8 @@ mcPackages := #(
  'System-FileRegistry'
  'FileSystem-Memory'
  'StartupPreferences'
- 'ConfigurationCommandLineHandler-Core'
  'PragmaCollector'
  'System-FileRegistry'
- 'MonticelloConfigurations'
- 'Gofer-Core'
  'MonticelloFileTree-Core'
  'MonticelloFileTree-FileSystem-Utilities'
  'Metacello-Base'
@@ -38,7 +35,7 @@ ConfigurationOf initialize.
 MetacelloPlatform initialize.
 
 "Init deprecated aliases for Pharo 12. To remove in Pharo 13"
-{ MetacelloPlatform . MetacelloProject . MetacelloProjectSpec . MetacelloSpecLoader . MetacelloVersion . MetacelloVersionSpec } do: [ :class | class initialize ].
+{ MetacelloPlatform . MetacelloProject . MetacelloProjectSpec . MetacelloTarget . MetacelloVersion . MetacelloVersionSpec } do: [ :class | class initialize ].
 
 STONWriter initialize.
 

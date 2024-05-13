@@ -39,6 +39,14 @@ ClassDescription >> allProtocolsUpTo: mostGenericClass [
 ]
 
 { #category : '*Deprecated12' }
+ClassDescription >> baseClass [
+	"This method is deprecated so consider to migrate."
+	self deprecated:  'Please use #instanceSide instead' transformWith:  '`@receiver baseClass'
+						-> '`@receiver instanceSide'.
+	^ self instanceSide
+]
+
+{ #category : '*Deprecated12' }
 ClassDescription >> categories [
 
 	self deprecated: 'Use #protocolNames instead.' transformWith: '`@rcv categories' -> '`@rcv protocolNames'.
@@ -168,6 +176,15 @@ ClassDescription >> copyCategory: protocolName from: aClass classified: newProto
 	self deprecated: 'This method will be removed in the next version of Pharo.'.
 
 	self copyAll: (aClass selectorsInProtocol: protocolName) from: aClass classified: newProtocolName
+]
+
+{ #category : '*Deprecated12' }
+ClassDescription >> definition [
+	"Answer a String that defines the receiver."
+	self
+		deprecated: #definition
+		transformWith: '`@receiver definition' -> '`@receiver definitionString'.
+	^ self definitionString
 ]
 
 { #category : '*Deprecated12' }
@@ -302,12 +319,28 @@ ClassDescription >> tagsForMethods [
 ]
 
 { #category : '*Deprecated12' }
+ClassDescription >> theMetaClass [
+	"This method is deprecated so consider to migrate."
+	self deprecated:  'Please use #classSide instead' transformWith:  '`@receiver theMetaClass'
+						-> '`@receiver classSide'.
+	^ self classSide
+]
+
+{ #category : '*Deprecated12' }
+ClassDescription >> theNonMetaClass [
+	"This method is deprecated so consider to migrate."
+	self deprecated:  'Please use #instanceSide instead' transformWith:  '`@receiver theNonMetaClass'
+						-> '`@receiver instanceSide'.
+	^ self instanceSide
+]
+
+{ #category : '*Deprecated12' }
 ClassDescription >> untagFrom: aSymbol [
 
 	| package packageTag |
 	self deprecated: 'A class can have only one package tag so it is easier to use #removePackageTag.'.
 	"Any class or trait could be tagged by multiple symbols for user purpose.
-	For now we could only model single tag with RPackageTag"
+	For now we could only model single tag with PackageTag"
 	package := self package.
 	packageTag := self packageTag.
 	packageTag isRoot ifTrue: [ ^ #(  ) ].

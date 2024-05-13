@@ -1,12 +1,28 @@
 Extension { #name : 'CompiledMethod' }
 
 { #category : '*Deprecated12' }
+CompiledMethod >> category [
+
+	self deprecated: 'Use #protocolName instead.' transformWith: '`@rcv category' -> '`@rcv protocolName'.
+	^ self protocolName
+]
+
+{ #category : '*Deprecated12' }
 CompiledMethod >> isDefinedInPackage: aPackage [
 
 	self
 		deprecated: 'This method will be removed because it is really specific and easy to inline. Use `receiver package = argument` instead.'
 		transformWith: '`@rcv isDefinedInPackage: `@package' -> '`@rcv package = `@package'.
 	^ self package = aPackage
+]
+
+{ #category : '*Deprecated12' }
+CompiledMethod >> isExtensionInPackage: aPackage [
+
+	self
+		deprecated: 'This method will be removed from future version of Pharo because it is too specific (I doubt anybody uses this) and easy to inline.'
+		transformWith: '`@rcv isExtensionInPackage: `@package' -> '`@rcv isExtension and: [ `@rcv package = `@package ]'.
+	^ self isExtension and: [ self package = aPackage ]
 ]
 
 { #category : '*Deprecated12' }
@@ -37,6 +53,11 @@ CompiledMethod >> tags [
 	protocol ifNil: [ ^ #(  ) ].
 	protocol = Protocol unclassified ifTrue: [ ^ #(  ) ].
 	^ { protocol }
+]
+
+{ #category : '*Deprecated12' }
+CompiledMethod >> trailer [
+	^self deprecated: 'CompiledMethodTrailer has been removed in Pharo12. Just use sourcePointer / sourcePointer to read and set. See class comment of CompiledMethodTrailer for more information'
 ]
 
 { #category : '*Deprecated12' }

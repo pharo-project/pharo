@@ -36,22 +36,20 @@ RBMoveMethodToClassSideTransformation >> accessorsFor: variableName [
 { #category : 'refactoring' }
 RBMoveMethodToClassSideTransformation >> addMethod: rbMethod to: aClass toProtocol: protocol [
 
-	(RBAddMethodTransformation
+	self generateChangesFor: (RBAddMethodTransformation
 		model: self model
 		sourceCode: rbMethod source
 		in: aClass
-		withProtocol: protocol) generateChanges
+		withProtocol: protocol)
 ]
 
-{ #category : 'refactoring' }
+{ #category : 'preconditions' }
 RBMoveMethodToClassSideTransformation >> applicabilityPreconditions [
-	^ (RBCondition
-			definesSelector: method selector
-			in: class classSide) not
-		& (RBCondition withBlock: [ class isMeta not ])
-		
-	
 
+	^ {
+		  (RBCondition definesSelector: method selector in: class classSide)
+			  not.
+		  (RBCondition withBlock: [ class isMeta not ]) }
 ]
 
 { #category : 'refactoring' }
@@ -112,8 +110,8 @@ RBMoveMethodToClassSideTransformation >> privateTransform [
 	method := class methodFor: method selector.
 	newClass := self model classNamed: class name, ' class'.
 	newSource2 := self getNewSource.
-	rbMethod := RBClassModelFactory rbMethod for: newClass source: newSource2 selector: method selector.
-	rbMethod2 := RBClassModelFactory rbMethod for: oldClass source: newSource selector: method selector.
+	rbMethod := model rbMethodClass for: newClass source: newSource2 selector: method selector.
+	rbMethod2 := model rbMethodClass for: oldClass source: newSource selector: method selector.
 	self removeMethod: method selector from: oldClass.
 	self addMethod: rbMethod to: newClass toProtocol: originalProtocol.
 	self addMethod: rbMethod2 to: oldClass toProtocol: originalProtocol
@@ -129,7 +127,7 @@ RBMoveMethodToClassSideTransformation >> removeInstVariableReferences [
 	references do: [ :e |
 		| replacer accessorsRefactoring |
 		accessorsRefactoring := self accessorsFor: e.
-		accessorsRefactoring generateChanges.
+		self generateChangesFor: accessorsRefactoring.
 		replacer := self parseTreeRewriterClass
 			            variable: e
 			            getter: accessorsRefactoring getterMethod
@@ -140,13 +138,13 @@ RBMoveMethodToClassSideTransformation >> removeInstVariableReferences [
 { #category : 'transforming' }
 RBMoveMethodToClassSideTransformation >> removeMethod: aSelector from: aRBClass [
 
-	(RBRemoveMethodTransformation
+	self generateChangesFor: (RBRemoveMethodTransformation
 		model: self model
 		selector: aSelector
-		from: aRBClass ) generateChanges
+		from: aRBClass )
 ]
 
-{ #category : 'refactoring' }
+{ #category : 'storing' }
 RBMoveMethodToClassSideTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

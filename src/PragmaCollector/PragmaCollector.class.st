@@ -167,13 +167,13 @@ PragmaCollector >> initialize [
 PragmaCollector >> installSystemNotifications [
 	"Allows myself to be kept up-to-date regarding system changes"
 
-	SystemAnnouncer uniqueInstance unsubscribe: self.
+	self noMoreNotifications.
 
-	SystemAnnouncer uniqueInstance weak
-			when: ClassRemoved send: #classRemovedEventOccurs: to: self;
-			when: MethodRemoved send: #removedEventOccurs: to: self;
-			when: MethodAdded send: #addedEventOccurs: to: self;
-			when: MethodModified send: #modifiedEventOccurs: to: self
+	self class codeChangeAnnouncer weak
+		when: ClassRemoved send: #classRemovedEventOccurs: to: self;
+		when: MethodRemoved send: #removedEventOccurs: to: self;
+		when: MethodAdded send: #addedEventOccurs: to: self;
+		when: MethodModified send: #modifiedEventOccurs: to: self
 ]
 
 { #category : 'testing' }
@@ -188,7 +188,7 @@ PragmaCollector >> isNotEmpty [
 
 { #category : 'updating' }
 PragmaCollector >> keepPragma: aPragma [
-	(selectors notNil and: [(selectors includes: aPragma selector) not ]) ifTrue: [ ^ false ].
+	(selectors isNotNil and: [(selectors includes: aPragma selector) not ]) ifTrue: [ ^ false ].
 	^ self filter value: aPragma
 ]
 
@@ -232,7 +232,8 @@ PragmaCollector >> noMoreAnnounceWhile: aBlock [
 { #category : 'system changes' }
 PragmaCollector >> noMoreNotifications [
 	"Do not receiver any system change notification anymore"
-	SystemAnnouncer uniqueInstance unsubscribe: self
+
+	self class codeChangeAnnouncer unsubscribe: self
 ]
 
 { #category : 'system changes' }
@@ -275,10 +276,10 @@ PragmaCollector >> reject: aBlock [
 
 { #category : 'dependents access' }
 PragmaCollector >> release [
+
 	self noMoreNotifications.
 	self destroyAnnouncer.
-	collected := nil.
-	super release
+	collected := nil
 ]
 
 { #category : 'updating' }

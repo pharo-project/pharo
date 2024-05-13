@@ -81,14 +81,13 @@ ReCriticEngine >> critiquesOf: anEntity [
 ReCriticEngine >> guidedBy: anEntity ban: aCritique [
 
 	| candidates |
-
 	candidates := anEntity banLevelCandidates.
 
-	(UIManager default
-		chooseFrom: (candidates collect: [:each | each reBanName])
-		values: candidates
-		title: 'On which level do you want to ban the rule?')
-			ifNotNil: [ :entity | entity ban: aCritique ]
+	(MorphicUIManager new
+		 chooseFrom: (candidates collect: [ :each | each reBanName ])
+		 values: candidates
+		 title: 'On which level do you want to ban the rule?') ifNotNil: [
+		:entity | entity ban: aCritique ]
 ]
 
 { #category : 'running' }
@@ -100,40 +99,27 @@ ReCriticEngine >> nodeCritiquesOf: aMethod [
 	the nodes of a method. I have to find a better solution to
 	do this, but for thow the method will stay like this."
 
-
 	| rules critiques manifest builder |
-
 	builder := TheManifestBuilder new.
 	manifest := builder manifestOf: aMethod.
 
 	rules := (ReRuleManager managerFor: aMethod) nodeRules.
 	critiques := Set new.
-	rules := rules
-		reject: [ :rule |
-			manifest isNotNil and:
-			[ aMethod banChecksForValidation
-				anySatisfy: [ :banLevel |
-					builder bansRule: rule for: banLevel ] ] ].
-		rules do: [ :rule |
+	rules := rules reject: [ :rule | manifest isNotNil and: [ aMethod banChecksForValidation anySatisfy: [ :banLevel | builder bansRule: rule for: banLevel ] ] ].
+	rules do: [ :rule |
+		(rule shouldCheckMethod: aMethod) ifTrue: [
 			| ast |
 			ast := aMethod ast.
 			"for rewrite rules, we run every rule on a copy of the ast"
-			rule isRewriteRule ifTrue: [ ast := ast copy  ].
+			rule isRewriteRule ifTrue: [ ast := ast copy ].
 			ast nodesDo: [ :node |
-			[
-			  rule
-				  check: node
-				  forCritiquesDo: [ :critique |
-						critique sourceAnchor initializeEnitity: aMethod.
-					  critiques add: critique ]
-			] on: Error
-			  do: [ :er |
-				ReExceptionStrategy current
-					handle: er
-					about: aMethod
-					forPropertiesDo: [ :prop |
-						critiques add: prop ] ].
-			Processor yield ] ].
+				[
+				rule check: node forCritiquesDo: [ :critique |
+					critique sourceAnchor initializeEnitity: aMethod.
+					critiques add: critique ] ]
+					on: Error
+					do: [ :er | ReExceptionStrategy current handle: er about: aMethod forPropertiesDo: [ :prop | critiques add: prop ] ].
+				Processor yield ] ] ].
 
 	ReSystemAnnouncer uniqueInstance notifyEntity: aMethod criticizedWith: critiques.
 

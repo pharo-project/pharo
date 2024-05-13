@@ -8,8 +8,6 @@ Class {
 		'symbolicVersionMap',
 		'loadType',
 		'versionMap',
-		'loader',
-		'loaderClass',
 		'configuration'
 	],
 	#category : 'Metacello-Core-Model',
@@ -91,82 +89,10 @@ MetacelloProject >> configurationOfProjectSpec [
     ^ MetacelloMCConfigurationOfProjectSpec for: self
 ]
 
-{ #category : 'repository creation' }
-MetacelloProject >> createRepository: aRepositorySpec [
-
-	^ MetacelloPlatform current createRepository: aRepositorySpec
-]
-
-{ #category : 'versions' }
-MetacelloProject >> currentVersion [
-	| cacheKey cv |
-	cacheKey := self configuration class.
-	^ MetacelloPlatform current
-		stackCacheFor: #currentVersion
-		at: cacheKey
-		doing: [ :cache | 
-			cv := self currentVersionAgainst: nil.
-			^ cache at: cacheKey put: cv ]
-]
-
-{ #category : 'versions' }
-MetacelloProject >> currentVersionAgainst: resolvedPackageAndProjectNames [
-
-	| cacheKey |
-
-	cacheKey := resolvedPackageAndProjectNames
-		ifNil: [ Array with: self configuration class with: nil ]
-		ifNotNil: [ Array
-				with: self configuration class
-				with: ( resolvedPackageAndProjectNames sort: [ :a :b | a <= b ] )
-			].
-	^ MetacelloPlatform current
-		stackCacheFor: #currentVersionAgainst:
-		at: cacheKey
-		doing: [ :cache | 
-			| cv versions latestSomethingLoaded |
-
-			cv := nil.
-			versions := self sortedAndFilteredVersions.
-			versions
-				do: [ :version | 
-					| status matchBlock |
-
-					status := resolvedPackageAndProjectNames
-						ifNil: [ version spec isPartiallyCurrent ]
-						ifNotNil: [ version spec isPartiallyCurrentAgainst: resolvedPackageAndProjectNames ].
-					matchBlock := [ :matchStatus | 
-					cv := version copy.
-					cv versionStatus: matchStatus.
-					^ cache at: cacheKey put: cv
-					].
-					status isAllLoadedToSpec: matchBlock.
-					status isLoadedToSpec: matchBlock.
-					status isLoadedMatchConstraints: matchBlock.
-					status
-						isSomethingLoaded: [ :matchStatus | 
-							latestSomethingLoaded
-								ifNil: [ cv := version copy.
-									cv versionStatus: matchStatus.
-									latestSomethingLoaded := cv
-									]
-							]
-					].
-			latestSomethingLoaded ifNotNil: [ ^ cache at: cacheKey put: latestSomethingLoaded ].
-			^ cache at: cacheKey put: nil
-			]
-]
-
 { #category : 'accessing' }
 MetacelloProject >> defaultBlessing [
 
 	^#release
-]
-
-{ #category : 'spec classes' }
-MetacelloProject >> defaultLoaderClass [
-
-	^MetacelloLoadingMCSpecLoader
 ]
 
 { #category : 'private' }
@@ -196,31 +122,6 @@ MetacelloProject >> errorMap: anObject [
 MetacelloProject >> excludeFromLatestVersion [
 
 	^#(structural development broken baseline)
-]
-
-{ #category : 'development support' }
-MetacelloProject >> fetchProject [
-	"fetch the latest version of the configuration package"
-	
-	^self fetchProject: MetacelloLoaderPolicy new
-]
-
-{ #category : 'development support' }
-MetacelloProject >> fetchProject: aLoaderPolicy [
-	"fetch the latest version of the configuration package"
-
-	| mcLoader |
-	(mcLoader := self loader) ifNil: [ mcLoader := self project loaderClass on: nil ].
-	mcLoader loaderPolicy: aLoaderPolicy.
-	mcLoader doingLoads: [
-		MCWorkingCopy workingCopiesForClass: self configuration class do: [ :workingCopy |
-			| pkg |
-			pkg := self packageSpec.
-			workingCopy repositoryGroup repositories do: [ :repo | pkg repositories repository: (repo asRepositorySpecFor: self) ].
-			pkg name: workingCopy packageName.
-			pkg fetchUsing: mcLoader.
-			^ true ] ].
-	^ true
 ]
 
 { #category : 'spec classes' }
@@ -288,30 +189,6 @@ MetacelloProject >> loadType: aSymbol [
 	loadType := aSymbol
 ]
 
-{ #category : 'spec classes' }
-MetacelloProject >> loader [
-
-	^loader
-]
-
-{ #category : 'spec classes' }
-MetacelloProject >> loader: aLoader [
-
-	loader := aLoader
-]
-
-{ #category : 'spec classes' }
-MetacelloProject >> loaderClass [
-
-	^ loaderClass ifNil: [ loaderClass := self defaultLoaderClass ]
-]
-
-{ #category : 'spec classes' }
-MetacelloProject >> loaderClass: aMetacelloSpecLoader [
-
-	loaderClass := aMetacelloSpecLoader
-]
-
 { #category : 'private' }
 MetacelloProject >> lookupVersion: aVersionString ifAbsent: aBlock [
     "please use version:...this is a private method"
@@ -339,7 +216,7 @@ MetacelloProject >> map: aDictionary [
 { #category : 'spec classes' }
 MetacelloProject >> packageSpec [
 
-	^self packageSpecClass for: self
+	^ self packageSpecClass for: self
 ]
 
 { #category : 'spec classes' }
@@ -399,35 +276,22 @@ MetacelloProject >> projectAttributes: aList [
 	projectAttributes := aList
 ]
 
-{ #category : 'scripting' }
-MetacelloProject >> projectForScriptEngine: aMetacelloScriptEngine [
-    ^ self projectForScriptEngine: aMetacelloScriptEngine unconditionalLoad: false
-]
-
-{ #category : 'scripting' }
-MetacelloProject >> projectForScriptEngine: aMetacelloScriptEngine unconditionalLoad: aBool [
-    ^ aMetacelloScriptEngine getConfigurationProjectUnconditionalLoad: aBool
-]
-
 { #category : 'development support' }
 MetacelloProject >> projectPackage [
-  MCWorkingCopy
-    workingCopiesForClass: self configuration class
-    do: [ :workingCopy | 
-      | pkgSpec repo |
-      pkgSpec := self packageSpec
-        name: workingCopy packageName;
-        yourself.
-      workingCopy ancestors notEmpty
-        ifTrue: [ pkgSpec file: workingCopy ancestors first name ].
-      repo := workingCopy repositoryGroup repositories
-        detect: [ :each | each ~~ MCCacheRepository default ]
-        ifNone: [ 
-          MetacelloNotification signal: ('Using cache repository for ' , self label , ' project package').
-          MCCacheRepository default ].
-      pkgSpec repository: (repo asRepositorySpecFor: self).
-      ^ pkgSpec ].
-  ^ nil
+
+	self configuration class mcWorkingCopy ifNotNil: [ :workingCopy |
+		| pkgSpec repo |
+		pkgSpec := self packageSpec
+			           name: workingCopy packageName;
+			           yourself.
+		repo := workingCopy repositoryGroup repositories
+			        detect: [ :each | each ~~ MCCacheRepository default ]
+			        ifNone: [
+				        MetacelloNotification signal: 'Using cache repository for ' , self label , ' project package'.
+				        MCCacheRepository default ].
+		pkgSpec repository: (repo asRepositorySpecFor: self).
+		^ pkgSpec ].
+	^ nil
 ]
 
 { #category : 'private' }

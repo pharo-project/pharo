@@ -60,7 +60,7 @@ RBCommentChange >> comment: aString [
 RBCommentChange >> generateChanges [
 
 	self changeClass comment: comment stamp: self changeStamp.
-	SystemAnnouncer uniqueInstance classCommented: self changeClass
+	
 ]
 
 { #category : 'printing' }
@@ -71,6 +71,5 @@ RBCommentChange >> printOn: aStream [
 		nextPutAll: ' classComment: ';
 		print: (self comment copyReplaceAll: '!' with: '!!');
 		nextPutAll: ' stamp: ';
-		print: self changeStamp;
-		nextPutAll: '!'
+		print: self changeStamp
 ]

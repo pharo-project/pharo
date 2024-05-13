@@ -38,18 +38,17 @@ DAPackageRelationGraph class >> onPackagesNamed: packageNames [
 ]
 
 { #category : 'adding' }
-DAPackageRelationGraph >> addExtensionDependencies: aPDPackage [
-	aPDPackage rPackageSet extensionMethods
-		do: [ :method | | packageOfExtendedClass |
+DAPackageRelationGraph >> addExtensionDependencies: aDAPackage [
+
+	aDAPackage systemPackage ifNotNil: [ :package |
+		package extensionMethods do: [ :method |
+			| packageOfExtendedClass |
 			packageOfExtendedClass := self packageForBehavior: method methodClass.
 			self addPackage: packageOfExtendedClass.
-			aPDPackage
-				add:
-					((DAExtensionDependency from: aPDPackage to: packageOfExtendedClass)
-						theClass: method methodClass;
-						selector: method selector asSymbol;
-						method: method).
-			 ]
+			aDAPackage add: ((DAExtensionDependency from: aDAPackage to: packageOfExtendedClass)
+					 theClass: method methodClass;
+					 selector: method selector asSymbol;
+					 method: method) ] ]
 ]
 
 { #category : 'adding' }
@@ -188,11 +187,6 @@ DAPackageRelationGraph >> build [
 		combineDependencies
 ]
 
-{ #category : 'adding' }
-DAPackageRelationGraph >> classesFor: aPackage [
-	^ aPackage rPackageSet classes
-]
-
 { #category : 'actions' }
 DAPackageRelationGraph >> clearAllDependencies [
 	packages do: [ :package | package clearDependencies ]
@@ -248,7 +242,8 @@ DAPackageRelationGraph >> computeStaticDependencies: aPackage [
 
 { #category : 'accessing' }
 DAPackageRelationGraph >> daPackageWith: packageName [
-	^ DAPackage on: (RPackageSet named: packageName)
+
+	^ DAPackage onPackageNamed: packageName
 ]
 
 { #category : 'accessing' }
@@ -310,7 +305,10 @@ DAPackageRelationGraph >> isReference: aLiteral [
 
 { #category : 'adding' }
 DAPackageRelationGraph >> methodsFor: aPackage [
-	^ aPackage rPackageSet methods
+
+	^ aPackage systemPackage
+		  ifNil: [ #(  ) ]
+		  ifNotNil: [ :package | package methods ]
 ]
 
 { #category : 'accessing' }
@@ -328,7 +326,8 @@ DAPackageRelationGraph >> outgoing [
 
 { #category : 'enumerating' }
 DAPackageRelationGraph >> package: aPackage classesDo: aBlock [
-	aPackage rPackageSet classes do: aBlock
+
+	aPackage systemPackage ifNotNil: [ :package | package classes do: aBlock ]
 ]
 
 { #category : 'accessing' }
@@ -344,17 +343,19 @@ DAPackageRelationGraph >> packageAt: aPackageName [
 DAPackageRelationGraph >> packageForBehavior: aClass [
 	"return a PDPackage and put in classToPackage"
 
-	^ classMapping
-		at: aClass
-		ifAbsentPut: [
-			self packages
-				detect: [ :each | each rPackageSet includesClass: aClass ]
-				ifNone: [ self systemPackageContaining: aClass ] ]
+	^ classMapping at: aClass ifAbsentPut: [
+		  self packages
+			  detect: [ :each |
+				  each systemPackage
+					  ifNil: [ false ]
+					  ifNotNil: [ :package | package includesClass: aClass ] ]
+			  ifNone: [ self systemPackageContaining: aClass ] ]
 ]
 
 { #category : 'accessing' }
 DAPackageRelationGraph >> packageForClass: aClass [
-	^ packages detect: [ :package | package rPackageSet includesClass: aClass ]
+
+	^ packages detect: [ :package | package systemPackage includesClass: aClass ]
 ]
 
 { #category : 'accessing' }
@@ -488,7 +489,7 @@ DAPackageRelationGraph >> systemPackageContaining: aClass [
 
 	^ aClass package name
 		  ifNil: [ self error: 'Package for ' , aClass name , ' not found.' ]
-		  ifNotNil: [ :packageName | DAPackage on: (RPackageSet named: packageName asString) ]
+		  ifNotNil: [ :packageName | DAPackage onPackageNamed: packageName asString ]
 ]
 
 { #category : 'computing' }

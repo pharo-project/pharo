@@ -317,84 +317,6 @@ SystemWindow >> allowedToClose [
 ]
 
 { #category : '*Polymorph-Widgets' }
-SystemWindow >> animateClose [
-	"Animate closing."
-
-	| smallRect restoredRect rects steps|
-	self isMinimized ifTrue: [^self].
-	restoredRect := self bounds.
-	smallRect := restoredRect scaledAndCenteredIn: (0@0 extent: 20@20).
-	smallRect := smallRect align: smallRect center with: restoredRect center.
-	steps := self theme numberOfStepsForAnimations.
-	rects := ((steps - 1)/steps to: 0 by: -1/steps) collect: [:x |
-		smallRect interpolateTo: restoredRect at: (20 raisedTo: x) - 1 / 19].
-	self currentWorld displayWorldSafely.
-	self fastAnimateRectangles: rects
-]
-
-{ #category : '*Polymorph-Widgets' }
-SystemWindow >> animateMaximize [
-	"Animate maximizing from restored."
-
-	|expandedRect restoredRect rects steps|
-	expandedRect := self fullscreenBounds.
-	restoredRect := self bounds.
-	steps := self theme numberOfStepsForAnimations.
-	rects := (1/steps to: 1 by: 1/steps) collect: [:x |
-		restoredRect interpolateTo: expandedRect at: (20 raisedTo: x) - 1 / 19].
-	self fastAnimateRectangles: rects
-]
-
-{ #category : '*Polymorph-Widgets' }
-SystemWindow >> animateMinimize [
-	"Animate minimizing."
-
-	|tb buttonRect restoredRect rects steps|
-	tb := self worldTaskbar ifNil: [^self].
-	buttonRect := ((tb taskButtonOf: self) ifNil: [^self]) bounds.
-	restoredRect := self isFlexed
-		ifTrue: [(owner transform
-					globalPointToLocal: fullFrame topLeft)
-					extent: fullFrame extent]
-		ifFalse: [fullFrame].
-	steps := self theme numberOfStepsForAnimations.
-	rects := ((steps - 1)/steps to: 0 by: -1/steps) collect: [:x |
-		buttonRect interpolateTo: restoredRect at: (20 raisedTo: x) - 1 / 19].
-	self fastAnimateRectangles: rects
-]
-
-{ #category : '*Polymorph-Widgets' }
-SystemWindow >> animateRestore [
-	"Animate restoring from maximised."
-
-	|expandedRect restoredRect rects steps|
-	expandedRect := self bounds.
-	restoredRect := self unexpandedFrame.
-	steps := self theme numberOfStepsForAnimations.
-	rects := ((steps - 1)/steps to: 0 by: -1/steps) collect: [:x |
-		restoredRect interpolateTo: expandedRect at: (20 raisedTo: x) - 1 / 19].
-	self fastAnimateRectangles: rects
-]
-
-{ #category : '*Polymorph-Widgets' }
-SystemWindow >> animateRestoreFromMinimized [
-	"Animate restoring from minimised."
-
-	|tb buttonRect restoredRect rects steps|
-	tb := self worldTaskbar ifNil: [^self].
-	buttonRect := ((tb taskButtonOf: self) ifNil: [^self]) bounds.
-	restoredRect := self isFlexed
-		ifTrue: [(owner transform
-					globalPointToLocal: fullFrame topLeft)
-					extent: fullFrame extent]
-		ifFalse: [fullFrame].
-	steps := self theme numberOfStepsForAnimations.
-	rects := (1/steps to: 1 by: 1/steps) collect: [:x |
-		buttonRect interpolateTo: restoredRect at: (20 raisedTo: x) - 1 / 19].
-	self fastAnimateRectangles: rects
-]
-
-{ #category : '*Polymorph-Widgets' }
 SystemWindow >> basicIsSticky [
 	"Answer the super isSticky."
 
@@ -557,49 +479,28 @@ SystemWindow >> drawDropShadowOn: aCanvas [
 SystemWindow >> expandBoxHit [
 	"The fullscreen expand box has been hit"
 
-	self isCollapsed
-		ifTrue: [self playRestoreUpSound.
-				self
-					hide;
-					collapseOrExpand.
-				self unexpandedFrame ifNil: [self unexpandedFrame: fullFrame].
-				self
-					fullscreen;
-					setExpandBoxBalloonText.
-				^self show].
+	self isCollapsed ifTrue: [
+		self playRestoreUpSound.
+		self
+			hide;
+			collapseOrExpand.
+		self unexpandedFrame ifNil: [ self unexpandedFrame: fullFrame ].
+		self
+			fullscreen;
+			setExpandBoxBalloonText.
+		^ self show ].
 	self unexpandedFrame
-		ifNil: [self playMaximizeSound.
-				self theme shouldUseAnimations ifTrue: [self animateMaximize].
-				self
-					unexpandedFrame: fullFrame;
-					fullscreen]
-		ifNotNil: [self playRestoreDownSound.
-				self theme shouldUseAnimations ifTrue: [self animateRestore].
-				self
-					bounds: self unexpandedFrame;
-					unexpandedFrame: nil].
+		ifNil: [
+			self playMaximizeSound.
+			self
+				unexpandedFrame: fullFrame;
+				fullscreen ]
+		ifNotNil: [
+			self playRestoreDownSound.
+			self
+				bounds: self unexpandedFrame;
+				unexpandedFrame: nil ].
 	self setExpandBoxBalloonText
-]
-
-{ #category : '*Polymorph-Widgets' }
-SystemWindow >> fastAnimateRectangles: rects [
-	"Animate the given rectangles using the fast method."
-
-	|delay col merged|
-	rects ifEmpty: [^self].
-	delay := Delay forMilliseconds: (self theme animationSettings delay).
-	col := Color gray alpha: 0.5.
-	merged := rects first.
-	rects withIndexDo: [:r :i |
-		Display
-			border: r rounded
-			width: 1
-			rule: Form blend
-			fillColor: col.
-		merged := merged merge: r.
-		delay wait].
-	merged := merged expandBy: 1.
-	self currentWorld invalidRect: merged from: self
 ]
 
 { #category : '*Polymorph-Widgets' }

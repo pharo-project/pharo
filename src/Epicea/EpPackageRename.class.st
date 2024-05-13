@@ -27,6 +27,19 @@ EpPackageRename >> accept: aVisitor [
 ]
 
 { #category : 'accessing' }
+EpPackageRename >> fileOutEntryOn: aWriteStream [ 
+	"Write a code chunk to rename a package"
+
+	aWriteStream
+		nextPutAll: 'self packageOrganizer renamePackage: ';
+		nextPutAll: self oldPackageName;
+		nextPutAll: ' to: ';
+		nextChunkPut: self newPackageName;
+		cr.
+
+]
+
+{ #category : 'accessing' }
 EpPackageRename >> newPackageName [
 
 	^ self packageName

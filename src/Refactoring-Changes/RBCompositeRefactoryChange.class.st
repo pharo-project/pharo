@@ -140,9 +140,9 @@ RBCompositeRefactoryChange >> compile: source in: class classified: aProtocol [
 ]
 
 { #category : 'refactory - changes' }
-RBCompositeRefactoryChange >> defineClass: aString [
+RBCompositeRefactoryChange >> defineClass: definition [
 
-	^ self addChange: (changeFactory addClassDefinition: aString)
+	^ self addChange: (changeFactory addClassDefinition: definition)
 ]
 
 { #category : 'private' }

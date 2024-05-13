@@ -53,7 +53,7 @@ RBRefactoryChangeManager class >> instance [
 RBRefactoryChangeManager class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Undo last refactoring')
-				action: [self undoLastRefactoring];
+				action: [self instance undoLastRefactoring];
 				parent: #Refactoring;
 				help: 'Undo last refactoring';
 				order: 10;
@@ -90,18 +90,10 @@ RBRefactoryChangeManager class >> resetCounter [
 
 { #category : 'menu' }
 RBRefactoryChangeManager class >> undoLastRefactoring [
-	| manager |
-	manager := RBRefactoryChangeManager instance.
-	manager undoPointers ifNotEmpty: [
-	[ |limit list|
-	list := OrderedCollection new.
-	limit := manager lastUndoPointer .
-	1 to: limit do:[ :i | list add: manager undoChange ].
-	list do: [ :e | e execute ]
-	 ] asJob
-		title: 'Refactoring';
-		run]
-	ifEmpty: [ self inform: 'There aren''t refactorings to undo.'  ]
+
+	self deprecated: 'Use instance side method instead'
+		transformWith: '`@rec undoLastRefactoring' -> '`@rec instance undoLastRefactoring'.
+	^ self instance undoLastRefactoring 
 ]
 
 { #category : 'class initialization' }
@@ -124,9 +116,13 @@ RBRefactoryChangeManager class >> unload [
 
 { #category : 'public access' }
 RBRefactoryChangeManager >> addUndo: aRefactoringChange [
+	
 	undo push: aRefactoringChange.
 	undo size > UndoSize
-		ifTrue: [ undo removeFirst ].
+		ifTrue: [ 
+			"Remove the element at the bottom of the stack"
+			undo removeLast 
+		].
 	redo := OrderedCollection new
 ]
 
@@ -152,7 +148,7 @@ RBRefactoryChangeManager >> clearUndoRedoList [
 { #category : 'initialization' }
 RBRefactoryChangeManager >> connectToChanges [
 
-	SystemAnnouncer uniqueInstance weak
+	self class codeChangeAnnouncer weak
 		when: PackageTagAnnouncement,
 				ClassAdded,
 				ClassModifiedClassDefinition,
@@ -169,7 +165,7 @@ RBRefactoryChangeManager >> connectToChanges [
 { #category : 'initialization' }
 RBRefactoryChangeManager >> disconnectFromChanges [
 
-	SystemAnnouncer uniqueInstance unsubscribe: self
+	self class codeChangeAnnouncer unsubscribe: self
 ]
 
 { #category : 'testing' }
@@ -207,8 +203,32 @@ RBRefactoryChangeManager >> lastUndoPointer [
 
 { #category : 'public access' }
 RBRefactoryChangeManager >> performChange: aRefactoringChange [
-	
-	self ignoreChangesWhile: [ self addUndo: aRefactoringChange execute ]
+
+	self
+		deprecated: 'Use `performCompositeChange:` if you have CompositeChange or use `performChanges:` if you have a list of changes instead of current one'
+		transformWith: '`@rec performChange: `@arg' -> '`@rec performCompositeChange: `@arg'.
+
+	self performCompositeChange: aRefactoringChange.
+]
+
+{ #category : 'public access' }
+RBRefactoryChangeManager >> performChanges: aRefactoringChangesList [
+
+	| compositeChange |
+	aRefactoringChangesList ifEmpty: [ ^ self ].
+	compositeChange := RBCompositeRefactoryChange new.
+	compositeChange onSystemDictionary:
+		aRefactoringChangesList first onSystemDictionary.
+	compositeChange changes: aRefactoringChangesList.
+	self performCompositeChange: compositeChange
+]
+
+{ #category : 'public access' }
+RBRefactoryChangeManager >> performCompositeChange: aCompositeChange [
+
+	self ignoreChangesWhile: [
+		self addUndo: aCompositeChange execute.
+		self addUndoPointer: self class nextCounter ]
 ]
 
 { #category : 'public access' }
@@ -228,8 +248,7 @@ RBRefactoryChangeManager >> redoOperation [
 { #category : 'initialization' }
 RBRefactoryChangeManager >> release [
 
-	self disconnectFromChanges.
-	super release
+	self disconnectFromChanges
 ]
 
 { #category : 'public access' }
@@ -238,13 +257,30 @@ RBRefactoryChangeManager >> undoChange [
 	^ undo pop
 ]
 
+{ #category : 'menu' }
+RBRefactoryChangeManager >> undoLastRefactoring [
+
+	self undoPointers ifNotEmpty: [
+	[ |limit list|
+		list := OrderedCollection new.
+		limit := self lastUndoPointer .
+		1 to: limit do:[ :i | list add: self undoChange ].
+		list do: [ :e | e execute ].
+		^ list
+	 ] asJob
+		title: 'Refactoring';
+		run]
+	ifEmpty: [ self inform: 'There aren''t refactorings to undo.'  ]
+]
+
 { #category : 'public access' }
 RBRefactoryChangeManager >> undoOperation [
 
 	undo ifEmpty: [ ^ self ].
 	self ignoreChangesWhile: [
 		| change |
-		change := undo removeLast.
+		"Retrieve the element at the top"
+		change := self undoChange.
 		redo add: change execute ]
 ]
 

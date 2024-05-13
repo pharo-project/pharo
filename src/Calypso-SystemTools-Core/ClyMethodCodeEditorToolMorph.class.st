@@ -71,11 +71,8 @@ ClyMethodCodeEditorToolMorph >> applyDecorations [
 { #category : 'controlling' }
 ClyMethodCodeEditorToolMorph >> attachToSystem [
 
-	browser system
-		when: (ClyMethodChange of: self editingMethod)
-		send: #triggerUpdate
-		to: self.
-	SystemAnnouncer uniqueInstance weak when: ASTCacheReset send: #resetASTCache to: self
+	browser system when: (ClyMethodChange of: self editingMethod) send: #triggerUpdate to: self.
+	self class codeSupportAnnouncer weak when: ASTCacheReset send: #resetASTCache to: self
 ]
 
 { #category : 'testing' }
@@ -392,6 +389,12 @@ ClyMethodCodeEditorToolMorph >> update [
 { #category : 'updating' }
 ClyMethodCodeEditorToolMorph >> updateProtocolAndPackage [
 
-	self methodProtocol: editingMethod protocolName.
-	editingMethod isExtension ifTrue: [ extendingPackage := editingMethod package ]
+	| realMethod |
+	
+	realMethod := editingMethod isRGObject 
+		ifTrue: [ editingMethod realMethod ]
+		ifFalse: [ editingMethod ].
+
+	self methodProtocol: realMethod protocolName.
+	realMethod isExtension ifTrue: [ extendingPackage := realMethod package ]
 ]

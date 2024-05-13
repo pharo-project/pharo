@@ -94,6 +94,14 @@ TaCompositionElement >> hash [
 	^ self innerClass hash
 ]
 
+{ #category : 'testing' }
+TaCompositionElement >> includesTrait: aTrait [
+
+	innerClass = aTrait ifTrue: [ ^ true ].
+
+	^ innerClass traitComposition includesTrait: aTrait
+]
+
 { #category : 'transforming selectors' }
 TaCompositionElement >> initializeSelectorForMe [
 	^ ('initializeTalent_' , self name) asSymbol
@@ -152,7 +160,8 @@ TaCompositionElement >> selectors [
 	" I get all the selectors of the methods in this talent, if there is a #initializeTalent selector I rename it to #initializeTalent_NameOfTalent"
 
 	| originals |
-	originals := self methods collect: [ :method | method selector ].
+	"We do not rely on the methods of the innerclass because while removing a trait we might return the removed methods during the removal and I need to work properly during the method dictionary rebuild"
+	originals := innerClass localSelectors , innerClass traitComposition selectors.
 	^ (originals includes: #initializeTalent)
 		  ifTrue: [ (originals reject: [ :e | e = #initializeTalent ]) copyWith: self initializeSelectorForMe ]
 		  ifFalse: [ originals ]
@@ -189,6 +198,11 @@ TaCompositionElement >> traitDefining: selector [
 { #category : 'querying' }
 TaCompositionElement >> traits [
 	^ { innerClass }
+]
+
+{ #category : 'deprecated' }
+TaCompositionElement >> transformations [
+	^ { self innerClass }
 ]
 
 { #category : 'operations' }

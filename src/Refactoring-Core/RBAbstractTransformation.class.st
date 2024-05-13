@@ -59,9 +59,6 @@ RBAbstractTransformation class >> initializeRefactoringOptions [
 		at: #alreadyDefined
 		put: [ :ref :cls :selector |  self error: #alreadyDefined ];
 
-		at: #useExistingMethod
-		put: [ :ref :selector |  self error: #useExistingMethod ];
-
 		at: #openBrowser
 		put: [ :ref :env |  self error: #openBrowser ];
 
@@ -86,6 +83,12 @@ RBAbstractTransformation class >> menuItemString [
 { #category : 'accessing' }
 RBAbstractTransformation class >> refactoringOptions [
 	^ RefactoringOptions
+]
+
+{ #category : 'preconditions' }
+RBAbstractTransformation >> applicabilityPreconditions [
+
+	^ #(  )
 ]
 
 { #category : 'private' }
@@ -138,6 +141,16 @@ RBAbstractTransformation >> changes [
 	^ self model changes
 ]
 
+{ #category : 'scripting api - conditions' }
+RBAbstractTransformation >> checkApplicabilityPreconditions [
+	"Check a preconditions and raise an error on violations. This method is part of the scripting API since it raises an error."
+	
+	| failedPreconditions |
+	failedPreconditions := self failedApplicabilityPreconditions.
+	failedPreconditions ifEmpty: [ ^ self ].
+	RBRefactoringError signalFor: failedPreconditions
+]
+
 { #category : 'condition definitions' }
 RBAbstractTransformation >> checkInstanceVariableName: aName in: aClass [
 	^RBCondition checkInstanceVariableName: aName in: aClass
@@ -148,17 +161,10 @@ RBAbstractTransformation >> checkMethodName: aName in: aClass [
 	^RBCondition checkMethodName: aName in: aClass
 ]
 
-{ #category : 'preconditions' }
+{ #category : 'scripting api - conditions' }
 RBAbstractTransformation >> checkPreconditions [
 
-	| conditions block |
-	conditions := self preconditions.
-	conditions check ifTrue: [ ^ self ].
-	block := conditions errorBlock.
-	block
-		ifNotNil: [
-		self refactoringWarning: conditions errorString with: block ]
-		ifNil: [ self refactoringError: conditions errorString ]
+	self checkApplicabilityPreconditions
 ]
 
 { #category : 'preconditions' }
@@ -182,10 +188,32 @@ RBAbstractTransformation >> convertMethod: selector for: aClass using: searchRep
 		ifTrue: [ aClass compileTree: searchReplacer tree ]
 ]
 
+{ #category : 'accessing' }
+RBAbstractTransformation >> copyOptionsFrom: aDictionary [
+	| dict |
+	dict := self options.
+	dict == self class refactoringOptions
+		ifTrue: [^self options: aDictionary copy].
+	dict keysAndValuesDo:
+			[:key :value |
+			value == (self class refactoringOptions at: key ifAbsent: [nil])
+				ifTrue: [ dict at: key put: (aDictionary at: key) ]].
+	(aDictionary keys difference: dict keys) do:
+		[ :e | dict at: e put: (aDictionary at: e) ].
+	self options: dict
+]
+
 { #category : 'initialize' }
 RBAbstractTransformation >> defaultEnvironment [
 
 	^ RBBrowserEnvironment new
+]
+
+{ #category : 'preconditions' }
+RBAbstractTransformation >> eagerlyCheckApplicabilityPreconditions [
+
+	self applicabilityPreconditions do: [ :cond |
+		cond check ifFalse: [ RBRefactoringError signalFor: { cond } ] ]
 ]
 
 { #category : 'condition definitions' }
@@ -196,27 +224,47 @@ RBAbstractTransformation >> emptyCondition [
 
 { #category : 'transforming' }
 RBAbstractTransformation >> execute [
-	"Check precondition, execute the transformation that produces changes and finally execute the changes"
+	"Check precondition, execute the transformation that produces changes and finally execute the changes. This method is part of the scripting API. It should not be called from the driver."
+	
 	self generateChanges.
 	self performChanges
 ]
 
-{ #category : 'executing' }
+{ #category : 'preconditions' }
+RBAbstractTransformation >> failedApplicabilityPreconditions [
+	"Returne the failed preconditions without raising error. It should only be called by drivers."
+	
+	^ self applicabilityPreconditions reject: [ :cond | cond check ]
+]
+
+{ #category : 'scripting api - executing' }
 RBAbstractTransformation >> generateChanges [
+	"Prepare, check the preconditions, perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message), and return the changes. This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
 	
 	self prepareForExecution.
 	self checkPreconditions.
-	self privateTransform
+	self privateTransform.
+	^ self changes
 	
-	"below executes the refactoring without prompt"
-	"RBRefactoringManager instance addRefactoring: self"
+	
+]
+
+{ #category : 'transforming' }
+RBAbstractTransformation >> generateChangesFor: aRefactoring [
+	"I will generate changes and save them in the model, BUT I will not apply them!
+	Use me when a refactorings is composed of multiple other refactorings"
+
+	"Execute the argument but passing the receiver options to that refactoring"
+	aRefactoring copyOptionsFrom: self options.
+	aRefactoring model: self model.
+	aRefactoring generateChanges
 ]
 
 { #category : 'accessing' }
 RBAbstractTransformation >> model [
 
 	^ model
-		ifNil: [ model := ( RBClassModelFactory rbNamespace onEnvironment: self defaultEnvironment )
+		ifNil: [ model := (RBNamespace onEnvironment: self defaultEnvironment )
 				name: 'Changes for ', self class name asString;
 				yourself
 			]
@@ -284,8 +332,7 @@ RBAbstractTransformation >> performChanges: aCompositeChange [
 	"Perform the changes contained in a composite change"
 	
 	RBRefactoryChangeManager instance
-		performChange: aCompositeChange;
-		addUndoPointer: RBRefactoryChangeManager nextCounter
+		performCompositeChange: aCompositeChange
 ]
 
 { #category : 'accessing' }
@@ -307,8 +354,9 @@ RBAbstractTransformation >> poolVariableNamesIn: poolName [
 
 { #category : 'preconditions' }
 RBAbstractTransformation >> preconditions [
-
-	self subclassResponsibility
+	"By default we define applicabilityPreconditions, if you need to check
+	breakingChangePreconditions, you need to override me"
+	^ self applicabilityPreconditions
 ]
 
 { #category : 'transforming' }
@@ -385,6 +433,17 @@ RBAbstractTransformation >> selectVariableTypesFrom: initialTypeCollection selec
 		value: selectedTypeCollection
 ]
 
+{ #category : 'accessing' }
+RBAbstractTransformation >> setOption: aSymbol toUse: aBlock [
+	"Unshare on usage"
+	
+	| dict |
+	dict := self options.
+	dict == self class refactoringOptions ifTrue: [dict := dict copy].
+	dict at: aSymbol put: aBlock.
+	self options: dict
+]
+
 { #category : 'requests' }
 RBAbstractTransformation >> shouldExtractAssignmentTo: aString [
 	^(self options at: #extractAssignment) value: self value: aString
@@ -401,11 +460,6 @@ RBAbstractTransformation >> shouldOverride: aSelector in: aClass [
 		value: self
 		value: aClass
 		value: aSelector
-]
-
-{ #category : 'requests' }
-RBAbstractTransformation >> shouldUseExistingMethod: aSelector [
-	^(self options at: #useExistingMethod) value: self value: aSelector
 ]
 
 { #category : 'transforming' }

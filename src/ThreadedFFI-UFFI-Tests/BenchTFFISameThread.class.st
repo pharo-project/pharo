@@ -3,17 +3,11 @@ I am a simple benchmark class to test the TFFISameThread scheme
 "
 Class {
 	#name : 'BenchTFFISameThread',
-	#superclass : 'Object',
+	#superclass : 'BenchTFFI',
 	#category : 'ThreadedFFI-UFFI-Tests-Benchs',
 	#package : 'ThreadedFFI-UFFI-Tests',
 	#tag : 'Benchs'
 }
-
-{ #category : 'accessing' }
-BenchTFFISameThread >> calloutAPIClass [
-
-	^ TFCalloutAPI
-]
 
 { #category : 'private' }
 BenchTFFISameThread >> doCallWith: aFloat another: aDouble [
@@ -29,9 +23,7 @@ BenchTFFISameThread >> ffiLibrary [
 
 { #category : 'running' }
 BenchTFFISameThread >> runCall [
-	<script: 'self new runCall'>
-	| return |
+	<script: 'self new runCall traceCr'>
 
-	^ [ return := self doCallWith: 1.0 another: 2.0.
-		 self assert: return = 3.0 ] bench
+	^ super runCall
 ]

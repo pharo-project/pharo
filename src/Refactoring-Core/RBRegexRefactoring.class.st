@@ -13,7 +13,7 @@ Here is a sample of a script that will change of the YK* classes of package Pref
 pkgPrefix := 'PrefixOfPackageNames'.
 newClassPrefix := 'ZG'.
 env := RBBrowserEnvironment new 
-			forPackageNames: (RPackage organizer packageNames select: [ : pkgName | (pkgName beginsWith: pkgPrefix) ]).
+			forPackageNames: (Package organizer packageNames select: [ : pkgName | (pkgName beginsWith: pkgPrefix) ]).
 model := (RBClassModelFactory rbNamespace onEnvironment: env) name: 'MyModel'; yourself.
 RBClassRegexRefactoring new
 	model: model;
@@ -24,13 +24,6 @@ RBClassRegexRefactoring new
 
 - ==renameClasses== renames the classes in place
 - ==copyclasses== copies the classes (pay attention we are not sure that it is fully working)
-
-
-
-
-
-
-
 "
 Class {
 	#name : 'RBRegexRefactoring',
@@ -77,12 +70,6 @@ RBRegexRefactoring >> execute: aString replace: aRegex with: aReadStream [
 RBRegexRefactoring >> initialize [
 	super initialize.
 	matchers := OrderedCollection new
-]
-
-{ #category : 'preconditions' }
-RBRegexRefactoring >> preconditions [
-
-	^ self trueCondition
 ]
 
 { #category : 'searching' }

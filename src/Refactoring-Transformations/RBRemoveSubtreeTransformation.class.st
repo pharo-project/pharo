@@ -26,54 +26,54 @@ Class {
 }
 
 { #category : 'api' }
-RBRemoveSubtreeTransformation class >> code: aString from: aSelector in: aClass [
+RBRemoveSubtreeTransformation class >> model: aRBModel remove: aString fromMethod: aSelector inClass: aClass [
 
 	^ self new
-		code: aString
-		from: aSelector
-		in: aClass;
+		model: aRBModel;
+		remove: aString
+		fromMethod: aSelector
+		inClass: aClass;
 		yourself
 ]
 
 { #category : 'api' }
-RBRemoveSubtreeTransformation class >> model: aRBModel code: aString from: aSelector in: aClass [
+RBRemoveSubtreeTransformation class >> remove: aString fromMethod: aSelector inClass: aClass [
 
 	^ self new
-		model: aRBModel;
-		code: aString
-		from: aSelector
-		in: aClass;
+		remove: aString
+		fromMethod: aSelector
+		inClass: aClass;
 		yourself
 ]
 
 { #category : 'preconditions' }
-RBRemoveSubtreeTransformation >> applicabilityPreconditions [ 
+RBRemoveSubtreeTransformation >> applicabilityPreconditions [
 
-	^ (RBCondition definesSelector: selector in: self definingClass)
-		&
-			(RBCondition
-				withBlock: [ | tree |
-					tree := self parserClass
-						parseExpression: sourceCode
-						onError:
-							[ :string :pos | self refactoringError: 'Invalid source to extract - ' , string ].
-					tree
-						ifNil: [ self refactoringError: 'Invalid source to extract - ' , sourceCode ].
-					(tree isSequence and: [ tree statements isEmpty ])
-						ifTrue: [ self refactoringError: 'Selected code to extract is empty' ].
-					tree := ((self definingClass parseTreeForSelector: selector)
-						extractSubtreeWith: sourceCode)
-						ifNil: [ self
-								refactoringError: 'Could not extract code from method ' , selector ].
-					true ])
+	^ {
+		  (RBCondition definesSelector: selector in: self definingClass).
+		  (RBCondition withBlock: [
+			   | tree |
+			   tree := self parserClass
+				           parseExpression: sourceCode
+				           onError: [ :string :pos |
+					           self refactoringError:
+						           'Invalid source to extract - ' , string ].
+			   tree ifNil: [
+				   self refactoringError:
+					   'Invalid source to extract - ' , sourceCode ].
+			   (tree isSequence and: [ tree statements isEmpty ]) ifTrue: [
+				   self refactoringError: 'Selected code to extract is empty' ].
+			   tree := ((self definingClass parseTreeForSelector: selector)
+				            extractSubtreeWith: sourceCode) ifNil: [
+				           self refactoringError:
+					           'Could not extract code from method ' , selector ].
+			   true ]) }
 ]
 
-{ #category : 'api' }
-RBRemoveSubtreeTransformation >> code: aString from: aSelector in: aClassName [
+{ #category : 'scripting api - conditions' }
+RBRemoveSubtreeTransformation >> checkPreconditions [
 
-	self className: aClassName.
-	selector := aSelector.
-	sourceCode := aString
+	self eagerlyCheckApplicabilityPreconditions 
 ]
 
 { #category : 'executing' }
@@ -98,6 +98,14 @@ RBRemoveSubtreeTransformation >> privateTransform [
 	self definingClass compileTree: parseTree"
 ]
 
+{ #category : 'api' }
+RBRemoveSubtreeTransformation >> remove: aString fromMethod: aSelector inClass: aClassName [
+
+	self className: aClassName.
+	selector := aSelector.
+	sourceCode := aString
+]
+
 { #category : 'private' }
 RBRemoveSubtreeTransformation >> removeSubtree: aTree in: aMethodTree [
 	^ [ self parseTreeRewriterClass
@@ -113,7 +121,7 @@ RBRemoveSubtreeTransformation >> removeSubtree: aTree in: aMethodTree [
 				onInterval: aTree sourceInterval ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRemoveSubtreeTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

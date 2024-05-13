@@ -12,14 +12,14 @@ Class {
 PharoBootstrapRuleTest >> setUp [
 	super setUp.
 	checkerBackup := PharoBootstrapRule
-		classVarNamed: 'DependencyChecker'
+		readClassVariableNamed: 'DependencyChecker'
 ]
 
 { #category : 'running' }
 PharoBootstrapRuleTest >> tearDown [
 	PharoBootstrapRule
-		classVarNamed: 'DependencyChecker'
-		put: checkerBackup.
+		writeClassVariableNamed: 'DependencyChecker'
+		value: checkerBackup.
 	super tearDown
 ]
 
@@ -27,9 +27,9 @@ PharoBootstrapRuleTest >> tearDown [
 PharoBootstrapRuleTest >> testRuleDoesNotFailIfAppliedOnNonBootstrapPackage [
 	| rule critiques |
 	rule := PharoBootstrapRule new.
-	rule class classVarNamed: 'DependencyChecker' put: PharoBootstrapAnalyzerStubWithNoNewDependency.
+	rule class writeClassVariableNamed: 'DependencyChecker' value: PharoBootstrapAnalyzerStubWithNoNewDependency.
 
-	critiques := rule check: (RPackage named: #P1).
+	critiques := rule check: (Package named: #P1).
 
 	self assertEmpty: critiques
 ]
@@ -38,9 +38,9 @@ PharoBootstrapRuleTest >> testRuleDoesNotFailIfAppliedOnNonBootstrapPackage [
 PharoBootstrapRuleTest >> testRuleDoesNotFailIfNoNewExternalDependency [
 	| rule critiques |
 	rule := PharoBootstrapRule new.
-	rule class classVarNamed: 'DependencyChecker' put: PharoBootstrapAnalyzerStubWithNoNewDependency.
+	rule class writeClassVariableNamed: 'DependencyChecker' value: PharoBootstrapAnalyzerStubWithNoNewDependency.
 
-	critiques := rule check: (RPackage named: #Kernel).
+	critiques := rule check: (Package named: #Kernel).
 
 	self assertEmpty: critiques
 ]
@@ -50,9 +50,9 @@ PharoBootstrapRuleTest >> testRuleFailsIfAnyNewExternalDependencyFound [
 	| rule packageUnderTest critiques |
 	rule := PharoBootstrapRule new.
 	rule class
-		classVarNamed: 'DependencyChecker'
-		put: PharoBootstrapAnalyzerStubWithNewDependency.
-	packageUnderTest := RPackage named: #Kernel.
+		writeClassVariableNamed: 'DependencyChecker'
+		value: PharoBootstrapAnalyzerStubWithNewDependency.
+	packageUnderTest := Package named: #Kernel.
 
 	critiques := rule check: packageUnderTest.
 

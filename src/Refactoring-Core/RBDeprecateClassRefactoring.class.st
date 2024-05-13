@@ -26,7 +26,7 @@ Class {
 
 { #category : 'instance creation' }
 RBDeprecateClassRefactoring class >> deprecate: aDeprecatedClass in: aNewName [
-	^ self new className: aDeprecatedClass name newName: aNewName
+	^ self new className: aDeprecatedClass newName: aNewName
 ]
 
 { #category : 'instance creation' }
@@ -45,6 +45,24 @@ RBDeprecateClassRefactoring >> addMethod: source to: aClass in: aProtocol [
 			sourceCode: source
 			in: aClass
 			withProtocol: aProtocol)
+]
+
+{ #category : 'preconditions' }
+RBDeprecateClassRefactoring >> applicabilityPreconditions [
+
+	| class |
+	class := self model classNamed: className.
+	^ {
+		  (ReClassesExistCondition new classes: { class }).
+		  (ReClassesAreNotMetaClassCondition new classes: { class }).
+		  (ReNameIsGlobalCondition new model: self model className: newName).
+		  (ReValidClassNameCondition new className: newName) }
+]
+
+{ #category : 'scripting api - conditions' }
+RBDeprecateClassRefactoring >> checkPreconditions [ 
+
+	self checkApplicabilityPreconditions 
 ]
 
 { #category : 'initialization' }
@@ -122,14 +140,6 @@ RBDeprecateClassRefactoring >> instanceSideExtensionMethodsOf: anRBClass [
 RBDeprecateClassRefactoring >> newClass [
 
 	^ self model classNamed: newName
-]
-
-{ #category : 'preconditions' }
-RBDeprecateClassRefactoring >> preconditions [
-	^((RBCondition withBlock: [deprecatedClass notNil and: [deprecatedClass isMeta not]])
-			& (RBCondition isValidClassName: newName)
-			& (RBCondition isGlobal: newName in: self model)) |
-			(RBCondition withBlock: [ self refactoringError: newName , ' is not a valid class name'])
 ]
 
 { #category : 'transforming' }
@@ -224,7 +234,7 @@ RBDeprecateClassRefactoring >> shouldRemoveExtensions: anObject [
 	shouldRemoveExtensions := anObject
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBDeprecateClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

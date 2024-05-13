@@ -34,6 +34,12 @@ SharedRandom class >> globalGenerator [
 ]
 
 { #category : 'class initialization' }
+SharedRandom class >> initialize [
+
+	SessionManager default registerSystemClassNamed: self name
+]
+
+{ #category : 'class initialization' }
 SharedRandom class >> reset [
 	global := nil
 ]

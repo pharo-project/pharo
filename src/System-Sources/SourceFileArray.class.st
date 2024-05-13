@@ -21,12 +21,6 @@ Class {
 	#tag : 'Sources'
 }
 
-{ #category : 'class initialization' }
-SourceFileArray class >> initialize [
-
-	SessionManager default registerSystemClassNamed: self name
-]
-
 { #category : 'system startup' }
 SourceFileArray class >> startUp: resuming [
 

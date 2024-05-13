@@ -13,6 +13,12 @@ Class {
 OSNullFormRenderer >> newExtent: anExtent [
 ]
 
+{ #category : 'accessing' }
+OSNullFormRenderer >> outputExtent [
+
+	^ 0@0
+]
+
 { #category : 'updating screen' }
 OSNullFormRenderer >> updateAll [
 	"Do nothing"

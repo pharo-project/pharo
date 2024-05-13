@@ -27,9 +27,6 @@ Class {
 		'package',
 		'modified'
 	],
-	#classVars : [
-		'PrivateAnnouncer'
-	],
 	#classInstVars : [
 		'registry'
 	],
@@ -69,49 +66,6 @@ MCWorkingCopy class >> ancestorsFromArray: anArray cache: cacheDictionary [
 	^ anArray collect: [:dict | self infoFromDictionary: dict cache: cacheDictionary]
 ]
 
-{ #category : 'private' }
-MCWorkingCopy class >> announcer [
-	^PrivateAnnouncer ifNil: [ SystemAnnouncer uniqueInstance  ]
-]
-
-{ #category : 'private' }
-MCWorkingCopy class >> announcer: anAnnouncer [
-	PrivateAnnouncer := anAnnouncer
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> classModified: anEvent [
-
-	self workingCopiesForClass: anEvent classAffected do: [ :wc | wc modified: true ]
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> classMoved: anEvent [
-
-	self workingCopiesForPackage: anEvent oldPackage do: [ :mgr | mgr modified: true ].
-	self workingCopiesForPackage: anEvent newPackage do: [ :mgr | mgr modified: true ]
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> classRemoved: anEvent [
-	"Informs the registry who use to keep this class that its changed. Unlike #classModified:, class is not anymore in RPackages so it will not be found, that's why we look for system category instead if class is included or not"
-
-	anEvent packageAffected mcWorkingCopy ifNotNil: [ :workingCopy | workingCopy modified: true ].
-
-	anEvent classAffected protocols , anEvent classAffected classSide protocols
-		select: [ :protocol | protocol isExtensionProtocol ]
-		thenDo: [ :extensionProtocol |
-			(self packageOrganizer packageMatchingExtensionName: extensionProtocol name allButFirst) ifNotNil: [ :package |
-				package mcWorkingCopy ifNotNil: [ :workingCopy | workingCopy modified: true ] ] ]
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> classRenamed: anEvent [
-
-	self classModified: anEvent.
-	anEvent classAffected extendingPackages do: [ :pkg | self workingCopiesForPackage: pkg do: [ :workingCopy | workingCopy modified: true ] ]
-]
-
 { #category : 'accessing' }
 MCWorkingCopy class >> ensureForPackage: aPackage [
 
@@ -146,6 +100,12 @@ MCWorkingCopy class >> forPackageNamed: aPackageName [
 		  ifNone: [ NotFound signalFor: aPackageName in: self ]
 ]
 
+{ #category : 'system changes' }
+MCWorkingCopy class >> handleClassAndMethodsChange: anEvent [
+
+	anEvent packagesAffected do: [ :package | package mcWorkingCopy ifNotNil: [ :workingCopy | workingCopy modified: true ] ]
+]
+
 { #category : 'querying' }
 MCWorkingCopy class >> hasPackageNamed: aName [
 
@@ -161,9 +121,8 @@ MCWorkingCopy class >> infoFromDictionary: aDictionary cache: cache [
 			name: (aDictionary at: #name ifAbsent: [''])
 			id: (UUID fromString: id)
 			message: (aDictionary at: #message ifAbsent: [''])
-			date: ([Date fromString: (aDictionary at: #date)] onErrorDo: [nil])
+			date: ([Date readFrom: (aDictionary at: #date) pattern: 'yyyy-mm-dd' ] onErrorDo: [nil])
 			time: ([Time fromString: (aDictionary at: #time)] onErrorDo: [nil])
-			author: (aDictionary at: #author ifAbsent: [''])
 			ancestors: (self ancestorsFromArray: (aDictionary at: #ancestors ifAbsent: []) cache: cache)
 			stepChildren: (self ancestorsFromArray: (aDictionary at: #stepChildren ifAbsent: []) cache: cache)]
 ]
@@ -173,27 +132,6 @@ MCWorkingCopy class >> initialize [
 
 	registry ifNotNil: [ registry rehash ].
 	self registerForNotifications
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> methodModified: anEvent [
-	"trait methods aren't handled here"
-	anEvent isProvidedByATrait ifTrue: [ ^ self ].
-
-	^ self workingCopiesForPackage: anEvent methodPackage do: [ :wc | wc modified: true ]
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> methodMoved: anEvent [
-
-	self workingCopiesForPackage: anEvent oldPackage do: [ :workingCopy | workingCopy modified: true ].
-	self workingCopiesForPackage: anEvent newPackage do: [ :workingCopy | workingCopy modified: true ]
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> methodRemoved: anEvent [
-
-	self workingCopiesForPackage: anEvent methodPackage do: [ :wc | wc modified: true ]
 ]
 
 { #category : 'system changes' }
@@ -227,7 +165,6 @@ MCWorkingCopy class >> registerForNotifications [
 
 	<systemEventRegistration>
 	self
-		announcer: nil;
 		unregisterForNotifications;
 		registerInterestOnSystemChanges
 ]
@@ -235,17 +172,11 @@ MCWorkingCopy class >> registerForNotifications [
 { #category : 'event registration' }
 MCWorkingCopy class >> registerInterestOnSystemChanges [
 
-	SystemAnnouncer uniqueInstance weak
+	self class codeChangeAnnouncer weak
 		when: PackageAdded send: #packageAdded: to: self;
 		when: PackageRenamed send: #packageRenamed: to: self;
 		when: PackageRemoved send: #packageRemoved: to: self;
-		when: ClassAdded , ClassModifiedClassDefinition , ClassCommented , ClassParentRenamed send: #classModified: to: self;
-		when: ClassRenamed send: #classRenamed: to: self;
-		when: ClassRepackaged send: #classMoved: to: self;
-		when: ClassRemoved send: #classRemoved: to: self;
-		when: MethodAdded , MethodModified , MethodRecategorized send: #methodModified: to: self;
-		when: MethodRepackaged send: #methodMoved: to: self;
-		when: MethodRemoved send: #methodRemoved: to: self
+		when: ClassAnnouncement , MethodAnnouncement send: #handleClassAndMethodsChange: to: self
 ]
 
 { #category : 'private' }
@@ -269,22 +200,7 @@ MCWorkingCopy class >> registry [
 { #category : 'event registration' }
 MCWorkingCopy class >> unregisterForNotifications [
 
-	SystemAnnouncer uniqueInstance unsubscribe: self
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> workingCopiesForClass: aClass do: aBlock [
-
-	^ self workingCopiesForPackage: aClass package do: aBlock
-]
-
-{ #category : 'system changes' }
-MCWorkingCopy class >> workingCopiesForPackage: aPackage do: aBlock [
-
-	| packageName |
-	packageName := aPackage name.
-
-	self registry select: [ :workingCopy | workingCopy packageName = packageName ] thenDo: aBlock
+	self codeChangeAnnouncer unsubscribe: self
 ]
 
 { #category : 'operations' }
@@ -308,33 +224,6 @@ MCWorkingCopy >> ancestors [
 { #category : 'accessing' }
 MCWorkingCopy >> ancestry [
 	^ ancestry
-]
-
-{ #category : 'private' }
-MCWorkingCopy >> announcer [
-	^self class announcer
-]
-
-{ #category : 'operations' }
-MCWorkingCopy >> backportChangesTo: aVersionInfo [
-	| baseVersion fullPatch currentVersionInfo currentVersion newSnapshot newAncestry |
-	currentVersionInfo := self currentVersionInfo.
-	baseVersion := self repositoryGroup versionWithInfo: aVersionInfo.
-	currentVersion := self repositoryGroup versionWithInfo: currentVersionInfo.
-	fullPatch := currentVersion snapshot patchRelativeToBase: baseVersion snapshot.
-	(MCChangeSelectionRequest new
-		patch: fullPatch;
-		label: 'Changes to Backport';
-		signal ) ifNotNil:
-		[:partialPatch |
-		newSnapshot := MCPatcher apply: partialPatch to: baseVersion snapshot.
-		newAncestry := MCWorkingAncestry new
-							addAncestor: aVersionInfo;
-							addStepChild: currentVersionInfo;
-							yourself.
-		MCPackageLoader updatePackage: package withSnapshot: newSnapshot.
-		ancestry := newAncestry.
-		self modified: false; modified: true]
 ]
 
 { #category : 'operations' }
@@ -413,7 +302,7 @@ MCWorkingCopy >> description [
 	^ self packageNameWithStar, ' (', (ancestry ancestorStringWithout: self packageName), ')'
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 MCWorkingCopy >> displayStringOn: stream [
 
 	ancestry ancestors
@@ -513,15 +402,8 @@ MCWorkingCopy >> newVersionIn: aRepository [
 
 { #category : 'operations' }
 MCWorkingCopy >> newVersionWithMessage: aMessageString in: aRepository [
-	^ self 
-		newVersionWithName: (self uniqueVersionNameIn: aRepository)  
-		message: aMessageString
-		in: aRepository.
 
-	"^ (self requestVersionNameAndMessageWithSuggestion: self uniqueVersionName) ifNotNil:
-		[:pair |
-		self newVersionWithName: pair first message: aMessageString].
-	"
+	^ self newVersionWithName: (self uniqueVersionNameIn: aRepository) message: aMessageString in: aRepository
 ]
 
 { #category : 'operations' }
@@ -553,27 +435,32 @@ MCWorkingCopy >> nextAncestors [
 
 { #category : 'private' }
 MCWorkingCopy >> nextVersionName [
-	| branch oldName base author |
+
+	| branch oldName base |
 	branch := ''.
 	ancestry ancestors isEmpty
-		ifTrue: [counter ifNil: [counter := 0]. base := package name]
-		ifFalse:
-			[oldName := ancestry ancestors first name.
+		ifTrue: [
+			counter ifNil: [ counter := 0 ].
+			base := package name ]
+		ifFalse: [
+			oldName := ancestry ancestors first name.
 			oldName last isDigit
-				ifFalse: [base := oldName]
+				ifFalse: [ base := oldName ]
 				ifTrue: [
 					base := oldName copyUpToLast: $-.
-					branch := ((oldName copyAfterLast: $-) copyUpToLast: $.) copyAfter: $. ].
+					branch := ((oldName copyAfterLast: $-) copyUpToLast: $.)
+						          copyAfter: $. ].
 			counter ifNil: [
-				counter := (ancestry ancestors collect: [:each |
-					each name last isDigit
-						ifFalse: [0]
-						ifTrue: [(each name copyAfterLast: $.) extractNumber]]) max]].
+				counter := (ancestry ancestors collect: [ :each |
+					            each name last isDigit
+						            ifFalse: [ 0 ]
+						            ifTrue: [
+							            ('0' , (each name copyAfterLast: $.) select: [ :ea |
+								             ea isDigit ]) asNumber ] ]) max ] ].
 
-	branch isEmpty ifFalse: [branch := '.',branch].
+	branch isEmpty ifFalse: [ branch := '.' , branch ].
 	counter := counter + 1.
-	author := Author fullName collect: [ :each | each isAlphaNumeric ifTrue: [ each ] ifFalse: [ $_ ] ].
-	^ base , '-' , author , branch , '.' , counter asString
+	^ base , '-' , branch , '.' , counter asString
 ]
 
 { #category : 'accessing' }
@@ -591,25 +478,6 @@ MCWorkingCopy >> packageNameWithStar [
 	^ modified
 		ifTrue: ['* ', self packageName]
 		ifFalse: [self packageName]
-]
-
-{ #category : 'accessing' }
-MCWorkingCopy >> packageSet [
-	^ package packageSet
-]
-
-{ #category : 'private' }
-MCWorkingCopy >> possiblyNewerVersions [
-
-	^Array streamContents: [:strm |
-		self repositoryGroup repositories do: [:repo |
-			strm nextPutAll: (self possiblyNewerVersionsIn: repo)]]
-]
-
-{ #category : 'private' }
-MCWorkingCopy >> possiblyNewerVersionsIn: aRepository [
-
-	^aRepository possiblyNewerVersionsOfAnyOf: self ancestors
 ]
 
 { #category : 'printing' }
@@ -696,25 +564,6 @@ MCWorkingCopy >> systemPackage [
 	^ self package systemPackage
 ]
 
-{ #category : 'accessing' }
-MCWorkingCopy >> theCachedRepository [
-
-	^ MCCacheRepository uniqueInstance.
-]
-
-{ #category : 'private' }
-MCWorkingCopy >> uniqueVersionName [
-	|versionName|
-	counter := nil.
-	'Creating unique version number' 
-		displayProgressFrom: 0 
-		to: 1 
-		during: [ :arg|
-			[versionName := self nextVersionName.
-			self repositoryGroup includesVersionNamed: versionName] whileTrue ].
-	^ versionName
-]
-
 { #category : 'private' }
 MCWorkingCopy >> uniqueVersionNameIn: aRepository [
 	|versionName|
@@ -761,9 +610,4 @@ MCWorkingCopy >> versionInfo [
 { #category : 'accessing' }
 MCWorkingCopy >> versionInfo: aVersionInfo [
 	ancestry := MCWorkingAncestry new addAncestor: aVersionInfo
-]
-
-{ #category : 'private' }
-MCWorkingCopy >> versionSeparator [
-	^ $_
 ]

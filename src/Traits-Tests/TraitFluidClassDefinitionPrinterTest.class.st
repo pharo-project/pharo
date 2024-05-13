@@ -34,10 +34,10 @@ TraitFluidClassDefinitionPrinterTest >> testClassSideDoesNotShowPackage [
 { #category : 'tests - template' }
 TraitFluidClassDefinitionPrinterTest >> testCompactTraitFullTemplate [
 
-	self
-		assert: (FluidClassDefinitionPrinter new compactTraitDefinitionTemplateInPackage: 'Traits') equals: 'Trait << #TMyTrait
+	self assert: (FluidClassDefinitionPrinter new compactTraitDefinitionTemplateInPackage: 'Traits' tag: #Basic) equals: 'Trait << #TMyTrait
 	traits: {};
 	slots: {};
+	tag: #Basic;
 	package: ''Traits'''
 ]
 
@@ -127,8 +127,7 @@ TraitFluidClassDefinitionPrinterTest >> testExpandedTrait3ClassTrait [
 { #category : 'tests - template' }
 TraitFluidClassDefinitionPrinterTest >> testFullTraitTemplate [
 
-	self
-		assert: (FluidClassDefinitionPrinter new traitDefinitionTemplateInPackage: 'Traits') equals: 'Trait << #TMyTrait
+	self assert: (FluidClassDefinitionPrinter new traitDefinitionTemplateInPackage: 'Traits' tag: nil named: #TMyTrait) equals: 'Trait << #TMyTrait
 	traits: {};
 	slots: {};
 	tag: '''' ;
@@ -152,16 +151,6 @@ TraitFluidClassDefinitionPrinterTest >> testMultiPools [
 ]
 
 { #category : 'tests - traits' }
-TraitFluidClassDefinitionPrinterTest >> testTBehavior [
-
-	self
-		assert: (self forClass: TBehavior)
-		equals: 'Trait << #TBehavior
-	tag: ''Traits'';
-	package: ''Traits-Compatibility'''
-]
-
-{ #category : 'tests - traits' }
 TraitFluidClassDefinitionPrinterTest >> testTComparableClassTrait [
 
 	self assert: (self forClass: TComparable classTrait) equals: 'Trait << TComparable classTrait'
@@ -174,6 +163,16 @@ TraitFluidClassDefinitionPrinterTest >> testTEventVisitorClassTrait [
 		assert: (self forClass: EpTEventVisitor classTrait)
 		equals: 'Trait << EpTEventVisitor classTrait
 	traits: {EpTCodeChangeVisitor classTrait}'
+]
+
+{ #category : 'tests - traits' }
+TraitFluidClassDefinitionPrinterTest >> testTIsEmpty [
+
+	self
+		assert: (self forClass: TIsEmpty)
+		equals: 'Trait << #TIsEmpty
+	tag: ''Base'';
+	package: ''Kernel-Traits'''
 ]
 
 { #category : 'tests - traits' }
@@ -192,10 +191,10 @@ TraitFluidClassDefinitionPrinterTest >> testTUses [
 
 	self
 		assert: ((Trait << #TTUses)
-				 traits: TBehavior;
+				 traits: TEmpty;
 				 package: 'Fake') build definitionString
 		equals: 'Trait << #TTUses
-	traits: {TBehavior};
+	traits: {TEmpty};
 	package: ''_UnpackagedPackage'''
 ]
 

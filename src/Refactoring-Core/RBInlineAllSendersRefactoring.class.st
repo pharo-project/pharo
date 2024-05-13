@@ -57,6 +57,12 @@ RBInlineAllSendersRefactoring class >> sendersOf: aSelector in: aClass [
 		in: aClass
 ]
 
+{ #category : 'preconditions' }
+RBInlineAllSendersRefactoring >> applicabilityPreconditions [
+
+	^ { (RBCondition canUnderstand: selector in: class) }
+]
+
 { #category : 'transforming' }
 RBInlineAllSendersRefactoring >> checkInlinedMethods [
 	numberReplaced = 0
@@ -124,11 +130,6 @@ RBInlineAllSendersRefactoring >> numberOfSelfSendsIn: aParseTree [
 	^ search executeTree: aParseTree initialAnswer: 0
 ]
 
-{ #category : 'preconditions' }
-RBInlineAllSendersRefactoring >> preconditions [
-	^RBCondition canUnderstand: selector in: class
-]
-
 { #category : 'transforming' }
 RBInlineAllSendersRefactoring >> privateTransform [
 	self
@@ -169,7 +170,7 @@ RBInlineAllSendersRefactoring >> sendersOf: aSelector in: aClass [
 	numberReplaced := numberNotReplaced := 0
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBInlineAllSendersRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

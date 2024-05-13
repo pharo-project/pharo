@@ -89,6 +89,12 @@ TaEmptyComposition >> hash [
 ]
 
 { #category : 'testing' }
+TaEmptyComposition >> includesTrait: aTrait [
+
+	^ false
+]
+
+{ #category : 'testing' }
 TaEmptyComposition >> isAliasSelector: aString [
 
 	^ false
@@ -144,5 +150,10 @@ TaEmptyComposition >> traitDefining: aSelector [
 
 { #category : 'querying' }
 TaEmptyComposition >> traits [
+	^ #()
+]
+
+{ #category : 'deprecated' }
+TaEmptyComposition >> transformations [
 	^ #()
 ]

@@ -62,6 +62,12 @@ TaSingleComposition >> hash [
 	^ inner hash
 ]
 
+{ #category : 'testing' }
+TaSingleComposition >> includesTrait: aTrait [
+
+	^ inner includesTrait: aTrait
+]
+
 { #category : 'transforming selectors' }
 TaSingleComposition >> initializeSelectorForMe [
 	^ inner initializeSelectorForMe
@@ -125,6 +131,13 @@ TaSingleComposition >> slots [
 	^ inner slots.
 ]
 
+{ #category : 'deprecated' }
+TaSingleComposition >> subject [
+	"Do not use... do not access directly to the subject. Kept for compatibility
+	To deprecate"
+	^ inner
+]
+
 { #category : 'querying' }
 TaSingleComposition >> traitDefining: selector [
 	^ inner traitDefining: selector
@@ -133,6 +146,11 @@ TaSingleComposition >> traitDefining: selector [
 { #category : 'querying' }
 TaSingleComposition >> traits [
 	^ inner traits
+]
+
+{ #category : 'deprecated' }
+TaSingleComposition >> transformations [
+	^ { self }
 ]
 
 { #category : 'operations' }

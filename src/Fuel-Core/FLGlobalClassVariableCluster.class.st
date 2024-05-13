@@ -21,7 +21,7 @@ FLGlobalClassVariableCluster >> materializeInstanceWith: aDecoder [
 	| keyName ownerClass |
 	ownerClass := aDecoder nextEncodedReference.
 	keyName := aDecoder nextEncodedReference.
-	^ownerClass classPool associationAt: keyName
+	^ownerClass classVariableNamed: keyName
 ]
 
 { #category : 'analyzing' }

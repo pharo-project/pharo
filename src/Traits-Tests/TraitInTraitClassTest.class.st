@@ -9,23 +9,21 @@ Class {
 TraitInTraitClassTest >> testAddingSlotToClassSide [
 
 	| t1 |
-
 	t1 := self newTrait: #T1.
-	t1 classTrait uses: {} slots: #(aSlot).
+	t1 classTrait trait: {  } slots: #( aSlot ).
 
 	self assert: t1 classTrait slots size equals: 1.
-	self assert: t1 classTrait slots anyOne name equals: #aSlot.
+	self assert: t1 classTrait slots anyOne name equals: #aSlot
 ]
 
 { #category : 'tests' }
 TraitInTraitClassTest >> testAddingSpecialSlotToClassSide [
 
 	| t1 |
-
 	t1 := self newTrait: #T1.
-	t1 classTrait uses: {} slots: {#aSlot => WeakSlot}.
+	t1 classTrait trait: {  } slots: { (#aSlot => WeakSlot) }.
 
 	self assert: t1 classTrait slots size equals: 1.
 	self assert: t1 classTrait slots anyOne name equals: #aSlot.
-	self assert: t1 classTrait slots anyOne species equals: WeakSlot.
+	self assert: t1 classTrait slots anyOne species equals: WeakSlot
 ]

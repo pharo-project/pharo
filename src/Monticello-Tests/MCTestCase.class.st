@@ -14,11 +14,6 @@ MCTestCase class >> isAbstract [
 	^ self = MCTestCase
 ]
 
-{ #category : 'testing' }
-MCTestCase class >> isUnitTest [
-	^false
-]
-
 { #category : 'accessing' }
 MCTestCase class >> resources [
 	^ Array with: MCSnapshotResource
@@ -163,7 +158,6 @@ MCTestCase >> mockVersionInfo: tag [
 		message: self mockMessageString, '-', tag asString
 		date: Date today
 		time: Time now
-		author: Author fullName
 		ancestors: #()
 
 ]
@@ -176,7 +170,6 @@ MCTestCase >> mockVersionInfoWithAncestor: aVersionInfo [
 		message: self mockMessageString
 		date: Date today
 		time: Time now
-		author: Author fullName
 		ancestors: {aVersionInfo}
 
 ]
@@ -225,6 +218,5 @@ MCTestCase >> treeFrom: anArray [
 		message: ''
 		date: nil
 		time: nil
-		author: ''
 		ancestors: (anArray size > 1 ifTrue: [(anArray second collect: [:ea | self treeFrom: ea])] ifFalse: [#()])
 ]

@@ -65,11 +65,6 @@ RBRemoveAllSendersRefactoring >> messagePattern [
 	^ 'self ' , (self buildSelectorString: selector)
 ]
 
-{ #category : 'preconditions' }
-RBRemoveAllSendersRefactoring >> preconditions [
-	^ self trueCondition
-]
-
 { #category : 'transforming' }
 RBRemoveAllSendersRefactoring >> privateTransform [
 	self removeSelfSenders
@@ -117,7 +112,7 @@ RBRemoveAllSendersRefactoring >> selfSendIn: aTree [
 	^ nodes
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRemoveAllSendersRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

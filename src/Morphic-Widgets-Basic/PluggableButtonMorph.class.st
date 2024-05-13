@@ -333,23 +333,14 @@ PluggableButtonMorph >> browseAction [
 PluggableButtonMorph >> changed [
 	"Update the fillStyle here."
 
-	|lc pc bs|
+	| aBorderStyle|
 	self assureExtension.
-	extension borderStyle: (bs := self borderStyleToUse).
-	borderColor := bs style.
-	borderWidth := bs width.
+	extension borderStyle: (aBorderStyle := self borderStyleToUse).
+	borderColor := aBorderStyle style.
+	borderWidth := aBorderStyle width.
 	extension fillStyle: self fillStyleToUse.
 	self layoutInset: (self theme buttonLabelInsetFor: self).
 	self privateColor: self fillStyle asColor.
-	(self labelMorph respondsTo: #interactionState:)
-		ifTrue: [self labelMorph interactionState: self interactionState]
-		ifFalse: [(self labelMorph isNil
-			or: [label isMorph]) ifFalse: [
-				pc := self normalColor.
-				lc := self enabled
-					ifTrue: [pc contrastingBlackAndWhiteColor]
-					ifFalse: [pc contrastingBlackAndWhiteColor muchDarker].
-				self labelMorph color: lc]].
 	super changed
 ]
 
@@ -641,23 +632,23 @@ PluggableButtonMorph >> iconPosition [
 PluggableButtonMorph >> indicateModalChild [
 	"Flash the button border."
 
-	|fs c w d|
+	| fs c w d |
 	fs := self fillStyle.
 	c := self color alphaMixed: 0.5 with: Color black.
 	w := self world.
 	d := 0.
 	self assureExtension.
 	2 timesRepeat: [
-		(Delay forDuration: d milliSeconds) wait.
+		(Delay forMilliseconds: d) wait.
 		d := 200.
 		extension fillStyle: c.
 		self privateColor: c.
 		self invalidRect: self bounds.
-		w ifNotNil: [w displayWorldSafely].
-		(Delay forDuration: d milliSeconds) wait.
+		w ifNotNil: [ w displayWorldSafely ].
+		(Delay forMilliseconds: d milliSeconds) wait.
 		self fillStyle: fs.
-		w ifNotNil: [w displayWorldSafely].
-		self invalidRect: self bounds]
+		w ifNotNil: [ w displayWorldSafely ].
+		self invalidRect: self bounds ]
 ]
 
 { #category : 'initialization' }

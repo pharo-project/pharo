@@ -7,6 +7,7 @@ Usage: test [--junit-xml-output] [--fail-on-failure] [<package> ...]
 	--stage-name=aName	
 					it adds a prefix to the xml generated, this is useful 
 					when running in the CI infrastructure
+	--shuffle-seed        an integer specifying the seed used to shuffle the tests
 	 <package>            a String matching a package name
 	
 Examples:
@@ -123,7 +124,7 @@ TestCommandLineHandler >> runPackages [
 	
 	packages := self packages.
 	self inform: 'Running tests in ', packages size asString, ' Packages'.
-	results := (self testRunner runPackages: self packages) select: #notNil.
+	results := (self testRunner runPackages: self packages) select: #isNotNil.
 				
 	self informResults: results.
 	(self hasOption: 'save') ifTrue: [ Smalltalk saveSession ].
@@ -139,13 +140,22 @@ TestCommandLineHandler >> runPackages [
 
 { #category : 'private' }
 TestCommandLineHandler >> testRunner [
-	
-	(self hasOption: 'junit-xml-output') ifTrue: [ 
-		HDTestReport currentStageName: ((self hasOption: 'stage-name') ifTrue: [ self optionAt: 'stage-name' ] ifFalse: [ '' ]). 	
+
+	(self hasOption: 'junit-xml-output') ifTrue: [
+		HDTestReport shuffleSeed: ((self hasOption: 'shuffle-seed')
+				 ifTrue: [ self optionAt: 'shuffle-seed' ]
+				 ifFalse: [ nil ]).
+		HDTestReport currentStageName: ((self hasOption: 'stage-name')
+				 ifTrue: [ self optionAt: 'stage-name' ]
+				 ifFalse: [ '' ]).
 		^ HDTestReport ].
-	
-	self class environment at: #CommandLineTestRunner ifPresent: [ :commandLineTestRunner |
-		(self hasOption: 'no-xterm') ifTrue: [ ^ commandLineTestRunner ].
-		^ self class environment at: #VTermTestRunner
-	] ifAbsent: [ self error: 'no tests output available, try to use the option --junit-xml-output' ]
+
+	self class environment
+		at: #CommandLineTestRunner
+		ifPresent: [ :commandLineTestRunner |
+			(self hasOption: 'no-xterm') ifTrue: [ ^ commandLineTestRunner ].
+			^ self class environment at: #VTermTestRunner ]
+		ifAbsent: [
+			self error:
+				'no tests output available, try to use the option --junit-xml-output' ]
 ]

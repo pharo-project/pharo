@@ -56,9 +56,13 @@ ReSmalllintTest >> assertResult: critiques hasAllClassesInEnvironment: anEnviron
 
 { #category : 'asserting' }
 ReSmalllintTest >> assertResult: critiques hasAllMethodsInEnvironment: anEnvironment [
-	anEnvironment methodsDo: [ :method |
-		self assert: (critiques anySatisfy: [ :crit |
-			crit entity = method ]) ]
+
+	| missingMethods |
+	missingMethods := OrderedCollection new.
+	anEnvironment methodsDo: [ :method | (critiques anySatisfy: [ :crit | crit entity = method ]) ifFalse: [ missingMethods add: method ] ].
+
+	"We collect the missing methods instead of doing an assert in the previous block to give a better feedback in the CI and test failure."
+	self assertEmpty: missingMethods
 ]
 
 { #category : 'private' }
@@ -263,7 +267,7 @@ ReSmalllintTest >> testClassNotReferenced [
 
 { #category : 'tests' }
 ReSmalllintTest >> testCodeCruftLeftInMethods [
-	self ruleFor: self currentSelector plusSelectors: #(haltClassMentioned flagged transcriptMentioned #debuggingMessageSent)
+	self ruleFor: self currentSelector plusSelectors: #(haltClassMentioned flagged transcriptMentioned debuggingMessageSent)
 ]
 
 { #category : 'tests' }

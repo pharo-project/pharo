@@ -129,9 +129,9 @@ SDL_SystemCursorType class >> enumDecl [
 SDL_SystemCursorType class >> initialize [
 	self initializeEnumeration.
 
-	self classPool keysDo: [ :e |
+	self classVariables do: [ :var |
 		self class compile: ('{1}
-	^ {1}' format: {e asString}) classified: #accessing	]
+	^ {1}' format: {var name asString}) classified: #accessing	]
 ]
 
 { #category : 'printing' }

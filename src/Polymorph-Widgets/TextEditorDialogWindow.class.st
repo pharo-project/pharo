@@ -86,7 +86,10 @@ TextEditorDialogWindow >> initialize [
 TextEditorDialogWindow >> newButtons [
 	"Answer new buttons as appropriate."
 
-	^{self newOKButton. self newCancelButton}
+	^{
+		self newCancelButton.
+		self newOKButton isDefault: true
+	}
 ]
 
 { #category : 'actions' }

@@ -16,12 +16,10 @@ ToolShortcutsCategory class >> isGlobalCategory [
 ]
 
 { #category : 'keymaps' }
-ToolShortcutsCategory >> openMonticelloPackageBrowser [
+ToolShortcutsCategory >> openPlayground [
 
 	<shortcut>
-	^ KMKeymap
-		  shortcut: PharoShortcuts current openMonticielloShortcut
-		  action: [ self tools openMonticelloBrowser ]
+	^ KMKeymap shortcut: PharoShortcuts current openPlaygroundShortcut action: [ self tools workspace open ]
 ]
 
 { #category : 'keymaps' }
@@ -58,20 +56,11 @@ ToolShortcutsCategory >> openUnitTestRunner [
 ]
 
 { #category : 'keymaps' }
-ToolShortcutsCategory >> openWorkspace [
-
-	<shortcut>
-	^ KMKeymap
-		  shortcut: PharoShortcuts current openPlaygroundShortcut
-		  action: [ self tools workspace open ]
-]
-
-{ #category : 'keymaps' }
 ToolShortcutsCategory >> saveImage [
 	<shortcut>
 	^ KMKeymap
 		shortcut: PharoShortcuts current saveImageShortcut
 		action: [
-			(Smalltalk snapshot: true andQuit: false)
-				ifFalse: [ self inform: 'Image saved' ] ]
+			(Smalltalk snapshot: true andQuit: false) hasSavedSuccessfully
+				ifTrue: [ self inform: 'Image saved' ] ]
 ]

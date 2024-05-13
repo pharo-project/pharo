@@ -13,7 +13,7 @@ Class {
 ClyTraitMethodDecorator class >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
 	super decorateMainTableCell: anItemCellMorph of: aDataSourceItem.
 
-	anItemCellMorph definitionIcon: #traitIcon
+	anItemCellMorph definitionIcon: #trait
 ]
 
 { #category : 'decoration' }

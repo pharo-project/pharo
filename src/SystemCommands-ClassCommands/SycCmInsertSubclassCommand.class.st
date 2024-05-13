@@ -28,7 +28,7 @@ SycCmInsertSubclassCommand >> icon [
 { #category : 'testing' }
 SycCmInsertSubclassCommand >> isApplicable [
 
-	^ true
+	^ context lastSelectedClass isTrait not
 ]
 
 { #category : 'accessing' }

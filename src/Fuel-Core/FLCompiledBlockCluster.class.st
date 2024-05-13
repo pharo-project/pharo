@@ -38,7 +38,7 @@ FLCompiledBlockCluster >> materializeInstanceWith: aDecoder [
 	size := aDecoder nextEncodedUint32.
 
 	instance := CompiledBlock
-		newMethod: size
+		basicNew: size
 		header: header.
 	initialPC := instance initialPC.
 	initialPC

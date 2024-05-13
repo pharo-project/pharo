@@ -30,6 +30,30 @@ TCreationWithTest >> test0FixtureCreationWithTest [
 ]
 
 { #category : 'tests - creation' }
+TCreationWithTest >> testLessThanMinus [
+
+	| aCol collection |
+	collection := self collectionMoreThan5Elements asArray.
+	aCol := self collectionClass <- collection.
+
+	collection do: [ :each | self assert: (aCol occurrencesOf: each ) equals: ( collection occurrencesOf: each ) ].
+
+	self assert: aCol size equals: collection size
+]
+
+{ #category : 'tests - creation' }
+TCreationWithTest >> testNewFromArray [
+
+	| aCol collection |
+	collection := self collectionMoreThan5Elements asArray.
+	aCol := self collectionClass newFromArray: collection.
+
+	collection do: [ :each | self assert: (aCol occurrencesOf: each ) equals: ( collection occurrencesOf: each ) ].
+
+	self assert: aCol size equals: collection size
+]
+
+{ #category : 'tests - creation' }
 TCreationWithTest >> testOfSize [
 
 	| aCol |

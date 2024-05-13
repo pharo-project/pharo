@@ -9,7 +9,7 @@ To instantiate my instances use following expressions:
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	package:		<RPackage>
+	package:		<Package>
 
 "
 Class {

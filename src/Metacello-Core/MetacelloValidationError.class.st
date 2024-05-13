@@ -7,7 +7,6 @@ Class {
 	#instVars : [
 		'reasonCode',
 		'callSite',
-		'configurationClass',
 		'explanation'
 	],
 	#category : 'Metacello-Core-Validation',
@@ -16,14 +15,13 @@ Class {
 }
 
 { #category : 'instance creation' }
-MetacelloValidationError class >> configurationClass: aClass reasonCode: aSymbol callSite: aCallSite explanation: aString [
+MetacelloValidationError class >> reasonCode: aSymbol callSite: aCallSite explanation: aString [
 
-	^(self new)
-		configurationClass: aClass;
-		reasonCode: aSymbol;
-		callSite: aCallSite;
-		explanation: aString;
-		yourself
+	^ self new
+		  reasonCode: aSymbol;
+		  callSite: aCallSite;
+		  explanation: aString;
+		  yourself
 ]
 
 { #category : 'accessing' }
@@ -34,16 +32,6 @@ MetacelloValidationError >> callSite [
 { #category : 'accessing' }
 MetacelloValidationError >> callSite: anObject [
 	callSite := anObject
-]
-
-{ #category : 'accessing' }
-MetacelloValidationError >> configurationClass [
-	^ configurationClass
-]
-
-{ #category : 'accessing' }
-MetacelloValidationError >> configurationClass: aClass [
-	configurationClass := aClass
 ]
 
 { #category : 'accessing' }

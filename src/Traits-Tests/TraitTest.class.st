@@ -11,7 +11,7 @@ Class {
 { #category : 'tests' }
 TraitTest >> createT1 [
 	| t1 |
-	t1 := self newTrait: #T1 with: 'a b c' asSlotCollection.
+	t1 := self newTrait: #T1 with: #(a b c).
 	t1
 		compile:
 			'setValues
@@ -30,7 +30,7 @@ TraitTest >> createT1 [
 { #category : 'tests' }
 TraitTest >> createT2 [
 	| t2 |
-	t2 := self newTrait: #T2 with: 'd e f' asSlotCollection.
+	t2 := self newTrait: #T2 with: #(d e f).
 	t2
 		compile:
 			'setValues2
@@ -69,6 +69,27 @@ TraitTest >> createT3 [
 				'.
 
 	^ t3
+]
+
+{ #category : 'tests' }
+TraitTest >> testAddingATraitToAClassWithSubclasses [
+	"This is a regression test when adding a trait to a class without traits and with subclasses was not possible."
+
+	| c1 c2 t1 |
+	c1 := self newClass: #C1.
+	c2 := self newClass: #C2 superclass: c1 traits: {  }.
+	t1 := self newTrait: #T1.
+
+	self
+		shouldnt: [
+			self class classInstaller make: [ :aBuilder |
+				aBuilder
+					fillFor: c1;
+					traits: t1 ] ]
+		raise: Error.
+
+	self assert: (c1 includesTrait: t1).
+	self deny: (c2 includesTrait: t1)
 ]
 
 { #category : 'tests' }
@@ -275,7 +296,7 @@ TraitTest >> testIndirectSequence [
 	t2 := self createT2.
 	t3 := self newTrait: #T3 traits: t1 + t2.
 
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection traits: t3.
+	c1 := self newClass: #C1 with: #(g h) traits: t3.
 
 	obj := c1 new.
 	obj setValues.
@@ -339,20 +360,20 @@ TraitTest >> testMethodsAddedInMetaclass [
 	| t1 c1 |
 
 	t1 := self createT1.
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection traits: t1.
+	c1 := self newClass: #C1 with: #(g h) traits: t1.
 
 	self assertCollection: c1 class selectors sorted equals: TraitedClass selectors sorted
 ]
 
 { #category : 'tests' }
 TraitTest >> testMethodsAddedInMetaclassNotPresentInSubclasses [
+
 	| t1 c1 c2 |
-
 	t1 := self createT1.
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection traits: t1.
-	c2 := self newClass: #C2 superclass: c1 traits: {}.
+	c1 := self newClass: #C1 with: #( g h ) traits: t1.
+	c2 := self newClass: #C2 superclass: c1 traits: {  }.
 
-	self assertCollection: c2 class selectors sorted equals: #()
+	self assertCollection: c2 class localSelectors sorted equals: #(  )
 ]
 
 { #category : 'tests' }
@@ -362,29 +383,12 @@ TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterChangingSupercla
 	t1 := self createT1.
 	t2 := self createT2.
 
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection traits: t1.
+	c1 := self newClass: #C1 with: #(g h) traits: t1.
 	c2 := self newClass: #C2 superclass: c1 traits: {t2}.
 
-	self assertCollection: c2 class selectors sorted equals: #().
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection traits: {}.
-
-	self assertCollection: c2 class selectors sorted equals: TraitedClass selectors sorted
-]
-
-{ #category : 'tests' }
-TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterRemovingSuperclass [
-	| t1 c1 c2 t2 |
-
-	t1 := self createT1.
-	t2 := self createT2.
-
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection traits: t1.
-	c2 := self newClass: #C2 superclass: c1 traits: {t2}.
-
-	self assertCollection: c2 class selectors sorted equals: #().
-	c1 removeFromSystem.
-
-	self assertCollection: c2 class selectors sorted equals: TraitedClass selectors sorted
+	self assertCollection: c2 class localSelectors sorted equals: #().
+	self assert: (TraitedClass selectors allSatisfy: [ :selector | (c2 class lookupSelector: selector) isNotNil ])
+	
 ]
 
 { #category : 'tests' }
@@ -441,6 +445,38 @@ origin of Tr2>>foo is Tr1"
 	self assert: (tr1 >> #foo) origin identicalTo: tr1.
 	tr2 := self newTrait: #TTT2 traits: { tr1 }.
 	self assert: (tr2 >> #foo) origin identicalTo: tr1
+]
+
+{ #category : 'tests' }
+TraitTest >> testPackageIsUpdatedInClassSide [
+
+	| c1 t1 |
+	t1 := self newTrait: #T1.
+	t1 class compile: 'msg ^ 1'.
+
+	c1 := self newClass: #C1 superclass: Object traits: t1.
+	c1 class compile: 'msg ^ 12'.
+
+	self assert: self packageNameForTests asPackage methods size equals: 2.
+	(c1 class >> #msg) removeFromSystem.
+	self assert: self packageNameForTests asPackage methods size equals: 1
+]
+
+{ #category : 'tests' }
+TraitTest >> testPackageIsUpdatedInInstanceSide [
+
+	| c1 t1 |
+	t1 := self newTrait: #T1.
+	t1 compile: 'msg ^ 1'.
+
+	c1 := self newClass: #C1 superclass: Object traits: t1.
+	c1 compile: 'msg ^ 12'.
+
+	self assert: (c1 >> #msg) origin equals: c1.
+
+	self assert: self packageNameForTests asPackage methods size equals: 2.
+	(c1 >> #msg) removeFromSystem.
+	self assert: self packageNameForTests asPackage methods size equals: 1
 ]
 
 { #category : 'tests' }
@@ -532,11 +568,11 @@ TraitTest >> testRemovingTraitsRemoveTraitedClassMethods [
 
 	t1 := self createT1.
 	t2 := self createT2.
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection traits: t1 + t2.
+	c1 := self newClass: #C1 with: #(g h) traits: t1 + t2.
 
 	self assert: (c1 class includesSelector: #traits).
 
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection traits: {}.
+	c1 := self newClass: #C1 with: #(g h) traits: {}.
 
 	self deny: (c1 class includesSelector: #traits)
 ]
@@ -547,16 +583,20 @@ TraitTest >> testRemovingTraitsRemoveTraitedClassMethodsWithSubclasses [
 
 	t1 := self createT1.
 	t2 := self createT2.
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection traits: t1.
+	c1 := self newClass: #C1 with: #(g h) traits: t1.
 	c2 := self newClass: #C2 superclass: c1 traits: t2.
 
 	self assert: (c1 class includesSelector: #traits).
-	self deny: (c2 class includesSelector: #traits).
+	self deny: (c1 class includesLocalSelector: #traits).
+	self assert: (c2 class lookupSelector: #traits) notNil.
+	self deny: (c2 class includesLocalSelector: #traits).
 
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection traits: {}.
+	c1 := self newClass: #C1 with: #(g h) traits: {}.
 
+	"Now c1 has no more traits, c2 remains unchanged"
 	self deny: (c1 class includesSelector: #traits).
-	self assert: (c2 class includesSelector: #traits)
+	self assert: (c2 class includesSelector: #traits).
+	self deny: (c2 class includesLocalSelector: #traits).
 ]
 
 { #category : 'tests' }
@@ -565,8 +605,8 @@ TraitTest >> testRemovingTraitsUpdatesCategories [
 	| t1 t2 c1 |
 	t1 := self createT1.
 	t2 := self createT2.
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection traits: t1 + t2.
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection traits: {  }.
+	c1 := self newClass: #C1 with: #(g h) traits: t1 + t2.
+	c1 := self newClass: #C1 with: #(g h) traits: {  }.
 
 	c1 selectors do: [ :selector | self assert: (c1 includesSelector: selector) ].
 	c1 class selectors do: [ :selector | self assert: (c1 class includesSelector: selector) ]
@@ -603,7 +643,7 @@ TraitTest >> testSequence [
 
 	t1 := self createT1.
 	t2 := self createT2.
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection traits: t1 + t2.
+	c1 := self newClass: #C1 with: #(g h) traits: t1 + t2.
 
 	obj := c1 new.
 	obj setValues.
@@ -620,7 +660,7 @@ TraitTest >> testSequence [
 TraitTest >> testSettingAClassInAClassTraitCompositionShouldRaiseAnError [
 
 	| t1 c1 |
-	t1 :=  self newTrait: #T1 with: 'a' asSlotCollection.
+	t1 :=  self newTrait: #T1 with: #(a).
 	c1 := self newClass: #C1.
 
 	self should: [ t1 traitComposition: c1 ] raise: Error.
@@ -631,7 +671,7 @@ TraitTest >> testSettingAClassInAClassTraitCompositionShouldRaiseAnError [
 TraitTest >> testSlotsAreNotDuplicated [
 
 	| t1 t2 c1 |
-	t1 := self newTrait: #T1 with: 'a' asSlotCollection.
+	t1 := self newTrait: #T1 with: #(a).
 	t2 := self newTrait: #T2 traits: t1.
 	c1 := self newClass: #C1 traits: t1 + t2.
 
@@ -683,6 +723,52 @@ TraitTest >> testTraitRemoval [
 ]
 
 { #category : 'tests' }
+TraitTest >> testTraitSource [
+
+	self assert: (MOPTestClassC >> #c) traitSource isNil.
+	self assert: (MOPTestClassC >> #c2) traitSource equals: Trait2 asTraitComposition
+]
+
+{ #category : 'tests' }
+TraitTest >> testTraitSourceIsPersistedWithRecompilation [
+
+	[
+	Trait2 compile: 'traitMethod ^ 1' classified: '*GeneratedPackageForTest'.
+
+	self assert: (Trait2 >> #traitMethod) traitSource isNil.
+	self assert: (MOPTestClassC >> #traitMethod) traitSource equals: Trait2 asTraitComposition.
+
+	(Trait2 >> #traitMethod) recompile.
+
+	self assert: (Trait2 >> #traitMethod) traitSource isNil.
+	self assert: (MOPTestClassC >> #traitMethod) traitSource equals: Trait2 asTraitComposition ] ensure: [
+		self packageOrganizer removePackage: 'GeneratedPackageForTest' ]
+]
+
+{ #category : 'tests' }
+TraitTest >> testTraitSourceIsPersistedWithRemovalOfMetalinks [
+
+	[
+	| metalink |
+	Trait2 compile: 'traitMethod ^ 1' classified: '*GeneratedPackageForTest'.
+
+	self assert: (Trait2 >> #traitMethod) traitSource isNil.
+	self assert: (MOPTestClassC >> #traitMethod) traitSource equals: Trait2 asTraitComposition.
+
+	metalink := MetaLink new.
+	(MOPTestClassC >> #traitMethod) ast link: metalink.
+
+	self assert: (Trait2 >> #traitMethod) traitSource isNil.
+	self assert: (MOPTestClassC >> #traitMethod) traitSource equals: Trait2 asTraitComposition.
+
+	metalink uninstall.
+
+	self assert: (Trait2 >> #traitMethod) traitSource isNil.
+	self assert: (MOPTestClassC >> #traitMethod) traitSource equals: Trait2 asTraitComposition ] ensure: [
+		self packageOrganizer removePackage: 'GeneratedPackageForTest' ]
+]
+
+{ #category : 'tests' }
 TraitTest >> testTraitThatHasAPragmaHasCorrectTraitSourceAfterRecompile [
 	| t3 aClass |
 
@@ -695,6 +781,36 @@ TraitTest >> testTraitThatHasAPragmaHasCorrectTraitSourceAfterRecompile [
 	(aClass >> #aMethod) recompile.
 
 	self assert: (aClass >> #aMethod) traitSource equals: t3 asTraitComposition
+]
+
+{ #category : 'tests' }
+TraitTest >> testTraitUsingTraitsPreserveSourceCode [
+
+	| t1 t2 source |
+	t1 := self createT1.
+	t2 := self newTrait: #T2 traits: t1.
+
+	source := 'aMethod: aString
+	^ aMethod'.
+	t1 compile: source.
+
+	self assert: (t1 >> #aMethod:) sourceCode equals: source.
+	self assert: (t2 >> #aMethod:) sourceCode equals: source
+]
+
+{ #category : 'tests' }
+TraitTest >> testTraitUsingTraitsPreserveSourceCodeOnClassSide [
+
+	| t1 t2 source |
+	t1 := self createT1.
+	t2 := self newTrait: #T2 traits: t1.
+
+	source := 'aMethod: aString
+	^ aMethod'.
+	t1 class compile: source.
+
+	self assert: (t1 class >> #aMethod:) sourceCode equals: source.
+	self assert: (t2 class >> #aMethod:) sourceCode equals: source
 ]
 
 { #category : 'tests' }
@@ -725,7 +841,14 @@ TraitTest >> testUsingTraitInAnonymousSubClassAndRedefiningIt [
 
 	self deny: (Object subclasses includes: aClass).
 
-	t1 := self newTrait: #T1 with: #(aSlot).
+	t1 := t1 classInstaller 
+				update: t1
+				to: [ :aBuilder |
+		  						aBuilder
+			  					slots: #(aSlot);
+								 package: self packageNameForTests;
+			  					beTrait ].
+		
 	self assert: (aClass hasSlotNamed: #aSlot).
 
 	self deny: (Object subclasses includes: aClass)

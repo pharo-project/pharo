@@ -54,13 +54,14 @@ TraitMCDefinitionsTest >> testDefinitionHasCorrectStringWithoutSlots [
 TraitMCDefinitionsTest >> testDefinitionOfClassSideTrait [
 
 	| t1 definition |
-
 	t1 := self newTrait: #T1.
-	t1 classTrait uses: {} slots: #(aSlot).
+	t1 classTrait trait: {  } slots: #( aSlot ).
 
 	definition := t1 asClassDefinition.
 
-	self assert: definition classInstanceVariables equals: {#aSlot => InstanceVariableSlot}
+	self
+		assert: definition classInstanceVariables
+		equals: { (#aSlot => InstanceVariableSlot) }
 ]
 
 { #category : 'tests' }

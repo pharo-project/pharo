@@ -30,18 +30,32 @@ Class {
 }
 
 { #category : 'preconditions' }
-RBRemoveDirectAccessToVariableTransformation >> applicabilityPreconditions [ 
+RBRemoveDirectAccessToVariableTransformation >> applicabilityPreconditions [
 
+	| conds |
 	class := self model classObjectFor: className.
-	^ (isClassVariable
-			ifTrue: [ (RBCondition isMetaclass: class) not
-					& (RBCondition directlyDefinesClassVariable: variableName asSymbol in: class)
-					& ((RBCondition withBlock:
-				[(#(#Object #Behavior #ClassDescription #Class) includes: class name) not])
-				errorMacro: 'This refactoring does not work for Object, Behavior, ClassDescription, or Class')]
-			ifFalse: [ (RBCondition directlyDefinesInstanceVariable: variableName in: class) ])
-		& (RBCondition canUnderstand: self getterMethodSelector in: self definingClass)
-		& (RBCondition canUnderstand: self setterMethodSelector in: self definingClass)
+	conds := isClassVariable
+		         ifTrue: [
+			         {
+				         (RBCondition isMetaclass: class) not.
+				         (RBCondition
+					          directlyDefinesClassVariable: variableName asSymbol
+					          in: class).
+				         ((RBCondition withBlock: [
+					           (#( #Object #Behavior #ClassDescription
+					               #Class ) includes: class name) not ]) errorMacro:
+					          'This refactoring does not work for Object, Behavior, ClassDescription, or Class') } ]
+		         ifFalse: [
+			         { (RBCondition
+				          directlyDefinesInstanceVariable: variableName
+				          in: class) } ].
+	^ conds , 
+		{ (RBCondition
+		   canUnderstand: self getterMethodSelector
+		   in: self definingClass).
+		(RBCondition
+		   canUnderstand: self setterMethodSelector
+		   in: self definingClass)}
 ]
 
 { #category : 'accessing' }

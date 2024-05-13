@@ -18,14 +18,6 @@ RGBehavior >> canUnderstand: selector [
 ]
 
 { #category : '*Calypso-Ring' }
-RGBehavior >> categoryOfElement: aSymbol ifAbsent: aBlockClosure [
-
-	^ (self localMethodNamed: aSymbol ifAbsent: [ nil ])
-		  ifNotNil: [ :method | method protocol ]
-		  ifNil: [ aBlockClosure value ]
-]
-
-{ #category : '*Calypso-Ring' }
 RGBehavior >> hasAbstractMethods [
 	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
 
@@ -139,6 +131,13 @@ RGBehavior >> traitCompositionIncludes: aTrait [
 	^self == aTrait or:
 		[self hasTraitComposition and:
 			[self traitComposition allTraits includes: aTrait]]
+]
+
+{ #category : '*Calypso-Ring' }
+RGBehavior >> visibleMethods [
+	"Answer a <Collection> of <RGMethod> in the receiver"
+
+	^ self methods
 ]
 
 { #category : '*Calypso-Ring' }

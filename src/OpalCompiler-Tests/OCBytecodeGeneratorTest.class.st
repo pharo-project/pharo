@@ -66,11 +66,3 @@ OCBytecodeGeneratorTest >> testExample2 [
 	self assert: (cm valueWithReceiver: 2 @ 2 arguments: #(3)) equals: 'yes'.
 	^ cm
 ]
-
-{ #category : 'helper' }
-OCBytecodeGeneratorTest >> testMethod: cm against: string [
-	| symbolic |
-	self assert: cm isCompiledMethod.
-	symbolic := String streamContents: [ :str | cm longPrintOn: str ].
-	self assert: symbolic equals: string
-]

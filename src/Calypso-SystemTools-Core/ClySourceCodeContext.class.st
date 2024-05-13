@@ -69,6 +69,11 @@ ClySourceCodeContext >> executeCommand: aCommand by: aCommandActivator [
 ]
 
 { #category : 'testing' }
+ClySourceCodeContext >> hasUnacceptedEdits [
+	^ self tool hasUnacceptedEdits 
+]
+
+{ #category : 'testing' }
 ClySourceCodeContext >> isArgOrTempVariableSelected [
 
 	| sourceNode |

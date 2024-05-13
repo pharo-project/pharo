@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : 'preconditions' }
-RBAddOverrideMethodTransformation >> preconditions [
+RBAddOverrideMethodTransformation >> breakingChangePreconditions [
 
-	^ (RBCondition definesSelector: transformation selector in: class) not
+	^ { (RBCondition definesSelector: transformation selector in: class) not }
 ]

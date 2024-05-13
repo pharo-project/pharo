@@ -15,7 +15,7 @@ Class {
 RBConditionTest >> setUp [
 
 	super setUp.
-	rbNamespace := RBClassModelFactory rbNamespace new.
+	rbNamespace := RBNamespace new.
 	objectClass := rbNamespace classNamed: #Object.
 	messageNodeClass := rbNamespace classNamed: #RBMessageNode.
 	rbNamespace defineClass: [ :aBuilder |
@@ -24,7 +24,7 @@ RBConditionTest >> setUp [
 			name: #SomeClassName;
 			slots: { #instanceVariable1. #instanceVariable2 };
 			sharedVariables: { #ClassVariable1 };
-			sharedPools: 'TextConstants';
+			sharedPools: { #TextConstants };
 			package: #'Refactory-Testing' ].
 	newClass := rbNamespace classNamed: #SomeClassName
 ]
@@ -139,7 +139,7 @@ RBConditionTest >> testHierarchyOfReferencesInstanceVariable2 [
 	
 	self assert: (testClass withAllSuperclasses includes: objectClass).
 	"the class itself refers to its own objectClass instance variable"
-	self assert: (RBInstanceVariableHasReferences new
+	self assert: (ReInstanceVariableHasReferences new
 			 				hierarchyOf: testClass
 			 				referencesInstanceVariable: #objectClass) check
 ]
@@ -173,10 +173,10 @@ RBConditionTest >> testHierarchyOfReferencesSharedVariableFromClassSide [
 	self assert: (root definesClassVariable: #Shared2).
 	self assert: (sub definesClassVariable: #Shared2).
 							
-	self assert: (RBSharedVariableHasReferences new
+	self assert: (ReSharedVariableHasReferences new
 			 				hierarchyOf: root
 			 				referencesSharedVariable: #SharedOnlyInClassSideSubclass) check.
-	self assert: (RBSharedVariableHasReferences new
+	self assert: (ReSharedVariableHasReferences new
 			 				hierarchyOf: root classSide
 			 				referencesSharedVariable: #SharedOnlyInClassSideSubclass) check.
 ]
@@ -193,7 +193,7 @@ RBConditionTest >> testHierarchyOfReferencesSharedVariableFromSubclass [
 	self assert: (root definesClassVariable: #Shared2).
 
 	"We access the class var from the superclass only from a subclass."	
-	self assert: (RBSharedVariableHasReferences new
+	self assert: (ReSharedVariableHasReferences new
 			 				hierarchyOf: root
 			 				referencesSharedVariable: #Shared2) check.
 
@@ -209,7 +209,7 @@ RBConditionTest >> testHierarchyOfReferencesSharedVariableInDefiningClass [
 	sub := rbNamespace classNamed: #MySubAccessingSuperclassState.
 	self assert: (root subclasses includes: sub).
 	
-	self assert: (RBSharedVariableHasReferences new
+	self assert: (ReSharedVariableHasReferences new
 			 				hierarchyOf: root
 			 				referencesSharedVariable: #Shared1) check
 ]

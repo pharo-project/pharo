@@ -122,6 +122,12 @@ TaSequence >> hash [
 	^ self class hash
 ]
 
+{ #category : 'testing' }
+TaSequence >> includesTrait: aTrait [
+
+	^ members anySatisfy: [ :member | member includesTrait: aTrait ]
+]
+
 { #category : 'initialization' }
 TaSequence >> initialize [
 	super initialize.
@@ -245,7 +251,8 @@ TaSequence >> selectorForConflict: selector [
 
 { #category : 'accessing' }
 TaSequence >> selectors [
-	^ members flatCollect: #selectors
+	"We should really introduce a #removeDuplicates or #withoutDuplicates on Array..."
+	^ (members flatCollect: [ :member | member selectors ] as: Set) asArray
 ]
 
 { #category : 'accessing' }
@@ -294,6 +301,11 @@ TaSequence >> traitDefining: aSelector [
 { #category : 'querying' }
 TaSequence >> traits [
 	^ members flatCollect: #traits
+]
+
+{ #category : 'deprecated' }
+TaSequence >> transformations [
+	^ members flatCollect: #transformations
 ]
 
 { #category : 'validations' }
