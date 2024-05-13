@@ -4,7 +4,7 @@ Check if a baseline is properly packaged. It should be included in a package wit
 Example: if your baseline class is named ""BaselineOfMyKillerApp"" it should be in a package with the same name ""BaselineOfMyKillerApp""
 "
 Class {
-	#name : 'ReBaselineOfProperlyPackagedRule',
+	#name : 'ReBaselineProperlyPackagedRule',
 	#superclass : 'ReAbstractRule',
 	#category : 'General-Rules-Migrated',
 	#package : 'General-Rules',
@@ -12,36 +12,36 @@ Class {
 }
 
 { #category : 'testing - interest' }
-ReBaselineOfProperlyPackagedRule class >> checksClass [
+ReBaselineProperlyPackagedRule class >> checksClass [
 
 	^ true
 ]
 
 { #category : 'manifest' }
-ReBaselineOfProperlyPackagedRule class >> uniqueIdentifierName [
+ReBaselineProperlyPackagedRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'ReBaselineOfProperlyPackagedRule'
 ]
 
 { #category : 'running' }
-ReBaselineOfProperlyPackagedRule >> basicCheck: aClass [
+ReBaselineProperlyPackagedRule >> basicCheck: aClass [
 
 	^(aClass name beginsWith: 'BaselineOf') 
 		and: [ aClass package name ~= aClass name ]
 ]
 
 { #category : 'accessing' }
-ReBaselineOfProperlyPackagedRule >> group [
+ReBaselineProperlyPackagedRule >> group [
 	^ 'Design Flaws'
 ]
 
 { #category : 'accessing' }
-ReBaselineOfProperlyPackagedRule >> name [
+ReBaselineProperlyPackagedRule >> name [
 	^ 'Baseline class not properly packaged in a package with the same name'
 ]
 
 { #category : 'accessing' }
-ReBaselineOfProperlyPackagedRule >> severity [
+ReBaselineProperlyPackagedRule >> severity [
 	^ #information
 ]
