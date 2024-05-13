@@ -478,6 +478,66 @@ OrderedDictionaryTest >> testAt [
 ]
 
 { #category : 'tests' }
+OrderedDictionaryTest >> testAtAt [
+
+	| dict |
+	dict := { #key1 -> { #key2 -> #value2 } asOrderedDictionary } asOrderedDictionary.
+	self assert: (dict at: #key1 at: #key2) equals: #value2.
+	self should: [ dict at: #key1 at: #unknownKey ] raise: KeyNotFound
+]
+
+{ #category : 'tests' }
+OrderedDictionaryTest >> testAtAtIfAbsent [
+
+	self assert: (OrderedDictionary new at: #key1 at: #key2 ifAbsent: [ 33 ]) equals: 33.
+	self assert: (OrderedDictionary new 
+						at: #key1 at: #key2 put: 22; 
+						at: #key1 at: #key2 ifAbsent: [ 33 ]) equals: 22.
+]
+
+{ #category : 'tests' }
+OrderedDictionaryTest >> testAtAtIfAbsentPut [
+
+	| dictionary |
+	dictionary := OrderedDictionary new.
+
+	self
+		assert: (dictionary
+				 at: #key1 at: #key2 ifAbsentPut: [ 33 ];
+				 at: #key1 at: #key2)
+		equals: 33.
+	dictionary keysAndValuesDo: [ :key :value |
+		self
+			assert: key equals: #key1;
+			assert: (value at: #key2) equals: 33 ].
+	self
+		assert: (dictionary
+				 at: #key1 at: #key2 put: 22;
+				 at: #key1 at: #key2 ifAbsentPut: [ 33 ];
+				 at: #key1 at: #key2)
+		equals: 22
+]
+
+{ #category : 'tests' }
+OrderedDictionaryTest >> testAtAtPut [
+
+	| dictionary |
+	dictionary := OrderedDictionary new.
+
+	self
+		assert: (dictionary
+				 at: #key1 at: #key2 put: 22;
+				 at: #key1 at: #key2 put: 23;
+				 at: #key1 at: #key2)
+		equals: 23.
+
+	dictionary keysAndValuesDo: [ :key :value |
+		self
+			assert: key equals: #key1;
+			assert: (value at: #key2) equals: 23 ]
+]
+
+{ #category : 'tests' }
 OrderedDictionaryTest >> testAtIfAbsent [
 	| dictionary |
 
@@ -619,21 +679,6 @@ OrderedDictionaryTest >> testAtUpdateInitial [
 	dict at: 2 update: [ :v | v+10 ] initial: [0].
 	self assert: (dict at: 5) equals: 17.
 	self assert: (dict at: 2) equals: 20
-]
-
-{ #category : 'tests' }
-OrderedDictionaryTest >> testBindingsDo [
-	| dictionary |
-
-	dictionary := self emptyDictionary.
-	self
-		should: [:block | dictionary bindingsDo: block]
-		enumerate: #().
-	self orderedAssociations withIndexDo: [:each :i |
-		dictionary add: each.
-		self
-			should: [:block | dictionary bindingsDo: block]
-			enumerate: (self orderedAssociationsFirst: i)]
 ]
 
 { #category : 'tests' }

@@ -27,9 +27,6 @@ Class {
 		'package',
 		'modified'
 	],
-	#classVars : [
-		'PrivateAnnouncer'
-	],
 	#classInstVars : [
 		'registry'
 	],
@@ -67,16 +64,6 @@ MCWorkingCopy class >> ancestorsFromArray: anArray cache: cacheDictionary [
 		self infoFromDictionary: each cache: cacheDictionary.
 	].
 	^ anArray collect: [:dict | self infoFromDictionary: dict cache: cacheDictionary]
-]
-
-{ #category : 'private' }
-MCWorkingCopy class >> announcer [
-	^PrivateAnnouncer ifNil: [ SystemAnnouncer uniqueInstance  ]
-]
-
-{ #category : 'private' }
-MCWorkingCopy class >> announcer: anAnnouncer [
-	PrivateAnnouncer := anAnnouncer
 ]
 
 { #category : 'accessing' }
@@ -134,9 +121,8 @@ MCWorkingCopy class >> infoFromDictionary: aDictionary cache: cache [
 			name: (aDictionary at: #name ifAbsent: [''])
 			id: (UUID fromString: id)
 			message: (aDictionary at: #message ifAbsent: [''])
-			date: ([Date fromString: (aDictionary at: #date)] onErrorDo: [nil])
+			date: ([Date readFrom: (aDictionary at: #date) pattern: 'yyyy-mm-dd' ] onErrorDo: [nil])
 			time: ([Time fromString: (aDictionary at: #time)] onErrorDo: [nil])
-			author: (aDictionary at: #author ifAbsent: [''])
 			ancestors: (self ancestorsFromArray: (aDictionary at: #ancestors ifAbsent: []) cache: cache)
 			stepChildren: (self ancestorsFromArray: (aDictionary at: #stepChildren ifAbsent: []) cache: cache)]
 ]
@@ -179,7 +165,6 @@ MCWorkingCopy class >> registerForNotifications [
 
 	<systemEventRegistration>
 	self
-		announcer: nil;
 		unregisterForNotifications;
 		registerInterestOnSystemChanges
 ]
@@ -187,11 +172,11 @@ MCWorkingCopy class >> registerForNotifications [
 { #category : 'event registration' }
 MCWorkingCopy class >> registerInterestOnSystemChanges [
 
-	SystemAnnouncer uniqueInstance weak
+	self class codeChangeAnnouncer weak
 		when: PackageAdded send: #packageAdded: to: self;
 		when: PackageRenamed send: #packageRenamed: to: self;
 		when: PackageRemoved send: #packageRemoved: to: self;
-		when: ClassAnnouncement, MethodAnnouncement send: #handleClassAndMethodsChange: to: self
+		when: ClassAnnouncement , MethodAnnouncement send: #handleClassAndMethodsChange: to: self
 ]
 
 { #category : 'private' }
@@ -215,7 +200,7 @@ MCWorkingCopy class >> registry [
 { #category : 'event registration' }
 MCWorkingCopy class >> unregisterForNotifications [
 
-	SystemAnnouncer uniqueInstance unsubscribe: self
+	self codeChangeAnnouncer unsubscribe: self
 ]
 
 { #category : 'operations' }
@@ -239,11 +224,6 @@ MCWorkingCopy >> ancestors [
 { #category : 'accessing' }
 MCWorkingCopy >> ancestry [
 	^ ancestry
-]
-
-{ #category : 'private' }
-MCWorkingCopy >> announcer [
-	^self class announcer
 ]
 
 { #category : 'operations' }
@@ -322,7 +302,7 @@ MCWorkingCopy >> description [
 	^ self packageNameWithStar, ' (', (ancestry ancestorStringWithout: self packageName), ')'
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 MCWorkingCopy >> displayStringOn: stream [
 
 	ancestry ancestors
@@ -456,7 +436,7 @@ MCWorkingCopy >> nextAncestors [
 { #category : 'private' }
 MCWorkingCopy >> nextVersionName [
 
-	| branch oldName base author |
+	| branch oldName base |
 	branch := ''.
 	ancestry ancestors isEmpty
 		ifTrue: [
@@ -468,20 +448,19 @@ MCWorkingCopy >> nextVersionName [
 				ifFalse: [ base := oldName ]
 				ifTrue: [
 					base := oldName copyUpToLast: $-.
-					branch := ((oldName copyAfterLast: $-) copyUpToLast: $.) copyAfter: $. ].
+					branch := ((oldName copyAfterLast: $-) copyUpToLast: $.)
+						          copyAfter: $. ].
 			counter ifNil: [
 				counter := (ancestry ancestors collect: [ :each |
 					            each name last isDigit
 						            ifFalse: [ 0 ]
-						            ifTrue: [ ('0' , (each name copyAfterLast: $.) select: [ :ea | ea isDigit ]) asNumber ] ]) max ] ].
+						            ifTrue: [
+							            ('0' , (each name copyAfterLast: $.) select: [ :ea |
+								             ea isDigit ]) asNumber ] ]) max ] ].
 
 	branch isEmpty ifFalse: [ branch := '.' , branch ].
 	counter := counter + 1.
-	author := Author fullName collect: [ :each |
-		          each isAlphaNumeric
-			          ifTrue: [ each ]
-			          ifFalse: [ $_ ] ].
-	^ base , '-' , author , branch , '.' , counter asString
+	^ base , '-' , branch , '.' , counter asString
 ]
 
 { #category : 'accessing' }

@@ -98,11 +98,6 @@ RGClassDefinition >> allClassVariables [
 ]
 
 { #category : 'shared pools' }
-RGClassDefinition >> allSharedPoolNames [
-	^ self allSharedPools collect: [ :pool | pool name ]
-]
-
-{ #category : 'shared pools' }
 RGClassDefinition >> allSharedPools [
 	"Answer a collection of the pools the receiver shares, including those defined
 	in the superclasses of the receiver."
@@ -119,16 +114,16 @@ RGClassDefinition >> classSide [
 ]
 
 { #category : 'class variables' }
-RGClassDefinition >> classVarNamed: aString [
-
-	^classVariables detect:[ :v| v name = aString asSymbol ] ifNone:[ nil ]
-]
-
-{ #category : 'class variables' }
 RGClassDefinition >> classVarNames [
 	"Answer a collection of the names of the class variables defined in the receiver."
 
 	^classVariables collect:[ :cvar| cvar name ]
+]
+
+{ #category : 'class variables' }
+RGClassDefinition >> classVariableNamed: aString [
+
+	^ classVariables detect:[ :v| v name = aString asSymbol ] ifNone: [ nil ]
 ]
 
 { #category : 'accessing' }
@@ -271,7 +266,9 @@ RGClassDefinition >> packageTag: anObject [
 { #category : 'class variables' }
 RGClassDefinition >> removeClassVarNamed: aString [
 
-	self removeVariable: (self classVarNamed: aString) from: classVariables
+	self
+		removeVariable: (self classVariableNamed: aString)
+		from: classVariables
 ]
 
 { #category : 'class variables' }

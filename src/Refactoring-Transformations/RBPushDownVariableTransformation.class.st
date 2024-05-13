@@ -21,46 +21,18 @@ Class {
 
 { #category : 'preconditions' }
 RBPushDownVariableTransformation >> applicabilityPreconditionsForClassVariable [
-	"it does not perform when two subclasses (and/or their subclasses) accesses this variable"
 
-	^ RBCondition
+	^ { RBCondition
 		  definesClassVariable: variableName
-		  in: self definingClass
+		  in: self definingClass }
 ]
 
 { #category : 'preconditions' }
 RBPushDownVariableTransformation >> applicabilityPreconditionsForInstanceVariable [
 
-	^ RBCondition
+	^ { RBCondition
 		  definesInstanceVariable: variableName
-		  in: self definingClass
-]
-
-{ #category : 'preconditions' }
-RBPushDownVariableTransformation >> breakingChangePreconditionsForClassVariable [
-
-	^ RBCondition withBlock: [
-		  | numSubclassesAccessing |
-		  numSubclassesAccessing := self definingClass subclasses count: [
-			                            :subclass |
-			                            subclass withAllSubclasses anySatisfy: [
-				                            :e |
-				                            (e
-					                             whichSelectorsReferToClassVariable:
-					                             variableName) isNotEmpty or: [
-					                            (e classSide
-						                             whichSelectorsReferToClassVariable:
-						                             variableName) isNotEmpty ] ] ].
-		  numSubclassesAccessing < 2 ]
-]
-
-{ #category : 'preconditions' }
-RBPushDownVariableTransformation >> breakingChangePreconditionsForInstanceVariable [
-
-	^ RBCondition
-		  accessesInstanceVariable: variableName
-		  in: self definingClass
-		  showIn: self
+		  in: self definingClass }
 ]
 
 { #category : 'executing' }
@@ -84,15 +56,13 @@ RBPushDownVariableTransformation >> buildTransformations [
 
 { #category : 'preconditions' }
 RBPushDownVariableTransformation >> preconditions [
-	"it does not perform when two subclasses
-	(and/or their subclasses) access this variable"
 
 	^ isClassVariable
 		ifTrue: [ self applicabilityPreconditionsForClassVariable ]
 		ifFalse: [ self applicabilityPreconditionsForInstanceVariable ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBPushDownVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
@@ -116,6 +86,9 @@ RBPushDownVariableTransformation >> variable: aVariableName class: aClassName cl
 
 { #category : 'private' }
 RBPushDownVariableTransformation >> variableDefinitionsInHierarchy [
+	"For class variable return only classes that reference the class variable 
+	both from instance and class side.
+	For instance variable return all subclasses."
 
 	self flag: #pharoTodo. "why the behavior is different for class and instance variable?"
 	^ isClassVariable

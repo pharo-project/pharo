@@ -95,7 +95,7 @@ RBBrowserEnvironmentWrapper >> includesSelector: aSelector in: aClass [
 { #category : 'testing' }
 RBBrowserEnvironmentWrapper >> isBoundToEnvironment [
 
-	^ environment notNil
+	^ environment isNotNil
 ]
 
 { #category : 'testing' }
@@ -138,7 +138,7 @@ RBBrowserEnvironmentWrapper >> selectionIntervalFor: aString [
 		ifNil: [environment selectionIntervalFor: aString]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBBrowserEnvironmentWrapper >> storeOn: aStream [
 	aStream
 		nextPutAll: '(';

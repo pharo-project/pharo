@@ -4,13 +4,14 @@ Extension { #name : 'CmdMenu' }
 CmdMenu >> buildContextMenuFor: aMorph [
 
 	| menu |
-	menu := UIManager default newMenuIn: aMorph for: aMorph.
+	menu := MorphicUIManager new newMenuIn: aMorph for: aMorph.
 
 	rootGroup buildContextMenu: menu.
 
 	menu hasSubmorphs ifTrue: [
-		menu lastSubmorph isMenuLineMorph ifTrue: [ menu lastSubmorph delete ]].
-	^menu
+		menu lastSubmorph isMenuLineMorph ifTrue: [
+			menu lastSubmorph delete ] ].
+	^ menu
 ]
 
 { #category : '*Commander-Activators-ContextMenu' }

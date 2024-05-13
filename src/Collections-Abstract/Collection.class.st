@@ -731,7 +731,7 @@ Collection >> difference: aCollection [
 	^ self species withAll: set asArray
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 Collection >> displayStringOn: stream [
 	self printNameOn: stream.
 	stream
@@ -1462,7 +1462,7 @@ Collection >> size [
 	^ tally
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Collection >> storeOn: aStream [
 	"Refer to the comment in Object|storeOn:."
 

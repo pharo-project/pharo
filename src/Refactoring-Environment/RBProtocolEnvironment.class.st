@@ -126,7 +126,7 @@ RBProtocolEnvironment >> removeProtocol: aSymbol [
 	protocols remove: aSymbol ifAbsent: [  ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBProtocolEnvironment >> storeOn: aStream [
 	aStream nextPut: $(.
 	super storeOn: aStream.

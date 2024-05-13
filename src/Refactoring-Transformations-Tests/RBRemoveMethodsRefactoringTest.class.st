@@ -9,7 +9,7 @@ Class {
 { #category : 'tests' }
 RBRemoveMethodsRefactoringTest >> testFailureMethodHasReferences [
 
-	self shouldWarn: (RBRemoveMethodsRefactoring
+	self shouldWarn: (ReRemoveMethodsRefactoring
 								selectors: #(#checkClass:)
 								from: RBBasicLintRuleTestData )
 ]
@@ -17,7 +17,7 @@ RBRemoveMethodsRefactoringTest >> testFailureMethodHasReferences [
 { #category : 'tests' }
 RBRemoveMethodsRefactoringTest >> testFailureNonExistantSelector [
 
-	self shouldFail: (RBRemoveMethodsRefactoring
+	self shouldFail: (ReRemoveMethodsRefactoring
 								selectors: #(#nonExistingMethod)
 								from: RBLintRuleTestData )
 ]
@@ -39,18 +39,14 @@ RBRemoveMethodsRefactoringTest >> testRemovingMethodsFromDifferentClasses [
 	self assert: (class definesMethod: methodReferencing).
 	self assert: (anotherClass definesMethod: anotherMethodWithoutRefs).
 
-	(RBCompositeRefactoring new
+	(ReRemoveMethodsRefactoring new
 		model: model;
-		refactorings: { 
-			RBRemoveMethodsRefactoring
-				model: model
-				selectors: { methodWithoutRefs . methodReferencing }
-				from: class
+		classSelectorMapping: { 
+			RBBasicLintRuleTestData -> methodWithoutRefs
 			.
-			RBRemoveMethodsRefactoring
-				model: model
-				selectors: { anotherMethodWithoutRefs }
-				from: anotherClass 
+			RBBasicLintRuleTestData -> methodReferencing
+			.
+			RBTransformationDummyRuleTest -> anotherMethodWithoutRefs
 		} 
 	) generateChanges.
 
@@ -73,7 +69,7 @@ RBRemoveMethodsRefactoringTest >> testRemovingMethodsThatOnlyReferenceThemselves
 	self assert: (class definesMethod: methodWithRef).
 	self assert: (class definesMethod: methodReferencing).
 
-	(RBRemoveMethodsRefactoring
+	(ReRemoveMethodsRefactoring
 		 model: model
 		 selectors: {
 				 methodWithRef.

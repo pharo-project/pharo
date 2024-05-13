@@ -27,7 +27,6 @@ ClassDescriptionTest >> compilationTestPackageName [
 ClassDescriptionTest >> createTestClass [
 
 	^ ((Object << #TemporaryMockClass)
-		   slots: {  };
 		   package: self compilationTestPackageName) build
 ]
 
@@ -192,7 +191,6 @@ ClassDescriptionTest >> testDeprecatedAliasesAreRemovedByClassRemovalSpecialCase
 
 	| class systemDictionary |
 	class := ((Object << #TemporaryMockClass)
-		          slots: {  };
 		          package: self compilationTestPackageName) install.
 	systemDictionary := class environment.
 
@@ -243,10 +241,8 @@ ClassDescriptionTest >> testIsInstalled [
 
 	self deny: class isInstalled description: 'The class was built but not installed so it should not be installed.'.
 
-	class := self class classInstaller make: [ :aBuilder |
-		         aBuilder
-			         fillFor: class;
-			         package: self compilationTestPackageName ].
+	class := self class classInstaller update: class to: [ :aBuilder |
+		         aBuilder package: self compilationTestPackageName ].
 
 	self assert: class isInstalled description: 'The class got installed in the system and thus should be installed.'.
 

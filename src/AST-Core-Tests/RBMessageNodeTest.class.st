@@ -63,6 +63,15 @@ RBMessageNodeTest >> testIntersectsInterval [
 ]
 
 { #category : 'tests' }
+RBMessageNodeTest >> testIsInlineToDo [
+	| messageNode |
+	messageNode := (RBParser parseExpression: '1 to: 2 by: 2 do: [:each |]').
+	self assert: messageNode isInlineToDo.
+	messageNode := (RBParser parseExpression: '1 to: 2 by: nil do: [:each |]').
+	self deny: messageNode isInlineToDo
+]
+
+{ #category : 'tests' }
 RBMessageNodeTest >> testSelectorAndArgumentNamesForComposedKeywords [
 		| tree message |
 		tree := self parseMethod: 'test self between: x and: y'.

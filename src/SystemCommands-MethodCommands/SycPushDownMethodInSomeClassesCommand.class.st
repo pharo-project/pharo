@@ -5,7 +5,7 @@ I am responsible for delegating execution to `RBPushDownMethodInSomeClassesDrive
 "
 Class {
 	#name : 'SycPushDownMethodInSomeClassesCommand',
-	#superclass : 'SysRefactoringMethodCommand',
+	#superclass : 'SycRefactoringMethodCommand',
 	#instVars : [
 		'refactoringScopes'
 	],
@@ -35,7 +35,7 @@ SycPushDownMethodInSomeClassesCommand >> executeRefactorings [
 	(RBPushDownMethodInSomeClassesDriver
 		model: model
 		scopes: refactoringScopes
-		pushDown: methods) runRefactoring
+		pushDownMethods: methods) runRefactoring
 ]
 
 { #category : 'testing' }

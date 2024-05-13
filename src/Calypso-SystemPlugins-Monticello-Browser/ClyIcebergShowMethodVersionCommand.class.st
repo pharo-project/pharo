@@ -62,7 +62,7 @@ ClyIcebergShowMethodVersionCommand >> execute [
 		^ self ].
 	repository := repositoriesWithPackage size > 1
 		ifTrue: [
-			UIManager default
+			self morphicUIManager
 				chooseFrom: (repositoriesWithPackage collect: [ :each | each name ])
 				values: repositoriesWithPackage
 				title: 'Repository' ]

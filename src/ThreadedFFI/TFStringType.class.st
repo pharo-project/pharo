@@ -19,7 +19,7 @@ Class {
 TFStringType >> allocateString: aString [
 	| anExternalAddress |
 
-	anExternalAddress := (ExternalAddress fromString: aString utf8Encoded).
+	anExternalAddress := (ExternalAddress fromString: aString).
 	self allocatedStrings add: anExternalAddress.
 	^ anExternalAddress
 ]

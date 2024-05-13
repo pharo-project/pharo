@@ -22,9 +22,3 @@ CDMetaclassDefinitionNode >> isClassSide [
 CDMetaclassDefinitionNode >> isInstanceSide [
 	^ false
 ]
-
-{ #category : 'testing' }
-CDMetaclassDefinitionNode >> selector [
-
-	^ tokens at: 3
-]

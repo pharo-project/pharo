@@ -54,7 +54,9 @@ SUnitExtensionsTest >> failureLog [
 { #category : 'real tests' }
 SUnitExtensionsTest >> invalidShouldNotTakeMoreThan [
 
-	self should: [(Delay forMilliseconds: 100) wait] notTakeMoreThan: 50 milliSeconds
+	self 
+		should: [(Delay forMilliseconds: 100) wait] 
+		notTakeMoreThanMilliseconds: 50
 ]
 
 { #category : 'real tests' }
@@ -285,11 +287,15 @@ SUnitExtensionsTest >> testValidShouldNotTakeMoreThanMilliseconds [
 { #category : 'real tests' }
 SUnitExtensionsTest >> validShouldNotTakeMoreThan [
 
-	self should: [(Delay forMilliseconds: 100) wait] notTakeMoreThan:  200 milliSeconds
+	self
+		should: [ (Delay forMilliseconds: 100) wait ]
+		notTakeMoreThanMilliseconds: 200
 ]
 
 { #category : 'real tests' }
 SUnitExtensionsTest >> validShouldNotTakeMoreThanMilliseconds [
 
-	self should: [(Delay forMilliseconds: 100) wait] notTakeMoreThanMilliseconds: 200
+	self
+		should: [ (Delay forMilliseconds: 100) wait ]
+		notTakeMoreThanMilliseconds: 200
 ]

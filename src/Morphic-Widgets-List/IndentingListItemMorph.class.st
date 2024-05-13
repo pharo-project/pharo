@@ -230,14 +230,14 @@ IndentingListItemMorph >> drawOn: aCanvas [
 { #category : 'drawing' }
 IndentingListItemMorph >> drawToggleOn: aCanvas in: aRectangle [
 
-	| aForm centeringOffset |
+	| aFormSet centeringOffset |
 	complexContents hasContents ifFalse: [^self].
-	aForm := isExpanded
-		ifTrue: [container expandedFormForMorph: self]
-		ifFalse: [container notExpandedFormForMorph: self].
-	centeringOffset := ((aRectangle height - aForm extent y) / 2.0) truncated.
+	aFormSet := isExpanded
+		ifTrue: [container expandedFormSetForMorph: self]
+		ifFalse: [container notExpandedFormSetForMorph: self].
+	centeringOffset := ((aRectangle height - aFormSet extent y) / 2.0) truncated.
 	^aCanvas
-		translucentImage: aForm
+		translucentFormSet: aFormSet
 		at: (aRectangle topLeft translateBy: 0 @ centeringOffset)
 ]
 

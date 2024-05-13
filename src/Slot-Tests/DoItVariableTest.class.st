@@ -50,7 +50,7 @@ DoItVariableTest >> testDoItCompilation [
 		isScripting: true;
 		bindings: { var };
 		compile.
-	self assert: (doIt valueWithReceiver: self arguments: #()) equals: 102
+	self assert: (doIt valueWithReceiver: self) equals: 102
 ]
 
 { #category : 'tests' }
@@ -90,7 +90,7 @@ DoItVariableTest >> testReadCompilation [
 	ast variableNodes first variable: var.
 	doIt := ast generateMethod.
 
-	self assert: (doIt valueWithReceiver: self arguments: #()) equals: 102
+	self assert: (doIt valueWithReceiver: self) equals: 102
 ]
 
 { #category : 'tests' }
@@ -121,7 +121,7 @@ DoItVariableTest >> testWriteCompilation [
 	ast := [ temp := 500 ] sourceNode body asDoit doSemanticAnalysis.
 	ast variableNodes first variable: var.
 	doIt := ast generateMethod.
-	doIt valueWithReceiver: self arguments: #().
+	doIt valueWithReceiver: self.
 
 	self assert: temp equals: 500
 ]

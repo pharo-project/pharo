@@ -50,7 +50,8 @@ RBAddSubtreeTransformationTest >> testTransform [
 		                   interval: (0 to: 1)
 		                   with: 'self printString'
 		                   from: #one
-		                   in: self changeMockClass name) generateChanges.
+		                   in: self changeMockClass name).
+	transformation generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 

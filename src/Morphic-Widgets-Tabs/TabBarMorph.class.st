@@ -176,29 +176,29 @@ TabBarMorph >> createActionButtonFor: anAction [
 { #category : 'private' }
 TabBarMorph >> createMenuButton [
 	"Answer a button for the window menu."
-	| form msb |
+	| formSet msb |
 
-	form := self theme windowMenuForm.
-	msb := MultistateButtonMorph new extent: form extent.
-	msb activeEnabledNotOverUpFillStyle: (ImageFillStyle form: form).
+	formSet := self theme windowMenuFormSet.
+	msb := MultistateButtonMorph new extent: formSet extent.
+	msb activeEnabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
 
-	form := self theme windowMenuPassiveForm.
-	msb extent: form extent.
-	msb activeDisabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	msb passiveEnabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	msb passiveDisabledNotOverUpFillStyle: (ImageFillStyle form: form).
+	formSet := self theme windowMenuPassiveFormSet.
+	msb extent: formSet extent.
+	msb activeDisabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	msb passiveEnabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	msb passiveDisabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
 
-	form := self theme windowMenuForm.
-	msb extent: form extent.
+	formSet := self theme windowMenuFormSet.
+	msb extent: formSet extent.
 	msb
-		activeEnabledOverUpFillStyle: (ImageFillStyle form: form);
-		passiveEnabledOverUpFillStyle: (ImageFillStyle form: form).
+		activeEnabledOverUpFillStyle: (ImageFillStyle formSet: formSet);
+		passiveEnabledOverUpFillStyle: (ImageFillStyle formSet: formSet).
 
-	form := self theme windowMenuPassiveForm.
+	formSet := self theme windowMenuPassiveFormSet.
 	msb
-		extent: form extent;
-		activeEnabledOverDownFillStyle: (ImageFillStyle form: form);
-		passiveEnabledOverDownFillStyle: (ImageFillStyle form: form);
+		extent: formSet extent;
+		activeEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
+		passiveEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
 		addUpAction: [ self popUpMenu ];
 		setBalloonText: 'tab menu' translated;
 		extent: 16@16.

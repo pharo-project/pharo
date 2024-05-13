@@ -69,9 +69,29 @@ RBRenameInstanceVariableRefactoring >> addNewAccessors [
 		createSetterAccessor
 ]
 
+{ #category : 'preconditions' }
+RBRenameInstanceVariableRefactoring >> applicabilityPreconditions [
+
+	^ {
+		  (ReIsValidInstanceVariableName name: newName).
+		  (ReDefinesInstanceVariableCondition
+			   classNamed: class name
+			   inModel: self model
+			   instanceVariables: { variableName }).
+		  (ReIsVariableNotDefinedInHierarchy name: newName class: class).
+		  (ReNameIsGlobalCondition new model: self model className: newName)
+			  not }
+]
+
 { #category : 'refactoring' }
 RBRenameInstanceVariableRefactoring >> browsedEnvironment [
 	^ browsedEnvironment ifNil: [ browsedEnvironment := RBBrowserEnvironment new ]
+]
+
+{ #category : 'scripting api - conditions' }
+RBRenameInstanceVariableRefactoring >> checkPreconditions [ 
+
+	self checkApplicabilityPreconditions 
 ]
 
 { #category : 'initialization' }
@@ -88,14 +108,6 @@ RBRenameInstanceVariableRefactoring >> newName [
 { #category : 'accessing' }
 RBRenameInstanceVariableRefactoring >> newName: anObject [
 	newName := anObject
-]
-
-{ #category : 'preconditions' }
-RBRenameInstanceVariableRefactoring >> preconditions [
-	^(RBCondition isValidInstanceVariableName: newName for: class)
-		& (RBCondition definesInstanceVariable: variableName in: class)
-			& (RBCondition hierarchyOf: class definesVariable: newName) not
-			& (RBCondition isGlobal: newName in: self model) not
 ]
 
 { #category : 'transforming' }
@@ -181,7 +193,7 @@ RBRenameInstanceVariableRefactoring >> renameReferences [
 		using: replacer
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRenameInstanceVariableRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

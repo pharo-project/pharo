@@ -47,9 +47,9 @@ HEInstaller >> build: aHEClass [
 			            name: aHEClass className;
 			            superclass: superclass;
 			            layoutClass: layoutType;
-			            slots: aHEClass instanceVariables asSlotCollection;
+			            slotsFromString: aHEClass instanceVariables;
 			            sharedVariablesFromString: aHEClass classVariables;
-			            sharedPools: aHEClass sharedPools;
+			            sharedPoolsFromString: aHEClass sharedPools;
 			            package: aHEClass packageName;
 			            classSlots: aHEClass classInstancevariables asSlotCollection.
 		            aHEClass tagName ifNotEmpty: [ :tag | builder tag: tag ].
@@ -91,34 +91,33 @@ HEInstaller >> classNamed: aSymbol [
 	^ self environment at: aSymbol
 ]
 
-{ #category : 'reporting undeclared' }
-HEInstaller >> createdUndeclared [
-	^ (Undeclared associations reject: [ :asoc | originalUndeclareds associations includes: asoc]) asDictionary 
-]
-
 { #category : 'installing package' }
 HEInstaller >> doInstallPackage: aHEPackage [
 
 	| newTraits newClasses |
 	"Creating the package. It requires a number of steps.
 	1. Register the package in the organizer."
-	self flag: #pahro11. "Update this when Pharo 12 will be the minimal version"
-	SystemVersion current major < 12 ifTrue: [ PackageOrganizer default registerPackageNamed: aHEPackage packageName ] ifFalse: [ self packageOrganizer ensurePackage: aHEPackage packageName ].
+	self packageOrganizer ensurePackage: aHEPackage packageName.
 
 	"2. Install the traits"
-	newTraits := aHEPackage traits collect: [ :exportedTrait | self buildTrait: exportedTrait ].
+	newTraits := aHEPackage traits collect: [ :exportedTrait |
+		             self buildTrait: exportedTrait ].
 
 	"3. Install traits methods"
-	aHEPackage traits with: newTraits do: [ :exportedTrait :newTrait | self installMethods: exportedTrait into: newTrait ].
+	aHEPackage traits with: newTraits do: [ :exportedTrait :newTrait |
+		self installMethods: exportedTrait into: newTrait ].
 
 	"4. Install classes"
-	newClasses := aHEPackage classes collect: [ :exportedClass | self build: exportedClass ].
+	newClasses := aHEPackage classes collect: [ :exportedClass |
+		              self build: exportedClass ].
 
 	"5. Install class methods"
-	aHEPackage classes with: newClasses do: [ :exportedClass :newClass | self installMethods: exportedClass into: newClass ].
+	aHEPackage classes with: newClasses do: [ :exportedClass :newClass |
+		self installMethods: exportedClass into: newClass ].
 
 	"6. Install extension methods"
-	aHEPackage extensionMethods do: [ :e | self installExtensionMethod: e ].
+	aHEPackage extensionMethods do: [ :e |
+		self installExtensionMethod: e ].
 
 	"7. After all I validate if there are no new undeclared variables created in the environment.
 	A new undeclared is a sign of an improper modularization."
@@ -182,7 +181,7 @@ HEInstaller >> installMethods: exportedClass into: aClass [
 { #category : 'installing package' }
 HEInstaller >> installPackage: aHEPackage [
 
-	SystemAnnouncer uniqueInstance delayAnnouncementsAfter: [ self doInstallPackage: aHEPackage ]
+	self class codeChangeAnnouncer delayAnnouncementsAfter: [ self doInstallPackage: aHEPackage ]
 ]
 
 { #category : 'messages' }
@@ -202,6 +201,13 @@ HEInstaller >> messageMethod: aHEMethod alreadyExistsIn: aClass [
 	^ 'The method ' , aHEMethod name asString , ' already exists in class ' , aClass name asString
 ]
 
+{ #category : 'reporting undeclared' }
+HEInstaller >> newUndeclaredVariables [
+	"Return the collection of undeclared variables created during this installation"
+	^ Undeclared associations reject: [ :asoc |
+		  originalUndeclareds associations includes: asoc ]
+]
+
 { #category : 'installing methods' }
 HEInstaller >> rebuildMethod: aMethod into: aClass [
 
@@ -213,28 +219,36 @@ HEInstaller >> rebuildMethod: aMethod into: aClass [
 	extendedEnvironment newClass: aClass.
 	extendedEnvironment newSelector: aMethod name.
 
-	self flag: #pharo11. "If Pharo12 the management of the method trailer changed and the way to create a new method changed too."
 	newMethod := CompiledMethod
-		             newMethod: (SystemVersion current major >= 12
-				              ifTrue: [ aMethod bytecode size + CompiledMethod trailerSize ]
-				              ifFalse: [ aMethod bytecode size ])
+		             basicNew:
+		             aMethod bytecode size + CompiledMethod trailerSize
 		             header: (aMethod headerFor: extendedEnvironment).
 
 	extendedEnvironment newMethod: newMethod.
 
-	aMethod literals doWithIndex: [ :literal :idx | newMethod literalAt: idx put: (literal asLiteralIn: extendedEnvironment) ].
+	aMethod literals doWithIndex: [ :literal :idx |
+		newMethod
+			literalAt: idx
+			put: (literal asLiteralIn: extendedEnvironment) ].
 
 	newMethod classBinding: aClass binding.
 	literalSpace := aMethod literals size + 1 * Smalltalk wordSize.
 
-	aMethod bytecode doWithIndex: [ :e :idx | newMethod at: idx + literalSpace put: e ].
+	aMethod bytecode doWithIndex: [ :e :idx |
+		newMethod at: idx + literalSpace put: e ].
 
-	aClass addAndClassifySelector: aMethod name withMethod: newMethod inProtocol: aMethod protocol
+	aClass
+		addAndClassifySelector: aMethod name
+		withMethod: newMethod
+		inProtocol: aMethod protocol
 ]
 
 { #category : 'reporting undeclared' }
 HEInstaller >> reportNewUndeclareds: newUndeclareds [
-	newUndeclareds ifNotEmpty: [ self error: 'New Undeclared created... check dependencies: ' , newUndeclareds keys printString ]
+
+	newUndeclareds ifNotEmpty: [
+		self error: 'New Undeclared created... check dependencies: '
+			, (newUndeclareds collect: [ :e | e key ]) printString ]
 ]
 
 { #category : 'validating existence' }
@@ -255,7 +269,7 @@ HEInstaller >> supportsTraits [
 
 { #category : 'reporting undeclared' }
 HEInstaller >> validateNoNewUndeclared [
-	self reportNewUndeclareds: self createdUndeclared.
+	self reportNewUndeclareds: self newUndeclaredVariables.
 	
 	SystemNotification signal: ('[Hermes] Remaining Undeclared variables in the system: '
 		, Undeclared keys printString)

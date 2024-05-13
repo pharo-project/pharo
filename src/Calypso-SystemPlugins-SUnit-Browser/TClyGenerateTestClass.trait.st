@@ -35,21 +35,6 @@ TClyGenerateTestClass >> isValidClass: inputClass [
 	^ (inputClass isTestCase or: [ inputClass isMeta ]) not
 ]
 
-{ #category : 'action' }
-TClyGenerateTestClass >> newTestClassCategoryFor: aClass [
-
-	| tag |
-	tag := aClass packageTag.
-	^ String streamContents: [ :s |
-		  s
-			  nextPutAll: aClass package name;
-			  nextPutAll: '-Tests'.
-		  tag isRoot ifFalse: [
-			  s
-				  nextPut: $-;
-				  nextPutAll: tag name ] ]
-]
-
 { #category : 'accessing' }
 TClyGenerateTestClass >> systemEnvironment [
 	^ self explicitRequirement
@@ -60,21 +45,18 @@ TClyGenerateTestClass >> testClassFor: inputClass [
 
 	| className resultClass |
 	className := self testClassNameFor: inputClass.
-	self systemEnvironment
-		classNamed: className
-		ifPresent: [ :class | resultClass := class ]
-		ifAbsent: [
-			(self isValidClass: inputClass) 
-				ifFalse: [ ClyInvalidClassForTestClassGeneration signalFor: inputClass ].
-			self systemEnvironment ensurePackage: inputClass package name asString , '-Tests'.
+	self systemEnvironment classNamed: className ifPresent: [ :class | resultClass := class ] ifAbsent: [
+		(self isValidClass: inputClass) ifFalse: [ ClyInvalidClassForTestClassGeneration signalFor: inputClass ].
+		self systemEnvironment ensurePackage: inputClass package name asString , '-Tests'.
 
-			resultClass := self class classInstaller make: [ :aBuilder |
-				               aBuilder
-					               name: className;
-					               superclass: TestCase;
-					               package: (self newTestClassCategoryFor: inputClass) ].
+		resultClass := self class classInstaller make: [ :aBuilder |
+			               aBuilder
+				               name: className;
+				               superclass: TestCase;
+				               package: inputClass package name , '-Tests';
+				               tag: inputClass packageTag name ].
 
-			self addNewCommentForTestClass: resultClass basedOn: inputClass ].
+		self addNewCommentForTestClass: resultClass basedOn: inputClass ].
 	^ resultClass
 ]
 

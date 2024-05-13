@@ -63,6 +63,11 @@ CmdToolContext >> executeCommand: aCommand by: aCommandActivator [
 ]
 
 { #category : 'testing' }
+CmdToolContext >> hasUnacceptedEdits [ 
+	^ false 
+]
+
+{ #category : 'testing' }
 CmdToolContext >> isSimilarTo: anotherToolContext [
 	^self = anotherToolContext
 ]

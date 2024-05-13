@@ -48,9 +48,10 @@ RBSmalllintContext >> checkLiteral: aLiteral [
 
 { #category : 'accessing' }
 RBSmalllintContext >> compiledMethod [
-	^compiledMethod notNil
-		ifTrue: [compiledMethod]
-		ifFalse: [compiledMethod := class compiledMethodAt: selector]
+
+	^ compiledMethod
+		  ifNotNil: [ compiledMethod ]
+		  ifNil: [ compiledMethod := class compiledMethodAt: selector ]
 ]
 
 { #category : 'private' }
@@ -174,8 +175,8 @@ RBSmalllintContext >> protocols [
 
 { #category : 'initialization' }
 RBSmalllintContext >> release [
-	literalProcess ifNotNil: [literalProcess terminate].
-	super release
+
+	literalProcess ifNotNil: [ literalProcess terminate ]
 ]
 
 { #category : 'accessing' }

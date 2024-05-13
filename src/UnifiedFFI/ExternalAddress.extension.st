@@ -8,6 +8,20 @@ ExternalAddress >> adoptAddress: anExternalAddress [
 ]
 
 { #category : '*UnifiedFFI' }
+ExternalAddress class >> arrayOfStringsFrom: aCollection [
+	"answer a char**, terminated with nil"
+	| stringArray index |
+
+	stringArray := self allocate: (FFIExternalType pointerSize * (aCollection size + 1)).
+	index := 1.
+	aCollection do: [ :each | 
+		stringArray pointerAt: index put: (self fromString: each).
+		index := index + FFIExternalType pointerSize ].
+	stringArray pointerAt: index put: self null.
+	^ stringArray
+]
+
+{ #category : '*UnifiedFFI' }
 ExternalAddress >> asExternalAddress [
 
 	^ self
@@ -148,6 +162,21 @@ ExternalAddress >> floatAt: byteIndex put: value [
 ]
 
 { #category : '*UnifiedFFI' }
+ExternalAddress >> freeArrayOfStrings [
+	"this is used to free an array created with `arrayOfStringsFrom:`"
+	| string index |
+	
+	index := 1.
+	[ 
+		(string := self pointerAt: index) isNull ]
+	whileFalse: [ 
+		string free.
+		index := index + FFIExternalType pointerSize ].
+	
+	self free 
+]
+
+{ #category : '*UnifiedFFI' }
 ExternalAddress class >> fromAddress: aNumber [
 	"Answers an external address who points to aNumber"
 	^ self new fromAddress: aNumber
@@ -160,12 +189,14 @@ ExternalAddress >> fromAddress: aNumber [
 
 { #category : '*UnifiedFFI' }
 ExternalAddress class >> fromString: aString [
-	| result |
+	| result utf8Encoded |
+	
+	utf8Encoded := aString utf8Encoded. 
 
-	result := self allocate: aString size + 1.
+	result := self allocate: utf8Encoded size + 1.
 	(self assert: result isNotNil).
-	result writeString: aString.
-	result unsignedByteAt: aString size + 1 put: 0.
+	result writeString: utf8Encoded.
+	result unsignedByteAt: utf8Encoded size + 1 put: 0.
 	^ result
 ]
 

@@ -16,25 +16,11 @@ Class {
 	#package : 'Network-Mail'
 }
 
-{ #category : 'smtp server' }
-MailComposition class >> isSmtpServerSet [
-	^ SmtpServer notNil and: [SmtpServer notEmpty]
-]
-
 { #category : 'instance creation' }
 MailComposition class >> sendMailMessage: aMailMessage [
 	| newComposition |
 	newComposition := self new.
 	newComposition messageText: aMailMessage text; open
-]
-
-{ #category : 'smtp server' }
-MailComposition class >> setSmtpServer [
-	"Set the SMTP server used to send outgoing messages via"
-	SmtpServer ifNil: [SmtpServer := ''].
-	SmtpServer := UIManager default
-		request: 'What is your mail server for outgoing mail?'
-		initialAnswer: SmtpServer
 ]
 
 { #category : 'smtp server' }
@@ -46,30 +32,25 @@ MailComposition class >> setSmtpServer: aString [
 MailComposition class >> smtpServer [
 	"Answer the server for sending email"
 
-	self isSmtpServerSet
-		ifFalse: [self setSmtpServer].
-	SmtpServer isEmpty ifTrue: [
-		self error: 'no SMTP server specified' ].
+	SmtpServer isEmpty ifTrue: [ self error: 'no SMTP server specified' ].
 
-	^SmtpServer
+	^ SmtpServer
 ]
 
 { #category : 'interface' }
 MailComposition >> addAttachment [
+
 	| fileSelected |
-	self textModel hasUnacceptedEdits
-		ifTrue: [ self textModel acceptEditsInView ].
-	fileSelected := UIManager default chooseFullFileNameMatching: nil.
+	self textModel hasUnacceptedEdits ifTrue: [
+		self textModel acceptEditsInView ].
+	fileSelected := MorphicUIManager new chooseFullFileNameMatching: nil.
 	fileSelected ifNil: [ ^ self ].
-	fileSelected
-		writeStreamDo: [ :stream |
-			stream binary.
-			self
-				messageText:
-					((MailMessage from: self messageText asString)
-						addAttachmentFrom: stream withName: fileSelected basename;
-						text;
-						yourself) ]
+	fileSelected writeStreamDo: [ :stream |
+		stream binary.
+		self messageText: ((MailMessage from: self messageText asString)
+				 addAttachmentFrom: stream withName: fileSelected basename;
+				 text;
+				 yourself) ]
 ]
 
 { #category : 'private' }

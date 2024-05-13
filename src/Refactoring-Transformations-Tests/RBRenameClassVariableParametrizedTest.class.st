@@ -9,7 +9,7 @@ Class {
 { #category : 'building suites' }
 RBRenameClassVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBRenameClassVariableRefactoring .
+		addCase: { #rbClass -> ReRenameSharedVariableRefactoring .
 					  #constructor -> #rename:to:in: .
 					  #extraArgument -> #() };
 		addCase: { #rbClass -> RBRenameVariableTransformation .
@@ -23,7 +23,7 @@ RBRenameClassVariableParametrizedTest >> testFailureAlreadyExistingName [
 
 	self shouldFail: (self createRefactoringWithArguments: {
 				 #RecursiveSelfRule.
-				 self objectClassVariable.
+				 #TextConstants.
 				 #RBTransformationRuleTestData })
 ]
 

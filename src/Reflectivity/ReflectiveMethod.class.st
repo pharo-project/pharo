@@ -78,11 +78,13 @@ ReflectiveMethod >> decreaseLinkCount [
 
 { #category : 'invalidate' }
 ReflectiveMethod >> destroyTwin [
-	(ast hasProperty: #wrapperMethod) ifTrue: [  ast :=  compiledMethod parseTree].
+
+	(ast hasProperty: #wrapperMethod) ifTrue: [ ast := compiledMethod parseTree ].
 	self recompileAST.
 	self installCompiledMethod.
 	compiledMethod reflectiveMethod: nil.
-	SystemAnnouncer uniqueInstance unsubscribe: self
+	self class codeSupportAnnouncer unsubscribe: self.
+	self class codeChangeAnnouncer unsubscribe: self
 ]
 
 { #category : 'forwarding' }
@@ -98,26 +100,30 @@ ReflectiveMethod >> flushCache [
 
 { #category : 'evaluation' }
 ReflectiveMethod >> generatePrimitiveWrapper [
+
 	| wrappedMethod send wrapperMethod assignmentNode |
 	wrappedMethod := self compileAST.
 
 	send := RBMessageNode
-		receiver: RBVariableNode selfNode
-		selector:  #rFwithArgs:executeMethod:
-		arguments: {RBArrayNode statements: ast arguments . (RBLiteralNode value: wrappedMethod)}.
+		        receiver: RBVariableNode selfNode
+		        selector: #rFwithArgs:executeMethod:
+		        arguments: {
+				        (RBArrayNode statements: ast arguments).
+				        (RBLiteralNode value: self compiledMethod) }.
 
 	assignmentNode := RBAssignmentNode
-		variable: (RBVariableNode named: #RFReifyValueVar)
-		value: send.
+		                  variable: (RBVariableNode named: #RFReifyValueVar)
+		                  value: send.
 
 	wrapperMethod := RBMethodNode
-		selector: ast selector
-		arguments: ast arguments
-		body: assignmentNode asSequenceNode.
+		                 selector: ast selector
+		                 arguments: ast arguments
+		                 body: assignmentNode asSequenceNode.
 
 	wrapperMethod methodClass: ast methodClass.
 	wrapperMethod propertyAt: #wrapperMethod put: true.
-	ast hasMetalink ifTrue: [wrapperMethod propertyAt: #links put: (ast propertyAt: #links)].
+	ast hasMetalink ifTrue: [
+		wrapperMethod propertyAt: #links put: (ast propertyAt: #links) ].
 	ast := wrapperMethod
 ]
 

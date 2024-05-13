@@ -38,13 +38,17 @@ RBExtractToTemporaryTransformation class >> model: aRBNamespace extract: anInter
 ]
 
 { #category : 'preconditions' }
-RBExtractToTemporaryTransformation >> applicabilityPreconditions [ 
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition isValidInstanceVariableName: newVariableName for: class)
-			& (RBCondition withBlock:
-						[self verifySelectedInterval.
-						self checkVariableName.
-						true])
+RBExtractToTemporaryTransformation >> applicabilityPreconditions [
+
+	^ {
+		  (RBCondition definesSelector: selector in: class).
+		  (RBCondition
+			   isValidInstanceVariableName: newVariableName
+			   for: class).
+		  (RBCondition withBlock: [
+			   self verifySelectedInterval.
+			   self checkVariableName.
+			   true ]) }
 ]
 
 { #category : 'executing' }
@@ -91,11 +95,16 @@ RBExtractToTemporaryTransformation >> extract: anInterval to: aString from: aSel
 RBExtractToTemporaryTransformation >> insertTemporary [
 
 	^ { (RBCustomTransformation model: self model with: [ :rbMode |
-		   | node statementNode nodeReferences |
+		   | node statementNode nodeReferences scope |
 		   node := self nodeContainedBy: sourceInterval.
-		   nodeReferences := self referencesTo: node.
-		   statementNode := node statementNode.
-		   statementNode parent
+		   scope := node methodOrBlockNode.
+		   nodeReferences := scope allChildren select: [ :each |
+			                     each = node ].
+		   "Insert the assignment before the first occurrence to be replaced,
+			but in the same scope as the selected expression,
+			even if that first occurrence is in a nested block."
+		   statementNode := nodeReferences first statementNodeIn: scope.
+		   scope body
 			   addNode: (self constructAssignmentFrom: node)
 			   before: statementNode;
 			   addTemporaryNamed: newVariableName.
@@ -108,7 +117,7 @@ RBExtractToTemporaryTransformation >> insertTemporary [
 RBExtractToTemporaryTransformation >> nodeContainedBy: anInterval [
 	| node |
 	node := self parseTree whichNodeIsContainedBy: anInterval.
-	(node notNil and: [ node isValue ])
+	(node isNotNil and: [ node isValue ])
 		ifFalse: [ self refactoringError: 'Cannot assign to non-value nodes' ].
 	^ node
 ]
@@ -143,7 +152,7 @@ RBExtractToTemporaryTransformation >> selectedSource [
 	^ source copyFrom: sourceInterval first to: sourceInterval last
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBExtractToTemporaryTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

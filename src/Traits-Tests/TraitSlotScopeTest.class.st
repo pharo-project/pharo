@@ -215,7 +215,7 @@ TraitSlotScopeTest >> testSubClassWithTraitsAfterModificationOfParentSharedPools
 		      aClassBuilder
 			      name: #C1;
 			      traitComposition: t1;
-			      sharedPools: 'X1';
+			      sharedPools: #(X1);
 			      package: self packageNameForTests ].
 
 	self assert: c2 classLayout slotScope parentScope identicalTo: c2 superclass classLayout slotScope.

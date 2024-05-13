@@ -16,7 +16,6 @@ MetacelloMCNamelessProjectSpec >> asProjectSpecForVersion: vrsn [
   proj := vrsn ifNil: [ ^ self ] ifNotNil: [ vrsn versionSpec project ].
   spec := MetacelloMCConfigurationOfProjectSpec for: proj.
   self copyForScriptingInto: spec.
-  spec loader: self loader.
   self assert: (self className beginsWith: 'BaselineOf') not.
   ^ spec
 ]

@@ -18,11 +18,6 @@ MCMockDefinition class >> token: aString [
 	^ self new token: aString
 ]
 
-{ #category : 'compiling' }
-MCMockDefinition class >> wantsChangeSetLogging [
-	^ false
-]
-
 { #category : 'comparing' }
 MCMockDefinition >> = definition [
 	self == definition

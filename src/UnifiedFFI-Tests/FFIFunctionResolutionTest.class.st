@@ -110,7 +110,7 @@ FFIFunctionResolutionTest >> testResolveClassVariableShouldBeInt32Type [
 	context := Context
 		sender: nil
 		receiver: receiver
-		method: String>>#asDate
+		method: String>>#asDuration
 		arguments: #().
 	resolver := FFICallout new
 		sender: context;
@@ -134,7 +134,7 @@ FFIFunctionResolutionTest >> testResolveClassVariableShouldSetClassVariableLoade
 	context := Context
 		sender: nil
 		receiver: receiver
-		method: String>>#asDate
+		method: String>>#asDuration
 		arguments: #().
 	resolver := FFICallout new
 		sender: context;
@@ -143,7 +143,7 @@ FFIFunctionResolutionTest >> testResolveClassVariableShouldSetClassVariableLoade
 	argument resolveUsing: resolver.
 	argument loader emitArgument: self context: context.
 
-	self assert: stack pop equals: { #classVariable . (String classPool bindingOf: #AsciiOrder )}.
+	self assert: stack pop equals: { #classVariable . (String classVariableNamed: #AsciiOrder )}.
 	self assert: argument resolvedType class equals: int32Type
 ]
 

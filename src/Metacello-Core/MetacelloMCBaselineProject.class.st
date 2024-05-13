@@ -24,6 +24,9 @@ The `<baseline>` pragma marks the method containing the baseline specification.
 Class {
 	#name : 'MetacelloMCBaselineProject',
 	#superclass : 'MetacelloProject',
+	#instVars : [
+		'repositoryDescription'
+	],
 	#category : 'Metacello-Core-Model',
 	#package : 'Metacello-Core',
 	#tag : 'Model'
@@ -47,13 +50,6 @@ MetacelloMCBaselineProject >> asConfigurationProject [
 { #category : 'versions' }
 MetacelloMCBaselineProject >> bleedingEdge [
     ^ nil
-]
-
-{ #category : 'versions' }
-MetacelloMCBaselineProject >> currentVersion [
-    ^ self version isSomethingLoaded
-        ifTrue: [ self version ]
-        ifFalse: [ nil ]
 ]
 
 { #category : 'versions' }
@@ -86,19 +82,16 @@ MetacelloMCBaselineProject >> latestVersion: blessing [
     ^ nil
 ]
 
-{ #category : 'scripting' }
-MetacelloMCBaselineProject >> projectForScriptEngine: aMetacelloScriptEngine unconditionalLoad: aBool [
-  "see https://github.com/dalehenrich/metacello-work/issues/244 ... uncoditionally load
-   baseline"
-
-  ^ aMetacelloScriptEngine getBaselineProjectUnconditionalLoad: true
+{ #category : 'accessing' }
+MetacelloMCBaselineProject >> repositoryDescription [
+	^ repositoryDescription
 ]
 
-{ #category : 'initialization' }
+{ #category : 'development support' }
 MetacelloMCBaselineProject >> setBaselineRepositoryDescription: aListOrRepositoryDescriptions [
-    "set #version repositories to < aListOrRepositoryDescriptions>. Should be the directory where the BaselineOf is located."
+	"set #version repositories to < aListOrRepositoryDescriptions>. Should be the directory where the BaselineOf is located."
 
-    aListOrRepositoryDescriptions do: [:desc | self version spec repository: desc]
+	repositoryDescription := aListOrRepositoryDescriptions
 ]
 
 { #category : 'versions' }

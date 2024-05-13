@@ -75,7 +75,7 @@ EpHasImpactVisitor >> visitBehaviorRepackagedChange: aBehaviorRepackagedChange [
 	classRepackaged := aBehaviorRepackagedChange behaviorAffected.
 	self
 		behaviorNamed: classRepackaged name
-		ifPresent: [ :behavior | ^ (behavior package name = classRepackaged package name and: [ behavior packageTag name = classRepackaged packageTag ]) y ].
+		ifPresent: [ :behavior | ^ (behavior package name = classRepackaged package name and: [ behavior packageTag name = classRepackaged packageTag ]) not ].
 
 	^ true
 ]

@@ -25,10 +25,11 @@ ClyMethodsInProtocolQueryTest >> testCheckIfEmpty [
 
 { #category : 'tests' }
 ClyMethodsInProtocolQueryTest >> testComparisonToSimilarQueryButWithDifferentTag [
+
 	| query2 |
-	query tag: #tag1.
+	query protocol: #tag1.
 	query2 := self createQuery.
-	query2 tag: #anotherTag.
+	query2 protocol: #anotherTag.
 
 	self deny: query equals: query2
 ]

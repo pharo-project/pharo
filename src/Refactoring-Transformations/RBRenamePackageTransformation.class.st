@@ -37,6 +37,17 @@ RBRenamePackageTransformation class >> rename: aString to: aNewName [
 		packageName: aString newName: aNewName
 ]
 
+{ #category : 'preconditions' }
+RBRenamePackageTransformation >> applicabilityPreconditions [
+
+	^ super applicabilityPreconditions , {
+		(RBCondition withBlock: [ newName ~= packageName ] errorString: 'The new package name is the same as the old package name.').
+		(RBCondition
+			   withBlock: [ "Cyril: I am not sure we should use #packageOrganizer. Maybe we should ask the environment the package manager. But currently the image does not know yet how to work with multiple package managers/modules."
+				   (self packageOrganizer hasPackage: newName) not ]
+			   errorString: 'The system already includes a package named ' , newName) }
+]
+
 { #category : 'executing' }
 RBRenamePackageTransformation >> buildTransformations [
 
@@ -64,21 +75,11 @@ RBRenamePackageTransformation >> packageName: aName newName: aNewName [
 ]
 
 { #category : 'executing' }
-RBRenamePackageTransformation >> preconditions [
-	^ super preconditions
-		& (RBCondition withBlock: [ newName ~= packageName ] errorString: 'The new package name is the same as the old package name.')
-		& (RBCondition
-			   withBlock: [ "Cyril: I am not sure we should use #packageOrganizer. Maybe we should ask the environment the package manager. But currently the image does not know yet how to work with multiple package managers/modules."
-				   (self packageOrganizer hasPackage: newName) not ]
-			   errorString: 'The system already includes a package named ' , newName)
-]
-
-{ #category : 'executing' }
 RBRenamePackageTransformation >> renameManifestClass [
 	| manifest |
 	manifest := package realPackage packageManifestOrNil.
 	manifest ifNotNil: [
-	transformations add: ( RBRenameClassRefactoring
+	transformations add: ( ReRenameClassRefactoring
 		model: self model
 		rename: manifest name
 		to: (self manifestClassNameFor: newName)) ]
@@ -89,7 +90,7 @@ RBRenamePackageTransformation >> renamePackage [
 	self model renamePackage: package to: newName
 ]
 
-{ #category : 'executing' }
+{ #category : 'storing' }
 RBRenamePackageTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

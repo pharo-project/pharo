@@ -4,8 +4,9 @@ This class contains tests for `FluidClassBuilder`
 Class {
 	#name : 'ShiftClassBuilderTest',
 	#superclass : 'ShiftClassBuilderAbstractTest',
-	#category : 'Shift-ClassBuilder-Tests',
-	#package : 'Shift-ClassBuilder-Tests'
+	#category : 'Shift-ClassBuilder-Tests-Base',
+	#package : 'Shift-ClassBuilder-Tests',
+	#tag : 'Base'
 }
 
 { #category : 'running' }
@@ -53,6 +54,23 @@ ShiftClassBuilderTest >> testBuildClassTraitsAPI [
 ]
 
 { #category : 'tests - gathering' }
+ShiftClassBuilderTest >> testBuildClassWithSuperclassWithTraits [
+	| clas subClassBuilder subClas |
+
+	builder := Object << #Point2.
+	builder traits: { TViewModelMock }.
+	builder package: self packageNameForTest.
+	clas := builder build.
+
+	subClassBuilder := clas << (#Sub, clas name).
+	subClassBuilder package: self packageNameForTest.
+	subClas := subClassBuilder build.
+
+	self assert: subClas superclass equals: clas.
+	self assert: subClas class traitComposition isEmpty
+]
+
+{ #category : 'tests - gathering' }
 ShiftClassBuilderTest >> testBuildLayout [
 
 	builder
@@ -85,7 +103,7 @@ ShiftClassBuilderTest >> testBuilderSharedPools [
 	builder
 		slots: { #string. #runs };
 		tag: 'Base';
-		sharedPools: 'TextConstants';
+		sharedPools: #(TextConstants);
 		package: 'Text-Core'.
 
 	self assert: builder sharedPools equals: #( TextConstants )
@@ -350,7 +368,7 @@ ShiftClassBuilderTest >> testFillShiftClassBuilder [
 	self assert: builder superclass equals: Object.
 	self assert: builder name equals: #Point2.
 	self assert: builder slots size equals: 2.
-	self assert: builder sharedPools equals: { ChronologyConstants }.
+	self assert: builder sharedPools equals: { #ChronologyConstants }.
 	self assert: builder package equals: self packageNameForTest.
 	self assert: builder tag equals: #Mafia
 ]
@@ -367,7 +385,7 @@ ShiftClassBuilderTest >> testInstallMinimalMockClass [
 	tag: '''' ;
 	sharedPools: {};
 	package: ''' , self packageNameForTest , ''''.
-	ShiftClassInstaller new makeWithBuilder: builder.
+	builder install.
 
 	installedClass := self class environment at: #MyClass ifAbsent: [ self fail ].
 
@@ -397,4 +415,16 @@ ShiftClassBuilderTest >> testInstallSimplePoint2 [
 	self assert: pt2Class slots size equals: 2 ] ensure: [
 		(self class environment at: #Point2 ifAbsent: [ self fail ]) removeFromSystem.
 		self assert: (self class environment at: #Point2 ifAbsent: [ true ]) ]
+]
+
+{ #category : 'tests - class creation' }
+ShiftClassBuilderTest >> testMetaSuperclassShouldUseTheSuperclassName [
+
+	| sup |
+	self assert: builder superclass isNotNil.
+	sup := builder superclass.
+	builder superclass: nil.
+	builder superclassName: sup name.
+	builder metaSuperclass: nil.
+	self assert: builder metaSuperclass equals: sup class
 ]

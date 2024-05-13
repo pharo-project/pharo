@@ -202,7 +202,7 @@ Boolean >> shallowCopy [
 	Only one instance of each should be made, so return self."
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Boolean >> storeOn: aStream [
 	"Refer to the comment in Object|storeOn:."
 

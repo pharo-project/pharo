@@ -187,6 +187,7 @@ ByteArray >> utf8StringFromCString [
 ]
 
 { #category : '*UnifiedFFI' }
-ByteArray >> writeString: aString [
-	LibC memCopy: aString to: self size: aString size
+ByteArray >> writeString: aByteString [
+
+	LibC memCopy: aByteString to: self size: aByteString size
 ]

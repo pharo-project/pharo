@@ -9,7 +9,7 @@ Class {
 { #category : 'building suites' }
 RBRemoveClassVariableParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBRemoveClassVariableRefactoring .
+		addCase: { #rbClass -> ReRemoveSharedVariableRefactoring .
 					  #constructor -> #variable:class: };
 		addCase: { #rbClass -> RBRemoveVariableTransformation .
 					  #constructor -> #classVariable:class: };

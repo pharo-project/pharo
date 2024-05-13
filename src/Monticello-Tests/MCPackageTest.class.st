@@ -38,8 +38,11 @@ MCPackageTest >> testUnload [
 MCPackageTest >> testUnloadWithAdditionalTracking [
 	"This is to test against another entity removing the extension protocol as well."
 
-	SystemAnnouncer uniqueInstance when: MethodRemoved send: #aMethodRemoved: to: self.
-	self assert: (SystemAnnouncer uniqueInstance hasSubscriber: self).
+	| announcer |
+	announcer := self class codeChangeAnnouncer.
+
+	announcer when: MethodRemoved send: #aMethodRemoved: to: self.
+	self assert: (announcer hasSubscriber: self).
 	self mockPackage unload.
 	self deny: (testingEnvironment hasClassNamed: #MCMockClassA).
 	self deny: (MCSnapshotTest includesSelector: #mockClassExtension).
@@ -48,6 +51,6 @@ MCPackageTest >> testUnloadWithAdditionalTracking [
 	self assert: (Object subclasses
 			 detect: [ :c | c name = #MCMockClassA ]
 			 ifNone: [  ]) isNil.
-	SystemAnnouncer uniqueInstance unsubscribe: self.
-	self deny: (SystemAnnouncer uniqueInstance hasSubscriber: self)
+	announcer unsubscribe: self.
+	self deny: (announcer hasSubscriber: self)
 ]

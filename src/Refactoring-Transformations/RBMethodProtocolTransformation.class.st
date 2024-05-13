@@ -54,13 +54,20 @@ RBMethodProtocolTransformation class >> protocol: aString inMethod: aSelector in
 { #category : 'preconditions' }
 RBMethodProtocolTransformation >> applicabilityPreconditions [
 
-	^ self classExist
-	  & (RBCondition definesSelector: selector in: self definingClass)
-	  & (RBCondition
+	^ {
+		  self classExist.
+		  (RBCondition definesSelector: selector in: self definingClass).
+		  (RBCondition
 			   withBlock: [ protocol isNotNil ]
 			   errorString:
 			   ('Protocol of <1s> should not be nil' expandMacrosWith:
-				    className))
+				    className)) }
+]
+
+{ #category : 'scripting api - conditions' }
+RBMethodProtocolTransformation >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
 ]
 
 { #category : 'preconditions' }
@@ -89,7 +96,7 @@ RBMethodProtocolTransformation >> protocol: aString inMethod: aSelector inClass:
 	protocol := aString
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBMethodProtocolTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

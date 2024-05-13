@@ -171,7 +171,7 @@ RBNamespaceTest >> testDefineClassAfterDeletedChange [
 	self deny: (namespace includesClassNamed: self class name).
 	namespace defineClass: [ :aBuilder | aBuilder fillFor: self class ].
 	self assert: (namespace includesClassNamed: self class name).
-	self assert: (namespace classNamed: self class name) notNil
+	self assert: (namespace classNamed: self class name) isNotNil
 ]
 
 { #category : 'tests - classes' }
@@ -183,7 +183,7 @@ RBNamespaceTest >> testDefineClassChange [
 			name: #SmalltalkTestXXX;
 			package: #'Refactory-Testing' ].
 	self assert: (namespace includesClassNamed: #SmalltalkTestXXX).
-	self assert: (namespace classNamed: #SmalltalkTestXXX) notNil
+	self assert: (namespace classNamed: #SmalltalkTestXXX) isNotNil
 ]
 
 { #category : 'tests - classes' }
@@ -256,10 +256,10 @@ RBNamespaceTest >> testRedefineClassChange [
 			name: #RBNamespaceTest;
 			slots: { #a };
 			sharedVariables: { #A };
-			sharedPools: 'TextConstants';
+			sharedPools: #(TextConstants);
 			package: #'Refactory-Testing' ].
 	self assert: (namespace includesClassNamed: #Object).
-	self assert: (namespace classNamed: #Object) notNil
+	self assert: (namespace classNamed: #Object) isNotNil
 ]
 
 { #category : 'tests - classes' }

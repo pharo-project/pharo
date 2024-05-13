@@ -253,7 +253,6 @@ SystemDictionary >> forgetClass: aClass [
 	Note that this doesn't do everything required to dispose of a class - to do that use Class>>removeFromSystem."
 
 	self organization removeClass: aClass.
-	SessionManager default unregisterClassNamed: aClass name.
 	self removeKey: aClass name ifAbsent: [  ]
 ]
 
@@ -274,7 +273,7 @@ SystemDictionary >> hasBindingThatBeginsWith: aString [
 	name := self classNames findBinary: searchBlock ifNone: [ nil ].
 	name ifNotNil: [ ^ true ].
 	name := self nonClassNames findBinary: searchBlock ifNone: [ nil ].
-	^ name notNil
+	^ name isNotNil
 ]
 
 { #category : 'accessing - classes and traits' }
@@ -427,10 +426,9 @@ SystemDictionary >> renameClass: aClass from: oldName [
 	self removeKey: oldName.
 	oldref key: aClass name.
 	self add: oldref. "Old association preserves old refs"
-	SessionManager default renamedClass: aClass from: oldName to: aClass name.
 	self flushClassNameCache.
-	SystemAnnouncer uniqueInstance classRenamed: aClass from: oldName to: aClass name.
-	aClass subclassesDo: [ :subclass | SystemAnnouncer uniqueInstance classParentOf: subclass renamedFrom: oldName to: aClass name ]
+	self class codeChangeAnnouncer classRenamed: aClass from: oldName to: aClass name.
+	aClass subclassesDo: [ :subclass | self class codeChangeAnnouncer classParentOf: subclass renamedFrom: oldName to: aClass name ]
 ]
 
 { #category : 'renaming' }

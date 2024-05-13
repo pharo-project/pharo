@@ -51,6 +51,14 @@ RBAbstractInstanceVariableRefactoring >> accessorsRefactoring [
 		ifNotNil: [ accessorsRefactoring ]
 ]
 
+{ #category : 'preconditions' }
+RBAbstractInstanceVariableRefactoring >> applicabilityPreconditions [
+
+	^ { (RBCondition
+		   directlyDefinesInstanceVariable: variableName
+		   in: class) }
+]
+
 { #category : 'transforming' }
 RBAbstractInstanceVariableRefactoring >> createAccessors [
 	self generateChangesFor: self accessorsRefactoring
@@ -58,7 +66,8 @@ RBAbstractInstanceVariableRefactoring >> createAccessors [
 
 { #category : 'preconditions' }
 RBAbstractInstanceVariableRefactoring >> preconditions [
-	^ RBCondition directlyDefinesInstanceVariable: variableName in: class
+
+	^ self applicabilityPreconditions & self breakingChangePreconditions
 ]
 
 { #category : 'transforming' }

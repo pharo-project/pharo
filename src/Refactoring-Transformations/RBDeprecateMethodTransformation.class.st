@@ -93,10 +93,11 @@ RBDeprecateMethodTransformation class >> model: aRBSmalltalk deprecateMethod: aS
 { #category : 'preconditions' }
 RBDeprecateMethodTransformation >> applicabilityPreconditions [
 
-	^ (RBCondition withBlock: [ selector ~= newSelector ]) 
-	  & (RBCondition withBlock: [ RBCondition checkMethodName: newSelector] ) 
-	  & (RBCondition definesSelector: selector in: class)
-	  
+	^ {
+		  (RBCondition withBlock: [ selector ~= newSelector ]).
+		  (RBCondition withBlock: [
+			   RBCondition checkMethodName: newSelector ]).
+		  (RBCondition definesSelector: selector in: class) }
 ]
 
 { #category : 'executing' }
@@ -143,7 +144,7 @@ RBDeprecateMethodTransformation >> newSelector: aSymbol [
 	newSelector := aSymbol
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBDeprecateMethodTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

@@ -70,7 +70,7 @@ RBMoveMethodTransformation class >> selector: aSymbol class: aClass variable: aV
 { #category : 'transforming' }
 RBMoveMethodTransformation >> abstractVariables [
 
-	self abstractVariablesRefactoring generateChanges.
+	self generateChangesFor: self abstractVariablesRefactoring.
 	parseTree := self abstractVariablesRefactoring parseTree
 ]
 
@@ -93,8 +93,9 @@ RBMoveMethodTransformation >> addSelfReturn [
 { #category : 'preconditions' }
 RBMoveMethodTransformation >> applicabilityPreconditions [
 
-	^ (RBCondition definesSelector: selector in: class)
-	  & (RBCondition withBlock: [
+	^ {
+		  (RBCondition definesSelector: selector in: class).
+		  (RBCondition withBlock: [
 			   self buildParseTree.
 			   self checkForPrimitiveMethod.
 			   self checkForSuperReferences.
@@ -103,7 +104,7 @@ RBMoveMethodTransformation >> applicabilityPreconditions [
 			   self getArgumentNameForSelf.
 			   self checkTemporaryVariableNames.
 			   self getNewMethodName.
-			   true ])
+			   true ]) }
 ]
 
 { #category : 'transforming' }
@@ -337,7 +338,7 @@ RBMoveMethodTransformation >> isMovingToArgument [
 { #category : 'transforming' }
 RBMoveMethodTransformation >> isMovingToInstVar [
 	^self isMovingToArgument not
-		and: [(class whoDefinesInstanceVariable: variable) notNil]
+		and: [(class whoDefinesInstanceVariable: variable) isNotNil]
 ]
 
 { #category : 'transforming' }
@@ -403,7 +404,7 @@ RBMoveMethodTransformation >> selector: aSymbol class: aClass variable: aVariabl
 	variable := aVariableName
 ]
 
-{ #category : 'transforming' }
+{ #category : 'storing' }
 RBMoveMethodTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -427,7 +428,7 @@ RBMoveMethodTransformation >> uniqueMethodNameFor: anInteger [
 	index := 0.
 
 	[name := before , index printString , after.
-	(Symbol findInterned: name) notNil]
+	(Symbol findInterned: name) isNotNil]
 			whileTrue: [index := index + 1].
 	^name asSymbol
 ]

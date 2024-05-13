@@ -152,9 +152,6 @@ SpRubFindReplaceDialog >> initializePresenters [
 
 { #category : 'private' }
 SpRubFindReplaceDialog >> newReplacement [
-	| t |
-	(t := replaceTextInput text asString) ifEmpty: [^ self ].
-
 	service replaceText: replaceTextInput text asString
 ]
 

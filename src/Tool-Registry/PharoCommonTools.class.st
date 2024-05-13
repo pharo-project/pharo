@@ -82,13 +82,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						targetSelector: #tools;
 						label: 'Filelist';
 						default: (self environment at: #FileList);
-						domainValues: Smalltalk tools recentFileListTools];
-		with: [
-					(aBuilder pickOne: #changeSorterTool)
-						target: Smalltalk;
-						targetSelector: #tools;
-						label: 'Changesorter';
-						domainValues: Smalltalk tools recentChangeSorterTools]
+						domainValues: Smalltalk tools recentFileListTools]
 ]
 
 { #category : 'system startup' }
@@ -109,7 +103,7 @@ PharoCommonTools class >> worldMenuOn: aBuilder [
 		iconName: #smallSystemBrowser.
 	(aBuilder item: 'Git Repositories Browser')
 		order: 1;
-		icon: (self iconNamed: #komitterSmalltalkhubRemote);
+		iconName: #komitterSmalltalkhubRemote;
 		parent: #Browsing;
 		keyText: 'o, i';
 		help:
@@ -143,22 +137,6 @@ PharoCommonTools >> browserTool: aTool [
 PharoCommonTools >> changeList [
 
 	^ self toolNamed: #changeList
-]
-
-{ #category : 'registry access' }
-PharoCommonTools >> changeSorter [
-
-	^ self toolNamed: #changeSorter
-]
-
-{ #category : 'tools' }
-PharoCommonTools >> changeSorterTool [
-	^ self changeSorter
-]
-
-{ #category : 'tools' }
-PharoCommonTools >> changeSorterTool: aTool [
-	^ self register: aTool as: #changeSorter
 ]
 
 { #category : 'cleanup' }
@@ -251,11 +229,6 @@ PharoCommonTools >> recentBrowserTools [
 ]
 
 { #category : 'registration' }
-PharoCommonTools >> recentChangeSorterTools [
-	^ self recentToolsFor: #changeSorter
-]
-
-{ #category : 'registration' }
 PharoCommonTools >> recentFileListTools [
 	^ self recentToolsFor: #fileList
 ]
@@ -293,12 +266,6 @@ PharoCommonTools >> register: anTool as: aNameSelector [
 PharoCommonTools >> testRunner [
 
 	^ self toolNamed: #testRunner
-]
-
-{ #category : 'registry access' }
-PharoCommonTools >> timeProfiler [
-
-	^ self toolNamed: #timeProfiler
 ]
 
 { #category : 'private' }

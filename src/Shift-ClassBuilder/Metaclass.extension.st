@@ -13,3 +13,9 @@ Metaclass >> << aMetaclass [
 		  fillInstanceSideFromClass: aMetaclass soleInstance;
 		  yourself
 ]
+
+{ #category : '*Shift-ClassBuilder' }
+Metaclass >> instanceVariableNames: instVarString [
+
+	^ self slots: instVarString asSlotCollection
+]

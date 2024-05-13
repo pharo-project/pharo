@@ -4,7 +4,7 @@ I am a command to add new class tag into the package.
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	package:		<RPackage>
+	package:		<Package>
 	tagName:		<String>
 
 "
@@ -61,7 +61,7 @@ SycAddNewClassTagCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	package := aToolContext lastSelectedPackage.
 
-	tagName := UIManager default
+	tagName := self morphicUIManager
 		request: ('New class tag in ' , package name)
 		initialAnswer: ''
 		title: 'Create a new class tag'.

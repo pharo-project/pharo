@@ -11,7 +11,7 @@ Class {
 { #category : 'tests' }
 TraitWithSlotsTest >> createT1 [
 	| t1 |
-	t1 := self newTrait: #T1 with: 'a b c' asSlotCollection.
+	t1 := self newTrait: #T1 with: #(a b c).
 	t1
 		compile:
 			'setValues
@@ -71,7 +71,7 @@ TraitWithSlotsTest >> testDefiningClass [
 	| t1 c1 |
 
 	t1 := self createT1.
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection traits: t1.
+	c1 := self newClass: #C1 with: #(g h) traits: t1.
 
 	self assert: (t1 slotNamed: #a) definingClass equals: t1.
 	self assert: (t1 slotNamed: #b) definingClass equals: t1.
@@ -121,7 +121,7 @@ TraitWithSlotsTest >> testOwningClass [
 	| t1 c1 |
 
 	t1 := self createT1.
-	c1 := self newClass: #C1 with: 'g h' asSlotCollection traits: t1.
+	c1 := self newClass: #C1 with: #(g h) traits: t1.
 
 	self assert: (t1 slotNamed: #a) owningClass equals: t1.
 	self assert: (t1 slotNamed: #b) owningClass equals: t1.

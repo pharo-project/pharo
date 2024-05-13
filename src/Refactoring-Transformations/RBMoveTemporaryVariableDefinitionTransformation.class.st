@@ -51,24 +51,35 @@ RBMoveTemporaryVariableDefinitionTransformation class >> variable: aString inMet
 ]
 
 { #category : 'preconditions' }
-RBMoveTemporaryVariableDefinitionTransformation >> applicabilityPreconditions [ 
+RBMoveTemporaryVariableDefinitionTransformation >> applicabilityPreconditions [
 
-	^ ( RBCondition
-			withBlock: [ self definingClass isNotNil ]
-			errorString: 'No such class or trait named ', class asString)
-		& ( RBCondition definesSelector: selector in: self definingClass)
-		& ( RBCondition
-			withBlock: [ self definingMethod allTemporaryVariables includes: variableName ]
-			errorString: 'Method named ', selector, ' does not define a temporary variable named ', variableName )
-		& ( RBCondition
-			withBlock: [ (self definingMethod allArgumentVariables includes: variableName) not ]
-			errorString: 'Variable named ', variableName, ' cannot be removed because it is an argument in this method' )
-		& ( RBCondition
-			withBlock: [ (self checkBlocksIn: self definingBlock) not ]
-			errorString: 'Variable named ', variableName, ' is already bound tightly as possible.')
-		& ( RBCondition
-			withBlock: [ self checkLocationsIn: (self checkAllBlocksIn: self definingBlock) ]
-			errorString: 'Variable named ', variableName, ' is used in an outside block.')
+	^ {
+		  (RBCondition
+			   withBlock: [ self definingClass isNotNil ]
+			   errorString: 'No such class or trait named ' , class asString).
+		  (RBCondition definesSelector: selector in: self definingClass).
+		  (RBCondition
+			   withBlock: [
+			   self definingMethod allTemporaryVariables includes: variableName ]
+			   errorString: 'Method named ' , selector
+				   , ' does not define a temporary variable named ' , variableName).
+		  (RBCondition
+			   withBlock: [
+				   (self definingMethod allArgumentVariables includes:
+					    variableName) not ]
+			   errorString: 'Variable named ' , variableName
+				   , ' cannot be removed because it is an argument in this method').
+		  (RBCondition
+			   withBlock: [ (self checkBlocksIn: self definingBlock) not ]
+			   errorString: 'Variable named ' , variableName
+				   , ' is already bound tightly as possible.').
+		  (RBCondition
+			   withBlock: [
+			   self checkLocationsIn:
+				   (self checkAllBlocksIn: self definingBlock) ]
+			   errorString:
+			   'Variable named ' , variableName
+			   , ' is used in an outside block.') }
 ]
 
 { #category : 'executing' }
@@ -123,17 +134,19 @@ RBMoveTemporaryVariableDefinitionTransformation >> checkBlocksIn: aParseTree [
 RBMoveTemporaryVariableDefinitionTransformation >> checkLocationsIn: candidateBlocks [
 
 	(candidateBlocks
-		detect: [:each | RBReadBeforeWrittenTester
-							isVariable: variableName readBeforeWrittenIn: each]
-		ifNone: [nil]) notNil
-		ifTrue: [^false].
+		 detect: [ :each |
+			 RBReadBeforeWrittenTester
+				 isVariable: variableName
+				 readBeforeWrittenIn: each ]
+		 ifNone: [ nil ]) ifNotNil: [ ^ false ].
 
 	blockNodes ifNil: [ blockNodes := OrderedCollection new ].
 	candidateBlocks do: [ :each |
 		(self checkBlocksIn: each body)
 			ifTrue: [ blockNodes add: each ]
-			ifFalse: 	[ (self checkLocationsIn: (self checkAllBlocksIn: each body))
-							ifFalse: [ blockNodes add: each ]]].
+			ifFalse: [
+				(self checkLocationsIn: (self checkAllBlocksIn: each body))
+					ifFalse: [ blockNodes add: each ] ] ].
 	^ true
 ]
 
@@ -144,6 +157,12 @@ RBMoveTemporaryVariableDefinitionTransformation >> checkMethodForBlocks [
 	definingNode := self definingBlock.
 	self checkBlocksIn: definingNode.
 	self checkLocationsIn: (self checkAllBlocksIn: definingNode)
+]
+
+{ #category : 'scripting api - conditions' }
+RBMoveTemporaryVariableDefinitionTransformation >> checkPreconditions [
+
+	self eagerlyCheckApplicabilityPreconditions 
 ]
 
 { #category : 'private' }
@@ -164,7 +183,7 @@ RBMoveTemporaryVariableDefinitionTransformation >> definingBlock [
 	^ definingNode
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBMoveTemporaryVariableDefinitionTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

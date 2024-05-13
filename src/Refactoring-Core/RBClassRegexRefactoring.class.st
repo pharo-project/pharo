@@ -70,7 +70,7 @@ RBClassRegexRefactoring >> duplicate: aClass name: aSymbol deep: aBoolean [
 		aBuilder
 			superclassName: superclassName;
 			name: aSymbol;
-			package: aClass package name ].
+			package: aClass packageName ].
 	aBoolean ifTrue: [
 		(class := self model classNamed: aSymbol) ifNil: [ ^ self ].
 		self copyFrom: aClass to: class.
@@ -93,13 +93,13 @@ RBClassRegexRefactoring >> privateTransform [
 			replacement = class name asString ifFalse: [
 				refactoring := self perform: mode
 					with: class with: replacement asSymbol.
-				(refactoring notNil and: [ refactoring preconditions check ])
+				(refactoring isNotNil and: [ refactoring preconditions check ])
 					ifTrue: [ refactoring privateTransform ] ] ] ]
 ]
 
 { #category : 'transforming' }
 RBClassRegexRefactoring >> rename: aClass name: aSymbol [
-	^ RBRenameClassRefactoring
+	^ ReRenameClassRefactoring
 		model: self model
 		rename: aClass name
 		to: aSymbol

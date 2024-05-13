@@ -6,12 +6,6 @@ Class {
 	#tag : 'Kernel'
 }
 
-{ #category : 'variables' }
-RGTraitDescriptionStrategy >> allSharedPoolNames [
-
-	^#()
-]
-
 { #category : 'private - backend access' }
 RGTraitDescriptionStrategy >> bindingOf: varName [
 
