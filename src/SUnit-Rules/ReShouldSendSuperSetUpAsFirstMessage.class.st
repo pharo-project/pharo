@@ -17,12 +17,12 @@ ReShouldSendSuperSetUpAsFirstMessage class >> checksMethod [
 	^ true
 ]
 
-{ #category : 'utilities' }
+{ #category : 'as yet unclassified' }
 ReShouldSendSuperSetUpAsFirstMessage class >> parseTreeSearcher [
 	^ RBParseTreeSearcher new
 ]
 
-{ #category : 'utilities' }
+{ #category : 'as yet unclassified' }
 ReShouldSendSuperSetUpAsFirstMessage class >> superSetUpNotCalledFirstIn: aCompiledMethod [
 	"Return true if the method is a setUp method and a call to super setUp is not the first message send."
 
@@ -37,7 +37,7 @@ ReShouldSendSuperSetUpAsFirstMessage class >> superSetUpNotCalledFirstIn: aCompi
 		initialAnswer: false) not
 ]
 
-{ #category : 'running' }
+{ #category : 'as yet unclassified' }
 ReShouldSendSuperSetUpAsFirstMessage >> basicCheck: aMethod [
 
 	^ (self isClassToCheck: aMethod methodClass) and: [ aMethod selector = #setUp and: [ self class superSetUpNotCalledFirstIn: aMethod ] ]
@@ -49,7 +49,7 @@ ReShouldSendSuperSetUpAsFirstMessage >> isClassToCheck: aClass [
 	^ { TestCase. TestResource } anySatisfy: [:each | aClass inheritsFrom: each ]
 ]
 
-{ #category : 'accessing' }
+{ #category : 'as yet unclassified' }
 ReShouldSendSuperSetUpAsFirstMessage >> name [
 
 	^ 'Provide a call to super setUp as the first message in the setUp method'
