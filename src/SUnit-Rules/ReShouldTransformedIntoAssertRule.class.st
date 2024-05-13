@@ -17,10 +17,16 @@ ReShouldTransformedIntoAssertRule class >> uniqueIdentifierName [
 	^'ShouldTransformedIntoAssert'
 ]
 
+{ #category : 'accessing' }
+ReShouldTransformedIntoAssertRule >> group [
+
+	^ 'SUnit'
+]
+
 { #category : 'initialization' }
 ReShouldTransformedIntoAssertRule >> initialize [
-	super initialize.
 
+	super initialize.
 	self
 		replace: 'self should: [ ``@object1 ]'
 		with: 'self assert: ``@object1'

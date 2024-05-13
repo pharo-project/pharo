@@ -11,7 +11,7 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'testing-interest' }
+{ #category : 'testing - interest' }
 ReShouldSendSuperTearDownAsLastMessage class >> checksMethod [
 
 	^ true
@@ -19,6 +19,7 @@ ReShouldSendSuperTearDownAsLastMessage class >> checksMethod [
 
 { #category : 'utilities' }
 ReShouldSendSuperTearDownAsLastMessage class >> parseTreeSearcher [
+
 	^ RBParseTreeSearcher new
 ]
 
@@ -41,6 +42,12 @@ ReShouldSendSuperTearDownAsLastMessage class >> superTearDownNotCalledLastIn: aC
 ReShouldSendSuperTearDownAsLastMessage >> basicCheck: aMethod [
 
 	^ (self isClassToCheck: aMethod methodClass) and: [ aMethod selector = #tearDown and: [ self class superTearDownNotCalledLastIn: aMethod ] ]
+]
+
+{ #category : 'accessing' }
+ReShouldSendSuperTearDownAsLastMessage >> group [
+
+	^ 'SUnit'
 ]
 
 { #category : 'testing' }

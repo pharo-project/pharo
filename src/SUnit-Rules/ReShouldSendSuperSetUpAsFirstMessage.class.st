@@ -11,7 +11,7 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'testing-interest' }
+{ #category : 'testing - interest' }
 ReShouldSendSuperSetUpAsFirstMessage class >> checksMethod [
 
 	^ true
@@ -19,6 +19,7 @@ ReShouldSendSuperSetUpAsFirstMessage class >> checksMethod [
 
 { #category : 'utilities' }
 ReShouldSendSuperSetUpAsFirstMessage class >> parseTreeSearcher [
+
 	^ RBParseTreeSearcher new
 ]
 
@@ -41,6 +42,12 @@ ReShouldSendSuperSetUpAsFirstMessage class >> superSetUpNotCalledFirstIn: aCompi
 ReShouldSendSuperSetUpAsFirstMessage >> basicCheck: aMethod [
 
 	^ (self isClassToCheck: aMethod methodClass) and: [ aMethod selector = #setUp and: [ self class superSetUpNotCalledFirstIn: aMethod ] ]
+]
+
+{ #category : 'accessing' }
+ReShouldSendSuperSetUpAsFirstMessage >> group [
+
+	^ 'SUnit'
 ]
 
 { #category : 'testing' }
