@@ -121,3 +121,12 @@ ReCodeCruftLeftInMethodsRule >> rationale [
 ReCodeCruftLeftInMethodsRule >> severity [
 	^ #error
 ]
+
+{ #category : 'testing' }
+ReCodeCruftLeftInMethodsRule >> shouldCheckMethod: aMethod [
+
+	(aMethod hasPragmaNamed: #debuggerCompleteToSender)
+	| (aMethod hasPragmaNamed: #haltOrBreakpointForTesting) ifTrue: [
+		^ false ].
+	^ true
+]
