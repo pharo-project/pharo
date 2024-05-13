@@ -49,17 +49,25 @@ RBMoveClassTransformation class >> move: aClassName toPackage: aPackageName inTa
 { #category : 'preconditions' }
 RBMoveClassTransformation >> applicabilityPreconditions [
 
-	^ self classExist & (RBCondition
-		   withBlock: [
-			   (self model environment
-				    packageAt: self packageName
-				    ifAbsent: [ nil ]) ifNil: [ false ] ifNotNil: [ :package |
-				   self tagName ifNotNil: [ :name | package hasTag: name ].
-				   true ] ]
-		   errorString:
-			   'No package named ' , self packageName , (self tagName
-				    ifNil: [ '' ]
-				    ifNotNil: [ :name | ' with tag named ' , name ]))
+	^ {
+		  self classExist.
+		  (RBCondition
+			   withBlock: [
+				   (self model environment
+					    packageAt: self packageName
+					    ifAbsent: [ nil ]) ifNil: [ false ] ifNotNil: [ :package |
+					   self tagName ifNotNil: [ :name | package hasTag: name ].
+					   true ] ]
+			   errorString:
+				   'No package named ' , self packageName , (self tagName
+					    ifNil: [ '' ]
+					    ifNotNil: [ :name | ' with tag named ' , name ])) }
+]
+
+{ #category : 'scripting api - conditions' }
+RBMoveClassTransformation >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
 ]
 
 { #category : 'preconditions' }

@@ -88,12 +88,8 @@ RBGenerateEqualHashTransformation >> accessorForVariable: aString [
 RBGenerateEqualHashTransformation >> applicabilityPreconditions [
 	"Checks that the class actually defines all the variables that will be part of the hash."
 
-	^ variables
-		  inject: self trueCondition
-		  into: [ :condition :variable |
-			  condition
-			  &
-			  (RBCondition definesInstanceVariable: variable in: self theClass) ]
+	^ variables collect: [ :variable |
+		  RBCondition definesInstanceVariable: variable in: self theClass ]
 ]
 
 { #category : 'transforming' }

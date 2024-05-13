@@ -68,7 +68,8 @@ RBDeprecateMethodParametrizedTest >> testValidateBogusNewSelector [
 	refactoring := self createRefactoringWithModel: model andArguments:
 		{ oldSelector . RBClassDataForRefactoringTest . newSelector }.
 
-	self deny: refactoring preconditions check
+	self should: [ refactoring checkPreconditions ]
+		raise: RBRefactoringError, RBRefactoringWarning
 ]
 
 { #category : 'tests' }
@@ -81,7 +82,8 @@ RBDeprecateMethodParametrizedTest >> testValidateEmptyNewSelector [
 	refactoring := self createRefactoringWithModel: model andArguments:
 		{ oldSelector . RBClassDataForRefactoringTest . newSelector }.
 
-	self deny: refactoring preconditions check
+	self should: [ refactoring checkPreconditions ]
+		raise: RBRefactoringError, RBRefactoringWarning
 ]
 
 { #category : 'tests' }
@@ -94,18 +96,24 @@ RBDeprecateMethodParametrizedTest >> testValidateNewSelector [
 	refactoring := self createRefactoringWithModel: model andArguments:
 		{ oldSelector . RBClassDataForRefactoringTest . newSelector }.
 
-	self assert: refactoring preconditions check
+	self shouldnt: [ refactoring checkPreconditions ]
+		raise: RBRefactoringError, RBRefactoringWarning
 ]
 
 { #category : 'tests' }
 RBDeprecateMethodParametrizedTest >> testValidateSameNewSelector [
 
 	| refactoring oldSelector newSelector |
-
 	oldSelector := #callMethod.
 	newSelector := #callMethod.
-	refactoring := self createRefactoringWithModel: model andArguments:
-		{ oldSelector . RBClassDataForRefactoringTest . newSelector }.
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArguments: {
+				               oldSelector.
+				               RBClassDataForRefactoringTest.
+				               newSelector }.
 
-	self deny: refactoring preconditions check
+	self
+		should: [ refactoring checkPreconditions ]
+		raise: RBRefactoringError
 ]

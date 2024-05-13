@@ -34,15 +34,16 @@ RBChangeMethodNameRefactoring class >> isAbstract [
 { #category : 'preconditions' }
 RBChangeMethodNameRefactoring >> applicabilityPreconditions [
 
-	^ (RBCondition definesSelector: oldSelector in: class)
-	  & self isValidMethodNamePrecondition
+	^ {
+		  (RBCondition definesSelector: oldSelector in: class).
+		  self isValidMethodNamePrecondition }
 ]
 
 { #category : 'preconditions' }
-RBChangeMethodNameRefactoring >> breakingChangePreconditions [ 
+RBChangeMethodNameRefactoring >> breakingChangePreconditions [
 	"This refactoring only preserves behavior if all implementors are renamed."
 
-	^ self doesNotOverrideExistingMethodPrecondition 
+	^ { self doesNotOverrideExistingMethodPrecondition }
 ]
 
 { #category : 'preconditions' }

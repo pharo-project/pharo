@@ -33,18 +33,22 @@ RBRenameMethodTransformation class >> renameMethod: aSelector in: aClass to: new
 RBRenameMethodTransformation >> applicabilityPreconditions [
 	"Check skipping preconditions first, if they fail, check applicability preconditions."
 
-	^ (RBCondition
-			withBlock: [ newSelector = oldSelector ]
-		   errorString: 'The selector name has <1?not:> changed <1?:to #' , newSelector , '>') 
-	& (RBCondition 
-			withBlock: [ permutation asArray ~= (1 to: oldSelector numArgs) asArray ]
-		   errorString: 'The arguments are <1?:not >permuted')
-	|
-	  super applicabilityPreconditions 
-	  & (RBCondition
+	^ super applicabilityPreconditions , {
+		  (
+			(RBCondition
+			   withBlock: [ newSelector ~= oldSelector ]
+			   errorString:
+			   'The selector name has <1?not:> changed <1?:to #' , newSelector
+			   , '>')
+			|
+		  (RBCondition
+			   withBlock: [
+			   permutation asArray ~= (1 to: oldSelector numArgs) asArray ]
+			   errorString: 'The arguments are <1?:not >permuted')).
+		  (RBCondition
 			   withBlock: [ oldSelector numArgs = newSelector numArgs ]
 			   errorString: newSelector printString
-				   , ' doesn''t have the correct number of arguments.')
+				   , ' doesn''t have the correct number of arguments.') }
 ]
 
 { #category : 'accessing' }

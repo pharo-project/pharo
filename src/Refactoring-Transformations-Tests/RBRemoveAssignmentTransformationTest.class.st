@@ -25,11 +25,11 @@ RBRemoveAssignmentTransformationTest >> methodBefore [
 RBRemoveAssignmentTransformationTest >> testAssignmentDoesNotExist [
 
 	| refactoring |
-	refactoring := (RBAddTemporaryVariableTransformation
-		                variable: 'variable2'
-		                inMethod: #methodBefore
-		                inClass: #RBRemoveAssignmentTransformationTest)
-		               generateChanges.
+	refactoring := RBAddTemporaryVariableTransformation
+		               variable: 'variable2'
+		               inMethod: #methodBefore
+		               inClass: #RBRemoveAssignmentTransformationTest.
+	refactoring generateChanges.
 
 	self shouldFail: (RBRemoveAssignmentTransformation
 			 model: refactoring model
@@ -63,12 +63,12 @@ RBRemoveAssignmentTransformationTest >> testMethodDoesNotExist [
 RBRemoveAssignmentTransformationTest >> testRefactoring [
 
 	| refactoring class |
-	refactoring := (RBRemoveAssignmentTransformation
-		                variable: 'variable'
-		                value: '1 asString'
-		                inMethod: #methodBefore
-		                inClass: #RBRemoveAssignmentTransformationTest)
-		               generateChanges.
+	refactoring := RBRemoveAssignmentTransformation
+		               variable: 'variable'
+		               value: '1 asString'
+		               inMethod: #methodBefore
+		               inClass: #RBRemoveAssignmentTransformationTest.
+	refactoring generateChanges.
 
 	self assert: refactoring model changes changes size equals: 1.
 
@@ -83,11 +83,12 @@ RBRemoveAssignmentTransformationTest >> testRefactoring [
 RBRemoveAssignmentTransformationTest >> testTransform [
 
 	| transformation class |
-	transformation := (RBRemoveAssignmentTransformation new
-		                   variable: 'variable'
-		                   value: '1 asString'
-		                   inMethod: #methodBefore
-		                   inClass: self class name) generateChanges.
+	transformation := RBRemoveAssignmentTransformation new
+		                  variable: 'variable'
+		                  value: '1 asString'
+		                  inMethod: #methodBefore
+		                  inClass: self class name.
+	transformation generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 

@@ -170,7 +170,7 @@ TFUFFIDerivedTypeMarshallingTest >> testMarshallingStringReturnValue [
 	| cString originalString returnedString |
 	[
 	originalString := 'áèïô å∫'.
-	cString := ExternalAddress fromString: originalString utf8Encoded asString.
+	cString := ExternalAddress fromString: originalString.
 	returnedString := self pointerToString: cString.
 	self assert: returnedString equals: originalString.
 	] ensure: [ cString free ]
@@ -182,7 +182,7 @@ TFUFFIDerivedTypeMarshallingTest >> testMarshallingStringReturnValueWithAlias [
 	| cString originalString returnedString |
 	[
 	originalString := 'áèïô å∫'.
-	cString := ExternalAddress fromString: originalString utf8Encoded asString.
+	cString := ExternalAddress fromString: originalString.
 	returnedString := self pointerToStringWithAlias: cString.
 	self assert: returnedString equals: originalString.
 	] ensure: [ cString free ]

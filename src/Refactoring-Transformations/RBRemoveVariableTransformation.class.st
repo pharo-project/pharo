@@ -25,27 +25,27 @@ Class {
 }
 
 { #category : 'preconditions' }
-RBRemoveVariableTransformation >> applicabilityPreconditions [ 
+RBRemoveVariableTransformation >> applicabilityPreconditions [
 
 	class := self definingClass.
 
 	^ isClassVariable
-		ifTrue: [ self applicabilityPreconditionsForClassVariable ]
-		ifFalse: [ self applicabilityPreconditionsForInstanceVariable ]
+		  ifTrue: [ self applicabilityPreconditionsForClassVariable ]
+		  ifFalse: [ self applicabilityPreconditionsForInstanceVariable ]
 ]
 
 { #category : 'preconditions' }
 RBRemoveVariableTransformation >> applicabilityPreconditionsForClassVariable [
 
-	^ (RBCondition isMetaclass: class) not
-	  & (RBCondition definesClassVariable: variableName in: class)
+	^ { (RBCondition isMetaclass: class) not.
+	    (RBCondition definesClassVariable: variableName in: class) }
 ]
 
 { #category : 'preconditions' }
 RBRemoveVariableTransformation >> applicabilityPreconditionsForInstanceVariable [
 	"For now only remove an instance variable that is locally defined in a class."
 	
-	^ (ReDirectlyDefinesInstanceVariableCondition classNamed: class name inModel: self model instanceVariables: { variableName })
+	^ { (ReDirectlyDefinesInstanceVariableCondition class: class inModel: self model instanceVariables: { variableName }) }
 ]
 
 { #category : 'executing' }

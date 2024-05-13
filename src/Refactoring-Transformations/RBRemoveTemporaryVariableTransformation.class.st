@@ -51,19 +51,26 @@ RBRemoveTemporaryVariableTransformation class >> variable: aString inMethod: aSe
 { #category : 'preconditions' }
 RBRemoveTemporaryVariableTransformation >> applicabilityPreconditions [
 
-	^ self classExist
-	  & (RBCondition definesSelector: selector in: self definingClass)
-	  & (RBCondition
+	^ {
+		  self classExist.
+		  (RBCondition definesSelector: selector in: self definingClass).
+		  (RBCondition
 			   withBlock: [
 			   self definingMethod allTemporaryVariables includes: variableName ]
 			   errorString: 'Method named ' , selector
-				   , ' does not define a temporary variable named ' , variableName)
-	  & (RBCondition
+				   , ' does not define a temporary variable named ' , variableName).
+		  (RBCondition
 			   withBlock: [
 				   (self definingMethod allArgumentVariables includes:
 					    variableName) not ]
 			   errorString: 'Variable named ' , variableName
-				   , ' cannot be removed because it is an argument in this method')
+				   , ' cannot be removed because it is an argument in this method') }
+]
+
+{ #category : 'scripting api - conditions' }
+RBRemoveTemporaryVariableTransformation >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
 ]
 
 { #category : 'preconditions' }

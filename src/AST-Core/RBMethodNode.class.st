@@ -53,7 +53,7 @@ RBMethodNode class >> selector: aSymbol arguments: valueNodes [
 
 { #category : 'instance creation' }
 RBMethodNode class >> selector: aSymbol arguments: variableNodes body: aSequenceNode [
-	^(self new)
+	^ self new 
 		arguments: variableNodes;
 		selector: aSymbol;
 		body: aSequenceNode;
@@ -326,7 +326,7 @@ RBMethodNode >> extractSubtreeWith: aSourceCode [
 		ifFalse:
 			[ RBParseTreeSearcher treeMatching: aSourceCode in: self ].	"or: [aTree isReturn]"
 	^ extractedTree
-		ifNotNil: [ extractedTree parent: (self parentOfSubtree: extractedTree) ]
+		"ifNotNil: [ extractedTree parent: (self parentOfSubtree: extractedTree) ]"
 ]
 
 { #category : 'accessing' }
@@ -501,17 +501,6 @@ RBMethodNode >> offsetIsComment: anOffset [
 
 	^ self allComments
 		anySatisfy: [ :comment | anOffset between: comment start and: comment stop ]
-]
-
-{ #category : 'tree accessing' }
-RBMethodNode >> parentOfSubtree: subtree [
-
-	| sourceCode |
-	sourceCode := subtree formattedCode.
-	^ self allChildren reversed
-		detect: [ :e | e formattedCode includesSubstring: sourceCode ]
-		ifFound: [ :e | e parent ]
-		ifNone: [ nil ]
 ]
 
 { #category : 'copying' }

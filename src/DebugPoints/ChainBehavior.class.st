@@ -4,7 +4,7 @@ I maintain a chain of debug points. When a debug point in the chain is hit I dea
 "
 Class {
 	#name : 'ChainBehavior',
-	#superclass : 'DebugPointSideEffectBehavior',
+	#superclass : 'DebugPointMetaBehavior',
 	#classVars : [
 		'Chains'
 	],

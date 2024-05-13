@@ -46,12 +46,14 @@ RBCopyPackageRefactoring class >> model: aRBSmalltalk copyPackage: aString1 in: 
 { #category : 'preconditions' }
 RBCopyPackageRefactoring >> applicabilityPreconditions [ 
 
-	^ super applicabilityPreconditions 
-		& (RBCondition withBlock: [ newName ~= packageName ] errorString: 'The new package name is the same as the old package name.')
-		& (RBCondition
+	| conds |
+	conds := super applicabilityPreconditions.
+	^ conds , {
+		 (RBCondition withBlock: [ newName ~= packageName ] errorString: 'The new package name is the same as the old package name.').
+		 (RBCondition
 			   withBlock: [ "Cyril: I am not sure we should use #packageOrganizer. Maybe we should ask the environment the package manager. But currently the image does not know yet how to work with multiple package managers/modules."
 				   (self packageOrganizer hasPackage: newName) not ]
-			   errorString: 'The system already includes a package named ' , newName)
+			   errorString: 'The system already includes a package named ' , newName) }
 ]
 
 { #category : 'preconditions' }

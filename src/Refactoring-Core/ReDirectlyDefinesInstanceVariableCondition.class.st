@@ -10,6 +10,16 @@ Class {
 }
 
 { #category : 'instance creation' }
+ReDirectlyDefinesInstanceVariableCondition class >> class: aRBAbstractClass inModel: aRBNamespace instanceVariables: aCollection [
+
+	^ self new
+		  class: aRBAbstractClass
+		  inModel: aRBNamespace
+		  instanceVariables: aCollection;
+		  yourself
+]
+
+{ #category : 'instance creation' }
 ReDirectlyDefinesInstanceVariableCondition class >> classNamed: aString inModel: aRBNamespace instanceVariables: aCollection [ 
 	
 	^ (self classNamed: aString inModel: aRBNamespace)
@@ -20,13 +30,22 @@ ReDirectlyDefinesInstanceVariableCondition class >> classNamed: aString inModel:
 { #category : 'checking' }
 ReDirectlyDefinesInstanceVariableCondition >> check [
 	
-	violators := instanceVariables reject: [ :shared | aClass directlyDefinesInstanceVariable: shared ].
+	violators := instanceVariables reject: [ :shared | class directlyDefinesInstanceVariable: shared ].
 	^ violators isEmpty
+]
+
+{ #category : 'instance creation' }
+ReDirectlyDefinesInstanceVariableCondition >> class: aRBAbstractClass inModel: aRBNamespace instanceVariables: aCollection [ 
+
+	class := aRBAbstractClass.
+	model := aRBNamespace.
+	instanceVariables := aCollection 
+	
 ]
 
 { #category : 'private' }
 ReDirectlyDefinesInstanceVariableCondition >> errorBlock [
-	^ [ aClass printString
+	^ [ class printString
 				, ' <1?: > directly define <1?s:> instance variable ' , instanceVariables ]
 ]
 
@@ -43,6 +62,6 @@ ReDirectlyDefinesInstanceVariableCondition >> violationMessageOn: aStream [
 		  aStream
 			nextPutAll: 
 				('The variable {1} is not directly defined in the class {2}' 
-					format: { violator. className });
+					format: { violator. class name });
 			nextPut: Character cr ]
 ]

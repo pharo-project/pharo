@@ -48,17 +48,18 @@ RBAddMethodTransformation class >> sourceCode: aString in: aClass withProtocol: 
 ]
 
 { #category : 'preconditions' }
-RBAddMethodTransformation >> applicabilityPreconditions [ 
+RBAddMethodTransformation >> applicabilityPreconditions [
 
-	^ (RBCondition 
-		withBlock: [ 
-			rbMethod ifNil: [
-				self refactoringError: 'The content of this method cannot be parsed.' ]. 
-			true ])
-	& (RBCondition
-		withBlock: [ rbMethod selector ifNil: [ 
-				self refactoringError: 'The method has no selector.' ]. 
-			true])
+	^ {
+		  (RBCondition withBlock: [
+			   rbMethod ifNil: [
+				   self refactoringError:
+					   'The content of this method cannot be parsed.' ].
+			   true ]).
+		  (RBCondition withBlock: [
+			   rbMethod selector ifNil: [
+				   self refactoringError: 'The method has no selector.' ].
+			   true ]) }
 ]
 
 { #category : 'accessing' }

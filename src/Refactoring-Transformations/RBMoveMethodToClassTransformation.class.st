@@ -33,10 +33,10 @@ RBMoveMethodToClassTransformation class >> model: aRBSmalltalk method: aMethod c
 		yourself
 ]
 
-{ #category : 'transforming' }
+{ #category : 'preconditions' }
 RBMoveMethodToClassTransformation >> applicabilityPreconditions [
 
-	^ (RBCondition definesSelector: method selector in: class) not
+	^ { (RBCondition definesSelector: method selector in: class) not }
 ]
 
 { #category : 'transforming' }
@@ -58,14 +58,14 @@ RBMoveMethodToClassTransformation >> privateTransform [
 	rbMethod := model rbMethodClass for: newClass source: method sourceCode selector: method selector.
 	originalProtocol := method protocolName.
 
-	(RBRemoveMethodTransformation 
+	self generateChangesFor: (RBRemoveMethodTransformation 
 		selector: method selector
-		from: oldClass) generateChanges.
-	(RBAddMethodTransformation
+		from: oldClass).
+	self generateChangesFor: (RBAddMethodTransformation
 		model: self model
 		sourceCode: rbMethod
 		in: newClass
-		withProtocol: originalProtocol) generateChanges
+		withProtocol: originalProtocol)
 ]
 
 { #category : 'storing' }

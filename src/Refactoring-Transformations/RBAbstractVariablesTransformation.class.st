@@ -45,11 +45,12 @@ RBAbstractVariablesTransformation >> abstractClassVariable: aString [
 
 	| transformation rewriter nonMetaClass |
 	nonMetaClass := fromClass instanceSide.
-	transformation := (RBAddVariableAccessorTransformation
-		                   model: self model
-		                   variable: aString
-		                   class: nonMetaClass
-		                   classVariable: true) generateChanges.
+	transformation := RBAddVariableAccessorTransformation
+		                  model: self model
+		                  variable: aString
+		                  class: nonMetaClass
+		                  classVariable: true.
+	self generateChangesFor: transformation .
 	rewriter := self parseTreeRewriter.
 	fromClass isMeta
 		ifTrue: [
@@ -85,11 +86,12 @@ RBAbstractVariablesTransformation >> abstractClassVariables [
 RBAbstractVariablesTransformation >> abstractInstanceVariable: aString [
 
 	| transformation rewriter |
-	transformation := (RBAddVariableAccessorTransformation
-		                   model: self model
-		                   variable: aString
-		                   class: fromClass
-		                   classVariable: false) generateChanges.
+	transformation := RBAddVariableAccessorTransformation
+		                  model: self model
+		                  variable: aString
+		                  class: fromClass
+		                  classVariable: false.
+	self generateChangesFor: transformation.
 	rewriter := self parseTreeRewriter.
 	rewriter
 		replace: aString , ' := ``@object'
@@ -115,17 +117,16 @@ RBAbstractVariablesTransformation >> abstractInstanceVariables [
 { #category : 'executing' }
 RBAbstractVariablesTransformation >> abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection ignoring: aVariableName [
 
-	| poolTransformation |
 	tree := aBRProgramNode.
 	fromClass := self model classObjectFor: fromBehavior.
 	toClasses := behaviorCollection collect: [ :each |
 		             self model classObjectFor: each ].
 	ignore := aVariableName.
-	poolTransformation := (RBExpandReferencedPoolsTransformation
-		                       model: self model
-		                       forMethod: tree
-		                       fromClass: fromClass
-		                       toClasses: toClasses) generateChanges.
+	self generateChangesFor: (RBExpandReferencedPoolsTransformation
+		 model: self model
+		 forMethod: tree
+		 fromClass: fromClass
+		 toClasses: toClasses).
 	self computeVariablesToAbstract
 ]
 

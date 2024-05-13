@@ -169,10 +169,6 @@ BaselineOfCalypso >> baseline: spec [
 						   #'Calypso-SystemTools-Core' ) ];
 			package: #'Calypso-SystemPlugins-ClassScripts-Queries'
 			with: [ spec requires: #( #'Calypso-SystemQueries' ) ];
-			package: #'Calypso-SystemPlugins-ClassScripts-Queries-Tests'
-			with: [
-				spec requires:
-						#( #'Calypso-SystemQueries-Tests' #'Calypso-SystemPlugins-ClassScripts-Queries' ) ];
 			package: #'Calypso-SystemPlugins-ClassScripts-Browser' with: [
 				spec requires: #( #'Calypso-SystemPlugins-ClassScripts-Queries'
 						   #'Calypso-SystemTools-Core' ) ];
@@ -255,8 +251,7 @@ BaselineOfCalypso >> baseline: spec [
 				   #'Calypso-SystemPlugins-SUnit-Queries-Tests'
 				   #'Calypso-SystemPlugins-Undeclared-Queries-Tests'
 				   #'Calypso-SystemPlugins-FFI-Queries-Tests'
-				   #'Calypso-SystemPlugins-Flags-Queries-Tests'
-				   #'Calypso-SystemPlugins-ClassScripts-Queries-Tests' );
+				   #'Calypso-SystemPlugins-Flags-Queries-Tests' );
 			group: 'Tests'
 			with:
 				#( 'MinimalEnvironmentTests' #'Calypso-SystemTools-FullBrowser-Tests'

@@ -65,15 +65,16 @@ RBAddSubtreeTransformation >> addNode: aRBNode toSequence: aSequenceNode [
 ]
 
 { #category : 'preconditions' }
-RBAddSubtreeTransformation >> applicabilityPreconditions [ 
+RBAddSubtreeTransformation >> applicabilityPreconditions [
 
-	^ (RBCondition definesSelector: selector in: self definingClass)
-		&
-			(RBCondition
-				withBlock: [ self parserClass
-						parseExpression: sourceCode
-						onError: [ :string :pos | self refactoringError: 'Invalid source to add - ' , string ].
-					true ])
+	^ {
+		  (RBCondition definesSelector: selector in: self definingClass).
+		  (RBCondition withBlock: [
+			   self parserClass
+				   parseExpression: sourceCode
+				   onError: [ :string :pos |
+					   self refactoringError: 'Invalid source to add - ' , string ].
+			   true ]) }
 ]
 
 { #category : 'api' }

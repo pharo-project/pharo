@@ -63,7 +63,8 @@ RBRemoveInstanceVariable2ParametrizedTest >> testRemoveNonLocalInstanceVariableP
 
 	refactoring := self createRefactoringWithModel: model andArguments: { #foo1. #ObjectSubsubclass }.
 
-	self deny: refactoring preconditions check.
+	self should: [ refactoring checkPreconditions ]
+		raise: RBRefactoringError, RBRefactoringWarning.
 	self should: [ self executeRefactoring: refactoring ] raise: refactoring refactoringErrorClass.
 
 	self deny: (subsubclass directlyDefinesInstanceVariable: #foo1).
@@ -93,7 +94,8 @@ RBRemoveInstanceVariable2ParametrizedTest >> testVerifyPreconditionWhenRemoveLoc
 	self assert: (class directlyDefinesInstanceVariable: #foo1).
 
 	refactoring := self createRefactoringWithModel: model andArguments: { #foo1. #ObjectSubclass }.
-	self assert: refactoring preconditions check.
+	self shouldnt: [ refactoring checkPreconditions ]
+		raise: RBRefactoringError, RBRefactoringWarning.
 
 	self executeRefactoring: refactoring.
 

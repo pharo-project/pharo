@@ -62,14 +62,6 @@ FreeTypeFontProvider class >> initialize [
 	self current "this creates an instance of me, and updates from the system"
 ]
 
-{ #category : 'extra fonts registration' }
-FreeTypeFontProvider class >> registerFont: aClassWithFont [
-	"Do nothing if freetype is disabled currently"
-
-	FreeTypeSystemSettings loadFt2Library ifTrue: [
-		aClassWithFont installFontsIn: self current ]
-]
-
 { #category : 'accessing' }
 FreeTypeFontProvider class >> resetCurrent [
 	"I reset all provider contents.
@@ -127,18 +119,6 @@ FreeTypeFontProvider >> cacheFileInfo: aFreeTypeFileInfo index: i [
 
 	(fileInfoCache  at:  {aFreeTypeFileInfo fileSize. i} ifAbsentPut:[Set new])
 		add:  aFreeTypeFileInfo
-]
-
-{ #category : 'error handling' }
-FreeTypeFontProvider >> failedToOpen: face from: path index: i [
-	"Transcript cr; show: 'Failed : ', path asString, '[', i asString,']'."
-	"remove all cache entries for path with index >= i"
-]
-
-{ #category : 'error handling' }
-FreeTypeFontProvider >> failedToOpen: face index: i [
-	"Transcript cr; show: 'Failed : ', path asString, '[', i asString,']'."
-	"remove all cache entries for path with index >= i"
 ]
 
 { #category : 'font families' }
@@ -441,49 +421,8 @@ FreeTypeFontProvider >> updateFromDirectory: aDirectory done: aSet [
 
 { #category : 'loading and updating' }
 FreeTypeFontProvider >> updateFromFile: aFile [
-	| i face numFaces cachedInfo info cachedNumFaces path |
 
-	i:= 0.
-	[(cachedInfo := self validCachedInfoFor: aFile index: i) isNotNil]
-		whileTrue:[
-			i = 0 ifTrue: [ cachedNumFaces := cachedInfo numFaces ].
-			self addFileInfo: cachedInfo index: i.
-			i := i + 1.].
-
-	(cachedNumFaces isNotNil and:[ i >= cachedNumFaces ]) ifTrue:[ ^ self ].
-
-	path := aFile fullName utf8Encoded asString.
-	[face := FreeTypeFace basicNew filename: path; index:  i.
-	["we use the primNewFaceFromFile:index: method because we want to do this as fast as possible and we don't need the face registered because it will be explicitly destroyed later"
-	face newFaceFromFile: path index: i.
-	face loadFields]
-		on: FT2Error, PrimitiveFailed
-		do: [:e | ^self failedToOpen: face from: path index: i ].
-	(face height isNotNil and:[face hasFamilyName and:[face hasStyleName and:[face isValid]]])
-		ifFalse: [ ^self failedToOpen:face from: path index: i ]
-		ifTrue: [
-			numFaces ifNil: [numFaces := face numFaces].
-			info :=FreeTypeFileInfo new
-				absoluteOrRelativePath: aFile path isAbsolute;
-				absolutePath: path; "used for quick lookup on same platform"
-				locationType: #default;
-				index: i;
-				fileSize: aFile size;
-				modificationTime: aFile modificationTime;
-				familyName: face familyName;
-				styleName: face styleName;
-				postscriptName: face postscriptName;
-				bold: face isBold;
-				italic: face isItalic;
-				fixedWidth: face isFixedWidth;
-				numFaces: numFaces;
-				extractAttributesFromNames;
-				yourself.
-			self addFileInfo: info index: i.
-			self cacheFileInfo: info index: i.
-			"Transcript show: 'from file : ', info asString."].
-	i := i + 1.
-	i < numFaces "note, we use < rather than <= , because i is zero based"] whileTrue:[]
+	(FreeTypeFontFileUpdator withFileInfoProvider: self) updateFromFile: aFile
 ]
 
 { #category : 'loading and updating' }

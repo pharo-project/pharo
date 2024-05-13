@@ -123,15 +123,6 @@ PanelMorph >> initialize [
 ]
 
 { #category : 'protocol' }
-PanelMorph >> interactionState: aSymbol [
-	"Pass on to submorphs."
-
-	self submorphsDo: [:m |
-		(m respondsTo: #interactionState:) ifTrue: [
-			m interactionState: aSymbol]]
-]
-
-{ #category : 'protocol' }
 PanelMorph >> isResizeableMorph: submorph forSplitter: e [
 	| done |
 	done := e splitsTopAndBottom

@@ -51,24 +51,32 @@ RBAddReturnStatementTransformation class >> return: aString inMethod: aSelector 
 { #category : 'preconditions' }
 RBAddReturnStatementTransformation >> applicabilityPreconditions [
 
-	^ self classExist & (RBCondition
-		   withBlock: [ self definingClass canUnderstand: selector ]
-		   errorString:
-		   ('Method named <1s> does not exist' expandMacrosWith: selector))
-	  & (RBCondition
-			   withBlock: [ self definingMethod lastIsReturn not ]
+	^ {
+		  self classExist.
+		  (RBCondition
+			   withBlock: [ self definingClass canUnderstand: selector ]
 			   errorString:
-				   ('Method named <1s> already has a return statement'
-					    expandMacrosWith: selector)) & (RBCondition
-		   withBlock: [
-			   | returnNode |
-			   returnNode := self parserClass parseExpression: returnValue.
-			   returnNode allVariables allSatisfy: [ :e |
-				   (self definingMethod hasArgumentNamed: e name) or: [
-					   self definingMethod hasTemporaryNamed: e name ] ] ]
-		   errorString:
-			   ('Some variables in this return statement are not defined in method named <1s>.'
-				    expandMacrosWith: selector))
+			   ('Method named <1s> does not exist' expandMacrosWith: selector)).
+		  ((RBCondition
+			    withBlock: [ self definingMethod lastIsReturn not ]
+			    errorString:
+				    ('Method named <1s> already has a return statement'
+					     expandMacrosWith: selector)) & (RBCondition
+			    withBlock: [
+				    | returnNode |
+				    returnNode := self parserClass parseExpression: returnValue.
+				    returnNode allVariables allSatisfy: [ :e |
+					    (self definingMethod hasArgumentNamed: e name) or: [
+						    self definingMethod hasTemporaryNamed: e name ] ] ]
+			    errorString:
+				    ('Some variables in this return statement are not defined in method named <1s>.'
+					     expandMacrosWith: selector))) }
+]
+
+{ #category : 'scripting api - conditions' }
+RBAddReturnStatementTransformation >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
 ]
 
 { #category : 'preconditions' }

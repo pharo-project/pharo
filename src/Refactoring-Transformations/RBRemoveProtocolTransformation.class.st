@@ -47,16 +47,24 @@ RBRemoveProtocolTransformation class >> protocol: aString inClass: aClassName [
 { #category : 'preconditions' }
 RBRemoveProtocolTransformation >> applicabilityPreconditions [
 
-	^ self classExist & (RBCondition
-		   withBlock: [
-			   (model environment protocolsFor: self definingClass realClass)
-				   anySatisfy: [ :prot | prot name = protocol ] ]
-		   errorString: 'Protocol named ' , protocol , ' does not exist')
-	  & (RBCondition
+	^ {
+		  self classExist.
+		  (RBCondition
+			   withBlock: [
+				   (model environment protocolsFor: self definingClass realClass)
+					   anySatisfy: [ :prot | prot name = protocol ] ]
+			   errorString: 'Protocol named ' , protocol , ' does not exist').
+		  (RBCondition
 			   withBlock: [
 			   (self definingClass realClass protocolNamed: protocol) isEmpty ]
 			   errorString: 'Protocol named ' , protocol
-				   , ' is not empty and it cannot be removed')
+				   , ' is not empty and it cannot be removed') }
+]
+
+{ #category : 'scripting api - conditions' }
+RBRemoveProtocolTransformation >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
 ]
 
 { #category : 'preconditions' }
