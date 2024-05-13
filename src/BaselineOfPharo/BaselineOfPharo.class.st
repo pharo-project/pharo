@@ -189,9 +189,7 @@ BaselineOfPharo >> baseline: spec [
 				repository: repository;
 				loads: #( 'IcebergSupport' ) ].
 
-		spec
-			package: 'Gofer-Deprecated';
-			package: 'Deprecated12' ]
+		spec package: 'Deprecated12' ]
 ]
 
 { #category : 'actions' }
