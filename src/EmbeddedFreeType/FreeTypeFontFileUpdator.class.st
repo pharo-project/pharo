@@ -39,7 +39,7 @@ FreeTypeFontFileUpdator >> cachedNumFacesFromData: bytes [
 ]
 
 { #category : 'error handling' }
-FreeTypeFontFileUpdator >> failedToOpen: face from: path index: i [
+FreeTypeFontFileUpdator >> failedToOpen: aFace from: aPath index: anIndex [
 	"Transcript cr; show: 'Failed : ', path asString, '[', i asString,']'."
 	"remove all cache entries for path with index >= i"
 ]
@@ -98,5 +98,5 @@ FreeTypeFontFileUpdator >> updateFromFile: aFile [
 			numFaces ifNil: [ numFaces := face numFaces ].
 			self addAndCacheFileInfoFromPath: path file: aFile ].
 	index := index + 1.
-	index < numFaces ] whileTrue: [  ]
+	index < numFaces ] whileTrue
 ]

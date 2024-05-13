@@ -44,7 +44,7 @@ FreeTypeFontFileInstaller >> addFromFileContents: bytes baseName: originalFileBa
 			numFaces ifNil: [ numFaces := face numFaces ].
 			self addAndCacheFileInfoFromBytes: bytes filename: originalFileBaseName ].
 	index := index + 1.
-	index < numFaces ] whileTrue: [  ]
+	index < numFaces ] whileTrue
 ]
 
 { #category : 'accessing' }
@@ -62,7 +62,7 @@ FreeTypeFontFileInstaller >> cachedNumFacesFromData: bytes [
 ]
 
 { #category : 'error handling' }
-FreeTypeFontFileInstaller >> failedToOpen: face index: index [
+FreeTypeFontFileInstaller >> failedToOpen: anFace index: anIndex [
 	"Transcript cr; show: 'Failed : ', path asString, '[', i asString,']'."
 	"remove all cache entries for path with index >= i"
 ]
