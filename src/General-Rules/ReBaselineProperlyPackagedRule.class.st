@@ -27,6 +27,8 @@ ReBaselineProperlyPackagedRule class >> uniqueIdentifierName [
 { #category : 'running' }
 ReBaselineProperlyPackagedRule >> basicCheck: aClass [
 
+	aClass isClassSide ifTrue: [ ^ false ].
+	 
 	^(aClass name beginsWith: 'BaselineOf') 
 		and: [ aClass package name ~= aClass name ]
 ]

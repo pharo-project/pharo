@@ -25,6 +25,7 @@ ReBaselineWithProperSuperclassRule class >> uniqueIdentifierName [
 { #category : 'running' }
 ReBaselineWithProperSuperclassRule >> basicCheck: aClass [
 
+	aClass isClassSide ifTrue: [ ^ false ].
 	aClass name = #BaselineOf ifTrue: [ ^ false ].
 	
 	^(aClass name beginsWith: 'BaselineOf') 
