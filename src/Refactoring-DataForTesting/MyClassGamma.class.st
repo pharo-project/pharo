@@ -5,3 +5,8 @@ Class {
 	#package : 'Refactoring-DataForTesting',
 	#tag : 'StaticModel'
 }
+
+{ #category : 'as yet unclassified' }
+MyClassGamma >> referenceToClassAlpha [
+	^ MyClassAlpha new
+]

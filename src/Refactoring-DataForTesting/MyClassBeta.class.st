@@ -20,6 +20,11 @@ MyClassBeta >> methodForPushUp [
 	^ 24
 ]
 
+{ #category : 'as yet unclassified' }
+MyClassBeta >> methodOverriden [
+	^ self
+]
+
 { #category : 'dummy methods' }
 MyClassBeta >> methodReferencingSharedVariable [
 	^ SharedVarB
@@ -33,5 +38,5 @@ MyClassBeta >> methodReferencingSharedVariableFromSuperclass [
 { #category : 'dummy methods' }
 MyClassBeta >> methodWithSuperSend [
 	" I send a message to super "
-	^ super methodWithSuperSend
+	^ super methodOverriden
 ]

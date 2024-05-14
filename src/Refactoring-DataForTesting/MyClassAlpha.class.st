@@ -16,7 +16,6 @@ Class {
 }
 
 { #category : 'dummy methods' }
-MyClassAlpha >> methodWithSuperSend [
-	" I exist to give MyClassB>>methodWithSuperSend sense "
+MyClassAlpha >> methodOverriden [
 	^ 24
 ]

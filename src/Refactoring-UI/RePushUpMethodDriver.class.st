@@ -39,6 +39,28 @@ RePushUpMethodDriver class >> model: model scopes: refactoringScopes pushUpMetho
 ]
 
 { #category : 'execution' }
+RePushUpMethodDriver >> breakingChoices [
+	| choices |
+	choices := OrderedCollection new.
+	notOverrides check ifFalse:[ choices add: (ReBrowseMethodOverridesChoice new driver: self) ].
+	self flag: 'Add missing choices'.
+	^ choices
+	
+]
+
+{ #category : 'actions' }
+RePushUpMethodDriver >> browseOverrides [
+
+	| overrides |
+	overrides := notOverrides violators.
+	methods do: [:method | 
+		StMessageBrowser
+		browse: (overrides collect: [ :ref | ref realClass methodNamed: method selector ])
+		asImplementorsOf: method selector ]
+	
+]
+
+{ #category : 'execution' }
 RePushUpMethodDriver >> changes [
 	"it should NOT be generate changes."
 	^  refactoring privateTransform
@@ -68,12 +90,41 @@ RePushUpMethodDriver >> configureRefactoring [
 		               to: superclass name
 ]
 
+{ #category : 'configuration' }
+RePushUpMethodDriver >> defaultSelectDialog [
+
+	^ SpSelectDialog new
+		    title: 'There are potential breaking changes!';
+		          label: self labelBasedOnBreakingChanges;
+		          items: self breakingChoices;
+		          display: [ :each | each description ];
+		          displayIcon: [ :each | self iconNamed: each systemIconName ];
+		          openModal
+]
+
 { #category : 'execution' }
 RePushUpMethodDriver >> gatherUserInput [
-	| methodsAndClass |
-	methodsAndClass := self selectMethodsAndClass.
-	superclass := methodsAndClass at: 'class'.
-	methods := methodsAndClass at: 'methods'
+	self selectMethodsAndClass
+]
+
+{ #category : 'execution' }
+RePushUpMethodDriver >> handleBreakingChanges [
+
+	| select |
+	select := self selectDialog.
+	select ifNotNil: [ select action ]
+]
+
+{ #category : 'ui - dialogs' }
+RePushUpMethodDriver >> labelBasedOnBreakingChanges [
+
+	^ String streamContents: [ :stream |
+		  { notOverrides. notVarRefs. notSupersendsDone. notSupersendsReceived } 
+			do: [ :cond |
+			  cond check ifFalse: [
+				  cond violationMessageOn: stream.
+				  stream cr ] ].
+		  stream nextPutAll: 'Select a strategy' ]
 ]
 
 { #category : 'for mocks' }
@@ -125,11 +176,7 @@ RePushUpMethodDriver >> selectMethodsAndClass [
 			          superclass := selectedClass.
 			          methods := selectedMethods ].
 
-	dialog cancelled ifTrue: [ ^ nil ].
-	
-	^ {
-		  ('class' -> superclass).
-		  ('methods' -> methods) } asDictionary
+	dialog cancelled ifTrue: [ ^ nil ]
 ]
 
 { #category : 'initialization' }

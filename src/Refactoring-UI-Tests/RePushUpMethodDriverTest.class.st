@@ -35,3 +35,22 @@ RePushUpMethodDriverTest >> testPushUpMethodDriverWhenHappyPathExpectChanges [
 	driver runRefactoring.
 	self assert: driver refactoring model changes changes size equals: 2
 ]
+
+{ #category : 'initialization' }
+RePushUpMethodDriverTest >> testPushUpMethodDriverWhenOverridesExpectBreakingChanges [
+
+	| driver method |
+	
+	environment := RBClassEnvironment classes: MyClassAlpha withAllSubclasses.
+	model := RBNamespace onEnvironment: environment.
+	method := MyClassBeta methodNamed: #methodOverriden.
+	
+	driver := RePushUpMethodDriver new
+					model: model scopes: { environment } pushUpMethods: { method }.
+
+	self setUpDriver: driver.
+	
+	driver runRefactoring.
+	self assert: driver refactoring model changes changes size equals: 0.
+	self assert: driver refactoring failedBreakingChangePreconditions size equals: 1
+]

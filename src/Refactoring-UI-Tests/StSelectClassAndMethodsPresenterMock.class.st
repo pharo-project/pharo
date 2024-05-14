@@ -48,7 +48,9 @@ StSelectClassAndMethodsPresenterMock >> label: aString dropLabel: aString2 withI
 	dropLabel := aString2.
 	items := aCollection.
 	selecting := aCollection4.
-	dropItems := aCollection4
+	dropItems := aCollection4.
+	acceptBlock := aFullBlockClosure.
+	acceptBlock value: self selectedClass value: self selectedMethods
 ]
 
 { #category : 'initialization' }
