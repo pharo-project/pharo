@@ -50,25 +50,29 @@ RBPullUpMethodRefactoring class >> pullUp: selectorCollection from: aClass to: a
 
 { #category : 'preconditions' }
 RBPullUpMethodRefactoring >> applicabilityPreconditions [
+	" Check that all selectors are defined in `class`, 
+	and that `class` is in the hierarchy of subclasses of `targetSuperclass` "
 
 	^ {
-		  (RBCondition hasSuperclass: class).
 		  (ReDefinesSelectorsCondition new
 			   definesSelectors: selectors
 			   in: class).
-		  (RBCondition withBlock: [
-			   self checkClassVars.
-			   self checkSuperclass.
-			   self checkSuperMessages.
-			   true ]) }
+		  (ReClassHasSubclassesCondition new
+			   class: targetSuperclass;
+			   subclassesList: { class name }) }
 ]
 
 { #category : 'preconditions' }
 RBPullUpMethodRefactoring >> breakingChangePreconditions [
+	" Check that none of the selectors are already defined in the `targetSuperclass` unless the `targetSuperclass` is abstract.
+	Also check that the pushed up methods do not refer to shared or instance variables defined in `class`.
+	Finally check that supersends from and to pushed up methods do preserve system consistency. "
 
-	^ { (RBCondition withBlock: [
-		   self checkInstVars.
-		   true ]) }
+	^ {
+		  self preconditionNoOverrides.
+		  self preconditionNoReferencesToInvalidVariables.
+		  self preconditionNoSupersendsSent.
+		  self preconditionNoSupersendsReceived }
 ]
 
 { #category : 'preconditions' }
@@ -79,9 +83,9 @@ RBPullUpMethodRefactoring >> checkBackReferencesTo: aSelector [
 	in `targetSuperclass` "
 
 	| definingClass pushUpParseTree |
-	definingClass := targetSuperclass whichClassIncludesSelector:
-		                 aSelector.
-	definingClass ifNil: [ ^ self ].
+	self halt.
+	definingClass := targetSuperclass whoDefinesMethod: aSelector.
+	definingClass ifNil: [^self].
 	pushUpParseTree := class parseTreeForSelector: aSelector.
 	targetSuperclass allSubclasses do: [ :each |
 		each selectors do: [ :sel |
@@ -269,6 +273,47 @@ RBPullUpMethodRefactoring >> copyDownMethod: aSelector [
 { #category : 'transforming' }
 RBPullUpMethodRefactoring >> copyDownMethods [
 	selectors do: [:each | self copyDownMethod: each]
+]
+
+{ #category : 'preconditions' }
+RBPullUpMethodRefactoring >> preconditionNoOverrides [
+
+	^ (ReDefinesSelectorsCondition new
+		   definesSelectors: selectors
+		   in: targetSuperclass) not 
+	  |
+	  (ReClassesAreAbstractCondition new 
+			classes: { targetSuperclass })
+]
+
+{ #category : 'preconditions' }
+RBPullUpMethodRefactoring >> preconditionNoReferencesToInvalidVariables [
+
+	^ ((ReMethodsReferToSharedVariablesCondition new
+	 		class: class
+	 		selectors: selectors) not)
+	  & 
+		((ReMethodsReferToInstanceVariablesCondition new
+			class: class
+			selectors: selectors) not)
+]
+
+{ #category : 'preconditions' }
+RBPullUpMethodRefactoring >> preconditionNoSupersendsReceived [
+
+	^ ReMethodsReceiveNoSupersendsCondition new
+		   class: class
+		   targetSuperclass: targetSuperclass
+		   selectors: selectors
+]
+
+{ #category : 'preconditions' }
+RBPullUpMethodRefactoring >> preconditionNoSupersendsSent [
+
+	^ ReMethodsSendNoSupersendsCondition new
+		   class: class
+		   targetSuperclass: targetSuperclass
+		   selectors: selectors
 ]
 
 { #category : 'preconditions' }
