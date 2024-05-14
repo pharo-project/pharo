@@ -812,7 +812,7 @@ VirtualMachine >> parameterLabels [
 		73 'total milliseconds in full GCs Sweep phase since startup (read-only, can be 0 depending on compactors)'
 		74 'maximum pause time due to segment allocation (read-write)'
 		75 'number of JIT compiled methods since startup (read-only)'
-		76 'total milliseconds spent on JIT compiled methods since startup (read-only)'
+		76 'total milliseconds spent compiling JIT methods since startup (read-only)'
 		77 'number of JIT compiled block since startup (read-only)'
 		78 'total milliseconds spent on JIT compiled block since startup (read-only)'
 		79 'Image version stored in the header of the image file'
