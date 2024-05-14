@@ -104,6 +104,13 @@ BaselineOfPharo class >> newToolsRepository [
 	^ (self externalProjectNamed: 'NewTools') repository
 ]
 
+{ #category : 'class initialization' }
+BaselineOfPharo class >> reset [
+	<script>
+
+	ExternalProjects := nil
+]
+
 { #category : 'accessing - external projects' }
 BaselineOfPharo class >> roassal [
 	<externalProject>
@@ -119,6 +126,23 @@ BaselineOfPharo class >> roassal [
 BaselineOfPharo class >> roassalRepository [
 
 	^ (self externalProjectNamed: 'Roassal') repository
+]
+
+{ #category : 'accessing - external projects' }
+BaselineOfPharo class >> scriptableDebugger [
+	<externalProject>
+
+	^ PharoExternalProject 
+		newName: 'ScriptableDebugger' 
+		owner: 'pharo-spec' 
+		project: 'ScriptableDebugger' 
+		version: 'Pharo13'
+]
+
+{ #category : 'repository urls' }
+BaselineOfPharo class >> scriptableDebuggerRepository [
+
+	^ (self externalProjectNamed: 'ScriptableDebugger') repository
 ]
 
 { #category : 'accessing - external projects' }
