@@ -43,12 +43,12 @@ RBExpandReferencedPoolsRefactoring class >> model: aRBNamespace forMethod: aPars
 { #category : 'preconditions' }
 RBExpandReferencedPoolsRefactoring >> breakingChangePreconditions [
 
-	^ RBCondition withBlock: [
-		  self hasPoolsToMove ifTrue: [
-			  self refactoringWarning:
-				  'This method contains references to pools<n>which may need to be moved.<n>Proceed anyway?'
-					  expandMacros ].
-		  true ]
+	^ { (RBCondition withBlock: [
+		   self hasPoolsToMove ifTrue: [
+			   self refactoringWarning:
+				   'This method contains references to pools<n>which may need to be moved.<n>Proceed anyway?'
+					   expandMacros ].
+		   true ]) }
 ]
 
 { #category : 'transforming' }

@@ -216,6 +216,11 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 		getStateSelector: nil
 		enablementSelector: true.
 	submenu
+		addToggle: 'hidden windows' translated
+		target: self
+		selector: #taskbarCloseHiddenWindows
+		getStateSelector: nil
+		enablementSelector: true.	submenu
 		addToggle: 'close all debuggers' translated
 		target: OupsDebuggerSystem
 		selector: #closeAllDebuggers
@@ -238,9 +243,9 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 { #category : '*Morphic-Widgets-Taskbar' }
 SystemWindow >> taskbarCloseAllLikeThis [
 
-	(self confirm: 'Do you really want to close all windows like this ?') ifFalse: [
+	(self confirm: 'Do you really want to close all windows like this?') ifFalse: [
 		^ self ].
-	(SystemWindow allSubInstances select: [ :w | w labelString = self labelString]) do: [ :w | w delete ]
+	(self class allSubInstances select: [ :w | w labelString = self labelString]) do: [ :w | w delete ]
 ]
 
 { #category : '*Morphic-Widgets-Taskbar' }
@@ -276,6 +281,23 @@ SystemWindow >> taskbarCloseAllWindows [
 
 	self worldTaskbar ifNotNil: [ :worldTaskbar |
 		worldTaskbar tasks do: [ :task | task morph delete ] ]
+]
+
+{ #category : '*Morphic-Widgets-Taskbar' }
+SystemWindow >> taskbarCloseHiddenWindows [
+
+	| windows invisible parts other |
+	(self confirm: 'Do you really want to close all windows hidden behind other windows?') ifFalse: [
+		^ self ].
+	windows := (self world submorphs select: [:each | each isSystemWindow ]) reversed.
+invisible := windows withIndexSelect: [ :win :index |
+	bounds := win fullBoundsInWorld.
+	parts := OrderedCollection new.
+	other := (windows copyFrom: index+1 to: windows size) collect: [:each | each fullBoundsInWorld] .
+	bounds allAreasOutsideList: other do: [ :each | parts add: each  ].
+	parts isEmpty
+].
+invisible do: [ :each | each close ].
 ]
 
 { #category : '*Morphic-Widgets-Taskbar' }

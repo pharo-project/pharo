@@ -41,32 +41,21 @@ ReRemoveClassRefactoring class >> model: aRBSmalltalk classNames: aClassNameColl
 { #category : 'preconditions' }
 ReRemoveClassRefactoring >> applicabilityPreconditions [
 
-	^ { ReClassesExistCondition new classes: classesDictionary . self preconditionAreNotMeta }
+	^ {
+		  (ReClassesExistCondition new classes: classesDictionary).
+		  self preconditionAreNotMeta }
 ]
 
 { #category : 'preconditions' }
 ReRemoveClassRefactoring >> breakingChangePreconditions [
 	"Empty error blocks are here so that warnings are raised. This is a ugly hack..."
 
-	^ { self preconditionHaveNoReferences .
-		 self preconditionHaveNoSubclasses |
-		 self preconditionEmptyClasses }
+	^ {
+		  self preconditionHaveNoReferences.
+		  (self preconditionHaveNoSubclasses | self preconditionEmptyClasses) }
 ]
 
-{ #category : 'preconditions' }
-ReRemoveClassRefactoring >> checkBreakingChangePreconditions [
-
-	| conditions errorStrings |
-	conditions := self breakingChangePreconditions.
-	conditions := conditions reject: [ :cond | cond check ].
-	conditions ifEmpty: [ ^ self ].
-	errorStrings := String streamContents: [ :aStream |
-		                conditions do: [ :cond |
-			                cond violationMessageOn: aStream ] ].
-	self refactoringWarning: errorStrings
-]
-
-{ #category : 'preconditions' }
+{ #category : 'scripting api - conditions' }
 ReRemoveClassRefactoring >> checkPreconditions [
 
 	self eagerlyCheckApplicabilityPreconditions.

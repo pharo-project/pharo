@@ -60,7 +60,7 @@ RBInlineAllSendersRefactoring class >> sendersOf: aSelector in: aClass [
 { #category : 'preconditions' }
 RBInlineAllSendersRefactoring >> applicabilityPreconditions [
 
-	^ RBCondition canUnderstand: selector in: class
+	^ { (RBCondition canUnderstand: selector in: class) }
 ]
 
 { #category : 'transforming' }

@@ -112,7 +112,7 @@ BaselineOfPharo class >> roassal [
 		  newName: 'Roassal'
 		  owner: 'pharo-graphics'
 		  project: 'Roassal'
-		  version: 'v1.06b'
+		  version: 'v1.06d'
 ]
 
 { #category : 'repository urls' }
@@ -189,9 +189,7 @@ BaselineOfPharo >> baseline: spec [
 				repository: repository;
 				loads: #( 'IcebergSupport' ) ].
 
-		spec
-			package: 'Gofer-Deprecated';
-			package: 'Deprecated13' ]
+		spec package: 'Deprecated13' ]
 ]
 
 { #category : 'actions' }

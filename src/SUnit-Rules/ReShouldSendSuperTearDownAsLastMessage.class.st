@@ -11,7 +11,7 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'testing-interest' }
+{ #category : 'testing - interest' }
 ReShouldSendSuperTearDownAsLastMessage class >> checksMethod [
 
 	^ true
@@ -19,6 +19,7 @@ ReShouldSendSuperTearDownAsLastMessage class >> checksMethod [
 
 { #category : 'utilities' }
 ReShouldSendSuperTearDownAsLastMessage class >> parseTreeSearcher [
+
 	^ RBParseTreeSearcher new
 ]
 

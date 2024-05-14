@@ -38,7 +38,7 @@ RBMoveInstanceVariableToClassParametrizedTest >> testFailureVariableDoesNotExist
 		model: model 
 		variable: #abc 
 		fromClass: #RBFooLintRuleTestData 
-		toClass: #RBBasicLintRuleTestData) generateChanges ] raise: RBRefactoringWarning
+		toClass: #RBBasicLintRuleTestData) generateChanges ] raise: RBRefactoringError
 	
 ]
 

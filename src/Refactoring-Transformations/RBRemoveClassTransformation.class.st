@@ -58,13 +58,13 @@ RBRemoveClassTransformation class >> model: aRBModel classNames: aCollection [
 ]
 
 { #category : 'preconditions' }
-RBRemoveClassTransformation >> applicabilityPreconditions [ 
+RBRemoveClassTransformation >> applicabilityPreconditions [
 
-		| aClassOrTrait |
-		aClassOrTrait := self model classNamed: className.
-		aClassOrTrait ifNil: [ self refactoringError: 'No such class or trait named ', className ].
-		^ (self preconditionIsNotMetaclass: aClassOrTrait)
-			
+	| aClassOrTrait |
+	aClassOrTrait := self model classNamed: className.
+	aClassOrTrait ifNil: [
+		self refactoringError: 'No such class or trait named ' , className ].
+	^ { (self preconditionIsNotMetaclass: aClassOrTrait) }
 ]
 
 { #category : 'preconditions' }

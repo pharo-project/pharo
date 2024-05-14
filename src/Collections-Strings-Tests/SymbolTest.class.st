@@ -286,6 +286,16 @@ SymbolTest >> subCollectionNotIn [
 ]
 
 { #category : 'tests' }
+SymbolTest >> testAsAccessor [
+	self assert: #x: asAccessor equals: #x.
+	self assert: #x asAccessor equals: #x.
+	self should: [ self assert: #x:: asAccessor ] raise: Error.	
+	self should: [ self assert: #keyword:selector: asAccessor ] raise: Error.
+	self should: [ self assert: #+ asAccessor ] raise: Error.
+	self should: [ self assert: #'' asAccessor ] raise: Error.	
+]
+
+{ #category : 'tests' }
 SymbolTest >> testAsMutator [
 	self assert: #x asMutator equals: #x:.
 	"return receiver if it is already a mutator"
@@ -500,6 +510,30 @@ SymbolTest >> testNumArgsUnary [
 	self assert: 'name123' numArgs equals: 0.
 	self assert: 'na123me' numArgs equals: 0.
 	self assert: '123name' numArgs equals: -1
+]
+
+{ #category : 'tests' }
+SymbolTest >> testPrecedence [
+	self assert: #x precedence equals: 1.
+	self assert: #abs precedence equals: 1.
+	self assert: #_abs precedence equals: 1.
+
+	self assert: #+ precedence equals: 2.
+	self assert: #+- precedence equals: 2.
+	self assert: #>>> precedence equals: 2.
+
+	self assert: #x: precedence equals: 3.
+	self assert: #abs: precedence equals: 3.
+	self assert: #_abs: precedence equals: 3.
+
+	self assert: #x:y: precedence equals: 3.
+	self assert: #abs:y: precedence equals: 3.
+	self assert: #_abs:y: precedence equals: 3.
+
+	self assert: #'0' precedence equals: 0.
+	self assert: #'.' precedence equals: 0.
+	self assert: #':' precedence equals: 0.
+
 ]
 
 { #category : 'tests' }

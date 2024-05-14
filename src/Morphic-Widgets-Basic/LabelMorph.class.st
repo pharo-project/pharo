@@ -182,12 +182,6 @@ LabelMorph >> initialize [
 		enabled: true
 ]
 
-{ #category : 'protocol' }
-LabelMorph >> interactionState: aSymbol [
-	"Backstop here to prevent 'legacy' color handling being applied from
-	pluggable buttons."
-]
-
 { #category : 'layout' }
 LabelMorph >> minHeight [
 	"Answer the receiver's minimum height.

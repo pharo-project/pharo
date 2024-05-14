@@ -53,7 +53,7 @@ RBRefactoryChangeManager class >> instance [
 RBRefactoryChangeManager class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Undo last refactoring')
-				action: [self undoLastRefactoring];
+				action: [self instance undoLastRefactoring];
 				parent: #Refactoring;
 				help: 'Undo last refactoring';
 				order: 10;
@@ -90,18 +90,10 @@ RBRefactoryChangeManager class >> resetCounter [
 
 { #category : 'menu' }
 RBRefactoryChangeManager class >> undoLastRefactoring [
-	| manager |
-	manager := RBRefactoryChangeManager instance.
-	manager undoPointers ifNotEmpty: [
-	[ |limit list|
-	list := OrderedCollection new.
-	limit := manager lastUndoPointer .
-	1 to: limit do:[ :i | list add: manager undoChange ].
-	list do: [ :e | e execute ]
-	 ] asJob
-		title: 'Refactoring';
-		run]
-	ifEmpty: [ self inform: 'There aren''t refactorings to undo.'  ]
+
+	self deprecated: 'Use instance side method instead'
+		transformWith: '`@rec undoLastRefactoring' -> '`@rec instance undoLastRefactoring'.
+	^ self instance undoLastRefactoring 
 ]
 
 { #category : 'class initialization' }
@@ -211,8 +203,32 @@ RBRefactoryChangeManager >> lastUndoPointer [
 
 { #category : 'public access' }
 RBRefactoryChangeManager >> performChange: aRefactoringChange [
-	
-	self ignoreChangesWhile: [ self addUndo: aRefactoringChange execute ]
+
+	self
+		deprecated: 'Use `performCompositeChange:` if you have CompositeChange or use `performChanges:` if you have a list of changes instead of current one'
+		transformWith: '`@rec performChange: `@arg' -> '`@rec performCompositeChange: `@arg'.
+
+	self performCompositeChange: aRefactoringChange.
+]
+
+{ #category : 'public access' }
+RBRefactoryChangeManager >> performChanges: aRefactoringChangesList [
+
+	| compositeChange |
+	aRefactoringChangesList ifEmpty: [ ^ self ].
+	compositeChange := RBCompositeRefactoryChange new.
+	compositeChange onSystemDictionary:
+		aRefactoringChangesList first onSystemDictionary.
+	compositeChange changes: aRefactoringChangesList.
+	self performCompositeChange: compositeChange
+]
+
+{ #category : 'public access' }
+RBRefactoryChangeManager >> performCompositeChange: aCompositeChange [
+
+	self ignoreChangesWhile: [
+		self addUndo: aCompositeChange execute.
+		self addUndoPointer: self class nextCounter ]
 ]
 
 { #category : 'public access' }
@@ -239,6 +255,22 @@ RBRefactoryChangeManager >> release [
 RBRefactoryChangeManager >> undoChange [
 
 	^ undo pop
+]
+
+{ #category : 'menu' }
+RBRefactoryChangeManager >> undoLastRefactoring [
+
+	self undoPointers ifNotEmpty: [
+	[ |limit list|
+		list := OrderedCollection new.
+		limit := self lastUndoPointer .
+		1 to: limit do:[ :i | list add: self undoChange ].
+		list do: [ :e | e execute ].
+		^ list
+	 ] asJob
+		title: 'Refactoring';
+		run]
+	ifEmpty: [ self inform: 'There aren''t refactorings to undo.'  ]
 ]
 
 { #category : 'public access' }

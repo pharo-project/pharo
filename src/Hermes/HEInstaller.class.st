@@ -155,7 +155,7 @@ HEInstaller >> existingTrait: aHETrait [
 HEInstaller >> initialize [
 
 	environment := self class environment.
-	originalUndeclareds := Undeclared copy.
+	originalUndeclareds := self class undeclaredRegistry copy.
 	"We need to set it at the initialization and we cannot ask this later during the building because it will cause trouble if the class we are building is Trait."
 	hasTraits := Smalltalk globals hasClassNamed: #Trait
 ]
@@ -204,7 +204,7 @@ HEInstaller >> messageMethod: aHEMethod alreadyExistsIn: aClass [
 { #category : 'reporting undeclared' }
 HEInstaller >> newUndeclaredVariables [
 	"Return the collection of undeclared variables created during this installation"
-	^ Undeclared associations reject: [ :asoc |
+	^ self class undeclaredRegistry associations reject: [ :asoc |
 		  originalUndeclareds associations includes: asoc ]
 ]
 
@@ -272,5 +272,5 @@ HEInstaller >> validateNoNewUndeclared [
 	self reportNewUndeclareds: self newUndeclaredVariables.
 	
 	SystemNotification signal: ('[Hermes] Remaining Undeclared variables in the system: '
-		, Undeclared keys printString)
+		, self class undeclaredRegistry keys printString)
 ]

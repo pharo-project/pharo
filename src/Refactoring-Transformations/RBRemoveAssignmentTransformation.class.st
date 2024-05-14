@@ -55,11 +55,13 @@ RBRemoveAssignmentTransformation class >> variable: aVariableName value: anExpre
 { #category : 'preconditions' }
 RBRemoveAssignmentTransformation >> applicabilityPreconditions [
 
-	^ self classExist & (RBCondition
-		   withBlock: [ self definingClass canUnderstand: selector ]
-		   errorString:
-		   ('Method named <1s> does not exist' expandMacrosWith: selector))
-	  & (RBCondition
+	^ {
+		  self classExist.
+		  (RBCondition
+			   withBlock: [ self definingClass canUnderstand: selector ]
+			   errorString:
+			   ('Method named <1s> does not exist' expandMacrosWith: selector)).
+		  (RBCondition
 			   withBlock: [
 				   (self definingMethod allChildren
 					    select: #isVariable
@@ -68,16 +70,23 @@ RBRemoveAssignmentTransformation >> applicabilityPreconditions [
 			   errorString:
 				   ('Method named <1s> does not have an assignment for variable named <2s>'
 					    expandMacrosWith: selector
-					    with: variableName)) & (RBCondition
-		   withBlock: [
-			   (self definingMethod allChildren
-				    select: [ :each | each isAssignment ]
-				    thenCollect: [ :var | var variable ]) anySatisfy: [ :e |
-				   e name asString = variableName ] ]
-		   errorString:
-			   ('Method named <1s> does not have an assignment for variable named <2s>'
-				    expandMacrosWith: selector
-				    with: variableName))
+					    with: variableName)).
+		  (RBCondition
+			   withBlock: [
+				   (self definingMethod allChildren
+					    select: [ :each | each isAssignment ]
+					    thenCollect: [ :var | var variable ]) anySatisfy: [ :e |
+					   e name asString = variableName ] ]
+			   errorString:
+				   ('Method named <1s> does not have an assignment for variable named <2s>'
+					    expandMacrosWith: selector
+					    with: variableName)) }
+]
+
+{ #category : 'scripting api - conditions' }
+RBRemoveAssignmentTransformation >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
 ]
 
 { #category : 'preconditions' }

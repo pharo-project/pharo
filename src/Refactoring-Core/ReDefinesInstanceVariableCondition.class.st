@@ -20,13 +20,13 @@ ReDefinesInstanceVariableCondition class >> classNamed: aString inModel: aRBName
 { #category : 'checking' }
 ReDefinesInstanceVariableCondition >> check [
 	
-	violators := instanceVariables reject: [ :shared | aClass definesInstanceVariable: shared ].
+	violators := instanceVariables reject: [ :shared | class definesInstanceVariable: shared ].
 	^ violators isEmpty
 ]
 
 { #category : 'private' }
 ReDefinesInstanceVariableCondition >> errorBlock [
-	^ [ aClass printString
+	^ [ class printString
 				, ' <1?: > define <1?s:> instance variable ' , instanceVariables ]
 ]
 

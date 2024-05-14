@@ -57,13 +57,16 @@ RBAddParameterRefactoring >> addParameterToMethod: aSelector in: aClass newSelec
 
 { #category : 'preconditions' }
 RBAddParameterRefactoring >> applicabilityPreconditions [
-	^ super applicabilityPreconditions & (RBCondition withBlock:
-		[oldSelector numArgs < newSelector numArgs
-			ifFalse:
-				[self refactoringError: newSelector printString,
-				' doesn''t have the proper number of arguments.'].
-		self newArgs do: [	:arg | self verifyInitializationExpressionOf: arg argValue ].
-		true])
+
+	^ super applicabilityPreconditions,
+		  { (RBCondition withBlock: [
+		   oldSelector numArgs < newSelector numArgs ifFalse: [
+				   self refactoringError: newSelector printString
+						   , ' doesn''t have the proper number of arguments.' ].
+		   self newArgs do: [ :arg |
+				   self verifyInitializationExpressionOf: arg argValue ].
+		   true ]) }
+	
 ]
 
 { #category : 'preconditions' }

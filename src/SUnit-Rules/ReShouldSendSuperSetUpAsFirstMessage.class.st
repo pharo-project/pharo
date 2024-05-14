@@ -11,7 +11,7 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'testing-interest' }
+{ #category : 'testing - interest' }
 ReShouldSendSuperSetUpAsFirstMessage class >> checksMethod [
 
 	^ true
@@ -19,6 +19,7 @@ ReShouldSendSuperSetUpAsFirstMessage class >> checksMethod [
 
 { #category : 'utilities' }
 ReShouldSendSuperSetUpAsFirstMessage class >> parseTreeSearcher [
+
 	^ RBParseTreeSearcher new
 ]
 
