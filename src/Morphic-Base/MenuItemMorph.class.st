@@ -28,10 +28,10 @@ Class {
 		'keyText'
 	],
 	#classVars : [
-		'BottomArrow',
-		'LeftArrow',
-		'SubMenuMarker',
-		'UpArrow'
+		'BottomArrowFormSet',
+		'LeftArrowFormSet',
+		'SubMenuMarkerFormSet',
+		'UpArrowFormSet'
 	],
 	#category : 'Morphic-Base-Menus',
 	#package : 'Morphic-Base',
@@ -41,16 +41,26 @@ Class {
 { #category : 'class initialization' }
 MenuItemMorph class >> initialize [
 
-	| f |
-	f := Form
-		extent: 5@9
-		fromArray: #(2147483648 3221225472 3758096384 4026531840 4160749568 4026531840 3758096384 3221225472 2147483648)
-		offset: 0@0.
+	| forms rotatedFormSets |
 
-	SubMenuMarker := (ColorForm mappingWhiteToTransparentFrom: f) asFormOfDepth: 32.
-	BottomArrow := SubMenuMarker rotateBy: 90.
-	LeftArrow := SubMenuMarker rotateBy: 180.
-	UpArrow := SubMenuMarker rotateBy: 270
+	forms := (1 to: 2) collect: [ :scale |
+		| rectangle |
+		rectangle := (0 @ -1) corner: (1@2) * 4 * scale + 1.
+		(FormCanvas extent: (5@9) * scale)
+			drawPolygon: { rectangle topLeft. rectangle rightCenter. rectangle bottomLeft }
+				fillStyle: (SolidFillStyle color: Color black);
+			form ].
+	SubMenuMarkerFormSet := FormSet forms: forms.
+	rotatedFormSets := #(90 180 270) collect: [ :degrees |
+		| form1 form2 |
+		form1 := forms first rotateBy: degrees.
+		form2 := (FormCanvas extent: form1 extent * 2)
+			drawImage: (forms second rotateBy: degrees) at: 0@0;
+			form.
+		FormSet forms: { form1. form2 } ].
+	BottomArrowFormSet := rotatedFormSets first.
+	LeftArrowFormSet := rotatedFormSets second.
+	UpArrowFormSet := rotatedFormSets third
 ]
 
 { #category : 'grabbing' }
@@ -135,9 +145,9 @@ MenuItemMorph >> arguments: aCollection [
 ]
 
 { #category : 'private' }
-MenuItemMorph >> bottomArrow [
+MenuItemMorph >> bottomArrowFormSet [
 
-	^ BottomArrow
+	^ BottomArrowFormSet
 ]
 
 { #category : 'accessing' }
@@ -480,9 +490,9 @@ MenuItemMorph >> keyText: anObject [
 ]
 
 { #category : 'private' }
-MenuItemMorph >> leftArrow [
+MenuItemMorph >> leftArrowFormSet [
 
-	^ LeftArrow
+	^ LeftArrowFormSet
 ]
 
 { #category : 'drawing' }
@@ -601,9 +611,9 @@ MenuItemMorph >> onImage [
 ]
 
 { #category : 'private' }
-MenuItemMorph >> rightArrow [
+MenuItemMorph >> rightArrowFormSet [
 
-	^ SubMenuMarker
+	^ SubMenuMarkerFormSet
 ]
 
 { #category : 'selecting' }
@@ -670,8 +680,14 @@ MenuItemMorph >> subMenu: aMenuMorph [
 
 { #category : 'private' }
 MenuItemMorph >> subMenuMarker [
-	"private - answer the form to be used as submenu marker"
-	 ^ self rightArrow
+
+	 ^ self subMenuMarkerFormSet asForm
+]
+
+{ #category : 'private' }
+MenuItemMorph >> subMenuMarkerFormSet [
+	"private - answer the form set to be used as submenu marker"
+	 ^ self rightArrowFormSet
 ]
 
 { #category : 'accessing' }
@@ -707,9 +723,9 @@ MenuItemMorph >> toggledIconFormSet [
 ]
 
 { #category : 'private' }
-MenuItemMorph >> upArrow [
+MenuItemMorph >> upArrowFormSet [
 
-	^ UpArrow
+	^ UpArrowFormSet
 ]
 
 { #category : 'copying' }
