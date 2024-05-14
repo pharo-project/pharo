@@ -26,6 +26,11 @@ MyClassBeta >> methodOverriden [
 ]
 
 { #category : 'dummy methods' }
+MyClassBeta >> methodReferencingInstanceVariable [
+	^ instVarB 
+]
+
+{ #category : 'dummy methods' }
 MyClassBeta >> methodReferencingSharedVariable [
 	^ SharedVarB
 ]

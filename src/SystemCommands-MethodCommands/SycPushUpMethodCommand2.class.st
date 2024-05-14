@@ -8,6 +8,12 @@ Class {
 	#package : 'SystemCommands-MethodCommands'
 }
 
+{ #category : 'testing' }
+SycPushUpMethodCommand2 class >> canBeExecutedInContext: aToolContext [
+
+	^aToolContext isMethodSelected and: [ aToolContext lastSelectedClass superclass ~= Object ]
+]
+
 { #category : 'accessing' }
 SycPushUpMethodCommand2 >> defaultMenuIconName [
 	^ #up

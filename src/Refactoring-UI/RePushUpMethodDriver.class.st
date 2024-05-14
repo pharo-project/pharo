@@ -176,7 +176,9 @@ RePushUpMethodDriver >> selectMethodsAndClass [
 			          superclass := selectedClass.
 			          methods := selectedMethods ].
 
-	dialog cancelled ifTrue: [ ^ nil ]
+	dialog cancelled ifFalse: [ ^ self ].
+	superclass := nil.
+	methods := nil
 ]
 
 { #category : 'initialization' }
