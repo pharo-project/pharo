@@ -6,7 +6,8 @@ Class {
 	#tag : 'Transforms'
 }
 
-{ #category : 'tests' }
+{ #category : 'accessing' }
 AthensProjectiveTransformTest >> transformClass [
+
 	^ AthensProjectiveTransform
 ]

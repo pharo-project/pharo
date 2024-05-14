@@ -370,7 +370,8 @@ AthensTransformTest >> testTranslateXY [
 	self assert: (transform transform: -2 @ -5) equals: -1 	@ -3
 ]
 
-{ #category : 'tests' }
+{ #category : 'accessing' }
 AthensTransformTest >> transformClass [
-	self subclassResponsibility
+
+	^ self subclassResponsibility
 ]
