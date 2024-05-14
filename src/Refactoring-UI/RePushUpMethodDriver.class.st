@@ -29,6 +29,15 @@ Class {
 	#tag : 'Drivers'
 }
 
+{ #category : 'initialization' }
+RePushUpMethodDriver class >> model: model scopes: refactoringScopes pushUpMethods: methods [
+
+	^ self new
+		  model: model
+		  scopes: refactoringScopes
+		  pushUpMethods: methods
+]
+
 { #category : 'execution' }
 RePushUpMethodDriver >> changes [
 	"it should NOT be generate changes."
@@ -119,8 +128,8 @@ RePushUpMethodDriver >> selectMethodsAndClass [
 	dialog cancelled ifTrue: [ ^ nil ].
 	
 	^ {
-		  ('class' -> dialog selectedClass).
-		  ('methods' -> dialog selectedMethods) } asDictionary
+		  ('class' -> superclass).
+		  ('methods' -> methods) } asDictionary
 ]
 
 { #category : 'initialization' }
