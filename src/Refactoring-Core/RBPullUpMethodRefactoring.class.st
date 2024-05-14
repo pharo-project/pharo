@@ -83,8 +83,8 @@ RBPullUpMethodRefactoring >> checkBackReferencesTo: aSelector [
 	in `targetSuperclass` "
 
 	| definingClass pushUpParseTree |
-	self halt.
-	definingClass := targetSuperclass whoDefinesMethod: aSelector.
+	
+	definingClass := targetSuperclass whichClassIncludesSelector: aSelector.
 	definingClass ifNil: [^self].
 	pushUpParseTree := class parseTreeForSelector: aSelector.
 	targetSuperclass allSubclasses do: [ :each |
