@@ -86,13 +86,13 @@ MockObject >> doesNotUnderstand: aMessage [
 	"When a message is not understood, check if this is one that have benn taught and if this is the case remove it from the list of messages. This supports the possibility to have sequence of similar messages resulting in different messages. In particular I handle also Joker objects as part of the message argument. See MockObject any"
 	
 	messages isEmpty
-		ifTrue: [ failed := true ]
+		ifTrue: [ failed add: aMessage ]
 		ifFalse: [ | expected |
 			expected := messages removeFirst.
 			(expected matches: aMessage)
 				ifTrue: [ ^ expected valueWithPossibleArgs: aMessage arguments ]
-				ifFalse: [ messages addFirst: expected.
-					failed := true ] ]
+				ifFalse: [ failed add: aMessage. messages addFirst: expected.
+					] ]
 ]
 
 { #category : 'initialization' }
@@ -100,7 +100,7 @@ MockObject >> initialize [
 
 	super initialize.
 	messages := OrderedCollection new.
-	failed := false
+	failed := OrderedCollection new.
 ]
 
 { #category : 'teaching - returning self' }
@@ -240,14 +240,14 @@ MockObject >> on: aSelector withArguments: anArray respond: anObject [
 MockObject >> on: aSymbol withArguments: anArray verify: aBlock [
 
 	messages add: (MockMessageSend on: aSymbol with: anArray do: aBlock).
-	failed := false
+	
 ]
 
 { #category : 'verifying' }
 MockObject >> verifyIn: aTestCase [
 	"Verify that the test did not fail and that all the messages got consumed."
 	
-	aTestCase deny: failed description: 'Incorrect message sequence'.
+	aTestCase deny: failed notEmpty description: 'Incorrect message sequence'.
 	aTestCase
 		assert: messages isEmpty
 		description: 'Mock still has messages pending'

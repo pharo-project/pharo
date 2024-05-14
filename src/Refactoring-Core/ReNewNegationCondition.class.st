@@ -30,6 +30,14 @@ ReNewNegationCondition >> errorString [
 	^ condition errorString
 ]
 
+{ #category : 'displaying' }
+ReNewNegationCondition >> violationMessageOn: aWriteStream [
+
+	aWriteStream
+		nextPutAll: 'NOT ';
+		nextPutAll: condition errorString
+]
+
 { #category : 'accessing' }
 ReNewNegationCondition >> violators [
 	"This is probably wrong because of the negation"

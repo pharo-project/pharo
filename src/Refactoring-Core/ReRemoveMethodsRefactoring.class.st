@@ -58,15 +58,13 @@ ReRemoveMethodsRefactoring >> allSelectors [
 { #category : 'preconditions' }
 ReRemoveMethodsRefactoring >> applicabilityPreconditions [
 	"Return a list of preconditions"
-	
+
 	| preconditions |
 	preconditions := OrderedCollection new.
-	classSelectorMapping
-		keysAndValuesDo: [ :class :selectorsList |
-			preconditions add:
-					(ReDefinesSelectorsCondition new
-						 definesSelectors: selectorsList
-						 in: class) ].
+	classSelectorMapping keysAndValuesDo: [ :class :selectorsList |
+		preconditions add: (ReDefinesSelectorsCondition new
+				 definesSelectors: selectorsList
+				 in: class) ].
 	^ preconditions
 ]
 

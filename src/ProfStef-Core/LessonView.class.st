@@ -78,7 +78,7 @@ LessonView >> doItReceiver [
 { #category : 'testing' }
 LessonView >> hasBindingOf: aString [
 
-  	^ self bindings includesKey: aString
+ 	^ self bindings includesKey: aString
 ]
 
 { #category : 'initialization' }

@@ -58,8 +58,9 @@ RBCopyClassRefactoring class >> model: aRBNamespace copyClass: aClass withName: 
 { #category : 'preconditions' }
 RBCopyClassRefactoring >> applicabilityPreconditions [
 
-	^ (RBCondition isValidClassName: className)
-	  & (RBCondition isGlobal: className in: self model) not
+	^ {
+		  (RBCondition isValidClassName: className).
+		  (RBCondition isGlobal: className in: self model) not }
 ]
 
 { #category : 'transforming' }

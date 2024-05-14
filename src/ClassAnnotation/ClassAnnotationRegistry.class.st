@@ -127,11 +127,11 @@ ClassAnnotationRegistry class >> doesMethodDefineAnnotation: aMethod [
 { #category : 'system changes' }
 ClassAnnotationRegistry class >> ensureSystemSubscription [
 
-	SystemAnnouncer uniqueInstance unsubscribe: self.
+	self codeChangeAnnouncer unsubscribe: self.
 
-	SystemAnnouncer uniqueInstance weak
-		when: ClassRemoved, ClassAdded, ClassModificationApplied send: #handleClassChanged: to: self;
-		when: MethodRemoved, MethodAdded, MethodModified send: #handleMethodChange: to: self;
+	self codeChangeAnnouncer weak
+		when: ClassRemoved , ClassAdded , ClassModificationApplied send: #handleClassChanged: to: self;
+		when: MethodRemoved , MethodAdded , MethodModified send: #handleMethodChange: to: self;
 		when: MethodModified send: #handleOldMethodChange: to: self
 ]
 
@@ -157,9 +157,9 @@ ClassAnnotationRegistry class >> handleOldMethodChange: aMethodModified [
 
 { #category : 'class initialization' }
 ClassAnnotationRegistry class >> reset [
-	<script>
 
-	SystemAnnouncer uniqueInstance unsubscribe: self.
+	<script>
+	self codeChangeAnnouncer unsubscribe: self.
 	default := nil
 ]
 

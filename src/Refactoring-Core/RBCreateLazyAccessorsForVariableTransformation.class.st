@@ -65,8 +65,8 @@ RBCreateLazyAccessorsForVariableTransformation class >> variable: aVarName class
 RBCreateLazyAccessorsForVariableTransformation >> applicabilityPreconditions [ 
 	"In addition check that the initialization is valid"
 
-	^ super applicabilityPreconditions 
-		& (RBCondition withBlock: [  self verifyInitializationExpressionOf: self defaultValue. true ])
+	^ super applicabilityPreconditions ,
+		{ (RBCondition withBlock: [  self verifyInitializationExpressionOf: self defaultValue. true ]) }
 ]
 
 { #category : 'preconditions' }

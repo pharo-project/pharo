@@ -73,6 +73,12 @@ SubscriptionRegistry >> initialize [
 	self reset
 ]
 
+{ #category : 'testing' }
+SubscriptionRegistry >> isEmpty [
+
+	^ subscriptions isEmpty
+]
+
 { #category : 'accessing' }
 SubscriptionRegistry >> numberOfSubscriptions [
 

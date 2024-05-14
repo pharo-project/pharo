@@ -13,9 +13,9 @@ Class {
 }
 
 { #category : 'preconditions' }
-RBProtectInstanceVariableRefactoring >> applicabilityPreconditions [ 
+RBProtectInstanceVariableRefactoring >> applicabilityPreconditions [
 
-	^RBCondition definesInstanceVariable: variableName in: class
+	^ { (RBCondition definesInstanceVariable: variableName in: class) }
 ]
 
 { #category : 'private - accessing' }

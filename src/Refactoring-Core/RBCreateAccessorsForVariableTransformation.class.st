@@ -94,11 +94,13 @@ RBCreateAccessorsForVariableTransformation class >> variable: aVarName class: aC
 ]
 
 { #category : 'preconditions' }
-RBCreateAccessorsForVariableTransformation >> applicabilityPreconditions [ 
+RBCreateAccessorsForVariableTransformation >> applicabilityPreconditions [
 
-	^ classVariable
-		ifTrue: [RBCondition definesClassVariable: variableName asSymbol in: class]
-		ifFalse: [RBCondition definesInstanceVariable: variableName in: class]
+	^ { (classVariable
+		   ifTrue: [
+				RBCondition definesClassVariable: variableName asSymbol in: class ]
+		   ifFalse: [
+				RBCondition definesInstanceVariable: variableName in: class ]) }
 ]
 
 { #category : 'initialization' }

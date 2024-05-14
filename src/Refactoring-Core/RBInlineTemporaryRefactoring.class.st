@@ -38,12 +38,13 @@ RBInlineTemporaryRefactoring class >> model: aRBSmalltalk inline: anInterval fro
 ]
 
 { #category : 'preconditions' }
-RBInlineTemporaryRefactoring >> applicabilityPreconditions [ 
+RBInlineTemporaryRefactoring >> applicabilityPreconditions [
 
-	^ (RBCondition definesSelector: selector in: class)
-	  & (RBCondition withBlock: [
+	^ {
+		  (RBCondition definesSelector: selector in: class).
+		  (RBCondition withBlock: [
 			   self checkSelectedInterval.
-			   true ])
+			   true ]) }
 ]
 
 { #category : 'preconditions' }

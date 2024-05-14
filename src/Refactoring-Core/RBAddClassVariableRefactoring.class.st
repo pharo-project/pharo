@@ -14,17 +14,13 @@ Class {
 { #category : 'preconditions' }
 RBAddClassVariableRefactoring >> applicabilityPreconditions [
 
-	^ (RBCondition isMetaclass: class) not
-	  & (RBCondition isValidClassVarName: variableName for: class)
-	  & (RBCondition isGlobal: variableName in: self model) not
-]
-
-{ #category : 'preconditions' }
-RBAddClassVariableRefactoring >> breakingChangePreconditions [
-
-	^ (RBCondition
-		   hierarchyOf: class
-		   definesVariable: variableName asString) not
+	^ {
+		  (RBCondition isMetaclass: class) not.
+		  (RBCondition isValidClassVarName: variableName for: class).
+		  (RBCondition isGlobal: variableName in: self model) not.
+		  (RBCondition
+			   hierarchyOf: class
+			   definesVariable: variableName asString) not }
 ]
 
 { #category : 'preconditions' }

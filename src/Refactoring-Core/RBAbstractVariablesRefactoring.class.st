@@ -136,11 +136,12 @@ RBAbstractVariablesRefactoring >> abstractVariablesIn: aBRProgramNode from: from
 { #category : 'preconditions' }
 RBAbstractVariablesRefactoring >> breakingChangePreconditions [
 
-	^ RBCondition withBlock: [ self hasVariablesToAbstract ifTrue: [
-		self refactoringWarning:
-			'This method has direct variable references which<n>will need to be converted to getter/setters.<n>Proceed anyway?'
-				expandMacros ].
-		true ]
+	^ { (RBCondition withBlock: [
+		   self hasVariablesToAbstract ifTrue: [
+			   self refactoringWarning:
+				   'This method has direct variable references which<n>will need to be converted to getter/setters.<n>Proceed anyway?'
+					   expandMacros ].
+		   true ]) }
 ]
 
 { #category : 'transforming' }

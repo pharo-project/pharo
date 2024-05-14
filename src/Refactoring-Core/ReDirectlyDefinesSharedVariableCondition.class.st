@@ -22,10 +22,10 @@ ReDirectlyDefinesSharedVariableCondition class >> classNamed: aString inModel: a
 		yourself
 ]
 
-{ #category : 'accessing' }
+{ #category : 'checking' }
 ReDirectlyDefinesSharedVariableCondition >> check [
 	
-	violators := sharedVariables reject: [ :shared | aClass directlyDefinesClassVariable: shared ].
+	violators := sharedVariables reject: [ :shared | class directlyDefinesClassVariable: shared ].
 	^ violators isEmpty
 ]
 

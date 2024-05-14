@@ -67,11 +67,13 @@ RBRenameAndDeprecateClassTransformation >> applicabilityPreconditions [
 
 	| class |
 	class := self model classNamed: className.
-	^ { (ReClassesExistCondition new classes: { class }).
-		 (ReClassesAreNotMetaClassCondition new classes: { class }).
-		 (ReNameIsGlobalCondition new model: self model
+	^ {
+		  (ReClassesExistCondition new classes: { class }).
+		  (ReClassesAreNotMetaClassCondition new classes: { class }).
+		  (ReNameIsGlobalCondition new
+			   model: self model
 			   className: newClassName) not.
-	     (ReValidClassNameCondition new className: newClassName) }
+		  (ReValidClassNameCondition new className: newClassName) }
 ]
 
 { #category : 'executing' }
@@ -91,12 +93,6 @@ RBRenameAndDeprecateClassTransformation >> buildTransformations [
 		with: (RBDeprecateClassTransformation
 						model: self model
 						className: className)]
-]
-
-{ #category : 'preconditions' }
-RBRenameAndDeprecateClassTransformation >> checkPreconditions [ 
-
-	self checkApplicabilityPreconditions 
 ]
 
 { #category : 'api' }

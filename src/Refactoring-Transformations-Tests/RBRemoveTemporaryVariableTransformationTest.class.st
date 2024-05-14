@@ -28,22 +28,23 @@ RBRemoveTemporaryVariableTransformationTest >> testMethodDoesNotExist [
 RBRemoveTemporaryVariableTransformationTest >> testTransform [
 
 	| transformation class |
-	transformation := (RBAddMethodTransformation
-		                   sourceCode: 'foo
+	transformation := RBAddMethodTransformation
+		                  sourceCode: 'foo
 									| temp bar |
 									bar := 5.
 									temp := bar * bar.
 									Transcript show: temp printString; cr.
 									^temp * temp'
-		                   in: self changeMockClass name
-		                   withProtocol: #accessing ) generateChanges.
+		                  in: self changeMockClass name
+		                  withProtocol: #accessing.
+	transformation generateChanges.
 
-	transformation := (RBRemoveTemporaryVariableTransformation
-		                   model: transformation model
-		                   variable: 'temp'
-		                   inMethod: #foo
-		                   inClass: self changeMockClass name)
-		                  generateChanges.
+	transformation := RBRemoveTemporaryVariableTransformation
+		                  model: transformation model
+		                  variable: 'temp'
+		                  inMethod: #foo
+		                  inClass: self changeMockClass name.
+	transformation generateChanges.
 
 	self assert: transformation model changes changes size equals: 2.
 

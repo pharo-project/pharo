@@ -54,11 +54,11 @@ RBRemovePragmaTransformationTest >> testPragmaDoesNotExist [
 RBRemovePragmaTransformationTest >> testRefactoring [
 
 	| refactoring class |
-	refactoring := (RBRemovePragmaTransformation
-		                pragma: '<pragmaForTesting: 34>'
-		                inMethod: #methodBefore
-		                inClass: #RBRemovePragmaTransformationTest)
-		               generateChanges.
+	refactoring := RBRemovePragmaTransformation
+		               pragma: '<pragmaForTesting: 34>'
+		               inMethod: #methodBefore
+		               inClass: #RBRemovePragmaTransformationTest.
+	refactoring generateChanges.
 
 	self assert: refactoring model changes changes size equals: 1.
 
@@ -73,10 +73,11 @@ RBRemovePragmaTransformationTest >> testRefactoring [
 RBRemovePragmaTransformationTest >> testTransform [
 
 	| transformation class |
-	transformation := (RBRemovePragmaTransformation new
-		                   pragma: '<pragmaForTesting: 34>'
-		                   inMethod: #methodBefore
-		                   inClass: self class name) generateChanges.
+	transformation := RBRemovePragmaTransformation new
+		                  pragma: '<pragmaForTesting: 34>'
+		                  inMethod: #methodBefore
+		                  inClass: self class name.
+	transformation generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 

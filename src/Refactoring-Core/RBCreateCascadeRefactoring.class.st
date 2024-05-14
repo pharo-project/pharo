@@ -47,20 +47,21 @@ RBCreateCascadeRefactoring >> addStatementNode: aNode [
 { #category : 'preconditions' }
 RBCreateCascadeRefactoring >> applicabilityPreconditions [
 
-	^ (RBCondition definesSelector: selector in: class)
-	  & (RBCondition withBlock: [
+	^ {
+		  (RBCondition definesSelector: selector in: class).
+		  (RBCondition withBlock: [
 			   self
 				   findSequenceNode;
 				   findStatementNodes.
-			   true ])
+			   true ]) }
 ]
 
 { #category : 'preconditions' }
 RBCreateCascadeRefactoring >> breakingChangePreconditions [
 
-	^ RBCondition withBlock: [
-		  self findReceiverNode.
-		  true ]
+	^ { (RBCondition withBlock: [
+		   self findReceiverNode.
+		   true ]) }
 ]
 
 { #category : 'initialization' }

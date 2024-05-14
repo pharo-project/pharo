@@ -479,7 +479,9 @@ SystemWindow class >> windowMenuOn: aBuilder [
 		action: [ aBuilder model makeSecondTopmost ];
 		withSeparatorAfter.
 	(aBuilder item: #'Create window group')
-		action: [ aBuilder model createWindowGroup ];
+		action: [ aBuilder model createWindowGroup ].
+	(aBuilder item: #'Open as external window')
+		action: [ aBuilder model openAsExternalWindow ];
 		withSeparatorAfter.
 	closableLabel := aBuilder model mustNotClose
 		ifFalse: [ #'Make unclosable' ]
@@ -1477,6 +1479,13 @@ SystemWindow >> offerWindowMenu [
 	model ifNotNil:
 		[model addModelItemsToWindowMenu: aMenu].
 	aMenu popUpEvent: self currentEvent in: self world
+]
+
+{ #category : 'menu actions' }
+SystemWindow >> openAsExternalWindow [
+
+	self submorphs last openInExternalWindow.
+	self delete.
 ]
 
 { #category : 'open/close' }

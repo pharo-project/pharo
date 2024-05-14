@@ -57,11 +57,13 @@ RBRemoveAllMessageSendsTransformation class >> model: aRBModel messageSend: aMes
 { #category : 'preconditions' }
 RBRemoveAllMessageSendsTransformation >> applicabilityPreconditions [
 
-	^ self classExist & (RBCondition
-		   withBlock: [ self definingClass canUnderstand: selector ]
-		   errorString:
-		   ('Method named <1s> does not exist' expandMacrosWith: selector))
-	  & (RBCondition
+	^ {
+		  self classExist.
+		  (RBCondition
+			   withBlock: [ self definingClass canUnderstand: selector ]
+			   errorString:
+			   ('Method named <1s> does not exist' expandMacrosWith: selector)).
+		  (RBCondition
 			   withBlock: [
 				   (self definingMethod allChildren select: [ :each |
 					    each isMessage ]) anySatisfy: [ :messageNode |
@@ -69,7 +71,13 @@ RBRemoveAllMessageSendsTransformation >> applicabilityPreconditions [
 			   errorString:
 				   ('Method named <1s> does not implement this message send <2s>'
 					    expandMacrosWith: selector
-					    with: message))
+					    with: message)) }
+]
+
+{ #category : 'scripting api - conditions' }
+RBRemoveAllMessageSendsTransformation >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
 ]
 
 { #category : 'preconditions' }

@@ -2,7 +2,7 @@ Class {
 	#name : 'ReClassCondition',
 	#superclass : 'ReClassNameCondition',
 	#instVars : [
-		'aClass'
+		'class'
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
@@ -18,15 +18,15 @@ ReClassCondition class >> class: anRBClass [
 
 { #category : 'accessing' }
 ReClassCondition >> analysedClass [
-	^ aClass
+	^ class
 ]
 
 { #category : 'accessing' }
 ReClassCondition >> class: aRBClass [
-	aClass := aRBClass
+	class := aRBClass
 ]
 
 { #category : 'accessing' }
 ReClassCondition >> classNamed: aString [ 
-	aClass := model classNamed: aString
+	class := model classNamed: aString
 ]
