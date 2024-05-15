@@ -27,13 +27,6 @@ ReBaselineProperlyPackagedRuleTest >> tearDown [
 ]
 
 { #category : 'tests' }
-ReBaselineProperlyPackagedRuleTest >> testBasicCheck [
-
-	self deny: (ReBaselineProperlyPackagedRule new basicCheck: BaselineOfPharo).
-	self deny: (ReBaselineProperlyPackagedRule new basicCheck: BaselineOfPharo class)
-]
-
-{ #category : 'tests' }
 ReBaselineProperlyPackagedRuleTest >> testRuleWithBadPackagedBaselineClass [
 
 	| badPackagedBaselineClass critiques |

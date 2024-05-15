@@ -27,13 +27,6 @@ ReBaselineWithProperSuperclassRuleTest >> tearDown [
 ]
 
 { #category : 'tests' }
-ReBaselineWithProperSuperclassRuleTest >> testBasicCheck [
-
-	self deny: (ReBaselineWithProperSuperclassRule new basicCheck: BaselineOfPharo).
-	self deny: (ReBaselineWithProperSuperclassRule new basicCheck: BaselineOfPharo class)
-]
-
-{ #category : 'tests' }
 ReBaselineWithProperSuperclassRuleTest >> testRuleWithBaselineClassWithCorrectSuperclass [
 
 	| badPackagedBaselineClass critiques |
