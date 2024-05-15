@@ -125,6 +125,6 @@ ReCodeCruftLeftInMethodsRule >> severity [
 { #category : 'testing' }
 ReCodeCruftLeftInMethodsRule >> shouldCheckMethod: aMethod [
 
-	(#(#debuggerCompleteToSender #haltOrBreakpointForTesting) anySatifsy: [ :selector |  aMethod hasPragmaNamed: selector ]) ifTrue: [ ^ false ].
+	(#(#debuggerCompleteToSender #haltOrBreakpointForTesting) anySatisfy: [ :selector |  aMethod hasPragmaNamed: selector ]) ifTrue: [ ^ false ].
 	^ true
 ]
