@@ -58,8 +58,8 @@ FinderUI class >> on: aFinder [
 
 { #category : 'instance creation' }
 FinderUI class >> open [
+	<script>
 
-	<script: 'self open'>
 	^ (self on: Finder new) open
 ]
 
@@ -657,7 +657,7 @@ FinderUI >> menu: menu shifted: b [
 
 { #category : 'display' }
 FinderUI >> open [
-
+	<script: 'self open'>
 	| window |
 	window := StandardWindow new model: self.
 	self addAllItems: window.

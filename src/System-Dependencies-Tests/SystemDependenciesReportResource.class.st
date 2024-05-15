@@ -9,8 +9,8 @@ Class {
 	#instVars : [
 		'dependenciesReport'
 	],
-	#category : 'System-DependenciesTests',
-	#package : 'System-DependenciesTests'
+	#category : 'System-Dependencies-Tests',
+	#package : 'System-Dependencies-Tests'
 }
 
 { #category : 'accessing' }

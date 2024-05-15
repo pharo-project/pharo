@@ -2,8 +2,7 @@ Class {
 	#name : 'CoverageCollectorTest',
 	#superclass : 'TestCase',
 	#category : 'Coverage-Tests',
-	#package : 'Coverage',
-	#tag : 'Tests'
+	#package : 'Coverage-Tests'
 }
 
 { #category : 'example' }

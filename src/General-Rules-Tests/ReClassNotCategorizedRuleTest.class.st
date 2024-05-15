@@ -40,29 +40,29 @@ ReClassNotCategorizedRuleTest >> testAllClassesAreNotTagged [
 { #category : 'tests' }
 ReClassNotCategorizedRuleTest >> testRule [
 
-	| classCatorized classNotCatorized critiques |
-	classCatorized := classFactory make: [ :builder |
+	| classCategorized classNotCategorized critiques |
+	classCategorized := classFactory make: [ :builder |
 		                  builder
 			                  tag: 'aTag';
 			                  package: 'aPackage' ].
-	classNotCatorized := classFactory make: [ :builder |
+	classNotCategorized := classFactory make: [ :builder |
 		                     builder package: 'aPackage' ].
-	critiques := self myCritiquesOnClass: classNotCatorized.
+	critiques := self myCritiquesOnClass: classNotCategorized.
 	self assert: critiques size equals: 1
 ]
 
 { #category : 'tests' }
 ReClassNotCategorizedRuleTest >> testRuleNotViolated [
 
-	| classCatorized anotherClassCatorized critiques |
-	classCatorized := classFactory make: [ :builder |
+	| classCategorized anotherClassCategorized critiques |
+	classCategorized := classFactory make: [ :builder |
 		                  builder
 			                  tag: 'aTag';
 			                  package: 'aPackage' ].
-	anotherClassCatorized := classFactory make: [ :builder |
+	anotherClassCategorized := classFactory make: [ :builder |
 		                     builder
 			                     tag: 'aTag';
 			                     package: 'aPackage' ].
-	critiques := self myCritiquesOnClass: anotherClassCatorized.
+	critiques := self myCritiquesOnClass: anotherClassCategorized.
 	self assertEmpty: critiques
 ]

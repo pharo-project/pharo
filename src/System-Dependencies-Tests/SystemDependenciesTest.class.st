@@ -7,8 +7,8 @@ It is not a standard unit test because to compute dependencies takes a lot of ti
 Class {
 	#name : 'SystemDependenciesTest',
 	#superclass : 'TestCase',
-	#category : 'System-DependenciesTests',
-	#package : 'System-DependenciesTests'
+	#category : 'System-Dependencies-Tests',
+	#package : 'System-Dependencies-Tests'
 }
 
 { #category : 'accessing' }

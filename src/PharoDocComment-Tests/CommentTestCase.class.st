@@ -9,8 +9,8 @@ Class {
 	#instVars : [
 		'docCommentNode'
 	],
-	#category : 'PharoDocComment-Base',
-	#package : 'PharoDocComment',
+	#category : 'PharoDocComment-Tests-Base',
+	#package : 'PharoDocComment-Tests',
 	#tag : 'Base'
 }
 
@@ -33,7 +33,7 @@ CommentTestCase >> docCommentNode: aDocComment [
 	testSelector := #testIt
 ]
 
-{ #category : 'accessing' }
+{ #category : 'actions' }
 CommentTestCase >> drTestsBrowse [
  	docCommentNode browse
 ]
