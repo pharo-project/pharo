@@ -52,8 +52,8 @@ TaskbarItemMorph >> initialize [
 { #category : 'initialization' }
 TaskbarItemMorph >> initializeAnnouncements [
 	self
-		on: #mouseEnter send: #taskbarButtonEntered:event:in: to: self model withValue: self;
-		on: #mouseLeave send: #taskbarButtonLeft:event:in: to: self model withValue: self
+		on: #mouseEnter send: #taskbarButtonEntered:event:in: to: self model morph withValue: self;
+		on: #mouseLeave send: #taskbarButtonLeft:event:in: to: self model morph withValue: self
 ]
 
 { #category : 'initialization' }
@@ -65,7 +65,7 @@ TaskbarItemMorph >> initializeFor: aTaskbar [
 	lm := self theme
 		newRowIn: aTaskbar
 		for:
-			{((self iconFormSetNamed: self model taskbarIconName) ifNil: [ ^ nil ]) asMorph.
+			{(self model icon ifNil: [ ^ nil ]) asMorph.
 			lab}.
 	lm cellInset: 2.
 	self
@@ -78,14 +78,14 @@ TaskbarItemMorph >> initializeFor: aTaskbar [
 	self initializeAnnouncements.
 	lab
 		color:
-			(self model isCollapsed
+			(self model state = #minimized
 				ifTrue: [ self theme taskbarItemLabelColorForCollapsed: self ]
 				ifFalse: [ self theme taskbarItemLabelColorForExpanded: self ])
 ]
 
 { #category : 'accessing' }
 TaskbarItemMorph >> labelOfSize: labSize [
-	^ self theme	buttonLabelForText: (self model taskbarLabel truncateWithElipsisTo: labSize)
+	^ self theme	buttonLabelForText: (self model label truncateWithElipsisTo: labSize)
 ]
 
 { #category : 'accessing' }
@@ -119,6 +119,23 @@ TaskbarItemMorph >> normalFillStyle [
 	"Return the normal fillStyle of the receiver."
 
 	^ self theme taskbarItemNormalFillStyleFor: self
+]
+
+{ #category : 'accessing' }
+TaskbarItemMorph >> performAction: event [
+	"Inform the model that this button has been pressed. Sent by the controller when this button is pressed. If the button's actionSelector takes any arguments, they are obtained dynamically by sending the argumentSelector to the argumentsProvider"
+
+	enabled ifFalse: [ ^ self ].
+	askBeforeChanging ifTrue: [
+		model morph okToChange ifFalse: [ ^ self ] ].
+	self actionBlock ifNotNil: [ ^ self actionBlock cull: event ].
+	actionSelector ifNotNil: [
+		actionSelector numArgs = 0
+			ifTrue: [ model morph perform: actionSelector ]
+			ifFalse: [
+				argumentsProvider ifNotNil: [
+					arguments := argumentsProvider perform: argumentsSelector ].
+				model morph perform: actionSelector withArguments: arguments ] ]
 ]
 
 { #category : 'style - border' }

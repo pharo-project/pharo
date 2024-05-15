@@ -3407,6 +3407,18 @@ UITheme >> newTaskbarButtonIn: aTaskbar for: aWindow [
 ]
 
 { #category : 'morph creation' }
+UITheme >> newTaskbarButtonIn: aTaskbar forTask: aTaskbarTask [
+	"Answer a taskbar button morph for the given window."
+
+	^ (TaskbarItemMorph
+		   on: aTaskbarTask
+		   getState: #isActive
+		   action: #taskbarButtonClicked)
+		  initializeFor: aTaskbar;
+		  yourself
+]
+
+{ #category : 'morph creation' }
 UITheme >> newTaskbarThumbnailIn: aThemedMorph for: aWindow [
 	"Answer a taskbar thumbnail morph for the given window."
 

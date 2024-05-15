@@ -144,7 +144,7 @@ TaskbarTask >> taskListButtonFor: aTasklist [
 TaskbarTask >> taskbarButtonFor: aTaskBar [
 	"Answer a button for the task."
 
-	^self morph taskbarButtonFor: aTaskBar
+	^ aTaskBar theme newTaskbarButtonIn: aTaskBar forTask: self
 ]
 
 { #category : 'accessing' }
