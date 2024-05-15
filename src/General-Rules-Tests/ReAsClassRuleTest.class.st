@@ -23,7 +23,7 @@ ReAsClassRuleTest >> testRuleNotViolated [
 
 	| critiques |
 	critiques := self myCritiquesOnMethod:
-		             self class >> #testRuleWithAsClass.
+		             self class >> #testRuleNotViolated.
 	self assertEmpty: critiques 
 ]
 
