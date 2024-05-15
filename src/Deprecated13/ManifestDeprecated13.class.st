@@ -6,7 +6,8 @@ Class {
 	#name : 'ManifestDeprecated13',
 	#superclass : 'PackageManifest',
 	#category : 'Deprecated13',
-	#package : 'Deprecated13'
+	#package : 'Deprecated13',
+	#tag: 'Manifest'
 }
 
 { #category : 'testing' }
