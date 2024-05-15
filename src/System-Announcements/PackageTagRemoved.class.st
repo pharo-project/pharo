@@ -8,9 +8,3 @@ Class {
 	#package : 'System-Announcements',
 	#tag : 'System-Packages'
 }
-
-{ #category : 'class initialization' }
-PackageTagRemoved class >> initialize [
-
-	self deprecatedAliases: { #ClassTagRemoved . #CategoryRemoved }
-]

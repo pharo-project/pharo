@@ -12,12 +12,6 @@ Class {
 	#tag : 'Borders'
 }
 
-{ #category : 'class initialization' }
-CompositeBorderStyle class >> initialize [
-	"Deprecated in Pharo 11"
-	self deprecatedAliases: { #CompositeBorder }
-]
-
 { #category : 'comparing' }
 CompositeBorderStyle >> = aBorderStyle [
 	"Check the sub-borders too"

@@ -13,12 +13,6 @@ Class {
 	#tag : 'System-Packages'
 }
 
-{ #category : 'class initialization' }
-PackageRenamed class >> initialize [
-
-	self deprecatedAliases: { #RPackageRenamed }
-]
-
 { #category : 'instance creation' }
 PackageRenamed class >> to: aPackage oldName: aSymbol newName: anotherSymbol [
 

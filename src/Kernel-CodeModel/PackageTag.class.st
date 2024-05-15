@@ -15,12 +15,6 @@ Class {
 	#tag : 'Packages'
 }
 
-{ #category : 'class initialization' }
-PackageTag class >> initialize [
-
-	self deprecatedAliases: { #RPackageTag }
-]
-
 { #category : 'instance creation' }
 PackageTag class >> package: aPackage name: aString [
 
