@@ -77,11 +77,6 @@ AthensCairoCanvas >> copyPage [
 	self ffiCall: #( void cairo_copy_page (self) )
 ]
 
-{ #category : 'private' }
-AthensCairoCanvas >> destroy [
-	^ self ffiCall: #( 	void cairo_destroy (self) )
-]
-
 { #category : 'drawing' }
 AthensCairoCanvas >> draw [
 	"Fill the shape (anObject) using currently selected paint
