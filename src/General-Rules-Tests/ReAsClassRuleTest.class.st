@@ -7,12 +7,6 @@ Class {
 }
 
 { #category : 'test-help' }
-ReAsClassRuleTest >> methodWithAsClass [
-
-	self class asClass
-]
-
-{ #category : 'test-help' }
 ReAsClassRuleTest >> methodWithAsClassIfAbsent [
 
 	self class asClassIfAbsent: [  ]
@@ -31,14 +25,6 @@ ReAsClassRuleTest >> testRuleNotViolated [
 	critiques := self myCritiquesOnMethod:
 		             self class >> #testRuleWithAsClass.
 	self assertEmpty: critiques 
-]
-
-{ #category : 'tests' }
-ReAsClassRuleTest >> testRuleWithAsClass [
-
-	| critiques |
-	critiques := self myCritiquesOnMethod: self class >> #methodWithAsClass.
-	self assert: critiques size equals: 1
 ]
 
 { #category : 'tests' }
