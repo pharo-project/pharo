@@ -101,6 +101,7 @@ DebugPoint >> arguments [
 
 { #category : 'accessing' }
 DebugPoint >> arguments: aDictionary [
+
 	arguments := aDictionary
 ]
 
@@ -131,12 +132,14 @@ DebugPoint >> disable [
 { #category : 'reflective operations' }
 DebugPoint >> doesNotUnderstand: message [
 	"forward not understood messages to behaviors, 'delegation complements composition' "
-	self behaviors do: [ :bh | 
-		(bh respondsTo: message selector)
-			ifTrue: [ ^bh perform: message selector withEnoughArguments: message arguments ]
-		].
-	
-	^super doesNotUnderstand: message
+
+	self behaviors do: [ :bh |
+		(bh respondsTo: message selector) ifTrue: [
+			^ bh
+				  perform: message selector
+				  withEnoughArguments: message arguments ] ].
+
+	^ super doesNotUnderstand: message
 ]
 
 { #category : 'protocol' }
@@ -147,23 +150,29 @@ DebugPoint >> enable [
 
 { #category : 'accessing' }
 DebugPoint >> enabled [
-	^enabled
+
+	^ enabled
 ]
 
 { #category : 'accessing' }
 DebugPoint >> enabled: aBoolean [
+
 	enabled := aBoolean.
-	DebugPointManager notifyDebugPointChanged: self.
+	DebugPointManager notifyDebugPointChanged: self
 ]
 
 { #category : 'accessing' }
 DebugPoint >> getArgument: aSymbol [
-	^self arguments at: aSymbol
+
+	^ self arguments at: aSymbol
 ]
 
 { #category : 'accessing' }
 DebugPoint >> getBehavior: aBehaviorClass [
-	^self behaviors detect: [ :bh | bh class = aBehaviorClass ] ifNone: [nil]
+
+	^ self behaviors
+		  detect: [ :bh | bh class = aBehaviorClass ]
+		  ifNone: [ nil ]
 ]
 
 { #category : 'announcements' }
@@ -219,30 +228,35 @@ DebugPoint >> instanceVariable: aSlot accessStrategy: aSymbol [
 
 { #category : 'accessing' }
 DebugPoint >> link [
-	^link ifNil:[link := self metaLink]
+
+	^ link ifNil: [ link := self metaLink ]
 ]
 
 { #category : 'accessing' }
 DebugPoint >> link: aMetaLink [
-	link := aMetaLink 
+
+	link := aMetaLink
 ]
 
 { #category : 'default values' }
 DebugPoint >> metaLink [
-	^(MetaLink new
-		metaObject: self;
-		options: #(+ optionCompileOnLinkInstallation);
-		selector: #hitWithContext:;
-		arguments: #(context) ).
+
+	^ MetaLink new
+		  metaObject: self;
+		  options: #( #+ optionCompileOnLinkInstallation );
+		  selector: #hitWithContext:;
+		  arguments: #( context )
 ]
 
 { #category : 'accessing' }
 DebugPoint >> name [
-	^name ifNil: [ #Debugpoint ]
+
+	^ name ifNil: [ #Debugpoint ]
 ]
 
 { #category : 'accessing' }
 DebugPoint >> name: aSymbol [
+
 	name := aSymbol
 ]
 
@@ -261,8 +275,9 @@ DebugPoint >> nodes [
 ]
 
 { #category : 'accessing' }
-DebugPoint >> properties [ 
-	^properties ifNil: [ properties := Dictionary new. ]
+DebugPoint >> properties [
+
+	^ properties ifNil: [ properties := Dictionary new ]
 ]
 
 { #category : 'removing' }
