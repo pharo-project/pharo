@@ -10,9 +10,9 @@ Class {
 		'checkBehaviors',
 		'sideEffectBehaviors',
 		'arguments',
-		'metaLink',
 		'properties',
-		'target'
+		'target',
+		'link'
 	],
 	#classVars : [
 		'AllDebugPoints'
@@ -199,7 +199,7 @@ DebugPoint >> initialize [
 { #category : 'installing' }
 DebugPoint >> install [
 
-	self link ifNil: [ ^ self ].
+	self link ifNil: [ ^self ].
 	self link uninstall.
 	self target install: self link
 ]
@@ -219,12 +219,12 @@ DebugPoint >> instanceVariable: aSlot accessStrategy: aSymbol [
 
 { #category : 'accessing' }
 DebugPoint >> link [
-	^metaLink
+	^link ifNil:[link := self metaLink]
 ]
 
 { #category : 'accessing' }
 DebugPoint >> link: aMetaLink [
-	metaLink := aMetaLink 
+	link := aMetaLink 
 ]
 
 { #category : 'default values' }
