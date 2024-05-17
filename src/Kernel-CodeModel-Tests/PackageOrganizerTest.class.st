@@ -112,7 +112,6 @@ PackageOrganizerTest >> testExtensionMethodNotExactlyTheName [
 PackageOrganizerTest >> testFullRegistration [
 
 	| xPackage yPackage zPackage a1 a2 b1 b2 a3 |
-	"taken from setup of RPackageReadOnlyCompleteSetup"
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
 	zPackage := self ensureZPackage.
@@ -360,7 +359,6 @@ PackageOrganizerTest >> testRemoveEmptyPackagesAndTags [
 PackageOrganizerTest >> testRemovePackage [
 
 	| xPackage yPackage zPackage a1 a2 b1 b2 a3 |
-	"taken from setup of RPackageReadOnlyCompleteSetup"
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
 	zPackage := self ensureZPackage.
