@@ -1,5 +1,5 @@
 "
-I represent an not fully visided selector in a core result.
+I represent an not fully visited selector in a core result.
 
 For a given `selector`, I associate callers that are call sites (`RBSendNode`) in covered methods to callees that are uncovered methods (`CompiledMethod`).
 "
