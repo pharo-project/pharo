@@ -27,7 +27,7 @@ ReRemoveMethodDriver >> breakingChoices [
 { #category : 'execution' }
 ReRemoveMethodDriver >> browseSenders [
 
-	StMessageBrowserPresenter  
+	StMessageBrowser  
 		browse: (haveNoSenders violators collect: [ :each | each value methodClass realClass >> each value selector ]) 
 		asSendersOf: (refactoring allSelectors )
 	"this does not work for multiple selectors remove."
