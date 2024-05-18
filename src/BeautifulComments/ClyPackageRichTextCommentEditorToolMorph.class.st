@@ -45,10 +45,9 @@ ClyPackageRichTextCommentEditorToolMorph class >> tabOrder [
 { #category : 'operations' }
 ClyPackageRichTextCommentEditorToolMorph >> applyChanges [
 
-	self pendingText asString = self editingText ifFalse: [
-		editingPackage packageManifest comment: self pendingText stamp: Author changeStamp].
+	self pendingText asString = self editingText ifFalse: [ editingPackage packageManifest comment: self pendingText stamp: Date today mmddyyyy ].
 
-	^true
+	^ true
 ]
 
 { #category : 'rendering' }

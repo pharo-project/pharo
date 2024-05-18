@@ -26,12 +26,9 @@ ClyRichTextClassCommentEditorToolMorph class >> classCommentTabActivation [
 { #category : 'operations' }
 ClyRichTextClassCommentEditorToolMorph >> applyChanges [
 
-	self pendingText asString = self editingText asString 
-		ifFalse: [ editingClass 
-						comment: self pendingText 
-						stamp: Author changeStamp].
+	self pendingText asString = self editingText asString ifFalse: [ editingClass comment: self pendingText stamp: Date today mmddyyyy ].
 
-	^true
+	^ true
 ]
 
 { #category : 'rendering' }
