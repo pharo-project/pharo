@@ -31,6 +31,7 @@ Crown >> callers [
 { #category : 'initialization' }
 Crown >> initialize [
 
+	super initialize.
 	callees := OrderedCollection new.
 	callers := OrderedCollection new
 ]
