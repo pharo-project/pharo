@@ -129,7 +129,7 @@ AthensCairoCanvas >> getCurrentPoint [
 	^ (x doubleAt: 1)@ (y doubleAt: 1)
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 AthensCairoCanvas >> getHandle [
 
 	^ handle
