@@ -129,6 +129,12 @@ AthensCairoCanvas >> getCurrentPoint [
 	^ (x doubleAt: 1)@ (y doubleAt: 1)
 ]
 
+{ #category : 'as yet unclassified' }
+AthensCairoCanvas >> getHandle [
+
+	^ handle
+]
+
 { #category : 'private' }
 AthensCairoCanvas >> getScaledFont [
 	"Returns the current scaled font. This object is owned by cairo. To keep a reference to it, you must call cairo_scaled_font_reference().
