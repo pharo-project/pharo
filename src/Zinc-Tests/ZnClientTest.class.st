@@ -498,7 +498,7 @@ ZnClientTest >> testLogging [
 	| client logEventCollection count |
 	logEventCollection := OrderedCollection new.
 	ZnLogEvent announcer
-		when: ZnLogEvent do: [ :event | logEventCollection add: event ].
+		when: ZnLogEvent do: [ :event | logEventCollection add: event ] for: self.
 	(client := ZnClient new)
 		clientId: #C1;
 		beOneShot.
