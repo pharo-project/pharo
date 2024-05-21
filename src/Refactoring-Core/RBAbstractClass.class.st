@@ -504,9 +504,10 @@ RBAbstractClass >> instanceVariableNames: aCollectionOfStrings [
 
 { #category : 'testing' }
 RBAbstractClass >> isAbstract [
+
 	(self whichSelectorsReferToSymbol: #subclassResponsibility) ifNotEmpty: [^true].
-	model allReferencesToClass: self do: [:each | ^false].
-	^true
+	model allReferencesToClass: self do: [:each | ^ false].
+	^ true
 ]
 
 { #category : 'testing' }
