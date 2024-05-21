@@ -33,8 +33,9 @@ Class {
 	#classVars : [
 		'Initialized'
 	],
-	#category : 'BaselineOfIDE',
-	#package : 'BaselineOfIDE'
+	#category : 'BaselineOfIDE-Baseline',
+	#package : 'BaselineOfIDE',
+	#tag : 'Baseline'
 }
 
 { #category : 'baselines' }
