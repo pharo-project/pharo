@@ -36,14 +36,10 @@ DebugPointManager class >> initialize [
 { #category : 'private - helpers' }
 DebugPointManager class >> installDebugPoint: dp withBehaviors: aListOfBehaviorClasses [
 
-	| ml |
-	ml := dp metaLink.
-
-	dp link: ml.
 	dp install.
 	DebugPoint add: dp.
 
-	"adding behaviors"
+	"Adding behaviors"
 	aListOfBehaviorClasses do: [ :bhc | dp addBehavior: bhc new ].
 
 	self notifyDebugPointAdded: dp.

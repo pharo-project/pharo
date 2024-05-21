@@ -18,9 +18,8 @@ Class {
 		'cacheActive',
 		'cachePackages'
 	],
-	#category : 'Kernel-CodeModel-Packages',
-	#package : 'Kernel-CodeModel',
-	#tag : 'Packages'
+	#category : 'Deprecated13',
+	#package : 'Deprecated13'
 }
 
 { #category : 'private' }
@@ -51,6 +50,13 @@ RPackageSet class >> cachePackages [
 { #category : 'testing' }
 RPackageSet class >> isCacheActive [
 	^ cacheActive ifNil: [ cacheActive := false ]
+]
+
+{ #category : 'testing' }
+RPackageSet class >> isDeprecated [
+	"RPackageSet was an optimization done when RPackage implementation was slow. Now it has been revised and it is better to just have a collection of packages and do standard operations of them such as #collect: or #do: or #select:"
+
+	^ true
 ]
 
 { #category : 'instance creation' }

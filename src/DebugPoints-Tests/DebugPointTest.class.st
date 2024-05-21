@@ -18,7 +18,7 @@ Class {
 	#tag : 'Model'
 }
 
-{ #category : 'nil' }
+{ #category : 'utils' }
 DebugPointTest >> compileTestClass [
 
 	testClass := ((DummyTestClass << #DummyTestSubclass)
