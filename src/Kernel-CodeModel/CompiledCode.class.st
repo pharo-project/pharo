@@ -112,10 +112,17 @@ CompiledCode class >> handleFailingNew: numberOfBytes header: headerWord [
 
 { #category : 'instance creation' }
 CompiledCode class >> newFrom: aCompiledMethod [
+	"Create a method with the same bytecode and literals, but do not copy the source pointer, for a complete copy, use #clone"
 	| inst |
-	inst := super basicNew: aCompiledMethod size.
-	1 to: aCompiledMethod size do: [:index |
-		inst at: index put: (aCompiledMethod at: index)].
+	inst := self basicNew: aCompiledMethod basicSize - aCompiledMethod initialPC + 1 header: aCompiledMethod header.
+	
+	"Copy over the bytecode, skip trailer"
+	aCompiledMethod initialPC to: aCompiledMethod size - self trailerSize do: [:index |
+		inst basicAt: index put: (aCompiledMethod basicAt: index)].
+	
+	"set the same literals, sharing literals is save due to literal strings being read-only"
+	1 to: aCompiledMethod numLiterals do: [ :i | 
+		inst literalAt: i put: (aCompiledMethod literalAt: i)].
 	^ inst
 ]
 
@@ -127,6 +134,11 @@ CompiledCode class >> newMethod: numberOfBytes header: headerWord [
 		transformWith: '`@rcv newMethod: `@numberOfBytes header: `@headerWord' -> '`@rcv basicNew: `@numberOfBytes header: `@headerWord'.
 	
 	^ self basicNew: numberOfBytes header: headerWord
+]
+
+{ #category : 'constants' }
+CompiledCode class >> trailerSize [
+	^ self subclassResponsibility
 ]
 
 { #category : 'comparing' }

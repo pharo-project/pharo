@@ -27,9 +27,7 @@ ReRemoveSharedVariablesDriver >> breakingChoices [
 { #category : 'execution' }
 ReRemoveSharedVariablesDriver >> browseSharedVariableReferences [
 
-	StMessageBrowserPresenter
-		browse: refactoring violators
-		
+	StMessageBrowser browse: refactoring violators
 ]
 
 { #category : 'execution' }
