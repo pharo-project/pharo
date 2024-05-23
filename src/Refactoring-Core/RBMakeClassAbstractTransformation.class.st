@@ -48,7 +48,7 @@ RBMakeClassAbstractTransformation >> preconditions [
 { #category : 'transforming' }
 RBMakeClassAbstractTransformation >> privateTransform [
 
-	self generateChangesFor: ((RBAddMethodTransformation
+	self generateChangesFor: (RBAddMethodTransformation
 		 sourceCode: 'isAbstract
 
 	^ self == ' , targetClass asString
