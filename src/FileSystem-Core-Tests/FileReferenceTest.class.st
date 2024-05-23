@@ -4,7 +4,6 @@ SUnit tests for file reference
 Class {
 	#name : 'FileReferenceTest',
 	#superclass : 'TestCase',
-	#type : 'variable',
 	#instVars : [
 		'filesystem'
 	],

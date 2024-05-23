@@ -2,7 +2,7 @@
 name: Cleanup report
 about: Create a report to help us improve
 title: ''
-labels: Cleanup
+labels: 'Type: Cleanup'
 assignees: ''
 
 ---

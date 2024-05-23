@@ -4,7 +4,6 @@ SUnit tests for file system paths
 Class {
 	#name : 'PathTest',
 	#superclass : 'TestCase',
-	#type : 'variable',
 	#category : 'FileSystem-Core-Tests-Base',
 	#package : 'FileSystem-Core-Tests',
 	#tag : 'Base'
