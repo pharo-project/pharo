@@ -6,7 +6,6 @@ Class {
 	#name : 'StRefactoringAddClassPresenter',
 	#superclass : 'SpRequestDialog',
 	#instVars : [
-		'newClassPresenter',
 		'packagePresenter',
 		'tagPresenter',
 		'commentPresenter',
@@ -18,11 +17,10 @@ Class {
 	#tag : 'UI'
 }
 
-{ #category : 'examples' }
-StRefactoringAddClassPresenter class >> example [
-	<script>
-	
-	self new openModal
+{ #category : 'accessing' }
+StRefactoringAddClassPresenter class >> defaultExtent [
+
+	^ (500 @ 450) scaledByDisplayScaleFactor
 ]
 
 { #category : 'layout' }
@@ -30,7 +28,7 @@ StRefactoringAddClassPresenter >> defaultLayout [
 
 	^ SpGridLayout new
 		  add: 'New class name' at: 1 @ 1;
-		  add: newClassPresenter at: 2 @ 1 span: 2 @ 1;
+		  add: textInput at: 2 @ 1 span: 2 @ 1;
 		  add: 'Package' at: 1 @ 2;
 		  add: packagePresenter at: 2 @ 2 span: 2 @ 1;
 		  add: 'Tag' at: 1 @ 3;
@@ -46,15 +44,9 @@ StRefactoringAddClassPresenter >> defaultLayout [
 ]
 
 { #category : 'initialization' }
-StRefactoringAddClassPresenter >> initialExtentForWindow [
-
-	^ (500 @ 450) scaledByDisplayScaleFactor
-]
-
-{ #category : 'initialization' }
 StRefactoringAddClassPresenter >> initializeClassNamePresenter [
 
-	newClassPresenter := self newTextInput
+	textInput := self newTextInput
 		whenTextChangedDo: [ : text | 
 			(Smalltalk globals hasClassNamed: text asSymbol)
 				ifTrue: [ self inform: 'Class ' , text asString , ' already exists' ]
@@ -83,7 +75,7 @@ StRefactoringAddClassPresenter >> initializeCommentPresenter [
 StRefactoringAddClassPresenter >> initializeFocus [
 
 	self focusOrder 
-		add: newClassPresenter;
+		add: textInput;
 		add: packagePresenter;
 		add: tagPresenter;
 		add: commentPresenter
@@ -107,6 +99,7 @@ StRefactoringAddClassPresenter >> initializePackagesPresenter [
 { #category : 'initialization' }
 StRefactoringAddClassPresenter >> initializePresenters [ 
 
+	super initializePresenters.
 	self
 		initializeClassNamePresenter;
 		initializeTagsPresenter;
@@ -132,9 +125,9 @@ StRefactoringAddClassPresenter >> initializeTagsPresenter [
 { #category : 'initialization' }
 StRefactoringAddClassPresenter >> initializeWindow: aSpWindowPresenter [
 
+	super initializeWindow: aSpWindowPresenter.
 	self setTitleTo: aSpWindowPresenter.
 	self setWindowIconTo: aSpWindowPresenter.
-	self setInitialExtentTo: aSpWindowPresenter.
 	aSpWindowPresenter aboutText: String empty
 ]
 
@@ -142,7 +135,7 @@ StRefactoringAddClassPresenter >> initializeWindow: aSpWindowPresenter [
 StRefactoringAddClassPresenter >> newClassName [
 	"Answer a <String> containing the current contents of the new class name presenter"
 	
-	^ newClassPresenter text trimmed
+	^ textInput text trimmed
 ]
 
 { #category : 'showing' }
@@ -157,12 +150,6 @@ StRefactoringAddClassPresenter >> open [
 StRefactoringAddClassPresenter >> openModal [
 	
 	^ self asModalWindow open; centered.
-]
-
-{ #category : 'initialization' }
-StRefactoringAddClassPresenter >> setInitialExtentTo: aSpWindowPresenter [
-
-	aSpWindowPresenter initialExtent: self initialExtentForWindow
 ]
 
 { #category : 'accessing - model' }
@@ -206,7 +193,7 @@ StRefactoringAddClassPresenter >> validateAnswer [
 	
 	validateBlock ifNotNil: [ 
 		^ validateBlock 
-			value: newClassPresenter text
+			value: textInput text
 			value: packagePresenter selectedItem
 			value: tagPresenter selectedItem ].
 	^ true

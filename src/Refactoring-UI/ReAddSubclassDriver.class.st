@@ -39,7 +39,6 @@ ReAddSubclassDriver >> configureRefactoring [
 	refactoring := (RBAddNewClassRefactoring className: self subclass)
 		model: model;
 		superclass: self superclass;
-		subclasses: self superclass subclasses;
 		packageName: self packageName;
 		tagName: self tagName;
 		comment: self comment;
