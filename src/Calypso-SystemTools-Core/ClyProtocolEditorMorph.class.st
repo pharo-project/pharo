@@ -163,8 +163,10 @@ ClyProtocolEditorMorph >> requestProtocol [
 
 	| newProtocol priorProtocol |
 	priorProtocol := ownerTool methodProtocol ifNil: [ '' ].
-
-	newProtocol := StProtocolNameChooserPresenter requestProtocolNameConfiguring: [ :presenter | presenter protocolName: priorProtocol ].
+	newProtocol := StProtocolNameChooserPresenter requestProtocolNameConfiguring: [ :presenter |
+		               presenter
+			               protocolName: priorProtocol;
+			               concernedClass: ownerTool methodClass ].
 	newProtocol = priorProtocol ifTrue: [ ^ CmdCommandAborted signal ].
 
 	ownerTool methodProtocol: newProtocol

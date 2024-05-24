@@ -45,7 +45,7 @@ SycClassifyMethodCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.
 
-	protocol := StProtocolNameChooserPresenter requestProtocolName
+	protocol := StProtocolNameChooserPresenter requestProtocolNameConfiguring: [ :presenter | presenter concernedClass: aToolContext lastSelectedClass ]
 ]
 
 { #category : 'accessing' }
