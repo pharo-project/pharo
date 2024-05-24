@@ -52,9 +52,10 @@ ClyConvertMethodGroupToProtocolCommand >> execute [
 
 { #category : 'execution' }
 ClyConvertMethodGroupToProtocolCommand >> prepareFullExecutionInContext: aToolContext [
+
 	super prepareFullExecutionInContext: aToolContext.
 
-	protocol := aToolContext requestProtocol: 'New protocol name'
+	protocol := StProtocolNameChooserPresenter requestProtocolName
 ]
 
 { #category : 'accessing' }
