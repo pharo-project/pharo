@@ -42,8 +42,11 @@ ReAddSubclassDriverTest >> testAddSingleSubclass [
 	| driver rbClass |
 
 	driver := ReAddSubclassDriver new
-			scopes: { testingEnvironment } subclass: self newSubclassName;
-			yourself.
+		superclass: self superclassToAddSubclass
+		packageNames: { }.
+	driver
+		scopes: { testingEnvironment };
+		subclass: self newSubclassName.
 	rbClass := driver superclass.
 	self deny: rbClass hasSubclasses.
 	

@@ -20,10 +20,13 @@ Class {
 
 { #category : 'execution' }
 SycCmNewClassCreationCommand >> applyCommandResult [
-
+	"Check if user cancelled while viewing changes"
 	| newClass |
+	
+	(self class environment hasClassNamed: newClassName)
+		ifFalse: [ ^ self ].
+		
 	newClass := context system classNamed: newClassName.
-
 	context showClass: newClass
 ]
 

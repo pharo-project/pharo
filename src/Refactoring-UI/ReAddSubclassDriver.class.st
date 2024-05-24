@@ -6,12 +6,23 @@ Class {
 		'subclass',
 		'comment',
 		'tagName',
-		'packageName'
+		'packageName',
+		'packageNames'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers'
 }
+
+{ #category : 'instance creation' }
+ReAddSubclassDriver class >> superclass: aClass packageNames: packages [
+
+	^ self basicNew
+		superclass: aClass;
+		packageNames: packages;
+		initialize;
+		yourself
+]
 
 { #category : 'execution' }
 ReAddSubclassDriver >> changes [
@@ -45,6 +56,21 @@ ReAddSubclassDriver >> configureRefactoring [
 		yourself
 ]
 
+{ #category : 'initialization' }
+ReAddSubclassDriver >> initialize [
+
+	super initialize.
+	(StRefactoringAddClassPresenter on: self)
+		onCancel: [ : dialog | dialog close ];
+		onAccept: [ :dialog | 
+			self
+				packageName: dialog presenter packageName;
+				tagName: dialog presenter tagName;
+				comment: dialog presenter commentPresenterText.
+			dialog close ];
+		openModal
+]
+
 { #category : 'accessing' }
 ReAddSubclassDriver >> packageName [
 	"Answer a <Symbol> representing the receiver's package name where the new class will be add"
@@ -60,6 +86,18 @@ ReAddSubclassDriver >> packageName: anObject [
 	packageName := anObject
 ]
 
+{ #category : 'accessing' }
+ReAddSubclassDriver >> packageNames [
+
+	^ packageNames
+]
+
+{ #category : 'accessing' }
+ReAddSubclassDriver >> packageNames: anObject [
+
+	packageNames := anObject
+]
+
 { #category : 'execution' }
 ReAddSubclassDriver >> runRefactoring [
 
@@ -70,18 +108,23 @@ ReAddSubclassDriver >> runRefactoring [
 ]
 
 { #category : 'accessing' }
-ReAddSubclassDriver >> scopes: refactoringScopes subclass: newSubclass [
+ReAddSubclassDriver >> scopes: refactoringScopes [
 
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes last.
 	superclass := model classFor: model environment classes anyOne.
-	subclass := newSubclass.
 ]
 
 { #category : 'accessing' }
 ReAddSubclassDriver >> subclass [
 
 	^ subclass
+]
+
+{ #category : 'accessing' }
+ReAddSubclassDriver >> subclass: aClass [
+
+	subclass := aClass
 ]
 
 { #category : 'accessing' }

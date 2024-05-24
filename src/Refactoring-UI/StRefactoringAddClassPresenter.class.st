@@ -9,8 +9,8 @@ Class {
 		'packagePresenter',
 		'tagPresenter',
 		'commentPresenter',
-		'sycCmAddSubclassCommand',
-		'useTemplateCheckPresenter'
+		'useTemplateCheckPresenter',
+		'driver'
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',
@@ -21,6 +21,12 @@ Class {
 StRefactoringAddClassPresenter class >> defaultExtent [
 
 	^ (500 @ 450) scaledByDisplayScaleFactor
+]
+
+{ #category : 'accessing' }
+StRefactoringAddClassPresenter >> commentPresenterText [
+
+	^ commentPresenter text
 ]
 
 { #category : 'layout' }
@@ -50,7 +56,7 @@ StRefactoringAddClassPresenter >> initializeClassNamePresenter [
 		whenTextChangedDo: [ : text | 
 			(Smalltalk globals hasClassNamed: text asSymbol)
 				ifTrue: [ self inform: 'Class ' , text asString , ' already exists' ]
-				ifFalse: [ sycCmAddSubclassCommand newClassName: self newClassName ] ];
+				ifFalse: [ driver subclass: self newClassName ] ];
 		yourself.
 ]
 
@@ -61,13 +67,13 @@ StRefactoringAddClassPresenter >> initializeCommentPresenter [
 		state: false;
 		help: 'When checked, the comment will be prefilled with a generic class comment';
 		label: 'Use comment template';
-		whenActivatedDo: [ commentPresenter text: sycCmAddSubclassCommand targetClass classCommentBlank  ];
+		whenActivatedDo: [ commentPresenter text: driver superclass classCommentBlank  ];
 		whenDeactivatedDo: [ commentPresenter text: String empty ];
 		yourself.
 	commentPresenter := self newText
 		beWrapWord;
 		placeholder: 'A comment for your new class';
-		whenTextChangedDo: [ : text | sycCmAddSubclassCommand comment: commentPresenter text trimmed ];
+		whenTextChangedDo: [ : text | driver comment: commentPresenter text trimmed ];
 		yourself.
 ]
 
@@ -86,13 +92,13 @@ StRefactoringAddClassPresenter >> initializePackagesPresenter [
 
 	packagePresenter := self newDropList
 		startWithSelection;
-		items: sycCmAddSubclassCommand packageNames;
+		items: driver packageNames;
 		displayIcon: [ : aPackage | self iconNamed: aPackage systemIconName ];
 		sortingBlock: [ : a : b | a model < b model ];
 		whenSelectedItemChangedDo: [ : item | 
 			self updateTagItems: item.		
 			self updateTagSelection: item ];
-		selectItem: sycCmAddSubclassCommand targetPackageName;		
+		selectItem: driver packageName;		
 		yourself.
 ]
 
@@ -131,7 +137,7 @@ StRefactoringAddClassPresenter >> initializeWindow: aSpWindowPresenter [
 	aSpWindowPresenter aboutText: String empty
 ]
 
-{ #category : 'instance creation' }
+{ #category : 'accessing' }
 StRefactoringAddClassPresenter >> newClassName [
 	"Answer a <String> containing the current contents of the new class name presenter"
 	
@@ -152,22 +158,34 @@ StRefactoringAddClassPresenter >> openModal [
 	^ self asModalWindow open; centered.
 ]
 
-{ #category : 'accessing - model' }
-StRefactoringAddClassPresenter >> setModelBeforeInitialization: aSycCmAddSubclassCommand [
+{ #category : 'accessing' }
+StRefactoringAddClassPresenter >> packageName [
 
-	sycCmAddSubclassCommand := aSycCmAddSubclassCommand
+	^ packagePresenter selectedItem
+]
+
+{ #category : 'accessing - model' }
+StRefactoringAddClassPresenter >> setModelBeforeInitialization: aRBInteractionDriver [
+
+	driver := aRBInteractionDriver
 ]
 
 { #category : 'initialization' }
 StRefactoringAddClassPresenter >> setTitleTo: aSpWindowPresenter [
 
-	aSpWindowPresenter title: 'Add new subclass of ' , sycCmAddSubclassCommand targetClass name
+	aSpWindowPresenter title: 'Add new subclass of ' , driver superclass name
 ]
 
 { #category : 'initialization' }
 StRefactoringAddClassPresenter >> setWindowIconTo: aSpWindowPresenter [
 
 	aSpWindowPresenter windowIcon: (self iconNamed: #add)
+]
+
+{ #category : 'accessing' }
+StRefactoringAddClassPresenter >> tagName [
+
+	^ tagPresenter selectedItem
 ]
 
 { #category : 'callbacks' }
@@ -185,7 +203,7 @@ StRefactoringAddClassPresenter >> updateTagItems: item [
 { #category : 'callbacks' }
 StRefactoringAddClassPresenter >> updateTagSelection: item [
 
-	sycCmAddSubclassCommand tagName: tagPresenter selectedItem.
+	driver tagName: tagPresenter selectedItem.
 ]
 
 { #category : 'private' }
