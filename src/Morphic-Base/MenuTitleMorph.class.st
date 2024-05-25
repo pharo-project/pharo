@@ -142,12 +142,12 @@ MenuTitleMorph >> pinColor [
 { #category : 'pinning' }
 MenuTitleMorph >> pinFormSet [
 
-	^ FormSet form:
+	^ FormSet forms: ((1 to: 2) collect: [ :scale |
 		(CircleMorph new
-			extent: (8@8) scaledByDisplayScaleFactor truncated;
-			borderWidth: 2 scaledByDisplayScaleFactor truncated;
+			extent: (8@8) scaledByDisplayScaleFactor truncated * scale;
+			borderWidth: 2 scaledByDisplayScaleFactor truncated * scale;
 			color: self pinColor;
-			imageForm)
+			imageForm) ])
 ]
 
 { #category : 'rounding' }
