@@ -146,14 +146,15 @@ MenuTitleMorph >> pinColor [
 ]
 
 { #category : 'pinning' }
-MenuTitleMorph >> pinForm [
+MenuTitleMorph >> pinFormSet [
 
-	^(CircleMorph new
-		extent: 8@8;
-		borderWidth: 2;
-		color: self pinColor;
-		imageForm)
-			scaledByDisplayScaleFactor
+	^ FormSet form:
+		(CircleMorph new
+			extent: 8@8;
+			borderWidth: 2;
+			color: self pinColor;
+			imageForm)
+				scaledByDisplayScaleFactor
 ]
 
 { #category : 'rounding' }
@@ -188,7 +189,7 @@ MenuTitleMorph >> title: aString [
 { #category : 'pinning' }
 MenuTitleMorph >> updatePinForm [
 
-	pinBox ifNotNil: [ pinBox labelGraphic: self pinForm; extent: self boxExtent ]
+	pinBox ifNotNil: [ pinBox labelFormSet: self pinFormSet; extent: self boxExtent ]
 ]
 
 { #category : 'rounding' }
@@ -216,7 +217,7 @@ MenuTitleMorph >> withPinBox [
 
 	pinBox := self
 		iconButtonCalling: #pinBoxClicked
-		withForm: self pinForm
+		withFormSet: self pinFormSet
 		helpText: 'Keep this menu up'.
 
 	self addMorph: pinBox asElementNumber: 4
