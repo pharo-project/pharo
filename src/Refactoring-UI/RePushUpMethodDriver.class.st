@@ -20,9 +20,10 @@ Class {
 		'methodSelectionPresenterClass',
 		'superclass',
 		'notOverrides',
-		'notVarRefs',
-		'notSupersendsDone',
-		'notSupersendsReceived'
+		'notInstVarRefs',
+		'notSharedVarRefs',
+		'notSupersendsReceived',
+		'notSupersendsSent'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -43,7 +44,11 @@ RePushUpMethodDriver >> breakingChoices [
 	| choices |
 	choices := OrderedCollection new.
 	notOverrides check ifFalse:[ choices add: (ReBrowseMethodOverridesChoice new driver: self) ].
-	self flag: 'Add missing choices'.
+	notInstVarRefs  check ifFalse: [ choices add: (RePushUpInstanceVariableChoice new driver: self) ].
+	notSharedVarRefs  check ifFalse: [ choices add: (RePushUpSharedVariableChoice new driver: self) ].
+	notSupersendsReceived check ifFalse: [ choices add: (ReBrowseSubclassSuperSendsChoice new driver: self)  ].
+	notSupersendsSent check ifFalse: [ self halt  ].
+	
 	^ choices
 	
 ]
@@ -119,7 +124,7 @@ RePushUpMethodDriver >> handleBreakingChanges [
 RePushUpMethodDriver >> labelBasedOnBreakingChanges [
 
 	^ String streamContents: [ :stream |
-		  { notOverrides. notVarRefs. notSupersendsDone. notSupersendsReceived } 
+		  { notOverrides. notInstVarRefs . notSharedVarRefs . notSupersendsSent. notSupersendsReceived } 
 			do: [ :cond |
 			  cond check ifFalse: [
 				  cond violationMessageOn: stream.
@@ -146,6 +151,18 @@ RePushUpMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushUpMeth
 	scopes := refactoringScopes.
 	methods := methodsList.
 	class := methods first origin
+]
+
+{ #category : 'as yet unclassified' }
+RePushUpMethodDriver >> pushUpReferencedInstVars [
+
+	notInstVarRefs violators do: [ :violator | 
+		"We add the pushUpVariable transformation to the refactoring previous transformations"
+		refactoring pushUpVariable: (violator at: 2) ].
+
+	self flag: 'Discuss with Stef and Balša about applying changes here... What should happen when where are unfixed breaking changes beside referenced inst vars?'.
+	"Now the push up variable transformation is among the changes to be applied"
+	self applyChanges
 ]
 
 { #category : 'execution' }
@@ -184,7 +201,8 @@ RePushUpMethodDriver >> selectMethodsAndClass [
 { #category : 'initialization' }
 RePushUpMethodDriver >> setBreakingChangesPreconditions [
 	notOverrides := refactoring preconditionNoOverrides.
-	notVarRefs := refactoring preconditionNoReferencesToInvalidVariables.
-	notSupersendsDone := refactoring preconditionNoSupersendsSent.
+	notInstVarRefs := refactoring preconditionNoReferencesToInstVars.
+	notSharedVarRefs := refactoring preconditionNoReferencesToSharedVars.
+	notSupersendsSent := refactoring preconditionNoSupersendsSent.
 	notSupersendsReceived := refactoring preconditionNoSupersendsReceived
 ]

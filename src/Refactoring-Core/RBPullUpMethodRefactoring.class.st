@@ -70,7 +70,8 @@ RBPullUpMethodRefactoring >> breakingChangePreconditions [
 
 	^ {
 		  self preconditionNoOverrides.
-		  self preconditionNoReferencesToInvalidVariables.
+		  self preconditionNoReferencesToInstVars.
+		  self preconditionNoReferencesToSharedVars.
 		  self preconditionNoSupersendsSent.
 		  self preconditionNoSupersendsReceived }
 ]
@@ -287,15 +288,19 @@ RBPullUpMethodRefactoring >> preconditionNoOverrides [
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodRefactoring >> preconditionNoReferencesToInvalidVariables [
+RBPullUpMethodRefactoring >> preconditionNoReferencesToInstVars [
 
-	^ ((ReMethodsReferToSharedVariablesCondition new
-	 		class: class
-	 		selectors: selectors) not)
-	  & 
-		((ReMethodsReferToInstanceVariablesCondition new
-			class: class
-			selectors: selectors) not)
+	^ ReMethodsDontReferToInstVarsCondition new
+		  class: class
+		  selectors: selectors
+]
+
+{ #category : 'preconditions' }
+RBPullUpMethodRefactoring >> preconditionNoReferencesToSharedVars [
+
+	^ ReMethodsDontReferToSharedVarsCondition new
+		   class: class
+		   selectors: selectors
 ]
 
 { #category : 'preconditions' }
@@ -444,4 +449,9 @@ RBPullUpMethodRefactoring >> superClass: anObject [
 { #category : 'initialization' }
 RBPullUpMethodRefactoring >> targetClass [
 	^ class
+]
+
+{ #category : 'accessing' }
+RBPullUpMethodRefactoring >> targetSuperclass [
+	^ targetSuperclass
 ]

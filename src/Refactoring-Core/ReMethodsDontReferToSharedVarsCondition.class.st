@@ -3,7 +3,7 @@ I am a refactoring condition that checks if a method refers to any of the shared
 I do not check for shared variables defined in my class superclasses
 "
 Class {
-	#name : 'ReMethodsReferToSharedVariablesCondition',
+	#name : 'ReMethodsDontReferToSharedVarsCondition',
 	#superclass : 'ReMethodsCondition',
 	#instVars : [
 		'class',
@@ -15,14 +15,28 @@ Class {
 }
 
 { #category : 'initialization' }
-ReMethodsReferToSharedVariablesCondition >> class: aRBClass selectors: aCollection [ 
+ReMethodsDontReferToSharedVarsCondition >> class: aRBClass selectors: aCollection [ 
 
 	class := aRBClass.
 	selectors := aCollection 
 ]
 
+{ #category : 'displaying' }
+ReMethodsDontReferToSharedVarsCondition >> violationMessageOn: aStream [
+
+	self violators do: [ :violator |
+		| selector instVar |
+		selector := violator at: 1.
+		instVar := violator at: 2.
+		aStream
+			nextPutAll: '''';
+			nextPutAll: selector;
+			nextPutAll: ''' refers to the shared var #';
+			nextPutAll: instVar ]
+]
+
 { #category : 'accessing' }
-ReMethodsReferToSharedVariablesCondition >> violators [
+ReMethodsDontReferToSharedVarsCondition >> violators [
 
 	violators ifNotNil: [ ^ violators ].
 
@@ -30,6 +44,6 @@ ReMethodsReferToSharedVariablesCondition >> violators [
 	selectors do: [ :selector |
 		class classVariableNames do: [ :classVar |
 			((class methodNamed: selector) refersToVariable: classVar)
-				ifFalse: [ violators add: selector ] ] ].
+				ifTrue: [ violators add: { selector . classVar } ] ] ].
 	^ violators asOrderedCollection
 ]
