@@ -202,7 +202,7 @@ MenuTitleMorph >> withCloseBox [
 
 	closeBox := self
 		iconButtonCalling: #closeBoxClicked
-		withForm: self theme menuCloseForm
+		withFormSet: self theme menuCloseFormSet
 		helpText: 'Close this menu'.
 
 	self addMorph: closeBox asElementNumber: 1
