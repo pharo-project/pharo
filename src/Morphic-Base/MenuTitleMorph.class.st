@@ -144,11 +144,10 @@ MenuTitleMorph >> pinFormSet [
 
 	^ FormSet form:
 		(CircleMorph new
-			extent: 8@8;
-			borderWidth: 2;
+			extent: (8@8) scaledByDisplayScaleFactor truncated;
+			borderWidth: 2 scaledByDisplayScaleFactor truncated;
 			color: self pinColor;
 			imageForm)
-				scaledByDisplayScaleFactor
 ]
 
 { #category : 'rounding' }
