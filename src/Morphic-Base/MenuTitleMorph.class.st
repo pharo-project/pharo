@@ -90,12 +90,6 @@ MenuTitleMorph >> icon: aForm [
 ]
 
 { #category : 'private - creation' }
-MenuTitleMorph >> iconButtonCalling: aSelector withForm: aForm helpText: aText [
-
-	^ self iconButtonCalling: aSelector withFormSet: (FormSet form: aForm) helpText: aText
-]
-
-{ #category : 'private - creation' }
 MenuTitleMorph >> iconButtonCalling: aSelector withFormSet: aFormSet helpText: aText [
 
 	^IconicButtonMorph new target: self;
