@@ -1,9 +1,33 @@
 Extension { #name : 'RBMethodNode' }
 
 { #category : '*Reflectivity' }
+RBMethodNode >> decreaseLinkCount [
+
+	self propertyAt: #linkCount put: ((self linkCount - 1) max: 0)
+]
+
+{ #category : '*Reflectivity' }
 RBMethodNode >> hasOption: aSymbol for: aLink [
 	"take the class and method overrides to options into account"
 	^(self optionsFor: aLink) includes: aSymbol
+]
+
+{ #category : '*Reflectivity' }
+RBMethodNode >> increaseLinkCount [
+
+	self propertyAt: #linkCount put: self linkCount + 1
+]
+
+{ #category : '*Reflectivity' }
+RBMethodNode >> linkCount [
+
+	^self propertyAt: #linkCount ifAbsentPut: [ 0 ]
+]
+
+{ #category : '*Reflectivity' }
+RBMethodNode >> linkCount: aNumber [
+
+	self propertyAt: #linkCount put: aNumber
 ]
 
 { #category : '*Reflectivity' }
