@@ -77,7 +77,9 @@ ReflectiveMethod >> decreaseLinkCount [
 
 { #category : 'invalidate' }
 ReflectiveMethod >> destroyTwin [
+	ast removeProperty: #linkCount ifAbsent:["nothing to do"].
 	(ast hasProperty: #wrapperMethod) ifTrue: [  ast :=  compiledMethod parseTree].
+	
 	self recompileAST.
 	self installCompiledMethod.
 	compiledMethod reflectiveMethod: nil.
