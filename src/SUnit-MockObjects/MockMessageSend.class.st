@@ -55,6 +55,20 @@ MockMessageSend >> on: aSymbol with: anArray do: aBlock [
 	behavior := aBlock
 ]
 
+{ #category : 'printing' }
+MockMessageSend >> printOn: aStream [
+
+	aStream nextPutAll: selector.
+	
+	arguments isEmptyOrNil ifFalse: [
+		arguments size > 1 ifTrue: [ aStream nextPutAll: ' (' ].
+		aStream space.
+		arguments
+			do: [ :arg | arg printOn: aStream ]
+			separatedBy: [ aStream nextPutAll: ', ' ].
+		arguments size > 1 ifTrue: [ aStream nextPutAll: ' )' ]]
+]
+
 { #category : 'accessing' }
 MockMessageSend >> selector [
 

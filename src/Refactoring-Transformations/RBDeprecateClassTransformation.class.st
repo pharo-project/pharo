@@ -40,12 +40,6 @@ RBDeprecateClassTransformation >> applicabilityPreconditions [
 		  (ReClassesAreNotMetaClassCondition new classes: { class }) }
 ]
 
-{ #category : 'preconditions' }
-RBDeprecateClassTransformation >> checkPreconditions [ 
-
-	self checkApplicabilityPreconditions 
-]
-
 { #category : 'transforming' }
 RBDeprecateClassTransformation >> prepareForExecution [ 
 

@@ -605,13 +605,6 @@ FTTableMorph >> initializeSelectedIndexes [
 ]
 
 { #category : 'initialization' }
-FTTableMorph >> initializeShortcuts: aKMDispatcher [
-
-	super initializeShortcuts: aKMDispatcher.
-	aKMDispatcher attachCategory: #WindowShortcuts
-]
-
-{ #category : 'initialization' }
 FTTableMorph >> initializeWithHorizontalScrollBar [
 	horizontalScrollBar := true.
 	self initialize

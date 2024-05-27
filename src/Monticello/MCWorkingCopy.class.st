@@ -200,7 +200,7 @@ MCWorkingCopy class >> registry [
 { #category : 'event registration' }
 MCWorkingCopy class >> unregisterForNotifications [
 
-	SystemAnnouncer uniqueInstance unsubscribe: self
+	self codeChangeAnnouncer unsubscribe: self
 ]
 
 { #category : 'operations' }

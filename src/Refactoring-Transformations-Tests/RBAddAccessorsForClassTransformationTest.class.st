@@ -11,7 +11,8 @@ RBAddAccessorsForClassTransformationTest >> testRefactoring [
 
 	| refactoring class |
 	refactoring := (RBAddAccessorsForClassTransformation className:
-		                #RBVariableTransformation) generateChanges.
+		                #RBVariableTransformation).
+	refactoring generateChanges.
 
 	self assert: refactoring model changes changes size equals: 4.
 
@@ -30,7 +31,8 @@ RBAddAccessorsForClassTransformationTest >> testTransform [
 
 	| transformation class |
 	transformation := (RBAddAccessorsForClassTransformation className:
-		                   self changeMockClass name) generateChanges.
+		                   self changeMockClass name).
+	transformation generateChanges.
 
 	self assert: transformation model changes changes size equals: 2.
 

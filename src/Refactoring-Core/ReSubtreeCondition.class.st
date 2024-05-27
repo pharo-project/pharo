@@ -1,6 +1,6 @@
 Class {
 	#name : 'ReSubtreeCondition',
-	#superclass : 'RBCondition',
+	#superclass : 'ReReifiedCondition',
 	#instVars : [
 		'subtree'
 	],
@@ -25,10 +25,4 @@ ReSubtreeCondition >> check [
 ReSubtreeCondition >> subtree: aRBMethodNode [
 
 	subtree := aRBMethodNode
-]
-
-{ #category : 'displaying' }
-ReSubtreeCondition >> violationMessageOn: aStream [ 
-
-	self subclassResponsibility
 ]

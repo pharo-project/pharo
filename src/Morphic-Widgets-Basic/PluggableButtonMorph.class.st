@@ -333,23 +333,14 @@ PluggableButtonMorph >> browseAction [
 PluggableButtonMorph >> changed [
 	"Update the fillStyle here."
 
-	|lc pc bs|
+	| aBorderStyle|
 	self assureExtension.
-	extension borderStyle: (bs := self borderStyleToUse).
-	borderColor := bs style.
-	borderWidth := bs width.
+	extension borderStyle: (aBorderStyle := self borderStyleToUse).
+	borderColor := aBorderStyle style.
+	borderWidth := aBorderStyle width.
 	extension fillStyle: self fillStyleToUse.
 	self layoutInset: (self theme buttonLabelInsetFor: self).
 	self privateColor: self fillStyle asColor.
-	(self labelMorph respondsTo: #interactionState:)
-		ifTrue: [self labelMorph interactionState: self interactionState]
-		ifFalse: [(self labelMorph isNil
-			or: [label isMorph]) ifFalse: [
-				pc := self normalColor.
-				lc := self enabled
-					ifTrue: [pc contrastingBlackAndWhiteColor]
-					ifFalse: [pc contrastingBlackAndWhiteColor muchDarker].
-				self labelMorph color: lc]].
 	super changed
 ]
 

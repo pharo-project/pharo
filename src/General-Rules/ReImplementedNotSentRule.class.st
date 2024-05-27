@@ -92,11 +92,12 @@ ReImplementedNotSentRule class >> shutDown [
 
 { #category : 'announcement' }
 ReImplementedNotSentRule class >> subscribe [
+
 	<systemEventRegistration>
 	self unsubscribe.
 
-	SystemAnnouncer uniqueInstance weak
-		when: MethodAdded    send: #methodAdded: to: self;
+	self codeChangeAnnouncer weak
+		when: MethodAdded send: #methodAdded: to: self;
 		when: MethodModified send: #methodModified: to: self
 ]
 
@@ -110,7 +111,7 @@ ReImplementedNotSentRule class >> uniqueIdentifierName [
 { #category : 'announcement' }
 ReImplementedNotSentRule class >> unsubscribe [
 
-	SystemAnnouncer uniqueInstance unsubscribe: self
+	self codeChangeAnnouncer unsubscribe: self
 ]
 
 { #category : 'running' }

@@ -41,12 +41,15 @@ RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval
 { #category : 'preconditions' }
 RBExtractToTemporaryRefactoring >> applicabilityPreconditions [
 
-	^ (RBCondition definesSelector: selector in: class)
-	  & (RBCondition isValidInstanceVariableName: newVariableName for: class)
-	  & (RBCondition withBlock: [
-		   self verifySelectedInterval.
-		   self checkVariableName.
-		   true ])
+	^ {
+		  (RBCondition definesSelector: selector in: class).
+		  (RBCondition
+			   isValidInstanceVariableName: newVariableName
+			   for: class).
+		  (RBCondition withBlock: [
+			   self verifySelectedInterval.
+			   self checkVariableName.
+			   true ]) }
 ]
 
 { #category : 'preconditions' }

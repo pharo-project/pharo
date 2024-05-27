@@ -85,6 +85,9 @@ RBRemoveSenderMethodParametrizedTest >> testRemoveMessageInsideBlock [
 			#RBClassDataForRefactoringTest }.
 
 	self setupInlineExpressionFor: refactoring toReturn: false.
+	self
+		setupImplementorToInlineFor: refactoring
+		toReturn: (refactoring model classNamed: #RBClassDataForRefactoringTest).	
 	self executeRefactoring: refactoring .
 
 	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #caller1) equals: (self parseMethod: 'caller1
@@ -156,13 +159,16 @@ RBRemoveSenderMethodParametrizedTest >> testRemoveSenderIntoCascaded3Message [
 			   environment isEmpty ])
 		  errorMacro: aClass , '' is referenced.<n>Browse references?'';
 		  yourself'.
+	refactoring := self createRefactoringWithArguments:
+		{{(	63 to: 460) . #errorBlock:}.
+			#referencesConditionFor: .
+			#RBClassDataForRefactoringTest}.
 	self proceedThroughWarning:
-		[ refactoring := self createRefactoringWithArguments:
-			{{(	63 to: 460) . #errorBlock:}.
-				#referencesConditionFor: .
-				#RBClassDataForRefactoringTest}.
-	self setupInlineExpressionFor: refactoring toReturn: false.
-	self executeRefactoring: refactoring ].
+		[  self setupInlineExpressionFor: refactoring toReturn: false.
+			self
+				setupImplementorToInlineFor: refactoring
+				toReturn: (refactoring model classNamed: #RBClassDataForRefactoringTest).	
+			self executeRefactoring: refactoring ].
 	transformedMethod := ((refactoring model classNamed: #RBClassDataForRefactoringTest)
 	parseTreeForSelector: #referencesConditionFor:).
 	self assert: (transformedMethod = afterRefactoring1 or: [transformedMethod = afterRefactoring2])
@@ -172,14 +178,15 @@ RBRemoveSenderMethodParametrizedTest >> testRemoveSenderIntoCascaded3Message [
 RBRemoveSenderMethodParametrizedTest >> testRemoveSenderIntoCascadedMessage [
 
 	| refactoring |
-
-	self proceedThroughWarning: [ 
-		refactoring := self createRefactoringWithArguments:
+	refactoring := self createRefactoringWithArguments:
 			{{(	32 to: 63) . #cr}.
 			(#called:, #on:) asSymbol .
 			#RBClassDataForRefactoringTest}.
+	self proceedThroughWarning: [ 
 		self setupInlineExpressionFor: refactoring toReturn: false.
-
+		self
+			setupImplementorToInlineFor: refactoring
+			toReturn: (refactoring model classNamed: #RBClassDataForRefactoringTest).	
 		self executeRefactoring: refactoring ].
 	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: (#called:, #on:) asSymbol )
 		equals: (self parseMethod: 'called: anObject on: aBlock

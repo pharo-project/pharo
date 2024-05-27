@@ -106,8 +106,10 @@ Symbol class >> initialize [
 { #category : 'symbol table' }
 Symbol class >> intern: aStringOrSymbol [
 
-	^ (self findInterned: aStringOrSymbol) ifNil: [
-		  NewSymbols add: aStringOrSymbol createSymbol ]
+	SymbolTableSemaphore enabled ifFalse: [
+		^ self rawIntern: aStringOrSymbol ].
+	SymbolTableSemaphore singleInstance critical: [
+		^ self rawIntern: aStringOrSymbol ]
 ]
 
 { #category : 'instance creation' }
@@ -154,6 +156,13 @@ Symbol class >> possibleSelectorsFor: misspelled [
 		binary := misspelled, ':'.		"try for missing colon"
 		Symbol hasInterned: binary ifTrue: [:him | best addFirst: him]].
 	^ best
+]
+
+{ #category : 'symbol table' }
+Symbol class >> rawIntern: aStringOrSymbol [
+
+	^ (self findInterned: aStringOrSymbol) ifNil: [
+		  NewSymbols add: aStringOrSymbol createSymbol ]
 ]
 
 { #category : 'instance creation' }
@@ -314,6 +323,23 @@ Symbol >> = aSymbol [
 	self class == aSymbol class ifTrue: [^ false].
 	"Use String comparison otherwise"
 	^ super = aSymbol
+]
+
+{ #category : 'converting' }
+Symbol >> asAccessor [
+	"Return a accessor (getter) message from a setter message.
+	Return self if it is already a getter."
+
+	"#name asAccessor >>> #name"
+	"#name: asAccessor >>> #name"
+	
+	(((self count: [ :char | char = $: ]) > 1) 
+		or: [ self isEmpty 
+		or: [ self isBinary ]]) ifTrue: [ 
+		self error: 'This symbol cannot be converted to an accessor' ].
+
+	self endsWithAColon ifFalse:[ ^ self ].
+	^ (self withoutSuffix: ':') asSymbol
 ]
 
 { #category : 'converting' }
@@ -509,7 +535,12 @@ Symbol >> precedence [
 	2 for binary and 3 for keyword selectors."
 
 	self size = 0 ifTrue: [^ 0].
-	(self first isLetter or: [ self first = $_ ]) ifFalse: [^ 2].
+	(self first isLetter or: [ self first = $_ ]) ifFalse: [
+		| special |
+		special := Character specialCharacters.
+		^ (self allSatisfy: [ :char | special includes: char ])
+			ifTrue: [ 2 ]
+			ifFalse: [ 0 ] ].
 	self last = $: ifTrue: [^ 3].
 	^ 1
 ]

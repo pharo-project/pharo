@@ -53,7 +53,7 @@ RBRefactoring >> asRefactoring [
 { #category : 'preconditions' }
 RBRefactoring >> breakingChangePreconditions [
 
-	^ self trueCondition 
+	^ #(  )
 ]
 
 { #category : 'testing' }
@@ -61,16 +61,6 @@ RBRefactoring >> canReferenceVariable: aString in: aClass [
 	(aClass definesVariable: aString) ifTrue: [^true].
 	(self model includesGlobal: aString asSymbol) ifTrue: [^true].
 	^(self poolVariableNamesFor: aClass) includes: aString
-]
-
-{ #category : 'scripting api - conditions' }
-RBRefactoring >> checkApplicabilityPreconditions [
-	"Check a preconditions and raise an error on violations. This method is part of the scripting API since it raises an error."
-	
-	| failedPreconditions |
-	failedPreconditions := self failedApplicabilityPreconditions.
-	failedPreconditions ifEmpty: [ ^ self ].
-	RBRefactoringError signalFor: failedPreconditions
 ]
 
 { #category : 'scripting api - conditions' }
@@ -89,6 +79,13 @@ RBRefactoring >> checkClass: aRBClass selector: aSelector using: aMatcher [
 	parseTree := aRBClass parseTreeForSelector: aSelector.
 	parseTree ifNotNil: [aMatcher executeTree: parseTree].
 	^aMatcher answer
+]
+
+{ #category : 'scripting api - conditions' }
+RBRefactoring >> checkPreconditions [ 
+
+	self checkApplicabilityPreconditions.
+	self checkBreakingChangePreconditions 
 ]
 
 { #category : 'private' }
@@ -122,22 +119,6 @@ RBRefactoring >> convertClasses: classSet select: aBlock using: searchReplacer [
 						convertMethod: selector
 						for: aClass
 						using: searchReplacer]]
-]
-
-{ #category : 'preconditions' }
-RBRefactoring >> eagerlyCheckApplicabilityPreconditions [
-
-	self applicabilityPreconditions
-		do: [ :cond | cond check ifFalse:
-				[ self refactoringError:
-					(String streamContents: [ :aStream | cond violationMessageOn: aStream ] ) ] ]
-]
-
-{ #category : 'preconditions' }
-RBRefactoring >> failedApplicabilityPreconditions [
-	"Returne the failed preconditions without raising error. It should only be called by drivers."
-	
-	^ self applicabilityPreconditions reject: [ :cond | cond check ]
 ]
 
 { #category : 'preconditions' }

@@ -105,18 +105,21 @@ RBTemporaryToInstanceVariableTransformation class >> model: aRBSmalltalk class: 
 { #category : 'preconditions' }
 RBTemporaryToInstanceVariableTransformation >> applicabilityPreconditions [
 
-	^ (RBCondition definesSelector: selector in: class) & (RBCondition
-		   definesInstanceVariable: temporaryVariableName asString
-		   in: class) not
-	  & (RBCondition withBlock: [
+	^ {
+		  (RBCondition definesSelector: selector in: class).
+		  (RBCondition
+			   definesInstanceVariable: temporaryVariableName asString
+			   in: class) not.
+		  (RBCondition withBlock: [
 			   self checkForValidTemporaryVariable.
-			   true ])
+			   true ]) }
 ]
 
 { #category : 'preconditions' }
 RBTemporaryToInstanceVariableTransformation >> checkForValidTemporaryVariable [
 	| parseTree |
 	parseTree := class parseTreeForSelector: selector.
+	parseTree ifNil: [ self refactoringError: 'Could not create parse tree for ' class name , '>>' , selector ].
 	(parseTree allTemporaryVariables includes: temporaryVariableName)
 		ifFalse:
 			[self refactoringError: temporaryVariableName

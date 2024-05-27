@@ -1,8 +1,8 @@
 ---
 name: Bug report
-about: Create a report to help us improve the latest dev version of Pharo 
+about: Create a report to help us improve the latest dev version of Pharo
 title: ''
-labels: Bug
+labels: 'Type: Bug'
 assignees: ''
 
 ---
@@ -34,4 +34,3 @@ In addition, are you willing to help because after all Pharo is yours too?
 
 **Additional context**
 Add any other context about the problem here.
-

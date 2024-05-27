@@ -121,7 +121,8 @@ ProcessorScheduler >> activeProcess [
 	It can be just pretending to be the active process
 	(like during the code simulation in the debugger)"
 
-	^activeProcess effectiveProcess
+	<noInstrumentation>
+	^ activeProcess effectiveProcess
 ]
 
 { #category : 'private' }

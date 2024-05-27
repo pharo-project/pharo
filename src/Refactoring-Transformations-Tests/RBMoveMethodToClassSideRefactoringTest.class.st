@@ -22,5 +22,5 @@ RBMoveMethodToClassSideRefactoringTest >> testFailureExistsMethodInClassSide [
 		classified: { #example }.
 	self
 		should: [ refactoring generateChanges ]
-		raise: RBBreakingChangeChecksFailedWarning
+		raise: RBRefactoringWarning
 ]

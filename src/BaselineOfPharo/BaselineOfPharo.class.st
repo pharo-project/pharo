@@ -7,9 +7,9 @@ Class {
 	#classVars : [
 		'ExternalProjects'
 	],
-	#category : 'BaselineOfPharo-Base',
+	#category : 'BaselineOfPharo-Baseline',
 	#package : 'BaselineOfPharo',
-	#tag : 'Base'
+	#tag : 'Baseline'
 }
 
 { #category : 'private' }
@@ -28,7 +28,7 @@ BaselineOfPharo class >> documentBrowser [
 		newName: 'DocumentBrowser' 
 		owner: 'pharo-spec' 
 		project: 'NewTools-DocumentBrowser' 
-		version: 'Pharo12'
+		version: 'Pharo13'
 ]
 
 { #category : 'repository urls' }
@@ -60,7 +60,7 @@ BaselineOfPharo class >> iceberg [
 		newName: 'Iceberg' 
 		owner: 'pharo-vcs' 
 		project: 'iceberg' 
-		version: 'Pharo12' 
+		version: 'Pharo13' 
 		sourceDir: nil
 ]
 
@@ -78,7 +78,7 @@ BaselineOfPharo class >> microdown [
 		newName: 'Microdown' 
 		owner: 'pillar-markup' 
 		project: 'Microdown' 
-		version: 'Pharo12'
+		version: 'Pharo13'
 ]
 
 { #category : 'repository urls' }
@@ -95,13 +95,20 @@ BaselineOfPharo class >> newTools [
 		newName: 'NewTools' 
 		owner: 'pharo-spec' 
 		project: 'NewTools' 
-		version: 'Pharo12'
+		version: 'Pharo13'
 ]
 
 { #category : 'repository urls' }
 BaselineOfPharo class >> newToolsRepository [
 
 	^ (self externalProjectNamed: 'NewTools') repository
+]
+
+{ #category : 'class initialization' }
+BaselineOfPharo class >> reset [
+	<script>
+
+	ExternalProjects := nil
 ]
 
 { #category : 'accessing - external projects' }
@@ -112,13 +119,30 @@ BaselineOfPharo class >> roassal [
 		  newName: 'Roassal'
 		  owner: 'pharo-graphics'
 		  project: 'Roassal'
-		  version: 'v1.06b'
+		  version: 'v1.06d'
 ]
 
 { #category : 'repository urls' }
 BaselineOfPharo class >> roassalRepository [
 
 	^ (self externalProjectNamed: 'Roassal') repository
+]
+
+{ #category : 'accessing - external projects' }
+BaselineOfPharo class >> scriptableDebugger [
+	<externalProject>
+
+	^ PharoExternalProject 
+		newName: 'ScriptableDebugger' 
+		owner: 'pharo-spec' 
+		project: 'ScriptableDebugger' 
+		version: 'Pharo13'
+]
+
+{ #category : 'repository urls' }
+BaselineOfPharo class >> scriptableDebuggerRepository [
+
+	^ (self externalProjectNamed: 'ScriptableDebugger') repository
 ]
 
 { #category : 'accessing - external projects' }
@@ -129,7 +153,7 @@ BaselineOfPharo class >> spec [
 		newName: 'Spec2' 
 		owner: 'pharo-spec' 
 		project:'Spec' 
-		version: 'Pharo12'
+		version: 'Pharo13'
 ]
 
 { #category : 'repository urls' }
@@ -163,7 +187,7 @@ BaselineOfPharo class >> welcomeBrowser [
 		newName: 'WelcomeBrowser' 
 		owner: 'pharo-spec' 
 		project: 'NewTools-WelcomeBrowser' 
-		version: 'Pharo12'
+		version: 'Pharo13'
 ]
 
 { #category : 'repository urls' }
@@ -189,9 +213,7 @@ BaselineOfPharo >> baseline: spec [
 				repository: repository;
 				loads: #( 'IcebergSupport' ) ].
 
-		spec
-			package: 'Gofer-Deprecated';
-			package: 'Deprecated12' ]
+		spec package: 'Deprecated13' ]
 ]
 
 { #category : 'actions' }

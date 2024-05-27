@@ -46,10 +46,10 @@ RBProtectVariableTransformationTest >> testAccessorsAlreadyExist [
 RBProtectVariableTransformationTest >> testClassVariable [
 
 	| refactoring class |
-	refactoring := (RBProtectVariableTransformation
-		                classVariable: 'RecursiveSelfRule'
-		                class: #RBTransformationRuleTestData)
-		               generateChanges.
+	refactoring := RBProtectVariableTransformation
+		               classVariable: 'RecursiveSelfRule'
+		               class: #RBTransformationRuleTestData.
+	refactoring generateChanges.
 
 	class := (refactoring model classNamed: #RBTransformationRuleTestData)
 		         classSide.
@@ -167,10 +167,10 @@ RBProtectVariableTransformationTest >> testMetaclassFailure [
 RBProtectVariableTransformationTest >> testRefactoring [
 
 	| refactoring class |
-	refactoring := (RBProtectVariableTransformation
-		                instanceVariable: 'builder'
-		                class: #RBTransformationRuleTestData)
-		               generateChanges.
+	refactoring := RBProtectVariableTransformation
+		               instanceVariable: 'builder'
+		               class: #RBTransformationRuleTestData.
+	refactoring generateChanges.
 
 	class := refactoring model classNamed: #RBTransformationRuleTestData.
 	self
@@ -203,10 +203,10 @@ RBProtectVariableTransformationTest >> testRefactoring [
 RBProtectVariableTransformationTest >> testTransform [
 
 	| transformation class |
-	transformation := (RBProtectVariableTransformation
-		                   instanceVariable: 'class'
-		                   class: #RBTransformationRuleTestData)
-		                  generateChanges.
+	transformation := RBProtectVariableTransformation
+		                  instanceVariable: 'class'
+		                  class: #RBTransformationRuleTestData.
+	transformation generateChanges.
 
 	class := transformation model classNamed:
 		         #RBTransformationRuleTestData.
@@ -290,10 +290,11 @@ RBProtectVariableTransformationTest >> testVariableNotDirectlyDefined [
 RBProtectVariableTransformationTest >> testWithAssignment [
 
 	| refactoring class |
-	refactoring := (RBProtectVariableTransformation
-		                model: model
-		                instanceVariable: 'instVarName2'
-		                class: #Foo) generateChanges.
+	refactoring := RBProtectVariableTransformation
+		               model: model
+		               instanceVariable: 'instVarName2'
+		               class: #Foo.
+	refactoring generateChanges.
 
 	class := model classNamed: #Foo.
 	self

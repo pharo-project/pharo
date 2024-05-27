@@ -86,9 +86,9 @@ RBAbstractTransformation class >> refactoringOptions [
 ]
 
 { #category : 'preconditions' }
-RBAbstractTransformation >> applicabilityPreconditions [ 
-	
-	^ self trueCondition 
+RBAbstractTransformation >> applicabilityPreconditions [
+
+	^ #(  )
 ]
 
 { #category : 'private' }
@@ -143,15 +143,12 @@ RBAbstractTransformation >> changes [
 
 { #category : 'scripting api - conditions' }
 RBAbstractTransformation >> checkApplicabilityPreconditions [
-
-	| conditions errorStrings |
-	conditions := self applicabilityPreconditions.
-	conditions := conditions reject: [ :cond | cond check ].
-	conditions ifEmpty: [ ^ self ].
-	errorStrings := String streamContents: [ :aStream |
-		                conditions do: [ :cond |
-			                cond violationMessageOn: aStream ] ].
-	self refactoringError: errorStrings
+	"Check a preconditions and raise an error on violations. This method is part of the scripting API since it raises an error."
+	
+	| failedPreconditions |
+	failedPreconditions := self failedApplicabilityPreconditions.
+	failedPreconditions ifEmpty: [ ^ self ].
+	RBRefactoringError signalFor: failedPreconditions
 ]
 
 { #category : 'condition definitions' }
@@ -167,14 +164,7 @@ RBAbstractTransformation >> checkMethodName: aName in: aClass [
 { #category : 'scripting api - conditions' }
 RBAbstractTransformation >> checkPreconditions [
 
-	| conditions block |
-	conditions := self preconditions.
-	conditions check ifTrue: [ ^ self ].
-	block := conditions errorBlock.
-	block
-		ifNotNil: [
-		self refactoringWarning: conditions errorString with: block ]
-		ifNil: [ self refactoringError: conditions errorString ]
+	self checkApplicabilityPreconditions
 ]
 
 { #category : 'preconditions' }
@@ -219,6 +209,13 @@ RBAbstractTransformation >> defaultEnvironment [
 	^ RBBrowserEnvironment new
 ]
 
+{ #category : 'preconditions' }
+RBAbstractTransformation >> eagerlyCheckApplicabilityPreconditions [
+
+	self applicabilityPreconditions do: [ :cond |
+		cond check ifFalse: [ RBRefactoringError signalFor: { cond } ] ]
+]
+
 { #category : 'condition definitions' }
 RBAbstractTransformation >> emptyCondition [
 	self deprecated: 'Use trueCondition' transformWith: '`@rec emptyCondition' -> '`@rec trueCondition'. 
@@ -233,6 +230,13 @@ RBAbstractTransformation >> execute [
 	self performChanges
 ]
 
+{ #category : 'preconditions' }
+RBAbstractTransformation >> failedApplicabilityPreconditions [
+	"Returne the failed preconditions without raising error. It should only be called by drivers."
+	
+	^ self applicabilityPreconditions reject: [ :cond | cond check ]
+]
+
 { #category : 'scripting api - executing' }
 RBAbstractTransformation >> generateChanges [
 	"Prepare, check the preconditions, perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message), and return the changes. This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
@@ -240,6 +244,7 @@ RBAbstractTransformation >> generateChanges [
 	self prepareForExecution.
 	self checkPreconditions.
 	self privateTransform.
+	^ self changes
 	
 	
 ]
@@ -327,8 +332,7 @@ RBAbstractTransformation >> performChanges: aCompositeChange [
 	"Perform the changes contained in a composite change"
 	
 	RBRefactoryChangeManager instance
-		performChange: aCompositeChange;
-		addUndoPointer: RBRefactoryChangeManager nextCounter
+		performCompositeChange: aCompositeChange
 ]
 
 { #category : 'accessing' }
@@ -350,7 +354,8 @@ RBAbstractTransformation >> poolVariableNamesIn: poolName [
 
 { #category : 'preconditions' }
 RBAbstractTransformation >> preconditions [
-
+	"By default we define applicabilityPreconditions, if you need to check
+	breakingChangePreconditions, you need to override me"
 	^ self applicabilityPreconditions
 ]
 

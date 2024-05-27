@@ -19,11 +19,11 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMethodDoesNotExist [
 RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinition [
 
 	| transformation class |
-	transformation := (RBMoveTemporaryVariableDefinitionTransformation
-		                   variable: #temp
-		                   inMethod: #moveDefinition
-		                   inClass: #RBClassDataForRefactoringTest)
-		                  generateChanges.
+	transformation := RBMoveTemporaryVariableDefinitionTransformation
+		                  variable: #temp
+		                  inMethod: #moveDefinition
+		                  inClass: #RBClassDataForRefactoringTest.
+	transformation generateChanges.
 
 	class := transformation model classNamed:
 		         #RBClassDataForRefactoringTest.
@@ -46,11 +46,11 @@ RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinition [
 RBMoveTemporaryVariableDefinitionTransformationTest >> testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage [
 
 	| transformation class |
-	transformation := (RBMoveTemporaryVariableDefinitionTransformation
-		                   variable: #association
-		                   inMethod: #referencesConditionFor:
-		                   inClass: #RBClassDataForRefactoringTest)
-		                  generateChanges.
+	transformation := RBMoveTemporaryVariableDefinitionTransformation
+		                  variable: #association
+		                  inMethod: #referencesConditionFor:
+		                  inClass: #RBClassDataForRefactoringTest.
+	transformation generateChanges.
 
 	class := transformation model classNamed:
 		         #RBClassDataForRefactoringTest.

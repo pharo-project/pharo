@@ -44,6 +44,13 @@ ByteArray class >> readHexFrom: aString [
 	^(self new: aString size // 2) readHexFrom: aString readStream
 ]
 
+{ #category : 'comparing' }
+ByteArray >> = anotherByteArray [
+
+	<primitive: 156>
+	^ super = anotherByteArray
+]
+
 { #category : 'converting' }
 ByteArray >> asByteArray [
 	^ self

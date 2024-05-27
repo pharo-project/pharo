@@ -20,10 +20,10 @@ RBMakeClassAbstractTransformation class >> basicMenuItemString [
 	^ 'Make abstract'
 ]
 
-{ #category : 'instance creation' }
-RBMakeClassAbstractTransformation class >> class: targetClass [
+{ #category : 'accessing' }
+RBMakeClassAbstractTransformation class >> classNamed: aClassName [
 
-	^ self new class: targetClass
+	^ self new classNamed: aClassName
 ]
 
 { #category : 'testing' }
@@ -32,10 +32,34 @@ RBMakeClassAbstractTransformation class >> isTransformation [
 	^ true
 ]
 
-{ #category : 'instance creation' }
-RBMakeClassAbstractTransformation >> class: class [
+{ #category : 'preconditions' }
+RBMakeClassAbstractTransformation >> applicabilityPreconditions [
+	"Answer a <Collection> of <RBCondition>"
 
-	targetClass := class
+	^ { 
+		self preconditionHaveNoReferences
+		}
+]
+
+{ #category : 'scripting api - conditions' }
+RBMakeClassAbstractTransformation >> checkPreconditions [ 
+
+	self checkApplicabilityPreconditions 
+]
+
+{ #category : 'scripting api - conditions' }
+RBMakeClassAbstractTransformation >> classNamed: aClassName [
+
+	className := aClassName.
+	targetClass := self model classNamed: aClassName.
+]
+
+{ #category : 'preconditions' }
+RBMakeClassAbstractTransformation >> preconditionHaveNoReferences [
+
+	^ ReClassesHaveNoReferencesCondition new
+		  model: model;
+		  classes: { targetClass }
 ]
 
 { #category : 'preconditions' }
@@ -48,17 +72,11 @@ RBMakeClassAbstractTransformation >> preconditions [
 { #category : 'transforming' }
 RBMakeClassAbstractTransformation >> privateTransform [
 
-	(RBAddMethodTransformation
+	self generateChangesFor: ((RBAddMethodTransformation
 		 sourceCode: 'isAbstract
 
-	^ self == ' , targetClass asString
+	^ self == ' , className
 		 in: targetClass classSide
-		 withProtocol: #testing) execute
-]
+		 withProtocol: #testing)).
 
-{ #category : 'preconditions' }
-RBMakeClassAbstractTransformation >> skippingPreconditions [
-	"We cannot validate that the class is actually not used and not receiving a message new."
-	
-	^ (RBCondition isAbstractClass: targetClass) not
 ]

@@ -206,7 +206,7 @@ TaAbstractComposition >> copyMethod: aSelector into: aClass replacing: replacing
 	newMethod sourcePointer: aCompiledMethod sourcePointer.
 
 	"This step should not announce anything in the system."
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ aClass classify: aSelector under: aCompiledMethod protocolName ].
+	self class codeChangeAnnouncer suspendAllWhile: [ aClass classify: aSelector under: aCompiledMethod protocolName ].
 
 	aClass addSelectorSilently: aSelector withMethod: newMethod.
 

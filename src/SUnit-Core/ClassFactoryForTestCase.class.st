@@ -123,8 +123,8 @@ ClassFactoryForTestCase >> delete: aBehavior [
 			createdSilently remove: aBehavior.
 			aBehavior removeFromSystemUnlogged ]
 		ifFalse: [ aBehavior removeFromSystem ].
-	"We know that we can remove the key from Undeclared, as it was added by #removeFromSystem"
-	Undeclared removeKey: name ifAbsent: [ "might be an anonymous class" ]
+	"We know that we can remove the key from the undeclared registry, as it was added by #removeFromSystem"
+	self class undeclaredRegistry removeKey: name ifAbsent: [ "might be an anonymous class" ]
 ]
 
 { #category : 'cleaning' }

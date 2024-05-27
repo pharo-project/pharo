@@ -8,16 +8,16 @@ Class {
 
 { #category : 'checking' }
 ReIsNotAMetaclass >> check [
-	^ aClass isMeta not
+	^ class isMeta not
 ]
 
 { #category : 'displaying' }
 ReIsNotAMetaclass >> violationMessageOn: aWriteStream [ 
 	
-	aWriteStream nextPutAll: 'Class ', aClass name , ' is a metaclass'
+	aWriteStream nextPutAll: 'Class ', class name , ' is a metaclass'
 ]
 
 { #category : 'checking' }
 ReIsNotAMetaclass >> violators [
-	^ { aClass }
+	^ { class }
 ]

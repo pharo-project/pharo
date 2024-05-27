@@ -54,6 +54,6 @@ SycAbstractAllInstVarAccessorsCommand >> selectVariables [
 			withItems: vars
 			selecting: vars.
 		dialog cancelled ifTrue: [ CmdCommandAborted signal ].
-		aClass -> dialog presenter selectedItems
+		aClass -> dialog selectedItems
 		]
 ]

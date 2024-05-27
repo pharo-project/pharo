@@ -46,7 +46,15 @@ RBAddProtocolTransformation class >> protocol: aString inClass: aClassName [
 { #category : 'preconditions' }
 RBAddProtocolTransformation >> applicabilityPreconditions [
 
-	^ self classExist & self protocolExist
+	^ {
+		  self classExist.
+		  self protocolExist }
+]
+
+{ #category : 'scripting api - conditions' }
+RBAddProtocolTransformation >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
 ]
 
 { #category : 'preconditions' }

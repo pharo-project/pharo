@@ -203,21 +203,21 @@ Class >> basicDeclareClassVariable: aClassVariable [
 	This method was extracted from existing users and it keeps known issues (therefore a flag):
 	- When a class of a variable is changed we must recompile using methods because new variable can implement specific compilation logic (method bytecode can become different).
 	- Undeclared case requires much more clever logic. Now in that case the class variable will be shared between all classes previously referencing undeclared variable despite on the fact that they do no see a class variables from other classes"
+
 	self flag: #todo.
 
 	classPool ifNil: [ classPool := Dictionary new ].
 	aClassVariable owningClass: self.
 
-	self classPool associationAt: aClassVariable name ifPresent:  [:existingVar |
-		(existingVar class == aClassVariable class) ifTrue: [^self].
+	self classPool associationAt: aClassVariable name ifPresent: [ :existingVar |
+		existingVar class == aClassVariable class ifTrue: [ ^ self ].
 		"need to take care to migrate existing variables to new global if class if different"
 		aClassVariable write: existingVar read.
 		self classPool removeKey: existingVar name ].
 	"Pick up any refs in Undeclared"
-	Undeclared associationAt: aClassVariable name ifPresent:  [:existingVar |
-		Undeclared removeKey: existingVar name.
-		existingVar becomeForward: aClassVariable
-	].
+	self undeclaredRegistry associationAt: aClassVariable name ifPresent: [ :existingVar |
+		self undeclaredRegistry removeKey: existingVar name.
+		existingVar becomeForward: aClassVariable ].
 	self classPool add: aClassVariable
 ]
 
@@ -842,7 +842,7 @@ Class >> removeClassVariable: aClassVariable [
 	aClassVariable isReferenced ifTrue: [
 			NewUndeclaredWarning signal: aClassVariable name in: self name.
 			"NOTE: we add ClassVariable to Undeclared, we need to update to UndeclaredVariable"
-			Undeclared add: aClassVariable ].
+			self undeclaredRegistry add: aClassVariable ].
 		
 	self classPool removeKey: aClassVariable key.
 	self classPool ifEmpty: [ self classPool: nil ].
@@ -870,9 +870,9 @@ Class >> removeFromSystem: logged [
 
 	"we add the class to Undeclared so that if references still exist, they will  be automatically fixed if this class is loaded again. We do not check if references exist as it is too slow"
 	
-	(Undeclared includesKey: self name) ifFalse: [
+	(self undeclaredRegistry includesKey: self name) ifFalse: [
 		self environment associationAt: self name ifPresent: [  
-			Undeclared add: ((self environment associationAt: self name) primitiveChangeClassTo: UndeclaredVariable new)]].
+			self undeclaredRegistry add: ((self environment associationAt: self name) primitiveChangeClassTo: UndeclaredVariable new)]].
 	
 	self environment forgetClass: self.
 
@@ -948,9 +948,9 @@ Class >> rename: aString [
 		ifTrue: [^ self error: newName , ' already exists'].
 	self setName: newName.
 	self environment renameClass: self from: oldName.
-	(Undeclared includesKey: newName)
+	(self undeclaredRegistry includesKey: newName)
 		ifTrue: [self inform: 'There are references to, ' , aString printString , '
-from Undeclared. Check them after this change.']
+from the undeclared registry. Check them after this change.']
 ]
 
 { #category : 'private' }
@@ -1067,6 +1067,13 @@ Class >> superclass: aClass methodDictionary: mDict format: fmt [
 	"Basic initialization of the receiver"
 	super superclass: aClass methodDictionary: mDict format: fmt.
 	self subclasses: nil
+]
+
+{ #category : 'accessing' }
+Class >> undeclaredRegistry [
+	"The undeclared registry is a registry of all the undeclared classes in the environment of the class. An undeclared class is a class that is not part of the environment but that is referenced or subclassed."
+
+	^ self environment undeclaredRegistry
 ]
 
 { #category : 'initialization' }

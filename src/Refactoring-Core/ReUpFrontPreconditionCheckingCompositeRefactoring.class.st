@@ -15,14 +15,15 @@ Class {
 ReUpFrontPreconditionCheckingCompositeRefactoring >> applicabilityPreconditions [
 	"Return the list of the all the applicabilityPreconditions of the composite"
 	
-	^ refactorings collect: [ :each |  each applicabilityPreconditions ] 
+	^ refactorings flatCollect: [ :each |  each applicabilityPreconditions ] 
 ]
 
 { #category : 'preconditions' }
 ReUpFrontPreconditionCheckingCompositeRefactoring >> breakingChangePreconditions [
 	"Return the list of the all the breakingChangePreconditions of the composite"
-	
-	^ refactorings collect: [ :each | each breakingChangePreconditions ]
+
+	^ refactorings flatCollect: [ :each |
+		  each breakingChangePreconditions ]
 ]
 
 { #category : 'accessing' }

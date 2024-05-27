@@ -2,7 +2,7 @@
 name: Enhancement request
 about: Create a report to help us improve
 title: Enhance X with Y
-labels: Enhancement
+labels: 'Type: Enhancement'
 assignees: ''
 
 ---

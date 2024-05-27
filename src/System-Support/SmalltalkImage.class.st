@@ -318,7 +318,7 @@ SmalltalkImage >> classOrTraitNamed: aString [
 { #category : 'housekeeping' }
 SmalltalkImage >> cleanOutUndeclared [
 	| unreferenced |
-	unreferenced := Undeclared keys asSet.
+	unreferenced := self environment undeclaredRegistry keys asSet.
 	self systemNavigation allBehaviorsDo: [ :class |
 		class methodsDo: [ :method |
 			method withAllNestedLiteralsDo: [ :lit |
@@ -326,9 +326,9 @@ SmalltalkImage >> cleanOutUndeclared [
 					unreferenced
 						remove: lit key
 						ifAbsent: [ "Sanity check--a binding with more than one reference may already be gone from the unreferenced set, but should be present in Undeclared itself"
-							Undeclared at: lit key ] ] ] ] ].
+							self environment undeclaredRegistry at: lit key ] ] ] ] ].
 
-	unreferenced do: [ :key | Undeclared removeKey: key ]
+	unreferenced do: [ :key | self environment undeclaredRegistry removeKey: key ]
 ]
 
 { #category : 'cleanup' }

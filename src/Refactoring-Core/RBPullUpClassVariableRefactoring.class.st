@@ -10,32 +10,27 @@ Class {
 }
 
 { #category : 'preconditions' }
-RBPullUpClassVariableRefactoring >> applicabilityPreconditions [ 
+RBPullUpClassVariableRefactoring >> applicabilityPreconditions [
 
-	^ ((RBCondition isMetaclass: class) not)
-	& (RBCondition withBlock: [
-		  (class hierarchyDefinesClassVariable: variableName) ifFalse: [
-			  self refactoringError: 'No subclass defines ' , variableName ].
-		  true ])
+	^ {
+		  (RBCondition isMetaclass: class) not.
+		  (RBCondition withBlock: [
+			   (class hierarchyDefinesClassVariable: variableName) ifFalse: [
+				   self refactoringError: 'No subclass defines ' , variableName ].
+			   true ]) }
 ]
 
 { #category : 'preconditions' }
 RBPullUpClassVariableRefactoring >> breakingChangePreconditions [
 
-	^ RBCondition withBlock: [
-		  (class subclasses anySatisfy: [ :each |
-			   (each directlyDefinesClassVariable: variableName) not ])
-			  ifTrue: [
-				  self refactoringWarning:
-					  'Not all subclasses have an class variable named.<n> Do you want pull up this variable anyway?'
-					  , variableName , '.' ].
-		  true ]
-]
-
-{ #category : 'preconditions' }
-RBPullUpClassVariableRefactoring >> preconditions [
-
-	^ self applicabilityPreconditions & self breakingChangePreconditions
+	^ { (RBCondition withBlock: [
+		   (class subclasses anySatisfy: [ :each |
+			    (each directlyDefinesClassVariable: variableName) not ])
+			   ifTrue: [
+				   self refactoringWarning:
+					   'Not all subclasses have an class variable named.<n> Do you want pull up this variable anyway?'
+					   , variableName , '.' ].
+		   true ]) }
 ]
 
 { #category : 'transforming' }

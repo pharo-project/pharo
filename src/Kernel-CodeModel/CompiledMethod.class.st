@@ -416,6 +416,12 @@ CompiledMethod >> isInstalled [
 ]
 
 { #category : 'testing' }
+CompiledMethod >> isInstanceSide [
+	<reflection: 'Class structural inspection - Class/Metaclass shift'>
+	^self methodClass isInstanceSide
+]
+
+{ #category : 'testing' }
 CompiledMethod >> isOverridden [
 	| selector|
 	selector := self selector.

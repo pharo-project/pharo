@@ -98,7 +98,7 @@ Date class >> firstWeekdayOfMonth: month year: year [
 Date class >> fromDays: dayCount [
 	"Days since 1 January 1901"
 
-	^ self julianDayNumber: SqueakEpoch + dayCount
+	^ self julianDayNumber: Epoch + dayCount
 ]
 
 { #category : 'instance creation' }
@@ -303,7 +303,7 @@ Date >> addMonths: monthCount [
 	month := self monthIndex + monthCount - 1 \\ 12 + 1.
 	maxDaysInMonth := Month daysInMonth: month forYear: year.
 	day := self dayOfMonth min: maxDaysInMonth.
-	^ Date year: year month: month day: day
+	^ (Date year: year month: month day: day) translateTo: self offset
 ]
 
 { #category : 'accessing' }

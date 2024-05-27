@@ -76,7 +76,7 @@ MCPackageLoader >> basicLoadDefinitions [
 	self loadClassDefinitions.
 
 	"We want to announce the addition of the methods only once all methods are loaded because the system might react to the annoucements and execute code requirement other methods from the classes we are loading."
-	SystemAnnouncer uniqueInstance delayAnnouncementsAfter: [ additions select: [ :aDefinition | aDefinition isMethodDefinition ] thenDo: [ :definition | definition load ] ].
+	self class codeChangeAnnouncer delayAnnouncementsAfter: [ additions select: [ :aDefinition | aDefinition isMethodDefinition ] thenDo: [ :definition | definition load ] ].
 
 	removals do: [ :each | each unload ] displayingProgress: 'Cleaning up...'.
 

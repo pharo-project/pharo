@@ -11,7 +11,10 @@ Class {
 { #category : 'executing' }
 SycCMakeAbstractCommand >> executeRefactoring [
 
-	(self refactoringClass class: targetClass) execute
+	(RBMakeClassAbstractDriver new
+		 scopes: refactoringScopes
+		 class: targetClass) runRefactoring
+
 ]
 
 { #category : 'accessing' }
@@ -20,18 +23,19 @@ SycCMakeAbstractCommand >> icon [
 	^ self iconNamed: #smallLoadProject
 ]
 
-{ #category : 'accessing' }
+{ #category : 'testing' }
 SycCMakeAbstractCommand >> isApplicable [
 
 	^ context lastSelectedClass realClass isAbstract not
 ]
 
-{ #category : 'testing' }
+{ #category : 'accessing' }
 SycCMakeAbstractCommand >> name [
-	^ self refactoringClass menuItemString
+
+	^ 'Make abstract'
 ]
 
-{ #category : 'testing' }
+{ #category : 'accessing' }
 SycCMakeAbstractCommand >> order [
 	^ 40
 ]

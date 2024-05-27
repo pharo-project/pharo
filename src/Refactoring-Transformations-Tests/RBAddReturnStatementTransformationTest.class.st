@@ -64,8 +64,8 @@ RBAddReturnStatementTransformationTest >> testRefactoring [
 	refactoring := (RBAddReturnStatementTransformation
 		                return: '^ variable'
 		                inMethod: #methodBefore
-		                inClass: #RBAddReturnStatementTransformationTest)
-		               generateChanges.
+		                inClass: #RBAddReturnStatementTransformationTest).
+	refactoring generateChanges.
 
 	self assert: refactoring model changes changes size equals: 1.
 
@@ -83,7 +83,8 @@ RBAddReturnStatementTransformationTest >> testTransform [
 	transformation := (RBAddReturnStatementTransformation new
 		                   return: '^ variable'
 		                   inMethod: #methodBefore
-		                   inClass: self class name) generateChanges.
+		                   inClass: self class name).
+	transformation generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 
