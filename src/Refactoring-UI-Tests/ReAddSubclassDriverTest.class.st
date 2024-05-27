@@ -4,8 +4,9 @@ Class {
 	#instVars : [
 		'testingEnvironment'
 	],
-	#category : 'Refactoring-UI-Tests',
-	#package : 'Refactoring-UI-Tests'
+	#category : 'Refactoring-UI-Tests-Driver',
+	#package : 'Refactoring-UI-Tests',
+	#tag : 'Driver'
 }
 
 { #category : 'tests' }
@@ -41,16 +42,15 @@ ReAddSubclassDriverTest >> testAddSingleSubclass [
 
 	| driver rbClass |
 
-	driver := ReAddSubclassDriver new
-		superclass: self superclassToAddSubclass
-		packageNames: { }.
-	driver
+	driver := ReAddSubclassDriver basicNew. 
+	self setUpDriver: driver.
+	driver 
+		superclass: self superclassToAddSubclass;
 		scopes: { testingEnvironment };
 		subclass: self newSubclassName.
 	rbClass := driver superclass.
 	self deny: rbClass hasSubclasses.
-	
-	self setUpDriver: driver.	
+
 	driver runRefactoring.
 	
 	self 
@@ -66,18 +66,18 @@ ReAddSubclassDriverTest >> testAddSingleSubclassToDifferentPackage [
 
 	| driver |
 
-	driver := ReAddSubclassDriver new
-			scopes: { testingEnvironment } subclass: self newSubclassName;
-			package: ReAddSubclassDriver package;
-			yourself.
-	
+	driver := ReAddSubclassDriver basicNew. 
 	self setUpDriver: driver.
-	driver runRefactoring.
+	driver	
+		subclass: self newSubclassName;
+		scopes: { testingEnvironment };
+		packageName: ReAddSubclassDriver packageName;	
+		runRefactoring.
 	
 	self 
 		assert: driver refactoring changes changes size 
 		equals: 1.
 	self
 		assert: driver refactoring changes changes anyOne package
-		equals: ReAddSubclassDriver package name
+		equals: ReAddSubclassDriver packageName
 ]

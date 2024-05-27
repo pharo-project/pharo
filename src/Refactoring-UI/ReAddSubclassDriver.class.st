@@ -1,3 +1,9 @@
+"
+Interaction object responsible for driving the analysis and interactive adding of classes.
+
+The driver could be instantiated by providing a superclass, and additionally, a `Collection` of package names.
+
+"
 Class {
 	#name : 'ReAddSubclassDriver',
 	#superclass : 'RBInteractionDriver',
@@ -14,8 +20,19 @@ Class {
 	#tag : 'Drivers'
 }
 
+{ #category : 'accessing - class hierarchy' }
+ReAddSubclassDriver class >> superclass: aClass [
+	"Answer a new instance using aClass as the superclass of the receiver's subclass"
+
+	^ self basicNew
+		superclass: aClass;
+		initialize;
+		yourself
+]
+
 { #category : 'instance creation' }
 ReAddSubclassDriver class >> superclass: aClass packageNames: packages [
+	"Answer a new instance using aClass as the superclass of the receiver's subclass, and packages as a <Collection> of <String> specifying the package names where the new subclass will be created"
 
 	^ self basicNew
 		superclass: aClass;
@@ -60,15 +77,7 @@ ReAddSubclassDriver >> configureRefactoring [
 ReAddSubclassDriver >> initialize [
 
 	super initialize.
-	(StRefactoringAddClassPresenter on: self)
-		onCancel: [ : dialog | dialog close ];
-		onAccept: [ :dialog | 
-			self
-				packageName: dialog presenter packageName;
-				tagName: dialog presenter tagName;
-				comment: dialog presenter commentPresenterText.
-			dialog close ];
-		openModal
+	self requestSingleSubclass.
 ]
 
 { #category : 'accessing' }
@@ -88,14 +97,30 @@ ReAddSubclassDriver >> packageName: anObject [
 
 { #category : 'accessing' }
 ReAddSubclassDriver >> packageNames [
+	"Answer a <Collection> of packages to be displayed as potential targets of the new receiver's subclass"
 
 	^ packageNames
+		ifNil: [ packageNames := OrderedCollection new ]
 ]
 
 { #category : 'accessing' }
 ReAddSubclassDriver >> packageNames: anObject [
 
 	packageNames := anObject
+]
+
+{ #category : 'initialization' }
+ReAddSubclassDriver >> requestSingleSubclass [
+
+	(StRefactoringAddClassPresenter on: self)
+		onCancel: [ : dialog | dialog close ];
+		onAccept: [ :dialog | 
+			self
+				packageName: dialog presenter packageName;
+				tagName: dialog presenter tagName;
+				comment: dialog presenter commentPresenterText.
+			dialog close ];
+		openModal
 ]
 
 { #category : 'execution' }

@@ -98,8 +98,9 @@ StRefactoringAddClassPresenter >> initializePackagesPresenter [
 		whenSelectedItemChangedDo: [ : item | 
 			self updateTagItems: item.		
 			self updateTagSelection: item ];
-		selectItem: driver packageName;		
+		selectItem: driver packageName;
 		yourself.
+
 ]
 
 { #category : 'initialization' }
