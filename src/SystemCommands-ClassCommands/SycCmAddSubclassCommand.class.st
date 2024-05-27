@@ -15,16 +15,16 @@ Class {
 { #category : 'executing' }
 SycCmAddSubclassCommand >> executeRefactoring [
 	"The class name is necessary so the browser can select the new subclass"
-	| refactoring |
+	| driver |
 
-	refactoring := (ReAddSubclassDriver 
+	driver := (ReAddSubclassDriver 
 		superclass: self targetClass 
 		packageNames: self packageNames)
 			scopes: refactoringScopes.
-	refactoring subclass
+	driver subclass
 		ifNil: [ ^ self ]. " cancelled "
-	refactoring runRefactoring.
-	newClassName := refactoring subclass.
+	driver runRefactoring.
+	newClassName := driver subclass.
 ]
 
 { #category : 'accessing' }
