@@ -23,6 +23,11 @@ ReClassNotCategorizedRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReClassNotCategorizedRule class >> rationale [
+	^ 'Classes should be categorized with a tag if other class tags exist in the package. Use "Base" as default if you can not provide a better name.'
+]
+
+{ #category : 'accessing' }
 ReClassNotCategorizedRule class >> ruleName [
 	^ 'Uncategorized class - missing class tag'
 ]
@@ -40,11 +45,6 @@ ReClassNotCategorizedRule >> basicCheck: aClass [
 	aClass isMeta ifTrue: [ ^ false ].
 
 	^ aClass packageTag isRoot and: [ aClass package tags size > 1 ]
-]
-
-{ #category : 'accessing' }
-ReClassNotCategorizedRule >> rationale [
-	^ 'Classes should be categorized with a tag if other class tags exist in the package. Use "Base" as default if you can not provide a better name.'
 ]
 
 { #category : 'accessing' }

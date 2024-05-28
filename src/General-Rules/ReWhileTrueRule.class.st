@@ -25,6 +25,11 @@ ReWhileTrueRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReWhileTrueRule class >> rationale [
+	^ 'Checks for users of whileTrue: when the shorter to:do: would work.'
+]
+
+{ #category : 'accessing' }
 ReWhileTrueRule class >> ruleName [
 	^ 'Uses whileTrue: instead of to:do:'
 ]
@@ -72,9 +77,4 @@ ReWhileTrueRule >> initialize [
 					`@.BlockStmts1.
 					`index := `index - 1].
 			`@.Statements2' )
-]
-
-{ #category : 'accessing' }
-ReWhileTrueRule >> rationale [
-	^ 'Checks for users of whileTrue: when the shorter to:do: would work.'
 ]

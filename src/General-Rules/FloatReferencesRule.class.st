@@ -15,8 +15,21 @@ FloatReferencesRule class >> group [
 ]
 
 { #category : 'accessing' }
+FloatReferencesRule class >> rationale [
+
+	^ 'You should not reference ' , (self systemClassNames joinUsing: Character space)
+	  , ' as they are there for system purpose and should not be referenced directly.'
+]
+
+{ #category : 'accessing' }
 FloatReferencesRule class >> ruleName [
 	^ 'Access to a system class'
+]
+
+{ #category : 'running' }
+FloatReferencesRule class >> systemClassNames [
+
+	^ #(BoxedFloat64 SmallFloat64)
 ]
 
 { #category : 'running' }
@@ -25,16 +38,7 @@ FloatReferencesRule >> basicCheck: node [
 	^(self systemClassNames includes: node name)
 ]
 
-{ #category : 'accessing' }
-FloatReferencesRule >> rationale [
-
-	^ 'You should not reference ',
-		(self systemClassNames joinUsing: Character space),
-		' as they are there for system purpose and should not be referenced directly.'
-]
-
 { #category : 'running' }
 FloatReferencesRule >> systemClassNames [
-
-	^ #(BoxedFloat64 SmallFloat64)
+	^ self class systemClassNames
 ]

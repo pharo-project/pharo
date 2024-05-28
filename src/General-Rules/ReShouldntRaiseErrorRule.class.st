@@ -46,6 +46,11 @@ ReShouldntRaiseErrorRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReShouldntRaiseErrorRule class >> rationale [
+	^ 'Replaces `shouldnt: [ ... ] raise: Error` with  `[ ... ]`'
+]
+
+{ #category : 'accessing' }
 ReShouldntRaiseErrorRule class >> ruleName [
 	^ 'Do not use  `shouldnt: [ ... ] raise: Error` '
 ]
@@ -63,9 +68,4 @@ ReShouldntRaiseErrorRule >> initialize [
 	self
 		replace: 'self shouldnt: [ `@statements ] raise: Error' with: '`@statements';
 		replace: 'self shouldnt: [ `@statements ] raise: Exception' with: '`@statements'
-]
-
-{ #category : 'accessing' }
-ReShouldntRaiseErrorRule >> rationale [
-	^ 'Replaces `shouldnt: [ ... ] raise: Error` with  `[ ... ]`'
 ]

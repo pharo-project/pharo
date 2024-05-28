@@ -23,6 +23,12 @@ ReModifiesCollectionRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReModifiesCollectionRule class >> rationale [
+
+	^ 'Checks for remove:''s of elements inside of collection iteration methods such as do:. '
+]
+
+{ #category : 'accessing' }
 ReModifiesCollectionRule class >> ruleName [
 	^ 'Modifies collection while iterating over it'
 ]
@@ -60,10 +66,4 @@ ReModifiesCollectionRule >> modifiesCollection: aCollectionNode inAnyStatement: 
 			node = aCollectionNode ifTrue: [ ^ true ] ] ].
 
 	^ false
-]
-
-{ #category : 'accessing' }
-ReModifiesCollectionRule >> rationale [
-
-	^ 'Checks for remove:''s of elements inside of collection iteration methods such as do:. '
 ]

@@ -36,6 +36,11 @@ ReNotEliminationRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReNotEliminationRule class >> rationale [
+	^ 'Eliminate unnecessary not''s in relation of conditionals'
+]
+
+{ #category : 'accessing' }
 ReNotEliminationRule class >> ruleName [
 	^ 'Eliminate unnecessary not''s'
 ]
@@ -75,9 +80,4 @@ ReNotEliminationRule >> initialize [
 		replace: '(``@a ~~ ``@b) not' with: '``@a == ``@b';
 		replace: '(``@a >= ``@b) not' with: '``@a < ``@b';
 		replace: '(``@a > ``@b) not' with: '``@a <= ``@b'
-]
-
-{ #category : 'accessing' }
-ReNotEliminationRule >> rationale [
-	^ 'Eliminate unnecessary not''s in relation of conditionals'
 ]

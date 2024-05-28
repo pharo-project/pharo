@@ -19,6 +19,11 @@ ReNoUnusedInstanceVariableRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReNoUnusedInstanceVariableRule class >> rationale [
+	^ 'Classes should have instance variables that are actually used - instance variables without a reference should be removed.'
+]
+
+{ #category : 'accessing' }
 ReNoUnusedInstanceVariableRule class >> ruleName [
 	^ 'Unused instance variable'
 ]
@@ -53,9 +58,4 @@ ReNoUnusedInstanceVariableRule >> critiqueFor: aClass about: aVarName [
 
 
 	^ crit
-]
-
-{ #category : 'accessing' }
-ReNoUnusedInstanceVariableRule >> rationale [
-	^ 'Classes should have instance variables that are actually used - instance variables without a reference should be removed.'
 ]

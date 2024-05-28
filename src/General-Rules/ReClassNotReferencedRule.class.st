@@ -20,6 +20,11 @@ ReClassNotReferencedRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReClassNotReferencedRule class >> rationale [
+	^ 'Check if a class is referenced either directly or indirectly by a symbol. If a class is not referenced, it can be removed.'
+]
+
+{ #category : 'accessing' }
 ReClassNotReferencedRule class >> ruleName [
 	^ 'Class not referenced'
 ]
@@ -34,11 +39,6 @@ ReClassNotReferencedRule class >> uniqueIdentifierName [
 { #category : 'enumerating' }
 ReClassNotReferencedRule >> basicCheck: aClass [
 	^ aClass isUsed not
-]
-
-{ #category : 'accessing' }
-ReClassNotReferencedRule >> rationale [
-	^ 'Check if a class is referenced either directly or indirectly by a symbol. If a class is not referenced, it can be removed.'
 ]
 
 { #category : 'accessing' }

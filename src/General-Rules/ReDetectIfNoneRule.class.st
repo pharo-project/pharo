@@ -26,6 +26,11 @@ ReDetectIfNoneRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReDetectIfNoneRule class >> rationale [
+	^ 'Replaces detect:ifNone: and contains: by anySatisfy:'
+]
+
+{ #category : 'accessing' }
 ReDetectIfNoneRule class >> ruleName [
 	^ '#detect:ifNone: or #contains: -> #anySatisfy:'
 ]
@@ -61,9 +66,4 @@ ReDetectIfNoneRule >> initialize [
 
 		replace: '(``@collection detect: [:`each | | `@temps | ``@.Statements] ifNone: [nil]) ~~ nil'
 		with: '``@collection anySatisfy: [:`each | | `@temps | ``@.Statements]'
-]
-
-{ #category : 'accessing' }
-ReDetectIfNoneRule >> rationale [
-	^ 'Replaces detect:ifNone: and contains: by anySatisfy:'
 ]

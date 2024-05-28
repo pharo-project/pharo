@@ -27,6 +27,11 @@ ReNoPrintStringInPrintOnRule class >> initialize [
 ]
 
 { #category : 'accessing' }
+ReNoPrintStringInPrintOnRule class >> rationale [
+	^ 'Use the stream argument to #printOn: e.g.( stream print: anObject ) instead of creating an extra stream by using printString. e.g.( stream nextPutAll: anObject printString ).'
+]
+
+{ #category : 'accessing' }
 ReNoPrintStringInPrintOnRule class >> ruleName [
 	^ 'No printString inside printOn'
 ]
@@ -43,9 +48,4 @@ ReNoPrintStringInPrintOnRule >> check: aMethod forCritiquesDo: aCriticBlock [
 				createTrivialCritiqueOn: aMethod
 				intervalOf: msgSend
 				hint: msgSend selector asString )]
-]
-
-{ #category : 'accessing' }
-ReNoPrintStringInPrintOnRule >> rationale [
-	^ 'Use the stream argument to #printOn: e.g.( stream print: anObject ) instead of creating an extra stream by using printString. e.g.( stream nextPutAll: anObject printString ).'
 ]

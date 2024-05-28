@@ -16,6 +16,12 @@ ReDeadBlockRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReDeadBlockRule class >> rationale [
+	^ 'Dead Block. The block is not assigned, not returned and no message is send to it.
+Often this is a left over from using blocks to comment out code.'
+]
+
+{ #category : 'accessing' }
 ReDeadBlockRule class >> ruleName [
 	^ 'Dead Block'
 ]
@@ -30,12 +36,6 @@ ReDeadBlockRule class >> uniqueIdentifierName [
 { #category : 'running' }
 ReDeadBlockRule >> basicCheck: node [
 	^ node isBlock and: [ node isUsedAsReturnValue not ]
-]
-
-{ #category : 'accessing' }
-ReDeadBlockRule >> rationale [
-	^ 'Dead Block. The block is not assigned, not returned and no message is send to it.
-Often this is a left over from using blocks to comment out code.'
 ]
 
 { #category : 'accessing' }

@@ -29,6 +29,11 @@ ReAllAnyNoneSatisfyRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReAllAnyNoneSatisfyRule class >> rationale [
+	^ 'Replace ad-hoc implementations (using explicit logic based on do:) of allSatisfy:, anySatisfy: and noneSatisfy: by the adequate calls to #allSatisfy:, #anySatisfy: or #noneSatisfy:. '
+]
+
+{ #category : 'accessing' }
 ReAllAnyNoneSatisfyRule class >> ruleName [
 	^ 'Replace with #allSatisfy:, #anySatisfy: or #noneSatisfy:'
 ]
@@ -98,9 +103,4 @@ ReAllAnyNoneSatisfyRule >> initialize [
 				| `@blocktemps |
 				`@.blockstatements.
 				`@condition ]'
-]
-
-{ #category : 'accessing' }
-ReAllAnyNoneSatisfyRule >> rationale [
-	^ 'Replace ad-hoc implementations (using explicit logic based on do:) of allSatisfy:, anySatisfy: and noneSatisfy: by the adequate calls to #allSatisfy:, #anySatisfy: or #noneSatisfy:. '
 ]

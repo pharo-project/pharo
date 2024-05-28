@@ -26,6 +26,11 @@ ReTrueFalseDuplicationRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReTrueFalseDuplicationRule class >> rationale [
+	^ 'Checks for ifTrue:ifFalse: blocks that have the same code at the beginning or end.'
+]
+
+{ #category : 'accessing' }
 ReTrueFalseDuplicationRule class >> ruleName [
 	^ 'Check for same statements at end of ifTrue:ifFalse: blocks'
 ]
@@ -112,11 +117,6 @@ ReTrueFalseDuplicationRule >> initialize [
 			ifFalse: [ | `@falseTemps | `@.FalseStatements. ]
 			ifTrue: [ | `@trueTemps | `@.TrueStatements. ].
 		`.@PostStatements.'
-]
-
-{ #category : 'accessing' }
-ReTrueFalseDuplicationRule >> rationale [
-	^ 'Checks for ifTrue:ifFalse: blocks that have the same code at the beginning or end.'
 ]
 
 { #category : 'accessing' }

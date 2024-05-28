@@ -22,6 +22,11 @@ ReEquivalentSuperclassMethodsRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReEquivalentSuperclassMethodsRule class >> rationale [
+	^ 'Check for methods that are equivalent to their superclass methods.'
+]
+
+{ #category : 'accessing' }
 ReEquivalentSuperclassMethodsRule class >> ruleName [
 	^ 'Methods equivalently defined in superclass'
 ]
@@ -48,9 +53,4 @@ ReEquivalentSuperclassMethodsRule >> ignoredSelectors [
 	"These methods are often overridden for compatilbity with other platforms."
 
 	^ #(new initialize)
-]
-
-{ #category : 'accessing' }
-ReEquivalentSuperclassMethodsRule >> rationale [
-	^ 'Check for methods that are equivalent to their superclass methods.'
 ]

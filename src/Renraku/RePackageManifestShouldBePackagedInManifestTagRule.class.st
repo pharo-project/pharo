@@ -19,6 +19,11 @@ RePackageManifestShouldBePackagedInManifestTagRule class >> group [
 ]
 
 { #category : 'accessing' }
+RePackageManifestShouldBePackagedInManifestTagRule class >> rationale [
+	^ 'Check if the package manifest is tagged in class category ''Manifest'' to align with other packages and fulfil common expectations.'
+]
+
+{ #category : 'accessing' }
 RePackageManifestShouldBePackagedInManifestTagRule class >> ruleName [
 	^ 'A package manifest should be tagged using ''Manifest'' class tag'
 ]
@@ -27,9 +32,4 @@ RePackageManifestShouldBePackagedInManifestTagRule class >> ruleName [
 RePackageManifestShouldBePackagedInManifestTagRule >> basicCheck: aClass [
 
 	^ (aClass inheritsFrom: PackageManifest) and: [ ((aClass package classesTaggedWith: 'Manifest') includes: aClass) not ]
-]
-
-{ #category : 'accessing' }
-RePackageManifestShouldBePackagedInManifestTagRule >> rationale [
-	^ 'Check if the package manifest is tagged in class category ''Manifest'' to align with other packages and fulfil common expectations.'
 ]

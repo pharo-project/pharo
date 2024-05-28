@@ -20,6 +20,11 @@ ReSubclassResponsibilityNotDefinedRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReSubclassResponsibilityNotDefinedRule class >> rationale [
+	^ 'Checks that all methods which send #subclassResponsibility, which indicates that they are abstract, are defined in all leaf classes.'
+]
+
+{ #category : 'accessing' }
 ReSubclassResponsibilityNotDefinedRule class >> ruleName [
 	^ '#subclassResponsibility not defined'
 ]
@@ -46,11 +51,6 @@ ReSubclassResponsibilityNotDefinedRule >> check: aClass forCritiquesDo: aCriticB
 						selector: method selector)
 						beShouldBeImplemented;
 						yourself ] ]) ]
-]
-
-{ #category : 'accessing' }
-ReSubclassResponsibilityNotDefinedRule >> rationale [
-	^ 'Checks that all methods which send #subclassResponsibility, which indicates that they are abstract, are defined in all leaf classes.'
 ]
 
 { #category : 'accessing' }

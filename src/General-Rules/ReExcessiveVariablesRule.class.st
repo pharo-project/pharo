@@ -22,6 +22,11 @@ ReExcessiveVariablesRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReExcessiveVariablesRule class >> rationale [
+	^ 'Classes that have too many instance variables (10+) could be redesigned to have fewer fields, possibly through some nested object grouping.'
+]
+
+{ #category : 'accessing' }
 ReExcessiveVariablesRule class >> ruleName [
 	^ 'Excessive number of variables'
 ]
@@ -38,11 +43,6 @@ ReExcessiveVariablesRule >> basicCheck: aClass [
 	^ aClass instVarNames size >= self variablesCount or: [
 		"Shared pools are just there to define vars, so it is ok for them to have a lot"
 		(aClass instanceSide isPool not) and: [aClass classVarNames size >= self variablesCount ]]
-]
-
-{ #category : 'accessing' }
-ReExcessiveVariablesRule >> rationale [
-	^ 'Classes that have too many instance variables (10+) could be redesigned to have fewer fields, possibly through some nested object grouping.'
 ]
 
 { #category : 'private' }

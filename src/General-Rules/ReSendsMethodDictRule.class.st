@@ -20,6 +20,11 @@ ReSendsMethodDictRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReSendsMethodDictRule class >> rationale [
+	^ 'Nobody should directly access the method dictionary. It is purely an implementation artefact that we use one dictionary and it might change in the future'
+]
+
+{ #category : 'accessing' }
 ReSendsMethodDictRule class >> ruleName [
 	^ 'No direct access of methodDict'
 ]
@@ -37,11 +42,6 @@ ReSendsMethodDictRule >> basicCheck: aMethod [
 	({Behavior . ClassDescription . Class. Metaclass. TraitedMetaclass. MetaclassForTraits} includes: aMethod methodClass)
 		ifTrue: [ ^ false ].
 	^(aMethod refersToLiteral: #methodDict) and: [aMethod messages includes: #methodDict]
-]
-
-{ #category : 'accessing' }
-ReSendsMethodDictRule >> rationale [
-	^ 'Nobody should directly access the method dictionary. It is purely an implementation artefact that we use one dictionary and it might change in the future'
 ]
 
 { #category : 'accessing' }

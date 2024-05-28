@@ -27,6 +27,11 @@ ReSendsDifferentSuperRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReSendsDifferentSuperRule class >> rationale [
+	^ 'Checks for methods whose source sends a different super message.'
+]
+
+{ #category : 'accessing' }
 ReSendsDifferentSuperRule class >> ruleName [
 	^ 'Sends different super message'
 ]
@@ -41,9 +46,4 @@ ReSendsDifferentSuperRule class >> uniqueIdentifierName [
 { #category : 'running' }
 ReSendsDifferentSuperRule >> basicCheck: aMethod [
 	^ aMethod superMessages anySatisfy: [ :message | message ~= aMethod selector ]
-]
-
-{ #category : 'accessing' }
-ReSendsDifferentSuperRule >> rationale [
-	^ 'Checks for methods whose source sends a different super message.'
 ]

@@ -24,6 +24,11 @@ ReTestClassNotInPackageWithTestEndingNameRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReTestClassNotInPackageWithTestEndingNameRule class >> rationale [
+	^ 'A test class (subclass of TestCase) should be placed in a package with a ''-Tests'' suffix'
+]
+
+{ #category : 'accessing' }
 ReTestClassNotInPackageWithTestEndingNameRule class >> ruleName [
 	^ 'Test class not in a package with name ending with ''-Tests'' '
 ]
@@ -32,9 +37,4 @@ ReTestClassNotInPackageWithTestEndingNameRule class >> ruleName [
 ReTestClassNotInPackageWithTestEndingNameRule >> basicCheck: aClass [
 
 	^ (aClass inheritsFrom: TestCase) and: [(aClass package name asString endsWith: '-Tests') not]
-]
-
-{ #category : 'accessing' }
-ReTestClassNotInPackageWithTestEndingNameRule >> rationale [
-	^ 'A test class (subclass of TestCase) should be placed in a package with a ''-Tests'' suffix'
 ]

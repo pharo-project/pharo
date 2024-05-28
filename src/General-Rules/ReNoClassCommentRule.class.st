@@ -20,6 +20,11 @@ ReNoClassCommentRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReNoClassCommentRule class >> rationale [
+	^ 'Classes should have comments to explain their purpose, collaborations with other classes, and optionally provide examples of use.'
+]
+
+{ #category : 'accessing' }
 ReNoClassCommentRule class >> ruleName [
 	^ 'No class comment'
 ]
@@ -35,9 +40,4 @@ ReNoClassCommentRule class >> uniqueIdentifierName [
 ReNoClassCommentRule >> basicCheck: aClass [
 	(aClass isMeta or: [ aClass isTestCase ]) ifTrue: [ ^ false ].
 	^ aClass hasComment not
-]
-
-{ #category : 'accessing' }
-ReNoClassCommentRule >> rationale [
-	^ 'Classes should have comments to explain their purpose, collaborations with other classes, and optionally provide examples of use.'
 ]

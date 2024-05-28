@@ -20,6 +20,11 @@ ReSelfSentNotImplementedRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReSelfSentNotImplementedRule class >> rationale [
+	^ 'Checks if messages sent to self or super exist in the hierarchy, since these can be statically typed. Reported methods will certainly cause a doesNotUnderstand: message when they are executed.'
+]
+
+{ #category : 'accessing' }
 ReSelfSentNotImplementedRule class >> ruleName [
 	^ 'Super and Self Messages sent but not implemented'
 ]
@@ -45,11 +50,6 @@ ReSelfSentNotImplementedRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	
 	problemSends do: [ :msgSend |
 			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: msgSend hint: msgSend selector asString)]
-]
-
-{ #category : 'accessing' }
-ReSelfSentNotImplementedRule >> rationale [
-	^ 'Checks if messages sent to self or super exist in the hierarchy, since these can be statically typed. Reported methods will certainly cause a doesNotUnderstand: message when they are executed.'
 ]
 
 { #category : 'accessing' }

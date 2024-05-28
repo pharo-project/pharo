@@ -24,6 +24,11 @@ ReTestClassNameShouldNotEndWithTests class >> group [
 ]
 
 { #category : 'accessing' }
+ReTestClassNameShouldNotEndWithTests class >> rationale [
+	^ 'A test class (subclass of TestCase) should have it''s name ending with ''Test'' instead of ''Tests'' '
+]
+
+{ #category : 'accessing' }
 ReTestClassNameShouldNotEndWithTests class >> ruleName [
 	^ 'A Test class'' name should not end with ''Tests'' '
 ]
@@ -32,9 +37,4 @@ ReTestClassNameShouldNotEndWithTests class >> ruleName [
 ReTestClassNameShouldNotEndWithTests >> basicCheck: aClass [
 
 	^ (aClass inheritsFrom: TestCase) and: [aClass name asString endsWith: 'Tests']
-]
-
-{ #category : 'accessing' }
-ReTestClassNameShouldNotEndWithTests >> rationale [
-	^ 'A test class (subclass of TestCase) should have it''s name ending with ''Test'' instead of ''Tests'' '
 ]

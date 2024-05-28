@@ -20,6 +20,11 @@ ReSentNotImplementedRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReSentNotImplementedRule class >> rationale [
+	^ 'Checks for messages that are sent by a method, but no class in the system implements such a message. Reported methods will certainly cause a doesNotUnderstand: message when they are executed.'
+]
+
+{ #category : 'accessing' }
 ReSentNotImplementedRule class >> ruleName [
 	^ 'Messages sent but not implemented'
 ]
@@ -47,11 +52,6 @@ ReSentNotImplementedRule >> check: aMethod forCritiquesDo: aCriticBlock [
 				 createTrivialCritiqueOn: aMethod
 				 intervalOf: msgSend
 				 hint: msgSend selector asString) ]
-]
-
-{ #category : 'accessing' }
-ReSentNotImplementedRule >> rationale [
-	^ 'Checks for messages that are sent by a method, but no class in the system implements such a message. Reported methods will certainly cause a doesNotUnderstand: message when they are executed.'
 ]
 
 { #category : 'accessing' }

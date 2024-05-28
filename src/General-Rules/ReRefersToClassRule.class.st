@@ -21,6 +21,11 @@ ReRefersToClassRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReRefersToClassRule class >> rationale [
+	^ 'Checks for direct reference to classes themselves.'
+]
+
+{ #category : 'accessing' }
 ReRefersToClassRule class >> ruleName [
 	^ 'Refers to class name instead of "self class"'
 ]
@@ -47,9 +52,4 @@ ReRefersToClassRule >> check: aMethod forCritiquesDo: aCriticBlock [
 
 	problemLiterals do: [ :literal |
 			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: literal hint:literal name )]
-]
-
-{ #category : 'accessing' }
-ReRefersToClassRule >> rationale [
-	^ 'Checks for direct reference to classes themselves.'
 ]

@@ -26,6 +26,11 @@ ReEndTrueFalseRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReEndTrueFalseRule class >> rationale [
+	^ 'Checks for ifTrue:ifFalse: blocks that have the same code at the beginning or end.'
+]
+
+{ #category : 'accessing' }
 ReEndTrueFalseRule class >> ruleName [
 	^ 'Check for same statements at end of ifTrue:ifFalse: blocks'
 ]
@@ -62,11 +67,6 @@ ReEndTrueFalseRule >> initialize [
 				ifTrue: [| `@temps2 | `@.Statements2. `.Statement]' '`@object
 				ifFalse: [| `@temps1 | `.Statement. `@.Statements1]
 				ifTrue: [| `@temps2 | `.Statement. `@.Statement2]')
-]
-
-{ #category : 'accessing' }
-ReEndTrueFalseRule >> rationale [
-	^ 'Checks for ifTrue:ifFalse: blocks that have the same code at the beginning or end.'
 ]
 
 { #category : 'accessing' }

@@ -17,6 +17,11 @@ RePlatformDependentUserInteractionRule class >> group [
 ]
 
 { #category : 'accessing' }
+RePlatformDependentUserInteractionRule class >> rationale [
+	^ 'Check the methods that  use platform dependent user interactions.'
+]
+
+{ #category : 'accessing' }
 RePlatformDependentUserInteractionRule class >> ruleName [
 	^ 'Platform dependent user interaction'
 ]
@@ -43,11 +48,6 @@ RePlatformDependentUserInteractionRule >> initialize [
 			'PopUpMenu labels: `@object1'
 			'PopUpMenu withCaption: `@object1 chooseFrom: `@object2'
 			 )
-]
-
-{ #category : 'accessing' }
-RePlatformDependentUserInteractionRule >> rationale [
-	^ 'Check the methods that  use platform dependent user interactions.'
 ]
 
 { #category : 'accessing' }

@@ -15,6 +15,11 @@ ReCodeCruftLeftInMethodsRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReCodeCruftLeftInMethodsRule class >> rationale [
+	^ 'Breakpoints, logging statements, etc. should not be left in production code.'
+]
+
+{ #category : 'accessing' }
 ReCodeCruftLeftInMethodsRule class >> ruleName [
 	^ 'Debugging code left in methods'
 ]
@@ -110,11 +115,6 @@ ReCodeCruftLeftInMethodsRule >> patternForKeywordSelector: selector [
 { #category : 'private' }
 ReCodeCruftLeftInMethodsRule >> patterns [
 	^ self debuggingPatterns, self haltPatterns
-]
-
-{ #category : 'accessing' }
-ReCodeCruftLeftInMethodsRule >> rationale [
-	^ 'Breakpoints, logging statements, etc. should not be left in production code.'
 ]
 
 { #category : 'accessing' }

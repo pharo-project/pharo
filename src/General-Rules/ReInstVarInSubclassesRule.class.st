@@ -22,6 +22,11 @@ ReInstVarInSubclassesRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReInstVarInSubclassesRule class >> rationale [
+	^ 'All subclasses of this class define the same variable. Most likely this variable should be pulled up to the superclass.'
+]
+
+{ #category : 'accessing' }
 ReInstVarInSubclassesRule class >> ruleName [
 	^ 'Same instance variable defined in ALL subclasses'
 ]
@@ -60,11 +65,6 @@ ReInstVarInSubclassesRule >> critiqueFor: aClass [
 	^ ReRefactoringCritique
 			withAnchor: (self anchorFor: aClass)
 			by: self
-]
-
-{ #category : 'accessing' }
-ReInstVarInSubclassesRule >> rationale [
-	^ 'All subclasses of this class define the same variable. Most likely this variable should be pulled up to the superclass.'
 ]
 
 { #category : 'accessing' }

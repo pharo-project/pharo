@@ -15,6 +15,11 @@ ReGuardingClauseRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReGuardingClauseRule class >> rationale [
+	^ 'Checks for ifTrue: or ifFalse: conditions at end of methods that have two or more statements inside their blocks. Such code might better represent the true meaning of the code if they returned self instead.'
+]
+
+{ #category : 'accessing' }
 ReGuardingClauseRule class >> ruleName [
 	^ 'Guarding clauses'
 ]
@@ -39,9 +44,4 @@ ReGuardingClauseRule >> initialize [
 				'`@MethodName
 				`@.Statements.
 				`@condition ifFalse: [| `@BlockTemps | `.Statement1. `.Statement2. `@.BStatements]'
-]
-
-{ #category : 'accessing' }
-ReGuardingClauseRule >> rationale [
-	^ 'Checks for ifTrue: or ifFalse: conditions at end of methods that have two or more statements inside their blocks. Such code might better represent the true meaning of the code if they returned self instead.'
 ]

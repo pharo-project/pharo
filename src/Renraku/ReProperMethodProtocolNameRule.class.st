@@ -54,6 +54,12 @@ ReProperMethodProtocolNameRule class >> protocolIdiom [
 ]
 
 { #category : 'accessing' }
+ReProperMethodProtocolNameRule class >> rationale [
+
+	^ 'Check if the method protocol name is appropriate and fulfils common expectations.'
+]
+
+{ #category : 'accessing' }
 ReProperMethodProtocolNameRule class >> ruleName [
 	^ 'Method categorization: use '''
 		  	, self class goodMethodProtocolName
@@ -101,12 +107,6 @@ ReProperMethodProtocolNameRule >> methodProtocolName [
 ReProperMethodProtocolNameRule >> methodProtocolName: anObject [
 
 	methodProtocolName := anObject
-]
-
-{ #category : 'accessing' }
-ReProperMethodProtocolNameRule >> rationale [
-
-	^ 'Check if the method protocol name is appropriate and fulfils common expectations.'
 ]
 
 { #category : 'private - utilities' }

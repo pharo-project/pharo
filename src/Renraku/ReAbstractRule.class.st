@@ -143,6 +143,16 @@ ReAbstractRule class >> methodOfInteresetSelectors [
 ]
 
 { #category : 'accessing' }
+ReAbstractRule class >> rationale [
+	"Answer an explanation of the rule, usually in one line. Long description can be obtained using longDescription."
+
+	(self selectors includes: #rationale) ifTrue: [
+		self deprecated: 'The method #rationale of rules should be implemented on the class side in Pharo 13+ and not in instance sice.'.
+		^ self new rationale ].
+	^ self comment
+]
+
+{ #category : 'accessing' }
 ReAbstractRule class >> ruleName [
 
 	(self selectors includes: #name) ifTrue: [
@@ -282,9 +292,7 @@ ReAbstractRule >> name [
 
 { #category : 'accessing' }
 ReAbstractRule >> rationale [
-	"Answer an explanation of the rule, usually in one line. Long description can be obtained using longDescription."
-
-	^ self class comment
+	^ self class rationale
 ]
 
 { #category : 'compatibility' }

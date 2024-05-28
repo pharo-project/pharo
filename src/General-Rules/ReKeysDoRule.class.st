@@ -22,6 +22,11 @@ ReKeysDoRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReKeysDoRule class >> rationale [
+	^ 'The use of keysDo:/valuesDo: means one intermediate collection created less'
+]
+
+{ #category : 'accessing' }
 ReKeysDoRule class >> ruleName [
 	^ 'keys do: -> keysDo: and valuesDo:'
 ]
@@ -39,9 +44,4 @@ ReKeysDoRule >> initialize [
 	self
 		replace: '``@object keys do: ``@block' with: '``@object keysDo: ``@block';
 		replace: '``@object values do: ``@block' with: '``@object valuesDo: ``@block'
-]
-
-{ #category : 'accessing' }
-ReKeysDoRule >> rationale [
-	^ 'The use of keysDo:/valuesDo: means one intermediate collection created less'
 ]

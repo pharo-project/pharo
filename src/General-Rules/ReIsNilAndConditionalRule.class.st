@@ -16,6 +16,13 @@ ReIsNilAndConditionalRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReIsNilAndConditionalRule class >> rationale [
+
+	^ 'Using specific conditional methods leads to shorter code and helps in avoiding unneeded temporary variables.<n><n>Replaces<n><t>isNil ifTrue: ~~> ifNil:<n><t>isNil ifFalse: ~~> ifNotNil:<n><t>isNil ifTrue:ifFalse ~~> ifNil:ifNotNil:'
+		expandMacros
+]
+
+{ #category : 'accessing' }
 ReIsNilAndConditionalRule class >> ruleName [
 	^ 'Sends isNil and a conditional check instead of using #ifNil: #ifNotNil: or #ifNil:ifNotNil:'
 ]
@@ -31,11 +38,4 @@ ReIsNilAndConditionalRule >> initialize [
 			with: '``@receiver ifNil: ``@nilBlock ifNotNil: ``@notNilBlock';
 		replace: '``@receiver isNil ifFalse: ``@notNilBlock ifTrue: ``@nilBlock'
 			with: '``@receiver ifNil: ``@nilBlock ifNotNil: ``@notNilBlock'
-]
-
-{ #category : 'accessing' }
-ReIsNilAndConditionalRule >> rationale [
-
-	^ 'Using specific conditional methods leads to shorter code and helps in avoiding unneeded temporary variables.<n><n>Replaces<n><t>isNil ifTrue: ~~> ifNil:<n><t>isNil ifFalse: ~~> ifNotNil:<n><t>isNil ifTrue:ifFalse ~~> ifNil:ifNotNil:'
-		expandMacros
 ]

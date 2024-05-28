@@ -24,6 +24,11 @@ ReExcessiveArgumentsRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReExcessiveArgumentsRule class >> rationale [
+	^ 'Long argument lists (five or more) can indicate that a new object should be created to wrap the numerous parameters.'
+]
+
+{ #category : 'accessing' }
 ReExcessiveArgumentsRule class >> ruleName [
 	^ 'Excessive number of arguments'
 ]
@@ -47,9 +52,4 @@ ReExcessiveArgumentsRule >> basicCheck: aMethod [
 	aMethod isFFIMethod ifTrue: [ ^false ].
 
 	^ aMethod numArgs >= self argumentsCount
-]
-
-{ #category : 'accessing' }
-ReExcessiveArgumentsRule >> rationale [
-	^ 'Long argument lists (five or more) can indicate that a new object should be created to wrap the numerous parameters.'
 ]

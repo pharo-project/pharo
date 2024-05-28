@@ -26,6 +26,11 @@ ReExcessiveMethodsRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReExcessiveMethodsRule class >> rationale [
+	^ 'Large classes are indications that the class may be trying to do too much.'
+]
+
+{ #category : 'accessing' }
 ReExcessiveMethodsRule class >> ruleName [
 	^ 'Excessive number of methods'
 ]
@@ -45,9 +50,4 @@ ReExcessiveMethodsRule >> basicCheck: aClass [
 { #category : 'private' }
 ReExcessiveMethodsRule >> methodsCount [
 	^ 60
-]
-
-{ #category : 'accessing' }
-ReExcessiveMethodsRule >> rationale [
-	^ 'Large classes are indications that the class may be trying to do too much.'
 ]

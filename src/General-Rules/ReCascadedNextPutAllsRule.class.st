@@ -24,6 +24,11 @@ ReCascadedNextPutAllsRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReCascadedNextPutAllsRule class >> rationale [
+	^ 'Use cascaded nextPutAll:''s instead of #, in #nextPutAll:.'
+]
+
+{ #category : 'accessing' }
 ReCascadedNextPutAllsRule class >> ruleName [
 	^ 'Use cascaded nextPutAll:''s instead of #, in #nextPutAll:'
 ]
@@ -41,9 +46,4 @@ ReCascadedNextPutAllsRule >> initialize [
 	self
 		replace: '``@rcvr nextPutAll: ``@object1 , ``@object2' with: '``@rcvr nextPutAll: ``@object1; nextPutAll: ``@object2';
 		replace: '``@rcvr show: ``@object1 , ``@object2' with: '``@rcvr show: ``@object1; show: ``@object2'
-]
-
-{ #category : 'accessing' }
-ReCascadedNextPutAllsRule >> rationale [
-	^ 'Use cascaded nextPutAll:''s instead of #, in #nextPutAll:.'
 ]
