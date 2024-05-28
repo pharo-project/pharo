@@ -28,6 +28,11 @@ ZnEncodedReadStream >> back [
 ]
 
 { #category : 'accessing' }
+ZnEncodedReadStream >> collectionSpecies [
+	^ self subclassResponsibility
+]
+
+{ #category : 'accessing' }
 ZnEncodedReadStream >> contents [
 	"This is technically not correct, but it is better than nothing"
 
