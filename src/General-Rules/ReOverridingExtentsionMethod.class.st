@@ -15,7 +15,7 @@ ReOverridingExtentsionMethod >> basicCheck: aMethod [
     | superMethod |
     superMethod := aMethod origin superclass ifNotNil: [ :class |
       class lookupSelector: aMethod selector ].
-    superMethod notNil and: [
+    superMethod isNotNil and: [
       "Ignore overrides of extension methods in special classes.
       These may be name clashes or intended overrides of framework
       methods."
