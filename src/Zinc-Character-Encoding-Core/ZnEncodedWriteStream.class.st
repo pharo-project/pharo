@@ -10,6 +10,12 @@ Class {
 	#package : 'Zinc-Character-Encoding-Core'
 }
 
+{ #category : 'testing' }
+ZnEncodedWriteStream class >> isAbstract [
+
+	^ self == ZnEncodedWriteStream
+]
+
 { #category : 'accessing' }
 ZnEncodedWriteStream >> << anObject [
 	"Write anObject to the receiver, dispatching using #putOn:
