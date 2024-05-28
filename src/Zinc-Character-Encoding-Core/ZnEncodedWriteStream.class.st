@@ -26,11 +26,6 @@ ZnEncodedWriteStream >> flush [
 	stream flush
 ]
 
-{ #category : 'testing' }
-ZnEncodedWriteStream >> isBinary [
-	^ false
-]
-
 { #category : 'accessing' }
 ZnEncodedWriteStream >> next: count putAll: collection [
 	self
