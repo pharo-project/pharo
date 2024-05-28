@@ -30,6 +30,11 @@ ReSelfSentNotImplementedRule class >> ruleName [
 ]
 
 { #category : 'accessing' }
+ReSelfSentNotImplementedRule class >> severity [
+	^ #error
+]
+
+{ #category : 'accessing' }
 ReSelfSentNotImplementedRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -50,9 +55,4 @@ ReSelfSentNotImplementedRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	
 	problemSends do: [ :msgSend |
 			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: msgSend hint: msgSend selector asString)]
-]
-
-{ #category : 'accessing' }
-ReSelfSentNotImplementedRule >> severity [
-	^ #error
 ]

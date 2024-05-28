@@ -33,6 +33,12 @@ ReSentButNotUnderstoodBySuperRule class >> ruleName [
 ]
 
 { #category : 'accessing' }
+ReSentButNotUnderstoodBySuperRule class >> severity [
+
+	^ #error
+]
+
+{ #category : 'accessing' }
 ReSentButNotUnderstoodBySuperRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -55,10 +61,4 @@ ReSentButNotUnderstoodBySuperRule >> check: aMethod forCritiquesDo: aCriticBlock
 				 createTrivialCritiqueOn: aMethod
 				 intervalOf: msgSend
 				 hint: msgSend selector asString) ]
-]
-
-{ #category : 'accessing' }
-ReSentButNotUnderstoodBySuperRule >> severity [
-
-	^ #error
 ]

@@ -33,6 +33,11 @@ ReJustSendsSuperRule class >> ruleName [
 ]
 
 { #category : 'accessing' }
+ReJustSendsSuperRule class >> severity [
+	^ #information
+]
+
+{ #category : 'accessing' }
 ReJustSendsSuperRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -54,9 +59,4 @@ ReJustSendsSuperRule >> basicCheck: aMethod [
 ReJustSendsSuperRule >> initialize [
 	super initialize.
 	matcher := RBParseTreeSearcher justSendsSuper
-]
-
-{ #category : 'accessing' }
-ReJustSendsSuperRule >> severity [
-	^ #information
 ]

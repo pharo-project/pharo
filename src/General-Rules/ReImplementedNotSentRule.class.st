@@ -95,6 +95,11 @@ ReImplementedNotSentRule class >> ruleName [
 	^ 'Methods implemented but not sent'
 ]
 
+{ #category : 'accessing' }
+ReImplementedNotSentRule class >> severity [
+	^ #information
+]
+
 { #category : 'cleanup' }
 ReImplementedNotSentRule class >> shutDown [
 	self reset
@@ -145,9 +150,4 @@ ReImplementedNotSentRule >> basicCheck: aMethod [
 						  occurrencesToFind := occurrencesToFind - 1.
 						  false ] ]
 			  ifFalse: [ false ] ]
-]
-
-{ #category : 'accessing' }
-ReImplementedNotSentRule >> severity [
-	^ #information
 ]

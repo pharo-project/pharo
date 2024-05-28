@@ -43,6 +43,11 @@ ReOverridesSpecialMessageRule class >> ruleName [
 ]
 
 { #category : 'accessing' }
+ReOverridesSpecialMessageRule class >> severity [
+	^ #error
+]
+
+{ #category : 'accessing' }
 ReOverridesSpecialMessageRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -70,9 +75,4 @@ ReOverridesSpecialMessageRule >> classShouldNotOverride [
 { #category : 'private' }
 ReOverridesSpecialMessageRule >> metaclassShouldNotOverride [
 	^ self class metaclassShouldNotOverride
-]
-
-{ #category : 'accessing' }
-ReOverridesSpecialMessageRule >> severity [
-	^ #error
 ]

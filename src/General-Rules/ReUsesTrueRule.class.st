@@ -27,6 +27,11 @@ ReUsesTrueRule class >> ruleName [
 ]
 
 { #category : 'accessing' }
+ReUsesTrueRule class >> severity [
+	^ #error
+]
+
+{ #category : 'accessing' }
 ReUsesTrueRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -40,9 +45,4 @@ ReUsesTrueRule >> check: aMethod forCritiquesDo: aCriticBlock [
 			                 aNode isGlobalVariable and: [ #( True False ) includes: aNode name ] ].
 	problemUsages do: [ :ref |
 		aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: ref hint: ref name asString)]
-]
-
-{ #category : 'accessing' }
-ReUsesTrueRule >> severity [
-	^ #error
 ]

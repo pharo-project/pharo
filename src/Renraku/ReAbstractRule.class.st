@@ -162,6 +162,16 @@ ReAbstractRule class >> ruleName [
 	^ self subclassResponsibility
 ]
 
+{ #category : 'accessing' }
+ReAbstractRule class >> severity [
+	"Answer the severity of issues reported by this rule. This method should return one of #error, #warning, or #information."
+
+	(self selectors includes: #severity) ifTrue: [
+		self deprecated: 'The method #severity of rules should be implemented on the class side in Pharo 13+ and not in instance sice.'.
+		^ self new severity ].
+	^ #warning
+]
+
 { #category : 'manifest' }
 ReAbstractRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
@@ -310,7 +320,7 @@ ReAbstractRule >> ruleName [
 ReAbstractRule >> severity [
 	"Answer the severity of issues reported by this rule. This method should return one of #error, #warning, or #information."
 
-	^ #warning
+	^ self class severity
 ]
 
 { #category : 'testing' }

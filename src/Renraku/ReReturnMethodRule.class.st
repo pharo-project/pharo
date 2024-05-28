@@ -28,15 +28,15 @@ ReReturnMethodRule class >> ruleName [
 	^ 'Method should explicitly return a value'
 ]
 
+{ #category : 'accessing' }
+ReReturnMethodRule class >> severity [
+
+	^ #error
+]
+
 { #category : 'running' }
 ReReturnMethodRule >> basicCheck: aMethod [
 	(aMethod overriddenMethods anySatisfy: [ :method | method hasPragmaNamed: #shouldReturn ]) ifFalse: [ ^ false ].
 
 	^ aMethod ast lastIsReturn not
-]
-
-{ #category : 'accessing' }
-ReReturnMethodRule >> severity [
-
-	^ #error
 ]

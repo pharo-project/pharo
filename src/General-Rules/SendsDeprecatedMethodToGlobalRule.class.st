@@ -20,6 +20,11 @@ SendsDeprecatedMethodToGlobalRule class >> ruleName [
 ]
 
 { #category : 'accessing' }
+SendsDeprecatedMethodToGlobalRule class >> severity [
+	^ #error
+]
+
+{ #category : 'accessing' }
 SendsDeprecatedMethodToGlobalRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -35,9 +40,4 @@ SendsDeprecatedMethodToGlobalRule >> basicCheck: aNode [
 	^value class classAndMethodFor: aNode selector
 		do: [ :class :method | method isDeprecated ]
 		ifAbsent: [ false ]
-]
-
-{ #category : 'accessing' }
-SendsDeprecatedMethodToGlobalRule >> severity [
-	^ #error
 ]

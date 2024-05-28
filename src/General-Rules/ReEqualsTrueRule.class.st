@@ -20,6 +20,11 @@ ReEqualsTrueRule class >> ruleName [
 ]
 
 { #category : 'accessing' }
+ReEqualsTrueRule class >> severity [
+	^ #information
+]
+
+{ #category : 'accessing' }
 ReEqualsTrueRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -34,9 +39,4 @@ ReEqualsTrueRule >> basicCheck: aNode [
 	(parent := aNode parent) ifNil: [ ^ false ].
 	parent isMessage ifFalse: [ ^ false ].
 	^ #(#= #== #~= #~~) includes: parent selector
-]
-
-{ #category : 'accessing' }
-ReEqualsTrueRule >> severity [
-	^ #information
 ]

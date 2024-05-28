@@ -30,6 +30,11 @@ ReSubclassResponsibilityNotDefinedRule class >> ruleName [
 ]
 
 { #category : 'accessing' }
+ReSubclassResponsibilityNotDefinedRule class >> severity [
+	^ #error
+]
+
+{ #category : 'accessing' }
 ReSubclassResponsibilityNotDefinedRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -51,9 +56,4 @@ ReSubclassResponsibilityNotDefinedRule >> check: aClass forCritiquesDo: aCriticB
 						selector: method selector)
 						beShouldBeImplemented;
 						yourself ] ]) ]
-]
-
-{ #category : 'accessing' }
-ReSubclassResponsibilityNotDefinedRule >> severity [
-	^ #error
 ]

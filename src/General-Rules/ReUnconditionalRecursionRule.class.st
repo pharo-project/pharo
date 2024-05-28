@@ -26,6 +26,11 @@ ReUnconditionalRecursionRule class >> ruleName [
 ]
 
 { #category : 'accessing' }
+ReUnconditionalRecursionRule class >> severity [
+	^ #error
+]
+
+{ #category : 'accessing' }
 ReUnconditionalRecursionRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -46,9 +51,4 @@ ReUnconditionalRecursionRule >> initialize [
 			`@.before.
 			self `@message: `@args.
 			`@.after'
-]
-
-{ #category : 'accessing' }
-ReUnconditionalRecursionRule >> severity [
-	^ #error
 ]

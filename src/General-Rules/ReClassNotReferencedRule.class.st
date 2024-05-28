@@ -30,6 +30,11 @@ ReClassNotReferencedRule class >> ruleName [
 ]
 
 { #category : 'accessing' }
+ReClassNotReferencedRule class >> severity [
+	^ #information
+]
+
+{ #category : 'accessing' }
 ReClassNotReferencedRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -39,9 +44,4 @@ ReClassNotReferencedRule class >> uniqueIdentifierName [
 { #category : 'enumerating' }
 ReClassNotReferencedRule >> basicCheck: aClass [
 	^ aClass isUsed not
-]
-
-{ #category : 'accessing' }
-ReClassNotReferencedRule >> severity [
-	^ #information
 ]

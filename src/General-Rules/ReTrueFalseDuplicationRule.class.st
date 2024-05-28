@@ -36,6 +36,11 @@ ReTrueFalseDuplicationRule class >> ruleName [
 ]
 
 { #category : 'accessing' }
+ReTrueFalseDuplicationRule class >> severity [
+	^ #information
+]
+
+{ #category : 'accessing' }
 ReTrueFalseDuplicationRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -117,9 +122,4 @@ ReTrueFalseDuplicationRule >> initialize [
 			ifFalse: [ | `@falseTemps | `@.FalseStatements. ]
 			ifTrue: [ | `@trueTemps | `@.TrueStatements. ].
 		`.@PostStatements.'
-]
-
-{ #category : 'accessing' }
-ReTrueFalseDuplicationRule >> severity [
-	^ #information
 ]

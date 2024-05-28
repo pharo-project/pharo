@@ -25,6 +25,11 @@ ReMethodHasSyntaxErrorRule class >> ruleName [
 ]
 
 { #category : 'accessing' }
+ReMethodHasSyntaxErrorRule class >> severity [
+	^ #error
+]
+
+{ #category : 'accessing' }
 ReMethodHasSyntaxErrorRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -34,9 +39,4 @@ ReMethodHasSyntaxErrorRule class >> uniqueIdentifierName [
 { #category : 'running' }
 ReMethodHasSyntaxErrorRule >> basicCheck: aMethod [
 	^aMethod isFaulty
-]
-
-{ #category : 'accessing' }
-ReMethodHasSyntaxErrorRule >> severity [
-	^ #error
 ]

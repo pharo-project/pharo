@@ -25,6 +25,11 @@ ReCodeCruftLeftInMethodsRule class >> ruleName [
 ]
 
 { #category : 'accessing' }
+ReCodeCruftLeftInMethodsRule class >> severity [
+	^ #error
+]
+
+{ #category : 'accessing' }
 ReCodeCruftLeftInMethodsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -115,9 +120,4 @@ ReCodeCruftLeftInMethodsRule >> patternForKeywordSelector: selector [
 { #category : 'private' }
 ReCodeCruftLeftInMethodsRule >> patterns [
 	^ self debuggingPatterns, self haltPatterns
-]
-
-{ #category : 'accessing' }
-ReCodeCruftLeftInMethodsRule >> severity [
-	^ #error
 ]

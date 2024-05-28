@@ -27,6 +27,11 @@ ReInconsistentMethodClassificationRule class >> ruleName [
 ]
 
 { #category : 'accessing' }
+ReInconsistentMethodClassificationRule class >> severity [
+	^ #information
+]
+
+{ #category : 'accessing' }
 ReInconsistentMethodClassificationRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -54,9 +59,4 @@ ReInconsistentMethodClassificationRule >> critiqueFor: aMethod [
 
 	^ (ReRefactoringCritique withAnchor: (self anchorFor: aMethod) by: self) refactoring:
 		  (RBMethodProtocolTransformation protocol: { aMethod overriddenMethod protocolName } inMethod: aMethod selector inClass: aMethod methodClass name)
-]
-
-{ #category : 'accessing' }
-ReInconsistentMethodClassificationRule >> severity [
-	^ #information
 ]

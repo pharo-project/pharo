@@ -20,6 +20,11 @@ ReReferencesObsoleteClassRule class >> ruleName [
 	^ 'References an obsolete class'
 ]
 
+{ #category : 'accessing' }
+ReReferencesObsoleteClassRule class >> severity [
+	^ #error
+]
+
 { #category : 'helpers' }
 ReReferencesObsoleteClassRule >> basicCheck: aNode [
  	^ aNode isGlobalVariable
@@ -32,9 +37,4 @@ ReReferencesObsoleteClassRule >> critiqueFor: aNode [
 	^ (super critiqueFor: aNode)
 		  tinyHint: aNode name;
 		  yourself
-]
-
-{ #category : 'accessing' }
-ReReferencesObsoleteClassRule >> severity [
-	^ #error
 ]

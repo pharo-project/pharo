@@ -26,6 +26,11 @@ ReIvarNeitherReadNorWrittenRule class >> ruleName [
 	^ 'Instance variable not read or not written'
 ]
 
+{ #category : 'accessing' }
+ReIvarNeitherReadNorWrittenRule class >> severity [
+	^ #information
+]
+
 { #category : 'running' }
 ReIvarNeitherReadNorWrittenRule >> check: aClass forCritiquesDo: aCriticBlock [
 
@@ -34,9 +39,4 @@ ReIvarNeitherReadNorWrittenRule >> check: aClass forCritiquesDo: aCriticBlock [
 			slot isReferenced or: [
 				slot definingClass pragmas anySatisfy: [ :pragma | pragma selector = #ignoreUnusedVariables: and: [ (pragma argumentAt: 1) includes: slot name ] ] ] ]
 		thenDo: [ :slot | aCriticBlock cull: (self critiqueFor: aClass about: slot name) ]
-]
-
-{ #category : 'accessing' }
-ReIvarNeitherReadNorWrittenRule >> severity [
-	^ #information
 ]

@@ -26,6 +26,12 @@ ReIconHardcodedMessageRule class >> ruleName [
 	^ 'Use self iconNamed: #symbol instead of asIcon or Smalltalk ui icons iconNamed: #symbol'
 ]
 
+{ #category : 'accessing' }
+ReIconHardcodedMessageRule class >> severity [
+
+	^ #error
+]
+
 { #category : 'initialization' }
 ReIconHardcodedMessageRule >> initialize [
 	super initialize.
@@ -34,10 +40,4 @@ ReIconHardcodedMessageRule >> initialize [
 		byEvaluating: [ :node :matchMap |
 			RBParser
 				parseExpression: 'self iconNamed: #' , (matchMap at: #'`iconName') ]
-]
-
-{ #category : 'accessing' }
-ReIconHardcodedMessageRule >> severity [
-
-	^ #error
 ]

@@ -63,6 +63,12 @@ ReCompactSourceCodeRule class >> ruleName [
 	^ 'Unnecessary characters found in method body'
 ]
 
+{ #category : 'accessing' }
+ReCompactSourceCodeRule class >> severity [
+
+	^ #information
+]
+
 { #category : 'running' }
 ReCompactSourceCodeRule >> basicCheck: aMethod [
 
@@ -84,10 +90,4 @@ ReCompactSourceCodeRule >> check: aMethod forCritiquesDo: aCriticBlock [
 ReCompactSourceCodeRule >> providesChange [
 
 	^ true
-]
-
-{ #category : 'accessing' }
-ReCompactSourceCodeRule >> severity [
-
-	^ #information
 ]
