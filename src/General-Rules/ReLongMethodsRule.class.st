@@ -27,6 +27,11 @@ ReLongMethodsRule class >> group [
 	^ 'Design Flaws'
 ]
 
+{ #category : 'private' }
+ReLongMethodsRule class >> longMethodSize [
+	^ 20
+]
+
 { #category : 'accessing' }
 ReLongMethodsRule class >> rationale [
 	^ 'This smell arises when a long method is found (with {1} or more statements). Note that, it counts statements, not lines. Long methods should often be split into several smaller ones.
@@ -70,5 +75,5 @@ ReLongMethodsRule >> basicCheck: aMethod [
 
 { #category : 'private' }
 ReLongMethodsRule >> longMethodSize [
-	^ 20
+	^ self class longMethodSize
 ]
