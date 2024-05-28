@@ -14,6 +14,11 @@ ReOverridingExtentsionMethod class >> group [
 	^ 'Potential Bugs'
 ]
 
+{ #category : 'accessing' }
+ReOverridingExtentsionMethod class >> ruleName [
+	^ 'An extension method overrides another method'
+]
+
 { #category : 'running' }
 ReOverridingExtentsionMethod >> basicCheck: aMethod [
   ^ aMethod isExtension and: [
@@ -28,12 +33,6 @@ ReOverridingExtentsionMethod >> basicCheck: aMethod [
           "We allow extensions from the same package to override, so that
           hierarchies can be extended with overriding functionality."
           superMethod package ~= aMethod package ] ] ]
-]
-
-{ #category : 'accessing' }
-ReOverridingExtentsionMethod >> name [
-
-	^ 'An extension method overrides another method'
 ]
 
 { #category : 'private' }

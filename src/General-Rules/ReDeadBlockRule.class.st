@@ -16,6 +16,11 @@ ReDeadBlockRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReDeadBlockRule class >> ruleName [
+	^ 'Dead Block'
+]
+
+{ #category : 'accessing' }
 ReDeadBlockRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -25,11 +30,6 @@ ReDeadBlockRule class >> uniqueIdentifierName [
 { #category : 'running' }
 ReDeadBlockRule >> basicCheck: node [
 	^ node isBlock and: [ node isUsedAsReturnValue not ]
-]
-
-{ #category : 'accessing' }
-ReDeadBlockRule >> name [
-	^ 'Dead Block'
 ]
 
 { #category : 'accessing' }

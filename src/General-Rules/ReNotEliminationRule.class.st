@@ -36,6 +36,11 @@ ReNotEliminationRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReNotEliminationRule class >> ruleName [
+	^ 'Eliminate unnecessary not''s'
+]
+
+{ #category : 'accessing' }
 ReNotEliminationRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -70,11 +75,6 @@ ReNotEliminationRule >> initialize [
 		replace: '(``@a ~~ ``@b) not' with: '``@a == ``@b';
 		replace: '(``@a >= ``@b) not' with: '``@a < ``@b';
 		replace: '(``@a > ``@b) not' with: '``@a <= ``@b'
-]
-
-{ #category : 'accessing' }
-ReNotEliminationRule >> name [
-	^ 'Eliminate unnecessary not''s'
 ]
 
 { #category : 'accessing' }

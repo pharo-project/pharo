@@ -23,6 +23,11 @@ PharoBootstrapRule class >> group [
 	^ 'Architectural'
 ]
 
+{ #category : 'accessing' }
+PharoBootstrapRule class >> ruleName [
+	^ 'Illegal dependency of Bootstrap Layer'
+]
+
 { #category : 'running' }
 PharoBootstrapRule >> basicCheck: aPackage [
 
@@ -48,11 +53,6 @@ PharoBootstrapRule >> critiqueFor: aPackage [
 { #category : 'private' }
 PharoBootstrapRule >> dependencyChecker [
 	^ (DependencyChecker ifNil: [ DADependencyChecker ]) new
-]
-
-{ #category : 'accessing' }
-PharoBootstrapRule >> name [
-	^ 'Illegal dependency of Bootstrap Layer'
 ]
 
 { #category : 'instance creation' }

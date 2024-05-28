@@ -20,6 +20,11 @@ ReVariableReferencedOnceRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReVariableReferencedOnceRule class >> ruleName [
+	^ 'Variable referenced in only one method and always assigned first'
+]
+
+{ #category : 'accessing' }
 ReVariableReferencedOnceRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -35,11 +40,6 @@ ReVariableReferencedOnceRule >> check: aClass forCritiquesDo: aCriticBlock [
 		  (RBReadBeforeWrittenTester
 				  isVariable: slot name
 				  writtenBeforeReadIn: usingMethods first ast) ifTrue: [aCriticBlock cull: (self critiqueFor: aClass about: slot  name)   ]]
-]
-
-{ #category : 'accessing' }
-ReVariableReferencedOnceRule >> name [
-	^ 'Variable referenced in only one method and always assigned first'
 ]
 
 { #category : 'accessing' }

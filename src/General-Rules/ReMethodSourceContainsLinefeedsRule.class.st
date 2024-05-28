@@ -20,6 +20,11 @@ ReMethodSourceContainsLinefeedsRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReMethodSourceContainsLinefeedsRule class >> ruleName [
+	^ 'Method source contains linefeeds'
+]
+
+{ #category : 'accessing' }
 ReMethodSourceContainsLinefeedsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -38,11 +43,6 @@ ReMethodSourceContainsLinefeedsRule >> check: aMethod forCritiquesDo: aCriticBlo
 				interval: lfInterval)
 			by: self
 			hint: 'lf') ]
-]
-
-{ #category : 'accessing' }
-ReMethodSourceContainsLinefeedsRule >> name [
-	^ 'Method source contains linefeeds'
 ]
 
 { #category : 'accessing' }

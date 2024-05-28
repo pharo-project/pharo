@@ -17,6 +17,11 @@ ReCollectSelectNotUsedRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReCollectSelectNotUsedRule class >> ruleName [
+	^ 'Doesn''t use the result of a collect:/select:'
+]
+
+{ #category : 'accessing' }
 ReCollectSelectNotUsedRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -28,9 +33,4 @@ ReCollectSelectNotUsedRule >> basicCheck: aNode [
 	aNode isMessage ifFalse: [ ^ false ].
 	(#(#select: #collect: #reject:) includes: aNode selector) ifFalse: [ ^ false ].
 	^ aNode isUsedAsReturnValue not
-]
-
-{ #category : 'accessing' }
-ReCollectSelectNotUsedRule >> name [
-	^ 'Doesn''t use the result of a collect:/select:'
 ]

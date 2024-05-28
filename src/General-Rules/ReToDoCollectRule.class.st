@@ -15,6 +15,11 @@ ReToDoCollectRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReToDoCollectRule class >> ruleName [
+	^ 'to:do: used instead of collect:'
+]
+
+{ #category : 'accessing' }
 ReToDoCollectRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -47,9 +52,4 @@ ReToDoCollectRule >> initialize [
 					`collection at: `i put: `@obj.
 					`@.BStmt2].
 			`@.Stmts3' )
-]
-
-{ #category : 'accessing' }
-ReToDoCollectRule >> name [
-	^ 'to:do: used instead of collect:'
 ]

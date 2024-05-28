@@ -14,6 +14,11 @@ ReUndeclaredVariableRule class >> group [
 	^ 'Bugs'
 ]
 
+{ #category : 'accessing' }
+ReUndeclaredVariableRule class >> ruleName [
+	^ 'References an undeclared variable'
+]
+
 { #category : 'running' }
 ReUndeclaredVariableRule >> basicCheck: aNode [
 	^ aNode isVariable and: [ aNode isUndeclaredVariable ]
@@ -24,11 +29,6 @@ ReUndeclaredVariableRule >> critiqueFor: aNode [
 	^ (super critiqueFor: aNode)
 		tinyHint: aNode name;
 		yourself
-]
-
-{ #category : 'accessing' }
-ReUndeclaredVariableRule >> name [
-	^ 'References an undeclared variable'
 ]
 
 { #category : 'accessing' }

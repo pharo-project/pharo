@@ -20,6 +20,11 @@ ReNoNilAssignationInInitializeRule class >> group [
 	^ 'Style'
 ]
 
+{ #category : 'accessing' }
+ReNoNilAssignationInInitializeRule class >> ruleName [
+	^ 'Initialize method does not need nil assignation'
+]
+
 { #category : 'running' }
 ReNoNilAssignationInInitializeRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| problemAssigments|
@@ -30,12 +35,6 @@ ReNoNilAssignationInInitializeRule >> check: aMethod forCritiquesDo: aCriticBloc
 	problemAssigments do: [ :assignment |
 			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: assignment hint: 'nil').
 		 ]
-]
-
-{ #category : 'accessing' }
-ReNoNilAssignationInInitializeRule >> name [
-
-	^ 'Initialize method does not need nil assignation'
 ]
 
 { #category : 'accessing' }

@@ -23,15 +23,15 @@ ReTestClassNotInPackageWithTestEndingNameRule class >> group [
 	^ 'SUnit'
 ]
 
+{ #category : 'accessing' }
+ReTestClassNotInPackageWithTestEndingNameRule class >> ruleName [
+	^ 'Test class not in a package with name ending with ''-Tests'' '
+]
+
 { #category : 'running' }
 ReTestClassNotInPackageWithTestEndingNameRule >> basicCheck: aClass [
 
 	^ (aClass inheritsFrom: TestCase) and: [(aClass package name asString endsWith: '-Tests') not]
-]
-
-{ #category : 'accessing' }
-ReTestClassNotInPackageWithTestEndingNameRule >> name [
-	^ 'Test class not in a package with name ending with ''-Tests'' '
 ]
 
 { #category : 'accessing' }

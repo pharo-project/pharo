@@ -20,6 +20,11 @@ ReMethodHasSyntaxErrorRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReMethodHasSyntaxErrorRule class >> ruleName [
+	^ 'Method source has syntax errors'
+]
+
+{ #category : 'accessing' }
 ReMethodHasSyntaxErrorRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -29,11 +34,6 @@ ReMethodHasSyntaxErrorRule class >> uniqueIdentifierName [
 { #category : 'running' }
 ReMethodHasSyntaxErrorRule >> basicCheck: aMethod [
 	^aMethod isFaulty
-]
-
-{ #category : 'accessing' }
-ReMethodHasSyntaxErrorRule >> name [
-	^ 'Method source has syntax errors'
 ]
 
 { #category : 'accessing' }

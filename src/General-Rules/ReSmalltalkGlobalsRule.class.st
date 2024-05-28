@@ -15,6 +15,11 @@ ReSmalltalkGlobalsRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReSmalltalkGlobalsRule class >> ruleName [
+	^ 'Use "Smalltalk globals" instead of "Smalltalk"'
+]
+
+{ #category : 'accessing' }
 ReSmalltalkGlobalsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -37,9 +42,4 @@ ReSmalltalkGlobalsRule >> initialize [
 			with: 'Smalltalk globals flushClassNameCache';
 		replace: 'Smalltalk includesKey: `@statements'
 			with: 'Smalltalk globals includesKey: `@statements'
-]
-
-{ #category : 'accessing' }
-ReSmalltalkGlobalsRule >> name [
-	^ 'Use "Smalltalk globals" instead of "Smalltalk"'
 ]

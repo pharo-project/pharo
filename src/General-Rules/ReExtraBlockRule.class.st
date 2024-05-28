@@ -16,6 +16,11 @@ ReExtraBlockRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReExtraBlockRule class >> ruleName [
+	^ 'Block immediately evaluated'
+]
+
+{ #category : 'accessing' }
 ReExtraBlockRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -36,11 +41,6 @@ ReExtraBlockRule >> blockEvaluatingMessages [
 	value: value:value: value:value:value: value:value:value:value:
 	cull: cull:cull: cull:cull:cull: cull:cull:cull:cull:
 	#valueWithArguments: valueWithPossibleArgs: valueWithPossibleArgument)
-]
-
-{ #category : 'accessing' }
-ReExtraBlockRule >> name [
-	^ 'Block immediately evaluated'
 ]
 
 { #category : 'accessing' }

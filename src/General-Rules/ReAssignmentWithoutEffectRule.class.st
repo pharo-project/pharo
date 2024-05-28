@@ -15,6 +15,11 @@ ReAssignmentWithoutEffectRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReAssignmentWithoutEffectRule class >> ruleName [
+	^ 'Assignment has no effect'
+]
+
+{ #category : 'accessing' }
 ReAssignmentWithoutEffectRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -25,11 +30,6 @@ ReAssignmentWithoutEffectRule class >> uniqueIdentifierName [
 ReAssignmentWithoutEffectRule >> initialize [
 	super initialize.
 	self  replace: 	'`var := `var' with: ''
-]
-
-{ #category : 'accessing' }
-ReAssignmentWithoutEffectRule >> name [
-	^ 'Assignment has no effect'
 ]
 
 { #category : 'accessing' }

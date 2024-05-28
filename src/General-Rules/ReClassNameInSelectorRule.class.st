@@ -22,6 +22,11 @@ ReClassNameInSelectorRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReClassNameInSelectorRule class >> ruleName [
+	^ 'Redundant class name in selector'
+]
+
+{ #category : 'accessing' }
 ReClassNameInSelectorRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -53,11 +58,6 @@ ReClassNameInSelectorRule >> critiqueFor: aMethod withInterval: anInterval [
 			entity: aMethod
 			interval: anInterval)
 		by: self
-]
-
-{ #category : 'accessing' }
-ReClassNameInSelectorRule >> name [
-	^ 'Redundant class name in selector'
 ]
 
 { #category : 'accessing' }

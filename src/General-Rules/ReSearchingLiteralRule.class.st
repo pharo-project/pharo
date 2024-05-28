@@ -15,6 +15,11 @@ ReSearchingLiteralRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReSearchingLiteralRule class >> ruleName [
+	^ 'Uses or instead of a searching literal'
+]
+
+{ #category : 'accessing' }
 ReSearchingLiteralRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -67,9 +72,4 @@ ReSearchingLiteralRule >> isSearchingLiteralExpression: aSearchingNode for: anOb
 		for: anObjectNode) and:
 				[self isSearchingLiteralExpression: argument body statements first
 					for: anObjectNode]
-]
-
-{ #category : 'accessing' }
-ReSearchingLiteralRule >> name [
-	^ 'Uses or instead of a searching literal'
 ]

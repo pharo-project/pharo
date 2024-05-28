@@ -24,6 +24,11 @@ ReNoSpaceAroundProtocolRule class >> group [
 	^ 'Coding Idiom Violation'
 ]
 
+{ #category : 'accessing' }
+ReNoSpaceAroundProtocolRule class >> ruleName [
+	^ 'Protocol named "{1}" should be trimmed (includes space at start or end)' format: { protocolName }
+]
+
 { #category : 'manifest' }
 ReNoSpaceAroundProtocolRule class >> uniqueIdentifierName [
 
@@ -49,10 +54,4 @@ ReNoSpaceAroundProtocolRule >> critiqueFor: aMethod [
 			   protocol: { proposedProtocol }
 			   inMethod: aMethod selector
 			   inClass: aMethod methodClass name asSymbol)
-]
-
-{ #category : 'accessing' }
-ReNoSpaceAroundProtocolRule >> name [
-
-	^ 'Protocol named "{1}" should be trimmed (includes space at start or end)' format: { protocolName }
 ]

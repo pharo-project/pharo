@@ -15,6 +15,11 @@ ReGuardingClauseRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReGuardingClauseRule class >> ruleName [
+	^ 'Guarding clauses'
+]
+
+{ #category : 'accessing' }
 ReGuardingClauseRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -34,11 +39,6 @@ ReGuardingClauseRule >> initialize [
 				'`@MethodName
 				`@.Statements.
 				`@condition ifFalse: [| `@BlockTemps | `.Statement1. `.Statement2. `@.BStatements]'
-]
-
-{ #category : 'accessing' }
-ReGuardingClauseRule >> name [
-	^ 'Guarding clauses'
 ]
 
 { #category : 'accessing' }

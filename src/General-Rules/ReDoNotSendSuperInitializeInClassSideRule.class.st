@@ -25,6 +25,11 @@ ReDoNotSendSuperInitializeInClassSideRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReDoNotSendSuperInitializeInClassSideRule class >> ruleName [
+	^ 'Class-side #initialize should not send "super initialize".'
+]
+
+{ #category : 'accessing' }
 ReDoNotSendSuperInitializeInClassSideRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -37,11 +42,6 @@ ReDoNotSendSuperInitializeInClassSideRule >> initialize [
 	self
 		replace: 'super initialize'
 		with: ''
-]
-
-{ #category : 'accessing' }
-ReDoNotSendSuperInitializeInClassSideRule >> name [
-	^ 'Class-side #initialize should not send "super initialize".'
 ]
 
 { #category : 'testing' }

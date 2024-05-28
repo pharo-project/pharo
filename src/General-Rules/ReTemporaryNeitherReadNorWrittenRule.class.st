@@ -14,15 +14,15 @@ ReTemporaryNeitherReadNorWrittenRule class >> group [
 	^ 'Optimization'
 ]
 
+{ #category : 'accessing' }
+ReTemporaryNeitherReadNorWrittenRule class >> ruleName [
+	^ 'Temporary variables not read or not written'
+]
+
 { #category : 'running' }
 ReTemporaryNeitherReadNorWrittenRule >> check: aNode forCritiquesDo: aBlock [
 	aNode isTempVariable ifFalse: [ ^ self ].
 	aNode isDefinition ifFalse: [ ^ self ].
 	aNode variable isReferenced ifFalse: [
 		aBlock cull: (self critiqueFor: aNode) ]
-]
-
-{ #category : 'accessing' }
-ReTemporaryNeitherReadNorWrittenRule >> name [
-	^ 'Temporary variables not read or not written'
 ]

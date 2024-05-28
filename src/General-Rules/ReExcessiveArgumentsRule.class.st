@@ -24,6 +24,11 @@ ReExcessiveArgumentsRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReExcessiveArgumentsRule class >> ruleName [
+	^ 'Excessive number of arguments'
+]
+
+{ #category : 'accessing' }
 ReExcessiveArgumentsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -42,11 +47,6 @@ ReExcessiveArgumentsRule >> basicCheck: aMethod [
 	aMethod isFFIMethod ifTrue: [ ^false ].
 
 	^ aMethod numArgs >= self argumentsCount
-]
-
-{ #category : 'accessing' }
-ReExcessiveArgumentsRule >> name [
-	^ 'Excessive number of arguments'
 ]
 
 { #category : 'accessing' }

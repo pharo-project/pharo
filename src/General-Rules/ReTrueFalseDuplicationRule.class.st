@@ -26,6 +26,11 @@ ReTrueFalseDuplicationRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReTrueFalseDuplicationRule class >> ruleName [
+	^ 'Check for same statements at end of ifTrue:ifFalse: blocks'
+]
+
+{ #category : 'accessing' }
 ReTrueFalseDuplicationRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -107,11 +112,6 @@ ReTrueFalseDuplicationRule >> initialize [
 			ifFalse: [ | `@falseTemps | `@.FalseStatements. ]
 			ifTrue: [ | `@trueTemps | `@.TrueStatements. ].
 		`.@PostStatements.'
-]
-
-{ #category : 'accessing' }
-ReTrueFalseDuplicationRule >> name [
-	^ 'Check for same statements at end of ifTrue:ifFalse: blocks'
 ]
 
 { #category : 'accessing' }

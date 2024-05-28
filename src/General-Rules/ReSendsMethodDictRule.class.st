@@ -20,6 +20,11 @@ ReSendsMethodDictRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReSendsMethodDictRule class >> ruleName [
+	^ 'No direct access of methodDict'
+]
+
+{ #category : 'accessing' }
 ReSendsMethodDictRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -32,11 +37,6 @@ ReSendsMethodDictRule >> basicCheck: aMethod [
 	({Behavior . ClassDescription . Class. Metaclass. TraitedMetaclass. MetaclassForTraits} includes: aMethod methodClass)
 		ifTrue: [ ^ false ].
 	^(aMethod refersToLiteral: #methodDict) and: [aMethod messages includes: #methodDict]
-]
-
-{ #category : 'accessing' }
-ReSendsMethodDictRule >> name [
-	^ 'No direct access of methodDict'
 ]
 
 { #category : 'accessing' }

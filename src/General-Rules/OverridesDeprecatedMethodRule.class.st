@@ -22,6 +22,11 @@ OverridesDeprecatedMethodRule class >> group [
 ]
 
 { #category : 'accessing' }
+OverridesDeprecatedMethodRule class >> ruleName [
+	^ 'Overrides a deprecated method'
+]
+
+{ #category : 'accessing' }
 OverridesDeprecatedMethodRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -33,9 +38,4 @@ OverridesDeprecatedMethodRule >> basicCheck: aMethod [
 	aMethod isDeprecated ifTrue: [ ^ false ].
 
 	^ aMethod overriddenMethods anySatisfy: #isDeprecated
-]
-
-{ #category : 'accessing' }
-OverridesDeprecatedMethodRule >> name [
-	^ 'Overrides a deprecated method'
 ]

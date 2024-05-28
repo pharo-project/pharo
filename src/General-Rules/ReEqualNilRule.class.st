@@ -15,6 +15,11 @@ ReEqualNilRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReEqualNilRule class >> ruleName [
+	^ '= nil -> isNil AND ~= nil -> isNotNil'
+]
+
+{ #category : 'accessing' }
 ReEqualNilRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -29,9 +34,4 @@ ReEqualNilRule >> initialize [
 		replace: '``@object == nil' with: '``@object isNil';
 		replace: '``@object ~= nil' with: '``@object isNotNil';
 		replace: '``@object ~~ nil' with: '``@object isNotNil'
-]
-
-{ #category : 'accessing' }
-ReEqualNilRule >> name [
-	^ '= nil -> isNil AND ~= nil -> isNotNil'
 ]

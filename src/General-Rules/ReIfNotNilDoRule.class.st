@@ -15,6 +15,11 @@ ReIfNotNilDoRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReIfNotNilDoRule class >> ruleName [
+	^ 'Use "ifNotNil:" not "ifNotNilDo:"'
+]
+
+{ #category : 'accessing' }
 ReIfNotNilDoRule class >> uniqueIdentifierName [
 
 	^ 'RuleIfNotNilDo'
@@ -30,9 +35,4 @@ ReIfNotNilDoRule >> initialize [
 			with: '`@receiver ifNotNil: `@statements1 ifNil: `@statements2';
 		replace: '`@receiver ifNil: `@statements1 ifNotNilDo: `@statements2'
 			with: '`@receiver ifNil: `@statements1 ifNotNil: `@statements2'
-]
-
-{ #category : 'accessing' }
-ReIfNotNilDoRule >> name [
-	^ 'Use "ifNotNil:" not "ifNotNilDo:"'
 ]

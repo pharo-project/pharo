@@ -23,6 +23,11 @@ ReModifiesCollectionRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReModifiesCollectionRule class >> ruleName [
+	^ 'Modifies collection while iterating over it'
+]
+
+{ #category : 'accessing' }
 ReModifiesCollectionRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -55,11 +60,6 @@ ReModifiesCollectionRule >> modifiesCollection: aCollectionNode inAnyStatement: 
 			node = aCollectionNode ifTrue: [ ^ true ] ] ].
 
 	^ false
-]
-
-{ #category : 'accessing' }
-ReModifiesCollectionRule >> name [
-	^ 'Modifies collection while iterating over it'
 ]
 
 { #category : 'accessing' }

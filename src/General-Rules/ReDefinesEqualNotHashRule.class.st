@@ -30,6 +30,11 @@ ReDefinesEqualNotHashRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReDefinesEqualNotHashRule class >> ruleName [
+	^ 'Defines = but not hash'
+]
+
+{ #category : 'accessing' }
 ReDefinesEqualNotHashRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -39,9 +44,4 @@ ReDefinesEqualNotHashRule class >> uniqueIdentifierName [
 { #category : 'enumerating' }
 ReDefinesEqualNotHashRule >> basicCheck: aClass [
 	^ (aClass includesSelector: #=) and: [ (aClass includesSelector: #hash) not ]
-]
-
-{ #category : 'accessing' }
-ReDefinesEqualNotHashRule >> name [
-	^ 'Defines = but not hash'
 ]

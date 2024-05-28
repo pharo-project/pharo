@@ -18,15 +18,15 @@ RePackageManifestShouldBePackagedInManifestTagRule class >> group [
 	^ 'Coding Idiom Violation'
 ]
 
+{ #category : 'accessing' }
+RePackageManifestShouldBePackagedInManifestTagRule class >> ruleName [
+	^ 'A package manifest should be tagged using ''Manifest'' class tag'
+]
+
 { #category : 'running' }
 RePackageManifestShouldBePackagedInManifestTagRule >> basicCheck: aClass [
 
 	^ (aClass inheritsFrom: PackageManifest) and: [ ((aClass package classesTaggedWith: 'Manifest') includes: aClass) not ]
-]
-
-{ #category : 'accessing' }
-RePackageManifestShouldBePackagedInManifestTagRule >> name [
-	^ 'A package manifest should be tagged using ''Manifest'' class tag'
 ]
 
 { #category : 'accessing' }

@@ -15,6 +15,11 @@ ReCodeCruftLeftInMethodsRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReCodeCruftLeftInMethodsRule class >> ruleName [
+	^ 'Debugging code left in methods'
+]
+
+{ #category : 'accessing' }
 ReCodeCruftLeftInMethodsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -76,11 +81,6 @@ ReCodeCruftLeftInMethodsRule >> haltSelectors [
 ReCodeCruftLeftInMethodsRule >> initialize [
 	super initialize.
 	self patterns do: [ :halt | self addRuleRemoving: halt ]
-]
-
-{ #category : 'accessing' }
-ReCodeCruftLeftInMethodsRule >> name [
-	^ 'Debugging code left in methods'
 ]
 
 { #category : 'private' }

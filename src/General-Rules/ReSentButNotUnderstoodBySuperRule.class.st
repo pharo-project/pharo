@@ -22,6 +22,11 @@ ReSentButNotUnderstoodBySuperRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReSentButNotUnderstoodBySuperRule class >> ruleName [
+	^ 'Messages sent that super can not understand'
+]
+
+{ #category : 'accessing' }
 ReSentButNotUnderstoodBySuperRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -44,12 +49,6 @@ ReSentButNotUnderstoodBySuperRule >> check: aMethod forCritiquesDo: aCriticBlock
 				 createTrivialCritiqueOn: aMethod
 				 intervalOf: msgSend
 				 hint: msgSend selector asString) ]
-]
-
-{ #category : 'accessing' }
-ReSentButNotUnderstoodBySuperRule >> name [
-
-	^ 'Messages sent that super can not understand'
 ]
 
 { #category : 'accessing' }

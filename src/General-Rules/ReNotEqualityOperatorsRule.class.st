@@ -14,6 +14,11 @@ ReNotEqualityOperatorsRule class >> group [
 	^ 'Bugs'
 ]
 
+{ #category : 'accessing' }
+ReNotEqualityOperatorsRule class >> ruleName [
+	^ 'Use the correct non-equality operators'
+]
+
 { #category : 'initialization' }
 ReNotEqualityOperatorsRule >> initialize [
 	super initialize.
@@ -21,11 +26,6 @@ ReNotEqualityOperatorsRule >> initialize [
 		replace: '``@a != ``@b' with: '``@a ~= ``@b';
 		replace: '``@a <> ``@b' with: '``@a ~= ``@b';
 		replace: '``@a !== ``@b' with: '``@a ~~ ``@b'
-]
-
-{ #category : 'accessing' }
-ReNotEqualityOperatorsRule >> name [
-	^ 'Use the correct non-equality operators'
 ]
 
 { #category : 'accessing' }

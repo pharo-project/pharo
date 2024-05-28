@@ -29,6 +29,11 @@ ReShouldSendSuperTearDownAsLastMessage class >> parseTreeSearcher [
 	^ RBParseTreeSearcher new
 ]
 
+{ #category : 'accessing' }
+ReShouldSendSuperTearDownAsLastMessage class >> ruleName [
+	^ 'Provide a call to super tearDown as the last message in the tearDown method'
+]
+
 { #category : 'utilities' }
 ReShouldSendSuperTearDownAsLastMessage class >> superTearDownNotCalledLastIn: aCompiledMethod [
 	"Return true if the method is a tearDown method and a call to super tearDown is not the last message send."
@@ -54,10 +59,4 @@ ReShouldSendSuperTearDownAsLastMessage >> basicCheck: aMethod [
 ReShouldSendSuperTearDownAsLastMessage >> isClassToCheck: aClass [
 
 	^ { TestCase. TestResource } anySatisfy: [:each | aClass inheritsFrom: each ]
-]
-
-{ #category : 'accessing' }
-ReShouldSendSuperTearDownAsLastMessage >> name [
-
-	^ 'Provide a call to super tearDown as the last message in the tearDown method'
 ]

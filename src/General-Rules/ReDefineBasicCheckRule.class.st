@@ -23,6 +23,11 @@ ReDefineBasicCheckRule class >> group [
 	^ 'Coding Idiom Violation'
 ]
 
+{ #category : 'accessing' }
+ReDefineBasicCheckRule class >> ruleName [
+	^ 'Rule does not define #basicCheck:'
+]
+
 { #category : 'running' }
 ReDefineBasicCheckRule >> basicCheck: aClass [
 	^ (aClass inheritsFrom: RBLintRule) and: [ aClass isVisible and: [ (aClass lookupSelector: #basicCheck:) isSubclassResponsibility ] ]
@@ -35,9 +40,4 @@ ReDefineBasicCheckRule >> critiqueFor: aClass [
 		by: self
 		class: aClass
 		selector: #basicCheck:) beShouldBeImplemented
-]
-
-{ #category : 'accessing' }
-ReDefineBasicCheckRule >> name [
-	^ 'Rule does not define #basicCheck:'
 ]

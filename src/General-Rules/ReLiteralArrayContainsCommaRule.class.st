@@ -15,6 +15,11 @@ ReLiteralArrayContainsCommaRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReLiteralArrayContainsCommaRule class >> ruleName [
+	^ 'Literal array contains a #,'
+]
+
+{ #category : 'accessing' }
 ReLiteralArrayContainsCommaRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -31,9 +36,4 @@ ReLiteralArrayContainsCommaRule >> basicCheck: aNode [
 		 FFICompilerPlugin ffiCalloutSelectors includes: aNode parent parent selector ]) ifTrue: [ ^ false ].
 
 	^ aNode value includes: #,
-]
-
-{ #category : 'accessing' }
-ReLiteralArrayContainsCommaRule >> name [
-	^ 'Literal array contains a #,'
 ]

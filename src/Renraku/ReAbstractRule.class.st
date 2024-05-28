@@ -142,6 +142,16 @@ ReAbstractRule class >> methodOfInteresetSelectors [
 	^ #(checksMethod checksClass checksPackage checksNode)
 ]
 
+{ #category : 'accessing' }
+ReAbstractRule class >> ruleName [
+
+	(self selectors includes: #name) ifTrue: [
+		self deprecated:
+			'The method #name of rules should be implemented on the class side in Pharo 13+ and not in instance sice. It was also renamed into #ruleName.'.
+		^ self new name ].
+	^ self subclassResponsibility
+]
+
 { #category : 'manifest' }
 ReAbstractRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
@@ -265,9 +275,9 @@ ReAbstractRule >> isRewriteRule [
 
 { #category : 'accessing' }
 ReAbstractRule >> name [
-	"Answer a human readable name of the rule."
 
-	^ self subclassResponsibility
+	self deprecated: 'Use #ruleName instead.' transformWith: '`@rcv name' -> '`@rcv ruleName'.
+	^ self ruleName
 ]
 
 { #category : 'accessing' }
@@ -279,6 +289,13 @@ ReAbstractRule >> rationale [
 
 { #category : 'compatibility' }
 ReAbstractRule >> resetResult [
+]
+
+{ #category : 'accessing' }
+ReAbstractRule >> ruleName [
+	"Answer a human readable name of the rule."
+
+	^ self class ruleName
 ]
 
 { #category : 'accessing' }

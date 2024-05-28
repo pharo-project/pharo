@@ -23,6 +23,11 @@ ReJustSendsSuperRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReJustSendsSuperRule class >> ruleName [
+	^ 'Method just sends super message'
+]
+
+{ #category : 'accessing' }
 ReJustSendsSuperRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -44,11 +49,6 @@ ReJustSendsSuperRule >> basicCheck: aMethod [
 ReJustSendsSuperRule >> initialize [
 	super initialize.
 	matcher := RBParseTreeSearcher justSendsSuper
-]
-
-{ #category : 'accessing' }
-ReJustSendsSuperRule >> name [
-	^ 'Method just sends super message'
 ]
 
 { #category : 'accessing' }

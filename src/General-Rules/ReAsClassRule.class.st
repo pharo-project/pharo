@@ -20,6 +20,11 @@ ReAsClassRule class >> group [
 	^ 'Design Flaws'
 ]
 
+{ #category : 'accessing' }
+ReAsClassRule class >> ruleName [
+	^ 'Do not use #asClass & similar'
+]
+
 { #category : 'initialization' }
 ReAsClassRule >> initialize [
 
@@ -27,12 +32,6 @@ ReAsClassRule >> initialize [
 	self
 		replace: '`@expr asClassIfAbsent: `@block' with: 'self class environment at: `@expr ifAbsent: `@block';
 		replace: '`@expr asClassIfPresent: `@block' with: 'self class environment at: `@expr ifPresent: `@block'
-]
-
-{ #category : 'accessing' }
-ReAsClassRule >> name [
-
-	^ 'Do not use #asClass & similar'
 ]
 
 { #category : 'accessing' }

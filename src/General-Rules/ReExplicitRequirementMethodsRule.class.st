@@ -20,6 +20,11 @@ ReExplicitRequirementMethodsRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReExplicitRequirementMethodsRule class >> ruleName [
+	^ 'Explicit requirement methods'
+]
+
+{ #category : 'accessing' }
 ReExplicitRequirementMethodsRule class >> uniqueIdentifierName [
 
 	^ 'ExplicitRequirementMethodsRule'
@@ -45,9 +50,4 @@ ReExplicitRequirementMethodsRule >> check: aClass forCritiquesDo: aCritiqueBlock
 					((self critiqueFor: aClass)
 						tinyHint: method selector;
 						yourself) ]
-]
-
-{ #category : 'accessing' }
-ReExplicitRequirementMethodsRule >> name [
-	^ 'Explicit requirement methods'
 ]

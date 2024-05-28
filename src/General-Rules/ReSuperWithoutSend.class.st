@@ -19,6 +19,11 @@ ReSuperWithoutSend class >> group [
 	^ 'Design Flaws'
 ]
 
+{ #category : 'accessing' }
+ReSuperWithoutSend class >> ruleName [
+	^ 'super makes only sense as the receiver of a message'
+]
+
 { #category : 'running' }
 ReSuperWithoutSend >> basicCheck: aNode [
 	aNode isVariable ifFalse: [ ^ false ].
@@ -28,9 +33,4 @@ ReSuperWithoutSend >> basicCheck: aNode [
 		^aNode parent receiver ~= aNode
 	].
 	^true
-]
-
-{ #category : 'accessing' }
-ReSuperWithoutSend >> name [
-	^ 'super makes only sense as the receiver of a message'
 ]

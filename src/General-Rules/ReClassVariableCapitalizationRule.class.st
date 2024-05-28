@@ -19,6 +19,11 @@ ReClassVariableCapitalizationRule class >> group [
 	^ 'Style'
 ]
 
+{ #category : 'accessing' }
+ReClassVariableCapitalizationRule class >> ruleName [
+	^ 'Class (or pool) variable not capitalized'
+]
+
 { #category : 'running' }
 ReClassVariableCapitalizationRule >> check: aClass forCritiquesDo: aCriticBlock [
 	aClass isMeta ifTrue: [ ^ self ].
@@ -48,9 +53,4 @@ ReClassVariableCapitalizationRule >> critiqueFor: aClass about: aVarName [
 				in: aClass).
 
 	^ crit
-]
-
-{ #category : 'accessing' }
-ReClassVariableCapitalizationRule >> name [
-	^ 'Class (or pool) variable not capitalized'
 ]

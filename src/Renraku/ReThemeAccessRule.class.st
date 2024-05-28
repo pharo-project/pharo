@@ -24,6 +24,11 @@ ReThemeAccessRule class >> initialize [
    " ReRuleManager cleanUp "
 ]
 
+{ #category : 'accessing' }
+ReThemeAccessRule class >> ruleName [
+	^ 'Access to UI theme.'
+]
+
 { #category : 'running' }
 ReThemeAccessRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| problemThemes |
@@ -39,9 +44,4 @@ ReThemeAccessRule >> check: aMethod forCritiquesDo: aCriticBlock [
 				createTrivialCritiqueOn: aMethod
 				intervalOf: msgSend
 				hint: msgSend selector asString) ]
-]
-
-{ #category : 'running' }
-ReThemeAccessRule >> name [
-	^ 'Access to UI theme.'
 ]

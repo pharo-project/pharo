@@ -23,6 +23,11 @@ ReAssignmentInIfTrueRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReAssignmentInIfTrueRule class >> ruleName [
+	^ 'Move variable assignment outside of single statement ifTrue:ifFalse: blocks'
+]
+
+{ #category : 'accessing' }
 ReAssignmentInIfTrueRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -37,11 +42,6 @@ ReAssignmentInIfTrueRule >> initialize [
 		with: '`variable := ``@Boolean ifTrue: [``@true] ifFalse: [``@false]';
 		replace: '``@Boolean ifFalse: [`variable := ``@true] ifTrue: [`variable := ``@false]'
 		with: '`variable := ``@Boolean ifFalse: [``@true] ifTrue: [``@false]'
-]
-
-{ #category : 'accessing' }
-ReAssignmentInIfTrueRule >> name [
-	^ 'Move variable assignment outside of single statement ifTrue:ifFalse: blocks'
 ]
 
 { #category : 'accessing' }

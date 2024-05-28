@@ -21,6 +21,11 @@ ReRefersToClassRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReRefersToClassRule class >> ruleName [
+	^ 'Refers to class name instead of "self class"'
+]
+
+{ #category : 'accessing' }
 ReRefersToClassRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -42,11 +47,6 @@ ReRefersToClassRule >> check: aMethod forCritiquesDo: aCriticBlock [
 
 	problemLiterals do: [ :literal |
 			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: literal hint:literal name )]
-]
-
-{ #category : 'accessing' }
-ReRefersToClassRule >> name [
-	^ 'Refers to class name instead of "self class"'
 ]
 
 { #category : 'accessing' }

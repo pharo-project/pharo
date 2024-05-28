@@ -28,6 +28,11 @@ ReUnwindBlocksRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReUnwindBlocksRule class >> ruleName [
+	^ 'Move assignment out of unwind blocks'
+]
+
+{ #category : 'accessing' }
 ReUnwindBlocksRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -46,9 +51,4 @@ ReUnwindBlocksRule >> initialize [
 			with: '`var := [| `@temps | ``@.Statements. ``@object] ifCurtailed: ``@block';
 		replace:'[| `@temps | ``@.Statements. ^``@object] ifCurtailed: ``@block'
 			with: '^[| `@temps | ``@.Statements. ``@object] ifCurtailed: ``@block'
-]
-
-{ #category : 'accessing' }
-ReUnwindBlocksRule >> name [
-	^ 'Move assignment out of unwind blocks'
 ]

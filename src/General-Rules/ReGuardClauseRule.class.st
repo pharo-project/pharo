@@ -31,6 +31,11 @@ ReGuardClauseRule class >> group [
 	^ 'Coding Idiom Violation'
 ]
 
+{ #category : 'accessing' }
+ReGuardClauseRule class >> ruleName [
+	^ 'Replace single branch conditional with guard clause'
+]
+
 { #category : 'initialization' }
 ReGuardClauseRule >> initialize [
 	super initialize.
@@ -57,9 +62,4 @@ ReGuardClauseRule >> initialize [
 					`.Statement1.
 					`.Statement2.
 					`@.Statements1'
-]
-
-{ #category : 'accessing' }
-ReGuardClauseRule >> name [
-	^ 'Replace single branch conditional with guard clause'
 ]

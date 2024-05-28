@@ -21,6 +21,11 @@ ReUnoptimizedToDoRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReUnoptimizedToDoRule class >> ruleName [
+	^ 'Uses (to:)do: instead of to:do:'
+]
+
+{ #category : 'accessing' }
 ReUnoptimizedToDoRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -31,9 +36,4 @@ ReUnoptimizedToDoRule class >> uniqueIdentifierName [
 ReUnoptimizedToDoRule >> initialize [
 	super initialize.
 	self matches: '(`@a to: `@b) do: `@c'
-]
-
-{ #category : 'accessing' }
-ReUnoptimizedToDoRule >> name [
-	^ 'Uses (to:)do: instead of to:do:'
 ]

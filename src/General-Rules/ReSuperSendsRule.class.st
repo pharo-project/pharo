@@ -15,6 +15,11 @@ ReSuperSendsRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReSuperSendsRule class >> ruleName [
+	^ 'Rewrite super messages to self messages'
+]
+
+{ #category : 'accessing' }
 ReSuperSendsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -27,11 +32,6 @@ ReSuperSendsRule >> initialize [
 	self
 		replace: 'super `@message: ``@args'
 		with: 'self `@message: ``@args'
-]
-
-{ #category : 'accessing' }
-ReSuperSendsRule >> name [
-	^ 'Rewrite super messages to self messages'
 ]
 
 { #category : 'testing' }

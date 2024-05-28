@@ -90,6 +90,11 @@ ReImplementedNotSentRule class >> reset [
 	allMessages := nil
 ]
 
+{ #category : 'accessing' }
+ReImplementedNotSentRule class >> ruleName [
+	^ 'Methods implemented but not sent'
+]
+
 { #category : 'cleanup' }
 ReImplementedNotSentRule class >> shutDown [
 	self reset
@@ -140,11 +145,6 @@ ReImplementedNotSentRule >> basicCheck: aMethod [
 						  occurrencesToFind := occurrencesToFind - 1.
 						  false ] ]
 			  ifFalse: [ false ] ]
-]
-
-{ #category : 'accessing' }
-ReImplementedNotSentRule >> name [
-	^ 'Methods implemented but not sent'
 ]
 
 { #category : 'accessing' }

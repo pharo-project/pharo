@@ -53,6 +53,14 @@ ReProperMethodProtocolNameRule class >> protocolIdiom [
 	^ self subclassResponsibility
 ]
 
+{ #category : 'accessing' }
+ReProperMethodProtocolNameRule class >> ruleName [
+	^ 'Method categorization: use '''
+		  	, self class goodMethodProtocolName
+  	  		, ''' as protocol name instead of '''
+	  		, self methodProtocolName asString , ''''
+]
+
 { #category : 'private - utilities' }
 ReProperMethodProtocolNameRule class >> use: valid insteadOf: arrayOfInvalid [
 	"Instead of directly creating an array we use this utility method for better readability
@@ -93,15 +101,6 @@ ReProperMethodProtocolNameRule >> methodProtocolName [
 ReProperMethodProtocolNameRule >> methodProtocolName: anObject [
 
 	methodProtocolName := anObject
-]
-
-{ #category : 'accessing' }
-ReProperMethodProtocolNameRule >> name [
-
-	^ 'Method categorization: use '''
-		  	, self class goodMethodProtocolName
-  	  		, ''' as protocol name instead of '''
-	  		, self methodProtocolName asString , ''''
 ]
 
 { #category : 'accessing' }

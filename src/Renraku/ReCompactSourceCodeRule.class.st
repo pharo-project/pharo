@@ -58,6 +58,11 @@ ReCompactSourceCodeRule class >> initialize [
 	self enabled: false
 ]
 
+{ #category : 'accessing' }
+ReCompactSourceCodeRule class >> ruleName [
+	^ 'Unnecessary characters found in method body'
+]
+
 { #category : 'running' }
 ReCompactSourceCodeRule >> basicCheck: aMethod [
 
@@ -73,12 +78,6 @@ ReCompactSourceCodeRule >> check: aMethod forCritiquesDo: aCriticBlock [
 				ReCompactSourceCodeCritic
 					for: aMethod
 					by: self)  ]
-]
-
-{ #category : 'accessing' }
-ReCompactSourceCodeRule >> name [
-
-	^ 'Unnecessary characters found in method body'
 ]
 
 { #category : 'testing' }

@@ -15,6 +15,11 @@ ReBooleanPrecedenceRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReBooleanPrecedenceRule class >> ruleName [
+	^ 'Uses A | B = C instead of A | (B = C)'
+]
+
+{ #category : 'accessing' }
 ReBooleanPrecedenceRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -33,11 +38,6 @@ ReBooleanPrecedenceRule >> initialize [
 			'`@object1 | `@object2 ~~ `@object3'
 			'`@object1 & `@object2 ~= `@object3'
 			'`@object1 & `@object2 ~~ `@object3' )
-]
-
-{ #category : 'accessing' }
-ReBooleanPrecedenceRule >> name [
-	^ 'Uses A | B = C instead of A | (B = C)'
 ]
 
 { #category : 'accessing' }

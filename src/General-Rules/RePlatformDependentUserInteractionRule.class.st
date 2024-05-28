@@ -17,6 +17,11 @@ RePlatformDependentUserInteractionRule class >> group [
 ]
 
 { #category : 'accessing' }
+RePlatformDependentUserInteractionRule class >> ruleName [
+	^ 'Platform dependent user interaction'
+]
+
+{ #category : 'accessing' }
 RePlatformDependentUserInteractionRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -38,11 +43,6 @@ RePlatformDependentUserInteractionRule >> initialize [
 			'PopUpMenu labels: `@object1'
 			'PopUpMenu withCaption: `@object1 chooseFrom: `@object2'
 			 )
-]
-
-{ #category : 'accessing' }
-RePlatformDependentUserInteractionRule >> name [
-	^ 'Platform dependent user interaction'
 ]
 
 { #category : 'accessing' }

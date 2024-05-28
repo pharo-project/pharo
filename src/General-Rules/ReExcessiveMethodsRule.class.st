@@ -26,6 +26,11 @@ ReExcessiveMethodsRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReExcessiveMethodsRule class >> ruleName [
+	^ 'Excessive number of methods'
+]
+
+{ #category : 'accessing' }
 ReExcessiveMethodsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -40,11 +45,6 @@ ReExcessiveMethodsRule >> basicCheck: aClass [
 { #category : 'private' }
 ReExcessiveMethodsRule >> methodsCount [
 	^ 60
-]
-
-{ #category : 'accessing' }
-ReExcessiveMethodsRule >> name [
-	^ 'Excessive number of methods'
 ]
 
 { #category : 'accessing' }

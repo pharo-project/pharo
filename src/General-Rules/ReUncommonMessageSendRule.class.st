@@ -22,6 +22,11 @@ ReUncommonMessageSendRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReUncommonMessageSendRule class >> ruleName [
+	^ 'Uncommon message send'
+]
+
+{ #category : 'accessing' }
 ReUncommonMessageSendRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -43,9 +48,4 @@ ReUncommonMessageSendRule >> check: aMethod forCritiquesDo: aCriticBlock [
 ReUncommonMessageSendRule >> commonLiterals [
 
 	^ #(#self #super #thisContext #true #false #nil)
-]
-
-{ #category : 'accessing' }
-ReUncommonMessageSendRule >> name [
-	^ 'Uncommon message send'
 ]

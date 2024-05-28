@@ -14,16 +14,15 @@ FloatReferencesRule class >> group [
 	^ 'Bugs'
 ]
 
+{ #category : 'accessing' }
+FloatReferencesRule class >> ruleName [
+	^ 'Access to a system class'
+]
+
 { #category : 'running' }
 FloatReferencesRule >> basicCheck: node [
 	node isGlobalVariable ifFalse: [ ^ false ].
 	^(self systemClassNames includes: node name)
-]
-
-{ #category : 'accessing' }
-FloatReferencesRule >> name [
-
-	^ 'Access to a system class'
 ]
 
 { #category : 'accessing' }

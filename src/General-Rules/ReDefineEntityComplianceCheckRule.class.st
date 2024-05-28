@@ -19,6 +19,11 @@ ReDefineEntityComplianceCheckRule class >> group [
 	^ 'Coding Idiom Violation'
 ]
 
+{ #category : 'accessing' }
+ReDefineEntityComplianceCheckRule class >> ruleName [
+	^ 'Rule does not define entity compliance'
+]
+
 { #category : 'running' }
 ReDefineEntityComplianceCheckRule >> basicCheck: aClass [
 	^ (aClass inheritsFrom: RBLintRule) and: [ aClass isVisible and: [ self complianceMethods noneSatisfy: [ :method | aClass perform: method ] ] ]
@@ -28,11 +33,6 @@ ReDefineEntityComplianceCheckRule >> basicCheck: aClass [
 ReDefineEntityComplianceCheckRule >> complianceMethods [
 
 	^ #(checksMethod checksClass checksPackage)
-]
-
-{ #category : 'accessing' }
-ReDefineEntityComplianceCheckRule >> name [
-	^ 'Rule does not define entity compliance'
 ]
 
 { #category : 'accessing' }

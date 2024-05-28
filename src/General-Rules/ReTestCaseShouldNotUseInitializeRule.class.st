@@ -24,6 +24,11 @@ ReTestCaseShouldNotUseInitializeRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReTestCaseShouldNotUseInitializeRule class >> ruleName [
+	^ 'Tests should not use initialize'
+]
+
+{ #category : 'accessing' }
 ReTestCaseShouldNotUseInitializeRule >> basicCheck: aClass [
 
 	| alteredVariables expectedVariables |
@@ -41,10 +46,4 @@ ReTestCaseShouldNotUseInitializeRule >> basicCheck: aClass [
 	expectedVariables := aClass new instanceVariablesToKeep.
 
 	^ alteredVariables anySatisfy: [ :e | (expectedVariables includes: e name) not ]
-]
-
-{ #category : 'accessing' }
-ReTestCaseShouldNotUseInitializeRule >> name [
-
-	^ 'Tests should not use initialize'
 ]

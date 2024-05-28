@@ -22,6 +22,11 @@ ReEquivalentSuperclassMethodsRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReEquivalentSuperclassMethodsRule class >> ruleName [
+	^ 'Methods equivalently defined in superclass'
+]
+
+{ #category : 'accessing' }
 ReEquivalentSuperclassMethodsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -43,11 +48,6 @@ ReEquivalentSuperclassMethodsRule >> ignoredSelectors [
 	"These methods are often overridden for compatilbity with other platforms."
 
 	^ #(new initialize)
-]
-
-{ #category : 'accessing' }
-ReEquivalentSuperclassMethodsRule >> name [
-	^ 'Methods equivalently defined in superclass'
 ]
 
 { #category : 'accessing' }

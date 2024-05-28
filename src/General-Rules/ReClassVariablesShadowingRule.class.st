@@ -20,15 +20,15 @@ ReClassVariablesShadowingRule class >> group [
 	^ 'Design Flaws'
 ]
 
+{ #category : 'accessing' }
+ReClassVariablesShadowingRule class >> ruleName [
+	^ 'Variable shadows a global variable'
+]
+
 { #category : 'running' }
 ReClassVariablesShadowingRule >> check: aClass forCritiquesDo: aCriticBlock [
 
 	aClass definedVariables
 		select: [ :variable | variable isShadowing ]
 		thenDo: [ :variable | aCriticBlock cull: (self critiqueFor: aClass about: variable name) ]
-]
-
-{ #category : 'accessing' }
-ReClassVariablesShadowingRule >> name [
-	^ 'Variable shadows a global variable'
 ]

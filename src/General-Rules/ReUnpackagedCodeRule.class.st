@@ -25,6 +25,11 @@ ReUnpackagedCodeRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReUnpackagedCodeRule class >> ruleName [
+	^ 'Unpackaged code'
+]
+
+{ #category : 'accessing' }
 ReUnpackagedCodeRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -35,9 +40,4 @@ ReUnpackagedCodeRule class >> uniqueIdentifierName [
 ReUnpackagedCodeRule >> basicCheck: anEntity [
 
 	^ anEntity package isNotNil and: [ anEntity package isUndefined ]
-]
-
-{ #category : 'accessing' }
-ReUnpackagedCodeRule >> name [
-	^ 'Unpackaged code'
 ]

@@ -26,6 +26,11 @@ ReEndTrueFalseRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReEndTrueFalseRule class >> ruleName [
+	^ 'Check for same statements at end of ifTrue:ifFalse: blocks'
+]
+
+{ #category : 'accessing' }
 ReEndTrueFalseRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -57,11 +62,6 @@ ReEndTrueFalseRule >> initialize [
 				ifTrue: [| `@temps2 | `@.Statements2. `.Statement]' '`@object
 				ifFalse: [| `@temps1 | `.Statement. `@.Statements1]
 				ifTrue: [| `@temps2 | `.Statement. `@.Statement2]')
-]
-
-{ #category : 'accessing' }
-ReEndTrueFalseRule >> name [
-	^ 'Check for same statements at end of ifTrue:ifFalse: blocks'
 ]
 
 { #category : 'accessing' }

@@ -28,6 +28,11 @@ ReLongMethodsRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReLongMethodsRule class >> ruleName [
+	^ 'Long methods'
+]
+
+{ #category : 'accessing' }
 ReLongMethodsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -52,11 +57,6 @@ ReLongMethodsRule >> basicCheck: aMethod [
 { #category : 'private' }
 ReLongMethodsRule >> longMethodSize [
 	^ 20
-]
-
-{ #category : 'accessing' }
-ReLongMethodsRule >> name [
-	^ 'Long methods'
 ]
 
 { #category : 'accessing' }

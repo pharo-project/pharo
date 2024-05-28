@@ -26,6 +26,11 @@ ReNoPrintStringInPrintOnRule class >> initialize [
     ReRuleManager cleanUp
 ]
 
+{ #category : 'accessing' }
+ReNoPrintStringInPrintOnRule class >> ruleName [
+	^ 'No printString inside printOn'
+]
+
 { #category : 'running' }
 ReNoPrintStringInPrintOnRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| problemPrintStrings |
@@ -38,11 +43,6 @@ ReNoPrintStringInPrintOnRule >> check: aMethod forCritiquesDo: aCriticBlock [
 				createTrivialCritiqueOn: aMethod
 				intervalOf: msgSend
 				hint: msgSend selector asString )]
-]
-
-{ #category : 'accessing' }
-ReNoPrintStringInPrintOnRule >> name [
-	^ 'No printString inside printOn'
 ]
 
 { #category : 'accessing' }

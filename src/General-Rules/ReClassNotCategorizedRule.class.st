@@ -23,6 +23,11 @@ ReClassNotCategorizedRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReClassNotCategorizedRule class >> ruleName [
+	^ 'Uncategorized class - missing class tag'
+]
+
+{ #category : 'accessing' }
 ReClassNotCategorizedRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -35,12 +40,6 @@ ReClassNotCategorizedRule >> basicCheck: aClass [
 	aClass isMeta ifTrue: [ ^ false ].
 
 	^ aClass packageTag isRoot and: [ aClass package tags size > 1 ]
-]
-
-{ #category : 'accessing' }
-ReClassNotCategorizedRule >> name [
-
-	^ 'Uncategorized class - missing class tag'
 ]
 
 { #category : 'accessing' }

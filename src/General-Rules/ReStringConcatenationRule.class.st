@@ -31,6 +31,11 @@ ReStringConcatenationRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReStringConcatenationRule class >> ruleName [
+	^ 'String concatenation instead of streams'
+]
+
+{ #category : 'accessing' }
 ReStringConcatenationRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -65,11 +70,6 @@ ReStringConcatenationRule >> initialize [
 		'``@collection anySatisfy: ``@argument'
 		'``@collection allSatisfy: ``@argument'
 		'``@collection noneSatisfy: ``@argument' )
-]
-
-{ #category : 'accessing' }
-ReStringConcatenationRule >> name [
-	^ 'String concatenation instead of streams'
 ]
 
 { #category : 'hooks' }

@@ -23,16 +23,16 @@ ReTestClassNameShouldEndWithTestRule class >> group [
 	^ 'SUnit'
 ]
 
+{ #category : 'accessing' }
+ReTestClassNameShouldEndWithTestRule class >> ruleName [
+	^ 'A Test class'' name should end with ''Test'' '
+]
+
 { #category : 'running' }
 ReTestClassNameShouldEndWithTestRule >> basicCheck: aClass [
 	| suffixes |
 	suffixes := #('Test' 'TestCase').
 	^ (aClass inheritsFrom: TestCase) and: [ suffixes noneSatisfy: [ :suffix | aClass name asString endsWith: suffix ] ]
-]
-
-{ #category : 'accessing' }
-ReTestClassNameShouldEndWithTestRule >> name [
-	^ 'A Test class'' name should end with ''Test'' '
 ]
 
 { #category : 'accessing' }

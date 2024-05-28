@@ -29,6 +29,11 @@ ReMinMaxRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReMinMaxRule class >> ruleName [
+	^ 'Rewrite ifTrue:ifFalse: using min:/max:'
+]
+
+{ #category : 'accessing' }
 ReMinMaxRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -63,11 +68,6 @@ ReMinMaxRule >> initialize [
 		replace: '``@b >= `a ifTrue: [`a := ``@b]' with: '`a := `a max: ``@b';
 		replace: '``@b > `a ifFalse: [`a := ``@b]' with: '`a := `a min: ``@b';
 		replace: '``@b >= `a ifFalse: [`a := ``@b]' with: '`a := `a min: ``@b'
-]
-
-{ #category : 'accessing' }
-ReMinMaxRule >> name [
-	^ 'Rewrite ifTrue:ifFalse: using min:/max:'
 ]
 
 { #category : 'accessing' }

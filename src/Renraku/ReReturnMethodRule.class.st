@@ -23,17 +23,16 @@ ReReturnMethodRule class >> group [
 	^ 'Bugs'
 ]
 
+{ #category : 'accessing' }
+ReReturnMethodRule class >> ruleName [
+	^ 'Method should explicitly return a value'
+]
+
 { #category : 'running' }
 ReReturnMethodRule >> basicCheck: aMethod [
 	(aMethod overriddenMethods anySatisfy: [ :method | method hasPragmaNamed: #shouldReturn ]) ifFalse: [ ^ false ].
 
 	^ aMethod ast lastIsReturn not
-]
-
-{ #category : 'accessing' }
-ReReturnMethodRule >> name [
-
-	^ 'Method should explicitly return a value'
 ]
 
 { #category : 'accessing' }

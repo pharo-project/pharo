@@ -25,6 +25,11 @@ ReWhileTrueRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReWhileTrueRule class >> ruleName [
+	^ 'Uses whileTrue: instead of to:do:'
+]
+
+{ #category : 'accessing' }
 ReWhileTrueRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -67,11 +72,6 @@ ReWhileTrueRule >> initialize [
 					`@.BlockStmts1.
 					`index := `index - 1].
 			`@.Statements2' )
-]
-
-{ #category : 'accessing' }
-ReWhileTrueRule >> name [
-	^ 'Uses whileTrue: instead of to:do:'
 ]
 
 { #category : 'accessing' }

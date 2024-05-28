@@ -20,6 +20,11 @@ ReOverridesSpecialMessageRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReOverridesSpecialMessageRule class >> ruleName [
+	^ 'Overrides a "special" message'
+]
+
+{ #category : 'accessing' }
 ReOverridesSpecialMessageRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -47,11 +52,6 @@ ReOverridesSpecialMessageRule >> classShouldNotOverride [
 { #category : 'private' }
 ReOverridesSpecialMessageRule >> metaclassShouldNotOverride [
 	^ #( #basicNew #basicNew #class #comment #name )
-]
-
-{ #category : 'accessing' }
-ReOverridesSpecialMessageRule >> name [
-	^ 'Overrides a "special" message'
 ]
 
 { #category : 'accessing' }

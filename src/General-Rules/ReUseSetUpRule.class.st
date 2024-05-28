@@ -15,6 +15,11 @@ ReUseSetUpRule class >> group [
 	^ 'Design Flaws'
 ]
 
+{ #category : 'accessing' }
+ReUseSetUpRule class >> ruleName [
+	^ 'Uses setUp instead of initialize for Test class.'
+]
+
 { #category : 'manifest' }
 ReUseSetUpRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
@@ -31,12 +36,6 @@ ReUseSetUpRule >> initialize [
 		'initialize |`@temps| super initialize. `.@statements'
 		rewriteTo: 'setUp |`@temps| super setUp. `.@statements'.
 	self addMatchingMethod: 'initialize' rewriteTo: 'setUp'
-]
-
-{ #category : 'accessing' }
-ReUseSetUpRule >> name [
-
-	^ 'Uses setUp instead of initialize for Test class.'
 ]
 
 { #category : 'accessing' }

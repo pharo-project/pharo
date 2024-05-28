@@ -21,6 +21,11 @@ ReUnconditionalRecursionRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReUnconditionalRecursionRule class >> ruleName [
+	^ 'Unconditional recursion'
+]
+
+{ #category : 'accessing' }
 ReUnconditionalRecursionRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -41,11 +46,6 @@ ReUnconditionalRecursionRule >> initialize [
 			`@.before.
 			self `@message: `@args.
 			`@.after'
-]
-
-{ #category : 'accessing' }
-ReUnconditionalRecursionRule >> name [
-	^ 'Unconditional recursion'
 ]
 
 { #category : 'accessing' }

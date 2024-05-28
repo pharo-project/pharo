@@ -26,6 +26,11 @@ ReDetectIfNoneRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReDetectIfNoneRule class >> ruleName [
+	^ '#detect:ifNone: or #contains: -> #anySatisfy:'
+]
+
+{ #category : 'accessing' }
 ReDetectIfNoneRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -56,11 +61,6 @@ ReDetectIfNoneRule >> initialize [
 
 		replace: '(``@collection detect: [:`each | | `@temps | ``@.Statements] ifNone: [nil]) ~~ nil'
 		with: '``@collection anySatisfy: [:`each | | `@temps | ``@.Statements]'
-]
-
-{ #category : 'accessing' }
-ReDetectIfNoneRule >> name [
-	^ '#detect:ifNone: or #contains: -> #anySatisfy:'
 ]
 
 { #category : 'accessing' }

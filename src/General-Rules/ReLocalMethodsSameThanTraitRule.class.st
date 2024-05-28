@@ -20,6 +20,11 @@ ReLocalMethodsSameThanTraitRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReLocalMethodsSameThanTraitRule class >> ruleName [
+	^ 'Repeated methods in the trait composition'
+]
+
+{ #category : 'accessing' }
 ReLocalMethodsSameThanTraitRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -40,9 +45,4 @@ ReLocalMethodsSameThanTraitRule >> check: aClass forCritiquesDo: aCriticBlock [
 		thenDo: [ :duplicatedMethod |
 			aCriticBlock cull:
 				(ReRemoveMethodCritique for: aClass selector: duplicatedMethod selector by: self) ]
-]
-
-{ #category : 'accessing' }
-ReLocalMethodsSameThanTraitRule >> name [
-	^ 'Repeated methods in the trait composition'
 ]

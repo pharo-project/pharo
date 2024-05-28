@@ -15,6 +15,11 @@ ReEqualsTrueRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReEqualsTrueRule class >> ruleName [
+	^ 'Unnecessary "= true"'
+]
+
+{ #category : 'accessing' }
 ReEqualsTrueRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -29,11 +34,6 @@ ReEqualsTrueRule >> basicCheck: aNode [
 	(parent := aNode parent) ifNil: [ ^ false ].
 	parent isMessage ifFalse: [ ^ false ].
 	^ #(#= #== #~= #~~) includes: parent selector
-]
-
-{ #category : 'accessing' }
-ReEqualsTrueRule >> name [
-	^ 'Unnecessary "= true"'
 ]
 
 { #category : 'accessing' }

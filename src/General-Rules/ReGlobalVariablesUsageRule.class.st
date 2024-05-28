@@ -21,6 +21,11 @@ ReGlobalVariablesUsageRule class >> group [
 	^ 'Design Flaws'
 ]
 
+{ #category : 'accessing' }
+ReGlobalVariablesUsageRule class >> ruleName [
+	^ 'Global variable usage'
+]
+
 { #category : 'running' }
 ReGlobalVariablesUsageRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	aMethod ast allChildren
@@ -49,11 +54,6 @@ ReGlobalVariablesUsageRule >> isKnownGlobal: aString [
 			Undeclared
 			World
 		) includes: aString
-]
-
-{ #category : 'accessing' }
-ReGlobalVariablesUsageRule >> name [
-	^ 'Global variable usage'
 ]
 
 { #category : 'running' }

@@ -20,6 +20,11 @@ ReNoClassCommentRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReNoClassCommentRule class >> ruleName [
+	^ 'No class comment'
+]
+
+{ #category : 'accessing' }
 ReNoClassCommentRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -30,11 +35,6 @@ ReNoClassCommentRule class >> uniqueIdentifierName [
 ReNoClassCommentRule >> basicCheck: aClass [
 	(aClass isMeta or: [ aClass isTestCase ]) ifTrue: [ ^ false ].
 	^ aClass hasComment not
-]
-
-{ #category : 'accessing' }
-ReNoClassCommentRule >> name [
-	^ 'No class comment'
 ]
 
 { #category : 'accessing' }

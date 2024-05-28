@@ -21,6 +21,11 @@ ReEmptyExceptionHandlerRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReEmptyExceptionHandlerRule class >> ruleName [
+	^ 'Empty exception handler'
+]
+
+{ #category : 'accessing' }
 ReEmptyExceptionHandlerRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -47,9 +52,4 @@ ReEmptyExceptionHandlerRule >> initialize [
 		'`@block
 			on: `exception
 			do: [ :`@err | | `@temps | ]'
-]
-
-{ #category : 'accessing' }
-ReEmptyExceptionHandlerRule >> name [
-	^ 'Empty exception handler'
 ]

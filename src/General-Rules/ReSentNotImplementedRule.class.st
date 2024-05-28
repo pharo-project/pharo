@@ -20,6 +20,11 @@ ReSentNotImplementedRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReSentNotImplementedRule class >> ruleName [
+	^ 'Messages sent but not implemented'
+]
+
+{ #category : 'accessing' }
 ReSentNotImplementedRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -42,11 +47,6 @@ ReSentNotImplementedRule >> check: aMethod forCritiquesDo: aCriticBlock [
 				 createTrivialCritiqueOn: aMethod
 				 intervalOf: msgSend
 				 hint: msgSend selector asString) ]
-]
-
-{ #category : 'accessing' }
-ReSentNotImplementedRule >> name [
-	^ 'Messages sent but not implemented'
 ]
 
 { #category : 'accessing' }

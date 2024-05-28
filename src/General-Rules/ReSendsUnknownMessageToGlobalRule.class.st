@@ -15,6 +15,11 @@ ReSendsUnknownMessageToGlobalRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReSendsUnknownMessageToGlobalRule class >> ruleName [
+	^ 'Sends unknown message to global'
+]
+
+{ #category : 'accessing' }
 ReSendsUnknownMessageToGlobalRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -32,11 +37,6 @@ ReSendsUnknownMessageToGlobalRule >> basicCheck: aNode [
 	"if we know that the selector does not exist, we ignore"
 	(aNode methodNode compiledMethod allIgnoredNotImplementedSelectors includes: aNode selector) ifTrue: [ ^false ].
 	^ (aNode receiver variable value respondsTo: aNode selector) not
-]
-
-{ #category : 'accessing' }
-ReSendsUnknownMessageToGlobalRule >> name [
-	^ 'Sends unknown message to global'
 ]
 
 { #category : 'accessing' }

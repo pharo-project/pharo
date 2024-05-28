@@ -15,6 +15,11 @@ ReBetweenAndRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReBetweenAndRule class >> ruleName [
+	^ '"a >= b and: [a <= c]" -> "a between: b and: c"'
+]
+
+{ #category : 'accessing' }
 ReBetweenAndRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -41,9 +46,4 @@ ReBetweenAndRule >> initialize [
 		replace: '``@a <= ``@c & (``@b <= ``@a)' with: '``@a between: ``@b and: ``@c';
 		replace: '``@c >= ``@a and: [``@b <= ``@a]' with: '``@a between: ``@b and: ``@c';
 		replace: '``@c >= ``@a & (``@b <= ``@a)' with: '``@a between: ``@b and: ``@c'
-]
-
-{ #category : 'accessing' }
-ReBetweenAndRule >> name [
-	^ '"a >= b and: [a <= c]" -> "a between: b and: c"'
 ]

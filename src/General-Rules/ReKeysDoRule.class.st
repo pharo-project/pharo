@@ -22,6 +22,11 @@ ReKeysDoRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReKeysDoRule class >> ruleName [
+	^ 'keys do: -> keysDo: and valuesDo:'
+]
+
+{ #category : 'accessing' }
 ReKeysDoRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -34,11 +39,6 @@ ReKeysDoRule >> initialize [
 	self
 		replace: '``@object keys do: ``@block' with: '``@object keysDo: ``@block';
 		replace: '``@object values do: ``@block' with: '``@object valuesDo: ``@block'
-]
-
-{ #category : 'accessing' }
-ReKeysDoRule >> name [
-	^ 'keys do: -> keysDo: and valuesDo:'
 ]
 
 { #category : 'accessing' }

@@ -22,6 +22,11 @@ ReUsesTrueRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReUsesTrueRule class >> ruleName [
+	^ 'Uses True/False instead of true/false'
+]
+
+{ #category : 'accessing' }
 ReUsesTrueRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -35,11 +40,6 @@ ReUsesTrueRule >> check: aMethod forCritiquesDo: aCriticBlock [
 			                 aNode isGlobalVariable and: [ #( True False ) includes: aNode name ] ].
 	problemUsages do: [ :ref |
 		aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: ref hint: ref name asString)]
-]
-
-{ #category : 'accessing' }
-ReUsesTrueRule >> name [
-	^ 'Uses True/False instead of true/false'
 ]
 
 { #category : 'accessing' }

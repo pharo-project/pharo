@@ -15,6 +15,11 @@ ReAssignmentInBlockRule class >> group [
 ]
 
 { #category : 'accessing' }
+ReAssignmentInBlockRule class >> ruleName [
+	^ 'Unnecessary assignment or return in block'
+]
+
+{ #category : 'accessing' }
 ReAssignmentInBlockRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -31,9 +36,4 @@ ReAssignmentInBlockRule >> initialize [
 			'[| `@temps | `@.Statements. ^`@object] ensure: `@block'
 			'[| `@temps | `@.Statements. `var := `@object] ifCurtailed: `@block'
 			'[| `@temps | `@.Statements. ^`@object] ifCurtailed: `@block' )
-]
-
-{ #category : 'accessing' }
-ReAssignmentInBlockRule >> name [
-	^ 'Unnecessary assignment or return in block'
 ]

@@ -15,6 +15,11 @@ ReIsNilAndConditionalRule class >> group [
 	^ 'Coding Idiom Violation'
 ]
 
+{ #category : 'accessing' }
+ReIsNilAndConditionalRule class >> ruleName [
+	^ 'Sends isNil and a conditional check instead of using #ifNil: #ifNotNil: or #ifNil:ifNotNil:'
+]
+
 { #category : 'initialization' }
 ReIsNilAndConditionalRule >> initialize [
 
@@ -26,12 +31,6 @@ ReIsNilAndConditionalRule >> initialize [
 			with: '``@receiver ifNil: ``@nilBlock ifNotNil: ``@notNilBlock';
 		replace: '``@receiver isNil ifFalse: ``@notNilBlock ifTrue: ``@nilBlock'
 			with: '``@receiver ifNil: ``@nilBlock ifNotNil: ``@notNilBlock'
-]
-
-{ #category : 'accessing' }
-ReIsNilAndConditionalRule >> name [
-
-	^ 'Sends isNil and a conditional check instead of using #ifNil: #ifNotNil: or #ifNil:ifNotNil:'
 ]
 
 { #category : 'accessing' }
