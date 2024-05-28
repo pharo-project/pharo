@@ -16,6 +16,12 @@ ReSentButNotUnderstoodBySuperRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReSentButNotUnderstoodBySuperRule class >> group [
+
+	^ 'Bugs'
+]
+
+{ #category : 'accessing' }
 ReSentButNotUnderstoodBySuperRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -38,12 +44,6 @@ ReSentButNotUnderstoodBySuperRule >> check: aMethod forCritiquesDo: aCriticBlock
 				 createTrivialCritiqueOn: aMethod
 				 intervalOf: msgSend
 				 hint: msgSend selector asString) ]
-]
-
-{ #category : 'accessing' }
-ReSentButNotUnderstoodBySuperRule >> group [
-
-	^ 'Bugs'
 ]
 
 { #category : 'accessing' }

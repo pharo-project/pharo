@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'accessing' }
-ReAssertWithBooleanEqualtiyRule >> group [ 
+ReAssertWithBooleanEqualtiyRule class >> group [ 
 
 	^ 'Optimization'
 ]

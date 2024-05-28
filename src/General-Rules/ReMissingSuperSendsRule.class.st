@@ -17,6 +17,12 @@ ReMissingSuperSendsRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReMissingSuperSendsRule class >> group [
+
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
 ReMissingSuperSendsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -41,12 +47,6 @@ ReMissingSuperSendsRule >> basicCheck: aMethod [
 
 	superMethod isReturnSelf ifTrue: [ ^ false ].
 	^ (superMethod sendsSelector: #subclassResponsibility) not
-]
-
-{ #category : 'accessing' }
-ReMissingSuperSendsRule >> group [
-
-	^ 'Potential Bugs'
 ]
 
 { #category : 'accessing' }

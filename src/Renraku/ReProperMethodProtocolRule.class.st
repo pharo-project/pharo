@@ -27,6 +27,12 @@ ReProperMethodProtocolRule class >> checksMethod [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReProperMethodProtocolRule class >> group [
+
+	^ 'Clean Code'
+]
+
 { #category : 'testing' }
 ReProperMethodProtocolRule class >> isAbstract [
 
@@ -60,12 +66,6 @@ ReProperMethodProtocolRule >> critiqueFor: aMethod [
 			   protocol: self protocolName
 			   inMethod: methodSymbol
 			   inClass: classSymbol)
-]
-
-{ #category : 'accessing' }
-ReProperMethodProtocolRule >> group [
-
-	^ 'Clean Code'
 ]
 
 { #category : 'accessing' }

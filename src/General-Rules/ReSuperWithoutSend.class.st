@@ -14,6 +14,11 @@ Class {
 	#tag : 'Migrated'
 }
 
+{ #category : 'accessing' }
+ReSuperWithoutSend class >> group [
+	^ 'Design Flaws'
+]
+
 { #category : 'running' }
 ReSuperWithoutSend >> basicCheck: aNode [
 	aNode isVariable ifFalse: [ ^ false ].
@@ -23,11 +28,6 @@ ReSuperWithoutSend >> basicCheck: aNode [
 		^aNode parent receiver ~= aNode
 	].
 	^true
-]
-
-{ #category : 'accessing' }
-ReSuperWithoutSend >> group [
-	^ 'Design Flaws'
 ]
 
 { #category : 'accessing' }

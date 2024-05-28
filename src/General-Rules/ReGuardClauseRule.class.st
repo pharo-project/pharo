@@ -27,7 +27,7 @@ Class {
 }
 
 { #category : 'accessing' }
-ReGuardClauseRule >> group [
+ReGuardClauseRule class >> group [
 	^ 'Coding Idiom Violation'
 ]
 

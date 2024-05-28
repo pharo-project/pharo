@@ -14,6 +14,11 @@ ReClassVariableCapitalizationRule class >> checksClass [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReClassVariableCapitalizationRule class >> group [
+	^ 'Style'
+]
+
 { #category : 'running' }
 ReClassVariableCapitalizationRule >> check: aClass forCritiquesDo: aCriticBlock [
 	aClass isMeta ifTrue: [ ^ self ].
@@ -43,11 +48,6 @@ ReClassVariableCapitalizationRule >> critiqueFor: aClass about: aVarName [
 				in: aClass).
 
 	^ crit
-]
-
-{ #category : 'accessing' }
-ReClassVariableCapitalizationRule >> group [
-	^ 'Style'
 ]
 
 { #category : 'accessing' }

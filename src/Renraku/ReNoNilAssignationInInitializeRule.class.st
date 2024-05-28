@@ -14,6 +14,12 @@ ReNoNilAssignationInInitializeRule class >> checksMethod [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReNoNilAssignationInInitializeRule class >> group [
+
+	^ 'Style'
+]
+
 { #category : 'running' }
 ReNoNilAssignationInInitializeRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	| problemAssigments|
@@ -24,12 +30,6 @@ ReNoNilAssignationInInitializeRule >> check: aMethod forCritiquesDo: aCriticBloc
 	problemAssigments do: [ :assignment |
 			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: assignment hint: 'nil').
 		 ]
-]
-
-{ #category : 'accessing' }
-ReNoNilAssignationInInitializeRule >> group [
-
-	^ 'Style'
 ]
 
 { #category : 'accessing' }

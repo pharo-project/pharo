@@ -24,15 +24,15 @@ Class {
 }
 
 { #category : 'accessing' }
+ReAllAnyNoneSatisfyRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
 ReAllAnyNoneSatisfyRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'AllAnyNoneSatisfyRule'
-]
-
-{ #category : 'accessing' }
-ReAllAnyNoneSatisfyRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'initialization' }

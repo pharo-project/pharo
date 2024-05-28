@@ -10,15 +10,15 @@ Class {
 }
 
 { #category : 'accessing' }
+ReBetweenAndRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
 ReBetweenAndRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'BetweenAndRule'
-]
-
-{ #category : 'accessing' }
-ReBetweenAndRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'initialization' }

@@ -15,6 +15,11 @@ ReOverridesSpecialMessageRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
+ReOverridesSpecialMessageRule class >> group [
+	^ 'Bugs'
+]
+
+{ #category : 'accessing' }
 ReOverridesSpecialMessageRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -37,11 +42,6 @@ ReOverridesSpecialMessageRule >> check: aClass forCritiquesDo: aCriticBlock [
 { #category : 'private' }
 ReOverridesSpecialMessageRule >> classShouldNotOverride [
 	^ #( #== #~~ #class #basicAt: #basicAt:put: #basicSize #identityHash )
-]
-
-{ #category : 'accessing' }
-ReOverridesSpecialMessageRule >> group [
-	^ 'Bugs'
 ]
 
 { #category : 'private' }

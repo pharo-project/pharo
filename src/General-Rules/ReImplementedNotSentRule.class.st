@@ -57,6 +57,11 @@ ReImplementedNotSentRule class >> enabled: aBoolean [
 		ifFalse: [ self unsubscribe ]
 ]
 
+{ #category : 'accessing' }
+ReImplementedNotSentRule class >> group [
+	^ 'Design Flaws'
+]
+
 { #category : 'class initialization' }
 ReImplementedNotSentRule class >> initialize [
 	"we do not want to register if the rule is disabled"
@@ -135,11 +140,6 @@ ReImplementedNotSentRule >> basicCheck: aMethod [
 						  occurrencesToFind := occurrencesToFind - 1.
 						  false ] ]
 			  ifFalse: [ false ] ]
-]
-
-{ #category : 'accessing' }
-ReImplementedNotSentRule >> group [
-	^ 'Design Flaws'
 ]
 
 { #category : 'accessing' }

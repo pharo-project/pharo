@@ -9,15 +9,15 @@ Class {
 	#tag : 'Base'
 }
 
+{ #category : 'accessing' }
+FloatReferencesRule class >> group [
+	^ 'Bugs'
+]
+
 { #category : 'running' }
 FloatReferencesRule >> basicCheck: node [
 	node isGlobalVariable ifFalse: [ ^ false ].
 	^(self systemClassNames includes: node name)
-]
-
-{ #category : 'accessing' }
-FloatReferencesRule >> group [
-	^ 'Bugs'
 ]
 
 { #category : 'accessing' }

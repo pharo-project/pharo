@@ -9,6 +9,11 @@ Class {
 	#tag : 'Migrated'
 }
 
+{ #category : 'accessing' }
+ReOverridingExtentsionMethod class >> group [
+	^ 'Potential Bugs'
+]
+
 { #category : 'running' }
 ReOverridingExtentsionMethod >> basicCheck: aMethod [
   ^ aMethod isExtension and: [
@@ -23,11 +28,6 @@ ReOverridingExtentsionMethod >> basicCheck: aMethod [
           "We allow extensions from the same package to override, so that
           hierarchies can be extended with overriding functionality."
           superMethod package ~= aMethod package ] ] ]
-]
-
-{ #category : 'accessing' }
-ReOverridingExtentsionMethod >> group [
-	^ 'Potential Bugs'
 ]
 
 { #category : 'accessing' }

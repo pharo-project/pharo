@@ -15,17 +15,17 @@ ReClassVariablesShadowingRule class >> checksClass [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReClassVariablesShadowingRule class >> group [
+	^ 'Design Flaws'
+]
+
 { #category : 'running' }
 ReClassVariablesShadowingRule >> check: aClass forCritiquesDo: aCriticBlock [
 
 	aClass definedVariables
 		select: [ :variable | variable isShadowing ]
 		thenDo: [ :variable | aCriticBlock cull: (self critiqueFor: aClass about: variable name) ]
-]
-
-{ #category : 'accessing' }
-ReClassVariablesShadowingRule >> group [
-	^ 'Design Flaws'
 ]
 
 { #category : 'accessing' }

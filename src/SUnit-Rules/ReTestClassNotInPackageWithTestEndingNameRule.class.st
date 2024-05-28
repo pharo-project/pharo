@@ -17,6 +17,12 @@ ReTestClassNotInPackageWithTestEndingNameRule class >> checksClass [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReTestClassNotInPackageWithTestEndingNameRule class >> group [
+
+	^ 'SUnit'
+]
+
 { #category : 'running' }
 ReTestClassNotInPackageWithTestEndingNameRule >> basicCheck: aClass [
 

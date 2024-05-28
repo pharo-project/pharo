@@ -17,6 +17,12 @@ PharoBootstrapRule class >> checksPackage [
 	^ true
 ]
 
+{ #category : 'accessing' }
+PharoBootstrapRule class >> group [
+
+	^ 'Architectural'
+]
+
 { #category : 'running' }
 PharoBootstrapRule >> basicCheck: aPackage [
 
@@ -42,12 +48,6 @@ PharoBootstrapRule >> critiqueFor: aPackage [
 { #category : 'private' }
 PharoBootstrapRule >> dependencyChecker [
 	^ (DependencyChecker ifNil: [ DADependencyChecker ]) new
-]
-
-{ #category : 'accessing' }
-PharoBootstrapRule >> group [
-
-	^ 'Architectural'
 ]
 
 { #category : 'accessing' }

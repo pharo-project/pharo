@@ -17,6 +17,11 @@ ReClassNameInSelectorRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReClassNameInSelectorRule class >> group [
+	^ 'Style'
+]
+
+{ #category : 'accessing' }
 ReClassNameInSelectorRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -48,11 +53,6 @@ ReClassNameInSelectorRule >> critiqueFor: aMethod withInterval: anInterval [
 			entity: aMethod
 			interval: anInterval)
 		by: self
-]
-
-{ #category : 'accessing' }
-ReClassNameInSelectorRule >> group [
-	^ 'Style'
 ]
 
 { #category : 'accessing' }

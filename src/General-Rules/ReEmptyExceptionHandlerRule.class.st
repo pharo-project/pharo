@@ -16,6 +16,11 @@ Class {
 }
 
 { #category : 'accessing' }
+ReEmptyExceptionHandlerRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
 ReEmptyExceptionHandlerRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -33,11 +38,6 @@ ReEmptyExceptionHandlerRule >> afterCheck: aNode mappings: mappingDict [
 	(class includesBehavior: Notification) ifTrue: [ ^false ].
 
 	^ true
-]
-
-{ #category : 'accessing' }
-ReEmptyExceptionHandlerRule >> group [
-	^ 'Potential Bugs'
 ]
 
 { #category : 'initialization' }

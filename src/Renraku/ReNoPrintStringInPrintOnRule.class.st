@@ -16,6 +16,11 @@ ReNoPrintStringInPrintOnRule class >> checksMethod [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReNoPrintStringInPrintOnRule class >> group [
+	^ 'Optimization'
+]
+
 { #category : 'class initialization' }
 ReNoPrintStringInPrintOnRule class >> initialize [
     ReRuleManager cleanUp
@@ -33,11 +38,6 @@ ReNoPrintStringInPrintOnRule >> check: aMethod forCritiquesDo: aCriticBlock [
 				createTrivialCritiqueOn: aMethod
 				intervalOf: msgSend
 				hint: msgSend selector asString )]
-]
-
-{ #category : 'accessing' }
-ReNoPrintStringInPrintOnRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : 'accessing' }

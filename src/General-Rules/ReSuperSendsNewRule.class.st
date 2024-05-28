@@ -11,6 +11,11 @@ Class {
 }
 
 { #category : 'accessing' }
+ReSuperSendsNewRule class >> group [
+	^ 'Bugs'
+]
+
+{ #category : 'accessing' }
 ReSuperSendsNewRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -20,11 +25,6 @@ ReSuperSendsNewRule class >> uniqueIdentifierName [
 { #category : 'hooks' }
 ReSuperSendsNewRule >> afterCheck: aNode mappings: mappingDict [
 	^ aNode methodNode methodClass isMeta
-]
-
-{ #category : 'accessing' }
-ReSuperSendsNewRule >> group [
-	^ 'Bugs'
 ]
 
 { #category : 'initialization' }

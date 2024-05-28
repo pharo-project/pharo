@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'accessing' }
-ReIfTrueIfFalseUselessRule >> group [
+ReIfTrueIfFalseUselessRule class >> group [
 
 	^ 'Design Flaws'
 ]

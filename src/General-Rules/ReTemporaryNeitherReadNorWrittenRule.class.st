@@ -9,17 +9,17 @@ Class {
 	#tag : 'Migrated'
 }
 
+{ #category : 'accessing' }
+ReTemporaryNeitherReadNorWrittenRule class >> group [
+	^ 'Optimization'
+]
+
 { #category : 'running' }
 ReTemporaryNeitherReadNorWrittenRule >> check: aNode forCritiquesDo: aBlock [
 	aNode isTempVariable ifFalse: [ ^ self ].
 	aNode isDefinition ifFalse: [ ^ self ].
 	aNode variable isReferenced ifFalse: [
 		aBlock cull: (self critiqueFor: aNode) ]
-]
-
-{ #category : 'accessing' }
-ReTemporaryNeitherReadNorWrittenRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : 'accessing' }

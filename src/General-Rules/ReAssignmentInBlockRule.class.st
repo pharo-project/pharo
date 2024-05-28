@@ -10,15 +10,15 @@ Class {
 }
 
 { #category : 'accessing' }
+ReAssignmentInBlockRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
 ReAssignmentInBlockRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'AssignmentInBlockRule'
-]
-
-{ #category : 'accessing' }
-ReAssignmentInBlockRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'initialization' }

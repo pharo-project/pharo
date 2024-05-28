@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'accessing' }
-ReNotEqualityOperatorsRule >> group [
+ReNotEqualityOperatorsRule class >> group [
 	^ 'Bugs'
 ]
 

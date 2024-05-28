@@ -15,6 +15,12 @@ ReMethodSelectorKeywordCasingRule class >> checksMethod [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReMethodSelectorKeywordCasingRule class >> group [
+
+	^ 'Design Flaws'
+]
+
 { #category : 'manifest' }
 ReMethodSelectorKeywordCasingRule class >> uniqueIdentifierName [
 	"The return value hould be unique and should change only when the rule completely change semantics"
@@ -28,12 +34,6 @@ ReMethodSelectorKeywordCasingRule >> basicCheck: aMethod [
 	^ aMethod selector isKeyword and: [
 		  (aMethod selector asString substrings: #( $: )) anySatisfy: [
 			  :each | each first isUppercase ] ]
-]
-
-{ #category : 'accessing' }
-ReMethodSelectorKeywordCasingRule >> group [
-
-	^ 'Design Flaws'
 ]
 
 { #category : 'accessing' }

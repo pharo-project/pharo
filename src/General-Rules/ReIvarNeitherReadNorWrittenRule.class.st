@@ -16,6 +16,11 @@ ReIvarNeitherReadNorWrittenRule class >> checksClass [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReIvarNeitherReadNorWrittenRule class >> group [
+	^ 'Clean Code'
+]
+
 { #category : 'running' }
 ReIvarNeitherReadNorWrittenRule >> check: aClass forCritiquesDo: aCriticBlock [
 
@@ -24,11 +29,6 @@ ReIvarNeitherReadNorWrittenRule >> check: aClass forCritiquesDo: aCriticBlock [
 			slot isReferenced or: [
 				slot definingClass pragmas anySatisfy: [ :pragma | pragma selector = #ignoreUnusedVariables: and: [ (pragma argumentAt: 1) includes: slot name ] ] ] ]
 		thenDo: [ :slot | aCriticBlock cull: (self critiqueFor: aClass about: slot name) ]
-]
-
-{ #category : 'accessing' }
-ReIvarNeitherReadNorWrittenRule >> group [
-	^ 'Clean Code'
 ]
 
 { #category : 'accessing' }

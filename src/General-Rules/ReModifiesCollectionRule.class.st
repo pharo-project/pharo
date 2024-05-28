@@ -18,6 +18,11 @@ Class {
 }
 
 { #category : 'accessing' }
+ReModifiesCollectionRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
 ReModifiesCollectionRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -29,11 +34,6 @@ ReModifiesCollectionRule >> afterCheck: aNode mappings: mappingDict [
 	^ self
 		modifiesCollection: (mappingDict at: '`@collection')
 		inAnyStatement: (mappingDict at: '`@.Statements')
-]
-
-{ #category : 'accessing' }
-ReModifiesCollectionRule >> group [
-	^ 'Potential Bugs'
 ]
 
 { #category : 'initialization' }

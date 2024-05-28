@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : 'accessing' }
-ReIsNotNilAndConditionalRule >> group [
+ReIsNotNilAndConditionalRule class >> group [
 
 	^ 'Coding Idiom Violation'
 ]

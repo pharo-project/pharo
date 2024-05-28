@@ -15,17 +15,17 @@ Class {
 	#tag : 'Migrated'
 }
 
+{ #category : 'accessing' }
+ReNotOptimizedIfNilRule class >> group [
+	^ 'Optimization'
+]
+
 { #category : 'running' }
 ReNotOptimizedIfNilRule >> check: aNode forCritiquesDo: aBlock [
 	aNode isMessage ifFalse: [  ^ self ].
 	(#(ifNil: ifNotNil: ifNil:ifNotNil: ifNotNil:ifNil:) includes: aNode selector) ifFalse: [^ self].
 	aNode isInlineIfNil ifFalse: [
 		aBlock cull: (self critiqueFor: aNode) ]
-]
-
-{ #category : 'accessing' }
-ReNotOptimizedIfNilRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : 'accessing' }

@@ -13,17 +13,17 @@ Class {
 	#tag : 'Migrated'
 }
 
+{ #category : 'accessing' }
+ReNotOptimizedIfRule class >> group [
+	^ 'Optimization'
+]
+
 { #category : 'running' }
 ReNotOptimizedIfRule >> check: aNode forCritiquesDo: aBlock [
 	aNode isMessage ifFalse: [  ^ self ].
 	(#(ifTrue: ifFalse: ifTrue:ifFalse: ifFalse:ifTrue:) includes: aNode selector) ifFalse: [^ self].
 	aNode isInlineIf ifFalse: [
 		aBlock cull: (self critiqueFor: aNode) ]
-]
-
-{ #category : 'accessing' }
-ReNotOptimizedIfRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : 'accessing' }

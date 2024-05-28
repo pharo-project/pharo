@@ -16,15 +16,15 @@ Class {
 }
 
 { #category : 'accessing' }
+ReUnoptimizedToDoRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
 ReUnoptimizedToDoRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'UnoptimizedToDoRule'
-]
-
-{ #category : 'accessing' }
-ReUnoptimizedToDoRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : 'initialization' }

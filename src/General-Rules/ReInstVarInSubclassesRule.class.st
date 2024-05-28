@@ -17,6 +17,11 @@ ReInstVarInSubclassesRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
+ReInstVarInSubclassesRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
 ReInstVarInSubclassesRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -50,11 +55,6 @@ ReInstVarInSubclassesRule >> critiqueFor: aClass [
 	^ ReRefactoringCritique
 			withAnchor: (self anchorFor: aClass)
 			by: self
-]
-
-{ #category : 'accessing' }
-ReInstVarInSubclassesRule >> group [
-	^ 'Design Flaws'
 ]
 
 { #category : 'accessing' }

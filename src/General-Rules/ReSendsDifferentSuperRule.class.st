@@ -22,6 +22,11 @@ ReSendsDifferentSuperRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReSendsDifferentSuperRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
 ReSendsDifferentSuperRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -31,11 +36,6 @@ ReSendsDifferentSuperRule class >> uniqueIdentifierName [
 { #category : 'running' }
 ReSendsDifferentSuperRule >> basicCheck: aMethod [
 	^ aMethod superMessages anySatisfy: [ :message | message ~= aMethod selector ]
-]
-
-{ #category : 'accessing' }
-ReSendsDifferentSuperRule >> group [
-	^ 'Design Flaws'
 ]
 
 { #category : 'accessing' }

@@ -20,15 +20,15 @@ Class {
 }
 
 { #category : 'accessing' }
+ReDoNotSendSuperInitializeInClassSideRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
 ReDoNotSendSuperInitializeInClassSideRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'DoNotSendSuperInitializeInClassSideRule'
-]
-
-{ #category : 'accessing' }
-ReDoNotSendSuperInitializeInClassSideRule >> group [
-	^ 'Potential Bugs'
 ]
 
 { #category : 'initialization' }

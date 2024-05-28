@@ -9,17 +9,17 @@ Class {
 	#tag : 'Migrated'
 }
 
+{ #category : 'accessing' }
+ReUseSetUpRule class >> group [
+
+	^ 'Design Flaws'
+]
+
 { #category : 'manifest' }
 ReUseSetUpRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^ 'UseSetUpRule'
-]
-
-{ #category : 'accessing' }
-ReUseSetUpRule >> group [
-
-	^ 'Design Flaws'
 ]
 
 { #category : 'initialization' }

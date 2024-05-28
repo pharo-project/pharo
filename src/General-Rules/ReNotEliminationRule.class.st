@@ -31,15 +31,15 @@ Class {
 }
 
 { #category : 'accessing' }
+ReNotEliminationRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
 ReNotEliminationRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'NotEliminationRule'
-]
-
-{ #category : 'accessing' }
-ReNotEliminationRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : 'initialization' }

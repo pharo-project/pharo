@@ -10,15 +10,15 @@ Class {
 }
 
 { #category : 'accessing' }
+ReAssignmentWithoutEffectRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
 ReAssignmentWithoutEffectRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'AssignmentWithoutEffectRule'
-]
-
-{ #category : 'accessing' }
-ReAssignmentWithoutEffectRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : 'initialization' }

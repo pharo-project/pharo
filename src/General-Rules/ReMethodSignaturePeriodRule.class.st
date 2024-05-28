@@ -14,6 +14,11 @@ ReMethodSignaturePeriodRule class >> checksMethod [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReMethodSignaturePeriodRule class >> group [
+	^ 'Potential Bugs'
+]
+
 { #category : 'running' }
 ReMethodSignaturePeriodRule >> check: aMethod forCritiquesDo: aCriticBlock [
 
@@ -26,11 +31,6 @@ ReMethodSignaturePeriodRule >> check: aMethod forCritiquesDo: aCriticBlock [
 						  entity: aMethod
 						  interval: (1 to: firstLine size))
 				 by: self) ]
-]
-
-{ #category : 'accessing' }
-ReMethodSignaturePeriodRule >> group [
-	^ 'Potential Bugs'
 ]
 
 { #category : 'accessing' }

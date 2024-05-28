@@ -21,15 +21,15 @@ Class {
 }
 
 { #category : 'accessing' }
+ReDetectIfNoneRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
 ReDetectIfNoneRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'DetectIfNoneRule'
-]
-
-{ #category : 'accessing' }
-ReDetectIfNoneRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'initialization' }

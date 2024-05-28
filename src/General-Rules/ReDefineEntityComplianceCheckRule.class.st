@@ -14,6 +14,11 @@ ReDefineEntityComplianceCheckRule class >> checksClass [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReDefineEntityComplianceCheckRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
 { #category : 'running' }
 ReDefineEntityComplianceCheckRule >> basicCheck: aClass [
 	^ (aClass inheritsFrom: RBLintRule) and: [ aClass isVisible and: [ self complianceMethods noneSatisfy: [ :method | aClass perform: method ] ] ]
@@ -23,11 +28,6 @@ ReDefineEntityComplianceCheckRule >> basicCheck: aClass [
 ReDefineEntityComplianceCheckRule >> complianceMethods [
 
 	^ #(checksMethod checksClass checksPackage)
-]
-
-{ #category : 'accessing' }
-ReDefineEntityComplianceCheckRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'accessing' }

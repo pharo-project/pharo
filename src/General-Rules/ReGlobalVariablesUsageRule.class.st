@@ -16,6 +16,11 @@ ReGlobalVariablesUsageRule class >> checksMethod [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReGlobalVariablesUsageRule class >> group [
+	^ 'Design Flaws'
+]
+
 { #category : 'running' }
 ReGlobalVariablesUsageRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	aMethod ast allChildren
@@ -28,11 +33,6 @@ ReGlobalVariablesUsageRule >> check: aMethod forCritiquesDo: aCriticBlock [
 				createTrivialCritiqueOn: aMethod
 				intervalOf: node
 				hint: node name) ]
-]
-
-{ #category : 'running' }
-ReGlobalVariablesUsageRule >> group [
-	^ 'Design Flaws'
 ]
 
 { #category : 'testing' }

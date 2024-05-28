@@ -15,6 +15,11 @@ ReUnclassifiedMethodsRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReUnclassifiedMethodsRule class >> group [
+	^ 'Style'
+]
+
+{ #category : 'accessing' }
 ReUnclassifiedMethodsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -25,11 +30,6 @@ ReUnclassifiedMethodsRule class >> uniqueIdentifierName [
 ReUnclassifiedMethodsRule >> basicCheck: aMethod [
 
 	^ aMethod isClassified not
-]
-
-{ #category : 'accessing' }
-ReUnclassifiedMethodsRule >> group [
-	^ 'Style'
 ]
 
 { #category : 'accessing' }

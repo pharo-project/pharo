@@ -10,15 +10,15 @@ Class {
 }
 
 { #category : 'accessing' }
+ReBooleanPrecedenceRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
 ReBooleanPrecedenceRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'BooleanPrecedenceRule'
-]
-
-{ #category : 'accessing' }
-ReBooleanPrecedenceRule >> group [
-	^ 'Potential Bugs'
 ]
 
 { #category : 'initialization' }

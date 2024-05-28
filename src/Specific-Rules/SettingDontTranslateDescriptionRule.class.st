@@ -9,6 +9,12 @@ Class {
 	#tag : 'System-Settings'
 }
 
+{ #category : 'accessing' }
+SettingDontTranslateDescriptionRule class >> group [
+
+	^ 'API Hints'
+]
+
 { #category : 'running' }
 SettingDontTranslateDescriptionRule >> basicCheck: aNode [
 	^ aNode methodNode ifNil: [ false ] ifNotNil: [ :methNode | self checkPreconditionOn: methNode ]
@@ -19,12 +25,6 @@ SettingDontTranslateDescriptionRule >> checkPreconditionOn: aMethodNode [
 
 	^ aMethodNode pragmas anySatisfy: [ :p |
 		p selector = #systemsettings ]
-]
-
-{ #category : 'accessing' }
-SettingDontTranslateDescriptionRule >> group [
-
-	^ 'API Hints'
 ]
 
 { #category : 'initialization' }

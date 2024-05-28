@@ -10,6 +10,11 @@ Class {
 }
 
 { #category : 'accessing' }
+ReFloatEqualityComparisonRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
 ReFloatEqualityComparisonRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -19,11 +24,6 @@ ReFloatEqualityComparisonRule class >> uniqueIdentifierName [
 { #category : 'hooks' }
 ReFloatEqualityComparisonRule >> afterCheck: aNode mappings: mappingDict [
 	^ (mappingDict at: '`#floatLiteral') value isFloat
-]
-
-{ #category : 'accessing' }
-ReFloatEqualityComparisonRule >> group [
-	^ 'Potential Bugs'
 ]
 
 { #category : 'initialization' }

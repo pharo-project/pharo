@@ -18,6 +18,11 @@ ReJustSendsSuperRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReJustSendsSuperRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
 ReJustSendsSuperRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -33,11 +38,6 @@ ReJustSendsSuperRule >> basicCheck: aMethod [
 	aMethod pragmas ifNotEmpty: [ ^ false ].
 
 	^ matcher executeMethod: aMethod ast initialAnswer: false
-]
-
-{ #category : 'accessing' }
-ReJustSendsSuperRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : 'initialization' }

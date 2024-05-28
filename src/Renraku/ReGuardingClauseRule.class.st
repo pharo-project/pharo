@@ -10,15 +10,15 @@ Class {
 }
 
 { #category : 'accessing' }
+ReGuardingClauseRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
 ReGuardingClauseRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'GuardingClauseRule'
-]
-
-{ #category : 'accessing' }
-ReGuardingClauseRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'initialization' }

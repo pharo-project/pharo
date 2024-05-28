@@ -18,6 +18,12 @@ ReNoSpaceAroundProtocolRule class >> checksMethod [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReNoSpaceAroundProtocolRule class >> group [
+
+	^ 'Coding Idiom Violation'
+]
+
 { #category : 'manifest' }
 ReNoSpaceAroundProtocolRule class >> uniqueIdentifierName [
 
@@ -43,12 +49,6 @@ ReNoSpaceAroundProtocolRule >> critiqueFor: aMethod [
 			   protocol: { proposedProtocol }
 			   inMethod: aMethod selector
 			   inClass: aMethod methodClass name asSymbol)
-]
-
-{ #category : 'accessing' }
-ReNoSpaceAroundProtocolRule >> group [
-
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'accessing' }

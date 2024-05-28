@@ -15,7 +15,7 @@ Class {
 }
 
 { #category : 'accessing' }
-ReAsClassRule >> group [
+ReAsClassRule class >> group [
 
 	^ 'Design Flaws'
 ]

@@ -12,6 +12,11 @@ Class {
 }
 
 { #category : 'accessing' }
+ReBadMessageRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
 ReBadMessageRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -29,11 +34,6 @@ ReBadMessageRule >> basicCheck: aNode [
 	"In tests using these messages (like isKindOf:) is no problem"
 	aNode methodNode methodClass ifNotNil: [ :class | class isTestCase ifTrue: [ ^false ]].
 	^ self badSelectors includes: aNode selector
-]
-
-{ #category : 'accessing' }
-ReBadMessageRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'accessing' }

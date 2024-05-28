@@ -10,6 +10,11 @@ Class {
 }
 
 { #category : 'accessing' }
+ReSearchingLiteralRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
 ReSearchingLiteralRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -21,11 +26,6 @@ ReSearchingLiteralRule >> afterCheck: aNode mappings: mappingDict [
 	^ self
 		isSearchingLiteralExpression: aNode
 		for: (mappingDict at: '``@object')
-]
-
-{ #category : 'accessing' }
-ReSearchingLiteralRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : 'initialization' }

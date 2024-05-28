@@ -10,6 +10,11 @@ Class {
 }
 
 { #category : 'accessing' }
+ReEqualsTrueRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
 ReEqualsTrueRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -24,11 +29,6 @@ ReEqualsTrueRule >> basicCheck: aNode [
 	(parent := aNode parent) ifNil: [ ^ false ].
 	parent isMessage ifFalse: [ ^ false ].
 	^ #(#= #== #~= #~~) includes: parent selector
-]
-
-{ #category : 'accessing' }
-ReEqualsTrueRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : 'accessing' }

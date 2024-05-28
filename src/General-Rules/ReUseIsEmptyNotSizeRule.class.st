@@ -10,15 +10,15 @@ Class {
 }
 
 { #category : 'accessing' }
+ReUseIsEmptyNotSizeRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
 ReUseIsEmptyNotSizeRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'ConsistencyCheckRule'
-]
-
-{ #category : 'accessing' }
-ReUseIsEmptyNotSizeRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'initialization' }

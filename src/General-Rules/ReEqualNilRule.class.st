@@ -10,15 +10,15 @@ Class {
 }
 
 { #category : 'accessing' }
+ReEqualNilRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
 ReEqualNilRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'EqualNilRule'
-]
-
-{ #category : 'accessing' }
-ReEqualNilRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'initialization' }

@@ -10,15 +10,15 @@ Class {
 }
 
 { #category : 'accessing' }
+ReToDoCollectRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
 ReToDoCollectRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'ToDoCollectRule'
-]
-
-{ #category : 'accessing' }
-ReToDoCollectRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'initialization' }

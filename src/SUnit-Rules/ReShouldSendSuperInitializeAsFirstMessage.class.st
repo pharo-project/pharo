@@ -19,6 +19,12 @@ ReShouldSendSuperInitializeAsFirstMessage class >> checksMethod [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReShouldSendSuperInitializeAsFirstMessage class >> group [
+
+	^ 'Clean Code'
+]
+
 { #category : 'utilities' }
 ReShouldSendSuperInitializeAsFirstMessage class >> parseTreeSearcher [
 
@@ -45,12 +51,6 @@ ReShouldSendSuperInitializeAsFirstMessage class >> superInitializeNotCalledFirst
 ReShouldSendSuperInitializeAsFirstMessage >> basicCheck: aMethod [
 
 	^ (aMethod isClassSide not) and: [ aMethod selector = #initialize and: [ self class superInitializeNotCalledFirstIn: aMethod ] ]
-]
-
-{ #category : 'accessing' }
-ReShouldSendSuperInitializeAsFirstMessage >> group [
-
-	^ 'Clean Code'
 ]
 
 { #category : 'accessing' }

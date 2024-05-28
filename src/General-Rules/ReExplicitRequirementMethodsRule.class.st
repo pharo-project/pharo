@@ -15,6 +15,11 @@ ReExplicitRequirementMethodsRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
+ReExplicitRequirementMethodsRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
 ReExplicitRequirementMethodsRule class >> uniqueIdentifierName [
 
 	^ 'ExplicitRequirementMethodsRule'
@@ -40,11 +45,6 @@ ReExplicitRequirementMethodsRule >> check: aClass forCritiquesDo: aCritiqueBlock
 					((self critiqueFor: aClass)
 						tinyHint: method selector;
 						yourself) ]
-]
-
-{ #category : 'accessing' }
-ReExplicitRequirementMethodsRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'accessing' }

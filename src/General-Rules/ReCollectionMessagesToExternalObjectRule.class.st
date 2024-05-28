@@ -10,6 +10,11 @@ Class {
 }
 
 { #category : 'accessing' }
+ReCollectionMessagesToExternalObjectRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
 ReCollectionMessagesToExternalObjectRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -27,11 +32,6 @@ ReCollectionMessagesToExternalObjectRule >> afterCheck: aNode mappings: mappingD
 	collectionOwner isVariable ifFalse: [ ^ true ].
 	"ignore for all global vars and self and super"
 	^ (aNode scope lookupVar: collectionOwner name) scope ~= Smalltalk globals
-]
-
-{ #category : 'accessing' }
-ReCollectionMessagesToExternalObjectRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'initialization' }

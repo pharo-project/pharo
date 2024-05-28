@@ -17,6 +17,12 @@ ReShouldSendSuperTearDownAsLastMessage class >> checksMethod [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReShouldSendSuperTearDownAsLastMessage class >> group [
+
+	^ 'SUnit'
+]
+
 { #category : 'utilities' }
 ReShouldSendSuperTearDownAsLastMessage class >> parseTreeSearcher [
 

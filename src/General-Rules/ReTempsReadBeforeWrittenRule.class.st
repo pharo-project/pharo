@@ -27,6 +27,11 @@ ReTempsReadBeforeWrittenRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReTempsReadBeforeWrittenRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
 ReTempsReadBeforeWrittenRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -51,11 +56,6 @@ ReTempsReadBeforeWrittenRule >> findReadsBeforeWrittenTemporariesIn: aMethod [
 
 	^ (RBReadBeforeWrittenTester variablesReadBeforeWrittenIn:
 		   aMethod ast) array select: #isNotNil
-]
-
-{ #category : 'accessing' }
-ReTempsReadBeforeWrittenRule >> group [
-	^ 'Potential Bugs'
 ]
 
 { #category : 'accessing' }

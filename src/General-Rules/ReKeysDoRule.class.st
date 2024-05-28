@@ -17,15 +17,15 @@ Class {
 }
 
 { #category : 'accessing' }
+ReKeysDoRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
 ReKeysDoRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'keysDoRule'
-]
-
-{ #category : 'accessing' }
-ReKeysDoRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : 'initialization' }

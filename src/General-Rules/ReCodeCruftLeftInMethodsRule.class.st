@@ -10,6 +10,11 @@ Class {
 }
 
 { #category : 'accessing' }
+ReCodeCruftLeftInMethodsRule class >> group [
+	^ 'Bugs'
+]
+
+{ #category : 'accessing' }
 ReCodeCruftLeftInMethodsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -49,11 +54,6 @@ ReCodeCruftLeftInMethodsRule >> debuggingPatterns [
 ReCodeCruftLeftInMethodsRule >> debuggingSelectors [
 
 	^ Object allSelectorsInProtocol: 'flagging'
-]
-
-{ #category : 'accessing' }
-ReCodeCruftLeftInMethodsRule >> group [
-	^ 'Bugs'
 ]
 
 { #category : 'private' }

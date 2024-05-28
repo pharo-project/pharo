@@ -21,6 +21,11 @@ Class {
 }
 
 { #category : 'accessing' }
+ReEndTrueFalseRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
 ReEndTrueFalseRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -36,11 +41,6 @@ ReEndTrueFalseRule >> afterCheck: aNode mappings: mappingDict [
 			statement := aNode arguments first body statements last.
 			( statement isVariable and: [ statement = aNode arguments last body statements last ] ) not]
 		ifNotNil: [ true ]
-]
-
-{ #category : 'accessing' }
-ReEndTrueFalseRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : 'initialization' }

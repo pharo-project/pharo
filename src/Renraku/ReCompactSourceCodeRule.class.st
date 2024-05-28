@@ -45,6 +45,12 @@ ReCompactSourceCodeRule class >> criticizeFinalDotInMethodBody: aBoolean [
 	CriticizeFinalDotInMethodBody := aBoolean
 ]
 
+{ #category : 'accessing' }
+ReCompactSourceCodeRule class >> group [
+
+	^ 'Clean Code'
+]
+
 { #category : 'class initialization' }
 ReCompactSourceCodeRule class >> initialize [
 
@@ -67,12 +73,6 @@ ReCompactSourceCodeRule >> check: aMethod forCritiquesDo: aCriticBlock [
 				ReCompactSourceCodeCritic
 					for: aMethod
 					by: self)  ]
-]
-
-{ #category : 'accessing' }
-ReCompactSourceCodeRule >> group [
-
-	^ 'Clean Code'
 ]
 
 { #category : 'accessing' }

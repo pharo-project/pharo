@@ -18,6 +18,11 @@ ReDefineBasicCheckRule class >> checksClass [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReDefineBasicCheckRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
 { #category : 'running' }
 ReDefineBasicCheckRule >> basicCheck: aClass [
 	^ (aClass inheritsFrom: RBLintRule) and: [ aClass isVisible and: [ (aClass lookupSelector: #basicCheck:) isSubclassResponsibility ] ]
@@ -30,11 +35,6 @@ ReDefineBasicCheckRule >> critiqueFor: aClass [
 		by: self
 		class: aClass
 		selector: #basicCheck:) beShouldBeImplemented
-]
-
-{ #category : 'accessing' }
-ReDefineBasicCheckRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'accessing' }

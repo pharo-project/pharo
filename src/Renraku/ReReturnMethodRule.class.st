@@ -17,17 +17,17 @@ ReReturnMethodRule class >> checksMethod [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReReturnMethodRule class >> group [
+
+	^ 'Bugs'
+]
+
 { #category : 'running' }
 ReReturnMethodRule >> basicCheck: aMethod [
 	(aMethod overriddenMethods anySatisfy: [ :method | method hasPragmaNamed: #shouldReturn ]) ifFalse: [ ^ false ].
 
 	^ aMethod ast lastIsReturn not
-]
-
-{ #category : 'accessing' }
-ReReturnMethodRule >> group [
-
-	^ 'Bugs'
 ]
 
 { #category : 'accessing' }

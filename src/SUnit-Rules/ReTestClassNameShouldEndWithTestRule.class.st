@@ -17,6 +17,12 @@ ReTestClassNameShouldEndWithTestRule class >> checksClass [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReTestClassNameShouldEndWithTestRule class >> group [
+
+	^ 'SUnit'
+]
+
 { #category : 'running' }
 ReTestClassNameShouldEndWithTestRule >> basicCheck: aClass [
 	| suffixes |

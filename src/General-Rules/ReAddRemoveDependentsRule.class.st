@@ -15,6 +15,11 @@ ReAddRemoveDependentsRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
+ReAddRemoveDependentsRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
 ReAddRemoveDependentsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -33,11 +38,6 @@ ReAddRemoveDependentsRule >> basicCheck: aClass [
 				addSends := addSends + (messages count: [ :each | each selector == #addDependent:]).
 				removeSends := removeSends + (messages count: [ :each | each selector == #removeDependent:])].
 	^ addSends > removeSends
-]
-
-{ #category : 'accessing' }
-ReAddRemoveDependentsRule >> group [
-	^ 'Potential Bugs'
 ]
 
 { #category : 'accessing' }

@@ -84,6 +84,15 @@ ReAbstractRule class >> enabledSettingID [
 	^ (self name, '_enabled') asSymbol
 ]
 
+{ #category : 'accessing' }
+ReAbstractRule class >> group [
+
+	(self selectors includes: #group) ifTrue: [
+		self deprecated: 'The method #group of rules should be implemented on the class side in Pharo 13+ and not in instance sice.'.
+		^ self new group ].
+	^ 'Unclassified rules'
+]
+
 { #category : 'manifest' }
 ReAbstractRule class >> identifierMinorVersionNumber [
 	"This number identifies the version of the rule definition. Each time the rule is updated and its changes invalidates previous false positives identification (and as such should be reassessed by developers) the number should be increased."
@@ -239,8 +248,7 @@ ReAbstractRule >> critiqueFor: aClass about: aVarName [
 
 { #category : 'accessing' }
 ReAbstractRule >> group [
-
-	^ 'Unclassified rules'
+	^ self class group
 ]
 
 { #category : 'testing' }

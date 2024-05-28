@@ -19,15 +19,15 @@ Class {
 }
 
 { #category : 'accessing' }
+ReCascadedNextPutAllsRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
 ReCascadedNextPutAllsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'CascadedNextPutAllsRule'
-]
-
-{ #category : 'accessing' }
-ReCascadedNextPutAllsRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'initialization' }

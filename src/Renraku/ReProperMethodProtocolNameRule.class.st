@@ -34,6 +34,12 @@ ReProperMethodProtocolNameRule class >> goodMethodProtocolName [
 	^self protocolIdiom key
 ]
 
+{ #category : 'accessing' }
+ReProperMethodProtocolNameRule class >> group [
+
+	^ 'Coding Idiom Violation'
+]
+
 { #category : 'testing' }
 ReProperMethodProtocolNameRule class >> isAbstract [
 
@@ -75,12 +81,6 @@ ReProperMethodProtocolNameRule >> critiqueFor: aMethod [
 			   protocol: { proposedProtocol }
 			   inMethod: aMethod selector
 			   inClass: aMethod methodClass name)
-]
-
-{ #category : 'accessing' }
-ReProperMethodProtocolNameRule >> group [
-
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'accessing' }

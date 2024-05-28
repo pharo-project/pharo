@@ -23,6 +23,11 @@ ReExcessiveInheritanceRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
+ReExcessiveInheritanceRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
 ReExcessiveInheritanceRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -34,11 +39,6 @@ ReExcessiveInheritanceRule >> basicCheck: aClass [
 	aClass isMeta ifTrue: [ ^ false ].
 
 	^ aClass allSuperclasses size >= self inheritanceDepth
-]
-
-{ #category : 'accessing' }
-ReExcessiveInheritanceRule >> group [
-	^ 'Design Flaws'
 ]
 
 { #category : 'private' }

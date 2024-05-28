@@ -9,6 +9,11 @@ Class {
 	#tag : 'Migrated'
 }
 
+{ #category : 'accessing' }
+ReUndeclaredVariableRule class >> group [
+	^ 'Bugs'
+]
+
 { #category : 'running' }
 ReUndeclaredVariableRule >> basicCheck: aNode [
 	^ aNode isVariable and: [ aNode isUndeclaredVariable ]
@@ -19,11 +24,6 @@ ReUndeclaredVariableRule >> critiqueFor: aNode [
 	^ (super critiqueFor: aNode)
 		tinyHint: aNode name;
 		yourself
-]
-
-{ #category : 'accessing' }
-ReUndeclaredVariableRule >> group [
-	^ 'Bugs'
 ]
 
 { #category : 'accessing' }

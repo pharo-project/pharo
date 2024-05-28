@@ -15,6 +15,11 @@ ReCollectionCopyEmptyRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
+ReCollectionCopyEmptyRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
 ReCollectionCopyEmptyRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -24,11 +29,6 @@ ReCollectionCopyEmptyRule class >> uniqueIdentifierName [
 { #category : 'running' }
 ReCollectionCopyEmptyRule >> basicCheck: aClass [
 	^ (aClass inheritsFrom: Collection) and: [ aClass isVariable and: [ (aClass includesSelector: #copyEmpty) not and: [ aClass instVarNames isNotEmpty ] ] ]
-]
-
-{ #category : 'accessing' }
-ReCollectionCopyEmptyRule >> group [
-	^ 'Potential Bugs'
 ]
 
 { #category : 'accessing' }

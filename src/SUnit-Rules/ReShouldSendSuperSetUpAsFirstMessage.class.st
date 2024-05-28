@@ -17,6 +17,12 @@ ReShouldSendSuperSetUpAsFirstMessage class >> checksMethod [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReShouldSendSuperSetUpAsFirstMessage class >> group [
+
+	^ 'SUnit'
+]
+
 { #category : 'utilities' }
 ReShouldSendSuperSetUpAsFirstMessage class >> parseTreeSearcher [
 

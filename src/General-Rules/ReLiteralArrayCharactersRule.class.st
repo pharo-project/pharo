@@ -10,6 +10,11 @@ Class {
 }
 
 { #category : 'accessing' }
+ReLiteralArrayCharactersRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
 ReLiteralArrayCharactersRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -21,11 +26,6 @@ ReLiteralArrayCharactersRule >> basicCheck: aNode [
 	aNode isLiteralArray ifFalse: [ ^ false ].
 	aNode value ifEmpty: [ ^ false ].
 	^ aNode value allSatisfy: #isCharacter
-]
-
-{ #category : 'accessing' }
-ReLiteralArrayCharactersRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : 'accessing' }

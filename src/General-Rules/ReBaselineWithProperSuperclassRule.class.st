@@ -15,6 +15,12 @@ ReBaselineWithProperSuperclassRule class >> checksClass [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReBaselineWithProperSuperclassRule class >> group [
+
+	^ 'Design Flaws'
+]
+
 { #category : 'manifest' }
 ReBaselineWithProperSuperclassRule class >> uniqueIdentifierName [ 
 	"This number should be unique and should change only when the rule completely change semantics"
@@ -31,12 +37,6 @@ ReBaselineWithProperSuperclassRule >> basicCheck: aClass [
 	^(aClass name beginsWith: 'BaselineOf') 
 		and: [ (aClass inheritsFrom: BaselineOf) not ]
  
-]
-
-{ #category : 'accessing' }
-ReBaselineWithProperSuperclassRule >> group [
-
-	^ 'Design Flaws'
 ]
 
 { #category : 'accessing' }

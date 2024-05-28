@@ -10,14 +10,14 @@ Class {
 }
 
 { #category : 'accessing' }
-ReIfNotNilDoRule class >> uniqueIdentifierName [
-
-	^ 'RuleIfNotNilDo'
+ReIfNotNilDoRule class >> group [
+	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'accessing' }
-ReIfNotNilDoRule >> group [
-	^ 'Coding Idiom Violation'
+ReIfNotNilDoRule class >> uniqueIdentifierName [
+
+	^ 'RuleIfNotNilDo'
 ]
 
 { #category : 'initialization' }

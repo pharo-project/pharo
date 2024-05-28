@@ -41,15 +41,15 @@ Class {
 }
 
 { #category : 'accessing' }
+ReShouldntRaiseErrorRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
 ReShouldntRaiseErrorRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'ShouldntRaiseErrorRule'
-]
-
-{ #category : 'accessing' }
-ReShouldntRaiseErrorRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'initialization' }

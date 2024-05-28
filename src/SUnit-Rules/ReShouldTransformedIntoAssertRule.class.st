@@ -12,6 +12,12 @@ Class {
 }
 
 { #category : 'accessing' }
+ReShouldTransformedIntoAssertRule class >> group [
+
+	^ 'SUnit'
+]
+
+{ #category : 'accessing' }
 ReShouldTransformedIntoAssertRule class >> uniqueIdentifierName [
 
 	^'ShouldTransformedIntoAssert'

@@ -13,6 +13,12 @@ Class {
 	#tag : 'Migrated'
 }
 
+{ #category : 'accessing' }
+RePointRule class >> group [
+
+	^ 'Optimization'
+]
+
 { #category : 'manifest' }
 RePointRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
@@ -27,12 +33,6 @@ RePointRule >> basicCheck: aNode [
 	aNode receiver isMessage ifTrue: [ ^ false ].
 	aNode isSelfSend ifTrue: [ ^ false ].
 	^ (#( #x:y: ) includes: aNode selector ) and: [ aNode receiver name == Point name  ]
-]
-
-{ #category : 'accessing' }
-RePointRule >> group [
-
-	^ 'Optimization'
 ]
 
 { #category : 'accessing' }

@@ -20,15 +20,15 @@ Class {
 }
 
 { #category : 'accessing' }
+ReWhileTrueRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
 ReWhileTrueRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'WhileTrueRule'
-]
-
-{ #category : 'accessing' }
-ReWhileTrueRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'initialization' }

@@ -23,15 +23,15 @@ Class {
 }
 
 { #category : 'accessing' }
+ReUnwindBlocksRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
 ReUnwindBlocksRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'UnwindBlocksRule'
-]
-
-{ #category : 'accessing' }
-ReUnwindBlocksRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : 'initialization' }

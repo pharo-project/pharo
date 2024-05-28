@@ -19,6 +19,11 @@ ReExcessiveArgumentsRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReExcessiveArgumentsRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
 ReExcessiveArgumentsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -37,11 +42,6 @@ ReExcessiveArgumentsRule >> basicCheck: aMethod [
 	aMethod isFFIMethod ifTrue: [ ^false ].
 
 	^ aMethod numArgs >= self argumentsCount
-]
-
-{ #category : 'accessing' }
-ReExcessiveArgumentsRule >> group [
-	^ 'Design Flaws'
 ]
 
 { #category : 'accessing' }

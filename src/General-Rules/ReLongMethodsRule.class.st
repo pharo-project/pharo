@@ -23,6 +23,11 @@ ReLongMethodsRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReLongMethodsRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
 ReLongMethodsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -42,11 +47,6 @@ ReLongMethodsRule >> basicCheck: aMethod [
 				ifTrue: [ numberOfStatements := numberOfStatements + node statements size.
 					numberOfStatements >= self longMethodSize ifTrue: [ ^ true ] ] ].
 	^ false
-]
-
-{ #category : 'accessing' }
-ReLongMethodsRule >> group [
-	^ 'Design Flaws'
 ]
 
 { #category : 'private' }

@@ -11,6 +11,11 @@ Class {
 }
 
 { #category : 'accessing' }
+ReExtraBlockRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
 ReExtraBlockRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -31,11 +36,6 @@ ReExtraBlockRule >> blockEvaluatingMessages [
 	value: value:value: value:value:value: value:value:value:value:
 	cull: cull:cull: cull:cull:cull: cull:cull:cull:cull:
 	#valueWithArguments: valueWithPossibleArgs: valueWithPossibleArgument)
-]
-
-{ #category : 'accessing' }
-ReExtraBlockRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : 'accessing' }

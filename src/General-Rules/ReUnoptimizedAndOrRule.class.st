@@ -10,15 +10,15 @@ Class {
 }
 
 { #category : 'accessing' }
+ReUnoptimizedAndOrRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
 ReUnoptimizedAndOrRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'UnoptimizedAndOrRule'
-]
-
-{ #category : 'accessing' }
-ReUnoptimizedAndOrRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : 'initialization' }

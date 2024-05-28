@@ -10,6 +10,11 @@ Class {
 }
 
 { #category : 'accessing' }
+SendsDeprecatedMethodToGlobalRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
 SendsDeprecatedMethodToGlobalRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -25,11 +30,6 @@ SendsDeprecatedMethodToGlobalRule >> basicCheck: aNode [
 	^value class classAndMethodFor: aNode selector
 		do: [ :class :method | method isDeprecated ]
 		ifAbsent: [ false ]
-]
-
-{ #category : 'accessing' }
-SendsDeprecatedMethodToGlobalRule >> group [
-	^ 'Design Flaws'
 ]
 
 { #category : 'accessing' }

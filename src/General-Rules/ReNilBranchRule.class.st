@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'accessing' }
-ReNilBranchRule >> group [
+ReNilBranchRule class >> group [
 
 	^ 'Design Flaws'
 ]

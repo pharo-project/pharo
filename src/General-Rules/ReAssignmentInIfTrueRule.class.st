@@ -18,15 +18,15 @@ Class {
 }
 
 { #category : 'accessing' }
+ReAssignmentInIfTrueRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
 ReAssignmentInIfTrueRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'AssignmentInIfTrueRule'
-]
-
-{ #category : 'accessing' }
-ReAssignmentInIfTrueRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : 'initialization' }

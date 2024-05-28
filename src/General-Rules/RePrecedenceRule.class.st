@@ -10,6 +10,11 @@ Class {
 }
 
 { #category : 'accessing' }
+RePrecedenceRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
 RePrecedenceRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -25,11 +30,6 @@ RePrecedenceRule >> basicCheck: aNode [
 	leftOperand isMessage ifFalse: [ ^ false ].
 	leftOperand hasParentheses ifTrue: [ ^ false ].
 	^ #(#+ #-) includes: leftOperand selector
-]
-
-{ #category : 'accessing' }
-RePrecedenceRule >> group [
-	^ 'Potential Bugs'
 ]
 
 { #category : 'accessing' }

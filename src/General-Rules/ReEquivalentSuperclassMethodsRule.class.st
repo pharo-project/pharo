@@ -17,6 +17,11 @@ ReEquivalentSuperclassMethodsRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReEquivalentSuperclassMethodsRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
 ReEquivalentSuperclassMethodsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -31,11 +36,6 @@ ReEquivalentSuperclassMethodsRule >> basicCheck: aMethod [
 	^ aMethod overriddenMethod
 		  ifNotNil: [ :overridenMethod | aMethod equivalentTo: overridenMethod ]
 		  ifNil: [ false ]
-]
-
-{ #category : 'accessing' }
-ReEquivalentSuperclassMethodsRule >> group [
-	^ 'Design Flaws'
 ]
 
 { #category : 'accessing' }

@@ -17,6 +17,11 @@ ReExcessiveVariablesRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
+ReExcessiveVariablesRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
 ReExcessiveVariablesRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -28,11 +33,6 @@ ReExcessiveVariablesRule >> basicCheck: aClass [
 	^ aClass instVarNames size >= self variablesCount or: [
 		"Shared pools are just there to define vars, so it is ok for them to have a lot"
 		(aClass instanceSide isPool not) and: [aClass classVarNames size >= self variablesCount ]]
-]
-
-{ #category : 'accessing' }
-ReExcessiveVariablesRule >> group [
-	^ 'Design Flaws'
 ]
 
 { #category : 'accessing' }

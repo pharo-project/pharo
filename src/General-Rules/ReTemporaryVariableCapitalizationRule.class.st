@@ -9,6 +9,11 @@ Class {
 	#tag : 'Migrated'
 }
 
+{ #category : 'accessing' }
+ReTemporaryVariableCapitalizationRule class >> group [
+	^ 'Style'
+]
+
 { #category : 'running' }
 ReTemporaryVariableCapitalizationRule >> basicCheck: aNode [
 	aNode isLocalVariable ifFalse: [ ^false ].
@@ -34,11 +39,6 @@ ReTemporaryVariableCapitalizationRule >> critiqueFor: aNode [
 				selector: aNode methodNode selector).
 
 	^ crit
-]
-
-{ #category : 'accessing' }
-ReTemporaryVariableCapitalizationRule >> group [
-	^ 'Style'
 ]
 
 { #category : 'accessing' }

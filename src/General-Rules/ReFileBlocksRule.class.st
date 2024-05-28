@@ -26,15 +26,15 @@ Class {
 }
 
 { #category : 'accessing' }
+ReFileBlocksRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
 ReFileBlocksRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'FileBlocksRule'
-]
-
-{ #category : 'accessing' }
-ReFileBlocksRule >> group [
-	^ 'Potential Bugs'
 ]
 
 { #category : 'initialization' }

@@ -15,6 +15,11 @@ ReSentNotImplementedRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReSentNotImplementedRule class >> group [
+	^ 'Bugs'
+]
+
+{ #category : 'accessing' }
 ReSentNotImplementedRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -37,11 +42,6 @@ ReSentNotImplementedRule >> check: aMethod forCritiquesDo: aCriticBlock [
 				 createTrivialCritiqueOn: aMethod
 				 intervalOf: msgSend
 				 hint: msgSend selector asString) ]
-]
-
-{ #category : 'accessing' }
-ReSentNotImplementedRule >> group [
-	^ 'Bugs'
 ]
 
 { #category : 'accessing' }

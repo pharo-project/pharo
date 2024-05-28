@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'accessing' }
-RbScriptingSetBeforeModel >> group [
+RbScriptingSetBeforeModel class >> group [
 	^ 'Rubric'
 ]
 

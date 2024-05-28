@@ -10,6 +10,11 @@ Class {
 }
 
 { #category : 'accessing' }
+ReSizeCheckRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
 ReSizeCheckRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -23,11 +28,6 @@ ReSizeCheckRule >> genericPatternForSelector: aSymbol [
 			stream space; nextPutAll: value.
 			aSymbol last = $:
 				ifTrue: [ stream space; nextPutAll: '`@object'; print: index ] ] ]
-]
-
-{ #category : 'accessing' }
-ReSizeCheckRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : 'initialization' }

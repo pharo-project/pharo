@@ -16,6 +16,11 @@ ReUnconditionalRecursionRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReUnconditionalRecursionRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
 ReUnconditionalRecursionRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -25,11 +30,6 @@ ReUnconditionalRecursionRule class >> uniqueIdentifierName [
 { #category : 'hooks' }
 ReUnconditionalRecursionRule >> afterCheck: aNode mappings: mappingDict [
 	^ (mappingDict at: '`@.before') noneSatisfy: #containsReturn
-]
-
-{ #category : 'accessing' }
-ReUnconditionalRecursionRule >> group [
-	^ 'Potential Bugs'
 ]
 
 { #category : 'initialization' }

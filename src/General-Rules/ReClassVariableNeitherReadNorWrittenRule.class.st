@@ -16,6 +16,11 @@ ReClassVariableNeitherReadNorWrittenRule class >> checksClass [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReClassVariableNeitherReadNorWrittenRule class >> group [
+	^ 'Clean Code'
+]
+
 { #category : 'running' }
 ReClassVariableNeitherReadNorWrittenRule >> check: aClass forCritiquesDo: aCriticBlock [
 
@@ -24,11 +29,6 @@ ReClassVariableNeitherReadNorWrittenRule >> check: aClass forCritiquesDo: aCriti
 			variable definingClass pragmas anySatisfy: [ :pragma |
 				pragma selector = #ignoreUnusedClassVariables: and: [ (pragma argumentAt: 1) includes: variable name ] ] ]
 		thenDo: [ :variable | aCriticBlock cull: (self critiqueFor: aClass about: variable name) ]
-]
-
-{ #category : 'accessing' }
-ReClassVariableNeitherReadNorWrittenRule >> group [
-	^ 'Clean Code'
 ]
 
 { #category : 'accessing' }

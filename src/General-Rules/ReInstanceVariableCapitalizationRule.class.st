@@ -14,6 +14,11 @@ ReInstanceVariableCapitalizationRule class >> checksClass [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReInstanceVariableCapitalizationRule class >> group [
+	^ 'Style'
+]
+
 { #category : 'running' }
 ReInstanceVariableCapitalizationRule >> check: aClass forCritiquesDo: aCriticBlock [
 
@@ -41,11 +46,6 @@ ReInstanceVariableCapitalizationRule >> critiqueFor: aClass about: aVarName [
 				in: aClass).
 
 	^ crit
-]
-
-{ #category : 'accessing' }
-ReInstanceVariableCapitalizationRule >> group [
-	^ 'Style'
 ]
 
 { #category : 'accessing' }

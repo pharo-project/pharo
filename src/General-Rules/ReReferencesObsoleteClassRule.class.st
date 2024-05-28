@@ -10,6 +10,11 @@ Class {
 	#tag : 'Migrated'
 }
 
+{ #category : 'accessing' }
+ReReferencesObsoleteClassRule class >> group [
+	^ 'Bugs'
+]
+
 { #category : 'helpers' }
 ReReferencesObsoleteClassRule >> basicCheck: aNode [
  	^ aNode isGlobalVariable
@@ -22,11 +27,6 @@ ReReferencesObsoleteClassRule >> critiqueFor: aNode [
 	^ (super critiqueFor: aNode)
 		  tinyHint: aNode name;
 		  yourself
-]
-
-{ #category : 'accessing' }
-ReReferencesObsoleteClassRule >> group [
-	^ 'Bugs'
 ]
 
 { #category : 'accessing' }

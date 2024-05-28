@@ -17,6 +17,12 @@ ReTestClassNameShouldNotEndWithTests class >> checksClass [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReTestClassNameShouldNotEndWithTests class >> group [
+
+	^ 'SUnit'
+]
+
 { #category : 'running' }
 ReTestClassNameShouldNotEndWithTests >> basicCheck: aClass [
 

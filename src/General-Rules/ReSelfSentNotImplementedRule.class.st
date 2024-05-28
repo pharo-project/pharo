@@ -15,6 +15,11 @@ ReSelfSentNotImplementedRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReSelfSentNotImplementedRule class >> group [
+	^ 'Bugs'
+]
+
+{ #category : 'accessing' }
 ReSelfSentNotImplementedRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -35,11 +40,6 @@ ReSelfSentNotImplementedRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	
 	problemSends do: [ :msgSend |
 			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: msgSend hint: msgSend selector asString)]
-]
-
-{ #category : 'accessing' }
-ReSelfSentNotImplementedRule >> group [
-	^ 'Bugs'
 ]
 
 { #category : 'accessing' }

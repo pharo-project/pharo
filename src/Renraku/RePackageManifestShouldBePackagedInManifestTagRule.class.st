@@ -12,16 +12,16 @@ RePackageManifestShouldBePackagedInManifestTagRule class >> checksClass [
 	^ true
 ]
 
+{ #category : 'accessing' }
+RePackageManifestShouldBePackagedInManifestTagRule class >> group [
+
+	^ 'Coding Idiom Violation'
+]
+
 { #category : 'running' }
 RePackageManifestShouldBePackagedInManifestTagRule >> basicCheck: aClass [
 
 	^ (aClass inheritsFrom: PackageManifest) and: [ ((aClass package classesTaggedWith: 'Manifest') includes: aClass) not ]
-]
-
-{ #category : 'accessing' }
-RePackageManifestShouldBePackagedInManifestTagRule >> group [
-
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'accessing' }

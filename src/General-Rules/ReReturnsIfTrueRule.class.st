@@ -10,15 +10,15 @@ Class {
 }
 
 { #category : 'accessing' }
+ReReturnsIfTrueRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
 ReReturnsIfTrueRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'ReturnsIfTrueRule'
-]
-
-{ #category : 'accessing' }
-ReReturnsIfTrueRule >> group [
-	^ 'Potential Bugs'
 ]
 
 { #category : 'initialization' }

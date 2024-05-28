@@ -17,6 +17,11 @@ ReBaselineProperlyPackagedRule class >> checksClass [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReBaselineProperlyPackagedRule class >> group [
+	^ 'Design Flaws'
+]
+
 { #category : 'manifest' }
 ReBaselineProperlyPackagedRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
@@ -31,11 +36,6 @@ ReBaselineProperlyPackagedRule >> basicCheck: aClass [
 	 
 	^(aClass name beginsWith: 'BaselineOf') 
 		and: [ aClass package name ~= aClass name ]
-]
-
-{ #category : 'accessing' }
-ReBaselineProperlyPackagedRule >> group [
-	^ 'Design Flaws'
 ]
 
 { #category : 'accessing' }

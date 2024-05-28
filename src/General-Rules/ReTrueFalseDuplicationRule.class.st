@@ -21,6 +21,11 @@ Class {
 }
 
 { #category : 'accessing' }
+ReTrueFalseDuplicationRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
 ReTrueFalseDuplicationRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -37,11 +42,6 @@ ReTrueFalseDuplicationRule >> afterCheck: aNode mappings: mappingDict [
 
 	"the first statement is duplicated"
 	^ true
-]
-
-{ #category : 'accessing' }
-ReTrueFalseDuplicationRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : 'initialization' }
