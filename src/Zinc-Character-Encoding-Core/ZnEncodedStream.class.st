@@ -87,7 +87,7 @@ ZnEncodedStream >> position: aPosition [
 	stream position: aPosition
 ]
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 ZnEncodedStream >> reset [
 
 	^ stream reset
