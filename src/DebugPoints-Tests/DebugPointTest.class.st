@@ -179,6 +179,15 @@ DebugPointTest >> testBreakDebugPoint [
 ]
 
 { #category : 'tests' }
+DebugPointTest >> testBreakDebugPointOnClassSideMethod [
+
+	node := (DummyTestClass class >> #dummyClassSide) ast.
+	dp := DebugPointManager installNew: BreakDebugPoint on: node.
+	self should: [ dp hitWithContext: context ] raise: Break.
+	self should: [ DummyTestClass dummyClassSide ] raise: Break
+]
+
+{ #category : 'tests' }
 DebugPointTest >> testBreakDebugPointOnClassVariableAccess [
 
 	dp := DebugPointManager
