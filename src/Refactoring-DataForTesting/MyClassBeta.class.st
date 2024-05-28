@@ -31,6 +31,13 @@ MyClassBeta >> methodReferencingInstanceVariable [
 ]
 
 { #category : 'dummy methods' }
+MyClassBeta >> methodReferencingSharedAndInstVariable [
+
+	instVarB.
+	^ SharedVarB
+]
+
+{ #category : 'dummy methods' }
 MyClassBeta >> methodReferencingSharedVariable [
 	^ SharedVarB
 ]

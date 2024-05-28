@@ -115,9 +115,29 @@ RePushUpMethodDriver >> gatherUserInput [
 { #category : 'execution' }
 RePushUpMethodDriver >> handleBreakingChanges [
 
-	| select |
-	select := self selectDialog.
-	select ifNotNil: [ select action ]
+	| breakingConditions presenter changes |
+
+	breakingConditions := {
+		                      notOverrides.
+		                      notInstVarRefs.
+		                      notSharedVarRefs.
+		                      notSupersendsSent.
+		                      notSupersendsReceived } reject: [ :cond |
+		                      cond check ].
+	
+	changes := breakingConditions collect: [:each | each class fixChoiceClass new driver: self ].
+	presenter := self application newSelectMultiple.
+	
+	presenter
+		title: 'There are potential breaking changes';
+		label: self labelBasedOnBreakingChanges;
+		items: changes;
+		display: [ :each | each description ];
+		onAccept: [ :dialog | | selectedChanges |
+			selectedChanges := dialog presenter selectedItems.
+			selectedChanges do: #action.
+			selectedChanges ifNotEmpty: [ self applyChanges ] ];
+		openDialog
 ]
 
 { #category : 'ui - dialogs' }
@@ -129,7 +149,7 @@ RePushUpMethodDriver >> labelBasedOnBreakingChanges [
 			  cond check ifFalse: [
 				  cond violationMessageOn: stream.
 				  stream cr ] ].
-		  stream nextPutAll: 'Select a strategy' ]
+		  stream nextPutAll: 'Select the strategies to apply' ]
 ]
 
 { #category : 'for mocks' }
@@ -158,11 +178,7 @@ RePushUpMethodDriver >> pushUpReferencedInstVars [
 
 	notInstVarRefs violators do: [ :violator | 
 		"We add the pushUpVariable transformation to the refactoring previous transformations"
-		refactoring pushUpVariable: (violator at: 2) ].
-
-	self flag: 'Discuss with Stef and Balša about applying changes here... What should happen when where are unfixed breaking changes beside referenced inst vars?'.
-	"Now the push up variable transformation is among the changes to be applied"
-	self applyChanges
+		refactoring pushUpVariable: (violator at: 2) ]
 ]
 
 { #category : 'execution' }

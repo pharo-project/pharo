@@ -6,6 +6,11 @@ Class {
 	#tag : 'Conditions'
 }
 
+{ #category : 'as yet unclassified' }
+ReReifiedCondition class >> fixChoiceClass [
+	self subclassResponsibility 
+]
+
 { #category : 'accessing' }
 ReReifiedCondition >> errorString [
 

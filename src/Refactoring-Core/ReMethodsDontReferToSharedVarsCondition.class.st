@@ -14,6 +14,11 @@ Class {
 	#tag : 'Conditions'
 }
 
+{ #category : 'as yet unclassified' }
+ReMethodsDontReferToSharedVarsCondition class >> fixChoiceClass [
+	^ RePushUpSharedVariableChoice
+]
+
 { #category : 'initialization' }
 ReMethodsDontReferToSharedVarsCondition >> class: aRBClass selectors: aCollection [ 
 
