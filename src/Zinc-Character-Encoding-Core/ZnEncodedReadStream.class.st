@@ -35,11 +35,6 @@ ZnEncodedReadStream >> contents [
 ]
 
 { #category : 'testing' }
-ZnEncodedReadStream >> isBinary [
-	^ false
-]
-
-{ #category : 'testing' }
 ZnEncodedReadStream >> isReadOnly [
 
 	^ true

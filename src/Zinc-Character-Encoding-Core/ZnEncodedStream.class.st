@@ -65,6 +65,11 @@ ZnEncodedStream >> flush [
 ]
 
 { #category : 'testing' }
+ZnEncodedStream >> isBinary [
+	^ false
+]
+
+{ #category : 'testing' }
 ZnEncodedStream >> isStream [
   ^ true
 ]
