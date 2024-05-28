@@ -14,6 +14,12 @@ Class {
 }
 
 { #category : 'testing' }
+ZnEncodedReadStream class >> isAbstract [
+
+	^ self == ZnEncodedReadStream
+]
+
+{ #category : 'testing' }
 ZnEncodedReadStream >> atEnd [
 	^ peeked isNil and: [ stream atEnd ]
 ]

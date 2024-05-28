@@ -19,6 +19,12 @@ ZnEncodedStream class >> defaultEncoder [
 	^ ZnCharacterEncoder utf8
 ]
 
+{ #category : 'testing' }
+ZnEncodedStream class >> isAbstract [
+
+	^ self == ZnEncodedStream
+]
+
 { #category : 'instance creation' }
 ZnEncodedStream class >> on: wrappedStream [
 	^ self new
