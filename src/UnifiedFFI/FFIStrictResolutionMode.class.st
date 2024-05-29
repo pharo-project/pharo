@@ -26,10 +26,8 @@ FFIStrictResolutionMode >> resolveUndeclaredTypeForArgument: aFFIValueArgument w
 	 	 There is no ambiguity.
 	"
 	
-	(aFFIValueArgument value isNil
-		or: [aFFIValueArgument value = 'nil'
-			or: [ aFFIValueArgument value = 'NULL' ]])
-				ifTrue: [ ^ (aResolver resolveType: #'void *') ].
+	(#(nil 'nil' 'NULL') includes: aFFIValueArgument value)
+		 ifTrue: [ ^ (aResolver resolveType: #'void *') ].
 				
 	aFFIValueArgument value == #self ifTrue: [
 		| externalType |
