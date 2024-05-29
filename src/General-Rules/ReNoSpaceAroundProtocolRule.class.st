@@ -26,7 +26,8 @@ ReNoSpaceAroundProtocolRule class >> group [
 
 { #category : 'accessing' }
 ReNoSpaceAroundProtocolRule class >> ruleName [
-	^ 'Protocol named "{1}" should be trimmed (includes space at start or end)' format: { protocolName }
+
+	^ 'Protocol should be trimmed (includes space at start or end)'
 ]
 
 { #category : 'manifest' }
