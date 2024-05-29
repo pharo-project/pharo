@@ -293,3 +293,8 @@ ChunkImportTestCase >> testImportFromReadStream [
 ChunkImportTestCase >> testImportString [
 	self assert: 4 equals: (CodeImporter evaluateString: '2+2!')
 ]
+
+{ #category : 'tests' }
+ChunkImportTestCase >> testImportUndeclared [
+	self assert: 4 equals: (CodeImporter evaluateString: 'myCodeImortUndecl := 4')
+]
