@@ -9,14 +9,14 @@ Class {
 	#tag : 'Rules'
 }
 
-{ #category : 'accessing - defaults' }
-ReInstanceSidePrintOnMethodProtocolRule >> protocolName [
+{ #category : 'accessing' }
+ReInstanceSidePrintOnMethodProtocolRule class >> protocolName [
 
 	^ 'printing'
 ]
 
-{ #category : 'accessing - defaults' }
-ReInstanceSidePrintOnMethodProtocolRule >> selector [
+{ #category : 'accessing' }
+ReInstanceSidePrintOnMethodProtocolRule class >> selector [
 
 	^ #printOn:
 ]

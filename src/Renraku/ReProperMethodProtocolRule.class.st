@@ -39,15 +39,27 @@ ReProperMethodProtocolRule class >> isAbstract [
 	^ self == ReProperMethodProtocolRule
 ]
 
+{ #category : 'accessing - defaults' }
+ReProperMethodProtocolRule class >> protocolName [
+
+	^ self subclassResponsibility
+]
+
 { #category : 'accessing' }
 ReProperMethodProtocolRule class >> ruleName [
+
 	| side |
-	side := self class checksClassMethod
+	side := self checksClassMethod
 		        ifTrue: [ 'Class' ]
 		        ifFalse: [ 'Instance' ].
 
-	^ side , ' side methods called #' , self selector asString
-	  , ' should be in the ''' , self protocolName , ''' protocol'
+	^ side , ' side methods called #' , self selector asString , ' should be in the ''' , self protocolName , ''' protocol'
+]
+
+{ #category : 'accessing - defaults' }
+ReProperMethodProtocolRule class >> selector [
+
+	^ self subclassResponsibility
 ]
 
 { #category : 'running' }
@@ -81,12 +93,10 @@ ReProperMethodProtocolRule >> critiqueFor: aMethod [
 
 { #category : 'accessing - defaults' }
 ReProperMethodProtocolRule >> protocolName [
-
-	^ self subclassResponsibility
+	^ self class protocolName
 ]
 
 { #category : 'accessing - defaults' }
 ReProperMethodProtocolRule >> selector [
-
-	^ self subclassResponsibility
+	^ self class selector
 ]
