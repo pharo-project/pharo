@@ -49,7 +49,6 @@ Class {
 		'oldClass',
 		'oldMetaclass',
 		'builderEnhancer',
-		'metaclassClass',
 		'extensibleProperties',
 		'changeComparers',
 		'changes',
