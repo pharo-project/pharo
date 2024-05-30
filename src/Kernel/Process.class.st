@@ -366,7 +366,7 @@ Process >> isBlocked [
 	^false
 ]
 
-{ #category : 'testing'. }
+{ #category : 'testing' }
 Process >> isSuspended [
 	"A #suspended process will not run until sent #resume. New processes
 	start in this state (though the #fork family sends #resume internally),
