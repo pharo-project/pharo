@@ -296,5 +296,5 @@ ChunkImportTestCase >> testImportString [
 
 { #category : 'tests' }
 ChunkImportTestCase >> testImportUndeclared [
-	self assert: 4 equals: (CodeImporter evaluateString: 'myCodeImortUndecl := 4')
+	self assert: 4 equals: (CodeImporter evaluateString: 'myCodeImportUndecl := 4')
 ]
