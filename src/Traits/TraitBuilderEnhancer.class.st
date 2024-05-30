@@ -193,7 +193,7 @@ TraitBuilderEnhancer >> isTraitedMetaclass: aBuilder [
 	^ aBuilder metaclassClass includesBehavior: TraitedMetaclass
 ]
 
-{ #category : 'class modifications' }
+{ #category : 'accessing' }
 TraitBuilderEnhancer >> metaclassClassFor: aBuilder [
 
 	aBuilder metaSuperclass = Trait ifTrue: [ ^ MetaclassForTraits ].
