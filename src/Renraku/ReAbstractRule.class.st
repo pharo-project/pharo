@@ -295,8 +295,9 @@ ReAbstractRule >> isRewriteRule [
 
 { #category : 'accessing' }
 ReAbstractRule >> name [
-
-	self deprecated: 'Use #ruleName instead.' transformWith: '`@rcv name' -> '`@rcv ruleName'.
+	
+	"Should be deprecated when CBCritiquesRuleGroup will implement #ruleName also but this is in NewTools"
+	"self deprecated: 'Use #ruleName instead.' transformWith: '`@rcv name' -> '`@rcv ruleName'."
 	^ self ruleName
 ]
 
