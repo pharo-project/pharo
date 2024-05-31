@@ -18,6 +18,9 @@ FFIStrictResolutionMode >> isStrict [
 { #category : 'resolution' }
 FFIStrictResolutionMode >> resolveUndeclaredTypeForArgument: aFFIValueArgument withResolver: aResolver [
 
+	(aFFIValueArgument value = 'NULL')
+		ifTrue: [ ^ aResolver resolveType: #'void *' ].
+
 	"Make strict all declarations except those using self.
 	This is safe because:
 	 - We can infer self from the current class
