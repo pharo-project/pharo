@@ -563,6 +563,30 @@ TraitTest >> testRemoveFromSystem [
 ]
 
 { #category : 'tests' }
+TraitTest >> testRemovingTraitsDoesNotModifiyTraitedSubclasses [
+
+	| t1 t2 c2 c1 |
+	t1 := self newTrait: #T1.
+	t2 := self newTrait: #T2.
+	c1 := self newClass: #C1 traits: t1.
+	c2 := self newClass: #C2 superclass: c1 traits: t2.
+
+	self assert: c1 hasTraitComposition.
+	self assert: (c1 traits includes: t1).
+	self assert: c2 hasTraitComposition.
+	self assert: (c2 traits includes: t2).
+	self assert: (t2 users includes: c2).
+
+	c1 := self newClass: #C1 traits: {  }.
+
+	self deny: c1 hasTraitComposition.
+	self deny: (c1 traits includes: t1).
+	self assert: c2 hasTraitComposition.
+	self assert: (c2 traits includes: t2).
+	self assert: (t2 users includes: c2)
+]
+
+{ #category : 'tests' }
 TraitTest >> testRemovingTraitsRemoveTraitedClassMethods [
 	| t1 t2 c1 |
 
