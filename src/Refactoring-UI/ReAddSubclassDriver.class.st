@@ -64,7 +64,7 @@ ReAddSubclassDriver >> comment: aString [
 { #category : 'accessing' }
 ReAddSubclassDriver >> configureRefactoring [
 
-	refactoring := (RBAddNewClassRefactoring className: self subclass)
+	refactoring := (RBInsertNewClassRefactoring className: self subclass)
 		model: model;
 		superclass: self superclass;
 		packageName: self packageName;

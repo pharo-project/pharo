@@ -4,9 +4,6 @@ I am a command to create new subclass og given class (my targetClass)
 Class {
 	#name : 'SycCmAddSubclassCommand',
 	#superclass : 'SycCmNewClassCreationCommand',
-	#instVars : [
-		'packageName'
-	],
 	#category : 'SystemCommands-ClassCommands-Creation',
 	#package : 'SystemCommands-ClassCommands',
 	#tag : 'Creation'

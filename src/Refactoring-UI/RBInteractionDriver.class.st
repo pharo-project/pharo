@@ -87,7 +87,7 @@ RBInteractionDriver >> furtherActionFor: aReport [
 	aReport browse
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'private' }
 RBInteractionDriver >> informConditions: conditions [ 
 	"The receiver has multiple failed applicability conditions and more than one could fail, inform all failures"
 
