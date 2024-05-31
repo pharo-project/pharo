@@ -67,7 +67,7 @@ RBInlineMethodRefactoring >> applicabilityPreconditions [
 		  (RBCondition withBlock: [
 			   self checkSelectedMessage.
 			   self parseInlineMethod.
-			   self isPrimitive ifTrue: [
+			   inlineParseTree isPrimitive ifTrue: [
 				   self refactoringError: 'Cannot inline primitives' ].
 			   self checkSuperMessages.
 			   self rewriteInlinedTree.
@@ -235,11 +235,6 @@ RBInlineMethodRefactoring >> insertInlinedMethod [
 RBInlineMethodRefactoring >> isOverridden [
 
 	^ class subclassRedefines: self inlineSelector
-]
-
-{ #category : 'testing' }
-RBInlineMethodRefactoring >> isPrimitive [
-	^inlineParseTree isPrimitive
 ]
 
 { #category : 'transforming' }
