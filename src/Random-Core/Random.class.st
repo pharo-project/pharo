@@ -206,7 +206,7 @@ Random >> seed: aNumber [
 { #category : 'initialization' }
 Random >> setStateFromSeed [
 
-	state at: 1 put: seed + 1442695040888963407.
+	state at: 1 put: seed asInteger + 1442695040888963407.
 	self class primitiveRandomNumber: state
 ]
 
