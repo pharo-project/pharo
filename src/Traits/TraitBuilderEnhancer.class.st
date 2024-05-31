@@ -172,13 +172,10 @@ TraitBuilderEnhancer >> eliminateDuplicates: aSlotCollection withSuperclassSlots
 { #category : 'initialization' }
 TraitBuilderEnhancer >> fillBuilder: aBuilder from: aClass [
 
-	(aBuilder superclass isNil and: [ aClass superclass isNil ]) ifTrue: [
-		aBuilder metaSuperclass: aClass class superclass ].
+	(aBuilder superclass isNil and: [ aClass superclass isNil ]) ifTrue: [ aBuilder metaSuperclass: aClass class superclass ].
 
 	aBuilder traitComposition: aClass traitComposition.
-	aBuilder classTraitComposition: aClass class basicTraitComposition.
-
-	aBuilder metaclassClass: aClass class class
+	aBuilder classTraitComposition: aClass class basicTraitComposition
 ]
 
 { #category : 'initialization' }
@@ -196,6 +193,17 @@ TraitBuilderEnhancer >> isTraitedMetaclass: aBuilder [
 	^ aBuilder metaclassClass includesBehavior: TraitedMetaclass
 ]
 
+{ #category : 'accessing' }
+TraitBuilderEnhancer >> metaclassClassFor: aBuilder [
+
+	aBuilder metaSuperclass = Trait ifTrue: [ ^ MetaclassForTraits ].
+
+	(aBuilder traitComposition asTraitComposition isNotEmpty or: [
+		 aBuilder classTraitComposition asTraitComposition isNotEmpty or: [ aBuilder superclass class class = TraitedMetaclass ] ]) ifTrue: [ ^ TraitedMetaclass ].
+
+	^ super metaclassClassFor: aBuilder
+]
+
 { #category : 'events' }
 TraitBuilderEnhancer >> migrateInstancesTo: aClass installer: aShiftClassInstaller [
 
@@ -204,18 +212,6 @@ TraitBuilderEnhancer >> migrateInstancesTo: aClass installer: aShiftClassInstall
 		ifTrue: [ ^ self ].
 
 	super migrateInstancesTo: aClass installer: aShiftClassInstaller
-]
-
-{ #category : 'class modifications' }
-TraitBuilderEnhancer >> newMetaclass: aBuilder [
-
-	(aBuilder traitComposition asTraitComposition isNotEmpty or: [ aBuilder classTraitComposition asTraitComposition isNotEmpty or: [ aBuilder superclass class class = TraitedMetaclass]])
-		ifTrue: [ aBuilder metaclassClass: TraitedMetaclass ].
-
-	aBuilder metaSuperclass = Trait
-		ifTrue: [ aBuilder metaclassClass: MetaclassForTraits ].
-
-	^ super newMetaclass: aBuilder
 ]
 
 { #category : 'class modifications' }

@@ -15,6 +15,16 @@ ReTempVarOverridesInstVarRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReTempVarOverridesInstVarRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+ReTempVarOverridesInstVarRule class >> ruleName [
+	^ 'Outer variable shadowed by temporary variable or argument'
+]
+
+{ #category : 'accessing' }
 ReTempVarOverridesInstVarRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -42,14 +52,4 @@ ReTempVarOverridesInstVarRule >> critiqueFor: aMethod about: aVarNode [
 		by: self)
 		tinyHint: aVarNode name;
 		yourself
-]
-
-{ #category : 'accessing' }
-ReTempVarOverridesInstVarRule >> group [
-	^ 'Potential Bugs'
-]
-
-{ #category : 'accessing' }
-ReTempVarOverridesInstVarRule >> name [
-	^ 'Outer variable shadowed by temporary variable or argument'
 ]

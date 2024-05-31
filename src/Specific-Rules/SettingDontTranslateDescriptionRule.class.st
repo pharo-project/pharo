@@ -9,6 +9,17 @@ Class {
 	#tag : 'System-Settings'
 }
 
+{ #category : 'accessing' }
+SettingDontTranslateDescriptionRule class >> group [
+
+	^ 'API Hints'
+]
+
+{ #category : 'accessing' }
+SettingDontTranslateDescriptionRule class >> ruleName [
+	^ 'Do not use #translated for setting''s description'
+]
+
 { #category : 'running' }
 SettingDontTranslateDescriptionRule >> basicCheck: aNode [
 	^ aNode methodNode ifNil: [ false ] ifNotNil: [ :methNode | self checkPreconditionOn: methNode ]
@@ -21,12 +32,6 @@ SettingDontTranslateDescriptionRule >> checkPreconditionOn: aMethodNode [
 		p selector = #systemsettings ]
 ]
 
-{ #category : 'accessing' }
-SettingDontTranslateDescriptionRule >> group [
-
-	^ 'API Hints'
-]
-
 { #category : 'initialization' }
 SettingDontTranslateDescriptionRule >> initialize [
 	super initialize.
@@ -34,10 +39,4 @@ SettingDontTranslateDescriptionRule >> initialize [
 	self
 		replace: '`@recv description: `#str translated'
 		with: '`@recv description: `#str'
-]
-
-{ #category : 'accessing' }
-SettingDontTranslateDescriptionRule >> name [
-
-	^ 'Do not use #translated for setting''s description'
 ]

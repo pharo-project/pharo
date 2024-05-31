@@ -16,6 +16,21 @@ ReRefersToClassRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReRefersToClassRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+ReRefersToClassRule class >> rationale [
+	^ 'Checks for direct reference to classes themselves.'
+]
+
+{ #category : 'accessing' }
+ReRefersToClassRule class >> ruleName [
+	^ 'Refers to class name instead of "self class"'
+]
+
+{ #category : 'accessing' }
 ReRefersToClassRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -37,19 +52,4 @@ ReRefersToClassRule >> check: aMethod forCritiquesDo: aCriticBlock [
 
 	problemLiterals do: [ :literal |
 			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: literal hint:literal name )]
-]
-
-{ #category : 'accessing' }
-ReRefersToClassRule >> group [
-	^ 'Design Flaws'
-]
-
-{ #category : 'accessing' }
-ReRefersToClassRule >> name [
-	^ 'Refers to class name instead of "self class"'
-]
-
-{ #category : 'accessing' }
-ReRefersToClassRule >> rationale [
-	^ 'Checks for direct reference to classes themselves.'
 ]

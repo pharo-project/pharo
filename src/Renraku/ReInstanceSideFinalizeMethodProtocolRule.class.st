@@ -9,14 +9,14 @@ Class {
 	#tag : 'Rules'
 }
 
-{ #category : 'accessing - defaults' }
-ReInstanceSideFinalizeMethodProtocolRule >> protocolName [
+{ #category : 'accessing' }
+ReInstanceSideFinalizeMethodProtocolRule class >> protocolName [
 
 	^ 'finalization'
 ]
 
-{ #category : 'accessing - defaults' }
-ReInstanceSideFinalizeMethodProtocolRule >> selector [
+{ #category : 'accessing' }
+ReInstanceSideFinalizeMethodProtocolRule class >> selector [
 
 	^ #finalize
 ]

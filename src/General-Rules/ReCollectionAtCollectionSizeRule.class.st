@@ -10,24 +10,24 @@ Class {
 }
 
 { #category : 'accessing' }
+ReCollectionAtCollectionSizeRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
+ReCollectionAtCollectionSizeRule class >> ruleName [
+	^ 'Uses "collection at: collection size" instead of "collection last"'
+]
+
+{ #category : 'accessing' }
 ReCollectionAtCollectionSizeRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'ReCollectionAtCollectionSizeRule'
 ]
 
-{ #category : 'accessing' }
-ReCollectionAtCollectionSizeRule >> group [
-	^ 'Coding Idiom Violation'
-]
-
 { #category : 'initialization' }
 ReCollectionAtCollectionSizeRule >> initialize [
 	super initialize.
 	self  matchesAny: #('`@collection at: `@collection size')
-]
-
-{ #category : 'accessing' }
-ReCollectionAtCollectionSizeRule >> name [
-	^ 'Uses "collection at: collection size" instead of "collection last"'
 ]

@@ -10,6 +10,21 @@ Class {
 }
 
 { #category : 'accessing' }
+SendsDeprecatedMethodToGlobalRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+SendsDeprecatedMethodToGlobalRule class >> ruleName [
+	^ 'Sends a deprecated message to a known global'
+]
+
+{ #category : 'accessing' }
+SendsDeprecatedMethodToGlobalRule class >> severity [
+	^ #error
+]
+
+{ #category : 'accessing' }
 SendsDeprecatedMethodToGlobalRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -25,19 +40,4 @@ SendsDeprecatedMethodToGlobalRule >> basicCheck: aNode [
 	^value class classAndMethodFor: aNode selector
 		do: [ :class :method | method isDeprecated ]
 		ifAbsent: [ false ]
-]
-
-{ #category : 'accessing' }
-SendsDeprecatedMethodToGlobalRule >> group [
-	^ 'Design Flaws'
-]
-
-{ #category : 'accessing' }
-SendsDeprecatedMethodToGlobalRule >> name [
-	^ 'Sends a deprecated message to a known global'
-]
-
-{ #category : 'accessing' }
-SendsDeprecatedMethodToGlobalRule >> severity [
-	^ #error
 ]

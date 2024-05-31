@@ -10,14 +10,19 @@ Class {
 }
 
 { #category : 'accessing' }
-ReIfNotNilDoRule class >> uniqueIdentifierName [
-
-	^ 'RuleIfNotNilDo'
+ReIfNotNilDoRule class >> group [
+	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'accessing' }
-ReIfNotNilDoRule >> group [
-	^ 'Coding Idiom Violation'
+ReIfNotNilDoRule class >> ruleName [
+	^ 'Use "ifNotNil:" not "ifNotNilDo:"'
+]
+
+{ #category : 'accessing' }
+ReIfNotNilDoRule class >> uniqueIdentifierName [
+
+	^ 'RuleIfNotNilDo'
 ]
 
 { #category : 'initialization' }
@@ -30,9 +35,4 @@ ReIfNotNilDoRule >> initialize [
 			with: '`@receiver ifNotNil: `@statements1 ifNil: `@statements2';
 		replace: '`@receiver ifNil: `@statements1 ifNotNilDo: `@statements2'
 			with: '`@receiver ifNil: `@statements1 ifNotNil: `@statements2'
-]
-
-{ #category : 'accessing' }
-ReIfNotNilDoRule >> name [
-	^ 'Use "ifNotNil:" not "ifNotNilDo:"'
 ]

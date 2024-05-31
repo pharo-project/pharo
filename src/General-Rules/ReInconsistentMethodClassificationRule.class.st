@@ -17,6 +17,21 @@ ReInconsistentMethodClassificationRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReInconsistentMethodClassificationRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+ReInconsistentMethodClassificationRule class >> ruleName [
+	^ 'Inconsistent method classification'
+]
+
+{ #category : 'accessing' }
+ReInconsistentMethodClassificationRule class >> severity [
+	^ #information
+]
+
+{ #category : 'accessing' }
 ReInconsistentMethodClassificationRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -44,19 +59,4 @@ ReInconsistentMethodClassificationRule >> critiqueFor: aMethod [
 
 	^ (ReRefactoringCritique withAnchor: (self anchorFor: aMethod) by: self) refactoring:
 		  (RBMethodProtocolTransformation protocol: { aMethod overriddenMethod protocolName } inMethod: aMethod selector inClass: aMethod methodClass name)
-]
-
-{ #category : 'accessing' }
-ReInconsistentMethodClassificationRule >> group [
-	^ 'Design Flaws'
-]
-
-{ #category : 'accessing' }
-ReInconsistentMethodClassificationRule >> name [
-	^ 'Inconsistent method classification'
-]
-
-{ #category : 'accessing' }
-ReInconsistentMethodClassificationRule >> severity [
-	^ #information
 ]

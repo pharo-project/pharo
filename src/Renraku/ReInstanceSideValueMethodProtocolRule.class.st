@@ -9,14 +9,14 @@ Class {
 	#tag : 'Rules'
 }
 
-{ #category : 'accessing - defaults' }
-ReInstanceSideValueMethodProtocolRule >> protocolName [
+{ #category : 'accessing' }
+ReInstanceSideValueMethodProtocolRule class >> protocolName [
 
 	^ 'evaluating'
 ]
 
-{ #category : 'accessing - defaults' }
-ReInstanceSideValueMethodProtocolRule >> selector [
+{ #category : 'accessing' }
+ReInstanceSideValueMethodProtocolRule class >> selector [
 
 	^ #value
 ]

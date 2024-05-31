@@ -40,25 +40,16 @@ AthensCairoExportSurface class >> extent: anExtent fileName: fileName [
 		yourself
 ]
 
-{ #category : 'finalize resources' }
-AthensCairoExportSurface class >> finalizeResourceData: data [
-	"Finalize external state. I override super behavior for two reasons:
-	* Export surfaces do not register to the SurfacePlugin, so there is less state to finalize.
-	* Support too be executed more than once. This was required because user finalizes the external object when drawing is done and also the Garbage Collector finalizes."
-
-	| surfaceHandle contextHandleValue |
-	surfaceHandle := data first.
-	contextHandleValue := data second.
-
-	surfaceHandle isNull ifTrue: [ ^self ].
-	self destroySurfaceHandle: surfaceHandle value.
-	self destroyContextHandle: contextHandleValue.
-	surfaceHandle beNull
-]
-
 { #category : 'private' }
 AthensCairoExportSurface class >> registerSurface: surface [
 	"Do not register my instances with SurfacePlugin since I only write to file."
+]
+
+{ #category : 'private' }
+AthensCairoExportSurface class >> unregisterSurfaceWithId: id [
+	"Do not unregister my instances with SurfacePlugin since I only write to file."
+
+	
 ]
 
 { #category : 'finalization' }
@@ -93,13 +84,6 @@ AthensCairoExportSurface >> initializeWith: anExtent [
 
 	"We keep the extent to override related accessors because superclass uses cairo_image_surface_get_width and similar for height which don't give the right answer."
 	extent := anExtent
-]
-
-{ #category : 'initialization' }
-AthensCairoExportSurface >> resourceData [
-	"See #finalizeResourceData: at class-side."
-
-	^ { handle. context handle }
 ]
 
 { #category : 'accessing' }

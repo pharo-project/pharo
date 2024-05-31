@@ -16,6 +16,17 @@ Class {
 	#tag : 'Migrated'
 }
 
+{ #category : 'accessing' }
+ReStatementsAfterReturnConditionalRule class >> group [
+
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+ReStatementsAfterReturnConditionalRule class >> ruleName [
+	^ 'statements written after conditional return'
+]
+
 { #category : 'running' }
 ReStatementsAfterReturnConditionalRule >> basicCheck: aNode [
 
@@ -24,18 +35,6 @@ ReStatementsAfterReturnConditionalRule >> basicCheck: aNode [
 	aNode arguments do: [ :arg |
 		(arg isBlock and: [ arg statements last isReturn ]) ifFalse: [ ^ false ] ].
 	^ aNode ~= aNode methodNode statements last
-]
-
-{ #category : 'accessing' }
-ReStatementsAfterReturnConditionalRule >> group [
-
-	^ 'Potential Bugs'
-]
-
-{ #category : 'accessing' }
-ReStatementsAfterReturnConditionalRule >> name [
-
-	^ 'statements written after conditional return'
 ]
 
 { #category : 'utilities' }

@@ -588,7 +588,7 @@ TraitTest >> testRemovingTraitsRemoveTraitedClassMethodsWithSubclasses [
 
 	self assert: (c1 class includesSelector: #traits).
 	self deny: (c1 class includesLocalSelector: #traits).
-	self assert: (c2 class lookupSelector: #traits) notNil.
+	self assert: (c2 class lookupSelector: #traits) isNotNil.
 	self deny: (c2 class includesLocalSelector: #traits).
 
 	c1 := self newClass: #C1 with: #(g h) traits: {}.

@@ -16,6 +16,21 @@ ReUnconditionalRecursionRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReUnconditionalRecursionRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+ReUnconditionalRecursionRule class >> ruleName [
+	^ 'Unconditional recursion'
+]
+
+{ #category : 'accessing' }
+ReUnconditionalRecursionRule class >> severity [
+	^ #error
+]
+
+{ #category : 'accessing' }
 ReUnconditionalRecursionRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -27,11 +42,6 @@ ReUnconditionalRecursionRule >> afterCheck: aNode mappings: mappingDict [
 	^ (mappingDict at: '`@.before') noneSatisfy: #containsReturn
 ]
 
-{ #category : 'accessing' }
-ReUnconditionalRecursionRule >> group [
-	^ 'Potential Bugs'
-]
-
 { #category : 'initialization' }
 ReUnconditionalRecursionRule >> initialize [
 	super initialize.
@@ -41,14 +51,4 @@ ReUnconditionalRecursionRule >> initialize [
 			`@.before.
 			self `@message: `@args.
 			`@.after'
-]
-
-{ #category : 'accessing' }
-ReUnconditionalRecursionRule >> name [
-	^ 'Unconditional recursion'
-]
-
-{ #category : 'accessing' }
-ReUnconditionalRecursionRule >> severity [
-	^ #error
 ]

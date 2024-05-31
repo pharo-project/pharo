@@ -9,14 +9,14 @@ Class {
 	#tag : 'Rules'
 }
 
-{ #category : 'accessing - defaults' }
-ReInstanceSideHashMethodProtocolRule >> protocolName [
+{ #category : 'accessing' }
+ReInstanceSideHashMethodProtocolRule class >> protocolName [
 
 	^ 'comparing'
 ]
 
-{ #category : 'accessing - defaults' }
-ReInstanceSideHashMethodProtocolRule >> selector [
+{ #category : 'accessing' }
+ReInstanceSideHashMethodProtocolRule class >> selector [
 
 	^ #hash
 ]

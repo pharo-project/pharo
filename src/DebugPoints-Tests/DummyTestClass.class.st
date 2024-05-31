@@ -15,6 +15,12 @@ Class {
 	#tag : 'Utils'
 }
 
+{ #category : 'test methods' }
+DummyTestClass class >> dummyClassSide [
+
+	^ 42
+]
+
 { #category : 'nil' }
 DummyTestClass >> classVarRead [
 
