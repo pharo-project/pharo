@@ -199,7 +199,7 @@ Random >> seed [
 { #category : 'initialization' }
 Random >> seed: aNumber [
 	"Refer #privateNextSeed and [1], seed should be positive and less than m"
-	seed := aNumber.
+	seed := aNumber asInteger.
 	self setStateFromSeed.
 ]
 
