@@ -18,13 +18,20 @@ Class {
 	#tag : 'Text'
 }
 
+{ #category : 'private' }
+CairoScaledFont class >> defaultInches [
+
+	^ 72.0
+]
+
 { #category : 'finalizing' }
 CairoScaledFont class >> finalizeResourceData: handle [
-
-"
+	"
 void                cairo_scaled_font_destroy           (cairo_scaled_font_t *scaled_font);
 "
-	^ self ffiCall: #( void  cairo_scaled_font_destroy (size_t handle) )
+
+	^ self ffiCall:
+		  #( void cairo_scaled_font_destroy #( void #* handle ) )
 ]
 
 { #category : 'instance creation' }
@@ -70,7 +77,7 @@ CairoScaledFont class >> pixelsPerInch [
 { #category : 'accessing' }
 CairoScaledFont class >> pointsToPixels: points [
 
-	^ points * self pixelsPerInch / 72.0
+	^ points * self pixelsPerInch / self defaultInches
 ]
 
 { #category : 'private' }
@@ -201,7 +208,8 @@ FT_Face             cairo_ft_scaled_font_lock_face      (cairo_scaled_font_t *sc
 
 { #category : 'external resource management' }
 CairoScaledFont >> resourceData [
-	^ handle value
+
+	^ self getHandle
 ]
 
 { #category : 'accessing' }
