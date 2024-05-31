@@ -5,8 +5,7 @@ ShiftClassBuilder >> beTrait [
 
 	self
 		superclass: nil;
-		metaSuperclass: Trait;
-		metaclassClass: MetaclassForTraits
+		metaSuperclass: Trait
 ]
 
 { #category : '*Traits' }
@@ -53,6 +52,7 @@ ShiftClassBuilder >> traitComposition [
 ShiftClassBuilder >> traitComposition: aValue [
 
 	self classTraitComposition: aValue asTraitComposition classComposition.
+
 	^ self privateTraitComposition: aValue
 ]
 
