@@ -9,9 +9,9 @@ Class {
 		'oldTag',
 		'newTag'
 	],
-	#category : 'System-Announcements-System-Packages',
+	#category : 'System-Announcements-System-Classes',
 	#package : 'System-Announcements',
-	#tag : 'System-Packages'
+	#tag : 'System-Classes'
 }
 
 { #category : 'instance creation' }
@@ -24,28 +24,10 @@ ClassRepackaged class >> classRepackaged: aClass oldTag: oldTag newTag: newTag [
 		  yourself
 ]
 
-{ #category : 'testing' }
-ClassRepackaged >> affectsMethods [
-	"methods belong to class which could be represented by tools as part of method"
-	^true
-]
+{ #category : 'class initialization' }
+ClassRepackaged class >> initialize [
 
-{ #category : 'testing' }
-ClassRepackaged >> affectsMethodsDefinedInClass: aClass [
-
-	^classRepackaged == aClass
-]
-
-{ #category : 'testing' }
-ClassRepackaged >> affectsMethodsDefinedInPackage: aPackage [
-
-	^self oldPackage == aPackage or: [ self newPackage == aPackage ]
-]
-
-{ #category : 'testing' }
-ClassRepackaged >> affectsMethodsInProtocol: protocol [
-
-	^ classRepackaged protocolNames includes: protocol
+	self deprecatedAliases: { #ClassRecategorized }
 ]
 
 { #category : 'accessing' }
@@ -119,7 +101,5 @@ ClassRepackaged >> packagedChanged [
 { #category : 'accessing' }
 ClassRepackaged >> packagesAffected [
 
-	^ {
-		  self oldPackage.
-		  self newPackage }
+	^ { self oldPackage. self newPackage }
 ]

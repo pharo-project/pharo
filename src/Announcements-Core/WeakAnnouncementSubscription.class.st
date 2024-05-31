@@ -74,7 +74,7 @@ WeakAnnouncementSubscription >> subscriber [
 { #category : 'accessing' }
 WeakAnnouncementSubscription >> subscriber: anObject [
 
-	self subscriber ifNotNil: [ self error: 'subscriber already set' ].
+	self subscriber ifNotNil: [ self error: 'subscriber is already set' ].
 	self basicAt: 1 put: anObject.
 	self register
 ]
@@ -82,5 +82,8 @@ WeakAnnouncementSubscription >> subscriber: anObject [
 { #category : 'finalization' }
 WeakAnnouncementSubscription >> unregister [
 
-	self subscriber ifNotNil: [:sub |  self finalizationRegistry remove: sub ]
+	self subscriber ifNotNil: [:sub | 
+		self finalizationRegistry 
+			remove: sub 
+			ifAbsent: ["I will ignore if the subscription has been already removed"]]
 ]

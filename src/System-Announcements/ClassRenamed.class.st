@@ -27,52 +27,6 @@ ClassRenamed class >> class: aClass oldName: anOldClassName newName: aNewClassNa
 		  yourself
 ]
 
-{ #category : 'testing' }
-ClassRenamed >> affectsMethod: aMethod [
-	^self classAffected == aMethod origin
-]
-
-{ #category : 'testing' }
-ClassRenamed >> affectsMethods [
-	"methods belong to class which could be represented by tools as part of method"
-	^true
-]
-
-{ #category : 'testing' }
-ClassRenamed >> affectsMethodsDefinedInClass: aClass [
-
-	^classRenamed == aClass
-]
-
-{ #category : 'testing' }
-ClassRenamed >> affectsMethodsDefinedInPackage: aPackage [
-
-	^classRenamed package == aPackage
-]
-
-{ #category : 'testing' }
-ClassRenamed >> affectsMethodsInProtocol: protocol [
-
-	^ classRenamed protocolNames includes: protocol
-]
-
-{ #category : 'testing' }
-ClassRenamed >> affectsVariablesOf: aClass [
-	"Any class has ClassVariables which are visible from both sides: instance side and class 	side.
-	That's any class modification can affect variables from both class sides.
-	And we do not need to distinguish it"
-
-	aClass instanceSide = classRenamed instanceSide ifTrue: [ ^true ].
-
-	^false
-]
-
-{ #category : 'accessing' }
-ClassRenamed >> category [
-
-	^ self classRenamed category
-]
-
 { #category : 'accessing' }
 ClassRenamed >> classAffected [
 	^self classRenamed

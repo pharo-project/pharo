@@ -50,6 +50,11 @@ ReInvocationSequenceRule class >> noteCompilationOf: aSelector meta: isMeta [
 		ReRuleManager reset ]
 ]
 
+{ #category : 'accessing' }
+ReInvocationSequenceRule class >> ruleName [
+	^ 'Invocation order incorect'
+]
+
 { #category : 'adding' }
 ReInvocationSequenceRule >> add: preSelectors requiresPostSend: postSelectors [
 
@@ -96,12 +101,6 @@ ReInvocationSequenceRule >> initialize [
 
 	preConditions := Set new.
 	postConditions := Set new
-]
-
-{ #category : 'accessing' }
-ReInvocationSequenceRule >> name [
-
-	^ 'Invocation order incorect'
 ]
 
 { #category : 'running' }

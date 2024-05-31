@@ -75,10 +75,6 @@ ClySystemEnvironmentPlugin >> collectClassGroupProviders [
 ]
 
 { #category : 'query metadata' }
-ClySystemEnvironmentPlugin >> collectMetadataOfClassGroups: aQueryResult [
-]
-
-{ #category : 'query metadata' }
 ClySystemEnvironmentPlugin >> collectMetadataOfClasses: aQueryResult [
 ]
 

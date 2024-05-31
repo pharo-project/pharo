@@ -79,7 +79,7 @@ LocaleID >> displayLanguage [
 
 { #category : 'testing' }
 LocaleID >> hasParent [
-	^self isoCountry notNil
+	^self isoCountry isNotNil
 ]
 
 { #category : 'comparing' }
@@ -131,11 +131,15 @@ LocaleID >> printOn: stream [
 		ifNotNil: [stream nextPut: $-; nextPutAll: self isoCountry]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 LocaleID >> storeOn: aStream [
-	aStream nextPut: $(.
-	aStream nextPutAll: self class name.
-	aStream nextPutAll: ' isoString: '.
-	aStream nextPutAll: '''' , self printString , ''''.
-	aStream nextPut: $)
+
+	aStream
+		nextPut: $(;
+		nextPutAll: self class name;
+		nextPutAll: ' isoString: ';
+		nextPut: $';
+		nextPutAll: self printString;
+		nextPut: $';
+		nextPut: $)
 ]

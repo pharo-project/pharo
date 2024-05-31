@@ -7,7 +7,6 @@ repositoryReference := (Smalltalk os environment at: 'BOOTSTRAP_REPOSITORY' ifAb
 repository := TonelRepository new
 	directory: repositoryReference;
 	yourself.
-(repository versionWithInfo: (repository versionInfoFromVersionNamed: 'Metacello-PharoExtensions')) snapshot install.
 (repository versionWithInfo: (repository versionInfoFromVersionNamed: 'BaselineOfPharoBootstrap')) snapshot install.
 (repository versionWithInfo: (repository versionInfoFromVersionNamed: 'BaselineOfTraits')) snapshot install.
 
@@ -19,7 +18,7 @@ packageNames := #BaselineOfPharoBootstrap asClass kernelPackageNames, #BaselineO
 environment := repository asRing2EnvironmentWith: packageNames.		
 
 environment fixProtoObjectClassSuperclass.
-environment addGlobalsNamed: #(Undeclared Smalltalk UTF8TextConverter MacRomanTextConverter FileStream ChangeSet Character Processor).
+environment addGlobalsNamed: #(Undeclared Smalltalk UTF8TextConverter MacRomanTextConverter FileStream Character Processor).
 
 environment clean.
 

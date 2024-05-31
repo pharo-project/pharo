@@ -567,7 +567,7 @@ TabMorph >> hasActions [
 { #category : 'protocol' }
 TabMorph >> hasMenu [
 
-	^ menu notNil or: [ retrievingBlock notNil ]
+	^ menu isNotNil or: [ retrievingBlock isNotNil ]
 ]
 
 { #category : 'protocol' }
@@ -716,7 +716,7 @@ TabMorph >> mouseLeaveIcon [
 	fadeOut ifNotNil: [ fadeOut terminate ].
 	fadeOut := [
 		closeIcon image: self class closeHalfOverIcon.
-		50 milliSeconds asDelay wait.
+		(Delay forMilliseconds: 50) wait.
 		closeIcon image: self class closeIcon ] fork
 ]
 
@@ -768,7 +768,7 @@ TabMorph >> retrieveMorph: aBlock [
 
 	^ [ retrievingSemaphore wait.
 		morph ifNotNil: [
-			UIManager default defer: [aBlock value: morph ]]]
+			self morphicUIManager defer: [aBlock value: morph ]]]
 				fork
 ]
 
@@ -858,7 +858,7 @@ TabMorph >> softRetrieveMorph [
 	retrievingProcess := [ [
 		morph := retrievingBlock value]
 	ensure: [
-		UIManager default defer: [
+		self morphicUIManager defer: [
 			self icon: oldIcon.
 			self triggerEvent: #tabRefreshed with: self].
 		"I should signal all waiters here"
@@ -894,6 +894,7 @@ TabMorph >> waitReadyMorphFor: timeoutDuration [
 	Clients could use it to not show loading progress if it is really fast process.
 	Instead some blinking could happen"
 
-	morph ifNotNil: [ ^self].
-	retrievingSemaphore wait: timeoutDuration
+	morph ifNotNil: [ ^ self ].
+	retrievingSemaphore waitTimeoutMilliseconds:
+		timeoutDuration asMilliSeconds
 ]

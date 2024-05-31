@@ -45,7 +45,7 @@ ImageCleaner class >> cleanUpForRelease [
 ImageCleaner class >> examplePackages [
 	<script: 'self examplePackages inspect'>
 
-	^RPackageOrganizer default packageNames select: [ :each | each endsWith: '-Examples' ]
+	^PackageOrganizer default packageNames select: [ :each | each endsWith: '-Examples' ]
 ]
 
 { #category : 'instance creation' }
@@ -59,7 +59,7 @@ ImageCleaner class >> testPackages [
 	"All test packages to wipe out, except ReleeaseTests package."
 
 	<script: 'self testPackages inspect'>
-	^ RPackageOrganizer default testPackageNames copyWithout: 'ReleaseTests'
+	^ PackageOrganizer default testPackageNames copyWithout: 'ReleaseTests'
 ]
 
 { #category : 'api' }
@@ -79,28 +79,28 @@ ImageCleaner >> cleanUpForProduction [
 
 { #category : 'api' }
 ImageCleaner >> cleanUpForRelease [
-	<script: 'self new cleanUpForRelease'>
 
-	Author fullName: 'MrCleaner'.
+	<script: 'self new cleanUpForRelease'>
 	self cleanUpMethods.
-	self class environment at: #MetacelloProjectRegistration ifPresent: [ :class | class resetRegistry ].
-	SystemNavigation new
-		allObjectsDo: [ :each |
-			((each respondsTo: #releaseCachedState) and: [ (each isKindOf: RubAbstractTextArea) not ])
-				ifTrue: [ each releaseCachedState ] ].
-	
+	self class environment
+		at: #MetacelloProjectRegistration
+		ifPresent: [ :class | class resetRegistry ].
+	SystemNavigation new allObjectsDo: [ :each |
+		((each respondsTo: #releaseCachedState) and: [
+			 (each isKindOf: RubAbstractTextArea) not ]) ifTrue: [
+			each releaseCachedState ] ].
+
 	Smalltalk
 		garbageCollect;
 		cleanOutUndeclared;
 		fixObsoleteReferences;
 		removeEmptyMessageCategories;
-		cleanUp: true except: #() confirming: false.
+		cleanUp: true except: #(  ) confirming: false.
 
 	FreeTypeFontProvider current prepareForRelease.
 
 	HashedCollection rehashAll.
-	self shareLiterals.
-	Author reset
+	self shareLiterals
 ]
 
 { #category : 'cleaning' }
@@ -116,10 +116,10 @@ ImageCleaner >> cleanUpProcesses [
 		reject: [ :p |
 			{
 			Processor activeProcess.
-			WeakArray runningFinalizationProcess.
+			FinalizationProcess runningFinalizationProcess.
 			Processor backgroundProcess.
 			SmalltalkImage current lowSpaceWatcherProcess.
-			UIManager default uiProcess.
+			MorphicUIManager uiProcess.
 			Delay schedulingProcess} includes: p ])
 		do: [ :p |
 			p
@@ -146,7 +146,7 @@ ImageCleaner >> createLiteralTable [
 				(arrayValue  isSymbol not and:  [ arrayValue isImmediateObject not ]) ifTrue:
 				[array
 					at: (array identityIndexOf: arrayValue)
-					put: (literalTable like: arrayValue)]].
+					put: (literalTable like: arrayValue ifAbsent: [arrayValue])]].
 			array beReadOnlyObject ]
 ]
 
@@ -185,7 +185,7 @@ ImageCleaner >> shareLiterals [
 	"We go over all methods and replace all the literals that are equal by one copy"
 	self createLiteralTable.
 	self literalsDo: [ :literal :cm |
-			cm literalAt: (cm indexOfLiteral: literal) put: (literalTable like: literal)  ].
+			cm literalAt: (cm indexOfLiteral: literal) put: (literalTable like: literal ifAbsent: [ literal ])  ].
 	self detroyLiteralTable
 ]
 

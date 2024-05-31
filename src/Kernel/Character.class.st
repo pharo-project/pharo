@@ -13,7 +13,6 @@ Class {
 	#type : 'immediate',
 	#classVars : [
 		'CharSet',
-		'CharacterTable',
 		'DigitValues'
 	],
 	#category : 'Kernel-BasicObjects',
@@ -21,24 +20,11 @@ Class {
 	#tag : 'BasicObjects'
 }
 
-{ #category : 'instance creation' }
+{ #category : 'accessing' }
 Character class >> allByteCharacters [
 	"Answer all the characters that can be encoded in a byte"
 
 	^ (0 to: 255) collect: [:v | Character value: v] as: String
-]
-
-{ #category : 'instance creation' }
-Character class >> allCharacters [
-
-	"This name is obsolete since only the characters that will fit in a byte can be queried"
-
-	self
-		deprecated:
-			'This name is obsolete since only the characters that will fit in a byte can be queried'
-		transformWith: '`@rec allCharacters' -> '`@rec allByteCharacters'.
-
-	^ self allByteCharacters
 ]
 
 { #category : 'constants' }
@@ -48,27 +34,27 @@ Character class >> alphabet [
 	^ 'abcdefghijklmnopqrstuvwxyz' copy
 ]
 
-{ #category : 'accessing untypeable characters' }
+{ #category : 'accessing - untypeable characters' }
 Character class >> arrowDown [
 	^ self value: 31
 ]
 
-{ #category : 'accessing untypeable characters' }
+{ #category : 'accessing - untypeable characters' }
 Character class >> arrowLeft [
 	^ self value: 28
 ]
 
-{ #category : 'accessing untypeable characters' }
+{ #category : 'accessing - untypeable characters' }
 Character class >> arrowRight [
 	^ self value: 29
 ]
 
-{ #category : 'accessing untypeable characters' }
+{ #category : 'accessing - untypeable characters' }
 Character class >> arrowUp [
 	^ self value: 30
 ]
 
-{ #category : 'accessing untypeable characters' }
+{ #category : 'accessing - untypeable characters' }
 Character class >> backspace [
 	"Answer the Character representing a backspace."
 
@@ -80,12 +66,12 @@ Character class >> centeredDot [
 	^self codePoint: 183
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing - charset' }
 Character class >> characterSet [
 	^ CharSet ifNil: [ AsciiCharset ]
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing - charset' }
 Character class >> characterSet: aCharSet [
 	^ CharSet := aCharSet
 ]
@@ -113,14 +99,14 @@ Character class >> constantNames [
 		enter end home insert nbsp pageDown pageUp null)
 ]
 
-{ #category : 'accessing untypeable characters' }
+{ #category : 'accessing - untypeable characters' }
 Character class >> cr [
 	"Answer the Character representing a carriage return."
 
 	^self value: 13
 ]
 
-{ #category : 'accessing untypeable characters' }
+{ #category : 'accessing - untypeable characters' }
 Character class >> delete [
 	^ self value: 127
 ]
@@ -140,26 +126,26 @@ Character class >> divide [
 	^self codePoint: 247
 ]
 
-{ #category : 'accessing untypeable characters' }
+{ #category : 'accessing - untypeable characters' }
 Character class >> end [
 	^ self value: 4
 ]
 
-{ #category : 'accessing untypeable characters' }
+{ #category : 'accessing - untypeable characters' }
 Character class >> enter [
 	"Answer the Character representing enter."
 
 	^self value: 3
 ]
 
-{ #category : 'accessing untypeable characters' }
+{ #category : 'accessing - untypeable characters' }
 Character class >> escape [
 	"Answer the ASCII ESC character"
 
 	^self value: 27
 ]
 
-{ #category : 'accessing untypeable characters' }
+{ #category : 'accessing - untypeable characters' }
 Character class >> home [
 	^ self value: 1
 ]
@@ -171,7 +157,7 @@ Character class >> initialize [
 	self initializeDigitValues
 ]
 
-{ #category : 'initialization' }
+{ #category : 'private - initialization' }
 Character class >> initializeDigitValues [
 	"Initialize the well known digit value of ascii characters.
 	Note that the DigitValues table is 1-based while ascii values are 0-based, thus the offset+1."
@@ -184,19 +170,19 @@ Character class >> initializeDigitValues [
 	10 to: 35 do: [:i | DigitValues at: 87 + i + 1 put: i]
 ]
 
-{ #category : 'accessing untypeable characters' }
+{ #category : 'accessing - untypeable characters' }
 Character class >> insert [
 	^ self value: 5
 ]
 
-{ #category : 'accessing untypeable characters' }
+{ #category : 'accessing - untypeable characters' }
 Character class >> lf [
 	"Answer the Character representing a linefeed."
 
 	^self value: 10
 ]
 
-{ #category : 'accessing untypeable characters' }
+{ #category : 'accessing - untypeable characters' }
 Character class >> linefeed [
 	"Answer the Character representing a linefeed."
 
@@ -210,7 +196,7 @@ Character class >> maxVal [
 	^ (2 ** 30) - 1
 ]
 
-{ #category : 'accessing untypeable characters' }
+{ #category : 'accessing - untypeable characters' }
 Character class >> nbsp [
 	"non-breakable space. Latin1 encoding common usage."
 
@@ -224,24 +210,24 @@ Character class >> new [
 	self error: 'cannot create new characters'
 ]
 
-{ #category : 'accessing untypeable characters' }
+{ #category : 'accessing - untypeable characters' }
 Character class >> newPage [
 	"Answer the Character representing a form feed."
 
 	^self value: 12
 ]
 
-{ #category : 'accessing untypeable characters' }
+{ #category : 'accessing - untypeable characters' }
 Character class >> null [
 	^ self value: 0
 ]
 
-{ #category : 'accessing untypeable characters' }
+{ #category : 'accessing - untypeable characters' }
 Character class >> pageDown [
 	^ self value: 12
 ]
 
-{ #category : 'accessing untypeable characters' }
+{ #category : 'accessing - untypeable characters' }
 Character class >> pageUp [
 	^ self value: 11
 ]
@@ -251,7 +237,7 @@ Character class >> plusOrMinus [
 	^self codePoint: 177
 ]
 
-{ #category : 'instance creation' }
+{ #category : 'accessing' }
 Character class >> separators [
 	"Answer a collection of the standard ASCII separator characters as string."
 
@@ -263,7 +249,7 @@ Character class >> separators [
 		collect: [:v | Character value: v] as: String
 ]
 
-{ #category : 'accessing untypeable characters' }
+{ #category : 'accessing - untypeable characters' }
 Character class >> space [
 	"Answer the Character representing a space."
 
@@ -286,7 +272,7 @@ Character class >> supportsNonASCII [
 		((self environment  at: #EncodedCharSet) charsetAt: 255) name = #Unicode ]
 ]
 
-{ #category : 'accessing untypeable characters' }
+{ #category : 'accessing - untypeable characters' }
 Character class >> tab [
 	"Answer the Character representing a tab."
 
@@ -480,7 +466,6 @@ Character >> hexDigitValue [
 
 { #category : 'initialization' }
 Character >> initialize [
-		<ignoreUnusedClassVariables: #( CharacterTable )>
 		super initialize.
 ]
 
@@ -837,7 +822,7 @@ Character >> printOn: aStream [
 		ifFalse: [
 			name := self class constantNameFor: self.
 			aStream nextPutAll: self class name.
-			name notNil
+			name isNotNil
 				ifTrue: [ aStream space; nextPutAll: name ]
 				ifFalse: [ aStream nextPutAll: ' value: '; print: self asInteger ] ]
 ]
@@ -878,7 +863,7 @@ Character >> storeBinaryOn: aStream [
 		ifFalse: [ aStream nextInt32Put: self asInteger ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Character >> storeOn: aStream [
 	"Common character literals are preceded by '$', however special need to be encoded differently: for some this might be done by using one of the shortcut constructor methods for the rest we have to create them by ascii-value."
 
@@ -887,7 +872,7 @@ Character >> storeOn: aStream [
 		ifTrue: [ aStream nextPut: $$; nextPut: self ]
 		ifFalse: [
 			name := self class constantNameFor: self.
-			name notNil
+			name isNotNil
 				ifTrue: [ aStream nextPutAll: self class name; space; nextPutAll: name ]
 				ifFalse: [
 					aStream

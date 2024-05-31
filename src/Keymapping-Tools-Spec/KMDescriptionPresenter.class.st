@@ -22,10 +22,43 @@ KMDescriptionPresenter class >> defaultLayout [
 		yourself
 ]
 
+{ #category : 'instance creation' }
+KMDescriptionPresenter class >> descriptionText [
+
+	^ 'Show the description of shortcuts for the system'
+]
+
 { #category : 'examples' }
 KMDescriptionPresenter class >> example [
 	self new
-		categories: #(GlobalShortcuts MonticelloShortcuts TextEditor);
+		categories: #(GlobalShortcuts MonticelloShortcuts);
+		open
+]
+
+{ #category : 'accessing' }
+KMDescriptionPresenter class >> icon [
+
+	^ self iconNamed: #keymapBrowser
+]
+
+{ #category : 'instance creation' }
+KMDescriptionPresenter class >> menuCommandOn: aBuilder [
+	<worldMenu>
+
+	(aBuilder item: 'Keymap Descriptions')
+		action: [ self open ];
+		order: 34;
+		parent: #Tools;
+		icon: self icon;
+		help: self descriptionText
+]
+
+{ #category : 'instance creation' }
+KMDescriptionPresenter class >> open [
+	"Open the receiver's on all the system keymap categories"
+	
+	^ self new
+		categories: KMRepository default categories keys;
 		open
 ]
 
@@ -35,19 +68,20 @@ KMDescriptionPresenter >> categories: aCollectionOfSymbols [
 ]
 
 { #category : 'initialization' }
-KMDescriptionPresenter >> initializePresenter [
+KMDescriptionPresenter >> connectPresenters [
+
 	categoryList
 		transmitTo: shortcutList
-		transform: [ :category | (category entriesAt: #all) keymaps sorted: [ :keymap | keymap shortcut asString ] ascending ]
+		transform: [ :category | (category model entriesAt: #all) keymaps sorted: [ :keymap | keymap shortcut asString ] ascending ]
 ]
 
-{ #category : 'initialization' }
+{ #category : 'initialization - deprecated' }
 KMDescriptionPresenter >> initializeWidgets [
 	categoryList := self newDropList.
 	shortcutList := self newTable.
 	actionBar := self newActionBar.
 
-	categoryList displayBlock: [ :category | category name ].
+	categoryList display: [ :category | category name ].
 
 	shortcutList
 		addColumn: (SpStringTableColumn title: 'Shortcut' evaluated: #shortcut);

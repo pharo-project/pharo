@@ -28,6 +28,14 @@ ClyBrowserToolValidityTest >> mockPackageName [
 	^ 'MockPackageForTestingCalypso'.
 ]
 
+{ #category : 'running' }
+ClyBrowserToolValidityTest >> tearDown [
+
+	self packageOrganizer removePackage: self mockPackageName.
+
+	super tearDown
+]
+
 { #category : 'tests' }
 ClyBrowserToolValidityTest >> testClassCommentToolIsNotValidWhenNotAClassContext [
 
@@ -270,8 +278,6 @@ ClyBrowserToolValidityTest >> testWindowLabelSetAfterPackageCreation [
 	self deleteBrowser.
 	browser := ClyFullBrowserMorph openOnPackage: self mockPackage.
 	tool := self findBrowserTool: ClyClassCreationToolMorph.
-	
-	self 
-		assert: browser window label 
-		equals: self mockPackageName
+
+	self assert: browser window label equals: 'Package: ' , self mockPackageName
 ]

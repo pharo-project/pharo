@@ -358,7 +358,7 @@ SettingBrowser >> changePackageSet: aSet [
 	"
 	This method allow for restricting the settings displayed in the browser.
 	Opening a setting browser display all the setting.
-	SettingBrowser new changePackageSet: { (RPackageOrganizer default packageNamed: 'GT-Playground') }; open
+	SettingBrowser new changePackageSet: { (PackageOrganizer default packageNamed: 'GT-Playground') }; open
 	"
 	aSet ~= self viewedPackages
 		ifTrue: [self viewedPackages: aSet.
@@ -415,21 +415,28 @@ SettingBrowser >> exportAllSettings: actions by: groupSize withBasename: aString
 
 { #category : 'export' }
 SettingBrowser >> exportSettings [
-	| title nodes actions   |
+
+	| nodes actions |
 
 	nodes := self treeHolder nodeList.
-	title := 'Exporting settings'.
-	title
-		displayProgressFrom: 1
-		to: nodes size
-		during: [:bar | actions := nodes collectWithIndex: [:e :i |
-											bar current: i.
-											bar label: (String streamContents: [:s |
-															s << title << ' (' << (e item label) << ')']).
-											e item exportSettingAction ]].
+	[: job | 
+		| title  |
+		title := 'Exporting settings'.
+		job title: title.
+		1 to: nodes size do: [ : each |
+			actions := nodes collectWithIndex: [ : e : i |
+			job
+				progress: i;
+				title: (String streamContents: [:s |
+					s << title << ' (' << (e item label) << ')']).			
+				e item exportSettingAction ] ] 
+	]  asJob run.
 
 	actions := actions reject: [:e | e isNil ].
-	self exportAllSettings: actions by: 50 withBasename: 'exported_settings'
+	self 
+		exportAllSettings: actions 
+		by: 50 
+		withBasename: 'exported_settings'
 ]
 
 { #category : 'export' }
@@ -457,29 +464,6 @@ SettingBrowser >> getViewedPackageNames [
 						  selections do: [ :package |
 							  s nextPutAll: package name.
 							  s nextPut: Character space ] ] ] ]
-]
-
-{ #category : 'user interface' }
-SettingBrowser >> helpDeclaringAndManagingSettings [
-	"Open up a workspace with explanatory info in it about the Setting Browser"
-	UIManager default edit: 'To be documented here later' label: 'Declaring and managing settings' translated
-]
-
-{ #category : 'user interface' }
-SettingBrowser >> helpMenuIn: aWindow [
-	| helpMenu |
-	helpMenu := aWindow newMenu.
-	helpMenu
-		addToggle: 'About' translated
-		target: self
-		selector: #about.
-	helpMenu lastItem font: aWindow theme menuFont.
-	helpMenu
-		addToggle: 'Declaring and managing settings' translated
-		target: self
-		selector: #helpDeclaringAndManagingSettings.
-	helpMenu lastItem font: aWindow theme menuFont.
-	^ helpMenu
 ]
 
 { #category : 'user interface' }
@@ -623,13 +607,13 @@ SettingBrowser >> regexpSearch: aBoolean [
 
 { #category : 'initialization' }
 SettingBrowser >> release [
+
 	treeHolder release.
 	treeHolder := nil.
 	roots := nil.
 	status := nil.
 	searchedText := nil.
-	viewedPackages := nil.
-	super release
+	viewedPackages := nil
 ]
 
 { #category : 'accessing' }
@@ -684,7 +668,7 @@ SettingBrowser >> setViewedPackageNames: aText [
 	| allViewed |
 	allViewed := Set new.
 	aText asString substrings
-		do: [:sub | (RPackageOrganizer default
+		do: [:sub | (PackageOrganizer default
 						packageNamed: sub
 						ifAbsent: [])
 				ifNotNil: [:pkg | allViewed add: pkg]].

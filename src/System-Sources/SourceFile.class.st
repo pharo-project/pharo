@@ -111,7 +111,7 @@ SourceFile >> getPreambleAt: startingPosition [
 { #category : 'testing' }
 SourceFile >> isOpen [
 
-	^ stream notNil and: [ stream closed not ]
+	^ stream isNotNil and: [ stream closed not ]
 ]
 
 { #category : 'testing' }

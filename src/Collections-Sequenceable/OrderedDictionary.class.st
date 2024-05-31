@@ -176,41 +176,47 @@ OrderedDictionary >> at: firstKey at: secondKey [
 	"Return the object stored in the second dictionary at secondKey. The second dictionary is accessed via the key firstKey."
 
 	"
-	(Dictionary new
+	(OrderedDictionary new
 		at: #top at: #below1 put: 1;
 		at: #top at: #below1 put: 2;
 		at: #top at: #below1)
 	>>>
 	2"
 
-	^ self at: firstKey at: secondKey ifAbsent: [ self errorKeyNotFound: secondKey ]
+	^ dictionary at: firstKey at: secondKey
 ]
 
 { #category : 'nested dictionaries' }
 OrderedDictionary >> at: firstKey at: secondKey ifAbsent: aZeroArgBlock [
 		"Return the object stored in the second dictionary at secondKey. The second dictionary is accessed via the key firstKey. Execute aZeroArgBlock in case one of the key is wrong."
+	"
+	(OrderedDictionary new
+		at: #top at: #below1 ifAbsent: [ 1 ])
+	>>>
+	1
+	"
+	
+	^ dictionary at: firstKey at: secondKey ifAbsent: aZeroArgBlock
 
-	| subDictionary |
-	subDictionary := self at: firstKey ifAbsent: [ ^ aZeroArgBlock value ].
-	^ subDictionary at: secondKey ifAbsent: aZeroArgBlock
 ]
 
 { #category : 'nested dictionaries' }
 OrderedDictionary >> at: firstKey at: secondKey ifAbsentPut: aZeroArgBlock [
 	"Return the object stored in the second dictionary at secondKey. The second dictionary is accessed via the key firstKey. If firstKey is not defined, set a new dictionary for the second key and set the value of aZeroArgBlock execution. If firstKey is defined and not second key set the value of aZeroArgBlock execution. See NestedDictionaryTest for examples."
 
-	| subDictionary |
-	subDictionary := self at: firstKey ifAbsentPut: [ self species new ].
-	^ subDictionary at: secondKey ifAbsentPut: aZeroArgBlock
+	^ self
+		  value: [
+		  dictionary at: firstKey at: secondKey ifAbsentPut: aZeroArgBlock ]
+		  registeringAtOrderedKeys: firstKey
 ]
 
 { #category : 'nested dictionaries' }
 OrderedDictionary >> at: firstKey at: secondKey put: aValue [
 	"Set a value at secondKey in the dictionary returned by firstKey."
 
-	| subDictionary |
-	subDictionary := self at: firstKey ifAbsentPut: [ self species new ].
-	^ subDictionary at: secondKey put: aValue
+	^ self
+		  value: [ dictionary at: firstKey at: secondKey put: aValue ]
+		  registeringAtOrderedKeys: firstKey
 ]
 
 { #category : 'accessing' }
@@ -246,22 +252,10 @@ OrderedDictionary >> at: aKey ifPresent: aPresentBlock ifAbsentPut: anAbsentBloc
 
 { #category : 'accessing' }
 OrderedDictionary >> at: aKey put: aValue [
-	| oldSize |
 
-	oldSize := dictionary size.
-	dictionary at: aKey put: aValue.
-	dictionary size > oldSize
-		ifTrue: [
-			orderedKeys size > oldSize
-				ifFalse: [self growOrderedKeys].
-			orderedKeys at: oldSize + 1 put: aKey].
-	^ aValue
-]
-
-{ #category : 'accessing' }
-OrderedDictionary >> at: key update: updateBlock [
-	"I am used to update the value at a given key, or if the key does not exist, to throw an error"
-	self at: key update: updateBlock initial: [ KeyNotFound signalFor: key ]
+	^ self
+		  value: [ dictionary at: aKey put: aValue ]
+		  registeringAtOrderedKeys: aKey
 ]
 
 { #category : 'accessing' }
@@ -282,11 +276,6 @@ OrderedDictionary >> bindingOf: varName [
 	^ self associationAt: varName ifAbsent: [nil]
 ]
 
-{ #category : 'enumerating' }
-OrderedDictionary >> bindingsDo: aBlock [
-	self associationsDo: aBlock
-]
-
 { #category : 'accessing' }
 OrderedDictionary >> capacity [
 	^ dictionary capacity
@@ -299,26 +288,9 @@ OrderedDictionary >> collect: aBlock [
 			each key -> (aBlock value: each value)])
 ]
 
-{ #category : 'adding' }
-OrderedDictionary >> declare: aKey from: aDictionary [
-	(self includesKey: aKey)
-		ifTrue: [^ self].
-
-	(aDictionary includesKey: aKey)
-		ifTrue: [
-			self add: (aDictionary associationAt: aKey).
-			aDictionary removeKey: aKey]
-		ifFalse: [self add: aKey -> nil]
-]
-
 { #category : 'private' }
 OrderedDictionary >> dictionary [
 	^ dictionary
-]
-
-{ #category : 'accessing' }
-OrderedDictionary >> dictionaryClass [
-	^ Dictionary
 ]
 
 { #category : 'enumerating' }
@@ -610,7 +582,7 @@ OrderedDictionary >> size [
 	^ dictionary size
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 OrderedDictionary >> storeOn: aStream [
 	aStream << '((' << self class name << ' new)'.
 	self associations
@@ -623,6 +595,21 @@ OrderedDictionary >> storeOn: aStream [
 				separatedBy: [ aStream << ';' ].
 			aStream << '; yourself' ].
 	aStream << ')'
+]
+
+{ #category : 'private' }
+OrderedDictionary >> value: aBlock registeringAtOrderedKeys: aKey [
+
+	| oldSize value |
+
+	oldSize := dictionary size.
+	value := aBlock value.
+	dictionary size > oldSize
+		ifTrue: [
+			orderedKeys size > oldSize
+				ifFalse: [self growOrderedKeys].
+			orderedKeys at: oldSize + 1 put: aKey].
+	^ value
 ]
 
 { #category : 'accessing' }

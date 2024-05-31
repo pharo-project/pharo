@@ -45,5 +45,5 @@ AthensCairoPath >> paintFillsUsing: aPaint on: anAthensCanvas [
 
 { #category : 'instance creation' }
 AthensCairoPath >> primDestroyPath: aHandle [
-	^ self ffiCall: #(void cairo_path_destroy ( ulong aHandle ))
+	^ self ffiCall: #(void cairo_path_destroy ( size_t aHandle ))
 ]

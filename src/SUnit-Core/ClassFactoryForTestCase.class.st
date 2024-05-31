@@ -2,20 +2,28 @@
 I'm useful when classes needs to be created during the execution of the test. This avoid polluting your unit tests with dummy and mock classes.
 A typical usage of it is:
 
-TestCase subclass: #YourTest
-       instanceVariableNames: 'classFactory'
+```
+TestCase << #YourTest
+    slots: { #classFactory};
+	  package: 'YourPackage'
+```
+```
+YourTest >> setUp
+	  super setUp. 
+    classFactory := ClassFactoryForTestCase new
+```
+```
+YourTest >> tearDown
+    classFactory deleteClasses.
+    super tearDown 
+```
 
-YourTest>>setUp
-       classFactory := ClassFactoryForTestCase new
-
-YourTest>>tearDown
-       classFactory deleteClasses.
-
-YourTest>>testIsBehavior
-       | cls |
-       cls := classFactory newClass.
-       self assert: cls isBehavior
-
+```
+YourTest >> testIsBehavior
+    | cls |
+    cls := classFactory newClass.
+    self assert: cls isBehavior
+```
 "
 Class {
 	#name : 'ClassFactoryForTestCase',
@@ -98,34 +106,25 @@ ClassFactoryForTestCase >> createdTraits [
 ]
 
 { #category : 'accessing' }
-ClassFactoryForTestCase >> defaultCategory [
-
-	^ (self packageName , '-' , self defaultTagPostfix) asSymbol
-]
-
-{ #category : 'accessing' }
 ClassFactoryForTestCase >> defaultSuperclass [
 
 	^ Object
 ]
 
-{ #category : 'accessing' }
-ClassFactoryForTestCase >> defaultTagPostfix [
-
-	^ #Default
-]
-
 { #category : 'cleaning' }
 ClassFactoryForTestCase >> delete: aBehavior [
 
+	| name |
 	createdBehaviors remove: aBehavior ifAbsent: [  ].
 	aBehavior isObsolete ifTrue: [ ^ self ].
-	self class environment at: #ChangeSet ifPresent: [ :changeSet | changeSet current removeClassAndMetaClassChanges: aBehavior ].
+	name := aBehavior name. "save it as it will be obsolete later"
 	(createdSilently includes: aBehavior)
 		ifTrue: [
 			createdSilently remove: aBehavior.
 			aBehavior removeFromSystemUnlogged ]
-		ifFalse: [ aBehavior removeFromSystem ]
+		ifFalse: [ aBehavior removeFromSystem ].
+	"We know that we can remove the key from the undeclared registry, as it was added by #removeFromSystem"
+	self class undeclaredRegistry removeKey: name ifAbsent: [ "might be an anonymous class" ]
 ]
 
 { #category : 'cleaning' }
@@ -250,13 +249,12 @@ ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior protocol: anot
 ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior protocol: anotherString storingSource: aBoolean [
 
 	^ self silentlyDo: [
-		  Author useAuthor: 'TestsAuthor' during: [
-			  aBehavior
-				  compile: aString
-				  classified: anotherString
-				  withStamp: nil
-				  notifying: nil
-				  logSource: aBoolean ] ]
+		  aBehavior
+			  compile: aString
+			  classified: anotherString
+			  withStamp: nil
+			  notifying: nil
+			  logSource: aBoolean ]
 ]
 
 { #category : 'compiling - silently' }
@@ -299,4 +297,29 @@ ClassFactoryForTestCase >> silentlyNewTrait [
 { #category : 'creating' }
 ClassFactoryForTestCase >> silentlyRename: aClass to: aName [
 	^ self silentlyDo: [ aClass rename: aName asSymbol ]
+]
+
+{ #category : 'accessing' }
+ClassFactoryForTestCase >> tagName [
+
+	^ #Default
+]
+
+{ #category : 'creating' }
+ClassFactoryForTestCase >> update: aClass to: aBlock [
+	"I return an updated class or trait in the environment of the factory configured as the user specified in the make block.
+	Once the test is finished, I'll remove the created class or trait."
+
+	| newClass |
+	newClass := self class classInstaller make: [ :aBuilder | "Let's but some default values."
+		    			aBuilder fillFor: aClass.        
+						aBuilder
+			            installingEnvironment: self environment;
+			            package: self packageName.
+						
+		            "Now we let the users specify what they want."
+		            aBlock value: aBuilder ].
+
+	self registerBehavior: newClass.
+	^ newClass
 ]

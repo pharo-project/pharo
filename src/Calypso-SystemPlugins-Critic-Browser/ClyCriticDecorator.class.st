@@ -60,7 +60,7 @@ ClyCriticDecorator >> buildCriticalTextSegmentsFor: anObject [
 			severity := critique getProperty: ClyCritiqueSeverityProperty.
 			segment
 				label: critique name;
-				icon: (browserTool iconNamed: severity iconName);
+				iconFormSet: (browserTool iconFormSetNamed: severity iconName);
 				color: severity color;
 				critique: critique actualObject;
 				entity: anObject;

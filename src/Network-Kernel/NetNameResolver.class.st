@@ -90,8 +90,11 @@ NetNameResolver class >> addressFromIPv6String: aString [
 { #category : 'address string utils' }
 NetNameResolver class >> addressFromString: addressString [
 	"Return the internet address represented by the given string. The string should contain four positive decimal integers delimited by periods, commas, or spaces, where each integer represents one address byte. Return nil if the string is not a host address in an acceptable format."
+
 	"NetNameResolver addressFromString: '1.2.3.4'"
+
 	"NetNameResolver addressFromString: '1,2,3,4'"
+
 	"NetNameResolver addressFromString: '1 2 3 4'"
 
 	| newAddr s byte delimiter |
@@ -103,14 +106,12 @@ NetNameResolver class >> addressFromString: addressString [
 	newAddr := ByteArray new: 4.
 	s := ReadStream on: addressString.
 	s skipSeparators.
-	1 to: 4 do: [:i |
-		byte := self readDecimalByteFrom: s.
-		byte = nil ifTrue: [^ nil].
+	1 to: 4 do: [ :i |
+		byte := (self readDecimalByteFrom: s) ifNil: [ ^ nil ].
 		newAddr at: i put: byte.
 		i < 4 ifTrue: [
 			delimiter := s next.
-			((delimiter = $.) or: [(delimiter = $,) or: [delimiter = $ ]])
-				ifFalse: [^ nil]]].
+			(delimiter = $. or: [ delimiter = $, or: [ delimiter = $  ] ]) ifFalse: [ ^ nil ] ] ].
 	^ newAddr
 ]
 
@@ -220,7 +221,7 @@ NetNameResolver class >> initializeNetwork [
 		ResolverSemaphore ifNotNil: [Smalltalk unregisterExternalObject: ResolverSemaphore].
 		ResolverSemaphore := Semaphore new.
 		semaIndex := Smalltalk registerExternalObject: ResolverSemaphore.
-		successful := (self primInitializeNetwork: semaIndex) notNil.
+		successful := (self primInitializeNetwork: semaIndex) isNotNil.
 		HaveNetwork := nil.].
 	^successful or: [NoNetworkError signal: 'failed network initialization']
 ]
@@ -468,33 +469,6 @@ NetNameResolver class >> primStartLookupOfName: hostName [
 	self primitiveFailed
 ]
 
-{ #category : 'lookups' }
-NetNameResolver class >> promptUserForHostAddress [
-	"Ask the user for a host name and return its address."
-	"NetNameResolver promptUserForHostAddress"
-
-	^ NetNameResolver promptUserForHostAddressDefault: ''
-]
-
-{ #category : 'lookups' }
-NetNameResolver class >> promptUserForHostAddressDefault: defaultName [
-	"Ask the user for a host name and return its address. If the default name is the empty string, use the last host name as the default."
-
-	"NetNameResolver promptUserForHostAddressDefault: ''"
-
-	| default hostName serverAddr |
-	default := defaultName isEmpty
-		ifTrue: [ DefaultHostName ]
-		ifFalse: [ defaultName ].
-	hostName := UIManager default request: 'Host name or address?' initialAnswer: default.
-	hostName isEmptyOrNil
-		ifTrue: [ ^ 0 ].
-	serverAddr := NetNameResolver addressForName: hostName timeout: 15.
-	hostName size > 0
-		ifTrue: [ DefaultHostName := hostName ].
-	^ serverAddr
-]
-
 { #category : 'private' }
 NetNameResolver class >> putIPv6HexIntegers: aCollection on: aWriteStream [
 	"Given a collection of Integers, convert them to
@@ -670,7 +644,7 @@ NetNameResolver class >> waitForResolverNonBusyUntil: deadline [
 	[ status = ResolverBusy and: [ (passed := Time millisecondsSince: deadline key) < deadline value] ]
 		whileTrue: [
 			"wait for resolver to be available"
-			ResolverSemaphore waitTimeoutMSecs: (deadline value - passed).
+			ResolverSemaphore waitTimeoutMilliseconds: (deadline value - passed).
 			status := self resolverStatus ].
 	^ status
 ]

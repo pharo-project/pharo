@@ -48,16 +48,15 @@ FallbackMenu >> debug [
 
 { #category : 'private' }
 FallbackMenu >> fallbackMenuExplanations [
+	"This is bad because to goes deep into the playground implementation but to improve this the playground should be improved..."
 
-	| workspace wsBindings |
-	wsBindings := Dictionary newFrom: { #menu-> self }.
-	workspace := Smalltalk tools workspace
-		openContents: '"Something is wrong with this menu.
+	| playground |
+	playground := Smalltalk tools workspace openContents: '"Something is wrong with this menu.
 To investigate just debug following expression:"
 menu debug'.
-	workspace
-		label: 'Fallback menu explanations';
-		setBindings: wsBindings
+	playground title: 'Fallback menu explanations'.
+	"This is not good but this is the best with the current playground implementation.."
+	playground presenter firstPage interactionModel addBinding: (WorkspaceVariable key: #menu value: self)
 ]
 
 { #category : 'private' }
@@ -65,7 +64,7 @@ FallbackMenu >> menu [
 	"Build the menu that is put up if something is going wrong with the menubuilder"
 
 	| menu |
-	menu := UIManager default newMenuIn: self currentWorld for: self.
+	menu := self morphicUIManager newMenuIn: self currentWorld for: self.
 	menu buildTitle: [ :menuTitle | menuTitle
 		onlyCloseAndPinable
 	].
@@ -78,4 +77,10 @@ FallbackMenu >> menu [
 	menu addLine.
 	client fallbackMenuOn: menu.
 	^ menu
+]
+
+{ #category : 'private' }
+FallbackMenu >> morphicUIManager [
+
+	^ MorphicUIManager new
 ]

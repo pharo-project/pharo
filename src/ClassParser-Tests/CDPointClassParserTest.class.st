@@ -8,9 +8,9 @@ Class {
 { #category : 'helpers' }
 CDPointClassParserTest >> classDefinitionString [
 
-	^ 'Object subclass: #Point
-	instanceVariableNames: ''x y''
-	classVariableNames: ''XX YY''
+	^ 'Object << #Point
+	slots: { #x. #y };
+	sharedVariables: { #XX . #YY };
 	package: ''Kernel-BasicObjects'''
 ]
 

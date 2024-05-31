@@ -1,63 +1,55 @@
-"
-I am a command to remove given methods.
-
-I use special remove strategy to define what to do when given methods are in use.
-
-So I delegate actual remove operation to the strategy: 
-
-	removeStrategy removeMethods: methods
- 
-Internal Representation and Key Implementation Points.
-
-    Instance Variables
-	removeStrategy:		<SycRemoveMethodStrategy>
-"
 Class {
 	#name : 'SycRemoveMethodCommand',
 	#superclass : 'SycMethodCommand',
 	#instVars : [
-		'removeStrategy'
+		'toolContext'
 	],
 	#category : 'SystemCommands-MethodCommands',
 	#package : 'SystemCommands-MethodCommands'
 }
 
+{ #category : 'activation' }
+SycRemoveMethodCommand class >> methodMenuActivation [
+	<classAnnotation>
+
+	^ CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyMethod asCalypsoItemContext
+]
+
+{ #category : 'activation' }
+SycRemoveMethodCommand class >> methodShortcutActivation [
+	<classAnnotation>
+
+	^CmdShortcutActivation removalFor: ClyMethod asCalypsoItemContext
+]
+
 { #category : 'accessing' }
 SycRemoveMethodCommand >> defaultMenuIconName [
-	^#removeIcon
+	^#remove
 ]
 
 { #category : 'accessing' }
 SycRemoveMethodCommand >> defaultMenuItemName [
-	^'Remove'
+	^'(R) Remove'
 ]
 
 { #category : 'execution' }
 SycRemoveMethodCommand >> execute [
-
-	removeStrategy removeMethods: methods
+	
+	(ReRemoveMethodDriver new
+				 scopes: toolContext refactoringScopes
+				 methods: methods) runRefactoring
 ]
 
-{ #category : 'initialization' }
-SycRemoveMethodCommand >> initialize [
-	super initialize.
+{ #category : 'execution' }
+SycRemoveMethodCommand >> isComplexRefactoring [ 
 
-	removeStrategy := SycSilentlyRemoveMethodStrategy new
+	^ false
 ]
 
 { #category : 'execution' }
 SycRemoveMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
+	toolContext := aToolContext.
+	"(RBRemoveMethodDriver new scopes: aToolContext refactoringScopes methods: methods for: aToolContext lastSelectedClass) runRefactoring"
 
-	removeStrategy := aToolContext requestRemoveMethodStrategyFor: methods
-]
-
-{ #category : 'accessing' }
-SycRemoveMethodCommand >> removeStrategy [
-	^ removeStrategy
-]
-
-{ #category : 'accessing' }
-SycRemoveMethodCommand >> removeStrategy: anObject [
-	removeStrategy := anObject
 ]

@@ -46,6 +46,16 @@ OSSDL2ExternalForm >> destroySurface [
 	]
 ]
 
+{ #category : 'scaling, rotation' }
+OSSDL2ExternalForm >> magnifyBy: scale smoothing: cellSize [
+
+	| form |
+	
+	form := Form extent: self extent depth: self depth.
+	form getCanvas image: self at: 0@0 sourceRect: self boundingBox rule: 34.
+	^ form magnifyBy: scale smoothing: cellSize
+]
+
 { #category : 'old - ffi backend support' }
 OSSDL2ExternalForm >> oldPrimCreateManualSurfaceWidth: aWidth height: aHeight rowPitch: rowPitch depth: aDepth isMSB: isMSB [
 	<primitive: 'primitiveCreateManualSurface' module: 'SqueakFFIPrims'>

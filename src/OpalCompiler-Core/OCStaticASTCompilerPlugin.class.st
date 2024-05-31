@@ -18,11 +18,6 @@ OCStaticASTCompilerPlugin class >> isAbstract [
 	^ self == OCStaticASTCompilerPlugin
 ]
 
-{ #category : 'private' }
-OCStaticASTCompilerPlugin class >> priority [
-	self subclassResponsibility
-]
-
 { #category : 'instance creation' }
 OCStaticASTCompilerPlugin class >> transform: anAST [
 	"Return a new instance of the receiver transforming the given AST"
@@ -43,17 +38,14 @@ OCStaticASTCompilerPlugin >> copyAST [
 	ast := ast copy
 ]
 
-{ #category : 'accessing' }
-OCStaticASTCompilerPlugin >> priority [
-	^100 "default. Priority 0 is used by Reflectivity to be the last"
-]
-
 { #category : 'private - transforming' }
 OCStaticASTCompilerPlugin >> transform [
 	"Subclasses override this method to actually provide the AST transformation.
-	 IMPORTANT: If you modify the AST, make sure to copy it before using #copyAST!"
+	 IMPORTANT: If you modify the AST, make sure to copy it before using #copyAST!
+	
+	I act as a no-op to prevent loading errors. Image ClassA overrides #compiler to use PluginA from the same package. During the loading maybe the #transfrom method is not present yet and will break the loading if we use a subclass responsibility."
 
-	self subclassResponsibility
+	
 ]
 
 { #category : 'transforming' }

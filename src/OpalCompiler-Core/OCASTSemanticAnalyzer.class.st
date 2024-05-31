@@ -93,7 +93,7 @@ OCASTSemanticAnalyzer >> declareVariableNode: aVariableNode as: anOCTempVariable
 	shadowing := scope lookupVar: name.
 	var := scope addTemp: anOCTempVariable.
 	aVariableNode binding: var.
-	(shadowing notNil and: [ shadowing allowsShadowing not]) ifTrue: [self shadowing: shadowing withVariable: aVariableNode].
+	(shadowing isNotNil and: [ shadowing allowsShadowing not]) ifTrue: [self shadowing: shadowing withVariable: aVariableNode].
 	^ var
 ]
 
@@ -116,11 +116,14 @@ OCASTSemanticAnalyzer >> outerScope: anObject [
 
 { #category : 'variables' }
 OCASTSemanticAnalyzer >> resolveVariableNode: aVariableNode [
+
 	| var |
-	var := (scope lookupVar: aVariableNode name)
-		ifNil: [ self undeclaredVariable: aVariableNode ].
+	var := (scope lookupVar: aVariableNode name) ifNil: [
+		       (self compilationContext environment bindingOf:
+			        aVariableNode name) ifNil: [
+			       self undeclaredVariable: aVariableNode ] ].
 	aVariableNode variable: var.
-	^var
+	^ var
 ]
 
 { #category : 'initialization' }
@@ -260,8 +263,9 @@ OCASTSemanticAnalyzer >> visitPragmaNode: aPragmaNode [
 
 	| varNode |
 	super visitPragmaNode: aPragmaNode.
+	aPragmaNode pragma: aPragmaNode asPragma.
 	aPragmaNode selector = #compilerOptions: ifTrue: [
-		aPragmaNode asPragma sendTo:
+		aPragmaNode pragma sendTo:
 			self compilationContext ].
 
 	"if the pragma is a primitive that defines an error variable, we need to declare a temp

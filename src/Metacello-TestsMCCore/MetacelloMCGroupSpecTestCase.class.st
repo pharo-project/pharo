@@ -4,8 +4,3 @@ Class {
 	#category : 'Metacello-TestsMCCore',
 	#package : 'Metacello-TestsMCCore'
 }
-
-{ #category : 'accessing' }
-MetacelloMCGroupSpecTestCase >> projectClass [
-    ^ MetacelloMCProject
-]

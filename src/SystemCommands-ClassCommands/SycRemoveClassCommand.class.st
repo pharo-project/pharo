@@ -1,3 +1,6 @@
+"
+Remove Class Refactoring: Safely delete a selected class, ensuring no references are left behind, and preview changes before applying.
+"
 Class {
 	#name : 'SycRemoveClassCommand',
 	#superclass : 'SycClassCommand',
@@ -8,34 +11,20 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : 'activation' }
-SycRemoveClassCommand class >> fullBrowserMenuActivation [
-	<classAnnotation>
-
-	^CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyFullBrowserClassContext
-]
-
-{ #category : 'activation' }
-SycRemoveClassCommand class >> fullBrowserShortcutActivation [
-	<classAnnotation>
-
-	^CmdShortcutActivation removalFor: ClyFullBrowserClassContext
-]
-
 { #category : 'accessing' }
 SycRemoveClassCommand >> defaultMenuIconName [
-	^#removeIcon
+	^#remove
 ]
 
 { #category : 'accessing' }
 SycRemoveClassCommand >> defaultMenuItemName [
-	^'Remove Class'
+	^'(R) Remove'
 ]
 
 { #category : 'execution' }
 SycRemoveClassCommand >> execute [
 
-	(RBRemoveClassDriver new
+	(ReRemoveClassDriver new
 				 scopes: toolContext refactoringScopes
 				 classes:  classes) runRefactoring
 ]

@@ -106,13 +106,37 @@ SystemDictionary >> allTraitsDo: aBlock [
 SystemDictionary >> at: aKey put: anObject [
 	"Override from Dictionary to check Undeclared and fix up
 	references to undeclared variables."
-
+	| index assoc registeredMethods |
 	aKey isSymbol ifFalse: [ self error: 'Only symbols are accepted as keys in SystemDictionary' ].
-	(self includesKey: aKey) ifFalse: [
-		self declare: aKey from: Undeclared.
-		self flushClassNameCache ].
-	super at: aKey put: anObject.
-	^ anObject
+
+	registeredMethods := #().
+
+	((self includesKey: aKey) not and: [ self undeclaredRegistry includesKey: aKey ]) ifTrue: [
+ 			| undeclared |
+ 			undeclared := self undeclaredRegistry associationAt: aKey.
+ 			"Undeclared variables record using methods in a property, remove. Boostrap might have used Associations"
+ 			(undeclared class == UndeclaredVariable) ifTrue: [
+				registeredMethods := undeclared removeProperty: #registeredMethods ifAbsent: [ #() ]]. 
+ 			"and change class to be Global" 
+ 			self add: (undeclared primitiveChangeClassTo: GlobalVariable new).
+ 			self undeclaredRegistry removeKey: aKey].
+ 	"code of super at:put:, not using Associations but GlobalVariable"
+ 	index := self findElementOrNil: aKey.
+ 	assoc := array at: index.
+ 	assoc
+ 		ifNil: [self atNewIndex: index put: (GlobalVariable key: aKey value: anObject). self flushClassNameCache]
+ 		ifNotNil: [assoc value: anObject].
+		
+	registeredMethods do: [ :aMethod | aMethod isInstalled ifTrue: [aMethod recompile] ].		
+
+ 	^ anObject
+]
+
+{ #category : 'adding' }
+SystemDictionary >> atNewIndex: index put: aGlobalVariable [
+
+	aGlobalVariable isAssociation ifTrue: [ self error: 'Only global variables should be added to the SystemDictionary and not associations.' ].
+	^ super atNewIndex: index put: aGlobalVariable
 ]
 
 { #category : 'accessing - variable lookup' }
@@ -170,6 +194,24 @@ SystemDictionary >> classOrTraitNamed: aString [
 ]
 
 { #category : 'accessing' }
+SystemDictionary >> codeChangeAnnouncer [
+	"A code change announcer is an announcer to register to Class, Method, Package and Protocol announcement."
+
+	"This should not be hardcoded in the futurebut I should have my own instance."
+
+	^ SystemAnnouncer uniqueInstance
+]
+
+{ #category : 'accessing' }
+SystemDictionary >> codeSupportAnnouncer [
+	"A code support announcer is an announcer used for tooling support such as the breakpoints or AST cache."
+
+	"This should not be hardcoded in the futurebut I should have my own instance."
+
+	^ SystemAnnouncer uniqueInstance
+]
+
+{ #category : 'accessing' }
 SystemDictionary >> environment [
 	"For conversion from SmalltalkImage to SystemDictionary"
 
@@ -218,8 +260,6 @@ SystemDictionary >> forgetClass: aClass [
 	Note that this doesn't do everything required to dispose of a class - to do that use Class>>removeFromSystem."
 
 	self organization removeClass: aClass.
-	aClass basicCategory: Class unclassifiedCategory.
-	SessionManager default unregisterClassNamed: aClass name.
 	self removeKey: aClass name ifAbsent: [  ]
 ]
 
@@ -240,7 +280,7 @@ SystemDictionary >> hasBindingThatBeginsWith: aString [
 	name := self classNames findBinary: searchBlock ifNone: [ nil ].
 	name ifNotNil: [ ^ true ].
 	name := self nonClassNames findBinary: searchBlock ifNone: [ nil ].
-	^ name notNil
+	^ name isNotNil
 ]
 
 { #category : 'accessing - classes and traits' }
@@ -296,7 +336,7 @@ SystemDictionary >> organization [
 	"Return the organizer for the receiver"
 
 	^ self at: #SystemOrganization ifAbsent: [
-		  self organization: RPackageOrganizer new.
+		  self organization: PackageOrganizer new.
 		  self at: #SystemOrganization ]
 ]
 
@@ -385,10 +425,9 @@ SystemDictionary >> renameClass: aClass from: oldName [
 	self removeKey: oldName.
 	oldref key: aClass name.
 	self add: oldref. "Old association preserves old refs"
-	SessionManager default renamedClass: aClass from: oldName to: aClass name.
 	self flushClassNameCache.
-	SystemAnnouncer uniqueInstance classRenamed: aClass from: oldName to: aClass name.
-	aClass subclassesDo: [ :subclass | SystemAnnouncer uniqueInstance classParentOf: subclass renamedFrom: oldName to: aClass name ]
+	self class codeChangeAnnouncer classRenamed: aClass from: oldName to: aClass name.
+	aClass subclassesDo: [ :subclass | self class codeChangeAnnouncer classParentOf: subclass renamedFrom: oldName to: aClass name ]
 ]
 
 { #category : 'renaming' }
@@ -421,6 +460,13 @@ SystemDictionary >> traitNames [
 			  ifPresent: [ :global |
 			  global isTrait and: [ global isObsolete not ] ]
 			  ifAbsent: [ false ] ]
+]
+
+{ #category : 'accessing' }
+SystemDictionary >> undeclaredRegistry [
+	"For now we are referencing a global variable of the default environment of Pharo. But in the future each environments should have their undeclared registry, else we have memory leaks of the environments."
+
+	^ Undeclared
 ]
 
 { #category : 'copying' }

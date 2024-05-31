@@ -13,7 +13,7 @@ Class {
 { #category : 'requests' }
 CoInitializeInferencedMessageHeuristic >> appliesForNode: aNode inContext: aContext [
 
-	^ aContext completionClass notNil
+	^ aContext completionClass isNotNil
 		and: [ aNode receiver isVariable ]
 ]
 

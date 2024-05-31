@@ -76,23 +76,6 @@ RBMethodNode >> firstPcForNode: aNode [
 ]
 
 { #category : '*OpalCompiler-Core' }
-RBMethodNode >> generate [
-
-	self deprecated: 'Use generateMethod. Beware that there are limitations so read the comments.' transformWith: '`@receiver generate' -> '`@receiver generateMethod'.
-
-	^ self generateMethod
-]
-
-{ #category : '*OpalCompiler-Core' }
-RBMethodNode >> generate: trailer [
-	self
-		deprecated: 'Use generateMethod'
-		transformWith: '`@receiver generate: `@argument'
-			-> '`@receiver generateMethod'.
-	^ self generateMethod
-]
-
-{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> generateIR [
 	"Generate an IRMethod. See `ir` for the cached version."
 
@@ -131,6 +114,17 @@ RBMethodNode >> irInstruction [
 RBMethodNode >> lastPcForNode: aNode [
 
 	^ self bcToASTCache lastBcOffsetForNode: aNode
+]
+
+{ #category : '*OpalCompiler-Core' }
+RBMethodNode >> methodClass [
+
+	^ self scope ifNotNil: [ :s | s targetClass ]
+]
+
+{ #category : '*OpalCompiler-Core' }
+RBMethodNode >> methodClass: aClass [
+	self semanticScope: (OCMethodSemanticScope targetingClass: aClass)
 ]
 
 { #category : '*OpalCompiler-Core' }

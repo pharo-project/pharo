@@ -69,9 +69,10 @@ EpApplyPreviewer >> visitBehaviorNameChange: aChange [
 { #category : 'visitor' }
 EpApplyPreviewer >> visitBehaviorRepackagedChange: aBehaviorRepackagedChange [
 
-	self behaviorNamed: aBehaviorRepackagedChange behaviorAffectedName ifPresent: [ :behavior |
-		self flag: #package. "We should not rely on categories here :("
-		^ behavior packageTag categoryName = aBehaviorRepackagedChange behaviorAffected category
+	| classRepackaged |
+	classRepackaged := aBehaviorRepackagedChange classAffected.
+	self behaviorNamed: classRepackaged name ifPresent: [ :behavior |
+		^ (behavior package name = classRepackaged package name and: [ behavior packageTag name = classRepackaged packageTag ])
 			  ifTrue: [ #(  ) ]
 			  ifFalse: [
 				  { (EpBehaviorRepackagedChange

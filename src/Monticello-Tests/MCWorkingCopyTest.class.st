@@ -5,8 +5,7 @@ Class {
 		'workingCopy',
 		'repositoryGroup',
 		'versions',
-		'versions2',
-		'savedName'
+		'versions2'
 	],
 	#category : 'Monticello-Tests-Base',
 	#package : 'Monticello-Tests',
@@ -23,18 +22,6 @@ MCWorkingCopyTest >> assertNameWhenSavingTo: aRepository is: aString [
 			name := n suggestedName.
 			n resume: (Array with: name with: '') ].
 	self assert: name equals: aString
-]
-
-{ #category : 'asserting' }
-MCWorkingCopyTest >> assertNumberWhenSavingTo: aRepository is: aNumber [
-	| name |
-	name := nil.
-	[ aRepository storeVersion: (workingCopy newVersionIn: aRepository) ]
-		on: MCVersionNameAndMessageRequest
-		do: [ :n | 
-			name := n suggestedName.
-			n resume: (Array with: name with: '') ].
-	self assert: name equals: self packageName , '-' , Author fullName , '.' , aNumber asString
 ]
 
 { #category : 'actions' }
@@ -87,9 +74,7 @@ MCWorkingCopyTest >> setUp [
 	MCRepositoryGroup default
 		removeRepository: repos1;
 		removeRepository: repos2.
-	workingCopy repositoryGroup: repositoryGroup.
-	savedName := Author fullName.
-	Author fullName: 'abc'
+	workingCopy repositoryGroup: repositoryGroup
 ]
 
 { #category : 'actions' }
@@ -107,7 +92,6 @@ MCWorkingCopyTest >> tearDown [
 
 	workingCopy unregister.
 	self restoreMocks.
-	Author fullName: savedName.
 	super tearDown
 ]
 
@@ -125,42 +109,6 @@ MCWorkingCopyTest >> testAncestorMerge [
 
 	self should: [self basicMerge: revA] raise: MCNoChangesException.
 	
-]
-
-{ #category : 'tests' }
-MCWorkingCopyTest >> testBackport [
-	| inst base final backported ancestry |
-	inst := self mockInstanceA.
-	base := self snapshot.
-
-	self assert: inst one equals: 1.
-
-	self change: #one toReturn: 2.
-	self change: #two toReturn: 3.
-
-	final := self snapshot.
-	[ workingCopy backportChangesTo: base info ]
-		on: MCChangeSelectionRequest
-		do: [ :e | e resume: e patch ].
-
-	self assert: inst one equals: 2.
-	self assert: inst two equals: 3.
-	ancestry := workingCopy ancestry.
-	self assert: ancestry ancestors size equals: 1.
-	self assert: ancestry ancestors first equals: base info.
-	self assert: ancestry stepChildren size equals: 1.
-	self assert: ancestry stepChildren first equals: final info.
-
-	backported := self snapshot.
-	[ workingCopy backportChangesTo: base info ]
-		on: MCChangeSelectionRequest
-		do: [ :e | e resume: e patch ].
-
-	ancestry := workingCopy ancestry.
-	self assert: ancestry ancestors size equals: 1.
-	self assert: ancestry ancestors first equals: base info.
-	self assert: ancestry stepChildren size equals: 1.
-	self assert: ancestry stepChildren first equals: backported info
 ]
 
 { #category : 'tests' }
@@ -229,41 +177,25 @@ MCWorkingCopyTest >> testNaming [
 	| repos version |
 
 	repos := MCDictionaryRepository new.
-	self assertNameWhenSavingTo: repos is: self packageName, '-abc.1'.
-	self assertNameWhenSavingTo: repos is: self packageName, '-abc.2'.
+	self assertNameWhenSavingTo: repos is: self packageName, '-.1'.
+	self assertNameWhenSavingTo: repos is: self packageName, '-.2'.
 	repos := MCDictionaryRepository new.
-	self assertNameWhenSavingTo: repos is: self packageName, '-abc.3'.
+	self assertNameWhenSavingTo: repos is: self packageName, '-.3'.
 	version := self snapshot.
-	version info instVarNamed: 'name' put: 'foo-jf.32'.
+	version info instVarNamed: 'name' put: 'foo-.32'.
 	version load.
-	self assertNameWhenSavingTo: repos is: 'foo-abc.33'.
-	self assertNameWhenSavingTo: repos is: 'foo-abc.34'.
-	version info instVarNamed: 'name' put: 'foo-abc.35'.
+	self assertNameWhenSavingTo: repos is: 'foo-.33'.
+	self assertNameWhenSavingTo: repos is: 'foo-.34'.
+	version info instVarNamed: 'name' put: 'foo-.35'.
 	repos storeVersion: version.
-	self assertNameWhenSavingTo: repos is: 'foo-abc.36'.
-	self assertNameWhenSavingTo: repos is: 'foo-abc.37'.
-	version info instVarNamed: 'name' put: 'foo-abc.10'.
+	self assertNameWhenSavingTo: repos is: 'foo-.36'.
+	self assertNameWhenSavingTo: repos is: 'foo-.37'.
+	version info instVarNamed: 'name' put: 'foo-.10'.
 	repos storeVersion: version.
-	self assertNameWhenSavingTo: repos is: 'foo-abc.38'.
-	version info instVarNamed: 'name' put: 'foo2-ab.40'.
+	self assertNameWhenSavingTo: repos is: 'foo-.38'.
+	version info instVarNamed: 'name' put: 'foo2-.40'.
 	version load.
-	self assertNameWhenSavingTo: repos is: 'foo2-abc.41'.
-]
-
-{ #category : 'tests' }
-MCWorkingCopyTest >> testOptimizedLoad [
-	| inst base diffy |
-	inst := self mockInstanceA.
-	base := self snapshot.
-	self change: #one toReturn: 2.
-	self assert: inst one equals: 2.
-	diffy := self snapshot asDiffAgainst: base.
-	self deny: diffy canOptimizeLoading.
-	self load: base.
-	self assert: inst one equals: 1.
-	self assert: diffy canOptimizeLoading.
-	self load: diffy.
-	self assert: inst one equals: 2
+	self assertNameWhenSavingTo: repos is: 'foo2-.41'.
 ]
 
 { #category : 'tests' }
@@ -309,31 +241,6 @@ MCWorkingCopyTest >> testRepositoryFallback [
 	self assert: (repositoryGroup versionWithInfo: version info) identicalTo: version.
 	versions2 removeKey: version info.
 	self should: [ repositoryGroup versionWithInfo: version info ] raise: Error
-]
-
-{ #category : 'tests' }
-MCWorkingCopyTest >> testSelectiveBackport [
-	| inst base intermediate final |
-	inst := self mockInstanceA.
-	base := self snapshot.
-	self assert: inst one equals: 1.
-	self change: #one toReturn: 2.
-	intermediate := self snapshot.
-	self change: #two toReturn: 3.
-	final := self snapshot.
-	[ workingCopy backportChangesTo: base info ]
-		on: MCChangeSelectionRequest
-		do: [ :e | 
-			| patch selected |
-			patch := e patch.
-			selected := patch operations select: [ :ea | ea definition selector = #two ].
-			e resume: (MCPatch operations: selected) ].
-	self assert: inst one equals: 1.
-	self assert: inst two equals: 3.
-	self assert: workingCopy ancestry ancestors size equals: 1.
-	self assert: workingCopy ancestry ancestors first equals: base info.
-	self assert: workingCopy ancestry stepChildren size equals: 1.
-	self assert: workingCopy ancestry stepChildren first equals: final info
 ]
 
 { #category : 'tests' }

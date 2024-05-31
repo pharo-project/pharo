@@ -164,15 +164,13 @@ RBRefactoryTyper >> computeTypes [
 
 { #category : 'private' }
 RBRefactoryTyper >> executeSearch: searcher [
-	class withAllSubclasses do:
-			[:each |
-			each selectors do:
-					[:sel |
-					| parseTree |
-					methodName := sel.
-					parseTree := each parseTreeForSelector: sel.
-					parseTree doSemanticAnalysis.
-					parseTree notNil ifTrue: [searcher executeTree: parseTree]]]
+
+	class withAllSubclasses do: [ :aClass |
+		aClass selectors do: [ :selector |
+			methodName := selector.
+			searcher executeTree: ((aClass parseTreeForSelector: methodName)
+					 doSemanticAnalysis;
+					 yourself) ] ]
 ]
 
 { #category : 'computing types' }
@@ -258,7 +256,7 @@ RBRefactoryTyper >> implementorsOf: aSelector in: aClass storeIn: classes [
 
 { #category : 'initialization' }
 RBRefactoryTyper >> initialize [
-	model := RBClassModelFactory rbNamespace new.
+	model := RBNamespace new.
 	class := model classFor: Object.
 	variableTypes := Dictionary new.
 	variableMessages := Dictionary new.
@@ -372,7 +370,7 @@ RBRefactoryTyper >> processCollectionMessagesFor: variableName in: aParseTree [
 		ifFalse: [ ^ self ].
 	(#(anyOne at: at:ifAbsent: at:ifAbsentPut: atPin: atRandom atRandom: atWrap: eight fifth first fourth last middle ninth second seventh sixth third) includes: aParseTree selector) ifTrue: [
 		parent := aParseTree parent.
-		(parent notNil and: [ parent isMessage ])
+		(parent isNotNil and: [ parent isMessage ])
 			ifFalse: [ ^ self ].
 		aParseTree == parent receiver
 			ifFalse: [ ^ self ].

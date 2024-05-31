@@ -84,12 +84,11 @@ Class {
 
 { #category : 'adding' }
 HistoryNode >> addItem: anHistoryItem [
-	self current notNil
-		ifTrue: [(self current addItem: anHistoryItem)
-				ifTrue: [^ true]].
-	self opened
-		ifTrue: [self history add: anHistoryItem.
-			^ true].
+
+	self current ifNotNil: [ :current | (current addItem: anHistoryItem) ifTrue: [ ^ true ] ].
+	self opened ifTrue: [
+		self history add: anHistoryItem.
+		^ true ].
 	^ false
 ]
 
@@ -110,7 +109,7 @@ HistoryNode >> close [
 
 { #category : 'opening-closing' }
 HistoryNode >> closeGroup [
-	(self current notNil
+	(self current isNotNil
 			and: [self current isComposite
 				and: [self current opened]])
 		ifTrue: [self current closeGroup]

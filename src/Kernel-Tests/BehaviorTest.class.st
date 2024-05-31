@@ -65,23 +65,21 @@ BehaviorTest >> testAllSelectors [
 { #category : 'tests' }
 BehaviorTest >> testAllSelectorsAbove [
 
-	|sels |
-	sels := Date allSelectorsAbove.
-	self deny: (sels includes: #mmddyyyy).
-	self deny: (sels includes: #weekday).
-	self assert: (sels includes: #at:).
-	self assert: (sels includes: #cannotInterpret: )
+	| selectors |
+	selectors := self class allSelectorsAbove.
+	self deny: (selectors includes: #testAllSelectorsAboveUntil).
+	self assert: (selectors includes: #assert:).
+	self assert: (selectors includes: #yourself)
 ]
 
 { #category : 'tests' }
 BehaviorTest >> testAllSelectorsAboveUntil [
 
-	|sels |
-	sels := Date allSelectorsAboveUntil: Object.
-	self deny: (sels includes: #mmddyyyy).
-	self deny: (sels includes: #weekday).
-	self assert: (sels includes: #at:).
-	self deny: (sels includes: #cannotInterpret: )
+	| selectors |
+	selectors := self class allSelectorsAboveUntil: TestCase.
+	self deny: (selectors includes: #testAllSelectorsAboveUntil).
+	self assert: (selectors includes: #run:).
+	self deny: (selectors includes: #yourself)
 ]
 
 { #category : 'tests' }
@@ -101,6 +99,32 @@ BehaviorTest >> testBinding [
 	"returns nil for Metaclasses... like Encoder>>#associationFor:"
 
 	self assert: Object class binding key isNil
+]
+
+{ #category : 'tests' }
+BehaviorTest >> testDefinedMethods [
+
+	[
+	ExampleForTest1 compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+	self assertCollection: ExampleForTest1 localMethods hasSameElements: {
+			(ExampleForTest1 >> #aSuperclassVariable).
+			(ExampleForTest1 >> #aSuperclassVariable:).
+			(ExampleForTest1 >> #extensionMethod) }.
+
+	self assertCollection: ExampleForTest1 definedMethods hasSameElements: {
+			(ExampleForTest1 >> #aSuperclassVariable).
+			(ExampleForTest1 >> #aSuperclassVariable:) } ] ensure: [ self packageOrganizer removePackage: 'AGeneratedPackageForTest' ]
+]
+
+{ #category : 'tests' }
+BehaviorTest >> testDefinedSelectors [
+
+	[
+	ExampleForTest1 compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+	self assertCollection: ExampleForTest1 localSelectors hasSameElements: #( #aSuperclassVariable #aSuperclassVariable: #extensionMethod ).
+
+	self assertCollection: ExampleForTest1 definedSelectors hasSameElements: #( #aSuperclassVariable #aSuperclassVariable: ) ] ensure: [
+		self packageOrganizer removePackage: 'AGeneratedPackageForTest' ]
 ]
 
 { #category : 'tests - queries' }
@@ -128,9 +152,8 @@ BehaviorTest >> testHasAbstractMethods [
 
 { #category : 'tests - properties' }
 BehaviorTest >> testHasProperty [
-	| testValue |
-	testValue := Date today.
-	self class propertyAt: #testKeySelector put: testValue.
+
+	self class propertyAt: #testKeySelector put: 42.
 	self assert: (self class hasProperty: #testKeySelector).
 
 	self class removeProperty: #testKeySelector.
@@ -179,6 +202,20 @@ BehaviorTest >> testIsRootInEnvironment [
 BehaviorTest >> testIsUsed [
 	self assert: Object isUsed.
 	self assert: Object class isUsed
+]
+
+{ #category : 'tests' }
+BehaviorTest >> testLocalMethods [
+
+	self assertCollection: ExampleForTest1 localMethods hasSameElements: {
+			(ExampleForTest1 >> #aSuperclassVariable).
+			(ExampleForTest1 >> #aSuperclassVariable:) }
+]
+
+{ #category : 'tests' }
+BehaviorTest >> testLocalSelectors [
+
+	self assertCollection: ExampleForTest1 localSelectors hasSameElements: #( #aSuperclassVariable #aSuperclassVariable: )
 ]
 
 { #category : 'tests - queries' }
@@ -232,12 +269,9 @@ BehaviorTest >> testOriginalName [
 
 { #category : 'tests - properties' }
 BehaviorTest >> testPropertyValueAtPut [
-	| testValue |
-	testValue := Date today.
-	self class propertyAt: #testKeySelector put: testValue.
-	self
-		assert: (self class propertyAt: #testKeySelector)
-		equals: testValue.
+
+	self class propertyAt: #testKeySelector put: 42.
+	self assert: (self class propertyAt: #testKeySelector) equals: 42.
 	self class removeProperty: #testKeySelector
 ]
 

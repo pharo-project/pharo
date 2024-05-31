@@ -7,10 +7,8 @@ Class {
 	#name : 'EpMonitor',
 	#superclass : 'Object',
 	#instVars : [
-		'systemAnnouncer',
 		'log',
 		'entryReferenceByEvent',
-		'jobAnnouncer',
 		'announcer'
 	],
 	#classInstVars : [
@@ -122,14 +120,11 @@ EpMonitor >> addEvent: anEvent newEntryDo: aBlock [
 EpMonitor >> addEvent: anEvent newEntryDo: aBlock triggerReference: triggerReference [
 
 	| newEntry |
-
-	"During the tests, we should only log with Epicea if the test case declare it wants logging."
-	(CurrentExecutionEnvironment value isTest and: [ CurrentExecutionEnvironment value testCase shouldLogWithEpicea not ]) ifTrue: [ ^ self ].
 	newEntry := log addEntryWith: anEvent tags: [ :tags |
-		            triggerReference isNull ifFalse: [ tags at: EpLog triggererReferenceKey put: triggerReference ].
-
-		            tags at: EpLog authorKey put: self author.
-		            tags at: EpLog timeKey put: self time ].
+		            triggerReference isNull ifFalse: [
+			            tags
+				            at: EpLog triggererReferenceKey
+				            put: triggerReference ] ].
 
 	aBlock value: newEntry
 ]
@@ -143,13 +138,6 @@ EpMonitor >> announceMonitorStateUpdated [
 { #category : 'accessing' }
 EpMonitor >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
-]
-
-{ #category : 'private' }
-EpMonitor >> author [
-	^ Author uniqueInstance
-		ifUnknownAuthorUse: 'Unknown'
-		during: [ Author uniqueInstance fullName ]
 ]
 
 { #category : 'accessing' }
@@ -218,8 +206,7 @@ EpMonitor >> behaviorRemoved: aClassRemovedAnnouncement [
 EpMonitor >> behaviorRemovedImpliesMethodRemoved: aMethodInAnObsoleteBehavior defaultPackageName: aSymbol [
 
 	| packageName |
-	packageName := ((self packageOrganizer packageForProtocol: aMethodInAnObsoleteBehavior protocol) ifNil: [ aMethodInAnObsoleteBehavior methodClass package ])
-		               name.
+	packageName := (self packageOrganizer packageForProtocol: aMethodInAnObsoleteBehavior protocol from: aMethodInAnObsoleteBehavior methodClass) name.
 
 	"If the method is local, (belongs to the class being removed) then the package was wrong,  and we fix it"
 	packageName = UndefinedPackage undefinedPackageName ifTrue: [ packageName := aSymbol ].
@@ -294,7 +281,7 @@ EpMonitor >> disable [
 
 	self sessionStore flush.
 
-	{ systemAnnouncer. jobAnnouncer }
+	{ self systemAnnouncer. self jobAnnouncer }
 		do: [ :each | each ifNotNil: [ :a | a unsubscribe: self ] ].
 
 	self announceMonitorStateUpdated
@@ -339,15 +326,19 @@ EpMonitor >> initializeWithLog: aLog [
 	self initialize.
 
 	log := aLog.
-	systemAnnouncer := SystemAnnouncer uniqueInstance.
-	jobAnnouncer := Job jobAnnouncer.
-
 	entryReferenceByEvent := IdentityDictionary new
 ]
 
 { #category : 'testing' }
 EpMonitor >> isEnabled [
-	^ systemAnnouncer hasSubscriber: self
+
+	^ self systemAnnouncer hasSubscriber: self
+]
+
+{ #category : 'private' }
+EpMonitor >> jobAnnouncer [
+
+	^ Job jobAnnouncer
 ]
 
 { #category : 'announcement handling' }
@@ -418,7 +409,7 @@ EpMonitor >> methodRecategorized: aMethodRecategorized [
 		             protocol: aMethodRecategorized oldProtocol name;
 		             yourself.
 	newMethod := aMethodRecategorized methodRecategorized asEpiceaRingDefinition
-		             protocol: (aMethodRecategorized newProtocol ifNotNil: [ :protocol | protocol name ]);
+		             protocol: aMethodRecategorized newProtocol name;
 		             yourself.
 
 	self addEvent: (EpMethodModification oldMethod: oldMethod newMethod: newMethod)
@@ -426,12 +417,9 @@ EpMonitor >> methodRecategorized: aMethodRecategorized [
 
 { #category : 'announcement handling' }
 EpMonitor >> methodRemoved: aMethodRemovedAnnouncement [
-	"RPackage already unregistered the method so we have to workaround protocol and package."
+	"Package already unregistered the method so we have to workaround protocol."
 
-	self addEvent: (EpMethodRemoval method: (aMethodRemovedAnnouncement methodAffected asEpiceaRingDefinition
-				  protocol: aMethodRemovedAnnouncement protocol name;
-				  package: aMethodRemovedAnnouncement methodPackage name;
-				  yourself))
+	self addEvent: (EpMethodRemoval method: aMethodRemovedAnnouncement methodAffected asEpiceaRingDefinition)
 ]
 
 { #category : 'announcement handling' }
@@ -513,7 +501,7 @@ EpMonitor >> subscribeToJobAnnouncer [
 	{	JobStart -> #jobStarted:.
 		JobEnd -> #jobEnded:.
 	} do: [ :pair |
-		jobAnnouncer
+		self jobAnnouncer
 			when: pair key
 			send: pair value
 			to: self ]
@@ -523,24 +511,35 @@ EpMonitor >> subscribeToJobAnnouncer [
 EpMonitor >> subscribeToSystemAnnouncer [
 
 	{
-		(PackageAdded -> #packageAdded:).
-		(PackageRenamed -> #packageRenamed:).
-		(PackageRemoved -> #packageRemoved:).
-		(PackageTagAdded -> #packageTagAdded:).
-		(PackageTagRemoved -> #packageTagRemoved:).
-		(PackageTagRenamed -> #packageTagRenamed:).
-		(ClassAdded -> #behaviorAdded:).
-		(ClassRemoved -> #behaviorRemoved:).
-		(MethodAdded -> #methodAdded:).
-		(MethodRemoved -> #methodRemoved:).
-		(ProtocolAdded -> #protocolAdded:).
-		(ProtocolRemoved -> #protocolRemoved:).
-		(ClassModifiedClassDefinition -> #behaviorModified:).
-		(MethodModified -> #methodModified:).
-		(ClassRepackaged -> #classRepackaged:).
-		(ClassRenamed -> #classRenamed:).
-		(ClassCommented -> #classCommented:).
-		(MethodRecategorized -> #methodRecategorized:) } do: [ :pair | systemAnnouncer weak when: pair key send: pair value to: self ]
+		(PackageAdded -> [ :ann | self packageAdded: ann ]).
+		(PackageRenamed -> [ :ann | self packageRenamed: ann ]).
+		(PackageRemoved -> [ :ann | self packageRemoved: ann ]).
+		(PackageTagAdded -> [ :ann | self packageTagAdded: ann ]).
+		(PackageTagRemoved -> [ :ann | self packageTagRemoved: ann ]).
+		(PackageTagRenamed -> [ :ann | self packageTagRenamed: ann ]).
+		(ClassAdded -> [ :ann | self behaviorAdded: ann ]).
+		(ClassRemoved -> [ :ann | self behaviorRemoved: ann ]).
+		(MethodAdded -> [ :ann | self methodAdded: ann ]).
+		(MethodRemoved -> [ :ann | self methodRemoved: ann ]).
+		(ProtocolAdded -> [ :ann | self protocolAdded: ann ]).
+		(ProtocolRemoved -> [ :ann | self protocolRemoved: ann ]).
+		(ClassModifiedClassDefinition -> [ :ann | self behaviorModified: ann ]).
+		(MethodModified -> [ :ann | self methodModified: ann ]).
+		(ClassRepackaged -> [ :ann | self classRepackaged: ann ]).
+		(ClassRenamed -> [ :ann | self classRenamed: ann ]).
+		(ClassCommented -> [ :ann | self classCommented: ann ]).
+		(MethodRecategorized -> [ :ann | self methodRecategorized: ann ]) } asDictionary keysAndValuesDo: [ :announcement :block |
+		self systemAnnouncer weak
+			when: announcement
+			do: [ :ann | "During the tests, we should only log with Epicea if the test case declare it wants logging."
+				(CurrentExecutionEnvironment value isTest and: [ CurrentExecutionEnvironment value testCase shouldLogWithEpicea not ]) ifFalse: [ block value: ann ] ]
+			for: self ]
+]
+
+{ #category : 'private' }
+EpMonitor >> systemAnnouncer [
+
+	^ self class codeChangeAnnouncer
 ]
 
 { #category : 'private' }

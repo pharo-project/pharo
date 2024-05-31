@@ -213,6 +213,14 @@ MemoryStore >> initialize [
 ]
 
 { #category : 'testing' }
+MemoryStore >> isHidden: aResolvable attributes: statAttributesArray [
+	"Answer a boolean indicating whether the file is hidden or not.
+	We follow Unix here, using the file naming convention that file names beginning with a dot are not displayed"
+
+	^ aResolvable basename first = $.
+]
+
+{ #category : 'testing' }
 MemoryStore >> isMemoryFileSystem [
 	^ true
 ]
@@ -307,4 +315,11 @@ MemoryStore >> replaceFile: path in: aBlock [
 { #category : 'accessing' }
 MemoryStore >> root [
 	^ root
+]
+
+{ #category : 'private' }
+MemoryStore >> symlinkEntryAt: aPath fileSystem: aFilesystem [
+	"MemoryStore doesn't support symbolic links, so a standard entry can be used"
+
+	^ MemoryDirectoryEntry reference: (aFilesystem referenceTo: aPath)
 ]

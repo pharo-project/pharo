@@ -13,7 +13,7 @@ Class {
 ClyFullBrowserPackageContext class >> selectionStrategy [
 	<classAnnotation>
 
-	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: RPackage
+	^ClyContextSelectionStrategyAnnotation for: ClyFullBrowserMorph selectionType: Package
 ]
 
 { #category : 'selection-class groups' }
@@ -22,7 +22,7 @@ ClyFullBrowserPackageContext >> isClassGroupSelected [
 ]
 
 { #category : 'selection-class groups' }
-ClyFullBrowserPackageContext >> isClassTagSelected [
+ClyFullBrowserPackageContext >> isPackageTagSelected [
 	^false
 ]
 

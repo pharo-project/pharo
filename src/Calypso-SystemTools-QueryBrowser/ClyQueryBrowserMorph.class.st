@@ -176,7 +176,13 @@ ClyQueryBrowserMorph >> extraScopesOfSelectedItems [
 		self packageScopeOfSelectedItems.
 		classScope asFullHierarchyScope.
 		classScope
-	}, RefactoringSettings availableScopes
+	}, ScopesManager availableScopes
+]
+
+{ #category : 'initialization' }
+ClyQueryBrowserMorph >> initialExtent [
+
+	^ 1350 @ 620 * self currentWorld displayScaleFactor
 ]
 
 { #category : 'initialization' }
@@ -193,17 +199,13 @@ ClyQueryBrowserMorph >> initializeNavigationViews [
 	resultView enableFilter: ClyQueryBrowserFilter.
 	resultView allowsDeselection: false.
 	resultView mainColumn
-		width: 250;
 		displayItemPropertyBy: [:item | self classNameOf: item].
 	(resultView addColumn: #name)
-		width: 200;
 		displayItemPropertyBy: [:item | self mainNameOf: item].
-	(resultView addColumn: #protocol)
-		width: 200;
-		displayItemPropertyBy: [:item | self protocolNameOf: item].
 	(resultView addColumn: #package)
-		width: 50;
-		displayItemPropertyBy: [:item | self packageNameOf: item]
+		displayItemPropertyBy: [:item | self packageNameOf: item].
+	(resultView addColumn: #protocol)
+		displayItemPropertyBy: [:item | self protocolNameOf: item]
 ]
 
 { #category : 'testing' }
@@ -222,6 +224,37 @@ ClyQueryBrowserMorph >> isQueryScopeActive: aScope [
 { #category : 'accessing' }
 ClyQueryBrowserMorph >> itemCount [
 	^resultView itemCount
+]
+
+{ #category : 'initialization' }
+ClyQueryBrowserMorph >> layoutChildren [
+
+	"Set up the message browser layout with:
+	  - toolbar on top
+	  - list on the left
+	  - tool (the code editor and so on) on the right"
+
+	| contentPanel |
+	self changeTableLayout.
+	self listDirection: #topToBottom.
+
+	self addMorph: toolbar.
+
+	contentPanel := PanelMorph new.
+	contentPanel changeProportionalLayout.
+	contentPanel name: 'tools panel'.
+	contentPanel
+		hResizing: #spaceFill;
+		vResizing: #spaceFill.
+
+	contentPanel
+		addMorph: navigationPanel
+		fullFrame: (0 @ 0.0 corner: 0.5 @ 1) asLayoutFrame.
+	contentPanel
+		addMorph: tabManager tabMorph
+		fullFrame: (0.5 @ 0 corner: 1 @ 1.0) asLayoutFrame.
+	self addMorphBack: contentPanel.
+	contentPanel addPaneSplitters
 ]
 
 { #category : 'initialization' }
@@ -267,10 +300,26 @@ ClyQueryBrowserMorph >> newWindowTitle [
 ]
 
 { #category : 'opening/closing' }
+ClyQueryBrowserMorph >> open [ 
+	super open.
+
+	resultView takeKeyboardFocus
+	
+]
+
+{ #category : 'opening/closing' }
 ClyQueryBrowserMorph >> openAnotherBrowser: aBrowser [
 	(aBrowser isKindOf: ClyQueryBrowserMorph)
 		ifTrue: [ aBrowser openInWindow: self window]
 		ifFalse: [ aBrowser open ]
+]
+
+{ #category : 'opening/closing' }
+ClyQueryBrowserMorph >> openInWindow: aWindow [
+	super openInWindow: aWindow.
+
+	resultView takeKeyboardFocus
+	
 ]
 
 { #category : 'initialization' }
@@ -336,6 +385,14 @@ ClyQueryBrowserMorph >> resultView [
 ClyQueryBrowserMorph >> selectClass: aClass [
 
 	self selectObject: aClass
+]
+
+{ #category : 'navigation' }
+ClyQueryBrowserMorph >> selectFirstItem [
+
+	self changeStateBy: [
+		resultView selectFirstItem
+	]
 ]
 
 { #category : 'navigation' }

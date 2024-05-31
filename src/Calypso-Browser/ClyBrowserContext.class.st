@@ -125,6 +125,12 @@ ClyBrowserContext >> isAboutSelectedItem: aDataSourceItem [
 ]
 
 { #category : 'testing' }
+ClyBrowserContext >> isQueryBrowserContext [
+
+	^ false.
+]
+
+{ #category : 'testing' }
 ClyBrowserContext >> isSimilarTo: anotherBrowserContext [
 	self class = anotherBrowserContext class ifFalse: [ ^false ].
 

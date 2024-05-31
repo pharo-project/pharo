@@ -21,9 +21,7 @@ HDReport class >> runPackage: aString [
 { #category : 'running' }
 HDReport class >> runPackages: aCollectionOfStrings [
 
-	^ aCollectionOfStrings collect: [ :packageName |
-		  Stdio stdout << 'Running tests of ' << packageName << OSPlatform current lineEnding.
-		  self runPackage: packageName ]
+	^ aCollectionOfStrings collect: [ :packageName | self runPackage: packageName ]
 ]
 
 { #category : 'private' }

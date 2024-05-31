@@ -1,9 +1,33 @@
 Extension { #name : 'RBMethodNode' }
 
 { #category : '*Reflectivity' }
+RBMethodNode >> decreaseLinkCount [
+
+	self propertyAt: #linkCount put: ((self linkCount - 1) max: 0)
+]
+
+{ #category : '*Reflectivity' }
 RBMethodNode >> hasOption: aSymbol for: aLink [
 	"take the class and method overrides to options into account"
 	^(self optionsFor: aLink) includes: aSymbol
+]
+
+{ #category : '*Reflectivity' }
+RBMethodNode >> increaseLinkCount [
+
+	self propertyAt: #linkCount put: self linkCount + 1
+]
+
+{ #category : '*Reflectivity' }
+RBMethodNode >> linkCount [
+
+	^self propertyAt: #linkCount ifAbsentPut: [ 0 ]
+]
+
+{ #category : '*Reflectivity' }
+RBMethodNode >> linkCount: aNumber [
+
+	self propertyAt: #linkCount put: aNumber
 ]
 
 { #category : '*Reflectivity' }
@@ -23,14 +47,14 @@ RBMethodNode >> metaLinkOptionsFromClassAndMethod [
 		ifPresent: [ :method |
 			options
 				parseOptions:
-					((method valueWithReceiver: nil arguments: #()) asDictionary
+					((method valueWithReceiver: nil) asDictionary
 						at: self selector
 						ifAbsent: [ #() ]) ].
 	"set meta link options defined per method"
 	(self pragmas
-		select: [ :pragma | pragma selector == #metaLinkOptions: ])
+		select: [ :pragmaNode | pragmaNode selector == #metaLinkOptions: ])
 		do:
-			[ :pragma | (pragma asPragma selector: #parseOptions:) sendTo: options ].
+			[ :pragmaNode | (pragmaNode pragma copy selector: #parseOptions:) sendTo: options ].
 	^ options
 ]
 

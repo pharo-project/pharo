@@ -12,6 +12,18 @@ Class {
 	#tag : 'Base'
 }
 
+{ #category : 'private' }
+UnlimitedInstanceVariableSlot >> addAdditionalSlotsTo: slots [
+	"we reuse a baseSlot if it is already there, if not, we add it"
+
+	"TODO: this does not take into account adding BooleanSlots higher up in the Hierarchy"
+
+	slots
+		detect: [ :slot | slot name = #_ivarArrayBaseSlot ]
+		ifFound: [ :slot | baseSlot := slot. self growBaseSlot ]
+		ifNone: [ slots add: (baseSlot := #_ivarArrayBaseSlot => BaseSlot default: (Array new: 1)) ]
+]
+
 { #category : 'code generation' }
 UnlimitedInstanceVariableSlot >> emitStore: methodBuilder [
 	"generate bytecode for 'baseSlot at: index put: <stackTop>'"
@@ -37,21 +49,15 @@ UnlimitedInstanceVariableSlot >> emitValue: methodBuilder [
 ]
 
 { #category : 'class building' }
-UnlimitedInstanceVariableSlot >> growBaseSlot: aClass [
+UnlimitedInstanceVariableSlot >> growBaseSlot [
 	baseSlot default: (baseSlot default grownBy: 1)
 ]
 
 { #category : 'class building' }
 UnlimitedInstanceVariableSlot >> installingIn: aClass [
+
 	| unlimitedSlots |
 	super installingIn: aClass.
-
-	"we reuse a baseSlot if it is already there, if not, we add it"
-	"TODO: this does not take into account adding BooleanSlots higher up in the Hierarchy"
-	aClass classLayout
-		resolveSlot: #'_ivarArrayBaseSlot'
-		ifFound:  [: slot |  baseSlot := slot. self growBaseSlot: aClass. ]
-		ifNone: [aClass addSlot: (baseSlot := #'_ivarArrayBaseSlot' => BaseSlot default: (Array new: 1))].
 
 	"my offset in the base slot is defined by the order of all BooleanSlots in the Hierarchy"
 	unlimitedSlots := aClass allSlots select: [ :each | each isKindOf: self class ].

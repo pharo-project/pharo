@@ -25,41 +25,6 @@ Class {
 	#tag : 'Conditions'
 }
 
-{ #category : 'variable accessing' }
-RBCondition class >> accessesClassVariable: variableName in: aClass showIn: aTransformation [
-
-	self flag: #popUp.
-	^ RBCondition withBlock: [ | block |
-		block := 	[ :each |
-			(each whichSelectorsReferToClassVariable: variableName)
-				ifNotEmpty: [ aClass realClass
-					ifNil: [ RBRefactoring new
-						refactoringError: ('<1s> is referenced.' expandMacrosWith: variableName) ]
-					ifNotNil: [ RBRefactoring new
-						refactoringWarning: ('<1s> is referenced.<n>Browse references?' expandMacrosWith: variableName)
-						with: [ aTransformation openBrowserOn: (RBVariableEnvironment
-									referencesToClassVariable: variableName
-									in: aClass realClass) ] ] ] ].
-			aClass withAllSubclasses do: block.
-			aClass classSide withAllSubclasses do: block.
-			true ]
-]
-
-{ #category : 'variable accessing' }
-RBCondition class >> accessesInstanceVariable: variableName in: aClass showIn: aTransformation [
-
-	| references |
-	self flag: #popUp.
-	references := RBCondition referencesInstanceVariable: variableName in: aClass.
-	aClass realClass
-		ifNil: [ references errorMacro: ('<1s> is referenced.' expandMacrosWith: variableName) ]
-		ifNotNil: [ references
-			errorMacro: ('<1s> is referenced.<n>Browse references?' expandMacrosWith: variableName);
-			errorBlock: [ aTransformation openBrowserOn:
-				(RBBrowserEnvironment new instVarRefsTo: variableName in: aClass realClass)]].
-	^ references not
-]
-
 { #category : 'instance creation' }
 RBCondition class >> canUnderstand: aSelector in: aClass [
 
@@ -154,7 +119,7 @@ RBCondition class >> definesTempVar: aString in: aClass ignoreClass: subclass [
 			method ifNotNil: [
 				condition errorMacro:
 					method printString , ' defines variable ' , aString ].
-			method notNil ]
+			method isNotNil ]
 		errorString:
 			aClass printString
 			, ' <1?:does not >define<1?s:> temporary variable ' , aString.
@@ -176,7 +141,7 @@ RBCondition class >> definesTemporaryVariable: aString in: aClass [
 			method ifNotNil: [
 				condition errorMacro:
 					method printString , ' defines variable ' , aString ].
-			method notNil ]
+			method isNotNil ]
 		errorString:
 			aClass printString
 			, ' <1?:does not >define<1?s:> temporary variable ' , aString.
@@ -197,21 +162,6 @@ RBCondition class >> directlyDefinesInstanceVariable: aString in: aClass [
 		block: [aClass directlyDefinesInstanceVariable: aString]
 		errorString: aClass printString
 				, ' <1?:does not >directly define<1?s:> instance variable ' , aString
-]
-
-{ #category : 'variable accessing' }
-RBCondition class >> doesNotAccessInstanceVariable: variableName inHierarchyOf: aClass showIn: aTransformation [
-
-	| references |
-	self flag: #popUp.
-	references := RBCondition hierarchyOf: aClass referencesInstanceVariable: variableName.
-	aClass realClass
-		ifNil: [ references errorMacro: ('<1s> is referenced.' expandMacrosWith: variableName) ]
-		ifNotNil: [ references
-			errorMacro: ('<1s> is referenced.<n>Browse references?' expandMacrosWith: variableName);
-			errorBlock: [ aTransformation openBrowserOn:
-				(RBBrowserEnvironment new instVarRefsTo: variableName in: aClass realClass)]].
-	^ references not
 ]
 
 { #category : 'instance creation' }
@@ -411,6 +361,18 @@ RBCondition class >> methodDefiningTemporary: aString in: aClass ignore: aBlock 
 ]
 
 { #category : 'instance creation' }
+RBCondition class >> referencesClassVariable: aString in: aClass [
+
+	^ self new
+		  block: [
+		  	(aClass whichSelectorsReferToClassVariable: aString) isNotEmpty and: 
+			[ (aClass classSide whichSelectorsReferToClassVariable: aString) isNotEmpty ] ]
+		  errorString:
+			  aClass printString
+			  , ' <1?:does not >reference<1?s:> class variable ' , aString
+]
+
+{ #category : 'instance creation' }
 RBCondition class >> referencesInstanceVariable: aString in: aClass [
 
 	^ self new
@@ -434,7 +396,7 @@ RBCondition class >> subclassesOf: aClass isDoingASuperSendFor: aSelector [
 				  each selectors anySatisfy: [ :sel |
 					  | tree |
 					  tree := each parseTreeForSelector: sel.
-					  tree notNil and: [ tree superMessages includes: aSelector ] ] ] ]
+					  tree isNotNil and: [ tree superMessages includes: aSelector ] ] ] ]
 		  errorString:
 			  '<1?:no:a> subclass of ' , aClass printString , ' is doing a super send using '
 			  , aSelector printString
@@ -481,6 +443,12 @@ RBCondition >> errorBlock [
 { #category : 'initialization' }
 RBCondition >> errorBlock: anObject [
 	errorBlock := anObject
+]
+
+{ #category : 'displaying' }
+RBCondition >> violationMessageOn: aWriteStream [ 
+
+	aWriteStream nextPutAll: self errorString
 ]
 
 { #category : 'initialization' }

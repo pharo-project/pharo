@@ -1,5 +1,5 @@
 "
-I represent environment of Pharo system. I incapsulate globals (Smalltalk globals), packageOrganizer (RPackageOrganizer  default) and changesAnnouncer (SystemAnnouncer uniqueInstance). I have class side #currentImage instance created with all corresponding globals of current image.
+I represent environment of Pharo system. I incapsulate globals (Smalltalk globals), packageOrganizer (PackageOrganizer  default) and changesAnnouncer (SystemAnnouncer uniqueInstance). I have class side #currentImage instance created with all corresponding globals of current image.
 
 I am used to navigate over system by ClyNavigationEnvironment.
 
@@ -18,7 +18,7 @@ Internal Representation and Key Implementation Points.
 	changesAnnouncer:		<SystemAnnouncer>
 	globals:		<SmalltalkDictionary> ""Smalltalk globals class""
 	name:		<String>
-	packageOrganizer:		<RPackageOrganizer>
+	packageOrganizer:		<PackageOrganizer>
 	projectManager:		<ClyProjectManager>
 "
 Class {
@@ -45,7 +45,7 @@ ClySystemEnvironment class >> currentImage [
 		currentImage := self new
 			name: 'Current image';
 			globals: Smalltalk globals;
-			packageOrganizer: RPackageOrganizer default;
+			packageOrganizer: PackageOrganizer default;
 			changesAnnouncer: SystemAnnouncer uniqueInstance]
 ]
 
@@ -127,7 +127,7 @@ ClySystemEnvironment >> compileANewClassFrom: newClassDefinitionString notifying
 	source code is defString. If any errors occur in compilation, notify
 	aController."
 
-	| newClassName newClass |
+	| newClassName newClass compiler |
 	newClassName := self extractNameFrom: newClassDefinitionString.
 	((self
 		  isOverridingExistingClassWhenDefiningClassNamed: newClassName
@@ -140,14 +140,17 @@ ClySystemEnvironment >> compileANewClassFrom: newClassDefinitionString notifying
 	On execution, some methods might be recompiled and cause issues:
 	* Warnings (undeclared/shadowed) are sillently passed, but should be fixed by the user later.
 	* Errors are unlikely (method should be already broken), but cause (resumable) syntax error for now."
-	newClass := (self classCompilerFor: oldClass)
+
+	compiler := (self classCompilerFor: oldClass)
 		            source: newClassDefinitionString;
 		            requestor: aController;
 		            failBlock: [ ^ nil ];
-		            logged: true;
-		            evaluate. 
-	"mild ugly hack for fluid classes"
-	(newClass isKindOf: ShiftClassBuilder) ifTrue: [ newClass := newClass fluidInstall ].
+		            logged: true.
+	
+	[newClass := compiler evaluate] 
+		on: Error do: [:e | self notifyErroInClassDefinition: e. ^ nil].
+
+	newClass := newClass fluidInstall.
 
 	"evaluation can lead to anything (just put a literal in the class defintion pane and accept), these are ignored"
 	^ (newClass isBehavior or: [ newClass isTrait ])
@@ -157,15 +160,11 @@ ClySystemEnvironment >> compileANewClassFrom: newClassDefinitionString notifying
 
 { #category : 'class management' }
 ClySystemEnvironment >> confirmToOverrideExistingClassNamed: newClassName [
-
 	"Attempting to define new class/trait over existing one when not looking at the original one in this browser..."
 
-	^ self confirm:
-		((newClassName , ' might have been edited from another editor.
+	^ self confirm: ((newClassName , ' might have been edited from another editor.
 Redefining it might override these changes.
-Is this really what you want to do?') asText
-			 makeBoldFrom: 1
-			 to: newClassName size)
+Is this really what you want to do?') asText makeBoldFrom: 1 to: newClassName size)
 ]
 
 { #category : 'package management' }
@@ -194,23 +193,7 @@ ClySystemEnvironment >> environment [
 { #category : 'class management' }
 ClySystemEnvironment >> extractNameFrom: aDefinitionString [
 
-	| defTokens keywdIx |
-	(self isFluidDefinition: aDefinitionString)
-		ifFalse: [
-			defTokens := aDefinitionString findTokens: Character separators.
-			(self isTraitDefinition: aDefinitionString)
-				ifFalse: [
-					keywdIx := defTokens findFirst: [ :x | x beginsWith: 'category' ].
-					keywdIx := defTokens findFirst: [ :x | '*subclass*' match: x ] ]
-				ifTrue: [
-					keywdIx := defTokens findFirst: [ :x | x = 'category' ].
-					keywdIx := defTokens findFirst: [ :x | x = 'named:' ] ].
-			^ (defTokens at: keywdIx + 1 ifAbsent: [ '' ]) copyWithoutAll:
-				  '#()' ]
-		ifTrue: [
-			defTokens := aDefinitionString findTokens:
-				             Character separators , '<#'.
-			^ defTokens at: 2 ifAbsent: [ '' ] ]
+	^ (aDefinitionString findTokens: Character separators , '<#') at: 2 ifAbsent: [ '' ]
 ]
 
 { #category : 'accessing' }
@@ -231,71 +214,14 @@ ClySystemEnvironment >> includesClassNamed: aSymbol [
 { #category : 'initialization' }
 ClySystemEnvironment >> initialize [
 	super initialize.
-	projectManager := ClyProjectManagerRegistry new
-]
-
-{ #category : 'compiling' }
-ClySystemEnvironment >> isClassDefinition: newClassDefinitionString [
-	| defTokens |
-	defTokens := newClassDefinitionString findTokens: Character separators.
-	^ (self class environment classNamed: defTokens first) isNotNil
-]
-
-{ #category : 'testing' }
-ClySystemEnvironment >> isFluidClassDefinition: classDefinitionString [
-
-	| splitted |
-	splitted := classDefinitionString splitOn: '<<'.
-	^ splitted size = 2 and: [
-		  splitted first trim ~= 'Trait' and: [
-			  '#*' match:
-				  (splitted second findTokens: Character separators) first ] ]
-]
-
-{ #category : 'testing' }
-ClySystemEnvironment >> isFluidDefinition: aDefinitionString [
-
-	^ (self isFluidClassDefinition: aDefinitionString) or: [
-		  self isFluidTraitDefinition: aDefinitionString ]
-]
-
-{ #category : 'testing' }
-ClySystemEnvironment >> isFluidTraitDefinition: traitDefinitionString [
-
-	| splitted |
-	splitted := traitDefinitionString splitOn: '<<'.
-	^ splitted size = 2 and: [
-		  splitted first trim = 'Trait' and: [
-			  '#*' match:
-				  (splitted second findTokens: Character separators) first ] ]
-]
-
-{ #category : 'testing' }
-ClySystemEnvironment >> isOldTraitDefinition: traitDefinitionString [
-
-	| defTokens |
-	defTokens := traitDefinitionString findTokens:
-		             Character separators.
-	^ defTokens size >= 2 and: [
-		  (defTokens first = 'Trait' and: [ defTokens second = 'named:' ])
-			  or: [ defTokens second = 'classTrait' ] ]
+	projectManager := ProjectManager new
 ]
 
 { #category : 'class management' }
 ClySystemEnvironment >> isOverridingExistingClassWhenDefiningClassNamed: newClassName startingFrom: oldClass [
-
 	"Attempting to define new class over existing one when not looking at the original one in this browser..."
 
-	^ (oldClass isNil or: [
-		   oldClass instanceSide name asString ~= newClassName ]) and: [
-		  self includesClassNamed: newClassName asSymbol ]
-]
-
-{ #category : 'testing' }
-ClySystemEnvironment >> isTraitDefinition: newClassDefinitionString [
-
-	^ (self isFluidTraitDefinition: newClassDefinitionString) or: [
-		  self isOldTraitDefinition: newClassDefinitionString ]
+	^ (oldClass isNil or: [ oldClass instanceSide name asString ~= newClassName ]) and: [ self includesClassNamed: newClassName asSymbol ]
 ]
 
 { #category : 'accessing' }
@@ -306,6 +232,28 @@ ClySystemEnvironment >> name [
 { #category : 'accessing' }
 ClySystemEnvironment >> name: anObject [
 	name := anObject
+]
+
+{ #category : 'ui' }
+ClySystemEnvironment >> notifyErroInClassDefinition: anError [ 
+
+	| text |
+
+	anError freeze.
+
+	text := ((anError isKindOf: MessageNotUnderstood) and: [ anError receiver isKindOf: ShiftClassBuilder ])
+		ifTrue: [ 'The selector {1} is unrecognized in your class definition.'
+		        format: { anError message selector } ]
+		ifFalse: [ anError messageText ].
+
+	SpConfirmDialog new
+		title: 'There is an error in your class definition';
+		label: text;
+		acceptLabel: 'Debug';
+		cancelLabel: 'Close';
+		onAccept: [ anError debug ];
+		openDialog
+		
 ]
 
 { #category : 'package management' }
@@ -351,12 +299,6 @@ ClySystemEnvironment >> projectManager: anObject [
 { #category : 'accessing' }
 ClySystemEnvironment >> projects [
 	^projectManager projects
-]
-
-{ #category : 'package management' }
-ClySystemEnvironment >> registerProjectManager: aPackageManager [
-	aPackageManager systemEnvironment: self.
-	projectManager registerProjectManager: aPackageManager
 ]
 
 { #category : 'subscription' }

@@ -340,7 +340,7 @@ FBDDecompiler >> interpret: seq1 then: seq2 distance: distance [
 			instructionStream advanceToFollowingPc ].
 
 	stackSize := simulatedStack size.
-	hasPopped := self interpretSeq: seq1 baseStackSize: stackSize distance: distance - topValue notNil asBit.
+	hasPopped := self interpretSeq: seq1 baseStackSize: stackSize distance: distance - topValue isNotNil asBit.
 	jmpSz := jumpSize.
 	jumpSize := 0.
 	topValue ifNotNil: [:e | simulatedStack addLast: e ].
@@ -585,7 +585,6 @@ FBDDecompiler >> recompile: selector from: oldClass [
 	| newMethod |
 	newMethod := oldClass compiler
 		             source: (self decompile: oldClass >> selector) formattedCode;
-		             class: oldClass;
 		             failBlock: [ ^ self ];
 		             compile. "Assume OK after proceed from SyntaxError"
 	selector == newMethod selector ifFalse: [ self error: 'selector changed!' ].

@@ -19,44 +19,6 @@ Class {
 	#tag : 'Kernel'
 }
 
-{ #category : 'default - color' }
-TestResult class >> defaultColorBackGroundForErrorTest [
-
-	^ Color red darker darker
-]
-
-{ #category : 'default - color' }
-TestResult class >> defaultColorBackGroundForFailureTest [
-
-	^ Color yellow darker darker darker
-]
-
-{ #category : 'default - color' }
-TestResult class >> defaultColorBackGroundForPassingTest [
-
-	^ Color green darker darker
-]
-
-{ #category : 'default - color' }
-TestResult class >> defaultColorText [
-	^ Color black
-]
-
-{ #category : 'default - color' }
-TestResult class >> defaultColorTextForErrorTest [
-	^ self defaultColorText
-]
-
-{ #category : 'default - color' }
-TestResult class >> defaultColorTextForFailureTest [
-	^ self defaultColorText
-]
-
-{ #category : 'default - color' }
-TestResult class >> defaultColorTextForPassingTest [
-	^ self defaultColorText
-]
-
 { #category : 'exceptions' }
 TestResult class >> error [
 	^self exError

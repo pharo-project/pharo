@@ -77,12 +77,9 @@ ClyNotebookPageMorph >> initialize [
 	super initialize.
 	closeable := false.
 	labelPresenter := ClyNotebookPageHeaderPresenter on: self.
-	self flag: #TODO. "I'm hardcoding this width because I need to keep this sizes consistent.
-	But this is not good, think a better way."
 	labelMorph := labelPresenter build
-		              hResizing: #rigid;
-		              width: 120 * self currentWorld displayScaleFactor;
-		              yourself
+		hResizing: #rigid;
+		yourself
 ]
 
 { #category : 'testing' }

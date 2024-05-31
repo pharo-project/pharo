@@ -282,7 +282,7 @@ CompiledCodeTest >> testLiteralsDoNotConsiderTheInnerBlockLiterals [
 	self assertCollection: method literals equals: {
 			2.
 			(UndeclaredVariable key: #test value: nil).
-			#runtimeUndeclaredWrite:.
+			#runtimeUndeclaredWrite:inContext:.
 			(GlobalVariable key: #Class value: Class).
 			block.
 			#doIt:.
@@ -325,11 +325,11 @@ CompiledCodeTest >> testLiteralsEvenTheOnesInTheInnerBlocks [
 		equals: {
 				2.
 				(UndeclaredVariable key: #test value: nil).
-				#runtimeUndeclaredWrite:.
+				#runtimeUndeclaredWrite:inContext:.
 				(GlobalVariable key: #Class value: Class).
 				2.
 				(UndeclaredVariable key: #test value: nil).
-				#runtimeUndeclaredWrite:.
+				#runtimeUndeclaredWrite:inContext:.
 				#( #arrayInBlock ).
 				(GlobalVariable key: #Object value: Object).
 				#name.
@@ -378,6 +378,25 @@ CompiledCodeTest >> testMethodReturnSpecial [
 
 	normalMethod := self class >> #method1.
 	self deny: normalMethod isReturnSpecial
+]
+
+{ #category : 'tests - instance creation' }
+CompiledCodeTest >> testNewFrom [ 
+
+	| method copy |
+	method := OrderedCollection>>#do:.
+	copy := CompiledMethod newFrom: method.
+	
+	self assert: method header equals: copy header.
+	self assert: method bytecodes equals: copy bytecodes.
+	self deny: method sourcePointer equals: copy sourcePointer.
+	
+	method := [ 1 ] method.
+	copy := CompiledBlock newFrom: method.
+	
+	self assert: method header equals: copy header.
+	self assert: method bytecodes equals: copy bytecodes
+	"blocks have no sourcePointer"
 ]
 
 { #category : 'tests - scanning' }

@@ -44,7 +44,7 @@ Integer class >> byte1: byte1 byte2: byte2 byte3: byte3 byte4: byte4 [
 { #category : 'testing' }
 Integer class >> isAbstract [
 
-	^self name = #Integer
+	^ self == Integer
 ]
 
 { #category : 'instance creation' }
@@ -338,11 +338,6 @@ Integer >> asFraction [
 ]
 
 { #category : 'converting' }
-Integer >> asHexDigit [
-	^'0123456789ABCDEF' at: self+1
-]
-
-{ #category : 'converting' }
 Integer >> asInteger [
 	"Answer with the receiver itself."
 
@@ -370,11 +365,6 @@ Integer >> asScaledDecimal [
 	^ ScaledDecimal newFromNumber: self scale: 0
 ]
 
-{ #category : 'converting' }
-Integer >> asSeconds [
-	^ Duration seconds: self
-]
-
 { #category : 'truncation and round off' }
 Integer >> asSmallerPowerOfTwo [
 	"Convert the receiver into a power of two which is not larger than the receiver"
@@ -382,38 +372,6 @@ Integer >> asSmallerPowerOfTwo [
 		ifTrue:[self]
 		ifFalse:[self > 0 ifTrue: [	1 bitShift: (self highBit - 1)]
 						ifFalse: [DomainError signal: 'Value outside (0 , infinity)' from: 0]]
-]
-
-{ #category : 'printing' }
-Integer >> asStringWithCommas [
-	"123456789 asStringWithCommas"
-	"-123456789 asStringWithCommas"
-	^ String streamContents: [:stream |
-		self printWithCommasOn: stream ]
-]
-
-{ #category : 'printing' }
-Integer >> asStringWithCommasSigned [
-	"123456789 asStringWithCommasSigned"
-	"-123456789 asStringWithCommasSigned"
-	^ String streamContents: [:stream |
-		self printWithCommasSignedOn: stream ]
-]
-
-{ #category : 'printing' }
-Integer >> asTwoCharacterString [
-	"Answer a two-character string representing the receiver, with leading zero if required.  Intended for use with integers in the range 0 to 99, but plausible replies given for other values too
-	Examples:
-		2 asTwoCharacterString
-		11 asTwoCharacterString
-		1943 asTwoCharacterString
-		0 asTwoCharacterString
-		-2 asTwoCharacterString
-		-234 asTwoCharacterString "
-
-	^ (self >= 0 and: [self < 10])
-		ifTrue:	['0', self printString]
-		ifFalse:	[self printString copyFrom: 1 to: 2]
 ]
 
 { #category : 'bit manipulation' }
@@ -662,13 +620,13 @@ Integer >> digitAdd: arg [
 { #category : 'accessing' }
 Integer >> digitAt: anExponent base: base [
 
-	"Return number that represents digit at given position.
-		42 digitAt: 2 base: 10 -> 4
-		42 digitAt: 1 base: 10 -> 1
-	It is always a number or zero:
-		16rFF digitAt: 1 base: 16 -> 15
-		1 digitAt: 2 base: 10 -> 0
-	Results are not defined for base smaller than 2 and non-integer arguments."
+	"Return number that represents digit at given position."
+		"(42 digitAt: 2 base: 10) >>> 4"
+		"(42 digitAt: 1 base: 10) >>> 2"
+	"It is always a number or zero:"
+		"(16rFF digitAt: 1 base: 16) >>> 15"
+		"(1 digitAt: 2 base: 10) >>> 0"
+	"Results are not defined for base smaller than 2 and non-integer arguments."
 
 	^ self // (base raisedToInteger: anExponent - 1) \\ base
 ]
@@ -1033,45 +991,6 @@ Integer >> hashMultiply [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'converting' }
-Integer >> hex [
-	"Returns a string representation of the receiver as hex, prefixed with 16r.
-	DO NOT CHANGE THIS!  The Cog VMMaker depends on this."
-
-	"Consider using any of
-		printStringHex
-		printStringBase: 16
-		printStringBase: 16 length: 8 padded: true
-		storeStringHex
-		storeStringBase: 16
-		storeStringBase: 16 length: 11 padded: true"
-
-	"12 hex >>> '16rC'"
-	"10 hex >>> '16rA'"
-	"-10 hex >>> '-16rA'"
-
-	^ self storeStringBase: 16
-]
-
-{ #category : 'converting' }
-Integer >> hexString [
-	"Returns a string representation of the receiver as hexadecimal, prefixed with 16r."
-
-	"Consider using any of
-		printStringHex
-		printStringBase: 16
-		printStringBase: 16 length: 8 padded: true
-		storeStringHex
-		storeStringBase: 16
-		storeStringBase: 16 length: 11 padded: true"
-
-	"12 hexString >>> '16rC'"
-	"10 hexString >>> '16rA'"
-	"-10 hexString >>> '-16rA'"
-
-	^ self storeStringBase: 16
-]
-
 { #category : 'bit manipulation' }
 Integer >> highBit [
 	"Answer the index of the high order bit of the receiver, or zero if the
@@ -1088,35 +1007,6 @@ Integer >> highBitOfMagnitude [
 	"Answer the index of the high order bit of the magnitude of the
 	receiver, or zero if the receiver is zero."
 	^ self subclassResponsibility
-]
-
-{ #category : 'converting' }
-Integer >> humanReadableSISizeOn: aStream [
-	"Print a SI representation of myself on the argument. See humanReadableSIByteSize for better comment."
-
-	| exponent base |
-	base := 1000.
-	self < base
-		ifTrue: [ ^ aStream print: self; space; nextPut: $B ].
-	exponent := (self log / base log) asInteger.
-	(self / (base ** exponent)) printOn: aStream showingDecimalPlaces: 2.
-	aStream
-		space;
-		nextPut: ('kMGTPE' at: exponent);
-		nextPut: $B
-]
-
-{ #category : 'converting' }
-Integer >> humanReadableSISizeString [
-	"Return the receiver as a string with SI binary (International System of Units) file size, e.g. '50 KB'. It means that it takes 1000 and not 1024 as unit as humanReadableByteSizeString does."
-
-	"(1000 * 1000 * 1000) humanReadableSISizeString >>> '1.00 GB'"
-	"(1000 * 1000 * 1000) humanReadableByteSizeString >>> '953.67 MB'"
-	"(1024 * 1024 * 1024) humanReadableSISizeString >>> '1.07 GB'"
-
-
-	^ String streamContents: [ :s|
-		self humanReadableSISizeOn: s ]
 ]
 
 { #category : 'testing' }
@@ -1185,14 +1075,6 @@ Integer >> normalize [
 ]
 
 { #category : 'printing' }
-Integer >> numberOfDigits [
-	"Return how many digits are necessary to print this number in base 10.
-	This does not count any place for minus sign, radix prefix or whatever."
-
-	^ self numberOfDigitsInBase: 10
-]
-
-{ #category : 'printing' }
 Integer >> numberOfDigitsInBase: b [
 	"Return how many digits are necessary to print this number in base b.
 	This does not count any place for minus sign, radix prefix or whatever.
@@ -1231,79 +1113,6 @@ Integer >> numerator [
 ]
 
 { #category : 'printing' }
-Integer >> print: positiveNumberString on: aStream prefix: prefix length: minimum padded: zeroFlag [
-	"Return a String based on concatenation of positiveNumberString with prefix then padded by 0 is zeroFlag is set for a minimum length."
-
-	"(String streamContents: [:s | 10 print: '10' on: s prefix: 'zz' length: 4 padded: true] ) >>> 'zz10'"
-
-
-	| padLength |
-	padLength := minimum - positiveNumberString size - prefix size.
-	padLength > 0
-		ifTrue: [zeroFlag
-						ifTrue: [aStream nextPutAll: prefix; nextPutAll: (String new: padLength withAll: $0)]
-						ifFalse: [aStream nextPutAll: (String new: padLength withAll: Character space); nextPutAll: prefix]]
-		ifFalse: [aStream nextPutAll: prefix].
-	aStream nextPutAll: positiveNumberString
-]
-
-{ #category : 'printing - numerative' }
-Integer >> printHexByteOn: characterWriteStream [
-	"Assuming the receiver is a byte value [0, 255],
-	print a 2 character hexadecimal representation on characterWriteStream
-	using the uppercase alphabet."
-
-	(self between: 0 and: 255)
-		ifTrue: [
-			| highNibble lowNibble hexDigits |
-			highNibble := self bitShift: -4.
-			lowNibble := self bitAnd: 15.
-			hexDigits := '0123456789ABCDEF'.
-			characterWriteStream
-				nextPut: (hexDigits at: highNibble + 1);
-				nextPut: (hexDigits at: lowNibble + 1) ]
-		ifFalse: [
-			self error: 'byte value between 0 and 255 expected' ]
-]
-
-{ #category : 'printing - numerative' }
-Integer >> printLowercaseHexByteOn: characterWriteStream [
-	"Assuming the receiver is a byte value [0, 255],
-	print a 2 character hexadecimal representation on characterWriteStream
-	using the lowercase alphabet."
-
-	(self between: 0 and: 255)
-		ifTrue: [
-			| highNibble lowNibble hexDigits |
-			highNibble := self bitShift: -4.
-			lowNibble := self bitAnd: 15.
-			hexDigits := '0123456789abcdef'.
-			characterWriteStream
-				nextPut: (hexDigits at: highNibble + 1);
-				nextPut: (hexDigits at: lowNibble + 1) ]
-		ifFalse: [
-			self error: 'byte value between 0 and 255 expected' ]
-]
-
-{ #category : 'printing - numerative' }
-Integer >> printOn: aStream base: base length: minimum padded: zeroFlag [
-	"Return a String representation of this number in base b with a minimum length and padded by 0 if zeroFlag is set"
-
-	"(String streamContents: [ :s | 10 printOn: s base: 10 length: 4 padded: true] ) >>> '0010'"
-	"(String streamContents: [ :s | -10 printOn: s base: 10 length: 4 padded: true] ) >>> '-010'"
-
-
-	| prefix |
-	prefix := self negative ifTrue: ['-'] ifFalse: [ '' ].
-	self
-		print: (self abs printStringBase: base)
-		on: aStream
-		prefix: prefix
-		length: minimum
-		padded: zeroFlag
-]
-
-{ #category : 'printing - numerative' }
 Integer >> printOn: aStream base: b nDigits: n [
 	"Append a representation of this number in base b on aStream using nDigits.
 	self must be positive."
@@ -1311,169 +1120,15 @@ Integer >> printOn: aStream base: b nDigits: n [
 	self subclassResponsibility
 ]
 
-{ #category : 'printing' }
-Integer >> printOn: outputStream base: baseInteger showRadix: flagBoolean [
-	"Write a sequence of characters that describes the receiver in radix
-	baseInteger with optional radix specifier.
-	The result is undefined if baseInteger less than 2 or greater than 36."
-
-	| tempString startPos |
-
-	tempString := self printStringRadix: baseInteger.
-	flagBoolean
-		ifTrue: [ ^ outputStream nextPutAll: tempString ].
-
-	startPos := (tempString indexOf: $r ifAbsent: [ self error: 'radix indicator not found.' ]) + 1.
-	self negative ifTrue: [ outputStream nextPut: $-] .
-	outputStream nextPutAll: (tempString copyFrom: startPos to: tempString size)
-]
-
-{ #category : 'printing' }
-Integer >> printOn: aStream showingDecimalPlaces: placesDesired [
-	"Same as super, but provides a faster implementation because fraction part and rounding are trivial."
-
-	self printOn: aStream base: 10.
-
-	placesDesired <= 0 ifTrue: [ ^ self ].
-
-	aStream nextPut: $..
-	placesDesired timesRepeat: [ aStream nextPut: $0 ]
-]
-
-{ #category : 'printing' }
-Integer >> printPaddedWith: aCharacter to: anInteger [
-	"Answer the string containing the ASCII representation of the receiver
-	padded on the left with aCharacter to be at least anInteger characters."
-
-	^ self
-		printPaddedWith: aCharacter
-		to: anInteger
-		base: 10
-]
-
-{ #category : 'printing' }
-Integer >> printPaddedWith: aCharacter to: anInteger base: aRadix [
-	"Answer the string containing the ASCII representation of the receiver
-	padded on the left with aCharacter to be at least anInteger characters."
-	| aStream padding digits |
-
-	aStream := (String new: 10) writeStream.
-	self
-		printOn: aStream
-		base: aRadix
-		showRadix: false.
-	digits := aStream contents.
-	padding := anInteger - digits size.
-	padding > 0 ifFalse: [^ digits].
-	^ ((String new: padding) atAllPut: aCharacter;
-	 yourself) , digits
-]
-
-{ #category : 'printing' }
-Integer >> printSeparatedBy: aDelimiter every: offset signed: printSigned base: base on: aStream [
-	| digits |
-	digits := self abs printStringBase: base.
-
-	self signBit = 1
-		ifTrue: [ aStream nextPut: $- ]
-		ifFalse: [ printSigned ifTrue: [ aStream nextPut: $+ ] ].
-
-	1 to: digits size do: [ :i |
-		aStream nextPut: (digits at: i).
-		(i < digits size and: [ (i - digits size) \\ offset = 0 ])
-			ifTrue: [ aStream nextPut: aDelimiter ] ]
-]
-
-{ #category : 'printing' }
-Integer >> printSeparatedBy: aDelimiter every: offset signed: printSigned on: aStream [
-	^ self printSeparatedBy: aDelimiter every: offset signed: printSigned base: 10 on: aStream
-]
-
-{ #category : 'printing' }
-Integer >> printString [
-	"For Integer, prefer the stream version to the string version for efficiency"
-
-	^String streamContents: [:str | self printOn: str base: 10]
-]
-
-{ #category : 'printing - numerative' }
-Integer >> printStringBase: base length: minimum padded: zeroFlag [
-
-	^ String streamContents: [:s| self printOn: s base: base length: minimum padded: zeroFlag]
-]
-
-{ #category : 'printing - numerative' }
-Integer >> printStringHex [
-	"Returns the hex digit part of the integer when printed in hexadecimal format."
-	"30 printStringHex >>> '1E'"
-	"30 hex >>> '16r1E'"
-
-	^ self printStringBase: 16
-]
-
-{ #category : 'printing - numerative' }
-Integer >> printStringLength: minimal [
-	^self printStringLength: minimal padded: false
-]
-
-{ #category : 'printing - numerative' }
-Integer >> printStringLength: minimal padded: zeroFlag [
-	^self printStringBase: 10 length: minimal padded: zeroFlag
-]
-
-{ #category : 'printing - numerative' }
-Integer >> printStringPadded: minimal [
-	^self printStringLength: minimal padded: true
-]
-
-{ #category : 'printing' }
-Integer >> printStringRadix: baseInteger [
-	"Return a string containing a sequence of characters that represents the
-	numeric value of the receiver in the radix specified by the argument.
-	If the receiver is negative, a minus sign ('-') is prepended to the
-	sequence of characters.
-	The result is undefined if baseInteger less than 2 or greater than 36."
-
-	| tempString |
-
-	baseInteger = 10
-		ifTrue: [
-			tempString := self storeStringBase: baseInteger.
-			^ self negative
-				ifTrue: [ '-10r' , (tempString copyFrom: 2 to: tempString size) ]
-				ifFalse: [ '10r' , tempString ]].
-
-	^ self storeStringBase: baseInteger
-]
-
-{ #category : 'printing' }
-Integer >> printWithCommasOn: aStream [
-	"123456789 asStringWithCommas"
-	"-123456789 asStringWithCommas"
-	^ self printSeparatedBy: $, every: 3 signed: false on: aStream
-]
-
-{ #category : 'printing' }
-Integer >> printWithCommasSignedOn: aStream [
-	"123456789 asStringWithCommasSigned"
-	"-123456789 asStringWithCommasSigned"
-	^ self printSeparatedBy: $, every: 3 signed: true on: aStream
-]
-
 { #category : 'arithmetic' }
 Integer >> quo: aNumber [
-	"Refer to the comment in Number quo: "
+	"Refer to the comment in Number#quo: "
 	| ng quo |
 	aNumber isInteger ifTrue:
 		[ng := self negative == aNumber negative == false.
 		quo := (self digitDiv: aNumber neg: ng) at: 1.
 		^ quo normalize].
 	^ aNumber adaptToInteger: self andSend: #quo:
-]
-
-{ #category : 'printing - numerative' }
-Integer >> radix: base [
-	^ self printStringBase: base
 ]
 
 { #category : 'arithmetic' }
@@ -1523,55 +1178,7 @@ Integer >> round: numberOfWishedDecimal [
 
 { #category : 'truncation and round off' }
 Integer >> rounded [
-	"Refer to the comment in Number|rounded."
-]
-
-{ #category : 'printing' }
-Integer >> storeOn: aStream [
-	self < 0
-		ifTrue: [ aStream space ].
-
-	super storeOn: aStream
-]
-
-{ #category : 'printing - numerative' }
-Integer >> storeOn: aStream base: base [
-	"Print a representation of the receiver on the stream
-	<aStream> in base <base> where
-	2 <= <baseInteger> <= 16. If <base> is other than 10
-	it is written first separated by $r followed by the number
-	like for example: 16rFCE2"
-
-	| integer |
-	integer := self negative
-		ifTrue: [aStream nextPut: $-. self negated]
-		ifFalse: [self].
-	base = 10 ifFalse: [aStream nextPutAll: base printString; nextPut: $r].
-	aStream nextPutAll: (integer printStringBase: base)
-]
-
-{ #category : 'printing - numerative' }
-Integer >> storeOn: aStream base: base length: minimum padded: zeroFlag [
-	| prefix |
-	prefix := self negative ifTrue: ['-'] ifFalse: [String new].
-	base = 10 ifFalse: [prefix := prefix, base printString, 'r'].
-	self print: (self abs printStringBase: base) on: aStream prefix: prefix length: minimum padded: zeroFlag
-]
-
-{ #category : 'printing - numerative' }
-Integer >> storeStringBase: base length: minimum padded: zeroFlag [
-	"(10 storeStringBase: 16 length: 6 padded: true) >>> '16r00A'"
-
-	^ String streamContents: [:s|
-			self storeOn: s base: base length: minimum padded: zeroFlag ]
-]
-
-{ #category : 'printing - numerative' }
-Integer >> storeStringHex [
-	"Returns a string representation of the receiver in base 16 in a way that executing it will return the receiver."
-	"10 storeStringHex >>> '16rA'"
-
-	^ self storeStringBase: 16
+	"Refer to the comment in Number#rounded."
 ]
 
 { #category : 'enumerating' }
@@ -1589,7 +1196,7 @@ Integer >> timesRepeat: aBlock [
 
 { #category : 'truncation and round off' }
 Integer >> truncated [
-	"Refer to the comment in Number|truncated."
+	"Refer to the comment in Number#truncated."
 ]
 
 { #category : 'bit manipulation' }

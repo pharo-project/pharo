@@ -30,11 +30,10 @@ fi
 
 if [ -z ${BOOTSTRAP_REPOSITORY+x} ]
 then
-  ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." ; pwd -P)"
-  export BOOTSTRAP_REPOSITORY="${ROOT_DIR}"
-else
-  ROOT_DIR="$(pwd -P)"
+  export BOOTSTRAP_REPOSITORY="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." ; pwd -P)"
 fi
+
+ROOT_DIR="$(pwd -P)/build"
 
 if [ -z ${BOOTSTRAP_CACHE+x} ]
 then

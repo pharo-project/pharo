@@ -28,7 +28,6 @@ AthensWorldMorph >> initialize [
 { #category : 'world state' }
 AthensWorldMorph >> restoreMorphicDisplay [
 "overwritten for using its own display dimension"
-	DisplayScreen startUp.
 
 	self
 		extent: self display extent;

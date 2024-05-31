@@ -68,10 +68,7 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		keyText: 'D';
 		selector: #debugIt;
 		help: nil;
-		iconName: #smallDebug.
-	(aBuilder item: #'Profile it' translated)
-		selector: #tallyIt;
-		iconName: #smallProfile;
+		iconName: #smallDebug;
 		withSeparatorAfter.
 	(aBuilder item: #'Find...' translated)
 		keyText: 'f';
@@ -185,8 +182,8 @@ RubSmalltalkCodeMode >> formatMethodCode [
 
 { #category : 'shout' }
 RubSmalltalkCodeMode >> hasBindingOf: aString [
-	" For the shout styler "
-	^ self model notNil and: [ self model hasBindingOf: aString ]
+	"For the shout styler"
+	^ self model isNotNil and: [ self model hasBindingOf: aString ]
 ]
 
 { #category : 'parsing' }

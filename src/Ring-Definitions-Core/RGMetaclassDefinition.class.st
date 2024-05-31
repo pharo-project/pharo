@@ -26,22 +26,11 @@ RGMetaclassDefinition >> allClassVarNames [
 	^self instanceSide allClassVarNames
 ]
 
-{ #category : 'variables' }
-RGMetaclassDefinition >> allSharedPoolNames [
-
-	^self instanceSide allSharedPoolNames
-]
-
 { #category : 'accessing' }
 RGMetaclassDefinition >> baseClass: aRGClassDefinition [
 
 	baseClass:= aRGClassDefinition.
 	self name: (baseClass name, ' class') asSymbol
-]
-
-{ #category : 'accessing' }
-RGMetaclassDefinition >> category [
-	^ self instanceSide category
 ]
 
 { #category : 'accessing - parallel hierarchy' }
@@ -89,12 +78,17 @@ RGMetaclassDefinition >> package [
 ]
 
 { #category : 'accessing' }
+RGMetaclassDefinition >> packageTag [
+	^ self instanceSide packageTag
+]
+
+{ #category : 'accessing' }
 RGMetaclassDefinition >> realClass [
 
 	^baseClass realClass classSide
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RGMetaclassDefinition >> storeOn: aStream [
 
 	aStream nextPut: $(.

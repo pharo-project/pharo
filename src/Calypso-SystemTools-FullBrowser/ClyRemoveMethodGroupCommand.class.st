@@ -25,18 +25,18 @@ ClyRemoveMethodGroupCommand class >> fullBrowserShortcutActivation [
 
 { #category : 'accessing' }
 ClyRemoveMethodGroupCommand >> defaultMenuIconName [
-	^#removeIcon
+	^#remove
 ]
 
 { #category : 'accessing' }
 ClyRemoveMethodGroupCommand >> defaultMenuItemName [
-	^'Remove 2222'
+	^'Remove'
 ]
 
 { #category : 'execution' }
 ClyRemoveMethodGroupCommand >> execute [
 
-	methodGroups do: #removeWithMethods
+	methodGroups do: [ :each | each removeWithMethods ]
 ]
 
 { #category : 'execution' }

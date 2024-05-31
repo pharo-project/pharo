@@ -110,11 +110,6 @@ OrderedCollection class >> new: anInteger [
 	^ self basicNew setCollection: (self arrayType new: anInteger)
 ]
 
-{ #category : 'stream creation' }
-OrderedCollection class >> new: size streamContents: aBlock [
-	^ self withAll: (super new: size streamContents: aBlock)
-]
-
 { #category : 'instance creation' }
 OrderedCollection class >> new: anInteger withAll: anObject [
 	^ self basicNew setContents: (self arrayType new: anInteger withAll: anObject)
@@ -269,6 +264,13 @@ OrderedCollection >> addLast: newObject [
 	^array at: lastIndex put: newObject
 ]
 
+{ #category : 'private' }
+OrderedCollection >> addNoSort: newObject [
+	"Add newObject to the end of the receiver. If the receiver is sorted, assume that this is the correct position--do not check sort order. Answer newObject."
+
+	^ self addLast: newObject
+]
+
 { #category : 'converting' }
 OrderedCollection >> asArray [
 	"Convert an OrderedCollection into an Array."
@@ -349,39 +351,39 @@ OrderedCollection >> collect: aBlock [
 	collection. Override superclass in order to use addLast:, not at:put:."
 
 	"(#(1 2 3) asOrderedCollection collect: [ :v | v * 10 ]) asArray >>> #(10 20 30)"
+
 	"(#(1 2 3) asOrderedCollection collect: [ :v | 10 ]) asArray >>> #(10 10 10)"
 
 	| newCollection |
-	newCollection := self species new: self size.
-	firstIndex to: lastIndex do:
-		[:index |
-		newCollection addLast: (aBlock value: (array at: index))].
+	newCollection := self speciesForTransform new: self size.
+	firstIndex to: lastIndex do: [ :index |
+	newCollection addLast: (aBlock value: (array at: index)) ].
 	^ newCollection
 ]
 
 { #category : 'enumerating' }
 OrderedCollection >> collect: aBlock from: fromIndex to: toIndex [
 	"Override superclass in order to use addLast:, not at:put:."
+
 	| result |
 	self ensureBoundsFrom: fromIndex to: toIndex.
-	result := self species new: toIndex - fromIndex + 1.
-	firstIndex + fromIndex - 1 to: firstIndex + toIndex - 1 do:
-		[:index | result addLast: (aBlock value: (array at: index))].
+	result := self speciesForTransform new: toIndex - fromIndex + 1.
+	firstIndex + fromIndex - 1 to: firstIndex + toIndex - 1 do: [ :index |
+	result addLast: (aBlock value: (array at: index)) ].
 	^ result
 ]
 
 { #category : 'enumerating' }
 OrderedCollection >> collect: collectBlock thenSelect: selectBlock [
-    "Optimized version Collection>>#collect:thenSelect:"
+	"Optimized version Collection>>#collect:thenSelect:"
 
-    | newCollection newElement |
-
-    newCollection := self copyEmpty.
-    firstIndex to: lastIndex do: [ :index |
+	| newCollection newElement |
+	newCollection := self speciesForTransform new.
+	firstIndex to: lastIndex do: [ :index |
 		newElement := collectBlock value: (array at: index).
-		(selectBlock value: newElement)
-			ifTrue: [ newCollection addLast: newElement ]].
-    ^ newCollection
+		(selectBlock value: newElement) ifTrue: [
+			newCollection addLast: newElement ] ].
+	^ newCollection
 ]
 
 { #category : 'private' }
@@ -478,12 +480,6 @@ OrderedCollection >> ensureBoundsFrom: fromIndex to: toIndex [
 ]
 
 { #category : 'private' }
-OrderedCollection >> errorConditionNotSatisfied [
-
-	self error: 'no element satisfies condition'
-]
-
-{ #category : 'private' }
 OrderedCollection >> find: oldObject [
   "  This method answers an index in the range firstIndex .. lastIndex, which is meant for internal use only.
      Never use this method in your code, the methods for public use are:
@@ -571,13 +567,18 @@ OrderedCollection >> insert: anObject before: spot [
 
 { #category : 'splitjoin' }
 OrderedCollection >> join: aCollection [
-	"Append the elements of the argument, aSequenceableCollection, separating them by the receiver."
+	"Append the elements of the argument, aSequenceableCollection, separating them by the receiver.
+	Note that we always return an OrderedCollection, not a SortedCollection--the interleaved order
+	of the result is the whole point, here."
 
 	| result |
-	result := self class new.
+	"Lower-bound guess at the size of the result, assuming aCollection is 'flat'--
+	no nested collections."
+	result := self speciesForTransform new:
+		          aCollection size + (self size * (aCollection size - 1)).
 	aCollection
-		do: [:each | each appendTo: result]
-		separatedBy: [self appendTo: result].
+		do: [ :each | each appendTo: result ]
+		separatedBy: [ self appendTo: result ].
 	^ result
 ]
 
@@ -653,26 +654,25 @@ OrderedCollection >> reject: rejectBlock [
 
 	firstIndex to: lastIndex do: [ :index |
 		(rejectBlock value: (element := array at: index))
-			ifFalse: [ newCollection addLast: element ]].
+			ifFalse: [ newCollection addNoSort: element ]].
 
 	^ newCollection
 ]
 
 { #category : 'enumerating' }
 OrderedCollection >> reject: rejectBlock thenCollect: collectBlock [
-    " Optimized version of Collection>>#reject:thenCollect: "
+	" Optimized version of Collection>>#reject:thenCollect: "
 
 	| newCollection |
+	newCollection := self speciesForTransform new.
 
-    newCollection := self copyEmpty.
-
-    firstIndex to: lastIndex do: [ :index |
+	firstIndex to: lastIndex do: [ :index |
 		| element |
 		element := array at: index.
-		(rejectBlock value: element)
-			ifFalse: [ newCollection addLast: (collectBlock value: element) ]].
+		(rejectBlock value: element) ifFalse: [
+			newCollection addLast: (collectBlock value: element) ] ].
 
-    ^ newCollection
+	^ newCollection
 ]
 
 { #category : 'removing' }
@@ -719,26 +719,6 @@ OrderedCollection >> removeAt: index [
 	removed := self at: index.
 	self removeIndex: index + firstIndex - 1.
 	^removed
-]
-
-{ #category : 'removing' }
-OrderedCollection >> removeDuplicates [
-	"Remove the copies of elements, but keep the same order"
-
-	"#(7 42 7 42 9) asOrderedCollection removeDuplicates asArray >>> #(7 42 9)"
-	"#(1 2 3) asOrderedCollection removeDuplicates asArray >>> #(1 2 3)"
-
-	| iterator seen |
-	self ifEmpty: [ ^ self ].
-	iterator := 1.
-	seen := Set new.
-	[ iterator <= self size ]
-		whileTrue: [ | each |
-			each := self at: iterator.
-			(seen includes: each)
-				ifTrue: [ self removeAt: iterator ]
-				ifFalse: [ seen add: each. iterator := iterator + 1. ].
-	 ]
 ]
 
 { #category : 'removing' }
@@ -834,11 +814,12 @@ OrderedCollection >> reverseDo: aBlock [
 { #category : 'converting' }
 OrderedCollection >> reversed [
 	"Answer a copy of the receiver with element order reversed.  "
+
 	"#(2 3 4 'fred') asOrderedCollection reversed >>> #('fred' 4 3 2) asOrderedCollection"
+
 	| newCol |
-	newCol := self species new.
-	self reverseDo:
-		[:elem | newCol addLast: elem].
+	newCol := self speciesForTransform new: self size.
+	self reverseDo: [ :elem | newCol addLast: elem ].
 	^ newCol
 ]
 
@@ -852,25 +833,24 @@ OrderedCollection >> select: selectBlock [
 
 	firstIndex to: lastIndex do: [ :index |
 		(selectBlock value: (element := array at: index))
-			ifTrue: [ newCollection addLast: element ]].
+			ifTrue: [ newCollection addNoSort: element ]].
 
 	^ newCollection
 ]
 
 { #category : 'enumerating' }
 OrderedCollection >> select: selectBlock thenCollect: collectBlock [
-    " Optimized version Collection>>#select:thenCollect: "
+	" Optimized version Collection>>#select:thenCollect: "
 
 	| newCollection element |
+	newCollection := self speciesForTransform new.
 
-    newCollection := self copyEmpty.
-
-    firstIndex to: lastIndex do: [ :index |
+	firstIndex to: lastIndex do: [ :index |
 		element := array at: index.
-		(selectBlock value: element)
-			ifTrue: [ newCollection addLast: (collectBlock value: element) ]].
+		(selectBlock value: element) ifTrue: [
+			newCollection addLast: (collectBlock value: element) ] ].
 
-    ^ newCollection
+	^ newCollection
 ]
 
 { #category : 'private' }
@@ -907,16 +887,26 @@ OrderedCollection >> sort: aSortBlock [
 		by: aSortBlock
 ]
 
+{ #category : 'private' }
+OrderedCollection >> speciesForTransform [
+	"Answer the preferred class for a transformation of the receiver (the output of a #collect: or similar). This may differ from the regular #species, as the transformed elements may no longer be compatible with the receiver in some way. For example, when transforming the elements of a SortedCollection, the result may no longer be sorted, or indeed sortable."
+
+	^ self species
+]
+
 { #category : 'enumerating' }
 OrderedCollection >> with: otherCollection collect: twoArgBlock [
 	"Collect and return the result of evaluating twoArgBlock with
 	corresponding elements from this collection and otherCollection."
+
 	| result |
-	otherCollection size = self size ifFalse: [self error: 'otherCollection must be the same size'].
-	result := self species new: self size.
-	1 to: self size do:
-		[:index | result addLast: (twoArgBlock value: (self at: index)
-									value: (otherCollection at: index))].
+	otherCollection size = self size ifFalse: [
+		self error: 'otherCollection must be the same size' ].
+	result := self speciesForTransform new: self size.
+	1 to: self size do: [ :index |
+		result addLast: (twoArgBlock
+				 value: (self at: index)
+				 value: (otherCollection at: index)) ].
 	^ result
 ]
 
@@ -925,17 +915,16 @@ OrderedCollection >> withIndexCollect: elementAndIndexBlock [
 	"Just like with:collect: except that the iteration index supplies the second argument to the block. Override superclass in order to use addLast:, not at:put:."
 
 	| newCollection |
-	newCollection := self species new: self size.
-	firstIndex to: lastIndex do:
-		[:index |
+	newCollection := self speciesForTransform new: self size.
+	firstIndex to: lastIndex do: [ :index |
 		newCollection addLast: (elementAndIndexBlock
-			value: (array at: index)
-			value: index - firstIndex + 1)].
+				 value: (array at: index)
+				 value: index - firstIndex + 1) ].
 	^ newCollection
 ]
 
 { #category : 'enumerating' }
-OrderedCollection >> withIndexSelect: elementAndIndexBlock select: selectBlock [
+OrderedCollection >> withIndexSelect: elementAndIndexBlock [
 	"Optimized version of SequenceableCollection>>#withIndexSelect: "
 
 	"(#('We' 'love' 'pharo!') asOrderedCollection withIndexSelect: [:value :index | value size - 1 <= index]) >>> (OrderedCollection with: 'We')"
@@ -943,7 +932,7 @@ OrderedCollection >> withIndexSelect: elementAndIndexBlock select: selectBlock [
 	| newCollection element |
 	newCollection := self copyEmpty.
 	firstIndex to: lastIndex do: [ :index |
-		(selectBlock value: (element := array at: index) value: index)
-			ifTrue: [ newCollection addLast: element ] ].
+		(elementAndIndexBlock value: (element := array at: index) value: index)
+			ifTrue: [ newCollection addNoSort: element ] ].
 	^ newCollection
 ]

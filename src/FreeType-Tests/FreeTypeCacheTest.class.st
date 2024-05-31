@@ -230,17 +230,18 @@ FreeTypeCacheTest >> testMaximumSizeRespectedOnIfAbsentPut [
 		ifAbsentPut: [font1XGlyph].
 	self validateSizes: cache.
 	self validateCollections: cache.
+	self assert: (cache instVarNamed: #used) equals: (cache sizeOf: font1XGlyph).
 	cache
 		atFont: font1
 		charCode: $Y asInteger
 		type: FreeTypeCacheGlyph
 		scale: 1
 		ifAbsentPut: [font1XGlyph].
-	self assert: (cache instVarNamed: #used) equals: 0.	"cache has been cleared on reaching max size"
+	self assert: (cache instVarNamed: #used) equals: (cache sizeOf: font1XGlyph). "cache has been shrunk on reaching max size"
 	self validateSizes: cache.
 	self validateCollections: cache.
 	self should: [ cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph scale: 1 ] raise: Error.
-	self should: [ cache atFont: font1 charCode: $Y asInteger type: FreeTypeCacheGlyph scale: 1 ] raise: Error
+	self assert: (cache atFont: font1 charCode: $Y asInteger type: FreeTypeCacheGlyph scale: 1) identicalTo: font1XGlyph.
 ]
 
 { #category : 'tests' }
@@ -255,17 +256,18 @@ FreeTypeCacheTest >> testMaximumSizeRespectedOnPut [
 		put: font1XGlyph.
 	self validateSizes: cache.
 	self validateCollections: cache.
+	self assert: (cache instVarNamed: #used) equals: (cache sizeOf: font1XGlyph).
 	cache
 		atFont: font1
 		charCode: $Y asInteger
 		type: FreeTypeCacheGlyph
 		scale: 1
 		put: font1XGlyph.
-	self assert: (cache instVarNamed: #used) equals: 0.	"cache has been cleared on reaching max size"
+	self assert: (cache instVarNamed: #used) equals: (cache sizeOf: font1XGlyph). "cache has been shrunk on reaching max size"
 	self validateSizes: cache.
 	self validateCollections: cache.
 	self should: [ cache atFont: font1 charCode: $X asInteger type: FreeTypeCacheGlyph scale: 1 ] raise: Error.
-	self should: [ cache atFont: font1 charCode: $Y asInteger type: FreeTypeCacheGlyph scale: 1 ] raise: Error
+	self assert: (cache atFont: font1 charCode: $Y asInteger type: FreeTypeCacheGlyph scale: 1) identicalTo: font1XGlyph.
 ]
 
 { #category : 'tests' }
@@ -456,22 +458,24 @@ FreeTypeCacheTest >> testRemoveAllForFont [
 	| fifo |
 	fullCache maximumSize: nil.
 	1 to: 100 do:[:i |
-		fullCache atFont: font1 charCode: i type: 1 scale: 1 put: font1XGlyph].
+		fullCache atFont: font1 charCode: i type: 1 scale: 1 put: font1XGlyph.
+		fullCache atFont: font1 charCode: i type: 1 scale: 2 put: font1XGlyph].
 	1 to: 100 do:[:i |
-		fullCache atFont: font2 charCode: i type: 2 scale: 1 put: font1YGlyph].
+		fullCache atFont: font2 charCode: i type: 2 scale: 1 put: font1YGlyph.
+		fullCache atFont: font2 charCode: i type: 2 scale: 2 put: font1YGlyph].
 	1 to: 100 do:[:i |
 		fullCache atFont: font3 charCode: i type: 3 scale: 1 put: font1ZGlyph].
 	fifo := fullCache instVarNamed: #fifo.
-	self assert: (fifo detect:[:each | each font = font1] ifNone:[]) notNil.
-	self assert: (fifo detect:[:each | each font = font2] ifNone:[]) notNil.
-	self assert: (fifo detect:[:each | each font = font3] ifNone:[]) notNil.
+	self assert: (fifo detect:[:each | each font = font1] ifNone:[]) isNotNil.
+	self assert: (fifo detect:[:each | each font = font2] ifNone:[]) isNotNil.
+	self assert: (fifo detect:[:each | each font = font3] ifNone:[]) isNotNil.
 	fullCache removeAllForFont: font1.
 	self validateSizes: fullCache.
 	self validateCollections: fullCache.
 	fifo := (fullCache instVarNamed: #fifo).
 	self assert: (fifo detect:[:each | each font = font1] ifNone:[]) isNil.
-	self assert: (fifo detect:[:each | each font = font2] ifNone:[]) notNil.
-	self assert: (fifo detect:[:each | each font = font2] ifNone:[]) notNil
+	self assert: (fifo detect:[:each | each font = font2] ifNone:[]) isNotNil.
+	self assert: (fifo detect:[:each | each font = font2] ifNone:[]) isNotNil
 ]
 
 { #category : 'tests' }
@@ -480,22 +484,24 @@ FreeTypeCacheTest >> testRemoveAllForType [
 	| fifo |
 	fullCache maximumSize: nil.
 	1 to: 100 do:[:i |
-		fullCache atFont: font1 charCode: i type: 1 scale: 1 put: font1XGlyph].
+		fullCache atFont: font1 charCode: i type: 1 scale: 1 put: font1XGlyph.
+		fullCache atFont: font1 charCode: i type: 1 scale: 2 put: font1XGlyph].
 	1 to: 100 do:[:i |
-		fullCache atFont: font2 charCode: i type: 2 scale: 1 put: font1YGlyph].
+		fullCache atFont: font2 charCode: i type: 2 scale: 1 put: font1YGlyph.
+		fullCache atFont: font2 charCode: i type: 2 scale: 2 put: font1YGlyph].
 	1 to: 100 do:[:i |
 		fullCache atFont: font3 charCode: i type: 3 scale: 1 put: font1ZGlyph].
 	fifo := fullCache instVarNamed: #fifo.
-	self assert: (fifo detect:[:each | each type = 1] ifNone:[]) notNil.
-	self assert: (fifo detect:[:each | each type = 2] ifNone:[]) notNil.
-	self assert: (fifo detect:[:each | each type = 3] ifNone:[]) notNil.
+	self assert: (fifo detect:[:each | each type = 1] ifNone:[]) isNotNil.
+	self assert: (fifo detect:[:each | each type = 2] ifNone:[]) isNotNil.
+	self assert: (fifo detect:[:each | each type = 3] ifNone:[]) isNotNil.
 	fullCache removeAllForType: 1.
 	self validateSizes: fullCache.
 	self validateCollections: fullCache.
 	fifo := (fullCache instVarNamed: #fifo).
 	self assert: (fifo detect:[:each | each type = 1] ifNone:[]) isNil.
-	self assert: (fifo detect:[:each | each type = 2] ifNone:[]) notNil.
-	self assert: (fifo detect:[:each | each type = 3] ifNone:[]) notNil
+	self assert: (fifo detect:[:each | each type = 2] ifNone:[]) isNotNil.
+	self assert: (fifo detect:[:each | each type = 3] ifNone:[]) isNotNil
 ]
 
 { #category : 'tests' }
@@ -540,7 +546,7 @@ FreeTypeCacheTest >> testSetMaximumSizeShrink [
 	| m |
 	m := fullCache instVarNamed: #maximumSize.
 	fullCache maximumSize: m // 2.	"shrink"
-	self assert: (fullCache instVarNamed: #used) equals: 0.	"cache is cleared when used > maximumSize"
+	self assert: (fullCache instVarNamed: #used) equals: 5 * (fullCache sizeOf: font1YGlyph). "cache is shrunk when used > maximumSize"
 	self validateSizes: fullCache.
 	self validateCollections: fullCache
 ]
@@ -572,8 +578,14 @@ FreeTypeCacheTest >> validateCollections: aFreeTypeCache [
 	fifo := aFreeTypeCache instVarNamed: #fifo.
 	lastLink := fifo instVarNamed: #lastLink.
 	fontTableEntries := Set new.
-	fontTable keysAndValuesDo: [ :k1 :v1 | v1 keysAndValuesDo: [ :k2 :v2 | v2 keysAndValuesDo: [ :k3 :v3 | v3 keysAndValuesDo: [ :k4 :v4 |
-		fontTableEntries add: v4 ] ] ] ].
+	fontTable keysAndValuesDo: [ :k1 :v1 |
+		self denyEmpty: v1.
+		v1 keysAndValuesDo: [ :k2 :v2 |
+			self denyEmpty: v2.
+			v2 keysAndValuesDo: [ :k3 :v3 |
+				self denyEmpty: v3.
+				v3 keysAndValuesDo: [ :k4 :v4 |
+					fontTableEntries add: v4 ] ] ] ].
 	self assert: fifo size equals: fontTableEntries size.
 	self assert: fifo asSet equals: fontTableEntries.
 	self assert: (lastLink isNil or: [ lastLink nextLink isNil ])

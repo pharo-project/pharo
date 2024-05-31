@@ -195,6 +195,8 @@ RGEnvironment >> cleanUnusedUnreferencedPackages [
 		referenced addAll: each referencedPackages ].
 
 	unreferenced := (self ask packages copyWithoutAll: referenced).
+	"Do not skip packages that only have extension methods..."
+	unreferenced := unreferenced reject: [ :e | e definedBehaviors isEmpty and: [ e extensionMethods notEmpty ] ].
 
 	unreferenced do: [:each | self removePackage: each  ].
 
@@ -354,19 +356,19 @@ RGEnvironment >> ensureClassNamed: aSymbol [
 RGEnvironment >> ensureClassTrait [
 
 	| aClassTrait |
-
+	
 	aClassTrait := self ask behaviorNamed: #ClassTrait.
 	aClassTrait ifNotNil: [ ^ aClassTrait ].
-
-	aClassTrait := self ask behaviors detect: [ :each |
+	
+	aClassTrait := self ask behaviors detect: [ :each | 
 		(each propertyNamed: #ClassTrait ifAbsent: [ false ]) ] ifNone: [ nil ].
 	aClassTrait ifNotNil: [ ^ aClassTrait ].
 
-	aClassTrait := self ensureClassNamed: #ClassTrait.
-
-	aClassTrait propertyNamed: #ClassTrait put: true.
-
-	^ aClassTrait
+	aClassTrait := self ensureClassNamed: #ClassTrait.	
+	
+	aClassTrait propertyNamed: #ClassTrait put: true.	
+	
+	^ aClassTrait.
 ]
 
 { #category : 'cleaning' }
@@ -416,7 +418,7 @@ RGEnvironment >> ensureMetaclassTraitNamed: aSymbol [
 	self assert: (aSymbol endsWith: ' classTrait').
 
 	found := self ask behaviorNamedExactlyAs: aSymbol.
-	(found notNil and: [ found isMetaclassTrait ]) ifTrue: [ ^ found ].
+	(found isNotNil and: [ found isMetaclassTrait ]) ifTrue: [ ^ found ].
 
 	^ found
 		ifNil: [
@@ -524,7 +526,7 @@ RGEnvironment >> ensureTraitNamed: aSymbol [
 
 	"a trait with the same name already exists"
 	found := self ask behaviorNamedExactlyAs: aSymbol.
-	(found notNil and: [ found isTrait ]) ifTrue: [ ^ found ].
+	(found isNotNil and: [ found isTrait ]) ifTrue: [ ^ found ].
 
 	^ found
 		ifNil: [
@@ -778,7 +780,7 @@ RGEnvironment >> removeBehavior: anRGBehavior [
 	anRGBehavior extensions do: [ :each |
 		each package removeExtensionMethod: each ].
 
-	(anRGBehavior package notNil and: [anRGBehavior package  definedBehaviors includes: anRGBehavior]) ifTrue: [
+	(anRGBehavior package isNotNil and: [anRGBehavior package  definedBehaviors includes: anRGBehavior]) ifTrue: [
 	anRGBehavior package removeDefinedBehavior: anRGBehavior.
 	].
 
@@ -825,16 +827,12 @@ RGEnvironment >> removeUnusedPackages [
 
 { #category : 'cleaning' }
 RGEnvironment >> unifyClassTrait [
-
 	"set all metaclasses of classTraits to the same object (ClassTrait) "
 
 	| aTrait |
-
 	aTrait := self ensureClassTrait.
 
-	self ask behaviorsDo: [ :each |
-		(each isMetaclassTrait)
-			ifTrue: [ each metaclass: aTrait]]
+	self ask behaviorsDo: [ :each | each isMetaclassTrait ifTrue: [ each metaclass: aTrait ] ]
 ]
 
 { #category : 'cleaning' }

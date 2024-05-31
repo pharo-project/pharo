@@ -42,11 +42,17 @@ CairoFontMetricsProvider >> cairoFont [
 
 { #category : 'private' }
 CairoFontMetricsProvider >> convertString: utf8String len: strlen ofFont: aScaledFont toGlyphs: glyphs numGlyphs: numGlyphs x: x y: y [
-"
-all of this for using
-http://www.cairographics.org/manual/cairo-User-Fonts.html#cairo-user-scaled-font-text-to-glyphs-func-t
-
-"
+	"cairo_status_t
+	cairo_scaled_font_text_to_glyphs (cairo_scaled_font_t *scaled_font,
+                                  double x,
+                                  double y,
+                                  const char *utf8,
+                                  int utf8_len,
+                                  cairo_glyph_t **glyphs,
+                                  int *num_glyphs,
+                                  cairo_text_cluster_t **clusters,
+                                  int *num_clusters,
+                                  cairo_text_cluster_flags_t *cluster_flags);"
 	^ self ffiCall: #(
 		cairo_status_t cairo_scaled_font_text_to_glyphs (CairoScaledFont aScaledFont,
 			double x,
@@ -55,9 +61,9 @@ http://www.cairographics.org/manual/cairo-User-Fonts.html#cairo-user-scaled-font
 			int strlen,
 			void ** glyphs,
 			int * numGlyphs,
-			NULL,
-			NULL,
-			NULL))
+			void* 0,
+			void* 0,
+			void* 0))
 ]
 
 { #category : 'accessing' }

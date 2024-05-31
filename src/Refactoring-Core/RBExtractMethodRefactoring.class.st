@@ -33,6 +33,15 @@ RBExtractMethodRefactoring class >> extract: anInterval from: aSelector in: aCla
 ]
 
 { #category : 'instance creation' }
+RBExtractMethodRefactoring class >> extractSource: aString from: aSelector in: aClass [ 
+
+	^ self new
+		extractSource: aString 
+		from: aSelector
+		in: aClass
+]
+
+{ #category : 'instance creation' }
 RBExtractMethodRefactoring class >> model: aRBSmalltalk extract: anInterval from: aSelector in: aClass [
 	^ self new
 		model: aRBSmalltalk;
@@ -40,6 +49,30 @@ RBExtractMethodRefactoring class >> model: aRBSmalltalk extract: anInterval from
 			from: aSelector
 			in: aClass;
 		yourself
+]
+
+{ #category : 'instance creation' }
+RBExtractMethodRefactoring class >> model: aRBSmalltalk extractSource: aString from: aSelector in: aClass [
+	^ self new
+		model: aRBSmalltalk;
+		extractSource: aString
+		from: aSelector
+		in: aClass;
+		yourself
+]
+
+{ #category : 'preconditions' }
+RBExtractMethodRefactoring >> applicabilityPreconditions [
+
+	^ {
+		  (RBCondition definesSelector: selector in: class).
+		  (RBCondition withBlock: [
+			   self extractMethod.
+			   self checkSpecialExtractions.
+			   self checkReturn.
+			   needsReturn ifTrue: [ extractedParseTree addReturn ].
+			   self checkTemporaries.
+			   true ]) }
 ]
 
 { #category : 'transforming' }
@@ -64,9 +97,11 @@ RBExtractMethodRefactoring >> checkAssignments: variableNames [
 
 { #category : 'transforming' }
 RBExtractMethodRefactoring >> checkReturn [
-	needsReturn := self placeholderNode isUsed.
+	needsReturn := self placeholderNode isUsedAsReturnValue.
 	extractedParseTree containsReturn ifFalse: [^self].
 	extractedParseTree lastIsReturn ifTrue: [^self].
+	"Since we have a return that is not last in the extracted tree,
+	extraction is only possible if the modified method's last statement is being extracted"
 	(modifiedParseTree isLast: self placeholderNode)
 		ifFalse:
 			[self refactoringError: 'Couldn''t extract code since it contains a return.'].
@@ -215,6 +250,14 @@ RBExtractMethodRefactoring >> extractMethod [
 				onInterval: extractionInterval ]
 ]
 
+{ #category : 'instance creation' }
+RBExtractMethodRefactoring >> extractSource: aString from: aSelector in: aClass [ 
+
+	class := self classObjectFor: aClass.
+	selector := aSelector.
+	extractionInterval := self getIntervalForSource: aString
+]
+
 { #category : 'accessing' }
 RBExtractMethodRefactoring >> extractedParseTree [
 	^ extractedParseTree
@@ -224,10 +267,26 @@ RBExtractMethodRefactoring >> extractedParseTree [
 RBExtractMethodRefactoring >> getExtractedSource [
 	| source |
 	source := class sourceCodeFor: selector.
+	source ifNil: [ self refactoringError: 'Invalid source' ].
 	((extractionInterval first between: 1 and: (self startLimit: source size))
 		and: [extractionInterval last between: 1 and: source size])
 			ifFalse: [self refactoringError: 'Invalid interval'].
 	^source copyFrom: extractionInterval first to: extractionInterval last
+]
+
+{ #category : 'transforming' }
+RBExtractMethodRefactoring >> getIntervalForSource: aString [
+	"I return interval where aString is situated in the `selector`"
+
+	| method expression searcher matchedNode |
+	method := class methodFor: selector.
+	expression := RBParser parseExpression: aString.
+
+	searcher := RBParseTreeSearcher new.
+	searcher matchesTree: expression do: [ :aNode :answer | aNode ].
+	matchedNode := searcher executeTree: method ast.
+	matchedNode ifNil: [ self refactoringError: 'Could not find given source in the method.' ].
+	^ matchedNode start to: matchedNode stop
 ]
 
 { #category : 'transforming' }
@@ -267,22 +326,23 @@ RBExtractMethodRefactoring >> isMethodEquivalentTo: aSelector [
 
 { #category : 'transforming' }
 RBExtractMethodRefactoring >> isParseTreeEquivalentTo: aSelector [
+
 	| tree definingClass |
-	definingClass := class whoDefinesMethod: aSelector.
+	definingClass := class whichClassIncludesSelector: aSelector.
 	tree := definingClass parseTreeForSelector: aSelector.
-	tree ifNil: [^false].
-	tree isPrimitive ifTrue: [^false].
+	tree ifNil: [ ^ false ].
+	tree isPrimitive ifTrue: [ ^ false ].
 	needsReturn ifFalse: [ tree := self removeReturnsOf: tree ].
-	(tree body equalTo: extractedParseTree body
-		exceptForVariables: (tree arguments collect: [:each | each name]))
-			ifFalse: [^false].
-	(definingClass = class or:
-			[(tree superMessages anySatisfy:
-					[:each |
-					(class superclass whichClassIncludesSelector: aSelector)
-						~= (definingClass superclass whichClassIncludesSelector: each)]) not])
-		ifFalse: [^false].
-	^self shouldUseExistingMethod: aSelector
+	(tree body
+		 equalTo: extractedParseTree body
+		 exceptForVariables: (tree arguments collect: [ :each | each name ]))
+		ifFalse: [ ^ false ].
+	(definingClass = class or: [
+		 (tree superMessages anySatisfy: [ :each |
+			  (class superclass whichClassIncludesSelector: aSelector)
+			  ~= (definingClass superclass whichClassIncludesSelector: each) ])
+			 not ]) ifFalse: [ ^ false ].
+	^ true
 ]
 
 { #category : 'accessing' }
@@ -348,18 +408,6 @@ RBExtractMethodRefactoring >> placeholderNode [
 		in: modifiedParseTree.
 	node ifNil: [ self refactoringError: 'Cannot extract code' ].
 	^ node
-]
-
-{ #category : 'preconditions' }
-RBExtractMethodRefactoring >> preconditions [
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition withBlock:
-					[self extractMethod.
-					self checkSpecialExtractions.
-					self checkReturn.
-					needsReturn ifTrue: [extractedParseTree addReturn].
-					self checkTemporaries.
-					true])
 ]
 
 { #category : 'transforming' }
@@ -436,7 +484,7 @@ RBExtractMethodRefactoring >> startLimit: aNumber [
 	^ aNumber
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBExtractMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

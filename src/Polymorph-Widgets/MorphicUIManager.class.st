@@ -14,9 +14,8 @@ Class {
 	#classVars : [
 		'UIProcess'
 	],
-	#category : 'Polymorph-Widgets-Themes',
-	#package : 'Polymorph-Widgets',
-	#tag : 'Themes'
+	#category : 'Polymorph-Widgets',
+	#package : 'Polymorph-Widgets'
 }
 
 { #category : 'accessing' }
@@ -59,13 +58,12 @@ MorphicUIManager >> activate [
 	WorldMorph extraWorldList do: [:each | each restoreMorphicDisplay].
 
 	activeTranscript
+		ifNotNil: [ 
+			Transcript := activeTranscript ]
 		ifNil: [
-			Transcript class == ThreadSafeTranscript ifFalse: [
-				ThreadSafeTranscript install
-			]
-		]
-		ifNotNil: [ Transcript := activeTranscript ].
-
+			Transcript class == ThreadSafeTranscript 
+				ifFalse: [ ThreadSafeTranscript install ] ].
+			
 	SystemProgressMorph enable
 ]
 
@@ -273,13 +271,6 @@ MorphicUIManager >> confirm: queryString trueChoice: trueChoice falseChoice: fal
 		default: defaultOption
 ]
 
-{ #category : 'ui requests' }
-MorphicUIManager >> currentWorld [
-
-	ActiveWorld ifNotNil: [ ^ ActiveWorld ].
-	^ World
-]
-
 { #category : 'private' }
 MorphicUIManager >> deactivate [
 
@@ -353,12 +344,6 @@ MorphicUIManager >> enterOrRequestFrom: labelList values: valueList lines: lines
 		lines: linesArray
 ]
 
-{ #category : 'ui requests' }
-MorphicUIManager >> fontFromUser: priorFont [
-
-	^ StrikeFont fromUser: priorFont allowKeyboard: true
-]
-
 { #category : 'handle debug requests' }
 MorphicUIManager >> handleDebugRequest: aDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
 	<debuggerCompleteToSender>
@@ -367,9 +352,23 @@ MorphicUIManager >> handleDebugRequest: aDebugRequest fromDebuggerSystem: anOups
 
 { #category : 'error handling' }
 MorphicUIManager >> handleError: anError log: shouldLog [
-	shouldLog
-		ifTrue: [ self logError: anError ].
+
+	shouldLog ifTrue: [ self logError: anError ].
 	(OupsDebugRequest newForException: anError) submit
+]
+
+{ #category : 'error handling' }
+MorphicUIManager >> handleNotification: aNotification [
+
+	aNotification messageText traceCr.
+	aNotification resume
+]
+
+{ #category : 'error handling' }
+MorphicUIManager >> handleWarning: aWarning [
+	"The user should be notified of the occurrence of an exceptional occurrence and given an option of continuing or aborting the computation. The description of the occurrence should include any text specified as the argument of the #signal: message."
+
+	(OupsWarningRequest newForException: aWarning) submit
 ]
 
 { #category : 'handle debug requests' }
@@ -471,25 +470,6 @@ MorphicUIManager >> multiLineRequest: queryString  initialAnswer: defaultAnswer 
 ]
 
 { #category : 'ui requests' }
-MorphicUIManager >> newDisplayDepthNoRestore: pixelSize [
-
-	"Change depths.  Check if there is enough space!  , di"
-	| area need |
-	pixelSize = Display depth ifTrue: [^ Display  "no change"].
-	pixelSize abs < Display depth ifFalse:
-		["Make sure there is enough space"
-		area := Display boundingBox area. "pixels"
-		need := (area * (pixelSize abs - Display depth) // 8)  "new bytes needed"
-				+ Smalltalk lowSpaceThreshold.
-		(Smalltalk garbageCollectMost <= need
-			and: [Smalltalk garbageCollect <= need])
-			ifTrue: [self error: 'Insufficient free space']].
-	Display setExtent: Display extent depth: pixelSize.
-
-	DisplayScreen startUp
-]
-
-{ #category : 'ui requests' }
 MorphicUIManager >> newMenuIn: aThemedMorph for: aModel [
 	"Answer a new menu."
 	"UIManager default"
@@ -508,16 +488,20 @@ MorphicUIManager >> onFontsChanged [
 
 { #category : 'events' }
 MorphicUIManager >> onPrimitiveError: aString [
+
 	| message |
-	message := String
-				streamContents: [:s |
-					| context |
-					s nextPutAll: '*** System error handling failed ***'.
-					s cr; nextPutAll: aString.
-					context := thisContext sender sender.
-					20
-						timesRepeat: [context == nil
-								ifFalse: [s cr; print: (context := context sender)]]].
+	message := String streamContents: [ :s |
+		           | context |
+		           s nextPutAll: '*** System error handling failed ***'.
+		           s
+			           cr;
+			           nextPutAll: aString.
+		           context := thisContext sender sender.
+		           20 timesRepeat: [
+			           context ifNotNil: [
+				           s
+					           cr;
+					           print: (context := context sender) ] ] ].
 	Stdio stderr << message.
 	"init hands and redisplay"
 	self currentWorld install
@@ -532,11 +516,10 @@ MorphicUIManager >> preferredCornerStyle [
 MorphicUIManager >> request: queryString initialAnswer: defaultAnswer [
 	"Create an instance of me whose question is queryString with the given initial answer. Invoke it centered at the given point, and answer the string the user accepts. Answer the empty string if the user cancels."
 
-
-	 ^ self
-		request: queryString
-		initialAnswer: defaultAnswer
-		title: 'Provide the following information'
+	^ self
+		  request: queryString
+		  initialAnswer: defaultAnswer
+		  title: 'Provide the following information'
 ]
 
 { #category : 'ui requests' }
@@ -600,20 +583,6 @@ MorphicUIManager >> requestPassword: aStringOrText [
 		entryText: ''
 ]
 
-{ #category : 'ui requests' }
-MorphicUIManager >> restoreDisplay [
-
-	self currentWorld fullRepaintNeeded
-]
-
-{ #category : 'ui requests' }
-MorphicUIManager >> restoreDisplayAfter: aBlock [
-
-	aBlock value.
-	self currentWorld activeHand waitButton.
-	self currentWorld fullRepaintNeeded
-]
-
 { #category : 'ui process' }
 MorphicUIManager >> resumeUIProcess: aProcess [
 	"Adopt aProcess as the project process -- probably because of proceeding from a debugger"
@@ -635,13 +604,6 @@ MorphicUIManager >> spawnNewProcess [
 	UIProcess
 		name: 'Morphic UI Process';
 		resume
-]
-
-{ #category : 'ui requests' }
-MorphicUIManager >> systemNotificationDefaultAction: aNotification [
-
-	aNotification messageText traceCr.
-	aNotification resume
 ]
 
 { #category : 'ui process' }
@@ -668,13 +630,6 @@ MorphicUIManager >> unhandledErrorDefaultAction: anException [
 
 	"The current computation is terminated. The cause of the error should be logged or reported to the user. If the program is operating in an interactive debugging environment the computation should be suspended and the debugger activated."
 	anException debug
-]
-
-{ #category : 'handle debug requests' }
-MorphicUIManager >> warningDefaultAction: anException [
-	"The user should be notified of the occurrence of an exceptional occurrence and given an option of continuing or aborting the computation. The description of the occurrence should include any text specified as the argument of the #signal: message."
-	self flag: 'This looks like a code smell'.
-	(OupsWarningRequest newForException: anException) submit
 ]
 
 { #category : 'global state' }

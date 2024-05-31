@@ -9,14 +9,14 @@ Class {
 	#tag : 'Rules'
 }
 
-{ #category : 'accessing - defaults' }
-ReClassSideInitializeMethodProtocolRule >> protocolName [
+{ #category : 'accessing' }
+ReClassSideInitializeMethodProtocolRule class >> protocolName [
 
 	^ 'class initialization'
 ]
 
-{ #category : 'accessing - defaults' }
-ReClassSideInitializeMethodProtocolRule >> selector [
+{ #category : 'accessing' }
+ReClassSideInitializeMethodProtocolRule class >> selector [
 
 	^ #initialize
 ]

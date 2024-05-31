@@ -18,31 +18,26 @@ Class {
 RealEstateAgent class >> assignCollapseFrameFor: aSSView [
 	"Offer up a location along the left edge of the screen for a collapsed
 	SSView. Make sure it doesn't overlap any other collapsed frames."
+
 	| grid otherFrames topLeft viewBox collapsedFrame extent newFrame verticalBorderDistance top |
 	grid := 8.
 	verticalBorderDistance := 8.
-	otherFrames := ( aSSView world windowsSatisfying: [:w | w ~= aSSView])
-				collect: [:w | w collapsedFrame]
-				thenSelect: [:rect | rect notNil].
+	otherFrames := (aSSView world windowsSatisfying: [ :w | w ~= aSSView ])
+		               collect: [ :w | w collapsedFrame ]
+		               thenSelect: [ :rect | rect isNotNil ].
 	viewBox := aSSView world viewBox.
 	collapsedFrame := aSSView collapsedFrame.
-	extent := collapsedFrame notNil
-				ifTrue: [collapsedFrame extent]
-				ifFalse: [aSSView getRawLabel width + aSSView labelWidgetAllowance @ (aSSView labelHeight + 2)].
-	collapsedFrame notNil
-		ifTrue: [(otherFrames
-					anySatisfy: [:f | collapsedFrame intersects: f])
-				ifFalse: ["non overlapping"
-					^ collapsedFrame]].
+	extent := collapsedFrame isNotNil
+		          ifTrue: [ collapsedFrame extent ]
+		          ifFalse: [ aSSView getRawLabel width + aSSView labelWidgetAllowance @ (aSSView labelHeight + 2) ].
+	collapsedFrame ifNotNil: [ (otherFrames anySatisfy: [ :f | collapsedFrame intersects: f ]) ifFalse: [ "non overlapping" ^ collapsedFrame ] ].
 	top := viewBox top + verticalBorderDistance.
-	[topLeft := viewBox left @ top.
+	[
+	topLeft := viewBox left @ top.
 	newFrame := topLeft extent: extent.
-	newFrame bottom <= (viewBox height - verticalBorderDistance)]
-		whileTrue: [(otherFrames
-					anySatisfy: [:w | newFrame intersects: w])
-				ifFalse: ["no overlap"
-					^ newFrame].
-			top := top + grid].
+	newFrame bottom <= (viewBox height - verticalBorderDistance) ] whileTrue: [
+		(otherFrames anySatisfy: [ :w | newFrame intersects: w ]) ifFalse: [ "no overlap" ^ newFrame ].
+		top := top + grid ].
 	"If all else fails... (really to many wins here)"
 	^ 0 @ 0 extent: extent
 ]
@@ -56,7 +51,7 @@ RealEstateAgent class >> assignCollapsePointFor: aSSView [
 	"should be mult of 8, since manual move is gridded by 8"
 	otherFrames := ( aSSView world   windowsSatisfying: [:w | true])
 				collect: [:w | w collapsedFrame]
-				thenSelect: [:rect | rect notNil].
+				thenSelect: [:rect | rect isNotNil].
 	viewBox := aSSView world viewBox.
 	y := viewBox top.
 	[(y := y + grid) <= (viewBox height - grid)]
@@ -76,7 +71,7 @@ RealEstateAgent class >> cascadeFor: aView initialExtent: initialExtent world: a
 	| position allowedArea |
 	allowedArea := self maximumUsableAreaInWorld: aWorld.
 	position := aWorld currentWindow isMorph
-		ifFalse: [ aWorld center - (initialExtent / 2)]
+		ifFalse: [ aWorld center - (initialExtent // 2)]
 		ifTrue: [ aWorld currentWindow position + 20].
 	^ (position extent: initialExtent)
 		translatedAndSquishedToBeWithin: allowedArea
@@ -111,9 +106,11 @@ RealEstateAgent class >> initialize [
 RealEstateAgent class >> maximumUsableArea [
 
 	| allowedArea |
-	allowedArea := Display usableArea.
-	allowedArea := allowedArea intersect: self currentWorld visibleClearArea ifNone: [ allowedArea ].
-	^allowedArea
+	allowedArea := self currentWorld bounds.
+	allowedArea := allowedArea
+		               intersect: self currentWorld visibleClearArea
+		               ifNone: [ allowedArea ].
+	^ allowedArea
 ]
 
 { #category : 'accessing' }

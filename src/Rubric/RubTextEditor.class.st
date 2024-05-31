@@ -321,7 +321,7 @@ RubTextEditor >> caseSensitiveFinds [
 RubTextEditor >> changeAlignment [
 	"Interactively change the alignment of the text currently being edited."
 	| reply  |
-	reply := UIManager default
+	reply := self morphicUIManager
 				chooseFrom:  self alignmentChoices
 				values:  self alignmentChoices.
 	reply ifNil: [^self].
@@ -332,23 +332,17 @@ RubTextEditor >> changeAlignment [
 { #category : 'menu messages' }
 RubTextEditor >> changeEmphasis [
 
-	|  reply code align menuList startIndex attribute choices |
+	| code align menuList startIndex choices |
 	choices := self emphasisChoices.
 	startIndex := self startIndex.
 	align := self text alignmentAt: startIndex ifAbsent: [ 0 ].
 	code := self text emphasisAt: startIndex.
 	menuList := WriteStream on: Array new.
-	menuList nextPut: (code isZero ->  'normal' translated).
-	menuList nextPutAll: (choices  collect: [:emph|
-							(code anyMask: (TextEmphasis perform: emph) emphasisCode)
-								-> emph asString translated ]).
+	menuList nextPut: code isZero -> 'normal' translated.
+	menuList nextPutAll: (choices collect: [ :emph | (code anyMask: (TextEmphasis perform: emph) emphasisCode) -> emph asString translated ]).
 
-	menuList nextPut: ((self text attributesAt: startIndex)
-							anySatisfy: [ :attr | attr isKern and: [attr kern < 0 ]]) -> 'narrow' translated.
-	reply := UIManager default chooseFrom:  choices values: choices.
-	reply notNil
-		ifTrue: [ attribute := TextEmphasis perform: reply.
-				self applyAttribute:  attribute].
+	menuList nextPut: ((self text attributesAt: startIndex) anySatisfy: [ :attr | attr isKern and: [ attr kern < 0 ] ]) -> 'narrow' translated.
+	(self morphicUIManager chooseFrom: choices values: choices) ifNotNil: [ :reply | self applyAttribute: (TextEmphasis perform: reply) ].
 	^ true
 ]
 
@@ -371,7 +365,7 @@ RubTextEditor >> changeEmphasis: aKeyboardEvent [
 	keyCode = 6
 		ifTrue: [
 			colors := #(#black #magenta #red #yellow #green #blue #cyan #white).
-			index := UIManager default chooseFrom:  colors title: 'choose color...'.
+			index := self morphicUIManager chooseFrom:  colors title: 'choose color...'.
 			index = 0 ifTrue: [^true].
 			index <= colors size
 				ifTrue: [attribute := TextColor color: (Color perform: (colors at: index))]
@@ -398,28 +392,27 @@ RubTextEditor >> changeEmphasis: aKeyboardEvent [
 
 { #category : 'menu messages' }
 RubTextEditor >> changeEmphasisOrAlignment [
-	| aList reply  code align menuList startIndex attribute |
+
+	| aList code align menuList startIndex |
 	startIndex := self startIndex.
 	align := self text alignmentAt: startIndex ifAbsent: [ 0 ].
 	code := self text emphasisAt: startIndex.
 	menuList := WriteStream on: Array new.
-	menuList nextPut: (code isZero -> 'normal' translated).
-	menuList nextPutAll: (#(bold italic underlined struckOut) collect: [:emph|
-		(code anyMask: (TextEmphasis perform: emph) emphasisCode) -> emph asString translated]).
+	menuList nextPut: code isZero -> 'normal' translated.
+	menuList nextPutAll:
+		(#( bold italic underlined struckOut ) collect: [ :emph | (code anyMask: (TextEmphasis perform: emph) emphasisCode) -> emph asString translated ]).
 
-	menuList nextPut: ((self text attributesAt: startIndex)
-		anySatisfy: [ :attr | attr isKern and: [attr kern < 0 ]]) -> 'narrow' translated.
+	menuList nextPut: ((self text attributesAt: startIndex) anySatisfy: [ :attr | attr isKern and: [ attr kern < 0 ] ]) -> 'narrow' translated.
 
-	self alignmentChoices collectWithIndex: [ :type :i |
-		menuList nextPut: (align = (i-1)) -> type asString translated ].
+	self alignmentChoices collectWithIndex: [ :type :i | menuList nextPut: align = (i - 1) -> type asString translated ].
 
-	aList := #(normal bold italic underlined struckOut narrow leftFlush centered rightFlush justified).
-	reply := UIManager default chooseFrom:  aList values: aList.
-	reply notNil ifTrue: [
+	aList := #( normal bold italic underlined struckOut narrow leftFlush centered rightFlush justified ).
+	(self morphicUIManager chooseFrom: aList values: aList) ifNotNil: [ :reply |
+		| attribute |
 		(self alignmentChoices includes: reply)
-			ifTrue: [ attribute :=TextAlignment perform: reply]
-			ifFalse: [ attribute := TextEmphasis perform: reply].
-		self applyAttribute:  attribute].
+			ifTrue: [ attribute := TextAlignment perform: reply ]
+			ifFalse: [ attribute := TextEmphasis perform: reply ].
+		self applyAttribute: attribute ].
 	^ true
 ]
 
@@ -448,9 +441,26 @@ RubTextEditor >> chooseColor [
 
 	| attribute |
 	attribute := TextColor color: Color black "default".
-	UIManager default chooseColor
+	self morphicUIManager chooseColor
 		ifNotNil: [:nc | attribute color: nc].
 	^ attribute
+]
+
+{ #category : 'menu messages' }
+RubTextEditor >> chooseRecentClipping [
+	"Let the user choose one of the remebered last clippings. Return nil if none had been
+	 remembered or if none is selected."
+
+	| recentClippings |
+	recentClippings := Clipboard recentClippings.
+
+	recentClippings ifEmpty: [ ^ nil ].
+	^ self morphicUIManager
+		  chooseFrom: (recentClippings collect: [ :txt |
+				   ((txt asString contractTo: 50)
+					    copyReplaceAll: String cr
+					    with: '\') copyReplaceAll: String tab with: '|' ])
+		  values: recentClippings
 ]
 
 { #category : 'undo - redo private' }
@@ -509,7 +519,7 @@ RubTextEditor >> compareToClipboard [
 	s1 := self clipboardText string.
 	s2 := self string.
 	s1 = s2 ifTrue: [^ self inform: 'Exact match'].
-	UIManager default
+	self morphicUIManager
 		longMessage: (TextDiffBuilder buildDisplayPatchFrom: s1 to: s2)
 		title: 'Comparison to Clipboard Text'
 ]
@@ -1584,6 +1594,12 @@ RubTextEditor >> morph [
 	^ textArea
 ]
 
+{ #category : 'menu messages' }
+RubTextEditor >> morphicUIManager [
+
+	^ MorphicUIManager new
+]
+
 { #category : 'private' }
 RubTextEditor >> moveCursor: directionBlock forward: forward specialBlock: specialBlock event: aKeyboardEvent [
 	"Private - Move cursor.
@@ -1765,7 +1781,7 @@ RubTextEditor >> pasteRecent [
 	"Paste an item chose from RecentClippings."
 
 	| clipping |
-	(clipping := Clipboard chooseRecentClipping) ifNil: [^ self].
+	(clipping := self chooseRecentClipping) ifNil: [^ self].
 	Clipboard clipboardText: clipping.
 	^ self paste
 ]
@@ -1998,7 +2014,7 @@ RubTextEditor >> saveContentsInFile [
 							(lastIndex = 0 or: [lastIndex = 1])
 								ifFalse: [suggestedName := suggestedName copyFrom: 1 to: lastIndex - 1]]]].
 	suggestedName ifNil: [suggestedName := labelToUse , '.text'].
-	fileName := UIManager default request: 'File name?'
+	fileName := self morphicUIManager request: 'File name?'
 				initialAnswer: suggestedName.
 	fileName isEmptyOrNil
 		ifFalse: [ fileName asFileReference writeStreamDo: [ :out | out nextPutAll: stringToSave ] ]
@@ -2155,7 +2171,7 @@ RubTextEditor >> selectWord [
 			[hereChar := string at: (here := here + direction).
 			match = 0
 				ifTrue: ["token scan goes left, then right"
-					(hereChar tokenish or: [ hereChar = $# ])
+					(hereChar tokenish)
 						ifTrue: [here = 1
 								ifTrue:
 									[start := 1.

@@ -39,12 +39,10 @@ MCGitBasedNetworkRepository class >> cacheDirectory: aDirectory [
 
 { #category : 'private' }
 MCGitBasedNetworkRepository class >> cacheDirectoryFor: projectPath [
-	| cacheDirectory projectDirectory |
-	
-	cacheDirectory := self cacheDirectory.
-	projectDirectory := MetacelloPlatform current directoryFromPath: projectPath relativeTo: cacheDirectory.
-	MetacelloPlatform current ensureDirectoryExists: projectDirectory.
-	^ projectDirectory
+
+	^ (self cacheDirectory resolveString: projectPath)
+		  ensureCreateDirectory;
+		  yourself
 ]
 
 { #category : 'accessing' }
@@ -54,22 +52,16 @@ MCGitBasedNetworkRepository class >> cacheDirectoryPath [
 
 { #category : 'accessing' }
 MCGitBasedNetworkRepository class >> cacheDirectoryPath: aString [
-  self
-    cacheDirectory:
-      (aString
-        ifEmpty: [  ]
-        ifNotEmpty: [ MetacelloPlatform current fileHandleOn: aString ])
+
+	self cacheDirectory: (aString ifNotEmpty: [ aString asFileReference ])
 ]
 
 { #category : 'private' }
 MCGitBasedNetworkRepository class >> defaultCacheDirectory [
-  | defaultDirectory cacheDirectory |
-  defaultDirectory := MetacelloPlatform current defaultDirectory.
-  cacheDirectory := MetacelloPlatform current
-    directoryFromPath: self basicDescription , '-cache'
-    relativeTo: defaultDirectory.
-  MetacelloPlatform current ensureDirectoryExists: cacheDirectory.
-  ^ cacheDirectory
+
+	^ (FileLocator imageDirectory asFileReference resolveString: self basicDescription , '-cache')
+		  ensureCreateDirectory;
+		  yourself
 ]
 
 { #category : 'accessing' }
@@ -86,6 +78,25 @@ MCGitBasedNetworkRepository class >> downloadCache [
 { #category : 'accessing' }
 MCGitBasedNetworkRepository class >> downloadCacheKey: projectPath version: versionString [
   ^ projectPath , ':::' , versionString
+]
+
+{ #category : 'utilities' }
+MCGitBasedNetworkRepository class >> downloadZipArchive: url to: outputFileName [
+	"download zip archive from <url> into <outputFileName>"
+
+	outputFileName asFileReference ensureDelete.
+	[ :bar |
+	bar title: 'Download: ' , url asString , ' to ' , outputFileName.
+	[
+	ZnClient new
+		url: url;
+		signalProgress: true;
+		downloadTo: outputFileName ]
+		on: HTTPProgress
+		do: [ :progress |
+			progress isEmpty ifFalse: [ bar current: progress percentage ].
+			progress resume ] ] asJob run.
+	^ ZipArchive new readFrom: outputFileName asFileReference
 ]
 
 { #category : 'class initialization' }
@@ -134,43 +145,39 @@ MCGitBasedNetworkRepository class >> location: locationUrl version: versionStrin
 
 { #category : 'private' }
 MCGitBasedNetworkRepository class >> parseLocation: locationUrl version: versionString [
-  "self 
+	"self 
 	parseLocation: 'github://dalehenrich/MetacelloRepository:master/monticello/repos/itory/path'
 	version: nil
      "
 
-  | projectPath projectVersion repoPath headerSize desc projectDelim repoDelim versionDelim |
-  headerSize := self description size.
-  desc := locationUrl.
-  desc := desc copyFrom: headerSize + 1 to: desc size.
-  projectVersion := repoPath := nil.
-  projectDelim := desc indexOf: $/.
-  repoDelim := desc indexOf: $/ startingAt: projectDelim + 1.
-  (versionDelim := desc indexOf: $:) == 0
-    ifTrue: [ 
-      repoDelim == 0
-        ifTrue: [ projectPath := desc ]
-        ifFalse: [ 
-          projectPath := desc copyFrom: 1 to: repoDelim - 1.
-          repoPath := desc copyFrom: repoDelim + 1 to: desc size ] ]
-    ifFalse: [ 
-      projectPath := desc copyFrom: 1 to: versionDelim - 1.
-      repoDelim == 0
-        ifTrue: [ projectVersion := desc copyFrom: versionDelim + 1 to: desc size ]
-        ifFalse: [ 
-          projectPath := desc copyFrom: 1 to: versionDelim - 1.
-          self
-            parseProjectVersionField: [ :pv :rp | 
-              projectVersion := pv.
-              repoPath := rp ]
-            desc: desc
-            versionDelim: versionDelim ] ].
-  versionString ~~ nil
-    ifTrue: [ projectVersion := versionString ].
-  ^ self new
-    projectPath: projectPath
-    projectVersion: projectVersion
-    repoPath: repoPath
+	| projectPath projectVersion repoPath headerSize desc projectDelim repoDelim versionDelim |
+	headerSize := self description size.
+	desc := locationUrl.
+	desc := desc copyFrom: headerSize + 1 to: desc size.
+	projectVersion := repoPath := nil.
+	projectDelim := desc indexOf: $/.
+	repoDelim := desc indexOf: $/ startingAt: projectDelim + 1.
+	(versionDelim := desc indexOf: $:) == 0
+		ifTrue: [
+			repoDelim == 0
+				ifTrue: [ projectPath := desc ]
+				ifFalse: [
+					projectPath := desc copyFrom: 1 to: repoDelim - 1.
+					repoPath := desc copyFrom: repoDelim + 1 to: desc size ] ]
+		ifFalse: [
+			projectPath := desc copyFrom: 1 to: versionDelim - 1.
+			repoDelim == 0
+				ifTrue: [ projectVersion := desc copyFrom: versionDelim + 1 to: desc size ]
+				ifFalse: [
+					projectPath := desc copyFrom: 1 to: versionDelim - 1.
+					self
+						parseProjectVersionField: [ :pv :rp |
+							projectVersion := pv.
+							repoPath := rp ]
+						desc: desc
+						versionDelim: versionDelim ] ].
+	versionString ifNotNil: [ projectVersion := versionString ].
+	^ self new projectPath: projectPath projectVersion: projectVersion repoPath: repoPath
 ]
 
 { #category : 'private' }
@@ -212,62 +219,44 @@ MCGitBasedNetworkRepository class >> parseProjectVersionField: parseBlock desc: 
 
 { #category : 'utilities' }
 MCGitBasedNetworkRepository class >> projectDirectoryFrom: projectPath version: versionString [
-	| mcPlatform theCacheDirectory projectDirectory downloadCacheKey cachePath pid |
-	downloadCacheKey := self
-		downloadCacheKey: projectPath
-		version: versionString.
-	mcPlatform := MetacelloPlatform current.
-	theCacheDirectory := mcPlatform
-		directoryFromPath: versionString
-		relativeTo: (self cacheDirectoryFor: projectPath).
+	| theCacheDirectory projectDirectory downloadCacheKey cachePath |
+	downloadCacheKey := self downloadCacheKey: projectPath version: versionString.
+	theCacheDirectory := (self cacheDirectoryFor: projectPath) resolveString: versionString.
 	cachePath := self downloadCache at: downloadCacheKey ifAbsent: [  ].
 	(cachePath isNil
-		or: [ (projectDirectory := mcPlatform
-				directoryFromPath: cachePath
-				relativeTo: theCacheDirectory) exists not ])
+		or: [ (projectDirectory := theCacheDirectory resolveString: cachePath) exists not ])
 		ifTrue: [ | url archive directory zipFileName |
 			MetacelloScriptGitBasedDownloadNotification new
 				projectPath: projectPath;
 				versionString: versionString;
 				signal.	"for testing purposes"
-			mcPlatform ensureDirectoryExists: theCacheDirectory.
+			theCacheDirectory ensureCreateDirectory.
 			url := self
 				projectZipUrlFor: projectPath
 				versionString: versionString.
-			pid := mcPlatform processPID.
-			zipFileName := mcPlatform
-				tempFileFor:
-					self basicDescription , '-' , pid , '-'
-						, (downloadCacheKey select: [ :c | c isAlphaNumeric ])
+			zipFileName := self
+				tempFileFor: self basicDescription , '--' , (downloadCacheKey select: [ :c | c isAlphaNumeric ])
 				suffix: '.zip'.
-			archive := mcPlatform
-				downloadZipArchive: url
-				to: zipFileName.
-			directory := mcPlatform
-				directoryFromPath: (cachePath := archive members first fileName)
-				relativeTo: theCacheDirectory.
-			mcPlatform closeZipArchive: archive.
-			directory exists
-				ifTrue: [ mcPlatform deleteFileNamed: zipFileName ]
-				ifFalse: [ mcPlatform
-						extractRepositoryFrom: zipFileName
-						to: theCacheDirectory fullName ].
+			archive := self downloadZipArchive: url to: zipFileName.
+			directory := theCacheDirectory resolveString: (cachePath := archive members first fileName).
+			archive close.
+			directory
+				ifExists: [ zipFileName asFileReference delete ]
+				ifAbsent: [ 
+					ZipArchive extractFrom: zipFileName to: theCacheDirectory fullName.
+					zipFileName asFileReference delete ].
 			self downloadCache at: downloadCacheKey put: cachePath.
-			projectDirectory := mcPlatform
-				directoryFromPath: cachePath
-				relativeTo: theCacheDirectory ].
+			projectDirectory := theCacheDirectory resolveString: cachePath ].
 	^ projectDirectory
 ]
 
 { #category : 'version patterns' }
 MCGitBasedNetworkRepository class >> projectVersionFromString: aString [
-  "strip leading $v if present and return an instance of MetacelloVersionNumber"
+	"strip leading $v if present and return an instance of MetacelloVersionNumber"
 
-  | versionString |
-  versionString := aString.
-  (versionString beginsWith: 'v')
-    ifTrue: [ versionString := versionString copyFrom: 2 to: versionString size ].
-  ^ MetacelloVersionNumber fromString: versionString
+	| versionString |
+	versionString := (aString beginsWith: 'v') ifTrue: [ aString allButFirst ] ifFalse: [ aString ].
+	^ MetacelloVersionNumber fromString: versionString
 ]
 
 { #category : 'private' }
@@ -279,7 +268,7 @@ MCGitBasedNetworkRepository class >> projectZipUrlFor: projectPath versionString
 MCGitBasedNetworkRepository class >> resetCacheDirectoryIfInvalid [
   "Reset if invalid"
 
-  repoCacheDirectory notNil
+  repoCacheDirectory isNotNil
     and: [ 
       (MCFileTreeFileUtils current directoryExists: repoCacheDirectory)
         ifFalse: [ repoCacheDirectory := nil ] ]
@@ -324,6 +313,12 @@ MCGitBasedNetworkRepository class >> startUp: resuming [
         ifTrue: [ self flushDownloadCache ]
 ]
 
+{ #category : 'utilities' }
+MCGitBasedNetworkRepository class >> tempFileFor: aName suffix: aSuffixString [
+
+	^ (FileLocator temp asFileReference / (FileReference newTempFilePrefix: aName suffix: aSuffixString) basename) fullName
+]
+
 { #category : 'accessing' }
 MCGitBasedNetworkRepository >> allFileNames [
 	self flag: #review. "This will fail in non filtree(cypress) formats, but I need to 
@@ -342,25 +337,21 @@ MCGitBasedNetworkRepository >> asRepositorySpecFor: aMetacelloMCProject [
 
 { #category : 'private' }
 MCGitBasedNetworkRepository >> calculateRepositoryDirectory [
-	 | directory |
-	
-	directory := self class
-		projectDirectoryFrom: self projectPath
-		version: self projectVersion.
-	self repoPath isEmpty ifFalse: [
-		directory := MetacelloPlatform current
-			directoryFromPath: self repoPath
- 			relativeTo: directory ].
-		
+
+	| directory |
+	directory := self class projectDirectoryFrom: self projectPath version: self projectVersion.
+	self repoPath ifNotEmpty: [ directory := directory resolveString: self repoPath ].
 	^ directory
 ]
 
 { #category : 'initialization' }
 MCGitBasedNetworkRepository >> canUpgradeTo: anMCGitBasedRepository [
-  (anMCGitBasedRepository isKindOf: self class)
-    ifFalse: [ ^ false ].
-  ^ self projectPath = anMCGitBasedRepository projectPath
-    and: [ self repoPath = anMCGitBasedRepository repoPath ]
+
+	(anMCGitBasedRepository isKindOf: self class) ifFalse: [ ^ false ].
+
+	^ self projectPath = anMCGitBasedRepository projectPath and: [
+		  self repoPath = anMCGitBasedRepository repoPath and: [
+			  self projectVersion = anMCGitBasedRepository projectVersion ] ]
 ]
 
 { #category : 'accessing' }
@@ -386,20 +377,40 @@ MCGitBasedNetworkRepository >> directory [
 ]
 
 { #category : 'private' }
+MCGitBasedNetworkRepository >> downloadJSON: url username: username pass: pass [
+	"return result of parsing JSON downloaded from url. username:pass may be nil, but calls will be subject to severe rate limits."
+
+	| client json |
+	client := ZnClient new
+		          url: url;
+		          yourself.
+	username ifNotNil: [ client username: username password: pass ].
+	client get.
+	json := client contents.
+	^ STON fromString: json
+]
+
+{ #category : 'private' }
 MCGitBasedNetworkRepository >> downloadJSONTags [
-  | tagsUrl jsonObject |
-  tagsUrl := self projectTagsUrlFor: self projectPath.
-  jsonObject := MetacelloPlatform current
-    downloadJSON: tagsUrl
-    username: self class siteUsername
-    pass: self class sitePassword.
-  ^ self normalizeTagsData: jsonObject
+
+	| tagsUrl jsonObject |
+	tagsUrl := self projectTagsUrlFor: self projectPath.
+	jsonObject := self downloadJSON: tagsUrl username: self class siteUsername pass: self class sitePassword.
+	^ self normalizeTagsData: jsonObject
 ]
 
 { #category : 'private' }
 MCGitBasedNetworkRepository >> ensureLocalRepository [
 	localRepository ifNotNil: [ ^ self ].
 	self resolveLocalRespository
+]
+
+{ #category : 'fetching' }
+MCGitBasedNetworkRepository >> fetchPackageNamed: aName [
+
+	| references |
+	references := self packageNamed: aName.
+	MCCacheRepository default storeVersion: references
 ]
 
 { #category : 'initialization' }
@@ -426,17 +437,6 @@ MCGitBasedNetworkRepository >> flushForScriptGet [
 		flushProjectEntry: self projectPath 
 		version: self projectVersion.
     self localRepository flushForScriptGet
-]
-
-{ #category : 'accessing' }
-MCGitBasedNetworkRepository >> goferReferences [
-	"delegate collection to local repository, but change them to be from *this* repository."
-
-	^ self localRepository goferReferences 
-		collect: [ :each | 
-			GoferResolvedReference 
-				name: each name 
-				repository: self ]
 ]
 
 { #category : 'accessing' }
@@ -472,6 +472,15 @@ MCGitBasedNetworkRepository >> isValid [
     ^ true
 ]
 
+{ #category : 'accessing' }
+MCGitBasedNetworkRepository >> loadPackageNamed: aString intoLoader: aMCVersionLoader [
+
+	| found |
+	found := self packageNamed: aString.
+	aMCVersionLoader addVersion: found.
+	^ { found . self }
+]
+
 { #category : 'private' }
 MCGitBasedNetworkRepository >> localRepository [
 	self ensureLocalRepository.
@@ -490,8 +499,13 @@ MCGitBasedNetworkRepository >> normalizeTagsData: jsonObject [
 ]
 
 { #category : 'accessing' }
-MCGitBasedNetworkRepository >> possiblyNewerVersionsOfAnyOf: someVersions [
-	^ self localRepository possiblyNewerVersionsOfAnyOf: someVersions
+MCGitBasedNetworkRepository >> packageNamed: aName ifPresent: presentBlock ifAbsent: absentBlock [
+	"delegate collection to local repository, but change them to be from *this* repository."
+
+	^ self localRepository
+		  packageNamed: aName
+		  ifPresent: presentBlock
+		  ifAbsent: absentBlock
 ]
 
 { #category : 'accessing' }
@@ -518,9 +532,9 @@ MCGitBasedNetworkRepository >> projectTagsUrlFor: aProjectPath [
 
 { #category : 'accessing' }
 MCGitBasedNetworkRepository >> projectVersion [
-    (projectVersion == nil or: [ projectVersion isEmpty ])
-        ifTrue: [ projectVersion := 'master' ].
-    ^ projectVersion
+
+	(projectVersion isNil or: [ projectVersion isEmpty ]) ifTrue: [ projectVersion := 'master' ].
+	^ projectVersion
 ]
 
 { #category : 'accessing' }

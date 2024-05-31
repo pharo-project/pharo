@@ -74,7 +74,7 @@ MemoryHandle >> grownBy: length [
 
 { #category : 'testing' }
 MemoryHandle >> isOpen [
-	^ entry notNil
+	^ entry isNotNil
 ]
 
 { #category : 'public' }

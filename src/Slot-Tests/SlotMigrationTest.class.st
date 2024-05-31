@@ -36,7 +36,7 @@ SlotMigrationTest >> testAddSharedVariableKeepSubclasses [
 			builder
 				name: self aClassName;
 				superclass: Object;
-				sharedVariablesFromString: 'Var' ].
+				sharedVariables: #(Var) ].
 
 	self assert: aClass subclasses size equals: 1.
 	self assert: aClass subclasses anyOne identicalTo: anotherClass

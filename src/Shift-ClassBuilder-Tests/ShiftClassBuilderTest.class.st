@@ -4,8 +4,9 @@ This class contains tests for `FluidClassBuilder`
 Class {
 	#name : 'ShiftClassBuilderTest',
 	#superclass : 'ShiftClassBuilderAbstractTest',
-	#category : 'Shift-ClassBuilder-Tests',
-	#package : 'Shift-ClassBuilder-Tests'
+	#category : 'Shift-ClassBuilder-Tests-Base',
+	#package : 'Shift-ClassBuilder-Tests',
+	#tag : 'Base'
 }
 
 { #category : 'running' }
@@ -53,6 +54,23 @@ ShiftClassBuilderTest >> testBuildClassTraitsAPI [
 ]
 
 { #category : 'tests - gathering' }
+ShiftClassBuilderTest >> testBuildClassWithSuperclassWithTraits [
+	| clas subClassBuilder subClas |
+
+	builder := Object << #Point2.
+	builder traits: { TViewModelMock }.
+	builder package: self packageNameForTest.
+	clas := builder build.
+
+	subClassBuilder := clas << (#Sub, clas name).
+	subClassBuilder package: self packageNameForTest.
+	subClas := subClassBuilder build.
+
+	self assert: subClas superclass equals: clas.
+	self assert: subClas class traitComposition isEmpty
+]
+
+{ #category : 'tests - gathering' }
 ShiftClassBuilderTest >> testBuildLayout [
 
 	builder
@@ -85,7 +103,7 @@ ShiftClassBuilderTest >> testBuilderSharedPools [
 	builder
 		slots: { #string. #runs };
 		tag: 'Base';
-		sharedPools: 'TextConstants';
+		sharedPools: #(TextConstants);
 		package: 'Text-Core'.
 
 	self assert: builder sharedPools equals: #( TextConstants )
@@ -145,7 +163,6 @@ ShiftClassBuilderTest >> testBuilderWithTag [
 ShiftClassBuilderTest >> testChevronIsWorkingOnClassSide [
 
 	| instBuilder newClass clasBuilder |
-	self categoryHack.
 
 	instBuilder := (Object << #Point2)
 		               slots: { #a. #b };
@@ -156,9 +173,6 @@ ShiftClassBuilderTest >> testChevronIsWorkingOnClassSide [
 		               tag: 'boring';
 		               package: self packageNameForTest.
 
-	"Ideally we should not install the class but just build it (sending instBuilder build)
-	the problem is that category and tag are lost by the class builder.
-	Hence we cannot test for real."
 	newClass := instBuilder install.
 
 	clasBuilder := Object class << newClass class traits: { TViewModelMock classTrait }.
@@ -261,37 +275,6 @@ ShiftClassBuilderTest >> testCreateClassWithFullExpandedDefinitionKeepsTheMinimu
 ]
 
 { #category : 'tests - class creation' }
-ShiftClassBuilderTest >> testCreatedClassHasAllElements [
-
-	| instBuilder newClass |
-	self categoryHack.
-
-	instBuilder := (Object << #Point2)
-		               slots: { #a. #b };
-		               layout: WeakLayout;
-		               traits: { TViewModelMock };
-		               sharedVariables: { #AAA };
-		               sharedPools: { #TextConstants };
-		               tag: 'boring';
-		               package: self packageNameForTest.
-
-	"Ideally we should not install the class but just build it (sending instBuilder build)
-	the problem is that category and tag are lost by the class builder.
-	Hence we cannot test for real."
-	newClass := instBuilder install.
-
-	self assert: newClass name equals: #Point2.
-	self assert: newClass slots size equals: 2.
-	self assert: newClass slotNames equals: #( a b ).
-	self assert: newClass classLayout class equals: WeakLayout.
-	self assert: newClass traitComposition equals: { TViewModelMock } asTraitComposition.
-	self assert: newClass class traitComposition equals: { TViewModelMock classSide } asTraitComposition.
-	self assert: newClass classVarNames equals: #( AAA ).
-	self assertCollection: newClass sharedPools hasSameElements: { TextConstants }.
-	self assert: newClass category equals: self packageNameForTest , '-boring'
-]
-
-{ #category : 'tests - class creation' }
 ShiftClassBuilderTest >> testCreatedEmptyClassHasDefaultElements [
 
 	| instBuilder newClass |
@@ -309,15 +292,13 @@ ShiftClassBuilderTest >> testCreatedEmptyClassHasDefaultElements [
 	self assert: newClass class traitComposition equals: {  } asTraitComposition.
 	self assert: newClass classVarNames equals: #(  ).
 	self assertCollection: newClass sharedPools hasSameElements: {  }.
-	self assert: newClass category equals: self packageNameForTest
+	self assert: newClass package name equals: self packageNameForTest
 ]
 
 { #category : 'tests - class creation' }
 ShiftClassBuilderTest >> testExistingClassWithClassSlot [
 
 	| instBuilder newClass |
-		self categoryHack.
-
 	"We are creating a class with a class slot. This class slot is defined in the class side of the fluid definition.
 	When redefining the instance side, the class slot should not be lost."
 	instBuilder := (Object << #Point2)
@@ -330,9 +311,6 @@ ShiftClassBuilderTest >> testExistingClassWithClassSlot [
 		               tag: 'boring';
 		               package: self packageNameForTest.
 
-	"Ideally we should not install the class but just build it (sending instBuilder build)
-	the problem is that category and tag are lost by the class builder.
-	Hence we cannot test for real."
 	newClass := instBuilder install.
 
 	self assert: newClass class slots first name equals: #AAA.
@@ -344,7 +322,7 @@ ShiftClassBuilderTest >> testExistingClassWithClassSlot [
 		               sharedVariables: { #BBB };
 		               sharedPools: { #TextConstants };
 		               tag: 'boring';
-		               package: self packageNameForTest..
+		               package: self packageNameForTest.
 
 	newClass := instBuilder install.
 
@@ -355,11 +333,8 @@ ShiftClassBuilderTest >> testExistingClassWithClassSlot [
 ShiftClassBuilderTest >> testExistingClassWithClassSlotThenWeRemoveIt [
 
 	| instBuilder newClass classBuilder |
-	self categoryHack.
-
 	"We are creating a class with a class slot. This class slot is defined in the class side of the fluid definition.
 	Then we are removing the classSlot, it should remove it"
-
 	instBuilder := (Object << #Point2)
 		               slots: { #a. #b };
 		               layout: WeakLayout;
@@ -370,9 +345,6 @@ ShiftClassBuilderTest >> testExistingClassWithClassSlotThenWeRemoveIt [
 		               tag: 'boring';
 		               package: self packageNameForTest.
 
-	"Ideally we should not install the class but just build it (sending instBuilder build)
-	the problem is that category and tag are lost by the class builder.
-	Hence we cannot test for real."
 	newClass := instBuilder install.
 
 	self assert: newClass class slots first name equals: #AAA.
@@ -387,18 +359,18 @@ ShiftClassBuilderTest >> testExistingClassWithClassSlotThenWeRemoveIt [
 { #category : 'tests - classBuilder generation' }
 ShiftClassBuilderTest >> testFillShiftClassBuilder [
 
-	builder := Object << #Point2.
-	builder slots: { #x. #y }.
-	builder sharedVariables: { #Share1. #Share2 }.
-	builder sharedPools: { ChronologyConstants }.
-	builder tag: 'Mafia'.
-	builder package: self packageNameForTest.
+	builder := (Object << #Point2)
+		           slots: { #x. #y };
+		           sharedVariables: { #Share1. #Share2 };
+		           sharedPools: { ChronologyConstants };
+		           tag: 'Mafia';
+		           package: self packageNameForTest.
 	self assert: builder superclass equals: Object.
 	self assert: builder name equals: #Point2.
 	self assert: builder slots size equals: 2.
-	self assert: builder sharedPools equals: { ChronologyConstants }.
-	self assert: builder category equals: self packageNameForTest , '-Mafia'.
-	self assert: builder category equals: self packageNameForTest , '-Mafia'
+	self assert: builder sharedPools equals: { #ChronologyConstants }.
+	self assert: builder package equals: self packageNameForTest.
+	self assert: builder tag equals: #Mafia
 ]
 
 { #category : 'tests - mandatory' }
@@ -413,7 +385,7 @@ ShiftClassBuilderTest >> testInstallMinimalMockClass [
 	tag: '''' ;
 	sharedPools: {};
 	package: ''' , self packageNameForTest , ''''.
-	ShiftClassInstaller new makeWithBuilder: builder.
+	builder install.
 
 	installedClass := self class environment at: #MyClass ifAbsent: [ self fail ].
 
@@ -443,4 +415,16 @@ ShiftClassBuilderTest >> testInstallSimplePoint2 [
 	self assert: pt2Class slots size equals: 2 ] ensure: [
 		(self class environment at: #Point2 ifAbsent: [ self fail ]) removeFromSystem.
 		self assert: (self class environment at: #Point2 ifAbsent: [ true ]) ]
+]
+
+{ #category : 'tests - class creation' }
+ShiftClassBuilderTest >> testMetaSuperclassShouldUseTheSuperclassName [
+
+	| sup |
+	self assert: builder superclass isNotNil.
+	sup := builder superclass.
+	builder superclass: nil.
+	builder superclassName: sup name.
+	builder metaSuperclass: nil.
+	self assert: builder metaSuperclass equals: sup class
 ]

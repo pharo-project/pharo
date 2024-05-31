@@ -9,14 +9,14 @@ Class {
 	#tag : 'Rules'
 }
 
-{ #category : 'accessing - defaults' }
-ReInstanceSideBaselineMethodProtocolRule >> protocolName [
+{ #category : 'accessing' }
+ReInstanceSideBaselineMethodProtocolRule class >> protocolName [
 
 	^ 'baselines'
 ]
 
-{ #category : 'accessing - defaults' }
-ReInstanceSideBaselineMethodProtocolRule >> selector [
+{ #category : 'accessing' }
+ReInstanceSideBaselineMethodProtocolRule class >> selector [
 
 	^ #baseline:
 ]

@@ -194,7 +194,7 @@ MCStWriter >> writeMethodPreamble: definition [
 			[ str nextPutAll: ' class' ].
 		str
 			nextPutAll: ' methodsFor: ';
-			nextPutAll: definition category asString printString;
+			nextPutAll: definition protocol asString printString;
 			nextPutAll: ' stamp: ';
 			nextPutAll: definition timeStamp asString printString
 		]

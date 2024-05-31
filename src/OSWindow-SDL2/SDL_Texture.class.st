@@ -47,14 +47,9 @@ SDL_Texture >> destroy [
 	handle beNull
 ]
 
-{ #category : 'initialization' }
-SDL_Texture >> initialize [
-	self autoRelease
-]
-
 { #category : 'pixels handling' }
 SDL_Texture >> lockPixels: pixels pitch: pitch [
-	^ self ffiCall: #( int SDL_LockTexture ( self , nil , void** pixels , int* pitch ) )
+	^ self ffiCall: #( int SDL_LockTexture ( self , void* 0 , void** pixels , int* pitch ) )
 ]
 
 { #category : 'private' }
@@ -69,7 +64,8 @@ SDL_Texture >> unlock [
 
 { #category : 'initialization' }
 SDL_Texture >> updateTexturePixels: pixels pitch: pitch [
-	^ self ffiCall: #( int SDL_UpdateTexture ( self , nil , void* pixels , int pitch ) )
+
+  ^ self ffiCall: #( int SDL_UpdateTexture ( self , void* 0 , void* pixels , int pitch ) )
 ]
 
 { #category : 'initialization' }

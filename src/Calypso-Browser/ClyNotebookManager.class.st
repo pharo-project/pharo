@@ -191,7 +191,7 @@ ClyNotebookManager >> initialize [
 ClyNotebookManager >> okToChange [
 
 	(tools anySatisfy: #hasUnacceptedEdits) ifFalse: [ ^ true ].
-	^browser confirmDiscardChanges
+	^browser confirmDiscardChanges ifNil: [ ^ false ]
 ]
 
 { #category : 'private' }
@@ -248,7 +248,7 @@ ClyNotebookManager >> restoreBrowserState: aBrowserState [
 
 	existingTools := aBrowserState selectedTabs
 		collect: [ :oldTool | tools detect: [ :each | each isSimilarTo: oldTool ] ifNone: [ nil ] ]
-		thenSelect: #notNil.
+		thenSelect: #isNotNil.
 
 	existingTools ifEmpty: [ ^ self ].
 	self tabMorph page: existingTools first.

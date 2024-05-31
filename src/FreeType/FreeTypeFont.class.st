@@ -15,34 +15,59 @@ Class {
 		'cachedDescent',
 		'subPixelPositioned',
 		'symbolFont',
-		'mutex',
 		'characterWidthCache'
 	],
 	#pools : [
 		'FT2Constants',
 		'FreeTypeCacheConstants'
 	],
+	#classInstVars : [
+		'all'
+	],
 	#category : 'FreeType-Fonts',
 	#package : 'FreeType',
 	#tag : 'Fonts'
 }
 
+{ #category : 'accessing' }
+FreeTypeFont class >> all [
+
+	^ all ifNil: [
+		all := WeakSet new
+			addAll: self allInstances;
+			yourself ]
+]
+
 { #category : 'instance creation' }
-FreeTypeFont class >> forLogicalFont: aLogicalFont fileInfo: aFreeTypeFileInfoAbstract [
-	| pointSize index |
+FreeTypeFont class >> face: freeTypeFace pointSize: pointSize [
+
+	^ self face: freeTypeFace pointSize: pointSize simulatedEmphasis: nil
+]
+
+{ #category : 'instance creation' }
+FreeTypeFont class >> face: freeTypeFace pointSize: pointSize simulatedEmphasis: simulatedEmphasis [
+
+	^ self all
+		detect: [ :font |
+			font face = freeTypeFace and: [
+				font pointSize = pointSize and: [
+					font basicSimulatedEmphasis = simulatedEmphasis ] ] ]
+		ifNone: [
+			(self all add: self new)
+				setFace: freeTypeFace pointSize: pointSize;
+				simulatedEmphasis: simulatedEmphasis;
+				yourself ]
+]
+
+{ #category : 'instance creation' }
+FreeTypeFont class >> forLogicalFont: aLogicalFont fileInfo: aFreeTypeFileInfoAbstract simulatedEmphasis: simulatedEmphasis [
+	| pointSize index face |
 	pointSize := aLogicalFont pointSize.
 	index := aFreeTypeFileInfoAbstract index.
-	^aFreeTypeFileInfoAbstract isEmbedded
-		ifTrue:[
-			self
-				fromBytes: aFreeTypeFileInfoAbstract fileContents
-				pointSize: pointSize
-				index: index]
-		ifFalse:[
-			self
-				fromFile: aFreeTypeFileInfoAbstract absolutePath
-				pointSize: pointSize
-				index: index]
+	face := aFreeTypeFileInfoAbstract isEmbedded
+		ifTrue: [ FreeTypeFace fromBytes: aFreeTypeFileInfoAbstract fileContents index: index ]
+		ifFalse: [ FreeTypeFace fromFile: aFreeTypeFileInfoAbstract absolutePath index: index ].
+	^ self face: face pointSize: pointSize simulatedEmphasis: simulatedEmphasis
 ]
 
 { #category : 'instance creation' }
@@ -51,10 +76,9 @@ FreeTypeFont class >> fromBytes: aByteArray pointSize: anInteger [
 ]
 
 { #category : 'instance creation' }
-FreeTypeFont class >> fromBytes: aByteArray pointSize: anInteger  index: i [
-	^self new
-		setFace: (FreeTypeFace fromBytes: aByteArray index: i) pointSize: anInteger;
-		yourself
+FreeTypeFont class >> fromBytes: aByteArray pointSize: anInteger index: i [
+
+	^ self face: (FreeTypeFace fromBytes: aByteArray index: i) pointSize: anInteger
 ]
 
 { #category : 'instance creation' }
@@ -64,9 +88,8 @@ FreeTypeFont class >> fromFile: aFileName pointSize: anInteger [
 
 { #category : 'instance creation' }
 FreeTypeFont class >> fromFile: aFileName pointSize: anInteger index: i [
-	^self new
-		setFace: (FreeTypeFace fromFile: aFileName index: i) pointSize: anInteger;
-		yourself
+
+	^ self face: (FreeTypeFace fromFile: aFileName index: i) pointSize: anInteger
 ]
 
 { #category : 'measuring' }
@@ -85,6 +108,12 @@ FreeTypeFont >> ascent [
 FreeTypeFont >> basicAscent [
 
 	^(self face ascender * self pixelSize // self face unitsPerEm)
+]
+
+{ #category : 'private' }
+FreeTypeFont >> basicSimulatedEmphasis [
+
+	^ simulatedEmphasis
 ]
 
 { #category : 'glyph lookup' }
@@ -516,7 +545,8 @@ FreeTypeFont >> isSimulatedRegular [
 
 { #category : 'testing' }
 FreeTypeFont >> isSimulatedStyle [
-	^simulatedEmphasis notNil
+
+	^ simulatedEmphasis isNotNil
 ]
 
 { #category : 'testing' }
@@ -630,12 +660,6 @@ FreeTypeFont >> mode41GlyphOf: aCharacter colorValue: aColorValue mono: monoBool
 				subpixelPosition: sub
 				font: self
 				scale: scale ]
-]
-
-{ #category : 'accessing' }
-FreeTypeFont >> mutex [
-
-	^ mutex ifNil: [ mutex := Semaphore forMutualExclusion ]
 ]
 
 { #category : 'measuring' }

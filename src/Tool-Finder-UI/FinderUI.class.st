@@ -58,8 +58,8 @@ FinderUI class >> on: aFinder [
 
 { #category : 'instance creation' }
 FinderUI class >> open [
+	<script>
 
-	<script: 'self open'>
 	^ (self on: Finder new) open
 ]
 
@@ -419,7 +419,7 @@ FinderUI >> compileSource: aString notifying: aController [
 			^self].
 	class := self selectedClass.
 	method := class compiledMethodAt: self selectedMethod.
-	(class compile: (aString asString) classified: method category notifying: aController)
+	(class compile: (aString asString) classified: method protocol notifying: aController)
 			ifNil: [^ self ]
 			ifNotNil: [:selector |
 				self changed: #clearUserEdits ]
@@ -657,7 +657,7 @@ FinderUI >> menu: menu shifted: b [
 
 { #category : 'display' }
 FinderUI >> open [
-
+	<script: 'self open'>
 	| window |
 	window := StandardWindow new model: self.
 	self addAllItems: window.

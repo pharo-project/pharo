@@ -11,7 +11,9 @@ Class {
 
 { #category : 'meta-data - dependency analyser' }
 ManifestASTCore class >> manuallyResolvedDependencies [
-	^ #(#'Collections-Abstract')
+
+	<ignoreForCoverage>
+	^ #( #'OpalCompiler-Core')
 ]
 
 { #category : 'meta data' }

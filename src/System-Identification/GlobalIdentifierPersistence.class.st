@@ -90,7 +90,7 @@ GlobalIdentifierPersistence >> fileName [
 
 { #category : 'testing' }
 GlobalIdentifierPersistence >> hasPreviousPersistence [
-	^ previousPersistence notNil
+	^ previousPersistence isNotNil
 ]
 
 { #category : 'testing' }

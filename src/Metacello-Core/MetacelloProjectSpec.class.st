@@ -2,18 +2,35 @@ Class {
 	#name : 'MetacelloProjectSpec',
 	#superclass : 'MetacelloSpec',
 	#instVars : [
-		'name',
-		'className',
+		'file',
 		'versionString',
-		'operator',
-		'loads',
 		'preLoadDoIt',
-		'postLoadDoIt'
+		'loads',
+		'projectPackage',
+		'name',
+		'repositories',
+		'operator',
+		'postLoadDoIt',
+		'className',
+		'projectInitialized'
 	],
 	#category : 'Metacello-Core-Specs',
 	#package : 'Metacello-Core',
 	#tag : 'Specs'
 }
+
+{ #category : 'class initialization' }
+MetacelloProjectSpec class >> initialize [
+
+	self deprecatedAliases: { #MetacelloMCProjectSpec. #MetacelloGenericProjectSpec }
+]
+
+{ #category : 'instance creation' }
+MetacelloProjectSpec class >> new [
+	self name == #MetacelloProjectSpec
+		ifTrue: [ self error: 'This class is abstract' ].
+	^ super new
+]
 
 { #category : 'adding' }
 MetacelloProjectSpec >> addToMetacelloPackages: aMetacelloPackagesSpec [
@@ -31,28 +48,56 @@ MetacelloProjectSpec >> addToMetacelloPackages: aMetacelloPackagesSpec [
 ]
 
 { #category : 'scripting' }
-MetacelloProjectSpec >> canDowngradeTo: aMetacelloProjectSpec [
-  (self className = aMetacelloProjectSpec className
-    and: [ self operator == aMetacelloProjectSpec operator ])
-    ifFalse: [ ^ false ].
-  self versionOrNil == nil
+MetacelloProjectSpec >> asBaselineProjectSpec [
+    ^ self copyForScriptingInto: (MetacelloMCBaselineOfProjectSpec for: self project asBaselineProject)
+]
+
+{ #category : 'scripting' }
+MetacelloProjectSpec >> asConfigurationProjectSpec [
+    ^ self copyForScriptingInto: (MetacelloMCConfigurationOfProjectSpec for: self project asConfigurationProject)
+]
+
+{ #category : 'scripting' }
+MetacelloProjectSpec >> asProjectRegistration [
+  (self className beginsWith: 'BaselineOf')
     ifTrue: [ 
-      "https://github.com/dalehenrich/metacello-work/issues/198#issuecomment-21737458"
-      ^ true ].
-  ^ (self compareVersions: aMetacelloProjectSpec usingOperator: self operator)
-    not
+      ^ MetacelloProjectRegistration
+        fromMCBaselineProjectSpec: self asBaselineProjectSpec ].
+  ^ MetacelloProjectRegistration
+    fromMCConfigurationProjectSpec: self asConfigurationProjectSpec
+]
+
+{ #category : 'scripting' }
+MetacelloProjectSpec >> asProjectSpec [
+    ^ self
+]
+
+{ #category : 'scripting' }
+MetacelloProjectSpec >> asProjectSpecForVersion: vrsn [
+  ^ self
+]
+
+{ #category : 'accessing' }
+MetacelloProjectSpec >> baseName [
+	^ MetacelloScriptEngine baseNameOf: self className
+]
+
+{ #category : 'scripting' }
+MetacelloProjectSpec >> canDowngradeTo: aMetacelloProjectSpec [
+
+	self file = aMetacelloProjectSpec file ifFalse: [ ^ false ].
+	(self className = aMetacelloProjectSpec className and: [ self operator == aMetacelloProjectSpec operator ]) ifFalse: [ ^ false ].
+	self versionOrNil ifNil: [ "https://github.com/dalehenrich/metacello-work/issues/198#issuecomment-21737458" ^ true ].
+	^ (self compareVersions: aMetacelloProjectSpec usingOperator: self operator) not
 ]
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> canUpgradeTo: aMetacelloProjectSpec [
-  (self className = aMetacelloProjectSpec className
-    and: [ self operator == aMetacelloProjectSpec operator ])
-    ifFalse: [ ^ false ].
-  self versionOrNil == nil
-    ifTrue: [ 
-      "https://github.com/dalehenrich/metacello-work/issues/198#issuecomment-21737458"
-      ^ true ].
-  ^ self compareVersions: aMetacelloProjectSpec usingOperator: self operator
+
+	self file = aMetacelloProjectSpec file ifFalse: [ ^ false ].
+	(self className = aMetacelloProjectSpec className and: [ self operator == aMetacelloProjectSpec operator ]) ifFalse: [ ^ false ].
+	self versionOrNil ifNil: [ "https://github.com/dalehenrich/metacello-work/issues/198#issuecomment-21737458" ^ true ].
+	^ self compareVersions: aMetacelloProjectSpec usingOperator: self operator
 ]
 
 { #category : 'querying' }
@@ -63,55 +108,49 @@ MetacelloProjectSpec >> className [
 
 { #category : 'accessing' }
 MetacelloProjectSpec >> className: aString [
-    self shouldBeMutable.
-    className := aString
-]
 
-{ #category : 'construction' }
-MetacelloProjectSpec >> className: aString constructor: aVersionConstructor [
-    aVersionConstructor classNameForProject: aString
+	self shouldBeMutable.
+	className := aString.
+	self projectPackage: nil
 ]
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> compareEqual: aMetacelloProjectSpec [
-  "name className versionString operator loads preLoadDoIt postLoadDoIt"
+	"'projectPackage repositories'"
 
-  ^ self className = aMetacelloProjectSpec className
-    and: [ 
-      (self compareVersionsEqual: aMetacelloProjectSpec)
-        and: [ 
-          self operator == aMetacelloProjectSpec operator
-            and: [ 
-              self loads = aMetacelloProjectSpec loads
-                and: [ 
-                  self preLoadDoIt value == aMetacelloProjectSpec preLoadDoIt value
-                    and: [ self postLoadDoIt value == aMetacelloProjectSpec postLoadDoIt value ] ] ] ] ]
+	^ self className = aMetacelloProjectSpec className and: [
+		  (self compareVersionsEqual: aMetacelloProjectSpec) and: [
+			  self operator == aMetacelloProjectSpec operator and: [
+				  self loads = aMetacelloProjectSpec loads and: [
+					  self preLoadDoIt value == aMetacelloProjectSpec preLoadDoIt value and: [
+						  self postLoadDoIt value == aMetacelloProjectSpec postLoadDoIt value and: [
+							  (self repositories compareEqual: aMetacelloProjectSpec repositories) and: [ self file = aMetacelloProjectSpec file ] ] ] ] ] ] ]
 ]
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> compareVersions: aMetacelloProjectSpec usingOperator: anOperator [
-  ^ aMetacelloProjectSpec versionOrNil == nil
-    ifTrue: [ 
-      "https://github.com/dalehenrich/metacello-work/issues/199#issuecomment-21739622"
-      aMetacelloProjectSpec versionString asMetacelloVersionNumber
-        perform: anOperator
-        with: self version versionNumber ]
-    ifFalse: [ ^ aMetacelloProjectSpec version perform: anOperator with: self version ]
+
+	^ aMetacelloProjectSpec versionOrNil
+		  ifNotNil: [ ^ aMetacelloProjectSpec version perform: anOperator with: self version ]
+		  ifNil: [ "https://github.com/dalehenrich/metacello-work/issues/199#issuecomment-21739622"
+			  aMetacelloProjectSpec versionString asMetacelloVersionNumber perform: anOperator with: self version versionNumber ]
 ]
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> compareVersionsEqual: aMetacelloProjectSpec [
-  | vrsn otherVrsn |
-  vrsn := self versionOrNil.
-  otherVrsn := aMetacelloProjectSpec versionOrNil.
-  vrsn ifNil: [ ^ vrsn = otherVrsn ].
-  otherVrsn ifNil: [ ^ false ].
-  ^ vrsn versionNumber = otherVrsn versionNumber
+
+	| vrsn otherVrsn |
+	vrsn := self versionOrNil.
+	otherVrsn := aMetacelloProjectSpec versionOrNil.
+	vrsn ifNil: [ ^ vrsn = otherVrsn ].
+	otherVrsn ifNil: [ ^ false ].
+	^ vrsn versionNumber = otherVrsn versionNumber
 ]
 
 { #category : 'printing' }
 MetacelloProjectSpec >> configHasVersionString [
-  ^ self versionString ~~ nil
+
+	^ self versionString isNotNil
 ]
 
 { #category : 'printing' }
@@ -121,145 +160,121 @@ MetacelloProjectSpec >> configMethodBodyOn: aStream indent: indent [
 
 { #category : 'printing' }
 MetacelloProjectSpec >> configMethodBodyOn: aStream indent: indent fromShortCut: fromShortCut [
-  | hasVersionString hasOperator hasProjectPackage hasLoads hasClassName hasPreLoadDoIt hasPostLoadDoIt |
-  hasClassName := self hasClassName.
-  hasVersionString := self configHasVersionString.
-  hasOperator := operator ~~ nil.
-  hasProjectPackage := self hasRepository
-    or: [ hasClassName & (self getFile ~~ nil) ].
-  hasLoads := self loads ~~ nil.
-  hasPreLoadDoIt := self getPreLoadDoIt ~~ nil.
-  hasPostLoadDoIt := self getPostLoadDoIt ~~ nil.
-  hasClassName
-    ifTrue: [ 
-      hasVersionString | hasOperator | hasProjectPackage | hasLoads
-        ifTrue: [ 
-          aStream
-            cr;
-            tab: indent + 1 ]
-        ifFalse: [ aStream space ].
-      aStream nextPutAll: 'className: ' , self className printString.
-      hasVersionString | hasPreLoadDoIt | hasPostLoadDoIt | hasOperator
-        | hasLoads | hasProjectPackage
-        ifTrue: [ aStream nextPut: $; ] ].
-  hasVersionString
-    ifTrue: [ 
-      | vs |
-      hasClassName | hasOperator | hasProjectPackage | hasLoads | hasPreLoadDoIt
-        | hasPostLoadDoIt
-        ifTrue: [ 
-          aStream
-            cr;
-            tab: indent + 1 ]
-        ifFalse: [ aStream space ].
-      vs := self versionString.
-      aStream nextPutAll: 'versionString: '.
-      vs isSymbol
-        ifTrue: [ aStream nextPut: $# ].
-      aStream nextPutAll: vs asString printString.
-      hasPreLoadDoIt | hasPostLoadDoIt | hasOperator | hasProjectPackage
-        | hasLoads
-        ifTrue: [ aStream nextPut: $; ] ].
-  hasPreLoadDoIt
-    ifTrue: [ 
-      hasClassName | hasOperator | hasProjectPackage | hasLoads | hasPreLoadDoIt
-        ifTrue: [ 
-          aStream
-            cr;
-            tab: indent + 1 ]
-        ifFalse: [ aStream space ].
-      aStream nextPutAll: 'preLoadDoIt: '.
-      self preLoadDoIt value isSymbol
-        ifTrue: [ 
-          aStream
-            nextPut: $#;
-            nextPutAll: self preLoadDoIt value asString printString ]
-        ifFalse: [ aStream nextPutAll: self preLoadDoIt value asString ].
-      hasPostLoadDoIt | hasOperator | hasProjectPackage | hasLoads
-        ifTrue: [ aStream nextPut: $; ] ].
-  hasPostLoadDoIt
-    ifTrue: [ 
-      hasClassName | hasOperator | hasProjectPackage | hasLoads | hasPostLoadDoIt
-        ifTrue: [ 
-          aStream
-            cr;
-            tab: indent + 1 ]
-        ifFalse: [ aStream space ].
-      aStream nextPutAll: 'postLoadDoIt: '.
-      self postLoadDoIt value isSymbol
-        ifTrue: [ 
-          aStream
-            nextPut: $#;
-            nextPutAll: self postLoadDoIt value asString printString ]
-        ifFalse: [ aStream nextPutAll: self postLoadDoIt value asString ].
-      hasOperator | hasProjectPackage | hasLoads
-        ifTrue: [ aStream nextPut: $; ] ].
-  hasOperator
-    ifTrue: [ 
-      hasClassName | hasVersionString | hasProjectPackage | hasLoads | hasPreLoadDoIt
-        | hasPostLoadDoIt
-        ifTrue: [ 
-          aStream
-            cr;
-            tab: indent + 1 ]
-        ifFalse: [ aStream space ].
-      aStream nextPutAll: 'operator: #' , self operator asString printString.
-      hasProjectPackage | hasLoads
-        ifTrue: [ aStream nextPut: $; ] ].
-  hasLoads
-    ifTrue: [ 
-      hasClassName | hasVersionString | hasOperator | hasProjectPackage
-        | hasPreLoadDoIt | hasPostLoadDoIt
-        ifTrue: [ 
-          aStream
-            cr;
-            tab: indent + 1 ]
-        ifFalse: [ aStream space ].
-      aStream nextPutAll: 'loads: #('.
-      self loads do: [ :str | aStream nextPutAll: str printString , ' ' ].
-      aStream nextPut: $).
-      hasProjectPackage
-        ifTrue: [ aStream nextPut: $; ] ].
-  hasProjectPackage
-    ifTrue: [ 
-      | hasName hasRepo |
-      hasRepo := self hasRepository.
-      hasName := self file ~= self className.
-      hasName
-        ifTrue: [ 
-          hasClassName | hasVersionString | hasOperator | hasLoads | hasPreLoadDoIt
-            | hasPostLoadDoIt
-            ifTrue: [ 
-              aStream
-                cr;
-                tab: indent + 1 ]
-            ifFalse: [ aStream space ].
-          aStream nextPutAll: 'file: ' , self file printString.
-          hasRepo
-            ifTrue: [ aStream nextPut: $; ] ].
-      hasRepo
-        ifTrue: [ 
-          | repos |
-          repos := self repositories map values.
-          repos size = 1
-            ifTrue: [ 
-              fromShortCut
-                ifTrue: [ 
-                  hasClassName | hasVersionString | hasOperator | hasLoads | hasPreLoadDoIt
-                    | hasPostLoadDoIt | hasName
-                    ifTrue: [ 
-                      aStream
-                        cr;
-                        tab: indent + 1 ]
-                    ifFalse: [ aStream space ] ]
-                ifFalse: [ 
-                  aStream
-                    cr;
-                    tab: indent + 1 ].
-              repos first configMethodCascadeOn: aStream lastCascade: true ]
-            ifFalse: [ 
-              aStream cr.
-              self repositories configMethodCascadeOn: aStream indent: indent ] ] ]
+
+	| hasVersionString hasOperator hasProjectPackage hasLoads hasClassName hasPreLoadDoIt hasPostLoadDoIt |
+	hasClassName := self hasClassName.
+	hasVersionString := self configHasVersionString.
+	hasOperator := operator isNotNil.
+	hasProjectPackage := self hasRepository or: [ hasClassName & self getFile isNotNil ].
+	hasLoads := self loads isNotNil.
+	hasPreLoadDoIt := self getPreLoadDoIt isNotNil.
+	hasPostLoadDoIt := self getPostLoadDoIt isNotNil.
+	hasClassName ifTrue: [
+		hasVersionString | hasOperator | hasProjectPackage | hasLoads
+			ifTrue: [
+				aStream
+					cr;
+					tab: indent + 1 ]
+			ifFalse: [ aStream space ].
+		aStream nextPutAll: 'className: ' , self className printString.
+		hasVersionString | hasPreLoadDoIt | hasPostLoadDoIt | hasOperator | hasLoads | hasProjectPackage ifTrue: [ aStream nextPut: $; ] ].
+	hasVersionString ifTrue: [
+		| vs |
+		hasClassName | hasOperator | hasProjectPackage | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt
+			ifTrue: [
+				aStream
+					cr;
+					tab: indent + 1 ]
+			ifFalse: [ aStream space ].
+		vs := self versionString.
+		aStream nextPutAll: 'versionString: '.
+		vs isSymbol ifTrue: [ aStream nextPut: $# ].
+		aStream nextPutAll: vs asString printString.
+		hasPreLoadDoIt | hasPostLoadDoIt | hasOperator | hasProjectPackage | hasLoads ifTrue: [ aStream nextPut: $; ] ].
+	hasPreLoadDoIt ifTrue: [
+		hasClassName | hasOperator | hasProjectPackage | hasLoads | hasPreLoadDoIt
+			ifTrue: [
+				aStream
+					cr;
+					tab: indent + 1 ]
+			ifFalse: [ aStream space ].
+		aStream nextPutAll: 'preLoadDoIt: '.
+		self preLoadDoIt value isSymbol
+			ifTrue: [
+				aStream
+					nextPut: $#;
+					nextPutAll: self preLoadDoIt value asString printString ]
+			ifFalse: [ aStream nextPutAll: self preLoadDoIt value asString ].
+		hasPostLoadDoIt | hasOperator | hasProjectPackage | hasLoads ifTrue: [ aStream nextPut: $; ] ].
+	hasPostLoadDoIt ifTrue: [
+		hasClassName | hasOperator | hasProjectPackage | hasLoads | hasPostLoadDoIt
+			ifTrue: [
+				aStream
+					cr;
+					tab: indent + 1 ]
+			ifFalse: [ aStream space ].
+		aStream nextPutAll: 'postLoadDoIt: '.
+		self postLoadDoIt value isSymbol
+			ifTrue: [
+				aStream
+					nextPut: $#;
+					nextPutAll: self postLoadDoIt value asString printString ]
+			ifFalse: [ aStream nextPutAll: self postLoadDoIt value asString ].
+		hasOperator | hasProjectPackage | hasLoads ifTrue: [ aStream nextPut: $; ] ].
+	hasOperator ifTrue: [
+		hasClassName | hasVersionString | hasProjectPackage | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt
+			ifTrue: [
+				aStream
+					cr;
+					tab: indent + 1 ]
+			ifFalse: [ aStream space ].
+		aStream nextPutAll: 'operator: #' , self operator asString printString.
+		hasProjectPackage | hasLoads ifTrue: [ aStream nextPut: $; ] ].
+	hasLoads ifTrue: [
+		hasClassName | hasVersionString | hasOperator | hasProjectPackage | hasPreLoadDoIt | hasPostLoadDoIt
+			ifTrue: [
+				aStream
+					cr;
+					tab: indent + 1 ]
+			ifFalse: [ aStream space ].
+		aStream nextPutAll: 'loads: #('.
+		self loads do: [ :str | aStream nextPutAll: str printString , ' ' ].
+		aStream nextPut: $).
+		hasProjectPackage ifTrue: [ aStream nextPut: $; ] ].
+	hasProjectPackage ifTrue: [
+		| hasName hasRepo |
+		hasRepo := self hasRepository.
+		hasName := self file ~= self className.
+		hasName ifTrue: [
+			hasClassName | hasVersionString | hasOperator | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt
+				ifTrue: [
+					aStream
+						cr;
+						tab: indent + 1 ]
+				ifFalse: [ aStream space ].
+			aStream nextPutAll: 'file: ' , self file printString.
+			hasRepo ifTrue: [ aStream nextPut: $; ] ].
+		hasRepo ifTrue: [
+			| repos |
+			repos := self repositories map values.
+			repos size = 1
+				ifTrue: [
+					fromShortCut
+						ifTrue: [
+							hasClassName | hasVersionString | hasOperator | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt | hasName
+								ifTrue: [
+									aStream
+										cr;
+										tab: indent + 1 ]
+								ifFalse: [ aStream space ] ]
+						ifFalse: [
+							aStream
+								cr;
+								tab: indent + 1 ].
+					repos first configMethodCascadeOn: aStream lastCascade: true ]
+				ifFalse: [
+					aStream cr.
+					self repositories configMethodCascadeOn: aStream indent: indent ] ] ]
 ]
 
 { #category : 'printing' }
@@ -276,42 +291,37 @@ MetacelloProjectSpec >> configMethodOn: aStream indent: indent [
 
 { #category : 'printing' }
 MetacelloProjectSpec >> configShortCutMethodOn: aStream member: aMember indent: indent [
-  | hasVersionString hasOperator hasProjectPackage hasLoads hasClassName hasPreLoadDoIt hasPostLoadDoIt |
-  hasClassName := self hasClassName.
-  hasVersionString := self configHasVersionString.
-  hasOperator := operator ~~ nil.
-  hasProjectPackage := self hasRepository
-    or: [ hasClassName & (self getFile ~~ nil or: [ className ~= self name ]) ].
-  hasLoads := self loads ~~ nil.
-  hasPreLoadDoIt := self getPreLoadDoIt ~~ nil.
-  hasPostLoadDoIt := self getPostLoadDoIt ~~ nil.
-  hasClassName | hasOperator | hasProjectPackage | hasLoads | hasPreLoadDoIt
-    | hasPostLoadDoIt
-    ifTrue: [ 
-      (aMember methodUpdateSelector == #'copy:'
-        or: [ aMember methodUpdateSelector == #'with:' ])
-        ifTrue: [ 
-          aStream
-            nextPutAll: 'with: [';
-            cr ]
-        ifFalse: [ 
-          aStream
-            nextPutAll: 'overrides: [';
-            cr ].
-      aStream
-        tab: indent;
-        nextPutAll: 'spec'.
-      self configMethodBodyOn: aStream indent: indent fromShortCut: true.
-      aStream nextPutAll: ' ]'.
-      ^ self ].
-  hasVersionString
-    ifTrue: [ 
-      | vs |
-      vs := self versionString.
-      aStream nextPutAll: 'with: '.
-      vs isSymbol
-        ifTrue: [ aStream nextPut: $# ].
-      aStream nextPutAll: vs asString printString ]
+
+	| hasVersionString hasOperator hasProjectPackage hasLoads hasClassName hasPreLoadDoIt hasPostLoadDoIt |
+	hasClassName := self hasClassName.
+	hasVersionString := self configHasVersionString.
+	hasOperator := operator isNotNil.
+	hasProjectPackage := self hasRepository or: [ hasClassName & (self getFile isNotNil or: [ className ~= self name ]) ].
+	hasLoads := self loads isNotNil.
+	hasPreLoadDoIt := self getPreLoadDoIt isNotNil.
+	hasPostLoadDoIt := self getPostLoadDoIt isNotNil.
+	hasClassName | hasOperator | hasProjectPackage | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt ifTrue: [
+		(aMember methodUpdateSelector == #copy: or: [ aMember methodUpdateSelector == #with: ])
+			ifTrue: [
+				aStream
+					nextPutAll: 'with: [';
+					cr ]
+			ifFalse: [
+				aStream
+					nextPutAll: 'overrides: [';
+					cr ].
+		aStream
+			tab: indent;
+			nextPutAll: 'spec'.
+		self configMethodBodyOn: aStream indent: indent fromShortCut: true.
+		aStream nextPutAll: ' ]'.
+		^ self ].
+	hasVersionString ifTrue: [
+		| vs |
+		vs := self versionString.
+		aStream nextPutAll: 'with: '.
+		vs isSymbol ifTrue: [ aStream nextPut: $# ].
+		aStream nextPutAll: vs asString printString ]
 ]
 
 { #category : 'private' }
@@ -319,15 +329,57 @@ MetacelloProjectSpec >> constructClassName [
     ^ nil
 ]
 
-{ #category : 'querying' }
+{ #category : 'mutability' }
+MetacelloProjectSpec >> copyForRegistration: aMetacelloProjectRegistration onWrite: aBlock [
+    self subclassResponsibility
+]
+
+{ #category : 'scripting' }
+MetacelloProjectSpec >> copyForScriptingInto: aProjectSpec [
+    ^aProjectSpec
+        setName: name;
+        className: className;
+        versionString: versionString;
+        operator: operator;
+        setLoads: loads;
+        preLoadDoIt: preLoadDoIt;
+        postLoadDoIt: postLoadDoIt;
+        repositories: repositories copy;
+        file: file
+]
+
+{ #category : 'enumerating' }
 MetacelloProjectSpec >> currentlyLoadedClassesInVersion [
-    self versionOrNil ifNotNil: [ :vrsn | ^ vrsn currentlyLoadedClassesInVersion ].
-    ^ #()
+
+	self versionOrNil ifNotNil: [ :vrsn |
+		^ vrsn spec currentlyLoadedClassesInVersion ].
+	^ #(  )
+]
+
+{ #category : 'loading' }
+MetacelloProjectSpec >> ensureProjectLoadedWithEngine: anEngine [
+	"Ensure that the MetacelloProject is loaded in image. 
+	 projectClass == nil or requested version non-existent warrants a project package load."
+
+	(projectInitialized and: [
+		 (self isMutable and: [ anEngine ignoreImage ]) not ]) ifTrue: [
+		^ self ].
+
+	projectInitialized := true.
+	project := anEngine loader loadProject: self
+]
+
+{ #category : 'querying' }
+MetacelloProjectSpec >> file [
+
+	^ file ifNil: [ ^ self className ]
 ]
 
 { #category : 'accessing' }
-MetacelloProjectSpec >> file [
-    ^ self className
+MetacelloProjectSpec >> file: aString [
+    self shouldBeMutable.
+    file := aString.
+    self projectPackage: nil
 ]
 
 { #category : 'accessing' }
@@ -341,7 +393,7 @@ MetacelloProjectSpec >> getClassName [
 MetacelloProjectSpec >> getFile [
     "raw access to iv"
 
-    ^ nil
+    ^ file
 ]
 
 { #category : 'accessing' }
@@ -366,12 +418,31 @@ MetacelloProjectSpec >> getPreLoadDoIt [
 MetacelloProjectSpec >> getRepositories [
     "raw access to iv"
 
-    ^ nil
+    ^ repositories
 ]
 
 { #category : 'printing' }
 MetacelloProjectSpec >> hasClassName [
-    ^ className ~~ nil
+
+	^ className isNotNil
+]
+
+{ #category : 'testing' }
+MetacelloProjectSpec >> hasConflictWithBaselineSpec: projectSpec [
+	^ self hasLoadConflicts: projectSpec
+]
+
+{ #category : 'testing' }
+MetacelloProjectSpec >> hasConflictWithConfigurationSpec: projectSpec [
+	^ self hasLoadConflicts: projectSpec
+]
+
+{ #category : 'testing' }
+MetacelloProjectSpec >> hasConflictWithProjectSpec: projectSpec [
+  (self className beginsWith: 'BaselineOf')
+    ifTrue: [ ^ projectSpec hasConflictWithBaselineSpec: self asBaselineProjectSpec ].
+  ^ projectSpec
+    hasConflictWithConfigurationSpec: self asConfigurationProjectSpec
 ]
 
 { #category : 'testing' }
@@ -381,32 +452,49 @@ MetacelloProjectSpec >> hasLoadConflicts: aMetacelloProjectSpec [
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> hasNoLoadConflicts: aMetacelloProjectSpec [
-  "same as compareEqual:, except if versionString and/or repositories are not 
-	specified for either one, then there are not conflicts"
+	"'projectPackage repositories'"
 
-  ^ self className = aMetacelloProjectSpec className
-    and: [ 
-      (self compareVersionsEqual: aMetacelloProjectSpec)
-        and: [ self operator == aMetacelloProjectSpec operator ] ]
+	^ (self className = aMetacelloProjectSpec className and: [
+		   (self compareVersionsEqual: aMetacelloProjectSpec) and: [
+			   self operator == aMetacelloProjectSpec operator and: [
+				   (self repositories isEmpty or: [ aMetacelloProjectSpec repositories isEmpty ]) or: [
+					   self repositories hasNoLoadConflicts: aMetacelloProjectSpec repositories ] ] ] ]) and: [ self file = aMetacelloProjectSpec file ]
 ]
 
 { #category : 'testing' }
 MetacelloProjectSpec >> hasNonVersionStringField [
-    | hasVersionString hasOperator hasProjectPackage hasLoads hasClassName hasPreLoadDoIt hasPostLoadDoIt |
-    hasClassName := self hasClassName.
-    hasVersionString := self versionString ~~ nil.
-    hasOperator := operator ~~ nil.
-    hasProjectPackage := (self file ~~ nil and: [ hasClassName and: [ self className ~= self name ] ])
-        or: [ self hasRepository ].
-    hasLoads := self loads ~~ nil.
-    hasPreLoadDoIt := self getPreLoadDoIt ~~ nil.
-    hasPostLoadDoIt := self getPostLoadDoIt ~~ nil.
-    ^ hasClassName | hasOperator | hasProjectPackage | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt
+
+	| hasVersionString hasOperator hasProjectPackage hasLoads hasClassName hasPreLoadDoIt hasPostLoadDoIt |
+	hasClassName := self hasClassName.
+	hasVersionString := self versionString isNotNil.
+	hasOperator := operator isNotNil.
+	hasProjectPackage := (self file isNotNil and: [ hasClassName and: [ self className ~= self name ] ]) or: [ self hasRepository ].
+	hasLoads := self loads isNotNil.
+	hasPreLoadDoIt := self getPreLoadDoIt isNotNil.
+	hasPostLoadDoIt := self getPostLoadDoIt isNotNil.
+	^ hasClassName | hasOperator | hasProjectPackage | hasLoads | hasPreLoadDoIt | hasPostLoadDoIt
 ]
 
 { #category : 'testing' }
 MetacelloProjectSpec >> hasRepository [
-    ^ false
+    ^ self repositorySpecs notEmpty
+]
+
+{ #category : 'initialization' }
+MetacelloProjectSpec >> initialize [
+
+	super initialize.
+	projectInitialized := false
+]
+
+{ #category : 'testing' }
+MetacelloProjectSpec >> isBaselineOfProjectSpec [
+	^ false
+]
+
+{ #category : 'testing' }
+MetacelloProjectSpec >> isConfigurationOfProjectSpec [
+	^ false
 ]
 
 { #category : 'scripting' }
@@ -423,19 +511,22 @@ MetacelloProjectSpec >> label [
 	^self name
 ]
 
-{ #category : 'loading' }
-MetacelloProjectSpec >> load [
+{ #category : 'private' }
+MetacelloProjectSpec >> loadListForVersion: vrsn [
 
-	self subclassResponsibility
+	^ (self loads isNil or: [ self loads isEmpty ])
+		  ifTrue: [ vrsn spec defaultPackageNames ]
+		  ifFalse: [ self loads ]
 ]
 
-{ #category : 'private' }
-MetacelloProjectSpec >> loadListForVersion: vrsn [ 
+{ #category : 'accessing' }
+MetacelloProjectSpec >> loadPackageList [
 
-	^ (self loads == nil
-			or: [self loads isEmpty])
-		ifTrue: [vrsn spec defaultPackageNames]
-		ifFalse: [self loads]
+	| vrsn pkgs |
+	(vrsn := self versionOrNil) ifNil: [ ^ #(  ) ].
+	pkgs := OrderedCollection new.
+	(self loadListForVersion: vrsn) do: [ :nm | pkgs addAll: ((vrsn packagesForSpecNamed: nm) collect: [ :each | each name ]) ].
+	^ pkgs
 ]
 
 { #category : 'querying' }
@@ -447,11 +538,6 @@ MetacelloProjectSpec >> loads [
 MetacelloProjectSpec >> loads: aCollection [
 
 	aCollection setLoadsInMetacelloProject: self
-]
-
-{ #category : 'construction' }
-MetacelloProjectSpec >> loads: anObject constructor: aVersionConstructor [
-    aVersionConstructor loadsForProject: anObject
 ]
 
 { #category : 'merging' }
@@ -466,29 +552,57 @@ MetacelloProjectSpec >> mergeMap [
 	map at: #loads put: loads.
 	map at: #preLoadDoIt put: preLoadDoIt.
 	map at: #postLoadDoIt put: postLoadDoIt.
-	^map
+	map at: #repositories put: repositories.
+	^ map
+]
+
+{ #category : 'merging' }
+MetacelloProjectSpec >> mergeRepositoriesSpec: anotherRepositories [
+
+	self repositories: (self getRepositories
+			 ifNotNil: [ self repositories mergeSpec: anotherRepositories ]
+			 ifNil: [ anotherRepositories ])
 ]
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> mergeScriptLoads: aSpec [
-    self shouldBeMutable.
-    aSpec loads
-        ifNotNil: [ :otherLoads | self loads ifNil: [ loads := otherLoads ] ifNotNil: [ loads := (loads , otherLoads) asSet asArray ] ].
-    self loader: aSpec loader
+
+	self shouldBeMutable.
+	aSpec loads ifNotNil: [ :otherLoads |
+		self loads
+			ifNil: [ loads := otherLoads ]
+			ifNotNil: [ loads := (loads , otherLoads) asSet asArray ] ]
+]
+
+{ #category : 'scripting' }
+MetacelloProjectSpec >> mergeScriptRepository: anotherSpec [
+    self repositories: anotherSpec repositories
+]
+
+{ #category : 'merging' }
+MetacelloProjectSpec >> mergeSpec: anotherSpec [
+
+	| newSpec map |
+	newSpec := super mergeSpec: anotherSpec.
+	map := anotherSpec mergeMap.
+	(map at: #repositories) ifNotNil: [ :anotherRepositories | newSpec mergeRepositoriesSpec: anotherRepositories ].
+	^ newSpec
 ]
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> metacelloRegistrationHash [
-    "name className versionString operator loads preLoadDoIt postLoadDoIt"
+	"file"
 
-    | hash |
-    hash := String stringHash: name initialHash: 0.
-    hash := String stringHash: self className initialHash: hash.
-    hash := String stringHash: self versionString initialHash: hash.
-    hash := String stringHash: self operator asString initialHash: hash.
-    hash := String stringHash: self preLoadDoIt asString initialHash: hash.
-    hash := String stringHash: self postLoadDoIt asString initialHash: hash.
-    ^ hash bitXor: loads hash
+	| hash |
+	hash := String stringHash: name initialHash: 0.
+	hash := String stringHash: self className initialHash: hash.
+	hash := String stringHash: self versionString initialHash: hash.
+	hash := String stringHash: self operator asString initialHash: hash.
+	hash := String stringHash: self preLoadDoIt asString initialHash: hash.
+	hash := String stringHash: self postLoadDoIt asString initialHash: hash.
+	hash := hash bitXor: loads hash.
+	hash := hash bitXor: self repositories metacelloRegistrationHash.
+	^ String stringHash: self file initialHash: hash
 ]
 
 { #category : 'querying' }
@@ -499,22 +613,23 @@ MetacelloProjectSpec >> name [
 
 { #category : 'accessing' }
 MetacelloProjectSpec >> name: aString [
-    ((aString at: 1) isSeparator or: [ (aString at: aString size) isSeparator ])
-        ifTrue: [ self error: 'Names are not allowed to have leading or trailing blanks: ' , aString printString ].
-    self shouldBeMutable.
-    name := aString
+
+	((aString at: 1) isSeparator or: [ (aString at: aString size) isSeparator ]) ifTrue: [
+		self error: 'Names are not allowed to have leading or trailing blanks: ' , aString printString ].
+	self shouldBeMutable.
+	name := aString.
+	self projectPackage: nil
 ]
 
-{ #category : 'construction' }
-MetacelloProjectSpec >> name: aString constructor: aVersionConstructor [
-    aVersionConstructor nameForProject: aString
+{ #category : 'merging' }
+MetacelloProjectSpec >> nonOverridable [
+    ^ super nonOverridable , #(#'projectPackage' #'repositories')
 ]
 
 { #category : 'querying' }
 MetacelloProjectSpec >> operator [
 
-	operator == nil ifTrue: [ ^#>= ].
-	^ operator
+	^ operator ifNil: [ #'>=' ]
 ]
 
 { #category : 'accessing' }
@@ -525,9 +640,20 @@ MetacelloProjectSpec >> operator: anObject [
     operator := anObject
 ]
 
-{ #category : 'construction' }
-MetacelloProjectSpec >> operator: anObject constructor: aVersionConstructor [
-    aVersionConstructor operatorForProject: anObject
+{ #category : 'accessing' }
+MetacelloProjectSpec >> packageFileSpecFor: aMetacelloPackagesSpec [
+
+	^(aMetacelloPackagesSpec project projectReferenceSpec)
+			name: self name;
+			projectReference: self copy;
+			yourself.
+]
+
+{ #category : 'copying' }
+MetacelloProjectSpec >> postCopy [
+    super postCopy.
+    repositories := repositories copy.
+    projectPackage := nil
 ]
 
 { #category : 'querying' }
@@ -542,11 +668,6 @@ MetacelloProjectSpec >> postLoadDoIt: anObject [
 	anObject setPostLoadDoItInMetacelloSpec: self
 ]
 
-{ #category : 'construction' }
-MetacelloProjectSpec >> postLoadDoIt: aSymbol constructor: aVersionConstructor [
-    aVersionConstructor postLoadDoItForProject: aSymbol
-]
-
 { #category : 'querying' }
 MetacelloProjectSpec >> preLoadDoIt [
 
@@ -559,14 +680,14 @@ MetacelloProjectSpec >> preLoadDoIt: anObject [
 	anObject setPreLoadDoItInMetacelloSpec: self
 ]
 
-{ #category : 'construction' }
-MetacelloProjectSpec >> preLoadDoIt: aSymbol constructor: aVersionConstructor [
-    aVersionConstructor preLoadDoItForProject: aSymbol
-]
-
 { #category : 'visiting' }
 MetacelloProjectSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
     projectBlock value: self
+]
+
+{ #category : 'accessing' }
+MetacelloProjectSpec >> projectInitialized [
+	^ projectInitialized
 ]
 
 { #category : 'printing' }
@@ -574,10 +695,22 @@ MetacelloProjectSpec >> projectLabel [
     ^ 'project'
 ]
 
-{ #category : 'querying' }
+{ #category : 'accessing' }
 MetacelloProjectSpec >> projectPackage [
+    projectPackage
+        ifNil: [ 
+            self className ifNil: [ ^ nil ].
+            projectPackage := self project packageSpec.
+            projectPackage name: self className.
+            self getFile ifNotNil: [ projectPackage file: self file ].
+            projectPackage repositories: self getRepositories ].
+    ^ projectPackage
+]
 
-	^nil
+{ #category : 'accessing' }
+MetacelloProjectSpec >> projectPackage: aProjectPackage [
+    self shouldBeMutable.
+    projectPackage := aProjectPackage
 ]
 
 { #category : 'scripting' }
@@ -590,10 +723,47 @@ MetacelloProjectSpec >> registration [
 
 { #category : 'scripting' }
 MetacelloProjectSpec >> registrationsCompareEqual: aMetacelloProjectSpec [
-    "name className versionString operator loads preLoadDoIt postLoadDoIt"
+	"name className versionString operator loads preLoadDoIt postLoadDoIt"
 
-    ^ self className = aMetacelloProjectSpec className
-        and: [ self versionString = aMetacelloProjectSpec versionString and: [ self operator == aMetacelloProjectSpec operator ] ]
+	^ self className = aMetacelloProjectSpec className and: [
+		  self versionString = aMetacelloProjectSpec versionString and: [
+			  self operator == aMetacelloProjectSpec operator ] ]
+]
+
+{ #category : 'accessing' }
+MetacelloProjectSpec >> repositories [
+    repositories ifNil: [ repositories := self project repositoriesSpec ].
+    ^ repositories
+]
+
+{ #category : 'accessing' }
+MetacelloProjectSpec >> repositories: anObject [
+    self shouldBeMutable.
+    repositories := anObject.
+    self projectPackage: nil
+]
+
+{ #category : 'accessing' }
+MetacelloProjectSpec >> repository: aStringOrMetacelloRepositorySpec [
+    self repositories repository: aStringOrMetacelloRepositorySpec.
+    self projectPackage: nil
+]
+
+{ #category : 'accessing' }
+MetacelloProjectSpec >> repository: aString username: username password: password [
+    self repositories repository: aString username: username password: password.
+    self projectPackage: nil
+]
+
+{ #category : 'querying' }
+MetacelloProjectSpec >> repositoryDescriptions [
+    ^ self repositorySpecs collect: [ :repoSpec | repoSpec description ]
+]
+
+{ #category : 'querying' }
+MetacelloProjectSpec >> repositorySpecs [
+    repositories ifNil: [ ^ #() ].
+    ^ self repositories map values
 ]
 
 { #category : 'private' }
@@ -634,14 +804,71 @@ MetacelloProjectSpec >> unregisterProject [
         ifPresent: [ :existing :new | existing unregisterProject ]
 ]
 
-{ #category : 'querying' }
-MetacelloProjectSpec >> version [
-    self subclassResponsibility
+{ #category : 'development support' }
+MetacelloProjectSpec >> updateForSpawnMethod: sourceSpec [
+	"This means that this spec was used in a baseline and will be used in a version .... drop all information that isn't useful"
+
+	repositories := className := operator := loads := projectPackage := nil.
+	sourceSpec ifNotNil: [ versionString := sourceSpec versionString ]
 ]
 
-{ #category : 'construction' }
-MetacelloProjectSpec >> version: anObject constructor: aVersionConstructor [
-    aVersionConstructor versionForProject: anObject
+{ #category : 'scripting' }
+MetacelloProjectSpec >> validateForScriptLoad: aScriptEngine withDefaultVersionString: defaultVersionString withDefaultRepositoryDecription: defaultRepositoryDecription [
+
+	| issues callSite |
+	issues := OrderedCollection new.
+	callSite := #validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:.
+	self name ifNil: [
+		issues add: (MetacelloValidationError
+				 reasonCode: #incompleteProjectSpec
+				 callSite: callSite
+				 explanation: 'name field required') ].
+	self className ifNil: [
+		issues add: (MetacelloValidationError
+				 reasonCode: #incompleteProjectSpec
+				 callSite: callSite
+				 explanation: 'className field required') ].
+	self repositories isEmpty ifTrue: [
+		defaultRepositoryDecription
+			ifNotNil: [ self repository: defaultRepositoryDecription ]
+			ifNil: [
+				issues add: (MetacelloValidationError
+						 reasonCode: #incompleteProjectSpec
+						 callSite: callSite
+						 explanation: 'repository field required') ] ].
+	self
+		validateVersionString: issues
+		withDefaultVersionString: defaultVersionString.
+	^ issues
+]
+
+{ #category : 'scripting' }
+MetacelloProjectSpec >> validateVersionString: issues withDefaultVersionString: defaultVersionString [
+
+	self versionString ifNil: [
+		defaultVersionString
+			ifNotNil: [ self versionString: defaultVersionString ]
+			ifNil: [
+				issues add: (MetacelloValidationError
+						 reasonCode: #incompleteProjectSpec
+						 callSite:
+						 #validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:
+						 explanation: 'version field required') ] ]
+]
+
+{ #category : 'querying' }
+MetacelloProjectSpec >> version [
+	"Empty version string means use latestVersion or #bleedingEdge"
+
+	^ self versionString
+		  ifNotNil: [ self project versionString ]
+		  ifNil: [
+			  | vrsn |
+			  "Eventually it will become an error to not specify a project reference version as default: #stable is the preferred default""self deprecated: 'Must specify a project reference version.'."
+			  self flag: 'deprecate after version 1.0'.
+			  (vrsn := self project latestVersion) isNil
+				  ifTrue: [ self project version: #bleedingEdge ]
+				  ifFalse: [ vrsn ] ]
 ]
 
 { #category : 'querying' }
@@ -654,11 +881,14 @@ MetacelloProjectSpec >> versionKey [
 { #category : 'querying' }
 MetacelloProjectSpec >> versionOrNil [
 
-	^[ self version ] on: MetacelloVersionDoesNotExistError do: [:ex | ^nil ].
+	^ [ self version ]
+		  on: MetacelloVersionDoesNotExistError
+		  do: [ :ex | nil ]
 ]
 
 { #category : 'querying' }
 MetacelloProjectSpec >> versionString [
+
 	^ versionString
 ]
 
@@ -666,9 +896,4 @@ MetacelloProjectSpec >> versionString [
 MetacelloProjectSpec >> versionString: anObject [
     self shouldBeMutable.
     versionString := anObject
-]
-
-{ #category : 'construction' }
-MetacelloProjectSpec >> versionString: anObject constructor: aVersionConstructor [
-    aVersionConstructor versionStringForProject: anObject
 ]

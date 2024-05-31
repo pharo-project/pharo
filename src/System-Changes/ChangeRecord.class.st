@@ -32,7 +32,7 @@ ChangeRecord >> <= anotherOne [
 ChangeRecord >> classIncludesSelector [
 
 	| aClass |
-	^ (aClass := self methodClass) notNil
+	^ (aClass := self methodClass) isNotNil
 			and: [aClass includesSelector: self methodSelector]
 ]
 
@@ -66,18 +66,21 @@ ChangeRecord >> file: f position: p type: t class: c protocol: aProtocol meta: m
 ChangeRecord >> fileIn [
 	"File the receiver in.  If I represent a method or a class-comment, file the method in and make a note of it in the recent-submissions list; if I represent a do-it, then, well, do it."
 
-	UIManager default showWaitCursorWhile: [
-		self methodClass ifNotNil: [ :methodClass |
-			methodClass
-				compile: self string
-				classified: protocol
-				withStamp: stamp
-				notifying: nil ].
-		type == #doIt ifTrue: [
-			| string |
-			string := self string.
-			(string beginsWith: '----') ifFalse: [ self class compiler evaluate: string ] ].
-		type == #classComment ifTrue: [ (Smalltalk globals at: class asSymbol) comment: self string stamp: stamp ] ]
+	self methodClass ifNotNil: [ :methodClass |
+		methodClass
+			compile: self string
+			classified: protocol
+			withStamp: stamp
+			notifying: nil ].
+	type == #doIt ifTrue: [
+		| string |
+		string := self string.
+		(string beginsWith: '----') ifFalse: [
+			self class compiler evaluate: string ] ].
+	type == #classComment ifTrue: [
+		(Smalltalk globals at: class asSymbol)
+			comment: self string
+			stamp: stamp ]
 ]
 
 { #category : 'accessing' }
@@ -231,7 +234,7 @@ ChangeRecord >> timeStamp [
 		ifTrue: [
 			[
 			| time date |
-			date := Date fromString: (tokens at: tokens size - 1).
+			date := Date readFrom: (tokens at: tokens size - 1) pattern: 'dd-mm-yyyy'.
 			time := Time fromString: tokens last.
 			DateAndTime date: date time: time ]
 				on: Error

@@ -55,7 +55,7 @@ ClyClassGroup class >> decorateBrowserItem: aBrowserItem by: anEnvironmentPlugin
 ]
 
 { #category : 'testing' }
-ClyClassGroup class >> isBasedOnClassTag [
+ClyClassGroup class >> isBasedOnPackageTag [
 	^false
 ]
 
@@ -98,6 +98,17 @@ ClyClassGroup >> = anObject [
 	^ classQuery = anObject classQuery
 ]
 
+{ #category : 'adding' }
+ClyClassGroup >> addClass: aClass [
+
+	| newPackages |
+	newPackages := OrderedCollection new.
+	classQuery scope packagesDo: [ :package | package = aClass package ifFalse: [ newPackages add: package ] ].
+	newPackages size > 1 ifTrue: [ self error: 'You should select single package for import!' ].
+	newPackages ifNotEmpty: [ aClass package: newPackages anyOne ].
+	aClass packageTag: self tag
+]
+
 { #category : 'accessing' }
 ClyClassGroup >> classQuery [
 	^ classQuery
@@ -133,16 +144,6 @@ ClyClassGroup >> hash [
 	^ classQuery hash
 ]
 
-{ #category : 'operations' }
-ClyClassGroup >> importClass: aClass [
-]
-
-{ #category : 'operations' }
-ClyClassGroup >> importClasses: classesCollection [
-
-	classesCollection do: [ :each | self importClass: each ]
-]
-
 { #category : 'initialization' }
 ClyClassGroup >> initialize [
 	super initialize.
@@ -171,4 +172,10 @@ ClyClassGroup >> subgroupsQuery [
 { #category : 'accessing' }
 ClyClassGroup >> subgroupsQuery: anObject [
 	subgroupsQuery := anObject
+]
+
+{ #category : 'accessing' }
+ClyClassGroup >> tag [
+
+	^ self subclassResponsibility
 ]

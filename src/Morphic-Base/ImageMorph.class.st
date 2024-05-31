@@ -5,7 +5,7 @@ Use #image: to set my picture.
 
 Structure:
  instance var		Type 		Description
- image				Form		The Form to use when drawing
+ formSet			FormSet	The FormSet to use when drawing
 
 Code examples:
 	ImageMorph new openInWorld; grabFromScreen
@@ -21,7 +21,7 @@ Class {
 	#traits : 'TAbleToRotate',
 	#classTraits : 'TAbleToRotate classTrait',
 	#instVars : [
-		'image'
+		'formSet'
 	],
 	#classVars : [
 		'DefaultForm'
@@ -73,7 +73,13 @@ ImageMorph class >> initialize [
 { #category : 'instance creation' }
 ImageMorph class >> withForm: aForm [
 
-	^ self new form: aForm ; yourself
+	^ self withFormSet: (FormSet form: aForm)
+]
+
+{ #category : 'instance creation' }
+ImageMorph class >> withFormSet: aFormSet [
+
+	^ self new formSet: aFormSet; yourself
 ]
 
 { #category : 'menus' }
@@ -113,7 +119,7 @@ ImageMorph >> borderStyle: newStyle [
 
 	| newExtent |
 	self borderStyle = newStyle ifTrue: [^self].
-	newExtent := 2 * newStyle width + image extent.
+	newExtent := 2 * newStyle width + formSet extent.
 	bounds extent = newExtent ifFalse: [super extent: newExtent].
 	super borderStyle: newStyle
 ]
@@ -122,7 +128,7 @@ ImageMorph >> borderStyle: newStyle [
 ImageMorph >> borderWidth: bw [
 
 	| newExtent |
-	newExtent := 2 * bw + image extent.
+	newExtent := 2 * bw + formSet extent.
 	bounds extent = newExtent ifFalse: [super extent: newExtent].
 	super borderWidth: bw
 ]
@@ -138,11 +144,13 @@ ImageMorph >> color: aColor [
 	Change to a ColorForm here if depth 1."
 
 	super color: aColor.
-    (image depth = 1 and: [aColor isColor]) ifTrue: [
-		image isColorForm ifFalse: [
-			image := ColorForm mappingWhiteToTransparentFrom: image].
-			image colors: {Color transparent. aColor}.
-			self changed]
+	(formSet depth = 1 and: [aColor isColor]) ifTrue: [
+		formSet := FormSet extent: formSet extent depth: formSet depth
+			forms: (formSet forms collect: [ :form |
+				| colorForm |
+				colorForm := form isColorForm ifTrue: [ form ] ifFalse: [ ColorForm mappingWhiteToTransparentFrom: (form asFormOfDepth: 1) ].
+				colorForm colors: {Color transparent. aColor} ]) ].
+	self changed
 ]
 
 { #category : 'initialization' }
@@ -158,8 +166,8 @@ ImageMorph >> drawOn: aCanvas [
 
 	| style |
 	self isOpaque
-		ifTrue: [aCanvas drawImage: image at: self innerBounds origin]
-		ifFalse: [aCanvas translucentImage: image at: self innerBounds origin].
+		ifTrue: [aCanvas drawFormSet: formSet at: self innerBounds origin]
+		ifFalse: [aCanvas translucentFormSet: formSet at: self innerBounds origin].
 	(style := self borderStyle) ifNotNil: [style frameRectangle: bounds on: aCanvas]
 ]
 
@@ -172,13 +180,26 @@ ImageMorph >> extent: aPoint [
 
 { #category : 'accessing' }
 ImageMorph >> form [
-	^ image
+	^ formSet asForm
 ]
 
 { #category : 'accessing' }
 ImageMorph >> form: aForm [
-	image := aForm.
-	super extent: (2 * self borderWidth) asPoint + image extent.
+
+	self formSet: (FormSet form: aForm)
+]
+
+{ #category : 'accessing' }
+ImageMorph >> formSet [
+
+	^ formSet
+]
+
+{ #category : 'accessing' }
+ImageMorph >> formSet: aFormSet [
+
+	formSet := aFormSet.
+	super extent: (2 * self borderWidth) asPoint + formSet extent.
 	self changed
 ]
 
@@ -191,9 +212,7 @@ ImageMorph >> grabFromScreen [
 { #category : 'accessing' }
 ImageMorph >> image: anImage [
 
-	image := anImage.
-	super extent: (2 * self borderWidth) asPoint + image extent.
-	self changed
+	self form: anImage
 ]
 
 { #category : 'other' }
@@ -236,7 +255,7 @@ ImageMorph >> opacityString [
 { #category : 'menu commands' }
 ImageMorph >> readFromFile [
 	| fileName |
-	fileName := UIManager default
+	fileName := self morphicUIManager
 		request: 'Please enter the image file name' translated
 		initialAnswer: 'fileName'.
 	fileName isEmptyOrNil ifTrue: [^ self].
@@ -247,13 +266,17 @@ ImageMorph >> readFromFile [
 ImageMorph >> releaseCachedState [
 
 	super releaseCachedState.
-	image hibernate
+	formSet hibernate
 ]
 
 { #category : 'other' }
 ImageMorph >> resize: newSize [
 
-	self form: (image scaledToSize: newSize)
+	| newExtent |
+
+	newExtent := (newSize / formSet extent) min * formSet extent truncated.
+	self formSet: (FormSet extent: newExtent depth: formSet depth
+		forms: (formSet forms collect: [ :form | form scaledToSize: (form extent * (newExtent / formSet extent)) ]))
 ]
 
 { #category : 'testing' }
@@ -263,7 +286,8 @@ ImageMorph >> shouldFlex [
 
 { #category : 'testing' }
 ImageMorph >> wantsRecolorHandle [
-	^ image notNil and: [image depth = 1]
+
+	^ formSet isNotNil and: [formSet depth = 1]
 ]
 
 { #category : 'accessing' }

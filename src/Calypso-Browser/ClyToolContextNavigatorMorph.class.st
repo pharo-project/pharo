@@ -23,13 +23,13 @@ ClyToolContextNavigatorMorph >> build [
 	| goButton contextLabel |
 	contextLabel := ownerTool printContext.
 	contextLabel ifEmpty: [ ^self ]. "if ownerTool not defines meaningfull context name we ignore it"
-	self addMorphBack: (self iconNamed: #uncommentedClass) asMorph.
+	self addMorphBack: (self iconFormSetNamed: #uncommentedClass) asMorph.
 	self addMorphBack: contextLabel asMorph.
 	goButton := IconicButtonMorph new
 		target: self;
 		actionSelector: #restoreBrowserState;
 		arguments: {};
-		labelGraphic: (self iconNamed: #forward);
+		labelFormSet: (self iconFormSetNamed: #forward);
 		color: Color transparent;
 		helpText: 'Move browser to ', contextLabel;
 		borderWidth: 0.

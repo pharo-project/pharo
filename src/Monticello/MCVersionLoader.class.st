@@ -39,47 +39,35 @@ MCVersionLoader >> addVersion: aVersion [
 
 { #category : 'private' }
 MCVersionLoader >> announceLoad: aString do: aBlock [
-	| returnValue |
-	returnValue := nil.
-	[ self announceLoadStart: aString ] ensure: [ 
-		[ returnValue := aBlock value ] ensure: [ 
-			self announceLoadStop: aString ] ].
-	^ returnValue
-]
 
-{ #category : 'private' }
-MCVersionLoader >> announceLoadStart: aString [
-	SystemAnnouncer announce: (MCVersionLoaderStarted new
-		versionLoader: self;
-		label: aString; 
-		yourself)
+	^ [ aBlock value ] ensure: [ self announceLoadStop: aString ]
 ]
 
 { #category : 'private' }
 MCVersionLoader >> announceLoadStop: aString [
-	SystemAnnouncer announce: (MCVersionLoaderStopped new
-		versionLoader: self;
-		label: aString; 
-		yourself)
+
+	self class codeSupportAnnouncer announce: (MCVersionLoaderStopped new
+			 versionLoader: self;
+			 label: aString;
+			 yourself)
 ]
 
 { #category : 'private' }
-MCVersionLoader >> basicLoadWithNameLike: aString [
+MCVersionLoader >> basicLoad [
+
 	| loader |
-	
-	self checkForModificationsIfCancel: [ ^ self] ifMerge: [ ^ self mergeVersions ].
-	
+	self
+		checkForModificationsIfCancel: [ ^ self ]
+		ifMerge: [ ^ self mergeVersions ].
+
 	loader := versions size > 1
-		ifTrue: [MCMultiPackageLoader new]
-		ifFalse: [MCPackageLoader new].
-		
-	versions do: [:ea |
-		ea canOptimizeLoading
-			ifTrue: [ea patch applyTo: loader]
-			ifFalse: [loader updatePackage: ea package withSnapshot: ea snapshot]].
-		
-	loader loadWithNameLike: aString.
-	versions do: [:ea | ea workingCopy loaded: ea]
+		          ifTrue: [ MCMultiPackageLoader new ]
+		          ifFalse: [ MCPackageLoader new ].
+	versions do: [ :ea |
+		loader updatePackage: ea package withSnapshot: ea snapshot ].
+
+	loader load.
+	versions do: [ :ea | ea workingCopy loaded: ea ]
 ]
 
 { #category : 'checking' }
@@ -122,8 +110,8 @@ MCVersionLoader >> ensurePackage: mcPackage [
 
 { #category : 'testing' }
 MCVersionLoader >> hasLocalModifications [
-	^ self localModifications isEmpty not
-	
+
+	^ self localModifications isNotEmpty
 ]
 
 { #category : 'testing' }
@@ -140,19 +128,21 @@ MCVersionLoader >> initialize [
 
 { #category : 'loading' }
 MCVersionLoader >> load [
-	RPackageSet withCacheDo: [   
-		| version |
-		version := versions first. 
-		[ self ensurePackage: version package.
-		  self loadWithNameLike: version info name ] asJob
-				title: 'Loading ', version info name asString;
-				run ]
+
+	| version |
+	version := versions first.
+	[
+	self ensurePackage: version package.
+	self loadWithNameLike: version info name ] asJob
+		title: 'Loading ' , version info name asString;
+		run
 ]
 
 { #category : 'loading' }
 MCVersionLoader >> loadWithNameLike: aString [
 	" this is THE central entrypoint for all loading (gopher, metacello, monticello, ...) "
-	^ self announceLoad: aString do: [ self basicLoadWithNameLike: aString ]
+
+	^ self announceLoad: aString do: [ self basicLoad ]
 ]
 
 { #category : 'checking' }
@@ -171,13 +161,12 @@ MCVersionLoader >> mergeVersions [
 
 { #category : 'checking' }
 MCVersionLoader >> warnAboutLosingChangesTo: versionCollection ifCancel: cancelBlock ifMerge: mergeBlock [
-	
-	| result |
 
-	result := (MCMergeOrLoadWarning signalFor: versionCollection).
-	
+	| result |
+	result := MCMergeOrLoadWarning signalFor: versionCollection.
+
 	result = false ifTrue: [ ^ mergeBlock value ].
-	result = nil ifTrue: [ ^ cancelBlock value ].
-	
+	result ifNil: [ ^ cancelBlock value ]
+
 	"otherwise we will continue loading"
 ]

@@ -103,7 +103,9 @@ CommandLinePasswordManager >> hasPasswordSet [
 CommandLinePasswordManager >> hashString: password [
 	| hash |
 	hash := self hashingPepper , password.
-	(self numberOfHashIterations max: 1) timesRepeat: [ hash := (SHA256 hashMessage: hash) hex ].
+	(self numberOfHashIterations max: 1) timesRepeat: [ 
+		"We do not use a direct reference because this class is loaded after me.. But I should never be called in the bootstrap before loading the class, so this should be fine. Maybe we could have a better integration of the password management of the command lines later?"
+		hash := ((self class environment at: #SHA256) hashMessage: hash) hex ].
 	^ hash
 ]
 

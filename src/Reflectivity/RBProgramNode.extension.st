@@ -86,7 +86,7 @@ RBProgramNode >> hasLinks [
 
 { #category : '*Reflectivity' }
 RBProgramNode >> hasMetaLinks [
-	^ self links notNil and: [ self links notEmpty ]
+	^ self links isNotNil and: [ self links notEmpty ]
 ]
 
 { #category : '*Reflectivity' }
@@ -157,7 +157,7 @@ RBProgramNode >> link: aMetaLink [
 		add: aMetaLink.
 	aMetaLink installOn: self.
 	self clearReflectivityAnnotations.
-	self methodNode compiledMethod installLink: aMetaLink.
+	(self methodNode methodClass>>self methodNode selector) installLink: aMetaLink.
 	aMetaLink linkInstaller
 		propagateLinkAddition: aMetaLink
 		forNode: self.

@@ -36,8 +36,9 @@ MCGitHubRepository class >> cacheDirectory: aDirectory [
 ]
 
 { #category : 'instance creation' }
-MCGitHubRepository class >> createRepositoryFromSpec: aRepositorySpec on: aPlatform [
-	^ aPlatform createGithubRepository: aRepositorySpec
+MCGitHubRepository class >> createRepositoryFromSpec: aRepositorySpec [
+
+	^ self location: aRepositorySpec description
 ]
 
 { #category : 'accessing' }
@@ -96,7 +97,7 @@ MCGitHubRepository class >> resetCacheDirectoryIfInvalid [
 
   "Reset if invalid"
 
-  CacheDirectory notNil
+  CacheDirectory isNotNil
     and: [ 
       (MCFileTreeFileUtils current directoryExists: CacheDirectory)
         ifFalse: [ CacheDirectory := nil ] ]
@@ -108,16 +109,26 @@ MCGitHubRepository class >> urlSchemes [
 ]
 
 { #category : 'private' }
+MCGitHubRepository >> downloadJSON: url eTagsCache: eTagsCache eTagsKey: eTagsKey username: username pass: pass [
+	"return result of parsing JSON downloaded from url. username:pass may be nil, but calls will be subject to severe rate limits."
+
+	"To minimize GitHub rate limiting problems, we are caching the ETags for the tag request: https://developer.github.com/v3/#conditional-requests"
+
+	^ self downloadJSON: url username: username pass: pass
+]
+
+{ #category : 'private' }
 MCGitHubRepository >> downloadJSONTags [
-  | tagsUrl jsonObject |
-  tagsUrl := self projectTagsUrlFor: self projectPath.
-  jsonObject := MetacelloPlatform current
-    downloadJSON: tagsUrl
-    eTagsCache: self class eTagsCache
-    eTagsKey: self projectPath
-    username: self class siteUsername
-    pass: self class sitePassword.
-  ^ self normalizeTagsData: jsonObject
+
+	| tagsUrl jsonObject |
+	tagsUrl := self projectTagsUrlFor: self projectPath.
+	jsonObject := self
+		              downloadJSON: tagsUrl
+		              eTagsCache: self class eTagsCache
+		              eTagsKey: self projectPath
+		              username: self class siteUsername
+		              pass: self class sitePassword.
+	^ self normalizeTagsData: jsonObject
 ]
 
 { #category : 'private' }

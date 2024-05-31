@@ -9,12 +9,6 @@ Class {
 	#tag : 'Kernel'
 }
 
-{ #category : 'visiting' }
-RGMetaclassTraitStrategy >> acceptVisitor: aVisitor [
-
-	^ aVisitor visitClassTrait: self owner
-]
-
 { #category : 'private - backend access' }
 RGMetaclassTraitStrategy >> baseBehavior [
 

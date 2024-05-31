@@ -53,7 +53,7 @@ ReRuleManager class >> critiqueBanned: aReCritiqueBanned [
 	| baner |
 	baner := aReCritiqueBanned entityBanLevel.
 
-	baner class = RPackage
+	baner class = Package
 		ifTrue: [ self removeManagerFor: baner ]
 ]
 
@@ -88,17 +88,17 @@ ReRuleManager class >> managers [
 ]
 
 { #category : 'instance creation' }
-ReRuleManager class >> newManagerForPackage: aRPackage [
+ReRuleManager class >> newManagerForPackage: aPackage [
 	| builder manifest defaultRules rules |
-	aRPackage ifNil: [ ^ self default ].
+	aPackage ifNil: [ ^ self default ].
 	builder := TheManifestBuilder new.
-	manifest := builder manifestOf: aRPackage.
+	manifest := builder manifestOf: aPackage.
 	manifest ifNil: [ ^ self default ].
 
 	defaultRules := self defaultRules.
 	"remove rules banned for the package"
 	rules := defaultRules reject: [ :rule |
-		builder bansRule: rule for: aRPackage ].
+		builder bansRule: rule for: aPackage ].
 	(rules size = defaultRules size and: [
 	 manifest forcedRules isEmpty ])
 		ifTrue: [ ^ self default ].
@@ -117,10 +117,10 @@ ReRuleManager class >> newWithRules: aCollection [
 ]
 
 { #category : 'event subscriptions' }
-ReRuleManager class >> removeManagerFor: anRPackage [
+ReRuleManager class >> removeManagerFor: anPackage [
 
 	self managers
-		removeKey: anRPackage
+		removeKey: anPackage
 		ifAbsent: [  ]
 ]
 
@@ -160,6 +160,7 @@ ReRuleManager class >> ruleToggleGroupID [
 
 { #category : 'settings' }
 ReRuleManager class >> ruleToggleSettingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder group: self ruleToggleGroupID)
 		order: 1;
@@ -167,16 +168,13 @@ ReRuleManager class >> ruleToggleSettingsOn: aBuilder [
 		description: 'Select which rules do you want to see in the live feedback';
 		parent: #qualityAssistant;
 		with: [
-			(self visibleRuleClasses sorted: [ :a :b | a name < b name ])
-				do: [ :rule |
-					| inst |
-					inst := rule new.
+			(self visibleRuleClasses sorted: [ :a :b | a name < b name ]) do: [ :rule |
 					(aBuilder setting: rule enabledSettingID)
-					selector: #enabled;
-					target: rule;
-					default: rule enabled;
-					label: inst name;
-					description: inst rationale ] ]
+						selector: #enabled;
+						target: rule;
+						default: rule enabled;
+						label: rule name;
+						description: rule rationale ] ]
 ]
 
 { #category : 'accessing' }
@@ -208,17 +206,15 @@ ReRuleManager class >> setDefaultProfile [
 
 { #category : 'event subscriptions' }
 ReRuleManager class >> subscribe [
+
 	<systemEventRegistration>
 	self unsubscribe.
 
-	SystemAnnouncer uniqueInstance weak
-		when: ClassAdded   send: #classAddedOrRemoved: to: self;
+	self codeChangeAnnouncer weak
+		when: ClassAdded send: #classAddedOrRemoved: to: self;
 		when: ClassRemoved send: #classAddedOrRemoved: to: self.
 
-	ReSystemAnnouncer uniqueInstance weak
-		when: ReCritiqueBanned
-		send: #critiqueBanned:
-		to: self
+	ReSystemAnnouncer uniqueInstance weak when: ReCritiqueBanned send: #critiqueBanned: to: self
 ]
 
 { #category : 'instance creation' }
@@ -236,7 +232,7 @@ ReRuleManager class >> unload [
 { #category : 'event subscriptions' }
 ReRuleManager class >> unsubscribe [
 
-	SystemAnnouncer uniqueInstance unsubscribe: self.
+	self codeChangeAnnouncer unsubscribe: self.
 	ReSystemAnnouncer uniqueInstance unsubscribe: self
 ]
 

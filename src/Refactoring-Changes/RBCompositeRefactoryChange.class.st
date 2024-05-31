@@ -88,20 +88,14 @@ RBCompositeRefactoryChange >> changeClass [
 { #category : 'accessing' }
 RBCompositeRefactoryChange >> changeForClass: aClassName selector: aSelector [
 
-	changes reverseDo: [ :each |
-		| change |
-		change := each changeForClass: aClassName selector: aSelector.
-		change notNil ifTrue: [ ^ change ] ].
+	changes reverseDo: [ :each | (each changeForClass: aClassName selector: aSelector) ifNotNil: [ :change | ^ change ] ].
 	^ nil
 ]
 
 { #category : 'accessing' }
 RBCompositeRefactoryChange >> changeForMetaclass: aClassName selector: aSelector [
 
-	changes reverseDo: [ :each |
-		| change |
-		change := each changeForMetaclass: aClassName selector: aSelector.
-		change notNil ifTrue: [ ^ change ] ].
+	changes reverseDo: [ :each | (each changeForMetaclass: aClassName selector: aSelector) ifNotNil: [ :change | ^ change ] ].
 	^ nil
 ]
 
@@ -146,9 +140,9 @@ RBCompositeRefactoryChange >> compile: source in: class classified: aProtocol [
 ]
 
 { #category : 'refactory - changes' }
-RBCompositeRefactoryChange >> defineClass: aString [
+RBCompositeRefactoryChange >> defineClass: definition [
 
-	^ self addChange: (changeFactory addClassDefinition: aString)
+	^ self addChange: (changeFactory addClassDefinition: definition)
 ]
 
 { #category : 'private' }

@@ -12,9 +12,12 @@ CompiledBlock >> sourceNode [
 
 { #category : '*OpalCompiler-Core' }
 CompiledBlock >> sourceNodeForPC: aPC [
+
 	| blockNode |
 	blockNode := self outerCode sourceNodeForPC: self pcInOuter.
-	^blockNode sourceNodeForPC: aPC
+	"Bug in the cache? The mapping is returning Return node instead of Block"
+	blockNode isReturn ifTrue: [ blockNode := blockNode value ].
+	^ blockNode sourceNodeForPC: aPC
 ]
 
 { #category : '*OpalCompiler-Core' }

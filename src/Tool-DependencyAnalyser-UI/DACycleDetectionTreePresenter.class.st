@@ -33,8 +33,8 @@ DACycleDetectionTreePresenter class >> onPackagesNamed: aCollection [
 
 { #category : 'instance creation' }
 DACycleDetectionTreePresenter class >> system [
-	^ self onPackagesNamed:
-		(self packageOrganizer packages collect: [ :package | package packageName asString ])
+
+	^ self onPackagesNamed: (self packageOrganizer packages collect: [ :package | package name asString ])
 ]
 
 { #category : 'specs' }

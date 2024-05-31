@@ -88,10 +88,8 @@ JoinSection >> borderWidth: anInteger [
 	"Set the value of borderWidth"
 
 	borderWidth := anInteger.
-	self src highlight notNil ifTrue: [
-		self src highlight borderWidth: anInteger].
-	self dst highlight notNil ifTrue: [
-		self dst highlight borderWidth: anInteger]
+	self src highlight ifNotNil: [ :highlight | highlight borderWidth: anInteger ].
+	self dst highlight ifNotNil: [ :highlight | highlight borderWidth: anInteger ]
 ]
 
 { #category : 'actions' }
@@ -396,13 +394,11 @@ JoinSection >> type: anObject [
 JoinSection >> updateHighlights [
 	"Update the highlight border colors."
 
-	|bc|
-	(self src isNil or: [self dst isNil]) ifTrue: [^self].
+	| bc |
+	(self src isNil or: [ self dst isNil ]) ifTrue: [ ^ self ].
 	bc := self borderColorToUse.
-	self src highlight notNil ifTrue: [
-		self src highlight borderColor: bc].
-	self dst highlight notNil ifTrue: [
-		self dst highlight borderColor: bc]
+	self src highlight ifNotNil: [ :highlight | highlight borderColor: bc ].
+	self dst highlight ifNotNil: [ :highlight | highlight borderColor: bc ]
 ]
 
 { #category : 'updating' }

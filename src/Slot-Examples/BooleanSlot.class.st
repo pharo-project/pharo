@@ -14,6 +14,18 @@ Class {
 	#tag : 'Base'
 }
 
+{ #category : 'private' }
+BooleanSlot >> addAdditionalSlotsTo: slots [
+	"we reuse a baseSlot if it is already there, if not, we add it"
+
+	"TODO: this does not take into account adding BooleanSlots higher up in the Hierarchy"
+
+	slots
+		detect: [ :slot | slot name = #_booleanBaseSlot ]
+		ifFound: [ :slot | baseSlot := slot ]
+		ifNone: [ slots add: (baseSlot := #_booleanBaseSlot => BaseSlot default: 0) ]
+]
+
 { #category : 'accessing' }
 BooleanSlot >> baseSlotRead: anObject [
 	^ (baseSlot read: anObject) ifNil: [ 0 ]
@@ -49,15 +61,9 @@ BooleanSlot >> emitValue: methodBuilder [
 
 { #category : 'class building' }
 BooleanSlot >> installingIn: aClass [
+
 	| booleanSlots |
 	super installingIn: aClass.
-
-	"we reuse a baseSlot if it is already there, if not, we add it"
-	"TODO: this does not take into account adding BooleanSlots higher up in the Hierarchy"
-	aClass classLayout
-		resolveSlot: #'_booleanBaseSlot'
-		ifFound:  [: slot |  baseSlot := slot ]
-		ifNone: [aClass addSlot: (baseSlot := #'_booleanBaseSlot' => BaseSlot default: 0)].
 
 	"my offset in the base slot is defined by the order of all BooleanSlots in the Hierarchy"
 	booleanSlots := aClass allSlots select: [ :each | each isKindOf: self class ].

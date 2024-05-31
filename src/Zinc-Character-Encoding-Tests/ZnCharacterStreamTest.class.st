@@ -104,6 +104,16 @@ ZnCharacterStreamTest >> testReadStreamManipulation [
 ]
 
 { #category : 'tests' }
+ZnCharacterStreamTest >> testReset [
+
+	| stream |
+	stream := ZnCharacterReadStream on: 'abc' asByteArray readStream.
+	self assert: stream next equals: $a.
+	stream reset.
+	self assert: stream next equals: $a
+]
+
+{ #category : 'tests' }
 ZnCharacterStreamTest >> testSimpleUTF8ReadStream [
 	| string bytes |
 	string := 'élève en Français'.

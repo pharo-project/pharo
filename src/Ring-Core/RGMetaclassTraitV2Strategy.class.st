@@ -60,25 +60,19 @@ RGMetaclassTraitV2Strategy >> defaultMetaClass [
 
 { #category : 'private - backend access' }
 RGMetaclassTraitV2Strategy >> definition [
-	^String streamContents: [:stream |
-		stream
-			nextPutAll: self baseTrait name;
-			nextPutAll: ' clasTrait';
-			crtab;
-			nextPutAll: 'uses: ';
-			nextPutAll: self owner traitCompositionString.
-		(self owner slots size > 0) ifTrue: [
-			(self owner slotsNeedFullDefinition or: [ ClassDefinitionPrinter showFluidClassDefinition ])
-				ifFalse: [
-							stream
-								crtab;
-								nextPutAll: 'instanceVariableNames: ';
-								store: self owner instanceVariablesString]
-				ifTrue: [
-							stream
-								crtab;
-								nextPutAll: 'slots: ';
-								nextPutAll: self owner slotDefinitionString]]]
+
+	^ String streamContents: [ :stream |
+		  stream
+			  nextPutAll: self baseTrait name;
+			  nextPutAll: ' clasTrait';
+			  crtab;
+			  nextPutAll: 'uses: ';
+			  nextPutAll: self owner traitCompositionString.
+		  self owner slots size > 0 ifTrue: [
+			  stream
+				  crtab;
+				  nextPutAll: 'slots: ';
+				  nextPutAll: self owner slotDefinitionString ] ]
 ]
 
 { #category : 'initialization' }
@@ -108,6 +102,18 @@ RGMetaclassTraitV2Strategy >> isMetaclass [
 
 { #category : 'testing' }
 RGMetaclassTraitV2Strategy >> isMetaclassStrategy [
+
+	^ true
+]
+
+{ #category : 'testing' }
+RGMetaclassTraitV2Strategy >> isMetaclassTrait [
+
+	^ true
+]
+
+{ #category : 'testing' }
+RGMetaclassTraitV2Strategy >> isMetaclassTraitStrategy [
 
 	^ true
 ]

@@ -211,7 +211,7 @@ SmallDictionary >> associationsSelect: aBlock [
 	to true."
 
 	| newCollection |
-	newCollection := self species new.
+	newCollection := self copyEmpty.
 	self associationsDo:
 		[:each |
 		(aBlock value: each) ifTrue: [newCollection add: each]].
@@ -254,7 +254,7 @@ SmallDictionary >> at: firstKey at: secondKey ifAbsentPut: aZeroArgBlock [
 	"Return the object stored in the second dictionary at secondKey. The second dictionary is accessed via the key firstKey. If firstKey is not defined, set a new dictionary for the second key and set the value of aZeroArgBlock execution. If firstKey is defined and not second key set the value of aZeroArgBlock execution. See NestedDictionaryTest for examples."
 
 	| subDictionary |
-	subDictionary := self at: firstKey ifAbsentPut: [ self species new ].
+	subDictionary := self at: firstKey ifAbsentPut: [ self copyEmpty ].
 	^ subDictionary at: secondKey ifAbsentPut: aZeroArgBlock
 ]
 
@@ -263,7 +263,7 @@ SmallDictionary >> at: firstKey at: secondKey put: aValue [
 	"Set a value at secondKey in the dictionary returned by firstKey."
 
 	| subDictionary |
-	subDictionary := self at: firstKey ifAbsentPut: [ self species new ].
+	subDictionary := self at: firstKey ifAbsentPut: [ self copyEmpty ].
 	^ subDictionary at: secondKey put: aValue
 ]
 
@@ -376,6 +376,12 @@ SmallDictionary >> bindingOf: varName [
 
 { #category : 'enumerating' }
 SmallDictionary >> bindingsDo: aBlock [
+
+	self
+		deprecated:
+		'use classVariables do: instead'
+		transformWith: '`@receiver bindingsDo: `@arg1' -> '`@receiver associationsDo: `@arg1'.
+
 	self associationsDo: aBlock
 ]
 
@@ -390,26 +396,11 @@ SmallDictionary >> collect: aBlock [
 	resulting values into a collection that is like me. Answer with the new
 	collection."
 	| newCollection |
-	newCollection := self species new.
+	newCollection := self copyEmpty.
 	self associationsDo:[:each |
 		newCollection at: each key put: (aBlock value: each value).
 	].
 	^newCollection
-]
-
-{ #category : 'adding' }
-SmallDictionary >> declare: key from: aDictionary [
-	"Add key to the receiver. If key already exists, do nothing. If aDictionary
-	includes key, then remove it from aDictionary and use its association as
-	the element of the receiver."
-
-	(self includesKey: key) ifTrue: [^ self].
-	(aDictionary includesKey: key)
-		ifTrue:
-			[self add: (aDictionary associationAt: key).
-			aDictionary removeKey: key]
-		ifFalse:
-			[self add: key -> nil]
 ]
 
 { #category : 'enumerating' }
@@ -652,7 +643,7 @@ SmallDictionary >> keysSortedSafely [
 			ifFalse: [x class == y class
 				ifTrue: [x printString < y printString]
 				ifFalse: [x class name < y class name]]].
-	self keysDo: [:each | sortedKeys addLast: each].
+	self keysDo: [:each | sortedKeys addNoSort: each].
 	^ sortedKeys reSort
 ]
 
@@ -681,6 +672,18 @@ SmallDictionary >> privateAt: key put: value [
 	size := size + 1.
 	keys at: size put: key.
 	^values at: size put: value
+]
+
+{ #category : 'enumerating' }
+SmallDictionary >> reject: rejectBlock thenCollect: collectBlock [
+	"Optimized implementation"
+
+	| newSmallDictionary |
+	newSmallDictionary := self copyEmpty.
+	1 to: size do: [:index | 
+		(rejectBlock value: (keys at: index)) ifFalse: [
+			newSmallDictionary at: (keys at: index) put: (collectBlock value: (values at: index)) ] ].
+	^ newSmallDictionary
 ]
 
 { #category : 'removing' }
@@ -744,6 +747,17 @@ SmallDictionary >> select: aBlock [
 	^newCollection
 ]
 
+{ #category : 'enumerating' }
+SmallDictionary >> select: selectBlock thenCollect: collectBlock [
+
+	| newSmallDictionary |
+	newSmallDictionary := self copyEmpty.
+	1 to: size do: [:index | 
+		(selectBlock value: (keys at: index)) ifTrue: [
+			newSmallDictionary at: (keys at: index) put: (collectBlock value: (values at: index)) ] ].
+	^ newSmallDictionary
+]
+
 { #category : 'private' }
 SmallDictionary >> setClass [
 	^ Set
@@ -754,7 +768,7 @@ SmallDictionary >> size [
 	^size
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 SmallDictionary >> storeOn: aStream [
 	| noneYet |
 	aStream nextPutAll: '(('.

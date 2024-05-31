@@ -13,3 +13,10 @@ ClyClassCreationToolMorph class >> fullBrowserPackageActivation [
 
 	^ClyTabActivationStrategyAnnotation for: ClyFullBrowserPackageContext
 ]
+
+{ #category : '*Calypso-SystemTools-FullBrowser' }
+ClyClassCreationToolMorph class >> fullBrowserProjectActivation [
+	<classAnnotation>
+
+	^ClyTabActivationStrategyAnnotation for: ClyFullBrowserProjectContext
+]

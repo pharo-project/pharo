@@ -280,7 +280,11 @@ ListDialogWindow >> listKeystrokeUp [
 ListDialogWindow >> newButtons [
 	"Answer new buttons as appropriate."
 
-	^{self newOKButton isDefault: true. self buildBrowseButton. self newCancelButton}
+	^ { 
+		self buildBrowseButton. 
+		self newCancelButton.
+		self newOKButton isDefault: true
+	}
 ]
 
 { #category : 'actions' }

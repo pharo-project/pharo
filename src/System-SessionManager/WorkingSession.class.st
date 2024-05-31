@@ -11,8 +11,6 @@ Class {
 	#instVars : [
 		'manager',
 		'deferredStartupActions',
-		'id',
-		'creationTime',
 		'properties'
 	],
 	#category : 'System-SessionManager-Utilities',
@@ -39,11 +37,6 @@ WorkingSession >> addDeferredStartupAction: aBlock [
 ]
 
 { #category : 'accessing' }
-WorkingSession >> creationTime [
-	^ creationTime
-]
-
-{ #category : 'accessing' }
 WorkingSession >> errorHandler [
 	^ UIManager default
 ]
@@ -61,16 +54,10 @@ WorkingSession >> executeDeferredStartupActions: resuming [
 			The current UI manager will handle the error." ]
 ]
 
-{ #category : 'accessing' }
-WorkingSession >> id [
-	^ id ifNil: [ id := UUID new ]
-]
-
 { #category : 'initialization' }
 WorkingSession >> initialize [
 	super initialize.
 	deferredStartupActions := OrderedCollection new.
-	creationTime := DateAndTime now.
 	properties := Dictionary new
 ]
 
@@ -148,7 +135,6 @@ WorkingSession >> start: isImageStarting [
 { #category : 'startup - shutdown' }
 WorkingSession >> stop: isImageQuitting [
 
-	Object flushDependents.
 	self runShutdown: isImageQuitting
 ]
 

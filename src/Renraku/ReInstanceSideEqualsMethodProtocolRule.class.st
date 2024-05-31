@@ -9,14 +9,14 @@ Class {
 	#tag : 'Rules'
 }
 
-{ #category : 'accessing - defaults' }
-ReInstanceSideEqualsMethodProtocolRule >> protocolName [
+{ #category : 'accessing' }
+ReInstanceSideEqualsMethodProtocolRule class >> protocolName [
 
 	^ 'comparing'
 ]
 
-{ #category : 'accessing - defaults' }
-ReInstanceSideEqualsMethodProtocolRule >> selector [
+{ #category : 'accessing' }
+ReInstanceSideEqualsMethodProtocolRule class >> selector [
 
 	^ #=
 ]

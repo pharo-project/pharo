@@ -72,12 +72,12 @@ FreeTypeCacheLinkedList >> moveDown: aLink [
 	e4 := e3 nextLink.
 	e1 := e2 previousLink.
 	"swap e2 & e3"
-	e1 ifNotNil: [e1 nextLink: e2].
-	e2 nextLink: e3.
-	e3 nextLink: e4.
-	e4 ifNotNil: [e4 previousLink: e3].
-	e3 previousLink: e2.
-	e2 previousLink: e1
+	e1 ifNotNil: [e1 nextLink: e3] ifNil: [firstLink := e3].
+	e2 nextLink: e4.
+	e3 nextLink: e2.
+	e4 ifNotNil: [e4 previousLink: e2] ifNil: [lastLink := e2].
+	e3 previousLink: e1.
+	e2 previousLink: e3
 ]
 
 { #category : 'removing' }

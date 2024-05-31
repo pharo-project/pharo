@@ -143,7 +143,7 @@ GeneralScrollPaneMorph >> hScrollbar: anObject [
 GeneralScrollPaneMorph >> hScrollbarInterval [
 	"Answer the computed size of the thumb of the horizontal scrollbar."
 
-	^self scrollBounds width asFloat / self scrollTarget width min: 1.0
+	^ self scrollBounds width asFloat / (self scrollTarget width max: 1.0) min: 1.0
 ]
 
 { #category : 'scrollbars' }
@@ -186,7 +186,7 @@ GeneralScrollPaneMorph >> hScrollbarShowWhenNeeded [
 GeneralScrollPaneMorph >> hScrollbarShowing [
 	"Answer whether the horizontal scrollbar is showing."
 
-	^self hScrollbar owner notNil
+	^self hScrollbar owner isNotNil
 ]
 
 { #category : 'scrollbars' }
@@ -544,7 +544,7 @@ GeneralScrollPaneMorph >> vScrollbar: anObject [
 GeneralScrollPaneMorph >> vScrollbarInterval [
 	"Answer the computed size of the thumb of the vertical scrollbar."
 
-	^self scrollBounds height asFloat / self scrollTarget height min: 1.0
+	^ (self scrollBounds height asFloat / (self scrollTarget height max: 1.0)) min: 1.0
 ]
 
 { #category : 'scrollbars' }
@@ -587,7 +587,7 @@ GeneralScrollPaneMorph >> vScrollbarShowWhenNeeded [
 GeneralScrollPaneMorph >> vScrollbarShowing [
 	"Answer whether the vertical scrollbar is showing."
 
-	^self vScrollbar owner notNil
+	^self vScrollbar owner isNotNil
 ]
 
 { #category : 'scrollbars' }

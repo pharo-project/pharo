@@ -31,9 +31,11 @@ RGChunkImporter >> allowedSelectors [
 
 	^ #(
 #ephemeronSubclass:instanceVariableNames:classVariableNames:package:
+#ephemeronSubclass:instanceVariableNames:classVariableNames:poolDictionaries:package:
 #ephemeronSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:
 
 #immediateSubclass:instanceVariableNames:classVariableNames:package:
+#immediateSubclass:instanceVariableNames:classVariableNames:category:
 #immediateSubclass:instanceVariableNames:classVariableNames:poolDictionaries:package:
 #immediateSubclass:uses:instanceVariableNames:classVariableNames:package:
 #immediateSubclass:uses:instanceVariableNames:classVariableNames:poolDictionaries:package:
@@ -157,7 +159,7 @@ RGChunkImporter >> createBehavior: subclassName superclassName: superclassName i
 
 	| behavior superclass |
 
-	self assert: subclassName notNil.
+	self assert: subclassName isNotNil.
 
 	isTrait
 		ifTrue: [
@@ -503,9 +505,8 @@ RGChunkImporter >> visitMethodChunk: aChunk [
 	theClass := self classNamed: aChunk behaviorName.
 	aChunk isMeta ifTrue: [ theClass := theClass classSide makeResolved ].
 
-	theMethod := theClass ensureLocalMethodNamed:
-		             aChunk methodSelector asSymbol.
-	theProtocol := theClass ensureProtocolNamed: aChunk category asSymbol.
+	theMethod := theClass ensureLocalMethodNamed: aChunk methodSelector asSymbol.
+	theProtocol := theClass ensureProtocolNamed: aChunk protocol asSymbol.
 	theMethod protocol: theProtocol.
 	theMethod sourceCode: aChunk contents.
 	theMethod author: (RGStampParser authorForStamp: aChunk stamp).

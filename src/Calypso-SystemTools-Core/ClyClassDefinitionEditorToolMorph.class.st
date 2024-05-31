@@ -15,8 +15,16 @@ Class {
 { #category : 'operations' }
 ClyClassDefinitionEditorToolMorph >> applyChanges [
 
-	| code |
+	| code ast |
 	code := self pendingText.
+
+	"The next line are here for the compatibility with the old class definition."
+	ast := RBParser parseFaultyExpression: code.
+	(OldClassDefinitionBuilder isOldClassCreation: ast) ifTrue: [
+		Warning signal:
+			'The class definition used is the old Pharo class definition. Now the Fluid class definition should be used. Check the comment of ShiftClassBuilder to know the syntax.'.
+		^ self applyChangesAsOldClassDefinition: ast ].
+
 	^ (code asString lines first includesSubstring: '<<')
 		  ifTrue: [ self applyChangesAsClassDefinition ]
 		  ifFalse: [
@@ -34,8 +42,6 @@ ClyClassDefinitionEditorToolMorph >> applyChangesAsClassDefinition [
 		            startingFrom: editingClass.
 
 	newClass ifNil: [ ^ false ].
-
-	editingClass == newClass ifFalse: [ self removeFromBrowser ].
 	browser selectClass: newClass.
 	^ true
 ]
@@ -60,6 +66,17 @@ ClyClassDefinitionEditorToolMorph >> applyChangesAsMethodDefinition [
  	^ true
 ]
 
+{ #category : 'operations' }
+ClyClassDefinitionEditorToolMorph >> applyChangesAsOldClassDefinition: ast [
+
+	| newClass |
+	newClass := OldClassDefinitionBuilder buildFromAST: ast.
+
+	newClass ifNil: [ ^ false ].
+	browser selectClass: newClass.
+	^ true
+]
+
 { #category : 'to sort' }
 ClyClassDefinitionEditorToolMorph >> createTextContext [
 	^self selectedSourceNode
@@ -81,7 +98,9 @@ ClyClassDefinitionEditorToolMorph >> decorateContainerTab [
 
 { #category : 'initialization' }
 ClyClassDefinitionEditorToolMorph >> defaultIconName [
-	^#class
+
+	self editingClass isTrait ifTrue: [ ^ #trait ].
+	^ #class
 ]
 
 { #category : 'to sort' }
@@ -89,12 +108,6 @@ ClyClassDefinitionEditorToolMorph >> editingText [
 	"Answer a <String> with the receivers class definition"
 
 	^ editingClass definitionString
-]
-
-{ #category : 'building' }
-ClyClassDefinitionEditorToolMorph >> fillStatusBar [
-	super fillStatusBar.
-	statusBar addCommandItem: (ClyFluidClassDefinitionSwitchMorph for: self)
 ]
 
 { #category : 'testing' }
@@ -106,9 +119,7 @@ ClyClassDefinitionEditorToolMorph >> isCommandAvailable: aCommand [
 { #category : 'to sort' }
 ClyClassDefinitionEditorToolMorph >> parseClassDefinition [
 
-	self editingClass needsSlotClassDefinition
-		ifTrue: [ ^ ClassDefinitionPrinter fluid classDefinitionParserClass parse: self editingText].
-	^ ClassDefinitionPrinter new classDefinitionParserClass parse: self editingText
+	^ CDFluidClassDefinitionParser parse: self editingText
 ]
 
 { #category : 'selecting text' }

@@ -10,7 +10,7 @@ Instance variables:
 	target 		<Object>		The target of the associated action.
 	selector 		<Symbol>	The associated action.
 	arguments 	<Array>		The arguments for the associated action.
-	icon		<Form | nil>	An optional icon form to be displayed to my left.
+	iconFormSet	<FormSet | nil>	An optional icon form set to be displayed to my left.
 
 
 "
@@ -24,14 +24,14 @@ Class {
 		'target',
 		'selector',
 		'arguments',
-		'icon',
+		'iconFormSet',
 		'keyText'
 	],
 	#classVars : [
-		'BottomArrow',
-		'LeftArrow',
-		'SubMenuMarker',
-		'UpArrow'
+		'BottomArrowFormSet',
+		'LeftArrowFormSet',
+		'SubMenuMarkerFormSet',
+		'UpArrowFormSet'
 	],
 	#category : 'Morphic-Base-Menus',
 	#package : 'Morphic-Base',
@@ -41,28 +41,38 @@ Class {
 { #category : 'class initialization' }
 MenuItemMorph class >> initialize [
 
-	| f |
-	f := Form
-		extent: 5@9
-		fromArray: #(2147483648 3221225472 3758096384 4026531840 4160749568 4026531840 3758096384 3221225472 2147483648)
-		offset: 0@0.
+	| forms rotatedFormSets |
 
-	SubMenuMarker := (ColorForm mappingWhiteToTransparentFrom: f) asFormOfDepth: 32.
-	BottomArrow := SubMenuMarker rotateBy: 90.
-	LeftArrow := SubMenuMarker rotateBy: 180.
-	UpArrow := SubMenuMarker rotateBy: 270
+	forms := (1 to: 2) collect: [ :scale |
+		| rectangle |
+		rectangle := (0 @ -1) corner: (1@2) * 4 * scale + 1.
+		(FormCanvas extent: (5@9) * scale)
+			drawPolygon: { rectangle topLeft. rectangle rightCenter. rectangle bottomLeft }
+				fillStyle: (SolidFillStyle color: Color black);
+			form ].
+	SubMenuMarkerFormSet := FormSet forms: forms.
+	rotatedFormSets := #(90 180 270) collect: [ :degrees |
+		| form1 form2 |
+		form1 := forms first rotateBy: degrees.
+		form2 := (FormCanvas extent: form1 extent * 2)
+			drawImage: (forms second rotateBy: degrees) at: 0@0;
+			form.
+		FormSet forms: { form1. form2 } ].
+	BottomArrowFormSet := rotatedFormSets first.
+	LeftArrowFormSet := rotatedFormSets second.
+	UpArrowFormSet := rotatedFormSets third
 ]
 
 { #category : 'grabbing' }
 MenuItemMorph >> aboutToBeGrabbedBy: aHand [
 	"Don't allow the receiver to act outside a Menu"
 	| menu box |
-	(owner notNil and:[owner hasSubmorphs ]) ifTrue:[
+	(owner isNotNil and:[owner hasSubmorphs ]) ifTrue:[
 		"I am a lonely menuitem already; just grab my owner"
 		owner stayUp: true.
 		^owner aboutToBeGrabbedBy: aHand].
 	box := self bounds.
-	menu := UIManager default newMenuIn: self for: nil.
+	menu := self morphicUIManager newMenuIn: self for: nil.
 	menu addMorphFront: self.
 	menu bounds: box.
 	menu stayUp: true.
@@ -135,9 +145,9 @@ MenuItemMorph >> arguments: aCollection [
 ]
 
 { #category : 'private' }
-MenuItemMorph >> bottomArrow [
+MenuItemMorph >> bottomArrowFormSet [
 
-	^ BottomArrow
+	^ BottomArrowFormSet
 ]
 
 { #category : 'accessing' }
@@ -244,11 +254,11 @@ MenuItemMorph >> doButtonAction [
 
 { #category : 'drawing' }
 MenuItemMorph >> drawIconOn: aCanvas [
-	| iconForm |
+	| toggledIconFormSet |
 	self hasIcon ifFalse: [ ^ self ].
 
-	iconForm := self iconForm.
-	aCanvas translucentImage: iconForm at: bounds left @ (self top + ((self height - iconForm height) // 2))
+	toggledIconFormSet := self toggledIconFormSet.
+	aCanvas translucentFormSet: toggledIconFormSet at: bounds left @ (self top + ((self height - toggledIconFormSet height) // 2))
 ]
 
 { #category : 'drawing' }
@@ -282,7 +292,7 @@ MenuItemMorph >> duplicateMorph: evt [
 	"Make and return a duplicate of the receiver's argument"
 	| dup menu |
 	dup := self duplicate isSelected: false.
-	menu := UIManager default newMenuIn: self for: nil.
+	menu := self morphicUIManager newMenuIn: self for: nil.
 	menu addMorphFront: dup.
 	menu bounds: self bounds.
 	menu stayUp: true.
@@ -334,7 +344,7 @@ MenuItemMorph >> handlesMouseOverDragging: evt [
 { #category : 'accessing' }
 MenuItemMorph >> hasIcon [
 	"Answer whether the receiver has an icon."
-	^ icon notNil
+	^ iconFormSet isNotNil
 ]
 
 { #category : 'accessing' }
@@ -352,7 +362,7 @@ MenuItemMorph >> hasMarker [
 { #category : 'accessing' }
 MenuItemMorph >> hasSubMenu [
 	"Return true if the receiver has a submenu"
-	^subMenu notNil
+	^subMenu isNotNil
 ]
 
 { #category : 'accessing' }
@@ -364,22 +374,26 @@ MenuItemMorph >> hasSubMenu: aMenuMorph [
 
 { #category : 'accessing' }
 MenuItemMorph >> icon [
-	"answer the receiver's icon"
-	^ icon
+
+	^ self iconFormSet ifNotNil: [ :formSet | formSet asForm ]
 ]
 
 { #category : 'accessing' }
 MenuItemMorph >> icon: aForm [
-	"change the the receiver's icon"
-	icon := aForm
+
+	self iconFormSet: (aForm ifNotNil: [ FormSet form: aForm ])
 ]
 
-{ #category : 'private' }
-MenuItemMorph >> iconForm [
-	"private - answer the form to be used as the icon"
-	^ isEnabled
-		ifTrue: [self icon]
-		ifFalse: [self icon asGrayScale]
+{ #category : 'accessing' }
+MenuItemMorph >> iconFormSet [
+	"answer the receiver's icon form set"
+	^ iconFormSet
+]
+
+{ #category : 'accessing' }
+MenuItemMorph >> iconFormSet: aFormSet [
+	"change the the receiver's icon form set"
+	iconFormSet := aFormSet
 ]
 
 { #category : 'initialization' }
@@ -476,18 +490,18 @@ MenuItemMorph >> keyText: anObject [
 ]
 
 { #category : 'private' }
-MenuItemMorph >> leftArrow [
+MenuItemMorph >> leftArrowFormSet [
 
-	^ LeftArrow
+	^ LeftArrowFormSet
 ]
 
 { #category : 'drawing' }
 MenuItemMorph >> menuStringBounds [
 	| stringBounds |
 	stringBounds := bounds.
-	self hasIcon ifTrue: [ | iconForm |
-		iconForm := self iconForm.
-		stringBounds := stringBounds left: stringBounds left + iconForm width + 2 ].
+	self hasIcon ifTrue: [ | toggledIconFormSet |
+		toggledIconFormSet := self toggledIconFormSet.
+		stringBounds := stringBounds left: stringBounds left + toggledIconFormSet width + 2 ].
 	self hasMarker ifTrue: [
 		stringBounds := stringBounds left: stringBounds left + self submorphBounds width + 8 ].
 	^ stringBounds top: (stringBounds top + stringBounds bottom - self fontToUse height) // 2
@@ -597,9 +611,9 @@ MenuItemMorph >> onImage [
 ]
 
 { #category : 'private' }
-MenuItemMorph >> rightArrow [
+MenuItemMorph >> rightArrowFormSet [
 
-	^ SubMenuMarker
+	^ SubMenuMarkerFormSet
 ]
 
 { #category : 'selecting' }
@@ -620,7 +634,6 @@ MenuItemMorph >> selectionFillStyle [
 	"answer the fill style to use with the receiver is the selected
 	element"
 
-	Display depth <= 2 ifTrue: [ ^ Color gray ].
 	^ self theme menuSelectionColor
 ]
 
@@ -667,8 +680,14 @@ MenuItemMorph >> subMenu: aMenuMorph [
 
 { #category : 'private' }
 MenuItemMorph >> subMenuMarker [
-	"private - answer the form to be used as submenu marker"
-	 ^ self rightArrow
+
+	 ^ self subMenuMarkerFormSet asForm
+]
+
+{ #category : 'private' }
+MenuItemMorph >> subMenuMarkerFormSet [
+	"private - answer the form set to be used as submenu marker"
+	 ^ self rightArrowFormSet
 ]
 
 { #category : 'accessing' }
@@ -692,9 +711,21 @@ MenuItemMorph >> themeChanged [
 ]
 
 { #category : 'private' }
-MenuItemMorph >> upArrow [
+MenuItemMorph >> toggledIconFormSet [
+	"private - answer the form set to be used as the icon"
+	| baseIconFormSet |
+	baseIconFormSet := self iconFormSet.
+	^ isEnabled
+		ifTrue: [ baseIconFormSet ]
+		ifFalse: [
+			FormSet extent: baseIconFormSet extent depth: 8
+				forms: (baseIconFormSet forms collect: [ :form | form asGrayScale ]) ]
+]
 
-	^ UpArrow
+{ #category : 'private' }
+MenuItemMorph >> upArrowFormSet [
+
+	^ UpArrowFormSet
 ]
 
 { #category : 'copying' }
@@ -702,10 +733,8 @@ MenuItemMorph >> veryDeepFixupWith: deepCopier [
 	"If target and arguments fields were weakly copied, fix them here.  If they were in the tree being copied, fix them up, otherwise point to the originals!!"
 
 	super veryDeepFixupWith: deepCopier.
-	target := deepCopier references at: target ifAbsent: [target].
-	arguments notNil ifTrue:
-	[arguments := arguments collect: [:each |
-		deepCopier references at: each ifAbsent: [each]]]
+	target := deepCopier references at: target ifAbsent: [ target ].
+	arguments ifNotNil: [ arguments := arguments collect: [ :each | deepCopier references at: each ifAbsent: [ each ] ] ]
 ]
 
 { #category : 'copying' }
@@ -718,7 +747,7 @@ MenuItemMorph >> veryDeepInner: deepCopier [
 	isEnabled := isEnabled veryDeepCopyWith: deepCopier.
 	subMenu := subMenu veryDeepCopyWith: deepCopier.
 	isSelected := isSelected veryDeepCopyWith: deepCopier.
-	icon := icon veryDeepCopyWith: deepCopier.
+	iconFormSet := iconFormSet veryDeepCopyWith: deepCopier.
 	"target := target.		Weakly copied"
 	"selector := selector.		a Symbol"
 	arguments := arguments
@@ -727,5 +756,5 @@ MenuItemMorph >> veryDeepInner: deepCopier [
 { #category : 'meta actions' }
 MenuItemMorph >> wantsHaloFromClick [
 	"Only if I'm not a lonely submenu"
-	^owner notNil and:[ owner hasSubmorphs ]
+	^owner isNotNil and:[ owner hasSubmorphs ]
 ]

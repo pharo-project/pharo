@@ -64,7 +64,7 @@ Canvas >> contentsOfArea: aRectangle into: aForm [
 { #category : 'accessing' }
 Canvas >> depth [
 
-	^ Display depth
+	^ self subclassResponsibility
 ]
 
 { #category : 'testing' }
@@ -76,6 +76,12 @@ Canvas >> doesRoundedCorners [
 { #category : 'drawing - general' }
 Canvas >> draw: anObject [
 	^anObject drawOn: self
+]
+
+{ #category : 'drawing - images' }
+Canvas >> drawFormSet: formSet at: point [
+
+	^ self drawImage: formSet asForm at: point
 ]
 
 { #category : 'drawing - images' }
@@ -242,7 +248,7 @@ Canvas >> fillRectangle: aRectangle fillStyle: aFillStyle borderStyle: aBorderSt
        aFillStyle isTransparent ifFalse: [
                self fillRectangle: (aRectangle insetBy: aBorderStyle width) fillStyle: aFillStyle ].
 
-       (aBorderStyle notNil and: [aBorderStyle width]) >= 0 ifTrue: [ aBorderStyle frameRectangle: aRectangle on: self ]
+       (aBorderStyle isNotNil and: [aBorderStyle width]) >= 0 ifTrue: [ aBorderStyle frameRectangle: aRectangle on: self ]
 ]
 
 { #category : 'initialization' }
@@ -258,7 +264,13 @@ Canvas >> flush [
 { #category : 'accessing' }
 Canvas >> form [
 
-	^ Display
+	^ self subclassResponsibility
+]
+
+{ #category : 'private' }
+Canvas >> formSet: aFormSet at: aPoint sourceRect: sourceRect rule: rule [
+
+	^ self image: aFormSet asForm at: aPoint sourceRect: sourceRect rule: rule
 ]
 
 { #category : 'drawing - rectangles' }
@@ -606,6 +618,12 @@ Canvas >> origin [
 ]
 
 { #category : 'drawing - images' }
+Canvas >> paintFormSet: aFormSet at: aPoint [
+
+	self paintImage: aFormSet asForm at: aPoint
+]
+
+{ #category : 'drawing - images' }
 Canvas >> paintImage: aForm at: aPoint [
 	"Draw the given Form, which is assumed to be a Form or ColorForm following the convention that zero is the transparent pixel value."
 
@@ -682,6 +700,12 @@ Canvas >> stencil: stencilForm at: aPoint sourceRect: sourceRect color: aColor [
 	^self subclassResponsibility
 ]
 
+{ #category : 'drawing - images' }
+Canvas >> stencilFormSet: stencilFormSet at: aPoint color: aColor [
+
+	^ self stencil: stencilFormSet asForm at: aPoint color: aColor
+]
+
 { #category : 'drawing - support' }
 Canvas >> transformBy: aDisplayTransform clippingTo: aClipRect during: aBlock [
 	"Transform the receiver by the given display transformation during the execution of aBlock. The given clip rectangle defines the *global* (e.g., outer) rectangle against which the receiver should clip (which would be equivalent to 'self clipRect: aClipRect; transformBy: aDisplayTransform')."
@@ -711,6 +735,12 @@ Canvas >> translateTo: newOrigin clippingTo: aRectangle during: aBlock [
 	self translateBy: newOrigin - self origin
 		clippingTo: (aRectangle translateBy: self origin negated)
 		during: aBlock
+]
+
+{ #category : 'drawing - images' }
+Canvas >> translucentFormSet: formSet at: point [
+
+	^ self translucentImage: formSet asForm at: point
 ]
 
 { #category : 'drawing - images' }

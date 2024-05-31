@@ -14,9 +14,19 @@ ReThemeAccessRule class >> checksMethod [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReThemeAccessRule class >> group [
+	^ 'API Hints'
+]
+
 { #category : 'class initialization' }
 ReThemeAccessRule class >> initialize [
    " ReRuleManager cleanUp "
+]
+
+{ #category : 'accessing' }
+ReThemeAccessRule class >> ruleName [
+	^ 'Access to UI theme.'
 ]
 
 { #category : 'running' }
@@ -34,14 +44,4 @@ ReThemeAccessRule >> check: aMethod forCritiquesDo: aCriticBlock [
 				createTrivialCritiqueOn: aMethod
 				intervalOf: msgSend
 				hint: msgSend selector asString) ]
-]
-
-{ #category : 'running' }
-ReThemeAccessRule >> group [
-	^ 'API Hints'
-]
-
-{ #category : 'running' }
-ReThemeAccessRule >> name [
-	^ 'Access to UI theme.'
 ]

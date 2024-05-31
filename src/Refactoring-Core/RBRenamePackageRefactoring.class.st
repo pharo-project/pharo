@@ -10,7 +10,7 @@ Example
 ```
 (RBRenamePackageRefactoring 
 				rename: (self getPackageNamed: #'Refactoring-Tests-Core')
-				to: #'Refactoring-Tests-Core1') execute.
+				to: #'Refactoring-Core-Test') execute.
 ```
 "
 Class {
@@ -38,6 +38,21 @@ RBRenamePackageRefactoring class >> rename: aString to: aNewName [
 		packageName: aString newName: aNewName
 ]
 
+{ #category : 'preconditions' }
+RBRenamePackageRefactoring >> applicabilityPreconditions [
+
+	^ super applicabilityPreconditions, {
+		 (RBCondition
+			 withBlock: [ newName ~= packageName ]
+			 errorString:
+			 'The new package name is the same as the old package name.').
+		 (RBCondition
+			 withBlock: [ "Cyril: I am not sure we should use #packageOrganizer. Maybe we should ask the environment the package manager. But currently the image does not know yet how to work with multiple package managers/modules."
+				 (self packageOrganizer hasPackage: newName) not ]
+			 errorString:
+			 'The system already includes a package named ' , newName) }
+]
+
 { #category : 'transforming' }
 RBRenamePackageRefactoring >> manifestClassNameFor: aPackageName [
 	"Returns a symbol representing a suitable name for a Manifest class for the given package"
@@ -52,16 +67,6 @@ RBRenamePackageRefactoring >> packageName: aName newName: aNewName [
 	newName := aNewName asSymbol
 ]
 
-{ #category : 'preconditions' }
-RBRenamePackageRefactoring >> preconditions [
-	^ super preconditions
-		& (RBCondition withBlock: [ newName ~= packageName ] errorString: 'The new package name is the same as the old package name.')
-		& (RBCondition
-			   withBlock: [ "Cyril: I am not sure we should use #packageOrganizer. Maybe we should ask the environment the package manager. But currently the image does not know yet how to work with multiple package managers/modules."
-				   (self packageOrganizer hasPackage: newName) not ]
-			   errorString: 'The system already includes a package named ' , newName)
-]
-
 { #category : 'transforming' }
 RBRenamePackageRefactoring >> privateTransform [
 
@@ -74,7 +79,7 @@ RBRenamePackageRefactoring >> renameManifestClass [
 	|refactoring manifest|
 	manifest := package realPackage packageManifestOrNil.
 	manifest ifNotNil: [
-	refactoring := RBRenameClassRefactoring
+	refactoring := ReRenameClassRefactoring
 		model: self model
 		rename: manifest name
 		to: (self manifestClassNameFor: newName).
@@ -86,7 +91,7 @@ RBRenamePackageRefactoring >> renamePackage [
 	self model renamePackage: package to: newName
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRenamePackageRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

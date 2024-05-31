@@ -18,17 +18,17 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBPushDownMethodRefactoring class >> model: aRBSmalltalk pushDown: selectorCollection from: aClass [
+RBPushDownMethodRefactoring class >> model: anEnvironment pushDown: selectorCollection from: aClassName [
 	^ self new
-		model: aRBSmalltalk;
-		pushDown: selectorCollection from: aClass;
+		model: anEnvironment;
+		pushDown: selectorCollection from: aClassName;
 		yourself
 ]
 
 { #category : 'instance creation' }
-RBPushDownMethodRefactoring class >> model: aRBSmalltalk pushDown: selectorCollection from: aClass in: classes [
+RBPushDownMethodRefactoring class >> model: anEnvironment pushDown: selectorCollection from: aClass in: classes [
 	^ self new
-		model: aRBSmalltalk;
+		model: anEnvironment;
 		pushDown: selectorCollection from: aClass in: classes;
 		yourself
 ]
@@ -55,10 +55,9 @@ RBPushDownMethodRefactoring >> allClasses [
 RBPushDownMethodRefactoring >> applicabilityPreconditions [
 	"Check that all selectors are defined in `class`"
 
-	^ selectors
-		  inject: self trueCondition
-		  into: [ :cond :each |
-		  	cond & (RBCondition definesSelector: each in: class) ]
+	^ { (ReDefinesSelectorsCondition new
+		   definesSelectors: selectors
+		   in: class) }
 ]
 
 { #category : 'preconditions' }
@@ -71,13 +70,9 @@ RBPushDownMethodRefactoring >> breakingChangePreconditions [
 	This should be controlled via a flag on the ui.
 	"
 
-	| condition |
-	condition := selectors
-		             inject: (RBCondition isAbstractClass: class)
-		             into: [ :cond :each |
-			             cond & (RBCondition subclassesOf: class isDoingASuperSendFor: each)
-				             not ].
-	^ condition
+	^ OrderedCollection
+		  with: self preconditionIsAbstract
+		  with: self preconditionSubclassesDontSendSuper
 ]
 
 { #category : 'transforming' }
@@ -87,22 +82,18 @@ RBPushDownMethodRefactoring >> classes: aCollection [
 	]
 ]
 
-{ #category : 'executing' }
-RBPushDownMethodRefactoring >> generateChanges [
+{ #category : 'preconditions' }
+RBPushDownMethodRefactoring >> preconditionIsAbstract [
 
-	self prepareForExecution.
+	^ ReClassesAreAbstractCondition new classes: { class }
+]
 
-	self applicabilityPreconditions check ifFalse: [
-		RBApplicabilityChecksFailedError signal:
-			self applicabilityPreconditions errorString ].
+{ #category : 'preconditions' }
+RBPushDownMethodRefactoring >> preconditionSubclassesDontSendSuper [
 
-	self breakingChangePreconditions check ifFalse: [
-		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangePreconditions errorString ].
-
-	self privateTransform.
-
-	^ self changes
+	^ ReSubclassesDontSendSuperCondition new
+		  class: class
+		  selectors: selectors
 ]
 
 { #category : 'preconditions' }
@@ -142,8 +133,8 @@ RBPushDownMethodRefactoring >> pushDown: aSelector [
 ]
 
 { #category : 'initialization' }
-RBPushDownMethodRefactoring >> pushDown: selectorCollection from: aClass [
-	class := self classObjectFor: aClass.
+RBPushDownMethodRefactoring >> pushDown: selectorCollection from: aClassName [
+	class := self model classNamed: aClassName.
 	selectors := selectorCollection
 ]
 
@@ -152,6 +143,13 @@ RBPushDownMethodRefactoring >> pushDown: selectorCollection from: aClass in: aCo
 	class := self classObjectFor: aClass.
 	selectors := selectorCollection.
 	self classes: aCollection
+]
+
+{ #category : 'transforming' }
+RBPushDownMethodRefactoring >> pushDownMethodChanges [
+
+	self privateTransform.
+	^ self changes
 ]
 
 { #category : 'transforming' }
@@ -164,7 +162,7 @@ RBPushDownMethodRefactoring >> selectors: aList [
 	selectors := aList
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBPushDownMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

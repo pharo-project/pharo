@@ -58,7 +58,7 @@ ClyProtocolEditorMorph >> buildEditButton [
 		target: self;
 		actionSelector: #openEditor;
 		arguments: #();
-		labelGraphic: (self iconNamed: #edit);
+		labelFormSet: (self iconFormSetNamed: #edit);
 		color: Color transparent;
 		borderWidth: 0
 ]
@@ -93,7 +93,7 @@ ClyProtocolEditorMorph >> buildResetButton [
 		target: self;
 		actionSelector: #resetProtocolAndPackage;
 		arguments: #();
-		labelGraphic: (self iconNamed: #glamorousClose);
+		labelFormSet: (self iconFormSetNamed: #glamorousClose);
 		color: Color transparent;
 		borderWidth: 0;
 		hResizing: #shinkWrap;
@@ -109,7 +109,7 @@ ClyProtocolEditorMorph >> initialize [
 { #category : 'testing' }
 ClyProtocolEditorMorph >> isExtensionActive [
 
-	^ownerTool extendingPackage notNil
+	^ownerTool extendingPackage isNotNil
 ]
 
 { #category : 'operations' }

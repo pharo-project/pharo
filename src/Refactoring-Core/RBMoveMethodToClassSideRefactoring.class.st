@@ -66,14 +66,13 @@ RBMoveMethodToClassSideRefactoring >> addMethod: rbMethod to: aClass toProtocol:
 { #category : 'preconditions' }
 RBMoveMethodToClassSideRefactoring >> applicabilityPreconditions [
 
-	^ (RBCondition isMetaclass: class) not
+	^ { (RBCondition isMetaclass: class) not }
 ]
 
 { #category : 'preconditions' }
 RBMoveMethodToClassSideRefactoring >> breakingChangePreconditions [
 
-	^ (RBCondition definesSelector: method selector in: class classSide)
-		  not
+	^ { (RBCondition definesSelector: method selector in: class classSide) not }
 ]
 
 { #category : 'checking' }
@@ -83,22 +82,6 @@ RBMoveMethodToClassSideRefactoring >> checkVariableNamed: aString [
 	(class whoDefinesClassVariable: aString) ifNotNil:
 			[^ true].
 	^ (self parseTree allDefinedVariables includes: aString)
-]
-
-{ #category : 'executing' }
-RBMoveMethodToClassSideRefactoring >> generateChanges [
-	
-	self prepareForExecution.
-
-	self applicabilityPreconditions check ifFalse: [
-		^ RBApplicabilityChecksFailedError signal:
-			  self applicabilityPreconditions errorString ].
-	self breakingChangePreconditions check ifFalse: [
-		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangePreconditions errorString ].
-
-	self privateTransform.
-	^ self changes
 ]
 
 { #category : 'transforming' }
@@ -169,8 +152,8 @@ RBMoveMethodToClassSideRefactoring >> privateTransform [
 	method := class methodFor: method selector.
 	newClass := self model classNamed: class name, ' class'.
 	newSource2 := self getNewSource.
-	rbMethod := RBClassModelFactory rbMethod for: newClass source: newSource2 selector: method selector.
-	rbMethod2 := RBClassModelFactory rbMethod for: oldClass source: newSource selector: method selector.
+	rbMethod := self model rbMethodClass for: newClass source: newSource2 selector: method selector.
+	rbMethod2 := self model rbMethodClass for: oldClass source: newSource selector: method selector.
 	self removeMethod: method selector from: oldClass.
 	self addMethod: rbMethod to: newClass toProtocol: originalProtocol.
 	self addMethod: rbMethod2 to: oldClass toProtocol: originalProtocol
@@ -203,7 +186,7 @@ RBMoveMethodToClassSideRefactoring >> removeMethod: selector from: aRBClass [
 			from: aRBClass)
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBMoveMethodToClassSideRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

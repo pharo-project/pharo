@@ -25,15 +25,15 @@ Class {
 }
 
 { #category : 'baseline' }
-BaselineOfUI >> baseline: spec [ 
-    <baseline>
+BaselineOfUI >> baseline: spec [
 
+	<baseline>
 	| repository |
-	repository := self packageRepositoryURL.       
+	repository := self packageRepositoryURLForSpec: spec.
 	spec for: #common do: [
-		spec postLoadDoIt: #'postload:package:'.
-		
-		"Loading the debugger model and infrastructure before the UI"		
+		spec postLoadDoIt: #postload:package:.
+
+		"Loading the debugger model and infrastructure before the UI"
 		spec package: 'Debugger-Model'.
 		spec package: 'Debugger-Oups'.
 
@@ -41,19 +41,17 @@ BaselineOfUI >> baseline: spec [
 		spec baseline: 'Morphic' with: [ spec repository: repository ].
 		spec baseline: 'Commander2' with: [ spec repository: repository ].
 		"Spec 2 (base), using external configuration"
-		self specBase: spec.		
-		
-		spec package: 'StartupPreferences'.		
+		self specBase: spec.
+
+		spec package: 'StartupPreferences'.
 		spec package: 'Transcript-Tool'.
-		spec package: 'Tool-Workspace'.
 		spec package: 'Morphic-Widgets-Tree'.
 
-		spec baseline: 'Keymapping' with: [ 
-			spec 
+		spec baseline: 'Keymapping' with: [
+			spec
 				repository: repository;
 				loads: 'ui' ].
-		spec package: 'WebBrowser-Core'.
-	].
+		spec package: 'WebBrowser-Core' ]
 ]
 
 { #category : 'actions' }
@@ -62,11 +60,6 @@ BaselineOfUI >> postload: loader package: packageSpec [
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
 
-	Smalltalk tools register: Workspace as: #browser.
-	Smalltalk tools register: Workspace as: #monticelloBrowser.
-	Smalltalk tools register: Workspace as: #fileList.
-	Smalltalk tools register: Workspace as: #changeList.	
-	
 	Smalltalk ui theme settings preferGradientFill: true.
 	PharoCommonTools initialize.
 

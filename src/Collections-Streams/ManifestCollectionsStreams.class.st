@@ -14,12 +14,6 @@ ManifestCollectionsStreams class >> dependencies [
 	^ #(#'Collections-Strings' #'Collections-Support' #'Collections-Sequenceable' #Kernel #'Collections-Native')
 ]
 
-{ #category : 'meta-data - dependency analyser' }
-ManifestCollectionsStreams class >> manuallyResolvedDependencies [
-
-	^ #( #'Collections-Abstract' )
-]
-
 { #category : 'meta-data' }
 ManifestCollectionsStreams class >> packageName [
 	^ #'Collections-Streams'

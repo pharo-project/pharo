@@ -5,11 +5,6 @@ Class {
 	#package : 'Metacello-TestsMCCore'
 }
 
-{ #category : 'accessing' }
-MetacelloRepositorySpecTestCase >> projectClass [
-    ^ MetacelloMCProject
-]
-
 { #category : 'tests' }
 MetacelloRepositorySpecTestCase >> testRepositoryMergeSpec [
 	| repositoryA repositoryB repository |

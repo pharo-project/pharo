@@ -52,7 +52,7 @@ MCDataStream >> readMethod [
 	xxHeader := self next.	"nArgs := (xxHeader >> 24) bitAnd: 16rF."	"nTemps := (xxHeader >> 18) bitAnd: 16r3F."	"largeBit := (xxHeader >> 17) bitAnd: 1."
 	nLits := xxHeader >> 9 bitAnd: 16rFF.	"primBits := ((xxHeader >> 19) bitAnd: 16r600) + (xxHeader bitAnd: 16r1FF)."
 	byteCodeSizePlusTrailer := instSize - newClass instSize - ((nLits + 1) * 4).	"0"
-	newMethod := newClass newMethod: byteCodeSizePlusTrailer header: xxHeader.
+	newMethod := newClass basicNew: byteCodeSizePlusTrailer header: xxHeader.
 	self setCurrentReference: refPosn.	"before readDataFrom:size:"
 	self beginReference: newMethod.
 	lits := newMethod numLiterals + 1.	"counting header"
@@ -141,18 +141,6 @@ MCDataStream >> readWordArray [
 	"PRIVATE -- Read the contents of a WordArray."
 	^ WordArray newFromStream: byteStream
 	"Size is number of long words."
-]
-
-{ #category : '*Monticello-BackwardCompatibility' }
-MCDataStream >> readWordLike [
-	| refPosn aSymbol newClass anObject |
-	"Can be used by any class that is bits and not bytes (WordArray, Bitmap, SoundBuffer, etc)."
-	refPosn := self getCurrentReference.
-	aSymbol := self next.
-	newClass := Smalltalk globals at: aSymbol asSymbol.
-	anObject := newClass newFromStream: byteStream.	"Size is number of long words."
-	self setCurrentReference: refPosn.	"before returning to next"
-	^ anObject
 ]
 
 { #category : '*Monticello-BackwardCompatibility' }

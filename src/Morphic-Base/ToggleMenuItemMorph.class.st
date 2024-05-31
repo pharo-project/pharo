@@ -51,9 +51,8 @@ ToggleMenuItemMorph >> basicDrawOn: aCanvas [
 			fillRectangle: self bounds
 			fillStyle: self selectionFillStyle
 			borderStyle: self selectionBorderStyle].
-	self hasIcon ifTrue: [ |iconForm|
-		iconForm := self icon.
-		self drawIcon: iconForm on: aCanvas in: stringBounds ].
+	self hasIcon ifTrue: [
+		self drawIcon: self iconFormSet on: aCanvas in: stringBounds ].
 	maxItemsIconWidth := self owner maxItemsIconWidth.
 	maxItemsIconWidth > 0 ifTrue: [
 		stringBounds := stringBounds left: stringBounds left + maxItemsIconWidth + (2*self displayScaleFactor) ].
@@ -62,26 +61,33 @@ ToggleMenuItemMorph >> basicDrawOn: aCanvas [
 	stringBounds := stringBounds top: stringBounds top + stringBounds bottom - self fontToUse height // 2.
 	stringBounds := stringBounds bottom: stringBounds top + self fontToUse height.
 	self drawText: contents on: aCanvas in: stringBounds.
-	self hasSubMenu ifTrue: [ |subMenuMarker|
-		subMenuMarker := self subMenuMarker deepCopy mapColor: Color black to: stringColor.
-		self drawSubMenuMarker: subMenuMarker on: aCanvas in: stringBounds]
+	self hasSubMenu ifTrue: [ |subMenuMarkerFormSet colorMappedFormSet|
+		subMenuMarkerFormSet := self subMenuMarkerFormSet.
+		colorMappedFormSet := FormSet extent: subMenuMarkerFormSet extent depth: subMenuMarkerFormSet depth
+			forms: (subMenuMarkerFormSet forms collect: [ :subMenuMarkerForm |
+				subMenuMarkerForm deepCopy mapColor: Color black to: stringColor ]).
+		self drawSubMenuMarker: colorMappedFormSet on: aCanvas in: stringBounds]
 ]
 
 { #category : 'private - drawing' }
-ToggleMenuItemMorph >> drawIcon: aForm on: aCanvas in: aRectangle [
+ToggleMenuItemMorph >> drawIcon: aFormSet on: aCanvas in: aRectangle [
 	"Draw the icon on the canvas within the given bounds."
 
-	|iconForm|
-	self isEnabled
-		ifTrue: [iconForm := aForm]
-		ifFalse: [iconForm := Form extent: aForm extent depth: 32.
-				iconForm fillColor: (Color white alpha: 0.003922).
-				(iconForm getCanvas asAlphaBlendingCanvas: 0.5)
-					drawImage: aForm
-					at: 0@0].
+	| toggledIconFormSet |
+	toggledIconFormSet := self isEnabled
+		ifTrue: [ aFormSet ]
+		ifFalse: [
+			| baseIconForm toggledIconForm |
+			baseIconForm := aFormSet asFormAtScale: aCanvas scale.
+			toggledIconForm := Form extent: baseIconForm extent depth: 32.
+			toggledIconForm fillColor: (Color white alpha: 0.003922).
+			(toggledIconForm getCanvas asAlphaBlendingCanvas: 0.5)
+				drawImage: baseIconForm
+				at: 0@0.
+			FormSet extent: aFormSet extent depth: 32 forms: { toggledIconForm } ].
 	aCanvas
-		translucentImage: iconForm
-		at: aRectangle topLeft + (0@(aRectangle height - iconForm height // 2))
+		translucentFormSet: toggledIconFormSet
+		at: aRectangle topLeft + (0@(aRectangle height - toggledIconFormSet height // 2))
 ]
 
 { #category : 'private - drawing' }
@@ -103,12 +109,12 @@ ToggleMenuItemMorph >> drawOn: aCanvas [
 ]
 
 { #category : 'private - drawing' }
-ToggleMenuItemMorph >> drawSubMenuMarker: aForm on: aCanvas in: aRectangle [
+ToggleMenuItemMorph >> drawSubMenuMarker: aFormSet on: aCanvas in: aRectangle [
 	"Draw the submenu marker on the canvas within the given bounds."
 
 	|markerRect|
-	markerRect := aRectangle topRight + ((aForm width * self displayScaleFactor) negated @ (aRectangle height - (aForm height * self displayScaleFactor) // 2)) extent: aForm extent * self displayScaleFactor.
-	self drawIcon: aForm scaledByDisplayScaleFactor on: aCanvas in: markerRect
+	markerRect := aRectangle topRight + ((aFormSet width * self displayScaleFactor) negated @ (aRectangle height - (aFormSet height * self displayScaleFactor) // 2)) extent: aFormSet extent * self displayScaleFactor.
+	self drawIcon: (FormSet extent: aFormSet extent scaledByDisplayScaleFactor truncated depth: aFormSet depth forms: aFormSet forms) on: aCanvas in: markerRect
 ]
 
 { #category : 'private - drawing' }
@@ -171,23 +177,23 @@ ToggleMenuItemMorph >> getStateSelector: anObject [
 ]
 
 { #category : 'accessing' }
-ToggleMenuItemMorph >> icon [
-	"Answer the receiver's icon. Handle legacy case
+ToggleMenuItemMorph >> iconFormSet [
+	"Answer the receiver's icon form set. Handle legacy case
 	of wording-based mechanism."
 
 	|state|
-	self getStateSelector ifNil: [^super icon].
+	self getStateSelector ifNil: [^super iconFormSet].
 	state := (MessageSend receiver: self target selector: self getStateSelector)
 		valueWithEnoughArguments: self arguments .
 	self flag: #pharoFixMe.
 	(state isKindOf: Association)
-		ifTrue: [^ state key ifTrue: [self onImage] ifFalse: [self offImage]]
+		ifTrue: [^ state key ifTrue: [FormSet form: self onImage] ifFalse: [FormSet form: self offImage]]
 		ifFalse: [
 	(state = true or: [state isString and: [(state beginsWith: '<yes>') or: [state beginsWith: '<on>']]])
-		ifTrue: [^self onImage].
+		ifTrue: [^FormSet form: self onImage].
 	(state = false or: [state isString and: [(state beginsWith: '<no>') or: [state beginsWith: '<off>']]])
-		ifTrue: [^self offImage]].
-	^super icon
+		ifTrue: [^FormSet form: self offImage]].
+	^super iconFormSet
 ]
 
 { #category : 'accessing' }
@@ -240,7 +246,7 @@ ToggleMenuItemMorph >> mouseEnter: evt [
 	Handle the case when in an EmbeddedMenuMorph."
 
 	super mouseEnter: evt.
-	(owner notNil and: [owner isKindOf: EmbeddedMenuMorph]) ifTrue:[
+	(owner isNotNil and: [owner isKindOf: EmbeddedMenuMorph]) ifTrue:[
 		owner selectedItem ~~ self
 			ifTrue: [owner selectItem: self event: evt]]
 ]
@@ -251,7 +257,7 @@ ToggleMenuItemMorph >> mouseLeave: evt [
 	Handle the case when in an EmbeddedMenuMorph."
 
 	super mouseLeave: evt.
-	(owner notNil and: [owner isKindOf: EmbeddedMenuMorph]) ifTrue:[
+	(owner isNotNil and: [owner isKindOf: EmbeddedMenuMorph]) ifTrue:[
 		owner selectedItem == self
 			ifTrue: [owner selectItem: nil event: evt]]
 ]

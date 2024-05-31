@@ -119,6 +119,13 @@ FileReference >> binaryWriteStream [
 	^ ZnBufferedWriteStream on: (filesystem binaryWriteStreamOn: self path)
 ]
 
+{ #category : 'delegated' }
+FileReference >> canonicalize [
+	"Answer the receiver with references to the current folder (.) and parent folder (..) removed"
+
+	^ self withPath: (self path canonicalizeOnFilesystem: filesystem)
+]
+
 { #category : 'accessing' }
 FileReference >> changeTime [
 	^ filesystem changeTimeOf: self path
@@ -160,7 +167,9 @@ FileReference >> delete [
 	"Deletes the referenced file or directory. If the directory is not empty,
 	raises an error. Use #deleteAll to delete with the children."
 
-	(self isDirectory and:[self hasChildren])
+	(self isDirectory and:
+	[ self isSymlink not and: 
+	[ self hasChildren ] ])
 		ifTrue:[DirectoryIsNotEmpty signalWith: self].
 	filesystem delete: path
 ]
@@ -178,7 +187,7 @@ FileReference >> deviceId [
 	^ filesystem deviceIdOf: path
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 FileReference >> displayStringOn: stream [
 	filesystem printPath: path on: stream
 ]
@@ -304,6 +313,12 @@ FileReference >> isFIFO [
 { #category : 'testing' }
 FileReference >> isFile [
 	^ filesystem isFile: path
+]
+
+{ #category : 'testing' }
+FileReference >> isHidden [
+
+	^ filesystem isHidden: path attributes: nil
 ]
 
 { #category : 'testing' }
@@ -518,9 +533,16 @@ FileReference >> symlinkUid: uid gid: gid [
 ]
 
 { #category : 'accessing' }
+FileReference >> targetFileReference [
+	"Return the target file of the File described by aPath.  For a regular file, this is itself, for a symbolic link, it is the file pointed to by the symbolic link"
+	^ self class fileSystem: filesystem path: self symlinkEntry targetPath
+]
+
+{ #category : 'accessing' }
 FileReference >> targetPath [
 	"Return the target file of the File described by aPath.  For a regular file, this is itself, for a symbolic link, it is the file pointed to by the symbolic link"
-	^ self class fileSystem: filesystem path: (filesystem targetPath: path)
+
+	^ self symlinkEntry targetPath
 ]
 
 { #category : 'accessing' }

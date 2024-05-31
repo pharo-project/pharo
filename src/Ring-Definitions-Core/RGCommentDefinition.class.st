@@ -98,9 +98,9 @@ RGCommentDefinition >> content: anObject [
 RGCommentDefinition >> contentAtPointer [
 	"A RGCommentDefinition may be created to point the sourceFile in which case it retrieves the class comment"
 
-	^ self sourcePointer notNil
-		ifTrue: [ SourceFiles sourceCodeAt: self sourcePointer ]
-		ifFalse:[ '' ]
+	^ self sourcePointer
+		  ifNotNil: [ SourceFiles sourceCodeAt: self sourcePointer ]
+		  ifNil: [ '' ]
 ]
 
 { #category : 'type of comments' }
@@ -269,9 +269,12 @@ RGCommentDefinition >> stamp: anObject [
 RGCommentDefinition >> stampAtPointer [
 	"A RGMethodDefinition may be created to point the sourceFile in which case it retrieves the stamp"
 
-	^ self sourcePointer notNil
-		ifTrue: [ SourceFiles timeStampAt: self sourcePointer for: self commentDataPointers ]
-		ifFalse:[ nil ]
+	^ self sourcePointer
+		  ifNotNil: [
+			  SourceFiles
+				  timeStampAt: self sourcePointer
+				  for: self commentDataPointers ]
+		  ifNil: [ nil ]
 ]
 
 { #category : 'stamp values' }
