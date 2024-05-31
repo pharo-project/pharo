@@ -189,3 +189,9 @@ RandomTest >> testUnixRandomGeneratorSeed [
 			self assert: next >= 0.
 			self assert: next < 1 ]
 ]
+
+{ #category : 'tests' }
+RandomTest >> testWithFloatAsSeed [
+
+self shouldnt: [ Random seed: 10.5. ] raise: Error.
+]
