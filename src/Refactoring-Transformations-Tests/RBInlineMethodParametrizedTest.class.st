@@ -10,7 +10,6 @@ Class {
 RBInlineMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBInlineMethodRefactoring };
-		addCase: { #rbClass -> RBInlineMethodTransformation };
 		yourself
 ]
 
