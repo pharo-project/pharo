@@ -9,6 +9,16 @@ Class {
 	#tag : 'Migrated'
 }
 
+{ #category : 'accessing' }
+ReTemporaryVariableCapitalizationRule class >> group [
+	^ 'Style'
+]
+
+{ #category : 'accessing' }
+ReTemporaryVariableCapitalizationRule class >> ruleName [
+	^ 'Temporary variable (or parameter) capitalized'
+]
+
 { #category : 'running' }
 ReTemporaryVariableCapitalizationRule >> basicCheck: aNode [
 	aNode isLocalVariable ifFalse: [ ^false ].
@@ -34,14 +44,4 @@ ReTemporaryVariableCapitalizationRule >> critiqueFor: aNode [
 				selector: aNode methodNode selector).
 
 	^ crit
-]
-
-{ #category : 'accessing' }
-ReTemporaryVariableCapitalizationRule >> group [
-	^ 'Style'
-]
-
-{ #category : 'accessing' }
-ReTemporaryVariableCapitalizationRule >> name [
-	^ 'Temporary variable (or parameter) capitalized'
 ]

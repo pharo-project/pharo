@@ -16,6 +16,16 @@ Class {
 }
 
 { #category : 'accessing' }
+ReEmptyExceptionHandlerRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+ReEmptyExceptionHandlerRule class >> ruleName [
+	^ 'Empty exception handler'
+]
+
+{ #category : 'accessing' }
 ReEmptyExceptionHandlerRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -35,11 +45,6 @@ ReEmptyExceptionHandlerRule >> afterCheck: aNode mappings: mappingDict [
 	^ true
 ]
 
-{ #category : 'accessing' }
-ReEmptyExceptionHandlerRule >> group [
-	^ 'Potential Bugs'
-]
-
 { #category : 'initialization' }
 ReEmptyExceptionHandlerRule >> initialize [
 	super initialize.
@@ -47,9 +52,4 @@ ReEmptyExceptionHandlerRule >> initialize [
 		'`@block
 			on: `exception
 			do: [ :`@err | | `@temps | ]'
-]
-
-{ #category : 'accessing' }
-ReEmptyExceptionHandlerRule >> name [
-	^ 'Empty exception handler'
 ]

@@ -17,6 +17,21 @@ ReEquivalentSuperclassMethodsRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReEquivalentSuperclassMethodsRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+ReEquivalentSuperclassMethodsRule class >> rationale [
+	^ 'Check for methods that are equivalent to their superclass methods.'
+]
+
+{ #category : 'accessing' }
+ReEquivalentSuperclassMethodsRule class >> ruleName [
+	^ 'Methods equivalently defined in superclass'
+]
+
+{ #category : 'accessing' }
 ReEquivalentSuperclassMethodsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -34,23 +49,8 @@ ReEquivalentSuperclassMethodsRule >> basicCheck: aMethod [
 ]
 
 { #category : 'accessing' }
-ReEquivalentSuperclassMethodsRule >> group [
-	^ 'Design Flaws'
-]
-
-{ #category : 'accessing' }
 ReEquivalentSuperclassMethodsRule >> ignoredSelectors [
 	"These methods are often overridden for compatilbity with other platforms."
 
 	^ #(new initialize)
-]
-
-{ #category : 'accessing' }
-ReEquivalentSuperclassMethodsRule >> name [
-	^ 'Methods equivalently defined in superclass'
-]
-
-{ #category : 'accessing' }
-ReEquivalentSuperclassMethodsRule >> rationale [
-	^ 'Check for methods that are equivalent to their superclass methods.'
 ]

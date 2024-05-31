@@ -17,6 +17,26 @@ ReInstVarInSubclassesRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
+ReInstVarInSubclassesRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+ReInstVarInSubclassesRule class >> rationale [
+	^ 'All subclasses of this class define the same variable. Most likely this variable should be pulled up to the superclass.'
+]
+
+{ #category : 'accessing' }
+ReInstVarInSubclassesRule class >> ruleName [
+	^ 'Same instance variable defined in ALL subclasses'
+]
+
+{ #category : 'accessing' }
+ReInstVarInSubclassesRule class >> severity [
+	^ #information
+]
+
+{ #category : 'accessing' }
 ReInstVarInSubclassesRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -50,24 +70,4 @@ ReInstVarInSubclassesRule >> critiqueFor: aClass [
 	^ ReRefactoringCritique
 			withAnchor: (self anchorFor: aClass)
 			by: self
-]
-
-{ #category : 'accessing' }
-ReInstVarInSubclassesRule >> group [
-	^ 'Design Flaws'
-]
-
-{ #category : 'accessing' }
-ReInstVarInSubclassesRule >> name [
-	^ 'Same instance variable defined in ALL subclasses'
-]
-
-{ #category : 'accessing' }
-ReInstVarInSubclassesRule >> rationale [
-	^ 'All subclasses of this class define the same variable. Most likely this variable should be pulled up to the superclass.'
-]
-
-{ #category : 'accessing' }
-ReInstVarInSubclassesRule >> severity [
-	^ #information
 ]

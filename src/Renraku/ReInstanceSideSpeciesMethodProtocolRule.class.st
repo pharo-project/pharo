@@ -9,14 +9,14 @@ Class {
 	#tag : 'Rules'
 }
 
-{ #category : 'accessing - defaults' }
-ReInstanceSideSpeciesMethodProtocolRule >> protocolName [
+{ #category : 'accessing' }
+ReInstanceSideSpeciesMethodProtocolRule class >> protocolName [
 
 	^ 'private'
 ]
 
-{ #category : 'accessing - defaults' }
-ReInstanceSideSpeciesMethodProtocolRule >> selector [
+{ #category : 'accessing' }
+ReInstanceSideSpeciesMethodProtocolRule class >> selector [
 
 	^ #species
 ]

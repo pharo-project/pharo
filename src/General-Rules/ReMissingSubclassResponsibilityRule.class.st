@@ -15,6 +15,16 @@ ReMissingSubclassResponsibilityRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
+ReMissingSubclassResponsibilityRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+ReMissingSubclassResponsibilityRule class >> ruleName [
+	^ 'Method defined in all subclasses, but not in superclass'
+]
+
+{ #category : 'accessing' }
 ReMissingSubclassResponsibilityRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -45,14 +55,4 @@ ReMissingSubclassResponsibilityRule >> check: aClass forCritiquesDo: aCritiqueBl
 				thenDo: [ :critic |
 					aCritiqueBlock cull: critic ].
 				^ self ] ]
-]
-
-{ #category : 'accessing' }
-ReMissingSubclassResponsibilityRule >> group [
-	^ 'Design Flaws'
-]
-
-{ #category : 'accessing' }
-ReMissingSubclassResponsibilityRule >> name [
-	^ 'Method defined in all subclasses, but not in superclass'
 ]

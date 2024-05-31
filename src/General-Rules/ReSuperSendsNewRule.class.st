@@ -11,6 +11,16 @@ Class {
 }
 
 { #category : 'accessing' }
+ReSuperSendsNewRule class >> group [
+	^ 'Bugs'
+]
+
+{ #category : 'accessing' }
+ReSuperSendsNewRule class >> ruleName [
+	^ 'Sends super new initialize or self new initialize'
+]
+
+{ #category : 'accessing' }
 ReSuperSendsNewRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -22,11 +32,6 @@ ReSuperSendsNewRule >> afterCheck: aNode mappings: mappingDict [
 	^ aNode methodNode methodClass isMeta
 ]
 
-{ #category : 'accessing' }
-ReSuperSendsNewRule >> group [
-	^ 'Bugs'
-]
-
 { #category : 'initialization' }
 ReSuperSendsNewRule >> initialize [
 	super initialize.
@@ -35,9 +40,4 @@ ReSuperSendsNewRule >> initialize [
 			'(super new: `@expr) initialize'
 			'self new initialize'
 			'(self new: `@expr) initialize' )
-]
-
-{ #category : 'accessing' }
-ReSuperSendsNewRule >> name [
-	^ 'Sends super new initialize or self new initialize'
 ]

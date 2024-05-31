@@ -15,6 +15,16 @@ ReReturnsBooleanAndOtherRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReReturnsBooleanAndOtherRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+ReReturnsBooleanAndOtherRule class >> ruleName [
+	^ 'Returns a boolean and non boolean'
+]
+
+{ #category : 'accessing' }
 ReReturnsBooleanAndOtherRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -54,14 +64,4 @@ ReReturnsBooleanAndOtherRule >> checkIfNodeIsBool: node [
 ReReturnsBooleanAndOtherRule >> checkIfNodeIsNotBool: node [
 	^ node isSelfVariable or:
 		[ node isLiteralNode and: [ (#(true false) includes: node value) not ] ]
-]
-
-{ #category : 'accessing' }
-ReReturnsBooleanAndOtherRule >> group [
-	^ 'Potential Bugs'
-]
-
-{ #category : 'accessing' }
-ReReturnsBooleanAndOtherRule >> name [
-	^ 'Returns a boolean and non boolean'
 ]

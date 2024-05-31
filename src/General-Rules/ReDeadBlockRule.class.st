@@ -11,6 +11,27 @@ Class {
 }
 
 { #category : 'accessing' }
+ReDeadBlockRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
+ReDeadBlockRule class >> rationale [
+	^ 'Dead Block. The block is not assigned, not returned and no message is send to it.
+Often this is a left over from using blocks to comment out code.'
+]
+
+{ #category : 'accessing' }
+ReDeadBlockRule class >> ruleName [
+	^ 'Dead Block'
+]
+
+{ #category : 'accessing' }
+ReDeadBlockRule class >> severity [
+	^ #information
+]
+
+{ #category : 'accessing' }
 ReDeadBlockRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -20,25 +41,4 @@ ReDeadBlockRule class >> uniqueIdentifierName [
 { #category : 'running' }
 ReDeadBlockRule >> basicCheck: node [
 	^ node isBlock and: [ node isUsedAsReturnValue not ]
-]
-
-{ #category : 'accessing' }
-ReDeadBlockRule >> group [
-	^ 'Optimization'
-]
-
-{ #category : 'accessing' }
-ReDeadBlockRule >> name [
-	^ 'Dead Block'
-]
-
-{ #category : 'accessing' }
-ReDeadBlockRule >> rationale [
-	^ 'Dead Block. The block is not assigned, not returned and no message is send to it.
-Often this is a left over from using blocks to comment out code.'
-]
-
-{ #category : 'accessing' }
-ReDeadBlockRule >> severity [
-	^ #information
 ]

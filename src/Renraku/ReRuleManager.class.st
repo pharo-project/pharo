@@ -160,6 +160,7 @@ ReRuleManager class >> ruleToggleGroupID [
 
 { #category : 'settings' }
 ReRuleManager class >> ruleToggleSettingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder group: self ruleToggleGroupID)
 		order: 1;
@@ -167,16 +168,13 @@ ReRuleManager class >> ruleToggleSettingsOn: aBuilder [
 		description: 'Select which rules do you want to see in the live feedback';
 		parent: #qualityAssistant;
 		with: [
-			(self visibleRuleClasses sorted: [ :a :b | a name < b name ])
-				do: [ :rule |
-					| inst |
-					inst := rule new.
+			(self visibleRuleClasses sorted: [ :a :b | a name < b name ]) do: [ :rule |
 					(aBuilder setting: rule enabledSettingID)
-					selector: #enabled;
-					target: rule;
-					default: rule enabled;
-					label: inst name;
-					description: inst rationale ] ]
+						selector: #enabled;
+						target: rule;
+						default: rule enabled;
+						label: rule name;
+						description: rule rationale ] ]
 ]
 
 { #category : 'accessing' }
