@@ -192,6 +192,10 @@ RandomTest >> testUnixRandomGeneratorSeed [
 
 { #category : 'tests' }
 RandomTest >> testWithFloatAsSeed [
-
-self shouldnt: [ Random seed: 10.5. ] raise: Error.
+	
+	|r|
+	
+	r := Random seed: 10.5.
+	
+	self assert: r seed equals: 10.
 ]
