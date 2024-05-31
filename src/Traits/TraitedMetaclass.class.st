@@ -196,20 +196,19 @@ TraitedMetaclass >> isLocalSelector: aSelector [
 TraitedMetaclass >> isRejectedMethod: aSelector [
 	"Determine if the method is not to be installed in method dictionary"
 
-	| isFromClass isFromTraitedClass isTheTraitIUseDefinesTheSelector isMySuperclassTraitedClass |
+	| isFromClass isFromTraitedClass  isMySuperclassTraitedClass |
 
 	"the selector is one of the local methods"
 	(self isLocalSelector: aSelector)
 		ifTrue: [ ^ true ].
 
 	"If a trait I used define the selector, we do not reject"
-	isTheTraitIUseDefinesTheSelector := self traitComposition traits anySatisfy: [:inTrait |
-		inTrait localMethods anySatisfy: [ :meth | meth selector = aSelector ]].
-	isTheTraitIUseDefinesTheSelector ifTrue:[ ^false ].
+	 ((self traitComposition traits) copyWithout: TraitedClass) do: [:inTrait |
+		(inTrait nonTraitedClassSelectors includes: aSelector) ifTrue:[ ^false ]].
 
 
 	isFromClass := Class canUnderstand: aSelector.
-	isFromTraitedClass := TraitedClass methodDict includesKey: aSelector.
+	isFromTraitedClass := TraitedClass includesSelector: aSelector.
 	isMySuperclassTraitedClass := (superclass isKindOf: TraitedMetaclass) and: [
 	superclass isObsolete not].
 
