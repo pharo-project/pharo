@@ -6,14 +6,14 @@ Class {
 	#tag : 'Allocators'
 }
 
-{ #category : 'class initialization' }
-NormalAllocator class >> initialize [
+{ #category : 'instance creation' }
+NormalAllocator class >> allocate: aClass [
 
-	Smalltalk globals at: #DefaultAllocator put: self new
+	^ aClass privateBasicNew
 ]
 
 { #category : 'instance creation' }
-NormalAllocator >> allocate: aClass [
+NormalAllocator class >> allocate: aClass size: requestedSize [
 
-	^ aClass privateBasicNew
+	^ aClass privateBasicNew: requestedSize
 ]
