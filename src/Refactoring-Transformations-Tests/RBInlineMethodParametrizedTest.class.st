@@ -1,9 +1,9 @@
 Class {
 	#name : 'RBInlineMethodParametrizedTest',
 	#superclass : 'RBAbstractRefactoringTest',
-	#category : 'Refactoring-Transformations-Tests-Parametrized',
+	#category : 'Refactoring-Transformations-Tests-SingleParametrized',
 	#package : 'Refactoring-Transformations-Tests',
-	#tag : 'Parametrized'
+	#tag : 'SingleParametrized'
 }
 
 { #category : 'tests' }
