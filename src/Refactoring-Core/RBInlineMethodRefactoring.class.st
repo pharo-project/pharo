@@ -444,6 +444,10 @@ RBInlineMethodRefactoring >> replaceArguments [
 	sourceMessage arguments reversed
 		with: inlineParseTree arguments reversed
 		do: [ :replacement :source |
+			self flag: #todo. "shouldInlineExpression can produce bogus transformations.
+			Mainly by evaluating multiple time expressions. We can fix this by ensuring that
+			binding creation is only done when the argument expression (or self) is used multiple times.
+			This will avoid that ProtectField refactoring uses shouldInlineExpression."
 			(replacement isImmediateNode or: [ self shouldInlineExpression: replacement newSource ])
 				ifTrue: [ self replaceArgument: source with: replacement ]
 				ifFalse: [ self addTemporary: source assignedTo: replacement ] ]

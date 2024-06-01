@@ -12,15 +12,19 @@ Class {
 { #category : 'utilities' }
 ReSemanticsOfInlineMethodRefactoringTest >> inlineMessageSend: messageSendSource inlineMethodSource:  methodToInlineSource ofMethodSource: source [
 
-	| method methodToInline |
+	| method methodToInline refactoring |
 	method := class compile: source classified: '#test data'.
 	methodToInline := class compile: methodToInlineSource classified: '#test data'.
 
-	^ RBInlineMethodRefactoring
+	refactoring := RBInlineMethodRefactoring
 		  model: model
 		  inlineSource: messageSendSource 
 		  fromMethod: method selector
-		  inClass: class name
+		  inClass: class name.
+		
+	self setupInlineExpressionFor: refactoring toReturn: false.
+	
+	^ refactoring 
 ]
 
 { #category : 'running' }
@@ -223,7 +227,7 @@ ReSemanticsOfInlineMethodRefactoringTest >> testInlineMethodWithoutReturnInAssig
 		inlineMessageSend: 'self foo: (1 + 1)'
 		inlineMethodSource:  'foo: arg instVar := Point new + arg'
 		ofMethodSource: 'm instVar2 := self foo: (1 + 1)'.
-		
+
 	refactoring generateChanges.
 
 	self 
