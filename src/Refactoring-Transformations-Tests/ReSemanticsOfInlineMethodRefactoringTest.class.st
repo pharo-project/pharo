@@ -43,6 +43,208 @@ ReSemanticsOfInlineMethodRefactoringTest >> setUp [
 	class := model classNamed: 'ReClassForTesting'
 ]
 
+{ #category : 'tests - control flow' }
+ReSemanticsOfInlineMethodRefactoringTest >> testControlFlowInAssignmentWhenInlineMethodWithIfTrueIfFalseExpectSuccess [
+
+	| refactoring |
+	refactoring := self 
+		inlineMessageSend: 'self foo'
+		inlineMethodSource:  'foo instVar ifTrue: [ ^ 2 ] ifFalse: [ ^ 1 ]'
+		ofMethodSource: 'm instVar := self foo'.
+		
+	refactoring generateChanges.
+	
+	self
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm instVar := instVar ifTrue: [ 2 ] ifFalse: [ 1 ]')
+]
+
+{ #category : 'tests - error' }
+ReSemanticsOfInlineMethodRefactoringTest >> testControlFlowInAssignmentWhenInlineMethodWithNonLocalReturningBlockAndRetunExpectError [
+
+	| refactoring |
+	refactoring := self 
+		inlineMessageSend: 'self foo'
+		inlineMethodSource:  'foo instVar test: [ ^ 2 ]. ^ 1'
+		ofMethodSource: 'm instVar := self foo'.
+		
+	self
+		should: [ refactoring generateChanges ]
+		raise: RBRefactoringError
+]
+
+{ #category : 'tests - control flow' }
+ReSemanticsOfInlineMethodRefactoringTest >> testControlFlowInReturnNodeWhenInlineMethodWithArgumentUsedMultipleTimes [
+
+	| refactoring |
+	refactoring := self 
+		inlineMessageSend: 'self foo: (1 + 1)'
+		inlineMethodSource:  'foo: arg ^ arg + arg'
+		ofMethodSource: 'm ^ self foo: (1 + 1)'.
+		
+	refactoring generateChanges.
+
+	self 
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm | arg | arg := 1 + 1. ^ arg + arg')
+]
+
+{ #category : 'tests - control flow' }
+ReSemanticsOfInlineMethodRefactoringTest >> testControlFlowInReturnNodeWhenInlineMethodWithExpression [
+
+	| refactoring |
+	refactoring := self 
+		inlineMessageSend: 'self foo'
+		inlineMethodSource:  'foo ^ 1 + 1'
+		ofMethodSource: 'm ^ self foo'.
+		
+	refactoring generateChanges.
+
+	self 
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm ^ 1 + 1')
+]
+
+{ #category : 'tests - control flow' }
+ReSemanticsOfInlineMethodRefactoringTest >> testControlFlowInReturnNodeWhenInlineMethodWithIfTrueIfFalseExpectSuccess [
+
+	| refactoring |
+	refactoring := self 
+		inlineMessageSend: 'self foo'
+		inlineMethodSource:  'foo instVar ifTrue: [ ^ 1 ] ifFalse: [ ^ 3 ]'
+		ofMethodSource: 'm ^ self foo'.
+		
+	refactoring generateChanges.
+	self flag: #todo. "This is strage result even though it is correct one. Why it removed return node?"
+	self 
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm instVar ifTrue: [ ^ 1 ] ifFalse: [ ^ 3 ]')
+]
+
+{ #category : 'tests - control flow' }
+ReSemanticsOfInlineMethodRefactoringTest >> testControlFlowInReturnNodeWhenInlineMethodWithIfTrueReturnsLiteral [
+
+	| refactoring |
+	refactoring := self 
+		inlineMessageSend: 'self foo'
+		inlineMethodSource:  'foo instVar ifTrue: [ ^ 2 ]'
+		ofMethodSource: 'm ^ self foo'.
+		
+	refactoring generateChanges.
+
+	self 
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm instVar ifTrue: [ ^ 2 ]. ^ self')
+]
+
+{ #category : 'tests - control flow' }
+ReSemanticsOfInlineMethodRefactoringTest >> testControlFlowInReturnNodeWhenInlineMethodWithNonLocalReturningBlock [
+
+	| refactoring |
+	refactoring := self 
+		inlineMessageSend: 'self foo'
+		inlineMethodSource:  'foo instVar test: [ ^ 2 ]'
+		ofMethodSource: 'm ^ self foo'.
+		
+	refactoring generateChanges.
+
+	self 
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm instVar test: [ ^ 2 ]. ^ self')
+]
+
+{ #category : 'tests - control flow' }
+ReSemanticsOfInlineMethodRefactoringTest >> testControlFlowInReturnNodeWhenInlineMethodWithNonLocalReturningBlockAndRetun [
+
+	| refactoring |
+	refactoring := self 
+		inlineMessageSend: 'self foo'
+		inlineMethodSource:  'foo instVar test: [ ^ 2 ]. ^ 1'
+		ofMethodSource: 'm ^ self foo'.
+		
+	refactoring generateChanges.
+
+	self 
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm instVar test: [ ^ 2 ]. ^ 1')
+]
+
+{ #category : 'tests - control flow' }
+ReSemanticsOfInlineMethodRefactoringTest >> testControlFlowInReturnNodeWhenInlineMethodWithReturnIfTrueIfFalseExpectSuccess [
+
+	| refactoring |
+	refactoring := self 
+		inlineMessageSend: 'self foo'
+		inlineMethodSource:  'foo ^ instVar ifTrue: [ ^ 1 ] ifFalse: [ ^ 3 ]'
+		ofMethodSource: 'm ^ self foo'.
+		
+	refactoring generateChanges.
+	self flag: #todo. "This is strage result even though it is correct one"
+	self 
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm ^ instVar ifTrue: [ ^ 1 ] ifFalse: [ ^ 3 ]')
+]
+
+{ #category : 'tests - error' }
+ReSemanticsOfInlineMethodRefactoringTest >> testControlFlowInStatementWhenInlineMethodWithNonLocalReturningBlockAndReturnAndStatmentsAfterInlined [
+
+	| refactoring |
+	refactoring := self 
+		inlineMessageSend: 'self foo'
+		inlineMethodSource:  'foo instVar test: [ ^ self bar ]. ^ self zed'
+		ofMethodSource: 'm self foo. self bar'.
+	
+	self
+		should: [ refactoring generateChanges ]	
+		raise: RBRefactoringError
+]
+
+{ #category : 'tests - error' }
+ReSemanticsOfInlineMethodRefactoringTest >> testControlFlowInStatementWhenInlineMethodWithNonLocalReturningBlockStatmentsAfterInlined [
+
+	| refactoring |
+	refactoring := self 
+		inlineMessageSend: 'self foo'
+		inlineMethodSource:  'foo instVar test: [ ^ self bar ]'
+		ofMethodSource: 'm self foo. self bar'.
+	
+	self
+		should: [ refactoring generateChanges ]	
+		raise: RBRefactoringError
+]
+
+{ #category : 'tests - control flow' }
+ReSemanticsOfInlineMethodRefactoringTest >> testControlFlowInStatementWhenInlineMethodWithReturnIfTrueIfFalseExpectSuccess [
+
+	| refactoring |
+	refactoring := self 
+		inlineMessageSend: 'self foo'
+		inlineMethodSource:  'foo ^ instVar ifTrue: [ ^ 1 ] ifFalse: [ ^ 1 ]'
+		ofMethodSource: 'm self foo. self bar'.
+		
+	refactoring generateChanges.
+	self flag: #todo. "a ifFalse: [] can be removed since it is also a dead code."
+	self 
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm instVar ifFalse: [ ]. self bar')
+]
+
+{ #category : 'tests - control flow' }
+ReSemanticsOfInlineMethodRefactoringTest >> testControlFlowInStatementWhenInlineMethodWithReturnIfTrueIfFalseWithExpressionsExpectSuccess [
+
+	| refactoring |
+	refactoring := self 
+		inlineMessageSend: 'self foo'
+		inlineMethodSource:  'foo ^ instVar ifTrue: [ ^ 1 + 1 ] ifFalse: [ ^ 3 + 1 ]'
+		ofMethodSource: 'm self foo. self bar'.
+		
+	refactoring generateChanges.
+
+	self 
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm instVar ifTrue: [ 1 + 1 ] ifFalse: [ 3 + 1 ]. self bar')
+]
+
 { #category : 'tests' }
 ReSemanticsOfInlineMethodRefactoringTest >> testInlineMethodExpressionThatIsNotDeadCode [
 
