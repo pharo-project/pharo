@@ -44,6 +44,22 @@ ReSemanticsOfInlineMethodRefactoringTest >> setUp [
 ]
 
 { #category : 'tests - control flow' }
+ReSemanticsOfInlineMethodRefactoringTest >> testControlFlowInAssignmentWhenInlineMethodWithIfTrueAndReturnExpectSuccess [
+
+	| refactoring |
+	refactoring := self 
+		inlineMessageSend: 'self foo'
+		inlineMethodSource:  'foo instVar ifTrue: [ ^ 2 ].  ^ 1 '
+		ofMethodSource: 'm instVar := self foo'.
+		
+	refactoring generateChanges.
+	
+	self
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm instVar := instVar ifTrue: [ 2 ] ifFalse: [ 1 ]')
+]
+
+{ #category : 'tests - control flow' }
 ReSemanticsOfInlineMethodRefactoringTest >> testControlFlowInAssignmentWhenInlineMethodWithIfTrueIfFalseExpectSuccess [
 
 	| refactoring |
@@ -71,6 +87,22 @@ ReSemanticsOfInlineMethodRefactoringTest >> testControlFlowInAssignmentWhenInlin
 	self
 		should: [ refactoring generateChanges ]
 		raise: RBRefactoringError
+]
+
+{ #category : 'tests - control flow' }
+ReSemanticsOfInlineMethodRefactoringTest >> testControlFlowInBlockWithReturnWhenInlineMethodHasNonLocalReturningBlockExpectSuccess [
+
+	| refactoring |
+	refactoring := self 
+		inlineMessageSend: 'self foo'
+		inlineMethodSource:  'foo instVar ifTrue: [ ^ 2 ] '
+		ofMethodSource: 'm instVar := [ ^ self foo ]'.
+		
+	refactoring generateChanges.
+	
+	self
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm instVar := [ instVar ifTrue: [ ^ 2 ]. ^ self ]')
 ]
 
 { #category : 'tests - control flow' }
@@ -243,6 +275,22 @@ ReSemanticsOfInlineMethodRefactoringTest >> testControlFlowInStatementWhenInline
 	self 
 		assert: (class parseTreeForSelector: #m)
 		equals: (self parseMethod: 'm instVar ifTrue: [ 1 + 1 ] ifFalse: [ 3 + 1 ]. self bar')
+]
+
+{ #category : 'tests - control flow' }
+ReSemanticsOfInlineMethodRefactoringTest >> testControlFlowInStatementWithBlockWithReturnWhenInlineMethodHasReturnExpectSuccess [
+
+	| refactoring |
+	refactoring := self 
+		inlineMessageSend: 'self foo'
+		inlineMethodSource:  'foo ^ 2 * instVar2 - 1 '
+		ofMethodSource: 'm instVar := [ instVar2 := self foo ]. self bar'.
+		
+	refactoring generateChanges.
+	
+	self
+		assert: (class parseTreeForSelector: #m)
+		equals: (self parseMethod: 'm instVar := [ instVar2 := 2 * instVar2 - 1 ]. self bar')
 ]
 
 { #category : 'tests' }
