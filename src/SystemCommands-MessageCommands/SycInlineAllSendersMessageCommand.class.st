@@ -24,7 +24,7 @@ SycInlineAllSendersMessageCommand >> createRefactoring [
 	Ask #method to resolve to the method, and then ask the origin, i.e. the class or trait where it is defined"
 	methodOrigin := originalMessage contextUser compiledMethod origin.
 	refactoring := RBInlineAllSendersRefactoring model: model sendersOf: originalMessage selector in: methodOrigin.
-	refactoring setOption: #inlineExpression toUse: [ :ref :aString |
+	refactoring setOption: #shouldNotCreateExtraBindings toUse: [ :ref :aString |
 		(self confirm: ('Do you want to extract the expression ''<1s>'' into a variable in method ''<2s>''?' expandMacrosWith: aString with: ref sourceSelector)) not ].
 	^ refactoring
 ]

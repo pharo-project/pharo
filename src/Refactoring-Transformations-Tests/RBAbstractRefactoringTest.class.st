@@ -105,14 +105,6 @@ RBAbstractRefactoringTest >> setupImplementorToInlineFor: aRefactoring toReturn:
 ]
 
 { #category : 'set up' }
-RBAbstractRefactoringTest >> setupInlineExpressionFor: aRefactoring toReturn: aBoolean [
-	| options |
-	options := aRefactoring options copy.
-	options at: #inlineExpression put: [:ref :string | aBoolean].
-	aRefactoring options: options
-]
-
-{ #category : 'set up' }
 RBAbstractRefactoringTest >> setupMethodNameFor: aRefactoring toReturn: aSelector [
 
 	| options |
