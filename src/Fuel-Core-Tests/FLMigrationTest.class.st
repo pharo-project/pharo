@@ -17,10 +17,7 @@ FLMigrationTest class >> resources [
 { #category : 'running' }
 FLMigrationTest >> redefined: aClass with: instanceVariableNames [
 
-	^ self classFactory make: [ :aBuilder |
-		  aBuilder
-			  fillFor: aClass;
-			  slots: instanceVariableNames ]
+	^ self classFactory update: aClass to: [ :aBuilder | aBuilder slots: instanceVariableNames ]
 ]
 
 { #category : 'running' }

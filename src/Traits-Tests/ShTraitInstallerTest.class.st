@@ -28,32 +28,6 @@ ShTraitInstallerTest >> testCreatingFullTraitHasAllElements [
 ]
 
 { #category : 'tests' }
-ShTraitInstallerTest >> testRemovingTraitCompositionOfAClassAfterFillForShouldUpdateItsMetaclass [
-
-	| t1 |
-	t1 := ShiftClassInstaller make: [ :builder |
-		      builder
-			      name: #TShCITestClass;
-			      beTrait;
-			      package: self generatedClassesPackageName ].
-
-	newClass := ShiftClassInstaller make: [ :builder |
-		            builder
-			            name: #ShCITestClass;
-			            traits: t1;
-			            package: self generatedClassesPackageName ].
-
-	self assert: newClass class class equals: TraitedMetaclass.
-
-	newClass := ShiftClassInstaller make: [ :builder |
-		            builder
-			            fillFor: newClass;
-			            traits: {  } ].
-
-	self assert: newClass class class equals: Metaclass
-]
-
-{ #category : 'tests' }
 ShTraitInstallerTest >> testRemovingTraitCompositionOfAClassShouldUpdateItsMetaclass [
 
 	| t1 |
@@ -74,6 +48,29 @@ ShTraitInstallerTest >> testRemovingTraitCompositionOfAClassShouldUpdateItsMetac
 		            builder
 			            name: #ShCITestClass;
 			            package: self generatedClassesPackageName ].
+
+	self assert: newClass class class equals: Metaclass
+]
+
+{ #category : 'tests' }
+ShTraitInstallerTest >> testRemovingTraitCompositionOfAClassThroughAnUpdateShouldUpdateItsMetaclass [
+
+	| t1 |
+	t1 := ShiftClassInstaller make: [ :builder |
+		      builder
+			      name: #TShCITestClass;
+			      beTrait;
+			      package: self generatedClassesPackageName ].
+
+	newClass := ShiftClassInstaller make: [ :builder |
+		            builder
+			            name: #ShCITestClass;
+			            traits: t1;
+			            package: self generatedClassesPackageName ].
+
+	self assert: newClass class class equals: TraitedMetaclass.
+
+	newClass := ShiftClassInstaller update: newClass to: [ :builder | builder traits: {  } ].
 
 	self assert: newClass class class equals: Metaclass
 ]
