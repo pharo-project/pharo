@@ -311,12 +311,11 @@ ClassFactoryForTestCase >> update: aClass to: aBlock [
 	Once the test is finished, I'll remove the created class or trait."
 
 	| newClass |
-	newClass := self class classInstaller make: [ :aBuilder | "Let's but some default values."
-		    			aBuilder fillFor: aClass.        
-						aBuilder
+	newClass := self class classInstaller update: aClass to: [ :aBuilder | "Let's but some default values."
+		            aBuilder
 			            installingEnvironment: self environment;
 			            package: self packageName.
-						
+
 		            "Now we let the users specify what they want."
 		            aBlock value: aBuilder ].
 

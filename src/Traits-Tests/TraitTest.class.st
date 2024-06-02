@@ -80,13 +80,7 @@ TraitTest >> testAddingATraitToAClassWithSubclasses [
 	c2 := self newClass: #C2 superclass: c1 traits: {  }.
 	t1 := self newTrait: #T1.
 
-	self
-		shouldnt: [
-			self class classInstaller make: [ :aBuilder |
-				aBuilder
-					fillFor: c1;
-					traits: t1 ] ]
-		raise: Error.
+	self shouldnt: [ self class classInstaller update: c1 to: [ :aBuilder | aBuilder traits: t1 ] ] raise: Error.
 
 	self assert: (c1 includesTrait: t1).
 	self deny: (c2 includesTrait: t1)
