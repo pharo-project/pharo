@@ -70,7 +70,7 @@ ReRuleManager class >> defaultRules [
 ]
 
 { #category : 'reflective operations' }
-ReRuleManager class >> doesNotUnderstand: aMessage [ [
+ReRuleManager class >> doesNotUnderstand: aMessage [ 
 
 	(aMessage selector beginsWith: 'toggleGroupNamed')
 		ifTrue: [
@@ -83,12 +83,11 @@ ReRuleManager class >> doesNotUnderstand: aMessage [ [
 				  ifFalse: [ rules anySatisfy: [ :rule | rule enabled ] ] ]
 		ifFalse: [ super doesNotUnderstand: aMessage ]
 ]
-]
 
 { #category : 'class initialization' }
 ReRuleManager class >> initialize [
 	self reset.
-	self subscribe
+	self subscribe.
 ]
 
 { #category : 'instance creation' }
@@ -227,20 +226,15 @@ ReRuleManager class >> setDefaultProfile [
 ]
 
 { #category : 'settings' }
-ReRuleManager class >> subSettingsOn: aBuilder with: rules [ [
+ReRuleManager class >> subSettingsOn: aBuilder with: rules [ 
 
-	^ (rules sorted: [ :a :b | a name < b name ]) do: [ :rule |
-		  | inst |
-		  inst := rule new.
+	 ^ (rules sorted: [ :a :b | a name < b name ]) do: [ :rule |
 		  (aBuilder setting: rule enabledSettingID)
 			  selector: #enabled;
 			  target: rule;
 			  default: rule enabled;
-			  label: inst name;
-			  description: inst rationale ]
-]
-
-
+			  label: rule name;
+			  description: rule rationale ]
 ]
 
 { #category : 'event subscriptions' }
