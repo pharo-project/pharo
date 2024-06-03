@@ -12,12 +12,6 @@ Class {
 	#tag : 'Borders'
 }
 
-{ #category : 'class initialization' }
-FillBorderStyle class >> initialize [
-	"Deprecated in Pharo 11"
-	self deprecatedAliases: { #FillStyleBorder }
-]
-
 { #category : 'geometry' }
 FillBorderStyle >> borderRectsFor: aRectangle [
 	"Answer a collection of rectangles to fill.

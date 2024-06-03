@@ -13,12 +13,6 @@ Class {
 	#package : 'Morphic-Widgets-Scrolling'
 }
 
-{ #category : 'class initialization' }
-GeneralScrollPaneMorph class >> initialize [
-
-	self deprecatedAliases: { #GeneralScrollPane }
-]
-
 { #category : 'accessing' }
 GeneralScrollPaneMorph >> adoptPaneColor: paneColor [
 	"Adopt the given pane color."

@@ -41,8 +41,8 @@ RBTransformation class >> initializeRefactoringOptions [
 		at: #extractAssignment
 		put: [ :ref :varName | self error: #extractAssignment ];
 
-		at: #inlineExpression
-		put: [ :ref :string | self error: #inlineExpression ];
+		at: #shouldNotCreateExtraBindings
+		put: [ :ref :string | self error: #shouldNotCreateExtraBindings ];
 
 		at: #alreadyDefined
 		put: [ :ref :cls :selector |  self error: #alreadyDefined ];
