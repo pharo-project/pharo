@@ -1305,15 +1305,17 @@ Behavior >> newTenured [
 	are made in the new space, that why the new space exists.
 	Use this method when you know that tenuring the object is what you want."
 
-	^ self basicNewTenured initialize
+	^ ObjectAllocator value: TenuredAllocator during: [ self new ]
 ]
 
 { #category : 'instance creation' }
-Behavior >> newTenured: sizeRequested [
+Behavior >> newTenured: requestedSize [
 	"Allocates the variable size object in the old space. See newTenured comment for more
 	information."
 
-	^ (self basicNewTenured: sizeRequested) initialize
+	^ ObjectAllocator
+		  value: TenuredAllocator
+		  during: [ self new: requestedSize ]
 ]
 
 { #category : 'initialization' }
