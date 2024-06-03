@@ -10,15 +10,25 @@ Class {
 }
 
 { #category : 'accessing' }
+ReBooleanPrecedenceRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+ReBooleanPrecedenceRule class >> ruleName [
+	^ 'Uses A | B = C instead of A | (B = C)'
+]
+
+{ #category : 'accessing' }
+ReBooleanPrecedenceRule class >> severity [
+	^ #error
+]
+
+{ #category : 'accessing' }
 ReBooleanPrecedenceRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'BooleanPrecedenceRule'
-]
-
-{ #category : 'accessing' }
-ReBooleanPrecedenceRule >> group [
-	^ 'Potential Bugs'
 ]
 
 { #category : 'initialization' }
@@ -33,14 +43,4 @@ ReBooleanPrecedenceRule >> initialize [
 			'`@object1 | `@object2 ~~ `@object3'
 			'`@object1 & `@object2 ~= `@object3'
 			'`@object1 & `@object2 ~~ `@object3' )
-]
-
-{ #category : 'accessing' }
-ReBooleanPrecedenceRule >> name [
-	^ 'Uses A | B = C instead of A | (B = C)'
-]
-
-{ #category : 'accessing' }
-ReBooleanPrecedenceRule >> severity [
-	^ #error
 ]

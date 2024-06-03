@@ -15,12 +15,6 @@ Class {
 	#tag : 'Pagination'
 }
 
-{ #category : 'class initialization' }
-TreeChunkPagerMorph class >> initialize [
-
-	self deprecatedAliases: { #MorphTreeChunkPager }
-]
-
 { #category : 'accessing' }
 TreeChunkPagerMorph >> atBottom [
 	^ atBottom ifNil: [atBottom := false]

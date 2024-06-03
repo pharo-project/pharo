@@ -17,10 +17,21 @@ ReShouldSendSuperSetUpAsFirstMessage class >> checksMethod [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReShouldSendSuperSetUpAsFirstMessage class >> group [
+
+	^ 'SUnit'
+]
+
 { #category : 'utilities' }
 ReShouldSendSuperSetUpAsFirstMessage class >> parseTreeSearcher [
 
 	^ RBParseTreeSearcher new
+]
+
+{ #category : 'accessing' }
+ReShouldSendSuperSetUpAsFirstMessage class >> ruleName [
+	^ 'Provide a call to super setUp as the first message in the setUp method'
 ]
 
 { #category : 'utilities' }
@@ -48,10 +59,4 @@ ReShouldSendSuperSetUpAsFirstMessage >> basicCheck: aMethod [
 ReShouldSendSuperSetUpAsFirstMessage >> isClassToCheck: aClass [
 
 	^ { TestCase. TestResource } anySatisfy: [:each | aClass inheritsFrom: each ]
-]
-
-{ #category : 'accessing' }
-ReShouldSendSuperSetUpAsFirstMessage >> name [
-
-	^ 'Provide a call to super setUp as the first message in the setUp method'
 ]

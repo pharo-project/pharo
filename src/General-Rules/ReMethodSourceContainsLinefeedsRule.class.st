@@ -15,6 +15,21 @@ ReMethodSourceContainsLinefeedsRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReMethodSourceContainsLinefeedsRule class >> group [
+	^ 'Bugs'
+]
+
+{ #category : 'accessing' }
+ReMethodSourceContainsLinefeedsRule class >> ruleName [
+	^ 'Method source contains linefeeds'
+]
+
+{ #category : 'accessing' }
+ReMethodSourceContainsLinefeedsRule class >> severity [
+	^ #error
+]
+
+{ #category : 'accessing' }
 ReMethodSourceContainsLinefeedsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -33,19 +48,4 @@ ReMethodSourceContainsLinefeedsRule >> check: aMethod forCritiquesDo: aCriticBlo
 				interval: lfInterval)
 			by: self
 			hint: 'lf') ]
-]
-
-{ #category : 'accessing' }
-ReMethodSourceContainsLinefeedsRule >> group [
-	^ 'Bugs'
-]
-
-{ #category : 'accessing' }
-ReMethodSourceContainsLinefeedsRule >> name [
-	^ 'Method source contains linefeeds'
-]
-
-{ #category : 'accessing' }
-ReMethodSourceContainsLinefeedsRule >> severity [
-	^ #error
 ]

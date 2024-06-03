@@ -189,3 +189,13 @@ RandomTest >> testUnixRandomGeneratorSeed [
 			self assert: next >= 0.
 			self assert: next < 1 ]
 ]
+
+{ #category : 'tests' }
+RandomTest >> testWithFloatAsSeed [
+	
+	|r|
+	
+	r := Random seed: 10.5.
+	
+	self assert: r seed equals: 10.
+]

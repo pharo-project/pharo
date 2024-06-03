@@ -9,6 +9,21 @@ Class {
 	#tag : 'Migrated'
 }
 
+{ #category : 'accessing' }
+ReUndeclaredVariableRule class >> group [
+	^ 'Bugs'
+]
+
+{ #category : 'accessing' }
+ReUndeclaredVariableRule class >> ruleName [
+	^ 'References an undeclared variable'
+]
+
+{ #category : 'accessing' }
+ReUndeclaredVariableRule class >> severity [
+	^ #error
+]
+
 { #category : 'running' }
 ReUndeclaredVariableRule >> basicCheck: aNode [
 	^ aNode isVariable and: [ aNode isUndeclaredVariable ]
@@ -19,19 +34,4 @@ ReUndeclaredVariableRule >> critiqueFor: aNode [
 	^ (super critiqueFor: aNode)
 		tinyHint: aNode name;
 		yourself
-]
-
-{ #category : 'accessing' }
-ReUndeclaredVariableRule >> group [
-	^ 'Bugs'
-]
-
-{ #category : 'accessing' }
-ReUndeclaredVariableRule >> name [
-	^ 'References an undeclared variable'
-]
-
-{ #category : 'accessing' }
-ReUndeclaredVariableRule >> severity [
-	^ #error
 ]

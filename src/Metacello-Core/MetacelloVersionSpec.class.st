@@ -20,12 +20,6 @@ Class {
 	#tag : 'Specs'
 }
 
-{ #category : 'class initialization' }
-MetacelloVersionSpec class >> initialize [
-
-	self deprecatedAliases: { #MetacelloMCVersionSpec }
-]
-
 { #category : 'visiting' }
 MetacelloVersionSpec >> acceptVisitor: aVisitor [
 	

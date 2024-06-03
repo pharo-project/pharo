@@ -23,6 +23,21 @@ ReExcessiveInheritanceRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
+ReExcessiveInheritanceRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+ReExcessiveInheritanceRule class >> rationale [
+	^ 'Deep inheritance (10+ depth) is usually a sign of a design flaw.'
+]
+
+{ #category : 'accessing' }
+ReExcessiveInheritanceRule class >> ruleName [
+	^ 'Excessive inheritance depth'
+]
+
+{ #category : 'accessing' }
 ReExcessiveInheritanceRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -36,22 +51,7 @@ ReExcessiveInheritanceRule >> basicCheck: aClass [
 	^ aClass allSuperclasses size >= self inheritanceDepth
 ]
 
-{ #category : 'accessing' }
-ReExcessiveInheritanceRule >> group [
-	^ 'Design Flaws'
-]
-
 { #category : 'private' }
 ReExcessiveInheritanceRule >> inheritanceDepth [
 	^ 10
-]
-
-{ #category : 'accessing' }
-ReExcessiveInheritanceRule >> name [
-	^ 'Excessive inheritance depth'
-]
-
-{ #category : 'accessing' }
-ReExcessiveInheritanceRule >> rationale [
-	^ 'Deep inheritance (10+ depth) is usually a sign of a design flaw.'
 ]

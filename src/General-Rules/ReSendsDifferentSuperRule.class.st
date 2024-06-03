@@ -22,6 +22,21 @@ ReSendsDifferentSuperRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReSendsDifferentSuperRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+ReSendsDifferentSuperRule class >> rationale [
+	^ 'Checks for methods whose source sends a different super message.'
+]
+
+{ #category : 'accessing' }
+ReSendsDifferentSuperRule class >> ruleName [
+	^ 'Sends different super message'
+]
+
+{ #category : 'accessing' }
 ReSendsDifferentSuperRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -31,19 +46,4 @@ ReSendsDifferentSuperRule class >> uniqueIdentifierName [
 { #category : 'running' }
 ReSendsDifferentSuperRule >> basicCheck: aMethod [
 	^ aMethod superMessages anySatisfy: [ :message | message ~= aMethod selector ]
-]
-
-{ #category : 'accessing' }
-ReSendsDifferentSuperRule >> group [
-	^ 'Design Flaws'
-]
-
-{ #category : 'accessing' }
-ReSendsDifferentSuperRule >> name [
-	^ 'Sends different super message'
-]
-
-{ #category : 'accessing' }
-ReSendsDifferentSuperRule >> rationale [
-	^ 'Checks for methods whose source sends a different super message.'
 ]

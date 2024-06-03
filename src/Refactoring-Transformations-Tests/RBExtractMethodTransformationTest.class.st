@@ -20,7 +20,7 @@ RBExtractMethodTransformationTest >> testExtractUsingExistingMethodRefactoring [
 	model := self modelOnClasses: { RBTransformationRuleTestData }.
 	transformation := ReCompositeExtractMethodRefactoring
 		                  model: model
-		                  extract: 'rewriteRule tree printString'
+		                  extractSource: 'rewriteRule tree printString'
 		                  from: #checkMethod:
 		                  to: #bar
 		                  in: #RBTransformationRuleTestData.
@@ -48,12 +48,12 @@ RBExtractMethodTransformationTest >> testExtractUsingExistingMethodRefactoring [
 RBExtractMethodTransformationTest >> testFailureBadInterval [
 
 	self shouldFail: (ReCompositeExtractMethodRefactoring
-							extract: 'whatever'
+							extractSource: 'whatever'
 							from: #testMethod to: #bla
 							in: #RBClassDataForRefactoringTest).
 
 	self shouldFail: (ReCompositeExtractMethodRefactoring
-							extract: (self sourceCodeAt: (80 to: 147)
+							extractSource: (self sourceCodeAt: (80 to: 147)
 								forMethod: #subclassOf:overrides: in: RBBasicLintRuleTestData class)
 							from: #subclassOf:overrides: to: #bla
 							in: #'RBBasicLintRuleTestData class')
@@ -63,7 +63,7 @@ RBExtractMethodTransformationTest >> testFailureBadInterval [
 RBExtractMethodTransformationTest >> testFailureCannotExtractProperSubtreeFromInterval [
 
 	self shouldFail: (ReCompositeExtractMethodRefactoring
-			 extract: (self
+			 extractSource: (self
 					  sourceCodeAt: (80 to: 269)
 					  forMethod: #subclassOf:overrides:
 					  in: RBBasicLintRuleTestData class)
@@ -72,7 +72,7 @@ RBExtractMethodTransformationTest >> testFailureCannotExtractProperSubtreeFromIn
 			 in: #'RBBasicLintRuleTestData class').
 
 	self shouldFail: (ReCompositeExtractMethodRefactoring
-			 extract: (self
+			 extractSource: (self
 					  sourceCodeAt: (53 to: 56)
 					  forMethod: #subclassOf:overrides:
 					  in: RBBasicLintRuleTestData class)
@@ -85,7 +85,7 @@ RBExtractMethodTransformationTest >> testFailureCannotExtractProperSubtreeFromIn
 RBExtractMethodTransformationTest >> testFailureCannotExtractTwoAssignmentsToTemporaries [
 
 	self shouldFail: (ReCompositeExtractMethodRefactoring
-			 extract: (self
+			 extractSource: (self
 					  sourceCodeAt: (77 to: 222)
 					  forMethod: #subclassResponsibilityNotDefined
 					  in: RBBasicLintRuleTestData class)
@@ -98,7 +98,7 @@ RBExtractMethodTransformationTest >> testFailureCannotExtractTwoAssignmentsToTem
 RBExtractMethodTransformationTest >> testFailureWhenMethodDoesNotExist [
 
 	self shouldFail: (ReCompositeExtractMethodRefactoring
-			extract: 'bla'
+			extractSource: 'bla'
 			from: #checkClass1:
 			to: #bla
 			in: #RBBasicLintRuleTestData)
@@ -123,7 +123,7 @@ RBExtractMethodTransformationTest >> testFailureWhenTemporaryReadBeforeWritten [
 		should: [
 			(ReCompositeExtractMethodRefactoring
 				 model: model
-				 extract: '
+				 extractSource: '
 			bar := temp.
 			temp := bar * bar.'
 				 from: #foo
@@ -142,7 +142,7 @@ RBExtractMethodTransformationTest >> testNeedsReturn [
 	model := self modelOnClasses: { RBDummyLintRuleTest }.
 	refactoring := ReCompositeExtractMethodRefactoring
 		                model: model
-		                extract: 'rules isEmpty ifTrue: [^self].
+		                extractSource: 'rules isEmpty ifTrue: [^self].
 						rules size == 1 ifTrue: [^rules first viewResults]'
 		               from: #openEditor
 		               to: #foo:
@@ -201,7 +201,7 @@ RBExtractMethodTransformationTest >> testTransform [
 
 	transformation := ReCompositeExtractMethodRefactoring
 		                   model: transformation model
-		                   extract: 'bar := 5.
+		                   extractSource: 'bar := 5.
 							temp := bar * bar.
 							Transcript show: temp printString; cr'
 		                   from: #foo
@@ -235,7 +235,7 @@ RBExtractMethodTransformationTest >> testWhenTemporaryVariableBecomesArgumentOfE
 	model := self modelOnClasses: { RBDummyLintRuleTest }.
 	refactoring := ReCompositeExtractMethodRefactoring
 							 model: model
-		                extract: (self
+		                extractSource: (self
 				                 sourceCodeAt: (78 to: 197)
 				                 forMethod: #displayName
 				                 in: RBDummyLintRuleTest)
@@ -271,7 +271,7 @@ RBExtractMethodTransformationTest >> testWithArgument [
 
 	refactoring := ReCompositeExtractMethodRefactoring
 		                model: model
-		                extract:
+		                extractSource:
 			                '(RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
 			ifFalse: [builder
 						compile: rewriteRule tree printString
@@ -313,7 +313,7 @@ RBExtractMethodTransformationTest >> testWithTemporariesSelected [
 
 	refactoring := ReCompositeExtractMethodRefactoring
 		                model: model
-		                extract: '| temp | temp := 5. temp * temp'
+		                extractSource: '| temp | temp := 5. temp * temp'
 		                from: #foo
 		                to: #foobar
 		                in: class name.
@@ -346,7 +346,7 @@ RBExtractMethodTransformationTest >> testWithTemporaryAssigned [
 
 	refactoring := ReCompositeExtractMethodRefactoring
 		                model: model
-		                extract: 'bar := 5.
+		                extractSource: 'bar := 5.
 			temp := bar * bar.
 			Transcript show: temp printString; cr.'
 		                from: #foo
@@ -372,7 +372,7 @@ RBExtractMethodTransformationTest >> testWithTemporaryVariable [
 	model := self modelOnClasses: { RBTransformationRuleTestData }.
 	refactoring := ReCompositeExtractMethodRefactoring
 		                model: model
-		                extract: (self
+		                extractSource: (self
 				                 sourceCodeAt: (22 to: 280)
 				                 forMethod: #superSends
 				                 in: RBTransformationRuleTestData)

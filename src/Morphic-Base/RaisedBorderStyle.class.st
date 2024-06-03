@@ -9,12 +9,6 @@ Class {
 	#tag : 'Borders'
 }
 
-{ #category : 'class initialization' }
-RaisedBorderStyle class >> initialize [
-	"Deprecated in Pharo 11"
-	self deprecatedAliases: { #RaisedBorder }
-]
-
 { #category : 'accessing' }
 RaisedBorderStyle >> bottomRightColor [
 	"Changed from direct access to color since, if nil,

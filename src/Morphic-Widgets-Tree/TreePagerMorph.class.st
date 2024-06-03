@@ -12,12 +12,6 @@ Class {
 	#tag : 'Pagination'
 }
 
-{ #category : 'class initialization' }
-TreePagerMorph class >> initialize [
-
-	self deprecatedAliases: { #MorphTreePager }
-]
-
 { #category : 'accessing' }
 TreePagerMorph >> allIntervals [
 	| intervals |

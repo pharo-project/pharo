@@ -69,12 +69,6 @@ Class {
 	#tag : 'Borders'
 }
 
-{ #category : 'class initialization' }
-ComplexBorderStyle class >> initialize [
-	"Deprecated in Pharo 11"
-	self deprecatedAliases: { #ComplexBorder }
-]
-
 { #category : 'instance creation' }
 ComplexBorderStyle class >> style: aSymbol [
 	^self new style: aSymbol

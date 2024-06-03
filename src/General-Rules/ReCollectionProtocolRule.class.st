@@ -10,15 +10,20 @@ Class {
 }
 
 { #category : 'accessing' }
+ReCollectionProtocolRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
+ReCollectionProtocolRule class >> ruleName [
+	^ 'Uses do: instead of collect: or select:''s'
+]
+
+{ #category : 'accessing' }
 ReCollectionProtocolRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'CollectionProtocolRule'
-]
-
-{ #category : 'accessing' }
-ReCollectionProtocolRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'initialization' }
@@ -42,9 +47,4 @@ ReCollectionProtocolRule >> initialize [
 					`@object add: `each.
 					`@.BlockStatements2].
 			`@.Statements2]' )
-]
-
-{ #category : 'accessing' }
-ReCollectionProtocolRule >> name [
-	^ 'Uses do: instead of collect: or select:''s'
 ]

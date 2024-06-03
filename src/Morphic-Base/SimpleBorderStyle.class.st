@@ -14,12 +14,6 @@ Class {
 	#tag : 'Borders'
 }
 
-{ #category : 'class initialization' }
-SimpleBorderStyle class >> initialize [
-	"Deprecated in Pharo 11"
-	self deprecatedAliases: { #SimpleBorder }
-]
-
 { #category : 'accessing' }
 SimpleBorderStyle >> baseColor [
 	^baseColor ifNil:[Color transparent]

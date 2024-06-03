@@ -14,12 +14,6 @@ Class {
 	#tag : 'Exceptions'
 }
 
-{ #category : 'class initialization' }
-MessageNotUnderstood class >> initialize [
-
-	self deprecatedAliases: { #VariableNotDeclared }
-]
-
 { #category : 'accessing' }
 MessageNotUnderstood >> defaultAction [
 

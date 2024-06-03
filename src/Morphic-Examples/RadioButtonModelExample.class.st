@@ -12,12 +12,6 @@ Class {
 	#tag : 'Widgets'
 }
 
-{ #category : 'class initialization' }
-RadioButtonModelExample class >> initialize [
-
-	self deprecatedAliases: { #ExampleRadioButtonModel }
-]
-
 { #category : 'accessing' }
 RadioButtonModelExample >> beCenter [
 	"Set the option to #center."

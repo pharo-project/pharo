@@ -15,6 +15,26 @@ ReSendsMethodDictRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReSendsMethodDictRule class >> group [
+	^ 'Bugs'
+]
+
+{ #category : 'accessing' }
+ReSendsMethodDictRule class >> rationale [
+	^ 'Nobody should directly access the method dictionary. It is purely an implementation artefact that we use one dictionary and it might change in the future'
+]
+
+{ #category : 'accessing' }
+ReSendsMethodDictRule class >> ruleName [
+	^ 'No direct access of methodDict'
+]
+
+{ #category : 'accessing' }
+ReSendsMethodDictRule class >> severity [
+	^ #error
+]
+
+{ #category : 'accessing' }
 ReSendsMethodDictRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -27,24 +47,4 @@ ReSendsMethodDictRule >> basicCheck: aMethod [
 	({Behavior . ClassDescription . Class. Metaclass. TraitedMetaclass. MetaclassForTraits} includes: aMethod methodClass)
 		ifTrue: [ ^ false ].
 	^(aMethod refersToLiteral: #methodDict) and: [aMethod messages includes: #methodDict]
-]
-
-{ #category : 'accessing' }
-ReSendsMethodDictRule >> group [
-	^ 'Bugs'
-]
-
-{ #category : 'accessing' }
-ReSendsMethodDictRule >> name [
-	^ 'No direct access of methodDict'
-]
-
-{ #category : 'accessing' }
-ReSendsMethodDictRule >> rationale [
-	^ 'Nobody should directly access the method dictionary. It is purely an implementation artefact that we use one dictionary and it might change in the future'
-]
-
-{ #category : 'accessing' }
-ReSendsMethodDictRule >> severity [
-	^ #error
 ]

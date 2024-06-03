@@ -70,7 +70,7 @@ RBExtractMethodToComponentRefactoring >> inlineForwarder [
 				model: self model
 				sendersOf: extractedMethodSelector
 				in: class.
-	refactoring setOption: #inlineExpression toUse: [:ref :string | true].
+	refactoring setOption: #shouldNotCreateExtraBindings toUse: [:ref :string | true].
 	self generateChangesFor: refactoring
 ]
 

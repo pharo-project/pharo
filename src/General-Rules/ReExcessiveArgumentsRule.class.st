@@ -19,6 +19,21 @@ ReExcessiveArgumentsRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReExcessiveArgumentsRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+ReExcessiveArgumentsRule class >> rationale [
+	^ 'Long argument lists (five or more) can indicate that a new object should be created to wrap the numerous parameters.'
+]
+
+{ #category : 'accessing' }
+ReExcessiveArgumentsRule class >> ruleName [
+	^ 'Excessive number of arguments'
+]
+
+{ #category : 'accessing' }
 ReExcessiveArgumentsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -37,19 +52,4 @@ ReExcessiveArgumentsRule >> basicCheck: aMethod [
 	aMethod isFFIMethod ifTrue: [ ^false ].
 
 	^ aMethod numArgs >= self argumentsCount
-]
-
-{ #category : 'accessing' }
-ReExcessiveArgumentsRule >> group [
-	^ 'Design Flaws'
-]
-
-{ #category : 'accessing' }
-ReExcessiveArgumentsRule >> name [
-	^ 'Excessive number of arguments'
-]
-
-{ #category : 'accessing' }
-ReExcessiveArgumentsRule >> rationale [
-	^ 'Long argument lists (five or more) can indicate that a new object should be created to wrap the numerous parameters.'
 ]

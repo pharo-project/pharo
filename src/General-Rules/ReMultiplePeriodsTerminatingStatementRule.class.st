@@ -15,6 +15,16 @@ ReMultiplePeriodsTerminatingStatementRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReMultiplePeriodsTerminatingStatementRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+ReMultiplePeriodsTerminatingStatementRule class >> ruleName [
+	^ 'Multiple periods terminating the same statement'
+]
+
+{ #category : 'accessing' }
 ReMultiplePeriodsTerminatingStatementRule class >> uniqueIdentifierName [
 
 	^ 'MultiplePeriodsTerminatingStatementRule'
@@ -26,16 +36,6 @@ ReMultiplePeriodsTerminatingStatementRule >> check: aMethod forCritiquesDo: aCri
 	aMethod ast nodesDo: [ :node |
 		node isSequence and: [
 			self periodPairs: node critiqueBlock: aCriticBlock in: aMethod ] ]
-]
-
-{ #category : 'accessing' }
-ReMultiplePeriodsTerminatingStatementRule >> group [
-	^ 'Potential Bugs'
-]
-
-{ #category : 'accessing' }
-ReMultiplePeriodsTerminatingStatementRule >> name [
-	^ 'Multiple periods terminating the same statement'
 ]
 
 { #category : 'running' }

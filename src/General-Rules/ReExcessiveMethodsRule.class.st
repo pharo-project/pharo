@@ -21,6 +21,21 @@ ReExcessiveMethodsRule class >> checksClass [
 ]
 
 { #category : 'accessing' }
+ReExcessiveMethodsRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+ReExcessiveMethodsRule class >> rationale [
+	^ 'Large classes are indications that the class may be trying to do too much.'
+]
+
+{ #category : 'accessing' }
+ReExcessiveMethodsRule class >> ruleName [
+	^ 'Excessive number of methods'
+]
+
+{ #category : 'accessing' }
 ReExcessiveMethodsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -32,22 +47,7 @@ ReExcessiveMethodsRule >> basicCheck: aClass [
 	^ aClass selectors size >= self methodsCount
 ]
 
-{ #category : 'accessing' }
-ReExcessiveMethodsRule >> group [
-	^ 'Design Flaws'
-]
-
 { #category : 'private' }
 ReExcessiveMethodsRule >> methodsCount [
 	^ 60
-]
-
-{ #category : 'accessing' }
-ReExcessiveMethodsRule >> name [
-	^ 'Excessive number of methods'
-]
-
-{ #category : 'accessing' }
-ReExcessiveMethodsRule >> rationale [
-	^ 'Large classes are indications that the class may be trying to do too much.'
 ]

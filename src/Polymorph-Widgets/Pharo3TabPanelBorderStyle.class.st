@@ -9,12 +9,6 @@ Class {
 	#tag : 'Themes'
 }
 
-{ #category : 'class initialization' }
-Pharo3TabPanelBorderStyle class >> initialize [
-
-	self deprecatedAliases: { #Pharo3TabPanelBorder }
-]
-
 { #category : 'drawing' }
 Pharo3TabPanelBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	"Draw the border taking the currently selected tab into account.
