@@ -9,22 +9,6 @@ Class {
 	#tag : 'Parametrized'
 }
 
-{ #category : 'helpers' }
-RBAbstractRefactoringTest class >> unreferencedClass [
-	"Answer a <Class> which should not have any references"
-
-	| env |
-	env := (RBNamespace onEnvironment: (RBPackageEnvironment packageName: 'Refactoring-DataForTesting')).
-	^ env classNamed: self unreferencedClassName 
-]
-
-{ #category : 'helpers' }
-RBAbstractRefactoringTest class >> unreferencedClassName [
-	"Answer a <Symbol> representing a <Class> which should not have any references"
-
-	^ 'RBClassWithoutSelfClassReferenceTest' asSymbol
-]
-
 { #category : 'accessing' }
 RBAbstractRefactoringTest >> constructor [
 ]
@@ -121,14 +105,6 @@ RBAbstractRefactoringTest >> setupImplementorToInlineFor: aRefactoring toReturn:
 ]
 
 { #category : 'set up' }
-RBAbstractRefactoringTest >> setupInlineExpressionFor: aRefactoring toReturn: aBoolean [
-	| options |
-	options := aRefactoring options copy.
-	options at: #inlineExpression put: [:ref :string | aBoolean].
-	aRefactoring options: options
-]
-
-{ #category : 'set up' }
 RBAbstractRefactoringTest >> setupMethodNameFor: aRefactoring toReturn: aSelector [
 
 	| options |
@@ -220,11 +196,4 @@ RBAbstractRefactoringTest >> testConditions [
 	self assert: newCondition errorString equals: 'false'.
 	self assert: (condition not & condition not) check.
 	self assert: (condition & condition) errorString equals: 'false OR false'
-]
-
-{ #category : 'helpers' }
-RBAbstractRefactoringTest >> unreferencedClassName [
-	"Answer a <Symbol> representing a <Class> which should not have any references"
-
-	^ self class unreferencedClassName 
 ]

@@ -43,12 +43,6 @@ ToggleWithSymbolMenuItemShortcut class >> createSymbolTable [
 		"#Enter. 	Text string: (Character value: 16r23ce) asString attributes: attributes" }
 ]
 
-{ #category : 'class initialization' }
-ToggleWithSymbolMenuItemShortcut class >> initialize [
-
-	self deprecatedAliases: { #ToggleMenuItemShortcutWithSymbol }
-]
-
 { #category : 'accessing' }
 ToggleWithSymbolMenuItemShortcut class >> priority [
 	^ 0

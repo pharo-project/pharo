@@ -30,11 +30,6 @@ Class {
 	#tag : 'Editors-Methods'
 }
 
-{ #category : 'class initialization' }
-ClyProtocolEditorMorph class >> initialize [
-	self deprecatedAliases: { #ClyProtocolAndPackageEditorMorph }
-]
-
 { #category : 'building' }
 ClyProtocolEditorMorph >> build [
 	self buildResetButton.

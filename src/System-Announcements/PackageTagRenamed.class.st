@@ -13,12 +13,6 @@ Class {
 	#tag : 'System-Packages'
 }
 
-{ #category : 'class initialization' }
-PackageTagRenamed class >> initialize [
-
-	self deprecatedAliases: { #ClassTagRenamed . #CategoryRenamed }
-]
-
 { #category : 'instance creation' }
 PackageTagRenamed class >> to: aPackageTag oldName: aSymbol newName: anotherSymbol [
 

@@ -18,12 +18,6 @@ Class {
 	#tag : 'Builder'
 }
 
-{ #category : 'class initialization' }
-ShiftClassSideBuilder class >> initialize [
-
-	self deprecatedAliases: #( #FluidClassSideClassBuilder #FluidClassSideTraitBuilder )
-]
-
 { #category : 'accessing' }
 ShiftClassSideBuilder >> slots: anArray [
 	"Pay attention on the class side we do not have to have classSlots: but slots:"

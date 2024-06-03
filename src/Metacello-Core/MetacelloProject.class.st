@@ -15,12 +15,6 @@ Class {
 	#tag : 'Model'
 }
 
-{ #category : 'class initialization' }
-MetacelloProject class >> initialize [
-
-	self deprecatedAliases: { #MetacelloMCProject }
-]
-
 { #category : 'instance creation' }
 MetacelloProject class >> new [
 

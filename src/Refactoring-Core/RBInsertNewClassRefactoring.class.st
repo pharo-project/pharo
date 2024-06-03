@@ -3,10 +3,15 @@ I am a refactoring for creating new classes.
 
 You can define the name, superclass, package/tag and subclasses.
 
-I am used by other refactorings that may create new classes, for example, RBSplitClassRefactoring.
+I am used by other refactorings that may create new classes, for example, `RBSplitClassRefactoring`.
 
 My preconditions verify that I use a valid class name, that does not yet exists as a global variable, 
 and the subclasses (if any) were direct subclasses of the superclass.
+
+-  If it receives the `subclasses:` message, then this refactoring acts as in ""insertion mode"", assuming that the new class will be inserted between the parent class and direct subclasses of the superclass.
+
+-  If it does not receive the `subclasses:` message, it will act as if it were in ""add mode"" without reparenting the subclasses to the new class.
+
 "
 Class {
 	#name : 'RBInsertNewClassRefactoring',
@@ -105,13 +110,13 @@ RBInsertNewClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing' }
 RBInsertNewClassRefactoring >> subclasses: aCollection [
 
-	subclasses := aCollection collect: [ :each | self classObjectFor: each ]
+	subclasses := aCollection collect: [ :each | self classObjectFor: each ].
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing' }
 RBInsertNewClassRefactoring >> superclass: aClass [
 
 	superclass := self classObjectFor: aClass

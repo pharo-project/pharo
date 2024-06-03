@@ -83,8 +83,8 @@ NautilusRefactoring >> refactoringOptions: aRefactoring [
 		toUse: [ :ref :types :selected | self selectVariableTypesFrom: types selected: selected for: ref ];
 		setOption: #extractAssignment
 		toUse: [ :ref :string | self shouldExtractAssignmentTo: string ];
-		setOption: #inlineExpression
-		toUse: [ :ref :string | self shouldInlineExpression: string ];
+		setOption: #shouldNotCreateExtraBindings
+		toUse: [ :ref :string | self shouldNotCreateExtraBindings: string ];
 		setOption: #alreadyDefined
 		toUse: [ :ref :class :selector | self shouldOverride: selector in: class ];
 		setOption: #searchInWholeHierarchy
@@ -162,7 +162,7 @@ NautilusRefactoring >> shouldExtractAssignmentTo: aString [
 ]
 
 { #category : 'option' }
-NautilusRefactoring >> shouldInlineExpression: aString [
+NautilusRefactoring >> shouldNotCreateExtraBindings: aString [
 
 	^ (self confirm:
 		   ('Do you want to extract the expression ''<1s>'' into a variable in the current method?'

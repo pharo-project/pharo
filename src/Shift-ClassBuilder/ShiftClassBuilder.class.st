@@ -71,12 +71,6 @@ ShiftClassBuilder class >> defaultBuildEnhancer [
 	^ BuilderEnhancer ifNil: [ ShDefaultBuilderEnhancer ]
 ]
 
-{ #category : 'class initialization' }
-ShiftClassBuilder class >> initialize [
-
-	self deprecatedAliases: #( #FluidBuilder #FluidClassBuilder #FluidTraitBuilder )
-]
-
 { #category : 'accessing' }
 ShiftClassBuilder class >> setDefaultBuilderEnhancer: aClass [
 	BuilderEnhancer := aClass

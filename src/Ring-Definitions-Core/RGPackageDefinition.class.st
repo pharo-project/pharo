@@ -15,13 +15,6 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'class initialization' }
-RGPackageDefinition class >> initialize [
-	"Those got merged into RGPackageDefinition"
-
-	self deprecatedAliases: { #RGAbstractContainer. #RGContainer }
-]
-
 { #category : 'adding-removing' }
 RGPackageDefinition >> addClass: aRGBehaviorDefinition [
 	"aRGBehaviorDefinition has to be a class, trait or metaclass"
