@@ -49,7 +49,6 @@ Class {
 		'oldClass',
 		'oldMetaclass',
 		'builderEnhancer',
-		'metaclassClass',
 		'extensibleProperties',
 		'changeComparers',
 		'changes',
@@ -70,12 +69,6 @@ Class {
 { #category : 'defaults' }
 ShiftClassBuilder class >> defaultBuildEnhancer [
 	^ BuilderEnhancer ifNil: [ ShDefaultBuilderEnhancer ]
-]
-
-{ #category : 'class initialization' }
-ShiftClassBuilder class >> initialize [
-
-	self deprecatedAliases: #( #FluidBuilder #FluidClassBuilder #FluidTraitBuilder )
 ]
 
 { #category : 'accessing' }
@@ -250,15 +243,13 @@ ShiftClassBuilder >> createClass [
 { #category : 'building' }
 ShiftClassBuilder >> createMetaclass [
 
-	newMetaclass := self builderEnhancer newMetaclass: self.
+	newMetaclass := self metaclassClass new.
 
 	self builderEnhancer
 		configureMetaclass: newMetaclass
 		superclass: self metaSuperclass
 		withLayoutType: FixedLayout
-		slots: (self withAdditionalSlots: self classSlots).
-
-	self builderEnhancer metaclassCreated: self
+		slots: (self withAdditionalSlots: self classSlots)
 ]
 
 { #category : 'building' }
@@ -317,9 +308,7 @@ ShiftClassBuilder >> fillClassSideFromEnvironment: anEnvironment [
 	| old |
 	old := anEnvironment at: name ifAbsent: [ ^ self ].
 
-	self metaclassClass: old class class.
-	self classSlots: old class slots.
-	self classTraits: old class traitComposition
+	self classSlots: old class slots
 ]
 
 { #category : 'initialization' }
@@ -482,12 +471,9 @@ ShiftClassBuilder >> metaSuperclass: aClass [
 
 { #category : 'accessing' }
 ShiftClassBuilder >> metaclassClass [
-	^ metaclassClass ifNil: [ Metaclass ]
-]
+	"The metaclass class is determined by the builder enhancer. In case you want to play with your own metaclass class, you can implement a subclass of the buildre enhancer and use this one overriding the method #metaclassClassFor:."
 
-{ #category : 'accessing' }
-ShiftClassBuilder >> metaclassClass: anObject [
-	metaclassClass := anObject
+	^ self builderEnhancer metaclassClassFor: self
 ]
 
 { #category : 'accessing' }

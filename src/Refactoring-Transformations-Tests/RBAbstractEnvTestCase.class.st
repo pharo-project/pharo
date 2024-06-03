@@ -214,6 +214,14 @@ RBAbstractEnvTestCase >> setUp [
 	testingEnvironment := Smalltalk globals
 ]
 
+{ #category : 'set up' }
+RBAbstractEnvTestCase >> setupInlineExpressionFor: aRefactoring toReturn: aBoolean [
+	| options |
+	options := aRefactoring options copy.
+	options at: #shouldNotCreateExtraBindings put: [:ref :string | aBoolean].
+	aRefactoring options: options
+]
+
 { #category : 'actions' }
 RBAbstractEnvTestCase >> shouldFail: aRefactoring [
 

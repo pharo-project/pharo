@@ -57,7 +57,9 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineComponentMethodMax [
 	self proceedThroughWarning: [ | class |
 			refactoring := self createRefactoringWithArguments:
 				{ (47 to: 58) . #inlineMax . RBClassDataForRefactoringTest }.
-			self setupInlineExpressionFor: refactoring toReturn: true.
+			self flag: #todo. "Should be removed when inline will create extra binding when
+								  the expression is used multiple times."
+			self setupInlineExpressionFor: refactoring toReturn: false.
 			class := refactoring model classNamed: #Magnitude.
 			class
 				compile:
@@ -74,13 +76,14 @@ RBInlineMethodFromComponentParametrizedTest >> testInlineComponentMethodMax [
 			toReturn: class.
 		self executeRefactoring: refactoring ].
 	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #inlineMax) equals: (self parseMethod: 'inlineMax
-								| x y q |
-								x := 5.
-								y := 10.
-								q := x + 1 > y
-									ifTrue: [x + 1]
-									ifFalse: [y].
-								^q')
+				| x y q aMagnitude1 |
+				x := 5.
+				y := 10.
+				aMagnitude1 := x + 1.
+				q := aMagnitude1 > y
+				ifTrue: [ aMagnitude1 ]
+				ifFalse: [ y ].
+				^ q')
 ]
 
 { #category : 'tests' }

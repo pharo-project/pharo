@@ -27,6 +27,8 @@ Class {
 
 { #category : 'instance creation' }
 RBInlineMethodRefactoring class >> inline: anInterval inMethod: aSelector forClass: aClass [
+	"Use this API because intervals disambiguate expression that appears twice in a method."
+	
 	^ self new
 		inline: anInterval
 		inMethod: aSelector
@@ -35,11 +37,26 @@ RBInlineMethodRefactoring class >> inline: anInterval inMethod: aSelector forCla
 
 { #category : 'instance creation' }
 RBInlineMethodRefactoring class >> model: aRBSmalltalk inline: anInterval inMethod: aSelector forClass: aClass [
+	"Use this API because intervals disambiguate expression that appears twice in a method."
+	
 	^ self new
 		model: aRBSmalltalk;
 		inline: anInterval
 			inMethod: aSelector
 			forClass: aClass;
+		yourself
+]
+
+{ #category : 'testing - api' }
+RBInlineMethodRefactoring class >> model: aRBSmalltalk inlineSource: aSourceCode fromMethod: aSelector inClass: aClassName [
+	"This API is for testing purposes only. If you use it and there are two similar expressions
+	(selection) in the method, the first one will be extracted every time."
+	
+	^ self new
+		model: aRBSmalltalk;
+		inlineSource: aSourceCode
+		fromMethod: aSelector
+		inClass: aClassName;
 		yourself
 ]
 
@@ -67,7 +84,7 @@ RBInlineMethodRefactoring >> applicabilityPreconditions [
 		  (RBCondition withBlock: [
 			   self checkSelectedMessage.
 			   self parseInlineMethod.
-			   self isPrimitive ifTrue: [
+			   inlineParseTree isPrimitive ifTrue: [
 				   self refactoringError: 'Cannot inline primitives' ].
 			   self checkSuperMessages.
 			   self rewriteInlinedTree.
@@ -157,6 +174,18 @@ RBInlineMethodRefactoring >> compileMethod [
 	class compileTree: sourceParseTree
 ]
 
+{ #category : 'text selection' }
+RBInlineMethodRefactoring >> findFirstOccurrenceOf: searchedString in: textToSearchIn [
+	"Return the first index of aString in textToSearchIn "
+	| firstIndex |
+	firstIndex := textToSearchIn findString: searchedString startingAt: 1.
+	[ (firstIndex > 1) and: [ (textToSearchIn at: (firstIndex - 1)) isAlphaNumeric ] ]
+		whileTrue: [
+			firstIndex := textToSearchIn findString: searchedString startingAt: firstIndex +1 ].
+		
+	^ firstIndex
+]
+
 { #category : 'testing' }
 RBInlineMethodRefactoring >> hasMultipleReturns [
 	"Do we have multiple returns? If the last statement isn't a return, then we have an implicit return of self."
@@ -191,6 +220,14 @@ RBInlineMethodRefactoring >> inlineParseTree [
 RBInlineMethodRefactoring >> inlineSelector [
 
 	^ sourceMessage selector
+]
+
+{ #category : 'initialization' }
+RBInlineMethodRefactoring >> inlineSource: messageSendSource fromMethod: aSelector inClass: aClassName [
+	
+	sourceSelector := aSelector.
+	class := self model classNamed: aClassName.
+	sourceInterval := self sourceIntervalForMessageSend: messageSendSource
 ]
 
 { #category : 'transforming' }
@@ -235,11 +272,6 @@ RBInlineMethodRefactoring >> insertInlinedMethod [
 RBInlineMethodRefactoring >> isOverridden [
 
 	^ class subclassRedefines: self inlineSelector
-]
-
-{ #category : 'testing' }
-RBInlineMethodRefactoring >> isPrimitive [
-	^inlineParseTree isPrimitive
 ]
 
 { #category : 'transforming' }
@@ -412,7 +444,11 @@ RBInlineMethodRefactoring >> replaceArguments [
 	sourceMessage arguments reversed
 		with: inlineParseTree arguments reversed
 		do: [ :replacement :source |
-			(replacement isImmediateNode or: [ self shouldInlineExpression: replacement newSource ])
+			self flag: #todo. "shouldInlineExpression can produce bogus transformations.
+			Mainly by evaluating multiple time expressions. We can fix this by ensuring that
+			binding creation is only done when the argument expression (or self) is used multiple times.
+			This will avoid that ProtectField refactoring uses shouldInlineExpression."
+			(replacement isImmediateNode or: [ self shouldNotCreateExtraBindings: replacement newSource ])
 				ifTrue: [ self replaceArgument: source with: replacement ]
 				ifFalse: [ self addTemporary: source assignedTo: replacement ] ]
 ]
@@ -444,6 +480,15 @@ RBInlineMethodRefactoring >> rewriteInlinedTree [
 				normalizeIfTrues;
 				normalizeReturns;
 				addSelfReturn]
+]
+
+{ #category : 'initialization' }
+RBInlineMethodRefactoring >> sourceIntervalForMessageSend: messageSendSource [ 
+
+	| rbMethod start |
+	rbMethod := class methodFor: sourceSelector.
+	start := self findFirstOccurrenceOf: messageSendSource in: rbMethod ast sourceCode.
+	^ start to: (start + messageSendSource size)
 ]
 
 { #category : 'accessing' }

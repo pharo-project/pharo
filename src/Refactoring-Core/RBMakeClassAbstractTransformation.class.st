@@ -20,10 +20,10 @@ RBMakeClassAbstractTransformation class >> basicMenuItemString [
 	^ 'Make abstract'
 ]
 
-{ #category : 'accessing' }
-RBMakeClassAbstractTransformation class >> classNamed: aClassName [
+{ #category : 'instance creation' }
+RBMakeClassAbstractTransformation class >> class: targetClass [
 
-	^ self new classNamed: aClassName
+	^ self new class: targetClass
 ]
 
 { #category : 'testing' }
@@ -32,34 +32,10 @@ RBMakeClassAbstractTransformation class >> isTransformation [
 	^ true
 ]
 
-{ #category : 'preconditions' }
-RBMakeClassAbstractTransformation >> applicabilityPreconditions [
-	"Answer a <Collection> of <RBCondition>"
+{ #category : 'instance creation' }
+RBMakeClassAbstractTransformation >> class: class [
 
-	^ { 
-		self preconditionHaveNoReferences
-		}
-]
-
-{ #category : 'scripting api - conditions' }
-RBMakeClassAbstractTransformation >> checkPreconditions [ 
-
-	self checkApplicabilityPreconditions 
-]
-
-{ #category : 'scripting api - conditions' }
-RBMakeClassAbstractTransformation >> classNamed: aClassName [
-
-	className := aClassName.
-	targetClass := self model classNamed: aClassName.
-]
-
-{ #category : 'preconditions' }
-RBMakeClassAbstractTransformation >> preconditionHaveNoReferences [
-
-	^ ReClassesHaveNoReferencesCondition new
-		  model: model;
-		  classes: { targetClass }
+	targetClass := class
 ]
 
 { #category : 'preconditions' }
@@ -72,11 +48,17 @@ RBMakeClassAbstractTransformation >> preconditions [
 { #category : 'transforming' }
 RBMakeClassAbstractTransformation >> privateTransform [
 
-	self generateChangesFor: ((RBAddMethodTransformation
+	self generateChangesFor: (RBAddMethodTransformation
 		 sourceCode: 'isAbstract
 
-	^ self == ' , className
+	^ self == ' , targetClass asString
 		 in: targetClass classSide
-		 withProtocol: #testing)).
+		 withProtocol: #testing) execute
+]
 
+{ #category : 'preconditions' }
+RBMakeClassAbstractTransformation >> skippingPreconditions [
+	"We cannot validate that the class is actually not used and not receiving a message new."
+	
+	^ (RBCondition isAbstractClass: targetClass) not
 ]

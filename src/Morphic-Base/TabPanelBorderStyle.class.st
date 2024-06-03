@@ -12,12 +12,6 @@ Class {
 	#tag : 'Borders'
 }
 
-{ #category : 'class initialization' }
-TabPanelBorderStyle class >> initialize [
-	"Deprecated in Pharo 11"
-	self deprecatedAliases: { #TabPanelBorder }
-]
-
 { #category : 'drawing' }
 TabPanelBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	"Draw the border taking the currently selected tab into account.

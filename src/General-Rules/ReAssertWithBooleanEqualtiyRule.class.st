@@ -10,9 +10,14 @@ Class {
 }
 
 { #category : 'accessing' }
-ReAssertWithBooleanEqualtiyRule >> group [ 
+ReAssertWithBooleanEqualtiyRule class >> group [ 
 
 	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
+ReAssertWithBooleanEqualtiyRule class >> ruleName [
+	^ 'use deny: instead of assert:equals:'
 ]
 
 { #category : 'initialization' }
@@ -36,10 +41,4 @@ ReAssertWithBooleanEqualtiyRule >> initialize [
 		with: 'self assert: `@expr';
 		replace: 'self deny: `@expr identicalTo: true'
 		with: 'self deny: `@expr'
-]
-
-{ #category : 'accessing' }
-ReAssertWithBooleanEqualtiyRule >> name [
-
-	^ 'use deny: instead of assert:equals:'
 ]

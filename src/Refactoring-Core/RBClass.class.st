@@ -134,6 +134,12 @@ RBClass >> directlyDefinesPoolDictionary: aString [
 	^self sharedPoolNames includes: aString asSymbol
 ]
 
+{ #category : 'testing' }
+RBClass >> hasSubclasses [
+
+	^ self subclasses isNotEmpty
+]
+
 { #category : 'initialization' }
 RBClass >> initialize [
 	super initialize.

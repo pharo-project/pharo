@@ -19,10 +19,21 @@ ReShouldSendSuperInitializeAsFirstMessage class >> checksMethod [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReShouldSendSuperInitializeAsFirstMessage class >> group [
+
+	^ 'Clean Code'
+]
+
 { #category : 'utilities' }
 ReShouldSendSuperInitializeAsFirstMessage class >> parseTreeSearcher [
 
 	^ RBParseTreeSearcher new
+]
+
+{ #category : 'accessing' }
+ReShouldSendSuperInitializeAsFirstMessage class >> ruleName [
+	^ 'Provide a call to super initialize as the first message in the instance side #initialize method'
 ]
 
 { #category : 'utilities' }
@@ -45,16 +56,4 @@ ReShouldSendSuperInitializeAsFirstMessage class >> superInitializeNotCalledFirst
 ReShouldSendSuperInitializeAsFirstMessage >> basicCheck: aMethod [
 
 	^ (aMethod isClassSide not) and: [ aMethod selector = #initialize and: [ self class superInitializeNotCalledFirstIn: aMethod ] ]
-]
-
-{ #category : 'accessing' }
-ReShouldSendSuperInitializeAsFirstMessage >> group [
-
-	^ 'Clean Code'
-]
-
-{ #category : 'accessing' }
-ReShouldSendSuperInitializeAsFirstMessage >> name [
-
-	^ 'Provide a call to super initialize as the first message in the instance side #initialize method'
 ]

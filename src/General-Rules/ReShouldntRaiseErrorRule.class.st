@@ -41,15 +41,25 @@ Class {
 }
 
 { #category : 'accessing' }
+ReShouldntRaiseErrorRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
+ReShouldntRaiseErrorRule class >> rationale [
+	^ 'Replaces `shouldnt: [ ... ] raise: Error` with  `[ ... ]`'
+]
+
+{ #category : 'accessing' }
+ReShouldntRaiseErrorRule class >> ruleName [
+	^ 'Do not use  `shouldnt: [ ... ] raise: Error` '
+]
+
+{ #category : 'accessing' }
 ReShouldntRaiseErrorRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'ShouldntRaiseErrorRule'
-]
-
-{ #category : 'accessing' }
-ReShouldntRaiseErrorRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'initialization' }
@@ -58,14 +68,4 @@ ReShouldntRaiseErrorRule >> initialize [
 	self
 		replace: 'self shouldnt: [ `@statements ] raise: Error' with: '`@statements';
 		replace: 'self shouldnt: [ `@statements ] raise: Exception' with: '`@statements'
-]
-
-{ #category : 'accessing' }
-ReShouldntRaiseErrorRule >> name [
-	^ 'Do not use  `shouldnt: [ ... ] raise: Error` '
-]
-
-{ #category : 'accessing' }
-ReShouldntRaiseErrorRule >> rationale [
-	^ 'Replaces `shouldnt: [ ... ] raise: Error` with  `[ ... ]`'
 ]

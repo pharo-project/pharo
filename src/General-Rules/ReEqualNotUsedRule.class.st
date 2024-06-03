@@ -10,6 +10,16 @@ Class {
 }
 
 { #category : 'accessing' }
+ReEqualNotUsedRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+ReEqualNotUsedRule class >> ruleName [
+	^ 'Doesn''t use the result of a =, ~=, etc.'
+]
+
+{ #category : 'accessing' }
 ReEqualNotUsedRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -19,14 +29,4 @@ ReEqualNotUsedRule class >> uniqueIdentifierName [
 { #category : 'running' }
 ReEqualNotUsedRule >> basicCheck: node [
 	^ node isMessage and: [ node isUsedAsReturnValue not and: [ #(#= #== #~= #~~ #< #> #<= #>=) includes: node selector ] ]
-]
-
-{ #category : 'accessing' }
-ReEqualNotUsedRule >> group [
-	^ 'Potential Bugs'
-]
-
-{ #category : 'accessing' }
-ReEqualNotUsedRule >> name [
-	^ 'Doesn''t use the result of a =, ~=, etc.'
 ]

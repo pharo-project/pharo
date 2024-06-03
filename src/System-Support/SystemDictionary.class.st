@@ -106,13 +106,17 @@ SystemDictionary >> allTraitsDo: aBlock [
 SystemDictionary >> at: aKey put: anObject [
 	"Override from Dictionary to check Undeclared and fix up
 	references to undeclared variables."
-	| index assoc |
+	| index assoc registeredMethods |
 	aKey isSymbol ifFalse: [ self error: 'Only symbols are accepted as keys in SystemDictionary' ].
+
+	registeredMethods := #().
+
 	((self includesKey: aKey) not and: [ self undeclaredRegistry includesKey: aKey ]) ifTrue: [
  			| undeclared |
  			undeclared := self undeclaredRegistry associationAt: aKey.
  			"Undeclared variables record using methods in a property, remove. Boostrap might have used Associations"
- 			(undeclared class == UndeclaredVariable) ifTrue: [undeclared removeProperty: #registeredMethods ifAbsent: [ ]]. 
+ 			(undeclared class == UndeclaredVariable) ifTrue: [
+				registeredMethods := undeclared removeProperty: #registeredMethods ifAbsent: [ #() ]]. 
  			"and change class to be Global" 
  			self add: (undeclared primitiveChangeClassTo: GlobalVariable new).
  			self undeclaredRegistry removeKey: aKey].
@@ -122,6 +126,9 @@ SystemDictionary >> at: aKey put: anObject [
  	assoc
  		ifNil: [self atNewIndex: index put: (GlobalVariable key: aKey value: anObject). self flushClassNameCache]
  		ifNotNil: [assoc value: anObject].
+		
+	registeredMethods do: [ :aMethod | aMethod isInstalled ifTrue: [aMethod recompile] ].		
+
  	^ anObject
 ]
 

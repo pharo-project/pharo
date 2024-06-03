@@ -21,6 +21,26 @@ Class {
 }
 
 { #category : 'accessing' }
+ReTrueFalseDuplicationRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
+ReTrueFalseDuplicationRule class >> rationale [
+	^ 'Checks for ifTrue:ifFalse: blocks that have the same code at the beginning or end.'
+]
+
+{ #category : 'accessing' }
+ReTrueFalseDuplicationRule class >> ruleName [
+	^ 'Check for same statements at end of ifTrue:ifFalse: blocks'
+]
+
+{ #category : 'accessing' }
+ReTrueFalseDuplicationRule class >> severity [
+	^ #information
+]
+
+{ #category : 'accessing' }
 ReTrueFalseDuplicationRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -37,11 +57,6 @@ ReTrueFalseDuplicationRule >> afterCheck: aNode mappings: mappingDict [
 
 	"the first statement is duplicated"
 	^ true
-]
-
-{ #category : 'accessing' }
-ReTrueFalseDuplicationRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : 'initialization' }
@@ -107,19 +122,4 @@ ReTrueFalseDuplicationRule >> initialize [
 			ifFalse: [ | `@falseTemps | `@.FalseStatements. ]
 			ifTrue: [ | `@trueTemps | `@.TrueStatements. ].
 		`.@PostStatements.'
-]
-
-{ #category : 'accessing' }
-ReTrueFalseDuplicationRule >> name [
-	^ 'Check for same statements at end of ifTrue:ifFalse: blocks'
-]
-
-{ #category : 'accessing' }
-ReTrueFalseDuplicationRule >> rationale [
-	^ 'Checks for ifTrue:ifFalse: blocks that have the same code at the beginning or end.'
-]
-
-{ #category : 'accessing' }
-ReTrueFalseDuplicationRule >> severity [
-	^ #information
 ]

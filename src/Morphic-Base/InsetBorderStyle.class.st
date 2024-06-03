@@ -9,12 +9,6 @@ Class {
 	#tag : 'Borders'
 }
 
-{ #category : 'class initialization' }
-InsetBorderStyle class >> initialize [
-	"Deprecated in Pharo 11"
-	self deprecatedAliases: { #InsetBorder }
-]
-
 { #category : 'accessing' }
 InsetBorderStyle >> bottomRightColor [
 	"Changed from direct access to color since, if nil,

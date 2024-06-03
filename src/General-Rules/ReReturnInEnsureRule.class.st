@@ -10,6 +10,16 @@ Class {
 }
 
 { #category : 'accessing' }
+ReReturnInEnsureRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+ReReturnInEnsureRule class >> ruleName [
+	^ 'Contains a return in an ensure: block'
+]
+
+{ #category : 'accessing' }
 ReReturnInEnsureRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -22,20 +32,10 @@ ReReturnInEnsureRule >> afterCheck: aNode mappings: mappingDict [
 		anySatisfy: #containsReturn
 ]
 
-{ #category : 'accessing' }
-ReReturnInEnsureRule >> group [
-	^ 'Potential Bugs'
-]
-
 { #category : 'initialization' }
 ReReturnInEnsureRule >> initialize [
 	super initialize.
 	self matchesAny: #(
 		'`@rcv ensure: [| `@temps | `@.Stmts]'
 		'`@rcv ifCurtailed: [| `@temps | `@.Stmts]')
-]
-
-{ #category : 'accessing' }
-ReReturnInEnsureRule >> name [
-	^ 'Contains a return in an ensure: block'
 ]

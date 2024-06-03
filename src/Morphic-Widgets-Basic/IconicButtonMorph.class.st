@@ -26,9 +26,7 @@ IconicButtonMorph class >> defaultGraphics [
 { #category : 'class initialization' }
 IconicButtonMorph class >> initialize [
 
-	DefaultGraphics := self defaultGraphics.
-
-	self deprecatedAliases: { #IconicButton }
+	DefaultGraphics := self defaultGraphics
 ]
 
 { #category : 'menu' }

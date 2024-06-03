@@ -426,15 +426,15 @@ PackageAndClassesTest >> testRenameClass [
 
 	| xPackage class |
 	xPackage := self ensureXPackage.
-	class := self newClassNamed: #RPackageOldStubClass in: xPackage.
+	class := self newClassNamed: #PackageOldStubClass in: xPackage.
 
-	class rename: #RPackageNewStubClass.
+	class rename: #PackageNewStubClass.
 
 	self assert: (self organizer packageOf: class) equals: xPackage.
-	self assert: (self organizer packageOfClassNamed: #RPackageNewStubClass) equals: xPackage.
-	self assert: (self organizer packageOfClassNamed: #RPackageOldStubClass) equals: self organizer undefinedPackage.
-	self assert: (xPackage includesClassNamed: 'RPackageNewStubClass').
-	self deny: (xPackage includesClassNamed: 'RPackageOldStubClass')
+	self assert: (self organizer packageOfClassNamed: #PackageNewStubClass) equals: xPackage.
+	self assert: (self organizer packageOfClassNamed: #PackageOldStubClass) equals: self organizer undefinedPackage.
+	self assert: (xPackage includesClassNamed: 'PackageNewStubClass').
+	self deny: (xPackage includesClassNamed: 'PackageOldStubClass')
 ]
 
 { #category : 'tests - operations on classes' }
@@ -443,10 +443,10 @@ PackageAndClassesTest >> testRenameClassUpdateClassDefinedSelectorsInTheParentPa
 
 	| xPackage class |
 	xPackage := self ensureXPackage.
-	class := self newClassNamed: 'RPackageOldStubClass' asSymbol in: xPackage.
-	self createMethodNamed: 'stubMethod' inClass: class inProtocol: 'classic category'.
+	class := self newClassNamed: 'PackageOldStubClass' asSymbol in: xPackage.
+	self createMethodNamed: 'stubMethod' inClass: class inProtocol: 'classic protocol'.
 
-	class rename: 'RPackageNewStubClass'.
+	class rename: 'PackageNewStubClass'.
 
 	self assert: (class >> #stubMethod) package equals: xPackage.
 	self deny: (class >> #stubMethod) isExtension
@@ -459,10 +459,10 @@ PackageAndClassesTest >> testRenameClassUpdateClassExtensionSelectorsInTheExtend
 	| xPackage yPackage class |
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
-	class := self newClassNamed: #RPackageOldStubClass in: xPackage.
+	class := self newClassNamed: #PackageOldStubClass in: xPackage.
 	self createMethodNamed: 'stubMethod' inClass: class asExtensionOf: yPackage.
 
-	class rename: 'RPackageNewStubClass'.
+	class rename: 'PackageNewStubClass'.
 
 	self assert: (yPackage includesExtensionSelector: #stubMethod ofClass: class)
 ]
@@ -473,10 +473,10 @@ PackageAndClassesTest >> testRenameClassUpdateMetaclassDefinedSelectorsInThePare
 
 	| xPackage class |
 	xPackage := self ensureXPackage.
-	class := self newClassNamed: #RPackageOldStubClass in: xPackage.
-	self createMethodNamed: 'stubMethod' inClass: class class inProtocol: 'classic category'.
+	class := self newClassNamed: #PackageOldStubClass in: xPackage.
+	self createMethodNamed: 'stubMethod' inClass: class class inProtocol: 'classic protocol'.
 
-	class rename: 'RPackageNewStubClass'.
+	class rename: 'PackageNewStubClass'.
 
 	self assert: (class class >> #stubMethod) package equals: xPackage.
 	self deny: (class class >> #stubMethod) isExtension
@@ -489,10 +489,10 @@ PackageAndClassesTest >> testRenameClassUpdateMetaclassExtensionSelectorsInTheEx
 	| xPackage yPackage class |
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
-	class := self newClassNamed: #RPackageOldStubClass in: xPackage.
+	class := self newClassNamed: #PackageOldStubClass in: xPackage.
 	self createMethodNamed: 'stubMethod' inClass: class class asExtensionOf: yPackage.
 
-	class rename: 'RPackageNewStubClass'.
+	class rename: 'PackageNewStubClass'.
 
 	self assert: (yPackage includesExtensionSelector: #stubMethod ofClass: class class)
 ]
@@ -504,10 +504,10 @@ PackageAndClassesTest >> testRenameClassUpdateOrganizerClassExtendingPackagesMap
 	| xPackage yPackage class |
 	xPackage := self ensureXPackage.
 	yPackage := self ensureYPackage.
-	class := self newClassNamed: #RPackageOldStubClass in: xPackage.
+	class := self newClassNamed: #PackageOldStubClass in: xPackage.
 	self createMethodNamed: #stubMethod inClass: class asExtensionOf: yPackage.
 
-	class rename: 'RPackageNewStubClass'.
+	class rename: 'PackageNewStubClass'.
 
 	self assert: (class extendingPackages includes: yPackage)
 ]

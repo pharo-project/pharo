@@ -15,6 +15,16 @@ ReVariableAssignedLiteralRule class >> checksClass [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReVariableAssignedLiteralRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+ReVariableAssignedLiteralRule class >> ruleName [
+	^ 'Variable is only assigned a single literal value'
+]
+
 { #category : 'running' }
 ReVariableAssignedLiteralRule >> check: aClass forCritiquesDo: aCriticBlock [
 
@@ -26,14 +36,4 @@ ReVariableAssignedLiteralRule >> check: aClass forCritiquesDo: aCriticBlock [
 		assignmentNodes size = 1 ifFalse: [ ^ self ].
 		assignmentNodes first value isLiteralNode ifTrue: [
 			aCriticBlock cull: (self critiqueFor: aClass about: variable name) ] ]
-]
-
-{ #category : 'accessing' }
-ReVariableAssignedLiteralRule >> group [
-	^ 'Design Flaws'
-]
-
-{ #category : 'accessing' }
-ReVariableAssignedLiteralRule >> name [
-	^ 'Variable is only assigned a single literal value'
 ]

@@ -10,6 +10,16 @@ Class {
 }
 
 { #category : 'accessing' }
+ReThreeElementPointRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+ReThreeElementPointRule class >> ruleName [
+	^ 'Possible three element point (e.g., x @ y + q @ r)'
+]
+
+{ #category : 'accessing' }
 ReThreeElementPointRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -47,14 +57,4 @@ ReThreeElementPointRule >> findSuspiciousParentFor: aNode ifNone: alternativeBlo
 	^ self
 		findSuspiciousParentFor: tentativeNode
 		ifNone: alternativeBlock
-]
-
-{ #category : 'accessing' }
-ReThreeElementPointRule >> group [
-	^ 'Potential Bugs'
-]
-
-{ #category : 'accessing' }
-ReThreeElementPointRule >> name [
-	^ 'Possible three element point (e.g., x @ y + q @ r)'
 ]

@@ -15,6 +15,26 @@ ReSelfSentNotImplementedRule class >> checksMethod [
 ]
 
 { #category : 'accessing' }
+ReSelfSentNotImplementedRule class >> group [
+	^ 'Bugs'
+]
+
+{ #category : 'accessing' }
+ReSelfSentNotImplementedRule class >> rationale [
+	^ 'Checks if messages sent to self or super exist in the hierarchy, since these can be statically typed. Reported methods will certainly cause a doesNotUnderstand: message when they are executed.'
+]
+
+{ #category : 'accessing' }
+ReSelfSentNotImplementedRule class >> ruleName [
+	^ 'Super and Self Messages sent but not implemented'
+]
+
+{ #category : 'accessing' }
+ReSelfSentNotImplementedRule class >> severity [
+	^ #error
+]
+
+{ #category : 'accessing' }
 ReSelfSentNotImplementedRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -35,24 +55,4 @@ ReSelfSentNotImplementedRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	
 	problemSends do: [ :msgSend |
 			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: msgSend hint: msgSend selector asString)]
-]
-
-{ #category : 'accessing' }
-ReSelfSentNotImplementedRule >> group [
-	^ 'Bugs'
-]
-
-{ #category : 'accessing' }
-ReSelfSentNotImplementedRule >> name [
-	^ 'Super and Self Messages sent but not implemented'
-]
-
-{ #category : 'accessing' }
-ReSelfSentNotImplementedRule >> rationale [
-	^ 'Checks if messages sent to self or super exist in the hierarchy, since these can be statically typed. Reported methods will certainly cause a doesNotUnderstand: message when they are executed.'
-]
-
-{ #category : 'accessing' }
-ReSelfSentNotImplementedRule >> severity [
-	^ #error
 ]

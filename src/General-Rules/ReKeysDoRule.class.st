@@ -17,15 +17,25 @@ Class {
 }
 
 { #category : 'accessing' }
+ReKeysDoRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
+ReKeysDoRule class >> rationale [
+	^ 'The use of keysDo:/valuesDo: means one intermediate collection created less'
+]
+
+{ #category : 'accessing' }
+ReKeysDoRule class >> ruleName [
+	^ 'keys do: -> keysDo: and valuesDo:'
+]
+
+{ #category : 'accessing' }
 ReKeysDoRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'keysDoRule'
-]
-
-{ #category : 'accessing' }
-ReKeysDoRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : 'initialization' }
@@ -34,14 +44,4 @@ ReKeysDoRule >> initialize [
 	self
 		replace: '``@object keys do: ``@block' with: '``@object keysDo: ``@block';
 		replace: '``@object values do: ``@block' with: '``@object valuesDo: ``@block'
-]
-
-{ #category : 'accessing' }
-ReKeysDoRule >> name [
-	^ 'keys do: -> keysDo: and valuesDo:'
-]
-
-{ #category : 'accessing' }
-ReKeysDoRule >> rationale [
-	^ 'The use of keysDo:/valuesDo: means one intermediate collection created less'
 ]

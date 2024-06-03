@@ -10,6 +10,16 @@ Class {
 }
 
 { #category : 'accessing' }
+ReUsesAddRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+ReUsesAddRule class >> ruleName [
+	^ 'Uses the result of an add: message'
+]
+
+{ #category : 'accessing' }
 ReUsesAddRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -19,14 +29,4 @@ ReUsesAddRule class >> uniqueIdentifierName [
 { #category : 'running' }
 ReUsesAddRule >> basicCheck: node [
 	^ node isMessage and: [ (#(#add: #addAll:) includes: node selector) and: [ node isEssential ] ]
-]
-
-{ #category : 'accessing' }
-ReUsesAddRule >> group [
-	^ 'Potential Bugs'
-]
-
-{ #category : 'accessing' }
-ReUsesAddRule >> name [
-	^ 'Uses the result of an add: message'
 ]

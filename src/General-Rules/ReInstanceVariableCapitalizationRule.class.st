@@ -14,6 +14,16 @@ ReInstanceVariableCapitalizationRule class >> checksClass [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReInstanceVariableCapitalizationRule class >> group [
+	^ 'Style'
+]
+
+{ #category : 'accessing' }
+ReInstanceVariableCapitalizationRule class >> ruleName [
+	^ 'Instance variable capitalized'
+]
+
 { #category : 'running' }
 ReInstanceVariableCapitalizationRule >> check: aClass forCritiquesDo: aCriticBlock [
 
@@ -41,14 +51,4 @@ ReInstanceVariableCapitalizationRule >> critiqueFor: aClass about: aVarName [
 				in: aClass).
 
 	^ crit
-]
-
-{ #category : 'accessing' }
-ReInstanceVariableCapitalizationRule >> group [
-	^ 'Style'
-]
-
-{ #category : 'accessing' }
-ReInstanceVariableCapitalizationRule >> name [
-	^ 'Instance variable capitalized'
 ]

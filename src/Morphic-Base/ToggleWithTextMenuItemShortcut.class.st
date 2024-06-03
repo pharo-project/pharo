@@ -16,12 +16,6 @@ ToggleWithTextMenuItemShortcut class >> canBeUsed [
 	^ true
 ]
 
-{ #category : 'class initialization' }
-ToggleWithTextMenuItemShortcut class >> initialize [
-
-	self deprecatedAliases: { #ToggleMenuItemShortcutWithText }
-]
-
 { #category : 'accessing' }
 ToggleWithTextMenuItemShortcut class >> priority [
 	"Lowest priority... last to be choosen"

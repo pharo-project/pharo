@@ -29,12 +29,6 @@ ProtocolAnnouncement class >> in: aClass protocol: aProtocol [
 		  yourself
 ]
 
-{ #category : 'class initialization' }
-ProtocolAnnouncement class >> initialize [
-
-	self deprecatedAliases: { #ClassReorganized }
-]
-
 { #category : 'accessing' }
 ProtocolAnnouncement >> classAffected [
 
