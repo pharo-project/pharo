@@ -15,9 +15,9 @@ test
 Class {
 	#name : 'ReEndTrueFalseRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'Renraku-Rules-Rewrite',
+	#category : 'Renraku-Optimization',
 	#package : 'Renraku',
-	#tag : 'Rules-Rewrite'
+	#tag : 'Optimization'
 }
 
 { #category : 'accessing' }

@@ -7,9 +7,9 @@ Class {
 	#instVars : [
 		'matcher'
 	],
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
 
 { #category : 'testing' }

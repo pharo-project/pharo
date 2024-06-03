@@ -4,9 +4,9 @@ Morph and Model subclasses methods should access GUI theme via 'self theme' inst
 Class {
 	#name : 'ReThemeAccessRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'Renraku-Rules',
+	#category : 'Renraku-API Hints',
 	#package : 'Renraku',
-	#tag : 'Rules'
+	#tag : 'API Hints'
 }
 
 { #category : 'testing-interest' }

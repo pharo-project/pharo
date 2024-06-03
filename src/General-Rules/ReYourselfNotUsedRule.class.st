@@ -4,9 +4,9 @@ Check for methods sending the yourself message when it is not necessary.
 Class {
 	#name : 'ReYourselfNotUsedRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
 
 { #category : 'accessing' }

@@ -4,9 +4,9 @@ Instance variable names on the instance- and class-side should start with a lowe
 Class {
 	#name : 'ReInstanceVariableCapitalizationRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Style',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Style'
 }
 
 { #category : 'testing-interest' }

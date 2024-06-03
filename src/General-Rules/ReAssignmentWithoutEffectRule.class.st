@@ -4,9 +4,9 @@ This smell arises when a statement such as x := x is found. This statement has n
 Class {
 	#name : 'ReAssignmentWithoutEffectRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
 
 { #category : 'accessing' }

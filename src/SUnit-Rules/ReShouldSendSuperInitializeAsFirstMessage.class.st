@@ -8,9 +8,9 @@ Class {
 	#superclass : 'ReAbstractRule',
 	#traits : 'ReTSUnitGroupedRule',
 	#classTraits : 'ReTSUnitGroupedRule classTrait',
-	#category : 'SUnit-Rules-Base',
+	#category : 'SUnit-Rules-Clean Code',
 	#package : 'SUnit-Rules',
-	#tag : 'Base'
+	#tag : 'Clean Code'
 }
 
 { #category : 'testing - interest' }

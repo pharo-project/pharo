@@ -4,9 +4,9 @@ The rule detects if any Float system classes are refferenced by an AST
 Class {
 	#name : 'FloatReferencesRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Base',
+	#category : 'General-Rules-Bugs',
 	#package : 'General-Rules',
-	#tag : 'Base'
+	#tag : 'Bugs'
 }
 
 { #category : 'accessing' }

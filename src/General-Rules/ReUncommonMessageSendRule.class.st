@@ -6,9 +6,9 @@ Notice, problems of this kind will most likely also cause RBSentNotImplementedRu
 Class {
 	#name : 'ReUncommonMessageSendRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'testing' }

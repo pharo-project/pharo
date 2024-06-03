@@ -4,9 +4,9 @@ A rule to check for a period terminating the method signature, which is unnecess
 Class {
 	#name : 'ReMethodSignaturePeriodRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'testing' }

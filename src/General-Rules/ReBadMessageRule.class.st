@@ -6,9 +6,9 @@ This rule is not active for methods in test classes.
 Class {
 	#name : 'ReBadMessageRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'accessing' }

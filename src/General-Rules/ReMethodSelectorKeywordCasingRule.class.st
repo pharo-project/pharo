@@ -4,9 +4,9 @@ The method name/selector of keyword messages should use camel case. So every key
 Class {
 	#name : 'ReMethodSelectorKeywordCasingRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing - interest' }

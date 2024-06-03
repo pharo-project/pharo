@@ -4,9 +4,9 @@ This smell arises when a class has no comment. Classes should have comments to e
 Class {
 	#name : 'ReNoClassCommentRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'testing' }

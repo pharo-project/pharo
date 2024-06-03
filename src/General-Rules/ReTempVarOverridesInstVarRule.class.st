@@ -4,9 +4,9 @@ Finds methods whose arguments or temporary variables ooverride an instance varia
 Class {
 	#name : 'ReTempVarOverridesInstVarRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'testing-interest' }

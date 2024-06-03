@@ -4,9 +4,9 @@ This smell arises when a method return a boolean value (true or false) and retur
 Class {
 	#name : 'ReReturnsBooleanAndOtherRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'testing' }

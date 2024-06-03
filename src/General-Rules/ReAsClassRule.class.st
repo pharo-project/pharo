@@ -9,9 +9,9 @@ because they do not take into account an environment. Instead use `self class en
 Class {
 	#name : 'ReAsClassRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'accessing' }

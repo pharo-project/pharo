@@ -8,9 +8,9 @@ The defined number of arguments can be edited in #argumentsCount.
 Class {
 	#name : 'ReExcessiveArgumentsRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing' }

@@ -4,9 +4,9 @@ Instance variables are initialized to nil by default. There is no need to do it 
 Class {
 	#name : 'ReNoNilAssignationInInitializeRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'Renraku-Rules',
+	#category : 'Renraku-Style',
 	#package : 'Renraku',
-	#tag : 'Rules'
+	#tag : 'Style'
 }
 
 { #category : 'testing' }

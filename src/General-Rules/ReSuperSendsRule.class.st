@@ -4,9 +4,9 @@ Rewrite super messages to self messages when both refer to same method
 Class {
 	#name : 'ReSuperSendsRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'accessing' }

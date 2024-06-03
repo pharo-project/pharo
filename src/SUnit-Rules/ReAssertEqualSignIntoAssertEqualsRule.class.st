@@ -6,9 +6,9 @@ Class {
 	#superclass : 'ReNodeRewriteRule',
 	#traits : 'ReTSUnitGroupedRule',
 	#classTraits : 'ReTSUnitGroupedRule classTrait',
-	#category : 'SUnit-Rules-Base',
+	#category : 'SUnit-Rules-SUnit',
 	#package : 'SUnit-Rules',
-	#tag : 'Base'
+	#tag : 'SUnit'
 }
 
 { #category : 'accessing' }

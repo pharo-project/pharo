@@ -4,9 +4,9 @@ Checks for mathematical expressions that might be evaluated different (from left
 Class {
 	#name : 'RePrecedenceRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'accessing' }

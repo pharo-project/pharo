@@ -4,9 +4,9 @@ When defining a description of a setting, you don't need to translate it. It wil
 Class {
 	#name : 'SettingDontTranslateDescriptionRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'Specific-Rules-System-Settings',
+	#category : 'Specific-Rules-API Hints',
 	#package : 'Specific-Rules',
-	#tag : 'System-Settings'
+	#tag : 'API Hints'
 }
 
 { #category : 'accessing' }

@@ -1,9 +1,9 @@
 Class {
 	#name : 'RePackageManifestShouldBePackagedInManifestTagRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'Renraku-Rules',
+	#category : 'Renraku-Coding Idiom Violation',
 	#package : 'Renraku',
-	#tag : 'Rules'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'testing - interest' }

@@ -5,9 +5,9 @@ Do not explicitly refer to UITheme current but use Smalltalk ui theme. Similarly
 Class {
 	#name : 'ReThemeAPIUpdateRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'accessing' }

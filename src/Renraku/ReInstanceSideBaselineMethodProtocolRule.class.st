@@ -4,9 +4,9 @@ Instance side #baseline: method should be in 'baselines' protocol
 Class {
 	#name : 'ReInstanceSideBaselineMethodProtocolRule',
 	#superclass : 'ReProperInstanceMethodProtocolRule',
-	#category : 'Renraku-Rules',
+	#category : 'Renraku-Clean Code',
 	#package : 'Renraku',
-	#tag : 'Rules'
+	#tag : 'Clean Code'
 }
 
 { #category : 'accessing' }

@@ -4,9 +4,9 @@ Check for methods that return the value of an ifTrue: or ifFalse: message. These
 Class {
 	#name : 'ReReturnsIfTrueRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'accessing' }

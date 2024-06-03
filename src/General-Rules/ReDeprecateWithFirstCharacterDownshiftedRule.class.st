@@ -4,9 +4,9 @@ Use uncapitalized instead of withFirstCharacterDownshifted since withFirstCharac
 Class {
 	#name : 'ReDeprecateWithFirstCharacterDownshiftedRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Style',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Style'
 }
 
 { #category : 'accessing' }

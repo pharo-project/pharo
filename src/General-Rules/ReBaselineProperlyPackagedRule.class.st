@@ -6,9 +6,9 @@ Example: if your baseline class is named ""BaselineOfMyKillerApp"" it should be 
 Class {
 	#name : 'ReBaselineProperlyPackagedRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing - interest' }

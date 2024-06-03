@@ -20,9 +20,9 @@ or more concisely...
 Class {
 	#name : 'ReStringConcatenationRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
 
 { #category : 'accessing' }

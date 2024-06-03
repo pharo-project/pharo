@@ -4,9 +4,9 @@ Checks for assignements to temporaries that are not used afterwards.
 Class {
 	#name : 'ReUnnecessaryAssignmentRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
 
 { #category : 'accessing' }

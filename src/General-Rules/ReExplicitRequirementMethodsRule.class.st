@@ -4,9 +4,9 @@ Classes that use traits with explicit requirement methods should either implemen
 Class {
 	#name : 'ReExplicitRequirementMethodsRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'testing' }

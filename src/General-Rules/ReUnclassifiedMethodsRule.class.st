@@ -4,9 +4,9 @@ All methods should be put into a protocol (method category) for better readabili
 Class {
 	#name : 'ReUnclassifiedMethodsRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Style',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Style'
 }
 
 { #category : 'testing' }

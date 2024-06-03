@@ -4,9 +4,9 @@ Checks for literal arrays that contain the #, symbol. The user may have thought 
 Class {
 	#name : 'ReLiteralArrayContainsCommaRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'accessing' }

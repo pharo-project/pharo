@@ -4,9 +4,9 @@ This rule checks for messages sent to superclass which are not implemented by su
 Class {
 	#name : 'ReSentButNotUnderstoodBySuperRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Bugs'
 }
 
 { #category : 'testing - interest' }

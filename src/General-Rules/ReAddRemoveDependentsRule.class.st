@@ -4,9 +4,9 @@ Check that the number of addDependent: message sends in a class is less than or 
 Class {
 	#name : 'ReAddRemoveDependentsRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'testing' }

@@ -69,6 +69,22 @@ ReRuleManager class >> defaultRules [
 			thenCollect: [:ruleClass | ruleClass new]
 ]
 
+{ #category : 'reflective operations' }
+ReRuleManager class >> doesNotUnderstand: aMessage [ [
+
+	(aMessage selector beginsWith: 'toggleGroupNamed')
+		ifTrue: [
+			| ruleName rules |
+			ruleName := (aMessage selector allButFirst: 16) withoutSuffix: ':'.
+			rules := self visibleRuleClasses select: [ :class |
+				         class group = ruleName ].
+			^ (aMessage selector endsWith: ':')
+				  ifTrue: [ rules do: [ :rule | rule enabled: aMessage arguments first ] ]
+				  ifFalse: [ rules anySatisfy: [ :rule | rule enabled ] ] ]
+		ifFalse: [ super doesNotUnderstand: aMessage ]
+]
+]
+
 { #category : 'class initialization' }
 ReRuleManager class >> initialize [
 	self reset.
@@ -165,16 +181,22 @@ ReRuleManager class >> ruleToggleSettingsOn: aBuilder [
 	(aBuilder group: self ruleToggleGroupID)
 		order: 1;
 		label: 'Toggle rules to run';
-		description: 'Select which rules do you want to see in the live feedback';
+		description:
+			'Select which rules do you want to see in the live feedback';
 		parent: #qualityAssistant;
 		with: [
-			(self visibleRuleClasses sorted: [ :a :b | a name < b name ]) do: [ :rule |
-					(aBuilder setting: rule enabledSettingID)
-						selector: #enabled;
-						target: rule;
-						default: rule enabled;
-						label: rule name;
-						description: rule rationale ] ]
+			(self visibleRuleClasses groupedBy: [ :class | class group ])
+				keysAndValuesDo: [ :groupName :rules |
+					(aBuilder setting: groupName asSymbol)
+						target: self;
+						selector: #toggleGroupNamed , groupName capitalized;
+						default: true;
+						noOrdering;
+						iconName: #smallConfiguration;
+						label: groupName , ' rules';
+						description: 'select ', groupName , ' rules';
+						with: [ self subSettingsOn: aBuilder with: rules] ] ]
+
 ]
 
 { #category : 'accessing' }
@@ -202,6 +224,23 @@ ReRuleManager class >> setDefaultProfile [
 
 	self visibleRuleClasses do: [ :rule | rule enabled: rule isDefaultRule ].
 	self reset
+]
+
+{ #category : 'settings' }
+ReRuleManager class >> subSettingsOn: aBuilder with: rules [ [
+
+	^ (rules sorted: [ :a :b | a name < b name ]) do: [ :rule |
+		  | inst |
+		  inst := rule new.
+		  (aBuilder setting: rule enabledSettingID)
+			  selector: #enabled;
+			  target: rule;
+			  default: rule enabled;
+			  label: inst name;
+			  description: inst rationale ]
+]
+
+
 ]
 
 { #category : 'event subscriptions' }

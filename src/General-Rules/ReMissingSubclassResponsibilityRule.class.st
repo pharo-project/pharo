@@ -4,9 +4,9 @@ This smell arises when a class defines a method in all subclasses, but not in it
 Class {
 	#name : 'ReMissingSubclassResponsibilityRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing' }

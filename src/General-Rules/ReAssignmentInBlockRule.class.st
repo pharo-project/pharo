@@ -4,9 +4,9 @@ Checks ensure:, ifCurtailed:, and showWhile: blocks for assignments or returns t
 Class {
 	#name : 'ReAssignmentInBlockRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'accessing' }

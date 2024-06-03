@@ -4,9 +4,9 @@ Checks arithmetic statements for possible three element points (i.e., a point th
 Class {
 	#name : 'ReThreeElementPointRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'accessing' }

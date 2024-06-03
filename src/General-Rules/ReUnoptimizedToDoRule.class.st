@@ -10,9 +10,9 @@ can be more efficiently expressed as
 Class {
 	#name : 'ReUnoptimizedToDoRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
 
 { #category : 'accessing' }

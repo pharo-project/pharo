@@ -4,9 +4,9 @@ Checks code using the do: method instead of using the collect: or select: method
 Class {
 	#name : 'ReCollectionProtocolRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'accessing' }

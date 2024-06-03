@@ -12,9 +12,9 @@ aCol copy do: [ :each |  ... aCol remove:... ]
 Class {
 	#name : 'ReModifiesCollectionRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'accessing' }

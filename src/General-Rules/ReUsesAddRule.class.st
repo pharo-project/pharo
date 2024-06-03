@@ -4,9 +4,9 @@ Check for possible uses of the result returned by an add: or addAll: messages. T
 Class {
 	#name : 'ReUsesAddRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'accessing' }

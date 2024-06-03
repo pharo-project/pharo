@@ -4,9 +4,9 @@ If a class has a method in its trait composition, the method should not be imple
 Class {
 	#name : 'ReLocalMethodsSameThanTraitRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
 
 { #category : 'testing' }

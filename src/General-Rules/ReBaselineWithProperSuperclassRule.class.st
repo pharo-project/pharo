@@ -4,9 +4,9 @@ A custom baseline class should be a (direct or indirect) subclass of the predefi
 Class {
 	#name : 'ReBaselineWithProperSuperclassRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing - interest' }

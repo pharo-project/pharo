@@ -18,9 +18,9 @@ collection allSatisfy: [ :each | condition ]
 Class {
 	#name : 'ReAllAnyNoneSatisfyRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'accessing' }

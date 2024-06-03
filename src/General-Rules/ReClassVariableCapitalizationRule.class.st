@@ -4,9 +4,9 @@ Class and pool variable names should start with an uppercase letter.
 Class {
 	#name : 'ReClassVariableCapitalizationRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Style',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Style'
 }
 
 { #category : 'testing-interest' }

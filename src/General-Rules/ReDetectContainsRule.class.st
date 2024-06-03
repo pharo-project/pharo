@@ -4,9 +4,9 @@ Checks for bytecodePrimEqual  using the do: method instead of using the contains
 Class {
 	#name : 'ReDetectContainsRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'accessing' }

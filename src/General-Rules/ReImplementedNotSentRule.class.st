@@ -18,9 +18,9 @@ Class {
 	#classInstVars : [
 		'allMessages'
 	],
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'accessing' }

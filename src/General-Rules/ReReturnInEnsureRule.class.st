@@ -4,9 +4,9 @@ Checks for return statements within ensure: blocks that can have unintended side
 Class {
 	#name : 'ReReturnInEnsureRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'accessing' }

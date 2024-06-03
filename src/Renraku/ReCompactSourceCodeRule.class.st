@@ -7,9 +7,9 @@ Class {
 	#classVars : [
 		'CriticizeFinalDotInMethodBody'
 	],
-	#category : 'Renraku-Rules',
+	#category : 'Renraku-Clean Code',
 	#package : 'Renraku',
-	#tag : 'Rules'
+	#tag : 'Clean Code'
 }
 
 { #category : 'testing - interest' }

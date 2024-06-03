@@ -5,9 +5,9 @@ Using it inside a #printOn: will imply a useless creation of stream and its pass
 Class {
 	#name : 'ReNoPrintStringInPrintOnRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'Renraku-Rules',
+	#category : 'Renraku-Optimization',
 	#package : 'Renraku',
-	#tag : 'Rules'
+	#tag : 'Optimization'
 }
 
 { #category : 'testing - interest' }

@@ -4,9 +4,9 @@ Checks for ifTrue: or ifFalse: conditions at end of methods that have two or mor
 Class {
 	#name : 'ReGuardingClauseRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'Renraku-Rules-Rewrite',
+	#category : 'Renraku-Coding Idiom Violation',
 	#package : 'Renraku',
-	#tag : 'Rules-Rewrite'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'accessing' }

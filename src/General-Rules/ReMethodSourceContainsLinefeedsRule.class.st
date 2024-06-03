@@ -4,9 +4,9 @@ Pharo code should not contain linefeed characters.
 Class {
 	#name : 'ReMethodSourceContainsLinefeedsRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Bugs'
 }
 
 { #category : 'testing' }

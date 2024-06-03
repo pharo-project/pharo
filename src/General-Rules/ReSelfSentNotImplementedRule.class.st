@@ -4,9 +4,9 @@ This smell arises when a message is sent to self by a method,  but no class in t
 Class {
 	#name : 'ReSelfSentNotImplementedRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Bugs'
 }
 
 { #category : 'testing' }

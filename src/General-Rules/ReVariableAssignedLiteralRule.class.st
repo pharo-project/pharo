@@ -4,9 +4,9 @@ If a variable is only assigned a single literal value then that variable is eith
 Class {
 	#name : 'ReVariableAssignedLiteralRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing-interest' }

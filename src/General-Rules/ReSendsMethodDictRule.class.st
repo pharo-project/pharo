@@ -4,9 +4,9 @@ Nobody should directly access the method dictionary. It is purely an implementat
 Class {
 	#name : 'ReSendsMethodDictRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Bugs'
 }
 
 { #category : 'testing' }

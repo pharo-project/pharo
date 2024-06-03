@@ -11,9 +11,9 @@ This array can be quite large and using the keysDo: does not create such interme
 Class {
 	#name : 'ReKeysDoRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
 
 { #category : 'accessing' }

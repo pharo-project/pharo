@@ -12,9 +12,9 @@ The defined number of statements can be edited in #longMethodSize. In the future
 Class {
 	#name : 'ReLongMethodsRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing' }
