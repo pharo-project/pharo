@@ -12,12 +12,6 @@ Class {
 	#tag : 'Borders'
 }
 
-{ #category : 'class initialization' }
-RoundedBorderStyle class >> initialize [
-	"Deprecated in Pharo 11"
-	self deprecatedAliases: { #RoundedBorder }
-]
-
 { #category : 'accessing' }
 RoundedBorderStyle >> cornerRadius [
 	"Answer the value of cornerRadius"

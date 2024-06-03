@@ -19,12 +19,6 @@ Class {
 	#tag : 'Specs'
 }
 
-{ #category : 'class initialization' }
-MetacelloProjectSpec class >> initialize [
-
-	self deprecatedAliases: { #MetacelloMCProjectSpec. #MetacelloGenericProjectSpec }
-]
-
 { #category : 'instance creation' }
 MetacelloProjectSpec class >> new [
 	self name == #MetacelloProjectSpec

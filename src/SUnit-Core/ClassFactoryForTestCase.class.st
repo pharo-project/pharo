@@ -49,13 +49,6 @@ ClassFactoryForTestCase class >> environment: aSystemDictionary [
 		  yourself
 ]
 
-{ #category : 'class initialization' }
-ClassFactoryForTestCase class >> initialize [
-	"Now we can personnalize the environment of the ClassFactoryForTestCase. So instead of having this duplicated class, we can just use this one and specify the environment that will have its own organization."
-
-	self deprecatedAliases: { #ClassFactoryWithOrganization }
-]
-
 { #category : 'cleaning' }
 ClassFactoryForTestCase >> cleanUp [
 

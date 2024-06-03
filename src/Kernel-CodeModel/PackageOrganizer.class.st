@@ -24,12 +24,6 @@ PackageOrganizer class >> default [
 	^ self packageOrganizer
 ]
 
-{ #category : 'class initialization' }
-PackageOrganizer class >> initialize [
-
-	self deprecatedAliases: { #RPackageOrganizer }
-]
-
 { #category : 'registration' }
 PackageOrganizer >> addPackage: aPackage [
 

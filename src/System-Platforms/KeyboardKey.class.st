@@ -398,9 +398,7 @@ KeyboardKey class >> initialize [
 		initializeMacOSVirtualKeyTable;
 		initializeUnixVirtualKeyTable;
 		initializeWindowsVirtualKeyTable;
-		initializeKeyFromCharacterCompatibilityTable.
-
-	self deprecatedAliases: { #Key }
+		initializeKeyFromCharacterCompatibilityTable
 ]
 
 { #category : 'key table' }

@@ -13,12 +13,6 @@ Class {
 	#tag : 'Targets'
 }
 
-{ #category : 'class initialization' }
-MetacelloTarget class >> initialize [
-
-	self deprecatedAliases: { #MetacelloCommonMCSpecLoader }
-]
-
 { #category : 'utilities' }
 MetacelloTarget class >> nameComponentsFrom: aVersionName [
 	| ar |
