@@ -11,7 +11,8 @@ Class {
 	#name : 'TraitBuilderEnhancer',
 	#superclass : 'ShDefaultBuilderEnhancer',
 	#instVars : [
-		'builder'
+		'builder',
+		'shouldUpdateSubclassesMethodDictionaries'
 	],
 	#category : 'Traits-Class-Builder',
 	#package : 'Traits',
@@ -49,8 +50,15 @@ TraitBuilderEnhancer >> afterMethodsCompiled: aBuilder [
 { #category : 'migrating' }
 TraitBuilderEnhancer >> afterMigratingClass: aBuilder installer: anInstaller [
 
-	(self isTraitedMetaclass: aBuilder)
-		ifFalse: [ ^ self ].
+	"In case the class to build had traits and we remove them, we need to rebuild the method dictionary of subclasses in case they have traits and need the TraitedClass methods in their method dictionary."
+	shouldUpdateSubclassesMethodDictionaries ifTrue: [
+		aBuilder newClass allSubclassesDo: [ :subclass |
+			subclass class
+				initializeBasicMethods;
+				rebuildMethodDictionary.
+			subclass rebuildMethodDictionary ] ].
+
+	(self isTraitedMetaclass: aBuilder) ifFalse: [ ^ self ].
 
 	aBuilder newClass traitComposition addUser: aBuilder newClass.
 	aBuilder newMetaclass traitComposition addUser: aBuilder newMetaclass.
@@ -60,8 +68,8 @@ TraitBuilderEnhancer >> afterMigratingClass: aBuilder installer: anInstaller [
 	"If this is a trait I have to update the users"
 	aBuilder newClass isTrait ifFalse: [ ^ self ].
 
-	builder newMetaclass traitUsers do: [:e | e rebuildMethodDictionary].
-	aBuilder newClass traitUsers do: [:e | e rebuildMethodDictionary]
+	builder newMetaclass traitUsers do: [ :e | e rebuildMethodDictionary ].
+	aBuilder newClass traitUsers do: [ :e | e rebuildMethodDictionary ]
 ]
 
 { #category : 'accessing' }
@@ -92,7 +100,12 @@ TraitBuilderEnhancer >> allSlotsToInstallForBuilder: aBuilder [
 
 { #category : 'migrating' }
 TraitBuilderEnhancer >> beforeMigratingClass: aBuilder installer: anInstaller [
+
 	aBuilder oldClass ifNil: [ ^ self ].
+
+	"In case a class that had traits does not have them anymore, we need to check if the subclasses also have traits to rebuild their method dictionary.
+	Here, we check this info and in the post migration we will use this info to do the rebuild."
+	shouldUpdateSubclassesMethodDictionaries := aBuilder oldClass class class = TraitedMetaclass and: [ (self isTraitedMetaclass: aBuilder) not ].
 
 	aBuilder oldClass traitComposition removeUser: aBuilder oldClass.
 	aBuilder oldMetaclass traitComposition removeUser: aBuilder oldMetaclass.
@@ -102,7 +115,7 @@ TraitBuilderEnhancer >> beforeMigratingClass: aBuilder installer: anInstaller [
 	"If it is a Trait we should migrate the users "
 	aBuilder newClass isTrait ifFalse: [ ^ self ].
 	aBuilder newClass users: aBuilder oldClass users.
-	aBuilder newMetaclass users: aBuilder oldMetaclass users.
+	aBuilder newMetaclass users: aBuilder oldMetaclass users
 ]
 
 { #category : 'events' }
@@ -176,6 +189,12 @@ TraitBuilderEnhancer >> fillBuilder: aBuilder from: aClass [
 
 	aBuilder traitComposition: aClass traitComposition.
 	aBuilder classTraitComposition: aClass class basicTraitComposition
+]
+
+{ #category : 'initialization' }
+TraitBuilderEnhancer >> initialize [
+	super initialize.
+	shouldUpdateSubclassesMethodDictionaries := false
 ]
 
 { #category : 'initialization' }
