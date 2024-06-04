@@ -71,7 +71,10 @@ ReRuleManager class >> defaultRules [
 
 { #category : 'reflective operations' }
 ReRuleManager class >> doesNotUnderstand: aMessage [ 
-
+	"
+	When a set of rule is selected in rules settings, this method is triggered to send true or false. 
+	It allow to create a link with the rule group setting for each rule of the group and selecting a set of 	rule to enable or to disable
+	"
 	(aMessage selector beginsWith: 'toggleGroupNamed')
 		ifTrue: [
 			| ruleName rules |
@@ -79,8 +82,8 @@ ReRuleManager class >> doesNotUnderstand: aMessage [
 			rules := self visibleRuleClasses select: [ :class |
 				         class group = ruleName ].
 			^ (aMessage selector endsWith: ':')
-				  ifTrue: [ rules do: [ :rule | rule enabled: aMessage arguments first ] ]
-				  ifFalse: [ rules anySatisfy: [ :rule | rule enabled ] ] ]
+				  ifTrue: [ rules do: [ :rule | rule enabled: aMessage arguments first] ]
+				  ifFalse: [ rules anySatisfy: [ :rule | rule enabled] ] ]
 		ifFalse: [ super doesNotUnderstand: aMessage ]
 ]
 
