@@ -72,8 +72,10 @@ ReRuleManager class >> defaultRules [
 { #category : 'reflective operations' }
 ReRuleManager class >> doesNotUnderstand: aMessage [ 
 	"
-	When a set of rule is selected in rules settings, this method is triggered to send true or false. 
-	It allow to create a link with the rule group setting for each rule of the group and selecting a set of rule to enable or to disable
+	Currently, the setting model requires for each setting a getter and a setter method existing to execute. This does not work with the way rules group settings are implemented because we want to be able to add groups dynamically, thus we build the settings collecting the groups present in the image and this does not work with having pre-existing methods to execute through a setting.
+	Since we cannot have those methods and it would take too much efforts currently to update the settings model, we are handling those missing getter/setter with the doesNotUnderstood:.
+	
+	We build the getters and setters for the settings in the method #ruleToggleSettingsOn:
 	"
 	(aMessage selector beginsWith: 'toggleGroupNamed')
 		ifTrue: [
