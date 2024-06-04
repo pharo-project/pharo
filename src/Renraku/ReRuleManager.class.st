@@ -73,7 +73,7 @@ ReRuleManager class >> defaultRules [
 ReRuleManager class >> doesNotUnderstand: aMessage [ 
 	"
 	When a set of rule is selected in rules settings, this method is triggered to send true or false. 
-	It allow to create a link with the rule group setting for each rule of the group and selecting a set of 	rule to enable or to disable
+	It allow to create a link with the rule group setting for each rule of the group and selecting a set of rule to enable or to disable
 	"
 	(aMessage selector beginsWith: 'toggleGroupNamed')
 		ifTrue: [
