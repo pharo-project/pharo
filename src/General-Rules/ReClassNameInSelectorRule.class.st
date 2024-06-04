@@ -6,9 +6,9 @@ For example, #openHierarchyBrowserFrom: is a redundant name for HierarchyBrowser
 Class {
 	#name : 'ReClassNameInSelectorRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Style',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Style'
 }
 
 { #category : 'testing' }

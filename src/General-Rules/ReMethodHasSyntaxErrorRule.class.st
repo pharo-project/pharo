@@ -4,9 +4,9 @@ Methods can be compiled with syntax errors, fix the code and recompile the metho
 Class {
 	#name : 'ReMethodHasSyntaxErrorRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Bugs'
 }
 
 { #category : 'testing' }

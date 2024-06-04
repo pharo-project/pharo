@@ -4,9 +4,9 @@ Checks for users of to:do: when the shorter collect: would work.
 Class {
 	#name : 'ReToDoCollectRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'accessing' }

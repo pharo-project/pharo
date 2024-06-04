@@ -5,9 +5,9 @@ However we cannot systematically replace Class reference by self class or self b
 Class {
 	#name : 'ReRefersToClassRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing' }

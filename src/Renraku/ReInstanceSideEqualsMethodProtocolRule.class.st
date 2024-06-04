@@ -4,9 +4,9 @@ Instance side #= method should be in 'comparing' protocol
 Class {
 	#name : 'ReInstanceSideEqualsMethodProtocolRule',
 	#superclass : 'ReProperInstanceMethodProtocolRule',
-	#category : 'Renraku-Rules',
+	#category : 'Renraku-Clean Code',
 	#package : 'Renraku',
-	#tag : 'Rules'
+	#tag : 'Clean Code'
 }
 
 { #category : 'accessing' }

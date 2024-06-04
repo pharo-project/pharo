@@ -4,9 +4,9 @@ This rule checks if all subclassResponsibility methods are defined in all leaf c
 Class {
 	#name : 'ReSubclassResponsibilityNotDefinedRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Bugs'
 }
 
 { #category : 'testing' }

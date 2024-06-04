@@ -6,9 +6,9 @@ If you really intend to have an unused variable (for example, for testing purpos
 Class {
 	#name : 'ReClassVariableNeitherReadNorWrittenRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Clean Code',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Clean Code'
 }
 
 { #category : 'testing-interest' }

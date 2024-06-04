@@ -4,9 +4,9 @@ There is something wrong in the method as you have variables that are either nor
 Class {
 	#name : 'ReTemporaryNeitherReadNorWrittenRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
 
 { #category : 'accessing' }

@@ -4,9 +4,9 @@ Checks for code using  ""collection at: collection size"" instead of ""collectio
 Class {
 	#name : 'ReCollectionAtCollectionSizeRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'accessing' }

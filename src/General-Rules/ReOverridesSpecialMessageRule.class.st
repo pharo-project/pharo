@@ -4,9 +4,9 @@ Checks that a class does not override a message that is essential to the base sy
 Class {
 	#name : 'ReOverridesSpecialMessageRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Bugs'
 }
 
 { #category : 'testing' }

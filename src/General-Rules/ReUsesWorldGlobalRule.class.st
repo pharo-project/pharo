@@ -5,9 +5,9 @@ Use ""self currentWorld"" instead.
 Class {
 	#name : 'ReUsesWorldGlobalRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Bugs'
 }
 
 { #category : 'accessing' }

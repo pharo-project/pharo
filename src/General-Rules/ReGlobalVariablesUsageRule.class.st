@@ -6,9 +6,9 @@ Specially in Pharo, we do not want to keep global bindings because their usage c
 Class {
 	#name : 'ReGlobalVariablesUsageRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing-interest' }

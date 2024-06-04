@@ -4,9 +4,9 @@ In pharo, the inequality operators are `~=` (for the negation of `=`) and `~~` (
 Class {
 	#name : 'ReNotEqualityOperatorsRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Bugs'
 }
 
 { #category : 'accessing' }

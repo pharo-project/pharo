@@ -4,9 +4,9 @@ Checks that all subclasses of the Collection classes that add an instance variab
 Class {
 	#name : 'ReCollectionCopyEmptyRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'testing' }

@@ -4,9 +4,9 @@ Checks for methods that appear to be modifying a collection that is owned by ano
 Class {
 	#name : 'ReCollectionMessagesToExternalObjectRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'accessing' }

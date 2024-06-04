@@ -6,9 +6,9 @@ This smell arises when a method protocol is not equivalent to the one defined in
 Class {
 	#name : 'ReInconsistentMethodClassificationRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing' }

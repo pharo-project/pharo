@@ -10,9 +10,9 @@ See the method RBMessageNode>>#isInlineIfNil for the exact implementation of the
 Class {
 	#name : 'ReNotOptimizedIfNilRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
 
 { #category : 'accessing' }

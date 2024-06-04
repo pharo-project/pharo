@@ -4,9 +4,9 @@ A rule to check for multiple periods terminating the same statement, which is un
 Class {
 	#name : 'ReMultiplePeriodsTerminatingStatementRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'testing' }

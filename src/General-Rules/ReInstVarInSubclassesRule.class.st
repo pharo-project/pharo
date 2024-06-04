@@ -6,9 +6,9 @@ This smell arises when instance variables are defined in all subclasses. Many ti
 Class {
 	#name : 'ReInstVarInSubclassesRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing' }

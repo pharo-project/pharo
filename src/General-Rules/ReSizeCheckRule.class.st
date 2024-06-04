@@ -4,9 +4,9 @@ Check for code that checks that a collection is non-empty before sending it an i
 Class {
 	#name : 'ReSizeCheckRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
 
 { #category : 'accessing' }

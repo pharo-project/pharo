@@ -10,9 +10,9 @@ Instead of
 Class {
 	#name : 'ReIconHardcodedMessageRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'Specific-Rules-Polymorph-Widgets',
+	#category : 'Specific-Rules-API Change',
 	#package : 'Specific-Rules',
-	#tag : 'Polymorph-Widgets'
+	#tag : 'API Change'
 }
 
 { #category : 'accessing' }

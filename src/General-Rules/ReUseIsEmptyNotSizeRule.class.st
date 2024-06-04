@@ -4,9 +4,9 @@ Checks for code using equality tests instead of the message sends. Since the cod
 Class {
 	#name : 'ReUseIsEmptyNotSizeRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'accessing' }

@@ -5,9 +5,9 @@ Often this is a left over from using blocks to comment out code.
 Class {
 	#name : 'ReDeadBlockRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
 
 { #category : 'accessing' }

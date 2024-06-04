@@ -5,9 +5,9 @@ A prior conversion to an Array or OrderedCollection is not necessary when adding
 Class {
 	#name : 'ReAsOrderedCollectionNotNeededRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
 
 { #category : 'accessing' }

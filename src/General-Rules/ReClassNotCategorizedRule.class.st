@@ -6,9 +6,9 @@ The goal is to have no classes that are shown as ""Uncategorized"" in the system
 Class {
 	#name : 'ReClassNotCategorizedRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing' }

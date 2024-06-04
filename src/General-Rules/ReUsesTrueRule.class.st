@@ -6,9 +6,9 @@ true is the object true, while True is the class whose true is the sole instance
 Class {
 	#name : 'ReUsesTrueRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Bugs'
 }
 
 { #category : 'testing' }

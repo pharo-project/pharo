@@ -8,9 +8,9 @@ See the method RBMessageNode>>#isInlineIf for the exact implementation of the ch
 Class {
 	#name : 'ReNotOptimizedIfRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
 
 { #category : 'accessing' }

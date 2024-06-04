@@ -4,9 +4,9 @@ Replaces ""a >= b and: [a <= c]"" by ""a between: b and: c.
 Class {
 	#name : 'ReBetweenAndRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'accessing' }

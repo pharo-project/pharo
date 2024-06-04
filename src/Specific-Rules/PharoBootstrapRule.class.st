@@ -7,8 +7,9 @@ Class {
 	#classVars : [
 		'DependencyChecker'
 	],
-	#category : 'Specific-Rules',
-	#package : 'Specific-Rules'
+	#category : 'Specific-Rules-Architectural',
+	#package : 'Specific-Rules',
+	#tag : 'Architectural'
 }
 
 { #category : 'testing' }

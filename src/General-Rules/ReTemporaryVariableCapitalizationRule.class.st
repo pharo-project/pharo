@@ -4,9 +4,9 @@ Temporary and argument variable names should start with a lowercase letter.
 Class {
 	#name : 'ReTemporaryVariableCapitalizationRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Style',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Style'
 }
 
 { #category : 'accessing' }

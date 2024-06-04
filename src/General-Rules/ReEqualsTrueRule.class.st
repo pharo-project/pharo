@@ -4,9 +4,9 @@ Check for a =, ==, ~=, or ~~ message being sent to true/false or with true/false
 Class {
 	#name : 'ReEqualsTrueRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
 
 { #category : 'accessing' }

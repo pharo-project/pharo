@@ -4,9 +4,9 @@ ifNotNilDo: should not be used as ifNotNil: works for blocks with arguments, too
 Class {
 	#name : 'ReIfNotNilDoRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'accessing' }

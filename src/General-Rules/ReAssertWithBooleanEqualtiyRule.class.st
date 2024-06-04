@@ -4,9 +4,9 @@ For a code more optimize and more readable, prefer to use deny: instead of asser
 Class {
 	#name : 'ReAssertWithBooleanEqualtiyRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
 
 { #category : 'accessing' }

@@ -4,9 +4,9 @@ Literal arrays containing only characters can more efficiently represented as st
 Class {
 	#name : 'ReLiteralArrayCharactersRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
 
 { #category : 'accessing' }

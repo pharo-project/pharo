@@ -4,9 +4,9 @@ Checks for unconditional recursion that might cause the image to hang when execu
 Class {
 	#name : 'ReUnconditionalRecursionRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'testing' }

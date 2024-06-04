@@ -4,9 +4,9 @@ This smell arises when a class is not referenced either directly or indirectly b
 Class {
 	#name : 'ReClassNotReferencedRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing' }

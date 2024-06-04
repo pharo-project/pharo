@@ -5,9 +5,9 @@ A warning is raised when the statement self new initialize is found in a method.
 Class {
 	#name : 'ReSuperSendsNewRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Bugs'
 }
 
 { #category : 'accessing' }

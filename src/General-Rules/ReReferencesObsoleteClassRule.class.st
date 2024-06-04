@@ -5,9 +5,9 @@ You are referencing a class that is obsolete, that is, it has been removed
 Class {
 	#name : 'ReReferencesObsoleteClassRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Bugs'
 }
 
 { #category : 'accessing' }

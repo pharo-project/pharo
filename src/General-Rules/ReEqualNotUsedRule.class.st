@@ -4,9 +4,9 @@ Checks for senders of comparator messages that do not use the result of the comp
 Class {
 	#name : 'ReEqualNotUsedRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'accessing' }

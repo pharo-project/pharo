@@ -10,9 +10,9 @@ The defined number of methods can be edited in #methodsCount.
 Class {
 	#name : 'ReExcessiveMethodsRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing' }

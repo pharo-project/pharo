@@ -4,9 +4,9 @@ Checks for repeated literal equality tests that should rather be implemented as 
 Class {
 	#name : 'ReSearchingLiteralRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
 
 { #category : 'accessing' }

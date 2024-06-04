@@ -4,9 +4,9 @@ Checks for any unary ""accessing"" methods without explicit return statements.
 Class {
 	#name : 'ReUnaryAccessingMethodWithoutReturnRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'testing' }

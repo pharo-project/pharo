@@ -4,9 +4,9 @@ Checks precedence ordering of & and | with equality operators. Since | and & hav
 Class {
 	#name : 'ReBooleanPrecedenceRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'accessing' }

@@ -7,9 +7,9 @@ In Pharo you do not increment or decrement counter but should use the message to
 Class {
 	#name : 'ReToDoWithIncrementRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'accessing' }

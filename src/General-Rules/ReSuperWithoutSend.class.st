@@ -9,9 +9,9 @@ For every other use, it is just the same as ""self"".
 Class {
 	#name : 'ReSuperWithoutSend',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'accessing' }

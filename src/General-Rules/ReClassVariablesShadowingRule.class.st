@@ -4,9 +4,9 @@ This rule checks if a instance or class variable shadows a global
 Class {
 	#name : 'ReClassVariablesShadowingRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing-interest' }

@@ -6,9 +6,9 @@ Furthermore, the methods #new and #initialize are ignored once they are often ov
 Class {
 	#name : 'ReEquivalentSuperclassMethodsRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing' }

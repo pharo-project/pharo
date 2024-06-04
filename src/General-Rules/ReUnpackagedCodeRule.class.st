@@ -4,9 +4,9 @@ Code that is not contained in a Monticello package is not versioned and cannot b
 Class {
 	#name : 'ReUnpackagedCodeRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'testing' }

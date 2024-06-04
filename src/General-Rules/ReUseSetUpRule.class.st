@@ -4,9 +4,9 @@ this smell arise when we use initialize instead of setUp in a TestCase
 Class {
 	#name : 'ReUseSetUpRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'accessing' }

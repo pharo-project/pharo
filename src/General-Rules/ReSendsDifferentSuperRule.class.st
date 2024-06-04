@@ -11,9 +11,9 @@ If the new method is not defined in the class, you should probably rewrite this 
 Class {
 	#name : 'ReSendsDifferentSuperRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing' }

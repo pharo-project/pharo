@@ -4,9 +4,9 @@ Instance side #finalize method should be in 'finalization' protocol
 Class {
 	#name : 'ReInstanceSideFinalizeMethodProtocolRule',
 	#superclass : 'ReProperInstanceMethodProtocolRule',
-	#category : 'Renraku-Rules',
+	#category : 'Renraku-Clean Code',
 	#package : 'Renraku',
-	#tag : 'Rules'
+	#tag : 'Clean Code'
 }
 
 { #category : 'accessing' }

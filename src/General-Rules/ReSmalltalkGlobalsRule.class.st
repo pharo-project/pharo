@@ -4,9 +4,9 @@ Do not send requests to ""Smalltalk"" (which models the whole image)  that are r
 Class {
 	#name : 'ReSmalltalkGlobalsRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'accessing' }

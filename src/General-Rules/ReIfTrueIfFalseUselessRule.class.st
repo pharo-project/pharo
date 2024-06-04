@@ -4,9 +4,9 @@ it's more efficient and  more readable to return the condition that use ifTrue: 
 Class {
 	#name : 'ReIfTrueIfFalseUselessRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'accessing' }

@@ -6,9 +6,9 @@ Replaces at:ifAbsent: by at:ifAbsentPut:. Its leads to shorter and more readable
 Class {
 	#name : 'ReAtIfAbsentRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'accessing' }
