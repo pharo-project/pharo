@@ -4,10 +4,20 @@ Checks arithmetic statements for possible three element points (i.e., a point th
 Class {
 	#name : 'ReThreeElementPointRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
+
+{ #category : 'accessing' }
+ReThreeElementPointRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+ReThreeElementPointRule class >> ruleName [
+	^ 'Possible three element point (e.g., x @ y + q @ r)'
+]
 
 { #category : 'accessing' }
 ReThreeElementPointRule class >> uniqueIdentifierName [
@@ -47,14 +57,4 @@ ReThreeElementPointRule >> findSuspiciousParentFor: aNode ifNone: alternativeBlo
 	^ self
 		findSuspiciousParentFor: tentativeNode
 		ifNone: alternativeBlock
-]
-
-{ #category : 'accessing' }
-ReThreeElementPointRule >> group [
-	^ 'Potential Bugs'
-]
-
-{ #category : 'accessing' }
-ReThreeElementPointRule >> name [
-	^ 'Possible three element point (e.g., x @ y + q @ r)'
 ]

@@ -49,12 +49,12 @@ AthensCairoSurface class >> checkSession [
 AthensCairoSurface class >> createFromFile: aFileName ifFailed: aBlock [
 	"Right now, this protocol is Cairo backend only. "
 
- 	| surface cstring |
+	| surface cstring |
 	cstring := aFileName , (Character value: 0) asString.
-	surface :=  self primCreateFromFile: cstring.
+	surface := self primCreateFromFile: cstring.
 	surface isSuccess not
 		ifTrue: [
-			self destroySurfaceHandle: surface handle asInteger.
+			self destroySurfaceHandle: surface getHandle.
 			^ aBlock cull: surface status ]
 		ifFalse: [ surface initialize ].
 	^ surface
@@ -158,12 +158,14 @@ AthensCairoSurface class >> createUnlockSurfaceFn [
 
 { #category : 'private' }
 AthensCairoSurface class >> destroyContextHandle: aHandle [
-	^ self ffiCall: #( 	void cairo_destroy (size_t aHandle) )
+
+	^ self ffiCall: #( void cairo_destroy #( void #* aHandle ) )
 ]
 
 { #category : 'private' }
 AthensCairoSurface class >> destroySurfaceHandle: handle [
-	^ self ffiCall: #( void cairo_surface_destroy ( size_t handle ) )
+
+	^ self ffiCall: #( void cairo_surface_destroy #( void #* handle ) )
 ]
 
 { #category : 'surface plugin callbacks' }
@@ -186,14 +188,18 @@ AthensCairoSurface class >> extent: anExtent format: aFormat [
 AthensCairoSurface class >> finalizeResourceData: data [
 	"Finalize external state"
 
-	| handle id contextHandle |
-	handle := data first.
-	id := data second.
+	| surfaceHandle surfaceId contextHandle |
+	surfaceHandle := data first.
+	surfaceId := data second.
 	contextHandle := data third.
 
-	self unregisterSurfaceWithId: id.
-	self destroyContextHandle: contextHandle value.
-	self destroySurfaceHandle: handle value
+	self
+		unregisterSurfaceWithId: surfaceId;
+		destroyContextHandle: contextHandle;
+		destroySurfaceHandle: surfaceHandle.
+
+	contextHandle beNull.
+	surfaceHandle beNull
 ]
 
 { #category : 'instance creation' }
@@ -268,7 +274,7 @@ AthensCairoSurface class >> primImageFromData: data width: width height: height 
 
 	^ self ffiCall: #(AthensCairoSurface cairo_image_surface_create_for_data (
 		void *data,
-		0,
+		int 0,
 		int width,
 		int height,
 		int stride) )
@@ -300,7 +306,7 @@ AthensCairoSurface class >> primUnregisterSurface: aCairoSurfaceId [
 { #category : 'private' }
 AthensCairoSurface class >> primWidth: aWidth height: aHeight [
 	^ self ffiCall: #( AthensCairoSurface cairo_image_surface_create (
-						CAIRO_FORMAT_ARGB32,
+						int CAIRO_FORMAT_ARGB32,
 						int aWidth,
 						int aHeight) )
 ]
@@ -613,7 +619,11 @@ AthensCairoSurface >> privateHeight [
 
 { #category : 'initialization' }
 AthensCairoSurface >> resourceData [
-	^ { handle value. id. context handle }
+
+	^ {
+		  self getHandle.
+		  id.
+		  context getHandle }
 ]
 
 { #category : 'private' }

@@ -12,9 +12,3 @@ Class {
 	#package : 'Kernel-CodeModel',
 	#tag : 'Exceptions'
 }
-
-{ #category : 'class initialization' }
-PackageConflictError class >> initialize [
-
-	self deprecatedAliases: { #RPackageConflictError }
-]

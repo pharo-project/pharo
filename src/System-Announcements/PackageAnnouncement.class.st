@@ -12,11 +12,6 @@ Class {
 	#tag : 'System-Packages'
 }
 
-{ #category : 'class initialization' }
-PackageAnnouncement class >> initialize [
-	self deprecatedAliases: { #RPackageAnnouncement }
-]
-
 { #category : 'instance creation' }
 PackageAnnouncement class >> to: aPackage [
 

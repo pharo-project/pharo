@@ -4,14 +4,47 @@ Checks that a class does not override a message that is essential to the base sy
 Class {
 	#name : 'ReOverridesSpecialMessageRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Bugs'
 }
 
 { #category : 'testing' }
 ReOverridesSpecialMessageRule class >> checksClass [
 	^ true
+]
+
+{ #category : 'private' }
+ReOverridesSpecialMessageRule class >> classShouldNotOverride [
+	^ #( #== #~~ #class #basicAt: #basicAt:put: #basicSize #identityHash )
+]
+
+{ #category : 'accessing' }
+ReOverridesSpecialMessageRule class >> group [
+	^ 'Bugs'
+]
+
+{ #category : 'private' }
+ReOverridesSpecialMessageRule class >> metaclassShouldNotOverride [
+	^ #( #basicNew #basicNew #class #comment #name )
+]
+
+{ #category : 'accessing' }
+ReOverridesSpecialMessageRule class >> rationale [
+
+	^ 'Checks that a class does not override a message that is essential to the base system. For example, if you override the #class method from object, you are likely to crash your image.
+In the class the messages we should not override are: ' , (', ' join: self classShouldNotOverride) , '.
+In the class side the messages we should not override are: ' , (', ' join: self metaclassShouldNotOverride) , '.'
+]
+
+{ #category : 'accessing' }
+ReOverridesSpecialMessageRule class >> ruleName [
+	^ 'Overrides a "special" message'
+]
+
+{ #category : 'accessing' }
+ReOverridesSpecialMessageRule class >> severity [
+	^ #error
 ]
 
 { #category : 'accessing' }
@@ -36,33 +69,10 @@ ReOverridesSpecialMessageRule >> check: aClass forCritiquesDo: aCriticBlock [
 
 { #category : 'private' }
 ReOverridesSpecialMessageRule >> classShouldNotOverride [
-	^ #( #== #~~ #class #basicAt: #basicAt:put: #basicSize #identityHash )
-]
-
-{ #category : 'accessing' }
-ReOverridesSpecialMessageRule >> group [
-	^ 'Bugs'
+	^ self class classShouldNotOverride
 ]
 
 { #category : 'private' }
 ReOverridesSpecialMessageRule >> metaclassShouldNotOverride [
-	^ #( #basicNew #basicNew #class #comment #name )
-]
-
-{ #category : 'accessing' }
-ReOverridesSpecialMessageRule >> name [
-	^ 'Overrides a "special" message'
-]
-
-{ #category : 'accessing' }
-ReOverridesSpecialMessageRule >> rationale [
-
-	^ 'Checks that a class does not override a message that is essential to the base system. For example, if you override the #class method from object, you are likely to crash your image.
-In the class the messages we should not override are: ',  (', ' join: (self classShouldNotOverride) ),'.
-In the class side the messages we should not override are: ',  (', ' join: (self metaclassShouldNotOverride) ),'.'
-]
-
-{ #category : 'accessing' }
-ReOverridesSpecialMessageRule >> severity [
-	^ #error
+	^ self class metaclassShouldNotOverride
 ]

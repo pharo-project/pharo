@@ -88,6 +88,13 @@ RBInteractionDriver >> furtherActionFor: aReport [
 ]
 
 { #category : 'private' }
+RBInteractionDriver >> informConditions: conditions [ 
+	"The receiver has multiple failed applicability conditions and more than one could fail, inform all failures"
+
+	conditions do: [ : cond | self inform: cond errorString ].
+]
+
+{ #category : 'private' }
 RBInteractionDriver >> informDialog [
 	"I'm hook to inject mock in tests. The driver should specialize defaultInformDialog"
 	
@@ -106,6 +113,13 @@ RBInteractionDriver >> initialize [
 	super initialize.
 	stoppedBeforeApplyingRefactoring := false.
 	"for now unused but we should soon use it. Check applyChanges"
+]
+
+{ #category : 'accessing' }
+RBInteractionDriver >> model [
+	"Answer the receiver's <RBBrowserEnvironment>"
+
+	^ model
 ]
 
 { #category : 'accessing' }

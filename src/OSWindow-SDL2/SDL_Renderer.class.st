@@ -43,11 +43,7 @@ SDL_Renderer >> copy: texture srcRect: srcRect dstRect: dstRect [
 { #category : 'rendering' }
 SDL_Renderer >> createTextureFormat: format access: access width: width height: height [
 
-	^ self
-		  primCreateTextureFormat: format
-		  access: access
-		  width: width
-		  height: height
+	^ self ffiCall: #( SDL_Texture SDL_CreateTexture #( self #, Uint32 format #, int access #, int width #, int height ) )
 ]
 
 { #category : 'initialization' }
@@ -134,11 +130,6 @@ SDL_Renderer >> outputExtent [
 { #category : 'rendering' }
 SDL_Renderer >> present [
 	^ self ffiCall: #( void SDL_RenderPresent ( self ) )
-]
-
-{ #category : 'private' }
-SDL_Renderer >> primCreateTextureFormat: format access: access width: width height: height [
-	^ self ffiCall: #( SDL_Texture SDL_CreateTexture ( self , Uint32 format , int access , int width , int height ) )
 ]
 
 { #category : 'initialization' }

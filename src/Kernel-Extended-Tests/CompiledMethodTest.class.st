@@ -550,6 +550,12 @@ CompiledMethodTest >> testIsInstalled [
 ]
 
 { #category : 'tests - testing' }
+CompiledMethodTest >> testIsInstanceSide [
+	self assert: (Object>>#yourself) isInstanceSide.
+	self deny: (UndefinedObject class>>#new) isInstanceSide
+]
+
+{ #category : 'tests - testing' }
 CompiledMethodTest >> testIsQuick [
 	| method  |
 

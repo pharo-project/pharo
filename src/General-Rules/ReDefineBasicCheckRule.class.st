@@ -8,14 +8,24 @@ It is recommended to reuse #basicCheck: functionality in #checkClass: and #check
 Class {
 	#name : 'ReDefineBasicCheckRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'testing' }
 ReDefineBasicCheckRule class >> checksClass [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReDefineBasicCheckRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
+ReDefineBasicCheckRule class >> ruleName [
+	^ 'Rule does not define #basicCheck:'
 ]
 
 { #category : 'running' }
@@ -30,14 +40,4 @@ ReDefineBasicCheckRule >> critiqueFor: aClass [
 		by: self
 		class: aClass
 		selector: #basicCheck:) beShouldBeImplemented
-]
-
-{ #category : 'accessing' }
-ReDefineBasicCheckRule >> group [
-	^ 'Coding Idiom Violation'
-]
-
-{ #category : 'accessing' }
-ReDefineBasicCheckRule >> name [
-	^ 'Rule does not define #basicCheck:'
 ]

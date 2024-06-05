@@ -11,16 +11,17 @@ Class {
 
 { #category : 'API' }
 BreakDebugPoint >> hitWithContext: aContext [
-	<debuggerCompleteToSender>
-	
-	(super hitWithContext: aContext) ifFalse: [^self].
 
-	Break break.
+	<debuggerCompleteToSender>
+	(super hitWithContext: aContext) ifFalse: [ ^ self ].
+
+	Break break
 ]
 
 { #category : 'accessing' }
 BreakDebugPoint >> name [
-	^name ifNil: [ #Breakpoint ]
+
+	^ name ifNil: [ #Breakpoint ]
 ]
 
 { #category : 'accessing' }

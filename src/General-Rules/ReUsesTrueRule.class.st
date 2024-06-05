@@ -6,14 +6,29 @@ true is the object true, while True is the class whose true is the sole instance
 Class {
 	#name : 'ReUsesTrueRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Bugs'
 }
 
 { #category : 'testing' }
 ReUsesTrueRule class >> checksMethod [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReUsesTrueRule class >> group [
+	^ 'Bugs'
+]
+
+{ #category : 'accessing' }
+ReUsesTrueRule class >> ruleName [
+	^ 'Uses True/False instead of true/false'
+]
+
+{ #category : 'accessing' }
+ReUsesTrueRule class >> severity [
+	^ #error
 ]
 
 { #category : 'accessing' }
@@ -30,19 +45,4 @@ ReUsesTrueRule >> check: aMethod forCritiquesDo: aCriticBlock [
 			                 aNode isGlobalVariable and: [ #( True False ) includes: aNode name ] ].
 	problemUsages do: [ :ref |
 		aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: ref hint: ref name asString)]
-]
-
-{ #category : 'accessing' }
-ReUsesTrueRule >> group [
-	^ 'Bugs'
-]
-
-{ #category : 'accessing' }
-ReUsesTrueRule >> name [
-	^ 'Uses True/False instead of true/false'
-]
-
-{ #category : 'accessing' }
-ReUsesTrueRule >> severity [
-	^ #error
 ]

@@ -6,10 +6,25 @@ This rule is not active for methods in test classes.
 Class {
 	#name : 'ReBadMessageRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
+
+{ #category : 'accessing' }
+ReBadMessageRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
+ReBadMessageRule class >> rationale [
+	^ 'Check methods that send messages that perform low level things.'
+]
+
+{ #category : 'accessing' }
+ReBadMessageRule class >> ruleName [
+	^ 'Sends "questionable" message'
+]
 
 { #category : 'accessing' }
 ReBadMessageRule class >> uniqueIdentifierName [
@@ -29,19 +44,4 @@ ReBadMessageRule >> basicCheck: aNode [
 	"In tests using these messages (like isKindOf:) is no problem"
 	aNode methodNode methodClass ifNotNil: [ :class | class isTestCase ifTrue: [ ^false ]].
 	^ self badSelectors includes: aNode selector
-]
-
-{ #category : 'accessing' }
-ReBadMessageRule >> group [
-	^ 'Coding Idiom Violation'
-]
-
-{ #category : 'accessing' }
-ReBadMessageRule >> name [
-	^ 'Sends "questionable" message'
-]
-
-{ #category : 'accessing' }
-ReBadMessageRule >> rationale [
-	^ 'Check methods that send messages that perform low level things.'
 ]

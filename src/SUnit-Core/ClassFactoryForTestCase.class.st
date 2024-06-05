@@ -49,13 +49,6 @@ ClassFactoryForTestCase class >> environment: aSystemDictionary [
 		  yourself
 ]
 
-{ #category : 'class initialization' }
-ClassFactoryForTestCase class >> initialize [
-	"Now we can personnalize the environment of the ClassFactoryForTestCase. So instead of having this duplicated class, we can just use this one and specify the environment that will have its own organization."
-
-	self deprecatedAliases: { #ClassFactoryWithOrganization }
-]
-
 { #category : 'cleaning' }
 ClassFactoryForTestCase >> cleanUp [
 
@@ -123,8 +116,8 @@ ClassFactoryForTestCase >> delete: aBehavior [
 			createdSilently remove: aBehavior.
 			aBehavior removeFromSystemUnlogged ]
 		ifFalse: [ aBehavior removeFromSystem ].
-	"We know that we can remove the key from Undeclared, as it was added by #removeFromSystem"
-	Undeclared removeKey: name ifAbsent: [ "might be an anonymous class" ]
+	"We know that we can remove the key from the undeclared registry, as it was added by #removeFromSystem"
+	self class undeclaredRegistry removeKey: name ifAbsent: [ "might be an anonymous class" ]
 ]
 
 { #category : 'cleaning' }
@@ -311,12 +304,11 @@ ClassFactoryForTestCase >> update: aClass to: aBlock [
 	Once the test is finished, I'll remove the created class or trait."
 
 	| newClass |
-	newClass := self class classInstaller make: [ :aBuilder | "Let's but some default values."
-		    			aBuilder fillFor: aClass.        
-						aBuilder
+	newClass := self class classInstaller update: aClass to: [ :aBuilder | "Let's but some default values."
+		            aBuilder
 			            installingEnvironment: self environment;
 			            package: self packageName.
-						
+
 		            "Now we let the users specify what they want."
 		            aBlock value: aBuilder ].
 

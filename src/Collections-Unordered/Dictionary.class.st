@@ -476,17 +476,6 @@ Dictionary >> bindingOf: varName [
 ]
 
 { #category : 'enumerating' }
-Dictionary >> bindingsDo: aBlock [
-
-	self
-		deprecated:
-		'use classVariables do: instead'
-		transformWith: '`@receiver bindingsDo: `@arg1' -> '`@receiver associationsDo: `@arg1'.
-
-	self associationsDo: aBlock
-]
-
-{ #category : 'enumerating' }
 Dictionary >> collect: aBlock [
 	"Evaluate aBlock with each of my values as the argument.  Collect the
 	resulting values into a collection that is like me. Answer with the new

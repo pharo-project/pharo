@@ -6,14 +6,29 @@ For example, #openHierarchyBrowserFrom: is a redundant name for HierarchyBrowser
 Class {
 	#name : 'ReClassNameInSelectorRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Style',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Style'
 }
 
 { #category : 'testing' }
 ReClassNameInSelectorRule class >> checksMethod [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReClassNameInSelectorRule class >> group [
+	^ 'Style'
+]
+
+{ #category : 'accessing' }
+ReClassNameInSelectorRule class >> rationale [
+	^ 'Checks for the class name in a selector. This is redundant since to call the you must already refer to the class name. For example, openHierarchyBrowserFrom: is a redundant name for HierarchyBrowser. Avoiding selector including class name gives a chance to have more polymorphic methods.'
+]
+
+{ #category : 'accessing' }
+ReClassNameInSelectorRule class >> ruleName [
+	^ 'Redundant class name in selector'
 ]
 
 { #category : 'accessing' }
@@ -48,19 +63,4 @@ ReClassNameInSelectorRule >> critiqueFor: aMethod withInterval: anInterval [
 			entity: aMethod
 			interval: anInterval)
 		by: self
-]
-
-{ #category : 'accessing' }
-ReClassNameInSelectorRule >> group [
-	^ 'Style'
-]
-
-{ #category : 'accessing' }
-ReClassNameInSelectorRule >> name [
-	^ 'Redundant class name in selector'
-]
-
-{ #category : 'accessing' }
-ReClassNameInSelectorRule >> rationale [
-	^ 'Checks for the class name in a selector. This is redundant since to call the you must already refer to the class name. For example, openHierarchyBrowserFrom: is a redundant name for HierarchyBrowser. Avoiding selector including class name gives a chance to have more polymorphic methods.'
 ]

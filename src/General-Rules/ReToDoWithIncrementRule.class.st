@@ -7,21 +7,31 @@ In Pharo you do not increment or decrement counter but should use the message to
 Class {
 	#name : 'ReToDoWithIncrementRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
+
+{ #category : 'accessing' }
+ReToDoWithIncrementRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
+ReToDoWithIncrementRule class >> rationale [
+	^ 'Checks for users of to:do: that also increment or decrement a counter.'
+]
+
+{ #category : 'accessing' }
+ReToDoWithIncrementRule class >> ruleName [
+	^ 'to:do: loop also increments a counter'
+]
 
 { #category : 'accessing' }
 ReToDoWithIncrementRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'ToDoWithIncrementRule'
-]
-
-{ #category : 'accessing' }
-ReToDoWithIncrementRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'initialization' }
@@ -32,14 +42,4 @@ ReToDoWithIncrementRule >> initialize [
 			'`@i to: `@j by: `@k do: [:`e | | `@temps | `@.Stmts. `x := `x + `@k. `@.Stmts2]'
 			'`@i to: `@j do: [:`e | | `@temps | `@.Stmts. `x := `x - 1. `@.Stmts2]'
 			'`@i to: `@j by: `@k do: [:`e | | `@temps | `@.Stmts. `x := `x - `@k. `@.Stmts2]')
-]
-
-{ #category : 'accessing' }
-ReToDoWithIncrementRule >> name [
-	^ 'to:do: loop also increments a counter'
-]
-
-{ #category : 'accessing' }
-ReToDoWithIncrementRule >> rationale [
-	^ 'Checks for users of to:do: that also increment or decrement a counter.'
 ]

@@ -15,6 +15,11 @@ Class {
 	#tag : 'Methods'
 }
 
+{ #category : 'constants' }
+CompiledBlock class >> trailerSize [
+	^ 0
+]
+
 { #category : 'displaying' }
 CompiledBlock >> displayStringOn: stream [
 	self printOn: stream
@@ -233,9 +238,4 @@ CompiledBlock >> stepIntoQuickMethods [
 { #category : 'debugger support' }
 CompiledBlock >> stepIntoQuickMethods: aBoolean [
 	^self method stepIntoQuickMethods: aBoolean
-]
-
-{ #category : 'constants' }
-CompiledBlock >> trailerSize [
-	^ 0
 ]

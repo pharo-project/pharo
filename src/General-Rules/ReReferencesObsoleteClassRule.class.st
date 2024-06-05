@@ -5,10 +5,25 @@ You are referencing a class that is obsolete, that is, it has been removed
 Class {
 	#name : 'ReReferencesObsoleteClassRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Bugs'
 }
+
+{ #category : 'accessing' }
+ReReferencesObsoleteClassRule class >> group [
+	^ 'Bugs'
+]
+
+{ #category : 'accessing' }
+ReReferencesObsoleteClassRule class >> ruleName [
+	^ 'References an obsolete class'
+]
+
+{ #category : 'accessing' }
+ReReferencesObsoleteClassRule class >> severity [
+	^ #error
+]
 
 { #category : 'helpers' }
 ReReferencesObsoleteClassRule >> basicCheck: aNode [
@@ -22,19 +37,4 @@ ReReferencesObsoleteClassRule >> critiqueFor: aNode [
 	^ (super critiqueFor: aNode)
 		  tinyHint: aNode name;
 		  yourself
-]
-
-{ #category : 'accessing' }
-ReReferencesObsoleteClassRule >> group [
-	^ 'Bugs'
-]
-
-{ #category : 'accessing' }
-ReReferencesObsoleteClassRule >> name [
-	^ 'References an obsolete class'
-]
-
-{ #category : 'accessing' }
-ReReferencesObsoleteClassRule >> severity [
-	^ #error
 ]

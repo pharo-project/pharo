@@ -10,12 +10,6 @@ Class {
 	#tag : 'Selection'
 }
 
-{ #category : 'class initialization' }
-FTSimpleSelectionStrategy class >> initialize [
-
-	self deprecatedAliases: { #FTSimpleSelection }
-]
-
 { #category : 'testing' }
 FTSimpleSelectionStrategy >> isMultiple [
 	^ false

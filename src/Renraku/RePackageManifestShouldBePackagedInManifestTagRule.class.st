@@ -1,9 +1,9 @@
 Class {
 	#name : 'RePackageManifestShouldBePackagedInManifestTagRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'Renraku-Rules',
+	#category : 'Renraku-Coding Idiom Violation',
 	#package : 'Renraku',
-	#tag : 'Rules'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'testing - interest' }
@@ -12,24 +12,24 @@ RePackageManifestShouldBePackagedInManifestTagRule class >> checksClass [
 	^ true
 ]
 
-{ #category : 'running' }
-RePackageManifestShouldBePackagedInManifestTagRule >> basicCheck: aClass [
-
-	^ (aClass inheritsFrom: PackageManifest) and: [ ((aClass package classesTaggedWith: 'Manifest') includes: aClass) not ]
-]
-
 { #category : 'accessing' }
-RePackageManifestShouldBePackagedInManifestTagRule >> group [
+RePackageManifestShouldBePackagedInManifestTagRule class >> group [
 
 	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'accessing' }
-RePackageManifestShouldBePackagedInManifestTagRule >> name [
-	^ 'A package manifest should be tagged using ''Manifest'' class tag'
+RePackageManifestShouldBePackagedInManifestTagRule class >> rationale [
+	^ 'Check if the package manifest is tagged in class category ''Manifest'' to align with other packages and fulfil common expectations.'
 ]
 
 { #category : 'accessing' }
-RePackageManifestShouldBePackagedInManifestTagRule >> rationale [
-	^ 'Check if the package manifest is tagged in class category ''Manifest'' to align with other packages and fulfil common expectations.'
+RePackageManifestShouldBePackagedInManifestTagRule class >> ruleName [
+	^ 'A package manifest should be tagged using ''Manifest'' class tag'
+]
+
+{ #category : 'running' }
+RePackageManifestShouldBePackagedInManifestTagRule >> basicCheck: aClass [
+
+	^ (aClass inheritsFrom: PackageManifest) and: [ ((aClass package classesTaggedWith: 'Manifest') includes: aClass) not ]
 ]

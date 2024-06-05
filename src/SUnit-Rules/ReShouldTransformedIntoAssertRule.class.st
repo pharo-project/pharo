@@ -6,10 +6,21 @@ Class {
 	#superclass : 'ReNodeRewriteRule',
 	#traits : 'ReTSUnitGroupedRule',
 	#classTraits : 'ReTSUnitGroupedRule classTrait',
-	#category : 'SUnit-Rules-Base',
+	#category : 'SUnit-Rules-SUnit',
 	#package : 'SUnit-Rules',
-	#tag : 'Base'
+	#tag : 'SUnit'
 }
+
+{ #category : 'accessing' }
+ReShouldTransformedIntoAssertRule class >> group [
+
+	^ 'SUnit'
+]
+
+{ #category : 'accessing' }
+ReShouldTransformedIntoAssertRule class >> ruleName [
+	^ 'Use assert: instead of should:'
+]
 
 { #category : 'accessing' }
 ReShouldTransformedIntoAssertRule class >> uniqueIdentifierName [
@@ -24,10 +35,4 @@ ReShouldTransformedIntoAssertRule >> initialize [
 	self
 		replace: 'self should: [ ``@object1 ]'
 		with: 'self assert: ``@object1'
-]
-
-{ #category : 'accessing' }
-ReShouldTransformedIntoAssertRule >> name [
-
-	^ 'Use assert: instead of should:'
 ]

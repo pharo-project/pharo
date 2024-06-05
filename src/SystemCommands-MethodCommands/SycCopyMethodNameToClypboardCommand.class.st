@@ -12,7 +12,7 @@ SycCopyMethodNameToClypboardCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 SycCopyMethodNameToClypboardCommand >> defaultMenuItemName [
-	^'Copy name(s) to Clipboard'
+	^'Copy method name(s) to Clipboard'
 ]
 
 { #category : 'accessing' }

@@ -18,9 +18,9 @@ Class {
 	#classInstVars : [
 		'allMessages'
 	],
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'accessing' }
@@ -57,6 +57,11 @@ ReImplementedNotSentRule class >> enabled: aBoolean [
 		ifFalse: [ self unsubscribe ]
 ]
 
+{ #category : 'accessing' }
+ReImplementedNotSentRule class >> group [
+	^ 'Design Flaws'
+]
+
 { #category : 'class initialization' }
 ReImplementedNotSentRule class >> initialize [
 	"we do not want to register if the rule is disabled"
@@ -83,6 +88,16 @@ ReImplementedNotSentRule class >> methodModified: anAnnouncement [
 ReImplementedNotSentRule class >> reset [
 	<script>
 	allMessages := nil
+]
+
+{ #category : 'accessing' }
+ReImplementedNotSentRule class >> ruleName [
+	^ 'Methods implemented but not sent'
+]
+
+{ #category : 'accessing' }
+ReImplementedNotSentRule class >> severity [
+	^ #information
 ]
 
 { #category : 'cleanup' }
@@ -135,19 +150,4 @@ ReImplementedNotSentRule >> basicCheck: aMethod [
 						  occurrencesToFind := occurrencesToFind - 1.
 						  false ] ]
 			  ifFalse: [ false ] ]
-]
-
-{ #category : 'accessing' }
-ReImplementedNotSentRule >> group [
-	^ 'Design Flaws'
-]
-
-{ #category : 'accessing' }
-ReImplementedNotSentRule >> name [
-	^ 'Methods implemented but not sent'
-]
-
-{ #category : 'accessing' }
-ReImplementedNotSentRule >> severity [
-	^ #information
 ]

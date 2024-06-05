@@ -22,7 +22,7 @@ CompiledMethod >> createTwin [
 
 { #category : '*Reflectivity' }
 CompiledMethod >> destroyTwin [
-	self reflectiveMethod: nil
+	self reflectiveMethod ifNotNil: [:rf| rf destroyTwin ]
 ]
 
 { #category : '*Reflectivity' }

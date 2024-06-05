@@ -4,19 +4,19 @@ Instance side #initialize method should be in 'initialization' protocol
 Class {
 	#name : 'ReInstanceSideInitializeMethodProtocolRule',
 	#superclass : 'ReProperInstanceMethodProtocolRule',
-	#category : 'Renraku-Rules',
+	#category : 'Renraku-Clean Code',
 	#package : 'Renraku',
-	#tag : 'Rules'
+	#tag : 'Clean Code'
 }
 
-{ #category : 'accessing - defaults' }
-ReInstanceSideInitializeMethodProtocolRule >> protocolName [
+{ #category : 'accessing' }
+ReInstanceSideInitializeMethodProtocolRule class >> protocolName [
 
 	^ 'initialization'
 ]
 
-{ #category : 'accessing - defaults' }
-ReInstanceSideInitializeMethodProtocolRule >> selector [
+{ #category : 'accessing' }
+ReInstanceSideInitializeMethodProtocolRule class >> selector [
 
 	^ #initialize
 ]

@@ -106,8 +106,10 @@ Symbol class >> initialize [
 { #category : 'symbol table' }
 Symbol class >> intern: aStringOrSymbol [
 
-	^ (self findInterned: aStringOrSymbol) ifNil: [
-		  NewSymbols add: aStringOrSymbol createSymbol ]
+	SymbolTableSemaphore enabled ifFalse: [
+		^ self rawIntern: aStringOrSymbol ].
+	SymbolTableSemaphore singleInstance critical: [
+		^ self rawIntern: aStringOrSymbol ]
 ]
 
 { #category : 'instance creation' }
@@ -154,6 +156,13 @@ Symbol class >> possibleSelectorsFor: misspelled [
 		binary := misspelled, ':'.		"try for missing colon"
 		Symbol hasInterned: binary ifTrue: [:him | best addFirst: him]].
 	^ best
+]
+
+{ #category : 'symbol table' }
+Symbol class >> rawIntern: aStringOrSymbol [
+
+	^ (self findInterned: aStringOrSymbol) ifNil: [
+		  NewSymbols add: aStringOrSymbol createSymbol ]
 ]
 
 { #category : 'instance creation' }

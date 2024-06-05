@@ -26,7 +26,8 @@ AthensCairoMatrixTest >> testInverted [
 	self assert: m getHandle ~~ m inverted getHandle
 ]
 
-{ #category : 'tests' }
+{ #category : 'accessing' }
 AthensCairoMatrixTest >> transformClass [
+
 	^ AthensCairoMatrix
 ]
