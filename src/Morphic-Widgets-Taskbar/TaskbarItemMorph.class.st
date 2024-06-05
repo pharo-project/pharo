@@ -58,15 +58,15 @@ TaskbarItemMorph >> initializeAnnouncements [
 
 { #category : 'initialization' }
 TaskbarItemMorph >> initializeFor: aTaskbar [
+
 	| lm lab labSize |
 	labSize := self labelSizeIn: aTaskbar.
 	lab := self labelOfSize: labSize.
 	self addEmphaseTo: lab.
-	lm := self theme
-		newRowIn: aTaskbar
-		for:
-			{(self model icon ifNil: [ ^ nil ]) asMorph.
-			lab}.
+	lm := self theme newRowIn: aTaskbar for: {
+			      ((self iconFormSetNamed: self model iconName) ifNil: [ ^ nil ])
+				      asMorph.
+			      lab }.
 	lm cellInset: 2.
 	self
 		label: lm font: self theme buttonFont;
@@ -76,11 +76,9 @@ TaskbarItemMorph >> initializeFor: aTaskbar [
 		useSquareCorners;
 		getMenuSelector: #taskbarButtonMenu:.
 	self initializeAnnouncements.
-	lab
-		color:
-			(self model state = #minimized
-				ifTrue: [ self theme taskbarItemLabelColorForCollapsed: self ]
-				ifFalse: [ self theme taskbarItemLabelColorForExpanded: self ])
+	lab color: (self model state = #minimized
+			 ifTrue: [ self theme taskbarItemLabelColorForCollapsed: self ]
+			 ifFalse: [ self theme taskbarItemLabelColorForExpanded: self ])
 ]
 
 { #category : 'accessing' }
