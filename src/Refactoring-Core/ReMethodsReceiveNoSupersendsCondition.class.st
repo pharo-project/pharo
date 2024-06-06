@@ -22,21 +22,20 @@ ReMethodsReceiveNoSupersendsCondition >> checkSiblingSuperSendsFrom: aRBClass [
 	warn the user.
 	Repeat the process for all subclasses of `aRBClass`"
 
-	aRBClass selectors do:
-			[:each |
-			| tree |
-			tree := aRBClass parseTreeForSelector: each.
-			tree ifNotNil:
-					[tree superMessages do:
-							[:aSelector |
-							(selectors includes: aSelector)
-								ifTrue:
-									[| definer |
-									definer := aRBClass superclass whoDefinesMethod: aSelector.
-									(definer isNotNil and: [class includesClass: definer])
-										ifTrue:
-											[ violators add: aSelector ]]]]].
-	aRBClass allSubclasses do: [:each | self checkSiblingSuperSendsFrom: each]
+	aRBClass selectors do: [ :each |
+		| tree |
+		tree := aRBClass parseTreeForSelector: each.
+		tree ifNotNil: [
+			tree superMessages do: [ :aSelector |
+				(selectors includes: aSelector) ifTrue: [
+					| definer |
+					definer := aRBClass superclass whichClassIncludesSelector:
+						           aSelector.
+
+					(definer isNotNil and: [ class includesClass: definer ]) ifTrue: [
+						violators add: { aSelector. aRBClass. each }  ] ] ] ] ].
+	aRBClass allSubclasses do: [ :each |
+		self checkSiblingSuperSendsFrom: each ]
 ]
 
 { #category : 'private' }
@@ -54,6 +53,24 @@ ReMethodsReceiveNoSupersendsCondition >> class: aRBClass targetSuperclass: aRBCl
 	class := aRBClass.
 	targetSuperclass := aRBClass2.
 	selectors := aCollection
+]
+
+{ #category : 'displaying' }
+ReMethodsReceiveNoSupersendsCondition >> violationMessageOn: aStream [
+	| messageSent senderClass senderMessage |
+	
+	self violators do: [ :violator |
+		messageSent := violator at: 1.
+		senderClass := violator at: 2.
+		senderMessage := violator at: 3.
+		
+		aStream
+			nextPutAll: senderClass realClass name;
+			nextPutAll: '>>';
+			nextPutAll: senderMessage;
+			nextPutAll: 'sends a supermessage to ';
+			nextPutAll: messageSent;
+			space ]
 ]
 
 { #category : 'accessing' }

@@ -2,14 +2,14 @@
 I exist to test refactoring conditions
 "
 Class {
-	#name : 'MyClassGamma',
-	#superclass : 'MyClassBeta',
+	#name : 'MyClassBetaSibling',
+	#superclass : 'MyClassAlpha',
 	#category : 'Refactoring-DataForTesting-StaticModel',
 	#package : 'Refactoring-DataForTesting',
 	#tag : 'StaticModel'
 }
 
 { #category : 'dummy methods' }
-MyClassGamma >> referenceToClassAlpha [
-	^ MyClassAlpha new
+MyClassBetaSibling >> sendSuper [
+	^ super methodOverriden 
 ]

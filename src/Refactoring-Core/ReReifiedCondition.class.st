@@ -7,8 +7,8 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-ReReifiedCondition class >> fixChoiceClass [
-	self subclassResponsibility 
+ReReifiedCondition class >> strategyChoiceClass [
+	^ ReBrowseSubclassSuperSendsChoice 
 ]
 
 { #category : 'accessing' }

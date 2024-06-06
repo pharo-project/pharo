@@ -22,6 +22,16 @@ ReMethodsSendNoSupersendsCondition >> class: rbClassA targetSuperclass: rbClassB
 	selectors := aCollection 
 ]
 
+{ #category : 'displaying' }
+ReMethodsSendNoSupersendsCondition >> violationMessageOn: aStream [
+
+	self violators do: [ :violator |
+		aStream
+			nextPutAll: violator selector;
+			nextPutAll: ' sends a message to ''super''.';
+			space ]
+]
+
 { #category : 'accessing' }
 ReMethodsSendNoSupersendsCondition >> violators [
 
@@ -33,6 +43,6 @@ ReMethodsSendNoSupersendsCondition >> violators [
 		parseTree := class parseTreeForSelector: each.
 		parseTree superMessages
 			detect: [ :sup | targetSuperclass directlyDefinesMethod: sup ]
-			ifFound: [ violators add: each ] ].
+			ifFound: [ violators add: (class methodNamed: each) ] ].
 	^ violators
 ]

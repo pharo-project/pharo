@@ -23,7 +23,8 @@ Class {
 		'notInstVarRefs',
 		'notSharedVarRefs',
 		'notSupersendsReceived',
-		'notSupersendsSent'
+		'notSupersendsSent',
+		'continuePushUp'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -39,20 +40,6 @@ RePushUpMethodDriver class >> model: model scopes: refactoringScopes pushUpMetho
 		  pushUpMethods: methods
 ]
 
-{ #category : 'execution' }
-RePushUpMethodDriver >> breakingChoices [
-	| choices |
-	choices := OrderedCollection new.
-	notOverrides check ifFalse:[ choices add: (ReBrowseMethodOverridesChoice new driver: self) ].
-	notInstVarRefs  check ifFalse: [ choices add: (RePushUpInstanceVariableChoice new driver: self) ].
-	notSharedVarRefs  check ifFalse: [ choices add: (RePushUpSharedVariableChoice new driver: self) ].
-	notSupersendsReceived check ifFalse: [ choices add: (ReBrowseSubclassSuperSendsChoice new driver: self)  ].
-	notSupersendsSent check ifFalse: [ self halt  ].
-	
-	^ choices
-	
-]
-
 { #category : 'actions' }
 RePushUpMethodDriver >> browseOverrides [
 
@@ -61,6 +48,18 @@ RePushUpMethodDriver >> browseOverrides [
 	methods do: [:method | 
 		StMessageBrowser
 		browse: (overrides collect: [ :ref | ref realClass methodNamed: method selector ])
+		asImplementorsOf: method selector ]
+	
+]
+
+{ #category : 'actions' }
+RePushUpMethodDriver >> browseSuperSendsSent [
+	| overrides |
+	overrides := notSupersendsSent violators.
+	
+	methods do: [:method | 
+		StMessageBrowser
+		browse: (overrides collect: [ :ref | ref compiledMethod ])
 		asImplementorsOf: method selector ]
 	
 ]
@@ -95,13 +94,21 @@ RePushUpMethodDriver >> configureRefactoring [
 		               to: superclass name
 ]
 
+{ #category : 'accessing' }
+RePushUpMethodDriver >> continuePushUp [
+	^ continuePushUp ifNil: [ continuePushUp := false ]
+]
+
 { #category : 'configuration' }
 RePushUpMethodDriver >> defaultSelectDialog [
 
 	^ SpSelectDialog new
 		    title: 'There are potential breaking changes!';
-		          label: self labelBasedOnBreakingChanges;
-		          items: self breakingChoices;
+		          label: (self labelBasedOnBreakingChanges: {
+		notOverrides.
+		notSupersendsReceived.
+		notSupersendsSent });
+		          items: self unfixableBreakingChoices;
 		          display: [ :each | each description ];
 		          displayIcon: [ :each | self iconNamed: each systemIconName ];
 		          openModal
@@ -115,36 +122,57 @@ RePushUpMethodDriver >> gatherUserInput [
 { #category : 'execution' }
 RePushUpMethodDriver >> handleBreakingChanges [
 
-	| breakingConditions presenter changes |
+	| fixableBreakingConditions unfixableBreakingConditions presenter changes |
+	fixableBreakingConditions := {
+		                             notInstVarRefs.
+		                             notSharedVarRefs } reject: [ :cond |
+		                             cond check ].
 
-	breakingConditions := {
-		                      notOverrides.
-		                      notInstVarRefs.
-		                      notSharedVarRefs.
-		                      notSupersendsSent.
-		                      notSupersendsReceived } reject: [ :cond |
-		                      cond check ].
+	unfixableBreakingConditions := {
+		                               notOverrides.
+		                               notSupersendsSent.
+		                               notSupersendsReceived } reject: [
+		                               :cond | cond check ].
 	
-	changes := breakingConditions collect: [:each | each class fixChoiceClass new driver: self ].
+	"Display strategies for unfixable breaking conditions"
+	unfixableBreakingConditions ifNotEmpty: [ :cond |
+		| select |
+		select := self selectDialog.
+		select
+			ifNotNil: [
+				select action.
+				self continuePushUp ifFalse: [ ^ self ] ]
+			ifNil: [ ^ self ] ].
+
+	fixableBreakingConditions ifEmpty: [
+		self applyChanges.
+		^ self ].
+	"Display previous transformations that will fix the fixable breaking conditions"
+	changes := fixableBreakingConditions collect: [ :each |
+		           each class strategyChoiceClass new driver: self ].
+
 	presenter := self application newSelectMultiple.
-	
+
 	presenter
 		title: 'There are potential breaking changes';
-		label: self labelBasedOnBreakingChanges;
+		label: (self labelBasedOnBreakingChanges: {
+						 notInstVarRefs.
+						 notSharedVarRefs });
 		items: changes;
 		display: [ :each | each description ];
-		onAccept: [ :dialog | | selectedChanges |
+		onAccept: [ :dialog |
+			| selectedChanges |
 			selectedChanges := dialog presenter selectedItems.
 			selectedChanges do: #action.
-			selectedChanges ifNotEmpty: [ self applyChanges ] ];
+			self applyChanges ];
 		openDialog
 ]
 
 { #category : 'ui - dialogs' }
-RePushUpMethodDriver >> labelBasedOnBreakingChanges [
+RePushUpMethodDriver >> labelBasedOnBreakingChanges: conditions [
 
 	^ String streamContents: [ :stream |
-		  { notOverrides. notInstVarRefs . notSharedVarRefs . notSupersendsSent. notSupersendsReceived } 
+		  conditions 
 			do: [ :cond |
 			  cond check ifFalse: [
 				  cond violationMessageOn: stream.
@@ -173,12 +201,25 @@ RePushUpMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushUpMeth
 	class := methods first origin
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'action' }
+RePushUpMethodDriver >> pushUpMethods [
+	continuePushUp := true
+]
+
+{ #category : 'action' }
 RePushUpMethodDriver >> pushUpReferencedInstVars [
 
 	notInstVarRefs violators do: [ :violator | 
 		"We add the pushUpVariable transformation to the refactoring previous transformations"
 		refactoring pushUpVariable: (violator at: 2) ]
+]
+
+{ #category : 'action' }
+RePushUpMethodDriver >> pushUpReferencedSharedVars [
+
+	notSharedVarRefs violators do: [ :violator | 
+		"We add the pushUpVariable transformation to the refactoring previous transformations"
+		refactoring pushUpSharedVariable: (violator at: 2) ]
 ]
 
 { #category : 'execution' }
@@ -216,9 +257,22 @@ RePushUpMethodDriver >> selectMethodsAndClass [
 
 { #category : 'initialization' }
 RePushUpMethodDriver >> setBreakingChangesPreconditions [
+
 	notOverrides := refactoring preconditionNoOverrides.
 	notInstVarRefs := refactoring preconditionNoReferencesToInstVars.
 	notSharedVarRefs := refactoring preconditionNoReferencesToSharedVars.
 	notSupersendsSent := refactoring preconditionNoSupersendsSent.
 	notSupersendsReceived := refactoring preconditionNoSupersendsReceived
+]
+
+{ #category : 'execution' }
+RePushUpMethodDriver >> unfixableBreakingChoices [
+	| choices |
+	choices := OrderedCollection new.
+	notOverrides check ifFalse:[ choices add: (ReBrowseMethodOverridesChoice new driver: self) ].
+	notSupersendsReceived check ifFalse: [ choices add: (ReBrowseSubclassSuperSendsChoice new driver: self)  ].
+	notSupersendsSent check ifFalse: [ choices add: (ReBrowseSuperSendsSentChoice new driver: self)  ].
+	choices add: (RePushUpMethodChoice new driver: self).
+	^ choices
+	
 ]

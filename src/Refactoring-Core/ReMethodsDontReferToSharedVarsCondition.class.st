@@ -15,7 +15,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-ReMethodsDontReferToSharedVarsCondition class >> fixChoiceClass [
+ReMethodsDontReferToSharedVarsCondition class >> strategyChoiceClass [
 	^ RePushUpSharedVariableChoice
 ]
 

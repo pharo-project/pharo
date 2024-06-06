@@ -374,6 +374,16 @@ RBPullUpMethodRefactoring >> pullUpMethods [
 ]
 
 { #category : 'preconditions' }
+RBPullUpMethodRefactoring >> pushUpSharedVariable: aVariable [
+	| refactoring |
+	refactoring :=  RBPullUpClassVariableRefactoring 
+			model: self model
+			variable: aVariable
+			class: targetSuperclass.
+	self generateChangesFor: refactoring
+]
+
+{ #category : 'preconditions' }
 RBPullUpMethodRefactoring >> pushUpVariable: aVariable [
 	| refactoring |
 	refactoring :=  RBPullUpInstanceVariableRefactoring

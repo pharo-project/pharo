@@ -20,7 +20,7 @@ MyClassBeta >> methodForPushUp [
 	^ 24
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'dummy methods' }
 MyClassBeta >> methodOverriden [
 	^ self
 ]

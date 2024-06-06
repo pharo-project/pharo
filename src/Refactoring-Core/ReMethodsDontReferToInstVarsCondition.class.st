@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-ReMethodsDontReferToInstVarsCondition class >> fixChoiceClass [
+ReMethodsDontReferToInstVarsCondition class >> strategyChoiceClass [
 	^ RePushUpInstanceVariableChoice
 ]
 
@@ -20,11 +20,6 @@ ReMethodsDontReferToInstVarsCondition >> class: aRBClass selectors: aCollection 
 
 	class := aRBClass.
 	selectors := aCollection 
-]
-
-{ #category : 'as yet unclassified' }
-ReMethodsDontReferToInstVarsCondition >> fixChoice [
-	self shouldBeImplemented.
 ]
 
 { #category : 'displaying' }
