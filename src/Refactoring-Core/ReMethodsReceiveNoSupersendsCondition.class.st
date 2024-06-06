@@ -65,7 +65,7 @@ ReMethodsReceiveNoSupersendsCondition >> violationMessageOn: aStream [
 		senderMessage := violator at: 3.
 		
 		aStream
-			nextPutAll: senderClass realClass name;
+			nextPutAll: senderClass name;
 			nextPutAll: '>>';
 			nextPutAll: senderMessage;
 			nextPutAll: 'sends a supermessage to ';
