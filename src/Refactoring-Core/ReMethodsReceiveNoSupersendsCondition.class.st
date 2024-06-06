@@ -44,6 +44,7 @@ ReMethodsReceiveNoSupersendsCondition >> checkSuperSendsFromSiblings [
 	send super message to one of the selected messages."
 
 	| siblings |
+	targetSuperclass name == #Object ifTrue: [ ^ self ].
 	siblings := targetSuperclass subclasses reject: [:each | each = class].
 	siblings do: [:aRBClass | self checkSiblingSuperSendsFrom: aRBClass]
 ]

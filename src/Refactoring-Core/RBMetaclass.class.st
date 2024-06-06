@@ -72,6 +72,16 @@ RBMetaclass >> isMeta [
 	^true
 ]
 
+{ #category : 'accessing - methods' }
+RBMetaclass >> methodNamed: aSymbol [
+
+	| allMethods |
+	
+	allMethods := IdentitySet new.
+	self allMethods do: [ :each | each selector = aSymbol ifTrue: [^ each]].
+	^ nil
+]
+
 { #category : 'printing' }
 RBMetaclass >> printOn: aStream [
 	super printOn: aStream.
