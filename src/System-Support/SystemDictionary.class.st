@@ -106,22 +106,29 @@ SystemDictionary >> allTraitsDo: aBlock [
 SystemDictionary >> at: aKey put: anObject [
 	"Override from Dictionary to check Undeclared and fix up
 	references to undeclared variables."
-	| index assoc |
+	| index assoc registeredMethods |
 	aKey isSymbol ifFalse: [ self error: 'Only symbols are accepted as keys in SystemDictionary' ].
-	((self includesKey: aKey) not and: [ Undeclared includesKey: aKey ]) ifTrue: [
+
+	registeredMethods := #().
+
+	((self includesKey: aKey) not and: [ self undeclaredRegistry includesKey: aKey ]) ifTrue: [
  			| undeclared |
- 			undeclared := Undeclared associationAt: aKey.
+ 			undeclared := self undeclaredRegistry associationAt: aKey.
  			"Undeclared variables record using methods in a property, remove. Boostrap might have used Associations"
- 			(undeclared class == UndeclaredVariable) ifTrue: [undeclared removeProperty: #registeredMethods ifAbsent: [ ]]. 
+ 			(undeclared class == UndeclaredVariable) ifTrue: [
+				registeredMethods := undeclared removeProperty: #registeredMethods ifAbsent: [ #() ]]. 
  			"and change class to be Global" 
  			self add: (undeclared primitiveChangeClassTo: GlobalVariable new).
- 			Undeclared removeKey: aKey].
+ 			self undeclaredRegistry removeKey: aKey].
  	"code of super at:put:, not using Associations but GlobalVariable"
  	index := self findElementOrNil: aKey.
  	assoc := array at: index.
  	assoc
  		ifNil: [self atNewIndex: index put: (GlobalVariable key: aKey value: anObject). self flushClassNameCache]
  		ifNotNil: [assoc value: anObject].
+		
+	registeredMethods do: [ :aMethod | aMethod isInstalled ifTrue: [aMethod recompile] ].		
+
  	^ anObject
 ]
 
@@ -453,6 +460,13 @@ SystemDictionary >> traitNames [
 			  ifPresent: [ :global |
 			  global isTrait and: [ global isObsolete not ] ]
 			  ifAbsent: [ false ] ]
+]
+
+{ #category : 'accessing' }
+SystemDictionary >> undeclaredRegistry [
+	"For now we are referencing a global variable of the default environment of Pharo. But in the future each environments should have their undeclared registry, else we have memory leaks of the environments."
+
+	^ Undeclared
 ]
 
 { #category : 'copying' }
