@@ -4,9 +4,6 @@ I exist to test refactoring conditions
 Class {
 	#name : 'MyClassAlpha',
 	#superclass : 'Object',
-	#instVars : [
-		'instVarA'
-	],
 	#classVars : [
 		'SharedVarA'
 	],

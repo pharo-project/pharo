@@ -210,6 +210,11 @@ RBAbstractClass >> classSide [
 	^ model metaclassNamed: self name
 ]
 
+{ #category : 'accessing' }
+RBAbstractClass >> classVariableNames [
+	^self subclassResponsibility
+]
+
 { #category : 'method accessing' }
 RBAbstractClass >> compile: aString [
 	^ self compile: aString withAttributesFrom: (self methodFor: (self parserClass parseMethodPattern: aString))
