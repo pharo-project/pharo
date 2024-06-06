@@ -52,3 +52,9 @@ MyClassBeta >> methodWithSuperSend [
 	" I send a message to super "
 	^ super methodOverriden
 ]
+
+{ #category : 'dummy methods' }
+MyClassBeta >> methodWithSuperSendAndReferencingInstVar [
+	super methodOverriden.
+	instVarB
+]
