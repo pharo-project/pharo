@@ -70,8 +70,9 @@ TraitedClassTest >> setUp [
 { #category : 'running' }
 TraitedClassTest >> tearDown [
 
+	parentBehavior removeSelector: selector.
 	super tearDown.
-	parentBehavior removeSelector: selector
+
 ]
 
 { #category : 'running' }
