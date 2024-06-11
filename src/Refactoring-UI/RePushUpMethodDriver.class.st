@@ -23,8 +23,7 @@ Class {
 		'notInstVarRefs',
 		'notSharedVarRefs',
 		'notSupersendsReceived',
-		'notSupersendsSent',
-		'continuePushUp'
+		'notSupersendsSent'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -38,6 +37,22 @@ RePushUpMethodDriver class >> model: model scopes: refactoringScopes pushUpMetho
 		  model: model
 		  scopes: refactoringScopes
 		  pushUpMethods: methods
+]
+
+{ #category : 'ui - dialogs' }
+RePushUpMethodDriver >> alertFailedPreconditions [
+	SpAlertDialog new
+		title: 'Push Up failed: Required preconditions were not met';
+		label:  self failedPreconditionsErrorString;
+		acceptLabel: 'Accept';
+		openDialog
+]
+
+{ #category : 'execution' }
+RePushUpMethodDriver >> breakingChoices [
+
+	^ refactoring failedBreakingChangePreconditions collect: [ :each |
+		each class strategyChoiceClass new driver: self ]
 ]
 
 { #category : 'actions' }
@@ -73,11 +88,12 @@ RePushUpMethodDriver >> changes [
 
 { #category : 'execution' }
 RePushUpMethodDriver >> configureAndRunRefactoring [
-	
+
 	self configureRefactoring.
 
 	refactoring failedApplicabilityPreconditions ifNotEmpty: [
-		^ self inform: 'ToDo: Specify error' ].
+		^ self alertFailedPreconditions ].
+	
 	self setBreakingChangesPreconditions.
 	refactoring failedBreakingChangePreconditions
 		ifEmpty: [ self applyChanges ]
@@ -94,24 +110,14 @@ RePushUpMethodDriver >> configureRefactoring [
 		               to: superclass name
 ]
 
-{ #category : 'accessing' }
-RePushUpMethodDriver >> continuePushUp [
-	^ continuePushUp ifNil: [ continuePushUp := false ]
-]
+{ #category : 'ui - dialogs' }
+RePushUpMethodDriver >> failedPreconditionsErrorString [
 
-{ #category : 'configuration' }
-RePushUpMethodDriver >> defaultSelectDialog [
-
-	^ SpSelectDialog new
-		    title: 'There are potential breaking changes!';
-		          label: (self labelBasedOnBreakingChanges: {
-		notOverrides.
-		notSupersendsReceived.
-		notSupersendsSent });
-		          items: self unfixableBreakingChoices;
-		          display: [ :each | each description ];
-		          displayIcon: [ :each | self iconNamed: each systemIconName ];
-		          openModal
+	^ String streamContents: [ :stream |
+		  refactoring failedApplicabilityPreconditions do: [ :cond |
+			  cond check ifFalse: [
+				  cond violationMessageOn: stream.
+				  stream cr ] ] ]
 ]
 
 { #category : 'execution' }
@@ -122,42 +128,17 @@ RePushUpMethodDriver >> gatherUserInput [
 { #category : 'execution' }
 RePushUpMethodDriver >> handleBreakingChanges [
 
-	| fixableBreakingConditions unfixableBreakingConditions presenter changes |
-	fixableBreakingConditions := {
-		                             notInstVarRefs.
-		                             notSharedVarRefs } reject: [ :cond |
-		                             cond check ].
-
-	unfixableBreakingConditions := {
-		                               notOverrides.
-		                               notSupersendsSent.
-		                               notSupersendsReceived } reject: [
-		                               :cond | cond check ].
+	| presenter changes |
 	
-	"Display strategies for unfixable breaking conditions"
-	unfixableBreakingConditions ifNotEmpty: [ :cond |
-		| select |
-		select := self selectDialog.
-		select
-			ifNotNil: [
-				select action.
-				self continuePushUp ifFalse: [ ^ self ] ]
-			ifNil: [ ^ self ] ].
-
-	fixableBreakingConditions ifEmpty: [
-		self applyChanges.
-		^ self ].
 	"Display previous transformations that will fix the fixable breaking conditions"
-	changes := fixableBreakingConditions collect: [ :each |
-		           each class strategyChoiceClass new driver: self ].
-
+	changes := self breakingChoices.
+	
+	
 	presenter := self application newSelectMultiple.
 
 	presenter
 		title: 'There are potential breaking changes';
-		label: (self labelBasedOnBreakingChanges: {
-						 notInstVarRefs.
-						 notSharedVarRefs });
+		label: self labelBasedOnBreakingChanges;
 		items: changes;
 		display: [ :each | each description ];
 		onAccept: [ :dialog |
@@ -169,11 +150,10 @@ RePushUpMethodDriver >> handleBreakingChanges [
 ]
 
 { #category : 'ui - dialogs' }
-RePushUpMethodDriver >> labelBasedOnBreakingChanges: conditions [
+RePushUpMethodDriver >> labelBasedOnBreakingChanges [
 
 	^ String streamContents: [ :stream |
-		  conditions 
-			do: [ :cond |
+		  refactoring failedBreakingChangePreconditions do: [ :cond |
 			  cond check ifFalse: [
 				  cond violationMessageOn: stream.
 				  stream cr ] ].
@@ -199,11 +179,6 @@ RePushUpMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushUpMeth
 	scopes := refactoringScopes.
 	methods := methodsList.
 	class := methods first origin
-]
-
-{ #category : 'action' }
-RePushUpMethodDriver >> pushUpMethods [
-	continuePushUp := true
 ]
 
 { #category : 'action' }
@@ -263,16 +238,4 @@ RePushUpMethodDriver >> setBreakingChangesPreconditions [
 	notSharedVarRefs := refactoring preconditionNoReferencesToSharedVars.
 	notSupersendsSent := refactoring preconditionNoSupersendsSent.
 	notSupersendsReceived := refactoring preconditionNoSupersendsReceived
-]
-
-{ #category : 'execution' }
-RePushUpMethodDriver >> unfixableBreakingChoices [
-	| choices |
-	choices := OrderedCollection new.
-	notOverrides check ifFalse:[ choices add: (ReBrowseMethodOverridesChoice new driver: self) ].
-	notSupersendsReceived check ifFalse: [ choices add: (ReBrowseSubclassSuperSendsChoice new driver: self)  ].
-	notSupersendsSent check ifFalse: [ choices add: (ReBrowseSuperSendsSentChoice new driver: self)  ].
-	choices add: (RePushUpMethodChoice new driver: self).
-	^ choices
-	
 ]

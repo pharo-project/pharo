@@ -69,8 +69,9 @@ ReMethodsReceiveNoSupersendsCondition >> violationMessageOn: aStream [
 			nextPutAll: senderClass name;
 			nextPutAll: '>>';
 			nextPutAll: senderMessage;
-			nextPutAll: 'sends a supermessage to ';
+			nextPutAll: ' sends ''';
 			nextPutAll: messageSent;
+			nextPutAll: ''' to super';
 			space ]
 ]
 

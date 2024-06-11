@@ -59,7 +59,10 @@ RBPullUpMethodRefactoring >> applicabilityPreconditions [
 			   in: class).
 		  (ReClassHasSubclassesCondition new
 			   class: targetSuperclass;
-			   subclassesList: { class name }) }
+			   subclassesList: { class name }).
+		self preconditionNoOverrides.
+		  self preconditionNoSupersendsSent.
+		  self preconditionNoSupersendsReceived }
 ]
 
 { #category : 'preconditions' }
@@ -69,11 +72,8 @@ RBPullUpMethodRefactoring >> breakingChangePreconditions [
 	Finally check that supersends from and to pushed up methods do preserve system consistency. "
 
 	^ {
-		  self preconditionNoOverrides.
 		  self preconditionNoReferencesToInstVars.
-		  self preconditionNoReferencesToSharedVars.
-		  self preconditionNoSupersendsSent.
-		  self preconditionNoSupersendsReceived }
+		  self preconditionNoReferencesToSharedVars }
 ]
 
 { #category : 'preconditions' }
