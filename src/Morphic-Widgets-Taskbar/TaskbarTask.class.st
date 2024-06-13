@@ -8,20 +8,32 @@ Class {
 		'morph',
 		'state',
 		'label',
-		'icon'
+		'iconName'
 	],
 	#category : 'Morphic-Widgets-Taskbar',
 	#package : 'Morphic-Widgets-Taskbar'
 }
 
 { #category : 'intance creation' }
-TaskbarTask class >> morph: aMorph state: aSymbol icon: aForm label: aString [
+TaskbarTask class >> morph: aMorph state: aSymbol icon: anIconName label: aString [
+	"Answer a new instance of the receiver with the given parameters."
+	
+	self deprecated: 'Please use #iconName instead' transformWith: '`@receiver morph: `@arg1 state: `@arg2 icon: `@arg3 label: `arg4' -> '`@receiver morph: `@arg1 state: `@arg2 iconName: `@arg3 label: `arg4'.
+	^self
+		morph: aMorph
+		state: aSymbol
+		iconName: anIconName
+		label: aString
+]
+
+{ #category : 'intance creation' }
+TaskbarTask class >> morph: aMorph state: aSymbol iconName: anIconName label: aString [
 	"Answer a new instance of the receiver with the given parameters."
 
 	^self new
 		morph: aMorph;
 		state: aSymbol;
-		icon: aForm;
+		iconName: anIconName;
 		label: aString
 ]
 
@@ -32,7 +44,7 @@ TaskbarTask >> = aTaskbarTask [
 	^self species = aTaskbarTask species
 		and: [self morph == aTaskbarTask morph
 		and: [self state == aTaskbarTask state
-		and: [self icon = aTaskbarTask icon
+		and: [self iconName = aTaskbarTask iconName
 		and: [self label = aTaskbarTask label]]]]
 ]
 
@@ -57,7 +69,7 @@ TaskbarTask >> hash [
 
 	^self morph hash
 		bitXor: (self state hash
-		bitXor: (self icon hash
+		bitXor: (self iconName hash
 		bitXor: self label hash))
 ]
 
@@ -65,14 +77,30 @@ TaskbarTask >> hash [
 TaskbarTask >> icon [
 	"Answer the value of icon"
 
-	^ icon
+	self deprecated: 'use an icon name instead'.
+	^ iconName
 ]
 
 { #category : 'accessing' }
 TaskbarTask >> icon: anObject [
 	"Set the value of icon"
 
-	icon := anObject
+	self deprecated: 'use an icon name instead'.
+	iconName := anObject
+]
+
+{ #category : 'accessing' }
+TaskbarTask >> iconName [
+	"Answer the value of icon"
+
+	^ iconName
+]
+
+{ #category : 'accessing' }
+TaskbarTask >> iconName: anObject [
+	"Set the value of icon"
+
+	iconName := anObject
 ]
 
 { #category : 'testing' }
@@ -144,7 +172,7 @@ TaskbarTask >> taskListButtonFor: aTasklist [
 TaskbarTask >> taskbarButtonFor: aTaskBar [
 	"Answer a button for the task."
 
-	^self morph taskbarButtonFor: aTaskBar
+	^ aTaskBar theme newTaskbarButtonIn: aTaskBar forTask: self
 ]
 
 { #category : 'accessing' }
