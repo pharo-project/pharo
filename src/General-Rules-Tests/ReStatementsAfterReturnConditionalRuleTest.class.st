@@ -1,9 +1,9 @@
 Class {
 	#name : 'ReStatementsAfterReturnConditionalRuleTest',
 	#superclass : 'ReAbstractRuleTestCase',
-	#category : 'General-Rules-Tests-Migrated',
+	#category : 'General-Rules-Tests-Potential Bugs',
 	#package : 'General-Rules-Tests',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'tests' }
