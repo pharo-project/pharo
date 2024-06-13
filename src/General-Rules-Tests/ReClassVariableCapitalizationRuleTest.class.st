@@ -4,9 +4,9 @@ Class {
 	#instVars : [
 		'classFactory'
 	],
-	#category : 'General-Rules-Tests-Migrated',
+	#category : 'General-Rules-Tests-Style',
 	#package : 'General-Rules-Tests',
-	#tag : 'Migrated'
+	#tag : 'Style'
 }
 
 { #category : 'running' }
