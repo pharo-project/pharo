@@ -44,9 +44,10 @@ SycAddNewProtocolCommand >> execute [
 
 { #category : 'execution' }
 SycAddNewProtocolCommand >> prepareFullExecutionInContext: aToolContext [
+
 	super prepareFullExecutionInContext: aToolContext.
 
-	protocol := aToolContext requestProtocol: 'New protocol name'.
+	protocol := StProtocolNameChooserPresenter requestProtocolNameConfiguring: [ :presenter | presenter concernedClass: aToolContext lastSelectedClass ].
 
 	targetClass := self requestClassInContext: aToolContext.
 	targetClass := aToolContext currentMetaLevelOf: targetClass
