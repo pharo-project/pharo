@@ -178,6 +178,11 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 		selector: #taskbarMoveRight
 		getStateSelector: nil
 		enablementSelector: #canBeMovedToRight.
+	moveSubmenu
+		addToggle: 'Move to...' translated
+		target: self
+		selector: #taskbarMoveTo
+		getStateSelector: nil.
 	menu addLine.
 
 	submenu := theme newMenuIn: self for: self.
