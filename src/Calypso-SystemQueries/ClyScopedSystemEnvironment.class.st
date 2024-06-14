@@ -13,6 +13,11 @@ Class {
 }
 
 { #category : 'accessing' }
+ClyScopedSystemEnvironment >> == anObject [
+	^ anObject scope == self scope
+]
+
+{ #category : 'accessing' }
 ClyScopedSystemEnvironment >> asGlobalScopeIn: aNavigationEnvironment [
 	^ super asGlobalScopeIn: aNavigationEnvironment
  
@@ -77,6 +82,12 @@ ClyScopedSystemEnvironment >> createPackageNamed: packageName [
 	^ packageOrganizer addPackage: packageName
 ]
 
+{ #category : 'class management' }
+ClyScopedSystemEnvironment >> definedClassesInPackage: aPackage [
+
+	^ self classes select: [ :class | class package = aPackage ]
+]
+
 { #category : 'accessing' }
 ClyScopedSystemEnvironment >> ensurePackage: packageName [
 	"Should we allow creating new packages while calypso is displaying a scope?".
@@ -108,6 +119,11 @@ ClyScopedSystemEnvironment >> packageNamed: aString [
 ClyScopedSystemEnvironment >> packages [
 	
 	^ scope packages
+]
+
+{ #category : 'accessing' }
+ClyScopedSystemEnvironment >> scope [
+	^ scope
 ]
 
 { #category : 'accessing' }
