@@ -4,9 +4,9 @@ Class {
 	#instVars : [
 		'testClass'
 	],
-	#category : 'General-Rules-Tests-Base',
+	#category : 'General-Rules-Tests-Bugs',
 	#package : 'General-Rules-Tests',
-	#tag : 'Base'
+	#tag : 'Bugs'
 }
 
 { #category : 'running' }

@@ -285,7 +285,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	   #FreeTypeCache #FreeTypeSettings #FreeTypeSubPixelAntiAliasedGlyphRenderer
 	   #FT2Constants #GIFReadWriter #GlobalIdentifier #HaloMorph
 	   #CharacterScanner #ImageMorph #JPEGHuffmanTable #JPEGReadStream
-	   #JPEGReadWriter #Locale #MczInstaller #MD5NonPrimitive
+	   #Locale #MczInstaller #MD5NonPrimitive
 	   #MenuItemMorph #MenuMorph #RxMatcher #RxParser #RxsPredicate
 	   #SHA1 #ShortIntegerArray #SystemProgressMorph #SystemWindow
 	   #TestCase #TextContainer #TextDiffBuilder #ThumbnailMorph
