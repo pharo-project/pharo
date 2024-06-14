@@ -58,7 +58,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						targetSelector: #tools;
 						getSelector: #inspectorTool;
 						setSelector: #inspectorTool:;
-						default: (self environment at: #StInspector);
+						default: (self environment at: #StInspectorPresenter);
 						label: 'Inspector';
 						domainValues: Smalltalk tools recentInspectorTools ];
 		with: [
