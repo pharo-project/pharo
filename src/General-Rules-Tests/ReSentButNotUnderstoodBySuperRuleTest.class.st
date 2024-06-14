@@ -4,9 +4,9 @@ A ReSentButNotUnderstoodBySuperRuleTest is a test class for testing the behavior
 Class {
 	#name : 'ReSentButNotUnderstoodBySuperRuleTest',
 	#superclass : 'ReAbstractRuleTestCase',
-	#category : 'General-Rules-Tests-Migrated',
+	#category : 'General-Rules-Tests-Bugs',
 	#package : 'General-Rules-Tests',
-	#tag : 'Migrated'
+	#tag : 'Bugs'
 }
 
 { #category : 'accessing' }

@@ -4,9 +4,9 @@ A RBUsesTrueRuleTest is a test class for testing the behavior of RBUsesTrueRule
 Class {
 	#name : 'ReUsesTrueRuleTest',
 	#superclass : 'ReAbstractRuleTestCase',
-	#category : 'General-Rules-Tests-Migrated',
+	#category : 'General-Rules-Tests-Bugs',
 	#package : 'General-Rules-Tests',
-	#tag : 'Migrated'
+	#tag : 'Bugs'
 }
 
 { #category : 'sample' }

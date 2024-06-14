@@ -273,7 +273,7 @@ Morph >> exportAsGIF [
 Morph >> exportAsJPEG [
 	"Export the receiver's image as a JPEG"
 
-	self exportAs: 'jpeg' using: PluginBasedJPEGReadWriter
+	self exportAs: 'jpeg' using: JPEGReadWriter
 ]
 
 { #category : '*Morphic-Base' }

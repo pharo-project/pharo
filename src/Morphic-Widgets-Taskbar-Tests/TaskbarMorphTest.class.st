@@ -42,7 +42,7 @@ TaskbarMorphTest >> newTaskFor: window [
 	^ TaskbarTask
 		morph: window
 		state: #aNilState
-		icon: nil
+		iconName: nil
 		label: 'a Label'
 ]
 

@@ -114,15 +114,6 @@ Process class >> updateInheritableKeys [
 	InheritablePSKeys := keys asArray ifEmpty: [ nil ]
 ]
 
-{ #category : 'changing suspended state' }
-Process >> activateReturn: aContext value: value [
-	"Activate 'aContext return: value', so execution will return to aContext's sender"
-
-	^Processor activeProcess
-		evaluate: [suspendedContext := suspendedContext activateReturn: aContext value: value]
-		onBehalfOf: self
-]
-
 { #category : 'printing' }
 Process >> browserPrintString [
 	^self browserPrintStringWith: suspendedContext
@@ -151,43 +142,6 @@ Process >> calleeOf: aContext [
 	suspendedContext == aContext ifTrue: [^ nil].
 	^ (suspendedContext findContextSuchThat: [:c | c sender == aContext])
 		ifNil: [self error: 'aContext not in process chain']
-]
-
-{ #category : 'changing suspended state' }
-Process >> complete: aContext [
-	"Run self until aContext is popped or an unhandled error is raised.  Return self's new top context, unless an unhandled error was raised then return the signal context (rather than open a debugger)."
-
-	| ctxt pair |
-	ctxt := suspendedContext.
-	suspendedContext := nil.	"disable this process while running its stack in active process below"
-	pair := Processor activeProcess
-				evaluate: [ ctxt runUntilErrorOrReturnFrom: aContext ]
-				onBehalfOf: self.
-	suspendedContext := pair first.
-	^ pair second
-		ifNil: [ suspendedContext ]
-		ifNotNil: [ :error | error completeProcess: self with: aContext ]
-]
-
-{ #category : 'changing suspended state' }
-Process >> completeStep: aContext [
-	"Resume self until aContext is on top, or if already on top, complete next step"
-
-	| callee |
-	self suspendedContext == aContext ifFalse: [
-		^ self complete: (self calleeOf: aContext)].
-	callee := self step.
-	callee == aContext ifTrue: [^ callee].
-	aContext isDead ifTrue: [^ self suspendedContext].  "returned"
-	^ self complete: callee  "finish send"
-]
-
-{ #category : 'changing suspended state' }
-Process >> completeTo: aContext [
-	"Resume self until aContext is on top"
-
-	self suspendedContext == aContext ifTrue: [^ aContext].
-	^ self complete: (self calleeOf: aContext)
 ]
 
 { #category : 'accessing' }
@@ -425,39 +379,6 @@ Process >> on: exception do: handlerAction [
 		ifFalse: [ self install: newRoot ]
 ]
 
-{ #category : 'changing suspended state' }
-Process >> popTo: aContext [
-	"Pop self down to aContext by remote returning from aContext's callee.  Unwind blocks will be executed on the way.
-	This is done by pushing a new context on top which executes 'aContext callee return' then resuming self until aContext is reached.  This way any errors raised in an unwind block will get handled by senders in self and not by senders in the activeProcess.
-	If an unwind block raises an error that is not handled then the popping stops at the error and the signalling context is returned, othewise aContext is returned."
-
-	self == Processor activeProcess ifTrue:
-		[^self error: 'The active process cannot pop contexts'].
-	^(self calleeOf: aContext)
-		ifNil: [aContext]  "aContext is on top"
-		ifNotNil:
-			[:callee|
-			 Processor activeProcess
-				evaluate: [self return: callee value: callee receiver]
-				onBehalfOf: self]
-]
-
-{ #category : 'changing suspended state' }
-Process >> popTo: aContext value: aValue [
-	"Replace the suspendedContext with aContext, releasing all contexts
-	 between the currently suspendedContext and it."
-
-	self == Processor activeProcess ifTrue:
-		[^self error: 'The active process cannot pop contexts'].
-	^(self calleeOf: aContext)
-		ifNil: [aContext]  "aContext is on top"
-		ifNotNil:
-			[:callee|
-			 Processor activeProcess
-				evaluate: [self return: callee value: aValue]
-				onBehalfOf: self]
-]
-
 { #category : 'changing process state' }
 Process >> primitiveResume [
 	"Primitive. Allow the process that the receiver represents to continue. Put
@@ -557,20 +478,6 @@ Process >> resetPSValueAt: index [
 	env at: index put: nil
 ]
 
-{ #category : 'changing suspended state' }
-Process >> restartTop [
-	"Rollback top context and replace with new method.  Assumes self is suspended"
-
-	suspendedContext privRefresh
-]
-
-{ #category : 'changing suspended state' }
-Process >> restartTopWith: method [
-	"Rollback top context and replace with new method.  Assumes self is suspended"
-
-	suspendedContext privRefreshWith: method
-]
-
 { #category : 'changing process state' }
 Process >> resume [
 	"Allow the process that the receiver represents to continue. Put
@@ -580,18 +487,6 @@ Process >> resume [
 
 	suspendedContext ifNil: [^ self primitiveFailed].
 	^ self primitiveResume
-]
-
-{ #category : 'changing suspended state' }
-Process >> return: aContext value: value [
-	"Pop thread down to aContext's sender.  Execute any unwind blocks on the way.  See #popTo: comment and #runUntilErrorOrReturnFrom: for more details."
-
-	suspendedContext == aContext ifTrue:
-		[^Processor activeProcess
-			evaluate: [suspendedContext := aContext return: value from: aContext]
-			onBehalfOf: self].
-	self activateReturn: aContext value: value.
-	^self complete: aContext
 ]
 
 { #category : 'changing process state' }
@@ -671,18 +566,6 @@ Process >> step [
 ]
 
 { #category : 'changing suspended state' }
-Process >> step: aContext [
-	"Resume self until aContext is on top, or if already on top, do next step"
-
-	^Processor activeProcess
-		evaluate:
-			[self suspendedContext == aContext
-				ifTrue: [suspendedContext := suspendedContext step]
-				ifFalse: [self complete: (self calleeOf: aContext)]]
-		onBehalfOf: self
-]
-
-{ #category : 'changing suspended state' }
 Process >> stepToCallee [
 	"Step until top context changes"
 
@@ -694,33 +577,6 @@ Process >> stepToCallee [
 				suspendedContext := suspendedContext step]]
 		onBehalfOf: self.
 	^suspendedContext
-]
-
-{ #category : 'changing suspended state' }
-Process >> stepToHome: aContext [
-	| ctxt pair error |
-	ctxt := suspendedContext.
-	suspendedContext := nil.
-	pair := Processor activeProcess
-				evaluate: [ctxt stepToHome: aContext]
-				onBehalfOf: self.
-	suspendedContext := pair first.
-	error := pair second.
-
-	error ifNotNil: [
-		suspendedContext := error signalerContext.
-		"As we are activating a context that has been interrupted in the signal of the exception,
-		we need to push a receiver of the signal message.
-		A suspended context should always be a top context.
-		A top context has the return value of the message in the stack.
-		As this context has been suspended while sending a message the return value should be pushed.
-		This is maybe not the expected return value (the #signal message returns the value with the
-		one the exception is resumed).
-		But this allows the debugger to continue executing and does not crash the interpreter nor
-		the VM
-		"
-		suspendedContext push: nil].
-	^ suspendedContext
 ]
 
 { #category : 'changing process state' }

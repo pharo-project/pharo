@@ -4,9 +4,9 @@ A ReDoNotSendSuperInitializeInClassSideRuleTest is a test class for testing the 
 Class {
 	#name : 'ReShouldSendSuperInitializeAsFirstMessageTest',
 	#superclass : 'ReAbstractRuleTestCase',
-	#category : 'General-Rules-Tests-Migrated',
+	#category : 'General-Rules-Tests-Clean Code',
 	#package : 'General-Rules-Tests',
-	#tag : 'Migrated'
+	#tag : 'Clean Code'
 }
 
 { #category : 'tests' }
