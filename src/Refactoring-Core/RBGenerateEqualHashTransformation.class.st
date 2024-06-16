@@ -92,6 +92,15 @@ RBGenerateEqualHashTransformation >> applicabilityPreconditions [
 		  RBCondition definesInstanceVariable: variable in: self theClass ]
 ]
 
+{ #category : 'preconditions' }
+RBGenerateEqualHashTransformation >> breakingChangePreconditions [
+
+	^ { 
+		(RBCondition definesSelector: #= in: self theClass) not . 
+		(RBCondition definesSelector: #hash in: self theClass) not
+		}
+]
+
 { #category : 'transforming' }
 RBGenerateEqualHashTransformation >> compileEqual [
 	| method statement comparison |
@@ -174,6 +183,13 @@ RBGenerateEqualHashTransformation >> privateTransform [
 { #category : 'accessing' }
 RBGenerateEqualHashTransformation >> theClass [
 	^ (self classObjectFor: className) instanceSide
+]
+
+{ #category : 'accessing' }
+RBGenerateEqualHashTransformation >> variables [
+	"Answer a <Collection> of <Symbol> each one representing a variable in the receiver's target class"
+	
+	^ variables 
 ]
 
 { #category : 'accessing' }

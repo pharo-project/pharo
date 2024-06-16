@@ -12,5 +12,11 @@ StSelectDialogMock >> action [
 ]
 
 { #category : 'accessing' }
+StSelectDialogMock >> selectedItems [
+
+	^ { #iVar1 . #iVar2 }
+]
+
+{ #category : 'accessing' }
 StSelectDialogMock >> title: doesNotCare [
 ]
