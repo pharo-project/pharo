@@ -4,14 +4,29 @@ This smell arises when a class has no comment. Classes should have comments to e
 Class {
 	#name : 'ReNoClassCommentRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'testing' }
 ReNoClassCommentRule class >> checksClass [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReNoClassCommentRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
+ReNoClassCommentRule class >> rationale [
+	^ 'Classes should have comments to explain their purpose, collaborations with other classes, and optionally provide examples of use.'
+]
+
+{ #category : 'accessing' }
+ReNoClassCommentRule class >> ruleName [
+	^ 'No class comment'
 ]
 
 { #category : 'accessing' }
@@ -25,19 +40,4 @@ ReNoClassCommentRule class >> uniqueIdentifierName [
 ReNoClassCommentRule >> basicCheck: aClass [
 	(aClass isMeta or: [ aClass isTestCase ]) ifTrue: [ ^ false ].
 	^ aClass hasComment not
-]
-
-{ #category : 'accessing' }
-ReNoClassCommentRule >> group [
-	^ 'Coding Idiom Violation'
-]
-
-{ #category : 'accessing' }
-ReNoClassCommentRule >> name [
-	^ 'No class comment'
-]
-
-{ #category : 'accessing' }
-ReNoClassCommentRule >> rationale [
-	^ 'Classes should have comments to explain their purpose, collaborations with other classes, and optionally provide examples of use.'
 ]

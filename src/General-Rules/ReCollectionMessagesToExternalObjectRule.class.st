@@ -4,10 +4,20 @@ Checks for methods that appear to be modifying a collection that is owned by ano
 Class {
 	#name : 'ReCollectionMessagesToExternalObjectRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
+
+{ #category : 'accessing' }
+ReCollectionMessagesToExternalObjectRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
+ReCollectionMessagesToExternalObjectRule class >> ruleName [
+	^ 'Sends add:/remove: to external collection'
+]
 
 { #category : 'accessing' }
 ReCollectionMessagesToExternalObjectRule class >> uniqueIdentifierName [
@@ -29,11 +39,6 @@ ReCollectionMessagesToExternalObjectRule >> afterCheck: aNode mappings: mappingD
 	^ (aNode scope lookupVar: collectionOwner name) scope ~= Smalltalk globals
 ]
 
-{ #category : 'accessing' }
-ReCollectionMessagesToExternalObjectRule >> group [
-	^ 'Coding Idiom Violation'
-]
-
 { #category : 'initialization' }
 ReCollectionMessagesToExternalObjectRule >> initialize [
 	super initialize.
@@ -43,9 +48,4 @@ ReCollectionMessagesToExternalObjectRule >> initialize [
 		'(`@collectionOwner `@collectionGetter: `@args) addAll:       `@arg'
 		'(`@collectionOwner `@collectionGetter: `@args) removeAll: `@arg'
 		)
-]
-
-{ #category : 'accessing' }
-ReCollectionMessagesToExternalObjectRule >> name [
-	^ 'Sends add:/remove: to external collection'
 ]

@@ -131,10 +131,10 @@ PackageTest >> testAnonymousClassAndSelector [
 	| ghost method |
 	ghost := Object newAnonymousSubclassInEnvironment: testEnvironment.
 	method := ghost compiler compile: 'rpackagetest'.
-	ghost addSelector: #rpackagetest withMethod: method.
-	self deny: (self organizer undefinedPackage includesSelector: #rpackagetest ofClass: ghost).
+	ghost addSelector: #packagetest withMethod: method.
+	self deny: (self organizer undefinedPackage includesSelector: #packagetest ofClass: ghost).
 	self assert: (self organizer packageOfClassNamed: ghost name) equals: self organizer undefinedPackage.
-	ghost classify: #rpackagetest under: '*rpackagetest'
+	ghost classify: #packagetest under: '*packagetest'
 ]
 
 { #category : 'tests - extensions' }
@@ -154,7 +154,7 @@ PackageTest >> testAsPackageWithError [
 ]
 
 { #category : 'tests - demotion' }
-PackageTest >> testDemoteToRPackageNamed [
+PackageTest >> testDemoteToPackageNamed [
 
 	| package1 package2 class |
 	package1 := self ensurePackage: #'Test1-TAG1'.
@@ -171,7 +171,7 @@ PackageTest >> testDemoteToRPackageNamed [
 ]
 
 { #category : 'tests - demotion' }
-PackageTest >> testDemoteToRPackageNamedExistingPackage [
+PackageTest >> testDemoteToPackageNamedExistingPackage [
 
 	| package1 package2 packageExisting class |
 	package1 := self ensurePackage: #'Test1-TAG1'.
@@ -190,7 +190,7 @@ PackageTest >> testDemoteToRPackageNamedExistingPackage [
 ]
 
 { #category : 'tests - demotion' }
-PackageTest >> testDemoteToRPackageNamedKeepOrganizer [
+PackageTest >> testDemoteToPackageNamedKeepOrganizer [
 
 	| newOrganizer package renamedPackage |
 	newOrganizer := PackageOrganizer new.
@@ -203,7 +203,7 @@ PackageTest >> testDemoteToRPackageNamedKeepOrganizer [
 ]
 
 { #category : 'tests - demotion' }
-PackageTest >> testDemoteToRPackageNamedMultilevelPackage [
+PackageTest >> testDemoteToPackageNamedMultilevelPackage [
 
 	| package1 package2 class |
 	package1 := self ensurePackage: #'Test1-TAG1-X1'.
@@ -220,7 +220,7 @@ PackageTest >> testDemoteToRPackageNamedMultilevelPackage [
 ]
 
 { #category : 'tests - demotion' }
-PackageTest >> testDemoteToRPackageNamedWithExtension [
+PackageTest >> testDemoteToPackageNamedWithExtension [
 
 	| packageOriginal packageDemoted class classOther |
 	packageOriginal := self ensurePackage: #'Test1-TAG1'.

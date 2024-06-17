@@ -5,9 +5,9 @@ Using it inside a #printOn: will imply a useless creation of stream and its pass
 Class {
 	#name : 'ReNoPrintStringInPrintOnRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'Renraku-Rules',
+	#category : 'Renraku-Optimization',
 	#package : 'Renraku',
-	#tag : 'Rules'
+	#tag : 'Optimization'
 }
 
 { #category : 'testing - interest' }
@@ -16,9 +16,24 @@ ReNoPrintStringInPrintOnRule class >> checksMethod [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReNoPrintStringInPrintOnRule class >> group [
+	^ 'Optimization'
+]
+
 { #category : 'class initialization' }
 ReNoPrintStringInPrintOnRule class >> initialize [
     ReRuleManager cleanUp
+]
+
+{ #category : 'accessing' }
+ReNoPrintStringInPrintOnRule class >> rationale [
+	^ 'Use the stream argument to #printOn: e.g.( stream print: anObject ) instead of creating an extra stream by using printString. e.g.( stream nextPutAll: anObject printString ).'
+]
+
+{ #category : 'accessing' }
+ReNoPrintStringInPrintOnRule class >> ruleName [
+	^ 'No printString inside printOn'
 ]
 
 { #category : 'running' }
@@ -33,19 +48,4 @@ ReNoPrintStringInPrintOnRule >> check: aMethod forCritiquesDo: aCriticBlock [
 				createTrivialCritiqueOn: aMethod
 				intervalOf: msgSend
 				hint: msgSend selector asString )]
-]
-
-{ #category : 'accessing' }
-ReNoPrintStringInPrintOnRule >> group [
-	^ 'Optimization'
-]
-
-{ #category : 'accessing' }
-ReNoPrintStringInPrintOnRule >> name [
-	^ 'No printString inside printOn'
-]
-
-{ #category : 'accessing' }
-ReNoPrintStringInPrintOnRule >> rationale [
-	^ 'Use the stream argument to #printOn: e.g.( stream print: anObject ) instead of creating an extra stream by using printString. e.g.( stream nextPutAll: anObject printString ).'
 ]

@@ -35,10 +35,25 @@ be avoided.
 Class {
 	#name : 'ReShouldntRaiseErrorRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
+
+{ #category : 'accessing' }
+ReShouldntRaiseErrorRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
+ReShouldntRaiseErrorRule class >> rationale [
+	^ 'Replaces `shouldnt: [ ... ] raise: Error` with  `[ ... ]`'
+]
+
+{ #category : 'accessing' }
+ReShouldntRaiseErrorRule class >> ruleName [
+	^ 'Do not use  `shouldnt: [ ... ] raise: Error` '
+]
 
 { #category : 'accessing' }
 ReShouldntRaiseErrorRule class >> uniqueIdentifierName [
@@ -47,25 +62,10 @@ ReShouldntRaiseErrorRule class >> uniqueIdentifierName [
 	^'ShouldntRaiseErrorRule'
 ]
 
-{ #category : 'accessing' }
-ReShouldntRaiseErrorRule >> group [
-	^ 'Coding Idiom Violation'
-]
-
 { #category : 'initialization' }
 ReShouldntRaiseErrorRule >> initialize [
 	super initialize.
 	self
 		replace: 'self shouldnt: [ `@statements ] raise: Error' with: '`@statements';
 		replace: 'self shouldnt: [ `@statements ] raise: Exception' with: '`@statements'
-]
-
-{ #category : 'accessing' }
-ReShouldntRaiseErrorRule >> name [
-	^ 'Do not use  `shouldnt: [ ... ] raise: Error` '
-]
-
-{ #category : 'accessing' }
-ReShouldntRaiseErrorRule >> rationale [
-	^ 'Replaces `shouldnt: [ ... ] raise: Error` with  `[ ... ]`'
 ]

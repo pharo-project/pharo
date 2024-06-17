@@ -9,10 +9,20 @@ For every other use, it is just the same as ""self"".
 Class {
 	#name : 'ReSuperWithoutSend',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
+
+{ #category : 'accessing' }
+ReSuperWithoutSend class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+ReSuperWithoutSend class >> ruleName [
+	^ 'super makes only sense as the receiver of a message'
+]
 
 { #category : 'running' }
 ReSuperWithoutSend >> basicCheck: aNode [
@@ -23,14 +33,4 @@ ReSuperWithoutSend >> basicCheck: aNode [
 		^aNode parent receiver ~= aNode
 	].
 	^true
-]
-
-{ #category : 'accessing' }
-ReSuperWithoutSend >> group [
-	^ 'Design Flaws'
-]
-
-{ #category : 'accessing' }
-ReSuperWithoutSend >> name [
-	^ 'super makes only sense as the receiver of a message'
 ]

@@ -1,9 +1,9 @@
 Class {
 	#name : 'ReProperMethodProtocolNameForFileInOutRule',
 	#superclass : 'ReProperMethodProtocolNameRule',
-	#category : 'Renraku-Rules',
+	#category : 'Renraku-Coding Idiom Violation',
 	#package : 'Renraku',
-	#tag : 'Rules'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'idioms' }

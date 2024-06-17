@@ -5,8 +5,9 @@ I create new class using supeclass of my target class. And I replace superclass 
 Class {
 	#name : 'SycCmInsertSuperclassCommand',
 	#superclass : 'SycCmNewClassCreationCommand',
-	#category : 'SystemCommands-ClassCommands',
-	#package : 'SystemCommands-ClassCommands'
+	#category : 'SystemCommands-ClassCommands-Creation',
+	#package : 'SystemCommands-ClassCommands',
+	#tag : 'Creation'
 }
 
 { #category : 'executing' }

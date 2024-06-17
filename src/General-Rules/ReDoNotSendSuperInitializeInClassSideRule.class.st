@@ -14,10 +14,20 @@ ZnServer class>>initialize
 Class {
 	#name : 'ReDoNotSendSuperInitializeInClassSideRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
+
+{ #category : 'accessing' }
+ReDoNotSendSuperInitializeInClassSideRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+ReDoNotSendSuperInitializeInClassSideRule class >> ruleName [
+	^ 'Class-side #initialize should not send "super initialize".'
+]
 
 { #category : 'accessing' }
 ReDoNotSendSuperInitializeInClassSideRule class >> uniqueIdentifierName [
@@ -26,22 +36,12 @@ ReDoNotSendSuperInitializeInClassSideRule class >> uniqueIdentifierName [
 	^'DoNotSendSuperInitializeInClassSideRule'
 ]
 
-{ #category : 'accessing' }
-ReDoNotSendSuperInitializeInClassSideRule >> group [
-	^ 'Potential Bugs'
-]
-
 { #category : 'initialization' }
 ReDoNotSendSuperInitializeInClassSideRule >> initialize [
 	super initialize.
 	self
 		replace: 'super initialize'
 		with: ''
-]
-
-{ #category : 'accessing' }
-ReDoNotSendSuperInitializeInClassSideRule >> name [
-	^ 'Class-side #initialize should not send "super initialize".'
 ]
 
 { #category : 'testing' }

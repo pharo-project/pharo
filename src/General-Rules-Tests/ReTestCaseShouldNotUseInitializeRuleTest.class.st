@@ -4,9 +4,9 @@ Class {
 	#instVars : [
 		'aDummyVar'
 	],
-	#category : 'General-Rules-Tests-Migrated',
+	#category : 'General-Rules-Tests-Clean Code',
 	#package : 'General-Rules-Tests',
-	#tag : 'Migrated'
+	#tag : 'Clean Code'
 }
 
 { #category : 'accessing' }

@@ -4,21 +4,26 @@ Do not send requests to ""Smalltalk"" (which models the whole image)  that are r
 Class {
 	#name : 'ReSmalltalkGlobalsRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
+
+{ #category : 'accessing' }
+ReSmalltalkGlobalsRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
+ReSmalltalkGlobalsRule class >> ruleName [
+	^ 'Use "Smalltalk globals" instead of "Smalltalk"'
+]
 
 { #category : 'accessing' }
 ReSmalltalkGlobalsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^ 'SmalltalkGlobalsRule'
-]
-
-{ #category : 'accessing' }
-ReSmalltalkGlobalsRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'initialization' }
@@ -37,9 +42,4 @@ ReSmalltalkGlobalsRule >> initialize [
 			with: 'Smalltalk globals flushClassNameCache';
 		replace: 'Smalltalk includesKey: `@statements'
 			with: 'Smalltalk globals includesKey: `@statements'
-]
-
-{ #category : 'accessing' }
-ReSmalltalkGlobalsRule >> name [
-	^ 'Use "Smalltalk globals" instead of "Smalltalk"'
 ]

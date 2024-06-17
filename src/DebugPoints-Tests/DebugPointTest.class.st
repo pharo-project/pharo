@@ -18,7 +18,7 @@ Class {
 	#tag : 'Model'
 }
 
-{ #category : 'nil' }
+{ #category : 'utils' }
 DebugPointTest >> compileTestClass [
 
 	testClass := ((DummyTestClass << #DummyTestSubclass)
@@ -176,6 +176,15 @@ DebugPointTest >> testBreakDebugPoint [
 	dp := DebugPointManager installNew: BreakDebugPoint on: node.
 	self should: [dp hitWithContext: context] raise: Break.
 	self should: [DummyTestClass new id:2 ] raise: Break.
+]
+
+{ #category : 'tests' }
+DebugPointTest >> testBreakDebugPointOnClassSideMethod [
+
+	node := (DummyTestClass class >> #dummyClassSide) ast.
+	dp := DebugPointManager installNew: BreakDebugPoint on: node.
+	self should: [ dp hitWithContext: context ] raise: Break.
+	self should: [ DummyTestClass dummyClassSide ] raise: Break
 ]
 
 { #category : 'tests' }

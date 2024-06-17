@@ -4,14 +4,34 @@ Nobody should directly access the method dictionary. It is purely an implementat
 Class {
 	#name : 'ReSendsMethodDictRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Bugs'
 }
 
 { #category : 'testing' }
 ReSendsMethodDictRule class >> checksMethod [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReSendsMethodDictRule class >> group [
+	^ 'Bugs'
+]
+
+{ #category : 'accessing' }
+ReSendsMethodDictRule class >> rationale [
+	^ 'Nobody should directly access the method dictionary. It is purely an implementation artefact that we use one dictionary and it might change in the future'
+]
+
+{ #category : 'accessing' }
+ReSendsMethodDictRule class >> ruleName [
+	^ 'No direct access of methodDict'
+]
+
+{ #category : 'accessing' }
+ReSendsMethodDictRule class >> severity [
+	^ #error
 ]
 
 { #category : 'accessing' }
@@ -27,24 +47,4 @@ ReSendsMethodDictRule >> basicCheck: aMethod [
 	({Behavior . ClassDescription . Class. Metaclass. TraitedMetaclass. MetaclassForTraits} includes: aMethod methodClass)
 		ifTrue: [ ^ false ].
 	^(aMethod refersToLiteral: #methodDict) and: [aMethod messages includes: #methodDict]
-]
-
-{ #category : 'accessing' }
-ReSendsMethodDictRule >> group [
-	^ 'Bugs'
-]
-
-{ #category : 'accessing' }
-ReSendsMethodDictRule >> name [
-	^ 'No direct access of methodDict'
-]
-
-{ #category : 'accessing' }
-ReSendsMethodDictRule >> rationale [
-	^ 'Nobody should directly access the method dictionary. It is purely an implementation artefact that we use one dictionary and it might change in the future'
-]
-
-{ #category : 'accessing' }
-ReSendsMethodDictRule >> severity [
-	^ #error
 ]

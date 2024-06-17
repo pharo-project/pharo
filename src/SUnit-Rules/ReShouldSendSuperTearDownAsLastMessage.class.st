@@ -6,9 +6,9 @@ Class {
 	#superclass : 'ReAbstractRule',
 	#traits : 'ReTSUnitGroupedRule',
 	#classTraits : 'ReTSUnitGroupedRule classTrait',
-	#category : 'SUnit-Rules-Base',
+	#category : 'SUnit-Rules-SUnit',
 	#package : 'SUnit-Rules',
-	#tag : 'Base'
+	#tag : 'SUnit'
 }
 
 { #category : 'testing - interest' }
@@ -17,10 +17,21 @@ ReShouldSendSuperTearDownAsLastMessage class >> checksMethod [
 	^ true
 ]
 
+{ #category : 'accessing' }
+ReShouldSendSuperTearDownAsLastMessage class >> group [
+
+	^ 'SUnit'
+]
+
 { #category : 'utilities' }
 ReShouldSendSuperTearDownAsLastMessage class >> parseTreeSearcher [
 
 	^ RBParseTreeSearcher new
+]
+
+{ #category : 'accessing' }
+ReShouldSendSuperTearDownAsLastMessage class >> ruleName [
+	^ 'Provide a call to super tearDown as the last message in the tearDown method'
 ]
 
 { #category : 'utilities' }
@@ -48,10 +59,4 @@ ReShouldSendSuperTearDownAsLastMessage >> basicCheck: aMethod [
 ReShouldSendSuperTearDownAsLastMessage >> isClassToCheck: aClass [
 
 	^ { TestCase. TestResource } anySatisfy: [:each | aClass inheritsFrom: each ]
-]
-
-{ #category : 'accessing' }
-ReShouldSendSuperTearDownAsLastMessage >> name [
-
-	^ 'Provide a call to super tearDown as the last message in the tearDown method'
 ]

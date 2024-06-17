@@ -6,14 +6,24 @@ This rule will not activate if the method itself deprecated because it is make s
 Class {
 	#name : 'OverridesDeprecatedMethodRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Base',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Base'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'testing' }
 OverridesDeprecatedMethodRule class >> checksMethod [
 	^ true
+]
+
+{ #category : 'accessing' }
+OverridesDeprecatedMethodRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+OverridesDeprecatedMethodRule class >> ruleName [
+	^ 'Overrides a deprecated method'
 ]
 
 { #category : 'accessing' }
@@ -28,14 +38,4 @@ OverridesDeprecatedMethodRule >> basicCheck: aMethod [
 	aMethod isDeprecated ifTrue: [ ^ false ].
 
 	^ aMethod overriddenMethods anySatisfy: #isDeprecated
-]
-
-{ #category : 'accessing' }
-OverridesDeprecatedMethodRule >> group [
-	^ 'Potential Bugs'
-]
-
-{ #category : 'accessing' }
-OverridesDeprecatedMethodRule >> name [
-	^ 'Overrides a deprecated method'
 ]

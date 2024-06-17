@@ -6,15 +6,30 @@ Example: if your baseline class is named ""BaselineOfMyKillerApp"" it should be 
 Class {
 	#name : 'ReBaselineProperlyPackagedRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing - interest' }
 ReBaselineProperlyPackagedRule class >> checksClass [
 
 	^ true
+]
+
+{ #category : 'accessing' }
+ReBaselineProperlyPackagedRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+ReBaselineProperlyPackagedRule class >> ruleName [
+	^ 'Baseline class not properly packaged in a package with the same name'
+]
+
+{ #category : 'accessing' }
+ReBaselineProperlyPackagedRule class >> severity [
+	^ #information
 ]
 
 { #category : 'manifest' }
@@ -31,19 +46,4 @@ ReBaselineProperlyPackagedRule >> basicCheck: aClass [
 	 
 	^(aClass name beginsWith: 'BaselineOf') 
 		and: [ aClass package name ~= aClass name ]
-]
-
-{ #category : 'accessing' }
-ReBaselineProperlyPackagedRule >> group [
-	^ 'Design Flaws'
-]
-
-{ #category : 'accessing' }
-ReBaselineProperlyPackagedRule >> name [
-	^ 'Baseline class not properly packaged in a package with the same name'
-]
-
-{ #category : 'accessing' }
-ReBaselineProperlyPackagedRule >> severity [
-	^ #information
 ]

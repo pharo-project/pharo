@@ -10,12 +10,6 @@ Class {
 	#tag : 'Selection'
 }
 
-{ #category : 'class initialization' }
-FTMultipleSelectionStrategy class >> initialize [
-
-	self deprecatedAliases: { #FTMultipleSelection }
-]
-
 { #category : 'testing' }
 FTMultipleSelectionStrategy >> isMultiple [
 	^ true

@@ -30,11 +30,6 @@ Class {
 	#tag : 'Editors-Methods'
 }
 
-{ #category : 'class initialization' }
-ClyProtocolEditorMorph class >> initialize [
-	self deprecatedAliases: { #ClyProtocolAndPackageEditorMorph }
-]
-
 { #category : 'building' }
 ClyProtocolEditorMorph >> build [
 	self buildResetButton.
@@ -163,8 +158,10 @@ ClyProtocolEditorMorph >> requestProtocol [
 
 	| newProtocol priorProtocol |
 	priorProtocol := ownerTool methodProtocol ifNil: [ '' ].
-
-	newProtocol := self ownerTool context requestProtocol: 'New protocol name' suggesting: priorProtocol.
+	newProtocol := StProtocolNameChooserPresenter requestProtocolNameConfiguring: [ :presenter |
+		               presenter
+			               protocolName: priorProtocol;
+			               concernedClass: ownerTool methodClass ].
 	newProtocol = priorProtocol ifTrue: [ ^ CmdCommandAborted signal ].
 
 	ownerTool methodProtocol: newProtocol

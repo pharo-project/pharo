@@ -20,21 +20,31 @@ This code can be changed to
 Class {
 	#name : 'ReFileBlocksRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
+
+{ #category : 'accessing' }
+ReFileBlocksRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+ReFileBlocksRule class >> rationale [
+	^ 'Checks assignment to a variable that is the first statement inside the value block that is also used in the unwind block.'
+]
+
+{ #category : 'accessing' }
+ReFileBlocksRule class >> ruleName [
+	^ 'Assignment inside unwind blocks should be outside.'
+]
 
 { #category : 'accessing' }
 ReFileBlocksRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'FileBlocksRule'
-]
-
-{ #category : 'accessing' }
-ReFileBlocksRule >> group [
-	^ 'Potential Bugs'
 ]
 
 { #category : 'initialization' }
@@ -51,14 +61,4 @@ ReFileBlocksRule >> initialize [
 				`@.statements]
 						ifCurtailed:
 							[`var `@messages: `@args]' )
-]
-
-{ #category : 'accessing' }
-ReFileBlocksRule >> name [
-	^ 'Assignment inside unwind blocks should be outside.'
-]
-
-{ #category : 'accessing' }
-ReFileBlocksRule >> rationale [
-	^ 'Checks assignment to a variable that is the first statement inside the value block that is also used in the unwind block.'
 ]

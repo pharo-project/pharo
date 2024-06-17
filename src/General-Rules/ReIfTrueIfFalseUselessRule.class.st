@@ -4,15 +4,20 @@ it's more efficient and  more readable to return the condition that use ifTrue: 
 Class {
 	#name : 'ReIfTrueIfFalseUselessRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'accessing' }
-ReIfTrueIfFalseUselessRule >> group [
+ReIfTrueIfFalseUselessRule class >> group [
 
 	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+ReIfTrueIfFalseUselessRule class >> ruleName [
+	^ 'useless ifTrue:ifFalse:'
 ]
 
 { #category : 'initialization' }
@@ -24,10 +29,4 @@ ReIfTrueIfFalseUselessRule >> initialize [
 		with: '^ (`@condition)';
 		replace: ' (`@condition) ifFalse: [ ^ false ] ifTrue: [ ^ true ] '
 		with: '^ (`@condition)'
-]
-
-{ #category : 'accessing' }
-ReIfTrueIfFalseUselessRule >> name [ 
-
-^ 'useless ifTrue:ifFalse:'
 ]

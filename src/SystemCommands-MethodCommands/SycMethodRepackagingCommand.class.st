@@ -28,5 +28,9 @@ SycMethodRepackagingCommand >> classifyMethod: aMethod [
 { #category : 'categories' }
 SycMethodRepackagingCommand >> newProtocolFor: aMethod [
 
-	^ self asCommandActivator context requestProtocol: 'New protocol name for: ' , aMethod name suggesting: (MethodClassifier suggestProtocolFor: aMethod)
+	^ StProtocolNameChooserPresenter requestProtocolNameConfiguring: [ :presenter :dialog |
+		  dialog title: 'New protocol name for: ' , aMethod name.
+		  presenter
+			  protocolName: (MethodClassifier suggestProtocolFor: aMethod);
+			  concernedClass: aMethod methodClass ]
 ]

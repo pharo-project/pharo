@@ -9,12 +9,6 @@ Class {
 	#tag : 'States'
 }
 
-{ #category : 'class initialization' }
-TabSelectedState class >> initialize [
-
-	self deprecatedAliases: { #TabSelected }
-]
-
 { #category : 'protocol' }
 TabSelectedState >> backgroundColor [
 	^ Smalltalk ui theme selectionColor

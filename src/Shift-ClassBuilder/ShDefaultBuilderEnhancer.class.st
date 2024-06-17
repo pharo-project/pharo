@@ -82,8 +82,10 @@ ShDefaultBuilderEnhancer >> initializeBuilder: aBuilder [
 	aBuilder addChangeComparer: ShMetaclassChangeDetector
 ]
 
-{ #category : 'events' }
-ShDefaultBuilderEnhancer >> metaclassCreated: builder [
+{ #category : 'accessing' }
+ShDefaultBuilderEnhancer >> metaclassClassFor: aBuilder [
+
+	^ Metaclass
 ]
 
 { #category : 'events' }
@@ -96,11 +98,6 @@ ShDefaultBuilderEnhancer >> migrateInstancesTo: aClass installer: aShiftClassIns
 ShDefaultBuilderEnhancer >> migrateToClass: aClass installer: aShiftClassInstaller [
 
 	aShiftClassInstaller migrateClassTo: aClass
-]
-
-{ #category : 'class modifications' }
-ShDefaultBuilderEnhancer >> newMetaclass: builder [
-	^ builder metaclassClass new
 ]
 
 { #category : 'class modifications' }

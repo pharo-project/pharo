@@ -1,9 +1,9 @@
 Class {
 	#name : 'ReBetweenAndRuleTest',
 	#superclass : 'ReAbstractRuleTestCase',
-	#category : 'General-Rules-Tests-Migrated',
+	#category : 'General-Rules-Tests-Coding Idiom Violation',
 	#package : 'General-Rules-Tests',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'tests' }

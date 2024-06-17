@@ -8,14 +8,29 @@ The defined number of arguments can be edited in #argumentsCount.
 Class {
 	#name : 'ReExcessiveArgumentsRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing' }
 ReExcessiveArgumentsRule class >> checksMethod [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReExcessiveArgumentsRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+ReExcessiveArgumentsRule class >> rationale [
+	^ 'Long argument lists (five or more) can indicate that a new object should be created to wrap the numerous parameters.'
+]
+
+{ #category : 'accessing' }
+ReExcessiveArgumentsRule class >> ruleName [
+	^ 'Excessive number of arguments'
 ]
 
 { #category : 'accessing' }
@@ -37,19 +52,4 @@ ReExcessiveArgumentsRule >> basicCheck: aMethod [
 	aMethod isFFIMethod ifTrue: [ ^false ].
 
 	^ aMethod numArgs >= self argumentsCount
-]
-
-{ #category : 'accessing' }
-ReExcessiveArgumentsRule >> group [
-	^ 'Design Flaws'
-]
-
-{ #category : 'accessing' }
-ReExcessiveArgumentsRule >> name [
-	^ 'Excessive number of arguments'
-]
-
-{ #category : 'accessing' }
-ReExcessiveArgumentsRule >> rationale [
-	^ 'Long argument lists (five or more) can indicate that a new object should be created to wrap the numerous parameters.'
 ]

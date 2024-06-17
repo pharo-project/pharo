@@ -7,15 +7,27 @@ Class {
 	#instVars : [
 		'protocolName'
 	],
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'testing' }
 ReNoSpaceAroundProtocolRule class >> checksMethod [
 
 	^ true
+]
+
+{ #category : 'accessing' }
+ReNoSpaceAroundProtocolRule class >> group [
+
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
+ReNoSpaceAroundProtocolRule class >> ruleName [
+
+	^ 'Protocol should be trimmed (includes space at start or end)'
 ]
 
 { #category : 'manifest' }
@@ -43,16 +55,4 @@ ReNoSpaceAroundProtocolRule >> critiqueFor: aMethod [
 			   protocol: { proposedProtocol }
 			   inMethod: aMethod selector
 			   inClass: aMethod methodClass name asSymbol)
-]
-
-{ #category : 'accessing' }
-ReNoSpaceAroundProtocolRule >> group [
-
-	^ 'Coding Idiom Violation'
-]
-
-{ #category : 'accessing' }
-ReNoSpaceAroundProtocolRule >> name [
-
-	^ 'Protocol named "{1}" should be trimmed (includes space at start or end)' format: { protocolName }
 ]

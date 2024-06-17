@@ -4,9 +4,9 @@ Rule to favour 'adding-removing' method protocol over similar ones (like 'adding
 Class {
 	#name : 'ReProperMethodProtocolNameForAddingRemovingRule',
 	#superclass : 'ReProperMethodProtocolNameRule',
-	#category : 'Renraku-Rules',
+	#category : 'Renraku-Coding Idiom Violation',
 	#package : 'Renraku',
-	#tag : 'Rules'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'idioms' }

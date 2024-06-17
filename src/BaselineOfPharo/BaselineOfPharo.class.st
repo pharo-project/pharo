@@ -7,9 +7,9 @@ Class {
 	#classVars : [
 		'ExternalProjects'
 	],
-	#category : 'BaselineOfPharo-Base',
+	#category : 'BaselineOfPharo-Baseline',
 	#package : 'BaselineOfPharo',
-	#tag : 'Base'
+	#tag : 'Baseline'
 }
 
 { #category : 'private' }
@@ -119,7 +119,7 @@ BaselineOfPharo class >> roassal [
 		  newName: 'Roassal'
 		  owner: 'pharo-graphics'
 		  project: 'Roassal'
-		  version: 'v1.06d'
+		  version: 'v1.06f'
 ]
 
 { #category : 'repository urls' }

@@ -4,14 +4,24 @@ A rule to check for multiple periods terminating the same statement, which is un
 Class {
 	#name : 'ReMultiplePeriodsTerminatingStatementRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'testing' }
 ReMultiplePeriodsTerminatingStatementRule class >> checksMethod [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReMultiplePeriodsTerminatingStatementRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+ReMultiplePeriodsTerminatingStatementRule class >> ruleName [
+	^ 'Multiple periods terminating the same statement'
 ]
 
 { #category : 'accessing' }
@@ -26,16 +36,6 @@ ReMultiplePeriodsTerminatingStatementRule >> check: aMethod forCritiquesDo: aCri
 	aMethod ast nodesDo: [ :node |
 		node isSequence and: [
 			self periodPairs: node critiqueBlock: aCriticBlock in: aMethod ] ]
-]
-
-{ #category : 'accessing' }
-ReMultiplePeriodsTerminatingStatementRule >> group [
-	^ 'Potential Bugs'
-]
-
-{ #category : 'accessing' }
-ReMultiplePeriodsTerminatingStatementRule >> name [
-	^ 'Multiple periods terminating the same statement'
 ]
 
 { #category : 'running' }

@@ -25,11 +25,6 @@ MetacelloVersion class >> fromString: aString [
 	^self new versionNumber: aString asMetacelloVersionNumber
 ]
 
-{ #category : 'class initialization' }
-MetacelloVersion class >> initialize [ 
-	self deprecatedAliases: { #MetacelloMCVersion }
-]
-
 { #category : 'comparing' }
 MetacelloVersion >> < aMetacelloVersion [
 

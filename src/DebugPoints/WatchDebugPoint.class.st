@@ -15,57 +15,62 @@ Class {
 
 { #category : 'API' }
 WatchDebugPoint >> addValue: aValue [
+
 	self history addFirst: aValue.
-	(self limit = 0) ifFalse: [ 
-		self history size > self limit ifTrue: [ self history removeLast ].
-	].
-	
+	self limit = 0 ifFalse: [
+		self history size > self limit ifTrue: [ self history removeLast ] ]
 ]
 
 { #category : 'accessing' }
 WatchDebugPoint >> history [
-	^history ifNil: [ history := OrderedCollection new. ]
+
+	^ history ifNil: [ history := OrderedCollection new ]
 ]
 
 { #category : 'accessing' }
 WatchDebugPoint >> history: anOrderedCollection [
-	history := anOrderedCollection 
+
+	history := anOrderedCollection
 ]
 
 { #category : 'API' }
 WatchDebugPoint >> hitWithContext: aContext value: aValue [
-	(self hitWithContext: aContext) ifFalse: [^self].
+
+	(self hitWithContext: aContext) ifFalse: [ ^ self ].
 	self addValue: aValue.
-	DebugPointManager notifyDebugPointChanged: self.
+	DebugPointManager notifyDebugPointChanged: self
 ]
 
 { #category : 'accessing' }
 WatchDebugPoint >> limit [
-	^limit ifNil: [ limit := 0 ]
+
+	^ limit ifNil: [ limit := 0 ]
 ]
 
 { #category : 'accessing' }
 WatchDebugPoint >> limit: anInteger [
+
 	limit := anInteger.
-	(anInteger = 0) ifFalse: [ 
-		(self history size > anInteger) ifTrue: [ self history: (self history copyFrom: 1 to: anInteger) ]
-	].
+	anInteger = 0 ifFalse: [
+		self history size > anInteger ifTrue: [
+			self history: (self history copyFrom: 1 to: anInteger) ] ]
 ]
 
 { #category : 'default values' }
 WatchDebugPoint >> metaLink [
-	^(MetaLink new 
-				metaObject: self;
-				selector: #hitWithContext:value:;
-				arguments: #(context value);
-				control: #after;
-				option: #(+ optionWeakAfter +optionCompileOnLinkInstallation)).
+
+	^ MetaLink new
+		  metaObject: self;
+		  selector: #hitWithContext:value:;
+		  arguments: #( context value );
+		  control: #after;
+		  option: #( #+ optionWeakAfter #+ optionCompileOnLinkInstallation )
 ]
 
 { #category : 'accessing' }
 WatchDebugPoint >> name [
-	^name ifNil: [ #WatchPoint ]
 
+	^ name ifNil: [ #WatchPoint ]
 ]
 
 { #category : 'accessing' }

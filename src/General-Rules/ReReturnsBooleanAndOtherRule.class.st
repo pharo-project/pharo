@@ -4,14 +4,24 @@ This smell arises when a method return a boolean value (true or false) and retur
 Class {
 	#name : 'ReReturnsBooleanAndOtherRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'testing' }
 ReReturnsBooleanAndOtherRule class >> checksMethod [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReReturnsBooleanAndOtherRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+ReReturnsBooleanAndOtherRule class >> ruleName [
+	^ 'Returns a boolean and non boolean'
 ]
 
 { #category : 'accessing' }
@@ -54,14 +64,4 @@ ReReturnsBooleanAndOtherRule >> checkIfNodeIsBool: node [
 ReReturnsBooleanAndOtherRule >> checkIfNodeIsNotBool: node [
 	^ node isSelfVariable or:
 		[ node isLiteralNode and: [ (#(true false) includes: node value) not ] ]
-]
-
-{ #category : 'accessing' }
-ReReturnsBooleanAndOtherRule >> group [
-	^ 'Potential Bugs'
-]
-
-{ #category : 'accessing' }
-ReReturnsBooleanAndOtherRule >> name [
-	^ 'Returns a boolean and non boolean'
 ]

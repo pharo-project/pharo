@@ -343,8 +343,8 @@ DeflateStream >> updateHashAt: here [
 
 { #category : 'private' }
 DeflateStream >> updateHashTable: table delta: delta [
-	| pos |
 	<primitive: 'primitiveDeflateUpdateHashTable' module: 'ZipPlugin'>
+	| pos |
 	1 to: table size do:[:i|
 		"Discard entries that are out of range"
 		(pos := table at: i) >= delta
