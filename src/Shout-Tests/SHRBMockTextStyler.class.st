@@ -124,6 +124,7 @@ SHRBMockTextStyler >> declared: anObject [
 
 { #category : 'testing' }
 SHRBMockTextStyler >> hasSymbolStartingBy: aSymbol [
+	"I provide a hook to not make tests depends on the registered symbols in the system. Instead we let the user writting tests define the symbols that should be considered registered. Else our tests will break if a user name a method true or false or any other edge case used in tests."
 
 	^ declared anySatisfy: [ :each | each beginsWith: aSymbol ]
 ]
@@ -133,4 +134,10 @@ SHRBMockTextStyler >> initialize [
 
 	super initialize.
 	declared := OrderedCollection new
+]
+
+{ #category : 'testing' }
+SHRBMockTextStyler >> representsASelector: aSymbol [
+
+	^ declared includes: aSymbol
 ]
