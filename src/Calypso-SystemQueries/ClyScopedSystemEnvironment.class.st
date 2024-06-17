@@ -12,9 +12,9 @@ Class {
 	#tag : 'Domain'
 }
 
-{ #category : 'accessing' }
+{ #category : 'comparing' }
 ClyScopedSystemEnvironment >> == anObject [
-	^ anObject scope == self scope
+	^ anObject scope label == self scope label
 ]
 
 { #category : 'accessing' }
@@ -85,7 +85,7 @@ ClyScopedSystemEnvironment >> createPackageNamed: packageName [
 { #category : 'class management' }
 ClyScopedSystemEnvironment >> definedClassesInPackage: aPackage [
 
-	^ self classes select: [ :class | class package = aPackage ]
+	^ scope definedClasses select: [ :class | class package = aPackage ]
 ]
 
 { #category : 'accessing' }
@@ -101,7 +101,12 @@ ClyScopedSystemEnvironment >> extractPackageNameFrom: aDefinitionString [
 	^ (CDFluidClassDefinitionParser parse: aDefinitionString) packageName
 ]
 
-{ #category : 'accessing' }
+{ #category : 'comparing' }
+ClyScopedSystemEnvironment >> identityHash [
+	^ self scope label identityHash
+]
+
+{ #category : 'class management' }
 ClyScopedSystemEnvironment >> includesClassNamed: aSymbol [
 	|class|
 	
@@ -119,6 +124,19 @@ ClyScopedSystemEnvironment >> packageNamed: aString [
 ClyScopedSystemEnvironment >> packages [
 	
 	^ scope packages
+]
+
+{ #category : 'printing' }
+ClyScopedSystemEnvironment >> printOn: aStream [
+	| title |
+	title := self class name.
+	aStream
+		nextPutAll: (title first isVowel ifTrue: ['an '] ifFalse: ['a ']);
+		nextPutAll: title.
+
+	aStream nextPut: $(.
+	aStream nextPutAll: scope label.
+	aStream nextPut: $)
 ]
 
 { #category : 'accessing' }
