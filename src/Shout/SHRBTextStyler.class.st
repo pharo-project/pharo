@@ -717,9 +717,16 @@ SHRBTextStyler >> classOrMetaClass: aBehavior [
 SHRBTextStyler >> formatIncompleteSelector: aSymbol [
 
 	aSymbol isSelectorSymbol ifTrue: [ ^ nil ].
-	^ (self class formatIncompleteIdentifiers and: [ (Symbol selectorThatStartsCaseSensitive: aSymbol asString skipping: nil) isNotNil ])
+
+	^ (self class formatIncompleteIdentifiers and: [ self hasSymbolStartingBy: aSymbol ])
 		  ifTrue: [ #incompleteSelector ]
 		  ifFalse: [ #undefinedSelector ]
+]
+
+{ #category : 'testing' }
+SHRBTextStyler >> hasSymbolStartingBy: aSymbol [
+
+	^ (Symbol selectorThatStartsCaseSensitive: aSymbol asString skipping: nil) isNotNil
 ]
 
 { #category : 'initialization' }

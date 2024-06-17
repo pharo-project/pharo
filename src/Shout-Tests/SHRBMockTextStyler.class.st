@@ -122,11 +122,10 @@ SHRBMockTextStyler >> declared: anObject [
 	declared := anObject
 ]
 
-{ #category : 'visiting' }
-SHRBMockTextStyler >> formatIncompleteSelector: aSymbol [
+{ #category : 'testing' }
+SHRBMockTextStyler >> hasSymbolStartingBy: aSymbol [
 
-	(declared includes: aSymbol) ifTrue: [ ^ nil ].
-	^ (declared anySatisfy: [ :each | each beginsWith: aSymbol ]) ifTrue: [ #incompleteSelector ] ifFalse: [ #undefinedSelector ]
+	^ declared anySatisfy: [ :each | each beginsWith: aSymbol ]
 ]
 
 { #category : 'initialization' }
