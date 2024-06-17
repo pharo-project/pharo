@@ -1,9 +1,9 @@
 Class {
 	#name : 'ReParensFormattingRuleTest',
 	#superclass : 'ReAbstractRuleTestCase',
-	#category : 'General-Rules-Tests-Migrated',
+	#category : 'General-Rules-Tests-Formatting',
 	#package : 'General-Rules-Tests',
-	#tag : 'Migrated'
+	#tag : 'Formatting'
 }
 
 { #category : 'tests' }
