@@ -61,9 +61,12 @@ ToggleMenuItemMorph >> basicDrawOn: aCanvas [
 	stringBounds := stringBounds top: stringBounds top + stringBounds bottom - self fontToUse height // 2.
 	stringBounds := stringBounds bottom: stringBounds top + self fontToUse height.
 	self drawText: contents on: aCanvas in: stringBounds.
-	self hasSubMenu ifTrue: [ |subMenuMarker|
-		subMenuMarker := self subMenuMarker deepCopy mapColor: Color black to: stringColor.
-		self drawSubMenuMarker: subMenuMarker on: aCanvas in: stringBounds]
+	self hasSubMenu ifTrue: [ |subMenuMarkerFormSet colorMappedFormSet|
+		subMenuMarkerFormSet := self subMenuMarkerFormSet.
+		colorMappedFormSet := FormSet extent: subMenuMarkerFormSet extent depth: subMenuMarkerFormSet depth
+			forms: (subMenuMarkerFormSet forms collect: [ :subMenuMarkerForm |
+				subMenuMarkerForm deepCopy mapColor: Color black to: stringColor ]).
+		self drawSubMenuMarker: colorMappedFormSet on: aCanvas in: stringBounds]
 ]
 
 { #category : 'private - drawing' }
@@ -106,12 +109,12 @@ ToggleMenuItemMorph >> drawOn: aCanvas [
 ]
 
 { #category : 'private - drawing' }
-ToggleMenuItemMorph >> drawSubMenuMarker: aForm on: aCanvas in: aRectangle [
+ToggleMenuItemMorph >> drawSubMenuMarker: aFormSet on: aCanvas in: aRectangle [
 	"Draw the submenu marker on the canvas within the given bounds."
 
 	|markerRect|
-	markerRect := aRectangle topRight + ((aForm width * self displayScaleFactor) negated @ (aRectangle height - (aForm height * self displayScaleFactor) // 2)) extent: aForm extent * self displayScaleFactor.
-	self drawIcon: (FormSet form: aForm scaledByDisplayScaleFactor) on: aCanvas in: markerRect
+	markerRect := aRectangle topRight + ((aFormSet width * self displayScaleFactor) negated @ (aRectangle height - (aFormSet height * self displayScaleFactor) // 2)) extent: aFormSet extent * self displayScaleFactor.
+	self drawIcon: (FormSet extent: aFormSet extent scaledByDisplayScaleFactor truncated depth: aFormSet depth forms: aFormSet forms) on: aCanvas in: markerRect
 ]
 
 { #category : 'private - drawing' }
