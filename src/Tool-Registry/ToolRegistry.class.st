@@ -140,7 +140,7 @@ ToolRegistry >> menuItems [
 	^#(
 		('System Browser' 			#openClassBrowser)
 		-
-		('Playground'				#openWorkspace)
+		('Playground'				#openPlayground)
 		('Transcript' 				#openTranscript)
 		('File Browser'				#openFileList)
 		-

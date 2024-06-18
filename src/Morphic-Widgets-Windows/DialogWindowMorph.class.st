@@ -30,7 +30,7 @@ DialogWindowMorph >> acceptTextMorphs [
 				p hasUnacceptedEdits]]) ifTrue: [p accept]]
 ]
 
-{ #category : 'top window' }
+{ #category : 'activation' }
 DialogWindowMorph >> activate [
 	"Set the default focus for now, will want to
 	remember it at some point."

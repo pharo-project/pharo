@@ -13,7 +13,6 @@ Class {
 	#type : 'immediate',
 	#classVars : [
 		'CharSet',
-		'CharacterTable',
 		'DigitValues'
 	],
 	#category : 'Kernel-BasicObjects',
@@ -467,7 +466,6 @@ Character >> hexDigitValue [
 
 { #category : 'initialization' }
 Character >> initialize [
-		<ignoreUnusedClassVariables: #( CharacterTable )>
 		super initialize.
 ]
 

@@ -1,3 +1,7 @@
+"
+Generate Equals and Hash Methods: Automatically create `=` and `hash` methods for the selected class, ensuring proper object comparison
+
+"
 Class {
 	#name : 'SycGenerateEqualAndHashCommand',
 	#superclass : 'SycSingleClassCommand',

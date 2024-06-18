@@ -342,9 +342,6 @@ PBAbstractImageBuilder >> createInitialObjects [
 
 			self log: 'Initializing Character Table'.
 			self bootstrapInterpreter evaluateCode: 'Character initialize.'.
-			characterTable := EPInternalCharacterTable new objectSpace: objectSpace.
-			objectSpace backend characterTable: ((self classNamed: #Character) classPool at: #CharacterTable).
-			objectSpace characterTable: characterTable.
 
 			self log: 'Initializing String Ascii and CaseInsensitive Table'.
 			self bootstrapInterpreter evaluateCode: '| asciiOrder caseInsesitiveOrder |
@@ -681,7 +678,6 @@ PBAbstractImageBuilder >> initializeBootstrapEnvironment [
 	We will later replace them by real ones."
 	objectSpace := EPObjectSpace new.
 	objectSpace backend: espellBackend.
-	objectSpace characterTable: (EPExternalCharacterTable new objectSpace: objectSpace; yourself).
 	objectSpace symbolTable: (EPExternalSymbolTable new objectSpace: objectSpace; yourself).
 	
 	classLoader createJustStubs.

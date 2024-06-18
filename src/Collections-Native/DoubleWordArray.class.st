@@ -12,6 +12,13 @@ Class {
 	#tag : 'Base'
 }
 
+{ #category : 'comparing' }
+DoubleWordArray >> = anotherByteArray [
+
+	<primitive: 156>
+	^ super = anotherByteArray
+]
+
 { #category : 'private' }
 DoubleWordArray >> atAllPut: value [
 	"Fill the receiver with the given value"

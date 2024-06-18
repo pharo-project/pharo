@@ -19,6 +19,23 @@ SocketStreamTest >> classToBeTested [
 	^ SocketStream
 ]
 
+{ #category : 'stream protocol' }
+SocketStreamTest >> closeServerAndSendOnceFromClient [
+
+	serverStream close.
+	"The first send after the other end is closed will not have problems as long as it fits within the send buffer."
+	self
+		shouldnt: [
+			clientStream
+				nextPutAll: 'A line of text';
+				flush ]
+		raise: NetworkError.
+	"Wait for the state of the underlying socket to update--normally this happens near-instantly,
+	but when running tests in a batch of other sockets-related tests, e.g. in CI, often a subsequent send
+	will still succeed without the wait, causing the test to fail."
+	(Delay forMilliseconds: 100) wait
+]
+
 { #category : 'running' }
 SocketStreamTest >> setUp [
 	| listener clientSocket serverSocket |
@@ -48,13 +65,25 @@ SocketStreamTest >> tearDown [
 
 { #category : 'stream protocol' }
 SocketStreamTest >> testFlushLargeMessageOtherEndClosed [
-	"A large send will be broken into chunks and fail on the second one."
+	"A large send should be broken into chunks and fail once the TCP send buffer
+	is full. Ensure we actually exceed the size of the send buffer, but also try
+	to reduce it first so we don't need an excessively large message. Some platforms
+	(Linux) have minimum values for this setting that prevent us from relying on
+	lowering it alone. Attempt to set a 65KiB buffer and double whatever we get."
 
+	| bufferSize |
+	"Windows seems to accept arbitrarily large send() payloads regardless of the
+	send buffer size, so we can't force a wait other than by calling #flush twice,
+	which would defeat the whole purpose of the test.
+	Skip on Windows for now as this is not a regression."
+	OSPlatform current isWindows ifTrue: [ self skip ].
+	clientStream socket setOption: 'SO_SNDBUF' value: 2 ** 16.
+	bufferSize := (clientStream socket getOption: 'SO_SNDBUF') second.
 	serverStream close.
 	self
-		should: [ "256kiB"
+		should: [
 			clientStream
-				nextPutAll: (String new: 2 ** 18 withAll: $a);
+				nextPutAll: (String new: bufferSize * 2 withAll: $a);
 				flush ]
 		raise: ConnectionClosed
 ]
@@ -63,15 +92,7 @@ SocketStreamTest >> testFlushLargeMessageOtherEndClosed [
 SocketStreamTest >> testFlushOtherEndClosed [
 	"Ensure that #flush properly raises an error when called when the other end is closed."
 
-	serverStream close.
-	"The first send after the other end is closed will not have problems as long as it fits within the send buffer."
-	self
-		shouldnt: [
-			clientStream
-				nextPutAll: 'A line of text';
-				flush ]
-		raise: NetworkError.
-	"The next send will wait for the first to finish and discover the error condition."
+	self closeServerAndSendOnceFromClient.
 	self
 		should: [
 			clientStream
@@ -105,15 +126,11 @@ SocketStreamTest >> testNextIntoCloseNonSignaling [
 
 { #category : 'stream protocol' }
 SocketStreamTest >> testNextPutAllFlushOtherEndClosed [
-	"#nextPutAllFlush: does its own error handling, so needs to be tested separately.
-	Having some content in the buffer first means that the direct send of the second buffer will encounter an error."
+	"#nextPutAllFlush: does its own error handling, so needs to be tested separately."
 
-	serverStream close.
+	self closeServerAndSendOnceFromClient.
 	self
-		should: [
-			clientStream
-				nextPutAll: 'A line of text';
-				nextPutAllFlush: 'Another line of text' ]
+		should: [ clientStream nextPutAllFlush: 'Another line of text' ]
 		raise: ConnectionClosed
 ]
 

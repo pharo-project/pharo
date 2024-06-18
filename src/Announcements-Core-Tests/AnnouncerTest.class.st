@@ -335,6 +335,44 @@ AnnouncerTest >> testSubscribersForClass [
 ]
 
 { #category : 'tests' }
+AnnouncerTest >> testSuspendAllWhile [
+
+	| value |
+	value := 42.
+
+	announcer suspendAllWhile: [
+		announcer
+			when: AnnouncementMockA do: [ value := value + 1 ] for: self;
+			announce: AnnouncementMockA ].
+
+	self assert: value equals: 42. "The answer is always 42 :)"
+
+	announcer announce: AnnouncementMockA.
+
+	self assert: value equals: 43
+]
+
+{ #category : 'tests' }
+AnnouncerTest >> testSuspendAllWhileStoring [
+
+	| stored |
+	stored := announcer suspendAllWhileStoring: [ announcer announce: AnnouncementMockA ].
+
+	self assert: stored size equals: 1.
+	self assert: (stored at: 1) equals: AnnouncementMockA
+]
+
+{ #category : 'tests' }
+AnnouncerTest >> testSuspendAllWhileStoringNested [
+
+	| stored |
+	stored := announcer suspendAllWhileStoring: [ announcer suspendAllWhileStoring: [ announcer announce: AnnouncementMockA ] ].
+
+	self assert: stored size equals: 1.
+	self assert: (stored at: 1) equals: AnnouncementMockA
+]
+
+{ #category : 'tests' }
 AnnouncerTest >> testSymbolIdentifier [
 	| passed |
 	passed := false.

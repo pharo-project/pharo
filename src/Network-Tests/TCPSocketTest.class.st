@@ -120,3 +120,14 @@ TCPSocketTest >> testServerAccept [
 	self assert: serverSocket isNotNil.
 	self assert: serverSocket isConnected
 ]
+
+{ #category : 'tests' }
+TCPSocketTest >> testWaitForSendDoneAnswerStatus [
+	"test there is a boolean answer when calling waitForSendDoneFor: (as expected by zinc)"
+	| done |
+
+	self testServerAccept.
+	clientSocket sendData: 'Hello World'.
+	done := clientSocket waitForSendDoneFor: 2.
+	self assert: done
+]

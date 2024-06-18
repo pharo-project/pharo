@@ -1,3 +1,6 @@
+"
+Provide a class definition to create a new class in the selected package.
+"
 Class {
 	#name : 'ClyCreateClassCommand',
 	#superclass : 'ClyBrowserCommand',
