@@ -42,17 +42,17 @@ Object >> systemIconName [
 ]
 
 { #category : '*Polymorph-Widgets' }
-Object >> taskbarLabel [
-	"Answer the label string for the receiver in a task bar
-	or nil for the default."
-
-	^self class taskbarLabel
-]
-
-{ #category : '*Polymorph-Widgets' }
 Object class >> taskbarLabel [
 	"Answer the label string for the receiver in a task bar
 	or nil for the default."
 
 	^nil
+]
+
+{ #category : '*Polymorph-Widgets' }
+Object >> taskbarLabel [
+	"Answer the label string for the receiver in a task bar
+	or nil for the default."
+
+	^self class taskbarLabel
 ]
