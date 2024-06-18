@@ -50,7 +50,7 @@ ReSeparateMethodBodyAndHeaderRule >> anchorFor: aNode [
 ReSeparateMethodBodyAndHeaderRule >> basicCheck: anEntity [
 
 	| endOfHeader startOfBody |
-	endOfHeader:= anEntity methodNode arguments
+	endOfHeader := anEntity methodNode arguments
 		ifEmpty: [ anEntity methodNode selector keywords first size + 1 ]
 		ifNotEmpty: [
 			| lastArgument |
