@@ -1,6 +1,9 @@
 Class {
 	#name : 'StSelectDialogMock',
 	#superclass : 'Object',
+	#instVars : [
+		'selectedItems'
+	],
 	#category : 'Refactoring-UI-Tests',
 	#package : 'Refactoring-UI-Tests'
 }
@@ -14,7 +17,14 @@ StSelectDialogMock >> action [
 { #category : 'accessing' }
 StSelectDialogMock >> selectedItems [
 
-	^ { #iVar1 . #iVar2 }
+	^ selectedItems 
+		ifNil: [ selectedItems := { #iVar1 . #iVar2 } ]
+]
+
+{ #category : 'accessing' }
+StSelectDialogMock >> selectedItems: anObject [
+
+	selectedItems := anObject
 ]
 
 { #category : 'accessing' }

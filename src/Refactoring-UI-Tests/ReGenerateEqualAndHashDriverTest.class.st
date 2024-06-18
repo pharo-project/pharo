@@ -16,32 +16,48 @@ ReGenerateEqualAndHashDriverTest >> classForEqualAndHash [
 	^ RBClassForGeneratingEqualAndHash 
 ]
 
-{ #category : 'running' }
-ReGenerateEqualAndHashDriverTest >> setUp [
-
-	super setUp.
-	testingEnvironment := RBClassEnvironment class: self classForEqualAndHash. 
-]
-
-{ #category : 'running' }
-ReGenerateEqualAndHashDriverTest >> tearDown [
-
-	testingEnvironment ifNotNil: [ 
-		testingEnvironment classesDo: [ : cls |
-			(cls includesSelector: #=)
-				ifTrue: [ cls removeSelector: #= ].
-			(cls includesSelector: #hash)
-				ifTrue: [ cls removeSelector: #hash ] ] ].
-	super tearDown.
+{ #category : 'tests' }
+ReGenerateEqualAndHashDriverTest >> classForEqualAndHashExistingImplementors [
+	"Answer the <Class> which will be used to generate equal and hash methods"
+	
+	^ RBClassForGeneratingEqualAndHashExistingImplementors
 ]
 
 { #category : 'tests' }
-ReGenerateEqualAndHashDriverTest >> testGenerateEqualAndHash [
+ReGenerateEqualAndHashDriverTest >> testGenerateEqualAndHashExistingImplementors [
 
 	| driver rbClass driverChanges |
 
-	^ self skip.
+	testingEnvironment := RBClassEnvironment class: self classForEqualAndHashExistingImplementors. 	
 	driver := ReGenerateEqualAndHashDriver basicNew. 
+	self setUpDriver: driver.
+	driver scopes: { testingEnvironment }.
+	rbClass := testingEnvironment class.
+
+	self assert: (driver targetClass definesMethod: #hash).
+	self assert: (driver targetClass definesMethod: #=).
+
+	driver selectDialog selectedItems: #(#iVarA #iVarB).
+	driver runRefactoring.
+	driverChanges := driver refactoring changes.
+
+	self 
+		assert: driverChanges changes size 
+		equals: 4.
+	self assertEmpty: driver refactoring failedApplicabilityPreconditions.
+	self 
+		assert: (driverChanges changes select: [ : amc | amc selector = #hash or: [ amc selector = #= ] ]) size
+		equals: 2.
+
+]
+
+{ #category : 'tests' }
+ReGenerateEqualAndHashDriverTest >> testGenerateEqualAndHashFirstGen [
+
+	| driver rbClass driverChanges |
+
+	testingEnvironment := RBClassEnvironment class: self classForEqualAndHash.
+	driver := ReGenerateEqualAndHashDriver basicNew.
 	self setUpDriver: driver.
 	driver scopes: { testingEnvironment }.
 	rbClass := testingEnvironment class.
@@ -52,6 +68,16 @@ ReGenerateEqualAndHashDriverTest >> testGenerateEqualAndHash [
 	self 
 		assert: driverChanges changes size 
 		equals: 4.
-	self assert: (driver targetClass definesMethod: #hash).
-	self assert: (driver targetClass definesMethod: #=).
+	self assertEmpty: driver refactoring failedApplicabilityPreconditions.
+	self 
+		assert: (driverChanges changes select: [ : amc | amc selector = #hash or: [ amc selector = #= ] ]) size
+		equals: 2.
+
+	testingEnvironment ifNotNil: [ 
+		testingEnvironment classesDo: [ : cls |
+			(cls includesSelector: #=)
+				ifTrue: [ cls removeSelector: #= ].
+			(cls includesSelector: #hash)
+				ifTrue: [ cls removeSelector: #hash ] ] ].
+
 ]

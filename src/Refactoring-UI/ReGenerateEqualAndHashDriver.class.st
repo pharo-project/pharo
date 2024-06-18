@@ -1,3 +1,9 @@
+"
+Interaction object responsible for driving the analysis and interactive generation of equal and hash methods.
+
+The driver could be instantiated by providing a target class (`targetClass:`), or interactively using the select dialog.
+It uses the `RBGenerateEqualHashTransformation`.
+"
 Class {
 	#name : 'ReGenerateEqualAndHashDriver',
 	#superclass : 'RBInteractionDriver',
@@ -9,6 +15,15 @@ Class {
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers'
 }
+
+{ #category : 'execution' }
+ReGenerateEqualAndHashDriver >> changes [
+	"Remember should not call generateChanges"
+
+	^ refactoring privateTransform; changes
+
+
+]
 
 { #category : 'execution' }
 ReGenerateEqualAndHashDriver >> configureRefactoring [
@@ -34,34 +49,20 @@ ReGenerateEqualAndHashDriver >> defaultSelectDialog [
 ]
 
 { #category : 'execution' }
-ReGenerateEqualAndHashDriver >> handleExistingVariables: anException [
-
-	| dialog |
-
-	dialog := SpConfirmDialog new
-		          title: '#= and #hash methods already defined';
-		          label: 'Are you sure you want to override it?';
-		          acceptLabel: 'Ok';
-		          cancelLabel: 'Cancel';
-		          openModal.
-	dialog ifTrue: [ anException resume ]
-]
-
-{ #category : 'execution' }
 ReGenerateEqualAndHashDriver >> runRefactoring [
 
+	| changes |
+	
 	self selectDialog
 		ifNil: [ ^ self ]
 		ifNotNil: [ selectedVariables := self selectDialog selectedItems ].
 	selectedVariables ifEmpty: [ ^ self ].
-	[
-			| changes |
-			self configureRefactoring.
-			changes := refactoring generateChanges.
-			self openPreviewWithChanges: changes 
-	]
-	on: RBRefactoringWarning
-	do: [ : ex | self handleExistingVariables: ex ]
+
+	self configureRefactoring.
+	changes := refactoring generateChanges.
+	self openPreviewWithChanges: changes 
+
+
 ]
 
 { #category : 'accessing' }
