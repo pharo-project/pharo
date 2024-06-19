@@ -30,7 +30,7 @@ Class Variables:
 "
 Class {
 	#name : 'RBProgramNode',
-	#superclass : 'RBNode',
+	#superclass : 'ASTNode',
 	#instVars : [
 		'parent',
 		'properties'

@@ -11,7 +11,7 @@ I'm a new player in the field, do not hesitate to improve me.
 
 "
 Class {
-	#name : 'RBNode',
+	#name : 'ASTNode',
 	#superclass : 'Object',
 	#category : 'AST-Core-Nodes',
 	#package : 'AST-Core',
@@ -19,12 +19,12 @@ Class {
 }
 
 { #category : 'testing' }
-RBNode class >> isAbstract [
+ASTNode class >> isAbstract [
 
-	^ self == RBNode
+	^ self == ASTNode
 ]
 
 { #category : 'visiting' }
-RBNode >> acceptVisitor: aProgramNodeVisitor [
+ASTNode >> acceptVisitor: aProgramNodeVisitor [
 	self subclassResponsibility
 ]

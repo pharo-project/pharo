@@ -335,9 +335,9 @@ DebugPoint >> removeFromMethod: aMethod [
 ]
 
 { #category : 'removing' }
-DebugPoint >> removeNode: aRBNode [
+DebugPoint >> removeNode: aNode [
 
-	self link removeNode: aRBNode
+	self link removeNode: aNode
 ]
 
 { #category : 'removing' }

@@ -1331,10 +1331,10 @@ EFFormatter >> formatSequenceNodeStatementsFor: aSequenceNode [
 ]
 
 { #category : 'private - formatting' }
-EFFormatter >> formatSingleArrayElement: aRBNode [ 
+EFFormatter >> formatSingleArrayElement: aNode [ 
 	"Imagine that you have {1 factorial}, you do not want an ending period. This method is only invoked on the last array element."
 	
-	self visitNode: aRBNode
+	self visitNode: aNode
 ]
 
 { #category : 'private - formatting' }
