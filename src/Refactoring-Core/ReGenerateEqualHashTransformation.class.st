@@ -39,7 +39,7 @@ and any instvar accessor for the  instance variables used by method `#=`.
 
 "
 Class {
-	#name : 'RBGenerateEqualHashTransformation',
+	#name : 'ReGenerateEqualHashTransformation',
 	#superclass : 'RBClassRefactoring',
 	#instVars : [
 		'variables'
@@ -50,29 +50,29 @@ Class {
 }
 
 { #category : 'displaying' }
-RBGenerateEqualHashTransformation class >> basicMenuItemString [
+ReGenerateEqualHashTransformation class >> basicMenuItemString [
 
 	^ 'Generate equal and hash'
 ]
 
 { #category : 'instance creation' }
-RBGenerateEqualHashTransformation class >> className: aClass variables: anArray [
+ReGenerateEqualHashTransformation class >> className: aClass variables: anArray [
 	^ (self className: aClass) variables: anArray
 ]
 
 { #category : 'testing' }
-RBGenerateEqualHashTransformation class >> isTransformation [
+ReGenerateEqualHashTransformation class >> isTransformation [
 
 	^ true
 ]
 
 { #category : 'instance creation' }
-RBGenerateEqualHashTransformation class >> model: aNamespace className: aClass variables: anArray [
+ReGenerateEqualHashTransformation class >> model: aNamespace className: aClass variables: anArray [
 	^ (self model: aNamespace className: aClass) variables: anArray
 ]
 
 { #category : 'transforming' }
-RBGenerateEqualHashTransformation >> accessorForVariable: aString [
+ReGenerateEqualHashTransformation >> accessorForVariable: aString [
 
 	| refactoring |
 	refactoring := RBCreateAccessorsForVariableTransformation
@@ -85,15 +85,14 @@ RBGenerateEqualHashTransformation >> accessorForVariable: aString [
 ]
 
 { #category : 'preconditions' }
-RBGenerateEqualHashTransformation >> applicabilityPreconditions [
+ReGenerateEqualHashTransformation >> applicabilityPreconditions [
 	"Checks that the class actually defines all the variables that will be part of the hash."
 
-	^ variables collect: [ :variable |
-		  RBCondition definesInstanceVariable: variable in: self theClass ]
+	^ (variables collect: [ :variable | RBCondition definesInstanceVariable: variable in: self theClass ])
 ]
 
 { #category : 'transforming' }
-RBGenerateEqualHashTransformation >> compileEqual [
+ReGenerateEqualHashTransformation >> compileEqual [
 	| method statement comparison |
 	method := self parserClass
 		parseMethod:
@@ -137,7 +136,7 @@ RBGenerateEqualHashTransformation >> compileEqual [
 ]
 
 { #category : 'transforming' }
-RBGenerateEqualHashTransformation >> compileHash [
+ReGenerateEqualHashTransformation >> compileHash [
 	| method statement hash |
 	method := self parserClass
 		parseMethod:
@@ -166,17 +165,24 @@ RBGenerateEqualHashTransformation >> compileHash [
 ]
 
 { #category : 'transforming' }
-RBGenerateEqualHashTransformation >> privateTransform [
+ReGenerateEqualHashTransformation >> privateTransform [
 	self compileHash.
 	self compileEqual
 ]
 
 { #category : 'accessing' }
-RBGenerateEqualHashTransformation >> theClass [
+ReGenerateEqualHashTransformation >> theClass [
 	^ (self classObjectFor: className) instanceSide
 ]
 
 { #category : 'accessing' }
-RBGenerateEqualHashTransformation >> variables: anArray [
+ReGenerateEqualHashTransformation >> variables [
+	"Answer a <Collection> of <Symbol> each one representing a variable in the receiver's target class"
+	
+	^ variables 
+]
+
+{ #category : 'accessing' }
+ReGenerateEqualHashTransformation >> variables: anArray [
 	variables := anArray
 ]
