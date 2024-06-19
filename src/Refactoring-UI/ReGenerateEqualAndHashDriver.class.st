@@ -28,7 +28,7 @@ ReGenerateEqualAndHashDriver >> changes [
 { #category : 'execution' }
 ReGenerateEqualAndHashDriver >> configureRefactoring [
 
-	refactoring := RBGenerateEqualHashTransformation 
+	refactoring := ReGenerateEqualHashTransformation 
 		className: self targetClass name
 		variables: selectedVariables
 ]

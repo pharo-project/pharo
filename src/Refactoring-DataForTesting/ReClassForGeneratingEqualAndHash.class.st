@@ -1,5 +1,5 @@
 Class {
-	#name : 'RBClassForGeneratingEqualAndHash',
+	#name : 'ReClassForGeneratingEqualAndHash',
 	#superclass : 'Object',
 	#instVars : [
 		'iVar1',

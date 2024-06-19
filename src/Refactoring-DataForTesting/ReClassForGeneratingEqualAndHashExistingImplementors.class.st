@@ -1,5 +1,5 @@
 Class {
-	#name : 'RBClassForGeneratingEqualAndHashExistingImplementors',
+	#name : 'ReClassForGeneratingEqualAndHashExistingImplementors',
 	#superclass : 'Object',
 	#instVars : [
 		'iVarA',
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : 'comparing' }
-RBClassForGeneratingEqualAndHashExistingImplementors >> = anObject [
+ReClassForGeneratingEqualAndHashExistingImplementors >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
 	self == anObject ifTrue: [ ^ true ].
@@ -20,7 +20,7 @@ RBClassForGeneratingEqualAndHashExistingImplementors >> = anObject [
 ]
 
 { #category : 'comparing' }
-RBClassForGeneratingEqualAndHashExistingImplementors >> hash [
+ReClassForGeneratingEqualAndHashExistingImplementors >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ iVarA hash

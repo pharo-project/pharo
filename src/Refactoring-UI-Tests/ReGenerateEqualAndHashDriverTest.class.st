@@ -13,14 +13,14 @@ Class {
 ReGenerateEqualAndHashDriverTest >> classForEqualAndHash [
 	"Answer the <Class> which will be used to generate equal and hash methods"
 	
-	^ RBClassForGeneratingEqualAndHash 
+	^ ReClassForGeneratingEqualAndHash 
 ]
 
 { #category : 'tests' }
 ReGenerateEqualAndHashDriverTest >> classForEqualAndHashExistingImplementors [
 	"Answer the <Class> which will be used to generate equal and hash methods"
 	
-	^ RBClassForGeneratingEqualAndHashExistingImplementors
+	^ ReClassForGeneratingEqualAndHashExistingImplementors
 ]
 
 { #category : 'tests' }
