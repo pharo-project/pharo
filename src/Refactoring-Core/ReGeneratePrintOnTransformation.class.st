@@ -27,48 +27,37 @@ printOn: aStream
 ```
 "
 Class {
-	#name : 'RBGeneratePrintOnTransformation',
-	#superclass : 'RBClassRefactoring',
-	#instVars : [
-		'variables'
-	],
+	#name : 'ReGeneratePrintOnTransformation',
+	#superclass : 'ReGenerateAbstractTransformation',
 	#category : 'Refactoring-Core-Transformation',
 	#package : 'Refactoring-Core',
 	#tag : 'Transformation'
 }
 
 { #category : 'displaying' }
-RBGeneratePrintOnTransformation class >> basicMenuItemString [
+ReGeneratePrintOnTransformation class >> basicMenuItemString [
 
 	^ 'Generate printOn:'
 ]
 
 { #category : 'instance creation' }
-RBGeneratePrintOnTransformation class >> className: aClass variables: anArray [
+ReGeneratePrintOnTransformation class >> className: aClass variables: anArray [
 	^ (self className: aClass) variables: anArray
 ]
 
 { #category : 'testing' }
-RBGeneratePrintOnTransformation class >> isTransformation [
+ReGeneratePrintOnTransformation class >> isTransformation [
 
 	^ true
 ]
 
 { #category : 'instance creation' }
-RBGeneratePrintOnTransformation class >> model: aNamespace className: aClass variables: anArray [
+ReGeneratePrintOnTransformation class >> model: aNamespace className: aClass variables: anArray [
 	^ (self model: aNamespace className: aClass) variables: anArray
 ]
 
-{ #category : 'preconditions' }
-RBGeneratePrintOnTransformation >> applicabilityPreconditions [
-	"Checks that the class actually defines all the variables that will be part of the printOn:."
-
-	^ variables collect: [ :variable |
-		  RBCondition definesInstanceVariable: variable in: self theClass ]
-]
-
 { #category : 'transforming' }
-RBGeneratePrintOnTransformation >> privateTransform [
+ReGeneratePrintOnTransformation >> privateTransform [
 	| method |
 	method := self parserClass
 		parseMethod:
@@ -88,14 +77,4 @@ RBGeneratePrintOnTransformation >> privateTransform [
 			sourceCode: method formattedCode
 			in: self theClass
 			withProtocol: #printing)
-]
-
-{ #category : 'accessing' }
-RBGeneratePrintOnTransformation >> theClass [
-	^ (self classObjectFor: className) instanceSide
-]
-
-{ #category : 'accessing' }
-RBGeneratePrintOnTransformation >> variables: anArray [
-	variables := anArray
 ]
