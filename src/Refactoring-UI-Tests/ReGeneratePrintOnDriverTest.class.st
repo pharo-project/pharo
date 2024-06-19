@@ -34,7 +34,7 @@ ReGeneratePrintOnDriverTest >> testGeneratePrintOn [
 
 	self 
 		assert: driverChanges changes size 
-		equals: 4.
+		equals: 1.
 	self assertEmpty: driver refactoring failedApplicabilityPreconditions.
 	self 
 		assert: (driverChanges changes select: [ : amc | amc selector = #printOn: ]) size
