@@ -33,6 +33,19 @@ RBInteractionDriver class >> isAbstract [
 	^ self == RBInteractionDriver
 ]
 
+{ #category : 'displaying' }
+RBInteractionDriver class >> menuItemString [
+	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
+
+	^ self refactoringClass menuItemString
+]
+
+{ #category : 'displaying' }
+RBInteractionDriver class >> refactoringClass [
+
+	self subclassResponsibility
+]
+
 { #category : 'execution' }
 RBInteractionDriver >> application [
 	"For now use the singleton. Normally the application should be passed from Calypso and the command"

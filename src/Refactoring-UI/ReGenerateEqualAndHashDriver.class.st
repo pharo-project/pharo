@@ -16,6 +16,12 @@ Class {
 	#tag : 'Drivers'
 }
 
+{ #category : 'factory method' }
+ReGenerateEqualAndHashDriver class >> refactoringClass [
+
+	^ ReGenerateEqualHashTransformation
+]
+
 { #category : 'execution' }
 ReGenerateEqualAndHashDriver >> changes [
 	"Remember should not call generateChanges"
@@ -28,7 +34,7 @@ ReGenerateEqualAndHashDriver >> changes [
 { #category : 'execution' }
 ReGenerateEqualAndHashDriver >> configureRefactoring [
 
-	refactoring := ReGenerateEqualHashTransformation 
+	refactoring := self refactoringClass 
 		className: self targetClass name
 		variables: selectedVariables
 ]
@@ -46,6 +52,12 @@ ReGenerateEqualAndHashDriver >> defaultSelectDialog [
 		displayIcon: [ :each | self iconNamed: each systemIconName ];
 	  	openModal.
 	^ dialog
+]
+
+{ #category : 'execution' }
+ReGenerateEqualAndHashDriver >> refactoringClass [ 
+
+	^ self class refactoringClass
 ]
 
 { #category : 'execution' }

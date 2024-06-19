@@ -15,9 +15,15 @@ SycCmGenerateEqualAndHashCommand class >> equalIconContents [
 ]
 
 { #category : 'executing' }
+SycCmGenerateEqualAndHashCommand >> driverClass [
+
+	^ ReGenerateEqualAndHashDriver
+]
+
+{ #category : 'executing' }
 SycCmGenerateEqualAndHashCommand >> executeRefactoring [
 
-	(ReGenerateEqualAndHashDriver new
+	(self driverClass new
 		 targetClass: targetClass name;
 		 scopes: refactoringScopes) runRefactoring
 ]
@@ -37,18 +43,11 @@ SycCmGenerateEqualAndHashCommand >> isApplicable [
 
 { #category : 'accessing' }
 SycCmGenerateEqualAndHashCommand >> name [
-	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
 
-	^ self refactoringClass menuItemString
+	^ self driverClass menuItemString
 ]
 
 { #category : 'accessing' }
 SycCmGenerateEqualAndHashCommand >> order [
 	^ 41
-]
-
-{ #category : 'accessing' }
-SycCmGenerateEqualAndHashCommand >> refactoringClass [
-
-	^ ReGenerateEqualHashTransformation
 ]
