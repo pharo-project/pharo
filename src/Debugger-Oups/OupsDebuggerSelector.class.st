@@ -86,9 +86,7 @@ OupsDebuggerSelector >> openDebuggerForSession: aDebugSession [
 		self
 			tryOpen: aDebugSession
 			with: (self nextDebuggerForSession: aDebugSession) ].
-	handled ifTrue: [ ^ self ].
-
-	self logErrorsForSession: aDebugSession
+	handled ifFalse: [ self signalErrorHandlingErrorForSession: aDebugSession ]
 ]
 
 { #category : 'debuggers' }
