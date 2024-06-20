@@ -31,5 +31,5 @@ OupsSingleDebuggerSelector >> openDebuggerForSession: aDebugSession [
 		do: [ :err |
 			error := err.
 			handled := false.
-			self logErrorsForSession: aDebugSession ]
+			self signalErrorHandlingErrorForSession: aDebugSession ]
 ]

@@ -82,20 +82,6 @@ OupsDebuggerSelectionStrategy >> hasErrors [
 	^ error isNotNil
 ]
 
-{ #category : 'error handling' }
-OupsDebuggerSelectionStrategy >> logErrorsForSession: aDebugSession [
-
-	error ifNotNil: [ "There was an error while opening the debugger, we log that error"
-		DebuggerEmmergencyLogger new
-			logError: error
-			forSession: aDebugSession ].
-
-	"We log the original error."
-	DebuggerEmmergencyLogger new
-		logError: aDebugSession exception
-		forSession: aDebugSession
-]
-
 { #category : 'iterating' }
 OupsDebuggerSelectionStrategy >> nextDebugger [
 	^ self subclassResponsibility
@@ -104,4 +90,12 @@ OupsDebuggerSelectionStrategy >> nextDebugger [
 { #category : 'debuggers' }
 OupsDebuggerSelectionStrategy >> openDebuggerForSession: aDebugSession [
 	self subclassResponsibility
+]
+
+{ #category : 'error handling' }
+OupsDebuggerSelectionStrategy >> signalErrorHandlingErrorForSession: aDebugSession [
+
+	DebuggerEmmergencyLogger new
+		logError: error
+		forSession: aDebugSession crTrace
 ]

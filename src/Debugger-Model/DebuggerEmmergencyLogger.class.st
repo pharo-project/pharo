@@ -23,24 +23,25 @@ DebuggerEmmergencyLogger >> debugError: anError fromSession: aDebugSession [
 { #category : 'API' }
 DebuggerEmmergencyLogger >> logError: anError forSession: aDebugSession [
 
-	| errDescription |
+	| errDescription errStream |
 	errDescription := [ anError description ]
 		                  on: Error
 		                  do: [ 'a ' , anError class printString ].
+	errStream := WriteStream on: String new.
+	errStream cr.
+	errStream << ('Original error: ' , aDebugSession name asString , '.').
+	errStream cr.
+	errStream << ('Debugger error: ' , errDescription).
+	errStream cr.
 
-	self inform: errDescription.
+	self inform: '**Debugger opening error** ' , errStream contents.
 	[
 	Smalltalk
-		logError: errDescription contents
+		logError: errStream contents
 		inContext: aDebugSession interruptedContext ]
 		on: Error
 		do: [ :err |
-			self inform: (String streamContents: [ :str |
-					 str << 'Cannot log error:'.
-					 str space.
-					 str << anError description.
-					 str space.
-					 str << 'due to error:'.
-					 str space.
-					 str << err description ]) ]
+			self inform:
+				'Cannot log error: ' , anError printString , 'due to error: '
+				, err printString ]
 ]
