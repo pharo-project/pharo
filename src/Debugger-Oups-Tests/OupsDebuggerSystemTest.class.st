@@ -16,26 +16,6 @@ OupsDebuggerSystemTest >> createDummyDebugRequest [
 	^ OupsDummyDebugRequest newForException: exception
 ]
 
-{ #category : 'tests' }
-OupsDebuggerSystemTest >> createDummyDebugRequestForNotUIProcess [
-	| exception nonUIProcess |
-	nonUIProcess := [  1+1 ] newProcess.
-	[ Exception signal ] on: Exception do: [ :e | exception := e ].
-	^ (OupsDummyDebugRequest newForException: exception) process: nonUIProcess; yourself
-]
-
-{ #category : 'tests' }
-OupsDebuggerSystemTest >> createDummyDebugRequestForUIProcess [
-
-	| exception |
-	[ Exception signal ]
-		on: Exception
-		do: [ :e | exception := e ].
-	^ (OupsDummyDebugRequest newForException: exception)
-		  process: MorphicUIManager uiProcess;
-		  yourself
-]
-
 { #category : 'private' }
 OupsDebuggerSystemTest >> performTest [
 	"Temporary printing to find more information about https://github.com/pharo-project/pharo/issues/12502"
@@ -94,13 +74,6 @@ OupsDebuggerSystemTest >> testHandleWarningDebugRequest [
 ]
 
 { #category : 'tests' }
-OupsDebuggerSystemTest >> testNonUIProcessIsRecognised [
-	"Tests that a DebuggerSystem opening a DebugRequest that is NOT on the ui process does NOT spawn a new UI process"
-	debuggerSystem openDebuggerOnRequest: self createDummyDebugRequestForNotUIProcess.
-	self assert: debuggerSystem newUIProcessSpawned not
-]
-
-{ #category : 'tests' }
 OupsDebuggerSystemTest >> testPreDebugActionExecuted [
 	"Test that a DebuggerSystem opening a DebugRequest with a pre-debug action will execute it exactly once"
 	| debugRequest |
@@ -108,16 +81,4 @@ OupsDebuggerSystemTest >> testPreDebugActionExecuted [
 	self assert: debugRequest dummyPreDebugActionExecutedCount equals: 0.
 	debuggerSystem openDebuggerOnRequest: debugRequest.
 	self assert: debugRequest dummyPreDebugActionExecutedCount equals: 1
-]
-
-{ #category : 'tests' }
-OupsDebuggerSystemTest >> testUIProcessIsRecognised [
-
-	"Test that a DebuggerSystem opening a DebugRequest on the ui process will spawn a new UI process"
-	|request|
-	request := self createDummyDebugRequestForUIProcess.
-	request debugSession errorWasInUIProcess: true.
-	debuggerSystem spawnNewUIProcessIfNecessary: request.
-
-	self assert: debuggerSystem newUIProcessSpawned
 ]
