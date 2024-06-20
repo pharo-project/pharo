@@ -132,6 +132,7 @@ Class {
 
 { #category : 'default' }
 ClyNavigationEnvironment class >> defaultOver: aSystem [
+	" Using an IdentityDictionary as the defaultGlobalEnvironments doen't smell good "
 	defaultGlobalEnvironments ifNil: [ defaultGlobalEnvironments := IdentityDictionary new ].
 
 	^defaultGlobalEnvironments at: aSystem ifAbsentPut: 
