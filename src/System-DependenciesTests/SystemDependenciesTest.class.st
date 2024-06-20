@@ -253,6 +253,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfMorphicCore.
 	BaselineOfSlot.
 	BaselineOfSUnit.
+	BaselineOfShift.
 	BaselineOfTraits.
 	BaselineOfUI.
 	BaselineOfUnifiedFFI.
