@@ -15,7 +15,8 @@ Class {
 	#instVars : [
 		'className',
 		'newClassName',
-		'rbClass'
+		'rbClass',
+		'rbMetaclass'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -61,22 +62,27 @@ ReDuplicateClassDriver >> newClassName: anObject [
 ReDuplicateClassDriver >> requestNewClass [
 
 	^ requestDialog ifNil: [
-		requestDialog := (StClassAndMethodsSelectionPresenter new
-			label: 'Copy class ' , className 
+		requestDialog := (StClassAndMethodsSelectionPresenter
 			withInstanceMethods: rbClass methods
-			withClassMethods: rbClass class methods) ]
+			withClassMethods: rbMetaclass allMethods)
+				label: 'Copy class ' , className;
+				selectAll ]
 ]
 
 { #category : 'execution' }
 ReDuplicateClassDriver >> runRefactoring [
 
-	| dialog selectedMethods |
 	self configureRefactoring.
 	self requestNewClass openModal.
 	requestDialog cancelled ifTrue: [ ^ nil ].
-	self halt.
-	selectedMethods := requestDialog selectedItems collect: [ :each | each name ].
-	refactoring copyClass: className withName: dialog newClass.
+
+	refactoring 
+		className: requestDialog newClassName;
+		sourceClass: className;
+		instanceMethods: requestDialog selectedInstanceMethods;
+		classMethods: requestDialog selectedClassMethods;
+		copySelectedMethods.
+
 	"self configureMessage."
 	self applyChanges 
 ]
@@ -84,8 +90,13 @@ ReDuplicateClassDriver >> runRefactoring [
 { #category : 'accessing' }
 ReDuplicateClassDriver >> scopes: refactoringScopes [
 
+	| selectedClass |
+	
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes last.
-	rbClass := model classFor: model environment classes anyOne.
+	selectedClass := model environment classes anyOne.	
+
+	rbClass := model classFor: selectedClass.
+	rbMetaclass := model classFor: selectedClass class.
 	className := rbClass realClass name
 ]

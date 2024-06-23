@@ -17,7 +17,9 @@ Class {
 	#superclass : 'RBClassRefactoring',
 	#instVars : [
 		'aClass',
-		'packageName'
+		'packageName',
+		'instanceMethods',
+		'classMethods'
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
@@ -63,6 +65,18 @@ ReCopyClassRefactoring >> applicabilityPreconditions [
 ]
 
 { #category : 'transforming' }
+ReCopyClassRefactoring >> classMethods [
+
+	^ classMethods
+]
+
+{ #category : 'accessing' }
+ReCopyClassRefactoring >> classMethods: anObject [
+
+	classMethods := anObject
+]
+
+{ #category : 'transforming' }
 ReCopyClassRefactoring >> copyClass [
 
 	self generateChangesFor: ((RBInsertNewClassRefactoring model: self model className: className)
@@ -86,6 +100,19 @@ ReCopyClassRefactoring >> copyMethods [
 	self copyMethodsOf: aClass classSide in: newClass classSide
 ]
 
+{ #category : 'transforming' }
+ReCopyClassRefactoring >> copyMethods: aCollectionOfMethods of: sourceClass in: newClass [
+	"Copy aCollectionOfMethods from sourceClass to newClass "
+
+	aCollectionOfMethods do: [ :rbMethod | 
+		self generateChangesFor:
+			(RBAddMethodTransformation
+				model: self model
+				sourceCode: rbMethod source
+				in: newClass
+				withProtocol: rbMethod protocols) ]
+]
+
 { #category : 'copying' }
 ReCopyClassRefactoring >> copyMethodsOf: rbClass1 in: rbClass2 [
 	rbClass1 selectors do: [ :symbol | | rbMethod |
@@ -97,6 +124,15 @@ ReCopyClassRefactoring >> copyMethodsOf: rbClass1 in: rbClass2 [
 				in: rbClass2
 				withProtocol: rbMethod protocols)
 	]
+]
+
+{ #category : 'transforming' }
+ReCopyClassRefactoring >> copySelectedMethods [
+	| newClass |
+	
+	newClass := self model classNamed: className.
+	self copyMethods: self instanceMethods of: aClass in: newClass.
+	self copyMethods: self classMethods of: aClass classSide in: newClass classSide
 ]
 
 { #category : 'transforming' }
@@ -112,6 +148,18 @@ ReCopyClassRefactoring >> copyVariables [
 		model: self model
 		variable: varName
 		class: className) ]
+]
+
+{ #category : 'transforming' }
+ReCopyClassRefactoring >> instanceMethods [
+
+	^ instanceMethods
+]
+
+{ #category : 'accessing' }
+ReCopyClassRefactoring >> instanceMethods: anObject [
+
+	instanceMethods := anObject
 ]
 
 { #category : 'accessing' }
@@ -131,4 +179,10 @@ ReCopyClassRefactoring >> privateTransform [
 	self copyClass.
 	self copyVariables.
 	self copyMethods
+]
+
+{ #category : 'copying' }
+ReCopyClassRefactoring >> sourceClass: classToCopy [
+
+	aClass := self classObjectFor: classToCopy
 ]
