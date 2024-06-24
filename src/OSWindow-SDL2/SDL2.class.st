@@ -5,8 +5,6 @@ Class {
 	#name : 'SDL2',
 	#superclass : 'Object',
 	#classVars : [
-		'ModuleName',
-		'ModuleSession',
 		'Session'
 	],
 	#pools : [
@@ -24,11 +22,6 @@ SDL2 class >> checkForError [
 	| msg |
 	msg := self getErrorMessage.
 	( msg ~= SDL2 and: msg ~= '' ) ifTrue:[SDL2Error signal: msg]
-]
-
-{ #category : 'native' }
-SDL2 class >> checkLibraryName: aName [
-	^ (ExternalAddress loadSymbol: 'SDL_Init' from: aName) isNotNil
 ]
 
 { #category : 'clipboard' }
@@ -118,24 +111,10 @@ SDL2 class >> eventType: type state: state [
 ]
 
 { #category : 'native' }
-SDL2 class >> ffiLibraryName [
-	^ self moduleName
-]
-
-{ #category : 'native' }
-SDL2 class >> findSDL2 [
-	| libFullPath |
-
-	"In Linux, try to use the linked version."
-	OSSDL2Driver hasPlugin.
-
-	libFullPath := Smalltalk platform ffiLibraryName: SDL2.
-	(self checkLibraryName: libFullPath)
-		ifTrue: [ ^ libFullPath ]
-		ifFalse: [
-			libFullPath asFileReference exists
-				ifFalse: [ self error: libFullPath asString , ' does not exist. Please install or update SDL2 in your system' ]
-				ifTrue: [ self error: 'Failed to load SDL2 library. Check if the library ' , libFullPath asString , ' exports the SDL_Init symbol and matches this platform' ] ]
+SDL2 class >> ffiLibrary [
+	
+	^ SDL2Library 
+	
 ]
 
 { #category : 'video' }
@@ -290,7 +269,7 @@ SDL2 class >> initVideo [
 
 { #category : 'common' }
 SDL2 class >> isAvailable [
-	^ [ (ExternalAddress loadSymbol: 'SDL_Init' from: SDL2 moduleName) isNotNil ]
+	^ [ (ExternalAddress loadSymbol: 'SDL_Init' from: SDL2Library uniqueInstance libraryName) isNotNil ]
 		onErrorDo: [ false ]
 ]
 
@@ -309,27 +288,9 @@ SDL2 class >> joystickOpen: deviceIndex [
 	^ self ffiCall: #( SDL_Joystick SDL_JoystickOpen ( int deviceIndex ) )
 ]
 
-{ #category : 'native' }
-SDL2 class >> macLibraryName [
-
-	^ FFIMacLibraryFinder
-		findAnyLibrary: #(
-			'libSDL2.dylib'
-			'libSDL2-2.0.0.dylib')
-]
-
 { #category : 'mouse' }
 SDL2 class >> modState [
 	^ self ffiCall: #( SDL_Keymod SDL_GetModState ( ) )
-]
-
-{ #category : 'native' }
-SDL2 class >> moduleName [
-	ModuleSession ~~ Smalltalk session ifTrue: [
-		ModuleName := self findSDL2.
-		ModuleSession := Smalltalk session
-	].
-	^ ModuleName
 ]
 
 { #category : 'mouse' }
@@ -427,14 +388,6 @@ SDL2 class >> ticks [
 	^ self ffiCall: #( Uint32 SDL_GetTicks ( ) )
 ]
 
-{ #category : 'native' }
-SDL2 class >> unix64LibraryName [
-
-	^ FFIUnix64LibraryFinder findAnyLibrary: #(
-		'libSDL2-2.0.so.0.2.1'
-		'libSDL2-2.0.so.0')
-]
-
 { #category : 'common' }
 SDL2 class >> version [
 	"Answer the SDL version. For example, a SDL_Version(2.0.7)."
@@ -451,13 +404,9 @@ SDL2 class >> wasInit: flags [
 	^ self ffiCall: #( int SDL_WasInit ( Uint32 flags ) )
 ]
 
-{ #category : 'native' }
-SDL2 class >> win32LibraryName [
-
-	^ FFIWindowsLibraryFinder findAnyLibrary: #('SDL2.dll' 'libSDL2.dll')
-]
-
 { #category : 'nb-library' }
-SDL2 >> ffiLibraryName [
-	^self class ffiLibraryName
+SDL2 >> ffiLibrary [
+	
+	^ SDL2Library 
+
 ]
