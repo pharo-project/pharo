@@ -176,9 +176,11 @@ ReCopyClassRefactoring >> packageName: anObject [
 
 { #category : 'transforming' }
 ReCopyClassRefactoring >> privateTransform [
+
 	self copyClass.
 	self copyVariables.
-	self copyMethods
+	self copySelectedMethods.
+
 ]
 
 { #category : 'copying' }

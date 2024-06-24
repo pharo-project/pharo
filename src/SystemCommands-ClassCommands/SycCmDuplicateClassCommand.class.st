@@ -13,9 +13,8 @@ SycCmDuplicateClassCommand >> executeRefactoring [
 
 	driver := (ReDuplicateClassDriver className: self targetClass name) scopes: refactoringScopes.
 	driver runRefactoring ifNil: [ ^ self ].
-	self halt.
 	(self confirm: 'Do you want to browse the new class?')
-		ifTrue: [ Smalltalk tools browser openOn: driver newClassName ].
+		ifTrue: [ Smalltalk tools browser openOnClass: driver newClassName ].
 
 ]
 

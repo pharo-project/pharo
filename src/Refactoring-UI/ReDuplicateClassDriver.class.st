@@ -11,7 +11,7 @@ Managing the refactoring of duplicate classes within the codebase. Duplicate cla
 "
 Class {
 	#name : 'ReDuplicateClassDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReClassInteractionDriver',
 	#instVars : [
 		'className',
 		'newClassName',
@@ -31,19 +31,24 @@ ReDuplicateClassDriver class >> className: aClassName [
 		yourself
 ]
 
+{ #category : 'introspection' }
+ReDuplicateClassDriver >> className [
+	"Answer a <String> representing the class to be copied"
+	
+	^ className
+]
+
 { #category : 'accessing' }
 ReDuplicateClassDriver >> className: aClassName [
 
-	className := aClassName
+	className := aClassName.
+
 ]
 
-{ #category : 'execution' }
+{ #category : 'accessing' }
 ReDuplicateClassDriver >> configureRefactoring [
 
-	refactoring := ReCopyClassRefactoring new
-		copyClass: self className
-		withName: self newClassName
-		yourself
+	refactoring := ReCopyClassRefactoring new.
 ]
 
 { #category : 'accessing' }
@@ -62,28 +67,35 @@ ReDuplicateClassDriver >> newClassName: anObject [
 ReDuplicateClassDriver >> requestNewClass [
 
 	^ requestDialog ifNil: [
-		requestDialog := (StClassAndMethodsSelectionPresenter
+		requestDialog := (StClassAndMethodsSelectionPresenter on: self)
 			withInstanceMethods: rbClass methods
-			withClassMethods: rbMetaclass allMethods)
-				label: 'Copy class ' , className;
-				selectAll ]
+			withClassMethods: rbMetaclass allMethods;
+			onCancel: [ : dialog | dialog close ];
+			onAccept: [ :dialog |
+				self			
+					packageName: dialog presenter packageName;
+					tagName: dialog presenter tagName;
+					newClassName: dialog presenter newClassName.
+				refactoring
+					packageName: dialog presenter packageName;
+					className: dialog presenter newClassName;
+					sourceClass: className;					
+					instanceMethods: dialog presenter selectedInstanceMethods;
+					classMethods: dialog presenter selectedClassMethods.
+
+				dialog close ];
+			selectAll;
+			openModal;
+			yourself ]
 ]
 
 { #category : 'execution' }
 ReDuplicateClassDriver >> runRefactoring [
 
 	self configureRefactoring.
-	self requestNewClass openModal.
-	requestDialog cancelled ifTrue: [ ^ nil ].
-
-	refactoring 
-		className: requestDialog newClassName;
-		sourceClass: className;
-		instanceMethods: requestDialog selectedInstanceMethods;
-		classMethods: requestDialog selectedClassMethods;
-		copySelectedMethods.
-
-	"self configureMessage."
+	self requestNewClass.
+	requestDialog window isCancelled
+		ifTrue: [ ^ nil ].
 	self applyChanges 
 ]
 
@@ -98,5 +110,10 @@ ReDuplicateClassDriver >> scopes: refactoringScopes [
 
 	rbClass := model classFor: selectedClass.
 	rbMetaclass := model classFor: selectedClass class.
-	className := rbClass realClass name
+]
+
+{ #category : 'accessing' }
+ReDuplicateClassDriver >> tagName [
+
+	^ tagName
 ]

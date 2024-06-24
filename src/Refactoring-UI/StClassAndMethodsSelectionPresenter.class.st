@@ -1,16 +1,13 @@
 Class {
 	#name : 'StClassAndMethodsSelectionPresenter',
-	#superclass : 'StMethodsSelectionPresenter',
+	#superclass : 'StRequestClassPresenter',
 	#instVars : [
 		'selectedInstanceMethods',
 		'selectedClassMethods',
 		'instanceMethods',
 		'classMethods',
 		'methodsNotebookPresenter',
-		'codePresenter',
-		'newClassNamePresenter',
-		'packagePresenter',
-		'tagPresenter'
+		'codePresenter'
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',
@@ -42,6 +39,12 @@ StClassAndMethodsSelectionPresenter class >> buildStMethodsSelectionContextualGr
 		yourself
 ]
 
+{ #category : 'accessing' }
+StClassAndMethodsSelectionPresenter class >> defaultExtent [
+
+	^ 500 @ 700
+]
+
 { #category : 'examples' }
 StClassAndMethodsSelectionPresenter class >> example [
 
@@ -59,15 +62,6 @@ StClassAndMethodsSelectionPresenter class >> exampleAllInstanceMethodsSelected [
 		label: 'Example' 
 		withInstanceMethods: Object methods 
 		withClassMethods: Object class methods) open
-]
-
-{ #category : 'examples' }
-StClassAndMethodsSelectionPresenter class >> withInstanceMethods: instMths withClassMethods: classMths [
-
-	^ self basicNew
-		withInstanceMethods: instMths withClassMethods: classMths;
-		initialize;
-		yourself
 ]
 
 { #category : 'accessing' }
@@ -98,7 +92,7 @@ StClassAndMethodsSelectionPresenter >> defaultLayout [
 			beColumnNotHomogeneous;
 			column: 2 expand: true;
 			build: [ :builder | builder
-				add: 'New class name: '; add: newClassNamePresenter; nextRow;
+				add: 'New class name: '; add: textInput; nextRow;
 				add: 'Package'; add: packagePresenter; nextRow;
 				add: 'Tag'; add: tagPresenter; nextRow ]) height: 100;
 		add: (SpPanedLayout newLeftToRight 
@@ -126,6 +120,17 @@ StClassAndMethodsSelectionPresenter >> initialize [
 ]
 
 { #category : 'initialization' }
+StClassAndMethodsSelectionPresenter >> initializeClassNamePresenter [
+
+	textInput := self newTextInput
+		whenTextChangedDo: [ : text | 
+			(Smalltalk globals hasClassNamed: text asSymbol)
+				ifTrue: [ self inform: 'Class ' , text asString , ' already exists' ]
+				ifFalse: [  ] ];
+		yourself.
+]
+
+{ #category : 'initialization' }
 StClassAndMethodsSelectionPresenter >> initializeClassTablePresenter [
 
 	^ self newTable	
@@ -141,8 +146,7 @@ StClassAndMethodsSelectionPresenter >> initializeClassTablePresenter [
 			yourself);
 		sortingBlock: [ :a :b | a selector < b selector ];
 		whenSelectionChangedDo: [ : selection | self handleMethodChange: selection selectedItem compiledMethod ];
-		contextMenu: [ (self rootCommandsGroup / 'StClassAndMethodsSelectionMenu') beRoot asMenuPresenter ];	
-		"searchMatching: [ :selFormula :textToSearch | selFormula selector beginsWith: textToSearch ];"
+		contextMenu: [ (self rootCommandsGroup / 'StClassAndMethodsSelectionMenu') beRoot asMenuPresenter ];
 		yourself
 ]
 
@@ -155,28 +159,13 @@ StClassAndMethodsSelectionPresenter >> initializeCodePresenter [
 ]
 
 { #category : 'initialization' }
-StClassAndMethodsSelectionPresenter >> initializeInputPresenters [
+StClassAndMethodsSelectionPresenter >> initializeFocus [
 
-	newClassNamePresenter := self newTextInput
-		whenTextChangedDo: [ : text | 
-			(Smalltalk globals hasClassNamed: text asSymbol)
-				ifTrue: [ self inform: 'Class ' , text asString , ' already exists' ]
-				ifFalse: [  ] ];
-		yourself.
-		
-	packagePresenter := self newDropList
-		startWithSelection;
-		items: PackageOrganizer default packageNames;
-		displayIcon: [ : aPackage | self iconNamed: aPackage systemIconName ];
-		sortingBlock: [ : a : b | a model < b model ];
-		whenSelectedItemChangedDo: [ : item | self updateTagItems: item ];
-		yourself.
-		
-	tagPresenter := self newDropList
-		startWithSelection;
-		whenSelectedItemChangedDo: [ : item |
-			tagPresenter selectItem: item ];
-		yourself.
+	self focusOrder 
+		add: textInput;
+		add: packagePresenter;
+		add: tagPresenter;
+		add: codePresenter
 ]
 
 { #category : 'initialization' }
@@ -220,21 +209,16 @@ StClassAndMethodsSelectionPresenter >> initializeNotebookPresenter [
 { #category : 'initialization' }
 StClassAndMethodsSelectionPresenter >> initializePresenters [
 
+	super initializePresenters.
 	self 
-		initializeInputPresenters
 		initializeNotebookPresenter;
 		initializeCodePresenter.
-		
 	methodsNotebookPresenter update.
+	self 
+		acceptLabel: 'Create';
+		validateAnswer: self validateAnswerBlock;
+		initializeFocus.
 
-]
-
-{ #category : 'initialization' }
-StClassAndMethodsSelectionPresenter >> initializeWindow: aWindowPresenter [
-
-	aWindowPresenter
-		title: label label;
-		initialExtent: (700 @ 500) scaledByDisplayScaleFactor
 ]
 
 { #category : 'accessing' }
@@ -264,12 +248,6 @@ StClassAndMethodsSelectionPresenter >> isInstanceMethodsSelected [
 ]
 
 { #category : 'accessing' }
-StClassAndMethodsSelectionPresenter >> label: aString [ 
-
-	label label: aString.
-]
-
-{ #category : 'accessing' }
 StClassAndMethodsSelectionPresenter >> methodsNotebookPresenter [
 
 	^ methodsNotebookPresenter
@@ -279,13 +257,6 @@ StClassAndMethodsSelectionPresenter >> methodsNotebookPresenter [
 StClassAndMethodsSelectionPresenter >> methodsNotebookPresenter: anObject [
 
 	methodsNotebookPresenter := anObject
-]
-
-{ #category : 'private' }
-StClassAndMethodsSelectionPresenter >> newClassName [
-	"Answer a <String> representing the new class to create"
-
-	^ newClassNamePresenter text
 ]
 
 { #category : 'api - selection' }
@@ -324,15 +295,15 @@ StClassAndMethodsSelectionPresenter >> selectedInstanceMethods: anObject [
 ]
 
 { #category : 'initialization' }
-StClassAndMethodsSelectionPresenter >> updateTagItems: item [
-	"Note that as it seems there is no Spec drop list with editable text, we provide a 'Core' tag by default if the package has no tags"
-	| pkg |
-	
-	pkg := PackageOrganizer default packageNamed: item.
-	pkg tagNames
-		ifEmpty: [ tagPresenter items: { 'Core' }  ]
-		ifNotEmpty: [ : tagNames | tagPresenter items: tagNames asOrderedCollection ].
-	tagPresenter selectIndex: 1
+StClassAndMethodsSelectionPresenter >> setTitleTo: aSpWindowPresenter [
+
+	aSpWindowPresenter title: 'Copy class ' , driver className
+]
+
+{ #category : 'initialization' }
+StClassAndMethodsSelectionPresenter >> setWindowIconTo: aSpWindowPresenter [
+
+	aSpWindowPresenter windowIcon: (self iconNamed: #smallCopy)
 ]
 
 { #category : 'initialization' }
