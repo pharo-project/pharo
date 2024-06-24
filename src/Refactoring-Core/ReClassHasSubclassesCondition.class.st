@@ -18,13 +18,6 @@ ReClassHasSubclassesCondition >> class: aClass [
 	classes := { aClass }
 ]
 
-{ #category : 'private' }
-ReClassHasSubclassesCondition >> class: aClass hasSubclasses: subclassesList [
-
-	^ (aClass allSubclasses collect: [ :each | each name ]) includesAll:
-		  subclassesList
-]
-
 { #category : 'accessing' }
 ReClassHasSubclassesCondition >> subclassesList: aCollection [
 
@@ -42,7 +35,8 @@ ReClassHasSubclassesCondition >> theClass [
 ReClassHasSubclassesCondition >> violators [
 
 	^ violators ifNil: [
-		  violators := (self class: self theClass hasSubclasses: subclasses)
-			               ifTrue: [ { } ]
+		  violators := ((self theClass allSubclasses collect: [ :each |
+			                 each name ]) includesAll: subclasses)
+			               ifTrue: [ {  } ]
 			               ifFalse: [ { self class } ] ]
 ]

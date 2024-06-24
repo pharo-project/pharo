@@ -129,10 +129,10 @@ RePushUpMethodDriver >> gatherUserInput [
 { #category : 'execution' }
 RePushUpMethodDriver >> handleBreakingChanges [
 
-	| presenter changes |
+	| presenter choices |
 	
 	"Display previous transformations that will fix the fixable breaking conditions"
-	changes := self breakingChoices.
+	choices := self breakingChoices.
 	
 	
 	presenter := self application newSelectMultiple.
@@ -140,7 +140,7 @@ RePushUpMethodDriver >> handleBreakingChanges [
 	presenter
 		title: 'There are potential breaking changes';
 		label: self labelBasedOnBreakingChanges;
-		items: changes;
+		items: choices;
 		display: [ :each | each description ];
 		onAccept: [ :dialog |
 			| selectedChanges |
