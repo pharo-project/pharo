@@ -26,6 +26,12 @@ ReMethodsDontReferToSharedVarsCondition >> class: aRBClass selectors: aCollectio
 	selectors := aCollection 
 ]
 
+{ #category : 'accessing' }
+ReMethodsDontReferToSharedVarsCondition >> referencedSharedVariables [
+
+	^ self violators collect: [ :violator | violator at: 2 ]
+]
+
 { #category : 'displaying' }
 ReMethodsDontReferToSharedVarsCondition >> violationMessageOn: aStream [
 

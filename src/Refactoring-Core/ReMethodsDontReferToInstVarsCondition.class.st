@@ -22,6 +22,12 @@ ReMethodsDontReferToInstVarsCondition >> class: aRBClass selectors: aCollection 
 	selectors := aCollection 
 ]
 
+{ #category : 'accessing' }
+ReMethodsDontReferToInstVarsCondition >> referencedInstanceVariables [
+
+	^ self violators collect: [ :violator | violator at: 2 ]
+]
+
 { #category : 'displaying' }
 ReMethodsDontReferToInstVarsCondition >> violationMessageOn: aStream [
 

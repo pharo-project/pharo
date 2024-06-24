@@ -185,23 +185,24 @@ RePushUpMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushUpMeth
 { #category : 'actions' }
 RePushUpMethodDriver >> pushUpReferencedInstVars [
 
-	notInstVarRefs violators do: [ :violator | 
+	notInstVarRefs referencedInstanceVariables do: [ :instVar | 
 		"We add the pushUpVariable transformation to the refactoring previous transformations"
-		refactoring pushUpVariable: (violator at: 2) ]
+		refactoring pullUpVariable: instVar ]
 ]
 
 { #category : 'actions' }
 RePushUpMethodDriver >> pushUpReferencedSharedVars [
 
-	notSharedVarRefs violators do: [ :violator | 
+	notSharedVarRefs referencedSharedVariables do: [ :sharedVar | 
 		"We add the pushUpVariable transformation to the refactoring previous transformations"
-		refactoring pullUpSharedVariable: (violator at: 2) ]
+		refactoring pullUpSharedVariable: sharedVar ]
 ]
 
 { #category : 'actions' }
 RePushUpMethodDriver >> removeDuplicateMethods [
 self flag: 'I am ugly, refactor me'.
 	notDuplicateMethods violators do: [ :violator |
+		
 		refactoring generateChangesFor: (RBRemoveMethodTransformation
 				 selector: (violator at: 1)
 				 from: (violator at: 2)) ]
