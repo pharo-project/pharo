@@ -45,25 +45,6 @@ StClassAndMethodsSelectionPresenter class >> defaultExtent [
 	^ 500 @ 700
 ]
 
-{ #category : 'examples' }
-StClassAndMethodsSelectionPresenter class >> example [
-
-	(self new 
-		label: 'Example' 
-		withInstanceMethods: Object methods 
-		withClassMethods: {}) open
-
-]
-
-{ #category : 'examples' }
-StClassAndMethodsSelectionPresenter class >> exampleAllInstanceMethodsSelected [
-
-	(self new 
-		label: 'Example' 
-		withInstanceMethods: Object methods 
-		withClassMethods: Object class methods) open
-]
-
 { #category : 'accessing' }
 StClassAndMethodsSelectionPresenter >> classMethods [
 
@@ -79,7 +60,7 @@ StClassAndMethodsSelectionPresenter >> classMethods: anObject [
 { #category : 'private' }
 StClassAndMethodsSelectionPresenter >> classMethodsTable [
 	"Answer the receiver's <SpTablePresenter> that holds the class methods"
-	
+
 	^ (methodsNotebookPresenter pageAt: 2) retrievePresenter
 ]
 
@@ -116,24 +97,24 @@ StClassAndMethodsSelectionPresenter >> initialize [
 
 	super initialize.
 	self selectedInstanceMethods: OrderedCollection new.
-	self selectedClassMethods: OrderedCollection new.
+	self selectedClassMethods: OrderedCollection new
 ]
 
 { #category : 'initialization' }
 StClassAndMethodsSelectionPresenter >> initializeClassNamePresenter [
 
 	textInput := self newTextInput
-		whenTextChangedDo: [ : text | 
+		whenTextChangedDo: [ : text |
 			(Smalltalk globals hasClassNamed: text asSymbol)
 				ifTrue: [ self inform: 'Class ' , text asString , ' already exists' ]
 				ifFalse: [  ] ];
-		yourself.
+		yourself
 ]
 
 { #category : 'initialization' }
 StClassAndMethodsSelectionPresenter >> initializeClassTablePresenter [
 
-	^ self newTable	
+	^ self newTable
 		beMultipleSelection;
 		addColumn: ((SpCheckBoxTableColumn title: '' evaluated: [ : im | self selectedClassMethods includes: im ])
 			onActivation: [ : cv | ];
@@ -210,15 +191,14 @@ StClassAndMethodsSelectionPresenter >> initializeNotebookPresenter [
 StClassAndMethodsSelectionPresenter >> initializePresenters [
 
 	super initializePresenters.
-	self 
+	self
 		initializeNotebookPresenter;
 		initializeCodePresenter.
 	methodsNotebookPresenter update.
-	self 
+	self
 		acceptLabel: 'Create';
 		validateAnswer: self validateAnswerBlock;
-		initializeFocus.
-
+		initializeFocus
 ]
 
 { #category : 'accessing' }
@@ -243,7 +223,7 @@ StClassAndMethodsSelectionPresenter >> instanceMethodsTable [
 { #category : 'testing' }
 StClassAndMethodsSelectionPresenter >> isInstanceMethodsSelected [
 	"Answer <true> if the receiver's tool is displaying the instance methods page"
-	
+
 	^ methodsNotebookPresenter selectedPage title = 'Instance'
 ]
 
@@ -310,7 +290,5 @@ StClassAndMethodsSelectionPresenter >> setWindowIconTo: aSpWindowPresenter [
 StClassAndMethodsSelectionPresenter >> withInstanceMethods: instMethods withClassMethods: clsMethods [
 
 	self instanceMethods: instMethods.
-	self classMethods: clsMethods.
-
-
+	self classMethods: clsMethods
 ]

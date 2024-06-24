@@ -72,14 +72,14 @@ ReDuplicateClassDriver >> requestNewClass [
 			withClassMethods: rbMetaclass allMethods;
 			onCancel: [ : dialog | dialog close ];
 			onAccept: [ :dialog |
-				self			
+				self
 					packageName: dialog presenter packageName;
 					tagName: dialog presenter tagName;
 					newClassName: dialog presenter newClassName.
 				refactoring
 					packageName: dialog presenter packageName;
 					className: dialog presenter newClassName;
-					sourceClass: className;					
+					sourceClass: className;
 					instanceMethods: dialog presenter selectedInstanceMethods;
 					classMethods: dialog presenter selectedClassMethods.
 

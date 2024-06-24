@@ -9,7 +9,7 @@ Class {
 	#tag : 'UI'
 }
 
-{ #category : 'initialization' }
+{ #category : 'default' }
 StClassAndMethodsSelectAllCommand class >> defaultDescription [
 
 	^ 'Select all methods'

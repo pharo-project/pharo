@@ -61,11 +61,11 @@ StRequestClassPresenter >> initializeTagsPresenter [
 StRequestClassPresenter >> initializeWindow: aSpWindowPresenter [
 
 	super initializeWindow: aSpWindowPresenter.
-	self 
+	self
 		setTitleTo: aSpWindowPresenter;
 		setWindowIconTo: aSpWindowPresenter.
 
-	aSpWindowPresenter 
+	aSpWindowPresenter
 		aboutText: String empty
 ]
 
@@ -78,8 +78,8 @@ StRequestClassPresenter >> newClassName [
 
 { #category : 'api - showing' }
 StRequestClassPresenter >> openModal [
-	
-	^ self asModalWindow open; centered.
+
+	^ self asModalWindow open; centered
 ]
 
 { #category : 'accessing' }
@@ -100,7 +100,7 @@ StRequestClassPresenter >> setTitleTo: aSpWindowPresenter [
 ]
 
 { #category : 'initialization' }
-StRequestClassPresenter >> setWindowIconTo: aSpWindowPresenter [ 
+StRequestClassPresenter >> setWindowIconTo: aSpWindowPresenter [
 	^ self subclassResponsibility
 ]
 
@@ -132,9 +132,9 @@ StRequestClassPresenter >> updateTagSelection: item [
 
 { #category : 'private' }
 StRequestClassPresenter >> validateAnswer [
-	
-	validateBlock ifNotNil: [ 
-		^ validateBlock 
+
+	validateBlock ifNotNil: [
+		^ validateBlock
 			value: textInput text
 			value: packagePresenter selectedItem
 			value: tagPresenter selectedItem ].

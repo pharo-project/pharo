@@ -27,7 +27,7 @@ StRefactoringAddClassPresenter >> commentPresenterText [
 ]
 
 { #category : 'layout' }
-StRefactoringAddClassPresenter >> defaultLayout [ 
+StRefactoringAddClassPresenter >> defaultLayout [
 
 	^ SpGridLayout new
 		  add: 'New class name' at: 1 @ 1;
@@ -43,7 +43,6 @@ StRefactoringAddClassPresenter >> defaultLayout [
 				yourself) at: 2 @ 4 span: 2 @ 1;
 		  beColumnNotHomogeneous;
 		  yourself
-		
 ]
 
 { #category : 'initialization' }
@@ -85,15 +84,15 @@ StRefactoringAddClassPresenter >> initializeFocus [
 ]
 
 { #category : 'initialization' }
-StRefactoringAddClassPresenter >> initializePresenters [ 
+StRefactoringAddClassPresenter >> initializePresenters [
 
 	super initializePresenters.
 	self initializeCommentPresenter.
 
-	self 
+	self
 		acceptLabel: 'Create';
 		validateAnswer: self validateAnswerBlock;
-		initializeFocus.
+		initializeFocus
 ]
 
 { #category : 'showing' }

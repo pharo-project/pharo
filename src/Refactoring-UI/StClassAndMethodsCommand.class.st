@@ -21,10 +21,10 @@ StClassAndMethodsCommand >> classMethodsTableItems [
 ]
 
 { #category : 'private' }
-StClassAndMethodsCommand >> instanceMethodsTable [ 
+StClassAndMethodsCommand >> instanceMethodsTable [
 	"Answer the presenter's <SpTablePresenter> that holds the instance methods"
 
-	^ 	self context instanceMethodsTable.
+	^ 	self context instanceMethodsTable
 ]
 
 { #category : 'private' }

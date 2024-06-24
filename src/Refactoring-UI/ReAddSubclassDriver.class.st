@@ -83,7 +83,7 @@ ReAddSubclassDriver >> requestSingleSubclass [
 
 	(StRefactoringAddClassPresenter on: self)
 		onCancel: [ : dialog | dialog close ];
-		onAccept: [ :dialog | 
+		onAccept: [ :dialog |
 			self
 				packageName: dialog presenter packageName;
 				tagName: dialog presenter tagName;
@@ -96,9 +96,9 @@ ReAddSubclassDriver >> requestSingleSubclass [
 ReAddSubclassDriver >> runRefactoring [
 
 	self configureRefactoring.
-	refactoring failedApplicabilityPreconditions 
+	refactoring failedApplicabilityPreconditions
 		ifNotEmpty: [ : conditions | ^ self informConditions: conditions ].
-	self applyChanges.
+	self applyChanges
 ]
 
 { #category : 'accessing' }
