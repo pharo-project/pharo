@@ -10,6 +10,16 @@ Class {
 }
 
 { #category : 'dummy methods' }
+MyClassBetaSibling >> methodDuplicated [
+	^ self
+]
+
+{ #category : 'dummy methods' }
+MyClassBetaSibling >> methodDuplicated2 [
+	^ self
+]
+
+{ #category : 'dummy methods' }
 MyClassBetaSibling >> sendSuper [
 	^ super methodOverriden 
 ]

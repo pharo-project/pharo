@@ -53,6 +53,7 @@ RBMetaclass >> classSide [
 
 { #category : 'accessing' }
 RBMetaclass >> classVariableNames [
+
 	^ self instanceSide classVariableNames
 ]
 
@@ -70,16 +71,6 @@ RBMetaclass >> directlyDefinesPoolDictionary: aString [
 { #category : 'testing' }
 RBMetaclass >> isMeta [
 	^true
-]
-
-{ #category : 'accessing - methods' }
-RBMetaclass >> methodNamed: aSymbol [
-
-	| allMethods |
-	
-	allMethods := IdentitySet new.
-	self allMethods do: [ :each | each selector = aSymbol ifTrue: [^ each]].
-	^ nil
 ]
 
 { #category : 'printing' }

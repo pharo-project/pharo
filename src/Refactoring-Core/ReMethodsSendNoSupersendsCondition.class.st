@@ -43,6 +43,6 @@ ReMethodsSendNoSupersendsCondition >> violators [
 		parseTree := class parseTreeForSelector: each.
 		parseTree superMessages
 			detect: [ :sup | targetSuperclass directlyDefinesMethod: sup ]
-			ifFound: [ violators add: (class methodNamed: each) ] ].
+			ifFound: [ violators add: (class methodFor: each) ] ].
 	^ violators
 ]

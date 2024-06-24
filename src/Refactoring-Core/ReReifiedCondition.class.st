@@ -6,11 +6,6 @@ Class {
 	#tag : 'Conditions'
 }
 
-{ #category : 'as yet unclassified' }
-ReReifiedCondition class >> strategyChoiceClass [
-	^ ReBrowseSubclassSuperSendsChoice 
-]
-
 { #category : 'accessing' }
 ReReifiedCondition >> errorString [
 

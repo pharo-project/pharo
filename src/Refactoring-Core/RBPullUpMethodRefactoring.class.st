@@ -73,7 +73,8 @@ RBPullUpMethodRefactoring >> breakingChangePreconditions [
 
 	^ {
 		  self preconditionNoReferencesToInstVars.
-		  self preconditionNoReferencesToSharedVars }
+		  self preconditionNoReferencesToSharedVars.
+		  self preconditionNoDuplicateMethods }
 ]
 
 { #category : 'preconditions' }
@@ -277,6 +278,16 @@ RBPullUpMethodRefactoring >> copyDownMethods [
 ]
 
 { #category : 'preconditions' }
+RBPullUpMethodRefactoring >> preconditionNoDuplicateMethods [
+
+	^ ReMethodsHaveNoDuplicatesCondition new
+		targetSuperclass: targetSuperclass ;
+		selectors: selectors;
+		class: class;
+		yourself
+]
+
+{ #category : 'preconditions' }
 RBPullUpMethodRefactoring >> preconditionNoOverrides [
 
 	^ (ReDefinesSelectorsCondition new
@@ -329,11 +340,11 @@ RBPullUpMethodRefactoring >> preconditions [
 
 { #category : 'transforming' }
 RBPullUpMethodRefactoring >> privateTransform [
+
 	self
 		copyDownMethods;
 		pullUpMethods;
-		removePulledUpMethods;
-		removeDuplicateMethods
+		removePulledUpMethods
 ]
 
 { #category : 'transforming' }
@@ -374,7 +385,7 @@ RBPullUpMethodRefactoring >> pullUpMethods [
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodRefactoring >> pushUpSharedVariable: aVariable [
+RBPullUpMethodRefactoring >> pullUpSharedVariable: aVariable [
 	| refactoring |
 	refactoring :=  RBPullUpClassVariableRefactoring 
 			model: self model
@@ -386,6 +397,7 @@ RBPullUpMethodRefactoring >> pushUpSharedVariable: aVariable [
 { #category : 'preconditions' }
 RBPullUpMethodRefactoring >> pushUpVariable: aVariable [
 	| refactoring |
+	
 	refactoring :=  RBPullUpInstanceVariableRefactoring
 			model: self model
 			variable: aVariable
@@ -402,6 +414,7 @@ RBPullUpMethodRefactoring >> removeDuplicateMethods [
 RBPullUpMethodRefactoring >> removeDuplicatesOf: aSelector [
 
 	| tree |
+	"self deprecated: 'Use the version of this method in the driver'."
 	tree := targetSuperclass parseTreeForSelector: aSelector.
 	targetSuperclass allSubclasses do: [ :each |
 		((each directlyDefinesMethod: aSelector) and: [

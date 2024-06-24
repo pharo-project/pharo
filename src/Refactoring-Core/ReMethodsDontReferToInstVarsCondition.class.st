@@ -44,7 +44,7 @@ ReMethodsDontReferToInstVarsCondition >> violators [
 	violators := Set new.
 	selectors do: [ :selector |
 		class instanceVariableNames do: [ :instVar |
-			((class methodNamed: selector) refersToVariable: instVar)
+			((class methodFor: selector) refersToVariable: instVar)
 				ifTrue: [ violators add: { selector . instVar } ] ] ].
 	^ violators asOrderedCollection
 ]

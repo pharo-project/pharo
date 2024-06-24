@@ -173,15 +173,6 @@ RBClass >> isSharedPool [
 ]
 
 { #category : 'accessing' }
-RBClass >> methodNamed: aSymbol [
-
-	| allMethods |
-	allMethods := IdentitySet new.
-	self methods do: [ :each | each selector = aSymbol ifTrue: [^ each]].
-	^ nil
-]
-
-{ #category : 'accessing' }
 RBClass >> methods [
 
 	^ self allMethods asOrderedCollection 

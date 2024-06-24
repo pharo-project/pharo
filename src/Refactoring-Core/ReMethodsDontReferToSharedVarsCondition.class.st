@@ -48,7 +48,7 @@ ReMethodsDontReferToSharedVarsCondition >> violators [
 	violators := Set new.
 	selectors do: [ :selector |
 		class classVariableNames do: [ :classVar |
-			((class methodNamed: selector) refersToVariable: classVar)
+			((class methodFor: selector) refersToVariable: classVar)
 				ifTrue: [ violators add: { selector . classVar } ] ] ].
 	^ violators asOrderedCollection
 ]

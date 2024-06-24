@@ -16,6 +16,16 @@ Class {
 }
 
 { #category : 'dummy methods' }
+MyClassBeta >> methodDuplicated [
+	^ self
+]
+
+{ #category : 'dummy methods' }
+MyClassBeta >> methodDuplicated2 [
+	^ self
+]
+
+{ #category : 'dummy methods' }
 MyClassBeta >> methodForPushUp [
 	^ 24
 ]

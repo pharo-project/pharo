@@ -23,7 +23,8 @@ Class {
 		'notInstVarRefs',
 		'notSharedVarRefs',
 		'notSupersendsReceived',
-		'notSupersendsSent'
+		'notSupersendsSent',
+		'notDuplicateMethods'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -181,7 +182,7 @@ RePushUpMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushUpMeth
 	class := methods first origin
 ]
 
-{ #category : 'action' }
+{ #category : 'actions' }
 RePushUpMethodDriver >> pushUpReferencedInstVars [
 
 	notInstVarRefs violators do: [ :violator | 
@@ -189,12 +190,21 @@ RePushUpMethodDriver >> pushUpReferencedInstVars [
 		refactoring pushUpVariable: (violator at: 2) ]
 ]
 
-{ #category : 'action' }
+{ #category : 'actions' }
 RePushUpMethodDriver >> pushUpReferencedSharedVars [
 
 	notSharedVarRefs violators do: [ :violator | 
 		"We add the pushUpVariable transformation to the refactoring previous transformations"
-		refactoring pushUpSharedVariable: (violator at: 2) ]
+		refactoring pullUpSharedVariable: (violator at: 2) ]
+]
+
+{ #category : 'actions' }
+RePushUpMethodDriver >> removeDuplicateMethods [
+self flag: 'I am ugly, refactor me'.
+	notDuplicateMethods violators do: [ :violator |
+		refactoring generateChangesFor: (RBRemoveMethodTransformation
+				 selector: (violator at: 1)
+				 from: (violator at: 2)) ]
 ]
 
 { #category : 'execution' }
@@ -237,5 +247,6 @@ RePushUpMethodDriver >> setBreakingChangesPreconditions [
 	notInstVarRefs := refactoring preconditionNoReferencesToInstVars.
 	notSharedVarRefs := refactoring preconditionNoReferencesToSharedVars.
 	notSupersendsSent := refactoring preconditionNoSupersendsSent.
-	notSupersendsReceived := refactoring preconditionNoSupersendsReceived
+	notSupersendsReceived := refactoring preconditionNoSupersendsReceived.
+	notDuplicateMethods := refactoring preconditionNoDuplicateMethods 
 ]
