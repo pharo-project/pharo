@@ -1,5 +1,5 @@
 "
-Replaces isNotNil ifTrue , isNotNil ifFalse and isNotNil ifTrue:ifFalse by ifNotNil: , ifNil and ifNotNil:ifNil: to make the code more readable. Helps to avoid unnecesary temporal variables.
+Replaces isNotNil ifTrue , isNotNil ifFalse and isNotNil ifTrue:ifFalse by ifNotNil: , ifNil: and ifNotNil:ifNil: to make the code more readable. Helps to avoid unnecesary temporal variables.
 Works also with notNil.
 "
 Class {
