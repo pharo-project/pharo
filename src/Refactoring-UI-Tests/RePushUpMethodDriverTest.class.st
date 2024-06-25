@@ -52,5 +52,5 @@ RePushUpMethodDriverTest >> testPushUpMethodDriverWhenOverridesExpectBreakingCha
 	
 	driver runRefactoring.
 	self assert: driver refactoring model changes changes size equals: 0.
-	self assert: driver refactoring failedBreakingChangePreconditions size equals: 2
+	self assert: driver refactoring failedApplicabilityPreconditions size equals: 1
 ]

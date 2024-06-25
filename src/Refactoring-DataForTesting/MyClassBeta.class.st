@@ -26,6 +26,11 @@ MyClassBeta >> methodForPushUp [
 ]
 
 { #category : 'dummy methods' }
+MyClassBeta >> methodForSupersend [
+	^ self
+]
+
+{ #category : 'dummy methods' }
 MyClassBeta >> methodOverriden [
 	^ self
 ]
@@ -55,7 +60,7 @@ MyClassBeta >> methodReferencingSharedVariableFromSuperclass [
 { #category : 'dummy methods' }
 MyClassBeta >> methodWithSuperSend [
 	" I send a message to super "
-	^ super methodOverriden
+	^ super methodForSupersend
 ]
 
 { #category : 'dummy methods' }

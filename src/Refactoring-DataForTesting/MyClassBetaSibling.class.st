@@ -16,5 +16,5 @@ MyClassBetaSibling >> methodDuplicatedInSibling [
 
 { #category : 'dummy methods' }
 MyClassBetaSibling >> sendSuper [
-	^ super methodOverriden 
+	^ super methodForSupersend 
 ]

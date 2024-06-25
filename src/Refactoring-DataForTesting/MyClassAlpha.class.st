@@ -13,6 +13,11 @@ Class {
 }
 
 { #category : 'dummy methods' }
+MyClassAlpha >> methodForSupersend [
+	^ 42
+]
+
+{ #category : 'dummy methods' }
 MyClassAlpha >> methodOverriden [
 	^ 24
 ]
