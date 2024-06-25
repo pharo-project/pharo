@@ -60,7 +60,7 @@ RBPullUpMethodRefactoring >> applicabilityPreconditions [
 		  (ReClassHasSubclassesCondition new
 			   class: targetSuperclass;
 			   subclassesList: { class name }).
-		self preconditionNoOverrides.
+		  self preconditionNoOverrides.
 		  self preconditionNoSupersendsSent.
 		  self preconditionNoSupersendsReceived }
 ]
