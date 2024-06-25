@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'dummy methods' }
-MyClassBetaSibling >> methodDuplicated [
+MyClassBetaSibling >> methodDuplicatedInSibling [
 	^ self
 ]
 

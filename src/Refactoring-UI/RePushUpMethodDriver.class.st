@@ -200,12 +200,10 @@ RePushUpMethodDriver >> pushUpReferencedSharedVars [
 
 { #category : 'actions' }
 RePushUpMethodDriver >> removeDuplicateMethods [
-self flag: 'I am ugly, refactor me'.
-	notDuplicateMethods violators do: [ :violator |
-		
-		refactoring generateChangesFor: (RBRemoveMethodTransformation
-				 selector: (violator at: 1)
-				 from: (violator at: 2)) ]
+
+	notDuplicateMethods withViolatorsDo: [ :aSelector :aClass |
+		refactoring generateChangesFor:
+			(RBRemoveMethodTransformation selector: aSelector from: aClass) ]
 ]
 
 { #category : 'execution' }

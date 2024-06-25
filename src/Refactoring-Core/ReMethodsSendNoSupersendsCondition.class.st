@@ -28,7 +28,8 @@ ReMethodsSendNoSupersendsCondition >> violationMessageOn: aStream [
 	self violators do: [ :violator |
 		aStream
 			nextPutAll: violator selector;
-			nextPutAll: ' sends a message to ''super''.';
+			nextPutAll:
+				' sends a message to ''super'' which is resolved to target superclass. Pulling this method up to the target superclass would change the method lookup for the super send.';
 			space ]
 ]
 

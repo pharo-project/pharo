@@ -88,3 +88,13 @@ ReMethodsHaveNoDuplicatesCondition >> violators [
 	^ violators
 
 ]
+
+{ #category : 'enumerating' }
+ReMethodsHaveNoDuplicatesCondition >> withViolatorsDo: aBlockClosure [
+
+	self violators do: [ :violator |
+		| aSelector aClass |
+		aSelector := violator at: 1.
+		aClass := violator at: 2.
+		aBlockClosure value: aSelector value: aClass ]
+]
