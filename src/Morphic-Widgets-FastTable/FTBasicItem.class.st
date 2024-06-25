@@ -231,12 +231,12 @@ FTBasicItem >> initialize [
 	recentlyChanged := false
 ]
 
-{ #category : 'accessing' }
+{ #category : 'testing' }
 FTBasicItem >> isExpanded [
 	^ isExpanded
 ]
 
-{ #category : 'accessing' }
+{ #category : 'testing' }
 FTBasicItem >> isRootItem [
 	^ self depth = 0
 ]
