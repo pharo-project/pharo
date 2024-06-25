@@ -69,6 +69,13 @@ RBAbstractEnvTestCase >> environmentOfTest [
 	^ testingEnvironment
 ]
 
+{ #category : 'utilities' }
+RBAbstractEnvTestCase >> modelOnClasses: aCollection [
+
+	^ RBNamespace onEnvironment:
+		  (RBClassEnvironment classes: aCollection)
+]
+
 { #category : 'mocking helpers' }
 RBAbstractEnvTestCase >> modelWithoutRealClasses: aColOfClasses [
 
