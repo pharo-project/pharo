@@ -40,10 +40,7 @@ and any instvar accessor for the  instance variables used by method `#=`.
 "
 Class {
 	#name : 'ReGenerateEqualHashTransformation',
-	#superclass : 'RBClassRefactoring',
-	#instVars : [
-		'variables'
-	],
+	#superclass : 'ReGenerateAbstractTransformation',
 	#category : 'Refactoring-Core-Transformation',
 	#package : 'Refactoring-Core',
 	#tag : 'Transformation'
@@ -82,13 +79,6 @@ ReGenerateEqualHashTransformation >> accessorForVariable: aString [
 		               classVariable: false.
 	refactoring createGetterAccessor.
 	^ refactoring getterMethodName
-]
-
-{ #category : 'preconditions' }
-ReGenerateEqualHashTransformation >> applicabilityPreconditions [
-	"Checks that the class actually defines all the variables that will be part of the hash."
-
-	^ (variables collect: [ :variable | RBCondition definesInstanceVariable: variable in: self theClass ])
 ]
 
 { #category : 'transforming' }
@@ -168,21 +158,4 @@ ReGenerateEqualHashTransformation >> compileHash [
 ReGenerateEqualHashTransformation >> privateTransform [
 	self compileHash.
 	self compileEqual
-]
-
-{ #category : 'accessing' }
-ReGenerateEqualHashTransformation >> theClass [
-	^ (self classObjectFor: className) instanceSide
-]
-
-{ #category : 'accessing' }
-ReGenerateEqualHashTransformation >> variables [
-	"Answer a <Collection> of <Symbol> each one representing a variable in the receiver's target class"
-	
-	^ variables 
-]
-
-{ #category : 'accessing' }
-ReGenerateEqualHashTransformation >> variables: anArray [
-	variables := anArray
 ]
