@@ -65,11 +65,11 @@ RBPullUpMethodTransformation >> buildTransformations [
 { #category : 'preconditions' }
 RBPullUpMethodTransformation >> checkBackReferencesTo: aSelector [
 
-	| definingClass pushUpParseTree |
+	| definingClass pullUpParseTree |
 	definingClass := targetSuperclass whichClassIncludesSelector:
 		                 aSelector.
 	definingClass ifNil: [ ^ self ].
-	pushUpParseTree := class parseTreeForSelector: aSelector.
+	pullUpParseTree := class parseTreeForSelector: aSelector.
 	targetSuperclass allSubclasses do: [ :each |
 		each selectors do: [ :sel |
 			| parseTree |
@@ -80,7 +80,7 @@ RBPullUpMethodTransformation >> checkBackReferencesTo: aSelector [
 				ifTrue: [
 					removeDuplicates := true.
 					(aSelector == sel and: [
-						 parseTree equalTo: pushUpParseTree exceptForVariables: #(  ) ])
+						 parseTree equalTo: pullUpParseTree exceptForVariables: #(  ) ])
 						ifFalse: [
 							self refactoringError:
 								('Cannot pull up <1s> since it would override the method defined in <2p>'

@@ -84,11 +84,11 @@ RBPullUpMethodRefactoring >> checkBackReferencesTo: aSelector [
 	Display an error to the user about potential breaking changes with overriding `aSelector`
 	in `targetSuperclass` "
 
-	| definingClass pushUpParseTree |
+	| definingClass pullUpParseTree |
 	
 	definingClass := targetSuperclass whichClassIncludesSelector: aSelector.
 	definingClass ifNil: [^self].
-	pushUpParseTree := class parseTreeForSelector: aSelector.
+	pullUpParseTree := class parseTreeForSelector: aSelector.
 	targetSuperclass allSubclasses do: [ :each |
 		each selectors do: [ :sel |
 			| parseTree |
@@ -99,7 +99,7 @@ RBPullUpMethodRefactoring >> checkBackReferencesTo: aSelector [
 				ifTrue: [
 					removeDuplicates := true.
 					(aSelector == sel and: [
-						 parseTree equalTo: pushUpParseTree exceptForVariables: #(  ) ])
+						 parseTree equalTo: pullUpParseTree exceptForVariables: #(  ) ])
 						ifFalse: [
 							self refactoringError:
 								('Cannot pull up <1s> since it would override the method defined in <2p>'
@@ -138,13 +138,13 @@ RBPullUpMethodRefactoring >> checkInstVarsFor: aSelector [
 	class instanceVariableNames do:
 			[:each |
 			((class whichSelectorsReferToInstanceVariable: each) includes: aSelector) ifTrue:
-					[ (self confirm: ('<1p> refers to #<2s> which is defined in <3p>. Do you want push up variable #<2s> also?' expandMacrosWith: aSelector
+					[ (self confirm: ('<1p> refers to #<2s> which is defined in <3p>. Do you want pull up variable #<2s> also?' expandMacrosWith: aSelector
 								with: each
 								with: class))
 						ifTrue: [ self pullUpVariable: each ]
-						ifFalse: [ self refactoringWarning: 'You are about to push your method without the instance variable it uses.
+						ifFalse: [ self refactoringWarning: 'You are about to pull up your method without the instance variable it uses.
 						It will bring the system is an inconsistent state. But this may be what you want.
-						So do you want to push up anyway?' ] ]]
+						So do you want to pull up anyway?' ] ]]
 ]
 
 { #category : 'preconditions' }

@@ -1,5 +1,5 @@
 Class {
-	#name : 'RePushUpMethodDriverTest',
+	#name : 'RePullUpMethodDriverTest',
 	#superclass : 'ReDriverTest',
 	#instVars : [
 		'model',
@@ -11,7 +11,7 @@ Class {
 }
 
 { #category : 'initialization' }
-RePushUpMethodDriverTest >> setUpDriver: driver [
+RePullUpMethodDriverTest >> setUpDriver: driver [
 
 	super setUpDriver: driver.
 	
@@ -19,16 +19,16 @@ RePushUpMethodDriverTest >> setUpDriver: driver [
 ]
 
 { #category : 'initialization' }
-RePushUpMethodDriverTest >> testPushUpMethodDriverWhenHappyPathExpectChanges [
+RePullUpMethodDriverTest >> testPullUpMethodDriverWhenHappyPathExpectChanges [
 
 	| driver method |
 	
 	environment := RBClassEnvironment classes: MyClassAlpha withAllSubclasses.
 	model := RBNamespace onEnvironment: environment.
-	method := MyClassBeta methodNamed: #methodForPushUp.
+	method := MyClassBeta methodNamed: #methodForPullUp.
 	
-	driver := RePushUpMethodDriver new
-					model: model scopes: { environment } pushUpMethods: { method }.
+	driver := RePullUpMethodDriver new
+					model: model scopes: { environment } pullUpMethods: { method }.
 
 	self setUpDriver: driver.
 	
@@ -37,7 +37,7 @@ RePushUpMethodDriverTest >> testPushUpMethodDriverWhenHappyPathExpectChanges [
 ]
 
 { #category : 'initialization' }
-RePushUpMethodDriverTest >> testPushUpMethodDriverWhenOverridesExpectBreakingChanges [
+RePullUpMethodDriverTest >> testPullUpMethodDriverWhenOverridesExpectBreakingChanges [
 
 	| driver method |
 	
@@ -45,8 +45,8 @@ RePushUpMethodDriverTest >> testPushUpMethodDriverWhenOverridesExpectBreakingCha
 	model := RBNamespace onEnvironment: environment.
 	method := MyClassBeta methodNamed: #methodOverriden.
 	
-	driver := RePushUpMethodDriver new
-					model: model scopes: { environment } pushUpMethods: { method }.
+	driver := RePullUpMethodDriver new
+					model: model scopes: { environment } pullUpMethods: { method }.
 
 	self setUpDriver: driver.
 	

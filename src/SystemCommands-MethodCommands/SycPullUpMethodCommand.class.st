@@ -1,5 +1,8 @@
+"
+I am a command to pull up given methods
+"
 Class {
-	#name : 'SycPushUpMethodCommand2',
+	#name : 'SycPullUpMethodCommand',
 	#superclass : 'SycRefactoringMethodCommand',
 	#instVars : [
 		'refactoringScopes'
@@ -9,38 +12,38 @@ Class {
 }
 
 { #category : 'testing' }
-SycPushUpMethodCommand2 class >> canBeExecutedInContext: aToolContext [
+SycPullUpMethodCommand class >> canBeExecutedInContext: aToolContext [
 
 	^aToolContext isMethodSelected and: [ aToolContext lastSelectedClass superclass ~= Object ]
 ]
 
 { #category : 'accessing' }
-SycPushUpMethodCommand2 >> defaultMenuIconName [
+SycPullUpMethodCommand >> defaultMenuIconName [
 	^ #up
 ]
 
 { #category : 'accessing' }
-SycPushUpMethodCommand2 >> defaultMenuItemName [
-	^'Push up 2'
+SycPullUpMethodCommand >> defaultMenuItemName [
+	^'Pull up'
 ]
 
 { #category : 'execution' }
-SycPushUpMethodCommand2 >> executeRefactorings [
+SycPullUpMethodCommand >> executeRefactorings [
 
-	(RePushUpMethodDriver
+	(RePullUpMethodDriver
 		 model: model
 		 scopes: refactoringScopes
-		 pushUpMethods: methods) runRefactoring
+		 pullUpMethods: methods) runRefactoring
 ]
 
 { #category : 'testing' }
-SycPushUpMethodCommand2 >> isComplexRefactoring [
+SycPullUpMethodCommand >> isComplexRefactoring [
 
 	^ false
 ]
 
 { #category : 'execution' }
-SycPushUpMethodCommand2 >> prepareFullExecutionInContext: aToolContext [
+SycPullUpMethodCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.
 	refactoringScopes := aToolContext refactoringScopes

@@ -8,7 +8,7 @@ Class {
 
 { #category : 'accessing' }
 RePushUpSharedVariableChoice >> action [
-	driver pushUpReferencedSharedVars
+	driver pullUpReferencedSharedVars
 ]
 
 { #category : 'accessing' }

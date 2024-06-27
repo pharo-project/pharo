@@ -18,7 +18,7 @@ ReMethodsReferToSharedVariablesTest >> testMethodDoesNotReferToSharedVariables [
 	myClassBeta := self model classNamed: #MyClassBeta.
 	
 	cond := ReMethodsDontReferToSharedVarsCondition new 
-		class: myClassBeta selectors: { #methodForPushUp }.
+		class: myClassBeta selectors: { #methodForPullUp }.
 		
 	" the method does not refer to shared variables "
 	self assert: cond check

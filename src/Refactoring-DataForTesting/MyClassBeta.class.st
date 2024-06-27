@@ -21,7 +21,7 @@ MyClassBeta >> methodDuplicatedInSibling [
 ]
 
 { #category : 'dummy methods' }
-MyClassBeta >> methodForPushUp [
+MyClassBeta >> methodForPullUp [
 	^ 24
 ]
 

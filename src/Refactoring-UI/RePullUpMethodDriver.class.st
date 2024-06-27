@@ -12,7 +12,7 @@ You can create my instance and execute the refactoring by running:
 ```
 "
 Class {
-	#name : 'RePushUpMethodDriver',
+	#name : 'RePullUpMethodDriver',
 	#superclass : 'RBInteractionDriver',
 	#instVars : [
 		'methods',
@@ -32,32 +32,32 @@ Class {
 }
 
 { #category : 'initialization' }
-RePushUpMethodDriver class >> model: model scopes: refactoringScopes pushUpMethods: methods [
+RePullUpMethodDriver class >> model: model scopes: refactoringScopes pullUpMethods: methods [
 
 	^ self new
 		  model: model
 		  scopes: refactoringScopes
-		  pushUpMethods: methods
+		  pullUpMethods: methods
 ]
 
 { #category : 'ui - dialogs' }
-RePushUpMethodDriver >> alertFailedPreconditions [
+RePullUpMethodDriver >> alertFailedPreconditions [
 	SpAlertDialog new
-		title: 'Push Up failed: Required preconditions were not met';
+		title: 'Pull Up method failed: Required preconditions were not met';
 		label:  self failedPreconditionsErrorString;
 		acceptLabel: 'Accept';
 		openDialog
 ]
 
 { #category : 'execution' }
-RePushUpMethodDriver >> breakingChoices [
+RePullUpMethodDriver >> breakingChoices [
 
 	^ refactoring failedBreakingChangePreconditions collect: [ :each |
 		each class strategyChoiceClass new driver: self ]
 ]
 
 { #category : 'actions' }
-RePushUpMethodDriver >> browseOverrides [
+RePullUpMethodDriver >> browseOverrides [
 
 	| overrides |
 	overrides := notOverrides violators.
@@ -69,7 +69,7 @@ RePushUpMethodDriver >> browseOverrides [
 ]
 
 { #category : 'actions' }
-RePushUpMethodDriver >> browseSuperSendsSent [
+RePullUpMethodDriver >> browseSuperSendsSent [
 	| overrides |
 	overrides := notSupersendsSent violators.
 	
@@ -81,14 +81,14 @@ RePushUpMethodDriver >> browseSuperSendsSent [
 ]
 
 { #category : 'execution' }
-RePushUpMethodDriver >> changes [
+RePullUpMethodDriver >> changes [
 	"it should NOT be generate changes."
 	^  refactoring privateTransform
 
 ]
 
 { #category : 'execution' }
-RePushUpMethodDriver >> configureAndRunRefactoring [
+RePullUpMethodDriver >> configureAndRunRefactoring [
 
 	self configureRefactoring.
 
@@ -102,7 +102,7 @@ RePushUpMethodDriver >> configureAndRunRefactoring [
 ]
 
 { #category : 'resources' }
-RePushUpMethodDriver >> configureRefactoring [
+RePullUpMethodDriver >> configureRefactoring [
 
 	refactoring := RBPullUpMethodRefactoring
 		               model: model
@@ -112,7 +112,7 @@ RePushUpMethodDriver >> configureRefactoring [
 ]
 
 { #category : 'ui - dialogs' }
-RePushUpMethodDriver >> failedPreconditionsErrorString [
+RePullUpMethodDriver >> failedPreconditionsErrorString [
 
 	^ String streamContents: [ :stream |
 		  refactoring failedApplicabilityPreconditions do: [ :cond |
@@ -122,12 +122,12 @@ RePushUpMethodDriver >> failedPreconditionsErrorString [
 ]
 
 { #category : 'execution' }
-RePushUpMethodDriver >> gatherUserInput [
+RePullUpMethodDriver >> gatherUserInput [
 	self selectMethodsAndClass
 ]
 
 { #category : 'execution' }
-RePushUpMethodDriver >> handleBreakingChanges [
+RePullUpMethodDriver >> handleBreakingChanges [
 
 	| presenter choices |
 	
@@ -151,7 +151,7 @@ RePushUpMethodDriver >> handleBreakingChanges [
 ]
 
 { #category : 'ui - dialogs' }
-RePushUpMethodDriver >> labelBasedOnBreakingChanges [
+RePullUpMethodDriver >> labelBasedOnBreakingChanges [
 
 	^ String streamContents: [ :stream |
 		  refactoring failedBreakingChangePreconditions do: [ :cond |
@@ -162,19 +162,19 @@ RePushUpMethodDriver >> labelBasedOnBreakingChanges [
 ]
 
 { #category : 'for mocks' }
-RePushUpMethodDriver >> methodsAndSuperclassSelectionPresenterClass [
+RePullUpMethodDriver >> methodsAndSuperclassSelectionPresenterClass [
 
 	^ methodSelectionPresenterClass ifNil: [ methodSelectionPresenterClass := StSelectClassAndMethodsPresenter ]
 ]
 
 { #category : 'for mocks' }
-RePushUpMethodDriver >> methodsSelectionPresenterClass: aClass [ 
+RePullUpMethodDriver >> methodsSelectionPresenterClass: aClass [ 
 
 	methodSelectionPresenterClass := aClass
 ]
 
 { #category : 'initialization' }
-RePushUpMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushUpMethods: methodsList [ 
+RePullUpMethodDriver >> model: aRBNamespace scopes: refactoringScopes pullUpMethods: methodsList [ 
 	
 	model := aRBNamespace.
 	scopes := refactoringScopes.
@@ -183,7 +183,7 @@ RePushUpMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushUpMeth
 ]
 
 { #category : 'actions' }
-RePushUpMethodDriver >> pushUpReferencedInstVars [
+RePullUpMethodDriver >> pullUpReferencedInstVars [
 
 	notInstVarRefs referencedInstanceVariables do: [ :instVar | 
 		"We add the pushUpVariable transformation to the refactoring previous transformations"
@@ -191,7 +191,7 @@ RePushUpMethodDriver >> pushUpReferencedInstVars [
 ]
 
 { #category : 'actions' }
-RePushUpMethodDriver >> pushUpReferencedSharedVars [
+RePullUpMethodDriver >> pullUpReferencedSharedVars [
 
 	notSharedVarRefs referencedSharedVariables do: [ :sharedVar | 
 		"We add the pushUpVariable transformation to the refactoring previous transformations"
@@ -199,7 +199,7 @@ RePushUpMethodDriver >> pushUpReferencedSharedVars [
 ]
 
 { #category : 'actions' }
-RePushUpMethodDriver >> removeDuplicateMethods [
+RePullUpMethodDriver >> removeDuplicateMethods [
 
 	notDuplicateMethods withViolatorsDo: [ :aSelector :aClass |
 		refactoring generateChangesFor:
@@ -207,7 +207,7 @@ RePushUpMethodDriver >> removeDuplicateMethods [
 ]
 
 { #category : 'execution' }
-RePushUpMethodDriver >> runRefactoring [
+RePullUpMethodDriver >> runRefactoring [
 
 	"the user can still select if needed. Nil = cancel refactoring"
 	self gatherUserInput.
@@ -217,13 +217,13 @@ RePushUpMethodDriver >> runRefactoring [
 ]
 
 { #category : 'execution' }
-RePushUpMethodDriver >> selectMethodsAndClass [
+RePullUpMethodDriver >> selectMethodsAndClass [
 
 	| dialog classes |
 	classes := class allSuperclasses removeAllSuchThat: [ :each |
 		           each == Object or: [ each == ProtoObject ] ].
 	dialog := self methodsAndSuperclassSelectionPresenterClass
-		          label: 'Methods to be pull up'
+		          label: 'Methods to be pulled up'
 		          dropLabel: 'Pull up methods from ' , class name , ' to:'
 		          withItems:
 			          (class methods sort: [ :a :b | a asString < b asString ])
@@ -240,7 +240,7 @@ RePushUpMethodDriver >> selectMethodsAndClass [
 ]
 
 { #category : 'initialization' }
-RePushUpMethodDriver >> setBreakingChangesPreconditions [
+RePullUpMethodDriver >> setBreakingChangesPreconditions [
 
 	notOverrides := refactoring preconditionNoOverrides.
 	notInstVarRefs := refactoring preconditionNoReferencesToInstVars.

@@ -8,7 +8,7 @@ Class {
 
 { #category : 'accessing' }
 RePushUpInstanceVariableChoice >> action [
-	driver pushUpReferencedInstVars
+	driver pullUpReferencedInstVars
 ]
 
 { #category : 'accessing' }
