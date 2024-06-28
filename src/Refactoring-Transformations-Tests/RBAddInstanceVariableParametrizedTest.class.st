@@ -19,15 +19,14 @@ RBAddInstanceVariableParametrizedTest class >> testParameters [
 { #category : 'running' }
 RBAddInstanceVariableParametrizedTest >> setUp [
 	super setUp.
-	model := self rbModelForVariableTest
+	model := self modelOnClasses: { RBTransformationRuleTestData }
 ]
 
 { #category : 'tests' }
 RBAddInstanceVariableParametrizedTest >> testAddInstanceVariable [
 
 	| refactoring |
-	model := self modelOnClasses: { RBTransformationRuleTestData }.
-
+	
 	refactoring := self
 		               createRefactoringWithModel: model
 		               andArguments:
@@ -44,7 +43,7 @@ RBAddInstanceVariableParametrizedTest >> testAddInstanceVariable [
 RBAddInstanceVariableParametrizedTest >> testAddToModel [
 
 	| refactoring |
-	model := self modelOnClasses: {  }.
+	
 	model name: 'Add instance variable'.
 	model defineClass: [ :aBuilder |
 		aBuilder
@@ -64,8 +63,6 @@ RBAddInstanceVariableParametrizedTest >> testAddToModel [
 
 { #category : 'tests' }
 RBAddInstanceVariableParametrizedTest >> testInvalidVariableName [
-
-	model := self modelOnClasses: { RBTransformationRuleTestData }.
 
 	self shouldFail: (self
 			 createRefactoringWithModel: model
