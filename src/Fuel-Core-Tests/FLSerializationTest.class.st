@@ -27,9 +27,17 @@ FLSerializationTest class >> resources [
 ]
 
 { #category : 'asserting' }
-FLSerializationTest >> assertOuterContextBasedOnCompilationOption: aClosure [
+FLSerializationTest >> assertCleanBlockOuterContextBasedOnCompilationOption: aClosure [
 
 	CompilationContext optionCleanBlockClosure
+		ifTrue: [ self assert: aClosure outerContext isNil ]
+		ifFalse: [ self assert: aClosure outerContext isNotNil ]
+]
+
+{ #category : 'asserting' }
+FLSerializationTest >> assertConstantBlockOuterContextBasedOnCompilationOption: aClosure [
+
+	CompilationContext optionConstantBlockClosure
 		ifTrue: [ self assert: aClosure outerContext isNil ]
 		ifFalse: [ self assert: aClosure outerContext isNotNil ]
 ]
