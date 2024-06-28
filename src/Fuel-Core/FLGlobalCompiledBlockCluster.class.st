@@ -54,7 +54,7 @@ FLGlobalCompiledBlockCluster >> serializeInstance: aCompiledBlock with: anEncode
 	| method path |
 	method := aCompiledBlock method.
 	self serializeGlobalClass: aCompiledBlock methodClass on: anEncoder.
-	path := aCompiledBlock path.
+	path := aCompiledBlock pathOfLiteralIndexes.
 	anEncoder
 		encodeString: method selector;
 		encodeUint8: path size;

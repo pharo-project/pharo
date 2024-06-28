@@ -102,9 +102,9 @@ CleanBlockClosure >> outerCode: aCompiledCode [
 ]
 
 { #category : 'accessing' }
-CleanBlockClosure >> path [
+CleanBlockClosure >> pathOfLiteralIndexes [
 	
-	^ self compiledBlock path allButLast
+	^ self compiledBlock pathOfLiteralIndexes allButLast
 ]
 
 { #category : 'scanning' }
