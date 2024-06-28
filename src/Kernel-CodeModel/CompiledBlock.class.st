@@ -160,9 +160,9 @@ CompiledBlock >> outerCode: aCompiledCode [
 ]
 
 { #category : 'accessing' }
-CompiledBlock >> path [
+CompiledBlock >> pathOfLiteralIndexes [
 	
-	^ self outerCode path copyWithAll: self indexesInOuter
+	^ self outerCode pathOfLiteralIndexes copyWithAll: self indexesInOuter
 ]
 
 { #category : 'scanning' }

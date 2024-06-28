@@ -538,7 +538,7 @@ CompiledMethod >> overriddenMethod [
 ]
 
 { #category : 'accessing' }
-CompiledMethod >> path [
+CompiledMethod >> pathOfLiteralIndexes [
 	
 	^ #[]
 ]
