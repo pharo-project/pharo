@@ -31,8 +31,12 @@ FLGlobalCompiledBlockCluster >> materializeInstanceWith: aDecoder [
 	theBlock := method.
 	path do: [ :index |
 		theBlock := index = 0
-			            ifTrue: [ theBlock compiledBlock "0 means it is in a Clean Block" ]
-			            ifFalse: [ theBlock literalAt: index ] ].
+			            ifTrue: [
+			            theBlock compiledBlock "0 means it is in a Clean Block" ]
+			            ifFalse: [ theBlock literalAt: index ].
+		"If at some point we find another object that is not a closure, we skip.
+		Probably the code changed, we cannot get the block from old method."
+		(theBlock isBlock or: [ theBlock isCompiledBlock ]) ifFalse: [ ^ nil ] ].
 	^ theBlock
 ]
 
