@@ -10,15 +10,17 @@ Class {
 
 { #category : 'accessing' }
 SycAbstractAllInstVarAccessorsCommand >> asRefactorings [
+
 	| refactorings env |
-	refactorings := classes flatCollect: [:each |
-		each value collect: [:var |
-			| refactoring |
-			env
-				ifNil: [ refactoring := var createRefactoring: RBAbstractInstanceVariableRefactoring for: each key.
-							env := refactoring model ]
-				ifNotNil: [refactoring := var createRefactoring: RBAbstractInstanceVariableRefactoring for: each key in: env ].
-			refactoring ]].
+	refactorings := classes flatCollect: [ :each |
+		                each value collect: [ :var |
+			                | refactoring |
+			                refactoring := var
+				                               createRefactoring:
+				                               RBAbstractInstanceVariableRefactoring
+				                               for: each key.
+			                env := refactoring model.
+			                refactoring ] ].
 	^ refactorings
 ]
 
