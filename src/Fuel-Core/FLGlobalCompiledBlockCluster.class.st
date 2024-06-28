@@ -25,7 +25,7 @@ FLGlobalCompiledBlockCluster >> materializeInstanceWith: aDecoder [
 	aDecoder nextEncodedBytesInto: path.
 
 	"It's ok if the method was changed or removed."
-	method := methodClass compiledMethodAt: selector ifAbsent: [ ^ nil ].
+	method := self findMethodWithSelector: selector in: methodClass.
 
 	"Follow the saved path from the method to the compiled block"
 	theBlock := method.
@@ -36,7 +36,10 @@ FLGlobalCompiledBlockCluster >> materializeInstanceWith: aDecoder [
 			            ifFalse: [ theBlock literalAt: index ].
 		"If at some point we find another object that is not a closure, we skip.
 		Probably the code changed, we cannot get the block from old method."
-		(theBlock isBlock or: [ theBlock isCompiledBlock ]) ifFalse: [ ^ nil ] ].
+		(theBlock isBlock or: [ theBlock isCompiledBlock ]) ifFalse: [ 
+			"Do not throw an exception here, constant blocks are still possible to
+				metarialize as normal object."
+			^ nil ] ].
 	^ theBlock
 ]
 
