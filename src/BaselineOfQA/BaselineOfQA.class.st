@@ -13,6 +13,8 @@ BaselineOfQA >> baseline: spec [
 	repository := self packageRepositoryURLForSpec: spec.
 
 	spec for: #common do: [
+		
+		spec package: 'Refactoring-UI'.
 		spec
 			package: 'NautilusRefactoring'
 			with: [ spec requires: #( 'Refactoring-UI' ) ].
