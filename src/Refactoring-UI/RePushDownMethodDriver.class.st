@@ -46,10 +46,9 @@ RePushDownMethodDriver >> breakingChoices [
 { #category : 'actions' }
 RePushDownMethodDriver >> browseSubclassesSuperSends [
 
-	subclassesSendSuper violators keysAndValuesDo: [ :violator :references |
-		"we should pass the application! "
+	subclassesSendSuper violators keysAndValuesDo: [ :violator :references | "we should pass the application! "
 		StMessageBrowser
-			browse: (references collect: [ :ref | ref method ])
+			browse: (references collect: [ :ref | ref compiledMethod ])
 			asSendersOf: violator realClass ]
 ]
 

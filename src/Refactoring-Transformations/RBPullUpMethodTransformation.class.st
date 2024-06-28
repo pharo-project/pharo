@@ -65,11 +65,11 @@ RBPullUpMethodTransformation >> buildTransformations [
 { #category : 'preconditions' }
 RBPullUpMethodTransformation >> checkBackReferencesTo: aSelector [
 
-	| definingClass pushUpParseTree |
+	| definingClass pullUpParseTree |
 	definingClass := targetSuperclass whichClassIncludesSelector:
 		                 aSelector.
 	definingClass ifNil: [ ^ self ].
-	pushUpParseTree := class parseTreeForSelector: aSelector.
+	pullUpParseTree := class parseTreeForSelector: aSelector.
 	targetSuperclass allSubclasses do: [ :each |
 		each selectors do: [ :sel |
 			| parseTree |
@@ -80,7 +80,7 @@ RBPullUpMethodTransformation >> checkBackReferencesTo: aSelector [
 				ifTrue: [
 					removeDuplicates := true.
 					(aSelector == sel and: [
-						 parseTree equalTo: pushUpParseTree exceptForVariables: #(  ) ])
+						 parseTree equalTo: pullUpParseTree exceptForVariables: #(  ) ])
 						ifFalse: [
 							self refactoringError:
 								('Cannot pull up <1s> since it would override the method defined in <2p>'
@@ -117,7 +117,7 @@ RBPullUpMethodTransformation >> checkInstVarsFor: aSelector [
 					[ (self confirm: ('<1p> refers to #<2s> which is defined in <3p>. Do you want push up variable #<2s> also?' expandMacrosWith: aSelector
 								with: each
 								with: class))
-						ifTrue: [ self previousTransformations add: (self pushUpVariable: each) ]
+						ifTrue: [ self previousTransformations add: (self pullUpVariable: each) ]
 						ifFalse: [ self refactoringWarning: 'You are about to push your method without the instance variable it uses.
 						It will bring the system is an inconsistent state. But this may be what you want.
 						So do you want to push up anyway?' ] ]]
@@ -277,7 +277,7 @@ RBPullUpMethodTransformation >> pullUpMethods [
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodTransformation >> pushUpVariable: aVariable [
+RBPullUpMethodTransformation >> pullUpVariable: aVariable [
 	^ RBPullUpVariableTransformation
 			model: self model
 			instanceVariable: aVariable
