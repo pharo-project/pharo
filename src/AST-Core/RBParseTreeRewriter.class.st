@@ -22,12 +22,9 @@ Now here is a full script showing how to compile the method back.
 	method := (BIArrayExpressionTest>>#testNoExtraSpaceAroundPeriod).
 	ok := rewriter executeTree: method parseTree.
 	ok ifFalse: [ ^ 'did not work' ].
-	Author 
-		useAuthor: 'Refactoring'
-		during: [  
-			method origin 
-				compile: rewriter tree formattedCode 
-				classified: method protocol ]
+	method origin 
+		compile: rewriter tree formattedCode 
+		classified: method protocol
 
 
 Have a look at the users of deprecated:

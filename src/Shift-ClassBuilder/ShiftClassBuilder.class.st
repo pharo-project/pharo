@@ -49,7 +49,6 @@ Class {
 		'oldClass',
 		'oldMetaclass',
 		'builderEnhancer',
-		'metaclassClass',
 		'extensibleProperties',
 		'changeComparers',
 		'changes',
@@ -250,15 +249,13 @@ ShiftClassBuilder >> createClass [
 { #category : 'building' }
 ShiftClassBuilder >> createMetaclass [
 
-	newMetaclass := self builderEnhancer newMetaclass: self.
+	newMetaclass := self metaclassClass new.
 
 	self builderEnhancer
 		configureMetaclass: newMetaclass
 		superclass: self metaSuperclass
 		withLayoutType: FixedLayout
-		slots: (self withAdditionalSlots: self classSlots).
-
-	self builderEnhancer metaclassCreated: self
+		slots: (self withAdditionalSlots: self classSlots)
 ]
 
 { #category : 'building' }
@@ -317,8 +314,7 @@ ShiftClassBuilder >> fillClassSideFromEnvironment: anEnvironment [
 	| old |
 	old := anEnvironment at: name ifAbsent: [ ^ self ].
 
-	self classSlots: old class slots.
-	self classTraits: old class traitComposition
+	self classSlots: old class slots
 ]
 
 { #category : 'initialization' }
@@ -467,7 +463,10 @@ ShiftClassBuilder >> markIsInRemake [
 { #category : 'accessing' }
 ShiftClassBuilder >> metaSuperclass [
 
-	^ metaSuperclass ifNil:[ (superclass ifNil: [ Class ] ifNotNil: [ superclass class ]) ]
+	^ metaSuperclass ifNil: [
+		  self superclass
+			  ifNil: [ Class ]
+			  ifNotNil: [ self superclass class ] ]
 ]
 
 { #category : 'accessing' }
@@ -478,12 +477,9 @@ ShiftClassBuilder >> metaSuperclass: aClass [
 
 { #category : 'accessing' }
 ShiftClassBuilder >> metaclassClass [
-	^ metaclassClass ifNil: [ Metaclass ]
-]
+	"The metaclass class is determined by the builder enhancer. In case you want to play with your own metaclass class, you can implement a subclass of the buildre enhancer and use this one overriding the method #metaclassClassFor:."
 
-{ #category : 'accessing' }
-ShiftClassBuilder >> metaclassClass: anObject [
-	metaclassClass := anObject
+	^ self builderEnhancer metaclassClassFor: self
 ]
 
 { #category : 'accessing' }

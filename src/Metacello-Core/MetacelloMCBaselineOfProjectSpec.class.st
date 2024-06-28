@@ -6,6 +6,12 @@ Class {
 	#tag : 'Specs'
 }
 
+{ #category : 'visiting' }
+MetacelloMCBaselineOfProjectSpec >> acceptVisitor: aVisitor [
+	
+	^ aVisitor visitProjectSpec: self
+]
+
 { #category : 'scripting' }
 MetacelloMCBaselineOfProjectSpec >> asBaselineProjectSpec [
     ^ self
@@ -65,7 +71,7 @@ MetacelloMCBaselineOfProjectSpec >> determineCurrentVersionForLoad [
 ]
 
 { #category : 'loading' }
-MetacelloMCBaselineOfProjectSpec >> ensureConfigurationLoaded: vrsn ensured: ensured [
+MetacelloMCBaselineOfProjectSpec >> ensureConfigurationLoaded: vrsn ensured: ensured withEngine: anObject [
   "answer true if the configuration should be reloaded"
 
   "see Issue #181 for details ... basically we always want to consider loading the baseline from a project reference, especially if the two project specs are not the same..."
@@ -73,16 +79,6 @@ MetacelloMCBaselineOfProjectSpec >> ensureConfigurationLoaded: vrsn ensured: ens
   "https://github.com/dalehenrich/metacello-work/issues/181"
 
   ^ true
-]
-
-{ #category : 'loading' }
-MetacelloMCBaselineOfProjectSpec >> ensureLoadUsing: aLoader [
-  "see https://github.com/dalehenrich/metacello-work/issues/244 ... uncoditionally load
-   baseline"
-
-  [ super ensureLoadUsing: aLoader ]
-    on: MetacelloIgnorePackageLoaded
-    do: [ :ex | ex resume: ex packageSpec name = self name ]
 ]
 
 { #category : 'printing' }
@@ -161,31 +157,29 @@ MetacelloMCBaselineOfProjectSpec >> repositoryVersionString [
 
 { #category : 'scripting' }
 MetacelloMCBaselineOfProjectSpec >> validateVersionString: issues withDefaultVersionString: ignored [
-    self versionString
-        ifNotNil: [ :vs | 
-            | prj |
-            prj := self project asBaselineProject.
-            vs ~= prj singletonVersionName
-                ifTrue: [ 
-                    issues
-                        add:
-                            (MetacelloValidationError
-                                configurationClass: self projectClass
-                                reasonCode: #'invalidVersionString'
-                                callSite:
-                                    #'validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:'
-                                explanation:
-                                    'version field is incorrect, should be: ' , prj singletonVersionName printString) ] ]
+
+	self versionString ifNotNil: [ :vs |
+		| prj |
+		prj := self project asBaselineProject.
+		vs ~= prj singletonVersionName ifTrue: [
+			issues add: (MetacelloValidationError
+					 reasonCode: #invalidVersionString
+					 callSite:
+					 #validateForScriptLoad:withDefaultVersionString:withDefaultRepositoryDecription:
+					 explanation: 'version field is incorrect, should be: '
+						 , prj singletonVersionName printString) ] ]
 ]
 
 { #category : 'querying' }
 MetacelloMCBaselineOfProjectSpec >> version [
 
-	self projectClass ifNil: [ ^ nil ].
-	^ self projectClassProject version
+	projectInitialized ifFalse: [ ^ nil ].
+	^ self project version
 ]
 
 { #category : 'querying' }
 MetacelloMCBaselineOfProjectSpec >> versionString [
-    ^ versionString ifNil: [ self version ifNotNil: [:v | v versionString] ]
+
+	^ versionString ifNil: [
+		  self version ifNotNil: [ :v | v versionString ] ]
 ]

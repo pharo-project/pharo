@@ -109,7 +109,7 @@ DebugSession >> createModelForContext: aContext [
 { #category : 'initialization' }
 DebugSession >> detectUIProcess [
 
-	errorWasInUIProcess := UIManager default uiProcess == interruptedProcess
+	errorWasInUIProcess := MorphicUIManager uiProcess == interruptedProcess
 ]
 
 { #category : 'accessing' }
@@ -248,7 +248,8 @@ DebugSession >> logStackToFileIfNeeded [
 	self class logDebuggerStackToFile ifFalse: [ ^self ].
 
 	[[Smalltalk logError: name inContext: interruptedContext  ] onErrorDo: [ ]]
-		valueWithin: 100 milliSeconds onTimeout: [  ]
+		valueWithinMilliseconds: 100 
+		onTimeout: [  ]
 ]
 
 { #category : 'accessing' }

@@ -24,7 +24,7 @@ SycExtractMethodAndOccurrencesCommand class >> canBeExecutedInContext: aSourceCo
 SycExtractMethodAndOccurrencesCommand class >> methodEditorShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation by: $e meta, $m meta, $o meta for: ClySourceCodeContext
+	^CmdShortcutActivation by: $e meta, $m meta for: ClySourceCodeContext
 ]
 
 { #category : 'converting' }
@@ -48,7 +48,7 @@ SycExtractMethodAndOccurrencesCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 SycExtractMethodAndOccurrencesCommand >> defaultMenuItemName [
-	^ 'Extract method and occurances'
+	^ '(R) Extract method'
 ]
 
 { #category : 'execution' }
@@ -65,7 +65,7 @@ SycExtractMethodAndOccurrencesCommand >> setUpOptionToChangeExtractionClass: ref
 		cls := ref methodClass realClass.
 		superclasses := cls allSuperclasses reversed copyWithoutAll: { Object . ProtoObject }.
 		superclasses ifNotEmpty: [
-			cls := UIManager default
+			cls := self morphicUIManager
 				chooseFrom: ((superclasses, {cls}) collect: #name)
 				values: superclasses, {cls}
 				title: 'Choose the class where you want to extract the method'

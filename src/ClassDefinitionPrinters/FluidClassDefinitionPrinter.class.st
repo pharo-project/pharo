@@ -64,17 +64,30 @@ FluidClassDefinitionPrinter >> classDefinitionString [
 ]
 
 { #category : 'template' }
-FluidClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName named: aClassName [
+FluidClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName tag: aTagName named: aClassName [
 
-		^ String streamContents: [ :s |
-						s nextPutAll: 'Object << '; print: aClassName asSymbol; crtab.
-						s nextPutAll: 'layout: FixedLayout;'; crtab.
-						s nextPutAll: 'traits: {};'; crtab.
-						s nextPutAll: 'slots: {};'; crtab.
-						s nextPutAll: 'sharedVariables: {};'; crtab.
-						s nextPutAll: 'sharedPools: {};'; crtab.
-						s nextPutAll: 'tag: '''' ;';crtab.
-						s nextPutAll: 'package: '''; nextPutAll: aPackageName; nextPutAll: '''' ]
+	^ String streamContents: [ :s |
+		  s
+			  nextPutAll: 'Object << ';
+			  print: aClassName asSymbol;
+			  crtab;
+			  nextPutAll: 'layout: FixedLayout;';
+			  crtab;
+			  nextPutAll: 'traits: {};';
+			  crtab;
+			  nextPutAll: 'slots: {};';
+			  crtab;
+			  nextPutAll: 'sharedVariables: {};';
+			  crtab;
+			  nextPutAll: 'sharedPools: {};';
+			  crtab;
+			  nextPutAll: 'tag: ''';
+			  nextPutAll: (aTagName ifNil: [ '' ]);
+			  nextPutAll: ''' ;';
+			  crtab;
+			  nextPutAll: 'package: ''';
+			  nextPutAll: aPackageName;
+			  nextPutAll: '''' ]
 ]
 
 { #category : 'elementary operations' }
@@ -432,13 +445,19 @@ FluidClassDefinitionPrinter >> tagOn: aStream [
 ]
 
 { #category : 'printing' }
-FluidClassDefinitionPrinter >> testClassDefinitionTemplateInPackage: aPackageName [
+FluidClassDefinitionPrinter >> testClassDefinitionTemplateInPackage: aPackageName tag: aTagName [
 
-		^ String streamContents: [ :s |
-						s nextPutAll: 'TestCase << #MyTest'; crtab.
-						s nextPutAll: 'slots: {};'; crtab.
-						s nextPutAll: 'tag: '''' ;';crtab.
-						s nextPutAll: 'package: ''', aPackageName, '''' ]
+	^ String streamContents: [ :s |
+		  s
+			  nextPutAll: 'TestCase << #MyTest';
+			  crtab;
+			  nextPutAll: 'slots: {};';
+			  crtab;
+			  nextPutAll: 'tag: ''';
+			  nextPutAll: (aTagName ifNil: [ '' ]);
+			  nextPutAll: ''' ;';
+			  crtab;
+			  nextPutAll: 'package: ''' , aPackageName , '''' ]
 ]
 
 { #category : 'definition double dispatch API' }
@@ -455,23 +474,21 @@ FluidClassDefinitionPrinter >> traitDefinitionString [
 ]
 
 { #category : 'template' }
-FluidClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aPackageName named: aTraitName [
+FluidClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aPackageName tag: aTagName named: aTraitName [
 
 	^ String streamContents: [ :s |
 		  s
 			  nextPutAll: 'Trait << ';
 			  print: aTraitName asSymbol;
-			  crtab.
-		  s
+			  crtab;
 			  nextPutAll: 'traits: {};';
-			  crtab.
-		  s
+			  crtab;
 			  nextPutAll: 'slots: {};';
-			  crtab.
-		  s
-			  nextPutAll: 'tag: '''' ;';
-			  crtab.
-		  s
+			  crtab;
+			  nextPutAll: 'tag: ''';
+			  nextPutAll: (aTagName ifNil: [ '' ]);
+			  nextPutAll: ''' ;';
+			  crtab;
 			  nextPutAll: 'package: ''';
 			  nextPutAll: aPackageName;
 			  nextPutAll: '''' ]

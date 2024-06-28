@@ -39,6 +39,8 @@ MCPatcher >> initializeWithSnapshot: aSnapshot [
 MCPatcher >> modifyDefinition: baseDefinition to: targetDefinition [
 	
 	"Only modify the definition if present"
+	baseDefinition ifNil: [ ^ self "nothing" ].
+	
 	self definitions
 		definitionLike: baseDefinition
 		ifPresent: [ :found |

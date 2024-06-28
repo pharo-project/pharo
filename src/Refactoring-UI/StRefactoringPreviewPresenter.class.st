@@ -52,7 +52,6 @@ StRefactoringPreviewPresenter class >> title [
 StRefactoringPreviewPresenter >> accept [
 	
 	(self okToChange not or: [ selectedChanges isEmptyOrNil ]) ifTrue: [
-		"UIManager default inform: 'No changes to apply.'."
 		self application newInform 
 				title: 'No changes to apply.';
 				acceptLabel: 'Close this!';
@@ -60,6 +59,7 @@ StRefactoringPreviewPresenter >> accept [
 		
 		self closeWindow ].
 	self performChanges.
+	self updateGlobalActiveScope.
 	self closeWindow
 ]
 
@@ -151,6 +151,12 @@ StRefactoringPreviewPresenter >> defaultLayout [
 		yourself
 ]
 
+{ #category : 'accessing' }
+StRefactoringPreviewPresenter >> globalActiveScope [
+
+	^ ScopesManager activeScope
+]
+
 { #category : 'initialization' }
 StRefactoringPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter [
 	"Used to initialize the model in the case of the use into a dialog window.
@@ -176,8 +182,8 @@ StRefactoringPreviewPresenter >> initializePresenters [
 
 	scopeLabel := self newLabel label: 'Scope '.
 	scopeDropList := self newDropList.
-	scopeDropList display: [ :scope | scope description capitalized ].
-
+	scopeDropList display: [ :scope | scope description ].
+	
 	buttonOk := self newButton
 		            label: 'Ok';
 		            icon: (self iconNamed: #smallOk).
@@ -200,7 +206,6 @@ StRefactoringPreviewPresenter >> initializeWindow: aWindowPresenter [
 
 { #category : 'action' }
 StRefactoringPreviewPresenter >> performChanges [ 
-	
 	"the following behavior should not be kept in the UI. 
 	It should be moved to the driver or the refactoring itself because the driver is a model of interaction.
 	May be this should be in the refactoring."
@@ -234,9 +239,16 @@ StRefactoringPreviewPresenter >> updateChanges [
 ]
 
 { #category : 'update' }
+StRefactoringPreviewPresenter >> updateGlobalActiveScope [
+
+	ScopesManager activeScope: scopeDropList selectedItem asRBEnvironment
+]
+
+{ #category : 'update' }
 StRefactoringPreviewPresenter >> updateScopeList [
 
-	scopeDropList items: scopes
+	scopeDropList items: scopes.
+	self globalActiveScope ifNotNil: [ :scope | scopeDropList selectItem: scope ]
 ]
 
 { #category : 'update' }

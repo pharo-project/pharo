@@ -11,7 +11,7 @@ Class {
 { #category : 'execution' }
 SycRealizeClassCommand >> asRefactorings [
 
-	^classes collect: [ :each | self refactoringClass className: each]
+	^classes collect: [ :each | self refactoringClass className: each name]
 ]
 
 { #category : 'accessing' }

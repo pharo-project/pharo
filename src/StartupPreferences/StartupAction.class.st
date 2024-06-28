@@ -109,7 +109,7 @@ StartupAction >> runOnce: anObject [
 	runOnce := anObject
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 StartupAction >> storeOn: aStream [
 
 	aStream << self class name << ' name: '<< self name printString <<' code: ' << code printString.

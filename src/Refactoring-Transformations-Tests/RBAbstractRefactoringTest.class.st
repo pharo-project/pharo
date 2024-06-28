@@ -31,6 +31,7 @@ RBAbstractRefactoringTest >> createRefactoringWithModel: aRBNamespace andArgumen
 
 { #category : 'parsing' }
 RBAbstractRefactoringTest >> executeRefactoring: aRefactoring [
+
 	aRefactoring generateChanges
 ]
 
@@ -55,7 +56,8 @@ RBAbstractRefactoringTest >> methodSignatureStringForUnarySymbol: aSymbol [
 
 { #category : 'helpers' }
 RBAbstractRefactoringTest >> objectClassVariable [
-	^Object classVariables first name
+
+	^ Character classVariables first name
 ]
 
 { #category : 'parsing' }

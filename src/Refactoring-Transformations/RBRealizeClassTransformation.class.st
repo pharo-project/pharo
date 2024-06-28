@@ -35,7 +35,7 @@ RBRealizeClassTransformation >> privateTransform [
 	self transform: self theClass classSide
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRealizeClassTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

@@ -14,9 +14,13 @@ Package >> packageComment [
 
 { #category : '*Manifest-Core' }
 Package >> packageComment: aDescription [
-	^ self packageManifest
-		ifNil: [ '' ]
-		ifNotNil: [ :manifest | manifest comment: aDescription stamp: Author changeStamp]
+
+	^ self packageManifest ifNil: [ '' ] ifNotNil: [ :manifest |
+		  manifest comment: aDescription stamp: Date today mmddyyyy , ' '
+			  ,
+				  ((String streamContents: [ :s | Time now print24: true on: s ])
+					   copyFrom: 1
+					   to: 5) ]
 ]
 
 { #category : '*Manifest-Core' }

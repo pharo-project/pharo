@@ -72,6 +72,27 @@ TraitTest >> createT3 [
 ]
 
 { #category : 'tests' }
+TraitTest >> testAddingATraitToAClassWithSubclasses [
+	"This is a regression test when adding a trait to a class without traits and with subclasses was not possible."
+
+	| c1 c2 t1 |
+	c1 := self newClass: #C1.
+	c2 := self newClass: #C2 superclass: c1 traits: {  }.
+	t1 := self newTrait: #T1.
+
+	self
+		shouldnt: [
+			self class classInstaller make: [ :aBuilder |
+				aBuilder
+					fillFor: c1;
+					traits: t1 ] ]
+		raise: Error.
+
+	self assert: (c1 includesTrait: t1).
+	self deny: (c2 includesTrait: t1)
+]
+
+{ #category : 'tests' }
 TraitTest >> testClassHavingAnInstanceVariableUsersDifferenThanUsers [
 
 	| t1 aClass |
@@ -346,13 +367,13 @@ TraitTest >> testMethodsAddedInMetaclass [
 
 { #category : 'tests' }
 TraitTest >> testMethodsAddedInMetaclassNotPresentInSubclasses [
+
 	| t1 c1 c2 |
-
 	t1 := self createT1.
-	c1 := self newClass: #C1 with: #(g h) traits: t1.
-	c2 := self newClass: #C2 superclass: c1 traits: {}.
+	c1 := self newClass: #C1 with: #( g h ) traits: t1.
+	c2 := self newClass: #C2 superclass: c1 traits: {  }.
 
-	self assertCollection: c2 class selectors sorted equals: #()
+	self assertCollection: c2 class localSelectors sorted equals: #(  )
 ]
 
 { #category : 'tests' }
@@ -365,26 +386,9 @@ TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterChangingSupercla
 	c1 := self newClass: #C1 with: #(g h) traits: t1.
 	c2 := self newClass: #C2 superclass: c1 traits: {t2}.
 
-	self assertCollection: c2 class selectors sorted equals: #().
-	c1 := self newClass: #C1 with: #(g h) traits: {}.
-
-	self assertCollection: c2 class selectors sorted equals: TraitedClass selectors sorted
-]
-
-{ #category : 'tests' }
-TraitTest >> testMethodsAddedInMetaclassPresentInSubclassesAfterRemovingSuperclass [
-	| t1 c1 c2 t2 |
-
-	t1 := self createT1.
-	t2 := self createT2.
-
-	c1 := self newClass: #C1 with: #(g h) traits: t1.
-	c2 := self newClass: #C2 superclass: c1 traits: {t2}.
-
-	self assertCollection: c2 class selectors sorted equals: #().
-	c1 removeFromSystem.
-
-	self assertCollection: c2 class selectors sorted equals: TraitedClass selectors sorted
+	self assertCollection: c2 class localSelectors sorted equals: #().
+	self assert: (TraitedClass selectors allSatisfy: [ :selector | (c2 class lookupSelector: selector) isNotNil ])
+	
 ]
 
 { #category : 'tests' }
@@ -559,6 +563,30 @@ TraitTest >> testRemoveFromSystem [
 ]
 
 { #category : 'tests' }
+TraitTest >> testRemovingTraitsDoesNotModifiyTraitedSubclasses [
+
+	| t1 t2 c2 c1 |
+	t1 := self newTrait: #T1.
+	t2 := self newTrait: #T2.
+	c1 := self newClass: #C1 traits: t1.
+	c2 := self newClass: #C2 superclass: c1 traits: t2.
+
+	self assert: c1 hasTraitComposition.
+	self assert: (c1 traits includes: t1).
+	self assert: c2 hasTraitComposition.
+	self assert: (c2 traits includes: t2).
+	self assert: (t2 users includes: c2).
+
+	c1 := self newClass: #C1 traits: {  }.
+
+	self deny: c1 hasTraitComposition.
+	self deny: (c1 traits includes: t1).
+	self assert: c2 hasTraitComposition.
+	self assert: (c2 traits includes: t2).
+	self assert: (t2 users includes: c2)
+]
+
+{ #category : 'tests' }
 TraitTest >> testRemovingTraitsRemoveTraitedClassMethods [
 	| t1 t2 c1 |
 
@@ -575,20 +603,29 @@ TraitTest >> testRemovingTraitsRemoveTraitedClassMethods [
 
 { #category : 'tests' }
 TraitTest >> testRemovingTraitsRemoveTraitedClassMethodsWithSubclasses [
-	| t1 t2 c2 c1 |
+	| t1 t2 c2 c1 c3 |
 
 	t1 := self createT1.
 	t2 := self createT2.
 	c1 := self newClass: #C1 with: #(g h) traits: t1.
 	c2 := self newClass: #C2 superclass: c1 traits: t2.
+	c3 := self newClass: #C3 superclass: c1 traits: {}.
 
 	self assert: (c1 class includesSelector: #traits).
-	self deny: (c2 class includesSelector: #traits).
+	self deny: (c1 class includesLocalSelector: #traits).
+	self assert: (c2 class lookupSelector: #traits) notNil.
+	self deny: (c2 class includesLocalSelector: #traits).
+	self assert: (c3 class lookupSelector: #traits) isNotNil.
+	self deny: (c3 class includesLocalSelector: #traits).
 
 	c1 := self newClass: #C1 with: #(g h) traits: {}.
 
+	"Now c1 has no more traits, c2 remains unchanged"
 	self deny: (c1 class includesSelector: #traits).
-	self assert: (c2 class includesSelector: #traits)
+	self assert: (c2 class includesSelector: #traits).
+	self deny: (c2 class includesLocalSelector: #traits).
+	self assert: (c2 class includesSelector: #traits).
+	self deny: (c2 class includesLocalSelector: #traits).
 ]
 
 { #category : 'tests' }
@@ -657,6 +694,43 @@ TraitTest >> testSettingAClassInAClassTraitCompositionShouldRaiseAnError [
 
 	self should: [ t1 traitComposition: c1 ] raise: Error.
 	self should: [ t1 classTrait traitComposition: c1 ] raise: Error.
+]
+
+{ #category : 'tests' }
+TraitTest >> testSettingEmptyTraitCompositionDoesNotModifiyTraitedSubclasses [
+
+	| t1 t2 c2 c1 |
+	t1 := self createT1.
+	t2 := self createT2.
+	c1 := self newClass: #C1 with: #( g h ) traits: t1.
+	c2 := self newClass: #C2 superclass: c1 traits: t2.
+
+	c1 setTraitComposition: {  }.
+
+	self assert: c2 hasTraitComposition.
+	self assert: (c2 traits includes: t2).
+	self assert: (t2 users includes: c2)
+]
+
+{ #category : 'tests' }
+TraitTest >> testSettingEmptyTraitCompositionUpdatesMetaclass [
+
+	| t1 t2 c2 c1 c3 |
+	t1 := self createT1.
+	t2 := self createT2.
+	c1 := self newClass: #C1 with: #( g h ) traits: t1.
+	c2 := self newClass: #C2 superclass: c1 traits: t2.
+	c3 := self newClass: #C3 superclass: c1 traits: {  }.
+
+	self assert: (c1 class includesSelector: #traits).
+	self deny: (c2 class includesSelector: #traits).
+	self deny: (c3 class includesSelector: #traits).
+
+	c1 setTraitComposition: {  }.
+
+	self deny: (c1 class includesSelector: #traits).
+	self assert: (c2 class includesSelector: #traits).
+	self deny: (c3 class includesSelector: #traits)
 ]
 
 { #category : 'tests' }

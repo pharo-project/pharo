@@ -44,6 +44,17 @@ RBCopyPackageRefactoring class >> model: aRBSmalltalk copyPackage: aString1 in: 
 ]
 
 { #category : 'preconditions' }
+RBCopyPackageRefactoring >> applicabilityPreconditions [ 
+
+	^ super applicabilityPreconditions 
+		& (RBCondition withBlock: [ newName ~= packageName ] errorString: 'The new package name is the same as the old package name.')
+		& (RBCondition
+			   withBlock: [ "Cyril: I am not sure we should use #packageOrganizer. Maybe we should ask the environment the package manager. But currently the image does not know yet how to work with multiple package managers/modules."
+				   (self packageOrganizer hasPackage: newName) not ]
+			   errorString: 'The system already includes a package named ' , newName)
+]
+
+{ #category : 'preconditions' }
 RBCopyPackageRefactoring >> changeReferencesOf: classes with: copyClasses [
 
 	[ : job |
@@ -104,17 +115,6 @@ RBCopyPackageRefactoring >> copyPackage: aString1 in: aString2 [
 	newName := aString2 asSymbol
 ]
 
-{ #category : 'preconditions' }
-RBCopyPackageRefactoring >> preconditions [
-
-	^ super preconditions
-		& (RBCondition withBlock: [ newName ~= packageName ] errorString: 'The new package name is the same as the old package name.')
-		& (RBCondition
-			   withBlock: [ "Cyril: I am not sure we should use #packageOrganizer. Maybe we should ask the environment the package manager. But currently the image does not know yet how to work with multiple package managers/modules."
-				   (self packageOrganizer hasPackage: newName) not ]
-			   errorString: 'The system already includes a package named ' , newName)
-]
-
 { #category : 'transforming' }
 RBCopyPackageRefactoring >> privateTransform [
 	| copyClasses |
@@ -167,7 +167,7 @@ RBCopyPackageRefactoring >> reparent: classes  with: copyClasses [
 		] asJob run
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBCopyPackageRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

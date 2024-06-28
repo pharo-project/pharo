@@ -54,7 +54,7 @@ SycRemovePackageCommand >> prepareFullExecutionInContext: aToolContext [
 	packagesWithClasses := packages reject: [ :each | each isEmpty].
 	packagesWithClasses ifNotEmpty: [
 		names := (packagesWithClasses collect: [:package | package name ]) joinUsing: ', '.
-		answer := UIManager default confirm: (
+		answer := self morphicUIManager confirm: (
 			'Are you sure you want to delete the selection(s)?', String cr, names, ' still contains classes.').
 		answer ifFalse: [ CmdCommandAborted signal ]]
 ]

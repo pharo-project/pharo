@@ -43,7 +43,7 @@ FLDepthLimitingAnalysis >> mapAndTrace: anObject [
 		ifTrue: [ depth := depth + 1 ].
 	previousStackSize := objectStack size.
 	
-	(anObject notNil and: [
+	(anObject isNotNil and: [
 		depth  > depthLimit])
 			ifTrue: [
 				firstMapper

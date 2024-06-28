@@ -29,7 +29,8 @@ Class {
 		'env',
 		'effectiveProcess',
 		'terminating',
-		'level'
+		'level',
+		'errorHandler'
 	],
 	#classVars : [
 		'InheritablePSKeys',
@@ -195,24 +196,6 @@ Process >> copyStack [
 	^ self copy install: suspendedContext copyStack
 ]
 
-{ #category : 'debugging' }
-Process >> debug [
-	^ self debugWithTitle: 'Debug'
-]
-
-{ #category : 'debugging' }
-Process >> debugWithTitle: title [
-
-	| context |
-	context := self isActiveProcess
-		           ifTrue: [ thisContext ]
-		           ifFalse: [ self suspendedContext ].
-	UIManager default
-		requestDebuggerOpeningForProcess: self
-		named: title
-		inContext: context
-]
-
 { #category : 'private' }
 Process >> doTerminationFromAnotherProcess [ 
 	"Stop this process forever from another process.
@@ -275,6 +258,18 @@ Process >> endProcess [
 	"^thisContext restart"
 ]
 
+{ #category : 'error handling' }
+Process >> errorHandler [
+
+	^ errorHandler ifNil: [ ErrorHandler defaultErrorHandler ]
+]
+
+{ #category : 'accessing' }
+Process >> errorHandler: anObject [
+
+	errorHandler := anObject
+]
+
 { #category : 'private' }
 Process >> evaluate: aBlock onBehalfOf: aProcess [
 	"Evaluate aBlock setting effectiveProcess to aProcess.  Used
@@ -284,6 +279,24 @@ Process >> evaluate: aBlock onBehalfOf: aProcess [
 	oldEffectiveProcess := effectiveProcess.
 	effectiveProcess := aProcess.
 	^aBlock ensure: [effectiveProcess := oldEffectiveProcess]
+]
+
+{ #category : 'error handling' }
+Process >> handleError: anError [
+
+	^ self errorHandler handleError: anError
+]
+
+{ #category : 'error handling' }
+Process >> handleNotification: aNotification [
+
+	^ self errorHandler handleNotification: aNotification
+]
+
+{ #category : 'error handling' }
+Process >> handleWarning: aWarning [
+
+	^ self errorHandler handleWarning: aWarning
 ]
 
 { #category : 'initialization' }
@@ -317,39 +330,70 @@ Process >> installEnvIntoForked: newProcess [
 ]
 
 { #category : 'testing' }
-Process >> isActiveProcess [
+Process >> isActive [
+	"A process is #active if it is currently executing.
+	There can be only one such process, held in a slot on the Processor."
 
-	^ self == Processor activeProcess
+	^ self state == #active
+]
+
+{ #category : 'testing' }
+Process >> isActiveProcess [
+	"A process is #active if it is currently executing.
+	There can be only one such process, held in a slot on the Processor."
+
+	self
+		deprecated: 'Please use #isActive instead'
+		transformWith: '`@receiver isActiveProcess' -> '`@receiver isActive'.
+	^ self isActive
+]
+
+{ #category : 'testing' }
+Process >> isReady [
+	"A #ready process is one that is waiting on one of the priority lists
+	on the Processor, and will run as soon as there are no others ahead of it
+	or at a higher priority (i.e. the Processor is free)."
+
+	^ self state == #ready
 ]
 
 { #category : 'testing' }
 Process >> isSuspended [
-	"Answer true if I was never scheduled yet (new process, never been sent #resume) or paused (was sent #suspend)"
-	self isActiveProcess ifTrue: [ ^false ].
-	self isTerminated ifTrue: [ ^false ].
-	^myList isNil or: [ myList isEmpty ]
+	"A #suspended process will not run until sent #resume. New processes
+	start in this state (though the #fork family sends #resume internally),
+	and can be put back by sending #suspend. Effectively this is the 'default'
+	state, recognized by the absence of any of the others--not active, not
+	terminated, no list on which to be #waiting or #ready."
+
+	^ self state == #suspended
 ]
 
 { #category : 'testing' }
 Process >> isTerminated [
-
-	"Answer if the receiver is terminated, i.e. if the receiver is not active and
-	one of the following conditions is met:
+	"A process is #terminated if one of the following conditions is met:
 	(1) the receiver is a defunct process (suspendedContext = nil or pc = nil)
-	(2) the receiver is suspended in the endProcess method (We cannot use pragmas... pragmas require the compiler, it generates an evil dependency.
+	(2) the receiver is suspended in the endProcess method (we cannot use pragmas...
+	pragmas require the compiler, it generates an evil dependency.
 	It also is not available in minimal images)"
 
-	self isActiveProcess ifTrue: [ ^ false ].
-
-	^suspendedContext isNil or: [
-		suspendedContext isDead or: [
-			(suspendedContext method == (self class >> #endProcess))]]
+	^ self state == #terminated
 ]
 
 { #category : 'testing' }
 Process >> isTerminating [
 	"lazy initialization is a fallback only for processes that existed before this addition"
 	^ terminating ifNil: [ false ]
+]
+
+{ #category : 'testing' }
+Process >> isWaiting [
+	"A #waiting process is one that is waiting for a Semaphore to be signaled
+	(having previously executed a #wait on that Semaphore, thus the name).
+	This differs from a #ready process, which also is 'waiting' in a list,
+	in that the Semaphore must be explicitly signaled rather than just
+	the Processor being free."
+
+	^ self state == #waiting
 ]
 
 { #category : 'accessing' }
@@ -369,14 +413,14 @@ Process >> on: exception do: handlerAction [
 	"This method inject new bottom context into process with exception handler.
 	It uses context jump tricks to achieve it"
 	| currentContext root newRoot |
-	currentContext := self isActiveProcess ifTrue: [ thisContext ] ifFalse: [self suspendedContext].
+	currentContext := self isActive ifTrue: [ thisContext ] ifFalse: [self suspendedContext].
 	root := currentContext bottomContext.
 	newRoot := [
 			[root insertSender: thisContext.
 			currentContext jump] on: exception do: handlerAction.
 		Processor terminateRealActive] asContext.
 
-	self isActiveProcess
+	self isActive
 		ifTrue: [ newRoot jump ]
 		ifFalse: [ self install: newRoot ]
 ]
@@ -483,7 +527,7 @@ Process >> pvtSignal: anException list: aList [
 	have the potential to push an unwanted object on the caller's stack)."
 	<debuggerCompleteToSender>
 	| blocker |
-	self isActiveProcess ifFalse: [^self].
+	self isActive ifFalse: [^self].
 	anException signal.
 	blocker := Semaphore new.
 	[self suspend.
@@ -570,7 +614,7 @@ Process >> signalException: anException [
 	will return to a blocked state unless the blocking Semaphore has excess signals"
 	| oldList |
 	"If we are the active process, go ahead and signal the exception"
-	self isActiveProcess ifTrue: [^anException signal].
+	self isActive ifTrue: [^anException signal].
 
 	"Suspend myself first to ensure that I won't run away in the
 	midst of the following modifications."
@@ -589,6 +633,33 @@ Process >> signalException: anException [
 	process is resumed, it will signal the exception"
 
 	oldList ifNotNil: [self resume]
+]
+
+{ #category : 'testing' }
+Process >> state [
+	"A process is #active if it is currently executing.
+	There can be only one such process, held in a slot on the Processor."
+	self == Processor activeProcess ifTrue: [ ^ #active ].
+	"A process is #terminated if one of the following conditions is met:
+	(1) the receiver is a defunct process (suspendedContext = nil or pc = nil)
+	(2) the receiver is suspended in the endProcess method (we cannot use pragmas...
+	pragmas require the compiler, it generates an evil dependency.
+	It also is not available in minimal images)"
+	(suspendedContext isNil or: [
+		 suspendedContext isDead or: [
+			 suspendedContext method == (self class >> #endProcess) ] ])
+		ifTrue: [ ^ #terminated ].
+	"Any other process without a list is considered #suspended.
+	This is either a new process that has never been sent #resume,
+	or one that has been sent #suspend."
+	myList ifNil: [ ^ #suspended ].
+	"We term a process that is waiting in a list on the Processor #ready,
+	because it will run as soon as the Processor is free. Any other type of list,
+	usually a Semaphore, is considered #waiting, as the usual way to reach this state
+	is by executing e.g. Semaphore>>wait."
+	^ myList class == ProcessList
+		  ifTrue: [ #ready ]
+		  ifFalse: [ #waiting ]
 ]
 
 { #category : 'changing suspended state' }
@@ -691,11 +762,11 @@ Process >> suspendingList [
 ]
 
 { #category : 'changing process state' }
-Process >> terminate [ 
+Process >> terminate [
 	"Stop the process that the receiver represents forever. Unwind to execute pending ensure: and
 	ifCurtailed: blocks before terminating; allow all unwind blocks to run; if they are currently in
 	progress, let them finish. If the process is in the middle of a #critical: section, release it properly."
-	
+
 	"If terminating the active process, create a parallel stack and run unwinds from there;
 	if terminating a suspended process, create a parallel stack for the process being terminated
 	and resume the suspended process to complete its termination from the parallel stack. Use
@@ -712,8 +783,8 @@ Process >> terminate [
 	so that we leave the ensure: block inside Semaphore>>critical: without signaling the semaphore.
 	Execute termination wrapped in #ensure to ensure it completes even if the terminator
 	process itself gets terminated before it's finished; see testTerminateInTerminate."
-	
-	self isActiveProcess 
-		ifTrue: [self doTerminationFromYourself]
-		ifFalse: [self doTerminationFromAnotherProcess]
+
+	self isActive
+		ifTrue: [ self doTerminationFromYourself ]
+		ifFalse: [ self doTerminationFromAnotherProcess ]
 ]

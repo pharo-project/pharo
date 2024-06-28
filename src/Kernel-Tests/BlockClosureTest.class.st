@@ -320,7 +320,7 @@ BlockClosureTest >> testOnForkErrorTakesLessThanOneSecond [
 		skip.
 
 	self flag: 'The following line makes the test pass under headless linux. Everywhere else this test works'.
-	Smalltalk os isUnix ifTrue: [ 1 milliSecond wait ].
+	Smalltalk os isUnix ifTrue: [ (Delay forMilliseconds: 1) wait ].
 
 	sema := Semaphore new.
 	[ 1 / 0 ] on: Exception fork: [ sema signal ].
@@ -394,21 +394,23 @@ BlockClosureTest >> testSetUp [
 
 { #category : 'tests' }
 BlockClosureTest >> testSupplyAnswerOfFillInTheBlank [
+
 	self
 		assert:
-			([ UIManager default request: 'Your favorite color?' ]
-				valueSupplyingAnswer: #('Your favorite color?' 'blue'))
+			([ ProvideAnswerNotification signal: 'Your favorite color?' ]
+				 valueSupplyingAnswer: #( 'Your favorite color?'
+				    'blue' ))
 		equals: 'blue'
 ]
 
 { #category : 'tests' }
 BlockClosureTest >> testSupplyAnswerOfFillInTheBlankUsingDefaultAnswer [
+
 	self
-		assert:
-			([ UIManager default
-				request: 'Your favorite color?'
-				initialAnswer: 'red' ]
-				valueSupplyingAnswer: #('Your favorite color?' #default))
+		assert: ([
+			 (ProvideAnswerNotification signal: 'Your favorite color?')
+			 == #default ifTrue: [ 'red' ] ] valueSupplyingAnswer:
+				 #( 'Your favorite color?' #default ))
 		equals: 'red'
 ]
 

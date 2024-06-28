@@ -1,6 +1,42 @@
 Extension { #name : 'String' }
 
 { #category : '*Deprecated12' }
+String >> asClass [
+	"Returns a global class with my name"
+
+	self deprecated: 'Use #asClassInEnvironment: with an appropriate environment instead' transformWith: '`@receiver asClass' -> '`@receiver asClassInEnvironment: self class environment'.
+
+	^ self asClassInEnvironment: Smalltalk globals
+]
+
+{ #category : '*Deprecated12' }
+String >> asUncommentedCode [
+	"This string represents a commented code, let''s uncomment it.   
+	''""""abc""""'' asUncommentedCode.
+		"
+
+	self deprecated: 'This method will be removed in the future version of Pharo because the implementation does not seem to have use cases or there are too few.'.
+	
+	^ String streamContents:  [ :str |
+
+		|doubleQuoteAlreadyFound|
+		doubleQuoteAlreadyFound := false.
+
+		self withoutQuoting do: [ :char |
+			char = $"
+				ifTrue: [
+					doubleQuoteAlreadyFound 	ifTrue: [
+							str nextPut: $" ].
+					doubleQuoteAlreadyFound := doubleQuoteAlreadyFound not.
+				]
+				ifFalse: [
+					str nextPut: char
+				]
+		 ]
+	]
+]
+
+{ #category : '*Deprecated12' }
 String class >> crlfcrlf [
 
 	self

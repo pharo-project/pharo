@@ -42,7 +42,7 @@ RGClassDefinitionTest >> testAddingMethods [
 	newMethod := newClass methodNamed: #size.
 	self assert: newMethod parent equals: newClass.
 
-	self assert: (newClass compiledMethodNamed: #size) notNil.
+	self assert: (newClass compiledMethodNamed: #size) isNotNil.
 	self assert: (newClass compiledMethodNamed: #fakeMethod) isNil
 ]
 
@@ -247,7 +247,7 @@ RGClassDefinitionTest >> testWithClassVariables [
 	self assert: newClass allClassVarNames size equals: 2. "no hierarchy"
 
 	classVar := newClass classVariableNamed: #DependentsFields.
-	self assert: classVar notNil.
+	self assert: classVar isNotNil.
 	self assert: classVar isClassVariable.
 	self assert: classVar isVariable.
 	self assert: classVar parent equals: newClass.
@@ -268,7 +268,7 @@ RGClassDefinitionTest >> testWithComment [
 	newComment := RGCommentDefinition new
 		parent: newClass;
 		content: 'This is a comment for test';
-		stamp: 'VeronicaUquillas 3/22/2011 14:51';
+		stamp: 'VeronicaUquillas 2011-03-22T14:51';
 		yourself.
 	newClass comment: newComment.
 
@@ -277,7 +277,7 @@ RGClassDefinitionTest >> testWithComment [
 	self assert: newClass equals: newComment parent.
 	self assert: newComment content equals: 'This is a comment for test'.
 	self assert: newComment author equals: 'VeronicaUquillas'.
-	self assert: newComment timeStamp equals: '3/22/2011 14:51' asDateAndTime.
+	self assert: newComment timeStamp equals: '2011-03-22T14:51' asDateAndTime.
 
 	newClass comment: nil.
 	self assert: newClass hasComment not.

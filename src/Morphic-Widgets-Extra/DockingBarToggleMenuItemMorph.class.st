@@ -58,10 +58,10 @@ DockingBarToggleMenuItemMorph >> drawOn: aCanvas [
 	stringBounds := bounds.
 	stringBounds := stringBounds left: stringBounds left + 4.
 	self hasIcon
-		ifTrue: [ | iconForm |
-			iconForm := self iconForm.
-			aCanvas translucentImage: iconForm at: stringBounds left @ (self top + ((self height - iconForm height) // 2)).
-			stringBounds := stringBounds left: stringBounds left + iconForm width + 2 ].
+		ifTrue: [ | toggledIconFormSet |
+			toggledIconFormSet := self toggledIconFormSet.
+			aCanvas translucentFormSet: toggledIconFormSet at: stringBounds left @ (self top + ((self height - toggledIconFormSet height) // 2)).
+			stringBounds := stringBounds left: stringBounds left + toggledIconFormSet width + 2 ].
 	self hasMarker ifTrue: [ stringBounds := stringBounds left: stringBounds left + self submorphBounds width + 8 ].
 	stringBounds := stringBounds top: (stringBounds top + stringBounds bottom - self fontToUse height) // 2.
 	aCanvas
@@ -78,13 +78,13 @@ DockingBarToggleMenuItemMorph >> drawOn: aCanvas [
 ]
 
 { #category : 'private - drawing' }
-DockingBarToggleMenuItemMorph >> drawSubMenuMarker: aForm on: aCanvas in: aRectangle [
+DockingBarToggleMenuItemMorph >> drawSubMenuMarker: aFormSet on: aCanvas in: aRectangle [
 	"Draw the submenu marker on the canvas within the given bounds."
 
 	|markerRect|
-	markerRect := aRectangle topRight + (aForm width negated @ (aRectangle height - aForm height // 2)) extent: aForm extent.
+	markerRect := aRectangle topRight + (aFormSet width negated @ (aRectangle height - aFormSet height // 2)) extent: aFormSet extent.
 	markerRect translateBy: -4@1.
-	self drawIcon: aForm on: aCanvas in: markerRect
+	self drawIcon: aFormSet on: aCanvas in: markerRect
 ]
 
 { #category : 'events' }
@@ -180,20 +180,20 @@ DockingBarToggleMenuItemMorph >> stringBoundsToUse [
 ]
 
 { #category : 'accessing' }
-DockingBarToggleMenuItemMorph >> subMenuMarker [
-	"private - answer the form to be used as submenu marker"
+DockingBarToggleMenuItemMorph >> subMenuMarkerFormSet [
+	"private - answer the form set to be used as submenu marker"
 
 	owner isFloating
-		ifTrue: [ ^ self bottomArrow ].
+		ifTrue: [ ^ self bottomArrowFormSet ].
 	owner isAdheringToTop
-		ifTrue: [ ^ self bottomArrow ].
+		ifTrue: [ ^ self bottomArrowFormSet ].
 	owner isAdheringToBottom
-		ifTrue: [ ^ self upArrow ].
+		ifTrue: [ ^ self upArrowFormSet ].
 	owner isAdheringToLeft
-		ifTrue: [ ^ self rightArrow ].
+		ifTrue: [ ^ self rightArrowFormSet ].
 	owner isAdheringToRight
-		ifTrue: [ ^ self leftArrow ].
-	^ self rightArrow
+		ifTrue: [ ^ self leftArrowFormSet ].
+	^ self rightArrowFormSet
 ]
 
 { #category : 'accessing' }

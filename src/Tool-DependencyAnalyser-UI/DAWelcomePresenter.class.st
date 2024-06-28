@@ -23,7 +23,7 @@ DAWelcomePresenter class >> menuCommandOn: aBuilder [
 		order: 2;
 		parent: #Packaging;
 		label: 'Dependency Analyser';
-		icon: (self iconNamed: #package);
+		iconName: #package;
 		help: 'Analyze dependencies between different packages in the image.';
 		action: [ self new open ]
 ]
@@ -53,7 +53,7 @@ DAWelcomePresenter >> initializePresenters [
 
 	choosePresenter := SpChooserPresenter new
 		sourceItems: self packageOrganizer packages;
-		displayBlock: #packageName;
+		displayBlock: [ :aPackage | aPackage name ];
 		yourself.
 
 	browseDependenciesButton := self newButton

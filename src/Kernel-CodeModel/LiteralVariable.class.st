@@ -244,7 +244,7 @@ LiteralVariable >> scope [
 	^self definingClass
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 LiteralVariable >> storeOn: aStream [
 	"Store in the format (key->value)"
 	aStream nextPut: $(.

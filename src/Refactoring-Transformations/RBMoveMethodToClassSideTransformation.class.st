@@ -146,7 +146,7 @@ RBMoveMethodToClassSideTransformation >> removeMethod: aSelector from: aRBClass 
 		from: aRBClass ) generateChanges
 ]
 
-{ #category : 'refactoring' }
+{ #category : 'storing' }
 RBMoveMethodToClassSideTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

@@ -121,7 +121,7 @@ MCPatchOperation >> isRemoval [
 
 { #category : 'testing' }
 MCPatchOperation >> isResolved [
-	^ isConflict and: [ isApplicable notNil ]
+	^ isConflict and: [ isApplicable isNotNil ]
 ]
 
 { #category : 'testing' }

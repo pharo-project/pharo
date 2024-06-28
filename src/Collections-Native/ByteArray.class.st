@@ -44,6 +44,13 @@ ByteArray class >> readHexFrom: aString [
 	^(self new: aString size // 2) readHexFrom: aString readStream
 ]
 
+{ #category : 'comparing' }
+ByteArray >> = anotherByteArray [
+
+	<primitive: 156>
+	^ super = anotherByteArray
+]
+
 { #category : 'converting' }
 ByteArray >> asByteArray [
 	^ self
@@ -369,7 +376,7 @@ ByteArray >> shortAt: index put: value bigEndian: aBool [
 	^value
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 ByteArray >> storeOn: aStream [
 	aStream nextPutAll: '#['.
 	self

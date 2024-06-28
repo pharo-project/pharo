@@ -45,9 +45,11 @@ BaselineOfIDE >> baseline: spec [
 	spec for: #common do: [
 		spec postLoadDoIt: #postload:package:.
 		spec baseline: 'BasicTools' with: [ spec repository: repository ].
+		spec
+			package: 'Tool-MorphicProfiler'
+			with: [ spec requires: #( 'BasicTools' ) ].
 		spec baseline: 'Athens' with: [ spec repository: repository ].
-		spec baseline: 'KernelTests' with: [ spec repository: repository ].
-    spec baseline: 'Flashback' with: [ spec repository: repository ].
+		spec baseline: 'Flashback' with: [ spec repository: repository ].
 
 		self
 			load: 'Shift' group: 'shift-tests' spec: spec;
@@ -57,14 +59,15 @@ BaselineOfIDE >> baseline: spec [
 			load: 'SUnit' group: 'Tests' spec: spec;
 			load: 'EnlumineurFormatter' group: 'Tests' spec: spec;
 			load: 'Reflectivity' group: 'tests' spec: spec;
+			load: 'DebugPoints' group: 'Tests' spec: spec;
 			load: 'Refactoring' group: 'Tests' spec: spec.
 
 		spec package: 'Math-Operations-Extensions-Tests'.
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
-		spec package: 'Gofer-Tests'.
 		spec package: 'Rubric-SpecFindReplaceDialog'.
 
+		spec package: 'OpalCompiler-UI'.
 
 		self load: 'Metacello' group: 'Tests' spec: spec.
 
@@ -109,6 +112,7 @@ BaselineOfIDE >> baseline: spec [
 			with: [ spec repository: repository ].
 		spec baseline: 'ClassParser' with: [ spec repository: repository ].
 
+
 		self
 			load: 'Calypso'
 			group: #( 'FullEnvironment' 'SystemBrowser' 'Tests' )
@@ -125,7 +129,7 @@ BaselineOfIDE >> baseline: spec [
 		self newTools: spec.
 		self drTests: spec.
 		self microdown: spec.
-		self beautifulComments: spec.
+		spec package: #'BeautifulComments'  with: [ spec requires:  #( 'Microdown') ].
 		self documentBrowserCore: spec.
 		self welcomeBrowser: spec.
 		self roassal: spec.
@@ -133,13 +137,6 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
 
 		spec package: 'Kernel-ExtraUtils' ]
-]
-
-{ #category : 'baselines - dependencies' }
-BaselineOfIDE >> beautifulComments: spec [ 
-
-	spec baseline: 'BeautifulComments' with: [ 
-		spec repository: (self class environment at: #BaselineOfPharo) beautifulCommentsRepository ]
 ]
 
 { #category : 'baselines - dependencies' }
@@ -182,7 +179,7 @@ BaselineOfIDE >> loadExtraTools [
 	"Hack: Document Browser is loaded in 2 steps because of the dependency of some packages to Iceberg.
 	The 2nd load is done through Metacello that adds new project registrations in Iceberg (user, not system).
 	We then remove these last registrations."
-	#('NewTools-DocumentBrowser' 'Iceberg') do: [ :repositoryName | | foundRepo |
+	#('NewTools-DocumentBrowser' 'iceberg') do: [ :repositoryName | | foundRepo |
 		foundRepo := IceRepository registry 
 			detect: [ :repo | repo name = repositoryName ]
 			ifNone: [ self error: repositoryName , ' not found in Iceberg registry!' ].
@@ -218,7 +215,6 @@ BaselineOfIDE >> loadIceberg [
 	self registerProject: 'NewTools'.
 	self registerProject: 'Roassal'.
 	self registerProject: 'Microdown'.
-	self registerProject: 'BeautifulComments'.
 	self registerProject: 'DocumentBrowser' baseline: 'NewToolsDocumentBrowser' otherBaselines: #().
 	self registerProject: 'WelcomeBrowser'.
 	self registerIceberg
@@ -269,7 +265,6 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	Smalltalk tools register: FileList as: #fileList.
 	Smalltalk tools register: Finder as: #finder.
 	Smalltalk tools register: ProcessBrowser as: #processBrowser.
-	Smalltalk tools register: TimeProfiler as: #timeProfiler.
 
 	(MorphicCoreUIManager readClassVariableNamed: #UIProcess) ifNotNil: [ :proc | proc terminate ].
 	MorphicCoreUIManager writeClassVariableNamed: #UIProcess   value: nil.

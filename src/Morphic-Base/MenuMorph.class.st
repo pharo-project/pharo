@@ -214,11 +214,17 @@ MenuMorph >> activeSubmenu: aSubmenu [
 
 { #category : 'construction' }
 MenuMorph >> add: aLabelString icon: aForm subMenu: aMenuMorph [
+
+	^ self add: aLabelString iconFormSet: (aForm ifNotNil: [ FormSet form: aForm ]) subMenu: aMenuMorph
+]
+
+{ #category : 'construction' }
+MenuMorph >> add: aLabelString iconFormSet: aFormSet subMenu: aMenuMorph [
 	"Append the given submenu with the given label."
 
 	self addToggle: aLabelString target: nil selector: nil.
 	self lastItem
-		icon: aForm;
+		iconFormSet: aFormSet;
 		subMenu: aMenuMorph.
 	^ self
 ]
@@ -347,9 +353,9 @@ MenuMorph >> addIfNeededTitle: aTitle andIcon: anIcon [
 MenuMorph >> addItem [
 
 	| string sel |
-	string := UIManager default request: 'Label for new item?'.
+	string := self morphicUIManager request: 'Label for new item?'.
 	string isEmpty ifTrue: [^ self].
-	sel := UIManager default request: 'Selector?'.
+	sel := self morphicUIManager request: 'Selector?'.
 	sel isEmpty ifFalse: [sel := sel asSymbol].
 	self add: string selector: sel
 ]
@@ -403,7 +409,7 @@ MenuMorph >> addSeparator [
 MenuMorph >> addTitle [
 
 	| string |
-	string := UIManager default request: 'Title for this menu?'.
+	string := self morphicUIManager request: 'Title for this menu?'.
 	string isEmptyOrNil ifTrue: [^ self].
 	self addTitle: string
 ]
@@ -672,7 +678,7 @@ MenuMorph >> detachSubMenu: evt [
 	possibleTargets := self items select:[ :any | any hasSubMenu].
 	possibleTargets isEmpty ifTrue: [ ^self ].
 
-	index := UIManager default
+	index := self morphicUIManager
 			chooseFrom: (possibleTargets collect:[:t| t contents asString])
 			title: 'Which menu?' translated.
 	index = 0 ifTrue:[^self].
@@ -1047,7 +1053,7 @@ MenuMorph >> maxItemsIconWidth [
 
 	^ self menuItems inject: 0 into: [ :maxWidth :menuItemMorph |
 		menuItemMorph hasIcon
-			ifTrue: [ maxWidth max: menuItemMorph iconForm width ]
+			ifTrue: [ maxWidth max: menuItemMorph toggledIconFormSet width ]
 			ifFalse: [ maxWidth ] ]
 ]
 

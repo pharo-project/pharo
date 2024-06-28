@@ -11,20 +11,6 @@ Class {
 	#tag : 'Breakpoints'
 }
 
-{ #category : 'world menu' }
-ClyBrowseBreakpointsCommand class >> worldMenuOn: aBuilder [
-	<worldMenu>
-
-	| command |
-	command := self new.
-	(aBuilder item: command defaultMenuItemName)
-		parent: #Breakpoints;
-		order: 1;
-		icon: command defaultMenuIcon;
-		help: command description;
-		action: [ command execute ]
-]
-
 { #category : 'accessing' }
 ClyBrowseBreakpointsCommand >> defaultMenuIconName [
 

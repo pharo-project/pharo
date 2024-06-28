@@ -16,8 +16,8 @@ Class {
 { #category : 'testing' }
 SycExtractMethodCommand class >> canBeExecutedInContext: aSourceCodeContext [
 
-	^ (super canBeExecutedInContext: aSourceCodeContext) and: [
-		  aSourceCodeContext isMethodSelected not ]
+	^ false. "(super canBeExecutedInContext: aSourceCodeContext) and: [
+		  aSourceCodeContext isMethodSelected not ]"
 ]
 
 { #category : 'testing' }
@@ -40,7 +40,7 @@ SycExtractMethodCommand >> asRefactorings [
 				                to: selectedInterval last)
 		               from: method selector
 		               to: self getNewSelector selector
-		               in: method origin.
+		               in: method origin name.
 	self setUpOptionsOf: refactoring.
 	^ { refactoring }
 ]
@@ -88,7 +88,7 @@ SycExtractMethodCommand >> setUpOptionToChangeExtractionClass: refactoring [
 		cls := ref methodClass realClass.
 		superclasses := cls allSuperclasses reversed copyWithoutAll: { Object . ProtoObject }.
 		superclasses ifNotEmpty: [
-			cls := UIManager default
+			cls := self morphicUIManager
 				chooseFrom: ((superclasses, {cls}) collect: #name)
 				values: superclasses, {cls}
 				title: 'Choose the class where you want to extract the method'

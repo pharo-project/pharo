@@ -46,7 +46,6 @@ RBAddClassVariableTransformationParametrizedTest >> testFailureMetaClassFailure 
 RBAddClassVariableTransformationParametrizedTest >> testFailureMetaclass [
 
 	| refactoring |
-	self skip.
 	refactoring := self
 		               createRefactoringWithModel: model
 		               andArguments: { #ClassVarName3. #'Object class' }.
@@ -57,7 +56,6 @@ RBAddClassVariableTransformationParametrizedTest >> testFailureMetaclass [
 RBAddClassVariableTransformationParametrizedTest >> testFailureModelMetaclass [
 
 	| refactoring |
-	self skip.
 	refactoring := self
 		               createRefactoringWithModel: model
 		               andArguments: { #ClassVarName3. #'Bar class' }.

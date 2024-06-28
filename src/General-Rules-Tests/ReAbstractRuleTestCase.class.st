@@ -23,11 +23,8 @@ ReAbstractRuleTestCase >> critiguesFor: ruleClass onMethod: method [
 
 { #category : 'utilities' }
 ReAbstractRuleTestCase >> myCritiques [
-	| critiques |
-	critiques := OrderedCollection new.
-	self subjectUnderTest  new
-		check: (self class >> #sampleMethod ) forCritiquesDo:[:critique | critiques add: critique].
-	^critiques
+
+	^ self myCritiquesOnMethod: self class >> #sampleMethod
 ]
 
 { #category : 'utilities' }
@@ -41,11 +38,25 @@ ReAbstractRuleTestCase >> myCritiquesOnClass: aClass [
 
 { #category : 'utilities' }
 ReAbstractRuleTestCase >> myCritiquesOnMethod: method [
-	| critiques |
+
+	| critiques rule |
 	critiques := OrderedCollection new.
-	self subjectUnderTest  new
-		check: method forCritiquesDo:[:critique | critiques add: critique].
-	^critiques
+	rule := self subjectUnderTest new.
+	self subjectUnderTest checksNode
+		ifTrue: [
+			| ast |
+			ast := method ast.
+			"for rewrite rules, we run every rule on a copy of the ast"
+			rule isRewriteRule ifTrue: [ ast := ast copy ].
+			ast nodesDo: [ :node |
+				rule
+					check: node
+					forCritiquesDo: [ :critique | critiques add: critique ] ] ]
+		ifFalse: [
+			rule
+				check: method
+				forCritiquesDo: [ :critique | critiques add: critique ] ].
+	^ critiques
 ]
 
 { #category : 'utilities' }

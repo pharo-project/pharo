@@ -294,7 +294,7 @@ UITheme >> basicCreateArrowOfDirection: aSymbolDirection size: finalSizeInteger 
 	resizeFactor := 4.
 	form := Form
 		extent: finalSizeInteger asPoint * resizeFactor
-		depth: Display depth.
+		depth: 32.
 	form fillColor: Color transparent.
 	arrow := (self createArrowOfDirection: aSymbolDirection in: form boundingBox)
 		borderWidth: 1;
@@ -2143,9 +2143,15 @@ UITheme >> menuBorderWidth [
 
 { #category : 'label-styles' }
 UITheme >> menuCloseForm [
-	"Answer the form to use for the close button of a menu."
 
-	^self windowCloseForm
+	^self menuCloseFormSet asForm
+]
+
+{ #category : 'label-styles' }
+UITheme >> menuCloseFormSet [
+	"Answer the form set to use for the close button of a menu."
+
+	^self windowCloseFormSet
 ]
 
 { #category : 'accessing - colors' }
@@ -2232,21 +2238,17 @@ UITheme >> menuItemSelectedBorderStyleFor: aMenuItem [
 
 { #category : 'fill-styles - buttons' }
 UITheme >> menuItemSelectedFillStyleFor: aMenuItem [
-
 	"Answer the selected fill style to use for the given menu item."
 
 	| fill baseColor preferenced |
-
-	Display depth <= 2
-		ifTrue: [ ^ Color gray ].
 	preferenced := self menuSelectionColor.
-	baseColor := preferenced ifNil: [ aMenuItem owner color negated ] ifNotNil: [ preferenced ].
-	self preferGradientFill
-		ifFalse: [ ^ baseColor ].
-	fill := GradientFillStyle
-		ramp:
-			{( 0.0 -> baseColor twiceLighter ).
-			( 1 -> baseColor twiceDarker )}.
+	baseColor := preferenced
+		             ifNil: [ aMenuItem owner color negated ]
+		             ifNotNil: [ preferenced ].
+	self preferGradientFill ifFalse: [ ^ baseColor ].
+	fill := GradientFillStyle ramp: {
+			        (0.0 -> baseColor twiceLighter).
+			        (1 -> baseColor twiceDarker) }.
 	fill
 		origin: aMenuItem topLeft;
 		direction: 0 @ aMenuItem height.

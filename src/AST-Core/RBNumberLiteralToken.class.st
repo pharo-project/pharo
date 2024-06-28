@@ -18,7 +18,7 @@ RBNumberLiteralToken >> isNumberLiteralToken [
 	^true
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBNumberLiteralToken >> storeOn: aStream [
 	aStream nextPutAll: source
 ]

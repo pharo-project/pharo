@@ -55,7 +55,7 @@ HDTestReport class >> runClasses: aCollectionOfClasses named: packageName [
 	time := DateAndTime now.
 	Transcript
 		<< 'Beginning to run tests of ' << packageName
-		<< ' with random seed ' << ShuffleSeed asString
+		<< ' with random seed ' << suite shuffleSeed asString
 		<< OSPlatform current lineEnding.
 	"We flush so that if a crash happens during the tests, we print in which package is the naughty test in the logs."
 	Transcript flush.
@@ -144,7 +144,7 @@ HDTestReport >> initialize [
 
 	super initialize.
 	shouldSerializeError := true.
-	suiteTime := 0 asDuration.
+	suiteTime := 0.
 	suitePosition := suiteFailures := suiteErrors := 0.
 	progressFileName := 'progress.log'.
 	stageName := self class currentStageName.
@@ -241,7 +241,7 @@ HDTestReport >> reportTestCase: aTestCase runBlock: aBlock [
 	Otherwise any new xml element would be written out of the test node.
 	To allow reporting during test we set a temp log stream 
 	which we append to the main stream at the end of test as part of test element"
-	testLog := self newLogDuring: [ time := aBlock timeToRun ].
+	testLog := self newLogDuring: [ time := aBlock millisecondsToRun ].
 	stream
 		tab; nextPutAll: '<testcase classname="';
 		nextPutAll: (self encode: (self generateTestName: aTestCase));
@@ -250,23 +250,25 @@ HDTestReport >> reportTestCase: aTestCase runBlock: aBlock [
 		nextPutAll: '" name="';
 		nextPutAll: (self encode: aTestCase nameForReport);
 		nextPutAll: '" time="';
-		print: time asMilliSeconds / 1000.0;
+		print: time / 1000.0;
 		nextPutAll: '">';
 		lf.
 	stream nextPutAll: testLog.
 	stream tab; nextPutAll: '</testcase>'; lf.
-	progressStream nextPutAll: 'finished' ; crlf; flush
+	progressStream
+		nextPutAll: 'finished in ';
+		nextPutAll: (Duration milliSeconds: time) humanReadablePrintString;
+		crlf;
+		flush
 ]
 
 { #category : 'running' }
 HDTestReport >> run [
-	Author uniqueInstance
-		ifUnknownAuthorUse: 'hudson'
-		during: [ [ 
-			self setUp.
-			suiteTime := [ self runAll ]
-				timeToRun ]
-					ensure: [ self tearDown ] ]
+
+	[
+	self setUp.
+	suiteTime := [ self runAll ] millisecondsToRun ] ensure: [
+		self tearDown ]
 ]
 
 { #category : 'running' }
@@ -431,7 +433,7 @@ HDTestReport >> tearDown [
 	stream 
 		nextPutAll: ' failures="'; print: suiteFailures; 
 		nextPutAll: '" errors="'; print: suiteErrors; 
-		nextPutAll: '" time="'; print: suiteTime asMilliSeconds / 1000.0; 
+		nextPutAll: '" time="'; print: suiteTime / 1000.0; 
 		nextPutAll: '">'.
 	stream close.
 	
