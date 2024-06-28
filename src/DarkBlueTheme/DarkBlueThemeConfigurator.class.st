@@ -40,11 +40,6 @@ DarkBlueThemeConfigurator >> borderColor [
 ]
 
 { #category : 'colors' }
-DarkBlueThemeConfigurator >> buttonColor [
-	^ self backgroundColor
-]
-
-{ #category : 'colors' }
 DarkBlueThemeConfigurator >> darkBaseColor [
 	^ self baseColor
 ]
