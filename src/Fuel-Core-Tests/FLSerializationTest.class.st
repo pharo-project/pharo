@@ -26,6 +26,14 @@ FLSerializationTest class >> resources [
 	^ { FLFilePoolTestResource }
 ]
 
+{ #category : 'asserting' }
+FLSerializationTest >> assertOuterContextBasedOnCompilationOption: aClosure [
+
+	CompilationContext optionCleanBlockClosure
+		ifTrue: [ self assert: aClosure outerContext isNil ]
+		ifFalse: [ self assert: aClosure outerContext isNotNil ]
+]
+
 { #category : 'helpers' }
 FLSerializationTest >> assertSerializationEqualityOf: anObject [
 	"Asserts that the original object and the materialized one are equal (but not the same)"
