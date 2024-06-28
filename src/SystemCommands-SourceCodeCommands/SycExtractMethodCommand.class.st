@@ -77,7 +77,7 @@ SycExtractMethodCommand >> getNewSelector [
 							selector: #fooForNow
 		  					arguments: #().
 	invalidArgs := self computeInvalidArgNamesForSelector: method selector.
-	dialog := SycMethodNameEditorPresenter
+	dialog := StMethodNameEditorPresenter
 		          openOn: methodName
 		          withInvalidArgs: invalidArgs
 		          canRenameArgs: true
@@ -134,7 +134,7 @@ SycExtractMethodCommand >> setUpOptionToChangeMethodNameDuring: refactoring [
 	| dialog |
 	refactoring setOption: #methodName toUse: [ :methodName :ref | | invalidArgs |
 		invalidArgs := self computeInvalidArgNamesForSelector: method selector.
-		dialog := SycMethodNameEditorPresenter
+		dialog := StMethodNameEditorPresenter
 			openOn: methodName
 			withInvalidArgs: invalidArgs
 			canRenameArgs: true

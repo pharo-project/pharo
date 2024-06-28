@@ -121,7 +121,7 @@ SycChangeMessageSignatureCommand >> requestNewMessageIn: aToolContext [
 	methodName := RBMethodName
 		              selector: originalMessage selector
 		              arguments: originalMessage argumentNames.
-	dialog := SycMethodNameEditorPresenter
+	dialog := StMethodNameEditorPresenter
 		          openOn: methodName
 		          withInvalidArgs: invalidArgNames
 		          canRenameArgs: self canRenameArgs
