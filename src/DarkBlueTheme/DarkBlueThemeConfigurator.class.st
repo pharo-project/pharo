@@ -21,7 +21,8 @@ DarkBlueThemeConfigurator >> balloonBackgroundColor [
 
 { #category : 'colors' }
 DarkBlueThemeConfigurator >> baseColor [
-	^ Color r: 16r26 g: 16r2f b: 16r49 range: 16rFF
+
+	^ Color r: 0.2 g: 0.24 b: 0.37
 ]
 
 { #category : 'colors' }
@@ -41,7 +42,8 @@ DarkBlueThemeConfigurator >> borderColor [
 
 { #category : 'colors' }
 DarkBlueThemeConfigurator >> darkBaseColor [
-	^ self baseColor
+
+	^ self baseColor lighter lighter
 ]
 
 { #category : 'colors' }
