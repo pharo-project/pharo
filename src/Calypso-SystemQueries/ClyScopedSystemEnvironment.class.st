@@ -13,8 +13,9 @@ Class {
 }
 
 { #category : 'comparing' }
-ClyScopedSystemEnvironment >> == anObject [
-	^ anObject scope label == self scope label
+ClyScopedSystemEnvironment >> = anObject [
+
+	^ anObject class = self class and: [ anObject scope = self scope ]
 ]
 
 { #category : 'accessing' }
@@ -102,8 +103,8 @@ ClyScopedSystemEnvironment >> extractPackageNameFrom: aDefinitionString [
 ]
 
 { #category : 'comparing' }
-ClyScopedSystemEnvironment >> identityHash [
-	^ self scope label identityHash
+ClyScopedSystemEnvironment >> hash [
+	^ self scope hash
 ]
 
 { #category : 'class management' }
