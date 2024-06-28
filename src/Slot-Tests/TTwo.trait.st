@@ -9,6 +9,11 @@ Trait {
 }
 
 { #category : 'testing' }
+TTwo classSide >> classTwo [
+	^ 2
+]
+
+{ #category : 'testing' }
 TTwo >> two [
 	^ 2
 ]
