@@ -98,7 +98,7 @@ RBClass >> classPool [
 
 { #category : 'accessing' }
 RBClass >> classVariableNames [
-	^self privateClassVariableNames copy 
+	^self privateClassVariableNames copy
 ]
 
 { #category : 'accessing' }
