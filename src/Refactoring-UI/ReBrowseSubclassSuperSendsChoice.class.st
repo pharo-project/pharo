@@ -15,5 +15,5 @@ ReBrowseSubclassSuperSendsChoice >> action [
 { #category : 'accessing' }
 ReBrowseSubclassSuperSendsChoice >> description [
 
-	^ 'Browse methods from subclasses that send super to the method to be pushed down or up'
+	^ 'Browse methods from subclasses that send super to the method to be pushed down'
 ]
