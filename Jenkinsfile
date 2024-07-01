@@ -22,8 +22,21 @@ def getPharoVersionFromBranch() {
 	return branchName.substring(5)
 }
 
+def runInCygwin(command){
+	def c = """#!c:\\tools\\cygwin\\bin\\bash --login
+    cd `cygpath \"$WORKSPACE\"`
+    set -ex
+    ${command}
+    """
+    
+    echo("Executing: ${c}")
+    withEnv(["PHARO_CI_TESTING_ENVIRONMENT=true"]) {    
+      return sh(c)
+    }
+}
+
 def shell(params){
-    if(isWindows()) bat(params) 
+    if(isWindows()) runInCygwin(params) 
     else sh(params)
 }
 
@@ -33,8 +46,8 @@ def runTests(architecture, prefix=''){
     try {
         unstash "bootstrap${architecture}"
         shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}${prefix}'"
-        junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}${prefix}*.xml"
-        archiveArtifacts allowEmptyArchive: true, artifacts: "${env.STAGE_NAME}${prefix}*.xml", fingerprint: true
+        junit testResults: "${env.STAGE_NAME}${prefix}*.xml"
+        archiveArtifacts artifacts: "${env.STAGE_NAME}${prefix}*.xml", fingerprint: true
         archiveArtifacts allowEmptyArchive: true, artifacts: "*.fuel", fingerprint: true
     } finally {
         // I am archiving the logs to check for crashes and errors.
@@ -49,7 +62,7 @@ def runTests(architecture, prefix=''){
         if(fileExists('progress.log')){
             shell "mv progress.log progress-${env.STAGE_NAME}${prefix}.log"
             shell "cat progress-${env.STAGE_NAME}${prefix}.log"
-            archiveArtifacts allowEmptyArchive: true, artifacts: "progress-${env.STAGE_NAME}${prefix}.log", fingerprint: true
+            archiveArtifacts artifacts: "progress-${env.STAGE_NAME}${prefix}.log", fingerprint: true
         }
     }
   }
