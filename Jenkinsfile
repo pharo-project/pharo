@@ -25,6 +25,9 @@ def getPharoVersionFromBranch() {
 def runInCygwin(command){
 	def c = """#!c:\\tools\\cygwin\\bin\\bash --login
     set -ex
+    pwd
+    ls -al ..
+    ls -al .
     ${command}
     """
     
