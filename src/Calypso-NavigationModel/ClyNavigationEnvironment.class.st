@@ -135,7 +135,7 @@ ClyNavigationEnvironment class >> defaultOver: aSystem [
 	defaultGlobalEnvironments ifNil: [ defaultGlobalEnvironments := Dictionary new ].
 
 	^defaultGlobalEnvironments at: aSystem ifAbsentPut: [
-		(self class over: aSystem)
+		(self over: aSystem)
 			setUpAvailablePlugins;
 			attachToSystem ]
 ]
