@@ -12,12 +12,6 @@ Class {
 	#tag : 'Domain'
 }
 
-{ #category : 'comparing' }
-ClyScopedSystemEnvironment >> = anObject [
-
-	^ anObject class = self class and: [ anObject scope = self scope ]
-]
-
 { #category : 'accessing' }
 ClyScopedSystemEnvironment >> asGlobalScopeIn: aNavigationEnvironment [
 	^ super asGlobalScopeIn: aNavigationEnvironment
@@ -83,12 +77,6 @@ ClyScopedSystemEnvironment >> createPackageNamed: packageName [
 	^ packageOrganizer addPackage: packageName
 ]
 
-{ #category : 'class management' }
-ClyScopedSystemEnvironment >> definedClassesInPackage: aPackage [
-
-	^ scope definedClasses select: [ :class | class package = aPackage ]
-]
-
 { #category : 'accessing' }
 ClyScopedSystemEnvironment >> ensurePackage: packageName [
 	"Should we allow creating new packages while calypso is displaying a scope?".
@@ -102,12 +90,7 @@ ClyScopedSystemEnvironment >> extractPackageNameFrom: aDefinitionString [
 	^ (CDFluidClassDefinitionParser parse: aDefinitionString) packageName
 ]
 
-{ #category : 'comparing' }
-ClyScopedSystemEnvironment >> hash [
-	^ self scope hash
-]
-
-{ #category : 'class management' }
+{ #category : 'accessing' }
 ClyScopedSystemEnvironment >> includesClassNamed: aSymbol [
 	|class|
 	
@@ -125,24 +108,6 @@ ClyScopedSystemEnvironment >> packageNamed: aString [
 ClyScopedSystemEnvironment >> packages [
 	
 	^ scope packages
-]
-
-{ #category : 'printing' }
-ClyScopedSystemEnvironment >> printOn: aStream [
-	| title |
-	title := self class name.
-	aStream
-		nextPutAll: (title first isVowel ifTrue: ['an '] ifFalse: ['a ']);
-		nextPutAll: title.
-
-	aStream nextPut: $(.
-	aStream nextPutAll: scope label.
-	aStream nextPut: $)
-]
-
-{ #category : 'accessing' }
-ClyScopedSystemEnvironment >> scope [
-	^ scope
 ]
 
 { #category : 'accessing' }
