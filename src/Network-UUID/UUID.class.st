@@ -5,8 +5,10 @@ The intent of UUIDs is to enable distributed systems to uniquely identify inform
 
 Usage:
 
-	UUID new.
-	
+```
+	UUID new asString.
+```	
+
 Whenever you create a new UUID it will use your default UUID system library to generate one. If for some reason it is unable to work, the shared, default UUIDGenerator will be used to generate a new, unique UUID.
 
 UUIDs have a standard string representation, like this:

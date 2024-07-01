@@ -179,6 +179,12 @@ ClySystemEnvironment >> defaultClassCompiler [
 	^ self class compiler
 ]
 
+{ #category : 'class management' }
+ClySystemEnvironment >> definedClassesInPackage: aPackage [
+	 
+	^ aPackage definedClasses
+]
+
 { #category : 'package management' }
 ClySystemEnvironment >> ensurePackage: packageName [
 
