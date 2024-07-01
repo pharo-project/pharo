@@ -13,7 +13,7 @@ ReCyclomaticComplexityRuleTest >> testRule [
 	self class
 		compile:
 		'method 
-		1 < 2 ifTrue: [ 2 < 3 ifTrue: [ 3 < 4 ifTrue: [ 2 ] ifFalse: [ 1 ] ] ifFalse: [ 2 < 4 ifTrue: [ 1 ] ifFalse: [ 2 ] ] ] ifFalse: [ 1 < 3 ifTrue: [ 1 ] 		ifFalse: [ 2 ] ]'
+		1 < 2 ifTrue: [ 2 < 3 ifTrue: [ 3 < 4 ifTrue: [ 4 < 5 ifTrue: [ 3 ] ] ifFalse: [ 1 ] ] ifFalse: [ 2 < 4 ifTrue: [ 1 ] ifFalse: [ 2 ] ] ] ifFalse: [ 1 < 3 ifTrue: [ 1 ] 		ifFalse: [ 2 ] ]'
 		classified: 'test-helper'.
 	[
 	critiques := self myCritiquesOnMethod: self class >> #method.

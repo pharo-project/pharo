@@ -36,7 +36,7 @@ ReCyclomaticComplexityRule class >> ruleName [
 { #category : 'running' }
 ReCyclomaticComplexityRule >> basicCheck: aMethod [
 	
-	^ aMethod blockNodes size >= self complexityMax 
+	^ aMethod blockNodes size > self complexityMax 
 ]
 
 { #category : 'private' }
