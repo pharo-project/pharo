@@ -48,6 +48,9 @@ def runTests(architecture, prefix=''){
         unstash "bootstrap${architecture}"
 	// Seemingly in windows the unstash does not honor the directory
 	if (isWindows()){
+	    shell "pwd"
+		shell "ls -al"
+		shell "ls -al .."
 	    shell "mv ../bootstrap bootstrap"
 	}
         shell "./bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}${prefix}"
