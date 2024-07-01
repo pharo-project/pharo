@@ -34,9 +34,8 @@ ClyPackageScope >> classGroupProvidersDo: aBlock [
 
 { #category : 'queries' }
 ClyPackageScope >> classesDo: aBlock [
-
 	self packagesDo: [ :package |
-		(environment system definedClassesInPackage: package) do: aBlock ]
+		package definedClasses do: aBlock]
 ]
 
 { #category : 'system changes' }
