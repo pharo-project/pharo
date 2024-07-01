@@ -47,6 +47,10 @@ def runTests(architecture, prefix=''){
   dir(env.STAGE_NAME) {
     try {
         unstash "bootstrap${architecture}"
+	if (isWindows()){
+	    shell "ls -al /cygdrive/c/tools/cygwin/bin/"
+	    shell "PHARO_CI_TESTING_ENVIRONMENT=true ./PharoConsole.exe  --logLevel=4 ${hasWorker} Pharo.image ${additionalParameters} test --junit-xml-output --stage-name=${stageName} '.*'"
+	}
 	shell "./bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}${prefix} >> LOG.txt"
         junit testResults: "${env.STAGE_NAME}${prefix}*.xml"
     } finally {
