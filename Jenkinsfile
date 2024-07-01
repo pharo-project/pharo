@@ -25,6 +25,7 @@ def getPharoVersionFromBranch() {
 def runInCygwin(command){
 	def c = """#!c:\\tools\\cygwin\\bin\\bash --login
     cd `cygpath \"$WORKSPACE\"`
+    echo 
     set -ex
     ${command}
     """
@@ -45,7 +46,7 @@ def runTests(architecture, prefix=''){
   dir(env.STAGE_NAME) {
     try {
         unstash "bootstrap${architecture}"
-        shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}${prefix}'"
+        shell "bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}${prefix}"
         junit testResults: "${env.STAGE_NAME}${prefix}*.xml"
     } finally {
         archiveArtifacts artifacts: "${env.STAGE_NAME}${prefix}*.xml", fingerprint: true
