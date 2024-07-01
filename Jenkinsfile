@@ -47,7 +47,7 @@ def runTests(architecture, prefix=''){
   dir(env.STAGE_NAME) {
     try {
         unstash "bootstrap${architecture}"
-	shell "./bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}${prefix}"
+	shell "./bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}${prefix} >> LOG.txt"
         junit testResults: "${env.STAGE_NAME}${prefix}*.xml"
     } finally {
         archiveArtifacts artifacts: "${env.STAGE_NAME}${prefix}*.xml", fingerprint: true
