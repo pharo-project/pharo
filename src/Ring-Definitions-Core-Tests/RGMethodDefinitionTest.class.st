@@ -12,9 +12,7 @@ Class {
 { #category : 'running' }
 RGMethodDefinitionTest >> runCase [
 
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		Author useAuthor: self class name asString during: [ super runCase ]
-	]
+	self class codeChangeAnnouncer suspendAllWhile: [ super runCase ]
 ]
 
 { #category : 'running' }
@@ -101,7 +99,7 @@ RGMethodDefinitionTest >> testAsActive [
 	RGMethodDefinitionTest compileSilently: 'foo	^ ''first version''' classified: 'test'.
 	newMethod := (RGMethodDefinitionTest >> #foo) asActiveRingDefinition.
 	self assert: newMethod isActive.
-	self assert: newMethod sourcePointer notNil.
+	self assert: newMethod sourcePointer isNotNil.
 	self assert: newMethod sourceCode equals: newMethod compiledMethod sourceCode.
 
 	RGMethodDefinitionTest compileSilently: 'foo	^ ''second version''' classified: 'test'.
@@ -117,7 +115,7 @@ RGMethodDefinitionTest >> testAsActive [
 	newMethod := (Class >> #asRingDefinition) asActiveRingDefinition.
 	newMethod fromActiveToHistorical.
 	self assert: newMethod isHistorical.
-	self assert: newMethod sourcePointer notNil
+	self assert: newMethod sourcePointer isNotNil
 ]
 
 { #category : 'testing' }
@@ -148,8 +146,8 @@ RGMethodDefinitionTest >> testAsMethodDefinition [
 	self assert: newMethod parent isNil.
 	self assert: newMethod isMethod.
 	self assert: newMethod selector identicalTo: #size.
-	self assert: newMethod protocol notNil.
-	self assert: newMethod stamp notNil
+	self assert: newMethod protocol isNotNil.
+	self assert: newMethod stamp isNotNil
 ]
 
 { #category : 'testing' }
@@ -194,9 +192,9 @@ RGMethodDefinitionTest >> testCreatingMethodsWithoutFactory [
 	newMethod := RGMethodDefinition realClass: OrderedCollection selector: 'size'.
 	self assert: newMethod isMethod.
 	self assert: newMethod selector identicalTo: #size.
-	self assert: newMethod protocol notNil.
+	self assert: newMethod protocol isNotNil.
 	self assert: newMethod sourceCode notEmpty.
-	self assert: newMethod stamp notNil.
+	self assert: newMethod stamp isNotNil.
 
 	newClass := RGClassDefinition named: #OrderedCollection.
 	newMethod := RGMethodDefinition class: newClass selector: 'size'.
@@ -209,9 +207,9 @@ RGMethodDefinitionTest >> testCreatingMethodsWithoutFactory [
 	newMethod := RGMethodDefinition realClass: OrderedCollection classSide selector: #arrayType.
 	self assert: newMethod isMethod.
 	self assert: newMethod selector identicalTo: #arrayType.
-	self assert: newMethod protocol notNil.
+	self assert: newMethod protocol isNotNil.
 	self assert: newMethod sourceCode notEmpty.
-	self assert: newMethod stamp notNil
+	self assert: newMethod stamp isNotNil
 ]
 
 { #category : 'testing' }

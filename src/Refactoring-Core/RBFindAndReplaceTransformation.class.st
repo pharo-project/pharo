@@ -85,6 +85,21 @@ RBFindAndReplaceTransformation class >> model: aModel find: aMethod of: aClass i
 		yourself
 ]
 
+{ #category : 'preconditions' }
+RBFindAndReplaceTransformation >> applicabilityPreconditions [
+
+	| condition rbMethod |
+	rbMethod := class methodFor: selector.
+	condition := { RBCondition definesSelector: selector in: class }.
+	replacesAllHierarchy ifTrue: [
+		condition := condition , (class allSubclasses collect: [ :aClass |
+			(RBCondition
+				 definesSelector: selector
+				 in: aClass
+				 orIsSimilarTo: rbMethod) not ] ) ].
+	^ condition
+]
+
 { #category : 'accessing' }
 RBFindAndReplaceTransformation >> argumentsOf: aDictionary [
 	"Return the arguments values of a method ocurrence"
@@ -115,10 +130,7 @@ RBFindAndReplaceTransformation >> extract: occurrence of: rbMethod [
 { #category : 'accessing' }
 RBFindAndReplaceTransformation >> extractMethodRefactoring [
 	^ RBExtractMethodRefactoring new
-			setOption: #useExistingMethod
-			toUse:  [ :ref :aSelector |
-				true];
-			yourself
+
 ]
 
 { #category : 'initialization' }
@@ -215,26 +227,6 @@ RBFindAndReplaceTransformation >> patternParserClass [
 	^ RBPatternParser
 ]
 
-{ #category : 'preconditions' }
-RBFindAndReplaceTransformation >> preconditions [
-
-	| condition rbMethod |
-
-	rbMethod := class methodFor: selector.
-	condition := (RBCondition definesSelector: selector in: class)
-	             & (replacesAllHierarchy
-			              ifFalse: [ self trueCondition ]
-			              ifTrue: [
-				              class allSubclasses
-					              inject: self trueCondition
-					              into: [ :cond :aClass |
-						              cond
-						              &
-						              (RBCondition definesSelector: selector in: aClass orIsSimilarTo: rbMethod)
-							              not ] ]).
-	^ condition
-]
-
 { #category : 'transforming' }
 RBFindAndReplaceTransformation >> privateTransform [
 	|classes|
@@ -242,7 +234,6 @@ RBFindAndReplaceTransformation >> privateTransform [
 	classes do: [ :cls | (self selectorsFor: cls) do: [ :sel | |rbMethod|
 		rbMethod := cls methodFor: sel.
 		self findOccurrencesIn: rbMethod] ].
-	self inform: occurrences asString, ' occurrences were found and changed.'
 ]
 
 { #category : 'accessing' }
@@ -263,7 +254,7 @@ RBFindAndReplaceTransformation >> startLimitOf: sourceCode [
 	^ self method ast body statements first start
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBFindAndReplaceTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

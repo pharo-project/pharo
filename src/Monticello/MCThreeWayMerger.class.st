@@ -115,15 +115,6 @@ MCThreeWayMerger >> load [
 	loader load
 ]
 
-{ #category : 'operations' }
-MCThreeWayMerger >> loadWithNameLike: baseName [
-	| loader |
-	loader := MCPackageLoader new.
-	loader provisions addAll: self provisions.
-	self applyTo: loader.
-	loader loadWithNameLike: baseName
-]
-
 { #category : 'accessing' }
 MCThreeWayMerger >> mergedSnapshot [
 	^ MCPatcher apply: self to: self baseSnapshot

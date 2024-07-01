@@ -16,7 +16,7 @@ RBRemoveClassPushStateToSubclassesTest >> testRemoveNotEmptySuperclassPushDownIn
 			         (Smalltalk classNamed: removedClassName).
 			         (Smalltalk classNamed: subclassName).
 			         RBFooLintRuleTestData1 }.
-	refactoring := RBRemoveClassPushingStateToSubclassesRefactoring
+	refactoring := ReRemoveClassPushingStateToSubclassesRefactoring
 		               model: model
 		               classNames: { removedClassName }.
 	subclass := refactoring model classNamed: subclassName.
@@ -40,7 +40,7 @@ RBRemoveClassPushStateToSubclassesTest >> testShouldWarnWhenRemovingClassWithRef
 	| refactoring |
 	model := self modelOnClasses: { RBBasicLintRuleTestData . self class }.
 	
-	refactoring := RBRemoveClassPushingStateToSubclassesRefactoring model: model classNames: { #RBBasicLintRuleTestData }.
+	refactoring := ReRemoveClassPushingStateToSubclassesRefactoring model: model classNames: { #RBBasicLintRuleTestData }.
 	"self class refers to RBBasicLintRuleTestData"
 	self
 		should: [ refactoring generateChanges ]

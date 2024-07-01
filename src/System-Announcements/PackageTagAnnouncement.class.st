@@ -19,30 +19,12 @@ PackageTagAnnouncement class >> in: aPackage tag: aSymbol [
 		tag: aSymbol
 ]
 
-{ #category : 'class initialization' }
-PackageTagAnnouncement class >> initialize [
-
-	self deprecatedAliases: { 'ClassTagAnnouncement' }
-]
-
 { #category : 'instance creation' }
 PackageTagAnnouncement class >> to: aPackageTag [
 
 	^ self new
 		  tag: aPackageTag;
 		  yourself
-]
-
-{ #category : 'testing' }
-PackageTagAnnouncement >> affectsPackage: aPackage [
-
-	^ self package == aPackage
-]
-
-{ #category : 'testing' }
-PackageTagAnnouncement >> affectsPackages [
-
-	^ true
 ]
 
 { #category : 'accessing' }

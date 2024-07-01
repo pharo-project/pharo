@@ -6,10 +6,20 @@ For example, check that the result of a select: or detect: is used.
 Class {
 	#name : 'ReCollectSelectNotUsedRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
+
+{ #category : 'accessing' }
+ReCollectSelectNotUsedRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
+ReCollectSelectNotUsedRule class >> ruleName [
+	^ 'Doesn''t use the result of a collect:/select:'
+]
 
 { #category : 'accessing' }
 ReCollectSelectNotUsedRule class >> uniqueIdentifierName [
@@ -22,15 +32,5 @@ ReCollectSelectNotUsedRule class >> uniqueIdentifierName [
 ReCollectSelectNotUsedRule >> basicCheck: aNode [
 	aNode isMessage ifFalse: [ ^ false ].
 	(#(#select: #collect: #reject:) includes: aNode selector) ifFalse: [ ^ false ].
-	^ aNode isUsed not
-]
-
-{ #category : 'accessing' }
-ReCollectSelectNotUsedRule >> group [
-	^ 'Optimization'
-]
-
-{ #category : 'accessing' }
-ReCollectSelectNotUsedRule >> name [
-	^ 'Doesn''t use the result of a collect:/select:'
+	^ aNode isUsedAsReturnValue not
 ]

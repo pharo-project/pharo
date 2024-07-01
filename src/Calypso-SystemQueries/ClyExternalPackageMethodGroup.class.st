@@ -17,6 +17,12 @@ Class {
 }
 
 { #category : 'testing' }
+ClyExternalPackageMethodGroup class >> isBasedOnExtensions [
+
+	^ true
+]
+
+{ #category : 'testing' }
 ClyExternalPackageMethodGroup class >> isEditableGroup [
 	^true
 ]

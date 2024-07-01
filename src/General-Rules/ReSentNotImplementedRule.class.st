@@ -4,14 +4,34 @@ This smell arises when a message is sent by a method,  but no class in the syste
 Class {
 	#name : 'ReSentNotImplementedRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Bugs'
 }
 
 { #category : 'testing' }
 ReSentNotImplementedRule class >> checksMethod [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReSentNotImplementedRule class >> group [
+	^ 'Bugs'
+]
+
+{ #category : 'accessing' }
+ReSentNotImplementedRule class >> rationale [
+	^ 'Checks for messages that are sent by a method, but no class in the system implements such a message. Reported methods will certainly cause a doesNotUnderstand: message when they are executed.'
+]
+
+{ #category : 'accessing' }
+ReSentNotImplementedRule class >> ruleName [
+	^ 'Messages sent but not implemented'
+]
+
+{ #category : 'accessing' }
+ReSentNotImplementedRule class >> severity [
+	^ #error
 ]
 
 { #category : 'accessing' }
@@ -37,24 +57,4 @@ ReSentNotImplementedRule >> check: aMethod forCritiquesDo: aCriticBlock [
 				 createTrivialCritiqueOn: aMethod
 				 intervalOf: msgSend
 				 hint: msgSend selector asString) ]
-]
-
-{ #category : 'accessing' }
-ReSentNotImplementedRule >> group [
-	^ 'Bugs'
-]
-
-{ #category : 'accessing' }
-ReSentNotImplementedRule >> name [
-	^ 'Messages sent but not implemented'
-]
-
-{ #category : 'accessing' }
-ReSentNotImplementedRule >> rationale [
-	^ 'Checks for messages that are sent by a method, but no class in the system implements such a message. Reported methods will certainly cause a doesNotUnderstand: message when they are executed.'
-]
-
-{ #category : 'accessing' }
-ReSentNotImplementedRule >> severity [
-	^ #error
 ]

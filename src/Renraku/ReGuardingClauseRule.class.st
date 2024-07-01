@@ -4,21 +4,31 @@ Checks for ifTrue: or ifFalse: conditions at end of methods that have two or mor
 Class {
 	#name : 'ReGuardingClauseRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'Renraku-Rules-Rewrite',
+	#category : 'Renraku-Coding Idiom Violation',
 	#package : 'Renraku',
-	#tag : 'Rules-Rewrite'
+	#tag : 'Coding Idiom Violation'
 }
+
+{ #category : 'accessing' }
+ReGuardingClauseRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
+ReGuardingClauseRule class >> rationale [
+	^ 'Checks for ifTrue: or ifFalse: conditions at end of methods that have two or more statements inside their blocks. Such code might better represent the true meaning of the code if they returned self instead.'
+]
+
+{ #category : 'accessing' }
+ReGuardingClauseRule class >> ruleName [
+	^ 'Guarding clauses'
+]
 
 { #category : 'accessing' }
 ReGuardingClauseRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'GuardingClauseRule'
-]
-
-{ #category : 'accessing' }
-ReGuardingClauseRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'initialization' }
@@ -34,14 +44,4 @@ ReGuardingClauseRule >> initialize [
 				'`@MethodName
 				`@.Statements.
 				`@condition ifFalse: [| `@BlockTemps | `.Statement1. `.Statement2. `@.BStatements]'
-]
-
-{ #category : 'accessing' }
-ReGuardingClauseRule >> name [
-	^ 'Guarding clauses'
-]
-
-{ #category : 'accessing' }
-ReGuardingClauseRule >> rationale [
-	^ 'Checks for ifTrue: or ifFalse: conditions at end of methods that have two or more statements inside their blocks. Such code might better represent the true meaning of the code if they returned self instead.'
 ]

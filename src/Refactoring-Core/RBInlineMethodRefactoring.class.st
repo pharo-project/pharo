@@ -27,6 +27,8 @@ Class {
 
 { #category : 'instance creation' }
 RBInlineMethodRefactoring class >> inline: anInterval inMethod: aSelector forClass: aClass [
+	"Use this API because intervals disambiguate expression that appears twice in a method."
+	
 	^ self new
 		inline: anInterval
 		inMethod: aSelector
@@ -35,11 +37,26 @@ RBInlineMethodRefactoring class >> inline: anInterval inMethod: aSelector forCla
 
 { #category : 'instance creation' }
 RBInlineMethodRefactoring class >> model: aRBSmalltalk inline: anInterval inMethod: aSelector forClass: aClass [
+	"Use this API because intervals disambiguate expression that appears twice in a method."
+	
 	^ self new
 		model: aRBSmalltalk;
 		inline: anInterval
 			inMethod: aSelector
 			forClass: aClass;
+		yourself
+]
+
+{ #category : 'testing - api' }
+RBInlineMethodRefactoring class >> model: aRBSmalltalk inlineSource: aSourceCode fromMethod: aSelector inClass: aClassName [
+	"This API is for testing purposes only. If you use it and there are two similar expressions
+	(selection) in the method, the first one will be extracted every time."
+	
+	^ self new
+		model: aRBSmalltalk;
+		inlineSource: aSourceCode
+		fromMethod: aSelector
+		inClass: aClassName;
 		yourself
 ]
 
@@ -58,6 +75,40 @@ RBInlineMethodRefactoring >> addTemporary: sourceNode assignedTo: replacementNod
 					value: replacementNode)
 ]
 
+{ #category : 'preconditions' }
+RBInlineMethodRefactoring >> applicabilityPreconditions [
+	"Even though it looks complex it only does preconditions and set up. `transform` does actual refactoring"
+
+	^ {
+		  (RBCondition definesSelector: sourceSelector in: class).
+		  (RBCondition withBlock: [
+			   self checkSelectedMessage.
+			   self parseInlineMethod.
+			   inlineParseTree isPrimitive ifTrue: [
+				   self refactoringError: 'Cannot inline primitives' ].
+			   self checkSuperMessages.
+			   self rewriteInlinedTree.
+			   (sourceMessage parent isReturn or: [
+				    self hasMultipleReturns not ]) ifFalse: [
+				   self refactoringError:
+					   'Cannot inline method since it contains multiple returns that cannot be rewritten' ].
+			   true ]) }
+]
+
+{ #category : 'preconditions' }
+RBInlineMethodRefactoring >> breakingChangePreconditions [
+
+	^ { (RBCondition withBlock: [
+		   self checkOverridden ifTrue: [
+			   self isOverridden ifTrue: [
+				   self refactoringWarning:
+					   ('<1p>>><2s> is overriden. Do you want to inline it anyway?'
+					    , String cr , 'You can break you hooks with this inline.'
+						    expandMacrosWith: self classOfTheMethodToInline
+						    with: self inlineSelector) ] ].
+		   true ]) }
+]
+
 { #category : 'accessing' }
 RBInlineMethodRefactoring >> checkOverridden [
 	^ checkOverridden ifNil: [ checkOverridden := true ]
@@ -69,31 +120,52 @@ RBInlineMethodRefactoring >> checkOverridden: aBoolean [
 ]
 
 { #category : 'transforming' }
+RBInlineMethodRefactoring >> checkSelectedMessage [
+
+	sourceParseTree := class parseTreeForSelector: sourceSelector.
+	sourceParseTree ifNil: [
+		self refactoringError: 'Could not parse sources' ].
+	sourceMessage := sourceParseTree whichNodeIsContainedBy:
+		                 sourceInterval.
+	sourceMessage ifNil: [
+		self refactoringError:
+			'The selection doesn''t appear to be a message send' ].
+	sourceMessage isCascade ifTrue: [
+		sourceMessage := sourceMessage messages last ].
+	sourceMessage isMessage ifFalse: [
+		self refactoringError:
+			'The selection doesn''t appear to be a message send' ].
+	(sourceMessage receiver isSelfVariable or: [
+		 sourceMessage receiver isSuperVariable ]) ifFalse: [
+		self refactoringError: 'Cannot inline non-self messages' ]
+]
+
+{ #category : 'transforming' }
 RBInlineMethodRefactoring >> checkSuperMessages [
 
-	self classOfTheMethodToInline = class
-		ifTrue: [ ^ self ].
+	self classOfTheMethodToInline = class ifTrue: [ ^ self ].
 	self classOfTheMethodToInline superclass ifNil: [ ^ self ].
-	inlineParseTree superMessages
-		do: [ :each |
-			( self classOfTheMethodToInline superclass whoDefinesMethod: each ) = ( class superclass whoDefinesMethod: each )
-				ifFalse: [ self
-						refactoringError:
-							( 'Cannot inline method since it sends a super message <1s> that is overriden'
-								expandMacrosWith: each )
-					]
-			]
+	inlineParseTree superMessages do: [ :each |
+		(self classOfTheMethodToInline superclass
+			 whichClassIncludesSelector: each)
+		= (class superclass whichClassIncludesSelector: each) ifFalse: [
+			self refactoringError:
+				('Cannot inline method since it sends a super message <1s> that is overriden'
+					 expandMacrosWith: each) ] ]
 ]
 
 { #category : 'transforming' }
 RBInlineMethodRefactoring >> classOfTheMethodToInline [
 
 	^ classOfTheMethodToInline
-		ifNil: [ classOfTheMethodToInline := ( sourceMessage receiver name = 'super'
-				ifTrue: [ class superclass ]
-				ifFalse: [ class ] ) whoDefinesMethod: self inlineSelector
-			]
-		ifNotNil: [ classOfTheMethodToInline ]
+		  ifNil: [
+			  classOfTheMethodToInline := (sourceMessage receiver name
+			                               = 'super'
+				                               ifTrue: [ class superclass ]
+				                               ifFalse: [ class ])
+				                              whichClassIncludesSelector:
+				                              self inlineSelector ]
+		  ifNotNil: [ classOfTheMethodToInline ]
 ]
 
 { #category : 'transforming' }
@@ -102,20 +174,16 @@ RBInlineMethodRefactoring >> compileMethod [
 	class compileTree: sourceParseTree
 ]
 
-{ #category : 'transforming' }
-RBInlineMethodRefactoring >> findSelectedMessage [
-
-	sourceParseTree := class parseTreeForSelector: sourceSelector.
-	sourceParseTree ifNil: [ self refactoringError: 'Could not parse sources' ].
-	sourceMessage := sourceParseTree whichNodeIsContainedBy: sourceInterval.
-	sourceMessage
-		ifNil: [ self refactoringError: 'The selection doesn''t appear to be a message send' ].
-	sourceMessage isCascade
-		ifTrue: [ sourceMessage := sourceMessage messages last ].
-	sourceMessage isMessage
-		ifFalse: [ self refactoringError: 'The selection doesn''t appear to be a message send' ].
-	(sourceMessage receiver isSelfVariable or: [ sourceMessage receiver isSuperVariable ])
-		ifFalse: [ self refactoringError: 'Cannot inline non-self messages' ]
+{ #category : 'text selection' }
+RBInlineMethodRefactoring >> findFirstOccurrenceOf: searchedString in: textToSearchIn [
+	"Return the first index of aString in textToSearchIn "
+	| firstIndex |
+	firstIndex := textToSearchIn findString: searchedString startingAt: 1.
+	[ (firstIndex > 1) and: [ (textToSearchIn at: (firstIndex - 1)) isAlphaNumeric ] ]
+		whileTrue: [
+			firstIndex := textToSearchIn findString: searchedString startingAt: firstIndex +1 ].
+		
+	^ firstIndex
 ]
 
 { #category : 'testing' }
@@ -151,8 +219,15 @@ RBInlineMethodRefactoring >> inlineParseTree [
 { #category : 'transforming' }
 RBInlineMethodRefactoring >> inlineSelector [
 
-	sourceMessage ifNil: [ self findSelectedMessage ].
 	^ sourceMessage selector
+]
+
+{ #category : 'initialization' }
+RBInlineMethodRefactoring >> inlineSource: messageSendSource fromMethod: aSelector inClass: aClassName [
+	
+	sourceSelector := aSelector.
+	class := self model classNamed: aClassName.
+	sourceInterval := self sourceIntervalForMessageSend: messageSendSource
 ]
 
 { #category : 'transforming' }
@@ -195,14 +270,8 @@ RBInlineMethodRefactoring >> insertInlinedMethod [
 
 { #category : 'testing' }
 RBInlineMethodRefactoring >> isOverridden [
-	| selector|
-	selector := self inlineSelector.
-	^ class subclassRedefines: selector
-]
 
-{ #category : 'testing' }
-RBInlineMethodRefactoring >> isPrimitive [
-	^inlineParseTree isPrimitive
+	^ class subclassRedefines: self inlineSelector
 ]
 
 { #category : 'transforming' }
@@ -276,28 +345,9 @@ RBInlineMethodRefactoring >> parseInlineMethod [
 ]
 
 { #category : 'preconditions' }
-RBInlineMethodRefactoring >> preconditions [
-	"Even though it looks complex it only does preconditions and set up. `transform` does actual refactoring"
-	^ (RBCondition definesSelector: sourceSelector in: class)
-		& (RBCondition withBlock:
-					[self findSelectedMessage.
-					self checkOverridden ifTrue: [
-						self isOverridden
-						ifTrue:
-							[self
-								refactoringWarning: ('<1p>>><2s> is overriden. Do you want to inline it anyway?', String cr, 'You can break you hooks with this inline.'
-										expandMacrosWith: self classOfTheMethodToInline
-										with: self inlineSelector)] ].
-					self parseInlineMethod.
-					self isPrimitive
-						ifTrue: [self refactoringError: 'Cannot inline primitives'].
-					self checkSuperMessages.
-					self rewriteInlinedTree.
-					(sourceMessage parent isReturn or: [self hasMultipleReturns not])
-						ifFalse:
-							[self
-								refactoringError: 'Cannot inline method since it contains multiple returns that cannot be rewritten'].
-					true])
+RBInlineMethodRefactoring >> preconditions [ 
+
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
 { #category : 'transforming' }
@@ -394,7 +444,11 @@ RBInlineMethodRefactoring >> replaceArguments [
 	sourceMessage arguments reversed
 		with: inlineParseTree arguments reversed
 		do: [ :replacement :source |
-			(replacement isImmediateNode or: [ self shouldInlineExpression: replacement newSource ])
+			self flag: #todo. "shouldInlineExpression can produce bogus transformations.
+			Mainly by evaluating multiple time expressions. We can fix this by ensuring that
+			binding creation is only done when the argument expression (or self) is used multiple times.
+			This will avoid that ProtectField refactoring uses shouldInlineExpression."
+			(replacement isImmediateNode or: [ self shouldNotCreateExtraBindings: replacement newSource ])
 				ifTrue: [ self replaceArgument: source with: replacement ]
 				ifFalse: [ self addTemporary: source assignedTo: replacement ] ]
 ]
@@ -428,12 +482,21 @@ RBInlineMethodRefactoring >> rewriteInlinedTree [
 				addSelfReturn]
 ]
 
+{ #category : 'initialization' }
+RBInlineMethodRefactoring >> sourceIntervalForMessageSend: messageSendSource [ 
+
+	| rbMethod start |
+	rbMethod := class methodFor: sourceSelector.
+	start := self findFirstOccurrenceOf: messageSendSource in: rbMethod ast sourceCode.
+	^ start to: (start + messageSendSource size)
+]
+
 { #category : 'accessing' }
 RBInlineMethodRefactoring >> sourceSelector [
 	^ sourceSelector
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBInlineMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

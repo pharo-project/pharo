@@ -211,6 +211,46 @@ FloatTest >> testHash [
 	Float infinity hash
 ]
 
+{ #category : 'tests - arithmetic' }
+FloatTest >> testInferior [
+
+	self deny: 1.0 < 0.0.
+	self assert: 1.0 < 2.0.
+	self deny: -1.0 < -2.0.
+	self assert: -2.0 < -1.0.
+	self deny: 1.0 < 1.0
+]
+
+{ #category : 'tests - arithmetic' }
+FloatTest >> testInferiorOrEquals [
+
+	self deny: 1.0 <= 0.0.
+	self assert: 1.0 <= 2.0.
+	self deny: -1.0 <= -2.0.
+	self assert: -2.0 <= -1.0.
+	self assert: 1.0 <= 1.0
+]
+
+{ #category : 'tests - arithmetic' }
+FloatTest >> testInferiorOrEqualsWithInteger [
+
+	self deny: 1.0 <= 0.
+	self assert: 1.0 <= 2.
+	self deny: -1.0 <= -2.
+	self assert: -2.0 <= -1.
+	self assert: 1.0 <= 1
+]
+
+{ #category : 'tests - arithmetic' }
+FloatTest >> testInferiorWithInteger [
+
+	self deny: 1.0 < 0.
+	self assert: 1.0 < 2.
+	self deny: -1.0 < -2.
+	self assert: -2.0 < -1.
+	self deny: 1.0 < 1
+]
+
 { #category : 'tests - infinity behavior' }
 FloatTest >> testInfinity1 [
 
@@ -558,6 +598,46 @@ FloatTest >> testStringAsNumber [
 	self assert: -1234.56 equals: aFloat.
 	aFloat := '12.3456q2' asNumber.
 	self assert: 1234.56 equals: aFloat
+]
+
+{ #category : 'tests - arithmetic' }
+FloatTest >> testSuperior [
+
+	self assert: 1.0 > 0.0.
+	self deny: 1.0 > 2.0.
+	self assert: -1.0 > -2.0.
+	self deny: -2.0 > -1.0.
+	self deny: 1.0 > 1.0
+]
+
+{ #category : 'tests - arithmetic' }
+FloatTest >> testSuperiorOrEquals [
+
+	self assert: 1.0 >= 0.0.
+	self deny: 1.0 >= 2.0.
+	self assert: -1.0 >= -2.0.
+	self deny: -2.0 >= -1.0.
+	self assert: 1.0 >= 1.0
+]
+
+{ #category : 'tests - arithmetic' }
+FloatTest >> testSuperiorOrEqualsWithInteger [
+
+	self assert: 1.0 >= 0.
+	self deny: 1.0 >= 2.
+	self assert: -1.0 >= -2.
+	self deny: -2.0 >= -1.
+	self assert: 1.0 >= 1
+]
+
+{ #category : 'tests - arithmetic' }
+FloatTest >> testSuperiorWithInteger [
+
+	self assert: 1.0 > 0.
+	self deny: 1.0 > 2.
+	self assert: -1.0 > -2.
+	self deny: -2.0 > -1.
+	self deny: 1.0 > 1
 ]
 
 { #category : 'tests - conversion' }

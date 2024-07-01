@@ -98,7 +98,7 @@ OpalCompilerTest >> testCompileSource [
 
 	"Compiled but uninstalled methods have a #source but no sourcePointer"
 	result := MockForCompilation compiler compile: source.
-	self assert: (result valueWithReceiver: nil arguments: #()) equals: 7.
+	self assert: (result valueWithReceiver: nil) equals: 7.
 	self deny: result hasSourcePointer. "no sourcePointer"
 	self assert: (result propertyAt: #source) equals: source.
 	self assert: result sourceCodeOrNil equals: source.
@@ -106,7 +106,7 @@ OpalCompilerTest >> testCompileSource [
 	"Installed methods have asourcePointer but no #source"
 	result := MockForCompilation compiler install: source.
 	self assert: result equals: MockForCompilation>>#tt.
-	self assert: (result valueWithReceiver: nil arguments: #()) equals: 7.
+	self assert: (result valueWithReceiver: nil) equals: 7.
 	self assert: result hasSourcePointer. "no sourcePointer"
 	self assert: (result propertyAt: #source) equals: nil.
 	self assert: result sourceCodeOrNil equals: source.
@@ -114,7 +114,7 @@ OpalCompilerTest >> testCompileSource [
 	"When uninstalled, they still keep their source pointer"
 	MockForCompilation compiler install: 'tt ^42'.
 	self deny: result equals: MockForCompilation>>#tt.
-	self assert: (result valueWithReceiver: nil arguments: #()) equals: 7.
+	self assert: (result valueWithReceiver: nil) equals: 7.
 	self assert: result hasSourcePointer. "no sourcePointer"
 	self assert: (result propertyAt: #source) equals: nil.
 	self assert: result sourceCodeOrNil equals: source.

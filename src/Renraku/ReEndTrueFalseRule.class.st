@@ -15,10 +15,30 @@ test
 Class {
 	#name : 'ReEndTrueFalseRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'Renraku-Rules-Rewrite',
+	#category : 'Renraku-Optimization',
 	#package : 'Renraku',
-	#tag : 'Rules-Rewrite'
+	#tag : 'Optimization'
 }
+
+{ #category : 'accessing' }
+ReEndTrueFalseRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
+ReEndTrueFalseRule class >> rationale [
+	^ 'Checks for ifTrue:ifFalse: blocks that have the same code at the beginning or end.'
+]
+
+{ #category : 'accessing' }
+ReEndTrueFalseRule class >> ruleName [
+	^ 'Check for same statements at end of ifTrue:ifFalse: blocks'
+]
+
+{ #category : 'accessing' }
+ReEndTrueFalseRule class >> severity [
+	^ #information
+]
 
 { #category : 'accessing' }
 ReEndTrueFalseRule class >> uniqueIdentifierName [
@@ -38,11 +58,6 @@ ReEndTrueFalseRule >> afterCheck: aNode mappings: mappingDict [
 		ifNotNil: [ true ]
 ]
 
-{ #category : 'accessing' }
-ReEndTrueFalseRule >> group [
-	^ 'Optimization'
-]
-
 { #category : 'initialization' }
 ReEndTrueFalseRule >> initialize [
 
@@ -57,19 +72,4 @@ ReEndTrueFalseRule >> initialize [
 				ifTrue: [| `@temps2 | `@.Statements2. `.Statement]' '`@object
 				ifFalse: [| `@temps1 | `.Statement. `@.Statements1]
 				ifTrue: [| `@temps2 | `.Statement. `@.Statement2]')
-]
-
-{ #category : 'accessing' }
-ReEndTrueFalseRule >> name [
-	^ 'Check for same statements at end of ifTrue:ifFalse: blocks'
-]
-
-{ #category : 'accessing' }
-ReEndTrueFalseRule >> rationale [
-	^ 'Checks for ifTrue:ifFalse: blocks that have the same code at the beginning or end.'
-]
-
-{ #category : 'accessing' }
-ReEndTrueFalseRule >> severity [
-	^ #information
 ]

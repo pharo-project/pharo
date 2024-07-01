@@ -5,8 +5,9 @@ All current subclasses of targetClass will become subclasses of new created clas
 Class {
 	#name : 'SycCmInsertSubclassCommand',
 	#superclass : 'SycCmNewClassCreationCommand',
-	#category : 'SystemCommands-ClassCommands',
-	#package : 'SystemCommands-ClassCommands'
+	#category : 'SystemCommands-ClassCommands-Creation',
+	#package : 'SystemCommands-ClassCommands',
+	#tag : 'Creation'
 }
 
 { #category : 'executing' }
@@ -28,7 +29,7 @@ SycCmInsertSubclassCommand >> icon [
 { #category : 'testing' }
 SycCmInsertSubclassCommand >> isApplicable [
 
-	^ true
+	^ context lastSelectedClass isTrait not
 ]
 
 { #category : 'accessing' }

@@ -77,11 +77,6 @@ AthensCairoCanvas >> copyPage [
 	self ffiCall: #( void cairo_copy_page (self) )
 ]
 
-{ #category : 'private' }
-AthensCairoCanvas >> destroy [
-	^ self ffiCall: #( 	void cairo_destroy (self) )
-]
-
 { #category : 'drawing' }
 AthensCairoCanvas >> draw [
 	"Fill the shape (anObject) using currently selected paint
@@ -132,6 +127,12 @@ AthensCairoCanvas >> getCurrentPoint [
 	y := ByteArray new: 8.
 	self primGetCurrentPointX: x Y: y.
 	^ (x doubleAt: 1)@ (y doubleAt: 1)
+]
+
+{ #category : 'accessing' }
+AthensCairoCanvas >> getHandle [
+
+	^ handle
 ]
 
 { #category : 'private' }
@@ -227,8 +228,8 @@ AthensCairoCanvas >> primResetDashes: anOffset [
                                                          double offset);"
 	^ self ffiCall: #(void cairo_set_dash (
 				self,
-				0,
-				0,
+				void* 0,
+				int 0,
 				double anOffset) )
 ]
 

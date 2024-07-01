@@ -30,8 +30,9 @@ TRefactoringCommandSupport >> initializeDefaultOptionsOf: refactoring [
 { #category : 'initialization' }
 TRefactoringCommandSupport >> setUpModelFromContext: aContext [
 	| browser scope |
+	
 	browser := aContext browser.
 	scope := browser defaultNavigationScope.
-	scope isCurrentImage ifTrue: [ scope := RefactoringSettings scopeRefactoring ].
+	scope isCurrentImage ifTrue: [ scope := ScopesManager defaultScope ].
 	model := RBNamespace onEnvironment: scope asRBEnvironment
 ]

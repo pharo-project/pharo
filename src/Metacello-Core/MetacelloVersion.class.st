@@ -2,7 +2,6 @@ Class {
 	#name : 'MetacelloVersion',
 	#superclass : 'Magnitude',
 	#instVars : [
-		'loaderPolicy',
 		'versionStatus',
 		'importedVersions',
 		'spec',
@@ -24,11 +23,6 @@ MetacelloVersion class >> fromSpec: aMetacelloVersionSpec [
 MetacelloVersion class >> fromString: aString [
 
 	^self new versionNumber: aString asMetacelloVersionNumber
-]
-
-{ #category : 'class initialization' }
-MetacelloVersion class >> initialize [ 
-	self deprecatedAliases: { #MetacelloMCVersion }
 ]
 
 { #category : 'comparing' }
@@ -61,24 +55,11 @@ MetacelloVersion >> blessing [
     ^ self basicSpec blessing value
 ]
 
-{ #category : 'private' }
-MetacelloVersion >> computeVersionStatus [
-	"
-		#allLoadedToSpec - all projects and packages are loaded and match specification
-		#loadedToSpec - all loaded projects and packages match specifications (at least one package loaded)
-		#loadedMatchConstraints - all loaded projects and packages match constraints (at least one package loaded)
-		#somethingLoaded - at least one package loaded
-	"
-
-	self spec computeVersionStatus: [ :status | ^ status ].
-	^ #noStatus
-]
-
 { #category : 'querying' }
 MetacelloVersion >> defaultPackageNamesToLoad: defaultList [
 	"Answer the list of packages and projects to be loaded: packages already loaded plust defaultList"
 	
-	^ self packageAndProjectNamesToLoad: defaultList loader: self loader
+	^ self packageAndProjectNamesToLoad: defaultList loader: nil
 ]
 
 { #category : 'querying' }
@@ -94,110 +75,71 @@ MetacelloVersion >> difference: aMetacelloVersion [
 ]
 
 { #category : 'private' }
-MetacelloVersion >> doFetchRequiredFromArray: anArray [
+MetacelloVersion >> doFetchRequiredFromArray: anArray withEngine: anEngine [
 
-	| oldPolicy oldBypassProgress displayString |
-	displayString := self versionNumber printString, ' of ', self spec projectLabel.
-	MetacelloNotification signal: ('Fetching ', displayString, '...').
-	oldPolicy := loaderPolicy. 
+	^ self
+		  doWithProgress: [
+		  self fetchRequiredFromArray: anArray withEngine: anEngine ]
+		  label: 'Fetching'
+		  silently: anEngine silently
+]
+
+{ #category : 'private' }
+MetacelloVersion >> doLoadRequiredFromArray: anArray withEngine: anEngine [
+
+	^ self
+		  doWithProgress: [
+		  self loadRequiredFromArray: anArray withEngine: anEngine ]
+		  label: 'Loading'
+		  silently: anEngine silently
+]
+
+{ #category : 'private' }
+MetacelloVersion >> doRecordRequiredFromArray: anArray withEngine: anEngine [
+
+	^ self
+		  doWithProgress: [
+		  self recordRequiredFromArray: anArray withEngine: anEngine ]
+		  label: 'Recording'
+		  silently: anEngine silently
+]
+
+{ #category : 'private' }
+MetacelloVersion >> doWithProgress: aBlock label: aLabel silently: silently [
+
+	| displayString oldBypassProgress |
+	displayString := ' ' , self versionNumber printString , ' of '
+	                 , self spec projectLabel.
+	MetacelloNotification signal: aLabel , displayString , '...'.
 	oldBypassProgress := MetacelloPlatform current bypassProgressBars.
-	self loaderPolicy silently ifTrue: [ MetacelloPlatform current bypassProgressBars: true ].
-	[ 	| ans |
-		ans := self fetchRequiredFromArray: anArray.
-		MetacelloNotification signal: ('...finished ', self versionNumber printString).
-		^ans ]
-			ensure: [ 
-				MetacelloPlatform current bypassProgressBars: oldBypassProgress.
-				loaderPolicy := oldPolicy ]
-]
 
-{ #category : 'private' }
-MetacelloVersion >> doLoadRequiredFromArray: anArray [
+	silently ifTrue: [
+		MetacelloPlatform current bypassProgressBars: true ].
 
-	| displayString oldPolicy oldBypassProgress |
-	displayString := self versionNumber printString, ' of ', self spec projectLabel.
-	MetacelloNotification signal: ('Loading ', displayString, '...').
-	oldPolicy := loaderPolicy. 
-	oldBypassProgress := MetacelloPlatform current bypassProgressBars.
-	self loaderPolicy silently ifTrue: [ MetacelloPlatform current bypassProgressBars: true ].
-	[	| fetchLoader |
-		fetchLoader := self fetchRequiredFromArray: (self defaultPackageNamesToLoad: anArray).
-		MetacelloPlatform current
-			do:  [  fetchLoader doLoad ]
-			displaying: 'Loading ', displayString.
-		MetacelloNotification signal: ('...finished ', self versionNumber printString).
-		^fetchLoader ]
-		ensure: [ 
-			MetacelloPlatform current bypassProgressBars: oldBypassProgress.
-			loaderPolicy := oldPolicy ]
-]
-
-{ #category : 'private' }
-MetacelloVersion >> doRecordRequiredFromArray: anArray [
-
-	| originalLoader oldPolicy displayString oldBypassProgress |
-	displayString := self versionNumber printString, ' of ', self spec projectLabel.
-	MetacelloNotification signal: ('Recording ', displayString, '...').
-	originalLoader := self versionSpec loader.
-	oldPolicy := loaderPolicy. 
-	oldBypassProgress := MetacelloPlatform current bypassProgressBars.
-	self loaderPolicy silently ifTrue: [ MetacelloPlatform current bypassProgressBars: true ].
-	[	MetacelloPlatform current
-			do:  [ | ans |
-				self versionSpec loader: originalLoader recordingSpecLoader.
-				ans := (self executeLoadFromArray: anArray) copy.
-				MetacelloNotification signal: ('...finished ', self versionNumber printString).
-				^ans ]
-			displaying: 'Recording ', displayString ]
-				ensure: [
-					MetacelloPlatform current bypassProgressBars: oldBypassProgress.
-					self versionSpec loader: originalLoader.
-					loaderPolicy := oldPolicy ]
-]
-
-{ #category : 'private' }
-MetacelloVersion >> executeLoadFromArray: anArray [
-
-	| loader |
-	loader := MetacelloMCVersionSpecLoader on: self spec.
-	loader required: anArray.
-	loaderPolicy ifNotNil: [ loader loaderPolicy: loaderPolicy ].
-	^ loader load
-]
-
-{ #category : 'querying' }
-MetacelloVersion >> expandToLoadableSpecNames: nameList [
-	"Just like #resolveToLoadableSpecs:, but returns list of spec names instead of specs"
-	
-	^self spec expandToLoadableSpecNames: nameList
-]
-
-{ #category : 'actions' }
-MetacelloVersion >> fetch [
-
-	^self doFetchRequiredFromArray: self spec defaultPackageNames
-]
-
-{ #category : 'actions' }
-MetacelloVersion >> fetch: required [
-
-	^required fetchRequiredForMetacelloMCVersion: self
-]
-
-{ #category : 'private' }
-MetacelloVersion >> fetchRequiredFromArray: anArray [
-	| originalLoader displayString newLoader |
-	originalLoader := self versionSpec loader.
-	newLoader := originalLoader fetchingSpecLoader.
-	displayString := newLoader actionLabel , self versionNumber printString , ' of ' , self spec projectLabel.
+	[
 	MetacelloPlatform current
-		do: [ 
-			[ 
-			self versionSpec loader: newLoader.
-			MetacelloPlatform current
-				useStackCacheDuring: [ :dict | ^ self executeLoadFromArray: anArray ]
-				defaultDictionary: Dictionary new ] ensure: [ self versionSpec loader: originalLoader ] ]
-		displaying: displayString
+		do: [
+			| result |
+			result := aBlock value.
+
+			MetacelloNotification signal:
+				'...finished ' , self versionNumber printString.
+			^ result ]
+		displaying: aLabel , displayString ] ensure: [
+		MetacelloPlatform current bypassProgressBars: oldBypassProgress ]
+]
+
+{ #category : 'private' }
+MetacelloVersion >> fetchRequiredFromArray: anArray withEngine: anEngine [
+
+	| directive |
+	directive := self
+		              recordRequiredFromArray:
+		              (self defaultPackageNamesToLoad: anArray)
+		              withEngine: anEngine.
+
+	directive acceptVisitor: (MetacelloFetchTarget on: anEngine).
+	^ directive
 ]
 
 { #category : 'querying' }
@@ -217,13 +159,6 @@ MetacelloVersion >> hash [
 ]
 
 { #category : 'accessing' }
-MetacelloVersion >> ignoreImage: aBool [ 
-	"by default ignoreImage is false"
-	
-	self loaderPolicy ignoreImage: aBool
-]
-
-{ #category : 'accessing' }
 MetacelloVersion >> importedVersions [
 
 	^ importedVersions ifNil: [ importedVersions := #(  ) ]
@@ -235,56 +170,28 @@ MetacelloVersion >> importedVersions: aCollection [
 	importedVersions := aCollection
 ]
 
-{ #category : 'testing' }
-MetacelloVersion >> isSomethingLoaded [
-	"at least one project or package has been loaded"
-	
-	^self spec isSomethingLoaded
-]
-
-{ #category : 'actions' }
-MetacelloVersion >> load [
-
-	^self doLoadRequiredFromArray: self spec defaultPackageNames
-]
-
-{ #category : 'actions' }
-MetacelloVersion >> load: required [
-
-	^required loadRequiredForMetacelloMCVersion: self
-]
-
 { #category : 'private' }
-MetacelloVersion >> loadRequiredFromArray: anArray [
+MetacelloVersion >> loadRequiredFromArray: anArray withEngine: anEngine [
 
-	| displayString |
-	displayString := 'Loading ', self versionNumber printString, ' of ', self spec projectLabel.
-	MetacelloPlatform current
-		do: [ ^self executeLoadFromArray: anArray ]
-		displaying: displayString
+	| directive |
+	directive := self
+		             fetchRequiredFromArray:
+		             (self defaultPackageNamesToLoad: anArray)
+		             withEngine: anEngine.
+	directive acceptVisitor: (MetacelloLoadTarget on: anEngine).
+	^ directive
+]
+
+{ #category : 'actions' }
+MetacelloVersion >> loadUsingTarget: aTarget withEngine: anEngine [
+
+	^self doLoadRequiredFromArray: self spec defaultPackageNames withEngine: anEngine
 ]
 
 { #category : 'querying' }
 MetacelloVersion >> loader [
 
 	^self spec loader
-]
-
-{ #category : 'private' }
-MetacelloVersion >> loader: aLoader [
-
-	self versionSpec loader: aLoader
-]
-
-{ #category : 'accessing' }
-MetacelloVersion >> loaderPolicy [
-
-	^ loaderPolicy ifNil: [ loaderPolicy := MetacelloLoaderPolicy new ]
-]
-
-{ #category : 'accessing' }
-MetacelloVersion >> loaderPolicy: anObject [
-	loaderPolicy := anObject
 ]
 
 { #category : 'testing' }
@@ -297,32 +204,8 @@ MetacelloVersion >> name [
 MetacelloVersion >> packageAndProjectNamesToLoad: defaultList loader: aLoader [
 	"Answer the list of packages and projects to be loaded: packages already loaded plust defaultList"
 
-	| loadedPackageNames projectMap loadedProjectNames list |
-	loadedPackageNames := ((self packages select: [ :pkg | pkg isPackageLoaded: aLoader ]) collect: [ :pkg | pkg name ]) asSet , defaultList.
-	projectMap := Dictionary new.
-	self projects do: [ :prj |
-		prj className ifNotNil: [
-			| coll loaded |
-			coll := projectMap at: prj className ifAbsent: [
-				        coll := OrderedCollection new.
-				        projectMap at: prj className put: coll.
-				        coll ].
-			(loaded := prj loadedPackageNames: aLoader) isEmpty ifFalse: [ coll add: prj -> (loaded -> prj loadPackageList) ] ] ].
-	loadedProjectNames := Set new.
-	projectMap keysAndValuesDo: [ :prjClass :coll |
-		coll size <= 1
-			ifTrue: [ coll do: [ :assoc | loadedProjectNames add: assoc key name ] ]
-			ifFalse: [ "multiple project references against the same configuration ... only count project as loaded
-				 if there is an exact match for loaded projects...
-				 See http://code.google.com/p/metacello/issues/detail?id=86"
-				coll do: [ :assoc |
-					| loaded packageList |
-					loaded := assoc value key. "loaded packages from project"
-					packageList := assoc value value. "loadlist for project"
-					(packageList difference: loaded) isEmpty ifTrue: [ loadedProjectNames add: assoc key name ] ] ] ].
-	list := loadedPackageNames , loadedProjectNames.
-	list isEmpty ifTrue: [ ^ self spec defaultPackageNames ].
-	^ list
+	defaultList isEmpty ifTrue: [ ^ self spec defaultPackageNames ].
+	^ defaultList
 ]
 
 { #category : 'querying' }
@@ -379,13 +262,11 @@ MetacelloVersion >> packagesForSpecNamed: aString ifAbsent: aBlock [
 { #category : 'printing' }
 MetacelloVersion >> printOn: aStream [
 
-	| label vs |
-	(#( structural broken ) includes: self blessing) not ifTrue: [
-		(vs := self versionStatus) == #somethingLoaded ifTrue: [ aStream nextPutAll: '<>' ].
-		vs == #loadedMatchConstraints ifTrue: [ aStream nextPutAll: '>=' ].
-		vs == #loadedToSpec ifTrue: [ aStream nextPut: $~ ] ].
+	| label |
 	self versionNumber printOn: aStream.
-	self basicSpec ifNotNil: [ (label := self projectLabel) isEmpty ifFalse: [ aStream nextPutAll: ' [' , label , ']' ] ]
+	self basicSpec ifNotNil: [
+		(label := self projectLabel) isEmpty ifFalse: [
+			aStream nextPutAll: ' [' , label , ']' ] ]
 ]
 
 { #category : 'querying' }
@@ -408,36 +289,22 @@ MetacelloVersion >> projects [
 	^projects
 ]
 
-{ #category : 'actions' }
-MetacelloVersion >> record [
+{ #category : 'private' }
+MetacelloVersion >> recordRequiredFromArray: anArray withEngine: anEngine [
 
-	^self doRecordRequiredFromArray: self spec defaultPackageNames
+	| target |
+	target := MetacelloRecordTarget on: anEngine.
+	target required: anArray.
+
+	self spec acceptVisitor: target.
+
+	^ target specBuilder root
 ]
 
 { #category : 'actions' }
-MetacelloVersion >> record: required [
+MetacelloVersion >> recordWithEngine: anEngine [
 
-	^required recordRequiredForMetacelloMCVersion: self
-]
-
-{ #category : 'querying' }
-MetacelloVersion >> resolveToLoadableSpecs: nameList [
-	"Resolves names in namelist to the  list of packages and projects in the version that would be loaded. Projects are 
-	not traversed during the transitive closure. The scope is that of the version itself.
-	   If the spec is a package, answer a list including the package and the transitive closure on 
-			its #requires: and #includes: fields.
-	   If the spec is a project, answer the project.
-	   If the spec is a group, answers the list of packages in the #includes: field of the group. 
-			Groups in the #includes: field are expanded following the transitive closure on groups"
-
-	^self spec resolveToLoadableSpecs: nameList
-]
-
-{ #category : 'accessing' }
-MetacelloVersion >> silently: aBool [ 
-	"by default silently is false"
-	
-	self loaderPolicy silently: aBool
+	^self doRecordRequiredFromArray: self spec defaultPackageNames withEngine: anEngine
 ]
 
 { #category : 'accessing' }
@@ -495,12 +362,6 @@ MetacelloVersion >> versionNumberFrom: aString [
 MetacelloVersion >> versionSpec [
 
 	^self spec
-]
-
-{ #category : 'accessing' }
-MetacelloVersion >> versionStatus [
-
-	^ versionStatus ifNil: [ versionStatus := self computeVersionStatus ]
 ]
 
 { #category : 'accessing' }

@@ -63,17 +63,24 @@ RBAddTemporaryVariableTransformation class >> variable: aString inMethod: aSelec
 { #category : 'preconditions' }
 RBAddTemporaryVariableTransformation >> applicabilityPreconditions [
 
-	^ (RBCondition
-		   withBlock: [ self definingClass isNotNil ]
-		   errorString: 'No such class or trait named ' , className)
-	  & (RBCondition definesSelector: selector in: self definingClass)
-	  & (RBCondition
+	^ {
+		  (RBCondition
+			   withBlock: [ self definingClass isNotNil ]
+			   errorString: 'No such class or trait named ' , className).
+		  (RBCondition definesSelector: selector in: self definingClass).
+		  (RBCondition
 			   withBlock: [
 				   (self definingMethod allArgumentVariables includes:
 					    variableName) not ]
 			   errorString:
 				   'Method named ' , selector
-				   , ' already defines an argument named ' , variableName)
+				   , ' already defines an argument named ' , variableName) }
+]
+
+{ #category : 'scripting api - conditions' }
+RBAddTemporaryVariableTransformation >> checkPreconditions [ 
+
+	self eagerlyCheckApplicabilityPreconditions 
 ]
 
 { #category : 'executing' }
@@ -106,7 +113,7 @@ RBAddTemporaryVariableTransformation >> skippingPreconditions [
 			  , ' already defines a temporary variable named ' , variableName
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBAddTemporaryVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

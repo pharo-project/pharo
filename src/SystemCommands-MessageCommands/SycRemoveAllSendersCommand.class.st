@@ -20,7 +20,7 @@ SycRemoveAllSendersCommand >> createRefactoring [
 		model: model
 		removeSendersOf: originalMessage selector.
 	options := refactoring options copy.
-	options at: #inlineExpression put: [:ref :string | false].
+	options at: #shouldNotCreateExtraBindings put: [:ref :string | false].
 	refactoring options: options.
 	^ refactoring
 ]

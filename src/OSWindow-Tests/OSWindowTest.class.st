@@ -50,5 +50,5 @@ OSWindowTest >> testSettingUpWindow [
 OSWindowTest >> testTraceEvents [
 	"We do not trace events by default"
 
-	self deny: (OSWindow classVarNamed: #TraceEvents)
+	self deny: (OSWindow readClassVariableNamed: #TraceEvents)
 ]

@@ -4,8 +4,9 @@ I am in charge of resolving the existence of a class
 Class {
 	#name : 'ClassResolver',
 	#superclass : 'Object',
-	#category : 'Shift-ClassBuilder',
-	#package : 'Shift-ClassBuilder'
+	#category : 'Shift-ClassBuilder-Builder',
+	#package : 'Shift-ClassBuilder',
+	#tag : 'Builder'
 }
 
 { #category : 'resolving' }

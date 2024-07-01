@@ -132,6 +132,45 @@ RBBrowserEnvironmentTest >> storeStringFor: aBrowserEnvironment [
 ]
 
 { #category : 'tests - environments' }
+RBBrowserEnvironmentTest >> testAndAnOrEnvironmentAndAnotherOrEnvironment [
+
+	| orEnvironmentWithPackage orEnvironmentWithClass andEnvironment newClass |
+	"The first or environment contains a single package"
+	orEnvironmentWithPackage := (universalEnvironment forClasses: {  })
+	                            |
+	                            (universalEnvironment forPackages:
+		                             { self class package }).
+	orEnvironmentWithClass := (universalEnvironment forClasses:
+		                           { self class })
+	                          | (universalEnvironment forPackages: {  }).
+	andEnvironment := orEnvironmentWithClass & orEnvironmentWithPackage.
+
+	self
+		assert: orEnvironmentWithPackage classNames asArray
+		equals: { self class name }.
+	self
+		assert: orEnvironmentWithClass classNames asArray
+		equals: { self class name }.
+	self
+		assert: andEnvironment classNames asArray asArray
+		equals: { self class name }.
+
+	[ "Now we install a new class in the package"
+	newClass := Object classInstaller make: [ :builder |
+		            builder
+			            superclass: Object;
+			            name: #RBBrowserTemporaryClassForTest;
+			            package: self class package ].
+	"Check that the new class belongs in the or environment with a package"
+	self assert: orEnvironmentWithPackage classNames asSet equals: {
+			self class name.
+			#RBBrowserTemporaryClassForTest } asSet.
+	"Check that the new class does not belong in the and scope"
+	self deny: (andEnvironment classNames includes: newClass name) ]
+		ensure: [ newClass removeFromSystem ]
+]
+
+{ #category : 'tests - environments' }
 RBBrowserEnvironmentTest >> testAndEnvironment [
 	| originalEnvironment objectPrintStringEnvironment andEnvironment |
 	originalEnvironment := universalEnvironment referencesTo: #printOn:.
@@ -171,6 +210,38 @@ RBBrowserEnvironmentTest >> testAndEnvironmentWithStoreOn [
 	self assert: andEnvironment classNames asSortedCollection
 				equals: (originalEnvironment referencesTo: #printString) classNames
 						asSortedCollection
+]
+
+{ #category : 'tests - environments' }
+RBBrowserEnvironmentTest >> testAndPackageEnvironmentAndClassEnvironment [
+
+	| packageEnvironment classEnvironment andEnvironment newClass |
+	"There is a single class in the package"
+	packageEnvironment := universalEnvironment forPackages:
+		                      { self class package }.
+	classEnvironment := universalEnvironment forClasses: { self class }.
+	andEnvironment := packageEnvironment & classEnvironment.
+
+	self
+		assert: packageEnvironment classNames asArray
+		equals: { self class name }.
+	self
+		assert: classEnvironment classNames asArray
+		equals: { self class name }.
+	self
+		assert: andEnvironment classNames asArray asArray
+		equals: { self class name }.
+
+	[ "Now we install a new class in the package"
+	newClass := Object classInstaller make: [ :builder |
+		            builder
+			            superclass: Object;
+			            name: #RBBrowserTemporaryClassForTest;
+			            package: self class package ].
+
+	"Check that the new class does not belong in the scope"
+	self deny: (andEnvironment classNames includes: newClass name) ]
+		ensure: [ newClass removeFromSystem ]
 ]
 
 { #category : 'tests - environments' }
@@ -263,6 +334,16 @@ RBBrowserEnvironmentTest >> testEnvironmentWrapper [
 	self assert: wrapper numberSelectors equals: printString numberSelectors.
 	self assert: wrapper numberClasses equals: printString numberClasses.
 	self assert: wrapper environment identicalTo: printString
+]
+
+{ #category : 'tests - environments' }
+RBBrowserEnvironmentTest >> testHierarchyEnvironment [
+
+	| aHierarchyEnvironment |
+	aHierarchyEnvironment := universalEnvironment forClassHierarchy: RBBrowserEnvironmentTest.
+	self universalTestFor: aHierarchyEnvironment.
+	self assert: (aHierarchyEnvironment implementorsOf: #testPackageEnvironment) numberSelectors equals: 1.
+	self assert: (aHierarchyEnvironment implementorsOf: #setUp) numberSelectors equals:4 
 ]
 
 { #category : 'tests' }

@@ -18,21 +18,31 @@ a min: b
 Class {
 	#name : 'ReMinMaxRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
+
+{ #category : 'accessing' }
+ReMinMaxRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
+ReMinMaxRule class >> rationale [
+	^ 'The use of the messages #min: and #max: improves code readability and avoids heavily nested conditionals.'
+]
+
+{ #category : 'accessing' }
+ReMinMaxRule class >> ruleName [
+	^ 'Rewrite ifTrue:ifFalse: using min:/max:'
+]
 
 { #category : 'accessing' }
 ReMinMaxRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'MinMaxRule'
-]
-
-{ #category : 'accessing' }
-ReMinMaxRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'initialization' }
@@ -63,14 +73,4 @@ ReMinMaxRule >> initialize [
 		replace: '``@b >= `a ifTrue: [`a := ``@b]' with: '`a := `a max: ``@b';
 		replace: '``@b > `a ifFalse: [`a := ``@b]' with: '`a := `a min: ``@b';
 		replace: '``@b >= `a ifFalse: [`a := ``@b]' with: '`a := `a min: ``@b'
-]
-
-{ #category : 'accessing' }
-ReMinMaxRule >> name [
-	^ 'Rewrite ifTrue:ifFalse: using min:/max:'
-]
-
-{ #category : 'accessing' }
-ReMinMaxRule >> rationale [
-	^ 'The use of the messages #min: and #max: improves code readability and avoids heavily nested conditionals.'
 ]

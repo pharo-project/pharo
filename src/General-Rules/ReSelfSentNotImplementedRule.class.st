@@ -4,14 +4,34 @@ This smell arises when a message is sent to self by a method,  but no class in t
 Class {
 	#name : 'ReSelfSentNotImplementedRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Bugs'
 }
 
 { #category : 'testing' }
 ReSelfSentNotImplementedRule class >> checksMethod [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReSelfSentNotImplementedRule class >> group [
+	^ 'Bugs'
+]
+
+{ #category : 'accessing' }
+ReSelfSentNotImplementedRule class >> rationale [
+	^ 'Checks if messages sent to self or super exist in the hierarchy, since these can be statically typed. Reported methods will certainly cause a doesNotUnderstand: message when they are executed.'
+]
+
+{ #category : 'accessing' }
+ReSelfSentNotImplementedRule class >> ruleName [
+	^ 'Super and Self Messages sent but not implemented'
+]
+
+{ #category : 'accessing' }
+ReSelfSentNotImplementedRule class >> severity [
+	^ #error
 ]
 
 { #category : 'accessing' }
@@ -35,24 +55,4 @@ ReSelfSentNotImplementedRule >> check: aMethod forCritiquesDo: aCriticBlock [
 	
 	problemSends do: [ :msgSend |
 			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: msgSend hint: msgSend selector asString)]
-]
-
-{ #category : 'accessing' }
-ReSelfSentNotImplementedRule >> group [
-	^ 'Bugs'
-]
-
-{ #category : 'accessing' }
-ReSelfSentNotImplementedRule >> name [
-	^ 'Super and Self Messages sent but not implemented'
-]
-
-{ #category : 'accessing' }
-ReSelfSentNotImplementedRule >> rationale [
-	^ 'Checks if messages sent to self or super exist in the hierarchy, since these can be statically typed. Reported methods will certainly cause a doesNotUnderstand: message when they are executed.'
-]
-
-{ #category : 'accessing' }
-ReSelfSentNotImplementedRule >> severity [
-	^ #error
 ]

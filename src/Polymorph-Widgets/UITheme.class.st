@@ -18,7 +18,7 @@ Class {
 	#superclass : 'Model',
 	#instVars : [
 		'settings',
-		'forms',
+		'formSets',
 		'soundTheme',
 		'focusIndicator',
 		'windowActiveDropShadowStyle',
@@ -294,7 +294,7 @@ UITheme >> basicCreateArrowOfDirection: aSymbolDirection size: finalSizeInteger 
 	resizeFactor := 4.
 	form := Form
 		extent: finalSizeInteger asPoint * resizeFactor
-		depth: Display depth.
+		depth: 32.
 	form fillColor: Color transparent.
 	arrow := (self createArrowOfDirection: aSymbolDirection in: form boundingBox)
 		borderWidth: 1;
@@ -1910,23 +1910,16 @@ UITheme >> focusIndicatorMorphFor: aMorph [
 		privateBounds: aMorph focusBounds
 ]
 
-{ #category : 'accessing' }
-UITheme >> forms: anObject [
-	"Set the value of forms"
+{ #category : 'private' }
+UITheme >> formSetsForCurrentDisplayScaleFactor [
 
-	forms := anObject
+	^ self formSetsForScale: self currentWorld displayScaleFactor
 ]
 
 { #category : 'private' }
-UITheme >> formsForCurrentDisplayScaleFactor [
+UITheme >> formSetsForScale: scale [
 
-	^ self formsForScale: self currentWorld displayScaleFactor
-]
-
-{ #category : 'private' }
-UITheme >> formsForScale: scale [
-
-	^ forms at: scale ifAbsentPut: [ self newFormsForScale: scale ]
+	^ formSets at: scale ifAbsentPut: [ self newFormSetsForScale: scale ]
 ]
 
 { #category : 'accessing - colors' }
@@ -1982,7 +1975,7 @@ UITheme >> initialize [
 	colorPalette := UIThemePalette new
 		colorConfigurator: self class colorConfiguratorClass new;
 		yourself.
-	forms := Dictionary new.
+	formSets := Dictionary new.
 
 	self initializeDefaultSettings.
 	colorPalette themeSettings: settings.
@@ -2150,9 +2143,15 @@ UITheme >> menuBorderWidth [
 
 { #category : 'label-styles' }
 UITheme >> menuCloseForm [
-	"Answer the form to use for the close button of a menu."
 
-	^self windowCloseForm
+	^self menuCloseFormSet asForm
+]
+
+{ #category : 'label-styles' }
+UITheme >> menuCloseFormSet [
+	"Answer the form set to use for the close button of a menu."
+
+	^self windowCloseFormSet
 ]
 
 { #category : 'accessing - colors' }
@@ -2239,21 +2238,17 @@ UITheme >> menuItemSelectedBorderStyleFor: aMenuItem [
 
 { #category : 'fill-styles - buttons' }
 UITheme >> menuItemSelectedFillStyleFor: aMenuItem [
-
 	"Answer the selected fill style to use for the given menu item."
 
 	| fill baseColor preferenced |
-
-	Display depth <= 2
-		ifTrue: [ ^ Color gray ].
 	preferenced := self menuSelectionColor.
-	baseColor := preferenced ifNil: [ aMenuItem owner color negated ] ifNotNil: [ preferenced ].
-	self preferGradientFill
-		ifFalse: [ ^ baseColor ].
-	fill := GradientFillStyle
-		ramp:
-			{( 0.0 -> baseColor twiceLighter ).
-			( 1 -> baseColor twiceDarker )}.
+	baseColor := preferenced
+		             ifNil: [ aMenuItem owner color negated ]
+		             ifNotNil: [ preferenced ].
+	self preferGradientFill ifFalse: [ ^ baseColor ].
+	fill := GradientFillStyle ramp: {
+			        (0.0 -> baseColor twiceLighter).
+			        (1 -> baseColor twiceDarker) }.
 	fill
 		origin: aMenuItem topLeft;
 		direction: 0 @ aMenuItem height.
@@ -2824,17 +2819,17 @@ UITheme >> newFocusIndicatorMorphFor: aMorph [
 ]
 
 { #category : 'private' }
-UITheme >> newFormsForScale: scale [
+UITheme >> newFormSetsForScale: scale [
 
 	| size color |
 
 	size := (9 * scale) truncated.
 	color := Color gray: 0.5327468230694037.
 	^ Dictionary new
-		at: #treeExpanded put: (self newTreeForm: true size: size color: color);
-		at: #treeUnexpanded put: (self newTreeForm: false size: size color: color);
-		at: #whiteTreeExpanded put: (self newTreeForm: true size: size color: Color white);
-		at: #whiteTreeUnexpanded put: (self newTreeForm: false size: size color: Color white);
+		at: #treeExpanded put: (self newTreeFormSet: true size: size color: color);
+		at: #treeUnexpanded put: (self newTreeFormSet: false size: size color: color);
+		at: #whiteTreeExpanded put: (self newTreeFormSet: true size: size color: Color white);
+		at: #whiteTreeUnexpanded put: (self newTreeFormSet: false size: size color: Color white);
 		yourself
 ]
 
@@ -3609,6 +3604,14 @@ UITheme >> newTreeForm: expanded size: size color: color [
 	formCanvas := FormCanvas extent: rectangleScaled extent.
 	formCanvas drawPolygon: vertices fillStyle: color.
 	^ formCanvas form magnifyBy: insetDivisor reciprocal smoothing: insetDivisor
+]
+
+{ #category : 'private' }
+UITheme >> newTreeFormSet: expanded size: size color: color [
+
+	^ FormSet forms: {
+		self newTreeForm: expanded size: size color: color.
+		self newTreeForm: expanded size: size * 2 color: color }
 ]
 
 { #category : 'morph creation' }
@@ -4778,9 +4781,15 @@ UITheme >> textFont [
 
 { #category : 'label-styles' }
 UITheme >> treeExpandedForm [
-	"Answer the form to use for an expanded tree item."
 
-	^ self formsForCurrentDisplayScaleFactor at: #treeExpanded
+	^ self treeExpandedFormSet asForm
+]
+
+{ #category : 'label-styles' }
+UITheme >> treeExpandedFormSet [
+	"Answer the form set to use for an expanded tree item."
+
+	^ self formSetsForCurrentDisplayScaleFactor at: #treeExpanded
 ]
 
 { #category : 'basic-colors' }
@@ -4810,9 +4819,15 @@ UITheme >> treeLineWidth [
 
 { #category : 'label-styles' }
 UITheme >> treeUnexpandedForm [
-	"Answer the form to use for an unexpanded tree item."
 
-	^ self formsForCurrentDisplayScaleFactor at: #treeUnexpanded
+	^ self treeUnexpandedFormSet asForm
+]
+
+{ #category : 'label-styles' }
+UITheme >> treeUnexpandedFormSet [
+	"Answer the form set to use for an unexpanded tree item."
+
+	^ self formSetsForCurrentDisplayScaleFactor at: #treeUnexpanded
 ]
 
 { #category : 'accessing - colors' }
@@ -4910,16 +4925,28 @@ UITheme >> warningTextColor [
 
 { #category : 'label-styles' }
 UITheme >> whiteTreeExpandedForm [
-	"Answer the form to use for an expanded tree item when a contrasting one is needed."
 
-	^ self formsForCurrentDisplayScaleFactor at: #whiteTreeExpanded
+	^ self whiteTreeExpandedFormSet asForm
+]
+
+{ #category : 'label-styles' }
+UITheme >> whiteTreeExpandedFormSet [
+	"Answer the form set to use for an expanded tree item when a contrasting one is needed."
+
+	^ self formSetsForCurrentDisplayScaleFactor at: #whiteTreeExpanded
 ]
 
 { #category : 'label-styles' }
 UITheme >> whiteTreeUnexpandedForm [
-	"Answer the form to use for an unexpanded tree item when a contrasting one is needed."
 
-	^ self formsForCurrentDisplayScaleFactor at: #whiteTreeUnexpanded
+	^ self whiteTreeUnexpandedFormSet asForm
+]
+
+{ #category : 'label-styles' }
+UITheme >> whiteTreeUnexpandedFormSet [
+	"Answer the form set to use for an unexpanded tree item when a contrasting one is needed."
+
+	^ self formSetsForCurrentDisplayScaleFactor at: #whiteTreeUnexpanded
 ]
 
 { #category : 'border-styles' }

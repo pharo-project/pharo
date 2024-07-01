@@ -14,6 +14,12 @@ Class {
 }
 
 { #category : 'testing' }
+ZnEncodedReadStream class >> isAbstract [
+
+	^ self == ZnEncodedReadStream
+]
+
+{ #category : 'testing' }
 ZnEncodedReadStream >> atEnd [
 	^ peeked isNil and: [ stream atEnd ]
 ]
@@ -28,15 +34,15 @@ ZnEncodedReadStream >> back [
 ]
 
 { #category : 'accessing' }
+ZnEncodedReadStream >> collectionSpecies [
+	^ self subclassResponsibility
+]
+
+{ #category : 'accessing' }
 ZnEncodedReadStream >> contents [
 	"This is technically not correct, but it is better than nothing"
 
 	^ self upToEnd
-]
-
-{ #category : 'testing' }
-ZnEncodedReadStream >> isBinary [
-	^ false
 ]
 
 { #category : 'testing' }

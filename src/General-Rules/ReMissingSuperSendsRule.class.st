@@ -6,14 +6,25 @@ The list of methods that should contain super message sends is in #superMessages
 Class {
 	#name : 'ReMissingSuperSendsRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'testing' }
 ReMissingSuperSendsRule class >> checksMethod [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReMissingSuperSendsRule class >> group [
+
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+ReMissingSuperSendsRule class >> ruleName [
+	^ 'Missing super sends in selected methods.'
 ]
 
 { #category : 'accessing' }
@@ -44,20 +55,8 @@ ReMissingSuperSendsRule >> basicCheck: aMethod [
 ]
 
 { #category : 'accessing' }
-ReMissingSuperSendsRule >> group [
-
-	^ 'Potential Bugs'
-]
-
-{ #category : 'accessing' }
 ReMissingSuperSendsRule >> methodsRequiringSuper [
 
 	^ #( #release #postCopy #postBuildWith: #preBuildWith: #postOpenWith:
 	     #noticeOfWindowClose: #initialize )
-]
-
-{ #category : 'accessing' }
-ReMissingSuperSendsRule >> name [
-
-	^ 'Missing super sends in selected methods.'
 ]

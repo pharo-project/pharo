@@ -18,9 +18,9 @@ Class {
 	#classInstVars : [
 		'allMessages'
 	],
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'accessing' }
@@ -57,6 +57,11 @@ ReImplementedNotSentRule class >> enabled: aBoolean [
 		ifFalse: [ self unsubscribe ]
 ]
 
+{ #category : 'accessing' }
+ReImplementedNotSentRule class >> group [
+	^ 'Design Flaws'
+]
+
 { #category : 'class initialization' }
 ReImplementedNotSentRule class >> initialize [
 	"we do not want to register if the rule is disabled"
@@ -85,6 +90,16 @@ ReImplementedNotSentRule class >> reset [
 	allMessages := nil
 ]
 
+{ #category : 'accessing' }
+ReImplementedNotSentRule class >> ruleName [
+	^ 'Methods implemented but not sent'
+]
+
+{ #category : 'accessing' }
+ReImplementedNotSentRule class >> severity [
+	^ #information
+]
+
 { #category : 'cleanup' }
 ReImplementedNotSentRule class >> shutDown [
 	self reset
@@ -92,11 +107,12 @@ ReImplementedNotSentRule class >> shutDown [
 
 { #category : 'announcement' }
 ReImplementedNotSentRule class >> subscribe [
+
 	<systemEventRegistration>
 	self unsubscribe.
 
-	SystemAnnouncer uniqueInstance weak
-		when: MethodAdded    send: #methodAdded: to: self;
+	self codeChangeAnnouncer weak
+		when: MethodAdded send: #methodAdded: to: self;
 		when: MethodModified send: #methodModified: to: self
 ]
 
@@ -110,7 +126,7 @@ ReImplementedNotSentRule class >> uniqueIdentifierName [
 { #category : 'announcement' }
 ReImplementedNotSentRule class >> unsubscribe [
 
-	SystemAnnouncer uniqueInstance unsubscribe: self
+	self codeChangeAnnouncer unsubscribe: self
 ]
 
 { #category : 'running' }
@@ -134,19 +150,4 @@ ReImplementedNotSentRule >> basicCheck: aMethod [
 						  occurrencesToFind := occurrencesToFind - 1.
 						  false ] ]
 			  ifFalse: [ false ] ]
-]
-
-{ #category : 'accessing' }
-ReImplementedNotSentRule >> group [
-	^ 'Design Flaws'
-]
-
-{ #category : 'accessing' }
-ReImplementedNotSentRule >> name [
-	^ 'Methods implemented but not sent'
-]
-
-{ #category : 'accessing' }
-ReImplementedNotSentRule >> severity [
-	^ #information
 ]

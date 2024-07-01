@@ -53,7 +53,7 @@ DrTests class >> menuCommandOn: aBuilder [
 		order: 2;
 		keyText: 'o, u';
 		help: 'Let you run and debug SUnit tests.';
-		icon: (aBuilder iconNamed: self taskbarIconName);
+		iconName: self taskbarIconName;
 		withSeparatorAfter
 ]
 
@@ -213,13 +213,21 @@ DrTests >> pluginsDropList [
 	^ pluginsDropList
 ]
 
-{ #category : 'initialization' }
-DrTests >> reloadConfiguration: aDTPluginConfiguration withResults: aDTPluginResult andPlugin: aDTPlugin [
+{ #category : 'accessing' }
+DrTests >> receivePluginPresenter: aPluginPresenter [
 
+	self layout replace: pluginPresenter with: aPluginPresenter.
+	pluginPresenter := aPluginPresenter
+]
+
+{ #category : 'initialization' }
+DrTests >> reloadConfiguration: aDTPluginConfiguration withResults: aDTPluginResult andPlugin: aDTPlugin andPresenter: aDTPluginPresenter [
+	
 	self
 		updateStatus: 'Tests finished.';
 		currentPlugin: aDTPlugin;
 		testsConfiguration: aDTPluginConfiguration;
+		receivePluginPresenter: aDTPluginPresenter;
 		updateWithPluginResult: aDTPluginResult
 ]
 
@@ -254,6 +262,7 @@ DrTests >> switchToMiniDrTest [
 		testsConfiguration: self testsConfiguration;
 		currentPlugin: self currentPlugin;
 		updateWithPluginResult: self pluginResult;
+		receivePluginPresenter: self pluginPresenter;
 		yourself)
 		open
 ]

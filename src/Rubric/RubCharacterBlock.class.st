@@ -90,6 +90,12 @@ RubCharacterBlock >> extent [
 	^ surface extent
 ]
 
+{ #category : 'truncation and round off' }
+RubCharacterBlock >> floor [
+
+	^ surface floor
+]
+
 { #category : 'accessing' }
 RubCharacterBlock >> height [
 	^ surface height
@@ -162,6 +168,12 @@ RubCharacterBlock >> privateSetOrigin: aPoint [
 { #category : 'accessing' }
 RubCharacterBlock >> right [
 	^ surface right
+]
+
+{ #category : 'private' }
+RubCharacterBlock >> scaleBy: scale [
+
+	^ self copy surface: (surface scaleBy: scale)
 ]
 
 { #category : 'accessing' }

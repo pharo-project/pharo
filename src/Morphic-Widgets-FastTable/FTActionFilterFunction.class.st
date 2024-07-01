@@ -36,12 +36,6 @@ Class {
 	#tag : 'Functions'
 }
 
-{ #category : 'class initialization' }
-FTActionFilterFunction class >> initialize [
-
-	self deprecatedAliases: { #FTFilterFunctionWithAction }
-]
-
 { #category : 'instance creation' }
 FTActionFilterFunction class >> table: aFTTableMorph action: aBlockClosure named: aString [
 	^ (self table: aFTTableMorph)

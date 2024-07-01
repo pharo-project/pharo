@@ -22,7 +22,8 @@ Class {
 { #category : 'accessing' }
 OSPlatform class >> current [
 	"Answer the current platform"
-	^Current
+
+	^ Current
 ]
 
 { #category : 'system attributes' }
@@ -35,20 +36,15 @@ OSPlatform class >> currentVersion [
 { #category : 'private' }
 OSPlatform class >> determineActivePlatform [
 	"Look for the matching platform class"
-	^ self allSubclasses
-		detect: [ :any | any isActivePlatform ]
+
+	^ self allSubclasses detect: [ :any | any isActivePlatform ]
 ]
 
 { #category : 'examples' }
 OSPlatform class >> example [
+
 	<example>
 	Smalltalk os current inspect
-]
-
-{ #category : 'class initialization' }
-OSPlatform class >> initialize [
-
-	self startUp: true
 ]
 
 { #category : 'testing' }
@@ -58,19 +54,12 @@ OSPlatform class >> isActivePlatform [
 ]
 
 { #category : 'system startup' }
-OSPlatform class >> shutDown: isImageQuitting [
-	"The system is going down"
-	Current ifNotNil: [ Current shutDown: isImageQuitting ]
-]
-
-{ #category : 'system startup' }
 OSPlatform class >> startUp: isImageStarting [
 	"Determine the current platform."
 
-	isImageStarting ifFalse: [  ^ self ].
+	isImageStarting ifFalse: [ ^ self ].
 
-	Current := self determineActivePlatform new.
-	Current startUp: isImageStarting
+	Current := self determineActivePlatform new
 ]
 
 { #category : 'visiting' }
@@ -208,16 +197,6 @@ OSPlatform >> platformFamily [
 { #category : 'compatbility' }
 OSPlatform >> platformName [
 	^ self name
-]
-
-{ #category : 'system startup' }
-OSPlatform >> shutDown: quitting [
-	"Pharo is shutting down. If this platform requires specific shutdown code, this is a great place to put it."
-]
-
-{ #category : 'system startup' }
-OSPlatform >> startUp: resuming [
-	"Pharo is starting up. If this platform requires specific initialization, this is a great place to put it."
 ]
 
 { #category : 'accessing' }

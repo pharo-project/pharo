@@ -41,14 +41,11 @@ RBTransformation class >> initializeRefactoringOptions [
 		at: #extractAssignment
 		put: [ :ref :varName | self error: #extractAssignment ];
 
-		at: #inlineExpression
-		put: [ :ref :string | self error: #inlineExpression ];
+		at: #shouldNotCreateExtraBindings
+		put: [ :ref :string | self error: #shouldNotCreateExtraBindings ];
 
 		at: #alreadyDefined
 		put: [ :ref :cls :selector |  self error: #alreadyDefined ];
-
-		at: #useExistingMethod
-		put: [ :ref :selector |  self error: #useExistingMethod ];
 
 		at: #openBrowser
 		put: [ :ref :env |  self error: #openBrowser ]
@@ -59,31 +56,6 @@ RBTransformation >> asRefactoring [
 
 	self deprecated: 'This method is a no-op and can be removed' transformWith: '`@rec asRefactoring' -> '`@rec'.
 	^ self yourself
-]
-
-{ #category : 'accessing' }
-RBTransformation >> copyOptionsFrom: aDictionary [
-	| dict |
-	dict := self options.
-	dict == self class refactoringOptions
-		ifTrue: [^self options: aDictionary copy].
-	dict keysAndValuesDo:
-			[:key :value |
-			value == (self class refactoringOptions at: key)
-				ifTrue: [dict at: key put: (aDictionary at: key)]].
-	self options: dict
-]
-
-{ #category : 'preconditions' }
-RBTransformation >> preconditions [
-
-	^ self applicabilityPreconditions 
-]
-
-{ #category : 'accessing' }
-RBTransformation >> setOption: aSymbol toUse: aBlock [
-
-	self options at: aSymbol put: aBlock
 ]
 
 { #category : 'transforming' }

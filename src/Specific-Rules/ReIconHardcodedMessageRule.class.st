@@ -10,15 +10,26 @@ Instead of
 Class {
 	#name : 'ReIconHardcodedMessageRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'Specific-Rules-Polymorph-Widgets',
+	#category : 'Specific-Rules-API Change',
 	#package : 'Specific-Rules',
-	#tag : 'Polymorph-Widgets'
+	#tag : 'API Change'
 }
 
 { #category : 'accessing' }
-ReIconHardcodedMessageRule >> group [
+ReIconHardcodedMessageRule class >> group [
 
 	^ 'API Change'
+]
+
+{ #category : 'accessing' }
+ReIconHardcodedMessageRule class >> ruleName [
+	^ 'Use self iconNamed: #symbol instead of asIcon or Smalltalk ui icons iconNamed: #symbol'
+]
+
+{ #category : 'accessing' }
+ReIconHardcodedMessageRule class >> severity [
+
+	^ #error
 ]
 
 { #category : 'initialization' }
@@ -29,16 +40,4 @@ ReIconHardcodedMessageRule >> initialize [
 		byEvaluating: [ :node :matchMap |
 			RBParser
 				parseExpression: 'self iconNamed: #' , (matchMap at: #'`iconName') ]
-]
-
-{ #category : 'accessing' }
-ReIconHardcodedMessageRule >> name [
-
-	^ 'Use self iconNamed: #symbol instead of asIcon or Smalltalk ui icons iconNamed: #symbol'
-]
-
-{ #category : 'accessing' }
-ReIconHardcodedMessageRule >> severity [
-
-	^ #error
 ]

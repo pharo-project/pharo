@@ -13,16 +13,20 @@ Class {
 	#instVars : [
 		'newClassName'
 	],
-	#category : 'SystemCommands-ClassCommands',
-	#package : 'SystemCommands-ClassCommands'
+	#category : 'SystemCommands-ClassCommands-Creation',
+	#package : 'SystemCommands-ClassCommands',
+	#tag : 'Creation'
 }
 
 { #category : 'execution' }
 SycCmNewClassCreationCommand >> applyCommandResult [
-
+	"Check if user cancelled while viewing changes"
 	| newClass |
+	
+	(self class environment hasClassNamed: newClassName)
+		ifFalse: [ ^ self ].
+		
 	newClass := context system classNamed: newClassName.
-
 	context showClass: newClass
 ]
 
@@ -34,6 +38,7 @@ SycCmNewClassCreationCommand >> isApplicable [
 
 { #category : 'preparation' }
 SycCmNewClassCreationCommand >> prepareFullExecution [
+
 	super prepareFullExecution.
 	newClassName := UIManager default request: 'Name of new class'.
 	newClassName isEmptyOrNil | (newClassName = targetClass name) ifTrue: [ CmdCommandAborted signal]

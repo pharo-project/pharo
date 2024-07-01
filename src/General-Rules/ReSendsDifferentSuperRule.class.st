@@ -11,14 +11,29 @@ If the new method is not defined in the class, you should probably rewrite this 
 Class {
 	#name : 'ReSendsDifferentSuperRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing' }
 ReSendsDifferentSuperRule class >> checksMethod [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReSendsDifferentSuperRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+ReSendsDifferentSuperRule class >> rationale [
+	^ 'Checks for methods whose source sends a different super message.'
+]
+
+{ #category : 'accessing' }
+ReSendsDifferentSuperRule class >> ruleName [
+	^ 'Sends different super message'
 ]
 
 { #category : 'accessing' }
@@ -31,19 +46,4 @@ ReSendsDifferentSuperRule class >> uniqueIdentifierName [
 { #category : 'running' }
 ReSendsDifferentSuperRule >> basicCheck: aMethod [
 	^ aMethod superMessages anySatisfy: [ :message | message ~= aMethod selector ]
-]
-
-{ #category : 'accessing' }
-ReSendsDifferentSuperRule >> group [
-	^ 'Design Flaws'
-]
-
-{ #category : 'accessing' }
-ReSendsDifferentSuperRule >> name [
-	^ 'Sends different super message'
-]
-
-{ #category : 'accessing' }
-ReSendsDifferentSuperRule >> rationale [
-	^ 'Checks for methods whose source sends a different super message.'
 ]

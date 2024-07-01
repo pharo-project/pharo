@@ -33,20 +33,24 @@ Class {
 	#classVars : [
 		'Initialized'
 	],
-	#category : 'BaselineOfIDE',
-	#package : 'BaselineOfIDE'
+	#category : 'BaselineOfIDE-Baseline',
+	#package : 'BaselineOfIDE',
+	#tag : 'Baseline'
 }
 
 { #category : 'baselines' }
 BaselineOfIDE >> baseline: spec [
-	<baseline>
 
+	<baseline>
+	repository := self packageRepositoryURLForSpec: spec.
 	spec for: #common do: [
 		spec postLoadDoIt: #postload:package:.
-		spec baseline: 'BasicTools' with: [ spec repository: self repository ].
-		spec baseline: 'Athens' with: [ spec repository: self repository ].
-		spec baseline: 'Flashback' with: [ spec repository: self repository ].
-		spec baseline: 'KernelTests' with: [ spec repository: self repository ].
+		spec baseline: 'BasicTools' with: [ spec repository: repository ].
+		spec
+			package: 'Tool-MorphicProfiler'
+			with: [ spec requires: #( 'BasicTools' ) ].
+		spec baseline: 'Athens' with: [ spec repository: repository ].
+		spec baseline: 'Flashback' with: [ spec repository: repository ].
 
 		self
 			load: 'Shift' group: 'shift-tests' spec: spec;
@@ -56,42 +60,47 @@ BaselineOfIDE >> baseline: spec [
 			load: 'SUnit' group: 'Tests' spec: spec;
 			load: 'EnlumineurFormatter' group: 'Tests' spec: spec;
 			load: 'Reflectivity' group: 'tests' spec: spec;
+			load: 'DebugPoints' group: 'Tests' spec: spec;
 			load: 'Refactoring' group: 'Tests' spec: spec.
 
 		spec package: 'Math-Operations-Extensions-Tests'.
 		spec package: 'Network-Tests'.
 		spec package: 'Network-Mail-Tests'.
-		spec package: 'Gofer-Tests'.
 		spec package: 'Rubric-SpecFindReplaceDialog'.
 
+		spec package: 'OpalCompiler-UI'.
 
 		self load: 'Metacello' group: 'Tests' spec: spec.
 
 		spec package: 'MonticelloGUI-Tests'.
 		"Later we will load the UI of enlumineur probably here
 		"
-		spec baseline: 'Shout' with: [ spec repository: self repository ].
+		spec baseline: 'Shout' with: [ spec repository: repository ].
 
-		spec baseline: 'ReflectionMirrors' with: [ spec repository: self repository ].
-		spec baseline: 'FuzzyMatcher' with: [ spec repository: self repository ].
-		spec baseline: 'QA' with: [ spec repository: self repository ].
-		spec baseline: 'OSWindow' with: [ spec repository: self repository ].
-		spec baseline: 'EmergencyDebugger' with: [ spec repository: self repository ].
+		spec
+			baseline: 'ReflectionMirrors'
+			with: [ spec repository: repository ].
+		spec baseline: 'FuzzyMatcher' with: [ spec repository: repository ].
+		spec baseline: 'QA' with: [ spec repository: repository ].
+		spec baseline: 'OSWindow' with: [ spec repository: repository ].
+		spec
+			baseline: 'EmergencyDebugger'
+			with: [ spec repository: repository ].
 
 		self load: 'Epicea' group: 'Browsers' spec: spec.
 
-		spec baseline: 'Misc' with: [ spec repository: self repository ].
+		spec baseline: 'Misc' with: [ spec repository: repository ].
 
 		self load: 'Fuel' group: 'Tests' spec: spec.
 
-		spec baseline: 'GeneralTests' with: [ spec repository: self repository ].
+		spec baseline: 'GeneralTests' with: [ spec repository: repository ].
 
 		self load: 'FreeType' group: 'tests' spec: spec.
 		self load: 'Keymapping' group: 'tests' spec: spec.
 
-		spec baseline: 'Zodiac' with: [ spec repository: self repository ].
-		spec baseline: 'SortFunctions' with: [ spec repository: self repository ].
-		spec baseline: 'Equals' with: [ spec repository: self repository ].
+		spec baseline: 'Zodiac' with: [ spec repository: repository ].
+		spec baseline: 'SortFunctions' with: [ spec repository: repository ].
+		spec baseline: 'Equals' with: [ spec repository: repository ].
 
 		self load: 'NewValueHolder' group: 'tests' spec: spec.
 		spec package: 'STON-Extensions'.
@@ -99,33 +108,38 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'BaselineOfPharoBootstrap'.
 		spec package: 'BaselineOfMonticello'.
 		spec package: 'BaselineOfMetacello'.
-		spec baseline: 'ReferenceFinder' with: [ spec repository: self repository ].
-		spec baseline: 'ClassParser' with: [ spec repository: self repository ].
+		spec
+			baseline: 'ReferenceFinder'
+			with: [ spec repository: repository ].
+		spec baseline: 'ClassParser' with: [ spec repository: repository ].
 
-		self load: 'Calypso' group: #( 'FullEnvironment' 'SystemBrowser' 'Tests' ) spec: spec.
-		spec baseline: 'Ring' with: [ spec repository: self repository ].
-		spec baseline: 'HeuristicCompletion' with: [ spec repository: self repository ].
-		self load: 'DependencyAnalyzer' group: 'Tool-DependencyAnalyser-UI-Tab' spec: spec.
+
+		self
+			load: 'Calypso'
+			group: #( 'FullEnvironment' 'SystemBrowser' 'Tests' )
+			spec: spec.
+		spec baseline: 'Ring' with: [ spec repository: repository ].
+		spec
+			baseline: 'HeuristicCompletion'
+			with: [ spec repository: repository ].
+		self
+			load: 'DependencyAnalyzer'
+			group: 'Tool-DependencyAnalyser-UI-Tab'
+			spec: spec.
 		self specCode: spec.
 		self newTools: spec.
 		self drTests: spec.
 		self microdown: spec.
-		self beautifulComments: spec.
+		spec package: #'BeautifulComments'  with: [ spec requires:  #( 'Microdown') ].
 		self documentBrowserCore: spec.
 		self welcomeBrowser: spec.
 		self roassal: spec.
+		
+		spec package: 'DarkBlueTheme'.
 
-		spec baseline: 'ThreadedFFI' with: [ spec repository: self repository ].
-		spec baseline: 'ProfilerUI' with: [ spec repository: self repository ].
+		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
 
 		spec package: 'Kernel-ExtraUtils' ]
-]
-
-{ #category : 'baselines - dependencies' }
-BaselineOfIDE >> beautifulComments: spec [ 
-
-	spec baseline: 'BeautifulComments' with: [ 
-		spec repository: (self class environment at: #BaselineOfPharo) beautifulCommentsRepository ]
 ]
 
 { #category : 'baselines - dependencies' }
@@ -140,7 +154,9 @@ BaselineOfIDE >> documentBrowserCore: spec [
 { #category : 'baselines - dependencies' }
 BaselineOfIDE >> drTests: spec [
 
-	spec baseline: 'DrTests' with: [ spec repository: self repository ]
+	spec
+		baseline: 'DrTests'
+		with: [ spec repository: (self packageRepositoryURLForSpec: spec) ]
 ]
 
 { #category : 'private - loading' }
@@ -148,7 +164,7 @@ BaselineOfIDE >> load: aProject group: aGroupName spec: spec [
 
 	spec baseline: aProject with: [
 		spec
-			repository: self repository;
+			repository: (self packageRepositoryURLForSpec: spec);
 			loads: aGroupName ]
 ]
 
@@ -166,7 +182,7 @@ BaselineOfIDE >> loadExtraTools [
 	"Hack: Document Browser is loaded in 2 steps because of the dependency of some packages to Iceberg.
 	The 2nd load is done through Metacello that adds new project registrations in Iceberg (user, not system).
 	We then remove these last registrations."
-	#('NewTools-DocumentBrowser' 'Iceberg') do: [ :repositoryName | | foundRepo |
+	#('NewTools-DocumentBrowser' 'iceberg') do: [ :repositoryName | | foundRepo |
 		foundRepo := IceRepository registry 
 			detect: [ :repo | repo name = repositoryName ]
 			ifNone: [ self error: repositoryName , ' not found in Iceberg registry!' ].
@@ -202,7 +218,6 @@ BaselineOfIDE >> loadIceberg [
 	self registerProject: 'NewTools'.
 	self registerProject: 'Roassal'.
 	self registerProject: 'Microdown'.
-	self registerProject: 'BeautifulComments'.
 	self registerProject: 'DocumentBrowser' baseline: 'NewToolsDocumentBrowser' otherBaselines: #().
 	self registerProject: 'WelcomeBrowser'.
 	self registerIceberg
@@ -253,10 +268,9 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	Smalltalk tools register: FileList as: #fileList.
 	Smalltalk tools register: Finder as: #finder.
 	Smalltalk tools register: ProcessBrowser as: #processBrowser.
-	Smalltalk tools register: TimeProfiler as: #timeProfiler.
 
-	(MorphicCoreUIManager classPool at: #UIProcess) ifNotNil: [ :proc | proc terminate ].
-	MorphicCoreUIManager classPool at: #UIProcess put: nil.
+	(MorphicCoreUIManager readClassVariableNamed: #UIProcess) ifNotNil: [ :proc | proc terminate ].
+	MorphicCoreUIManager writeClassVariableNamed: #UIProcess   value: nil.
 
 	PolymorphSystemSettings desktopColor: Color veryVeryLightGray lighter.
 	SourceCodeFonts setSourceCodeFonts: 10.
@@ -284,7 +298,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	RubAbstractTextArea highlightMessageSend: true.
 
-	PharoLightTheme beCurrent.
+	DarkBlueTheme beCurrent.
 
 	SDL_Event initialize.
 
@@ -292,6 +306,9 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	"Making HeuristicCompletion the default completion engine"
 	RubSmalltalkEditor completionEngineClass: CoCompletionEngine.
+	
+	"This should be removed in Pharo 14."
+	ASTNode deprecatedAliases: { #RBNode }.
 
 	self loadIceberg.
 	self loadExtraTools.
@@ -370,12 +387,6 @@ BaselineOfIDE >> registerProject: projectName externalProject: externalProject b
 	"Register baselines"
 	({baselineName}, anArray) do: [ :each |
 		Metacello new baseline: each; register ]
-]
-
-{ #category : 'accessing' }
-BaselineOfIDE >> repository [
-
-	^ repository ifNil: [ repository := self packageRepositoryURL ]
 ]
 
 { #category : 'baselines - dependencies' }

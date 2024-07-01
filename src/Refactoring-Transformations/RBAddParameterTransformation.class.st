@@ -42,17 +42,17 @@ RBAddParameterTransformation >> addParameterToMethod: aSelector in: aClass newSe
 	newArgs := aColl2
 ]
 
-{ #category : 'adding' }
+{ #category : 'preconditions' }
 RBAddParameterTransformation >> applicabilityPreconditions [ 
 	
-	^ super applicabilityPreconditions & 
-		 (RBCondition withBlock:
+	^ super applicabilityPreconditions ,
+		{ (RBCondition withBlock:
 			[ oldSelector numArgs < newSelector numArgs
 				ifFalse:
 					[ self refactoringError: newSelector printString,
 					' doesn''t have the proper number of arguments.'].
 			self newArgs do: [	:arg | self verifyInitializationExpressionOf: arg argValue ].
-			true])
+			true]) }
 ]
 
 { #category : 'adding' }
@@ -173,7 +173,7 @@ RBAddParameterTransformation >> senders [
 	^ senders
 ]
 
-{ #category : 'adding' }
+{ #category : 'storing' }
 RBAddParameterTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

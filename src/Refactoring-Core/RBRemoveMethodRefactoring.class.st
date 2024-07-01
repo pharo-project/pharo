@@ -32,11 +32,19 @@ RBRemoveMethodRefactoring class >> selector: aSelector from: aClass [
 ]
 
 { #category : 'preconditions' }
+RBRemoveMethodRefactoring >> applicabilityPreconditions [ 
+
+	^ transformation applicabilityPreconditions
+]
+
+{ #category : 'preconditions' }
 RBRemoveMethodRefactoring >> breakingChangePreconditions [
 
-	^ (RBCondition withBlock: [
-		   self checkSuperMethods.
-		   true ]) & (RBCondition withBlock: [ self senders isEmpty ] errorString: 'Cannot remove method because it has senders')
+	^ {
+		  (RBCondition withBlock: [ self checkSuperMethods ]).
+		  (RBCondition
+			   withBlock: [ self senders isEmpty ]
+			   errorString: 'Cannot remove method because it has senders') }
 ]
 
 { #category : 'preconditions' }
@@ -81,13 +89,6 @@ RBRemoveMethodRefactoring >> checkBrowseOccurrences: anCollectionOfOccurrences [
 ]
 
 { #category : 'preconditions' }
-RBRemoveMethodRefactoring >> checkPreconditions [ 
-
-	transformation checkPreconditions.
-	super checkPreconditions 
-]
-
-{ #category : 'preconditions' }
 RBRemoveMethodRefactoring >> checkReferencesToAnyOf: aSelector [
 
 	| occurrences |
@@ -109,7 +110,7 @@ RBRemoveMethodRefactoring >> checkReferencesToSuperSendsToAnyOf: superMessages [
 RBRemoveMethodRefactoring >> checkSuperMethods [
 
 
-	(self justSendsSuper: selector) ifFalse: [ ^ self ].
+	(self justSendsSuper: selector) ifFalse: [ ^ true ].
 	
 	(self superclassEquivalentlyDefines: selector)
 		ifTrue:
@@ -117,20 +118,8 @@ RBRemoveMethodRefactoring >> checkSuperMethods [
 					[self checkReferencesToSuperSendsToAnyOf: selector]]
 
 		ifFalse: [self checkReferencesToAnyOf: selector].
-]
 
-{ #category : 'executing' }
-RBRemoveMethodRefactoring >> generateChanges [
-
-	self prepareForExecution.
-
-	transformation applicabilityPreconditions check ifFalse: [
-		^ RBApplicabilityChecksFailedError signal:
-			  transformation applicabilityPreconditions errorString ].
-	self breakingChangePreconditions check ifFalse: [
-		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangePreconditions errorString ].
-	^ self removeMethodChanges 
+	^ true
 ]
 
 { #category : 'preconditions' }
@@ -162,7 +151,7 @@ RBRemoveMethodRefactoring >> justSendsSuper: aSelector [
 { #category : 'preconditions' }
 RBRemoveMethodRefactoring >> preconditions [
 
-	^ self breakingChangePreconditions 
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
 { #category : 'transforming' }
@@ -173,7 +162,7 @@ RBRemoveMethodRefactoring >> privateTransform [
 
 { #category : 'actions' }
 RBRemoveMethodRefactoring >> removeMethodChanges [
-	"Pay attention, don't call directly since this method skips preconditions."
+	"Pay attention, don't call directly since this method skips preconditions. This should only be called by drivers when the preconditions have been met."
 
 	self privateTransform.
 	^ self changes
@@ -220,7 +209,7 @@ RBRemoveMethodRefactoring >> sendersOf: aSelector [
 	^ self model allReferencesTo: aSelector
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRemoveMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

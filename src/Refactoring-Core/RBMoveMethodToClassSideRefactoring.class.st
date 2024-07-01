@@ -66,14 +66,13 @@ RBMoveMethodToClassSideRefactoring >> addMethod: rbMethod to: aClass toProtocol:
 { #category : 'preconditions' }
 RBMoveMethodToClassSideRefactoring >> applicabilityPreconditions [
 
-	^ (RBCondition isMetaclass: class) not
+	^ { (RBCondition isMetaclass: class) not }
 ]
 
 { #category : 'preconditions' }
 RBMoveMethodToClassSideRefactoring >> breakingChangePreconditions [
 
-	^ (RBCondition definesSelector: method selector in: class classSide)
-		  not
+	^ { (RBCondition definesSelector: method selector in: class classSide) not }
 ]
 
 { #category : 'checking' }
@@ -83,22 +82,6 @@ RBMoveMethodToClassSideRefactoring >> checkVariableNamed: aString [
 	(class whoDefinesClassVariable: aString) ifNotNil:
 			[^ true].
 	^ (self parseTree allDefinedVariables includes: aString)
-]
-
-{ #category : 'executing' }
-RBMoveMethodToClassSideRefactoring >> generateChanges [
-	
-	self prepareForExecution.
-
-	self applicabilityPreconditions check ifFalse: [
-		^ RBApplicabilityChecksFailedError signal:
-			  self applicabilityPreconditions errorString ].
-	self breakingChangePreconditions check ifFalse: [
-		RBBreakingChangeChecksFailedWarning signal:
-			self breakingChangePreconditions errorString ].
-
-	self privateTransform.
-	^ self changes
 ]
 
 { #category : 'transforming' }
@@ -203,7 +186,7 @@ RBMoveMethodToClassSideRefactoring >> removeMethod: selector from: aRBClass [
 			from: aRBClass)
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBMoveMethodToClassSideRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

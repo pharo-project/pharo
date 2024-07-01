@@ -6,14 +6,29 @@ This smell arises when a method protocol is not equivalent to the one defined in
 Class {
 	#name : 'ReInconsistentMethodClassificationRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing' }
 ReInconsistentMethodClassificationRule class >> checksMethod [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReInconsistentMethodClassificationRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+ReInconsistentMethodClassificationRule class >> ruleName [
+	^ 'Inconsistent method classification'
+]
+
+{ #category : 'accessing' }
+ReInconsistentMethodClassificationRule class >> severity [
+	^ #information
 ]
 
 { #category : 'accessing' }
@@ -44,19 +59,4 @@ ReInconsistentMethodClassificationRule >> critiqueFor: aMethod [
 
 	^ (ReRefactoringCritique withAnchor: (self anchorFor: aMethod) by: self) refactoring:
 		  (RBMethodProtocolTransformation protocol: { aMethod overriddenMethod protocolName } inMethod: aMethod selector inClass: aMethod methodClass name)
-]
-
-{ #category : 'accessing' }
-ReInconsistentMethodClassificationRule >> group [
-	^ 'Design Flaws'
-]
-
-{ #category : 'accessing' }
-ReInconsistentMethodClassificationRule >> name [
-	^ 'Inconsistent method classification'
-]
-
-{ #category : 'accessing' }
-ReInconsistentMethodClassificationRule >> severity [
-	^ #information
 ]

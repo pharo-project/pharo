@@ -4,14 +4,29 @@ Checks for instance variables that might better be defined as temporary variable
 Class {
 	#name : 'ReVariableReferencedOnceRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing' }
 ReVariableReferencedOnceRule class >> checksClass [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReVariableReferencedOnceRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+ReVariableReferencedOnceRule class >> ruleName [
+	^ 'Variable referenced in only one method and always assigned first'
+]
+
+{ #category : 'accessing' }
+ReVariableReferencedOnceRule class >> severity [
+	^ #information
 ]
 
 { #category : 'accessing' }
@@ -30,19 +45,4 @@ ReVariableReferencedOnceRule >> check: aClass forCritiquesDo: aCriticBlock [
 		  (RBReadBeforeWrittenTester
 				  isVariable: slot name
 				  writtenBeforeReadIn: usingMethods first ast) ifTrue: [aCriticBlock cull: (self critiqueFor: aClass about: slot  name)   ]]
-]
-
-{ #category : 'accessing' }
-ReVariableReferencedOnceRule >> group [
-	^ 'Design Flaws'
-]
-
-{ #category : 'accessing' }
-ReVariableReferencedOnceRule >> name [
-	^ 'Variable referenced in only one method and always assigned first'
-]
-
-{ #category : 'accessing' }
-ReVariableReferencedOnceRule >> severity [
-	^ #information
 ]

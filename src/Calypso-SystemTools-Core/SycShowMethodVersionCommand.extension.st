@@ -13,3 +13,10 @@ SycShowMethodVersionCommand class >> methodMenuActivation [
 
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyMethod asCalypsoItemContext
 ]
+
+{ #category : '*Calypso-SystemTools-Core' }
+SycShowMethodVersionCommand class >> methodShortcutActivation [
+    <classAnnotation>
+    ^ CmdShortcutActivation by: $v meta for: ClyMethod asCalypsoItemContext
+
+]

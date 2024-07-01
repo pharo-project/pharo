@@ -2,7 +2,7 @@
 name: Cleanup report
 about: Create a report to help us improve
 title: ''
-labels: Cleanup
+labels: 'Type: Cleanup'
 assignees: ''
 
 ---
@@ -19,7 +19,7 @@ A clear and concise description of what you expected to happen.
 Do you require a refactoring? The addition of comments?
 
 **Version information:**
- - Version [e.g. Pharo 11.0]
+ - Version [e.g. Pharo 12.0]
  - Commit [e.g. 22]
 
 **Expected development cost**

@@ -7,9 +7,9 @@ Class {
 	#instVars : [
 		'notice'
 	],
-	#category : 'OpalCompiler-Core-Exception',
+	#category : 'OpalCompiler-Core-Exceptions',
 	#package : 'OpalCompiler-Core',
-	#tag : 'Exception'
+	#tag : 'Exceptions'
 }
 
 { #category : 'handling' }

@@ -13,15 +13,10 @@ We want to make sure that we are not forced to use classSlots: and classTraits: 
 Class {
 	#name : 'ShiftClassSideBuilder',
 	#superclass : 'ShiftClassBuilder',
-	#category : 'Shift-ClassBuilder',
-	#package : 'Shift-ClassBuilder'
+	#category : 'Shift-ClassBuilder-Builder',
+	#package : 'Shift-ClassBuilder',
+	#tag : 'Builder'
 }
-
-{ #category : 'class initialization' }
-ShiftClassSideBuilder class >> initialize [
-
-	self deprecatedAliases: #( #FluidClassSideClassBuilder #FluidClassSideTraitBuilder )
-]
 
 { #category : 'accessing' }
 ShiftClassSideBuilder >> slots: anArray [

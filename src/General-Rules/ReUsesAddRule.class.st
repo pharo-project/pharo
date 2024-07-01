@@ -4,10 +4,20 @@ Check for possible uses of the result returned by an add: or addAll: messages. T
 Class {
 	#name : 'ReUsesAddRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
+
+{ #category : 'accessing' }
+ReUsesAddRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+ReUsesAddRule class >> ruleName [
+	^ 'Uses the result of an add: message'
+]
 
 { #category : 'accessing' }
 ReUsesAddRule class >> uniqueIdentifierName [
@@ -18,15 +28,5 @@ ReUsesAddRule class >> uniqueIdentifierName [
 
 { #category : 'running' }
 ReUsesAddRule >> basicCheck: node [
-	^ node isMessage and: [ (#(#add: #addAll:) includes: node selector) and: [ node isDirectlyUsed ] ]
-]
-
-{ #category : 'accessing' }
-ReUsesAddRule >> group [
-	^ 'Potential Bugs'
-]
-
-{ #category : 'accessing' }
-ReUsesAddRule >> name [
-	^ 'Uses the result of an add: message'
+	^ node isMessage and: [ (#(#add: #addAll:) includes: node selector) and: [ node isEssential ] ]
 ]

@@ -12,14 +12,29 @@ The defined inheritance depth can be edited in #inheritanceDepth.
 Class {
 	#name : 'ReExcessiveInheritanceRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing' }
 ReExcessiveInheritanceRule class >> checksClass [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReExcessiveInheritanceRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+ReExcessiveInheritanceRule class >> rationale [
+	^ 'Deep inheritance (10+ depth) is usually a sign of a design flaw.'
+]
+
+{ #category : 'accessing' }
+ReExcessiveInheritanceRule class >> ruleName [
+	^ 'Excessive inheritance depth'
 ]
 
 { #category : 'accessing' }
@@ -36,22 +51,7 @@ ReExcessiveInheritanceRule >> basicCheck: aClass [
 	^ aClass allSuperclasses size >= self inheritanceDepth
 ]
 
-{ #category : 'accessing' }
-ReExcessiveInheritanceRule >> group [
-	^ 'Design Flaws'
-]
-
 { #category : 'private' }
 ReExcessiveInheritanceRule >> inheritanceDepth [
 	^ 10
-]
-
-{ #category : 'accessing' }
-ReExcessiveInheritanceRule >> name [
-	^ 'Excessive inheritance depth'
-]
-
-{ #category : 'accessing' }
-ReExcessiveInheritanceRule >> rationale [
-	^ 'Deep inheritance (10+ depth) is usually a sign of a design flaw.'
 ]

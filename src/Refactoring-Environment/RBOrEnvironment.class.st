@@ -19,6 +19,15 @@ RBOrEnvironment class >> onEnvironment: anEnvironment or: anotherEnvironment [
 		yourself
 ]
 
+{ #category : 'instance creation' }
+RBOrEnvironment class >> onEnvironments: aCollectionOfEnvironments [
+	| envs |
+	envs := aCollectionOfEnvironments asSet asArray.
+	envs size = 1 ifTrue: [ ^ envs first ].
+	
+	^ self onEnvironment: envs first or: (self onEnvironments: envs allButFirst)
+]
+
 { #category : 'accessing' }
 RBOrEnvironment >> classesDo: aBlock [
 	| enumerated |
@@ -106,7 +115,7 @@ RBOrEnvironment >> selectorsForClass: aClass do: aBlock [
 				ifFalse: [ aBlock value: each ] ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBOrEnvironment >> storeOn: aStream [
 	aStream nextPut: $(.
 	environment storeOn: aStream.

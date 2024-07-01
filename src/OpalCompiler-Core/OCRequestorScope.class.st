@@ -48,8 +48,9 @@ OCRequestorScope >> lookupVar: name [
 
 	"Can we have a free workspace variable or not?"
 	(self canAddBindingOf: name) ifFalse: [ ^nil ].
-	"We do not register it yet, to not fill the requestor with garbage variable during styling for instance"
-	^ self variables at: name ifAbsentPut: [ WorkspaceVariable key: name ]
+	"We do not register it yet, to not fill the requestor with garbage variable during styling for instance
+	We use an UndeclaredVariable to color correctly. #registerVariables changes it to a WorkspaceVariable"
+	^ self variables at: name ifAbsentPut: [ UndeclaredVariable named: name ]
 ]
 
 { #category : 'lookup' }

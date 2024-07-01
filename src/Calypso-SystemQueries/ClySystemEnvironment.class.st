@@ -127,22 +127,28 @@ ClySystemEnvironment >> compileANewClassFrom: newClassDefinitionString notifying
 	source code is defString. If any errors occur in compilation, notify
 	aController."
 
-	| newClassName newClass |
+	| newClassName newClass compiler |
 	newClassName := self extractNameFrom: newClassDefinitionString.
-	((self isOverridingExistingClassWhenDefiningClassNamed: newClassName startingFrom: oldClass) and: [
-		 (self confirmToOverrideExistingClassNamed: newClassName) not ]) ifTrue: [ ^ nil ].
+	((self
+		  isOverridingExistingClassWhenDefiningClassNamed: newClassName
+		  startingFrom: oldClass) and: [
+		 (self confirmToOverrideExistingClassNamed: newClassName) not ])
+		ifTrue: [ ^ nil ].
 
 	"On parser & semantic errors (including undeclared because we are in the legacy scripting interactive mode),
 	there is UI notification.
 	On execution, some methods might be recompiled and cause issues:
 	* Warnings (undeclared/shadowed) are sillently passed, but should be fixed by the user later.
 	* Errors are unlikely (method should be already broken), but cause (resumable) syntax error for now."
-	newClass := (self classCompilerFor: oldClass)
+
+	compiler := (self classCompilerFor: oldClass)
 		            source: newClassDefinitionString;
 		            requestor: aController;
 		            failBlock: [ ^ nil ];
-		            logged: true;
-		            evaluate.
+		            logged: true.
+	
+	[newClass := compiler evaluate] 
+		on: Error do: [:e | self notifyErroInClassDefinition: e. ^ nil].
 
 	newClass := newClass fluidInstall.
 
@@ -171,6 +177,12 @@ ClySystemEnvironment >> createPackageNamed: packageName [
 ClySystemEnvironment >> defaultClassCompiler [
 
 	^ self class compiler
+]
+
+{ #category : 'class management' }
+ClySystemEnvironment >> definedClassesInPackage: aPackage [
+	 
+	^ aPackage definedClasses
 ]
 
 { #category : 'package management' }
@@ -226,6 +238,28 @@ ClySystemEnvironment >> name [
 { #category : 'accessing' }
 ClySystemEnvironment >> name: anObject [
 	name := anObject
+]
+
+{ #category : 'ui' }
+ClySystemEnvironment >> notifyErroInClassDefinition: anError [ 
+
+	| text |
+
+	anError freeze.
+
+	text := ((anError isKindOf: MessageNotUnderstood) and: [ anError receiver isKindOf: ShiftClassBuilder ])
+		ifTrue: [ 'The selector {1} is unrecognized in your class definition.'
+		        format: { anError message selector } ]
+		ifFalse: [ anError messageText ].
+
+	SpConfirmDialog new
+		title: 'There is an error in your class definition';
+		label: text;
+		acceptLabel: 'Debug';
+		cancelLabel: 'Close';
+		onAccept: [ anError debug ];
+		openDialog
+		
 ]
 
 { #category : 'package management' }

@@ -4,14 +4,24 @@ Finds methods whose arguments or temporary variables ooverride an instance varia
 Class {
 	#name : 'ReTempVarOverridesInstVarRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'testing-interest' }
 ReTempVarOverridesInstVarRule class >> checksMethod [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReTempVarOverridesInstVarRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+ReTempVarOverridesInstVarRule class >> ruleName [
+	^ 'Outer variable shadowed by temporary variable or argument'
 ]
 
 { #category : 'accessing' }
@@ -42,14 +52,4 @@ ReTempVarOverridesInstVarRule >> critiqueFor: aMethod about: aVarNode [
 		by: self)
 		tinyHint: aVarNode name;
 		yourself
-]
-
-{ #category : 'accessing' }
-ReTempVarOverridesInstVarRule >> group [
-	^ 'Potential Bugs'
-]
-
-{ #category : 'accessing' }
-ReTempVarOverridesInstVarRule >> name [
-	^ 'Outer variable shadowed by temporary variable or argument'
 ]

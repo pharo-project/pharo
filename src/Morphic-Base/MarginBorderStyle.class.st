@@ -12,12 +12,6 @@ Class {
 	#tag : 'Borders'
 }
 
-{ #category : 'class initialization' }
-MarginBorderStyle class >> initialize [
-	"Deprecated in Pharo 11"
-	self deprecatedAliases: { #MarginBorder }
-]
-
 { #category : 'accessing' }
 MarginBorderStyle >> drawLineFrom: startPoint to: stopPoint on: aCanvas [
 	"Reduce the width by the margin."

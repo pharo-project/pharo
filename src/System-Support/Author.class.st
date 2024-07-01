@@ -15,22 +15,6 @@ Class {
 	#tag : 'Authoring'
 }
 
-{ #category : 'settings' }
-Author class >> authorSettingOn: aBuilder [
-	<systemsettings>
-	(aBuilder setting: #authorFullName)
-		order: -100000;
-		parent: #pharoSystem;
-		label: 'Author identification';
-		target: self uniqueInstance;
-		getSelector: #fullNamePerSe;
-		setSelector: #fullName:;
-		notInStyle;
-		default: '';
-		ghostHelp: 'VincentVanGogh';
-		description: AuthorNameRequest messagePrompt
-]
-
 { #category : 'utilities' }
 Author class >> changeStamp [
 	"Answer a string to be pasted into source code to mark who changed it and when."
@@ -72,6 +56,11 @@ Author class >> fullName: aString [
 { #category : 'convenience' }
 Author class >> fullNamePerSe [
 	^ self uniqueInstance fullNamePerSe
+]
+
+{ #category : 'accessing' }
+Author class >> isDeprecated [
+	^ true
 ]
 
 { #category : 'instance creation' }

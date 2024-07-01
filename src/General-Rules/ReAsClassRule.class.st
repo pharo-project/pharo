@@ -1,7 +1,6 @@
 "
 Do not use methods such as
 
-	#asClass
 	#asClassIfAbsent:
 	#asClassIfPresent:
 	
@@ -10,39 +9,33 @@ because they do not take into account an environment. Instead use `self class en
 Class {
 	#name : 'ReAsClassRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'accessing' }
-ReAsClassRule >> group [
+ReAsClassRule class >> group [
 
 	^ 'Design Flaws'
 ]
 
-{ #category : 'initialization' }
-ReAsClassRule >> initialize [
-	super initialize.
-	self
-		replace: '`@expr asClass'
-		   with: 'self class environment at: `@expr';
-
-		replace: '`@expr asClassIfAbsent: `@block'
-		with: 'self class environment at: `@expr ifAbsent: `@block';
-
-	replace: '`@expr asClassIfPresent: `@block'
-		with: 'self class environment at: `@expr ifPresent: `@block'
-]
-
 { #category : 'accessing' }
-ReAsClassRule >> name [
-
+ReAsClassRule class >> ruleName [
 	^ 'Do not use #asClass & similar'
 ]
 
 { #category : 'accessing' }
-ReAsClassRule >> severity [
+ReAsClassRule class >> severity [
 
 	^ #error
+]
+
+{ #category : 'initialization' }
+ReAsClassRule >> initialize [
+
+	super initialize.
+	self
+		replace: '`@expr asClassIfAbsent: `@block' with: 'self class environment at: `@expr ifAbsent: `@block';
+		replace: '`@expr asClassIfPresent: `@block' with: 'self class environment at: `@expr ifPresent: `@block'
 ]

@@ -16,6 +16,13 @@ IntegerTest >> assert: a classAndValueEquals: b [
 ]
 
 { #category : 'tests - basic' }
+IntegerTest >> testANegativeIntegerCannotBeAPowerOfTwo [
+
+	self deny: ((1 to: 80) anySatisfy: [:n | (2 raisedTo: n) negated isPowerOfTwo])
+		description: 'A negative integer cannot be a power of two'
+]
+
+{ #category : 'tests - basic' }
 IntegerTest >> testAsLargerPowerOfTwo [
 "Invalid input testing"
 	"LargeNegativeIntegers"
@@ -614,14 +621,6 @@ IntegerTest >> testIsPowerOfTwo [
 	self deny: ((2 raisedTo: 80) - 1) isPowerOfTwo.
 	self assert: (2 raisedTo: 80) isPowerOfTwo.
 	self deny: ((2 raisedTo: 80) + 1) isPowerOfTwo
-]
-
-{ #category : 'tests - basic' }
-IntegerTest >> testIsPowerOfTwoM6873 [
-	"This is a non regression test for http://bugs.squeak.org/view.php?id=6873"
-
-	self deny: ((1 to: 80) anySatisfy: [:n | (2 raisedTo: n) negated isPowerOfTwo])
-		description: 'A negative integer cannot be a power of two'
 ]
 
 { #category : 'tests - bitLogic' }

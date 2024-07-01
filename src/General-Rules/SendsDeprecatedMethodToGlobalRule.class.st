@@ -4,10 +4,25 @@ Checks for sends of deprecated messages that might be removed in upcoming releas
 Class {
 	#name : 'SendsDeprecatedMethodToGlobalRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Base',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Base'
+	#tag : 'Design Flaws'
 }
+
+{ #category : 'accessing' }
+SendsDeprecatedMethodToGlobalRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+SendsDeprecatedMethodToGlobalRule class >> ruleName [
+	^ 'Sends a deprecated message to a known global'
+]
+
+{ #category : 'accessing' }
+SendsDeprecatedMethodToGlobalRule class >> severity [
+	^ #error
+]
 
 { #category : 'accessing' }
 SendsDeprecatedMethodToGlobalRule class >> uniqueIdentifierName [
@@ -25,19 +40,4 @@ SendsDeprecatedMethodToGlobalRule >> basicCheck: aNode [
 	^value class classAndMethodFor: aNode selector
 		do: [ :class :method | method isDeprecated ]
 		ifAbsent: [ false ]
-]
-
-{ #category : 'accessing' }
-SendsDeprecatedMethodToGlobalRule >> group [
-	^ 'Design Flaws'
-]
-
-{ #category : 'accessing' }
-SendsDeprecatedMethodToGlobalRule >> name [
-	^ 'Sends a deprecated message to a known global'
-]
-
-{ #category : 'accessing' }
-SendsDeprecatedMethodToGlobalRule >> severity [
-	^ #error
 ]

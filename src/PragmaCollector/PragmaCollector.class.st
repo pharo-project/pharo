@@ -188,7 +188,7 @@ PragmaCollector >> isNotEmpty [
 
 { #category : 'updating' }
 PragmaCollector >> keepPragma: aPragma [
-	(selectors notNil and: [(selectors includes: aPragma selector) not ]) ifTrue: [ ^ false ].
+	(selectors isNotNil and: [(selectors includes: aPragma selector) not ]) ifTrue: [ ^ false ].
 	^ self filter value: aPragma
 ]
 
@@ -276,10 +276,10 @@ PragmaCollector >> reject: aBlock [
 
 { #category : 'dependents access' }
 PragmaCollector >> release [
+
 	self noMoreNotifications.
 	self destroyAnnouncer.
-	collected := nil.
-	super release
+	collected := nil
 ]
 
 { #category : 'updating' }

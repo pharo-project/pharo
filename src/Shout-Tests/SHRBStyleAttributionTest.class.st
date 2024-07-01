@@ -43,7 +43,7 @@ SHRBStyleAttributionTest >> setUp [
 
 	super setUp.
 	styler := SHRBMockTextStyler new.
-	styler declared: #( #/ #setUp #style: testKeywordStyle ).
+	styler declared: #( #/ #setUp #style: #testKeywordStyle #print ).
 	oldSetting := SHRBMockTextStyler instVarNamed: #formatIncompleteIdentifiers
 ]
 
@@ -60,7 +60,7 @@ SHRBStyleAttributionTest >> style: aText [
 { #category : 'running' }
 SHRBStyleAttributionTest >> tearDown [
 
-	SHRBMockTextStyler formatIncompleteIdentifiers: oldSetting.
+	styler class formatIncompleteIdentifiers: oldSetting.
 	super tearDown
 ]
 
@@ -276,6 +276,40 @@ SHRBStyleAttributionTest >> testCharacterStyle [
 		between: 5
 		and: 6
 		shouldBe: #character
+]
+
+{ #category : 'tests' }
+SHRBStyleAttributionTest >> testClassAfterMessageToASymbolLowercaseShouldBeColored [
+
+	| aText |
+	styler class formatIncompleteIdentifiers: true.
+	aText := 'm1
+		#world traceCr.
+		Object new.' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 24
+		and: 29
+		shouldBe: #globalVar
+]
+
+{ #category : 'tests' }
+SHRBStyleAttributionTest >> testClassAfterMessageToASymbolUppercaseShouldBeColored [
+
+	| aText |
+	styler class formatIncompleteIdentifiers: true.
+	aText := 'm1
+		#World traceCr.
+		Object new.' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 24
+		and: 29
+		shouldBe: #globalVar
 ]
 
 { #category : 'tests' }
@@ -506,7 +540,7 @@ SHRBStyleAttributionTest >> testGlobalVarStyle [
 SHRBStyleAttributionTest >> testIncompleteIdentifierStyle [
 
 	| aText |
-	SHRBMockTextStyler formatIncompleteIdentifiers: true.
+	styler class formatIncompleteIdentifiers: true.
 	aText := 'm ^ style' asText.
 	self style: aText.
 
@@ -521,7 +555,7 @@ SHRBStyleAttributionTest >> testIncompleteIdentifierStyle [
 SHRBStyleAttributionTest >> testIncompleteKeywordStyle [
 
 	| aText |
-	SHRBMockTextStyler formatIncompleteIdentifiers: true.
+	styler class formatIncompleteIdentifiers: true.
 	aText := 'm ^ self setU' asText.
 	self style: aText.
 
@@ -682,7 +716,7 @@ SHRBStyleAttributionTest >> testPatternArgStyle [
 SHRBStyleAttributionTest >> testPatternKeywordStyle [
 
 	| aText |
-	SHRBMockTextStyler formatIncompleteIdentifiers: true.
+	styler class formatIncompleteIdentifiers: true.
 	aText := 'test: arg1 with: arg2  ^ arg1 > arg2' asText.
 	self style: aText.
 
@@ -920,7 +954,7 @@ SHRBStyleAttributionTest >> testUnaryStyle [
 SHRBStyleAttributionTest >> testUndefinedIdentifierStyle [
 
 	| aText |
-	SHRBMockTextStyler formatIncompleteIdentifiers: true.
+	styler class formatIncompleteIdentifiers: true.
 	aText := 'm ^ toto' asText.
 	self style: aText.
 
@@ -935,7 +969,7 @@ SHRBStyleAttributionTest >> testUndefinedIdentifierStyle [
 SHRBStyleAttributionTest >> testUndefinedKeywordStyle [
 
 	| aText |
-	SHRBMockTextStyler formatIncompleteIdentifiers: true.
+	styler class formatIncompleteIdentifiers: true.
 	aText := 'm ^ self toto' asText.
 	self style: aText.
 
@@ -943,6 +977,22 @@ SHRBStyleAttributionTest >> testUndefinedKeywordStyle [
 		assertStyleOf: aText
 		between: 10
 		and: 13
+		shouldBe: #undefinedSelector
+]
+
+{ #category : 'tests' }
+SHRBStyleAttributionTest >> testUndefinedKeywordStyleWithSettingOff [
+
+	| aText |
+	styler class formatIncompleteIdentifiers: false.
+	aText := 'm1
+		^ self prin' asText.
+	self style: aText.
+
+	self
+		assertStyleOf: aText
+		between: 13
+		and: 16
 		shouldBe: #undefinedSelector
 ]
 

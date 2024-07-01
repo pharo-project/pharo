@@ -166,7 +166,8 @@ ReAbstractCritique >> isCritique [
 
 { #category : 'actions' }
 ReAbstractCritique >> popDescriptionUp [
-	UIManager default longMessage: self description title: self title
+
+	MorphicUIManager new longMessage: self description title: self title
 ]
 
 { #category : 'printing' }
@@ -174,16 +175,6 @@ ReAbstractCritique >> printOn: aStream [
 
 	super printOn: aStream.
 	aStream nextPutAll: ' (', self title, ')'
-]
-
-{ #category : 'actions' }
-ReAbstractCritique >> provideNegativeFeedback: aComment [
-	ReFeedbacker negativeFeedback: aComment about: self
-]
-
-{ #category : 'actions' }
-ReAbstractCritique >> providePositiveFeedback: aComment [
-	ReFeedbacker positiveFeedback: aComment about: self
 ]
 
 { #category : 'testing' }
@@ -210,13 +201,14 @@ ReAbstractCritique >> tinyHint: anObject [
 
 { #category : 'accessing' }
 ReAbstractCritique >> title [
+
 	^ (self tinyHint isNil or: [ self tinyHint isEmpty ])
-		ifTrue: [ rule name ]
-		ifFalse: [
-			String streamContents: [ :s |
-				s
-					nextPut: $[;
-					nextPutAll: self tinyHint;
-					nextPutAll: '] ';
-					nextPutAll: rule name ] ]
+		  ifTrue: [ rule ruleName ]
+		  ifFalse: [
+			  String streamContents: [ :s |
+				  s
+					  nextPut: $[;
+					  nextPutAll: self tinyHint;
+					  nextPutAll: '] ';
+					  nextPutAll: rule ruleName ] ]
 ]

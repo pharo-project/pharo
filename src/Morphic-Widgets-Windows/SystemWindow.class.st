@@ -479,7 +479,9 @@ SystemWindow class >> windowMenuOn: aBuilder [
 		action: [ aBuilder model makeSecondTopmost ];
 		withSeparatorAfter.
 	(aBuilder item: #'Create window group')
-		action: [ aBuilder model createWindowGroup ];
+		action: [ aBuilder model createWindowGroup ].
+	(aBuilder item: #'Open as external window')
+		action: [ aBuilder model openAsExternalWindow ];
 		withSeparatorAfter.
 	closableLabel := aBuilder model mustNotClose
 		ifFalse: [ #'Make unclosable' ]
@@ -909,11 +911,7 @@ SystemWindow >> deleteCloseBox [
 
 { #category : 'open/close' }
 SystemWindow >> deleteDiscardingChanges [
-	| thisWorld announcement animateClose |
-	animateClose := self visible
-		and: [ self world isNotNil
-				and: [ self theme shouldUseAnimations
-						and: [ self theme animationSettings animateClosing ] ] ].
+	| thisWorld announcement |
 	self removePaneSplitters.	"in case we add some panes and reopen!"
 	thisWorld := self world.
 	self isFlexed
@@ -924,8 +922,6 @@ SystemWindow >> deleteDiscardingChanges [
 				windowIsClosing;
 				releaseActionMap ].
 	model := nil.
-	animateClose
-		ifTrue: [ self animateClose ].
 	SystemWindow noteTopWindowIn: thisWorld.
 	announcement := WindowClosed new
 		window: self;
@@ -1320,8 +1316,6 @@ SystemWindow >> minimizeOrRestore [
 	| mc windowEvent |
 	isCollapsed
 		ifTrue: [ "Expand -- restore panes to morphics structure"
-			self theme shouldUseAnimations ifTrue: [
-				self animateRestoreFromMinimized ].
 			isCollapsed := false.
 			"Bring to front first"
 			self
@@ -1345,7 +1339,6 @@ SystemWindow >> minimizeOrRestore [
 			self
 				setBoundsWithFlex: (-100 @ -100 extent: 2 @ 2);
 				"place offscreen"hide.
-			self theme shouldUseAnimations ifTrue: [ self animateMinimize ].
 			self isActive ifTrue: [ self world navigateVisibleWindowForward ] ].
 	self layoutChanged.
 
@@ -1488,6 +1481,13 @@ SystemWindow >> offerWindowMenu [
 	aMenu popUpEvent: self currentEvent in: self world
 ]
 
+{ #category : 'menu actions' }
+SystemWindow >> openAsExternalWindow [
+
+	self submorphs last openInExternalWindow.
+	self delete.
+]
+
 { #category : 'open/close' }
 SystemWindow >> openModal [
 	self openInWorld.
@@ -1519,11 +1519,8 @@ SystemWindow >> paneColor: aColor [
 
 { #category : 'panes' }
 SystemWindow >> paneColorToUse [
-	^ Display depth <= 2
-		ifTrue:
-			[Color white]
-		ifFalse:
-			[self paneColor]
+
+	^ self paneColor
 ]
 
 { #category : 'panes' }
@@ -1684,10 +1681,22 @@ SystemWindow >> reframePanesAdjoining: growingPane along: side to: aDisplayBox [
 	self extent: self extent
 ]
 
+{ #category : 'dropping/grabbing' }
+SystemWindow >> rejectDropMorphEvent: evt [
+
+	super rejectDropMorphEvent: evt.
+
+	self formerOwner acceptDroppingMorph: self event: evt.
+	self position: self formerPosition.
+	
+	self formerOwner: nil.
+	self formerPosition: nil.
+]
+
 { #category : 'label' }
 SystemWindow >> relabel [
 	| newLabel |
-	newLabel := UIManager default
+	newLabel := self morphicUIManager
 		request: 'New title for this window' translated
 		initialAnswer: labelString.
 	newLabel isEmptyOrNil ifTrue: [^self].
@@ -1835,7 +1844,7 @@ SystemWindow >> setUpdatablePanesFrom: getSelectors [
 SystemWindow >> setWindowColor [
 	"Allow the user to select a new basic color for the window"
 
-	(UIManager default chooseColor: self paneColor)
+	(self morphicUIManager chooseColor: self paneColor)
 		ifNotNil: [:nc | self setWindowColor: nc]
 ]
 
@@ -1864,6 +1873,12 @@ SystemWindow >> stepTime [
 ]
 
 { #category : 'icons' }
+SystemWindow >> taskbarIcon [
+	
+	^ self iconFormSetNamed: self taskbarIconName
+]
+
+{ #category : 'icons' }
 SystemWindow >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
@@ -1885,6 +1900,33 @@ SystemWindow >> taskbarMoveRight [
 
 
 	self moveTaskbarTaskToOffset: 1
+]
+
+{ #category : 'move' }
+SystemWindow >> taskbarMoveTo [
+	"Move the current task button to the prompted location"
+	
+	| taskBarSize taskLocation desiredLocation answer |
+	
+	taskBarSize := self worldTaskbar orderedTasks size.
+	taskLocation := self worldTaskbar orderedTasks indexOf: self taskbarTask.
+
+	answer := UIManager default
+		          request: 'Enter new task location: 1..', taskBarSize printString
+		          initialAnswer: taskLocation asString
+		          title: 'Move Task'.
+		
+	answer ifNil: [ ^ self ].
+	
+	[
+	desiredLocation := answer asNumber.
+	((1 to: taskBarSize) includes: desiredLocation) ifFalse: [
+		self error: 'incorrect location' ] ] onErrorDo: [
+		UIManager default inform: 'Location must be a number between 1 and ' , taskBarSize printString.
+		^ self ].
+	
+	self moveTaskbarTaskToOffset: (taskLocation - desiredLocation) negated
+
 ]
 
 { #category : 'open/close' }

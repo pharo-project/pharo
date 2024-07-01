@@ -56,11 +56,13 @@ RBAddAssignmentTransformation class >> variable: aVariableName value: anExpressi
 { #category : 'preconditions' }
 RBAddAssignmentTransformation >> applicabilityPreconditions [
 
-	^ self classExist & (RBCondition
-		   withBlock: [ self definingClass canUnderstand: selector ]
-		   errorString:
-		   ('Method named <1s> does not exist' expandMacrosWith: selector))
-	  & (RBCondition
+	^ {
+		  self classExist.
+		  (RBCondition
+			   withBlock: [ self definingClass canUnderstand: selector ]
+			   errorString:
+			   ('Method named <1s> does not exist' expandMacrosWith: selector)).
+		  (RBCondition
 			   withBlock: [
 				   (self definingMethod allChildren
 					    select: [ :each | each isVariable ]
@@ -69,7 +71,13 @@ RBAddAssignmentTransformation >> applicabilityPreconditions [
 			   errorString:
 				   ('Method named <1s> does not have a variable named <2s>'
 					    expandMacrosWith: selector
-					    with: variableName))
+					    with: variableName)) }
+]
+
+{ #category : 'scripting api - conditions' }
+RBAddAssignmentTransformation >> checkPreconditions [
+
+	self eagerlyCheckApplicabilityPreconditions 
 ]
 
 { #category : 'preconditions' }
@@ -102,7 +110,7 @@ RBAddAssignmentTransformation >> privateTransform [
 	class compileTree: methodTree
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBAddAssignmentTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

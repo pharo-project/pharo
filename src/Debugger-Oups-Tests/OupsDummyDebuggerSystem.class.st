@@ -52,23 +52,11 @@ OupsDummyDebuggerSystem >> logDebugRequest: aDebugRequest withUIManager: aComman
 	self openDebuggerOnRequest: aDebugRequest
 ]
 
-{ #category : 'accessing' }
-OupsDummyDebuggerSystem >> newUIProcessSpawned [
-	newUIProcessSpawned ifNil: [ newUIProcessSpawned := false ].
-	^ newUIProcessSpawned
-]
-
 { #category : 'open debugger' }
 OupsDummyDebuggerSystem >> openDebuggerOnRequest: aDebugRequest [
 	self callsToHandleDebugRequest: self callsToHandleDebugRequest + 1.
 	debugRequestSentToHandleDebugRequest := aDebugRequest.
 	self performPreDebugActionsIn: aDebugRequest
-]
-
-{ #category : 'helpers' }
-OupsDummyDebuggerSystem >> spawnNewUIProcess [
-	"For testing purposes. Does not actually spawn a new UI process. Just record that this method was called"
-	newUIProcessSpawned := true
 ]
 
 { #category : 'helpers' }

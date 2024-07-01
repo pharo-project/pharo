@@ -64,7 +64,7 @@ Class {
 PragmaMenuBuilder class >> itemSortBlock [
 	"The block which is used to sort a menu tree"
 	^ [:a :b |
-		((a order notNil and: [b order notNil]) and: [a order ~= b order])
+		((a order isNotNil and: [b order isNotNil]) and: [a order ~= b order])
 			ifTrue: [a order < b order]
 			ifFalse: [((a order isNil and: [b order isNil]) or: [a order = b order])
 				ifTrue: [true]
@@ -77,7 +77,7 @@ PragmaMenuBuilder class >> orderAssignBlock [
 
 	^ [ :list |
 	list
-		detect: [ :n | n order notNil ]
+		detect: [ :n | n order isNotNil ]
 		ifFound: [ :firstWithOrder |
 			| idx order |
 			"A menu registration with an order indication hase been found - then compute order of previous and next nodes"
@@ -198,7 +198,7 @@ PragmaMenuBuilder >> interpretRegistration: aRegistration [
 			node
 				keyText: item keyText;
 				help: item help;
-				icon: item icon;
+				iconFormSet: item iconFormSet;
 				order: item order;
 				parent: item parent.
 			item enabled

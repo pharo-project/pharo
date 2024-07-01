@@ -4,9 +4,9 @@ Rule to favour 'converting' method protocol over similar ones (like 'conversion'
 Class {
 	#name : 'ReProperMethodProtocolNameForConvertingRule',
 	#superclass : 'ReProperMethodProtocolNameRule',
-	#category : 'Renraku-Rules',
+	#category : 'Renraku-Coding Idiom Violation',
 	#package : 'Renraku',
-	#tag : 'Rules'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'idioms' }

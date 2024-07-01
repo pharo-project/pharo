@@ -84,7 +84,7 @@ ClyRenamePackageTagCommand >> prepareFullExecutionInContext: aToolContext [
 
 	package := aToolContext lastSelectedPackage.
 	packageTag := aToolContext lastSelectedClassGroup.
-	newName := UIManager default
+	newName := self morphicUIManager
 		request: 'New name of the class tag'
 		initialAnswer: packageTag name
 		title: 'Rename a class tag'.

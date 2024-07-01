@@ -307,13 +307,13 @@ RubSmalltalkEditor >> classNamesContainingIt [
 ]
 
 { #category : 'do-its' }
-RubSmalltalkEditor >> compile: aStream for: anObject in: evalContext [
+RubSmalltalkEditor >> compile: source for: anObject in: evalContext [
 	| methodClass |
 	methodClass := evalContext
 		ifNil: [ anObject class ]
 		ifNotNil: [ evalContext methodClass ].
 	^self class compiler
-		source: aStream;
+		source: source;
 		class: methodClass;
 		context: evalContext;
 		isScripting: true;
@@ -425,10 +425,8 @@ RubSmalltalkEditor >> copySelection [
 { #category : 'do-its' }
 RubSmalltalkEditor >> debug: aStream [
 	| method receiver context |
-	(self model respondsTo: #doItReceiver)
-		ifTrue: [ receiver := self model doItReceiver.
-			context := self model doItContext ]
-		ifFalse: [ receiver := context := nil ].
+	receiver := self doItReceiver.
+	context := self doItContext.
 	method := self compile: aStream for: receiver in: context.
 	method ifNil: [ ^self ].
 	method isReturnSpecial
@@ -502,24 +500,34 @@ RubSmalltalkEditor >> doIt: aKeyboardEvent [
 	^ true
 ]
 
+{ #category : 'do-its' }
+RubSmalltalkEditor >> doItContext [
+	^self model ifNotNil: [:m | m doItContext]
+]
+
+{ #category : 'do-its' }
+RubSmalltalkEditor >> doItReceiver [
+	^self model ifNotNil: [:m | m doItReceiver]
+]
+
 { #category : 'private' }
 RubSmalltalkEditor >> editingMode [
 	^self textArea editingMode
 ]
 
 { #category : 'do-its' }
-RubSmalltalkEditor >> evaluate: aStream andDo: aBlock [
+RubSmalltalkEditor >> evaluate: source andDo: aBlock [
 	"Treat the current selection as an expression; evaluate it and invoke aBlock with the result."
 	| result rcvr ctxt |
-	(self model respondsTo: #doItReceiver)
-		ifTrue: [ rcvr := self model doItReceiver.
-				ctxt := self model doItContext]
-		ifFalse: [ rcvr := ctxt := nil].
+	rcvr := self doItReceiver.
+	ctxt := self doItContext.
+	"to improve: we need better reporting of errors, to revisit when unifying with Spec"
 	result := rcvr class compiler
-			source: aStream;
+			source: source;
+			requestor: self;
 			context: ctxt;
 			receiver: rcvr;
-			permitFaulty: true;
+			permitFaulty: false;
 			evaluate.
 
 	^ aBlock value: result
@@ -970,15 +978,6 @@ RubSmalltalkEditor >> paste [
 		[self selectAt: self pointIndex]
 ]
 
-{ #category : 'editing keys' }
-RubSmalltalkEditor >> pasteInitials: aKeyboardEvent [
-	"Replace the current text selection by an authorship name/date stamp; invoked by cmd-shift-v, easy way to put an authorship stamp in the comments of an editor."
-
-	self closeTypeIn.
-	self replace: self selectionInterval with: (Text fromString: Author changeStamp) and: [self selectAt: self stopIndex].
-	^ true
-]
-
 { #category : 'do-its' }
 RubSmalltalkEditor >> printIt [
 	"Treat the current text selection as an expression; evaluate it. Insert the
@@ -1145,44 +1144,6 @@ RubSmalltalkEditor >> sendersOfIt: aKeyboardEvent [
 
 	self sendersOfIt.
 	^ true
-]
-
-{ #category : 'do-its' }
-RubSmalltalkEditor >> tally: aStream [
-	"Treat the current selection as an expression; evaluate and tally it."
-	| receiver context v compiledMethod profiler |
-	(self model respondsTo: #doItReceiver)
-		ifTrue:
-			[receiver := self model doItReceiver.
-			context := self model doItContext]
-		ifFalse:
-			[receiver := context := nil].
-	compiledMethod := self compile: aStream for: receiver in: context.
-	compiledMethod ifNil: [^ self].
-	profiler := TimeProfiler spyOn: [ v:= compiledMethod valueWithReceiver: receiver arguments: #()].
-	profiler showResult: v
-]
-
-{ #category : 'do-its' }
-RubSmalltalkEditor >> tallyHighlight [
-	"Treat the current highlight as an expression; evaluate and tally it."
-
-	self highlightAndEmptyCheck: [ ^ self ].
-	self tally: self highlightedTextAsStream
-]
-
-{ #category : 'do-its' }
-RubSmalltalkEditor >> tallyIt [
-
-	^ self tallySelection
-]
-
-{ #category : 'do-its' }
-RubSmalltalkEditor >> tallySelection [
-	"Treat the current selection as an expression; evaluate and tally it."
-
-	self expressionSelectAndEmptyCheck: [ ^ self ].
-	self tally: self selection
 ]
 
 { #category : 'completion engine' }

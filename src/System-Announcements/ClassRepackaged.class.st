@@ -24,36 +24,6 @@ ClassRepackaged class >> classRepackaged: aClass oldTag: oldTag newTag: newTag [
 		  yourself
 ]
 
-{ #category : 'class initialization' }
-ClassRepackaged class >> initialize [
-
-	self deprecatedAliases: { #ClassRecategorized }
-]
-
-{ #category : 'testing' }
-ClassRepackaged >> affectsMethods [
-	"methods belong to class which could be represented by tools as part of method"
-	^true
-]
-
-{ #category : 'testing' }
-ClassRepackaged >> affectsMethodsDefinedInClass: aClass [
-
-	^classRepackaged == aClass
-]
-
-{ #category : 'testing' }
-ClassRepackaged >> affectsMethodsDefinedInPackage: aPackage [
-
-	^self oldPackage == aPackage or: [ self newPackage == aPackage ]
-]
-
-{ #category : 'testing' }
-ClassRepackaged >> affectsMethodsInProtocol: protocol [
-
-	^ classRepackaged protocolNames includes: protocol
-]
-
 { #category : 'accessing' }
 ClassRepackaged >> classAffected [
 

@@ -4,9 +4,9 @@ Rule to favour 'utilities' method protocol over similar ones (like 'utils' or ot
 Class {
 	#name : 'ReProperMethodProtocolNameForUtilitiesRule',
 	#superclass : 'ReProperMethodProtocolNameRule',
-	#category : 'Renraku-Rules',
+	#category : 'Renraku-Coding Idiom Violation',
 	#package : 'Renraku',
-	#tag : 'Rules'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'idioms' }

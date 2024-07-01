@@ -221,9 +221,6 @@
 			(Smalltalk globals at: cn) removeFromSystem ].
 
 	" final cleaning "
-	ChangeSet removeChangeSetsNamedSuchThat: [ :each | true ].
-	ChangeSet resetCurrentToNewUnnamedChangeSet.
-	Author reset.
 	SmalltalkImage classPool at: #Tools put: nil.
 	Job jobAnnouncer initialize.
 	EncodedCharSet initialize.

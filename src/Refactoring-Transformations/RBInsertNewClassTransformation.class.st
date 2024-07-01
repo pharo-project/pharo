@@ -39,12 +39,22 @@ RBInsertNewClassTransformation >> applicabilityPreconditions [
 	Each subclass should be immediate subclass of superclass."
 
 	| cond |
-	cond := ((RBCondition isMetaclass: (self model classObjectFor: superclass)) errorMacro: 'Superclass must not be a metaclass') not.
-	cond := subclasses inject: cond into: [ :sub :each |
-		        sub & ((RBCondition isMetaclass: (self model classObjectFor: each)) errorMacro: 'Subclass must <1?not :>be a metaclass') not
-		        & (RBCondition isImmediateSubclass: (self model classObjectFor: each) of: (self model classObjectFor: superclass)) ].
-	^ cond & self isValidClassName & self isNotGlobal & (RBCondition isSymbol: packageName)
-	  & ((RBCondition withBlock: [ packageName isNotEmpty ]) errorMacro: 'Invalid package name')
+	cond := { ((RBCondition isMetaclass:
+		          (self model classObjectFor: superclass)) errorMacro:
+		         'Superclass must not be a metaclass') not }.
+	subclasses do: [ :each |
+		cond := cond , { 
+			((RBCondition isMetaclass: (self model classObjectFor: each))
+				 errorMacro: 'Subclass must <1?not :>be a metaclass') not.
+			(RBCondition
+				 isImmediateSubclass: (self model classObjectFor: each)
+				 of: (self model classObjectFor: superclass)) } ].
+	^ cond , {
+		  self isValidClassName.
+		  self isNotGlobal.
+		  (RBCondition isSymbol: packageName).
+		  (RBCondition withBlock: [ packageName isNotEmpty ] errorString:
+					   'Invalid package name') }
 ]
 
 { #category : 'initialization' }
@@ -91,7 +101,7 @@ RBInsertNewClassTransformation >> privateTransform [
 		reparentClasses: (subclasses collect: [ :subclass | self model classObjectFor: subclass ]) to: (self model classNamed: className asSymbol)
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBInsertNewClassTransformation >> storeOn: aStream [
 
 	aStream nextPutAll: '(('.
@@ -117,9 +127,9 @@ RBInsertNewClassTransformation >> subclasses: aCollection [
 ]
 
 { #category : 'api' }
-RBInsertNewClassTransformation >> superclass: superclassName [
+RBInsertNewClassTransformation >> superclass: aSuperclass [
 
-	superclass := superclassName asSymbol
+	superclass := aSuperclass
 ]
 
 { #category : 'accessing' }

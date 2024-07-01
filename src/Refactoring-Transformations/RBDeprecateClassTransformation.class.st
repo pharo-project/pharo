@@ -36,14 +36,8 @@ RBDeprecateClassTransformation class >> model: aRBModel className: aClassName [
 RBDeprecateClassTransformation >> applicabilityPreconditions [
 
 	^ {
-		  (RBClassesExistCondition new classes: { class }).
-		  (RBClassesAreNotMetaClassCondition new classes: { class }) }
-]
-
-{ #category : 'preconditions' }
-RBDeprecateClassTransformation >> checkPreconditions [ 
-
-	self checkApplicabilityPreconditions 
+		  (ReClassesExistCondition new classes: { class }).
+		  (ReClassesAreNotMetaClassCondition new classes: { class }) }
 ]
 
 { #category : 'transforming' }
@@ -66,7 +60,7 @@ RBDeprecateClassTransformation >> privateTransform [
 			 withProtocol: #deprecation)
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBDeprecateClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

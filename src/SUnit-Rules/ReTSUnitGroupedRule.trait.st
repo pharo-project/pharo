@@ -8,7 +8,8 @@ Trait {
 	#tag : 'Traits'
 }
 
-{ #category : 'running' }
+{ #category : 'accessing' }
 ReTSUnitGroupedRule >> group [
+
 	^ 'SUnit'
 ]

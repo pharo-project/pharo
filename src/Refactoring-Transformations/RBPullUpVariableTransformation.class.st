@@ -19,6 +19,23 @@ Class {
 	#tag : 'Model-Unused'
 }
 
+{ #category : 'preconditions' }
+RBPullUpVariableTransformation >> applicabilityPreconditions [
+
+	^ { (isClassVariable
+		   ifTrue: [
+			   (self definingClass hierarchyDefinesClassVariable: variableName)
+				   ifFalse: [
+				   self refactoringError: 'No subclass defines ' , variableName ].
+			   (RBCondition isMetaclass: self definingClass) not ]
+		   ifFalse: [
+			   RBCondition withBlock: [
+				   (self definingClass hierarchyDefinesInstanceVariable:
+					    variableName) ifFalse: [
+					   self refactoringError: 'No subclass defines ' , variableName ].
+				   true ] ]) }
+]
+
 { #category : 'executing' }
 RBPullUpVariableTransformation >> buildTransformations [
 
@@ -38,23 +55,7 @@ RBPullUpVariableTransformation >> buildTransformations [
 		yourself
 ]
 
-{ #category : 'preconditions' }
-RBPullUpVariableTransformation >> preconditions [
-	^ isClassVariable
-		ifTrue: [ (RBCondition isMetaclass: self definingClass) not ]
-		ifFalse: [ RBCondition withBlock:
-			[(self definingClass hierarchyDefinesInstanceVariable: variableName)
-				ifFalse: [self refactoringError: 'No subclass defines ' , variableName].
-			(self definingClass subclasses
-				anySatisfy: [:each | (each directlyDefinesInstanceVariable: variableName) not])
-				ifTrue:
-					[self
-						refactoringWarning: 'Not all subclasses have an instance variable named.<n> Do you want pull up this variable anyway?'
-								, variableName , '.'].
-			true] ]
-]
-
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBPullUpVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
