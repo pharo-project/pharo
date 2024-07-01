@@ -48,9 +48,9 @@ def runTests(architecture, prefix=''){
         unstash "bootstrap${architecture}"
 	// Seemingly in windows the unstash does not honor the directory
 	if (isWindows()){
-	    shell "mv ../bootstrap${architecture} bootstrap${architecture}"
+	    shell "mv ../bootstrap bootstrap"
 	}
-        shell "bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}${prefix}"
+        shell "./bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}${prefix}"
         junit testResults: "${env.STAGE_NAME}${prefix}*.xml"
     } finally {
         archiveArtifacts artifacts: "${env.STAGE_NAME}${prefix}*.xml", fingerprint: true
