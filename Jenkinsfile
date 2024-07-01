@@ -46,6 +46,10 @@ def runTests(architecture, prefix=''){
   dir(env.STAGE_NAME) {
     try {
         unstash "bootstrap${architecture}"
+	// Seemingly in windows the unstash does not honor the directory
+	if (isWindows()){
+	    shell "mv ../bootstrap${architecture} bootstrap${architecture}"
+	}
         shell "bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}${prefix}"
         junit testResults: "${env.STAGE_NAME}${prefix}*.xml"
     } finally {
