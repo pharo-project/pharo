@@ -1,5 +1,6 @@
 "
-I am UUIDGenerator, I generate UUIDs.
+I am generator that is used by the class `UUID` to generate the identifiers.
+Normally, one should not use me directly for creating a UUID, one should use the class `UUID` instead.
 
 An RFC4122 Universally Unique Identifier (UUID) is an opaque 128-bit number that can be used for identification purposes. Concretely, a UUID is a 16 element byte array.
 
@@ -31,9 +32,10 @@ Some bits are set to some predefined value, to indicate the variant and version 
 
 Usage:
 
-  UUIDGenerator next.
-  UUIDGenerator current next.
-  UUIDGenerator new next.
+```
+	UUIDGenerator default nextCounter16.
+	UUIDGenerator default nextRandom16.
+```
 
 Sharing an instance is more efficient and correct.
 Instances should be reset whenever the image comes up.

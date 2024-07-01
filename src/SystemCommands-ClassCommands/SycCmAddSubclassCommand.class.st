@@ -54,7 +54,7 @@ SycCmAddSubclassCommand >> newClassName: aString [
 
 { #category : 'accessing' }
 SycCmAddSubclassCommand >> order [
-	^ 10100.1
+	^ 10
 ]
 
 { #category : 'accessing' }

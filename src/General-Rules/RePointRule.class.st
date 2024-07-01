@@ -43,6 +43,5 @@ RePointRule >> basicCheck: aNode [
 	aNode isMessage ifFalse: [ ^ false ].
 	aNode receiver isMessage ifTrue: [ ^ false ].
 	aNode isSelfSend ifTrue: [ ^ false ].
-	^ (#( #x:y: ) includes: aNode selector) 
-		and: [ aNode receiver name == Point name  ]
+	^ (#( #x:y: ) includes: aNode selector ) and: [ aNode receiver name == Point name  ]
 ]
