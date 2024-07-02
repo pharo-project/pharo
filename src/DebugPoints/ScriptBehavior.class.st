@@ -4,7 +4,7 @@ I execute arbitrary code that is saved in my script variable.
 "
 Class {
 	#name : 'ScriptBehavior',
-	#superclass : 'DebugPointMetaBehavior',
+	#superclass : 'UserDefinedBehavior',
 	#instVars : [
 		'script'
 	],
@@ -17,22 +17,6 @@ Class {
 ScriptBehavior class >> isAbstract [
 
 	^ false
-]
-
-{ #category : 'accessing' }
-ScriptBehavior >> context [
-	^self getArgument: #context
-]
-
-{ #category : 'accessing' }
-ScriptBehavior >> evaluate: expression withContext: aContext [
-
-	^ Smalltalk compiler
-		  source: expression;
-		  context: aContext;
-		  receiver: aContext receiver;
-		  bindings: { (#thisContext -> aContext) };
-		  evaluate
 ]
 
 { #category : 'execution' }

@@ -4,7 +4,7 @@ I write the string in my text variable to the transcript window when executed.
 "
 Class {
 	#name : 'TranscriptBehavior',
-	#superclass : 'DebugPointMetaBehavior',
+	#superclass : 'UserDefinedBehavior',
 	#instVars : [
 		'text'
 	],
@@ -21,8 +21,11 @@ TranscriptBehavior class >> isAbstract [
 
 { #category : 'execution' }
 TranscriptBehavior >> execute [
-	self text trace.
-	^true
+
+	(self text isNil or: [ self text isEmpty ]) ifTrue: [ ^ true ].
+	(self evaluate: self text withContext: self context) traceCr.
+
+	^ true
 ]
 
 { #category : 'cleanup' }
