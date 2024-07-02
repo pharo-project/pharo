@@ -33,7 +33,7 @@ ClyAddBreakPointCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 ClyAddBreakPointCommand >> defaultMenuItemName [
-	^' Add Breakpoint to: ',  sourceNode displaySourceCode
+	^' Break on ',  sourceNode displaySourceCode
 ]
 
 { #category : 'execution' }
