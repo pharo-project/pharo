@@ -99,7 +99,7 @@ ReDuplicateClassDriver >> runRefactoring [
 	self applyChanges 
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'execution' }
 ReDuplicateClassDriver >> runRefactoring: aReCopyClassRefactoring [ 
 	"This is the same as #runRefactoring, but instead of automatically configuring a new empty refactoring we use aReCopyClassRefactoring"
 
