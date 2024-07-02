@@ -47,8 +47,28 @@ ReDuplicateClassDriver >> className: aClassName [
 
 { #category : 'accessing' }
 ReDuplicateClassDriver >> configureRefactoring [
+	" This verification is necessary to make tests work "
+	refactoring ifNil: [ refactoring := ReCopyClassRefactoring new ]
+]
 
-	refactoring := ReCopyClassRefactoring new.
+{ #category : 'private' }
+ReDuplicateClassDriver >> fillFromDialog: aDialog [
+
+	| presenter |
+	presenter := aDialog presenter.
+
+	self
+		packageName: presenter packageName;
+		tagName: presenter tagName;
+		newClassName: presenter newClassName.
+
+	refactoring
+		packageName: presenter packageName;
+		tagName: presenter tagName;
+		className: presenter newClassName;
+		sourceClass: className;
+		instanceMethods: presenter selectedInstanceMethods;
+		classMethods: presenter selectedClassMethods
 ]
 
 { #category : 'accessing' }
@@ -72,21 +92,15 @@ ReDuplicateClassDriver >> requestNewClass [
 			withClassMethods: rbMetaclass allMethods;
 			onCancel: [ : dialog | dialog close ];
 			onAccept: [ :dialog |
-				self
-					packageName: dialog presenter packageName;
-					tagName: dialog presenter tagName;
-					newClassName: dialog presenter newClassName.
-				refactoring
-					packageName: dialog presenter packageName;
-					className: dialog presenter newClassName;
-					sourceClass: className;
-					instanceMethods: dialog presenter selectedInstanceMethods;
-					classMethods: dialog presenter selectedClassMethods.
+				self fillFromDialog: dialog.
 
 				dialog close ];
 			selectAll;
 			openModal;
 			yourself ]
+		
+		ifNotNil: [ 
+			self fillFromDialog: requestDialog ]
 ]
 
 { #category : 'execution' }
@@ -102,14 +116,12 @@ ReDuplicateClassDriver >> runRefactoring [
 { #category : 'accessing' }
 ReDuplicateClassDriver >> scopes: refactoringScopes [
 
-	| selectedClass |
-	
 	scopes := refactoringScopes.
-	model := self refactoringScopeOn: scopes last.
-	selectedClass := model environment classes anyOne.	
-
-	rbClass := model classFor: selectedClass.
-	rbMetaclass := model classFor: selectedClass class.
+	model := self refactoringScopeOn: scopes first.
+	
+	rbClass := model classNamed: self className.
+	rbMetaclass := model classNamed: self className, ' class'.
+	packageName := rbClass packageName
 ]
 
 { #category : 'accessing' }

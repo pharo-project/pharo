@@ -18,6 +18,7 @@ Class {
 	#instVars : [
 		'aClass',
 		'packageName',
+		'tagName',
 		'instanceMethods',
 		'classMethods'
 	],
@@ -79,9 +80,11 @@ ReCopyClassRefactoring >> classMethods: anObject [
 { #category : 'transforming' }
 ReCopyClassRefactoring >> copyClass [
 
-	self generateChangesFor: ((RBInsertNewClassRefactoring model: self model className: className)
+	self generateChangesFor:
+		((RBInsertNewClassRefactoring model: self model className: className)
 			 superclass: aClass superclass;
 			 packageName: self packageName;
+			 tagName: self tagName;
 			 comment: aClass comment;
 			 yourself)
 ]
@@ -187,4 +190,16 @@ ReCopyClassRefactoring >> privateTransform [
 ReCopyClassRefactoring >> sourceClass: classToCopy [
 
 	aClass := self classObjectFor: classToCopy
+]
+
+{ #category : 'accessing' }
+ReCopyClassRefactoring >> tagName [
+
+	^ tagName
+]
+
+{ #category : 'accessing' }
+ReCopyClassRefactoring >> tagName: anObject [
+
+	tagName := anObject
 ]

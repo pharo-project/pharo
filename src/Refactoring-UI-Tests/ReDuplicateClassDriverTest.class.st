@@ -21,9 +21,17 @@ ReDuplicateClassDriverTest >> setUpMocksOn: driver [
 
 	| dialog |
 	dialog := MockObject new.
+	
 	dialog
-		on: #window respond: SpDialogWindowPresenter new beOk;
+		on: #presenter respond: dialog;
+		on: #packageName respond: self classToBeDuplicated packageName;
+		on: #tagName respond: #ForDuplication;
 		on:	 #newClassName respond: #ReClassCopiedToBeDeleted;
+		on: #packageName respond: self classToBeDuplicated packageName;
+		on: #tagName respond: #ForDuplication;
+		on:	 #newClassName respond: #ReClassCopiedToBeDeleted;
+		on: #selectedInstanceMethods respond: #();
+		on: #selectedClassMethods respond: #();
 		on: #isCancelled respond: true;
 		on: #openModal respond: dialog.
 	driver requestDialog: dialog.
@@ -34,17 +42,16 @@ ReDuplicateClassDriverTest >> setUpMocksOn: driver [
 { #category : 'tests' }
 ReDuplicateClassDriverTest >> testDuplicateClass [
 
-	| driver rbClass driverChanges |
-
+	| driver driverChanges |
+	
 	testingEnvironment := RBClassEnvironment class: self classToBeDuplicated.
 	driver := ReDuplicateClassDriver basicNew.
-
-	self setUpMocksOn: driver.
-
-	driver scopes: { testingEnvironment }.
-	rbClass := testingEnvironment class.
 	
-	driver refactoring	className: rbClass.
+	driver className: self classToBeDuplicated name.
+	driver scopes: { testingEnvironment }.
+	
+	self setUpMocksOn: driver.
+	
 	driver runRefactoring.
 	driverChanges := driver refactoring changes.
 	self 
