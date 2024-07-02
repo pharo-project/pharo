@@ -4,7 +4,7 @@ I execute arbitrary code that is saved in my script variable.
 "
 Class {
 	#name : 'ScriptBehavior',
-	#superclass : 'UserDefinedBehavior',
+	#superclass : 'DebugPointMetaBehavior',
 	#instVars : [
 		'script'
 	],
@@ -23,7 +23,7 @@ ScriptBehavior class >> isAbstract [
 ScriptBehavior >> execute [
 
 	self script ifNil: [ ^ true ].
-	self evaluate: self script withContext: self context.
+	self debugPoint evaluateInContext: self script.
 	^ true
 ]
 

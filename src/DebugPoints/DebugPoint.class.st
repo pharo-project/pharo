@@ -174,6 +174,18 @@ DebugPoint >> enabled: aBoolean [
 ]
 
 { #category : 'accessing' }
+DebugPoint >> evaluateInContext: expression [ 
+	|currentContext|
+	currentContext := self getArgument: #context.
+	^ Smalltalk compiler
+		  source: expression;
+		  context: currentContext;
+		  receiver: currentContext receiver;
+		  bindings: { (#thisContext -> currentContext) };
+		  evaluate
+]
+
+{ #category : 'accessing' }
 DebugPoint >> getArgument: aSymbol [
 
 	^ self arguments at: aSymbol
