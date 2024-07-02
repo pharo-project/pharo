@@ -30,7 +30,7 @@ ReCyclomaticComplexityRule class >> rationale [
 { #category : 'accessing' }
 ReCyclomaticComplexityRule class >> ruleName [
 
-	^ 'the cyclomatic complexity is heigh'
+	^ 'The cyclomatic complexity is heigh'
 ]
 
 { #category : 'running' }
