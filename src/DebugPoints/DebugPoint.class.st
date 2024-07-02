@@ -8,11 +8,11 @@ Class {
 		'name',
 		'enabled',
 		'checkBehaviors',
-		'sideEffectBehaviors',
 		'arguments',
 		'properties',
 		'target',
-		'link'
+		'link',
+		'metaBehaviors'
 	],
 	#classVars : [
 		'AllDebugPoints'
@@ -88,9 +88,9 @@ DebugPoint >> addCheckBehavior: aConditionBehavior [
 ]
 
 { #category : 'adding' }
-DebugPoint >> addSideEffectBehavior: aSideEffectBehavior [
+DebugPoint >> addMetaBehavior: aSideEffectBehavior [
 
-	sideEffectBehaviors add: aSideEffectBehavior
+	metaBehaviors add: aSideEffectBehavior
 ]
 
 { #category : 'default values' }
@@ -114,7 +114,7 @@ DebugPoint >> arguments: aDictionary [
 { #category : 'accessing' }
 DebugPoint >> behaviors [
 
-	^ checkBehaviors , sideEffectBehaviors
+	^ checkBehaviors , metaBehaviors
 ]
 
 { #category : 'actions' }
@@ -204,7 +204,7 @@ DebugPoint >> hitWithContext: aContext [
 	
 	(self checkBehaviors allSatisfy: [ :behavior | behavior execute ])
 		ifFalse: [ ^ false ].
-	self sideEffectBehaviors do: [ :behavior | behavior execute ].
+	self metaBehaviors do: [ :behavior | behavior execute ].
 	^ true
 ]
 
@@ -214,7 +214,7 @@ DebugPoint >> initialize [
 	enabled := true.
 	checkBehaviors := SortedCollection sortUsing: [ :elem1 :elem2 |
 		                  elem1 priority >= elem2 priority ].
-	sideEffectBehaviors := SortedCollection sortUsing: [ :elem1 :elem2 |
+	metaBehaviors := SortedCollection sortUsing: [ :elem1 :elem2 |
 		                       elem1 priority >= elem2 priority ]
 ]
 
@@ -249,6 +249,12 @@ DebugPoint >> link [
 DebugPoint >> link: aMetaLink [
 
 	link := aMetaLink
+]
+
+{ #category : 'accessing' }
+DebugPoint >> metaBehaviors [
+
+	^ metaBehaviors
 ]
 
 { #category : 'default values' }
@@ -349,15 +355,15 @@ DebugPoint >> removeFromMethod: aMethod [
 ]
 
 { #category : 'removing' }
-DebugPoint >> removeNode: aNode [
+DebugPoint >> removeMetaBehavior: aSideEffectBehavior [
 
-	self link removeNode: aNode
+	metaBehaviors remove: aSideEffectBehavior
 ]
 
 { #category : 'removing' }
-DebugPoint >> removeSideEffectBehavior: aSideEffectBehavior [
+DebugPoint >> removeNode: aNode [
 
-	sideEffectBehaviors remove: aSideEffectBehavior
+	self link removeNode: aNode
 ]
 
 { #category : 'scope' }
@@ -389,12 +395,6 @@ DebugPoint >> scopeString [
 DebugPoint >> selector [
 
 	^ #hitWithContext:
-]
-
-{ #category : 'accessing' }
-DebugPoint >> sideEffectBehaviors [
-
-	^ sideEffectBehaviors
 ]
 
 { #category : 'accessing' }
