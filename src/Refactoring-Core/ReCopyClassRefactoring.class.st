@@ -1,7 +1,7 @@
 "
 I am a refactoring for copy a class.
 
-My preconditions verify, that the copied class exists (in  the current namespace) and that the new copy class name is valid and not yet used as a global variable name 
+My preconditions verify, that the copied class exists (in  the current namespace) and that the new copy class name is valid and not yet used as a global variable name.
 
 The refactoring transformation create a new class and copy all instance and class methods of copied class.
 
@@ -11,6 +11,12 @@ The refactoring transformation create a new class and copy all instance and clas
 		copyClass: #RBFooLintRuleTestData 
 		withName: #RBFooLintRuleTestData1 in: #Example1) execute. 
 ```
+
+## Implementation
+
+- className refers to a <Symbol> representing the new class to be created.
+- aClass is the RefactoringBrowser representation of className.
+
 "
 Class {
 	#name : 'ReCopyClassRefactoring',
@@ -68,6 +74,7 @@ ReCopyClassRefactoring >> applicabilityPreconditions [
 ReCopyClassRefactoring >> classMethods [
 
 	^ classMethods
+		ifNil: [ classMethods := aClass classSide allMethods ].
 ]
 
 { #category : 'accessing' }
@@ -88,16 +95,9 @@ ReCopyClassRefactoring >> copyClass [
 
 { #category : 'copying' }
 ReCopyClassRefactoring >> copyClass: cls withName: aName [
+
 	self className: aName.
 	aClass := self classObjectFor: cls
-]
-
-{ #category : 'transforming' }
-ReCopyClassRefactoring >> copyMethods [
-	| newClass |
-	newClass := (self model classNamed: className).
-	self copyMethodsOf: aClass in: newClass.
-	self copyMethodsOf: aClass classSide in: newClass classSide
 ]
 
 { #category : 'transforming' }
@@ -154,6 +154,7 @@ ReCopyClassRefactoring >> copyVariables [
 ReCopyClassRefactoring >> instanceMethods [
 
 	^ instanceMethods
+		ifNil: [ instanceMethods := aClass methods ]
 ]
 
 { #category : 'accessing' }
