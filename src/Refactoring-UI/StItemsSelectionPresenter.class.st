@@ -110,6 +110,7 @@ StItemsSelectionPresenter >> initializeWidgets [
 
 { #category : 'initialization' }
 StItemsSelectionPresenter >> label: aString withItems: coll1 selecting: coll2 [
+
 	label label: aString.
 
 	table items: coll1;
