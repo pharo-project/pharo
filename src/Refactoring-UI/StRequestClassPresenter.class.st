@@ -28,7 +28,7 @@ StRequestClassPresenter >> initializePackagesPresenter [
 	packagePresenter := self newDropList
 		startWithSelection;
 		items: driver packageNames;
-		displayIcon: [ : aPackageName | self iconNamed: #package ];
+		displayIcon: [ : aPackage | self iconNamed: aPackage systemIconName ];
 		sortingBlock: [ : a : b | a model < b model ];
 		whenSelectedItemChangedDo: [ : item | 
 			self updateTagItems: item.
