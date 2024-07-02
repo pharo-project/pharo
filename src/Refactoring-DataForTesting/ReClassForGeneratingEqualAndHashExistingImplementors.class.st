@@ -2,7 +2,7 @@ Class {
 	#name : 'ReClassForGeneratingEqualAndHashExistingImplementors',
 	#superclass : 'Object',
 	#instVars : [
-		'iVarA',
+		'name',
 		'iVarB'
 	],
 	#category : 'Refactoring-DataForTesting-ForGeneratingEqualAndHash',
@@ -16,12 +16,12 @@ ReClassForGeneratingEqualAndHashExistingImplementors >> = anObject [
 
 	self == anObject ifTrue: [ ^ true ].
 	self class = anObject class ifFalse: [ ^ false ].
-	^ iVarA = anObject iVarA
+	^ name = anObject name
 ]
 
 { #category : 'comparing' }
 ReClassForGeneratingEqualAndHashExistingImplementors >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
-	^ iVarA hash
+	^ name hash
 ]

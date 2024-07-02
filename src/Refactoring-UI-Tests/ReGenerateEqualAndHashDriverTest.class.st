@@ -37,7 +37,7 @@ ReGenerateEqualAndHashDriverTest >> testGenerateEqualAndHashExistingImplementors
 	self assert: (driver targetClass definesMethod: #hash).
 	self assert: (driver targetClass definesMethod: #=).
 
-	driver selectDialog selectedItems: #(#iVarA #iVarB).
+	driver selectDialog selectedItems: #(#name #iVarB).
 	driver runRefactoring.
 	driverChanges := driver refactoring changes.
 
