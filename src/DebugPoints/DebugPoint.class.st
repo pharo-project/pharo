@@ -93,6 +93,12 @@ DebugPoint >> addSideEffectBehavior: aSideEffectBehavior [
 	sideEffectBehaviors add: aSideEffectBehavior
 ]
 
+{ #category : 'default values' }
+DebugPoint >> args [
+
+	^ #( context )
+]
+
 { #category : 'accessing' }
 DebugPoint >> arguments [
 
@@ -121,6 +127,12 @@ DebugPoint >> browse [
 DebugPoint >> checkBehaviors [
 
 	^ checkBehaviors
+]
+
+{ #category : 'default values' }
+DebugPoint >> control [
+
+	^ #before
 ]
 
 { #category : 'protocol' }
@@ -189,6 +201,7 @@ DebugPoint >> hitWithContext: aContext [
 	DebugPointManager notifyDebugPointHit: self inContext: aContext.
 	self enabled ifFalse: [ ^ false ].
 	self saveContext: aContext.
+	
 	(self checkBehaviors allSatisfy: [ :behavior | behavior execute ])
 		ifFalse: [ ^ false ].
 	self sideEffectBehaviors do: [ :behavior | behavior execute ].
@@ -244,8 +257,9 @@ DebugPoint >> metaLink [
 	^ MetaLink new
 		  metaObject: self;
 		  options: #( #+ optionCompileOnLinkInstallation );
-		  selector: #hitWithContext:;
-		  arguments: #( context )
+		  selector: self selector;
+		  control: self control;
+		  arguments: self args
 ]
 
 { #category : 'accessing' }
@@ -369,6 +383,12 @@ DebugPoint >> scope [
 DebugPoint >> scopeString [
 
 	^ self target scopeString
+]
+
+{ #category : 'default values' }
+DebugPoint >> selector [
+
+	^ #hitWithContext:
 ]
 
 { #category : 'accessing' }
