@@ -70,7 +70,6 @@ RBCopyClassRefactoring >> applicabilityPreconditions [
 ]
 
 { #category : 'transforming' }
-<<<<<<< HEAD:src/Refactoring-Core/ReCopyClassRefactoring.class.st
 ReCopyClassRefactoring >> classMethods [
 
 	^ classMethods
@@ -85,23 +84,6 @@ ReCopyClassRefactoring >> classMethods: anObject [
 
 { #category : 'transforming' }
 ReCopyClassRefactoring >> copyClass [
-||||||| 3926c07db6:src/Refactoring-Core/ReCopyClassRefactoring.class.st
-ReCopyClassRefactoring >> classMethods [
-
-	^ classMethods
-]
-
-{ #category : 'accessing' }
-ReCopyClassRefactoring >> classMethods: anObject [
-
-	classMethods := anObject
-]
-
-{ #category : 'transforming' }
-ReCopyClassRefactoring >> copyClass [
-=======
-RBCopyClassRefactoring >> copyClass [
->>>>>>> Pharo13:src/Refactoring-Core/RBCopyClassRefactoring.class.st
 
 	self generateChangesFor: ((RBInsertNewClassRefactoring model: self model className: className)
 			 superclass: aClass superclass;
@@ -111,20 +93,13 @@ RBCopyClassRefactoring >> copyClass [
 ]
 
 { #category : 'copying' }
-<<<<<<< HEAD:src/Refactoring-Core/ReCopyClassRefactoring.class.st
 ReCopyClassRefactoring >> copyClass: cls withName: aName [
 
-||||||| 3926c07db6:src/Refactoring-Core/ReCopyClassRefactoring.class.st
-ReCopyClassRefactoring >> copyClass: cls withName: aName [
-=======
-RBCopyClassRefactoring >> copyClass: cls withName: aName [
->>>>>>> Pharo13:src/Refactoring-Core/RBCopyClassRefactoring.class.st
 	self className: aName.
 	aClass := self classObjectFor: cls
 ]
 
 { #category : 'transforming' }
-<<<<<<< HEAD:src/Refactoring-Core/ReCopyClassRefactoring.class.st
 ReCopyClassRefactoring >> copyMethods: aCollectionOfMethods of: sourceClass in: newClass [
 	"Copy aCollectionOfMethods from sourceClass to newClass "
 
@@ -137,36 +112,6 @@ ReCopyClassRefactoring >> copyMethods: aCollectionOfMethods of: sourceClass in: 
 				withProtocol: rbMethod protocols) ]
 ]
 
-||||||| 3926c07db6:src/Refactoring-Core/ReCopyClassRefactoring.class.st
-ReCopyClassRefactoring >> copyMethods [
-	| newClass |
-	newClass := (self model classNamed: className).
-	self copyMethodsOf: aClass in: newClass.
-	self copyMethodsOf: aClass classSide in: newClass classSide
-]
-
-{ #category : 'transforming' }
-ReCopyClassRefactoring >> copyMethods: aCollectionOfMethods of: sourceClass in: newClass [
-	"Copy aCollectionOfMethods from sourceClass to newClass "
-
-	aCollectionOfMethods do: [ :rbMethod | 
-		self generateChangesFor:
-			(RBAddMethodTransformation
-				model: self model
-				sourceCode: rbMethod source
-				in: newClass
-				withProtocol: rbMethod protocols) ]
-]
-
-=======
-RBCopyClassRefactoring >> copyMethods [
-	| newClass |
-	newClass := (self model classNamed: className).
-	self copyMethodsOf: aClass in: newClass.
-	self copyMethodsOf: aClass classSide in: newClass classSide
-]
-
->>>>>>> Pharo13:src/Refactoring-Core/RBCopyClassRefactoring.class.st
 { #category : 'copying' }
 RBCopyClassRefactoring >> copyMethodsOf: rbClass1 in: rbClass2 [
 	rbClass1 selectors do: [ :symbol | | rbMethod |
@@ -195,7 +140,6 @@ RBCopyClassRefactoring >> copyVariables [
 		class: className) ]
 ]
 
-<<<<<<< HEAD:src/Refactoring-Core/ReCopyClassRefactoring.class.st
 { #category : 'transforming' }
 ReCopyClassRefactoring >> instanceMethods [
 
@@ -203,15 +147,6 @@ ReCopyClassRefactoring >> instanceMethods [
 		ifNil: [ instanceMethods := aClass methods ]
 ]
 
-||||||| 3926c07db6:src/Refactoring-Core/ReCopyClassRefactoring.class.st
-{ #category : 'transforming' }
-ReCopyClassRefactoring >> instanceMethods [
-
-	^ instanceMethods
-]
-
-=======
->>>>>>> Pharo13:src/Refactoring-Core/RBCopyClassRefactoring.class.st
 { #category : 'accessing' }
 RBCopyClassRefactoring >> packageName [
 
