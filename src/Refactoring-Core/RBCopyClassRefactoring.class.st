@@ -8,7 +8,7 @@ The refactoring transformation create a new class and copy all instance and clas
 Example
 ---------------
 ```
-	(RBCopyClassRefactoring 
+	(ReCopyClassRefactoring 
 		copyClass: #RBFooLintRuleTestData 
 		withName: #RBFooLintRuleTestData1 in: #Example1) execute. 
 ```
@@ -20,7 +20,7 @@ Example
 
 "
 Class {
-	#name : 'RBCopyClassRefactoring',
+	#name : 'ReCopyClassRefactoring',
 	#superclass : 'RBClassRefactoring',
 	#instVars : [
 		'aClass',
@@ -32,13 +32,13 @@ Class {
 }
 
 { #category : 'copying' }
-RBCopyClassRefactoring class >> copyClass: aClass withName: aSymbol [
+ReCopyClassRefactoring class >> copyClass: aClass withName: aSymbol [
 
 	^ self new copyClass: aClass withName: aSymbol
 ]
 
 { #category : 'copying' }
-RBCopyClassRefactoring class >> copyClass: aClass withName: copyName in: aSymbol [
+ReCopyClassRefactoring class >> copyClass: aClass withName: copyName in: aSymbol [
 
 	^ (self copyClass: aClass withName: copyName)
 		  packageName: aSymbol;
@@ -46,7 +46,7 @@ RBCopyClassRefactoring class >> copyClass: aClass withName: copyName in: aSymbol
 ]
 
 { #category : 'copying' }
-RBCopyClassRefactoring class >> model: aRBNamespace copyClass: aClass withName: copyName [
+ReCopyClassRefactoring class >> model: aRBNamespace copyClass: aClass withName: copyName [
 
 	^ (self copyClass: aClass withName: copyName)
 		  model: aRBNamespace;
@@ -54,7 +54,7 @@ RBCopyClassRefactoring class >> model: aRBNamespace copyClass: aClass withName: 
 ]
 
 { #category : 'copying' }
-RBCopyClassRefactoring class >> model: aRBNamespace copyClass: aClass withName: copyName in: aSymbol [
+ReCopyClassRefactoring class >> model: aRBNamespace copyClass: aClass withName: copyName in: aSymbol [
 
 	^ (self copyClass: aClass withName: copyName in: aSymbol)
 		  model: aRBNamespace;
@@ -62,7 +62,7 @@ RBCopyClassRefactoring class >> model: aRBNamespace copyClass: aClass withName: 
 ]
 
 { #category : 'preconditions' }
-RBCopyClassRefactoring >> applicabilityPreconditions [
+ReCopyClassRefactoring >> applicabilityPreconditions [
 
 	^ {
 		  (RBCondition isValidClassName: className).
@@ -113,7 +113,7 @@ ReCopyClassRefactoring >> copyMethods: aCollectionOfMethods of: sourceClass in: 
 ]
 
 { #category : 'copying' }
-RBCopyClassRefactoring >> copyMethodsOf: rbClass1 in: rbClass2 [
+ReCopyClassRefactoring >> copyMethodsOf: rbClass1 in: rbClass2 [
 	rbClass1 selectors do: [ :symbol | | rbMethod |
 		rbMethod := rbClass1 methodFor: symbol.
 		self generateChangesFor:
@@ -126,7 +126,7 @@ RBCopyClassRefactoring >> copyMethodsOf: rbClass1 in: rbClass2 [
 ]
 
 { #category : 'transforming' }
-RBCopyClassRefactoring >> copyVariables [
+ReCopyClassRefactoring >> copyVariables [
 	aClass instanceVariableNames do: [ :varName |
 		self generateChangesFor: (RBAddInstanceVariableRefactoring
 		model: self model
@@ -148,19 +148,19 @@ ReCopyClassRefactoring >> instanceMethods [
 ]
 
 { #category : 'accessing' }
-RBCopyClassRefactoring >> packageName [
+ReCopyClassRefactoring >> packageName [
 
 	^ packageName ifNil: [ aClass packageName ]
 ]
 
 { #category : 'accessing' }
-RBCopyClassRefactoring >> packageName: anObject [
+ReCopyClassRefactoring >> packageName: anObject [
 
 	packageName := anObject
 ]
 
 { #category : 'transforming' }
-RBCopyClassRefactoring >> privateTransform [
+ReCopyClassRefactoring >> privateTransform [
 	self copyClass.
 	self copyVariables.
 	self copyMethods
