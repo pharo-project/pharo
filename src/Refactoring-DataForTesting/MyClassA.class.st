@@ -19,7 +19,7 @@ Class {
 
 { #category : 'tests - test data' }
 MyClassA >> methodForPushDown [
-	"My temporary comment"
+
 	^ 42
 ]
 
