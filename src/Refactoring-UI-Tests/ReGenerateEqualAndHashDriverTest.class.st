@@ -43,7 +43,7 @@ ReGenerateEqualAndHashDriverTest >> testGenerateEqualAndHashExistingImplementors
 
 	self 
 		assert: driverChanges changes size 
-		equals: 4.
+		equals: 2.
 	self assertEmpty: driver refactoring failedApplicabilityPreconditions.
 	self 
 		assert: (driverChanges changes select: [ : amc | amc selector = #hash or: [ amc selector = #= ] ]) size
@@ -67,7 +67,7 @@ ReGenerateEqualAndHashDriverTest >> testGenerateEqualAndHashFirstGen [
 	driverChanges := driver refactoring changes.
 	self 
 		assert: driverChanges changes size 
-		equals: 4.
+		equals: 2.
 	self assertEmpty: driver refactoring failedApplicabilityPreconditions.
 	self 
 		assert: (driverChanges changes select: [ : amc | amc selector = #hash or: [ amc selector = #= ] ]) size

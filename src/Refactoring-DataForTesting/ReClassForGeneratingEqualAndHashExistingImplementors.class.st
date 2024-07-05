@@ -16,12 +16,36 @@ ReClassForGeneratingEqualAndHashExistingImplementors >> = anObject [
 
 	self == anObject ifTrue: [ ^ true ].
 	self class = anObject class ifFalse: [ ^ false ].
-	^ name = anObject name
+	^ self name = anObject name
 ]
 
 { #category : 'comparing' }
 ReClassForGeneratingEqualAndHashExistingImplementors >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
-	^ name hash
+	^ self name hash
+]
+
+{ #category : 'accessing' }
+ReClassForGeneratingEqualAndHashExistingImplementors >> iVarB [
+
+	^ iVarB
+]
+
+{ #category : 'accessing' }
+ReClassForGeneratingEqualAndHashExistingImplementors >> iVarB: anObject [
+
+	iVarB := anObject
+]
+
+{ #category : 'accessing' }
+ReClassForGeneratingEqualAndHashExistingImplementors >> name [
+
+	^ name
+]
+
+{ #category : 'accessing' }
+ReClassForGeneratingEqualAndHashExistingImplementors >> name: anObject [
+
+	name := anObject
 ]

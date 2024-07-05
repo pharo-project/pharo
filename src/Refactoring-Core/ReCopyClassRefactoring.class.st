@@ -24,7 +24,9 @@ Class {
 	#superclass : 'RBClassRefactoring',
 	#instVars : [
 		'aClass',
-		'packageName'
+		'packageName',
+		'classMethods',
+		'instanceMethods'
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
@@ -99,6 +101,14 @@ ReCopyClassRefactoring >> copyClass: cls withName: aName [
 	aClass := self classObjectFor: cls
 ]
 
+{ #category : 'copying' }
+ReCopyClassRefactoring >> copyMethods [
+	| newClass |
+	newClass := (self model classNamed: className).
+	self copyMethodsOf: aClass in: newClass.
+	self copyMethodsOf: aClass classSide in: newClass classSide
+]
+
 { #category : 'transforming' }
 ReCopyClassRefactoring >> copyMethods: aCollectionOfMethods of: sourceClass in: newClass [
 	"Copy aCollectionOfMethods from sourceClass to newClass "
@@ -125,6 +135,15 @@ ReCopyClassRefactoring >> copyMethodsOf: rbClass1 in: rbClass2 [
 	]
 ]
 
+{ #category : 'copying' }
+ReCopyClassRefactoring >> copySelectedMethods [
+	| newClass |
+	
+	newClass := self model classNamed: className.
+	self copyMethods: self instanceMethods of: aClass in: newClass.
+	self copyMethods: self classMethods of: aClass classSide in: newClass classSide
+]
+
 { #category : 'transforming' }
 ReCopyClassRefactoring >> copyVariables [
 	aClass instanceVariableNames do: [ :varName |
@@ -148,6 +167,12 @@ ReCopyClassRefactoring >> instanceMethods [
 ]
 
 { #category : 'accessing' }
+ReCopyClassRefactoring >> instanceMethods: anObject [
+
+	instanceMethods := anObject
+]
+
+{ #category : 'accessing' }
 ReCopyClassRefactoring >> packageName [
 
 	^ packageName ifNil: [ aClass packageName ]
@@ -161,7 +186,15 @@ ReCopyClassRefactoring >> packageName: anObject [
 
 { #category : 'transforming' }
 ReCopyClassRefactoring >> privateTransform [
+
 	self copyClass.
 	self copyVariables.
-	self copyMethods
+	self copySelectedMethods.
+
+]
+
+{ #category : 'initialize' }
+ReCopyClassRefactoring >> sourceClass: classToCopy [
+
+	aClass := self classObjectFor: classToCopy
 ]

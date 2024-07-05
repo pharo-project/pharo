@@ -10,6 +10,13 @@ Class {
 }
 
 { #category : 'code-critics' }
+ManifestRefactoringDataForTesting class >> ruleNoUnusedInstanceVariableRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGClassDefinition #(#ReClassForGeneratingEqualAndHash)) #'2024-07-05T12:05:01.988597+02:00') #(#(#RGClassDefinition #(#ReClassForGeneratingEqualAndHashExistingImplementors)) #'2024-07-05T12:07:30.662537+02:00') )
+]
+
+{ #category : 'code-critics' }
 ManifestRefactoringDataForTesting class >> ruleReIvarNeitherReadNorWrittenRuleV1FalsePositive [
 
 	<ignoreForCoverage>
