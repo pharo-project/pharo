@@ -52,7 +52,7 @@ RBDeprecateMethodDriver >> runRefactoring [
 							"the user pressed cancel"
 							useInsteadSelector ifNil: [ ^ self ].
 							refactoring newSelector: useInsteadSelector.
-							isValid := refactoring applicabilityPreconditions check.
+							isValid := refactoring failedApplicabilityPreconditions isEmpty.
 							isValid ifFalse: [ self selectorToReplaceDeprecatedSelector ].
 							isValid ] whileFalse.
 							
