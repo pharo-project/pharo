@@ -15,8 +15,8 @@ You can invoke me with:
 ```
 "
 Class {
-	#name : 'RBDeprecateClassDriver',
-	#superclass : 'RBInteractionDriver',
+	#name : 'ReDeprecateClassDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'className',
 		'newClassName'
@@ -27,13 +27,13 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBDeprecateClassDriver class >> className: aClassName scopes: refactoringScopes [
+ReDeprecateClassDriver class >> className: aClassName scopes: refactoringScopes [
 
 	^ self new className: aClassName scopes: refactoringScopes
 ]
 
 { #category : 'initialization' }
-RBDeprecateClassDriver >> className: aClassName scopes: refactoringScopes [
+ReDeprecateClassDriver >> className: aClassName scopes: refactoringScopes [
 
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes first.
@@ -41,7 +41,7 @@ RBDeprecateClassDriver >> className: aClassName scopes: refactoringScopes [
 ]
 
 { #category : 'execution' }
-RBDeprecateClassDriver >> deprecateAndMigrateReferences [
+ReDeprecateClassDriver >> deprecateAndMigrateReferences [
 
 	newClassName := self requestClassToMigrateReferencesTo.
 	refactoring := RBDeprecateClassRefactoring deprecate: className in: newClassName.
@@ -52,7 +52,7 @@ RBDeprecateClassDriver >> deprecateAndMigrateReferences [
 ]
 
 { #category : 'execution' }
-RBDeprecateClassDriver >> deprecateClass [
+ReDeprecateClassDriver >> deprecateClass [
 
 	refactoring := RBDeprecateClassTransformation model: model className: className.
 	refactoring generateChanges.
@@ -61,7 +61,7 @@ RBDeprecateClassDriver >> deprecateClass [
 ]
 
 { #category : 'execution' }
-RBDeprecateClassDriver >> renameAndDeprecate [
+ReDeprecateClassDriver >> renameAndDeprecate [
 
 	refactoring := RBRenameAndDeprecateClassTransformation
 		               model: model
@@ -76,7 +76,7 @@ RBDeprecateClassDriver >> renameAndDeprecate [
 ]
 
 { #category : 'ui - requests' }
-RBDeprecateClassDriver >> requestClassToMigrateReferencesTo [
+ReDeprecateClassDriver >> requestClassToMigrateReferencesTo [
 
 	newClassName := SpSelectDialog new
 		                title: 'Class to migrate ' , className;
@@ -89,7 +89,7 @@ RBDeprecateClassDriver >> requestClassToMigrateReferencesTo [
 ]
 
 { #category : 'ui - requests' }
-RBDeprecateClassDriver >> requestNewClassName [
+ReDeprecateClassDriver >> requestNewClassName [
 
 	newClassName := SpRequestDialog new
 		                title: 'Rename and deprecate class';
@@ -103,7 +103,7 @@ RBDeprecateClassDriver >> requestNewClassName [
 ]
 
 { #category : 'execution' }
-RBDeprecateClassDriver >> runRefactoring [
+ReDeprecateClassDriver >> runRefactoring [
 
 	| select |
 	select := self selectDialog.
@@ -116,7 +116,7 @@ RBDeprecateClassDriver >> runRefactoring [
 ]
 
 { #category : 'execution' }
-RBDeprecateClassDriver >> selectDialog [ 
+ReDeprecateClassDriver >> selectDialog [ 
 
 	^ SpSelectDialog new 
 		title: 'Deprecate class with strategy';

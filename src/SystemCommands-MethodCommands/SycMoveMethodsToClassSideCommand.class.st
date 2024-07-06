@@ -30,7 +30,7 @@ SycMoveMethodsToClassSideCommand >> defaultMenuItemName [
 { #category : 'execution' }
 SycMoveMethodsToClassSideCommand >> execute [
 
-	(RBMoveMethodsToClassSideDriver scopes: refactoringScopes methods: methods) runRefactoring
+	(ReMoveMethodsToClassSideDriver scopes: refactoringScopes methods: methods) runRefactoring
 ]
 
 { #category : 'execution' }

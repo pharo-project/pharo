@@ -1,6 +1,6 @@
 Class {
 	#name : 'ReRenameClassDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'oldName',
 		'newName',

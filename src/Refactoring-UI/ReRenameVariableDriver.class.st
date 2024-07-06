@@ -3,7 +3,7 @@ I'm an abstract model for user interaction for the rename variables refactoring.
 "
 Class {
 	#name : 'ReRenameVariableDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'oldName',
 		'class',

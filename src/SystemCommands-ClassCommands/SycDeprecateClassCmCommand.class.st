@@ -8,7 +8,7 @@ Class {
 { #category : 'execution' }
 SycDeprecateClassCmCommand >> executeRefactoring [
 
-	(RBDeprecateClassDriver
+	(ReDeprecateClassDriver
 		 className: targetClass name
 		 scopes: refactoringScopes) runRefactoring
 ]

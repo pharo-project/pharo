@@ -11,8 +11,8 @@ You can create my instance and execute the refactoring by running:
 ```
 "
 Class {
-	#name : 'RBPushUpMethodDriver',
-	#superclass : 'RBInteractionDriver',
+	#name : 'RePushUpMethodDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'class',
 		'methods',
@@ -24,7 +24,7 @@ Class {
 }
 
 { #category : 'initialization' }
-RBPushUpMethodDriver class >> model: aRBNamespace scopes: refactoringScopes pushUp: methodsList [
+RePushUpMethodDriver class >> model: aRBNamespace scopes: refactoringScopes pushUp: methodsList [
 
 	^ self new
 		  model: aRBNamespace
@@ -33,7 +33,7 @@ RBPushUpMethodDriver class >> model: aRBNamespace scopes: refactoringScopes push
 ]
 
 { #category : 'resources' }
-RBPushUpMethodDriver >> configureRefactoring [
+RePushUpMethodDriver >> configureRefactoring [
 	"I'm gathering user input and creating refactoring instance"
 
 	self selectMethodsAndSuperclass.
@@ -45,7 +45,7 @@ RBPushUpMethodDriver >> configureRefactoring [
 ]
 
 { #category : 'initialization' }
-RBPushUpMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushUp: methodsList [
+RePushUpMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushUp: methodsList [
 
 	model := aRBNamespace.
 	scopes := refactoringScopes.
@@ -54,7 +54,7 @@ RBPushUpMethodDriver >> model: aRBNamespace scopes: refactoringScopes pushUp: me
 ]
 
 { #category : 'resources' }
-RBPushUpMethodDriver >> refactoring [
+RePushUpMethodDriver >> refactoring [
 	"I am creating the refactoring instance"
 
 	refactoring := RBPullUpMethodRefactoring
@@ -65,7 +65,7 @@ RBPushUpMethodDriver >> refactoring [
 ]
 
 { #category : 'execution' }
-RBPushUpMethodDriver >> runRefactoring [
+RePushUpMethodDriver >> runRefactoring [
 
 	| changes |
 	self configureRefactoring.
@@ -83,7 +83,7 @@ RBPushUpMethodDriver >> runRefactoring [
 ]
 
 { #category : 'initialization - data' }
-RBPushUpMethodDriver >> selectMethodsAndSuperclass [
+RePushUpMethodDriver >> selectMethodsAndSuperclass [
 
 	| classes |
 	classes := class allSuperclasses removeAllSuchThat: [ :each |

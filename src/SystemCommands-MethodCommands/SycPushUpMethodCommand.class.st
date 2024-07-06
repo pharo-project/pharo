@@ -30,7 +30,7 @@ SycPushUpMethodCommand >> defaultMenuItemName [
 { #category : 'execution' }
 SycPushUpMethodCommand >> executeRefactorings [
 
-	(RBPushUpMethodDriver
+	(RePushUpMethodDriver
 		 model: model
 		 scopes: refactoringScopes
 		 pushUp: methods) runRefactoring

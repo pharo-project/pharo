@@ -13,21 +13,21 @@ You can create my instance and execute the refactoring by running:
 ```
 "
 Class {
-	#name : 'RBMoveMethodsToClassSideDriver',
-	#superclass : 'RBInteractionDriver',
+	#name : 'ReMoveMethodsToClassSideDriver',
+	#superclass : 'ReInteractionDriver',
 	#category : 'Refactoring-UI-Drivers to migrate to new architecture',
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers to migrate to new architecture'
 }
 
 { #category : 'instance creation' }
-RBMoveMethodsToClassSideDriver class >> scopes: scopesList methods: aCollectionOfMethods [
+ReMoveMethodsToClassSideDriver class >> scopes: scopesList methods: aCollectionOfMethods [
 
 	^ self new scopes: scopesList methods: aCollectionOfMethods
 ]
 
 { #category : 'execution' }
-RBMoveMethodsToClassSideDriver >> runRefactoring [
+ReMoveMethodsToClassSideDriver >> runRefactoring [
 
 	[
 		[
@@ -47,12 +47,12 @@ RBMoveMethodsToClassSideDriver >> runRefactoring [
 					          openModal.
 				dialog ifTrue: [
 					self furtherActionFor:
-						(RBOverrideMethod new refactoring: refactoring) ].
+						(ReOverrideMethod new refactoring: refactoring) ].
 				err return ]
 ]
 
 { #category : 'initialization' }
-RBMoveMethodsToClassSideDriver >> scopes: scopesList methods: methods [
+ReMoveMethodsToClassSideDriver >> scopes: scopesList methods: methods [
 
 	scopes := scopesList.
 	model := self refactoringScopeOn: scopesList first.
