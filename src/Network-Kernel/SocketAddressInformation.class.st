@@ -162,6 +162,19 @@ SocketAddressInformation >> addressFamilyName [
 	^#(unspecified local inet4 inet6) at: addressFamily + 1
 ]
 
+{ #category : 'circuit setup' }
+SocketAddressInformation >> connect [
+
+	| sock |
+	socketType == SocketTypeStream ifFalse: [^nil].
+	sock := Socket newTCP: addressFamily.
+	sock connectTo: socketAddress.
+	sock waitForConnectionFor: Socket standardTimeout
+		ifTimedOut: [ConnectionTimedOut signal: ('Cannot connect to {1}' translated format: {self})]
+		ifRefused: [ConnectionRefused signal: ('Cannot connect to {1}' translated format: {self})].
+	^sock
+]
+
 { #category : 'initialize-release' }
 SocketAddressInformation >> initSocketAddress: aSocketAddress family: familyInteger type: typeInteger protocol: protocolInteger [
 
@@ -169,6 +182,17 @@ SocketAddressInformation >> initSocketAddress: aSocketAddress family: familyInte
 	addressFamily := familyInteger.
 	socketType := typeInteger.
 	protocol := protocolInteger.
+]
+
+{ #category : 'circuit setup' }
+SocketAddressInformation >> listenWithBacklog: backlog [
+
+	| sock |
+	(socketType == SocketTypeStream and: [protocol == ProtocolTCP]) ifFalse: [self error: 'cannot listen'].
+	sock := Socket newTCP: addressFamily.
+	sock bindTo: socketAddress.
+	sock listenWithBacklog: 5.
+	^sock
 ]
 
 { #category : 'printing' }
