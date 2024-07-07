@@ -178,19 +178,31 @@ Socket class >> newAcceptCheck [
 
 { #category : 'instance creation' }
 Socket class >> newTCP [
+
+	^ self newTCP: SocketAddressInformation addressFamilyUnspecified
+]
+
+{ #category : 'instance creation' }
+Socket class >> newTCP: family [
 	"Create a socket and initialize it for TCP"
 
 	self initializeNetwork.
-	^ [ super new initialize: TCPSocketType ] repeatWithGCIf: [ :socket |
+	^ [ super new initialize: TCPSocketType family: family ] repeatWithGCIf: [ :socket |
 		  socket isValid not ]
 ]
 
 { #category : 'instance creation' }
 Socket class >> newUDP [
+
+	^ self newUDP: SocketAddressInformation addressFamilyUnspecified
+]
+
+{ #category : 'instance creation' }
+Socket class >> newUDP: family [
 	"Create a socket and initialize it for UDP"
 
 	self initializeNetwork.
-	^ [ super new initialize: UDPSocketType ] repeatWithGCIf: [ :socket |
+	^ [ super new initialize: UDPSocketType family: family ] repeatWithGCIf: [ :socket |
 		  socket isValid not ]
 ]
 
@@ -602,7 +614,7 @@ foo waitForConnectionUntil: (Socket standardDeadline).
 ]
 
 { #category : 'initialization' }
-Socket >> initialize: socketType [
+Socket >> initialize: socketType family: addressFamily [
 	"Initialize a new socket handle. If socket creation fails, socketHandle will be set to nil."
 
 	| semaIndex readSemaIndex writeSemaIndex |
@@ -614,7 +626,7 @@ Socket >> initialize: socketType [
 	readSemaIndex := Smalltalk registerExternalObject: readSemaphore.
 	writeSemaIndex := Smalltalk registerExternalObject: writeSemaphore.
 	socketHandle := self
-		primSocketCreateNetwork: 0
+		primSocketCreateNetwork: addressFamily
 		type: socketType
 		receiveBufferSize: 8000
 		sendBufSize: 8000
