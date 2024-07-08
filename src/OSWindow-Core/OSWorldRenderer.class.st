@@ -23,7 +23,7 @@ Class {
 { #category : 'accessing' }
 OSWorldRenderer class >> autoSetCanvasScaleFactor [
 
-	^ autoSetCanvasScaleFactor ifNil: [ autoSetCanvasScaleFactor := true ]
+	^ autoSetCanvasScaleFactor ifNil: [ autoSetCanvasScaleFactor := false ]
 ]
 
 { #category : 'accessing' }
@@ -79,7 +79,7 @@ OSWorldRenderer class >> settingsOn: aBuilder [
 			(aBuilder setting: #autoSetCanvasScaleFactor)
 				label: 'Set canvas scale factor automatically';
 				target: self;
-				default: true ]
+				default: false ]
 ]
 
 { #category : 'accessing' }
