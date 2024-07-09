@@ -49,14 +49,9 @@ FormSet >> asFormAtScale: scale [
 { #category : 'converting' }
 FormSet >> asFormWithExtent: formExtent [
 
-	^ forms
-		  detect: [ :form | form extent = formExtent ]
-		  ifFound: [ :form | form asFormOfDepth: depth ]
-		  ifNone: [
-			  | newForm |
-			  newForm := forms first scaledToExactSize: formExtent.
-			  forms := forms copyWith: newForm.
-			  newForm asFormOfDepth: depth ]
+	^ (forms detect: [ :form | form extent = formExtent ]
+		ifFound: [ :form | form asFormOfDepth: depth ]
+		ifNone: [ (forms first asFormOfDepth: depth) scaledToExactSize: formExtent ])
 ]
 
 { #category : 'accessing' }
