@@ -5,7 +5,6 @@ Class {
 	#name : 'OupsDummyDebuggerSystem',
 	#superclass : 'OupsDebuggerSystem',
 	#instVars : [
-		'newUIProcessSpawned',
 		'customUIManager',
 		'debugRequestSentToHandleDebugRequest',
 		'callsToHandleDebugRequest'
