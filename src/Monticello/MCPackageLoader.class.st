@@ -241,7 +241,7 @@ MCPackageLoader >> warnAboutDependencies [
 ]
 
 { #category : 'private' }
-MCPackageLoader >> warnAboutErrors: errorDefinitions [
+MCPackageLoader >> warnAboutErrors: errorsDict [
 
 	self notify: (String streamContents: [ :s |
 			 s
