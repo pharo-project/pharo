@@ -309,7 +309,7 @@ MetaLinkInstaller >> reinstallPermaLink: permalink onNode: node [
 	instances := (linksRegistry objectsForLink: link)
 		select: [ :i | 
 			"use perform as no method #oiginalClass exists"
-			(i perform: #oiginalClass) = permalink slotOrVarClass ].
+			(i perform: #originalClass) = permalink slotOrVarClass ].
 	instances do: [ :instance | node link: link forObject: instance ]
 ]
 
