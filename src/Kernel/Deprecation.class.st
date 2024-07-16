@@ -131,7 +131,7 @@ Deprecation >> contextOfDeprecatedMethod [
 
 { #category : 'accessing' }
 Deprecation >> contextOfSender [
-	^context sender
+	^context home sender
 ]
 
 { #category : 'accessing' }
