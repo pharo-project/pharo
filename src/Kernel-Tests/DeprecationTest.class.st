@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : 'tests' }
-DeprecationTest >> testMessageTextUnkownMethod [
+DeprecationTest >> testMessageTextFromBlock [
 	| notification |
 	"messageText should not be nil even the call is from a block"
 	notification := [ self deprecated: 'test']
