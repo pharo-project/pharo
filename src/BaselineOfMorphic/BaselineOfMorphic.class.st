@@ -118,6 +118,7 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'System-Sound'.
 
 		spec package: 'Text-Diff'.
+		spec package: 'Tool-Diff'.
 		spec package: 'Text-Edition'.
 		spec package: 'Text-Scanning'.
 
