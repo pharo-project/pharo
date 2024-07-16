@@ -134,6 +134,8 @@ BaselineOfIDE >> baseline: spec [
 		self documentBrowserCore: spec.
 		self welcomeBrowser: spec.
 		self roassal: spec.
+		
+		spec package: 'DarkBlueTheme'.
 
 		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
 
@@ -296,7 +298,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	RubAbstractTextArea highlightMessageSend: true.
 
-	PharoLightTheme beCurrent.
+	DarkBlueTheme beCurrent.
 
 	SDL_Event initialize.
 
@@ -304,6 +306,9 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	"Making HeuristicCompletion the default completion engine"
 	RubSmalltalkEditor completionEngineClass: CoCompletionEngine.
+	
+	"This should be removed in Pharo 14."
+	ASTNode deprecatedAliases: { #RBNode }.
 
 	self loadIceberg.
 	self loadExtraTools.

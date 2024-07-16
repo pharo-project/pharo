@@ -628,9 +628,9 @@ SHRBTextStyler >> addASTTransformationPlugin: aPlugin [
 ]
 
 { #category : 'formatting' }
-SHRBTextStyler >> addAttributes: attributes forNode: anRBNode [
+SHRBTextStyler >> addAttributes: attributes forNode: aNode [
 
-	self addAttributes: attributes from: anRBNode startWithoutParentheses to: anRBNode stopWithoutParentheses
+	self addAttributes: attributes from: aNode startWithoutParentheses to: aNode stopWithoutParentheses
 ]
 
 { #category : 'formatting' }
@@ -666,15 +666,15 @@ SHRBTextStyler >> addStyle: styleSymbol attribute: additionalAttribute from: sta
 ]
 
 { #category : 'formatting' }
-SHRBTextStyler >> addStyle: styleSymbol attributes: additionalAttributes forNode: anRBNode [
+SHRBTextStyler >> addStyle: styleSymbol attributes: additionalAttributes forNode: aNode [
 	self
 		addAttributes: (self attributesFor: styleSymbol), additionalAttributes
-		forNode: anRBNode
+		forNode: aNode
 ]
 
 { #category : 'formatting' }
-SHRBTextStyler >> addStyle: styleSymbol forNode: anRBNode [
-	self addAttributes: (self attributesFor: styleSymbol) forNode: anRBNode
+SHRBTextStyler >> addStyle: styleSymbol forNode: aNode [
+	self addAttributes: (self attributesFor: styleSymbol) forNode: aNode
 ]
 
 { #category : 'formatting' }
@@ -716,10 +716,17 @@ SHRBTextStyler >> classOrMetaClass: aBehavior [
 { #category : 'visiting' }
 SHRBTextStyler >> formatIncompleteSelector: aSymbol [
 
-	aSymbol isSelectorSymbol ifTrue: [ ^ nil ].
-	^ (self class formatIncompleteIdentifiers and: [ (Symbol selectorThatStartsCaseSensitive: aSymbol asString skipping: nil) isNotNil ])
+	(self representsASelector: aSymbol) ifTrue: [ ^ nil ].
+
+	^ (self class formatIncompleteIdentifiers and: [ self hasSymbolStartingBy: aSymbol ])
 		  ifTrue: [ #incompleteSelector ]
 		  ifFalse: [ #undefinedSelector ]
+]
+
+{ #category : 'testing' }
+SHRBTextStyler >> hasSymbolStartingBy: aSymbol [
+
+	^ (Symbol selectorThatStartsCaseSensitive: aSymbol asString skipping: nil) isNotNil
 ]
 
 { #category : 'initialization' }
@@ -818,6 +825,12 @@ SHRBTextStyler >> privateStyle: aText [
 	^ self
 		style: aText
 		ast: compiler parse
+]
+
+{ #category : 'testing' }
+SHRBTextStyler >> representsASelector: aSymbol [
+
+	^ aSymbol isSelectorSymbol
 ]
 
 { #category : 'private' }

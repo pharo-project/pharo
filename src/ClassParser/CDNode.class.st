@@ -26,10 +26,10 @@ CDNode class >> isAbstract [
 ]
 
 { #category : 'instance creation' }
-CDNode class >> on: aRBNode [
+CDNode class >> on: aNode [
 
 	^ self new
-		originalNode: aRBNode;
+		originalNode: aNode;
 		yourself
 ]
 
