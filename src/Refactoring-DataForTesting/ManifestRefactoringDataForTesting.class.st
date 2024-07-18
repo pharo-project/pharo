@@ -48,7 +48,7 @@ ManifestRefactoringDataForTesting class >> ruleNoUnusedInstanceVariableRuleV1Fal
 ManifestRefactoringDataForTesting class >> ruleReClassVariableNeitherReadNorWrittenRuleV1FalsePositive [
 
 	<ignoreForCoverage>
-	^ #(#(#(#RGClassDefinition #(#RBHierarchySubclassAForClassVariable)) #'2024-07-18T12:50:23.92547+02:00') #(#(#RGClassDefinition #(#RBHierarchySubclassBForClassVariable)) #'2024-07-18T12:50:42.673173+02:00') )
+	^ #(#(#(#RGClassDefinition #(#RBHierarchySubclassAForClassVariable)) #'2024-07-18T12:50:23.92547+02:00') #(#(#RGClassDefinition #(#RBHierarchySubclassBForClassVariable)) #'2024-07-18T12:50:42.673173+02:00') #(#(#RGMetaclassDefinition #(#'RBHierarchySubclassBForClassVariable class' #RBHierarchySubclassBForClassVariable)) #'2024-07-18T14:51:42.347867+02:00') #(#(#RGMetaclassDefinition #(#'RBHierarchySubclassAForClassVariable class' #RBHierarchySubclassAForClassVariable)) #'2024-07-18T14:51:42.347564+02:00') )
 ]
 
 { #category : 'code-critics' }

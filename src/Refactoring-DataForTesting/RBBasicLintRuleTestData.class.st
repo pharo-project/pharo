@@ -328,7 +328,7 @@ RBBasicLintRuleTestData >> newResultClass: aClass [
 { #category : 'accessing' }
 RBBasicLintRuleTestData >> onlyReferenceToSomeDemoMethod [
 
-	^ self onlyReferenceToSomeDemoMethod 
+	^ self onlyReferenceToSomeDemoMethod
 ]
 
 { #category : 'accessing' }

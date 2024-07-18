@@ -21,19 +21,19 @@ MySubAccessingSuperclassState class >> sharedOnlyInClassSideSubclass [
 { #category : 'accessing' }
 MySubAccessingSuperclassState >> accessing [
 
-	^ instVarName1  
+	^ instVarName1
 ]
 
 { #category : 'accessing' }
 MySubAccessingSuperclassState >> accessing2InSub [
 
-	^ instVarName1 
+	^ instVarName1
 ]
 
 { #category : 'accessing' }
 MySubAccessingSuperclassState >> accessingSharedVariable [
 
-	^ Shared1 
+	^ Shared1
 ]
 
 { #category : 'accessing' }
@@ -45,5 +45,5 @@ MySubAccessingSuperclassState >> accessingSharedVariable2 [
 { #category : 'actions' }
 MySubAccessingSuperclassState >> writing [
 
-	instVarName1 := 42 
+	instVarName1 := 42
 ]

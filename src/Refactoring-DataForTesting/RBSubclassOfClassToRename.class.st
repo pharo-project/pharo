@@ -39,8 +39,6 @@ RBSubclassOfClassToRename >> justSuperSendInSubclassBroken [
 
 { #category : 'accessing' }
 RBSubclassOfClassToRename >> methodThatIsNotUsedForSure [
-
-	
 ]
 
 { #category : 'accessing' }
@@ -48,7 +46,7 @@ RBSubclassOfClassToRename >> name [
 	^rewriteRule1
 ]
 
-{ #category : 'accessing' }
+{ #category : 'printing' }
 RBSubclassOfClassToRename >> printOn: aStream [
 
 	"just for the test"
