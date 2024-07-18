@@ -5,6 +5,23 @@ Class {
 	#package : 'BaselineOfReflectivity'
 }
 
+{ #category : 'system annoucements' }
+BaselineOfReflectivity class >> handleMethodModified: aMethodModified [
+
+	aMethodModified oldMethod saveBcToASTCacheWithAST:
+		aMethodModified oldMethod ast
+]
+
+{ #category : 'system annoucements' }
+BaselineOfReflectivity class >> subscribeToMethodModified [
+
+	<script>
+	self codeChangeAnnouncer weak
+		when: MethodModified
+		send: #handleMethodModified:
+		to: self
+]
+
 { #category : 'baselines' }
 BaselineOfReflectivity >> baseline: spec [
 
@@ -37,5 +54,7 @@ BaselineOfReflectivity >> baseline: spec [
 
 { #category : 'baselines' }
 BaselineOfReflectivity >> postload: loader package: packageSpec [
+
 	ASTCache cacheMissStrategy: RFReflectivityASTCacheStrategy new.
+	self class subscribeToMethodModified
 ]
