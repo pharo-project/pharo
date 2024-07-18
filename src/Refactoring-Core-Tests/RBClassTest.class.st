@@ -161,6 +161,35 @@ RBClassTest >> testHierarchy [
 	self assert: (meta withAllSuperclasses includes: objectClass)
 ]
 
+{ #category : 'tests - definition' }
+RBClassTest >> testHierarchyDefinesClassVariable [
+
+	| rootClass middleClass lastLeafClass |
+	
+	rootClass := rbNamespace classNamed: #RBHierarchyForClassVariable.
+	middleClass := rbNamespace classNamed: #RBHierarchySubclassAForClassVariable.
+	lastLeafClass := rbNamespace classNamed: #RBHierarchySubclassBForClassVariable.
+
+	self deny: (rootClass hierarchyDefinesClassVariable: #ClassVariable1).
+	self assert: (rootClass hierarchyDefinesClassVariable: #ClassVarB).
+
+	self deny: (middleClass hierarchyDefinesClassVariable: #ClassVariable1).
+	self assert: (middleClass hierarchyDefinesClassVariable: #ClassVarA).	
+	self assert: (middleClass hierarchyDefinesClassVariable: #ClassVarB).
+
+	self deny: (lastLeafClass hierarchyDefinesClassVariable: #ClassVariable1).
+	self assert: (lastLeafClass hierarchyDefinesClassVariable: #ClassVarA).
+]
+
+{ #category : 'tests - definition' }
+RBClassTest >> testHierarchyDefinesPoolDictionary [
+
+	self deny: (abstractTransformationClass definesPoolDictionary: #OpcodePool).
+	self assert: (newClass definesPoolDictionary: #TextConstants).
+	self deny: (refactoringClass definesPoolDictionary: #OpcodePool).
+	self assert: ((RBNamespace new classNamed: #Text) definesPoolDictionary: #TextConstants)
+]
+
 { #category : 'tests - navigation' }
 RBClassTest >> testIsEmptyClass [
 	
@@ -188,6 +217,26 @@ RBClassTest >> testIsMeta [
 RBClassTest >> testObjectIsNotAbstract [
 	self deny: objectClass isAbstract.
 	self deny: objectClass classSide isAbstract
+]
+
+{ #category : 'tests - definition' }
+RBClassTest >> testSuperclassRedefines [
+
+	| rootClass leafClass |
+	
+	rootClass := rbNamespace classNamed: #RBEquivalentMethodRootHolder.
+	leafClass := rbNamespace classNamed: #RBEquivalentMethodSubclassHolder.
+	self 
+		assert: (leafClass superclassRedefines: #someNumber)
+		description: 'It test that superclass already defines the existing superimplementor'.
+		
+	self
+		deny: (leafClass superclassRedefines: #anotherMethod:)
+		description: 'It test that superclass does not define a defined subimplementor'.
+		
+	self
+		assert: (leafClass superclassRedefines: #yourself)
+		description: 'It test that a non-direct superclass defined the method'
 ]
 
 { #category : 'tests - defining methods' }
