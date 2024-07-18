@@ -1,9 +1,9 @@
 "
-Checks for code using  ""collection at: collection size"" instead of ""collection last"".
+Checks for code using  ""collection at: collection size"" instead of ""collection last"" or using ""collection at: 1"" instead of ""collection first"".
 "
 Class {
 	#name : 'ReCollectionAtCollectionSizeRule',
-	#superclass : 'ReNodeMatchRule',
+	#superclass : 'ReNodeRewriteRule',
 	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
 	#tag : 'Coding Idiom Violation'
@@ -16,7 +16,7 @@ ReCollectionAtCollectionSizeRule class >> group [
 
 { #category : 'accessing' }
 ReCollectionAtCollectionSizeRule class >> ruleName [
-	^ 'Uses "collection at: collection size" instead of "collection last"'
+	^ 'Uses "collection at: collection size"/"collection at: 1" instead of "collection last"/"collection first"'
 ]
 
 { #category : 'accessing' }
@@ -28,6 +28,9 @@ ReCollectionAtCollectionSizeRule class >> uniqueIdentifierName [
 
 { #category : 'initialization' }
 ReCollectionAtCollectionSizeRule >> initialize [
+
 	super initialize.
-	self  matchesAny: #('`@collection at: `@collection size')
+	self
+		replace: '`@collection at: `@collection size' with: '`@collection last';
+		replace: '`@collection at: 1' with: '`@collection first'
 ]

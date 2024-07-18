@@ -7,6 +7,16 @@ Class {
 }
 
 { #category : 'tests' }
+DeprecationTest >> testMessageTextFromBlock [
+	| notification |
+	"messageText should not be nil even the call is from a block"
+	notification := [ self deprecated: 'test']
+			on: (self class environment at: #Deprecation)
+			do: [ :d | d ].
+	self assert: notification messageText notNil
+]
+
+{ #category : 'tests' }
 DeprecationTest >> testTransformingDeprecation [
 	<ignoreNotImplementedSelectors: #(sendsDeprecatedMessageWithTransform)>
 	| classFactory oldRaiseWarning oldActivateTransformations |
