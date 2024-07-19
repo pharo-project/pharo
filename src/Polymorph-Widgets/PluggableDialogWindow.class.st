@@ -82,15 +82,14 @@ PluggableDialogWindow >> initialize [
 	"Initialize the receiver."
 
 	super initialize.
-	self
-		buttons: super newButtons
+	self buttons: super newButtons
 ]
 
 { #category : 'actions' }
 PluggableDialogWindow >> newButtons [
 	"Answer  the plugged buttons."
 
-	^self buttons
+	^ self buttons
 ]
 
 { #category : 'actions' }
@@ -115,7 +114,9 @@ PluggableDialogWindow >> useDefaultOKButton [
 	"Set the buttons to be just an OK button.
 	Only effective before the model is set."
 
-	self buttons: {self newOKButton isDefault: true}
+	self buttons: {
+		self newOKButton isDefault: true
+	}
 ]
 
 { #category : 'actions' }
@@ -131,5 +132,8 @@ PluggableDialogWindow >> useOKDefaultCancelButton [
 	"Set the buttons to be an OK button and a default cancel button.
 	Only effective before the model is set."
 
-	self buttons: {self newOKButton. self newCancelButton isDefault: true}
+	self buttons: {
+		self newOKButton. 
+		self newCancelButton isDefault: true 
+	}
 ]

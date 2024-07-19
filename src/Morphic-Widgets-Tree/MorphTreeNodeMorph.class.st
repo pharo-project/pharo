@@ -335,7 +335,7 @@ MorphTreeNodeMorph >> drawLinesToNextSiblingOn: aCanvas hasToggle: hasToggle [
 	nextSibBounds := self nextSibling toggleRectangle.
 	myCenter := myBounds center.
 	vLineX := myCenter x.
-	gap := (container notExpandedForm extent y // 2) + 1.
+	gap := (self notExpandedToggleImageHeight // 2) + 1.
 	vLineTop := myCenter y + (self hasToggle ifTrue: [gap] ifFalse: [0]).
 	vLineBottom := nextSibBounds center y - (self nextSibling hasToggle ifTrue: [gap] ifFalse: [0]).
 	"Draw line from me to next sibling"
@@ -384,11 +384,11 @@ MorphTreeNodeMorph >> drawOn: aCanvas [
 { #category : 'drawing' }
 MorphTreeNodeMorph >> drawToggleOn: aCanvas in: aRectangle [
 
-	| aForm centeringOffset |
-	aForm := self toggleImageForm.
-	centeringOffset := ((aRectangle height - aForm extent y) / 2.0) truncated.
+	| aFormSet centeringOffset |
+	aFormSet := self toggleImageFormSet.
+	centeringOffset := ((aRectangle height - aFormSet extent y) / 2.0) truncated.
 	^aCanvas
-		translucentImage: aForm
+		translucentFormSet: aFormSet
 		at: (aRectangle topLeft translateBy: 0 @ centeringOffset)
 ]
 
@@ -701,6 +701,12 @@ MorphTreeNodeMorph >> nextSibling: anotherMorph [
 	nextSibling := anotherMorph
 ]
 
+{ #category : 'accessing' }
+MorphTreeNodeMorph >> notExpandedToggleImageHeight [
+
+	^ (container notExpandedFormSetForMorph: self) height
+]
+
 { #category : 'updating' }
 MorphTreeNodeMorph >> openItemPath: anArray [
 	"Open a path based on wrapper item equivalence. Generally more specific
@@ -904,7 +910,7 @@ MorphTreeNodeMorph >> selectionFrame [
 
 { #category : 'accessing' }
 MorphTreeNodeMorph >> sensitiveToggleRectangle [
-	^(bounds left + self indentGap) @ bounds top extent: (container toggleImageWidth + container gapAfterToggle) @ bounds height
+	^(bounds left + self indentGap) @ bounds top extent: (self toggleImageWidth + container gapAfterToggle) @ bounds height
 ]
 
 { #category : 'accessing' }
@@ -955,15 +961,21 @@ MorphTreeNodeMorph >> toggleExpandedState [
 ]
 
 { #category : 'accessing' }
-MorphTreeNodeMorph >> toggleImageForm [
+MorphTreeNodeMorph >> toggleImageFormSet [
 	^ isExpanded
-			ifTrue: [container expandedFormForMorph: self]
-			ifFalse: [container notExpandedFormForMorph: self]
+			ifTrue: [container expandedFormSetForMorph: self]
+			ifFalse: [container notExpandedFormSetForMorph: self]
+]
+
+{ #category : 'accessing' }
+MorphTreeNodeMorph >> toggleImageWidth [
+
+	^ (container expandedFormSetForMorph: self) width max: (container notExpandedFormSetForMorph: self) width
 ]
 
 { #category : 'accessing' }
 MorphTreeNodeMorph >> toggleRectangle [
-	^(bounds left + self indentGap) @ bounds top extent: (container toggleImageWidth) @ bounds height
+	^(bounds left + self indentGap) @ bounds top extent: (self toggleImageWidth) @ bounds height
 ]
 
 { #category : 'accessing' }

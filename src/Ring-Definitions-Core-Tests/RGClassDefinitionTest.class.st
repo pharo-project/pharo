@@ -42,7 +42,7 @@ RGClassDefinitionTest >> testAddingMethods [
 	newMethod := newClass methodNamed: #size.
 	self assert: newMethod parent equals: newClass.
 
-	self assert: (newClass compiledMethodNamed: #size) notNil.
+	self assert: (newClass compiledMethodNamed: #size) isNotNil.
 	self assert: (newClass compiledMethodNamed: #fakeMethod) isNil
 ]
 
@@ -235,18 +235,19 @@ RGClassDefinitionTest >> testWithClassInstanceVariables [
 
 { #category : 'testing' }
 RGClassDefinitionTest >> testWithClassVariables [
+
 	| newClass classVar |
 	newClass := (RGClassDefinition named: #Object)
-		addClassVariables: #(DependentsFields);
-		addClassVarNamed: #FakeVariable;
-		yourself.
+		            addClassVariables: #( DependentsFields );
+		            addClassVarNamed: #FakeVariable;
+		            yourself.
 
 	self assert: newClass classVariables size equals: 2.
 	self assert: newClass classVarNames size equals: 2.
-	self assert: newClass allClassVarNames size equals: 2.	"no hierarchy"
+	self assert: newClass allClassVarNames size equals: 2. "no hierarchy"
 
-	classVar := newClass classVarNamed: #DependentsFields.
-	self assert: classVar notNil.
+	classVar := newClass classVariableNamed: #DependentsFields.
+	self assert: classVar isNotNil.
 	self assert: classVar isClassVariable.
 	self assert: classVar isVariable.
 	self assert: classVar parent equals: newClass.
@@ -267,7 +268,7 @@ RGClassDefinitionTest >> testWithComment [
 	newComment := RGCommentDefinition new
 		parent: newClass;
 		content: 'This is a comment for test';
-		stamp: 'VeronicaUquillas 3/22/2011 14:51';
+		stamp: 'VeronicaUquillas 2011-03-22T14:51';
 		yourself.
 	newClass comment: newComment.
 
@@ -276,7 +277,7 @@ RGClassDefinitionTest >> testWithComment [
 	self assert: newClass equals: newComment parent.
 	self assert: newComment content equals: 'This is a comment for test'.
 	self assert: newComment author equals: 'VeronicaUquillas'.
-	self assert: newComment timeStamp equals: '3/22/2011 14:51' asDateAndTime.
+	self assert: newComment timeStamp equals: '2011-03-22T14:51' asDateAndTime.
 
 	newClass comment: nil.
 	self assert: newClass hasComment not.

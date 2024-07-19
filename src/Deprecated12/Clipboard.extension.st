@@ -15,7 +15,7 @@ Clipboard >> chooseRecentClipping [
 	self deprecated: 'This method will be removed in the next version of Pharo.'.
 
 	recentClippings ifNil: [ ^ nil ].
-	^ UIManager default
+	^ MorphicUIManager new
 		  chooseFrom: (recentClippings collect: [ :txt |
 				   ((txt asString contractTo: 50)
 					    copyReplaceAll: String cr

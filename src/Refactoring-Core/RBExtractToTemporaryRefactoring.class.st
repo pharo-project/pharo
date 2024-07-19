@@ -39,6 +39,17 @@ RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval
 ]
 
 { #category : 'preconditions' }
+RBExtractToTemporaryRefactoring >> applicabilityPreconditions [
+
+	^ (RBCondition definesSelector: selector in: class)
+	  & (RBCondition isValidInstanceVariableName: newVariableName for: class)
+	  & (RBCondition withBlock: [
+		   self verifySelectedInterval.
+		   self checkVariableName.
+		   true ])
+]
+
+{ #category : 'preconditions' }
 RBExtractToTemporaryRefactoring >> checkVariableName [
 	(class whoDefinesInstanceVariable: newVariableName) ifNotNil:
 			[self refactoringError: ('<1p> defines an instance variable named <2s>'
@@ -80,14 +91,17 @@ RBExtractToTemporaryRefactoring >> extract: anInterval to: aString from: aSelect
 { #category : 'transforming' }
 RBExtractToTemporaryRefactoring >> insertTemporary [
 
-	| node statementNode nodeReferences |
+	| node statementNode nodeReferences scope |
 	node := self parseTree whichNodeIsContainedBy: sourceInterval.
 	(node isNotNil and: [ node isValue ]) ifFalse: [
 		self refactoringError: 'Cannot assign to non-value nodes' ].
-	nodeReferences := node methodOrBlockNode allChildren select: [ :each |
-		                  each = node ].
-	statementNode := node statementNode.
-	statementNode parent
+	scope := node methodOrBlockNode.
+	nodeReferences := scope allChildren select: [ :each | each = node ].
+	"Insert the assignment before the first occurrence to be replaced,
+	but in the same scope as the selected expression,
+	even if that first occurrence is in a nested block."
+	statementNode := nodeReferences first statementNodeIn: scope.
+	scope body
 		addNode: (self constructAssignmentFrom: node) before: statementNode;
 		addTemporaryNamed: newVariableName.
 	nodeReferences do: [ :each |
@@ -102,16 +116,6 @@ RBExtractToTemporaryRefactoring >> parseTree [
 			parseTree ifNil: [ self refactoringError: 'Could not parse method' ]
 			].
 	^ parseTree doSemanticAnalysis
-]
-
-{ #category : 'preconditions' }
-RBExtractToTemporaryRefactoring >> preconditions [
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition isValidInstanceVariableName: newVariableName for: class)
-			& (RBCondition withBlock:
-						[self verifySelectedInterval.
-						self checkVariableName.
-						true])
 ]
 
 { #category : 'transforming' }
@@ -134,7 +138,7 @@ RBExtractToTemporaryRefactoring >> selectedSource [
 	^ source copyFrom: sourceInterval first to: sourceInterval last
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBExtractToTemporaryRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

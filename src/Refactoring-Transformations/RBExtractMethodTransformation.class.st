@@ -28,8 +28,7 @@ Class {
 		'subtree',
 		'arguments',
 		'temporaries',
-		'assignments',
-		'selectorOfExistingMethod'
+		'assignments'
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',
@@ -46,84 +45,50 @@ RBExtractMethodTransformation class >> allMethodsInHierarchyOf: aRBClass [
 ]
 
 { #category : 'api' }
-RBExtractMethodTransformation class >> extract: aString from: aSelector to: aNewSelector in: aClass [
+RBExtractMethodTransformation class >> extract: aString from: aSelector to: aNewSelector in: aClassName [
 
 	^ self new
 		extract: aString
 		from: aSelector
 		to: aNewSelector
-		in: aClass;
+		in: aClassName;
 		yourself
 ]
 
 { #category : 'api' }
-RBExtractMethodTransformation class >> model: aRBModel extract: aString from: aSelector to: aNewSelector in: aClass [
+RBExtractMethodTransformation class >> model: aRBModel extract: aString from: aSelector to: aNewSelector in: aClassName [
 
 	^ self new
 		model: aRBModel;
 		extract: aString
 		from: aSelector
 		to: aNewSelector
-		in: aClass;
+		in: aClassName;
 		yourself
 ]
 
 { #category : 'preconditions' }
-RBExtractMethodTransformation >> applicabilityPreconditions [ 
+RBExtractMethodTransformation >> applicabilityPreconditions [
 
-	| aSubtree |
-	aSubtree := self calculateSubtree.
+	^ self preconditionParsableSubtree
+	  & self preconditionNotInCascadedMessage
+	  & self preconditionTemporariesAreNotReadBeforeWritten
+	  & self preconditionOneAssignmentMaximum
+	  & self preconditionAssignmentsNotReadBeforeWritten
+	  & self preconditionSubtreeDoesNotContainsReturn
+]
 
-	^ (RBCondition withBlock: [
-		   aSubtree ifNil: [ self refactoringError: 'Cannot extract code.' ].
-		   true ]) & (RBCondition withBlock: [
-		   aSubtree parent isCascade ifTrue: [
-			   self refactoringError:
-				   'Cannot extract code in a cascaded message' ].
-		   true ]) & (RBCondition withBlock: [
-		   | tempVariables |
-		   tempVariables := self calculateTemporaries.
-		   (RBReadBeforeWrittenTester
-			    readBeforeWritten: tempVariables
-			    in: aSubtree) ifNotEmpty: [
-			   self refactoringError:
-				   'Cannot extract temporaries if they are read before written.' ].
-		   true ]) & (RBCondition withBlock: [
-		   self calculateAssignments size > 1 ifTrue: [
-			   self refactoringError:
-				   'Cannot extract two or more assignments to temporaries without also extracting all the references.' ].
-		   true ]) & (RBCondition withBlock: [
-		   | assignmentCollection |
-		   assignmentCollection := self calculateAssignments.
-		   assignmentCollection ifNotEmpty: [
-			   ((RBReadBeforeWrittenTester
-				     isVariable: assignmentCollection first
-				     readBeforeWrittenIn: aSubtree) or: [ aSubtree containsReturn ])
-				   ifTrue: [
-					   self refactoringError:
-						   ('Cannot extract assignment to <1s> without also extracting all the references.'
-							    expandMacrosWith: assignments asString) ] ].
-		   true ]) & (RBCondition withBlock: [
-		   | searchSpace |
-		   searchSpace := (self class allMethodsInHierarchyOf:
-			                   self definingClass) reject: [ :m |
-			                  m selector = selector ].
+{ #category : 'preconditions' }
+RBExtractMethodTransformation >> breakingChangePreconditions [ 
 
-		   (self parseTreeSearcherClass
-			    whichMethodIn: searchSpace
-			    matches: aSubtree)
-			   ifNotEmpty: [ :opportunities | "we found one method with similar body so we will use it instead of creating a new one"
-				   selectorOfExistingMethod := opportunities anyOne.
-				   true ]
-			   ifEmpty: [ true ] ])
-	
+	  ^ self preconditionHasSameExitPoint 
 ]
 
 { #category : 'executing' }
-RBExtractMethodTransformation >> buildTransformationFor: newMethodName withRemovedTemps: tempsToRemove [
+RBExtractMethodTransformation >> buildTransformationFor: newMethodName [
 
 	| needsReturn messageSend newArguments |
-	needsReturn := self calculateIfReturnIsNeeded.
+	needsReturn := self calculateIfReturnIsNeededInCaller.
 	newMethod := self generateNewMethodWith: newMethodName.
 	newArguments := self calculateNewArgumentsIn: newMethodName.
 	messageSend := self
@@ -143,46 +108,32 @@ RBExtractMethodTransformation >> buildTransformationFor: newMethodName withRemov
 				   to: messageSend
 				   inMethod: selector
 				   inClass: class);
-		  addAll: (tempsToRemove collect: [ :temporary |
-					   RBRemoveTemporaryVariableTransformation
-						   model: self model
-						   variable: temporary
-						   inMethod: selector
-						   inClass: class ]);
+		  add: (ReRemoveUnusedTemporaryVariableRefactoring
+				   model: self model
+				   inMethod: selector
+				   inClass: class name);
 		  yourself
 ]
 
 { #category : 'executing' }
 RBExtractMethodTransformation >> buildTransformations [
 
-	subtree := self calculateSubtree.
-
-	selectorOfExistingMethod
+	| selectorOfExistingMethod |
+	
+	selectorOfExistingMethod := self findMethodWithSimilarBody.
+	selectorOfExistingMethod 
 		ifNotNil: [
-			^ OrderedCollection with: (self parseTreeRewriterClass
+			^ OrderedCollection with: 
+					(self parseTreeRewriterClass
 					   replaceCode: subtree
 					   byMessageSendTo: selectorOfExistingMethod
 					   in:
 					   (self definingClass methodFor: self calculateTree selector)) ]
 		ifNil: [
-			^ (parseTree isNil or: [ subtree isNil ])
-				  ifTrue: [ OrderedCollection new ]
-				  ifFalse: [
-					  | tempsToRemove |
-					  arguments := self calculateArguments.
-					  temporaries := self calculateTemporaries.
-					  assignments := self calculateAssignments.
-					  tempsToRemove := self calculateTemporariesToRemove.
-
-					  assignments size > 1
-						  ifTrue: [ OrderedCollection new ]
-						  ifFalse: [
-							  | newMethodName |
-							  newMethodName := self newMethodName.
-							  newMethodName ifNil: [ ^ OrderedCollection new ].
-							  self
-								  buildTransformationFor: newMethodName
-								  withRemovedTemps: tempsToRemove ] ] ]
+			  | newMethodName |
+			  newMethodName := self newMethodName.
+			  newMethodName ifNil: [ ^ OrderedCollection new ].
+			  ^ self buildTransformationFor: newMethodName ]
 ]
 
 { #category : 'querying' }
@@ -190,6 +141,9 @@ RBExtractMethodTransformation >> calculateArguments [
 	"returns a collection of variables that should be passed as arguments"
 
 	| allVariables accesses assigned |
+	
+	subtree ifNil: [ ^ nil ].
+	
 	allVariables := parseTree allDefinedVariables difference: subtree allDefinedVariables.
 
 	accesses := allVariables select: [ :each | subtree references: each ].
@@ -201,7 +155,13 @@ RBExtractMethodTransformation >> calculateArguments [
 { #category : 'querying' }
 RBExtractMethodTransformation >> calculateAssignments [
 	"checks how many variables in the subtree are assigned to values."
+	"Those are temporaries (without temps defined in the subtree; see `calculateTemporaries` for details)
+	that have reference in a statement outside of the subtree.
+	For those variables we would need to return newly assigned value to preserve behavior."
 
+	"asssignments depend on subtree, if the subtree is nil, assignment will be nil as well"
+	subtree ifNil: [ ^ nil ].
+	
 	^ assignments ifNil: [
 		| sequenceNode whoDefinesTemp |
 		sequenceNode := (parseTree allChildren select: [ :each | each isSequence ]) last.
@@ -214,7 +174,7 @@ RBExtractMethodTransformation >> calculateAssignments [
 ]
 
 { #category : 'querying' }
-RBExtractMethodTransformation >> calculateIfReturnIsNeeded [
+RBExtractMethodTransformation >> calculateIfReturnIsNeededInCaller [
 
 	| searcher |
 	searcher := self parseTreeSearcher.
@@ -250,8 +210,16 @@ RBExtractMethodTransformation >> calculateSubtree [
 
 { #category : 'querying' }
 RBExtractMethodTransformation >> calculateTemporaries [
-	"returns a collection of variables that should be defined inside the method"
-
+	"returns a collection of variables that should be defined inside the method.
+	Those are all variables (temps and args) that are defined outside of subtree,
+	but are part of an assignment in the subtree.
+	If we want to assign something to them, we need to have a temp for it.
+	See calculateAssignments which then checks if we can preserve behavior
+	by returning that assignment value as extracted method's return value"
+	
+	"temporaries depend on subtree, if the subtree is nil, temporaries will be nil as well"
+	subtree ifNil: [ ^ nil ].
+	
 	^ temporaries ifNil: [
 		| allVariables accesses |
 		allVariables := parseTree allDefinedVariables difference: subtree allDefinedVariables.
@@ -261,28 +229,54 @@ RBExtractMethodTransformation >> calculateTemporaries [
 ]
 
 { #category : 'querying' }
-RBExtractMethodTransformation >> calculateTemporariesToRemove [
-	"returns a collection of variables that should be removed from the original method"
-
-	| newParseTree |
-	newParseTree := parseTree copy removeSubtree: subtree.
-	^ newParseTree allDefinedVariables
-		reject: [ :var | newParseTree references: var ]
-]
-
-{ #category : 'querying' }
 RBExtractMethodTransformation >> calculateTree [
 
 	^ parseTree ifNil: [ parseTree := self definingMethod ]
 ]
 
+{ #category : 'scripting api - conditions' }
+RBExtractMethodTransformation >> checkPreconditions [
+
+	super checkPreconditions.
+	self breakingChangePreconditions check ifFalse: [
+		self refactoringWarning:
+			self breakingChangePreconditions errorString ]
+]
+
 { #category : 'api' }
 RBExtractMethodTransformation >> extract: aString from: aSelector to: aNewSelector in: aClassName [
 
-	class := aClassName.
+	class := self model classNamed: aClassName.
 	selector := aSelector.
 	newSelector := aNewSelector.
 	sourceCode := aString
+]
+
+{ #category : 'api' }
+RBExtractMethodTransformation >> extractSource: aString fromMethodSource: source to: aNewSelector in: aClassName [
+
+	class := self model classNamed: aClassName.
+	parseTree := RBParser parseMethod: source. 
+	selector := parseTree selector.
+	newSelector := aNewSelector.
+	sourceCode := aString
+]
+
+{ #category : 'preconditions' }
+RBExtractMethodTransformation >> findMethodWithSimilarBody [
+
+	| searchSpace |
+	searchSpace := (self class allMethodsInHierarchyOf:
+		                self definingClass) reject: [ :m |
+		               m selector = selector ].
+
+	^ (self parseTreeSearcherClass
+		   whichMethodIn: searchSpace
+		   matches: subtree)
+		  ifNotEmpty: [ :opportunities | "we found one method with similar body so we will use it instead of creating a new one"
+			  ^ opportunities anyOne ]
+		  ifEmpty: [ ^ nil ]
+		
 ]
 
 { #category : 'executing' }
@@ -302,13 +296,15 @@ RBExtractMethodTransformation >> generateNewMethodWith: aMethodName [
 									statements: (OrderedCollection with: subtree)]).
 	temporaries do: [:each | newMethodNode body addTemporaryNamed: each].
 
-	((parseTree parentOfSubtree: subtree) uses: subtree)
+	((parseTree parentOfSubtree: subtree) isUsingAsReturnValue: subtree)
 		ifTrue: [ newMethodNode addReturn ].
 
-	assignments size = 1 ifTrue: [
+	assignments size = 1 
+		ifTrue: [
 		newMethodNode addNode:
 			(RBReturnNode value:
-			(RBVariableNode named: assignments first asString)) ].
+			(RBVariableNode named: assignments first asString)) ]
+		ifFalse: [RBReturnNodeAdderVisitor new visit: newMethodNode ].
 
 	^ newMethodNode
 ]
@@ -370,7 +366,72 @@ RBExtractMethodTransformation >> newMethodName [
 	^ methodName
 ]
 
-{ #category : 'printing' }
+{ #category : 'preconditions' }
+RBExtractMethodTransformation >> preconditionAssignmentsNotReadBeforeWritten [
+
+	assignments isEmptyOrNil ifTrue: [ ^ self trueCondition ].
+
+	^ ReVariablesNotReadBeforeWrittenCondition new subtree: subtree; variables: assignments
+]
+
+{ #category : 'preconditions' }
+RBExtractMethodTransformation >> preconditionHasSameExitPoint [
+
+	^ RBCondition
+		withBlock: [ subtree hasSameExitPoint ]
+		errorString: 'You cannot extract guard clauses and other expressions that directly impact the methods execution flow.'
+]
+
+{ #category : 'preconditions' }
+RBExtractMethodTransformation >> preconditionNotInCascadedMessage [
+
+	^ ReNotInCascadedMessageCondition new subtree: subtree
+]
+
+{ #category : 'preconditions' }
+RBExtractMethodTransformation >> preconditionOneAssignmentMaximum [
+	"When we have one assignment to temp or arg we don't need to worry about other references,
+	since we can return newly assigned value from the extracted method and preserve behavior.
+	When we have two or more assignments AND when they have references outside of extracted block,
+	we don't support return of multiple values, instead we notify the user that all references
+	to those temps should be extracted as well."
+
+	^ ReMaxOneAssignmentWithReferencesCondition new
+		  assignments: assignments
+]
+
+{ #category : 'preconditions' }
+RBExtractMethodTransformation >> preconditionParsableSubtree [
+
+	^ RBCondition
+		  withBlock: [ parseTree isNotNil & subtree isNotNil ]
+		  errorString: 'Cannot extract selected code, it is not a valid subtree.'
+]
+
+{ #category : 'preconditions' }
+RBExtractMethodTransformation >> preconditionSubtreeDoesNotContainsReturn [
+
+	assignments isEmptyOrNil ifTrue: [ ^ self trueCondition ].
+
+	^ ReSubtreeDoesNotContainReturnCondition new subtree: subtree
+]
+
+{ #category : 'preconditions' }
+RBExtractMethodTransformation >> preconditionTemporariesAreNotReadBeforeWritten [
+
+	^ ReVariablesNotReadBeforeWrittenCondition new subtree: subtree; variables: temporaries 
+]
+
+{ #category : 'transforming' }
+RBExtractMethodTransformation >> prepareForExecution [
+
+	subtree := self calculateSubtree.
+	temporaries := self calculateTemporaries.
+	assignments := self calculateAssignments.
+	arguments := self calculateArguments 
+]
+
+{ #category : 'storing' }
 RBExtractMethodTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

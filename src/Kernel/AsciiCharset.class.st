@@ -184,8 +184,8 @@ AsciiCharset class >> maxValue [
 { #category : 'casing' }
 AsciiCharset class >> toLowercase: aCharacter [
 	"(AsciiCharset toLowercase: $A) >>> $a."
-	"(AsciiCharset  toLowercase: $a) >>> $a."
-	"(AsciiCharset  toLowercase: $!) >>> $!"
+	"(AsciiCharset toLowercase: $a) >>> $a."
+	"(AsciiCharset toLowercase: $!) >>> $!"
 
 	(aCharacter between: $A and: $Z)
 		ifFalse: [ ^ aCharacter ].

@@ -68,10 +68,7 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		keyText: 'D';
 		selector: #debugIt;
 		help: nil;
-		iconName: #smallDebug.
-	(aBuilder item: #'Profile it' translated)
-		selector: #tallyIt;
-		iconName: #smallProfile;
+		iconName: #smallDebug;
 		withSeparatorAfter.
 	(aBuilder item: #'Find...' translated)
 		keyText: 'f';

@@ -146,10 +146,9 @@ MCClassDefinition >> classVarNames: cvarArray [
 
 { #category : 'printing' }
 MCClassDefinition >> classVariables [
-	^self needsSlotClassDefinition 
-		ifTrue: [self sortedVariablesOfType: #isClassVariable ]
-		ifFalse: [(self classVariablesString substrings: ' ') collect: [:x | x asSymbol => ClassVariable]].
-
+	^ self needsSlotClassDefinition 
+ 		ifTrue: [ self sortedVariablesOfType: #isClassVariable ]
+ 		ifFalse: [ self classVariablesString asClassVariableCollection ]
 ]
 
 { #category : 'printing' }
@@ -196,7 +195,7 @@ MCClassDefinition >> createClass [
 			  layoutClass: (ObjectLayout layoutForType: type);
 			  slots: self instanceVariables;
 			  sharedVariables: self classVariables;
-			  sharedPools: self sharedPoolsString;
+			  sharedPoolsFromString: self sharedPoolsString;
 			  classSlots: self classInstanceVariables;
 			  traitComposition: self traitCompositionCompiled;
 			  classTraitComposition: self classTraitCompositionCompiled;
@@ -333,9 +332,31 @@ MCClassDefinition >> kindOfSubclass [
 	^ ' subclass: '
 ]
 
+{ #category : 'printing' }
+MCClassDefinition >> layoutClassName [
+
+	type = #normal ifTrue: [ ^ #FixedLayout ].
+	type = #words ifTrue: [ ^ #WordLayout ].
+	type = #variable ifTrue: [ ^ #VariableLayout ].
+	type = #bytes ifTrue: [ ^ #ByteLayout ].
+	type = #weak ifTrue: [ ^ #WeakLayout ].
+	type = #compiledMethod ifTrue: [ ^ #CompiledMethodLayout ].
+	type = #immediate ifTrue: [ ^ #ImmediateLayout ].
+	type = #ephemeron ifTrue: [ ^ #EphemeronLayout ].
+	type = #DoubleByteLayout ifTrue: [ ^ #DoubleByteLayout ].
+	type = #DoubleWordLayout ifTrue: [ ^ #DoubleWordLayout ].
+	"To support user defined layouts (load them as normal classes), we just return the default"
+	^ #FixedLayout
+]
+
 { #category : 'installing' }
 MCClassDefinition >> load [
 	self createClass
+]
+
+{ #category : 'accessing' }
+MCClassDefinition >> name [
+	^ name
 ]
 
 { #category : 'accessing' }
@@ -532,6 +553,12 @@ MCClassDefinition >> stringForVariablesOfType: aSymbol [
 { #category : 'printing' }
 MCClassDefinition >> summary [
 	^ name
+]
+
+{ #category : 'accessing' }
+MCClassDefinition >> superclass [
+	
+	^ superclassName
 ]
 
 { #category : 'accessing' }

@@ -48,23 +48,33 @@ RBAddMethodTransformation class >> sourceCode: aString in: aClass withProtocol: 
 ]
 
 { #category : 'preconditions' }
-RBAddMethodTransformation >> applicabilityPreconditions [
+RBAddMethodTransformation >> applicabilityPreconditions [ 
 
-	rbMethod := self parserClass
-		parseMethod: sourceCode
-		onError: [ :string :position |
-			^ RBCondition
-				withBlock: [ self
-						refactoringError: 'The content of this method cannot be parsed.' ] ].
-	rbMethod selector
-		ifNil: [ self refactoringError: 'The method has no selector.' ].
-	^ self trueCondition
+	^ (RBCondition 
+		withBlock: [ 
+			rbMethod ifNil: [
+				self refactoringError: 'The content of this method cannot be parsed.' ]. 
+			true ])
+	& (RBCondition
+		withBlock: [ rbMethod selector ifNil: [ 
+				self refactoringError: 'The method has no selector.' ]. 
+			true])
 ]
 
 { #category : 'accessing' }
 RBAddMethodTransformation >> method [
 
 	^ rbMethod 
+]
+
+{ #category : 'transforming' }
+RBAddMethodTransformation >> prepareForExecution [
+
+	rbMethod := self parserClass
+		            parseMethod: sourceCode
+		            onError: [ :string :position |
+			            self refactoringError:
+				            'The content of this method cannot be parsed.' ]
 ]
 
 { #category : 'transforming' }
@@ -89,7 +99,7 @@ RBAddMethodTransformation >> sourceCode: aString in: aClassName withProtocol: aS
 	protocol := aSymbol
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBAddMethodTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

@@ -106,13 +106,17 @@ SystemDictionary >> allTraitsDo: aBlock [
 SystemDictionary >> at: aKey put: anObject [
 	"Override from Dictionary to check Undeclared and fix up
 	references to undeclared variables."
-	| index assoc |
+	| index assoc registeredMethods |
 	aKey isSymbol ifFalse: [ self error: 'Only symbols are accepted as keys in SystemDictionary' ].
+
+	registeredMethods := #().
+
 	((self includesKey: aKey) not and: [ Undeclared includesKey: aKey ]) ifTrue: [
  			| undeclared |
  			undeclared := Undeclared associationAt: aKey.
  			"Undeclared variables record using methods in a property, remove. Boostrap might have used Associations"
- 			(undeclared class == UndeclaredVariable) ifTrue: [undeclared removeProperty: #registeredMethods ifAbsent: [ ]]. 
+ 			(undeclared class == UndeclaredVariable) ifTrue: [
+				registeredMethods := undeclared removeProperty: #registeredMethods ifAbsent: [ #() ]]. 
  			"and change class to be Global" 
  			self add: (undeclared primitiveChangeClassTo: GlobalVariable new).
  			Undeclared removeKey: aKey].
@@ -122,6 +126,9 @@ SystemDictionary >> at: aKey put: anObject [
  	assoc
  		ifNil: [self atNewIndex: index put: (GlobalVariable key: aKey value: anObject). self flushClassNameCache]
  		ifNotNil: [assoc value: anObject].
+		
+	registeredMethods do: [ :aMethod | aMethod isInstalled ifTrue: [aMethod recompile] ].		
+
  	^ anObject
 ]
 
@@ -253,7 +260,6 @@ SystemDictionary >> forgetClass: aClass [
 	Note that this doesn't do everything required to dispose of a class - to do that use Class>>removeFromSystem."
 
 	self organization removeClass: aClass.
-	SessionManager default unregisterClassNamed: aClass name.
 	self removeKey: aClass name ifAbsent: [  ]
 ]
 
@@ -274,7 +280,7 @@ SystemDictionary >> hasBindingThatBeginsWith: aString [
 	name := self classNames findBinary: searchBlock ifNone: [ nil ].
 	name ifNotNil: [ ^ true ].
 	name := self nonClassNames findBinary: searchBlock ifNone: [ nil ].
-	^ name notNil
+	^ name isNotNil
 ]
 
 { #category : 'accessing - classes and traits' }
@@ -419,7 +425,6 @@ SystemDictionary >> renameClass: aClass from: oldName [
 	self removeKey: oldName.
 	oldref key: aClass name.
 	self add: oldref. "Old association preserves old refs"
-	SessionManager default renamedClass: aClass from: oldName to: aClass name.
 	self flushClassNameCache.
 	self class codeChangeAnnouncer classRenamed: aClass from: oldName to: aClass name.
 	aClass subclassesDo: [ :subclass | self class codeChangeAnnouncer classParentOf: subclass renamedFrom: oldName to: aClass name ]

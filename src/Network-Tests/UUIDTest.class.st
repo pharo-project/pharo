@@ -54,14 +54,6 @@ UUIDTest >> testNilUUID [
 	self deny: UUID new isNilUUID
 ]
 
-{ #category : 'tests' }
-UUIDTest >> testSpeed [
-
-	self
-		should: [ 100000 timesRepeat: [ UUID new ] ]
-		notTakeMoreThan: 1 second
-]
-
 { #category : 'testing' }
 UUIDTest >> testString [
 

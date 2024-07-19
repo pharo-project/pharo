@@ -31,7 +31,7 @@ NautilusRefactoring >> chooseFrom: anArray title: aString lines: aCollection [
 		ifTrue: [ ^ nil ].
 	anArray size = 1
 		ifTrue: [ ^ anArray first ].
-	^ UIManager default chooseOrRequestFrom: anArray lines: aCollection title: aString
+	^ self morphicUIManager chooseOrRequestFrom: anArray lines: aCollection title: aString
 ]
 
 { #category : 'display' }
@@ -62,6 +62,12 @@ NautilusRefactoring >> model: aNautilusUI [
 	model := aNautilusUI
 ]
 
+{ #category : 'display' }
+NautilusRefactoring >> morphicUIManager [
+
+	^ MorphicUIManager new
+]
+
 { #category : 'option' }
 NautilusRefactoring >> refactoringOptions: aRefactoring [
 	aRefactoring
@@ -81,8 +87,6 @@ NautilusRefactoring >> refactoringOptions: aRefactoring [
 		toUse: [ :ref :string | self shouldInlineExpression: string ];
 		setOption: #alreadyDefined
 		toUse: [ :ref :class :selector | self shouldOverride: selector in: class ];
-		setOption: #useExistingMethod
-		toUse: [ :ref :selector | self shouldUseExistingMethod: selector ];
 		setOption: #searchInWholeHierarchy
 		toUse: [ :ref :class | self shouldSearchInHierarchy: class ]
 ]
@@ -94,9 +98,12 @@ NautilusRefactoring >> request: aString [
 
 { #category : 'display' }
 NautilusRefactoring >> request: requestString initialAnswer: initialAnswerString [
+
 	| answer |
-	answer := UIManager default request: requestString initialAnswer: initialAnswerString.
-	answer isEmptyOrNil ifTrue:  [ RefactoringAborted signal ].
+	answer := self morphicUIManager
+		          request: requestString
+		          initialAnswer: initialAnswerString.
+	answer isEmptyOrNil ifTrue: [ RefactoringAborted signal ].
 	^ answer
 ]
 
@@ -169,16 +176,12 @@ NautilusRefactoring >> shouldOverride: aSelector in: aClass [
 
 { #category : 'option' }
 NautilusRefactoring >> shouldSearchInHierarchy: class [
-	^ class subclasses
-		ifNotEmpty: [
-			UIManager default
-				confirm: 'Do you want to search occurrences in the whole hierarchy?'
-				label: 'Warning'
-		] ifEmpty: [ false ]
-]
 
-{ #category : 'option' }
-NautilusRefactoring >> shouldUseExistingMethod: aMethodName [
-	"for now we always want to use the existing method."
-	^ true
+	^ class subclasses
+		  ifNotEmpty: [
+			  self morphicUIManager
+				  confirm:
+				  'Do you want to search occurrences in the whole hierarchy?'
+				  label: 'Warning' ]
+		  ifEmpty: [ false ]
 ]

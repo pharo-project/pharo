@@ -20,7 +20,8 @@ Class {
 
 { #category : 'testing' }
 ClyConvertMethodGroupToProtocolCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isProtocolSelected not
+
+	^ aToolContext isExtensionMethodGroupSelected
 ]
 
 { #category : 'activation' }

@@ -91,5 +91,11 @@ ClyMethodsInProtocolQuery >> protocol: protocolName [
 { #category : 'testing' }
 ClyMethodsInProtocolQuery >> selectsMethod: aMethod [
 
-	^ aMethod protocolName == protocol
+	| realMethod |
+	
+	realMethod := aMethod isRGObject
+		ifTrue: [ aMethod realMethod ]
+		ifFalse: [ aMethod ].
+	
+	^ realMethod protocolName == protocol
 ]

@@ -104,7 +104,6 @@ more; go get coffee.
 Random class >> primitiveRandomNumber: stateArray [
 	"Answer a random Float in the interval [0 to 1)."
 
-	<primitive: 231>
 	| count returnValue |
 	returnValue := stateArray at: 1.
 

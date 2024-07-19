@@ -74,7 +74,7 @@ FTExampleMethodTableDataSource >> nameColumn: column row: rowIndex [
 FTExampleMethodTableDataSource >> nameMenuColumn: column row: rowIndex [
 	| method menu |
 	method := (self elementAt: rowIndex) method.
-	menu := UIManager default newMenuIn: self table for: self.
+	menu := self morphicUIManager newMenuIn: self table for: self.
 	menu add: ('Browse ', (method methodClass name), '>>#', method selector)
 		target: method
 		selector: #browse.
@@ -97,7 +97,7 @@ FTExampleMethodTableDataSource >> originColumn: column row: rowIndex [
 FTExampleMethodTableDataSource >> originMenuColumn: column row: rowIndex [
 	| method menu |
 	method := (self elementAt: rowIndex) method.
-	menu := UIManager default newMenuIn: self table for: self.
+	menu := self morphicUIManager newMenuIn: self table for: self.
 	menu add: ('Browse ', (method methodClass name))
 		target: method methodClass
 		selector: #browse.

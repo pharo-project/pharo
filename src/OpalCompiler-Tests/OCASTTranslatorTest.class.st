@@ -79,7 +79,7 @@ OCASTTranslatorTest >> encoder: anEncoder [
 { #category : 'support' }
 OCASTTranslatorTest >> executeMethod: aMethod onReceiver: receiver [
 
-	^ aMethod valueWithReceiver: receiver arguments: #()
+	^ aMethod valueWithReceiver: receiver
 ]
 
 { #category : 'support' }

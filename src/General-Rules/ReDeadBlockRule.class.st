@@ -19,7 +19,7 @@ ReDeadBlockRule class >> uniqueIdentifierName [
 
 { #category : 'running' }
 ReDeadBlockRule >> basicCheck: node [
-	^ node isBlock and: [ node isUsed not ]
+	^ node isBlock and: [ node isUsedAsReturnValue not ]
 ]
 
 { #category : 'accessing' }

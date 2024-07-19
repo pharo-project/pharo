@@ -43,13 +43,12 @@ SystemDependenciesTest >> externalDependendiesOf: packagesCollection [
 
 { #category : 'known dependencies' }
 SystemDependenciesTest >> knownBasicToolsDependencies [
-
 	"ideally this list should be empty"
 
 	^ #( 'AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' #'Athens-Morphic'
-	     #'Refactoring-Critics' #'Commander-Core'
-	     #Reflectivity #'Reflectivity-Tools' #Shout 'ParametrizedTests'
-	     'HeuristicCompletion-Model' #VariablesLibrary #'Spec2-CommonWidgets')
+	     #'Refactoring-Critics' #'Commander-Core' #Reflectivity
+	     #'Reflectivity-Tools' #Shout 'HeuristicCompletion-Model'
+	     #VariablesLibrary #'Spec2-CommonWidgets' #'NewTools-Scopes' )
 ]
 
 { #category : 'known dependencies' }
@@ -61,10 +60,11 @@ SystemDependenciesTest >> knownCompilerDependencies [
 
 { #category : 'known dependencies' }
 SystemDependenciesTest >> knownIDEDependencies [
-
 	"ideally this list should be empty"
 
-	^ #('Spec2-CommonWidgets' #'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits' #'AI-Algorithms-Graph')
+	^ #( 'Spec2-CommonWidgets' #'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits'
+	     #'AI-Algorithms-Graph' 'DebugPoints' 'Microdown' 'Microdown-RichTextComposer'
+	     #'NewTools-Scopes' #'NewTools-Scopes-Editor' )
 ]
 
 { #category : 'known dependencies' }
@@ -87,15 +87,16 @@ SystemDependenciesTest >> knownLocalMonticelloDependencies [
 SystemDependenciesTest >> knownMorphicCoreDependencies [
 	"ideally this list should be empty"
 
-	^ #( #'Keymapping-KeyCombinations' #'Refactoring-Critics' #'Refactoring-Environment')
+	^ #(#'Fonts-Infrastructure' #'FreeType' #'Keymapping-KeyCombinations' #'Morphic-Base' #'Refactoring-Critics' #'Refactoring-Environment' #'Rubric')
 ]
 
 { #category : 'known dependencies' }
 SystemDependenciesTest >> knownMorphicDependencies [
 	"ideally this list should be empty"
 
-	^ #(#'Refactoring-Critics' #'Refactoring-Environment' #'Spec2-Core' #'Tool-FileList' #'Tool-Profilers'
-	#'Athens-Morphic' #'Tools-CodeNavigation' "Rubric has a dependency on It" 'Debugger-Oups')
+	^ #( #'Refactoring-Critics' #'Refactoring-Environment'
+	     #'Spec2-Core' #'Tool-FileList' #'Athens-Morphic'
+	     #'Tools-CodeNavigation' 'Debugger-Oups' ) "Rubric has a dependency on It"
 ]
 
 { #category : 'known dependencies' }
@@ -103,13 +104,6 @@ SystemDependenciesTest >> knownSUnitDependencies [
 	"ideally this list should be empty"
 
 	^ #( #'Refactoring-Critics' #'Refactoring-Environment' )
-]
-
-{ #category : 'known dependencies' }
-SystemDependenciesTest >> knownSUnitKernelDependencies [
-	"ideally this list should be empty"
-
-	^ #( #'FileSystem-Core' )
 ]
 
 { #category : 'known dependencies' }
@@ -133,7 +127,7 @@ SystemDependenciesTest >> knownUIDependencies [
 	"ideally this list should be empty"
 
 	^ #('AST-Core-Tests'  'Athens-Cairo' 'Athens-Core'
-	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers' #'HeuristicCompletion-Model' 'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets')
+	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'HeuristicCompletion-Model' 'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets')
 ]
 
 { #category : 'accessing' }
@@ -258,8 +252,8 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	BaselineOfMorphic.
 	BaselineOfMorphicCore.
 	BaselineOfSlot.
-	BaselineOfParametrizedTests.
 	BaselineOfSUnit.
+	BaselineOfShift.
 	BaselineOfTraits.
 	BaselineOfUI.
 	BaselineOfUnifiedFFI.
@@ -439,9 +433,10 @@ SystemDependenciesTest >> testExternalSUnitKernelDependencies [
 		BaselineOfPharoBootstrap kernelPackageNames,
 		BaselineOfPharoBootstrap multilingualPackageNames,
 		BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
+		BaselineOfPharoBootstrap fileSystemPackageNames,
 		BaselineOfPharoBootstrap sUnitPackageNames).
 
-	self assertCollection: dependencies hasSameElements: self knownSUnitKernelDependencies
+	self assertEmpty: dependencies
 ]
 
 { #category : 'tests' }
@@ -473,8 +468,7 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		BaselineOfThreadedFFI corePackageNames,
 
 		"Tests"
-		BaselineOfSUnit defaultPackageNames,
-		BaselineOfParametrizedTests allPackageNames))
+		BaselineOfSUnit defaultPackageNames))
 			copyWithoutAll: self knownMorphicDependencies, self knownBasicToolsDependencies, self knownUIDependencies.
 
 	self assertCollection: dependencies hasSameElements: self knownSpec2Dependencies
@@ -505,7 +499,6 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
 		BaselineOfTraits corePackages,
-		BaselineOfParametrizedTests allPackageNames,
 		BaselineOfSUnit defaultPackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,

@@ -24,8 +24,8 @@ MenuRegistrationExample class >> mostUsedToolsOn: aBuilder [
 			(aBuilder item: #'System browser')
 				selector: #openClassBrowser;
 				icon: (aBuilder iconNamed: Smalltalk tools browser taskbarIconName).
-			(aBuilder item: #Workspace)
-				selector: #openWorkspace;
+			(aBuilder item: #Playground)
+				selector: #openPlayground;
 				icon: (aBuilder iconNamed: Smalltalk tools workspace taskbarIconName).
 			]
 ]
@@ -79,8 +79,11 @@ MenuRegistrationExample class >> pragmaKeyword [
 
 { #category : 'menu actions' }
 MenuRegistrationExample class >> quitSession [
+
 	Smalltalk
-		snapshot: (UIManager default confirm: 'Save changes before quitting?' translated orCancel: [ ^ self ])
+		snapshot: (MorphicUIManager new
+				 confirm: 'Save changes before quitting?' translated
+				 orCancel: [ ^ self ])
 		andQuit: true
 ]
 

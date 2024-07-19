@@ -38,7 +38,7 @@ MethodChunk >> description [
 	^ 'Method ( ', behaviorName , ' >> ' , (contents first: (20 min: contents size)), ' )' , stamp asString
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 MethodChunk >> displayStringOn: stream [
 	stream nextPutAll: self description
 ]

@@ -112,29 +112,6 @@ Breakpoint class >> cleanUp [
 	self removeAll
 ]
 
-{ #category : 'world menu' }
-Breakpoint class >> debugWorldMenuOn: aBuilder [
-
-	<worldMenu>
-	(aBuilder item: #'Remove all Breakpoints')
-		parent: #Breakpoints;
-		order: 2;
-		help: 'Remove all the breakpoints of the image.';
-		action: [ self removeAll ].
-
-	(aBuilder item: #'Enable all Breakpoints')
-		parent: #Breakpoints;
-		order: 2;
-		help: 'Enable all the breakpoints of the image.';
-		action: [ self all do: #enable ].
-
-	(aBuilder item: #'Disable all Breakpoints')
-		parent: #Breakpoints;
-		order: 2;
-		help: 'Disable all the breakpoints of the image.';
-		action: [ self all do: #disable ]
-]
-
 { #category : 'system announcements' }
 Breakpoint class >> handleClassRemoved: anAnnouncement [
 
@@ -524,7 +501,7 @@ Breakpoint >> removeFromNodeProperty [
 Breakpoint >> requestConditionBlock [
 	| script |
 	script := 'true'.
-	script := UIManager default
+	script := MorphicUIManager new
 		request: 'This expression will be evaluated in the context of the position of this breakpoint.
 		You can use variables, globals, `thisContext`, `self` and `super`.
 		`:=` and Pool variables are not supported`'

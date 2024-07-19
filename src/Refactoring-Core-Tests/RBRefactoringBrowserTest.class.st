@@ -11,14 +11,15 @@ RBRefactoringBrowserTest class >> isAbstract [
 ]
 
 { #category : 'private' }
-RBRefactoringBrowserTest >> executeRefactoring: aRefactoring [
-	aRefactoring generateChanges.
-	self parserClass parseExpression: aRefactoring storeString
+RBRefactoringBrowserTest >> abstractTransformationClassVariable [
+
+	^ RBAbstractTransformation classVariables first name
 ]
 
 { #category : 'private' }
-RBRefactoringBrowserTest >> objectClassVariable [
-	^Object classPool keys detect: [:each | true]
+RBRefactoringBrowserTest >> executeRefactoring: aRefactoring [
+	aRefactoring generateChanges.
+	self parserClass parseExpression: aRefactoring storeString
 ]
 
 { #category : 'helpers' }

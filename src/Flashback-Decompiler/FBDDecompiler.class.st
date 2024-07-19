@@ -340,7 +340,7 @@ FBDDecompiler >> interpret: seq1 then: seq2 distance: distance [
 			instructionStream advanceToFollowingPc ].
 
 	stackSize := simulatedStack size.
-	hasPopped := self interpretSeq: seq1 baseStackSize: stackSize distance: distance - topValue notNil asBit.
+	hasPopped := self interpretSeq: seq1 baseStackSize: stackSize distance: distance - topValue isNotNil asBit.
 	jmpSz := jumpSize.
 	jumpSize := 0.
 	topValue ifNotNil: [:e | simulatedStack addLast: e ].

@@ -15,6 +15,13 @@ Class {
 	#tag : 'VariablesAndSlots'
 }
 
+{ #category : 'tests' }
+ClassVariableTest >> testAsClassVariableCollection [
+
+ 	self assert: 'a b' asClassVariableCollection equals: {#a => ClassVariable. #b => ClassVariable}.
+	self assert: ('a _a a_a b b_' asClassVariableCollection collect: [ :i | i name ]) equals: #(#a #_a #a_a #b #b_)
+]
+
 { #category : 'tests - properties' }
 ClassVariableTest >> testIsReadInMethod [
 
@@ -58,7 +65,10 @@ ClassVariableTest >> testNotReadInMethod [
 { #category : 'tests - properties' }
 ClassVariableTest >> testNotWrittenInMethodWhenItIsOnlyRead [
 
+	| constantlockForTest |
 	DefaultTimeLimit printString. "reading class variable".
+	"add a clean block to check that is works"
+	constantlockForTest := [  ].
 
 	self deny: ((TestCase classVariableNamed: #DefaultTimeLimit) isWrittenIn: self class >> testSelector)
 ]
@@ -154,6 +164,11 @@ ClassVariableTest >> testScope [
 	variable := SmalltalkImage classVariableNamed: #CompilerClass.
 	self assert: variable scope equals: SmalltalkImage.
 	self assert: (variable scope lookupVar: variable name) equals: variable
+]
+
+{ #category : 'tests' }
+ClassVariableTest >> testUsingClasses [
+	self assert: (Character classVariableNamed: #CharSet) usingClasses anyOne identicalTo: Character class
 ]
 
 { #category : 'tests' }

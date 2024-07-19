@@ -32,6 +32,17 @@ EpMethodAddition >> affectedPackageName [
 	^ method package
 ]
 
+{ #category : 'accessing' }
+EpMethodAddition >> fileOutEntryOn: aWriteStream [
+	"Write a code chunk to create the receiver's method on aWriteStream"
+
+	self methodAffected origin 
+		ifNotNil: [ : methodDefinition |
+			self methodAffected origin 
+				printMethodChunk: self methodAffected selector 
+				on: aWriteStream ]
+]
+
 { #category : 'initialization' }
 EpMethodAddition >> initializeMethod: aCompiledMethod [
 

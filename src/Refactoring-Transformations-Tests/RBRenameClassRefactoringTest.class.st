@@ -9,25 +9,25 @@ Class {
 { #category : 'failure tests' }
 RBRenameClassRefactoringTest >> testFailureBadName [
 
-	self shouldFail: (RBRenameClassRefactoring
+	self shouldFail: (ReRenameClassRefactoring
 			 rename: #RBLintRuleTestData
-			 to: self objectClassVariable).
+			 to: #TextConstants).
 	self shouldFail:
-		(RBRenameClassRefactoring rename: #RBLintRuleTestData to: #'Ob ject')
+		(ReRenameClassRefactoring rename: #RBLintRuleTestData to: #'Ob ject')
 ]
 
 { #category : 'failure tests' }
 RBRenameClassRefactoringTest >> testFailureExistingName [
 
 	self shouldFail:
-		(RBRenameClassRefactoring rename: self class name to: #Object)
+		(ReRenameClassRefactoring rename: self class name to: #Object)
 ]
 
 { #category : 'failure tests' }
 RBRenameClassRefactoringTest >> testFailureMetaClassFailure [
 
 	self shouldFail:
-		(RBRenameClassRefactoring rename: self class class name to: #Foo)
+		(ReRenameClassRefactoring rename: self class class name to: #Foo)
 ]
 
 { #category : 'tests' }
@@ -43,8 +43,8 @@ RBRenameClassRefactoringTest >> testModelRenameSequenceClass [
 		compile: 'objectName ^ #(Foo1)' classified: #( accessing ).
 
 
-	(RBRenameClassRefactoring model: model rename: #Foo1 to: #Foo2) generateChanges.
-	(RBRenameClassRefactoring model: model rename: #Foo2 to: #Foo3) generateChanges.
+	(ReRenameClassRefactoring model: model rename: #Foo1 to: #Foo2) generateChanges.
+	(ReRenameClassRefactoring model: model rename: #Foo2 to: #Foo3) generateChanges.
 
 	self deny: (model includesClassNamed: #Foo1).
 	self deny: (model includesClassNamed: #Foo2).
@@ -69,7 +69,7 @@ RBRenameClassRefactoringTest >> testRefactoring [
 		compile: 'foo	^Object' classified: #( #accessing );
 		compile: 'objectName ^#(Object)' classified: #( #accessing ).
 
-	refactoring := RBRenameClassRefactoring model: model rename: #Object to: #Thing.
+	refactoring := ReRenameClassRefactoring model: model rename: #Object to: #Thing.
 
 	refactoring generateChanges.
 
@@ -88,7 +88,7 @@ RBRenameClassRefactoringTest >> testRenameClass [
 	classB := ('RBNew', 'ClassName') asSymbol.
 	classC := #RBSubclassOfClassToRename.
 
-	refactoring := RBRenameClassRefactoring rename: classA to: classB.
+	refactoring := ReRenameClassRefactoring rename: classA to: classB.
 	refactoring generateChanges.
 
 	aModel := refactoring model.
@@ -113,7 +113,7 @@ RBRenameClassRefactoringTest >> testRenameClassFromTrait [
 	classA := ('RBClass', 'ToRename') asSymbol.
 	classB := ('RBNew', 'ClassName') asSymbol.
 	classC := #RBTDummy.
-	refactoring := RBRenameClassRefactoring rename: classA to: classB.
+	refactoring := ReRenameClassRefactoring rename: classA to: classB.
 	refactoring generateChanges.
 	aModel := refactoring model.
 	self assert: (aModel includesClassNamed: classB).
@@ -142,11 +142,11 @@ rename class B to A
 		            yourself.
 	addClass generateChanges.
 	self assert: (model includesClassNamed: classA).
-	renameClass := RBRenameClassRefactoring model: model rename: classA to: classC.
+	renameClass := ReRenameClassRefactoring model: model rename: classA to: classC.
 	renameClass generateChanges.
 	self deny: (model includesClassNamed: classA).
 	self assert: (model includesClassNamed: classC).
-	renameClass := RBRenameClassRefactoring model: model rename: classB to: classA.
+	renameClass := ReRenameClassRefactoring model: model rename: classB to: classA.
 	renameClass generateChanges.
 	self deny: (model includesClassNamed: classB).
 	self assert: (model includesClassNamed: classC).

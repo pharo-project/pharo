@@ -47,6 +47,25 @@ RBTransformationsTest >> testAddMethodCommentTransform [
 ]
 
 { #category : 'tests' }
+RBTransformationsTest >> testAddMethodCommentTransformWithExistingQuotationMarks [ 
+
+	| transformation method |
+	transformation := (RBAddMethodCommentTransformation
+		                   comment: '"New comment for method"'
+		                   inMethod: #one
+		                   inClass: self changeMockClass name)
+		                  generateChanges.
+
+	self assert: transformation model changes changes size equals: 1.
+
+	method := (transformation model classNamed: self changeMockClass name)
+		          methodFor: #one.
+	self
+		assert: method ast comments first contents
+		equals: 'New comment for method'
+]
+
+{ #category : 'tests' }
 RBTransformationsTest >> testAddMethodTransform [
 
 	| transformation class |
@@ -321,7 +340,7 @@ RBTransformationsTest >> testRenameClassTransform [
 	| transformation class newClassName oldClassName |
 	newClassName := #RBNewDummyClassName.
 	oldClassName := RBClassToRename name asSymbol.
-	transformation := (RBRenameClassRefactoring
+	transformation := (ReRenameClassRefactoring
 		                   rename: oldClassName
 		                   to: newClassName) generateChanges.
 

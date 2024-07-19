@@ -8,7 +8,18 @@ Class {
 
 { #category : 'accessing' }
 MetacelloBaselineSpecGenerator >> projectSpecCreationBlock [
-    ^ [ :projectName | {(MetacelloMCBaselineProject new baselineOfProjectSpec name: projectName)} ]
+
+	^ [ :projectName |
+	  | projectSpec spec |
+	  projectSpec := MetacelloMCBaselineProject new baselineOfProjectSpec
+		                 name: projectName;
+		                 className: 'BaselineOf' , projectName;
+		                 yourself.
+	  spec := MetacelloMCBaselineProject new projectReferenceSpec
+		          name: projectName;
+		          projectReference: projectSpec;
+		          yourself.
+	  { spec } ]
 ]
 
 { #category : 'accessing' }

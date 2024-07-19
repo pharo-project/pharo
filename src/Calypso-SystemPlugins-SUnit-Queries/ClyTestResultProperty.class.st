@@ -89,15 +89,7 @@ ClyTestResultProperty >> brokenCount [
 { #category : 'presentation' }
 ClyTestResultProperty >> createIcon [
 
-	allCount = 0 ifTrue: [ ^ self iconNamed: #testNotRun ].
-	allCount = successCount
-		ifTrue: [ ^ self iconNamed: #testGreen ].
-	errorCount = 0 & (failureCount > 0)
-		ifTrue: [ ^ self iconNamed: #testYellow ].
-	errorCount > 0
-		ifTrue: [ ^ self iconNamed: #testRed].
-
-	^ self iconNamed: #testNotRun
+	^ self iconNamed: self iconName
 ]
 
 { #category : 'accessing' }
@@ -123,6 +115,20 @@ ClyTestResultProperty >> failureCount: anObject [
 { #category : 'testing' }
 ClyTestResultProperty >> hasBrokenTests [
 	^failureCount > 0 | (errorCount > 0)
+]
+
+{ #category : 'presentation' }
+ClyTestResultProperty >> iconName [
+
+	allCount = 0 ifTrue: [ ^ #testNotRun ].
+	allCount = successCount
+		ifTrue: [ ^ #testGreen ].
+	errorCount = 0 & (failureCount > 0)
+		ifTrue: [ ^ #testYellow ].
+	errorCount > 0
+		ifTrue: [ ^ #testRed].
+
+	^ #testNotRun
 ]
 
 { #category : 'initialization' }

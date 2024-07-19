@@ -15,7 +15,7 @@ PackageOrganizer >> categories [
 	categories := Set new.
 	self packages do: [ :p |
 		categories add: p name.
-		categories addAll: (p classTags collect: [ :tag | tag categoryName ]) ].
+		categories addAll: (p tags collect: [ :tag | tag categoryName ]) ].
 
 	^ categories asArray
 ]
@@ -156,7 +156,7 @@ PackageOrganizer >> removeEmptyPackages [
 PackageOrganizer >> tagForCategory: category [
 
 	(self packageMatchingExtensionName: category) ifNotNil: [ :package |
-		package classTagNamed: (category withoutPrefix: package name , '-') ifPresent: [ :tag | ^ tag ] ].
+		package tagNamed: (category withoutPrefix: package name , '-') ifPresent: [ :tag | ^ tag ] ].
 
 	^ nil
 ]

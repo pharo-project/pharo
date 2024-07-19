@@ -684,7 +684,7 @@ ExternalType >> setReferencedType: aType [
 	referencedType := aType
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 ExternalType >> storeOn: aStream [
 
 	referentClass

@@ -42,7 +42,7 @@ RBInsertClassParametrizedTest >> testFailureExistingClassName [
 
 	self shouldFail: ((rbClass className: #Object)
 			 superclass: self class name;
-			 packageName: #'Refactoring-Testirg')
+			 packageName: #'Refactoring-Testing')
 ]
 
 { #category : 'failure tests' }
@@ -144,4 +144,27 @@ RBInsertClassParametrizedTest >> testModelInsertClass [
 	self assert: (insertedClass subclasses includes: subclass).
 	self assert: subclass classSide superclass equals: insertedClass classSide.
 	self assert: (insertedClass classSide subclasses includes: subclass classSide)
+]
+
+{ #category : 'tests' }
+RBInsertClassParametrizedTest >> testModelInsertClassFromBehaviorSuperclass [
+
+	| refactoring insertedClass superClass subclass |
+	superClass := model classNamed: #Foo.
+	subclass := model classNamed: #Bar.
+
+	refactoring := (rbClass model: model className: #InsertedClass)
+		               superclass: superClass;
+		               subclasses: { subclass };
+		               packageName: #'Refactoring-Testing'.
+
+	self executeRefactoring: refactoring.
+
+	insertedClass := model classNamed: #InsertedClass.
+	self assert: insertedClass superclass equals: superClass.
+	self assert: insertedClass classSide superclass equals: superClass classSide.
+
+	self assert: subclass superclass equals: insertedClass.
+	self assert: subclass classSide superclass equals: insertedClass classSide.
+
 ]

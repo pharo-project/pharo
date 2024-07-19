@@ -51,6 +51,12 @@ MetacelloBaselineConstructor >> projectClass [
     ^ MetacelloMCBaselineProject
 ]
 
+{ #category : 'loading' }
+MetacelloBaselineConstructor >> repositoryDescriptions [
+	
+	^ self project repositoryDescription
+]
+
 { #category : 'api' }
 MetacelloBaselineConstructor >> version: anObject [
 

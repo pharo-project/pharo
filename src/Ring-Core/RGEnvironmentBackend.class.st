@@ -518,7 +518,7 @@ RGEnvironmentBackend >> hasFullyUnresolved: anRGObject [
 { #category : 'method' }
 RGEnvironmentBackend >> hasSourceCodeFor: anRGMethod [
 
-	^ anRGMethod pvtSourceCode notNil
+	^ anRGMethod pvtSourceCode isNotNil
 ]
 
 { #category : 'initialization' }

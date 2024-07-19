@@ -67,7 +67,7 @@ FFIStringCalloutTest >> testLegacyCalloutShouldReturnStringArgument [
 		newFFIMethodWithSignature: #( char* f ( void ) )
 		doing: [ 'string' ].
 
-	return := method valueWithReceiver: nil arguments: #( ).
+	return := method valueWithReceiver: nil.
 
 	self assert: return equals: 'string'
 ]
@@ -116,7 +116,7 @@ FFIStringCalloutTest >> testStringEncodingWithMandatoryEncodingWithSpecifiedEnco
 		newFFIMethodWithSignature: #( char* f ( ) )
 		doing: [ 'test' ]
 		options: #( optStringEncodingUtf8 optStringEncodingMandatory ).
-	result := method valueWithReceiver: nil arguments: #( ).
+	result := method valueWithReceiver: nil.
 
 	self assert: result equals: 'test'
 ]
@@ -140,7 +140,7 @@ FFIStringCalloutTest >> testUtf8CalloutShouldReturnDecodeUtf8EncodedString [
 		newFFIMethodWithSignature: #( char* f ( ) )
 		doing: [ 	ByteString withAll: 'les élèves français' utf8Encoded ]
 		options: #( optStringEncodingUtf8 ).
-	return := method valueWithReceiver: nil arguments: #( ).
+	return := method valueWithReceiver: nil.
 
 	self assert: return equals: 'les élèves français'
 ]

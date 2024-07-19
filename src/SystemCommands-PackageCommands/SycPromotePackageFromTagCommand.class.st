@@ -40,7 +40,7 @@ SycPromotePackageFromTagCommand >> defaultMenuItemName [
 { #category : 'execution' }
 SycPromotePackageFromTagCommand >> execute [
 
-	(package classTagNamed: classTag) promoteAsPackage
+	(package tagNamed: classTag) promoteAsPackage
 ]
 
 { #category : 'execution' }

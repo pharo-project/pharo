@@ -45,7 +45,7 @@ TraitFileOutTest >> setUp [
 	cb compile: 'cb' classified: #cat1.
 
 	"make the class of cb also use tc:"
-	cb class uses: ta classTrait + tc instanceVariableNames: ''
+	cb class trait: ta classTrait + tc
 ]
 
 { #category : 'running' }

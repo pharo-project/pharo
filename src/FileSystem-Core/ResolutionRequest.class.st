@@ -19,14 +19,6 @@ ResolutionRequest class >> for: origin [
 		signal
 ]
 
-{ #category : 'exceptionDescription' }
-ResolutionRequest >> defaultAction [
-	| filedir ref |
-	filedir := UIManager default chooseDirectory: 'Where is ', origin asString, '?'.
-	ref := filedir ifNotNil: [FileSystem disk referenceTo: filedir fullName].
-	self resume: ref
-]
-
 { #category : 'accessing' }
 ResolutionRequest >> origin: aSymbol [
 	origin := aSymbol

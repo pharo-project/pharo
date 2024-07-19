@@ -28,6 +28,13 @@ SycSingleClassCommand class >> isAbstract [
 	^self = SycSingleClassCommand
 ]
 
+{ #category : 'accessing' }
+SycSingleClassCommand >> description [
+	"Answer a <String> describing the receiver, useful for instance in menu items pop-ups"
+
+	^ self class comment.
+]
+
 { #category : 'execution' }
 SycSingleClassCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.

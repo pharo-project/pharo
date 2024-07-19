@@ -31,7 +31,7 @@ BaselineOfSUnit >> baseline: spec [
 	
 			spec baseline: 'Traits' with: [
 				spec loads: 'core'. 
-				spec repository: self repository
+				spec repository: (self packageRepositoryURLForSpec: spec)
 			].
 			
 			spec
@@ -55,9 +55,4 @@ BaselineOfSUnit >> baseline: spec [
 				group: 'Tests' with: #('SUnit-Tests' 'SUnit-Support-UITesting-Tests' 'SUnit-Visitor-Tests' 'SUnit-MockObjects-Tests');
 				group: 'JenkinsSupport' with: #('JenkinsTools-Core' 'JenkinsTools-ExtraReports');
 				group: 'default' with: #('SUnit-Core' 'SUnit-Core-Traits' 'SUnit-Tests' 'JenkinsTools-Core' 'JenkinsTools-ExtraReports' 'SUnit-MockObjects') ]
-]
-
-{ #category : 'accessing' }
-BaselineOfSUnit >> repository [
-	^ self packageRepositoryURL
 ]
