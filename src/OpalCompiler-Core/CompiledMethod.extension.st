@@ -45,7 +45,8 @@ CompiledMethod >> saveBcToASTCacheWithAST: aMethodAST [
 
 	self allBlocks
 		select: [ :compiledBlock | "Installing metalinks in certain situations (e.g: installing a metalink after on a sequence node of a block node) may create other compiled blocks, which are not attached to a block node (e.g: a sequence node). We just ignore these blocks."
-			(compiledBlockAST := compiledBlock ast) isBlock ]
+			(compiledBlockAST := compiledBlock ast) isBlock and: [ "In other cases, installing metalinks create compiled blocks that are associated to invisible block nodes that are children of an `RFMessageNode`. In this case, its start index and stop index are equal to 0 in the source code. Its source code interval goes from 0 to 0 but is not considered empty because the method `Interval>>#isEmpty` does not consider these extreme bounds. We ignore these blocks too"
+				compiledBlockAST start ~= 0 ] ]
 		thenDo: [ :compiledBlock |
 			self
 				propertyAt: compiledBlock printString
