@@ -368,7 +368,7 @@ AlphaImageMorph >> scaledFormSetBy: imageScale [
 	| scaledExtent |
 
 	scaledExtent := (formSet extent * imageScale) truncated.
-	^ FormSet extent: scaledExtent depth: formSet depth
+	^ CachedFormSet extent: scaledExtent depth: formSet depth
 		forms: (formSet forms collect: [ :form | form magnifyBy: (scaledExtent / formSet extent) smoothing: 2 ])
 ]
 
