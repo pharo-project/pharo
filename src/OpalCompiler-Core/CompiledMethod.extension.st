@@ -39,11 +39,17 @@ CompiledMethod >> reformat [
 { #category : '*OpalCompiler-Core' }
 CompiledMethod >> saveBcToASTCacheWithAST: aMethodAST [
 
+	| compiledBlockAST |
+	self propertyAt: #bcToASTCache ifPresent: [ :bcToASTCache | ^ self ].
 	self propertyAt: #bcToASTCache put: aMethodAST bcToASTCache.
-	self allBlocksDo: [ :compiledBlock |
-		self
-			propertyAt: compiledBlock printString
-			put: compiledBlock ast bcToASTCache ]
+
+	self allBlocks
+		select: [ :compiledBlock | "Installing metalinks in certain situations (e.g: installing a metalink after on a sequence node of a block node) may create other compiled blocks, which are not attached to a block node (e.g: a sequence node). We just ignore these blocks."
+			(compiledBlockAST := compiledBlock ast) isBlock ]
+		thenDo: [ :compiledBlock |
+			self
+				propertyAt: compiledBlock printString
+				put: compiledBlockAST bcToASTCache ]
 ]
 
 { #category : '*OpalCompiler-Core' }
