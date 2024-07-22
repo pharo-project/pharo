@@ -1,5 +1,6 @@
 "
-I am a Deprecated package. I should be sued Renraku
+I am a Deprecated package because I am the old version of rules system.
+The new version is Renraku
 "
 Class {
 	#name : 'ManifestRefactoringCritics',
