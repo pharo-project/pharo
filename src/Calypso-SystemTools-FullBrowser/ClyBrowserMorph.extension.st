@@ -25,7 +25,7 @@ ClyBrowserMorph >> chooseClassToBrowseFrom: aClassNamePattern [
 
 	^[self searchDialog
 		requestSingleObject: 'Choose a class to browse...'
-		from: query] on: CmdCommandAborted do: [ nil ]
+		from: query] on: CmdCommandAborted, CmCommandAborted do: [ nil ]
 ]
 
 { #category : '*Calypso-SystemTools-FullBrowser' }
