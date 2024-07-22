@@ -208,3 +208,9 @@ CmdCommand >> secureMenuIcon [
 
 	^self defaultMenuIcon ifNil: [ Smalltalk ui iconNamed: #error ]
 ]
+
+{ #category : 'accessing' }
+CmdCommand >> specUIManager [
+
+	^ SpAlertDialog new
+]
