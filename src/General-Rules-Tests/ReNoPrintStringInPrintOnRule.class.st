@@ -5,8 +5,8 @@ Using it inside a #printOn: will imply a useless creation of stream and its pass
 Class {
 	#name : 'ReNoPrintStringInPrintOnRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'Renraku-Optimization',
-	#package : 'Renraku',
+	#category : 'General-Rules-Tests-Optimization',
+	#package : 'General-Rules-Tests',
 	#tag : 'Optimization'
 }
 
@@ -19,11 +19,6 @@ ReNoPrintStringInPrintOnRule class >> checksMethod [
 { #category : 'accessing' }
 ReNoPrintStringInPrintOnRule class >> group [
 	^ 'Optimization'
-]
-
-{ #category : 'class initialization' }
-ReNoPrintStringInPrintOnRule class >> initialize [
-    ReRuleManager cleanUp
 ]
 
 { #category : 'accessing' }

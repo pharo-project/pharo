@@ -7,15 +7,10 @@ Currently (2019-12-09) there is no methods in Pharo 8 which use #shouldReturn
 Class {
 	#name : 'ReReturnMethodRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'Renraku-Bugs',
-	#package : 'Renraku',
+	#category : 'General-Rules-Bugs',
+	#package : 'General-Rules',
 	#tag : 'Bugs'
 }
-
-{ #category : 'testing' }
-ReReturnMethodRule class >> checksMethod [
-	^ true
-]
 
 { #category : 'accessing' }
 ReReturnMethodRule class >> group [

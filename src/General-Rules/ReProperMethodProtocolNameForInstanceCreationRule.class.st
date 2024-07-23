@@ -4,9 +4,9 @@ Rule to favour 'instance creation' method protocol over similar ones (like 'inst
 Class {
 	#name : 'ReProperMethodProtocolNameForInstanceCreationRule',
 	#superclass : 'ReProperMethodProtocolNameRule',
-	#category : 'Renraku-Coding Idiom Violation',
-	#package : 'Renraku',
-	#tag : 'Coding Idiom Violation'
+	#category : 'General-Rules-Method Protocol Name',
+	#package : 'General-Rules',
+	#tag : 'Method Protocol Name'
 }
 
 { #category : 'idioms' }
