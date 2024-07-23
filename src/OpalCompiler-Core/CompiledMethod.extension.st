@@ -49,7 +49,7 @@ CompiledMethod >> saveBcToASTCacheWithAST: aMethodAST [
 				compiledBlockAST start ~= 0 ] ]
 		thenDo: [ :compiledBlock |
 			self
-				propertyAt: compiledBlock printString
+				propertyAt: compiledBlock bcToASTCacheKey
 				put: compiledBlockAST bcToASTCache ]
 ]
 
