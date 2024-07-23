@@ -8,3 +8,15 @@ Class {
 	#package : 'General-Rules',
 	#tag : 'Instance Method Protocol'
 }
+
+{ #category : 'accessing - defaults' }
+ReInstanceSideEqualsMethodProtocolRule class >> protocolName [
+
+	^ 'comparing'
+]
+
+{ #category : 'accessing - defaults' }
+ReInstanceSideEqualsMethodProtocolRule class >> selector [
+
+	^ #=
+]

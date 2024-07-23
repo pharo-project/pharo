@@ -8,3 +8,15 @@ Class {
 	#package : 'General-Rules',
 	#tag : 'Instance Method Protocol'
 }
+
+{ #category : 'accessing - defaults' }
+ReInstanceSideBaselineMethodProtocolRule class >> protocolName [
+
+	^ 'baselines'
+]
+
+{ #category : 'accessing - defaults' }
+ReInstanceSideBaselineMethodProtocolRule class >> selector [
+
+	^ #baseline:
+]

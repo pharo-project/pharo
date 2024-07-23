@@ -9,6 +9,11 @@ Class {
 	#tag : 'Style'
 }
 
+{ #category : 'testing - interest' }
+ReNoNilAssignationInInitializeRule class >> checksMethod [
+	^ true
+]
+
 { #category : 'accessing' }
 ReNoNilAssignationInInitializeRule class >> group [
 

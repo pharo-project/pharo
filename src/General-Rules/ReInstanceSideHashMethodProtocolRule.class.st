@@ -8,3 +8,15 @@ Class {
 	#package : 'General-Rules',
 	#tag : 'Instance Method Protocol'
 }
+
+{ #category : 'accessing - defaults' }
+ReInstanceSideHashMethodProtocolRule class >> protocolName [
+
+	^ 'comparing'
+]
+
+{ #category : 'accessing - defaults' }
+ReInstanceSideHashMethodProtocolRule class >> selector [
+
+	^ #hash
+]

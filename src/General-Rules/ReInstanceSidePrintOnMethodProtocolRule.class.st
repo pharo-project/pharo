@@ -8,3 +8,15 @@ Class {
 	#package : 'General-Rules',
 	#tag : 'Instance Method Protocol'
 }
+
+{ #category : 'accessing - defaults' }
+ReInstanceSidePrintOnMethodProtocolRule class >> protocolName [
+
+	^ 'printing'
+]
+
+{ #category : 'accessing - defaults' }
+ReInstanceSidePrintOnMethodProtocolRule class >> selector [
+
+	^ #printOn:
+]

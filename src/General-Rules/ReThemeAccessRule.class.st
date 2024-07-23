@@ -9,6 +9,11 @@ Class {
 	#tag : 'API Hints'
 }
 
+{ #category : 'testing - interest' }
+ReThemeAccessRule class >> checksMethod [
+	^ true
+]
+
 { #category : 'accessing' }
 ReThemeAccessRule class >> group [
 	^ 'API Hints'

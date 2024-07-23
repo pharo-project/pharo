@@ -8,3 +8,15 @@ Class {
 	#package : 'General-Rules',
 	#tag : 'Instance Method Protocol'
 }
+
+{ #category : 'accessing - defaults' }
+ReInstanceSideValueMethodProtocolRule class >> protocolName [
+
+	^ 'evaluating'
+]
+
+{ #category : 'accessing - defaults' }
+ReInstanceSideValueMethodProtocolRule class >> selector [
+
+	^ #value
+]

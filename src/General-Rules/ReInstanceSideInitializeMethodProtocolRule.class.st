@@ -8,3 +8,15 @@ Class {
 	#package : 'General-Rules',
 	#tag : 'Instance Method Protocol'
 }
+
+{ #category : 'accessing - defaults' }
+ReInstanceSideInitializeMethodProtocolRule class >> protocolName [
+
+	^ 'initialization'
+]
+
+{ #category : 'accessing - defaults' }
+ReInstanceSideInitializeMethodProtocolRule class >> selector [
+
+	^ #initialize
+]

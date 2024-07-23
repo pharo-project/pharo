@@ -12,6 +12,11 @@ Class {
 	#tag : 'Bugs'
 }
 
+{ #category : 'testing - interest' }
+ReReturnMethodRule class >> checksMethod [
+	^ true
+]
+
 { #category : 'accessing' }
 ReReturnMethodRule class >> group [
 

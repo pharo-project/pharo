@@ -9,7 +9,7 @@ Class {
 	#tag : 'Style'
 }
 
-{ #category : 'testing-interest' }
+{ #category : 'testing - interest' }
 ReInstanceVariableCapitalizationRule class >> checksClass [
 	^ true
 ]
