@@ -1151,6 +1151,12 @@ Object >> isNumber [
 	^ false
 ]
 
+{ #category : 'testing' }
+Object >> isPackage [
+
+	^ false
+]
+
 { #category : 'pinning' }
 Object >> isPinned [
 	"self

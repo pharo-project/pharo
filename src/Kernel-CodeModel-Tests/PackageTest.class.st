@@ -356,6 +356,12 @@ PackageTest >> testIncludesMethodOfClassInPresenceOfOtherPackageExtensions [
 	self deny: (yPackage includesSelector: #methodDefinedInP1 ofClass: a2)
 ]
 
+{ #category : 'tests - extensions' }
+PackageTest >> testIsPackage [
+
+	self assert: self class package name asPackage isPackage
+]
+
 { #category : 'tests' }
 PackageTest >> testIsTestPackage [
 
