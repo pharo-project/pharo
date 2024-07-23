@@ -92,6 +92,5 @@ Context >> method: aCompiledMethod [
 	pc := self computePCForNewMethod: compiledCode.
 	method := compiledCode.
 	closureOrNil ifNotNil: [
-		self assert: compiledCode isCompiledBlock.
 		closureOrNil compiledBlock: compiledCode ]
 ]
