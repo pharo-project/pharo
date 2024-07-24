@@ -14,7 +14,7 @@ SycCmDuplicateClassCommand >> executeRefactoring [
 	driver := (ReDuplicateClassDriver className: self targetClass name) scopes: refactoringScopes.
 	driver runRefactoring ifNil: [ ^ self ].
 	(self confirm: 'Do you want to browse the new class?')
-		ifTrue: [ context browser openOnClass: (driver model classNamed: driver newClassName) ].
+		ifTrue: [ context browser class openOnClass: (driver model classNamed: driver newClassName) ].
 
 ]
 

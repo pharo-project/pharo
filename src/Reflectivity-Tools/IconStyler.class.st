@@ -156,6 +156,11 @@ IconStyler >> textModel: anObject [
 	textModel := anObject
 ]
 
+{ #category : 'accessing' }
+IconStyler >> theme [
+	^ Smalltalk ui theme
+]
+
 { #category : 'visiting' }
 IconStyler >> visitArgumentNode: anArgumentNode [
 	self addIconStyle: anArgumentNode.

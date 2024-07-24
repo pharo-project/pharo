@@ -99,6 +99,17 @@ ReDuplicateClassDriver >> runRefactoring [
 	self applyChanges 
 ]
 
+{ #category : 'execution' }
+ReDuplicateClassDriver >> runRefactoring: aReCopyClassRefactoring [ 
+	"This is the same as #runRefactoring, but instead of automatically configuring a new empty refactoring we use aReCopyClassRefactoring"
+
+	refactoring := aReCopyClassRefactoring.
+	self requestNewClass.
+	requestDialog window isCancelled
+		ifTrue: [ ^ nil ].
+	self applyChanges 
+]
+
 { #category : 'accessing' }
 ReDuplicateClassDriver >> scopes: refactoringScopes [
 

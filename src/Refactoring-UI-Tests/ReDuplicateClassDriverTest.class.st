@@ -10,6 +10,12 @@ Class {
 }
 
 { #category : 'tests' }
+ReDuplicateClassDriverTest >> classToBeDeleted [
+
+	^ #ReClassCopiedToBeDeleted
+]
+
+{ #category : 'tests' }
 ReDuplicateClassDriverTest >> classToBeDuplicated [
 	"Answer the <Class> which will be duplicated"
 	
@@ -19,7 +25,7 @@ ReDuplicateClassDriverTest >> classToBeDuplicated [
 { #category : 'tests' }
 ReDuplicateClassDriverTest >> setUpMocksOn: driver [
 
-	| dialog |
+	| dialog requestClass |
 	dialog := MockObject new.
 	dialog
 		on: #window respond: SpDialogWindowPresenter new beOk;
@@ -28,13 +34,28 @@ ReDuplicateClassDriverTest >> setUpMocksOn: driver [
 		on: #openModal respond: dialog.
 	driver requestDialog: dialog.
 	driver configureRefactoring.
+	
+	requestClass := MockObject new.
+	requestClass
+		on: #changes:scopes: respond: dialog;
+		on: #application: respond: dialog;
+		on: #refactoring: respond: dialog;
+		on: #openModal respond: dialog.		
+	driver previewPresenterClass: requestClass.
+]
 
+{ #category : 'running' }
+ReDuplicateClassDriverTest >> tearDown [ 
+
+	(testingEnvironment notNil and: [ testingEnvironment classNames includes: self classToBeDeleted ])
+		ifTrue: [ testingEnvironment removeClass: self classToBeDeleted ].
+	super tearDown.
 ]
 
 { #category : 'tests' }
 ReDuplicateClassDriverTest >> testDuplicateClass [
 
-	| driver rbClass driverChanges |
+	| driver rbClass driverChanges refactoring methodChanges |
 
 	testingEnvironment := RBClassEnvironment class: self classToBeDuplicated.
 	driver := ReDuplicateClassDriver basicNew.
@@ -42,24 +63,20 @@ ReDuplicateClassDriverTest >> testDuplicateClass [
 	self setUpMocksOn: driver.
 
 	driver scopes: { testingEnvironment }.
-	rbClass := testingEnvironment class.
+	rbClass := testingEnvironment classes anyOne.
 	
-	driver refactoring	className: rbClass.
-	driver runRefactoring.
+	refactoring := ReCopyClassRefactoring new.
+	refactoring	className: self classToBeDeleted.
+	refactoring sourceClass: rbClass.
+	driver runRefactoring: refactoring.
 	driverChanges := driver refactoring changes.
 	self 
 		assert: driverChanges changes size 
-		equals: 4.
-	self assertEmpty: driver refactoring failedApplicabilityPreconditions.
-	self 
-		assert: (driverChanges changes select: [ : amc | amc selector = #hash or: [ amc selector = #= ] ]) size
-		equals: 2.
+		equals: 5.
 
-	testingEnvironment ifNotNil: [ 
-		testingEnvironment classesDo: [ : cls |
-			(cls includesSelector: #=)
-				ifTrue: [ cls removeSelector: #= ].
-			(cls includesSelector: #hash)
-				ifTrue: [ cls removeSelector: #hash ] ] ].
+	methodChanges := driverChanges changes select: [ : amc | amc isKindOf: RBAddMethodChange ].
+	self 
+		assert: (methodChanges select: [ : mc | mc selector = #hash or: [ mc selector = #= ] ]) size
+		equals: 2.
 
 ]

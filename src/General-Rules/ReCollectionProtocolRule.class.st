@@ -3,7 +3,7 @@ Checks code using the do: method instead of using the collect: or select: method
 "
 Class {
 	#name : 'ReCollectionProtocolRule',
-	#superclass : 'ReNodeMatchRule',
+	#superclass : 'ReNodeRewriteRule',
 	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
 	#tag : 'Coding Idiom Violation'
@@ -28,23 +28,27 @@ ReCollectionProtocolRule class >> uniqueIdentifierName [
 
 { #category : 'initialization' }
 ReCollectionProtocolRule >> initialize [
+
 	super initialize.
-	self matchesAny: #(
-		'`@collection do: [:`each | | `@temps | `@.Statements1. `@object add: `@arg. `@.Statements2]'
-
-		'`@collection do: [:`each | | `@temps |
-			`@.Statements1.
+	self 		replace:
+			'`@collection do: [:`each | | `@temps | `@.Statements. `@object add: `@arg ]'
+		with:
+			'`@object addAll: (`@collection collect: [:`each | | `@temps | `@.Statements. `@arg ])';
+			
+		replace: '`@collection do: [:`each | | `@temps |
+			`@.Statements.
 			`@condition ifTrue: [| `@blockTemps |
-					`@.BlockStatements1.
-					`@object add: `each.
-					`@.BlockStatements2].
-			`@.Statements2]'
-
-		'`@collection do: [:`each | | `@temps |
-			`@.Statements1.
+					`@.BlockStatements.
+					`@object add: `@arg ] ]'
+		with:
+			'`@object addAll: (`@collection select: [ :`each | | `@temps | `@.Statements. `@condition ifTrue: [| `@blockTemps |
+					`@.BlockStatements] ] )';
+			
+		replace: '`@collection do: [:`each | | `@temps |
+			`@.Statements.
 			`@condition ifFalse: [| `@blockTemps |
-					`@.BlockStatements1.
-					`@object add: `each.
-					`@.BlockStatements2].
-			`@.Statements2]' )
+					`@.BlockStatements.
+					`@object add: `@arg ] ]'
+		with: '`@object addAll: (`@collection select: [ :`each | | `@temps | `@.Statements. `@condition ifFalse: [| `@blockTemps |
+					`@.BlockStatements] ] )'
 ]
