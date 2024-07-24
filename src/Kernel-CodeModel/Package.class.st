@@ -397,6 +397,12 @@ Package >> isEmpty [
 ]
 
 { #category : 'testing' }
+Package >> isPackage [
+
+	^ true
+]
+
+{ #category : 'testing' }
 Package >> isTestPackage [
 	"1. Test package ends with suffix -Tests. Suffix is case sensitive.
 	 2. Or test package contains '-Tests-' in middle.

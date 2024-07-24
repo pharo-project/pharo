@@ -111,10 +111,6 @@ ShiftClassBuilder >> build [
 	self createMetaclass.
 	self createClass.
 
-	self oldClass ifNotNil: [
-		self copyProtocols.
-		self newClass commentSourcePointer: self oldClass commentSourcePointer ].
-
 	self createSharedVariables.
 
 	self installSlotsAndVariables.
@@ -236,6 +232,11 @@ ShiftClassBuilder >> createClass [
 		slots: (self withAdditionalSlots: self slots).
 
 	newClass environment: self installingEnvironment.
+	
+	"Since Traits might add some methods in #classCreated:, we need to copy the protocols before we add them."
+	self oldClass ifNotNil: [
+		self copyProtocols.
+		self newClass commentSourcePointer: self oldClass commentSourcePointer ].
 
 	self builderEnhancer classCreated: self
 ]

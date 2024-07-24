@@ -7,6 +7,26 @@ Class {
 }
 
 { #category : 'tests' }
+ShTraitInstallerTest >> testAddingATraitToAClassHasRightProtocolsOnMetaclass [
+	"Regression test. Some methods were copied on the method dic of a metaclass but the protocols were lost"
+
+	newClass := ShiftClassInstaller make: [ :builder |
+		            builder
+			            name: #SHClass;
+			            package: self generatedClassesPackageName ].
+
+	newClass := ShiftClassInstaller make: [ :builder |
+		            builder
+			            name: #SHClass;
+			            traits: { TViewModelMock };
+			            package: self generatedClassesPackageName ].
+
+	self assert: (newClass methods allSatisfy: [ :method | method protocol isNotNil ]).
+	self assert: (newClass class methods allSatisfy: [ :method | method protocol isNotNil ]).
+	self assert: (newClass class class methods allSatisfy: [ :method | method protocol isNotNil ])
+]
+
+{ #category : 'tests' }
 ShTraitInstallerTest >> testCreatingFullTraitHasAllElements [
 
 	newClass := ShiftClassInstaller make: [ :builder |
