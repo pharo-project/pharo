@@ -65,6 +65,6 @@ ClyMethodExtensionSwitchMorph >> label [
 { #category : 'operations' }
 ClyMethodExtensionSwitchMorph >> toggle [
 
-	[ownerTool toggleExtendingPackage] on: CmdCommandAborted do: [ :err | ].
+	[ownerTool toggleExtendingPackage] on: CmdCommandAborted, CmCommandAborted do: [ :err | ].
 	checkbox updateLabel
 ]
