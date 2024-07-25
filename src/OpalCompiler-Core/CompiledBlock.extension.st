@@ -7,6 +7,9 @@ CompiledBlock >> ast [
 
 { #category : '*OpalCompiler-Core' }
 CompiledBlock >> bcToASTCacheKey [
+	"The bcToASTCache of a compiled block is saved in its home method's properties, with its pc in outer code as key.
+	So this block is created at pc `48` in its outer code, which is its home method, then its key would be `#48`.
+	If this block is created at pc `57` in its outer code, which is itself a block created at pc `48` in its outer code that is its home method, then the key of this block would be `#48>57`"
 
 	| key outerCode |
 	key := self pcInOuter asString.
