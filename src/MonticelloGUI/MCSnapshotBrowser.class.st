@@ -3,13 +3,14 @@ Browser for snapshots
 "
 Class {
 	#name : 'MCSnapshotBrowser',
-	#superclass : 'MCCodeTool',
+	#superclass : 'MCTool',
 	#instVars : [
 		'categorySelection',
 		'classSelection',
 		'protocolSelection',
 		'methodSelection',
-		'switch'
+		'switch',
+		'items'
 	],
 	#category : 'MonticelloGUI-Tools',
 	#package : 'MonticelloGUI',
@@ -27,6 +28,40 @@ MCSnapshotBrowser >> allClassNames [
 		select: [:ea | (ea isOrganizationDefinition | ea isScriptDefinition) not]
 		thenCollect: [:ea | ea className]) asSet.
 
+]
+
+{ #category : 'menus' }
+MCSnapshotBrowser >> browseMessages [
+	"Present a menu of the currently selected message, as well as all messages sent by it.  Open a message set browser of all implementors of the selector chosen."
+
+	self systemNavigation browseAllImplementorsOf: (self selectedMessageName ifNil: [ ^nil ])
+]
+
+{ #category : 'menus' }
+MCSnapshotBrowser >> browseMethodFull [
+	"Create and schedule a full Browser and then select the current class and message."
+
+	| myClass |
+	(myClass := self selectedClassOrMetaClass) ifNotNil:
+		[Smalltalk tools browser openOnClass: myClass selector: self selectedMessageName]
+]
+
+{ #category : 'menus' }
+MCSnapshotBrowser >> browseSendersOfMessages [
+	"Present a menu of the currently selected message, as well as all messages sent by it.  Open a message set browser of all senders of the selector chosen."
+
+	self systemNavigation browseAllSendersOf: (self selectedMessageName ifNil: [ ^nil ])
+]
+
+{ #category : 'menus' }
+MCSnapshotBrowser >> browseVersions [
+	"Create and schedule a message set browser on all versions of the 
+	currently selected message selector."
+	
+	Smalltalk tools versionBrowser  
+		browseVersionsForClass:  self selectedClassOrMetaClass 
+		selector: self selectedMessageName
+		
 ]
 
 { #category : 'morphic ui' }
@@ -89,19 +124,28 @@ MCSnapshotBrowser >> classDefinitionString [
 	].
 ]
 
+{ #category : 'menus' }
+MCSnapshotBrowser >> classHierarchy [
+	"Create and schedule a class list browser on the receiver's hierarchy."
+
+	self systemNavigation 
+		browseHierarchy: self selectedClassOrMetaClass
+		selector: self selectedMessageName	"OK if nil"
+]
+
 { #category : 'listing' }
 MCSnapshotBrowser >> classList [
 	^ self visibleClasses
 ]
 
 { #category : 'menus' }
-MCSnapshotBrowser >> classListMenu: aMenu [ 
-	classSelection ifNil: [ ^aMenu ].
-	super classListMenu: aMenu.
+MCSnapshotBrowser >> classListMenu: aMenu [
+
+	classSelection ifNil: [ ^ aMenu ].
 	aMenu
+		addList: #( #- #( 'Browse full (b)' browseMethodFull ) #( 'Browse hierarchy (h)' classHierarchy ) #- #( 'Show hierarchy' methodHierarchy ) );
 		addLine;
-		add: ('Load class {1}'  format: {classSelection})
-		selector: #loadClassSelection.
+		add: ('Load class {1}' format: { classSelection }) selector: #loadClassSelection.
 	^ aMenu
 ]
 
@@ -120,6 +164,15 @@ MCSnapshotBrowser >> classSelection: aNumber [
 
 ]
 
+{ #category : 'menus' }
+MCSnapshotBrowser >> copySelector [
+	"Copy the selected selector to the clipboard"
+
+	| selector |
+	(selector := self selectedMessageName) ifNotNil:
+		[Clipboard clipboardText: selector asString]
+]
+
 { #category : 'morphic ui' }
 MCSnapshotBrowser >> defaultLabel [
 	^ 'Snapshot Browser'
@@ -133,6 +186,55 @@ MCSnapshotBrowser >> extensionClassNames [
 { #category : 'accessing' }
 MCSnapshotBrowser >> extensionsCategory [
 	^ '*Extensions'
+]
+
+{ #category : 'menus' }
+MCSnapshotBrowser >> fileOutMessage [
+	"Put a description of the selected message on a file"
+
+	| fileName |
+	self selectedMessageName ifNotNil: [
+		Cursor write showWhile: [
+			self selectedClassOrMetaClass fileOutMethod:
+				self selectedMessageName ].
+		^ self ].
+	items isEmpty ifTrue: [ ^ self ].
+	fileName := MorphicUIManager new
+		            request: 'File out on which file?'
+		            initialAnswer: 'methods'.
+	Cursor write showWhile: [
+		| internalStream |
+		internalStream := WriteStream on: (String new: 1000).
+		internalStream
+			header;
+			timeStamp.
+		items do: [ :patchOp |
+			patchOp definition isMethodDefinition ifTrue: [
+				(patchOp definition actualClass isNotNil and: [
+					 patchOp definition actualClass includesSelector:
+						 patchOp definition selector ])
+					ifTrue: [
+						patchOp definition actualClass
+							printMethodChunk: patchOp definition selector
+							on: internalStream ]
+					ifFalse: [
+						internalStream nextChunkPut:
+							patchOp definition className , ' removeSelector: '
+							, patchOp definition selector printString ] ].
+			patchOp definition isClassDefinition ifTrue: [
+				patchOp definition actualClass
+					ifNotNil: [
+						internalStream nextChunkPut:
+							patchOp definition actualClass definition.
+						patchOp definition comment ifNotNil: [
+							patchOp definition actualClass putCommentOnFile: internalStream ] ]
+					ifNil: [
+						internalStream nextChunkPut:
+							patchOp definition className , ' removeFromSystem' ] ] ].
+		CodeExporter
+			writeSourceCodeFrom: internalStream
+			baseName: fileName
+			isSt: true ]
 ]
 
 { #category : 'accessing' }
@@ -194,16 +296,50 @@ MCSnapshotBrowser >> metaclassDefinitionString [
 	].
 ]
 
+{ #category : 'menus' }
+MCSnapshotBrowser >> methodHierarchy [
+	"Create and schedule a method browser on the hierarchy of implementors."
+
+	self systemNavigation methodHierarchyBrowserForClass: self selectedClassOrMetaClass
+		selector: self selectedMessageName
+]
+
 { #category : 'listing' }
 MCSnapshotBrowser >> methodList [
 	^ self visibleMethods collect: [:ea | ea selector]
 ]
 
 { #category : 'menus' }
-MCSnapshotBrowser >> methodListMenu: aMenu [ 
-	super methodListMenu: aMenu.
-	( self selectedMessageName isNotNil and: [ methodSelection isLoadable ] )
-		ifTrue: [ aMenu addLine; add: 'Load method' selector: #loadMethodSelection ].
+MCSnapshotBrowser >> methodListKey: aKeystroke from: aListMorph [ 
+	aKeystroke caseOf: {
+		[$b] -> [self browseMethodFull].
+		[$h] -> [self classHierarchy].
+		[$o] -> [self fileOutMessage].
+		[$c] -> [self copySelector].
+		[$n] -> [self browseSendersOfMessages].
+		[$m] -> [self browseMessages].
+		[$i] -> [self methodHierarchy].
+		[$v] -> [self browseVersions]}
+		 otherwise: []
+]
+
+{ #category : 'menus' }
+MCSnapshotBrowser >> methodListMenu: aMenu [
+
+	self selectedMessageName
+		ifNil: [ items isNotEmpty ifTrue: [ aMenu add: 'FileOut (o)' selector: #fileOutMessage ] ]
+		ifNotNil: [
+			aMenu addList:
+				#( #( 'Browse full (b)' browseMethodFull ) #( 'Browse hierarchy (h)' classHierarchy ) #- #( 'FileOut (o)' fileOutMessage ) #( 'Copy selector (c)'
+				      copySelector ) ).
+			aMenu addList: #( #- #( 'Browse senders (n)' browseSendersOfMessages ) #( 'Browse implementors (m)' browseMessages )
+				   #( 'Inheritance (i)' methodHierarchy ) #( 'Versions (v)' browseVersions ) ) ].
+
+
+	(self selectedMessageName isNotNil and: [ methodSelection isLoadable ]) ifTrue: [
+		aMenu
+			addLine;
+			add: 'Load method' selector: #loadMethodSelection ].
 	^ aMenu
 ]
 
