@@ -43,20 +43,20 @@ ClassHierarchyPrinterTest >> testOnlyASTNodes [
 		limitedToClasses: (ASTNode withAllSubclasses select: [:each | (each name beginsWith: 'RB') or: [ each name beginsWith: 'AST' ]]).
 	self assert: printer print equals:
 	'ASTNode
-	RBProgramNode
+	ASTProgramNode
 		RBComment
 		RBMethodNode
 			RBDoItMethodNode
 		RBPragmaNode
 		RBReturnNode
 		RBSequenceNode
-		RBValueNode
+		ASTValueNode
 			RBAnnotationMarkNode
 			RBArrayNode
 			RBAssignmentNode
 			RBBlockNode
 			RBCascadeNode
-			RBLiteralNode
+			ASTLiteralNode
 				RBLiteralArrayNode
 				RBLiteralValueNode
 			RBMessageNode
