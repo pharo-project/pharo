@@ -306,12 +306,6 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	"Making HeuristicCompletion the default completion engine"
 	RubSmalltalkEditor completionEngineClass: CoCompletionEngine.
-	
-	"This should be removed in Pharo 14."
-	ASTNode deprecatedAliases: { #RBNode }.
-	ASTProgramNode deprecatedAliases: { #RBProgramNode }.
-	ASTValueNode deprecatedAliases: { #RBValueNode }.
-	ASTLiteralNode deprecatedAliases: { #RBLiteralNode }.
 
 	self loadIceberg.
 	self loadExtraTools.
