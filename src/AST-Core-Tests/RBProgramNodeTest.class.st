@@ -50,7 +50,7 @@ RBProgramNodeTest >> getMethodString [
 
 { #category : 'accessing' }
 RBProgramNodeTest >> node [
-	^ node ifNil: [ node := RBProgramNode new ]
+	^ node ifNil: [ node := ASTProgramNode new ]
 ]
 
 { #category : 'tests - adding' }

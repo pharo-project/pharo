@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFOperationReification class >> entities [
-	^{RBVariableNode. RBMessageNode. RBMethodNode . RBReturnNode. RBAssignmentNode. RBLiteralNode. RBBlockNode . RBLiteralArrayNode. RBArrayNode}
+	^{RBVariableNode. RBMessageNode. RBMethodNode . RBReturnNode. RBAssignmentNode. ASTLiteralNode. RBBlockNode . RBLiteralArrayNode. RBArrayNode}
 ]
 
 { #category : 'plugin interface' }
@@ -42,7 +42,7 @@ RFOperationReification >> genForRBAssignmentNode [
 		ast := RBParser parseExpression: ('RFGlobalWrite new
 			assignedValue: RFNewValueReificationVar;
 			variable: #toReplace.').
-		ast messages second arguments: {(RBLiteralNode value: entity variable binding)}.
+		ast messages second arguments: {(ASTLiteralNode value: entity variable binding)}.
 		^ast].
 	self error: 'not supported'
 ]
@@ -68,7 +68,7 @@ RFOperationReification >> genForRBLiteralArrayNode [
 { #category : 'generate' }
 RFOperationReification >> genForRBLiteralValueNode [
 	"same as #value, no need to wrap as the literal understands #value"
-	^RBLiteralNode value: entity value
+	^ASTLiteralNode value: entity value
 ]
 
 { #category : 'generate' }
@@ -87,7 +87,7 @@ RFOperationReification >> genForRBMethodNode [
 			method: #toReplace;
 			arguments: RFArgumentsReificationVar.'.
 
-	ast messages second arguments: {(RBLiteralNode value: entity methodNode methodClass >> entity methodNode selector)}.
+	ast messages second arguments: {(ASTLiteralNode value: entity methodNode methodClass >> entity methodNode selector)}.
 	^ast
 ]
 
@@ -113,7 +113,7 @@ RFOperationReification >> genForRBVariableNode [
 	entity variable isLiteralVariable ifTrue: [ | ast |
 			ast := RBParser parseExpression: 'RFGlobalRead new
 				variable: #toReplace'.
-			ast arguments: {(RBLiteralNode value: entity binding)}.
+			ast arguments: {(ASTLiteralNode value: entity binding)}.
 
 			^ast.
 		].

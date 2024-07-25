@@ -10,7 +10,7 @@ Instance Variables:
 "
 Class {
 	#name : 'RBAssignmentNode',
-	#superclass : 'RBValueNode',
+	#superclass : 'ASTValueNode',
 	#instVars : [
 		'variable',
 		'assignment',

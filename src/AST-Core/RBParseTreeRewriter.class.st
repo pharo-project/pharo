@@ -124,8 +124,8 @@ RBParseTreeRewriter class >> replace: code with: newCode method: aBoolean [
 RBParseTreeRewriter class >> replaceLiteral: literal with: newLiteral [
 	| rewriteRule |
 	rewriteRule := self new.
-	rewriteRule replaceTree: (RBLiteralNode value: literal)
-		withTree: (RBLiteralNode value: newLiteral).
+	rewriteRule replaceTree: (ASTLiteralNode value: literal)
+		withTree: (ASTLiteralNode value: newLiteral).
 	^rewriteRule
 ]
 

@@ -13,7 +13,7 @@ Instance Variables:
 "
 Class {
 	#name : 'RBPragmaNode',
-	#superclass : 'RBProgramNode',
+	#superclass : 'ASTProgramNode',
 	#instVars : [
 		'selector',
 		'keywordsPositions',

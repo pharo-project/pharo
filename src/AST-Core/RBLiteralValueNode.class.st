@@ -10,7 +10,7 @@ Instance Variables
 "
 Class {
 	#name : 'RBLiteralValueNode',
-	#superclass : 'RBLiteralNode',
+	#superclass : 'ASTLiteralNode',
 	#instVars : [
 		'value',
 		'sourceText'

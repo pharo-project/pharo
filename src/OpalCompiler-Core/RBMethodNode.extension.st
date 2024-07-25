@@ -62,7 +62,7 @@ RBMethodNode class >> errorMethodNode: selector errorMessage: messageText [
 	message := RBMessageNode
 		receiver: RBVariableNode selfNode
 		selector: #error:
-		arguments: {RBLiteralNode value: messageText}.
+		arguments: {ASTLiteralNode value: messageText}.
 	^ self
 		selector: selector
 		arguments: ((1 to: selector numArgs) collect: [ :i | RBVariableNode named: 't' , i asString ])

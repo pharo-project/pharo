@@ -29,7 +29,7 @@ Class Variables:
 
 "
 Class {
-	#name : 'RBProgramNode',
+	#name : 'ASTProgramNode',
 	#superclass : 'ASTNode',
 	#instVars : [
 		'parent',
@@ -44,34 +44,34 @@ Class {
 }
 
 { #category : 'accessing' }
-RBProgramNode class >> formatterClass [
+ASTProgramNode class >> formatterClass [
 	^ FormatterClass ifNil: [ RBSimpleFormatter ] ifNotNil: [ FormatterClass ]
 ]
 
 { #category : 'accessing' }
-RBProgramNode class >> formatterClass: aClass [
+ASTProgramNode class >> formatterClass: aClass [
 	FormatterClass := aClass
 ]
 
 { #category : 'testing' }
-RBProgramNode class >> isAbstract [
+ASTProgramNode class >> isAbstract [
 
-	^ self == RBProgramNode
+	^ self == ASTProgramNode
 ]
 
 { #category : 'accessing' }
-RBProgramNode class >> optimizedSelectors [
+ASTProgramNode class >> optimizedSelectors [
 	^ #( and: caseOf: caseOf:otherwise: ifFalse: ifFalse:ifTrue: ifNil: ifNil:ifNotNil: ifNotNil: ifNotNil:ifNil: ifTrue: ifTrue:ifFalse: or: to:by:do: to:do: whileFalse whileFalse: whileTrue whileTrue: )
 ]
 
 { #category : 'accessing' }
-RBProgramNode class >> resetFormatter [
+ASTProgramNode class >> resetFormatter [
 
 	self formatterClass: nil
 ]
 
 { #category : 'notice' }
-RBProgramNode >> addError: anErrorMessage [
+ASTProgramNode >> addError: anErrorMessage [
 	"Add an error information to the node. Node with error information are considered faulty.
 	Semantic passes that check the validity of AST are the targetted clients of this method."
 
@@ -82,20 +82,20 @@ RBProgramNode >> addError: anErrorMessage [
 ]
 
 { #category : 'notice' }
-RBProgramNode >> addNotice: aRBNotice [
+ASTProgramNode >> addNotice: aRBNotice [
 
 	(self propertyAt: #notices ifAbsentPut: [ OrderedCollection new ]) add: aRBNotice.
 	aRBNotice node: self
 ]
 
 { #category : 'replacing' }
-RBProgramNode >> addReplacement: aStringReplacement [
+ASTProgramNode >> addReplacement: aStringReplacement [
 	parent ifNil: [^self].
 	parent addReplacement: aStringReplacement
 ]
 
 { #category : 'notice' }
-RBProgramNode >> addWarning: aMessage [
+ASTProgramNode >> addWarning: aMessage [
 
 	| notice |
 	"Add a warning information to the node.
@@ -106,7 +106,7 @@ RBProgramNode >> addWarning: aMessage [
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> allArgumentVariables [
+ASTProgramNode >> allArgumentVariables [
 	| children |
 	children := self children.
 	children isEmpty ifTrue: [^#()].
@@ -119,7 +119,7 @@ RBProgramNode >> allArgumentVariables [
 ]
 
 { #category : 'iterating' }
-RBProgramNode >> allChildren [
+ASTProgramNode >> allChildren [
 	| children |
 	children := OrderedCollection new.
 	self nodesDo: [ :each | children addLast: each ].
@@ -127,14 +127,14 @@ RBProgramNode >> allChildren [
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> allComments [
+ASTProgramNode >> allComments [
 	"Answer a collection of objects representing the comments in the method. Return an empty collection if the method's source code does not contain a comment."
 
 	^ self allChildren flatCollect: [:el| el comments]
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> allDefinedVariables [
+ASTProgramNode >> allDefinedVariables [
 	| children |
 	children := self children.
 	children isEmpty ifTrue: [^#()].
@@ -147,7 +147,7 @@ RBProgramNode >> allDefinedVariables [
 ]
 
 { #category : 'notice' }
-RBProgramNode >> allErrorNotices [
+ASTProgramNode >> allErrorNotices [
 	"Include also error notices of all children"
 
 	| result |
@@ -157,7 +157,7 @@ RBProgramNode >> allErrorNotices [
 ]
 
 { #category : 'notice' }
-RBProgramNode >> allNotices [
+ASTProgramNode >> allNotices [
 	"Include also notices of all children"
 
 	| result |
@@ -167,7 +167,7 @@ RBProgramNode >> allNotices [
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> allParents [
+ASTProgramNode >> allParents [
 	"return all my parents.
 	See discussion in issue https://github.com/pharo-project/pharo/issues/6278"
 	^ parent
@@ -176,7 +176,7 @@ RBProgramNode >> allParents [
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> allStatements [
+ASTProgramNode >> allStatements [
 	| children |
 	children := self children.
 	children isEmpty ifTrue: [^#()].
@@ -189,7 +189,7 @@ RBProgramNode >> allStatements [
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> allTemporaryVariables [
+ASTProgramNode >> allTemporaryVariables [
 	| children |
 	children := self children.
 	children isEmpty ifTrue: [^#()].
@@ -202,14 +202,14 @@ RBProgramNode >> allTemporaryVariables [
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> allVariables [
+ASTProgramNode >> allVariables [
 	"Return all the variables in subnodes"
 
 	^ self allChildren select: [ :each | each isVariable ]
 ]
 
 { #category : 'replacing' }
-RBProgramNode >> asDoit [
+ASTProgramNode >> asDoit [
 	"The VM can only evaluate methods. wrap this ast in a doit MethodNode"
 
 	| source |
@@ -220,7 +220,7 @@ RBProgramNode >> asDoit [
 ]
 
 { #category : 'tests' }
-RBProgramNode >> asPositionDebugString [
+ASTProgramNode >> asPositionDebugString [
 	"Compute a string representing the positions of children nodes.
 	Each character is an identifier (0 to 9 then A to Z) that corresponds to the chidren node at the corresponding position.
 	Identifiers are assigned with a deep-first search: self is 0, first chisdren is 1, etc."
@@ -247,7 +247,7 @@ RBProgramNode >> asPositionDebugString [
 ]
 
 { #category : 'replacing' }
-RBProgramNode >> asReturn [
+ASTProgramNode >> asReturn [
 	"Change the current node to a return node."
 
 	parent ifNil: [self error: 'Cannot change to a return without a parent node.'].
@@ -258,22 +258,22 @@ RBProgramNode >> asReturn [
 ]
 
 { #category : 'replacing' }
-RBProgramNode >> asSequenceNode [
+ASTProgramNode >> asSequenceNode [
 	^RBSequenceNode statements: {self}
 ]
 
 { #category : 'querying' }
-RBProgramNode >> assignmentNodes [
+ASTProgramNode >> assignmentNodes [
 	^self allChildren select: [:each | each isAssignment]
 ]
 
 { #category : 'testing' }
-RBProgramNode >> assigns: aVariableName [
+ASTProgramNode >> assigns: aVariableName [
 	^self children anySatisfy: [:each | each assigns: aVariableName]
 ]
 
 { #category : 'querying' }
-RBProgramNode >> bestNodeFor: anInterval [
+ASTProgramNode >> bestNodeFor: anInterval [
 	| selectedChildren selectedComments |
 	anInterval ifNil: [^nil ].
 	selectedComments := self getCommentsFor: anInterval.
@@ -292,7 +292,7 @@ RBProgramNode >> bestNodeFor: anInterval [
 ]
 
 { #category : 'querying' }
-RBProgramNode >> bestNodeForPosition: aPosition [
+ASTProgramNode >> bestNodeForPosition: aPosition [
 
 	"aPosition is an integer that represents the position of the caret.
 	A value of N represents that the caret is between the characters N-1 and N.
@@ -326,17 +326,17 @@ RBProgramNode >> bestNodeForPosition: aPosition [
 ]
 
 { #category : 'querying' }
-RBProgramNode >> blockNodes [
+ASTProgramNode >> blockNodes [
 	^self allChildren select: [:each | each isBlock]
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> blockVariables [
+ASTProgramNode >> blockVariables [
 	^parent ifNil: [#()] ifNotNil: [parent blockVariables]
 ]
 
 { #category : 'testing - matching' }
-RBProgramNode >> canMatchMethod: aCompiledMethod [
+ASTProgramNode >> canMatchMethod: aCompiledMethod [
 	^self sentMessages allSatisfy:
 			[:each |
 			(self class optimizedSelectors includes: each)
@@ -344,12 +344,12 @@ RBProgramNode >> canMatchMethod: aCompiledMethod [
 ]
 
 { #category : 'accessing - meta variable' }
-RBProgramNode >> cascadeListCharacter [
+ASTProgramNode >> cascadeListCharacter [
 	^$;
 ]
 
 { #category : 'notice' }
-RBProgramNode >> checkFaulty: aBlock [
+ASTProgramNode >> checkFaulty: aBlock [
 	"Helper method to evaluate errorBlock and/or signal SyntaxErrorNotification in case of a faulty AST"
 
 	| errorNotice |
@@ -367,12 +367,12 @@ RBProgramNode >> checkFaulty: aBlock [
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> children [
+ASTProgramNode >> children [
 	^#()
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> childrenAndComments [
+ASTProgramNode >> childrenAndComments [
 	
 	| result |
 	result := self children.
@@ -382,27 +382,27 @@ RBProgramNode >> childrenAndComments [
 ]
 
 { #category : 'replacing' }
-RBProgramNode >> clearReplacements [
+ASTProgramNode >> clearReplacements [
 	parent ifNil: [^self].
 	parent clearReplacements
 ]
 
 { #category : 'enumeration' }
-RBProgramNode >> collect: aBlock [
+ASTProgramNode >> collect: aBlock [
 	"Hacked to fit collection protocols"
 
 	^aBlock value: self
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> comments [
+ASTProgramNode >> comments [
 	"Answer the comments of the receiving parse tree node"
 
 	^ (self propertyAt: #comments ifAbsent: [ #() ]) ifNil:[ #() ]
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> comments: aCollection [
+ASTProgramNode >> comments: aCollection [
 
 	(aCollection ifNil: [#()])
 		ifEmpty: [ self removeProperty: #comments ifAbsent: [] ]
@@ -410,17 +410,17 @@ RBProgramNode >> comments: aCollection [
 ]
 
 { #category : 'testing' }
-RBProgramNode >> containedBy: anInterval [
+ASTProgramNode >> containedBy: anInterval [
 	^anInterval first <= self start and: [anInterval last >= self stop]
 ]
 
 { #category : 'testing' }
-RBProgramNode >> containsReturn [
+ASTProgramNode >> containsReturn [
 	^self children anySatisfy: [:each | each containsReturn]
 ]
 
 { #category : 'copying' }
-RBProgramNode >> copyCommentsFrom: aNode [
+ASTProgramNode >> copyCommentsFrom: aNode [
 	"Add all comments from aNode to us. If we already have the comment, then don't add it."
 
 	| newComments |
@@ -435,12 +435,12 @@ RBProgramNode >> copyCommentsFrom: aNode [
 ]
 
 { #category : 'matching' }
-RBProgramNode >> copyInContext: aDictionary [
+ASTProgramNode >> copyInContext: aDictionary [
 	^ self copy
 ]
 
 { #category : 'matching' }
-RBProgramNode >> copyList: matchNodes inContext: aDictionary [
+ASTProgramNode >> copyList: matchNodes inContext: aDictionary [
 	| newNodes |
 	newNodes := OrderedCollection new.
 	matchNodes do:
@@ -452,37 +452,37 @@ RBProgramNode >> copyList: matchNodes inContext: aDictionary [
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> debugHighlightRange [
+ASTProgramNode >> debugHighlightRange [
 
 	^ self debugHighlightStart to: self debugHighlightStop
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> debugHighlightStart [
+ASTProgramNode >> debugHighlightStart [
 
 	^ self start
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> debugHighlightStop [
+ASTProgramNode >> debugHighlightStop [
 
 	^ self stop
 ]
 
 { #category : 'testing' }
-RBProgramNode >> defines: aName [
+ASTProgramNode >> defines: aName [
 	^false
 ]
 
 { #category : 'enumeration' }
-RBProgramNode >> do: aBlock [
+ASTProgramNode >> do: aBlock [
 	"Hacked to fit collection protocols"
 
 	aBlock value: self
 ]
 
 { #category : 'generation' }
-RBProgramNode >> dump [
+ASTProgramNode >> dump [
 	"Generate a literal expression that recreates the receiver"
 
 	| visitor |
@@ -492,7 +492,7 @@ RBProgramNode >> dump [
 ]
 
 { #category : 'comparing' }
-RBProgramNode >> equalTo: aNode exceptForVariables: variableNameCollection [
+ASTProgramNode >> equalTo: aNode exceptForVariables: variableNameCollection [
 	| dictionary |
 	dictionary := Dictionary new.
 	(self equalTo: aNode withMapping: dictionary) ifFalse: [^false].
@@ -503,12 +503,12 @@ RBProgramNode >> equalTo: aNode exceptForVariables: variableNameCollection [
 ]
 
 { #category : 'comparing' }
-RBProgramNode >> equalTo: aNode withMapping: aDictionary [
+ASTProgramNode >> equalTo: aNode withMapping: aDictionary [
 	^self = aNode
 ]
 
 { #category : 'notice' }
-RBProgramNode >> errorNotices [
+ASTProgramNode >> errorNotices [
 	"The errors attached to the receiver"
 
 	| notices |
@@ -522,7 +522,7 @@ RBProgramNode >> errorNotices [
 ]
 
 { #category : 'testing' }
-RBProgramNode >> evaluatedFirst: aNode [
+ASTProgramNode >> evaluatedFirst: aNode [
 	self children do:
 			[:each |
 			each == aNode ifTrue: [^true].
@@ -531,24 +531,24 @@ RBProgramNode >> evaluatedFirst: aNode [
 ]
 
 { #category : 'printing' }
-RBProgramNode >> formattedCode [
+ASTProgramNode >> formattedCode [
 
 	^ self formattedCodeIn: self class
 ]
 
 { #category : 'printing' }
-RBProgramNode >> formattedCodeIn: context [
+ASTProgramNode >> formattedCodeIn: context [
 
 	^ context formatter format: self
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> formatterClass [
+ASTProgramNode >> formatterClass [
 	^ self class formatterClass
 ]
 
 { #category : 'querying' }
-RBProgramNode >> getCommentsFor: anInterval [
+ASTProgramNode >> getCommentsFor: anInterval [
 	| selectedComments |
 	selectedComments := OrderedCollection new.
 	self nodesDo:
@@ -565,20 +565,20 @@ RBProgramNode >> getCommentsFor: anInterval [
 ]
 
 { #category : 'testing' }
-RBProgramNode >> hasBlock [
+ASTProgramNode >> hasBlock [
 
 	^ false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> hasComments [
+ASTProgramNode >> hasComments [
 	"Answer whether the receiver as comments"
 
 	^ self comments isNotEmpty
 ]
 
 { #category : 'testing' }
-RBProgramNode >> hasMultipleReturns [
+ASTProgramNode >> hasMultipleReturns [
 	| count |
 	count := 0.
 	self nodesDo: [:each | each isReturn ifTrue: [count := count + 1]].
@@ -586,121 +586,121 @@ RBProgramNode >> hasMultipleReturns [
 ]
 
 { #category : 'testing' }
-RBProgramNode >> hasNonLocalReturn [
+ASTProgramNode >> hasNonLocalReturn [
 	"check if there is a non-local return anywhere
 	Note: returns in a method itself are local returns"
 	^ self children anySatisfy: [ :child | child hasNonLocalReturn ]
 ]
 
 { #category : 'properties' }
-RBProgramNode >> hasProperty: aKey [
+ASTProgramNode >> hasProperty: aKey [
 	"Test if the property aKey is present."
 
 	^ properties isNotNil and: [ properties includesKey: aKey ]
 ]
 
 { #category : 'testing' }
-RBProgramNode >> hasSameExitPoint [
+ASTProgramNode >> hasSameExitPoint [
 
 	^ self hasSameExitPoint: false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> hasSameExitPoint: aBoolean [ 
+ASTProgramNode >> hasSameExitPoint: aBoolean [ 
 
 	^ true
 ]
 
 { #category : 'comparing' }
-RBProgramNode >> hashForCollection: aCollection [
+ASTProgramNode >> hashForCollection: aCollection [
 	^ aCollection isEmpty ifTrue: [ 0 ] ifFalse: [ aCollection first hash ]
 ]
 
 { #category : 'querying' }
-RBProgramNode >> instanceVariableNodes [
+ASTProgramNode >> instanceVariableNodes [
 		^self variableNodes select: [:each | each isInstanceVariable]
 ]
 
 { #category : 'querying' }
-RBProgramNode >> instanceVariableReadNodes [
+ASTProgramNode >> instanceVariableReadNodes [
 		^self variableReadNodes select: [:each | each isInstanceVariable]
 ]
 
 { #category : 'querying' }
-RBProgramNode >> instanceVariableWriteNodes [
+ASTProgramNode >> instanceVariableWriteNodes [
 		^self variableWriteNodes select: [:each | each isInstanceVariable]
 ]
 
 { #category : 'testing' }
-RBProgramNode >> intersectsInterval: anInterval [
+ASTProgramNode >> intersectsInterval: anInterval [
 	^(anInterval first between: self start and: self stop)
 		or: [self start between: anInterval first and: anInterval last]
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isAnnotationMark [
+ASTProgramNode >> isAnnotationMark [
 	^ false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isArgumentVariable [
+ASTProgramNode >> isArgumentVariable [
 	^ false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isArrayError [
+ASTProgramNode >> isArrayError [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isAssignment [
+ASTProgramNode >> isAssignment [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isBlockError [
+ASTProgramNode >> isBlockError [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isCascade [
+ASTProgramNode >> isCascade [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isCascadeError [
+ASTProgramNode >> isCascadeError [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isClassVariable [
+ASTProgramNode >> isClassVariable [
 	^ false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isCommentNode [
+ASTProgramNode >> isCommentNode [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isDynamicArray [
+ASTProgramNode >> isDynamicArray [
 	^ false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isEnglobingError [
+ASTProgramNode >> isEnglobingError [
 	^false
 ]
 
 { #category : 'notice' }
-RBProgramNode >> isError [
+ASTProgramNode >> isError [
 	"An error node is either a RBParseErrorNode (for syntactic errors) or has error information (for other errors)"
 
 	^ self errorNotices isNotEmpty
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isEssential [
+ASTProgramNode >> isEssential [
 	"This node can not be removed from the expression, else the expression is not valid anymore.
 	 An argument, receiver, or part of an assignment or part of a return can not be removed.
 	 This ensures that if the node would be removed, a resulting expression will still be syntatically correct.
@@ -714,123 +714,123 @@ RBProgramNode >> isEssential [
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isEssentialChild: aNode [
+ASTProgramNode >> isEssentialChild: aNode [
 	^true
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isEvaluatedFirst [
+ASTProgramNode >> isEvaluatedFirst [
 	"Return true if we are the first thing evaluated in this statement."
 
 	^parent isNil or: [parent isSequence or: [parent evaluatedFirst: self]]
 ]
 
 { #category : 'notice' }
-RBProgramNode >> isFaulty [
+ASTProgramNode >> isFaulty [
 
 	"return true if the AST is or contains a isError node."
 	^ self isError
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isGlobalVariable [
+ASTProgramNode >> isGlobalVariable [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isHaltNode [
+ASTProgramNode >> isHaltNode [
 	^ false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isImmediateNode [
+ASTProgramNode >> isImmediateNode [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isInstanceVariable [
+ASTProgramNode >> isInstanceVariable [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isLast: aNode [
+ASTProgramNode >> isLast: aNode [
 	| children |
 	children := self children.
 	^children notEmpty and: [children last == aNode]
 ]
 
 { #category : 'testing - matching' }
-RBProgramNode >> isList [
+ASTProgramNode >> isList [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isLiteralArray [
+ASTProgramNode >> isLiteralArray [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isLiteralArrayError [
+ASTProgramNode >> isLiteralArrayError [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isLiteralNode [
+ASTProgramNode >> isLiteralNode [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isLiteralVariable [
+ASTProgramNode >> isLiteralVariable [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isLocalVariable [
+ASTProgramNode >> isLocalVariable [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isMessage [
+ASTProgramNode >> isMessage [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isMethod [
+ASTProgramNode >> isMethod [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isParenthesesError [
+ASTProgramNode >> isParenthesesError [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isParseError [
+ASTProgramNode >> isParseError [
 	^false
 ]
 
 { #category : 'testing - matching' }
-RBProgramNode >> isPatternNode [
+ASTProgramNode >> isPatternNode [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isPragma [
+ASTProgramNode >> isPragma [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isPragmaError [
+ASTProgramNode >> isPragmaError [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isPseudoVariable [
+ASTProgramNode >> isPseudoVariable [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isReservedVariable [
+ASTProgramNode >> isReservedVariable [
 	self
 		deprecated: 'Please use #isPseudoVariable instead'
 		transformWith: '`@receiver isReservedVariable' -> '`@receiver isPseudoVariable'.
@@ -839,62 +839,62 @@ RBProgramNode >> isReservedVariable [
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isReturn [
+ASTProgramNode >> isReturn [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isSelector [
+ASTProgramNode >> isSelector [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isSelfOrSuperVariable [
+ASTProgramNode >> isSelfOrSuperVariable [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isSelfVariable [
+ASTProgramNode >> isSelfVariable [
 	^ false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isSequence [
+ASTProgramNode >> isSequence [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isSuperVariable [
+ASTProgramNode >> isSuperVariable [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isTempVariable [
+ASTProgramNode >> isTempVariable [
 	^ false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isTemporariesError [
+ASTProgramNode >> isTemporariesError [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isThisContextVariable [
+ASTProgramNode >> isThisContextVariable [
 	^ false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isUndeclaredVariable [
+ASTProgramNode >> isUndeclaredVariable [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isUnfinishedStatement [
+ASTProgramNode >> isUnfinishedStatement [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isUsedAsReturnValue [
+ASTProgramNode >> isUsedAsReturnValue [
 	"Answer true if this node could be used as part of another expression. For example, you could use the
 	result of this node as a receiver of a message, an argument, the right part of an assignment, or the
 	return value of a block. This differs from isDirectlyUsed in that it is conservative since it also includes
@@ -904,42 +904,42 @@ RBProgramNode >> isUsedAsReturnValue [
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isUsingAsReturnValue: aNode [
+ASTProgramNode >> isUsingAsReturnValue: aNode [
 	^true
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isValue [
+ASTProgramNode >> isValue [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isVariable [
+ASTProgramNode >> isVariable [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isWorkspaceVariable [
+ASTProgramNode >> isWorkspaceVariable [
 	^false
 ]
 
 { #category : 'testing' }
-RBProgramNode >> lastIsReturn [
+ASTProgramNode >> lastIsReturn [
 	^ false
 ]
 
 { #category : 'accessing - meta variable' }
-RBProgramNode >> listCharacter [
+ASTProgramNode >> listCharacter [
 	^$@
 ]
 
 { #category : 'accessing - meta variable' }
-RBProgramNode >> literalCharacter [
+ASTProgramNode >> literalCharacter [
 	^$#
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> mappingFor: aNode [
+ASTProgramNode >> mappingFor: aNode [
 	| method |
 	method := self methodNode.
 	method ifNil: [^aNode].
@@ -947,12 +947,12 @@ RBProgramNode >> mappingFor: aNode [
 ]
 
 { #category : 'matching' }
-RBProgramNode >> match: aNode inContext: aDictionary [
+ASTProgramNode >> match: aNode inContext: aDictionary [
 	^ self = aNode
 ]
 
 { #category : 'matching' }
-RBProgramNode >> matchList: matchNodes against: programNodes inContext: aDictionary [
+ASTProgramNode >> matchList: matchNodes against: programNodes inContext: aDictionary [
 	^self
 		matchList: matchNodes
 		index: 1
@@ -962,7 +962,7 @@ RBProgramNode >> matchList: matchNodes against: programNodes inContext: aDiction
 ]
 
 { #category : 'matching' }
-RBProgramNode >> matchList: matchNodes index: matchIndex against: programNodes index: programIndex inContext: aDictionary [
+ASTProgramNode >> matchList: matchNodes index: matchIndex against: programNodes index: programIndex inContext: aDictionary [
 	| node currentIndex currentDictionary nodes |
 	matchNodes size < matchIndex ifTrue: [^programNodes size < programIndex].
 	node := matchNodes at: matchIndex.
@@ -999,22 +999,22 @@ RBProgramNode >> matchList: matchNodes index: matchIndex against: programNodes i
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> methodNode [
+ASTProgramNode >> methodNode [
 	^parent ifNotNil: [parent methodNode]
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> methodOrBlockNode [
+ASTProgramNode >> methodOrBlockNode [
 	^ parent ifNotNil: [ parent methodOrBlockNode ]
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> newSource [
+ASTProgramNode >> newSource [
 	^self formattedCode
 ]
 
 { #category : 'node access' }
-RBProgramNode >> nodeBeforeOffset: anInteger [
+ASTProgramNode >> nodeBeforeOffset: anInteger [
 	"Return the node at offset `anInteger` or at the first non-separator previous character.
 	Ignoring space corresponds to what is the visible current or previous node in IDE."
 
@@ -1027,7 +1027,7 @@ RBProgramNode >> nodeBeforeOffset: anInteger [
 ]
 
 { #category : 'node access' }
-RBProgramNode >> nodeForOffset: anInteger [
+ASTProgramNode >> nodeForOffset: anInteger [
 	"Choose the best node on the specific offset, including comments.
 	Because comments can be oustide the span of sourceInterval, we have to visit all children.
 	Return nil if anInteger is out of range."
@@ -1041,7 +1041,7 @@ RBProgramNode >> nodeForOffset: anInteger [
 ]
 
 { #category : 'iterating' }
-RBProgramNode >> nodesDo: aBlock [
+ASTProgramNode >> nodesDo: aBlock [
 	"Evaluate aBlock on self and all chindren nodes, including comments"
 
 	aBlock value: self.
@@ -1049,7 +1049,7 @@ RBProgramNode >> nodesDo: aBlock [
 ]
 
 { #category : 'iterating' }
-RBProgramNode >> nodesPostorderDo: aBlock [
+ASTProgramNode >> nodesPostorderDo: aBlock [
 	"Like RBProgramNode>>#nodesDo: but visit children first"
 
 	self childrenAndComments do: [ :each | each nodesPostorderDo: aBlock ].
@@ -1057,40 +1057,40 @@ RBProgramNode >> nodesPostorderDo: aBlock [
 ]
 
 { #category : 'notice' }
-RBProgramNode >> notices [
+ASTProgramNode >> notices [
 	"The notices attached to the receiver"
 
 	^ self propertyAt: #notices ifAbsent: #()
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> parent [
+ASTProgramNode >> parent [
 	^parent
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> parent: aRBProgramNode [
+ASTProgramNode >> parent: aRBProgramNode [
 	parent := aRBProgramNode
 ]
 
 { #category : 'hook' }
-RBProgramNode >> parserClass [
+ASTProgramNode >> parserClass [
 	^ RBParser
 ]
 
 { #category : 'copying' }
-RBProgramNode >> postCopy [
+ASTProgramNode >> postCopy [
 	super postCopy.
 	properties := properties copy
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> precedence [
+ASTProgramNode >> precedence [
 	^6
 ]
 
 { #category : 'printing' }
-RBProgramNode >> printOn: aStream [
+ASTProgramNode >> printOn: aStream [
 	aStream
 		nextPutAll: self class name;
 		nextPut: $(;
@@ -1099,14 +1099,14 @@ RBProgramNode >> printOn: aStream [
 ]
 
 { #category : 'properties' }
-RBProgramNode >> propertyAt: aKey [
+ASTProgramNode >> propertyAt: aKey [
 	"Answer the property value associated with aKey."
 
 	^ self propertyAt: aKey ifAbsent: [ self error: 'Property not found' ]
 ]
 
 { #category : 'properties' }
-RBProgramNode >> propertyAt: aKey ifAbsent: aBlock [
+ASTProgramNode >> propertyAt: aKey ifAbsent: aBlock [
 	"Answer the property value associated with aKey or, if aKey isn't found, answer the result of evaluating aBlock."
 
 	^ properties
@@ -1115,28 +1115,28 @@ RBProgramNode >> propertyAt: aKey ifAbsent: aBlock [
 ]
 
 { #category : 'properties' }
-RBProgramNode >> propertyAt: aKey ifAbsentPut: aBlock [
+ASTProgramNode >> propertyAt: aKey ifAbsentPut: aBlock [
 	"Answer the property associated with aKey or, if aKey isn't found store the result of evaluating aBlock as new value."
 
 	^ self propertyAt: aKey ifAbsent: [ self propertyAt: aKey put: aBlock value ]
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> propertyAt: aKey ifPresent: aPresentBlock [
+ASTProgramNode >> propertyAt: aKey ifPresent: aPresentBlock [
 	"Evaluate aPresentBlock with the the property value associated with aKey. Return nil if aKey is not found."
 
 	^ properties ifNotNil: [ properties at: aKey ifPresent: aPresentBlock ifAbsent: [ nil ] ]
 ]
 
 { #category : 'properties' }
-RBProgramNode >> propertyAt: aKey ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
+ASTProgramNode >> propertyAt: aKey ifPresent: aPresentBlock ifAbsent: anAbsentBlock [
 	"Answer the property value associated with aKey or, if aKey is found, answer the result of evaluating aPresentBlock, else evaluates anAbsentBlock."
 
 	^ properties ifNil: [ anAbsentBlock value ] ifNotNil: [ properties at: aKey ifPresent: aPresentBlock ifAbsent: anAbsentBlock ]
 ]
 
 { #category : 'properties' }
-RBProgramNode >> propertyAt: aKey put: anObject [
+ASTProgramNode >> propertyAt: aKey put: anObject [
 	"Set the property at aKey to be anObject. If aKey is not found, create a new entry for aKey and set is value to anObject. Answer anObject."
 
 	^ (properties ifNil: [ properties := SmallDictionary new: 1 ])
@@ -1144,34 +1144,34 @@ RBProgramNode >> propertyAt: aKey put: anObject [
 ]
 
 { #category : 'testing - matching' }
-RBProgramNode >> recurseInto [
+ASTProgramNode >> recurseInto [
 	^false
 ]
 
 { #category : 'accessing - meta variable' }
-RBProgramNode >> recurseIntoCharacter [
+ASTProgramNode >> recurseIntoCharacter [
 	^$`
 ]
 
 { #category : 'testing' }
-RBProgramNode >> references: aVariableName [
+ASTProgramNode >> references: aVariableName [
 	^self children anySatisfy: [:each | each references: aVariableName]
 ]
 
 { #category : 'replacing' }
-RBProgramNode >> removeDeadCode [
+ASTProgramNode >> removeDeadCode [
 	self children do: [:each | each removeDeadCode]
 ]
 
 { #category : 'properties' }
-RBProgramNode >> removeProperty: aKey [
+ASTProgramNode >> removeProperty: aKey [
 	"Remove the property with aKey. Answer the property or raise an error if aKey isn't found."
 
 	^ self removeProperty: aKey ifAbsent: [ self error: 'Property not found' ]
 ]
 
 { #category : 'properties' }
-RBProgramNode >> removeProperty: aKey ifAbsent: aBlock [
+ASTProgramNode >> removeProperty: aKey ifAbsent: aBlock [
 	"Remove the property with aKey. Answer the value or, if aKey isn't found, answer the result of evaluating aBlock."
 
 	| answer |
@@ -1182,7 +1182,7 @@ RBProgramNode >> removeProperty: aKey ifAbsent: aBlock [
 ]
 
 { #category : 'replacing' }
-RBProgramNode >> replaceMethodSource: aNode [
+ASTProgramNode >> replaceMethodSource: aNode [
 	"We are being replaced with aNode -- if possible try to perform an in place edit of the source."
 
 	| method |
@@ -1197,46 +1197,46 @@ RBProgramNode >> replaceMethodSource: aNode [
 ]
 
 { #category : 'replacing' }
-RBProgramNode >> replaceNode: aNode withNode: anotherNode [
+ASTProgramNode >> replaceNode: aNode withNode: anotherNode [
 	self error: 'I don''t store other nodes'
 ]
 
 { #category : 'private - replacing' }
-RBProgramNode >> replaceSourceFrom: aNode [
+ASTProgramNode >> replaceSourceFrom: aNode [
 	self == aNode
 		ifFalse: [ self clearReplacements ]
 ]
 
 { #category : 'private - replacing' }
-RBProgramNode >> replaceSourceWith: aNode [
+ASTProgramNode >> replaceSourceWith: aNode [
 	aNode replaceSourceFrom: self
 ]
 
 { #category : 'replacing' }
-RBProgramNode >> replaceWith: aNode [
+ASTProgramNode >> replaceWith: aNode [
 	parent ifNil: [self error: 'This node doesn''t have a parent'].
 	self replaceMethodSource: aNode.
 	parent replaceNode: self withNode: aNode
 ]
 
 { #category : 'enumeration' }
-RBProgramNode >> reverseNodesDo: aBlock [
+ASTProgramNode >> reverseNodesDo: aBlock [
 	self children reverseDo: [ :each | each reverseNodesDo: aBlock ].
 	aBlock value: self
 ]
 
 { #category : 'querying' }
-RBProgramNode >> selfMessages [
+ASTProgramNode >> selfMessages [
 	^(self sendNodes select: [ :node | node isSelfSend ] thenCollect: [ :node | node selector ]) asSet
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> sendNodes [
+ASTProgramNode >> sendNodes [
 	^self allChildren select: [:each | each isMessage]
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> sentMessages [
+ASTProgramNode >> sentMessages [
 	^ self children
 		inject: Set new
 		into: [ :messages :each |
@@ -1246,20 +1246,20 @@ RBProgramNode >> sentMessages [
 ]
 
 { #category : 'enumeration' }
-RBProgramNode >> size [
+ASTProgramNode >> size [
 	"Hacked to fit collection protocols"
 
 	^1
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> source [
+ASTProgramNode >> source [
 
 	^ parent ifNotNil: [ parent source ]
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> sourceCode [
+ASTProgramNode >> sourceCode [
 
 	| interval |
 	interval := self sourceInterval.
@@ -1271,22 +1271,22 @@ RBProgramNode >> sourceCode [
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> sourceInterval [
+ASTProgramNode >> sourceInterval [
 	^ self start to: self stop
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> start [
+ASTProgramNode >> start [
 	self subclassResponsibility
 ]
 
 { #category : 'accessing - meta variable' }
-RBProgramNode >> statementCharacter [
+ASTProgramNode >> statementCharacter [
 	^ $.
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> statementComments [
+ASTProgramNode >> statementComments [
 	| statementComments |
 	statementComments := OrderedCollection withAll: self comments.
 	self children do: [:each | statementComments addAll: each statementComments].
@@ -1294,7 +1294,7 @@ RBProgramNode >> statementComments [
 ]
 
 { #category : 'querying' }
-RBProgramNode >> statementNode [
+ASTProgramNode >> statementNode [
 	"Return your topmost node that is contained by a sequence node."
 
 	(parent isNil or: [parent isSequence]) ifTrue: [^self].
@@ -1302,7 +1302,7 @@ RBProgramNode >> statementNode [
 ]
 
 { #category : 'querying' }
-RBProgramNode >> statementNodeIn: aSequenceBlockOrMethod [
+ASTProgramNode >> statementNodeIn: aSequenceBlockOrMethod [
 	"Return the statement within aSequenceBlockOrMethod that ultimately contains us,
 	skipping any intervening nested blocks.
 	
@@ -1322,62 +1322,62 @@ RBProgramNode >> statementNodeIn: aSequenceBlockOrMethod [
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> statements [
+ASTProgramNode >> statements [
 	^ #()
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> stop [
+ASTProgramNode >> stop [
 	self subclassResponsibility
 ]
 
 { #category : 'querying' }
-RBProgramNode >> superMessages [
+ASTProgramNode >> superMessages [
 	^(self sendNodes select: [ :node | node isSuperSend ] thenCollect: [ :node | node selector ]) asSet
 ]
 
 { #category : 'querying' }
-RBProgramNode >> tempVariableReadNodes [
+ASTProgramNode >> tempVariableReadNodes [
 		^self variableReadNodes select: [:each | each isTempVariable]
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> temporaryVariables [
+ASTProgramNode >> temporaryVariables [
 	^parent ifNil: [#()] ifNotNil: [parent temporaryVariables]
 ]
 
 { #category : 'querying' }
-RBProgramNode >> variableDefinitionNodes [
+ASTProgramNode >> variableDefinitionNodes [
 	^ self allChildren select: [ :each |
 		  each isVariable and: [ each isDefinition ] ]
 ]
 
 { #category : 'querying' }
-RBProgramNode >> variableNodes [
+ASTProgramNode >> variableNodes [
 
 	^ self allChildren select: [ :each |
 		  each isVariable and: [ each isDefinition not ] ]
 ]
 
 { #category : 'querying' }
-RBProgramNode >> variableReadNodes [
+ASTProgramNode >> variableReadNodes [
 	^self variableNodes select: [:each | each isRead]
 ]
 
 { #category : 'querying' }
-RBProgramNode >> variableWriteNodes [
+ASTProgramNode >> variableWriteNodes [
 		^self variableNodes select: [:each | each isWrite]
 ]
 
 { #category : 'notice' }
-RBProgramNode >> warningNotices [
+ASTProgramNode >> warningNotices [
 	"The warnings attached to the receiver"
 
 	^ self notices select: #isWarning
 ]
 
 { #category : 'querying' }
-RBProgramNode >> whichNodeIsContainedBy: anInterval [
+ASTProgramNode >> whichNodeIsContainedBy: anInterval [
 	| selectedChildren |
 	(self intersectsInterval: anInterval) ifFalse: [^nil].
 	(self containedBy: anInterval) ifTrue: [^self].
@@ -1389,7 +1389,7 @@ RBProgramNode >> whichNodeIsContainedBy: anInterval [
 ]
 
 { #category : 'querying' }
-RBProgramNode >> whoDefines: aName [
+ASTProgramNode >> whoDefines: aName [
 
 	^ (self defines: aName)
 		  ifTrue: [ self ]
@@ -1397,7 +1397,7 @@ RBProgramNode >> whoDefines: aName [
 ]
 
 { #category : 'accessing' }
-RBProgramNode >> withAllParents [
+ASTProgramNode >> withAllParents [
 	"return me and all my parents. Topmost parent first, me last
 	See discussion in issue https://github.com/pharo-project/pharo/issues/6278"
 	^ parent

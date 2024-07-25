@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFThisContextReification class >> entities [
-	^{RBProgramNode . Variable}
+	^{ASTProgramNode . Variable}
 ]
 
 { #category : 'plugin interface' }

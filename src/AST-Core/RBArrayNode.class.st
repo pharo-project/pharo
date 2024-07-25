@@ -9,7 +9,7 @@ Instance Variables
 "
 Class {
 	#name : 'RBArrayNode',
-	#superclass : 'RBValueNode',
+	#superclass : 'ASTValueNode',
 	#instVars : [
 		'left',
 		'right',

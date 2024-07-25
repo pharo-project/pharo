@@ -287,7 +287,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	MCSaveVersionDialog previousMessages add: String new.
 
-	RBProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [ RBSimpleFormatter ]).
+	ASTProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [ RBSimpleFormatter ]).
 
 	Color flushCache.
 
@@ -309,6 +309,9 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	
 	"This should be removed in Pharo 14."
 	ASTNode deprecatedAliases: { #RBNode }.
+	ASTProgramNode deprecatedAliases: { #RBProgramNode }.
+	ASTValueNode deprecatedAliases: { #RBValueNode }.
+	ASTLiteralNode deprecatedAliases: { #RBLiteralNode }.
 
 	self loadIceberg.
 	self loadExtraTools.

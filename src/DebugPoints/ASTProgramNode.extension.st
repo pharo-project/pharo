@@ -1,7 +1,7 @@
-Extension { #name : 'RBProgramNode' }
+Extension { #name : 'ASTProgramNode' }
 
 { #category : '*DebugPoints' }
-RBProgramNode >> usingMethods [
+ASTProgramNode >> usingMethods [
 
 	^ { self methodNode compiledMethod }
 ]

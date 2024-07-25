@@ -20,7 +20,7 @@ Note: the node is not a value nor a variable, it is a placeholder at best.
 "
 Class {
 	#name : 'RBAnnotationMarkNode',
-	#superclass : 'RBValueNode',
+	#superclass : 'ASTValueNode',
 	#instVars : [
 		'start',
 		'emitValueBlock'

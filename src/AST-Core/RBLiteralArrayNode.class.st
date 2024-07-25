@@ -8,7 +8,7 @@ Instance Variables
 "
 Class {
 	#name : 'RBLiteralArrayNode',
-	#superclass : 'RBLiteralNode',
+	#superclass : 'ASTLiteralNode',
 	#instVars : [
 		'isByteArray',
 		'contents',
@@ -33,7 +33,7 @@ RBLiteralArrayNode class >> startPosition: startInteger contents: anArray stopPo
 RBLiteralArrayNode class >> value: aValue [
 	^(self new)
 		startPosition: 0
-			contents: (aValue asArray collect: [:each | RBLiteralNode value: each])
+			contents: (aValue asArray collect: [:each | ASTLiteralNode value: each])
 			stopPosition: -1
 			isByteArray: aValue class ~~ Array;
 		yourself

@@ -12,7 +12,7 @@ Instance Variables:
 "
 Class {
 	#name : 'RBSequenceNode',
-	#superclass : 'RBProgramNode',
+	#superclass : 'ASTProgramNode',
 	#instVars : [
 		'leftBar',
 		'rightBar',

@@ -11,7 +11,7 @@ Instance Variables:
 "
 Class {
 	#name : 'RBMessageNode',
-	#superclass : 'RBValueNode',
+	#superclass : 'ASTValueNode',
 	#instVars : [
 		'receiver',
 		'selector',

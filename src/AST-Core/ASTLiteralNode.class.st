@@ -6,8 +6,8 @@ Instance Variables
 	stop: <Integer | nil> source position for the literal's end
 "
 Class {
-	#name : 'RBLiteralNode',
-	#superclass : 'RBValueNode',
+	#name : 'ASTLiteralNode',
+	#superclass : 'ASTValueNode',
 	#instVars : [
 		'start',
 		'stop'
@@ -18,13 +18,13 @@ Class {
 }
 
 { #category : 'testing' }
-RBLiteralNode class >> isAbstract [
+ASTLiteralNode class >> isAbstract [
 
-	^ self == RBLiteralNode
+	^ self == ASTLiteralNode
 ]
 
 { #category : 'instance creation' }
-RBLiteralNode class >> value: aValue [
+ASTLiteralNode class >> value: aValue [
 	"we check here for Array and ByteArray explicitly, as subclasses should use RBLiteralNode.
 	using #isByteArray would be inherited by subclasses"
 	^((aValue class == Array or: [aValue class == ByteArray])
@@ -33,23 +33,23 @@ RBLiteralNode class >> value: aValue [
 ]
 
 { #category : 'comparing' }
-RBLiteralNode >> = anObject [
+ASTLiteralNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	^self class = anObject class
 ]
 
 { #category : 'visiting' }
-RBLiteralNode >> acceptVisitor: aProgramNodeVisitor [
+ASTLiteralNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitLiteralNode: self
 ]
 
 { #category : 'comparing' }
-RBLiteralNode >> hash [
+ASTLiteralNode >> hash [
 	^self value hash
 ]
 
 { #category : 'initialization' }
-RBLiteralNode >> initialize [
+ASTLiteralNode >> initialize [
 
 	super initialize.
 
@@ -58,27 +58,27 @@ RBLiteralNode >> initialize [
 ]
 
 { #category : 'testing' }
-RBLiteralNode >> isImmediateNode [
+ASTLiteralNode >> isImmediateNode [
 	^true
 ]
 
 { #category : 'testing' }
-RBLiteralNode >> isLiteralNode [
+ASTLiteralNode >> isLiteralNode [
 	^true
 ]
 
 { #category : 'testing' }
-RBLiteralNode >> needsParenthesis [
+ASTLiteralNode >> needsParenthesis [
 	^false
 ]
 
 { #category : 'accessing' }
-RBLiteralNode >> precedence [
+ASTLiteralNode >> precedence [
 	^0
 ]
 
 { #category : 'private - replacing' }
-RBLiteralNode >> replaceSourceFrom: aNode [
+ASTLiteralNode >> replaceSourceFrom: aNode [
 	self addReplacement: (RBStringReplacement
 				replaceFrom: aNode start
 				to: aNode stop
@@ -86,7 +86,7 @@ RBLiteralNode >> replaceSourceFrom: aNode [
 ]
 
 { #category : 'private - replacing' }
-RBLiteralNode >> replaceSourceWith: aNode [
+ASTLiteralNode >> replaceSourceWith: aNode [
 	self addReplacement: (RBStringReplacement
 				replaceFrom: self start
 				to: self stop
@@ -94,26 +94,26 @@ RBLiteralNode >> replaceSourceWith: aNode [
 ]
 
 { #category : 'accessing' }
-RBLiteralNode >> start: anInteger [
+ASTLiteralNode >> start: anInteger [
 	start := anInteger
 ]
 
 { #category : 'accessing' }
-RBLiteralNode >> startWithoutParentheses [
+ASTLiteralNode >> startWithoutParentheses [
 	^start
 ]
 
 { #category : 'accessing' }
-RBLiteralNode >> stop: anInteger [
+ASTLiteralNode >> stop: anInteger [
 	stop := anInteger
 ]
 
 { #category : 'accessing' }
-RBLiteralNode >> stopWithoutParentheses [
+ASTLiteralNode >> stopWithoutParentheses [
 	^stop
 ]
 
 { #category : 'accessing' }
-RBLiteralNode >> value [
+ASTLiteralNode >> value [
 	^self subclassResponsibility
 ]

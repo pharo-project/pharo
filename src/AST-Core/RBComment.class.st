@@ -31,7 +31,7 @@ instance variables
 "
 Class {
 	#name : 'RBComment',
-	#superclass : 'RBProgramNode',
+	#superclass : 'ASTProgramNode',
 	#instVars : [
 		'contents',
 		'start',

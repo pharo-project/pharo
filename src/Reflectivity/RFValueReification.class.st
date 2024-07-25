@@ -21,7 +21,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFValueReification class >> entities [
-	^{RBValueNode . RBReturnNode. RBMethodNode . Variable}
+	^{ASTValueNode . RBReturnNode. RBMethodNode . Variable}
 ]
 
 { #category : 'plugin interface' }
@@ -34,7 +34,7 @@ RFValueReification >> genForInstanceVariableSlot [
 	"entity in this case is the binding of the instance variable"
 
 	^ RBMessageNode
-		receiver: (RBLiteralNode value: entity)
+		receiver: (ASTLiteralNode value: entity)
 		selector: #read:
 		arguments: {RBVariableNode selfNode}
 ]
@@ -42,7 +42,7 @@ RFValueReification >> genForInstanceVariableSlot [
 { #category : 'generate' }
 RFValueReification >> genForLiteralVariable [
 	"entity in this case is the binding of the literal"
-	^RBLiteralNode value: entity value
+	^ASTLiteralNode value: entity value
 ]
 
 { #category : 'generate' }
@@ -95,13 +95,13 @@ RFValueReification >> genForRBReturnNode [
 RFValueReification >> genForRBVariableNode [
 	entity variable
 		ifNotNil: [ entity variable isLiteralVariable
-				ifTrue: [ ^ RBLiteralNode value: entity binding value ] ].
+				ifTrue: [ ^ ASTLiteralNode value: entity binding value ] ].
 	^ RBVariableNode named: entity name
 ]
 
 { #category : 'generate' }
 RFValueReification >> postamble: aNode [
-	(aNode isKindOf: RBProgramNode) ifFalse: [ ^#() ].
+	(aNode isKindOf: ASTProgramNode) ifFalse: [ ^#() ].
 	aNode isMessage ifTrue: [^RFStoreIntoTempNode named: self varName. ].
 	aNode isCascade ifTrue: [^RFStoreIntoTempNode named: self varName. ].
 	aNode isBlock ifTrue: [^RFStoreIntoTempNode named: self varName].

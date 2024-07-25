@@ -715,7 +715,7 @@ RBBrowserEnvironment >> selectionParseTreeIntervalFor: aString [
 	self searchStrings do: [ :each |
 		| matcher tree |
 		matcher := RBParseTreeSearcher new.
-		matcher matchesTree: (RBLiteralNode value: each) do: answerBlock.
+		matcher matchesTree: (ASTLiteralNode value: each) do: answerBlock.
 		each isSymbol
 			ifTrue: [
 				tree := RBParseTreeSearcher buildSelectorTree: each.

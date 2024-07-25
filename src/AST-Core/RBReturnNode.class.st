@@ -9,7 +9,7 @@ Instance Variables:
 "
 Class {
 	#name : 'RBReturnNode',
-	#superclass : 'RBProgramNode',
+	#superclass : 'ASTProgramNode',
 	#instVars : [
 		'value',
 		'start'

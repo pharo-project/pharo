@@ -341,7 +341,7 @@ RBParseTreeSearcher >> messages [
 			[:each |
 			| searchMessages |
 			searchMessages := each sentMessages.
-			RBProgramNode optimizedSelectors
+			ASTProgramNode optimizedSelectors
 				do: [:sel | searchMessages remove: sel ifAbsent: []].
 			searchMessages isEmpty ifTrue: [^messages := #()].
 			messages addAll: searchMessages].
