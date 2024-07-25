@@ -35,7 +35,7 @@ RBChangeMethodNameRefactoring class >> isAbstract [
 RBChangeMethodNameRefactoring >> applicabilityPreconditions [
 
 	^ {
-		  (RBCondition definesSelector: oldSelector in: class).
+		  (RBCondition definesSelector: oldSelector inRealClass: class realClass).
 		  self isValidMethodNamePrecondition }
 ]
 
