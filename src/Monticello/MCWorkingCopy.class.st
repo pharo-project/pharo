@@ -382,17 +382,6 @@ MCWorkingCopy >> needsSaving [
 ]
 
 { #category : 'operations' }
-MCWorkingCopy >> newVersionIn: aRepository [
-	^ (self requestVersionNameAndMessageWithSuggestion: (self uniqueVersionNameIn: aRepository)) 
-		ifNotNil: [:pair |
-			self 
-				newVersionWithName: pair first trimBoth 
-				message: pair last 
-				in: aRepository ].
-
-]
-
-{ #category : 'operations' }
 MCWorkingCopy >> newVersionWithMessage: aMessageString in: aRepository [
 
 	^ self newVersionWithName: (self uniqueVersionNameIn: aRepository) message: aMessageString in: aRepository
@@ -497,11 +486,6 @@ MCWorkingCopy >> repositoryGroup [
 { #category : 'repositories' }
 MCWorkingCopy >> repositoryGroup: aRepositoryGroup [
 	repositoryGroup := aRepositoryGroup
-]
-
-{ #category : 'private' }
-MCWorkingCopy >> requestVersionNameAndMessageWithSuggestion: aString [
-	^ (MCVersionNameAndMessageRequest new suggestedName: aString) signal
 ]
 
 { #category : 'accessing' }

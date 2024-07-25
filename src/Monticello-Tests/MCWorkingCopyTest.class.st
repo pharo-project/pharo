@@ -12,18 +12,6 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'asserting' }
-MCWorkingCopyTest >> assertNameWhenSavingTo: aRepository is: aString [
-	| name |
-	name := nil.
-	[ aRepository storeVersion: (workingCopy newVersionIn: aRepository) ]
-		on: MCVersionNameAndMessageRequest
-		do: [ :n | 
-			name := n suggestedName.
-			n resume: (Array with: name with: '') ].
-	self assert: name equals: aString
-]
-
 { #category : 'actions' }
 MCWorkingCopyTest >> basicMerge: aVersion [
 	aVersion merge
@@ -79,10 +67,10 @@ MCWorkingCopyTest >> setUp [
 
 { #category : 'actions' }
 MCWorkingCopyTest >> snapshot [
-	| version |
-	[version := workingCopy newVersionIn: workingCopy repositoryGroup]
-		on: MCVersionNameAndMessageRequest
-		do: [:n | n resume: (Array with: n suggestedName with: '')].
+
+	| version repository |
+	repository := workingCopy repositoryGroup.
+	version := workingCopy newVersionWithName: (workingCopy uniqueVersionNameIn: repository) message: '' in: repository.
 	versions at: version info put: version.
 	^ version
 ]
@@ -97,18 +85,13 @@ MCWorkingCopyTest >> tearDown [
 
 { #category : 'tests' }
 MCWorkingCopyTest >> testAncestorMerge [
-	| base revA revB revC |
 
+	| base revision |
 	base := self snapshot.
 	self change: #a toReturn: 'a1'.
-	revA :=  self snapshot.
-	self change: #b toReturn: 'b1'.
-	revB :=  self snapshot.	
-	self change: #c toReturn: 'c1'.
-	revC :=  self snapshot.	
+	revision := self snapshot.
 
-	self should: [self basicMerge: revA] raise: MCNoChangesException.
-	
+	self should: [ self basicMerge: revision ] raise: MCNoChangesException
 ]
 
 { #category : 'tests' }
@@ -170,32 +153,6 @@ MCWorkingCopyTest >> testMergeIntoUnmodifiedImage [
 	self merge: revA.
 
 	self assert: workingCopy ancestors size equals: 1
-]
-
-{ #category : 'tests' }
-MCWorkingCopyTest >> testNaming [
-	| repos version |
-
-	repos := MCDictionaryRepository new.
-	self assertNameWhenSavingTo: repos is: self packageName, '-.1'.
-	self assertNameWhenSavingTo: repos is: self packageName, '-.2'.
-	repos := MCDictionaryRepository new.
-	self assertNameWhenSavingTo: repos is: self packageName, '-.3'.
-	version := self snapshot.
-	version info instVarNamed: 'name' put: 'foo-.32'.
-	version load.
-	self assertNameWhenSavingTo: repos is: 'foo-.33'.
-	self assertNameWhenSavingTo: repos is: 'foo-.34'.
-	version info instVarNamed: 'name' put: 'foo-.35'.
-	repos storeVersion: version.
-	self assertNameWhenSavingTo: repos is: 'foo-.36'.
-	self assertNameWhenSavingTo: repos is: 'foo-.37'.
-	version info instVarNamed: 'name' put: 'foo-.10'.
-	repos storeVersion: version.
-	self assertNameWhenSavingTo: repos is: 'foo-.38'.
-	version info instVarNamed: 'name' put: 'foo2-.40'.
-	version load.
-	self assertNameWhenSavingTo: repos is: 'foo2-.41'.
 ]
 
 { #category : 'tests' }
