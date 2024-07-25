@@ -283,14 +283,6 @@ MCWorkingCopy >> completeSnapshot [
 ]
 
 { #category : 'accessing' }
-MCWorkingCopy >> currentVersionInfo [
-	^ (self needsSaving or: [ancestry ancestors isEmpty])
-		ifTrue: [ (self newVersionIn: self repositoryGroup) 
-						ifNotNil: [ :version | version info ] ]
-		ifFalse: [ancestry ancestors first]
-]
-
-{ #category : 'accessing' }
 MCWorkingCopy >> currentVersionInfoWithMessage: aMessageString in: aRepository [
 	^ (self needsSaving or: [ancestry ancestors isEmpty])
 		ifTrue: [ (self newVersionWithMessage: aMessageString in: aRepository) info ]
