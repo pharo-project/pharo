@@ -38,7 +38,7 @@ ManifestASTCore class >> ruleReCompactSourceCodeRuleV1FalsePositive [
 
 { #category : 'meta data' }
 ManifestASTCore class >> ruleRefersToClassRuleV1FalsePositive [
-^ #(#(#(#RGMethodDefinition #(#'RBLiteralNode class' #literalToken: #true)) #'2013-03-29T18:06:27.069+01:00') )
+^ #(#(#(#RGMethodDefinition #(#'ASTLiteralNode class' #literalToken: #true)) #'2013-03-29T18:06:27.069+01:00') )
 ]
 
 { #category : 'meta data' }

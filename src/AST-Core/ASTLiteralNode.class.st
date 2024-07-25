@@ -1,5 +1,5 @@
 "
-RBLiteralNode is an AST node that represents literals.
+ASTLiteralNode is an AST node that represents literals.
 
 Instance Variables
 	start: <Integer | nil> source position for the literal's beginning
@@ -25,7 +25,7 @@ ASTLiteralNode class >> isAbstract [
 
 { #category : 'instance creation' }
 ASTLiteralNode class >> value: aValue [
-	"we check here for Array and ByteArray explicitly, as subclasses should use RBLiteralNode.
+	"we check here for Array and ByteArray explicitly, as subclasses should use ASTLiteralNode.
 	using #isByteArray would be inherited by subclasses"
 	^((aValue class == Array or: [aValue class == ByteArray])
 		ifTrue: [RBLiteralArrayNode]

@@ -147,7 +147,7 @@ RBParseErrorNode >> source: aString [
 
 { #category : 'accessing' }
 RBParseErrorNode >> start: aPosition [
-	"Beware, start is in fact `startWithoutParentheses` as in RBValueNode, start includes parentheses"
+	"Beware, start is in fact `startWithoutParentheses` as in ASTValueNode, start includes parentheses"
 
 	start := aPosition
 ]
@@ -159,7 +159,7 @@ RBParseErrorNode >> startWithoutParentheses [
 
 { #category : 'accessing' }
 RBParseErrorNode >> stop: aStopPosition [
-	"Beware, stop is in fact `stopWithoutParentheses` as in RBValueNode, stop includes parentheses"
+	"Beware, stop is in fact `stopWithoutParentheses` as in ASTValueNode, stop includes parentheses"
 
 	stop := aStopPosition
 ]

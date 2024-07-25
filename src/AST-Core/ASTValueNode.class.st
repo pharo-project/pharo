@@ -1,5 +1,5 @@
 "
-RBValueNode is an abstract class that represents a node that returns some value.
+ASTValueNode is an abstract class that represents a node that returns some value.
 
 Subclasses must implement the following messages:
 	accessing

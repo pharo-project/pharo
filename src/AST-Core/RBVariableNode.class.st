@@ -273,7 +273,7 @@ RBVariableNode >> replaceSourceWith: aNode [
 
 { #category : 'accessing' }
 RBVariableNode >> start: aPosition [
-	"Beware, start is in fact `startWithoutParentheses` as in RBValueNode, start includes parentheses"
+	"Beware, start is in fact `startWithoutParentheses` as in ASTValueNode, start includes parentheses"
 
 	start := aPosition
 ]

@@ -119,7 +119,7 @@ RFReification >> genForRBLiteralArrayNode [
 ]
 
 { #category : 'generate' }
-RFReification >> genForRBLiteralNode [
+RFReification >> genForASTLiteralNode [
 	^self genForASTProgramNode
 ]
 
