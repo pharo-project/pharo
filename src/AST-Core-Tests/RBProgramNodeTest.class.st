@@ -1,5 +1,5 @@
 "
-SUnit tests for RBProgramNode
+SUnit tests for ASTProgramNode
 "
 Class {
 	#name : 'RBProgramNodeTest',

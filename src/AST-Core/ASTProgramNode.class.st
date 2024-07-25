@@ -1,5 +1,5 @@
 "
-RBProgramNode is an abstract class that represents an abstract syntax tree node in a Smalltalk program.
+ASTProgramNode is an abstract class that represents an abstract syntax tree node in a Smalltalk program.
 
 Subclasses must implement the following messages:
 	accessing
@@ -22,7 +22,7 @@ Subclasses that contain other nodes should override equalTo:withMapping: to comp
 
 Instance Variables:
 	properties	<Dictionary of: Symbol -> Object>	A set of properties set to this node, for example every node can have the Property #comment to attach the method comment or the comment of the code line this node represents. Other classes or tools may add more type of properties; for example, the reflectivity support adds properties for managing Metalinks. 
-	parent	<RBProgramNode>	the node we're contained in
+	parent	<ASTProgramNode>	the node we're contained in
 
 Class Variables:
 	FormatterClass	<Behavior>	the formatter class that is used when we are formatted
@@ -1050,7 +1050,7 @@ ASTProgramNode >> nodesDo: aBlock [
 
 { #category : 'iterating' }
 ASTProgramNode >> nodesPostorderDo: aBlock [
-	"Like RBProgramNode>>#nodesDo: but visit children first"
+	"Like ASTProgramNode>>#nodesDo: but visit children first"
 
 	self childrenAndComments do: [ :each | each nodesPostorderDo: aBlock ].
 	aBlock value: self
@@ -1069,8 +1069,8 @@ ASTProgramNode >> parent [
 ]
 
 { #category : 'accessing' }
-ASTProgramNode >> parent: aRBProgramNode [
-	parent := aRBProgramNode
+ASTProgramNode >> parent: aProgramNode [
+	parent := aProgramNode
 ]
 
 { #category : 'hook' }
