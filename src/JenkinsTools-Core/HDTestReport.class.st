@@ -40,35 +40,21 @@ HDTestReport class >> runClasses: aCollectionOfClasses named: packageName [
 
 	| suite classes time result |
 	suite := TestSuite named: packageName.
-
-	"Use the configured shuffle seed if any, or a random one otherwise"
 	ShuffleSeed ifNotNil: [ suite shuffleSeed: ShuffleSeed asInteger ].
-
 	classes := (aCollectionOfClasses select: [ :class |
 		            class isTestCase and: [ class isAbstract not ] ])
 		           asSortedCollection: [ :a :b | a name <= b name ].
-
 	classes ifEmpty: [ ^ nil ].
-
 	classes do: [ :class | suite addTests: class buildSuite tests ].
-
 	time := DateAndTime now.
-	Transcript
-		<< 'Beginning to run tests of ' << packageName
-		<< ' with random seed ' << suite shuffleSeed asString
-		<< OSPlatform current lineEnding.
-	"We flush so that if a crash happens during the tests, we print in which package is the naughty test in the logs."
-	Transcript flush.
-	
+	('Beginning to run tests of ' , packageName , ' with random seed '
+	 , suite shuffleSeed asString , OSPlatform current lineEnding)
+		traceCr.
 	result := self runSuite: suite.
-	
-	Transcript
-		<< 'Finished to run tests of ' << packageName << ' in '
-		<< (DateAndTime now - time) humanReadablePrintString
-		<< OSPlatform current lineEnding.
-	Transcript flush.
-
-	^ result
+	('Finished to run tests of ' , packageName , ' in '
+	 , (DateAndTime now - time) humanReadablePrintString
+	 , OSPlatform current lineEnding) traceCr.
+	^ result 
 ]
 
 { #category : 'running' }

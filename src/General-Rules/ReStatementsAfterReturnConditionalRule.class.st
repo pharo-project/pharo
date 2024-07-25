@@ -32,8 +32,9 @@ ReStatementsAfterReturnConditionalRule >> basicCheck: aNode [
 
 	aNode isMessage ifFalse: [ ^ false ].
 	(self selectorList includes: aNode selector) ifFalse: [ ^ false ].
-	aNode arguments do: [ :arg |
-		(arg isBlock and: [ arg statements last isReturn ]) ifFalse: [ ^ false ] ].
+	(aNode arguments anySatisfy: [ :arg |
+		 (arg isBlock and: [
+			  arg statements isNotEmpty and: [ arg statements last isReturn ] ]) not ]) ifTrue: [ ^ false ].
 	^ aNode ~= aNode methodNode statements last
 ]
 

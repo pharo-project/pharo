@@ -213,6 +213,19 @@ ReSmalllintTest >> runRuleFor: aTestSelector onEnvironment: anEnvironment [
 	^ runner criticsOf: rule
 ]
 
+{ #category : 'private' }
+ReSmalllintTest >> testAddClassRules [
+
+	| checker |
+	
+	checker := ReSmalllintChecker new 
+		classRules: (ReAbstractRule allSubclasses collect: #new);
+		yourself.
+
+	self denyEmpty: checker classRules
+
+]
+
 { #category : 'tests' }
 ReSmalllintTest >> testAddRemoveDependents [
 	self classRuleFor: self currentSelector

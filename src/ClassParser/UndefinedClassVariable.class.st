@@ -10,9 +10,9 @@ Class {
 		'ast',
 		'classIsRebuild'
 	],
-	#category : 'Kernel-Variables',
-	#package : 'Kernel',
-	#tag : 'Variables'
+	#category : 'ClassParser-Utils',
+	#package : 'ClassParser',
+	#tag : 'Utils'
 }
 
 { #category : 'instance creation' }

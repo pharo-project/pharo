@@ -50,7 +50,7 @@ Object >> traceCr: anObject [
 	"Log the argument. Use self traceCr: 'something' instead of Transcript show: 'something'  ; cr "
 
 	self trace: anObject.
-	Transcript cr
+	Transcript cr 
 ]
 
 { #category : '*Transcript-NonInteractive' }

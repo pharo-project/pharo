@@ -532,7 +532,7 @@ RBClassDataForRefactoringTest >> sendsDifferentSuper [
 { #category : 'lint' }
 RBClassDataForRefactoringTest >> sizeCheck [
 
-	self isEmpty 
+	self isEmpty
 		ifFalse: [ self do: [ :each | each traceCr ] ]
 ]
 
