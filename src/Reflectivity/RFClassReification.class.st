@@ -20,17 +20,17 @@ RFClassReification class >> key [
 ]
 
 { #category : 'generate' }
+RFClassReification >> genForASTProgramNode [
+	^self generate
+]
+
+{ #category : 'generate' }
 RFClassReification >> genForInstanceVariableSlot [
 	^self generate
 ]
 
 { #category : 'generate' }
 RFClassReification >> genForLiteralVariable [
-	^self generate
-]
-
-{ #category : 'generate' }
-RFClassReification >> genForRBProgramNode [
 	^self generate
 ]
 

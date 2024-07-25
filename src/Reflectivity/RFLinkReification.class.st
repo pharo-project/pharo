@@ -20,16 +20,16 @@ RFLinkReification class >> key [
 ]
 
 { #category : 'generate' }
+RFLinkReification >> genForASTProgramNode [
+	^ASTLiteralNode value: link
+]
+
+{ #category : 'generate' }
 RFLinkReification >> genForInstanceVariableSlot [
 	^ASTLiteralNode value: link
 ]
 
 { #category : 'generate' }
 RFLinkReification >> genForLiteralVariable [
-	^ASTLiteralNode value: link
-]
-
-{ #category : 'generate' }
-RFLinkReification >> genForRBProgramNode [
 	^ASTLiteralNode value: link
 ]

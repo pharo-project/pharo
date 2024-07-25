@@ -58,6 +58,11 @@ RFReification >> entity: aRBMessageNode [
 ]
 
 { #category : 'generate' }
+RFReification >> genForASTProgramNode [
+	"overriden in subclass if needed"
+]
+
+{ #category : 'generate' }
 RFReification >> genForClassVariable [
 	^self genForLiteralVariable
 ]
@@ -85,22 +90,22 @@ RFReification >> genForRBArgumentNode [
 { #category : 'generate' }
 RFReification >> genForRBArrayNode [
 
-	^ self genForRBProgramNode
+	^ self genForASTProgramNode
 ]
 
 { #category : 'generate' }
 RFReification >> genForRBAssignmentNode [
-	^self genForRBProgramNode
+	^self genForASTProgramNode
 ]
 
 { #category : 'generate' }
 RFReification >> genForRBBlockNode [
-	^self genForRBProgramNode
+	^self genForASTProgramNode
 ]
 
 { #category : 'generate' }
 RFReification >> genForRBCascadeNode [
-	^self genForRBProgramNode
+	^self genForASTProgramNode
 ]
 
 { #category : 'generate' }
@@ -110,52 +115,47 @@ RFReification >> genForRBGlobalNode [
 
 { #category : 'generate' }
 RFReification >> genForRBLiteralArrayNode [
-	^self genForRBProgramNode
+	^self genForASTProgramNode
 ]
 
 { #category : 'generate' }
 RFReification >> genForRBLiteralNode [
-	^self genForRBProgramNode
+	^self genForASTProgramNode
 ]
 
 { #category : 'generate' }
 RFReification >> genForRBLiteralValueNode [
-	^self genForRBProgramNode
+	^self genForASTProgramNode
 ]
 
 { #category : 'generate' }
 RFReification >> genForRBMessageNode [
-	^self genForRBProgramNode
+	^self genForASTProgramNode
 ]
 
 { #category : 'generate' }
 RFReification >> genForRBMethodNode [
-	^self genForRBProgramNode
+	^self genForASTProgramNode
 ]
 
 { #category : 'generate' }
 RFReification >> genForRBPragmaNode [
-	^ self genForRBProgramNode
-]
-
-{ #category : 'generate' }
-RFReification >> genForRBProgramNode [
-	"overriden in subclass if needed"
+	^ self genForASTProgramNode
 ]
 
 { #category : 'generate' }
 RFReification >> genForRBReturnNode [
-	^self genForRBProgramNode
+	^self genForASTProgramNode
 ]
 
 { #category : 'generate' }
 RFReification >> genForRBSelfNode [
-	^self genForRBProgramNode
+	^self genForASTProgramNode
 ]
 
 { #category : 'generate' }
 RFReification >> genForRBSequenceNode [
-	^self genForRBProgramNode
+	^self genForASTProgramNode
 ]
 
 { #category : 'generate' }
@@ -165,7 +165,7 @@ RFReification >> genForRBTemporaryNode [
 
 { #category : 'generate' }
 RFReification >> genForRBVariableNode [
-	^self genForRBProgramNode
+	^self genForASTProgramNode
 ]
 
 { #category : 'accessing' }

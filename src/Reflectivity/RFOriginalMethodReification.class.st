@@ -22,7 +22,7 @@ RFOriginalMethodReification class >> key [
 ]
 
 { #category : 'generate' }
-RFOriginalMethodReification >> genForRBProgramNode [
+RFOriginalMethodReification >> genForASTProgramNode [
 
 	^ ASTLiteralNode value: entity methodNode compiledMethod
 ]

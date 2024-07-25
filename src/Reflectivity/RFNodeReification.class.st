@@ -20,6 +20,6 @@ RFNodeReification class >> key [
 ]
 
 { #category : 'generate' }
-RFNodeReification >> genForRBProgramNode [
+RFNodeReification >> genForASTProgramNode [
 	^ASTLiteralNode value: entity
 ]
