@@ -145,8 +145,7 @@ RBReplaceMessageSendTransformation >> applicabilityPreconditions [
 						   self refactoringError:
 							   'You don''t have the necessary initializers to replace senders.' ] ].
 			   true ]).
-		  (RBCondition definesSelector: oldSelector inRealClass: class realClass).
-		  (RBCondition definesSelector: newSelector inRealClass: class realClass) not }
+		  (RBCondition definesSelector: oldSelector inRealClass: class realClass) }
 ]
 
 { #category : 'support' }
