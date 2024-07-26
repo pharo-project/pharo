@@ -289,11 +289,6 @@ MCWorkingCopy >> currentVersionInfoWithMessage: aMessageString in: aRepository [
 		ifFalse: [ancestry ancestors first]
 ]
 
-{ #category : 'accessing' }
-MCWorkingCopy >> description [
-	^ self packageNameWithStar, ' (', (ancestry ancestorStringWithout: self packageName), ')'
-]
-
 { #category : 'displaying' }
 MCWorkingCopy >> displayStringOn: stream [
 
@@ -452,13 +447,6 @@ MCWorkingCopy >> package [
 { #category : 'accessing' }
 MCWorkingCopy >> packageName [
 	^ package name
-]
-
-{ #category : 'accessing' }
-MCWorkingCopy >> packageNameWithStar [
-	^ modified
-		ifTrue: ['* ', self packageName]
-		ifFalse: [self packageName]
 ]
 
 { #category : 'printing' }
