@@ -16,6 +16,29 @@ Class {
 	#tag : 'Compiler'
 }
 
+{ #category : 'system annoucements' }
+RFReflectivityASTCacheStrategy class >> handleMethodModified: aMethodModified [
+
+	aMethodModified oldMethod saveBcToASTCacheWithAST:
+		aMethodModified oldMethod ast
+]
+
+{ #category : 'class initialization' }
+RFReflectivityASTCacheStrategy class >> initialize [
+
+	self subscribeToMethodModified
+]
+
+{ #category : 'system annoucements' }
+RFReflectivityASTCacheStrategy class >> subscribeToMethodModified [
+
+	<script>
+	self codeChangeAnnouncer weak
+		when: MethodModified
+		send: #handleMethodModified:
+		to: self
+]
+
 { #category : 'accessing' }
 RFReflectivityASTCacheStrategy >> getASTFor: aCompiledMethod [
 	^ aCompiledMethod reflectiveMethod

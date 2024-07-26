@@ -340,23 +340,22 @@ RBPullUpMethodRefactoring >> removeDuplicateMethods [
 
 { #category : 'transforming' }
 RBPullUpMethodRefactoring >> removeDuplicatesOf: aSelector [
+
 	| tree |
 	tree := targetSuperclass parseTreeForSelector: aSelector.
-	targetSuperclass allSubclasses do:
-			[:each |
-			((each directlyDefinesMethod: aSelector) and:
-					[(tree equalTo: (each parseTreeForSelector: aSelector) exceptForVariables: #())
-						and: [(each superclass whoDefinesMethod: aSelector) == targetSuperclass]])
-				ifTrue:
-					[removeDuplicates
-						ifFalse:
-							[removeDuplicates :=
-							self
-								refactoringConfirmWarning: 'Do you want to remove duplicate subclass methods?'].
-					removeDuplicates ifTrue:[
-						self generateChangesFor:
-							(RBRemoveMethodTransformation
-								selector: aSelector from: each)]]]
+	targetSuperclass allSubclasses do: [ :each |
+		((each directlyDefinesMethod: aSelector) and: [
+			 (tree
+				  equalTo: (each parseTreeForSelector: aSelector)
+				  exceptForVariables: #(  )) and: [
+				 (each superclass whichClassIncludesSelector: aSelector)
+				 == targetSuperclass ] ]) ifTrue: [
+			removeDuplicates ifFalse: [
+				removeDuplicates := self refactoringConfirmWarning:
+					                    'Do you want to remove duplicate subclass methods?' ].
+			removeDuplicates ifTrue: [
+				self generateChangesFor:
+					(RBRemoveMethodTransformation selector: aSelector from: each) ] ] ]
 ]
 
 { #category : 'transforming' }

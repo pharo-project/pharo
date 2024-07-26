@@ -285,8 +285,6 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	KMRepository reset.
 	Morph shortcutsHandler: KMShortcutHandler new.
 
-	MCSaveVersionDialog previousMessages add: String new.
-
 	RBProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [ RBSimpleFormatter ]).
 
 	Color flushCache.

@@ -183,3 +183,9 @@ RBMethodNode >> primitiveFromPragma [
 RBMethodNode >> sourceNodeForPC: anInteger [
 	^ self bcToASTCache nodeForPC: anInteger
 ]
+
+{ #category : '*OpalCompiler-Core' }
+RBMethodNode >> sourceNodeForPC: anInteger usingBcToASTCache: aBcToASTCache [
+
+	^ aBcToASTCache nodeForPC: anInteger
+]

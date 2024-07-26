@@ -93,3 +93,9 @@ RBBlockNode >> resetBcToASTCache [
 RBBlockNode >> sourceNodeForPC: anInteger [
 	^ self bcToASTCache nodeForPC: anInteger
 ]
+
+{ #category : '*OpalCompiler-Core' }
+RBBlockNode >> sourceNodeForPC: anInteger usingBcToASTCache: aBcToASTCache [
+
+	^ aBcToASTCache nodeForPC: anInteger
+]
