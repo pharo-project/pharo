@@ -75,18 +75,6 @@ MCLazyVersionInfo >> initialize [
 ]
 
 { #category : 'initialization' }
-MCLazyVersionInfo >> initializeWithName: vName id: aUUID message: aString date: aDate time: aTime ancestors: aCollection stepChildren: stepCollection [
-
-	name := vName.
-	id := aUUID.
-	message := aString.
-	date := aDate ifNil: [ Date today ].
-	time := aTime.
-	ancestors := WeakArray withAll: aCollection.
-	stepChildren := WeakArray withAll: stepCollection
-]
-
-{ #category : 'initialization' }
 MCLazyVersionInfo >> lazy [
 	^ self
 ]

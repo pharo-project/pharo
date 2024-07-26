@@ -27,14 +27,6 @@ MCAncestry >> ancestors [
 ]
 
 { #category : 'ancestry' }
-MCAncestry >> ancestorsDoWhileTrue: aBlock [
-	self ancestors do:
-		[:ea |
-		(aBlock value: ea) ifTrue: 
-			[ea ancestorsDoWhileTrue: aBlock]]
-]
-
-{ #category : 'ancestry' }
 MCAncestry >> commonAncestorWith: aNode [
 
 	^ (self commonAncestorsWith: aNode) at: 1 ifAbsent: [ nil ]
@@ -78,10 +70,4 @@ MCAncestry >> initialize [
 { #category : 'ancestry' }
 MCAncestry >> stepChildren [
 	^ stepChildren ifNil: [#()]
-]
-
-{ #category : 'ancestry' }
-MCAncestry >> stepChildrenString [
-	^ String streamContents:
-		[:s | self stepChildren do: [:ea | s nextPutAll: ea name] separatedBy: [s nextPutAll: ', ']]
 ]

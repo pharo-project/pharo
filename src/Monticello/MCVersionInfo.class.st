@@ -110,8 +110,8 @@ MCVersionInfo >> initializeWithName: vName id: aUUID message: aString date: aDat
 	message := aString.
 	date := aDate ifNil: [ Date today ].
 	time := aTime.
-	ancestors := aCollection.
-	stepChildren := stepCollection
+	self setAncestors: aCollection.
+	self setStepChildren: stepCollection
 ]
 
 { #category : 'initialization' }
