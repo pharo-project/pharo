@@ -40,12 +40,6 @@ ConstantBlockClosure class >> numArgs: numArgs literal: aLiteral [
 		literal: aLiteral
 ]
 
-{ #category : 'testing' }
-ConstantBlockClosure >> isConstant [
-
-	^ true
-]
-
 { #category : 'accessing' }
 ConstantBlockClosure >> literal: anObject [
 	 literal := anObject

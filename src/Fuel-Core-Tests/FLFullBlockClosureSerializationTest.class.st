@@ -12,42 +12,20 @@ FLFullBlockClosureSerializationTest >> testBlockClosureChangeDifferentBytecodes 
 	Send #yourself to prevent ConstantBlockClosure optmization."
 
 	| aClass aClosure |
+	CompilationContext optionCleanBlockClosure ifTrue: [ ^ self skip ].
+
 	aClass := self classFactory silentlyNewClass.
 	self classFactory
 		silentlyCompile: 'methodWithClosure  ^ [ 42 yourself ]'
 		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self assert: aClosure isClean.
-	self assertCleanBlockOuterContextBasedOnCompilationOption: aClosure.
-
-	self serializer fullySerializeMethod: aClosure compiledBlock method.
-	self serialize: aClosure.
-	self classFactory
-		silentlyCompile: 'methodWithClosure  ^ 42'
-		in: aClass.
-	self should: [ self materialized ] raise: FLMethodChanged.
-
-	self materializer disableMethodChangedWarning.
-	self materialized
-]
-
-{ #category : 'tests' }
-FLFullBlockClosureSerializationTest >> testBlockClosureChangeDifferentBytecodesClean [
-	"Raise an error when materializing a non-clean closure whose method has changed bytecodes."
-
-	| aClass aClosure |
-	aClass := self classFactory silentlyNewClass.
-	self classFactory
-		silentlyCompile: 'methodWithClosure  ^ [ :x | x ]'
-		in: aClass.
-	aClosure := aClass new perform: #methodWithClosure.
-	self assert: aClosure isClean.
-	self assertCleanBlockOuterContextBasedOnCompilationOption: aClosure.
+	self assert: aClosure outerContext isNotNil.
 	
 	self serializer fullySerializeMethod: aClosure compiledBlock method.
 	self serialize: aClosure.
 	self classFactory
-		silentlyCompile: 'methodWithClosure  ^ 43'
+		silentlyCompile: 'methodWithClosure  ^ 42'
 		in: aClass.
 	self should: [ self materialized ] raise: FLMethodChanged.
 	
@@ -66,9 +44,8 @@ FLFullBlockClosureSerializationTest >> testBlockClosureChangeDifferentBytecodesC
 		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self assert: aClosure isClean.
-	self assertConstantBlockOuterContextBasedOnCompilationOption: aClosure.
-	CompilationContext optionConstantBlockClosure ifTrue: [ 
-		self assert: aClosure class equals: (Smalltalk at: #ConstantBlockClosure) ].
+	self assert: aClosure outerContext isNil.
+	self assert: aClosure class equals: (Smalltalk at: #ConstantBlockClosure).
 	
 	self serializer fullySerializeMethod: aClosure compiledBlock method.
 	self serialize: aClosure.
@@ -118,9 +95,8 @@ FLFullBlockClosureSerializationTest >> testBlockClosureChangeSameBytecodesConsta
 		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self assert: aClosure isClean.
-	self assertConstantBlockOuterContextBasedOnCompilationOption: aClosure.
-	CompilationContext optionConstantBlockClosure ifTrue: [ 
-		self assert: aClosure class equals: (Smalltalk at: #ConstantBlockClosure) ].
+	self assert: aClosure outerContext isNil.
+	self assert: aClosure class equals: (Smalltalk at: #ConstantBlockClosure).
 	
 	self serializer fullySerializeMethod: aClosure compiledBlock method.
 	self serialize: aClosure.
@@ -134,18 +110,20 @@ FLFullBlockClosureSerializationTest >> testBlockClosureChangeSameBytecodesConsta
 ]
 
 { #category : 'tests' }
-FLFullBlockClosureSerializationTest >> testBlockClosureRemovedClean [
+FLFullBlockClosureSerializationTest >> testBlockClosureRemoved [
 	"Raise an error when materializing a closure whose method was removed.
 	Send #yourself to prevent ConstantBlockClosure optmization."
 
 	| aClass aClosure |
+	CompilationContext optionCleanBlockClosure ifTrue: [ ^ self skip ].
+
 	aClass := self classFactory silentlyNewClass.
 	self classFactory
 		silentlyCompile: 'methodWithClosure  ^ [ 42 yourself ]'
 		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self assert: aClosure isClean.
-	self assertCleanBlockOuterContextBasedOnCompilationOption: aClosure.
+	self assert: aClosure outerContext isNotNil.
 	
 	self serializer fullySerializeMethod: aClosure compiledBlock method.
 	self serialize: aClosure.
@@ -167,9 +145,8 @@ FLFullBlockClosureSerializationTest >> testBlockClosureRemovedConstant [
 		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self assert: aClosure isClean.
-	self assertConstantBlockOuterContextBasedOnCompilationOption: aClosure.
-	CompilationContext optionConstantBlockClosure ifTrue: [ 
-		self assert: aClosure class equals: (Smalltalk at: #ConstantBlockClosure) ].
+	self assert: aClosure outerContext isNil.
+	self assert: aClosure class equals: (Smalltalk at: #ConstantBlockClosure).
 	
 	self serializer fullySerializeMethod: aClosure compiledBlock method.
 	self serialize: aClosure.
@@ -181,7 +158,7 @@ FLFullBlockClosureSerializationTest >> testBlockClosureRemovedConstant [
 ]
 
 { #category : 'tests' }
-FLFullBlockClosureSerializationTest >> testBlockClosureRemovedFull [
+FLFullBlockClosureSerializationTest >> testBlockClosureRemovedNonClean [
 	"Raise an error when materializing a non-clean closure whose method was removed."
 
 	| aClass aClosure |

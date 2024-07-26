@@ -347,12 +347,6 @@ BlockClosure >> isClosure [
 ]
 
 { #category : 'testing' }
-BlockClosure >> isConstant [
-
-	^ false
-]
-
-{ #category : 'testing' }
 BlockClosure >> isDead [
 	"Has self finished"
 	^false
