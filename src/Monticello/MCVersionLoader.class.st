@@ -83,12 +83,6 @@ MCVersionLoader >> checkForModificationsIfCancel: cancelBlock ifMerge: mergeBloc
 ]
 
 { #category : 'checking' }
-MCVersionLoader >> checkIfDepIsOlder: aDependency [
-	^ aDependency isOlder not 
-		or: [self confirm: 'load older dependency ', aDependency versionInfo name , '?']
-]
-
-{ #category : 'checking' }
 MCVersionLoader >> confirmMissingDependency: aDependency [
 	| name |
 	name := aDependency versionInfo name.

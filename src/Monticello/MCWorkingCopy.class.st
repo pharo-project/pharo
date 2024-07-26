@@ -227,31 +227,8 @@ MCWorkingCopy >> ancestry [
 ]
 
 { #category : 'operations' }
-MCWorkingCopy >> changesRelativeToRepository: aRepository [
-	^ self completeSnapshot patchRelativeToBase: (self closestAncestorSnapshotIn: aRepository).
-]
-
-{ #category : 'operations' }
 MCWorkingCopy >> clearRequiredPackages [
 	requiredPackages := nil
-]
-
-{ #category : 'accessing' }
-MCWorkingCopy >> closestAncestorSnapshotIn: aRepository [
-	
-	"Returns a complete Snapshot including all required packages by recurisveliy walking all required package and trying to find the closes ancestor in the given repository"
-	
-	| definitions ancestorVersion|
-	
-	ancestorVersion := aRepository closestAncestorVersionFor: ancestry ifNone: [].
-	
-	definitions := ancestorVersion 
-						ifNil: [ OrderedCollection new ] 
-						ifNotNil: [ ancestorVersion snapshot definitions ].
-	
-	definitions addAll: (self loadRemoteDependenciesIn: aRepository).
-	
-	^ MCSnapshot fromDefinitions: definitions
 ]
 
 { #category : 'operations' }
@@ -328,18 +305,6 @@ MCWorkingCopy >> initialize [
 MCWorkingCopy >> initializeWithPackage: aPackage [
 	package := aPackage.
 	self initialize.
-]
-
-{ #category : 'accessing' }
-MCWorkingCopy >> loadRemoteDependenciesIn: aRepository [
-	"load the remote dependencies of all packages in parallel"
-	| dependencies |
-	dependencies := self 
-		requiredPackagesParallelCollect: [ :aPackage|
-			(aPackage workingCopy closestAncestorSnapshotIn: aRepository) definitions.] 
-		withMessage: 'Loading remote dependencies...'.
-	^ dependencies flattened
-
 ]
 
 { #category : 'operations' }

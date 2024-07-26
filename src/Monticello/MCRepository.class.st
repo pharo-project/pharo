@@ -75,14 +75,6 @@ MCRepository >> basicStoreVersion: aVersion [
 ]
 
 { #category : 'accessing' }
-MCRepository >> closestAncestorVersionFor: anAncestry ifNone: errorBlock [
-	anAncestry breadthFirstAncestorsDo:
-		[:ancestorInfo |
-		(self versionWithInfo: ancestorInfo) ifNotNil: [:v | ^ v]].
-	^ errorBlock value
-]
-
-{ #category : 'accessing' }
 MCRepository >> creationTemplate [
 	^ creationTemplate
 ]

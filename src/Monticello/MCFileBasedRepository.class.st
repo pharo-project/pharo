@@ -5,9 +5,7 @@ Class {
 	#name : 'MCFileBasedRepository',
 	#superclass : 'MCRepository',
 	#instVars : [
-		'cache',
-		'allFileNames',
-		'cacheFileNames'
+		'cache'
 	],
 	#category : 'Monticello-Repositories',
 	#package : 'Monticello',
@@ -69,9 +67,8 @@ MCFileBasedRepository >> addVersionInformationExtractedFrom: readableFileName to
 
 { #category : 'accessing' }
 MCFileBasedRepository >> allFileNames [
-	cacheFileNames == true ifFalse: [ ^ self loadAllFileNames ].
-	^ allFileNames ifNil: [
-			allFileNames := self loadAllFileNames]
+
+	^ self loadAllFileNames
 ]
 
 { #category : 'accessing' }
@@ -81,9 +78,8 @@ MCFileBasedRepository >> allFileNamesForVersionNamed: aString [
 
 { #category : 'accessing' }
 MCFileBasedRepository >> allFileNamesOrCache [
-	cacheFileNames == true ifFalse: [ ^ self allFileNames ].
-	^ allFileNames ifNil: [
-			allFileNames := self allFileNames]
+
+	^ self allFileNames
 ]
 
 { #category : 'accessing' }
@@ -108,20 +104,11 @@ MCFileBasedRepository >> cache [
 ]
 
 { #category : 'caching' }
-MCFileBasedRepository >> cacheAllFileNamesDuring: aBlock [
-	cacheFileNames == true ifTrue: [ ^ aBlock value ].
-	allFileNames := nil.
-	cacheFileNames := true.	
-	^ aBlock ensure: [
-		allFileNames := nil.
-		cacheFileNames := false]
-]
-
-{ #category : 'caching' }
 MCFileBasedRepository >> cachedFileNames [
-	^cache == nil
-		ifTrue: [#()]
-		ifFalse: [cache keys]
+
+	^ cache
+		  ifNil: [ #(  ) ]
+		  ifNotNil: [ cache keys ]
 ]
 
 { #category : 'testing' }
@@ -129,14 +116,6 @@ MCFileBasedRepository >> canReadFileNamed: aString [
 	| reader |
 	reader := MCVersionReader readerClassForFileNamed: aString.
 	^ reader isNotNil
-]
-
-{ #category : 'accessing' }
-MCFileBasedRepository >> closestAncestorVersionFor: anAncestry ifNone: errorBlock [
-	^ self
-		cacheAllFileNamesDuring: [ 
-			anAncestry breadthFirstAncestorsDo: [ :ancestorInfo | (self notCachedVersionWithInfo: ancestorInfo) ifNotNil: [ :v | ^ v ] ].
-			^ errorBlock value ]
 ]
 
 { #category : 'fetching' }
@@ -202,17 +181,6 @@ MCFileBasedRepository >> loadVersionInfoFromFileNamed: aString [
 { #category : 'caching' }
 MCFileBasedRepository >> maxCacheSize [
 	^ 512
-]
-
-{ #category : 'loading' }
-MCFileBasedRepository >> notCachedVersionWithInfo: aVersionInfo [ 
-	(self allFileNamesForVersionNamed: aVersionInfo name)
-		do: [ :fileName | 
-			| version |
-			version := self versionFromRepositoryFromFileNamed: fileName.
-			version info = aVersionInfo
-				ifTrue: [ ^ version ] ].
-	^ nil
 ]
 
 { #category : 'accessing' }

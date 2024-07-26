@@ -354,13 +354,6 @@ MCGitBasedNetworkRepository >> canUpgradeTo: anMCGitBasedRepository [
 			  self projectVersion = anMCGitBasedRepository projectVersion ] ]
 ]
 
-{ #category : 'accessing' }
-MCGitBasedNetworkRepository >> closestAncestorVersionFor: anAncestry ifNone: errorBlock [
-	^ self localRepository 
-		closestAncestorVersionFor: anAncestry 
-		ifNone: errorBlock
-]
-
 { #category : 'descriptions' }
 MCGitBasedNetworkRepository >> description [
   | desc |

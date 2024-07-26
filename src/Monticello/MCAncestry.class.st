@@ -35,30 +35,9 @@ MCAncestry >> ancestorsDoWhileTrue: aBlock [
 ]
 
 { #category : 'ancestry' }
-MCAncestry >> breadthFirstAncestors [
-	^ Array streamContents: [:s | self breadthFirstAncestorsDo: [:ea | s nextPut: ea]]
-]
-
-{ #category : 'ancestry' }
-MCAncestry >> breadthFirstAncestorsDo: aBlock [
-	| seen todo next |
-	seen := Set with: self.
-	todo := OrderedCollection with: self.
-	[todo isEmpty] whileFalse:
-		[next := todo removeFirst.
-		next ancestors do:
-			[:ea |
-			(seen includes: ea) ifFalse:
-				[aBlock value: ea.
-				seen add: ea.
-				todo add: ea]]]
-]
-
-{ #category : 'ancestry' }
 MCAncestry >> commonAncestorWith: aNode [
-	| commonAncestors |
-	commonAncestors := self commonAncestorsWith: aNode.
-	^ commonAncestors at: 1 ifAbsent: [nil]
+
+	^ (self commonAncestorsWith: aNode) at: 1 ifAbsent: [ nil ]
 ]
 
 { #category : 'ancestry' }
@@ -97,13 +76,6 @@ MCAncestry >> initialize [
 ]
 
 { #category : 'ancestry' }
-MCAncestry >> isRelatedTo: aVersionInfo [
-	^ aVersionInfo timeStamp < self timeStamp
-		ifTrue: [self hasAncestor: aVersionInfo]
-		ifFalse: [aVersionInfo hasAncestor: self]
-]
-
-{ #category : 'ancestry' }
 MCAncestry >> stepChildren [
 	^ stepChildren ifNil: [#()]
 ]
@@ -112,9 +84,4 @@ MCAncestry >> stepChildren [
 MCAncestry >> stepChildrenString [
 	^ String streamContents:
 		[:s | self stepChildren do: [:ea | s nextPutAll: ea name] separatedBy: [s nextPutAll: ', ']]
-]
-
-{ #category : 'ancestry' }
-MCAncestry >> withBreadthFirstAncestors [
-	^ (Array with: self), self breadthFirstAncestors
 ]
