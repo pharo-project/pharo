@@ -18,6 +18,7 @@ RBBreakingChangeReport >> environment [
 
 { #category : 'accessing' }
 RBBreakingChangeReport >> refactoring [
+
 	^ refactoring
 ]
 
