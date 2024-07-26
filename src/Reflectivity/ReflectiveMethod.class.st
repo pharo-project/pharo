@@ -33,7 +33,9 @@ ReflectiveMethod >> ast [
 
 { #category : 'evaluation' }
 ReflectiveMethod >> compileAST [
+
 	| method |
+	compiledMethod saveBcToASTCacheWithAST: ast.
 	OCASTSemanticCleaner clean: ast.
 	ast compilationContext
 		semanticAnalyzerClass: RFSemanticAnalyzer;
@@ -43,7 +45,7 @@ ReflectiveMethod >> compileAST [
 	"#generateMethod sets the generated method as a property, put back the old"
 	ast compiledMethod: compiledMethod.
 	method sourcePointer: compiledMethod sourcePointer.
-	^method.
+	^ method
 ]
 
 { #category : 'evaluation' }
