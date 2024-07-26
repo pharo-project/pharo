@@ -9,8 +9,7 @@ Class {
 		'name',
 		'message',
 		'date',
-		'time',
-		'author'
+		'time'
 	],
 	#category : 'Monticello-Versioning',
 	#package : 'Monticello',
@@ -70,11 +69,6 @@ MCVersionInfo >> asDictionary [
 		at: #time put: time;
 		at: #ancestors put: (self ancestors collect: [:a | a asDictionary]);
 		yourself
-]
-
-{ #category : 'pillaging' }
-MCVersionInfo >> author [
-	^ author
 ]
 
 { #category : 'pillaging' }
