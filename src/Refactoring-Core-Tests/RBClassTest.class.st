@@ -180,11 +180,20 @@ RBClassTest >> testIsInstanceSide [
 { #category : 'tests - navigation' }
 RBClassTest >> testIsManifest [
 
+	| pmNamespace packageManifestClass |
+
+	pmNamespace := RBNamespace new.
+	pmNamespace defineClass: [ :aBuilder |
+		aBuilder
+			name: #PackageManifestForRBClassTest;
+			superclass: PackageManifest ;
+			package: #'Refactory-Testing' ].
+	packageManifestClass := pmNamespace classNamed: #PackageManifestForRBClassTest.
+	
 	self deny: abstractTransformationClass classSide isManifest.
 	self deny: abstractTransformationClass isManifest.
 	
-	self assert: PackageManifestForRBClassTest isManifest.
-	self assert: (rbNamespace classNamed: #PackageManifestForRBClassTest) isManifest
+	self assert: packageManifestClass isManifest.
 ]
 
 { #category : 'tests - navigation' }
