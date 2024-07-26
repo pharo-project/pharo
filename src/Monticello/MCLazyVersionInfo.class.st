@@ -31,6 +31,7 @@ Class {
 
 { #category : 'accessing' }
 MCLazyVersionInfo class >> flushMCVersionCache [
+
 	MCVersionCache := nil.
 	Smalltalk garbageCollect
 ]
@@ -46,11 +47,6 @@ MCLazyVersionInfo class >> from: aVersionInfo [
 		  time: aVersionInfo time
 		  ancestors: aVersionInfo ancestors
 		  stepChildren: aVersionInfo stepChildren
-]
-
-{ #category : 'accessing' }
-MCLazyVersionInfo class >> initMCVersionCache [
-	MCVersionCache := nil
 ]
 
 { #category : 'class initialization' }
@@ -72,8 +68,13 @@ MCLazyVersionInfo class >> install [
 
 { #category : 'accessing' }
 MCLazyVersionInfo class >> mcVersionCache [
+	"LRUCache is loaded after monticelle so we cache only if the class is present in the image."
 
-	^ MCVersionCache ifNil: [ MCVersionCache := LRUCache new maximumWeight: 32 ]
+	^ MCVersionCache ifNil: [
+		  self environment
+			  at: #LRUCache
+			  ifPresent: [ :cacheClass | MCVersionCache := cacheClass new maximumWeight: 32 ]
+			  ifAbsent: [ Dictionary new ] ]
 ]
 
 { #category : 'accessing' }
