@@ -104,17 +104,6 @@ RBCondition class >> definesSelector: aSelector in: aClass orIsSimilarTo: rbMeth
 ]
 
 { #category : 'instance creation' }
-RBCondition class >> definesSelector: aSelector inRealClass: aClass [
-
-	^ self new
-		  block: [
-			  (aClass methods collect: [ :method | method selector ])
-				  includes: aSelector ]
-		  errorString: aClass printString , ' <1?:does not >define<1?s:> '
-			  , aSelector printString
-]
-
-{ #category : 'instance creation' }
 RBCondition class >> definesTempVar: aString in: aClass ignoreClass: subclass [
 
 	| condition |

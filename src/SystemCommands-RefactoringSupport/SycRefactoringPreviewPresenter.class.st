@@ -163,7 +163,7 @@ SycRefactoringPreviewPresenter >> generateChanges [
 	rbEnvironment := self activeRBEnvironment.
 	changes do: [ :each |
 		each model environment: rbEnvironment.
-		each generateChanges ]
+		each changes changesSize == 0 ifTrue: [ each generateChanges ] ]
 ]
 
 { #category : 'initialization' }
