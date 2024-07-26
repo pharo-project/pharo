@@ -4,7 +4,7 @@ I support the general protocol for listing files in a remote repository.
 "
 Class {
 	#name : 'MCHttpRepository',
-	#superclass : 'MCFileBasedRepository',
+	#superclass : 'MCRemoteFileBasedRepository',
 	#instVars : [
 		'location',
 		'user',

@@ -3,7 +3,7 @@ I am an monticello repository implementation for the FTP protocol.
 "
 Class {
 	#name : 'MCFtpRepository',
-	#superclass : 'MCFileBasedRepository',
+	#superclass : 'MCRemoteFileBasedRepository',
 	#instVars : [
 		'host',
 		'directory',
