@@ -10,7 +10,10 @@ Class {
 		'protocolSelection',
 		'methodSelection',
 		'switch',
-		'items'
+		'items',
+		'modal',
+		'morph',
+		'label'
 	],
 	#category : 'MonticelloGUI-Tools',
 	#package : 'MonticelloGUI',
@@ -351,6 +354,7 @@ MCSnapshotBrowser >> label [
 
 { #category : 'morphic ui' }
 MCSnapshotBrowser >> label: aString [
+
 	label := aString
 ]
 
@@ -630,11 +634,11 @@ MCSnapshotBrowser >> show [
 
 { #category : 'opening' }
 MCSnapshotBrowser >> showLabelled: labelString [
-	
+
 	modal := false.
 	self label: labelString.
 	self window openInWorld.
-	^ self window.
+	^ self window
 ]
 
 { #category : 'switch' }
@@ -776,5 +780,6 @@ MCSnapshotBrowser >> widgetSpecs [
 
 { #category : 'morphic ui' }
 MCSnapshotBrowser >> window [
-	^ morph ifNil: [morph := self buildWindow]
+
+	^ morph ifNil: [ morph := self buildWindow ]
 ]
