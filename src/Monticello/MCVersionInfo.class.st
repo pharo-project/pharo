@@ -173,44 +173,6 @@ MCVersionInfo >> setStepChildren: someStepChildren [
 	stepChildren := someStepChildren
 ]
 
-{ #category : 'accessing' }
-MCVersionInfo >> summary [
-	^ String streamContents:
-		[:s |
-		s
-			nextPutAll: self summaryHeader; cr; cr;
-			nextPutAll: self message.
-		]
-]
-
-{ #category : 'accessing' }
-MCVersionInfo >> summaryHeader [
-
-	^ String streamContents: [ :s |
-		  s
-			  nextPutAll: 'Name: ';
-			  nextPutAll: self name;
-			  cr.
-		  date ifNotNil: [
-			  s
-				  nextPutAll: 'Time: ';
-				  nextPutAll: date asString , ', ' , time asString;
-				  cr ].
-		  id ifNotNil: [
-			  s
-				  nextPutAll: 'UUID: ';
-				  nextPutAll: id asString;
-				  cr ].
-		  s
-			  nextPutAll: 'Ancestors: ';
-			  nextPutAll: self ancestorString.
-		  self stepChildren isEmpty ifFalse: [
-			  s
-				  cr;
-				  nextPutAll: 'Backported From: ';
-				  nextPutAll: self stepChildrenString ] ]
-]
-
 { #category : 'pillaging' }
 MCVersionInfo >> time [
 	^ time
