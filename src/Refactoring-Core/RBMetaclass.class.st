@@ -63,6 +63,12 @@ RBMetaclass >> directlyDefinesPoolDictionary: aString [
 ]
 
 { #category : 'testing' }
+RBMetaclass >> isManifest [
+
+	^ self instanceSide isManifest
+]
+
+{ #category : 'testing' }
 RBMetaclass >> isMeta [
 	^true
 ]

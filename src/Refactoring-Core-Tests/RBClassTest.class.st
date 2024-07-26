@@ -178,6 +178,16 @@ RBClassTest >> testIsInstanceSide [
 ]
 
 { #category : 'tests - navigation' }
+RBClassTest >> testIsManifest [
+
+	self deny: abstractTransformationClass classSide isManifest.
+	self deny: abstractTransformationClass isManifest.
+	
+	self assert: PackageManifestForRBClassTest isManifest.
+	self assert: (rbNamespace classNamed: #PackageManifestForRBClassTest) isManifest
+]
+
+{ #category : 'tests - navigation' }
 RBClassTest >> testIsMeta [
 
 	self assert: abstractTransformationClass classSide isMeta.

@@ -161,6 +161,12 @@ RBClass >> isEmptyClass [
 ]
 
 { #category : 'testing' }
+RBClass >> isManifest [ 
+
+	^ realClass isManifest
+]
+
+{ #category : 'testing' }
 RBClass >> isMeta [
 
 	^false
