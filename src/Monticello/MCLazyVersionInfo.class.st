@@ -21,10 +21,19 @@ Warnings:
 Class {
 	#name : 'MCLazyVersionInfo',
 	#superclass : 'MCVersionInfo',
+	#classVars : [
+		'MCVersionCache'
+	],
 	#category : 'Monticello-Versioning',
 	#package : 'Monticello',
 	#tag : 'Versioning'
 }
+
+{ #category : 'accessing' }
+MCLazyVersionInfo class >> flushMCVersionCache [
+	MCVersionCache := nil.
+	Smalltalk garbageCollect
+]
 
 { #category : 'instance creation' }
 MCLazyVersionInfo class >> from: aVersionInfo [
@@ -37,6 +46,11 @@ MCLazyVersionInfo class >> from: aVersionInfo [
 		  time: aVersionInfo time
 		  ancestors: aVersionInfo ancestors
 		  stepChildren: aVersionInfo stepChildren
+]
+
+{ #category : 'accessing' }
+MCLazyVersionInfo class >> initMCVersionCache [
+	MCVersionCache := nil
 ]
 
 { #category : 'class initialization' }
@@ -54,6 +68,12 @@ MCLazyVersionInfo class >> install [
 		allInstancesDo: [ :each | each ancestors: (each ancestors collect: [ :e | MCLazyVersionInfo from: e ]) ].
 	MCFileBasedRepository flushAllCaches.
 	Smalltalk garbageCollect
+]
+
+{ #category : 'accessing' }
+MCLazyVersionInfo class >> mcVersionCache [
+
+	^ MCVersionCache ifNil: [ MCVersionCache := LRUCache new maximumWeight: 32 ]
 ]
 
 { #category : 'accessing' }
@@ -101,6 +121,32 @@ MCLazyVersionInfo >> initializeWithName: vName id: aUUID message: aString date: 
 { #category : 'initialization' }
 MCLazyVersionInfo >> lazy [
 	^ self
+]
+
+{ #category : 'private' }
+MCLazyVersionInfo >> loadAncestorsAndStepChildren [
+	"This code scans all the repositories to find the exact package version and reload the relevant info."
+
+	"Transient failures, such as the lack of network connectivity, will return nothing and no errors from this code."
+
+	"Cache loaded version info, but try not to add a nil at that space? Can't do that with LRUCache>>#at:ifAbsentPut:"
+
+	((self class mcVersionCache includesKey: id)
+		ifTrue: [ self class mcVersionCache at: id ]
+		ifFalse:
+			[ 
+			| r | 
+			r := MCRepositoryGroup default.
+			r versionWithInfo: self ifNone: [  ].
+			r	
+				ifNil: [  ]
+				ifNotNil: 	[ :aVersion | 
+					self class mcVersionCache at: id put: aVersion.
+					aVersion ] ])
+		ifNotNil:
+			[ :aVersion | 
+			ancestors := WeakArray withAll: aVersion info ancestors.
+			stepChildren := WeakArray withAll: aVersion info stepChildren ]
 ]
 
 { #category : 'private' }

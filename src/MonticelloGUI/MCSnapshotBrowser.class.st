@@ -3,7 +3,7 @@ Browser for snapshots
 "
 Class {
 	#name : 'MCSnapshotBrowser',
-	#superclass : 'MCTool',
+	#superclass : 'Model',
 	#instVars : [
 		'categorySelection',
 		'classSelection',
@@ -22,12 +22,22 @@ MCSnapshotBrowser class >> forSnapshot: aSnapshot [
 	^ self new snapshot: aSnapshot
 ]
 
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> accept [
+	" do nothing by default"
+]
+
 { #category : 'accessing' }
 MCSnapshotBrowser >> allClassNames [
 	^ (items 
 		select: [:ea | (ea isOrganizationDefinition | ea isScriptDefinition) not]
 		thenCollect: [:ea | ea className]) asSet.
 
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> arrowKey: aCharacter from: aPluggableListMorph [ 
+	"backstop"
 ]
 
 { #category : 'menus' }
@@ -65,10 +75,82 @@ MCSnapshotBrowser >> browseVersions [
 ]
 
 { #category : 'morphic ui' }
+MCSnapshotBrowser >> buildWindow [
+	| window |
+	window := SystemWindow labelled: self label.
+	window model: self.
+	self widgetSpecs do: [:spec |
+		| send fractions offsets |
+		send := spec first.
+		fractions := spec at: 2 ifAbsent: [#(0 0 1 1)].
+		offsets := spec at: 3 ifAbsent: [#(0 0 0 0)].
+		window
+			addMorph: (self perform: send first withArguments: send allButFirst)
+			fullFrame:
+				(LayoutFrame new 
+					leftFraction: fractions first; 
+					topFraction: fractions second;
+					rightFraction: fractions third ; 
+					bottomFraction: fractions fourth; 
+					leftOffset: offsets first;
+					topOffset: offsets second;
+					rightOffset: offsets third;
+					bottomOffset: offsets fourth)].
+	^ window
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> buttonEnabled [
+	^ true
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> buttonRow [
+	^ self buttonRow: self buttonSpecs
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> buttonRow: specArray [
+	| aRow |
+	aRow := PanelMorph new.
+	aRow layoutPolicy: TableLayout new; listDirection: #leftToRight.
+	aRow hResizing: #spaceFill; vResizing: #spaceFill; rubberBandCells: true.
+	aRow clipSubmorphs: true; borderWidth: 0.
+	aRow layoutInset: 2@2; cellInset: 1.
+	aRow wrapCentering: #center; cellPositioning: #leftCenter.
+	specArray do:
+		[:triplet | | aButton state |
+			state := triplet at: 5 ifAbsent: [#buttonState].
+			aButton := PluggableButtonMorph
+				on: self
+				getState: state
+				action: #performButtonAction:enabled:.
+			aButton
+				hResizing: #spaceFill;
+				vResizing: #spaceFill;
+				label: triplet first asString;
+				getEnabledSelector: (triplet at: 4 ifAbsent: [#buttonEnabled]);
+				arguments: (Array with: triplet second with: (triplet at: 4 ifAbsent: [#buttonEnabled])).
+			aRow addMorphBack: aButton.
+			aButton setBalloonText: triplet third].
+	^ aRow
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> buttonSelected [
+	^ false
+]
+
+{ #category : 'morphic ui' }
 MCSnapshotBrowser >> buttonSpecs [
 	^ #(('instance' switchBeInstance 'show instance' buttonEnabled switchIsInstance)
 		('?' switchBeComment 'show comment' buttonEnabled switchIsComment)
 		('class' switchBeClass 'show class' buttonEnabled switchIsClass))
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> buttonState [
+	^ false
 ]
 
 { #category : 'listing' }
@@ -164,6 +246,11 @@ MCSnapshotBrowser >> classSelection: aNumber [
 
 ]
 
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> close [
+	self window delete
+]
+
 { #category : 'menus' }
 MCSnapshotBrowser >> copySelector [
 	"Copy the selected selector to the clipboard"
@@ -252,6 +339,47 @@ MCSnapshotBrowser >> inspectSelection [
 	^ self methodSelection inspect
 ]
 
+{ #category : 'utilities' }
+MCSnapshotBrowser >> interactionModel [
+	^ self
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> label [
+	^ label ifNil: [self defaultLabel]
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> label: aString [
+	label := aString
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> listMorph: listSymbol [
+
+	| selectionSymbol |
+	selectionSymbol := (listSymbol , 'Selection') asSymbol.
+
+	^ PluggableListMorph
+		  on: self
+		  list: (listSymbol , 'List') asSymbol
+		  selected: selectionSymbol
+		  changeSelected: (selectionSymbol , ':') asSymbol
+		  menu: (listSymbol , 'ListMenu:') asSymbol
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> listMorph: listSymbol selection: selectionSymbol menu: menuSymbol keystroke: keystrokeSymbol [
+	^ (PluggableListMorph
+		on: self
+		list: listSymbol
+		selected: selectionSymbol
+		changeSelected: (selectionSymbol, ':') asSymbol
+		menu: menuSymbol)
+		keystrokeActionSelector: keystrokeSymbol;
+		yourself
+]
+
 { #category : 'menus' }
 MCSnapshotBrowser >> loadCategorySelection [
 	"Load the entire selected category"
@@ -279,6 +407,12 @@ MCSnapshotBrowser >> loadMethodSelection [
 MCSnapshotBrowser >> loadProtocolSelection [
 	protocolSelection ifNil: [ ^self ].
 	self methodsForSelectedProtocol do: [ :m | m load ].
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> menu [
+	" returns nil to let the editing mode offer the right menu"
+	^ nil
 ]
 
 { #category : 'text' }
@@ -398,6 +532,17 @@ MCSnapshotBrowser >> packageOrganizations [
 	^ items select: [:ea | ea isOrganizationDefinition]
 ]
 
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> performButtonAction: anActionSelector enabled: anEnabledSelector [
+	(self perform: anEnabledSelector) 
+		ifTrue: [ self perform: anActionSelector ]
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> preferredColor [  
+	^ (Color r: 0.627 g: 0.69 b: 0.976)
+]
+
 { #category : 'listing' }
 MCSnapshotBrowser >> protocolList [
 	^ self visibleProtocols
@@ -469,6 +614,29 @@ MCSnapshotBrowser >> selectedMessageName [
 
 ]
 
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> shoutAboutToStyle: aPluggableShoutMorphOrView [
+	^ false
+]
+
+{ #category : 'opening' }
+MCSnapshotBrowser >> show [
+	"Open the tool returning the window."
+
+	modal := false.
+	self window openInWorld.
+	^ self window
+]
+
+{ #category : 'opening' }
+MCSnapshotBrowser >> showLabelled: labelString [
+	
+	modal := false.
+	self label: labelString.
+	self window openInWorld.
+	^ self window.
+]
+
 { #category : 'switch' }
 MCSnapshotBrowser >> signalSwitchChanged [
 	self protocolSelection: 0.
@@ -485,6 +653,11 @@ MCSnapshotBrowser >> signalSwitchChanged [
 MCSnapshotBrowser >> snapshot: aSnapshot [
 	items := aSnapshot definitions asSortedCollection.
 	self categorySelection: 0.
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> summary: aString [
+	" do nothing by default"
 ]
 
 { #category : 'switch' }
@@ -539,6 +712,22 @@ MCSnapshotBrowser >> text: aTextOrString [
 	self changed: #text
 ]
 
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> textMorph: aSymbol [
+	| textMorph |
+	textMorph := RubPluggableTextMorph new
+		getTextSelector: aSymbol;
+		setTextSelector: (aSymbol , ':') asSymbol;
+		on: self;
+		beWrapped;
+		hScrollbarShowNever;
+		beForSmalltalkScripting;
+		yourself.
+	textMorph announcer when: RubTextAcceptRequest send: #accept to: self.
+	textMorph hasUnacceptedEdits: false.
+	^ textMorph
+]
+
 { #category : 'listing' }
 MCSnapshotBrowser >> visibleCategories [
 	^ ((self packageOrganizations flatCollect: [ :ea | ea categories ]),
@@ -583,4 +772,9 @@ MCSnapshotBrowser >> widgetSpecs [
 		((buttonRow) (0.25 0.4 0.5 0.4) (0 -30 0 0))
 		((textMorph: text) (0 0.4 1 1))
 		) 
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> window [
+	^ morph ifNil: [morph := self buildWindow]
 ]
