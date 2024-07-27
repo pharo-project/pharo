@@ -20,13 +20,14 @@ RBAddMethodTransformationParametrizedTest class >> testParameters [
 RBAddMethodTransformationParametrizedTest >> setUp [
 
 	super setUp.
-	model := self rbModelForVariableTest
+	model := self modelOnClasses: { RBBasicLintRuleTestData }.
+	self defineFooBarIn: model
 ]
 
 { #category : 'tests' }
 RBAddMethodTransformationParametrizedTest >> testAddMethod [
 	| refactoring |
-	refactoring := self createRefactoringWithArguments:
+	refactoring := self createRefactoringWithModel: model andArguments:
 		{'printString1 ^ super printString' .
 		RBBasicLintRuleTestData .
 		#(#accessing )}.
@@ -39,8 +40,7 @@ RBAddMethodTransformationParametrizedTest >> testAddMethod [
 
 { #category : 'failure tests' }
 RBAddMethodTransformationParametrizedTest >> testFailureBadMethod [
-
-	self shouldFail: (self createRefactoringWithArguments: {
+	self shouldFail: (self createRefactoringWithModel: model andArguments: {
 				 'asdf ^super ^printString'.
 				 RBBasicLintRuleTestData.
 				 #( #accessing ) })
