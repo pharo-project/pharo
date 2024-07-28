@@ -238,7 +238,7 @@ ReRuleManager class >> subSettingsOn: aBuilder with: rules [
 			  selector: #enabled;
 			  target: rule;
 			  default: rule enabled;
-			  label: rule name;
+			  label: rule ruleName;
 			  description: rule rationale ]
 ]
 
