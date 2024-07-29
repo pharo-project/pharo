@@ -719,8 +719,8 @@ FileSystem >> readStreamOn: aResolvable [
 
 { #category : 'public' }
 FileSystem >> referenceTo: aResolvable [
-	"Answer a reference to the argument from the context of the receiver filesystem.
-		Example: Filesystem disk referenceTo: 'plonk.taz'"
+	"Answer a reference to the argument from the context of the receiver FileSystem.
+		Example: (FileSystem disk referenceTo: 'plonk.taz') class >>> FileReference"
 
 	^ FileReference
 		fileSystem: self
