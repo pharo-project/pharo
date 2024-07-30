@@ -727,10 +727,6 @@ FileSystem >> referenceTo: aResolvable [
 		path: (self pathFromObject: aResolvable)
 ]
 
-
-
-
-
 { #category : 'public' }
 FileSystem >> rename: sourcePath ifAbsent: aBlock to: destPath ifPresent: pBlock [
 	"Rename the file referenced as sourcePath to the destination referred as destPath.
