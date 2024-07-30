@@ -720,12 +720,19 @@ FileSystem >> readStreamOn: aResolvable [
 { #category : 'public' }
 FileSystem >> referenceTo: aResolvable [
 	"Answer a reference to the argument from the context of the receiver FileSystem.
-		Example: (FileSystem disk referenceTo: 'plonk.taz') class >>> FileReference"
-
+		Example usage:
+		| reference |
+		reference := FileSystem disk referenceTo: 'plonk.taz'.
+		(reference class = FileReference) ifFalse: [ 
+			'Expected result: FileReference instance' 
+		]"
+	
 	^ FileReference
 		fileSystem: self
 		path: (self pathFromObject: aResolvable)
 ]
+
+
 
 { #category : 'public' }
 FileSystem >> rename: sourcePath ifAbsent: aBlock to: destPath ifPresent: pBlock [
