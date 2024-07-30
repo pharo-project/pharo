@@ -189,11 +189,35 @@ RBClassTest >> testIsManifest [
 			superclass: PackageManifest ;
 			package: #'Refactory-Testing' ].
 	packageManifestClass := pmNamespace classNamed: #PackageManifestForRBClassTest.
-	
-	self deny: abstractTransformationClass classSide isManifest.
-	self deny: abstractTransformationClass isManifest.
-	
+
 	self assert: packageManifestClass isManifest.
+]
+
+{ #category : 'tests - navigation' }
+RBClassTest >> testIsManifestTransformationClass [
+
+	self 
+		deny: abstractTransformationClass classSide isManifest
+		description: 'It tests that a transformation class is not manifest'.
+	self 
+		deny: abstractTransformationClass isManifest
+		description: 'It tests that a transformation is not manifest'.		
+]
+
+{ #category : 'tests - navigation' }
+RBClassTest >> testIsManifestWhenSuperclassIsUndefined [
+
+	| pmNamespace packageManifestClass |
+
+	pmNamespace := RBNamespace new.
+	pmNamespace defineClass: [ :aBuilder |
+		aBuilder
+			name: #PackageManifestForRBClassTest;
+			superclass: nil ;
+			package: #'Refactory-Testing' ].
+	packageManifestClass := pmNamespace classNamed: #PackageManifestForRBClassTest.
+	
+	self deny: packageManifestClass isManifest.
 ]
 
 { #category : 'tests - navigation' }

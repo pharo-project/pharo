@@ -163,9 +163,8 @@ RBClass >> isEmptyClass [
 { #category : 'testing' }
 RBClass >> isManifest [ 
 
-	realClass 
-		ifNil: [ ^ self superclass realClass == PackageManifest ].
-	^ realClass isManifest
+	^ self superclass notNil and: [ self superclass name = #PackageManifest ]
+
 ]
 
 { #category : 'testing' }
