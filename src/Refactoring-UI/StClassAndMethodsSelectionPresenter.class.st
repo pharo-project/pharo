@@ -52,7 +52,7 @@ StClassAndMethodsSelectionPresenter >> baseClassName: aString [
 	textInput text: aString
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 StClassAndMethodsSelectionPresenter >> basePackageName: aString [
 
  	packagePresenter selectItem: aString.
