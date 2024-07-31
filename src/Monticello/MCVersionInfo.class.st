@@ -71,6 +71,12 @@ MCVersionInfo >> asDictionary [
 		yourself
 ]
 
+{ #category : 'accessing' }
+MCVersionInfo >> author [
+
+	^ 'CompatibleUserName'
+]
+
 { #category : 'pillaging' }
 MCVersionInfo >> date [
 	^ date
