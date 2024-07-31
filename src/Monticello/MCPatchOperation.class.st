@@ -27,6 +27,17 @@ MCPatchOperation >> applyTo: anObject [
 	self remoteChosen ifTrue: [ self basicApplyTo: anObject ].
 ]
 
+{ #category : 'testing' }
+MCPatchOperation >> baseDefinition [
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+MCPatchOperation >> basicApplyTo: anObject [ 
+	^ self subclassResponsibility
+]
+
 { #category : 'accessing' }
 MCPatchOperation >> beConflict [
 	isConflict := true.
@@ -42,20 +53,6 @@ MCPatchOperation >> beNonConflict [
 { #category : 'accessing' }
 MCPatchOperation >> chooseLocal [
 	isApplicable := false
-]
-
-{ #category : 'accessing' }
-MCPatchOperation >> chooseNewer [
-	self isLocalNewer 
-		ifTrue: [ self chooseLocal ]
-		ifFalse: [ self isRemoteNewer ifTrue: [ self chooseRemote ]]
-]
-
-{ #category : 'accessing' }
-MCPatchOperation >> chooseOlder [
-	self isRemoteNewer 
-		ifTrue: [ self chooseLocal ]
-		ifFalse: [ self isLocalNewer ifTrue: [ self chooseRemote ]]
 ]
 
 { #category : 'accessing' }
@@ -100,18 +97,8 @@ MCPatchOperation >> isConflict [
 ]
 
 { #category : 'testing' }
-MCPatchOperation >> isLocalNewer [
-	^ self localDefinition fullTimeStamp > self remoteDefinition fullTimeStamp
-]
-
-{ #category : 'testing' }
 MCPatchOperation >> isModification [
 	^ false
-]
-
-{ #category : 'testing' }
-MCPatchOperation >> isRemoteNewer [
-	^ self localDefinition fullTimeStamp < self remoteDefinition fullTimeStamp
 ]
 
 { #category : 'testing' }
@@ -130,39 +117,15 @@ MCPatchOperation >> localChosen [
 
 ]
 
-{ #category : 'testing' }
-MCPatchOperation >> localDefinition [
-	^ self baseDefinition
-]
-
 { #category : 'accessing' }
 MCPatchOperation >> operation [
 	"for compatibility with MCConflict interface"
 	^ self
 ]
 
-{ #category : 'accessing' }
-MCPatchOperation >> prefixForOperation: aSymbol [
-	aSymbol == #insert ifTrue: [^ '+'].
-	aSymbol == #remove ifTrue: [^ '-'].
-	^ ' '
-]
-
-{ #category : 'accessing' }
-MCPatchOperation >> printAnnotations: requests on: aStream [
-	"Add a string for an annotation pane, trying to fulfill the CodeHolder annotationRequests"
-
-	self definition printAnnotations: requests on: aStream.
-]
-
 { #category : 'testing' }
 MCPatchOperation >> remoteChosen [
 	^ isApplicable ~~ false
-]
-
-{ #category : 'accessing' }
-MCPatchOperation >> remoteDefinition [
-	^ self targetDefinition
 ]
 
 { #category : 'accessing' }
@@ -182,4 +145,10 @@ MCPatchOperation >> summarySuffix [
 { #category : 'accessing' }
 MCPatchOperation >> targetClass [
 	self subclassResponsibility.
+]
+
+{ #category : 'accessing' }
+MCPatchOperation >> targetDefinition [
+
+	^ self subclassResponsibility
 ]

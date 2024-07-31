@@ -279,19 +279,6 @@ MCMethodDefinition >> postloadOver: aDefinition [
 		ifTrue: [self actualClass instanceSide compileFields].
 ]
 
-{ #category : 'annotations' }
-MCMethodDefinition >> printAnnotations: requests on: aStream [
-	"Add a string for an annotation pane, trying to fulfill the browser annotationRequests."
-	
-	requests do: [ :aRequest |
-		aRequest == #timeStamp ifTrue: [ aStream nextPutAll: self timeStamp ].
-		aRequest == #messageCategory ifTrue: [ aStream nextPutAll: self protocol ].
-		aRequest == #requirements ifTrue: [
-			self requirements do: [ :req |
-				aStream nextPutAll: req ] separatedBy: [ aStream space ]].
-	] separatedBy: [ aStream space ].
-]
-
 { #category : 'accessing' }
 MCMethodDefinition >> protocol [
 	"Return in which protocol (conceptual groups of methods) the receiver is grouped into."
