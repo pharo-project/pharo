@@ -70,6 +70,11 @@ MCPatchOperation >> definition [
 	^ self subclassResponsibility 
 ]
 
+{ #category : 'accessing' }
+MCPatchOperation >> fromSource [
+	^ self subclassResponsibility
+]
+
 { #category : 'initialization' }
 MCPatchOperation >> initialize [
 	super initialize.
@@ -138,11 +143,6 @@ MCPatchOperation >> status [
 ]
 
 { #category : 'accessing' }
-MCPatchOperation >> summarySuffix [
-	^ ''
-]
-
-{ #category : 'accessing' }
 MCPatchOperation >> targetClass [
 	self subclassResponsibility.
 ]
@@ -150,5 +150,10 @@ MCPatchOperation >> targetClass [
 { #category : 'accessing' }
 MCPatchOperation >> targetDefinition [
 
+	^ self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+MCPatchOperation >> toSource [
 	^ self subclassResponsibility
 ]
