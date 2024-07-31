@@ -46,46 +46,6 @@ MCVersion >> adopt [
 	self workingCopy adopt: self
 ]
 
-{ #category : 'enumerating' }
-MCVersion >> allAvailableDependenciesDo: aBlock [
-	
-	self dependencies do:
-		[:ea |
-		[ | version |version := ea resolve.
-		version allAvailableDependenciesDo: aBlock.
-		aBlock value: version]
-			on: Error do: []]
-]
-
-{ #category : 'enumerating' }
-MCVersion >> allDependenciesDo: aBlock [
-	self allDependenciesDo: aBlock ifUnresolved: [:ignored | true]
-]
-
-{ #category : 'enumerating' }
-MCVersion >> allDependenciesDo: aBlock ifUnresolved: failBlock [
-	| dict |
-	dict := Dictionary new.
-	self allDependenciesNotIn: dict do: aBlock ifUnresolved: failBlock
-]
-
-{ #category : 'enumerating' }
-MCVersion >> allDependenciesNotIn: aDictionary do: aBlock ifUnresolved: failBlock [
-	
-	self dependencies do: 
-		[:ea | | version | 
-		version := aDictionary at: ea ifAbsent: [ea resolve].
-		version 
-			ifNil: [failBlock value: ea]
-			ifNotNil: [(aDictionary includes: version) ifFalse:
-						[aDictionary at: ea put: version.
-						version 
-							allDependenciesNotIn: aDictionary 
-							do: aBlock
-							ifUnresolved: failBlock.
-						aBlock value: version]]]
-]
-
 { #category : 'accessing' }
 MCVersion >> changes [
 	^ self completeSnapshot patchRelativeToBase: self completePackageSnapshot
@@ -203,20 +163,6 @@ MCVersion >> snapshot [
 	snapshot isBlock ifTrue: [ 
 		snapshot := snapshot value ].
 	^ snapshot
-]
-
-{ #category : 'enumerating' }
-MCVersion >> withAllDependenciesDo: aBlock [
-	self allDependenciesDo: aBlock ifUnresolved: [:ignored |].
-	aBlock value: self
-]
-
-{ #category : 'enumerating' }
-MCVersion >> withAllDependenciesDo: aBlock ifUnresolved: failBlock [
-	| dict |
-	dict := Dictionary new.
-	self allDependenciesNotIn: dict do: aBlock ifUnresolved: failBlock.
-	aBlock value: self
 ]
 
 { #category : 'accessing' }
