@@ -21,22 +21,22 @@ self flag: 'need change tranformation to have the same behavior of ref'.
 RBProtectInstanceVariableParametrizedTest >> setUp [
 
 	super setUp.
-	model := self rbModelForVariableTest
+	model := self modelOnClasses: { RBSubclassOfClassToRename . RBBasicLintRuleTestData }
 ]
 
 { #category : 'failure tests' }
 RBProtectInstanceVariableParametrizedTest >> testFailureVariableNotDefined [
 
-	self shouldFail: (self createRefactoringWithArguments:
+	self shouldFail: (self createRefactoringWithModel: model andArguments:
 			 { 'rewrite'. #RBSubclassOfClassToRename }).
-	self shouldFail: (self createRefactoringWithArguments:
+	self shouldFail: (self createRefactoringWithModel: model andArguments:
 			 { 'foo'. #RBBasicLintRuleTestData })
 ]
 
 { #category : 'tests' }
 RBProtectInstanceVariableParametrizedTest >> testProtectInstanceVariable [
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments:
+	refactoring := self createRefactoringWithModel: model andArguments:
 		{('rewrite' , 'Rule1') . #RBSubclassOfClassToRename}.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBSubclassOfClassToRename.

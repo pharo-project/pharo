@@ -283,14 +283,6 @@ MCWorkingCopy >> completeSnapshot [
 ]
 
 { #category : 'accessing' }
-MCWorkingCopy >> currentVersionInfo [
-	^ (self needsSaving or: [ancestry ancestors isEmpty])
-		ifTrue: [ (self newVersionIn: self repositoryGroup) 
-						ifNotNil: [ :version | version info ] ]
-		ifFalse: [ancestry ancestors first]
-]
-
-{ #category : 'accessing' }
 MCWorkingCopy >> currentVersionInfoWithMessage: aMessageString in: aRepository [
 	^ (self needsSaving or: [ancestry ancestors isEmpty])
 		ifTrue: [ (self newVersionWithMessage: aMessageString in: aRepository) info ]
@@ -387,17 +379,6 @@ MCWorkingCopy >> modified: aBoolean [
 { #category : 'accessing' }
 MCWorkingCopy >> needsSaving [
 	^ self modified or: [self requiredPackages anySatisfy: [:ea | ea workingCopy needsSaving]]
-]
-
-{ #category : 'operations' }
-MCWorkingCopy >> newVersionIn: aRepository [
-	^ (self requestVersionNameAndMessageWithSuggestion: (self uniqueVersionNameIn: aRepository)) 
-		ifNotNil: [:pair |
-			self 
-				newVersionWithName: pair first trimBoth 
-				message: pair last 
-				in: aRepository ].
-
 ]
 
 { #category : 'operations' }
@@ -505,11 +486,6 @@ MCWorkingCopy >> repositoryGroup [
 { #category : 'repositories' }
 MCWorkingCopy >> repositoryGroup: aRepositoryGroup [
 	repositoryGroup := aRepositoryGroup
-]
-
-{ #category : 'private' }
-MCWorkingCopy >> requestVersionNameAndMessageWithSuggestion: aString [
-	^ (MCVersionNameAndMessageRequest new suggestedName: aString) signal
 ]
 
 { #category : 'accessing' }

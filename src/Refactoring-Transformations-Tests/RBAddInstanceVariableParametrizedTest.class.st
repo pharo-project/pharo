@@ -19,27 +19,31 @@ RBAddInstanceVariableParametrizedTest class >> testParameters [
 { #category : 'running' }
 RBAddInstanceVariableParametrizedTest >> setUp [
 	super setUp.
-	model := self rbModelForVariableTest
+	model := self modelOnClasses: { RBTransformationRuleTestData }
 ]
 
 { #category : 'tests' }
 RBAddInstanceVariableParametrizedTest >> testAddInstanceVariable [
+
 	| refactoring |
-	refactoring := self createRefactoringWithArguments:
-		{'asdf' . #RBTransformationRuleTestData }.
+	
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArguments:
+		               { 'asdf'. #RBTransformationRuleTestData }.
 
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model
-		classNamed: #RBTransformationRuleTestData)
-		directlyDefinesInstanceVariable: 'asdf')
+	self assert:
+		((refactoring model classNamed: #RBTransformationRuleTestData)
+			 directlyDefinesInstanceVariable: 'asdf')
 ]
 
 { #category : 'tests' }
 RBAddInstanceVariableParametrizedTest >> testAddToModel [
 
 	| refactoring |
-	model := RBNamespace new.
+	
 	model name: 'Add instance variable'.
 	model defineClass: [ :aBuilder |
 		aBuilder
@@ -47,22 +51,28 @@ RBAddInstanceVariableParametrizedTest >> testAddToModel [
 			name: #FOOBAR;
 			slots: { #fdsa };
 			package: #'Refactory-Test data' ].
-	refactoring := self createRefactoringWithModel: model andArguments: { 'asdf'. #FOOBAR }.
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArguments: { 'asdf'. #FOOBAR }.
 
 	self executeRefactoring: refactoring.
 
-	self assert: ((refactoring model classNamed: #FOOBAR) directlyDefinesInstanceVariable: 'asdf')
+	self assert: ((refactoring model classNamed: #FOOBAR)
+			 directlyDefinesInstanceVariable: 'asdf')
 ]
 
 { #category : 'tests' }
 RBAddInstanceVariableParametrizedTest >> testInvalidVariableName [
 
-	self shouldFail: (self createRefactoringWithArguments:
-			 { ''. #RBTransformationRuleTestData }).
+	self shouldFail: (self
+			 createRefactoringWithModel: model
+			 andArguments: { ''. #RBTransformationRuleTestData }).
 
-	self shouldFail: (self createRefactoringWithArguments:
-			 { 'true'. #RBTransformationRuleTestData }).
+	self shouldFail: (self
+			 createRefactoringWithModel: model
+			 andArguments: { 'true'. #RBTransformationRuleTestData }).
 
-	self shouldFail: (self createRefactoringWithArguments:
-			 { 'Asdf'. #RBTransformationRuleTestData })
+	self shouldFail: (self
+			 createRefactoringWithModel: model
+			 andArguments: { 'Asdf'. #RBTransformationRuleTestData })
 ]
