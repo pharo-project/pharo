@@ -186,11 +186,6 @@ MCPackageLoader >> obsoletionFor: aDefinition [
 ]
 
 { #category : 'private' }
-MCPackageLoader >> orderDefinitionsForLoading: aCollection [
-	^ (self sorterForItems: aCollection) orderedItems
-]
-
-{ #category : 'private' }
 MCPackageLoader >> orderedAdditions [
 	^ additions
 ]

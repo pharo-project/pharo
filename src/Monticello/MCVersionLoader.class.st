@@ -72,14 +72,11 @@ MCVersionLoader >> basicLoad [
 
 { #category : 'checking' }
 MCVersionLoader >> checkForModificationsIfCancel: cancelBlock ifMerge: mergeBlock [
-	| modifications |
-	
+
 	"first check if there are local packages which are dirty"
-	modifications := self localModifications.
-	modifications isEmpty ifTrue: [ ^ self].
-	
-	"ask the user what to do.. merge | overwrite | abort"
-	^ self warnAboutLosingChangesTo: modifications ifCancel: cancelBlock ifMerge: mergeBlock
+	self localModifications ifNotEmpty: [ :modifications |
+		"ask the user what to do.. merge | overwrite | abort"
+		^ self warnAboutLosingChangesTo: modifications ifCancel: cancelBlock ifMerge: mergeBlock ]
 ]
 
 { #category : 'checking' }
@@ -100,18 +97,6 @@ MCVersionLoader >> depAgeIsOk: aDependency [
 MCVersionLoader >> ensurePackage: mcPackage [ 
 	self packageOrganizer ensurePackage: mcPackage name 
 		
-]
-
-{ #category : 'testing' }
-MCVersionLoader >> hasLocalModifications [
-
-	^ self localModifications isNotEmpty
-]
-
-{ #category : 'testing' }
-MCVersionLoader >> hasVersions [
-
-	^ versions isEmpty not
 ]
 
 { #category : 'initialization' }
@@ -147,10 +132,10 @@ MCVersionLoader >> localModifications [
 
 { #category : 'loading' }
 MCVersionLoader >> mergeVersions [
-	|merger|
-	merger :=  MCVersionMerger new.
-	merger addVersions: self localModifications.
-	merger merge.
+
+	MCVersionMerger new
+		addVersions: self localModifications;
+		merge
 ]
 
 { #category : 'checking' }
