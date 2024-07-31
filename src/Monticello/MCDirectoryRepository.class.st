@@ -69,7 +69,8 @@ MCDirectoryRepository >> includesFileNamed: aString [
 { #category : 'testing' }
 MCDirectoryRepository >> includesVersionNamed: aString [
 	"avoid slow default implementation and directly check for existing files"
-	^ (self allFileNamesForVersionNamed: aString) isEmpty not
+
+	^ (self allFileNamesForVersionNamed: aString) isNotEmpty
 ]
 
 { #category : 'initialization' }

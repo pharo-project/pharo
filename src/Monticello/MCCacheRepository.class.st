@@ -113,12 +113,6 @@ MCCacheRepository >> initialize [
 	cacheEnabled := true
 ]
 
-{ #category : 'private' }
-MCCacheRepository >> loadVersionFromFileNamed: aString [
-	
-	^ self versionReaderForFileNamed: aString do: [:r | r version]
-]
-
 { #category : 'storing' }
 MCCacheRepository >> storeVersion: aVersion [
 
