@@ -672,11 +672,6 @@ MCGitBasedNetworkRepository >> validateLocalRepository [
 ]
 
 { #category : 'accessing' }
-MCGitBasedNetworkRepository >> versionFrom: aVersionReferenceString [
-	^ self localRepository versionFrom: aVersionReferenceString
-]
-
-{ #category : 'accessing' }
 MCGitBasedNetworkRepository >> versionWithInfo: aVersionInfo ifAbsent: errorBlock [
 	^ self localRepository 
 		versionWithInfo: aVersionInfo 

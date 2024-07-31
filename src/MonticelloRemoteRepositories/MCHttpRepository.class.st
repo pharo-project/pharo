@@ -116,10 +116,8 @@ MCHttpRepository >> assertNonBinaryResponse: response [
 MCHttpRepository >> cacheRawVersionNamed: aString stream: contents [
 	"directly forward the contents to the cache repository. 
 	this avoids and unnecessary serialization step"
-	MCCacheRepository uniqueInstance 
-		writeStreamForFileNamed: aString 
-		replace: true 
-		do: [ :s| s nextPutAll: contents ]
+
+	MCCacheRepository uniqueInstance writeStreamWithReplacingForFileNamed: aString do: [ :s | s nextPutAll: contents ]
 ]
 
 { #category : 'accessing' }
@@ -376,16 +374,16 @@ MCHttpRepository >> versionReaderForFileNamed: aString do: aBlock [
 ]
 
 { #category : 'i/o' }
-MCHttpRepository >> writeStreamForFileNamed: aString replace: ignoreBoolean do: aBlock [
+MCHttpRepository >> writeStreamForFileNamed: aString do: aBlock [
+
 	| entity |
 	entity := self entityStreamContents: aBlock.
-	self displayProgress: 'Uploading ', aString during: [
+	self displayProgress: 'Uploading ' , aString during: [
 		self httpClient
 			entity: entity;
-			ifFail: [ :exception | 
-				(exception isKindOf: ZnHttpUnsuccessful) 
-					ifTrue: [ ^ self handleUnsuccessfulResponse: exception response ].
-				self error: 'Could not save ', aString, ': ', exception printString ];
+			ifFail: [ :exception |
+				(exception isKindOf: ZnHttpUnsuccessful) ifTrue: [ ^ self handleUnsuccessfulResponse: exception response ].
+				self error: 'Could not save ' , aString , ': ' , exception printString ];
 			url: (self urlForFileNamed: aString);
 			put ]
 ]

@@ -102,12 +102,7 @@ MCDirectoryRepository >> readStreamForFileNamed: aString do: aBlock [
 ]
 
 { #category : 'i/o' }
-MCDirectoryRepository >> writeStreamForFileNamed: aString replace: shouldReplace do: aBlock [
+MCDirectoryRepository >> writeStreamForFileNamed: aString do: aBlock [
 
-	| file |
-	file := directory / aString.
-
-	shouldReplace ifTrue: [ file ensureDelete ].
-
-	file binaryWriteStreamDo: aBlock
+	directory / aString binaryWriteStreamDo: aBlock
 ]

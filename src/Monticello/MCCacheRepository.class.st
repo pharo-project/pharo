@@ -143,3 +143,12 @@ MCCacheRepository >> versionWithInfo: aVersionInfo ifAbsent: errorBlock [
 			version info = aVersionInfo ifTrue: [^ version]].
 	^ errorBlock value
 ]
+
+{ #category : 'writing' }
+MCCacheRepository >> writeStreamWithReplacingForFileNamed: aString do: aBlock [
+
+	| file |
+	file := directory / aString.
+	file ensureDelete.
+	file binaryWriteStreamDo: aBlock
+]

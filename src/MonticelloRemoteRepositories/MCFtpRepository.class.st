@@ -116,10 +116,9 @@ MCFtpRepository >> user: userString [
 ]
 
 { #category : 'required' }
-MCFtpRepository >> writeStreamForFileNamed: aString replace: ignoreBoolean do: aBlock [
+MCFtpRepository >> writeStreamForFileNamed: aString do: aBlock [
 
-	self clientDo:
-			[:client |
-			client binary.
-			client putFileStreamContents: (ByteArray streamContents: aBlock) readStream as: aString]
+	self clientDo: [ :client |
+		client binary.
+		client putFileStreamContents: (ByteArray streamContents: aBlock) readStream as: aString ]
 ]

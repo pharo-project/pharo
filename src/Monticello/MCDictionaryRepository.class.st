@@ -85,11 +85,6 @@ MCDictionaryRepository >> sortedVersionInfos [
 
 ]
 
-{ #category : 'accessing' }
-MCDictionaryRepository >> versionFrom: aVersionReferenceString [
-	^ self dictionary detect: [ :version | version info name = aVersionReferenceString ]
-]
-
 { #category : 'interface' }
 MCDictionaryRepository >> versionWithInfo: aVersionInfo ifAbsent: errorBlock [
 	^ dict at: aVersionInfo ifAbsent: errorBlock

@@ -51,20 +51,6 @@ MCFileBasedRepository class >> urlSchemes [
 	^ #(file)
 ]
 
-{ #category : 'adding' }
-MCFileBasedRepository >> addVersionInformationExtractedFrom: readableFileName to: versions [
-	| name |
-	name := (readableFileName copyUpToLast: $.) copyUpTo: $(.
-	name last isDigit
-		ifTrue: [ 
-			versions
-				add:
-					{(name copyUpToLast: $-).	"pkg name"
-					((name copyAfterLast: $-) copyUpTo: $.).	"user"
-					(((name copyAfterLast: $-) copyAfter: $.) asInteger ifNil: [ 0 ]).	"version"
-					readableFileName }]
-]
-
 { #category : 'accessing' }
 MCFileBasedRepository >> allFileNames [
 
@@ -74,12 +60,6 @@ MCFileBasedRepository >> allFileNames [
 { #category : 'accessing' }
 MCFileBasedRepository >> allFileNamesForVersionNamed: aString [
 	^ self filterFileNames: self readableFileNames forVersionNamed: aString
-]
-
-{ #category : 'accessing' }
-MCFileBasedRepository >> allFileNamesOrCache [
-
-	^ self allFileNames
 ]
 
 { #category : 'accessing' }
@@ -219,6 +199,12 @@ MCFileBasedRepository >> pathForFileNamed: aFileName [
   ^ aFileName
 ]
 
+{ #category : 'actions' }
+MCFileBasedRepository >> readStreamForFileNamed: aString do: aBlock [
+
+	^ self subclassResponsibility
+]
+
 { #category : 'accessing' }
 MCFileBasedRepository >> readableFileNames [
 	| all cached new emptyFilenamelength |
@@ -257,11 +243,6 @@ MCFileBasedRepository >> updateCachedVersionFromFileName: aString with: aVersion
 
 	self resizeCache: cache.
 	aVersion ifNotNil: [ cache at: aString put: aVersion ]
-]
-
-{ #category : 'accessing' }
-MCFileBasedRepository >> versionFrom: aVersionReferenceString [
-	^ self loadVersionFromFileNamed: aVersionReferenceString , '.mcz'
 ]
 
 { #category : 'accessing' }
@@ -317,17 +298,8 @@ MCFileBasedRepository >> versionWithInfo: aVersionInfo ifAbsent: errorBlock [
 	^ errorBlock value
 ]
 
-{ #category : 'accessing' }
-MCFileBasedRepository >> versionsWithPackageNames [
-	| versions |
-	versions := OrderedCollection new.
-	self readableFileNames
-		do: [ :each | 
-		      self addVersionInformationExtractedFrom: each to: versions ].
-	^ versions
-]
-
 { #category : 'storing' }
 MCFileBasedRepository >> writeStreamForFileNamed: aString do: aBlock [
-	^ self writeStreamForFileNamed: aString replace: false do: aBlock
+
+	^ self subclassResponsibility
 ]

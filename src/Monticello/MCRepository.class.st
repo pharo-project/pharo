@@ -136,11 +136,6 @@ MCRepository >> storeVersion: aVersion [
 	self basicStoreVersion: aVersion
 ]
 
-{ #category : 'accessing' }
-MCRepository >> versionFrom: aVersionReferenceString [
-	self error: 'Unable to load from ' , self printString
-]
-
 { #category : 'interface' }
 MCRepository >> versionWithInfo: aVersionInfo [
 	^ self versionWithInfo: aVersionInfo ifAbsent: [nil]
