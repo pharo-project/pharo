@@ -44,11 +44,10 @@ ReClassesHaveNoReferencesCondition >> violators [
 		  classes do: [ :aClass |
 			  | methodsReferencingClass |
 			  methodsReferencingClass := (model methodsReferencingClass: aClass) reject: [ :each |
-						    classes includes: each methodClass ].
+				(classes includes: each methodClass) or: [ each methodClass isManifest ] ].
 			  methodsReferencingClass ifNotEmpty: [ 
 				  referencingClassesDictionary
 					  at: aClass
 					  put: methodsReferencingClass ] ].
-			referencingClassesDictionary 
-		]
+			referencingClassesDictionary ]
 ]
