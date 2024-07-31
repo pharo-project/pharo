@@ -4,9 +4,6 @@ A Metacello repository
 Class {
 	#name : 'MCRepository',
 	#superclass : 'Object',
-	#instVars : [
-		'creationTemplate'
-	],
 	#classVars : [
 		'Settings'
 	],
@@ -18,11 +15,6 @@ Class {
 { #category : 'accessing' }
 MCRepository class >> allConcreteSubclasses [
 	^ self withAllSubclasses reject: [:ea | ea isAbstract]
-]
-
-{ #category : 'accessing' }
-MCRepository class >> creationTemplate [
-	self subclassResponsibility.
 ]
 
 { #category : 'accessing' }
@@ -64,26 +56,9 @@ MCRepository >> addTo: aRepository [
 	^ aRepository addBasicRepository: self
 ]
 
-{ #category : 'converting' }
-MCRepository >> asCreationTemplate [
-	^ self creationTemplate
-]
-
 { #category : 'storing' }
 MCRepository >> basicStoreVersion: aVersion [
 	self subclassResponsibility
-]
-
-{ #category : 'accessing' }
-MCRepository >> creationTemplate [
-	^ creationTemplate
-]
-
-{ #category : 'accessing' }
-MCRepository >> creationTemplate: aString [
-	self creationTemplate ifNotNil: [ self error: 'Creation template already set for this MCRepository instance.' ].
-	
-	creationTemplate := aString.
 ]
 
 { #category : 'accessing' }

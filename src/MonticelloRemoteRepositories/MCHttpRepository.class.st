@@ -37,23 +37,6 @@ MCHttpRepository class >> clearPasswords [
 
 ]
 
-{ #category : 'creation template' }
-MCHttpRepository class >> creationTemplate [
-	^self creationTemplateLocation: self baseURL
-		user: ''
-		password: ''
-
-]
-
-{ #category : 'creation template' }
-MCHttpRepository class >> creationTemplateLocation: location user: user password: password [
-	^
-self name, '
-	location: {1}
-	user: {2}
-	password: {3}' format: {location printString. user printString. password printString}
-]
-
 { #category : 'accessing' }
 MCHttpRepository class >> description [
 	^ 'HTTP'
@@ -114,11 +97,6 @@ MCHttpRepository class >> repositoryClassFor: location [
 { #category : 'accessing' }
 MCHttpRepository class >> urlSchemes [
 	^ #(http https)
-]
-
-{ #category : 'converting' }
-MCHttpRepository >> asCreationTemplate [
-	^self class creationTemplateLocation: self location user: user password: password
 ]
 
 { #category : 'private' }

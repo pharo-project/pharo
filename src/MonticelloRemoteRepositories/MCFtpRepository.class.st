@@ -24,17 +24,6 @@ MCFtpRepository class >> basicFromUrl: aZnUrl [
 ]
 
 { #category : 'accessing' }
-MCFtpRepository class >> creationTemplate [
-	^
-'MCFtpRepository
-	host: ''modules.blopy.org''
-	directory: ''mc''
-	user: ''blop''
-	password: ''pilou'''
-	
-]
-
-{ #category : 'accessing' }
 MCFtpRepository class >> description [
 	^ 'FTP'
 ]
@@ -46,11 +35,6 @@ MCFtpRepository class >> host: host directory: directory user: user password: pa
 		directory: directory;
 		user: user;
 		password: password
-]
-
-{ #category : 'accessing' }
-MCFtpRepository class >> templateCreationSelector [
-	^ #host:directory:user:password: 
 ]
 
 { #category : 'accessing' }
