@@ -54,7 +54,13 @@ MCVersion >> changes [
 { #category : 'accessing' }
 MCVersion >> completePackageSnapshot [
 	"Answer with a snapshot of current working copy of this package and all its dependencies."
-	^self loadCompletePackageSnapshot
+
+	| definitions |
+	definitions := OrderedCollection withAll: package snapshot definitions.
+	self dependencies
+		do: [ :each | definitions addAll: each package snapshot definitions ]
+		displayingProgress: [ :item | 'Loading dependencies from: ' , item package name ].
+	^ MCSnapshot fromDefinitions: definitions
 ]
 
 { #category : 'accessing' }
@@ -91,45 +97,21 @@ MCVersion >> initializeWithPackage: aPackage info: aVersionInfo snapshot: aSnaps
 	self addToCache.
 ]
 
-{ #category : 'testing' }
-MCVersion >> isCacheable [
-	^true
-]
-
-{ #category : 'testing' }
-MCVersion >> isDiffy [
-	^ false
-]
-
 { #category : 'actions' }
 MCVersion >> load [
 	MCVersionLoader loadVersion: self
 ]
 
 { #category : 'accessing' }
-MCVersion >> loadCompletePackageSnapshot [
-	| definitions |
-	definitions := OrderedCollection withAll: package snapshot definitions.
-	
-	self dependencies 
-		do: [ :each| definitions addAll: each package snapshot definitions ]
-		displayingProgress: [ :item| 'Loading dependencies from: ', item package name ].
-	
-	^ MCSnapshot fromDefinitions: definitions
-	
-	
-]
-
-{ #category : 'accessing' }
 MCVersion >> loadCompleteSnapshot [
-	|definitions|
-	
+
+	| definitions |
 	definitions := OrderedCollection withAll: self snapshot definitions.
-	
-	self dependencies 
-		do: [ :each| definitions addAll: each resolve completeSnapshot definitions ]
-		displayingProgress: [ :item| 'Loading dependencies from: ', item package name ].
-	
+
+	self dependencies
+		do: [ :each | definitions addAll: each resolve completeSnapshot definitions ]
+		displayingProgress: [ :item | 'Loading dependencies from: ' , item package name ].
+
 	^ MCSnapshot fromDefinitions: definitions
 ]
 

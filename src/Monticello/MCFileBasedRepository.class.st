@@ -89,13 +89,11 @@ MCFileBasedRepository >> allVersionNames [
 
 { #category : 'storing' }
 MCFileBasedRepository >> basicStoreVersion: aVersion [
-	self
-		writeStreamForFileNamed: aVersion fileName
-		do: [:s | aVersion fileOutOn: s].
-	aVersion isCacheable ifTrue: [
-		cache ifNil: [cache := Dictionary new].
-		cache at: aVersion fileName put: aVersion].
 
+	self writeStreamForFileNamed: aVersion fileName do: [ :s | aVersion fileOutOn: s ].
+
+	cache ifNil: [ cache := Dictionary new ].
+	cache at: aVersion fileName put: aVersion
 ]
 
 { #category : 'accessing' }
@@ -256,9 +254,9 @@ MCFileBasedRepository >> storeVersion: aVersion [
 
 { #category : 'private' }
 MCFileBasedRepository >> updateCachedVersionFromFileName: aString with: aVersion [
-	self resizeCache: cache.
-	(aVersion isNotNil and: [aVersion isCacheable]) ifTrue: [cache at: aString put: aVersion].
 
+	self resizeCache: cache.
+	aVersion ifNotNil: [ cache at: aString put: aVersion ]
 ]
 
 { #category : 'accessing' }
