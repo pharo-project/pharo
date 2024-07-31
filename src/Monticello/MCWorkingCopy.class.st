@@ -379,27 +379,24 @@ MCWorkingCopy >> nextVersionName [
 
 	| branch oldName base |
 	branch := ''.
-	ancestry ancestors isEmpty
-		ifTrue: [
+	ancestry ancestors
+		ifEmpty: [
 			counter ifNil: [ counter := 0 ].
 			base := package name ]
-		ifFalse: [
-			oldName := ancestry ancestors first name.
+		ifNotEmpty: [ :ancestors |
+			oldName := ancestors first name.
 			oldName last isDigit
 				ifFalse: [ base := oldName ]
 				ifTrue: [
 					base := oldName copyUpToLast: $-.
-					branch := ((oldName copyAfterLast: $-) copyUpToLast: $.)
-						          copyAfter: $. ].
+					branch := ((oldName copyAfterLast: $-) copyUpToLast: $.) copyAfter: $. ].
 			counter ifNil: [
-				counter := (ancestry ancestors collect: [ :each |
+				counter := (ancestors collect: [ :each |
 					            each name last isDigit
 						            ifFalse: [ 0 ]
-						            ifTrue: [
-							            ('0' , (each name copyAfterLast: $.) select: [ :ea |
-								             ea isDigit ]) asNumber ] ]) max ] ].
+						            ifTrue: [ ('0' , (each name copyAfterLast: $.) select: [ :ea | ea isDigit ]) asNumber ] ]) max ] ].
 
-	branch isEmpty ifFalse: [ branch := '.' , branch ].
+	branch ifNotEmpty: [ branch := '.' , branch ].
 	counter := counter + 1.
 	^ base , '-' , branch , '.' , counter asString
 ]
@@ -449,37 +446,6 @@ MCWorkingCopy >> requirePackage: aPackage [
 { #category : 'accessing' }
 MCWorkingCopy >> requiredPackages [
 	^ requiredPackages ifNil: [requiredPackages := OrderedCollection new]
-]
-
-{ #category : 'accessing' }
-MCWorkingCopy >> requiredPackagesParallelCollect: aBlock withMessage: aMessage [
-	"load the remote dependencies of all packages in parallel"
-
-	| packages progress results maxConcurrentConnections connectionThrottle addSemaphore |
-	
-	results := OrderedCollection new.
-	addSemaphore := Semaphore forMutualExclusion.
-	connectionThrottle := Semaphore new.
-	progress := 0.
-	maxConcurrentConnections := 5.
-	maxConcurrentConnections timesRepeat: [ connectionThrottle signal ]. "make room for maxConcurrentConnections"
-	packages := self requiredPackages.
-	
-	aMessage displayProgressFrom: 0 to: packages size during: [ :bar|
-		packages do: [ :aPackage| 
-			connectionThrottle wait. "no more than maxConcurrentConnections"
-			[|result|
-				[
-					result := aBlock value: aPackage.
-					addSemaphore critical: [ "update the non-threadsafe collection"
-						results add: result.
-						bar current: (progress := progress + 1)]
-				] ensure: [ connectionThrottle signal. "free a connection" ].
-			] fork ]].
-	
-	maxConcurrentConnections timesRepeat: [ connectionThrottle wait ]. "wait for the last connection to finish"
-	
-	^ results
 ]
 
 { #category : 'accessing' }
