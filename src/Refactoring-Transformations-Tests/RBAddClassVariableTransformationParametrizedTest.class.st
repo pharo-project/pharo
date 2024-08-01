@@ -19,13 +19,14 @@ RBAddClassVariableTransformationParametrizedTest class >> testParameters [
 { #category : 'running' }
 RBAddClassVariableTransformationParametrizedTest >> setUp [
 	super setUp.
-	model := self rbModelForVariableTest
+	model := self modelOnClasses: { Object . RBTransformationRuleTestData }.
+	self defineFooBarIn: model
 ]
 
 { #category : 'tests' }
 RBAddClassVariableTransformationParametrizedTest >> testAddClassVariable [
 	| refactoring |
-	refactoring := self createRefactoringWithArguments:
+	refactoring := self createRefactoringWithModel: model andArguments:
 		{'Asdf' . #RBTransformationRuleTestData }.
 
 	self executeRefactoring: refactoring.
@@ -38,7 +39,7 @@ RBAddClassVariableTransformationParametrizedTest >> testAddClassVariable [
 { #category : 'failure tests' }
 RBAddClassVariableTransformationParametrizedTest >> testFailureMetaClassFailure [
 
-	self shouldFail: (self createRefactoringWithArguments:
+	self shouldFail: (self createRefactoringWithModel: model andArguments:
 			 { #VariableName. #'RBTransformationRuleTestData class' })
 ]
 
@@ -46,7 +47,6 @@ RBAddClassVariableTransformationParametrizedTest >> testFailureMetaClassFailure 
 RBAddClassVariableTransformationParametrizedTest >> testFailureMetaclass [
 
 	| refactoring |
-	self skip.
 	refactoring := self
 		               createRefactoringWithModel: model
 		               andArguments: { #ClassVarName3. #'Object class' }.
@@ -57,7 +57,6 @@ RBAddClassVariableTransformationParametrizedTest >> testFailureMetaclass [
 RBAddClassVariableTransformationParametrizedTest >> testFailureModelMetaclass [
 
 	| refactoring |
-	self skip.
 	refactoring := self
 		               createRefactoringWithModel: model
 		               andArguments: { #ClassVarName3. #'Bar class' }.

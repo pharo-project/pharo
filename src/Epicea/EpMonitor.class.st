@@ -7,10 +7,8 @@ Class {
 	#name : 'EpMonitor',
 	#superclass : 'Object',
 	#instVars : [
-		'systemAnnouncer',
 		'log',
 		'entryReferenceByEvent',
-		'jobAnnouncer',
 		'announcer'
 	],
 	#classInstVars : [
@@ -123,10 +121,10 @@ EpMonitor >> addEvent: anEvent newEntryDo: aBlock triggerReference: triggerRefer
 
 	| newEntry |
 	newEntry := log addEntryWith: anEvent tags: [ :tags |
-		            triggerReference isNull ifFalse: [ tags at: EpLog triggererReferenceKey put: triggerReference ].
-
-		            tags at: EpLog authorKey put: self author.
-		            tags at: EpLog timeKey put: self time ].
+		            triggerReference isNull ifFalse: [
+			            tags
+				            at: EpLog triggererReferenceKey
+				            put: triggerReference ] ].
 
 	aBlock value: newEntry
 ]
@@ -140,13 +138,6 @@ EpMonitor >> announceMonitorStateUpdated [
 { #category : 'accessing' }
 EpMonitor >> announcer [
 	^ announcer ifNil: [ announcer := Announcer new ]
-]
-
-{ #category : 'private' }
-EpMonitor >> author [
-	^ Author uniqueInstance
-		ifUnknownAuthorUse: 'Unknown'
-		during: [ Author uniqueInstance fullName ]
 ]
 
 { #category : 'accessing' }
@@ -290,7 +281,7 @@ EpMonitor >> disable [
 
 	self sessionStore flush.
 
-	{ systemAnnouncer. jobAnnouncer }
+	{ self systemAnnouncer. self jobAnnouncer }
 		do: [ :each | each ifNotNil: [ :a | a unsubscribe: self ] ].
 
 	self announceMonitorStateUpdated
@@ -335,15 +326,19 @@ EpMonitor >> initializeWithLog: aLog [
 	self initialize.
 
 	log := aLog.
-	systemAnnouncer := SystemAnnouncer uniqueInstance.
-	jobAnnouncer := Job jobAnnouncer.
-
 	entryReferenceByEvent := IdentityDictionary new
 ]
 
 { #category : 'testing' }
 EpMonitor >> isEnabled [
-	^ systemAnnouncer hasSubscriber: self
+
+	^ self systemAnnouncer hasSubscriber: self
+]
+
+{ #category : 'private' }
+EpMonitor >> jobAnnouncer [
+
+	^ Job jobAnnouncer
 ]
 
 { #category : 'announcement handling' }
@@ -506,7 +501,7 @@ EpMonitor >> subscribeToJobAnnouncer [
 	{	JobStart -> #jobStarted:.
 		JobEnd -> #jobEnded:.
 	} do: [ :pair |
-		jobAnnouncer
+		self jobAnnouncer
 			when: pair key
 			send: pair value
 			to: self ]
@@ -534,11 +529,17 @@ EpMonitor >> subscribeToSystemAnnouncer [
 		(ClassRenamed -> [ :ann | self classRenamed: ann ]).
 		(ClassCommented -> [ :ann | self classCommented: ann ]).
 		(MethodRecategorized -> [ :ann | self methodRecategorized: ann ]) } asDictionary keysAndValuesDo: [ :announcement :block |
-		systemAnnouncer weak
+		self systemAnnouncer weak
 			when: announcement
 			do: [ :ann | "During the tests, we should only log with Epicea if the test case declare it wants logging."
 				(CurrentExecutionEnvironment value isTest and: [ CurrentExecutionEnvironment value testCase shouldLogWithEpicea not ]) ifFalse: [ block value: ann ] ]
 			for: self ]
+]
+
+{ #category : 'private' }
+EpMonitor >> systemAnnouncer [
+
+	^ self class codeChangeAnnouncer
 ]
 
 { #category : 'private' }

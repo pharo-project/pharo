@@ -46,8 +46,7 @@ RBRenamePackageChange >> printOn: aStream [
 	aStream
 		nextPutAll: oldName;
 		nextPutAll: ' renameTo: ';
-		print: newName;
-		nextPut: $!
+		print: newName
 ]
 
 { #category : 'instance creation' }

@@ -76,23 +76,6 @@ RBMethodNode >> firstPcForNode: aNode [
 ]
 
 { #category : '*OpalCompiler-Core' }
-RBMethodNode >> generate [
-
-	self deprecated: 'Use generateMethod. Beware that there are limitations so read the comments.' transformWith: '`@receiver generate' -> '`@receiver generateMethod'.
-
-	^ self generateMethod
-]
-
-{ #category : '*OpalCompiler-Core' }
-RBMethodNode >> generate: trailer [
-	self
-		deprecated: 'Use generateMethod'
-		transformWith: '`@receiver generate: `@argument'
-			-> '`@receiver generateMethod'.
-	^ self generateMethod
-]
-
-{ #category : '*OpalCompiler-Core' }
 RBMethodNode >> generateIR [
 	"Generate an IRMethod. See `ir` for the cached version."
 
@@ -131,13 +114,6 @@ RBMethodNode >> irInstruction [
 RBMethodNode >> lastPcForNode: aNode [
 
 	^ self bcToASTCache lastBcOffsetForNode: aNode
-]
-
-{ #category : '*OpalCompiler-Core' }
-RBMethodNode >> method [
-	
-	self deprecated: 'use compiledMethod' transformWith: '`@recv method' -> '`@recv compiledMethod'.
-	^ self compiledMethod
 ]
 
 { #category : '*OpalCompiler-Core' }
@@ -206,4 +182,10 @@ RBMethodNode >> primitiveFromPragma [
 { #category : '*OpalCompiler-Core' }
 RBMethodNode >> sourceNodeForPC: anInteger [
 	^ self bcToASTCache nodeForPC: anInteger
+]
+
+{ #category : '*OpalCompiler-Core' }
+RBMethodNode >> sourceNodeForPC: anInteger usingBcToASTCache: aBcToASTCache [
+
+	^ aBcToASTCache nodeForPC: anInteger
 ]

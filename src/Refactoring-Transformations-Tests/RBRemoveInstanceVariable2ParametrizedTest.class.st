@@ -9,16 +9,23 @@ Class {
 { #category : 'tests' }
 RBRemoveInstanceVariable2ParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBRemoveInstanceVariableRefactoring .
+		addCase: { #rbClass -> ReRemoveInstanceVariableRefactoring .
 					  #constructor -> #variable:class: };
 		yourself
+]
+
+{ #category : 'running' }
+RBRemoveInstanceVariable2ParametrizedTest >> setUp [
+
+	super setUp.
+	model := self modelOnClasses: { RBLintRuleTestData }
 ]
 
 { #category : 'failure tests' }
 RBRemoveInstanceVariable2ParametrizedTest >> testFailureNonExistantName [
 
 	self shouldFail:
-		(self createRefactoringWithArguments:
+		(self createRefactoringWithModel: model andArguments:
 			 { 'name1'. #RBLintRuleTestData })
 ]
 
@@ -26,7 +33,7 @@ RBRemoveInstanceVariable2ParametrizedTest >> testFailureNonExistantName [
 RBRemoveInstanceVariable2ParametrizedTest >> testRemoveLocallyDefinedInstanceVariable [
 
 	| refactoring class |
-	refactoring := self createRefactoringWithArguments: {#foo1 . #RBLintRuleTestData}.
+	refactoring := self createRefactoringWithModel: model andArguments: {#foo1 . #RBLintRuleTestData}.
 	class := refactoring model classNamed: #RBLintRuleTestData.
 	self assert: (class definesInstanceVariable: #foo1).
 
@@ -63,7 +70,8 @@ RBRemoveInstanceVariable2ParametrizedTest >> testRemoveNonLocalInstanceVariableP
 
 	refactoring := self createRefactoringWithModel: model andArguments: { #foo1. #ObjectSubsubclass }.
 
-	self deny: refactoring preconditions check.
+	self should: [ refactoring checkPreconditions ]
+		raise: RBRefactoringError, RBRefactoringWarning.
 	self should: [ self executeRefactoring: refactoring ] raise: refactoring refactoringErrorClass.
 
 	self deny: (subsubclass directlyDefinesInstanceVariable: #foo1).
@@ -74,7 +82,7 @@ RBRemoveInstanceVariable2ParametrizedTest >> testRemoveNonLocalInstanceVariableP
 { #category : 'failure tests' }
 RBRemoveInstanceVariable2ParametrizedTest >> testShouldWarnWhenVariableReferenced [
 
-	self shouldWarn: (self createRefactoringWithArguments:  { 'name'. #RBLintRuleTestData })
+	self shouldWarn: (self createRefactoringWithModel: model andArguments:  { 'name'. #RBLintRuleTestData })
 ]
 
 { #category : 'tests' }
@@ -93,7 +101,8 @@ RBRemoveInstanceVariable2ParametrizedTest >> testVerifyPreconditionWhenRemoveLoc
 	self assert: (class directlyDefinesInstanceVariable: #foo1).
 
 	refactoring := self createRefactoringWithModel: model andArguments: { #foo1. #ObjectSubclass }.
-	self assert: refactoring preconditions check.
+	self shouldnt: [ refactoring checkPreconditions ]
+		raise: RBRefactoringError, RBRefactoringWarning.
 
 	self executeRefactoring: refactoring.
 

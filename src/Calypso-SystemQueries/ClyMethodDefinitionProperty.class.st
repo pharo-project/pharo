@@ -26,6 +26,7 @@ Class {
 
 { #category : 'instance creation' }
 ClyMethodDefinitionProperty class >> of: aMethod [
+	"Answer a <ClyMethodDefinitionProperty>."
 
 	| methodPackage methodClass |
 	methodClass := aMethod origin.

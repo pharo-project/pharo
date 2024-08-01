@@ -6,6 +6,12 @@ Class {
 	#tag : 'Directives'
 }
 
+{ #category : 'visiting' }
+MetacelloPostLoadDirective >> acceptVisitor: aTarget [
+	
+	aTarget visitPostLoadDirective: self
+]
+
 { #category : 'actions' }
 MetacelloPostLoadDirective >> addTo: aLoaderDirective [
 
@@ -16,12 +22,6 @@ MetacelloPostLoadDirective >> addTo: aLoaderDirective [
 MetacelloPostLoadDirective >> label [
 
 	^super label, ' >> ', self spec postLoadDoIt value asString
-]
-
-{ #category : 'actions' }
-MetacelloPostLoadDirective >> loadUsing: aLoaderDirective gofer: aGofer [
-
-	aLoaderDirective loadPostloadDirective: self.
 ]
 
 { #category : 'accessing' }

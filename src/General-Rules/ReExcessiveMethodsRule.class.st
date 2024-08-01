@@ -10,14 +10,29 @@ The defined number of methods can be edited in #methodsCount.
 Class {
 	#name : 'ReExcessiveMethodsRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing' }
 ReExcessiveMethodsRule class >> checksClass [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReExcessiveMethodsRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+ReExcessiveMethodsRule class >> rationale [
+	^ 'Large classes are indications that the class may be trying to do too much.'
+]
+
+{ #category : 'accessing' }
+ReExcessiveMethodsRule class >> ruleName [
+	^ 'Excessive number of methods'
 ]
 
 { #category : 'accessing' }
@@ -32,22 +47,7 @@ ReExcessiveMethodsRule >> basicCheck: aClass [
 	^ aClass selectors size >= self methodsCount
 ]
 
-{ #category : 'accessing' }
-ReExcessiveMethodsRule >> group [
-	^ 'Design Flaws'
-]
-
 { #category : 'private' }
 ReExcessiveMethodsRule >> methodsCount [
 	^ 60
-]
-
-{ #category : 'accessing' }
-ReExcessiveMethodsRule >> name [
-	^ 'Excessive number of methods'
-]
-
-{ #category : 'accessing' }
-ReExcessiveMethodsRule >> rationale [
-	^ 'Large classes are indications that the class may be trying to do too much.'
 ]

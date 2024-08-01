@@ -14,14 +14,14 @@ Class {
 
 { #category : 'drawing' }
 MenubarItemMorph >> drawIconOn: aCanvas [
-	| iconForm x y |
+	| toggledIconFormSet x y |
 	self hasIcon ifFalse: [ ^ self ].
 
-	iconForm := self iconForm.
-	x := (self menuStringBounds left - iconForm width - 5 ).
-	y := (self top + ((self height - iconForm height) // 2)).
+	toggledIconFormSet := self toggledIconFormSet.
+	x := (self menuStringBounds left - toggledIconFormSet width - 5 ).
+	y := (self top + ((self height - toggledIconFormSet height) // 2)).
 
-	aCanvas translucentImage: iconForm at: x @ y
+	aCanvas translucentFormSet: toggledIconFormSet at: x @ y
 ]
 
 { #category : 'drawing' }

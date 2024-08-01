@@ -1,6 +1,6 @@
 "
 Usage: perform <global> <messageSelector>  [ <arguments> ] [ --save ]
-	global	A class name or a global name. Receiver of the message (e.g. Smalltalk)
+	global	            A class name or a global name. Receiver of the message (e.g. Smalltalk)
 	messageSelector   The message selector to be perfomed
 	
 Documentation:
@@ -8,8 +8,6 @@ Performs a message on a given class or global object. This command-line handler 
 
 Examples:
 	pharo Pharo.image perform Smalltalk garbageCollect --save
-	pharo Pharo.image perform PerformMessageCommandLineHandler printReversed:times:  olleH 10
-
 "
 Class {
 	#name : 'PerformMessageCommandLineHandler',
@@ -17,12 +15,6 @@ Class {
 	#category : 'PerformMessageCommandLineHandler',
 	#package : 'PerformMessageCommandLineHandler'
 }
-
-{ #category : 'testing' }
-PerformMessageCommandLineHandler class >> answerUltimateQuestion [
-
-	Smalltalk exit: 42
-]
 
 { #category : 'accessing' }
 PerformMessageCommandLineHandler class >> commandName [
@@ -34,16 +26,9 @@ PerformMessageCommandLineHandler class >> description [
 	^ 'Perform given message on a specified class or global'
 ]
 
-{ #category : 'testing' }
-PerformMessageCommandLineHandler class >> printReversed: aString times: aStringWithNumber [
-
-	aStringWithNumber asInteger timesRepeat: [
-		Stdio stdout nextPutAll: aString reversed; lf. ]
-]
-
 { #category : 'activation' }
 PerformMessageCommandLineHandler >> activate [
-	| aClass aMessage arguments messageArguments |
+	| aClass aMessage arguments messageArguments result |
 	self activateHelp
 		ifTrue: [ ^ self ].
 
@@ -57,7 +42,10 @@ PerformMessageCommandLineHandler >> activate [
 	aMessage := arguments second asSymbol.
 	messageArguments := (arguments allButFirst: 2) asArray.
 
-	aClass perform: aMessage withArguments: messageArguments.
+	result := aClass perform: aMessage withArguments: messageArguments.
+	self stdout
+		print: result;
+		lf.
 
 	(self hasOption: 'save')
 		ifTrue: [ Smalltalk snapshot: true andQuit: false ].

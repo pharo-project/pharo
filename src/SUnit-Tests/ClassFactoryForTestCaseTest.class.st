@@ -75,8 +75,7 @@ ClassFactoryForTestCaseTest >> testPackageCleanUp [
 	self assert: (factory createdClasses allSatisfy: [ :class | class isObsolete ]).
 	allClasses := self environment allClasses.
 	self assert: (factory createdClasses noneSatisfy: [ :class | allClasses includes: class ]).
-	self assertEmpty: (self organization packages select: [ :package | package name beginsWith: factory packageName ]).
-	self class environment at: #ChangeSet ifPresent: [ :changeSet | self deny: (changeSet current changedClassNames includesAnyOf: createdClassNames) ]
+	self assertEmpty: (self organization packages select: [ :package | package name beginsWith: factory packageName ])
 ]
 
 { #category : 'testing' }
@@ -86,8 +85,8 @@ ClassFactoryForTestCaseTest >> testSingleClassCreation [
 	class := factory make: [ :aBuilder |
 		         aBuilder
 			         superclass: Object;
-			         slotsFromString: 'a b c';
-			         sharedVariablesFromString: 'X Y';
+			         slots: #(a b c);
+			         sharedVariables: #(X Y);
 			         tag: factory tagName ].
 	self assert: (self environment allClasses includes: class).
 	self assert: class package name equals: factory packageName.

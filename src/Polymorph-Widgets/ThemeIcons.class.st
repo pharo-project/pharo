@@ -177,7 +177,7 @@ ThemeIcons class >> settingsOn: aBuilder [
 ThemeIcons class >> uiFetchPacks [
 	| choosenPacks remotePacks |
 
-	UIManager default
+	MorphicUIManager new
 		informUser: 'Retrieving available packs from remote repository'
 		during: [ remotePacks := self fetchPacks ].
 
@@ -188,7 +188,7 @@ ThemeIcons class >> uiFetchPacks [
 		title: 'Remote available icon packs')
 		chooseFromOwner: self currentWorld.
 	choosenPacks ifNil: [ ^ self ].
-	UIManager default informUserDuring: [ :bar |
+	MorphicUIManager new informUserDuring: [ :bar |
 		choosenPacks do: [ :each |
 			bar label: 'Retrieving "', each name, '" icon set from remote repository'.
 			each downloadFromUrl ]]
@@ -315,7 +315,10 @@ ThemeIcons >> iconFormSetNamed: aSymbol [
 				ifTrue: [
 					self crTrace: (aSymbol, ' icon not found!').
 					self notFoundIconFormSet ]
-				ifFalse: [ self blankIconFormSet ]])
+				ifFalse: [
+					aSymbol ~= #blank
+						ifTrue: [ self blankIconFormSet ]
+						ifFalse: [ FormSet form: (Form extent: 0@0) ]]])
 ]
 
 { #category : 'accessing' }
@@ -372,12 +375,20 @@ ThemeIcons >> loadIconsFromUrl [
 
 { #category : 'loading' }
 ThemeIcons >> loadIconsFromUrlUsingScale: newScale [
-	| newIconsPerScale zipArchive |
+	| newIconsPerScale zipArchive zipContent |
 
 	newIconsPerScale := Dictionary new.
 	zipArchive := self downloadFromUrl.
 
-	((FileSystem zip: zipArchive) open workingDirectory allChildrenMatching: 'png-scale*') do: [ :directory |
+	zipContent := (FileSystem zip: zipArchive) open workingDirectory.
+
+	"If it has the old icon pack structure we handle as they don't have multiple sizes"
+	(zipContent allChildrenMatching: 'icons') 
+		ifNotEmpty: [ 
+			scale := 1.
+			^ self loadIconsOldIconSetsFrom: zipContent ].
+
+	(zipContent allChildrenMatching: 'png-scale*') do: [ :directory |
 		| newIcons |
 		newIconsPerScale
 			at: (Float readFrom: (directory basename copyFrom: 10 to: directory basename size))
@@ -393,6 +404,25 @@ ThemeIcons >> loadIconsFromUrlUsingScale: newScale [
 		icons at: #notFound ifAbsentPut: [ Color red iconOrThumbnailOfSize: 16 * iconsScale ] ].
 	iconsPerScale := newIconsPerScale.
 	scale := newScale
+]
+
+{ #category : 'loading' }
+ThemeIcons >> loadIconsOldIconSetsFrom: zipContent [ 
+
+	| newIcons |
+	newIcons := IdentityDictionary new.
+	
+	(zipContent allChildrenMatching: '*.png')
+		reject: [ :each | each base beginsWith: '.' ]
+		thenDo: [ :each | 
+			[ newIcons 	
+				at: each base asSymbol
+				put: (self readPNGFrom: each) ]
+			on: Error do: [ :e | self crTrace: each fullName, ' not a PNG, skipping.'  ]].
+
+	iconsPerScale := Dictionary new
+	   at: 1.0 put: newIcons;
+	   yourself
 ]
 
 { #category : 'accessing' }

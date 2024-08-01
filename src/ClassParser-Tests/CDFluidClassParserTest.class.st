@@ -379,25 +379,80 @@ CDFluidClassParserTest >> testTraitSequence [
 	self assert: def traitDefinition sequence first name equals: #MyTrait
 ]
 
-{ #category : 'tests - (r) slots' }
-CDFluidClassParserTest >> testUnrestrictedSlots [
+{ #category : 'tests - (r) class variables' }
+CDFluidClassParserTest >> testUnrestrictedClassVariable [
 
-	| parser defString def slot |
+	| orginalSetting parser defString def |
+	orginalSetting := CDFluidClassDefinitionParser unrestrictedVariableDefinitions.
+	CDFluidClassDefinitionParser unrestrictedVariableDefinitions: true.
 	parser := self classDefinitionParserClass new.
-	
-	"check that we can experiment with if we enable the setting"
-	self classDefinitionParserClass  unrestrictedVariableDefinitions: true.
-	
+
 	defString := 'Object << #MyObject
-		slots: { Slot named: #slotName  };
+		sharedVariables: { ClassVariable named: #A };
 		package: #MyPackage'.
 	def := parser parse: defString.
-	slot := def slots first.
-	self assert: slot name equals: #slotName. 
-	self assert: slot variableClassName equals: #Slot.
-	self classDefinitionParserClass  unrestrictedVariableDefinitions: false.
-	"if it is the default false, we do no allow it"
-	self should: [ 	def := parser parse: defString ] raise: Error
+	self assert: def sharedVariables first class equals: CDSharedVariableNode.
+	self assert: def sharedVariables first name equals: #A.
+	self assert: def sharedVariables first variableClassName equals: #ClassVariable.
+	CDFluidClassDefinitionParser unrestrictedVariableDefinitions: orginalSetting
+]
+
+{ #category : 'tests - (r) class variables' }
+CDFluidClassParserTest >> testUnrestrictedClassVariableSimple [
+
+	| orginalSetting parser defString def |
+	orginalSetting := CDFluidClassDefinitionParser unrestrictedVariableDefinitions.
+	CDFluidClassDefinitionParser unrestrictedVariableDefinitions: true.
+	parser := self classDefinitionParserClass new.
+
+	defString := 'Object << #MyObject
+		sharedVariables: { #A };
+		package: #MyPackage'.
+	def := parser parse: defString.
+	self assert: def sharedVariables first class equals: CDSharedVariableNode.
+	self assert: def sharedVariables first name equals: #A.
+	self assert: def sharedVariables first variableClassName equals: #ClassVariable.
+	CDFluidClassDefinitionParser unrestrictedVariableDefinitions: orginalSetting
+]
+
+{ #category : 'tests - (r) slots' }
+CDFluidClassParserTest >> testUnrestrictedSlot [
+
+	| orginalSetting parser defString def |
+	orginalSetting := CDFluidClassDefinitionParser unrestrictedVariableDefinitions.
+	CDFluidClassDefinitionParser unrestrictedVariableDefinitions: true.
+	parser := self classDefinitionParserClass new.
+
+	defString := 'Object << #MyObject
+		slots: { InstanceVariableSlot named: #a. #b };
+		package: #MyPackage'.
+	def := parser parse: defString.
+	self assert: def slots size equals: 2.
+	self assert: def slots first name equals: #a.
+	self assert: def slots second name equals: #b.
+	self assert: def slots first variableClassName equals: #InstanceVariableSlot.
+	self assert: def slots second variableClassName equals: #InstanceVariableSlot.
+	CDFluidClassDefinitionParser unrestrictedVariableDefinitions: orginalSetting
+]
+
+{ #category : 'tests - (r) slots' }
+CDFluidClassParserTest >> testUnrestrictedSlotsSimple [
+
+	| orginalSetting parser defString def |
+	orginalSetting := CDFluidClassDefinitionParser unrestrictedVariableDefinitions.
+	CDFluidClassDefinitionParser unrestrictedVariableDefinitions: true.
+	parser := self classDefinitionParserClass new.
+
+	defString := 'Object << #MyObject
+		slots: { #a. #b };
+		package: #MyPackage'.
+	def := parser parse: defString.
+	self assert: def slots size equals: 2.
+	self assert: def slots first name equals: #a.
+	self assert: def slots second name equals: #b.
+	self assert: def slots first variableClassName equals: #InstanceVariableSlot.
+	self assert: def slots second variableClassName equals: #InstanceVariableSlot.
+	CDFluidClassDefinitionParser unrestrictedVariableDefinitions: orginalSetting
 ]
 
 { #category : 'tests - (r) kinds' }

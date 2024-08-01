@@ -4,7 +4,7 @@ I support the general protocol for listing files in a remote repository.
 "
 Class {
 	#name : 'MCHttpRepository',
-	#superclass : 'MCFileBasedRepository',
+	#superclass : 'MCRemoteFileBasedRepository',
 	#instVars : [
 		'location',
 		'user',
@@ -35,23 +35,6 @@ MCHttpRepository class >> basicFromUrl: aZnUrl [
 MCHttpRepository class >> clearPasswords [
 	self allSubInstancesDo: [:ea | ea password: ''].
 
-]
-
-{ #category : 'creation template' }
-MCHttpRepository class >> creationTemplate [
-	^self creationTemplateLocation: self baseURL
-		user: ''
-		password: ''
-
-]
-
-{ #category : 'creation template' }
-MCHttpRepository class >> creationTemplateLocation: location user: user password: password [
-	^
-self name, '
-	location: {1}
-	user: {2}
-	password: {3}' format: {location printString. user printString. password printString}
 ]
 
 { #category : 'accessing' }
@@ -116,11 +99,6 @@ MCHttpRepository class >> urlSchemes [
 	^ #(http https)
 ]
 
-{ #category : 'converting' }
-MCHttpRepository >> asCreationTemplate [
-	^self class creationTemplateLocation: self location user: user password: password
-]
-
 { #category : 'private' }
 MCHttpRepository >> assertBinaryResponse: response [ 
 
@@ -138,10 +116,8 @@ MCHttpRepository >> assertNonBinaryResponse: response [
 MCHttpRepository >> cacheRawVersionNamed: aString stream: contents [
 	"directly forward the contents to the cache repository. 
 	this avoids and unnecessary serialization step"
-	MCCacheRepository uniqueInstance 
-		writeStreamForFileNamed: aString 
-		replace: true 
-		do: [ :s| s nextPutAll: contents ]
+
+	MCCacheRepository uniqueInstance writeStreamWithReplacingForFileNamed: aString do: [ :s | s nextPutAll: contents ]
 ]
 
 { #category : 'accessing' }
@@ -162,25 +138,26 @@ MCHttpRepository >> description [
 
 { #category : 'i/o' }
 MCHttpRepository >> displayProgress: label during: workBlock [
+
 	| nextUpdateTime |
 	nextUpdateTime := 0.
-	^UIManager default displayProgress: label 
-		from: 0.0 to: 1.0 during:[:bar|
-			[workBlock value] on: HTTPProgress do:[:ex|
-				(ex total == nil or: [ex amount == nil]) ifFalse:[
-					(nextUpdateTime < Time millisecondClockValue 
-						or:[ex total = ex amount]) ifTrue:[
-							bar current: ex amount asFloat / ex total asFloat.
-							nextUpdateTime := Time millisecondClockValue + 100.
-					].
-				].
-				ex resume.
-			]
-		].
-
+	^ [ :bar |
+		  [ workBlock value ]
+		  on: HTTPProgress
+		  do: [ :ex |
+			  (ex total isNil or: [ ex amount isNil ]) ifFalse: [
+					  (nextUpdateTime < Time millisecondClockValue or: [
+							   ex total = ex amount ]) ifTrue: [
+							  bar current: ex amount asFloat / ex total asFloat.
+							  nextUpdateTime := Time millisecondClockValue + 100 ] ].
+			  ex resume ] ] asJob
+		  title: label;
+		  min: 0.0;
+		  max: 1.0;
+		  run
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 MCHttpRepository >> displayStringOn: aStream [
 	aStream nextPutAll: self location
 ]
@@ -275,24 +252,14 @@ MCHttpRepository >> parseFileNamesFromStream: aStream [
 
 { #category : 'actions' }
 MCHttpRepository >> password [
-	self userAndPasswordFromSettingsDo: [:usr :pwd | ^pwd].
 
-	self user isEmpty ifTrue: [^password ifNil: ['']].
+	self userAndPasswordFromSettingsDo: [ :usr :pwd | ^ pwd ].
+
+	self user isEmpty ifTrue: [ ^ password ifNil: [ '' ] ].
 
 	password isEmptyOrNil ifTrue: [
-		| answer |
-		user isEmptyOrNil ifTrue: [
-			"Give the user a chance to change the login"
-			answer := UIManager default request: 'User name for ', String cr, location
-				initialAnswer: ''.
-			answer isEmptyOrNil
-				ifTrue: [^password]
-				ifFalse: [self user: answer] ].
-		
-		password := UIManager default requestPassword: 'Password for "', self user, '" at ', String cr, self location.
-		"The user doesn't care about logging into this repo. Clear the username so they will not be prompted every time"
-		password isEmptyOrNil ifTrue: [ user := '' ].
-	].
+		user isEmptyOrNil ifTrue: [ ^ password ].
+		password isEmptyOrNil ifTrue: [ user := '' ] ].
 
 	^ password
 ]
@@ -407,16 +374,16 @@ MCHttpRepository >> versionReaderForFileNamed: aString do: aBlock [
 ]
 
 { #category : 'i/o' }
-MCHttpRepository >> writeStreamForFileNamed: aString replace: ignoreBoolean do: aBlock [
+MCHttpRepository >> writeStreamForFileNamed: aString do: aBlock [
+
 	| entity |
 	entity := self entityStreamContents: aBlock.
-	self displayProgress: 'Uploading ', aString during: [
+	self displayProgress: 'Uploading ' , aString during: [
 		self httpClient
 			entity: entity;
-			ifFail: [ :exception | 
-				(exception isKindOf: ZnHttpUnsuccessful) 
-					ifTrue: [ ^ self handleUnsuccessfulResponse: exception response ].
-				self error: 'Could not save ', aString, ': ', exception printString ];
+			ifFail: [ :exception |
+				(exception isKindOf: ZnHttpUnsuccessful) ifTrue: [ ^ self handleUnsuccessfulResponse: exception response ].
+				self error: 'Could not save ' , aString , ': ' , exception printString ];
 			url: (self urlForFileNamed: aString);
 			put ]
 ]

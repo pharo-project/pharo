@@ -160,6 +160,14 @@ RBClassDataForRefactoringTest >> demoMethodWithDuplicatesInBlocks [
 ]
 
 { #category : 'tests' }
+RBClassDataForRefactoringTest >> demoMethodWithDuplicatesInEarlierBlocks [
+
+	(3 to: 10) do: [ :i |
+		self someMethod \\ i = 0 ifTrue: [ self performAction: i ] ].
+	self someMethod odd ifTrue: [ self performAction ]
+]
+
+{ #category : 'tests' }
 RBClassDataForRefactoringTest >> demoRenameMethod: arg1 PermuteArgs: arg2 [
 	self do: arg1.
 	self do: arg2.
@@ -524,7 +532,7 @@ RBClassDataForRefactoringTest >> sendsDifferentSuper [
 { #category : 'lint' }
 RBClassDataForRefactoringTest >> sizeCheck [
 
-	self isEmpty 
+	self isEmpty
 		ifFalse: [ self do: [ :each | each traceCr ] ]
 ]
 

@@ -4,14 +4,24 @@ Classes that use traits with explicit requirement methods should either implemen
 Class {
 	#name : 'ReExplicitRequirementMethodsRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'testing' }
 ReExplicitRequirementMethodsRule class >> checksClass [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReExplicitRequirementMethodsRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
+ReExplicitRequirementMethodsRule class >> ruleName [
+	^ 'Explicit requirement methods'
 ]
 
 { #category : 'accessing' }
@@ -40,14 +50,4 @@ ReExplicitRequirementMethodsRule >> check: aClass forCritiquesDo: aCritiqueBlock
 					((self critiqueFor: aClass)
 						tinyHint: method selector;
 						yourself) ]
-]
-
-{ #category : 'accessing' }
-ReExplicitRequirementMethodsRule >> group [
-	^ 'Coding Idiom Violation'
-]
-
-{ #category : 'accessing' }
-ReExplicitRequirementMethodsRule >> name [
-	^ 'Explicit requirement methods'
 ]

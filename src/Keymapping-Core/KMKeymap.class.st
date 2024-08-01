@@ -85,7 +85,7 @@ KMKeymap >> description: aDescription [
 	description := aDescription asString
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 KMKeymap >> displayStringOn: aStream [
 	aStream
 		nextPutAll: self name displayString;
@@ -102,7 +102,7 @@ KMKeymap >> executeActionTargetting: target [
 
 { #category : 'accessing' }
 KMKeymap >> hasName [
-	^name notNil
+	^name isNotNil
 ]
 
 { #category : 'comparing' }

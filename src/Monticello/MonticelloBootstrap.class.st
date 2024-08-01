@@ -104,7 +104,7 @@ MonticelloBootstrap >> fileNameForPackageNamed: name [
 { #category : 'bootstrapping' }
 MonticelloBootstrap >> loadBootstrapPackageNamed: aName [
 
-	self loadBootstrapPackagesNamed: { aName }
+	(self bootstrapVersionsSatisfying: [ :package | aName = package name ]) do: [ :version | self loadPackageVersion: version ]
 ]
 
 { #category : 'bootstrapping' }
@@ -121,13 +121,6 @@ MonticelloBootstrap >> loadBootstrapPackages [
 	"We load lastly monticello because we are using it to reload itself.
 	Othewise, we should handle the case that after loading monticello we should return to a safe place from the stack where no old methods or classes are used."
 	self loadBootstrapPackageNamed: 'Monticello'
-]
-
-{ #category : 'bootstrapping' }
-MonticelloBootstrap >> loadBootstrapPackagesNamed: aCollectionOfNames [
-
-	(self bootstrapVersionsSatisfying: [ :package | aCollectionOfNames includes: package name ])
-		do: [ :version | self loadPackageVersion: version ].
 ]
 
 { #category : 'bootstrapping' }

@@ -8,10 +8,20 @@ See the method RBMessageNode>>#isInlineIf for the exact implementation of the ch
 Class {
 	#name : 'ReNotOptimizedIfRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
+
+{ #category : 'accessing' }
+ReNotOptimizedIfRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
+ReNotOptimizedIfRule class >> ruleName [
+	^ 'ifTrue: ifFalse: ifTrue:ifFalse: ifFalse:ifTrue: is used in a way that it can not be optimized'
+]
 
 { #category : 'running' }
 ReNotOptimizedIfRule >> check: aNode forCritiquesDo: aBlock [
@@ -19,14 +29,4 @@ ReNotOptimizedIfRule >> check: aNode forCritiquesDo: aBlock [
 	(#(ifTrue: ifFalse: ifTrue:ifFalse: ifFalse:ifTrue:) includes: aNode selector) ifFalse: [^ self].
 	aNode isInlineIf ifFalse: [
 		aBlock cull: (self critiqueFor: aNode) ]
-]
-
-{ #category : 'accessing' }
-ReNotOptimizedIfRule >> group [
-	^ 'Optimization'
-]
-
-{ #category : 'accessing' }
-ReNotOptimizedIfRule >> name [
-	^ 'ifTrue: ifFalse: ifTrue:ifFalse: ifFalse:ifTrue: is used in a way that it can not be optimized'
 ]

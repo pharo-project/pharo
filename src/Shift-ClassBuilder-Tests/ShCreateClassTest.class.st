@@ -88,7 +88,7 @@ ShCreateClassTest >> testEmptyClass [
 ShCreateClassTest >> testSharedPool [
 	builder name: #SHClassWithSharedPool.
 	result := builder
-		sharedPools: 'ShTestSharedPool';
+		sharedPools: #(ShTestSharedPool);
 		build.
 
 	self validateResult.
@@ -112,30 +112,12 @@ ShCreateClassTest >> testSharedVariables [
 ShCreateClassTest >> testSharedVariablesAsArray [
 	builder name: #SHClassWithSharedVariable.
 	result := builder
-		sharedVariablesFromString: #(aSharedVariable);
+		sharedVariables: #(aSharedVariable);
 		build.
 
 	self validateResult.
 	self validateSuperclass: Object.
 	self validateSharedVariables: #(aSharedVariable)
-]
-
-{ #category : 'tests' }
-ShCreateClassTest >> testSharedVariablesAsString [
-	builder name: #SHClassWithSharedVariable.
-	result := builder
-		sharedVariablesFromString: 'aSharedVariable';
-		build.
-
-	self validateResult.
-	self validateSuperclass: Object.
-	self validateSharedVariables: #(aSharedVariable)
-]
-
-{ #category : 'tests' }
-ShCreateClassTest >> testSharedVariablesWithSlot [
-	builder name: #SHClassWithSharedVariable.
-	self should: [ builder sharedVariablesFromString: {#aSharedVariable asSlot} ] raise: Error
 ]
 
 { #category : 'tests' }

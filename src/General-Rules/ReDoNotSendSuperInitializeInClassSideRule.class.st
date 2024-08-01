@@ -14,33 +14,26 @@ ZnServer class>>initialize
 Class {
 	#name : 'ReDoNotSendSuperInitializeInClassSideRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
+
+{ #category : 'accessing' }
+ReDoNotSendSuperInitializeInClassSideRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+ReDoNotSendSuperInitializeInClassSideRule class >> ruleName [
+	^ 'Class-side #initialize should not send "super initialize".'
+]
 
 { #category : 'accessing' }
 ReDoNotSendSuperInitializeInClassSideRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'DoNotSendSuperInitializeInClassSideRule'
-]
-
-{ #category : 'hooks' }
-ReDoNotSendSuperInitializeInClassSideRule >> afterCheck: aNode mappings: mappingDict [
-
-	aNode methodNode ifNotNil: [ :methNode |
-		methNode compiledMethod ifNotNil: [ :method |
-			(method selector = #initialize and: [
-			method methodClass isMeta ])
-				ifTrue: [ ^ true ] ] ].
-
-	^ false
-]
-
-{ #category : 'accessing' }
-ReDoNotSendSuperInitializeInClassSideRule >> group [
-	^ 'Potential Bugs'
 ]
 
 { #category : 'initialization' }
@@ -51,7 +44,8 @@ ReDoNotSendSuperInitializeInClassSideRule >> initialize [
 		with: ''
 ]
 
-{ #category : 'accessing' }
-ReDoNotSendSuperInitializeInClassSideRule >> name [
-	^ 'Class-side #initialize should not send "super initialize".'
+{ #category : 'testing' }
+ReDoNotSendSuperInitializeInClassSideRule >> shouldCheckMethod: aMethod [
+
+	^ aMethod selector = #initialize and: [ aMethod methodClass isMeta ]
 ]

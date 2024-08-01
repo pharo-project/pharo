@@ -42,8 +42,6 @@ ClyClassDefinitionEditorToolMorph >> applyChangesAsClassDefinition [
 		            startingFrom: editingClass.
 
 	newClass ifNil: [ ^ false ].
-
-	editingClass == newClass ifFalse: [ self removeFromBrowser ].
 	browser selectClass: newClass.
 	^ true
 ]
@@ -75,8 +73,6 @@ ClyClassDefinitionEditorToolMorph >> applyChangesAsOldClassDefinition: ast [
 	newClass := OldClassDefinitionBuilder buildFromAST: ast.
 
 	newClass ifNil: [ ^ false ].
-
-	editingClass == newClass ifFalse: [ self removeFromBrowser ].
 	browser selectClass: newClass.
 	^ true
 ]
@@ -102,7 +98,9 @@ ClyClassDefinitionEditorToolMorph >> decorateContainerTab [
 
 { #category : 'initialization' }
 ClyClassDefinitionEditorToolMorph >> defaultIconName [
-	^#class
+
+	self editingClass isTrait ifTrue: [ ^ #trait ].
+	^ #class
 ]
 
 { #category : 'to sort' }

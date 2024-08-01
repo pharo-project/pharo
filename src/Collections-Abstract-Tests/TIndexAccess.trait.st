@@ -90,6 +90,33 @@ TIndexAccess >> testIndexOfIfAbsent [
 ]
 
 { #category : 'tests - index access' }
+TIndexAccess >> testIndexOfIfAbsentUsing [
+
+	| collection equalityComparisonBlock identityComparisonBlock |
+	collection := self collectionMoreThan1NoDuplicates.
+	equalityComparisonBlock := [ : a : b | a = b ].
+	identityComparisonBlock := [ : a : b | a == b ].
+
+	self assert: (collection
+			indexOf: collection first
+			ifAbsent: [ 33 ]
+			using: equalityComparisonBlock) equals: 1.
+	self assert: (collection
+			indexOf: self elementNotInForIndexAccessing
+			ifAbsent: [ 33 ]
+			using: equalityComparisonBlock) equals: 33.
+			
+	self assert: (collection
+			indexOf: collection first
+			ifAbsent: [ 33 ]
+			using: identityComparisonBlock) equals: 1.
+	self assert: (collection
+			indexOf: self elementNotInForIndexAccessing
+			ifAbsent: [ 33 ]
+			using: identityComparisonBlock) equals: 33
+]
+
+{ #category : 'tests - index access' }
 TIndexAccess >> testIndexOfStartingAt [
 
 	| element collection |
@@ -127,6 +154,47 @@ TIndexAccess >> testIndexOfStartingAtIfAbsent [
 			indexOf: self elementNotInForIndexAccessing
 			startingAt: 1
 			ifAbsent: [ 99 ]) equals: 99
+]
+
+{ #category : 'tests - index access' }
+TIndexAccess >> testIndexOfStartingAtIfAbsentUsing [
+
+	| element collection equalityComparisonBlock identityComparisonBlock |
+	collection := self collectionMoreThan1NoDuplicates.
+	element := collection first.
+	equalityComparisonBlock := [ : a : b | a = b ].
+	identityComparisonBlock := [ : a : b | a == b ].
+	self assert: (collection
+			indexOf: element
+			startingAt: 2
+			ifAbsent: [ 99 ]
+			using: equalityComparisonBlock) equals: 99.
+	self assert: (collection
+			indexOf: element
+			startingAt: 1
+			ifAbsent: [ 99 ]
+			using: equalityComparisonBlock) equals: 1.
+	self assert: (collection
+			indexOf: self elementNotInForIndexAccessing
+			startingAt: 1
+			ifAbsent: [ 99 ]
+			using: equalityComparisonBlock) equals: 99.
+			
+	self assert: (collection
+			indexOf: element
+			startingAt: 2
+			ifAbsent: [ 99 ]
+			using: identityComparisonBlock) equals: 99.
+	self assert: (collection
+			indexOf: element
+			startingAt: 1
+			ifAbsent: [ 99 ]
+			using: identityComparisonBlock) equals: 1.
+	self assert: (collection
+			indexOf: self elementNotInForIndexAccessing
+			startingAt: 1
+			ifAbsent: [ 99 ]
+			using: identityComparisonBlock) equals: 99
 ]
 
 { #category : 'tests - index access' }

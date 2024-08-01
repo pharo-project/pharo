@@ -41,8 +41,18 @@ SlotClassVariableTest >> testClassVariableDoesNotDuplicatesSubclassesOfSuperclas
 		builder
 			name: self anotherClassName;
 			superclass: class1;
-			sharedVariablesFromString: 'ASharedVariable' ].
+			sharedVariables: #(ASharedVariable) ].
 	self assert: class1 subclasses equals: { class2 }
+]
+
+{ #category : 'tests' }
+SlotClassVariableTest >> testInitializedClassVariableUpdateClass [
+	
+	aClass := self make: [ :builder | builder sharedVariables: {#ClassVar => InitializedClassVariable default: 5}].
+
+	self assert: (aClass classVariableNamed: #ClassVar) default equals: 5.
+	aClass := self make: [ :builder | builder sharedVariables: {#ClassVar => InitializedClassVariable default: 4}].
+	self assert: (aClass classVariableNamed: #ClassVar) default equals: 4.
 ]
 
 { #category : 'tests' }

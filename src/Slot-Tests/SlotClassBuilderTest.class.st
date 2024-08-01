@@ -88,14 +88,14 @@ SlotClassBuilderTest >> slotTestPackageName [
 SlotClassBuilderTest >> tearDown [
 	"We remove the classes that could have been created during test run"
 
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
+	self class codeChangeAnnouncer suspendAllWhile: [
 		{
 			self aClassName.
 			self anotherClassName.
 			self yetAnotherClassName.
 			self yetYetAnotherClassName } do: [ :each | testingEnvironment at: each ifPresent: [ :class | class removeFromSystem ] ] ].
 
-	SystemAnnouncer uniqueInstance unsubscribe: self.
+	self class codeChangeAnnouncer unsubscribe: self.
 
 	self
 		cleanUpTrait: TOne;

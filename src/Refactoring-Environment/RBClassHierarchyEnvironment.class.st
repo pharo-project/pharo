@@ -57,3 +57,12 @@ RBClassHierarchyEnvironment >> includesClass: aClass [
 		[ (class inheritsFrom: aClass) or:
 			[ aClass inheritsFrom: class ] ]) and: [super includesClass: aClass]
 ]
+
+{ #category : 'printing' }
+RBClassHierarchyEnvironment >> storeOn: aStream [
+	aStream nextPut: $(.
+	super storeOn: aStream.
+	aStream nextPutAll: ' class: (('.
+	class storeOn: aStream.
+	aStream nextPutAll: ')))'
+]

@@ -6,21 +6,26 @@ Replaces at:ifAbsent: by at:ifAbsentPut:. Its leads to shorter and more readable
 Class {
 	#name : 'ReAtIfAbsentRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
+
+{ #category : 'accessing' }
+ReAtIfAbsentRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
+ReAtIfAbsentRule class >> ruleName [
+	^ 'at:ifAbsent: -> at:ifAbsentPut:'
+]
 
 { #category : 'accessing' }
 ReAtIfAbsentRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'AtIfAbsentRule'
-]
-
-{ #category : 'accessing' }
-ReAtIfAbsentRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'initialization' }
@@ -46,9 +51,4 @@ ReAtIfAbsentRule >> initialize [
 					ifAbsentPut: [| `@temps |
 							``@.Statements.
 							``@object]'
-]
-
-{ #category : 'accessing' }
-ReAtIfAbsentRule >> name [
-	^ 'at:ifAbsent: -> at:ifAbsentPut:'
 ]

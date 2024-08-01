@@ -26,6 +26,14 @@ ClyFullBrowserContext >> currentMetaLevelOf: aClass [
 ]
 
 { #category : 'selection-method groups' }
+ClyFullBrowserContext >> isExtensionMethodGroupSelected [
+
+	self isMethodGroupSelected ifFalse: [ ^ false ].
+
+	^ self selectedMethodGroupClass isBasedOnExtensions
+]
+
+{ #category : 'selection-method groups' }
 ClyFullBrowserContext >> isMethodGroupSelected [
 	^self selectedMethodGroupItems notEmpty
 ]

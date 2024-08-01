@@ -4,10 +4,30 @@ This smell arises when a breakpoint,  logging statement,  etc is found in a meth
 Class {
 	#name : 'ReCodeCruftLeftInMethodsRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Bugs'
 }
+
+{ #category : 'accessing' }
+ReCodeCruftLeftInMethodsRule class >> group [
+	^ 'Bugs'
+]
+
+{ #category : 'accessing' }
+ReCodeCruftLeftInMethodsRule class >> rationale [
+	^ 'Breakpoints, logging statements, etc. should not be left in production code.'
+]
+
+{ #category : 'accessing' }
+ReCodeCruftLeftInMethodsRule class >> ruleName [
+	^ 'Debugging code left in methods'
+]
+
+{ #category : 'accessing' }
+ReCodeCruftLeftInMethodsRule class >> severity [
+	^ #error
+]
 
 { #category : 'accessing' }
 ReCodeCruftLeftInMethodsRule class >> uniqueIdentifierName [
@@ -48,12 +68,7 @@ ReCodeCruftLeftInMethodsRule >> debuggingPatterns [
 { #category : 'private' }
 ReCodeCruftLeftInMethodsRule >> debuggingSelectors [
 
-	^ (Object allSelectorsInProtocol: 'flagging') , (Object allSelectorsInProtocol: 'debugging')
-]
-
-{ #category : 'accessing' }
-ReCodeCruftLeftInMethodsRule >> group [
-	^ 'Bugs'
+	^ Object allSelectorsInProtocol: 'flagging'
 ]
 
 { #category : 'private' }
@@ -65,21 +80,17 @@ ReCodeCruftLeftInMethodsRule >> haltPatterns [
 
 { #category : 'private' }
 ReCodeCruftLeftInMethodsRule >> haltSelectors [
+
 	| objectConvenience miscellaneous |
-	objectConvenience := Object allSelectorsInProtocol: #halting.
-	miscellaneous := #(inspectOnce).
-	^ objectConvenience, miscellaneous
+	objectConvenience := Object allSelectorsInProtocol: '*' , Halt package name.
+	miscellaneous := #( inspectOnce ).
+	^ objectConvenience , miscellaneous
 ]
 
 { #category : 'initialization' }
 ReCodeCruftLeftInMethodsRule >> initialize [
 	super initialize.
 	self patterns do: [ :halt | self addRuleRemoving: halt ]
-]
-
-{ #category : 'accessing' }
-ReCodeCruftLeftInMethodsRule >> name [
-	^ 'Debugging code left in methods'
 ]
 
 { #category : 'private' }
@@ -109,14 +120,4 @@ ReCodeCruftLeftInMethodsRule >> patternForKeywordSelector: selector [
 { #category : 'private' }
 ReCodeCruftLeftInMethodsRule >> patterns [
 	^ self debuggingPatterns, self haltPatterns
-]
-
-{ #category : 'accessing' }
-ReCodeCruftLeftInMethodsRule >> rationale [
-	^ 'Breakpoints, logging statements, etc. should not be left in production code.'
-]
-
-{ #category : 'accessing' }
-ReCodeCruftLeftInMethodsRule >> severity [
-	^ #error
 ]

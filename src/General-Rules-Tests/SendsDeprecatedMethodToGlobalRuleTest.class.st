@@ -5,8 +5,9 @@ Class {
 		'testClass',
 		'globalName'
 	],
-	#category : 'General-Rules-Tests',
-	#package : 'General-Rules-Tests'
+	#category : 'General-Rules-Tests-Design Flaws',
+	#package : 'General-Rules-Tests',
+	#tag : 'Design Flaws'
 }
 
 { #category : 'properties' }

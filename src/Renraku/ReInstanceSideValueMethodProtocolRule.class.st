@@ -4,19 +4,19 @@ Instance side #value method should be in 'evaluating' protocol
 Class {
 	#name : 'ReInstanceSideValueMethodProtocolRule',
 	#superclass : 'ReProperInstanceMethodProtocolRule',
-	#category : 'Renraku-Rules',
+	#category : 'Renraku-Clean Code',
 	#package : 'Renraku',
-	#tag : 'Rules'
+	#tag : 'Clean Code'
 }
 
-{ #category : 'accessing - defaults' }
-ReInstanceSideValueMethodProtocolRule >> protocolName [
+{ #category : 'accessing' }
+ReInstanceSideValueMethodProtocolRule class >> protocolName [
 
 	^ 'evaluating'
 ]
 
-{ #category : 'accessing - defaults' }
-ReInstanceSideValueMethodProtocolRule >> selector [
+{ #category : 'accessing' }
+ReInstanceSideValueMethodProtocolRule class >> selector [
 
 	^ #value
 ]

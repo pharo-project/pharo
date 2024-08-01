@@ -55,8 +55,8 @@ RBAddMessageSendTransformationTest >> testRefactoring [
 	refactoring := (RBAddMessageSendTransformation
 		                messageSend: 'variable byteAt: 1'
 		                inMethod: #methodBefore
-		                inClass: #RBAddMessageSendTransformationTest)
-		               generateChanges.
+		                inClass: #RBAddMessageSendTransformationTest).
+	refactoring generateChanges.
 
 	self assert: refactoring model changes changes size equals: 1.
 
@@ -74,7 +74,8 @@ RBAddMessageSendTransformationTest >> testTransform [
 	transformation := (RBAddMessageSendTransformation new
 		                   messageSend: 'variable byteAt: 1'
 		                   inMethod: #methodBefore
-		                   inClass: self class name) generateChanges.
+		                   inClass: self class name).
+	transformation generateChanges.
 
 	self assert: transformation model changes changes size equals: 1.
 

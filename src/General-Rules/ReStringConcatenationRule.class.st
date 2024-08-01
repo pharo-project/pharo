@@ -20,10 +20,20 @@ or more concisely...
 Class {
 	#name : 'ReStringConcatenationRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
+
+{ #category : 'accessing' }
+ReStringConcatenationRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
+ReStringConcatenationRule class >> ruleName [
+	^ 'String concatenation instead of streams'
+]
 
 { #category : 'accessing' }
 ReStringConcatenationRule class >> uniqueIdentifierName [
@@ -45,11 +55,6 @@ ReStringConcatenationRule >> afterCheck: aNode mappings: mappingDict [
 	^ false
 ]
 
-{ #category : 'accessing' }
-ReStringConcatenationRule >> group [
-	^ 'Optimization'
-]
-
 { #category : 'initialization' }
 ReStringConcatenationRule >> initialize [
 	super initialize.
@@ -65,11 +70,6 @@ ReStringConcatenationRule >> initialize [
 		'``@collection anySatisfy: ``@argument'
 		'``@collection allSatisfy: ``@argument'
 		'``@collection noneSatisfy: ``@argument' )
-]
-
-{ #category : 'accessing' }
-ReStringConcatenationRule >> name [
-	^ 'String concatenation instead of streams'
 ]
 
 { #category : 'hooks' }

@@ -23,7 +23,6 @@ CDClassDefinitionNode >> addSharedVariable: aCDSharedVariableNode [
 
 { #category : 'accessing' }
 CDClassDefinitionNode >> binding [
-	self trace: '.'.
 	^ self class environment associationAt: self className ifAbsent: [LiteralVariable key: nil value: self]
 ]
 
@@ -65,20 +64,14 @@ CDClassDefinitionNode >> packageNameNode [
 { #category : 'accessing' }
 CDClassDefinitionNode >> packageNameNode: aNode astNode: astNode [
 
-	packageNameNode := aNode.
+	packageNameNode := (CDPackageNode on: aNode) packageName: aNode value.
 	self addChild: aNode
-]
-
-{ #category : 'testing' }
-CDClassDefinitionNode >> selector [
-
-	^ tokens at: 2
 ]
 
 { #category : 'accessing' }
 CDClassDefinitionNode >> sharedPools [
-	sharedPools ifNil: [ self sharedPools: OrderedCollection new. ].
-	^sharedPools
+
+	^ sharedPools ifNil: [ sharedPools := OrderedCollection new ]
 ]
 
 { #category : 'accessing' }

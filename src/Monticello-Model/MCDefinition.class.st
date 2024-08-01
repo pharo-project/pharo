@@ -127,13 +127,6 @@ MCDefinition >> postloadOver: aDefinition [
 	self postload
 ]
 
-{ #category : 'annotations' }
-MCDefinition >> printAnnotations: requests on: aStream [
-	"Add a string for an annotation pane, trying to fulfill the browser annotationRequests."
-
-	aStream nextPutAll: 'not yet implemented'
-]
-
 { #category : 'printing' }
 MCDefinition >> printOn: aStream [
 	super printOn: aStream.

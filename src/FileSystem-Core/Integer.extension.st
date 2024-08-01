@@ -23,14 +23,3 @@ Integer >> humanReadableByteSizeStringPrecision: n [
 				ifFalse: [ value / 1024 ]
 				ifTrue: [ ^ (value printShowingDecimalPlaces: n) , ' ' , each ] ]
 ]
-
-{ #category : '*FileSystem-Core' }
-Integer >> humanReadableSIByteSize [
-	"Return the receiver as a string with SI binary (International System of Units) file size, e.g. '50 KB'"
-
-	self
-		deprecated: 'use humanReadableSISizeString'
-		transformWith:  '`@rec humanReadableSIByteSize' ->  '`@rec humanReadableSISizeString'.
-
-	^ self humanReadableSISizeString
-]

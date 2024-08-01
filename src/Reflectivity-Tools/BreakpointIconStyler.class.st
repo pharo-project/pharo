@@ -17,7 +17,8 @@ BreakpointIconStyler class >> isStaticStyler [
 
 { #category : 'defaults' }
 BreakpointIconStyler >> highlightColor [
-	^(Color red alpha: 0.1)
+
+	^ self theme dangerBackgroundColor alpha: 0.1
 ]
 
 { #category : 'defaults' }

@@ -18,26 +18,6 @@ MCSmalltalkhubRepository class >> baseURL [
 	^ self smalltalkhubUrl, 'mc/'
 ]
 
-{ #category : 'creation template' }
-MCSmalltalkhubRepository class >> creationTemplate [
-	^self creationTemplateOwner: ''
-		project: ''
-		user: ''
-		password: ''
-
-]
-
-{ #category : 'creation template' }
-MCSmalltalkhubRepository class >> creationTemplateOwner: owner project: project user: user password: password [
-	^ String streamContents: [ :s|
-		s 
-			nextPutAll: self name; cr;
-			tab; nextPutAll: 'owner: '; print: owner; cr;
-			tab; nextPutAll: 'project: '; print: project; cr;
-			tab; nextPutAll: 'user: '; print: user; cr;
-			tab; nextPutAll: 'password: '; print: password ].
-]
-
 { #category : 'accessing' }
 MCSmalltalkhubRepository class >> description [
 	^ 'smalltalkhub.com'
@@ -75,12 +55,6 @@ MCSmalltalkhubRepository class >> owner: owner project: project user: user passw
 { #category : 'accessing' }
 MCSmalltalkhubRepository class >> smalltalkhubUrl [
 	^ 'http://', self hostName, '/'
-]
-
-{ #category : 'converting' }
-MCSmalltalkhubRepository >> asCreationTemplate [
-	^self class 
-		creationTemplateOwner: self owner project: self project user: user password: password
 ]
 
 { #category : 'interface' }

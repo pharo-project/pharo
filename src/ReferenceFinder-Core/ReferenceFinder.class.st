@@ -244,9 +244,16 @@ ReferenceFinder >> searchIndicesIn: anObject [
 { #category : 'private' }
 ReferenceFinder >> searchVariablesIn: anObject [
 
-	| class |
+		| class |
 	class := self _objectClass: anObject.
-	1 to: class instSize do: [ :i | (self processLinkTo: (self _object: anObject instVarAt: i) from: anObject) ifNotNil: [ :path | ^ path ] ].
+	(class isEphemeronClass ifTrue: [ 2 ] ifFalse: [ 1 ])
+		to: class instSize
+		do: [ :i | 
+			| path |
+			path := self
+					processLinkTo: (self _object: anObject instVarAt: i)
+					from: anObject.
+			path ifNotNil: [ ^ path ] ].
 	^ nil
 ]
 

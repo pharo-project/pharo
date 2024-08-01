@@ -470,14 +470,14 @@ CompilationContext >> initialize [
 ]
 
 { #category : 'accessing' }
-CompilationContext >> noPattern [
+CompilationContext >> isScripting [
 	^semanticScope isDoItScope
 ]
 
 { #category : 'accessing' }
-CompilationContext >> noPattern: anObject [
+CompilationContext >> isScripting: aBoolean [
 
-	(anObject and: [ self noPattern not ]) ifTrue: [
+	(aBoolean and: [ self isScripting not ]) ifTrue: [
 		semanticScope := OCReceiverDoItSemanticScope targetingNilReceiver ]
 ]
 

@@ -10,10 +10,20 @@ See the method RBMessageNode>>#isInlineIfNil for the exact implementation of the
 Class {
 	#name : 'ReNotOptimizedIfNilRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
+
+{ #category : 'accessing' }
+ReNotOptimizedIfNilRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
+ReNotOptimizedIfNilRule class >> ruleName [
+	^ 'ifNil: ifNotNil: ifNil:ifNotNil: ifNotNil:ifNil: is used in a way that it can not be optimized'
+]
 
 { #category : 'running' }
 ReNotOptimizedIfNilRule >> check: aNode forCritiquesDo: aBlock [
@@ -21,14 +31,4 @@ ReNotOptimizedIfNilRule >> check: aNode forCritiquesDo: aBlock [
 	(#(ifNil: ifNotNil: ifNil:ifNotNil: ifNotNil:ifNil:) includes: aNode selector) ifFalse: [^ self].
 	aNode isInlineIfNil ifFalse: [
 		aBlock cull: (self critiqueFor: aNode) ]
-]
-
-{ #category : 'accessing' }
-ReNotOptimizedIfNilRule >> group [
-	^ 'Optimization'
-]
-
-{ #category : 'accessing' }
-ReNotOptimizedIfNilRule >> name [
-	^ 'ifNil: ifNotNil: ifNil:ifNotNil: ifNotNil:ifNil: is used in a way that it can not be optimized'
 ]

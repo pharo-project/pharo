@@ -4,10 +4,20 @@ Check for methods that return the value of an ifTrue: or ifFalse: message. These
 Class {
 	#name : 'ReReturnsIfTrueRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
+
+{ #category : 'accessing' }
+ReReturnsIfTrueRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+ReReturnsIfTrueRule class >> ruleName [
+	^ 'Returns value of ifTrue:/ifFalse: without ifFalse:/ifTrue: block'
+]
 
 { #category : 'accessing' }
 ReReturnsIfTrueRule class >> uniqueIdentifierName [
@@ -16,20 +26,10 @@ ReReturnsIfTrueRule class >> uniqueIdentifierName [
 	^'ReturnsIfTrueRule'
 ]
 
-{ #category : 'accessing' }
-ReReturnsIfTrueRule >> group [
-	^ 'Potential Bugs'
-]
-
 { #category : 'initialization' }
 ReReturnsIfTrueRule >> initialize [
 	super initialize.
 	self matchesAny: #(
 			'^`@condition ifTrue: [| `@temps | `@.statements]'
 			'^`@condition ifFalse: [| `@temps | `@.statements]' )
-]
-
-{ #category : 'accessing' }
-ReReturnsIfTrueRule >> name [
-	^ 'Returns value of ifTrue:/ifFalse: without ifFalse:/ifTrue: block'
 ]

@@ -12,17 +12,10 @@ RBAbstractTransformationTest >> changeMockClass [
 	^ RBRefactoringChangeMock
 ]
 
-{ #category : 'utilities' }
-RBAbstractTransformationTest >> modelOnClasses: aCollection [
-
-	^ RBNamespace onEnvironment:
-		  (RBClassEnvironment classes: aCollection)
-]
-
 { #category : 'mocking' }
 RBAbstractTransformationTest >> objectClassVariable [
 
-	^ Object classPool keys detect: [:each | true]
+	^ Character classVariables first name
 ]
 
 { #category : 'parsing' }
@@ -54,7 +47,7 @@ RBAbstractTransformationTest >> setUp [
 
 { #category : 'tests' }
 RBAbstractTransformationTest >> testAPI [
-	"all classes must implement #storeOn: and #transform"
+	"all classes must implement #storeOn: and #privateTransform"
 
 	| incompleteTransformations |
 	incompleteTransformations := RBTransformation allSubclasses
@@ -68,7 +61,7 @@ RBAbstractTransformationTest >> testAPI [
 		select: [ :each |
 			| selectors |
 			selectors := each methods collect: [:m | m selector].
-			each subclasses isEmpty and: [ (selectors includes: #buildTransformations) not ] ].
+			each subclasses isEmpty and: [ (selectors includes: #buildTransformations) not and: [ (selectors includes: #buildTransformationFor:) not ] ] ].
 	self assertEmpty: incompleteTransformations
 ]
 

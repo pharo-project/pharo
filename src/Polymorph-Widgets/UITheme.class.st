@@ -18,7 +18,7 @@ Class {
 	#superclass : 'Model',
 	#instVars : [
 		'settings',
-		'forms',
+		'formSets',
 		'soundTheme',
 		'focusIndicator',
 		'windowActiveDropShadowStyle',
@@ -294,7 +294,7 @@ UITheme >> basicCreateArrowOfDirection: aSymbolDirection size: finalSizeInteger 
 	resizeFactor := 4.
 	form := Form
 		extent: finalSizeInteger asPoint * resizeFactor
-		depth: Display depth.
+		depth: 32.
 	form fillColor: Color transparent.
 	arrow := (self createArrowOfDirection: aSymbolDirection in: form boundingBox)
 		borderWidth: 1;
@@ -606,7 +606,7 @@ UITheme >> checkboxButtonNormalBorderStyleFor: aChecboxButton [
 UITheme >> checkboxButtonNormalFillStyleFor: aCheckboxButton [
 	"Return the normal checkbox button fillStyle for the given checkbox button."
 
-	^(ImageFillStyle form: self checkboxForm) origin: aCheckboxButton topLeft
+	^(ImageFillStyle formSet: self checkboxFormSet) origin: aCheckboxButton topLeft
 ]
 
 { #category : 'border-styles - buttons' }
@@ -634,7 +634,7 @@ UITheme >> checkboxButtonSelectedDisabledFillStyleFor: aCheckboxButton [
 UITheme >> checkboxButtonSelectedFillStyleFor: aCheckboxButton [
 	"Return the selected checkbox button fillStyle for the given checkbox button."
 
-	^(ImageFillStyle form: self checkboxSelectedForm) origin: aCheckboxButton topLeft
+	^(ImageFillStyle formSet: self checkboxSelectedFormSet) origin: aCheckboxButton topLeft
 ]
 
 { #category : 'border-styles - buttons' }
@@ -646,9 +646,15 @@ UITheme >> checkboxCornerStyleFor: aCheckbox [
 
 { #category : 'forms' }
 UITheme >> checkboxForm [
-	"Answer the form to use for a normal checkbox."
 
-	^self  checkboxUnselectedForm
+	^self  checkboxFormSet asForm
+]
+
+{ #category : 'forms' }
+UITheme >> checkboxFormSet [
+	"Answer the form set to use for a normal checkbox."
+
+	^self  checkboxUnselectedFormSet
 ]
 
 { #category : 'label-styles - buttons' }
@@ -688,16 +694,28 @@ UITheme >> checkboxMarkerForm [
 
 { #category : 'fill-styles - buttons' }
 UITheme >> checkboxSelectedForm [
-	"Answer the form to use for a selected checkbox."
 
-	^ self iconNamed: #checkboxSelected
+	^ self checkboxSelectedFormSet asForm
+]
+
+{ #category : 'fill-styles - buttons' }
+UITheme >> checkboxSelectedFormSet [
+	"Answer the form set to use for a selected checkbox."
+
+	^ self iconFormSetNamed: #checkboxSelected
 ]
 
 { #category : 'forms' }
 UITheme >> checkboxUnselectedForm [
-	"Answer the form to use for a selected checkbox."
 
-	^ self iconNamed: #checkboxUnselected
+	^ self checkboxUnselectedFormSet asForm
+]
+
+{ #category : 'forms' }
+UITheme >> checkboxUnselectedFormSet [
+	"Answer the form set to use for a selected checkbox."
+
+	^ self iconFormSetNamed: #checkboxUnselected
 ]
 
 { #category : 'services' }
@@ -1202,23 +1220,23 @@ UITheme >> createCloseBoxFor: aSystemWindow [
 UITheme >> createCollapseBoxFor: aSystemWindow [
 	"Answer a button for minimising the window."
 
-	|form msb|
-	form := self windowMinimizeForm.
-	msb := MultistateButtonMorph new extent: form extent.
-	msb activeEnabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowMinimizePassiveForm.
-	msb extent: form extent.
-	msb passiveEnabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowMinimizeOverForm.
-	msb extent: form extent.
+	|formSet msb|
+	formSet := self windowMinimizeFormSet.
+	msb := MultistateButtonMorph new extent: formSet extent.
+	msb activeEnabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowMinimizePassiveFormSet.
+	msb extent: formSet extent.
+	msb passiveEnabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowMinimizeOverFormSet.
+	msb extent: formSet extent.
 	msb
-		activeEnabledOverUpFillStyle: (ImageFillStyle form: form);
-		passiveEnabledOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowMinimizePassiveForm.
+		activeEnabledOverUpFillStyle: (ImageFillStyle formSet: formSet);
+		passiveEnabledOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowMinimizePassiveFormSet.
 	msb
-		extent: form extent;
-		activeEnabledOverDownFillStyle: (ImageFillStyle form: form);
-		passiveEnabledOverDownFillStyle: (ImageFillStyle form: form);
+		extent: formSet extent;
+		activeEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
+		passiveEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
 		addUpAction: [aSystemWindow collapseBoxHit];
 		setBalloonText: 'Collapse this window' translated;
 		extent: aSystemWindow boxExtent.
@@ -1229,23 +1247,23 @@ UITheme >> createCollapseBoxFor: aSystemWindow [
 UITheme >> createExpandBoxFor: aSystemWindow [
 	"Answer a button for maximising/restoring the window."
 
-	|form msb|
-	form := self windowMaximizeForm.
-	msb := MultistateButtonMorph new extent: form extent.
-	msb activeEnabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowMaximizePassiveForm.
-	msb extent: form extent.
-	msb passiveEnabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowMaximizeOverForm.
-	msb extent: form extent.
+	|formSet msb|
+	formSet := self windowMaximizeFormSet.
+	msb := MultistateButtonMorph new extent: formSet extent.
+	msb activeEnabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowMaximizePassiveFormSet.
+	msb extent: formSet extent.
+	msb passiveEnabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowMaximizeOverFormSet.
+	msb extent: formSet extent.
 	msb
-		activeEnabledOverUpFillStyle: (ImageFillStyle form: form);
-		passiveEnabledOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowMaximizePassiveForm.
+		activeEnabledOverUpFillStyle: (ImageFillStyle formSet: formSet);
+		passiveEnabledOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowMaximizePassiveFormSet.
 	msb
-		extent: form extent;
-		activeEnabledOverDownFillStyle: (ImageFillStyle form: form);
-		passiveEnabledOverDownFillStyle: (ImageFillStyle form: form);
+		extent: formSet extent;
+		activeEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
+		passiveEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
 		addUpAction: [aSystemWindow expandBoxHit];
 		setBalloonText: 'Expand to full screen' translated;
 		extent: aSystemWindow boxExtent.
@@ -1263,25 +1281,25 @@ UITheme >> createMenuBoxFor: aSystemWindow [
 		actionSelector: #offerWindowMenu;
 		setBalloonText: 'window menu' translated"
 
-	|form msb|
-	form := self windowMenuForm.
-	msb := MultistateButtonMorph new extent: form extent.
-	msb activeEnabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowMenuPassiveForm.
-	msb extent: form extent.
-	msb activeDisabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	msb passiveEnabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	msb passiveDisabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowMenuForm.
-	msb extent: form extent.
+	|formSet msb|
+	formSet := self windowMenuFormSet.
+	msb := MultistateButtonMorph new extent: formSet extent.
+	msb activeEnabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowMenuPassiveFormSet.
+	msb extent: formSet extent.
+	msb activeDisabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	msb passiveEnabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	msb passiveDisabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowMenuFormSet.
+	msb extent: formSet extent.
 	msb
-		activeEnabledOverUpFillStyle: (ImageFillStyle form: form);
-		passiveEnabledOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowMenuPassiveForm.
+		activeEnabledOverUpFillStyle: (ImageFillStyle formSet: formSet);
+		passiveEnabledOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowMenuPassiveFormSet.
 	msb
-		extent: form extent;
-		activeEnabledOverDownFillStyle: (ImageFillStyle form: form);
-		passiveEnabledOverDownFillStyle: (ImageFillStyle form: form);
+		extent: formSet extent;
+		activeEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
+		passiveEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
 		addUpAction: [aSystemWindow offerWindowMenu];
 		setBalloonText: 'window menu' translated;
 		extent: aSystemWindow boxExtent.
@@ -1892,23 +1910,16 @@ UITheme >> focusIndicatorMorphFor: aMorph [
 		privateBounds: aMorph focusBounds
 ]
 
-{ #category : 'accessing' }
-UITheme >> forms: anObject [
-	"Set the value of forms"
+{ #category : 'private' }
+UITheme >> formSetsForCurrentDisplayScaleFactor [
 
-	forms := anObject
+	^ self formSetsForScale: self currentWorld displayScaleFactor
 ]
 
 { #category : 'private' }
-UITheme >> formsForCurrentDisplayScaleFactor [
+UITheme >> formSetsForScale: scale [
 
-	^ self formsForScale: self currentWorld displayScaleFactor
-]
-
-{ #category : 'private' }
-UITheme >> formsForScale: scale [
-
-	^ forms at: scale ifAbsentPut: [ self newFormsForScale: scale ]
+	^ formSets at: scale ifAbsentPut: [ self newFormSetsForScale: scale ]
 ]
 
 { #category : 'accessing - colors' }
@@ -1964,7 +1975,7 @@ UITheme >> initialize [
 	colorPalette := UIThemePalette new
 		colorConfigurator: self class colorConfiguratorClass new;
 		yourself.
-	forms := Dictionary new.
+	formSets := Dictionary new.
 
 	self initializeDefaultSettings.
 	colorPalette themeSettings: settings.
@@ -2132,9 +2143,15 @@ UITheme >> menuBorderWidth [
 
 { #category : 'label-styles' }
 UITheme >> menuCloseForm [
-	"Answer the form to use for the close button of a menu."
 
-	^self windowCloseForm
+	^self menuCloseFormSet asForm
+]
+
+{ #category : 'label-styles' }
+UITheme >> menuCloseFormSet [
+	"Answer the form set to use for the close button of a menu."
+
+	^self windowCloseFormSet
 ]
 
 { #category : 'accessing - colors' }
@@ -2221,21 +2238,17 @@ UITheme >> menuItemSelectedBorderStyleFor: aMenuItem [
 
 { #category : 'fill-styles - buttons' }
 UITheme >> menuItemSelectedFillStyleFor: aMenuItem [
-
 	"Answer the selected fill style to use for the given menu item."
 
 	| fill baseColor preferenced |
-
-	Display depth <= 2
-		ifTrue: [ ^ Color gray ].
 	preferenced := self menuSelectionColor.
-	baseColor := preferenced ifNil: [ aMenuItem owner color negated ] ifNotNil: [ preferenced ].
-	self preferGradientFill
-		ifFalse: [ ^ baseColor ].
-	fill := GradientFillStyle
-		ramp:
-			{( 0.0 -> baseColor twiceLighter ).
-			( 1 -> baseColor twiceDarker )}.
+	baseColor := preferenced
+		             ifNil: [ aMenuItem owner color negated ]
+		             ifNotNil: [ preferenced ].
+	self preferGradientFill ifFalse: [ ^ baseColor ].
+	fill := GradientFillStyle ramp: {
+			        (0.0 -> baseColor twiceLighter).
+			        (1 -> baseColor twiceDarker) }.
 	fill
 		origin: aMenuItem topLeft;
 		direction: 0 @ aMenuItem height.
@@ -2649,25 +2662,25 @@ UITheme >> newCloseButtonIn: aThemedMorph for: aModel [
 UITheme >> newCloseControlIn: aThemedMorph for: aModel action: aValuable help: helpText [
 	"Answer a button for closing things."
 
-	|form msb|
-	form := self windowCloseForm.
-	msb := MultistateButtonMorph new extent: form extent.
-	msb activeEnabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowClosePassiveForm.
-	msb extent: form extent.
-	msb activeDisabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	msb passiveEnabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	msb passiveDisabledNotOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowCloseOverForm.
-	msb extent: form extent.
+	|formSet msb|
+	formSet := self windowCloseFormSet.
+	msb := MultistateButtonMorph new extent: formSet extent.
+	msb activeEnabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowClosePassiveFormSet.
+	msb extent: formSet extent.
+	msb activeDisabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	msb passiveEnabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	msb passiveDisabledNotOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowCloseOverFormSet.
+	msb extent: formSet extent.
 	msb
-		activeEnabledOverUpFillStyle: (ImageFillStyle form: form);
-		passiveEnabledOverUpFillStyle: (ImageFillStyle form: form).
-	form := self windowClosePassiveForm.
+		activeEnabledOverUpFillStyle: (ImageFillStyle formSet: formSet);
+		passiveEnabledOverUpFillStyle: (ImageFillStyle formSet: formSet).
+	formSet := self windowClosePassiveFormSet.
 	msb
-		extent: form extent;
-		activeEnabledOverDownFillStyle: (ImageFillStyle form: form);
-		passiveEnabledOverDownFillStyle: (ImageFillStyle form: form);
+		extent: formSet extent;
+		activeEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
+		passiveEnabledOverDownFillStyle: (ImageFillStyle formSet: formSet);
 		addUpAction: aValuable;
 		setBalloonText: helpText.
 	^msb
@@ -2806,17 +2819,17 @@ UITheme >> newFocusIndicatorMorphFor: aMorph [
 ]
 
 { #category : 'private' }
-UITheme >> newFormsForScale: scale [
+UITheme >> newFormSetsForScale: scale [
 
 	| size color |
 
 	size := (9 * scale) truncated.
 	color := Color gray: 0.5327468230694037.
 	^ Dictionary new
-		at: #treeExpanded put: (self newTreeForm: true size: size color: color);
-		at: #treeUnexpanded put: (self newTreeForm: false size: size color: color);
-		at: #whiteTreeExpanded put: (self newTreeForm: true size: size color: Color white);
-		at: #whiteTreeUnexpanded put: (self newTreeForm: false size: size color: Color white);
+		at: #treeExpanded put: (self newTreeFormSet: true size: size color: color);
+		at: #treeUnexpanded put: (self newTreeFormSet: false size: size color: color);
+		at: #whiteTreeExpanded put: (self newTreeFormSet: true size: size color: Color white);
+		at: #whiteTreeUnexpanded put: (self newTreeFormSet: false size: size color: Color white);
 		yourself
 ]
 
@@ -3593,6 +3606,14 @@ UITheme >> newTreeForm: expanded size: size color: color [
 	^ formCanvas form magnifyBy: insetDivisor reciprocal smoothing: insetDivisor
 ]
 
+{ #category : 'private' }
+UITheme >> newTreeFormSet: expanded size: size color: color [
+
+	^ FormSet forms: {
+		self newTreeForm: expanded size: size color: color.
+		self newTreeForm: expanded size: size * 2 color: color }
+]
+
 { #category : 'morph creation' }
 UITheme >> newTreeIn: aThemedMorph for: aModel list: listSelector selected: getSelector changeSelected: setSelector [
 	"Answer a new tree morph."
@@ -3646,9 +3667,15 @@ UITheme >> newWindowIn: aThemedMorph for: aModel title: titleString [
 
 { #category : 'initialization' }
 UITheme >> newWindowMenuPassiveForm [
-	"Answer a new form for a window menu box."
 
-	^ self iconNamed: #windowMenuInactive
+	^ self newWindowMenuPassiveFormSet asForm
+]
+
+{ #category : 'initialization' }
+UITheme >> newWindowMenuPassiveFormSet [
+	"Answer a new form set for a window menu box."
+
+	^ self iconFormSetNamed: #windowMenuInactive
 ]
 
 { #category : 'morph creation' }
@@ -3848,9 +3875,15 @@ UITheme >> radioButtonDisabledFillStyleFor: aRadioButton [
 
 { #category : 'fill-styles' }
 UITheme >> radioButtonForm [
-	"Answer the form to use for a normal radio button."
 
-	^ self iconNamed: #radioButtonUnselected
+	^ self radioButtonFormSet asForm
+]
+
+{ #category : 'fill-styles' }
+UITheme >> radioButtonFormSet [
+	"Answer the form set to use for a normal radio button."
+
+	^ self iconFormSetNamed: #radioButtonUnselected
 ]
 
 { #category : 'label-styles' }
@@ -3871,7 +3904,7 @@ UITheme >> radioButtonNormalBorderStyleFor: aRadioButton [
 UITheme >> radioButtonNormalFillStyleFor: aRadioButton [
 	"Return the normal radio button fillStyle for the given button."
 
-	^(ImageFillStyle form: self radioButtonForm) origin: aRadioButton topLeft
+	^(ImageFillStyle formSet: self radioButtonFormSet) origin: aRadioButton topLeft
 ]
 
 { #category : 'border-styles - buttons' }
@@ -3899,14 +3932,20 @@ UITheme >> radioButtonSelectedDisabledFillStyleFor: aRadioButton [
 UITheme >> radioButtonSelectedFillStyleFor: aRadioButton [
 	"Return the selected radio button fillStyle for the given button."
 
-	^(ImageFillStyle form: self radioButtonSelectedForm) origin: aRadioButton topLeft
+	^(ImageFillStyle formSet: self radioButtonSelectedFormSet) origin: aRadioButton topLeft
 ]
 
 { #category : 'fill-styles' }
 UITheme >> radioButtonSelectedForm [
-	"Answer the form to use for a selected radio button."
 
-	^ self iconNamed: #radioButtonSelected
+	^ self radioButtonSelectedFormSet asForm
+]
+
+{ #category : 'fill-styles' }
+UITheme >> radioButtonSelectedFormSet [
+	"Answer the form set to use for a selected radio button."
+
+	^ self iconFormSetNamed: #radioButtonSelected
 ]
 
 { #category : 'fill-styles' }
@@ -4742,9 +4781,15 @@ UITheme >> textFont [
 
 { #category : 'label-styles' }
 UITheme >> treeExpandedForm [
-	"Answer the form to use for an expanded tree item."
 
-	^ self formsForCurrentDisplayScaleFactor at: #treeExpanded
+	^ self treeExpandedFormSet asForm
+]
+
+{ #category : 'label-styles' }
+UITheme >> treeExpandedFormSet [
+	"Answer the form set to use for an expanded tree item."
+
+	^ self formSetsForCurrentDisplayScaleFactor at: #treeExpanded
 ]
 
 { #category : 'basic-colors' }
@@ -4774,9 +4819,15 @@ UITheme >> treeLineWidth [
 
 { #category : 'label-styles' }
 UITheme >> treeUnexpandedForm [
-	"Answer the form to use for an unexpanded tree item."
 
-	^ self formsForCurrentDisplayScaleFactor at: #treeUnexpanded
+	^ self treeUnexpandedFormSet asForm
+]
+
+{ #category : 'label-styles' }
+UITheme >> treeUnexpandedFormSet [
+	"Answer the form set to use for an unexpanded tree item."
+
+	^ self formSetsForCurrentDisplayScaleFactor at: #treeUnexpanded
 ]
 
 { #category : 'accessing - colors' }
@@ -4874,16 +4925,28 @@ UITheme >> warningTextColor [
 
 { #category : 'label-styles' }
 UITheme >> whiteTreeExpandedForm [
-	"Answer the form to use for an expanded tree item when a contrasting one is needed."
 
-	^ self formsForCurrentDisplayScaleFactor at: #whiteTreeExpanded
+	^ self whiteTreeExpandedFormSet asForm
+]
+
+{ #category : 'label-styles' }
+UITheme >> whiteTreeExpandedFormSet [
+	"Answer the form set to use for an expanded tree item when a contrasting one is needed."
+
+	^ self formSetsForCurrentDisplayScaleFactor at: #whiteTreeExpanded
 ]
 
 { #category : 'label-styles' }
 UITheme >> whiteTreeUnexpandedForm [
-	"Answer the form to use for an unexpanded tree item when a contrasting one is needed."
 
-	^ self formsForCurrentDisplayScaleFactor at: #whiteTreeUnexpanded
+	^ self whiteTreeUnexpandedFormSet asForm
+]
+
+{ #category : 'label-styles' }
+UITheme >> whiteTreeUnexpandedFormSet [
+	"Answer the form set to use for an unexpanded tree item when a contrasting one is needed."
+
+	^ self formSetsForCurrentDisplayScaleFactor at: #whiteTreeUnexpanded
 ]
 
 { #category : 'border-styles' }
@@ -4943,23 +5006,41 @@ UITheme >> windowBottomOffset [
 
 { #category : 'label-styles - windows' }
 UITheme >> windowCloseForm [
-	"Answer the form to use for the close button of a window."
 
-	^ self iconNamed: #windowClose
+	^ self windowCloseFormSet asForm
+]
+
+{ #category : 'label-styles - windows' }
+UITheme >> windowCloseFormSet [
+	"Answer the form set to use for the close button of a window."
+
+	^ self iconFormSetNamed: #windowClose
 ]
 
 { #category : 'label-styles - windows' }
 UITheme >> windowCloseOverForm [
-	"Answer the form to use for mouse over window close buttons"
 
-	^ self iconNamed: #windowClose
+	^ self windowCloseOverFormSet asForm
+]
+
+{ #category : 'label-styles - windows' }
+UITheme >> windowCloseOverFormSet [
+	"Answer the form set to use for mouse over window close buttons"
+
+	^ self iconFormSetNamed: #windowClose
 ]
 
 { #category : 'label-styles - windows' }
 UITheme >> windowClosePassiveForm [
-	"Answer the form to use for passive (background) window close buttons"
 
-	^ self iconNamed: #windowCloseInactive
+	^ self windowClosePassiveFormSet asForm
+]
+
+{ #category : 'label-styles - windows' }
+UITheme >> windowClosePassiveFormSet [
+	"Answer the form set to use for passive (background) window close buttons"
+
+	^ self iconFormSetNamed: #windowCloseInactive
 ]
 
 { #category : 'sounds' }
@@ -5064,23 +5145,41 @@ UITheme >> windowLeftOffset [
 
 { #category : 'label-styles - windows' }
 UITheme >> windowMaximizeForm [
-	"Answer the form to use for the maximize button of a window."
 
-	^ self iconNamed: #windowMaximize
+	^ self windowMaximizeFormSet asForm
+]
+
+{ #category : 'label-styles - windows' }
+UITheme >> windowMaximizeFormSet [
+	"Answer the form set to use for the maximize button of a window."
+
+	^ self iconFormSetNamed: #windowMaximize
 ]
 
 { #category : 'label-styles - windows' }
 UITheme >> windowMaximizeOverForm [
-	"Answer the form to use for mouse over window maximize buttons"
 
-	^ self iconNamed: #windowMaximize
+	^ self windowMaximizeOverFormSet asForm
+]
+
+{ #category : 'label-styles - windows' }
+UITheme >> windowMaximizeOverFormSet [
+	"Answer the form set to use for mouse over window maximize buttons"
+
+	^ self iconFormSetNamed: #windowMaximize
 ]
 
 { #category : 'label-styles - windows' }
 UITheme >> windowMaximizePassiveForm [
-	"Answer the form to use for passive (background) window maximize/restore buttons"
 
-	^ self iconNamed: #windowMaximizeInactive
+	^ self windowMaximizePassiveFormSet asForm
+]
+
+{ #category : 'label-styles - windows' }
+UITheme >> windowMaximizePassiveFormSet [
+	"Answer the form set to use for passive (background) window maximize/restore buttons"
+
+	^ self iconFormSetNamed: #windowMaximizeInactive
 ]
 
 { #category : 'sounds' }
@@ -5092,9 +5191,15 @@ UITheme >> windowMaximizeSound [
 
 { #category : 'label-styles - windows' }
 UITheme >> windowMenuForm [
-	"Answer the form to use for the menu button of a window."
 
-	^ self iconNamed: #windowMenu
+	^ self windowMenuFormSet asForm
+]
+
+{ #category : 'label-styles - windows' }
+UITheme >> windowMenuFormSet [
+	"Answer the form set to use for the menu button of a window."
+
+	^ self iconFormSetNamed: #windowMenu
 ]
 
 { #category : 'label-styles - windows' }
@@ -5106,30 +5211,54 @@ UITheme >> windowMenuIconFor: aWindow [
 
 { #category : 'label-styles - windows' }
 UITheme >> windowMenuPassiveForm [
-	"Answer the form to use for passive (background) window menu buttons"
 
-	^self newWindowMenuPassiveForm
+	^self windowMenuPassiveFormSet asForm
+]
+
+{ #category : 'label-styles - windows' }
+UITheme >> windowMenuPassiveFormSet [
+	"Answer the form set to use for passive (background) window menu buttons"
+
+	^self newWindowMenuPassiveFormSet
 ]
 
 { #category : 'label-styles - windows' }
 UITheme >> windowMinimizeForm [
-	"Answer the form to use for the minimize button of a window."
 
-	^ self iconNamed: #windowMinimize
+	^ self windowMinimizeFormSet asForm
+]
+
+{ #category : 'label-styles - windows' }
+UITheme >> windowMinimizeFormSet [
+	"Answer the form set to use for the minimize button of a window."
+
+	^ self iconFormSetNamed: #windowMinimize
 ]
 
 { #category : 'label-styles - windows' }
 UITheme >> windowMinimizeOverForm [
-	"Answer the form to use for mouse over window minimize buttons"
 
-	^ self iconNamed: #windowMinimize
+	^ self windowMinimizeOverFormSet asForm
+]
+
+{ #category : 'label-styles - windows' }
+UITheme >> windowMinimizeOverFormSet [
+	"Answer the form set to use for mouse over window minimize buttons"
+
+	^ self iconFormSetNamed: #windowMinimize
 ]
 
 { #category : 'label-styles - windows' }
 UITheme >> windowMinimizePassiveForm [
-	"Answer the form to use for passive (background) window minimize buttons"
 
-	^ self iconNamed: #windowMinimizeInactive
+	^ self windowMinimizePassiveFormSet asForm
+]
+
+{ #category : 'label-styles - windows' }
+UITheme >> windowMinimizePassiveFormSet [
+	"Answer the form set to use for passive (background) window minimize buttons"
+
+	^ self iconFormSetNamed: #windowMinimizeInactive
 ]
 
 { #category : 'sounds' }

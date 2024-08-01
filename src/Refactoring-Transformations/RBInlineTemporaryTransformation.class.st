@@ -31,12 +31,13 @@ RBInlineTemporaryTransformation class >> model: aRBNamespace inline: anInterval 
 ]
 
 { #category : 'preconditions' }
-RBInlineTemporaryTransformation >> applicabilityPreconditions [ 
+RBInlineTemporaryTransformation >> applicabilityPreconditions [
 
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition withBlock:
-					[self verifySelectedInterval.
-					true])
+	^ {
+		  (RBCondition definesSelector: selector in: class).
+		  (RBCondition withBlock: [
+			   self verifySelectedInterval.
+			   true ]) }
 ]
 
 { #category : 'executing' }
@@ -83,7 +84,7 @@ RBInlineTemporaryTransformation >> replaceReferences [
 	class compileTree: sourceTree ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBInlineTemporaryTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

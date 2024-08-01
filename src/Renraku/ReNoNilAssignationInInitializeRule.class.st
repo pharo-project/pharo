@@ -4,14 +4,30 @@ Instance variables are initialized to nil by default. There is no need to do it 
 Class {
 	#name : 'ReNoNilAssignationInInitializeRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'Renraku-Rules',
+	#category : 'Renraku-Style',
 	#package : 'Renraku',
-	#tag : 'Rules'
+	#tag : 'Style'
 }
 
 { #category : 'testing' }
 ReNoNilAssignationInInitializeRule class >> checksMethod [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReNoNilAssignationInInitializeRule class >> group [
+
+	^ 'Style'
+]
+
+{ #category : 'accessing' }
+ReNoNilAssignationInInitializeRule class >> ruleName [
+	^ 'Initialize method does not need nil assignation'
+]
+
+{ #category : 'accessing' }
+ReNoNilAssignationInInitializeRule class >> severity [
+	^ #information
 ]
 
 { #category : 'running' }
@@ -24,21 +40,4 @@ ReNoNilAssignationInInitializeRule >> check: aMethod forCritiquesDo: aCriticBloc
 	problemAssigments do: [ :assignment |
 			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: assignment hint: 'nil').
 		 ]
-]
-
-{ #category : 'accessing' }
-ReNoNilAssignationInInitializeRule >> group [
-
-	^ 'Style'
-]
-
-{ #category : 'accessing' }
-ReNoNilAssignationInInitializeRule >> name [
-
-	^ 'Initialize method does not need nil assignation'
-]
-
-{ #category : 'accessing' }
-ReNoNilAssignationInInitializeRule >> severity [
-	^ #information
 ]

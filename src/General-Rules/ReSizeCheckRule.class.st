@@ -4,10 +4,20 @@ Check for code that checks that a collection is non-empty before sending it an i
 Class {
 	#name : 'ReSizeCheckRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
+
+{ #category : 'accessing' }
+ReSizeCheckRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
+ReSizeCheckRule class >> ruleName [
+	^ 'Unnecessary size check'
+]
 
 { #category : 'accessing' }
 ReSizeCheckRule class >> uniqueIdentifierName [
@@ -25,11 +35,6 @@ ReSizeCheckRule >> genericPatternForSelector: aSymbol [
 				ifTrue: [ stream space; nextPutAll: '`@object'; print: index ] ] ]
 ]
 
-{ #category : 'accessing' }
-ReSizeCheckRule >> group [
-	^ 'Optimization'
-]
-
 { #category : 'initialization' }
 ReSizeCheckRule >> initialize [
 	| patterns |
@@ -44,11 +49,6 @@ ReSizeCheckRule >> initialize [
 	patterns addAll: (self selectors
 		collect: [ :each | '`@object size = 0 ifFalse: [`@object' , (self genericPatternForSelector: each) , '. `@.Statements2]' ]).
 	self matchesAny: patterns
-]
-
-{ #category : 'accessing' }
-ReSizeCheckRule >> name [
-	^ 'Unnecessary size check'
 ]
 
 { #category : 'private' }

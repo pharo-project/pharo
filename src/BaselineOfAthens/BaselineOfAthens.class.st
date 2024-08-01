@@ -7,9 +7,8 @@ Load type:
 Class {
 	#name : 'BaselineOfAthens',
 	#superclass : 'BaselineOf',
-	#category : 'BaselineOfAthens-Baseline',
-	#package : 'BaselineOfAthens',
-	#tag : 'Baseline'
+	#category : 'BaselineOfAthens',
+	#package : 'BaselineOfAthens'
 }
 
 { #category : 'baseline' }
@@ -45,12 +44,10 @@ BaselineOfAthens >> baseline: spec [
 
 { #category : 'baseline' }
 BaselineOfAthens >> display: spec [
-	spec baseline: 'Display' with: [ spec repository: self repository ]
-]
 
-{ #category : 'accessing' }
-BaselineOfAthens >> repository [
-	^ self packageRepositoryURL
+	spec
+		baseline: 'Display'
+		with: [ spec repository: (self packageRepositoryURLForSpec: spec) ]
 ]
 
 { #category : 'baseline' }
@@ -59,5 +56,5 @@ BaselineOfAthens >> unifiedFFI: spec [
 		baseline: 'UnifiedFFI'
 		with: [ spec
 				loads: 'minimal';
-				repository: self repository ]
+				repository: (self packageRepositoryURLForSpec: spec) ]
 ]

@@ -70,17 +70,19 @@ MetaLinkAnonymousClassBuilderTest >> testClassAccessFromClassBuilder [
 
 { #category : 'tests' }
 MetaLinkAnonymousClassBuilderTest >> testCompileClassAccessorForAnonymousClass [
+
 	| class |
 	class := ReflectivityExamples newAnonymousSubclass.
 	builder compileClassAccessorForAnonymousClass: class.
+	
 	self
-		assert: (class methodDict at: #class) sourceCode
+		assert: (class compiledMethodAt: #class) sourceCode
 		equals: builder classAccessorsForAnonymousClasses first.
 	self
-		assert: (class methodDict at: #originalClass) sourceCode
+		assert: (class compiledMethodAt: #originalClass) sourceCode
 		equals: builder classAccessorsForAnonymousClasses second.
 	self
-		assert: (class methodDict at: #realClass) sourceCode
+		assert: (class compiledMethodAt: #realClass) sourceCode
 		equals: builder classAccessorsForAnonymousClasses third
 ]
 
@@ -139,7 +141,8 @@ MetaLinkAnonymousClassBuilderTest >> testMigrateObjectToAnonymousClass [
 	self assert: realClass identicalTo: subclass.
 	self assert: (builder soleInstanceOf: realClass) identicalTo: object.
 
-	originalClass := object originalClass.
+	"originalClass is defined in #classAccessorsForAnonymousClasses"
+	originalClass := object perform: #originalClass.
 	currentClass := object class.
 	self assert: currentClass identicalTo: class.
 	self assert: currentClass identicalTo: originalClass
@@ -154,7 +157,7 @@ MetaLinkAnonymousClassBuilderTest >> testMigrateObjectToOriginalClass [
 	builder migrateObjectToOriginalClass: object.
 
 	self should: [ object realClass ] raise: MessageNotUnderstood.
-	self should: [ object originalClass ] raise: MessageNotUnderstood.
+	self should: [ object perform: #originalClass ] raise: MessageNotUnderstood.
 	self assert: object class identicalTo: class
 ]
 

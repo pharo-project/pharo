@@ -20,7 +20,7 @@ PSMCMergePatchMorph >> allConflictsMenu [
 	"Answer the all conflicts menu."
 
 	| menu |
-	menu := UIManager default newMenuIn: self for: self.
+	menu := self morphicUIManager newMenuIn: self for: self.
 	menu
 		addToggle: 'Keep current version of all' translated
 		target: self
@@ -247,7 +247,7 @@ PSMCMergePatchMorph >> selectNextConflict [
 	|next op def path|
 	next := self nextConflict ifNil: [^self].
 	op := next operation.
-	def := next remoteDefinition ifNil: [next localDefinition].
+	def := next targetDefinition ifNil: [next baseDefinition].
 	path := {#changes. #openPath}.
 	def isMethodDefinition ifTrue: [path := path, {def fullClassName}].
 	path := path, {op shortSummary}.
@@ -257,7 +257,7 @@ PSMCMergePatchMorph >> selectNextConflict [
 { #category : 'actions' }
 PSMCMergePatchMorph >> selectionIsNotNil [
 
-	^ self selectedChange notNil
+	^ self selectedChange isNotNil
 ]
 
 { #category : 'testing' }
@@ -282,7 +282,7 @@ PSMCMergePatchMorph >> updateSource [
 
 	|sel|
 	sel := self selectedChangeWrapper.
-	self diffMorph allowJoinClicks: (sel notNil and: [
+	self diffMorph allowJoinClicks: (sel isNotNil and: [
 		sel isConflict and: [sel operation isModification]]).
 	super updateSource.
 	(sel isNil or: [sel isConflict not]) ifTrue: [^self].

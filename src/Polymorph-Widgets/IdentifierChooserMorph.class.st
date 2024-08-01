@@ -81,15 +81,6 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'accessing' }
-IdentifierChooserMorph class >> allowedArea [
-	"The area allowed for the building and positioning of the morph"
-	| allowedArea |
-	allowedArea := Display usableArea.
-	allowedArea := allowedArea intersect: self currentWorld visibleClearArea ifNone: [ 0@0 corner: 0@0 "not sure about this"].
-	^allowedArea
-]
-
 { #category : 'instance creation' }
 IdentifierChooserMorph class >> example [
 
@@ -113,7 +104,8 @@ IdentifierChooserMorph >> activate: evt [
 
 { #category : 'accessing' }
 IdentifierChooserMorph >> allowedArea [
-	^ self class allowedArea
+	
+	^ RealEstateAgent maximumUsableAreaInWorld: self currentWorld
 ]
 
 { #category : 'accessing' }
@@ -337,15 +329,17 @@ IdentifierChooserMorph >> newContentMorph [
 	| sp choices |
 	self choicesMorph: (choices := self newChoicesMorph).
 	sp := (self newScrollPaneFor: choices)
-		color: Color transparent;
-		scrollTarget: choices;
-		hResizing: #spaceFill;
-		vResizing: #spaceFill.
+		      color: Color transparent;
+		      scrollTarget: choices;
+		      hResizing: #spaceFill;
+		      vResizing: #spaceFill.
 	sp
-		minWidth: (scrollPaneWidth ifNil: [(choicesMorph width min: (Display width // 2) - 50) + sp scrollBarThickness]);
-		minHeight: (choicesMorph height min: (Display height // 3)).
-	choicesMorph width > sp minWidth
-		ifTrue: [sp minHeight: sp minHeight + sp scrollBarThickness].
+		minWidth: (scrollPaneWidth ifNil: [
+					 (choicesMorph width min: self currentWorld width // 2 - 50)
+					 + sp scrollBarThickness ]);
+		minHeight: (choicesMorph height min: self currentWorld height // 3).
+	choicesMorph width > sp minWidth ifTrue: [
+		sp minHeight: sp minHeight + sp scrollBarThickness ].
 	^ sp
 ]
 

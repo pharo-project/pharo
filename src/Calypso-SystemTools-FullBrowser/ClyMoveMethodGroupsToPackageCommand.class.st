@@ -17,6 +17,12 @@ Class {
 	#tag : 'Commands-MethodGroups'
 }
 
+{ #category : 'testing' }
+ClyMoveMethodGroupsToPackageCommand class >> canBeExecutedInContext: aToolContext [
+
+	^ aToolContext isProtocolSelected
+]
+
 { #category : 'activation' }
 ClyMoveMethodGroupsToPackageCommand class >> fullBrowserContextMenuActivation [
 	<classAnnotation>

@@ -12,8 +12,7 @@ Class {
 	#instVars : [
 		'parent',
 		'originalNode',
-		'children',
-		'tokens'
+		'children'
 	],
 	#category : 'ClassParser-Model',
 	#package : 'ClassParser',
@@ -27,10 +26,10 @@ CDNode class >> isAbstract [
 ]
 
 { #category : 'instance creation' }
-CDNode class >> on: aRBMessageNode [
+CDNode class >> on: aNode [
 
 	^ self new
-		originalNode: aRBMessageNode;
+		originalNode: aNode;
 		yourself
 ]
 
@@ -149,14 +148,4 @@ CDNode >> start [
 CDNode >> stop [
 
 	^ originalNode stop
-]
-
-{ #category : 'accessing' }
-CDNode >> tokens [
-	^ tokens
-]
-
-{ #category : 'accessing' }
-CDNode >> tokens: aCollectionOfTokens [
-	tokens := aCollectionOfTokens
 ]

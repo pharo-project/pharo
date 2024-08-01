@@ -25,7 +25,7 @@ WeakAnnouncerTest >> benchManyWeakGuys [
 
 	time := [object := nil.
 		Smalltalk garbageCollect.
-		 ]timeToRun.
+		 ] millisecondsToRun.
 
 	self assert: ann numberOfSubscriptions equals: 0.
 	^ time

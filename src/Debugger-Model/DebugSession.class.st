@@ -26,7 +26,6 @@ Class {
 		'name',
 		'interruptedContext',
 		'interruptedProcess',
-		'errorWasInUIProcess',
 		'exception'
 	],
 	#classVars : [
@@ -60,7 +59,8 @@ DebugSession class >> defaultContextModelClass [
 
 { #category : 'settings' }
 DebugSession class >> logDebuggerStackToFile [
-	^ LogDebuggerStackToFile ifNil: [LogDebuggerStackToFile := true]
+	^ LogDebuggerStackToFile 
+		ifNil: [ LogDebuggerStackToFile := false ]
 ]
 
 { #category : 'settings' }
@@ -70,10 +70,10 @@ DebugSession class >> logDebuggerStackToFile: aBoolean [
 
 { #category : 'instance creation' }
 DebugSession class >> named: aString on: aProcess startedAt: aContext [
+
 	^ self new
-		name: aString;
-		process: aProcess context: aContext;
-		detectUIProcess
+		  name: aString;
+		  process: aProcess context: aContext
 ]
 
 { #category : 'debugging actions' }
@@ -103,24 +103,6 @@ DebugSession >> contextChanged [
 DebugSession >> createModelForContext: aContext [
 
 	^ (self class contextModelClass forContext: aContext)
-]
-
-{ #category : 'initialization' }
-DebugSession >> detectUIProcess [
-
-	errorWasInUIProcess := UIManager default uiProcess == interruptedProcess
-]
-
-{ #category : 'accessing' }
-DebugSession >> errorWasInUIProcess [
-
-	^ errorWasInUIProcess
-]
-
-{ #category : 'initialization' }
-DebugSession >> errorWasInUIProcess: aBoolean [
-
-	errorWasInUIProcess := aBoolean
 ]
 
 { #category : 'accessing' }
@@ -198,12 +180,6 @@ DebugSession >> interruptedProcess [
 ]
 
 { #category : 'testing' }
-DebugSession >> isAboutUIProcess [
-
-	^errorWasInUIProcess
-]
-
-{ #category : 'testing' }
 DebugSession >> isContextPostMortem: selectedContext [
 	"return whether we're inspecting a frozen exception without a process attached"
 	| suspendedContext |
@@ -247,7 +223,8 @@ DebugSession >> logStackToFileIfNeeded [
 	self class logDebuggerStackToFile ifFalse: [ ^self ].
 
 	[[Smalltalk logError: name inContext: interruptedContext  ] onErrorDo: [ ]]
-		valueWithin: 100 milliSeconds onTimeout: [  ]
+		valueWithinMilliseconds: 100 
+		onTimeout: [  ]
 ]
 
 { #category : 'accessing' }
@@ -371,14 +348,17 @@ DebugSession >> resume: aValue [
 ]
 
 { #category : 'private' }
+DebugSession >> resumeInterruptedProcess [
+
+	interruptedProcess resume
+]
+
+{ #category : 'private' }
 DebugSession >> resumeProcess [
 	"Make sure the interrupted process is restored properly and restart the low space handler"
 
-	interruptedProcess isTerminated
-		ifFalse: [
-			errorWasInUIProcess
-				ifTrue: [ UIManager default resumeUIProcess: interruptedProcess ]
-				ifFalse: [ interruptedProcess resume ]].
+	interruptedProcess isTerminated ifFalse: [
+		^ self resumeInterruptedProcess ].
 
 	"restart low space handler"
 	Smalltalk installLowSpaceWatcher
@@ -615,17 +595,13 @@ DebugSession >> terminate [
 	"Action that needs to be executed after the window containing this debug session is closed,
 	in order to terminate the right process."
 
-	self interruptedProcess
-		ifNotNil: [
-			"Assume the user closed the debugger. Simply kill the interrupted process."
-			self interruptedProcess terminate.
-			self clear.
-			Smalltalk installLowSpaceWatcher.  "restart low space handler" ]
-		ifNil: [
-			"Assume the interrupted process was resumed."
-			"Kill the active process if the error was in the UI as there should be only one UI process."
-			self isAboutUIProcess
-				ifTrue: [Processor terminateActive] ]
+	self interruptedProcess ifNil: [ ^ self ].
+	
+	"Assume the user closed the debugger. 
+	Simply kill the interrupted process."
+	self interruptedProcess terminate.
+	self clear.
+	Smalltalk installLowSpaceWatcher "restart low space handler"
 ]
 
 { #category : 'evaluating' }

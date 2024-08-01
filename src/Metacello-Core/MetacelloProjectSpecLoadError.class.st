@@ -1,6 +1,6 @@
 Class {
 	#name : 'MetacelloProjectSpecLoadError',
-	#superclass : 'Error',
+	#superclass : 'MetacelloError',
 	#instVars : [
 		'projectSpec',
 		'versionDoesNotExistException'

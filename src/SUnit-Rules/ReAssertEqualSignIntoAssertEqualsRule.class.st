@@ -6,10 +6,21 @@ Class {
 	#superclass : 'ReNodeRewriteRule',
 	#traits : 'ReTSUnitGroupedRule',
 	#classTraits : 'ReTSUnitGroupedRule classTrait',
-	#category : 'SUnit-Rules-Base',
+	#category : 'SUnit-Rules-SUnit',
 	#package : 'SUnit-Rules',
-	#tag : 'Base'
+	#tag : 'SUnit'
 }
+
+{ #category : 'accessing' }
+ReAssertEqualSignIntoAssertEqualsRule class >> group [
+
+	^ 'SUnit'
+]
+
+{ #category : 'accessing' }
+ReAssertEqualSignIntoAssertEqualsRule class >> ruleName [
+	^ 'Use assert:equals: instead of assert: and = (or deny:/identicalTo: and ==)'
+]
 
 { #category : 'accessing' }
 ReAssertEqualSignIntoAssertEqualsRule class >> uniqueIdentifierName [
@@ -35,10 +46,4 @@ ReAssertEqualSignIntoAssertEqualsRule >> initialize [
 	self replace: 'self deny: ``@object1 = ``@object2' with: 'self deny: ``@object1 equals: ``@object2'.
 	self replace: 'self assert: ``@object1 == ``@object2' with: 'self assert: ``@object1 identicalTo: ``@object2'.
 	self replace: 'self deny: ``@object1 == ``@object2' with: 'self deny: ``@object1 identicalTo: ``@object2'
-]
-
-{ #category : 'accessing' }
-ReAssertEqualSignIntoAssertEqualsRule >> name [
-
-	^ 'Use assert:equals: instead of assert: and = (or deny:/identicalTo: and ==)'
 ]

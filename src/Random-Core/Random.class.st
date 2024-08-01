@@ -104,7 +104,6 @@ more; go get coffee.
 Random class >> primitiveRandomNumber: stateArray [
 	"Answer a random Float in the interval [0 to 1)."
 
-	<primitive: 231>
 	| count returnValue |
 	returnValue := stateArray at: 1.
 
@@ -199,7 +198,7 @@ Random >> seed [
 { #category : 'initialization' }
 Random >> seed: aNumber [
 	"Refer #privateNextSeed and [1], seed should be positive and less than m"
-	seed := aNumber.
+	seed := aNumber asInteger.
 	self setStateFromSeed.
 ]
 

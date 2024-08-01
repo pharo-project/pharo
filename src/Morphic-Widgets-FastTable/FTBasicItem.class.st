@@ -52,8 +52,8 @@ Class {
 }
 
 { #category : 'expanding-collapsing' }
-FTBasicItem class >> expandedForm [
-	^ self theme treeExpandedForm
+FTBasicItem class >> expandedFormSet [
+	^ self theme treeExpandedFormSet
 ]
 
 { #category : 'accessing' }
@@ -62,8 +62,8 @@ FTBasicItem class >> theme [
 ]
 
 { #category : 'expanding-collapsing' }
-FTBasicItem class >> unexpandedForm [
-	^ self theme treeUnexpandedForm
+FTBasicItem class >> unexpandedFormSet [
+	^ self theme treeUnexpandedFormSet
 ]
 
 { #category : 'accessing' }
@@ -125,7 +125,7 @@ FTBasicItem >> collpasedButton [
 		target: self;
 		actionSelector: #expandAndRefresh;
 		arguments: {};
-		labelGraphic: self class unexpandedForm;
+		labelFormSet: self class unexpandedFormSet;
 		color: Color transparent;
 		helpText: 'Expand Item';
 		borderWidth: 0
@@ -199,7 +199,7 @@ FTBasicItem >> expandedButton [
 		target: self;
 		actionSelector: #collapseAndRefresh;
 		arguments: {};
-		labelGraphic: self class expandedForm;
+		labelFormSet: self class expandedFormSet;
 		color: Color transparent;
 		helpText: 'Unexpand Item';
 		borderWidth: 0
@@ -231,12 +231,12 @@ FTBasicItem >> initialize [
 	recentlyChanged := false
 ]
 
-{ #category : 'accessing' }
+{ #category : 'testing' }
 FTBasicItem >> isExpanded [
 	^ isExpanded
 ]
 
-{ #category : 'accessing' }
+{ #category : 'testing' }
 FTBasicItem >> isRootItem [
 	^ self depth = 0
 ]

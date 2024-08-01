@@ -11,15 +11,15 @@ BaselineOfGeneralTests >> baseline: spec [
 
 	<baseline>
 	| repository |
-	repository := self packageRepositoryURL.
-	spec for: #'common' do: [
+	repository := self packageRepositoryURLForSpec: spec.
+	spec for: #common do: [
 		spec
 			package: 'Debugging-Utils-Tests';
 			package: 'NumberParser-Tests';
 			package: 'AST-Core-Tests';
-			package: 'RPackage-Tests';
-			package: 'Monticello-Tests';	"required by MonticelloMocks"
-			package: 'System-Installers-Tests' ;
+			package: 'Kernel-CodeModel-Tests';
+			package: 'Monticello-Tests';
+			"required by MonticelloMocks"package: 'System-Installers-Tests';
 			package: 'MonticelloMocks';
 			package: 'Fuel-Core-Tests';
 			package: 'FormCanvas-Tests';
@@ -29,30 +29,24 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Debugger-Model-Tests';
 			package: 'Debugger-Oups-Tests';
 			package: 'EmbeddedFreeType-Tests';
-
-
 			baseline: 'Epicea' with: [
 				spec
 					repository: repository;
 					loads: #Tests ];
-
-			package: 'FileSystem-Tests-Memory';
+			package: 'FileSystem-Memory-Tests';
 			package: 'Fonts-Infrastructure-Tests';
-
 			package: 'Graphics-Tests';
-
 			package: 'Morphic-Tests';
-
 			package: 'Morphic-Widgets-FastTable-Tests';
 			package: 'NECompletion-Tests';
 			package: 'ProfStef-Tests';
 			package: 'Regex-Core-Tests';
-			package: 'Ring-Definitions-Tests-Monticello';
+			package: 'Ring-Definitions-Monticello-Tests';
 			package: 'Rubric-Tests';
 			package: 'ScriptingExtensions-Tests';
 			package: 'STON-Tests';
 			package: 'System-Caching-Tests';
-			package: 'System-Clipboard-Tests';
+			package: 'System-Utilities-Tests';
 			package: 'System-Hashing-Tests';
 			package: 'System-History-Tests';
 			package: 'System-Localization-Tests';
@@ -69,10 +63,11 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Tools-Tests';
 			package: 'Zinc-Resource-Meta-Tests';
 			package: 'Zinc-HTTP-Examples';
-			package: 'Zinc-Tests';	"requires Zinc-Resource-Meta-Tests"
-			package: 'System-Identification-Tests'	;
-			package: 'System-DependenciesTests';
+			package: 'Zinc-Tests';
+			"requires Zinc-Resource-Meta-Tests"package:
+			'System-Identification-Tests';
+			package: 'System-Dependencies-Tests';
 			package: 'System-BasicCommandLineHandler-Tests';
 			package: 'Transcript-NonInteractive-Tests';
-			package: 'PharoDocComment-Tests'	"standalone" ]
+			package: 'PharoDocComment-Tests' "standalone" ]
 ]

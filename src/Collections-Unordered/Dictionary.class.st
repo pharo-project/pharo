@@ -476,14 +476,6 @@ Dictionary >> bindingOf: varName [
 ]
 
 { #category : 'enumerating' }
-Dictionary >> bindingsDo: aBlock [
-
-	"An alias for associationsDo:"
-
-	self associationsDo: aBlock
-]
-
-{ #category : 'enumerating' }
 Dictionary >> collect: aBlock [
 	"Evaluate aBlock with each of my values as the argument.  Collect the
 	resulting values into a collection that is like me. Answer with the new
@@ -494,21 +486,6 @@ Dictionary >> collect: aBlock [
 		newCollection at: each key put: (aBlock value: each value).
 	].
 	^newCollection
-]
-
-{ #category : 'adding' }
-Dictionary >> declare: key from: aDictionary [
-	"Add key to the receiver. If key already exists, do nothing. If aDictionary
-	includes key, then remove it from aDictionary and use its association as
-	the element of the receiver."
-
-	(self includesKey: key) ifTrue: [^ self].
-	(aDictionary includesKey: key)
-		ifTrue:
-			[self add: (aDictionary associationAt: key).
-			aDictionary removeKey: key]
-		ifFalse:
-			[self add: key -> nil]
 ]
 
 { #category : 'enumerating' }
@@ -948,7 +925,7 @@ Dictionary >> select: selectBlock thenCollect: collectBlock [
 	^ newDictionary
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Dictionary >> storeOn: aStream [
 	| noneYet |
 	aStream nextPutAll: '(('.

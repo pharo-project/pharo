@@ -121,7 +121,7 @@ MetaLink >> arguments [
 MetaLink >> arguments: anArray [
 	"anArray - elements can be either:
 		- aSymbol, which will be converted into an instance of RFReification. For a list of reifications available to the node to which you wish to link, do: `aNode availableReifications`. If you don't have the particular node handy, since the reifications depend only on the node's class, you can also do e.g. `RBMethodNode new availableReifications`
-		- anRBNode"
+		- anASTNode"
 
 	arguments := anArray.
 	self invalidate

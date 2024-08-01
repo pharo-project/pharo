@@ -19,7 +19,7 @@ Class {
 { #category : 'converting' }
 SycMigrateReferencesOfClassCommand >> asRefactorings [
 	| refactoring |
-	refactoring :=  RBDeprecateClassRefactoring deprecate: targetClass in: newName name.
+	refactoring :=  RBDeprecateClassRefactoring deprecate: targetClass name in: newName name.
 	refactoring shouldFixSubclasses: false.
 	refactoring shouldCopyExtensions: false.
 	refactoring shouldRemoveExtensions: false.

@@ -39,7 +39,7 @@ TraitedClass class >> classTrait [
 
 { #category : 'testing' }
 TraitedClass class >> isTrait [
-	<reflection: 'Class structural inspection - Traits'>
+	<reflection: 'Class structural inspection - Class kind testing'>
 	^ true
 ]
 
@@ -143,6 +143,13 @@ TraitedClass >> hasTraitComposition [
 TraitedClass >> includesLocalSelector: aSymbol [
 	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ self isLocalSelector: aSymbol
+]
+
+{ #category : 'testing' }
+TraitedClass >> includesTrait: aTrait [
+
+	<reflection: 'Class structural inspection - Traits'>
+	^ self traitComposition includesTrait: aTrait
 ]
 
 { #category : 'testing' }

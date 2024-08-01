@@ -271,6 +271,12 @@ ZnBufferedWriteStream >> printOn: aStream [
 ]
 
 { #category : 'accessing' }
+ZnBufferedWriteStream >> reset [
+	self flushBuffer.
+	stream reset
+]
+
+{ #category : 'accessing' }
 ZnBufferedWriteStream >> setToEnd [
 
 	self flush.

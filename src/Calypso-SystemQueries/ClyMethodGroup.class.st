@@ -57,6 +57,12 @@ ClyMethodGroup class >> decorateBrowserItem: aBrowserItem by: anEnvironmentPlugi
 ]
 
 { #category : 'testing' }
+ClyMethodGroup class >> isBasedOnExtensions [
+
+	^ false
+]
+
+{ #category : 'testing' }
 ClyMethodGroup class >> isBasedOnProtocol [
 	^false
 ]

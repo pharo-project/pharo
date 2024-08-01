@@ -57,7 +57,9 @@ export PHARO_CI_TESTING_ENVIRONMENT=1
 ./pharo bootstrap.image
 #Adding packages removed from the bootstrap
 ./pharo bootstrap.image loadHermes Hermes-Extensions.hermes --save
-./pharo bootstrap.image loadHermes  Kernel-Chronology-Extras.hermes AST-Core.hermes Jobs.hermes InitializePackagesCommandLineHandler.hermes --save --no-fail-on-undeclared --on-duplication=ignore
+./pharo bootstrap.image loadHermes System-Time.hermes AST-Core.hermes InitializePackagesCommandLineHandler.hermes Random-Core.hermes System-Model.hermes System-NumberPrinting.hermes --save --no-fail-on-undeclared --on-duplication=ignore
+./pharo bootstrap.image perform --save ChronologyConstants initialize
+./pharo bootstrap.image perform --save DateAndTime initialize
 
 #Initializing the package manager
 ./pharo bootstrap.image initializePackages --packages --protocols=protocolsKernel.txt --save
@@ -66,7 +68,7 @@ export PHARO_CI_TESTING_ENVIRONMENT=1
 ./pharo bootstrap.image loadHermes Traits.hermes --save
 
 #Loading Tests
-./pharo bootstrap.image loadHermes SUnit-Core.hermes JenkinsTools-Core.hermes JenkinsTools-Core.hermes SUnit-Tests.hermes --save --no-fail-on-undeclared --on-duplication=ignore
+./pharo bootstrap.image loadHermes Debugging-Utils.hermes SUnit-Core.hermes JenkinsTools-Core.hermes JenkinsTools-Core.hermes SUnit-Tests.hermes --save --no-fail-on-undeclared --on-duplication=ignore
 
 #Running tests
 ./pharo bootstrap.image test --junit-xml-output --stage-name=${2} SUnit-Core SUnit-Tests

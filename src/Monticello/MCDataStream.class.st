@@ -270,15 +270,6 @@ MCDataStream >> beginInstance: aClass size: anInteger [
 	self nextPut: aClass name
 ]
 
-{ #category : 'write and read' }
-MCDataStream >> beginReference: anObject [
-    "We're starting to read anObject. Remember it and its reference
-     position (if we care; ReferenceStream cares). Answer the
-     reference position."
-
-    ^ 0
-]
-
 { #category : 'other' }
 MCDataStream >> byteStream [
 	^ byteStream
@@ -303,33 +294,10 @@ MCDataStream >> contents [
 ]
 
 { #category : 'other' }
-MCDataStream >> errorWriteReference: anInteger [
-    "PRIVATE -- Raise an error because this case of nextPut:'s perform:
-     shouldn't be called."
-
-    self error: 'This should never be called'
-]
-
-{ #category : 'other' }
 MCDataStream >> flush [
     "Guarantee that any writes to me are actually recorded on disk."
 
     ^ byteStream flush
-]
-
-{ #category : 'write and read' }
-MCDataStream >> getCurrentReference [
-    "PRIVATE -- Return the currentReference posn.
-     Overridden by ReferenceStream."
-
-    ^ 0
-]
-
-{ #category : 'write and read' }
-MCDataStream >> maybeBeginReference: internalObject [
-	"Do nothing.  See ReferenceStream|maybeBeginReference:"
-
-	^ internalObject
 ]
 
 { #category : 'write and read' }
@@ -368,7 +336,7 @@ MCDataStream >> next [
 		 Either way, we must not re-internalize the object here."
 	selector == #readReference ifTrue: [^ anObject].
 	internalObject := anObject comeFullyUpOnReload: self.
-	^ self maybeBeginReference: internalObject
+	^ internalObject
 ]
 
 { #category : 'other' }
@@ -382,27 +350,14 @@ MCDataStream >> next: anInteger [
     ^ array
 ]
 
-{ #category : 'other' }
-MCDataStream >> nextAndClose [
-	"Speedy way to grab one object.  Only use when we are inside an object binary file.  Do not use for the start of a SmartRefStream mixed code-and-object file."
-
-	| obj |
-	obj := self next.
-	self close.
-	^ obj
-]
-
 { #category : 'write and read' }
 MCDataStream >> nextPut: anObject [
 	"Write anObject to the receiver stream. Answer anObject."
 	| typeID selector objectToStore |
 
 	typeID := self typeIDFor: anObject.
-	(self tryToPutReference: anObject typeID: typeID)
-		ifTrue: [^ anObject].
 
-	objectToStore := (self objectIfBlocked: anObject).
-	objectToStore == anObject ifFalse: [typeID := self typeIDFor: objectToStore].
+	objectToStore := anObject.
 
 	byteStream nextPut: typeID.
 	selector := self class writeSelectors at: typeID.
@@ -422,32 +377,15 @@ MCDataStream >> nextPutAll: aCollection [
 { #category : 'write and read' }
 MCDataStream >> objectAt: anInteger [
 	"PRIVATE -- Read & return the object at a given stream position.  08:18 tk  anInteger is a relative file position. "
-	| savedPosn anObject refPosn |
+	| savedPosn anObject |
 
 	savedPosn := byteStream position.	"absolute"
-	refPosn := self getCurrentReference.	"relative position"
 
 	byteStream position: anInteger + basePos.	"was relative"
 	anObject := self next.
 
-	self setCurrentReference: refPosn.	"relative position"
 	byteStream position: savedPosn.		"absolute"
 	^ anObject
-]
-
-{ #category : 'write and read' }
-MCDataStream >> objectIfBlocked: anObject [
-	"We don't do any blocking"
-
-	^ anObject
-]
-
-{ #category : 'write and read' }
-MCDataStream >> outputReference: referencePosn [
-	"PRIVATE -- Output a reference to the object at integer stream position referencePosn (relative to basePos). To output a weak reference to an object not yet written, supply (self vacantRef) for referencePosn."
-
-	byteStream nextPut: 10. "reference typeID"
-	byteStream nextNumber: 4 put: referencePosn	"relative position"
 ]
 
 { #category : 'write and read' }
@@ -458,14 +396,12 @@ MCDataStream >> readArray [
 	 the Array. beginReference: will be sent again when we return to
 	 next, but that's ok as long as we save and restore the current
 	 reference position over recursive calls to next."
-	| count array refPosn |
 
+	| count array |
 	count := byteStream nextNumber: 4.
 
-	refPosn := self beginReference: (array := Array new: count).		"relative pos"
-	1 to: count do: [:i |
-		array at: i put: self next].
-	self setCurrentReference: refPosn.		"relative pos"
+	array := Array new: count. "relative pos"
+	1 to: count do: [ :i | array at: i put: self next ].
 	^ array
 ]
 
@@ -485,17 +421,14 @@ MCDataStream >> readInstance [
 	   recursive calls to next.
 	Let the instance, not the class read the data.  "
 
-	| instSize aSymbol refPosn anObject newClass |
+	| instSize aSymbol anObject newClass |
 	instSize := (byteStream nextNumber: 4) - 1.
-	refPosn := self getCurrentReference.
 	aSymbol := self next.
 	newClass := Smalltalk globals at: aSymbol asSymbol.
 	anObject := newClass isVariable
 		ifFalse: [ newClass basicNew ]
 		ifTrue: [ newClass basicNew: instSize - newClass instSize ].	"Create object here"
-	self setCurrentReference: refPosn.	"before readDataFrom:size:"
 	anObject := anObject readDataFrom: self size: instSize.
-	self setCurrentReference: refPosn.	"before returning to next"
 	^ anObject
 ]
 
@@ -543,13 +476,11 @@ MCDataStream >> readTrue [
 
 { #category : 'write and read' }
 MCDataStream >> readWordLike [
-	| refPosn aSymbol newClass anObject |
+	| aSymbol newClass anObject |
 	"Can be used by any class that is bits and not bytes (WordArray, Bitmap, SoundBuffer, etc)."
-	refPosn := self getCurrentReference.
 	aSymbol := self next.
 	newClass := Smalltalk globals at: aSymbol asSymbol.
 	anObject := newClass newFromStream: byteStream.	"Size is number of long words."
-	self setCurrentReference: refPosn.	"before returning to next"
 	^ anObject
 ]
 
@@ -574,12 +505,6 @@ MCDataStream >> rootObject: anObject [
 	topCall := anObject
 ]
 
-{ #category : 'write and read' }
-MCDataStream >> setCurrentReference: refPosn [
-    "PRIVATE -- Set currentReference to refPosn.
-     Noop here. Cf. ReferenceStream."
-]
-
 { #category : 'other' }
 MCDataStream >> setStream: aStream [
 	"PRIVATE -- Initialization method."
@@ -589,34 +514,10 @@ MCDataStream >> setStream: aStream [
 ]
 
 { #category : 'other' }
-MCDataStream >> setStream: aStream reading: isReading [
-	"PRIVATE -- Initialization method."
-
-	aStream binary.
-	basePos := aStream position.	"Remember where we start.  Earlier part of file contains a class or method file-in.  Allow that to be edited.  We don't deal in absolute file locations."
-	byteStream := aStream.
-]
-
-{ #category : 'other' }
 MCDataStream >> size [
     "Answer the stream's size."
 
     ^ byteStream size
-]
-
-{ #category : 'write and read' }
-MCDataStream >> tryToPutReference: anObject typeID: typeID [
-    "PRIVATE -- If we support references for type typeID, and if
-       anObject already appears in my output stream, then put a
-       reference to the place where anObject already appears. If we
-       support references for typeID but didn't already put anObject,
-       then associate the current stream position with anObject in
-       case one wants to nextPut: it again.
-     Return true after putting a reference; false if the object still
-       needs to be put.
-     For DataStream this is trivial. ReferenceStream overrides this."
-
-    ^ false
 ]
 
 { #category : 'write and read' }

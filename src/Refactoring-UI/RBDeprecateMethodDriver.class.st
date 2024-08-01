@@ -17,9 +17,9 @@ Class {
 		'useInsteadSelector',
 		'selectorToDeprecate'
 	],
-	#category : 'Refactoring-UI-Drivers',
+	#category : 'Refactoring-UI-Drivers to migrate to new architecture',
 	#package : 'Refactoring-UI',
-	#tag : 'Drivers'
+	#tag : 'Drivers to migrate to new architecture'
 }
 
 { #category : 'instance creation' }
@@ -52,7 +52,7 @@ RBDeprecateMethodDriver >> runRefactoring [
 							"the user pressed cancel"
 							useInsteadSelector ifNil: [ ^ self ].
 							refactoring newSelector: useInsteadSelector.
-							isValid := refactoring applicabilityPreconditions check.
+							isValid := refactoring failedApplicabilityPreconditions isEmpty.
 							isValid ifFalse: [ self selectorToReplaceDeprecatedSelector ].
 							isValid ] whileFalse.
 							

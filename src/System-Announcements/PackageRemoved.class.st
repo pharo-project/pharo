@@ -8,8 +8,3 @@ Class {
 	#package : 'System-Announcements',
 	#tag : 'System-Packages'
 }
-
-{ #category : 'class initialization' }
-PackageRemoved class >> initialize [
-	self deprecatedAliases: { #RPackageUnregistered }
-]

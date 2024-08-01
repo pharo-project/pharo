@@ -252,13 +252,11 @@ MCGitBasedNetworkRepository class >> projectDirectoryFrom: projectPath version: 
 
 { #category : 'version patterns' }
 MCGitBasedNetworkRepository class >> projectVersionFromString: aString [
-  "strip leading $v if present and return an instance of MetacelloVersionNumber"
+	"strip leading $v if present and return an instance of MetacelloVersionNumber"
 
-  | versionString |
-  versionString := aString.
-  (versionString beginsWith: 'v')
-    ifTrue: [ versionString := versionString copyFrom: 2 to: versionString size ].
-  ^ MetacelloVersionNumber fromString: versionString
+	| versionString |
+	versionString := (aString beginsWith: 'v') ifTrue: [ aString allButFirst ] ifFalse: [ aString ].
+	^ MetacelloVersionNumber fromString: versionString
 ]
 
 { #category : 'private' }
@@ -270,7 +268,7 @@ MCGitBasedNetworkRepository class >> projectZipUrlFor: projectPath versionString
 MCGitBasedNetworkRepository class >> resetCacheDirectoryIfInvalid [
   "Reset if invalid"
 
-  repoCacheDirectory notNil
+  repoCacheDirectory isNotNil
     and: [ 
       (MCFileTreeFileUtils current directoryExists: repoCacheDirectory)
         ifFalse: [ repoCacheDirectory := nil ] ]
@@ -348,17 +346,12 @@ MCGitBasedNetworkRepository >> calculateRepositoryDirectory [
 
 { #category : 'initialization' }
 MCGitBasedNetworkRepository >> canUpgradeTo: anMCGitBasedRepository [
-  (anMCGitBasedRepository isKindOf: self class)
-    ifFalse: [ ^ false ].
-  ^ self projectPath = anMCGitBasedRepository projectPath
-    and: [ self repoPath = anMCGitBasedRepository repoPath ]
-]
 
-{ #category : 'accessing' }
-MCGitBasedNetworkRepository >> closestAncestorVersionFor: anAncestry ifNone: errorBlock [
-	^ self localRepository 
-		closestAncestorVersionFor: anAncestry 
-		ifNone: errorBlock
+	(anMCGitBasedRepository isKindOf: self class) ifFalse: [ ^ false ].
+
+	^ self projectPath = anMCGitBasedRepository projectPath and: [
+		  self repoPath = anMCGitBasedRepository repoPath and: [
+			  self projectVersion = anMCGitBasedRepository projectVersion ] ]
 ]
 
 { #category : 'descriptions' }
@@ -405,6 +398,14 @@ MCGitBasedNetworkRepository >> ensureLocalRepository [
 	self resolveLocalRespository
 ]
 
+{ #category : 'fetching' }
+MCGitBasedNetworkRepository >> fetchPackageNamed: aName [
+
+	| references |
+	references := self packageNamed: aName.
+	MCCacheRepository default storeVersion: references
+]
+
 { #category : 'initialization' }
 MCGitBasedNetworkRepository >> flushCache [
   "the directory acts like a cache since we download the directory from a git-based repository (github, bitbucket, etc.)"
@@ -429,17 +430,6 @@ MCGitBasedNetworkRepository >> flushForScriptGet [
 		flushProjectEntry: self projectPath 
 		version: self projectVersion.
     self localRepository flushForScriptGet
-]
-
-{ #category : 'accessing' }
-MCGitBasedNetworkRepository >> goferReferences [
-	"delegate collection to local repository, but change them to be from *this* repository."
-
-	^ self localRepository goferReferences 
-		collect: [ :each | 
-			GoferResolvedReference 
-				name: each name 
-				repository: self ]
 ]
 
 { #category : 'accessing' }
@@ -475,6 +465,15 @@ MCGitBasedNetworkRepository >> isValid [
     ^ true
 ]
 
+{ #category : 'accessing' }
+MCGitBasedNetworkRepository >> loadPackageNamed: aString intoLoader: aMCVersionLoader [
+
+	| found |
+	found := self packageNamed: aString.
+	aMCVersionLoader addVersion: found.
+	^ { found . self }
+]
+
 { #category : 'private' }
 MCGitBasedNetworkRepository >> localRepository [
 	self ensureLocalRepository.
@@ -490,6 +489,16 @@ MCGitBasedNetworkRepository >> metacelloProjectClassFor: aScriptEngine [
 { #category : 'private' }
 MCGitBasedNetworkRepository >> normalizeTagsData: jsonObject [
   ^ self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+MCGitBasedNetworkRepository >> packageNamed: aName ifPresent: presentBlock ifAbsent: absentBlock [
+	"delegate collection to local repository, but change them to be from *this* repository."
+
+	^ self localRepository
+		  packageNamed: aName
+		  ifPresent: presentBlock
+		  ifAbsent: absentBlock
 ]
 
 { #category : 'accessing' }
@@ -660,11 +669,6 @@ MCGitBasedNetworkRepository >> validateLocalRepository [
 		ifTrue: [ ^ self ].
 	self flushCache.
  	self resolveLocalRespository.
-]
-
-{ #category : 'accessing' }
-MCGitBasedNetworkRepository >> versionFrom: aVersionReferenceString [
-	^ self localRepository versionFrom: aVersionReferenceString
 ]
 
 { #category : 'accessing' }

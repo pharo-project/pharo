@@ -34,7 +34,6 @@ Class {
 		'EventStats',
 		'NormalCursor',
 		'PasteBuffer',
-		'ShowEvents',
 		'UpperHandLimit'
 	],
 	#category : 'Morphic-Core-Kernel',
@@ -116,14 +115,6 @@ HandMorph class >> settingsOn: aBuilder [
 		selector: #logEventStatsEnabled;
 		description: 'Enable/disable gathering global statistics of events handled by HandMorphs.
 "HandMorph eventStats inspect"'
-]
-
-{ #category : 'utilities' }
-HandMorph class >> showEvents: aBool [
-	"HandMorph showEvents: true"
-	"HandMorph showEvents: false"
-	ShowEvents := aBool.
-	aBool ifFalse: [ self currentWorld invalidRect: (0@0 extent: 500@120) ]
 ]
 
 { #category : 'accessing' }
@@ -521,8 +512,6 @@ HandMorph >> handleEvent: anEvent [
 	captureBlock ifNotNil: [ ^ captureBlock value: anEvent ].
 	evt isMouseOver ifTrue:[^self sendMouseEvent: evt].
 
-	self showDebugEvent: evt.
-
 	"Notify listeners"
 	self sendListenEvent: evt to: self eventListeners.
 
@@ -578,7 +567,6 @@ HandMorph >> handleEvent: anEvent [
 			ifTrue:[self dropMorphs: evt]
 			ifFalse:[self sendMouseEvent: evt].
 	].
-	self showMouseFocusEvent: evt.
 	self mouseOverHandler processMouseOver: lastMouseEvent
 ]
 
@@ -770,15 +758,19 @@ HandMorph >> nonCachingFullDrawOn: aCanvas [
 
 	submorphs isEmpty ifTrue: [^ self drawOn: aCanvas].  "just draw the hand itself"
 	aCanvas asShadowDrawingCanvas
-		translateBy: self shadowOffset during:[:shadowCanvas| | shadowForm |
+		translateBy: self shadowOffset during:[:shadowCanvas| | shadowFormSet bnds canvas |
 		"Note: We use a shadow form here to prevent drawing
 		overlapping morphs multiple times using the transparent
 		shadow color."
-		shadowForm := self shadowForm.
+		bnds := Rectangle merging: (submorphs collect: [:m | m fullBounds]).
+		canvas := aCanvas shadowDrawingCanvasWithExtent: bnds extent shadowColor: Color black.
+		canvas translateBy: bnds topLeft negated
+			during:[:tempCanvas| self drawSubmorphsOn: tempCanvas].
+		shadowFormSet := FormSet extent: bnds extent depth: 1 forms: { canvas form }.
 "
 shadowForm displayAt: shadowForm offset negated. Display forceToScreen: (0@0 extent: shadowForm extent).
 "
-		shadowCanvas paintImage: shadowForm at: shadowForm offset.  "draw shadows"
+		shadowCanvas paintFormSet: shadowFormSet at: bnds topLeft.  "draw shadows"
 	].
 	"draw morphs in front of shadows"
 	self drawSubmorphsOn: aCanvas.
@@ -1114,18 +1106,6 @@ HandMorph >> sendMouseEvent: anEvent [
 	^self sendEvent: anEvent focus: self mouseFocus clear:[self mouseFocus: nil]
 ]
 
-{ #category : 'drawing' }
-HandMorph >> shadowForm [
-	"Return a 1-bit shadow of my submorphs.  Assumes submorphs is not empty"
-	| bnds canvas |
-	bnds := Rectangle merging: (submorphs collect: [:m | m fullBounds]).
-	canvas := (Display defaultCanvasClass extent: bnds extent depth: 1)
-		asShadowDrawingCanvas: Color black.
-	canvas translateBy: bnds topLeft negated
-		during:[:tempCanvas| self drawSubmorphsOn: tempCanvas].
-	^ canvas form offset: bnds topLeft
-]
-
 { #category : 'drop shadows' }
 HandMorph >> shadowOffset [
 
@@ -1135,27 +1115,6 @@ HandMorph >> shadowOffset [
 { #category : 'accessing' }
 HandMorph >> shiftPressed [
 	^lastMouseEvent shiftPressed
-]
-
-{ #category : 'events - processing' }
-HandMorph >> showDebugEvent: evt [
-
-	ShowEvents == true ifTrue: [
-		| ofs|
-		Display fill: (0@0 extent: 500@120) rule: Form over fillColor: Color white.
-		ofs := (owner hands indexOf: self) - 1 * 60.
-		evt printString displayAt: (0@ofs) + (evt isKeyboard ifTrue: [0@30] ifFalse: [0@0]).
-		self keyboardFocus printString displayAt: (0@ofs)+(0@45).
-		]
-]
-
-{ #category : 'events - processing' }
-HandMorph >> showMouseFocusEvent: evt [
-
-	ShowEvents == true ifTrue: [
-		| ofs|
-		ofs := (owner hands indexOf: self) - 1 * 60.
-		self mouseFocus printString displayAt: (0@ofs) + (0@15)]
 ]
 
 { #category : 'cursor' }

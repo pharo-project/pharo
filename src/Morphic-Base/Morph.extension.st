@@ -203,9 +203,8 @@ Morph >> changeTableLayout [
 
 { #category : '*Morphic-Base' }
 Morph >> defaultBalloonColor [
-	^ Display depth <= 2
-		ifTrue: [Color white]
-		ifFalse: [BalloonMorph balloonColor]
+
+	^ BalloonMorph balloonColor
 ]
 
 { #category : '*Morphic-Base' }
@@ -251,7 +250,7 @@ Morph >> dispatchKeystrokeForEvent: evt [
 Morph >> exportAs: anExtension using: aWriter [
 
 	| reference |
-	reference := UIManager default
+	reference := self morphicUIManager
 		chooseForSaveFileReference: 'Save Morph as ', anExtension asUppercase
 		extensions: { anExtension }
 		path: (self externalName, '.' , anExtension).
@@ -274,7 +273,7 @@ Morph >> exportAsGIF [
 Morph >> exportAsJPEG [
 	"Export the receiver's image as a JPEG"
 
-	self exportAs: 'jpeg' using: PluginBasedJPEGReadWriter
+	self exportAs: 'jpeg' using: JPEGReadWriter
 ]
 
 { #category : '*Morphic-Base' }
@@ -430,19 +429,6 @@ Morph >> rowMorphForNode: aNode inColumn: aColumn [
 		].
 
 	^ rm
-]
-
-{ #category : '*Morphic-Base' }
-Morph >> setArrowheads [
-	"Let the user edit the size of arrowheads for this object"
-
-	| aParameter result  |
-	aParameter := self renderedMorph valueOfProperty:  #arrowSpec ifAbsent: [PolygonMorph defaultArrowSpec].
-	result := Morph obtainArrowheadFor: 'Head size for arrowheads: ' translated defaultValue: aParameter asString.
-	result ifNotNil:
-			[self renderedMorph  setProperty: #arrowSpec toValue: result]
-		ifNil:
-			[ self inform: 'Invalid input']
 ]
 
 { #category : '*Morphic-Base' }

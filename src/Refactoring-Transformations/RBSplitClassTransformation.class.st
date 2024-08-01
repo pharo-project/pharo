@@ -108,19 +108,18 @@ RBSplitClassTransformation >> applicabilityPreconditions [
 	class := self definingClass.
 
 	"check whether instVar exist"
-	^ (RBCondition isValidClassName: newClassName) & self isNotGlobal
-	  & (RBCondition
+	^ {
+		  ((RBCondition isValidClassName: newClassName) & self isNotGlobal).
+		  (RBCondition
 			   isValidInstanceVariableName: referenceVariableName
-			   for: class)
-	  &
+			   for: class).
 		  (RBCondition
 			   hierarchyOf: class
-			   definesVariable: referenceVariableName) not
-	  & (RBCondition isGlobal: referenceVariableName in: self model) not
-	  &
+			   definesVariable: referenceVariableName) not.
+		  (RBCondition isGlobal: referenceVariableName in: self model) not.
 		  (RBCondition
 			   definesTemporaryVariable: referenceVariableName
-			   in: class) not
+			   in: class) not }
 ]
 
 { #category : 'executing' }
@@ -175,7 +174,7 @@ RBSplitClassTransformation >> isNotGlobal [
 	^ (RBCondition isGlobal: newClassName in: self model) not
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBSplitClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

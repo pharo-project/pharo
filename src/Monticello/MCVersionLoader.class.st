@@ -53,40 +53,30 @@ MCVersionLoader >> announceLoadStop: aString [
 ]
 
 { #category : 'private' }
-MCVersionLoader >> basicLoadWithNameLike: aString [
+MCVersionLoader >> basicLoad [
+
 	| loader |
-	
-	self checkForModificationsIfCancel: [ ^ self] ifMerge: [ ^ self mergeVersions ].
-	
+	self
+		checkForModificationsIfCancel: [ ^ self ]
+		ifMerge: [ ^ self mergeVersions ].
+
 	loader := versions size > 1
-		ifTrue: [MCMultiPackageLoader new]
-		ifFalse: [MCPackageLoader new].
-		
-	versions do: [:ea |
-		ea canOptimizeLoading
-			ifTrue: [ea patch applyTo: loader]
-			ifFalse: [loader updatePackage: ea package withSnapshot: ea snapshot]].
-		
-	loader loadWithNameLike: aString.
-	versions do: [:ea | ea workingCopy loaded: ea]
+		          ifTrue: [ MCMultiPackageLoader new ]
+		          ifFalse: [ MCPackageLoader new ].
+	versions do: [ :ea |
+		loader updatePackage: ea package withSnapshot: ea snapshot ].
+
+	loader load.
+	versions do: [ :ea | ea workingCopy loaded: ea ]
 ]
 
 { #category : 'checking' }
 MCVersionLoader >> checkForModificationsIfCancel: cancelBlock ifMerge: mergeBlock [
-	| modifications |
-	
-	"first check if there are local packages which are dirty"
-	modifications := self localModifications.
-	modifications isEmpty ifTrue: [ ^ self].
-	
-	"ask the user what to do.. merge | overwrite | abort"
-	^ self warnAboutLosingChangesTo: modifications ifCancel: cancelBlock ifMerge: mergeBlock
-]
 
-{ #category : 'checking' }
-MCVersionLoader >> checkIfDepIsOlder: aDependency [
-	^ aDependency isOlder not 
-		or: [self confirm: 'load older dependency ', aDependency versionInfo name , '?']
+	"first check if there are local packages which are dirty"
+	self localModifications ifNotEmpty: [ :modifications |
+		"ask the user what to do.. merge | overwrite | abort"
+		^ self warnAboutLosingChangesTo: modifications ifCancel: cancelBlock ifMerge: mergeBlock ]
 ]
 
 { #category : 'checking' }
@@ -109,18 +99,6 @@ MCVersionLoader >> ensurePackage: mcPackage [
 		
 ]
 
-{ #category : 'testing' }
-MCVersionLoader >> hasLocalModifications [
-
-	^ self localModifications isNotEmpty
-]
-
-{ #category : 'testing' }
-MCVersionLoader >> hasVersions [
-
-	^ versions isEmpty not
-]
-
 { #category : 'initialization' }
 MCVersionLoader >> initialize [
 	super initialize.
@@ -129,19 +107,21 @@ MCVersionLoader >> initialize [
 
 { #category : 'loading' }
 MCVersionLoader >> load [
-	RPackageSet withCacheDo: [   
-		| version |
-		version := versions first. 
-		[ self ensurePackage: version package.
-		  self loadWithNameLike: version info name ] asJob
-				title: 'Loading ', version info name asString;
-				run ]
+
+	| version |
+	version := versions first.
+	[
+	self ensurePackage: version package.
+	self loadWithNameLike: version info name ] asJob
+		title: 'Loading ' , version info name asString;
+		run
 ]
 
 { #category : 'loading' }
 MCVersionLoader >> loadWithNameLike: aString [
 	" this is THE central entrypoint for all loading (gopher, metacello, monticello, ...) "
-	^ self announceLoad: aString do: [ self basicLoadWithNameLike: aString ]
+
+	^ self announceLoad: aString do: [ self basicLoad ]
 ]
 
 { #category : 'checking' }
@@ -152,10 +132,10 @@ MCVersionLoader >> localModifications [
 
 { #category : 'loading' }
 MCVersionLoader >> mergeVersions [
-	|merger|
-	merger :=  MCVersionMerger new.
-	merger addVersions: self localModifications.
-	merger merge.
+
+	MCVersionMerger new
+		addVersions: self localModifications;
+		merge
 ]
 
 { #category : 'checking' }

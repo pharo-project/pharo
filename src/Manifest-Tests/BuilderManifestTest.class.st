@@ -22,10 +22,7 @@ BuilderManifestTest >> setUp [
 { #category : 'running' }
 BuilderManifestTest >> tearDown [
 
-	testingEnvironment at: #ManifestManifestResourcesTests ifPresent: [ :class |
-		class
-			removeFromChanges;
-			removeFromSystem ].
+	testingEnvironment at: #ManifestManifestResourcesTests ifPresent: [ :class | class removeFromSystem ].
 	super tearDown
 ]
 
@@ -207,10 +204,7 @@ BuilderManifestTest >> testContainsToDo [
 BuilderManifestTest >> testCreationManifest [
 
 	manifestBuilder := TheManifestBuilder new.
-	testingEnvironment at: #ManifestManifestResourcesTests ifPresent: [ :class |
-		class
-			removeFromChanges;
-			removeFromSystem ].
+	testingEnvironment at: #ManifestManifestResourcesTests ifPresent: [ :class | class removeFromSystem ].
 	self assert: (manifestBuilder manifestOf: MFClassA) isNil.
 	self assert: (manifestBuilder createManifestOf: MFClassA) isNotNil.
 	self assert: (manifestBuilder manifestOf: MFClassA) isNotNil
@@ -220,10 +214,7 @@ BuilderManifestTest >> testCreationManifest [
 BuilderManifestTest >> testCreationManifestOn [
 
 	manifestBuilder := TheManifestBuilder new.
-	testingEnvironment at: #ManifestManifestResourcesTests ifPresent: [ :class |
-		class
-			removeFromChanges;
-			removeFromSystem ].
+	testingEnvironment at: #ManifestManifestResourcesTests ifPresent: [ :class | class removeFromSystem ].
 	self assert: (manifestBuilder manifestOf: MFClassA) isNil.
 	self assert: (TheManifestBuilder of: MFClassA) isNotNil.
 	self assert: (manifestBuilder manifestOf: MFClassA) isNotNil

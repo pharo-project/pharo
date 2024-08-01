@@ -134,6 +134,12 @@ RBClass >> directlyDefinesPoolDictionary: aString [
 	^self sharedPoolNames includes: aString asSymbol
 ]
 
+{ #category : 'testing' }
+RBClass >> hasSubclasses [
+
+	^ self subclasses isNotEmpty
+]
+
 { #category : 'initialization' }
 RBClass >> initialize [
 	super initialize.
@@ -155,6 +161,13 @@ RBClass >> isEmptyClass [
 ]
 
 { #category : 'testing' }
+RBClass >> isManifest [ 
+
+	^ self superclass notNil and: [ self superclass name = #PackageManifest ]
+
+]
+
+{ #category : 'testing' }
 RBClass >> isMeta [
 
 	^false
@@ -170,6 +183,12 @@ RBClass >> isSelfEvaluating [
 RBClass >> isSharedPool [
 
 	^ (self allSuperclasses collect:  [:each | each name]) includes: #SharedPool
+]
+
+{ #category : 'accessing' }
+RBClass >> methods [
+
+	^ self allMethods asOrderedCollection 
 ]
 
 { #category : 'querying' }

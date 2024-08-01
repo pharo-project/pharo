@@ -5,10 +5,20 @@ Use ""self currentWorld"" instead.
 Class {
 	#name : 'ReUsesWorldGlobalRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Bugs'
 }
+
+{ #category : 'accessing' }
+ReUsesWorldGlobalRule class >> group [
+	^ 'Bugs'
+]
+
+{ #category : 'accessing' }
+ReUsesWorldGlobalRule class >> ruleName [
+	^ 'Uses World or ActiveWorld directly'
+]
 
 { #category : 'accessing' }
 ReUsesWorldGlobalRule class >> uniqueIdentifierName [
@@ -20,14 +30,4 @@ ReUsesWorldGlobalRule class >> uniqueIdentifierName [
 { #category : 'running' }
 ReUsesWorldGlobalRule >> basicCheck: aNode [
 	^ aNode isGlobalVariable and: [ #(#World #ActiveWorld) includes: aNode name ]
-]
-
-{ #category : 'accessing' }
-ReUsesWorldGlobalRule >> group [
-	^ 'Bugs'
-]
-
-{ #category : 'accessing' }
-ReUsesWorldGlobalRule >> name [
-	^ 'Uses World or ActiveWorld directly'
 ]

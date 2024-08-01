@@ -4,21 +4,26 @@ Checks for code using equality tests instead of the message sends. Since the cod
 Class {
 	#name : 'ReUseIsEmptyNotSizeRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
+
+{ #category : 'accessing' }
+ReUseIsEmptyNotSizeRule class >> group [
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
+ReUseIsEmptyNotSizeRule class >> ruleName [
+	^ 'Checks for empty collection using #size instead of #isEmpty" or #isNotEmpty'
+]
 
 { #category : 'accessing' }
 ReUseIsEmptyNotSizeRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'ConsistencyCheckRule'
-]
-
-{ #category : 'accessing' }
-ReUseIsEmptyNotSizeRule >> group [
-	^ 'Coding Idiom Violation'
 ]
 
 { #category : 'initialization' }
@@ -29,9 +34,4 @@ ReUseIsEmptyNotSizeRule >> initialize [
 		'`@object size = 0'
 		'`@object size > 0'
 		'`@object size >= 1')
-]
-
-{ #category : 'accessing' }
-ReUseIsEmptyNotSizeRule >> name [
-	^ 'Checks for empty collection using #size instead of #isEmpty" or #isNotEmpty'
 ]

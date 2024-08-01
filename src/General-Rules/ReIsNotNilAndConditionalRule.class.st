@@ -5,15 +5,27 @@ Works also with notNil.
 Class {
 	#name : 'ReIsNotNilAndConditionalRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'accessing' }
-ReIsNotNilAndConditionalRule >> group [
+ReIsNotNilAndConditionalRule class >> group [
 
 	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
+ReIsNotNilAndConditionalRule class >> rationale [
+
+	^ 'Using specific conditional methods leads to shorter code and helps in avoiding unneeded temporary variables.<n><n>Replaces<n><t>isNotNil ifTrue: ~~> ifNotNil:<n><t>isNotNil ifFalse: ~~> ifNil:<n><t>isNotNil ifTrue:ifFalse ~~> ifNotNil:ifNil:'
+		expandMacros
+]
+
+{ #category : 'accessing' }
+ReIsNotNilAndConditionalRule class >> ruleName [
+	^ 'Sends isNotNil / notNil and a conditional check instead of using #ifNil: #ifNotNil: or #ifNil:ifNotNil:'
 ]
 
 { #category : 'initialization' }
@@ -34,17 +46,4 @@ ReIsNotNilAndConditionalRule >> initialize [
 			with: '``@receiver ifNotNil: ``@nilBlock ifNil: ``@notNilBlock';
 		replace: '``@receiver notNil ifFalse: ``@notNilBlock ifTrue: ``@nilBlock'
 			with: '``@receiver ifNotNil: ``@nilBlock ifNil: ``@notNilBlock'
-]
-
-{ #category : 'accessing' }
-ReIsNotNilAndConditionalRule >> name [
-
-	^ 'Sends isNotNil / notNil and a conditional check instead of using #ifNil: #ifNotNil: or #ifNil:ifNotNil:'
-]
-
-{ #category : 'accessing' }
-ReIsNotNilAndConditionalRule >> rationale [
-
-	^ 'Using specific conditional methods leads to shorter code and helps in avoiding unneeded temporary variables.<n><n>Replaces<n><t>isNotNil ifTrue: ~~> ifNotNil:<n><t>isNotNil ifFalse: ~~> ifNil:<n><t>isNotNil ifTrue:ifFalse ~~> ifNotNil:ifNil:'
-		expandMacros
 ]

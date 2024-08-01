@@ -5,10 +5,25 @@ For example, [:x | 1 + x] value: 4 is equivalent to 1 + 4
 Class {
 	#name : 'ReExtraBlockRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
+
+{ #category : 'accessing' }
+ReExtraBlockRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
+ReExtraBlockRule class >> ruleName [
+	^ 'Block immediately evaluated'
+]
+
+{ #category : 'accessing' }
+ReExtraBlockRule class >> severity [
+	^ #information
+]
 
 { #category : 'accessing' }
 ReExtraBlockRule class >> uniqueIdentifierName [
@@ -31,19 +46,4 @@ ReExtraBlockRule >> blockEvaluatingMessages [
 	value: value:value: value:value:value: value:value:value:value:
 	cull: cull:cull: cull:cull:cull: cull:cull:cull:cull:
 	#valueWithArguments: valueWithPossibleArgs: valueWithPossibleArgument)
-]
-
-{ #category : 'accessing' }
-ReExtraBlockRule >> group [
-	^ 'Optimization'
-]
-
-{ #category : 'accessing' }
-ReExtraBlockRule >> name [
-	^ 'Block immediately evaluated'
-]
-
-{ #category : 'accessing' }
-ReExtraBlockRule >> severity [
-	^ #information
 ]

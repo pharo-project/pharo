@@ -218,7 +218,7 @@ MCMethodDefinition >> isInitializer [
 
 { #category : 'testing' }
 MCMethodDefinition >> isLoadable [
-	^self actualClass notNil
+	^self actualClass isNotNil
 ]
 
 { #category : 'testing' }
@@ -277,19 +277,6 @@ MCMethodDefinition >> postloadOver: aDefinition [
 	"Postloading of FFI fields. This code will be called when loading FFI structures that are not by default in the image. This is NOT dead code."
 	self isExternalStructureFieldDefinition
 		ifTrue: [self actualClass instanceSide compileFields].
-]
-
-{ #category : 'annotations' }
-MCMethodDefinition >> printAnnotations: requests on: aStream [
-	"Add a string for an annotation pane, trying to fulfill the browser annotationRequests."
-	
-	requests do: [ :aRequest |
-		aRequest == #timeStamp ifTrue: [ aStream nextPutAll: self timeStamp ].
-		aRequest == #messageCategory ifTrue: [ aStream nextPutAll: self protocol ].
-		aRequest == #requirements ifTrue: [
-			self requirements do: [ :req |
-				aStream nextPutAll: req ] separatedBy: [ aStream space ]].
-	] separatedBy: [ aStream space ].
 ]
 
 { #category : 'accessing' }

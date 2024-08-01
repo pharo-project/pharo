@@ -58,7 +58,7 @@ RBRemoveMethodTransformation class >> selectors: aCollection from: aClassName [
 { #category : 'preconditions' }
 RBRemoveMethodTransformation >> applicabilityPreconditions [
 
-	^ RBCondition definesSelector: selector in: self definingClass
+	^ { (RBCondition definesSelector: selector in: self definingClass) }
 ]
 
 { #category : 'executing' }

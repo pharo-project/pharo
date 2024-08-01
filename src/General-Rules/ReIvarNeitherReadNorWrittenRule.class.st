@@ -6,14 +6,29 @@ If you really intend to have an unused variable (for example, for testing purpos
 Class {
 	#name : 'ReIvarNeitherReadNorWrittenRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Clean Code',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Clean Code'
 }
 
 { #category : 'testing-interest' }
 ReIvarNeitherReadNorWrittenRule class >> checksClass [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReIvarNeitherReadNorWrittenRule class >> group [
+	^ 'Clean Code'
+]
+
+{ #category : 'accessing' }
+ReIvarNeitherReadNorWrittenRule class >> ruleName [
+	^ 'Instance variable not read or not written'
+]
+
+{ #category : 'accessing' }
+ReIvarNeitherReadNorWrittenRule class >> severity [
+	^ #information
 ]
 
 { #category : 'running' }
@@ -24,20 +39,4 @@ ReIvarNeitherReadNorWrittenRule >> check: aClass forCritiquesDo: aCriticBlock [
 			slot isReferenced or: [
 				slot definingClass pragmas anySatisfy: [ :pragma | pragma selector = #ignoreUnusedVariables: and: [ (pragma argumentAt: 1) includes: slot name ] ] ] ]
 		thenDo: [ :slot | aCriticBlock cull: (self critiqueFor: aClass about: slot name) ]
-]
-
-{ #category : 'accessing' }
-ReIvarNeitherReadNorWrittenRule >> group [
-	^ 'Clean Code'
-]
-
-{ #category : 'accessing' }
-ReIvarNeitherReadNorWrittenRule >> name [
-
-	^ 'Instance variable not read or not written'
-]
-
-{ #category : 'accessing' }
-ReIvarNeitherReadNorWrittenRule >> severity [
-	^ #information
 ]

@@ -28,6 +28,19 @@ RBRemoveParameterTransformation class >> removeParameter: aString in: aClass sel
 		selector: aSelector
 ]
 
+{ #category : 'preconditions' }
+RBRemoveParameterTransformation >> applicabilityPreconditions [ 
+
+	| imps |
+	self getNewSelector.
+	imps := self model allImplementorsOf: oldSelector.
+	^  super applicabilityPreconditions ,
+			 (imps collect: [ :each |
+				(RBCondition 
+					withBlock: [ (self hasReferencesToTemporaryIn: each) not ]
+					errorString: 'This argument is still referenced in at least one implementor!!')]) asArray
+]
+
 { #category : 'private' }
 RBRemoveParameterTransformation >> computeNewSelector [
 
@@ -66,33 +79,13 @@ RBRemoveParameterTransformation >> hasReferencesToTemporaryIn: each [
 ]
 
 { #category : 'private' }
-RBRemoveParameterTransformation >> localPreconditions [
-
-	| imps |
-	self getNewSelector.
-	imps := self model allImplementorsOf: oldSelector.
-	^ imps inject: (RBCondition definesSelector: oldSelector in: class)
-		into:
-			[:cond :each |
-			cond & (RBCondition 
-						withBlock: [ (self hasReferencesToTemporaryIn: each) not ]
-						errorString: 'This argument is still referenced in at least one implementor!!')]
-]
-
-{ #category : 'private' }
-RBRemoveParameterTransformation >> preconditions [ 
-	"It looks like the localPreconditions is doing a side effect!!! argh! "
-	^  self localPreconditions & super preconditions
-]
-
-{ #category : 'private' }
 RBRemoveParameterTransformation >> removeParameter: aString in: aClass selector: aSelector [
 	oldSelector := aSelector.
 	class := self model classObjectFor: aClass.
 	argument := aString
 ]
 
-{ #category : 'private' }
+{ #category : 'storing' }
 RBRemoveParameterTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

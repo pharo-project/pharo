@@ -79,16 +79,13 @@ RBFindAndReplacePreviewPresenter >> initializeChangeList [
 
 { #category : 'initialization' }
 RBFindAndReplacePreviewPresenter >> initializeDialogWindow: aModalPresenter [
+	
 	aModalPresenter
-		addButton: 'Find' do: [ :presenter |
-			refactoring listToFindMatches: selectedRefactorings .
-			presenter
-				beOk;
-				close];
 		addButton: 'Cancel' do: [ :presenter |
-			presenter
-				beCancel;
-				close ]
+			presenter beCancel; close ];
+		addDefaultButton: 'Find' do: [ :presenter |
+			refactoring listToFindMatches: selectedRefactorings .
+			presenter beOk; close ]
 ]
 
 { #category : 'initialization' }
