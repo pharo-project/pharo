@@ -8,3 +8,10 @@ Class {
 	#package : 'Refactoring-DataForTesting',
 	#tag : 'MiniHierarchy'
 }
+
+{ #category : 'initialization' }
+RBHierarchySubclassAForClassVariable >> initialize [
+	<ignoreUnusedClassVariables: #( ClassVarA )>
+	super initialize.
+
+]
