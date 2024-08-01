@@ -5,9 +5,7 @@ Class {
 	#name : 'MCFileBasedRepository',
 	#superclass : 'MCRepository',
 	#instVars : [
-		'cache',
-		'allFileNames',
-		'cacheFileNames'
+		'cache'
 	],
 	#category : 'Monticello-Repositories',
 	#package : 'Monticello',
@@ -53,37 +51,15 @@ MCFileBasedRepository class >> urlSchemes [
 	^ #(file)
 ]
 
-{ #category : 'adding' }
-MCFileBasedRepository >> addVersionInformationExtractedFrom: readableFileName to: versions [
-	| name |
-	name := (readableFileName copyUpToLast: $.) copyUpTo: $(.
-	name last isDigit
-		ifTrue: [ 
-			versions
-				add:
-					{(name copyUpToLast: $-).	"pkg name"
-					((name copyAfterLast: $-) copyUpTo: $.).	"user"
-					(((name copyAfterLast: $-) copyAfter: $.) asInteger ifNil: [ 0 ]).	"version"
-					readableFileName }]
-]
-
 { #category : 'accessing' }
 MCFileBasedRepository >> allFileNames [
-	cacheFileNames == true ifFalse: [ ^ self loadAllFileNames ].
-	^ allFileNames ifNil: [
-			allFileNames := self loadAllFileNames]
+
+	^ self loadAllFileNames
 ]
 
 { #category : 'accessing' }
 MCFileBasedRepository >> allFileNamesForVersionNamed: aString [
 	^ self filterFileNames: self readableFileNames forVersionNamed: aString
-]
-
-{ #category : 'accessing' }
-MCFileBasedRepository >> allFileNamesOrCache [
-	cacheFileNames == true ifFalse: [ ^ self allFileNames ].
-	^ allFileNames ifNil: [
-			allFileNames := self allFileNames]
 ]
 
 { #category : 'accessing' }
@@ -93,13 +69,11 @@ MCFileBasedRepository >> allVersionNames [
 
 { #category : 'storing' }
 MCFileBasedRepository >> basicStoreVersion: aVersion [
-	self
-		writeStreamForFileNamed: aVersion fileName
-		do: [:s | aVersion fileOutOn: s].
-	aVersion isCacheable ifTrue: [
-		cache ifNil: [cache := Dictionary new].
-		cache at: aVersion fileName put: aVersion].
 
+	self writeStreamForFileNamed: aVersion fileName do: [ :s | aVersion fileOutOn: s ].
+
+	cache ifNil: [ cache := Dictionary new ].
+	cache at: aVersion fileName put: aVersion
 ]
 
 { #category : 'accessing' }
@@ -108,20 +82,11 @@ MCFileBasedRepository >> cache [
 ]
 
 { #category : 'caching' }
-MCFileBasedRepository >> cacheAllFileNamesDuring: aBlock [
-	cacheFileNames == true ifTrue: [ ^ aBlock value ].
-	allFileNames := nil.
-	cacheFileNames := true.	
-	^ aBlock ensure: [
-		allFileNames := nil.
-		cacheFileNames := false]
-]
-
-{ #category : 'caching' }
 MCFileBasedRepository >> cachedFileNames [
-	^cache == nil
-		ifTrue: [#()]
-		ifFalse: [cache keys]
+
+	^ cache
+		  ifNil: [ #(  ) ]
+		  ifNotNil: [ cache keys ]
 ]
 
 { #category : 'testing' }
@@ -129,14 +94,6 @@ MCFileBasedRepository >> canReadFileNamed: aString [
 	| reader |
 	reader := MCVersionReader readerClassForFileNamed: aString.
 	^ reader isNotNil
-]
-
-{ #category : 'accessing' }
-MCFileBasedRepository >> closestAncestorVersionFor: anAncestry ifNone: errorBlock [
-	^ self
-		cacheAllFileNamesDuring: [ 
-			anAncestry breadthFirstAncestorsDo: [ :ancestorInfo | (self notCachedVersionWithInfo: ancestorInfo) ifNotNil: [ :v | ^ v ] ].
-			^ errorBlock value ]
 ]
 
 { #category : 'fetching' }
@@ -204,17 +161,6 @@ MCFileBasedRepository >> maxCacheSize [
 	^ 512
 ]
 
-{ #category : 'loading' }
-MCFileBasedRepository >> notCachedVersionWithInfo: aVersionInfo [ 
-	(self allFileNamesForVersionNamed: aVersionInfo name)
-		do: [ :fileName | 
-			| version |
-			version := self versionFromRepositoryFromFileNamed: fileName.
-			version info = aVersionInfo
-				ifTrue: [ ^ version ] ].
-	^ nil
-]
-
 { #category : 'accessing' }
 MCFileBasedRepository >> packageDescriptionsFromReadableFileNames [
 	^ self readableFileNames
@@ -253,6 +199,12 @@ MCFileBasedRepository >> pathForFileNamed: aFileName [
   ^ aFileName
 ]
 
+{ #category : 'actions' }
+MCFileBasedRepository >> readStreamForFileNamed: aString do: aBlock [
+
+	^ self subclassResponsibility
+]
+
 { #category : 'accessing' }
 MCFileBasedRepository >> readableFileNames [
 	| all cached new emptyFilenamelength |
@@ -288,14 +240,9 @@ MCFileBasedRepository >> storeVersion: aVersion [
 
 { #category : 'private' }
 MCFileBasedRepository >> updateCachedVersionFromFileName: aString with: aVersion [
+
 	self resizeCache: cache.
-	(aVersion isNotNil and: [aVersion isCacheable]) ifTrue: [cache at: aString put: aVersion].
-
-]
-
-{ #category : 'accessing' }
-MCFileBasedRepository >> versionFrom: aVersionReferenceString [
-	^ self loadVersionFromFileNamed: aVersionReferenceString , '.mcz'
+	aVersion ifNotNil: [ cache at: aString put: aVersion ]
 ]
 
 { #category : 'accessing' }
@@ -351,17 +298,8 @@ MCFileBasedRepository >> versionWithInfo: aVersionInfo ifAbsent: errorBlock [
 	^ errorBlock value
 ]
 
-{ #category : 'accessing' }
-MCFileBasedRepository >> versionsWithPackageNames [
-	| versions |
-	versions := OrderedCollection new.
-	self readableFileNames
-		do: [ :each | 
-		      self addVersionInformationExtractedFrom: each to: versions ].
-	^ versions
-]
-
 { #category : 'storing' }
 MCFileBasedRepository >> writeStreamForFileNamed: aString do: aBlock [
-	^ self writeStreamForFileNamed: aString replace: false do: aBlock
+
+	^ self subclassResponsibility
 ]

@@ -58,11 +58,6 @@ MCRemoval >> isRemoval [
 ]
 
 { #category : 'accessing' }
-MCRemoval >> summarySuffix [
-	^ ' (removed)'
-]
-
-{ #category : 'accessing' }
 MCRemoval >> targetClass [
 	^ definition actualClass
 ]

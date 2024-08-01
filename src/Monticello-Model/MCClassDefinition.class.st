@@ -404,16 +404,6 @@ MCClassDefinition >> postCopy [
 	variables := variables copy
 ]
 
-{ #category : 'annotations' }
-MCClassDefinition >> printAnnotations: requests on: aStream [
-	"Add a string for an annotation pane, trying to fulfill the browser annotationRequests"
-
-	requests do: [ :aRequest |
-		aRequest == #requirements ifTrue: [
-			self requirements do: [ :req | aStream nextPutAll: req ] separatedBy: [ aStream space ]]
-	] separatedBy: [ aStream space ].
-]
-
 { #category : 'printing' }
 MCClassDefinition >> printClassDefinitionOn: stream [
 	"Print a class-side definition of the receiver on the given stream.
