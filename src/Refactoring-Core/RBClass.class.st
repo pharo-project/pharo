@@ -161,6 +161,13 @@ RBClass >> isEmptyClass [
 ]
 
 { #category : 'testing' }
+RBClass >> isManifest [ 
+
+	^ self superclass notNil and: [ self superclass name = #PackageManifest ]
+
+]
+
+{ #category : 'testing' }
 RBClass >> isMeta [
 
 	^false

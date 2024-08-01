@@ -44,21 +44,17 @@ MCDataStream >> readMethod [
 	   recursive calls to next.
 	Let the instance, not the class read the data.  "
 
-	| instSize refPosn newClass className xxHeader nLits byteCodeSizePlusTrailer newMethod lits |
+	| instSize newClass className xxHeader nLits byteCodeSizePlusTrailer newMethod lits |
 	instSize := (byteStream nextNumber: 4) - 1.
-	refPosn := self getCurrentReference.
 	className := self next.
 	newClass := Smalltalk globals at: className asSymbol.
 	xxHeader := self next.	"nArgs := (xxHeader >> 24) bitAnd: 16rF."	"nTemps := (xxHeader >> 18) bitAnd: 16r3F."	"largeBit := (xxHeader >> 17) bitAnd: 1."
 	nLits := xxHeader >> 9 bitAnd: 16rFF.	"primBits := ((xxHeader >> 19) bitAnd: 16r600) + (xxHeader bitAnd: 16r1FF)."
 	byteCodeSizePlusTrailer := instSize - newClass instSize - ((nLits + 1) * 4).	"0"
 	newMethod := newClass basicNew: byteCodeSizePlusTrailer header: xxHeader.
-	self setCurrentReference: refPosn.	"before readDataFrom:size:"
-	self beginReference: newMethod.
 	lits := newMethod numLiterals + 1.	"counting header"
 	2 to: lits do: [ :ii | newMethod objectAt: ii put: self next ].
 	lits * 4 + 1 to: newMethod basicSize do: [ :ii | newMethod basicAt: ii put: byteStream next ].	"Get raw bytes directly from the file"
-	self setCurrentReference: refPosn.	"before returning to next"
 	^ newMethod
 ]
 
@@ -102,17 +98,14 @@ MCDataStream >> readShortInst [
 	   recursive calls to next.
 	Let the instance, not the class read the data.  "
 
-	| instSize aSymbol refPosn anObject newClass |
+	| instSize aSymbol anObject newClass |
 	instSize := byteStream next - 1.	"one byte of size"
-	refPosn := self getCurrentReference.
 	aSymbol := self readShortRef.	"class symbol in two bytes of file pos"
 	newClass := Smalltalk globals at: aSymbol asSymbol.
 	anObject := newClass isVariable
 		ifFalse: [ newClass basicNew ]
 		ifTrue: [ newClass basicNew: instSize - newClass instSize ].	"Create object here"
-	self setCurrentReference: refPosn.	"before readDataFrom:size:"
 	anObject := anObject readDataFrom: self size: instSize.
-	self setCurrentReference: refPosn.	"before returning to next"
 	^ anObject
 ]
 

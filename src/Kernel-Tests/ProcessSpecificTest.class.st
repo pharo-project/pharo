@@ -90,21 +90,6 @@ ProcessSpecificTest >> testDynamicVariableRemovedAfterUse [
 ]
 
 { #category : 'testing' }
-ProcessSpecificTest >> testExecutionEnvironment [
-
-	| newEnv |
-	newEnv := ExecutionEnvironmentStub new.
-	newEnv beActiveDuring: [
-		self assert: CurrentExecutionEnvironment value equals: newEnv.
-
-		DefaultExecutionEnvironment beActiveDuring: [
-			self assert: CurrentExecutionEnvironment value equals: DefaultExecutionEnvironment instance].
-
-		self assert: CurrentExecutionEnvironment value equals: newEnv.
-	]
-]
-
-{ #category : 'testing' }
 ProcessSpecificTest >> testInheritableVariable [
 
 	| s1 s2 parentVar childVar |
@@ -124,18 +109,6 @@ ProcessSpecificTest >> testInheritableVariable [
 
 	self assert: parentVar equals: #inheritedVar.
 	self assert: childVar equals: #inheritedVar
-]
-
-{ #category : 'testing' }
-ProcessSpecificTest >> testInheritingExecutionEnvironment [
-
-	| newEnv p |
-	newEnv := ExecutionEnvironmentStub new.
-	newEnv beActiveDuring: [
-		p := [self assert: CurrentExecutionEnvironment value equals: newEnv] fork.
-	].
-
-	self assert: newEnv forkedProcesses anyOne equals: p
 ]
 
 { #category : 'testing' }

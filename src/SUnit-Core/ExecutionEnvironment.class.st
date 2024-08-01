@@ -12,9 +12,9 @@ For example SUnit installs special TestExecutionEnvironment to manage all forked
 Class {
 	#name : 'ExecutionEnvironment',
 	#superclass : 'Object',
-	#category : 'Kernel-Processes',
-	#package : 'Kernel',
-	#tag : 'Processes'
+	#category : 'SUnit-Core-Execution-Environments',
+	#package : 'SUnit-Core',
+	#tag : 'Execution-Environments'
 }
 
 { #category : 'controlling' }
@@ -42,5 +42,17 @@ ExecutionEnvironment >> isTest [
 
 { #category : 'controlling' }
 ExecutionEnvironment >> prepareForNewProcess: aProcess [
+	self subclassResponsibility
+]
+
+{ #category : 'controlling' }
+ExecutionEnvironment >> runTestCase: aTestCase [
+
+	self subclassResponsibility
+]
+
+{ #category : 'controlling' }
+ExecutionEnvironment >> runTestsBy: aBlock [
+
 	self subclassResponsibility
 ]

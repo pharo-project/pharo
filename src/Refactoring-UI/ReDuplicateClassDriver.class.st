@@ -70,6 +70,8 @@ ReDuplicateClassDriver >> requestNewClass [
 		requestDialog := (StClassAndMethodsSelectionPresenter on: self)
 			withInstanceMethods: rbClass methods
 			withClassMethods: rbMetaclass allMethods;
+			baseClassName: self className;
+			basePackageName: (self model environment at: self className) packageName;
 			onCancel: [ : dialog | dialog close ];
 			onAccept: [ :dialog |
 				self

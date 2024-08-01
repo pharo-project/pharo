@@ -228,6 +228,12 @@ RGMethod >> initializeUnresolved [
 	time := self unresolvedValue: self defaultTime
 ]
 
+{ #category : 'testing' }
+RGMethod >> isClassified [
+
+	^ self protocol ~= Protocol unclassified
+]
+
 { #category : 'accessing' }
 RGMethod >> isExtension [
 	"The receiver is an extension when is defined in a different package to the one of its parent"
@@ -345,6 +351,12 @@ RGMethod >> protocol: aSymbol [
 
 	self cleanTagsWithoutAnnouncemnt.
 	self tagWith: aSymbol
+]
+
+{ #category : 'accessing - backend' }
+RGMethod >> protocolName [
+
+	^ self protocol
 ]
 
 { #category : 'private - backend interface' }
