@@ -57,11 +57,6 @@ MCDefinition >> fullClassName [
 ]
 
 { #category : 'comparing' }
-MCDefinition >> fullTimeStamp [
-	^ DateAndTime current
-]
-
-{ #category : 'comparing' }
 MCDefinition >> hash [
 	^ self description hash
 ]

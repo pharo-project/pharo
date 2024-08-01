@@ -18,27 +18,6 @@ PSMCClassChangeWrapper >> actualClass [
 	^ super actualClass ifNil: [ Smalltalk globals classNamed: self item ]
 ]
 
-{ #category : 'choosing' }
-PSMCClassChangeWrapper >> chooseLocal [
-	"Choose the local version."
-
-	self operation chooseLocal
-]
-
-{ #category : 'choosing' }
-PSMCClassChangeWrapper >> chooseRemote [
-	"Choose the remote version."
-
-	self operation chooseRemote
-]
-
-{ #category : 'choosing' }
-PSMCClassChangeWrapper >> clearChoice [
-	"Choose neither version (be in conflict)."
-
-	self operation clearChoice
-]
-
 { #category : 'accessing' }
 PSMCClassChangeWrapper >> contents [
 	"Answer the contents of the change."
@@ -75,23 +54,9 @@ PSMCClassChangeWrapper >> isConflict [
 	^ op isNotNil and: [op isConflict ]
 ]
 
-{ #category : 'testing' }
-PSMCClassChangeWrapper >> localChosen [
-	"Answer whether the local version is chosen."
-
-	^self operation localChosen
-]
-
 { #category : 'accessing' }
 PSMCClassChangeWrapper >> operation [
 	"Answer the patch operation for the class itself or nil if none."
 
 	^ self model detect: [ :i | i targetClassName = self item and: [ i definition isClassDefinition ] ] ifNone: [ nil ]
-]
-
-{ #category : 'testing' }
-PSMCClassChangeWrapper >> remoteChosen [
-	"Answer whether the remote version is chosen."
-
-	^self conflict remoteChosen
 ]
