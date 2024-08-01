@@ -16,36 +16,47 @@ Class {
 
 { #category : 'serialize/materialize' }
 FLGlobalCompiledBlockCluster >> materializeInstanceWith: aDecoder [
-	| methodClass selector method literalIndex |
+
+	| methodClass selector method pathSize path theBlock |
 	methodClass := self materializeGlobalClassFrom: aDecoder.
 	selector := aDecoder nextEncodedString asSymbol.
-	literalIndex := aDecoder nextEncodedUint8.
-	
+	pathSize := aDecoder nextEncodedUint8.
+	path := ByteArray new: pathSize.
+	aDecoder nextEncodedBytesInto: path.
+
 	"It's ok if the method was changed or removed."
-	method := methodClass  
-		compiledMethodAt: selector
-		ifAbsent: [ ^ nil ].
-	^ literalIndex > method numLiterals
-		ifTrue: [ nil ]
-		ifFalse: [ method literalAt: literalIndex ]
+	method := self findMethodWithSelector: selector in: methodClass.
+
+	"Follow the saved path from the method to the compiled block"
+	theBlock := method.
+	path do: [ :index |
+		theBlock := index = 0
+			            ifTrue: [
+			            theBlock compiledBlock "0 means it is in a Clean Block" ]
+			            ifFalse: [ theBlock literalAt: index ].
+		"If at some point we find another object that is not a closure, we skip.
+		Probably the code changed, we cannot get the block from old method."
+		(theBlock isBlock or: [ theBlock isCompiledBlock ]) ifFalse: [ 
+			"Do not throw an exception here, constant blocks are still possible to
+				metarialize as normal object."
+			^ nil ] ].
+	^ theBlock
 ]
 
 { #category : 'serialize/materialize' }
 FLGlobalCompiledBlockCluster >> serializeInstance: aCompiledBlock with: anEncoder [
 	"The method will be looked up on the existing class upon materialization
-	and the block will be compiled as part of that method (possibly with a different
-	set of instructions than this one but that's expected behavior).
-	
-	See #testBlockClosureChangeDifferendBytecodes and #testBlockClosureChangeSameBytecodes
-	on FLBlockClosureSerializationTest."
-	| method literalIndex |
+	and the block:
+	  - will be compiled as part of that method (possibly with a different set of instructions than this one but that's expected behavior).
+	  - or the method will have a Clean Block with the compiled block inside (that's why we save all the path from the method)
+	See #testBlockClosureChangeDifferendBytecodes and #testBlockClosureChangeSameBytecodes on FLBlockClosureSerializationTest."
+
+	| method path |
 	method := aCompiledBlock method.
-	literalIndex := method literals indexOf: aCompiledBlock.
-	
-	self
-		serializeGlobalClass: aCompiledBlock methodClass
-		on: anEncoder.
+	self serializeGlobalClass: aCompiledBlock methodClass on: anEncoder.
+	path := aCompiledBlock pathOfLiteralIndexes.
 	anEncoder
 		encodeString: method selector;
-		encodeUint8: literalIndex
+		encodeUint8: path size;
+		encodeBytes: path
 ]

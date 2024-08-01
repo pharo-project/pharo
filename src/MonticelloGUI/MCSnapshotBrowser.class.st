@@ -22,6 +22,7 @@ Class {
 
 { #category : 'instance creation' }
 MCSnapshotBrowser class >> forSnapshot: aSnapshot [
+
 	^ self new snapshot: aSnapshot
 ]
 

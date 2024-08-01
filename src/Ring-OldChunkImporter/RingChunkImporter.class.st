@@ -22,7 +22,7 @@ RingChunkImporter class >> example [
 
 	| internalStream |
 	internalStream := (String new: 1000) writeStream.
-	((self packageOrganizer packageNamed: 'Ring-Deprecated-ChunkImporter') tagNamed: #Base) fileOutOn: internalStream.
+	((self packageOrganizer packageNamed: 'Ring-OldChunkImporter') tagNamed: #Base) fileOutOn: internalStream.
 	(self fromStream: internalStream contents readStream) inspect
 ]
 

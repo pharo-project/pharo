@@ -30,23 +30,9 @@ MCPatchOperation >> patchWrapper [
 MCPatchOperation >> shortSummary [
 	"Answer a short summary of the receiver."
 
-	^self shortSummaryPrefix , self shortSummarySuffix
-]
-
-{ #category : '*Monticello-GUI-Diff' }
-MCPatchOperation >> shortSummaryPrefix [
-	"Answer a short summary prefix of the receiver."
-
-	^ self definition summary
-]
-
-{ #category : '*Monticello-GUI-Diff' }
-MCPatchOperation >> shortSummarySuffix [
-	"Answer a short summary suffix of the receiver."
-
-	^self fromSource = self toSource
-		ifTrue: [' (revision changed)']
-		ifFalse: ['']
+	^ self definition summary , (self fromSource = self toSource
+		   ifTrue: [ ' (revision changed)' ]
+		   ifFalse: [ '' ])
 ]
 
 { #category : '*Monticello-GUI-Diff' }

@@ -327,18 +327,6 @@ MCFileTreeRepository >> repositoryProperties [
 ]
 
 { #category : 'accessing' }
-MCFileTreeRepository >> versionFrom: aVersionReferenceString [
-    "until we no longer find .tree directories in the wild"
-
-    (self readableFileNames collect: [ :fileName | self fileDirectoryOn: fileName ])
-        select: [ :packageDirectory | self fileUtils directoryExists: packageDirectory ]
-        thenCollect: [ :packageDirectory | 
-            (self versionInfoForPackageDirectory: packageDirectory) name = aVersionReferenceString
-                ifTrue: [ ^ self loadVersionFromFileNamed: (self fileUtils directoryName: packageDirectory) ] ].
-    ^ nil
-]
-
-{ #category : 'accessing' }
 MCFileTreeRepository >> versionFromFileNamed: aString [
 	^ self loadVersionFromFileNamed: aString
 ]
@@ -403,6 +391,7 @@ MCFileTreeRepository >> writeRepositoryProperties [
 ]
 
 { #category : 'i/o' }
-MCFileTreeRepository >> writeStreamForFileNamed: aString replace: aBoolean do: aBlock [
+MCFileTreeRepository >> writeStreamForFileNamed: aString do: aBlock [
+
 	self error: 'we do not open a single stream, but write multiple files'
 ]

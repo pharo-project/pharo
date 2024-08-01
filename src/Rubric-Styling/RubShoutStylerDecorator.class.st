@@ -118,13 +118,13 @@ RubShoutStylerDecorator >> styler [
 	Handle the case where `self model selectedClassOrMetaClass` is a RGBehavior (for example browsing unloaded code from Calypso)"
 
 	^ styler ifNil: [
-		| selectedClassOrMeta |
-		styler := (self model isNotNil and: [ (selectedClassOrMeta := self model selectedClassOrMetaClass) isNotNil ])
-			ifTrue: [
-				selectedClassOrMeta realClass syntaxHighlighter
-					view: self;
-					yourself ]
-			ifFalse: [ self defaultStyler ] ]
+		  | selectedClassOrMeta |
+		  styler := (self model isNotNil and: [ (selectedClassOrMeta := self model selectedClassOrMetaClass) isNotNil ])
+			            ifTrue: [
+				            self model selectedClassOrMetaClass syntaxHighlighter
+					            view: self;
+					            yourself ]
+			            ifFalse: [ self defaultStyler ] ]
 ]
 
 { #category : 'accessing' }

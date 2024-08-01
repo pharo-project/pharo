@@ -15,3 +15,10 @@ Class {
 FLMethodChanged class >> signalWith: aGlobalName and: aSelector [
 	^ self signal: 'Method ', aGlobalName, '>>#', aSelector, ' changed its bytecodes.'
 ]
+
+{ #category : 'signalling' }
+FLMethodChanged class >> signalWithBlock: aBlockWithoutOuterContext [
+
+	^ self signal: 'Clean block' , aBlockWithoutOuterContext
+		  , ' cannot be materialized because its method was changed.'
+]
