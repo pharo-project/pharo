@@ -6,9 +6,9 @@ Look at ExecutionEnvironment for details
 Class {
 	#name : 'CurrentExecutionEnvironment',
 	#superclass : 'ProcessLocalVariable',
-	#category : 'SUnit-Core-Execution-Environments',
-	#package : 'SUnit-Core',
-	#tag : 'Execution-Environments'
+	#category : 'Kernel-Processes',
+	#package : 'Kernel',
+	#tag : 'Processes'
 }
 
 { #category : 'controlling' }
@@ -37,18 +37,6 @@ CurrentExecutionEnvironment class >> restoreDefault [
 	current := self value.
 	current deactivated.
 	self value: nil
-]
-
-{ #category : 'controlling' }
-CurrentExecutionEnvironment class >> runTestCase: aTestCase [
-
-	self value runTestCase: aTestCase
-]
-
-{ #category : 'controlling' }
-CurrentExecutionEnvironment class >> runTestsBy: aBlock [
-
-	self value runTestsBy: aBlock
 ]
 
 { #category : 'accessing' }

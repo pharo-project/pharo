@@ -80,9 +80,9 @@ Class {
 		'services',
 		'mainTestProcess'
 	],
-	#category : 'SUnit-Core-Execution-Environments',
+	#category : 'SUnit-Core-Kernel',
 	#package : 'SUnit-Core',
-	#tag : 'Execution-Environments'
+	#tag : 'Kernel'
 }
 
 { #category : 'fuel support' }
