@@ -45,6 +45,19 @@ StClassAndMethodsSelectionPresenter class >> defaultExtent [
 	^ 500 @ 700
 ]
 
+{ #category : 'initialization' }
+StClassAndMethodsSelectionPresenter >> baseClassName: aString [
+	"By default set a name close to the original one."
+
+	textInput text: aString
+]
+
+{ #category : 'accessing' }
+StClassAndMethodsSelectionPresenter >> basePackageName: aString [
+
+ 	packagePresenter selectItem: aString.
+]
+
 { #category : 'accessing' }
 StClassAndMethodsSelectionPresenter >> classMethods [
 

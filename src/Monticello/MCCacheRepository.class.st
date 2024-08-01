@@ -87,7 +87,7 @@ MCCacheRepository class >> uniqueInstance [
 MCCacheRepository >> basicStoreVersion: aVersion [
 	"we store a version if it is cacheable and we don't have the file already"
 
-	(aVersion isCacheable and: [ (self includesFileNamed: aVersion fileName) not ]) ifTrue: [ super basicStoreVersion: aVersion ]
+	(self includesFileNamed: aVersion fileName) ifFalse: [ super basicStoreVersion: aVersion ]
 ]
 
 { #category : 'utilities' }
@@ -113,12 +113,6 @@ MCCacheRepository >> initialize [
 	cacheEnabled := true
 ]
 
-{ #category : 'private' }
-MCCacheRepository >> loadVersionFromFileNamed: aString [
-	
-	^ self versionReaderForFileNamed: aString do: [:r | r version]
-]
-
 { #category : 'storing' }
 MCCacheRepository >> storeVersion: aVersion [
 
@@ -142,4 +136,13 @@ MCCacheRepository >> versionWithInfo: aVersionInfo ifAbsent: errorBlock [
 			version := self versionFromFileNamed: fileName.
 			version info = aVersionInfo ifTrue: [^ version]].
 	^ errorBlock value
+]
+
+{ #category : 'writing' }
+MCCacheRepository >> writeStreamWithReplacingForFileNamed: aString do: aBlock [
+
+	| file |
+	file := directory / aString.
+	file ensureDelete.
+	file binaryWriteStreamDo: aBlock
 ]

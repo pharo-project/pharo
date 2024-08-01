@@ -9,8 +9,7 @@ Class {
 		'name',
 		'message',
 		'date',
-		'time',
-		'author'
+		'time'
 	],
 	#category : 'Monticello-Versioning',
 	#package : 'Monticello',
@@ -72,9 +71,10 @@ MCVersionInfo >> asDictionary [
 		yourself
 ]
 
-{ #category : 'pillaging' }
+{ #category : 'accessing' }
 MCVersionInfo >> author [
-	^ author
+
+	^ 'CompatibleUserName'
 ]
 
 { #category : 'pillaging' }
@@ -110,8 +110,8 @@ MCVersionInfo >> initializeWithName: vName id: aUUID message: aString date: aDat
 	message := aString.
 	date := aDate ifNil: [ Date today ].
 	time := aTime.
-	ancestors := aCollection.
-	stepChildren := stepCollection
+	self setAncestors: aCollection.
+	self setStepChildren: stepCollection
 ]
 
 { #category : 'initialization' }
@@ -148,15 +148,6 @@ MCVersionInfo >> name [
 	^ name ifNil: ['<working copy>']
 ]
 
-{ #category : 'accessing' }
-MCVersionInfo >> nameWithout: packageName [
-	| result |
-	result := self name.
-	(result beginsWith: packageName , '-') ifTrue: [
-		result := result copyFrom: packageName size + 2 to: result size].
-	^result
-]
-
 { #category : 'printing' }
 MCVersionInfo >> printOn: aStream [
 	super printOn: aStream.
@@ -180,44 +171,6 @@ MCVersionInfo >> setStepChildren: someStepChildren [
 	"It is there to allow a certain customisation with lazy stuff without kernel dependencies on LRUCache"
 
 	stepChildren := someStepChildren
-]
-
-{ #category : 'accessing' }
-MCVersionInfo >> summary [
-	^ String streamContents:
-		[:s |
-		s
-			nextPutAll: self summaryHeader; cr; cr;
-			nextPutAll: self message.
-		]
-]
-
-{ #category : 'accessing' }
-MCVersionInfo >> summaryHeader [
-
-	^ String streamContents: [ :s |
-		  s
-			  nextPutAll: 'Name: ';
-			  nextPutAll: self name;
-			  cr.
-		  date ifNotNil: [
-			  s
-				  nextPutAll: 'Time: ';
-				  nextPutAll: date asString , ', ' , time asString;
-				  cr ].
-		  id ifNotNil: [
-			  s
-				  nextPutAll: 'UUID: ';
-				  nextPutAll: id asString;
-				  cr ].
-		  s
-			  nextPutAll: 'Ancestors: ';
-			  nextPutAll: self ancestorString.
-		  self stepChildren isEmpty ifFalse: [
-			  s
-				  cr;
-				  nextPutAll: 'Backported From: ';
-				  nextPutAll: self stepChildrenString ] ]
 ]
 
 { #category : 'pillaging' }

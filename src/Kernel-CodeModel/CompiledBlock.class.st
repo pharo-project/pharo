@@ -80,6 +80,29 @@ CompiledBlock >> hash [
 	"(CompiledMethod>>#hash) hash"
 ]
 
+{ #category : 'accessing' }
+CompiledBlock >> indexInOuter [
+
+	| index |
+	index := self outerCode literals indexOf: self.
+	index > 0 ifTrue: [ ^ index ].
+
+	^ self outerCode literals detectIndex: [ :lit |
+		  lit isBlock and: [ lit compiledBlock == self ] ]
+]
+
+{ #category : 'accessing' }
+CompiledBlock >> indexesInOuter [
+
+	| index |
+	index := self outerCode literals indexOf: self.
+	index > 0 ifTrue: [ ^ ByteArray with: index ].
+
+	index := self outerCode literals detectIndex: [ :lit |
+		         lit isBlock and: [ lit compiledBlock == self ] ].
+	^ ByteArray with: index with: 0
+]
+
 { #category : 'testing' }
 CompiledBlock >> isCompiledBlock [
 	^ true
@@ -139,6 +162,12 @@ CompiledBlock >> outerCode [
 { #category : 'accessing' }
 CompiledBlock >> outerCode: aCompiledCode [
 	^self literalAt: self numLiterals put: aCompiledCode
+]
+
+{ #category : 'accessing' }
+CompiledBlock >> pathOfLiteralIndexes [
+	
+	^ self outerCode pathOfLiteralIndexes copyWithAll: self indexesInOuter
 ]
 
 { #category : 'scanning' }
