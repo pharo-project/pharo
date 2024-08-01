@@ -46,6 +46,12 @@ RGPackage >> addoptToParentStub [
 ]
 
 { #category : 'accessing' }
+RGPackage >> calypsoName [
+
+	^ self name
+]
+
+{ #category : 'accessing' }
 RGPackage >> categories [
 
 	^ self definedBehaviors collect: #category as: Set
