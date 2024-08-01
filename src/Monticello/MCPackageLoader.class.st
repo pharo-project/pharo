@@ -146,8 +146,8 @@ MCPackageLoader >> loadClassDefinitions [
 	When loading a class it is possible that it fails. The reason is that a class can use a trait from this package, but the dependency sorter of Monticello does not sort those traits before the classes using it.
 	In that case we are implementing a retry mechanism. If error persist, the exception message is logged to the Transcript"
 
-	| errorDefinitions |
-	errorDefinitions := OrderedCollection new.
+	| errors |
+	errors := Dictionary new.
 
 	"We first load the class definitions and store the potential errors"
 	[
@@ -155,23 +155,22 @@ MCPackageLoader >> loadClassDefinitions [
 		do: [ :aDefinition |
 			[ aDefinition load ]
 				on: Error
-				do: [ errorDefinitions add: aDefinition ] ]
+				do: [ :error | errors at: aDefinition put: error ] ]
 		displayingProgress: 'Loading classes...'.
 
 	"Until we succed to fix errors, we try to install them"
 	[
 	| previousErrors |
-	previousErrors := errorDefinitions copy.
+	previousErrors := errors copy.
 	previousErrors
-		do: [ :aClassDefinition |
-			errorDefinitions remove: aClassDefinition.
+		keysDo: [ :aClassDefinition |
+			errors removeKey: aClassDefinition.
 			[ aClassDefinition load ]
 				on: Error
-				do: [ :ex | errorDefinitions add: aClassDefinition ] ]
-		displayingProgress: 'Reloading erroneous definitions...'.
-	previousErrors size = errorDefinitions size ] whileFalse ] ensure: [ "Finally we warn about the errors we could not fix."
-		errorDefinitions ifNotEmpty: [
-			self warnAboutErrors: errorDefinitions ] ]
+				do: [ :error | errors at: aClassDefinition put: error ] ].
+	previousErrors size = errors size ] whileFalse ] ensure: [ "Finally we warn about the errors we could not fix."
+		errors ifNotEmpty: [
+			self warnAboutErrors: errors ] ]
 ]
 
 { #category : 'patch ops' }
@@ -183,11 +182,6 @@ MCPackageLoader >> modifyDefinition: old to: new [
 { #category : 'private' }
 MCPackageLoader >> obsoletionFor: aDefinition [
 	^ obsoletions at: aDefinition ifAbsent: [nil]
-]
-
-{ #category : 'private' }
-MCPackageLoader >> orderDefinitionsForLoading: aCollection [
-	^ (self sorterForItems: aCollection) orderedItems
 ]
 
 { #category : 'private' }
@@ -242,16 +236,19 @@ MCPackageLoader >> warnAboutDependencies [
 ]
 
 { #category : 'private' }
-MCPackageLoader >> warnAboutErrors: errorDefinitions [
+MCPackageLoader >> warnAboutErrors: errorsDict [
 
 	self notify: (String streamContents: [ :s |
 			 s
 				 nextPutAll: 'The following definitions had errors while loading.  Press Proceed to try to load them again (they may work on a second pass):';
 				 cr.
-			 errorDefinitions do: [ :ea |
+			 errorsDict keysDo: [ :ea |
 				 s
 					 space;
 					 space;
 					 nextPutAll: ea summary;
+					 nextPutAll: ' (';
+					 nextPutAll: ((errorsDict at: ea) description asString);
+					 nextPutAll: ')';
 					 cr ] ])
 ]

@@ -645,6 +645,11 @@ RGEnvironment >> package [
 	^ nil
 ]
 
+{ #category : 'accessing' }
+RGEnvironment >> packages [
+	^ packages
+]
+
 { #category : 'accessing - backend' }
 RGEnvironment >> packagesDo: aBlock [
 

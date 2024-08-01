@@ -3,7 +3,7 @@ I am an monticello repository implementation for the FTP protocol.
 "
 Class {
 	#name : 'MCFtpRepository',
-	#superclass : 'MCFileBasedRepository',
+	#superclass : 'MCRemoteFileBasedRepository',
 	#instVars : [
 		'host',
 		'directory',
@@ -24,17 +24,6 @@ MCFtpRepository class >> basicFromUrl: aZnUrl [
 ]
 
 { #category : 'accessing' }
-MCFtpRepository class >> creationTemplate [
-	^
-'MCFtpRepository
-	host: ''modules.blopy.org''
-	directory: ''mc''
-	user: ''blop''
-	password: ''pilou'''
-	
-]
-
-{ #category : 'accessing' }
 MCFtpRepository class >> description [
 	^ 'FTP'
 ]
@@ -46,11 +35,6 @@ MCFtpRepository class >> host: host directory: directory user: user password: pa
 		directory: directory;
 		user: user;
 		password: password
-]
-
-{ #category : 'accessing' }
-MCFtpRepository class >> templateCreationSelector [
-	^ #host:directory:user:password: 
 ]
 
 { #category : 'accessing' }
@@ -132,10 +116,9 @@ MCFtpRepository >> user: userString [
 ]
 
 { #category : 'required' }
-MCFtpRepository >> writeStreamForFileNamed: aString replace: ignoreBoolean do: aBlock [
+MCFtpRepository >> writeStreamForFileNamed: aString do: aBlock [
 
-	self clientDo:
-			[:client |
-			client binary.
-			client putFileStreamContents: (ByteArray streamContents: aBlock) readStream as: aString]
+	self clientDo: [ :client |
+		client binary.
+		client putFileStreamContents: (ByteArray streamContents: aBlock) readStream as: aString ]
 ]

@@ -1,16 +1,28 @@
 Class {
 	#name : 'EquivalentTreeTest',
 	#superclass : 'TestCase',
+	#instVars : [
+		'model'
+	],
 	#category : 'Refactoring-Transformations-Tests-Test',
 	#package : 'Refactoring-Transformations-Tests',
 	#tag : 'Test'
 }
 
+{ #category : 'running' }
+EquivalentTreeTest >> setUp [
+
+	super setUp.
+	model := RBNamespace onEnvironment: (RBClassEnvironment classes: {
+				          Object.
+				          RBEquivalentMethodRootHolder.
+				          RBEquivalentMethodSubclassHolder })
+]
+
 { #category : 'tests' }
 EquivalentTreeTest >> testAllMethodsInHierarchy [
 
-	| checker allMethods model |
-	model := RBNamespace new.
+	| checker allMethods  |
 	checker := EquivalentTreeChecker new.
 	checker model: model.
 	checker on: RBEquivalentMethodSubclassHolder.
@@ -40,7 +52,7 @@ EquivalentTreeTest >> testEquivalentTreeWithMethodContainingSuperSendInSameClass
 	| checker methodNode equivalentTree |
 
 	checker := EquivalentTreeChecker new.
-	checker model: RBNamespace new.
+	checker model: model.
 	checker on: RBEquivalentMethodSubclassHolder.
 	checker extractedFromSelector: #methodToExtractFrom.
 	"Here we have equivalent method in the same class as #methodToExtractFrom, and we can replace with it"
@@ -55,7 +67,7 @@ EquivalentTreeTest >> testEquivalentTreeWithMethodHasSuperSendInSuperClassExpect
 	| checker methodNode equivalentTree |
 
 	checker := EquivalentTreeChecker new.
-	checker model: RBNamespace new.
+	checker model: model.
 	checker on: RBEquivalentMethodSubclassHolder.
 	checker extractedFromSelector: #methodToExtractFromWithSuperAndSimilarMethodInSuper.
 	"Thre is equivalent method, but it is in super class, and we cannot replace it since 
@@ -70,7 +82,7 @@ EquivalentTreeTest >> testEquivalentTreeWithMethodNodeWhenUniqueMethodExpectNil 
 
 	| checker  methodNode equivalentTree |
 	checker := EquivalentTreeChecker new.
-	checker model: RBNamespace new.
+	checker model: model.
 	checker on: RBEquivalentMethodSubclassHolder.
 	checker extractedFromSelector: #simpleLocalMethodReturn.
 	"There is no method similar to this one."
@@ -87,7 +99,7 @@ EquivalentTreeTest >> testEquivalentTreeWithMethodNodeWithDuplicateMethodExpectF
 	| checker methodNode equivalentTree |
 
 	checker := EquivalentTreeChecker new.
-	checker model: RBNamespace new.
+	checker model: model.
 	checker on: RBEquivalentMethodSubclassHolder.
 	checker extractedFromSelector: #simpleLocalMethodReturn.
 	"Equivalent method exists in EquivalentMethodSubclassHolder superclass"
@@ -99,8 +111,7 @@ EquivalentTreeTest >> testEquivalentTreeWithMethodNodeWithDuplicateMethodExpectF
 { #category : 'tests' }
 EquivalentTreeTest >> testMethodsToBeCheckedExceptSelector [
 
-	| checker methodsToBeChecked model |
-	model := RBNamespace new.
+	| checker methodsToBeChecked |
 	
 	checker := EquivalentTreeChecker new.
 	checker model: model.

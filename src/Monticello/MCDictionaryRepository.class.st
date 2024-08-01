@@ -29,14 +29,6 @@ MCDictionaryRepository >> basicStoreVersion: aVersion [
 ]
 
 { #category : 'accessing' }
-MCDictionaryRepository >> closestAncestorVersionFor: anAncestry ifNone: errorBlock [
-	^ anAncestry breadthFirstAncestors
-		detect: [ :ea | self includesVersionWithInfo: ea ]
-		ifFound: [ :info | self versionWithInfo: info ]
-		ifNone: errorBlock
-]
-
-{ #category : 'accessing' }
 MCDictionaryRepository >> description [
 
 	^ description ifNil: ['cache']
@@ -91,11 +83,6 @@ MCDictionaryRepository >> sortedVersionInfos [
 	self allVersionInfos do: [:ea | sorter addVersionInfo: ea].
 	^ sorter sortedVersionInfos
 
-]
-
-{ #category : 'accessing' }
-MCDictionaryRepository >> versionFrom: aVersionReferenceString [
-	^ self dictionary detect: [ :version | version info name = aVersionReferenceString ]
 ]
 
 { #category : 'interface' }

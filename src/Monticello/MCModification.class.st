@@ -70,41 +70,6 @@ MCModification >> obsoletion [
 ]
 
 { #category : 'accessing' }
-MCModification >> printAnnotations: request on: aStream [
-	aStream nextPutAll: 'old: '.
-	obsoletion printAnnotations: request on: aStream.
-	aStream cr.
-	aStream nextPutAll: 'new: '.
-	modification printAnnotations: request on: aStream.
-]
-
-{ #category : 'accessing' }
-MCModification >> summarySuffix [
-	^ modification summarySuffixOver: obsoletion
-
-]
-
-{ #category : 'printing' }
-MCModification >> summarySuffixOver: previousDefinition [
-	| sourceChanged categoryChanged timeStampChanged |
-	sourceChanged := self source ~= previousDefinition source.
-	timeStampChanged := self timeStamp ~= previousDefinition timeStamp.
-	categoryChanged := self category ~= previousDefinition category.
-	sourceChanged | timeStampChanged | categoryChanged
-		ifFalse: [ ^super summarySuffixOver: previousDefinition ].
-	sourceChanged ifTrue: [
-		^categoryChanged
-			ifTrue: [ ' (changed and recategorized)' ]
-			ifFalse: [ ' (changed)' ] ].
-	timeStampChanged & categoryChanged
-		ifTrue: [^ ' (recategorized and different time stamp)' ].
-	^categoryChanged
-		ifTrue: [ ' (only recategorized)' ]
-		ifFalse: [ ' (only different time stamp)' ]
-
-]
-
-{ #category : 'accessing' }
 MCModification >> targetClass [
 	^ obsoletion actualClass
 ]

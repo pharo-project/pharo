@@ -36,25 +36,9 @@ OSSDL2Driver class >> eventLoopProcess [
 ]
 
 { #category : 'testing' }
-OSSDL2Driver class >> hasPlugin [
-	<primitive: #primitiveHasDisplayPlugin module: #SDL2DisplayPlugin>
-	^ false
-]
-
-{ #category : 'testing' }
 OSSDL2Driver class >> isSuitable [
-	^ self isSupported
-]
 
-{ #category : 'testing' }
-OSSDL2Driver class >> isSupported [
 	^ SDL2 isAvailable
-]
-
-{ #category : 'testing' }
-OSSDL2Driver class >> isVMDisplayUsingSDL2 [
-	<primitive: #primitiveIsVMDisplayUsingSDL2>
-	^ false
 ]
 
 { #category : 'events' }
@@ -164,49 +148,8 @@ OSSDL2Driver >> eventFilter [
 	^ eventFilter ifNil: [ eventFilter := OSSDLPasteEventFilter new next: self; yourself ]
 ]
 
-{ #category : 'accessing' }
-OSSDL2Driver >> eventLoopProcess [
-
-	^ self class eventLoopProcess
-]
-
 { #category : 'events-processing' }
-OSSDL2Driver >> eventLoopProcessWithPlugin [
-	| event session semaIndex |
-	event := SDL_Event new.
-	session := Smalltalk session.
-
-	semaIndex := (Smalltalk registerExternalObject: inputSemaphore).
-	self primSetupInputSemaphore: semaIndex.
-	[
-		[ inputSemaphore wait; consumeAllSignals. session  == Smalltalk session] whileTrue: [
-			[ (SDL2 pollEvent: event) > 0 ] whileTrue: [
-				self processEvent: event
-			].
-		]
-	] ensure:  [ Smalltalk unregisterExternalObject: inputSemaphore ]
-]
-
-{ #category : 'events-processing' }
-OSSDL2Driver >> eventLoopProcessWithVMWindow [
-	| event session semaIndex eventBuffer |
-	event := SDL_Event new.
-	eventBuffer := event getHandle.
-	session := Smalltalk session.
-
-	semaIndex := (Smalltalk registerExternalObject: inputSemaphore).
-	self primitiveSetVMSDL2Input: semaIndex.
-	[
-		[ inputSemaphore wait; consumeAllSignals. session  == Smalltalk session] whileTrue: [
-			[ self primitivePollVMSDL2Event: eventBuffer size: eventBuffer size ] whileTrue: [
-				self processEvent: event
-			].
-		]
-	] ensure:  [ Smalltalk unregisterExternalObject: inputSemaphore ]
-]
-
-{ #category : 'events-processing' }
-OSSDL2Driver >> eventLoopProcessWithoutPlugin [
+OSSDL2Driver >> eventLoop [
 	| event session |
 	event := SDL_Event new.
 	session := Smalltalk session.
@@ -217,6 +160,12 @@ OSSDL2Driver >> eventLoopProcessWithoutPlugin [
 		whileTrue: [ self processEvent: event ].
 
 		(Delay forMilliseconds: 5) wait ]
+]
+
+{ #category : 'accessing' }
+OSSDL2Driver >> eventLoopProcess [
+
+	^ self class eventLoopProcess
 ]
 
 { #category : 'initialization' }
@@ -267,24 +216,6 @@ OSSDL2Driver >> openAddedJoystick: index [
 	| joystick |
 	joystick := SDL2 joystickOpen: index.
 	JoystickMap at: index put: joystick
-]
-
-{ #category : 'events-processing' }
-OSSDL2Driver >> primSetupInputSemaphore: semaIndex [
-	<primitive: #primitiveSetSDL2Input module: #SDL2DisplayPlugin>
-	^ nil
-]
-
-{ #category : 'events-processing' }
-OSSDL2Driver >> primitivePollVMSDL2Event: eventBuffer size: size [
-	<primitive: #primitivePollVMSDL2Event>
-	^ false
-]
-
-{ #category : 'events-processing' }
-OSSDL2Driver >> primitiveSetVMSDL2Input: semaIndex [
-	<primitive: #primitiveSetVMSDL2Input>
-	^ nil
 ]
 
 { #category : 'events-processing' }
@@ -365,18 +296,7 @@ OSSDL2Driver >> setupEventLoop [
 			EventLoopProcess terminate.
 			EventLoopProcess := nil ] ].
 
-	EventLoopProcess := self class isVMDisplayUsingSDL2
-		ifTrue: [
-			[ self eventLoopProcessWithVMWindow ]
-			forkAt: Processor lowIOPriority ]
-		ifFalse: [
-			self class hasPlugin
-				ifTrue: [
-					[ self eventLoopProcessWithPlugin ]
-					forkAt: Processor lowIOPriority ]
-				ifFalse: [
-					[ self eventLoopProcessWithoutPlugin ]
-					forkAt: Processor lowIOPriority ] ].
+	EventLoopProcess := [ self eventLoop ] forkAt: Processor lowIOPriority.
 
 	EventLoopProcess
 		name: 'SDL2 Event loop';
