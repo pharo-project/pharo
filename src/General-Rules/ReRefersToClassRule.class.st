@@ -4,16 +4,11 @@ However we cannot systematically replace Class reference by self class or self b
 "
 Class {
 	#name : 'ReRefersToClassRule',
-	#superclass : 'ReAbstractRule',
+	#superclass : 'ReNodeRewriteRule',
 	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
 	#tag : 'Design Flaws'
 }
-
-{ #category : 'testing' }
-ReRefersToClassRule class >> checksMethod [
-	^ true
-]
 
 { #category : 'accessing' }
 ReRefersToClassRule class >> group [
@@ -30,26 +25,27 @@ ReRefersToClassRule class >> ruleName [
 	^ 'Refers to class name instead of "self class"'
 ]
 
-{ #category : 'accessing' }
+{ #category : 'manifest' }
 ReRefersToClassRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'RefersToClassRule'
 ]
 
-{ #category : 'running' }
-ReRefersToClassRule >> check: aMethod forCritiquesDo: aCriticBlock [
-	| class problemLiterals |
+{ #category : 'hooks' }
+ReRefersToClassRule >> afterCheck: aNode mappings: mappingDict [
 
-	"The class method #isAbstract needs to explicitly hardcode class references.
-	So we do not criticize this."
-	(aMethod isClassSide and: [ aMethod selector = #isAbstract ]) ifTrue: [ ^ self ].
+	| class |
+	
+	class := aNode methodNode .
+	(class methodClass isClassSide and: [ class selector = #isAbstract ]) ifTrue: [ ^ false ].
+	aNode isVariable ifFalse: [ ^ false ].
+	^ aNode isGlobalVariable and: [ aNode name = class methodClass instanceSide name ]
+]
 
-	class := aMethod methodClass instanceSide.
-	problemLiterals := (aMethod ast allChildren
-			select: [ :node | node isGlobalVariable ])
-			select: [ :var | var name = class name].
+{ #category : 'initialization' }
+ReRefersToClassRule >> initialize [ 
 
-	problemLiterals do: [ :literal |
-			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: literal hint:literal name )]
+	super initialize.
+	self replace: '`@Object' with: 'self'
 ]
