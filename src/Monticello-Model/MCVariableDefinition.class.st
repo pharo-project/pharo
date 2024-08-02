@@ -34,22 +34,12 @@ MCVariableDefinition >> isClassInstanceVariable [
 ]
 
 { #category : 'testing' }
-MCVariableDefinition >> isClassInstanceVariableDefinition [
-	^ false
-]
-
-{ #category : 'testing' }
 MCVariableDefinition >> isClassVariable [
 	^ false
 ]
 
 { #category : 'testing' }
 MCVariableDefinition >> isInstanceVariable [
-	^ false
-]
-
-{ #category : 'testing' }
-MCVariableDefinition >> isInstanceVariableDefinition [
 	^ false
 ]
 

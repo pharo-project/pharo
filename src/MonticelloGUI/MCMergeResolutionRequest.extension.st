@@ -1,6 +1,6 @@
 Extension { #name : 'MCMergeResolutionRequest' }
 
-{ #category : '*Monticello-GUI-Diff' }
+{ #category : '*MonticelloGUI-Diff' }
 MCMergeResolutionRequest >> defaultAction [
 	"Modally open a merge tool."
 
