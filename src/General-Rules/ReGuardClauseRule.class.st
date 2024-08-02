@@ -40,25 +40,13 @@ ReGuardClauseRule class >> ruleName [
 ReGuardClauseRule >> initialize [
 	super initialize.
 	self
-		addMatchingMethod: '`@methodName: `@args
-					| `@temps |
-					`@.Statements.
-					`@condition ifTrue: [| `@trueTemps | `.Statement1. `.Statement2. `@.Statements1]'
-		rewriteTo: '`@methodName: `@args
-					| `@temps `@trueTemps |
-					`@.Statements.
-					`@condition ifFalse: [^self].
+		replace: '`@condition ifTrue: [| `@trueTemps | `.Statement1. `.Statement2. `@.Statements1]'
+		with: '`@condition ifFalse: [^self].
 					`.Statement1.
 					`.Statement2.
 					`@.Statements1';
-		addMatchingMethod: '`@methodName: `@args
-					| `@temps |
-					`@.Statements.
-					`@condition ifFalse: [| `@falseTemps | `.Statement1. `.Statement2. `@.Statements1]'
-		rewriteTo: '`@methodName: `@args
-					| `@temps `@falseTemps |
-					`@.Statements.
-					`@condition ifTrue: [^self].
+		replace: '`@condition ifFalse: [| `@falseTemps | `.Statement1. `.Statement2. `@.Statements1]'
+		with: '`@condition ifTrue: [^self].
 					`.Statement1.
 					`.Statement2.
 					`@.Statements1'
