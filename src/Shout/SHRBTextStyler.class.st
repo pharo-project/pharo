@@ -50,6 +50,16 @@ SHRBTextStyler class >> attributesFor: aSymbol [
 ]
 
 { #category : 'styles' }
+SHRBTextStyler class >> availableStylesPragmas [
+	"Answer a <Collection> of <Pragma> each representing a Shout style"
+
+	^ Pragma
+		  allNamed: #styleTable:
+		  from: self class
+		  to: SHRBTextStyler class
+]
+
+{ #category : 'styles' }
 SHRBTextStyler class >> blueStyleTable [
 	"color can be a valid argument to Color class>>colorFrom: , or nil to
 	use the editor text color.
@@ -417,12 +427,33 @@ SHRBTextStyler class >> styleTable: anArray [
 ]
 
 { #category : 'styles' }
+SHRBTextStyler class >> styleTableName [
+	"Answer a <String> representing the current style name"
+	
+	self styleTablePragmas 
+		detect: [ : p | (self perform: p methodSelector) = self styleTable ]
+		ifFound: [ : p | ^ p argumentAt: 1 ]
+		ifNone: [ self error: 'Style table unknown' ]
+
+]
+
+{ #category : 'styles' }
 SHRBTextStyler class >> styleTableNamed: aString [
 
-	^ (Pragma allNamed: #styleTable: in: self class)
+	^ self styleTablePragmas
 		detect: [ :each | (each argumentAt: 1) = aString ]
 		ifFound: [ :each | self perform: each methodSelector ]
 		ifNone: [ nil ]
+]
+
+{ #category : 'styles' }
+SHRBTextStyler class >> styleTablePragmas [
+	"Answer a <Collection> of <Pragma> each representing a Shout style"
+
+	^ Pragma
+		  allNamed: #styleTable:
+		  from: self class
+		  to: SHRBTextStyler class
 ]
 
 { #category : 'styles' }
