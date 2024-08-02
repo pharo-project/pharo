@@ -16,8 +16,7 @@ Class {
 		'methodPreviewPresenter'
 	],
 	#category : 'Shout-UI',
-	#package : 'Shout',
-	#tag : 'UI'
+	#package : 'Shout-UI'
 }
 
 { #category : 'instance creation' }
