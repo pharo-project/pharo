@@ -1,10 +1,19 @@
+"
+Provides a Spec presenter to preview how a Shout code style would be displayed in the system.
+It also allows you to apply the selected style.
+
+```
+SHStylePresenter open.
+```
+"
 Class {
 	#name : 'SHStylePresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
 		'styleListPresenter',
-		'previewPresenter',
-		'buttonBarPresenter'
+		'buttonBarPresenter',
+		'classDefinitionPreviewPresenter',
+		'methodPreviewPresenter'
 	],
 	#category : 'Shout-UI',
 	#package : 'Shout',
@@ -25,12 +34,12 @@ SHStylePresenter >> availableStylesPragmas [
 	^ self textStylerClass styleTablePragmas
 ]
 
-{ #category : 'initialization' }
-SHStylePresenter >> codeMorphStyledAs: aStyleName [
+{ #category : 'private' }
+SHStylePresenter >> classDefinitionTextStyledAs: aStyleName [
 
 	^ RubScrolledTextMorph new
 		wrapped: true;
-		setText: (self styledMethodWith: aStyleName);
+		setText: (self styledClassDefinitionWith: aStyleName);
 		in: [ :this |
 			this textArea
 				readOnly: true;
@@ -46,7 +55,10 @@ SHStylePresenter >> defaultLayout [
 		add: (	SpBoxLayout newLeftToRight 
 			spacing: 4;
 			add: styleListPresenter expand: false;
-			add: previewPresenter;
+			add: (SpPanedLayout newTopToBottom 
+				add: classDefinitionPreviewPresenter;
+				add: methodPreviewPresenter;
+				yourself);
 			yourself);
 		add: buttonBarPresenter expand: false;
 		yourself
@@ -72,19 +84,28 @@ SHStylePresenter >> initializeButtonBar [
 ]
 
 { #category : 'initialization' }
-SHStylePresenter >> initializePresenters [
+SHStylePresenter >> initializeClassDefinitionPreview [
 
-	self initializeStyleList.
-	self initializePreview.
-	self initializeButtonBar.
+	classDefinitionPreviewPresenter := self newMorph
+		morph: (self classDefinitionTextStyledAs: self styleName);
+		yourself
 ]
 
 { #category : 'initialization' }
-SHStylePresenter >> initializePreview [
+SHStylePresenter >> initializeMethodPreview [
 
-	previewPresenter := self newMorph
-		morph: (self codeMorphStyledAs: self styleName);
+	methodPreviewPresenter := self newMorph
+		morph: (self methodTextStyledAs: self styleName);
 		yourself
+]
+
+{ #category : 'initialization' }
+SHStylePresenter >> initializePresenters [
+
+	self initializeStyleList.
+	self initializeMethodPreview.
+	self initializeClassDefinitionPreview.
+	self initializeButtonBar.
 ]
 
 { #category : 'initialization' }
@@ -95,8 +116,7 @@ SHStylePresenter >> initializeStyleList [
 		                      headerTitle: 'Styles';
 		                      items: self styleNames;
 		                      selectItem: self styleName;
-		                      whenSelectedItemChangedDo: [ :item | 
-			                      previewPresenter morph: (self codeMorphStyledAs: item) ];
+		                      whenSelectedItemChangedDo: [ :item | self updatePreviewPresenters: item ];
 		                      yourself.
 ]
 
@@ -109,35 +129,64 @@ SHStylePresenter >> initializeWindow: aWindowPresenter [
 		title: 'Code Styler'.
 ]
 
-{ #category : 'initialization' }
+{ #category : 'private' }
+SHStylePresenter >> methodTextStyledAs: aStyleName [
+
+	^ RubScrolledTextMorph new
+		wrapped: true;
+		setText: (self styledMethodWith: aStyleName);
+		in: [ :this |
+			this textArea
+				readOnly: true;
+				font: StandardFonts codeFont ];
+		yourself
+]
+
+{ #category : 'private' }
+SHStylePresenter >> sampleClass [
+
+	^ OrderedCollection 
+]
+
+{ #category : 'private' }
 SHStylePresenter >> sampleMethod [
 	"#copyReplaceFrom:to:with:"
 	
-	^  OrderedCollection >> #withIndexCollect: "OrderedCollection selectors atRandom"
+	^  self sampleClass >> #withIndexCollect: "OrderedCollection selectors atRandom"
 ]
 
-{ #category : 'initialization' }
+{ #category : 'private' }
 SHStylePresenter >> selectedStyleTableName [
 	"Answer a <String> with the currently selected style name in the receiver"
 	
 	^ styleListPresenter selectedItem
 ]
 
-{ #category : 'initialization' }
+{ #category : 'private' }
 SHStylePresenter >> styleName [
 	"Answer a <Collection> of <String> with the available style names"
 	
 	^ self textStylerClass styleTableName
 ]
 
-{ #category : 'initialization' }
+{ #category : 'private' }
 SHStylePresenter >> styleNames [
 	"Answer a <Collection> of <String> with the available style names"
 	
 	^ self availableStylesPragmas collect: [ :p | p argumentAt: 1 ]
 ]
 
-{ #category : 'initialization' }
+{ #category : 'private' }
+SHStylePresenter >> styledClassDefinitionWith: styleName [
+	"Answer a <Text> representing the receiver's styled sample class definition"
+
+	^ (self textStylerClass newWithAttributeTableNamed: styleName)
+			style: self sampleClass definitionString asText;
+			text
+	
+]
+
+{ #category : 'private' }
 SHStylePresenter >> styledMethodWith: styleName [
 	"Answer a <Text> representing the receiver's styled sample method source"
 
@@ -147,8 +196,15 @@ SHStylePresenter >> styledMethodWith: styleName [
 	
 ]
 
-{ #category : 'initialization' }
+{ #category : 'private' }
 SHStylePresenter >> textStylerClass [
 
 	^ SpMorphicCodeTextStyler
+]
+
+{ #category : 'callbacks' }
+SHStylePresenter >> updatePreviewPresenters: item [
+
+	classDefinitionPreviewPresenter morph: (self classDefinitionTextStyledAs: item).
+	methodPreviewPresenter morph: (self methodTextStyledAs: item)
 ]

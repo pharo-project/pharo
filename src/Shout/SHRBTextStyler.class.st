@@ -50,16 +50,6 @@ SHRBTextStyler class >> attributesFor: aSymbol [
 ]
 
 { #category : 'styles' }
-SHRBTextStyler class >> availableStylesPragmas [
-	"Answer a <Collection> of <Pragma> each representing a Shout style"
-
-	^ Pragma
-		  allNamed: #styleTable:
-		  from: self class
-		  to: SHRBTextStyler class
-]
-
-{ #category : 'styles' }
 SHRBTextStyler class >> blueStyleTable [
 	"color can be a valid argument to Color class>>colorFrom: , or nil to
 	use the editor text color.
@@ -1012,6 +1002,12 @@ SHRBTextStyler >> stylingEnabled [
 SHRBTextStyler >> stylingEnabled: aBoolean [
 
 	stylingEnabled := aBoolean
+]
+
+{ #category : 'private' }
+SHRBTextStyler >> text [
+
+	^ text
 ]
 
 { #category : 'styling' }
