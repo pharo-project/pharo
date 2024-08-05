@@ -8,7 +8,7 @@ Internal Representation and Key Implementation Points.
 	package:		<Package>
 "
 Class {
-	#name : 'SycCopyPackageCommand',
+	#name : 'SycDuplicatePackageCommand',
 	#superclass : 'CmdCommand',
 	#category : 'SystemCommands-PackageCommands-Scope',
 	#package : 'SystemCommands-PackageCommands',
@@ -16,23 +16,23 @@ Class {
 }
 
 { #category : 'testing' }
-SycCopyPackageCommand class >> canBeExecutedInContext: aToolContext [
+SycDuplicatePackageCommand class >> canBeExecutedInContext: aToolContext [
 
 	^ aToolContext isPackageSelected
 ]
 
 { #category : 'accessing' }
-SycCopyPackageCommand >> defaultMenuIconName [
+SycDuplicatePackageCommand >> defaultMenuIconName [
 	^#smallCopy
 ]
 
 { #category : 'accessing' }
-SycCopyPackageCommand >> defaultMenuItemName [
-	^'Copy all package'
+SycDuplicatePackageCommand >> defaultMenuItemName [
+	^'Duplicate package'
 ]
 
 { #category : 'execution' }
-SycCopyPackageCommand >> prepareFullExecutionInContext: aToolContext [
+SycDuplicatePackageCommand >> prepareFullExecutionInContext: aToolContext [
 
 	| dialog package newName |
 
