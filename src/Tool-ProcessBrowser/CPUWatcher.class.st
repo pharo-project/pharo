@@ -133,14 +133,13 @@ CPUWatcher class >> stopMonitoring [
 
 { #category : 'porcine capture' }
 CPUWatcher >> catchThePig: aProcess [
-	| rules  |
-	"nickname, allow-stop, allow-debug"
-	rules := self processBrowser nameAndRulesFor: aProcess.
 
 	(self processBrowser isUIProcess: aProcess)
 		ifTrue: [ "aProcess debugWithTitle: 'Interrupted from the CPUWatcher'." ]
 		ifFalse: [
-			rules second ifFalse: [ ^self ].
+			"We should not suspend a critical process."
+			(self processBrowser isCritical: aProcess) ifTrue: [ ^ self ].
+
 			self processBrowser suspendProcess: aProcess.
 			self openWindowForSuspendedProcess: aProcess ]
 ]
@@ -198,17 +197,14 @@ CPUWatcher >> monitorProcessPeriod: secs sampleRate: msecs [
 { #category : 'porcine capture' }
 CPUWatcher >> openMorphicWindowForSuspendedProcess: aProcess [
 
-	| menu rules |
+	| menu |
 	menu := MorphicUIManager new newMenuIn: self for: self.
 	"nickname  allow-stop  allow-debug"
-	rules := self processBrowser nameAndRulesFor: aProcess.
+
 	menu
 		add: 'Dismiss this menu' target: menu selector: #delete;
 		addLine.
-	menu
-		add: 'Open Process Browser'
-		target: self processBrowser
-		selector: #open.
+	menu add: 'Open Process Browser' target: self processBrowser selector: #open.
 	menu
 		add: 'Resume'
 		target: self
@@ -223,7 +219,7 @@ CPUWatcher >> openMorphicWindowForSuspendedProcess: aProcess [
 		argumentList: {
 				aProcess.
 				menu }.
-	rules third ifTrue: [
+	(self processBrowser isCritical: aProcess) ifFalse: [
 		menu
 			add: 'Debug at a lower priority'
 			target: self
@@ -231,8 +227,8 @@ CPUWatcher >> openMorphicWindowForSuspendedProcess: aProcess [
 			argumentList: {
 					aProcess.
 					menu } ].
-	menu addTitle: aProcess identityHash asString , ' ' , rules first
-		, ' is taking too much time and has been suspended.
+	menu addTitle:
+		aProcess identityHash asString , ' ' , (self processBrowser nameAndRulesFor: aProcess) first , ' is taking too much time and has been suspended.
 What do you want to do with it?'.
 	menu stayUp: true.
 	menu popUpInWorld

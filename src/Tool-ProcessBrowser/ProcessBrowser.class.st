@@ -146,6 +146,16 @@ ProcessBrowser class >> initialize [
 ]
 
 { #category : 'process control' }
+ProcessBrowser class >> isCritical: aProcess [
+	"We have a list of well known pnocesses that we do not want users to terminate. Critical processes are those processes."
+
+	^ WellKnownProcesses
+		  detect: [ :blockAndRules | blockAndRules key value == aProcess ]
+		  ifFound: [ :blockAndRules | true ]
+		  ifNone: [ false ]
+]
+
+{ #category : 'process control' }
 ProcessBrowser class >> isUIProcess: aProcess [
 	^ aProcess == MorphicUIManager uiProcess
 ]
@@ -164,13 +174,15 @@ ProcessBrowser class >> menuCommandOn: aBuilder [
 { #category : 'process control' }
 ProcessBrowser class >> nameAndRulesFor: aProcess [
 	"Answer a nickname and two flags: allow-stop, and allow-debug"
+
 	| rules |
-	rules := {nil. true. true}.
-	WellKnownProcesses do: [:blockAndRules |
-		blockAndRules key value == aProcess
-			ifTrue: [ rules := blockAndRules value value ]].
-	rules first ifNil: [
-		rules at: 1 put: aProcess suspendedContext asString ].
+	rules := { nil. true. true }.
+
+	WellKnownProcesses
+		detect: [ :blockAndRules | blockAndRules key value == aProcess ]
+		ifFound: [ :blockAndRules | rules := blockAndRules value ].
+
+	rules first ifNil: [ rules at: 1 put: aProcess suspendedContext asString ].
 	^ rules
 ]
 
@@ -212,13 +224,12 @@ ProcessBrowser class >> registerToolsOn: registry [
 ]
 
 { #category : 'process control' }
-ProcessBrowser class >> registerWellKnownProcess: aBlockForProcess label: nickname allowStop: allowStop allowDebug: allowDebug [
+ProcessBrowser class >> registerWellKnownProcess: aBlockForProcess label: nickname [
 	"Add an entry to the registry of well known processes. aBlockForProcess
-	evaluates to a known process to be identified by nickname, and allowStop
-	and allowDebug are flags controlling allowable actions for this process
-	in the browser."
+	evaluates to a known process to be identified by nickname.
+	Well known processes should not be able to be terminated or debugged."
 
-	WellKnownProcesses add: aBlockForProcess->[{nickname . allowStop . allowDebug}]
+	WellKnownProcesses add: aBlockForProcess -> { nickname }
 ]
 
 { #category : 'private - initialization' }
@@ -227,42 +238,12 @@ ProcessBrowser class >> registerWellKnownProcesses [
 	Additional processes may be added to this list as required"
 
 	WellKnownProcesses := OrderedCollection new.
-	self
-		registerWellKnownProcess: [  ]
-		label: 'no process'
-		allowStop: false
-		allowDebug: false.
-	self
-		registerWellKnownProcess: [ Smalltalk lowSpaceWatcherProcess ]
-		label: nil
-		allowStop: false
-		allowDebug: false.
-	self
-		registerWellKnownProcess: [ FinalizationProcess runningFinalizationProcess ]
-		label: nil
-		allowStop: false
-		allowDebug: false.
-	self
-		registerWellKnownProcess: [ Processor backgroundProcess ]
-		label: nil
-		allowStop: false
-		allowDebug: false.
-	self
-		registerWellKnownProcess: [ MorphicUIManager uiProcess ]
-		label: nil
-		allowStop: false
-		allowDebug: false.
-	self
-		registerWellKnownProcess: [ Smalltalk globals at: #CPUWatcher ifPresent: [ :cw | cw currentWatcherProcess ] ]
-		label: 'the CPUWatcher'
-		allowStop: false
-		allowDebug: false.
-
-	self
-		registerWellKnownProcess: [ Delay schedulingProcess ]
-		label: nil
-		allowStop: false
-		allowDebug: false
+	self registerWellKnownProcess: [ Smalltalk lowSpaceWatcherProcess ] label: nil.
+	self registerWellKnownProcess: [ FinalizationProcess runningFinalizationProcess ] label: nil.
+	self registerWellKnownProcess: [ Processor backgroundProcess ] label: nil.
+	self registerWellKnownProcess: [ MorphicUIManager uiProcess ] label: nil.
+	self registerWellKnownProcess: [ CPUWatcher currentWatcherProcess ] label: 'the CPUWatcher'.
+	self registerWellKnownProcess: [ Delay schedulingProcess ] label: nil
 ]
 
 { #category : 'cleanup' }
@@ -405,22 +386,18 @@ ProcessBrowser >> build [
 
 { #category : 'process actions' }
 ProcessBrowser >> changePriority [
-	| str newPriority nameAndRules |
-	nameAndRules := self nameAndRulesForSelectedProcess.
-	nameAndRules third
-		ifFalse: [self inform: 'Nope, won''t change priority of ' , nameAndRules first.
-			^ self].
-	str := self morphicUIManager
-				request: 'New priority'
-		  initialAnswer: selectedProcess priority asString.
-	str ifNil: [str := String new].
+
+	| str newPriority |
+	self isSelectedProcessCritical ifTrue: [
+		self inform: 'Won''t change priority of ' , self nameOfSelectedProcess.
+		^ self ].
+	str := self morphicUIManager request: 'New priority' initialAnswer: selectedProcess priority asString.
+	str ifNil: [ str := String new ].
 	newPriority := str asNumber asInteger.
-	newPriority
-		ifNil: [^ self].
-	(newPriority < 1
-			or: [newPriority > Processor highestPriority])
-		ifTrue: [self inform: 'Bad priority'.
-			^ self].
+	newPriority ifNil: [ ^ self ].
+	(newPriority < 1 or: [ newPriority > Processor highestPriority ]) ifTrue: [
+		self inform: 'Bad priority'.
+		^ self ].
 	self class setProcess: selectedProcess toPriority: newPriority.
 	self updateProcessList
 ]
@@ -436,11 +413,10 @@ ProcessBrowser >> changeStackListTo: aCollection [
 
 { #category : 'process actions' }
 ProcessBrowser >> debugProcess [
-	| nameAndRules |
-	nameAndRules := self nameAndRulesForSelectedProcess.
-	nameAndRules third
-		ifFalse: [self inform: 'Nope, won''t debug ' , nameAndRules first.
-			^ self].
+
+	self isSelectedProcessCritical ifTrue: [
+		self inform: 'Won''t debug ' , self nameOfSelectedProcess.
+		^ self ].
 	self class debugProcess: selectedProcess
 ]
 
@@ -550,6 +526,12 @@ ProcessBrowser >> isScripting [
 	^self doItContext belongsToDoIt
 ]
 
+{ #category : 'testing' }
+ProcessBrowser >> isSelectedProcessCritical [
+
+	^ self class isCritical: selectedProcess
+]
+
 { #category : 'process list' }
 ProcessBrowser >> keyEventsDict [
 
@@ -579,108 +561,100 @@ ProcessBrowser >> mayBeStartCPUWatcher [
 { #category : 'menu' }
 ProcessBrowser >> menuProcessList: aMenuMorph [
 
-	selectedProcess
-		ifNotNil: [
-			| nameAndRules |
-			nameAndRules := self nameAndRulesForSelectedProcess.
-			aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Inspect')
-				keyText: 'i';
-				selector: #inspectProcess;
-				target: self;
-				yourself).
-			aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Inspect Pointers')
-				keyText: 'P';
-				selector: #inspectPointers;
-				target: self;
-				yourself).
+	selectedProcess ifNotNil: [
+		aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #Inspect)
+				 keyText: 'i';
+				 selector: #inspectProcess;
+				 target: self;
+				 yourself).
+		aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Inspect Pointers')
+				 keyText: 'P';
+				 selector: #inspectPointers;
+				 target: self;
+				 yourself).
 
-			nameAndRules second
+		self isSelectedProcessCritical ifFalse: [
+			aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #Terminate)
+					 keyText: 't';
+					 selector: #terminateProcess;
+					 target: self;
+					 yourself).
+
+			selectedProcess isSuspended
 				ifTrue: [
-					aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Terminate')
-						keyText: 't';
-						selector: #terminateProcess;
-						target: self;
-						yourself).
+					aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #Resume)
+							 keyText: 'r';
+							 selector: #resumeProcess;
+							 target: self;
+							 yourself) ]
+				ifFalse: [
+					aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #Suspend)
+							 keyText: 's';
+							 selector: #suspendProcess;
+							 target: self;
+							 yourself) ] ].
 
-					selectedProcess isSuspended
-						ifTrue: [
-							aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Resume')
-								keyText: 'r';
-								selector: #resumeProcess;
-								target: self;
-								yourself). ]
-						ifFalse: [
-							aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Suspend')
-								keyText: 's';
-								selector: #suspendProcess;
-								target: self;
-								yourself). ] ].
+		self isSelectedProcessCritical ifFalse: [
+			aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Change priority')
+					 keyText: 'p';
+					 selector: #changePriority;
+					 target: self;
+					 yourself).
+			aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #Debug)
+					 keyText: 'd';
+					 selector: #debugProcess;
+					 target: self;
+					 yourself) ].
 
-			nameAndRules third
-				ifTrue: [
-					aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Change priority')
-						keyText: 'p';
-						selector: #changePriority;
-						target: self;
-						yourself).
-					aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Debug')
-						keyText: 'd';
-						selector: #debugProcess;
-						target: self;
-						yourself) ].
+		(selectedProcess suspendingList isKindOf: Semaphore) ifTrue: [
+			aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Signal Semaphore')
+					 keyText: 'S';
+					 selector: #signalSemaphore;
+					 target: self;
+					 yourself) ].
 
-			(selectedProcess suspendingList isKindOf: Semaphore)
-				ifTrue: [
-					aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Signal Semaphore')
-						keyText: 'S';
-						selector: #signalSemaphore;
-						target: self;
-						yourself). ].
-
-			aMenuMorph addMenuItem: (MenuLineMorph new)].
+		aMenuMorph addMenuItem: MenuLineMorph new ].
 
 	aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Find context...')
-		keyText: 'f';
-		selector: #findContext;
-		target: self;
-		yourself).
+			 keyText: 'f';
+			 selector: #findContext;
+			 target: self;
+			 yourself).
 	aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Find again')
-		keyText: 'g';
-		selector: #nextContext;
-		target: self;
-		yourself).
+			 keyText: 'g';
+			 selector: #nextContext;
+			 target: self;
+			 yourself).
 
-	aMenuMorph addMenuItem: (MenuLineMorph new).
+	aMenuMorph addMenuItem: MenuLineMorph new.
 
 	aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: (self isAutoUpdating
-			ifTrue: [ #'Turn off auto-update' ]
-			ifFalse: [ #'Turn on auto-update' ]))
-		keyText: 'a';
-		selector: #toggleAutoUpdate;
-		target: self;
-		yourself).
+					   ifTrue: [ #'Turn off auto-update' ]
+					   ifFalse: [ #'Turn on auto-update' ]))
+			 keyText: 'a';
+			 selector: #toggleAutoUpdate;
+			 target: self;
+			 yourself).
 
 	aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Update list')
-		keyText: 'u';
-		selector: #updateProcessList;
-		target: self;
-		yourself).
+			 keyText: 'u';
+			 selector: #updateProcessList;
+			 target: self;
+			 yourself).
 
-	Smalltalk globals
-		at: #CPUWatcher
-		ifPresent: [ :pw |
-			aMenuMorph addMenuItem: (MenuLineMorph new).
-			pw isMonitoring
-				ifTrue: [
-					aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Stop CPUWatcher')
-						selector: #stopCPUWatcher;
-						target: self;
-						yourself) ]
-				ifFalse: [
-					aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Start CPUWatcher')
-						selector: #startCPUWatcher;
-						target: self;
-						yourself) ] ].
+	Smalltalk globals at: #CPUWatcher ifPresent: [ :pw |
+		aMenuMorph addMenuItem: MenuLineMorph new.
+		pw isMonitoring
+			ifTrue: [
+				aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Stop CPUWatcher')
+						 selector: #stopCPUWatcher;
+						 target: self;
+						 yourself) ]
+			ifFalse: [
+				aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Start CPUWatcher')
+						 selector: #startCPUWatcher;
+						 target: self;
+						 yourself) ] ].
 
 	^ aMenuMorph
 ]
@@ -735,16 +709,16 @@ ProcessBrowser >> morphicUIManager [
 ]
 
 { #category : 'process actions' }
-ProcessBrowser >> nameAndRulesFor: aProcess [
-	"Answer a nickname and two flags: allow-stop, and allow-debug"
-	aProcess == autoUpdateProcess ifTrue: [ ^{'my auto-update process'. true. true} ].
-	^self class nameAndRulesFor: aProcess
+ProcessBrowser >> nameFor: aProcess [
+
+	aProcess == autoUpdateProcess ifTrue: [ ^ 'my auto-update process' ].
+	^ (self class nameAndRulesFor: aProcess) first
 ]
 
 { #category : 'process actions' }
-ProcessBrowser >> nameAndRulesForSelectedProcess [
-	"Answer a nickname and two flags: allow-stop, and allow-debug"
-	^self nameAndRulesFor: selectedProcess
+ProcessBrowser >> nameOfSelectedProcess [
+
+	^ self nameFor: selectedProcess
 ]
 
 { #category : 'process list' }
@@ -789,10 +763,9 @@ ProcessBrowser >> pcRange [
 
 { #category : 'process list' }
 ProcessBrowser >> prettyNameForProcess: aProcess [
-	| nameAndRules |
-	aProcess ifNil: [ ^'<nil>' ].
-	nameAndRules := self nameAndRulesFor: aProcess.
-	^ aProcess browserPrintStringWith: nameAndRules first
+
+	aProcess ifNil: [ ^ '<nil>' ].
+	^ aProcess browserPrintStringWith: (self nameFor: aProcess)
 ]
 
 { #category : 'accessing' }
@@ -992,24 +965,21 @@ ProcessBrowser >> stopCPUWatcher [
 
 { #category : 'process actions' }
 ProcessBrowser >> suspendProcess [
-	| nameAndRules |
-	selectedProcess isSuspended
-		ifTrue: [^ self].
-	nameAndRules := self nameAndRulesForSelectedProcess.
-	nameAndRules second
-		ifFalse: [self inform: 'Nope, won''t suspend ' , nameAndRules first.
-			^ self].
+
+	selectedProcess isSuspended ifTrue: [ ^ self ].
+	self isSelectedProcessCritical ifTrue: [
+		self inform: 'Won''t suspend ' , self nameOfSelectedProcess.
+		^ self ].
 	self class suspendProcess: selectedProcess.
 	self updateProcessList
 ]
 
 { #category : 'process actions' }
 ProcessBrowser >> terminateProcess [
-	| nameAndRules |
-	nameAndRules := self nameAndRulesForSelectedProcess.
-	nameAndRules second
-		ifFalse: [self inform: 'Nope, won''t kill ' , nameAndRules first.
-			^ self].
+
+	self isSelectedProcessCritical ifTrue: [
+		self inform: 'Won''t kill ' , self nameOfSelectedProcess.
+		^ self ].
 	self class terminateProcess: selectedProcess.
 	self updateProcessList
 ]
