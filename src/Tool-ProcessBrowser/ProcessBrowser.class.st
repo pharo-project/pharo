@@ -356,21 +356,6 @@ ProcessBrowser class >> terminateProcess: aProcess [
 	]
 ]
 
-{ #category : 'process control' }
-ProcessBrowser class >> unregisterWellKnownProcess: aProcess [
-	"Remove the first registry entry that matches aProcess. Use
-	with caution if more than one registry entry may match aProcess."
-
-	"self unregisterWellKnownProcess: Smalltalk lowSpaceWatcherProcess"
-
-	WellKnownProcesses detect: [ :e | e key value == aProcess ] ifFound: [ :entry | WellKnownProcesses remove: entry ]
-]
-
-{ #category : 'process control' }
-ProcessBrowser class >> wasProcessSuspendedByProcessBrowser: aProcess [
-	^self suspendedProcesses includesKey: aProcess
-]
-
 { #category : 'stack list' }
 ProcessBrowser >> browseContext [
 
@@ -378,12 +363,6 @@ ProcessBrowser >> browseContext [
 	self tools browser
 		openOnClass: self selectedClass
 		selector: self selectedSelector
-]
-
-{ #category : 'views' }
-ProcessBrowser >> browsedEnvironment [
-
-	^ Smalltalk globals
 ]
 
 { #category : 'views' }
@@ -487,11 +466,6 @@ ProcessBrowser >> ensureCPUWatcherMonitoring [
 	^ true
 ]
 
-{ #category : 'stack list' }
-ProcessBrowser >> exploreContext [
-	selectedContext inspect
-]
-
 { #category : 'process actions' }
 ProcessBrowser >> explorePointers [
 
@@ -502,18 +476,7 @@ ProcessBrowser >> explorePointers [
 	selectedProcess := nil.
 	(self tools hasToolNamed: #pointerExplorer)
 		ifTrue: [ self tools pointerExplorer openOn: saved ]
-		ifFalse: [ self inspectPointers ] ] ensure: [
-		selectedProcess := saved ]
-]
-
-{ #category : 'process list' }
-ProcessBrowser >> exploreProcess [
-	selectedProcess inspect
-]
-
-{ #category : 'stack list' }
-ProcessBrowser >> exploreReceiver [
-	selectedContext ifNotNil: [ selectedContext receiver inspect ]
+		ifFalse: [ self inspectPointers ] ] ensure: [ selectedProcess := saved ]
 ]
 
 { #category : 'process list' }
@@ -560,10 +523,14 @@ ProcessBrowser >> inspectContext [
 
 { #category : 'process actions' }
 ProcessBrowser >> inspectPointers [
+
 	| tc pointers |
 	selectedProcess ifNil: [ ^ self ].
 	tc := thisContext.
-	pointers := selectedProcess pointersToExcept: { self processList. tc. self}.
+	pointers := selectedProcess pointersToExcept: {
+			            self processList.
+			            tc.
+			            self }.
 	pointers ifEmpty: [ ^ self ].
 	pointers inspectWithLabel: 'Objects pointing to ' , selectedProcess browserPrintString
 ]
@@ -575,8 +542,8 @@ ProcessBrowser >> inspectProcess [
 
 { #category : 'stack list' }
 ProcessBrowser >> inspectReceiver [
-	selectedContext
-		ifNotNil: [selectedContext receiver inspect]
+
+	selectedContext ifNotNil: [ selectedContext receiver inspect ]
 ]
 
 { #category : 'updating' }
@@ -602,7 +569,6 @@ ProcessBrowser >> keyEventsDict [
 	^ keyEventsDict ifNil: [
 		keyEventsDict := Dictionary newFromPairs:  #(
 			$i #inspectProcess
-			$I #exploreProcess
 			$e #explorePointers
 			$P #inspectPointers
 			$t #terminateProcess
@@ -635,11 +601,6 @@ ProcessBrowser >> menuProcessList: aMenuMorph [
 			aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Inspect')
 				keyText: 'i';
 				selector: #inspectProcess;
-				target: self;
-				yourself).
-			aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Explore')
-				keyText: 'I';
-				selector: #exploreProcess;
 				target: self;
 				yourself).
 			aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Inspect Pointers')
@@ -761,30 +722,11 @@ ProcessBrowser >> menuStackList: aMenuMorph [
 		target: self;
 		yourself).
 
-	aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Explore context')
-		keyText: 'C';
-		selector: #exploreContext;
-		target: self;
-		yourself).
-
 	aMenuMorph addMenuItem: MenuLineMorph new.
-
-	aMenuMorph addMenuItem:((ToggleMenuItemMorph new contents: #'Explore context')
-		keyText: 'C';
-		selector: #exploreContext;
-		target: self;
-		yourself).
-
 
 	aMenuMorph addMenuItem:((ToggleMenuItemMorph new contents: #'Inspect receiver')
 		keyText: 'i';
 		selector: #inspectReceiver;
-		target: self;
-		yourself).
-
-	aMenuMorph addMenuItem:((ToggleMenuItemMorph new contents: #'Explore receiver')
-		keyText: 'I';
-		selector: #exploreReceiver;
 		target: self;
 		yourself).
 
@@ -867,13 +809,6 @@ ProcessBrowser >> notify: errorString at: location in: aStream [
 	"A syntax error happened when I was trying to highlight my pc.
 	Raise a signal so that it can be ignored."
 	Warning signal: 'syntax error'
-]
-
-{ #category : 'updating' }
-ProcessBrowser >> pauseAutoUpdate [
-	self isAutoUpdating
-		ifTrue: [ autoUpdateProcess suspend ].
-	self updateProcessList
 ]
 
 { #category : 'stack list' }
@@ -1030,9 +965,7 @@ ProcessBrowser >> stackListIndex: index [
 { #category : 'views' }
 ProcessBrowser >> stackListKey: aKey from: aView [
 	aKey = $c ifTrue: [ self inspectContext].
-	aKey = $C ifTrue: [ self exploreContext].
 	aKey = $i ifTrue: [ self inspectReceiver].
-	aKey = $I ifTrue: [ self exploreReceiver].
 	aKey = $b ifTrue: [ self browseContext]
 ]
 
@@ -1181,11 +1114,6 @@ ProcessBrowser >> updateStackList: depth [
 		stackListIndex: (stackList
 				ifNil: [0]
 				ifNotNil: [stackList indexOf: oldHighlight])
-]
-
-{ #category : 'process actions' }
-ProcessBrowser >> wasProcessSuspendedByProcessBrowser: aProcess [
-	^self class suspendedProcesses includesKey: aProcess
 ]
 
 { #category : 'initialization' }
