@@ -182,15 +182,17 @@ CPUWatcher >> isMonitoring [
 
 { #category : 'startup - shutdown' }
 CPUWatcher >> monitorProcessPeriod: secs sampleRate: msecs [
+
 	self stopMonitoring.
 
-	watcher := [ [ | promise |
-		promise := Processor tallyCPUUsageFor: secs every: msecs.
-		tally := promise value.
-		promise := nil.
-		self class pigFinding ifTrue: [
-			self findThePig ]
-	] repeat ] forkAt: Processor highestPriority.
+	watcher := [
+	           [
+	           | promise |
+	           promise := Processor tallyCPUUsageFor: secs every: msecs.
+	           tally := promise value.
+	           promise := nil.
+	           self class pigFinding ifTrue: [ self findThePig ] ] repeat ] forkAt: Processor highestPriority.
+	watcher name: 'The CPU Watcher'.
 	Processor yield
 ]
 
@@ -227,8 +229,7 @@ CPUWatcher >> openMorphicWindowForSuspendedProcess: aProcess [
 			argumentList: {
 					aProcess.
 					menu } ].
-	menu addTitle:
-		aProcess identityHash asString , ' ' , (self processBrowser nameAndRulesFor: aProcess) first , ' is taking too much time and has been suspended.
+	menu addTitle: aProcess identityHash asString , ' ' , aProcess name , ' is taking too much time and has been suspended.
 What do you want to do with it?'.
 	menu stayUp: true.
 	menu popUpInWorld

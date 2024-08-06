@@ -91,27 +91,35 @@ ProcessBrowser class >> dumpPigStackOn: aStream [
 	promise := Processor tallyCPUUsageFor: 1 every: 10.
 	tally := promise value.
 	"WorldState addDeferredUIMessage: [self dumpTallyOnTranscript: tally]."
-	aStream nextPutAll: '====Al processes===='; cr.
+	aStream
+		nextPutAll: '====Al processes====';
+		cr.
 	self dumpTally: tally on: aStream.
-	aStream cr; nextPutAll: '====Process using most CPU===='; cr.
+	aStream
+		cr;
+		nextPutAll: '====Process using most CPU====';
+		cr.
 	process := tally sortedCounts first value.
 	(100.0 * (tally occurrencesOf: process) / tally size) rounded printOn: aStream.
 	aStream
 		nextPutAll: ' % ';
-		nextPutAll: (process browserPrintStringWith: (self nameAndRulesFor: process) first);
+		nextPutAll: (process browserPrintStringWith: process name);
 		cr.
 	depth := 20.
 	stack := process == Processor activeProcess
-		ifTrue: [thisContext stackOfSize: depth]
-		ifFalse: [suspendedContext := process suspendedContext.
-			suspendedContext
-				ifNotNil: [suspendedContext stackOfSize: depth]].
+		         ifTrue: [ thisContext stackOfSize: depth ]
+		         ifFalse: [
+			         suspendedContext := process suspendedContext.
+			         suspendedContext ifNotNil: [ suspendedContext stackOfSize: depth ] ].
 	stack
-		ifNil: [ aStream nextPutAll: 'No context'; cr]
+		ifNil: [
+			aStream
+				nextPutAll: 'No context';
+				cr ]
 		ifNotNil: [
 			stack do: [ :c |
 				c printOn: aStream.
-				aStream cr]]
+				aStream cr ] ]
 ]
 
 { #category : 'CPU utilization' }
@@ -119,15 +127,16 @@ ProcessBrowser class >> dumpTally: tally on: aStream [
 	"tally is from ProcessorScheduler>>tallyCPUUsageFor:
 	Dumps lines with percentage of time, hash of process, and a friendly name"
 
-	tally sortedCounts do: [ :assoc | | procName |
-		procName := (self nameAndRulesFor: assoc value) first.
-		(((assoc key / tally size) * 100.0) roundTo: 1) printOn: aStream.
+	tally sortedCounts do: [ :assoc |
+		| procName |
+		procName := assoc value name.
+		(assoc key / tally size * 100.0 roundTo: 1) printOn: aStream.
 		aStream
 			nextPutAll: '%   ';
-			print: assoc value identityHash; space;
+			print: assoc value identityHash;
+			space;
 			nextPutAll: procName;
-			cr.
-	]
+			cr ]
 ]
 
 { #category : 'CPU utilization' }
@@ -150,8 +159,8 @@ ProcessBrowser class >> isCritical: aProcess [
 	"We have a list of well known pnocesses that we do not want users to terminate. Critical processes are those processes."
 
 	^ WellKnownProcesses
-		  detect: [ :blockAndRules | blockAndRules key value == aProcess ]
-		  ifFound: [ :blockAndRules | true ]
+		  detect: [ :processBlock | processBlock value == aProcess ]
+		  ifFound: [ :processBlock | true ]
 		  ifNone: [ false ]
 ]
 
@@ -169,21 +178,6 @@ ProcessBrowser class >> menuCommandOn: aBuilder [
 		action:[ self open ];
 		help: 'Provides a view of all of the processes (threads) executing in Smalltalk.';
 		iconName: self taskbarIconName
-]
-
-{ #category : 'process control' }
-ProcessBrowser class >> nameAndRulesFor: aProcess [
-	"Answer a nickname and two flags: allow-stop, and allow-debug"
-
-	| rules |
-	rules := { nil. true. true }.
-
-	WellKnownProcesses
-		detect: [ :blockAndRules | blockAndRules key value == aProcess ]
-		ifFound: [ :blockAndRules | rules := blockAndRules value ].
-
-	rules first ifNil: [ rules at: 1 put: aProcess suspendedContext asString ].
-	^ rules
 ]
 
 { #category : 'instance creation' }
@@ -223,27 +217,19 @@ ProcessBrowser class >> registerToolsOn: registry [
 	registry register: self as: #processBrowser
 ]
 
-{ #category : 'process control' }
-ProcessBrowser class >> registerWellKnownProcess: aBlockForProcess label: nickname [
-	"Add an entry to the registry of well known processes. aBlockForProcess
-	evaluates to a known process to be identified by nickname.
-	Well known processes should not be able to be terminated or debugged."
-
-	WellKnownProcesses add: aBlockForProcess -> { nickname }
-]
-
 { #category : 'private - initialization' }
 ProcessBrowser class >> registerWellKnownProcesses [
 	"Associate each well-known process with a nickname and two flags: allow-stop, and allow-debug.
 	Additional processes may be added to this list as required"
 
 	WellKnownProcesses := OrderedCollection new.
-	self registerWellKnownProcess: [ Smalltalk lowSpaceWatcherProcess ] label: nil.
-	self registerWellKnownProcess: [ FinalizationProcess runningFinalizationProcess ] label: nil.
-	self registerWellKnownProcess: [ Processor backgroundProcess ] label: nil.
-	self registerWellKnownProcess: [ MorphicUIManager uiProcess ] label: nil.
-	self registerWellKnownProcess: [ CPUWatcher currentWatcherProcess ] label: 'the CPUWatcher'.
-	self registerWellKnownProcess: [ Delay schedulingProcess ] label: nil
+	WellKnownProcesses
+		add: [ Smalltalk lowSpaceWatcherProcess ];
+		add: [ FinalizationProcess runningFinalizationProcess ];
+		add: [ Processor backgroundProcess ];
+		add: [ MorphicUIManager uiProcess ];
+		add: [ CPUWatcher currentWatcherProcess ];
+		add: [ Delay schedulingProcess ]
 ]
 
 { #category : 'cleanup' }
@@ -642,19 +628,19 @@ ProcessBrowser >> menuProcessList: aMenuMorph [
 			 target: self;
 			 yourself).
 
-	Smalltalk globals at: #CPUWatcher ifPresent: [ :pw |
-		aMenuMorph addMenuItem: MenuLineMorph new.
-		pw isMonitoring
-			ifTrue: [
-				aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Stop CPUWatcher')
-						 selector: #stopCPUWatcher;
-						 target: self;
-						 yourself) ]
-			ifFalse: [
-				aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Start CPUWatcher')
-						 selector: #startCPUWatcher;
-						 target: self;
-						 yourself) ] ].
+
+	aMenuMorph addMenuItem: MenuLineMorph new.
+	CPUWatcher isMonitoring
+		ifTrue: [
+			aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Stop CPUWatcher')
+					 selector: #stopCPUWatcher;
+					 target: self;
+					 yourself) ]
+		ifFalse: [
+			aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Start CPUWatcher')
+					 selector: #startCPUWatcher;
+					 target: self;
+					 yourself) ].
 
 	^ aMenuMorph
 ]
@@ -709,16 +695,9 @@ ProcessBrowser >> morphicUIManager [
 ]
 
 { #category : 'process actions' }
-ProcessBrowser >> nameFor: aProcess [
-
-	aProcess == autoUpdateProcess ifTrue: [ ^ 'my auto-update process' ].
-	^ (self class nameAndRulesFor: aProcess) first
-]
-
-{ #category : 'process actions' }
 ProcessBrowser >> nameOfSelectedProcess [
 
-	^ self nameFor: selectedProcess
+	^ selectedProcess name
 ]
 
 { #category : 'process list' }
@@ -765,7 +744,10 @@ ProcessBrowser >> pcRange [
 ProcessBrowser >> prettyNameForProcess: aProcess [
 
 	aProcess ifNil: [ ^ '<nil>' ].
-	^ aProcess browserPrintStringWith: (self nameFor: aProcess)
+
+	^ aProcess browserPrintStringWith: (aProcess == autoUpdateProcess
+			   ifTrue: [ 'my auto-update process' ]
+			   ifFalse: [ aProcess suspendedContext asString ])
 ]
 
 { #category : 'accessing' }
@@ -796,15 +778,15 @@ ProcessBrowser >> processListKey: aKey from: aView [
 { #category : 'process list' }
 ProcessBrowser >> processNameList [
 	"since processList is a WeakArray, we have to strengthen the result"
+
 	| tally |
-	tally := CPUWatcher ifNotNil: [ CPUWatcher current ifNotNil: [ CPUWatcher current tally ] ].
-	^ (processList asOrderedCollection copyWithout: nil)
-		collect: [ :each |
-			| percent |
-			percent := tally
-				ifNotNil: [ (((tally occurrencesOf: each) * 100.0 / tally size roundTo: 1) asString padLeftTo: 2) , '% ' ]
-				ifNil: [ '' ].
-			percent , (self prettyNameForProcess: each) ]
+	tally := CPUWatcher current ifNotNil: [ CPUWatcher current tally ].
+	^ (processList asOrderedCollection copyWithout: nil) collect: [ :each |
+		  | percent |
+		  percent := tally
+			             ifNotNil: [ (((tally occurrencesOf: each) * 100.0 / tally size roundTo: 1) asString padLeftTo: 2) , '% ' ]
+			             ifNil: [ '' ].
+		  percent , (self prettyNameForProcess: each) ]
 ]
 
 { #category : 'process actions' }
