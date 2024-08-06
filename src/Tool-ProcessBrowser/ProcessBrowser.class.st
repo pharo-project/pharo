@@ -581,7 +581,6 @@ ProcessBrowser >> keyEventsDict [
 			$a #toggleAutoUpdate
 			$u #updateProcessList
 			$S #signalSemaphore
-			$k #moreStack
 			)
 		]
 ]
@@ -658,12 +657,6 @@ ProcessBrowser >> menuProcessList: aMenuMorph [
 						selector: #signalSemaphore;
 						target: self;
 						yourself). ].
-
-			aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Full stack')
-				keyText: 'k';
-				selector: #moreStack;
-				target: self;
-				yourself).
 
 			aMenuMorph addMenuItem: (MenuLineMorph new)].
 
@@ -754,11 +747,6 @@ ProcessBrowser >> methodText [
 								addAttribute: TextEmphasis bold
 								from: pcRange first
 								to: pcRange last]]
-]
-
-{ #category : 'stack list' }
-ProcessBrowser >> moreStack [
-	self updateStackList: 2000
 ]
 
 { #category : 'process actions' }
@@ -1092,28 +1080,21 @@ ProcessBrowser >> updateProcessList [
 
 { #category : 'stack list' }
 ProcessBrowser >> updateStackList [
-	self updateStackList: 20
-]
 
-{ #category : 'stack list' }
-ProcessBrowser >> updateStackList: depth [
 	| suspendedContext oldHighlight |
-	selectedProcess
-		ifNil: [^ self changeStackListTo: nil].
-	(stackList isNotNil and: [ stackListIndex > 0 ])
-		ifTrue: [oldHighlight := stackList at: stackListIndex].
+	selectedProcess ifNil: [ ^ self changeStackListTo: nil ].
+
+	(stackList isNotNil and: [ stackListIndex > 0 ]) ifTrue: [ oldHighlight := stackList at: stackListIndex ].
 	selectedProcess == Processor activeProcess
-		ifTrue: [self
-				changeStackListTo: (thisContext stackOfSize: depth)]
-		ifFalse: [suspendedContext := selectedProcess suspendedContext.
+		ifTrue: [ self changeStackListTo: thisContext stack ]
+		ifFalse: [
+			suspendedContext := selectedProcess suspendedContext.
 			suspendedContext
-				ifNil: [self changeStackListTo: nil]
-				ifNotNil: [self
-						changeStackListTo: (suspendedContext stackOfSize: depth)]].
-	self
-		stackListIndex: (stackList
-				ifNil: [0]
-				ifNotNil: [stackList indexOf: oldHighlight])
+				ifNil: [ self changeStackListTo: nil ]
+				ifNotNil: [ self changeStackListTo: suspendedContext stack ] ].
+	self stackListIndex: (stackList
+			 ifNil: [ 0 ]
+			 ifNotNil: [ stackList indexOf: oldHighlight ])
 ]
 
 { #category : 'initialization' }
