@@ -125,6 +125,9 @@ Class {
 		'navigationEnvironment',
 		'systemScope'
 	],
+	#classVars : [
+		'NavigationHistoryClass'
+	],
 	#category : 'Calypso-Browser-UI',
 	#package : 'Calypso-Browser',
 	#tag : 'UI'
@@ -141,6 +144,19 @@ ClyBrowserMorph class >> canBeDefault [
 	^self class includesSelector: #beDefaultBrowser
 ]
 
+{ #category : 'settings' }
+ClyBrowserMorph class >> navigationHistoryClass [
+
+	^ NavigationHistoryClass
+		ifNil: [ NavigationHistoryClass := ClyNavigationHistory ]
+]
+
+{ #category : 'settings' }
+ClyBrowserMorph class >> navigationHistoryClass: aClyNavigationHistory [
+
+	NavigationHistoryClass := aClyNavigationHistory
+]
+
 { #category : 'instance creation' }
 ClyBrowserMorph class >> on: aNavigationEnvironment [
 	^self new
@@ -152,6 +168,19 @@ ClyBrowserMorph class >> on: aNavigationEnvironment [
 ClyBrowserMorph class >> on: aNavigationEnvironment systemScope: aSystemScope [
 	^(self on: aNavigationEnvironment)
 		systemScope: aSystemScope
+]
+
+{ #category : 'settings' }
+ClyBrowserMorph class >> settingsNavigationHistoryOn: aBuilder [
+	<systemsettings>
+
+	(aBuilder pickOne: #navigationHistoryClass)
+		parent: #Calypso;
+		label: 'Navigation History';
+		domainValues: ClyNavigationHistory withAllSubclasses;
+		default: ClyNavigationHistory;
+		description: 'Enable to set a custom navigation history to handle how collection of visited items is managed';
+		target: self
 ]
 
 { #category : 'accessing' }
