@@ -466,19 +466,6 @@ ProcessBrowser >> ensureCPUWatcherMonitoring [
 	^ true
 ]
 
-{ #category : 'process actions' }
-ProcessBrowser >> explorePointers [
-
-	| saved |
-	selectedProcess ifNil: [ ^ self ].
-	saved := selectedProcess.
-	[
-	selectedProcess := nil.
-	(self tools hasToolNamed: #pointerExplorer)
-		ifTrue: [ self tools pointerExplorer openOn: saved ]
-		ifFalse: [ self inspectPointers ] ] ensure: [ selectedProcess := saved ]
-]
-
 { #category : 'process list' }
 ProcessBrowser >> findContext [
 	| initialProcessIndex initialStackIndex found |
@@ -569,7 +556,6 @@ ProcessBrowser >> keyEventsDict [
 	^ keyEventsDict ifNil: [
 		keyEventsDict := Dictionary newFromPairs:  #(
 			$i #inspectProcess
-			$e #explorePointers
 			$P #inspectPointers
 			$t #terminateProcess
 			$r #resumeProcess
@@ -607,13 +593,6 @@ ProcessBrowser >> menuProcessList: aMenuMorph [
 				selector: #inspectPointers;
 				target: self;
 				yourself).
-			(Smalltalk globals includesKey: #PointerExplorer)
-				ifTrue: [
-					aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Explore pointers')
-						keyText: 'e';
-						selector: #explorePointers;
-						target: self;
-						yourself). ].
 
 			nameAndRules second
 				ifTrue: [
