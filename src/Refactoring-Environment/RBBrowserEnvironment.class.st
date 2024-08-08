@@ -410,14 +410,6 @@ RBBrowserEnvironment >> includesSelector: aSelector in: aClass [
 	^ true
 ]
 
-{ #category : 'actions' }
-RBBrowserEnvironment >> inspectIn: spec [
-
-	^ (spec instantiate: SpFilteringListPresenter)
-		  items: self basisObjects asArray;
-		  yourself
-]
-
 { #category : 'environments' }
 RBBrowserEnvironment >> instVarReadersTo: instVarName in: aClass [
 	^RBVariableEnvironment

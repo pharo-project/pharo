@@ -1,14 +1,14 @@
-Extension { #name : 'SycCopyPackageCommand' }
+Extension { #name : 'SycDuplicatePackageCommand' }
 
 { #category : '*Calypso-SystemTools-FullBrowser' }
-SycCopyPackageCommand class >> fullBrowserMenuActivation [
+SycDuplicatePackageCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byRootGroupItemOrder: 1.1 for: ClyFullBrowserPackageContext
 ]
 
 { #category : '*Calypso-SystemTools-FullBrowser' }
-SycCopyPackageCommand class >> fullBrowserShortcutActivation [
+SycDuplicatePackageCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation by: $c meta for: ClyFullBrowserPackageContext

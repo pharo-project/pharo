@@ -311,11 +311,6 @@ MCClassDefinition >> isClassDefinition [
 	^ true
 ]
 
-{ #category : 'testing' }
-MCClassDefinition >> isCodeDefinition [
-	^ true
-]
-
 { #category : 'printing' }
 MCClassDefinition >> kindOfSubclass [
 	type = #normal ifTrue: [^ ' subclass: '].
