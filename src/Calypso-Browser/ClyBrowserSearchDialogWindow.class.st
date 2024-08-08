@@ -130,20 +130,6 @@ ClyBrowserSearchDialogWindow >> openOn: aQuery withTitle: dialogTitle thenDo: re
 ]
 
 { #category : 'requests' }
-ClyBrowserSearchDialogWindow >> requestMultipleObjects: dialogTitle from: aQuery [
-
-	^ self requestMultipleObjects: dialogTitle from: aQuery selecting: #()
-]
-
-{ #category : 'requests' }
-ClyBrowserSearchDialogWindow >> requestMultipleObjects: dialogTitle from: aQuery inScope: aScope [
-
-	aScope bindTo: browser navigationEnvironment.
-
-	^self requestMultipleObjects: dialogTitle from: (aScope adoptQuery: aQuery)
-]
-
-{ #category : 'requests' }
 ClyBrowserSearchDialogWindow >> requestMultipleObjects: dialogTitle from: aQuery selecting: items [
 
 	self
