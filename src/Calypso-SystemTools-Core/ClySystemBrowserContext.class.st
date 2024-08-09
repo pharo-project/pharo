@@ -51,16 +51,6 @@ Class {
 }
 
 { #category : 'user requests' }
-ClySystemBrowserContext >> confirmUnusedClasses: variables [
-	^tool confirmUnusedClasses: variables
-]
-
-{ #category : 'user requests' }
-ClySystemBrowserContext >> confirmUnusedVariables: variables [
-	^tool confirmUnusedVariables: variables
-]
-
-{ #category : 'user requests' }
 ClySystemBrowserContext >> confirmUnusedVariablesInDefiningClass: variables [
 	^tool confirmUnusedVariablesInDefiningClass: variables
 ]

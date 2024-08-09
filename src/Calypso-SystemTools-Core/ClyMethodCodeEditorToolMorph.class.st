@@ -368,13 +368,6 @@ ClyMethodCodeEditorToolMorph >> switchToMethod: aMethod [
 	self update
 ]
 
-{ #category : 'operations' }
-ClyMethodCodeEditorToolMorph >> toggleExtendingPackage [
-	super toggleExtendingPackage.
-
-	self hasUnacceptedEdits ifFalse: [self packageEditingMethod: editingMethod]
-]
-
 { #category : 'updating' }
 ClyMethodCodeEditorToolMorph >> update [
 
