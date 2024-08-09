@@ -454,6 +454,14 @@ ClyBrowserMorph >> itemsForQuery: aQuery [
 		   ifFalse: [ aQuery withScope: self systemScope ]) execute items
 ]
 
+{ #category : 'accessing' }
+ClyBrowserMorph >> itemsForQuery: aQuery inScope: aScope [
+
+	aScope bindTo: self navigationEnvironment.
+
+	^ self itemsForQuery: (aScope adoptQuery: aQuery)
+]
+
 { #category : 'keymapping' }
 ClyBrowserMorph >> kmDispatcher [
 
