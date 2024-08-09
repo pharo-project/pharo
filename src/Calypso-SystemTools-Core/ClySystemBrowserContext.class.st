@@ -165,15 +165,6 @@ ClySystemBrowserContext >> refactoringScopes [
 ]
 
 { #category : 'user requests' }
-ClySystemBrowserContext >> requestSimpleVariable: queryTitle from: classes [
-1haltOnce.
-	^tool searchDialog
-		requestSingleObject: queryTitle
-		from: ClyAllInstanceVariablesQuery sorted
-		inScope: (ClyClassScope ofAll: classes) withInheritedScope
-]
-
-{ #category : 'user requests' }
 ClySystemBrowserContext >> requestSingleClass: queryTitle [
 
 	^ StBrowserSearchPresenter searchConfiguring: [ :presenter :dialog |

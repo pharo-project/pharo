@@ -80,15 +80,10 @@ SycMergeVariableCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.
 	variable := aToolContext lastSelectedVariable.
-	self requestNewNameIn: aToolContext
-]
-
-{ #category : 'execution' }
-SycMergeVariableCommand >> requestNewNameIn: aToolContext [
-1halt. 
-	newName := aToolContext
-		           requestSimpleVariable: 'Select a variable'
-		           from: (Array with: variable definingClass)
+	newName := StBrowserSearchPresenter searchConfiguring: [ :presenter :dialog |
+		           dialog title: 'Select a variable'.
+		           presenter items:
+			           (aToolContext browser itemsForQuery: ClyAllInstanceVariablesQuery sorted inScope: (ClyClassScope of: variable definingClass) withInheritedScope) ]
 ]
 
 { #category : 'accessing' }
