@@ -650,11 +650,6 @@ ClyBrowserMorph >> removePlugin: aBrowserPlugin [
 	plugins removeAllSuchThat: [ :each | each class = aBrowserPlugin class ]
 ]
 
-{ #category : 'tools support' }
-ClyBrowserMorph >> searchDialog [
-	^ClyBrowserSearchDialogWindow for: self
-]
-
 { #category : 'initialization' }
 ClyBrowserMorph >> setUpAvailablePlugins [
 
