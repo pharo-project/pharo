@@ -174,10 +174,11 @@ ClySystemBrowserContext >> requestSingleClass: queryTitle [
 
 { #category : 'user requests' }
 ClySystemBrowserContext >> requestSingleClass: queryTitle from: classCollection [
-	^tool searchDialog
-		requestSingleObject: queryTitle
-		from: ClyAllClassesQuery hierarchical
-		inScope: (ClyClassScope ofAll: classCollection)
+
+	^ StBrowserSearchPresenter searchConfiguring: [ :presenter :dialog |
+		  dialog title: queryTitle.
+		  presenter items:
+			  ((self browser itemsForQuery: ClyAllClassesQuery hierarchical inScope: (ClyClassScope ofAll: classCollection)) collect: [ :item | item actualObject ]) ]
 ]
 
 { #category : 'user requests' }

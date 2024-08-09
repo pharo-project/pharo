@@ -141,29 +141,6 @@ ClyBrowserSearchDialogWindow >> requestMultipleObjects: dialogTitle from: aQuery
 			^itemsView selection actualObjects]
 ]
 
-{ #category : 'requests' }
-ClyBrowserSearchDialogWindow >> requestSingleObject: dialogTitle from: aQuery [
-
-	self
-		openOn: aQuery
-		withTitle: dialogTitle
-		thenDo: [
-			itemsView selection isEmpty ifTrue: [
-				^self findObjectsSameAsFilter
-					ifEmpty: [ CmdCommandAborted signal ]
-					ifNotEmpty: [ :items | items first]].
-
-			^itemsView selection lastSelectedItem actualObject]
-]
-
-{ #category : 'requests' }
-ClyBrowserSearchDialogWindow >> requestSingleObject: dialogTitle from: aQuery inScope: aScope [
-
-	aScope bindTo: browser navigationEnvironment.
-
-	^self requestSingleObject: dialogTitle from: (aScope adoptQuery: aQuery)
-]
-
 { #category : 'private' }
 ClyBrowserSearchDialogWindow >> showItemsOf: aQuery [
 
