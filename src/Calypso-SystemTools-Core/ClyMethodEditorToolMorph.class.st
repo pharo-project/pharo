@@ -231,12 +231,3 @@ ClyMethodEditorToolMorph >> textChanged: aTextChanged [
 		styleText: textModel withAst: self currentEditedAST.
 	^ ast
 ]
-
-{ #category : 'operations' }
-ClyMethodEditorToolMorph >> toggleExtendingPackage [
-
-	extendingPackage ifNotNil: [ ^extendingPackage := nil ].
-
-	extendingPackage := browser searchDialog
-		requestSingleObject: 'Choose package for method' from: ClyAllPackagesQuery sorted
-]
