@@ -175,23 +175,6 @@ ClySystemBrowserContext >> refactoringScopes [
 ]
 
 { #category : 'user requests' }
-ClySystemBrowserContext >> requestMultiplePackages: queryTitle [
-
-	^ tool searchDialog
-		requestMultipleObjects: queryTitle
-		from: ClyAllPackagesQuery sorted
-]
-
-{ #category : 'user requests' }
-ClySystemBrowserContext >> requestMultipleVariables: queryTitle from: classes [
-
-	^tool searchDialog
-		requestMultipleObjects: queryTitle
-		from: ClyAllInstanceVariablesQuery sorted
-		inScope: (ClyClassScope ofAll: classes) withInheritedScope
-]
-
-{ #category : 'user requests' }
 ClySystemBrowserContext >> requestSimpleVariable: queryTitle from: classes [
 
 	^tool searchDialog
@@ -203,7 +186,9 @@ ClySystemBrowserContext >> requestSimpleVariable: queryTitle from: classes [
 { #category : 'user requests' }
 ClySystemBrowserContext >> requestSingleClass: queryTitle [
 
-	^tool searchDialog requestSingleObject: queryTitle from: ClyAllClassesQuery sorted
+	^ StBrowserSearchPresenter searchConfiguring: [ :presenter :dialog |
+		  dialog title: queryTitle.
+		  presenter items: (self browser itemsForQuery: ClyAllClassesQuery sorted) ]
 ]
 
 { #category : 'user requests' }
@@ -216,7 +201,10 @@ ClySystemBrowserContext >> requestSingleClass: queryTitle from: classCollection 
 
 { #category : 'user requests' }
 ClySystemBrowserContext >> requestSinglePackage: queryTitle [
-	^tool searchDialog requestSingleObject: queryTitle from: ClyAllPackagesQuery sorted
+
+	^ StBrowserSearchPresenter searchConfiguring: [ :presenter :dialog |
+		  dialog title: queryTitle.
+		  presenter items: (self browser itemsForQuery: ClyAllPackagesQuery sorted) ]
 ]
 
 { #category : 'selection-classes' }

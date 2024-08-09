@@ -446,6 +446,14 @@ ClyBrowserMorph >> itemsChanged [
 	[self rebuildToolsForChangedEnvironment] ensure: [ navigationStarted := false ]
 ]
 
+{ #category : 'accessing' }
+ClyBrowserMorph >> itemsForQuery: aQuery [
+
+	^ (aQuery isBoundToEnvironment
+		   ifTrue: [ aQuery ]
+		   ifFalse: [ aQuery withScope: self systemScope ]) execute items
+]
+
 { #category : 'keymapping' }
 ClyBrowserMorph >> kmDispatcher [
 
