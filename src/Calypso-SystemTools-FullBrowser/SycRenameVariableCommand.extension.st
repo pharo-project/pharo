@@ -1,7 +1,7 @@
-Extension { #name : 'SycRenameVariableCommand2' }
+Extension { #name : 'SycRenameVariableCommand' }
 
 { #category : '*Calypso-SystemTools-FullBrowser' }
-SycRenameVariableCommand2 class >> fullBrowserMenuActivation [
+SycRenameVariableCommand class >> fullBrowserMenuActivation [
 
 	<classAnnotation>
 	^ CmdContextMenuActivation
@@ -10,7 +10,7 @@ SycRenameVariableCommand2 class >> fullBrowserMenuActivation [
 ]
 
 { #category : '*Calypso-SystemTools-FullBrowser' }
-SycRenameVariableCommand2 class >> fullBrowserShortcutActivation [
+SycRenameVariableCommand class >> fullBrowserShortcutActivation [
 
 	<classAnnotation>
 	^ CmdShortcutActivation renamingFor: ClyFullBrowserVariableContext
