@@ -1,3 +1,6 @@
+"
+I am a command to rename a variable. 
+"
 Class {
 	#name : 'SycRenameVariableCommand',
 	#superclass : 'CmdCommand',

@@ -80,6 +80,7 @@ SycMergeVariableCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.
 	variable := aToolContext lastSelectedVariable.
+
 	newName := StBrowserSearchPresenter searchConfiguring: [ :presenter :dialog |
 		           dialog title: 'Select a variable'.
 		           presenter items:
