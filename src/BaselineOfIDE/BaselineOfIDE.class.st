@@ -296,7 +296,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	RubAbstractTextArea highlightMessageSend: true.
 
-	DarkBlueTheme beCurrent.
+	PharoLightTheme beCurrent.
 
 	SDL_Event initialize.
 
