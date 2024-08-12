@@ -29,7 +29,9 @@ Class {
 		'cachedClassNames',
 		'cachedNonClassNames',
 		'cachedBehaviors',
-		'pseudoVariables'
+		'pseudoVariables',
+		'codeChangeAnnouncer',
+		'codeSupportAnnouncer'
 	],
 	#category : 'System-Support-Utilities',
 	#package : 'System-Support',
@@ -202,7 +204,13 @@ SystemEnvironment >> codeChangeAnnouncer [
 
 	"This should not be hardcoded in the futurebut I should have my own instance."
 
-	^ SystemAnnouncer uniqueInstance
+	^ codeChangeAnnouncer ifNil: [ codeChangeAnnouncer := SystemAnnouncer uniqueInstance ]
+]
+
+{ #category : 'accessing' }
+SystemEnvironment >> codeChangeAnnouncer: anAnnouncer [
+
+	^ codeChangeAnnouncer := anAnnouncer
 ]
 
 { #category : 'accessing' }
@@ -211,7 +219,13 @@ SystemEnvironment >> codeSupportAnnouncer [
 
 	"This should not be hardcoded in the futurebut I should have my own instance."
 
-	^ SystemAnnouncer uniqueInstance
+	^ codeSupportAnnouncer ifNil: [ codeSupportAnnouncer := SystemAnnouncer uniqueInstance ]
+]
+
+{ #category : 'accessing' }
+SystemEnvironment >> codeSupportAnnouncer: anAnnouncer [
+
+	^ codeSupportAnnouncer := anAnnouncer
 ]
 
 { #category : 'accessing' }
