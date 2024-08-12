@@ -44,7 +44,7 @@ SystemEnvironment class >> cleanUp [
 
 { #category : 'accessing - classes and traits' }
 SystemEnvironment >> allBehaviors [
-	"Return all the classes and traits defined in the Smalltalk SystemDictionary"
+	"Return all the classes and traits defined in the Smalltalk SystemEnvironment"
 
 	^ cachedBehaviors ifNil: [
 		  cachedBehaviors := self allClassesAndTraits flatCollect: [ :each | { each. each classSide } ] ]
@@ -59,14 +59,14 @@ SystemEnvironment >> allBehaviorsDo: aBlock [
 
 { #category : 'accessing - classes and traits' }
 SystemEnvironment >> allClasses [
-	"Return all the class defines in the Smalltalk SystemDictionary"
+	"Return all the class defines in the Smalltalk SystemEnvironment"
 
 	^ self classNames collect: [:name | self at: name ]
 ]
 
 { #category : 'accessing - classes and traits' }
 SystemEnvironment >> allClassesAndTraits [
-	"Return all the classes and traits defined in the Smalltalk SystemDictionary"
+	"Return all the classes and traits defined in the Smalltalk SystemEnvironment"
 
 	^ self classAndTraitNames collect: [:each | self at: each ]
 ]
@@ -93,7 +93,7 @@ SystemEnvironment >> allMethods [
 
 { #category : 'accessing - classes and traits' }
 SystemEnvironment >> allTraits [
-	"Return all traits defined in the Smalltalk SystemDictionary"
+	"Return all traits defined in the Smalltalk SystemEnvironment"
 
 	^ self traitNames collect: [:each | self at: each ]
 ]
@@ -110,7 +110,7 @@ SystemEnvironment >> at: aKey put: anObject [
 	"Override from Dictionary to check Undeclared and fix up
 	references to undeclared variables."
 	| index assoc registeredMethods |
-	aKey isSymbol ifFalse: [ self error: 'Only symbols are accepted as keys in SystemDictionary' ].
+	aKey isSymbol ifFalse: [ self error: 'Only symbols are accepted as keys in SystemEnvironment' ].
 
 	registeredMethods := #().
 
@@ -138,7 +138,7 @@ SystemEnvironment >> at: aKey put: anObject [
 { #category : 'adding' }
 SystemEnvironment >> atNewIndex: index put: aGlobalVariable [
 
-	aGlobalVariable isAssociation ifTrue: [ self error: 'Only global variables should be added to the SystemDictionary and not associations.' ].
+	aGlobalVariable isAssociation ifTrue: [ self error: 'Only global variables should be added to the SystemEnvironment and not associations.' ].
 	^ super atNewIndex: index put: aGlobalVariable
 ]
 
@@ -216,7 +216,7 @@ SystemEnvironment >> codeSupportAnnouncer [
 
 { #category : 'accessing' }
 SystemEnvironment >> environment [
-	"For conversion from SmalltalkImage to SystemDictionary"
+	"For conversion from SmalltalkImage to SystemEnvironment"
 
 	^ self
 ]

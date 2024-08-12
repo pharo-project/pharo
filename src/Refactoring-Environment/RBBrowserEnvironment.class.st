@@ -92,7 +92,7 @@ RBBrowserEnvironment >> allClasses [
 
 { #category : 'accessing - classes' }
 RBBrowserEnvironment >> allClassesAndTraits [
-	" compatibility method with SystemDictionary "
+	" compatibility method with SystemEnvironment"
 
 	| allClassesAndTraits |
 	allClassesAndTraits := OrderedCollection new: 4096.

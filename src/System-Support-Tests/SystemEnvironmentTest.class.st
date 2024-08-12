@@ -1,5 +1,5 @@
 "
-SUnit tests for SystemDictionary
+SUnit tests for SystemEnvironment
 "
 Class {
 	#name : 'SystemEnvironmentTest',
@@ -126,19 +126,19 @@ SystemEnvironmentTest >> testOrganizationPerInstance [
 ]
 
 { #category : 'tests' }
-SystemEnvironmentTest >> testOtherInstancesOfSystemDictionaryAsString [
+SystemEnvironmentTest >> testOtherInstancesOfSystemEnvironmentAsString [
 
 	self deny: SystemEnvironment new asString equals: 'Smalltalk'
 ]
 
 { #category : 'tests' }
-SystemEnvironmentTest >> testOtherInstancesOfSystemDictionaryPrintString [
+SystemEnvironmentTest >> testOtherInstancesOfSystemEnvironmentPrintString [
 
 	self deny: SystemEnvironment new printString equals: 'Smalltalk'
 ]
 
 { #category : 'tests' }
-SystemEnvironmentTest >> testOtherInstancesOfSystemDictionarySelfEvaluating [
+SystemEnvironmentTest >> testOtherInstancesOfSystemEnvironmentSelfEvaluating [
 
 	self deny: SystemEnvironment new isSelfEvaluating
 ]

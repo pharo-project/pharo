@@ -765,8 +765,8 @@ FLBasicSerializationTest >> testSymbol [
 ]
 
 { #category : 'tests-globals' }
-FLBasicSerializationTest >> testSystemDictionary [
-	"We want to treat the <Smalltalk globals> instance of SystemDictionary
+FLBasicSerializationTest >> testSystemEnvironment [
+	"We want to treat the <Smalltalk globals> instance of SystemEnvironment
 	specially but want to serialize all others"
 
 	self assertSerializationEqualityOf: SystemEnvironment new
