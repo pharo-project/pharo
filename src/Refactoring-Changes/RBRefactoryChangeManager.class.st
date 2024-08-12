@@ -217,8 +217,8 @@ RBRefactoryChangeManager >> performChanges: aRefactoringChangesList [
 	| compositeChange |
 	aRefactoringChangesList ifEmpty: [ ^ self ].
 	compositeChange := RBCompositeRefactoryChange new.
-	compositeChange onSystemDictionary:
-		aRefactoringChangesList first onSystemDictionary.
+	compositeChange onSystemEnvironment:
+		aRefactoringChangesList first onSystemEnvironment.
 	compositeChange changes: aRefactoringChangesList.
 	self performCompositeChange: compositeChange
 ]
