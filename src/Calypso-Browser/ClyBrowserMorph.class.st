@@ -178,7 +178,7 @@ ClyBrowserMorph class >> settingsNavigationHistoryOn: aBuilder [
 		parent: #Calypso;
 		label: 'Navigation History';
 		domainValues: ClyNavigationHistory withAllSubclasses;
-		default: ClyNavigationHistory;
+		default: self navigationHistoryClass;
 		description: 'Enable to set a custom navigation history to handle how collection of visited items is managed';
 		target: self
 ]
