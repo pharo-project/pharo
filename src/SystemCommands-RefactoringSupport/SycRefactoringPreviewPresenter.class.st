@@ -163,6 +163,7 @@ SycRefactoringPreviewPresenter >> generateChanges [
 	rbEnvironment := self activeRBEnvironment.
 	changes do: [ :each |
 		each model environment: rbEnvironment.
+		"test"
 		each generateChanges ]
 ]
 
