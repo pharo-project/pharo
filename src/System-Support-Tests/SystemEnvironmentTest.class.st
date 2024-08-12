@@ -2,7 +2,7 @@
 SUnit tests for SystemDictionary
 "
 Class {
-	#name : 'SystemDictionaryTest',
+	#name : 'SystemEnvironmentTest',
 	#superclass : 'DictionaryTest',
 	#category : 'System-Support-Tests-Utilities',
 	#package : 'System-Support-Tests',
@@ -10,40 +10,40 @@ Class {
 }
 
 { #category : 'building suites' }
-SystemDictionaryTest class >> shouldInheritSelectors [
+SystemEnvironmentTest class >> shouldInheritSelectors [
 
 	^ true
 ]
 
 { #category : 'requirements' }
-SystemDictionaryTest >> associationWithKeyAlreadyInToAdd [
+SystemEnvironmentTest >> associationWithKeyAlreadyInToAdd [
 	" return an association that will be used to add to nonEmptyDict (the key of this association is already included in nonEmptyDict)"
 
 	^ GlobalVariable key: self nonEmptyDict keys anyOne value: valueNotIn
 ]
 
 { #category : 'requirements' }
-SystemDictionaryTest >> canBeUnhealthy [
+SystemEnvironmentTest >> canBeUnhealthy [
 	"uses GlobalVariables instead of associations"
 
 	^ false
 ]
 
 { #category : 'coverage' }
-SystemDictionaryTest >> classToBeTested [
+SystemEnvironmentTest >> classToBeTested [
 
-	^ SystemDictionary
+	^ SystemEnvironment
 ]
 
 { #category : 'requirements' }
-SystemDictionaryTest >> elementToAdd [
+SystemEnvironmentTest >> elementToAdd [
 	" return an element of type 'nonEmpy' elements'type'"
 
 	^ GlobalVariable key: #u value: 5
 ]
 
 { #category : 'running' }
-SystemDictionaryTest >> setUp [
+SystemEnvironmentTest >> setUp [
 
 	super setUp.
 
@@ -51,41 +51,41 @@ SystemDictionaryTest >> setUp [
 ]
 
 { #category : 'requirements' }
-SystemDictionaryTest >> supportsNilKey [
+SystemEnvironmentTest >> supportsNilKey [
 
 	^ false
 ]
 
 { #category : 'tests - DictionaryIndexAccessing' }
-SystemDictionaryTest >> testAtPutNil [
+SystemEnvironmentTest >> testAtPutNil [
 
 	self should: [ self collection at: nil put: nil ] raise: Error
 ]
 
 { #category : 'tests' }
-SystemDictionaryTest >> testClassOrTraitNamedReturnsClassForClasses [
+SystemEnvironmentTest >> testClassOrTraitNamedReturnsClassForClasses [
 
 	self assert: Object identicalTo: (testingEnvironment classOrTraitNamed: 'Object').
 	self assert: Object identicalTo: (testingEnvironment classOrTraitNamed: #Object)
 ]
 
 { #category : 'tests' }
-SystemDictionaryTest >> testClassOrTraitNamedReturnsNilForGlobals [
+SystemEnvironmentTest >> testClassOrTraitNamedReturnsNilForGlobals [
 
 	self assert: nil equals: (testingEnvironment classOrTraitNamed: 'Undeclared').
 	self assert: nil equals: (testingEnvironment classOrTraitNamed: #Undeclared)
 ]
 
 { #category : 'tests' }
-SystemDictionaryTest >> testEnvironmentOfOrganization [
+SystemEnvironmentTest >> testEnvironmentOfOrganization [
 
 	| aDictionary |
-	aDictionary := SystemDictionary new.
+	aDictionary := SystemEnvironment new.
 	self assert: aDictionary organization environment equals: aDictionary
 ]
 
 { #category : 'tests' }
-SystemDictionaryTest >> testHasBindingThatBeginsWith [
+SystemEnvironmentTest >> testHasBindingThatBeginsWith [
 
 	super testHasBindingThatBeginsWith.
 	self assert: (Smalltalk globals hasBindingThatBeginsWith: 'Obje').
@@ -93,7 +93,7 @@ SystemDictionaryTest >> testHasBindingThatBeginsWith [
 ]
 
 { #category : 'tests - testing' }
-SystemDictionaryTest >> testIncludesAssociationNoValue [
+SystemEnvironmentTest >> testIncludesAssociationNoValue [
 
 	| association dictionary |
 
@@ -109,7 +109,7 @@ SystemDictionaryTest >> testIncludesAssociationNoValue [
 ]
 
 { #category : 'tests - testing' }
-SystemDictionaryTest >> testIncludesAssociationWithValue [
+SystemEnvironmentTest >> testIncludesAssociationWithValue [
 
 	| association dictionary |
 	association := GlobalVariable key: #key value: 1.
@@ -120,31 +120,31 @@ SystemDictionaryTest >> testIncludesAssociationWithValue [
 ]
 
 { #category : 'tests' }
-SystemDictionaryTest >> testOrganizationPerInstance [
+SystemEnvironmentTest >> testOrganizationPerInstance [
 
-	self deny: SystemDictionary new organization equals: SystemDictionary new organization
+	self deny: SystemEnvironment new organization equals: SystemEnvironment new organization
 ]
 
 { #category : 'tests' }
-SystemDictionaryTest >> testOtherInstancesOfSystemDictionaryAsString [
+SystemEnvironmentTest >> testOtherInstancesOfSystemDictionaryAsString [
 
-	self deny: SystemDictionary new asString equals: 'Smalltalk'
+	self deny: SystemEnvironment new asString equals: 'Smalltalk'
 ]
 
 { #category : 'tests' }
-SystemDictionaryTest >> testOtherInstancesOfSystemDictionaryPrintString [
+SystemEnvironmentTest >> testOtherInstancesOfSystemDictionaryPrintString [
 
-	self deny: SystemDictionary new printString equals: 'Smalltalk'
+	self deny: SystemEnvironment new printString equals: 'Smalltalk'
 ]
 
 { #category : 'tests' }
-SystemDictionaryTest >> testOtherInstancesOfSystemDictionarySelfEvaluating [
+SystemEnvironmentTest >> testOtherInstancesOfSystemDictionarySelfEvaluating [
 
-	self deny: SystemDictionary new isSelfEvaluating
+	self deny: SystemEnvironment new isSelfEvaluating
 ]
 
 { #category : 'tests' }
-SystemDictionaryTest >> testPrintOn [
+SystemEnvironmentTest >> testPrintOn [
 
 	| printed splittedString |
 	printed := String streamContents: [ :stream |
@@ -161,10 +161,10 @@ SystemDictionaryTest >> testPrintOn [
 ]
 
 { #category : 'tests' }
-SystemDictionaryTest >> testSetOrganizationSetBackPointer [
+SystemEnvironmentTest >> testSetOrganizationSetBackPointer [
 
 	| systemDictionary packageOrganizer |
-	systemDictionary := SystemDictionary new.
+	systemDictionary := SystemEnvironment new.
 	packageOrganizer := PackageOrganizer new.
 	systemDictionary organization: packageOrganizer.
 	self assert: packageOrganizer environment identicalTo: systemDictionary.
@@ -172,25 +172,25 @@ SystemDictionaryTest >> testSetOrganizationSetBackPointer [
 ]
 
 { #category : 'tests' }
-SystemDictionaryTest >> testSmalltalkAsString [
+SystemEnvironmentTest >> testSmalltalkAsString [
 
 	self assert: Smalltalk asString equals: 'Smalltalk'
 ]
 
 { #category : 'tests' }
-SystemDictionaryTest >> testSmalltalkPrintString [
+SystemEnvironmentTest >> testSmalltalkPrintString [
 
 	self assert: Smalltalk printString equals: 'Smalltalk'
 ]
 
 { #category : 'tests' }
-SystemDictionaryTest >> testSmalltalkSelfEvaluating [
+SystemEnvironmentTest >> testSmalltalkSelfEvaluating [
 
 	self assert: Smalltalk isSelfEvaluating
 ]
 
 { #category : 'tests - printing' }
-SystemDictionaryTest >> testStoreOnWithNegativeInteger [
+SystemEnvironmentTest >> testStoreOnWithNegativeInteger [
 
 	| dictionary |
 	dictionary := { (GlobalVariable key: 'x' value: -1) } as: self classToBeTested.

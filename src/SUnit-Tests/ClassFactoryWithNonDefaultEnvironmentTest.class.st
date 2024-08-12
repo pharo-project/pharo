@@ -24,7 +24,7 @@ ClassFactoryWithNonDefaultEnvironmentTest >> environment [
 ClassFactoryWithNonDefaultEnvironmentTest >> setUp [
 
 	super setUp.
-	factory := ClassFactoryForTestCase environment: SystemDictionary new
+	factory := ClassFactoryForTestCase environment: SystemEnvironment new
 ]
 
 { #category : 'testing' }

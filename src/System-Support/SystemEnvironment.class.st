@@ -1,5 +1,8 @@
 "
-I represent a special dictionary used as global namespace for class names :
+I represent an environment in Pharo.
+An environment has its package manager, its classes, its system announcers and so on.
+
+I am a dictionary to save the bindings of my classes and globals. You can get the class names of the global environment like this:
 
 	Smalltalk globals classNames.
 
@@ -20,7 +23,7 @@ As the above example let you guess, the global namespace of Smalltalk system is 
 	Smalltalk globals.
 "
 Class {
-	#name : 'SystemDictionary',
+	#name : 'SystemEnvironment',
 	#superclass : 'IdentityDictionary',
 	#instVars : [
 		'cachedClassNames',
@@ -34,13 +37,13 @@ Class {
 }
 
 { #category : 'cleanup' }
-SystemDictionary class >> cleanUp [
+SystemEnvironment class >> cleanUp [
 
 	Smalltalk globals flushClassNameCache
 ]
 
 { #category : 'accessing - classes and traits' }
-SystemDictionary >> allBehaviors [
+SystemEnvironment >> allBehaviors [
 	"Return all the classes and traits defined in the Smalltalk SystemDictionary"
 
 	^ cachedBehaviors ifNil: [
@@ -48,62 +51,62 @@ SystemDictionary >> allBehaviors [
 ]
 
 { #category : 'accessing - classes and traits' }
-SystemDictionary >> allBehaviorsDo: aBlock [
+SystemEnvironment >> allBehaviorsDo: aBlock [
 	"Execute a block on each class, metaclass, trait and trait class"
 
 	self allBehaviors do: aBlock
 ]
 
 { #category : 'accessing - classes and traits' }
-SystemDictionary >> allClasses [
+SystemEnvironment >> allClasses [
 	"Return all the class defines in the Smalltalk SystemDictionary"
 
 	^ self classNames collect: [:name | self at: name ]
 ]
 
 { #category : 'accessing - classes and traits' }
-SystemDictionary >> allClassesAndTraits [
+SystemEnvironment >> allClassesAndTraits [
 	"Return all the classes and traits defined in the Smalltalk SystemDictionary"
 
 	^ self classAndTraitNames collect: [:each | self at: each ]
 ]
 
 { #category : 'accessing - classes and traits' }
-SystemDictionary >> allClassesAndTraitsDo: aBlock [
+SystemEnvironment >> allClassesAndTraitsDo: aBlock [
 	"Evaluate the argument, aBlock, for each class and trait in the system."
 
 	^self classAndTraitNames do: [:each | aBlock value: (self at: each) ]
 ]
 
 { #category : 'accessing - classes and traits' }
-SystemDictionary >> allClassesDo: aBlock [
+SystemEnvironment >> allClassesDo: aBlock [
 	"Evaluate the argument, aBlock, for each class in the system."
 
 	^self classNames do: [:name | aBlock value: (self at: name) ]
 ]
 
 { #category : 'accessing - classes and traits' }
-SystemDictionary >> allMethods [
+SystemEnvironment >> allMethods [
 	"all methods, including copies from Traits"
 	^ self allBehaviors flatCollect: [ :behavior | behavior methods ]
 ]
 
 { #category : 'accessing - classes and traits' }
-SystemDictionary >> allTraits [
+SystemEnvironment >> allTraits [
 	"Return all traits defined in the Smalltalk SystemDictionary"
 
 	^ self traitNames collect: [:each | self at: each ]
 ]
 
 { #category : 'accessing - classes and traits' }
-SystemDictionary >> allTraitsDo: aBlock [
+SystemEnvironment >> allTraitsDo: aBlock [
 	"Evaluate the argument, aBlock, for each trait in the system."
 
 	^ self traitNames do: [ :name | aBlock value: (self at: name) ]
 ]
 
 { #category : 'accessing - dictionary access' }
-SystemDictionary >> at: aKey put: anObject [
+SystemEnvironment >> at: aKey put: anObject [
 	"Override from Dictionary to check Undeclared and fix up
 	references to undeclared variables."
 	| index assoc registeredMethods |
@@ -133,21 +136,21 @@ SystemDictionary >> at: aKey put: anObject [
 ]
 
 { #category : 'adding' }
-SystemDictionary >> atNewIndex: index put: aGlobalVariable [
+SystemEnvironment >> atNewIndex: index put: aGlobalVariable [
 
 	aGlobalVariable isAssociation ifTrue: [ self error: 'Only global variables should be added to the SystemDictionary and not associations.' ].
 	^ super atNewIndex: index put: aGlobalVariable
 ]
 
 { #category : 'accessing - variable lookup' }
-SystemDictionary >> bindingOf: varName [
+SystemEnvironment >> bindingOf: varName [
 	"SystemDictionaries includes symbols only"
 
 	^ super bindingOf: varName asSymbol
 ]
 
 { #category : 'accessing - class and trait names' }
-SystemDictionary >> classAndTraitNames [
+SystemEnvironment >> classAndTraitNames [
 	"Answer a sorted collection of all class and trait (not including class-traits) names.
 	Now traits are normal classes. So they are in same class list.
 	Do not bother to sort"
@@ -156,20 +159,20 @@ SystemDictionary >> classAndTraitNames [
 ]
 
 { #category : 'accessing - classes and traits' }
-SystemDictionary >> classNamed: className [
+SystemEnvironment >> classNamed: className [
 
 	^ self classOrTraitNamed: className
 ]
 
 { #category : 'accessing - class and trait names' }
-SystemDictionary >> classNames [
+SystemEnvironment >> classNames [
 	"Answer a sorted collection of all class names. Use the return value of #fillCaches to avoid concurrency issues."
 
 	^cachedClassNames ifNil: [ self fillCaches at: 1 ]
 ]
 
 { #category : 'accessing - classes and traits' }
-SystemDictionary >> classOrTraitNamed: aString [
+SystemEnvironment >> classOrTraitNamed: aString [
 	"aString is either a class or trait name or a class or trait name followed by ' class' or 'classTrait'
 	respectively. Answer the class or metaclass it names."
 
@@ -194,7 +197,7 @@ SystemDictionary >> classOrTraitNamed: aString [
 ]
 
 { #category : 'accessing' }
-SystemDictionary >> codeChangeAnnouncer [
+SystemEnvironment >> codeChangeAnnouncer [
 	"A code change announcer is an announcer to register to Class, Method, Package and Protocol announcement."
 
 	"This should not be hardcoded in the futurebut I should have my own instance."
@@ -203,7 +206,7 @@ SystemDictionary >> codeChangeAnnouncer [
 ]
 
 { #category : 'accessing' }
-SystemDictionary >> codeSupportAnnouncer [
+SystemEnvironment >> codeSupportAnnouncer [
 	"A code support announcer is an announcer used for tooling support such as the breakpoints or AST cache."
 
 	"This should not be hardcoded in the futurebut I should have my own instance."
@@ -212,14 +215,14 @@ SystemDictionary >> codeSupportAnnouncer [
 ]
 
 { #category : 'accessing' }
-SystemDictionary >> environment [
+SystemEnvironment >> environment [
 	"For conversion from SmalltalkImage to SystemDictionary"
 
 	^ self
 ]
 
 { #category : 'accessing - class and trait names' }
-SystemDictionary >> fillCaches [
+SystemEnvironment >> fillCaches [
 	"Fill cachedClassNames and cachedNonClassNames. Return an array with the calculated values."
 
 	| classNames nonClassNames |
@@ -247,7 +250,7 @@ SystemDictionary >> fillCaches [
 ]
 
 { #category : 'accessing - class and trait names' }
-SystemDictionary >> flushClassNameCache [
+SystemEnvironment >> flushClassNameCache [
 	"Force recomputation of the cached list of class names and non-class names."
 
 	<script: 'Smalltalk flushClassNameCache'>
@@ -255,7 +258,7 @@ SystemDictionary >> flushClassNameCache [
 ]
 
 { #category : 'accessing - classes and traits' }
-SystemDictionary >> forgetClass: aClass [
+SystemEnvironment >> forgetClass: aClass [
 	"Delete the class, aClass, from the system.
 	Note that this doesn't do everything required to dispose of a class - to do that use Class>>removeFromSystem."
 
@@ -264,7 +267,7 @@ SystemDictionary >> forgetClass: aClass [
 ]
 
 { #category : 'testing' }
-SystemDictionary >> hasBindingThatBeginsWith: aString [
+SystemEnvironment >> hasBindingThatBeginsWith: aString [
 	"Use the cached class and non-class names for better performance."
 
 	| name searchBlock |
@@ -284,7 +287,7 @@ SystemDictionary >> hasBindingThatBeginsWith: aString [
 ]
 
 { #category : 'accessing - classes and traits' }
-SystemDictionary >> hasClassNamed: aString [
+SystemEnvironment >> hasClassNamed: aString [
 	"Answer whether there is a class of the given name, but don't intern aString if it's not already interned."
 
 	Symbol
@@ -294,7 +297,7 @@ SystemDictionary >> hasClassNamed: aString [
 ]
 
 { #category : 'accessing - classes and traits' }
-SystemDictionary >> hasClassOrTraitNamed: aString [
+SystemEnvironment >> hasClassOrTraitNamed: aString [
 	"Answer whether there is a class of the given name, but don't intern aString if it's not already interned."
 
 	Symbol
@@ -305,13 +308,13 @@ SystemDictionary >> hasClassOrTraitNamed: aString [
 ]
 
 { #category : 'accessing - variable lookup' }
-SystemDictionary >> lookupVar: name [
+SystemEnvironment >> lookupVar: name [
 	"Return a var with this name.  Return nil if none found"
 	^self pseudoVariables at: name ifAbsent: [self bindingOf: name]
 ]
 
 { #category : 'accessing - system attributes' }
-SystemDictionary >> maxIdentityHash [
+SystemEnvironment >> maxIdentityHash [
 	"Answer the maximum identityHash value supported by the VM."
 	<primitive: 176>
 
@@ -319,20 +322,20 @@ SystemDictionary >> maxIdentityHash [
 ]
 
 { #category : 'accessing - classes and traits' }
-SystemDictionary >> methods [
+SystemEnvironment >> methods [
 	"all methods, but without those installed by Traits"
 	^ self allBehaviors flatCollect: [ :behavior | behavior localMethods ]
 ]
 
 { #category : 'accessing - class and trait names' }
-SystemDictionary >> nonClassNames [
+SystemEnvironment >> nonClassNames [
 	"Answer a sorted collection of all non-class names. Use the return value of #fillCaches to avoid concurrency issues."
 
 	^ cachedNonClassNames ifNil: [ self fillCaches at: 2 ]
 ]
 
 { #category : 'accessing' }
-SystemDictionary >> organization [
+SystemEnvironment >> organization [
 	"Return the organizer for the receiver"
 
 	^ self at: #SystemOrganization ifAbsent: [
@@ -341,7 +344,7 @@ SystemDictionary >> organization [
 ]
 
 { #category : 'accessing' }
-SystemDictionary >> organization: anOrganization [
+SystemEnvironment >> organization: anOrganization [
 	"Return the organizer for the receiver"
 
 	anOrganization environment: self.
@@ -349,13 +352,13 @@ SystemDictionary >> organization: anOrganization [
 ]
 
 { #category : 'accessing - variable lookup' }
-SystemDictionary >> outerScope [
+SystemEnvironment >> outerScope [
 
 	^ nil
 ]
 
 { #category : 'accessing' }
-SystemDictionary >> poolUsers [
+SystemEnvironment >> poolUsers [
 	"Answer a dictionary of pool name -> classes that refer to it.
 	Also includes any globally know dictionaries (such as
 	Smalltalk, Undeclared etc) which although not strictly
@@ -379,13 +382,13 @@ SystemDictionary >> poolUsers [
 ]
 
 { #category : 'printing' }
-SystemDictionary >> printElementsOn: aStream [
+SystemEnvironment >> printElementsOn: aStream [
 
 	aStream nextPutAll: '(lots of globals)'
 ]
 
 { #category : 'accessing - variable lookup' }
-SystemDictionary >> pseudoVariables [
+SystemEnvironment >> pseudoVariables [
 	"We cache the variables for speed"
 
 	^ pseudoVariables ifNil: [
@@ -393,7 +396,7 @@ SystemDictionary >> pseudoVariables [
 ]
 
 { #category : 'accessing - classes and traits' }
-SystemDictionary >> removeClassNamed: aName [
+SystemEnvironment >> removeClassNamed: aName [
 	"Invoked from fileouts: if there is currently a class in the system named aName, then remove it"
 
 	self
@@ -402,7 +405,7 @@ SystemDictionary >> removeClassNamed: aName [
 ]
 
 { #category : 'removing' }
-SystemDictionary >> removeFromCaches: aKey [
+SystemEnvironment >> removeFromCaches: aKey [
 	"In case we remove a key from the system dictionary, we do not need to flush all the caches. We can just remove it from the class name and non class name caches."
 
 	cachedClassNames ifNotNil: [ :cache | cache remove: aKey ifAbsent: [  ] ].
@@ -411,14 +414,14 @@ SystemDictionary >> removeFromCaches: aKey [
 ]
 
 { #category : 'accessing - dictionary access' }
-SystemDictionary >> removeKey: key ifAbsent: aBlock [
+SystemEnvironment >> removeKey: key ifAbsent: aBlock [
 
 	self removeFromCaches: key.
 	^ super removeKey: key ifAbsent: aBlock
 ]
 
 { #category : 'renaming' }
-SystemDictionary >> renameClass: aClass from: oldName [
+SystemEnvironment >> renameClass: aClass from: oldName [
 
 	| oldref |
 	oldref := self associationAt: oldName.
@@ -431,7 +434,7 @@ SystemDictionary >> renameClass: aClass from: oldName [
 ]
 
 { #category : 'renaming' }
-SystemDictionary >> renameClassNamed: oldName as: newName [
+SystemEnvironment >> renameClassNamed: oldName as: newName [
 	"Invoked from fileouts: if there is currently a class in the system named oldName, then rename it to newName. If anything untoward happens, report it in the Transcript."
 
 	| oldClass |
@@ -444,14 +447,14 @@ SystemDictionary >> renameClassNamed: oldName as: newName [
 ]
 
 { #category : 'accessing - variable lookup' }
-SystemDictionary >> resetPseudoVariables [
+SystemEnvironment >> resetPseudoVariables [
 	"Lazy init in the accessor, resetting it will take new subclasses on PseudoVariable into account"
 
 	^ pseudoVariables := nil
 ]
 
 { #category : 'accessing - class and trait names' }
-SystemDictionary >> traitNames [
+SystemEnvironment >> traitNames [
 	"Answer a SortedCollection of all traits (not including class-traits) names."
 
 	^ self classNames select: [ :name |
@@ -463,13 +466,13 @@ SystemDictionary >> traitNames [
 ]
 
 { #category : 'accessing' }
-SystemDictionary >> undeclaredRegistry [
+SystemEnvironment >> undeclaredRegistry [
 	"For now we are referencing a global variable of the default environment of Pharo. But in the future each environments should have their undeclared registry, else we have memory leaks of the environments."
 
 	^ Undeclared
 ]
 
 { #category : 'copying' }
-SystemDictionary >> veryDeepCopyWith: deepCopier [
+SystemEnvironment >> veryDeepCopyWith: deepCopier [
 	"Return self. I can't be copied. Do not record me."
 ]
