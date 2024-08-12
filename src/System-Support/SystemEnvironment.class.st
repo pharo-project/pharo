@@ -144,7 +144,7 @@ SystemEnvironment >> atNewIndex: index put: aGlobalVariable [
 
 { #category : 'accessing - variable lookup' }
 SystemEnvironment >> bindingOf: varName [
-	"SystemDictionaries includes symbols only"
+	"SystemEnvironment includes symbols only"
 
 	^ super bindingOf: varName asSymbol
 ]
