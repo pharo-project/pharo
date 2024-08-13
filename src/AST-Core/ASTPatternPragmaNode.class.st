@@ -7,7 +7,7 @@ Instance Variables:
 
 "
 Class {
-	#name : 'RBPatternPragmaNode',
+	#name : 'ASTPatternPragmaNode',
 	#superclass : 'RBPragmaNode',
 	#instVars : [
 		'isList'
@@ -18,14 +18,14 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBPatternPragmaNode class >> selector: aSelector keywordsPositions: positionList arguments: valueNodes [
+ASTPatternPragmaNode class >> selector: aSelector keywordsPositions: positionList arguments: valueNodes [
 	^(aSelector isPatternVariable)
 		ifTrue: [ super selector: aSelector keywordsPositions: positionList arguments: valueNodes ]
 		ifFalse: [ RBPragmaNode selector: aSelector keywordsPositions: positionList arguments: valueNodes ]
 ]
 
 { #category : 'matching' }
-RBPatternPragmaNode >> copyInContext: aDictionary [
+ASTPatternPragmaNode >> copyInContext: aDictionary [
 	| keywordSelector |
 	keywordSelector := self isSelectorList
 		ifTrue: [ aDictionary at: self selectorParts first ]
@@ -36,17 +36,17 @@ RBPatternPragmaNode >> copyInContext: aDictionary [
 ]
 
 { #category : 'testing - matching' }
-RBPatternPragmaNode >> isPatternNode [
+ASTPatternPragmaNode >> isPatternNode [
 	^ true
 ]
 
 { #category : 'testing - matching' }
-RBPatternPragmaNode >> isSelectorList [
+ASTPatternPragmaNode >> isSelectorList [
 	^ isList
 ]
 
 { #category : 'matching' }
-RBPatternPragmaNode >> match: aNode inContext: aDictionary [
+ASTPatternPragmaNode >> match: aNode inContext: aDictionary [
 	aNode class = self matchingClass
 		ifFalse: [ ^ false ].
 	self isSelectorList ifTrue: [
@@ -56,7 +56,7 @@ RBPatternPragmaNode >> match: aNode inContext: aDictionary [
 ]
 
 { #category : 'matching' }
-RBPatternPragmaNode >> matchArgumentsAgainst: aNode inContext: aDictionary [
+ASTPatternPragmaNode >> matchArgumentsAgainst: aNode inContext: aDictionary [
 	self arguments size = aNode arguments size
 		ifFalse: [ ^ false ].
 	(self matchSelectorAgainst: aNode inContext: aDictionary)
@@ -68,7 +68,7 @@ RBPatternPragmaNode >> matchArgumentsAgainst: aNode inContext: aDictionary [
 ]
 
 { #category : 'matching' }
-RBPatternPragmaNode >> matchSelectorAgainst: aNode inContext: aDictionary [
+ASTPatternPragmaNode >> matchSelectorAgainst: aNode inContext: aDictionary [
 	self selectorParts with: aNode selectorParts do: [ :first :second |
 		| keyword |
 		keyword := aDictionary
@@ -83,12 +83,12 @@ RBPatternPragmaNode >> matchSelectorAgainst: aNode inContext: aDictionary [
 ]
 
 { #category : 'private' }
-RBPatternPragmaNode >> matchingClass [
+ASTPatternPragmaNode >> matchingClass [
 	^ RBPragmaNode
 ]
 
 { #category : 'initialization' }
-RBPatternPragmaNode >> selector: aSymbol keywordsPositions: positionList arguments: valueNodes [
+ASTPatternPragmaNode >> selector: aSymbol keywordsPositions: positionList arguments: valueNodes [
 	self
 		arguments: valueNodes;
 		selector: aSymbol;
@@ -97,7 +97,7 @@ RBPatternPragmaNode >> selector: aSymbol keywordsPositions: positionList argumen
 ]
 
 { #category : 'accessing' }
-RBPatternPragmaNode >> sentMessages [
+ASTPatternPragmaNode >> sentMessages [
 	^ super sentMessages
 		remove: self selector ifAbsent: [ ];
 		yourself

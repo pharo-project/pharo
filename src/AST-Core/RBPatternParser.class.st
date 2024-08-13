@@ -12,12 +12,12 @@ Class {
 
 { #category : 'private - classes' }
 RBPatternParser >> messageNodeClass [
-	^RBPatternMessageNode
+	^ASTPatternMessageNode
 ]
 
 { #category : 'private - classes' }
 RBPatternParser >> methodNodeClass [
-	^RBPatternMethodNode
+	^ASTPatternMethodNode
 ]
 
 { #category : 'private - parsing' }
@@ -66,14 +66,14 @@ RBPatternParser >> parsePatternBlock: aClass [
 RBPatternParser >> parsePragmaLiteral [
 	| node |
 	currentToken isPatternBlock
-		ifTrue: [ ^ self parsePatternBlock: RBPatternBlockNode ].
+		ifTrue: [ ^ self parsePatternBlock: ASTPatternBlockNode ].
 	(currentToken isIdentifier and: [ currentToken isPatternVariable ]) ifTrue: [
 		node := self variableNodeClass identifierNamed: currentToken value at: currentToken start.
 		node isLiteralNode
 			ifFalse: [ self parseError: 'Literal pattern expected' ].
 		self step.
 		currentToken isPatternBlock ifTrue: [
-			node := (self parsePatternBlock: RBPatternWrapperBlockNode)
+			node := (self parsePatternBlock: ASTPatternWrapperBlockNode)
 				wrappedNode: node;
 				yourself ].
 		^ node ].
@@ -100,7 +100,7 @@ RBPatternParser >> parsePrimitiveLiteral [
 { #category : 'private - parsing' }
 RBPatternParser >> parsePrimitiveObject [
 	currentToken isPatternBlock
-		ifTrue: [^self parsePatternBlock: RBPatternBlockNode].
+		ifTrue: [^self parsePatternBlock: ASTPatternBlockNode].
 	^super parsePrimitiveObject
 ]
 
@@ -127,8 +127,8 @@ RBPatternParser >> parseUnaryMessage [
 RBPatternParser >> parseWrapperPatternBlockWith: wrappedNode [
 	| node |
 
-	node := self parsePatternBlock: RBPatternWrapperBlockNode.
-	node class == RBPatternWrapperBlockNode ifTrue: [
+	node := self parsePatternBlock: ASTPatternWrapperBlockNode.
+	node class == ASTPatternWrapperBlockNode ifTrue: [
 		self flag: 'I think this is ugly, but I don''t know how to avoid checking the result of #parsePatternBlock:'.
 		node wrappedNode: wrappedNode ].
 
@@ -137,7 +137,7 @@ RBPatternParser >> parseWrapperPatternBlockWith: wrappedNode [
 
 { #category : 'private - classes' }
 RBPatternParser >> pragmaNodeClass [
-	^RBPatternPragmaNode
+	^ASTPatternPragmaNode
 ]
 
 { #category : 'accessing' }
@@ -147,5 +147,5 @@ RBPatternParser >> scannerClass [
 
 { #category : 'private - classes' }
 RBPatternParser >> variableNodeClass [
-	^RBPatternVariableNode
+	^ASTPatternVariableNode
 ]

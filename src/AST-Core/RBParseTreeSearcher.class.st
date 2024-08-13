@@ -158,10 +158,10 @@ RBParseTreeSearcher class >> treeMatchingStatements: subtreeSourceString in: aPa
 	subtree := RBParser parseExpression: subtreeSourceString.
 	subtree isSequence
 		ifFalse: [subtree := RBSequenceNode statements: (Array with: subtree)].
-	subtree temporaries: (Array with: (RBPatternVariableNode named: '`@temps')).
-	subtree addNodeFirst: (RBPatternVariableNode named: '`@.S1').
+	subtree temporaries: (Array with: (ASTPatternVariableNode named: '`@temps')).
+	subtree addNodeFirst: (ASTPatternVariableNode named: '`@.S1').
 	subtree lastIsReturn
-		ifFalse: [subtree addNode: (RBPatternVariableNode named: '`@.S2')].
+		ifFalse: [subtree addNode: (ASTPatternVariableNode named: '`@.S2')].
 	notifier matchesTree: subtree
 		do: [:aNode :answer |
 				| sub | 
