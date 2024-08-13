@@ -2,7 +2,7 @@
 RBPatternWrapperBlockNode allows further matching using a block after a node has been matched by a pattern node.
 
 Instance Variables:
-	wrappedNode	<RBProgramNode>	The original pattern node to match
+	wrappedNode	<ASTProgramNode>	The original pattern node to match
 "
 Class {
 	#name : 'RBPatternWrapperBlockNode',
@@ -49,7 +49,7 @@ RBPatternWrapperBlockNode >> wrappedNode [
 ]
 
 { #category : 'accessing' }
-RBPatternWrapperBlockNode >> wrappedNode: aRBProgramNode [
-	wrappedNode := aRBProgramNode.
-	aRBProgramNode parent: self
+RBPatternWrapperBlockNode >> wrappedNode: aProgramNode [
+	wrappedNode := aProgramNode.
+	aProgramNode parent: self
 ]

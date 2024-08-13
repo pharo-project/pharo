@@ -3,7 +3,7 @@ RBParseTreeRule is the abstract superclass of all of the parse tree searching ru
 
 Instance Variables:
 	owner	<ParseTreeSearcher>	The searcher that is actually performing the search.
-	searchTree	<RBProgramNode>	The parse tree to be searched.
+	searchTree	<ASTProgramNode>	The parse tree to be searched.
 
 
 "

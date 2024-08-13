@@ -40,7 +40,7 @@ RBPatternBlockNode >> constructLookupNodeFor: aString in: aRBBlockNode [
 	^ RBMessageNode
 		  receiver: RBVariableNode selfNode
 		  selector: #lookupMatchFor:in:
-		  arguments: (Array with: (RBLiteralNode value: aString) with: aRBBlockNode arguments last copy)
+		  arguments: (Array with: (ASTLiteralNode value: aString) with: aRBBlockNode arguments last copy)
 ]
 
 { #category : 'matching' }

@@ -9,7 +9,7 @@ Instance Variables:
 "
 Class {
 	#name : 'RBCascadeNode',
-	#superclass : 'RBValueNode',
+	#superclass : 'ASTValueNode',
 	#instVars : [
 		'messages',
 		'semicolons'

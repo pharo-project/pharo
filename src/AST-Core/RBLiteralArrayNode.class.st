@@ -2,13 +2,13 @@
 An RBLiteralArrayNode is an AST node that represents literal arrays #(1 2 3) and literal byte arrays #[ 1 2 3 ].
 
 Instance Variables
-	contents: <Array of: RBLiteralNode> literal nodes of the array
+	contents: <Array of: ASTLiteralNode> literal nodes of the array
 	isByteArray: <Boolean> if the receiver is a literal byte array
 
 "
 Class {
 	#name : 'RBLiteralArrayNode',
-	#superclass : 'RBLiteralNode',
+	#superclass : 'ASTLiteralNode',
 	#instVars : [
 		'isByteArray',
 		'contents',
@@ -33,7 +33,7 @@ RBLiteralArrayNode class >> startPosition: startInteger contents: anArray stopPo
 RBLiteralArrayNode class >> value: aValue [
 	^(self new)
 		startPosition: 0
-			contents: (aValue asArray collect: [:each | RBLiteralNode value: each])
+			contents: (aValue asArray collect: [:each | ASTLiteralNode value: each])
 			stopPosition: -1
 			isByteArray: aValue class ~~ Array;
 		yourself
@@ -66,8 +66,8 @@ RBLiteralArrayNode >> contents [
 ]
 
 { #category : 'initialization' }
-RBLiteralArrayNode >> contents: aRBLiteralNodeCollection [
-	contents := aRBLiteralNodeCollection.
+RBLiteralArrayNode >> contents: aLiteralNodeCollection [
+	contents := aLiteralNodeCollection.
 	contents do: [:each | each parent: self]
 ]
 

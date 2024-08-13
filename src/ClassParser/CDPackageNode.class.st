@@ -25,7 +25,7 @@ CDPackageNode >> packageName: anObject [
 { #category : 'accessing' }
 CDPackageNode >> value [
 	"to be compatible with the default CDClassDefinitionNode definition.
-	There a package is just an RBLiteralNode and it may be a PackageNode too."
+	There a package is just an ASTLiteralNode and it may be a PackageNode too."
 
 	^ packageName
 ]

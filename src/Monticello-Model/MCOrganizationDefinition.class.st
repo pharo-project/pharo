@@ -102,12 +102,6 @@ MCOrganizationDefinition >> postloadOver: oldDefinition [
 ]
 
 { #category : 'accessing' }
-MCOrganizationDefinition >> shortSummaryPrefix [
-
-	^ self definition description last
-]
-
-{ #category : 'accessing' }
 MCOrganizationDefinition >> sortKey [
 	^ '<organization>'
 ]

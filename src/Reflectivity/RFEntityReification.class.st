@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFEntityReification class >> entities [
-	^{RBProgramNode. Variable}
+	^{ASTProgramNode. Variable}
 ]
 
 { #category : 'plugin interface' }
@@ -20,19 +20,19 @@ RFEntityReification class >> key [
 ]
 
 { #category : 'generate' }
+RFEntityReification >> genForASTProgramNode [
+
+	^ASTLiteralNode value: entity
+]
+
+{ #category : 'generate' }
 RFEntityReification >> genForInstanceVariableSlot [
 
-	^RBLiteralNode value: entity
+	^ASTLiteralNode value: entity
 ]
 
 { #category : 'generate' }
 RFEntityReification >> genForLiteralVariable [
 	"entity in this case is the binding of the literal"
-	^RBLiteralNode value: entity
-]
-
-{ #category : 'generate' }
-RFEntityReification >> genForRBProgramNode [
-
-	^RBLiteralNode value: entity
+	^ASTLiteralNode value: entity
 ]

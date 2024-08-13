@@ -11,7 +11,7 @@ Class {
 
 { #category : 'tests' }
 ASTEvaluationTest >> testEvaluate [
-	self assert: (RBLiteralNode value: 5) evaluate equals: 5.
+	self assert: (ASTLiteralNode value: 5) evaluate equals: 5.
 	self assert: (RBMessageNode receiver: 5 asLiteralNode selector: #class ) evaluate equals: 5 class
 ]
 

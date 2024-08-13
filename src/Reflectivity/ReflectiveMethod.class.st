@@ -110,7 +110,7 @@ ReflectiveMethod >> generatePrimitiveWrapper [
 		        selector: #rFwithArgs:executeMethod:
 		        arguments: {
 				        (RBArrayNode statements: ast arguments).
-				        (RBLiteralNode value: self compiledMethod) }.
+				        (ASTLiteralNode value: self compiledMethod) }.
 
 	assignmentNode := RBAssignmentNode
 		                  variable: (RBVariableNode named: #RFReifyValueVar)

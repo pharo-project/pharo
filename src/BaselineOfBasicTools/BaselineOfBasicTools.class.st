@@ -70,10 +70,7 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Metacello-FileTree'.
 		spec package: 'Metacello-Cypress'.
 		spec package: 'CodeExport'.
-		spec package: 'MonticelloGUI'.
-		spec
-			package: 'Monticello-GUI-Diff'
-			with: [ spec requires: #( 'Tool-Diff' 'MonticelloGUI' ) ].
+		spec package: 'MonticelloGUI' with: [ spec requires: #( 'Tool-Diff' ) ].
 		spec package: 'System-Sources-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."
 
 		spec package: 'Kernel-CodeModel-Tests'.
@@ -108,6 +105,12 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
+
+	"This should be removed in Pharo 14."
+	ASTNode deprecatedAliases: { #RBNode }.
+	ASTProgramNode deprecatedAliases: { #RBProgramNode }.
+	ASTValueNode deprecatedAliases: { #RBValueNode }.
+	ASTLiteralNode deprecatedAliases: { #RBLiteralNode }.
 	
 	CompletionSorter register.
 	RubSmalltalkEditor completionEngineClass: CompletionEngine.

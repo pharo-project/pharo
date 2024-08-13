@@ -117,7 +117,7 @@ RBAddMethodChange >> hash [
 RBAddMethodChange >> oldVersionTextToDisplay [
 	| class |
 
-	class := (onSystemDictionary
+	class := (onSystemEnvironment
 					classNamed: className)
 					ifNil: [ ^ super oldVersionTextToDisplay ].
 
