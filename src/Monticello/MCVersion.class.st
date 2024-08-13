@@ -46,46 +46,6 @@ MCVersion >> adopt [
 	self workingCopy adopt: self
 ]
 
-{ #category : 'enumerating' }
-MCVersion >> allAvailableDependenciesDo: aBlock [
-	
-	self dependencies do:
-		[:ea |
-		[ | version |version := ea resolve.
-		version allAvailableDependenciesDo: aBlock.
-		aBlock value: version]
-			on: Error do: []]
-]
-
-{ #category : 'enumerating' }
-MCVersion >> allDependenciesDo: aBlock [
-	self allDependenciesDo: aBlock ifUnresolved: [:ignored | true]
-]
-
-{ #category : 'enumerating' }
-MCVersion >> allDependenciesDo: aBlock ifUnresolved: failBlock [
-	| dict |
-	dict := Dictionary new.
-	self allDependenciesNotIn: dict do: aBlock ifUnresolved: failBlock
-]
-
-{ #category : 'enumerating' }
-MCVersion >> allDependenciesNotIn: aDictionary do: aBlock ifUnresolved: failBlock [
-	
-	self dependencies do: 
-		[:ea | | version | 
-		version := aDictionary at: ea ifAbsent: [ea resolve].
-		version 
-			ifNil: [failBlock value: ea]
-			ifNotNil: [(aDictionary includes: version) ifFalse:
-						[aDictionary at: ea put: version.
-						version 
-							allDependenciesNotIn: aDictionary 
-							do: aBlock
-							ifUnresolved: failBlock.
-						aBlock value: version]]]
-]
-
 { #category : 'accessing' }
 MCVersion >> changes [
 	^ self completeSnapshot patchRelativeToBase: self completePackageSnapshot
@@ -94,7 +54,13 @@ MCVersion >> changes [
 { #category : 'accessing' }
 MCVersion >> completePackageSnapshot [
 	"Answer with a snapshot of current working copy of this package and all its dependencies."
-	^self loadCompletePackageSnapshot
+
+	| definitions |
+	definitions := OrderedCollection withAll: package snapshot definitions.
+	self dependencies
+		do: [ :each | definitions addAll: each package snapshot definitions ]
+		displayingProgress: [ :item | 'Loading dependencies from: ' , item package name ].
+	^ MCSnapshot fromDefinitions: definitions
 ]
 
 { #category : 'accessing' }
@@ -131,45 +97,21 @@ MCVersion >> initializeWithPackage: aPackage info: aVersionInfo snapshot: aSnaps
 	self addToCache.
 ]
 
-{ #category : 'testing' }
-MCVersion >> isCacheable [
-	^true
-]
-
-{ #category : 'testing' }
-MCVersion >> isDiffy [
-	^ false
-]
-
 { #category : 'actions' }
 MCVersion >> load [
 	MCVersionLoader loadVersion: self
 ]
 
 { #category : 'accessing' }
-MCVersion >> loadCompletePackageSnapshot [
-	| definitions |
-	definitions := OrderedCollection withAll: package snapshot definitions.
-	
-	self dependencies 
-		do: [ :each| definitions addAll: each package snapshot definitions ]
-		displayingProgress: [ :item| 'Loading dependencies from: ', item package name ].
-	
-	^ MCSnapshot fromDefinitions: definitions
-	
-	
-]
-
-{ #category : 'accessing' }
 MCVersion >> loadCompleteSnapshot [
-	|definitions|
-	
+
+	| definitions |
 	definitions := OrderedCollection withAll: self snapshot definitions.
-	
-	self dependencies 
-		do: [ :each| definitions addAll: each resolve completeSnapshot definitions ]
-		displayingProgress: [ :item| 'Loading dependencies from: ', item package name ].
-	
+
+	self dependencies
+		do: [ :each | definitions addAll: each resolve completeSnapshot definitions ]
+		displayingProgress: [ :item | 'Loading dependencies from: ' , item package name ].
+
 	^ MCSnapshot fromDefinitions: definitions
 ]
 
@@ -203,33 +145,6 @@ MCVersion >> snapshot [
 	snapshot isBlock ifTrue: [ 
 		snapshot := snapshot value ].
 	^ snapshot
-]
-
-{ #category : 'accessing' }
-MCVersion >> summary [
-	^ String streamContents:
-		[:s |
-		s nextPutAll: info summaryHeader.
-		(dependencies isNil or: [dependencies isEmpty]) ifFalse:
-			[s cr; nextPutAll: 'Dependencies: '.
-			dependencies
-				do: [:ea | s nextPutAll: ea versionInfo name]
-				separatedBy: [s nextPutAll: ', ']].
-		s cr; cr; nextPutAll: info message]
-]
-
-{ #category : 'enumerating' }
-MCVersion >> withAllDependenciesDo: aBlock [
-	self allDependenciesDo: aBlock ifUnresolved: [:ignored |].
-	aBlock value: self
-]
-
-{ #category : 'enumerating' }
-MCVersion >> withAllDependenciesDo: aBlock ifUnresolved: failBlock [
-	| dict |
-	dict := Dictionary new.
-	self allDependenciesNotIn: dict do: aBlock ifUnresolved: failBlock.
-	aBlock value: self
 ]
 
 { #category : 'accessing' }

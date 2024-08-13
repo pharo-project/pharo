@@ -227,31 +227,8 @@ MCWorkingCopy >> ancestry [
 ]
 
 { #category : 'operations' }
-MCWorkingCopy >> changesRelativeToRepository: aRepository [
-	^ self completeSnapshot patchRelativeToBase: (self closestAncestorSnapshotIn: aRepository).
-]
-
-{ #category : 'operations' }
 MCWorkingCopy >> clearRequiredPackages [
 	requiredPackages := nil
-]
-
-{ #category : 'accessing' }
-MCWorkingCopy >> closestAncestorSnapshotIn: aRepository [
-	
-	"Returns a complete Snapshot including all required packages by recurisveliy walking all required package and trying to find the closes ancestor in the given repository"
-	
-	| definitions ancestorVersion|
-	
-	ancestorVersion := aRepository closestAncestorVersionFor: ancestry ifNone: [].
-	
-	definitions := ancestorVersion 
-						ifNil: [ OrderedCollection new ] 
-						ifNotNil: [ ancestorVersion snapshot definitions ].
-	
-	definitions addAll: (self loadRemoteDependenciesIn: aRepository).
-	
-	^ MCSnapshot fromDefinitions: definitions
 ]
 
 { #category : 'operations' }
@@ -283,23 +260,10 @@ MCWorkingCopy >> completeSnapshot [
 ]
 
 { #category : 'accessing' }
-MCWorkingCopy >> currentVersionInfo [
-	^ (self needsSaving or: [ancestry ancestors isEmpty])
-		ifTrue: [ (self newVersionIn: self repositoryGroup) 
-						ifNotNil: [ :version | version info ] ]
-		ifFalse: [ancestry ancestors first]
-]
-
-{ #category : 'accessing' }
 MCWorkingCopy >> currentVersionInfoWithMessage: aMessageString in: aRepository [
 	^ (self needsSaving or: [ancestry ancestors isEmpty])
 		ifTrue: [ (self newVersionWithMessage: aMessageString in: aRepository) info ]
 		ifFalse: [ancestry ancestors first]
-]
-
-{ #category : 'accessing' }
-MCWorkingCopy >> description [
-	^ self packageNameWithStar, ' (', (ancestry ancestorStringWithout: self packageName), ')'
 ]
 
 { #category : 'displaying' }
@@ -343,18 +307,6 @@ MCWorkingCopy >> initializeWithPackage: aPackage [
 	self initialize.
 ]
 
-{ #category : 'accessing' }
-MCWorkingCopy >> loadRemoteDependenciesIn: aRepository [
-	"load the remote dependencies of all packages in parallel"
-	| dependencies |
-	dependencies := self 
-		requiredPackagesParallelCollect: [ :aPackage|
-			(aPackage workingCopy closestAncestorSnapshotIn: aRepository) definitions.] 
-		withMessage: 'Loading remote dependencies...'.
-	^ dependencies flattened
-
-]
-
 { #category : 'operations' }
 MCWorkingCopy >> loaded: aVersion [
 	ancestry := MCWorkingAncestry new addAncestor: aVersion info.
@@ -387,17 +339,6 @@ MCWorkingCopy >> modified: aBoolean [
 { #category : 'accessing' }
 MCWorkingCopy >> needsSaving [
 	^ self modified or: [self requiredPackages anySatisfy: [:ea | ea workingCopy needsSaving]]
-]
-
-{ #category : 'operations' }
-MCWorkingCopy >> newVersionIn: aRepository [
-	^ (self requestVersionNameAndMessageWithSuggestion: (self uniqueVersionNameIn: aRepository)) 
-		ifNotNil: [:pair |
-			self 
-				newVersionWithName: pair first trimBoth 
-				message: pair last 
-				in: aRepository ].
-
 ]
 
 { #category : 'operations' }
@@ -438,27 +379,24 @@ MCWorkingCopy >> nextVersionName [
 
 	| branch oldName base |
 	branch := ''.
-	ancestry ancestors isEmpty
-		ifTrue: [
+	ancestry ancestors
+		ifEmpty: [
 			counter ifNil: [ counter := 0 ].
 			base := package name ]
-		ifFalse: [
-			oldName := ancestry ancestors first name.
+		ifNotEmpty: [ :ancestors |
+			oldName := ancestors first name.
 			oldName last isDigit
 				ifFalse: [ base := oldName ]
 				ifTrue: [
 					base := oldName copyUpToLast: $-.
-					branch := ((oldName copyAfterLast: $-) copyUpToLast: $.)
-						          copyAfter: $. ].
+					branch := ((oldName copyAfterLast: $-) copyUpToLast: $.) copyAfter: $. ].
 			counter ifNil: [
-				counter := (ancestry ancestors collect: [ :each |
+				counter := (ancestors collect: [ :each |
 					            each name last isDigit
 						            ifFalse: [ 0 ]
-						            ifTrue: [
-							            ('0' , (each name copyAfterLast: $.) select: [ :ea |
-								             ea isDigit ]) asNumber ] ]) max ] ].
+						            ifTrue: [ ('0' , (each name copyAfterLast: $.) select: [ :ea | ea isDigit ]) asNumber ] ]) max ] ].
 
-	branch isEmpty ifFalse: [ branch := '.' , branch ].
+	branch ifNotEmpty: [ branch := '.' , branch ].
 	counter := counter + 1.
 	^ base , '-' , branch , '.' , counter asString
 ]
@@ -471,13 +409,6 @@ MCWorkingCopy >> package [
 { #category : 'accessing' }
 MCWorkingCopy >> packageName [
 	^ package name
-]
-
-{ #category : 'accessing' }
-MCWorkingCopy >> packageNameWithStar [
-	^ modified
-		ifTrue: ['* ', self packageName]
-		ifFalse: [self packageName]
 ]
 
 { #category : 'printing' }
@@ -507,11 +438,6 @@ MCWorkingCopy >> repositoryGroup: aRepositoryGroup [
 	repositoryGroup := aRepositoryGroup
 ]
 
-{ #category : 'private' }
-MCWorkingCopy >> requestVersionNameAndMessageWithSuggestion: aString [
-	^ (MCVersionNameAndMessageRequest new suggestedName: aString) signal
-]
-
 { #category : 'accessing' }
 MCWorkingCopy >> requirePackage: aPackage [
 	(self requiredPackages includes: aPackage) ifFalse: [requiredPackages add: aPackage]
@@ -520,37 +446,6 @@ MCWorkingCopy >> requirePackage: aPackage [
 { #category : 'accessing' }
 MCWorkingCopy >> requiredPackages [
 	^ requiredPackages ifNil: [requiredPackages := OrderedCollection new]
-]
-
-{ #category : 'accessing' }
-MCWorkingCopy >> requiredPackagesParallelCollect: aBlock withMessage: aMessage [
-	"load the remote dependencies of all packages in parallel"
-
-	| packages progress results maxConcurrentConnections connectionThrottle addSemaphore |
-	
-	results := OrderedCollection new.
-	addSemaphore := Semaphore forMutualExclusion.
-	connectionThrottle := Semaphore new.
-	progress := 0.
-	maxConcurrentConnections := 5.
-	maxConcurrentConnections timesRepeat: [ connectionThrottle signal ]. "make room for maxConcurrentConnections"
-	packages := self requiredPackages.
-	
-	aMessage displayProgressFrom: 0 to: packages size during: [ :bar|
-		packages do: [ :aPackage| 
-			connectionThrottle wait. "no more than maxConcurrentConnections"
-			[|result|
-				[
-					result := aBlock value: aPackage.
-					addSemaphore critical: [ "update the non-threadsafe collection"
-						results add: result.
-						bar current: (progress := progress + 1)]
-				] ensure: [ connectionThrottle signal. "free a connection" ].
-			] fork ]].
-	
-	maxConcurrentConnections timesRepeat: [ connectionThrottle wait ]. "wait for the last connection to finish"
-	
-	^ results
 ]
 
 { #category : 'accessing' }

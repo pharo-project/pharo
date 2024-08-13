@@ -10,9 +10,9 @@ Class {
 		'dummy3',
 		'dummy4'
 	],
-	#category : 'General-Rules-Tests-Migrated',
+	#category : 'General-Rules-Tests-Potential Bugs',
 	#package : 'General-Rules-Tests',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'accessing' }

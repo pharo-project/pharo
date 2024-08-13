@@ -21,45 +21,33 @@ foo
 Class {
 	#name : 'ReGuardClauseRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Coding Idiom Violation',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'accessing' }
-ReGuardClauseRule >> group [
+ReGuardClauseRule class >> group [
 	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing' }
+ReGuardClauseRule class >> ruleName [
+	^ 'Replace single branch conditional with guard clause'
 ]
 
 { #category : 'initialization' }
 ReGuardClauseRule >> initialize [
 	super initialize.
 	self
-		addMatchingMethod: '`@methodName: `@args
-					| `@temps |
-					`@.Statements.
-					`@condition ifTrue: [| `@trueTemps | `.Statement1. `.Statement2. `@.Statements1]'
-		rewriteTo: '`@methodName: `@args
-					| `@temps `@trueTemps |
-					`@.Statements.
-					`@condition ifFalse: [^self].
+		replace: '`@condition ifTrue: [| `@trueTemps | `.Statement1. `.Statement2. `@.Statements1]'
+		with: '`@condition ifFalse: [^self].
 					`.Statement1.
 					`.Statement2.
 					`@.Statements1';
-		addMatchingMethod: '`@methodName: `@args
-					| `@temps |
-					`@.Statements.
-					`@condition ifFalse: [| `@falseTemps | `.Statement1. `.Statement2. `@.Statements1]'
-		rewriteTo: '`@methodName: `@args
-					| `@temps `@falseTemps |
-					`@.Statements.
-					`@condition ifTrue: [^self].
+		replace: '`@condition ifFalse: [| `@falseTemps | `.Statement1. `.Statement2. `@.Statements1]'
+		with: '`@condition ifTrue: [^self].
 					`.Statement1.
 					`.Statement2.
 					`@.Statements1'
-]
-
-{ #category : 'accessing' }
-ReGuardClauseRule >> name [
-	^ 'Replace single branch conditional with guard clause'
 ]

@@ -174,7 +174,7 @@ WorldState class >> pharoItemsOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Pharo)
 		label: 'Pharo';
-		icon: ((self iconNamed: #pharo) scaledToSize: (16 @ 16) scaledByDisplayScaleFactor);
+		iconName: #smallPharo;
 		order: 0;
 		with: [
 			(aBuilder group: #Saving)

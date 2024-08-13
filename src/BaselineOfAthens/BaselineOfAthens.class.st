@@ -7,9 +7,8 @@ Load type:
 Class {
 	#name : 'BaselineOfAthens',
 	#superclass : 'BaselineOf',
-	#category : 'BaselineOfAthens-Baseline',
-	#package : 'BaselineOfAthens',
-	#tag : 'Baseline'
+	#category : 'BaselineOfAthens',
+	#package : 'BaselineOfAthens'
 }
 
 { #category : 'baseline' }

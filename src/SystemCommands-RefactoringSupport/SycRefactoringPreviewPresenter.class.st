@@ -286,7 +286,7 @@ SycRefactoringPreviewPresenter >> updateTablePresenter [
 	"We get the environment to apply the changes from any element in the changes instance variable"
 	anEnvironment := self activeRBEnvironment.
 	aCompositeChange := RBCompositeRefactoryChange new
-		onSystemDictionary: anEnvironment.
+		onSystemEnvironment: anEnvironment.
 	changes do: [ :each | aCompositeChange addChange: each ].
 
 	table items: (self changesFrom: aCompositeChange forEnvironment: anEnvironment).

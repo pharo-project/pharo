@@ -26,11 +26,6 @@ MCVersionSorter >> addAllAncestorsOf: aVersionInfo to: aSet [
 ]
 
 { #category : 'adding' }
-MCVersionSorter >> addAllVersionInfos: aCollection [
-	aCollection do: [:ea | self addVersionInfo: ea]
-]
-
-{ #category : 'adding' }
 MCVersionSorter >> addToCurrentLayer: aVersionInfo [
 	| layer |
 	layer := layers at: depthIndex.
@@ -84,11 +79,12 @@ MCVersionSorter >> popLayer [
 
 { #category : 'private' }
 MCVersionSorter >> processVersionInfo: aVersionInfo [
-	(self addToCurrentLayer: aVersionInfo) ifTrue:
-		[self pushLayer.
-		(self knownAncestorsOf: aVersionInfo) do: [:ea | self processVersionInfo: ea].
-		self popLayer]
 
+	(self addToCurrentLayer: aVersionInfo) ifFalse: [ ^ self ].
+
+	self pushLayer.
+	(self knownAncestorsOf: aVersionInfo) do: [ :ea | self processVersionInfo: ea ].
+	self popLayer
 ]
 
 { #category : 'private' }

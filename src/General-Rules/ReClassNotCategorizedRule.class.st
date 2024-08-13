@@ -6,15 +6,36 @@ The goal is to have no classes that are shown as ""Uncategorized"" in the system
 Class {
 	#name : 'ReClassNotCategorizedRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing' }
 ReClassNotCategorizedRule class >> checksClass [
 
 	^ true
+]
+
+{ #category : 'accessing' }
+ReClassNotCategorizedRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+ReClassNotCategorizedRule class >> rationale [
+	^ 'Classes should be categorized with a tag if other class tags exist in the package. Use "Base" as default if you can not provide a better name.'
+]
+
+{ #category : 'accessing' }
+ReClassNotCategorizedRule class >> ruleName [
+	^ 'Uncategorized class - missing class tag'
+]
+
+{ #category : 'accessing' }
+ReClassNotCategorizedRule class >> severity [
+
+	^ #information
 ]
 
 { #category : 'accessing' }
@@ -30,26 +51,4 @@ ReClassNotCategorizedRule >> basicCheck: aClass [
 	aClass isMeta ifTrue: [ ^ false ].
 
 	^ aClass packageTag isRoot and: [ aClass package tags size > 1 ]
-]
-
-{ #category : 'accessing' }
-ReClassNotCategorizedRule >> group [
-	^ 'Design Flaws'
-]
-
-{ #category : 'accessing' }
-ReClassNotCategorizedRule >> name [
-
-	^ 'Uncategorized class - missing class tag'
-]
-
-{ #category : 'accessing' }
-ReClassNotCategorizedRule >> rationale [
-	^ 'Classes should be categorized with a tag if other class tags exist in the package. Use "Base" as default if you can not provide a better name.'
-]
-
-{ #category : 'accessing' }
-ReClassNotCategorizedRule >> severity [
-
-	^ #information
 ]

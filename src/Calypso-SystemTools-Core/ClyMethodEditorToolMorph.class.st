@@ -74,7 +74,7 @@ ClyMethodEditorToolMorph >> chooseClassForNewMethodIfNone: aBlock [
 			requestSingleObject: 'Where to install new method?'
 			from: (ClyAllClassesQuery as: ClyMethodVisibilityProviderAnnotation defaultHierarchy asQueryResult)
 			inScope: (ClyClassScope ofAll: targetClasses)]
-		on: CmdCommandAborted do: [:err | aBlock value ]
+		on: CmdCommandAborted, CmCommandAborted do: [:err | aBlock value ]
 ]
 
 { #category : 'events handling' }
@@ -127,7 +127,7 @@ ClyMethodEditorToolMorph >> formatSourceCode [
 
 { #category : 'building' }
 ClyMethodEditorToolMorph >> formatTextIfNeeded [
-	RBProgramNode formatterClass formatAsYouReadPolicy ifFalse: [ ^self].
+	ASTProgramNode formatterClass formatAsYouReadPolicy ifFalse: [ ^self].
 
 	textMorph formatSourceCode.
 	textModel clearUserEdits
@@ -230,13 +230,4 @@ ClyMethodEditorToolMorph >> textChanged: aTextChanged [
 	   stylerClasses: {ErrorNodeStyler . SemanticMessageIconStyler . SemanticWarningIconStyler };
 		styleText: textModel withAst: self currentEditedAST.
 	^ ast
-]
-
-{ #category : 'operations' }
-ClyMethodEditorToolMorph >> toggleExtendingPackage [
-
-	extendingPackage ifNotNil: [ ^extendingPackage := nil ].
-
-	extendingPackage := browser searchDialog
-		requestSingleObject: 'Choose package for method' from: ClyAllPackagesQuery sorted
 ]

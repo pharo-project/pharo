@@ -17,7 +17,7 @@ ReSemanticsOfCompositeExtractMethodRefactoringTest >> extractSource: sourceToExt
 
 	^ ReCompositeExtractMethodRefactoring new
 		  model: model;
-		  extract: sourceToExtract
+		  extractSource: sourceToExtract
 		  from: method selector
 		  to: newSelector
 		  in: class name

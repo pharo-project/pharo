@@ -1,3 +1,7 @@
+"
+Mock for testing debug point observer.
+It bypasses the system observer for test purposes.
+"
 Class {
 	#name : 'DummyDebugPointObserver',
 	#superclass : 'Object',

@@ -5,21 +5,26 @@ A prior conversion to an Array or OrderedCollection is not necessary when adding
 Class {
 	#name : 'ReAsOrderedCollectionNotNeededRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
+
+{ #category : 'accessing' }
+ReAsOrderedCollectionNotNeededRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
+ReAsOrderedCollectionNotNeededRule class >> ruleName [
+	^ '#asOrderedCollection/#asArray not needed'
+]
 
 { #category : 'accessing' }
 ReAsOrderedCollectionNotNeededRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
 	^'AsOrderedCollectionNotNeededRule'
-]
-
-{ #category : 'accessing' }
-ReAsOrderedCollectionNotNeededRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : 'initialization' }
@@ -32,9 +37,4 @@ ReAsOrderedCollectionNotNeededRule >> initialize [
 					| baseString |
 					baseString := '``@receiver ' , collectionMessage , ' ``@arg '.
 					self replace: baseString , conversionMessage with: baseString ] ]
-]
-
-{ #category : 'accessing' }
-ReAsOrderedCollectionNotNeededRule >> name [
-	^ '#asOrderedCollection/#asArray not needed'
 ]

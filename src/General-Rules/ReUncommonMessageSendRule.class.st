@@ -6,14 +6,24 @@ Notice, problems of this kind will most likely also cause RBSentNotImplementedRu
 Class {
 	#name : 'ReUncommonMessageSendRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'testing' }
 ReUncommonMessageSendRule class >> checksMethod [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReUncommonMessageSendRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+ReUncommonMessageSendRule class >> ruleName [
+	^ 'Uncommon message send'
 ]
 
 { #category : 'accessing' }
@@ -38,14 +48,4 @@ ReUncommonMessageSendRule >> check: aMethod forCritiquesDo: aCriticBlock [
 ReUncommonMessageSendRule >> commonLiterals [
 
 	^ #(#self #super #thisContext #true #false #nil)
-]
-
-{ #category : 'accessing' }
-ReUncommonMessageSendRule >> group [
-	^ 'Potential Bugs'
-]
-
-{ #category : 'accessing' }
-ReUncommonMessageSendRule >> name [
-	^ 'Uncommon message send'
 ]

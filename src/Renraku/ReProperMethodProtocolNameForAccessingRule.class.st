@@ -4,9 +4,9 @@ Rule to favour 'accessing' method protocol over similar ones (like 'accessor' or
 Class {
 	#name : 'ReProperMethodProtocolNameForAccessingRule',
 	#superclass : 'ReProperMethodProtocolNameRule',
-	#category : 'Renraku-Rules',
+	#category : 'Renraku-Coding Idiom Violation',
 	#package : 'Renraku',
-	#tag : 'Rules'
+	#tag : 'Coding Idiom Violation'
 }
 
 { #category : 'idioms' }

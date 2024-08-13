@@ -4,14 +4,24 @@ Check that the number of addDependent: message sends in a class is less than or 
 Class {
 	#name : 'ReAddRemoveDependentsRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Potential Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Potential Bugs'
 }
 
 { #category : 'testing' }
 ReAddRemoveDependentsRule class >> checksClass [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReAddRemoveDependentsRule class >> group [
+	^ 'Potential Bugs'
+]
+
+{ #category : 'accessing' }
+ReAddRemoveDependentsRule class >> ruleName [
+	^ 'Number of addDependent: messages > removeDependent:'
 ]
 
 { #category : 'accessing' }
@@ -33,14 +43,4 @@ ReAddRemoveDependentsRule >> basicCheck: aClass [
 				addSends := addSends + (messages count: [ :each | each selector == #addDependent:]).
 				removeSends := removeSends + (messages count: [ :each | each selector == #removeDependent:])].
 	^ addSends > removeSends
-]
-
-{ #category : 'accessing' }
-ReAddRemoveDependentsRule >> group [
-	^ 'Potential Bugs'
-]
-
-{ #category : 'accessing' }
-ReAddRemoveDependentsRule >> name [
-	^ 'Number of addDependent: messages > removeDependent:'
 ]

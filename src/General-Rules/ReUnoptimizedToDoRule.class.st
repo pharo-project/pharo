@@ -10,10 +10,20 @@ can be more efficiently expressed as
 Class {
 	#name : 'ReUnoptimizedToDoRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
+
+{ #category : 'accessing' }
+ReUnoptimizedToDoRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
+ReUnoptimizedToDoRule class >> ruleName [
+	^ 'Uses (to:)do: instead of to:do:'
+]
 
 { #category : 'accessing' }
 ReUnoptimizedToDoRule class >> uniqueIdentifierName [
@@ -22,18 +32,8 @@ ReUnoptimizedToDoRule class >> uniqueIdentifierName [
 	^'UnoptimizedToDoRule'
 ]
 
-{ #category : 'accessing' }
-ReUnoptimizedToDoRule >> group [
-	^ 'Optimization'
-]
-
 { #category : 'initialization' }
 ReUnoptimizedToDoRule >> initialize [
 	super initialize.
 	self matches: '(`@a to: `@b) do: `@c'
-]
-
-{ #category : 'accessing' }
-ReUnoptimizedToDoRule >> name [
-	^ 'Uses (to:)do: instead of to:do:'
 ]

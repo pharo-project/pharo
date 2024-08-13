@@ -6,14 +6,29 @@ Furthermore, the methods #new and #initialize are ignored once they are often ov
 Class {
 	#name : 'ReEquivalentSuperclassMethodsRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing' }
 ReEquivalentSuperclassMethodsRule class >> checksMethod [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReEquivalentSuperclassMethodsRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+ReEquivalentSuperclassMethodsRule class >> rationale [
+	^ 'Check for methods that are equivalent to their superclass methods.'
+]
+
+{ #category : 'accessing' }
+ReEquivalentSuperclassMethodsRule class >> ruleName [
+	^ 'Methods equivalently defined in superclass'
 ]
 
 { #category : 'accessing' }
@@ -34,23 +49,8 @@ ReEquivalentSuperclassMethodsRule >> basicCheck: aMethod [
 ]
 
 { #category : 'accessing' }
-ReEquivalentSuperclassMethodsRule >> group [
-	^ 'Design Flaws'
-]
-
-{ #category : 'accessing' }
 ReEquivalentSuperclassMethodsRule >> ignoredSelectors [
 	"These methods are often overridden for compatilbity with other platforms."
 
 	^ #(new initialize)
-]
-
-{ #category : 'accessing' }
-ReEquivalentSuperclassMethodsRule >> name [
-	^ 'Methods equivalently defined in superclass'
-]
-
-{ #category : 'accessing' }
-ReEquivalentSuperclassMethodsRule >> rationale [
-	^ 'Check for methods that are equivalent to their superclass methods.'
 ]

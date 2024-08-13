@@ -4,10 +4,25 @@ This smell arises when a statement such as x := x is found. This statement has n
 Class {
 	#name : 'ReAssignmentWithoutEffectRule',
 	#superclass : 'ReNodeRewriteRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
+
+{ #category : 'accessing' }
+ReAssignmentWithoutEffectRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
+ReAssignmentWithoutEffectRule class >> ruleName [
+	^ 'Assignment has no effect'
+]
+
+{ #category : 'accessing' }
+ReAssignmentWithoutEffectRule class >> severity [
+	^ #information
+]
 
 { #category : 'accessing' }
 ReAssignmentWithoutEffectRule class >> uniqueIdentifierName [
@@ -16,23 +31,8 @@ ReAssignmentWithoutEffectRule class >> uniqueIdentifierName [
 	^'AssignmentWithoutEffectRule'
 ]
 
-{ #category : 'accessing' }
-ReAssignmentWithoutEffectRule >> group [
-	^ 'Optimization'
-]
-
 { #category : 'initialization' }
 ReAssignmentWithoutEffectRule >> initialize [
 	super initialize.
 	self  replace: 	'`var := `var' with: ''
-]
-
-{ #category : 'accessing' }
-ReAssignmentWithoutEffectRule >> name [
-	^ 'Assignment has no effect'
-]
-
-{ #category : 'accessing' }
-ReAssignmentWithoutEffectRule >> severity [
-	^ #information
 ]

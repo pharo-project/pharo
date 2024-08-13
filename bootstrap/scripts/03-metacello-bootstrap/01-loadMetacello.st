@@ -34,9 +34,6 @@ MCFileTreeFileSystemUtils initialize.
 ConfigurationOf initialize.
 MetacelloPlatform initialize.
 
-"Init deprecated aliases for Pharo 12. To remove in Pharo 13"
-{ MetacelloPlatform . MetacelloProject . MetacelloProjectSpec . MetacelloTarget . MetacelloVersion . MetacelloVersionSpec } do: [ :class | class initialize ].
-
 STONWriter initialize.
 
 MCGitHubRepository initialize.

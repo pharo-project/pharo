@@ -34,6 +34,12 @@ ReProperMethodProtocolNameRule class >> goodMethodProtocolName [
 	^self protocolIdiom key
 ]
 
+{ #category : 'accessing' }
+ReProperMethodProtocolNameRule class >> group [
+
+	^ 'Coding Idiom Violation'
+]
+
 { #category : 'testing' }
 ReProperMethodProtocolNameRule class >> isAbstract [
 
@@ -45,6 +51,18 @@ ReProperMethodProtocolNameRule class >> protocolIdiom [
 	"Subclasses should override to return an association between a wished protocol and an array of protocol names that are not so good."
 
 	^ self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+ReProperMethodProtocolNameRule class >> rationale [
+
+	^ 'Check if the method protocol name is appropriate and fulfils common expectations.'
+]
+
+{ #category : 'accessing' }
+ReProperMethodProtocolNameRule class >> ruleName [
+
+	^ 'Method categorization: use ''' , self goodMethodProtocolName , ''' as protocol name instead of ''' , self badMethodProtocolNames asString , ''''
 ]
 
 { #category : 'private - utilities' }
@@ -78,12 +96,6 @@ ReProperMethodProtocolNameRule >> critiqueFor: aMethod [
 ]
 
 { #category : 'accessing' }
-ReProperMethodProtocolNameRule >> group [
-
-	^ 'Coding Idiom Violation'
-]
-
-{ #category : 'accessing' }
 ReProperMethodProtocolNameRule >> methodProtocolName [
 
 	^ methodProtocolName
@@ -96,18 +108,9 @@ ReProperMethodProtocolNameRule >> methodProtocolName: anObject [
 ]
 
 { #category : 'accessing' }
-ReProperMethodProtocolNameRule >> name [
+ReProperMethodProtocolNameRule >> ruleName [
 
-	^ 'Method categorization: use '''
-		  	, self class goodMethodProtocolName
-  	  		, ''' as protocol name instead of '''
-	  		, self methodProtocolName asString , ''''
-]
-
-{ #category : 'accessing' }
-ReProperMethodProtocolNameRule >> rationale [
-
-	^ 'Check if the method protocol name is appropriate and fulfils common expectations.'
+	^ 'Method categorization: use ''' , self class goodMethodProtocolName , ''' as protocol name instead of ''' , self methodProtocolName asString , ''''
 ]
 
 { #category : 'private - utilities' }

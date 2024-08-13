@@ -4,14 +4,29 @@ Pharo code should not contain linefeed characters.
 Class {
 	#name : 'ReMethodSourceContainsLinefeedsRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Bugs',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Bugs'
 }
 
 { #category : 'testing' }
 ReMethodSourceContainsLinefeedsRule class >> checksMethod [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReMethodSourceContainsLinefeedsRule class >> group [
+	^ 'Bugs'
+]
+
+{ #category : 'accessing' }
+ReMethodSourceContainsLinefeedsRule class >> ruleName [
+	^ 'Method source contains linefeeds'
+]
+
+{ #category : 'accessing' }
+ReMethodSourceContainsLinefeedsRule class >> severity [
+	^ #error
 ]
 
 { #category : 'accessing' }
@@ -33,19 +48,4 @@ ReMethodSourceContainsLinefeedsRule >> check: aMethod forCritiquesDo: aCriticBlo
 				interval: lfInterval)
 			by: self
 			hint: 'lf') ]
-]
-
-{ #category : 'accessing' }
-ReMethodSourceContainsLinefeedsRule >> group [
-	^ 'Bugs'
-]
-
-{ #category : 'accessing' }
-ReMethodSourceContainsLinefeedsRule >> name [
-	^ 'Method source contains linefeeds'
-]
-
-{ #category : 'accessing' }
-ReMethodSourceContainsLinefeedsRule >> severity [
-	^ #error
 ]

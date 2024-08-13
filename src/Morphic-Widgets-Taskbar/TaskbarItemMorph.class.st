@@ -59,14 +59,16 @@ TaskbarItemMorph >> initializeAnnouncements [
 { #category : 'initialization' }
 TaskbarItemMorph >> initializeFor: aTaskbar [
 	| lm lab labSize |
+
 	labSize := self labelSizeIn: aTaskbar.
 	lab := self labelOfSize: labSize.
 	self addEmphaseTo: lab.
 	lm := self theme
 		newRowIn: aTaskbar
 		for:
-			{((self iconFormSetNamed: self model taskbarIconName) ifNil: [ ^ nil ]) asMorph.
+			{ (self model taskbarIcon ifNil: [ ^ nil ]) asMorph.
 			lab}.
+
 	lm cellInset: 2.
 	self
 		label: lm font: self theme buttonFont;

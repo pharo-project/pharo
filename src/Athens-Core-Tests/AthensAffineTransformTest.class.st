@@ -9,7 +9,8 @@ Class {
 	#tag : 'Transforms'
 }
 
-{ #category : 'tests' }
+{ #category : 'accessing' }
 AthensAffineTransformTest >> transformClass [
+
 	^ AthensAffineTransform
 ]

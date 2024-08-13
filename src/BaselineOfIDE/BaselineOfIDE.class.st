@@ -33,8 +33,9 @@ Class {
 	#classVars : [
 		'Initialized'
 	],
-	#category : 'BaselineOfIDE',
-	#package : 'BaselineOfIDE'
+	#category : 'BaselineOfIDE-Baseline',
+	#package : 'BaselineOfIDE',
+	#tag : 'Baseline'
 }
 
 { #category : 'baselines' }
@@ -133,6 +134,8 @@ BaselineOfIDE >> baseline: spec [
 		self documentBrowserCore: spec.
 		self welcomeBrowser: spec.
 		self roassal: spec.
+		
+		spec package: 'DarkBlueTheme'.
 
 		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
 
@@ -282,9 +285,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	KMRepository reset.
 	Morph shortcutsHandler: KMShortcutHandler new.
 
-	MCSaveVersionDialog previousMessages add: String new.
-
-	RBProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [ RBSimpleFormatter ]).
+	ASTProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [ RBSimpleFormatter ]).
 
 	Color flushCache.
 
@@ -295,7 +296,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	RubAbstractTextArea highlightMessageSend: true.
 
-	PharoLightTheme beCurrent.
+	DarkBlueTheme beCurrent.
 
 	SDL_Event initialize.
 

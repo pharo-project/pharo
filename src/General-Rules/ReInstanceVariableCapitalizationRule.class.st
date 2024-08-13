@@ -4,14 +4,24 @@ Instance variable names on the instance- and class-side should start with a lowe
 Class {
 	#name : 'ReInstanceVariableCapitalizationRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Style',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Style'
 }
 
 { #category : 'testing-interest' }
 ReInstanceVariableCapitalizationRule class >> checksClass [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReInstanceVariableCapitalizationRule class >> group [
+	^ 'Style'
+]
+
+{ #category : 'accessing' }
+ReInstanceVariableCapitalizationRule class >> ruleName [
+	^ 'Instance variable capitalized'
 ]
 
 { #category : 'running' }
@@ -41,14 +51,4 @@ ReInstanceVariableCapitalizationRule >> critiqueFor: aClass about: aVarName [
 				in: aClass).
 
 	^ crit
-]
-
-{ #category : 'accessing' }
-ReInstanceVariableCapitalizationRule >> group [
-	^ 'Style'
-]
-
-{ #category : 'accessing' }
-ReInstanceVariableCapitalizationRule >> name [
-	^ 'Instance variable capitalized'
 ]

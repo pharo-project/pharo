@@ -62,7 +62,6 @@ Class {
 
 { #category : 'class initialization' }
 Package class >> initialize [
-	self deprecatedAliases: { #RPackage }.
 	Properties
 		ifNil: [ self initializeProperties ]
 		ifNotNil: [
@@ -398,15 +397,21 @@ Package >> isEmpty [
 ]
 
 { #category : 'testing' }
+Package >> isPackage [
+
+	^ true
+]
+
+{ #category : 'testing' }
 Package >> isTestPackage [
 	"1. Test package ends with suffix -Tests. Suffix is case sensitive.
 	 2. Or test package contains '-Tests-' in middle.
 	Some examples: "
 
-	"(RPackage named: 'MockPackage-Tests') isTestPackage >>> true"
-	"(RPackage named: 'MockPackage-tests') isTestPackage >>> true"
-	"(RPackage named: 'MockPackage') isTestPackage >>> false"
-	"(RPackage named: 'MockPackage-Tests-Package') isTestPackage >>> true"
+	"(Package named: 'MockPackage-Tests') isTestPackage >>> true"
+	"(Package named: 'MockPackage-tests') isTestPackage >>> true"
+	"(Package named: 'MockPackage') isTestPackage >>> false"
+	"(Package named: 'MockPackage-Tests-Package') isTestPackage >>> true"
 
 	^ (self name endsWith: '-Tests' caseSensitive: false) or: [ self name includesSubstring: '-Tests-' caseSensitive: false ]
 ]

@@ -2143,9 +2143,15 @@ UITheme >> menuBorderWidth [
 
 { #category : 'label-styles' }
 UITheme >> menuCloseForm [
-	"Answer the form to use for the close button of a menu."
 
-	^self windowCloseForm
+	^self menuCloseFormSet asForm
+]
+
+{ #category : 'label-styles' }
+UITheme >> menuCloseFormSet [
+	"Answer the form set to use for the close button of a menu."
+
+	^self windowCloseFormSet
 ]
 
 { #category : 'accessing - colors' }

@@ -4,19 +4,19 @@ Class side #reset method should be in 'class initialization' protocol
 Class {
 	#name : 'ReClassSideResetMethodProtocolRule',
 	#superclass : 'ReProperClassMethodProtocolRule',
-	#category : 'Renraku-Rules',
+	#category : 'Renraku-Clean Code',
 	#package : 'Renraku',
-	#tag : 'Rules'
+	#tag : 'Clean Code'
 }
 
-{ #category : 'accessing - defaults' }
-ReClassSideResetMethodProtocolRule >> protocolName [
+{ #category : 'accessing' }
+ReClassSideResetMethodProtocolRule class >> protocolName [
 
 	^ 'class initialization'
 ]
 
-{ #category : 'accessing - defaults' }
-ReClassSideResetMethodProtocolRule >> selector [
+{ #category : 'accessing' }
+ReClassSideResetMethodProtocolRule class >> selector [
 
 	^ #reset
 ]

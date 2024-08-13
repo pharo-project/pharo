@@ -9,7 +9,7 @@ semanticScope <SemapticScope> defines the meaning of the code which is compiled 
 logged <Boolean> true if the sources will be logged in external logging system (change file, epicea, ...)
 interactive <Boolean> Interactive mode is typically used in the IDE (showing errors when compiling code inlined,  pop-ups for some errors/warnings, ...), non-interactive mode is used for headless & code loading to compile code by logging into stdout or Transcript but no interaction required by the user.
 options <Set of Symbols> See optionsDescription method comment class side
-environment <SystemDictionary> place to look for literal variables (Globals for instance)
+environment <SystemEnvironment> place to look for literal variables (Globals for instance)
 
 "
 Class {

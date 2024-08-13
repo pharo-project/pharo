@@ -4,10 +4,20 @@ Checks for repeated literal equality tests that should rather be implemented as 
 Class {
 	#name : 'ReSearchingLiteralRule',
 	#superclass : 'ReNodeMatchRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
+
+{ #category : 'accessing' }
+ReSearchingLiteralRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
+ReSearchingLiteralRule class >> ruleName [
+	^ 'Uses or instead of a searching literal'
+]
 
 { #category : 'accessing' }
 ReSearchingLiteralRule class >> uniqueIdentifierName [
@@ -21,11 +31,6 @@ ReSearchingLiteralRule >> afterCheck: aNode mappings: mappingDict [
 	^ self
 		isSearchingLiteralExpression: aNode
 		for: (mappingDict at: '``@object')
-]
-
-{ #category : 'accessing' }
-ReSearchingLiteralRule >> group [
-	^ 'Optimization'
 ]
 
 { #category : 'initialization' }
@@ -67,9 +72,4 @@ ReSearchingLiteralRule >> isSearchingLiteralExpression: aSearchingNode for: anOb
 		for: anObjectNode) and:
 				[self isSearchingLiteralExpression: argument body statements first
 					for: anObjectNode]
-]
-
-{ #category : 'accessing' }
-ReSearchingLiteralRule >> name [
-	^ 'Uses or instead of a searching literal'
 ]

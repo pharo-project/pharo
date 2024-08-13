@@ -1,9 +1,9 @@
 Class {
 	#name : 'ReSuperWithoutSendTest',
 	#superclass : 'TestCase',
-	#category : 'General-Rules-Tests-Migrated',
+	#category : 'General-Rules-Tests-Design Flaws',
 	#package : 'General-Rules-Tests',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'tests' }

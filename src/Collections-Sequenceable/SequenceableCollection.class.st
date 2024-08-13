@@ -1272,6 +1272,16 @@ SequenceableCollection >> indexOf: anElement ifAbsent: exceptionBlock [
 ]
 
 { #category : 'accessing' }
+SequenceableCollection >> indexOf: anElement ifAbsent: exceptionBlock using: comparisonBlock [
+	"Answer the index of the first occurrence of anElement within the receiver. If the receiver does not contain anElement, answer the
+	result of evaluating the argument, exceptionBlock."	
+	"	(#(a b c d e) indexOf: #c ifAbsent: 7 using: [ : a : b | a = b ]) >>> 3. "
+	" 	(#(a b c d e) indexOf: #x ifAbsent: 7 using: [ : a : b | a = b ]) >>> 7 "
+
+	^ self indexOf: anElement startingAt: 1 ifAbsent: exceptionBlock using: comparisonBlock
+]
+
+{ #category : 'accessing' }
 SequenceableCollection >> indexOf: anElement startingAt: start [
        "Answer the index of the first occurrence of anElement after start within the receiver. If the receiver does not contain anElement, answer 0."
 	"(#(a b c d e) indexOf: #c startingAt: 2) >>> 3"
@@ -1291,6 +1301,21 @@ SequenceableCollection >> indexOf: anElement startingAt: start ifAbsent: excepti
 	start to: self size do:
 		[:index |
 		(self at: index) = anElement ifTrue: [^ index]].
+	^ exceptionBlock value
+]
+
+{ #category : 'accessing' }
+SequenceableCollection >> indexOf: anElement startingAt: start ifAbsent: exceptionBlock using: comparisonBlock [
+	"Answer the index of the first occurrence of anElement after start
+	within the receiver. If the receiver does not contain anElement,
+	answer the 	result of evaluating the argument, exceptionBlock."
+	"	(#(a b c d e) indexOf: #c startingAt: 2 ifAbsent: 7 using: [ : a : b | a = b ]) >>> 3. "
+	" 	(#(a b c d e) indexOf: #x startingAt: 2 ifAbsent: 7 using: [ : a : b | a = b ]) >>> 7 "
+
+
+	start to: self size do: [ : index | 
+		(comparisonBlock value: (self at: index) value: anElement) 
+			ifTrue: [ ^ index ] ].
 	^ exceptionBlock value
 ]
 

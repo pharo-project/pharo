@@ -7,9 +7,9 @@ Class {
 	#classVars : [
 		'CriticizeFinalDotInMethodBody'
 	],
-	#category : 'Renraku-Rules',
+	#category : 'Renraku-Clean Code',
 	#package : 'Renraku',
-	#tag : 'Rules'
+	#tag : 'Clean Code'
 }
 
 { #category : 'testing - interest' }
@@ -45,11 +45,28 @@ ReCompactSourceCodeRule class >> criticizeFinalDotInMethodBody: aBoolean [
 	CriticizeFinalDotInMethodBody := aBoolean
 ]
 
+{ #category : 'accessing' }
+ReCompactSourceCodeRule class >> group [
+
+	^ 'Clean Code'
+]
+
 { #category : 'class initialization' }
 ReCompactSourceCodeRule class >> initialize [
 
 	CriticizeFinalDotInMethodBody := true.
 	self enabled: false
+]
+
+{ #category : 'accessing' }
+ReCompactSourceCodeRule class >> ruleName [
+	^ 'Unnecessary characters found in method body'
+]
+
+{ #category : 'accessing' }
+ReCompactSourceCodeRule class >> severity [
+
+	^ #information
 ]
 
 { #category : 'running' }
@@ -69,26 +86,8 @@ ReCompactSourceCodeRule >> check: aMethod forCritiquesDo: aCriticBlock [
 					by: self)  ]
 ]
 
-{ #category : 'accessing' }
-ReCompactSourceCodeRule >> group [
-
-	^ 'Clean Code'
-]
-
-{ #category : 'accessing' }
-ReCompactSourceCodeRule >> name [
-
-	^ 'Unnecessary characters found in method body'
-]
-
 { #category : 'testing' }
 ReCompactSourceCodeRule >> providesChange [
 
 	^ true
-]
-
-{ #category : 'accessing' }
-ReCompactSourceCodeRule >> severity [
-
-	^ #information
 ]

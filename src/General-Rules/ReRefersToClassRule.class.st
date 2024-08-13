@@ -5,14 +5,29 @@ However we cannot systematically replace Class reference by self class or self b
 Class {
 	#name : 'ReRefersToClassRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Design Flaws',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
 
 { #category : 'testing' }
 ReRefersToClassRule class >> checksMethod [
 	^ true
+]
+
+{ #category : 'accessing' }
+ReRefersToClassRule class >> group [
+	^ 'Design Flaws'
+]
+
+{ #category : 'accessing' }
+ReRefersToClassRule class >> rationale [
+	^ 'Checks for direct reference to classes themselves.'
+]
+
+{ #category : 'accessing' }
+ReRefersToClassRule class >> ruleName [
+	^ 'Refers to class name instead of "self class"'
 ]
 
 { #category : 'accessing' }
@@ -37,19 +52,4 @@ ReRefersToClassRule >> check: aMethod forCritiquesDo: aCriticBlock [
 
 	problemLiterals do: [ :literal |
 			aCriticBlock cull: (self createTrivialCritiqueOn: aMethod intervalOf: literal hint:literal name )]
-]
-
-{ #category : 'accessing' }
-ReRefersToClassRule >> group [
-	^ 'Design Flaws'
-]
-
-{ #category : 'accessing' }
-ReRefersToClassRule >> name [
-	^ 'Refers to class name instead of "self class"'
-]
-
-{ #category : 'accessing' }
-ReRefersToClassRule >> rationale [
-	^ 'Checks for direct reference to classes themselves.'
 ]

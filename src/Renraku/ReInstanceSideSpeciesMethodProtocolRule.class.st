@@ -4,19 +4,19 @@ Instance side #species method should be in 'private' protocol
 Class {
 	#name : 'ReInstanceSideSpeciesMethodProtocolRule',
 	#superclass : 'ReProperInstanceMethodProtocolRule',
-	#category : 'Renraku-Rules',
+	#category : 'Renraku-Clean Code',
 	#package : 'Renraku',
-	#tag : 'Rules'
+	#tag : 'Clean Code'
 }
 
-{ #category : 'accessing - defaults' }
-ReInstanceSideSpeciesMethodProtocolRule >> protocolName [
+{ #category : 'accessing' }
+ReInstanceSideSpeciesMethodProtocolRule class >> protocolName [
 
 	^ 'private'
 ]
 
-{ #category : 'accessing - defaults' }
-ReInstanceSideSpeciesMethodProtocolRule >> selector [
+{ #category : 'accessing' }
+ReInstanceSideSpeciesMethodProtocolRule class >> selector [
 
 	^ #species
 ]

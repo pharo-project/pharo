@@ -58,6 +58,9 @@ Of course this is not the best way to do it (parser needs to be adapted to do th
 Class {
 	#name : 'FFIArray',
 	#superclass : 'FFIExternalArray',
+	#classVars : [
+		'DefinedTypes'
+	],
 	#classInstVars : [
 		'type',
 		'numberOfElements'
@@ -81,6 +84,15 @@ FFIArray class >> externalNew [
 		yourself
 ]
 
+{ #category : 'private' }
+FFIArray class >> findOrCreateType: aTypeName size: aSize [
+
+	DefinedTypes ifNil: [ DefinedTypes := SmallDictionary new ].
+	^ (DefinedTypes 
+		at: aTypeName ifAbsentPut: [ SmallDictionary new ])
+		at: aSize ifAbsentPut: [ self newArrayTypeOf: aTypeName size: aSize ]
+]
+
 { #category : 'instance creation' }
 FFIArray class >> fromHandle: aHandle [
 	^ self basicNew
@@ -95,11 +107,12 @@ FFIArray class >> new [
 		yourself
 ]
 
-{ #category : 'class factory' }
-FFIArray class >> newArrayTypeOf: aTypeName size: elements [
+{ #category : 'private' }
+FFIArray class >> newArrayTypeOf: aTypeName size: aSize [
+
 	^ FFIArray newAnonymousSubclass
 		type: (FFIExternalType resolveType: aTypeName)
-		size: elements
+		size: aSize
 ]
 
 { #category : 'private' }
@@ -108,10 +121,11 @@ FFIArray class >> numberOfElements [
 ]
 
 { #category : 'class factory' }
-FFIArray class >> ofType: aTypeName size: elements [
-	^ FFIArray newAnonymousSubclass
-		type: (FFIExternalType resolveType: aTypeName)
-		size: elements
+FFIArray class >> ofType: aTypeName size: aSize [
+
+	^ self 
+		findOrCreateType: aTypeName 
+		size: aSize
 ]
 
 { #category : 'private' }

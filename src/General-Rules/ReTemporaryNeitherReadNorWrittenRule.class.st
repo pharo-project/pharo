@@ -4,10 +4,20 @@ There is something wrong in the method as you have variables that are either nor
 Class {
 	#name : 'ReTemporaryNeitherReadNorWrittenRule',
 	#superclass : 'ReNodeBasedRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
+
+{ #category : 'accessing' }
+ReTemporaryNeitherReadNorWrittenRule class >> group [
+	^ 'Optimization'
+]
+
+{ #category : 'accessing' }
+ReTemporaryNeitherReadNorWrittenRule class >> ruleName [
+	^ 'Temporary variables not read or not written'
+]
 
 { #category : 'running' }
 ReTemporaryNeitherReadNorWrittenRule >> check: aNode forCritiquesDo: aBlock [
@@ -15,14 +25,4 @@ ReTemporaryNeitherReadNorWrittenRule >> check: aNode forCritiquesDo: aBlock [
 	aNode isDefinition ifFalse: [ ^ self ].
 	aNode variable isReferenced ifFalse: [
 		aBlock cull: (self critiqueFor: aNode) ]
-]
-
-{ #category : 'accessing' }
-ReTemporaryNeitherReadNorWrittenRule >> group [
-	^ 'Optimization'
-]
-
-{ #category : 'accessing' }
-ReTemporaryNeitherReadNorWrittenRule >> name [
-	^ 'Temporary variables not read or not written'
 ]

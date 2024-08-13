@@ -10,17 +10,6 @@ Class {
 	#tag : 'Quartz'
 }
 
-{ #category : 'finalization' }
-AthensQuartzSurface class >> finalizeResourceData: data [
-	| handle contextHandle |
-	handle := data first.
-	"	id := data second.  - id is not used "
-	contextHandle := data third.
-
-	self destroyContextHandle: contextHandle value.
-	self destroySurfaceHandle: handle value
-]
-
 { #category : 'primitives' }
 AthensQuartzSurface class >> primImage: aFormat width: aWidth height: aHeight [
 "Creates a Quartz surface backed by a CGBitmap. The surface is created using the Device RGB (or Device Gray, for A8) color space. All Cairo operations, including those that require software rendering, will succeed on this surface. "
@@ -34,4 +23,10 @@ AthensQuartzSurface class >> registerSurface: quartzSurface [
 	"we cannot use SurfacePlugin for quartz surfaces"
 
 	^ nil
+]
+
+{ #category : 'private' }
+AthensQuartzSurface class >> unregisterSurfaceWithId: id [
+
+	
 ]

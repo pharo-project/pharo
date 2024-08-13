@@ -7,15 +7,25 @@ Initialize should only use variables defined in #instanceVariablesToKeep.
 Class {
 	#name : 'ReTestCaseShouldNotUseInitializeRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Migrated',
+	#category : 'General-Rules-Clean Code',
 	#package : 'General-Rules',
-	#tag : 'Migrated'
+	#tag : 'Clean Code'
 }
 
 { #category : 'testing-interest' }
 ReTestCaseShouldNotUseInitializeRule class >> checksClass [
 
 	^ true
+]
+
+{ #category : 'accessing' }
+ReTestCaseShouldNotUseInitializeRule class >> group [
+	^ 'Clean Code'
+]
+
+{ #category : 'accessing' }
+ReTestCaseShouldNotUseInitializeRule class >> ruleName [
+	^ 'Tests should not use initialize'
 ]
 
 { #category : 'accessing' }
@@ -36,15 +46,4 @@ ReTestCaseShouldNotUseInitializeRule >> basicCheck: aClass [
 	expectedVariables := aClass new instanceVariablesToKeep.
 
 	^ alteredVariables anySatisfy: [ :e | (expectedVariables includes: e name) not ]
-]
-
-{ #category : 'accessing' }
-ReTestCaseShouldNotUseInitializeRule >> group [
-	^ 'Clean Code'
-]
-
-{ #category : 'accessing' }
-ReTestCaseShouldNotUseInitializeRule >> name [
-
-	^ 'Tests should not use initialize'
 ]

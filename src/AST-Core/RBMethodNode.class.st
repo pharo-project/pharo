@@ -19,7 +19,7 @@ Instance Variables:
 "
 Class {
 	#name : 'RBMethodNode',
-	#superclass : 'RBProgramNode',
+	#superclass : 'ASTProgramNode',
 	#instVars : [
 		'scope',
 		'selector',

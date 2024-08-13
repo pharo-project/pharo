@@ -9,6 +9,19 @@ Class {
 	#package : 'Calypso-SystemPlugins-Critic-Browser'
 }
 
+{ #category : 'strings' }
+ClyShowCritiqueDetailsCommand >> critiqueDescription [
+
+	^ String streamContents: [ :s |
+		  s
+			  nextPutAll: '[';
+			  nextPutAll: critique rule group;
+			  nextPutAll: ']';
+			  cr;
+			  cr;
+			  nextPutAll: critique description ]
+]
+
 { #category : 'accessing' }
 ClyShowCritiqueDetailsCommand >> defaultMenuIconName [
 	^#smallQuestion
@@ -22,5 +35,10 @@ ClyShowCritiqueDetailsCommand >> description [
 { #category : 'execution' }
 ClyShowCritiqueDetailsCommand >> execute [
 
-	self morphicUIManager longMessage: critique description title: critique title
+	self specUIManager
+		title: critique title;
+		label: self critiqueDescription;
+		acceptLabel: 'close';
+		extent: 500 @ 500;
+		openDialog
 ]

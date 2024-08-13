@@ -1,16 +1,10 @@
 Class {
 	#name : 'ReAsClassRuleTest',
 	#superclass : 'ReAbstractRuleTestCase',
-	#category : 'General-Rules-Tests-Migrated',
+	#category : 'General-Rules-Tests-Design Flaws',
 	#package : 'General-Rules-Tests',
-	#tag : 'Migrated'
+	#tag : 'Design Flaws'
 }
-
-{ #category : 'test-help' }
-ReAsClassRuleTest >> methodWithAsClass [
-
-	self class asClass
-]
 
 { #category : 'test-help' }
 ReAsClassRuleTest >> methodWithAsClassIfAbsent [
@@ -29,16 +23,8 @@ ReAsClassRuleTest >> testRuleNotViolated [
 
 	| critiques |
 	critiques := self myCritiquesOnMethod:
-		             self class >> #testRuleWithAsClass.
+		             self class >> #testRuleNotViolated.
 	self assertEmpty: critiques 
-]
-
-{ #category : 'tests' }
-ReAsClassRuleTest >> testRuleWithAsClass [
-
-	| critiques |
-	critiques := self myCritiquesOnMethod: self class >> #methodWithAsClass.
-	self assert: critiques size equals: 1
 ]
 
 { #category : 'tests' }

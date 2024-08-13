@@ -6,7 +6,7 @@ I'm mainly legacy code, but still used by OpalCompiler, and was extracted from O
 
 I'm quite limited and I need love to improve and be usable in other context (right-click on a error/warning for instance) and for other kind of reparations.
 
-* node <RBNode> the AST node to repair.
+* node <ASTNode> the AST node to repair.
 * requestor <???> the original requestor (to do reparation on)
 "
 Class {

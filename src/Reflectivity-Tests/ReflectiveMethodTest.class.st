@@ -44,7 +44,26 @@ ReflectiveMethodTest >> testCreateReflectiveMethodAndInvalidate [
 	self assert: (ReflectivityExamples >> #exampleMethod) class equals: ReflectiveMethod.
 	self assert: ReflectivityExamples new exampleMethod equals: 5.
 	self assert: (ReflectivityExamples >> #exampleMethod) class equals: CompiledMethod.
-	ReflectivityExamples >> #exampleMethod reflectiveMethod: nil
+	(ReflectivityExamples >> #exampleMethod) reflectiveMethod destroyTwin
+]
+
+{ #category : 'tests - creation' }
+ReflectiveMethodTest >> testDestroyTwin [	
+	| sendNode compiledMethod link |
+	selector := #exampleMethod.
+	link := MetaLink new.
+	sendNode := (ReflectivityExamples >> #exampleMethod) ast body statements first value.
+	sendNode link: link.	
+	compiledMethod := (ReflectivityExamples >> #exampleMethod) compiledMethod.
+	
+	self assert: compiledMethod reflectiveMethod notNil.
+	self assert: (ReflectivityExamples >> #exampleMethod) linkCount equals: 1.
+	self assert: compiledMethod ast linkCount equals: 1.
+	
+	compiledMethod destroyTwin.
+	
+	self assert: (ReflectivityExamples >> #exampleMethod) reflectiveMethod isNil.
+	self assert: (ReflectivityExamples >> #exampleMethod) ast linkCount equals: 0
 ]
 
 { #category : 'tests - creation' }
@@ -55,18 +74,33 @@ ReflectiveMethodTest >> testInvalidate [
 	self assert: (ReflectivityExamples >> #exampleMethod) class equals: ReflectiveMethod.
 	self assert: ReflectivityExamples new exampleMethod equals: 5.
 	self assert: (ReflectivityExamples >> #exampleMethod) class equals: CompiledMethod.
-	ReflectivityExamples >> #exampleMethod reflectiveMethod: nil
+	(ReflectivityExamples >> #exampleMethod) reflectiveMethod destroyTwin
 ]
 
 { #category : 'tests - creation' }
 ReflectiveMethodTest >> testInvalidateNoJit [
-	(ReflectivityExamples class >> #exampleMethodWithMetaLinkOptionsViaClass) createTwin.
-	(ReflectivityExamples class >> #exampleMethodWithMetaLinkOptionsViaClass) invalidate.
-	self assert: (ReflectivityExamples class >> #exampleMethodWithMetaLinkOptionsViaClass) class equals: CompiledMethod.
-	self assert: ReflectivityExamples exampleMethodWithMetaLinkOptionsViaClass equals: 5.
-	self assert: (ReflectivityExamples class >> #exampleMethodWithMetaLinkOptionsViaClass) class equals: CompiledMethod.
-	ReflectivityExamples class >> #exampleMethodWithMetaLinkOptionsViaClass reflectiveMethod: nil.
-	ReflectivityExamples class recompile: #exampleMethodWithMetaLinkOptionsViaClass
+
+	(ReflectivityExamples class
+	 >> #exampleMethodWithMetaLinkOptionsViaClass) createTwin.
+	(ReflectivityExamples class
+	 >> #exampleMethodWithMetaLinkOptionsViaClass) invalidate.
+	self
+		assert: (ReflectivityExamples class
+			 >> #exampleMethodWithMetaLinkOptionsViaClass) class
+		equals: CompiledMethod.
+	self
+		assert:
+		ReflectivityExamples exampleMethodWithMetaLinkOptionsViaClass
+		equals: 5.
+	self
+		assert: (ReflectivityExamples class
+			 >> #exampleMethodWithMetaLinkOptionsViaClass) class
+		equals: CompiledMethod.
+	(ReflectivityExamples class
+	 >> #exampleMethodWithMetaLinkOptionsViaClass) reflectiveMethod
+		destroyTwin.
+	ReflectivityExamples class recompile:
+		#exampleMethodWithMetaLinkOptionsViaClass
 ]
 
 { #category : 'tests - creation' }
@@ -79,7 +113,7 @@ ReflectiveMethodTest >> testInvalidateWithLinkCount [
 	self assert: ReflectivityExamples new exampleMethod equals: 5.
 	self assert: (ReflectivityExamples >> #exampleMethod) class equals: CompiledMethod.
 	self deny: (ReflectivityExamples >> #exampleMethod) reflectiveMethod isNil.
-	ReflectivityExamples >> #exampleMethod reflectiveMethod: nil
+	(ReflectivityExamples >> #exampleMethod) reflectiveMethod destroyTwin
 ]
 
 { #category : 'tests - links' }

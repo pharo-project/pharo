@@ -10,29 +10,29 @@ For examples browse `ClassHierarchyPrinterTest`
 
 ```
 ClassHierarchyPrinter new 
-		forClass: RBNode; 
+		forClass: ASTNode; 
 		doNotShowState;
 		doNotShowSuperclasses;
-		excludedClasses: (RBNode withAllSubclasses select: [ :each | each name beginsWith: 'RBPattern' ]);
-		limitedToClasses: (RBNode withAllSubclasses select: [:each | each name beginsWith: 'RB']).
+		excludedClasses: (ASTNode withAllSubclasses select: [ :each | each name beginsWith: 'RBPattern' ]);
+		limitedToClasses: (ASTNode withAllSubclasses select: [:each | (each name beginsWith: 'AST') or: [ each name beginsWith: 'RB' ]]]).
 ```
 
 produces 
 
 ```
-'RBNode
-	RBProgramNode
+'ASTNode
+	ASTProgramNode
 		RBComment
 		RBMethodNode
 		RBPragmaNode
 		RBReturnNode
 		RBSequenceNode
-		RBValueNode
+		ASTValueNode
 			RBArrayNode
 			RBAssignmentNode
 			RBBlockNode
 			RBCascadeNode
-			RBLiteralNode
+			ASTLiteralNode
 				RBLiteralArrayNode
 				RBLiteralValueNode
 			RBMessageNode

@@ -431,7 +431,7 @@ RBNamespace >> includesPackageNamed: aSymbol [
 { #category : 'initialization' }
 RBNamespace >> initialize [
 	super initialize.
-	changes := changeFactory compositeRefactoryChange onSystemDictionary: self environment.
+	changes := changeFactory compositeRefactoryChange onSystemEnvironment: self environment.
 	newClasses := IdentityDictionary new.
 	newPackages := IdentityDictionary new.
 	changedClasses := IdentityDictionary new.

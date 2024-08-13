@@ -10,6 +10,13 @@ Class {
 }
 
 { #category : 'code-critics' }
+ManifestGeneralRules class >> ruleBadMessageRule2V1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGMethodDefinition #(#ReBaselineWithProperSuperclassRule #basicCheck: #false)) #'2024-05-13T22:11:20.009568+02:00') )
+]
+
+{ #category : 'code-critics' }
 ManifestGeneralRules class >> ruleLiteralArrayCharactersRuleV1FalsePositive [
 
 	<ignoreForCoverage>

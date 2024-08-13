@@ -12,13 +12,6 @@ RBAbstractTransformationTest >> changeMockClass [
 	^ RBRefactoringChangeMock
 ]
 
-{ #category : 'utilities' }
-RBAbstractTransformationTest >> modelOnClasses: aCollection [
-
-	^ RBNamespace onEnvironment:
-		  (RBClassEnvironment classes: aCollection)
-]
-
 { #category : 'mocking' }
 RBAbstractTransformationTest >> objectClassVariable [
 

@@ -16,10 +16,21 @@ RBPullUpClassVariableParametrizedTest class >> testParameters [
 		yourself
 ]
 
+{ #category : 'running' }
+RBPullUpClassVariableParametrizedTest >> setUp [
+
+	| classesInModel |
+	super setUp.
+	classesInModel := { RBLintRuleTestData } asOrderedCollection
+		                  addAll: RBLintRuleTestData allSubclasses;
+		                  yourself.
+	model := self modelOnClasses: classesInModel
+]
+
 { #category : 'failure tests' }
 RBPullUpClassVariableParametrizedTest >> testFailureMetaClassFailure [
 
-	self shouldFail: (self createRefactoringWithArguments:
+	self shouldFail: (self createRefactoringWithModel: model andArguments:
 			 { #RecursiveSelfRule. #'RBLintRuleTestData class' })
 ]
 
@@ -27,13 +38,13 @@ RBPullUpClassVariableParametrizedTest >> testFailureMetaClassFailure [
 RBPullUpClassVariableParametrizedTest >> testFailureNonExistantName [
 
 	self shouldFail:
-		(self createRefactoringWithArguments: { #Foo. #RBLintRuleTestData })
+		(self createRefactoringWithModel: model andArguments: { #Foo. #RBLintRuleTestData })
 ]
 
 { #category : 'tests' }
 RBPullUpClassVariableParametrizedTest >> testPullUpClassVariable [
 	| refactoring |
-	refactoring := self createRefactoringWithArguments:
+	refactoring := self createRefactoringWithModel: model andArguments:
 		{ #RecursiveSelfRule . #RBLintRuleTestData }.
 	[ self executeRefactoring: refactoring ]
 		on: RBRefactoringWarning 

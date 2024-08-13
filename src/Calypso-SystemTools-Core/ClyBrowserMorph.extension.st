@@ -27,55 +27,6 @@ ClyBrowserMorph >> confirmEmptySystemQuery: aQuery [
 ]
 
 { #category : '*Calypso-SystemTools-Core' }
-ClyBrowserMorph >> confirmEmptySystemQuery: aQuery excluding: classes [
-
-	| showResult result |
-
-	result := aQuery execute.
-	(result isEmpty or: [ ((result items collect: [:each | each origin]) difference: classes ) isEmpty]) ifTrue: [ ^#(true false) ].
-
-	showResult := self morphicUIManager confirm: 'There are '
-		, result size asString, ' ', aQuery description, '. Show them?'.
-	showResult ifTrue: [self spawnQueryBrowserOn: aQuery].
-	^Array with: false with: showResult
-]
-
-{ #category : '*Calypso-SystemTools-Core' }
-ClyBrowserMorph >> confirmUnusedClasses: classes [
-	"Returns a vector of size 2
-	The first value is TRUE when it doesn't have any reference, subclass or is used (for traits), otherwise is FALSE.
-	The second value is TRUE when in case of having references, subclasses or users and the user agreed to be shown those references, otherwise is FALSE. "
-	| refQuery noUsers answer subclasses users |
-
-	refQuery := ClyClassReferencesQuery toAny: classes from: self systemScope.
-	"we need to exclude both the class and instance side of the class"
-	noUsers := self confirmEmptySystemQuery: refQuery excluding: (classes flatCollect: [ :each | { each . each classSide } ]).
-	subclasses := (classes flatCollect: [:each | each subclasses]) copyWithoutAll: classes.
-	subclasses ifNotEmpty: [
-		noUsers at: 1 put: false.
-		answer := self morphicUIManager confirm: 'There are subclasses. Show them?'.
-		answer ifTrue: [ self spawnQueryBrowserOn: (ClyConstantQuery returning: subclasses).
-			noUsers at: 2 put: true. ] ].
-
-	users := (classes flatCollect: [:each | each users]) copyWithoutAll: classes.
-	users ifNotEmpty: [
-		noUsers at: 1 put: false.
-		answer := self morphicUIManager confirm: 'There are users of trait. Show them?'.
-		answer ifTrue: [ self spawnQueryBrowserOn: (ClyConstantQuery returning: users).
-			noUsers at: 2 put: true. ]].
-	^noUsers
-]
-
-{ #category : '*Calypso-SystemTools-Core' }
-ClyBrowserMorph >> confirmUnusedVariables: variables [
-
-	| refQuery |
-	refQuery := ClyVariableReferencesQuery ofAny: variables from: self systemScope.
-
-	^self confirmEmptySystemQuery: refQuery
-]
-
-{ #category : '*Calypso-SystemTools-Core' }
 ClyBrowserMorph >> confirmUnusedVariablesInDefiningClass: variables [
 
 	| refQuery classScope |

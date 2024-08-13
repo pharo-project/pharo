@@ -12,12 +12,6 @@ Class {
 	#tag : 'Variables'
 }
 
-{ #category : 'class initialization' }
-PseudoVariable class >> initialize [
-
-	self deprecatedAliases: { #ReservedVariable }
-]
-
 { #category : 'testing' }
 PseudoVariable class >> isAbstract [
 	^self = PseudoVariable

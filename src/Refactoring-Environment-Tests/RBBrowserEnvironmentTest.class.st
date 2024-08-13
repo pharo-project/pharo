@@ -160,7 +160,7 @@ RBBrowserEnvironmentTest >> testAndAnOrEnvironmentAndAnotherOrEnvironment [
 		            builder
 			            superclass: Object;
 			            name: #RBBrowserTemporaryClassForTest;
-			            category: self class package name ].
+			            package: self class package ].
 	"Check that the new class belongs in the or environment with a package"
 	self assert: orEnvironmentWithPackage classNames asSet equals: {
 			self class name.
@@ -237,7 +237,7 @@ RBBrowserEnvironmentTest >> testAndPackageEnvironmentAndClassEnvironment [
 		            builder
 			            superclass: Object;
 			            name: #RBBrowserTemporaryClassForTest;
-			            category: self class package name ].
+			            package: self class package ].
 
 	"Check that the new class does not belong in the scope"
 	self deny: (andEnvironment classNames includes: newClass name) ]

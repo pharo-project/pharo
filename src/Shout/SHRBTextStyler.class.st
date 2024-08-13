@@ -417,12 +417,33 @@ SHRBTextStyler class >> styleTable: anArray [
 ]
 
 { #category : 'styles' }
+SHRBTextStyler class >> styleTableName [
+	"Answer a <String> representing the current style name"
+	
+	self styleTablePragmas 
+		detect: [ : p | (self perform: p methodSelector) = self styleTable ]
+		ifFound: [ : p | ^ p argumentAt: 1 ]
+		ifNone: [ self error: 'Style table unknown' ]
+
+]
+
+{ #category : 'styles' }
 SHRBTextStyler class >> styleTableNamed: aString [
 
-	^ (Pragma allNamed: #styleTable: in: self class)
+	^ self styleTablePragmas
 		detect: [ :each | (each argumentAt: 1) = aString ]
 		ifFound: [ :each | self perform: each methodSelector ]
 		ifNone: [ nil ]
+]
+
+{ #category : 'styles' }
+SHRBTextStyler class >> styleTablePragmas [
+	"Answer a <Collection> of <Pragma> each representing a Shout style"
+
+	^ Pragma
+		  allNamed: #styleTable:
+		  from: self class
+		  to: SHRBTextStyler class
 ]
 
 { #category : 'styles' }
@@ -628,9 +649,9 @@ SHRBTextStyler >> addASTTransformationPlugin: aPlugin [
 ]
 
 { #category : 'formatting' }
-SHRBTextStyler >> addAttributes: attributes forNode: anRBNode [
+SHRBTextStyler >> addAttributes: attributes forNode: aNode [
 
-	self addAttributes: attributes from: anRBNode startWithoutParentheses to: anRBNode stopWithoutParentheses
+	self addAttributes: attributes from: aNode startWithoutParentheses to: aNode stopWithoutParentheses
 ]
 
 { #category : 'formatting' }
@@ -666,15 +687,15 @@ SHRBTextStyler >> addStyle: styleSymbol attribute: additionalAttribute from: sta
 ]
 
 { #category : 'formatting' }
-SHRBTextStyler >> addStyle: styleSymbol attributes: additionalAttributes forNode: anRBNode [
+SHRBTextStyler >> addStyle: styleSymbol attributes: additionalAttributes forNode: aNode [
 	self
 		addAttributes: (self attributesFor: styleSymbol), additionalAttributes
-		forNode: anRBNode
+		forNode: aNode
 ]
 
 { #category : 'formatting' }
-SHRBTextStyler >> addStyle: styleSymbol forNode: anRBNode [
-	self addAttributes: (self attributesFor: styleSymbol) forNode: anRBNode
+SHRBTextStyler >> addStyle: styleSymbol forNode: aNode [
+	self addAttributes: (self attributesFor: styleSymbol) forNode: aNode
 ]
 
 { #category : 'formatting' }
@@ -716,10 +737,17 @@ SHRBTextStyler >> classOrMetaClass: aBehavior [
 { #category : 'visiting' }
 SHRBTextStyler >> formatIncompleteSelector: aSymbol [
 
-	aSymbol isSelectorSymbol ifTrue: [ ^ nil ].
-	^ (self class formatIncompleteIdentifiers and: [ (Symbol selectorThatStartsCaseSensitive: aSymbol asString skipping: nil) isNotNil ])
+	(self representsASelector: aSymbol) ifTrue: [ ^ nil ].
+
+	^ (self class formatIncompleteIdentifiers and: [ self hasSymbolStartingBy: aSymbol ])
 		  ifTrue: [ #incompleteSelector ]
 		  ifFalse: [ #undefinedSelector ]
+]
+
+{ #category : 'testing' }
+SHRBTextStyler >> hasSymbolStartingBy: aSymbol [
+
+	^ (Symbol selectorThatStartsCaseSensitive: aSymbol asString skipping: nil) isNotNil
 ]
 
 { #category : 'initialization' }
@@ -818,6 +846,12 @@ SHRBTextStyler >> privateStyle: aText [
 	^ self
 		style: aText
 		ast: compiler parse
+]
+
+{ #category : 'testing' }
+SHRBTextStyler >> representsASelector: aSymbol [
+
+	^ aSymbol isSelectorSymbol
 ]
 
 { #category : 'private' }
@@ -968,6 +1002,12 @@ SHRBTextStyler >> stylingEnabled [
 SHRBTextStyler >> stylingEnabled: aBoolean [
 
 	stylingEnabled := aBoolean
+]
+
+{ #category : 'private' }
+SHRBTextStyler >> text [
+
+	^ text
 ]
 
 { #category : 'styling' }

@@ -8,9 +8,8 @@ Baseline to load libraries used in base image:
 Class {
 	#name : 'BaselineOfBaseLibraries',
 	#superclass : 'BaselineOf',
-	#category : 'BaselineOfBaseLibraries-Base',
-	#package : 'BaselineOfBaseLibraries',
-	#tag : 'Base'
+	#category : 'BaselineOfBaseLibraries',
+	#package : 'BaselineOfBaseLibraries'
 }
 
 { #category : 'baselines' }

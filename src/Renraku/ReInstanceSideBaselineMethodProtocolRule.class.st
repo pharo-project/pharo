@@ -4,19 +4,19 @@ Instance side #baseline: method should be in 'baselines' protocol
 Class {
 	#name : 'ReInstanceSideBaselineMethodProtocolRule',
 	#superclass : 'ReProperInstanceMethodProtocolRule',
-	#category : 'Renraku-Rules',
+	#category : 'Renraku-Clean Code',
 	#package : 'Renraku',
-	#tag : 'Rules'
+	#tag : 'Clean Code'
 }
 
-{ #category : 'accessing - defaults' }
-ReInstanceSideBaselineMethodProtocolRule >> protocolName [
+{ #category : 'accessing' }
+ReInstanceSideBaselineMethodProtocolRule class >> protocolName [
 
 	^ 'baselines'
 ]
 
-{ #category : 'accessing - defaults' }
-ReInstanceSideBaselineMethodProtocolRule >> selector [
+{ #category : 'accessing' }
+ReInstanceSideBaselineMethodProtocolRule class >> selector [
 
 	^ #baseline:
 ]

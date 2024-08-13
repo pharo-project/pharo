@@ -24,12 +24,6 @@ ClassRepackaged class >> classRepackaged: aClass oldTag: oldTag newTag: newTag [
 		  yourself
 ]
 
-{ #category : 'class initialization' }
-ClassRepackaged class >> initialize [
-
-	self deprecatedAliases: { #ClassRecategorized }
-]
-
 { #category : 'accessing' }
 ClassRepackaged >> classAffected [
 

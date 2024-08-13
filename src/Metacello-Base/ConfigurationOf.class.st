@@ -67,12 +67,6 @@ Class {
 	#package : 'Metacello-Base'
 }
 
-{ #category : 'class initialization' }
-ConfigurationOf class >> initialize [
-
-	self deprecatedAliases: { #MetacelloBaseConfiguration }
-]
-
 { #category : 'accessing' }
 ConfigurationOf class >> project [
 

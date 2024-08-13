@@ -68,6 +68,22 @@ ReSmalllintChecker >> checkPackage: aPackage [
 	(environment includesPackage: aPackage) ifTrue: [ self getCritiquesAbout: aPackage by: packageRules ]
 ]
 
+{ #category : 'accessing' }
+ReSmalllintChecker >> classRules [
+
+	^ classRules
+]
+
+{ #category : 'accessing' }
+ReSmalllintChecker >> classRules: aCollectionOfRules [
+	"Select and set class rules from aCollectionOfRules"
+
+	classRules := Set new.
+	aCollectionOfRules
+		select: [ :r | r class checksClass ]
+		thenDo: [ : r | classRules add: r ]
+]
+
 { #category : 'manifest' }
 ReSmalllintChecker >> cleanAllManifest [
 	| manifests |

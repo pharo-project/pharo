@@ -127,6 +127,15 @@ RGBehavior >> subclassDefinerClass [
 ]
 
 { #category : '*Calypso-Ring' }
+RGBehavior >> syntaxHighlighter [
+	"Answer a compiler appropriate for source methods of this class."
+
+	^ SHRBTextStyler new
+		  classOrMetaClass: self;
+		  yourself
+]
+
+{ #category : '*Calypso-Ring' }
 RGBehavior >> traitCompositionIncludes: aTrait [
 	^self == aTrait or:
 		[self hasTraitComposition and:

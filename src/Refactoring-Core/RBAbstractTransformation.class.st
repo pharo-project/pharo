@@ -53,8 +53,8 @@ RBAbstractTransformation class >> initializeRefactoringOptions [
 		at: #extractAssignment
 		put: [ :ref :varName | self error: #extractAssignment ];
 
-		at: #inlineExpression
-		put: [ :ref :string | self error: #inlineExpression ];
+		at: #shouldNotCreateExtraBindings
+		put: [ :ref :string | self error: #shouldNotCreateExtraBindings ];
 
 		at: #alreadyDefined
 		put: [ :ref :cls :selector |  self error: #alreadyDefined ];
@@ -450,8 +450,8 @@ RBAbstractTransformation >> shouldExtractAssignmentTo: aString [
 ]
 
 { #category : 'requests' }
-RBAbstractTransformation >> shouldInlineExpression: aString [
-	^(self options at: #inlineExpression) value: self value: aString
+RBAbstractTransformation >> shouldNotCreateExtraBindings: aString [
+	^(self options at: #shouldNotCreateExtraBindings) value: self value: aString
 ]
 
 { #category : 'requests' }

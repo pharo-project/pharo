@@ -134,6 +134,12 @@ RBClass >> directlyDefinesPoolDictionary: aString [
 	^self sharedPoolNames includes: aString asSymbol
 ]
 
+{ #category : 'testing' }
+RBClass >> hasSubclasses [
+
+	^ self subclasses isNotEmpty
+]
+
 { #category : 'initialization' }
 RBClass >> initialize [
 	super initialize.
@@ -152,6 +158,13 @@ RBClass >> isEmptyClass [
 	^ self classVariableNames isEmpty and: [
 				  self instanceVariableNames isEmpty and: [
 					  self selectors isEmpty]]
+]
+
+{ #category : 'testing' }
+RBClass >> isManifest [ 
+
+	^ self superclass notNil and: [ self superclass name = #PackageManifest ]
+
 ]
 
 { #category : 'testing' }

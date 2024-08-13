@@ -15,6 +15,11 @@ Class {
 	#tag : 'Methods'
 }
 
+{ #category : 'constants' }
+CompiledBlock class >> trailerSize [
+	^ 0
+]
+
 { #category : 'displaying' }
 CompiledBlock >> displayStringOn: stream [
 	self printOn: stream
@@ -73,6 +78,29 @@ CompiledBlock >> hash [
 	^hash
 
 	"(CompiledMethod>>#hash) hash"
+]
+
+{ #category : 'accessing' }
+CompiledBlock >> indexInOuter [
+
+	| index |
+	index := self outerCode literals indexOf: self.
+	index > 0 ifTrue: [ ^ index ].
+
+	^ self outerCode literals detectIndex: [ :lit |
+		  lit isBlock and: [ lit compiledBlock == self ] ]
+]
+
+{ #category : 'accessing' }
+CompiledBlock >> indexesInOuter [
+
+	| index |
+	index := self outerCode literals indexOf: self.
+	index > 0 ifTrue: [ ^ ByteArray with: index ].
+
+	index := self outerCode literals detectIndex: [ :lit |
+		         lit isBlock and: [ lit compiledBlock == self ] ].
+	^ ByteArray with: index with: 0
 ]
 
 { #category : 'testing' }
@@ -134,6 +162,12 @@ CompiledBlock >> outerCode [
 { #category : 'accessing' }
 CompiledBlock >> outerCode: aCompiledCode [
 	^self literalAt: self numLiterals put: aCompiledCode
+]
+
+{ #category : 'accessing' }
+CompiledBlock >> pathOfLiteralIndexes [
+	
+	^ self outerCode pathOfLiteralIndexes copyWithAll: self indexesInOuter
 ]
 
 { #category : 'scanning' }
@@ -233,9 +267,4 @@ CompiledBlock >> stepIntoQuickMethods [
 { #category : 'debugger support' }
 CompiledBlock >> stepIntoQuickMethods: aBoolean [
 	^self method stepIntoQuickMethods: aBoolean
-]
-
-{ #category : 'constants' }
-CompiledBlock >> trailerSize [
-	^ 0
 ]

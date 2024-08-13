@@ -108,7 +108,7 @@ Deprecation class >> showWarning: aBoolean [
 { #category : 'comparing' }
 Deprecation >> = anObject [
 	^self class == anObject class
-	  and: [context = anObject context
+	  and: [context = anObject contextOfDeprecatedMethod
 	  and: [context
 			ifNil: [explanationString = anObject explanationString]
 			ifNotNil: [true]]]
@@ -131,7 +131,7 @@ Deprecation >> contextOfDeprecatedMethod [
 
 { #category : 'accessing' }
 Deprecation >> contextOfSender [
-	^context sender
+	^context home sender
 ]
 
 { #category : 'accessing' }

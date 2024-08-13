@@ -33,18 +33,11 @@ ReSmalllintTest >> assertEnvironment: anEnvironment hasAllMethodsOfTheResult: cr
 
 { #category : 'private' }
 ReSmalllintTest >> assertIsValidRule: aRule [
-	self
-		assert: (aRule name isString and: [ aRule name notEmpty ])
-		description: 'Missing rule name'.
-	self
-		assert: (aRule group isString and: [ aRule group notEmpty ])
-		description: 'Missing group name'.
-	self
-		assert: (aRule rationale isString and: [ aRule rationale notEmpty ])
-		description: 'Missing rationale'.
-	self
-		assert: (#(error warning information) includes: aRule severity)
-		description: 'Invalid severity'
+
+	self assert: (aRule name isString and: [ aRule name isNotEmpty ]) description: 'Missing rule name'.
+	self assert: (aRule group isString and: [ aRule group isNotEmpty ]) description: 'Missing group name'.
+	self assert: (aRule rationale isString and: [ aRule rationale isNotEmpty ]) description: 'Missing rationale'.
+	self assert: (#( error warning information ) includes: aRule severity) description: 'Invalid severity'
 ]
 
 { #category : 'asserting' }
@@ -220,6 +213,19 @@ ReSmalllintTest >> runRuleFor: aTestSelector onEnvironment: anEnvironment [
 	^ runner criticsOf: rule
 ]
 
+{ #category : 'private' }
+ReSmalllintTest >> testAddClassRules [
+
+	| checker |
+	
+	checker := ReSmalllintChecker new 
+		classRules: (ReAbstractRule allSubclasses collect: #new);
+		yourself.
+
+	self denyEmpty: checker classRules
+
+]
+
 { #category : 'tests' }
 ReSmalllintTest >> testAddRemoveDependents [
 	self classRuleFor: self currentSelector
@@ -277,11 +283,6 @@ ReSmalllintTest >> testCollectSelectNotUsed [
 
 { #category : 'tests' }
 ReSmalllintTest >> testCollectionAtCollectionSize [
-	self ruleFor: self currentSelector
-]
-
-{ #category : 'tests' }
-ReSmalllintTest >> testCollectionMessagesToExternalObject [
 	self ruleFor: self currentSelector
 ]
 

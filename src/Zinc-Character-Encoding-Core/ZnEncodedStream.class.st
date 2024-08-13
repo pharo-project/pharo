@@ -19,6 +19,12 @@ ZnEncodedStream class >> defaultEncoder [
 	^ ZnCharacterEncoder utf8
 ]
 
+{ #category : 'testing' }
+ZnEncodedStream class >> isAbstract [
+
+	^ self == ZnEncodedStream
+]
+
 { #category : 'instance creation' }
 ZnEncodedStream class >> on: wrappedStream [
 	^ self new
@@ -65,6 +71,11 @@ ZnEncodedStream >> flush [
 ]
 
 { #category : 'testing' }
+ZnEncodedStream >> isBinary [
+	^ false
+]
+
+{ #category : 'testing' }
 ZnEncodedStream >> isStream [
   ^ true
 ]
@@ -85,6 +96,13 @@ ZnEncodedStream >> position [
 { #category : 'accessing' }
 ZnEncodedStream >> position: aPosition [
 	stream position: aPosition
+]
+
+{ #category : 'initialization' }
+ZnEncodedStream >> reset [
+
+	^ stream reset
+
 ]
 
 { #category : 'accessing' }

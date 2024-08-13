@@ -5,7 +5,7 @@ Internal Representation and Key Implementation Points.
 
     Instance Variables
 	method:		<CompiledMethod>
-	sourceNode:		<RBProgramNode>
+	sourceNode:		<ASTProgramNode>
 "
 Class {
 	#name : 'SycSourceCodeCommand',
@@ -26,10 +26,10 @@ SycSourceCodeCommand class >> isAbstract [
 ]
 
 { #category : 'instance creation' }
-SycSourceCodeCommand class >> method: aMethod node: aRBProgramNode [
+SycSourceCodeCommand class >> method: aMethod node: aProgramNode [
 	^self new
 		method: aMethod;
-		sourceNode: aRBProgramNode
+		sourceNode: aProgramNode
 ]
 
 { #category : 'converting' }

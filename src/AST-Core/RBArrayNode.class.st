@@ -5,11 +5,11 @@ Instance Variables
 	left:	 <Integer | nil> position of {
 	periods: <SequenceableCollection of: Integer> the positions of all the periods that separate the statements
 	right: <Integer | nil> position of }
-	statements: <SequenceableCollection of: RBValueNode> the statement nodes
+	statements: <SequenceableCollection of: ASTValueNode> the statement nodes
 "
 Class {
 	#name : 'RBArrayNode',
-	#superclass : 'RBValueNode',
+	#superclass : 'ASTValueNode',
 	#instVars : [
 		'left',
 		'right',

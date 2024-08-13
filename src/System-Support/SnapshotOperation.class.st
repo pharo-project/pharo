@@ -150,13 +150,7 @@ SnapshotOperation >> performSnapshot [
 
 	self executeStoringError: [ 
 		isImageStarting ifTrue: [ sessionManager installNewSession ].
-		sessionManager currentSession start: isImageStarting ].
-		
-	self hasSavedSuccessfully 
-		ifTrue: [ "This branch should be removed in Pharo 13 with the deprecated announcement."
-			self class environment at: #SnapshotDone 
-				ifPresent: [ :class | self class codeSupportAnnouncer announce: (class isNewImage: isImageStarting) ] ].
-
+		sessionManager currentSession start: isImageStarting ].	
 ]
 
 { #category : 'accessing' }

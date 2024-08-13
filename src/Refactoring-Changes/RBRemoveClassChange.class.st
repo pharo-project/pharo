@@ -19,7 +19,7 @@ RBRemoveClassChange class >> remove: aClass [
 RBRemoveClassChange class >> removeClassName: aSymbol [
 
 	^ self basicNew
-		  onSystemDictionary: self environment;
+		  onSystemEnvironment: self environment;
 		  changeClassName: aSymbol;
 		  initialize
 ]

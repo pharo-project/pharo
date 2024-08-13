@@ -21,10 +21,20 @@ Warnings:
 Class {
 	#name : 'MCLazyVersionInfo',
 	#superclass : 'MCVersionInfo',
+	#classVars : [
+		'MCVersionCache'
+	],
 	#category : 'Monticello-Versioning',
 	#package : 'Monticello',
 	#tag : 'Versioning'
 }
+
+{ #category : 'accessing' }
+MCLazyVersionInfo class >> flushMCVersionCache [
+
+	MCVersionCache := nil.
+	Smalltalk garbageCollect
+]
 
 { #category : 'instance creation' }
 MCLazyVersionInfo class >> from: aVersionInfo [
@@ -57,6 +67,17 @@ MCLazyVersionInfo class >> install [
 ]
 
 { #category : 'accessing' }
+MCLazyVersionInfo class >> mcVersionCache [
+	"LRUCache is loaded after monticelle so we cache only if the class is present in the image."
+
+	^ MCVersionCache ifNil: [
+		  self environment
+			  at: #LRUCache
+			  ifPresent: [ :cacheClass | MCVersionCache := cacheClass new maximumWeight: 32 ]
+			  ifAbsent: [ Dictionary new ] ]
+]
+
+{ #category : 'accessing' }
 MCLazyVersionInfo >> ancestors [
 	"Ensure we load ancestors as appropriate if necessary. Failure to load force us to return an empty set to avoid errors, but we'll keep track of the fact that this failure may be transient and that we can continue."
 
@@ -75,32 +96,34 @@ MCLazyVersionInfo >> initialize [
 ]
 
 { #category : 'initialization' }
-MCLazyVersionInfo >> initializeWithName: vName id: aUUID message: aString date: aDate time: aTime ancestors: aCollection stepChildren: stepCollection [
-
-	name := vName.
-	id := aUUID.
-	message := aString.
-	date := aDate ifNil: [ Date today ].
-	time := aTime.
-	ancestors := WeakArray withAll: aCollection.
-	stepChildren := WeakArray withAll: stepCollection
-]
-
-{ #category : 'initialization' }
-MCLazyVersionInfo >> initializeWithName: vName id: aUUID message: aString date: aDate time: aTime author: initials ancestors: aCollection stepChildren: stepCollection [
-	name := vName.
-	id := aUUID.
-	message := aString.
-	date := aDate ifNil: [ Date today ].
-	time := aTime.
-	author := initials.
-	ancestors := WeakArray withAll: aCollection.
-	stepChildren := WeakArray withAll: stepCollection
-]
-
-{ #category : 'initialization' }
 MCLazyVersionInfo >> lazy [
 	^ self
+]
+
+{ #category : 'private' }
+MCLazyVersionInfo >> loadAncestorsAndStepChildren [
+	"This code scans all the repositories to find the exact package version and reload the relevant info."
+
+	"Transient failures, such as the lack of network connectivity, will return nothing and no errors from this code."
+
+	"Cache loaded version info, but try not to add a nil at that space? Can't do that with LRUCache>>#at:ifAbsentPut:"
+
+	((self class mcVersionCache includesKey: id)
+		ifTrue: [ self class mcVersionCache at: id ]
+		ifFalse:
+			[ 
+			| r | 
+			r := MCRepositoryGroup default.
+			r versionWithInfo: self ifNone: [  ].
+			r	
+				ifNil: [  ]
+				ifNotNil: 	[ :aVersion | 
+					self class mcVersionCache at: id put: aVersion.
+					aVersion ] ])
+		ifNotNil:
+			[ :aVersion | 
+			ancestors := WeakArray withAll: aVersion info ancestors.
+			stepChildren := WeakArray withAll: aVersion info stepChildren ]
 ]
 
 { #category : 'private' }

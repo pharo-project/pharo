@@ -33,6 +33,19 @@ RBInteractionDriver class >> isAbstract [
 	^ self == RBInteractionDriver
 ]
 
+{ #category : 'displaying' }
+RBInteractionDriver class >> menuItemString [
+	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
+
+	^ self refactoringClass menuItemString
+]
+
+{ #category : 'displaying' }
+RBInteractionDriver class >> refactoringClass [
+
+	self subclassResponsibility
+]
+
 { #category : 'execution' }
 RBInteractionDriver >> application [
 	"For now use the singleton. Normally the application should be passed from Calypso and the command"
@@ -88,6 +101,13 @@ RBInteractionDriver >> furtherActionFor: aReport [
 ]
 
 { #category : 'private' }
+RBInteractionDriver >> informConditions: conditions [ 
+	"The receiver has multiple failed applicability conditions and more than one could fail, inform all failures"
+
+	conditions do: [ : cond | self inform: cond errorString ].
+]
+
+{ #category : 'private' }
 RBInteractionDriver >> informDialog [
 	"I'm hook to inject mock in tests. The driver should specialize defaultInformDialog"
 	
@@ -106,6 +126,13 @@ RBInteractionDriver >> initialize [
 	super initialize.
 	stoppedBeforeApplyingRefactoring := false.
 	"for now unused but we should soon use it. Check applyChanges"
+]
+
+{ #category : 'accessing' }
+RBInteractionDriver >> model [
+	"Answer the receiver's <RBBrowserEnvironment>"
+
+	^ model
 ]
 
 { #category : 'accessing' }

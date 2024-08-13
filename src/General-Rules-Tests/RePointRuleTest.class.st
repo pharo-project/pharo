@@ -1,9 +1,9 @@
 Class {
 	#name : 'RePointRuleTest',
 	#superclass : 'ReAbstractRuleTestCase',
-	#category : 'General-Rules-Tests-Migrated',
+	#category : 'General-Rules-Tests-Optimization',
 	#package : 'General-Rules-Tests',
-	#tag : 'Migrated'
+	#tag : 'Optimization'
 }
 
 { #category : 'tests' }
