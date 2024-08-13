@@ -43,14 +43,14 @@ RBBlockReplaceRule class >> searchForMethod: searchString replaceWith: replaceBl
 ]
 
 { #category : 'instance creation' }
-RBBlockReplaceRule class >> searchForTree: aRBProgramNode replaceWith: replaceBlock [
-	^self new searchForTree: aRBProgramNode replaceWith: replaceBlock
+RBBlockReplaceRule class >> searchForTree: aProgramNode replaceWith: replaceBlock [
+	^self new searchForTree: aProgramNode replaceWith: replaceBlock
 ]
 
 { #category : 'instance creation' }
-RBBlockReplaceRule class >> searchForTree: aRBProgramNode replaceWith: replaceBlock when: aBlock [
+RBBlockReplaceRule class >> searchForTree: aProgramNode replaceWith: replaceBlock when: aBlock [
 	^self new
-		searchForTree: aRBProgramNode
+		searchForTree: aProgramNode
 		replaceWith: replaceBlock
 		when: aBlock
 ]

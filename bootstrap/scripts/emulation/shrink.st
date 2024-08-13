@@ -24,7 +24,7 @@
 
 
 	SystemAnnouncer uniqueInstance unsubscribe: TestCase. 
-	RBProgramNode resetFormatter.
+	ASTProgramNode resetFormatter.
 
 !
 

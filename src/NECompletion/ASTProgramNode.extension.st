@@ -1,7 +1,7 @@
-Extension { #name : 'RBProgramNode' }
+Extension { #name : 'ASTProgramNode' }
 
 { #category : '*NECompletion' }
-RBProgramNode >> completionEntries: offset [
+ASTProgramNode >> completionEntries: offset [
 	"for now we give all selectors and gloabls as a fallback"
 	| selectors globals |
 	self methodNode sourceCode ifNil: [ ^#() ].
@@ -17,7 +17,7 @@ RBProgramNode >> completionEntries: offset [
 ]
 
 { #category : '*NECompletion' }
-RBProgramNode >> completionToken: offset [
+ASTProgramNode >> completionToken: offset [
 	"fall back: if we are not able to parse to something better, we use the word before the cursor"
 
 	^ self methodNode sourceCode

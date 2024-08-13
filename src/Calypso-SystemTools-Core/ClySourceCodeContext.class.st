@@ -24,7 +24,7 @@ I provide following interface to query code editor state. It is polymorphic to s
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	selectedSourceNode:		<RBProgramNode>
+	selectedSourceNode:		<ASTProgramNode>
 "
 Class {
 	#name : 'ClySourceCodeContext',

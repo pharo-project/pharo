@@ -105,6 +105,12 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
+
+	"This should be removed in Pharo 14."
+	ASTNode deprecatedAliases: { #RBNode }.
+	ASTProgramNode deprecatedAliases: { #RBProgramNode }.
+	ASTValueNode deprecatedAliases: { #RBValueNode }.
+	ASTLiteralNode deprecatedAliases: { #RBLiteralNode }.
 	
 	CompletionSorter register.
 	RubSmalltalkEditor completionEngineClass: CompletionEngine.

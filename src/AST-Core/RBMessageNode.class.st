@@ -2,8 +2,8 @@
 RBMessageNode is an AST node that represents a message send.
 
 Instance Variables:
-	arguments	<SequenceableCollection of: RBValueNode>	 our argument nodes
-	receiver	<RBValueNode>	the receiver's node
+	arguments	<SequenceableCollection of: ASTValueNode>	 our argument nodes
+	receiver	<ASTValueNode>	the receiver's node
 	selector	<Symbol>	the selector we're sending
 	keywordsPositions	<IntegerArray | nil>	the positions of the selector keywords
 	superOf <Behavior> the current class (for super-send messages)
@@ -11,7 +11,7 @@ Instance Variables:
 "
 Class {
 	#name : 'RBMessageNode',
-	#superclass : 'RBValueNode',
+	#superclass : 'ASTValueNode',
 	#instVars : [
 		'receiver',
 		'selector',

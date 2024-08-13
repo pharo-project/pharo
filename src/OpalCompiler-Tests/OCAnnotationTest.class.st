@@ -19,7 +19,7 @@ OCAnnotationTest >> testAnnotationAST [
 			          (RBParseTreeRewriter new
 				           replace: '@meaning: `@arg'
 				           withValueFrom: [ :node |
-					           RBLiteralNode value:
+					           ASTLiteralNode value:
 						           ((node arguments first isLiteralNode and: [
 							             node arguments first value = 42 ])
 							            ifTrue: [ 'meaning of life' ]
@@ -117,7 +117,7 @@ OCAnnotationTest >> testAnnotationConstexprAST [
 					           "Evaluate the argument, self is bound to the class"
 					           value := node arguments first evaluateForReceiver:
 						                    node methodNode methodClass instanceSide.
-					           RBLiteralNode value: value ]) executeTree: ast.
+					           ASTLiteralNode value: value ]) executeTree: ast.
 			          ast ]
 		          andPriority: 0.
 

@@ -16,23 +16,6 @@ ClassHierarchyPrinterTest >> setUp [
 ]
 
 { #category : 'tests' }
-ClassHierarchyPrinterTest >> testOnlyFreeText [
-
-	printer
-		nextPutAll: 'Start';
-		cr;
-		tab;
-		nextPutAll: 'Tabbed';
-		cr;
-		nextPutAll: 'End'.
-
-
-	self assert: printer print equals: 'Start
-	Tabbed
-End'
-]
-
-{ #category : 'tests' }
 ClassHierarchyPrinterTest >> testOnlyASTNodes [
 
 	printer
@@ -43,22 +26,16 @@ ClassHierarchyPrinterTest >> testOnlyASTNodes [
 		limitedToClasses: (ASTNode withAllSubclasses select: [:each | (each name beginsWith: 'RB') or: [ each name beginsWith: 'AST' ]]).
 	self assert: printer print equals:
 	'ASTNode
-	RBProgramNode
-		RBComment
-		RBMethodNode
-			RBDoItMethodNode
-		RBPragmaNode
-		RBReturnNode
-		RBSequenceNode
-		RBValueNode
+	ASTProgramNode
+		ASTValueNode
+			ASTLiteralNode
+				RBLiteralArrayNode
+				RBLiteralValueNode
 			RBAnnotationMarkNode
 			RBArrayNode
 			RBAssignmentNode
 			RBBlockNode
 			RBCascadeNode
-			RBLiteralNode
-				RBLiteralArrayNode
-				RBLiteralValueNode
 			RBMessageNode
 			RBParseErrorNode
 				RBEnglobingErrorNode
@@ -74,8 +51,31 @@ ClassHierarchyPrinterTest >> testOnlyASTNodes [
 					RBUnfinishedStatementErrorNode
 			RBSelectorNode
 			RBVariableNode
+		RBComment
+		RBMethodNode
+			RBDoItMethodNode
+		RBPragmaNode
+		RBReturnNode
+		RBSequenceNode
 	RBSlotInitializationNode
 '
+]
+
+{ #category : 'tests' }
+ClassHierarchyPrinterTest >> testOnlyFreeText [
+
+	printer
+		nextPutAll: 'Start';
+		cr;
+		tab;
+		nextPutAll: 'Tabbed';
+		cr;
+		nextPutAll: 'End'.
+
+
+	self assert: printer print equals: 'Start
+	Tabbed
+End'
 ]
 
 { #category : 'tests' }

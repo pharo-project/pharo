@@ -1,6 +1,6 @@
 "
 I'm the superclass of the all the nodes for 
-	- expressions and methods (subclasses of RBProgramNode) - historically it was the only tree and 
+	- expressions and methods (subclasses of ASTProgramNode) - historically it was the only tree and 
 	it was the only part concerned with refactorings (hence the RB suffix for RegactoringBrowser).
 	- class definition (just nodes to represent the class creation messages),
 	- full program (class definitions or method definitions)

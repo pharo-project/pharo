@@ -1,7 +1,7 @@
-Extension { #name : 'RBProgramNode' }
+Extension { #name : 'ASTProgramNode' }
 
 { #category : '*Renraku' }
-RBProgramNode >> banChecksForValidation [
+ASTProgramNode >> banChecksForValidation [
 "returns ban levels that have to be chacked before validation"
 
 	self methodNode ifNotNil: [ :mNode |
@@ -12,7 +12,7 @@ RBProgramNode >> banChecksForValidation [
 ]
 
 { #category : '*Renraku' }
-RBProgramNode >> banLevelCandidates [
+ASTProgramNode >> banLevelCandidates [
 "returns code entities which can ban a rule for this entity"
 
 	self methodNode ifNotNil: [ :mNode |
@@ -23,12 +23,12 @@ RBProgramNode >> banLevelCandidates [
 ]
 
 { #category : '*Renraku' }
-RBProgramNode >> critiques [
+ASTProgramNode >> critiques [
 	^ ReCriticEngine critiquesOf: self
 ]
 
 { #category : '*Renraku' }
-RBProgramNode >> match: aNode onSuccess: aBlock onFailure: anAlternativeBlock [
+ASTProgramNode >> match: aNode onSuccess: aBlock onFailure: anAlternativeBlock [
 	| context |
 
 	context := SmallDictionary new.
@@ -39,7 +39,7 @@ RBProgramNode >> match: aNode onSuccess: aBlock onFailure: anAlternativeBlock [
 ]
 
 { #category : '*Renraku' }
-RBProgramNode >> nodeAtTraversalIndex: anIndex [
+ASTProgramNode >> nodeAtTraversalIndex: anIndex [
 	| index |
 	index := 0.
 
@@ -51,7 +51,7 @@ RBProgramNode >> nodeAtTraversalIndex: anIndex [
 ]
 
 { #category : '*Renraku' }
-RBProgramNode >> package [
+ASTProgramNode >> package [
 	"a hack to make the critique check working"
 	"the package information is used to determin bans"
 
@@ -59,12 +59,12 @@ RBProgramNode >> package [
 ]
 
 { #category : '*Renraku' }
-RBProgramNode >> suitableRulesFrom: aReRuleManager [
+ASTProgramNode >> suitableRulesFrom: aReRuleManager [
 	^ aReRuleManager nodeRules
 ]
 
 { #category : '*Renraku' }
-RBProgramNode >> traversalIndexOf: aNode [
+ASTProgramNode >> traversalIndexOf: aNode [
 	| index |
 	index := 0.
 

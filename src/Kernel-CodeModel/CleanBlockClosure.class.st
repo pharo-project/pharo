@@ -43,12 +43,12 @@ CleanBlockClosure >> doPrintOn: aStream [
 	aStream nextPutAll: self sourceNode value sourceCode
 ]
 
-{ #category : 'accessing' }
+{ #category : 'testing' }
 CleanBlockClosure >> hasLiteral: aLiteral [
 	^self compiledBlock hasLiteral: aLiteral
 ]
 
-{ #category : 'accessing' }
+{ #category : 'testing' }
 CleanBlockClosure >> hasLiteralSuchThat: aLiteral [
 	^self compiledBlock hasLiteralSuchThat: aLiteral
 ]
@@ -79,6 +79,12 @@ CleanBlockClosure >> literal [
 	It seems that the VM expects closures to have 4 ivars
 	We should check if we can fix that."
 	^literal
+]
+
+{ #category : 'accessing' }
+CleanBlockClosure >> literals [
+
+	^ self compiledBlock literals
 ]
 
 { #category : 'accessing' }

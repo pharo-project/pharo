@@ -285,7 +285,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	KMRepository reset.
 	Morph shortcutsHandler: KMShortcutHandler new.
 
-	RBProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [ RBSimpleFormatter ]).
+	ASTProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [ RBSimpleFormatter ]).
 
 	Color flushCache.
 
@@ -304,9 +304,6 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	"Making HeuristicCompletion the default completion engine"
 	RubSmalltalkEditor completionEngineClass: CoCompletionEngine.
-	
-	"This should be removed in Pharo 14."
-	ASTNode deprecatedAliases: { #RBNode }.
 
 	self loadIceberg.
 	self loadExtraTools.
