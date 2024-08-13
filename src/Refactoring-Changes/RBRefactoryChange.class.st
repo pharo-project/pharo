@@ -9,7 +9,7 @@ Class {
 	#instVars : [
 		'name',
 		'changeFactory',
-		'onSystemDictionary'
+		'onSystemEnvironment'
 	],
 	#category : 'Refactoring-Changes-Base',
 	#package : 'Refactoring-Changes',
@@ -73,7 +73,7 @@ RBRefactoryChange >> executeNotifying: aBlock [
 { #category : 'initialization' }
 RBRefactoryChange >> initialize [
 	super initialize.
-	onSystemDictionary := Smalltalk globals.
+	onSystemEnvironment := Smalltalk globals.
 	changeFactory := RBRefactoryChangeManager changeFactory
 ]
 
@@ -102,15 +102,15 @@ RBRefactoryChange >> oldVersionTextToDisplay [
 ]
 
 { #category : 'accessing' }
-RBRefactoryChange >> onSystemDictionary [
+RBRefactoryChange >> onSystemEnvironment [
 
-	^ onSystemDictionary
+	^ onSystemEnvironment
 ]
 
 { #category : 'accessing' }
-RBRefactoryChange >> onSystemDictionary: anObject [
+RBRefactoryChange >> onSystemEnvironment: anObject [
 
-	onSystemDictionary := anObject
+	onSystemEnvironment := anObject
 ]
 
 { #category : 'accessing' }

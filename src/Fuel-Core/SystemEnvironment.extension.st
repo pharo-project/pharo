@@ -1,7 +1,7 @@
-Extension { #name : 'SystemDictionary' }
+Extension { #name : 'SystemEnvironment' }
 
 { #category : '*Fuel-Core' }
-SystemDictionary >> fuelAccept: aGeneralMapper [
+SystemEnvironment >> fuelAccept: aGeneralMapper [
 	"serialize all instances except for <Smalltalk globals>"
 	^ self == Smalltalk globals 
 		ifFalse: [ super fuelAccept: aGeneralMapper ]
@@ -9,13 +9,13 @@ SystemDictionary >> fuelAccept: aGeneralMapper [
 ]
 
 { #category : '*Fuel-Core' }
-SystemDictionary class >> materializeFrom: aDecoder [
+SystemEnvironment class >> materializeFrom: aDecoder [
 	"Answer my well-known instance"
 
 	^ Smalltalk globals
 ]
 
 { #category : '*Fuel-Core' }
-SystemDictionary >> serializeOn: anEncoder [
+SystemEnvironment >> serializeOn: anEncoder [
 	"Do nothing"
 ]

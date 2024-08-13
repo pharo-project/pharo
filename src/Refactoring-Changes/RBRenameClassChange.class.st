@@ -30,8 +30,8 @@ RBRenameClassChange >> = aRenameClassChange [
 { #category : 'accessing' }
 RBRenameClassChange >> changeClass [
 
-	^ (onSystemDictionary classNamed: oldName) ifNil: [
-		  onSystemDictionary classNamed: newName ]
+	^ (onSystemEnvironment classNamed: oldName) ifNil: [
+		  onSystemEnvironment classNamed: newName ]
 ]
 
 { #category : 'private' }
