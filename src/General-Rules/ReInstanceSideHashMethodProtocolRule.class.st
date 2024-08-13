@@ -4,18 +4,18 @@ Instance side #hash method should be in 'comparing' protocol
 Class {
 	#name : 'ReInstanceSideHashMethodProtocolRule',
 	#superclass : 'ReProperInstanceMethodProtocolRule',
-	#category : 'Renraku-Clean Code',
-	#package : 'Renraku',
-	#tag : 'Clean Code'
+	#category : 'General-Rules-Instance Method Protocol',
+	#package : 'General-Rules',
+	#tag : 'Instance Method Protocol'
 }
 
-{ #category : 'accessing' }
+{ #category : 'accessing - defaults' }
 ReInstanceSideHashMethodProtocolRule class >> protocolName [
 
 	^ 'comparing'
 ]
 
-{ #category : 'accessing' }
+{ #category : 'accessing - defaults' }
 ReInstanceSideHashMethodProtocolRule class >> selector [
 
 	^ #hash

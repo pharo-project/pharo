@@ -1,8 +1,11 @@
+"
+rule checking that the package manifest has the tag ''Manifest''
+"
 Class {
 	#name : 'RePackageManifestShouldBePackagedInManifestTagRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'Renraku-Coding Idiom Violation',
-	#package : 'Renraku',
+	#category : 'General-Rules-Coding Idiom Violation',
+	#package : 'General-Rules',
 	#tag : 'Coding Idiom Violation'
 }
 

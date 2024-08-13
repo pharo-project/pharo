@@ -4,18 +4,18 @@ Instance side #printOn: method should be in 'printing' protocol
 Class {
 	#name : 'ReInstanceSidePrintOnMethodProtocolRule',
 	#superclass : 'ReProperInstanceMethodProtocolRule',
-	#category : 'Renraku-Clean Code',
-	#package : 'Renraku',
-	#tag : 'Clean Code'
+	#category : 'General-Rules-Instance Method Protocol',
+	#package : 'General-Rules',
+	#tag : 'Instance Method Protocol'
 }
 
-{ #category : 'accessing' }
+{ #category : 'accessing - defaults' }
 ReInstanceSidePrintOnMethodProtocolRule class >> protocolName [
 
 	^ 'printing'
 ]
 
-{ #category : 'accessing' }
+{ #category : 'accessing - defaults' }
 ReInstanceSidePrintOnMethodProtocolRule class >> selector [
 
 	^ #printOn:

@@ -37,7 +37,7 @@ ReProperMethodProtocolNameRule class >> goodMethodProtocolName [
 { #category : 'accessing' }
 ReProperMethodProtocolNameRule class >> group [
 
-	^ 'Coding Idiom Violation'
+	^ 'Method Protocol Name'
 ]
 
 { #category : 'testing' }
