@@ -1,8 +1,8 @@
 "
-SUnit tests for RBProgramNode
+SUnit tests for ASTProgramNode
 "
 Class {
-	#name : 'RBProgramNodeTest',
+	#name : 'ASTProgramNodeTest',
 	#superclass : 'RBParseTreeTest',
 	#instVars : [
 		'node'
@@ -13,12 +13,12 @@ Class {
 }
 
 { #category : 'accessing' }
-RBProgramNodeTest class >> packageNamesUnderTest [
+ASTProgramNodeTest class >> packageNamesUnderTest [
 	^ #('AST-Core')
 ]
 
 { #category : 'accessing' }
-RBProgramNodeTest >> getAllNodesFromAST [
+ASTProgramNodeTest >> getAllNodesFromAST [
 	| methodText |
 	methodText :=
 	'toto
@@ -35,7 +35,7 @@ RBProgramNodeTest >> getAllNodesFromAST [
 ]
 
 { #category : 'accessing' }
-RBProgramNodeTest >> getMethodString [
+ASTProgramNodeTest >> getMethodString [
 	^'toto
 		"First comment"
 		| temp varaibles |
@@ -49,12 +49,12 @@ RBProgramNodeTest >> getMethodString [
 ]
 
 { #category : 'accessing' }
-RBProgramNodeTest >> node [
-	^ node ifNil: [ node := RBProgramNode new ]
+ASTProgramNodeTest >> node [
+	^ node ifNil: [ node := ASTProgramNode new ]
 ]
 
 { #category : 'tests - adding' }
-RBProgramNodeTest >> testAddNode [
+ASTProgramNodeTest >> testAddNode [
 	| tree treeNode |
 	tree := self parseExpression: '1. 2'.
 	treeNode := tree addNode: (self parseExpression: '3').
@@ -68,7 +68,7 @@ RBProgramNodeTest >> testAddNode [
 ]
 
 { #category : 'tests - adding' }
-RBProgramNodeTest >> testAddNodeBefore [
+ASTProgramNodeTest >> testAddNodeBefore [
 	| tree treeNode |
 	tree := self parseExpression: '1. 3'.
 	treeNode := tree
@@ -86,7 +86,7 @@ RBProgramNodeTest >> testAddNodeBefore [
 ]
 
 { #category : 'tests - adding' }
-RBProgramNodeTest >> testAddNodeFirst [
+ASTProgramNodeTest >> testAddNodeFirst [
 	| tree treeNode |
 	tree := self parseExpression: '2. 3'.
 	treeNode := tree addNodeFirst: (self parseExpression: '1').
@@ -100,7 +100,7 @@ RBProgramNodeTest >> testAddNodeFirst [
 ]
 
 { #category : 'tests - adding' }
-RBProgramNodeTest >> testAddNodes [
+ASTProgramNodeTest >> testAddNodes [
 	| tree treeNodes |
 	tree := self parseExpression: '1. 2'.
 	treeNodes := tree addNodes: (self parseExpression: '3. 4') statements.
@@ -116,7 +116,7 @@ RBProgramNodeTest >> testAddNodes [
 ]
 
 { #category : 'tests - adding' }
-RBProgramNodeTest >> testAddNodesBefore [
+ASTProgramNodeTest >> testAddNodesBefore [
 	| tree treeNodes |
 	tree := self parseExpression: '1. 4'.
 	treeNodes := tree
@@ -136,7 +136,7 @@ RBProgramNodeTest >> testAddNodesBefore [
 ]
 
 { #category : 'tests - adding' }
-RBProgramNodeTest >> testAddNodesFirst [
+ASTProgramNodeTest >> testAddNodesFirst [
 	| tree treeNodes |
 	tree := self parseExpression: '3. 4'.
 	treeNodes := tree addNodesFirst: (self parseExpression: '1. 2') statements.
@@ -152,7 +152,7 @@ RBProgramNodeTest >> testAddNodesFirst [
 ]
 
 { #category : 'tests - adding' }
-RBProgramNodeTest >> testAddReturn [
+ASTProgramNodeTest >> testAddReturn [
 	| tree return existingReturn lastStatement |
 	tree := self parseExpression: '1. 2'.
 	lastStatement := tree statements last.
@@ -173,7 +173,7 @@ RBProgramNodeTest >> testAddReturn [
 ]
 
 { #category : 'tests - adding' }
-RBProgramNodeTest >> testAddSelfReturn [
+ASTProgramNodeTest >> testAddSelfReturn [
 	| tree return |
 	tree := self parseExpression: '1. 2'.
 	return := tree addSelfReturn.
@@ -187,7 +187,7 @@ RBProgramNodeTest >> testAddSelfReturn [
 ]
 
 { #category : 'tests - adding' }
-RBProgramNodeTest >> testAddTemporariesNamed [
+ASTProgramNodeTest >> testAddTemporariesNamed [
 	| tree variables |
 	tree := self parseExpression: '| a | a'.
 	variables := tree addTemporariesNamed: #('b' 'c').
@@ -200,7 +200,7 @@ RBProgramNodeTest >> testAddTemporariesNamed [
 ]
 
 { #category : 'tests - adding' }
-RBProgramNodeTest >> testAddTemporaryNamed [
+ASTProgramNodeTest >> testAddTemporaryNamed [
 	| tree variable |
 	tree := self parseExpression: '| a | a'.
 	variable := tree addTemporaryNamed: 'b'.
@@ -210,19 +210,19 @@ RBProgramNodeTest >> testAddTemporaryNamed [
 ]
 
 { #category : 'tests - accessing' }
-RBProgramNodeTest >> testAllComments [
+ASTProgramNodeTest >> testAllComments [
 	"Testing the AST comments objects. I am the first comment to be found in this test"
 	self
-		assert: (RBProgramNodeTest >> #testAllComments) ast allComments first contents
+		assert: (ASTProgramNodeTest >> #testAllComments) ast allComments first contents
 		equals: 'Testing the AST comments objects. I am the first comment to be found in this test'.
 	"Next test assumes this comment it's not a string like in #testComments..."
 	self
-		assert: (RBProgramNodeTest >> #testAllComments) ast allComments second isString
+		assert: (ASTProgramNodeTest >> #testAllComments) ast allComments second isString
 		equals: false
 ]
 
 { #category : 'tests' }
-RBProgramNodeTest >> testAllParents [
+ASTProgramNodeTest >> testAllParents [
 	"check that we get all parents of a program node"
 
 	| me parentsOf7 |
@@ -236,7 +236,7 @@ RBProgramNodeTest >> testAllParents [
 ]
 
 { #category : 'tests' }
-RBProgramNodeTest >> testAllStatementsAssignment [
+ASTProgramNodeTest >> testAllStatementsAssignment [
 	| tree  |
 	tree := self parserClass parseMethod:
 			'methodName
@@ -247,7 +247,7 @@ RBProgramNodeTest >> testAllStatementsAssignment [
 ]
 
 { #category : 'tests' }
-RBProgramNodeTest >> testAllStatementsBlockWithReturn [
+ASTProgramNodeTest >> testAllStatementsBlockWithReturn [
 	| tree |
 	tree := self parserClass parseMethod:
 			'methodName
@@ -256,7 +256,7 @@ RBProgramNodeTest >> testAllStatementsBlockWithReturn [
 ]
 
 { #category : 'tests' }
-RBProgramNodeTest >> testAllStatementsBlockWithTemps [
+ASTProgramNodeTest >> testAllStatementsBlockWithTemps [
 	| tree |
 	tree := self parserClass parseMethod:
 			'methodName
@@ -265,7 +265,7 @@ RBProgramNodeTest >> testAllStatementsBlockWithTemps [
 ]
 
 { #category : 'tests' }
-RBProgramNodeTest >> testAllStatementsDynamicArray [
+ASTProgramNodeTest >> testAllStatementsDynamicArray [
 	| tree |
 	tree := self parserClass parseMethod:
 			'methodName
@@ -276,7 +276,7 @@ RBProgramNodeTest >> testAllStatementsDynamicArray [
 ]
 
 { #category : 'tests' }
-RBProgramNodeTest >> testAllStatementsReturns [
+ASTProgramNodeTest >> testAllStatementsReturns [
 	| tree stats |
 	tree := self parserClass parseMethod:
 			'methodName
@@ -286,7 +286,7 @@ RBProgramNodeTest >> testAllStatementsReturns [
 ]
 
 { #category : 'tests' }
-RBProgramNodeTest >> testAllStatementsReturnsMultiple [
+ASTProgramNodeTest >> testAllStatementsReturnsMultiple [
 	| tree stats |
 	tree := self parserClass parseMethod:
 			'methodName
@@ -297,7 +297,7 @@ RBProgramNodeTest >> testAllStatementsReturnsMultiple [
 ]
 
 { #category : 'tests' }
-RBProgramNodeTest >> testAllStatementsSimpleBlock [
+ASTProgramNodeTest >> testAllStatementsSimpleBlock [
 	| tree stats |
 	tree := self parserClass parseMethod:
 			'methodName
@@ -307,7 +307,7 @@ RBProgramNodeTest >> testAllStatementsSimpleBlock [
 ]
 
 { #category : 'tests' }
-RBProgramNodeTest >> testAllStatementsTemps [
+ASTProgramNodeTest >> testAllStatementsTemps [
 	| tree stats |
 	tree := self parserClass parseMethod:
 			'methodName
@@ -318,7 +318,7 @@ RBProgramNodeTest >> testAllStatementsTemps [
 ]
 
 { #category : 'tests' }
-RBProgramNodeTest >> testAllStatementsTwoMessages [
+ASTProgramNodeTest >> testAllStatementsTwoMessages [
 	| tree stats |
 	tree := self parserClass parseMethod:
 			'methodName
@@ -329,7 +329,7 @@ RBProgramNodeTest >> testAllStatementsTwoMessages [
 ]
 
 { #category : 'tests' }
-RBProgramNodeTest >> testAsDoit [
+ASTProgramNodeTest >> testAsDoit [
 
 	| source ast ast2 |
 	source := '|a| a + 1. a - 2. a * 3'.
@@ -348,7 +348,7 @@ RBProgramNodeTest >> testAsDoit [
 ]
 
 { #category : 'tests - bestNodeFor' }
-RBProgramNodeTest >> testBestNodeFirstTempsAndFirstCommentGivesVariableNode [
+ASTProgramNodeTest >> testBestNodeFirstTempsAndFirstCommentGivesVariableNode [
 	| ast string start |
 	string := '"First comment"'.
 	start := self getMethodString findString: string.
@@ -357,7 +357,7 @@ RBProgramNodeTest >> testBestNodeFirstTempsAndFirstCommentGivesVariableNode [
 ]
 
 { #category : 'tests - bestNodeFor' }
-RBProgramNodeTest >> testBestNodeForCommentInbetweenStatements [
+ASTProgramNodeTest >> testBestNodeForCommentInbetweenStatements [
 	| ast string start |
 	string := '"Fourth comment"'.
 	start := self getMethodString findString: string.
@@ -367,7 +367,7 @@ RBProgramNodeTest >> testBestNodeForCommentInbetweenStatements [
 ]
 
 { #category : 'tests - bestNodeFor' }
-RBProgramNodeTest >> testBestNodeForCommentInsideACascadeNodeOnMessageNode [
+ASTProgramNodeTest >> testBestNodeForCommentInsideACascadeNodeOnMessageNode [
 	| ast string start |
 	string := '"Seventh comment"'.
 	start := self getMethodString findString: string.
@@ -377,7 +377,7 @@ RBProgramNodeTest >> testBestNodeForCommentInsideACascadeNodeOnMessageNode [
 ]
 
 { #category : 'tests - bestNodeFor' }
-RBProgramNodeTest >> testBestNodeForCommentInsideACascadeNodeOnReceiver [
+ASTProgramNodeTest >> testBestNodeForCommentInsideACascadeNodeOnReceiver [
 	| ast string start |
 	string := '"Sixth comment"'.
 	start := self getMethodString findString: string.
@@ -387,7 +387,7 @@ RBProgramNodeTest >> testBestNodeForCommentInsideACascadeNodeOnReceiver [
 ]
 
 { #category : 'tests - bestNodeFor' }
-RBProgramNodeTest >> testBestNodeForCommentInsideAssignementNode [
+ASTProgramNodeTest >> testBestNodeForCommentInsideAssignementNode [
 	| ast string start |
 	string := '" Third comment "'.
 	start := self getMethodString findString: string.
@@ -397,7 +397,7 @@ RBProgramNodeTest >> testBestNodeForCommentInsideAssignementNode [
 ]
 
 { #category : 'tests - bestNodeFor' }
-RBProgramNodeTest >> testBestNodeForCommentInsideMessageNode [
+ASTProgramNodeTest >> testBestNodeForCommentInsideMessageNode [
 	| ast string start |
 	string := '"Fifth comment"'.
 	start := self getMethodString findString: string.
@@ -407,7 +407,7 @@ RBProgramNodeTest >> testBestNodeForCommentInsideMessageNode [
 ]
 
 { #category : 'tests - bestNodeFor' }
-RBProgramNodeTest >> testBestNodeForCommentInsideMethodNode [
+ASTProgramNodeTest >> testBestNodeForCommentInsideMethodNode [
 	| ast string start |
 	string := '"First comment"'.
 	start := self getMethodString findString: string.
@@ -417,7 +417,7 @@ RBProgramNodeTest >> testBestNodeForCommentInsideMethodNode [
 ]
 
 { #category : 'tests - bestNodeFor' }
-RBProgramNodeTest >> testBestNodeForCommentInsideReturnNode [
+ASTProgramNodeTest >> testBestNodeForCommentInsideReturnNode [
 	| ast string start |
 	string := '"return"'.
 	start := self getMethodString findString: string.
@@ -427,7 +427,7 @@ RBProgramNodeTest >> testBestNodeForCommentInsideReturnNode [
 ]
 
 { #category : 'tests - bestNodeFor' }
-RBProgramNodeTest >> testBestNodeForCommentInsideSequenceNode [
+ASTProgramNodeTest >> testBestNodeForCommentInsideSequenceNode [
 	| ast string start |
 	string := '"Second comment"'.
 	start := self getMethodString findString: string.
@@ -437,7 +437,7 @@ RBProgramNodeTest >> testBestNodeForCommentInsideSequenceNode [
 ]
 
 { #category : 'tests - bestNodeFor' }
-RBProgramNodeTest >> testBestNodeForStatementInsideMethodNodeReturnsStatement [
+ASTProgramNodeTest >> testBestNodeForStatementInsideMethodNodeReturnsStatement [
 
 	| bestNode string |
 
@@ -451,7 +451,7 @@ RBProgramNodeTest >> testBestNodeForStatementInsideMethodNodeReturnsStatement [
 ]
 
 { #category : 'tests - bestNodeFor' }
-RBProgramNodeTest >> testBestNodeInsideAssignementGivesSelectedValue [
+ASTProgramNodeTest >> testBestNodeInsideAssignementGivesSelectedValue [
 	| ast string start |
 	string := '#node'.
 	start := self getMethodString findString: string.
@@ -461,7 +461,7 @@ RBProgramNodeTest >> testBestNodeInsideAssignementGivesSelectedValue [
 ]
 
 { #category : 'tests - bestNodeFor' }
-RBProgramNodeTest >> testBestNodeInsideAssignementGivesSelectedVariable [
+ASTProgramNodeTest >> testBestNodeInsideAssignementGivesSelectedVariable [
 	| ast string start |
 	string := 'assignement'.
 	start := self getMethodString findString: string.
@@ -471,7 +471,7 @@ RBProgramNodeTest >> testBestNodeInsideAssignementGivesSelectedVariable [
 ]
 
 { #category : 'tests - bestNodeFor' }
-RBProgramNodeTest >> testBestNodeWithMethodSelectorGivesCommentNode [
+ASTProgramNodeTest >> testBestNodeWithMethodSelectorGivesCommentNode [
 	| ast string start |
 	string := '"First comment"'.
 	start := self getMethodString findString: string.
@@ -480,7 +480,7 @@ RBProgramNodeTest >> testBestNodeWithMethodSelectorGivesCommentNode [
 ]
 
 { #category : 'tests - adding' }
-RBProgramNodeTest >> testCursorAfterArgumentReturnsVariableNode [
+ASTProgramNodeTest >> testCursorAfterArgumentReturnsVariableNode [
 
 	| sourceCode ast bestNode |
 	sourceCode := 'toto: m1
@@ -493,7 +493,7 @@ RBProgramNodeTest >> testCursorAfterArgumentReturnsVariableNode [
 ]
 
 { #category : 'tests - adding' }
-RBProgramNodeTest >> testCursorAfterColonReturnsPreviousStatement [
+ASTProgramNodeTest >> testCursorAfterColonReturnsPreviousStatement [
 	"toto: arg
 		arg m1.|
 		arg m2"
@@ -510,7 +510,7 @@ RBProgramNodeTest >> testCursorAfterColonReturnsPreviousStatement [
 ]
 
 { #category : 'tests - adding' }
-RBProgramNodeTest >> testCursorAfterMessageAndBeforeNewlineReturnsMessageNode [
+ASTProgramNodeTest >> testCursorAfterMessageAndBeforeNewlineReturnsMessageNode [
 	"toto: arg
 	   arg m1 |
 	m2"
@@ -527,7 +527,7 @@ RBProgramNodeTest >> testCursorAfterMessageAndBeforeNewlineReturnsMessageNode [
 ]
 
 { #category : 'tests - adding' }
-RBProgramNodeTest >> testCursorAfterMessageAndSpaceReturnsMessageNode [
+ASTProgramNodeTest >> testCursorAfterMessageAndSpaceReturnsMessageNode [
 	"toto: arg
 	   arg m1 | m2"
 	| sourceCode ast bestNode |
@@ -542,7 +542,7 @@ RBProgramNodeTest >> testCursorAfterMessageAndSpaceReturnsMessageNode [
 ]
 
 { #category : 'tests - adding' }
-RBProgramNodeTest >> testCursorAfterMessageReturnsMessageNode [
+ASTProgramNodeTest >> testCursorAfterMessageReturnsMessageNode [
 	"toto: arg
 	   arg m1| m2"
 	| sourceCode ast bestNode |
@@ -557,7 +557,7 @@ RBProgramNodeTest >> testCursorAfterMessageReturnsMessageNode [
 ]
 
 { #category : 'tests - adding' }
-RBProgramNodeTest >> testCursorAfterVariableReturnsVariableNode [
+ASTProgramNodeTest >> testCursorAfterVariableReturnsVariableNode [
 	"toto: m1
 	   m1 |aMessage"
 	| sourceCode ast bestNode |
@@ -571,7 +571,7 @@ RBProgramNodeTest >> testCursorAfterVariableReturnsVariableNode [
 ]
 
 { #category : 'tests - adding' }
-RBProgramNodeTest >> testCursorBeforeArgumentNextToSelectorReturnsMethodNode [
+ASTProgramNodeTest >> testCursorBeforeArgumentNextToSelectorReturnsMethodNode [
 
 	| sourceCode ast bestNode |
 	sourceCode := 'toto:m1
@@ -584,7 +584,7 @@ RBProgramNodeTest >> testCursorBeforeArgumentNextToSelectorReturnsMethodNode [
 ]
 
 { #category : 'tests - adding' }
-RBProgramNodeTest >> testCursorBeforeArgumentReturnsVariableNode [
+ASTProgramNodeTest >> testCursorBeforeArgumentReturnsVariableNode [
 
 	| sourceCode ast bestNode |
 	sourceCode := 'toto: m1
@@ -597,7 +597,7 @@ RBProgramNodeTest >> testCursorBeforeArgumentReturnsVariableNode [
 ]
 
 { #category : 'tests - adding' }
-RBProgramNodeTest >> testCursorBeforeMessageAndAfterNewlineReturnsMessageNode [
+ASTProgramNodeTest >> testCursorBeforeMessageAndAfterNewlineReturnsMessageNode [
 	"toto: arg
 	   arg m1
 |	m2"
@@ -614,7 +614,7 @@ RBProgramNodeTest >> testCursorBeforeMessageAndAfterNewlineReturnsMessageNode [
 ]
 
 { #category : 'tests - adding' }
-RBProgramNodeTest >> testCursorBeforeVariableReturnsVariableNode [
+ASTProgramNodeTest >> testCursorBeforeVariableReturnsVariableNode [
 
 	| sourceCode ast bestNode |
 	sourceCode := 'toto: m1
@@ -627,7 +627,7 @@ RBProgramNodeTest >> testCursorBeforeVariableReturnsVariableNode [
 ]
 
 { #category : 'tests - adding' }
-RBProgramNodeTest >> testCursorInMiddleOfVariableReturnsVariableNode [
+ASTProgramNodeTest >> testCursorInMiddleOfVariableReturnsVariableNode [
 
 	| sourceCode ast bestNode |
 	sourceCode := 'toto: m1
@@ -640,14 +640,14 @@ RBProgramNodeTest >> testCursorInMiddleOfVariableReturnsVariableNode [
 ]
 
 { #category : 'tests - properties' }
-RBProgramNodeTest >> testHasProperty [
+ASTProgramNodeTest >> testHasProperty [
 	self deny: (self node hasProperty: #foo).
 	self node propertyAt: #foo put: 123.
 	self assert: (self node hasProperty: #foo)
 ]
 
 { #category : 'tests - hasSameExitPoint' }
-RBProgramNodeTest >> testHasSameExitPointWhenBlockWithoutReturnExpectTrue [
+ASTProgramNodeTest >> testHasSameExitPointWhenBlockWithoutReturnExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -657,7 +657,7 @@ RBProgramNodeTest >> testHasSameExitPointWhenBlockWithoutReturnExpectTrue [
 ]
 
 { #category : 'tests - hasSameExitPoint' }
-RBProgramNodeTest >> testHasSameExitPointWhenMessageWithReturnBlockExpectFalse [
+ASTProgramNodeTest >> testHasSameExitPointWhenMessageWithReturnBlockExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -667,7 +667,7 @@ RBProgramNodeTest >> testHasSameExitPointWhenMessageWithReturnBlockExpectFalse [
 ]
 
 { #category : 'tests - hasSameExitPoint' }
-RBProgramNodeTest >> testHasSameExitPointWhenMessageWithoutReturnBlockExpectTrue [
+ASTProgramNodeTest >> testHasSameExitPointWhenMessageWithoutReturnBlockExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -677,7 +677,7 @@ RBProgramNodeTest >> testHasSameExitPointWhenMessageWithoutReturnBlockExpectTrue
 ]
 
 { #category : 'tests - hasSameExitPoint' }
-RBProgramNodeTest >> testHasSameExitPointWhenReturnNodeExpectTrue [
+ASTProgramNodeTest >> testHasSameExitPointWhenReturnNodeExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -687,7 +687,7 @@ RBProgramNodeTest >> testHasSameExitPointWhenReturnNodeExpectTrue [
 ]
 
 { #category : 'tests - hasSameExitPoint' }
-RBProgramNodeTest >> testHasSameExitPointWhenReturnNodeWithAssignmentExpectTrue [
+ASTProgramNodeTest >> testHasSameExitPointWhenReturnNodeWithAssignmentExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -697,7 +697,7 @@ RBProgramNodeTest >> testHasSameExitPointWhenReturnNodeWithAssignmentExpectTrue 
 ]
 
 { #category : 'tests - hasSameExitPoint' }
-RBProgramNodeTest >> testHasSameExitPointWhenReturnNodeWithMessageSendExpectTrue [
+ASTProgramNodeTest >> testHasSameExitPointWhenReturnNodeWithMessageSendExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -707,7 +707,7 @@ RBProgramNodeTest >> testHasSameExitPointWhenReturnNodeWithMessageSendExpectTrue
 ]
 
 { #category : 'tests - hasSameExitPoint' }
-RBProgramNodeTest >> testHasSameExitPointWhenReturnWithBlockAndSequenceWithNestedBlockWithoutReturnExpectTrue [
+ASTProgramNodeTest >> testHasSameExitPointWhenReturnWithBlockAndSequenceWithNestedBlockWithoutReturnExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -717,7 +717,7 @@ RBProgramNodeTest >> testHasSameExitPointWhenReturnWithBlockAndSequenceWithNeste
 ]
 
 { #category : 'tests - hasSameExitPoint' }
-RBProgramNodeTest >> testHasSameExitPointWhenReturnWithBlockWithoutReturnExpectTrue [
+ASTProgramNodeTest >> testHasSameExitPointWhenReturnWithBlockWithoutReturnExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -727,7 +727,7 @@ RBProgramNodeTest >> testHasSameExitPointWhenReturnWithBlockWithoutReturnExpectT
 ]
 
 { #category : 'tests - hasSameExitPoint' }
-RBProgramNodeTest >> testHasSameExitPointWhenReturnWithEmptyBlockExpectTrue [
+ASTProgramNodeTest >> testHasSameExitPointWhenReturnWithEmptyBlockExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -737,7 +737,7 @@ RBProgramNodeTest >> testHasSameExitPointWhenReturnWithEmptyBlockExpectTrue [
 ]
 
 { #category : 'tests - hasSameExitPoint' }
-RBProgramNodeTest >> testHasSameExitPointWhenReturnWithMessageWithReturnBlockExpectTrue [
+ASTProgramNodeTest >> testHasSameExitPointWhenReturnWithMessageWithReturnBlockExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -747,7 +747,7 @@ RBProgramNodeTest >> testHasSameExitPointWhenReturnWithMessageWithReturnBlockExp
 ]
 
 { #category : 'tests - hasSameExitPoint' }
-RBProgramNodeTest >> testHasSameExitPointWhenReturnWithMessageWithoutReturnBlockExpecTrue [
+ASTProgramNodeTest >> testHasSameExitPointWhenReturnWithMessageWithoutReturnBlockExpecTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -757,7 +757,7 @@ RBProgramNodeTest >> testHasSameExitPointWhenReturnWithMessageWithoutReturnBlock
 ]
 
 { #category : 'tests - hasSameExitPoint' }
-RBProgramNodeTest >> testHasSameExitPointWhenReturnWithWhileFalseBlockWithReturnExpectFalse [
+ASTProgramNodeTest >> testHasSameExitPointWhenReturnWithWhileFalseBlockWithReturnExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -767,7 +767,7 @@ RBProgramNodeTest >> testHasSameExitPointWhenReturnWithWhileFalseBlockWithReturn
 ]
 
 { #category : 'tests - hasSameExitPoint' }
-RBProgramNodeTest >> testHasSameExitPointWhenSequenceWithLastReturnAndNonLocalReturnExpectTrue [
+ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithLastReturnAndNonLocalReturnExpectTrue [
 
 	| ast sequence |
 	ast := RBParser parseMethod: 'a1
@@ -781,7 +781,7 @@ RBProgramNodeTest >> testHasSameExitPointWhenSequenceWithLastReturnAndNonLocalRe
 ]
 
 { #category : 'tests - hasSameExitPoint' }
-RBProgramNodeTest >> testHasSameExitPointWhenSequenceWithLastReturnExpectTrue [
+ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithLastReturnExpectTrue [
 
 	| ast sequence |
 	ast := RBParser parseMethod: 'a1
@@ -794,7 +794,7 @@ RBProgramNodeTest >> testHasSameExitPointWhenSequenceWithLastReturnExpectTrue [
 ]
 
 { #category : 'tests - hasSameExitPoint' }
-RBProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutAnyReturnsExpectTrue [
+ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutAnyReturnsExpectTrue [
 
 	| ast sequence |
 	ast := RBParser parseMethod: 'a1
@@ -807,7 +807,7 @@ RBProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutAnyReturnsExpectTrue
 ]
 
 { #category : 'tests - hasSameExitPoint' }
-RBProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutLastReturnAndMultipleNonLocalReturnExpectFalse [
+ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutLastReturnAndMultipleNonLocalReturnExpectFalse [
 
 	| ast sequence |
 	ast := RBParser parseMethod: 'a1
@@ -823,7 +823,7 @@ RBProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutLastReturnAndMultipl
 ]
 
 { #category : 'tests - hasSameExitPoint' }
-RBProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutLastReturnAndNonLocalReturnExpectFalse [
+ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutLastReturnAndNonLocalReturnExpectFalse [
 
 	| ast sequence |
 	ast := RBParser parseMethod: 'a1
@@ -836,7 +836,7 @@ RBProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutLastReturnAndNonLoca
 ]
 
 { #category : 'tests - isEssential' }
-RBProgramNodeTest >> testIsEssentialWhenFirstMessageInACascadeExpectFalse [
+ASTProgramNodeTest >> testIsEssentialWhenFirstMessageInACascadeExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -846,7 +846,7 @@ RBProgramNodeTest >> testIsEssentialWhenFirstMessageInACascadeExpectFalse [
 ]
 
 { #category : 'tests - isEssential' }
-RBProgramNodeTest >> testIsEssentialWhenItIsReceiverExpectTrue [
+ASTProgramNodeTest >> testIsEssentialWhenItIsReceiverExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -856,7 +856,7 @@ RBProgramNodeTest >> testIsEssentialWhenItIsReceiverExpectTrue [
 ]
 
 { #category : 'tests - isEssential' }
-RBProgramNodeTest >> testIsEssentialWhenLastMessageInACascadeAndCascadeIsEssentialExpectFalse [
+ASTProgramNodeTest >> testIsEssentialWhenLastMessageInACascadeAndCascadeIsEssentialExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -866,7 +866,7 @@ RBProgramNodeTest >> testIsEssentialWhenLastMessageInACascadeAndCascadeIsEssenti
 ]
 
 { #category : 'tests - isEssential' }
-RBProgramNodeTest >> testIsEssentialWhenLastMessageInACascadeAndCascadeIsNotEssentialExpectFalse [
+ASTProgramNodeTest >> testIsEssentialWhenLastMessageInACascadeAndCascadeIsNotEssentialExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -876,7 +876,7 @@ RBProgramNodeTest >> testIsEssentialWhenLastMessageInACascadeAndCascadeIsNotEsse
 ]
 
 { #category : 'tests - isEssential' }
-RBProgramNodeTest >> testIsEssentialWhenMessageInACascadeExpectFalse [
+ASTProgramNodeTest >> testIsEssentialWhenMessageInACascadeExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -886,7 +886,7 @@ RBProgramNodeTest >> testIsEssentialWhenMessageInACascadeExpectFalse [
 ]
 
 { #category : 'tests - isEssential' }
-RBProgramNodeTest >> testIsEssentialWhenNodeIsArgumentExpectTrue [
+ASTProgramNodeTest >> testIsEssentialWhenNodeIsArgumentExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -896,7 +896,7 @@ RBProgramNodeTest >> testIsEssentialWhenNodeIsArgumentExpectTrue [
 ]
 
 { #category : 'tests - isEssential' }
-RBProgramNodeTest >> testIsEssentialWhenOnlyNodeInABlockNodeExpectFalse [
+ASTProgramNodeTest >> testIsEssentialWhenOnlyNodeInABlockNodeExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -906,7 +906,7 @@ RBProgramNodeTest >> testIsEssentialWhenOnlyNodeInABlockNodeExpectFalse [
 ]
 
 { #category : 'tests - isEssential' }
-RBProgramNodeTest >> testIsEssentialWhenPartOfABlockNodeExpectTrue [
+ASTProgramNodeTest >> testIsEssentialWhenPartOfABlockNodeExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -916,7 +916,7 @@ RBProgramNodeTest >> testIsEssentialWhenPartOfABlockNodeExpectTrue [
 ]
 
 { #category : 'tests - isEssential' }
-RBProgramNodeTest >> testIsEssentialWhenPartOfAReturnStatementExpectTrue [
+ASTProgramNodeTest >> testIsEssentialWhenPartOfAReturnStatementExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -926,7 +926,7 @@ RBProgramNodeTest >> testIsEssentialWhenPartOfAReturnStatementExpectTrue [
 ]
 
 { #category : 'tests - isEssential' }
-RBProgramNodeTest >> testIsEssentialWhenPartOfASequenceExpectFalse [
+ASTProgramNodeTest >> testIsEssentialWhenPartOfASequenceExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -936,7 +936,7 @@ RBProgramNodeTest >> testIsEssentialWhenPartOfASequenceExpectFalse [
 ]
 
 { #category : 'tests - isEssential' }
-RBProgramNodeTest >> testIsEssentialWhenPartOfASequenceLastNodeExpectFalse [
+ASTProgramNodeTest >> testIsEssentialWhenPartOfASequenceLastNodeExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -946,7 +946,7 @@ RBProgramNodeTest >> testIsEssentialWhenPartOfASequenceLastNodeExpectFalse [
 ]
 
 { #category : 'tests - isEssential' }
-RBProgramNodeTest >> testIsEssentialWhenPartOfASequenceOneStatementOnlyExpectFalse [
+ASTProgramNodeTest >> testIsEssentialWhenPartOfASequenceOneStatementOnlyExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -956,7 +956,7 @@ RBProgramNodeTest >> testIsEssentialWhenPartOfASequenceOneStatementOnlyExpectFal
 ]
 
 { #category : 'tests - isEssential' }
-RBProgramNodeTest >> testIsEssentialWhenPartOfAnAssignementInBlockNodeExpectTrue [
+ASTProgramNodeTest >> testIsEssentialWhenPartOfAnAssignementInBlockNodeExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -966,7 +966,7 @@ RBProgramNodeTest >> testIsEssentialWhenPartOfAnAssignementInBlockNodeExpectTrue
 ]
 
 { #category : 'tests - isEssential' }
-RBProgramNodeTest >> testIsEssentialWhenTwoMessagesInACascadeExpectFalse [
+ASTProgramNodeTest >> testIsEssentialWhenTwoMessagesInACascadeExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -976,7 +976,7 @@ RBProgramNodeTest >> testIsEssentialWhenTwoMessagesInACascadeExpectFalse [
 ]
 
 { #category : 'tests - isEssential' }
-RBProgramNodeTest >> testIsEssentialWhenValueOfAnAssignmentExpectTrue [
+ASTProgramNodeTest >> testIsEssentialWhenValueOfAnAssignmentExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -986,7 +986,7 @@ RBProgramNodeTest >> testIsEssentialWhenValueOfAnAssignmentExpectTrue [
 ]
 
 { #category : 'tests - isEssential' }
-RBProgramNodeTest >> testIsEssentialWhenVariableOfAnAssignmentExpectTrue [
+ASTProgramNodeTest >> testIsEssentialWhenVariableOfAnAssignmentExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -996,7 +996,7 @@ RBProgramNodeTest >> testIsEssentialWhenVariableOfAnAssignmentExpectTrue [
 ]
 
 { #category : 'tests - isUsedAsReturnValue' }
-RBProgramNodeTest >> testIsUsedAsReturnValueWhenBlockNodeInSequenceNodeExpectFalse [
+ASTProgramNodeTest >> testIsUsedAsReturnValueWhenBlockNodeInSequenceNodeExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1006,7 +1006,7 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenBlockNodeInSequenceNodeExpectFal
 ]
 
 { #category : 'tests - isUsedAsReturnValue' }
-RBProgramNodeTest >> testIsUsedAsReturnValueWhenFirstNodeInSequenceNodeExpectFalse [
+ASTProgramNodeTest >> testIsUsedAsReturnValueWhenFirstNodeInSequenceNodeExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1016,7 +1016,7 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenFirstNodeInSequenceNodeExpectFal
 ]
 
 { #category : 'tests - isUsedAsReturnValue' }
-RBProgramNodeTest >> testIsUsedAsReturnValueWhenInSequenceNodeExpectFalse [
+ASTProgramNodeTest >> testIsUsedAsReturnValueWhenInSequenceNodeExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1026,7 +1026,7 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenInSequenceNodeExpectFalse [
 ]
 
 { #category : 'tests - isUsedAsReturnValue' }
-RBProgramNodeTest >> testIsUsedAsReturnValueWhenLastNodeInSequenceExpectFalse [
+ASTProgramNodeTest >> testIsUsedAsReturnValueWhenLastNodeInSequenceExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1036,7 +1036,7 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenLastNodeInSequenceExpectFalse [
 ]
 
 { #category : 'tests - isUsedAsReturnValue' }
-RBProgramNodeTest >> testIsUsedAsReturnValueWhenLastNodeIsReturnStatementInSequenceExpectTrue [
+ASTProgramNodeTest >> testIsUsedAsReturnValueWhenLastNodeIsReturnStatementInSequenceExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1046,7 +1046,7 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenLastNodeIsReturnStatementInSeque
 ]
 
 { #category : 'tests - isUsedAsReturnValue' }
-RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsArrayExpectFalse [
+ASTProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsArrayExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1056,7 +1056,7 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsArrayExpectFalse [
 ]
 
 { #category : 'tests - isUsedAsReturnValue' }
-RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentExpectFalse [
+ASTProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1066,7 +1066,7 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentExpectFalse [
 ]
 
 { #category : 'tests - isUsedAsReturnValue' }
-RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentInSequenceExpectFalse [
+ASTProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentInSequenceExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1076,7 +1076,7 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentInSequenceExpect
 ]
 
 { #category : 'tests - isUsedAsReturnValue' }
-RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentValueExpectTrue [
+ASTProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentValueExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1086,7 +1086,7 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentValueExpectTrue 
 ]
 
 { #category : 'tests - isUsedAsReturnValue' }
-RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentVariableExpectFalse [
+ASTProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentVariableExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1096,7 +1096,7 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsAssignmentVariableExpectFa
 ]
 
 { #category : 'tests - isUsedAsReturnValue' }
-RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsLastInBlockExpectFalse [
+ASTProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsLastInBlockExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1106,7 +1106,7 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsLastInBlockExpectFalse [
 ]
 
 { #category : 'tests - isUsedAsReturnValue' }
-RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsNotLastInBlockExpectFalse [
+ASTProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsNotLastInBlockExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1116,7 +1116,7 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsNotLastInBlockExpectFalse 
 ]
 
 { #category : 'tests - isUsedAsReturnValue' }
-RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsPartOfArrayExpectTrue [
+ASTProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsPartOfArrayExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1126,7 +1126,7 @@ RBProgramNodeTest >> testIsUsedAsReturnValueWhenNodeIsPartOfArrayExpectTrue [
 ]
 
 { #category : 'tests' }
-RBProgramNodeTest >> testNumberOfSentMessages [
+ASTProgramNodeTest >> testNumberOfSentMessages [
 	| tree messages |
 	tree := self parserClass parseMethod:
 			'methodName
@@ -1143,34 +1143,34 @@ RBProgramNodeTest >> testNumberOfSentMessages [
 ]
 
 { #category : 'tests - properties' }
-RBProgramNodeTest >> testPropertyAt [
+ASTProgramNodeTest >> testPropertyAt [
 	self should: [ self node propertyAt: #foo ] raise: Error.
 	self node propertyAt: #foo put: true.
 	self assert: (self node propertyAt: #foo)
 ]
 
 { #category : 'tests - properties' }
-RBProgramNodeTest >> testPropertyAtIfAbsent [
+ASTProgramNodeTest >> testPropertyAtIfAbsent [
 	self assert: (self node propertyAt: #foo ifAbsent: [ true ]).
 	self node propertyAt: #foo put: true.
 	self assert: (self node propertyAt: #foo ifAbsent: [ false ])
 ]
 
 { #category : 'tests - properties' }
-RBProgramNodeTest >> testPropertyAtIfAbsentPut [
+ASTProgramNodeTest >> testPropertyAtIfAbsentPut [
 	self assert: (self node propertyAt: #foo ifAbsentPut: [ true ]).
 	self assert: (self node propertyAt: #foo ifAbsentPut: [ false ])
 ]
 
 { #category : 'tests' }
-RBProgramNodeTest >> testPropertyAtIfPresent [
+ASTProgramNodeTest >> testPropertyAtIfPresent [
 	self assert: (self node propertyAt: #foo ifPresent:[ :p | #bad ]) equals: nil.
 	self node propertyAt: #foo put: true.
 	self assert: (self node propertyAt: #foo ifPresent:[ :p | p ]).
 ]
 
 { #category : 'tests - properties' }
-RBProgramNodeTest >> testPropertyAtIfPresentIfAbsent [
+ASTProgramNodeTest >> testPropertyAtIfPresentIfAbsent [
 	self assert: (self node propertyAt: #foo ifPresent:[ false ] ifAbsent: [ true ]) equals: true.
 	self node propertyAt: #foo put: true.
 	self assert: (self node propertyAt: #foo ifPresent:[ true ] ifAbsent: [ false ]).
@@ -1178,21 +1178,21 @@ RBProgramNodeTest >> testPropertyAtIfPresentIfAbsent [
 ]
 
 { #category : 'tests - properties' }
-RBProgramNodeTest >> testRemoveProperty [
+ASTProgramNodeTest >> testRemoveProperty [
 	self should: [ self node removeProperty: #foo ] raise: Error.
 	self node propertyAt: #foo put: true.
 	self assert: (self node removeProperty: #foo)
 ]
 
 { #category : 'tests - properties' }
-RBProgramNodeTest >> testRemovePropertyIfAbsent [
+ASTProgramNodeTest >> testRemovePropertyIfAbsent [
 	self assert: (self node removeProperty: #foo ifAbsent: [ true ]).
 	self node propertyAt: #foo put: true.
 	self assert: (self node removeProperty: #foo ifAbsent: [ false ])
 ]
 
 { #category : 'tests - replacing' }
-RBProgramNodeTest >> testReplaceAssignment [
+ASTProgramNodeTest >> testReplaceAssignment [
 	| tree expectedTree |
 	tree := self parseMethod: 'run sum := 2 + 2'.
 	expectedTree := self parseMethod: 'run multpppp := 2 * 2'.
@@ -1202,7 +1202,7 @@ RBProgramNodeTest >> testReplaceAssignment [
 ]
 
 { #category : 'tests - replacing' }
-RBProgramNodeTest >> testReplaceBlock [
+ASTProgramNodeTest >> testReplaceBlock [
 	| tree expectedTree |
 	tree := self parseMethod: 'run self foo ifNil: [ ^ true ]'.
 	expectedTree := self parseMethod: 'run self foo ifNil: [ ^ false ]'.
@@ -1212,7 +1212,7 @@ RBProgramNodeTest >> testReplaceBlock [
 ]
 
 { #category : 'tests - replacing' }
-RBProgramNodeTest >> testReplaceLiteral [
+ASTProgramNodeTest >> testReplaceLiteral [
 	| tree |
 	tree := self parseMethod: 'run "1" 123 "2"'.
 	tree body statements first replaceWith: (self parseExpression: '$a').
@@ -1223,7 +1223,7 @@ RBProgramNodeTest >> testReplaceLiteral [
 ]
 
 { #category : 'tests - replacing' }
-RBProgramNodeTest >> testReplaceLiteralArray1 [
+ASTProgramNodeTest >> testReplaceLiteralArray1 [
 	| tree |
 	tree := self parseMethod: 'run "1" #(1 2 3) "2"'.
 	tree body statements first replaceWith: (self parseExpression: '#[1 2 3]').
@@ -1234,7 +1234,7 @@ RBProgramNodeTest >> testReplaceLiteralArray1 [
 ]
 
 { #category : 'tests - replacing' }
-RBProgramNodeTest >> testReplaceLiteralArray2 [
+ASTProgramNodeTest >> testReplaceLiteralArray2 [
 	| tree |
 	tree := self parseMethod: 'run "1" #[1 2 3] "2"'.
 	tree body statements first replaceWith: (self parseExpression: '#(1 2 3)').
@@ -1245,7 +1245,7 @@ RBProgramNodeTest >> testReplaceLiteralArray2 [
 ]
 
 { #category : 'tests - replacing' }
-RBProgramNodeTest >> testReplaceMessage [
+ASTProgramNodeTest >> testReplaceMessage [
 	| tree |
 	tree := self parseMethod: 'run "1" self "2" run "3"'.
 	tree body statements first replaceWith: (self parseExpression: 'self runCase').
@@ -1253,7 +1253,7 @@ RBProgramNodeTest >> testReplaceMessage [
 ]
 
 { #category : 'tests - replacing' }
-RBProgramNodeTest >> testReplaceMessageArgument [
+ASTProgramNodeTest >> testReplaceMessageArgument [
 	| tree |
 	tree := self parseMethod: 'foo "1" self "2" foo: "3" foo "4"'.
 	tree body statements first arguments first replaceWith: (self parseExpression: 'bar').
@@ -1267,7 +1267,7 @@ RBProgramNodeTest >> testReplaceMessageArgument [
 ]
 
 { #category : 'tests - replacing' }
-RBProgramNodeTest >> testReplaceMessageReceiver [
+ASTProgramNodeTest >> testReplaceMessageReceiver [
 	| tree |
 	tree := self parseMethod: 'foo "1" self "2" foo: "3" 123 "4"'.
 	tree body statements first receiver replaceWith: (self parseExpression: 'bar').
@@ -1281,7 +1281,7 @@ RBProgramNodeTest >> testReplaceMessageReceiver [
 ]
 
 { #category : 'tests - replacing' }
-RBProgramNodeTest >> testReplaceMethodBinary [
+ASTProgramNodeTest >> testReplaceMethodBinary [
 	| tree |
 	tree := self parseMethod: '= "1" anObject "2" ^ "3" 4 "5"'.
 	tree renameSelector: #runCase andArguments: #().
@@ -1301,7 +1301,7 @@ RBProgramNodeTest >> testReplaceMethodBinary [
 ]
 
 { #category : 'tests - replacing' }
-RBProgramNodeTest >> testReplaceMethodKeyword [
+ASTProgramNodeTest >> testReplaceMethodKeyword [
 	| tree |
 	tree := self parseMethod: 'deny: "1" anObject "2" ^ "3" 4 "5"'.
 	tree renameSelector: #runCase andArguments: #().
@@ -1321,7 +1321,7 @@ RBProgramNodeTest >> testReplaceMethodKeyword [
 ]
 
 { #category : 'tests - replacing' }
-RBProgramNodeTest >> testReplaceMethodKeywordLong [
+ASTProgramNodeTest >> testReplaceMethodKeywordLong [
 	| tree |
 	tree := self parseMethod: 'deny: "1" anObject "2" description: "3" anotherObject "4" ^ "5" 6 "7"'.
 	tree renameSelector: #runCase andArguments: #().
@@ -1341,7 +1341,7 @@ RBProgramNodeTest >> testReplaceMethodKeywordLong [
 ]
 
 { #category : 'tests - replacing' }
-RBProgramNodeTest >> testReplaceMethodUnary [
+ASTProgramNodeTest >> testReplaceMethodUnary [
 	| tree |
 	tree := self parseMethod: 'run "1" ^ "2" 3 "4"'.
 	tree renameSelector: #runCase andArguments: #().
@@ -1361,7 +1361,7 @@ RBProgramNodeTest >> testReplaceMethodUnary [
 ]
 
 { #category : 'tests - replacing' }
-RBProgramNodeTest >> testReplaceVariable [
+ASTProgramNodeTest >> testReplaceVariable [
 	| tree |
 	tree := self parseMethod: 'run "1" foo "2"'.
 	tree body statements first replaceWith: (self parseExpression: 'zork').
@@ -1372,7 +1372,7 @@ RBProgramNodeTest >> testReplaceVariable [
 ]
 
 { #category : 'tests - messages' }
-RBProgramNodeTest >> testSentMessages [
+ASTProgramNodeTest >> testSentMessages [
 	| tree messages |
 	tree := self
 		parseRewriteMethod:
@@ -1388,14 +1388,14 @@ RBProgramNodeTest >> testSentMessages [
 ]
 
 { #category : 'tests - comments' }
-RBProgramNodeTest >> testSetCommentsToNil [
+ASTProgramNodeTest >> testSetCommentsToNil [
 
 	self node comments: nil.
 	self assert: self node comments equals: #()
 ]
 
 { #category : 'tests' }
-RBProgramNodeTest >> testWithAllParents [
+ASTProgramNodeTest >> testWithAllParents [
 	"check that we get all parents of a program node, and me"
 
 	| me parentsOf7 |
@@ -1409,7 +1409,7 @@ RBProgramNodeTest >> testWithAllParents [
 ]
 
 { #category : 'tests - lastIsReturn' }
-RBProgramNodeTest >> testlastIsReturnWhenArrayNodeWithFirstReturnExpectFalse [
+ASTProgramNodeTest >> testlastIsReturnWhenArrayNodeWithFirstReturnExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1419,7 +1419,7 @@ RBProgramNodeTest >> testlastIsReturnWhenArrayNodeWithFirstReturnExpectFalse [
 ]
 
 { #category : 'tests - lastIsReturn' }
-RBProgramNodeTest >> testlastIsReturnWhenArrayNodeWithLastReturnExpectTrue [
+ASTProgramNodeTest >> testlastIsReturnWhenArrayNodeWithLastReturnExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1429,7 +1429,7 @@ RBProgramNodeTest >> testlastIsReturnWhenArrayNodeWithLastReturnExpectTrue [
 ]
 
 { #category : 'tests - lastIsReturn' }
-RBProgramNodeTest >> testlastIsReturnWhenBlockNodeExpectFalse [
+ASTProgramNodeTest >> testlastIsReturnWhenBlockNodeExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1439,7 +1439,7 @@ RBProgramNodeTest >> testlastIsReturnWhenBlockNodeExpectFalse [
 ]
 
 { #category : 'tests - lastIsReturn' }
-RBProgramNodeTest >> testlastIsReturnWhenEmptyArrayNodeExpectFalse [
+ASTProgramNodeTest >> testlastIsReturnWhenEmptyArrayNodeExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1449,7 +1449,7 @@ RBProgramNodeTest >> testlastIsReturnWhenEmptyArrayNodeExpectFalse [
 ]
 
 { #category : 'tests - lastIsReturn' }
-RBProgramNodeTest >> testlastIsReturnWhenEmptySequenceExpectFalse [
+ASTProgramNodeTest >> testlastIsReturnWhenEmptySequenceExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1'.
@@ -1458,7 +1458,7 @@ RBProgramNodeTest >> testlastIsReturnWhenEmptySequenceExpectFalse [
 ]
 
 { #category : 'tests - lastIsReturn' }
-RBProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasOneArgumentExpectFalse [
+ASTProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasOneArgumentExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1468,7 +1468,7 @@ RBProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasOneArgument
 ]
 
 { #category : 'tests - lastIsReturn' }
-RBProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumentExpectFalse [
+ASTProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumentExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1478,7 +1478,7 @@ RBProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgument
 ]
 
 { #category : 'tests - lastIsReturn' }
-RBProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumentsAndBothArgsHaveReturnExpectTrue [
+ASTProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumentsAndBothArgsHaveReturnExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1488,7 +1488,7 @@ RBProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgument
 ]
 
 { #category : 'tests - lastIsReturn' }
-RBProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumentsAndFirstArgHasReturnExpectFalse [
+ASTProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumentsAndFirstArgHasReturnExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1498,7 +1498,7 @@ RBProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgument
 ]
 
 { #category : 'tests - lastIsReturn' }
-RBProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumentsAndSecondArgHasReturnExpectFalse [
+ASTProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgumentsAndSecondArgHasReturnExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1508,7 +1508,7 @@ RBProgramNodeTest >> testlastIsReturnWhenMessageNodeIsInlinedIfAndHasTwoArgument
 ]
 
 { #category : 'tests - lastIsReturn' }
-RBProgramNodeTest >> testlastIsReturnWhenMessageNodeIsNotInlinedIfExpectFalse [
+ASTProgramNodeTest >> testlastIsReturnWhenMessageNodeIsNotInlinedIfExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1518,7 +1518,7 @@ RBProgramNodeTest >> testlastIsReturnWhenMessageNodeIsNotInlinedIfExpectFalse [
 ]
 
 { #category : 'tests - lastIsReturn' }
-RBProgramNodeTest >> testlastIsReturnWhenMethodNodeWithLastReturnExpectTrue [
+ASTProgramNodeTest >> testlastIsReturnWhenMethodNodeWithLastReturnExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1528,7 +1528,7 @@ RBProgramNodeTest >> testlastIsReturnWhenMethodNodeWithLastReturnExpectTrue [
 ]
 
 { #category : 'tests - lastIsReturn' }
-RBProgramNodeTest >> testlastIsReturnWhenNodeIsNotReturnExpectFalse [
+ASTProgramNodeTest >> testlastIsReturnWhenNodeIsNotReturnExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1538,7 +1538,7 @@ RBProgramNodeTest >> testlastIsReturnWhenNodeIsNotReturnExpectFalse [
 ]
 
 { #category : 'tests - lastIsReturn' }
-RBProgramNodeTest >> testlastIsReturnWhenNodeIsReturnExpectTrue [
+ASTProgramNodeTest >> testlastIsReturnWhenNodeIsReturnExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1548,7 +1548,7 @@ RBProgramNodeTest >> testlastIsReturnWhenNodeIsReturnExpectTrue [
 ]
 
 { #category : 'tests - lastIsReturn' }
-RBProgramNodeTest >> testlastIsReturnWhenNodeIsSequenceWithLastReturnNodeExpectTrue [
+ASTProgramNodeTest >> testlastIsReturnWhenNodeIsSequenceWithLastReturnNodeExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1558,7 +1558,7 @@ RBProgramNodeTest >> testlastIsReturnWhenNodeIsSequenceWithLastReturnNodeExpectT
 ]
 
 { #category : 'tests - lastIsReturn' }
-RBProgramNodeTest >> testlastIsReturnWhenNodeIsSequenceWithoutLastReturnNodeExpectFalse [
+ASTProgramNodeTest >> testlastIsReturnWhenNodeIsSequenceWithoutLastReturnNodeExpectFalse [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1
@@ -1568,7 +1568,7 @@ RBProgramNodeTest >> testlastIsReturnWhenNodeIsSequenceWithoutLastReturnNodeExpe
 ]
 
 { #category : 'tests - lastIsReturn' }
-RBProgramNodeTest >> testlastIsReturnWhenReturnNodeWithBlockNodeExpectTrue [
+ASTProgramNodeTest >> testlastIsReturnWhenReturnNodeWithBlockNodeExpectTrue [
 
 	| ast statement |
 	ast := RBParser parseMethod: 'a1

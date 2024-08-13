@@ -1,5 +1,5 @@
 "
-RBValueNode is an abstract class that represents a node that returns some value.
+ASTValueNode is an abstract class that represents a node that returns some value.
 
 Subclasses must implement the following messages:
 	accessing
@@ -14,8 +14,8 @@ Instance Variables:
 
 "
 Class {
-	#name : 'RBValueNode',
-	#superclass : 'RBProgramNode',
+	#name : 'ASTValueNode',
+	#superclass : 'ASTProgramNode',
 	#instVars : [
 		'parentheses'
 	],
@@ -25,31 +25,31 @@ Class {
 }
 
 { #category : 'testing' }
-RBValueNode class >> isAbstract [
+ASTValueNode class >> isAbstract [
 
-	^ self == RBValueNode
+	^ self == ASTValueNode
 ]
 
 { #category : 'accessing' }
-RBValueNode >> addParenthesis: anInterval [
+ASTValueNode >> addParenthesis: anInterval [
 	parentheses ifNil: [parentheses := OrderedCollection new: 1].
 	parentheses add: anInterval
 ]
 
 { #category : 'testing' }
-RBValueNode >> containedBy: anInterval [
+ASTValueNode >> containedBy: anInterval [
 	^anInterval first <= self startWithoutParentheses
 		and: [anInterval last >= self stopWithoutParentheses]
 ]
 
 { #category : 'evaluating' }
-RBValueNode >> evaluate [
+ASTValueNode >> evaluate [
 	"evaluate the AST with a nil  receiver"
 	^ self evaluateForReceiver: nil
 ]
 
 { #category : 'evaluating' }
-RBValueNode >> evaluateForContext: aContext [
+ASTValueNode >> evaluateForContext: aContext [
 	"evaluate the AST taking variables from the context"
 	^ aContext compiler
 		  ast: self asDoit;
@@ -57,7 +57,7 @@ RBValueNode >> evaluateForContext: aContext [
 ]
 
 { #category : 'evaluating' }
-RBValueNode >> evaluateForReceiver: aReceiver [
+ASTValueNode >> evaluateForReceiver: aReceiver [
 	"evaluate the AST binding self to the receiver and taking its variables"
 
 	^ aReceiver class compiler
@@ -67,41 +67,41 @@ RBValueNode >> evaluateForReceiver: aReceiver [
 ]
 
 { #category : 'testing' }
-RBValueNode >> hasParentheses [
+ASTValueNode >> hasParentheses [
 	^self parentheses notEmpty
 ]
 
 { #category : 'testing' }
-RBValueNode >> isValue [
+ASTValueNode >> isValue [
 	^true
 ]
 
 { #category : 'testing' }
-RBValueNode >> needsParenthesis [
+ASTValueNode >> needsParenthesis [
 	^self subclassResponsibility
 ]
 
 { #category : 'accessing' }
-RBValueNode >> parentheses [
+ASTValueNode >> parentheses [
 	^parentheses ifNil: [#()] ifNotNil: [parentheses]
 ]
 
 { #category : 'accessing' }
-RBValueNode >> start [
+ASTValueNode >> start [
 	^ parentheses ifNil: [ self startWithoutParentheses ] ifNotNil: [ parentheses last first ]
 ]
 
 { #category : 'accessing' }
-RBValueNode >> startWithoutParentheses [
+ASTValueNode >> startWithoutParentheses [
 	^self subclassResponsibility
 ]
 
 { #category : 'accessing' }
-RBValueNode >> stop [
+ASTValueNode >> stop [
 	^ parentheses ifNil: [ self stopWithoutParentheses ] ifNotNil: [ parentheses last last ]
 ]
 
 { #category : 'accessing' }
-RBValueNode >> stopWithoutParentheses [
+ASTValueNode >> stopWithoutParentheses [
 	^self subclassResponsibility
 ]

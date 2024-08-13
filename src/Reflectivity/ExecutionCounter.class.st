@@ -51,9 +51,9 @@ ExecutionCounter class >> initialize [
 ]
 
 { #category : 'instance creation' }
-ExecutionCounter class >> installOn: aRBProgramNode [
+ExecutionCounter class >> installOn: aProgramNode [
 	^self new
-		node: aRBProgramNode;
+		node: aProgramNode;
 		install
 ]
 

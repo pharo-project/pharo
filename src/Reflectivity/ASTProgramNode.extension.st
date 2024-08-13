@@ -1,51 +1,51 @@
-Extension { #name : 'RBProgramNode' }
+Extension { #name : 'ASTProgramNode' }
 
 { #category : '*Reflectivity' }
-RBProgramNode >> addBreakpoint: aBreakpoint [
+ASTProgramNode >> addBreakpoint: aBreakpoint [
 	self breakpoints add: aBreakpoint
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> afterHooks [
+ASTProgramNode >> afterHooks [
 	^self propertyAt: #afterHooks ifAbsent: #()
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> afterLinks [
+ASTProgramNode >> afterLinks [
 	^ self links select: [ :each | each control == #after ]
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> allAfterAreWeak [
+ASTProgramNode >> allAfterAreWeak [
 	self hasMetalink ifFalse: [^false].
 	self isMessage ifFalse:  [^false]. "only sends are weak"
 	^self afterLinks allSatisfy: [ :link | link hasOption: #optionWeakAfter ]
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> availableReifications [
+ASTProgramNode >> availableReifications [
 	^RFReification subclasses
 		select: [ :e | e entities includesAny: self class withAllSuperclasses ]
 		thenCollect: #key
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> beforeHooks [
+ASTProgramNode >> beforeHooks [
 	^self propertyAt: #beforeHooks ifAbsentPut: OrderedCollection new
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> beforeLinks [
+ASTProgramNode >> beforeLinks [
 	^ self links select: [ :each | each control == #before ]
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> breakpoints [
+ASTProgramNode >> breakpoints [
 	^ self propertyAt: #breakpoints ifAbsentPut: [ Set new ]
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> clearReflectivityAnnotations [
+ASTProgramNode >> clearReflectivityAnnotations [
 	self removeProperty: #preambles ifAbsent: [ ].
 	self removeProperty: #beforeHooks ifAbsent: [ ].
 	self removeProperty: #afterHooks ifAbsent: [ ].
@@ -53,31 +53,31 @@ RBProgramNode >> clearReflectivityAnnotations [
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> counter [
+ASTProgramNode >> counter [
 
 	self hasExecutionCounter ifFalse:[^nil].
 	^(self beforeLinks detect: [ :link | link metaObject class = ExecutionCounter]) metaObject
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> hasBeenExecuted [
+ASTProgramNode >> hasBeenExecuted [
 	^self propertyAt: #tagExecuted ifAbsent: false
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> hasBreakpoint [
+ASTProgramNode >> hasBreakpoint [
 	^ (self hasProperty: #breakpoints) and: [ self breakpoints notEmpty ]
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> hasExecutionCounter [
+ASTProgramNode >> hasExecutionCounter [
 
 	self hasMetalinkBefore ifFalse: [ ^false ].
 	^self beforeLinks anySatisfy: [ :link | link metaObject class = ExecutionCounter ]
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> hasLinks [
+ASTProgramNode >> hasLinks [
 	self
 		deprecated: 'use #hasMetaLinks'
 		transformWith:  '`@receiver hasLinks' -> '`@receiver hasMetaLinks'.
@@ -85,70 +85,70 @@ RBProgramNode >> hasLinks [
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> hasMetaLinks [
+ASTProgramNode >> hasMetaLinks [
 	^ self links isNotNil and: [ self links notEmpty ]
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> hasMetalink [
+ASTProgramNode >> hasMetalink [
 	^self hasProperty: #links
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> hasMetalink: aMetaLink [
+ASTProgramNode >> hasMetalink: aMetaLink [
 	^self links includes: aMetaLink
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> hasMetalinkAfter [
+ASTProgramNode >> hasMetalinkAfter [
 	self hasMetalink ifFalse: [^false].
 	^self afterLinks isNotEmpty
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> hasMetalinkBefore [
+ASTProgramNode >> hasMetalinkBefore [
 	self hasMetalink ifFalse: [^false].
 	^self beforeLinks isNotEmpty
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> hasMetalinkInstead [
+ASTProgramNode >> hasMetalinkInstead [
 		self hasMetalink ifFalse: [^false].
 		^self insteadLinks isNotEmpty
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> hasWatch [
+ASTProgramNode >> hasWatch [
 
 	self hasMetalinkAfter ifFalse: [ ^false ].
 	^self afterLinks anySatisfy: [ :link | link metaObject class = Watch ]
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> insteadHooks [
+ASTProgramNode >> insteadHooks [
 	^self propertyAt: #insteadHooks ifAbsent: #()
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> insteadLinks [
+ASTProgramNode >> insteadLinks [
 	^ self links select: [ :each | each control == #instead ]
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> invalidate [
+ASTProgramNode >> invalidate [
 
 	self methodNode compiledMethod invalidate
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> isEquivalentTo: aNode [
+ASTProgramNode >> isEquivalentTo: aNode [
 	self flag: 'should be tested, does not work on methods after links because of the wrappping now in place'.
 	^ aNode methodNode selector = self methodNode selector
 		and: [ aNode = self and: [ aNode start = self start and: [ aNode stop = self stop ] ] ]
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> link: aMetaLink [
+ASTProgramNode >> link: aMetaLink [
 
 	(aMetaLink checkForCompatibilityWith: self) ifFalse: [
 		self error:
@@ -165,12 +165,12 @@ RBProgramNode >> link: aMetaLink [
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> link: aMetaLink forObject: anObject [
+ASTProgramNode >> link: aMetaLink forObject: anObject [
 	aMetaLink linkToNode: self forObject: anObject
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> linkIfAbsent: metalink [
+ASTProgramNode >> linkIfAbsent: metalink [
 	"Per-object check only.
 	Links and nodes are stored in IdentitySet so there is already a guarantee that there will be no duplicates. However putting a link already existing for a given node will retrigger method compilation.
 	This check is used by MetaLinkInstaller only to avoid multiple and recursive reinstallation of links on nodes."
@@ -180,32 +180,32 @@ RBProgramNode >> linkIfAbsent: metalink [
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> links [
+ASTProgramNode >> links [
 	^self propertyAt: #links ifAbsent: #()
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> nodesWithLinks [
+ASTProgramNode >> nodesWithLinks [
 	^ self allChildren select: [ :e | e links isNotEmpty ]
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> postambles [
+ASTProgramNode >> postambles [
 	^self propertyAt: #postambles ifAbsent: #()
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> preambles [
+ASTProgramNode >> preambles [
 	^self propertyAt: #preambles ifAbsent: #()
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> removeBreakpoint: aBreakpoint [
+ASTProgramNode >> removeBreakpoint: aBreakpoint [
 	self breakpoints remove: aBreakpoint ifAbsent: []
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> removeLink: aMetaLink [
+ASTProgramNode >> removeLink: aMetaLink [
 
 	self hasMetalink ifFalse: [ ^ self ].
 	self links remove: aMetaLink ifAbsent: [  ].
@@ -219,22 +219,22 @@ RBProgramNode >> removeLink: aMetaLink [
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> removeLink: aMetaLink forObject: anObject [
+ASTProgramNode >> removeLink: aMetaLink forObject: anObject [
 	aMetaLink unlinkFromNode: self forObject: anObject
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> tagExecuted [
+ASTProgramNode >> tagExecuted [
 	^self propertyAt: #tagExecuted put: true
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> variableValueInContext: aContext [
+ASTProgramNode >> variableValueInContext: aContext [
 	^nil
 ]
 
 { #category : '*Reflectivity' }
-RBProgramNode >> watch [
+ASTProgramNode >> watch [
 
 	self hasWatch ifFalse:[^nil].
 	^(self afterLinks detect: [ :link | link metaObject class = Watch ]) metaObject

@@ -1,7 +1,7 @@
-Extension { #name : 'RBProgramNode' }
+Extension { #name : 'ASTProgramNode' }
 
 { #category : '*Calypso-SystemPlugins-DebugPoints-Browser' }
-RBProgramNode >> hasDebugPointOfType: aDebugPointSubClass [
+ASTProgramNode >> hasDebugPointOfType: aDebugPointSubClass [
 	
 	^self links anySatisfy: [ :link | link metaObject isKindOf: aDebugPointSubClass ]
 ]

@@ -244,7 +244,7 @@ RBParser >> literalArrayNodeClass [
 
 { #category : 'private - classes' }
 RBParser >> literalNodeClass [
-	^ RBLiteralNode
+	^ ASTLiteralNode
 ]
 
 { #category : 'private - classes' }

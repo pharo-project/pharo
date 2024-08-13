@@ -26,7 +26,7 @@ RBParserTest >> exampleClasses [
 	^ Array
 		with: self parserClass
 		with: RBScanner
-		with: RBProgramNode
+		with: ASTProgramNode
 		with: RBComment
 ]
 
@@ -415,7 +415,7 @@ RBParserTest >> testCreationMessageNodeFromExpression [
 		  to: (RBMessageNode
 				receiver: (RBVariableNode named: 'self')
 				selector: (RBSelectorNode value: #+)
-				arguments: (Array with: (RBLiteralNode value: 0)))
+				arguments: (Array with: (ASTLiteralNode value: 0)))
 ]
 
 { #category : 'tests' }
@@ -424,7 +424,7 @@ RBParserTest >> testCreationProtocol [
 	self compare: (RBMessageNode
 				receiver: (RBVariableNode selfNode)
 				selector: (RBSelectorNode value: #+)
-				arguments: (Array with: (RBLiteralNode value: 0)))
+				arguments: (Array with: (ASTLiteralNode value: 0)))
 		to: (self parserClass parseExpression: 'self + 0').
 	messageNode := RBMessageNode receiver: (RBVariableNode selfNode) selector: (RBSelectorNode value: #foo).
 	self compare: (RBMethodNode selector: #bar

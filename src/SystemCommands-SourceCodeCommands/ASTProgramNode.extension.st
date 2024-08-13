@@ -1,7 +1,7 @@
-Extension { #name : 'RBProgramNode' }
+Extension { #name : 'ASTProgramNode' }
 
 { #category : '*SystemCommands-SourceCodeCommands' }
-RBProgramNode >> displaySourceCode [
+ASTProgramNode >> displaySourceCode [
 
 	^ (((self sourceCode asString
 			 copyReplaceAll: String tab with: String empty)

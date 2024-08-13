@@ -20,7 +20,7 @@ Note: the node is not a value nor a variable, it is a placeholder at best.
 "
 Class {
 	#name : 'RBAnnotationMarkNode',
-	#superclass : 'RBValueNode',
+	#superclass : 'ASTValueNode',
 	#instVars : [
 		'start',
 		'emitValueBlock'
@@ -76,7 +76,7 @@ RBAnnotationMarkNode >> precedence [
 
 { #category : 'accessing' }
 RBAnnotationMarkNode >> start: aPosition [
-	"Beware, start is in fact `startWithoutParentheses` as in RBValueNode, start includes parentheses"
+	"Beware, start is in fact `startWithoutParentheses` as in ASTValueNode, start includes parentheses"
 
 	start := aPosition
 ]

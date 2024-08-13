@@ -1,5 +1,5 @@
 "
-RBProgramNodeVisitor is an abstract visitor for the RBProgramNodes.
+RBProgramNodeVisitor is an abstract visitor for the ASTProgramNodes.
 
 
 "
