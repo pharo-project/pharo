@@ -150,13 +150,14 @@ SHStylePresenter >> initializeStyleList [
 SHStylePresenter >> initializeThemeList [
 	"Private - The receiver's theme list contains the names of the available theme styles in the system"
 
-	themeListPresenter := self newList
+	themeListPresenter := self newList.
+	themeListPresenter model comparisonStrategy: [ : t1 : t2 | t1 class themeName = t2 class themeName ].
+	themeListPresenter
 		headerTitle: 'Themes';
 		items: self themePrototypes;
 		display: [ : aTheme | aTheme class themeName ];
-		selectItem: self theme class;
-		whenSelectedItemChangedDo: [ :item | self updatePreview ];
-		yourself.
+		selectItem: self theme;
+		whenSelectedItemChangedDo: [ :item | self updatePreview ].
 ]
 
 { #category : 'initialization' }
