@@ -14,11 +14,7 @@ ClySharedPoolReferencesQueryTest >> createQuery [
 
 	^ ClySharedPoolReferencesQuery
 		to: ClySharedPoolForTesting;
-		from: (ClyClassScope of: Object in: environment).
-		
-	
-		
-
+		from: (ClyClassScope of: Object in: environment)
 ]
 
 { #category : 'running' }
