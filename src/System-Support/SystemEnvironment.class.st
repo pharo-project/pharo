@@ -206,12 +206,30 @@ SystemEnvironment >> codeChangeAnnouncer [
 ]
 
 { #category : 'accessing' }
+SystemEnvironment >> codeChangeAnnouncer: anAnnouncer [
+	"For now the announcer is still saved in SystemAnnouncer so we access it there. In the future we should save it in the environment.
+	
+	codeChangeAnnouncer := anAnnouncer"
+
+	SystemAnnouncer announcer: anAnnouncer
+]
+
+{ #category : 'accessing' }
 SystemEnvironment >> codeSupportAnnouncer [
 	"A code support announcer is an announcer used for tooling support such as the breakpoints or AST cache."
 
 	"This should not be hardcoded in the futurebut I should have my own instance."
 
 	^ SystemAnnouncer uniqueInstance
+]
+
+{ #category : 'accessing' }
+SystemEnvironment >> codeSupportAnnouncer: anAnnouncer [
+	"For now the announcer is still saved in SystemAnnouncer so we access it there. In the future we should save it in the environment.
+	
+	codeSupportAnnouncer := anAnnouncer"
+
+	SystemAnnouncer announcer: anAnnouncer
 ]
 
 { #category : 'accessing' }

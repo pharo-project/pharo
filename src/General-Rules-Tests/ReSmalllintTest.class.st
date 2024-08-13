@@ -307,11 +307,6 @@ ReSmalllintTest >> testEmptyExceptionHandler [
 ]
 
 { #category : 'tests' }
-ReSmalllintTest >> testEndTrueFalse [
-	self ruleFor: self currentSelector
-]
-
-{ #category : 'tests' }
 ReSmalllintTest >> testEqualNotUsed [
 	self ruleFor: self currentSelector
 ]
@@ -340,11 +335,6 @@ ReSmalllintTest >> testFileBlocks [
 
 { #category : 'tests' }
 ReSmalllintTest >> testFloatEqualityComparison [
-	self ruleFor: self currentSelector
-]
-
-{ #category : 'tests' }
-ReSmalllintTest >> testGuardingClause [
 	self ruleFor: self currentSelector
 ]
 

@@ -4,9 +4,9 @@ Rule to favour 'tests' method protocol for SUnit tests over 'test' as typically 
 Class {
 	#name : 'ReProperMethodProtocolNameForTestsRule',
 	#superclass : 'ReProperMethodProtocolNameRule',
-	#category : 'Renraku-Coding Idiom Violation',
-	#package : 'Renraku',
-	#tag : 'Coding Idiom Violation'
+	#category : 'General-Rules-Method Protocol Name',
+	#package : 'General-Rules',
+	#tag : 'Method Protocol Name'
 }
 
 { #category : 'idioms' }
