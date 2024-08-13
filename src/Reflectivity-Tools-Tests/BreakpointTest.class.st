@@ -350,7 +350,7 @@ BreakpointTest >> testSelf_conditionBlockProducerMethodAST [
 { #category : 'tests' }
 BreakpointTest >> testSetAsBreakpointProperty [
 	| node breakpoint breakpoint2 |
-	node := ASTProgramNode new.
+	node := RBProgramNode new.
 	breakpoint := Breakpoint new.
 	breakpoint2 := Breakpoint new.
 	breakpoint node: node.
