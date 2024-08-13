@@ -18,7 +18,7 @@ Class {
 }
 
 { #category : 'testing' }
-ClyNoTagClassGroup class >> isBasedOnClassTag [
+ClyNoTagClassGroup class >> isBasedOnPackageTag [
 	^true
 ]
 
@@ -28,21 +28,14 @@ ClyNoTagClassGroup class >> priority [
 ]
 
 { #category : 'operations' }
-ClyNoTagClassGroup >> importClass: aClass [
-
-	| newPackages |
-	super importClass: aClass.
-	newPackages := OrderedCollection new.
-	classQuery scope packagesDo: [ :each | each = aClass package ifFalse: [ newPackages add: each ] ].
-	newPackages size > 1 ifTrue: [ ^ self error: 'You should select single package for import!' ].
-
-	newPackages ifNotEmpty: [ ^ newPackages first addClass: aClass ].
-	self flag: #package. "I'm not sure this next line even makes sens after moving the class from package. The tag should be removed automatically?"
-	aClass removePackageTag
-]
-
-{ #category : 'operations' }
-ClyNoTagClassGroup >> renameClassTagTo: newTag [
+ClyNoTagClassGroup >> renameTagTo: newTag [
 
 	self classes do: [ :class | class packageTag: newTag ]
+]
+
+{ #category : 'accessing' }
+ClyNoTagClassGroup >> tag [
+	"Uncategorized classes are going to the root tag."
+
+	^ Package rootTagName
 ]

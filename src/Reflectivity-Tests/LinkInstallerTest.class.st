@@ -32,6 +32,7 @@ LinkInstallerTest >> setUp [
 { #category : 'running' }
 LinkInstallerTest >> tearDown [
 	ReflectivityExamples2 new removeModifiedMethodWithInstVarAccess.
+	ReflectivityExamples2 new removeNewMethodWithInstVarAccess.
 	ReflectivityExamples new removeTemporaryMethods.
 	super tearDown
 ]
@@ -73,6 +74,21 @@ LinkInstallerTest >> testFindingAnonymousNodes [
 
 	self deny: varNode identicalTo: objectSpecificVarNode.
 	self assert: varNode equals: objectSpecificVarNode
+]
+
+{ #category : 'nodes' }
+LinkInstallerTest >> testLinkOnASTProgramNode [
+	| link varNode instance objectSpecificVarNode |
+	varNode := (ReflectivityExamples >> #exampleSendNoReturn) ast allChildren atRandom.
+	link := MetaLink new.
+
+	instance := ReflectivityExamples new.
+	varNode link: link forObject: instance.
+	objectSpecificVarNode := link linkInstaller linkToNodesMapper findNodeLike: varNode forObject: instance.
+
+	self deny: varNode hasMetalink.
+	self assert: objectSpecificVarNode hasMetalink.
+	self assert: objectSpecificVarNode links asArray first identicalTo: link
 ]
 
 { #category : 'permalinks' }
@@ -124,21 +140,6 @@ LinkInstallerTest >> testLinkOnClassVarForObject [
 	self assert: link nodes size equals: 4.
 	link uninstall.
 	self assert: link nodes isEmpty
-]
-
-{ #category : 'nodes' }
-LinkInstallerTest >> testLinkOnRBProgramNode [
-	| link varNode instance objectSpecificVarNode |
-	varNode := (ReflectivityExamples >> #exampleSendNoReturn) ast allChildren atRandom.
-	link := MetaLink new.
-
-	instance := ReflectivityExamples new.
-	varNode link: link forObject: instance.
-	objectSpecificVarNode := link linkInstaller linkToNodesMapper findNodeLike: varNode forObject: instance.
-
-	self deny: varNode hasMetalink.
-	self assert: objectSpecificVarNode hasMetalink.
-	self assert: objectSpecificVarNode links asArray first identicalTo: link
 ]
 
 { #category : 'permalinks' }
@@ -475,8 +476,7 @@ LinkInstallerTest >> testPermaLinkNotInstalledOnObjectIfExistsInClass [
 	link installOnVariableNamed: #instVar for: obj option: #all instanceSpecific: true.
 	self assert: link nodes size equals: 8.
 
-	link uninstall.
-	ReflectivityExamples2 new removeNewMethodWithInstVarAccess
+	link uninstall
 ]
 
 { #category : 'links - updating' }
@@ -751,8 +751,7 @@ LinkInstallerTest >> testSlotOrVarLinksAddedAfterMethodAddition [
 
 	|methodNode link|
 	methodNode := (ReflectivityExamples2 >> #methodWithInstVarAccess) ast.
-	ReflectivityExamples2 new removeNewMethodWithInstVarAccess.
-
+	
 	link := MetaLink new.
 	link installOnVariableNamed: #instVar for: ReflectivityExamples2 option: #all instanceSpecific: false.
 
@@ -771,8 +770,7 @@ LinkInstallerTest >> testSlotOrVarLinksAddedAfterMethodAdditionForObject [
 
 	methodNode := (ReflectivityExamples2 >> #methodWithInstVarAccess) ast.
 	obj := ReflectivityExamples2 new.
-	ReflectivityExamples2 new removeNewMethodWithInstVarAccess.
-
+	
 	link := MetaLink new.
 	link installOnVariableNamed: #instVar for: obj option: #all instanceSpecific: true.
 
@@ -787,7 +785,7 @@ LinkInstallerTest >> testSlotOrVarLinksAddedAfterMethodAdditionForObject [
 { #category : 'permalinks' }
 LinkInstallerTest >> testSlotOrVarLinksRemainAfterMethodModification [
 	|methodNode link|
-
+   ReflectivityExamples2 new generateNewMethodWithInstVarAccess.
 	ReflectivityExamples2 new resetModifiedMethodWithInstVarAccess.
 	methodNode := (ReflectivityExamples2 >> #modifiedMethodWithInstVarAccess) ast.
 
@@ -808,6 +806,7 @@ LinkInstallerTest >> testSlotOrVarLinksRemainAfterMethodModificationForObject [
 	|methodNode link obj|
 
 	obj := ReflectivityExamples2 new.
+	ReflectivityExamples2 new generateNewMethodWithInstVarAccess.
 	ReflectivityExamples2 new resetModifiedMethodWithInstVarAccess.
 	methodNode := (ReflectivityExamples2 >> #modifiedMethodWithInstVarAccess) ast.
 

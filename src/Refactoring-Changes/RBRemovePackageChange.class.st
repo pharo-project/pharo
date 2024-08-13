@@ -27,9 +27,7 @@ RBRemovePackageChange >> asUndoOperation [
 { #category : 'private' }
 RBRemovePackageChange >> generateChanges [
 
-	| pkg |
-	pkg := self package.
-	pkg ifNotNil: [ pkg removeFromSystem ]
+	self package ifNotNil: [ :package | package removeFromSystem ]
 ]
 
 { #category : 'accessing' }

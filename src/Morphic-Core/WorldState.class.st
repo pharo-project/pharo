@@ -174,7 +174,7 @@ WorldState class >> pharoItemsOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Pharo)
 		label: 'Pharo';
-		icon: ((self iconNamed: #pharo) scaledToSize: (16 @ 16) scaledByDisplayScaleFactor);
+		iconName: #smallPharo;
 		order: 0;
 		with: [
 			(aBuilder group: #Saving)
@@ -208,19 +208,13 @@ WorldState class >> pharoItemsOn: aBuilder [
 					iconName: #smallQuit ]
 ]
 
-{ #category : 'world menu items' }
-WorldState class >> quitSession [
-	| response |
-	response := UIManager default
-						confirm: 'Save changes before quitting?'
-						trueChoice: 'Save'
-						falseChoice: 'Discard'
-						cancelChoice: 'Cancel'
-						default: nil.
-	response ifNil: [ ^self ].
-	response
-		ifTrue: [Smalltalk snapshot: true andQuit: true]
-		ifFalse: [Smalltalk snapshot: false andQuit: true]
+{ #category : 'cleanup' }
+WorldState class >> restartMethods [
+
+	self allInstancesDo: [ :ws |
+		ws
+			convertAlarms;
+			cleanStepList ]
 ]
 
 { #category : 'world menu items' }
@@ -228,17 +222,6 @@ WorldState class >> saveAndQuit [
 	Cursor write showWhile: [
 		Smalltalk snapshot: true andQuit: true
 	]
-]
-
-{ #category : 'world menu items' }
-WorldState class >> saveAs [
-	| reference |
-	reference := UIManager default
-		chooseForSaveFileReference: 'Save Image as?'
-		extensions: #('image')
-		path: Smalltalk imageFile nextVersion.
-
-	reference ifNotNil: [ Smalltalk saveAs: reference parent / (reference basenameWithoutExtension: 'image') ]
 ]
 
 { #category : 'world menu items' }
@@ -470,7 +453,7 @@ WorldState >> displayWorldSafely: aWorld [
 		[
 			errCtx := errCtx sender.
 			"Search the sender chain to find the morph causing the problem"
-			[errCtx notNil and:[(errCtx receiver isMorph) not]]
+			[errCtx isNotNil and:[(errCtx receiver isMorph) not]]
 				whileTrue:[errCtx := errCtx sender].
 			"If we're at the root of the context chain then we have a fatal drawing problem"
 			errCtx ifNil:[^self handleFatalDrawingError: err description].

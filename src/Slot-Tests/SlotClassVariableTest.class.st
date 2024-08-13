@@ -41,33 +41,18 @@ SlotClassVariableTest >> testClassVariableDoesNotDuplicatesSubclassesOfSuperclas
 		builder
 			name: self anotherClassName;
 			superclass: class1;
-			sharedVariablesFromString: 'ASharedVariable' ].
+			sharedVariables: #(ASharedVariable) ].
 	self assert: class1 subclasses equals: { class2 }
 ]
 
 { #category : 'tests' }
-SlotClassVariableTest >> testSlotIsPersistedAfterRebuildOfClass [
-	| class1 |
+SlotClassVariableTest >> testInitializedClassVariableUpdateClass [
+	
+	aClass := self make: [ :builder | builder sharedVariables: {#ClassVar => InitializedClassVariable default: 5}].
 
-	class1 := self make: [ :builder |
-		builder
-			name: self aClassName;
-			superclass: Object ].
-
-	class1 class addSlot: (AccessorInstanceVariableSlot named: #Foo).
-
-	self assert: class1 class slots size equals: 1.
-	self assert: (class1 class slots at:1) name equals: #Foo.
-	self assert: (class1 class slots at:1) class equals: AccessorInstanceVariableSlot.
-
-	class1 := self make: [ :builder |
-		builder
-			name: self aClassName;
-			superclass: Object ].
-
-	self assert: class1 class slots size equals: 1.
-	self assert: (class1 class slots at:1) name equals: #Foo.
-	self assert: (class1 class slots at:1) class equals: AccessorInstanceVariableSlot
+	self assert: (aClass classVariableNamed: #ClassVar) default equals: 5.
+	aClass := self make: [ :builder | builder sharedVariables: {#ClassVar => InitializedClassVariable default: 4}].
+	self assert: (aClass classVariableNamed: #ClassVar) default equals: 4.
 ]
 
 { #category : 'tests' }

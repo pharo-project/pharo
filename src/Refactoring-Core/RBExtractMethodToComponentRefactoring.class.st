@@ -70,7 +70,7 @@ RBExtractMethodToComponentRefactoring >> inlineForwarder [
 				model: self model
 				sendersOf: extractedMethodSelector
 				in: class.
-	refactoring setOption: #inlineExpression toUse: [:ref :string | true].
+	refactoring setOption: #shouldNotCreateExtraBindings toUse: [:ref :string | true].
 	self generateChangesFor: refactoring
 ]
 
@@ -89,12 +89,6 @@ RBExtractMethodToComponentRefactoring >> moveMethod [
 	self generateChangesFor: refactoring
 ]
 
-{ #category : 'preconditions' }
-RBExtractMethodToComponentRefactoring >> preconditions [
-
-	^ self trueCondition
-]
-
 { #category : 'transforming' }
 RBExtractMethodToComponentRefactoring >> privateTransform [
 	self
@@ -103,7 +97,7 @@ RBExtractMethodToComponentRefactoring >> privateTransform [
 		inlineForwarder
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBExtractMethodToComponentRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

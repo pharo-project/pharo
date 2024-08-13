@@ -36,8 +36,8 @@ Class {
 
 { #category : 'instance creation' }
 FreeTypeSettings class >> current [
-	current == nil ifFalse:[^current].
-	^current := self new
+
+	^ current ifNil: [ current := self new ]
 ]
 
 { #category : 'class initialization' }

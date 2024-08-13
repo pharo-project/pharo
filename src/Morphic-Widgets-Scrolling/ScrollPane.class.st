@@ -207,18 +207,19 @@ ScrollPane >> findSubmorphFor: ptY [
 { #category : 'menu' }
 ScrollPane >> getMenu: shiftKeyState [
 	"Answer the menu for this text view, supplying an empty menu to be filled in. If the menu selector takes an extra argument, pass in the current state of the shift key."
+
 	| menu aMenu aTitle |
-	self getMenuSelector == nil ifTrue: [^ nil].
-	menu := UIManager default newMenuIn: self for: self model.
-	aTitle := getMenuTitleSelector ifNotNil: [self model perform: getMenuTitleSelector].
-	self getMenuSelector numArgs = 1 ifTrue:
-		[aMenu := self model perform: self getMenuSelector with: menu.
-		aTitle ifNotNil:  [aMenu addTitle: aTitle].
-		^ aMenu].
-	self getMenuSelector numArgs = 2 ifTrue:
-		[aMenu := self model perform: self getMenuSelector with: menu with: shiftKeyState.
-		aTitle ifNotNil:  [aMenu addTitle: aTitle].
-		^ aMenu].
+	self getMenuSelector ifNil: [ ^ nil ].
+	menu := self morphicUIManager newMenuIn: self for: self model.
+	aTitle := getMenuTitleSelector ifNotNil: [ self model perform: getMenuTitleSelector ].
+	self getMenuSelector numArgs = 1 ifTrue: [
+		aMenu := self model perform: self getMenuSelector with: menu.
+		aTitle ifNotNil: [ aMenu addTitle: aTitle ].
+		^ aMenu ].
+	self getMenuSelector numArgs = 2 ifTrue: [
+		aMenu := self model perform: self getMenuSelector with: menu with: shiftKeyState.
+		aTitle ifNotNil: [ aMenu addTitle: aTitle ].
+		^ aMenu ].
 	^ self error: 'The getMenuSelector must be a 1- or 2-keyword symbol'
 ]
 
@@ -784,11 +785,6 @@ ScrollPane >> shiftedTextPaneMenuRequest [
 	^ self yellowButtonActivity: true
 ]
 
-{ #category : 'scroll bar events' }
-ScrollPane >> shiftedYellowButtonActivity [
-	^ self yellowButtonActivity: true
-]
-
 { #category : 'accessing - options' }
 ScrollPane >> showHScrollBarOnlyWhenNeeded: bool [
 	"Get rid of scroll bar for short panes that don't want it shown."
@@ -976,7 +972,8 @@ ScrollPane >> vUnadjustedScrollRange [
 { #category : 'menu' }
 ScrollPane >> wantsYellowButtonMenu [
 	"Answer true if the receiver wants a yellow button menu"
-	^ self getMenuSelector notNil
+
+	^ self getMenuSelector isNotNil
 ]
 
 { #category : 'scroll bar events' }

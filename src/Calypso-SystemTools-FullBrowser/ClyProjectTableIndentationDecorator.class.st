@@ -32,5 +32,5 @@ ClyProjectTableIndentationDecorator class >> decorationStrategy [
 
 { #category : 'testing' }
 ClyProjectTableIndentationDecorator class >> wantsDecorateTableCellOf: aDataSourceItem [
-	^aDataSourceItem rootParentItem isBasedOnItemType: ClyManagedProject
+	^aDataSourceItem rootParentItem isBasedOnItemType: Project
 ]

@@ -1,9 +1,12 @@
+"
+Generate New Test Class: Automatically create a test class for the selected class, to include test methods and setup/teardown stubs.
+"
 Class {
 	#name : 'ClyCreateTestCaseCommand',
 	#superclass : 'ClyBrowserCommand',
 	#instVars : [
 		'package',
-		'classTag'
+		'packageTag'
 	],
 	#category : 'Calypso-SystemPlugins-Traits-Browser',
 	#package : 'Calypso-SystemPlugins-Traits-Browser'
@@ -35,19 +38,12 @@ ClyCreateTestCaseCommand >> defaultMenuItemName [
 
 { #category : 'command execution' }
 ClyCreateTestCaseCommand >> execute [
-	| classDefinition p resultClass |
-	p := package name.
-	classTag ifNotNil: [ p := p , '-' , classTag ].
-	classDefinition := ClassDefinitionPrinter new testClassDefinitionTemplateInPackage: p.
-	classDefinition := UIManager default
-		                   multiLineRequest: 'Define test class:'
-		                   initialAnswer: classDefinition
-		                   answerHeight: 250.
+
+	| classDefinition resultClass |
+	classDefinition := ClassDefinitionPrinter fluid testClassDefinitionTemplateInPackage: package name tag: packageTag.
+	classDefinition := self morphicUIManager multiLineRequest: 'Define test class:' initialAnswer: classDefinition answerHeight: 250.
 	classDefinition isEmptyOrNil ifTrue: [ ^ self ].
-	resultClass := browser
-		               compileANewClassFrom: classDefinition
-		               notifying: nil
-		               startingFrom: nil.
+	resultClass := browser compileANewClassFrom: classDefinition notifying: nil startingFrom: nil.
 	resultClass ifNotNil: [ browser selectClass: resultClass ]
 ]
 
@@ -56,6 +52,6 @@ ClyCreateTestCaseCommand >> prepareFullExecutionInContext: aBrowserContext [
 	super prepareFullExecutionInContext: aBrowserContext.
 
 	package := aBrowserContext lastSelectedPackage.
-	aBrowserContext isClassTagSelected ifTrue: [
-		classTag := aBrowserContext lastSelectedClassTag]
+	aBrowserContext isPackageTagSelected ifTrue: [
+		packageTag := aBrowserContext lastSelectedPackageTag]
 ]

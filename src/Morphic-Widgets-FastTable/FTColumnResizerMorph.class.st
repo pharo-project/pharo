@@ -49,7 +49,7 @@ FTColumnResizerMorph >> delete [
 
 { #category : 'drawing' }
 FTColumnResizerMorph >> drawOn: aCanvas [
-	(owner notNil and: [owner containsPoint: self position])
+	(owner isNotNil and: [owner containsPoint: self position])
 		ifTrue: [super drawOn: aCanvas]
 ]
 
@@ -79,7 +79,7 @@ FTColumnResizerMorph >> mouseDown: anEvent [
 { #category : 'event handling' }
 FTColumnResizerMorph >> mouseEnter: anEvent [
 	self canResizeColumn ifFalse: [^ self].
-	(owner notNil and: [owner bounds containsPoint: anEvent position])
+	(owner isNotNil and: [owner bounds containsPoint: anEvent position])
 		ifTrue: [super mouseEnter: anEvent]
 ]
 
@@ -128,11 +128,11 @@ FTColumnResizerMorph >> pressedFillStyle [
 
 { #category : 'submorphs - add/remove' }
 FTColumnResizerMorph >> release [
+
 	traceMorph := nil.
 	oldColor := nil.
 	container := nil.
-	self releaseActionMap. "we are not sure if we need it"
-	super release
+	self releaseActionMap "we are not sure if we need it"
 ]
 
 { #category : 'actions' }

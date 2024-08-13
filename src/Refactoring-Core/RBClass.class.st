@@ -12,9 +12,10 @@ Class {
 	#instVars : [
 		'classVariableNames',
 		'poolDictionaryNames',
-		'category',
 		'comment',
-		'classPool'
+		'classPool',
+		'packageName',
+		'tagName'
 	],
 	#classVars : [
 		'LookupComment'
@@ -91,17 +92,6 @@ RBClass >> allPoolDictionaryNames [
 ]
 
 { #category : 'accessing' }
-RBClass >> category [
-
-	^ category ifNil: [ category := self realClass category ]
-]
-
-{ #category : 'accessing' }
-RBClass >> category: aSymbol [
-	category := aSymbol
-]
-
-{ #category : 'accessing' }
 RBClass >> classPool [
 	^classPool ifNil: [ classPool := Dictionary new ]
 ]
@@ -144,6 +134,12 @@ RBClass >> directlyDefinesPoolDictionary: aString [
 	^self sharedPoolNames includes: aString asSymbol
 ]
 
+{ #category : 'testing' }
+RBClass >> hasSubclasses [
+
+	^ self subclasses isNotEmpty
+]
+
 { #category : 'initialization' }
 RBClass >> initialize [
 	super initialize.
@@ -165,6 +161,13 @@ RBClass >> isEmptyClass [
 ]
 
 { #category : 'testing' }
+RBClass >> isManifest [ 
+
+	^ self superclass notNil and: [ self superclass name = #PackageManifest ]
+
+]
+
+{ #category : 'testing' }
 RBClass >> isMeta [
 
 	^false
@@ -182,6 +185,12 @@ RBClass >> isSharedPool [
 	^ (self allSuperclasses collect:  [:each | each name]) includes: #SharedPool
 ]
 
+{ #category : 'accessing' }
+RBClass >> methods [
+
+	^ self allMethods asOrderedCollection 
+]
+
 { #category : 'querying' }
 RBClass >> methodsUsingClassVariableNamed: aClassVariableName [
 
@@ -190,6 +199,18 @@ RBClass >> methodsUsingClassVariableNamed: aClassVariableName [
 			modelClass := self model classNamed: aMethod methodClass name.
 			modelClass methodFor: aMethod selector
 		]
+]
+
+{ #category : 'accessing' }
+RBClass >> packageName [
+
+	^ packageName
+]
+
+{ #category : 'accessing' }
+RBClass >> packageName: anObject [
+
+	packageName := anObject
 ]
 
 { #category : 'accessing' }
@@ -269,4 +290,16 @@ RBClass >> sharedPoolNames [
 { #category : 'accessing' }
 RBClass >> sharedPools [
 	^ self allPoolDictionaryNames collect: [ :each | Smalltalk globals at: each asSymbol ifAbsent: [ Dictionary new ] ]
+]
+
+{ #category : 'accessing' }
+RBClass >> tagName [
+
+	^ tagName
+]
+
+{ #category : 'accessing' }
+RBClass >> tagName: anObject [
+
+	tagName := anObject
 ]

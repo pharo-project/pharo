@@ -2,8 +2,8 @@
 RBMessageNode is an AST node that represents a message send.
 
 Instance Variables:
-	arguments	<SequenceableCollection of: RBValueNode>	 our argument nodes
-	receiver	<RBValueNode>	the receiver's node
+	arguments	<SequenceableCollection of: ASTValueNode>	 our argument nodes
+	receiver	<ASTValueNode>	the receiver's node
 	selector	<Symbol>	the selector we're sending
 	keywordsPositions	<IntegerArray | nil>	the positions of the selector keywords
 	superOf <Behavior> the current class (for super-send messages)
@@ -11,7 +11,7 @@ Instance Variables:
 "
 Class {
 	#name : 'RBMessageNode',
-	#superclass : 'RBValueNode',
+	#superclass : 'ASTValueNode',
 	#instVars : [
 		'receiver',
 		'selector',
@@ -143,9 +143,17 @@ RBMessageNode >> equalTo: anObject withMapping: aDictionary [
 	^true
 ]
 
-{ #category : 'fluid parser' }
-RBMessageNode >> handleMetaclassName: aCDFluidClassDefinitionParser [
-	aCDFluidClassDefinitionParser handleMetaclassNameFromMessage: self
+{ #category : 'testing' }
+RBMessageNode >> hasBlock [
+
+	^ receiver hasBlock | (arguments anySatisfy: [ :arg | arg hasBlock ])
+]
+
+{ #category : 'testing' }
+RBMessageNode >> hasSameExitPoint: aBoolean [
+
+	^ (receiver hasSameExitPoint: aBoolean )
+	& (arguments allSatisfy: [ :arg | arg hasSameExitPoint: aBoolean ])
 ]
 
 { #category : 'comparing' }
@@ -165,7 +173,7 @@ RBMessageNode >> isBinary [
 
 { #category : 'testing' }
 RBMessageNode >> isCascaded [
-	^parent notNil and: [parent isCascade]
+	^parent isNotNil and: [parent isCascade]
 ]
 
 { #category : 'private - replacing' }
@@ -241,6 +249,7 @@ RBMessageNode >> keywordsPositions: aPositionsList [
 
 { #category : 'testing' }
 RBMessageNode >> lastIsReturn [
+	"Ideally, we want to remove this method so it returns false like the superclass"
 	(self isInlineIf or: [ self isInlineIfNil]) ifFalse: [ ^false ].
 	arguments size = 1 ifTrue: [ ^false ].
 	^ arguments first isBlock and: [ arguments first body lastIsReturn
@@ -362,7 +371,7 @@ RBMessageNode >> replaceNode: aNode withNode: anotherNode [
 	receiver == aNode
 		ifTrue:
 			[self receiver: anotherNode.
-			(parent notNil and: [parent isCascade])
+			(parent isNotNil and: [parent isCascade])
 				ifTrue: [parent messages do: [:each | each isMessage ifTrue: [ each receiver: anotherNode]]]].
 	self arguments: (arguments
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])

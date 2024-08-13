@@ -802,9 +802,9 @@ Cursor class >> initialize [
 Cursor class >> makeCursorsWithMask [
 	"Cursor initialize;makeCursorsWithMask"
 
-	self classPool associationsDo: [:var |
-		var value hasMask
-			ifFalse: [var value: var value withMask]]
+	self classVariables do: [:variable |
+		variable value hasMask
+			ifFalse: [variable value: variable value withMask]]
 ]
 
 { #category : 'constants' }
@@ -1027,6 +1027,17 @@ Cursor >> hasMask [
 Cursor >> printOn: aStream [
 
 	self storeOn: aStream base: 2
+]
+
+{ #category : 'primitives' }
+Cursor >> scaledToExactSize: newExtent [
+
+	"We need to override, so we can scale also the offset."
+
+	| newOne |
+	newOne := super scaledToExactSize: newExtent.
+	newOne offset: offset * (newExtent / self extent).
+	^ newOne
 ]
 
 { #category : 'primitives' }

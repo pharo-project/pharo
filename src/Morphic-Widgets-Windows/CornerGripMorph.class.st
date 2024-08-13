@@ -12,6 +12,12 @@ Class {
 	#tag : 'Resizing'
 }
 
+{ #category : 'testing' }
+CornerGripMorph class >> isAbstract [
+
+	^ self == CornerGripMorph
+]
+
 { #category : 'accessing' }
 CornerGripMorph >> defaultHeight [
 	^ 22

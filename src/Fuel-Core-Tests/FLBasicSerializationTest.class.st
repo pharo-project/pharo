@@ -400,7 +400,7 @@ FLBasicSerializationTest >> testExceptions [
 FLBasicSerializationTest >> testExecuteAfterMaterialization [
 
 	| anObject result aClass |
-	aClass := self classFactory silentlyMake: [ :aBuilder | aBuilder slotsFromString: 'a' ].
+	aClass := self classFactory silentlyMake: [ :aBuilder | aBuilder slots: #(a) ].
 	self classFactory silentlyCompile: 'fuelAfterMaterialization a := #A' in: aClass.
 	anObject := aClass new.
 
@@ -765,11 +765,11 @@ FLBasicSerializationTest >> testSymbol [
 ]
 
 { #category : 'tests-globals' }
-FLBasicSerializationTest >> testSystemDictionary [
-	"We want to treat the <Smalltalk globals> instance of SystemDictionary
+FLBasicSerializationTest >> testSystemEnvironment [
+	"We want to treat the <Smalltalk globals> instance of SystemEnvironment
 	specially but want to serialize all others"
 
-	self assertSerializationEqualityOf: SystemDictionary new
+	self assertSerializationEqualityOf: SystemEnvironment new
 ]
 
 { #category : 'tests' }

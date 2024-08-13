@@ -110,17 +110,11 @@ ColorForm >> colormapIfNeededForDepth: destDepth [
 	"Return a colormap for displaying the receiver at the given depth, or nil if no colormap is needed."
 
 	| newMap |
-	colors == nil ifTrue: [
-		"use the standard colormap"
-		^ Color colorMapIfNeededFrom: self depth to: destDepth].
+	colors ifNil: [ "use the standard colormap" ^ Color colorMapIfNeededFrom: self depth to: destDepth ].
 
-	(destDepth = cachedDepth and:[cachedColormap isColormap not])
-		ifTrue: [^ cachedColormap].
+	(destDepth = cachedDepth and: [ cachedColormap isColormap not ]) ifTrue: [ ^ cachedColormap ].
 	newMap := Bitmap new: colors size.
-	1 to: colors size do: [:i |
-		newMap
-			at: i
-			put: ((colors at: i) pixelValueForDepth: destDepth)].
+	1 to: colors size do: [ :i | newMap at: i put: ((colors at: i) pixelValueForDepth: destDepth) ].
 
 	cachedDepth := destDepth.
 	^ cachedColormap := newMap
@@ -346,8 +340,7 @@ ColorForm >> replaceColorAtIndex: index with: newColor [
 
 	self ensureColorArrayExists.
 	colors at: index put: newColor.
-	cachedColormap == nil ifFalse:
-		[cachedColormap at: index put: (newColor pixelValueForDepth: cachedDepth)]
+	cachedColormap ifNotNil: [ cachedColormap at: index put: (newColor pixelValueForDepth: cachedDepth) ]
 ]
 
 { #category : 'private' }
@@ -367,7 +360,7 @@ ColorForm >> setExtent: extent depth: bitsPerPixel [
 	super setExtent: extent depth: bitsPerPixel
 ]
 
-{ #category : 'file in/out' }
+{ #category : 'storing' }
 ColorForm >> storeOn: aStream [
 	aStream nextPut: $(.
 	super storeOn: aStream.

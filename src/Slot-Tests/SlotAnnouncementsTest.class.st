@@ -59,16 +59,13 @@ SlotAnnouncementsTest >> setUp [
 { #category : 'helpers' }
 SlotAnnouncementsTest >> subscribeOn: anAnnouncement [
 
-	SystemAnnouncer uniqueInstance weak
-		when: anAnnouncement
-		send: #add:
-		to: collectedAnnouncements
+	self class codeChangeAnnouncer weak when: anAnnouncement send: #add: to: collectedAnnouncements
 ]
 
 { #category : 'running' }
 SlotAnnouncementsTest >> tearDown [
 
-	SystemAnnouncer uniqueInstance unsubscribe: collectedAnnouncements.
+	self class codeChangeAnnouncer unsubscribe: collectedAnnouncements.
 	super tearDown
 ]
 
@@ -88,7 +85,7 @@ SlotAnnouncementsTest >> testChangeInSharedPoolShouldAnnounceClassModified [
 	aClass := self make: [ :builder |
 		builder
 			name: self aClassName;
-			sharedPools: 'TestSharedPool' ].
+			sharedPools: #(TestSharedPool) ].
 
 	self assert: self collectedAnnouncements size equals: 1.
 	self assert: self collectedAnnouncements first newClassDefinition equals: aClass
@@ -110,8 +107,8 @@ SlotAnnouncementsTest >> testChangeInSharedVariablesAndSharedPoolsShouldAnnounce
 	aClass := self make: [ :builder |
 		builder
 			name: self aClassName;
-			sharedPools: 'TestSharedPool';
-			sharedVariablesFromString: 'A B' ].
+			sharedPools: #(TestSharedPool);
+			sharedVariables: #(A B) ].
 
 	self assert: self collectedAnnouncements size equals: 1.
 	self assert: self collectedAnnouncements first newClassDefinition equals: aClass
@@ -133,7 +130,7 @@ SlotAnnouncementsTest >> testChangeInSharedVariablesShouldAnnounceClassModified 
 	aClass := self make: [ :builder |
 		builder
 			name: self aClassName;
-			sharedVariablesFromString: 'A B C' ].
+			sharedVariables: #(A B C) ].
 
 	self assert: self collectedAnnouncements size equals: 1.
 	self assert: self collectedAnnouncements first newClassDefinition equals: aClass
@@ -147,8 +144,7 @@ SlotAnnouncementsTest >> testChangeInSuperclassShouldNotAnnounceSubclassModified
 	"Create a class and a subclass"
 	aClass := self make: [ :builder |
 		builder
-			name: self aClassName;
-			slots: #() ].
+			name: self aClassName ].
 
 	anotherClass := self make: [ :builder |
 		builder
@@ -194,21 +190,6 @@ SlotAnnouncementsTest >> testClassCreationShouldAnnounceClassAdded [
 	self assert: self collectedAnnouncements first classAdded equals: aClass
 ]
 
-{ #category : 'tests' }
-SlotAnnouncementsTest >> testClassRecategorizationShouldAnnounceClassModified [
-
-	self subscribeOn: ClassRecategorized.
-
-	aClass := self make: [ :builder | builder package: self slotTestPackageName ].
-	anotherClass := self make: [ :builder | builder package: self slotTestPackageName , '2' ].
-
-	self assert: self collectedAnnouncements size equals: 1.
-	announcement := self collectedAnnouncements first.
-	self assert: announcement oldCategory equals: self slotTestPackageName.
-	self assert: announcement newCategory equals: self slotTestPackageName , '2'.
-	self assert: announcement classRecategorized identicalTo: anotherClass
-]
-
 { #category : 'tests - comments' }
 SlotAnnouncementsTest >> testCreateAndChangeWithCommentDoesAnnounceBoth [
 
@@ -252,7 +233,7 @@ SlotAnnouncementsTest >> testCreateAndChangeWithoutCommentDoesNotAnnounce [
 		make: [ :builder |
 			builder
 				name: self aClassName;
-				sharedPools: 'TestSharedPool' ].
+				sharedPools: #(TestSharedPool) ].
 
 	self assertEmpty: self collectedAnnouncements
 ]
@@ -294,7 +275,7 @@ SlotAnnouncementsTest >> testEmptyCommentDoesNotAnnounce [
 			builder
 				name: self aClassName;
 				comment: '';
-				sharedPools: 'TestSharedPool' ].
+				sharedPools: #(TestSharedPool) ].
 
 	self assertEmpty: self collectedAnnouncements
 ]

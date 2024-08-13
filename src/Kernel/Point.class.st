@@ -532,7 +532,7 @@ Point >> printOn: aStream [
 	aStream nextPut: $(.
 	x printOn: aStream.
 	aStream nextPut: $@.
-	(y notNil and: [y negative])
+	(y isNotNil and: [y negative])
 		ifTrue: [
 			"Avoid ambiguous @- construct"
 			aStream space].
@@ -686,7 +686,7 @@ Point >> squaredDistanceTo: aPoint [
 	^ delta dotProduct: delta
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Point >> storeOn: aStream [
 	"x@y printed form is good for storing too"
 	aStream nextPut: $(.

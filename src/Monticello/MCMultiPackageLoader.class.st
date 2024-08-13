@@ -16,6 +16,6 @@ MCMultiPackageLoader >> analyze [
 	removals removeAllSuchThat: [:removal |
 		(index definitionLike: removal
 			ifPresent: [:addition | obsoletions at: addition put: removal]
-			ifAbsent: []) notNil].
+			ifAbsent: []) isNotNil].
 	super analyze
 ]

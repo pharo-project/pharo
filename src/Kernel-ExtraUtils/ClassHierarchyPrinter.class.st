@@ -10,29 +10,29 @@ For examples browse `ClassHierarchyPrinterTest`
 
 ```
 ClassHierarchyPrinter new 
-		forClass: RBNode; 
+		forClass: ASTNode; 
 		doNotShowState;
 		doNotShowSuperclasses;
-		excludedClasses: (RBNode withAllSubclasses select: [ :each | each name beginsWith: 'RBPattern' ]);
-		limitedToClasses: (RBNode withAllSubclasses select: [:each | each name beginsWith: 'RB']).
+		excludedClasses: (ASTNode withAllSubclasses select: [ :each | each name beginsWith: 'RBPattern' ]);
+		limitedToClasses: (ASTNode withAllSubclasses select: [:each | (each name beginsWith: 'AST') or: [ each name beginsWith: 'RB' ]]]).
 ```
 
 produces 
 
 ```
-'RBNode
-	RBProgramNode
+'ASTNode
+	ASTProgramNode
 		RBComment
 		RBMethodNode
 		RBPragmaNode
 		RBReturnNode
 		RBSequenceNode
-		RBValueNode
+		ASTValueNode
 			RBArrayNode
 			RBAssignmentNode
 			RBBlockNode
 			RBCascadeNode
-			RBLiteralNode
+			ASTLiteralNode
 				RBLiteralArrayNode
 				RBLiteralValueNode
 			RBMessageNode
@@ -72,7 +72,7 @@ String streamContents: [ :st |
 	printer doNotShowSuperclasses.
 	printer on: st.	
 	((SortedCollection sortBlock: [ :a :b | a name < b name ])
-		addAll: (RPackageOrganizer default packageNamed: 'Refactoring-Core') roots)
+		addAll: (PackageOrganizer default packageNamed: 'Refactoring-Core') roots)
 			do: [ :each | 
 				printer forClass: each. 
 				printer print.
@@ -83,7 +83,7 @@ Now to print according to tags:
 
 ```
 | p roots |
-p := (RPackageOrganizer default packageNamed: 'MenuRegistration').
+p := (PackageOrganizer default packageNamed: 'MenuRegistration').
 roots := p roots. 
 String streamContents: [ :st |  
 	| printer |

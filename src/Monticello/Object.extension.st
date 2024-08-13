@@ -23,7 +23,6 @@ Object >> readDataFrom: aDataStream size: varsOnDisk [
 		ifFalse: [cntIndexedVars := 0.
 				cntInstVars := varsOnDisk]. 	"OK if fewer than now"
 
-	aDataStream beginReference: self.
 	1 to: cntInstVars do:
 		[:i | self instVarAt: i put: aDataStream next].
 	1 to: cntIndexedVars do:

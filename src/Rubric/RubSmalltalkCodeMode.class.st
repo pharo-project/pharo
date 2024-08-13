@@ -68,10 +68,7 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		keyText: 'D';
 		selector: #debugIt;
 		help: nil;
-		iconName: #smallDebug.
-	(aBuilder item: #'Profile it' translated)
-		selector: #tallyIt;
-		iconName: #smallProfile;
+		iconName: #smallDebug;
 		withSeparatorAfter.
 	(aBuilder item: #'Find...' translated)
 		keyText: 'f';
@@ -165,20 +162,28 @@ RubSmalltalkCodeMode >> classOrMetaClass: aBehavior [
 
 { #category : 'helper' }
 RubSmalltalkCodeMode >> formatMethodCode [
+
 	| source tree formatted |
-	source := self textArea text asString.
-	tree := self parseSource: source.
-	tree checkFaulty: [ :msg :pos | ^self ].
+	self textArea hasSelection
+		ifTrue: [
+			source := self textArea selection.
+			tree := self parseExpression: source ]
+		ifFalse: [
+			source := self textArea text.
+			tree := self parseSource: source ].
+	tree checkFaulty: [ :msg :pos |
+		^ self editor notify: msg at: pos + 1 in: source ].
 	formatted := tree formattedCodeIn: classOrMetaclass.
-	formatted = source
-		ifTrue: [ ^ self ].
-	self textArea updateTextWith: formatted
+	formatted = source ifTrue: [ ^ self ].
+	self textArea hasSelection
+		ifTrue: [ self textArea replaceSelectionWith: formatted ]
+		ifFalse: [ self textArea updateTextWith: formatted ]
 ]
 
 { #category : 'shout' }
 RubSmalltalkCodeMode >> hasBindingOf: aString [
-	" For the shout styler "
-	^ self model notNil and: [ self model hasBindingOf: aString ]
+	"For the shout styler"
+	^ self model isNotNil and: [ self model hasBindingOf: aString ]
 ]
 
 { #category : 'parsing' }

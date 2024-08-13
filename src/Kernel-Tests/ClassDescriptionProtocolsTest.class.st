@@ -9,12 +9,6 @@ Class {
 	#tag : 'Classes'
 }
 
-{ #category : 'private' }
-ClassDescriptionProtocolsTest >> performTest [
-
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ super performTest ]
-]
-
 { #category : 'tests' }
 ClassDescriptionProtocolsTest >> testAddProtocol [
 
@@ -225,7 +219,7 @@ ClassDescriptionProtocolsTest >> testExtensionProtocols [
 	class addProtocol: '*' , extensionPackageName.
 
 	self assertCollection: class extensionProtocols hasSameElements: { (class protocolNamed: '*' , extensionPackageName) } ] ensure: [
-		(extensionPackageName asPackageIfAbsent: [ nil ]) ifNotNil: [ :package | package removeFromSystem ] ]
+		self packageOrganizer removePackage: extensionPackageName ]
 ]
 
 { #category : 'tests' }

@@ -51,8 +51,8 @@ ClassFactoryForTestCaseTest >> testClassCreationInDifferentTags [
 	firstThreeClasses := factory createdClasses copy.
 	2 timesRepeat: [ factory make: [ :aBuilder | aBuilder tag: #Two ] ].
 	lastTwoClasses := factory createdClasses copyWithoutAll: firstThreeClasses.
-	self assert: (firstThreeClasses allSatisfy: [ :class | class category = (factory packageName , '-' , #One) asSymbol ]).
-	self assert: (lastTwoClasses allSatisfy: [ :class | class category = (factory packageName , '-' , #Two) asSymbol ])
+	self assert: (firstThreeClasses allSatisfy: [ :class | class package name = factory packageName and: [ class packageTag name = #One ] ]).
+	self assert: (lastTwoClasses allSatisfy: [ :class | class package name = factory packageName and: [ class packageTag name = #Two ] ])
 ]
 
 { #category : 'testing' }
@@ -75,8 +75,7 @@ ClassFactoryForTestCaseTest >> testPackageCleanUp [
 	self assert: (factory createdClasses allSatisfy: [ :class | class isObsolete ]).
 	allClasses := self environment allClasses.
 	self assert: (factory createdClasses noneSatisfy: [ :class | allClasses includes: class ]).
-	self assertEmpty: (self organization packages select: [ :package | package name beginsWith: factory packageName ]).
-	self class environment at: #ChangeSet ifPresent: [ :changeSet | self deny: (changeSet current changedClassNames includesAnyOf: createdClassNames) ]
+	self assertEmpty: (self organization packages select: [ :package | package name beginsWith: factory packageName ])
 ]
 
 { #category : 'testing' }
@@ -86,13 +85,14 @@ ClassFactoryForTestCaseTest >> testSingleClassCreation [
 	class := factory make: [ :aBuilder |
 		         aBuilder
 			         superclass: Object;
-			         slotsFromString: 'a b c';
-			         sharedVariablesFromString: 'X Y';
-			         tag: factory defaultTagPostfix ].
+			         slots: #(a b c);
+			         sharedVariables: #(X Y);
+			         tag: factory tagName ].
 	self assert: (self environment allClasses includes: class).
-	self assert: class category equals: factory packageName , '-' , factory defaultTagPostfix.
+	self assert: class package name equals: factory packageName.
+	self assert: class packageTag name equals: factory tagName.
 	self assert: class instVarNames equals: #( a b c ).
-	self assert: class classPool keys asSet equals: #( X Y ) asSet
+	self assert: class classVarNames asSet equals: #( X Y ) asSet
 ]
 
 { #category : 'testing' }
@@ -121,6 +121,6 @@ ClassFactoryForTestCaseTest >> testTraitCreationInDifferentCategories [
 				beTrait;
 				tag: #Two ] ].
 	lastTwoTraits := factory createdTraits copyWithoutAll: firstThreeTraits.
-	self assert: (firstThreeTraits allSatisfy: [ :trait | trait category = (factory packageName , '-' , #One) asSymbol ]).
-	self assert: (lastTwoTraits allSatisfy: [ :trait | trait category = (factory packageName , '-' , #Two) asSymbol ])
+	self assert: (firstThreeTraits allSatisfy: [ :trait | trait package name = factory packageName and: [ trait packageTag name = #One ] ]).
+	self assert: (lastTwoTraits allSatisfy: [ :trait | trait package name = factory packageName and: [ trait packageTag name = #Two ] ])
 ]

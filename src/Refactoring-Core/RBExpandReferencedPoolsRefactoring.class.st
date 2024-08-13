@@ -40,6 +40,17 @@ RBExpandReferencedPoolsRefactoring class >> model: aRBNamespace forMethod: aPars
 		yourself
 ]
 
+{ #category : 'preconditions' }
+RBExpandReferencedPoolsRefactoring >> breakingChangePreconditions [
+
+	^ { (RBCondition withBlock: [
+		   self hasPoolsToMove ifTrue: [
+			   self refactoringWarning:
+				   'This method contains references to pools<n>which may need to be moved.<n>Proceed anyway?'
+					   expandMacros ].
+		   true ]) }
+]
+
 { #category : 'transforming' }
 RBExpandReferencedPoolsRefactoring >> computePoolsToMove [
 
@@ -88,20 +99,15 @@ RBExpandReferencedPoolsRefactoring >> movePoolVariables [
 		do: [:poolDict | toClasses do: [:each | self movePool: poolDict toClass: each]]
 ]
 
-{ #category : 'preconditions' }
-RBExpandReferencedPoolsRefactoring >> preconditions [
+{ #category : 'transforming' }
+RBExpandReferencedPoolsRefactoring >> prepareForExecution [
 
-	^ self trueCondition
+	self computePoolsToMove
 ]
 
 { #category : 'transforming' }
 RBExpandReferencedPoolsRefactoring >> privateTransform [
-	self computePoolsToMove.
-	self hasPoolsToMove
-		ifTrue:
-			[self
-				refactoringWarning: 'This method contains references to pools<n>which may need to be moved.<n>Proceed anyway?'
-						expandMacros].
+
 	self movePoolVariables
 ]
 

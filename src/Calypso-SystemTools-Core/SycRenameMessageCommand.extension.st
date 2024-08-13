@@ -1,16 +1,10 @@
 Extension { #name : 'SycRenameMessageCommand' }
 
 { #category : '*Calypso-SystemTools-Core' }
-SycRenameMessageCommand class >> browserMenuOrder [
-	^2
-]
-
-{ #category : '*Calypso-SystemTools-Core' }
 SycRenameMessageCommand class >> methodMenuActivation [
 	<classAnnotation>
 
-	^CmdContextMenuActivation
-		byRootGroupItemOrder: self browserMenuOrder for: ClyMethod asCalypsoItemContext
+	^ CmdContextMenuActivation byRootGroupItemOrder: 1.7  for: ClyMethod asCalypsoItemContext
 ]
 
 { #category : '*Calypso-SystemTools-Core' }
@@ -29,7 +23,7 @@ SycRenameMessageCommand class >> sourceCodeMenuActivation [
 
 { #category : '*Calypso-SystemTools-Core' }
 SycRenameMessageCommand class >> sourceCodeShortcutActivation [
-	<classAnnotation>
 
-	^CmdShortcutActivation renamingFor: ClyMethodSourceCodeContext
+	<classAnnotation>
+	^ CmdShortcutActivation by: $r meta for: ClyMethodSourceCodeContext
 ]

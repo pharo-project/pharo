@@ -3,7 +3,7 @@ A MCSystemCategoryParser extracts or set a category/protocol to the correspondin
 "
 Class {
 	#name : 'MCOrganizationParser',
-	#superclass : 'MCSystemCategoryParser',
+	#superclass : 'MCDoItParser',
 	#category : 'Monticello-Chunk Format',
 	#package : 'Monticello',
 	#tag : 'Chunk Format'

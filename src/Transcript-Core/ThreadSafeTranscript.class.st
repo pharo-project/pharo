@@ -21,6 +21,8 @@ The ==stream resetContents== is moved to #step so this occurs directly after ==s
 Class {
 	#name : 'ThreadSafeTranscript',
 	#superclass : 'Model',
+	#traits : 'TTranscript',
+	#classTraits : 'TTranscript classTrait',
 	#instVars : [
 		'stream',
 		'accessSemaphore',
@@ -51,17 +53,6 @@ ThreadSafeTranscript class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
 	^#transcript
-]
-
-{ #category : 'streaming' }
-ThreadSafeTranscript >> << anObject [
-	"Write anObject to the receiver, dispatching using #putOn:
-	This is a shortcut for both nextPut: and nextPutAll: since anObject can be both
-	the element type of the receiver as well as a collection of those elements.
-	No further conversions of anObject are applied.
-	Return self to accomodate chaining."
-
- 	anObject putOn: self
 ]
 
 { #category : 'accessing' }
@@ -97,20 +88,6 @@ ThreadSafeTranscript >> contents [
 ]
 
 { #category : 'streaming' }
-ThreadSafeTranscript >> cr [
-	"Output a cr on the receiver, buffered and not yet shown"
-
-	self nextPut: Character cr
-]
-
-{ #category : 'streaming' }
-ThreadSafeTranscript >> crShow: anObject [
-	"Output anObject asString on the receiver preceded by a cr and show the output"
-
-	self critical: [ self cr; show: anObject ]
-]
-
-{ #category : 'streaming' }
 ThreadSafeTranscript >> critical: block [
 	"Execute block making sure only one thread accesses the receiver"
 
@@ -122,17 +99,21 @@ ThreadSafeTranscript >> doItContext [
 	^nil
 ]
 
-{ #category : 'streaming' }
-ThreadSafeTranscript >> endEntry [
-"
-	The next #stepGlobal message (usually invoked by Morhic stepping) will raise an #appendEntry update and reset the stream.
-"
-  	self critical: [ deferredEndEntry := true ]
+{ #category : 'accessing' }
+ThreadSafeTranscript >> doItReceiver [
+	^ nil
 ]
 
 { #category : 'streaming' }
 ThreadSafeTranscript >> flush [
-	self endEntry
+	"The next #stepGlobal message (usually invoked by Morhic stepping) will raise an #appendEntry update and reset the stream."
+
+	self critical: [ deferredEndEntry := true ]
+]
+
+{ #category : 'testing' }
+ThreadSafeTranscript >> hasBindingOf: aString [
+	^ false
 ]
 
 { #category : 'ui building' }
@@ -182,13 +163,6 @@ ThreadSafeTranscript >> nextPutAll: value [
 	^ value
 ]
 
-{ #category : 'streaming' }
-ThreadSafeTranscript >> print: anObject [
-	"Output anObject asString on the receiver, buffered, not yet shown"
-
-	self nextPutAll: anObject asString
-]
-
 { #category : 'printing' }
 ThreadSafeTranscript >> printOn: aStream [
 
@@ -206,23 +180,9 @@ ThreadSafeTranscript >> shoutAboutToStyle: aPluggableShoutMorphOrView [
 	^ false
 ]
 
-{ #category : 'streaming' }
-ThreadSafeTranscript >> show: anObject [
-	"Output anObject asString on the receiver and show the output"
-
-	self critical: [ self print: anObject; endEntry ]
-]
-
-{ #category : 'streaming' }
-ThreadSafeTranscript >> space [
-	"Output a space on the receiver, buffered and not yet shown"
-
-	self nextPut: Character space
-]
-
 { #category : 'updating' }
 ThreadSafeTranscript >> stepGlobal [
-"	The superclass method Model>>step indicates a convention that might be used to interoperate
+	"	The superclass method Model>>step indicates a convention that might be used to interoperate
 	synchronously with the UI-thread.  However when multiple Transcript windows are open, their
 	PluggableTextMorphs share a single instance, from the global Transcript.  To avoid potential trouble,
 	this method should not be named #step.
@@ -233,30 +193,21 @@ ThreadSafeTranscript >> stepGlobal [
 "
 
 	"Next three lines required temporarily to initialize instance variables added to existing instance"
+
 	deferredClear ifNil: [ deferredClear := false ].
 	deferredEndEntry ifNil: [ deferredEndEntry := false ].
 	stepContents ifNil: [ stepContents := '' ].
 
-	deferredClear ifTrue:
-	[ 	deferredClear := false.
+	deferredClear ifTrue: [
+		deferredClear := false.
 		stepContents := ''.
-		self changed: #clearText.
-	].
-	deferredEndEntry ifTrue:
-	[	deferredEndEntry := false.
-		self critical:
-		[	stepContents := stream contents.
+		self critical: [ self changed: #clearText ] ].
+	deferredEndEntry ifTrue: [
+		deferredEndEntry := false.
+		self critical: [
+			stepContents := stream contents.
 			stream resetContents.
-		].
-		self changed: #appendEntry.
-	]
-]
-
-{ #category : 'streaming' }
-ThreadSafeTranscript >> tab [
-	"Output a tab on the receiver, buffered and not yet shown"
-
-	self nextPut: Character tab
+			self changed: #appendEntry ] ]
 ]
 
 { #category : 'ui building' }

@@ -8,8 +8,8 @@ Class {
 		'metaClass',
 		'comment',
 		'classVariables',
-		'category',
 		'package',
+		'packageTag',
 		'sharedPools'
 	],
 	#category : 'Ring-Definitions-Core-Base',
@@ -98,11 +98,6 @@ RGClassDefinition >> allClassVariables [
 ]
 
 { #category : 'shared pools' }
-RGClassDefinition >> allSharedPoolNames [
-	^ self allSharedPools collect: [ :pool | pool name ]
-]
-
-{ #category : 'shared pools' }
 RGClassDefinition >> allSharedPools [
 	"Answer a collection of the pools the receiver shares, including those defined
 	in the superclasses of the receiver."
@@ -112,20 +107,6 @@ RGClassDefinition >> allSharedPools [
 		ifTrue: [ self superclass allSharedPools , sharedPools ]
 ]
 
-{ #category : 'accessing' }
-RGClassDefinition >> category [
-	"retrieves a tag for its package"
-
-	^category
-]
-
-{ #category : 'accessing' }
-RGClassDefinition >> category: aSymbol [
-	"stores a tag for its package"
-
-	category := aSymbol
-]
-
 { #category : 'accessing - parallel hierarchy' }
 RGClassDefinition >> classSide [
 	"Return the metaclass of the couple class/metaclass. Useful to avoid explicit test."
@@ -133,16 +114,16 @@ RGClassDefinition >> classSide [
 ]
 
 { #category : 'class variables' }
-RGClassDefinition >> classVarNamed: aString [
-
-	^classVariables detect:[ :v| v name = aString asSymbol ] ifNone:[ nil ]
-]
-
-{ #category : 'class variables' }
 RGClassDefinition >> classVarNames [
 	"Answer a collection of the names of the class variables defined in the receiver."
 
 	^classVariables collect:[ :cvar| cvar name ]
+]
+
+{ #category : 'class variables' }
+RGClassDefinition >> classVariableNamed: aString [
+
+	^ classVariables detect:[ :v| v name = aString asSymbol ] ifNone: [ nil ]
 ]
 
 { #category : 'accessing' }
@@ -192,7 +173,7 @@ RGClassDefinition >> hasComment [
 { #category : 'testing' }
 RGClassDefinition >> hasMetaclass [
 
-	^metaClass notNil
+	^metaClass isNotNil
 ]
 
 { #category : 'testing' }
@@ -245,14 +226,15 @@ RGClassDefinition >> isPool: aBoolean [
 RGClassDefinition >> isSameRevisionAs: aRGClassDefinition [
 	"This method look for equality of the properties of the receiver"
 
-	^(super isSameRevisionAs: aRGClassDefinition)
-		and:[ self superclassName == aRGClassDefinition superclassName
-		and:[ self category = aRGClassDefinition category
-		and:[ self classVarNames sorted = aRGClassDefinition classVarNames sorted
-		and:[ self sharedPoolNames sorted = aRGClassDefinition sharedPoolNames sorted
-		and:[ self traitCompositionSource = aRGClassDefinition traitCompositionSource
-		and:[ ((self hasComment and:[ self comment isSameRevisionAs: aRGClassDefinition comment ]) or:[ self hasComment not ])
-		and:[ (self classSide isSameRevisionAs: aRGClassDefinition classSide) ] ] ] ] ] ] ]
+	^ (super isSameRevisionAs: aRGClassDefinition) and: [
+		  self superclassName == aRGClassDefinition superclassName and: [
+			  self package name = aRGClassDefinition package name and: [
+				  self packageTag = aRGClassDefinition packageTag and: [
+					  self classVarNames sorted = aRGClassDefinition classVarNames sorted and: [
+						  self sharedPoolNames sorted = aRGClassDefinition sharedPoolNames sorted and: [
+							  self traitCompositionSource = aRGClassDefinition traitCompositionSource and: [
+								  ((self hasComment and: [ self comment isSameRevisionAs: aRGClassDefinition comment ]) or: [ self hasComment not ]) and: [
+									  self classSide isSameRevisionAs: aRGClassDefinition classSide ] ] ] ] ] ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -269,10 +251,24 @@ RGClassDefinition >> package: aRGPackage [
 	package:= aRGPackage
 ]
 
+{ #category : 'accessing' }
+RGClassDefinition >> packageTag [
+
+	^ packageTag
+]
+
+{ #category : 'accessing' }
+RGClassDefinition >> packageTag: anObject [
+
+	packageTag := anObject
+]
+
 { #category : 'class variables' }
 RGClassDefinition >> removeClassVarNamed: aString [
 
-	self removeVariable: (self classVarNamed: aString) from: classVariables
+	self
+		removeVariable: (self classVariableNamed: aString)
+		from: classVariables
 ]
 
 { #category : 'class variables' }

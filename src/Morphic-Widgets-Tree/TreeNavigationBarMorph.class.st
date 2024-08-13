@@ -29,12 +29,6 @@ TreeNavigationBarMorph class >> createIconMethods [
 			self class compile: (n, 'Icon', String cr, String tab, '^ ', form storeString) classified: #icons]
 ]
 
-{ #category : 'class initialization' }
-TreeNavigationBarMorph class >> initialize [
-
-	self deprecatedAliases: { #MorphTreeNavigationBar }
-]
-
 { #category : 'instance creation' }
 TreeNavigationBarMorph class >> on: aTreeMorph pageSize: aPageSize [
 	^ self new treeMorph: aTreeMorph  pageSize: aPageSize
@@ -253,7 +247,7 @@ TreeNavigationBarMorph >> pageSearchText: aString [
 	founds size > 1
 		ifTrue: [
 			chosen :=
-				UIManager default
+				self morphicUIManager
 					chooseFrom: (founds collect: [:l | l value] )
 					values: (founds collect: [:l | l key] )
 					lines: nil

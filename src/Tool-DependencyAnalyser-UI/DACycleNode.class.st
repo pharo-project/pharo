@@ -11,16 +11,8 @@ Class {
 
 { #category : 'building-menu' }
 DACycleNode >> addMenuEntriesOn: aMenu [
-	| graphvizGenerator |
-
-	aMenu defaultGroup
-		addMenuItem: (SpMenuItemPresenter new
-						name: 'Generate GraphViz file';
-						action: [ treeModelParent ifGraphVizAbsent: [ self error: 'Please install Graphviz Support' ].
-									graphvizGenerator := DAPackageCycleGenerator
-										newWith: cycle
-										named: 'CycleGraph' , cycle size asString , 'nodes'.
-									treeModelParent saveGraphAndOpenWith: graphvizGenerator ])
+	
+	self
 ]
 
 { #category : 'accessing' }
@@ -30,7 +22,7 @@ DACycleNode >> childNodeClassFor: anItem [
 
 { #category : 'accessing' }
 DACycleNode >> icon [
-	^ self iconNamed: #refreshIcon
+	^ self iconNamed: #refresh
 ]
 
 { #category : 'accessing' }

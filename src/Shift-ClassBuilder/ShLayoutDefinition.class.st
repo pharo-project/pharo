@@ -12,8 +12,9 @@ Class {
 		'sharedVariables',
 		'builder'
 	],
-	#category : 'Shift-ClassBuilder',
-	#package : 'Shift-ClassBuilder'
+	#category : 'Shift-ClassBuilder-Builder',
+	#package : 'Shift-ClassBuilder',
+	#tag : 'Builder'
 }
 
 { #category : 'accessing' }
@@ -30,7 +31,8 @@ ShLayoutDefinition >> builder: anObject [
 
 { #category : 'accessing' }
 ShLayoutDefinition >> classSlots [
-	^ classSlots ifNil: [ #() ]
+
+	^ classSlots
 ]
 
 { #category : 'accessing' }
@@ -38,51 +40,15 @@ ShLayoutDefinition >> classSlots: anObject [
 	classSlots := anObject collect: [ :e | e asSlot ]
 ]
 
-{ #category : 'accessing' }
-ShLayoutDefinition >> copy: slotCollection ifUsedIn: aClass [
-	"I only copy the slot if it is not virtual and it is the same in the oldClass.
-	 They are copied as they have the index as instance variable, the index can change in the new class."
-
-	aClass slots isEmpty ifTrue: [ ^ slotCollection ].
-
-	^ slotCollection
-		collect: [ :aSlot |
-			aClass
-				slotNamed: aSlot name
-				ifFound: [ :oldSlot |
-					(oldSlot == aSlot and: [ aSlot isVirtual not ])
-						ifTrue: [ aSlot copy ]
-						ifFalse: [ aSlot ] ]
-				ifNone: [ aSlot ] ]
-]
-
-{ #category : 'copying' }
-ShLayoutDefinition >> copyClassSlotsIfNeeded: oldSlots [
-
-	classSlots ifNotNil: [ ^ self ].
-
-	classSlots := oldSlots
-		select: [:each | each isDefinedByOwningClass ]
-		thenCollect: [ :each | each copy index: nil; yourself ]
-]
-
-{ #category : 'accessing' }
-ShLayoutDefinition >> copySlotsIfUsedIn: oldClass [
-	"I copy the slots if they are used in oldClass. As the slots has state (usually the index) they cannot be shared between the old and the new class."
-
-	oldClass ifNil: [ ^ self ].
-
-	slots := self copy: slots ifUsedIn: oldClass.
-	classSlots := self copy: self classSlots ifUsedIn: oldClass class
-]
-
 { #category : 'initialization' }
 ShLayoutDefinition >> initialize [
+
 	super initialize.
 
-	slots := #().
-	sharedPools := #().
-	sharedVariables := #()
+	slots := #(  ).
+	classSlots := #(  ).
+	sharedPools := #(  ).
+	sharedVariables := #(  )
 ]
 
 { #category : 'testing' }
@@ -123,11 +89,6 @@ ShLayoutDefinition >> sharedVariables [
 { #category : 'accessing' }
 ShLayoutDefinition >> sharedVariables: anObject [
 	sharedVariables := anObject
-]
-
-{ #category : 'accessing' }
-ShLayoutDefinition >> sharedVariablesString [
-	^ (sharedVariables collect:[:e | e key]) joinUsing: ' '
 ]
 
 { #category : 'accessing' }

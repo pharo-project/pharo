@@ -14,12 +14,6 @@ Class {
 	#tag : 'Widgets'
 }
 
-{ #category : 'class initialization' }
-DialogWindowMorph class >> initialize [
-
-	self deprecatedAliases: { #DialogWindow }
-]
-
 { #category : 'actions' }
 DialogWindowMorph >> acceptTextMorphs [
 	"Accept any text morphs except for those that have no edits."
@@ -30,7 +24,7 @@ DialogWindowMorph >> acceptTextMorphs [
 				p hasUnacceptedEdits]]) ifTrue: [p accept]]
 ]
 
-{ #category : 'top window' }
+{ #category : 'activation' }
 DialogWindowMorph >> activate [
 	"Set the default focus for now, will want to
 	remember it at some point."
@@ -180,7 +174,7 @@ DialogWindowMorph >> handlesKeyboard: evt [
 
 	(super handlesKeyboard: evt) ifTrue: [^true].
 	^evt keyCharacter = Character escape or: [
-		(self defaultButton notNil and: [
+		(self defaultButton isNotNil and: [
 			evt keyCharacter = Character cr])]
 ]
 
@@ -232,7 +226,7 @@ DialogWindowMorph >> keyDown: evt [
 	"Check for return and escape keys."
 
 	super keyDown: evt.
-	(self defaultButton notNil and: [evt key = KeyboardKey enter or: [evt key = KeyboardKey keypadEnter]])
+	(self defaultButton isNotNil and: [evt key = KeyboardKey enter or: [evt key = KeyboardKey keypadEnter]])
 		ifTrue: [self returnPressed. ^true].
 
 	evt key = KeyboardKey escape ifTrue: [self escapePressed. ^true].
@@ -281,7 +275,10 @@ DialogWindowMorph >> newButtonRow [
 DialogWindowMorph >> newButtons [
 	"Answer new buttons as appropriate."
 
-	^{self newOKButton isDefault: true. self newCancelButton}
+	^ {
+		self newCancelButton.
+		self newOKButton isDefault: true 
+	}
 ]
 
 { #category : 'actions' }
@@ -349,7 +346,9 @@ DialogWindowMorph >> title: aString [
 
 	super title: aString.
 	label fitContents.
-	self minimumExtent: (((label width + 20 min: (Display width // 2)) max: self minimumExtent x)@ self minimumExtent y)
+	self minimumExtent:
+		((label width + 20 min: self currentWorld width // 2) max:
+			 self minimumExtent x) @ self minimumExtent y
 ]
 
 { #category : 'theme' }

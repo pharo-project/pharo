@@ -260,7 +260,7 @@ ZnBase64Encoder >> isLegalCharacter: character [
 
 	| code |
 	^ (code := character asciiValue) < 128
-			and: [ (inverse at: code + 1) notNil ]
+			and: [ (inverse at: code + 1) isNotNil ]
 ]
 
 { #category : 'private' }

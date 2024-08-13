@@ -1,25 +1,33 @@
 "
-I am a command to rename message selector.
-In addition I allow to swap arguments in signature.
- 
-Internal Representation and Key Implementation Points.
-
-    Instance Variables
-	newSignature:		<SycMessageDescription>
+Call the rename method refactoring (yes the class name is not good)
 "
 Class {
 	#name : 'SycRenameMessageCommand',
 	#superclass : 'SycChangeMessageSignatureCommand',
 	#instVars : [
-		'newSignature'
+		'newSignature',
+		'driver',
+		'toolContext'
 	],
 	#category : 'SystemCommands-MessageCommands',
 	#package : 'SystemCommands-MessageCommands'
 }
 
+{ #category : 'execution' }
+SycRenameMessageCommand >> applyResultInContext: aToolContext [
+	"I have problem to understand how to plug the call to the driver in the cmd architecture
+	in a way that I can come back here only once the refactoring is applied."
+
+	"to be checked"
+
+	"aToolContext
+		showMessage: originalMessage
+		renamedTo: driver newMessage" 
+]
+
 { #category : 'requesting' }
 SycRenameMessageCommand >> canAddArgs [
-	^false
+	^ false
 ]
 
 { #category : 'requesting' }
@@ -29,44 +37,59 @@ SycRenameMessageCommand >> canRemoveArgs [
 
 { #category : 'execution' }
 SycRenameMessageCommand >> createRefactoring [
-
-	^ (RBRenameMethodRefactoring
-		model: model
-		renameMethod: originalMessage selector
-		in:  refactoredClass 
-		to: newSignature selector
-		permutation: newSignature permutation)
-			renameMap: newSignature renameMap
+	"not used"
+	^ self
 ]
 
 { #category : 'accessing' }
 SycRenameMessageCommand >> defaultMenuIconName [
-	^#edit
+	^ #edit
 ]
 
 { #category : 'accessing' }
 SycRenameMessageCommand >> defaultMenuItemName [
-	^'Rename'
+	^ '(R) Rename'
+]
+
+{ #category : 'execution' }
+SycRenameMessageCommand >> execute [
+
+	driver := ReRenameMethodDriver new
+		          scopes: refactoringScopes
+		          model: model
+		          renameMethodSignature: originalMessage
+		          in: originalMessage methodClass.
+	driver runRefactoring.
+	
+]
+
+{ #category : 'execution' }
+SycRenameMessageCommand >> isComplexRefactoring [ 
+
+	^ false
 ]
 
 { #category : 'accessing' }
 SycRenameMessageCommand >> newSignature [
+
 	^ newSignature
 ]
 
 { #category : 'accessing' }
 SycRenameMessageCommand >> newSignature: anObject [
+
 	newSignature := anObject
 ]
 
 { #category : 'execution' }
 SycRenameMessageCommand >> prepareFullExecutionInContext: aToolContext [
-	super prepareFullExecutionInContext: aToolContext.
 
-	newSignature := self requestNewMessageIn: aToolContext
+	super prepareFullExecutionInContext: aToolContext.
+	toolContext := aToolContext
 ]
 
 { #category : 'execution' }
 SycRenameMessageCommand >> resultMessageSelector [
-	^newSignature selector
+
+	^ newSignature selector
 ]

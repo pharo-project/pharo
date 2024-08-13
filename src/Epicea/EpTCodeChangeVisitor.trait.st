@@ -9,11 +9,6 @@ Trait {
 }
 
 { #category : 'visitor' }
-EpTCodeChangeVisitor >> visitBehaviorCategoryChange: aChange [
-	^ self visitBehaviorChange: aChange
-]
-
-{ #category : 'visitor' }
 EpTCodeChangeVisitor >> visitBehaviorChange: aChange [
 	^ self visitCodeChange: aChange
 ]
@@ -26,6 +21,11 @@ EpTCodeChangeVisitor >> visitBehaviorCommentChange: aChange [
 { #category : 'visitor' }
 EpTCodeChangeVisitor >> visitBehaviorNameChange: aChange [
 	^ self visitBehaviorChange: aChange
+]
+
+{ #category : 'visitor' }
+EpTCodeChangeVisitor >> visitBehaviorRepackagedChange: aBehaviorRepackagedChange [
+	^ self visitBehaviorChange: aBehaviorRepackagedChange
 ]
 
 { #category : 'visitor' }

@@ -16,49 +16,26 @@ ClassHierarchyPrinterTest >> setUp [
 ]
 
 { #category : 'tests' }
-ClassHierarchyPrinterTest >> testOnlyFreeText [
+ClassHierarchyPrinterTest >> testOnlyASTNodes [
 
 	printer
-		nextPutAll: 'Start';
-		cr;
-		tab;
-		nextPutAll: 'Tabbed';
-		cr;
-		nextPutAll: 'End'.
-
-
-	self assert: printer print equals: 'Start
-	Tabbed
-End'
-]
-
-{ #category : 'tests' }
-ClassHierarchyPrinterTest >> testOnlyRBASTNodes [
-
-	printer
-		forClass: RBNode;
+		forClass: ASTNode;
 		doNotShowState;
 		doNotShowSuperclasses;
-		excludedClasses: (RBNode withAllSubclasses select: [ :each | each name beginsWith: 'RBPattern' ]);
-		limitedToClasses: (RBNode withAllSubclasses select: [:each | each name beginsWith: 'RB']).
+		excludedClasses: (ASTNode withAllSubclasses select: [ :each | each name beginsWith: 'RBPattern' ]);
+		limitedToClasses: (ASTNode withAllSubclasses select: [:each | (each name beginsWith: 'RB') or: [ each name beginsWith: 'AST' ]]).
 	self assert: printer print equals:
-	'RBNode
-	RBProgramNode
-		RBComment
-		RBMethodNode
-			RBDoItMethodNode
-		RBPragmaNode
-		RBReturnNode
-		RBSequenceNode
-		RBValueNode
+	'ASTNode
+	ASTProgramNode
+		ASTValueNode
+			ASTLiteralNode
+				RBLiteralArrayNode
+				RBLiteralValueNode
 			RBAnnotationMarkNode
 			RBArrayNode
 			RBAssignmentNode
 			RBBlockNode
 			RBCascadeNode
-			RBLiteralNode
-				RBLiteralArrayNode
-				RBLiteralValueNode
 			RBMessageNode
 			RBParseErrorNode
 				RBEnglobingErrorNode
@@ -74,8 +51,31 @@ ClassHierarchyPrinterTest >> testOnlyRBASTNodes [
 					RBUnfinishedStatementErrorNode
 			RBSelectorNode
 			RBVariableNode
+		RBComment
+		RBMethodNode
+			RBDoItMethodNode
+		RBPragmaNode
+		RBReturnNode
+		RBSequenceNode
 	RBSlotInitializationNode
 '
+]
+
+{ #category : 'tests' }
+ClassHierarchyPrinterTest >> testOnlyFreeText [
+
+	printer
+		nextPutAll: 'Start';
+		cr;
+		tab;
+		nextPutAll: 'Tabbed';
+		cr;
+		nextPutAll: 'End'.
+
+
+	self assert: printer print equals: 'Start
+	Tabbed
+End'
 ]
 
 { #category : 'tests' }

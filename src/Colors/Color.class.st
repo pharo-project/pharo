@@ -833,6 +833,19 @@ Color class >> r: r g: g b: b range: range [
 		yourself
 ]
 
+{ #category : 'accessing' }
+Color class >> random [
+	"Return a random color that isn't too dark or under-saturated."
+
+	| random |
+	random := SharedRandom globalGenerator.
+	^ self
+		  h: 360.0 * random next
+		  s: 0.3 + (random next * 0.7)
+		  v: 0.4 + (random next * 0.6)
+		  alpha: 1.0
+]
+
 { #category : 'accessing - defaults' }
 Color class >> red [
 
@@ -2138,7 +2151,7 @@ Color >> storeArrayValuesOn: aStream [
 	(self alpha roundTo: 0.001) storeOn: aStream
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Color >> storeOn: aStream [
 	self isTransparent
 		ifTrue: [ ^ aStream nextPutAll: '(Color transparent)' ].

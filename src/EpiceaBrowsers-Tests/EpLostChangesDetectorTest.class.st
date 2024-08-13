@@ -23,14 +23,14 @@ EpLostChangesDetectorTest >> testDetectInEmptyLog [
 
 { #category : 'tests' }
 EpLostChangesDetectorTest >> testDetectNoChange [
+
 	classFactory newClass.
 	monitor log store flush.
 	detector := EpLostChangesDetector newWithLog: monitor log.
 	self deny: detector hasLostChanges.
 	self assertEmpty: detector lostChanges.
 
-	"Category addition and registration are two separate events"
-	"Just to be sure of the assumed precondition: category and only one class created"	
+	"Just to be sure of the assumed precondition: package, package tag and only one class created"
 	self assert: monitor log entriesCount equals: 3
 ]
 
@@ -89,7 +89,7 @@ EpLostChangesDetectorTest >> testDetectThreeChanges [
 	detectedLostChanges := detector lostChanges.
 	self
 		assert: (detectedLostChanges anySatisfy: [ : omEntry | omEntry content isEpPackageTagChange ])
-		description: 'It test that the class additions include a category registration'.
+		description: 'It test that the class additions include a tag registration'.
 	detectedLostClassChanges := detectedLostChanges reject: [ : omEntry | omEntry content isEpPackageTagChange ].
 	detectedLostClassChanges do: [ :each | self assert: each content isEpClassChange ].
 

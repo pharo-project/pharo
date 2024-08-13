@@ -58,12 +58,30 @@ RBChildrenToSiblingsRefactoring >> abstractSuperclass [
 
 { #category : 'transforming' }
 RBChildrenToSiblingsRefactoring >> addSuperclass [
-	self generateChangesFor: (RBInsertNewClassRefactoring
-				model: self model
-				addClass: className
-				superclass: parent superclass
-				subclasses: (Array with: parent)
-				category: parent category)
+
+	self generateChangesFor: ((RBInsertNewClassRefactoring model: self model className: className)
+			 superclass: parent superclass;
+			 subclasses: { parent };
+			 packageName: parent packageName;
+			 tagName: parent tagName;
+			 yourself)
+]
+
+{ #category : 'preconditions' }
+RBChildrenToSiblingsRefactoring >> applicabilityPreconditions [
+
+	| conds |
+	conds := {
+		         ((RBCondition isMetaclass: parent) errorMacro:
+			          'Superclass must not be a metaclass') not.
+		         (RBCondition isValidClassName: className).
+		         (RBCondition isGlobal: className in: self model) not }.
+	subclasses do: [ :each |
+		conds := conds , { 
+			((RBCondition isMetaclass: each) errorMacro:
+				 'Subclass must <1?not :>be a metaclass') not.
+			(RBCondition isImmediateSubclass: each of: parent) } ].
+	^ conds
 ]
 
 { #category : 'transforming' }
@@ -108,21 +126,6 @@ RBChildrenToSiblingsRefactoring >> name: aClassName class: aClass subclasses: su
 	parent := self model classFor: aClass.
 	subclasses := subclassCollection
 				collect: [:each | self model classFor: each]
-]
-
-{ #category : 'preconditions' }
-RBChildrenToSiblingsRefactoring >> preconditions [
-	^subclasses
-		inject: ((RBCondition isMetaclass: parent)
-				errorMacro: 'Superclass must not be a metaclass') not
-				& (RBCondition isValidClassName: className)
-					& (RBCondition isGlobal: className in: self model) not
-		into:
-			[:sub :each |
-			sub
-				& ((RBCondition isMetaclass: each)
-						errorMacro: 'Subclass must <1?not :>be a metaclass') not
-					& (RBCondition isImmediateSubclass: each of: parent)]
 ]
 
 { #category : 'transforming' }
@@ -210,7 +213,11 @@ RBChildrenToSiblingsRefactoring >> pushUpMethodsFrom: aClass [
 			(selectorsToPushUp includes: each)
 				ifTrue: [self pushUp: each in: aClass]
 				ifFalse: [self createSubclassResponsibilityFor: each in: aClass]].
-	selectorsToPushUp do: [:each | aClass removeMethod: each]
+	selectorsToPushUp do: [:each | 
+		self generateChangesFor:
+			(RBRemoveMethodTransformation
+				selector: each 
+				from: aClass) ]
 ]
 
 { #category : 'transforming' }
@@ -243,7 +250,7 @@ RBChildrenToSiblingsRefactoring >> shouldPushUp: aSelector from: aClass [
 		anySatisfy: [ :each | (each directlyDefinesMethod: aSelector) not ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBChildrenToSiblingsRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

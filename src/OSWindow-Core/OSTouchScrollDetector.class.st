@@ -18,7 +18,6 @@ Class {
 
 { #category : 'class initialization' }
 OSTouchScrollDetector class >> initialize [
-	super initialize.
 	PersistentDirection := false
 ]
 

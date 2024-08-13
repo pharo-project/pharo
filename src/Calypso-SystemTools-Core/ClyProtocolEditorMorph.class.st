@@ -30,11 +30,6 @@ Class {
 	#tag : 'Editors-Methods'
 }
 
-{ #category : 'class initialization' }
-ClyProtocolEditorMorph class >> initialize [
-	self deprecatedAliases: { #ClyProtocolAndPackageEditorMorph }
-]
-
 { #category : 'building' }
 ClyProtocolEditorMorph >> build [
 	self buildResetButton.
@@ -58,7 +53,7 @@ ClyProtocolEditorMorph >> buildEditButton [
 		target: self;
 		actionSelector: #openEditor;
 		arguments: #();
-		labelGraphic: (self iconNamed: #edit);
+		labelFormSet: (self iconFormSetNamed: #edit);
 		color: Color transparent;
 		borderWidth: 0
 ]
@@ -93,7 +88,7 @@ ClyProtocolEditorMorph >> buildResetButton [
 		target: self;
 		actionSelector: #resetProtocolAndPackage;
 		arguments: #();
-		labelGraphic: (self iconNamed: #glamorousClose);
+		labelFormSet: (self iconFormSetNamed: #glamorousClose);
 		color: Color transparent;
 		borderWidth: 0;
 		hResizing: #shinkWrap;
@@ -109,7 +104,7 @@ ClyProtocolEditorMorph >> initialize [
 { #category : 'testing' }
 ClyProtocolEditorMorph >> isExtensionActive [
 
-	^ownerTool extendingPackage notNil
+	^ownerTool extendingPackage isNotNil
 ]
 
 { #category : 'operations' }
@@ -117,9 +112,8 @@ ClyProtocolEditorMorph >> openEditor [
 
 	self requestChangeBy: [
 		self isExtensionActive
-			ifTrue: [ self requestPackage]
-			ifFalse: [ self requestProtocol ]
-	]
+			ifTrue: [ self requestPackage ]
+			ifFalse: [ self requestProtocol ] ]
 ]
 
 { #category : 'accessing' }
@@ -145,7 +139,7 @@ ClyProtocolEditorMorph >> printProtocolOrPackage [
 { #category : 'operations' }
 ClyProtocolEditorMorph >> requestChangeBy: aBlock [
 
-	aBlock on: CmdCommandAborted do: [ :err ].
+	aBlock on: CmdCommandAborted, CmCommandAborted do: [ :err ].
 
 	self update
 ]
@@ -164,8 +158,10 @@ ClyProtocolEditorMorph >> requestProtocol [
 
 	| newProtocol priorProtocol |
 	priorProtocol := ownerTool methodProtocol ifNil: [ '' ].
-
-	newProtocol := self ownerTool context requestProtocol: 'New protocol name' suggesting: priorProtocol.
+	newProtocol := StProtocolNameChooserPresenter requestProtocolNameConfiguring: [ :presenter |
+		               presenter
+			               protocolName: priorProtocol;
+			               concernedClass: ownerTool methodClass ].
 	newProtocol = priorProtocol ifTrue: [ ^ CmdCommandAborted signal ].
 
 	ownerTool methodProtocol: newProtocol

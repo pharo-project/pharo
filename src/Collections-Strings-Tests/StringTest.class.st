@@ -436,17 +436,6 @@ StringTest >> testAsCamelCase [
 ]
 
 { #category : 'tests' }
-StringTest >> testAsDate [
-
-	self assert: 'Jan 1 2015' asDate asString equals: '1 January 2015'.
-	self assert: '1/1/2015' asDate asString equals: '1 January 2015'.
-	self assert: '1 1 1' asDate asString equals: '1 January 2001'.
-	self assert: '1 J 1' asDate asString equals: '1 January 2001'.
-	self should: [ '' asDate ] raise: Error.
-	self should: [ '1234' asDate ] raise: Error
-]
-
-{ #category : 'tests' }
 StringTest >> testAsHTMLString [
 
 	self assert: '<a>' asHTMLString equals: '&lt;a&gt;'.
@@ -512,9 +501,11 @@ StringTest >> testAsSmalltalkComment [
 	exampleStrings do: [ :s | self assert: (s copyWithout: $") equals: (s asComment copyWithout: $") ].
 
 	"finnaly, test for some common kinds of inputs"
+	self assert: '' asComment equals: '""'.
 	self assert: 'abc' asComment equals: '"abc"'.
 	self assert: 'abc"abc' asComment equals: '"abc""abc"'.
-	self assert: 'abc""abc' asComment equals: '"abc""abc"'
+	self assert: 'abc""abc' asComment equals: '"abc""abc"'.
+	self assert: '"abc abc"' asComment equals: '"abc abc"'
 ]
 
 { #category : 'tests' }
@@ -593,6 +584,13 @@ StringTest >> testCapitalized [
 	"the string gets copied"
 	self deny: uc capitalized identicalTo: uc.
 	self deny: empty capitalized identicalTo: empty
+]
+
+{ #category : 'tests - converting' }
+StringTest >> testCapitalizedStartingWithEmptySpace [
+	
+	self assert: ' abc' capitalized equals: ' abc'.
+
 ]
 
 { #category : 'tests' }
@@ -886,12 +884,16 @@ StringTest >> testFindBetweenSubstrings [
 ]
 
 { #category : 'tests' }
-StringTest >> testFindCloseParenthesisFor [
+StringTest >> testFindClosingStartingAt [
 
-	self assert: ('(1 + 3(2 * 9) - 15)' findCloseParenthesisFor: 1) equals: 19.
-	self assert: ('(1+(2-3))-3.14159' findCloseParenthesisFor: 1) equals: 9.
-	self assert: ('(1+(2-3))-3.14159' findCloseParenthesisFor: 4) equals: 8.
-	self assert: ('()' findCloseParenthesisFor: 10) equals: 3
+	self assert: ('(1 + 3(2 * 9) - 15)' findClosing: $) startingAt: 1) equals: 19.
+	self assert: ('(1+(2-3))-3.14159' findClosing: $) startingAt: 1) equals: 9.
+	self assert: ('(1+(2-3))-3.14159' findClosing: $) startingAt: 4) equals: 8.
+	self assert: ('()' findClosing: $) startingAt: 10) equals: 0.
+
+	self assert: ('List<String>' findClosing: $> startingAt: 5) equals: 12.
+	self assert: ('Map<T,Map<T,List<T>>>' findClosing: $> startingAt: 4) equals: 21.
+	self assert: ('Map<T,Map<T,List<T>>>' findClosing: $> startingAt: 10) equals: 20
 ]
 
 { #category : 'tests' }

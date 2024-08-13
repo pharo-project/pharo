@@ -65,23 +65,21 @@ BehaviorTest >> testAllSelectors [
 { #category : 'tests' }
 BehaviorTest >> testAllSelectorsAbove [
 
-	|sels |
-	sels := Date allSelectorsAbove.
-	self deny: (sels includes: #mmddyyyy).
-	self deny: (sels includes: #weekday).
-	self assert: (sels includes: #at:).
-	self assert: (sels includes: #cannotInterpret: )
+	| selectors |
+	selectors := self class allSelectorsAbove.
+	self deny: (selectors includes: #testAllSelectorsAboveUntil).
+	self assert: (selectors includes: #assert:).
+	self assert: (selectors includes: #yourself)
 ]
 
 { #category : 'tests' }
 BehaviorTest >> testAllSelectorsAboveUntil [
 
-	|sels |
-	sels := Date allSelectorsAboveUntil: Object.
-	self deny: (sels includes: #mmddyyyy).
-	self deny: (sels includes: #weekday).
-	self assert: (sels includes: #at:).
-	self deny: (sels includes: #cannotInterpret: )
+	| selectors |
+	selectors := self class allSelectorsAboveUntil: TestCase.
+	self deny: (selectors includes: #testAllSelectorsAboveUntil).
+	self assert: (selectors includes: #run:).
+	self deny: (selectors includes: #yourself)
 ]
 
 { #category : 'tests' }
@@ -101,6 +99,32 @@ BehaviorTest >> testBinding [
 	"returns nil for Metaclasses... like Encoder>>#associationFor:"
 
 	self assert: Object class binding key isNil
+]
+
+{ #category : 'tests' }
+BehaviorTest >> testDefinedMethods [
+
+	[
+	ExampleForTest1 compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+	self assertCollection: ExampleForTest1 localMethods hasSameElements: {
+			(ExampleForTest1 >> #aSuperclassVariable).
+			(ExampleForTest1 >> #aSuperclassVariable:).
+			(ExampleForTest1 >> #extensionMethod) }.
+
+	self assertCollection: ExampleForTest1 definedMethods hasSameElements: {
+			(ExampleForTest1 >> #aSuperclassVariable).
+			(ExampleForTest1 >> #aSuperclassVariable:) } ] ensure: [ self packageOrganizer removePackage: 'AGeneratedPackageForTest' ]
+]
+
+{ #category : 'tests' }
+BehaviorTest >> testDefinedSelectors [
+
+	[
+	ExampleForTest1 compile: 'extensionMethod ' classified: '*AGeneratedPackageForTest'.
+	self assertCollection: ExampleForTest1 localSelectors hasSameElements: #( #aSuperclassVariable #aSuperclassVariable: #extensionMethod ).
+
+	self assertCollection: ExampleForTest1 definedSelectors hasSameElements: #( #aSuperclassVariable #aSuperclassVariable: ) ] ensure: [
+		self packageOrganizer removePackage: 'AGeneratedPackageForTest' ]
 ]
 
 { #category : 'tests - queries' }
@@ -128,9 +152,8 @@ BehaviorTest >> testHasAbstractMethods [
 
 { #category : 'tests - properties' }
 BehaviorTest >> testHasProperty [
-	| testValue |
-	testValue := Date today.
-	self class propertyAt: #testKeySelector put: testValue.
+
+	self class propertyAt: #testKeySelector put: 42.
 	self assert: (self class hasProperty: #testKeySelector).
 
 	self class removeProperty: #testKeySelector.
@@ -179,6 +202,20 @@ BehaviorTest >> testIsRootInEnvironment [
 BehaviorTest >> testIsUsed [
 	self assert: Object isUsed.
 	self assert: Object class isUsed
+]
+
+{ #category : 'tests' }
+BehaviorTest >> testLocalMethods [
+
+	self assertCollection: ExampleForTest1 localMethods hasSameElements: {
+			(ExampleForTest1 >> #aSuperclassVariable).
+			(ExampleForTest1 >> #aSuperclassVariable:) }
+]
+
+{ #category : 'tests' }
+BehaviorTest >> testLocalSelectors [
+
+	self assertCollection: ExampleForTest1 localSelectors hasSameElements: #( #aSuperclassVariable #aSuperclassVariable: )
 ]
 
 { #category : 'tests - queries' }
@@ -232,12 +269,9 @@ BehaviorTest >> testOriginalName [
 
 { #category : 'tests - properties' }
 BehaviorTest >> testPropertyValueAtPut [
-	| testValue |
-	testValue := Date today.
-	self class propertyAt: #testKeySelector put: testValue.
-	self
-		assert: (self class propertyAt: #testKeySelector)
-		equals: testValue.
+
+	self class propertyAt: #testKeySelector put: 42.
+	self assert: (self class propertyAt: #testKeySelector) equals: 42.
 	self class removeProperty: #testKeySelector
 ]
 
@@ -246,6 +280,52 @@ BehaviorTest >> testRemoveProperty [
 	self class propertyAt: #testKeySelector put: 1.
 	self class removeProperty: #testKeySelector.
 	self assert: (self class propertyAt: #testKeySelector) equals: nil
+]
+
+{ #category : 'tests - queries' }
+BehaviorTest >> testThoroughWhichMethodsReferTo [
+	| array |
+	array := #(thisIsOnlyHereIntestthoroughWhichMethodsReferTo).
+	"normal case"
+	self assert: (Point thoroughWhichMethodsReferTo: #x) notEmpty.
+	"we understand send bytecodes for special selectors"
+	self assert: (Point thoroughWhichMethodsReferTo: #+) notEmpty.
+	"we dive into literal arrays"
+	self assert: (self class thoroughWhichMethodsReferTo: array first) notEmpty.
+	"and we are false for non existing symbols"
+	self assert: (self class thoroughWhichMethodsReferTo: ('this', 'doesNotExist') asSymbol) isEmpty.
+	"we can search for Literal Variable references, but it is faster to use the non-thorough version"
+	self assert: (self class thoroughWhichSelectorsReferTo: Point binding) notEmpty
+]
+
+{ #category : 'tests - queries' }
+BehaviorTest >> testThoroughWhichMethodsReferToSpecialIndex [
+	| array |
+	array := #(thisIsOnlyHereIntestthoroughWhichMethodsReferTo).
+	"normal case"
+	self assert: (Point thoroughWhichMethodsReferTo: #x specialIndex: ( Smalltalk specialSelectorIndexOrNil: #+)) notEmpty.
+	"we understand send bytecodes for special selectors"
+	self assert: (Point thoroughWhichMethodsReferTo: #+ specialIndex: ( Smalltalk specialSelectorIndexOrNil: #+)) notEmpty.
+	"we dive into literal arrays"
+	self assert: (self class thoroughWhichMethodsReferTo: array first specialIndex: nil) notEmpty.
+	"and we are false for non existing symbols"
+	self assert: (self class thoroughWhichMethodsReferTo: ('this', 'doesNotExist') asSymbol specialIndex: nil) isEmpty
+]
+
+{ #category : 'tests - queries' }
+BehaviorTest >> testThoroughWhichSelectorsReferTo [
+	| array |
+	array := #(thisIsOnlyHereIntestthoroughWhichSelectorsReferTo).
+	"normal case"
+	self assert: (Point thoroughWhichSelectorsReferTo: #x) notEmpty.
+	"we understand send bytecodes for special selectors"
+	self assert: (Point thoroughWhichSelectorsReferTo: #+) notEmpty.
+	"we dive into literal arrays"
+	self assert: (self class thoroughWhichSelectorsReferTo: array first) notEmpty.
+	"and we are false for non existing symbols"
+	self assert: (self class thoroughWhichSelectorsReferTo: ('this', 'doesNotExist') asSymbol) isEmpty.
+	"we can search for Literal Variable references, but it is faster to use the non-thorough version"
+	self assert: (self class thoroughWhichSelectorsReferTo: Point binding) notEmpty
 ]
 
 { #category : 'tests - queries' }
@@ -296,32 +376,4 @@ BehaviorTest >> testsourceCodeTemplateFor [
 	"check for distictive source code templates for class-side and instance-side"
 	self assert: ((Object sourceCodeTemplate) includesSubstring: 'instance-side method').
 	self assert: ((Object class sourceCodeTemplate) includesSubstring: 'class-side method')
-]
-
-{ #category : 'tests - queries' }
-BehaviorTest >> testthoroughWhichMethodsReferTo [
-	| array |
-	array := #(thisIsOnlyHereIntestthoroughWhichMethodsReferTo).
-	"normal case"
-	self assert: (Point thoroughWhichMethodsReferTo: #x) notEmpty.
-	"we understand send bytecodes for special selectors"
-	self assert: (Point thoroughWhichMethodsReferTo: #+) notEmpty.
-	"we dive into literal arrays"
-	self assert: (self class thoroughWhichMethodsReferTo: array first) notEmpty.
-	"and we are false for non existing symbols"
-	self assert: (self class thoroughWhichMethodsReferTo: ('this', 'doesNotExist') asSymbol) isEmpty
-]
-
-{ #category : 'tests - queries' }
-BehaviorTest >> testthoroughWhichMethodsReferToSpecialIndex [
-	| array |
-	array := #(thisIsOnlyHereIntestthoroughWhichMethodsReferTo).
-	"normal case"
-	self assert: (Point thoroughWhichMethodsReferTo: #x specialIndex: ( Smalltalk specialSelectorIndexOrNil: #+)) notEmpty.
-	"we understand send bytecodes for special selectors"
-	self assert: (Point thoroughWhichMethodsReferTo: #+ specialIndex: ( Smalltalk specialSelectorIndexOrNil: #+)) notEmpty.
-	"we dive into literal arrays"
-	self assert: (self class thoroughWhichMethodsReferTo: array first specialIndex: nil) notEmpty.
-	"and we are false for non existing symbols"
-	self assert: (self class thoroughWhichMethodsReferTo: ('this', 'doesNotExist') asSymbol specialIndex: nil) isEmpty
 ]

@@ -52,7 +52,7 @@ PluggableIconListMorph >> getListItem: index [
 
 	getListElementSelector ifNotNil: [
 		^self itemMorphFor: (model perform: getListElementSelector with: index) index: index].
-	(list notNil and: [list size >= index]) ifTrue: [ ^list at: index ].
+	(list isNotNil and: [list size >= index]) ifTrue: [ ^list at: index ].
 	^ self wrapItem: (self getList at: index) index: index
 ]
 

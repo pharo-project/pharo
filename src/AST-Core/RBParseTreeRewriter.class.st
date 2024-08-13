@@ -1,5 +1,5 @@
 "
-ParseTreeRewriter walks over and transforms its RBProgramNode (tree). If the tree is modified, then the answer is set to true, and the modified tree can be retrieved by the #tree method.
+ParseTreeRewriter walks over and transforms its ASTProgramNode (tree). If the tree is modified, then the answer is set to true, and the modified tree can be retrieved by the #tree method.
 
 
 Here is a little script to rewrite a self halt into self dormantHalt. 
@@ -22,12 +22,9 @@ Now here is a full script showing how to compile the method back.
 	method := (BIArrayExpressionTest>>#testNoExtraSpaceAroundPeriod).
 	ok := rewriter executeTree: method parseTree.
 	ok ifFalse: [ ^ 'did not work' ].
-	Author 
-		useAuthor: 'Refactoring'
-		during: [  
-			method origin 
-				compile: rewriter tree formattedCode 
-				classified: method protocol ]
+	method origin 
+		compile: rewriter tree formattedCode 
+		classified: method protocol
 
 
 Have a look at the users of deprecated:
@@ -39,7 +36,7 @@ You can also have a look at the ParseTreeRewriterTest class.
 
 
 Instance Variables:
-	tree	<RBProgramNode>	the parse tree we're transforming
+	tree	<ASTProgramNode>	the parse tree we're transforming
 			
 	
 "
@@ -127,8 +124,8 @@ RBParseTreeRewriter class >> replace: code with: newCode method: aBoolean [
 RBParseTreeRewriter class >> replaceLiteral: literal with: newLiteral [
 	| rewriteRule |
 	rewriteRule := self new.
-	rewriteRule replaceTree: (RBLiteralNode value: literal)
-		withTree: (RBLiteralNode value: newLiteral).
+	rewriteRule replaceTree: (ASTLiteralNode value: literal)
+		withTree: (ASTLiteralNode value: newLiteral).
 	^rewriteRule
 ]
 

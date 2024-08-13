@@ -13,8 +13,9 @@ Class {
 		'project',
 		'owner'
 	],
-	#category : 'BaselineOfPharo',
-	#package : 'BaselineOfPharo'
+	#category : 'BaselineOfPharo-Utilities',
+	#package : 'BaselineOfPharo',
+	#tag : 'Utilities'
 }
 
 { #category : 'defaults' }
@@ -77,6 +78,12 @@ PharoExternalProject >> name [
 PharoExternalProject >> owner [
 
 	^ owner
+]
+
+{ #category : 'printing' }
+PharoExternalProject >> printOn: aStream [
+
+	aStream nextPutAll: self name
 ]
 
 { #category : 'accessing' }

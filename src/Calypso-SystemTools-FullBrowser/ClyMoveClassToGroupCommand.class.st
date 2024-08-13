@@ -32,7 +32,7 @@ ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation [
 
 	^CmdDragAndDropActivation
 		for: ClyClass asCalypsoItemContext
-		toDropIn: RPackage asCalypsoItemContext
+		toDropIn: Package asCalypsoItemContext
 ]
 
 { #category : 'activation' }
@@ -83,7 +83,7 @@ ClyMoveClassToGroupCommand >> defaultMenuItemName [
 { #category : 'execution' }
 ClyMoveClassToGroupCommand >> execute [
 
-	classGroup importClasses: classes
+	classes do: [ :class | classGroup addClass: class ]
 ]
 
 { #category : 'execution' }

@@ -244,9 +244,6 @@ AbstractWorldRenderer >> displayWorldState: aWorldState ofWorld: aWorld [
 			"draw hands onto world canvas"
 			handsToDraw reverseDo: [:h | aMorphicCanvas fullDrawMorph: h].
 
-			"*make this true to flash damaged areas for testing*"
-			WorldState debugShowDamage ifTrue: [aWorld flashRects: allDamage color: Color black].
-
 			aMorphicCanvas finish.
 			self updateDamage: allDamage.
 
@@ -274,6 +271,11 @@ AbstractWorldRenderer >> formatRenderingTimeMeasurement: measurement [
 			  self class name.
 			  measurement key.
 			  (measurement value printPaddedWith: Character space to: 5) }
+]
+
+{ #category : 'operations' }
+AbstractWorldRenderer >> fullscreenMode: aValue [
+	"We ignore the value by default - subclasses might handle fullscreen mode"
 ]
 
 { #category : 'accessing' }

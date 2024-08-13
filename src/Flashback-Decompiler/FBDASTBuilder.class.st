@@ -95,7 +95,7 @@ FBDASTBuilder >> codeInstanceVariable: offset [
 
 { #category : 'building' }
 FBDASTBuilder >> codeLiteral: lit [
-	^ RBLiteralNode value: lit
+	^ ASTLiteralNode value: lit
 ]
 
 { #category : 'building' }

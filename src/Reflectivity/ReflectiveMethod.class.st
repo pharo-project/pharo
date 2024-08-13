@@ -13,8 +13,7 @@ Class {
 	#type : 'variable',
 	#instVars : [
 		'ast',
-		'compiledMethod',
-		'linkCount'
+		'compiledMethod'
 	],
 	#category : 'Reflectivity-Core',
 	#package : 'Reflectivity',
@@ -34,7 +33,9 @@ ReflectiveMethod >> ast [
 
 { #category : 'evaluation' }
 ReflectiveMethod >> compileAST [
+
 	| method |
+	compiledMethod saveBcToASTCacheWithAST: ast.
 	OCASTSemanticCleaner clean: ast.
 	ast compilationContext
 		semanticAnalyzerClass: RFSemanticAnalyzer;
@@ -44,7 +45,7 @@ ReflectiveMethod >> compileAST [
 	"#generateMethod sets the generated method as a property, put back the old"
 	ast compiledMethod: compiledMethod.
 	method sourcePointer: compiledMethod sourcePointer.
-	^method.
+	^ method
 ]
 
 { #category : 'evaluation' }
@@ -73,16 +74,18 @@ ReflectiveMethod >> createTwin [
 
 { #category : 'invalidate' }
 ReflectiveMethod >> decreaseLinkCount [
-	linkCount := linkCount - 1
+	self ast decreaseLinkCount
 ]
 
 { #category : 'invalidate' }
 ReflectiveMethod >> destroyTwin [
+	ast removeProperty: #linkCount ifAbsent:["nothing to do"].
 	(ast hasProperty: #wrapperMethod) ifTrue: [  ast :=  compiledMethod parseTree].
 	self recompileAST.
 	self installCompiledMethod.
 	compiledMethod reflectiveMethod: nil.
-	SystemAnnouncer uniqueInstance unsubscribe: self
+	self class codeSupportAnnouncer unsubscribe: self.
+	self class codeChangeAnnouncer unsubscribe: self
 ]
 
 { #category : 'forwarding' }
@@ -98,26 +101,30 @@ ReflectiveMethod >> flushCache [
 
 { #category : 'evaluation' }
 ReflectiveMethod >> generatePrimitiveWrapper [
+
 	| wrappedMethod send wrapperMethod assignmentNode |
 	wrappedMethod := self compileAST.
 
 	send := RBMessageNode
-		receiver: RBVariableNode selfNode
-		selector:  #rFwithArgs:executeMethod:
-		arguments: {RBArrayNode statements: ast arguments . (RBLiteralNode value: wrappedMethod)}.
+		        receiver: RBVariableNode selfNode
+		        selector: #rFwithArgs:executeMethod:
+		        arguments: {
+				        (RBArrayNode statements: ast arguments).
+				        (ASTLiteralNode value: self compiledMethod) }.
 
 	assignmentNode := RBAssignmentNode
-		variable: (RBVariableNode named: #RFReifyValueVar)
-		value: send.
+		                  variable: (RBVariableNode named: #RFReifyValueVar)
+		                  value: send.
 
 	wrapperMethod := RBMethodNode
-		selector: ast selector
-		arguments: ast arguments
-		body: assignmentNode asSequenceNode.
+		                 selector: ast selector
+		                 arguments: ast arguments
+		                 body: assignmentNode asSequenceNode.
 
 	wrapperMethod methodClass: ast methodClass.
 	wrapperMethod propertyAt: #wrapperMethod put: true.
-	ast hasMetalink ifTrue: [wrapperMethod propertyAt: #links put: (ast propertyAt: #links)].
+	ast hasMetalink ifTrue: [
+		wrapperMethod propertyAt: #links put: (ast propertyAt: #links) ].
 	ast := wrapperMethod
 ]
 
@@ -128,7 +135,7 @@ ReflectiveMethod >> hasMetaLinks [
 
 { #category : 'invalidate' }
 ReflectiveMethod >> increaseLinkCount [
-	linkCount := self linkCount + 1
+	self ast increaseLinkCount
 ]
 
 { #category : 'invalidate' }
@@ -167,12 +174,12 @@ ReflectiveMethod >> isFromTrait [
 
 { #category : 'accessing' }
 ReflectiveMethod >> linkCount [
-	^linkCount ifNil: [ linkCount := 0 ]
+	^self ast linkCount
 ]
 
 { #category : 'accessing' }
 ReflectiveMethod >> linkCount: aNumber [
-	linkCount := aNumber
+	self ast linkCount: aNumber
 ]
 
 { #category : 'invalidate' }

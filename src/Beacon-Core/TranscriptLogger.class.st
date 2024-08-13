@@ -19,5 +19,5 @@ Class {
 { #category : 'utilities' }
 TranscriptLogger >> nextPut: anAnnouncement [
 
-	Transcript crShow: anAnnouncement
+	anAnnouncement crTrace
 ]

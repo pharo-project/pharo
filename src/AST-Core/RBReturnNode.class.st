@@ -3,13 +3,13 @@ RBReturnNode is an AST node that represents a return expression.
 
 Instance Variables:
 	return	<Integer>	the position of the ^ character
-	value	<RBValueNode>	the value that is being returned
+	value	<ASTValueNode>	the value that is being returned
 
 
 "
 Class {
 	#name : 'RBReturnNode',
-	#superclass : 'RBProgramNode',
+	#superclass : 'ASTProgramNode',
 	#instVars : [
 		'value',
 		'start'
@@ -69,6 +69,24 @@ RBReturnNode >> equalTo: anObject withMapping: aDictionary [
 		and: [self value equalTo: anObject value withMapping: aDictionary]
 ]
 
+{ #category : 'testing' }
+RBReturnNode >> hasBlock [
+
+	^ value hasBlock 
+]
+
+{ #category : 'testing' }
+RBReturnNode >> hasSameExitPoint [
+
+	^ true
+]
+
+{ #category : 'testing' }
+RBReturnNode >> hasSameExitPoint: aBoolean [
+
+	^ value hasSameExitPoint: aBoolean 
+]
+
 { #category : 'comparing' }
 RBReturnNode >> hash [
 	^self value hash
@@ -90,6 +108,11 @@ RBReturnNode >> isFaulty [
 { #category : 'testing' }
 RBReturnNode >> isReturn [
 	^true
+]
+
+{ #category : 'testing' }
+RBReturnNode >> lastIsReturn [ 
+	^ true
 ]
 
 { #category : 'matching' }

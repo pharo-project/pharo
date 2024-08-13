@@ -5,8 +5,10 @@ The intent of UUIDs is to enable distributed systems to uniquely identify inform
 
 Usage:
 
-	UUID new.
-	
+```
+	UUID new asString.
+```	
+
 Whenever you create a new UUID it will use your default UUID system library to generate one. If for some reason it is unable to work, the shared, default UUIDGenerator will be used to generate a new, unique UUID.
 
 UUIDs have a standard string representation, like this:
@@ -146,13 +148,6 @@ UUID >> asInteger [
 		deprecated:
 		'The UUIDs are no longer a subclass of ByteArray, and should not be directly modified.'."
 	^ uuidData asInteger
-]
-
-{ #category : 'converting' }
-UUID >> asString [
-	"Return a String with my official representation, 32 lowercase hexadecimal digits, displayed in five groups separated by hyphens, in the form 8-4-4-4-12 for a total of 36 characters (32 alphanumeric characters and four hyphens)"
-
-	^ self printString
 ]
 
 { #category : 'converting' }
@@ -300,16 +295,6 @@ UUID >> readFrom: aStream [
 	9 to: 10 do: [ :i | uuidData at: i put: (Integer readHexByteFrom: aStream) ].
 	aStream next = $- ifFalse: [ self error: '- separator expected' ].
 	11 to: 16 do: [ :i | uuidData at: i put: (Integer readHexByteFrom: aStream) ]
-]
-
-{ #category : 'accessing' }
-UUID >> size [
-
-	self
-		deprecated:
-		'The UUIDs are no longer a subclass of ByteArray, and should not be directly modified.'
-		transformWith: '`@receiver size' -> '`@receiver uuidData size'.
-	^ 16
 ]
 
 { #category : 'accessing' }

@@ -15,14 +15,14 @@ OCEnvironmentScopeTest >> testCompileWithEnvironment [
 
 
 	| environment method return |
-	environment := SystemDictionary new.
+	environment := SystemEnvironment new.
 	environment at: #MyClass put: Point copy.
 	(environment at: #MyClass) environment: environment.
 	method := OpalCompiler new
 					environment: environment;
 					class: (environment at: #MyClass);
 					compile: 'tt ^MyClass'.
-	return := method valueWithReceiver: nil arguments: #().
+	return := method valueWithReceiver: nil.
 	self assert: return name equals: 'Point'.
 	"I d not know about anything else"
 	method := OpalCompiler new
@@ -30,7 +30,7 @@ OCEnvironmentScopeTest >> testCompileWithEnvironment [
 					class: (environment at: #MyClass);
 					permitFaulty: true;
 					compile: 'tt ^Object'.
-	self should: [ method valueWithReceiver: nil arguments: #() ] raise: UndeclaredVariableRead
+	self should: [ method valueWithReceiver: nil ] raise: UndeclaredVariableRead
 ]
 
 { #category : 'test - production - environment' }
@@ -42,6 +42,6 @@ OCEnvironmentScopeTest >> testCompileWithProductionEnvironment [
 					compile: 'tt ^1+2'.
 
 	self assert: method class equals: MyCompiledMethodForTesting.
-	return := method valueWithReceiver: nil arguments: #().
+	return := method valueWithReceiver: nil.
 	self assert: return equals: 3
 ]

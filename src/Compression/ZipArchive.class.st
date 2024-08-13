@@ -51,6 +51,14 @@ ZipArchive class >> extractAllIn: aFileReferenceOrFileName [
 		extractAllTo: directory
 ]
 
+{ #category : 'file in/out' }
+ZipArchive class >> extractFrom: aZipFile to: aDirectory [
+
+	^ self new
+		  readFrom: aZipFile;
+		  extractAllTo: aDirectory asFileReference
+]
+
 { #category : 'constants' }
 ZipArchive class >> findEndOfCentralDirectoryFrom: stream [
 	"Seek in the given stream to the end, then read backwards until we find the
@@ -130,17 +138,45 @@ ZipArchive >> close [
 ZipArchive >> extractAllTo: aDirectory [
 	"Extract all elements to the given directory; notifying user via UI on progress and if existing files exist"
 
-	UIManager default
-		informUserDuring: [:bar |
-			bar max: self numberOfMembers.
-			self extractAllTo: aDirectory informing: bar ]
+	[ : job |
+		job max: self numberOfMembers.
+		self extractAllTo: aDirectory informing: job ] 
+			asJob run
 ]
 
 { #category : 'archive operations' }
-ZipArchive >> extractAllTo: aDirectory informing: bar [
+ZipArchive >> extractAllTo: aDirectory informing: job [
 	"Extract all elements to the given directory; notifying user via UI on progress and if existing files exist"
 
-	^ self extractAllTo: aDirectory informing: bar overwrite: false
+	| job1 barValue |
+	job1 := job ifNil: [ DummySystemProgressItem new ].
+	barValue := 0.
+	self members select: #isDirectory thenDo: [ :entry |
+		| dir shouldUpdateInfos lastUpdate |
+		lastUpdate := 0.
+		(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
+			ifTrue: [
+				lastUpdate := Time millisecondClockValue.
+				job1 title: 'Creating ' , entry fileName ].
+		dir := (entry fileName findTokens: '/')
+			       inject: aDirectory
+			       into: [ :base :part | base / part ].
+		dir ensureCreateDirectory.
+		barValue := barValue + 1.
+		shouldUpdateInfos ifTrue: [ job1 currentValue: barValue ] ].
+	self members reject: #isDirectory thenDo: [ :entry |
+		| shouldUpdateInfos lastUpdate |
+		lastUpdate := 0.
+		(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
+			ifTrue: [
+				lastUpdate := Time millisecondClockValue.
+				job1 title: 'Extracting ' , entry fileName ].
+		entry extractInDirectory: aDirectory.
+		barValue := barValue + 1.
+		shouldUpdateInfos ifTrue: [
+			job1 currentValue: barValue.
+			lastUpdate := Time millisecondClockValue ] ].
+	^ self
 ]
 
 { #category : 'archive operations' }
@@ -151,41 +187,31 @@ ZipArchive >> extractAllTo: aDirectory informing: aBar overwrite: allOverwrite [
 	bar := aBar ifNil: [ DummySystemProgressItem new ].
 	overwriteAll := allOverwrite.
 	barValue := 0.
-	self members
-		select: #isDirectory
-		thenDo: [ :entry |
-			| dir shouldUpdateInfos lastUpdate |
-			lastUpdate := 0.
-			(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
-				ifTrue: [ lastUpdate := Time millisecondClockValue.
-					bar label: 'Creating ' , entry fileName ].
-			dir := (entry fileName findTokens: '/')
-				inject: aDirectory
-				into: [ :base :part | base / part ].
-			dir ensureCreateDirectory.
-			barValue := barValue + 1.
-			shouldUpdateInfos
-				ifTrue: [ bar value: barValue ] ].
-	self members
-		reject: #isDirectory
-		thenDo: [ :entry |
-			| shouldUpdateInfos lastUpdate |
-			lastUpdate := 0.
-			(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
-				ifTrue: [ lastUpdate := Time millisecondClockValue.
-					bar label: 'Extracting ' , entry fileName ].
-			entry
-				extractInDirectory: aDirectory
-				informingOverwrite: overwriteAll
-				onSuccess: [  ]
-				onRetryWithOverwrite: [ overwriteAll := true ]
-				onFailedOverwrite: [ (self confirm: 'Failed to extract ' , entry fileName , '. Proceed?')
-						ifFalse: [ ^ self ] ]
-				onAbortOverwrite: [ ^ self ].
-			barValue := barValue + 1.
-			shouldUpdateInfos
-				ifTrue: [ bar value: barValue.
-					lastUpdate := Time millisecondClockValue ] ]
+	self members select: #isDirectory thenDo: [ :entry |
+		| dir shouldUpdateInfos lastUpdate |
+		lastUpdate := 0.
+		(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
+			ifTrue: [
+				lastUpdate := Time millisecondClockValue.
+				bar label: 'Creating ' , entry fileName ].
+		dir := (entry fileName findTokens: '/')
+			       inject: aDirectory
+			       into: [ :base :part | base / part ].
+		dir ensureCreateDirectory.
+		barValue := barValue + 1.
+		shouldUpdateInfos ifTrue: [ bar value: barValue ] ].
+	self members reject: #isDirectory thenDo: [ :entry |
+		| shouldUpdateInfos lastUpdate |
+		lastUpdate := 0.
+		(shouldUpdateInfos := (Time millisecondsSince: lastUpdate) >= 100)
+			ifTrue: [
+				lastUpdate := Time millisecondClockValue.
+				bar label: 'Extracting ' , entry fileName ].
+		entry extractInDirectory: aDirectory.
+		barValue := barValue + 1.
+		shouldUpdateInfos ifTrue: [
+			bar value: barValue.
+			lastUpdate := Time millisecondClockValue ] ]
 ]
 
 { #category : 'archive operations' }
@@ -245,7 +271,12 @@ ZipArchive >> readFrom: aStreamOrFile [
 	| stream name eocdPosition |
 	stream := aStreamOrFile isStream
 		ifTrue: [ name := aStreamOrFile printString. aStreamOrFile ]
-		ifFalse: [ name := aStreamOrFile asFileReference fullName. aStreamOrFile asFileReference binaryReadStream ].
+		ifFalse: [ 
+			name := aStreamOrFile asFileReference fullName.
+			
+			"Workaround: Force load the entire contents in memory.
+			The zip read stream breaks with Zn buffered streams otherwise"
+			aStreamOrFile asFileReference binaryReadStream contents readStream ].
 	eocdPosition := self class findEndOfCentralDirectoryFrom: stream.
 	eocdPosition <= 0 ifTrue: [ ZipArchiveError signal: 'can''t find EOCD position' ].
 	self readEndOfCentralDirectoryFrom: stream.

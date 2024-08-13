@@ -40,3 +40,19 @@ ZnBufferedWriteStreamTest >> testWritingOverflow [
 		bufferedStream flush ].
 	self assert: string equals: '0123456789012345678901234567890123456789'
 ]
+
+{ #category : 'tests' }
+ZnBufferedWriteStreamTest >> testWritingReset [
+
+	| file writeStream readStream |
+	file := 'test.txt' asFileReference ensureCreateFile.
+
+	writeStream := file binaryWriteStream.
+	writeStream nextPutAll: 'pedro'.
+	writeStream reset.
+	writeStream nextPutAll: 'pha'.
+	writeStream close.
+
+	readStream := file readStream.
+	self assert: readStream contents equals: 'pharo'
+]

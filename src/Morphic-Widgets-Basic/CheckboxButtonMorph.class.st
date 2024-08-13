@@ -7,10 +7,10 @@ Class {
 	#traits : 'TEnableOnHaloMenu',
 	#classTraits : 'TEnableOnHaloMenu classTrait',
 	#instVars : [
-		'repressedImage',
+		'repressedFormSet',
 		'enabled',
 		'isRadioButton',
-		'images'
+		'formSets'
 	],
 	#category : 'Morphic-Widgets-Basic-Buttons',
 	#package : 'Morphic-Widgets-Basic',
@@ -79,7 +79,7 @@ CheckboxButtonMorph >> borderStyle: newStyle [
 	| newExtent |
 	self borderStyle = newStyle ifTrue: [^self].
 	super borderStyle: newStyle.
-	newExtent := 2 * newStyle width + image extent min asPoint.
+	newExtent := 2 * newStyle width + formSet extent min asPoint.
 	bounds extent = newExtent ifFalse: [self extent: newExtent]
 ]
 
@@ -98,7 +98,7 @@ CheckboxButtonMorph >> borderWidth: bw [
 
 	| newExtent |
 	super borderWidth: bw.
-	newExtent := 2 * bw + image extent min asPoint.
+	newExtent := 2 * bw + formSet extent min asPoint.
 	bounds extent = newExtent ifFalse: [super extent: newExtent]
 ]
 
@@ -148,12 +148,12 @@ CheckboxButtonMorph >> drawOn: aCanvas [
 
 	|img|
 	aCanvas fillRectangle: self bounds fillStyle: self fillStyle borderStyle: self borderStyle.
-	img := self imageToUse.
+	img := self formSetToUse.
 	img ifNotNil: [
 		aCanvas
-			translucentImage: img
+			translucentFormSet: img
 			at: self innerBounds center - (img extent // 2)].
-	((self state == #pressed or: [self state == #repressed]) and: [image isNil]) ifTrue: [
+	((self state == #pressed or: [self state == #repressed]) and: [formSet isNil]) ifTrue: [
 		aCanvas fillRectangle: self innerBounds fillStyle: (self paneColor alpha: 0.3)].
 	(self enabled not and: [self theme fadeCheckboxWhenDisabled]) ifTrue: [
 		aCanvas fillRectangle: self innerBounds fillStyle: (self paneColor alpha: 0.4)]
@@ -195,39 +195,41 @@ CheckboxButtonMorph >> fillStyleToUse [
 ]
 
 { #category : 'accessing' }
-CheckboxButtonMorph >> image: anImage [
+CheckboxButtonMorph >> formSet: aFormSet [
 	"Fixed to take account of border width. Use narrowest
 	dimanesion of image to allow a little flexibility."
 
-	image := anImage depth = 1
-				ifTrue: [ColorForm mappingWhiteToTransparentFrom: anImage]
-				ifFalse: [anImage].
-	self extent: 2 * self borderWidth + image extent min asPoint.
+	formSet := aFormSet depth = 1
+		ifTrue: [
+			FormSet extent: aFormSet extent depth: aFormSet depth forms: (aFormSet forms collect: [ :form |
+				ColorForm mappingWhiteToTransparentFrom: (form asFormOfDepth: 1) ]) ]
+		ifFalse: [ aFormSet ].
+	self extent: 2 * self borderWidth + formSet extent min asPoint.
 	self changed
 ]
 
 { #category : 'private' }
-CheckboxButtonMorph >> imageFromName: aSymbol [
-	^ self images
+CheckboxButtonMorph >> formSetFromName: aSymbol [
+	^ self formSets
 		at: aSymbol
 		ifPresent: [:block | block value]
 		ifAbsent: []
 ]
 
 { #category : 'private' }
-CheckboxButtonMorph >> imageToUse [
+CheckboxButtonMorph >> formSetToUse [
 	"Answer the image we should use."
 
-	^ self imageFromName: state
+	^ self formSetFromName: state
 ]
 
 { #category : 'accessing' }
-CheckboxButtonMorph >> images [
-	^ images ifNil: [images := Dictionary newFromPairs: {
-								#off . [self offImage] .
-								#pressed . [self pressedImage] .
-								#on . [self onImage] .
-								#repressed . [self repressedImage ifNil: [self onImage]] }]
+CheckboxButtonMorph >> formSets [
+	^ formSets ifNil: [formSets := Dictionary newFromPairs: {
+								#off . [self offFormSet] .
+								#pressed . [self pressedFormSet] .
+								#on . [self onFormSet] .
+								#repressed . [self repressedFormSet ifNil: [self onFormSet]] }]
 ]
 
 { #category : 'initialization' }
@@ -331,19 +333,30 @@ CheckboxButtonMorph >> radioFillStyleToUse [
 ]
 
 { #category : 'accessing' }
-CheckboxButtonMorph >> repressedImage [
-	"Answer the value of repressedImage"
+CheckboxButtonMorph >> repressedFormSet [
 
-	^ repressedImage
+	^ repressedFormSet
 ]
 
 { #category : 'accessing' }
-CheckboxButtonMorph >> repressedImage: anObject [
-	"Set the value of repressedImage. This is shown when
+CheckboxButtonMorph >> repressedFormSet: aFormSet [
+	"Set the value of repressedFormSet. This is shown when
 	pressed after being off."
 
-	repressedImage := anObject.
+	repressedFormSet := aFormSet.
 	self invalidRect: self bounds
+]
+
+{ #category : 'accessing' }
+CheckboxButtonMorph >> repressedImage [
+
+	^ repressedFormSet ifNotNil: [ repressedFormSet asForm ]
+]
+
+{ #category : 'accessing' }
+CheckboxButtonMorph >> repressedImage: aForm [
+
+	self repressedFormSet: (aForm ifNotNil: [ FormSet form: aForm ])
 ]
 
 { #category : 'accessing' }

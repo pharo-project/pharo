@@ -137,30 +137,6 @@ RBCodeSnippetTest >> testCompileWithRequestor [
 ]
 
 { #category : '*OpalCompiler-Tests' }
-RBCodeSnippetTest >> testDecompile [
-
-	| method ast |
-	method := snippet compile.
-	method ifNil: [ ^ self skip ]. "Another test responsibility"
-	ast := method decompile.
-	self assert: ast isMethod.
-	ast := method parseTree.
-	self assert: ast isMethod.
-	"Decompilation lose many information. Not sure how to test more"
-]
-
-{ #category : '*OpalCompiler-Tests' }
-RBCodeSnippetTest >> testDecompileIR [
-
-	| method ir |
-	method := snippet compile.
-	method ifNil: [ ^ self skip ]. "Another test responsibility"
-	ir := method decompileIR.
-	self assert: ir class equals: IRMethod.
-	"Decompilation lose information. Not sure how to test more"
-]
-
-{ #category : '*OpalCompiler-Tests' }
 RBCodeSnippetTest >> testDoSemanticAnalysis [
 	"We should test more than that"
 
@@ -186,6 +162,18 @@ RBCodeSnippetTest >> testDoSemanticAnalysisOnError [
 		ifFalse: [
 			self deny: ast isFaulty.
 			self assert: error isNil ]
+]
+
+{ #category : '*OpalCompiler-Tests' }
+RBCodeSnippetTest >> testDump [
+
+	| ast dump ast2 dump2 |
+	ast := snippet parse.
+	dump := ast dump.
+	ast2 := OpalCompiler new evaluate: dump.
+	self assert: ast2 equals: ast.
+	dump2 := ast2 dump.
+	self assert: dump2 equals: dump
 ]
 
 { #category : '*OpalCompiler-Tests' }

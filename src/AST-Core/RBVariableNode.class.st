@@ -12,7 +12,7 @@ Instance Variables:
 "
 Class {
 	#name : 'RBVariableNode',
-	#superclass : 'RBValueNode',
+	#superclass : 'ASTValueNode',
 	#instVars : [
 		'name',
 		'variable',
@@ -89,8 +89,11 @@ RBVariableNode >> copyInContext: aDictionary [
 
 { #category : 'comparing' }
 RBVariableNode >> equalTo: anObject withMapping: aDictionary [
-	^self class = anObject class and:
-			[(aDictionary at: self name ifAbsentPut: [anObject name]) = anObject name]
+	"If we have two variables make sure that the dictionary associates both names."
+	
+	^ self class = anObject class 
+		and: [ (aDictionary at: self name ifAbsentPut: [ anObject name ])
+		  = anObject name ]
 ]
 
 { #category : 'testing' }
@@ -171,7 +174,7 @@ RBVariableNode >> isPseudoVariable [
 
 { #category : 'testing' }
 RBVariableNode >> isRead [
-	^ self isWrite not and: [ self isUsed ]
+	^ self isWrite not and: [ self isUsedAsReturnValue ]
 ]
 
 { #category : 'testing' }
@@ -217,7 +220,7 @@ RBVariableNode >> isWorkspaceVariable [
 
 { #category : 'testing' }
 RBVariableNode >> isWrite [
-	^ self parent notNil and: [ self parent isAssignment and: [ self parent variable == self ] ]
+	^ self parent isNotNil and: [ self parent isAssignment and: [ self parent variable == self ] ]
 ]
 
 { #category : 'accessing' }
@@ -270,7 +273,7 @@ RBVariableNode >> replaceSourceWith: aNode [
 
 { #category : 'accessing' }
 RBVariableNode >> start: aPosition [
-	"Beware, start is in fact `startWithoutParentheses` as in RBValueNode, start includes parentheses"
+	"Beware, start is in fact `startWithoutParentheses` as in ASTValueNode, start includes parentheses"
 
 	start := aPosition
 ]

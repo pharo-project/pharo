@@ -84,8 +84,10 @@ CDBehaviorDefinitionNode >> hasTraitComposition [
 
 { #category : 'initialization' }
 CDBehaviorDefinitionNode >> initialize [
+
 	super initialize.
-	slotNodes := OrderedCollection new
+	slotNodes := OrderedCollection new.
+	layoutClass := FixedLayout
 ]
 
 { #category : 'testing' }
@@ -107,11 +109,6 @@ CDBehaviorDefinitionNode >> layoutClass [
 { #category : 'accessing' }
 CDBehaviorDefinitionNode >> layoutClass: aClass [
 	layoutClass := aClass
-]
-
-{ #category : 'accessing' }
-CDBehaviorDefinitionNode >> selector [
-	^ self subclassResponsibility
 ]
 
 { #category : 'accessing' }

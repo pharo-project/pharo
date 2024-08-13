@@ -31,7 +31,7 @@ DAClassToDependencyNode >> hasChildren [
 
 { #category : 'accessing' }
 DAClassToDependencyNode >> icon [
-	^ self iconNamed: #confirmIcon
+	^ self iconNamed: #confirm
 ]
 
 { #category : 'accessing' }

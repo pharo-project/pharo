@@ -39,6 +39,19 @@ RBSplitCascadeRefactoring class >> split: anInterval from: aSelector in: aClass 
 		yourself
 ]
 
+{ #category : 'preconditions' }
+RBSplitCascadeRefactoring >> applicabilityPreconditions [
+
+	^ {
+		  (RBCondition definesSelector: selector in: class).
+		  (RBCondition withBlock: [
+			   self
+				   findCascadeNode;
+				   findAncestorNode;
+				   findMessageNodes.
+			   true ]) }
+]
+
 { #category : 'transforming' }
 RBSplitCascadeRefactoring >> extractReceiver [
 	| name |
@@ -107,13 +120,6 @@ RBSplitCascadeRefactoring >> parseTree [
 	^ parseTree doSemanticAnalysis
 ]
 
-{ #category : 'preconditions' }
-RBSplitCascadeRefactoring >> preconditions [
-	^ (RBCondition definesSelector: selector in: class) & (RBCondition withBlock: [
-		self findCascadeNode; findAncestorNode; findMessageNodes.
-		true ])
-]
-
 { #category : 'transforming' }
 RBSplitCascadeRefactoring >> privateTransform [
 	self extractReceiver.
@@ -140,7 +146,7 @@ RBSplitCascadeRefactoring >> splitCascade [
 	class compileTree: ancestorNode methodNode
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBSplitCascadeRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

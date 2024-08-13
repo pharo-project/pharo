@@ -3,7 +3,7 @@ Extension { #name : 'Object' }
 { #category : '*Reflectivity' }
 Object >> asLiteralNode [
 
-	^ RBLiteralNode value: self
+	^ ASTLiteralNode value: self
 ]
 
 { #category : '*Reflectivity' }
@@ -62,6 +62,12 @@ Object >> haltOnWriteTo: aVariableName [
 	^ VariableBreakpoint
 		  watchVariableWrites: aVariableName
 		  inObject: self
+]
+
+{ #category : '*Reflectivity' }
+Object >> haltOnceOnCallTo: aSelector [
+
+	^ Breakpoint breakOnceOn: aSelector inObject: self
 ]
 
 { #category : '*Reflectivity' }

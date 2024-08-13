@@ -1,14 +1,6 @@
 Extension { #name : 'Context' }
 
 { #category : '*Debugging-Core' }
-Context >> callChainAnySatisfy: aBlock [
-
-	(aBlock value: self) ifTrue: [ ^ true ].
-	self sender ifNil: [ ^ false ].
-	^ self sender callChainAnySatisfy: aBlock.
-]
-
-{ #category : '*Debugging-Core' }
 Context >> callPrimitive: primNumber [
 	| res |
 	res := receiver tryPrimitive: primNumber withArgs: self arguments.
@@ -47,16 +39,6 @@ Context >> findSimilarSender [
 Context >> instructionStream [
 	
 	^ InstructionStream on: method pc: pc
-]
-
-{ #category : '*Debugging-Core' }
-Context >> lookupTempVar: aSymbol [
-
-	self
-		deprecated: 'Use lookupVar: instead'
-		transformWith: '`@receiver lookupTempVar: `@argument'
-			-> '`@receiver lookupVar: `@argument'.
-	^ self lookupVar: aSymbol
 ]
 
 { #category : '*Debugging-Core' }
@@ -125,15 +107,6 @@ Context >> restartWithNewReceiver: obj [
 	self
 		swapReceiver: obj;
 		restart
-]
-
-{ #category : '*Debugging-Core' }
-Context >> return: value to: aSender [
-	"Simulate the return of value to aSender."
-
-	self releaseTo: aSender.
-	aSender ifNil: [^ nil].
-	^ aSender push: value
 ]
 
 { #category : '*Debugging-Core' }
@@ -218,33 +191,6 @@ Context >> send: selector super: superFlag numArgs: numArgs [
 ]
 
 { #category : '*Debugging-Core' }
-Context >> simulatePrimitive: primitiveIndex in: aMethod receiver: aReceiver arguments: arguments [
-	| key simulator |
-	
-	key := primitiveIndex = 117 
-		ifTrue: [ | literal |
-			literal := aMethod literalAt: 1.
-			"primitive name, module name"
-			{literal second. literal first}] 
-		ifFalse: [ primitiveIndex ].
-	
-	simulator := self class specialPrimitiveSimulators at: key ifAbsent: [
-		 "named primitives"
-		^  primitiveIndex = 117
-				ifTrue: [
-					self withoutPrimitiveTryNamedPrimitiveIn: aMethod for: aReceiver withArgs: arguments.
-					"this uses primitive 218, which doesn't works as expected... 
-					self tryNamedPrimitiveIn: method for: receiver withArgs: arguments " ]
-				ifFalse: [ aReceiver tryPrimitive: primitiveIndex withArgs: arguments ]]. 
-	
-	^ simulator 
-		simulatePrimitiveFor: aMethod
-		receiver: aReceiver
-		arguments: arguments
-		context: self
-]
-
-{ #category : '*Debugging-Core' }
 Context class >> simulatePrimitive: primName module: moduleName with: simulator [
 	^ self specialPrimitiveSimulators at: {primName. moduleName} put: simulator
 ]
@@ -301,7 +247,7 @@ Context >> stepToHome: aContext [
 				  error } ].
 
 		home == ctxt home ] whileFalse: [ 
-			(home isDead or: [ ctxt isDead ]) ifTrue: [ 
+			(home isDead or: [ ctxt willFailReturn ]) ifTrue: [ 
 				^ { 
 					  ctxt.
 					  nil } ] ].
@@ -453,9 +399,4 @@ Context >> updatePCForQuickPrimitiveRestart [
 			^ self ].
 
 	pc := pc + self quickMethodPrimitiveBytecodeSize
-]
-
-{ #category : '*Debugging-Core' }
-Context >> writeVariableNamed: aName value: anObject [ 
-	^ (self lookupVar: aName) write: anObject inContext: self
 ]

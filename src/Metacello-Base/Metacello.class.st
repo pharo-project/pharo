@@ -225,35 +225,19 @@ Class {
 	#name : 'Metacello',
 	#superclass : 'Object',
 	#instVars : [
-		'executorSpec',
-		'statements'
+		'statements',
+		'scriptExecutorClass'
 	],
 	#category : 'Metacello-Base',
 	#package : 'Metacello-Base'
 }
 
 { #category : 'instance creation' }
-Metacello class >> classic [
-    "set the options such that the load performed will be identical to the classic ConfigurationOf load:
-	(ConfigurationOfExample project version: '1.0') load
-	
-	#classic forces Metacello to look at image state to determine which version of a project is loaded instead of using
-		the registry to tell us explicitly which version of a project is loaded .. image state is not PRECISE"
-
-    "useCurrentVersion is a 'private' option for enforcing classic rules, so it's not part of scripting api"
-
-    ^ self new
-        onUpgrade: [ :ex | ex allow ];
-        onConflict: [ :ex | ex allow ];
-        addStatement: #'useCurrentVersion:' args: {true};
-        yourself
-]
-
-{ #category : 'instance creation' }
 Metacello class >> image [
-    ^ self new
-        executorSpec: #'MetacelloScriptImageExecutor' -> 'batch';
-        yourself
+
+	^ self new
+		  scriptExecutorClass: MetacelloScriptImageExecutor;
+		  yourself
 ]
 
 { #category : 'instance creation' }
@@ -263,20 +247,16 @@ Metacello class >> registrations [
 
 { #category : 'instance creation' }
 Metacello class >> registry [
-    ^ self new
-        executorSpec: #'MetacelloScriptRegistryExecutor' -> 'batch';
-        yourself
+
+	^ self new
+		  scriptExecutorClass: MetacelloScriptRegistryExecutor;
+		  yourself
 ]
 
 { #category : 'private' }
 Metacello class >> scriptExecutorClass [
-    ^ self scriptExecutorClass: {(#'MetacelloScriptApiExecutor' -> 'batch')}
-]
 
-{ #category : 'private' }
-Metacello class >> scriptExecutorClass: anExecutorSpec [
-    self environment at: anExecutorSpec key ifAbsent: [ ConfigurationOf ensureMetacello: anExecutorSpec value ].
-    ^ self environment at: anExecutorSpec key
+	^ MetacelloScriptApiExecutor
 ]
 
 { #category : 'private' }
@@ -291,24 +271,8 @@ Metacello >> baseline: projectName [
 
 { #category : 'api repository shortcuts' }
 Metacello >> bitbucketUser: userName project: projectName commitish: commitish path: path [
-  | branchOrCommitOrTag |
-  branchOrCommitOrTag := commitish.
-  branchOrCommitOrTag isEmpty
-    ifTrue: [ branchOrCommitOrTag := 'master' ].
-  self
-    repository:
-      'bitbucket://' , userName , '/' , projectName , ':' , branchOrCommitOrTag , '/'
-        , path
-]
 
-{ #category : 'api repository shortcuts' }
-Metacello >> blueplane: projectName [
-    self repository: 'http://squeaksource.blueplane.jp/' , projectName
-]
-
-{ #category : 'api options' }
-Metacello >> cacheRepository: aRepositoryDescription [
-    self addStatement: #'cacheRepository:' args: {aRepositoryDescription}
+	self repository: 'bitbucket://' , userName , '/' , projectName , ':' , (commitish ifEmpty: [ 'master' ]) , '/' , path
 ]
 
 { #category : 'api projectSpec' }
@@ -321,28 +285,12 @@ Metacello >> configuration: projectName [
     self addStatement: #'configurationArg:' args: {projectName}
 ]
 
-{ #category : 'api repository shortcuts' }
-Metacello >> croquet: projectName [
-    self repository: 'http://hedgehog.software.umn.edu:8888/' , projectName
-]
-
 { #category : 'private' }
 Metacello >> execute: selector args: args [
   | script |
   script := self statements copy.
   script add: selector -> args.
   ^ self scriptExecutor execute: script
-]
-
-{ #category : 'accessing' }
-Metacello >> executorSpec [
-    executorSpec ifNil: [ executorSpec := #'MetacelloScriptApiExecutor' -> 'batch' ].
-    ^ executorSpec
-]
-
-{ #category : 'accessing' }
-Metacello >> executorSpec: anAssoc [
-    executorSpec := anAssoc
 ]
 
 { #category : 'api actions' }
@@ -374,14 +322,8 @@ Metacello >> get [
 
 { #category : 'api repository shortcuts' }
 Metacello >> githubUser: userName project: projectName commitish: commitish path: path [
-  | branchOrCommitOrTag |
-  branchOrCommitOrTag := commitish.
-  branchOrCommitOrTag isEmpty
-    ifTrue: [ branchOrCommitOrTag := 'master' ].
-  self
-    repository:
-      'github://' , userName , '/' , projectName , ':' , branchOrCommitOrTag , '/'
-        , path
+
+	self repository: 'github://' , userName , '/' , projectName , ':' , (commitish ifEmpty: [ 'master' ]) , '/' , path
 ]
 
 { #category : 'api options' }
@@ -389,11 +331,6 @@ Metacello >> ignoreImage [
     "ignore image state"
 
     self addStatement: #'ignoreImage:' args: {true}
-]
-
-{ #category : 'api repository shortcuts' }
-Metacello >> impara: projectName [
-    self repository: 'http://source.impara.de/' , projectName
 ]
 
 { #category : 'api actions' }
@@ -411,6 +348,12 @@ Metacello >> load [
 { #category : 'api actions' }
 Metacello >> load: required [
   ^ self execute: #'load:' args: {required}
+]
+
+{ #category : 'api options' }
+Metacello >> loader: aLoader [
+
+	self addStatement: #loader: args: { aLoader }
 ]
 
 { #category : 'api actions' }
@@ -548,24 +491,27 @@ Metacello >> register [
   ^ self execute: #'register' args: #()
 ]
 
-{ #category : 'api repository shortcuts' }
-Metacello >> renggli: projectName [
-    self repository: 'http://source.lukas-renggli.ch/' , projectName
-]
-
 { #category : 'api projectSpec' }
 Metacello >> repository: repositoryDescription [
     self addStatement: #'repositoryArg:' args: {repositoryDescription}
 ]
 
-{ #category : 'api options' }
-Metacello >> repositoryOverrides: aRepositoryDescriptionCollection [
-    self addStatement: #'repositoryOverrides:' args: {aRepositoryDescriptionCollection}
+{ #category : 'accessing' }
+Metacello >> scriptExecutor [
+
+	^ self scriptExecutorClass new
 ]
 
 { #category : 'accessing' }
-Metacello >> scriptExecutor [
-    ^ (self class scriptExecutorClass: self executorSpec) new
+Metacello >> scriptExecutorClass [
+
+	^ scriptExecutorClass ifNil: [ scriptExecutorClass := MetacelloScriptApiExecutor ]
+]
+
+{ #category : 'accessing' }
+Metacello >> scriptExecutorClass: anObject [
+
+	scriptExecutorClass := anObject
 ]
 
 { #category : 'api options' }
@@ -577,14 +523,8 @@ Metacello >> silently [
 
 { #category : 'api repository shortcuts' }
 Metacello >> smalltalkhubUser: userName project: projectName [
-  self
-    repository:
-      'http://smalltalkhub.com/mc/' , userName , '/' , projectName , '/main'
-]
 
-{ #category : 'api repository shortcuts' }
-Metacello >> squeakfoundation: projectName [
-    self repository: 'http://source.squeakfoundation.org/' , projectName
+	self repository: 'http://smalltalkhub.com/mc/' , userName , '/' , projectName , '/main'
 ]
 
 { #category : 'api repository shortcuts' }
@@ -604,23 +544,13 @@ Metacello >> ss3: projectName [
 
 { #category : 'accessing' }
 Metacello >> statements [
-    statements ifNil: [ statements := OrderedCollection new ].
-    ^ statements
+
+	^ statements ifNil: [ statements := OrderedCollection new ]
 ]
 
 { #category : 'accessing' }
 Metacello >> statements: anObject [
 	statements := anObject
-]
-
-{ #category : 'api repository shortcuts' }
-Metacello >> swa: projectName [
-    self swasource: projectName
-]
-
-{ #category : 'api repository shortcuts' }
-Metacello >> swasource: projectName [
-    self repository: 'http://www.hpi.uni-potsdam.de/hirschfeld/squeaksource/' , projectName
 ]
 
 { #category : 'api actions' }
@@ -640,9 +570,4 @@ Metacello >> unregister [
 { #category : 'api projectSpec' }
 Metacello >> version: versionString [
     self addStatement: #'versionArg:' args: {versionString}
-]
-
-{ #category : 'api repository shortcuts' }
-Metacello >> wiresong: projectName [
-    self repository: 'http://source.wiresong.ca/' , projectName
 ]

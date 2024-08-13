@@ -14,11 +14,15 @@ Class {
 }
 
 { #category : 'accessing' }
-SDL2Handle class >> ffiLibraryName [
-	^ SDL2 ffiLibraryName
+SDL2Handle class >> ffiLibrary [
+	
+	^ SDL2Library 
+
 ]
 
 { #category : 'nb-library' }
-SDL2Handle >> ffiLibraryName [
-	^self class ffiLibraryName
+SDL2Handle >> ffiLibrary [
+	
+	^ SDL2Library 
+
 ]

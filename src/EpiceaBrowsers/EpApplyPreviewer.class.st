@@ -34,26 +34,6 @@ EpApplyPreviewer >> environment: anObject [
 ]
 
 { #category : 'visitor' }
-EpApplyPreviewer >> visitBehaviorCategoryChange: aChange [
-
-	self
-		behaviorNamed: aChange behaviorAffectedName
-		ifPresent: [ :behavior |
-			^ behavior category = aChange behaviorAffected category
-				ifTrue: [ #() ]
-				ifFalse: [ {
-					EpBehaviorCategoryChange
-						oldCategory: aChange oldCategory
-						newCategory: aChange newCategory
-						class: behavior
-					}
-				]
-			].
-
-	^ #()
-]
-
-{ #category : 'visitor' }
 EpApplyPreviewer >> visitBehaviorCommentChange: aChange [
 
 	self
@@ -84,6 +64,25 @@ EpApplyPreviewer >> visitBehaviorNameChange: aChange [
 					class: behavior } ].
 
 	^ #()
+]
+
+{ #category : 'visitor' }
+EpApplyPreviewer >> visitBehaviorRepackagedChange: aBehaviorRepackagedChange [
+
+	| classRepackaged |
+	classRepackaged := aBehaviorRepackagedChange classAffected.
+	self behaviorNamed: classRepackaged name ifPresent: [ :behavior |
+		^ (behavior package name = classRepackaged package name and: [ behavior packageTag name = classRepackaged packageTag ])
+			  ifTrue: [ #(  ) ]
+			  ifFalse: [
+				  { (EpBehaviorRepackagedChange
+					   oldPackage: aBehaviorRepackagedChange oldPackageName
+					   oldTag: aBehaviorRepackagedChange oldTagName
+					   newPackage: aBehaviorRepackagedChange newPackageName
+					   newTag: aBehaviorRepackagedChange newTagName
+					   class: behavior) } ] ].
+
+	^ #(  )
 ]
 
 { #category : 'visitor' }

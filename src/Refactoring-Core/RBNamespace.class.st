@@ -134,32 +134,30 @@ RBNamespace >> allClassesDo: aBlock [
 RBNamespace >> allClassesInPackages: aColl do: aBlock [
 
 	| seen evalBlock |
-
 	seen := Set new.
-	evalBlock := [ :each |
-	seen add: each first name.
-	aBlock
-		value: each first;
-		value: each last
-	].
-	(newClasses select: [ :e | aColl anySatisfy: [ :cat | cat, '*' match: e first category ]]) do: evalBlock.
-	(changedClasses select: [ :e | aColl anySatisfy: [ :cat | cat, '*' match: e first category ]]) do: evalBlock.
-	self environment
-		classesInPackages: aColl do: [ :each |
-			each isObsolete
-				ifFalse: [ | class |
-
-					class := each instanceSide.
-					( ( seen includes: class name ) or: [ self hasRemoved: ( self classNameFor: class ) ] )
-						ifFalse: [ ( class := self classFor: each )
-								ifNotNil: [ seen add: class name.
-									aBlock
-										value: class;
-										value: class classSide
-									]
-							]
-					]
-			]
+	evalBlock := [ :class |
+	             seen add: class first name.
+	             aBlock
+		             value: class first;
+		             value: class last ].
+	(newClasses select: [ :class |
+		 | classPackage |
+		 classPackage := class first packageName.
+		 aColl anySatisfy: [ :packageName | packageName sameAs: classPackage ] ]) do: evalBlock.
+	(changedClasses select: [ :class |
+		 | classPackage |
+		 classPackage := class first packageName.
+		 aColl anySatisfy: [ :packageName | packageName sameAs: classPackage ] ]) do: evalBlock.
+	self environment classesInPackages: aColl do: [ :each |
+		each isObsolete ifFalse: [
+			| class |
+			class := each instanceSide.
+			((seen includes: class name) or: [ self hasRemoved: (self classNameFor: class) ]) ifFalse: [
+				(class := self classFor: each) ifNotNil: [
+					seen add: class name.
+					aBlock
+						value: class;
+						value: class classSide ] ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -218,12 +216,6 @@ RBNamespace >> allReferencesToClass: aRBClass inPackages: aColl do: aBlock [
 			[:each |
 			(each whichSelectorsReferToClass: aRBClass)
 				do: [:sel | aBlock value: (each methodFor: sel)]]
-]
-
-{ #category : 'accessing' }
-RBNamespace >> category: aString for: aClass [
-
-	^ changes addChange: (RBClassCategoryChange category: aString for: aClass)
 ]
 
 { #category : 'private - changes' }
@@ -319,26 +311,27 @@ RBNamespace >> convertClasses: classSet select: aBlock using: searchReplacer [
 
 { #category : 'accessing - classes' }
 RBNamespace >> createNewClassFor: aBehavior [
+
 	| nonMeta meta className rbType rbMetaType |
 	className := aBehavior instanceSide name.
 	aBehavior isTrait
 		ifTrue: [
-			rbType := modelFactory rbTrait.
-			rbMetaType := modelFactory rbTraitMetaclass.
-		] ifFalse: [
-			rbType := modelFactory rbClass.
-			rbMetaType := modelFactory rbMetaclass.
-		].
+			rbType := self rbTraitClass.
+			rbMetaType := self rbTraitedMetaclassClass ]
+		ifFalse: [
+			rbType := self rbClassClass.
+			rbMetaType := self rbMetaclassClass ].
 	nonMeta := rbType existingNamed: className model: self.
 	meta := rbMetaType existingNamed: className model: self.
-	nonMeta category: aBehavior category.
-	^changedClasses at: className put: (Array with: nonMeta with: meta)
+	nonMeta packageName: aBehavior package name.
+	aBehavior packageTag isRoot ifFalse: [ nonMeta tagName: aBehavior packageTag name ].
+	^ changedClasses at: className put: (Array with: nonMeta with: meta)
 ]
 
 { #category : 'accessing - classes' }
 RBNamespace >> createNewPackageFor: aPackage [
 	| package |
-	package := modelFactory rbPackage existingNamed: aPackage model: self.
+	package := self rbPackageClass existingNamed: aPackage model: self.
 	^changedPackages at: aPackage put: (Array with: package)
 ]
 
@@ -352,8 +345,8 @@ RBNamespace >> defineClass: aBlock [
 	newClass ifNil: [
 		| newMetaclass |
 		self unmarkAsRemoved: newClassName.
-		newClass := modelFactory rbClass named: newClassName.
-		newMetaclass := modelFactory rbMetaclass named: newClassName.
+		newClass := self rbClassClass named: newClassName.
+		newMetaclass := self rbMetaclassClass named: newClassName.
 		newClass model: self.
 		newMetaclass model: self.
 		newClasses at: newClassName put: (Array with: newClass with: newMetaclass) ].
@@ -363,12 +356,12 @@ RBNamespace >> defineClass: aBlock [
 			self rootClasses add: newClass.
 			newClass classSide superclass: (self classFor: Object class superclass) ]
 		ifNotNil: [ newClass classSide superclass: newClass superclass classSide ].
-	self flag: #refacto. "We shoult let the change create and fill the RB class IMO."
 	newClass instanceVariableNames: (change instanceVariableNames ifNil: [ '' ]).
 	newClass classVariableNames: (change classVariableNames ifNil: [ '' ]).
 	newClass poolDictionaryNames: (change sharedPoolNames ifNil: [ '' ]).
 	change comment ifNotNil: [ :comment | newClass comment: comment ].
-	newClass category: change category.
+	newClass packageName: change package.
+	newClass tagName: change tag.
 	^ change
 ]
 
@@ -418,7 +411,7 @@ RBNamespace >> hasRemoved: aSymbol [
 
 { #category : 'testing' }
 RBNamespace >> includesClassNamed: aSymbol [
-	^(self classNamed: aSymbol) notNil
+	^(self classNamed: aSymbol) isNotNil
 ]
 
 { #category : 'testing' }
@@ -438,7 +431,7 @@ RBNamespace >> includesPackageNamed: aSymbol [
 { #category : 'initialization' }
 RBNamespace >> initialize [
 	super initialize.
-	changes := changeFactory compositeRefactoryChange onSystemDictionary: self environment.
+	changes := changeFactory compositeRefactoryChange onSystemEnvironment: self environment.
 	newClasses := IdentityDictionary new.
 	newPackages := IdentityDictionary new.
 	changedClasses := IdentityDictionary new.
@@ -582,7 +575,7 @@ RBNamespace >> privateRootClasses [
 	{ ProtoObject } do: [ :each |
 		| class |
 		class := self classFor: each.
-		(class notNil and: [ class superclass isNil ]) ifTrue: [
+		(class isNotNil and: [ class superclass isNil ]) ifTrue: [
 			classes add: class ] ].
 	^ classes
 ]
@@ -691,6 +684,12 @@ RBNamespace >> renamePackage: aRBPackage to: aSymbol [
 	^ change
 ]
 
+{ #category : 'accessing' }
+RBNamespace >> repackage: aClass in: aPackage tag: aTag [
+
+	^ changes addChange: (RBClassRepackagingChange repackage: aClass in: aPackage tag: aTag)
+]
+
 { #category : 'changes' }
 RBNamespace >> reparentClasses: aRBClassCollection to: newClass [
 
@@ -701,8 +700,9 @@ RBNamespace >> reparentClasses: aRBClassCollection to: newClass [
 				name: aClass name;
 				slots: aClass instanceVariableNames;
 				sharedVariables: aClass classVariableNames;
-				sharedPools: (' ' join: aClass sharedPoolNames);
-				category: aClass category ] ]
+				sharedPools: aClass sharedPoolNames;
+				package: aClass packageName;
+				tag: aClass tagName ] ]
 ]
 
 { #category : 'accessing' }

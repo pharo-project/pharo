@@ -340,7 +340,7 @@ FBDDecompiler >> interpret: seq1 then: seq2 distance: distance [
 			instructionStream advanceToFollowingPc ].
 
 	stackSize := simulatedStack size.
-	hasPopped := self interpretSeq: seq1 baseStackSize: stackSize distance: distance - topValue notNil asBit.
+	hasPopped := self interpretSeq: seq1 baseStackSize: stackSize distance: distance - topValue isNotNil asBit.
 	jmpSz := jumpSize.
 	jumpSize := 0.
 	topValue ifNotNil: [:e | simulatedStack addLast: e ].
@@ -474,7 +474,7 @@ FBDDecompiler >> pragmasForMethod: aCompiledMethod [
 	^ aCompiledMethod pragmas collect: [ :each |
 		RBPragmaNode
 			selector: each selector
-			arguments: (each arguments collect: [ :arg | RBLiteralNode value: arg ]) ]
+			arguments: (each arguments collect: [ :arg | ASTLiteralNode value: arg ]) ]
 ]
 
 { #category : 'data flow instructions' }
@@ -585,7 +585,6 @@ FBDDecompiler >> recompile: selector from: oldClass [
 	| newMethod |
 	newMethod := oldClass compiler
 		             source: (self decompile: oldClass >> selector) formattedCode;
-		             class: oldClass;
 		             failBlock: [ ^ self ];
 		             compile. "Assume OK after proceed from SyntaxError"
 	selector == newMethod selector ifFalse: [ self error: 'selector changed!' ].

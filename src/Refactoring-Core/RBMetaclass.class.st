@@ -63,6 +63,12 @@ RBMetaclass >> directlyDefinesPoolDictionary: aString [
 ]
 
 { #category : 'testing' }
+RBMetaclass >> isManifest [
+
+	^ self instanceSide isManifest
+]
+
+{ #category : 'testing' }
 RBMetaclass >> isMeta [
 	^true
 ]
@@ -73,12 +79,12 @@ RBMetaclass >> printOn: aStream [
 	aStream nextPutAll: ' class'
 ]
 
-{ #category : 'initialization' }
+{ #category : 'accessing' }
 RBMetaclass >> realName: aSymbol [
 	self realClass: (self model environment at: aSymbol) classSide
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBMetaclass >> storeOn: aStream [
 	super storeOn: aStream.
 	aStream nextPutAll: ' class'

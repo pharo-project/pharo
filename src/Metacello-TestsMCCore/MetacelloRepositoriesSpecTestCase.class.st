@@ -5,11 +5,6 @@ Class {
 	#package : 'Metacello-TestsMCCore'
 }
 
-{ #category : 'accessing' }
-MetacelloRepositoriesSpecTestCase >> projectClass [
-    ^ MetacelloMCProject
-]
-
 { #category : 'tests' }
 MetacelloRepositoriesSpecTestCase >> testAddA [
 	| repositories repository |

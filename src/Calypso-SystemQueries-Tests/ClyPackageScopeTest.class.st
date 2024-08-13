@@ -27,7 +27,7 @@ ClyPackageScopeTest >> testClassGroupEnumeration [
 	environment addPlugin: ClyDefaultSystemEnvironmentPlugin new.
 	scope := ClyPackageScope of: ClyClass7WithTag1FromP5Mock package in: environment.
 
-	scope classGroupsDo: [ :each | result add: each ].
+	scope packageTagsDo: [ :each | result add: each ].
 
 	self
 		assert: (result collect: #class as: Set)

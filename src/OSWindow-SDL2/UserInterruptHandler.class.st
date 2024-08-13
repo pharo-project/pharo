@@ -68,12 +68,12 @@ UserInterruptHandler >> processToInterrupt [
 	Never interrupt the idle process, since killing it is fatal"
 
 	| fallback |
-	fallback := UIManager default uiProcess.
+	fallback := MorphicUIManager uiProcess.
 	Processor
 		scanSchedule: [:p |
 		 "suspendedContext sender == nil usually means that process is only scheduled but had no chance to run"
-			(p ~~ Processor backgroundProcess and: [p suspendedContext sender notNil]) ifTrue: [
-				p ~~  WeakArray runningFinalizationProcess
+			(p ~~ Processor backgroundProcess and: [p suspendedContext sender isNotNil]) ifTrue: [
+				p ~~  FinalizationProcess runningFinalizationProcess
 					ifTrue: [^p]
 					ifFalse: [fallback := p]]]
 		startingAt: Processor activePriority.

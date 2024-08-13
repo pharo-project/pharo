@@ -142,6 +142,44 @@ BlockClosureTest >> testCullCullCullCull [
 		equals: 4
 ]
 
+{ #category : 'tests - loops' }
+BlockClosureTest >> testDoWhileFalse [
+
+	| result number |
+	
+	number := 1.
+	result := [ number := number + 1. number * 2 ] doWhileFalse: [ number > 5 ].
+	self assert: number equals: 6.
+	self assert: result equals: 12.
+	
+	number := 1.
+	result := [ number := number + 1. number * 2 ] doWhileFalse: [ number < 5 ].
+	self assert: number equals: 2.
+	self assert: result equals: 4.
+	
+	result := [ ] doWhileFalse: [ true ].
+	self assert: result equals: nil
+]
+
+{ #category : 'tests - loops' }
+BlockClosureTest >> testDoWhileTrue [
+
+	| result number |
+	
+	number := 1.
+	result := [ number := number + 1. number * 2 ] doWhileTrue: [ number < 5 ].
+	self assert: number equals: 5.
+	self assert: result equals: 10.
+	
+	number := 1.
+	result := [ number := number + 1. number * 2 ] doWhileTrue: [ number > 5 ].
+	self assert: number equals: 2.
+	self assert: result equals: 4.
+	
+	result := [ ] doWhileTrue: [ false ].
+	self assert: result equals: nil
+]
+
 { #category : 'tests - evaluating' }
 BlockClosureTest >> testHasNonLocalReturn [
 
@@ -178,10 +216,12 @@ BlockClosureTest >> testHomeMethod [
 
 { #category : 'tests - testing' }
 BlockClosureTest >> testIsClean [
+
 	| local |
 	local := #testIsClean.
 	self assert: [] isClean. "closes over nothing at all"
 	self assert: [thisContext] isClean. "we can access the context"
+	self assert: [BlockClosure] isClean. "we can access globals"
 	self assert: [
 		| local2 | true ifTrue: [local2 := 1 ] ] isClean. "optimized blocks are clean"
 	self assert: [:a :b| a < b] isClean. "accesses only arguments"
@@ -318,7 +358,7 @@ BlockClosureTest >> testOnForkErrorTakesLessThanOneSecond [
 		skip.
 
 	self flag: 'The following line makes the test pass under headless linux. Everywhere else this test works'.
-	Smalltalk os isUnix ifTrue: [ 1 milliSecond wait ].
+	Smalltalk os isUnix ifTrue: [ (Delay forMilliseconds: 1) wait ].
 
 	sema := Semaphore new.
 	[ 1 / 0 ] on: Exception fork: [ sema signal ].
@@ -340,7 +380,7 @@ BlockClosureTest >> testOnForkSplit [
 	[ 1/0 ] on: Exception fork: [  | ctx |
 		forkedContexts := IdentitySet new.
 		ctx := thisContext.
-		[ ctx notNil ] whileTrue: [ forkedContexts add: ctx. ctx := ctx sender ].
+		[ ctx isNotNil ] whileTrue: [ forkedContexts add: ctx. ctx := ctx sender ].
 		sema signal ].
 
 	timeout := (sema waitTimeoutSeconds: 1).
@@ -348,7 +388,7 @@ BlockClosureTest >> testOnForkSplit [
 
 	myContexts := IdentitySet new.
 	c := thisContext.
-	[ c notNil ] whileTrue: [ myContexts add: c. c := c sender ].
+	[ c isNotNil ] whileTrue: [ myContexts add: c. c := c sender ].
 
 	self assert: (myContexts noneSatisfy: [:b | forkedContexts includes: b ]) description: 'myContexts are not within forkedContexts'.
 	self assert: (forkedContexts noneSatisfy: [:b | myContexts includes: b ]) description: 'forkedContexts are not within myContexts'
@@ -392,21 +432,23 @@ BlockClosureTest >> testSetUp [
 
 { #category : 'tests' }
 BlockClosureTest >> testSupplyAnswerOfFillInTheBlank [
+
 	self
 		assert:
-			([ UIManager default request: 'Your favorite color?' ]
-				valueSupplyingAnswer: #('Your favorite color?' 'blue'))
+			([ ProvideAnswerNotification signal: 'Your favorite color?' ]
+				 valueSupplyingAnswer: #( 'Your favorite color?'
+				    'blue' ))
 		equals: 'blue'
 ]
 
 { #category : 'tests' }
 BlockClosureTest >> testSupplyAnswerOfFillInTheBlankUsingDefaultAnswer [
+
 	self
-		assert:
-			([ UIManager default
-				request: 'Your favorite color?'
-				initialAnswer: 'red' ]
-				valueSupplyingAnswer: #('Your favorite color?' #default))
+		assert: ([
+			 (ProvideAnswerNotification signal: 'Your favorite color?')
+			 == #default ifTrue: [ 'red' ] ] valueSupplyingAnswer:
+				 #( 'Your favorite color?' #default ))
 		equals: 'red'
 ]
 

@@ -383,7 +383,7 @@ MessageTally class >> terminateTimerProcess [
 { #category : 'spying' }
 MessageTally class >> time: aBlock [
 
-	^ Time millisecondsToRun: aBlock
+	^ aBlock millisecondsToRun
 ]
 
 { #category : 'comparing' }
@@ -468,7 +468,7 @@ MessageTally >> displayIdentifierOn: aStream [
 		store: self method selector
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 MessageTally >> displayStringOn: aStream [
 	self displayIdentifierOn: aStream.
 	aStream
@@ -664,11 +664,10 @@ MessageTally >> printOn: aStream total: total totalTime: totalTime tallyExact: i
 		ifTrue: [
 			| myTally |
 			myTally := tally.
-			receivers == nil
-				ifFalse: [receivers do: [:r | myTally := myTally - r tally]].
+			receivers ifNotNil: [ receivers do: [ :r | myTally := myTally - r tally ] ].
 			aStream
 				print: myTally;
-				space]
+				space ]
 		ifFalse: [
 			| percentage |
 			percentage := tally asFloat / total * 100.0.
@@ -676,12 +675,12 @@ MessageTally >> printOn: aStream total: total totalTime: totalTime tallyExact: i
 				nextPutAll: (percentage printShowingDecimalPlaces: 1);
 				nextPutAll: '% {';
 				print: (percentage * totalTime / 100) rounded;
-				nextPutAll: 'ms} '].
+				nextPutAll: 'ms} ' ].
 	receivers
 		ifNil: [
 			aStream
 				nextPutAll: 'primitives';
-				cr]
+				cr ]
 		ifNotNil: [
 			| className aSelector aClass |
 			aSelector := method selector.
@@ -690,11 +689,10 @@ MessageTally >> printOn: aStream total: total totalTime: totalTime tallyExact: i
 			aStream
 				nextPutAll: class name;
 				nextPutAll: (aClass = class
-							ifTrue: ['>>']
-							ifFalse: ['(' , aClass name , ')>>']);
-				nextPutAll: (aSelector
-							contractTo: self maxClassPlusSelectorSize - className size);
-				cr]
+						 ifTrue: [ '>>' ]
+						 ifFalse: [ '(' , aClass name , ')>>' ]);
+				nextPutAll: (aSelector contractTo: self maxClassPlusSelectorSize - className size);
+				cr ]
 ]
 
 { #category : 'printing' }
@@ -827,7 +825,7 @@ MessageTally >> rootPrintOn: aStream total: total totalTime: totalTime threshold
 		| sons p |
 		sons := g asArray sort.
 		p := g anyOne process.
-		(reportOtherProcesses or: [ p notNil ]) ifTrue: [
+		(reportOtherProcesses or: [ p isNotNil ]) ifTrue: [
 			aStream nextPutAll: '--------------------------------'; cr.
 			aStream nextPutAll: 'Process: ',  (p ifNil: [ 'other processes'] ifNotNil: [ p browserPrintString]); cr.
 			aStream nextPutAll: '--------------------------------'; cr.

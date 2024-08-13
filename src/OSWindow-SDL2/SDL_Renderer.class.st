@@ -32,7 +32,7 @@ SDL_Renderer >> clear [
 
 { #category : 'rendering' }
 SDL_Renderer >> copy: texture [
-	^ self ffiCall: #( int SDL_RenderCopy ( self , SDL_Texture texture , nil, nil ) )
+	^ self ffiCall: #( int SDL_RenderCopy ( self , SDL_Texture texture , void* 0, void* 0 ) )
 ]
 
 { #category : 'rendering' }
@@ -43,11 +43,7 @@ SDL_Renderer >> copy: texture srcRect: srcRect dstRect: dstRect [
 { #category : 'rendering' }
 SDL_Renderer >> createTextureFormat: format access: access width: width height: height [
 
-	^ self
-		  primCreateTextureFormat: format
-		  access: access
-		  width: width
-		  height: height
+	^ self ffiCall: #( SDL_Texture SDL_CreateTexture #( self #, Uint32 format #, int access #, int width #, int height ) )
 ]
 
 { #category : 'initialization' }
@@ -113,12 +109,14 @@ SDL_Renderer >> initialize [
 
 { #category : 'rendering' }
 SDL_Renderer >> noClipRect [
-	^ self ffiCall: #( int SDL_RenderSetClipRect ( self , nil ) )
+
+  ^ self ffiCall: #( int SDL_RenderSetClipRect ( self , void* 0 ) )
 ]
 
 { #category : 'rendering' }
 SDL_Renderer >> noRenderTarget [
-	^ self ffiCall: #( int SDL_SetRenderTarget ( self , nil ) )
+
+  ^ self ffiCall: #( int SDL_SetRenderTarget ( self , void* 0 ) )
 ]
 
 { #category : 'rendering' }
@@ -132,11 +130,6 @@ SDL_Renderer >> outputExtent [
 { #category : 'rendering' }
 SDL_Renderer >> present [
 	^ self ffiCall: #( void SDL_RenderPresent ( self ) )
-]
-
-{ #category : 'private' }
-SDL_Renderer >> primCreateTextureFormat: format access: access width: width height: height [
-	^ self ffiCall: #( SDL_Texture SDL_CreateTexture ( self , Uint32 format , int access , int width , int height ) )
 ]
 
 { #category : 'initialization' }

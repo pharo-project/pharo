@@ -44,33 +44,20 @@ InitializePackagesCommandLineHandler class >> description [
 { #category : 'activation' }
 InitializePackagesCommandLineHandler >> activate [
 
-	self activateHelp
-		ifTrue: [ ^ self ].
+	self activateHelp ifTrue: [ ^ self ].
 
-	(self hasOption: 'protocols')
-			ifTrue: [ self initializeProtocolsFrom: (self optionAt: 'protocols')].
+	(self hasOption: 'protocols') ifTrue: [ self initializeProtocolsFrom: (self optionAt: 'protocols') ].
 
-	(self hasOption: 'packages')
-			ifTrue: [ self initializePackagesFrom: (self optionAt: 'packages')].
+	(self hasOption: 'packages') ifTrue: [ self initializePackages ].
 
-	(self hasOption: 'save')
-		ifTrue: [ Smalltalk snapshot: true andQuit: false ].
+	(self hasOption: 'save') ifTrue: [ Smalltalk snapshot: true andQuit: false ].
 	self exitSuccess
 ]
 
 { #category : 'activation' }
-InitializePackagesCommandLineHandler >> initializePackagesFrom: aFileName [
+InitializePackagesCommandLineHandler >> initializePackages [
 
-	| packages |
-
-	packages := OrderedCollection new.
-	(File named: aFileName) readStreamDo: [:binaryStream | | stream |
-		stream := ZnCharacterReadStream on: binaryStream encoding: 'utf8'.
-		[stream atEnd] whileFalse: [
-			packages add: (stream upTo: Character cr)]].
-
-	RPackageOrganizer default basicInitializeFromPackagesList: packages.
-	RPackageOrganizer registerInterestToSystemAnnouncement
+	PackageOrganizer default basicBootstrapInitialize
 ]
 
 { #category : 'activation' }

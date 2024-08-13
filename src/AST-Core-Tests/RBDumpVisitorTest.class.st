@@ -1,5 +1,5 @@
 "
-SUnit tests for the RBDumpVisitor visit, called by the #dump method on RBProgramNodes.
+SUnit tests for the RBDumpVisitor visit, called by the #dump method on ASTProgramNodes.
 "
 Class {
 	#name : 'RBDumpVisitorTest',
@@ -15,14 +15,14 @@ RBDumpVisitorTest >> compiler [
 	^ Smalltalk compiler
 ]
 
-{ #category : 'test - api' }
+{ #category : 'tests - api' }
 RBDumpVisitorTest >> testAPI [
 
 	| node |
 	node := self parseExpression: 'self foo'.
 	self
 		assert: (RBDumpVisitor new visit: node) contents
-		equals:  'RBMessageNode receiver: (RBVariableNode named: #self) selector: #foo'
+		equals: 'RBMessageNode receiver: (RBVariableNode named: #self) selector: #foo'
 ]
 
 { #category : 'tests' }

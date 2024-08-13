@@ -34,7 +34,6 @@ Class {
 		'EventStats',
 		'NormalCursor',
 		'PasteBuffer',
-		'ShowEvents',
 		'UpperHandLimit'
 	],
 	#category : 'Morphic-Core-Kernel',
@@ -118,14 +117,6 @@ HandMorph class >> settingsOn: aBuilder [
 "HandMorph eventStats inspect"'
 ]
 
-{ #category : 'utilities' }
-HandMorph class >> showEvents: aBool [
-	"HandMorph showEvents: true"
-	"HandMorph showEvents: false"
-	ShowEvents := aBool.
-	aBool ifFalse: [ self currentWorld invalidRect: (0@0 extent: 500@120) ]
-]
-
 { #category : 'accessing' }
 HandMorph class >> upperHandLimit [
 
@@ -149,7 +140,7 @@ HandMorph >> addListener: anObject to: aListenerGroup [
 	"Add anObject to the given listener group. Return the new group."
 	| listeners |
 	listeners := aListenerGroup.
-	(listeners notNil and:[listeners includes: anObject]) ifFalse:[
+	(listeners isNotNil and:[listeners includes: anObject]) ifFalse:[
 		listeners
 			ifNil:[listeners := WeakArray with: anObject]
 			ifNotNil:[listeners := listeners copyWith: anObject]].
@@ -405,10 +396,9 @@ HandMorph >> fullDrawOn: aCanvas [
 								do: [:r | shadowCanvas fillRectangle: r color: Color black]]].
 			aCanvas roundCornersOf: rounded
 				during:
-					[aCanvas
-						drawImage: cacheCanvas form
-						at: subBnds origin
-						sourceRect: cacheCanvas form boundingBox].
+					[cacheCanvas
+						drawImageOn: aCanvas
+						at: subBnds origin].
 			^self drawOn: aCanvas	"draw the hand itself in front of morphs"].
 	"--> end rounded corners hack <---"
 
@@ -421,7 +411,7 @@ HandMorph >> fullDrawOn: aCanvas [
 				ifTrue:
 					["Have to draw the real shadow of the form"
 
-					shadowCanvas paintImage: cacheCanvas form at: subBnds origin]
+					cacheCanvas paintImageOn: shadowCanvas at: subBnds origin]
 				ifFalse:
 					["Much faster if only have to shade the edge of a solid rectangle"
 
@@ -430,12 +420,11 @@ HandMorph >> fullDrawOn: aCanvas [
 
 	"draw morphs in front of the shadow using the cached Form"
 	cachedCanvasHasHoles
-		ifTrue: [aCanvas paintImage: cacheCanvas form at: subBnds origin]
+		ifTrue: [cacheCanvas paintImageOn: aCanvas at: subBnds origin]
 		ifFalse: 	[
-			aCanvas
-			drawImage: cacheCanvas form
-			at: subBnds origin
-			sourceRect: cacheCanvas form boundingBox
+			cacheCanvas
+				drawImageOn: aCanvas
+				at: subBnds origin
 		].
 	self drawOn: aCanvas	"draw the hand itself in front of morphs"
 ]
@@ -523,8 +512,6 @@ HandMorph >> handleEvent: anEvent [
 	captureBlock ifNotNil: [ ^ captureBlock value: anEvent ].
 	evt isMouseOver ifTrue:[^self sendMouseEvent: evt].
 
-	self showDebugEvent: evt.
-
 	"Notify listeners"
 	self sendListenEvent: evt to: self eventListeners.
 
@@ -580,7 +567,6 @@ HandMorph >> handleEvent: anEvent [
 			ifTrue:[self dropMorphs: evt]
 			ifFalse:[self sendMouseEvent: evt].
 	].
-	self showMouseFocusEvent: evt.
 	self mouseOverHandler processMouseOver: lastMouseEvent
 ]
 
@@ -718,9 +704,9 @@ HandMorph >> needsToBeDrawn [
 	"Return true if this hand must be drawn explicitly instead of being drawn via the hardware cursor. This is the case if it (a) it is a remote hand, (b) it is showing a temporary cursor, or (c) it is not empty and there are any visible submorphs. If using the software cursor, ensure that the hardware cursor is hidden."
 	"Details:  Return true if this hand has a saved patch to ensure that is is processed by the world. This saved patch will be deleted after one final display pass when it becomes possible to start using the hardware cursor again. This trick gives us one last display cycle to allow us to remove the software cursor and shadow from the display."
 	| cursor |
-	(savedPatch notNil
+	(savedPatch isNotNil
 		or: [ (submorphs anySatisfy: [ :ea | ea visible ])
-			or: [ (temporaryCursor notNil and: [hardwareCursor isNil])
+			or: [ (temporaryCursor isNotNil and: [hardwareCursor isNil])
 				]])
 		ifTrue: [ ^ true ].
 	"Switch from one hardware cursor to another, if needed."
@@ -772,15 +758,19 @@ HandMorph >> nonCachingFullDrawOn: aCanvas [
 
 	submorphs isEmpty ifTrue: [^ self drawOn: aCanvas].  "just draw the hand itself"
 	aCanvas asShadowDrawingCanvas
-		translateBy: self shadowOffset during:[:shadowCanvas| | shadowForm |
+		translateBy: self shadowOffset during:[:shadowCanvas| | shadowFormSet bnds canvas |
 		"Note: We use a shadow form here to prevent drawing
 		overlapping morphs multiple times using the transparent
 		shadow color."
-		shadowForm := self shadowForm.
+		bnds := Rectangle merging: (submorphs collect: [:m | m fullBounds]).
+		canvas := aCanvas shadowDrawingCanvasWithExtent: bnds extent shadowColor: Color black.
+		canvas translateBy: bnds topLeft negated
+			during:[:tempCanvas| self drawSubmorphsOn: tempCanvas].
+		shadowFormSet := FormSet extent: bnds extent depth: 1 forms: { canvas form }.
 "
 shadowForm displayAt: shadowForm offset negated. Display forceToScreen: (0@0 extent: shadowForm extent).
 "
-		shadowCanvas paintImage: shadowForm at: shadowForm offset.  "draw shadows"
+		shadowCanvas paintFormSet: shadowFormSet at: bnds topLeft.  "draw shadows"
 	].
 	"draw morphs in front of shadows"
 	self drawSubmorphsOn: aCanvas.
@@ -869,7 +859,7 @@ HandMorph >> processEvents [
 	"Process user input events from the local input devices."
 
 	| evt |
-	[ (evt := self pendingEventQueue nextOrNil) notNil ] whileTrue: [
+	[ (evt := self pendingEventQueue nextOrNil) isNotNil ] whileTrue: [
 		evt == #invalid ifTrue: [ ^ self ].
 		evt ifNotNil: [ "Finally, handle it"
 			self handleEvent: evt.
@@ -1016,7 +1006,7 @@ HandMorph >> restoreSavedPatchOn: aCanvas [
 	savedPatch ifNotNil:
 			[aCanvas restoreSavedPatch: savedPatch at: savedPatch offset.
 			submorphs notEmpty ifTrue: [^self].
-			(temporaryCursor notNil and: [hardwareCursor isNil]) ifTrue: [^self].
+			(temporaryCursor isNotNil and: [hardwareCursor isNil]) ifTrue: [^self].
 
 			"Make the transition to using hardware cursor. Clear savedPatch and
 		 report one final damage rectangle to erase the image of the software cursor."
@@ -1116,18 +1106,6 @@ HandMorph >> sendMouseEvent: anEvent [
 	^self sendEvent: anEvent focus: self mouseFocus clear:[self mouseFocus: nil]
 ]
 
-{ #category : 'drawing' }
-HandMorph >> shadowForm [
-	"Return a 1-bit shadow of my submorphs.  Assumes submorphs is not empty"
-	| bnds canvas |
-	bnds := Rectangle merging: (submorphs collect: [:m | m fullBounds]).
-	canvas := (Display defaultCanvasClass extent: bnds extent depth: 1)
-		asShadowDrawingCanvas: Color black.
-	canvas translateBy: bnds topLeft negated
-		during:[:tempCanvas| self drawSubmorphsOn: tempCanvas].
-	^ canvas form offset: bnds topLeft
-]
-
 { #category : 'drop shadows' }
 HandMorph >> shadowOffset [
 
@@ -1137,27 +1115,6 @@ HandMorph >> shadowOffset [
 { #category : 'accessing' }
 HandMorph >> shiftPressed [
 	^lastMouseEvent shiftPressed
-]
-
-{ #category : 'events - processing' }
-HandMorph >> showDebugEvent: evt [
-
-	ShowEvents == true ifTrue: [
-		| ofs|
-		Display fill: (0@0 extent: 500@120) rule: Form over fillColor: Color white.
-		ofs := (owner hands indexOf: self) - 1 * 60.
-		evt printString displayAt: (0@ofs) + (evt isKeyboard ifTrue: [0@30] ifFalse: [0@0]).
-		self keyboardFocus printString displayAt: (0@ofs)+(0@45).
-		]
-]
-
-{ #category : 'events - processing' }
-HandMorph >> showMouseFocusEvent: evt [
-
-	ShowEvents == true ifTrue: [
-		| ofs|
-		ofs := (owner hands indexOf: self) - 1 * 60.
-		self mouseFocus printString displayAt: (0@ofs) + (0@15)]
 ]
 
 { #category : 'cursor' }
@@ -1230,7 +1187,7 @@ HandMorph >> updateCacheCanvas: aCanvas [
 	rectList := damageRecorder invalidRectsFullBounds: subBnds.
 	damageRecorder reset.
 	(rectList isEmpty
-		and: [cacheCanvas notNil and: [cacheCanvas extent = subBnds extent]])
+		and: [cacheCanvas isNotNil and: [cacheCanvas extent = subBnds extent]])
 			ifTrue: [^self].
 
 	"Always check for real translucency -- can't be cached in a form"
@@ -1243,7 +1200,7 @@ HandMorph >> updateCacheCanvas: aCanvas [
 					^self]].
 	(cacheCanvas isNil or: [cacheCanvas extent ~= subBnds extent])
 		ifTrue:
-			[cacheCanvas := (aCanvas allocateForm: subBnds extent) getCanvas.
+			[cacheCanvas := aCanvas allocateCanvas: subBnds extent.
 			cacheCanvas translateBy: subBnds origin negated
 				during: [:tempCanvas | self drawSubmorphsOn: tempCanvas].
 			self submorphsDo:
@@ -1252,7 +1209,7 @@ HandMorph >> updateCacheCanvas: aCanvas [
 						ifTrue: [^cachedCanvasHasHoles := false]].
 			nPix := cacheCanvas form tallyPixelValues first.
 			"--> begin rounded corners hack <---"
-			cachedCanvasHasHoles := (nPix = 48
+			cachedCanvasHasHoles := (nPix = cacheCanvas numberOfTransparentPixelsForRoundedCorners
 						and: [submorphs size = 1 and: [submorphs first wantsRoundedCorners]])
 							ifTrue: [false]
 							ifFalse: [nPix > 0].

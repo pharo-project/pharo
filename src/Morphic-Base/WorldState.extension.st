@@ -33,6 +33,7 @@ WorldState class >> browseWorldMenuOn: aBuilder [
 
 { #category : '*Morphic-Base' }
 WorldState class >> debugWorldMenuOn: aBuilder [
+
 	<worldMenu>
 	(aBuilder item: #Debug)
 		order: 30;
@@ -42,9 +43,7 @@ WorldState class >> debugWorldMenuOn: aBuilder [
 				withSeparatorAfter.
 			(aBuilder group: #Profiling)
 				order: 2;
-				withSeparatorAfter.
-			(aBuilder group: #Counters)
-				order: 3]
+				withSeparatorAfter ]
 ]
 
 { #category : '*Morphic-Base' }
@@ -64,6 +63,17 @@ WorldState >> menuBuilder [
 		   model: self)
 		  menuSpec;
 		  yourself
+]
+
+{ #category : '*Morphic-Base' }
+WorldState class >> newToolsMenuOn: aBuilder [
+	<worldMenu>
+	(aBuilder item: #NewToolsMenu)
+		label: 'New Tools (Preview)';
+		parent: #SystemTools;
+		order: 4;
+		help: 'New tools related.';
+		iconName: #tools
 ]
 
 { #category : '*Morphic-Base' }
@@ -87,25 +97,6 @@ WorldState class >> sourcesWorldMenuOn: aBuilder [
 ]
 
 { #category : '*Morphic-Base' }
-WorldState >> startMessageTally [
-
-	self class startMessageTally
-]
-
-{ #category : '*Morphic-Base' }
-WorldState class >> startMessageTally [
-
-	(self confirm: 'MessageTally will start now,
-and stop when the cursor goes
-to the top of the screen' translated)
-		ifFalse: [ ^ self ].
-
-	TimeProfiler spyAllOn: [
-		MorphicRenderLoop new doOneCycleWhile: [
-			self currentWorld activeHand position y > 0 ] ]
-]
-
-{ #category : '*Morphic-Base' }
 WorldState >> startStepping: aMorph at: scheduledTime selector: aSelector arguments: args stepTime: stepTime [
 	"Add the given morph to the step list. Do nothing if it is already being stepped."
 
@@ -124,19 +115,6 @@ WorldState >> startStepping: aMorph at: scheduledTime selector: aSelector argume
 WorldState >> startThenBrowseMessageTally [
 
 	self class startThenBrowseMessageTally
-]
-
-{ #category : '*Morphic-Base' }
-WorldState class >> startThenBrowseMessageTally [
-	"Tally only the UI process"
-
-	(self confirm: 'MessageTally the UI process until the
-mouse pointer goes to the top of the screen')
-		ifFalse: [ ^ self ].
-
-	TimeProfiler onBlock: [
-		MorphicRenderLoop new doOneCycleWhile: [
-			self currentWorld activeHand position y > 10 ] ]
 ]
 
 { #category : '*Morphic-Base' }
@@ -182,6 +160,33 @@ WorldState class >> systemOn: aBuilder [
 ]
 
 { #category : '*Morphic-Base' }
+WorldState class >> systemStartupFolderMenuOn: aBuilder [
+	<worldMenu>
+	(aBuilder item: #SystemFolders)
+		label: 'Folders';
+		parent: #Startup;
+		order: 2;
+		help: 'System folder related.';
+		iconName: #scriptManager;
+		with: [ 
+		
+	(aBuilder item: #SystemImageFolder)
+				action: [ Smalltalk imageDirectory openInOSFileBrowser ];
+				label: 'Open Image folder';
+				order: 1; 
+				help: 'Open the image folder.';
+				iconName: #smallOpen.
+
+	(aBuilder item: #SystemVMFolder)
+				action: [ Smalltalk imageDirectory openInOSFileBrowser ];
+				label: 'Open VM folder';
+				order: 1;
+				help: 'Open the VM folder.';
+				iconName: #smallOpen
+	 ]
+]
+
+{ #category : '*Morphic-Base' }
 WorldState class >> windowsOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #Windows)
@@ -212,6 +217,6 @@ WorldState class >> windowsOn: aBuilder [
 				action: [ self currentWorld closeAllWindowsDiscardingChanges ];
 				help: 'Deletes all windows even if they have unsaved text edits.' translated.
 			(aBuilder item: #'Toggle full screen mode')
-				action: [ Display toggleFullscreen ];
+				action: [ WorldMorph toggleFullscreen ];
 				help: 'Turn full screen mode on when it is off, off when it is on.' translated ]
 ]

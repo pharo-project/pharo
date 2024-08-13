@@ -10,13 +10,15 @@ Class {
 }
 
 { #category : 'accessing - defaults' }
-ReClassSideInitializeMethodProtocolRule >> protocolName [
+ReClassSideInitializeMethodProtocolRule class >> protocolName [ 
 
 	^ 'class initialization'
+
 ]
 
 { #category : 'accessing - defaults' }
-ReClassSideInitializeMethodProtocolRule >> selector [
+ReClassSideInitializeMethodProtocolRule class >> selector [ 
 
 	^ #initialize
+
 ]

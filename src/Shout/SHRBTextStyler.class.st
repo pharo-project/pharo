@@ -417,12 +417,33 @@ SHRBTextStyler class >> styleTable: anArray [
 ]
 
 { #category : 'styles' }
+SHRBTextStyler class >> styleTableName [
+	"Answer a <String> representing the current style name"
+	
+	self styleTablePragmas 
+		detect: [ : p | (self perform: p methodSelector) = self styleTable ]
+		ifFound: [ : p | ^ p argumentAt: 1 ]
+		ifNone: [ self error: 'Style table unknown' ]
+
+]
+
+{ #category : 'styles' }
 SHRBTextStyler class >> styleTableNamed: aString [
 
-	^ (Pragma allNamed: #styleTable: in: self class)
+	^ self styleTablePragmas
 		detect: [ :each | (each argumentAt: 1) = aString ]
 		ifFound: [ :each | self perform: each methodSelector ]
 		ifNone: [ nil ]
+]
+
+{ #category : 'styles' }
+SHRBTextStyler class >> styleTablePragmas [
+	"Answer a <Collection> of <Pragma> each representing a Shout style"
+
+	^ Pragma
+		  allNamed: #styleTable:
+		  from: self class
+		  to: SHRBTextStyler class
 ]
 
 { #category : 'styles' }
@@ -628,9 +649,9 @@ SHRBTextStyler >> addASTTransformationPlugin: aPlugin [
 ]
 
 { #category : 'formatting' }
-SHRBTextStyler >> addAttributes: attributes forNode: anRBNode [
+SHRBTextStyler >> addAttributes: attributes forNode: aNode [
 
-	self addAttributes: attributes from: anRBNode startWithoutParentheses to: anRBNode stopWithoutParentheses
+	self addAttributes: attributes from: aNode startWithoutParentheses to: aNode stopWithoutParentheses
 ]
 
 { #category : 'formatting' }
@@ -666,15 +687,15 @@ SHRBTextStyler >> addStyle: styleSymbol attribute: additionalAttribute from: sta
 ]
 
 { #category : 'formatting' }
-SHRBTextStyler >> addStyle: styleSymbol attributes: additionalAttributes forNode: anRBNode [
+SHRBTextStyler >> addStyle: styleSymbol attributes: additionalAttributes forNode: aNode [
 	self
 		addAttributes: (self attributesFor: styleSymbol), additionalAttributes
-		forNode: anRBNode
+		forNode: aNode
 ]
 
 { #category : 'formatting' }
-SHRBTextStyler >> addStyle: styleSymbol forNode: anRBNode [
-	self addAttributes: (self attributesFor: styleSymbol) forNode: anRBNode
+SHRBTextStyler >> addStyle: styleSymbol forNode: aNode [
+	self addAttributes: (self attributesFor: styleSymbol) forNode: aNode
 ]
 
 { #category : 'formatting' }
@@ -716,10 +737,17 @@ SHRBTextStyler >> classOrMetaClass: aBehavior [
 { #category : 'visiting' }
 SHRBTextStyler >> formatIncompleteSelector: aSymbol [
 
-	aSymbol isSelectorSymbol ifTrue: [ ^ nil ].
-	^ (self class formatIncompleteIdentifiers and: [ (Symbol selectorThatStartsCaseSensitive: aSymbol asString skipping: nil) isNotNil ])
+	(self representsASelector: aSymbol) ifTrue: [ ^ nil ].
+
+	^ (self class formatIncompleteIdentifiers and: [ self hasSymbolStartingBy: aSymbol ])
 		  ifTrue: [ #incompleteSelector ]
 		  ifFalse: [ #undefinedSelector ]
+]
+
+{ #category : 'testing' }
+SHRBTextStyler >> hasSymbolStartingBy: aSymbol [
+
+	^ (Symbol selectorThatStartsCaseSensitive: aSymbol asString skipping: nil) isNotNil
 ]
 
 { #category : 'initialization' }
@@ -806,16 +834,24 @@ SHRBTextStyler >> privateStyle: aText [
 	| compiler |
 
 	aText ifEmpty: [ ^ self ].
+
 	compiler := classOrMetaClass compiler
 		source: aText asString;
+		receiver: (self isScripting ifTrue: [workspace ifNotNil: [:w | w doItReceiver]]);
 		isScripting: self isScripting;
 		requestor: workspace.
 
 	self plugins do: [ :each | compiler addParsePlugin: each ].
-
+	
 	^ self
 		style: aText
 		ast: compiler parse
+]
+
+{ #category : 'testing' }
+SHRBTextStyler >> representsASelector: aSymbol [
+
+	^ aSymbol isSelectorSymbol
 ]
 
 { #category : 'private' }
@@ -968,6 +1004,12 @@ SHRBTextStyler >> stylingEnabled: aBoolean [
 	stylingEnabled := aBoolean
 ]
 
+{ #category : 'private' }
+SHRBTextStyler >> text [
+
+	^ text
+]
+
 { #category : 'styling' }
 SHRBTextStyler >> unstyledTextFrom: aText [
 	"return a Text object without all styling attributes"
@@ -1076,17 +1118,17 @@ SHRBTextStyler >> visitLiteralValueNode: aLiteralValueNode [
 	attributes := OrderedCollection new.
 
 	"We can have 3 different kind of links from a literal:
-	- In case it is a symbol representing a class, we want to return a TextClassLink to browse the class or its references
+	- In case it is a symbol representing a class or a global, we want to return a TextClassLink to browse the class or its references. In that case we also want to check if this global is deprecated or not to strikethrought it.
 	- In case it is another symbol, we want to return a TextMethodLink to browser the implementors or senders of this selector
 	- In case it is another literal value, we return a TextClassLink to browse the class defining this litera."
 	value isSymbol
 		ifTrue: [
-			self class environment
-				at: value
-				ifPresent: [ :aGlobal |
+			"We ask the binding to be able to know if the binding is deprecated ot not. If we used #at: then we would get the value of the binding which is not what interest us."
+			(self class environment bindingOf: value)
+				ifNotNil: [ :aGlobalVariable |
 					attributes add: (TextClassLink className: value).
-					(aGlobal isClass and: [ aGlobal isDeprecated ]) ifTrue: [ attributes add: TextEmphasis struckOut ] ]
-				ifAbsent: [ attributes add: (TextMethodLink selector: value) ] ]
+					aGlobalVariable isDeprecated ifTrue: [ attributes add: TextEmphasis struckOut ] ]
+				ifNil: [ attributes add: (TextMethodLink selector: value) ] ]
 		ifFalse: [ TextClassLink class: value class ].
 	self addStyle: (self literalStyleSymbol: value) attributes: attributes asArray forNode: aLiteralValueNode
 ]

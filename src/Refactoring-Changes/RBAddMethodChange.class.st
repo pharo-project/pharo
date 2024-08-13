@@ -117,7 +117,7 @@ RBAddMethodChange >> hash [
 RBAddMethodChange >> oldVersionTextToDisplay [
 	| class |
 
-	class := (onSystemDictionary
+	class := (onSystemEnvironment
 					classNamed: className)
 					ifNil: [ ^ super oldVersionTextToDisplay ].
 
@@ -149,10 +149,7 @@ RBAddMethodChange >> printOn: aStream [
 		nextPutAll: self protocol;
 		nextPutAll: ''' stamp: ';
 		print: self changeStamp;
-		nextPut: $!;
-		cr;
-		nextPutAll: (source copyReplaceAll: '!' with: '!!');
-		nextPutAll: '! !'
+		cr
 ]
 
 { #category : 'accessing' }

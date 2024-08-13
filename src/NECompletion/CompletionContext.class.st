@@ -93,17 +93,18 @@ CompletionContext >> hasEntries [
 
 { #category : 'testing' }
 CompletionContext >> hasMessage [
-	^ self message notNil
+	^ self message isNotNil
 ]
 
 { #category : 'entries' }
 CompletionContext >> initEntries [
-	^ sorter sortCompletionList: (node completionEntries: position) asOrderedCollection
+
+	^ sorter sortCompletionList: (node completionEntries: position)
 ]
 
 { #category : 'parsing' }
 CompletionContext >> isScripting [
-	^ engine notNil and: [ engine isScripting ]
+	^ engine isNotNil and: [ engine isScripting ]
 ]
 
 { #category : 'accessing' }

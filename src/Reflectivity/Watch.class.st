@@ -51,15 +51,15 @@ Watch class >> from: aNode ifAbsent: aBlock [
 ]
 
 { #category : 'instance creation' }
-Watch class >> in: aRBProgramNode [
-	^self in: aRBProgramNode named: ''
+Watch class >> in: aProgramNode [
+	^self in: aProgramNode named: ''
 ]
 
 { #category : 'instance creation' }
-Watch class >> in: aRBProgramNode named: aName [
-	aRBProgramNode hasWatch ifTrue: [ ^ aRBProgramNode watch ].
+Watch class >> in: aProgramNode named: aName [
+	aProgramNode hasWatch ifTrue: [ ^ aProgramNode watch ].
 	^self new
-		node: aRBProgramNode;
+		node: aProgramNode;
 		tagname: aName;
 		install
 ]

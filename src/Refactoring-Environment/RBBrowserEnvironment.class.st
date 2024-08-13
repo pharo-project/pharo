@@ -92,7 +92,7 @@ RBBrowserEnvironment >> allClasses [
 
 { #category : 'accessing - classes' }
 RBBrowserEnvironment >> allClassesAndTraits [
-	" compatibility method with SystemDictionary "
+	" compatibility method with SystemEnvironment"
 
 	| allClassesAndTraits |
 	allClassesAndTraits := OrderedCollection new: 4096.
@@ -360,7 +360,7 @@ RBBrowserEnvironment >> forPragmas: aKeywordCollection [
 RBBrowserEnvironment >> handleSystemChange: aSystemAnnouncement [
 
 	| todoList todoSize anyResult |
-	todoList := 	(queryCache values select: [ :each | each notNil ]) as: IdentitySet.
+	todoList := 	(queryCache values select: [ :each | each isNotNil ]) as: IdentitySet.
 	todoSize := 0.
 	[[todoSize = todoList size] whileFalse: [
 		todoSize := todoList size.
@@ -408,14 +408,6 @@ RBBrowserEnvironment >> includesProtocol: aProtocol in: aClass [
 { #category : 'testing' }
 RBBrowserEnvironment >> includesSelector: aSelector in: aClass [
 	^ true
-]
-
-{ #category : 'actions' }
-RBBrowserEnvironment >> inspectIn: spec [
-
-	^ (spec instantiate: SpFilteringListPresenter)
-		  items: self basisObjects asArray;
-		  yourself
 ]
 
 { #category : 'environments' }
@@ -577,7 +569,7 @@ RBBrowserEnvironment >> packageAt: aName ifAbsent: absentBlock [
 
 { #category : 'accessing - packages' }
 RBBrowserEnvironment >> packages [
-
+	"Contrary to `full packages`, `packages` include both packages directly defined in the environment and packages from the clases belonging to the environment. For example, if an environment contains the class Object, the package Kernel is a defined package in the environment, even though this package does is not directly defined in the environment "
 	^ self packageOrganizer packages select: [ :package | self includesPackage: package ]
 ]
 
@@ -715,7 +707,7 @@ RBBrowserEnvironment >> selectionParseTreeIntervalFor: aString [
 	self searchStrings do: [ :each |
 		| matcher tree |
 		matcher := RBParseTreeSearcher new.
-		matcher matchesTree: (RBLiteralNode value: each) do: answerBlock.
+		matcher matchesTree: (ASTLiteralNode value: each) do: answerBlock.
 		each isSymbol
 			ifTrue: [
 				tree := RBParseTreeSearcher buildSelectorTree: each.
@@ -769,7 +761,7 @@ RBBrowserEnvironment >> shortDescription [
 	^ self description contractTo: 50
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBBrowserEnvironment >> storeOn: aStream [
 	aStream
 		nextPutAll: self class name;

@@ -19,15 +19,17 @@ ClyDefaultSystemEnvironmentPlugin >> checkPackageHasClassGroups: aPackage [
 		pluginsDo: [ :plugin |
 			providers := plugin collectClassGroupProviders.
 			providers
-				do: [ :each | each classGroupsIn: packageScope do: [ :group | ^ true ] ] ].
+				do: [ :each | each packageTagssIn: packageScope do: [ :group | ^ true ] ] ].
 	^ false
 ]
 
 { #category : 'method groups' }
 ClyDefaultSystemEnvironmentPlugin >> collectClassGroupProviders [
 
-	^{ClyExtendedClassGroupProvider. ClyNoTagClassGroupProvider. ClyTaggedClassGroupProvider}
-		collect: [ :each | each new ]
+	^ {
+		  ClyExtendedClassGroupProvider.
+		  ClyNoTagClassGroupProvider.
+		  ClyTaggedClassGroupProvider } collect: [ :each | each new ]
 ]
 
 { #category : 'method groups' }

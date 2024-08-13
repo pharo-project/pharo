@@ -7,8 +7,6 @@ Class {
 	#name : 'MCCacheRepository',
 	#superclass : 'MCDirectoryRepository',
 	#instVars : [
-		'packageCaches',
-		'seenFiles',
 		'cacheEnabled'
 	],
 	#classInstVars : [
@@ -76,7 +74,7 @@ MCCacheRepository class >> reset [
 
 { #category : 'utilities' }
 MCCacheRepository class >> resetIfInvalid [
-	default notNil and: [ default directory ifAbsent: [ default := nil ] ]
+	default isNotNil and: [ default directory ifAbsent: [ default := nil ] ]
 ]
 
 { #category : 'accessing' }
@@ -88,16 +86,8 @@ MCCacheRepository class >> uniqueInstance [
 { #category : 'storing' }
 MCCacheRepository >> basicStoreVersion: aVersion [
 	"we store a version if it is cacheable and we don't have the file already"
-	
-	(aVersion isCacheable and: [(self includesFileNamed: aVersion fileName) not])
-		ifTrue: [super basicStoreVersion: aVersion]
 
-]
-
-{ #category : 'accessing' }
-MCCacheRepository >> cacheForPackage: aPackage [
-	packageCaches ifNil: [packageCaches := Dictionary new].
-	^ packageCaches at: aPackage ifAbsentPut: [MCPackageCache new]
+	(self includesFileNamed: aVersion fileName) ifFalse: [ super basicStoreVersion: aVersion ]
 ]
 
 { #category : 'utilities' }
@@ -118,43 +108,16 @@ MCCacheRepository >> enable [
 
 { #category : 'initialization' }
 MCCacheRepository >> initialize [
-	cacheEnabled := true.
+
 	super initialize.
-]
-
-{ #category : 'private' }
-MCCacheRepository >> loadVersionFromFileNamed: aString [
-	
-	^ self versionReaderForFileNamed: aString do: [:r | r version]
-]
-
-{ #category : 'instance creation' }
-MCCacheRepository >> newFileNames [ 
-	^ self allFileNames difference: self seenFileNames
-]
-
-{ #category : 'accessing' }
-MCCacheRepository >> rescan [
-	self newFileNames do:
-		[:ea |
-		self versionReaderForFileNamed: ea do:
-			[:reader |
-			(self cacheForPackage: reader package)
-				recordVersionInfo: reader info
-				forFileNamed: ea.
-			self seenFileNames add: ea]]
-		displayingProgress: 'Scanning cache...'
-]
-
-{ #category : 'accessing' }
-MCCacheRepository >> seenFileNames [
-	^ seenFiles ifNil: [seenFiles := OrderedCollection new]
+	cacheEnabled := true
 ]
 
 { #category : 'storing' }
 MCCacheRepository >> storeVersion: aVersion [
-	cacheEnabled == true ifFalse: [ ^ self ].
-	^ super storeVersion: aVersion.
+
+	cacheEnabled ifFalse: [ ^ self ].
+	^ super storeVersion: aVersion
 ]
 
 { #category : 'utilities' }
@@ -167,17 +130,19 @@ MCCacheRepository >> useDirectory: aFolder during: aBlock [
 	aBlock value ] ensure: [ self directory: oldDirectory ]
 ]
 
-{ #category : 'accessing' }
-MCCacheRepository >> versionInfoForFileNamed: aString [
-	^ self infoCache 
-		at: aString 
-		ifAbsentPut: [ self versionReaderForFileNamed: aString do: [:r | r info]]
-]
-
 { #category : 'interface' }
 MCCacheRepository >> versionWithInfo: aVersionInfo ifAbsent: errorBlock [
 	(self allFileNamesForVersionNamed: aVersionInfo name) do: [:fileName | | version |
 			version := self versionFromFileNamed: fileName.
 			version info = aVersionInfo ifTrue: [^ version]].
 	^ errorBlock value
+]
+
+{ #category : 'writing' }
+MCCacheRepository >> writeStreamWithReplacingForFileNamed: aString do: aBlock [
+
+	| file |
+	file := directory / aString.
+	file ensureDelete.
+	file binaryWriteStreamDo: aBlock
 ]

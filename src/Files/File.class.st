@@ -503,7 +503,7 @@ File class >> deleteFile: fullPathString [
 	utf8Path := fullPathString utf8Encoded.
 	self
 		retryWithGC: [ self primDeleteFile: utf8Path ]
-		until: [ :result | result notNil ]
+		until: [ :result | result isNotNil ]
 		forFileNamed: fullPathString.
 	(self primExists: utf8Path) ifTrue:
 		[ (CannotDeleteFileException new messageText: 'Could not delete file ' , name,
@@ -998,9 +998,11 @@ symbolic link information
 					self platformSupportsSymbolicLinksEgUnix]]]) ifTrue:
 						[DiskSymlinkDirectoryEntry fileSystem: DiskStore currentFileSystem path: aString asPath]"
 	error isPrimitiveError ifTrue: [
-		(attributeNumber = 16 and: [ error errorCode = self unsupportedOperation ]) ifTrue:
-			"If symlinks aren't supported, answer false"
-			[ ^false ]].
+		"If symlinks aren't supported or the supplied path doesn't exist, answer false"
+		(attributeNumber = 16 and: 
+			[ error errorCode = self unsupportedOperation or:
+			[ error errorCode = self cantStatPath ] ]) ifTrue:
+				[ ^false ] ].
 	^self signalError: error for: aByteArray
 ]
 
@@ -1398,7 +1400,7 @@ File >> basicOpenForWrite: writeMode [
 
 	^ self class
 		retryWithGC: [ self class open: name utf8Encoded writable: writeMode ]
-		until:[ :id | id notNil ]
+		until:[ :id | id isNotNil ]
 		forFileNamed: name
 ]
 

@@ -26,7 +26,7 @@ Class {
 
 { #category : 'instance creation' }
 RBDeprecateClassRefactoring class >> deprecate: aDeprecatedClass in: aNewName [
-	^ self new className: aDeprecatedClass name newName: aNewName
+	^ self new className: aDeprecatedClass newName: aNewName
 ]
 
 { #category : 'instance creation' }
@@ -45,6 +45,24 @@ RBDeprecateClassRefactoring >> addMethod: source to: aClass in: aProtocol [
 			sourceCode: source
 			in: aClass
 			withProtocol: aProtocol)
+]
+
+{ #category : 'preconditions' }
+RBDeprecateClassRefactoring >> applicabilityPreconditions [
+
+	| class |
+	class := self model classNamed: className.
+	^ {
+		  (ReClassesExistCondition new classes: { class }).
+		  (ReClassesAreNotMetaClassCondition new classes: { class }).
+		  (ReNameIsGlobalCondition new model: self model className: newName).
+		  (ReValidClassNameCondition new className: newName) }
+]
+
+{ #category : 'scripting api - conditions' }
+RBDeprecateClassRefactoring >> checkPreconditions [ 
+
+	self checkApplicabilityPreconditions 
 ]
 
 { #category : 'initialization' }
@@ -69,10 +87,10 @@ RBDeprecateClassRefactoring >> convertDeprecatedToSubclass [
 	self model reparentClasses: {deprecatedClass} to: replacement.
 	deprecatedClass selectors do: [ :symbol |
 		(deprecatedClass realClass instanceSide compiledMethodAt: symbol) isExtension
-			ifFalse: [ deprecatedClass removeMethod: symbol ] ].
+			ifFalse: [ self removeMethod: symbol from: deprecatedClass ] ].
 	deprecatedClass classSide selectors do: [ :symbol |
 		(deprecatedClass realClass classSide compiledMethodAt: symbol) isExtension
-			ifFalse: [ deprecatedClass classSide removeMethod: symbol ] ].
+			ifFalse: [ self removeMethod: symbol from: deprecatedClass classSide ] ].
 	self addMethod: 'isDeprecated
 		" Uses ', newName, ' instead of ', className,'"
 		^ true'
@@ -124,14 +142,6 @@ RBDeprecateClassRefactoring >> newClass [
 	^ self model classNamed: newName
 ]
 
-{ #category : 'preconditions' }
-RBDeprecateClassRefactoring >> preconditions [
-	^((RBCondition withBlock: [deprecatedClass notNil and: [deprecatedClass isMeta not]])
-			& (RBCondition isValidClassName: newName)
-			& (RBCondition isGlobal: newName in: self model)) |
-			(RBCondition withBlock: [ self refactoringError: newName , ' is not a valid class name'])
-]
-
 { #category : 'transforming' }
 RBDeprecateClassRefactoring >> privateTransform [
 
@@ -152,10 +162,19 @@ RBDeprecateClassRefactoring >> privateTransform [
 RBDeprecateClassRefactoring >> removeExtensionMethods [
 
 	(self instanceSideExtensionMethodsOf: deprecatedClass)
-		do: [ :each | deprecatedClass instanceSide removeMethod: each selector ].
+		do: [ :each | self removeMethod: each selector from: deprecatedClass instanceSide ].
 
 	(self classSideExtensionMethodsOf: deprecatedClass)
-		do: [ :each | deprecatedClass classSide removeMethod: each selector ]
+		do: [ :each | self removeMethod: each selector from: deprecatedClass classSide ]
+]
+
+{ #category : 'removing' }
+RBDeprecateClassRefactoring >> removeMethod: selector from: aRBClass [
+
+	self generateChangesFor:
+		(RBRemoveMethodTransformation
+			selector: selector
+			from: aRBClass)
 ]
 
 { #category : 'transforming' }
@@ -215,7 +234,7 @@ RBDeprecateClassRefactoring >> shouldRemoveExtensions: anObject [
 	shouldRemoveExtensions := anObject
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBDeprecateClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

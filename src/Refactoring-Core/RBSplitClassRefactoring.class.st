@@ -87,7 +87,7 @@ RBSplitClassRefactoring >> abstractReferenceTo: each [
 		aClass whichSelectorsReferToInstanceVariable: each ]
 		using: replacer.
 	self generateChangesFor:
-		(RBRemoveInstanceVariableRefactoring remove: each from: class)
+		(ReRemoveInstanceVariableRefactoring remove: each from: class)
 ]
 
 { #category : 'transforming' }
@@ -97,12 +97,12 @@ RBSplitClassRefactoring >> abstractVariableReferences [
 
 { #category : 'private - transforming' }
 RBSplitClassRefactoring >> addClass [
-	self generateChangesFor: (RBInsertNewClassRefactoring
-				model: self model
-				addClass: newClassName
-				superclass: Object
-				subclasses: #()
-				category: class category).
+
+	self generateChangesFor: ((RBInsertNewClassRefactoring model: self model className: newClassName)
+			 superclass: Object;
+			 packageName: class packageName;
+			 tagName: class tagName;
+			 yourself).
 	newClass := self model classNamed: newClassName
 ]
 
@@ -114,6 +114,24 @@ RBSplitClassRefactoring >> addInstanceVariables [
 						model: self model
 						variable: each
 						class: newClass)]
+]
+
+{ #category : 'preconditions' }
+RBSplitClassRefactoring >> applicabilityPreconditions [
+
+	^ {
+		  (RBCondition isValidClassName: newClassName).
+		  (RBCondition isGlobal: newClassName in: self model) not.
+		  (RBCondition
+			   isValidInstanceVariableName: referenceVariableName
+			   for: class).
+		  (RBCondition
+			   hierarchyOf: class
+			   definesVariable: referenceVariableName) not.
+		  (RBCondition isGlobal: referenceVariableName in: self model) not.
+		  (RBCondition
+			   definesTemporaryVariable: referenceVariableName
+			   in: class) not }
 ]
 
 { #category : 'initialization' }
@@ -138,18 +156,6 @@ RBSplitClassRefactoring >> createReference [
 				class: class)
 ]
 
-{ #category : 'preconditions' }
-RBSplitClassRefactoring >> preconditions [
-	^(RBCondition isValidClassName: newClassName)
-		& (RBCondition isGlobal: newClassName in: self model) not
-			& (RBCondition isValidInstanceVariableName: referenceVariableName for: class)
-			& (RBCondition hierarchyOf: class definesVariable: referenceVariableName)
-					not
-			& (RBCondition isGlobal: referenceVariableName in: self model) not
-			& (RBCondition definesTemporaryVariable: referenceVariableName in: class)
-					not
-]
-
 { #category : 'transforming' }
 RBSplitClassRefactoring >> privateTransform [
 	self
@@ -158,7 +164,7 @@ RBSplitClassRefactoring >> privateTransform [
 		abstractVariableReferences
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBSplitClassRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

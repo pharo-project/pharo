@@ -22,7 +22,5 @@ DocCommentsReleaseTest class >> buildSuite [
 	methods do: [ :method |
 		method pharoDocCommentNodes do: [ :docComment |
 			suite addTest: (CommentTestCase for: docComment) ] ].
-	"make sure to clean up the AST Cache to allow the GC to clean up"
-	ASTCache reset.
 	^ suite
 ]

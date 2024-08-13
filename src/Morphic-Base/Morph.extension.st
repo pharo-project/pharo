@@ -186,7 +186,7 @@ Morph >> changeMinCellSize: evt [
 { #category : '*Morphic-Base' }
 Morph >> changeProportionalLayout [
 	| layout |
-	((layout := self layoutPolicy) notNil and:[layout isProportionalLayout])
+	((layout := self layoutPolicy) isNotNil and:[layout isProportionalLayout])
 		ifTrue:[^self]. "already proportional layout"
 	self layoutPolicy: ProportionalLayout new.
 	self layoutChanged
@@ -195,7 +195,7 @@ Morph >> changeProportionalLayout [
 { #category : '*Morphic-Base' }
 Morph >> changeTableLayout [
 	| layout |
-	((layout := self layoutPolicy) notNil and:[layout isTableLayout])
+	((layout := self layoutPolicy) isNotNil and:[layout isTableLayout])
 		ifTrue:[^self]. "already table layout"
 	self layoutPolicy: TableLayout new.
 	self layoutChanged
@@ -203,9 +203,8 @@ Morph >> changeTableLayout [
 
 { #category : '*Morphic-Base' }
 Morph >> defaultBalloonColor [
-	^ Display depth <= 2
-		ifTrue: [Color white]
-		ifFalse: [BalloonMorph balloonColor]
+
+	^ BalloonMorph balloonColor
 ]
 
 { #category : '*Morphic-Base' }
@@ -251,7 +250,7 @@ Morph >> dispatchKeystrokeForEvent: evt [
 Morph >> exportAs: anExtension using: aWriter [
 
 	| reference |
-	reference := UIManager default
+	reference := self morphicUIManager
 		chooseForSaveFileReference: 'Save Morph as ', anExtension asUppercase
 		extensions: { anExtension }
 		path: (self externalName, '.' , anExtension).
@@ -274,7 +273,7 @@ Morph >> exportAsGIF [
 Morph >> exportAsJPEG [
 	"Export the receiver's image as a JPEG"
 
-	self exportAs: 'jpeg' using: PluginBasedJPEGReadWriter
+	self exportAs: 'jpeg' using: JPEGReadWriter
 ]
 
 { #category : '*Morphic-Base' }
@@ -338,7 +337,7 @@ Morph >> justDroppedInto: aMorph event: anEvent [
 	"This message is sent to a dropped morph after it has been dropped on -- and been accepted by -- a drop-sensitive morph"
 
 	| aWindow |
-	(self formerOwner notNil and: [self formerOwner ~~ aMorph])
+	(self formerOwner isNotNil and: [self formerOwner ~~ aMorph])
 		ifTrue: [self removeHalo].
 	self formerOwner: nil.
 	self formerPosition: nil.
@@ -430,19 +429,6 @@ Morph >> rowMorphForNode: aNode inColumn: aColumn [
 		].
 
 	^ rm
-]
-
-{ #category : '*Morphic-Base' }
-Morph >> setArrowheads [
-	"Let the user edit the size of arrowheads for this object"
-
-	| aParameter result  |
-	aParameter := self renderedMorph valueOfProperty:  #arrowSpec ifAbsent: [PolygonMorph defaultArrowSpec].
-	result := Morph obtainArrowheadFor: 'Head size for arrowheads: ' translated defaultValue: aParameter asString.
-	result ifNotNil:
-			[self renderedMorph  setProperty: #arrowSpec toValue: result]
-		ifNil:
-			[ self inform: 'Invalid input']
 ]
 
 { #category : '*Morphic-Base' }

@@ -96,17 +96,20 @@ MetaLink >> allReifications [
 
 { #category : 'installing' }
 MetaLink >> announceChange [
-	self optionAnnounce ifTrue: [SystemAnnouncer announce: (MetalinkChanged new link: self)]
+
+	self optionAnnounce ifTrue: [ self codeSupportAnnouncer announce: (MetalinkChanged new link: self) ]
 ]
 
 { #category : 'installing' }
 MetaLink >> announceInstall: node [
-	self optionAnnounce ifTrue: [SystemAnnouncer announce: (MetalinkChanged linkAdded: self toNode: node)]
+
+	self optionAnnounce ifTrue: [ self codeSupportAnnouncer announce: (MetalinkChanged linkAdded: self toNode: node) ]
 ]
 
 { #category : 'installing' }
 MetaLink >> announceRemove: node [
-	self optionAnnounce ifTrue: [SystemAnnouncer announce: (MetalinkChanged linkRemoved: self fromNode: node)]
+
+	self optionAnnounce ifTrue: [ self codeSupportAnnouncer announce: (MetalinkChanged linkRemoved: self fromNode: node) ]
 ]
 
 { #category : 'accessing' }
@@ -118,7 +121,7 @@ MetaLink >> arguments [
 MetaLink >> arguments: anArray [
 	"anArray - elements can be either:
 		- aSymbol, which will be converted into an instance of RFReification. For a list of reifications available to the node to which you wish to link, do: `aNode availableReifications`. If you don't have the particular node handy, since the reifications depend only on the node's class, you can also do e.g. `RBMethodNode new availableReifications`
-		- anRBNode"
+		- anASTNode"
 
 	arguments := anArray.
 	self invalidate
@@ -134,6 +137,12 @@ MetaLink >> checkForCompatibilityWith: aNode [
 		supported add: plugin key]].
 	self allReifications do: [ :each | (supported includes: each) ifFalse: [^false  ]  ].
 	^true
+]
+
+{ #category : 'accessing' }
+MetaLink >> codeSupportAnnouncer [
+
+	^ self class codeSupportAnnouncer
 ]
 
 { #category : 'accessing' }
@@ -225,12 +234,14 @@ MetaLink >> enable [
 
 { #category : 'testing' }
 MetaLink >> hasCondition [
-	^condition notNil
+
+	^ condition isNotNil
 ]
 
 { #category : 'testing' }
 MetaLink >> hasMetaLevel [
-	^level notNil
+
+	^ level isNotNil
 ]
 
 { #category : 'testing' }
@@ -337,7 +348,7 @@ MetaLink >> metaObject: anObject [
 { #category : 'accessing' }
 MetaLink >> methods [
 	^nodes flatCollect: [ :entity |
-		(entity isKindOf: RBProgramNode)
+		(entity isKindOf: ASTProgramNode)
 			ifTrue: [ {entity methodNode compiledMethod}  ]
 			ifFalse: [ entity usingMethods ] ]
 ]

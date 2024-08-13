@@ -5,20 +5,20 @@ I create new class using supeclass of my target class. And I replace superclass 
 Class {
 	#name : 'SycCmInsertSuperclassCommand',
 	#superclass : 'SycCmNewClassCreationCommand',
-	#category : 'SystemCommands-ClassCommands',
-	#package : 'SystemCommands-ClassCommands'
+	#category : 'SystemCommands-ClassCommands-Creation',
+	#package : 'SystemCommands-ClassCommands',
+	#tag : 'Creation'
 }
 
 { #category : 'executing' }
 SycCmInsertSuperclassCommand >> executeRefactoring [
 
-	| refactoring |
-	refactoring := RBInsertNewClassRefactoring
-		addClass: newClassName
-		superclass: targetClass superclass asString
-		subclasses: {targetClass}
-		category: targetClass category.
-	refactoring execute
+	(RBInsertNewClassRefactoring className: newClassName)
+		superclass: targetClass superclass asString;
+		subclasses: { targetClass };
+		packageName: targetClass package name;
+		tagName: targetClass packageTag name;
+		execute
 ]
 
 { #category : 'accessing' }
@@ -29,7 +29,7 @@ SycCmInsertSuperclassCommand >> icon [
 { #category : 'testing' }
 SycCmInsertSuperclassCommand >> isApplicable [
 
-	^ true
+	^ context lastSelectedClass isTrait not
 ]
 
 { #category : 'accessing' }

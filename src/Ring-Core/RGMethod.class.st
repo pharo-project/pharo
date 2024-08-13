@@ -228,6 +228,12 @@ RGMethod >> initializeUnresolved [
 	time := self unresolvedValue: self defaultTime
 ]
 
+{ #category : 'testing' }
+RGMethod >> isClassified [
+
+	^ self protocol ~= Protocol unclassified
+]
+
 { #category : 'accessing' }
 RGMethod >> isExtension [
 	"The receiver is an extension when is defined in a different package to the one of its parent"
@@ -254,7 +260,9 @@ RGMethod >> isMeta [
 
 { #category : 'testing' }
 RGMethod >> isMetaSide [
-
+	self
+		deprecated: 'Use isMeta instead'
+		transformWith: '`@receiver isMetaSide' -> '`@receiver isMeta'.
 	^ self isMeta
 ]
 
@@ -343,6 +351,12 @@ RGMethod >> protocol: aSymbol [
 
 	self cleanTagsWithoutAnnouncemnt.
 	self tagWith: aSymbol
+]
+
+{ #category : 'accessing - backend' }
+RGMethod >> protocolName [
+
+	^ self protocol
 ]
 
 { #category : 'private - backend interface' }

@@ -27,16 +27,6 @@ ExecutionCounter class >> allCounters [
 	^ Counters ifNil: [ Counters := WeakKeyDictionary new ]
 ]
 
-{ #category : 'all' }
-ExecutionCounter class >> debugWorldMenuOn: aBuilder [
-	<worldMenu>
-	(aBuilder item: #'Reset Counters')
-		order: 1;
-		parent: #Counters;
-		help: 'Reset the counters on the executions counters.';
-		action: [ ExecutionCounter resetAll ]
-]
-
 { #category : 'system annoucements' }
 ExecutionCounter class >> handleClassRemoved: anAnnouncement [
 	self allCounters copy do: [ :breakpoint |
@@ -61,20 +51,21 @@ ExecutionCounter class >> initialize [
 ]
 
 { #category : 'instance creation' }
-ExecutionCounter class >> installOn: aRBProgramNode [
+ExecutionCounter class >> installOn: aProgramNode [
 	^self new
-		node: aRBProgramNode;
+		node: aProgramNode;
 		install
 ]
 
 { #category : 'class initialization' }
 ExecutionCounter class >> registerInterestToSystemAnnouncement [
-	<systemEventRegistration>
 
-	SystemAnnouncer uniqueInstance unsubscribe: self.
-	SystemAnnouncer uniqueInstance weak when: MethodRemoved send: #handleMethodRemoved: to: self.
-	SystemAnnouncer uniqueInstance weak when: MethodModified send: #handleMethodModified: to: self.
-	SystemAnnouncer uniqueInstance weak when: ClassRemoved send: #handleClassRemoved: to: self
+	<systemEventRegistration>
+	self codeChangeAnnouncer unsubscribe: self.
+	self codeChangeAnnouncer weak
+		when: MethodRemoved send: #handleMethodRemoved: to: self;
+		when: MethodModified send: #handleMethodModified: to: self;
+		when: ClassRemoved send: #handleClassRemoved: to: self
 ]
 
 { #category : 'cleanup' }

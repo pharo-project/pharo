@@ -99,7 +99,7 @@ RubExtraSelectionDecorator >> drawAllSelectionShapesOnAthensCanvas: anAthensCanv
 { #category : 'drawing' }
 RubExtraSelectionDecorator >> drawOn: aCanvas [
 
-	(Display depth < 3 or: [ aCanvas isShadowDrawing ]) ifTrue: [ ^ self ].
+	aCanvas isShadowDrawing ifTrue: [ ^ self ].
 
 	self computeSelectionShapesFor: aCanvas clipRect.
 	self cleanUpText.
@@ -172,8 +172,8 @@ RubExtraSelectionDecorator >> hasValidSelection [
 
 	paragraph := self paragraph ifNil: [ ^false ].
 
-	^paragraph selectionStart notNil and: [
-		paragraph selectionStop notNil and: [
+	^paragraph selectionStart isNotNil and: [
+		paragraph selectionStop isNotNil and: [
 			paragraph selectionStart ~= paragraph selectionStop
 		]
 	]

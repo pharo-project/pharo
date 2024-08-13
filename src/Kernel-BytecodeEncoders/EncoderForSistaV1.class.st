@@ -365,6 +365,23 @@ EncoderForSistaV1 class >> extensionsAt: bcpc in: method into: aTrinaryBlock [
 	   Time millisecondsToRun: [1 to: n do: [:i| (byte bitAnd: 16rFE) = 16rE0 ifTrue: []]] }] #(#(297 599) #(702 671))"
 ]
 
+{ #category : 'instruction stream support' }
+EncoderForSistaV1 class >> extensionsFor: pc in: aCompiledMethod into: trinaryBlock [
+	"If the bytecode at pc is an extension, or if the bytecode at pc is preceeded by extensions,
+	 then evaluate aTrinaryBlock with the values of extA and extB and number of extension *bytes*.
+	 If the bytecode at pc is neither an extension or extended then evaluate with 0, 0, 0."
+
+	| prevPC |
+	"If there is what appears to be an extension bytecode before this bytecode
+	 then scan for the previous pc to confirm."
+	(pc - 2 >= aCompiledMethod initialPC
+	 and: [self isExtension: (aCompiledMethod at: pc - 2)]) ifTrue:
+		[prevPC := aCompiledMethod pcPreviousTo: pc.
+		 (self nonExtensionPcAt: prevPC in: aCompiledMethod) = pc ifTrue:
+			[^self extensionsAt: prevPC in: aCompiledMethod into: trinaryBlock]].
+	^self extensionsAt: pc in: aCompiledMethod into: trinaryBlock
+]
+
 { #category : 'compiled method support' }
 EncoderForSistaV1 class >> firstSpecialSelectorByte [
 	^ 16r5F
@@ -469,7 +486,9 @@ EncoderForSistaV1 class >> isCreateBlockAt: pc in: method [
 
 	| byte |
 	byte := self nonExtensionBytecodeAt: pc in: method.
-	^ byte = 250
+	^ byte = 250 or: [
+		  (method sourceNodeForPC: pc) in: [ :node | "Clean blocks are created as PushConstant"
+			  node isBlock and: [ node isClean ] ] ]
 ]
 
 { #category : 'block closure support' }
@@ -701,60 +720,46 @@ EncoderForSistaV1 class >> method: method refersInBytecodeToLiteral: aLiteral sp
 	*	232		11101000	iiiiiiii		Push Integer #iiiiiiii (+ Extend B * 256, where bbbbbbbb = sddddddd, e.g. -32768 = i=0, a=0, s=1)
 	*	233		11101001	iiiiiiii		Push Character #iiiiiiii (+ Extend B * 256)
 		249		11111001 	xxxxxxxx	syyyyyyy	Reserved for Push Float"
-	| byte extended scanner |
-	specialOrNil ifNotNil:
-		[byte := specialOrNil + 95.
-		^(InstructionStream on: method) scanFor: [:b| b = byte]].
-	extended := false.
-	aLiteral isInteger ifTrue:
-		[(aLiteral >= -32768 and: [aLiteral <= 32767]) ifFalse: [^false].
-		 scanner := InstructionStream on: method.
-		 (aLiteral >= 0 and: [aLiteral <= 255]) ifTrue:
-			[aLiteral <= 1 ifTrue:
-				[byte := aLiteral + 80.
-				 ^scanner scanFor: [:b| b = byte]].
-			 ^scanner scanFor:
-				[:b|
-				(b = 232
-				 and: [extended not
-				 and: [scanner secondByte = aLiteral]])
-				or: [extended := b = 225.
-					false]]].
-		 byte := (aLiteral bitShift: -8) bitAnd: 255.
-		^scanner scanFor:
-			[:b|
-			(b = 232
-			 and: [extended
-			 and: [scanner secondByte = (aLiteral bitAnd: 255)]])
-			or: [extended := b = 225 and: [scanner secondByte = byte].
-				false]]].
-	aLiteral isCharacter ifTrue:
-		[aLiteral asciiValue <= 65535 ifFalse: [^false].
-		 scanner := InstructionStream on: method.
-		 aLiteral asciiValue <= 255 ifTrue:
-			[^scanner scanFor:
-				[:b|
-				(b = 233
-				 and: [extended not
-				 and: [scanner secondByte = aLiteral]])
-				or: [extended := b = 225.
-					false]]].
-		 byte := (aLiteral bitShift: -8) bitAnd: 255.
-		^scanner scanFor:
-			[:b|
-			(b = 233
-			 and: [extended
-			 and: [scanner secondByte = (aLiteral bitAnd: 255)]])
-			or: [extended := b = 225 and: [scanner secondByte = byte].
-				false]]].
-	aLiteral == nil ifTrue:
-		[^(InstructionStream on: method) scanFor: [:b| b = 79 or: [b = 91 or: b = 93]]].
-	aLiteral == true ifTrue:
-		[^(InstructionStream on: method) scanFor: [:b| b = 77 or: [b = 89]]].
-	aLiteral == false ifTrue:
-		[^(InstructionStream on: method) scanFor: [:b| b = 78 or: [b = 90]]].
 
-	^false
+	| byte extended scanner |
+	specialOrNil ifNotNil: [
+		byte := specialOrNil + 95.
+		^ (InstructionStream on: method) scanFor: [ :b | b = byte ] ].
+	extended := false.
+	aLiteral isInteger ifTrue: [
+		(aLiteral >= -32768 and: [ aLiteral <= 32767 ]) ifFalse: [ ^ false ].
+		scanner := InstructionStream on: method.
+		(aLiteral >= 0 and: [ aLiteral <= 255 ]) ifTrue: [
+			aLiteral <= 1 ifTrue: [
+				byte := aLiteral + 80.
+				^ scanner scanFor: [ :b | b = byte ] ].
+			^ scanner scanFor: [ :b |
+				  (b = 232 and: [ extended not and: [ scanner secondByte = aLiteral ] ]) or: [
+					  extended := b = 225.
+					  false ] ] ].
+		byte := (aLiteral bitShift: -8) bitAnd: 255.
+		^ scanner scanFor: [ :b |
+			  (b = 232 and: [ extended and: [ scanner secondByte = (aLiteral bitAnd: 255) ] ]) or: [
+				  extended := b = 225 and: [ scanner secondByte = byte ].
+				  false ] ] ].
+	aLiteral isCharacter ifTrue: [
+		aLiteral asciiValue <= 65535 ifFalse: [ ^ false ].
+		scanner := InstructionStream on: method.
+		aLiteral asciiValue <= 255 ifTrue: [
+			^ scanner scanFor: [ :b |
+				  (b = 233 and: [ extended not and: [ scanner secondByte = aLiteral ] ]) or: [
+					  extended := b = 225.
+					  false ] ] ].
+		byte := (aLiteral bitShift: -8) bitAnd: 255.
+		^ scanner scanFor: [ :b |
+			  (b = 233 and: [ extended and: [ scanner secondByte = (aLiteral bitAnd: 255) ] ]) or: [
+				  extended := b = 225 and: [ scanner secondByte = byte ].
+				  false ] ] ].
+	aLiteral ifNil: [ ^ (InstructionStream on: method) scanFor: [ :b | b = 79 or: [ b = 91 or: b = 93 ] ] ].
+	aLiteral == true ifTrue: [ ^ (InstructionStream on: method) scanFor: [ :b | b = 77 or: [ b = 89 ] ] ].
+	aLiteral == false ifTrue: [ ^ (InstructionStream on: method) scanFor: [ :b | b = 78 or: [ b = 90 ] ] ].
+
+	^ false
 ]
 
 { #category : 'block closure support' }
@@ -770,14 +775,6 @@ EncoderForSistaV1 class >> nonExtensionBytecodeAt: pc in: method [
 	[ byte := method at: scanpc.
 	 byte >= 224 and: [byte <= 225]] whileTrue: [ scanpc := scanpc + 2 ].
 	^ byte
-]
-
-{ #category : 'block closure support' }
-EncoderForSistaV1 class >> numLocalTempsForBlockAt: startpc in: method [
-	"**	250		11111010 	eeiiikkk		jjjjjjjj		Push Closure Num Copied iii (+ExtA//16*8) Num Args kkk (+ ExtA\\16*8) BlockSize jjjjjjjj (+ExtB*256). ee = num extensions"
-	^ BlockLocalTempCounter
-		tempCountForBlockAt: startpc - 3 - (((method at: startpc - 2) >> 6) * 2)
-		in: method
 ]
 
 { #category : 'compiled method support' }

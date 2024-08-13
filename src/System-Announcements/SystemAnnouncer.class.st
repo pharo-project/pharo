@@ -6,11 +6,6 @@ BEWARE: You should not need to subclass me. Think about just using me to send yo
 Class {
 	#name : 'SystemAnnouncer',
 	#superclass : 'Announcer',
-	#instVars : [
-		'suspended',
-		'private',
-		'storedAnnouncements'
-	],
 	#classInstVars : [
 		'announcer'
 	],
@@ -57,33 +52,11 @@ SystemAnnouncer class >> unload [
 	self uniqueInstance unsubscribe: self
 ]
 
-{ #category : 'announce' }
-SystemAnnouncer >> announce: anAnnouncement [
-	self isSuspended
-		ifFalse: [
-			self private announce: anAnnouncement.
-			super announce: anAnnouncement ]
-		ifTrue:[
-			storedAnnouncements ifNotNil:[ storedAnnouncements add: anAnnouncement ]
-		]
-]
-
 { #category : 'triggering' }
 SystemAnnouncer >> class: aClass oldComment: oldComment newComment: newComment oldStamp: oldStamp newStamp: newStamp [
 	"A class was commented in the system."
 
 	self announce: (ClassCommented class: aClass oldComment: oldComment newComment: newComment oldStamp: oldStamp newStamp: newStamp)
-]
-
-{ #category : 'triggering' }
-SystemAnnouncer >> class: aClass recategorizedFrom: oldPackageName to: newPackageName [
-
-	self announce: (ClassRecategorized class: aClass recategorizedFrom: oldPackageName to: newPackageName)
-]
-
-{ #category : 'triggering' }
-SystemAnnouncer >> classAdded: aClass inCategory: aCategoryName [
-	self announce: (ClassAdded class: aClass category: aCategoryName)
 ]
 
 { #category : 'triggering' }
@@ -115,14 +88,6 @@ SystemAnnouncer >> classRenamed: aClass from: oldClassName to: newClassName [
 ]
 
 { #category : 'triggering' }
-SystemAnnouncer >> classRepackaged: aClass from: aPackage to: anotherPackage [
-	self announce: (ClassRepackaged
-						classRepackaged: aClass
-						oldPackage: aPackage
-						newPackage: anotherPackage)
-]
-
-{ #category : 'triggering' }
 SystemAnnouncer >> evaluated: textOrStream [
 	^ self evaluated: textOrStream context: nil
 ]
@@ -134,45 +99,11 @@ SystemAnnouncer >> evaluated: expression context: aContext [
 				context: aContext)
 ]
 
-{ #category : 'testing' }
-SystemAnnouncer >> isSuspended [
-	^suspended ifNil: [ suspended := false ]
-]
-
 { #category : 'triggering' }
-SystemAnnouncer >> methodAdded: aMethod [
-	"A method with the given selector was added to aClass, but not put in a protocol."
-
-	^ self methodAdded: aMethod configuredWith: [ :method | ]
-]
-
-{ #category : 'triggering' }
-SystemAnnouncer >> methodAdded: aMethod configuredWith: aBlock [
-	"A method with the given selector was added to aClass, but not put in a protocol."
-
-	| event |
-	event := MethodAdded method: aMethod.
-	aBlock value: event.
-	self announce: event
-]
-
-{ #category : 'triggering' }
-SystemAnnouncer >> methodChangedFrom: oldMethod to: newMethod oldProtocol: oldProtocol [
-
-	self announce: (MethodModified methodChangedFrom: oldMethod to: newMethod oldProtocol: oldProtocol)
-]
-
-{ #category : 'triggering' }
-SystemAnnouncer >> methodRecategorized: method oldProtocol: oldProtocol [
-
-	self announce: (MethodRecategorized method: method oldProtocol: oldProtocol)
-]
-
-{ #category : 'triggering' }
-SystemAnnouncer >> methodRemoved: aMethod protocol: protocol origin: aBehavior package: aPackage [
+SystemAnnouncer >> methodRemoved: aMethod origin: aBehavior [
 	"A method with the given selector was removed from the class."
 
-	self announce: (MethodRemoved methodRemoved: aMethod protocol: protocol origin: aBehavior package: aPackage)
+	self announce: (MethodRemoved methodRemoved: aMethod origin: aBehavior)
 ]
 
 { #category : 'triggering' }
@@ -181,55 +112,4 @@ SystemAnnouncer >> methodRepackaged: aMethod from: aPackage to: anotherPackage [
 						methodRepackaged: aMethod
 						oldPackage: aPackage
 						newPackage: anotherPackage)
-]
-
-{ #category : 'accessing' }
-SystemAnnouncer >> private [
-	^private ifNil: [ private := Announcer new ]
-]
-
-{ #category : 'triggering' }
-SystemAnnouncer >> snapshotDone: isNewImage [
-
-	self announce: (SnapshotDone isNewImage: isNewImage)
-]
-
-{ #category : 'announce' }
-SystemAnnouncer >> suspendAllWhile: aBlock [
-	| oldSuspended |
-	oldSuspended := self isSuspended.
-	suspended := true.
-	^aBlock ensure: [ suspended := oldSuspended ]
-]
-
-{ #category : 'announce' }
-SystemAnnouncer >> suspendAllWhileStoring: aBlock [
-	| reentring |
-	" Suspend all the announcements, storing them in an OrderedCollection, then returns this collection"
-
-	reentring := storedAnnouncements isNotNil.
-
-	reentring ifFalse:[
-		storedAnnouncements := OrderedCollection new.
-	].
-
-	[
-		self suspendAllWhile: aBlock.
-		^ storedAnnouncements.
-	] ensure:[
-		reentring ifFalse:[
-			storedAnnouncements := nil.
-		]
-	]
-]
-
-{ #category : 'triggering' }
-SystemAnnouncer >> traitDefinitionChangedFrom: oldTrait to: newTrait [
-	self announce: (ClassModifiedClassDefinition classDefinitionChangedFrom: oldTrait to: newTrait)
-]
-
-{ #category : 'subscription' }
-SystemAnnouncer >> unsubscribe: anObject [
-	self private unsubscribe: anObject.
-	super unsubscribe: anObject
 ]

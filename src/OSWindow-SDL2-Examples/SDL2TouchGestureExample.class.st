@@ -15,8 +15,8 @@ Class {
 
 { #category : 'examples' }
 SDL2TouchGestureExample class >> example [
-	<sampleInstance>
-	^ self new open
+	<script>
+	^ super example
 ]
 
 { #category : 'manage pinch' }

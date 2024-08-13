@@ -36,12 +36,6 @@ Class {
 	#tag : 'Borders'
 }
 
-{ #category : 'class initialization' }
-BottomBorderStyle class >> initialize [
-	"Deprecated in Pharo 11"
-	self deprecatedAliases: { #BottomBorder }
-]
-
 { #category : 'drawing' }
 BottomBorderStyle >> frameRectangle: aRectangle on: aCanvas [
 	self drawLineFrom: aRectangle bottomLeft + (self trimSize @ 0) to: aRectangle bottomRight - (self trimSize @ 0) on: aCanvas

@@ -107,7 +107,7 @@ FreeTypeFace >> filename: aString [
 
 { #category : 'testing' }
 FreeTypeFace >> hasFamilyName [
-	^super familyName notNil
+	^super familyName isNotNil
 ]
 
 { #category : 'testing' }
@@ -119,7 +119,7 @@ FreeTypeFace >> hasKerning [
 
 { #category : 'testing' }
 FreeTypeFace >> hasStyleName [
-	^super styleName notNil
+	^super styleName isNotNil
 ]
 
 { #category : 'accessing' }
@@ -158,7 +158,7 @@ FreeTypeFace >> validate [
 	receiver to obtain a handle and load the receiver's fields"
 
 	(self isValid
-		and: [ numCharmaps notNil ])
+		and: [ numCharmaps isNotNil ])
 		ifTrue: [ ^ self ].
 
 	self create

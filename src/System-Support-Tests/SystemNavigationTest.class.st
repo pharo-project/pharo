@@ -7,18 +7,12 @@ Class {
 	#name : 'SystemNavigationTest',
 	#superclass : 'TestCase',
 	#instVars : [
-		'classFactory',
-		'oldSystemAnnouncer'
+		'classFactory'
 	],
 	#category : 'System-Support-Tests-Image',
 	#package : 'System-Support-Tests',
 	#tag : 'Image'
 }
-
-{ #category : 'testing' }
-SystemNavigationTest class >> isUnitTest [
-	^false
-]
 
 { #category : 'accessing' }
 SystemNavigationTest >> classFactory [
@@ -32,12 +26,16 @@ SystemNavigationTest >> createClassFactory [
 	^ ClassFactoryForTestCase environment: self systemNavigationToTest environment
 ]
 
+{ #category : 'private' }
+SystemNavigationTest >> performTest [
+
+	self class codeChangeAnnouncer suspendAllWhile: [ ^ super performTest ]
+]
+
 { #category : 'running' }
 SystemNavigationTest >> setUp [
 
 	super setUp.
-	oldSystemAnnouncer := SystemAnnouncer uniqueInstance.
-	SystemAnnouncer announcer: nil.
 	classFactory := self createClassFactory
 ]
 
@@ -51,7 +49,6 @@ SystemNavigationTest >> systemNavigationToTest [
 SystemNavigationTest >> tearDown [
 
 	self classFactory cleanUp.
-	SystemAnnouncer announcer: oldSystemAnnouncer.
 	super tearDown
 ]
 
@@ -77,6 +74,23 @@ SystemNavigationTest >> testAllExistingProtocolsFor [
 	self assert: (classSideProtocols allSatisfy: #isSymbol).
 	self assert: (instSideProtocols includesAll: Object protocolNames).
 	self assert: (classSideProtocols includesAll: Object class protocolNames)
+]
+
+{ #category : 'tests' }
+SystemNavigationTest >> testAllGlobalNamesStartingWithDoCaseSensitive [
+
+	| result |
+	result := OrderedCollection new.
+	self systemNavigationToTest allGlobalNamesStartingWith: 'Sma' do: [ :name | result add: name ] caseSensitive: true.
+	self assert: (result includes: 'Smalltalk').
+
+	result := OrderedCollection new.
+	self systemNavigationToTest allGlobalNamesStartingWith: 'sma' do: [ :name | result add: name ] caseSensitive: true.
+	self deny: (result includes: 'Smalltalk').
+
+	result := OrderedCollection new.
+	self systemNavigationToTest allGlobalNamesStartingWith: 'sma' do: [ :name | result add: name ] caseSensitive: false.
+	self assert: (result includes: 'Smalltalk')
 ]
 
 { #category : 'tests' }
@@ -166,6 +180,20 @@ SystemNavigationTest >> testReferencesToAClassInBlock [
 	callers := referencingMethods collect: [ :methodRef | methodRef selector ].
 	self
 		assert: (callers includesAll: #(#anotherMethod))
+]
+
+{ #category : 'tests' }
+SystemNavigationTest >> testRemoveMethodInClass [
+
+	| methodToRemove selector class |
+
+	selector := #aMethod.
+	class := self classFactory silentlyNewClass.
+	class compileSilently: selector asString , ' ^ self'.
+
+	methodToRemove := class >> selector.
+	self assert: (self systemNavigationToTest removeMethod: methodToRemove inClass: class).
+	self should: [ class >> selector ] raise: NotFound
 ]
 
 { #category : 'tests' }

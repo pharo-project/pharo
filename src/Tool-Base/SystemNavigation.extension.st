@@ -186,13 +186,13 @@ SystemNavigation >> browseClassVarRefs: aClass [
 	index := (UIManager default chooseFrom: (labelStream contents substrings) lines: lines).
 	index = 0 ifTrue: [^ self].
 	^ self browseAllReferencesTo:
-		((owningClasses at: index) classPool associationAt: (allVars at: index))
+		((owningClasses at: index) classVariableNamed: (allVars at: index))
 ]
 
 { #category : '*Tool-Base' }
 SystemNavigation >> browseClassVariables: aClass [
 
-	^ aClass classPool inspectWithLabel: 'Class Variables in ' , aClass name
+	^ aClass classVariables inspectWithLabel: 'Class Variables in ' , aClass name
 ]
 
 { #category : '*Tool-Base' }
@@ -225,13 +225,6 @@ SystemNavigation >> browseHierarchy: aClass selector: aSelector [
 	^ self tools browser new
 		  spawnHierarchyForClass: aClass selector: aSelector;
 		  yourself
-]
-
-{ #category : '*Tool-Base' }
-SystemNavigation >> browseInstVarDefs: aClass [
-
-	^ self chooseInstVarFrom: aClass thenDo:
-		[:aVar | self browseAllStoresInto: aVar from: aClass]
 ]
 
 { #category : '*Tool-Base' }
@@ -340,8 +333,8 @@ SystemNavigation >> browseUndeclaredReferences [
 	SystemNavigation new browseUndeclaredReferences
 	"
 
-	Undeclared removeUnreferencedKeys.
-	Undeclared associations do: [:binding |
+	Smalltalk image cleanOutUndeclared.
+	self class undeclaredRegistry associations do: [:binding |
 		self
 			browseMessageList: (self allReferencesTo: binding )
 			name: 'References to Undeclared: ', binding key printString ]
@@ -447,40 +440,6 @@ SystemNavigation >> classFromPattern: pattern withCaption: aCaption [
 	self default classFromPattern: 'orph' withCaption: ''
 	self default classFromPattern: 'TCompil' withCaption: ''
 "
-]
-
-{ #category : '*Tool-Base' }
-SystemNavigation >> confirmRemovalOf: aSelector on: aClass [
-	"Determine if it is okay to remove the given selector. Answer 1 if it
-	should be removed, 2 if it should be removed followed by a senders
-	browse, and 3 if it should not be removed."
-
-	| count answer caption allCalls |
-	allCalls := self allCallsOn: aSelector.
-	(count := allCalls size) = 0
-		ifTrue: [^ 1].
-	"no senders -- let the removal happen without warning"
-	count = 1
-		ifTrue: [(allCalls first actualClass == aClass
-					and: [allCalls first selector == aSelector])
-				ifTrue: [^ 1]].
-	"only sender is itself"
-	caption := 'The message ', aSelector printString ,' has ' , count printString , ' sender' asPluralBasedOn: count.
-
-	answer := UIManager default
-		chooseFrom: #('Remove it'
-				'Remove, then browse senders'
-				'Don''t remove, but show me those senders'
-				'Forget it -- do nothing -- sorry I asked') title: caption.
-	answer = 3
-		ifTrue: [self
-				browseMessageList: allCalls
-				name: 'Senders of ' , aSelector
-				autoSelect: aSelector keywords first].
-	answer = 0
-		ifTrue: [answer := 3].
-	"If user didn't answer, treat it as cancel"
-	^ answer min: 3
 ]
 
 { #category : '*Tool-Base' }

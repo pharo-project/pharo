@@ -24,7 +24,7 @@ I provide following interface to query code editor state. It is polymorphic to s
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	selectedSourceNode:		<RBProgramNode>
+	selectedSourceNode:		<ASTProgramNode>
 "
 Class {
 	#name : 'ClySourceCodeContext',
@@ -45,16 +45,6 @@ ClySourceCodeContext class >> for: anEditorTool selectedNode: aProgramNode [
 ]
 
 { #category : 'user requests' }
-ClySourceCodeContext >> confirmUnusedClasses: variables [
-	^self browser confirmUnusedClasses: variables
-]
-
-{ #category : 'user requests' }
-ClySourceCodeContext >> confirmUnusedVariables: variables [
-	^self browser confirmUnusedVariables: variables
-]
-
-{ #category : 'user requests' }
 ClySourceCodeContext >> confirmUnusedVariablesInDefiningClass: variables [
 	^self browser confirmUnusedVariablesInDefiningClass: variables
 ]
@@ -69,6 +59,11 @@ ClySourceCodeContext >> executeCommand: aCommand by: aCommandActivator [
 ]
 
 { #category : 'testing' }
+ClySourceCodeContext >> hasUnacceptedEdits [
+	^ self tool hasUnacceptedEdits 
+]
+
+{ #category : 'testing' }
 ClySourceCodeContext >> isArgOrTempVariableSelected [
 
 	| sourceNode |
@@ -80,7 +75,7 @@ ClySourceCodeContext >> isArgOrTempVariableSelected [
 ClySourceCodeContext >> isAssignmentSelected [
 	| node |
 	node := self selectedSourceNode.
-	[node notNil] whileTrue: [
+	[node isNotNil] whileTrue: [
 		node isAssignment ifTrue: [ ^true ].
 		node := node parent].
 	^false

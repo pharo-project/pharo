@@ -66,7 +66,6 @@ ProcessorScheduler class >> idleTimeSettingOn: aBuilder [
 
 { #category : 'class initialization' }
 ProcessorScheduler class >> initialize [
-	"ProcessorScheduler initialize."
 
 	SystemRockBottomPriority := 10.
 	SystemBackgroundPriority := 20.
@@ -76,11 +75,7 @@ ProcessorScheduler class >> initialize [
 	LowIOPriority := 60.
 	HighIOPriority := 70.
 	TimingPriority := 80.
-	IdleTime := 50000.
-
-	SessionManager default
-		registerSystemClassNamed: self name
-		atPriority: 30
+	IdleTime := 50000
 ]
 
 { #category : 'instance creation' }
@@ -126,7 +121,8 @@ ProcessorScheduler >> activeProcess [
 	It can be just pretending to be the active process
 	(like during the code simulation in the debugger)"
 
-	^activeProcess effectiveProcess
+	<noInstrumentation>
+	^ activeProcess effectiveProcess
 ]
 
 { #category : 'private' }
@@ -180,19 +176,27 @@ ProcessorScheduler >> highestPriority: newHighestPriority [
 
 { #category : 'private' }
 ProcessorScheduler >> interpriorityYield: modifiedProcess [
-
 	"The original yield only works within processes of the same priority.
 	The primitive does not try to resume a process in a higher priority.
-	By forcing the creation of a new process and suspending this one,
-	we force the rescheduling of processes.
+	By suspending and resuming the modified process, we force it to be rescheduled.
+	When modifying the active process, we must handle the resume from a forked process.
+	We must also be careful not to resume a process that was suspended to begin with.
+	(In particular, processes all receive #priority: as part of their creation, before
+	it is safe to resume them.)
 
 	This message should not be used directly.
 	The only application so far is when changing the priority of a process.
 	"
 
-	modifiedProcess isActiveProcess ifFalse: [ ^ self ].
-	[ modifiedProcess resume ] fork.
-	modifiedProcess suspend
+	modifiedProcess isActive
+		ifTrue: [
+			[ modifiedProcess resume ] fork.
+			modifiedProcess suspend ]
+		ifFalse: [
+			modifiedProcess isReady ifTrue: [
+				modifiedProcess
+					suspend;
+					resume ] ]
 ]
 
 { #category : 'self evaluating' }

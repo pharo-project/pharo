@@ -59,10 +59,8 @@ SycRefactoringPreviewPresenter class >> title [
 SycRefactoringPreviewPresenter >> accept [
 	self okToChange ifFalse: [ ^ self ].
 	
-	[ self pickedChanges do: [ :change |
-		RBRefactoryChangeManager instance
-			performChange: change;
-			addUndoPointer: (RBRefactoryChangeManager nextCounter) ] ] asJob
+	[ RBRefactoryChangeManager instance
+			performChanges: self pickedChanges ] asJob
 		title: 'Refactoring';
 		run
 ]
@@ -170,17 +168,17 @@ SycRefactoringPreviewPresenter >> generateChanges [
 
 { #category : 'initialization' }
 SycRefactoringPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter [
+
 	aDialogWindowPresenter
 		title: self title;
 		initialExtent: 500 @ 500;
-		addButton: 'Apply'
-			do: [ :presenter |
+		addButton: 'Cancel' do: [ :presenter | presenter close ];
+		addDefaultButton: 'Apply' do: [ :presenter |
 			self accept.
-			presenter close ];
-		addButton: 'Cancel' do: [ :presenter | presenter close ]
+			presenter close ]
 ]
 
-{ #category : 'initialization' }
+{ #category : 'initialization - deprecated' }
 SycRefactoringPreviewPresenter >> initializePresenter [
 	super initializePresenter.
 	table
@@ -191,7 +189,7 @@ SycRefactoringPreviewPresenter >> initializePresenter [
 	table
 		whenActivatedDo: [ :selectedElement |
 			self toggleSelectionOf: selectedElement widget selection selectedItem ].
-
+	
 	scopeDropList
 		whenSelectedItemChangedDo: [ :scope | self updateChanges ]
 ]
@@ -288,7 +286,7 @@ SycRefactoringPreviewPresenter >> updateTablePresenter [
 	"We get the environment to apply the changes from any element in the changes instance variable"
 	anEnvironment := self activeRBEnvironment.
 	aCompositeChange := RBCompositeRefactoryChange new
-		onSystemDictionary: anEnvironment.
+		onSystemEnvironment: anEnvironment.
 	changes do: [ :each | aCompositeChange addChange: each ].
 
 	table items: (self changesFrom: aCompositeChange forEnvironment: anEnvironment).

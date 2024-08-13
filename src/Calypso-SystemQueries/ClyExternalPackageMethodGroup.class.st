@@ -6,7 +6,7 @@ I represent subgroups of ""extensions"" method group.
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	package:		<RPackage>
+	package:		<Package>
 "
 Class {
 	#name : 'ClyExternalPackageMethodGroup',
@@ -15,6 +15,12 @@ Class {
 	#package : 'Calypso-SystemQueries',
 	#tag : 'Domain'
 }
+
+{ #category : 'testing' }
+ClyExternalPackageMethodGroup class >> isBasedOnExtensions [
+
+	^ true
+]
 
 { #category : 'testing' }
 ClyExternalPackageMethodGroup class >> isEditableGroup [
@@ -37,7 +43,6 @@ ClyExternalPackageMethodGroup >> importMethod: aMethod [
 
 	super importMethod: aMethod.
 
-	self package addMethod: aMethod.
 	aMethod protocol: '*' , self package name
 ]
 

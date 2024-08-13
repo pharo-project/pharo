@@ -153,7 +153,7 @@ TaskListMorph >> initializeTasks [
 
 	self tasks: ((self currentWorld submorphs
 		collect: [:m | m taskbarTask])
-		select: [:m | m notNil]) asOrderedCollection
+		select: [:m | m isNotNil]) asOrderedCollection
 ]
 
 { #category : 'settings' }

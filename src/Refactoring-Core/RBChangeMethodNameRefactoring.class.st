@@ -32,6 +32,21 @@ RBChangeMethodNameRefactoring class >> isAbstract [
 ]
 
 { #category : 'preconditions' }
+RBChangeMethodNameRefactoring >> applicabilityPreconditions [
+
+	^ {
+		  (RBCondition definesSelector: oldSelector in: class).
+		  self isValidMethodNamePrecondition }
+]
+
+{ #category : 'preconditions' }
+RBChangeMethodNameRefactoring >> breakingChangePreconditions [
+	"This refactoring only preserves behavior if all implementors are renamed."
+
+	^ { self doesNotOverrideExistingMethodPrecondition }
+]
+
+{ #category : 'preconditions' }
 RBChangeMethodNameRefactoring >> doesNotOverrideExistingMethodPrecondition [
 	"Check that the new selector is not already defined in superclasses"
 	
@@ -75,11 +90,6 @@ RBChangeMethodNameRefactoring >> modifyImplementorParseTree: parseTree in: aClas
 	parseTree renameSelector: newSelector andArguments: (permutation collect: [:each | oldArgs at: each])
 ]
 
-{ #category : 'preconditions' }
-RBChangeMethodNameRefactoring >> myConditions [
-	"^self subclassResponsibility"
-]
-
 { #category : 'instance creation' }
 RBChangeMethodNameRefactoring >> newArgs [ 
 
@@ -106,12 +116,7 @@ RBChangeMethodNameRefactoring >> permutation: anObject [
 RBChangeMethodNameRefactoring >> preconditions [
 	"This refactoring only preserves behavior if all implementors are renamed."
 
-	| conditions |
-	conditions := self myConditions
-	              & (RBCondition definesSelector: oldSelector in: class)
-	              & self isValidMethodNamePrecondition.
-
-	^ conditions & self doesNotOverrideExistingMethodPrecondition
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
 { #category : 'transforming' }
@@ -126,7 +131,11 @@ RBChangeMethodNameRefactoring >> removeRenamedImplementors [
 	oldSelector = newSelector
 		ifTrue: [ ^ self ].
 	self implementors
-		do: [ :each | each removeMethod: oldSelector ]
+		do: [ :each | 
+			self generateChangesFor:
+				(RBRemoveMethodTransformation
+					selector: oldSelector
+					from: each) ]
 ]
 
 { #category : 'action' }

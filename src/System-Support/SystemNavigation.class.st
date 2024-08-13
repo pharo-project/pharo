@@ -1,7 +1,7 @@
 "
 I support the navigation of the system. 
 I act as a facade but as I could require some state or different way of navigating the system all my behavior are on the instance side.
-I should (it is not complety done yet) be parametrized by an environment (aSystemDictionary) that scopes my queries.
+I should (it is not complety done yet) be parametrized by an environment (aSystemEnvironment) that scopes my queries.
 "
 Class {
 	#name : 'SystemNavigation',
@@ -87,6 +87,12 @@ SystemNavigation >> allExistingProtocolsFor: instanceSide [
 		  instanceSide
 			  ifTrue: [ class protocolNames ]
 			  ifFalse: [ class class protocolNames ] ]
+]
+
+{ #category : 'query' }
+SystemNavigation >> allGlobalNamesStartingWith: aString do: aBlock caseSensitive: cs [
+
+	self environment keysDo: [ :globalName | (globalName beginsWith: aString caseSensitive: cs) ifTrue: [ aBlock value: globalName ] ]
 ]
 
 { #category : 'private' }
@@ -218,6 +224,19 @@ SystemNavigation >> allSendersOf: selector [
 ]
 
 { #category : 'query' }
+SystemNavigation >> allSentButNotImplementedSelectors [
+
+	"Answer all methods where a message is sent but the selector is not implemented anywhere in the system."
+
+	^ self allMethods select: [ :method |
+		  | ignored |
+		  ignored := method allIgnoredNotImplementedSelectors.
+
+		  method messages anySatisfy: [ :m |
+			  m isSelectorSymbol not and: [ (ignored includes: m) not ] ] ]
+]
+
+{ #category : 'query' }
 SystemNavigation >> allSentMessages [
 	"Answer the set of selectors which are sent somewhere in the system."
 	| sent |
@@ -239,33 +258,11 @@ SystemNavigation >> allSentMessages [
 ]
 
 { #category : 'query' }
-SystemNavigation >> allSentNotImplementedSelectors [
-
-	"Answer all methods where a message is sent but the selector is not implemented anywhere in the system."
-
-	^ self allMethods select: [ :method |
-		  | ignored |
-		  ignored := method allIgnoredNotImplementedSelectors.
-
-		  method messages anySatisfy: [ :m |
-			  m isSelectorSymbol not and: [ (ignored includes: m) not ] ] ]
-]
-
-{ #category : 'query' }
 SystemNavigation >> allSymbolsStartingWith: aString do: aBlock [
 
 	Symbol allSymbolTablesDo: [ :e |
 		(e beginsWith: aString)
 			ifTrue: [ aBlock value: e  ] ]
-]
-
-{ #category : 'query' }
-SystemNavigation >> allUnimplementedCalls [
-	"call is not a good term here, these are selectors"
-	self
-		deprecated: 'Changed selector for coherency'
-		transformWith: '`@receiver allUnimplementedCalls' -> '`@receiver allSentNotImplementedSelectors'.
-	^self allSentNotImplementedSelectors
 ]
 
 { #category : 'query' }
@@ -282,9 +279,9 @@ SystemNavigation >> environment [
 ]
 
 { #category : 'accessing' }
-SystemNavigation >> environment: aSystemDictionary [
+SystemNavigation >> environment: aSystemEnvironment [
 
-	environment := aSystemDictionary
+	environment := aSystemEnvironment
 ]
 
 { #category : 'private' }
@@ -351,25 +348,6 @@ SystemNavigation >> methodsReferencingObsoleteClasses [
 								ifTrue: [methods nextPut: meth]]]]]]
 ]
 
-{ #category : 'query' }
-SystemNavigation >> methodsWithUnboundGlobals [
-	"This says that for any global, it should match either the class's notion of what bindingOf: the key is, or bindingOf: should be nil and the binding should be in Undeclared. If the class answers a different binding through bindingOf: or answers no binding and the binding is not in Undeclared then the variable in the method is wrong.
-	For a clean image the result should be empty. If it is not empty, evaluating Compiler recompileAll probably solves the problem. However, we should investigate why the method gets an incorrect state."
-
-	"SystemNavigation new methodsWithUnboundGlobals"
-
-	^self allMethodsSelect:
-		[:m|
-		m allLiterals anySatisfy:
-			[:l|
-			l isVariableBinding
-			and: [l key isSymbol "avoid class-side methodClass literals"
-			and: [ (l isKindOf: AdditionalBinding) not
-			and: [(m methodClass classBindingOf: l key)
-					ifNil: [(Undeclared associationAt: l key ifAbsent: []) ~~ l]
-					ifNotNil: [:b| b ~~ l]]]]]]
-]
-
 { #category : 'identifying obsoletes' }
 SystemNavigation >> obsoleteClasses [
 	"SystemNavigation new obsoleteClasses inspect"
@@ -382,7 +360,7 @@ SystemNavigation >> obsoleteClasses [
 		allInstancesDo: [ :m |
 			| c |
 			c := m soleInstance.
-			(c notNil and: [ c isObsolete ])
+			(c isNotNil and: [ c isObsolete ])
 				ifTrue: [ obs add: c ] ].
 	^ obs asArray
 
@@ -432,23 +410,16 @@ from the system?'
 ]
 
 { #category : 'removing' }
-SystemNavigation >> removeMethod: aMethod inClass: aClass [
+SystemNavigation >> removeMethod: aCompiledMethod inClass: aClass [
 	"If a message is selected, create a Confirmer so the user can verify that
 	the currently selected message should be removed from the system. If
 	so, remove it. "
-	| messageName confirmation |
+	| messageName |
 
-	aMethod ifNil: [^ false].
-	messageName := aMethod selector.
-	confirmation := self confirmRemovalOf: messageName on: aClass.
-	confirmation = 3
-		ifTrue: [^ false].
+	aCompiledMethod ifNil: [ ^ false ].
+	messageName := aCompiledMethod selector.
 	(aClass includesLocalSelector: messageName)
 		ifTrue: [ aClass removeSelector: messageName ].
-
-	"In case organization not cached"
-	confirmation = 2
-		ifTrue: [self browseAllSendersOf: messageName].
 
 	^ true
 ]

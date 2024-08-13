@@ -31,7 +31,7 @@ RGTraitExclusion >> defaultExclusions [
 
 { #category : 'queries - exclusions' }
 RGTraitExclusion >> exclusions [
-
+	"Should be renamed #removedSelectors"
 	| allExclusions |
 	allExclusions := OrderedCollection new.
 	self exclusionsDo: [ :each | allExclusions add: each].
@@ -71,13 +71,13 @@ RGTraitExclusion >> makeResolved [
 
 	super makeResolved.
 
-	exclusions := self exclusions markAsRingResolved
+	exclusions := self removedSelectors markAsRingResolved
 ]
 
 { #category : 'queries - methods' }
 RGTraitExclusion >> methods [
 
-	^ self subject methods reject: [ :each | self exclusions includes: each name  ]
+	^ self subject methods reject: [ :each | self removedSelectors includes: each name  ]
 ]
 
 { #category : 'private - backend access' }
@@ -123,6 +123,13 @@ RGTraitExclusion >> removeExclusion: aSymbol [
 		self backend forBehavior removeExclusion: aSymbol from: self. ]
 ]
 
+{ #category : 'queries - exclusions' }
+RGTraitExclusion >> removedSelectors [
+	"This should replace #exclusions"
+
+	^ self exclusions
+]
+
 { #category : 'traits' }
 RGTraitExclusion >> traitCompositionString [
 
@@ -133,7 +140,7 @@ RGTraitExclusion >> traitCompositionString [
 			nextPut: $-;
 			space;
 			nextPut: ${.
-	self exclusions do: [:each | aStream print: each]
+	self removedSelectors do: [:each | aStream print: each]
 		separatedBy: [aStream nextPutAll: '. '].
 	aStream nextPut: $}]
 ]
@@ -149,7 +156,7 @@ RGTraitExclusion >> traitTransformationString [
 			nextPut: $-;
 			space;
 			nextPut: ${.
-	self exclusions do: [:each | aStream print: each]
+	self removedSelectors do: [:each | aStream print: each]
 		separatedBy: [aStream nextPutAll: '. '].
 	aStream nextPut: $}.
 	aStream nextPut: $).]

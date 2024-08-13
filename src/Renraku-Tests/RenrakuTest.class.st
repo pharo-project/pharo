@@ -11,7 +11,7 @@ RenrakuTest >> testAsClassRuleTransformation [
 
 	asClassMethod := testClass >> (testClass compile:
 		'aMethodWhichSendsAsClass
-			#', self class name, ' asClass').
+			#', self class name, ' asClassIfAbsent: [ nil ]').
 
 	critique := asClassMethod critiques detect: [ :crit |
 		crit rule class = ReAsClassRule ].

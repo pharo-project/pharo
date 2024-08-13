@@ -54,7 +54,7 @@ GroupWindowMorph >> addWindow: aSystemWindow [
 { #category : 'layout' }
 GroupWindowMorph >> changePropotionalLayout [
 	| layout |
-	((layout := self layoutPolicy) notNil and:[layout isProportionalLayout])
+	((layout := self layoutPolicy) isNotNil and:[layout isProportionalLayout])
 		ifTrue:[^self]. "already proportional layout"
 	self layoutPolicy: ProportionalLayout new.
 	self layoutChanged
@@ -80,7 +80,7 @@ GroupWindowMorph >> grabWindow [
 
 	|windows choice|
 	windows := self world visibleSystemWindows.
-	choice := UIManager default
+	choice := self morphicUIManager
 		chooseFrom: (windows collect: [:e | e labelString])
 		values: windows
 		lines: #()

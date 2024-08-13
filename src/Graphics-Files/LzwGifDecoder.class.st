@@ -208,6 +208,7 @@ LzwGifDecoder >> nextByte [
 
 { #category : 'private' }
 LzwGifDecoder >> nextCode [
+
 	| integer numBitsRead newRemainder shiftAmount byte |
 	"Retrieve the next code of codeSize bits.
 	Store the remaining bits etc for later computation"
@@ -219,18 +220,18 @@ LzwGifDecoder >> nextCode [
 		ifFalse: [
 			numBitsRead := numLeftoverBits.
 			shiftAmount := numLeftoverBits - 8 ].
-		[ numBitsRead < codeSize ] whileTrue: [
-			byte := self nextByte.
-			byte == nil ifTrue: [ ^ eoiCode ].
-			integer := integer + (byte bitShift: shiftAmount).
-			shiftAmount := shiftAmount + 8.
-			numBitsRead := numBitsRead + 8 ].
-		(newRemainder := numBitsRead - codeSize) = 0
-			ifTrue: [ byte := self nextByte ]
-			ifFalse: [ byte := self peekByte ].
-		byte == nil ifTrue: [ ^ eoiCode ].
-		numLeftoverBits := newRemainder.
-		^ integer + (byte bitShift: shiftAmount) bitAnd: bitMask
+	[ numBitsRead < codeSize ] whileTrue: [
+		byte := self nextByte.
+		byte ifNil: [ ^ eoiCode ].
+		integer := integer + (byte bitShift: shiftAmount).
+		shiftAmount := shiftAmount + 8.
+		numBitsRead := numBitsRead + 8 ].
+	(newRemainder := numBitsRead - codeSize) = 0
+		ifTrue: [ byte := self nextByte ]
+		ifFalse: [ byte := self peekByte ].
+	byte ifNil: [ ^ eoiCode ].
+	numLeftoverBits := newRemainder.
+	^ integer + (byte bitShift: shiftAmount) bitAnd: bitMask
 ]
 
 { #category : 'accessing' }

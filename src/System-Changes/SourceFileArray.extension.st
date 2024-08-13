@@ -1,31 +1,31 @@
 Extension { #name : 'SourceFileArray' }
 
 { #category : '*System-Changes' }
-SourceFileArray >> changeRecordsFor: aMethodDefinition [
+SourceFileArray >> changeRecordsFor: aMethod [
 
 	^ self
-		changeRecordsFrom: aMethodDefinition sourcePointer
-		className: aMethodDefinition methodClass instanceSide name
-		isMeta: aMethodDefinition methodClass isMeta
+		changeRecordsFrom: aMethod sourcePointer
+		className: aMethod methodClass instanceSide name
+		isMeta: aMethod methodClass isMeta
 ]
 
 { #category : '*System-Changes' }
-SourceFileArray >> changeRecordsFor: aMethodDefinition detect: aUnaryBlock [
+SourceFileArray >> changeRecordsFor: aMethod detect: aUnaryBlock [
 	"Try to detect the most recent ChangeRecord that satisfies aUnaryBlock. Answer nil if none satisfies."
 
-	self changeRecordsFor: aMethodDefinition do: [ :changeRecord |
+	self changeRecordsFor: aMethod do: [ :changeRecord |
 		(aUnaryBlock value: changeRecord protocol) ifTrue: [ ^ changeRecord ] ].
 	^ nil
 ]
 
 { #category : '*System-Changes' }
-SourceFileArray >> changeRecordsFor: aMethodDefinition do: aUnaryBlock [
+SourceFileArray >> changeRecordsFor: aMethod do: aUnaryBlock [
 	"Evaluate aUnaryBlock with each of the ChangeRecords of aMethodDefinition. Most recent changes are evaluated first."
 
 	^ self
-		changeRecordsFrom: aMethodDefinition sourcePointer
-		className: aMethodDefinition instanceSideParentName
-		isMeta: aMethodDefinition isMeta
+		changeRecordsFrom: aMethod sourcePointer
+		className: aMethod methodClass instanceSide name
+		isMeta: aMethod methodClass isMeta
 		do: aUnaryBlock
 ]
 
@@ -59,7 +59,7 @@ SourceFileArray >> changeRecordsFrom: initialSourcePointer className: theNonMeta
 		| file previousFilePosition previousFileIndex preamble stamp protocol preambleTokens |
 		file := sourceFilesCopy fileAt: fileIndex ifAbsent: [ ^ self ].
 
-		[ filePosition notNil & file notNil ]
+		[ filePosition isNotNil & file isNotNil ]
 			whileTrue: [
 				file position: (0 max: filePosition - 150).	"Skip back to before the preamble"
 				[ file position < (filePosition - 1) ] whileTrue: [

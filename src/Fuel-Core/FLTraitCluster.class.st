@@ -24,8 +24,10 @@ FLTraitCluster >> materializeInstanceWith: aDecoder [
 
 { #category : 'serialize/materialize' }
 FLTraitCluster >> materializePostInstance: aTrait with: aDecoder [
-	| category name environment format layout instanceVariableNames comment stamp |
-	category := aDecoder nextEncodedReference.
+
+	| name environment format layout instanceVariableNames comment stamp packageName packageTagName |
+	packageName := aDecoder nextEncodedReference.
+	packageTagName := aDecoder nextEncodedReference.
 	name := aDecoder nextEncodedReference.
 	environment := aDecoder nextEncodedReference.
 	format := aDecoder nextEncodedReference.
@@ -33,34 +35,36 @@ FLTraitCluster >> materializePostInstance: aTrait with: aDecoder [
 	instanceVariableNames := aDecoder nextEncodedString substrings: ' '.
 	comment := aDecoder nextEncodedString.
 	stamp := aDecoder nextEncodedString.
-	
-	aTrait 
+
+	aTrait
 		initialize;
 		"#initialize sets Object as the superclass
 		but the superclass of traits is nil"
 		superclass: nil;
 		setName: name;
-		basicCategory: (category ifNil: [ UndefinedPackage undefinedPackageName ]) asSymbol;
 		environment: environment.
+
+	self setTag: packageTagName ofPackage: packageName to: aTrait.
+
 	self
 		installLayout: layout
 		withFormat: format
 		variableNames: instanceVariableNames
 		into: aTrait.
-		
-	aTrait
-		comment: comment
-		stamp: stamp
+
+	aTrait comment: comment stamp: stamp
 ]
 
 { #category : 'analyzing' }
 FLTraitCluster >> referencesOf: aTrait do: aBlock [
+
 	super referencesOf: aTrait do: aBlock.
 
 	aBlock
 		value: aTrait classSide;
 		value: aTrait basicEnvironment;
-		value: aTrait category;
+		value: aTrait package name;
+		value: aTrait packageTag name;
 		value: aTrait name;
 		value: aTrait format;
 		value: aTrait classLayout class
@@ -73,15 +77,16 @@ FLTraitCluster >> serializeInstance: aTrait with: anEncoder [
 
 { #category : 'serialize/materialize' }
 FLTraitCluster >> serializePostInstance: aTrait with: anEncoder [
-		"Do not use #basicCategory because since it may be lazily computed it may happen that it is still in nil. "
+
 	anEncoder
-		encodeReferenceTo: aTrait category;
+		encodeReferenceTo: aTrait package name;
+		encodeReferenceTo: aTrait packageTag name;
 		encodeReferenceTo: aTrait name;
 		encodeReferenceTo: aTrait basicEnvironment;
 		encodeReferenceTo: aTrait format.
-	self
-		serializeLayout: aTrait classLayout
-		with: anEncoder.
+
+	self serializeLayout: aTrait classLayout with: anEncoder.
+
 	anEncoder
 		encodeString: aTrait instanceVariablesString;
 		encodeString: aTrait comment;

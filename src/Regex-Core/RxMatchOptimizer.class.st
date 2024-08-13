@@ -69,18 +69,14 @@ RxMatchOptimizer >> determineTestMethod [
 	be able to start a match)."
 
 	| testers |
-	(conditions includes: #any) ifTrue: [^nil].
+	(conditions includes: #any) ifTrue: [ ^ nil ].
 	testers := OrderedCollection new: 5.
-	#(#prefixTester #nonPrefixTester #conditionTester #methodPredicateTester #nonMethodPredicateTester #predicateTester #nonPredicateTester)
-		do:
-			[:selector |
-			| tester |
-			tester := self perform: selector.
-			tester notNil ifTrue: [testers add: tester]].
-	testers isEmpty ifTrue: [^nil].
-	testers size = 1 ifTrue: [^testers first].
+	#( #prefixTester #nonPrefixTester #conditionTester #methodPredicateTester #nonMethodPredicateTester #predicateTester #nonPredicateTester ) do: [ :selector |
+		(self perform: selector) ifNotNil: [ :tester | testers add: tester ] ].
+	testers isEmpty ifTrue: [ ^ nil ].
+	testers size = 1 ifTrue: [ ^ testers first ].
 	testers := testers asArray.
-	^[:char :matcher | testers contains: [:t | t value: char value: matcher]]
+	^ [ :char :matcher | testers contains: [ :t | t value: char value: matcher ] ]
 ]
 
 { #category : 'initialization' }
@@ -239,7 +235,7 @@ RxMatchOptimizer >> syntaxBranch: branchNode [
 	we must recurse down the branch. Otherwise, just the head atom
 	is important."
 
-	(branchNode piece isNullable and: [branchNode branch notNil])
+	(branchNode piece isNullable and: [branchNode branch isNotNil])
 		ifTrue: [branchNode branch dispatchTo: self].
 	branchNode piece dispatchTo: self
 ]
@@ -321,8 +317,7 @@ RxMatchOptimizer >> syntaxRegex: regexNode [
 	Therefore, just recurse."
 
 	regexNode branch dispatchTo: self.
-	regexNode regex notNil
-		ifTrue: [regexNode regex dispatchTo: self]
+	regexNode regex ifNotNil: [ :regex | regex dispatchTo: self ]
 ]
 
 { #category : 'double dispatch' }

@@ -30,8 +30,8 @@ RBRenameClassChange >> = aRenameClassChange [
 { #category : 'accessing' }
 RBRenameClassChange >> changeClass [
 
-	^ (onSystemDictionary classNamed: oldName) ifNil: [
-		  onSystemDictionary classNamed: newName ]
+	^ (onSystemEnvironment classNamed: oldName) ifNil: [
+		  onSystemEnvironment classNamed: newName ]
 ]
 
 { #category : 'private' }
@@ -86,8 +86,7 @@ RBRenameClassChange >> printOn: aStream [
 	aStream
 		nextPutAll: self oldName;
 		nextPutAll: ' rename: ';
-		print: self newName;
-		nextPut: $!
+		print: self newName
 ]
 
 { #category : 'initialization' }

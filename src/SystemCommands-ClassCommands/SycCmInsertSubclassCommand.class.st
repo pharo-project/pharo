@@ -5,20 +5,20 @@ All current subclasses of targetClass will become subclasses of new created clas
 Class {
 	#name : 'SycCmInsertSubclassCommand',
 	#superclass : 'SycCmNewClassCreationCommand',
-	#category : 'SystemCommands-ClassCommands',
-	#package : 'SystemCommands-ClassCommands'
+	#category : 'SystemCommands-ClassCommands-Creation',
+	#package : 'SystemCommands-ClassCommands',
+	#tag : 'Creation'
 }
 
 { #category : 'executing' }
 SycCmInsertSubclassCommand >> executeRefactoring [
 
-	| refactoring |
-	refactoring := RBInsertNewClassRefactoring
-		addClass: newClassName
-		superclass: targetClass asString
-		subclasses: targetClass subclasses
-		category: targetClass category.
-	refactoring execute
+	(RBInsertNewClassRefactoring className: newClassName)
+		superclass: targetClass asString;
+		subclasses: targetClass subclasses;
+		packageName: targetClass package name;
+		tagName: targetClass packageTag name;
+		execute
 ]
 
 { #category : 'accessing' }
@@ -29,7 +29,7 @@ SycCmInsertSubclassCommand >> icon [
 { #category : 'testing' }
 SycCmInsertSubclassCommand >> isApplicable [
 
-	^ true
+	^ context lastSelectedClass isTrait not
 ]
 
 { #category : 'accessing' }

@@ -49,7 +49,7 @@ Class {
 	#instVars : [
 		'semaphore',
 		'errorHandler',
-		'ephemeronListHead'
+		'ephemeronList'
 	],
 	#classVars : [
 		'Default'
@@ -72,36 +72,26 @@ FinalizationRegistry >> add: anObject [
 ]
 
 { #category : 'adding' }
-FinalizationRegistry >> add: anObject executor: finalizer [
-
-	self
-		deprecated: 'Please use #add:finalizer: instead'
-		transformWith: '`@receiver add: `@object executor: `@executor'
-			-> '`@receiver add: `@object finalizer: `@executor'.
-	^ self add: anObject finalizer: finalizer
-]
-
-{ #category : 'adding' }
 FinalizationRegistry >> add: anObject finalizer: finalizer [
 
-	self protected: [ | newEntry |
+	self protected: [ | newEntry link |
 		newEntry := FinalizationRegistryEntry key: anObject value: finalizer container: self.
-		ephemeronListHead chainNext: newEntry.
+		link := ephemeronList add: newEntry.
+		newEntry link: link
 	].
 	^ anObject
 ]
 
 { #category : 'adding' }
 FinalizationRegistry >> ephemeronAtKey: aKey [
-	| current |
-	current := ephemeronListHead.
-	[ current notNil ] whileTrue: [
-		current key == aKey
-			ifTrue: [ ^ current ].
-		current := current next
-	].
-	"Not found"
-	^ nil
+	
+	^ ephemeronList detect: [ :e | e key = aKey ]
+]
+
+{ #category : 'adding' }
+FinalizationRegistry >> ephemeronAtKey: aKey ifAbsent: aBlock [
+
+	^ ephemeronList detect: [ :e | e key = aKey ] ifNone: aBlock
 ]
 
 { #category : 'finalization' }
@@ -133,9 +123,9 @@ FinalizationRegistry >> handleErrorsDuring: aBlock [
 ]
 
 { #category : 'testing' }
-FinalizationRegistry >> includes: anObject [
+FinalizationRegistry >> includes: aKey [
 
-    ^ ephemeronListHead includes: anObject
+	^ ephemeronList anySatisfy: [ :e | e key = aKey ]
 ]
 
 { #category : 'initialization' }
@@ -143,8 +133,7 @@ FinalizationRegistry >> initialize [
 
 	super initialize.
 
-	"We have a head with an empty entry, this is to keep the linked list only"
-	ephemeronListHead := FinalizationRegistryEntry new.
+	ephemeronList := DoubleLinkedList new.
 
 	semaphore := Semaphore forMutualExclusion.
 	errorHandler := self.
@@ -153,22 +142,21 @@ FinalizationRegistry >> initialize [
 { #category : 'testing' }
 FinalizationRegistry >> isEmpty [
 		
-	^ ephemeronListHead next isNil
+	^ ephemeronList isEmpty
 ]
 
 { #category : 'accessing' }
 FinalizationRegistry >> keys [
 
-	^ ephemeronListHead keys
+	^ ephemeronList collect: [ :e | e key ]
 ]
 
 { #category : 'copying' }
 FinalizationRegistry >> postCopy [
-	"should we prohibit any attempts to copy the receiver?"
-	self protected: [
-		semaphore := Semaphore forMutualExclusion.
-		ephemeronListHead := ephemeronListHead copy
-	]
+	"should we prohibit any attempts to copy the receiver?
+	Do not copy the list, this will break everything: the ephemerons have a backpointer to the list nodes"
+
+	self protected: [ semaphore := Semaphore forMutualExclusion ]
 ]
 
 { #category : 'private - synchronization' }
@@ -181,30 +169,35 @@ FinalizationRegistry >> protected: aBlock [
 ]
 
 { #category : 'adding' }
+FinalizationRegistry >> remove: aKey [
+
+	^ self remove: aKey ifAbsent: [ NotFound signalFor: aKey ]
+]
+
+{ #category : 'adding' }
 FinalizationRegistry >> remove: aKey ifAbsent: aBlock [
+
 	| ephemeron |
-	ephemeron := self ephemeronAtKey: aKey.
-	ephemeron ifNil: [ ^ aBlock value ].
+	ephemeron := self ephemeronAtKey: aKey ifAbsent: [ ^ aBlock value ].
 	^ self removeEphemeron: ephemeron
 ]
 
 { #category : 'adding' }
 FinalizationRegistry >> removeEphemeron: anEphemeron [
 
-	self protected: [ 
-		anEphemeron removeFromChain ]
+	self protected: [ ephemeronList removeLink: anEphemeron link ]
 ]
 
 { #category : 'accessing' }
 FinalizationRegistry >> size [
 
-	^ ephemeronListHead size - 1 "The head does not count"
+	^ ephemeronList size
 ]
 
 { #category : 'accessing' }
 FinalizationRegistry >> values [
 
-	^ ephemeronListHead values
+	^ ephemeronList collect: [ :e | e value ]
 ]
 
 { #category : 'enumerating' }

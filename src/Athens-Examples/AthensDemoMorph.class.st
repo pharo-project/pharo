@@ -363,7 +363,7 @@ AthensDemoMorph >> initialize [
 	surface := AthensCairoSurface extent: self extent.
 	current := 1.
 	frame := 0.
-	loadFileFailBlock := AthensCairoSurface fromForm: (Form fromDisplay: (0 @ 0 extent: 300 @ 150)).
+	loadFileFailBlock := AthensCairoSurface fromForm: (Form extent: 300 @ 150).
 	ref := 'Pharo.png' asFileReference.
 	pharoLogo := AthensCairoSurface createFromFile: ref fullName ifFailed: [ loadFileFailBlock ].
 

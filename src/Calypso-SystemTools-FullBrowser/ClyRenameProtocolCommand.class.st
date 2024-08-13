@@ -83,6 +83,10 @@ ClyRenameProtocolCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
 	methodGroup := aToolContext lastSelectedMethodGroup.
-	newName := aToolContext requestProtocol: 'New name of protocol' suggesting: methodGroup name.
+
+	newName := StProtocolNameChooserPresenter requestProtocolNameConfiguring: [ :presenter |
+		           presenter
+			           protocolName: methodGroup name;
+			           concernedClass: aToolContext lastSelectedClass ].
 	newName = methodGroup name ifTrue: [ CmdCommandAborted signal ]
 ]

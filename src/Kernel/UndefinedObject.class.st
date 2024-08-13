@@ -105,12 +105,6 @@ UndefinedObject >> environment [
 	^self class environment
 ]
 
-{ #category : 'testing' }
-UndefinedObject >> haltIfNil [
-	<debuggerCompleteToSender>
-	Halt now
-]
-
 { #category : 'bottom context' }
 UndefinedObject >> handleSignal: exception [
 	"When no more handler (on:do:) context left in sender chain this gets called.  Return from signal with default action."
@@ -215,28 +209,11 @@ UndefinedObject >> shallowCopy [
 	with self."
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 UndefinedObject >> storeOn: aStream [
 	"Refer to the comment in Object|storeOn:."
 
 	aStream nextPutAll: 'nil'
-]
-
-{ #category : 'class hierarchy' }
-UndefinedObject >> subclass: nameOfClass instanceVariableNames: instVarNameList classVariableNames: classVarNames poolDictionaries: poolDictnames category: category [
-	"Calling this method is now considered an accident.  If you really want to create a class with a nil superclass, then create the class and then set the superclass using #superclass:"
-
-	Warning signal: 'Attempt to create ' , nameOfClass ,
-		' as a subclass of nil.  Possibly a class is being loaded before its superclass.'.
-	^ self classInstaller make: [ :builder |
-		  builder
-			  superclass: nil;
-			  name: nameOfClass;
-			  slotsFromString: instVarNameList;
-			  sharedVariablesFromString: classVarNames;
-			  sharedPools: poolDictnames;
-			  category: category;
-			  environment: self environment ]
 ]
 
 { #category : 'class hierarchy' }

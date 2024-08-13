@@ -8,9 +8,9 @@ Class {
 { #category : 'helpers' }
 CDCompiledBlockClassParserTest >> classDefinitionString [
 	"we just test the definition as it appears in the image"
-	^ 'CompiledCode variableByteSubclass: #CompiledBlock
-	instanceVariableNames: ''''
-	classVariableNames: ''''
+
+	^ 'CompiledCode << #CompiledBlock
+	layout: CompiledMethodLayout;
 	package: #MyPackage'
 ]
 
@@ -27,7 +27,8 @@ CDCompiledBlockClassParserTest >> superclassName [
 { #category : 'tests' }
 CDCompiledBlockClassParserTest >> testBestNodeForClassVariableSelectionShouldBeClassSlotNode [
 	"no Class Variables in CompileBlock"
-	self assert: classDefinition sharedVariableNodes isEmpty
+
+	self assertEmpty: classDefinition sharedVariableNodes
 ]
 
 { #category : 'tests' }

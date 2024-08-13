@@ -5,7 +5,7 @@ We have a fixed set of allowed ""primitive"" pragma keywords. Every method imple
 And as we need some special treatment for methods implemented as primitive, the RBPragmaNode adds the #isPrimitive testing method.
 
 Instance Variables:
-	arguments <SequenceableCollection of: RBLiteralNode> our argument nodes
+	arguments <SequenceableCollection of: ASTLiteralNode> our argument nodes
 	left <Integer | nil> position of <
 	right <Integer | nil> position of >
 	selector	<Symbol>	the selector we're sending
@@ -13,13 +13,14 @@ Instance Variables:
 "
 Class {
 	#name : 'RBPragmaNode',
-	#superclass : 'RBProgramNode',
+	#superclass : 'ASTProgramNode',
 	#instVars : [
 		'selector',
 		'keywordsPositions',
 		'arguments',
 		'left',
-		'right'
+		'right',
+		'pragma'
 	],
 	#category : 'AST-Core-Nodes',
 	#package : 'AST-Core',
@@ -201,6 +202,18 @@ RBPragmaNode >> numArgs [
 RBPragmaNode >> postCopy [
 	super postCopy.
 	self arguments: (self arguments collect: [ :each | each copy ])
+]
+
+{ #category : 'accessing' }
+RBPragmaNode >> pragma [
+
+	^ pragma
+]
+
+{ #category : 'accessing' }
+RBPragmaNode >> pragma: anObject [
+
+	pragma := anObject
 ]
 
 { #category : 'replacing' }

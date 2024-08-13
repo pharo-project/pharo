@@ -18,13 +18,13 @@ FLGlobalTraitSerializationTest >> testCreateClassWithCreatedTraitWithInstanceVar
 	The trait has instance variables."
 
 	| aClass aTrait result materializedClass materializedTrait materializedObject |
-	aClass := self classFactory silentlyMake: [ :aBuilder | aBuilder slotsFromString: 'ivar' ].
+	aClass := self classFactory silentlyMake: [ :aBuilder | aBuilder slots: #(ivar) ].
 	self classFactory silentlyCompile: 'ivar: x ivar := x' in: aClass.
 	self classFactory silentlyCompile: 'ivar ^ ivar' in: aClass.
 	aTrait := self classFactory silentlyMake: [ :aBuilder |
 		          aBuilder
 			          beTrait;
-			          slotsFromString: 'traitIvar' ].
+			          slots: #(traitIvar) ].
 	self classFactory silentlyCompile: 'traitIvar: x traitIvar := x' in: aTrait.
 	self classFactory silentlyCompile: 'traitIvar ^ traitIvar' in: aTrait.
 	aClass addToComposition: aTrait.

@@ -6,9 +6,7 @@ Class {
 	#name : 'ClassRemoved',
 	#superclass : 'ClassAnnouncement',
 	#instVars : [
-		'categoryName',
-		'classRemoved',
-		'affectedPackage'
+		'classRemoved'
 	],
 	#category : 'System-Announcements-System-Classes',
 	#package : 'System-Announcements',
@@ -16,65 +14,11 @@ Class {
 }
 
 { #category : 'instance creation' }
-ClassRemoved class >> class: aClass category: aCategoryName [
-	^self new
-			classRemoved: aClass;
-			categoryName: aCategoryName;
-			yourself
-]
+ClassRemoved class >> class: aClass [
 
-{ #category : 'instance creation' }
-ClassRemoved class >> class: aClass package: aPackage category: aCategoryName [
-
-	^ (self class: aClass category: aCategoryName)
-		  affectedPackage: aPackage;
+	^ self new
+		  classRemoved: aClass;
 		  yourself
-]
-
-{ #category : 'accessing' }
-ClassRemoved >> affectedPackage: aPackage [
-	affectedPackage := aPackage
-]
-
-{ #category : 'testing' }
-ClassRemoved >> affectsMethod: aMethod [
-	^classRemoved == aMethod origin
-]
-
-{ #category : 'testing' }
-ClassRemoved >> affectsMethods [
-	"methods are removed together with removed class"
-	^true
-]
-
-{ #category : 'testing' }
-ClassRemoved >> affectsMethodsDefinedInClass: aClass [
-
-	^classRemoved == aClass
-]
-
-{ #category : 'testing' }
-ClassRemoved >> affectsMethodsDefinedInPackage: aPackage [
-
-	^affectedPackage == aPackage
-]
-
-{ #category : 'testing' }
-ClassRemoved >> affectsMethodsInProtocol: protocol [
-
-	^ classRemoved protocolNames includes: protocol
-]
-
-{ #category : 'accessing' }
-ClassRemoved >> categoryName [
-
-	^ categoryName
-]
-
-{ #category : 'accessing' }
-ClassRemoved >> categoryName: anObject [
-
-	categoryName := anObject
 ]
 
 { #category : 'accessing' }
@@ -91,22 +35,12 @@ ClassRemoved >> classRemoved [
 { #category : 'accessing' }
 ClassRemoved >> classRemoved: aClass [
 
-	classRemoved := aClass.
-	affectedPackage := aClass package
+	classRemoved := aClass
 ]
 
 { #category : 'accessing' }
-ClassRemoved >> classTagAffected [
-	^affectedPackage toTagName: categoryName
-]
+ClassRemoved >> packagesAffected [
+	"In case we remove a class we need to specify that we are affecting the package of the class but also the packages extending it since we are removing extensions."
 
-{ #category : 'accessing' }
-ClassRemoved >> packageAffected [
-	^affectedPackage
-]
-
-{ #category : 'accessing' }
-ClassRemoved >> packageAffected: aPackage [
-
-	affectedPackage := aPackage
+	^ self classRemoved packages
 ]

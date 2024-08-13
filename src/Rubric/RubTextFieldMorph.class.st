@@ -68,7 +68,7 @@ RubTextFieldMorph >> chooserHasFocus [
 
 { #category : 'testing' }
 RubTextFieldMorph >> chooserIsOpened [
-	^ entryCompletion notNil and: [entryCompletion chooser notNil]
+	^ entryCompletion isNotNil and: [entryCompletion chooser isNotNil]
 ]
 
 { #category : 'accessing' }

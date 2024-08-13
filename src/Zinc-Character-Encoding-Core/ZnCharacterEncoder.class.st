@@ -85,6 +85,12 @@ ZnCharacterEncoder class >> handlesEncoding: string [
 	self subclassResponsibility
 ]
 
+{ #category : 'testing' }
+ZnCharacterEncoder class >> isAbstract [
+
+	^ self == ZnCharacterEncoder
+]
+
 { #category : 'convenience' }
 ZnCharacterEncoder class >> iso88591 [
 	^ self newForEncoding: 'iso-8859-1'

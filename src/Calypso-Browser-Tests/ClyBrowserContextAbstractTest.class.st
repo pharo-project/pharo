@@ -53,17 +53,17 @@ ClyBrowserContextAbstractTest >> deleteBrowser [
 
 { #category : 'helpers' }
 ClyBrowserContextAbstractTest >> differentClassGroupContext [
+
 	| items |
-	
 	self deleteBrowser.
 	browser := ClyFullBrowserMorph open.
-	browser selectPackage: (RPackageOrganizer default packageNamed: #Kernel) atClassTag: 'Chronology'.
+	browser selectPackage: (PackageOrganizer default packageNamed: #Kernel) andTag: 'Numbers'.
 	items := browser classGroupSelection items.
 
 	^ ClyFullBrowserClassGroupContext new
-		tool: browser;
-		selectedItems: items;
-		yourself.
+		  tool: browser;
+		  selectedItems: items;
+		  yourself
 ]
 
 { #category : 'helpers' }
@@ -110,7 +110,7 @@ ClyBrowserContextAbstractTest >> openBrowserWithPackageAndClassGroupOnlySelected
 
 	self deleteBrowser.
 	browser := ClyFullBrowserMorph open.
-	browser selectPackage: (RPackageOrganizer default packageNamed: #Kernel) atClassTag: 'BasicObjects'.
+	browser selectPackage: (PackageOrganizer default packageNamed: #Kernel) andTag: 'BasicObjects'.
 ]
 
 { #category : 'helpers' }

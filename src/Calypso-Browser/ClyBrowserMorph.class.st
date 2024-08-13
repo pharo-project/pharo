@@ -125,6 +125,9 @@ Class {
 		'navigationEnvironment',
 		'systemScope'
 	],
+	#classVars : [
+		'NavigationHistoryClass'
+	],
 	#category : 'Calypso-Browser-UI',
 	#package : 'Calypso-Browser',
 	#tag : 'UI'
@@ -141,6 +144,19 @@ ClyBrowserMorph class >> canBeDefault [
 	^self class includesSelector: #beDefaultBrowser
 ]
 
+{ #category : 'settings' }
+ClyBrowserMorph class >> navigationHistoryClass [
+
+	^ NavigationHistoryClass
+		ifNil: [ NavigationHistoryClass := ClyNavigationHistory ]
+]
+
+{ #category : 'settings' }
+ClyBrowserMorph class >> navigationHistoryClass: aClyNavigationHistory [
+
+	NavigationHistoryClass := aClyNavigationHistory
+]
+
 { #category : 'instance creation' }
 ClyBrowserMorph class >> on: aNavigationEnvironment [
 	^self new
@@ -152,6 +168,19 @@ ClyBrowserMorph class >> on: aNavigationEnvironment [
 ClyBrowserMorph class >> on: aNavigationEnvironment systemScope: aSystemScope [
 	^(self on: aNavigationEnvironment)
 		systemScope: aSystemScope
+]
+
+{ #category : 'settings' }
+ClyBrowserMorph class >> settingsNavigationHistoryOn: aBuilder [
+	<systemsettings>
+
+	(aBuilder pickOne: #navigationHistoryClass)
+		parent: #Calypso;
+		label: 'Navigation History';
+		domainValues: ClyNavigationHistory withAllSubclasses;
+		default: self navigationHistoryClass;
+		description: 'Enable to set a custom navigation history to handle how collection of visited items is managed';
+		target: self
 ]
 
 { #category : 'accessing' }
@@ -350,7 +379,7 @@ ClyBrowserMorph >> ignoreNavigationDuring: aBlock [
 
 { #category : 'initialization' }
 ClyBrowserMorph >> initialExtent [
-	^ 850@620 * self currentWorld displayScaleFactor
+	^ 915@620 * self currentWorld displayScaleFactor
 ]
 
 { #category : 'initialization' }
@@ -363,7 +392,7 @@ ClyBrowserMorph >> initialize [
 	self changeProportionalLayout.
 	self initializeToolsPanel.
 	self initializeNavigationPanel.
-	self addPaneSplitters
+	self layoutChildren
 ]
 
 { #category : 'initialization' }
@@ -379,7 +408,7 @@ ClyBrowserMorph >> initializeNavigationPanel [
 	eachViewExtent := 1.0 / navigationViews size.
 	lastViewLeft := 0.0.
 	navigationViews do: [ :each | | frame |
-		frame := (lastViewLeft @ 0.0 corner: lastViewLeft + eachViewExtent @ 1.0) asLayoutFrame.
+		frame := ( lastViewLeft @ 0.0 corner: lastViewLeft + eachViewExtent @ 1.0) asLayoutFrame.
 		each == navigationViews last ifFalse: [
 			frame := frame rightOffset: -4 ].
 		navigationPanel
@@ -387,8 +416,7 @@ ClyBrowserMorph >> initializeNavigationPanel [
 			fullFrame: frame.
 		lastViewLeft := lastViewLeft + eachViewExtent ].
 
-	navigationPanel addPaneSplitters.
-	self addMorph: navigationPanel fullFrame: ((0.0 @ 0 corner: 1.0 @ 0.5) asLayoutFrame bottomOffset: toolbar height negated)
+	navigationPanel addPaneSplitters
 ]
 
 { #category : 'initialization' }
@@ -398,20 +426,9 @@ ClyBrowserMorph >> initializeNavigationViews [
 
 { #category : 'initialization' }
 ClyBrowserMorph >> initializeToolsPanel [
+
 	toolbar := ClyToolbarMorph of: self.
-	tabManager := ClyNotebookManager of: self.
-
-	toolPanel := PanelMorph new.
-	toolPanel name: 'tools panel'.
-	toolPanel
-		changeTableLayout;
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
-		listDirection: #topToBottom.
-	self addMorph: toolPanel fullFrame: ((0.0 @ 0.5 corner: 1.0 @ 1.0) asLayoutFrame topOffset: toolbar height negated).
-
-	toolPanel addMorphBack: toolbar.
-	toolPanel addMorphBack: tabManager tabMorph
+	tabManager := ClyNotebookManager of: self
 ]
 
 { #category : 'testing' }
@@ -433,6 +450,36 @@ ClyBrowserMorph >> itemsChanged [
 ClyBrowserMorph >> kmDispatcher [
 
 	^ CmdKMDispatcher attachedTo: self
+]
+
+{ #category : 'initialization' }
+ClyBrowserMorph >> layoutChildren [
+
+	"Set up the typical calypso browser layout with:
+	  - package | classes | protocols | methods panels
+	  - toolbar
+	  - tool (the code editor and so on)"
+	self
+		addMorph: navigationPanel
+		fullFrame: ((0.0 @ 0 corner: 1.0 @ 0.5) asLayoutFrame bottomOffset:
+				 toolbar height negated).
+
+	toolPanel := PanelMorph new.
+	toolPanel name: 'tools panel'.
+	toolPanel
+		changeTableLayout;
+		hResizing: #spaceFill;
+		vResizing: #spaceFill;
+		listDirection: #topToBottom.
+	self
+		addMorph: toolPanel
+		fullFrame: ((0.0 @ 0.5 corner: 1.0 @ 1.0) asLayoutFrame topOffset:
+				 toolbar height negated).
+
+	toolPanel addMorphBack: toolbar.
+	toolPanel addMorphBack: tabManager tabMorph.
+	
+	self addPaneSplitters
 ]
 
 { #category : 'navigation' }

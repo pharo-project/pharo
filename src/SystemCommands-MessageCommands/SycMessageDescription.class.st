@@ -48,9 +48,11 @@ SycMessageDescription class >> fromContextOf: messageUserObject [
 
 { #category : 'instance creation' }
 SycMessageDescription class >> ofMessageNode: astMessageNode [
-	^(self fromContextOf: astMessageNode)
+
+	^ (self fromContextOf: astMessageNode methodNode)
 		selector: astMessageNode selector;
-		argumentNames: (astMessageNode arguments collect: [:each | each formattedCode])
+		argumentNames: (astMessageNode arguments collect: [:each | each formattedCode ])
+
 ]
 
 { #category : 'instance creation' }

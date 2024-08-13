@@ -31,7 +31,7 @@ Class {
 
 { #category : 'images' }
 ScrollBarMorph class >> arrowOfDirection: aSymbol size: finalSizeInteger color: aColor [
-	"answer a form with an arrow based on the parameters"
+	"answer a FormSet with an arrow based on the parameters"
 	^ ArrowImagesCache at: {aSymbol. finalSizeInteger. aColor}
 ]
 
@@ -123,9 +123,7 @@ ScrollBarMorph class >> cleanUp [
 { #category : 'class initialization' }
 ScrollBarMorph class >> initialize [
 
-	self initializeImagesCache.
-
-	self deprecatedAliases: { #ScrollBar }
+	self initializeImagesCache
 ]
 
 { #category : 'private - initialization' }
@@ -234,7 +232,7 @@ ScrollBarMorph >> doScrollUp [
 
 { #category : 'initialize' }
 ScrollBarMorph >> downImage [
-	"answer a form to be used in the down button"
+	"answer a FormSet to be used in the down button"
 	^ self class
 		arrowOfDirection: (bounds isWide
 				ifTrue: [#right]
@@ -1013,7 +1011,7 @@ ScrollBarMorph >> totalSliderArea [
 
 { #category : 'initialize' }
 ScrollBarMorph >> upImage [
-	"answer a form to be used in the up button"
+	"answer a FormSet to be used in the up button"
 	^ self class
 		arrowOfDirection: (bounds isWide
 				ifTrue: [#left]
@@ -1034,7 +1032,7 @@ ScrollBarMorph >> updateDownButtonImage [
 	"update the receiver's downButton.  put a new image inside"
 	downButton removeAllMorphs.
 	downButton
-		addMorphCentered: (ImageMorph new form: self downImage)
+		addMorphCentered: (ImageMorph new formSet: self downImage)
 ]
 
 { #category : 'update' }
@@ -1067,7 +1065,7 @@ ScrollBarMorph >> updateUpButtonImage [
 "update the receiver's upButton. put a new image inside"
 	upButton removeAllMorphs.
 	upButton
-		addMorphCentered: (ImageMorph new form: self upImage)
+		addMorphCentered: (ImageMorph new formSet: self upImage)
 ]
 
 { #category : 'scroll timing' }
@@ -1086,5 +1084,5 @@ ScrollBarMorph >> waitForDelay1: delay1 delay2: delay2 [
 
 { #category : 'stepping' }
 ScrollBarMorph >> wantsSteps [
-	^self scrollBarAction notNil
+	^self scrollBarAction isNotNil
 ]

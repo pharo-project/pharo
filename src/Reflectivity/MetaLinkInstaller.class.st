@@ -136,14 +136,16 @@ MetaLinkInstaller >> findSubNode: node in: methodNode [
 
 { #category : 'initialization' }
 MetaLinkInstaller >> initialize [
+
 	anonSubclassesBuilder := MetaLinkAnonymousClassBuilder new.
 	linksRegistry := MetaLinkRegistry new.
 	linkToNodesMapper := MetaLinkNodesMapper new.
 	superJumpLinks := OrderedCollection new.
 
-	SystemAnnouncer uniqueInstance weak when: MethodModified send: #methodChanged: to: self.
-	SystemAnnouncer uniqueInstance weak when: MethodRemoved send: #methodRemoved: to: self.
-	SystemAnnouncer uniqueInstance weak when: MethodAdded send: #methodAdded: to: self
+	self class codeSupportAnnouncer weak
+		when: MethodModified send: #methodChanged: to: self;
+		when: MethodRemoved send: #methodRemoved: to: self;
+		when: MethodAdded send: #methodAdded: to: self
 ]
 
 { #category : 'installation' }
@@ -305,7 +307,9 @@ MetaLinkInstaller >> reinstallPermaLink: permalink onNode: node [
 		ifFalse: [ node link: link.
 			^ self ].
 	instances := (linksRegistry objectsForLink: link)
-		select: [ :i | i originalClass = permalink slotOrVarClass ].
+		select: [ :i | 
+			"use perform as no method #oiginalClass exists"
+			(i perform: #originalClass) = permalink slotOrVarClass ].
 	instances do: [ :instance | node link: link forObject: instance ]
 ]
 
@@ -354,9 +358,10 @@ MetaLinkInstaller >> removeAllAnonymousNodesIn: methodNode fromAnonSubclassesOf:
 
 { #category : 'nodes' }
 MetaLinkInstaller >> removeNode: aNode forObject: anObject [
-	(self canRemoveMethodNodeContaining: aNode)
-		ifTrue: [ self removeSuperJumpsFor: aNode.
-			anonSubclassesBuilder removeMethodNode: aNode fromObject: anObject ].
+
+	(self canRemoveMethodNodeContaining: aNode) ifTrue: [
+		self removeSuperJumpsFor: aNode methodNode.
+		anonSubclassesBuilder removeMethodNode: aNode fromObject: anObject ].
 	linkToNodesMapper removeNode: aNode forObject: anObject
 ]
 
@@ -382,12 +387,17 @@ MetaLinkInstaller >> removePermaLinksNodesReferencesFor: aMethodNode [
 
 { #category : 'lookup' }
 MetaLinkInstaller >> removeSuperJumpsFor: methodNode [
-	| nodesWithLinks |
-	nodesWithLinks := methodNode allChildren select: [ :c | c hasMetaLinks ].
-	superJumpLinks
-		do: [ :link |
-			(nodesWithLinks anySatisfy: [ :node | node links includes: link ])
-				ifTrue: [ link uninstall ] ]
+
+	| nodesWithLinks toRemoveLinks |
+	nodesWithLinks := methodNode allChildren select: [ :c |
+		                  c hasMetaLinks ].
+	toRemoveLinks := OrderedCollection new.
+	superJumpLinks do: [ :link |
+		(nodesWithLinks anySatisfy: [ :node | node links includes: link ])
+			ifTrue: [
+				link uninstall.
+				toRemoveLinks add: link ] ].
+	superJumpLinks removeAllFoundIn: toRemoveLinks
 ]
 
 { #category : 'installation' }
@@ -427,10 +437,13 @@ MetaLinkInstaller >> uninstallPermaLinkFor: link [
 
 { #category : 'lookup' }
 MetaLinkInstaller >> uninstallSuperJumpLinks [
-	superJumpLinks do: [ :link | link uninstall ]
+
+	superJumpLinks do: [ :link | link uninstall ].
+	superJumpLinks removeAll
 ]
 
 { #category : 'initialization' }
 MetaLinkInstaller >> unsubscribeFromAnnouncers [
-	SystemAnnouncer uniqueInstance unsubscribe: self
+
+	self class codeSupportAnnouncer unsubscribe: self
 ]

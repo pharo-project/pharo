@@ -30,36 +30,33 @@ MorphTreeTransformMorph >> bottomVisibleRowForCanvas: aCanvas startingAt: aPos [
 
 { #category : 'drawing' }
 MorphTreeTransformMorph >> drawRawColorOn: aCanvas forSubmorph: aSubMorph [
-	| c frame |
-	frame := (aSubMorph fullBounds withWidth: owner scroller innerBounds width) translateBy:(owner scroller offset x)@0.
-	aSubMorph = owner listManager searchedElement
-		ifTrue: [
-			aCanvas fillRectangle: frame color: owner secondarySelectionColor.
-			^ self ].
+
+	| frame |
+	frame := (aSubMorph fullBounds withWidth: owner scroller innerBounds width) translateBy: owner scroller offset x @ 0.
+	aSubMorph = owner listManager searchedElement ifTrue: [
+		aCanvas fillRectangle: frame color: owner secondarySelectionColor.
+		^ self ].
 	owner listManager isCheckList
 		ifTrue: [
-			aSubMorph = owner listManager lastClickedMorph
-				ifTrue: [
-					aCanvas fillRectangle: frame color: owner selectionColorToUse.
-					^ self ] ]
+			aSubMorph = owner listManager lastClickedMorph ifTrue: [
+				aCanvas fillRectangle: frame color: owner selectionColorToUse.
+				^ self ] ]
 		ifFalse: [
-			aSubMorph selected
-				ifTrue: [
-					aCanvas fillRectangle: frame color: owner selectionColorToUse.
-					^ self ] ].
-	(c := aSubMorph color) notNil
-		ifTrue: [
-			c isColor
-				ifTrue: [
-					aCanvas
-						frameAndFillRectangle: frame
-						fillColor: c
-						borderWidth: 0
-						borderColor: Color transparent ]
-				ifFalse: [
-					c origin: aSubMorph bounds topLeft.
-					c direction: aSubMorph bounds width @ 0.
-					aCanvas fillRectangle: frame basicFillStyle: c ] ]
+			aSubMorph selected ifTrue: [
+				aCanvas fillRectangle: frame color: owner selectionColorToUse.
+				^ self ] ].
+	aSubMorph color ifNotNil: [ :subMorphColor |
+		subMorphColor isColor
+			ifTrue: [
+				aCanvas
+					frameAndFillRectangle: frame
+					fillColor: subMorphColor
+					borderWidth: 0
+					borderColor: Color transparent ]
+			ifFalse: [
+				subMorphColor origin: aSubMorph bounds topLeft.
+				subMorphColor direction: aSubMorph bounds width @ 0.
+				aCanvas fillRectangle: frame basicFillStyle: subMorphColor ] ]
 ]
 
 { #category : 'drawing' }

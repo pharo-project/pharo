@@ -79,7 +79,7 @@ OCASTTranslatorTest >> encoder: anEncoder [
 { #category : 'support' }
 OCASTTranslatorTest >> executeMethod: aMethod onReceiver: receiver [
 
-	^ aMethod valueWithReceiver: receiver arguments: #()
+	^ aMethod valueWithReceiver: receiver
 ]
 
 { #category : 'support' }
@@ -151,7 +151,7 @@ OCASTTranslatorTest >> setUp [
 
 	super setUp.
 	instance := OCOpalExamples new.
-	globals := SystemDictionary new
+	globals := SystemEnvironment new
 ]
 
 { #category : 'running' }

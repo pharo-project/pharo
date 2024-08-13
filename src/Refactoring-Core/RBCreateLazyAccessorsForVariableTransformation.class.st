@@ -62,6 +62,14 @@ RBCreateLazyAccessorsForVariableTransformation class >> variable: aVarName class
 ]
 
 { #category : 'preconditions' }
+RBCreateLazyAccessorsForVariableTransformation >> applicabilityPreconditions [ 
+	"In addition check that the initialization is valid"
+
+	^ super applicabilityPreconditions ,
+		{ (RBCondition withBlock: [  self verifyInitializationExpressionOf: self defaultValue. true ]) }
+]
+
+{ #category : 'preconditions' }
 RBCreateLazyAccessorsForVariableTransformation >> checkVariableReferencesIn: aParseTree [
 
 	| searcher |
@@ -115,14 +123,6 @@ RBCreateLazyAccessorsForVariableTransformation >> defineGetterMethod [
 			 withProtocol: #accessing).
 
 	^ selector
-]
-
-{ #category : 'preconditions' }
-RBCreateLazyAccessorsForVariableTransformation >> preconditions [
-	"In addition check that the initialization is valid"
-
-	^ super preconditions
-		& (RBCondition withBlock: [  self verifyInitializationExpressionOf: self defaultValue. true ])
 ]
 
 { #category : 'preconditions' }

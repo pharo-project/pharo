@@ -10,9 +10,9 @@ EDDebuggingAPITest >> forbiddenProcesses [
 	self flag: 'This is a fixed list of processes we do not want to kill if they exist. This is too magickal, but we lack tools to have such information and we do not want to depend on process browser packages (information is taken from there).'.
 	^ {[  ].
 	[ Smalltalk lowSpaceWatcherProcess ].
-	[ WeakArray runningFinalizationProcess ].
+	[ FinalizationProcess runningFinalizationProcess ].
 	[ Processor backgroundProcess ].
-	[ UIManager default uiProcess ].
+	[ MorphicUIManager uiProcess ].
 	[ Delay schedulingProcess ]}
 ]
 

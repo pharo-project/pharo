@@ -286,7 +286,7 @@ OSWindow >> isTextInputActive [
 
 { #category : 'testing' }
 OSWindow >> isValid [
-	 ^ backendWindow notNil and: [ backendWindow isValid ]
+	 ^ backendWindow isNotNil and: [ backendWindow isValid ]
 ]
 
 { #category : 'testing' }

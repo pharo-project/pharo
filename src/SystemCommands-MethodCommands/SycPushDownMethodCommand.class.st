@@ -3,7 +3,7 @@ I am a command to push down given methods
 "
 Class {
 	#name : 'SycPushDownMethodCommand',
-	#superclass : 'SysRefactoringMethodCommand',
+	#superclass : 'SycRefactoringMethodCommand',
 	#instVars : [
 		'refactoringScopes'
 	],
@@ -30,10 +30,10 @@ SycPushDownMethodCommand >> defaultMenuItemName [
 { #category : 'execution' }
 SycPushDownMethodCommand >> executeRefactorings [
 
-	(RBPushDownMethodDriver
+	(RePushDownMethodDriver
 		model: model
 		scopes: refactoringScopes
-		pushDown: methods) runRefactoring
+		pushDownMethods: methods) runRefactoring
 ]
 
 { #category : 'testing' }

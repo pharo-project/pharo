@@ -595,10 +595,12 @@ RubSmalltalkEditorTest >> testEvaluateAndDo [
 		          #flag ].
 	self assert: result equals: #flag.
 
+	"We for now ignore errors and return nil"
 	self
-		should: [
-		editor evaluate: '40+¿' andDo: [ :value | self error: 'DEADCODE' ] ]
-		raise: RuntimeSyntaxError
+		shouldnt: [
+		result := editor evaluate: '40+¿' andDo: [ :value | value ] ]
+		raise: RuntimeSyntaxError.
+	self assert: result isNil.
 ]
 
 { #category : 'tests - completion' }

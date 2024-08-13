@@ -48,13 +48,6 @@ TheManifestBuilder class >> hasManifestFor: aItem [
 	^  (self new manifestOf: aItem) isNil not
 ]
 
-{ #category : 'instance creation' }
-TheManifestBuilder class >> hasPackageNamed: aPackageName [
-
-	^ self allManifestClasses
-		anySatisfy: [:each | each category = aPackageName  ]
-]
-
 { #category : 'accessing - manifest' }
 TheManifestBuilder class >> manifestClassComment [
 
@@ -93,13 +86,14 @@ TheManifestBuilder class >> of: aItem [
 ]
 
 { #category : 'instance creation' }
-TheManifestBuilder class >> ofPackageNamed: aPackageName [
+TheManifestBuilder class >> ofPackage: aPackage [
+
 	| builder |
 	builder := self new.
 	self allManifestClasses
-		detect: [ :each | each category = aPackageName ]
+		detect: [ :each | each package = aPackage ]
 		ifFound: [ :manifestClass | builder manifestClass: manifestClass ]
-		ifNone: [ builder createManifestNamed: aPackageName ].
+		ifNone: [ builder createManifestNamed: aPackage name ].
 	^ builder
 ]
 
@@ -450,7 +444,7 @@ TheManifestBuilder >> isFalsePositive: anItem onRule: ruleId version: versionId 
 
 	^ ((self containsFalsePositive: anItem onRule: ruleId version: versionId) or:
 			[(self containsRejectedRule: ruleId) or:
-				[(anItem class = RPackage) not and: [self containsRejectedClass: anItem criticClass]]])
+				[(anItem class = Package) not and: [self containsRejectedClass: anItem criticClass]]])
 ]
 
 { #category : 'accessing' }
@@ -637,11 +631,11 @@ TheManifestBuilder >> unwrap: aCollection [
 	aCollection
 		do: [ :each |
 			rgobject := (self definitionClassFor: each first first) manifestReadOn:  (each first at: 2).
-			(rgobject isClass and: [ rgobject  realClass notNil ])
+			(rgobject isClass and: [ rgobject  realClass isNotNil ])
 				ifTrue: [ unwrapCollection add: rgobject realClass ].
-			(rgobject isMethod and: [ rgobject method notNil ])
+			(rgobject isMethod and: [ rgobject method isNotNil ])
 				ifTrue: [ unwrapCollection add: rgobject method ].
-			(rgobject isPackage and: [ rgobject realPackage notNil ])
+			(rgobject isPackage and: [ rgobject realPackage isNotNil ])
 				ifTrue: [ unwrapCollection add: rgobject realPackage ] ].
 	^ unwrapCollection
 ]

@@ -12,15 +12,6 @@ Class {
 }
 
 { #category : 'visitor' }
-EpInverseVisitor >> visitBehaviorCategoryChange: aChange [
-
-	^ EpBehaviorCategoryChange
-			oldCategory: aChange newCategory
-			newCategory: aChange oldCategory
-			class: aChange behaviorAffected
-]
-
-{ #category : 'visitor' }
 EpInverseVisitor >> visitBehaviorCommentChange: aChange [
 
 	^ EpBehaviorCommentChange
@@ -38,6 +29,17 @@ EpInverseVisitor >> visitBehaviorNameChange: aChange [
 			oldName: aChange newName
 			newName: aChange oldName
 			class: aChange behaviorAffected
+]
+
+{ #category : 'visitor' }
+EpInverseVisitor >> visitBehaviorRepackagedChange: aBehaviorRepackagedChange [
+
+	^ EpBehaviorRepackagedChange
+		  oldPackage: aBehaviorRepackagedChange newPackageName
+		  oldTag: aBehaviorRepackagedChange newTagName
+		  newPackage: aBehaviorRepackagedChange oldPackageName
+		  newTag: aBehaviorRepackagedChange oldTagName
+		  class: aBehaviorRepackagedChange behaviorAffected
 ]
 
 { #category : 'visitor' }

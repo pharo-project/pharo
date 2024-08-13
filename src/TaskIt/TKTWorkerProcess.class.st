@@ -41,7 +41,7 @@ TKTWorkerProcess >> isFree [
 { #category : 'testing' }
 TKTWorkerProcess >> isRunning [
 
-	^ process notNil and: [ process isTerminated not ]
+	^ process isNotNil and: [ process isTerminated not ]
 ]
 
 { #category : 'start-stop' }

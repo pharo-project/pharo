@@ -51,7 +51,8 @@ Class {
 
 { #category : 'private' }
 EFFormatter class >> announceASettingChange [
-	SystemAnnouncer announce: EFSettingChanged
+
+	self codeSupportAnnouncer announce: EFSettingChanged
 ]
 
 { #category : 'private' }
@@ -360,7 +361,7 @@ EFFormatter class >> numberOfSpacesInsideParentheses: anInteger [
 
 { #category : 'accessing' }
 EFFormatter class >> oneLineMessages [
-	^ DefaultPrettyPrintContext oneLineMessages
+	^ DefaultPrettyPrintContext oneLineMessages printString
 ]
 
 { #category : 'accessing' }
@@ -794,7 +795,7 @@ EFFormatter class >> settingsOneLineMessages: aBuilder [
 
 	(aBuilder setting: #oneLineMessages)
 		label: 'One line messages';
-		default: #(#to: #to:do: #to:by: #to:by:do:);
+		default: '#(#to: #to:do: #to:by: #to:by:do:)';
 		description: 'All the messages listed in this setting will be formatted on one single line. 
 		
 If we include #todo: in the oneLineMessages we get 
@@ -1330,10 +1331,10 @@ EFFormatter >> formatSequenceNodeStatementsFor: aSequenceNode [
 ]
 
 { #category : 'private - formatting' }
-EFFormatter >> formatSingleArrayElement: aRBNode [ 
+EFFormatter >> formatSingleArrayElement: aNode [ 
 	"Imagine that you have {1 factorial}, you do not want an ending period. This method is only invoked on the last array element."
 	
-	self visitNode: aRBNode
+	self visitNode: aNode
 ]
 
 { #category : 'private - formatting' }
@@ -1688,7 +1689,7 @@ EFFormatter >> needsParenthesisFor: aNode [
 		and: [ parent isMessage
 				and: [ parent receiver == aNode and: [ aNode selector isUnary not ] ] ])
 		ifTrue: [ grandparent := parent parent.
-			(grandparent notNil and: [ grandparent isCascade ])
+			(grandparent isNotNil and: [ grandparent isCascade ])
 				ifTrue: [ ^ true ] ].
 	aNode precedence < parent precedence
 		ifTrue: [ ^ false ].

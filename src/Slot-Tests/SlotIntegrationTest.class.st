@@ -326,7 +326,7 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 	aClass := self class classInstaller make: [ :aClassBuilder |
 		aClassBuilder
 			name: self aClassName;
-			slotsFromString: 'x';
+			slots: #(x);
 			package: self slotTestPackageName ].
 
 	self assert: aClass instVarNames equals: #(x).
@@ -340,22 +340,18 @@ SlotIntegrationTest >> testReshapeClassPropagatesToDeepHierarchyClassInterface [
 SlotIntegrationTest >> testReshapeClassWithClassSlot [
 
 	aClass := self class classInstaller make: [ :aClassBuilder |
-		aClassBuilder
-			name: self aClassName;
-			package: self slotTestPackageName ].
+		          aClassBuilder
+			          name: self aClassName;
+			          package: self slotTestPackageName ].
 
-	aClass class
-		instanceVariableNames: #x.
+	aClass class instanceVariableNames: #x.
 
-	self assert: aClass class instVarNames equals: #(x).
+	self assert: aClass class instVarNames equals: #( x ).
 
-	aClass := self class classInstaller make: [ :aClassBuilder |
-		aClassBuilder
-			name: self aClassName;
-			slotsFromString: 'x';
-			package: self slotTestPackageName ].
+	aClass := self class classInstaller update: aClass to: [ :aClassBuilder | aClassBuilder slots: #(x) ].
 
-	self assert: aClass class instVarNames equals: #(x)
+	self assert: aClass class instVarNames equals: #( x ).
+	self assert: aClass instVarNames equals: #( x )
 ]
 
 { #category : 'tests' }

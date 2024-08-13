@@ -453,22 +453,6 @@ ExceptionTester >> simpleIsNestedTestResults [
 		yourself
 ]
 
-{ #category : 'tests' }
-ExceptionTester >> simpleNoTimeoutTest [
-
-	[ self doSomething ]
-		valueWithin: 1 day onTimeout:
-			[ self doSomethingElse ]
-]
-
-{ #category : 'results' }
-ExceptionTester >> simpleNoTimeoutTestResults [
-
-	^OrderedCollection new
-		add: self doSomethingString;
-		yourself
-]
-
 { #category : 'signaledexception tests' }
 ExceptionTester >> simpleOuterTest [
 	"uses #resume"
@@ -640,50 +624,10 @@ ExceptionTester >> simpleReturnTestResults [
 		yourself
 ]
 
-{ #category : 'tests' }
-ExceptionTester >> simpleTimeoutTest [
-
-	| n |
-	[1 to: 1000000 do: [ :i | n := i. self doSomething ] ]
-		valueWithin: 50 milliSeconds onTimeout:
-			[ self iterationsBeforeTimeout: n.
-			self doSomethingElse ]
-]
-
-{ #category : 'results' }
-ExceptionTester >> simpleTimeoutTestResults [
-
-	| things |
-	things := OrderedCollection new: self iterationsBeforeTimeout.
-
-	self iterationsBeforeTimeout timesRepeat: [ things add: self  doSomethingString ].
-	things add: self doSomethingElseString.
-
-	^ things
-]
-
-{ #category : 'tests' }
-ExceptionTester >> simpleTimeoutWithZeroDurationTest [
-
-	[ self doSomething ]
-		valueWithin: 0 seconds onTimeout:
-			[ self doSomethingElse ]
-]
-
-{ #category : 'results' }
-ExceptionTester >> simpleTimeoutWithZeroDurationTestResults [
-
-	^OrderedCollection new
-		add: self doSomethingElseString;
-		yourself
-]
-
 { #category : 'accessing' }
 ExceptionTester >> suiteLog [
 
-	suiteLog == nil
-		ifTrue: [suiteLog := OrderedCollection new].
-	^suiteLog
+	^ suiteLog ifNil: [ suiteLog := OrderedCollection new ]
 ]
 
 { #category : 'accessing' }

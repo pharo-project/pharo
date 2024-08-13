@@ -138,7 +138,7 @@ RGDefinition >> hasAnnotationNamed: annotationName [
 { #category : 'annotations' }
 RGDefinition >> hasAnnotations [
 
-	^annotations notNil
+	^annotations isNotNil
 ]
 
 { #category : 'testing - types' }

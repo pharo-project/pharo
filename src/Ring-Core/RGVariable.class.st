@@ -55,6 +55,12 @@ RGVariable >> isInstanceVariable [
 ]
 
 { #category : 'testing' }
+RGVariable >> isInvalidVariable [
+
+	^ false
+]
+
+{ #category : 'testing' }
 RGVariable >> isLocalVariable [
 	^false
 ]
@@ -80,6 +86,12 @@ RGVariable >> isSuperVariable [
 { #category : 'testing' }
 RGVariable >> isTempVariable [
 	^false
+]
+
+{ #category : 'testing' }
+RGVariable >> isUndeclaredVariable [
+
+	^ false
 ]
 
 { #category : 'testing' }

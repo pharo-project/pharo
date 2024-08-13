@@ -1,12 +1,6 @@
 Extension { #name : 'String' }
 
 { #category : '*ScriptingExtensions' }
-String >> asClass [
-	"returns a global class with my name"
-	^ self asClassInEnvironment: Smalltalk globals
-]
-
-{ #category : '*ScriptingExtensions' }
 String >> asClassIfAbsent: absentBlock [
 	"returns a global class with my name"
 	^ self asClassInEnvironment: Smalltalk globals ifAbsent: absentBlock

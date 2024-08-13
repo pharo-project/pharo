@@ -218,8 +218,6 @@ Class {
 		'withHLines',
 		'preferedPaneColor',
 		'indentGap',
-		'expandedToggleImage',
-		'notExpandedToggleImage',
 		'resizerWidth',
 		'gapAfterToggle',
 		'hasToggleAtRoot',
@@ -674,14 +672,14 @@ MorphTreeMorph >> drawLinesOn: aCanvas [
 		during: [:clippedCanvas |
 			scroller submorphsDo: [ :submorph | | last |
 				((submorph isExpanded and: [
-					(submorph nextSibling notNil and: [
+					(submorph nextSibling isNotNil and: [
 						clippedCanvas isVisible: (submorph fullBounds topLeft
 							corner: submorph nextSibling fullBounds bottomRight)]) or: [
-					submorph nextSibling isNil and: [(last := submorph lastChild) notNil and: [
+					submorph nextSibling isNil and: [(last := submorph lastChild) isNotNil and: [
 						clippedCanvas isVisible: (submorph fullBounds topLeft
 							corner: last fullBounds bottomRight)]]]]) or: [
 				(clippedCanvas isVisible: submorph fullBounds) or: [
-				(submorph nextSibling notNil and: [
+				(submorph nextSibling isNotNil and: [
 						clippedCanvas isVisible: submorph nextSibling fullBounds])]]) ifTrue:[
 					submorph drawLinesOn: clippedCanvas]]]
 		smoothing: scroller smoothing
@@ -841,30 +839,18 @@ MorphTreeMorph >> expandSilently: aMorph suchThat: aBlock [
 ]
 
 { #category : 'expanding-collapsing' }
-MorphTreeMorph >> expandedForm [
-	"Answer the form to use for expanded items."
-
-	^self theme treeExpandedForm
-]
-
-{ #category : 'expanding-collapsing' }
-MorphTreeMorph >> expandedFormForMorph: aMorph [
-	"Answer the form to use for expanded items."
+MorphTreeMorph >> expandedFormSetForMorph: aMorph [
+	"Answer the form set to use for expanded items."
 
 	^ (aMorph selected and: [self selectionColor luminance < 0.7])
-		ifTrue: [self theme whiteTreeExpandedForm]
-		ifFalse: [self theme treeExpandedForm]
+		ifTrue: [self theme whiteTreeExpandedFormSet]
+		ifFalse: [self theme treeExpandedFormSet]
 ]
 
 { #category : 'expanding-collapsing' }
 MorphTreeMorph >> expandedNodesFrom: aMorpList [
 
 	^ (aMorpList select: [ :each | each isExpanded]) collect: [ :each | each complexContents]
-]
-
-{ #category : 'expanding-collapsing' }
-MorphTreeMorph >> expandedToggleImage [
-	^ expandedToggleImage ifNil: [expandedToggleImage := ImageMorph new form: self expandedForm]
 ]
 
 { #category : 'geometry' }
@@ -973,7 +959,8 @@ MorphTreeMorph >> handlesMouseStillDown: anEvent [
 
 { #category : 'accessing' }
 MorphTreeMorph >> hasIconBlock [
-	^ iconBlock notNil
+
+	^ iconBlock isNotNil
 ]
 
 { #category : 'accessing' }
@@ -1334,24 +1321,19 @@ MorphTreeMorph >> mouseStillDownStepRate [
 { #category : 'events-processing' }
 MorphTreeMorph >> mouseUp: event [
 	"Fixed up highlight problems."
-	| nodeMorph wasHigh |
 
-	self enabled ifFalse: [ ^self ].
+	| nodeMorph wasHigh |
+	self enabled ifFalse: [ ^ self ].
 	mouseOverAllowed := false.
 	nodeMorph := self scrollerSubMorphFromPoint: event position.
 
-	wasHigh := nodeMorph notNil
-		ifTrue: [nodeMorph highlightedForMouseDown]
-		ifFalse: [false].
+	wasHigh := nodeMorph
+		           ifNotNil: [ nodeMorph highlightedForMouseDown ]
+		           ifNil: [ false ].
 
-	self allNodeMorphs
-		do: [:m |
-				m highlightedForMouseDown
-					ifTrue: [m highlightForMouseDown: false]].
-	wasHigh
-		ifFalse: [
-			nodeMorph
-				ifNotNil: [^self]].
+	self allNodeMorphs do: [ :m |
+		m highlightedForMouseDown ifTrue: [ m highlightForMouseDown: false ] ].
+	wasHigh ifFalse: [ nodeMorph ifNotNil: [ ^ self ] ].
 
 	self listManager mouseUp: event on: nodeMorph
 ]
@@ -1410,22 +1392,10 @@ MorphTreeMorph >> nodeStringGetter: aValuable [
 ]
 
 { #category : 'expanding-collapsing' }
-MorphTreeMorph >> notExpandedForm [
-	"Answer the form to use for unexpanded items."
-
-	^self theme treeUnexpandedForm
-]
-
-{ #category : 'expanding-collapsing' }
-MorphTreeMorph >> notExpandedFormForMorph: aMorph [
+MorphTreeMorph >> notExpandedFormSetForMorph: aMorph [
 	^ (aMorph selected and: [self selectionColor luminance < 0.7])
-		ifTrue: [self theme whiteTreeUnexpandedForm]
-		ifFalse: [self theme treeUnexpandedForm]
-]
-
-{ #category : 'expanding-collapsing' }
-MorphTreeMorph >> notExpandedToggleImage [
-	^ notExpandedToggleImage ifNil: [notExpandedToggleImage := ImageMorph new form: self notExpandedForm]
+		ifTrue: [self theme whiteTreeUnexpandedFormSet]
+		ifFalse: [self theme treeUnexpandedFormSet]
 ]
 
 { #category : 'updating' }
@@ -1477,21 +1447,17 @@ MorphTreeMorph >> registerRequestHandlers [
 
 { #category : 'initialize - release' }
 MorphTreeMorph >> release [
+
 	lineColorBlock := nil.
 	columnResizers := nil.
 	preferedPaneColor := nil.
-	expandedToggleImage := nil.
-	notExpandedToggleImage := nil.
-	columns
-		ifNotNil: [
-			columns do: [:col | col release].
-			columns := nil].
-	listManager
-		ifNotNil: [
-			listManager release.
-			listManager := nil].
-	self releaseActionMap. "we are not sure if we need it"
-	super release
+	columns ifNotNil: [
+		columns do: [ :col | col release ].
+		columns := nil ].
+	listManager ifNotNil: [
+		listManager release.
+		listManager := nil ].
+	self releaseActionMap "we are not sure if we need it"
 ]
 
 { #category : 'column handling' }
@@ -1828,16 +1794,6 @@ MorphTreeMorph >> toggleExpandedState: aMorph event: event [
 					ifTrue: [each toggleExpandedState]]]
 		ifFalse: [aMorph toggleExpandedState].
 	self adjustSubmorphPositions
-]
-
-{ #category : 'expanding-collapsing' }
-MorphTreeMorph >> toggleImageHeight [
-	^ self expandedToggleImage height max: self notExpandedToggleImage height
-]
-
-{ #category : 'expanding-collapsing' }
-MorphTreeMorph >> toggleImageWidth [
-	^ self expandedToggleImage width max: self notExpandedToggleImage width
 ]
 
 { #category : 'accessing' }

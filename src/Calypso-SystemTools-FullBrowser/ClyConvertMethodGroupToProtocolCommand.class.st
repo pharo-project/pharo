@@ -20,7 +20,8 @@ Class {
 
 { #category : 'testing' }
 ClyConvertMethodGroupToProtocolCommand class >> canBeExecutedInContext: aToolContext [
-	^aToolContext isProtocolSelected not
+
+	^ aToolContext isExtensionMethodGroupSelected
 ]
 
 { #category : 'activation' }
@@ -51,9 +52,10 @@ ClyConvertMethodGroupToProtocolCommand >> execute [
 
 { #category : 'execution' }
 ClyConvertMethodGroupToProtocolCommand >> prepareFullExecutionInContext: aToolContext [
+
 	super prepareFullExecutionInContext: aToolContext.
 
-	protocol := aToolContext requestProtocol: 'New protocol name'
+	protocol := StProtocolNameChooserPresenter requestProtocolNameConfiguring: [ :presenter | presenter concernedClass: aToolContext lastSelectedClass ]
 ]
 
 { #category : 'accessing' }

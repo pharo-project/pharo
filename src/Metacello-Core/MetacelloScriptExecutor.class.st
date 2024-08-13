@@ -40,11 +40,6 @@ MetacelloScriptExecutor >> baselineArg: anObject [
 	baselineArg := anObject
 ]
 
-{ #category : 'options api' }
-MetacelloScriptExecutor >> cacheRepository: aRepositoryDescription [
-    self options at: #'cacheRepository' put: aRepositoryDescription
-]
-
 { #category : 'args' }
 MetacelloScriptExecutor >> classNameArg [
     ^ classNameArg
@@ -67,25 +62,23 @@ MetacelloScriptExecutor >> configurationArg: anObject [
 
 { #category : 'execution' }
 MetacelloScriptExecutor >> execute: statements [
-  statements
-    do: [ :assoc | 
-      assoc value
-        ifNil: [ self perform: assoc key ]
-        ifNotNil: [ self perform: assoc key withArguments: assoc value ] ].
-  projectSpecGenerator := self projectSpecGenerator.
-  projectSpecGenerator target
-    execute: [ :projectSpec | 
-      | engine |
-      engine := MetacelloScriptEngine new
-        options: self options copy;
-        projectSpec: projectSpec;
-        yourself.
-      engine perform: actionArg key withArguments: actionArg value.
-      engine root ifNotNil: [ :root | self roots add: root ] ]
-    against: self.
-  ^ (self singleRoot and: [ self roots size == 1 ])
-    ifTrue: [ self roots first ]
-    ifFalse: [ self roots ]
+
+	statements do: [ :assoc |
+		assoc value
+			ifNil: [ self perform: assoc key ]
+			ifNotNil: [ self perform: assoc key withArguments: assoc value ] ].
+	projectSpecGenerator := self projectSpecGenerator.
+	self executeString: projectSpecGenerator target do: [ :projectReferenceSpec |
+		| engine |
+		engine := MetacelloScriptEngine new
+			          options: self options copy;
+			          projectReferenceSpec: projectReferenceSpec;
+			          yourself.
+		engine perform: actionArg key withArguments: actionArg value.
+		engine root ifNotNil: [ :root | self roots add: root ] ].
+	^ (self singleRoot and: [ self roots size == 1 ])
+		  ifTrue: [ self roots first ]
+		  ifFalse: [ self roots ]
 ]
 
 { #category : 'execution callback' }
@@ -133,7 +126,13 @@ MetacelloScriptExecutor >> list [
 
 { #category : 'actions api' }
 MetacelloScriptExecutor >> load: required [
-    actionArg := #'load:' -> {required}
+    actionArg := #load: -> {required}
+]
+
+{ #category : 'options api' }
+MetacelloScriptExecutor >> loader: aLoader [
+	
+	self options at: #loader put: aLoader
 ]
 
 { #category : 'actions api' }
@@ -233,11 +232,6 @@ MetacelloScriptExecutor >> repositoryArg: anObject [
     repositoryArg := anObject
 ]
 
-{ #category : 'options api' }
-MetacelloScriptExecutor >> repositoryOverrides: aRepositoryDescriptionList [
-    self options at: #'repositoryOverrides' put: aRepositoryDescriptionList
-]
-
 { #category : 'accessing' }
 MetacelloScriptExecutor >> roots [
     roots ifNil: [ roots := OrderedCollection new ].
@@ -268,13 +262,6 @@ MetacelloScriptExecutor >> unlock [
 { #category : 'actions api' }
 MetacelloScriptExecutor >> unregister [
   actionArg := #'unregister' -> #()
-]
-
-{ #category : 'options api' }
-MetacelloScriptExecutor >> useCurrentVersion: aBool [
-    "private option used to implement the classic mode"
-
-    self options at: #'useCurrentVersion' put: aBool
 ]
 
 { #category : 'args' }

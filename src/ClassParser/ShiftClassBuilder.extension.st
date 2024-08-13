@@ -6,30 +6,24 @@ ShiftClassBuilder >> buildFromAST: aCDClassDefinitionNode [
 	self name: aCDClassDefinitionNode className.
 
 	aCDClassDefinitionNode superclassName = #nil
-		ifFalse: [ self
-				superclass:
-					(superclassResolver
-						resolve: aCDClassDefinitionNode superclassName
-						inEnv: buildEnvironment) ]
+		ifFalse: [ self superclass: (superclassResolver resolve: aCDClassDefinitionNode superclassName inEnv: buildEnvironment) ]
 		ifTrue: [ self superclass: nil ].
 
 	self layoutClass: aCDClassDefinitionNode layoutClass.
 
-	self slots: (aCDClassDefinitionNode slots collect: [ :e | e asSlot]).
+	self slots: (aCDClassDefinitionNode slots collect: [ :e | e asSlot ]).
 
-	self sharedVariables: (aCDClassDefinitionNode sharedVariables collect: [ :e | e asClassVariable]).
+	self sharedVariables: (aCDClassDefinitionNode sharedVariables collect: [ :e | e asClassVariable ]).
 
-	aCDClassDefinitionNode packageName
-		ifNotNil: [ :cat| self category: cat ].
+	aCDClassDefinitionNode packageName ifNotNil: [ :aPackage | self package: aPackage ].
 
-	self layoutDefinition sharedPools: (aCDClassDefinitionNode sharedPools collect: [ :e | e name ]).
+	aCDClassDefinitionNode tag ifNotNil: [ :aTag | self tag: aTag ].
 
-	aCDClassDefinitionNode traitDefinition
-		ifNotNil: [ :traitDef |
-			traitDef originalNode formattedCode.
-			self
-				traitComposition:
-					(self class compiler
-						source: traitDef originalNode formattedCode;
-							evaluate) ]
+	self sharedPools: (aCDClassDefinitionNode sharedPools collect: [ :e | e name ]).
+
+	aCDClassDefinitionNode traitDefinition ifNotNil: [ :traitDef |
+		traitDef originalNode formattedCode.
+		self traitComposition: (self class compiler
+				 source: traitDef originalNode formattedCode;
+				 evaluate) ]
 ]

@@ -8,9 +8,9 @@ Class {
 		'newPackage',
 		'oldPackage'
 	],
-	#category : 'System-Announcements-System-Packages',
+	#category : 'System-Announcements-System-Methods',
 	#package : 'System-Announcements',
-	#tag : 'System-Packages'
+	#tag : 'System-Methods'
 }
 
 { #category : 'instance creation' }
@@ -20,28 +20,6 @@ MethodRepackaged class >> methodRepackaged: aMethod oldPackage: oldPackage newPa
 			oldPackage: oldPackage;
 			newPackage: newPackage;
 			yourself
-]
-
-{ #category : 'testing' }
-MethodRepackaged >> affectsClassExtension [
-	^true
-]
-
-{ #category : 'testing' }
-MethodRepackaged >> affectsClassesExtendedInPackage: aPackage [
-	^(super affectsClassesExtendedInPackage: aPackage)
-		or: [ oldPackage = aPackage ]
-]
-
-{ #category : 'testing' }
-MethodRepackaged >> affectsMethodsDefinedInPackage: aPackage [
-	^(super affectsMethodsDefinedInPackage: aPackage)
-		or: [ oldPackage = aPackage ]
-]
-
-{ #category : 'testing' }
-MethodRepackaged >> affectsPackage: aPackage [
-	^newPackage == aPackage or: [ oldPackage == aPackage ]
 ]
 
 { #category : 'accessing' }

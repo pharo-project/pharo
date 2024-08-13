@@ -326,7 +326,7 @@ Dictionary >> associationsSelect: aBlock [
 	to true."
 
 	| newCollection |
-	newCollection := self species new.
+	newCollection := self copyEmpty.
 	self associationsDo:
 		[:each |
 		(aBlock value: each) ifTrue: [newCollection add: each]].
@@ -368,7 +368,7 @@ Dictionary >> at: firstKey at: secondKey ifAbsentPut: aZeroArgBlock [
 	"Return the object stored in the second dictionary at secondKey. The second dictionary is accessed via the key firstKey. If firstKey is not defined, set a new dictionary for the second key and set the value of aZeroArgBlock execution. If firstKey is defined and not second key set the value of aZeroArgBlock execution. See NestedDictionaryTest for examples."
 
 	| subDictionary |
-	subDictionary := self at: firstKey ifAbsentPut: [ self species new ].
+	subDictionary := self at: firstKey ifAbsentPut: [ self copyEmpty ].
 	^ subDictionary at: secondKey ifAbsentPut: aZeroArgBlock
 ]
 
@@ -377,7 +377,7 @@ Dictionary >> at: firstKey at: secondKey put: aValue [
 	"Set a value at secondKey in the dictionary returned by firstKey."
 
 	| subDictionary |
-	subDictionary := self at: firstKey ifAbsentPut: [ self species new ].
+	subDictionary := self at: firstKey ifAbsentPut: [ self copyEmpty ].
 	^ subDictionary at: secondKey put: aValue
 ]
 
@@ -476,39 +476,16 @@ Dictionary >> bindingOf: varName [
 ]
 
 { #category : 'enumerating' }
-Dictionary >> bindingsDo: aBlock [
-
-	"An alias for associationsDo:"
-
-	self associationsDo: aBlock
-]
-
-{ #category : 'enumerating' }
 Dictionary >> collect: aBlock [
 	"Evaluate aBlock with each of my values as the argument.  Collect the
 	resulting values into a collection that is like me. Answer with the new
 	collection."
 	| newCollection |
-	newCollection := self species new.
+	newCollection := self copyEmpty.
 	self associationsDo:[:each |
 		newCollection at: each key put: (aBlock value: each value).
 	].
 	^newCollection
-]
-
-{ #category : 'adding' }
-Dictionary >> declare: key from: aDictionary [
-	"Add key to the receiver. If key already exists, do nothing. If aDictionary
-	includes key, then remove it from aDictionary and use its association as
-	the element of the receiver."
-
-	(self includesKey: key) ifTrue: [^ self].
-	(aDictionary includesKey: key)
-		ifTrue:
-			[self add: (aDictionary associationAt: key).
-			aDictionary removeKey: key]
-		ifFalse:
-			[self add: key -> nil]
 ]
 
 { #category : 'enumerating' }
@@ -831,6 +808,23 @@ Dictionary >> rehash [
 	array := newSelf array
 ]
 
+{ #category : 'enumerating' }
+Dictionary >> reject: rejectBlock thenCollect: collectBlock [
+	"Optimized version of Collection>>#reject:thenCollect:"
+
+	| newDictionary |
+	tally = 0 ifTrue: [ ^ self copyEmpty ].
+	newDictionary := self copyEmpty.
+
+	1 to: array size do: [ :index |
+		| assoc |
+		assoc := array at: index.
+		assoc ifNotNil: [
+			(rejectBlock value: assoc value) ifFalse: [
+				newDictionary at: assoc key put: (collectBlock value: assoc value) ] ] ].
+	^ newDictionary
+]
+
 { #category : 'removing' }
 Dictionary >> remove: anObject [
 
@@ -859,8 +853,7 @@ Dictionary >> removeKey: key ifAbsent: aBlock [
 
 	| index assoc |
 	index := self findElementOrNil: key.
-	assoc := array at: index.
-	assoc == nil ifTrue: [ ^ aBlock value ].
+	assoc := (array at: index) ifNil: [ ^ aBlock value ].
 	array at: index put: nil.
 	tally := tally - 1.
 	self fixCollisionsFrom: index.
@@ -870,9 +863,11 @@ Dictionary >> removeKey: key ifAbsent: aBlock [
 { #category : 'undeclared' }
 Dictionary >> removeUnreferencedKeys [
 	"This is private code for the Undeclared handling, not a general API."
-	"Undeclared removeUnreferencedKeys"
 
-	^ self unreferencedKeys do: [ :key | self removeKey: key ]
+	self
+		deprecated: 'Use "Smalltalk image cleanOutUndeclared" instead'
+		transformWith: '`@rcv removeUnreferencedKeys' -> 'Smalltalk image cleanOutUndeclared'.
+	Smalltalk image cleanOutUndeclared
 ]
 
 { #category : 'private' }
@@ -913,7 +908,24 @@ Dictionary >> select: aBlock [
 	^ newCollection
 ]
 
-{ #category : 'printing' }
+{ #category : 'enumerating' }
+Dictionary >> select: selectBlock thenCollect: collectBlock [
+	"Optimized version of Collection>>#select:thenCollect:"
+
+	| newDictionary |
+	tally = 0 ifTrue: [ ^ self copyEmpty ].
+	newDictionary := self copyEmpty.
+
+	1 to: array size do: [ :index |
+		| assoc |
+		assoc := array at: index.
+		assoc ifNotNil: [
+			(selectBlock value: assoc value) ifTrue: [
+				newDictionary at: assoc key put: (collectBlock value: assoc value) ] ] ].
+	^ newDictionary
+]
+
+{ #category : 'storing' }
 Dictionary >> storeOn: aStream [
 	| noneYet |
 	aStream nextPutAll: '(('.
@@ -929,29 +941,6 @@ Dictionary >> storeOn: aStream [
 			aStream store: each].
 	noneYet ifFalse: [aStream nextPutAll: '; yourself'].
 	aStream nextPut: $)
-]
-
-{ #category : 'undeclared' }
-Dictionary >> unreferencedKeys [
-	"This is private code for the Undeclared handling"
-
-	^self keys select: [ :key |
-			(self systemNavigation allReferencesTo: (self associationAt: key)) isEmpty ]
-]
-
-{ #category : 'private' }
-Dictionary >> valueAtNewKey: aKey put: anObject atIndex: index declareFrom: aDictionary [
-	"Support for coordinating class variable and global declarations
-	with variables that have been put in Undeclared so as to
-	redirect all references to the undeclared variable."
-
-	(aDictionary includesKey: aKey)
-		ifTrue:
-			[self atNewIndex: index
-				put: ((aDictionary associationAt: aKey) value: anObject).
-			aDictionary removeKey: aKey]
-		ifFalse:
-			[self atNewIndex: index put: (Association key: aKey value: anObject)]
 ]
 
 { #category : 'accessing' }

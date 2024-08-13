@@ -9,10 +9,10 @@ set -o xtrace
 # The first parameter is the architecture
 # The second parameter is the stage name
 
-CACHE="${BOOTSTRAP_CACHE:-bootstrap-cache}"
-
 SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
 . ${SCRIPTS}/envvars.sh
+
+CACHE="${BOOTSTRAP_CACHE}"
 
 
 find ${CACHE}
@@ -22,7 +22,7 @@ find ${CACHE}
 # WARNING: I'm assuming CACHE=bootstrap-cache
 # WARNING: If you change this, you will need to change "runTests.sh" too
 #
-TEST_NAME_PREFIX=$(find ${CACHE} -name "Pharo*.zip" | head -n 1 | cut -d'/' -f 2 | cut -d'-' -f 1-2)
+TEST_NAME_PREFIX=$(basename `find ${CACHE} -name "Pharo*.zip" | head -n 1` | cut -d'-' -f 1-2)
 
 # Extract the VM version from the image file version, avoiding going to git to extract the tags
 # This is handy in later stages of the build process when no repository is available, e.g., to run the tests
@@ -57,16 +57,18 @@ export PHARO_CI_TESTING_ENVIRONMENT=1
 ./pharo bootstrap.image
 #Adding packages removed from the bootstrap
 ./pharo bootstrap.image loadHermes Hermes-Extensions.hermes --save
-./pharo bootstrap.image loadHermes  Kernel-Chronology-Extras.hermes AST-Core.hermes Jobs.hermes InitializePackagesCommandLineHandler.hermes --save --no-fail-on-undeclared --on-duplication=ignore
+./pharo bootstrap.image loadHermes System-Time.hermes AST-Core.hermes InitializePackagesCommandLineHandler.hermes Random-Core.hermes System-Model.hermes System-NumberPrinting.hermes --save --no-fail-on-undeclared --on-duplication=ignore
+./pharo bootstrap.image perform --save ChronologyConstants initialize
+./pharo bootstrap.image perform --save DateAndTime initialize
 
 #Initializing the package manager
-./pharo bootstrap.image initializePackages --packages=packagesKernel.txt --protocols=protocolsKernel.txt --save
+./pharo bootstrap.image initializePackages --packages --protocols=protocolsKernel.txt --save
 
 #Load traits
-./pharo bootstrap.image loadHermes TraitsV2.hermes --save
+./pharo bootstrap.image loadHermes Traits.hermes --save
 
 #Loading Tests
-./pharo bootstrap.image loadHermes SUnit-Core.hermes JenkinsTools-Core.hermes JenkinsTools-Core.hermes SUnit-Tests.hermes --save --no-fail-on-undeclared --on-duplication=ignore
+./pharo bootstrap.image loadHermes Debugging-Utils.hermes SUnit-Core.hermes JenkinsTools-Core.hermes JenkinsTools-Core.hermes SUnit-Tests.hermes --save --no-fail-on-undeclared --on-duplication=ignore
 
 #Running tests
 ./pharo bootstrap.image test --junit-xml-output --stage-name=${2} SUnit-Core SUnit-Tests

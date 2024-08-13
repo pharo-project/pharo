@@ -62,9 +62,9 @@ RubShoutStylerDecorator >> okToStyle [
 
 { #category : 'event handling' }
 RubShoutStylerDecorator >> refreshStyling [
+	"Shout for the whole text"	
 
-	" shout for the whole text "
-	(next notNil and: [self okToStyle])
+	(next isNotNil and: [self okToStyle])
 		ifTrue: [ self text: self text ]
 ]
 
@@ -114,15 +114,17 @@ RubShoutStylerDecorator >> style: aText [
 
 { #category : 'accessing' }
 RubShoutStylerDecorator >> styler [
-	"The styler responsible for highlighting text in the receiver"
+	"Answer a <SHRBStyler>, responsible for highlighting text in the receiver. 
+	Handle the case where `self model selectedClassOrMetaClass` is a RGBehavior (for example browsing unloaded code from Calypso)"
 
 	^ styler ifNil: [
-		styler := (self model notNil and: [  self model selectedClassOrMetaClass notNil ])
-			ifTrue: [
-				self model selectedClassOrMetaClass syntaxHighlighter
-					view: self;
-					yourself ]
-			ifFalse: [ self defaultStyler ] ]
+		  | selectedClassOrMeta |
+		  styler := (self model isNotNil and: [ (selectedClassOrMeta := self model selectedClassOrMetaClass) isNotNil ])
+			            ifTrue: [
+				            self model selectedClassOrMetaClass syntaxHighlighter
+					            view: self;
+					            yourself ]
+			            ifFalse: [ self defaultStyler ] ]
 ]
 
 { #category : 'accessing' }
@@ -135,7 +137,7 @@ RubShoutStylerDecorator >> styler: aTextStyler [
 { #category : 'editing' }
 RubShoutStylerDecorator >> stylerStyled: styledCopyOfText [
 	next ifNil: [ ^ self ].
-	(text notNil and:[text string = styledCopyOfText string])
+	(text isNotNil and:[text string = styledCopyOfText string])
 		ifFalse: [ ^ self ].
 	text runs: styledCopyOfText runs.
 	"must take care to recompose. If not, the textArea

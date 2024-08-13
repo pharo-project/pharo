@@ -173,15 +173,15 @@ ThemeSettings >> derivedMenuColor [
 	"Answer a selection colour based on the window color."
 
 	| autoColor worldColor |
-	autoColor := self autoMenuColor
-				and: [Display depth > 4
-						and: [(worldColor := self currentWorld color) isColor]].
+	autoColor := self autoMenuColor and: [
+		             (worldColor := self currentWorld color) isColor ].
 
 	^ autoColor
-				ifTrue: [worldColor luminance > 0.7
-						ifTrue: [worldColor mixed: 0.85 with: Color black]
-						ifFalse: [worldColor mixed: 0.4 with: Color white]]
-				ifFalse: [self menuColor]
+		  ifTrue: [
+			  worldColor luminance > 0.7
+				  ifTrue: [ worldColor mixed: 0.85 with: Color black ]
+				  ifFalse: [ worldColor mixed: 0.4 with: Color white ] ]
+		  ifFalse: [ self menuColor ]
 ]
 
 { #category : 'accessing' }
@@ -283,20 +283,20 @@ ThemeSettings >> fromConfiguration: tree [
 { #category : 'accessing' }
 ThemeSettings >> haveFindReplaceSelectionTextColor [
 
-	^ findReplaceSelectionTextColor notNil
+	^ findReplaceSelectionTextColor isNotNil
 ]
 
 { #category : 'accessing' }
 ThemeSettings >> haveSecondarySelectionTextColor [
 	"Answer the value of selectionTextColor"
 
-	^ secondarySelectionTextColor notNil
+	^ secondarySelectionTextColor isNotNil
 ]
 
 { #category : 'accessing' }
 ThemeSettings >> haveSelectionTextColor [
 
-	^ selectionTextColor notNil
+	^ selectionTextColor isNotNil
 ]
 
 { #category : 'initialization' }
@@ -430,14 +430,11 @@ ThemeSettings >> menuTitleBorderColor [
 ThemeSettings >> menuTitleColor [
 	"Answer the value of menuTitleColor"
 
-	Display depth = 1 ifTrue: [^ Color white].
-	Display depth = 2 ifTrue: [^ Color gray].
-	^menuTitleColor
-		ifNil: [self menuColor
-				ifNil: [Color gray]
-				ifNotNil: [:mc | self preferGradientFill
-					ifTrue: [mc]
-					ifFalse: [mc twiceDarker]]]
+	^ menuTitleColor ifNil: [
+		  self menuColor ifNil: [ Color gray ] ifNotNil: [ :mc |
+			  self preferGradientFill
+				  ifTrue: [ mc ]
+				  ifFalse: [ mc twiceDarker ] ] ]
 ]
 
 { #category : 'menu' }
@@ -562,11 +559,15 @@ ThemeSettings >> selectionBarColor: aColor [
 ThemeSettings >> selectionColor [
 	"Answer the value of selectionColor"
 
-	Display depth = 1 ifTrue: [^ Color veryLightGray].
-	Display depth = 2 ifTrue: [^ Color gray].
-	^self autoSelectionColor
-		ifTrue: [self derivedSelectionColor]
-		ifFalse: [selectionColor ifNil: [selectionColor := Color r: 0.0 g: 0.0 b: 0.8 alpha: 0.25]]
+	^ self autoSelectionColor
+		  ifTrue: [ self derivedSelectionColor ]
+		  ifFalse: [
+			  selectionColor ifNil: [
+				  selectionColor := Color
+					                    r: 0.0
+					                    g: 0.0
+					                    b: 0.8
+					                    alpha: 0.25 ] ]
 ]
 
 { #category : 'accessing' }

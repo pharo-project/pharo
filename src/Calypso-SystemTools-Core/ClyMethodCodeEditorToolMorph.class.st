@@ -71,11 +71,8 @@ ClyMethodCodeEditorToolMorph >> applyDecorations [
 { #category : 'controlling' }
 ClyMethodCodeEditorToolMorph >> attachToSystem [
 
-	browser system
-		when: (ClyMethodChange of: self editingMethod)
-		send: #triggerUpdate
-		to: self.
-	SystemAnnouncer uniqueInstance weak when: ASTCacheReset send: #resetASTCache to: self
+	browser system when: (ClyMethodChange of: self editingMethod) send: #triggerUpdate to: self.
+	self class codeSupportAnnouncer weak when: ASTCacheReset send: #resetASTCache to: self
 ]
 
 { #category : 'testing' }
@@ -173,6 +170,14 @@ ClyMethodCodeEditorToolMorph >> extendingPackage: aPackage [
 	self hasUnacceptedEdits ifFalse: [self packageEditingMethod: editingMethod]
 ]
 
+{ #category : 'building' }
+ClyMethodCodeEditorToolMorph >> fillStatusBar [
+
+	super fillStatusBar.
+
+	statusBar addCommandItem: (ClyProtocolEditorMorph for: self)
+]
+
 { #category : 'selecting text' }
 ClyMethodCodeEditorToolMorph >> findAnySelectorInSourceCode: selectors [
 
@@ -268,7 +273,7 @@ ClyMethodCodeEditorToolMorph >> methodProtocol: protocolName [
 ClyMethodCodeEditorToolMorph >> modifiesExtension [
 	^editingMethod isExtension
 		ifTrue: [ extendingPackage ~~ editingMethod package  ]
-		ifFalse: [ extendingPackage notNil and: [extendingPackage ~~ self methodClass package] ]
+		ifFalse: [ extendingPackage isNotNil and: [extendingPackage ~~ self methodClass package] ]
 ]
 
 { #category : 'printing' }
@@ -361,13 +366,6 @@ ClyMethodCodeEditorToolMorph >> switchToMethod: aMethod [
 	self attachToSystem.
 	browser selectMethod: editingMethod.
 	self update
-]
-
-{ #category : 'operations' }
-ClyMethodCodeEditorToolMorph >> toggleExtendingPackage [
-	super toggleExtendingPackage.
-
-	self hasUnacceptedEdits ifFalse: [self packageEditingMethod: editingMethod]
 ]
 
 { #category : 'updating' }

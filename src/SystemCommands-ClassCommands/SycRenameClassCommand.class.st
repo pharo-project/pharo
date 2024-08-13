@@ -1,16 +1,12 @@
 "
-I am a command to rename given class.
+Rename Class Refactoring: Change the name of a selected class, update all references, and preview changes before applying.
 
-Internal Representation and Key Implementation Points.
-
-    Instance Variables
-	newName:		<String>
 "
 Class {
 	#name : 'SycRenameClassCommand',
 	#superclass : 'SycSingleClassCommand',
 	#instVars : [
-		'newName'
+		'toolContext'
 	],
 	#category : 'SystemCommands-ClassCommands',
 	#package : 'SystemCommands-ClassCommands'
@@ -23,39 +19,32 @@ SycRenameClassCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 SycRenameClassCommand >> defaultMenuItemName [
-	^'Rename'
+	^'(R) Rename'
 ]
 
 { #category : 'execution' }
 SycRenameClassCommand >> execute [
-
-	| refactoring |
-	refactoring := RBRenameClassRefactoring
-		rename: targetClass name
-		to: newName.
-	refactoring execute
-]
-
-{ #category : 'accessing' }
-SycRenameClassCommand >> newName [
-	^ newName
-]
-
-{ #category : 'accessing' }
-SycRenameClassCommand >> newName: anObject [
-	newName := anObject
+	"Pay attention when you specify a model that is a selection of the full environment. 
+	Indeed imagine that you have a model of just one package, 
+	the precondition may say that the new name is not the one of an already existing global 
+	that is defined outside of your model (think of OrderedCollection) in this case
+	when the refactoring will check then it will say that the name is ok, and you will destroy the system
+	by creating a new class with the same name as an existing one.
+	
+	So this is we pass the model of the full environment and not a scope selected by the user."
+	
+	
+	
+	(ReRenameClassDriver
+		rename: targetClass name) 
+		model: RBBrowserEnvironment new;
+		scopes: toolContext refactoringScopes; runRefactoring
 ]
 
 { #category : 'execution' }
 SycRenameClassCommand >> prepareFullExecutionInContext: aToolContext [
-
+	
 	super prepareFullExecutionInContext: aToolContext.
+	toolContext := aToolContext
 
-	newName := UIManager default
-		           request: 'New name of the class'
-		           initialAnswer: targetClass name
-		           title: 'Rename a class'.
-
-	newName isEmptyOrNil | (newName = targetClass name) ifTrue: [
-		CmdCommandAborted signal ]
 ]

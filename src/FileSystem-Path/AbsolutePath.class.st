@@ -14,6 +14,23 @@ Class {
 AbsolutePath class >> addEmptyElementTo: result [
 ]
 
+{ #category : 'private' }
+AbsolutePath class >> addParentElementTo: result on: filesystem [
+	"The parent directory may be a symbolic link, in which case it must be resolved to its target path before determining the result."
+
+	result ifNotEmpty:
+		[ | parentReference entry |
+		parentReference := filesystem referenceTo: (self withAll: result).
+		entry := parentReference symlinkEntry.
+		entry isSymlink ifTrue:
+			[ result removeAll.
+			result addAll: entry targetPath segments ] ].
+
+	(result isEmpty or: [ result last = '..' ])
+		ifTrue: [ result add: '..' ]
+		ifFalse: [ result removeLast ]
+]
+
 { #category : 'instance creation' }
 AbsolutePath class >> from: aString delimiter: aDelimiterCharater [
 	aString = '/'

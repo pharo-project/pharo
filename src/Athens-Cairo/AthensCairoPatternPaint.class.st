@@ -22,7 +22,7 @@ AthensCairoPatternPaint class >> finalizeResourceData: handle [
 
 { #category : 'private' }
 AthensCairoPatternPaint class >> primDestroyPattern: aHandle [
-	^ self ffiCall: #(void cairo_pattern_destroy (ulong aHandle) )
+	^ self ffiCall: #(void cairo_pattern_destroy (size_t aHandle) )
 ]
 
 { #category : 'converting' }

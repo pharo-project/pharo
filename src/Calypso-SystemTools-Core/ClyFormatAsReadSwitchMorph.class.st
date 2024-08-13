@@ -20,7 +20,7 @@ Class {
 { #category : 'formatting' }
 ClyFormatAsReadSwitchMorph >> formatAsYouRead [
 
-	^ RBProgramNode formatterClass formatAsYouReadPolicy
+	^ ASTProgramNode formatterClass formatAsYouReadPolicy
 ]
 
 { #category : 'formatting' }
@@ -47,7 +47,7 @@ ClyFormatAsReadSwitchMorph >> initialize [
 { #category : 'operations' }
 ClyFormatAsReadSwitchMorph >> toggle [
 	| formatter isDirty |
-	formatter := RBProgramNode formatterClass.
+	formatter := ASTProgramNode formatterClass.
 	formatter formatAsYouReadPolicy
 		ifTrue: [
 			formatter formatAsYouReadPolicy: false.

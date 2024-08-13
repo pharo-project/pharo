@@ -13,7 +13,8 @@ SemanticMessageIconStyler >> borderColor [
 
 { #category : 'defaults' }
 SemanticMessageIconStyler >> highlightColor [
-	^(Color lightOrange alpha: 0.2)
+
+	^ Color lightOrange alpha: 0.2
 ]
 
 { #category : 'defaults' }

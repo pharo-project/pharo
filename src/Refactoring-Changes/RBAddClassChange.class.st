@@ -34,7 +34,7 @@ RBAddClassChange class >> make: aBlock [
 RBAddClassChange >> asUndoOperation [
 
 	| class |
-	class := onSystemDictionary classNamed: self changeClassName.
+	class := onSystemEnvironment classNamed: self changeClassName.
 
 	^ class isBehavior
 		  ifTrue: [ changeFactory addClassDefinition: [ :aBuilder | aBuilder fillFor: class ] ]
@@ -53,12 +53,6 @@ RBAddClassChange >> builder: aClassBuilder [
 	isMeta := false.
 	builder := aClassBuilder.
 	className := builder name
-]
-
-{ #category : 'accessing' }
-RBAddClassChange >> category [
-
-	^ builder category
 ]
 
 { #category : 'accessing' }
@@ -88,7 +82,7 @@ RBAddClassChange >> definedClass [
 { #category : 'private' }
 RBAddClassChange >> definitionClass [
 
-	^ onSystemDictionary classNamed:
+	^ onSystemEnvironment classNamed:
 		  (self superclassName ifNil: [ #ProtoObject ])
 ]
 
@@ -117,6 +111,12 @@ RBAddClassChange >> nameToDisplay [
 ]
 
 { #category : 'accessing' }
+RBAddClassChange >> package [
+
+	^ builder package
+]
+
+{ #category : 'accessing' }
 RBAddClassChange >> sharedPoolNames [
 
 	^ builder ifNotNil: [ builder sharedPools ]
@@ -126,6 +126,12 @@ RBAddClassChange >> sharedPoolNames [
 RBAddClassChange >> superclassName [
 
 	^ builder superclassName
+]
+
+{ #category : 'accessing' }
+RBAddClassChange >> tag [
+
+	^ builder tag
 ]
 
 { #category : 'accessing' }

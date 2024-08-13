@@ -8,7 +8,7 @@ Class {
 { #category : 'helpers' }
 CDExistingClassSideDefinitionTest >> classDefinitionString [
 
-	^ (ClassDefinitionPrinter oldPharo for: CDClassWithFullDefinitionExample class) definitionString
+	^ (ClassDefinitionPrinter fluid for: CDClassWithFullDefinitionExample class) definitionString
 ]
 
 { #category : 'helpers' }

@@ -31,21 +31,9 @@ SlotBasicTest >> testAddSharedPool [
 		builder sharedPools: '' ].
 
 	aClass := self make: [ :builder |
-		builder sharedPools: 'TestSharedPool' ].
+		builder sharedPools: #(TestSharedPool) ].
 
 	self assert: (aClass sharedPools includes: TestSharedPool)
-]
-
-{ #category : 'tests - shared variables' }
-SlotBasicTest >> testAddSharedVariable [
-
-	self make: [ :builder |
-		builder sharedVariablesFromString: '' ].
-
-	aClass := self make: [ :builder |
-		builder sharedVariablesFromString: 'Var' ].
-
-	self assert: aClass classVarNames equals: #(Var)
 ]
 
 { #category : 'tests - basic' }
@@ -80,6 +68,17 @@ SlotBasicTest >> testClassWithCommentAndStamp [
 	self assert: aClass name equals: self aClassName.
 	self assert: aClass comment equals: 'A class Comment'.
 	self assert: aClass commentStamp equals: (Object>>#halt) stamp
+]
+
+{ #category : 'tests' }
+SlotBasicTest >> testInitializedSlotUpdateClass [
+	"When we update a Slot that has a default value, the slot us updated, tests #hasSameDefinitionAs:"
+	aClass := self make: [ :builder | builder slots: {#slot => InitializedSlot default: 5}].
+
+	self assert: (aClass slotNamed: #slot) default equals: 5.
+	aClass := self make: [ :builder | builder slots: {#slot => InitializedSlot default: 4}].
+	self assert: (aClass slotNamed: #slot) default equals: 4
+
 ]
 
 { #category : 'tests - basic' }
@@ -137,7 +136,9 @@ SlotBasicTest >> testNewWeakClass [
 	aClass := self makeWithLayout: WeakLayout.
 	self assert: aClass isPointers.
 	self deny: aClass isFixed.
-	self assert: aClass isWords.
+	self assert: aClass isVariable.
+	self assert: aClass classLayout isVariable.
+	self deny: aClass isWords.
 	self assert: aClass isWeak
 ]
 
@@ -161,7 +162,7 @@ SlotBasicTest >> testRemoveClassSlotAndMigrate [
 
 { #category : 'tests - shared pools' }
 SlotBasicTest >> testRemoveSharedPool [
-	self make: [ :builder | builder sharedPools: 'TestSharedPool' ].
+	self make: [ :builder | builder sharedPools: #(TestSharedPool) ].
 
 	aClass := self make: [ :builder | builder sharedPools: '' ].
 
@@ -170,9 +171,9 @@ SlotBasicTest >> testRemoveSharedPool [
 
 { #category : 'tests - shared variables' }
 SlotBasicTest >> testRemoveSharedVariable [
-	self make: [ :builder | builder sharedVariablesFromString: 'Var' ].
+	self make: [ :builder | builder sharedVariables: #(Var) ].
 
-	aClass := self make: [ :builder | builder sharedVariablesFromString: '' ].
+	aClass := self make: [ :builder | builder sharedVariables: #() ].
 
 	self assertEmpty: aClass classVarNames
 ]
@@ -223,7 +224,7 @@ SlotBasicTest >> testWithClassSlots [
 SlotBasicTest >> testWithSharedPool [
 
 	aClass := self make: [ :builder |
-		builder sharedPools: 'TestSharedPool' ].
+		builder sharedPools: #(TestSharedPool) ].
 	aClass class compile: 'one ^One'.
 
 	self assert: (aClass sharedPools includes: TestSharedPool).
@@ -234,7 +235,7 @@ SlotBasicTest >> testWithSharedPool [
 SlotBasicTest >> testWithSharedVariable [
 	<ignoreNotImplementedSelectors: #(var:)>
 	aClass := self make: [ :builder |
-		builder sharedVariablesFromString: 'Var' ].
+		builder sharedVariables: #(Var) ].
 	aClass class
 		compile: 'var:x  Var:=x';
 		compile: 'var  ^Var'.
@@ -248,20 +249,6 @@ SlotBasicTest >> testWithSharedVariable [
 { #category : 'tests - class slots' }
 SlotBasicTest >> testWithoutClassSlots [
 	aClass := self make: [ :builder | builder classSlots: #() ].
-
-	self assertEmpty: aClass classVarNames
-]
-
-{ #category : 'tests - shared pools' }
-SlotBasicTest >> testWithoutSharedPools [
-	aClass := self make: [ :builder | builder sharedPools: '' ].
-
-	self assertEmpty: aClass sharedPools
-]
-
-{ #category : 'tests - shared variables' }
-SlotBasicTest >> testWithoutSharedVariables [
-	aClass := self make: [ :builder | builder sharedVariablesFromString: '' ].
 
 	self assertEmpty: aClass classVarNames
 ]

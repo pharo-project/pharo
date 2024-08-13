@@ -44,6 +44,7 @@ ClyTextEditor >> methodSourceContainingIt [
 	"Open a browser class comments which contain the current selection somewhere in them."
 
 	| query pattern |
+	
 	self lineSelectAndEmptyCheck: [^ self].
 	pattern := self selection string.
 	query := (ClyMethodSourcesQuery withString: pattern), (ClyClassCommentsQuery withString: pattern).
@@ -67,9 +68,10 @@ ClyTextEditor >> referencesTo: aVariableName [
 
 { #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyTextEditor >> referencesToIt [
+
 	| selector |
 	"self lineSelectAndEmptyCheck: [^ self]."
-	(selector := self selectedSelector) == nil ifTrue: [^ textArea flash].
+	(selector := self selectedSelector) ifNil: [ ^ textArea flash ].
 
 	self referencesTo: selector
 ]

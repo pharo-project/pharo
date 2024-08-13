@@ -27,7 +27,7 @@ In this case the argument parts is a RBMessageNode.
 "
 Class {
 	#name : 'RBSlotInitializationNode',
-	#superclass : 'RBNode',
+	#superclass : 'ASTNode',
 	#instVars : [
 		'selectorParts',
 		'argumentParts'

@@ -24,7 +24,7 @@ ClassFactoryWithNonDefaultEnvironmentTest >> environment [
 ClassFactoryWithNonDefaultEnvironmentTest >> setUp [
 
 	super setUp.
-	factory := ClassFactoryForTestCase environment: SystemDictionary new
+	factory := ClassFactoryForTestCase environment: SystemEnvironment new
 ]
 
 { #category : 'testing' }
@@ -37,8 +37,6 @@ ClassFactoryWithNonDefaultEnvironmentTest >> testClassCreationInDifferentTags [
 { #category : 'testing' }
 ClassFactoryWithNonDefaultEnvironmentTest >> testMultipleClassCreation [
 
-	self flag: #package. "Broken because of the SystemOrganizer/PackageOrganizer mixup."
-	self skip.
 	super testMultipleClassCreation.
 	factory createdClasses do: [ :aClass | self assertEnvironmentOf: aClass ]
 ]

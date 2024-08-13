@@ -102,9 +102,14 @@ FTTreeItem >> hasChildren [
 	^ self children size ~= 0
 ]
 
-{ #category : 'updating' }
+{ #category : 'testing' }
 FTTreeItem >> isExpanded [
 	^ self subclassResponsibility
+]
+
+{ #category : 'testing' }
+FTTreeItem >> isRoot [
+	^ false
 ]
 
 { #category : 'accessing' }

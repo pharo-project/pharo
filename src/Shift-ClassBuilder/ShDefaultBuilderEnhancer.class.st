@@ -7,8 +7,9 @@ Also I can configure the builder to add more comparers or do additional things.
 Class {
 	#name : 'ShDefaultBuilderEnhancer',
 	#superclass : 'Object',
-	#category : 'Shift-ClassBuilder',
-	#package : 'Shift-ClassBuilder'
+	#category : 'Shift-ClassBuilder-Builder',
+	#package : 'Shift-ClassBuilder',
+	#tag : 'Builder'
 }
 
 { #category : 'testing' }
@@ -81,8 +82,10 @@ ShDefaultBuilderEnhancer >> initializeBuilder: aBuilder [
 	aBuilder addChangeComparer: ShMetaclassChangeDetector
 ]
 
-{ #category : 'events' }
-ShDefaultBuilderEnhancer >> metaclassCreated: builder [
+{ #category : 'accessing' }
+ShDefaultBuilderEnhancer >> metaclassClassFor: aBuilder [
+
+	^ Metaclass
 ]
 
 { #category : 'events' }
@@ -98,21 +101,16 @@ ShDefaultBuilderEnhancer >> migrateToClass: aClass installer: aShiftClassInstall
 ]
 
 { #category : 'class modifications' }
-ShDefaultBuilderEnhancer >> newMetaclass: builder [
-	^ builder metaclassClass new
-]
-
-{ #category : 'class modifications' }
-ShDefaultBuilderEnhancer >> on: newClass declareClassVariables: sharedVariables sharing: sharedPoolsString [
+ShDefaultBuilderEnhancer >> on: newClass declareClassVariables: sharedVariables sharing: sharedPoolNames [
 	newClass
 		declareClassVariables: sharedVariables;
-		sharing: sharedPoolsString
+		sharing:sharedPoolNames
 ]
 
 { #category : 'class modifications' }
-ShDefaultBuilderEnhancer >> propagateChangesToRelatedClasses: newClass installer: installer [
+ShDefaultBuilderEnhancer >> propagateChangesToRelatedClasses: newClass builder: aBuilder [
 
-	newClass subclasses do: [ :e | installer remake: e ]
+	newClass subclasses do: [ :subclass | subclass classInstaller remake: subclass basedOn: aBuilder ]
 ]
 
 { #category : 'class modifications' }

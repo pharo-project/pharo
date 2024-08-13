@@ -4,9 +4,6 @@ A Metacello repository
 Class {
 	#name : 'MCRepository',
 	#superclass : 'Object',
-	#instVars : [
-		'creationTemplate'
-	],
 	#classVars : [
 		'Settings'
 	],
@@ -18,11 +15,6 @@ Class {
 { #category : 'accessing' }
 MCRepository class >> allConcreteSubclasses [
 	^ self withAllSubclasses reject: [:ea | ea isAbstract]
-]
-
-{ #category : 'accessing' }
-MCRepository class >> creationTemplate [
-	self subclassResponsibility.
 ]
 
 { #category : 'accessing' }
@@ -64,34 +56,9 @@ MCRepository >> addTo: aRepository [
 	^ aRepository addBasicRepository: self
 ]
 
-{ #category : 'converting' }
-MCRepository >> asCreationTemplate [
-	^ self creationTemplate
-]
-
 { #category : 'storing' }
 MCRepository >> basicStoreVersion: aVersion [
 	self subclassResponsibility
-]
-
-{ #category : 'accessing' }
-MCRepository >> closestAncestorVersionFor: anAncestry ifNone: errorBlock [
-	anAncestry breadthFirstAncestorsDo:
-		[:ancestorInfo |
-		(self versionWithInfo: ancestorInfo) ifNotNil: [:v | ^ v]].
-	^ errorBlock value
-]
-
-{ #category : 'accessing' }
-MCRepository >> creationTemplate [
-	^ creationTemplate
-]
-
-{ #category : 'accessing' }
-MCRepository >> creationTemplate: aString [
-	self creationTemplate ifNotNil: [ self error: 'Creation template already set for this MCRepository instance.' ].
-	
-	creationTemplate := aString.
 ]
 
 { #category : 'accessing' }
@@ -99,7 +66,7 @@ MCRepository >> description [
 	^ self class name
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 MCRepository >> displayStringOn: aStream [
 	aStream nextPutAll: self description
 ]
@@ -125,8 +92,33 @@ MCRepository >> isValid [
 ]
 
 { #category : 'accessing' }
-MCRepository >> possiblyNewerVersionsOfAnyOf: someVersions [
-	^#()
+MCRepository >> packageNamed: aName [
+
+	^ self packageNamed: aName ifAbsent: [ NotFound signal: aName ]
+]
+
+{ #category : 'accessing' }
+MCRepository >> packageNamed: aName ifAbsent: aBlock [
+
+	^ self
+		packageNamed: aName
+		ifPresent: [ :found | found ]
+		ifAbsent: aBlock
+]
+
+{ #category : 'accessing' }
+MCRepository >> packageNamed: aName ifPresent: aBlock [
+
+	^ self
+		  packageNamed: aName
+		  ifPresent: aBlock
+		  ifAbsent: [ NotFound signal: aName ]
+]
+
+{ #category : 'accessing' }
+MCRepository >> packageNamed: aName ifPresent: presentBlock ifAbsent: absentBlock [
+
+	^ absentBlock value
 ]
 
 { #category : 'printing' }
@@ -139,25 +131,9 @@ MCRepository >> printOn: aStream [
 ]
 
 { #category : 'storing' }
-MCRepository >> storeDependencies: aVersion [
-	MCCacheRepository uniqueInstance cacheAllFileNamesDuring: 
-		[self cacheAllFileNamesDuring: 
-			[aVersion allAvailableDependenciesDo:
-				[:dep |
-					(self includesVersionNamed: dep info name)
-						ifFalse: [self storeVersion: dep]]]]
-]
-
-{ #category : 'storing' }
 MCRepository >> storeVersion: aVersion [
-	self basicStoreVersion: aVersion.
-	SystemAnnouncer uniqueInstance
-		announce: (MCVersionSaved version: aVersion repository: self)
-]
 
-{ #category : 'accessing' }
-MCRepository >> versionFrom: aVersionReferenceString [
-	self error: 'Unable to load from ' , self printString
+	self basicStoreVersion: aVersion
 ]
 
 { #category : 'interface' }

@@ -134,7 +134,7 @@ ImageReadWriterTest >> testHasMagicNumber [
 ImageReadWriterTest >> testJpegWriteReadInMemory [
 	| form bytes result |
 	form := self pharoLogoFormNonTransparent.
-	bytes := ByteArray streamContents: [ :out | PluginBasedJPEGReadWriter putForm: form onStream: out ].
+	bytes := ByteArray streamContents: [ :out | JPEGReadWriter putForm: form onStream: out ].
 	"Without format detection"
 	result := (JPEGReadWriter on: bytes readStream) nextImage.
 	self assert: form bits size equals: result bits size.
@@ -149,7 +149,7 @@ ImageReadWriterTest >> testJpegWriteReadUsingFiles [
 	form := self pharoLogoFormNonTransparent.
 	file := (self class name asString , '-pharo-logo.jpeg') asFileReference.
 	file ensureDelete.
-	(PluginBasedJPEGReadWriter on: file binaryWriteStream) nextPutImage: form. "gets closed ?!"
+	(JPEGReadWriter on: file binaryWriteStream) nextPutImage: form. "gets closed ?!"
 	"Without format detection"
 	result := file binaryReadStreamDo: [ :in | (JPEGReadWriter on: in) nextImage ].
 	self assert: form bits size equals: result bits size.
@@ -163,9 +163,9 @@ ImageReadWriterTest >> testJpegWriteReadUsingFiles [
 ImageReadWriterTest >> testPluginBasedJpegWriteReadInMemory [
 	| form bytes result |
 	form := self pharoLogoFormNonTransparent.
-	bytes := ByteArray streamContents: [ :out | PluginBasedJPEGReadWriter putForm: form onStream: out ].
+	bytes := ByteArray streamContents: [ :out | JPEGReadWriter putForm: form onStream: out ].
 	"Without format detection"
-	result := (PluginBasedJPEGReadWriter on: bytes readStream) nextImage.
+	result := (JPEGReadWriter on: bytes readStream) nextImage.
 	self assert: form bits size equals: result bits size.
 	"With format detection"
 	result := ImageReadWriter formFromStream: bytes readStream.
@@ -178,9 +178,9 @@ ImageReadWriterTest >> testPluginBasedJpegWriteReadUsingFiles [
 	form := self pharoLogoFormNonTransparent.
 	file := (self class name asString , '-pharo-logo.jpeg') asFileReference.
 	file ensureDelete.
-	(PluginBasedJPEGReadWriter on: file binaryWriteStream) nextPutImage: form. "gets closed ?!"
+	(JPEGReadWriter on: file binaryWriteStream) nextPutImage: form. "gets closed ?!"
 	"Without format detection"
-	result := file binaryReadStreamDo: [ :in | (PluginBasedJPEGReadWriter on: in) nextImage ].
+	result := file binaryReadStreamDo: [ :in | (JPEGReadWriter on: in) nextImage ].
 	self assert: form bits size equals: result bits size.
 	"With format detection"
 	result := file binaryReadStreamDo: [ :in | ImageReadWriter formFromStream: in ].

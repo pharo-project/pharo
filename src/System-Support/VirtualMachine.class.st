@@ -248,7 +248,7 @@ VirtualMachine >> gcStatisticsDuring: aBlockClosure [
 	incrementalGCTime := self totalIncrementalGCTime.
 	fullGCTime := self totalFullGCTime.
 	
-	timeToRun := aBlockClosure timeToRun.
+	timeToRun := aBlockClosure millisecondsToRun.
 
 	incrementalGCCount := self incrementalGCCount - incrementalGCCount.
 	fullGCCount := self fullGCCount - fullGCCount.
@@ -670,7 +670,7 @@ VirtualMachine >> optionAt: i [
 { #category : 'accessing' }
 VirtualMachine >> optionDash [
 	"VMs release in Mai 2013 use -- instead of - for VM command line options"
-	^ (Smalltalk vm interpreterSourceDate > '2013-05-17' asDate)
+	^ (Smalltalk vm interpreterSourceDate > (Date readFrom: '17-5-2013' pattern: 'd-m-y'))
 		ifTrue: [ '--' ]
 		ifFalse: [ '-' ]
 ]
@@ -812,9 +812,9 @@ VirtualMachine >> parameterLabels [
 		73 'total milliseconds in full GCs Sweep phase since startup (read-only, can be 0 depending on compactors)'
 		74 'maximum pause time due to segment allocation (read-write)'
 		75 'number of JIT compiled methods since startup (read-only)'
-		76 'total milliseconds spent on JIT compiled methods since startup (read-only)'
+		76 'total milliseconds spent JIT compiling methods since startup (read-only)'
 		77 'number of JIT compiled block since startup (read-only)'
-		78 'total milliseconds spent on JIT compiled block since startup (read-only)'
+		78 'total milliseconds spent JIT compiling blocks since startup (read-only)'
 		79 'Image version stored in the header of the image file'
 		80 'From OldSpace Remembered set used size'
 		81 'From OldSpace Remembered set max size'
