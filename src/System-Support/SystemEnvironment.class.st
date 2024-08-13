@@ -29,9 +29,7 @@ Class {
 		'cachedClassNames',
 		'cachedNonClassNames',
 		'cachedBehaviors',
-		'pseudoVariables',
-		'codeChangeAnnouncer',
-		'codeSupportAnnouncer'
+		'pseudoVariables'
 	],
 	#category : 'System-Support-Utilities',
 	#package : 'System-Support',
@@ -204,13 +202,16 @@ SystemEnvironment >> codeChangeAnnouncer [
 
 	"This should not be hardcoded in the futurebut I should have my own instance."
 
-	^ codeChangeAnnouncer ifNil: [ codeChangeAnnouncer := SystemAnnouncer uniqueInstance ]
+	^ "codeChangeAnnouncer ifNil: [ codeChangeAnnouncer := "SystemAnnouncer uniqueInstance" ]"
 ]
 
 { #category : 'accessing' }
 SystemEnvironment >> codeChangeAnnouncer: anAnnouncer [
+	"For now the announcer is still saved in SystemAnnouncer so we access it there. In the future we should save it in the environment.
+	
+	codeChangeAnnouncer := anAnnouncer"
 
-	^ codeChangeAnnouncer := anAnnouncer
+	SystemAnnouncer announcer: anAnnouncer
 ]
 
 { #category : 'accessing' }
@@ -219,13 +220,16 @@ SystemEnvironment >> codeSupportAnnouncer [
 
 	"This should not be hardcoded in the futurebut I should have my own instance."
 
-	^ codeSupportAnnouncer ifNil: [ codeSupportAnnouncer := SystemAnnouncer uniqueInstance ]
+	^ "codeSupportAnnouncer ifNil: [ codeSupportAnnouncer := "SystemAnnouncer uniqueInstance "]"
 ]
 
 { #category : 'accessing' }
 SystemEnvironment >> codeSupportAnnouncer: anAnnouncer [
+	"For now the announcer is still saved in SystemAnnouncer so we access it there. In the future we should save it in the environment.
+	
+	codeSupportAnnouncer := anAnnouncer"
 
-	^ codeSupportAnnouncer := anAnnouncer
+	SystemAnnouncer announcer: anAnnouncer
 ]
 
 { #category : 'accessing' }
