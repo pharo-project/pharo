@@ -1,21 +1,11 @@
 "
-I am a command to remove given variable.
-
-My #variable should be compatible variable object like ClassVariable or Slot. Or Calypso provide ClyVariable subclasses.
-
-Internal Representation and Key Implementation Points.
-
-    Instance Variables
-	newName:		<String>
-	variable:		<Variable>
-
+I am a command to rename a variable. 
 "
 Class {
 	#name : 'SycRenameVariableCommand',
 	#superclass : 'CmdCommand',
 	#instVars : [
-		'newName',
-		'variable'
+		'toolContext'
 	],
 	#category : 'SystemCommands-VariableCommands',
 	#package : 'SystemCommands-VariableCommands'
@@ -31,74 +21,31 @@ SycRenameVariableCommand class >> defaultMenuIconName [
 	^ #edit
 ]
 
-{ #category : 'execution' }
-SycRenameVariableCommand >> applyResultInContext: aToolContext [
-	super applyResultInContext: aToolContext.
-	aToolContext showVariableNamed: newName
-]
-
-{ #category : 'execution' }
-SycRenameVariableCommand >> classRefactoring [
-
-	^ RBRenameInstanceVariableRefactoring
-]
-
 { #category : 'accessing' }
 SycRenameVariableCommand >> defaultMenuItemName [
 
-	^ 'Rename (old calypso)'
+	^ 'Rename'
 ]
 
 { #category : 'execution' }
 SycRenameVariableCommand >> execute [
 
-	| refactoring |
-	refactoring := variable createVariableRefactoring: self classRefactoring.
-	refactoring newName: self newVariableName.
-	refactoring execute
-]
+	| variable driver |
+	variable := toolContext lastSelectedVariable.
+	
+	driver := variable isClassVariable
+		          ifFalse: [ ReRenameInstanceVariableDriver new ]
+		          ifTrue: [ ReRenameSharedVariableDriver new ].
 
-{ #category : 'accessing' }
-SycRenameVariableCommand >> newName [
-	^ newName
-]
-
-{ #category : 'accessing' }
-SycRenameVariableCommand >> newName: anObject [
-	newName := anObject
-]
-
-{ #category : 'execution' }
-SycRenameVariableCommand >> newVariableName [
-
-	^ newName asSymbol
+	(driver
+		 scopes: toolContext refactoringScopes
+		 variable: variable name
+		 for: variable definingClass) runRefactoring
 ]
 
 { #category : 'execution' }
 SycRenameVariableCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.
-	variable := aToolContext lastSelectedVariable.
-	self requestNewNameIn: aToolContext
-]
-
-{ #category : 'execution' }
-SycRenameVariableCommand >> requestNewNameIn: aToolContext [
-
-	newName := self morphicUIManager
-		           request: 'New name of the variable'
-		           initialAnswer: variable name
-		           title: 'Rename a variable'.
-	newName isEmptyOrNil | (newName = variable name) ifTrue: [
-		CmdCommandAborted signal ]
-]
-
-{ #category : 'accessing' }
-SycRenameVariableCommand >> variable [
-	^ variable
-]
-
-{ #category : 'accessing' }
-SycRenameVariableCommand >> variable: anObject [
-	variable := anObject
+	toolContext := aToolContext
 ]

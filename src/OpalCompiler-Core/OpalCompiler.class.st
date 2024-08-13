@@ -56,7 +56,7 @@ OpalCompiler class >> compilerClasses [
 	^self package definedClasses
 
 	"Compiler and AST:
-	self package definedClasses, RBProgramNode package definedClasses, {TRBProgramNodeVisitor}
+	self package definedClasses, ASTProgramNode package definedClasses, {TRBProgramNodeVisitor}
 	"
 ]
 

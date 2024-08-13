@@ -8,7 +8,7 @@ Instance Variables:
 "
 Class {
 	#name : 'RBSelectorNode',
-	#superclass : 'RBValueNode',
+	#superclass : 'ASTValueNode',
 	#instVars : [
 		'value',
 		'keywordPositions'

@@ -163,11 +163,6 @@ MCMethodDefinition >> fullClassName [
 				ifTrue: [self className, ' classSide']]
 ]
 
-{ #category : 'accessing' }
-MCMethodDefinition >> fullTimeStamp [
-	^ DateAndTime fromMethodTimeStamp: timeStamp
-]
-
 { #category : 'comparing' }
 MCMethodDefinition >> hash [
 	| hash |
@@ -187,11 +182,6 @@ MCMethodDefinition >> initializeWithClassName: classString classIsMeta: metaBool
 	timeStamp := timeString.
 	classIsMeta := metaBoolean.
 	source := sourceString withInternalLineEndings
-]
-
-{ #category : 'testing' }
-MCMethodDefinition >> isCodeDefinition [
-	^ true
 ]
 
 { #category : 'installing' }
@@ -310,12 +300,6 @@ MCMethodDefinition >> requirements [
 { #category : 'accessing' }
 MCMethodDefinition >> selector [
 	^selector
-]
-
-{ #category : 'printing' }
-MCMethodDefinition >> shortSummaryPrefix [
-
-	^ self definition selector asString
 ]
 
 { #category : 'comparing' }

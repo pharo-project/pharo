@@ -42,10 +42,10 @@ Class {
 }
 
 { #category : 'instance creation' }
-ClassFactoryForTestCase class >> environment: aSystemDictionary [
+ClassFactoryForTestCase class >> environment: aSystemEnvironment [
 
 	^ self new
-		  environment: aSystemDictionary;
+		  environment: aSystemEnvironment;
 		  yourself
 ]
 

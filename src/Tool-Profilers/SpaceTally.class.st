@@ -9,7 +9,7 @@ try something like:
 SpaceTally new systemWideSpaceTally
 
 
-This class has been created from a part of SystemDictionary. It still deserves a nice
+This class has been created from a part of SystemEnvironment. It still deserves a nice
 clean, such as using object instead of array having 4 slots.
 
 sd-20 June 2003

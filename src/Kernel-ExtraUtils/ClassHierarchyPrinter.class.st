@@ -21,18 +21,18 @@ produces
 
 ```
 'ASTNode
-	RBProgramNode
+	ASTProgramNode
 		RBComment
 		RBMethodNode
 		RBPragmaNode
 		RBReturnNode
 		RBSequenceNode
-		RBValueNode
+		ASTValueNode
 			RBArrayNode
 			RBAssignmentNode
 			RBBlockNode
 			RBCascadeNode
-			RBLiteralNode
+			ASTLiteralNode
 				RBLiteralArrayNode
 				RBLiteralValueNode
 			RBMessageNode

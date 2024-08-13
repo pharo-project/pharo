@@ -43,7 +43,7 @@ fullBocksWithReturn size  ""2198""
 "
 Class {
 	#name : 'RBBlockNode',
-	#superclass : 'RBValueNode',
+	#superclass : 'ASTValueNode',
 	#instVars : [
 		'left',
 		'right',

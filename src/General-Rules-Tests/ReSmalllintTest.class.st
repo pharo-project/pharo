@@ -287,11 +287,6 @@ ReSmalllintTest >> testCollectionAtCollectionSize [
 ]
 
 { #category : 'tests' }
-ReSmalllintTest >> testCollectionMessagesToExternalObject [
-	self ruleFor: self currentSelector
-]
-
-{ #category : 'tests' }
 ReSmalllintTest >> testCollectionProtocol [
 	self ruleFor: self currentSelector
 ]

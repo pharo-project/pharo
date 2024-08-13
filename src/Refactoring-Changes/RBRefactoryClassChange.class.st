@@ -40,7 +40,7 @@ RBRefactoryClassChange >> asUndoOperation [
 RBRefactoryClassChange >> changeClass [
 
 	| class |
-	class := onSystemDictionary
+	class := onSystemEnvironment
 		         at: self changeClassName
 		         ifAbsent: [ ^ nil ].
 	^ isMeta
