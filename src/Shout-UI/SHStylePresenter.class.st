@@ -97,7 +97,7 @@ SHStylePresenter >> initializeButtonBar [
 			label: 'Apply';
 			icon: (self iconNamed: #smallOk);
 			help: 'Apply the selected style';
-			action: [ SHPreferences setStyleTableNamed: self selectedStyleTableName ];
+			action: [ self updatePreferences ];
 			yourself);
 		add: (self newButton
 			label: 'Cancel';
@@ -255,6 +255,14 @@ SHStylePresenter >> themePrototypes [
 	"Answer a <Collection> of available themes in the system"
 
 	^ UITheme allThemeClasses collect: [ : th | th new ]
+]
+
+{ #category : 'callbacks' }
+SHStylePresenter >> updatePreferences [
+	"Private - Callback for updating global preferences"
+	
+	UITheme current: themeListPresenter selectedItem.
+	SHPreferences setStyleTableNamed: self selectedStyleTableName.
 ]
 
 { #category : 'callbacks' }
