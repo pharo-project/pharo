@@ -304,6 +304,14 @@ SystemDictionary >> hasClassOrTraitNamed: aString [
 	^ false
 ]
 
+{ #category : 'initialization' }
+SystemDictionary >> initialize [
+
+	super initialize.
+	"Undeclared should be deprecated in the future and the undeclared registry should be an instance variable of the environment."
+	self at: #Undeclared put: UndeclaredRegistry new
+]
+
 { #category : 'accessing - variable lookup' }
 SystemDictionary >> lookupVar: name [
 	"Return a var with this name.  Return nil if none found"
