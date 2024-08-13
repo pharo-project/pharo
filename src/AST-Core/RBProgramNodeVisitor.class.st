@@ -155,16 +155,16 @@ RBProgramNodeVisitor >> visitParseErrorNode: anErrorNode [
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitPatternBlockNode: aRBPatternBlockNode [
-	self visitArgumentNodes: aRBPatternBlockNode arguments.
-	self visitNode: aRBPatternBlockNode body
+RBProgramNodeVisitor >> visitPatternBlockNode: aPatternBlockNode [
+	self visitArgumentNodes: aPatternBlockNode arguments.
+	self visitNode: aPatternBlockNode body
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode [
-	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
-	self visitArgumentNodes: aRBPatternWrapperBlockNode arguments.
-	self visitNode: aRBPatternWrapperBlockNode body
+RBProgramNodeVisitor >> visitPatternWrapperBlockNode: aPatternWrapperBlockNode [
+	self visitNode: aPatternWrapperBlockNode wrappedNode.
+	self visitArgumentNodes: aPatternWrapperBlockNode arguments.
+	self visitNode: aPatternWrapperBlockNode body
 ]
 
 { #category : 'visiting' }

@@ -1,5 +1,5 @@
 "
-RBPatternWrapperBlockNode allows further matching using a block after a node has been matched by a pattern node.
+ASTPatternWrapperBlockNode allows further matching using a block after a node has been matched by a pattern node.
 
 Instance Variables:
 	wrappedNode	<ASTProgramNode>	The original pattern node to match

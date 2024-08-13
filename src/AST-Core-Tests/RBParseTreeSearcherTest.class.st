@@ -286,7 +286,7 @@ RBParseTreeSearcherTest >> testMatchingReceiverAndMultiKeywordSelector2 [
 	"The below is not working: simething wrong with the assertion type"
 
 	"self
-		  assert:(contextDictionary at: (RBPatternVariableNode named: '`@args'))
+		  assert:(contextDictionary at: (ASTPatternVariableNode named: '`@args'))
 		  equals: #( 2 55) asArray "
 ]
 
@@ -450,7 +450,7 @@ RBParseTreeSearcherTest >> testSearchLiteralArray [
 	"This assertion is not working yet, something wrong with the type. The logic is correct bcz it is working on the Rewriter Tool"
 	"self
 		assert:
-		(contextDictionary at: (RBPatternVariableNode named: '`#lit')) formattedCode
+		(contextDictionary at: (ASTPatternVariableNode named: '`#lit')) formattedCode
 		""equals: (RBLiteralArrayNode named: #(1 2 3)).""
 		equals:   #( 1 2 3)."
 ]
