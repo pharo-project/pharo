@@ -13,11 +13,31 @@ Class {
 		'styleListPresenter',
 		'buttonBarPresenter',
 		'classDefinitionPreviewPresenter',
-		'methodPreviewPresenter'
+		'methodPreviewPresenter',
+		'themeListPresenter'
 	],
 	#category : 'Shout-UI',
 	#package : 'Shout-UI'
 }
+
+{ #category : 'world menu' }
+SHStylePresenter class >> descriptionText [
+
+	^ 'A tool to select the code style for the system'
+
+]
+
+{ #category : 'world menu' }
+SHStylePresenter class >> menuCommandOn: aBuilder [
+	<worldMenu>
+
+	(aBuilder item: 'Code Styler')
+		action: [ self open ];
+		order: 35;
+		parent: #Tools;
+		icon: (self iconNamed: #configuration);
+		help: self descriptionText
+]
 
 { #category : 'instance creation' }
 SHStylePresenter class >> open [
@@ -33,12 +53,13 @@ SHStylePresenter >> availableStylesPragmas [
 	^ self textStylerClass styleTablePragmas
 ]
 
-{ #category : 'private' }
-SHStylePresenter >> classDefinitionTextStyledAs: aStyleName [
+{ #category : 'callbacks' }
+SHStylePresenter >> classDefinitionText [
 
 	^ RubScrolledTextMorph new
 		wrapped: true;
-		setText: (self styledClassDefinitionWith: aStyleName);
+		setText: (self styledClassDefinitionWith: self selectedStyleTableName);
+		color: (self themeBackgroundColor: themeListPresenter selectedItem);
 		in: [ :this |
 			this textArea
 				readOnly: true;
@@ -51,9 +72,13 @@ SHStylePresenter >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
 		spacing: 4;
-		add: (	SpBoxLayout newLeftToRight 
-			spacing: 4;
-			add: styleListPresenter expand: false;
+		add: (	SpPanedLayout newLeftToRight 
+			positionOfSlider: 20 percent;
+			add: (SpPanedLayout newTopToBottom
+				positionOfSlider: 30 percent;
+				add: themeListPresenter;
+				add: styleListPresenter;
+				yourself);
 			add: (SpPanedLayout newTopToBottom 
 				add: classDefinitionPreviewPresenter;
 				add: methodPreviewPresenter;
@@ -86,7 +111,7 @@ SHStylePresenter >> initializeButtonBar [
 SHStylePresenter >> initializeClassDefinitionPreview [
 
 	classDefinitionPreviewPresenter := self newMorph
-		morph: (self classDefinitionTextStyledAs: self styleName);
+		morph: self classDefinitionText;
 		yourself
 ]
 
@@ -94,17 +119,19 @@ SHStylePresenter >> initializeClassDefinitionPreview [
 SHStylePresenter >> initializeMethodPreview [
 
 	methodPreviewPresenter := self newMorph
-		morph: (self methodTextStyledAs: self styleName);
+		morph: self methodText;
 		yourself
 ]
 
 { #category : 'initialization' }
 SHStylePresenter >> initializePresenters [
 
-	self initializeStyleList.
-	self initializeMethodPreview.
-	self initializeClassDefinitionPreview.
-	self initializeButtonBar.
+	self 
+		initializeThemeList;
+		initializeStyleList;
+		initializeMethodPreview;
+		initializeClassDefinitionPreview;
+		initializeButtonBar.
 ]
 
 { #category : 'initialization' }
@@ -115,8 +142,21 @@ SHStylePresenter >> initializeStyleList [
 		                      headerTitle: 'Styles';
 		                      items: self styleNames;
 		                      selectItem: self styleName;
-		                      whenSelectedItemChangedDo: [ :item | self updatePreviewPresenters: item ];
+		                      whenSelectedItemChangedDo: [ :item | self updatePreview ];
 		                      yourself.
+]
+
+{ #category : 'initialization' }
+SHStylePresenter >> initializeThemeList [
+	"Private - The receiver's theme list contains the names of the available theme styles in the system"
+
+	themeListPresenter := self newList
+		headerTitle: 'Themes';
+		items: self themePrototypes;
+		display: [ : aTheme | aTheme class themeName ];
+		selectItem: self theme class;
+		whenSelectedItemChangedDo: [ :item | self updatePreview ];
+		yourself.
 ]
 
 { #category : 'initialization' }
@@ -128,12 +168,13 @@ SHStylePresenter >> initializeWindow: aWindowPresenter [
 		title: 'Code Styler'.
 ]
 
-{ #category : 'private' }
-SHStylePresenter >> methodTextStyledAs: aStyleName [
+{ #category : 'callbacks' }
+SHStylePresenter >> methodText [
 
 	^ RubScrolledTextMorph new
 		wrapped: true;
-		setText: (self styledMethodWith: aStyleName);
+		setText: (self styledMethodWith: self selectedStyleTableName);
+		color: (self themeBackgroundColor: themeListPresenter selectedItem);
 		in: [ :this |
 			this textArea
 				readOnly: true;
@@ -201,9 +242,24 @@ SHStylePresenter >> textStylerClass [
 	^ SpMorphicCodeTextStyler
 ]
 
-{ #category : 'callbacks' }
-SHStylePresenter >> updatePreviewPresenters: item [
+{ #category : 'private' }
+SHStylePresenter >> themeBackgroundColor: aSelectedItemOrNil [
 
-	classDefinitionPreviewPresenter morph: (self classDefinitionTextStyledAs: item).
-	methodPreviewPresenter morph: (self methodTextStyledAs: item)
+	^ (aSelectedItemOrNil
+		ifNil: [ self theme ]
+		ifNotNil: [ themeListPresenter selectedItem ]) backgroundColor
+]
+
+{ #category : 'private' }
+SHStylePresenter >> themePrototypes [
+	"Answer a <Collection> of available themes in the system"
+
+	^ UITheme allThemeClasses collect: [ : th | th new ]
+]
+
+{ #category : 'callbacks' }
+SHStylePresenter >> updatePreview [
+
+	classDefinitionPreviewPresenter morph: self classDefinitionText.
+	methodPreviewPresenter morph: self methodText
 ]
