@@ -80,13 +80,16 @@ ReCriticEngine >> critiquesOf: anEntity [
 { #category : 'banning' }
 ReCriticEngine >> guidedBy: anEntity ban: aCritique [
 
-	| candidates |
+	| candidates presenter |
 	candidates := anEntity banLevelCandidates.
-
-	(MorphicUIManager new
-		 chooseFrom: (candidates collect: [ :each | each reBanName ])
-		 values: candidates
-		 title: 'On which level do you want to ban the rule?') ifNotNil: [
+	presenter := SpSelectDialog new.
+	(presenter
+		title: 'On which level do you want to ban the rule?';
+		items: candidates;
+		display: [ :each | each reBanName ];
+		onAccept: [ :dialog |
+			dialog presenter inform: dialog presenter selectedItem asString ];
+		openModal ) ifNotNil: [
 		:entity | entity ban: aCritique ]
 ]
 

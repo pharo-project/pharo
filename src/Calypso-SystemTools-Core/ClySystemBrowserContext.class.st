@@ -51,16 +51,6 @@ Class {
 }
 
 { #category : 'user requests' }
-ClySystemBrowserContext >> confirmUnusedClasses: variables [
-	^tool confirmUnusedClasses: variables
-]
-
-{ #category : 'user requests' }
-ClySystemBrowserContext >> confirmUnusedVariables: variables [
-	^tool confirmUnusedVariables: variables
-]
-
-{ #category : 'user requests' }
 ClySystemBrowserContext >> confirmUnusedVariablesInDefiningClass: variables [
 	^tool confirmUnusedVariablesInDefiningClass: variables
 ]
@@ -172,23 +162,6 @@ ClySystemBrowserContext >> refactoringScopes [
 	allScopes := tool allNavigationScopes.
 	defaultScope := tool defaultNavigationScope.
 	^(allScopes copyWithout: defaultScope) copyWithFirst: defaultScope
-]
-
-{ #category : 'user requests' }
-ClySystemBrowserContext >> requestMultiplePackages: queryTitle [
-
-	^ tool searchDialog
-		requestMultipleObjects: queryTitle
-		from: ClyAllPackagesQuery sorted
-]
-
-{ #category : 'user requests' }
-ClySystemBrowserContext >> requestMultipleVariables: queryTitle from: classes [
-
-	^tool searchDialog
-		requestMultipleObjects: queryTitle
-		from: ClyAllInstanceVariablesQuery sorted
-		inScope: (ClyClassScope ofAll: classes) withInheritedScope
 ]
 
 { #category : 'user requests' }
