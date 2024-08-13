@@ -202,7 +202,7 @@ SystemEnvironment >> codeChangeAnnouncer [
 
 	"This should not be hardcoded in the futurebut I should have my own instance."
 
-	^ "codeChangeAnnouncer ifNil: [ codeChangeAnnouncer := "SystemAnnouncer uniqueInstance" ]"
+	^ SystemAnnouncer uniqueInstance
 ]
 
 { #category : 'accessing' }
@@ -220,7 +220,7 @@ SystemEnvironment >> codeSupportAnnouncer [
 
 	"This should not be hardcoded in the futurebut I should have my own instance."
 
-	^ "codeSupportAnnouncer ifNil: [ codeSupportAnnouncer := "SystemAnnouncer uniqueInstance "]"
+	^ SystemAnnouncer uniqueInstance
 ]
 
 { #category : 'accessing' }
