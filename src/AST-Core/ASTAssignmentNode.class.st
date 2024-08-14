@@ -4,7 +4,7 @@ ASTAssignmentNode is an AST node for assignment statements.
 Instance Variables:
 	assignment	<Integer>	position of the :=
 	value	<ASTValueNode>	the value that we're assigning
-	variable	<RBVariableNode>	the variable being assigned
+	variable	<ASTVariableNode>	the variable being assigned
 
 
 "

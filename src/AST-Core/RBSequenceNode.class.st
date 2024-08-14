@@ -6,7 +6,7 @@ Instance Variables:
 	rightBar	<Integer | nil>	the position of the right | in the temporaries definition
 	statements	<SequenceableCollection of: ASTReturnNode or ASTValueNode> the statement nodes
 	periods	<SequenceableCollection of: Integer>	the positions of all the periods that separate the statements
-	temporaries	<SequenceableCollection of: RBVariableNode>	the temporaries defined
+	temporaries	<SequenceableCollection of: ASTVariableNode>	the temporaries defined
 
 
 "

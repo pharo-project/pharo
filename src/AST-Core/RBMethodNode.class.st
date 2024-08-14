@@ -5,7 +5,7 @@ Some properties aren't known to the parser creating this Object. For example, th
 semantic analysis. Likewise, the compilation context isn't needed until we try to do the semantic analysis. 
 
 Instance Variables:
-	arguments	<SequenceableCollection of: RBVariableNode>	the arguments to the method
+	arguments	<SequenceableCollection of: ASTVariableNode>	the arguments to the method
 	body	<BRSequenceNode>	the body/statements of the method
 	nodeReplacements	<Dictionary>	a dictionary of oldNode -> newNode replacements
 	replacements	<Collection of: RBStringReplacement>	the collection of string replacements for each node replacement in the parse tree

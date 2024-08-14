@@ -1,5 +1,5 @@
 "
-SUnit tests for RBVariableNode
+SUnit tests for ASTVariableNode
 "
 Class {
 	#name : 'RBVariableNodeTest',
