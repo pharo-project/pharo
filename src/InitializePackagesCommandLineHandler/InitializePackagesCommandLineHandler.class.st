@@ -17,7 +17,7 @@ The <cr> line ending is expected for protocols and packages file.
 
 Protocols file exxample:
 RBReplaceRule	false	searchForTree:replaceWith:	matching
-RBPatternPragmaNode	true	selector:keywordsPositions:arguments:	instance creation
+ASTPatternPragmaNode	true	selector:keywordsPositions:arguments:	instance creation
 			
 Packages file contains list of packages where every package is on own line.
 

@@ -35,8 +35,11 @@ ClassHierarchyPrinterTest >> testOnlyASTNodes [
 			RBArrayNode
 			RBAssignmentNode
 			RBBlockNode
+				ASTPatternBlockNode
+					ASTPatternWrapperBlockNode
 			RBCascadeNode
 			RBMessageNode
+				ASTPatternMessageNode
 			RBParseErrorNode
 				RBEnglobingErrorNode
 					RBArrayErrorNode
@@ -51,10 +54,13 @@ ClassHierarchyPrinterTest >> testOnlyASTNodes [
 					RBUnfinishedStatementErrorNode
 			RBSelectorNode
 			RBVariableNode
+				ASTPatternVariableNode
 		RBComment
 		RBMethodNode
+			ASTPatternMethodNode
 			RBDoItMethodNode
 		RBPragmaNode
+			ASTPatternPragmaNode
 		RBReturnNode
 		RBSequenceNode
 	RBSlotInitializationNode

@@ -1,7 +1,7 @@
-Extension { #name : 'RBPatternBlockNode' }
+Extension { #name : 'ASTPatternBlockNode' }
 
 { #category : '*Renraku' }
-RBPatternBlockNode >> pattern [
+ASTPatternBlockNode >> pattern [
 
 	^ self source
 		copyFrom: self sourceInterval first
