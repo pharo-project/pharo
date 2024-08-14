@@ -24,7 +24,7 @@ RBParseTreeSearcherTest >> assertCodeForSymbolAt: aSymbol in: myContextDictionar
 RBParseTreeSearcherTest >> assertCodeForVariableNodeNamed: name in: myContextDictionary equals: expectedCode [
 
 	^ self
-		  assert:(myContextDictionary at: (RBPatternVariableNode named: name)) formattedCode
+		  assert:(myContextDictionary at: (ASTPatternVariableNode named: name)) formattedCode
 		  equals: expectedCode
 ]
 
@@ -122,7 +122,7 @@ RBParseTreeSearcherTest >> testMacthesDoisMatchingStatementsInDynamicArray [
 	| contextDictionary |
 	searcher matches: '{`.@stmts.}' do: [ :aNode :answer |  contextDictionary:= searcher context ].
 	contextDictionary := searcher executeTree: (self parseExpression:'{ (1@2) . Color red . 3 }').
-	self assert: (contextDictionary at: (RBPatternVariableNode named: '`.@stmts')) size equals: 3
+	self assert: (contextDictionary at: (ASTPatternVariableNode named: '`.@stmts')) size equals: 3
 ]
 
 { #category : 'tests - arguments' }
@@ -286,7 +286,7 @@ RBParseTreeSearcherTest >> testMatchingReceiverAndMultiKeywordSelector2 [
 	"The below is not working: simething wrong with the assertion type"
 
 	"self
-		  assert:(contextDictionary at: (RBPatternVariableNode named: '`@args'))
+		  assert:(contextDictionary at: (ASTPatternVariableNode named: '`@args'))
 		  equals: #( 2 55) asArray "
 ]
 
@@ -357,12 +357,12 @@ RBParseTreeSearcherTest >> testSearchListComplex [
 
 	self
 		assert:
-		(dict at: (RBPatternVariableNode named: '`@receiver')) formattedCode
+		(dict at: (ASTPatternVariableNode named: '`@receiver')) formattedCode
 		equals: 'self'.
 
 	self
 		assert:
-		(dict at: (RBPatternVariableNode named: '`@arg')) formattedCode
+		(dict at: (ASTPatternVariableNode named: '`@arg')) formattedCode
 		equals: 'each isReadOnlyObject'
 ]
 
@@ -450,7 +450,7 @@ RBParseTreeSearcherTest >> testSearchLiteralArray [
 	"This assertion is not working yet, something wrong with the type. The logic is correct bcz it is working on the Rewriter Tool"
 	"self
 		assert:
-		(contextDictionary at: (RBPatternVariableNode named: '`#lit')) formattedCode
+		(contextDictionary at: (ASTPatternVariableNode named: '`#lit')) formattedCode
 		""equals: (RBLiteralArrayNode named: #(1 2 3)).""
 		equals:   #( 1 2 3)."
 ]

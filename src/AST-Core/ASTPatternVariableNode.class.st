@@ -1,5 +1,5 @@
 "
-RBPatternVariableNode is an AST node that is used to match several other types of nodes (literals, variables, value nodes, statement nodes, and sequences of statement nodes).
+ASTPatternVariableNode is an AST node that is used to match several other types of nodes (literals, variables, value nodes, statement nodes, and sequences of statement nodes).
 
 The different types of matches are determined by the name of the node. If the name contains a # character, then it will match a literal. If it contains, a . then it matches statements. If it contains no extra characters, then it matches only variables. These options are mutually exclusive.
 
@@ -17,7 +17,7 @@ Instance Variables:
 
 "
 Class {
-	#name : 'RBPatternVariableNode',
+	#name : 'ASTPatternVariableNode',
 	#superclass : 'RBVariableNode',
 	#instVars : [
 		'recurseInto',
@@ -32,28 +32,28 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBPatternVariableNode class >> identifierNamed: anIdentifierName at: aPosition [
+ASTPatternVariableNode class >> identifierNamed: anIdentifierName at: aPosition [
 	^anIdentifierName isPatternVariable
 		ifTrue: [super identifierNamed: anIdentifierName at: aPosition]
 		ifFalse: [RBVariableNode identifierNamed: anIdentifierName at: aPosition]
 ]
 
 { #category : 'verification' }
-RBPatternVariableNode >> compare: anObject with: aNode [
+ASTPatternVariableNode >> compare: anObject with: aNode [
 	^ anObject isCollection
 		ifTrue: [ anObject anySatisfy: [ :e | e = aNode ] ]
 		ifFalse: [ anObject = aNode ]
 ]
 
 { #category : 'matching' }
-RBPatternVariableNode >> copyInContext: aDictionary [
+ASTPatternVariableNode >> copyInContext: aDictionary [
 	^ (self isList and: [ self isStatement ])
 		ifTrue: [ self copyList: (aDictionary at: self) inContext: aDictionary ]
 		ifFalse: [ (aDictionary at: self) copy ]
 ]
 
 { #category : 'initialization' }
-RBPatternVariableNode >> initializePatternVariables [
+ASTPatternVariableNode >> initializePatternVariables [
 	| myname |
 	myname := self name.
 	isAnything := isList := isLiteral := isStatement := recurseInto := false.
@@ -77,32 +77,32 @@ RBPatternVariableNode >> initializePatternVariables [
 ]
 
 { #category : 'testing - matching' }
-RBPatternVariableNode >> isAnything [
+ASTPatternVariableNode >> isAnything [
 	^isAnything
 ]
 
 { #category : 'testing - matching' }
-RBPatternVariableNode >> isList [
+ASTPatternVariableNode >> isList [
 	^isList
 ]
 
 { #category : 'testing - matching' }
-RBPatternVariableNode >> isLiteralNode [
+ASTPatternVariableNode >> isLiteralNode [
 	^isLiteral
 ]
 
 { #category : 'testing - matching' }
-RBPatternVariableNode >> isPatternNode [
+ASTPatternVariableNode >> isPatternNode [
 	^true
 ]
 
 { #category : 'testing - matching' }
-RBPatternVariableNode >> isStatement [
+ASTPatternVariableNode >> isStatement [
 	^isStatement
 ]
 
 { #category : 'matching' }
-RBPatternVariableNode >> match: aNode inContext: aDictionary [
+ASTPatternVariableNode >> match: aNode inContext: aDictionary [
 	self isAnything
 		ifTrue: [^ self compare: (aDictionary at: self ifAbsentPut: [aNode]) with: aNode].
 	self isLiteralNode ifTrue: [^self matchLiteral: aNode inContext: aDictionary].
@@ -113,32 +113,32 @@ RBPatternVariableNode >> match: aNode inContext: aDictionary [
 ]
 
 { #category : 'matching' }
-RBPatternVariableNode >> matchLiteral: aNode inContext: aDictionary [
+ASTPatternVariableNode >> matchLiteral: aNode inContext: aDictionary [
 
 	^aNode isLiteralNode
 		and: [ self compare: (aDictionary at: self ifAbsentPut: [aNode]) with: aNode]
 ]
 
 { #category : 'matching' }
-RBPatternVariableNode >> matchStatement: aNode inContext: aDictionary [
+ASTPatternVariableNode >> matchStatement: aNode inContext: aDictionary [
 	(aNode parent isNotNil and: [aNode parent isSequence]) ifFalse: [^false].
 	^ self compare: (aDictionary at: self ifAbsentPut: [aNode]) with: aNode
 ]
 
 { #category : 'private' }
-RBPatternVariableNode >> matchingClass [
+ASTPatternVariableNode >> matchingClass [
 	^RBVariableNode
 ]
 
 { #category : 'initialization' }
-RBPatternVariableNode >> named: aName start: aPosition [
+ASTPatternVariableNode >> named: aName start: aPosition [
 
 	super named: aName start: aPosition.
 	self initializePatternVariables
 ]
 
 { #category : 'accessing' }
-RBPatternVariableNode >> parent: aBRProgramNode [
+ASTPatternVariableNode >> parent: aBRProgramNode [
 	"Fix the case where '``@node' should match a single node, not a sequence node."
 
 	super parent: aBRProgramNode.
@@ -152,6 +152,6 @@ RBPatternVariableNode >> parent: aBRProgramNode [
 ]
 
 { #category : 'testing - matching' }
-RBPatternVariableNode >> recurseInto [
+ASTPatternVariableNode >> recurseInto [
 	^recurseInto
 ]

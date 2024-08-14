@@ -1,12 +1,12 @@
 "
-RBPatternMessageNode is an RBMessageNode that will match other message nodes without their selectors being equal. 
+ASTPatternMessageNode is an RBMessageNode that will match other message nodes without their selectors being equal. 
 
 Instance Variables:
 	isCascadeList	<Boolean>	are we matching a list of message nodes in a cascaded message
 	isList	<Boolean>	are we matching each keyword or matching all keywords together (e.g., `keyword1: would match a one-argument method whereas `@keywords: would match 0 or more arguments)
 "
 Class {
-	#name : 'RBPatternMessageNode',
+	#name : 'ASTPatternMessageNode',
 	#superclass : 'RBMessageNode',
 	#instVars : [
 		'isList',
@@ -18,7 +18,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBPatternMessageNode class >> receiver: aValueNode selector: aSelector keywordsPositions: positionList arguments: valueNodes [
+ASTPatternMessageNode class >> receiver: aValueNode selector: aSelector keywordsPositions: positionList arguments: valueNodes [
 
 	^aSelector value asSymbol isPatternVariable
 		ifTrue:
@@ -36,7 +36,7 @@ RBPatternMessageNode class >> receiver: aValueNode selector: aSelector keywordsP
 ]
 
 { #category : 'matching' }
-RBPatternMessageNode >> copyInContext: aDictionary [
+ASTPatternMessageNode >> copyInContext: aDictionary [
 	| keywordSelector |
 	self isList
 		ifTrue: [ ^ aDictionary at: self ].
@@ -50,22 +50,22 @@ RBPatternMessageNode >> copyInContext: aDictionary [
 ]
 
 { #category : 'testing - matching' }
-RBPatternMessageNode >> isList [
+ASTPatternMessageNode >> isList [
 	^isCascadeList and: [parent isNotNil and: [parent isCascade]]
 ]
 
 { #category : 'testing - matching' }
-RBPatternMessageNode >> isPatternNode [
+ASTPatternMessageNode >> isPatternNode [
 	^true
 ]
 
 { #category : 'testing - matching' }
-RBPatternMessageNode >> isSelectorList [
+ASTPatternMessageNode >> isSelectorList [
 	^isList
 ]
 
 { #category : 'matching' }
-RBPatternMessageNode >> match: aNode inContext: aDictionary [
+ASTPatternMessageNode >> match: aNode inContext: aDictionary [
 	aNode class == self matchingClass ifFalse: [^false].
 	(receiver match: aNode receiver inContext: aDictionary) ifFalse: [^false].
 	self isSelectorList
@@ -78,7 +78,7 @@ RBPatternMessageNode >> match: aNode inContext: aDictionary [
 ]
 
 { #category : 'matching' }
-RBPatternMessageNode >> matchArgumentsAgainst: aNode inContext: aDictionary [
+ASTPatternMessageNode >> matchArgumentsAgainst: aNode inContext: aDictionary [
 	self arguments size = aNode arguments size
 		ifFalse: [ ^ false ].
 	(self matchSelectorAgainst: aNode inContext: aDictionary)
@@ -90,7 +90,7 @@ RBPatternMessageNode >> matchArgumentsAgainst: aNode inContext: aDictionary [
 ]
 
 { #category : 'matching' }
-RBPatternMessageNode >> matchSelectorAgainst: aNode inContext: aDictionary [
+ASTPatternMessageNode >> matchSelectorAgainst: aNode inContext: aDictionary [
 	self selectorParts with: aNode selectorParts do: [ :first :second |
 		| keyword |
 		keyword := aDictionary
@@ -105,12 +105,12 @@ RBPatternMessageNode >> matchSelectorAgainst: aNode inContext: aDictionary [
 ]
 
 { #category : 'private' }
-RBPatternMessageNode >> matchingClass [
+ASTPatternMessageNode >> matchingClass [
 	^RBMessageNode
 ]
 
 { #category : 'initialization' }
-RBPatternMessageNode >> receiver: aValueNode selector: aSymbol keywordsPositions: positionList arguments: valueNodes [
+ASTPatternMessageNode >> receiver: aValueNode selector: aSymbol keywordsPositions: positionList arguments: valueNodes [
 	| message |
 	self
 		receiver: aValueNode;
@@ -135,7 +135,7 @@ RBPatternMessageNode >> receiver: aValueNode selector: aSymbol keywordsPositions
 ]
 
 { #category : 'accessing' }
-RBPatternMessageNode >> sentMessages [
+ASTPatternMessageNode >> sentMessages [
 	^ super sentMessages
 		remove: self selector ifAbsent: [ ];
 		yourself

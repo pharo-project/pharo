@@ -1,5 +1,5 @@
 "
-RBPatternMethodNode is an RBMethodNode that will match other method nodes without their selectors being equal. 
+ASTPatternMethodNode is an RBMethodNode that will match other method nodes without their selectors being equal. 
 
 Instance Variables:
 	isList	<Boolean>	are we matching each keyword or matching all keywords together (e.g., `keyword1: would match a one-argument method whereas `@keywords: would match 0 or more arguments)
@@ -7,7 +7,7 @@ Instance Variables:
 
 "
 Class {
-	#name : 'RBPatternMethodNode',
+	#name : 'ASTPatternMethodNode',
 	#superclass : 'RBMethodNode',
 	#instVars : [
 		'isList'
@@ -18,7 +18,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBPatternMethodNode class >> selector: aSelector keywordsPositions: positionList arguments: valueNodes [
+ASTPatternMethodNode class >> selector: aSelector keywordsPositions: positionList arguments: valueNodes [
 	^(aSelector isPatternVariable)
 		ifTrue: [super selector: aSelector keywordsPositions: positionList arguments: valueNodes]
 		ifFalse:
@@ -26,7 +26,7 @@ RBPatternMethodNode class >> selector: aSelector keywordsPositions: positionList
 ]
 
 { #category : 'matching' }
-RBPatternMethodNode >> copyInContext: aDictionary [
+ASTPatternMethodNode >> copyInContext: aDictionary [
 	| keywordSelector |
 	keywordSelector := self isSelectorList
 		ifTrue: [ aDictionary at: self selectorParts first ]
@@ -43,17 +43,17 @@ RBPatternMethodNode >> copyInContext: aDictionary [
 ]
 
 { #category : 'testing - matching' }
-RBPatternMethodNode >> isPatternNode [
+ASTPatternMethodNode >> isPatternNode [
 	^true
 ]
 
 { #category : 'testing' }
-RBPatternMethodNode >> isSelectorList [
+ASTPatternMethodNode >> isSelectorList [
 	^isList
 ]
 
 { #category : 'matching' }
-RBPatternMethodNode >> match: aNode inContext: aDictionary [
+ASTPatternMethodNode >> match: aNode inContext: aDictionary [
 	aNode class = self matchingClass
 		ifFalse: [ ^ false ].
 	aDictionary at: '-source-' put: aNode source.
@@ -68,7 +68,7 @@ RBPatternMethodNode >> match: aNode inContext: aDictionary [
 ]
 
 { #category : 'matching' }
-RBPatternMethodNode >> matchArgumentsAgainst: aNode inContext: aDictionary [
+ASTPatternMethodNode >> matchArgumentsAgainst: aNode inContext: aDictionary [
 	self arguments size = aNode arguments size
 		ifFalse: [ ^ false ].
 	(self matchSelectorAgainst: aNode inContext: aDictionary)
@@ -80,7 +80,7 @@ RBPatternMethodNode >> matchArgumentsAgainst: aNode inContext: aDictionary [
 ]
 
 { #category : 'matching' }
-RBPatternMethodNode >> matchSelectorAgainst: aNode inContext: aDictionary [
+ASTPatternMethodNode >> matchSelectorAgainst: aNode inContext: aDictionary [
 	self selectorParts with: aNode selectorParts do: [ :first :second |
 		| keyword |
 		keyword := aDictionary
@@ -95,12 +95,12 @@ RBPatternMethodNode >> matchSelectorAgainst: aNode inContext: aDictionary [
 ]
 
 { #category : 'private' }
-RBPatternMethodNode >> matchingClass [
+ASTPatternMethodNode >> matchingClass [
 	^RBMethodNode
 ]
 
 { #category : 'initialization' }
-RBPatternMethodNode >> selector: aSymbol keywordsPositions: positionList arguments: valueNodes [
+ASTPatternMethodNode >> selector: aSymbol keywordsPositions: positionList arguments: valueNodes [
 	super selector: aSymbol keywordsPositions: positionList arguments: valueNodes.
 	isList := (aSymbol keywords first value at: 2) == self listCharacter
 ]

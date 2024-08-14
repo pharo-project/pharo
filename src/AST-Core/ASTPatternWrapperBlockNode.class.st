@@ -1,12 +1,12 @@
 "
-RBPatternWrapperBlockNode allows further matching using a block after a node has been matched by a pattern node.
+ASTPatternWrapperBlockNode allows further matching using a block after a node has been matched by a pattern node.
 
 Instance Variables:
 	wrappedNode	<ASTProgramNode>	The original pattern node to match
 "
 Class {
-	#name : 'RBPatternWrapperBlockNode',
-	#superclass : 'RBPatternBlockNode',
+	#name : 'ASTPatternWrapperBlockNode',
+	#superclass : 'ASTPatternBlockNode',
 	#instVars : [
 		'wrappedNode'
 	],
@@ -16,40 +16,40 @@ Class {
 }
 
 { #category : 'visiting' }
-RBPatternWrapperBlockNode >> acceptVisitor: aProgramNodeVisitor [
+ASTPatternWrapperBlockNode >> acceptVisitor: aProgramNodeVisitor [
 	^aProgramNodeVisitor visitPatternWrapperBlockNode: self
 ]
 
 { #category : 'matching' }
-RBPatternWrapperBlockNode >> copyInContext: aDictionary [
+ASTPatternWrapperBlockNode >> copyInContext: aDictionary [
 	"I don't know what this would mean, so ignore it."
 
 	^ wrappedNode copyInContext: aDictionary
 ]
 
 { #category : 'matching' }
-RBPatternWrapperBlockNode >> match: aNode inContext: aDictionary [
+ASTPatternWrapperBlockNode >> match: aNode inContext: aDictionary [
 	(wrappedNode match: aNode inContext: aDictionary) ifFalse: [^false].
 	^super match: aNode inContext: aDictionary
 ]
 
 { #category : 'accessing' }
-RBPatternWrapperBlockNode >> precedence [
+ASTPatternWrapperBlockNode >> precedence [
 	^1
 ]
 
 { #category : 'accessing' }
-RBPatternWrapperBlockNode >> sentMessages [
+ASTPatternWrapperBlockNode >> sentMessages [
 	^ wrappedNode sentMessages
 ]
 
 { #category : 'accessing' }
-RBPatternWrapperBlockNode >> wrappedNode [
+ASTPatternWrapperBlockNode >> wrappedNode [
 	^wrappedNode
 ]
 
 { #category : 'accessing' }
-RBPatternWrapperBlockNode >> wrappedNode: aProgramNode [
+ASTPatternWrapperBlockNode >> wrappedNode: aProgramNode [
 	wrappedNode := aProgramNode.
 	aProgramNode parent: self
 ]
