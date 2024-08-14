@@ -17,6 +17,24 @@ Process >> complete: aContext [
 ]
 
 { #category : '*Debugging-Core' }
+Process >> debug [
+	^ self debugWithTitle: 'Debug'
+]
+
+{ #category : '*Debugging-Core' }
+Process >> debugWithTitle: title [
+
+	| context |
+	context := self isActiveProcess
+		           ifTrue: [ thisContext ]
+		           ifFalse: [ self suspendedContext ].
+	UIManager default
+		requestDebuggerOpeningForProcess: self
+		named: title
+		inContext: context
+]
+
+{ #category : '*Debugging-Core' }
 Process >> step: aContext [
 	"Resume self until aContext is on top, or if already on top, do next step"
 

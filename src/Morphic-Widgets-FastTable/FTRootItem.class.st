@@ -62,6 +62,11 @@ FTRootItem >> isExpanded [
 	^ true
 ]
 
+{ #category : 'testing' }
+FTRootItem >> isRoot [
+	^ true
+]
+
 { #category : 'accessing' }
 FTRootItem >> recentlyChanged [
 	"Cannot collapse root item."

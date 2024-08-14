@@ -42,6 +42,16 @@ ZipArchive class >> compressionStored [
 ]
 
 { #category : 'file in/out' }
+ZipArchive class >> extractAllIn: aFileReferenceOrFileName [
+	"Service method to extract all contents of a zip."
+	| directory |
+	directory := (UIManager default chooseDirectoryFrom: aFileReferenceOrFileName asFileReference) ifNil: [^ self].
+	^ (self new)
+		readFrom: aFileReferenceOrFileName;
+		extractAllTo: directory
+]
+
+{ #category : 'file in/out' }
 ZipArchive class >> extractFrom: aZipFile to: aDirectory [
 
 	^ self new
