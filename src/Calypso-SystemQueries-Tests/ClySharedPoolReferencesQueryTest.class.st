@@ -24,19 +24,21 @@ ClySharedPoolReferencesQueryTest >> setUp [
 	environment system: ClySystemEnvironment currentImage.
 	environment detachFromSystem.
 
-	query variableQuery: (ClyConstantQuery returning: {(self class environment bindingOf: #ClySharedPoolForTesting)}).
-	self queryFromScope: ClyClassScope of: self class
 ]
 
 { #category : 'tests' }
 ClySharedPoolReferencesQueryTest >> testCheckIfEmpty [
 
+	query variableQuery: (ClyConstantQuery returning: {(self class environment bindingOf: #ClySharedPoolForTesting)}).
+	self queryFromScope: ClyClassScope of: self class.
 	self deny: query checkEmptyResult
 ]
 
 { #category : 'tests' }
 ClySharedPoolReferencesQueryTest >> testFromSystemScope [
 
+	query variableQuery: (ClyConstantQuery returning: {(self class environment bindingOf: #ClySharedPoolForTesting)}).
+	self queryFromScope: ClyClassScope of: self class.
 	self assert: resultItems size equals: 1.
 	self assertCollection: resultItems hasSameElements: { self class }
 ]
