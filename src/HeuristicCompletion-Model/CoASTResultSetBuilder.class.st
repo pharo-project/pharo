@@ -145,9 +145,9 @@ CoASTResultSetBuilder >> visitInstanceVariableNode: aRBVariableNode [
 ]
 
 { #category : 'visiting' }
-CoASTResultSetBuilder >> visitLiteralArrayNode: aRBLiteralArrayNode [
+CoASTResultSetBuilder >> visitLiteralArrayNode: aLiteralArrayNode [
 
-	^ self visitValueNode: aRBLiteralArrayNode
+	^ self visitValueNode: aLiteralArrayNode
 ]
 
 { #category : 'visiting' }

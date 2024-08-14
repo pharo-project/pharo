@@ -102,8 +102,8 @@ RBProgramNodeVisitor >> visitInstanceVariableNode: aSelfNode [
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitLiteralArrayNode: aRBLiteralArrayNode [
-	aRBLiteralArrayNode contents do: [ :each | self visitNode: each ]
+RBProgramNodeVisitor >> visitLiteralArrayNode: aLiteralArrayNode [
+	aLiteralArrayNode contents do: [ :each | self visitNode: each ]
 ]
 
 { #category : 'visiting' }

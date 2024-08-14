@@ -198,9 +198,9 @@ IconStyler >> visitEnglobingErrorNode: anEnglobingNode [
 ]
 
 { #category : 'visiting' }
-IconStyler >> visitLiteralArrayNode: aRBLiteralArrayNode [
-	self addIconStyle: aRBLiteralArrayNode.
-	super visitLiteralArrayNode: aRBLiteralArrayNode
+IconStyler >> visitLiteralArrayNode: aLiteralArrayNode [
+	self addIconStyle: aLiteralArrayNode.
+	super visitLiteralArrayNode: aLiteralArrayNode
 ]
 
 { #category : 'visiting' }

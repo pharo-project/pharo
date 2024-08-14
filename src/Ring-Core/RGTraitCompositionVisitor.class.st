@@ -59,9 +59,9 @@ RGTraitCompositionVisitor >> visitArrayNode: anArrayNode [
 ]
 
 { #category : 'visiting' }
-RGTraitCompositionVisitor >> visitLiteralArrayNode: aRBLiteralArrayNode [
+RGTraitCompositionVisitor >> visitLiteralArrayNode: aLiteralArrayNode [
 
-	^ aRBLiteralArrayNode contents collect: [:each | self visitNode: each]
+	^ aLiteralArrayNode contents collect: [:each | self visitNode: each]
 ]
 
 { #category : 'visiting' }

@@ -28,13 +28,13 @@ produces
 		RBReturnNode
 		RBSequenceNode
 		ASTValueNode
-			RBArrayNode
-			RBAssignmentNode
+			ASTArrayNode
+			ASTAssignmentNode
 			RBBlockNode
 			RBCascadeNode
 			ASTLiteralNode
-				RBLiteralArrayNode
-				RBLiteralValueNode
+				ASTLiteralArrayNode
+				ASTLiteralValueNode
 			RBMessageNode
 			RBParseErrorNode
 				RBEnglobingErrorNode

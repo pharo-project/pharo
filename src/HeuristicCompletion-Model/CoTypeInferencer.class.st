@@ -263,9 +263,9 @@ CoTypeInferencer >> visitInstanceVariableNode: aRBInstanceVariableNode [
 ]
 
 { #category : 'visiting' }
-CoTypeInferencer >> visitLiteralArrayNode: aRBLiteralArrayNode [
+CoTypeInferencer >> visitLiteralArrayNode: aLiteralArrayNode [
 
-	^ self visitArrayNode: aRBLiteralArrayNode
+	^ self visitArrayNode: aLiteralArrayNode
 ]
 
 { #category : 'visiting' }

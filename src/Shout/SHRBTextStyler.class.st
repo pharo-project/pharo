@@ -1081,12 +1081,12 @@ SHRBTextStyler >> visitEnglobingErrorNode: anEnglobingErrorNode [
 ]
 
 { #category : 'visiting' }
-SHRBTextStyler >> visitLiteralArrayNode: aRBLiteralArrayNode [
+SHRBTextStyler >> visitLiteralArrayNode: aLiteralArrayNode [
 	"We reuse the nested brackets/parenthesis style.
 	The main point it to easyly match opener and closer, nor necesarily to add type semanting"
 
 	| style |
-	aRBLiteralArrayNode isForByteArray
+	aLiteralArrayNode isForByteArray
 		ifTrue: [
 			style := self bracketStyleName.
 			bracketLevel := bracketLevel + 1 ]
@@ -1096,16 +1096,16 @@ SHRBTextStyler >> visitLiteralArrayNode: aRBLiteralArrayNode [
 
 	self
 		addStyle: style
-		from: aRBLiteralArrayNode startWithoutParentheses
-		to: aRBLiteralArrayNode startWithoutParentheses + aRBLiteralArrayNode openerSize - 1.
+		from: aLiteralArrayNode startWithoutParentheses
+		to: aLiteralArrayNode startWithoutParentheses + aLiteralArrayNode openerSize - 1.
 	self
 		addStyle: style
-		from: aRBLiteralArrayNode stopWithoutParentheses
-		to: aRBLiteralArrayNode stopWithoutParentheses.
+		from: aLiteralArrayNode stopWithoutParentheses
+		to: aLiteralArrayNode stopWithoutParentheses.
 
-	aRBLiteralArrayNode contents do: [ :each | self visitNode: each ].
+	aLiteralArrayNode contents do: [ :each | self visitNode: each ].
 
-	aRBLiteralArrayNode isForByteArray
+	aLiteralArrayNode isForByteArray
 		ifTrue: [ bracketLevel := bracketLevel - 1 ]
 		ifFalse: [ parentheseLevel := parentheseLevel - 1 ]
 ]
