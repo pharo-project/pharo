@@ -543,7 +543,7 @@ CDFluidClassDefinitionParser >> slotNodeClass [
 ]
 
 { #category : 'parsing' }
-CDFluidClassDefinitionParser >> visitCascadeNode: aRBCascadeNode [
+CDFluidClassDefinitionParser >> visitCascadeNode: aCascadeNode [
 	"See class comment. Here we handle the cascade version of the class definition."
 	"
 	Object << #Point
@@ -552,8 +552,8 @@ CDFluidClassDefinitionParser >> visitCascadeNode: aRBCascadeNode [
 			package: ''Kernel-BasicObjects'''
 	"
 
-	self handleClassAndSuperclassOf: aRBCascadeNode.
-	aRBCascadeNode messages do:
+	self handleClassAndSuperclassOf: aCascadeNode.
+	aCascadeNode messages do:
 		[:msg | msg selectorParts
 					with: msg arguments
 					do: [ :selectorPart :argument |
@@ -561,18 +561,18 @@ CDFluidClassDefinitionParser >> visitCascadeNode: aRBCascadeNode [
 ]
 
 { #category : 'parsing' }
-CDFluidClassDefinitionParser >> visitMessageNode: aRBMessageNode [
+CDFluidClassDefinitionParser >> visitMessageNode: aMessageNode [
 	"See class comment. Here we handle the cascade version of the class definition."
 	"
 	Object << #Point
 			package: ''Kernel-BasicObjects'''
 	"
 
-	self handleClassAndSuperclassOf: aRBMessageNode.
+	self handleClassAndSuperclassOf: aMessageNode.
 
-	aRBMessageNode arguments ifEmpty: [ ^ self ].
-	aRBMessageNode selectorParts
-		with: aRBMessageNode arguments
+	aMessageNode arguments ifEmpty: [ ^ self ].
+	aMessageNode selectorParts
+		with: aMessageNode arguments
 		do: [ :selectorPart :argument |
 			self parseSelectorPart: selectorPart withArgument: argument ]
 ]

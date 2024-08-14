@@ -21,7 +21,7 @@ an expression
 - ASTAssignmentNode
 - RBMessageNode
 - RBReturnNode
-- RBCascadeNode
+- ASTCascadeNode
 a sequence of expressions
 - RBSequenceNode
 or a block or Method

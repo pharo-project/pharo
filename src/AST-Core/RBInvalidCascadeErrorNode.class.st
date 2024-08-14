@@ -7,7 +7,7 @@ The only content of the error node is this possible receiver.
 It is also used if the first message is empty: not even a receiver, e.g. `;foo`.
 In this case the content (the receiver) is an error node (expected value).
 
-Beware that instances of this class can be the first element of ""messages"" on a faulty RBCascadeNode object.
+Beware that instances of this class can be the first element of ""messages"" on a faulty ASTCascadeNode object.
 "
 Class {
 	#name : 'RBInvalidCascadeErrorNode',
