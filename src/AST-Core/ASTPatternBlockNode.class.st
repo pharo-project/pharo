@@ -32,13 +32,13 @@ ASTPatternBlockNode >> addArgumentWithNameBasedOn: aString to: aRBBlockNode [
 			[index := index + 1.
 			name := name , index printString].
 	aRBBlockNode
-		arguments: (aRBBlockNode arguments copyWith: (RBVariableNode named: name))
+		arguments: (aRBBlockNode arguments copyWith: (ASTVariableNode named: name))
 ]
 
 { #category : 'matching' }
 ASTPatternBlockNode >> constructLookupNodeFor: aString in: aRBBlockNode [
 	^ RBMessageNode
-		  receiver: RBVariableNode selfNode
+		  receiver: ASTVariableNode selfNode
 		  selector: #lookupMatchFor:in:
 		  arguments: (Array with: (ASTLiteralNode value: aString) with: aRBBlockNode arguments last copy)
 ]

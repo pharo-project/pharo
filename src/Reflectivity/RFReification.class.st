@@ -99,6 +99,11 @@ RFReification >> genForASTReturnNode [
 ]
 
 { #category : 'generate' }
+RFReification >> genForASTVariableNode [
+	^self genForASTProgramNode
+]
+
+{ #category : 'generate' }
 RFReification >> genForClassVariable [
 	^self genForLiteralVariable
 ]
@@ -130,7 +135,7 @@ RFReification >> genForRBBlockNode [
 
 { #category : 'generate' }
 RFReification >> genForRBGlobalNode [
-	^self genForRBVariableNode
+	^self genForASTVariableNode
 ]
 
 { #category : 'generate' }
@@ -160,12 +165,7 @@ RFReification >> genForRBSequenceNode [
 
 { #category : 'generate' }
 RFReification >> genForRBTemporaryNode [
-	^self genForRBVariableNode
-]
-
-{ #category : 'generate' }
-RFReification >> genForRBVariableNode [
-	^self genForASTProgramNode
+	^self genForASTVariableNode
 ]
 
 { #category : 'accessing' }

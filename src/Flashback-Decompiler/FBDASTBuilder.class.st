@@ -26,14 +26,14 @@ FBDASTBuilder >> codeAnyLitInd: anAssociation [
 	| varName |
 	"class binding on the class side has nil as key"
 	varName := anAssociation key ifNil: [ 'class binding' ] ifNotNil: [ anAssociation key ].
-	^ (RBVariableNode named: varName)
+	^ (ASTVariableNode named: varName)
 		binding: anAssociation;
 		yourself
 ]
 
 { #category : 'building' }
 FBDASTBuilder >> codeArgument: tempName [
-	^ RBVariableNode named: tempName
+	^ ASTVariableNode named: tempName
 ]
 
 { #category : 'building' }
@@ -90,7 +90,7 @@ FBDASTBuilder >> codeEmptySequence [
 
 { #category : 'building' }
 FBDASTBuilder >> codeInstanceVariable: offset [
-	^ RBVariableNode named: (methodClass allSlots at: offset) name
+	^ ASTVariableNode named: (methodClass allSlots at: offset) name
 ]
 
 { #category : 'building' }
@@ -128,7 +128,7 @@ FBDASTBuilder >> codeMethod: selector arguments: args body: body pragmas: pragma
 
 { #category : 'building' }
 FBDASTBuilder >> codeReceiver [
-	^ RBVariableNode selfNode
+	^ ASTVariableNode selfNode
 ]
 
 { #category : 'building' }
@@ -148,7 +148,7 @@ FBDASTBuilder >> codeReturn: value [
 
 { #category : 'building' }
 FBDASTBuilder >> codeSelf [
-	^ RBVariableNode selfNode
+	^ ASTVariableNode selfNode
 ]
 
 { #category : 'building' }
@@ -158,22 +158,22 @@ FBDASTBuilder >> codeSequence: temps [
 
 { #category : 'building' }
 FBDASTBuilder >> codeSuper [
-	^ RBVariableNode superNode
+	^ ASTVariableNode superNode
 ]
 
 { #category : 'building' }
 FBDASTBuilder >> codeTemp: tempName [
-	^ RBVariableNode named: tempName
+	^ ASTVariableNode named: tempName
 ]
 
 { #category : 'building' }
 FBDASTBuilder >> codeThisContext [
-	^ RBVariableNode thisContextNode
+	^ ASTVariableNode thisContextNode
 ]
 
 { #category : 'building' }
 FBDASTBuilder >> codeVariable: variable [
-	^ RBVariableNode named: variable
+	^ ASTVariableNode named: variable
 ]
 
 { #category : 'accessing' }

@@ -39,7 +39,7 @@ ReAddSuperSendAsFirstStatementTransformation >> methodTree: aRBMethodNode inClas
 ReAddSuperSendAsFirstStatementTransformation >> privateTransform [ 
 
 	| superSend |
-	superSend := RBMessageNode receiver: RBVariableNode superNode selector: selector.
+	superSend := RBMessageNode receiver: ASTVariableNode superNode selector: selector.
 	method body addNodeFirst: superSend.
 	class compileTree: method
 ]

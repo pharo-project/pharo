@@ -1,21 +1,21 @@
-Extension { #name : 'RBVariableNode' }
+Extension { #name : 'ASTVariableNode' }
 
 { #category : '*NECompletion' }
-RBVariableNode >> argEntriesForMethodNode: aMethodNode [
+ASTVariableNode >> argEntriesForMethodNode: aMethodNode [
 	^ aMethodNode argumentNames
 		select: [ :each | each beginsWith: self name ]
 		thenCollect: [ :each | NECLocalEntry contents: each node: self ]
 ]
 
 { #category : '*NECompletion' }
-RBVariableNode >> classVarEntriesForClass: lookupClass [
+ASTVariableNode >> classVarEntriesForClass: lookupClass [
 	^ lookupClass allClassVarNames
 		select: [ :each | each beginsWith: self name ]
 		thenCollect: [ :each | NECClassVarEntry contents: each node: self ]
 ]
 
 { #category : '*NECompletion' }
-RBVariableNode >> completionEntries: offset [
+ASTVariableNode >> completionEntries: offset [
 	| methodNode lookupClass |
 	methodNode := self methodNode.
 	lookupClass := methodNode methodClass.
@@ -34,48 +34,48 @@ RBVariableNode >> completionEntries: offset [
 ]
 
 { #category : '*NECompletion' }
-RBVariableNode >> completionToken: offset [
+ASTVariableNode >> completionToken: offset [
 
 	^ self name
 ]
 
 { #category : '*NECompletion' }
-RBVariableNode >> entriesSpecialVariables [
+ASTVariableNode >> entriesSpecialVariables [
 	^ #('self' 'super' 'thisContext' 'nil' 'false' 'true')
 			select: [ :each | each beginsWith: self name ]
 			thenCollect: [ :each | NECSpecialVariableEntry contents: each node: self ]
 ]
 
 { #category : '*NECompletion' }
-RBVariableNode >> globalEntries [
+ASTVariableNode >> globalEntries [
 	^ Smalltalk globals keys
 			select: [ :each | each beginsWith: self name ]
 			thenCollect: [ :each | NECGlobalEntry contents: each  node: self ]
 ]
 
 { #category : '*NECompletion' }
-RBVariableNode >> poolVarEntriesForClass: lookupClass [
+ASTVariableNode >> poolVarEntriesForClass: lookupClass [
 	^ (lookupClass allSharedPools flatCollect: [ :each | each classVarNames ])
 			select: [ :each | each beginsWith: self name ]
 			thenCollect: [ :each | NECClassVarEntry contents: each node: self ]
 ]
 
 { #category : '*NECompletion' }
-RBVariableNode >> possibleSelectorEntries [
+ASTVariableNode >> possibleSelectorEntries [
 	^ Symbol allSymbols
 		select: [ :each | (each beginsWith: self name) and: [ each contents numArgs = 0 ] ]
 		thenCollect: [ :each | NECSymbolEntry contents: each node: self ]
 ]
 
 { #category : '*NECompletion' }
-RBVariableNode >> slotEntriesForClass: lookupClass [
+ASTVariableNode >> slotEntriesForClass: lookupClass [
 	^lookupClass
 		allSlots select: [ :each | each name beginsWith: self name ]
 		thenCollect: [ :each | NECInstVarEntry contents: each name node: self ]
 ]
 
 { #category : '*NECompletion' }
-RBVariableNode >> tempEntriesForMethodNode: aMethodNode [
+ASTVariableNode >> tempEntriesForMethodNode: aMethodNode [
 	^ aMethodNode temporaryNames
 		select: [ :each | each beginsWith: self name ]
 		thenCollect: [ :each | NECLocalEntry contents: each node: self ]

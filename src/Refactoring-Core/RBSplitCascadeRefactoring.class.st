@@ -64,11 +64,11 @@ RBSplitCascadeRefactoring >> extractReceiver [
 	ancestorNode parent
 		addTemporaryNamed: name;
 		addNode: (ASTAssignmentNode
-			variable: (RBVariableNode named: name)
+			variable: (ASTVariableNode named: name)
 			value: cascadeNode receiver)
 		before: ancestorNode.
 	cascadeNode messages
-		do: [ :each | each receiver: (RBVariableNode named: name) ]
+		do: [ :each | each receiver: (ASTVariableNode named: name) ]
 ]
 
 { #category : 'preconditions' }

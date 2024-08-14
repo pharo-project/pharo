@@ -1318,5 +1318,5 @@ RBParser >> stepBar [
 
 { #category : 'private - classes' }
 RBParser >> variableNodeClass [
-	^ RBVariableNode
+	^ ASTVariableNode
 ]

@@ -30,6 +30,8 @@ produces
 			ASTLiteralNode
 				ASTLiteralArrayNode
 				ASTLiteralValueNode
+			ASTVariableNode
+				ASTPatternVariableNode
 			RBAnnotationMarkNode
 			RBBlockNode
 				ASTPatternBlockNode
@@ -49,8 +51,6 @@ produces
 					RBTemporariesErrorNode
 					RBUnfinishedStatementErrorNode
 			RBSelectorNode
-			RBVariableNode
-				ASTPatternVariableNode
 		RBComment
 		RBMethodNode
 			ASTPatternMethodNode

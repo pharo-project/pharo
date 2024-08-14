@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFIndexReification class >> entities [
-	^{RBVariableNode. ASTAssignmentNode}
+	^{ASTVariableNode. ASTAssignmentNode}
 ]
 
 { #category : 'plugin interface' }
@@ -25,6 +25,6 @@ RFIndexReification >> genForASTAssignmentNode [
 ]
 
 { #category : 'generate' }
-RFIndexReification >> genForRBVariableNode [
+RFIndexReification >> genForASTVariableNode [
 	^entity binding index asLiteralNode
 ]

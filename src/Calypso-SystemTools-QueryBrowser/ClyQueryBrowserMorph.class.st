@@ -180,12 +180,6 @@ ClyQueryBrowserMorph >> extraScopesOfSelectedItems [
 ]
 
 { #category : 'initialization' }
-ClyQueryBrowserMorph >> initialExtent [
-
-	^ 1350 @ 620 * self currentWorld displayScaleFactor
-]
-
-{ #category : 'initialization' }
 ClyQueryBrowserMorph >> initialize [
 	super initialize.
 

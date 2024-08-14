@@ -158,12 +158,12 @@ EpFileOutModificationsTest >> testFileOutMultipleMethodRemoval [
 	self assert: methodNode1 selector equals: #removeSelector:.
 	self 
 		assertCollection: methodNode1 arguments 
-		hasSameElements: { RBVariableNode named: #fortyTwo }.
+		hasSameElements: { ASTVariableNode named: #fortyTwo }.
 		
 	self assert: methodNode2 selector equals: #removeSelector:.
 	self 
 		assertCollection: methodNode2 arguments 
-		hasSameElements: { RBVariableNode named: #thirtyTwo }.
+		hasSameElements: { ASTVariableNode named: #thirtyTwo }.
 ]
 
 { #category : 'tests' }
@@ -318,7 +318,7 @@ EpFileOutModificationsTest >> testFileOutSingleMethodRemoval [
 	self assert: methodNode selector equals: #removeSelector:.
 	self 
 		assertCollection: methodNode arguments 
-		hasSameElements: { RBVariableNode named: #fortyTwo }
+		hasSameElements: { ASTVariableNode named: #fortyTwo }
 ]
 
 { #category : 'tests' }

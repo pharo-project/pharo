@@ -279,10 +279,10 @@ Breakpoint >> conditionBlockProducerMethodAST: conditionString [
 			(ASTReturnNode
 				value:
 					(RBBlockNode
-						arguments: {(RBVariableNode named: 'ThisContext')}
+						arguments: {(ASTVariableNode named: 'ThisContext')}
 						body:
 							(RBMessageNode
-								receiver: (RBVariableNode named: 'Breakpoint')
+								receiver: (ASTVariableNode named: 'Breakpoint')
 								selector: #checkBreakConditionValue:
 								arguments: {conditionAST}) asSequenceNode)) asSequenceNode.
 	conditionBlockProducerMethodAST := self
@@ -528,10 +528,10 @@ Breakpoint >> rewriteASTToSimulateExecutionInADifferentContext: anAST [
 	rewriter := RBParseTreeRewriter new.
 	semanticallyAnalysedMethodAST := anAST doSemanticAnalysis.	"To find which variables are undefined"
 	rewriter
-		replace: (RBVariableNode named: #ThisContext) name
+		replace: (ASTVariableNode named: #ThisContext) name
 		with:
 			'(ThisContext readVariableNamed: #'
-				, (RBVariableNode named: #ThisContext) name , ')'.
+				, (ASTVariableNode named: #ThisContext) name , ')'.
 	allMessageNodes := semanticallyAnalysedMethodAST allChildren
 		select: [ :astElem | astElem isMessage ].
 	receiverSuperclassValueNode := self parserClass

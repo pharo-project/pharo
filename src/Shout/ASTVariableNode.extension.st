@@ -1,7 +1,7 @@
-Extension { #name : 'RBVariableNode' }
+Extension { #name : 'ASTVariableNode' }
 
 { #category : '*Shout' }
-RBVariableNode >> styleName [
+ASTVariableNode >> styleName [
 
 	^ self variable
 		  ifNil: [ #default ]

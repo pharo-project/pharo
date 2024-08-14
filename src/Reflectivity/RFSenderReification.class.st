@@ -21,14 +21,14 @@ RFSenderReification class >> key [
 
 { #category : 'generate' }
 RFSenderReification >> genForRBMessageNode [
-	^RBVariableNode selfNode
+	^ASTVariableNode selfNode
 ]
 
 { #category : 'generate' }
 RFSenderReification >> genForRBMethodNode [
 	^RBMessageNode
 		receiver: (RBMessageNode
-			receiver: RBVariableNode thisContextNode
+			receiver: ASTVariableNode thisContextNode
 			selector: #sender)
 		selector: #receiver
 ]

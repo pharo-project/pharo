@@ -97,7 +97,7 @@ RBAddAssignmentTransformation >> privateTransform [
 	| methodTree assignmentNode assignments previousNode |
 	methodTree := self definingMethod.
 	assignmentNode := ASTAssignmentNode
-		variable: (RBVariableNode named: variableName)
+		variable: (ASTVariableNode named: variableName)
 		value: (self parserClass parseExpression: value).
 
 	"check whether there are some dependencies in the expression"

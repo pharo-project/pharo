@@ -44,17 +44,17 @@ CoBasicCompletionTest >> innerASTNode [
 	| nodeInsideABlock |
 	RBMethodNode
 		selector: #foo
-		arguments: (#(methodArgument) collect: [ :e | RBVariableNode named: e ])
+		arguments: (#(methodArgument) collect: [ :e | ASTVariableNode named: e ])
 		body:
 			(RBSequenceNode
-				temporaries: (#(methodTemporary) collect: [ :e | RBVariableNode named: e ])
+				temporaries: (#(methodTemporary) collect: [ :e | ASTVariableNode named: e ])
 				statements:
 					{(RBBlockNode
-						arguments: (#(blockArgument) collect: [ :e | RBVariableNode named: e ])
+						arguments: (#(blockArgument) collect: [ :e | ASTVariableNode named: e ])
 						body:
 							(RBSequenceNode
-								temporaries: (#(blockTemporary) collect: [ :e | RBVariableNode named: e ])
-								statements: {(nodeInsideABlock := RBVariableNode named: '')}))}).
+								temporaries: (#(blockTemporary) collect: [ :e | ASTVariableNode named: e ])
+								statements: {(nodeInsideABlock := ASTVariableNode named: '')}))}).
 	^ nodeInsideABlock
 ]
 

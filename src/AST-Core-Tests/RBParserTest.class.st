@@ -362,20 +362,20 @@ RBParserTest >> testCopyInContext [
 RBParserTest >> testCreationBlockNodeWithExpression [
 	self compare: (self parserClass parseExpression: '[:a :b | a messaged. b messaged.]')
 		  to:(RBBlockNode
-			   arguments: (OrderedCollection with: (RBVariableNode named: 'a') with: (RBVariableNode named: 'b'))
-				body: (RBSequenceNode statements: (OrderedCollection with: (RBMessageNode receiver: (RBVariableNode named: #a) selector: (RBSelectorNode value: #messaged))
-																						with: (RBMessageNode receiver: (RBVariableNode named: #b) selector: (RBSelectorNode value: #messaged)))))
+			   arguments: (OrderedCollection with: (ASTVariableNode named: 'a') with: (ASTVariableNode named: 'b'))
+				body: (RBSequenceNode statements: (OrderedCollection with: (RBMessageNode receiver: (ASTVariableNode named: #a) selector: (RBSelectorNode value: #messaged))
+																						with: (RBMessageNode receiver: (ASTVariableNode named: #b) selector: (RBSelectorNode value: #messaged)))))
 ]
 
 { #category : 'tests - CreationProtocol' }
 RBParserTest >> testCreationCascadeNodeFromExpression [
 	self compare: (self parserClass parseExpression: 'cascade firstMessage; secondMessage; lastMessage')
 		  to: (ASTCascadeNode
-				messages: (OrderedCollection with: (RBMessageNode receiver: (RBVariableNode named: 'cascade')
+				messages: (OrderedCollection with: (RBMessageNode receiver: (ASTVariableNode named: 'cascade')
 																					selector: (RBSelectorNode value: #firstMessage))
-													  with: (RBMessageNode receiver: (RBVariableNode named: 'cascade')
+													  with: (RBMessageNode receiver: (ASTVariableNode named: 'cascade')
 																					selector: (RBSelectorNode value: #secondMessage))
-													  with: (RBMessageNode receiver: (RBVariableNode named: 'cascade')
+													  with: (RBMessageNode receiver: (ASTVariableNode named: 'cascade')
 																					selector: (RBSelectorNode value: #lastMessage)))
 				semicolons: (OrderedCollection with: 21 with: 37))
 ]
@@ -413,7 +413,7 @@ RBParserTest >> testCreationMessageNodeFromExpression [
 	"Verify the good parsing of an expression."
 	self compare: (self parserClass parseExpression: 'self + 0')
 		  to: (RBMessageNode
-				receiver: (RBVariableNode named: 'self')
+				receiver: (ASTVariableNode named: 'self')
 				selector: (RBSelectorNode value: #+)
 				arguments: (Array with: (ASTLiteralNode value: 0)))
 ]
@@ -422,11 +422,11 @@ RBParserTest >> testCreationMessageNodeFromExpression [
 RBParserTest >> testCreationProtocol [
 	| messageNode |
 	self compare: (RBMessageNode
-				receiver: (RBVariableNode selfNode)
+				receiver: (ASTVariableNode selfNode)
 				selector: (RBSelectorNode value: #+)
 				arguments: (Array with: (ASTLiteralNode value: 0)))
 		to: (self parserClass parseExpression: 'self + 0').
-	messageNode := RBMessageNode receiver: (RBVariableNode selfNode) selector: (RBSelectorNode value: #foo).
+	messageNode := RBMessageNode receiver: (ASTVariableNode selfNode) selector: (RBSelectorNode value: #foo).
 	self compare: (RBMethodNode selector: #bar
 				body: (RBSequenceNode statements: (OrderedCollection
 								with: (ASTCascadeNode messages: (OrderedCollection with: messageNode with: messageNode)))))
@@ -436,31 +436,31 @@ RBParserTest >> testCreationProtocol [
 { #category : 'tests - CreationProtocol' }
 RBParserTest >> testCreationSelfNodeWithExpression [
 	self compare: (self parserClass parseExpression: 'self')
-		  to: RBVariableNode selfNode
+		  to: ASTVariableNode selfNode
 ]
 
 { #category : 'tests - CreationProtocol' }
 RBParserTest >> testCreationSuperNodeWithExpression [
 	self compare: (self parserClass parseExpression: 'super')
-		  to: RBVariableNode superNode
+		  to: ASTVariableNode superNode
 ]
 
 { #category : 'tests - CreationProtocol' }
 RBParserTest >> testCreationThisContexNodeWithExpression [
 	self compare: (self parserClass parseExpression: 'thisContext')
-		  to: RBVariableNode thisContextNode
+		  to: ASTVariableNode thisContextNode
 ]
 
 { #category : 'tests - CreationProtocol' }
 RBParserTest >> testCreationThisProcessNodeWithExpression [
 	self compare: (self parserClass parseExpression: 'thisProcess')
-		  to: RBVariableNode thisProcessNode 
+		  to: ASTVariableNode thisProcessNode 
 ]
 
 { #category : 'tests - CreationProtocol' }
 RBParserTest >> testCreationVariableNodeWithExpression [
 	self compare: (self parserClass parseExpression: 'variable')
-		  to: (RBVariableNode named: #variable start: 1)
+		  to: (ASTVariableNode named: #variable start: 1)
 ]
 
 { #category : 'tests - Array' }
@@ -1390,7 +1390,7 @@ RBParserTest >> testParseMethodWhichEndsWithUncompleteStringWithEscapedMarkAtThe
 	body := node body.
 	self assert: body isSequence.
 	self assert: body isFaulty.
-	self assert: (body temporaries includes: (RBVariableNode named: 'temp')).
+	self assert: (body temporaries includes: (ASTVariableNode named: 'temp')).
 
 	statement := body statements first.
 	self assert: statement isFaulty.
@@ -1425,7 +1425,7 @@ RBParserTest >> testParseMethodWithErrorTokenIsWellFormed [
 	body := node body.
 	self assert: body isSequence.
 	self assert: body isFaulty.
-	self assert: (body temporaries includes: (RBVariableNode named: 'temp')).
+	self assert: (body temporaries includes: (ASTVariableNode named: 'temp')).
 
 	statement := body statements first.
 	self assert: statement isFaulty.
@@ -1638,7 +1638,7 @@ RBParserTest >> testPositions [
 	self assert: blockNode sourceInterval equals: (1 to: 10).
 	self assert: blockNode size equals: 1.	"test dummy collection protocol"
 	blockNode printString.	"coverage"
-	self deny: (blockNode isLast: (RBVariableNode named: 'b'))
+	self deny: (blockNode isLast: (ASTVariableNode named: 'b'))
 ]
 
 { #category : 'error testing' }
@@ -1823,7 +1823,7 @@ RBParserTest >> testReplacingNodes [
 	| tree search block |
 	tree := self parserClass parseMethod: '+ a | a b | self ifTrue: [a] ifFalse: [b := c]. a := b. [:b :c :a | a foo: a; foo1: a; foo2: a foo: b]. {a. b}. ^a'.
 	search := self parseTreeSearcher.
-	block := [ :aNode :answer | aNode replaceWith: (RBVariableNode named: 'q') ].
+	block := [ :aNode :answer | aNode replaceWith: (ASTVariableNode named: 'q') ].
 	search
 		matches: 'a' do: block;
 		matchesArgument: 'a' do: block.

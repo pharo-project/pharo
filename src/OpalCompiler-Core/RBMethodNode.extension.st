@@ -60,12 +60,12 @@ RBMethodNode >> ensureCachedArgumentNames [
 RBMethodNode class >> errorMethodNode: selector errorMessage: messageText [
 	| message |
 	message := RBMessageNode
-		receiver: RBVariableNode selfNode
+		receiver: ASTVariableNode selfNode
 		selector: #error:
 		arguments: {ASTLiteralNode value: messageText}.
 	^ self
 		selector: selector
-		arguments: ((1 to: selector numArgs) collect: [ :i | RBVariableNode named: 't' , i asString ])
+		arguments: ((1 to: selector numArgs) collect: [ :i | ASTVariableNode named: 't' , i asString ])
 		body: (RBSequenceNode statements: {message})
 ]
 

@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFNameReification class >> entities [
-	^{RBVariableNode. ASTAssignmentNode. Variable}
+	^{ASTVariableNode. ASTAssignmentNode. Variable}
 ]
 
 { #category : 'plugin interface' }
@@ -25,16 +25,16 @@ RFNameReification >> genForASTAssignmentNode [
 ]
 
 { #category : 'generate' }
+RFNameReification >> genForASTVariableNode [
+	^entity name asLiteralNode
+]
+
+{ #category : 'generate' }
 RFNameReification >> genForInstanceVariableSlot [
 	^entity name asLiteralNode
 ]
 
 { #category : 'generate' }
 RFNameReification >> genForLiteralVariable [
-	^entity name asLiteralNode
-]
-
-{ #category : 'generate' }
-RFNameReification >> genForRBVariableNode [
 	^entity name asLiteralNode
 ]

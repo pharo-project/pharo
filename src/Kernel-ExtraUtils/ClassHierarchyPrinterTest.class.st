@@ -35,6 +35,8 @@ ClassHierarchyPrinterTest >> testOnlyASTNodes [
 			ASTLiteralNode
 				ASTLiteralArrayNode
 				ASTLiteralValueNode
+			ASTVariableNode
+				ASTPatternVariableNode
 			RBAnnotationMarkNode
 			RBBlockNode
 				ASTPatternBlockNode
@@ -54,8 +56,6 @@ ClassHierarchyPrinterTest >> testOnlyASTNodes [
 					RBTemporariesErrorNode
 					RBUnfinishedStatementErrorNode
 			RBSelectorNode
-			RBVariableNode
-				ASTPatternVariableNode
 		RBComment
 		RBMethodNode
 			ASTPatternMethodNode

@@ -713,7 +713,7 @@ RBBrowserEnvironment >> selectionParseTreeIntervalFor: aString [
 				tree := RBParseTreeSearcher buildSelectorTree: each.
 				tree ifNotNil: [ matcher matchesTree: tree do: answerBlock ] ]
 			ifFalse: [
-				tree := RBVariableNode named: each.
+				tree := ASTVariableNode named: each.
 				matcher
 					matchesTree: tree do: answerBlock;
 					matchesArgumentTree: tree do: answerBlock ].

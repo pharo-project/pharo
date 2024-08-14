@@ -27,25 +27,3 @@ MethodFinder >> findMethodsByExampleInput: inputCollection andExpectedResult: ex
 		 
 		  send resultIn: expectedResult evaluate ]
 ]
-
-{ #category : 'public access' }
-MethodFinder >> possibleSolutionsForInput: inputCollection [
-
-	| sends |
-	
-	sends := OrderedCollection new.
-	inputCollection permutationsDo: [ :permutation |
-		| foundPermutationSends args receiver |
-		args := permutation allButFirst.
-		receiver := permutation first.
-		foundPermutationSends := (receiver evaluate class
-			                          allSelectorsToTestInMethodFinderWithArity:
-			                          inputCollection size - 1) collect: [
-			                         :method |
-			                         MethodFinderSend
-				                         receiver: receiver evaluate
-				                         selector: method
-				                         withArguments: (args collect: #evaluate) ].
-		sends addAll: foundPermutationSends ].
-	^ sends
-]

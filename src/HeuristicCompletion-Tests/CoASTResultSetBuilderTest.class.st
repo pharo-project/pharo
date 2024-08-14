@@ -177,7 +177,7 @@ CoASTResultSetBuilderTest >> testBuildThisContextHeuristic [
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: (RBVariableNode thisContextNode variable: ThisContextVariable new);
+		node: (ASTVariableNode thisContextNode variable: ThisContextVariable new);
 		buildCompletion.
 
 	self assert: builder heuristic equals: #thisContext
@@ -190,7 +190,7 @@ CoASTResultSetBuilderTest >> testBuildVariableClassVariableHeuristic [
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: ((RBVariableNode named: 'ClassVar') variable: (ClassVariable named: 'ClassVar'));
+		node: ((ASTVariableNode named: 'ClassVar') variable: (ClassVariable named: 'ClassVar'));
 		buildCompletion.
 
 	self assert: builder heuristic equals: #variable
@@ -203,7 +203,7 @@ CoASTResultSetBuilderTest >> testBuildVariableGlobalHeuristic [
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: ((RBVariableNode named: 'Object') variable: Object binding);
+		node: ((ASTVariableNode named: 'Object') variable: Object binding);
 		buildCompletion.
 
 	self assert: builder heuristic equals: #variable
@@ -216,7 +216,7 @@ CoASTResultSetBuilderTest >> testBuildVariableHeuristic [
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBVariableNode new;
+		node: ASTVariableNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #variable
@@ -229,7 +229,7 @@ CoASTResultSetBuilderTest >> testBuildVariableInstanceVariableHeuristic [
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: ((RBVariableNode named: 'ivar') variable: (Slot named: 'ivar'));
+		node: ((ASTVariableNode named: 'ivar') variable: (Slot named: 'ivar'));
 		buildCompletion.
 
 	self assert: builder heuristic equals: #variable
@@ -242,7 +242,7 @@ CoASTResultSetBuilderTest >> testBuildVariableTempVariableHeuristic [
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: ((RBVariableNode named: 'temp') variable: (TemporaryVariable named: 'temp'));
+		node: ((ASTVariableNode named: 'temp') variable: (TemporaryVariable named: 'temp'));
 		buildCompletion.
 
 	self assert: builder heuristic equals: #variable
@@ -255,7 +255,7 @@ CoASTResultSetBuilderTest >> testBuildVariableUndeclaredHeuristic [
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: ((RBVariableNode named: 'ClassVar') variable: (UndeclaredVariable named: 'ClassVar'));
+		node: ((ASTVariableNode named: 'ClassVar') variable: (UndeclaredVariable named: 'ClassVar'));
 		buildCompletion.
 
 	self assert: builder heuristic equals: #variable

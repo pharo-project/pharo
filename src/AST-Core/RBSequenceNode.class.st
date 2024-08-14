@@ -179,7 +179,7 @@ RBSequenceNode >> addSelfReturn [
 	| node |
 	self lastIsReturn
 		ifTrue: [ ^ self statements last ].
-	node := ASTReturnNode value: RBVariableNode selfNode.
+	node := ASTReturnNode value: ASTVariableNode selfNode.
 	^ self addNode: node
 ]
 
@@ -191,7 +191,7 @@ RBSequenceNode >> addTemporariesNamed: aCollection [
 { #category : 'adding nodes' }
 RBSequenceNode >> addTemporaryNamed: aString [
 	| variableNode |
-	variableNode := RBVariableNode named: aString.
+	variableNode := ASTVariableNode named: aString.
 	variableNode parent: self.
 	temporaries := temporaries copyWith: variableNode.
 	^ variableNode
