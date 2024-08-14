@@ -20,7 +20,7 @@ a single element
 an expression
 - ASTAssignmentNode
 - RBMessageNode
-- RBReturnNode
+- ASTReturnNode
 - ASTCascadeNode
 a sequence of expressions
 - RBSequenceNode
@@ -74,7 +74,7 @@ RBParser parseMethod:'sign
         |->ASTLiteralValueNode 0
       |->RBBlockNode [ ^ 1 ]
         |->RBSequenceNode ^ 1
-          |->RBReturnNode ^ 1
+          |->ASTReturnNode ^ 1
             |->ASTLiteralValueNode 1
     |->RBMessageNode ifTrue:
       |->RBMessageNode <
@@ -82,9 +82,9 @@ RBParser parseMethod:'sign
         |->ASTLiteralValueNode 0
       |->RBBlockNode [ ^ -1 ]
         |->RBSequenceNode ^ -1
-          |->RBReturnNode ^ -1
+          |->ASTReturnNode ^ -1
             |->ASTLiteralValueNode -1
-    |->RBReturnNode ^ 0
+    |->ASTReturnNode ^ 0
       |->ASTLiteralValueNode 0
 ```
 
