@@ -34,10 +34,10 @@ SycPushDownVariableCommand >> defaultMenuItemName [
 
 { #category : 'execution' }
 SycPushDownVariableCommand >> prepareFullExecutionInContext: aToolContext [
-
-	| selectedClass |
+	"Private - If one of the selected variables belongs to a leaf class, without subclasses, abort the command"
+	
 	super prepareFullExecutionInContext: aToolContext.
-	"If the receiver is a leaf class, without subclasses, abort the command"
+
 	(aToolContext selectedVariables allSatisfy: [ : selectedVar | selectedVar definingClass hasSubclasses ])
 		ifFalse: [ 
 			self inform: 'One of the selected variables belongs to a class that has no subclasses to push down the selection(s)'.
