@@ -30,6 +30,7 @@ ClassHierarchyPrinterTest >> testOnlyASTNodes [
 		ASTValueNode
 			ASTArrayNode
 			ASTAssignmentNode
+			ASTCascadeNode
 			ASTLiteralNode
 				ASTLiteralArrayNode
 				ASTLiteralValueNode
@@ -37,7 +38,6 @@ ClassHierarchyPrinterTest >> testOnlyASTNodes [
 			RBBlockNode
 				ASTPatternBlockNode
 					ASTPatternWrapperBlockNode
-			RBCascadeNode
 			RBMessageNode
 				ASTPatternMessageNode
 			RBParseErrorNode

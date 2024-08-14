@@ -41,6 +41,11 @@ RFValueReification >> genForASTAssignmentNode [
 ]
 
 { #category : 'generate' }
+RFValueReification >> genForASTCascadeNode [
+	^RBVariableNode named: self varName
+]
+
+{ #category : 'generate' }
 RFValueReification >> genForASTLiteralArrayNode [
 	^ASTLiteralArrayNode value: entity value
 ]
@@ -68,11 +73,6 @@ RFValueReification >> genForLiteralVariable [
 
 { #category : 'generate' }
 RFValueReification >> genForRBBlockNode [
-	^RBVariableNode named: self varName
-]
-
-{ #category : 'generate' }
-RFValueReification >> genForRBCascadeNode [
 	^RBVariableNode named: self varName
 ]
 

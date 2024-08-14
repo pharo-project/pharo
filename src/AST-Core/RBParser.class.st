@@ -169,7 +169,7 @@ RBParser >> blockNodeClass [
 
 { #category : 'private - classes' }
 RBParser >> cascadeNodeClass [
-	^ RBCascadeNode
+	^ ASTCascadeNode
 ]
 
 { #category : 'accessing' }

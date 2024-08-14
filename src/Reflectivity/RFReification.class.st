@@ -69,6 +69,11 @@ RFReification >> genForASTAssignmentNode [
 ]
 
 { #category : 'generate' }
+RFReification >> genForASTCascadeNode [
+	^self genForASTProgramNode
+]
+
+{ #category : 'generate' }
 RFReification >> genForASTLiteralArrayNode [
 	^self genForASTProgramNode
 ]
@@ -115,11 +120,6 @@ RFReification >> genForRBArgumentNode [
 
 { #category : 'generate' }
 RFReification >> genForRBBlockNode [
-	^self genForASTProgramNode
-]
-
-{ #category : 'generate' }
-RFReification >> genForRBCascadeNode [
 	^self genForASTProgramNode
 ]
 

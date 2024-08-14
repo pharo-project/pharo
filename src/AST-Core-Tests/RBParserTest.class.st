@@ -370,7 +370,7 @@ RBParserTest >> testCreationBlockNodeWithExpression [
 { #category : 'tests - CreationProtocol' }
 RBParserTest >> testCreationCascadeNodeFromExpression [
 	self compare: (self parserClass parseExpression: 'cascade firstMessage; secondMessage; lastMessage')
-		  to: (RBCascadeNode
+		  to: (ASTCascadeNode
 				messages: (OrderedCollection with: (RBMessageNode receiver: (RBVariableNode named: 'cascade')
 																					selector: (RBSelectorNode value: #firstMessage))
 													  with: (RBMessageNode receiver: (RBVariableNode named: 'cascade')
@@ -429,7 +429,7 @@ RBParserTest >> testCreationProtocol [
 	messageNode := RBMessageNode receiver: (RBVariableNode selfNode) selector: (RBSelectorNode value: #foo).
 	self compare: (RBMethodNode selector: #bar
 				body: (RBSequenceNode statements: (OrderedCollection
-								with: (RBCascadeNode messages: (OrderedCollection with: messageNode with: messageNode)))))
+								with: (ASTCascadeNode messages: (OrderedCollection with: messageNode with: messageNode)))))
 		to: (self parserClass parseMethod: 'bar self foo; foo')
 ]
 

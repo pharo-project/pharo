@@ -137,7 +137,7 @@ RBSplitCascadeRefactoring >> split: anInterval from: aSelector in: aClass [
 RBSplitCascadeRefactoring >> splitCascade [
 	ancestorNode parent
 		addNode: (beforeNodes size > 1
-			ifTrue: [ RBCascadeNode messages: beforeNodes ]
+			ifTrue: [ ASTCascadeNode messages: beforeNodes ]
 			ifFalse: [ beforeNodes first ])
 		before: ancestorNode.
 	afterNodes size > 1

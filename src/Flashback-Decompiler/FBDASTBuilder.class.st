@@ -63,7 +63,7 @@ FBDASTBuilder >> codeBlockFromStatements: statements [
 
 { #category : 'building' }
 FBDASTBuilder >> codeCascade: messages [
-	^ RBCascadeNode messages: messages
+	^ ASTCascadeNode messages: messages
 ]
 
 { #category : 'building' }

@@ -60,7 +60,7 @@ CoASTResultSetBuilderTest >> testBuildCascadeHeuristic [
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBCascadeNode new;
+		node: ASTCascadeNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #cascade

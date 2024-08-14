@@ -94,7 +94,7 @@ RBDumpVisitorTest >> testCascadeNodeDump [
 	node := self parseExpression: 'self foo; bar'.
 	dumpedNode := self compiler evaluate: node dump.
 
-	self assert: dumpedNode class equals: RBCascadeNode.
+	self assert: dumpedNode class equals: ASTCascadeNode.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString
 ]

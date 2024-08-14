@@ -25,6 +25,7 @@ produces
 		ASTValueNode
 			ASTArrayNode
 			ASTAssignmentNode
+			ASTCascadeNode
 			ASTLiteralNode
 				ASTLiteralArrayNode
 				ASTLiteralValueNode
@@ -32,7 +33,6 @@ produces
 			RBBlockNode
 				ASTPatternBlockNode
 					ASTPatternWrapperBlockNode
-			RBCascadeNode
 			RBMessageNode
 				ASTPatternMessageNode
 			RBParseErrorNode

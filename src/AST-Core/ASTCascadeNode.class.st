@@ -8,7 +8,7 @@ Instance Variables:
 
 "
 Class {
-	#name : 'RBCascadeNode',
+	#name : 'ASTCascadeNode',
 	#superclass : 'ASTValueNode',
 	#instVars : [
 		'messages',
@@ -20,17 +20,17 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBCascadeNode class >> messages: messageNodes [
+ASTCascadeNode class >> messages: messageNodes [
 	^self new messages: messageNodes
 ]
 
 { #category : 'instance creation' }
-RBCascadeNode class >> messages: messageNodes semicolons: integerCollection [
+ASTCascadeNode class >> messages: messageNodes semicolons: integerCollection [
 	^self new messages: messageNodes semicolons: integerCollection
 ]
 
 { #category : 'comparing' }
-RBCascadeNode >> = anObject [
+ASTCascadeNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
 	self messages size = anObject messages size ifFalse: [^false].
@@ -39,12 +39,12 @@ RBCascadeNode >> = anObject [
 ]
 
 { #category : 'visiting' }
-RBCascadeNode >> acceptVisitor: aProgramNodeVisitor [
+ASTCascadeNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitCascadeNode: self
 ]
 
 { #category : 'querying' }
-RBCascadeNode >> bestNodeFor: anInterval [
+ASTCascadeNode >> bestNodeFor: anInterval [
 	| selectedChildren |
 	(self intersectsInterval: anInterval) ifFalse: [ ^nil ] .
 	(self containedBy: anInterval) ifTrue: [^self].
@@ -57,19 +57,19 @@ RBCascadeNode >> bestNodeFor: anInterval [
 ]
 
 { #category : 'accessing' }
-RBCascadeNode >> children [
+ASTCascadeNode >> children [
 	^ messages
 ]
 
 { #category : 'matching' }
-RBCascadeNode >> copyInContext: aDictionary [
+ASTCascadeNode >> copyInContext: aDictionary [
 	^ self class new
 		messages: (self copyList: self messages inContext: aDictionary);
 		yourself
 ]
 
 { #category : 'comparing' }
-RBCascadeNode >> equalTo: anObject withMapping: aDictionary [
+ASTCascadeNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class ifFalse: [^false].
 	self messages size = anObject messages size ifFalse: [^false].
 	self messages
@@ -79,42 +79,42 @@ RBCascadeNode >> equalTo: anObject withMapping: aDictionary [
 ]
 
 { #category : 'testing' }
-RBCascadeNode >> hasBlock [
+ASTCascadeNode >> hasBlock [
 
 	"They all have same receiver so we only check with the first one."
 	^ messages first hasBlock
 ]
 
 { #category : 'comparing' }
-RBCascadeNode >> hash [
+ASTCascadeNode >> hash [
 	^ self hashForCollection: self messages
 ]
 
 { #category : 'testing' }
-RBCascadeNode >> isCascade [
+ASTCascadeNode >> isCascade [
 	^true
 ]
 
 { #category : 'testing' }
-RBCascadeNode >> isEssentialChild: aNode [
+ASTCascadeNode >> isEssentialChild: aNode [
 	"Removing a message in a cascade is not considered as a problem from a syntatic point of view."
 
 	^ false
 ]
 
 { #category : 'errors' }
-RBCascadeNode >> isFaulty [
+ASTCascadeNode >> isFaulty [
 	self isError ifTrue: [ ^ true ].
 	^self messages anySatisfy: [:each | each isFaulty ]
 ]
 
 { #category : 'testing' }
-RBCascadeNode >> isUsingAsReturnValue: aNode [
+ASTCascadeNode >> isUsingAsReturnValue: aNode [
 	^messages last = aNode and: [self isUsedAsReturnValue]
 ]
 
 { #category : 'accessing' }
-RBCascadeNode >> leftmostChainReceiver [
+ASTCascadeNode >> leftmostChainReceiver [
 
 	^ self receiver isMessage
 		ifTrue: [ self receiver receiver ]
@@ -122,7 +122,7 @@ RBCascadeNode >> leftmostChainReceiver [
 ]
 
 { #category : 'matching' }
-RBCascadeNode >> match: aNode inContext: aDictionary [
+ASTCascadeNode >> match: aNode inContext: aDictionary [
 	aNode class = self class ifFalse: [^false].
 	^self
 		matchList: messages
@@ -131,74 +131,74 @@ RBCascadeNode >> match: aNode inContext: aDictionary [
 ]
 
 { #category : 'accessing' }
-RBCascadeNode >> messages [
+ASTCascadeNode >> messages [
 	^messages
 ]
 
 { #category : 'accessing' }
-RBCascadeNode >> messages: messageNodeCollection [
+ASTCascadeNode >> messages: messageNodeCollection [
 	messages := messageNodeCollection.
 	messages do: [:each | each parent: self]
 ]
 
 { #category : 'initialization' }
-RBCascadeNode >> messages: messageNodes semicolons: integerCollection [
+ASTCascadeNode >> messages: messageNodes semicolons: integerCollection [
 	self messages: messageNodes.
 	semicolons := integerCollection
 ]
 
 { #category : 'testing' }
-RBCascadeNode >> needsParenthesis [
+ASTCascadeNode >> needsParenthesis [
 	^parent
 		ifNil: [false]
 		ifNotNil: [self precedence > parent precedence]
 ]
 
 { #category : 'copying' }
-RBCascadeNode >> postCopy [
+ASTCascadeNode >> postCopy [
 	super postCopy.
 	self messages: (self messages collect: [ :each | each copy ])
 ]
 
 { #category : 'accessing' }
-RBCascadeNode >> precedence [
+ASTCascadeNode >> precedence [
 	^4
 ]
 
 { #category : 'accessing' }
-RBCascadeNode >> receiver [
+ASTCascadeNode >> receiver [
 	^self messages first receiver
 ]
 
 { #category : 'adding-removing' }
-RBCascadeNode >> removeNode: aNode [
+ASTCascadeNode >> removeNode: aNode [
 
 	self messages remove: aNode ifAbsent: [ ]
 ]
 
 { #category : 'replacing' }
-RBCascadeNode >> replaceNode: aNode withNode: anotherNode [
+ASTCascadeNode >> replaceNode: aNode withNode: anotherNode [
 	self messages: (messages
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])
 ]
 
 { #category : 'accessing - token' }
-RBCascadeNode >> semicolons [
+ASTCascadeNode >> semicolons [
 	^ semicolons
 ]
 
 { #category : 'accessing - token' }
-RBCascadeNode >> semicolons: anArray [
+ASTCascadeNode >> semicolons: anArray [
 	semicolons := anArray
 ]
 
 { #category : 'accessing' }
-RBCascadeNode >> startWithoutParentheses [
+ASTCascadeNode >> startWithoutParentheses [
 	^messages first start
 ]
 
 { #category : 'accessing' }
-RBCascadeNode >> statementComments [
+ASTCascadeNode >> statementComments [
 	| statementComments |
 	statementComments := OrderedCollection withAll: self comments.
 	statementComments addAll: messages first receiver statementComments.
@@ -210,12 +210,12 @@ RBCascadeNode >> statementComments [
 ]
 
 { #category : 'accessing' }
-RBCascadeNode >> stopWithoutParentheses [
+ASTCascadeNode >> stopWithoutParentheses [
 	^messages last stop
 ]
 
 { #category : 'querying' }
-RBCascadeNode >> whichNodeIsContainedBy: anInterval [
+ASTCascadeNode >> whichNodeIsContainedBy: anInterval [
 	| selectedChildren |
 	(self intersectsInterval: anInterval) ifFalse: [^nil].
 	(self containedBy: anInterval) ifTrue: [^self].
