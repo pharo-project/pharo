@@ -26,7 +26,7 @@ RFMethodToExecuteReification >> genForRBMessageNode [
 	^RBMessageNode
 		receiver: (RBMessageNode receiver: (RBVariableNode named: #RFReceiverReificationVar) selector: #class)
 		selector: #lookupSelector:
-		arguments: (RBLiteralValueNode value: entity selector)
+		arguments: (ASTLiteralValueNode value: entity selector)
 ]
 
 { #category : 'preamble' }

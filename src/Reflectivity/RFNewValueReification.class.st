@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFNewValueReification class >> entities [
-	^{RBVariableNode. RBAssignmentNode}
+	^{RBVariableNode. ASTAssignmentNode}
 ]
 
 { #category : 'plugin interface' }

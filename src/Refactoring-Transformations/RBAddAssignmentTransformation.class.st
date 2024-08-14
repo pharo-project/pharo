@@ -96,7 +96,7 @@ RBAddAssignmentTransformation >> privateTransform [
 
 	| methodTree assignmentNode assignments previousNode |
 	methodTree := self definingMethod.
-	assignmentNode := RBAssignmentNode
+	assignmentNode := ASTAssignmentNode
 		variable: (RBVariableNode named: variableName)
 		value: (self parserClass parseExpression: value).
 

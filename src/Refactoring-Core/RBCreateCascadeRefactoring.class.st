@@ -80,7 +80,7 @@ RBCreateCascadeRefactoring >> combineMessages [
 		collect: [ :each | each copy ]).
 	expression := statementNodes last parent.
 	[ expression isAssignment ] whileTrue: [
-		transformedNode := RBAssignmentNode
+		transformedNode := ASTAssignmentNode
 			variable: expression variable
 			value: transformedNode.
 		expression := expression parent ]

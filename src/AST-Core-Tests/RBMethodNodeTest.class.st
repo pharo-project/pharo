@@ -239,7 +239,7 @@ RBMethodNodeTest >> testNodeForOffsetAssignment [
 	foundNode := ast nodeForOffset: 9.
 	self assert: foundNode class identicalTo: RBVariableNode.
 	foundNode := ast nodeForOffset: 14.
-	self assert: foundNode class identicalTo: RBAssignmentNode.
+	self assert: foundNode class identicalTo: ASTAssignmentNode.
 	foundNode := ast nodeForOffset: 19.
 	self assert: foundNode class identicalTo: RBVariableNode
 ]

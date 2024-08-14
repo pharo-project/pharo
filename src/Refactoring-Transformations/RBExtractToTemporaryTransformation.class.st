@@ -80,7 +80,7 @@ RBExtractToTemporaryTransformation >> constructAssignmentFrom: aNode [
 	"Use a copy so aNode retains its original parent.
 	In this case the caller is done making use of the parent backlink,
 	but it seems sensible to keep it intact whenever possible."
-	^RBAssignmentNode variable: valueNode value: aNode copy.
+	^ASTAssignmentNode variable: valueNode value: aNode copy.
 ]
 
 { #category : 'api' }

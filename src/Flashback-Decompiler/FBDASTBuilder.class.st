@@ -38,12 +38,12 @@ FBDASTBuilder >> codeArgument: tempName [
 
 { #category : 'building' }
 FBDASTBuilder >> codeArray: array [
-	^ RBArrayNode statements: array
+	^ ASTArrayNode statements: array
 ]
 
 { #category : 'building' }
 FBDASTBuilder >> codeAssignment: value to: variable [
-	^ RBAssignmentNode variable: variable value: value
+	^ ASTAssignmentNode variable: variable value: value
 ]
 
 { #category : 'building' }
@@ -100,7 +100,7 @@ FBDASTBuilder >> codeLiteral: lit [
 
 { #category : 'building' }
 FBDASTBuilder >> codeLiteralValue: lit [
-	^ RBLiteralValueNode value: lit
+	^ ASTLiteralValueNode value: lit
 ]
 
 { #category : 'building' }

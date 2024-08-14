@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFOperationReification class >> entities [
-	^{RBVariableNode. RBMessageNode. RBMethodNode . RBReturnNode. RBAssignmentNode. ASTLiteralNode. RBBlockNode . RBLiteralArrayNode. RBArrayNode}
+	^{RBVariableNode. RBMessageNode. RBMethodNode . RBReturnNode. ASTAssignmentNode. ASTLiteralNode. RBBlockNode . ASTLiteralArrayNode. ASTArrayNode}
 ]
 
 { #category : 'plugin interface' }
@@ -62,7 +62,7 @@ RFOperationReification >> genForRBBlockNode [
 { #category : 'generate' }
 RFOperationReification >> genForRBLiteralArrayNode [
 	"same as #value, no need to wrap as the literal understands #value"
-	^RBLiteralArrayNode value: entity value
+	^ASTLiteralArrayNode value: entity value
 ]
 
 { #category : 'generate' }
@@ -139,7 +139,7 @@ RFOperationReification >> preambleForArray: aNode [
 			name := 'RFArg', index asString, 'RFReification'.
 			arguments add:  (RBVariableNode named: name).
 	].
-	preamble addAll: (RBArrayNode statements: arguments).
+	preamble addAll: (ASTArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: 'RFReifyValueVar').
 	preamble addAll: arguments.
 	^ preamble
@@ -170,7 +170,7 @@ RFOperationReification >> preambleForMessage: aNode [
 			name := 'RFArg', index asString, 'RFReification'.
 			arguments add:  (RBVariableNode named: name).
 	].
-	preamble addAll: (RBArrayNode statements: arguments).
+	preamble addAll: (ASTArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: 'RFArgumentsReificationVar').
 	preamble addAll: arguments.
 	^ preamble
@@ -181,7 +181,7 @@ RFOperationReification >> preambleForMethod: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
 	arguments := aNode argumentNames collect: [ :name | RBVariableNode named: name].
-	preamble addAll: (RBArrayNode statements: arguments).
+	preamble addAll: (ASTArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: 'RFArgumentsReificationVar').
 	^ preamble
 ]

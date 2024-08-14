@@ -78,7 +78,7 @@ HookGenerator >> generateArguments: aMetalink [
 
 	arguments := aMetalink arguments collect: [: each | self genReification: each for: aMetalink].
 	(self hasOption: #argsAsArray for: aMetalink) ifTrue:
-		[ ^RBArrayNode statements: arguments ].
+		[ ^ASTArrayNode statements: arguments ].
 	^arguments
 ]
 

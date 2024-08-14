@@ -58,6 +58,11 @@ RFReification >> entity: aRBMessageNode [
 ]
 
 { #category : 'generate' }
+RFReification >> genForASTLiteralNode [
+	^self genForASTProgramNode
+]
+
+{ #category : 'generate' }
 RFReification >> genForASTProgramNode [
 	"overriden in subclass if needed"
 ]
@@ -115,11 +120,6 @@ RFReification >> genForRBGlobalNode [
 
 { #category : 'generate' }
 RFReification >> genForRBLiteralArrayNode [
-	^self genForASTProgramNode
-]
-
-{ #category : 'generate' }
-RFReification >> genForASTLiteralNode [
 	^self genForASTProgramNode
 ]
 

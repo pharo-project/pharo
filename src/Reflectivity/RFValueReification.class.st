@@ -68,12 +68,12 @@ RFValueReification >> genForRBCascadeNode [
 
 { #category : 'generate' }
 RFValueReification >> genForRBLiteralArrayNode [
-	^RBLiteralArrayNode value: entity value
+	^ASTLiteralArrayNode value: entity value
 ]
 
 { #category : 'generate' }
 RFValueReification >> genForRBLiteralValueNode [
-	^RBLiteralValueNode value: entity value
+	^ASTLiteralValueNode value: entity value
 ]
 
 { #category : 'generate' }
@@ -126,7 +126,7 @@ RFValueReification >> preambleForArray: aNode [
 			name := 'RFArg', index asString, 'RFReification'.
 			arguments add:  (RBVariableNode named: name).
 	].
-	preamble addAll: (RBArrayNode statements: arguments).
+	preamble addAll: (ASTArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: self varName).
 	preamble addAll: arguments.
 	^ preamble

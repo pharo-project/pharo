@@ -63,7 +63,7 @@ RBSplitCascadeRefactoring >> extractReceiver [
 		basedOn: 'receiver'.
 	ancestorNode parent
 		addTemporaryNamed: name;
-		addNode: (RBAssignmentNode
+		addNode: (ASTAssignmentNode
 			variable: (RBVariableNode named: name)
 			value: cascadeNode receiver)
 		before: ancestorNode.

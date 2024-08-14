@@ -71,7 +71,7 @@ RBInlineMethodRefactoring >> addTemporary: sourceNode assignedTo: replacementNod
 	newName := self renameConflictingTemporary: sourceNode name.
 	(inlineParseTree body)
 		addTemporaryNamed: newName;
-		addNodeFirst: (RBAssignmentNode variable: (RBVariableNode named: newName)
+		addNodeFirst: (ASTAssignmentNode variable: (RBVariableNode named: newName)
 					value: replacementNode)
 ]
 

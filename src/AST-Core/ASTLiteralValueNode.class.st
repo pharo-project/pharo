@@ -9,7 +9,7 @@ Instance Variables
 	sourceText <String> the original source text of this literal
 "
 Class {
-	#name : 'RBLiteralValueNode',
+	#name : 'ASTLiteralValueNode',
 	#superclass : 'ASTLiteralNode',
 	#instVars : [
 		'value',
@@ -21,26 +21,26 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBLiteralValueNode class >> value: aValue [
+ASTLiteralValueNode class >> value: aValue [
 	^ self value: aValue start: 0 stop: -1
 ]
 
 { #category : 'instance creation' }
-RBLiteralValueNode class >> value: aValue start: aPosition stop: anotherPosition [
+ASTLiteralValueNode class >> value: aValue start: aPosition stop: anotherPosition [
  	^ self new
 		value: aValue start: aPosition stop: anotherPosition;
 		yourself
 ]
 
 { #category : 'instance creation' }
-RBLiteralValueNode class >> value: aValue start: aPosition stop: anotherPosition  source: aString [
+ASTLiteralValueNode class >> value: aValue start: aPosition stop: anotherPosition  source: aString [
  	^ self new
 		value: aValue start: aPosition stop: anotherPosition source: aString;
 		yourself
 ]
 
 { #category : 'comparing' }
-RBLiteralValueNode >> = anObject [
+ASTLiteralValueNode >> = anObject [
 	^ super = anObject
 		and: [ self value = anObject value
 		and: [ self value class = anObject value class
@@ -48,35 +48,35 @@ RBLiteralValueNode >> = anObject [
 ]
 
 { #category : 'visiting' }
-RBLiteralValueNode >> acceptVisitor: aProgramNodeVisitor [
+ASTLiteralValueNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitLiteralValueNode: self
 ]
 
 { #category : 'matching' }
-RBLiteralValueNode >> copyInContext: aDictionary [
+ASTLiteralValueNode >> copyInContext: aDictionary [
 	^ self class value: self value
 ]
 
 { #category : 'evaluating' }
-RBLiteralValueNode >> evaluateForContext: aContext [
+ASTLiteralValueNode >> evaluateForContext: aContext [
 
 	^ value
 ]
 
 { #category : 'evaluating' }
-RBLiteralValueNode >> evaluateForReceiver: aReceicer [
+ASTLiteralValueNode >> evaluateForReceiver: aReceicer [
 
 	^ value
 ]
 
 { #category : 'testing' }
-RBLiteralValueNode >> isString [
+ASTLiteralValueNode >> isString [
 
 	^ value isString and: [ value isSymbol not ]
 ]
 
 { #category : 'accessing' }
-RBLiteralValueNode >> sourceText [
+ASTLiteralValueNode >> sourceText [
 
 	sourceText ifNotNil: [ ^ sourceText ].
 	^ String streamContents: [ :aStream |
@@ -88,12 +88,12 @@ RBLiteralValueNode >> sourceText [
 ]
 
 { #category : 'accessing' }
-RBLiteralValueNode >> value [
+ASTLiteralValueNode >> value [
 	^ value
 ]
 
 { #category : 'initialization' }
-RBLiteralValueNode >> value: aValue start: aPosition stop: anotherPosition [
+ASTLiteralValueNode >> value: aValue start: aPosition stop: anotherPosition [
 
 	value := aValue.
 	start := aPosition.
@@ -101,7 +101,7 @@ RBLiteralValueNode >> value: aValue start: aPosition stop: anotherPosition [
 ]
 
 { #category : 'initialization' }
-RBLiteralValueNode >> value: aValue start: aPosition stop: anotherPosition source: aString [
+ASTLiteralValueNode >> value: aValue start: aPosition stop: anotherPosition source: aString [
 
 	self value: aValue start: aPosition stop: anotherPosition.
 	sourceText := aString

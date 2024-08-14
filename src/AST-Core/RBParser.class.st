@@ -135,12 +135,12 @@ RBParser >> addPragma: aPragma [
 
 { #category : 'private - classes' }
 RBParser >> arrayNodeClass [
-	^ RBArrayNode
+	^ ASTArrayNode
 ]
 
 { #category : 'private - classes' }
 RBParser >> assignmentNodeClass [
-	^ RBAssignmentNode
+	^ ASTAssignmentNode
 ]
 
 { #category : 'testing' }
@@ -239,7 +239,7 @@ RBParser >> initializeParserWith: aString [
 
 { #category : 'private - classes' }
 RBParser >> literalArrayNodeClass [
-	^ RBLiteralArrayNode
+	^ ASTLiteralArrayNode
 ]
 
 { #category : 'private - classes' }
@@ -249,7 +249,7 @@ RBParser >> literalNodeClass [
 
 { #category : 'private - classes' }
 RBParser >> literalValueNodeClass [
-	^ RBLiteralValueNode
+	^ ASTLiteralValueNode
 ]
 
 { #category : 'private - classes' }

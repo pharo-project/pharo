@@ -1,7 +1,7 @@
-Extension { #name : 'RBAssignmentNode' }
+Extension { #name : 'ASTAssignmentNode' }
 
 { #category : '*Reflectivity-Examples' }
-RBAssignmentNode >> tagType: anObject [
+ASTAssignmentNode >> tagType: anObject [
 	"record the type of the assigned value"
 	variable propertyAt: #types ifAbsentPut: Set new.
 	(variable propertyAt: #types) add: anObject class

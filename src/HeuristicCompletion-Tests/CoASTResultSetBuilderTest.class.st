@@ -21,7 +21,7 @@ CoASTResultSetBuilderTest >> testBuildArrayHeuristic [
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBArrayNode new;
+		node: ASTArrayNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #array
@@ -34,7 +34,7 @@ CoASTResultSetBuilderTest >> testBuildAssignmentHeuristic [
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBAssignmentNode new;
+		node: ASTAssignmentNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #assignment
@@ -73,7 +73,7 @@ CoASTResultSetBuilderTest >> testBuildLiteralArrayHeuristic [
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBLiteralArrayNode new;
+		node: ASTLiteralArrayNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #literalArray
@@ -86,7 +86,7 @@ CoASTResultSetBuilderTest >> testBuildLiteralHeuristic [
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBLiteralValueNode new;
+		node: ASTLiteralValueNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #literal

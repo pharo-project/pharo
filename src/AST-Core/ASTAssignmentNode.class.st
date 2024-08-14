@@ -9,7 +9,7 @@ Instance Variables:
 
 "
 Class {
-	#name : 'RBAssignmentNode',
+	#name : 'ASTAssignmentNode',
 	#superclass : 'ASTValueNode',
 	#instVars : [
 		'variable',
@@ -22,7 +22,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBAssignmentNode class >> variable: aVariableNode value: aValueNode [
+ASTAssignmentNode class >> variable: aVariableNode value: aValueNode [
 	^self
 		variable: aVariableNode
 		value: aValueNode
@@ -30,7 +30,7 @@ RBAssignmentNode class >> variable: aVariableNode value: aValueNode [
 ]
 
 { #category : 'instance creation' }
-RBAssignmentNode class >> variable: aVariableNode value: aValueNode position: anInteger [
+ASTAssignmentNode class >> variable: aVariableNode value: aValueNode position: anInteger [
 	^(self new)
 		variable: aVariableNode
 			value: aValueNode
@@ -39,49 +39,49 @@ RBAssignmentNode class >> variable: aVariableNode value: aValueNode position: an
 ]
 
 { #category : 'comparing' }
-RBAssignmentNode >> = anObject [
+ASTAssignmentNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
 	^self variable = anObject variable and: [self value = anObject value]
 ]
 
 { #category : 'visiting' }
-RBAssignmentNode >> acceptVisitor: aProgramNodeVisitor [
+ASTAssignmentNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitAssignmentNode: self
 ]
 
 { #category : 'accessing - token' }
-RBAssignmentNode >> assignment [
+ASTAssignmentNode >> assignment [
 	^ assignment
 ]
 
 { #category : 'accessing - token' }
-RBAssignmentNode >> assignment: anInteger [
+ASTAssignmentNode >> assignment: anInteger [
 	assignment := anInteger
 ]
 
 { #category : 'accessing' }
-RBAssignmentNode >> assignmentOperator [
+ASTAssignmentNode >> assignmentOperator [
 	^  ':='
 ]
 
 { #category : 'accessing' }
-RBAssignmentNode >> assignmentPosition [
+ASTAssignmentNode >> assignmentPosition [
 	^ assignment
 ]
 
 { #category : 'testing' }
-RBAssignmentNode >> assigns: aVariableName [
+ASTAssignmentNode >> assigns: aVariableName [
 	^variable name = aVariableName or: [value assigns: aVariableName]
 ]
 
 { #category : 'accessing' }
-RBAssignmentNode >> children [
+ASTAssignmentNode >> children [
 	^ { value . variable }
 ]
 
 { #category : 'matching' }
-RBAssignmentNode >> copyInContext: aDictionary [
+ASTAssignmentNode >> copyInContext: aDictionary [
 	^ self class new
 		variable: (self variable copyInContext: aDictionary);
 		value: (self value copyInContext: aDictionary);
@@ -89,85 +89,85 @@ RBAssignmentNode >> copyInContext: aDictionary [
 ]
 
 { #category : 'comparing' }
-RBAssignmentNode >> equalTo: anObject withMapping: aDictionary [
+ASTAssignmentNode >> equalTo: anObject withMapping: aDictionary [
 	^self class = anObject class and:
 			[(self variable equalTo: anObject variable withMapping: aDictionary)
 				and: [self value equalTo: anObject value withMapping: aDictionary]]
 ]
 
 { #category : 'testing' }
-RBAssignmentNode >> hasBlock [
+ASTAssignmentNode >> hasBlock [
 
 	^ value hasBlock 
 ]
 
 { #category : 'testing' }
-RBAssignmentNode >> hasSameExitPoint: aBoolean [ 
+ASTAssignmentNode >> hasSameExitPoint: aBoolean [ 
 
 	^ value hasSameExitPoint: aBoolean
 ]
 
 { #category : 'comparing' }
-RBAssignmentNode >> hash [
+ASTAssignmentNode >> hash [
 	^self variable hash bitXor: self value hash
 ]
 
 { #category : 'testing' }
-RBAssignmentNode >> isAssignment [
+ASTAssignmentNode >> isAssignment [
 	^true
 ]
 
 { #category : 'errors' }
-RBAssignmentNode >> isFaulty [
+ASTAssignmentNode >> isFaulty [
 	self isError ifTrue: [ ^ true ].
 	^self variable isFaulty or: [ self value isFaulty ]
 ]
 
 { #category : 'testing' }
-RBAssignmentNode >> isUsingAsReturnValue: aNode [
+ASTAssignmentNode >> isUsingAsReturnValue: aNode [
 	^aNode = value ifTrue: [true] ifFalse: [self isUsedAsReturnValue ]
 ]
 
 { #category : 'matching' }
-RBAssignmentNode >> match: aNode inContext: aDictionary [
+ASTAssignmentNode >> match: aNode inContext: aDictionary [
 	aNode class = self class ifFalse: [^false].
 	^(variable match: aNode variable inContext: aDictionary)
 		and: [value match: aNode value inContext: aDictionary]
 ]
 
 { #category : 'testing' }
-RBAssignmentNode >> needsParenthesis [
+ASTAssignmentNode >> needsParenthesis [
 	^parent
 		ifNil: [false]
 		ifNotNil: [self precedence > parent precedence]
 ]
 
 { #category : 'copying' }
-RBAssignmentNode >> postCopy [
+ASTAssignmentNode >> postCopy [
 	super postCopy.
 	self variable: self variable copy.
 	self value: self value copy
 ]
 
 { #category : 'accessing' }
-RBAssignmentNode >> precedence [
+ASTAssignmentNode >> precedence [
 	^5
 ]
 
 { #category : 'adding-removing' }
-RBAssignmentNode >> removeNode: aNode [
+ASTAssignmentNode >> removeNode: aNode [
 
 	self replaceNode: aNode withNode: aNode receiver
 ]
 
 { #category : 'replacing' }
-RBAssignmentNode >> replaceNode: aNode withNode: anotherNode [
+ASTAssignmentNode >> replaceNode: aNode withNode: anotherNode [
 	value == aNode ifTrue: [self value: anotherNode].
 	variable == aNode ifTrue: [self variable: anotherNode]
 ]
 
 { #category : 'replacing' }
-RBAssignmentNode >> replaceSourceWith: aNode [
+ASTAssignmentNode >> replaceSourceWith: aNode [
 	"Check if we need to convert the assignment. Also check if we are being replaced with a setter message send. If so, create the replacements to edit the original source."
 
 	(aNode isAssignment and: [ aNode assignmentOperator ~= self assignmentOperator ]) ifTrue: [
@@ -201,39 +201,39 @@ RBAssignmentNode >> replaceSourceWith: aNode [
 ]
 
 { #category : 'accessing' }
-RBAssignmentNode >> startWithoutParentheses [
+ASTAssignmentNode >> startWithoutParentheses [
 	^variable start
 ]
 
 { #category : 'accessing' }
-RBAssignmentNode >> stopWithoutParentheses [
+ASTAssignmentNode >> stopWithoutParentheses [
 	^value stop
 ]
 
 { #category : 'accessing' }
-RBAssignmentNode >> value [
+ASTAssignmentNode >> value [
 	^value
 ]
 
 { #category : 'accessing' }
-RBAssignmentNode >> value: aValueNode [
+ASTAssignmentNode >> value: aValueNode [
 	value := aValueNode.
 	value parent: self
 ]
 
 { #category : 'accessing' }
-RBAssignmentNode >> variable [
+ASTAssignmentNode >> variable [
 	^variable
 ]
 
 { #category : 'accessing' }
-RBAssignmentNode >> variable: varNode [
+ASTAssignmentNode >> variable: varNode [
 	variable := varNode.
 	variable parent: self
 ]
 
 { #category : 'initialization' }
-RBAssignmentNode >> variable: aVariableNode value: aValueNode position: anInteger [
+ASTAssignmentNode >> variable: aVariableNode value: aValueNode position: anInteger [
 	self variable: aVariableNode.
 	self value: aValueNode.
 	assignment := anInteger

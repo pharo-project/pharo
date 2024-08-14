@@ -383,9 +383,9 @@ RBParserTest >> testCreationCascadeNodeFromExpression [
 { #category : 'tests - CreationProtocol' }
 RBParserTest >> testCreationLiteralArrayNodeWithExpression [
 	self compare: (self parserClass parseExpression: '#(literal1 literal2)')
-		  to: (RBLiteralArrayNode
+		  to: (ASTLiteralArrayNode
 				startPosition: 1
-				contents: (Array with: (RBLiteralValueNode value: #literal1) with: (RBLiteralValueNode value: #literal2))
+				contents: (Array with: (ASTLiteralValueNode value: #literal1) with: (ASTLiteralValueNode value: #literal2))
 				stopPosition: 20
 				isByteArray: false)
 ]
@@ -393,7 +393,7 @@ RBParserTest >> testCreationLiteralArrayNodeWithExpression [
 { #category : 'tests - CreationProtocol' }
 RBParserTest >> testCreationLiteralValueNodeWithExpression [
 	self compare: (self parserClass parseExpression: '#literal')
-		  to: (RBLiteralValueNode
+		  to: (ASTLiteralValueNode
 				value: #literal
 				start: 1
 				stop: 8)
@@ -402,7 +402,7 @@ RBParserTest >> testCreationLiteralValueNodeWithExpression [
 { #category : 'tests - CreationProtocol' }
 RBParserTest >> testCreationLiteralValueNodeWithExpressionForNumber [
 	self compare: (self parserClass parseExpression: '2r10100')
-		  to: (RBLiteralValueNode
+		  to: (ASTLiteralValueNode
 				value: 20
 				start: 1
 				stop: 7)

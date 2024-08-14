@@ -1,7 +1,7 @@
-Extension { #name : 'RBLiteralArrayNode' }
+Extension { #name : 'ASTLiteralArrayNode' }
 
 { #category : '*SystemCommands-SourceCodeCommands' }
-RBLiteralArrayNode >> displaySourceCode [
+ASTLiteralArrayNode >> displaySourceCode [
 	| code |
 	code := super displaySourceCode.
 	(code endsWith: '...') ifTrue: [ code := code , ')' ].

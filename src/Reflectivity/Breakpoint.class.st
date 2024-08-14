@@ -546,8 +546,8 @@ Breakpoint >> rewriteASTToSimulateExecutionInADifferentContext: anAST [
 								receiver: (self parserClass parseExpression: 'ThisContext receiver')
 								selector: #perform:withArguments:inSuperclass:
 								arguments:
-									{(RBLiteralValueNode value: msgNode selector).
-									(RBArrayNode statements: msgNode arguments).
+									{(ASTLiteralValueNode value: msgNode selector).
+									(ASTArrayNode statements: msgNode arguments).
 									receiverSuperclassValueNode}) ] ].
 	intermediateAST := rewriter
 		executeTree: semanticallyAnalysedMethodAST;
