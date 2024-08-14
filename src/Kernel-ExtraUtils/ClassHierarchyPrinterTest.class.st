@@ -28,12 +28,12 @@ ClassHierarchyPrinterTest >> testOnlyASTNodes [
 	'ASTNode
 	ASTProgramNode
 		ASTValueNode
+			ASTArrayNode
+			ASTAssignmentNode
 			ASTLiteralNode
 				ASTLiteralArrayNode
 				ASTLiteralValueNode
 			RBAnnotationMarkNode
-			ASTArrayNode
-			ASTAssignmentNode
 			RBBlockNode
 				ASTPatternBlockNode
 					ASTPatternWrapperBlockNode
