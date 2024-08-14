@@ -16,9 +16,9 @@ This book contains some chapter about the core components
 The AST representing the code by a tree of nodes. A node may represent 
 a single element
 - ASTVariableNode 
-- RBLiteralValueNode 
+- ASTLiteralValueNode 
 an expression
-- RBAssignmentNode
+- ASTAssignmentNode
 - RBMessageNode
 - RBReturnNode
 - RBCascadeNode
@@ -55,7 +55,7 @@ Therefor a parser first translates the source code into an abstract syntax tree 
 The tree consists of nodes for every source code element, tagged it with some "type" information (the node subclass), source code location, and optional properties. And it represents the whole source code structure. 
 
 For example, the AST for the source code of a method has a RBMethodNode with child nodes RBArgument for the arguments (if any) and a RBSequenceNode for the code body. The RBSequenceNode has child nodes for any
-defined temporaries and the actual code, RBAssignmentNode for variable assignments, RBMessageNode for message sends.
+defined temporaries and the actual code, ASTAssignmentNode for variable assignments, RBMessageNode for message sends.
 
 This is how the structure for Numbers #sgn method AST looks:
 
@@ -71,21 +71,21 @@ RBParser parseMethod:'sign
     |->RBMessageNode ifTrue:
       |->RBMessageNode >
         |->RBSelfNode self
-        |->RBLiteralValueNode 0
+        |->ASTLiteralValueNode 0
       |->RBBlockNode [ ^ 1 ]
         |->RBSequenceNode ^ 1
           |->RBReturnNode ^ 1
-            |->RBLiteralValueNode 1
+            |->ASTLiteralValueNode 1
     |->RBMessageNode ifTrue:
       |->RBMessageNode <
         |->RBSelfNode self
-        |->RBLiteralValueNode 0
+        |->ASTLiteralValueNode 0
       |->RBBlockNode [ ^ -1 ]
         |->RBSequenceNode ^ -1
           |->RBReturnNode ^ -1
-            |->RBLiteralValueNode -1
+            |->ASTLiteralValueNode -1
     |->RBReturnNode ^ 0
-      |->RBLiteralValueNode 0
+      |->ASTLiteralValueNode 0
 ```
 
 The AST for the compiler, is often only needed to create the byte code and therefore can ignore any code comments or the code formatting. If we use the AST in the refactoring for search and replace code, for example renaming a variable, we don't want to reformat the whole code or remove any code comments. 

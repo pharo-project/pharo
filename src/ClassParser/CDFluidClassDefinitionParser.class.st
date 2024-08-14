@@ -167,10 +167,10 @@ CDFluidClassDefinitionParser >> handleMetaclassName: aNode [
 ]
 
 { #category : 'parsing' }
-CDFluidClassDefinitionParser >> handleMetaclassNameFromCascade: aRBCascadeNode [
+CDFluidClassDefinitionParser >> handleMetaclassNameFromCascade: aCascadeNode [
 
 	| className classNode node |
-	node := aRBCascadeNode receiver arguments first.
+	node := aCascadeNode receiver arguments first.
 	className := node receiver binding value class name.
 	classNode := self classNameNodeClass new
 		originalNode: node;
@@ -303,9 +303,9 @@ CDFluidClassDefinitionParser >> handleSharedVariableNodeSimpleClassArgument: slo
 ]
 
 { #category : 'parsing - variables' }
-CDFluidClassDefinitionParser >> handleSharedVariableNodesFromArrayNode: aRBArrayNode [
+CDFluidClassDefinitionParser >> handleSharedVariableNodesFromArrayNode: anArrayNode [
 
-	aRBArrayNode statements do: [ :slotStatement |
+	anArrayNode statements do: [ :slotStatement |
 		self handleSharedVariabeNode: slotStatement ]
 ]
 
@@ -385,9 +385,9 @@ CDFluidClassDefinitionParser >> handleSlotNodeSimpleClassArgument: slotDefNode [
 ]
 
 { #category : 'parsing - variables' }
-CDFluidClassDefinitionParser >> handleSlotsNodesFromArrayNode: aRBArrayNode [
+CDFluidClassDefinitionParser >> handleSlotsNodesFromArrayNode: anArrayNode [
 
-	aRBArrayNode statements do: [ :slotStatement |
+	anArrayNode statements do: [ :slotStatement |
 		self handleSlotNode: slotStatement ]
 ]
 

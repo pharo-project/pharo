@@ -71,7 +71,7 @@ RBParserTest >> testArray [
 
 { #category : 'tests' }
 RBParserTest >> testArrayNodesArentArrays [
-"Although an RBArrayNode represents an array, it is not an Array-like object.
+"Although an ASTArrayNode represents an array, it is not an Array-like object.
 Therefore it shouldn't return true for message #isArray (like an instance of a real
 array would"
 	| arrayNode nonArrayNode |

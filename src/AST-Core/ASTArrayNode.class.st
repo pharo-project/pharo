@@ -1,5 +1,5 @@
 "
-An RBArrayNode is an AST node for runtime arrays.
+An ASTArrayNode is an AST node for runtime arrays.
 
 Instance Variables
 	left:	 <Integer | nil> position of {

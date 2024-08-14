@@ -15,9 +15,9 @@ Class {
 }
 
 { #category : 'instance creation' }
-CDSharedPoolNode class >> node: aRBLiteralValueNode name: aString start: anInteger stop: anInteger2 [
+CDSharedPoolNode class >> node: aLiteralValueNode name: aString start: anInteger stop: anInteger2 [
 	^ self new
-			node: aRBLiteralValueNode;
+			node: aLiteralValueNode;
 			name: aString;
 			 start: anInteger;
 			 stop: anInteger2;
@@ -35,8 +35,8 @@ CDSharedPoolNode >> name: aString [
 ]
 
 { #category : 'accessing' }
-CDSharedPoolNode >> node: aRBLiteralValueNode [
-	originalNode := aRBLiteralValueNode
+CDSharedPoolNode >> node: aLiteralValueNode [
+	originalNode := aLiteralValueNode
 ]
 
 { #category : 'accessing' }

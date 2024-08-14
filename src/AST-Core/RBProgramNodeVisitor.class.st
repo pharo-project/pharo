@@ -18,12 +18,12 @@ RBProgramNodeVisitor class >> isAbstract [
 ]
 
 { #category : 'API' }
-RBProgramNodeVisitor >> visit: aRBMessageNode [
-	^ aRBMessageNode acceptVisitor: self
+RBProgramNodeVisitor >> visit: aMessageNode [
+	^ aMessageNode acceptVisitor: self
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitAnnotationMarkNode: aRBAnnotationValueNode [
+RBProgramNodeVisitor >> visitAnnotationMarkNode: aAnnotationValueNode [
 ]
 
 { #category : 'visiting' }
@@ -75,7 +75,7 @@ RBProgramNodeVisitor >> visitClassVariableNode: aNode [
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitCommentNode: aRBComment [
+RBProgramNodeVisitor >> visitCommentNode: aComment [
 	"Note: currenlty, comment nodes are not automatically visited by `RBProgramNodeVisitor`.
 	This method can still be reached by custom visitors and direct visit on a comment node."
 ]
@@ -111,10 +111,10 @@ RBProgramNodeVisitor >> visitLiteralNode: aLiteralNode [
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitLiteralValueNode: aRBLiteralValueNode [
+RBProgramNodeVisitor >> visitLiteralValueNode: aLiteralValueNode [
 	"Redirect the message by default to #visitLiteralNode: for retrocompatibility (pharo 8)"
 
-	^ self visitLiteralNode: aRBLiteralValueNode
+	^ self visitLiteralNode: aLiteralValueNode
 ]
 
 { #category : 'visiting - variables' }

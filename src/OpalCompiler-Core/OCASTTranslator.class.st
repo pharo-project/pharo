@@ -642,12 +642,12 @@ OCASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 ]
 
 { #category : 'visitor - double dispatching' }
-OCASTTranslator >> visitLargeArrayNode: aArrayNode [
+OCASTTranslator >> visitLargeArrayNode: anArrayNode [
 	"Long form: using at:put:"
 	methodBuilder pushLiteralVariable: Array binding.
-	methodBuilder pushLiteral: aArrayNode statements size.
+	methodBuilder pushLiteral: anArrayNode statements size.
 	methodBuilder send: #new:.
-	aArrayNode statements withIndexDo: [  :each :index |
+	anArrayNode statements withIndexDo: [  :each :index |
 		methodBuilder pushDup.
 		methodBuilder pushLiteral: index.
 		self visitNode: each.
