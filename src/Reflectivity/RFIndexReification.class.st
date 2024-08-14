@@ -20,7 +20,7 @@ RFIndexReification class >> key [
 ]
 
 { #category : 'generate' }
-RFIndexReification >> genForRBAssignmentNode [
+RFIndexReification >> genForASTAssignmentNode [
 	^entity variable binding index asLiteralNode
 ]
 

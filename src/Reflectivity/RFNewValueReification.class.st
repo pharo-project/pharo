@@ -20,7 +20,7 @@ RFNewValueReification class >> key [
 ]
 
 { #category : 'generate' }
-RFNewValueReification >> genForRBAssignmentNode [
+RFNewValueReification >> genForASTAssignmentNode [
 	^RBVariableNode named: #RFNewValueReificationVar
 ]
 

@@ -30,6 +30,27 @@ RFValueReification class >> key [
 ]
 
 { #category : 'generate' }
+RFValueReification >> genForASTArrayNode [
+	^RBVariableNode named: self varName
+]
+
+{ #category : 'generate' }
+RFValueReification >> genForASTAssignmentNode [
+	"#value for Assignemnt is the old value, is that what we want?"
+	^RBVariableNode named: entity variable name
+]
+
+{ #category : 'generate' }
+RFValueReification >> genForASTLiteralArrayNode [
+	^ASTLiteralArrayNode value: entity value
+]
+
+{ #category : 'generate' }
+RFValueReification >> genForASTLiteralValueNode [
+	^ASTLiteralValueNode value: entity value
+]
+
+{ #category : 'generate' }
 RFValueReification >> genForInstanceVariableSlot [
 	"entity in this case is the binding of the instance variable"
 
@@ -46,17 +67,6 @@ RFValueReification >> genForLiteralVariable [
 ]
 
 { #category : 'generate' }
-RFValueReification >> genForRBArrayNode [
-	^RBVariableNode named: self varName
-]
-
-{ #category : 'generate' }
-RFValueReification >> genForRBAssignmentNode [
-	"#value for Assignemnt is the old value, is that what we want?"
-	^RBVariableNode named: entity variable name
-]
-
-{ #category : 'generate' }
 RFValueReification >> genForRBBlockNode [
 	^RBVariableNode named: self varName
 ]
@@ -64,16 +74,6 @@ RFValueReification >> genForRBBlockNode [
 { #category : 'generate' }
 RFValueReification >> genForRBCascadeNode [
 	^RBVariableNode named: self varName
-]
-
-{ #category : 'generate' }
-RFValueReification >> genForRBLiteralArrayNode [
-	^ASTLiteralArrayNode value: entity value
-]
-
-{ #category : 'generate' }
-RFValueReification >> genForRBLiteralValueNode [
-	^ASTLiteralValueNode value: entity value
 ]
 
 { #category : 'generate' }

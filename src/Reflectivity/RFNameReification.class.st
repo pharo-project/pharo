@@ -20,6 +20,11 @@ RFNameReification class >> key [
 ]
 
 { #category : 'generate' }
+RFNameReification >> genForASTAssignmentNode [
+	^entity variable name asLiteralNode
+]
+
+{ #category : 'generate' }
 RFNameReification >> genForInstanceVariableSlot [
 	^entity name asLiteralNode
 ]
@@ -27,11 +32,6 @@ RFNameReification >> genForInstanceVariableSlot [
 { #category : 'generate' }
 RFNameReification >> genForLiteralVariable [
 	^entity name asLiteralNode
-]
-
-{ #category : 'generate' }
-RFNameReification >> genForRBAssignmentNode [
-	^entity variable name asLiteralNode
 ]
 
 { #category : 'generate' }

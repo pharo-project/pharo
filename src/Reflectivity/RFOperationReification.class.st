@@ -20,12 +20,12 @@ RFOperationReification class >> key [
 ]
 
 { #category : 'generate' }
-RFOperationReification >> genForRBArrayNode [
+RFOperationReification >> genForASTArrayNode [
 	^RBVariableNode named: #RFReifyValueVar
 ]
 
 { #category : 'generate' }
-RFOperationReification >> genForRBAssignmentNode [
+RFOperationReification >> genForASTAssignmentNode [
 	entity variable isLocalVariable ifTrue: [
 		^RBParser parseExpression: ('RFTempWrite new
 			assignedValue: RFNewValueReificationVar;
@@ -48,6 +48,18 @@ RFOperationReification >> genForRBAssignmentNode [
 ]
 
 { #category : 'generate' }
+RFOperationReification >> genForASTLiteralArrayNode [
+	"same as #value, no need to wrap as the literal understands #value"
+	^ASTLiteralArrayNode value: entity value
+]
+
+{ #category : 'generate' }
+RFOperationReification >> genForASTLiteralValueNode [
+	"same as #value, no need to wrap as the literal understands #value"
+	^ASTLiteralNode value: entity value
+]
+
+{ #category : 'generate' }
 RFOperationReification >> genForRBBlockNode [
 	"we just compile the block again"
 	| blockNode |
@@ -57,18 +69,6 @@ RFOperationReification >> genForRBBlockNode [
 		receiver: (RBVariableNode named: #RFBlockOperation)
 		selector: #block:
 		arguments: {blockNode}
-]
-
-{ #category : 'generate' }
-RFOperationReification >> genForRBLiteralArrayNode [
-	"same as #value, no need to wrap as the literal understands #value"
-	^ASTLiteralArrayNode value: entity value
-]
-
-{ #category : 'generate' }
-RFOperationReification >> genForRBLiteralValueNode [
-	"same as #value, no need to wrap as the literal understands #value"
-	^ASTLiteralNode value: entity value
 ]
 
 { #category : 'generate' }

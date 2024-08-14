@@ -58,7 +58,28 @@ RFReification >> entity: aRBMessageNode [
 ]
 
 { #category : 'generate' }
+RFReification >> genForASTArrayNode [
+
+	^ self genForASTProgramNode
+]
+
+{ #category : 'generate' }
+RFReification >> genForASTAssignmentNode [
+	^self genForASTProgramNode
+]
+
+{ #category : 'generate' }
+RFReification >> genForASTLiteralArrayNode [
+	^self genForASTProgramNode
+]
+
+{ #category : 'generate' }
 RFReification >> genForASTLiteralNode [
+	^self genForASTProgramNode
+]
+
+{ #category : 'generate' }
+RFReification >> genForASTLiteralValueNode [
 	^self genForASTProgramNode
 ]
 
@@ -93,17 +114,6 @@ RFReification >> genForRBArgumentNode [
 ]
 
 { #category : 'generate' }
-RFReification >> genForRBArrayNode [
-
-	^ self genForASTProgramNode
-]
-
-{ #category : 'generate' }
-RFReification >> genForRBAssignmentNode [
-	^self genForASTProgramNode
-]
-
-{ #category : 'generate' }
 RFReification >> genForRBBlockNode [
 	^self genForASTProgramNode
 ]
@@ -116,16 +126,6 @@ RFReification >> genForRBCascadeNode [
 { #category : 'generate' }
 RFReification >> genForRBGlobalNode [
 	^self genForRBVariableNode
-]
-
-{ #category : 'generate' }
-RFReification >> genForRBLiteralArrayNode [
-	^self genForASTProgramNode
-]
-
-{ #category : 'generate' }
-RFReification >> genForRBLiteralValueNode [
-	^self genForASTProgramNode
 ]
 
 { #category : 'generate' }
