@@ -111,6 +111,13 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	ASTProgramNode deprecatedAliases: { #RBProgramNode }.
 	ASTValueNode deprecatedAliases: { #RBValueNode }.
 	ASTLiteralNode deprecatedAliases: { #RBLiteralNode }.
+
+	ASTPatternMessageNode deprecatedAliases: { #RBPatternMessageNode }.
+	ASTPatternBlockNode deprecatedAliases: { #RBPatternBlockNode }.
+	ASTPatternWrapperBlockNode deprecatedAliases: { #RBPatternWrapperBlockNode }.
+	ASTPatternMethodNode deprecatedAliases: { #RBPatternMethodNode }.
+	ASTPatternVariableNode deprecatedAliases: { #RBPatternVariableNode }.
+	ASTPatternPragmaNode deprecatedAliases: { #RBPatternPragmaNode }.
 	
 	CompletionSorter register.
 	RubSmalltalkEditor completionEngineClass: CompletionEngine.

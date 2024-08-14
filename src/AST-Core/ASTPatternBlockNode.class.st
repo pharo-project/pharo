@@ -1,5 +1,5 @@
 "
-RBPatternBlockNode is the node in matching parse trees (it never occurs in normal Smalltalk code) that executes a block to determine if a match occurs. valueBlock takes two arguments, the first is the actual node that we are trying to match against, and the second node is the dictionary that contains all the metavariable bindings that the matcher has made thus far.
+ASTPatternBlockNode is the node in matching parse trees (it never occurs in normal Smalltalk code) that executes a block to determine if a match occurs. valueBlock takes two arguments, the first is the actual node that we are trying to match against, and the second node is the dictionary that contains all the metavariable bindings that the matcher has made thus far.
 
 Instance Variables:
 	valueBlock	<BlockClosure>	The block to execute when attempting to match this to a node.
@@ -7,7 +7,7 @@ Instance Variables:
 
 "
 Class {
-	#name : 'RBPatternBlockNode',
+	#name : 'ASTPatternBlockNode',
 	#superclass : 'RBBlockNode',
 	#instVars : [
 		'valueBlock'
@@ -18,12 +18,12 @@ Class {
 }
 
 { #category : 'visiting' }
-RBPatternBlockNode >> acceptVisitor: aProgramNodeVisitor [
+ASTPatternBlockNode >> acceptVisitor: aProgramNodeVisitor [
 	^aProgramNodeVisitor visitPatternBlockNode: self
 ]
 
 { #category : 'matching' }
-RBPatternBlockNode >> addArgumentWithNameBasedOn: aString to: aRBBlockNode [
+ASTPatternBlockNode >> addArgumentWithNameBasedOn: aString to: aRBBlockNode [
 	| name index vars |
 	name := aString.
 	vars := aRBBlockNode allDefinedVariables.
@@ -36,7 +36,7 @@ RBPatternBlockNode >> addArgumentWithNameBasedOn: aString to: aRBBlockNode [
 ]
 
 { #category : 'matching' }
-RBPatternBlockNode >> constructLookupNodeFor: aString in: aRBBlockNode [
+ASTPatternBlockNode >> constructLookupNodeFor: aString in: aRBBlockNode [
 	^ RBMessageNode
 		  receiver: RBVariableNode selfNode
 		  selector: #lookupMatchFor:in:
@@ -44,12 +44,12 @@ RBPatternBlockNode >> constructLookupNodeFor: aString in: aRBBlockNode [
 ]
 
 { #category : 'matching' }
-RBPatternBlockNode >> copyInContext: aDictionary [
+ASTPatternBlockNode >> copyInContext: aDictionary [
 	^ self replacingBlock value: aDictionary
 ]
 
 { #category : 'matching' }
-RBPatternBlockNode >> createMatchingBlock [
+ASTPatternBlockNode >> createMatchingBlock [
 	| newBlock |
 	self arguments size > 2
 		ifTrue:
@@ -65,7 +65,7 @@ RBPatternBlockNode >> createMatchingBlock [
 ]
 
 { #category : 'matching' }
-RBPatternBlockNode >> createReplacingBlock [
+ASTPatternBlockNode >> createReplacingBlock [
 	| newBlock |
 	self arguments size > 1
 		ifTrue:
@@ -79,31 +79,31 @@ RBPatternBlockNode >> createReplacingBlock [
 ]
 
 { #category : 'testing - matching' }
-RBPatternBlockNode >> isPatternNode [
+ASTPatternBlockNode >> isPatternNode [
 	^ true
 ]
 
 { #category : 'matching' }
-RBPatternBlockNode >> lookupMatchFor: aString in: aDictionary [
+ASTPatternBlockNode >> lookupMatchFor: aString in: aDictionary [
 	^aDictionary at: aString
 		ifAbsent:
 			[| variableNode |
-			variableNode := RBPatternVariableNode named: aString.
+			variableNode := ASTPatternVariableNode named: aString.
 			aDictionary at: variableNode ifAbsent: [nil]]
 ]
 
 { #category : 'matching' }
-RBPatternBlockNode >> match: aNode inContext: aDictionary [
+ASTPatternBlockNode >> match: aNode inContext: aDictionary [
 	^self matchingBlock value: aNode value: aDictionary
 ]
 
 { #category : 'matching' }
-RBPatternBlockNode >> matchingBlock [
+ASTPatternBlockNode >> matchingBlock [
 	^ valueBlock ifNil: [valueBlock := self createMatchingBlock]
 ]
 
 { #category : 'matching' }
-RBPatternBlockNode >> replacePatternNodesIn: aRBBlockNode [
+ASTPatternBlockNode >> replacePatternNodesIn: aRBBlockNode [
 	aRBBlockNode body nodesDo:
 			[:each |
 			(each isVariable and: [each isPatternNode])
@@ -113,11 +113,11 @@ RBPatternBlockNode >> replacePatternNodesIn: aRBBlockNode [
 ]
 
 { #category : 'matching' }
-RBPatternBlockNode >> replacingBlock [
+ASTPatternBlockNode >> replacingBlock [
 	^ valueBlock ifNil: [valueBlock := self createReplacingBlock]
 ]
 
 { #category : 'accessing' }
-RBPatternBlockNode >> sentMessages [
+ASTPatternBlockNode >> sentMessages [
 	^ OrderedCollection new
 ]

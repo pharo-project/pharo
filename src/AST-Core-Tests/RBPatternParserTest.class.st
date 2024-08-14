@@ -76,7 +76,7 @@ RBPatternParserTest >> testPatternStringExpression [
 RBPatternParserTest >> testPatternVariable [
 	| searchPattern |
 	searchPattern := RBPatternParser parseExpression: '`a'.
-	self assert: searchPattern class = RBPatternVariableNode.
+	self assert: searchPattern class = ASTPatternVariableNode.
 	self assert: searchPattern name equals: #'`a'
 ]
 
@@ -84,7 +84,7 @@ RBPatternParserTest >> testPatternVariable [
 RBPatternParserTest >> testPatternVariableSimpleVariable [
 	| searchPattern |
 	searchPattern := RBPatternParser parseExpression: '`a'.
-	self assert: searchPattern class = RBPatternVariableNode.
+	self assert: searchPattern class = ASTPatternVariableNode.
 	self assert: searchPattern name equals: #'`a'
 ]
 
@@ -92,6 +92,6 @@ RBPatternParserTest >> testPatternVariableSimpleVariable [
 RBPatternParserTest >> testPatternVariableSymbol [
 	| searchPattern |
 	searchPattern := RBPatternParser parseExpression: '`#aSymbol'.
-	self assert: searchPattern class = RBPatternVariableNode.
+	self assert: searchPattern class = ASTPatternVariableNode.
 	self assert: searchPattern name equals: #'`#aSymbol'
 ]
