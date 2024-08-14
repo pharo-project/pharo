@@ -128,7 +128,7 @@ RBExtractMethodRefactoring >> checkSingleAssignment: varName [
 				[self
 					refactoringError: 'Cannot extract assignments to temporaries without all references'].
 	extractedParseTree
-		addNode: (RBReturnNode value: (RBVariableNode named: varName)).
+		addNode: (ASTReturnNode value: (RBVariableNode named: varName)).
 	modifiedParseTree := self parseTreeRewriterClass
 				replace: self methodDelimiter
 				with: varName , ' := ' , self methodDelimiter

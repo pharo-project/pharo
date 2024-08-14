@@ -276,7 +276,7 @@ Breakpoint >> conditionBlockProducerMethodAST: conditionString [
 	conditionBlockProducerMethodAST := RBMethodNode
 		selector: #conditionBlockGenerator
 		body:
-			(RBReturnNode
+			(ASTReturnNode
 				value:
 					(RBBlockNode
 						arguments: {(RBVariableNode named: 'ThisContext')}

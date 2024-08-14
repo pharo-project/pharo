@@ -22,6 +22,7 @@ produces
 ```
 'ASTNode
 	ASTProgramNode
+		ASTReturnNode
 		ASTValueNode
 			ASTArrayNode
 			ASTAssignmentNode
@@ -56,7 +57,6 @@ produces
 			RBDoItMethodNode
 		RBPragmaNode
 			ASTPatternPragmaNode
-		RBReturnNode
 		RBSequenceNode
 	RBSlotInitializationNode
 '

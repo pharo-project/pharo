@@ -168,7 +168,7 @@ RBSequenceNode >> addReturn [
 		ifTrue: [ ^ nil ].
 	statements last isReturn
 		ifTrue: [ ^ statements last ].
-	node := RBReturnNode start: statements last start value: statements last.
+	node := ASTReturnNode start: statements last start value: statements last.
 	statements at: statements size put: node.
 	node parent: self.
 
@@ -179,7 +179,7 @@ RBSequenceNode >> addSelfReturn [
 	| node |
 	self lastIsReturn
 		ifTrue: [ ^ self statements last ].
-	node := RBReturnNode value: RBVariableNode selfNode.
+	node := ASTReturnNode value: RBVariableNode selfNode.
 	^ self addNode: node
 ]
 

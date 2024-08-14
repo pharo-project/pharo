@@ -97,12 +97,12 @@ EpFileOutModificationsTest >> testFileOutMultipleMethodAddition [
 	self assert: methodNode1 selector equals: #fortyTwo.
 	self 
 		assert: methodNode1 body value 
-		equals: (RBSequenceNode statements:{ (RBReturnNode value: (ASTLiteralValueNode value: 42)) }).
+		equals: (RBSequenceNode statements:{ (ASTReturnNode value: (ASTLiteralValueNode value: 42)) }).
 		
 	self assert: methodNode2 selector equals: #thirtyTwo.
 	self 
 		assert: methodNode2 body value 
-		equals: (RBSequenceNode statements:{ (RBReturnNode value: (ASTLiteralValueNode value: 32)) })
+		equals: (RBSequenceNode statements:{ (ASTReturnNode value: (ASTLiteralValueNode value: 32)) })
 ]
 
 { #category : 'tests' }
@@ -128,7 +128,7 @@ EpFileOutModificationsTest >> testFileOutMultipleMethodModification [
 	self assert: methodNode selector equals: #fortyTwo.
 	self 
 		assert: methodNode body value 
-		equals: (RBSequenceNode statements:{ (RBReturnNode value: (ASTLiteralValueNode value: 0.042)) }).
+		equals: (RBSequenceNode statements:{ (ASTReturnNode value: (ASTLiteralValueNode value: 0.042)) }).
 
 ]
 
@@ -247,7 +247,7 @@ EpFileOutModificationsTest >> testFileOutSingleMethodAddition [
 	self assert: methodNode selector equals: #fortyTwo.
 	self 
 		assert: methodNode body value 
-		equals: (RBSequenceNode statements:{ (RBReturnNode value: (ASTLiteralValueNode value: 42)) })
+		equals: (RBSequenceNode statements:{ (ASTReturnNode value: (ASTLiteralValueNode value: 42)) })
 ]
 
 { #category : 'tests' }
@@ -293,7 +293,7 @@ EpFileOutModificationsTest >> testFileOutSingleMethodModificationOfSourceCode [
 	self assert: methodNode selector equals: #fortyTwo.
 	self 
 		assert: methodNode body value 
-		equals: (RBSequenceNode statements:{ (RBReturnNode value: (ASTLiteralValueNode value: 0.42)) }).
+		equals: (RBSequenceNode statements:{ (ASTReturnNode value: (ASTLiteralValueNode value: 0.42)) }).
 
 ]
 

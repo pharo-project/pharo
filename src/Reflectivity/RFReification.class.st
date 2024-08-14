@@ -94,6 +94,11 @@ RFReification >> genForASTProgramNode [
 ]
 
 { #category : 'generate' }
+RFReification >> genForASTReturnNode [
+	^self genForASTProgramNode
+]
+
+{ #category : 'generate' }
 RFReification >> genForClassVariable [
 	^self genForLiteralVariable
 ]
@@ -141,11 +146,6 @@ RFReification >> genForRBMethodNode [
 { #category : 'generate' }
 RFReification >> genForRBPragmaNode [
 	^ self genForASTProgramNode
-]
-
-{ #category : 'generate' }
-RFReification >> genForRBReturnNode [
-	^self genForASTProgramNode
 ]
 
 { #category : 'generate' }

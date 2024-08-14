@@ -1242,7 +1242,7 @@ RBParser >> pragmaNodeClass [
 
 { #category : 'private - classes' }
 RBParser >> returnNodeClass [
-	^ RBReturnNode
+	^ ASTReturnNode
 ]
 
 { #category : 'private - parsing' }

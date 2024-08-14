@@ -151,7 +151,7 @@ CoASTResultSetBuilderTest >> testBuildReturnHeuristic [
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBReturnNode new;
+		node: ASTReturnNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #return

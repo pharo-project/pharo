@@ -283,7 +283,7 @@ RBDumpVisitorTest >> testReturnNodeDump [
 	node := self parseExpression: '^ 1 + 1'.
 	dumpedNode := self compiler evaluate: node dump.
 
-	self assert: dumpedNode class equals: RBReturnNode.
+	self assert: dumpedNode class equals: ASTReturnNode.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString
 ]

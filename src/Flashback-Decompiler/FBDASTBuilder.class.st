@@ -143,7 +143,7 @@ FBDASTBuilder >> codeRepeatNode: body [
 
 { #category : 'building' }
 FBDASTBuilder >> codeReturn: value [
-	^ RBReturnNode value: value
+	^ ASTReturnNode value: value
 ]
 
 { #category : 'building' }

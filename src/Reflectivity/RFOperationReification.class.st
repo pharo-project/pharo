@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFOperationReification class >> entities [
-	^{RBVariableNode. RBMessageNode. RBMethodNode . RBReturnNode. ASTAssignmentNode. ASTLiteralNode. RBBlockNode . ASTLiteralArrayNode. ASTArrayNode}
+	^{RBVariableNode. RBMessageNode. RBMethodNode . ASTReturnNode. ASTAssignmentNode. ASTLiteralNode. RBBlockNode . ASTLiteralArrayNode. ASTArrayNode}
 ]
 
 { #category : 'plugin interface' }
@@ -60,6 +60,13 @@ RFOperationReification >> genForASTLiteralValueNode [
 ]
 
 { #category : 'generate' }
+RFOperationReification >> genForASTReturnNode [
+	^RBParser parseExpression: 'RFReturnOperation new
+			context: thisContext;
+			returnValue: RFReifyValueVar'
+]
+
+{ #category : 'generate' }
 RFOperationReification >> genForRBBlockNode [
 	"we just compile the block again"
 	| blockNode |
@@ -89,13 +96,6 @@ RFOperationReification >> genForRBMethodNode [
 
 	ast messages second arguments: {(ASTLiteralNode value: entity methodNode methodClass >> entity methodNode selector)}.
 	^ast
-]
-
-{ #category : 'generate' }
-RFOperationReification >> genForRBReturnNode [
-	^RBParser parseExpression: 'RFReturnOperation new
-			context: thisContext;
-			returnValue: RFReifyValueVar'
 ]
 
 { #category : 'generate' }

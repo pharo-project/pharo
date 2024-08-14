@@ -182,7 +182,7 @@ RBMoveMethodTransformation >> compileDelegatorMethod [
 				                  each = selfVariableName
 					                  ifTrue: [ RBVariableNode selfNode ]
 					                  ifFalse: [ RBVariableNode named: each ] ]).
-	self hasOnlySelfReturns ifFalse: [ delegatorNode := RBReturnNode value: delegatorNode ].
+	self hasOnlySelfReturns ifFalse: [ delegatorNode := ASTReturnNode value: delegatorNode ].
 	statementNode := RBSequenceNode temporaries: #(  ) statements: (Array with: delegatorNode).
 	(tree := class parseTreeForSelector: selector) body: statementNode.
 	class compileTree: tree
