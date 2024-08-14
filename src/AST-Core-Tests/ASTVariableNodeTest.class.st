@@ -2,7 +2,7 @@
 SUnit tests for ASTVariableNode
 "
 Class {
-	#name : 'RBVariableNodeTest',
+	#name : 'ASTVariableNodeTest',
 	#superclass : 'RBParseTreeTest',
 	#category : 'AST-Core-Tests-Nodes',
 	#package : 'AST-Core-Tests',
@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'tests' }
-RBVariableNodeTest >> testIsDefinedByBlock [
+ASTVariableNodeTest >> testIsDefinedByBlock [
 
 	| ast temps args |
 	ast := self class compiler parse: 'myMethod: arg
@@ -43,7 +43,7 @@ RBVariableNodeTest >> testIsDefinedByBlock [
 ]
 
 { #category : 'tests' }
-RBVariableNodeTest >> testStartForReplacement [
+ASTVariableNodeTest >> testStartForReplacement [
 
 	| source tree dTemporary |
 	source := 'foo
@@ -58,7 +58,7 @@ RBVariableNodeTest >> testStartForReplacement [
 ]
 
 { #category : 'tests' }
-RBVariableNodeTest >> testStartForReplacement02 [
+ASTVariableNodeTest >> testStartForReplacement02 [
 
 	| source tree dTemporary |
 	source := 'foo

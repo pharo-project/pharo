@@ -1,7 +1,7 @@
-Extension { #name : 'RBVariableNodeTest' }
+Extension { #name : 'ASTVariableNodeTest' }
 
 { #category : '*OpalCompiler-Tests' }
-RBVariableNodeTest >> testIsDefinition [
+ASTVariableNodeTest >> testIsDefinition [
 
 	| ast temps |
 	ast := self class compiler parse: 'myMethod: arg
@@ -28,7 +28,7 @@ RBVariableNodeTest >> testIsDefinition [
 ]
 
 { #category : '*OpalCompiler-Tests' }
-RBVariableNodeTest >> testIsDefinitionAfterNameResolution [
+ASTVariableNodeTest >> testIsDefinitionAfterNameResolution [
 
 	| ast temps |
 	ast := self class compiler parse: 'myMethod: arg
