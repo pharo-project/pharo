@@ -474,7 +474,7 @@ FBDDecompiler >> pragmasForMethod: aCompiledMethod [
 	^ aCompiledMethod pragmas collect: [ :each |
 		RBPragmaNode
 			selector: each selector
-			arguments: (each arguments collect: [ :arg | RBLiteralNode value: arg ]) ]
+			arguments: (each arguments collect: [ :arg | ASTLiteralNode value: arg ]) ]
 ]
 
 { #category : 'data flow instructions' }

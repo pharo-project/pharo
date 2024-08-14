@@ -287,11 +287,6 @@ ReSmalllintTest >> testCollectionAtCollectionSize [
 ]
 
 { #category : 'tests' }
-ReSmalllintTest >> testCollectionMessagesToExternalObject [
-	self ruleFor: self currentSelector
-]
-
-{ #category : 'tests' }
 ReSmalllintTest >> testCollectionProtocol [
 	self ruleFor: self currentSelector
 ]
@@ -308,11 +303,6 @@ ReSmalllintTest >> testDetectContains [
 
 { #category : 'tests' }
 ReSmalllintTest >> testEmptyExceptionHandler [
-	self ruleFor: self currentSelector
-]
-
-{ #category : 'tests' }
-ReSmalllintTest >> testEndTrueFalse [
 	self ruleFor: self currentSelector
 ]
 
@@ -345,11 +335,6 @@ ReSmalllintTest >> testFileBlocks [
 
 { #category : 'tests' }
 ReSmalllintTest >> testFloatEqualityComparison [
-	self ruleFor: self currentSelector
-]
-
-{ #category : 'tests' }
-ReSmalllintTest >> testGuardingClause [
 	self ruleFor: self currentSelector
 ]
 

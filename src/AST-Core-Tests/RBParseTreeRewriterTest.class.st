@@ -218,7 +218,7 @@ RBParseTreeRewriterTest >> testPatternCascade [
 
 { #category : 'tests - ok' }
 RBParseTreeRewriterTest >> testRewriteDoesNotReuseOriginalNodes [
-	"Due to a bug in RBPatternVariableNode copyInContext method, creating a new astTree from the rewriter reused some nodes
+	"Due to a bug in ASTPatternVariableNode copyInContext method, creating a new astTree from the rewriter reused some nodes
 	 of the original tree, this results in two trees sharing the identical nodes. The original AST now contained statement nodes
 	that don't refer to the same parent (the method node) and that is wrong."
 

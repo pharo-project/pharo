@@ -1,7 +1,7 @@
 "
 I add a number of facilities to those in ClassDescription:
 	A set of all my subclasses (defined in ClassDescription, but only used here and below)
-	A name by which I can be found in a SystemDictionary
+	A name by which I can be found in a SystemEnvironment
 	A classPool for class variables shared between this class and its metaclass
 	A list of sharedPools which probably should be supplanted by some better mechanism.
 

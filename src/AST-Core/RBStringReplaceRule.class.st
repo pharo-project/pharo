@@ -2,7 +2,7 @@
 RBStringReplaceRule replaces a matched tree with another tree (which may include metavariable from the matching tree). This is a very succinct syntax for specifying most rewrites.
 
 Instance Variables:
-	replaceTree	<RBProgramNode>	The tree to replace the matched tree with.
+	replaceTree	<ASTProgramNode>	The tree to replace the matched tree with.
 
 
 "
@@ -46,14 +46,14 @@ RBStringReplaceRule class >> searchForMethod: searchString replaceWith: replaceS
 ]
 
 { #category : 'instance creation' }
-RBStringReplaceRule class >> searchForTree: aRBProgramNode replaceWith: replaceString [
-	^self new searchForTree: aRBProgramNode replaceWith: replaceString
+RBStringReplaceRule class >> searchForTree: aProgramNode replaceWith: replaceString [
+	^self new searchForTree: aProgramNode replaceWith: replaceString
 ]
 
 { #category : 'instance creation' }
-RBStringReplaceRule class >> searchForTree: aRBProgramNode replaceWith: replaceString when: aBlock [
+RBStringReplaceRule class >> searchForTree: aProgramNode replaceWith: replaceString when: aBlock [
 	^self new
-		searchForTree: aRBProgramNode
+		searchForTree: aProgramNode
 		replaceWith: replaceString
 		when: aBlock
 ]

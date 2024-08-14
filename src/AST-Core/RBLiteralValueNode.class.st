@@ -1,5 +1,5 @@
 "
-RBLiteralNode is an AST node that represents literal values (e.g., #foo, true, 1, etc.), but not literal arrays.
+ASTLiteralNode is an AST node that represents literal values (e.g., #foo, true, 1, etc.), but not literal arrays.
 
 The sourceText field is needed for the formatter for the correct printing of strings vs symbols. If we just call
 value asString, both a string and a symbol print itself as a string.
@@ -10,7 +10,7 @@ Instance Variables
 "
 Class {
 	#name : 'RBLiteralValueNode',
-	#superclass : 'RBLiteralNode',
+	#superclass : 'ASTLiteralNode',
 	#instVars : [
 		'value',
 		'sourceText'

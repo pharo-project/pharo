@@ -47,7 +47,7 @@ RBRenameVariableChange >> addNewVariable [
 RBRenameVariableChange >> changeClass [
 
 	| class |
-	class := onSystemDictionary classNamed: self changeClassName.
+	class := onSystemEnvironment classNamed: self changeClassName.
 	^ isMeta
 		  ifTrue: [ class class ]
 		  ifFalse: [ class ]

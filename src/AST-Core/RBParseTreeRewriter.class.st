@@ -1,5 +1,5 @@
 "
-ParseTreeRewriter walks over and transforms its RBProgramNode (tree). If the tree is modified, then the answer is set to true, and the modified tree can be retrieved by the #tree method.
+ParseTreeRewriter walks over and transforms its ASTProgramNode (tree). If the tree is modified, then the answer is set to true, and the modified tree can be retrieved by the #tree method.
 
 
 Here is a little script to rewrite a self halt into self dormantHalt. 
@@ -36,7 +36,7 @@ You can also have a look at the ParseTreeRewriterTest class.
 
 
 Instance Variables:
-	tree	<RBProgramNode>	the parse tree we're transforming
+	tree	<ASTProgramNode>	the parse tree we're transforming
 			
 	
 "
@@ -124,8 +124,8 @@ RBParseTreeRewriter class >> replace: code with: newCode method: aBoolean [
 RBParseTreeRewriter class >> replaceLiteral: literal with: newLiteral [
 	| rewriteRule |
 	rewriteRule := self new.
-	rewriteRule replaceTree: (RBLiteralNode value: literal)
-		withTree: (RBLiteralNode value: newLiteral).
+	rewriteRule replaceTree: (ASTLiteralNode value: literal)
+		withTree: (ASTLiteralNode value: newLiteral).
 	^rewriteRule
 ]
 
@@ -134,11 +134,11 @@ RBParseTreeRewriter class >> replaceStatements: code with: newCode in: aParseTre
 	| tree replaceStmt |
 	tree := self buildTree: code method: false.
 	tree isSequence ifFalse: [ tree := RBSequenceNode statements: (Array with: tree) ].
-	tree temporaries: (Array with: (RBPatternVariableNode named: '`@temps')).
-	tree addNodeFirst: (RBPatternVariableNode named: '`@.S1').
+	tree temporaries: (Array with: (ASTPatternVariableNode named: '`@temps')).
+	tree addNodeFirst: (ASTPatternVariableNode named: '`@.S1').
 	replaceStmt := tree lastIsReturn
 		ifTrue: [ '| `@temps | `@.S1. ^' , newCode ]
-		ifFalse: [ tree addNode: (RBPatternVariableNode named: '`@.S2').
+		ifFalse: [ tree addNode: (ASTPatternVariableNode named: '`@.S2').
 			'| `@temps | `@.S1. ' , newCode , '. `@.S2' ].
 	^ self
 		replace: tree formattedCode

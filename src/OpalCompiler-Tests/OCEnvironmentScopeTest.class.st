@@ -15,7 +15,7 @@ OCEnvironmentScopeTest >> testCompileWithEnvironment [
 
 
 	| environment method return |
-	environment := SystemDictionary new.
+	environment := SystemEnvironment new.
 	environment at: #MyClass put: Point copy.
 	(environment at: #MyClass) environment: environment.
 	method := OpalCompiler new

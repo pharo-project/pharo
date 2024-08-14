@@ -497,20 +497,20 @@ RBSimpleFormatter >> visitParseErrorNode: aNode [
 ]
 
 { #category : 'visiting' }
-RBSimpleFormatter >> visitPatternBlockNode: aRBPatternBlockNode [
+RBSimpleFormatter >> visitPatternBlockNode: aPatternBlockNode [
 	codeStream nextPut: $`.
 	self
 		bracketWith: '{}'
-		around: [ self formatBlock: aRBPatternBlockNode ]
+		around: [ self formatBlock: aPatternBlockNode ]
 ]
 
 { #category : 'visiting' }
-RBSimpleFormatter >> visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode [
-	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
+RBSimpleFormatter >> visitPatternWrapperBlockNode: aPatternWrapperBlockNode [
+	self visitNode: aPatternWrapperBlockNode wrappedNode.
 	codeStream nextPut: $`.
 	self
 		bracketWith: '{}'
-		around: [ self formatBlock: aRBPatternWrapperBlockNode ]
+		around: [ self formatBlock: aPatternWrapperBlockNode ]
 ]
 
 { #category : 'visiting' }

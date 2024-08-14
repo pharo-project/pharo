@@ -1,7 +1,7 @@
 "
 I am responsible for providing all the package currently defined in an environment.
 
-The system currently hold a global environment with a default package organizer but it is possible to create new enviornemnt with `SystemDictionary new` and they will come with a new package organizer.
+The system currently hold a global environment with a default package organizer but it is possible to create new enviornemnt with `SystemEnvironment new` and they will come with a new package organizer.
 
 I am used as en entry point to access packages and tags and update the model.
 "
@@ -103,8 +103,8 @@ PackageOrganizer >> environment [
 ]
 
 { #category : 'accessing' }
-PackageOrganizer >> environment: aSystemDictionary [
-	 environment := aSystemDictionary
+PackageOrganizer >> environment: aSystemEnvironment [
+	 environment := aSystemEnvironment
 ]
 
 { #category : 'testing' }

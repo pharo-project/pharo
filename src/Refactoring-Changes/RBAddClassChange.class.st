@@ -34,7 +34,7 @@ RBAddClassChange class >> make: aBlock [
 RBAddClassChange >> asUndoOperation [
 
 	| class |
-	class := onSystemDictionary classNamed: self changeClassName.
+	class := onSystemEnvironment classNamed: self changeClassName.
 
 	^ class isBehavior
 		  ifTrue: [ changeFactory addClassDefinition: [ :aBuilder | aBuilder fillFor: class ] ]
@@ -82,7 +82,7 @@ RBAddClassChange >> definedClass [
 { #category : 'private' }
 RBAddClassChange >> definitionClass [
 
-	^ onSystemDictionary classNamed:
+	^ onSystemEnvironment classNamed:
 		  (self superclassName ifNil: [ #ProtoObject ])
 ]
 

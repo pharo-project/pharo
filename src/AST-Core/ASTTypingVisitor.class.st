@@ -4,7 +4,7 @@ A very simple and fast type inferer.
 I'm a work in progress.
 
 I'm not sound nor complete but my concern is to be usaful and fast when accuracy is not a concern (completion, user feedback, etc.).
-I approximate the types to `RBValueNode` instances, `Variable` instance, and return values of `CompiledMethod`.
+I approximate the types to `ASTValueNode` instances, `Variable` instance, and return values of `CompiledMethod`.
 
 On AST nodes, type are stored in the `#type` property. Two instance variable dictionaries are used to store the types of variables and metod returns.
 

@@ -3,10 +3,10 @@ ParseTreeSearcher walks over a normal source code parse tree using the visitor p
 
 Instance Variables:
 	answer	<Object>	the ""answer"" that is propagated between matches
-	argumentSearches	<Collection of: (Association key: RBProgramNode value: BlockClosure)>	argument searches (search for the RBProgramNode and perform the BlockClosure when its found)
+	argumentSearches	<Collection of: (Association key: ASTProgramNode value: BlockClosure)>	argument searches (search for the ASTProgramNode and perform the BlockClosure when its found)
 	context	<RBSmallDictionary>	a dictionary that contains what each meta-node matches against. This could be a normal Dictionary that is created for each search but is created once and reused (efficiency).
 	messages	<Collection>	the sent messages in our searches
-	searches	<Collection of: (Association key: RBProgramNode value: BlockClosure)>	non-argument searches (search for the RBProgramNode and perform the BlockClosure when its found)
+	searches	<Collection of: (Association key: ASTProgramNode value: BlockClosure)>	non-argument searches (search for the ASTProgramNode and perform the BlockClosure when its found)
 	
 ***********************
 		
@@ -158,10 +158,10 @@ RBParseTreeSearcher class >> treeMatchingStatements: subtreeSourceString in: aPa
 	subtree := RBParser parseExpression: subtreeSourceString.
 	subtree isSequence
 		ifFalse: [subtree := RBSequenceNode statements: (Array with: subtree)].
-	subtree temporaries: (Array with: (RBPatternVariableNode named: '`@temps')).
-	subtree addNodeFirst: (RBPatternVariableNode named: '`@.S1').
+	subtree temporaries: (Array with: (ASTPatternVariableNode named: '`@temps')).
+	subtree addNodeFirst: (ASTPatternVariableNode named: '`@.S1').
 	subtree lastIsReturn
-		ifFalse: [subtree addNode: (RBPatternVariableNode named: '`@.S2')].
+		ifFalse: [subtree addNode: (ASTPatternVariableNode named: '`@.S2')].
 	notifier matchesTree: subtree
 		do: [:aNode :answer |
 				| sub | 
@@ -341,7 +341,7 @@ RBParseTreeSearcher >> messages [
 			[:each |
 			| searchMessages |
 			searchMessages := each sentMessages.
-			RBProgramNode optimizedSelectors
+			ASTProgramNode optimizedSelectors
 				do: [:sel | searchMessages remove: sel ifAbsent: []].
 			searchMessages isEmpty ifTrue: [^messages := #()].
 			messages addAll: searchMessages].
