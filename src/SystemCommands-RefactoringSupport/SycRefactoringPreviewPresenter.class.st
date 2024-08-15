@@ -161,8 +161,11 @@ SycRefactoringPreviewPresenter >> generateChanges [
 	| rbEnvironment |
 	changes := command asRefactorings.
 	rbEnvironment := self activeRBEnvironment.
-	changes do: [ :each |
-		each model environment: rbEnvironment.
+	changes do: [ :each | | model |
+		model := (RBNamespace onEnvironment: rbEnvironment )
+				name: 'Changes for ', each class name asString;
+				yourself.
+		each model: model.
 		each generateChanges ]
 ]
 
