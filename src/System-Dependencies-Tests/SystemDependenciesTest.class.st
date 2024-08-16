@@ -49,7 +49,7 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 	     #'Refactoring-Critics' #'Commander-Core' #Reflectivity
 	     #'Reflectivity-Tools' #Shout 'HeuristicCompletion-Model'
 	     #VariablesLibrary #'Spec2-CommonWidgets' #'NewTools-Scopes'
-		  #Traits-Tests )
+		  #'Traits-Tests' )
 ]
 
 { #category : 'known dependencies' }
