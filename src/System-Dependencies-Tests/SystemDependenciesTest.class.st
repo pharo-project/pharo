@@ -48,7 +48,8 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 	^ #( 'AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' #'Athens-Morphic'
 	     #'Refactoring-Critics' #'Commander-Core' #Reflectivity
 	     #'Reflectivity-Tools' #Shout 'HeuristicCompletion-Model'
-	     #VariablesLibrary #'Spec2-CommonWidgets' #'NewTools-Scopes' )
+	     #VariablesLibrary #'Spec2-CommonWidgets' #'NewTools-Scopes'
+		  #Traits-Tests )
 ]
 
 { #category : 'known dependencies' }
