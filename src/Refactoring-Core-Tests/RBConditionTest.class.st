@@ -13,9 +13,12 @@ Class {
 
 { #category : 'running' }
 RBConditionTest >> setUp [
-
+	| classenv classes |
 	super setUp.
-	rbNamespace := RBNamespace new.
+	classes := { Object . RBMessageNode . TextConstants } asOrderedCollection addAll: self class withAllSuperclasses; yourself.
+	classenv := RBClassEnvironment classes: classes.
+	rbNamespace := RBNamespace onEnvironment: classenv.
+	
 	objectClass := rbNamespace classNamed: #Object.
 	messageNodeClass := rbNamespace classNamed: #RBMessageNode.
 	rbNamespace defineClass: [ :aBuilder |
