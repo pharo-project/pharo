@@ -194,13 +194,13 @@ ClyTextEditorToolMorph >> editingMode [
 ]
 
 { #category : 'accessing' }
-ClyTextEditorToolMorph >> editionTimestamp [
-  ^ Date today yyyymmdd, ' ', (Time now print24 first: 5)
+ClyTextEditorToolMorph >> editingText [
+	self subclassResponsibility
 ]
 
 { #category : 'accessing' }
-ClyTextEditorToolMorph >> editingText [
-	self subclassResponsibility
+ClyTextEditorToolMorph >> editionTimestamp [
+  ^ Date today yyyymmdd, ' ', (Time now print24 first: 5)
 ]
 
 { #category : 'selecting text' }

@@ -386,7 +386,7 @@ ClyBrowserMorph >> initialExtent [
 ClyBrowserMorph >> initialize [
 	super initialize.
 	navigationStarted := false.
-	navigationHistory := ClyNavigationHistory new.
+	navigationHistory := self class navigationHistoryClass new.
 	plugins := SortedCollection sortBlock: [ :a :b | a priority <= b priority ].
 	self extent: self initialExtent.
 	self changeProportionalLayout.
