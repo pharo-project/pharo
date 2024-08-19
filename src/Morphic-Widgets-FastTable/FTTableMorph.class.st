@@ -1208,7 +1208,8 @@ FTTableMorph >> startDrag: event [
 
 	passengers := self selectedIndexes collect: [ :each | self dataSource passengerAt: each ].
 	transferMorph := self dataSource transferFor: passengers from: self.
-	transferMorph align: transferMorph draggedMorph topLeft with: event position.
+	transferMorph align: transferMorph draggedMorph topLeft with: ((self transformedFrom: event hand owner)
+		localPointToGlobal: event position).
 	transferMorph dragTransferType: self dataSource dragTransferType.
 
 	event hand grabMorph: transferMorph
