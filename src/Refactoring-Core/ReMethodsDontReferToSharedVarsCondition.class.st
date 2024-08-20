@@ -14,7 +14,7 @@ Class {
 	#tag : 'Conditions'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'choices' }
 ReMethodsDontReferToSharedVarsCondition class >> strategyChoiceClass [
 	^ RePushUpSharedVariableChoice
 ]

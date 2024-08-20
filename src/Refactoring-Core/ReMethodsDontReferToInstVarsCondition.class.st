@@ -10,7 +10,7 @@ Class {
 	#tag : 'Conditions'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'choices' }
 ReMethodsDontReferToInstVarsCondition class >> strategyChoiceClass [
 	^ RePushUpInstanceVariableChoice
 ]

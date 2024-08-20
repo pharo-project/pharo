@@ -50,7 +50,6 @@ RBPullUpMethodRefactoring class >> pullUp: selectorCollection from: aClass to: a
 
 { #category : 'preconditions' }
 RBPullUpMethodRefactoring >> applicabilityPreconditions [
-
 	" Check that all selectors are defined in `class`, 
 	and that `class` is in the hierarchy of subclasses of `targetSuperclass` "
 
@@ -61,6 +60,7 @@ RBPullUpMethodRefactoring >> applicabilityPreconditions [
 		  (ReClassHasSubclassesCondition new
 			   class: targetSuperclass;
 			   subclassesList: { class name }).
+		  self preconditionNoReferencesToSharedVars.
 		  self preconditionNoOverrides.
 		  self preconditionNoSupersendsSent.
 		  self preconditionNoSupersendsReceived }

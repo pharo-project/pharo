@@ -15,7 +15,7 @@ Class {
 	#tag : 'Conditions'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'choices' }
 ReMethodsHaveNoDuplicatesCondition class >> strategyChoiceClass [
 	^ ReRemoveDuplicateMethodsChoice 
 ]
