@@ -35,22 +35,3 @@ RePullUpMethodDriverTest >> testPullUpMethodDriverWhenHappyPathExpectChanges [
 	driver runRefactoring.
 	self assert: driver refactoring model changes changes size equals: 2
 ]
-
-{ #category : 'initialization' }
-RePullUpMethodDriverTest >> testPullUpMethodDriverWhenOverridesExpectBreakingChanges [
-
-	| driver method |
-	self skip: 'Prevent display of UI dialog'.
-	environment := RBClassEnvironment classes: MyClassAlpha withAllSubclasses.
-	model := RBNamespace onEnvironment: environment.
-	method := MyClassBeta methodNamed: #methodOverriden.
-	
-	driver := RePullUpMethodDriver new
-					model: model scopes: { environment } pullUpMethods: { method }.
-
-	self setUpDriver: driver.
-	
-	driver runRefactoring.
-	self assert: driver refactoring model changes changes size equals: 0.
-	self assert: driver refactoring failedApplicabilityPreconditions size equals: 1
-]

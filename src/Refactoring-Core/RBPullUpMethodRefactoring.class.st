@@ -71,7 +71,6 @@ RBPullUpMethodRefactoring >> breakingChangePreconditions [
 
 	^ {
 		  self preconditionNoReferencesToInstVars.
-		  self preconditionNoReferencesToSharedVars.
 		  self preconditionNoDuplicateMethods }
 ]
 

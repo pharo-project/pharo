@@ -36,10 +36,12 @@ ReMethodsDontReferToInstVarsCondition >> violationMessageOn: aStream [
 		selector := violator at: 1.
 		instVar := violator at: 2.
 		aStream
-			nextPutAll: '''';
+			nextPutAll: 'Method ''';
 			nextPutAll: selector;
 			nextPutAll: ''' refers to the inst var #';
-			nextPutAll: instVar ]
+			nextPutAll: instVar;
+			nextPutAll: ' defined in class ';
+			nextPutAll: class name ]
 ]
 
 { #category : 'accessing' }

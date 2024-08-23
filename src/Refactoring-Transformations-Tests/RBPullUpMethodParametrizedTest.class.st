@@ -263,13 +263,12 @@ RBPullUpMethodParametrizedTest >> testPullUpReferencesInstVar [
 	class := model classNamed: ('RBTransformation', 'RuleTestData1') asSymbol.
 	refactoring := self createRefactoringWithModel: model
 		andArguments: { #(#foo ) . class }.
-	[ self executeRefactoring: refactoring ] valueSupplyingAnswer: true.
+	self proceedThroughWarning: [ self executeRefactoring: refactoring  ].
 	superClass := model classNamed: ('RBFooLint', 'RuleTestData1') asSymbol.
 	self assert: (superClass parseTreeForSelector: #foo)
 				equals: (self parseMethod: 'foo ^ foo').
-	self assert: (superClass directlyDefinesInstanceVariable: #foo).
 	self deny: (class directlyDefinesMethod: #foo).
-	self deny: (class directlyDefinesInstanceVariable: #foo)
+	self assert: (class directlyDefinesInstanceVariable: #foo)
 ]
 
 { #category : 'failure tests' }
