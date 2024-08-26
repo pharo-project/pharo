@@ -100,17 +100,6 @@ ShortcutReminder >> createLabelMorph: aString [
 		yourself
 ]
 
-{ #category : 'settings' }
-ShortcutReminder >> createResetCountButtonMorph [
-
-	^SimpleButtonMorph new
-		target: self;
-		label: 'Reset notification counts';
-		actionSelector: #resetCount;
-		themeChanged;
-		yourself
-]
-
 { #category : 'shortcut creation' }
 ShortcutReminder >> createShortcutMorphFor: aMenuItem [
 
@@ -158,11 +147,12 @@ ShortcutReminder >> customSettingsOn: aBuilder [
 		default: self defaultLimit;
 		range: (-1 to: 100).
 
-	(aBuilder group: #'Reset count')
+	(aBuilder button: #resetCount)
 		order: 7;
 		target: self;
 		label: 'Reset the reminder count';
-		dialog: [ self createResetCountButtonMorph ]
+		buttonLabel: 'Apply';
+		dialog: [ self resetCount ]
 ]
 
 { #category : 'defaults' }
@@ -311,7 +301,8 @@ ShortcutReminder >> remind: aMenuItem [
 { #category : 'settings' }
 ShortcutReminder >> resetCount [
 
-	countDict := Dictionary new
+	countDict := Dictionary new.
+	self inform: 'Shortcut reminder count reset'
 ]
 
 { #category : 'shortcut creation' }
