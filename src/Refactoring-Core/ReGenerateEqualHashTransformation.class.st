@@ -97,13 +97,13 @@ ReGenerateEqualHashTransformation >> compileEqual [
 			| accessor |
 			accessor := self accessorForVariable: each.
 			comparison := RBMessageNode
-				receiver: (RBVariableNode named: each)
+				receiver: (ASTVariableNode named: each)
 				selector: #=
 				arguments:
 					(Array
 						with:
 							(RBMessageNode
-								receiver: (RBVariableNode named: 'anObject')
+								receiver: (ASTVariableNode named: 'anObject')
 								selector: accessor)).
 			statement := statement
 				ifNil: [ comparison ]
@@ -136,7 +136,7 @@ ReGenerateEqualHashTransformation >> compileHash [
 	variables reversed
 		do: [ :each |
 			hash := RBMessageNode
-				receiver: (RBVariableNode named: each)
+				receiver: (ASTVariableNode named: each)
 				selector: #hash.
 			statement := statement
 				ifNil: [ hash ]

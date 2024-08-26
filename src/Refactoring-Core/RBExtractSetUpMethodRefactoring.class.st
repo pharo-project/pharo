@@ -107,7 +107,7 @@ RBExtractSetUpMethodRefactoring >> checkSingleAssignment: varName [
 { #category : 'transforming' }
 RBExtractSetUpMethodRefactoring >> nameNewMethod: aSymbol [
 	| args |
-	args := parameters collect: [ :parm | RBVariableNode named: parm ].
+	args := parameters collect: [ :parm | ASTVariableNode named: parm ].
 	extractedParseTree renameSelector: aSymbol andArguments: args asArray.
 	modifiedParseTree := RBParseTreeRewriter replace: self methodDelimiter with: '#callToSetUp' in: modifiedParseTree
 ]

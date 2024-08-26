@@ -1,5 +1,5 @@
 "
-An RBArrayNode is an AST node for runtime arrays.
+An ASTArrayNode is an AST node for runtime arrays.
 
 Instance Variables
 	left:	 <Integer | nil> position of {
@@ -8,7 +8,7 @@ Instance Variables
 	statements: <SequenceableCollection of: ASTValueNode> the statement nodes
 "
 Class {
-	#name : 'RBArrayNode',
+	#name : 'ASTArrayNode',
 	#superclass : 'ASTValueNode',
 	#instVars : [
 		'left',
@@ -22,12 +22,12 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBArrayNode class >> statements: statements [
+ASTArrayNode class >> statements: statements [
 	^ self new statements: statements
 ]
 
 { #category : 'comparing' }
-RBArrayNode >> = anObject [
+ASTArrayNode >> = anObject [
 	self == anObject ifTrue: [ ^ true ].
 	self class = anObject class ifFalse: [ ^ false ].
 	self statements size = anObject statements size ifFalse: [ ^ false ].
@@ -36,12 +36,12 @@ RBArrayNode >> = anObject [
 ]
 
 { #category : 'visiting' }
-RBArrayNode >> acceptVisitor: aProgramNodeVisitor [
+ASTArrayNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitArrayNode: self
 ]
 
 { #category : 'adding nodes' }
-RBArrayNode >> addNode: aNode [
+ASTArrayNode >> addNode: aNode [
 	statements := statements asOrderedCollection
 		add: aNode;
 		yourself.
@@ -50,7 +50,7 @@ RBArrayNode >> addNode: aNode [
 ]
 
 { #category : 'adding nodes' }
-RBArrayNode >> addNode: aNode before: anotherNode [
+ASTArrayNode >> addNode: aNode before: anotherNode [
 	| index |
 	aNode isReturn
 		ifTrue: [ self error: 'Cannot add return node' ].
@@ -64,7 +64,7 @@ RBArrayNode >> addNode: aNode before: anotherNode [
 ]
 
 { #category : 'adding nodes' }
-RBArrayNode >> addNodeFirst: aNode [
+ASTArrayNode >> addNodeFirst: aNode [
 	statements := statements asOrderedCollection
 		addFirst: aNode;
 		yourself.
@@ -73,7 +73,7 @@ RBArrayNode >> addNodeFirst: aNode [
 ]
 
 { #category : 'adding nodes' }
-RBArrayNode >> addNodes: aCollection [
+ASTArrayNode >> addNodes: aCollection [
 	statements := statements asOrderedCollection
 		addAll: aCollection;
 		yourself.
@@ -82,13 +82,13 @@ RBArrayNode >> addNodes: aCollection [
 ]
 
 { #category : 'adding nodes' }
-RBArrayNode >> addNodes: aCollection before: anotherNode [
+ASTArrayNode >> addNodes: aCollection before: anotherNode [
 	aCollection do: [ :each | self addNode: each before: anotherNode ].
 	^ aCollection
 ]
 
 { #category : 'adding nodes' }
-RBArrayNode >> addNodesFirst: aCollection [
+ASTArrayNode >> addNodesFirst: aCollection [
 	statements := statements asOrderedCollection
 		addAllFirst: aCollection;
 		yourself.
@@ -97,7 +97,7 @@ RBArrayNode >> addNodesFirst: aCollection [
 ]
 
 { #category : 'accessing' }
-RBArrayNode >> allStatements [
+ASTArrayNode >> allStatements [
 
 	^ (OrderedCollection withAll: statements)
 		  addAll: super allStatements;
@@ -105,17 +105,17 @@ RBArrayNode >> allStatements [
 ]
 
 { #category : 'accessing' }
-RBArrayNode >> children [
+ASTArrayNode >> children [
 	^ statements
 ]
 
 { #category : 'matching' }
-RBArrayNode >> copyInContext: aDictionary [
+ASTArrayNode >> copyInContext: aDictionary [
 	^ self class statements: (self copyList: self statements inContext: aDictionary)
 ]
 
 { #category : 'comparing' }
-RBArrayNode >> equalTo: anObject withMapping: aDictionary [
+ASTArrayNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class
 		ifFalse: [ ^ false ].
 	self statements size = anObject statements size
@@ -129,18 +129,18 @@ RBArrayNode >> equalTo: anObject withMapping: aDictionary [
 ]
 
 { #category : 'testing' }
-RBArrayNode >> hasBlock [
+ASTArrayNode >> hasBlock [
 
 	^ statements anySatisfy: [ :stm | stm hasBlock ]
 ]
 
 { #category : 'comparing' }
-RBArrayNode >> hash [
+ASTArrayNode >> hash [
 	^ self hashForCollection: self statements
 ]
 
 { #category : 'private' }
-RBArrayNode >> indexOfNode: aNode [
+ASTArrayNode >> indexOfNode: aNode [
 	"Try to find the node by first looking for ==, and then for ="
 
 	^ (1 to: statements size)
@@ -149,7 +149,7 @@ RBArrayNode >> indexOfNode: aNode [
 ]
 
 { #category : 'initialization' }
-RBArrayNode >> initialize [
+ASTArrayNode >> initialize [
 	super initialize.
 	statements := OrderedCollection new.
 	periods := #().
@@ -157,28 +157,28 @@ RBArrayNode >> initialize [
 ]
 
 { #category : 'testing' }
-RBArrayNode >> isDynamicArray [
+ASTArrayNode >> isDynamicArray [
 	^ true
 ]
 
 { #category : 'testing' }
-RBArrayNode >> isEmpty [
+ASTArrayNode >> isEmpty [
 	^ statements isEmpty
 ]
 
 { #category : 'errors' }
-RBArrayNode >> isFaulty [
+ASTArrayNode >> isFaulty [
 	self isError ifTrue: [ ^ true ].
 	^self statements anySatisfy: [:each | each isFaulty]
 ]
 
 { #category : 'testing' }
-RBArrayNode >> isUsingAsReturnValue: aNode [
+ASTArrayNode >> isUsingAsReturnValue: aNode [
 	^ (statements anySatisfy: [ :each | each == aNode ]) or: [ self isUsedAsReturnValue ]
 ]
 
 { #category : 'testing' }
-RBArrayNode >> lastIsReturn [
+ASTArrayNode >> lastIsReturn [
 
 	^ statements isEmpty
 		  ifTrue: [ false ]
@@ -186,54 +186,54 @@ RBArrayNode >> lastIsReturn [
 ]
 
 { #category : 'accessing - token' }
-RBArrayNode >> left [
+ASTArrayNode >> left [
 	^ left
 ]
 
 { #category : 'accessing - token' }
-RBArrayNode >> left: anInteger [
+ASTArrayNode >> left: anInteger [
 	left := anInteger
 ]
 
 { #category : 'matching' }
-RBArrayNode >> match: aNode inContext: aDictionary [
+ASTArrayNode >> match: aNode inContext: aDictionary [
 	aNode class = self class ifFalse: [ ^ false ].
 	^ self matchList: statements against: aNode statements inContext: aDictionary
 ]
 
 { #category : 'testing' }
-RBArrayNode >> needsParenthesis [
+ASTArrayNode >> needsParenthesis [
 	^ false
 ]
 
 { #category : 'accessing - token' }
-RBArrayNode >> periods [
+ASTArrayNode >> periods [
 	^ periods
 ]
 
 { #category : 'accessing - token' }
-RBArrayNode >> periods: anArray [
+ASTArrayNode >> periods: anArray [
 	periods := anArray
 ]
 
 { #category : 'copying' }
-RBArrayNode >> postCopy [
+ASTArrayNode >> postCopy [
 	super postCopy.
 	self statements: (self statements collect: [ :each | each copy ])
 ]
 
 { #category : 'accessing' }
-RBArrayNode >> precedence [
+ASTArrayNode >> precedence [
 	^0
 ]
 
 { #category : 'testing' }
-RBArrayNode >> references: aVariableName [
+ASTArrayNode >> references: aVariableName [
 	^ statements anySatisfy: [ :each | each references: aVariableName ]
 ]
 
 { #category : 'replacing' }
-RBArrayNode >> replaceNode: oldNode  withNode: newNode [
+ASTArrayNode >> replaceNode: oldNode  withNode: newNode [
 	self statements: (statements collect: [ :statement |
 		statement == oldNode
 			ifTrue: [ newNode ]
@@ -241,37 +241,37 @@ RBArrayNode >> replaceNode: oldNode  withNode: newNode [
 ]
 
 { #category : 'accessing - token' }
-RBArrayNode >> right [
+ASTArrayNode >> right [
 	^ right
 ]
 
 { #category : 'accessing - token' }
-RBArrayNode >> right: anInteger [
+ASTArrayNode >> right: anInteger [
 	right := anInteger
 ]
 
 { #category : 'accessing' }
-RBArrayNode >> startWithoutParentheses [
+ASTArrayNode >> startWithoutParentheses [
 	^ left
 ]
 
 { #category : 'accessing' }
-RBArrayNode >> statementComments [
+ASTArrayNode >> statementComments [
 	^self comments
 ]
 
 { #category : 'accessing' }
-RBArrayNode >> statements [
+ASTArrayNode >> statements [
 	^statements
 ]
 
 { #category : 'accessing' }
-RBArrayNode >> statements: statements0 [
+ASTArrayNode >> statements: statements0 [
 	statements := statements0.
 	statements do: [:statement | statement parent: self]
 ]
 
 { #category : 'accessing' }
-RBArrayNode >> stopWithoutParentheses [
+ASTArrayNode >> stopWithoutParentheses [
 	^ right
 ]

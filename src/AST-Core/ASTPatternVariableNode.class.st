@@ -18,7 +18,7 @@ Instance Variables:
 "
 Class {
 	#name : 'ASTPatternVariableNode',
-	#superclass : 'RBVariableNode',
+	#superclass : 'ASTVariableNode',
 	#instVars : [
 		'recurseInto',
 		'isList',
@@ -35,7 +35,7 @@ Class {
 ASTPatternVariableNode class >> identifierNamed: anIdentifierName at: aPosition [
 	^anIdentifierName isPatternVariable
 		ifTrue: [super identifierNamed: anIdentifierName at: aPosition]
-		ifFalse: [RBVariableNode identifierNamed: anIdentifierName at: aPosition]
+		ifFalse: [ASTVariableNode identifierNamed: anIdentifierName at: aPosition]
 ]
 
 { #category : 'verification' }
@@ -127,7 +127,7 @@ ASTPatternVariableNode >> matchStatement: aNode inContext: aDictionary [
 
 { #category : 'private' }
 ASTPatternVariableNode >> matchingClass [
-	^RBVariableNode
+	^ASTVariableNode
 ]
 
 { #category : 'initialization' }

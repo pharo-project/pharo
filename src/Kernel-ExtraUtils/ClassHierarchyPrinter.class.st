@@ -22,42 +22,42 @@ produces
 ```
 'ASTNode
 	ASTProgramNode
-		RBComment
-		RBMethodNode
-		RBPragmaNode
-		RBReturnNode
-		RBSequenceNode
+		ASTReturnNode
 		ASTValueNode
-			RBArrayNode
-			RBAssignmentNode
-			RBBlockNode
-			RBCascadeNode
+			ASTArrayNode
+			ASTAssignmentNode
+			ASTCascadeNode
 			ASTLiteralNode
-				RBLiteralArrayNode
-				RBLiteralValueNode
+				ASTLiteralArrayNode
+				ASTLiteralValueNode
+			ASTVariableNode
+				ASTPatternVariableNode
+			RBAnnotationMarkNode
+			RBBlockNode
+				ASTPatternBlockNode
+					ASTPatternWrapperBlockNode
 			RBMessageNode
+				ASTPatternMessageNode
 			RBParseErrorNode
 				RBEnglobingErrorNode
 					RBArrayErrorNode
+					RBAssignmentErrorNode
 					RBBlockErrorNode
 					RBInvalidCascadeErrorNode
 					RBLiteralArrayErrorNode
 					RBLiteralByteArrayErrorNode
-					RBMissingOpenerErrorNode
 					RBParenthesesErrorNode
 					RBPragmaErrorNode
 					RBTemporariesErrorNode
 					RBUnfinishedStatementErrorNode
-					RBUnreachableStatementErrorNode
 			RBSelectorNode
-			RBVariableNode
-				RBArgumentNode
-				RBGlobalNode
-				RBInstanceVariableNode
-				RBSelfNode
-				RBSuperNode
-				RBTemporaryNode
-				RBThisContextNode
+		RBComment
+		RBMethodNode
+			ASTPatternMethodNode
+			RBDoItMethodNode
+		RBPragmaNode
+			ASTPatternPragmaNode
+		RBSequenceNode
 	RBSlotInitializationNode
 '
 ```	

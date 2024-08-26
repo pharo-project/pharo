@@ -4,9 +4,9 @@ RBSequenceNode is an AST node that represents a sequence of statements. Both RBB
 Instance Variables:
 	leftBar	<Integer | nil>	the position of the left | in the temporaries definition
 	rightBar	<Integer | nil>	the position of the right | in the temporaries definition
-	statements	<SequenceableCollection of: RBReturnNode or ASTValueNode> the statement nodes
+	statements	<SequenceableCollection of: ASTReturnNode or ASTValueNode> the statement nodes
 	periods	<SequenceableCollection of: Integer>	the positions of all the periods that separate the statements
-	temporaries	<SequenceableCollection of: RBVariableNode>	the temporaries defined
+	temporaries	<SequenceableCollection of: ASTVariableNode>	the temporaries defined
 
 
 "
@@ -168,7 +168,7 @@ RBSequenceNode >> addReturn [
 		ifTrue: [ ^ nil ].
 	statements last isReturn
 		ifTrue: [ ^ statements last ].
-	node := RBReturnNode start: statements last start value: statements last.
+	node := ASTReturnNode start: statements last start value: statements last.
 	statements at: statements size put: node.
 	node parent: self.
 
@@ -179,7 +179,7 @@ RBSequenceNode >> addSelfReturn [
 	| node |
 	self lastIsReturn
 		ifTrue: [ ^ self statements last ].
-	node := RBReturnNode value: RBVariableNode selfNode.
+	node := ASTReturnNode value: ASTVariableNode selfNode.
 	^ self addNode: node
 ]
 
@@ -191,7 +191,7 @@ RBSequenceNode >> addTemporariesNamed: aCollection [
 { #category : 'adding nodes' }
 RBSequenceNode >> addTemporaryNamed: aString [
 	| variableNode |
-	variableNode := RBVariableNode named: aString.
+	variableNode := ASTVariableNode named: aString.
 	variableNode parent: self.
 	temporaries := temporaries copyWith: variableNode.
 	^ variableNode

@@ -1,5 +1,5 @@
 "
-RBReturnNode is an AST node that represents a return expression.
+ASTReturnNode is an AST node that represents a return expression.
 
 Instance Variables:
 	return	<Integer>	the position of the ^ character
@@ -8,7 +8,7 @@ Instance Variables:
 
 "
 Class {
-	#name : 'RBReturnNode',
+	#name : 'ASTReturnNode',
 	#superclass : 'ASTProgramNode',
 	#instVars : [
 		'value',
@@ -20,20 +20,20 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBReturnNode class >> start: returnInteger value: aValueNode [
+ASTReturnNode class >> start: returnInteger value: aValueNode [
 	^self new
 		start: returnInteger;
 		value: aValueNode
 ]
 
 { #category : 'instance creation' }
-RBReturnNode class >> value: aNode [
+ASTReturnNode class >> value: aNode [
 	^self new
 		value: aNode
 ]
 
 { #category : 'comparing' }
-RBReturnNode >> = anObject [
+ASTReturnNode >> = anObject [
 	self == anObject
 		ifTrue: [ ^ true ].
 	self class = anObject class
@@ -42,130 +42,130 @@ RBReturnNode >> = anObject [
 ]
 
 { #category : 'visiting' }
-RBReturnNode >> acceptVisitor: aProgramNodeVisitor [
+ASTReturnNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitReturnNode: self
 ]
 
 { #category : 'accessing' }
-RBReturnNode >> children [
+ASTReturnNode >> children [
 	^ { value }
 ]
 
 { #category : 'testing' }
-RBReturnNode >> containsReturn [
+ASTReturnNode >> containsReturn [
 	^ true
 ]
 
 { #category : 'matching' }
-RBReturnNode >> copyInContext: aDictionary [
+ASTReturnNode >> copyInContext: aDictionary [
 	^ self class new
 		value: (self value copyInContext: aDictionary);
 		yourself
 ]
 
 { #category : 'comparing' }
-RBReturnNode >> equalTo: anObject withMapping: aDictionary [
+ASTReturnNode >> equalTo: anObject withMapping: aDictionary [
 	^self class = anObject class
 		and: [self value equalTo: anObject value withMapping: aDictionary]
 ]
 
 { #category : 'testing' }
-RBReturnNode >> hasBlock [
+ASTReturnNode >> hasBlock [
 
 	^ value hasBlock 
 ]
 
 { #category : 'testing' }
-RBReturnNode >> hasSameExitPoint [
+ASTReturnNode >> hasSameExitPoint [
 
 	^ true
 ]
 
 { #category : 'testing' }
-RBReturnNode >> hasSameExitPoint: aBoolean [
+ASTReturnNode >> hasSameExitPoint: aBoolean [
 
 	^ value hasSameExitPoint: aBoolean 
 ]
 
 { #category : 'comparing' }
-RBReturnNode >> hash [
+ASTReturnNode >> hash [
 	^self value hash
 ]
 
 { #category : 'initialization' }
-RBReturnNode >> initialize [
+ASTReturnNode >> initialize [
 	super initialize.
 
 	start := 0
 ]
 
 { #category : 'errors' }
-RBReturnNode >> isFaulty [
+ASTReturnNode >> isFaulty [
 	self isError ifTrue: [ ^ true ].
 	^self value isFaulty
 ]
 
 { #category : 'testing' }
-RBReturnNode >> isReturn [
+ASTReturnNode >> isReturn [
 	^true
 ]
 
 { #category : 'testing' }
-RBReturnNode >> lastIsReturn [ 
+ASTReturnNode >> lastIsReturn [ 
 	^ true
 ]
 
 { #category : 'matching' }
-RBReturnNode >> match: aNode inContext: aDictionary [
+ASTReturnNode >> match: aNode inContext: aDictionary [
 	aNode class = self class ifFalse: [^false].
 	^value match: aNode value inContext: aDictionary
 ]
 
 { #category : 'copying' }
-RBReturnNode >> postCopy [
+ASTReturnNode >> postCopy [
 	super postCopy.
 	self value: self value copy
 ]
 
 { #category : 'adding-removing' }
-RBReturnNode >> removeNode: aNode [
+ASTReturnNode >> removeNode: aNode [
 
 	self parent removeNode: self
 ]
 
 { #category : 'replacing' }
-RBReturnNode >> replaceNode: aNode withNode: anotherNode [
+ASTReturnNode >> replaceNode: aNode withNode: anotherNode [
 	value == aNode ifTrue: [ self value: anotherNode ]
 ]
 
 { #category : 'accessing' }
-RBReturnNode >> start [
+ASTReturnNode >> start [
 	^ start
 ]
 
 { #category : 'accessing - token' }
-RBReturnNode >> start: anInteger [
+ASTReturnNode >> start: anInteger [
 	start := anInteger
 ]
 
 { #category : 'accessing' }
-RBReturnNode >> stop [
+ASTReturnNode >> stop [
 	value ifNil:[^ 0].
 	^ value stop
 ]
 
 { #category : 'accessing' }
-RBReturnNode >> stop: anInteger [
+ASTReturnNode >> stop: anInteger [
 	self value stop: anInteger
 ]
 
 { #category : 'evaluating' }
-RBReturnNode >> value [
+ASTReturnNode >> value [
 	^ value
 ]
 
 { #category : 'accessing' }
-RBReturnNode >> value: anExpression [
+ASTReturnNode >> value: anExpression [
 	value := anExpression.
 	value parent: self
 ]

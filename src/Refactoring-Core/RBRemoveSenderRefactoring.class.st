@@ -100,7 +100,7 @@ RBRemoveSenderRefactoring >> inlineParseTree [
 	aSymbol := self inlineSelector.
 	^ inlineParseTree ifNil: [inlineParseTree := RBMethodNode
 		selector:  aSymbol
-		arguments: ( (1 to: aSymbol numArgs) collect: [ :e | RBVariableNode named: 'arg', e asString ])
+		arguments: ( (1 to: aSymbol numArgs) collect: [ :e | ASTVariableNode named: 'arg', e asString ])
 		body: ( RBSequenceNode statements: #())]
 ]
 

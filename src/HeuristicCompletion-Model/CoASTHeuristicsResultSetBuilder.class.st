@@ -78,22 +78,22 @@ CoASTHeuristicsResultSetBuilder >> visitLiteralValueNode: aNode [
 ]
 
 { #category : 'visiting' }
-CoASTHeuristicsResultSetBuilder >> visitMessageNode: aRBMessageNode [ 
+CoASTHeuristicsResultSetBuilder >> visitMessageNode: aMessageNode [ 
 
-	completionContext completionToken ifEmpty: [ ^ super visitMessageNode: aRBMessageNode ].
+	completionContext completionToken ifEmpty: [ ^ super visitMessageNode: aMessageNode ].
 
 	^ self
-		configureFetcherForNode: aRBMessageNode
+		configureFetcherForNode: aMessageNode
 		usingHeuristicAvoidingRepetitions: self messageHeuristic
 ]
 
 { #category : 'visiting' }
-CoASTHeuristicsResultSetBuilder >> visitMethodNode: aRBMethodNode [
+CoASTHeuristicsResultSetBuilder >> visitMethodNode: aMethodNode [
 
-	completionContext completionToken ifEmpty: [ ^ super visitMethodNode: aRBMethodNode ].
+	completionContext completionToken ifEmpty: [ ^ super visitMethodNode: aMethodNode ].
 
 	^ self
-		configureFetcherForNode: aRBMethodNode
+		configureFetcherForNode: aMethodNode
 		usingHeuristicAvoidingRepetitions: self methodNodeHeuristic
 ]
 
@@ -123,11 +123,11 @@ CoASTHeuristicsResultSetBuilder >> visitValueNode: aNode [
 ]
 
 { #category : 'visiting' }
-CoASTHeuristicsResultSetBuilder >> visitVariableNode: aRBVariableNode [
+CoASTHeuristicsResultSetBuilder >> visitVariableNode: aVariableNode [
 
-	completionContext completionToken ifEmpty: [ ^ super visitVariableNode: aRBVariableNode ].
+	completionContext completionToken ifEmpty: [ ^ super visitVariableNode: aVariableNode ].
 
 	^ self
-		configureFetcherForNode: aRBVariableNode
+		configureFetcherForNode: aVariableNode
 		usingHeuristicAvoidingRepetitions: self variablesHeuristic
 ]

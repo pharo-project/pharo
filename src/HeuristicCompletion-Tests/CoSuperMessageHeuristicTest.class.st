@@ -30,7 +30,7 @@ CoSuperMessageHeuristicTest >> testDoesApplyForMethodNodeInContextWithSuperclass
 CoSuperMessageHeuristicTest >> testDoesApplyForSuperMessageSendNodes [
 
 	self assert: (CoSuperMessageHeuristic new
-		appliesForNode: (RBMessageNode receiver: (RBVariableNode superNode variable: SuperVariable new) selector: #foo)
+		appliesForNode: (RBMessageNode receiver: (ASTVariableNode superNode variable: SuperVariable new) selector: #foo)
 		inContext: nil)
 ]
 
@@ -48,6 +48,6 @@ CoSuperMessageHeuristicTest >> testDoesNotApplyForMethodNodeInContextWithNoSuper
 CoSuperMessageHeuristicTest >> testDoesNotApplyForNonSuperMessageSendNodes [
 
 	self deny: (CoSuperMessageHeuristic new
-		appliesForNode: (RBMessageNode receiver: (RBVariableNode new variable: (GlobalVariable new)) selector: #foo)
+		appliesForNode: (RBMessageNode receiver: (ASTVariableNode new variable: (GlobalVariable new)) selector: #foo)
 		inContext: nil)
 ]

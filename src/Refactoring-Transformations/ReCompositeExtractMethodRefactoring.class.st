@@ -96,8 +96,8 @@ ReCompositeExtractMethodRefactoring >> addReturnIfNeeded: newMethodNode [
 	
 	assignments size = 1
 		ifTrue: [
-			newMethodNode addNode: (RBReturnNode value:
-					 (RBVariableNode named: assignments first asString)) ]
+			newMethodNode addNode: (ASTReturnNode value:
+					 (ASTVariableNode named: assignments first asString)) ]
 		ifFalse: [ RBReturnNodeAdderVisitor new visit: newMethodNode ].
 ]
 
@@ -289,7 +289,7 @@ ReCompositeExtractMethodRefactoring >> generateNewMethodWith: aMethodName [
 
 	| args newMethodNode |
 	args := aMethodName arguments collect: [ :p |
-		        RBVariableNode named: p ].
+		        ASTVariableNode named: p ].
 
 	newMethodNode := RBMethodNode
 		                 selector: newSelector

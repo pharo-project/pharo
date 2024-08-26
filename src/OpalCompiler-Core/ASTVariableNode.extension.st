@@ -1,26 +1,26 @@
-Extension { #name : 'RBVariableNode' }
+Extension { #name : 'ASTVariableNode' }
 
 { #category : '*OpalCompiler-Core' }
-RBVariableNode >> binding [
+ASTVariableNode >> binding [
 	^self variable
 ]
 
 { #category : '*OpalCompiler-Core' }
-RBVariableNode >> binding: aSemVar [
+ASTVariableNode >> binding: aSemVar [
 	self variable: aSemVar
 ]
 
 { #category : '*OpalCompiler-Core' }
-RBVariableNode >> isAccessingSelf [
+ASTVariableNode >> isAccessingSelf [
 	^ self isInstanceVariable or: [ self isSelfVariable or: [self isSuperVariable]]
 ]
 
 { #category : '*OpalCompiler-Core' }
-RBVariableNode >> variable [
+ASTVariableNode >> variable [
 	^variable
 ]
 
 { #category : '*OpalCompiler-Core' }
-RBVariableNode >> variable: aSemVar [
+ASTVariableNode >> variable: aSemVar [
 	variable := aSemVar
 ]

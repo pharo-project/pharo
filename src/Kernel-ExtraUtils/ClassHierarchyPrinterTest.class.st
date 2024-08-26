@@ -27,17 +27,20 @@ ClassHierarchyPrinterTest >> testOnlyASTNodes [
 	self assert: printer print equals:
 	'ASTNode
 	ASTProgramNode
+		ASTReturnNode
 		ASTValueNode
+			ASTArrayNode
+			ASTAssignmentNode
+			ASTCascadeNode
 			ASTLiteralNode
-				RBLiteralArrayNode
-				RBLiteralValueNode
+				ASTLiteralArrayNode
+				ASTLiteralValueNode
+			ASTVariableNode
+				ASTPatternVariableNode
 			RBAnnotationMarkNode
-			RBArrayNode
-			RBAssignmentNode
 			RBBlockNode
 				ASTPatternBlockNode
 					ASTPatternWrapperBlockNode
-			RBCascadeNode
 			RBMessageNode
 				ASTPatternMessageNode
 			RBParseErrorNode
@@ -53,15 +56,12 @@ ClassHierarchyPrinterTest >> testOnlyASTNodes [
 					RBTemporariesErrorNode
 					RBUnfinishedStatementErrorNode
 			RBSelectorNode
-			RBVariableNode
-				ASTPatternVariableNode
 		RBComment
 		RBMethodNode
 			ASTPatternMethodNode
 			RBDoItMethodNode
 		RBPragmaNode
 			ASTPatternPragmaNode
-		RBReturnNode
 		RBSequenceNode
 	RBSlotInitializationNode
 '

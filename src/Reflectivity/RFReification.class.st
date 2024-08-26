@@ -58,8 +58,49 @@ RFReification >> entity: aRBMessageNode [
 ]
 
 { #category : 'generate' }
+RFReification >> genForASTArrayNode [
+
+	^ self genForASTProgramNode
+]
+
+{ #category : 'generate' }
+RFReification >> genForASTAssignmentNode [
+	^self genForASTProgramNode
+]
+
+{ #category : 'generate' }
+RFReification >> genForASTCascadeNode [
+	^self genForASTProgramNode
+]
+
+{ #category : 'generate' }
+RFReification >> genForASTLiteralArrayNode [
+	^self genForASTProgramNode
+]
+
+{ #category : 'generate' }
+RFReification >> genForASTLiteralNode [
+	^self genForASTProgramNode
+]
+
+{ #category : 'generate' }
+RFReification >> genForASTLiteralValueNode [
+	^self genForASTProgramNode
+]
+
+{ #category : 'generate' }
 RFReification >> genForASTProgramNode [
 	"overriden in subclass if needed"
+]
+
+{ #category : 'generate' }
+RFReification >> genForASTReturnNode [
+	^self genForASTProgramNode
+]
+
+{ #category : 'generate' }
+RFReification >> genForASTVariableNode [
+	^self genForASTProgramNode
 ]
 
 { #category : 'generate' }
@@ -88,44 +129,13 @@ RFReification >> genForRBArgumentNode [
 ]
 
 { #category : 'generate' }
-RFReification >> genForRBArrayNode [
-
-	^ self genForASTProgramNode
-]
-
-{ #category : 'generate' }
-RFReification >> genForRBAssignmentNode [
-	^self genForASTProgramNode
-]
-
-{ #category : 'generate' }
 RFReification >> genForRBBlockNode [
 	^self genForASTProgramNode
 ]
 
 { #category : 'generate' }
-RFReification >> genForRBCascadeNode [
-	^self genForASTProgramNode
-]
-
-{ #category : 'generate' }
 RFReification >> genForRBGlobalNode [
-	^self genForRBVariableNode
-]
-
-{ #category : 'generate' }
-RFReification >> genForRBLiteralArrayNode [
-	^self genForASTProgramNode
-]
-
-{ #category : 'generate' }
-RFReification >> genForASTLiteralNode [
-	^self genForASTProgramNode
-]
-
-{ #category : 'generate' }
-RFReification >> genForRBLiteralValueNode [
-	^self genForASTProgramNode
+	^self genForASTVariableNode
 ]
 
 { #category : 'generate' }
@@ -144,11 +154,6 @@ RFReification >> genForRBPragmaNode [
 ]
 
 { #category : 'generate' }
-RFReification >> genForRBReturnNode [
-	^self genForASTProgramNode
-]
-
-{ #category : 'generate' }
 RFReification >> genForRBSelfNode [
 	^self genForASTProgramNode
 ]
@@ -160,12 +165,7 @@ RFReification >> genForRBSequenceNode [
 
 { #category : 'generate' }
 RFReification >> genForRBTemporaryNode [
-	^self genForRBVariableNode
-]
-
-{ #category : 'generate' }
-RFReification >> genForRBVariableNode [
-	^self genForASTProgramNode
+	^self genForASTVariableNode
 ]
 
 { #category : 'accessing' }

@@ -111,6 +111,13 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	ASTProgramNode deprecatedAliases: { #RBProgramNode }.
 	ASTValueNode deprecatedAliases: { #RBValueNode }.
 	ASTLiteralNode deprecatedAliases: { #RBLiteralNode }.
+	ASTLiteralArrayNode deprecatedAliases: { #RBLiteralArrayNode }.
+	ASTLiteralValueNode deprecatedAliases: { #RBLiteralValueNode }.
+	ASTArrayNode deprecatedAliases: { #RBArrayNode }.
+	ASTAssignmentNode deprecatedAliases: { #RBAssignmentNode }.
+	ASTCascadeNode deprecatedAliases: { #RBCascadeNode }.
+	ASTReturnNode deprecatedAliases: { #RBReturnNode }.
+	ASTVariableNode deprecatedAliases: { #RBVariableNode }.
 
 	ASTPatternMessageNode deprecatedAliases: { #RBPatternMessageNode }.
 	ASTPatternBlockNode deprecatedAliases: { #RBPatternBlockNode }.

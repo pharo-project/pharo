@@ -1,9 +1,9 @@
 "
-RBVariableNode is an AST node that represents a variable (global, inst var, temp, etc.).
+ASTVariableNode is an AST node that represents a variable (global, inst var, temp, etc.).
 
 Although this is the basic class for the concrete variable types, this is not an abstract class and is actually used
 by the parser for all variables that aren't special builtin types like self/super/thisContext. All other variables are
-just RBVariableNodes until the semantic analyser can deduce the type.
+just ASTVariableNodes until the semantic analyser can deduce the type.
 
 Instance Variables:
 	name	<RBValueToken>	the variable's name I represent
@@ -11,7 +11,7 @@ Instance Variables:
 
 "
 Class {
-	#name : 'RBVariableNode',
+	#name : 'ASTVariableNode',
 	#superclass : 'ASTValueNode',
 	#instVars : [
 		'name',
@@ -24,7 +24,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBVariableNode class >> identifierNamed: anIdentifierName at: aPosition [
+ASTVariableNode class >> identifierNamed: anIdentifierName at: aPosition [
 
 	anIdentifierName = #self
 		ifTrue: [ ^ self selfNode start: aPosition ].
@@ -38,39 +38,39 @@ RBVariableNode class >> identifierNamed: anIdentifierName at: aPosition [
 ]
 
 { #category : 'instance creation' }
-RBVariableNode class >> named: aName [
+ASTVariableNode class >> named: aName [
 	^ self named: aName start: 0
 ]
 
 { #category : 'instance creation' }
-RBVariableNode class >> named: aName start: aPosition [
+ASTVariableNode class >> named: aName start: aPosition [
 	^self new
 		named: aName start: aPosition;
 		yourself
 ]
 
 { #category : 'instance creation' }
-RBVariableNode class >> selfNode [
+ASTVariableNode class >> selfNode [
 	^ self named: #self
 ]
 
 { #category : 'instance creation' }
-RBVariableNode class >> superNode [
+ASTVariableNode class >> superNode [
 	^ self named: #super
 ]
 
 { #category : 'instance creation' }
-RBVariableNode class >> thisContextNode [
+ASTVariableNode class >> thisContextNode [
 	^ self named: #thisContext
 ]
 
 { #category : 'instance creation' }
-RBVariableNode class >> thisProcessNode [
+ASTVariableNode class >> thisProcessNode [
 	^ self named: #thisProcess
 ]
 
 { #category : 'comparing' }
-RBVariableNode >> = anObject [
+ASTVariableNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	((anObject isKindOf: self class) or: [self isKindOf: anObject class])
 		ifFalse: [^false].
@@ -78,17 +78,17 @@ RBVariableNode >> = anObject [
 ]
 
 { #category : 'visiting' }
-RBVariableNode >> acceptVisitor: aProgramNodeVisitor [
+ASTVariableNode >> acceptVisitor: aProgramNodeVisitor [
 	^ variable acceptVisitor: aProgramNodeVisitor node: self
 ]
 
 { #category : 'matching' }
-RBVariableNode >> copyInContext: aDictionary [
+ASTVariableNode >> copyInContext: aDictionary [
 	^ self class named: name
 ]
 
 { #category : 'comparing' }
-RBVariableNode >> equalTo: anObject withMapping: aDictionary [
+ASTVariableNode >> equalTo: anObject withMapping: aDictionary [
 	"If we have two variables make sure that the dictionary associates both names."
 	
 	^ self class = anObject class 
@@ -97,7 +97,7 @@ RBVariableNode >> equalTo: anObject withMapping: aDictionary [
 ]
 
 { #category : 'testing' }
-RBVariableNode >> hasIncompleteIdentifier [
+ASTVariableNode >> hasIncompleteIdentifier [
 	"check if there is any variable declared in my scope that starts with my name"
 
 	"declared vars are never incomplete"
@@ -107,12 +107,12 @@ RBVariableNode >> hasIncompleteIdentifier [
 ]
 
 { #category : 'comparing' }
-RBVariableNode >> hash [
+ASTVariableNode >> hash [
 	^self name hash
 ]
 
 { #category : 'initialization' }
-RBVariableNode >> initialize [
+ASTVariableNode >> initialize [
 	super initialize.
 	variable := UnresolvedVariable instance.
 	name := ''.
@@ -120,143 +120,143 @@ RBVariableNode >> initialize [
 ]
 
 { #category : 'testing' }
-RBVariableNode >> isArgumentVariable [
+ASTVariableNode >> isArgumentVariable [
 	^variable isArgumentVariable
 ]
 
 { #category : 'testing' }
-RBVariableNode >> isClassVariable [
+ASTVariableNode >> isClassVariable [
 	^variable isClassVariable
 ]
 
 { #category : 'testing' }
-RBVariableNode >> isDefinedByBlock [
+ASTVariableNode >> isDefinedByBlock [
 	"true if a variable node is defined by a block"
 	^variable isDefinedByBlock
 ]
 
 { #category : 'testing' }
-RBVariableNode >> isDefinition [
+ASTVariableNode >> isDefinition [
 	"Check if I am a Variable defintion"
 	^variable definingNode == self
 ]
 
 { #category : 'testing' }
-RBVariableNode >> isGlobalVariable [
+ASTVariableNode >> isGlobalVariable [
 	^variable isGlobalVariable
 ]
 
 { #category : 'testing' }
-RBVariableNode >> isImmediateNode [
+ASTVariableNode >> isImmediateNode [
 	^true
 ]
 
 { #category : 'testing' }
-RBVariableNode >> isInstanceVariable [
+ASTVariableNode >> isInstanceVariable [
 	^variable isInstanceVariable
 ]
 
 { #category : 'testing' }
-RBVariableNode >> isLiteralVariable [
+ASTVariableNode >> isLiteralVariable [
 	^variable isLiteralVariable
 ]
 
 { #category : 'testing' }
-RBVariableNode >> isLocalVariable [
+ASTVariableNode >> isLocalVariable [
 	"returns true for temporary variables and arguments"
 	^variable isLocalVariable
 ]
 
 { #category : 'testing' }
-RBVariableNode >> isPseudoVariable [
+ASTVariableNode >> isPseudoVariable [
 	^ variable isPseudoVariable
 ]
 
 { #category : 'testing' }
-RBVariableNode >> isRead [
+ASTVariableNode >> isRead [
 	^ self isWrite not and: [ self isUsedAsReturnValue ]
 ]
 
 { #category : 'testing' }
-RBVariableNode >> isSelfOrSuperVariable [
+ASTVariableNode >> isSelfOrSuperVariable [
 	^ variable isSelfOrSuperVariable
 ]
 
 { #category : 'testing' }
-RBVariableNode >> isSelfVariable [
+ASTVariableNode >> isSelfVariable [
 	^variable isSelfVariable
 ]
 
 { #category : 'testing' }
-RBVariableNode >> isSuperVariable [
+ASTVariableNode >> isSuperVariable [
 	^ variable isSuperVariable
 ]
 
 { #category : 'testing' }
-RBVariableNode >> isTempVariable [
+ASTVariableNode >> isTempVariable [
 	^variable isTempVariable
 ]
 
 { #category : 'testing' }
-RBVariableNode >> isThisContextVariable [
+ASTVariableNode >> isThisContextVariable [
 	^variable isThisContextVariable
 ]
 
 { #category : 'testing' }
-RBVariableNode >> isUndeclaredVariable [
+ASTVariableNode >> isUndeclaredVariable [
 
 	^variable isUndeclaredVariable
 ]
 
 { #category : 'testing' }
-RBVariableNode >> isVariable [
+ASTVariableNode >> isVariable [
 	^true
 ]
 
 { #category : 'testing' }
-RBVariableNode >> isWorkspaceVariable [
+ASTVariableNode >> isWorkspaceVariable [
 	^ variable isWorkspaceVariable
 ]
 
 { #category : 'testing' }
-RBVariableNode >> isWrite [
+ASTVariableNode >> isWrite [
 	^ self parent isNotNil and: [ self parent isAssignment and: [ self parent variable == self ] ]
 ]
 
 { #category : 'accessing' }
-RBVariableNode >> name [
+ASTVariableNode >> name [
 	^ name
 ]
 
 { #category : 'accessing' }
-RBVariableNode >> name: aName [
+ASTVariableNode >> name: aName [
 	name := aName asSymbol
 ]
 
 { #category : 'initialization' }
-RBVariableNode >> named: aName start: aPosition [
+ASTVariableNode >> named: aName start: aPosition [
 
 	self name: aName.
 	self start: aPosition
 ]
 
 { #category : 'testing' }
-RBVariableNode >> needsParenthesis [
+ASTVariableNode >> needsParenthesis [
 	^false
 ]
 
 { #category : 'accessing' }
-RBVariableNode >> precedence [
+ASTVariableNode >> precedence [
 	^0
 ]
 
 { #category : 'testing' }
-RBVariableNode >> references: aVariableName [
+ASTVariableNode >> references: aVariableName [
 	^self name = aVariableName
 ]
 
 { #category : 'replacing' }
-RBVariableNode >> replaceSourceFrom: aNode [
+ASTVariableNode >> replaceSourceFrom: aNode [
 	self addReplacement: (RBStringReplacement
 				replaceFrom: aNode start
 				to: aNode stop
@@ -264,7 +264,7 @@ RBVariableNode >> replaceSourceFrom: aNode [
 ]
 
 { #category : 'replacing' }
-RBVariableNode >> replaceSourceWith: aNode [
+ASTVariableNode >> replaceSourceWith: aNode [
 	self addReplacement: (RBStringReplacement
 				replaceFrom: self start
 				to: self stop
@@ -272,14 +272,14 @@ RBVariableNode >> replaceSourceWith: aNode [
 ]
 
 { #category : 'accessing' }
-RBVariableNode >> start: aPosition [
+ASTVariableNode >> start: aPosition [
 	"Beware, start is in fact `startWithoutParentheses` as in ASTValueNode, start includes parentheses"
 
 	start := aPosition
 ]
 
 { #category : 'accessing' }
-RBVariableNode >> startForReplacement [
+ASTVariableNode >> startForReplacement [
 	"Return the start of the variable,  taking into account characters before the variable.
 	This method is used when unused temporary variables are removed"
 	| src t |
@@ -290,11 +290,11 @@ RBVariableNode >> startForReplacement [
 ]
 
 { #category : 'accessing' }
-RBVariableNode >> startWithoutParentheses [
+ASTVariableNode >> startWithoutParentheses [
 	^ start
 ]
 
 { #category : 'accessing' }
-RBVariableNode >> stopWithoutParentheses [
+ASTVariableNode >> stopWithoutParentheses [
 	^ start + name size - 1
 ]

@@ -135,12 +135,12 @@ RBParser >> addPragma: aPragma [
 
 { #category : 'private - classes' }
 RBParser >> arrayNodeClass [
-	^ RBArrayNode
+	^ ASTArrayNode
 ]
 
 { #category : 'private - classes' }
 RBParser >> assignmentNodeClass [
-	^ RBAssignmentNode
+	^ ASTAssignmentNode
 ]
 
 { #category : 'testing' }
@@ -169,7 +169,7 @@ RBParser >> blockNodeClass [
 
 { #category : 'private - classes' }
 RBParser >> cascadeNodeClass [
-	^ RBCascadeNode
+	^ ASTCascadeNode
 ]
 
 { #category : 'accessing' }
@@ -239,7 +239,7 @@ RBParser >> initializeParserWith: aString [
 
 { #category : 'private - classes' }
 RBParser >> literalArrayNodeClass [
-	^ RBLiteralArrayNode
+	^ ASTLiteralArrayNode
 ]
 
 { #category : 'private - classes' }
@@ -249,7 +249,7 @@ RBParser >> literalNodeClass [
 
 { #category : 'private - classes' }
 RBParser >> literalValueNodeClass [
-	^ RBLiteralValueNode
+	^ ASTLiteralValueNode
 ]
 
 { #category : 'private - classes' }
@@ -1242,7 +1242,7 @@ RBParser >> pragmaNodeClass [
 
 { #category : 'private - classes' }
 RBParser >> returnNodeClass [
-	^ RBReturnNode
+	^ ASTReturnNode
 ]
 
 { #category : 'private - parsing' }
@@ -1318,5 +1318,5 @@ RBParser >> stepBar [
 
 { #category : 'private - classes' }
 RBParser >> variableNodeClass [
-	^ RBVariableNode
+	^ ASTVariableNode
 ]

@@ -173,13 +173,13 @@ RFASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 ]
 
 { #category : 'visitor - double dispatching' }
-RFASTTranslator >> visitLiteralArrayNode: aRBLiteralArrayNode [
-	self emitPreamble: aRBLiteralArrayNode.
-	self emitMetaLinkBefore: aRBLiteralArrayNode.
-	aRBLiteralArrayNode hasMetalinkInstead
-		ifTrue: [ self emitMetaLinkInstead: aRBLiteralArrayNode ]
-		ifFalse: [ methodBuilder pushLiteral: aRBLiteralArrayNode value ].
-	self emitMetaLinkAfterNoEnsure: aRBLiteralArrayNode
+RFASTTranslator >> visitLiteralArrayNode: aLiteralArrayNode [
+	self emitPreamble: aLiteralArrayNode.
+	self emitMetaLinkBefore: aLiteralArrayNode.
+	aLiteralArrayNode hasMetalinkInstead
+		ifTrue: [ self emitMetaLinkInstead: aLiteralArrayNode ]
+		ifFalse: [ methodBuilder pushLiteral: aLiteralArrayNode value ].
+	self emitMetaLinkAfterNoEnsure: aLiteralArrayNode
 ]
 
 { #category : 'visitor - double dispatching' }

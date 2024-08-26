@@ -21,12 +21,51 @@ Class {
 
 { #category : 'plugin interface' }
 RFValueReification class >> entities [
-	^{ASTValueNode . RBReturnNode. RBMethodNode . Variable}
+	^{ASTValueNode . ASTReturnNode. RBMethodNode . Variable}
 ]
 
 { #category : 'plugin interface' }
 RFValueReification class >> key [
 	^#value
+]
+
+{ #category : 'generate' }
+RFValueReification >> genForASTArrayNode [
+	^ASTVariableNode named: self varName
+]
+
+{ #category : 'generate' }
+RFValueReification >> genForASTAssignmentNode [
+	"#value for Assignemnt is the old value, is that what we want?"
+	^ASTVariableNode named: entity variable name
+]
+
+{ #category : 'generate' }
+RFValueReification >> genForASTCascadeNode [
+	^ASTVariableNode named: self varName
+]
+
+{ #category : 'generate' }
+RFValueReification >> genForASTLiteralArrayNode [
+	^ASTLiteralArrayNode value: entity value
+]
+
+{ #category : 'generate' }
+RFValueReification >> genForASTLiteralValueNode [
+	^ASTLiteralValueNode value: entity value
+]
+
+{ #category : 'generate' }
+RFValueReification >> genForASTReturnNode [
+	^ASTVariableNode named: self varName
+]
+
+{ #category : 'generate' }
+RFValueReification >> genForASTVariableNode [
+	entity variable
+		ifNotNil: [ entity variable isLiteralVariable
+				ifTrue: [ ^ ASTLiteralNode value: entity binding value ] ].
+	^ ASTVariableNode named: entity name
 ]
 
 { #category : 'generate' }
@@ -36,7 +75,7 @@ RFValueReification >> genForInstanceVariableSlot [
 	^ RBMessageNode
 		receiver: (ASTLiteralNode value: entity)
 		selector: #read:
-		arguments: {RBVariableNode selfNode}
+		arguments: {ASTVariableNode selfNode}
 ]
 
 { #category : 'generate' }
@@ -46,57 +85,18 @@ RFValueReification >> genForLiteralVariable [
 ]
 
 { #category : 'generate' }
-RFValueReification >> genForRBArrayNode [
-	^RBVariableNode named: self varName
-]
-
-{ #category : 'generate' }
-RFValueReification >> genForRBAssignmentNode [
-	"#value for Assignemnt is the old value, is that what we want?"
-	^RBVariableNode named: entity variable name
-]
-
-{ #category : 'generate' }
 RFValueReification >> genForRBBlockNode [
-	^RBVariableNode named: self varName
-]
-
-{ #category : 'generate' }
-RFValueReification >> genForRBCascadeNode [
-	^RBVariableNode named: self varName
-]
-
-{ #category : 'generate' }
-RFValueReification >> genForRBLiteralArrayNode [
-	^RBLiteralArrayNode value: entity value
-]
-
-{ #category : 'generate' }
-RFValueReification >> genForRBLiteralValueNode [
-	^RBLiteralValueNode value: entity value
+	^ASTVariableNode named: self varName
 ]
 
 { #category : 'generate' }
 RFValueReification >> genForRBMessageNode [
-	^RBVariableNode named: self varName
+	^ASTVariableNode named: self varName
 ]
 
 { #category : 'generate' }
 RFValueReification >> genForRBMethodNode [
-	^RBVariableNode named: self varName
-]
-
-{ #category : 'generate' }
-RFValueReification >> genForRBReturnNode [
-	^RBVariableNode named: self varName
-]
-
-{ #category : 'generate' }
-RFValueReification >> genForRBVariableNode [
-	entity variable
-		ifNotNil: [ entity variable isLiteralVariable
-				ifTrue: [ ^ ASTLiteralNode value: entity binding value ] ].
-	^ RBVariableNode named: entity name
+	^ASTVariableNode named: self varName
 ]
 
 { #category : 'generate' }
@@ -124,9 +124,9 @@ RFValueReification >> preambleForArray: aNode [
 	(1 to: aNode size) withIndexDo: [:each :index |
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
-			arguments add:  (RBVariableNode named: name).
+			arguments add:  (ASTVariableNode named: name).
 	].
-	preamble addAll: (RBArrayNode statements: arguments).
+	preamble addAll: (ASTArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: self varName).
 	preamble addAll: arguments.
 	^ preamble

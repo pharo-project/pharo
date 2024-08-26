@@ -228,7 +228,7 @@ searcher matches: pattern do:[:node :answer |node].
 searcher executeTree: (Number>>#asPoint) ast initialAnswer: nil.
 ```
 
-it will return nil, since no node in that method returns 'self'. If we execute the searcher instead on the method for class `Point`, it will return the found node, a `RBReturnNode`
+it will return nil, since no node in that method returns 'self'. If we execute the searcher instead on the method for class `Point`, it will return the found node, an `ASTReturnNode`
 
 ```st
 searcher executeTree: (Point>>#asPoint) ast initialAnswer: nil.

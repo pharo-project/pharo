@@ -12,37 +12,37 @@ Class {
 { #category : 'visiting' }
 RBReturnNodeAdderVisitor >> visitArrayNode: aNode [
 
-	^ RBReturnNode value: aNode
+	^ ASTReturnNode value: aNode
 ]
 
 { #category : 'visiting' }
 RBReturnNodeAdderVisitor >> visitAssignmentNode: aNode [
 
-	^ RBReturnNode value: aNode
+	^ ASTReturnNode value: aNode
 ]
 
 { #category : 'visiting' }
 RBReturnNodeAdderVisitor >> visitBlockNode: aNode [
 
-	^ RBReturnNode value: aNode
+	^ ASTReturnNode value: aNode
 ]
 
 { #category : 'visiting' }
 RBReturnNodeAdderVisitor >> visitCascadeNode: aNode [
 
-	^ RBReturnNode value: aNode
+	^ ASTReturnNode value: aNode
 ]
 
 { #category : 'visiting' }
 RBReturnNodeAdderVisitor >> visitLiteralNode: aNode [
 
-	^ RBReturnNode value: aNode
+	^ ASTReturnNode value: aNode
 ]
 
 { #category : 'visiting' }
 RBReturnNodeAdderVisitor >> visitMessageNode: aNode [
 
-	^ RBReturnNode value: aNode
+	^ ASTReturnNode value: aNode
 ]
 
 { #category : 'visiting' }
@@ -62,5 +62,5 @@ RBReturnNodeAdderVisitor >> visitSequenceNode: aNode [
 { #category : 'visiting' }
 RBReturnNodeAdderVisitor >> visitVariableNode: aNode [
 
-	^ RBReturnNode value: aNode
+	^ ASTReturnNode value: aNode
 ]

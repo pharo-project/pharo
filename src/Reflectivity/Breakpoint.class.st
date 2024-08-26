@@ -5,7 +5,7 @@ There are three types of breakpoints:
 -halt always: Once installed, they have to be explicitly removed (by using #remove on the instance side, or #removeAll on class side)
 -halt on condition: Before being installed prompts the user for a condition (a block with a boolean expression), and it is only triggered when that condition is met.
 
-Breakpoints are installed via SmartSuggestions menu (available for RBMethodNode, RBMessageNode and RBAssignmentNode), or programmatically:
+Breakpoints are installed via SmartSuggestions menu (available for RBMethodNode, RBMessageNode and ASTAssignmentNode), or programmatically:
 
 ""(Breakpoint inMethod: (Bar>>#foo2) inNode: ((Bar>>#foo2) ast allChildren at: 9) )
 break: #when: withArguments: { [ RFCounter counter isZero ] }
@@ -276,13 +276,13 @@ Breakpoint >> conditionBlockProducerMethodAST: conditionString [
 	conditionBlockProducerMethodAST := RBMethodNode
 		selector: #conditionBlockGenerator
 		body:
-			(RBReturnNode
+			(ASTReturnNode
 				value:
 					(RBBlockNode
-						arguments: {(RBVariableNode named: 'ThisContext')}
+						arguments: {(ASTVariableNode named: 'ThisContext')}
 						body:
 							(RBMessageNode
-								receiver: (RBVariableNode named: 'Breakpoint')
+								receiver: (ASTVariableNode named: 'Breakpoint')
 								selector: #checkBreakConditionValue:
 								arguments: {conditionAST}) asSequenceNode)) asSequenceNode.
 	conditionBlockProducerMethodAST := self
@@ -528,10 +528,10 @@ Breakpoint >> rewriteASTToSimulateExecutionInADifferentContext: anAST [
 	rewriter := RBParseTreeRewriter new.
 	semanticallyAnalysedMethodAST := anAST doSemanticAnalysis.	"To find which variables are undefined"
 	rewriter
-		replace: (RBVariableNode named: #ThisContext) name
+		replace: (ASTVariableNode named: #ThisContext) name
 		with:
 			'(ThisContext readVariableNamed: #'
-				, (RBVariableNode named: #ThisContext) name , ')'.
+				, (ASTVariableNode named: #ThisContext) name , ')'.
 	allMessageNodes := semanticallyAnalysedMethodAST allChildren
 		select: [ :astElem | astElem isMessage ].
 	receiverSuperclassValueNode := self parserClass
@@ -546,8 +546,8 @@ Breakpoint >> rewriteASTToSimulateExecutionInADifferentContext: anAST [
 								receiver: (self parserClass parseExpression: 'ThisContext receiver')
 								selector: #perform:withArguments:inSuperclass:
 								arguments:
-									{(RBLiteralValueNode value: msgNode selector).
-									(RBArrayNode statements: msgNode arguments).
+									{(ASTLiteralValueNode value: msgNode selector).
+									(ASTArrayNode statements: msgNode arguments).
 									receiverSuperclassValueNode}) ] ].
 	intermediateAST := rewriter
 		executeTree: semanticallyAnalysedMethodAST;
