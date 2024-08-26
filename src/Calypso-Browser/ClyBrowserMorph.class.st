@@ -446,6 +446,22 @@ ClyBrowserMorph >> itemsChanged [
 	[self rebuildToolsForChangedEnvironment] ensure: [ navigationStarted := false ]
 ]
 
+{ #category : 'accessing' }
+ClyBrowserMorph >> itemsForQuery: aQuery [
+
+	^ (aQuery isBoundToEnvironment
+		   ifTrue: [ aQuery ]
+		   ifFalse: [ aQuery withScope: self systemScope ]) execute items
+]
+
+{ #category : 'accessing' }
+ClyBrowserMorph >> itemsForQuery: aQuery inScope: aScope [
+
+	aScope bindTo: self navigationEnvironment.
+
+	^ self itemsForQuery: (aScope adoptQuery: aQuery)
+]
+
 { #category : 'keymapping' }
 ClyBrowserMorph >> kmDispatcher [
 
@@ -632,11 +648,6 @@ ClyBrowserMorph >> recordNavigationState: aBrowserNavigationState [
 ClyBrowserMorph >> removePlugin: aBrowserPlugin [
 
 	plugins removeAllSuchThat: [ :each | each class = aBrowserPlugin class ]
-]
-
-{ #category : 'tools support' }
-ClyBrowserMorph >> searchDialog [
-	^ClyBrowserSearchDialogWindow for: self
 ]
 
 { #category : 'initialization' }

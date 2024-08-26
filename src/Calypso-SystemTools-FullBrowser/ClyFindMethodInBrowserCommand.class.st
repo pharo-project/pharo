@@ -8,6 +8,9 @@ By default I am activated by cmd+f.
 Class {
 	#name : 'ClyFindMethodInBrowserCommand',
 	#superclass : 'ClyBrowserCommand',
+	#instVars : [
+		'method'
+	],
 	#category : 'Calypso-SystemTools-FullBrowser-Commands-Methods',
 	#package : 'Calypso-SystemTools-FullBrowser',
 	#tag : 'Commands-Methods'
@@ -39,10 +42,17 @@ ClyFindMethodInBrowserCommand >> defaultMenuItemName [
 
 { #category : 'execution' }
 ClyFindMethodInBrowserCommand >> execute [
-	| method |
-
-	method := browser searchDialog
-		requestSingleObject: 'Choose method' from: browser methodView query.
 
 	browser selectMethod: method
+]
+
+{ #category : 'execution' }
+ClyFindMethodInBrowserCommand >> prepareFullExecutionInContext: aToolContext [
+
+	super prepareFullExecutionInContext: aToolContext.
+
+	method := StBrowserSearchPresenter searchConfiguring: [ :presenter :dialog |
+		          dialog title: 'Choose method'.
+		          presenter items: (aToolContext browser itemsForQuery: browser methodView query).
+		          presenter itemsList display: [ :aMethod | aMethod selector ] ]
 ]

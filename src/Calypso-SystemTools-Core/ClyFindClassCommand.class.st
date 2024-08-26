@@ -6,6 +6,9 @@ By default I am executed by cmd+f shortcut
 Class {
 	#name : 'ClyFindClassCommand',
 	#superclass : 'ClyBrowserCommand',
+	#instVars : [
+		'class'
+	],
 	#category : 'Calypso-SystemTools-Core-Commands-Classes',
 	#package : 'Calypso-SystemTools-Core',
 	#tag : 'Commands-Classes'
@@ -24,9 +27,13 @@ ClyFindClassCommand >> defaultMenuItemName [
 { #category : 'execution' }
 ClyFindClassCommand >> execute [
 
-	| class |
-	class := browser searchDialog
-		requestSingleObject: 'Choose class' from: ClyAllClassesQuery sorted.
-
 	browser selectClass: class
+]
+
+{ #category : 'execution' }
+ClyFindClassCommand >> prepareFullExecutionInContext: aToolContext [
+
+	super prepareFullExecutionInContext: aToolContext.
+
+	class := aToolContext requestSingleClass: 'Choose class'
 ]
