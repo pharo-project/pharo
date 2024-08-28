@@ -1129,11 +1129,6 @@ Behavior >> isPointers [
 ]
 
 { #category : 'testing' }
-Behavior >> isPool [
-	^false
-]
-
-{ #category : 'testing' }
 Behavior >> isReferenced [
 	"Returns true if the class is referenced from a method."
 	^ self binding isReferenced

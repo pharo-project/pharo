@@ -196,12 +196,6 @@ RGDefinition >> isPackage [
 ]
 
 { #category : 'testing - types' }
-RGDefinition >> isPool [
-
-	^false
-]
-
-{ #category : 'testing - types' }
 RGDefinition >> isReference [
 
 	^false

@@ -208,7 +208,7 @@ RGClassDefinition >> instanceSide [
 	^ self
 ]
 
-{ #category : 'managing pool users' }
+{ #category : 'testing' }
 RGClassDefinition >> isPool [
 	"The receiver is a shared pool if it inherits from SharedPool"
 
