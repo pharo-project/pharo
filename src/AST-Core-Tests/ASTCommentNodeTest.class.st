@@ -1,5 +1,5 @@
 "
-SUnit tests for RBComment
+SUnit tests for ASTCommentNode
 "
 Class {
 	#name : 'ASTCommentNodeTest',

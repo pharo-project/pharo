@@ -1,9 +1,9 @@
 "
-An RBComment represents a text comment associated with an AST node.
+An ASTCommentNode represents a text comment associated with an AST node.
 
 Even though comments are not part of the syntax, we model comments with a subclass of ASTProgramNode, storing the comment text and start/stop position.
 
-Due to the way the parser handles comments, the RBComment is assigned to its preceding (real) AST node, although we often write the comment prior to a statement.
+Due to the way the parser handles comments, the ASTCommentNode is assigned to its preceding (real) AST node, although we often write the comment prior to a statement.
 
 For example:
 

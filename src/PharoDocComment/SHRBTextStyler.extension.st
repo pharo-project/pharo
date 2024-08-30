@@ -1,21 +1,21 @@
 Extension { #name : 'SHRBTextStyler' }
 
 { #category : '*PharoDocComment' }
-SHRBTextStyler >> styleDocComment: aRBComment [
-	aRBComment pharoDocCommentNodes
+SHRBTextStyler >> styleDocComment: aComment [
+	aComment pharoDocCommentNodes
 		do: [ :pharoDocComment |
-			self styleDocExpression: pharoDocComment expression in: aRBComment. ]
+			self styleDocExpression: pharoDocComment expression in: aComment. ]
 ]
 
 { #category : '*PharoDocComment' }
-SHRBTextStyler >> styleDocExpression: aPharoDocExpression in: aRBComment [
+SHRBTextStyler >> styleDocExpression: aPharoDocExpression in: aComment [
 
 	| expressionText expressionNode off |
 	expressionNode := aPharoDocExpression expressionNode.
 	expressionText := expressionNode source asText.
 	self class new style: expressionText ast: expressionNode.
 
-	off := aRBComment start.
+	off := aComment start.
 	expressionText withIndexDo: [ :char :ij |
 		| index attr |
 		index := ij + off.
