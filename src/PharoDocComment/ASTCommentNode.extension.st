@@ -1,12 +1,12 @@
-Extension { #name : 'RBComment' }
+Extension { #name : 'ASTCommentNode' }
 
 { #category : '*PharoDocComment' }
-RBComment >> hasDocComment [
+ASTCommentNode >> hasDocComment [
 	^ (self hasProperty: #pharoDocCommentNodes) or: [contents includesSubstring: '>>>']
 ]
 
 { #category : '*PharoDocComment' }
-RBComment >> pharoDocCommentNodes [
+ASTCommentNode >> pharoDocCommentNodes [
 	self hasDocComment ifFalse: [ ^#() ].
 	^ self propertyAt: #pharoDocCommentNodes ifAbsentPut: [PharoDocCommentNode parseDocComments: self]
 ]

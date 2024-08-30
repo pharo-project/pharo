@@ -2,7 +2,7 @@
 SUnit tests for RBComment
 "
 Class {
-	#name : 'RBCommentTest',
+	#name : 'ASTCommentNodeTest',
 	#superclass : 'TestCase',
 	#category : 'AST-Core-Tests-Nodes',
 	#package : 'AST-Core-Tests',
@@ -10,15 +10,15 @@ Class {
 }
 
 { #category : 'tests' }
-RBCommentTest >> testFoo [
+ASTCommentNodeTest >> testFoo [
 
 	true ifFalse: [ self assert: true ].
 ]
 
 { #category : 'tests' }
-RBCommentTest >> testIntersectsInterval [
+ASTCommentNodeTest >> testIntersectsInterval [
 	| node |
-	node:= RBComment with: (RBCommentToken value: 'Some sample text' start: 5 stop: 21).
+	node:= ASTCommentNode with: (RBCommentToken value: 'Some sample text' start: 5 stop: 21).
 
 	self
 		assert: (node intersectsInterval: (4 to: 6)) description: 'either side of interval';
