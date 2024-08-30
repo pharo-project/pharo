@@ -177,6 +177,7 @@ ThemeIcons class >> settingsOn: aBuilder [
 ThemeIcons class >> uiFetchPacks [
 	| choosenPacks remotePacks |
 
+	self halt.
 	MorphicUIManager new
 		informUser: 'Retrieving available packs from remote repository'
 		during: [ remotePacks := self fetchPacks ].
