@@ -29,7 +29,7 @@ DAPackageAnalyzerDiffTreePresenter class >> title [
 { #category : 'initialization' }
 DAPackageAnalyzerDiffTreePresenter >> buildRoots [
 	self treeDiff roots: packageRelationGraphDiff packagesDiffToDisplay.
-	self treeDiff whenBuiltDo: [ treeDiff rootNodeHolder: [ :item | DAPackageItemDiffNode new content: item ] ]
+	self treeDiff whenBuiltDo: [ treeDiff children: [ :item | DAPackageItemDiffNode new content: item ] ]
 ]
 
 { #category : 'specs' }
