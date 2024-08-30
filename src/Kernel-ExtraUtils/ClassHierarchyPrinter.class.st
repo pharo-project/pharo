@@ -22,6 +22,7 @@ produces
 ```
 'ASTNode
 	ASTProgramNode
+		ASTCommentNode
 		ASTReturnNode
 		ASTValueNode
 			ASTArrayNode
@@ -51,7 +52,6 @@ produces
 					RBTemporariesErrorNode
 					RBUnfinishedStatementErrorNode
 			RBSelectorNode
-		ASTCommentNode
 		RBMethodNode
 			ASTPatternMethodNode
 			RBDoItMethodNode

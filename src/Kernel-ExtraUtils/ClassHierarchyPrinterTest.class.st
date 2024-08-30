@@ -27,6 +27,7 @@ ClassHierarchyPrinterTest >> testOnlyASTNodes [
 	self assert: printer print equals:
 	'ASTNode
 	ASTProgramNode
+		ASTCommentNode
 		ASTReturnNode
 		ASTValueNode
 			ASTArrayNode
@@ -56,7 +57,6 @@ ClassHierarchyPrinterTest >> testOnlyASTNodes [
 					RBTemporariesErrorNode
 					RBUnfinishedStatementErrorNode
 			RBSelectorNode
-		ASTCommentNode
 		RBMethodNode
 			ASTPatternMethodNode
 			RBDoItMethodNode
