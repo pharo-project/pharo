@@ -1,7 +1,7 @@
 "
-The method overrided a deprecated method. This is a sign that an API has changed in an upstream project and most likely the method should override another one.
+Checks if the method overrides a deprecated method. This is a sign that an API has changed in an upstream project and most likely the method should override another one.
 
-This rule will not activate if the method itself deprecated because it is make sens to deprecate the overriden methods of a deprecated method too.
+This rule will not activate if the method itself is deprecated because it makes sens to deprecate the overriding methods of a deprecated method too.
 "
 Class {
 	#name : 'OverridesDeprecatedMethodRule',
