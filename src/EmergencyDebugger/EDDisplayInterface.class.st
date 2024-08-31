@@ -90,7 +90,7 @@ EDDisplayInterface >> ensureWindowOpen [
 	window := OSWindow
 		createWithAttributes: attrs
 		eventHandler: (EDDisplayEventHandler on: self).
-	renderer := window newFormRenderer: (Form extent: self extent depth: 32)
+	renderer := window newFormRenderer: (Form extent: self extent * OSWorldRenderer canvasScaleFactor depth: 32)
 ]
 
 { #category : 'private - display' }
