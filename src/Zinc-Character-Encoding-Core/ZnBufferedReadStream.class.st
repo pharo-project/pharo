@@ -273,15 +273,14 @@ ZnBufferedReadStream >> peekFor: object [
 
 { #category : 'accessing' }
 ZnBufferedReadStream >> position [
-
 	"If the buffer advanced, we need to check the original stream position, minus what we have read.
 	The -1 is because the buffer is base 1"
+
 	^ stream position - limit + position - 1
 ]
 
 { #category : 'accessing' }
 ZnBufferedReadStream >> position: anInteger [
-
 	| bufferEnd bufferStart |
 	bufferEnd := stream position.
 	bufferStart := bufferEnd - limit.
@@ -289,8 +288,7 @@ ZnBufferedReadStream >> position: anInteger [
 		ifTrue: [ position := anInteger - bufferStart + 1 ]
 		ifFalse: [
 			"We reset the buffer and update the position in the underlying stream"
-			limit := 0.
-			position := 1.
+			self discardBuffer.
 			stream position: anInteger ]
 ]
 
@@ -327,12 +325,13 @@ ZnBufferedReadStream >> readInto: collection startingAt: offset count: requested
 			| newOffset |
 			newOffset := offset + countRead.
 			(self shouldBufferReadOfCount: countYetToRead)
-				ifTrue: [ self nextBuffer.
+				ifTrue: [
+					self nextBuffer.
 					limit > 0
-						ifTrue:
-							[ countRead := countRead + (self readInto: collection startingAt: newOffset count: countYetToRead) ] ]
-				ifFalse:
-					[ countRead := countRead + (stream readInto: collection startingAt: newOffset count: countYetToRead) ] ].
+						ifTrue: [ countRead := countRead + (self readInto: collection startingAt: newOffset count: countYetToRead) ] ]
+				ifFalse: [
+					self discardBuffer.
+					countRead := countRead + (stream readInto: collection startingAt: newOffset count: countYetToRead) ] ].
 	^ countRead
 ]
 
