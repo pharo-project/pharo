@@ -105,10 +105,11 @@ ThemeIcons class >> settingsOn: aBuilder [
 	<systemsettings>
 
 	(aBuilder button: #openIconsPackManager)
+		parent: #appearance;
 		order: 2;
 		target: self;
 		label: 'Icons Pack';
-		parent: #appearance
+		buttonLabel: 'Open'
 ]
 
 { #category : 'comparing' }
