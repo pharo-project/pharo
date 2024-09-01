@@ -2,14 +2,68 @@ Class {
 	#name : 'IconPacksFetchPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'choosePresenter',
 		'fetchButton',
-		'buttonBar',
-		'cancelButton'
+		'cancelButton',
+		'searchIconTextPresenter',
+		'searchButtonPresenter',
+		'availableIconPacksPresenter',
+		'fetchedIconPacks',
+		'updateListButton',
+		'iconsTablePresenter',
+		'mainButtonBar',
+		'iconPacksButtonBar',
+		'applyButton',
+		'closeButton',
+		'repositoryListIconPacksPresenter',
+		'logPresenter'
+	],
+	#classVars : [
+		'JSONList'
 	],
 	#category : 'IconPacks',
 	#package : 'IconPacks'
 }
+
+{ #category : 'accessing' }
+IconPacksFetchPresenter class >> descriptionText [
+
+	^ ''
+]
+
+{ #category : 'accessing' }
+IconPacksFetchPresenter class >> fetchJsonList [
+
+	^ ZnClient new
+			get: 'https://api.github.com/repos/pharo-project/pharo-icon-packs/branches';
+			contents
+]
+
+{ #category : 'accessing' }
+IconPacksFetchPresenter class >> jsonList [
+	"Answer a <String> representing a JSON with the icon-packs meta-information obtained from remote repository"
+
+	^ JSONList
+		ifNil: [ JSONList := self fetchJsonList ]
+]
+
+{ #category : 'accessing' }
+IconPacksFetchPresenter class >> jsonList: aJSONString [
+	"Set a <String> representing a JSON with the icon-packs meta-information obtained from remote repository"
+
+	JSONList := aJSONString
+]
+
+{ #category : 'world menu' }
+IconPacksFetchPresenter class >> menuCommandOn: aBuilder [
+	<worldMenu>
+
+	(aBuilder item: 'Icon Studio')
+		action: [ self open ];
+		order: 37;
+		parent: #Tools;
+		icon: (self iconNamed: #configuration);
+		help: self descriptionText
+]
 
 { #category : 'instance creation' }
 IconPacksFetchPresenter class >> open [
@@ -18,61 +72,141 @@ IconPacksFetchPresenter class >> open [
 	^ self new open
 ]
 
+{ #category : 'class initialization' }
+IconPacksFetchPresenter class >> reset [
+	<script>
+
+	JSONList := nil.
+]
+
 { #category : 'layout' }
 IconPacksFetchPresenter >> defaultLayout [
 
-	^ SpBoxLayout newTopToBottom
-		add: choosePresenter;
-		add:  buttonBar expand: false;
+	^ SpBoxLayout newTopToBottom 
+		spacing: 5;
+		add: (SpBoxLayout newLeftToRight 
+			spacing: 5;
+			add: (SpBoxLayout newTopToBottom 
+				spacing: 5;			
+				add: repositoryListIconPacksPresenter;
+				add: (SpBoxLayout newLeftToRight 
+					add: updateListButton;
+					add: fetchButton;
+					yourself) expand: false;
+				add: availableIconPacksPresenter;
+				yourself) expand: false;
+			add: (SpBoxLayout newTopToBottom 
+				spacing: 5;
+				add: (SpBoxLayout newLeftToRight
+					spacing: 5;
+					add: searchIconTextPresenter;
+					add: searchButtonPresenter expand: false;
+					yourself) expand: false;			
+				add: iconsTablePresenter;
+				add: 'Log' expand: false;
+				add: logPresenter height: 100;
+				yourself);
+			yourself);
+		add: mainButtonBar expand: false;
 		yourself
+]
+
+{ #category : 'callbacks' }
+IconPacksFetchPresenter >> downloadedIconPacksNames [
+	"Answer a <Collection> of <ThemeIcons> each one representing a downloaded Icon Pack"
+
+	^ ThemeIcons availablePacks
 ]
 
 { #category : 'accessing' }
 IconPacksFetchPresenter >> fetchPacks [
-	"Retrieve all packs available from repository"
+	"Retrieve all packs available from repository. This fetch the **names** of the icon packs, not the icon resources. Answer a <Collection> of <ThemeIcon>"
 
-	| jsonList |
 	[
-	jsonList := ZnClient new
-		            get:
-			            'https://api.github.com/repos/pharo-project/pharo-icon-packs/branches';
-		            contents ]
-		on: Error
-		do: [ :e | "in case of error (no inet connection, for example) I retrieve just current icon set"
-			e crTrace.
-			^ { Smalltalk ui icons } ].
-	^ (STON fromString: jsonList)
+		self jsonList: self class fetchJsonList
+	]
+	on: Error
+	do: [ :e | "in case of error (no inet connection, for example) I retrieve just current icon set"
+		e crTrace.
+		^ { Smalltalk ui icons } ].
+
+	^ (STON fromString: self jsonList)
 		  collect: [ :each |
 			  | packName |
 			  "Ensure we have just one instance of current pack"
-			  packName := each at: 'name'.
-			  packName = (self iconNamed: #name)
+			  (packName := each at: 'name') = Smalltalk ui icons name
 				  ifTrue: [ Smalltalk ui icons ]
 				  ifFalse: [ ThemeIcons named: packName ] ]
 		  as: Array
 ]
 
-{ #category : 'initialization' }
+{ #category : 'callbacks' }
+IconPacksFetchPresenter >> fetchSelectedIconPack: aThemeIcons [
+
+	self updateLogPresenter: (self newLogEntryFromZipFile: aThemeIcons downloadFromUrl).
+]
+
+{ #category : 'callbacks' }
 IconPacksFetchPresenter >> fetchSelectedIconPacks [
 	"Callback to make a remote request to download available icon packs"
 
 	self selectedIconPacks 
-		do: [ : iconPack | iconPack downloadFromUrl ]
-		displayingProgress: 'Downloading selected icon packs'
+		ifNotEmpty: [ : selectedIconsPck |
+			selectedIconsPck 
+				do: [ : iconPack | self fetchSelectedIconPack: iconPack ]
+				displayingProgress: 'Downloading selected icon packs'.
+			self updateDownloadedIconPacks ]
+		ifEmpty: [ self inform: 'No selected icon(s) pack(s) to fetch' ]
+	
+]
+
+{ #category : 'accessing' }
+IconPacksFetchPresenter >> fetchedIconPacks [
+	"Answer a <Collection> of <ThemeIcons>"
+	
+	^ fetchedIconPacks
+		ifNil: [ fetchedIconPacks := self fetchPacks ]
+]
+
+{ #category : 'private' }
+IconPacksFetchPresenter >> iconDimensions: aForm [
+
+	^ String streamContents: [ : stream |
+		stream 
+			<< aForm width asString;
+			<< $x;
+			<< aForm height asString;
+			<< $x;
+			<< aForm depth asString ]
 
 ]
 
 { #category : 'initialization' }
-IconPacksFetchPresenter >> initializePresenters [ 
+IconPacksFetchPresenter >> initializeButtonsPresenters [
 
-	choosePresenter := SpChooserPresenter new
-		sourceItems: self fetchPacks;
-		displayBlock: [ : themeIcons | themeIcons name ];
+	applyButton := self newButton
+		label: 'Set Current';
+		action: [ self setCurrentIconPack ];
+		disable;
+		yourself.
+		
+	closeButton := self newButton
+		label: 'Close';
+		action: [ self delete ];
 		yourself.
 
+	mainButtonBar := self newButtonBar 
+		add: applyButton;
+		add: closeButton;
+		yourself
+]
+
+{ #category : 'initialization' }
+IconPacksFetchPresenter >> initializeIconPacksButtonsPresenters [
+
 	fetchButton := self newButton
-		help: 'Fetch Icon Packs from remote repository';
 		label: 'Fetch';
+		help: 'Fetch Icon Packs from remote repository';
 		icon: (self iconNamed: #down);
 		action: [ self fetchSelectedIconPacks ];
 		yourself.
@@ -81,12 +215,95 @@ IconPacksFetchPresenter >> initializePresenters [
 		icon: (self iconNamed: #smallCancel);
 		action: [ self delete ];
 		yourself.
+	updateListButton := self newButton
+		label: 'Update';
+		help: 'Update the icon packs list';
+		icon: (self iconNamed: #smallUpdate);
+		action: [ self fetchedIconPacks ];
+		yourself.
 
-	buttonBar := self newButtonBar 
+	iconPacksButtonBar := self newButtonBar 
 		add: cancelButton;
-		add:  fetchButton;
+		add: updateListButton;
+		add: fetchButton;
+		yourself
+]
+
+{ #category : 'initialization' }
+IconPacksFetchPresenter >> initializeIconPacksPresenters [
+
+	repositoryListIconPacksPresenter := (self instantiate: SpFilteringSelectableListPresenter)
+		headerTitle: 'Available Icon Packs';
+		items: self fetchedIconPacks;
+		display: [ : themeIcons | themeIcons name ];
+		contextMenu: [  ];
+		yourself.
+	availableIconPacksPresenter := self newList
+		headerTitle: 'Downloaded Icon Packs';
+		items: self downloadedIconPacksNames;
+		display: [ : iconsPack | iconsPack name ];
+		whenSelectedItemChangedDo: [ : iconPack | 
+			applyButton enable.
+			self updateIconsTable: iconPack ];
+		"contextMenu: [ self availableIconsPackcontextMenuCommands ];"
+		yourself.
+
+]
+
+{ #category : 'initialization' }
+IconPacksFetchPresenter >> initializeIconTablePresenter [
+
+	iconsTablePresenter := self newTable
+		addColumn: (SpImageTableColumn new 
+			width: 30;
+			title: 'Icon';
+			evaluated: [ : iconAssoc | iconAssoc value  ];
+			beNotExpandable;
+			yourself);
+		addColumn: (SpStringTableColumn new  
+			title: 'Name'; 
+			evaluated: [ : iconAssoc | iconAssoc key asString ];
+			beSortable;
+			yourself);
+		addColumn: (SpStringTableColumn new
+			title: 'Dimensions (W x H x D)';
+			evaluated: [ : iconAssoc | self iconDimensions: iconAssoc value ];
+			beSortable;
+			yourself);
 		yourself
 
+]
+
+{ #category : 'initialization' }
+IconPacksFetchPresenter >> initializeLogPresenter [
+
+	logPresenter := self newList
+]
+
+{ #category : 'initialization' }
+IconPacksFetchPresenter >> initializePresenters [ 
+
+	self 
+		initializeSearchPresenters;
+		initializeIconPacksPresenters;
+		initializeIconPacksButtonsPresenters;
+		initializeButtonsPresenters;
+		initializeIconTablePresenter;
+		initializeLogPresenter
+]
+
+{ #category : 'initialization' }
+IconPacksFetchPresenter >> initializeSearchPresenters [
+
+	searchIconTextPresenter := self newSearchInput 
+		placeholder: 'Search icon by name';
+		whenTextChangedDo: [ :aString | self updateSearch: aString ];				
+		yourself.
+	searchButtonPresenter := self newButton
+		iconName: #smallFind;	
+		disable;			
+		action: [ self updateSearch: searchIconTextPresenter text ];
+		yourself.
 ]
 
 { #category : 'initialization' }
@@ -94,14 +311,110 @@ IconPacksFetchPresenter >> initializeWindow: aWindowPresenter [
 	super initializeWindow: aWindowPresenter.
 	
 	aWindowPresenter 
-		title: 'Icon Packs Downloader';
+		title: 'Icon Packs Manager';
 		initialExtent: (950 @ 650) scaledByDisplayScaleFactor;
 		centered
 ]
 
-{ #category : 'initialization' }
-IconPacksFetchPresenter >> selectedIconPacks [ 
-	"Answer a <Collection> of "
+{ #category : 'accessing' }
+IconPacksFetchPresenter >> installedFetchPacks [
+	"Answer a <Collection> with the receiver's icon packs which are installed in the system"
+
+	^ self fetchedIconPacks select: [ : iconPack | iconPack hasIcons ]
+]
+
+{ #category : 'accessing' }
+IconPacksFetchPresenter >> jsonList [
+	"Answer a <String> representing a JSON with the icon-packs meta-information obtained from remote repository"
 	
-	^ choosePresenter chosenItems
+	^ self class jsonList
+]
+
+{ #category : 'accessing' }
+IconPacksFetchPresenter >> jsonList: aJSONString [
+
+	self class jsonList: aJSONString
+]
+
+{ #category : 'accessing' }
+IconPacksFetchPresenter >> logPresenter [
+	^ logPresenter
+]
+
+{ #category : 'private' }
+IconPacksFetchPresenter >> newLogEntryFromThemeIcons: aThemeIcons [
+
+	^ String streamContents: [ : stream |
+		stream 
+			<< 'Loaded ';
+			<< aThemeIcons name;
+			<< ': ';
+			<< aThemeIcons icons size asString;
+			<< ' icons.';
+			<< ' Scale: ';
+			<< aThemeIcons scale asString;
+			<< '. URL: ';
+			<< aThemeIcons url asString ]
+]
+
+{ #category : 'private' }
+IconPacksFetchPresenter >> newLogEntryFromZipFile: aFileLocator [ 
+	"Answer a <String> with aFileLocator information for a log reporter"
+
+	^ aFileLocator isZipFile 
+		ifFalse: [ 'Not a ZIP file: ' , (aFileLocator asString first: 10) ]
+		ifTrue: [ String streamContents: [ : stream |
+				stream 
+					<< aFileLocator basename;
+					<< ' (';
+					<< aFileLocator humanReadableSize;
+					<< ')' ] ]
+]
+
+{ #category : 'accessing' }
+IconPacksFetchPresenter >> selectedIconPacks [ 
+	"Answer a <Collection> of <ThemeIcons> found in the repository"
+	
+	^ repositoryListIconPacksPresenter selectedItems
+]
+
+{ #category : 'initialization' }
+IconPacksFetchPresenter >> setCurrentIconPack [
+
+	(self confirm: 'Are you sure to replace the current icon pack?')
+		ifTrue: [ self halt. availableIconPacksPresenter selectedItem beCurrent ]
+
+]
+
+{ #category : 'callbacks' }
+IconPacksFetchPresenter >> updateDownloadedIconPacks [
+
+	availableIconPacksPresenter 
+		items: self downloadedIconPacksNames
+]
+
+{ #category : 'callbacks' }
+IconPacksFetchPresenter >> updateIconsTable: aThemeIcons [
+
+	aThemeIcons hasIcons
+		ifFalse: [ aThemeIcons loadIconsFromUrl ].
+	iconsTablePresenter 
+		items: aThemeIcons icons associations asSortedCollection.
+	self updateLogPresenter: (self newLogEntryFromThemeIcons: aThemeIcons)
+
+]
+
+{ #category : 'callbacks' }
+IconPacksFetchPresenter >> updateLogPresenter: aString [
+
+	| logItems newLogItems |
+	logItems := self logPresenter items asOrderedCollection.
+	newLogItems := logItems add: aString; yourself. 
+	self logPresenter items: newLogItems
+]
+
+{ #category : 'callbacks' }
+IconPacksFetchPresenter >> updateSearch: aString [
+
+	self shouldBeImplemented
 ]

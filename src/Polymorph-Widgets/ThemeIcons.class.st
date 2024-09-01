@@ -28,7 +28,8 @@ Class {
 		'iconsPerScale',
 		'scale',
 		'formSetsCache',
-		'reportNotFound'
+		'reportNotFound',
+		'zipArchive'
 	],
 	#classVars : [
 		'Current'
@@ -274,7 +275,7 @@ ThemeIcons >> doesNotUnderstand: aMessage [
 
 { #category : 'loading' }
 ThemeIcons >> downloadFromUrl [
-	| zipArchive |
+
 	self class destinationPath ensureCreateDirectory.
 	zipArchive := self class destinationPath / (self name, '.zip').
 	zipArchive exists
@@ -282,8 +283,6 @@ ThemeIcons >> downloadFromUrl [
 			ZnClient new
 				url: self url;
 				downloadTo: zipArchive ].
-
-	^ zipArchive
 ]
 
 { #category : 'utilities' }
@@ -376,11 +375,16 @@ ThemeIcons >> loadIconsFromUrl [
 
 { #category : 'loading' }
 ThemeIcons >> loadIconsFromUrlUsingScale: newScale [
-	| newIconsPerScale zipArchive zipContent |
+
+	self downloadFromUrl.
+	^ self loadIconsFromZipArchiveUsingScale: newScale
+]
+
+{ #category : 'loading' }
+ThemeIcons >> loadIconsFromZipArchiveUsingScale: newScale [
+	| newIconsPerScale zipContent |
 
 	newIconsPerScale := Dictionary new.
-	zipArchive := self downloadFromUrl.
-
 	zipContent := (FileSystem zip: zipArchive) open workingDirectory.
 
 	"If it has the old icon pack structure we handle as they don't have multiple sizes"
