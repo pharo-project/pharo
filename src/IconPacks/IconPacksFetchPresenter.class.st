@@ -417,6 +417,12 @@ IconPacksFetchPresenter >> setCurrentIconPack [
 ]
 
 { #category : 'callbacks' }
+IconPacksFetchPresenter >> sortedIconsList: iconsCollection [
+
+	^ iconsCollection associations asSortedCollection
+]
+
+{ #category : 'callbacks' }
 IconPacksFetchPresenter >> updateDownloadedIconPacks [
 
 	availableIconPacksPresenter 
@@ -429,7 +435,7 @@ IconPacksFetchPresenter >> updateIconsTable: aThemeIcons [
 	aThemeIcons hasIcons
 		ifFalse: [ aThemeIcons loadIconsFromUrl ].
 	iconsTablePresenter 
-		items: aThemeIcons icons associations asSortedCollection.
+		items: (self sortedIconsList: aThemeIcons icons).
 	self updateLogPresenter: (self newLogEntryFromThemeIcons: aThemeIcons)
 
 ]
@@ -448,6 +454,8 @@ IconPacksFetchPresenter >> updateSearch: aString [
 
 	aString 
 		ifNotEmpty: [ searchButtonPresenter enable ]
-		ifEmpty: [ searchButtonPresenter disable ].
+		ifEmpty: [ 
+			searchButtonPresenter disable.
+			iconsTablePresenter items: (self sortedIconsList: availableIconPacksPresenter selectedItem icons) ].
 	self searchIcon: aString
 ]
