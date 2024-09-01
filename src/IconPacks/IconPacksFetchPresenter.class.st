@@ -77,6 +77,17 @@ IconPacksFetchPresenter class >> reset [
 	JSONList := nil.
 ]
 
+{ #category : 'private' }
+IconPacksFetchPresenter >> checkAPILimitExceeded: jsonResponse [
+
+	(jsonResponse includesKey: 'message')
+		ifFalse: [ ^ self ].
+	((jsonResponse at: 'message') asLowercase beginsWith: 'api rate limit') 
+		ifFalse: [ ^ self ].
+	self inform: (jsonResponse at: 'message').
+	self error
+]
+
 { #category : 'layout' }
 IconPacksFetchPresenter >> defaultLayout [
 
@@ -120,16 +131,19 @@ IconPacksFetchPresenter >> downloadedIconPacksNames [
 IconPacksFetchPresenter >> fetchPacks [
 	"Retrieve all packs available from repository. This fetch the **names** of the icon packs, not the icon resources. Answer a <Collection> of <ThemeIcon>"
 
+	| jsonResponse fetchedJSONList |
 	[ 
-		self inform: 'Note that in case of error (no internet connection, for example) the remote Icons Pack list will display only the current icon set'.
-		self jsonList: self class fetchJsonList 
+		fetchedJSONList := self class fetchJsonList.
+		((jsonResponse := STON fromString: fetchedJSONList) isDictionary)
+			ifTrue: [ self checkAPILimitExceeded: jsonResponse ]
+			ifFalse: [ self jsonList: fetchedJSONList ]
 	]
 	on: Error
 	do: [ :e | 
 		e crTrace.
 		^ { Smalltalk ui icons } ].
 
-	^ (STON fromString: self jsonList)
+	^ jsonResponse
 		  collect: [ :each |
 			  | packName |
 			  "Ensure we have just one instance of current pack"
@@ -207,7 +221,9 @@ IconPacksFetchPresenter >> initializeIconPacksButtonsPresenters [
 		label: 'Update';
 		help: 'Query available packs from remote repository';
 		icon: (self iconNamed: #smallUpdate);
-		action: [ self fetchedIconPacks ];
+		action: [ 
+			self inform: 'Note that in case of error (no internet connection, for example) the remote Icons Pack list will display only the current icon set'.
+			fetchedIconPacks := self fetchPacks ];
 		yourself.
 
 	fetchButton := self newButton
