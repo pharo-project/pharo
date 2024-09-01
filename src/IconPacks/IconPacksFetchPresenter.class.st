@@ -3,7 +3,6 @@ Class {
 	#superclass : 'SpPresenter',
 	#instVars : [
 		'fetchButton',
-		'cancelButton',
 		'searchIconTextPresenter',
 		'searchButtonPresenter',
 		'availableIconPacksPresenter',
@@ -11,7 +10,6 @@ Class {
 		'updateListButton',
 		'iconsTablePresenter',
 		'mainButtonBar',
-		'iconPacksButtonBar',
 		'applyButton',
 		'closeButton',
 		'repositoryListIconPacksPresenter',
@@ -27,7 +25,7 @@ Class {
 { #category : 'accessing' }
 IconPacksFetchPresenter class >> descriptionText [
 
-	^ ''
+	^ 'UI tool to query, download and set Icon Packs in the system'
 ]
 
 { #category : 'accessing' }
@@ -57,7 +55,7 @@ IconPacksFetchPresenter class >> jsonList: aJSONString [
 IconPacksFetchPresenter class >> menuCommandOn: aBuilder [
 	<worldMenu>
 
-	(aBuilder item: 'Icon Studio')
+	(aBuilder item: 'Icons Pack Manager')
 		action: [ self open ];
 		order: 37;
 		parent: #Tools;
@@ -122,11 +120,12 @@ IconPacksFetchPresenter >> downloadedIconPacksNames [
 IconPacksFetchPresenter >> fetchPacks [
 	"Retrieve all packs available from repository. This fetch the **names** of the icon packs, not the icon resources. Answer a <Collection> of <ThemeIcon>"
 
-	[
-		self jsonList: self class fetchJsonList
+	[ 
+		self inform: 'Note that in case of error (no internet connection, for example) the remote Icons Pack list will display only the current icon set'.
+		self jsonList: self class fetchJsonList 
 	]
 	on: Error
-	do: [ :e | "in case of error (no inet connection, for example) I retrieve just current icon set"
+	do: [ :e | 
 		e crTrace.
 		^ { Smalltalk ui icons } ].
 
@@ -204,36 +203,28 @@ IconPacksFetchPresenter >> initializeButtonsPresenters [
 { #category : 'initialization' }
 IconPacksFetchPresenter >> initializeIconPacksButtonsPresenters [
 
-	fetchButton := self newButton
-		label: 'Fetch';
-		help: 'Fetch Icon Packs from remote repository';
-		icon: (self iconNamed: #down);
-		action: [ self fetchSelectedIconPacks ];
-		yourself.
-	cancelButton := self newButton
-		label: 'Close';
-		icon: (self iconNamed: #smallCancel);
-		action: [ self delete ];
-		yourself.
 	updateListButton := self newButton
 		label: 'Update';
-		help: 'Update the icon packs list';
+		help: 'Query available packs from remote repository';
 		icon: (self iconNamed: #smallUpdate);
 		action: [ self fetchedIconPacks ];
 		yourself.
 
-	iconPacksButtonBar := self newButtonBar 
-		add: cancelButton;
-		add: updateListButton;
-		add: fetchButton;
-		yourself
+	fetchButton := self newButton
+		label: 'Fetch';
+		help: 'Download selected Icon Packs from remote repository';
+		icon: (self iconNamed: #down);
+		action: [ self fetchSelectedIconPacks ];
+		yourself.
+
+
 ]
 
 { #category : 'initialization' }
 IconPacksFetchPresenter >> initializeIconPacksPresenters [
 
 	repositoryListIconPacksPresenter := (self instantiate: SpFilteringSelectableListPresenter)
-		headerTitle: 'Available Icon Packs';
+		"headerTitle: 'Remote Icon Packs';"
 		items: self fetchedIconPacks;
 		display: [ : themeIcons | themeIcons name ];
 		contextMenu: [  ];
@@ -371,6 +362,24 @@ IconPacksFetchPresenter >> newLogEntryFromZipFile: aFileLocator [
 					<< ')' ] ]
 ]
 
+{ #category : 'callbacks' }
+IconPacksFetchPresenter >> searchIcon: aString [ 
+	"Update the receiver's icon entries with items matching aString"
+
+	iconsTablePresenter items: (self searchedIconMatches: aString) reversed.
+
+]
+
+{ #category : 'callbacks' }
+IconPacksFetchPresenter >> searchedIconMatches: aString [ 
+	"If there are filters applied, then search aString in the subset of the filtered entries, otherwise search in the cached log entries"
+	
+	^ iconsTablePresenter items
+		select: [: iconAssoc | iconAssoc key asLowercase beginsWith: aString asLowercase ]
+
+
+]
+
 { #category : 'accessing' }
 IconPacksFetchPresenter >> selectedIconPacks [ 
 	"Answer a <Collection> of <ThemeIcons> found in the repository"
@@ -380,10 +389,15 @@ IconPacksFetchPresenter >> selectedIconPacks [
 
 { #category : 'initialization' }
 IconPacksFetchPresenter >> setCurrentIconPack [
+	
+	| selectedIconsPack |
 
 	(self confirm: 'Are you sure to replace the current icon pack?')
-		ifTrue: [ self halt. availableIconPacksPresenter selectedItem beCurrent ]
-
+		ifFalse: [ ^ self ].
+	selectedIconsPack := availableIconPacksPresenter selectedItem.
+	selectedIconsPack beCurrent.
+	self inform:
+		'Current Icons Pack updated to: ' , selectedIconsPack name
 ]
 
 { #category : 'callbacks' }
@@ -416,5 +430,8 @@ IconPacksFetchPresenter >> updateLogPresenter: aString [
 { #category : 'callbacks' }
 IconPacksFetchPresenter >> updateSearch: aString [
 
-	self shouldBeImplemented
+	aString 
+		ifNotEmpty: [ searchButtonPresenter enable ]
+		ifEmpty: [ searchButtonPresenter disable ].
+	self searchIcon: aString
 ]

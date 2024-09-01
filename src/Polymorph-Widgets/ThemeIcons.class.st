@@ -55,51 +55,6 @@ ThemeIcons class >> baseUrl [
 	^ 'https://github.com/pharo-project/pharo-icon-packs/archive' asUrl
 ]
 
-{ #category : 'settings' }
-ThemeIcons class >> createFetchButtonUpdating: listMorph [
-	^ (Smalltalk ui theme
-		newButtonIn: self
-		for: self
-		getState: nil
-		action: nil
-		arguments: nil
-		getEnabled: nil
-		getLabel: nil
-		help: 'Fetch icon pack from remote repository' translated)
-		label: 'Fetch from remote';
-		actionBlock: [
-			self uiFetchPacks.
-			listMorph update: #availablePacks ];
-		yourself
-]
-
-{ #category : 'settings' }
-ThemeIcons class >> createIconPackList [
-	^ (Smalltalk ui theme
-		newDropListIn: Morph new
-		for: self
-		list: #availablePacks
-		getSelected: #current
-		setSelected: #current:
-		getEnabled: nil
-		useIndex: false
-		help: nil)
-		wrapSelector: #name;
-		hResizing: #rigid;
-		width: 120;
-		yourself
-]
-
-{ #category : 'settings' }
-ThemeIcons class >> createSettingRow [
-	| list |
-	^ Smalltalk ui theme
-		newRowIn: self
-		for: {
-			list := self createIconPackList.
-			self createFetchButtonUpdating: list }
-]
-
 { #category : 'instance creation' }
 ThemeIcons class >> current [
 	"WARNING: Direct access to this method is ill-adviced, use Smalltalk ui icons instead."
@@ -119,28 +74,6 @@ ThemeIcons class >> destinationPath [
 	^ FileLocator localDirectory / 'icon-packs'
 ]
 
-{ #category : 'accessing' }
-ThemeIcons class >> fetchPacks [
-	"Retrieve all packs available from repository"
-	| jsonList |
-
-	[ jsonList := ZnClient new
-		get: 'https://api.github.com/repos/pharo-project/pharo-icon-packs/branches';
-		contents ]
-	on: Error do: [ :e |
-		"in case of error (no inet connection, for example) I retrieve just current icon set"
-		e crTrace.
-		^ { self current } ].
-	^ (STON fromString: jsonList)
-		collect: [ :each | | packName |
-			"Ensure we have just one instance of current pack"
-			packName := each at: 'name'.
-			packName = self current name
-				ifTrue: [ self current ]
-				ifFalse: [ self named: packName ] ]
-		as: Array
-]
-
 { #category : 'private' }
 ThemeIcons class >> loadDefault [
 	^ self new
@@ -154,6 +87,12 @@ ThemeIcons class >> named: aString [
 	^ self new name: aString
 ]
 
+{ #category : 'accessing' }
+ThemeIcons class >> openIconsPackManager [
+
+	IconPacksFetchPresenter open
+]
+
 { #category : 'class initialization' }
 ThemeIcons class >> reset [
 	<script>
@@ -165,40 +104,11 @@ ThemeIcons class >> reset [
 ThemeIcons class >> settingsOn: aBuilder [
 	<systemsettings>
 
-	(aBuilder setting: #current)
-		parent: #appearance;
+	(aBuilder button: #openIconsPackManager)
 		order: 2;
-		label: 'Icon Set';
-		default: (ThemeIcons named: 'svgPack');
 		target: self;
-		dialog: [ self createSettingRow ]
-]
-
-{ #category : 'settings' }
-ThemeIcons class >> uiFetchPacks [
-	| choosenPacks remotePacks |
-
-	self halt.
-	MorphicUIManager new
-		informUser: 'Retrieving available packs from remote repository'
-		during: [ remotePacks := self fetchPacks ].
-
-	choosenPacks := (TickDialogWindow
-		itemsList: remotePacks
-		itemsHeaderName: nil
-		wrapBlockOrSelector: #name
-		title: 'Remote available icon packs')
-		chooseFromOwner: self currentWorld.
-	choosenPacks ifNil: [ ^ self ].
-	MorphicUIManager new informUserDuring: [ :bar |
-		choosenPacks do: [ :each |
-			bar label: 'Retrieving "', each name, '" icon set from remote repository'.
-			each downloadFromUrl ]]
-]
-
-{ #category : 'settings' }
-ThemeIcons class >> wrapIconPack: aPack [
-	^ aPack name
+		label: 'Icons Pack';
+		parent: #appearance
 ]
 
 { #category : 'comparing' }

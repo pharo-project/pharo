@@ -27,8 +27,8 @@ ActionSettingDeclaration >> inputWidget [
 
 	^ SimpleButtonMorph new
 		target: self target;
-		label: 'Apply';
-		actionSelector: #resetCount;
+		label: self label;
+		actionSelector: self name;
 		themeChanged;
 		yourself
 ]

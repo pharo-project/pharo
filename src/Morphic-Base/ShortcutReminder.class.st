@@ -151,8 +151,7 @@ ShortcutReminder >> customSettingsOn: aBuilder [
 		order: 7;
 		target: self;
 		label: 'Reset the reminder count';
-		buttonLabel: 'Apply';
-		dialog: [ self resetCount ]
+		buttonLabel: 'Apply'
 ]
 
 { #category : 'defaults' }
