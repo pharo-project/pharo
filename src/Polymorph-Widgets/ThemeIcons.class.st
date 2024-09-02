@@ -70,16 +70,23 @@ ThemeIcons class >> current: aPack [
 ]
 
 { #category : 'accessing' }
+ThemeIcons class >> defaultIconsPack [
+
+	^ 'svgPack'
+]
+
+{ #category : 'accessing' }
 ThemeIcons class >> destinationPath [
 	^ FileLocator localDirectory / 'icon-packs'
 ]
 
 { #category : 'private' }
 ThemeIcons class >> loadDefault [
+
 	^ self new
-	name: 'svgPack';
-	loadIconsFromUrl;
-	yourself
+		  name: self defaultIconsPack;
+		  loadIconsFromUrl;
+		  yourself
 ]
 
 { #category : 'instance creation' }
@@ -87,29 +94,11 @@ ThemeIcons class >> named: aString [
 	^ self new name: aString
 ]
 
-{ #category : 'accessing' }
-ThemeIcons class >> openIconsPackManager [
-
-	IconPacksFetchPresenter open
-]
-
 { #category : 'class initialization' }
 ThemeIcons class >> reset [
 	<script>
 
 	Current := nil
-]
-
-{ #category : 'settings' }
-ThemeIcons class >> settingsOn: aBuilder [
-	<systemsettings>
-
-	(aBuilder button: #openIconsPackManager)
-		parent: #appearance;
-		order: 2;
-		target: self;
-		label: 'Icons Pack';
-		buttonLabel: 'Open'
 ]
 
 { #category : 'comparing' }

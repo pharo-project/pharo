@@ -77,9 +77,22 @@ IconPacksFetchPresenter class >> reset [
 	JSONList := nil.
 ]
 
+{ #category : 'settings' }
+IconPacksFetchPresenter class >> settingsOn: aBuilder [
+	<systemsettings>
+
+	(aBuilder button: #openIconsPackManager)
+		parent: #appearance;
+		order: 2;
+		target: self;
+		label: 'Icons Pack';
+		buttonLabel: 'Open'
+]
+
 { #category : 'private' }
 IconPacksFetchPresenter >> checkAPILimitExceeded: jsonResponse [
-
+	"Private - GitHub answer a JSON dictionary if there is any API error. Check jsonResponse and raise an <Error> if there was a API rate limit problem"
+	
 	(jsonResponse includesKey: 'message')
 		ifFalse: [ ^ self ].
 	((jsonResponse at: 'message') asLowercase beginsWith: 'api rate limit') 
@@ -223,7 +236,8 @@ IconPacksFetchPresenter >> initializeIconPacksButtonsPresenters [
 		icon: (self iconNamed: #smallUpdate);
 		action: [ 
 			self inform: 'Note that in case of error (no internet connection, for example) the remote Icons Pack list will display only the current icon set'.
-			fetchedIconPacks := self fetchPacks ];
+			fetchedIconPacks := self fetchPacks.
+			self updateLogPresenter: 'Fetched ' , fetchedIconPacks size asString , ' icon packs' ];
 		yourself.
 
 	fetchButton := self newButton
@@ -442,6 +456,7 @@ IconPacksFetchPresenter >> updateIconsTable: aThemeIcons [
 
 { #category : 'callbacks' }
 IconPacksFetchPresenter >> updateLogPresenter: aString [
+	"Private - Write aString to the receiver's log presenter pane"
 
 	| logItems newLogItems |
 	logItems := self logPresenter items asOrderedCollection.
@@ -452,10 +467,9 @@ IconPacksFetchPresenter >> updateLogPresenter: aString [
 { #category : 'callbacks' }
 IconPacksFetchPresenter >> updateSearch: aString [
 
+	iconsTablePresenter items: (self sortedIconsList: availableIconPacksPresenter selectedItem icons).
 	aString 
 		ifNotEmpty: [ searchButtonPresenter enable ]
-		ifEmpty: [ 
-			searchButtonPresenter disable.
-			iconsTablePresenter items: (self sortedIconsList: availableIconPacksPresenter selectedItem icons) ].
+		ifEmpty: [ searchButtonPresenter disable ].
 	self searchIcon: aString
 ]
