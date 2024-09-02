@@ -27,9 +27,9 @@ ActionSettingDeclaration >> inputWidget [
 
 	^ SimpleButtonMorph new
 		target: self target;
-		label: 'Apply';
-		actionSelector: #resetCount;
-		themeChanged;
+		label: (self label ifNil: [ '(Error: no label defined)' ]);
+		actionSelector: self name;
+		themeChanged; "This is to avoid green button?"
 		yourself
 ]
 
