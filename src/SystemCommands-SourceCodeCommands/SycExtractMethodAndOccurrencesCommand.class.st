@@ -4,8 +4,6 @@ I am a command to extract selected ast node into separate method
 Class {
 	#name : 'SycExtractMethodAndOccurrencesCommand',
 	#superclass : 'SycSourceCodeRefactoringCommand',
-	#traits : 'TRefactoringCommandSupport',
-	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
 		'selectedTextInterval'
 	],
