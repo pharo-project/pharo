@@ -33,6 +33,24 @@ PharoCommonTools class >> initialize [
 		registerToolClassNamed: self name
 ]
 
+{ #category : 'world menu' }
+PharoCommonTools class >> menuToploOn: aBuilder [
+	<worldMenu>
+
+	(aBuilder item: #LoadToplo)
+		parent: #Tools;
+		label: 'Load Toplo and Bloc';
+		icon: (self iconNamed: #smallLoadProject);
+		help: 'Load Toplo, a widget framework on top of Bloc.';
+		order: 100;
+		action: [
+			(Smalltalk classNamed: #Metacello) new
+				baseline: 'Toplo';
+				repository: (Smalltalk classNamed: #BaselineOfPharo) toploRepository;
+				onConflictUseIncoming;
+				load ]
+]
+
 { #category : 'settings' }
 PharoCommonTools class >> settingsOn: aBuilder [
 	<systemsettings>
