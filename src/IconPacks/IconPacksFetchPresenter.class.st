@@ -263,9 +263,7 @@ IconPacksFetchPresenter >> initializeIconPacksPresenters [
 		headerTitle: 'Downloaded Icon Packs';
 		items: self downloadedIconPacksNames;
 		display: [ : iconsPack | iconsPack name ];
-		whenSelectedItemChangedDo: [ : iconPack | 
-			applyButton enable.
-			self updateIconsTable: iconPack ];
+		whenSelectedItemChangedDo: [ : iconPack | self updateSelectedIconPack: iconPack ];
 		"contextMenu: [ self availableIconsPackcontextMenuCommands ];"
 		yourself.
 
@@ -472,4 +470,16 @@ IconPacksFetchPresenter >> updateSearch: aString [
 		ifNotEmpty: [ searchButtonPresenter enable ]
 		ifEmpty: [ searchButtonPresenter disable ].
 	self searchIcon: aString
+]
+
+{ #category : 'callbacks' }
+IconPacksFetchPresenter >> updateSelectedIconPack: anIconPack [
+
+	anIconPack 
+		ifNotNil: [ 
+			applyButton enable.
+			self updateIconsTable: anIconPack ]
+		ifNil: [ 
+			applyButton disable ]
+
 ]
