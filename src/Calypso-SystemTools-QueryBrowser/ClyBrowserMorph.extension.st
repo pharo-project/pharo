@@ -64,7 +64,7 @@ ClyBrowserMorph >> browseUppercasedReferencesTo: aSymbol inNameRespolver: anEnvi
 
 	(anEnvironment bindingOf: aSymbol) 
 		ifNotNil: [ : envBinding |
-			^ envBinding value isPool 
+			^ (envBinding value isClass and: [envBinding value isPool])
 				ifTrue: [ 
 					{ 
 						(self spawnQueryBrowserOn: (ClySharedPoolReferencesQuery of: envBinding)) .
