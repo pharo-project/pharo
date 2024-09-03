@@ -27,7 +27,7 @@ RBParserTest >> exampleClasses [
 		with: self parserClass
 		with: RBScanner
 		with: ASTProgramNode
-		with: RBComment
+		with: ASTCommentNode
 ]
 
 { #category : 'private' }

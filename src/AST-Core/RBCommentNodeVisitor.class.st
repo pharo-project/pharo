@@ -1,8 +1,8 @@
 "
-Visit any RBCommentNode in the syntax tree and evaluate a generic block.
+Visit any ASTCommentNode in the syntax tree and evaluate a generic block.
 
 The block  has two optional parameters:  
-	aCommentArray (the collection of 1 or more RBComment's)
+	aCommentArray (the collection of 1 or more ASTCommentNode's)
 	aNode (the node which contains the comment)
 "
 Class {

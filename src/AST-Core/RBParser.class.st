@@ -208,7 +208,7 @@ RBParser >> errorPosition [
 RBParser >> extractCommentsFrom: aToken [
 
 	aToken comments
-		collect: [:commentToken | RBComment with: commentToken ]
+		collect: [:commentToken | ASTCommentNode with: commentToken ]
 		into: comments
 ]
 

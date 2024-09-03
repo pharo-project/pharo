@@ -1,9 +1,9 @@
 "
-An RBComment represents a text comment associated with an AST node.
+An ASTCommentNode represents a text comment associated with an AST node.
 
 Even though comments are not part of the syntax, we model comments with a subclass of ASTProgramNode, storing the comment text and start/stop position.
 
-Due to the way the parser handles comments, the RBComment is assigned to its preceding (real) AST node, although we often write the comment prior to a statement.
+Due to the way the parser handles comments, the ASTCommentNode is assigned to its preceding (real) AST node, although we often write the comment prior to a statement.
 
 For example:
 
@@ -30,7 +30,7 @@ instance variables
 
 "
 Class {
-	#name : 'RBComment',
+	#name : 'ASTCommentNode',
 	#superclass : 'ASTProgramNode',
 	#instVars : [
 		'contents',
@@ -43,7 +43,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBComment class >> with: aCommentToken [
+ASTCommentNode class >> with: aCommentToken [
 	"To respect the previously implemented comment node content,
 	 we strip the surrounding quotes of the comment."
 	^ self new
@@ -52,7 +52,7 @@ RBComment class >> with: aCommentToken [
 ]
 
 { #category : 'instance creation' }
-RBComment class >> with: aString at: startPosition [
+ASTCommentNode class >> with: aString at: startPosition [
 
 	^ self with: (RBCommentToken
 			   value: aString
@@ -61,34 +61,34 @@ RBComment class >> with: aString at: startPosition [
 ]
 
 { #category : 'comparing' }
-RBComment >> = anObject [
+ASTCommentNode >> = anObject [
 	self == anObject ifTrue: [ ^true ].
 	^ self class = anObject class and: [ self contents = anObject contents ]
 ]
 
 { #category : 'visiting' }
-RBComment >> acceptVisitor: aProgramNodeVisitor [
+ASTCommentNode >> acceptVisitor: aProgramNodeVisitor [
 
 	^ aProgramNodeVisitor visitCommentNode: self
 ]
 
 { #category : 'accessing' }
-RBComment >> contents [
+ASTCommentNode >> contents [
 	^ contents
 ]
 
 { #category : 'comparing' }
-RBComment >> hash [
+ASTCommentNode >> hash [
 	^ self contents hash
 ]
 
 { #category : 'testing' }
-RBComment >> isCommentNode [
+ASTCommentNode >> isCommentNode [
 	^true
 ]
 
 { #category : 'printing' }
-RBComment >> printOn: aStream [
+ASTCommentNode >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPutAll: ' "'.
 	aStream nextPutAll: contents.
@@ -96,23 +96,23 @@ RBComment >> printOn: aStream [
 ]
 
 { #category : 'enumeration' }
-RBComment >> size [
+ASTCommentNode >> size [
 	^ contents size + 2 "must take into account quotation marks"
 ]
 
 { #category : 'accessing' }
-RBComment >> start [
+ASTCommentNode >> start [
 	^ start
 ]
 
 { #category : 'accessing' }
-RBComment >> stop [
+ASTCommentNode >> stop [
 	^ stop ifNil: [ start + self size - 1 ]
 			 ifNotNil: [ stop ]
 ]
 
 { #category : 'instance creation' }
-RBComment >> with: aString from: aStartPosition to: aStopPosition [
+ASTCommentNode >> with: aString from: aStartPosition to: aStopPosition [
 	start := aStartPosition.
 	stop := aStopPosition.
 	contents := aString

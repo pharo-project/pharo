@@ -287,7 +287,7 @@ RBInlineMethodRefactoring >> moveComments [
 							source := source
 										, (inlineParseTree source copyFrom: aComment start to: aComment stop).
 							sourceParseTree source: source.
-							RBComment with: aComment contents at: start])]
+							ASTCommentNode with: aComment contents at: start])]
 ]
 
 { #category : 'transforming' }
