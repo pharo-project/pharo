@@ -1,5 +1,5 @@
 "
-ASTPatternPragmaNode is an RBPragmaNode that is used by the tree searcher to
+ASTPatternPragmaNode is an ASTPragmaNode that is used by the tree searcher to
 match pragma statements. Just like ASTPatternMethodNode for method nodes.
 
 Instance Variables:

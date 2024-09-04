@@ -1171,7 +1171,7 @@ RBParser >> parseUnaryPattern [
 { #category : 'private - parsing' }
 RBParser >> parseUnaryPragma [
 	"Current Token must be an Identifier."
-	"Return an RBPragmaNode."
+	"Return an ASTPragmaNode."
 	| selector |
 	selector := currentToken.
 	self step.
