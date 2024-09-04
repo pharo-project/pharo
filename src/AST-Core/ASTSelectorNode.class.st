@@ -1,5 +1,5 @@
 "
-RBSelectorNode is an AST node that represents a selector (unary, binary, keyword).
+ASTSelectorNode is an AST node that represents a selector (unary, binary, keyword).
 
 Instance Variables:
 	value	<String>	the selector's name I represent or the ensemble of keywords I'm made of

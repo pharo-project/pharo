@@ -51,7 +51,7 @@ produces
 					RBPragmaErrorNode
 					RBTemporariesErrorNode
 					RBUnfinishedStatementErrorNode
-			RBSelectorNode
+			ASTSelectorNode
 		RBMethodNode
 			ASTPatternMethodNode
 			RBDoItMethodNode
