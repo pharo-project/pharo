@@ -7,6 +7,19 @@ Class {
 }
 
 { #category : 'tests' }
+ComputedSlotTest >> testHasSameDefinitionAs [
+	| slot1 slot2 slot3 |
+	<ignoreNotImplementedSelectors: #(slot1 slot2)>
+
+	slot1 := #slot1 => ComputedSlot with: [ :obj | 3 + 2 ].
+	slot2 := #slot2 => ComputedSlot with: [ :obj | 1 + 2 ].
+	slot3 := #slot2 => ComputedSlot with: [ :obj | 1 + 2 ].
+
+	self deny: (slot1 hasSameDefinitionAs: slot2).
+	self assert: (slot2 hasSameDefinitionAs: slot3)
+]
+
+{ #category : 'tests' }
 ComputedSlotTest >> testReadComputedSlotCompiled [
 	| object slot |
 	<ignoreNotImplementedSelectors: #(slot1)>
