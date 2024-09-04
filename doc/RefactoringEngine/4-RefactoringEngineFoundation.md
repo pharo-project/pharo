@@ -19,7 +19,7 @@ a single element
 - ASTLiteralValueNode 
 an expression
 - ASTAssignmentNode
-- RBMessageNode
+- ASTMessageNode
 - ASTReturnNode
 - ASTCascadeNode
 a sequence of expressions
@@ -55,7 +55,7 @@ Therefor a parser first translates the source code into an abstract syntax tree 
 The tree consists of nodes for every source code element, tagged it with some "type" information (the node subclass), source code location, and optional properties. And it represents the whole source code structure. 
 
 For example, the AST for the source code of a method has a RBMethodNode with child nodes RBArgument for the arguments (if any) and a RBSequenceNode for the code body. The RBSequenceNode has child nodes for any
-defined temporaries and the actual code, ASTAssignmentNode for variable assignments, RBMessageNode for message sends.
+defined temporaries and the actual code, ASTAssignmentNode for variable assignments, ASTMessageNode for message sends.
 
 This is how the structure for Numbers #sgn method AST looks:
 
@@ -68,16 +68,16 @@ RBParser parseMethod:'sign
 ```
 |->RBMethodNode sign
   |->RBSequenceNode self > 0 ifTrue: [ ^ 1 ]. self < 0 ifTrue: [ ^ -1 ]. ^ 0
-    |->RBMessageNode ifTrue:
-      |->RBMessageNode >
+    |->ASTMessageNode ifTrue:
+      |->ASTMessageNode >
         |->RBSelfNode self
         |->ASTLiteralValueNode 0
       |->ASTBlockNode [ ^ 1 ]
         |->RBSequenceNode ^ 1
           |->ASTReturnNode ^ 1
             |->ASTLiteralValueNode 1
-    |->RBMessageNode ifTrue:
-      |->RBMessageNode <
+    |->ASTMessageNode ifTrue:
+      |->ASTMessageNode <
         |->RBSelfNode self
         |->ASTLiteralValueNode 0
       |->ASTBlockNode [ ^ -1 ]

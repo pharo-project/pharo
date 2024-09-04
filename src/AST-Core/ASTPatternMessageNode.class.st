@@ -1,5 +1,5 @@
 "
-ASTPatternMessageNode is an RBMessageNode that will match other message nodes without their selectors being equal. 
+ASTPatternMessageNode is an ASTMessageNode that will match other message nodes without their selectors being equal. 
 
 Instance Variables:
 	isCascadeList	<Boolean>	are we matching a list of message nodes in a cascaded message

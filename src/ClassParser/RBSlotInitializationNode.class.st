@@ -19,11 +19,7 @@ Object subclass: #MyClass
 
 'first' => LazyClassVariable default: x + 3
 
-In this case the argument parts is a RBMessageNode.
-
-
-		
-	
+In this case the argument parts is a ASTMessageNode.	
 "
 Class {
 	#name : 'RBSlotInitializationNode',

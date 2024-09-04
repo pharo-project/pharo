@@ -1,5 +1,5 @@
 "
-RBMessageNode is an AST node that represents a message send.
+ASTMessageNode is an AST node that represents a message send.
 
 Instance Variables:
 	arguments	<SequenceableCollection of: ASTValueNode>	 our argument nodes

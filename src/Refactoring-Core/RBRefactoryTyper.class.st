@@ -18,9 +18,9 @@ typer guessTypeFor: '-variablename-'
 Example usage: 
 | typer |
 ""create and initialize for a class to analyze""
-typer := (RBRefactoryTyper new runOn: RBMessageNode).
+typer := (RBRefactoryTyper new runOn: ASTMessageNode).
 
-""guess types for RBMessageNodes instane var 'arguments' ""
+""guess types for ASTMessageNodes instane var 'arguments' ""
 typer  guessTypesFor:'arguments'.  ""a Set(SequenceableCollection)""
 
 ""guess types for objects that may be put  into  'arguments' collection ""

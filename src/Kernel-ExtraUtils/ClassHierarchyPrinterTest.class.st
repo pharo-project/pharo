@@ -42,7 +42,7 @@ ClassHierarchyPrinterTest >> testOnlyASTNodes [
 			ASTBlockNode
 				ASTPatternBlockNode
 					ASTPatternWrapperBlockNode
-			RBMessageNode
+			ASTMessageNode
 				ASTPatternMessageNode
 			RBParseErrorNode
 				RBEnglobingErrorNode

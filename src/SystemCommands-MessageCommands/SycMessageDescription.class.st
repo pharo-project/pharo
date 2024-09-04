@@ -2,7 +2,7 @@
 I represent message description which includes selector and argument names.
 
 In addition I keep reference to so named contextUser. It is an object which uses given message, which was used to retrieve message instance.
-The #contextUser is either a method or RBMessageNode.
+The #contextUser is either a method or ASTMessageNode.
 
 To create my instance use following expressions: 
 

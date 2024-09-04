@@ -53,8 +53,8 @@ RFReification class >> key [
 ]
 
 { #category : 'accessing' }
-RFReification >> entity: aRBMessageNode [
-	entity := aRBMessageNode
+RFReification >> entity: aMessageNode [
+	entity := aMessageNode
 ]
 
 { #category : 'generate' }

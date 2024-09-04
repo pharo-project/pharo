@@ -18,7 +18,7 @@ CoVariableMessageHeuristic class >> isAbstract [
 ]
 
 { #category : 'requests' }
-CoVariableMessageHeuristic >> appliesForNode: aRBMessageNode inContext: aContext [
+CoVariableMessageHeuristic >> appliesForNode: aMessageNode inContext: aContext [
 
-	^ aRBMessageNode receiver isVariable
+	^ aMessageNode receiver isVariable
 ]
