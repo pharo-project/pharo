@@ -1,5 +1,5 @@
 Class {
-	#name : 'RBBlockNodeTest',
+	#name : 'ASTBlockNodeTest',
 	#superclass : 'RBParseTreeTest',
 	#category : 'AST-Core-Tests-Nodes',
 	#package : 'AST-Core-Tests',
@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : 'tests' }
-RBBlockNodeTest >> testConstantValue [
+ASTBlockNodeTest >> testConstantValue [
 
 	self assert: [  ] sourceNode constantValue equals: nil.
 	self assert: [ 1 ] sourceNode constantValue equals: 1.
@@ -15,7 +15,7 @@ RBBlockNodeTest >> testConstantValue [
 ]
 
 { #category : 'tests' }
-RBBlockNodeTest >> testHasNonLocalReturn [
+ASTBlockNodeTest >> testHasNonLocalReturn [
 
 	self deny: [  ] sourceNode hasNonLocalReturn.
 	self deny: [ [  ] ] sourceNode hasNonLocalReturn.
@@ -29,7 +29,7 @@ RBBlockNodeTest >> testHasNonLocalReturn [
 ]
 
 { #category : 'tests' }
-RBBlockNodeTest >> testIsClean [
+ASTBlockNodeTest >> testIsClean [
 	| escpWrite escpRead |
 	escpRead := escpWrite := 1.
 	self deny: [ self yourself ] sourceNode isClean.
@@ -59,7 +59,7 @@ RBBlockNodeTest >> testIsClean [
 ]
 
 { #category : 'tests' }
-RBBlockNodeTest >> testIsConstant [
+ASTBlockNodeTest >> testIsConstant [
 
 	self assert: [  ] sourceNode isConstant.
 	self assert: [ 1 ] sourceNode isConstant.
@@ -68,7 +68,7 @@ RBBlockNodeTest >> testIsConstant [
 ]
 
 { #category : 'tests' }
-RBBlockNodeTest >> testNumArgs [
+ASTBlockNodeTest >> testNumArgs [
 	self assert: [  ] sourceNode numArgs equals: 0.
 	self assert: [:a  |  ] sourceNode numArgs equals: 1.
 	self assert: [:a :b  |  ] sourceNode numArgs equals:  [:a :b  |  ] numArgs

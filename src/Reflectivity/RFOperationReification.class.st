@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFOperationReification class >> entities [
-	^{ASTVariableNode. RBMessageNode. RBMethodNode . ASTReturnNode. ASTAssignmentNode. ASTLiteralNode. RBBlockNode . ASTLiteralArrayNode. ASTArrayNode}
+	^{ASTVariableNode. RBMessageNode. RBMethodNode . ASTReturnNode. ASTAssignmentNode. ASTLiteralNode. ASTBlockNode . ASTLiteralArrayNode. ASTArrayNode}
 ]
 
 { #category : 'plugin interface' }

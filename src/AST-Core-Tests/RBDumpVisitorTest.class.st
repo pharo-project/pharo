@@ -66,7 +66,7 @@ RBDumpVisitorTest >> testBlockNodeDump [
 	node := self parseExpression: '[self]'.
 	dumpedNode := self compiler evaluate: node dump.
 
-	self assert: dumpedNode class equals: RBBlockNode.
+	self assert: dumpedNode class equals: ASTBlockNode.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString.
 
@@ -74,7 +74,7 @@ RBDumpVisitorTest >> testBlockNodeDump [
 	node := self parseExpression: '[:each | each]'.
 	dumpedNode := self compiler evaluate: node dump.
 
-	self assert: dumpedNode class equals: RBBlockNode.
+	self assert: dumpedNode class equals: ASTBlockNode.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString.
 
@@ -82,7 +82,7 @@ RBDumpVisitorTest >> testBlockNodeDump [
 	node := self parseExpression: '[:each :i | |a b| a := each. b := i.]'.
 	dumpedNode := self compiler evaluate: node dump.
 
-	self assert: dumpedNode class equals: RBBlockNode.
+	self assert: dumpedNode class equals: ASTBlockNode.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString
 ]

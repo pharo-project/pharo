@@ -42,7 +42,7 @@ fullBocksWithReturn size  ""2198""
 
 "
 Class {
-	#name : 'RBBlockNode',
+	#name : 'ASTBlockNode',
 	#superclass : 'ASTValueNode',
 	#instVars : [
 		'left',
@@ -60,7 +60,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBBlockNode class >> arguments: argNodes body: sequenceNode [
+ASTBlockNode class >> arguments: argNodes body: sequenceNode [
 	^(self new)
 		arguments: argNodes;
 		body: sequenceNode;
@@ -68,12 +68,12 @@ RBBlockNode class >> arguments: argNodes body: sequenceNode [
 ]
 
 { #category : 'instance creation' }
-RBBlockNode class >> body: sequenceNode [
+ASTBlockNode class >> body: sequenceNode [
 	^self arguments: #() body: sequenceNode
 ]
 
 { #category : 'comparing' }
-RBBlockNode >> = anObject [
+ASTBlockNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
 	self body = anObject body ifFalse: [^false].
@@ -83,26 +83,26 @@ RBBlockNode >> = anObject [
 ]
 
 { #category : 'visiting' }
-RBBlockNode >> acceptVisitor: aProgramNodeVisitor [
+ASTBlockNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitBlockNode: self
 ]
 
 { #category : 'accessing' }
-RBBlockNode >> allArgumentVariables [
+ASTBlockNode >> allArgumentVariables [
 	^(self argumentNames asOrderedCollection)
 		addAll: super allArgumentVariables;
 		yourself
 ]
 
 { #category : 'accessing' }
-RBBlockNode >> allDefinedVariables [
+ASTBlockNode >> allDefinedVariables [
 	^(self argumentNames asOrderedCollection)
 		addAll: super allDefinedVariables;
 		yourself
 ]
 
 { #category : 'accessing' }
-RBBlockNode >> allStatements [
+ASTBlockNode >> allStatements [
 	"including temp variable definition."
 
 	^ (OrderedCollection withAll: self temporaries)
@@ -111,33 +111,33 @@ RBBlockNode >> allStatements [
 ]
 
 { #category : 'accessing' }
-RBBlockNode >> argumentNames [
+ASTBlockNode >> argumentNames [
 	^ self arguments collect: [:each | each name] as: Array
 ]
 
 { #category : 'accessing' }
-RBBlockNode >> arguments [
+ASTBlockNode >> arguments [
 	^arguments
 ]
 
 { #category : 'accessing' }
-RBBlockNode >> arguments: argCollection [
+ASTBlockNode >> arguments: argCollection [
 	arguments := argCollection.
 	arguments do: [:each | each parent: self ]
 ]
 
 { #category : 'accessing - token' }
-RBBlockNode >> bar [
+ASTBlockNode >> bar [
 	^ bar
 ]
 
 { #category : 'accessing - token' }
-RBBlockNode >> bar: anInteger [
+ASTBlockNode >> bar: anInteger [
 	bar := anInteger
 ]
 
 { #category : 'accessing' }
-RBBlockNode >> blockVariables [
+ASTBlockNode >> blockVariables [
 	| vars |
 	vars := super blockVariables asOrderedCollection.
 	vars addAll: self argumentNames.
@@ -145,33 +145,33 @@ RBBlockNode >> blockVariables [
 ]
 
 { #category : 'accessing' }
-RBBlockNode >> body [
+ASTBlockNode >> body [
 	^body
 ]
 
 { #category : 'accessing' }
-RBBlockNode >> body: stmtsNode [
+ASTBlockNode >> body: stmtsNode [
 	body := stmtsNode.
 	body parent: self
 ]
 
 { #category : 'accessing' }
-RBBlockNode >> children [
+ASTBlockNode >> children [
 	^ arguments copyWith: body
 ]
 
 { #category : 'accessing - token' }
-RBBlockNode >> colons [
+ASTBlockNode >> colons [
 	^ colons
 ]
 
 { #category : 'accessing - token' }
-RBBlockNode >> colons: anArray [
+ASTBlockNode >> colons: anArray [
 	colons := anArray
 ]
 
 { #category : 'accessing' }
-RBBlockNode >> constantValue [
+ASTBlockNode >> constantValue [
 	self isConstant ifFalse: [ self error: 'block is not constant' ].
 	^ body statements
 		ifEmpty: [ nil ]
@@ -179,7 +179,7 @@ RBBlockNode >> constantValue [
 ]
 
 { #category : 'matching' }
-RBBlockNode >> copyInContext: aDictionary [
+ASTBlockNode >> copyInContext: aDictionary [
 	^ self class new
 		arguments: (self copyList: self arguments inContext: aDictionary);
 		body: (self body copyInContext: aDictionary);
@@ -187,12 +187,12 @@ RBBlockNode >> copyInContext: aDictionary [
 ]
 
 { #category : 'testing' }
-RBBlockNode >> defines: aName [
+ASTBlockNode >> defines: aName [
 	^arguments anySatisfy: [:each | each name = aName]
 ]
 
 { #category : 'comparing' }
-RBBlockNode >> equalTo: anObject withMapping: aDictionary [
+ASTBlockNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class ifFalse: [^false].
 	self arguments size = anObject arguments size ifFalse: [^false].
 	self arguments
@@ -205,24 +205,24 @@ RBBlockNode >> equalTo: anObject withMapping: aDictionary [
 ]
 
 { #category : 'testing' }
-RBBlockNode >> hasArgumentNamed: aString [
+ASTBlockNode >> hasArgumentNamed: aString [
 	^ self arguments anySatisfy: [ :argument| argument name = aString ]
 ]
 
 { #category : 'testing' }
-RBBlockNode >> hasArguments [
+ASTBlockNode >> hasArguments [
 
 	^ arguments isNotEmpty
 ]
 
 { #category : 'testing' }
-RBBlockNode >> hasBlock [
+ASTBlockNode >> hasBlock [
 
 	^ true
 ]
 
 { #category : 'testing' }
-RBBlockNode >> hasBlockReturn [
+ASTBlockNode >> hasBlockReturn [
 
 	self deprecated: 'This method is deprecated, don''t use it. Use on your own responsibility.'.
 
@@ -230,42 +230,42 @@ RBBlockNode >> hasBlockReturn [
 ]
 
 { #category : 'testing' }
-RBBlockNode >> hasSameExitPoint [
+ASTBlockNode >> hasSameExitPoint [
 
 	^ body hasSameExitPoint 
 ]
 
 { #category : 'testing' }
-RBBlockNode >> hasSameExitPoint: aBoolean [ 
+ASTBlockNode >> hasSameExitPoint: aBoolean [ 
 
 	^ body hasSameExitPoint: aBoolean 
 ]
 
 { #category : 'testing' }
-RBBlockNode >> hasTemporaries [
+ASTBlockNode >> hasTemporaries [
 
 	^ self temporaries isNotEmpty
 ]
 
 { #category : 'testing' }
-RBBlockNode >> hasTemporaryNamed: aString [
+ASTBlockNode >> hasTemporaryNamed: aString [
 	^ self temporaries anySatisfy: [ :temp| temp name = aString ]
 ]
 
 { #category : 'comparing' }
-RBBlockNode >> hash [
+ASTBlockNode >> hash [
 	^ (self hashForCollection: self arguments) bitXor: self body hash
 ]
 
 { #category : 'testing' }
-RBBlockNode >> headIsNotEmpty [
+ASTBlockNode >> headIsNotEmpty [
 	"Return true whether the receiver has some arguments or comments"
 
 	^ arguments isNotEmpty or: [ self comments isNotEmpty ]
 ]
 
 { #category : 'initialization' }
-RBBlockNode >> initialize [
+ASTBlockNode >> initialize [
 	super initialize.
 
 	arguments := #().
@@ -275,13 +275,13 @@ RBBlockNode >> initialize [
 ]
 
 { #category : 'testing' }
-RBBlockNode >> isBlock [
+ASTBlockNode >> isBlock [
 
 	^ true
 ]
 
 { #category : 'testing' }
-RBBlockNode >> isConstant [
+ASTBlockNode >> isConstant [
 	"is the block just returning a literal?"
 	^ body statements
 		ifEmpty: [ true "empty block returns nil" ]
@@ -289,23 +289,23 @@ RBBlockNode >> isConstant [
 ]
 
 { #category : 'errors' }
-RBBlockNode >> isFaulty [
+ASTBlockNode >> isFaulty [
 	self isError ifTrue: [ ^ true ].
 	^(self arguments anySatisfy: [:each | each isFaulty] ) or: [ self body isFaulty]
 ]
 
 { #category : 'testing' }
-RBBlockNode >> isImmediateNode [
+ASTBlockNode >> isImmediateNode [
 	^true
 ]
 
 { #category : 'testing' }
-RBBlockNode >> isLast: aNode [
+ASTBlockNode >> isLast: aNode [
 	^body isLast: aNode
 ]
 
 { #category : 'testing' }
-RBBlockNode >> isUsingAsReturnValue: aNode [
+ASTBlockNode >> isUsingAsReturnValue: aNode [
 	aNode = body ifFalse: [^false].
 	^parent isMessage
 		ifTrue:
@@ -316,17 +316,17 @@ RBBlockNode >> isUsingAsReturnValue: aNode [
 ]
 
 { #category : 'accessing - token' }
-RBBlockNode >> left [
+ASTBlockNode >> left [
 	^ left
 ]
 
 { #category : 'accessing - token' }
-RBBlockNode >> left: anInteger [
+ASTBlockNode >> left: anInteger [
 	left := anInteger
 ]
 
 { #category : 'matching' }
-RBBlockNode >> match: aNode inContext: aDictionary [
+ASTBlockNode >> match: aNode inContext: aDictionary [
 	aNode class = self class ifFalse: [^false].
 	^(self
 		matchList: arguments
@@ -336,98 +336,98 @@ RBBlockNode >> match: aNode inContext: aDictionary [
 ]
 
 { #category : 'accessing' }
-RBBlockNode >> methodOrBlockNode [
+ASTBlockNode >> methodOrBlockNode [
 	^ self
 ]
 
 { #category : 'testing' }
-RBBlockNode >> needsParenthesis [
+ASTBlockNode >> needsParenthesis [
 	^false
 ]
 
 { #category : 'accessing' }
-RBBlockNode >> numArgs [
+ASTBlockNode >> numArgs [
 	^ self arguments size
 ]
 
 { #category : 'copying' }
-RBBlockNode >> postCopy [
+ASTBlockNode >> postCopy [
 	super postCopy.
 	self arguments: (self arguments collect: [ :each | each copy ]).
 	self body: self body copy
 ]
 
 { #category : 'accessing' }
-RBBlockNode >> precedence [
+ASTBlockNode >> precedence [
 	^0
 ]
 
 { #category : 'testing' }
-RBBlockNode >> references: aVariableName [
+ASTBlockNode >> references: aVariableName [
 	^body references: aVariableName
 ]
 
 { #category : 'adding-removing' }
-RBBlockNode >> removeTemporaryNamed: aName [
+ASTBlockNode >> removeTemporaryNamed: aName [
 
 	self body removeTemporaryNamed: aName
 ]
 
 { #category : 'replacing' }
-RBBlockNode >> replaceNode: aNode withNode: anotherNode [
+ASTBlockNode >> replaceNode: aNode withNode: anotherNode [
 	body == aNode ifTrue: [self body: anotherNode].
 	self arguments: (arguments
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])
 ]
 
 { #category : 'accessing - token' }
-RBBlockNode >> right [
+ASTBlockNode >> right [
 	^ right
 ]
 
 { #category : 'accessing - token' }
-RBBlockNode >> right: anInteger [
+ASTBlockNode >> right: anInteger [
 	right := anInteger
 ]
 
 { #category : 'accessing' }
-RBBlockNode >> scope [
+ASTBlockNode >> scope [
 	^ scope
 ]
 
 { #category : 'accessing' }
-RBBlockNode >> scope: aScopedNode [
+ASTBlockNode >> scope: aScopedNode [
 	scope := aScopedNode
 ]
 
 { #category : 'accessing' }
-RBBlockNode >> startWithoutParentheses [
+ASTBlockNode >> startWithoutParentheses [
 	^ left
 ]
 
 { #category : 'accessing' }
-RBBlockNode >> statementComments [
+ASTBlockNode >> statementComments [
 	"this is used for formatting comments for this node as a statement, but I don't have a single statement comment, my comments are place within the block code"
 
 	^ ''
 ]
 
 { #category : 'accessing' }
-RBBlockNode >> statements [
+ASTBlockNode >> statements [
 	^ self body statements
 ]
 
 { #category : 'accessing' }
-RBBlockNode >> stopWithoutParentheses [
+ASTBlockNode >> stopWithoutParentheses [
 	^ right
 ]
 
 { #category : 'accessing' }
-RBBlockNode >> temporaries [
+ASTBlockNode >> temporaries [
 	^ self body temporaries
 ]
 
 { #category : 'accessing' }
-RBBlockNode >> temporaryNames [
+ASTBlockNode >> temporaryNames [
 	^ self body temporaryNames
 ]

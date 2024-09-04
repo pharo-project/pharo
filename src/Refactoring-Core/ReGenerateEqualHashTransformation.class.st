@@ -113,7 +113,7 @@ ReGenerateEqualHashTransformation >> compileEqual [
 						arguments:
 							(Array
 								with:
-									(RBBlockNode
+									(ASTBlockNode
 										body: (RBSequenceNode statements: (Array with: statement)))) ] ].
 	method
 		addNode: statement;

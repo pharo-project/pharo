@@ -1,7 +1,7 @@
-Extension { #name : 'RBBlockNode' }
+Extension { #name : 'ASTBlockNode' }
 
 { #category : '*SystemCommands-SourceCodeCommands' }
-RBBlockNode >> displaySourceCode [
+ASTBlockNode >> displaySourceCode [
 
 	| code |
 	code := '[ '.

@@ -8,7 +8,7 @@ Instance Variables:
 "
 Class {
 	#name : 'ASTPatternBlockNode',
-	#superclass : 'RBBlockNode',
+	#superclass : 'ASTBlockNode',
 	#instVars : [
 		'valueBlock'
 	],
@@ -55,7 +55,7 @@ ASTPatternBlockNode >> createMatchingBlock [
 		ifTrue:
 			[self
 				error: 'Search blocks can only contain arguments for the node and matching dictionary'].
-	newBlock := RBBlockNode arguments: arguments body: body.
+	newBlock := ASTBlockNode arguments: arguments body: body.
 	newBlock arguments isEmpty
 		ifTrue: [self addArgumentWithNameBasedOn: 'aNode' to: newBlock].
 	newBlock arguments size = 1
@@ -71,7 +71,7 @@ ASTPatternBlockNode >> createReplacingBlock [
 		ifTrue:
 			[self
 				error: 'Replace blocks can only contain an argument for the matching dictionary'].
-	newBlock := RBBlockNode arguments: arguments body: body.
+	newBlock := ASTBlockNode arguments: arguments body: body.
 	self arguments isEmpty
 		ifTrue: [self addArgumentWithNameBasedOn: 'aDictionary' to: newBlock].
 	self replacePatternNodesIn: newBlock.

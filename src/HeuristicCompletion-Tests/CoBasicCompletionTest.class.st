@@ -49,7 +49,7 @@ CoBasicCompletionTest >> innerASTNode [
 			(RBSequenceNode
 				temporaries: (#(methodTemporary) collect: [ :e | ASTVariableNode named: e ])
 				statements:
-					{(RBBlockNode
+					{(ASTBlockNode
 						arguments: (#(blockArgument) collect: [ :e | ASTVariableNode named: e ])
 						body:
 							(RBSequenceNode

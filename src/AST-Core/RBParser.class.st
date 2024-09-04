@@ -164,7 +164,7 @@ RBParser >> basicParsePragma [
 
 { #category : 'private - classes' }
 RBParser >> blockNodeClass [
-	^ RBBlockNode
+	^ ASTBlockNode
 ]
 
 { #category : 'private - classes' }

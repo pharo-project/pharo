@@ -53,7 +53,7 @@ FBDASTBuilder >> codeBlock: body [
 
 { #category : 'building' }
 FBDASTBuilder >> codeBlock: body arguments: args [
-	^ RBBlockNode arguments: args body: body
+	^ ASTBlockNode arguments: args body: body
 ]
 
 { #category : 'building' }
@@ -80,7 +80,7 @@ FBDASTBuilder >> codeConditionalNode: expr trueSequence: seq1 falseSequence: seq
 
 { #category : 'building' }
 FBDASTBuilder >> codeEmptyBlock [
-	^ RBBlockNode body: (self codeSequence: #())
+	^ ASTBlockNode body: (self codeSequence: #())
 ]
 
 { #category : 'building' }

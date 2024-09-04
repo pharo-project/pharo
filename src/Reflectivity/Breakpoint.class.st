@@ -278,7 +278,7 @@ Breakpoint >> conditionBlockProducerMethodAST: conditionString [
 		body:
 			(ASTReturnNode
 				value:
-					(RBBlockNode
+					(ASTBlockNode
 						arguments: {(ASTVariableNode named: 'ThisContext')}
 						body:
 							(RBMessageNode

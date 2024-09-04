@@ -361,7 +361,7 @@ RBParserTest >> testCopyInContext [
 { #category : 'tests - CreationProtocol' }
 RBParserTest >> testCreationBlockNodeWithExpression [
 	self compare: (self parserClass parseExpression: '[:a :b | a messaged. b messaged.]')
-		  to:(RBBlockNode
+		  to:(ASTBlockNode
 			   arguments: (OrderedCollection with: (ASTVariableNode named: 'a') with: (ASTVariableNode named: 'b'))
 				body: (RBSequenceNode statements: (OrderedCollection with: (RBMessageNode receiver: (ASTVariableNode named: #a) selector: (RBSelectorNode value: #messaged))
 																						with: (RBMessageNode receiver: (ASTVariableNode named: #b) selector: (RBSelectorNode value: #messaged)))))

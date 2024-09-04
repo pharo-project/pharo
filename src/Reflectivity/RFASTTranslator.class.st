@@ -32,7 +32,7 @@ RFASTTranslator >> emitMetaLinkAfterEnsure: aNode [
 
 	"this saves the value from top of stack, executed [operation <here>] ensure: [ afterhook ] "
 	aNode postambles do: [ :each | self visitNode: each ].
-	ensureBlock := RBBlockNode body: (RBSequenceNode statements: aNode afterHooks).
+	ensureBlock := ASTBlockNode body: (RBSequenceNode statements: aNode afterHooks).
 
 	ensureBlock parent: aNode.
 	ensureBlock scope: (aNode parent scope newBlockScope: 20).
@@ -298,7 +298,7 @@ RFASTTranslator >> visitSequenceNode: aSequenceNode [
 { #category : 'visitor - double dispatching' }
 RFASTTranslator >> visitSequenceWithAfter: aSequenceNode [
 	| wrappedBlock compiledBlock |
-	wrappedBlock := RBBlockNode body: (RBSequenceNode statements: aSequenceNode statements).
+	wrappedBlock := ASTBlockNode body: (RBSequenceNode statements: aSequenceNode statements).
 	wrappedBlock parent: aSequenceNode.
 	wrappedBlock scope: (aSequenceNode parent scope newBlockScope: 20).
 	 (aSequenceNode parent scope copiedVars, aSequenceNode parent scope tempVars) do: [ :var |

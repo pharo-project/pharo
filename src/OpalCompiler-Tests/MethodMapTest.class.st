@@ -208,8 +208,8 @@ MethodMapTest >> testTempNamedTempCopyingNestedBlock2 [
 { #category : 'tests - ast mapping' }
 MethodMapTest >> testThisContextSourceNode [
 	self assert: (thisContext sourceNode isKindOf: RBMethodNode).
-	self assert: ([thisContext sourceNode] value isKindOf: RBBlockNode).
-	self assert: ([true ifTrue: [thisContext sourceNode]]value isKindOf: RBBlockNode)
+	self assert: ([thisContext sourceNode] value isKindOf: ASTBlockNode).
+	self assert: ([true ifTrue: [thisContext sourceNode]]value isKindOf: ASTBlockNode)
 ]
 
 { #category : 'tests - ast mapping' }
