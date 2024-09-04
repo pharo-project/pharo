@@ -1237,7 +1237,7 @@ RBParser >> patchNegativeLiteral [
 
 { #category : 'private - classes' }
 RBParser >> pragmaNodeClass [
-	^ RBPragmaNode
+	^ ASTPragmaNode
 ]
 
 { #category : 'private - classes' }

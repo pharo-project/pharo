@@ -269,7 +269,7 @@ RBDumpVisitorTest >> testPragmaNodeDump [
 	node := self parseMethod: 'foo <useless>'.
 	dumpedNode := self compiler evaluate: node dump.
 
-	self assert: dumpedNode pragmas first class equals: RBPragmaNode.
+	self assert: dumpedNode pragmas first class equals: ASTPragmaNode.
 	self
 		assert: node pragmas first class
 		equals: dumpedNode pragmas first class.

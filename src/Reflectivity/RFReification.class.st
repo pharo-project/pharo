@@ -99,6 +99,11 @@ RFReification >> genForASTMessageNode [
 ]
 
 { #category : 'generate' }
+RFReification >> genForASTPragmaNode [
+	^ self genForASTProgramNode
+]
+
+{ #category : 'generate' }
 RFReification >> genForASTProgramNode [
 	"overriden in subclass if needed"
 ]
@@ -146,11 +151,6 @@ RFReification >> genForRBGlobalNode [
 { #category : 'generate' }
 RFReification >> genForRBMethodNode [
 	^self genForASTProgramNode
-]
-
-{ #category : 'generate' }
-RFReification >> genForRBPragmaNode [
-	^ self genForASTProgramNode
 ]
 
 { #category : 'generate' }

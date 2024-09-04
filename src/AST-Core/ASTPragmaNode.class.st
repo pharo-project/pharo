@@ -12,7 +12,7 @@ Instance Variables:
 	keywordsPositions	<IntegerArray | nil>	the positions of the selector keywords
 "
 Class {
-	#name : 'RBPragmaNode',
+	#name : 'ASTPragmaNode',
 	#superclass : 'ASTProgramNode',
 	#instVars : [
 		'selector',
@@ -28,17 +28,17 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBPragmaNode class >> selector: aSymbol arguments: valueNodes [
+ASTPragmaNode class >> selector: aSymbol arguments: valueNodes [
 	^ self selector: aSymbol keywordsPositions: nil arguments: valueNodes
 ]
 
 { #category : 'instance creation' }
-RBPragmaNode class >> selector: aSymbol keywordsPositions: positionList arguments: valueNodes [
+ASTPragmaNode class >> selector: aSymbol keywordsPositions: positionList arguments: valueNodes [
 	^ self new selector: aSymbol keywordsPositions: positionList arguments: valueNodes
 ]
 
 { #category : 'comparing' }
-RBPragmaNode >> = anObject [
+ASTPragmaNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
 	self selector = anObject selector ifFalse: [^false].
@@ -50,19 +50,19 @@ RBPragmaNode >> = anObject [
 ]
 
 { #category : 'visiting' }
-RBPragmaNode >> acceptVisitor: aProgramNodeVisitor [
+ASTPragmaNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitPragmaNode: self
 ]
 
 { #category : 'accessing' }
-RBPragmaNode >> argumentAt: keywordSelector [
+ASTPragmaNode >> argumentAt: keywordSelector [
 	^ self
 		argumentAt: keywordSelector
 		ifAbsent: [ KeyNotFound signalFor: keywordSelector ]
 ]
 
 { #category : 'accessing' }
-RBPragmaNode >> argumentAt: keywordSelector ifAbsent: absentBlock [
+ASTPragmaNode >> argumentAt: keywordSelector ifAbsent: absentBlock [
 	self selectorParts with: self arguments do: [ :selectorPart :argument |
 		selectorPart value = keywordSelector
 			ifTrue: [ ^ argument ]].
@@ -70,35 +70,35 @@ RBPragmaNode >> argumentAt: keywordSelector ifAbsent: absentBlock [
 ]
 
 { #category : 'accessing' }
-RBPragmaNode >> arguments [
+ASTPragmaNode >> arguments [
 	^ arguments
 ]
 
 { #category : 'accessing' }
-RBPragmaNode >> arguments: aLiteralCollection [
+ASTPragmaNode >> arguments: aLiteralCollection [
 	arguments := aLiteralCollection.
 	arguments do: [ :each | each parent: self ]
 ]
 
 { #category : 'accessing' }
-RBPragmaNode >> children [
+ASTPragmaNode >> children [
 	^ arguments
 ]
 
 { #category : 'matching' }
-RBPragmaNode >> copyInContext: aDictionary [
+ASTPragmaNode >> copyInContext: aDictionary [
 	^ self class
 		selector: self selector
 		arguments: (self arguments collect: [ :each | each copyInContext: aDictionary ])
 ]
 
 { #category : 'testing' }
-RBPragmaNode >> defines: aName [
+ASTPragmaNode >> defines: aName [
 	^ self isPrimitive and: [ arguments anySatisfy: [ :each | each value = aName ] ]
 ]
 
 { #category : 'comparing' }
-RBPragmaNode >> equalTo: anObject withMapping: aDictionary [
+ASTPragmaNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class ifFalse: [ ^ false ].
 	self selector = anObject selector ifFalse: [ ^ false ].
 	self arguments size = anObject arguments size ifFalse: [ ^ false ].
@@ -109,12 +109,12 @@ RBPragmaNode >> equalTo: anObject withMapping: aDictionary [
 ]
 
 { #category : 'comparing' }
-RBPragmaNode >> hash [
+ASTPragmaNode >> hash [
 	^ self selector hash bitXor: (self hashForCollection: self arguments)
 ]
 
 { #category : 'initialization' }
-RBPragmaNode >> initialize [
+ASTPragmaNode >> initialize [
 	super initialize.
 
 	arguments := #().
@@ -124,65 +124,65 @@ RBPragmaNode >> initialize [
 ]
 
 { #category : 'testing' }
-RBPragmaNode >> isBinary [
+ASTPragmaNode >> isBinary [
 	^ (self isUnary or: [self isKeyword]) not
 ]
 
 { #category : 'errors' }
-RBPragmaNode >> isFaulty [
+ASTPragmaNode >> isFaulty [
 	self isError ifTrue: [ ^ true ].
 	^self arguments anySatisfy: [:each | each isFaulty]
 ]
 
 { #category : 'testing' }
-RBPragmaNode >> isKeyword [
+ASTPragmaNode >> isKeyword [
 	^ selector isKeyword
 ]
 
 { #category : 'testing' }
-RBPragmaNode >> isPragma [
+ASTPragmaNode >> isPragma [
 	^ true
 ]
 
 { #category : 'testing' }
-RBPragmaNode >> isPrimitive [
+ASTPragmaNode >> isPrimitive [
 	^ #(primitive: primitive:error: primitive:error:module: primitive:module: primitive:module:error:) includes: self selector
 ]
 
 { #category : 'testing' }
-RBPragmaNode >> isUnary [
+ASTPragmaNode >> isUnary [
 	^ arguments isEmpty
 ]
 
 { #category : 'accessing' }
-RBPragmaNode >> keywordsIntervals [
+ASTPragmaNode >> keywordsIntervals [
 	^selector keywords
 		with: self keywordsPositions
 		collect: [:keyword :start| start to: (start = 0 ifTrue: [ -1 ] ifFalse: [ start + keyword size - 1]) ]
 ]
 
 { #category : 'accessing' }
-RBPragmaNode >> keywordsPositions [
+ASTPragmaNode >> keywordsPositions [
 	^keywordsPositions ifNil: [ (selector keywords collect: [:char| 0 ]) asIntegerArray ]
 ]
 
 { #category : 'accessing' }
-RBPragmaNode >> keywordsPositions: aPositionsList [
+ASTPragmaNode >> keywordsPositions: aPositionsList [
 	keywordsPositions := aPositionsList ifNotNil: [:list| list asIntegerArray ]
 ]
 
 { #category : 'accessing - token' }
-RBPragmaNode >> left [
+ASTPragmaNode >> left [
 	^ left
 ]
 
 { #category : 'accessing - token' }
-RBPragmaNode >> left: anInteger [
+ASTPragmaNode >> left: anInteger [
 	left := anInteger
 ]
 
 { #category : 'matching' }
-RBPragmaNode >> match: aNode inContext: aDictionary [
+ASTPragmaNode >> match: aNode inContext: aDictionary [
 	aNode class = self class
 		ifFalse: [ ^ false ].
 	self selector = aNode selector
@@ -194,30 +194,30 @@ RBPragmaNode >> match: aNode inContext: aDictionary [
 ]
 
 { #category : 'accessing' }
-RBPragmaNode >> numArgs [
+ASTPragmaNode >> numArgs [
 	^ self selector numArgs
 ]
 
 { #category : 'copying' }
-RBPragmaNode >> postCopy [
+ASTPragmaNode >> postCopy [
 	super postCopy.
 	self arguments: (self arguments collect: [ :each | each copy ])
 ]
 
 { #category : 'accessing' }
-RBPragmaNode >> pragma [
+ASTPragmaNode >> pragma [
 
 	^ pragma
 ]
 
 { #category : 'accessing' }
-RBPragmaNode >> pragma: anObject [
+ASTPragmaNode >> pragma: anObject [
 
 	pragma := anObject
 ]
 
 { #category : 'replacing' }
-RBPragmaNode >> replaceNode: aNode withNode: anotherNode [
+ASTPragmaNode >> replaceNode: aNode withNode: anotherNode [
 	self arguments: (arguments collect: [ :each |
 		each == aNode
 			ifTrue: [ anotherNode ]
@@ -225,28 +225,28 @@ RBPragmaNode >> replaceNode: aNode withNode: anotherNode [
 ]
 
 { #category : 'accessing - token' }
-RBPragmaNode >> right [
+ASTPragmaNode >> right [
 	^ right
 ]
 
 { #category : 'accessing - token' }
-RBPragmaNode >> right: anInteger [
+ASTPragmaNode >> right: anInteger [
 	right := anInteger
 ]
 
 { #category : 'accessing' }
-RBPragmaNode >> selector [
+ASTPragmaNode >> selector [
 	^ selector
 ]
 
 { #category : 'accessing' }
-RBPragmaNode >> selector: aSelector [
+ASTPragmaNode >> selector: aSelector [
 	keywordsPositions := nil.
 	selector := aSelector asSymbol
 ]
 
 { #category : 'initialization' }
-RBPragmaNode >> selector: aSymbol keywordsPositions: positionList arguments: valueNodes [
+ASTPragmaNode >> selector: aSymbol keywordsPositions: positionList arguments: valueNodes [
 	aSymbol numArgs == valueNodes size
 		ifFalse:
 			[self error: 'Attempting to assign selector with wrong number of arguments.'].
@@ -258,23 +258,23 @@ RBPragmaNode >> selector: aSymbol keywordsPositions: positionList arguments: val
 ]
 
 { #category : 'accessing' }
-RBPragmaNode >> selectorParts [
+ASTPragmaNode >> selectorParts [
 	^ selector keywords collect: [:keyword| keyword asSymbol ]
 ]
 
 { #category : 'accessing' }
-RBPragmaNode >> sentMessages [
+ASTPragmaNode >> sentMessages [
 	^ super sentMessages
 		add: self selector;
 		yourself
 ]
 
 { #category : 'accessing' }
-RBPragmaNode >> start [
+ASTPragmaNode >> start [
 	^ left
 ]
 
 { #category : 'accessing' }
-RBPragmaNode >> stop [
+ASTPragmaNode >> stop [
 	^ right
 ]

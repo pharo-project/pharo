@@ -138,7 +138,7 @@ CoASTResultSetBuilderTest >> testBuildPragmaHeuristic [
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBPragmaNode new;
+		node: ASTPragmaNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #pragma

@@ -472,7 +472,7 @@ FBDDecompiler >> popIntoTemporaryVariable: offset [
 { #category : 'initialize' }
 FBDDecompiler >> pragmasForMethod: aCompiledMethod [
 	^ aCompiledMethod pragmas collect: [ :each |
-		RBPragmaNode
+		ASTPragmaNode
 			selector: each selector
 			arguments: (each arguments collect: [ :arg | ASTLiteralNode value: arg ]) ]
 ]
