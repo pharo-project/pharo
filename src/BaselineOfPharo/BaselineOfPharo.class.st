@@ -59,8 +59,8 @@ BaselineOfPharo class >> iceberg [
 	^ PharoExternalProject 
 		newName: 'Iceberg' 
 		owner: 'pharo-vcs' 
-		project: 'iceberg' 
-		version: 'v2.3.1' 
+		project: 'iceberg'
+		version: 'v2.3.2' 
 		sourceDir: nil
 ]
 
