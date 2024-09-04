@@ -297,7 +297,7 @@ ReCompositeExtractMethodRefactoring >> generateNewMethodWith: aMethodName [
 		                 body: (subtree isSequence
 				                  ifTrue: [ subtree ]
 				                  ifFalse: [
-					                  RBSequenceNode
+					                  ASTSequenceNode
 						                  temporaries: #(  )
 						                  statements: (OrderedCollection with: subtree) ]).
 	temporaries do: [ :each | newMethodNode body addTemporaryNamed: each ].

@@ -66,7 +66,7 @@ RBMethodNode class >> errorMethodNode: selector errorMessage: messageText [
 	^ self
 		selector: selector
 		arguments: ((1 to: selector numArgs) collect: [ :i | ASTVariableNode named: 't' , i asString ])
-		body: (RBSequenceNode statements: {message})
+		body: (ASTSequenceNode statements: {message})
 ]
 
 { #category : '*OpalCompiler-Core' }

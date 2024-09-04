@@ -114,6 +114,11 @@ RFReification >> genForASTReturnNode [
 ]
 
 { #category : 'generate' }
+RFReification >> genForASTSequenceNode [
+	^self genForASTProgramNode
+]
+
+{ #category : 'generate' }
 RFReification >> genForASTVariableNode [
 	^self genForASTProgramNode
 ]
@@ -155,11 +160,6 @@ RFReification >> genForRBMethodNode [
 
 { #category : 'generate' }
 RFReification >> genForRBSelfNode [
-	^self genForASTProgramNode
-]
-
-{ #category : 'generate' }
-RFReification >> genForRBSequenceNode [
 	^self genForASTProgramNode
 ]
 

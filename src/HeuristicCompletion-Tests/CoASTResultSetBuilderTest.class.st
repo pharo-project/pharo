@@ -164,7 +164,7 @@ CoASTResultSetBuilderTest >> testBuildSequenceHeuristic [
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBSequenceNode new;
+		node: ASTSequenceNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #sequence

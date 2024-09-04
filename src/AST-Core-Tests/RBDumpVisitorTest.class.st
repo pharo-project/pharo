@@ -307,7 +307,7 @@ RBDumpVisitorTest >> testSequenceNodeDump [
 	node := self parseExpression: 'foo. bar.'.
 	dumpedNode := self compiler evaluate: node dump.
 
-	self assert: dumpedNode class equals: RBSequenceNode.
+	self assert: dumpedNode class equals: ASTSequenceNode.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString
 ]

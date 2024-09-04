@@ -1214,7 +1214,7 @@ ReflectivityControlTest >> testInsteadSequence [
 		metaObject: self;
 		control: #instead;
 		selector: #tagExec.
-	self assert: (seqNode isKindOf: RBSequenceNode).
+	self assert: (seqNode isKindOf: ASTSequenceNode).
 	seqNode link: link.
 	self assert: seqNode hasMetalinkInstead.
 	self assert: (ReflectivityExamples >> #exampleAssignment) class equals: ReflectiveMethod.

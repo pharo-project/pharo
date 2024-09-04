@@ -153,7 +153,7 @@ FBDASTBuilder >> codeSelf [
 
 { #category : 'building' }
 FBDASTBuilder >> codeSequence: temps [
-	^ RBSequenceNode temporaries: temps statements: OrderedCollection new
+	^ ASTSequenceNode temporaries: temps statements: OrderedCollection new
 ]
 
 { #category : 'building' }

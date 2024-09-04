@@ -1280,7 +1280,7 @@ RBParser >> selectorNodeClass [
 
 { #category : 'private - classes' }
 RBParser >> sequenceNodeClass [
-	^ RBSequenceNode
+	^ ASTSequenceNode
 ]
 
 { #category : 'accessing' }

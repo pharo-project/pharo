@@ -90,14 +90,14 @@ HookGenerator >> hasOption: aSymbol for: aLink [
 
 { #category : 'results' }
 HookGenerator >> hook [
-	^RBSequenceNode statements: (links collect:  [ :link | self hookFor: link ])
+	^ASTSequenceNode statements: (links collect:  [ :link | self hookFor: link ])
 ]
 
 { #category : 'private' }
 HookGenerator >> hookFor: aLink [
 	| receiver hook arguments |
 
-	(self hasOption: #optionDisabledLink for: aLink) ifTrue: [ ^RBSequenceNode new ].
+	(self hasOption: #optionDisabledLink for: aLink) ifTrue: [ ^ASTSequenceNode new ].
 
 	receiver := aLink metaObject isSymbol
 		ifTrue: [ self genReification: aLink metaObject for: aLink ]
@@ -114,7 +114,7 @@ HookGenerator >> hookFor: aLink [
 		arguments: arguments.
 
 	(self hasOption: #optionOneShot for: aLink) ifTrue: [
-			hook := RBSequenceNode statements: {
+			hook := ASTSequenceNode statements: {
 				ASTMessageNode
 					receiver: (ASTLiteralNode value: aLink)
 					selector: #uninstall.

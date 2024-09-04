@@ -114,7 +114,7 @@ ReGenerateEqualHashTransformation >> compileEqual [
 							(Array
 								with:
 									(ASTBlockNode
-										body: (RBSequenceNode statements: (Array with: statement)))) ] ].
+										body: (ASTSequenceNode statements: (Array with: statement)))) ] ].
 	method
 		addNode: statement;
 		addReturn.

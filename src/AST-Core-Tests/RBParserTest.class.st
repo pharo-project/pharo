@@ -363,7 +363,7 @@ RBParserTest >> testCreationBlockNodeWithExpression [
 	self compare: (self parserClass parseExpression: '[:a :b | a messaged. b messaged.]')
 		  to:(ASTBlockNode
 			   arguments: (OrderedCollection with: (ASTVariableNode named: 'a') with: (ASTVariableNode named: 'b'))
-				body: (RBSequenceNode statements: (OrderedCollection with: (ASTMessageNode receiver: (ASTVariableNode named: #a) selector: (ASTSelectorNode value: #messaged))
+				body: (ASTSequenceNode statements: (OrderedCollection with: (ASTMessageNode receiver: (ASTVariableNode named: #a) selector: (ASTSelectorNode value: #messaged))
 																						with: (ASTMessageNode receiver: (ASTVariableNode named: #b) selector: (ASTSelectorNode value: #messaged)))))
 ]
 
@@ -428,7 +428,7 @@ RBParserTest >> testCreationProtocol [
 		to: (self parserClass parseExpression: 'self + 0').
 	messageNode := ASTMessageNode receiver: (ASTVariableNode selfNode) selector: (ASTSelectorNode value: #foo).
 	self compare: (RBMethodNode selector: #bar
-				body: (RBSequenceNode statements: (OrderedCollection
+				body: (ASTSequenceNode statements: (OrderedCollection
 								with: (ASTCascadeNode messages: (OrderedCollection with: messageNode with: messageNode)))))
 		to: (self parserClass parseMethod: 'bar self foo; foo')
 ]
@@ -1786,7 +1786,7 @@ RBParserTest >> testQuerying [
 	self assert: (arg1Node statementNodeIn: arg1Node methodOrBlockNode body) equals: arg1Node statementNode.
 	self assert: (arg1Node statementNodeIn: tree) equals: tree body statements last.
 	self assert: (arg1Node statementNodeIn: tree body) equals: tree body statements last.
-	self should: [ arg1Node statementNodeIn: RBSequenceNode new ] raise: NotFound.
+	self should: [ arg1Node statementNodeIn: ASTSequenceNode new ] raise: NotFound.
 	self assert: (arg1Node whoDefines: 'arg1') isBlock.
 	self assert: (aNode whoDefines: 'a') isMethod.
 	self assert: (aNode whoDefines: 'b') isSequence.

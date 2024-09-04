@@ -11,7 +11,7 @@ Instance Variables:
 
 "
 Class {
-	#name : 'RBSequenceNode',
+	#name : 'ASTSequenceNode',
 	#superclass : 'ASTProgramNode',
 	#instVars : [
 		'leftBar',
@@ -26,7 +26,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBSequenceNode class >> leftBar: leftInteger temporaries: variableNodes rightBar: rightInteger [
+ASTSequenceNode class >> leftBar: leftInteger temporaries: variableNodes rightBar: rightInteger [
 	^(self new)
 		leftBar: leftInteger
 			temporaries: variableNodes
@@ -35,12 +35,12 @@ RBSequenceNode class >> leftBar: leftInteger temporaries: variableNodes rightBar
 ]
 
 { #category : 'instance creation' }
-RBSequenceNode class >> statements: statementNodes [
+ASTSequenceNode class >> statements: statementNodes [
 	^self temporaries: #() statements: statementNodes
 ]
 
 { #category : 'instance creation' }
-RBSequenceNode class >> temporaries: variableNodes statements: statementNodes [
+ASTSequenceNode class >> temporaries: variableNodes statements: statementNodes [
 	^(self new)
 		temporaries: variableNodes;
 		statements: statementNodes;
@@ -48,7 +48,7 @@ RBSequenceNode class >> temporaries: variableNodes statements: statementNodes [
 ]
 
 { #category : 'comparing' }
-RBSequenceNode >> = anObject [
+ASTSequenceNode >> = anObject [
 	"Can't send = to the temporaries and statements collection since they might change from arrays to OCs"
 
 	self == anObject ifTrue: [^true].
@@ -65,12 +65,12 @@ RBSequenceNode >> = anObject [
 ]
 
 { #category : 'visiting' }
-RBSequenceNode >> acceptVisitor: aProgramNodeVisitor [
+ASTSequenceNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitSequenceNode: self
 ]
 
 { #category : 'adding nodes' }
-RBSequenceNode >> addFaultyNode: aNode [
+ASTSequenceNode >> addFaultyNode: aNode [
 "just like addNode, but ignore if we already include a return node, as we are faulty"
 	aNode parent: self.
 	statements := statements asOrderedCollection
@@ -80,7 +80,7 @@ RBSequenceNode >> addFaultyNode: aNode [
 ]
 
 { #category : 'adding nodes' }
-RBSequenceNode >> addNode: aNode [
+ASTSequenceNode >> addNode: aNode [
 	aNode parent: self.
 	(statements notEmpty and: [ statements last isReturn ])
 		ifTrue: [ self error: 'Cannot add statement after return node' ].
@@ -91,7 +91,7 @@ RBSequenceNode >> addNode: aNode [
 ]
 
 { #category : 'adding nodes' }
-RBSequenceNode >> addNode: aNode after: anotherNode [
+ASTSequenceNode >> addNode: aNode after: anotherNode [
 
 	| index |
 	index := self indexOfNode: anotherNode.
@@ -105,7 +105,7 @@ RBSequenceNode >> addNode: aNode after: anotherNode [
 ]
 
 { #category : 'adding nodes' }
-RBSequenceNode >> addNode: aNode before: anotherNode [
+ASTSequenceNode >> addNode: aNode before: anotherNode [
 	| index |
 	index := self indexOfNode: anotherNode.
 	index = 0
@@ -118,7 +118,7 @@ RBSequenceNode >> addNode: aNode before: anotherNode [
 ]
 
 { #category : 'adding nodes' }
-RBSequenceNode >> addNodeFirst: aNode [
+ASTSequenceNode >> addNodeFirst: aNode [
 	aNode parent: self.
 	statements := statements asOrderedCollection
 		addFirst: aNode;
@@ -127,7 +127,7 @@ RBSequenceNode >> addNodeFirst: aNode [
 ]
 
 { #category : 'adding nodes' }
-RBSequenceNode >> addNodeLast: aNode [
+ASTSequenceNode >> addNodeLast: aNode [
 
 	self lastIsReturn
 		ifTrue: [ self addNode: aNode before: self statements last ]
@@ -135,7 +135,7 @@ RBSequenceNode >> addNodeLast: aNode [
 ]
 
 { #category : 'adding nodes' }
-RBSequenceNode >> addNodes: aCollection [
+ASTSequenceNode >> addNodes: aCollection [
 	aCollection do: [ :each | each parent: self ].
 	(statements notEmpty and: [ statements last isReturn ])
 		ifTrue: [ self error: 'Cannot add statement after return node' ].
@@ -146,13 +146,13 @@ RBSequenceNode >> addNodes: aCollection [
 ]
 
 { #category : 'adding nodes' }
-RBSequenceNode >> addNodes: aCollection before: anotherNode [
+ASTSequenceNode >> addNodes: aCollection before: anotherNode [
 	aCollection do: [ :each | self addNode: each before: anotherNode ].
 	^ aCollection
 ]
 
 { #category : 'adding nodes' }
-RBSequenceNode >> addNodesFirst: aCollection [
+ASTSequenceNode >> addNodesFirst: aCollection [
 	aCollection do: [ :each | each parent: self ].
 	statements := statements asOrderedCollection
 		addAllFirst: aCollection;
@@ -161,7 +161,7 @@ RBSequenceNode >> addNodesFirst: aCollection [
 ]
 
 { #category : 'adding nodes' }
-RBSequenceNode >> addReturn [
+ASTSequenceNode >> addReturn [
 	| node |
 
 	statements isEmpty
@@ -175,7 +175,7 @@ RBSequenceNode >> addReturn [
 ]
 
 { #category : 'adding nodes' }
-RBSequenceNode >> addSelfReturn [
+ASTSequenceNode >> addSelfReturn [
 	| node |
 	self lastIsReturn
 		ifTrue: [ ^ self statements last ].
@@ -184,12 +184,12 @@ RBSequenceNode >> addSelfReturn [
 ]
 
 { #category : 'adding nodes' }
-RBSequenceNode >> addTemporariesNamed: aCollection [
+ASTSequenceNode >> addTemporariesNamed: aCollection [
 	^ aCollection collect: [ :each | self addTemporaryNamed: each ]
 ]
 
 { #category : 'adding nodes' }
-RBSequenceNode >> addTemporaryNamed: aString [
+ASTSequenceNode >> addTemporaryNamed: aString [
 	| variableNode |
 	variableNode := ASTVariableNode named: aString.
 	variableNode parent: self.
@@ -198,14 +198,14 @@ RBSequenceNode >> addTemporaryNamed: aString [
 ]
 
 { #category : 'accessing' }
-RBSequenceNode >> allDefinedVariables [
+ASTSequenceNode >> allDefinedVariables [
 	^(self temporaryNames asOrderedCollection)
 		addAll: super allDefinedVariables;
 		yourself
 ]
 
 { #category : 'accessing' }
-RBSequenceNode >> allStatements [
+ASTSequenceNode >> allStatements [
 
 	^ (OrderedCollection withAll: statements)
 		  addAll: super allStatements;
@@ -213,19 +213,19 @@ RBSequenceNode >> allStatements [
 ]
 
 { #category : 'accessing' }
-RBSequenceNode >> allTemporaryVariables [
+ASTSequenceNode >> allTemporaryVariables [
 	^(self temporaryNames asOrderedCollection)
 		addAll: super allTemporaryVariables;
 		yourself
 ]
 
 { #category : 'converting' }
-RBSequenceNode >> asSequenceNode [
+ASTSequenceNode >> asSequenceNode [
 	^self
 ]
 
 { #category : 'querying' }
-RBSequenceNode >> bestNodeFor: anInterval [
+ASTSequenceNode >> bestNodeFor: anInterval [
 
 	| node intersectingStatements |
 	" if the interval contains myself precisely, return self "
@@ -250,7 +250,7 @@ RBSequenceNode >> bestNodeFor: anInterval [
 ]
 
 { #category : 'accessing' }
-RBSequenceNode >> children [
+ASTSequenceNode >> children [
 	^(OrderedCollection new)
 		addAll: temporaries;
 		addAll: statements;
@@ -258,7 +258,7 @@ RBSequenceNode >> children [
 ]
 
 { #category : 'matching' }
-RBSequenceNode >> copyInContext: aDictionary [
+ASTSequenceNode >> copyInContext: aDictionary [
 	^ self class new
 		temporaries: (self copyList: self temporaries inContext: aDictionary);
 		statements: (self copyList: self statements inContext: aDictionary);
@@ -266,12 +266,12 @@ RBSequenceNode >> copyInContext: aDictionary [
 ]
 
 { #category : 'testing' }
-RBSequenceNode >> defines: aName [
+ASTSequenceNode >> defines: aName [
 	^temporaries anySatisfy: [:each | each name = aName]
 ]
 
 { #category : 'comparing' }
-RBSequenceNode >> equalTo: anObject withMapping: aDictionary [
+ASTSequenceNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class ifFalse: [^false].
 	self statements size = anObject statements size ifFalse: [^false].
 	self statements
@@ -284,13 +284,13 @@ RBSequenceNode >> equalTo: anObject withMapping: aDictionary [
 ]
 
 { #category : 'testing' }
-RBSequenceNode >> hasBlock [
+ASTSequenceNode >> hasBlock [
 
 	^ statements anySatisfy: [ :stm | stm hasBlock ]
 ]
 
 { #category : 'testing' }
-RBSequenceNode >> hasNonLocalReturn [
+ASTSequenceNode >> hasNonLocalReturn [
 	"check if there is a non-local return anywhere
 	Note: returns in a method itself are local returns"
 	^ self lastIsReturn
@@ -299,14 +299,14 @@ RBSequenceNode >> hasNonLocalReturn [
 ]
 
 { #category : 'testing' }
-RBSequenceNode >> hasSameExitPoint [
+ASTSequenceNode >> hasSameExitPoint [
 
 	statements last isReturn ifTrue: [ ^ true ].
 	^ self hasSameExitPoint: false
 ]
 
 { #category : 'testing' }
-RBSequenceNode >> hasSameExitPoint: aBoolean [ 
+ASTSequenceNode >> hasSameExitPoint: aBoolean [ 
 
 	| statementsWithBlocks |
 	aBoolean ifTrue: [ ^ true ].
@@ -317,24 +317,24 @@ RBSequenceNode >> hasSameExitPoint: aBoolean [
 ]
 
 { #category : 'testing' }
-RBSequenceNode >> hasTemporaries [
+ASTSequenceNode >> hasTemporaries [
 
 	^ temporaries isNotEmpty
 ]
 
 { #category : 'testing' }
-RBSequenceNode >> hasTemporaryNamed: aString [
+ASTSequenceNode >> hasTemporaryNamed: aString [
 
 	^ temporaries anySatisfy: [ :temp | temp name = aString ]
 ]
 
 { #category : 'comparing' }
-RBSequenceNode >> hash [
+ASTSequenceNode >> hash [
 	^ (self hashForCollection: self temporaries) bitXor: (self hashForCollection: self statements)
 ]
 
 { #category : 'private' }
-RBSequenceNode >> indexOfNode: aNode [
+ASTSequenceNode >> indexOfNode: aNode [
 	"Try to find the node by first looking for ==, and then for ="
 
 	^(1 to: statements size) detect: [:each | (statements at: each) == aNode]
@@ -342,7 +342,7 @@ RBSequenceNode >> indexOfNode: aNode [
 ]
 
 { #category : 'initialization' }
-RBSequenceNode >> initialize [
+ASTSequenceNode >> initialize [
 
 	super initialize.
 	periods := OrderedCollection new.
@@ -351,19 +351,19 @@ RBSequenceNode >> initialize [
 ]
 
 { #category : 'testing' }
-RBSequenceNode >> isEssentialChild: aNode [
+ASTSequenceNode >> isEssentialChild: aNode [
 	^false
 ]
 
 { #category : 'errors' }
-RBSequenceNode >> isFaulty [
+ASTSequenceNode >> isFaulty [
 	self isError ifTrue: [ ^ true ].
 	(self temporaries anySatisfy: [:each | each isFaulty]) ifTrue:[ ^true ].
 	^self statements anySatisfy: [:each | each isFaulty]
 ]
 
 { #category : 'testing' }
-RBSequenceNode >> isLast: aNode [
+ASTSequenceNode >> isLast: aNode [
 	| last |
 	statements isEmpty ifTrue: [^false].
 	last := statements last.
@@ -374,12 +374,12 @@ RBSequenceNode >> isLast: aNode [
 ]
 
 { #category : 'testing' }
-RBSequenceNode >> isSequence [
+ASTSequenceNode >> isSequence [
 	^true
 ]
 
 { #category : 'testing' }
-RBSequenceNode >> isUsingAsReturnValue: aNode [
+ASTSequenceNode >> isUsingAsReturnValue: aNode [
 	statements isEmpty ifTrue: [^false].
 	aNode == statements last ifFalse: [^false].
 	"We will come to this line only if the `aNode` is the last node in the sequence.
@@ -390,29 +390,29 @@ RBSequenceNode >> isUsingAsReturnValue: aNode [
 ]
 
 { #category : 'testing' }
-RBSequenceNode >> lastIsReturn [
+ASTSequenceNode >> lastIsReturn [
 	^statements notEmpty and: [statements last lastIsReturn]
 ]
 
 { #category : 'accessing - token' }
-RBSequenceNode >> leftBar [
+ASTSequenceNode >> leftBar [
 	^ leftBar
 ]
 
 { #category : 'accessing - token' }
-RBSequenceNode >> leftBar: anInteger [
+ASTSequenceNode >> leftBar: anInteger [
 	leftBar := anInteger
 ]
 
 { #category : 'initialization' }
-RBSequenceNode >> leftBar: leftInteger temporaries: variableNodes rightBar: rightInteger [
+ASTSequenceNode >> leftBar: leftInteger temporaries: variableNodes rightBar: rightInteger [
 	leftBar := leftInteger.
 	self temporaries: variableNodes.
 	rightBar := rightInteger
 ]
 
 { #category : 'matching' }
-RBSequenceNode >> match: aNode inContext: aDictionary [
+ASTSequenceNode >> match: aNode inContext: aDictionary [
 	self class = aNode class ifFalse: [^false].
 	^(self
 		matchList: temporaries
@@ -425,29 +425,29 @@ RBSequenceNode >> match: aNode inContext: aDictionary [
 ]
 
 { #category : 'accessing - token' }
-RBSequenceNode >> periods [
+ASTSequenceNode >> periods [
 	^ periods
 ]
 
 { #category : 'accessing - token' }
-RBSequenceNode >> periods: anArray [
+ASTSequenceNode >> periods: anArray [
 	periods := anArray
 ]
 
 { #category : 'copying' }
-RBSequenceNode >> postCopy [
+ASTSequenceNode >> postCopy [
 	super postCopy.
 	self temporaries: (self temporaries collect: [ :each | each copy ]).
 	self statements: (self statements collect: [ :each | each copy ])
 ]
 
 { #category : 'testing' }
-RBSequenceNode >> references: aVariableName [
+ASTSequenceNode >> references: aVariableName [
 	^statements anySatisfy: [:each | each references: aVariableName]
 ]
 
 { #category : 'replacing' }
-RBSequenceNode >> removeDeadCode [
+ASTSequenceNode >> removeDeadCode [
 	(self isUsedAsReturnValue ifTrue: [statements size - 1] ifFalse: [statements size])
 		to: 1
 		by: -1
@@ -461,17 +461,17 @@ RBSequenceNode >> removeDeadCode [
 ]
 
 { #category : 'replacing' }
-RBSequenceNode >> removeNode: aNode [
+ASTSequenceNode >> removeNode: aNode [
 	self replaceNode: aNode withNodes: #()
 ]
 
 { #category : 'accessing' }
-RBSequenceNode >> removeTemporaryNamed: aName [
+ASTSequenceNode >> removeTemporaryNamed: aName [
 	temporaries := temporaries reject: [:each | each name = aName]
 ]
 
 { #category : 'replacing' }
-RBSequenceNode >> replaceNode: aNode withNode: anotherNode [
+ASTSequenceNode >> replaceNode: aNode withNode: anotherNode [
 	self statements: (statements
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]]).
 	self temporaries: (temporaries
@@ -479,7 +479,7 @@ RBSequenceNode >> replaceNode: aNode withNode: anotherNode [
 ]
 
 { #category : 'replacing' }
-RBSequenceNode >> replaceNode: aNode withNodes: aCollection [
+ASTSequenceNode >> replaceNode: aNode withNodes: aCollection [
 	| index newStatements |
 	self clearReplacements.
 	index := self indexOfNode: aNode.
@@ -493,34 +493,34 @@ RBSequenceNode >> replaceNode: aNode withNodes: aCollection [
 ]
 
 { #category : 'accessing - token' }
-RBSequenceNode >> rightBar [
+ASTSequenceNode >> rightBar [
 	^ rightBar
 ]
 
 { #category : 'accessing - token' }
-RBSequenceNode >> rightBar: anInteger [
+ASTSequenceNode >> rightBar: anInteger [
 	rightBar := anInteger
 ]
 
 { #category : 'accessing' }
-RBSequenceNode >> start [
+ASTSequenceNode >> start [
 	^ leftBar
 		ifNil: [statements isEmpty ifTrue: [1] ifFalse: [statements first start]]
 ]
 
 { #category : 'accessing' }
-RBSequenceNode >> statements [
+ASTSequenceNode >> statements [
 	^statements
 ]
 
 { #category : 'accessing' }
-RBSequenceNode >> statements: stmtCollection [
+ASTSequenceNode >> statements: stmtCollection [
 	statements := stmtCollection.
 	statements do: [:each | each parent: self]
 ]
 
 { #category : 'querying' }
-RBSequenceNode >> statementsIntersectingInterval: anInterval [
+ASTSequenceNode >> statementsIntersectingInterval: anInterval [
 
 	| found |
 	found := #(  ) asOrderedCollection.
@@ -534,7 +534,7 @@ RBSequenceNode >> statementsIntersectingInterval: anInterval [
 ]
 
 { #category : 'accessing' }
-RBSequenceNode >> stop [
+ASTSequenceNode >> stop [
 	^{
 	temporaries isEmpty ifTrue: [0] ifFalse: [ self temporaries last stop].
 	periods isEmpty ifTrue: [0] ifFalse: [periods last].
@@ -543,36 +543,36 @@ RBSequenceNode >> stop [
 ]
 
 { #category : 'accessing' }
-RBSequenceNode >> temporaries [
+ASTSequenceNode >> temporaries [
 	^temporaries
 ]
 
 { #category : 'accessing' }
-RBSequenceNode >> temporaries: tempCollection [
+ASTSequenceNode >> temporaries: tempCollection [
 	temporaries := tempCollection.
 	temporaries do: [:each | each parent: self]
 ]
 
 { #category : 'accessing' }
-RBSequenceNode >> temporaryNames [
+ASTSequenceNode >> temporaryNames [
 	^temporaries collect: [:each | each name]
 ]
 
 { #category : 'accessing' }
-RBSequenceNode >> temporaryVariables [
+ASTSequenceNode >> temporaryVariables [
 	^(super temporaryVariables asOrderedCollection)
 		addAll: self temporaryNames;
 		yourself
 ]
 
 { #category : 'adding nodes' }
-RBSequenceNode >> transformLastToReturn [
+ASTSequenceNode >> transformLastToReturn [
 	"transform the last statement, but this method returns the sequence, not the returnNode"
 	self addReturn
 ]
 
 { #category : 'querying' }
-RBSequenceNode >> whichNodeIsContainedBy: anInterval [
+ASTSequenceNode >> whichNodeIsContainedBy: anInterval [
 	| node |
 	node := super whichNodeIsContainedBy: anInterval.
 	node == self

@@ -129,7 +129,7 @@ NautilusRefactoring >> selectVariableToMoveMethodTo: aSelector class: aClass [
 
 	parseTree := aClass parseTreeForSelector: aSelector.
 	parseTree
-		ifNil: [ parseTree := RBMethodNode selector: #value body: ( RBSequenceNode statements: #() ) ].
+		ifNil: [ parseTree := RBMethodNode selector: #value body: ( ASTSequenceNode statements: #() ) ].
 	nameList := OrderedCollection new.
 	nameList
 		addAll: parseTree argumentNames sorted;

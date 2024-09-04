@@ -6,7 +6,7 @@ RBParseTreeRewriter class >> replaceStatements: code with: newCode in: aParseTre
 	| tree replaceStmt |
 	tree := self buildTree: code method: false.
 	tree isSequence
-		ifFalse: [tree := RBSequenceNode statements: (Array with: tree)].
+		ifFalse: [tree := ASTSequenceNode statements: (Array with: tree)].
 	tree temporaries: (Array with: (ASTPatternVariableNode named: '`@temps')).
 	tree addNodeFirst: (ASTPatternVariableNode named: '`@.S1').
 	tree lastIsReturn ifTrue: [replaceStmt := '| `@temps | `@.S1. ^' , newCode].

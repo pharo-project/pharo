@@ -245,7 +245,7 @@ FBDDecompiler >> extractFullBlock: aCompiledBlock numCopied: numCopied [
 { #category : 'private' }
 FBDDecompiler >> generateNativeBoostCallErrorMethodFrom: aCompiledMethod [
 	| seq args |
-	seq := RBSequenceNode
+	seq := ASTSequenceNode
 		statements:
 			{ASTMessageNode receiver: (ASTVariableNode named: #CannotDecompileNativeBoostCalls) selector: #signal arguments: #()}.
 	args := OrderedCollection new.

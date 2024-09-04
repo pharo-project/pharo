@@ -209,7 +209,7 @@ RBExtractMethodRefactoring >> extractMethod [
 		body:
 			(extractedParseTree isSequence
 				ifTrue: [ extractedParseTree ]
-				ifFalse: [ RBSequenceNode
+				ifFalse: [ ASTSequenceNode
 						temporaries: #()
 						statements: (OrderedCollection with: extractedParseTree) ]).
 	extractedParseTree body temporaries

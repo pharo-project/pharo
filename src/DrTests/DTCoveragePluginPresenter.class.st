@@ -92,7 +92,7 @@ DTCoveragePluginPresenter >> defineColorCoverage: aMethod [
 		node isSequence ifTrue: [
 			node hasBeenExecuted
 				ifTrue: [
-					(self hasRBSequenceNodeInside: node) ifFalse: [
+					(self hasSequenceNodeInside: node) ifFalse: [
 						coveredNodes add: node ] ]
 				ifFalse: [ uncoveredNodes add: node ] ].
 
@@ -112,7 +112,7 @@ DTCoveragePluginPresenter >> defineColorMessageNode: aMessageNode [
 ]
 
 { #category : 'highlighting' }
-DTCoveragePluginPresenter >> hasRBSequenceNodeInside: aSequenceNode [
+DTCoveragePluginPresenter >> hasSequenceNodeInside: aSequenceNode [
 
 	^ aSequenceNode statements anySatisfy: [ :statement |
 		  statement allChildren anySatisfy: [ :node | node isSequence ] ]
