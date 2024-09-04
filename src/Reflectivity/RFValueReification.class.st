@@ -61,6 +61,11 @@ RFValueReification >> genForASTLiteralValueNode [
 ]
 
 { #category : 'generate' }
+RFValueReification >> genForASTMessageNode [
+	^ASTVariableNode named: self varName
+]
+
+{ #category : 'generate' }
 RFValueReification >> genForASTReturnNode [
 	^ASTVariableNode named: self varName
 ]
@@ -77,7 +82,7 @@ RFValueReification >> genForASTVariableNode [
 RFValueReification >> genForInstanceVariableSlot [
 	"entity in this case is the binding of the instance variable"
 
-	^ RBMessageNode
+	^ ASTMessageNode
 		receiver: (ASTLiteralNode value: entity)
 		selector: #read:
 		arguments: {ASTVariableNode selfNode}
@@ -87,11 +92,6 @@ RFValueReification >> genForInstanceVariableSlot [
 RFValueReification >> genForLiteralVariable [
 	"entity in this case is the binding of the literal"
 	^ASTLiteralNode value: entity value
-]
-
-{ #category : 'generate' }
-RFValueReification >> genForRBMessageNode [
-	^ASTVariableNode named: self varName
 ]
 
 { #category : 'generate' }

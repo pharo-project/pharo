@@ -115,7 +115,7 @@ FBDASTBuilder >> codeLoopNode: bool condition: seq1 body: seq2 [
 
 { #category : 'building' }
 FBDASTBuilder >> codeMessage: selector receiver: rcvr arguments:args [
-	^ RBMessageNode receiver: rcvr selector: selector arguments: args
+	^ ASTMessageNode receiver: rcvr selector: selector arguments: args
 ]
 
 { #category : 'building' }

@@ -104,7 +104,7 @@ HookGenerator >> hookFor: aLink [
 		ifFalse: [
 			(self hasOption: #optionInlineMetaObject for: aLink)
 				ifTrue: [ASTLiteralNode value: aLink metaObject]
-				ifFalse: [RBMessageNode receiver: (ASTLiteralNode value: aLink)
+				ifFalse: [ASTMessageNode receiver: (ASTLiteralNode value: aLink)
 											 selector: #metaObject ]].
 	arguments := self generateArguments: aLink.
 
@@ -115,7 +115,7 @@ HookGenerator >> hookFor: aLink [
 
 	(self hasOption: #optionOneShot for: aLink) ifTrue: [
 			hook := RBSequenceNode statements: {
-				RBMessageNode
+				ASTMessageNode
 					receiver: (ASTLiteralNode value: aLink)
 					selector: #uninstall.
 				hook }].
@@ -193,10 +193,10 @@ HookGenerator >> wrapCondition: hook link: aLink [
 	].
 
 	linkBlock := self encloseInBlock: hook asSequenceNode.
-	conditionExpression := RBMessageNode
+	conditionExpression := ASTMessageNode
 			receiver: ((self hasOption: #optionInlineCondition for: aLink)
 				ifTrue: [ASTLiteralNode value: aLink condition]
-				ifFalse:[RBMessageNode receiver: (ASTLiteralNode value: aLink)
+				ifFalse:[ASTMessageNode receiver: (ASTLiteralNode value: aLink)
 											 selector: #condition ])
 			selector: condSelector
 			arguments: condArguments.

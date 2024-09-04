@@ -1,6 +1,6 @@
-Extension { #name : 'RBMessageNode' }
+Extension { #name : 'ASTMessageNode' }
 
 { #category : '*SystemCommands-SourceCodeCommands' }
-RBMessageNode >> displaySourceCode [
+ASTMessageNode >> displaySourceCode [
 	^ selector value asString asSymbol
 ]

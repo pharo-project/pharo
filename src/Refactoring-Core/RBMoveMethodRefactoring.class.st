@@ -157,7 +157,7 @@ RBMoveMethodRefactoring >> checkTemporaryVariableNames [
 { #category : 'transforming' }
 RBMoveMethodRefactoring >> compileDelegatorMethod [
 	| statementNode delegatorNode tree |
-	delegatorNode := RBMessageNode
+	delegatorNode := ASTMessageNode
 		                 receiver: (ASTVariableNode named: variable)
 		                 selector: parseTree selector
 		                 keywordsPositions: parseTree keywordsPositions

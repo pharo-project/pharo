@@ -13,7 +13,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFMethodToExecuteReification class >> entities [
-	^{RBMessageNode}
+	^{ASTMessageNode}
 ]
 
 { #category : 'plugin interface' }
@@ -22,9 +22,9 @@ RFMethodToExecuteReification class >> key [
 ]
 
 { #category : 'generate' }
-RFMethodToExecuteReification >> genForRBMessageNode [
-	^RBMessageNode
-		receiver: (RBMessageNode receiver: (ASTVariableNode named: #RFReceiverReificationVar) selector: #class)
+RFMethodToExecuteReification >> genForASTMessageNode [
+	^ASTMessageNode
+		receiver: (ASTMessageNode receiver: (ASTVariableNode named: #RFReceiverReificationVar) selector: #class)
 		selector: #lookupSelector:
 		arguments: (ASTLiteralValueNode value: entity selector)
 ]

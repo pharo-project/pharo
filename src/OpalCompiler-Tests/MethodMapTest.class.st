@@ -178,7 +178,7 @@ MethodMapTest >> testMethodSourceNodeAtInitialPC [
 
 { #category : 'tests - ast mapping' }
 MethodMapTest >> testMethodSourceNodeAtPC [
-	self assert: (((Object>>#halt) sourceNodeForPC:  (Smalltalk vm for32bit: 22 for64bit: 42)) isKindOf: RBMessageNode)
+	self assert: (((Object>>#halt) sourceNodeForPC:  (Smalltalk vm for32bit: 22 for64bit: 42)) isKindOf: ASTMessageNode)
 ]
 
 { #category : 'tests - ast mapping' }

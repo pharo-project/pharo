@@ -37,7 +37,7 @@ ASTPatternBlockNode >> addArgumentWithNameBasedOn: aString to: aBlockNode [
 
 { #category : 'matching' }
 ASTPatternBlockNode >> constructLookupNodeFor: aString in: aBlockNode [
-	^ RBMessageNode
+	^ ASTMessageNode
 		  receiver: ASTVariableNode selfNode
 		  selector: #lookupMatchFor:in:
 		  arguments: (Array with: (ASTLiteralNode value: aString) with: aBlockNode arguments last copy)

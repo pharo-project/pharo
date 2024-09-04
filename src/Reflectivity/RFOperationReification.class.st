@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFOperationReification class >> entities [
-	^{ASTVariableNode. RBMessageNode. RBMethodNode . ASTReturnNode. ASTAssignmentNode. ASTLiteralNode. ASTBlockNode . ASTLiteralArrayNode. ASTArrayNode}
+	^{ASTVariableNode. ASTMessageNode. RBMethodNode . ASTReturnNode. ASTAssignmentNode. ASTLiteralNode. ASTBlockNode . ASTLiteralArrayNode. ASTArrayNode}
 ]
 
 { #category : 'plugin interface' }
@@ -53,7 +53,7 @@ RFOperationReification >> genForASTBlockNode [
 	| blockNode |
 
 	blockNode := RBParser parseExpression: entity formattedCode.
-	^RBMessageNode
+	^ASTMessageNode
 		receiver: (ASTVariableNode named: #RFBlockOperation)
 		selector: #block:
 		arguments: {blockNode}
@@ -69,6 +69,14 @@ RFOperationReification >> genForASTLiteralArrayNode [
 RFOperationReification >> genForASTLiteralValueNode [
 	"same as #value, no need to wrap as the literal understands #value"
 	^ASTLiteralNode value: entity value
+]
+
+{ #category : 'generate' }
+RFOperationReification >> genForASTMessageNode [
+	^RBParser parseExpression: ('RFMessageOperation
+			receiver: RFReceiverReificationVar
+			selector: #{1}
+			arguments: RFArgumentsReificationVar.' format: {entity selector})
 ]
 
 { #category : 'generate' }
@@ -99,14 +107,6 @@ RFOperationReification >> genForASTVariableNode [
 		].
 
 	self error: 'not supported'
-]
-
-{ #category : 'generate' }
-RFOperationReification >> genForRBMessageNode [
-	^RBParser parseExpression: ('RFMessageOperation
-			receiver: RFReceiverReificationVar
-			selector: #{1}
-			arguments: RFArgumentsReificationVar.' format: {entity selector})
 ]
 
 { #category : 'generate' }

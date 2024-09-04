@@ -254,7 +254,7 @@ RBMethodNodeTest >> testNodeForOffsetMessage [
 	foundNode := ast nodeForOffset: 9.
 	self assert: foundNode class identicalTo: ASTVariableNode.
 	foundNode := ast nodeForOffset: 14.
-	self assert: foundNode class identicalTo: RBMessageNode.
+	self assert: foundNode class identicalTo: ASTMessageNode.
 	foundNode := ast nodeForOffset: 22.
 	self assert: foundNode class identicalTo: ASTVariableNode
 ]

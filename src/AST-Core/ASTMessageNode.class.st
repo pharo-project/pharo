@@ -10,7 +10,7 @@ Instance Variables:
 
 "
 Class {
-	#name : 'RBMessageNode',
+	#name : 'ASTMessageNode',
 	#superclass : 'ASTValueNode',
 	#instVars : [
 		'receiver',
@@ -25,7 +25,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBMessageNode class >> receiver: aValueNode selector: aSelector [
+ASTMessageNode class >> receiver: aValueNode selector: aSelector [
 	^self
 		receiver: aValueNode
 		selector: aSelector
@@ -33,7 +33,7 @@ RBMessageNode class >> receiver: aValueNode selector: aSelector [
 ]
 
 { #category : 'instance creation' }
-RBMessageNode class >> receiver: aValueNode selector: aSelector arguments: valueNodes [
+ASTMessageNode class >> receiver: aValueNode selector: aSelector arguments: valueNodes [
 	^self
 		receiver: aValueNode
 		selector: aSelector
@@ -42,7 +42,7 @@ RBMessageNode class >> receiver: aValueNode selector: aSelector arguments: value
 ]
 
 { #category : 'instance creation' }
-RBMessageNode class >> receiver: aValueNode selector: aSelector keywordsPositions: positionList arguments: valueNodes [
+ASTMessageNode class >> receiver: aValueNode selector: aSelector keywordsPositions: positionList arguments: valueNodes [
 	^(self new)
 		receiver: aValueNode
 			selector: aSelector
@@ -52,7 +52,7 @@ RBMessageNode class >> receiver: aValueNode selector: aSelector keywordsPosition
 ]
 
 { #category : 'comparing' }
-RBMessageNode >> = anObject [
+ASTMessageNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
 	(self receiver = anObject receiver
@@ -64,30 +64,30 @@ RBMessageNode >> = anObject [
 ]
 
 { #category : 'visiting' }
-RBMessageNode >> acceptVisitor: aProgramNodeVisitor [
+ASTMessageNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitMessageNode: self
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> argumentPartStrings [
+ASTMessageNode >> argumentPartStrings [
 	"Return a collection of string representing the code of the argument."
 	^ arguments collect: [ :each | each formattedCode asString
 			"strangely enough literal formatted code is not a string" ]
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> arguments [
+ASTMessageNode >> arguments [
 	^arguments ifNil: [#()] ifNotNil: [arguments]
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> arguments: argCollection [
+ASTMessageNode >> arguments: argCollection [
 	arguments := argCollection.
 	arguments do: [:each | each parent: self]
 ]
 
 { #category : 'querying' }
-RBMessageNode >> bestNodeFor: anInterval [
+ASTMessageNode >> bestNodeFor: anInterval [
 	| comments |
 	(self intersectsInterval: anInterval) ifFalse: [ ^nil ] .
 	(self containedBy: anInterval) ifTrue: [^self].
@@ -106,14 +106,14 @@ RBMessageNode >> bestNodeFor: anInterval [
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> children [
+ASTMessageNode >> children [
 	^(OrderedCollection with: receiver)
 		addAll: arguments;
 		yourself
 ]
 
 { #category : 'matching' }
-RBMessageNode >> copyInContext: aDictionary [
+ASTMessageNode >> copyInContext: aDictionary [
 	^self class
 		receiver: (self receiver copyInContext: aDictionary)
 		selector: self selectorNode
@@ -121,19 +121,19 @@ RBMessageNode >> copyInContext: aDictionary [
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> debugHighlightStart [
+ASTMessageNode >> debugHighlightStart [
 
 	^ self  keywordsPositions first
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> debugHighlightStop [
+ASTMessageNode >> debugHighlightStop [
 
 	^ self stopWithoutParentheses
 ]
 
 { #category : 'comparing' }
-RBMessageNode >> equalTo: anObject withMapping: aDictionary [
+ASTMessageNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class ifFalse: [^false].
 	((self receiver equalTo: anObject receiver withMapping: aDictionary)
 		and: [self selector = anObject selector]) ifFalse: [^false].
@@ -144,111 +144,111 @@ RBMessageNode >> equalTo: anObject withMapping: aDictionary [
 ]
 
 { #category : 'testing' }
-RBMessageNode >> hasBlock [
+ASTMessageNode >> hasBlock [
 
 	^ receiver hasBlock | (arguments anySatisfy: [ :arg | arg hasBlock ])
 ]
 
 { #category : 'testing' }
-RBMessageNode >> hasSameExitPoint: aBoolean [
+ASTMessageNode >> hasSameExitPoint: aBoolean [
 
 	^ (receiver hasSameExitPoint: aBoolean )
 	& (arguments allSatisfy: [ :arg | arg hasSameExitPoint: aBoolean ])
 ]
 
 { #category : 'comparing' }
-RBMessageNode >> hash [
+ASTMessageNode >> hash [
 	^ (self receiver hash bitXor: self selector hash) bitXor: (self hashForCollection: self arguments)
 ]
 
 { #category : 'testing' }
-RBMessageNode >> isAnnotation [
+ASTMessageNode >> isAnnotation [
 	^ self receiver isAnnotationMark
 ]
 
 { #category : 'testing' }
-RBMessageNode >> isBinary [
+ASTMessageNode >> isBinary [
 	^(self isUnary or: [self isKeyword]) not
 ]
 
 { #category : 'testing' }
-RBMessageNode >> isCascaded [
+ASTMessageNode >> isCascaded [
 	^parent isNotNil and: [parent isCascade]
 ]
 
 { #category : 'private - replacing' }
-RBMessageNode >> isContainmentReplacement: aNode [
+ASTMessageNode >> isContainmentReplacement: aNode [
 	^(self mappingFor: self receiver) = aNode
 		or: [self arguments anySatisfy: [:each | (self mappingFor: each) = aNode]]
 ]
 
 { #category : 'errors' }
-RBMessageNode >> isFaulty [
+ASTMessageNode >> isFaulty [
 	self isError ifTrue: [ ^ true ].
 	^self receiver isFaulty or: [self arguments anySatisfy: [:each | each isFaulty]]
 ]
 
 { #category : 'testing' }
-RBMessageNode >> isFirstCascaded [
+ASTMessageNode >> isFirstCascaded [
 	^self isCascaded and: [parent messages first == self]
 ]
 
 { #category : 'testing' }
-RBMessageNode >> isHaltNode [
+ASTMessageNode >> isHaltNode [
 
 	^ (#( #halt #halt: #haltIf: #haltOnce #haltIfNil #haltOnCount: ) includes: self selector) or: [
 		  self receiver isGlobalVariable and: [ self receiver variable value = Halt and: [ (Halt class selectorsInProtocol: #halting) includes: self selector ] ] ]
 ]
 
 { #category : 'testing' }
-RBMessageNode >> isKeyword [
+ASTMessageNode >> isKeyword [
 	^ self selector isKeyword
 ]
 
 { #category : 'testing' }
-RBMessageNode >> isMessage [
+ASTMessageNode >> isMessage [
 	^true
 ]
 
 { #category : 'testing' }
-RBMessageNode >> isSelfSend [
+ASTMessageNode >> isSelfSend [
 	^ self receiver isSelfVariable
 ]
 
 { #category : 'testing' }
-RBMessageNode >> isSuperSend [
+ASTMessageNode >> isSuperSend [
 	^ self receiver isSuperVariable
 ]
 
 { #category : 'testing' }
-RBMessageNode >> isUnary [
+ASTMessageNode >> isUnary [
 	^arguments isEmpty
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> keywords [
+ASTMessageNode >> keywords [
 	^ self selector keywords
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> keywordsIntervals [
+ASTMessageNode >> keywordsIntervals [
 	^ self selector keywords
 		with: self keywordsPositions
 		collect: [ :keyword :start | start to: (start == 0 ifTrue: [ -1 ] ifFalse: [ start + keyword size - 1]) ]
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> keywordsPositions [
+ASTMessageNode >> keywordsPositions [
 	^keywordsPositions ifNil: [ IntegerArray new: self selector keywords size withAll: 0 ]
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> keywordsPositions: aPositionsList [
+ASTMessageNode >> keywordsPositions: aPositionsList [
 	keywordsPositions := aPositionsList ifNotNil: [:list| list asIntegerArray ]
 ]
 
 { #category : 'testing' }
-RBMessageNode >> lastIsReturn [
+ASTMessageNode >> lastIsReturn [
 	"Ideally, we want to remove this method so it returns false like the superclass"
 	(self isInlineIf or: [ self isInlineIfNil]) ifFalse: [ ^false ].
 	arguments size = 1 ifTrue: [ ^false ].
@@ -257,7 +257,7 @@ RBMessageNode >> lastIsReturn [
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> leftmostChainReceiver [
+ASTMessageNode >> leftmostChainReceiver [
 
 	^ self receiver isMessage
 		ifTrue: [ self receiver receiver ]
@@ -265,7 +265,7 @@ RBMessageNode >> leftmostChainReceiver [
 ]
 
 { #category : 'matching' }
-RBMessageNode >> match: aNode inContext: aDictionary [
+ASTMessageNode >> match: aNode inContext: aDictionary [
 	aNode class = self class ifFalse: [^false].
 	self selector = aNode selector ifFalse: [^false].
 	(receiver match: aNode receiver inContext: aDictionary) ifFalse: [^false].
@@ -276,7 +276,7 @@ RBMessageNode >> match: aNode inContext: aDictionary [
 ]
 
 { #category : 'testing' }
-RBMessageNode >> needsParenthesis [
+ASTMessageNode >> needsParenthesis [
 	^parent
 		ifNil: [false]
 		ifNotNil:
@@ -285,37 +285,37 @@ RBMessageNode >> needsParenthesis [
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> numArgs [
+ASTMessageNode >> numArgs [
 	^self selector numArgs
 ]
 
 { #category : 'copying' }
-RBMessageNode >> postCopy [
+ASTMessageNode >> postCopy [
 	super postCopy.
 	self receiver: self receiver copy.
 	self arguments: (self arguments collect: [ :each | each copy ])
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> precedence [
+ASTMessageNode >> precedence [
 	^self isUnary
 		ifTrue: [1]
 		ifFalse: [self isKeyword ifTrue: [3] ifFalse: [2]]
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> receiver [
+ASTMessageNode >> receiver [
 	^receiver
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> receiver: aValueNode [
+ASTMessageNode >> receiver: aValueNode [
 	receiver := aValueNode.
 	receiver parent: self
 ]
 
 { #category : 'initialization' }
-RBMessageNode >> receiver: aValueNode selector: aSelector keywordsPositions: positionList arguments: valueNodes [
+ASTMessageNode >> receiver: aValueNode selector: aSelector keywordsPositions: positionList arguments: valueNodes [
 	aSelector numArgs == valueNodes size
 		ifFalse:
 			[self error: 'Attempting to assign selector with wrong number of arguments.'].
@@ -328,26 +328,26 @@ RBMessageNode >> receiver: aValueNode selector: aSelector keywordsPositions: pos
 ]
 
 { #category : 'adding-removing' }
-RBMessageNode >> removeFromTree [
+ASTMessageNode >> removeFromTree [
 
 	self parent removeNode: self
 ]
 
 { #category : 'adding-removing' }
-RBMessageNode >> removeNode: aNode [
+ASTMessageNode >> removeNode: aNode [
 
 	self replaceNode: aNode withNode: aNode receiver
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> renameSelector: newSelector andArguments: varNodeCollection [
+ASTMessageNode >> renameSelector: newSelector andArguments: varNodeCollection [
 	self
 		arguments: varNodeCollection;
 		selector: newSelector
 ]
 
 { #category : 'private - replacing' }
-RBMessageNode >> replaceContainmentSourceWith: aNode [
+ASTMessageNode >> replaceContainmentSourceWith: aNode [
 	| originalNode needsParenthesis |
 	needsParenthesis := aNode hasParentheses not and: [aNode needsParenthesis].
 	originalNode := (self mappingFor: self receiver) = aNode
@@ -365,7 +365,7 @@ RBMessageNode >> replaceContainmentSourceWith: aNode [
 ]
 
 { #category : 'replacing' }
-RBMessageNode >> replaceNode: aNode withNode: anotherNode [
+ASTMessageNode >> replaceNode: aNode withNode: anotherNode [
 	"If we're inside a cascade node and are changing the receiver, change all the receivers"
 
 	receiver == aNode
@@ -378,7 +378,7 @@ RBMessageNode >> replaceNode: aNode withNode: anotherNode [
 ]
 
 { #category : 'private - replacing' }
-RBMessageNode >> replaceSourceWith: aNode [
+ASTMessageNode >> replaceSourceWith: aNode [
 	(self isContainmentReplacement: aNode)
 		ifTrue: [^self replaceContainmentSourceWith: aNode].
 	aNode isMessage ifFalse: [^super replaceSourceWith: aNode].
@@ -386,7 +386,7 @@ RBMessageNode >> replaceSourceWith: aNode [
 ]
 
 { #category : 'private - replacing' }
-RBMessageNode >> replaceSourceWithMessageNode: aNode [
+ASTMessageNode >> replaceSourceWithMessageNode: aNode [
 	| isBinaryToKeyword newSelectorParts  oldkeywordsIntervals|
 	self numArgs = aNode numArgs ifFalse: [^super replaceSourceWith: aNode].
 	self arguments with: aNode arguments
@@ -431,12 +431,12 @@ RBMessageNode >> replaceSourceWithMessageNode: aNode [
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> selector [
+ASTMessageNode >> selector [
 	^ selector value
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> selector: aSelector [
+ASTMessageNode >> selector: aSelector [
 	keywordsPositions := nil.
 	selector := aSelector isString
 		ifTrue: [ RBSelectorNode value: aSelector ]
@@ -445,7 +445,7 @@ RBMessageNode >> selector: aSelector [
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> selectorAndArgumentNames [
+ASTMessageNode >> selectorAndArgumentNames [
 	"Returns the selector and argument names portion of a method as a string"
 
 	^ self arguments
@@ -463,33 +463,33 @@ RBMessageNode >> selectorAndArgumentNames [
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> selectorInterval [
+ASTMessageNode >> selectorInterval [
 	| positions |
 	positions := self keywordsIntervals.
 	^positions first first to: positions last last
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> selectorNode [
+ASTMessageNode >> selectorNode [
 	^selector
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> selectorParts [
+ASTMessageNode >> selectorParts [
 	"Returns a collection containing all the selector composing a message"
 
 	^ self keywords collect: [ :each | each asSymbol]
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> sentMessages [
+ASTMessageNode >> sentMessages [
 	^ super sentMessages
 		add: self selector;
 		yourself
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> start: newStart [
+ASTMessageNode >> start: newStart [
 	| oldStart |
 
 	oldStart := self start.
@@ -498,25 +498,25 @@ RBMessageNode >> start: newStart [
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> startWithoutParentheses [
+ASTMessageNode >> startWithoutParentheses [
 	^receiver start
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> stopWithoutParentheses [
+ASTMessageNode >> stopWithoutParentheses [
 	^arguments isEmpty
 		ifTrue: [self keywordsIntervals first last]
 		ifFalse: [arguments last stop]
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> superOf [
+ASTMessageNode >> superOf [
 
 	^ superOf
 ]
 
 { #category : 'accessing' }
-RBMessageNode >> superOf: anObject [
+ASTMessageNode >> superOf: anObject [
 
 	superOf := anObject
 ]

@@ -59,7 +59,7 @@ RBMethodNode >> ensureCachedArgumentNames [
 { #category : '*OpalCompiler-Core' }
 RBMethodNode class >> errorMethodNode: selector errorMessage: messageText [
 	| message |
-	message := RBMessageNode
+	message := ASTMessageNode
 		receiver: ASTVariableNode selfNode
 		selector: #error:
 		arguments: {ASTLiteralNode value: messageText}.

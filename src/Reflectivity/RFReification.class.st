@@ -94,6 +94,11 @@ RFReification >> genForASTLiteralValueNode [
 ]
 
 { #category : 'generate' }
+RFReification >> genForASTMessageNode [
+	^self genForASTProgramNode
+]
+
+{ #category : 'generate' }
 RFReification >> genForASTProgramNode [
 	"overriden in subclass if needed"
 ]
@@ -136,11 +141,6 @@ RFReification >> genForRBArgumentNode [
 { #category : 'generate' }
 RFReification >> genForRBGlobalNode [
 	^self genForASTVariableNode
-]
-
-{ #category : 'generate' }
-RFReification >> genForRBMessageNode [
-	^self genForASTProgramNode
 ]
 
 { #category : 'generate' }

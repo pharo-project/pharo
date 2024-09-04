@@ -221,7 +221,7 @@ RBDumpVisitorTest >> testMessageNodeDump [
 	node := self parseExpression: 'self foo'.
 	dumpedNode := self compiler evaluate: node dump.
 
-	self assert: dumpedNode class equals: RBMessageNode.
+	self assert: dumpedNode class equals: ASTMessageNode.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString.
 
@@ -229,7 +229,7 @@ RBDumpVisitorTest >> testMessageNodeDump [
 	node := self parseExpression: 'self foo: 1'.
 	dumpedNode := self compiler evaluate: node dump.
 
-	self assert: dumpedNode class equals: RBMessageNode.
+	self assert: dumpedNode class equals: ASTMessageNode.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString.
 
@@ -237,7 +237,7 @@ RBDumpVisitorTest >> testMessageNodeDump [
 	node := self parseExpression: 'self foo: 1 bar: 2'.
 	dumpedNode := self compiler evaluate: node dump.
 
-	self assert: dumpedNode class equals: RBMessageNode.
+	self assert: dumpedNode class equals: ASTMessageNode.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString.
 
@@ -245,7 +245,7 @@ RBDumpVisitorTest >> testMessageNodeDump [
 	node := self parseExpression: '1 + 2'.
 	dumpedNode := self compiler evaluate: node dump.
 
-	self assert: dumpedNode class equals: RBMessageNode.
+	self assert: dumpedNode class equals: ASTMessageNode.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString
 ]

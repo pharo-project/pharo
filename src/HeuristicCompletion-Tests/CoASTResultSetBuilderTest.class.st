@@ -99,7 +99,7 @@ CoASTResultSetBuilderTest >> testBuildMessageHeuristic [
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBMessageNode new;
+		node: ASTMessageNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #message

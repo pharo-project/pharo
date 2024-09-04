@@ -363,19 +363,19 @@ RBParserTest >> testCreationBlockNodeWithExpression [
 	self compare: (self parserClass parseExpression: '[:a :b | a messaged. b messaged.]')
 		  to:(ASTBlockNode
 			   arguments: (OrderedCollection with: (ASTVariableNode named: 'a') with: (ASTVariableNode named: 'b'))
-				body: (RBSequenceNode statements: (OrderedCollection with: (RBMessageNode receiver: (ASTVariableNode named: #a) selector: (RBSelectorNode value: #messaged))
-																						with: (RBMessageNode receiver: (ASTVariableNode named: #b) selector: (RBSelectorNode value: #messaged)))))
+				body: (RBSequenceNode statements: (OrderedCollection with: (ASTMessageNode receiver: (ASTVariableNode named: #a) selector: (RBSelectorNode value: #messaged))
+																						with: (ASTMessageNode receiver: (ASTVariableNode named: #b) selector: (RBSelectorNode value: #messaged)))))
 ]
 
 { #category : 'tests - CreationProtocol' }
 RBParserTest >> testCreationCascadeNodeFromExpression [
 	self compare: (self parserClass parseExpression: 'cascade firstMessage; secondMessage; lastMessage')
 		  to: (ASTCascadeNode
-				messages: (OrderedCollection with: (RBMessageNode receiver: (ASTVariableNode named: 'cascade')
+				messages: (OrderedCollection with: (ASTMessageNode receiver: (ASTVariableNode named: 'cascade')
 																					selector: (RBSelectorNode value: #firstMessage))
-													  with: (RBMessageNode receiver: (ASTVariableNode named: 'cascade')
+													  with: (ASTMessageNode receiver: (ASTVariableNode named: 'cascade')
 																					selector: (RBSelectorNode value: #secondMessage))
-													  with: (RBMessageNode receiver: (ASTVariableNode named: 'cascade')
+													  with: (ASTMessageNode receiver: (ASTVariableNode named: 'cascade')
 																					selector: (RBSelectorNode value: #lastMessage)))
 				semicolons: (OrderedCollection with: 21 with: 37))
 ]
@@ -412,7 +412,7 @@ RBParserTest >> testCreationLiteralValueNodeWithExpressionForNumber [
 RBParserTest >> testCreationMessageNodeFromExpression [
 	"Verify the good parsing of an expression."
 	self compare: (self parserClass parseExpression: 'self + 0')
-		  to: (RBMessageNode
+		  to: (ASTMessageNode
 				receiver: (ASTVariableNode named: 'self')
 				selector: (RBSelectorNode value: #+)
 				arguments: (Array with: (ASTLiteralNode value: 0)))
@@ -421,12 +421,12 @@ RBParserTest >> testCreationMessageNodeFromExpression [
 { #category : 'tests' }
 RBParserTest >> testCreationProtocol [
 	| messageNode |
-	self compare: (RBMessageNode
+	self compare: (ASTMessageNode
 				receiver: (ASTVariableNode selfNode)
 				selector: (RBSelectorNode value: #+)
 				arguments: (Array with: (ASTLiteralNode value: 0)))
 		to: (self parserClass parseExpression: 'self + 0').
-	messageNode := RBMessageNode receiver: (ASTVariableNode selfNode) selector: (RBSelectorNode value: #foo).
+	messageNode := ASTMessageNode receiver: (ASTVariableNode selfNode) selector: (RBSelectorNode value: #foo).
 	self compare: (RBMethodNode selector: #bar
 				body: (RBSequenceNode statements: (OrderedCollection
 								with: (ASTCascadeNode messages: (OrderedCollection with: messageNode with: messageNode)))))

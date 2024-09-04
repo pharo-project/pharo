@@ -1,7 +1,7 @@
-Extension { #name : 'RBMessageNode' }
+Extension { #name : 'ASTMessageNode' }
 
 { #category : '*OpalCompiler-Core' }
-RBMessageNode >> isInlineAndOr [
+ASTMessageNode >> isInlineAndOr [
 
 	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineAndOr ifFalse: [ ^false ]].
 	self receiver isBlock ifTrue: [^ false].
@@ -11,7 +11,7 @@ RBMessageNode >> isInlineAndOr [
 ]
 
 { #category : '*OpalCompiler-Core' }
-RBMessageNode >> isInlineCase [
+ASTMessageNode >> isInlineCase [
 	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineCase ifFalse: [ ^false ]].
 	self isCascaded ifTrue: [^ false].
 	(#(caseOf: caseOf:otherwise:) includes: self selector) ifFalse: [^ false].
@@ -29,7 +29,7 @@ RBMessageNode >> isInlineCase [
 ]
 
 { #category : '*OpalCompiler-Core' }
-RBMessageNode >> isInlineIf [
+ASTMessageNode >> isInlineIf [
 
 	self methodCompilationContextOrNil ifNotNil: [ :c |
 		c optionInlineIf ifFalse: [ ^ false ] ].
@@ -40,7 +40,7 @@ RBMessageNode >> isInlineIf [
 ]
 
 { #category : '*OpalCompiler-Core' }
-RBMessageNode >> isInlineIfNil [
+ASTMessageNode >> isInlineIfNil [
 
 	| assertNone assertOneOrNone |
 
@@ -67,7 +67,7 @@ RBMessageNode >> isInlineIfNil [
 ]
 
 { #category : '*OpalCompiler-Core' }
-RBMessageNode >> isInlineRepeat [
+ASTMessageNode >> isInlineRepeat [
 	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineRepeat
 		ifFalse: [ ^ false ]].
 	self receiver isBlock
@@ -81,7 +81,7 @@ RBMessageNode >> isInlineRepeat [
 ]
 
 { #category : '*OpalCompiler-Core' }
-RBMessageNode >> isInlineTimesRepeat [
+ASTMessageNode >> isInlineTimesRepeat [
 
 	| block |
 	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineTimesRepeat ifFalse: [ ^false ]].
@@ -96,7 +96,7 @@ RBMessageNode >> isInlineTimesRepeat [
 ]
 
 { #category : '*OpalCompiler-Core' }
-RBMessageNode >> isInlineToDo [
+ASTMessageNode >> isInlineToDo [
 
 	| block step |
 	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineToDo ifFalse: [ ^false ]].
@@ -121,7 +121,7 @@ RBMessageNode >> isInlineToDo [
 ]
 
 { #category : '*OpalCompiler-Core' }
-RBMessageNode >> isInlineWhile [
+ASTMessageNode >> isInlineWhile [
 
 	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineWhile ifFalse: [ ^false ]].
 	self isCascaded ifTrue: [^ false].
@@ -136,7 +136,7 @@ RBMessageNode >> isInlineWhile [
 ]
 
 { #category : '*OpalCompiler-Core' }
-RBMessageNode >> isInlined [
+ASTMessageNode >> isInlined [
 	self methodCompilationContextOrNil ifNotNil:[:c | c optionInlineNone ifTrue: [ ^false ]].
 	self isInlineIf ifTrue: [^true].
 	self isInlineIfNil  ifTrue: [^true].
@@ -150,6 +150,6 @@ RBMessageNode >> isInlined [
 ]
 
 { #category : '*OpalCompiler-Core' }
-RBMessageNode >> methodCompilationContextOrNil [
+ASTMessageNode >> methodCompilationContextOrNil [
 	^ self methodNode ifNotNil: [ :node | node compilationContext ]
 ]

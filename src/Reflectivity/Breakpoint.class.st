@@ -281,7 +281,7 @@ Breakpoint >> conditionBlockProducerMethodAST: conditionString [
 					(ASTBlockNode
 						arguments: {(ASTVariableNode named: 'ThisContext')}
 						body:
-							(RBMessageNode
+							(ASTMessageNode
 								receiver: (ASTVariableNode named: 'Breakpoint')
 								selector: #checkBreakConditionValue:
 								arguments: {conditionAST}) asSequenceNode)) asSequenceNode.
@@ -542,7 +542,7 @@ Breakpoint >> rewriteASTToSimulateExecutionInADifferentContext: anAST [
 				ifTrue: [ rewriter
 						replaceTree: msgNode
 						withTree:
-							(RBMessageNode
+							(ASTMessageNode
 								receiver: (self parserClass parseExpression: 'ThisContext receiver')
 								selector: #perform:withArguments:inSuperclass:
 								arguments:

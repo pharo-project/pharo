@@ -247,7 +247,7 @@ FBDDecompiler >> generateNativeBoostCallErrorMethodFrom: aCompiledMethod [
 	| seq args |
 	seq := RBSequenceNode
 		statements:
-			{RBMessageNode receiver: (ASTVariableNode named: #CannotDecompileNativeBoostCalls) selector: #signal arguments: #()}.
+			{ASTMessageNode receiver: (ASTVariableNode named: #CannotDecompileNativeBoostCalls) selector: #signal arguments: #()}.
 	args := OrderedCollection new.
 	1 to: aCompiledMethod numArgs do: [ :i | args add: (ASTVariableNode named: 'arg' , i asString) ].
 	^ builder

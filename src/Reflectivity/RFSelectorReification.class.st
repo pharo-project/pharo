@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFSelectorReification class >> entities [
-	^{RBMessageNode. RBMethodNode}
+	^{ASTMessageNode. RBMethodNode}
 ]
 
 { #category : 'plugin interface' }
@@ -20,7 +20,7 @@ RFSelectorReification class >> key [
 ]
 
 { #category : 'generate' }
-RFSelectorReification >> genForRBMessageNode [
+RFSelectorReification >> genForASTMessageNode [
 	^entity selector asLiteralNode
 ]
 

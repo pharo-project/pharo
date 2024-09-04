@@ -254,7 +254,7 @@ RBParser >> literalValueNodeClass [
 
 { #category : 'private - classes' }
 RBParser >> messageNodeClass [
-	^ RBMessageNode
+	^ ASTMessageNode
 ]
 
 { #category : 'private - classes' }
