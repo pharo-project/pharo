@@ -183,6 +183,7 @@ ThemeIcons >> downloadFromUrl [
 			ZnClient new
 				url: self url;
 				downloadTo: zipArchive ].
+	^ zipArchive
 ]
 
 { #category : 'utilities' }
