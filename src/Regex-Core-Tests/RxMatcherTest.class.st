@@ -183,6 +183,22 @@ RxMatcherTest >> testEmptyStringNotAtWordBoundary [
 		description: 'An empty string not at a word boundary'
 ]
 
+{ #category : 'tests' }
+RxMatcherTest >> testEscapedLineEndings [ 
+
+	self assert: (
+		((ClyRegexPattern with: '^bb\ncc') matches: 
+				(String streamContents: [ :s | #( 'aa' 'bb' 'cc') do: [ :e | s << e; lf] ]))
+			&
+		((ClyRegexPattern with: '^bb\rcc') matches: 
+				(String streamContents: [ :s | #( 'aa' 'bb' 'cc') do: [ :e | s << e; cr] ]))
+			&
+		((ClyRegexPattern with: '^bb\r\ncc') matches: 
+			(String streamContents: [ :s | #( 'aa' 'bb' 'cc') do: [ :e | s << e; cr; lf] ]))
+	)
+
+]
+
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry001 [
 	self runRegex: #('abc'
@@ -1034,6 +1050,18 @@ RxMatcherTest >> testHenry136 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry137 [
 	self runRegex: #('\((.*), (.*)\)' '(a, b)' true (2 'a' 3 'b'))
+]
+
+{ #category : 'tests' }
+RxMatcherTest >> testLineEndings [ 
+
+	self assert: ((ClyRegexPattern with: '^b') matches: 
+		(String streamContents: [ :s | #( 'aa' 'bb' 'cc') do: [ :e | s << e; cr] ])).
+	self assert: ((ClyRegexPattern with: '^b') matches: 
+		(String streamContents: [ :s | #( 'aa' 'bb' 'cc') do: [ :e | s << e; lf] ])).
+	self assert: ((ClyRegexPattern with: '^b') matches: 
+		(String streamContents: [ :s | #( 'aa' 'bb' 'cc') do: [ :e | s << e; cr; lf] ])).
+
 ]
 
 { #category : 'tests - protocol' }
