@@ -48,6 +48,18 @@ RFOperationReification >> genForASTAssignmentNode [
 ]
 
 { #category : 'generate' }
+RFOperationReification >> genForASTBlockNode [
+	"we just compile the block again"
+	| blockNode |
+
+	blockNode := RBParser parseExpression: entity formattedCode.
+	^RBMessageNode
+		receiver: (ASTVariableNode named: #RFBlockOperation)
+		selector: #block:
+		arguments: {blockNode}
+]
+
+{ #category : 'generate' }
 RFOperationReification >> genForASTLiteralArrayNode [
 	"same as #value, no need to wrap as the literal understands #value"
 	^ASTLiteralArrayNode value: entity value
@@ -87,18 +99,6 @@ RFOperationReification >> genForASTVariableNode [
 		].
 
 	self error: 'not supported'
-]
-
-{ #category : 'generate' }
-RFOperationReification >> genForRBBlockNode [
-	"we just compile the block again"
-	| blockNode |
-
-	blockNode := RBParser parseExpression: entity formattedCode.
-	^RBMessageNode
-		receiver: (ASTVariableNode named: #RFBlockOperation)
-		selector: #block:
-		arguments: {blockNode}
 ]
 
 { #category : 'generate' }
