@@ -439,7 +439,7 @@ ASTMessageNode >> selector [
 ASTMessageNode >> selector: aSelector [
 	keywordsPositions := nil.
 	selector := aSelector isString
-		ifTrue: [ RBSelectorNode value: aSelector ]
+		ifTrue: [ ASTSelectorNode value: aSelector ]
 		ifFalse: [ aSelector ].
 	selector parent: self
 ]

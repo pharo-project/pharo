@@ -1275,7 +1275,7 @@ RBParser >> scannerNext [
 
 { #category : 'private - classes' }
 RBParser >> selectorNodeClass [
-	^ RBSelectorNode
+	^ ASTSelectorNode
 ]
 
 { #category : 'private - classes' }

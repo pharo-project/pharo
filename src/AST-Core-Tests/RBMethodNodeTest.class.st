@@ -202,7 +202,7 @@ RBMethodNodeTest >> testMethodClass [
 	ast :=  (OrderedCollection>>#do:) ast.
 	self assert: ast methodClass equals: OrderedCollection.
 	"if we create an AST, the class should be nil"
-	ast := RBMethodNode selector: #tt body: RBSelectorNode new.
+	ast := RBMethodNode selector: #tt body: ASTSelectorNode new.
 	self assert: ast methodClass equals: nil
 ]
 
