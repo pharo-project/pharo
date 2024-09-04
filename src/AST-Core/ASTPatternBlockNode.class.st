@@ -23,24 +23,24 @@ ASTPatternBlockNode >> acceptVisitor: aProgramNodeVisitor [
 ]
 
 { #category : 'matching' }
-ASTPatternBlockNode >> addArgumentWithNameBasedOn: aString to: aRBBlockNode [
+ASTPatternBlockNode >> addArgumentWithNameBasedOn: aString to: aBlockNode [
 	| name index vars |
 	name := aString.
-	vars := aRBBlockNode allDefinedVariables.
+	vars := aBlockNode allDefinedVariables.
 	index := 0.
 	[vars includes: name] whileTrue:
 			[index := index + 1.
 			name := name , index printString].
-	aRBBlockNode
-		arguments: (aRBBlockNode arguments copyWith: (ASTVariableNode named: name))
+	aBlockNode
+		arguments: (aBlockNode arguments copyWith: (ASTVariableNode named: name))
 ]
 
 { #category : 'matching' }
-ASTPatternBlockNode >> constructLookupNodeFor: aString in: aRBBlockNode [
+ASTPatternBlockNode >> constructLookupNodeFor: aString in: aBlockNode [
 	^ RBMessageNode
 		  receiver: ASTVariableNode selfNode
 		  selector: #lookupMatchFor:in:
-		  arguments: (Array with: (ASTLiteralNode value: aString) with: aRBBlockNode arguments last copy)
+		  arguments: (Array with: (ASTLiteralNode value: aString) with: aBlockNode arguments last copy)
 ]
 
 { #category : 'matching' }
@@ -103,13 +103,13 @@ ASTPatternBlockNode >> matchingBlock [
 ]
 
 { #category : 'matching' }
-ASTPatternBlockNode >> replacePatternNodesIn: aRBBlockNode [
-	aRBBlockNode body nodesDo:
+ASTPatternBlockNode >> replacePatternNodesIn: aBlockNode [
+	aBlockNode body nodesDo:
 			[:each |
 			(each isVariable and: [each isPatternNode])
 				ifTrue:
 					[each
-						replaceWith: (self constructLookupNodeFor: each name in: aRBBlockNode)]]
+						replaceWith: (self constructLookupNodeFor: each name in: aBlockNode)]]
 ]
 
 { #category : 'matching' }

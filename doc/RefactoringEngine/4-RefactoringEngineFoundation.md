@@ -25,7 +25,7 @@ an expression
 a sequence of expressions
 - RBSequenceNode
 or a block or Method
-- RBBlockNode
+- ASTBlockNode
 - RBMethodNode
 
 These nodes are part of a class hierarchy starting with ASTProgramNode an abstract class defining the common operations needed for all nodes. Every node knows about its child nodes, the source code location, any comment attached (comment prior to this node in the source code, or for RBMethodNodes the "method comment" line), and the type (by its subclass) - see the is-Methods in "testing"-protocol.
@@ -72,7 +72,7 @@ RBParser parseMethod:'sign
       |->RBMessageNode >
         |->RBSelfNode self
         |->ASTLiteralValueNode 0
-      |->RBBlockNode [ ^ 1 ]
+      |->ASTBlockNode [ ^ 1 ]
         |->RBSequenceNode ^ 1
           |->ASTReturnNode ^ 1
             |->ASTLiteralValueNode 1
@@ -80,7 +80,7 @@ RBParser parseMethod:'sign
       |->RBMessageNode <
         |->RBSelfNode self
         |->ASTLiteralValueNode 0
-      |->RBBlockNode [ ^ -1 ]
+      |->ASTBlockNode [ ^ -1 ]
         |->RBSequenceNode ^ -1
           |->ASTReturnNode ^ -1
             |->ASTLiteralValueNode -1

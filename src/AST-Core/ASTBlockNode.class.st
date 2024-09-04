@@ -1,5 +1,5 @@
 "
-RBBlockNode is an AST node that represents a block ""[...]"".
+ASTBlockNode is an AST node that represents a block ""[...]"".
 
 Like RBMethodNode, the scope attribute is only valid after doing a semantic analyzing step.
 

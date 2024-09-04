@@ -39,7 +39,7 @@ ClassHierarchyPrinterTest >> testOnlyASTNodes [
 			ASTVariableNode
 				ASTPatternVariableNode
 			RBAnnotationMarkNode
-			RBBlockNode
+			ASTBlockNode
 				ASTPatternBlockNode
 					ASTPatternWrapperBlockNode
 			RBMessageNode

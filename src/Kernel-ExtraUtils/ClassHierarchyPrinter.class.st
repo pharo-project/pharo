@@ -34,7 +34,7 @@ produces
 			ASTVariableNode
 				ASTPatternVariableNode
 			RBAnnotationMarkNode
-			RBBlockNode
+			ASTBlockNode
 				ASTPatternBlockNode
 					ASTPatternWrapperBlockNode
 			RBMessageNode
