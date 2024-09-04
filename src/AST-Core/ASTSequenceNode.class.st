@@ -1,5 +1,5 @@
 "
-RBSequenceNode is an AST node that represents a sequence of statements. Both ASTBlockNodes and ASTMethodNodes contain these.
+ASTSequenceNode is an AST node that represents a sequence of statements. Both ASTBlockNodes and ASTMethodNodes contain these.
 
 Instance Variables:
 	leftBar	<Integer | nil>	the position of the left | in the temporaries definition

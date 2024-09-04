@@ -57,7 +57,7 @@ produces
 			RBDoItMethodNode
 		ASTPragmaNode
 			ASTPatternPragmaNode
-		RBSequenceNode
+		ASTSequenceNode
 	RBSlotInitializationNode
 '
 ```	

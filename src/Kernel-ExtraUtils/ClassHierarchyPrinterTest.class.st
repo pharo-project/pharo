@@ -62,7 +62,7 @@ ClassHierarchyPrinterTest >> testOnlyASTNodes [
 			RBDoItMethodNode
 		ASTPragmaNode
 			ASTPatternPragmaNode
-		RBSequenceNode
+		ASTSequenceNode
 	RBSlotInitializationNode
 '
 ]

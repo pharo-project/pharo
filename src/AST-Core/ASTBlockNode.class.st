@@ -6,7 +6,7 @@ Like RBMethodNode, the scope attribute is only valid after doing a semantic anal
 Instance Variables:
 	arguments	<SequenceableCollection of: ASTVariableNode>	the arguments for the block
 	bar	<Integer | nil>	position of the | after the arguments
-	body	<RBSequenceNode>	the code inside the block
+	body	<ASTSequenceNode>	the code inside the block
 	colons	<SequenceableCollection of: Integer>	positions of each : before each argument
 	left	<Integer>	position of [
 	right	<Integer>	position of ]
