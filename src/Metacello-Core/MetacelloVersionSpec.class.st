@@ -637,50 +637,27 @@ MetacelloVersionSpec >> repositorySpecs [
 ]
 
 { #category : 'loading' }
-MetacelloVersionSpec >> resolveToLoadableSpec: aString forMap: map packages: packageMap [
+MetacelloVersionSpec >> resolveToLoadableSpecs: aRequiredCollection [
 
-	| package |
-	package := self packageNamed: aString forMap: map ifAbsent: [ ^ self error: 'Name not found: ' , aString ].
-	packageMap at: package name put: package.
-	^ { package }
-]
-
-{ #category : 'loading' }
-MetacelloVersionSpec >> resolveToLoadableSpecs: nameList [
-	"Resolves names in namelist to the  list of packages and projects in the version that would be loaded. Projects are 
-	not traversed during the transitive closure. The scope is that of the version itself.
-	   If the spec is a package, answer a list including the package and the transitive closure on 
-			its #requires: and #includes: fields.
-	   If the spec is a project, answer the project.
-	   If the spec is a group, answers the list of packages in the #includes: field of the group. 
-			Groups in the #includes: field are expanded following the transitive closure on groups"
-
-	| map |
-	map := Dictionary new.
-	self resolveToLoadableSpecs: nameList map: map.
-	^ map values
-]
-
-{ #category : 'loading' }
-MetacelloVersionSpec >> resolveToLoadableSpecs: required map: packageMap [
-
-	| reqd allReqd map newReqd |
-	reqd := required copy.
-	allReqd := Set new.
+	| packageMap required managedRequirements map |
+	packageMap := Dictionary new.
+	required := aRequiredCollection copy.
+	managedRequirements := Set new.
 	map := self packages map.
-	[ reqd isEmpty ] whileFalse: [
+	[ required isEmpty ] whileFalse: [
+		| newReqd |
 		newReqd := Set new.
-		reqd do: [ :req |
-			(self resolveToLoadableSpec: req forMap: map packages: packageMap) do: [ :loadableSpec |
-				newReqd addAll: loadableSpec requires.
-				newReqd addAll: loadableSpec includes ] ].
-		allReqd addAll: reqd.
-		newReqd removeAllFoundIn: allReqd.
-		reqd := newReqd ].
-	packageMap keys do: [ :pkgName |
-		(packageMap at: pkgName) resolveToLoadableSpec
-			ifNotNil: [ packageMap at: pkgName put: (packageMap at: pkgName) resolveToLoadableSpec ]
-			ifNil: [ packageMap removeKey: pkgName ] ]
+		required do: [ :req |
+			| loadableSpec |
+			loadableSpec := self packageNamed: req forMap: map ifAbsent: [ ^ self error: 'Name not found: ' , req ].
+			"If the loadable spec is a Group we ignore it."
+			loadableSpec resolveToLoadableSpec ifNotNil: [ :resolvedSpec | packageMap at: loadableSpec name put: resolvedSpec ].
+			newReqd addAll: loadableSpec requires.
+			newReqd addAll: loadableSpec includes ].
+		managedRequirements addAll: required.
+		newReqd removeAllFoundIn: managedRequirements.
+		required := newReqd ].
+	^ packageMap
 ]
 
 { #category : 'accessing' }
