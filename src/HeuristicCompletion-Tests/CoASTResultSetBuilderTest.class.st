@@ -47,7 +47,7 @@ CoASTResultSetBuilderTest >> testBuildBlockHeuristic [
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBBlockNode new;
+		node: ASTBlockNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #block
@@ -99,7 +99,7 @@ CoASTResultSetBuilderTest >> testBuildMessageHeuristic [
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBMessageNode new;
+		node: ASTMessageNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #message
@@ -138,7 +138,7 @@ CoASTResultSetBuilderTest >> testBuildPragmaHeuristic [
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBPragmaNode new;
+		node: ASTPragmaNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #pragma
@@ -164,7 +164,7 @@ CoASTResultSetBuilderTest >> testBuildSequenceHeuristic [
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBSequenceNode new;
+		node: ASTSequenceNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #sequence

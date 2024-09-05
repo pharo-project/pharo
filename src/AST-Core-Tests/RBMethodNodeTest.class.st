@@ -202,7 +202,7 @@ RBMethodNodeTest >> testMethodClass [
 	ast :=  (OrderedCollection>>#do:) ast.
 	self assert: ast methodClass equals: OrderedCollection.
 	"if we create an AST, the class should be nil"
-	ast := RBMethodNode selector: #tt body: RBSelectorNode new.
+	ast := RBMethodNode selector: #tt body: ASTSelectorNode new.
 	self assert: ast methodClass equals: nil
 ]
 
@@ -254,7 +254,7 @@ RBMethodNodeTest >> testNodeForOffsetMessage [
 	foundNode := ast nodeForOffset: 9.
 	self assert: foundNode class identicalTo: ASTVariableNode.
 	foundNode := ast nodeForOffset: 14.
-	self assert: foundNode class identicalTo: RBMessageNode.
+	self assert: foundNode class identicalTo: ASTMessageNode.
 	foundNode := ast nodeForOffset: 22.
 	self assert: foundNode class identicalTo: ASTVariableNode
 ]

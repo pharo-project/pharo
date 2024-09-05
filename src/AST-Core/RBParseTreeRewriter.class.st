@@ -133,7 +133,7 @@ RBParseTreeRewriter class >> replaceLiteral: literal with: newLiteral [
 RBParseTreeRewriter class >> replaceStatements: code with: newCode in: aParseTree onInterval: anInterval [
 	| tree replaceStmt |
 	tree := self buildTree: code method: false.
-	tree isSequence ifFalse: [ tree := RBSequenceNode statements: (Array with: tree) ].
+	tree isSequence ifFalse: [ tree := ASTSequenceNode statements: (Array with: tree) ].
 	tree temporaries: (Array with: (ASTPatternVariableNode named: '`@temps')).
 	tree addNodeFirst: (ASTPatternVariableNode named: '`@.S1').
 	replaceStmt := tree lastIsReturn

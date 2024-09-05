@@ -54,20 +54,20 @@ CoStaticBenchmarks >> accuracyForCompletionIndex: completionIndexRange withPrefi
 ]
 
 { #category : 'benchmarks' }
-CoStaticBenchmarks >> benchCallsite: aRBMessageNode atPosition: aPosition [
+CoStaticBenchmarks >> benchCallsite: aMessageNode atPosition: aPosition [
 
 	| originalSelector |
-	originalSelector := aRBMessageNode selector.
-	2 to: (aRBMessageNode selector size min: 8) do: [ :index | | prefix completion candidates completionIndex previousResultsPerIndexPerPrefixSize |
+	originalSelector := aMessageNode selector.
+	2 to: (aMessageNode selector size min: 8) do: [ :index | | prefix completion candidates completionIndex previousResultsPerIndexPerPrefixSize |
 
 		"The CoGlobalSorterResultSetBuilder uses the selector to pre-narrow the results"
 		prefix := originalSelector copyFrom: 1 to: index.
-		aRBMessageNode selector: prefix.
+		aMessageNode selector: prefix.
 
 		completion := builder
-			node: aRBMessageNode;
+			node: aMessageNode;
 			completionContext: (CoBenchmarkContext new
-				callsite: aRBMessageNode;
+				callsite: aMessageNode;
 				position: aPosition;
 				yourself);
 			buildCompletion.
@@ -87,7 +87,7 @@ CoStaticBenchmarks >> benchCallsite: aRBMessageNode atPosition: aPosition [
 			at: prefix size
 			put: {previousResultsPerIndexPerPrefixSize first + 1 . previousResultsPerIndexPerPrefixSize second }
 	].
-	aRBMessageNode selector: originalSelector
+	aMessageNode selector: originalSelector
 ]
 
 { #category : 'accessing' }

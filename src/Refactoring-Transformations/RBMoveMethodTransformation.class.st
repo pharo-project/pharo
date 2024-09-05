@@ -174,7 +174,7 @@ RBMoveMethodTransformation >> checkTemporaryVariableNames [
 { #category : 'transforming' }
 RBMoveMethodTransformation >> compileDelegatorMethod [
 	| statementNode delegatorNode tree |
-	delegatorNode := RBMessageNode
+	delegatorNode := ASTMessageNode
 		                 receiver: (ASTVariableNode named: variable)
 		                 selector: parseTree selector
 		                 keywordsPositions: parseTree keywordsPositions
@@ -183,7 +183,7 @@ RBMoveMethodTransformation >> compileDelegatorMethod [
 					                  ifTrue: [ ASTVariableNode selfNode ]
 					                  ifFalse: [ ASTVariableNode named: each ] ]).
 	self hasOnlySelfReturns ifFalse: [ delegatorNode := ASTReturnNode value: delegatorNode ].
-	statementNode := RBSequenceNode temporaries: #(  ) statements: (Array with: delegatorNode).
+	statementNode := ASTSequenceNode temporaries: #(  ) statements: (Array with: delegatorNode).
 	(tree := class parseTreeForSelector: selector) body: statementNode.
 	class compileTree: tree
 ]

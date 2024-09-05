@@ -101,7 +101,7 @@ RBRemoveSenderRefactoring >> inlineParseTree [
 	^ inlineParseTree ifNil: [inlineParseTree := RBMethodNode
 		selector:  aSymbol
 		arguments: ( (1 to: aSymbol numArgs) collect: [ :e | ASTVariableNode named: 'arg', e asString ])
-		body: ( RBSequenceNode statements: #())]
+		body: ( ASTSequenceNode statements: #())]
 ]
 
 { #category : 'transforming' }

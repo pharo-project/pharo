@@ -1,5 +1,5 @@
 Class {
-	#name : 'RBSequenceNodeTest',
+	#name : 'ASTSequenceNodeTest',
 	#superclass : 'RBParseTreeTest',
 	#category : 'AST-Core-Tests-Nodes',
 	#package : 'AST-Core-Tests',
@@ -7,10 +7,10 @@ Class {
 }
 
 { #category : 'tests' }
-RBSequenceNodeTest >> testModifyParametersShouldNotModifyPeriods [
+ASTSequenceNodeTest >> testModifyParametersShouldNotModifyPeriods [
 
 	| sequenceNode |
-	sequenceNode := RBSequenceNode new.
+	sequenceNode := ASTSequenceNode new.
 	sequenceNode statements add: #example.
 	self
 		assertCollection: sequenceNode statements
@@ -20,7 +20,7 @@ RBSequenceNodeTest >> testModifyParametersShouldNotModifyPeriods [
 ]
 
 { #category : 'tests' }
-RBSequenceNodeTest >> testStop [
+ASTSequenceNodeTest >> testStop [
 	| ast |
 	ast := self parserClass parseMethod: 'method | temp |'.
 	self assert: ast body stop equals: ast body temporaries last stop

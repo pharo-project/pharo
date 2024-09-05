@@ -775,7 +775,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithLastReturnAndNonLocalR
 							instVar := true ifFalse: [ ^ 1 ].
 							instVar isOdd ifTrue: [ instVar := instVar + 1 ].
 							^ self end'.
-	sequence := RBSequenceNode statements: ast body statements allButFirst.
+	sequence := ASTSequenceNode statements: ast body statements allButFirst.
 	sequence parent: ast body.
 	self assert: sequence hasSameExitPoint 
 ]
@@ -788,7 +788,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithLastReturnExpectTrue [
 							self foo.
 							instVar := true ifFalse: [ 1 ].
 							^ 2'.
-	sequence := RBSequenceNode statements: ast body statements allButFirst.
+	sequence := ASTSequenceNode statements: ast body statements allButFirst.
 	sequence parent: ast body.
 	self assert: sequence hasSameExitPoint 
 ]
@@ -801,7 +801,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutAnyReturnsExpectTru
 							self foo.
 							instVar := true ifFalse: [ 1 ]
 							self end'.
-	sequence := RBSequenceNode statements: ast body statements allButFirst.
+	sequence := ASTSequenceNode statements: ast body statements allButFirst.
 	sequence parent: ast body.
 	self assert: sequence hasSameExitPoint 
 ]
@@ -817,7 +817,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutLastReturnAndMultip
 								whileTrue: [ instVar < 10 ].
 							instVar := true ifFalse: [ ^ 1 ].
 							self end'.
-	sequence := RBSequenceNode statements: ast body statements allButLast.
+	sequence := ASTSequenceNode statements: ast body statements allButLast.
 	sequence parent: ast body.
 	self deny: sequence hasSameExitPoint 
 ]
@@ -830,7 +830,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutLastReturnAndNonLoc
 							self foo.
 							instVar := true ifFalse: [ ^ 1 ]
 							self end'.
-	sequence := RBSequenceNode statements: ast body statements allButFirst.
+	sequence := ASTSequenceNode statements: ast body statements allButFirst.
 	sequence parent: ast body.
 	self deny: sequence hasSameExitPoint 
 ]

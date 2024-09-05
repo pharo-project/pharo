@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFArgumentsReification class >> entities [
-	^{RBMessageNode. RBMethodNode. RBSequenceNode}
+	^{ASTMessageNode. RBMethodNode. ASTSequenceNode}
 ]
 
 { #category : 'plugin interface' }
@@ -20,17 +20,17 @@ RFArgumentsReification class >> key [
 ]
 
 { #category : 'generate' }
-RFArgumentsReification >> genForRBMessageNode [
+RFArgumentsReification >> genForASTMessageNode [
+	^ASTVariableNode named: self varName
+]
+
+{ #category : 'generate' }
+RFArgumentsReification >> genForASTSequenceNode [
 	^ASTVariableNode named: self varName
 ]
 
 { #category : 'generate' }
 RFArgumentsReification >> genForRBMethodNode [
-	^ASTVariableNode named: self varName
-]
-
-{ #category : 'generate' }
-RFArgumentsReification >> genForRBSequenceNode [
 	^ASTVariableNode named: self varName
 ]
 

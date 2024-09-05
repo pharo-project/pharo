@@ -178,7 +178,7 @@ MethodMapTest >> testMethodSourceNodeAtInitialPC [
 
 { #category : 'tests - ast mapping' }
 MethodMapTest >> testMethodSourceNodeAtPC [
-	self assert: (((Object>>#halt) sourceNodeForPC:  (Smalltalk vm for32bit: 22 for64bit: 42)) isKindOf: RBMessageNode)
+	self assert: (((Object>>#halt) sourceNodeForPC:  (Smalltalk vm for32bit: 22 for64bit: 42)) isKindOf: ASTMessageNode)
 ]
 
 { #category : 'tests - ast mapping' }
@@ -208,8 +208,8 @@ MethodMapTest >> testTempNamedTempCopyingNestedBlock2 [
 { #category : 'tests - ast mapping' }
 MethodMapTest >> testThisContextSourceNode [
 	self assert: (thisContext sourceNode isKindOf: RBMethodNode).
-	self assert: ([thisContext sourceNode] value isKindOf: RBBlockNode).
-	self assert: ([true ifTrue: [thisContext sourceNode]]value isKindOf: RBBlockNode)
+	self assert: ([thisContext sourceNode] value isKindOf: ASTBlockNode).
+	self assert: ([true ifTrue: [thisContext sourceNode]]value isKindOf: ASTBlockNode)
 ]
 
 { #category : 'tests - ast mapping' }

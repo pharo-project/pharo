@@ -22,7 +22,7 @@ RBDumpVisitorTest >> testAPI [
 	node := self parseExpression: 'self foo'.
 	self
 		assert: (RBDumpVisitor new visit: node) contents
-		equals: 'RBMessageNode receiver: (ASTVariableNode named: #self) selector: #foo'
+		equals: 'ASTMessageNode receiver: (ASTVariableNode named: #self) selector: #foo'
 ]
 
 { #category : 'tests' }
@@ -66,7 +66,7 @@ RBDumpVisitorTest >> testBlockNodeDump [
 	node := self parseExpression: '[self]'.
 	dumpedNode := self compiler evaluate: node dump.
 
-	self assert: dumpedNode class equals: RBBlockNode.
+	self assert: dumpedNode class equals: ASTBlockNode.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString.
 
@@ -74,7 +74,7 @@ RBDumpVisitorTest >> testBlockNodeDump [
 	node := self parseExpression: '[:each | each]'.
 	dumpedNode := self compiler evaluate: node dump.
 
-	self assert: dumpedNode class equals: RBBlockNode.
+	self assert: dumpedNode class equals: ASTBlockNode.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString.
 
@@ -82,7 +82,7 @@ RBDumpVisitorTest >> testBlockNodeDump [
 	node := self parseExpression: '[:each :i | |a b| a := each. b := i.]'.
 	dumpedNode := self compiler evaluate: node dump.
 
-	self assert: dumpedNode class equals: RBBlockNode.
+	self assert: dumpedNode class equals: ASTBlockNode.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString
 ]
@@ -221,7 +221,7 @@ RBDumpVisitorTest >> testMessageNodeDump [
 	node := self parseExpression: 'self foo'.
 	dumpedNode := self compiler evaluate: node dump.
 
-	self assert: dumpedNode class equals: RBMessageNode.
+	self assert: dumpedNode class equals: ASTMessageNode.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString.
 
@@ -229,7 +229,7 @@ RBDumpVisitorTest >> testMessageNodeDump [
 	node := self parseExpression: 'self foo: 1'.
 	dumpedNode := self compiler evaluate: node dump.
 
-	self assert: dumpedNode class equals: RBMessageNode.
+	self assert: dumpedNode class equals: ASTMessageNode.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString.
 
@@ -237,7 +237,7 @@ RBDumpVisitorTest >> testMessageNodeDump [
 	node := self parseExpression: 'self foo: 1 bar: 2'.
 	dumpedNode := self compiler evaluate: node dump.
 
-	self assert: dumpedNode class equals: RBMessageNode.
+	self assert: dumpedNode class equals: ASTMessageNode.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString.
 
@@ -245,7 +245,7 @@ RBDumpVisitorTest >> testMessageNodeDump [
 	node := self parseExpression: '1 + 2'.
 	dumpedNode := self compiler evaluate: node dump.
 
-	self assert: dumpedNode class equals: RBMessageNode.
+	self assert: dumpedNode class equals: ASTMessageNode.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString
 ]
@@ -269,7 +269,7 @@ RBDumpVisitorTest >> testPragmaNodeDump [
 	node := self parseMethod: 'foo <useless>'.
 	dumpedNode := self compiler evaluate: node dump.
 
-	self assert: dumpedNode pragmas first class equals: RBPragmaNode.
+	self assert: dumpedNode pragmas first class equals: ASTPragmaNode.
 	self
 		assert: node pragmas first class
 		equals: dumpedNode pragmas first class.
@@ -307,7 +307,7 @@ RBDumpVisitorTest >> testSequenceNodeDump [
 	node := self parseExpression: 'foo. bar.'.
 	dumpedNode := self compiler evaluate: node dump.
 
-	self assert: dumpedNode class equals: RBSequenceNode.
+	self assert: dumpedNode class equals: ASTSequenceNode.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString
 ]

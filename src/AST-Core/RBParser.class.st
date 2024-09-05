@@ -164,7 +164,7 @@ RBParser >> basicParsePragma [
 
 { #category : 'private - classes' }
 RBParser >> blockNodeClass [
-	^ RBBlockNode
+	^ ASTBlockNode
 ]
 
 { #category : 'private - classes' }
@@ -254,7 +254,7 @@ RBParser >> literalValueNodeClass [
 
 { #category : 'private - classes' }
 RBParser >> messageNodeClass [
-	^ RBMessageNode
+	^ ASTMessageNode
 ]
 
 { #category : 'private - classes' }
@@ -1171,7 +1171,7 @@ RBParser >> parseUnaryPattern [
 { #category : 'private - parsing' }
 RBParser >> parseUnaryPragma [
 	"Current Token must be an Identifier."
-	"Return an RBPragmaNode."
+	"Return an ASTPragmaNode."
 	| selector |
 	selector := currentToken.
 	self step.
@@ -1237,7 +1237,7 @@ RBParser >> patchNegativeLiteral [
 
 { #category : 'private - classes' }
 RBParser >> pragmaNodeClass [
-	^ RBPragmaNode
+	^ ASTPragmaNode
 ]
 
 { #category : 'private - classes' }
@@ -1275,12 +1275,12 @@ RBParser >> scannerNext [
 
 { #category : 'private - classes' }
 RBParser >> selectorNodeClass [
-	^ RBSelectorNode
+	^ ASTSelectorNode
 ]
 
 { #category : 'private - classes' }
 RBParser >> sequenceNodeClass [
-	^ RBSequenceNode
+	^ ASTSequenceNode
 ]
 
 { #category : 'accessing' }

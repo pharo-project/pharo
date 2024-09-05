@@ -1,5 +1,5 @@
 "
-ASTPatternMessageNode is an RBMessageNode that will match other message nodes without their selectors being equal. 
+ASTPatternMessageNode is an ASTMessageNode that will match other message nodes without their selectors being equal. 
 
 Instance Variables:
 	isCascadeList	<Boolean>	are we matching a list of message nodes in a cascaded message
@@ -7,7 +7,7 @@ Instance Variables:
 "
 Class {
 	#name : 'ASTPatternMessageNode',
-	#superclass : 'RBMessageNode',
+	#superclass : 'ASTMessageNode',
 	#instVars : [
 		'isList',
 		'isCascadeList'
@@ -28,7 +28,7 @@ ASTPatternMessageNode class >> receiver: aValueNode selector: aSelector keywords
 				keywordsPositions: positionList asIntegerArray
 				arguments: valueNodes]
 		ifFalse:
-			[RBMessageNode
+			[ASTMessageNode
 				receiver: aValueNode
 				selector: aSelector
 				keywordsPositions: positionList asIntegerArray
@@ -43,7 +43,7 @@ ASTPatternMessageNode >> copyInContext: aDictionary [
 	keywordSelector := self isSelectorList
 		ifTrue: [ aDictionary at: self selectorParts first ]
 		ifFalse: [ '' join: (self selectorParts collect: [ :each | aDictionary at: each ])].
-	^ RBMessageNode
+	^ ASTMessageNode
 		receiver: (self receiver copyInContext: aDictionary)
 		selector: keywordSelector
 		arguments: (self copyList: self arguments inContext: aDictionary)
@@ -106,7 +106,7 @@ ASTPatternMessageNode >> matchSelectorAgainst: aNode inContext: aDictionary [
 
 { #category : 'private' }
 ASTPatternMessageNode >> matchingClass [
-	^RBMessageNode
+	^ASTMessageNode
 ]
 
 { #category : 'initialization' }

@@ -1,5 +1,5 @@
 "
-ASTPatternPragmaNode is an RBPragmaNode that is used by the tree searcher to
+ASTPatternPragmaNode is an ASTPragmaNode that is used by the tree searcher to
 match pragma statements. Just like ASTPatternMethodNode for method nodes.
 
 Instance Variables:
@@ -8,7 +8,7 @@ Instance Variables:
 "
 Class {
 	#name : 'ASTPatternPragmaNode',
-	#superclass : 'RBPragmaNode',
+	#superclass : 'ASTPragmaNode',
 	#instVars : [
 		'isList'
 	],
@@ -21,7 +21,7 @@ Class {
 ASTPatternPragmaNode class >> selector: aSelector keywordsPositions: positionList arguments: valueNodes [
 	^(aSelector isPatternVariable)
 		ifTrue: [ super selector: aSelector keywordsPositions: positionList arguments: valueNodes ]
-		ifFalse: [ RBPragmaNode selector: aSelector keywordsPositions: positionList arguments: valueNodes ]
+		ifFalse: [ ASTPragmaNode selector: aSelector keywordsPositions: positionList arguments: valueNodes ]
 ]
 
 { #category : 'matching' }
@@ -30,7 +30,7 @@ ASTPatternPragmaNode >> copyInContext: aDictionary [
 	keywordSelector := self isSelectorList
 		ifTrue: [ aDictionary at: self selectorParts first ]
 		ifFalse: [ ('' join: (self selectorParts collect: [ :each | aDictionary at: each ])) asSymbol ].
-	^ RBPragmaNode
+	^ ASTPragmaNode
 		selector: keywordSelector
 		arguments: (self copyList: self arguments inContext: aDictionary)
 ]
@@ -84,7 +84,7 @@ ASTPatternPragmaNode >> matchSelectorAgainst: aNode inContext: aDictionary [
 
 { #category : 'private' }
 ASTPatternPragmaNode >> matchingClass [
-	^ RBPragmaNode
+	^ ASTPragmaNode
 ]
 
 { #category : 'initialization' }

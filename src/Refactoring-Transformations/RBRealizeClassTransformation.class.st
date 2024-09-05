@@ -66,7 +66,7 @@ RBRealizeClassTransformation >> transform: aClass [
 				parseTree body
 					temporaries: OrderedCollection new;
 					statements: OrderedCollection new;
-					addNode: (RBMessageNode
+					addNode: (ASTMessageNode
 							 receiver: ASTVariableNode selfNode
 							 selector: #shouldBeImplemented).
 				"Note that we compile in the class (a subclass compared to superclass having abstract methods) 

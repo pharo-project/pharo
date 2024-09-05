@@ -1,5 +1,5 @@
 Class {
-	#name : 'RBMessageNodeTest',
+	#name : 'ASTMessageNodeTest',
 	#superclass : 'RBParseTreeTest',
 	#category : 'AST-Core-Tests-Nodes',
 	#package : 'AST-Core-Tests',
@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : 'tests' }
-RBMessageNodeTest >> testArgumentPartsForBinaryMessages [
+ASTMessageNodeTest >> testArgumentPartsForBinaryMessages [
 	| tree message |
 	tree := self parseMethod: 'test 1 + 2 '.
 	message := tree sendNodes first.
@@ -15,7 +15,7 @@ RBMessageNodeTest >> testArgumentPartsForBinaryMessages [
 ]
 
 { #category : 'tests' }
-RBMessageNodeTest >> testArgumentPartsForKeywordMessages [
+ASTMessageNodeTest >> testArgumentPartsForKeywordMessages [
 	| tree message |
 	tree := self parseMethod: 'test self between: x + 2 and: (y foo: 3)'.
 	message := tree sendNodes first.
@@ -23,7 +23,7 @@ RBMessageNodeTest >> testArgumentPartsForKeywordMessages [
 ]
 
 { #category : 'tests' }
-RBMessageNodeTest >> testArgumentPartsForKeywordMessages1 [
+ASTMessageNodeTest >> testArgumentPartsForKeywordMessages1 [
 	| tree message |
 	tree := self parseMethod: 'test self between: 2 and: 3'.
 	message := tree sendNodes first.
@@ -31,7 +31,7 @@ RBMessageNodeTest >> testArgumentPartsForKeywordMessages1 [
 ]
 
 { #category : 'tests' }
-RBMessageNodeTest >> testArgumentPartsForKeywordMessages2 [
+ASTMessageNodeTest >> testArgumentPartsForKeywordMessages2 [
 
 		| tree message |
 		tree := self parseMethod: 'test self between: x and: y'.
@@ -44,7 +44,7 @@ RBMessageNodeTest >> testArgumentPartsForKeywordMessages2 [
 ]
 
 { #category : 'tests' }
-RBMessageNodeTest >> testArgumentPartsForUnaryMessages [
+ASTMessageNodeTest >> testArgumentPartsForUnaryMessages [
 	| tree message |
 	tree := self parseMethod: 'test 1 foo '.
 	message := tree sendNodes first.
@@ -52,7 +52,7 @@ RBMessageNodeTest >> testArgumentPartsForUnaryMessages [
 ]
 
 { #category : 'tests' }
-RBMessageNodeTest >> testIntersectsInterval [
+ASTMessageNodeTest >> testIntersectsInterval [
 		| tree message |
 		tree := self parseMethod: 'test self doit.'.
 		message := tree sendNodes first.
@@ -63,7 +63,7 @@ RBMessageNodeTest >> testIntersectsInterval [
 ]
 
 { #category : 'tests' }
-RBMessageNodeTest >> testIsInlineToDo [
+ASTMessageNodeTest >> testIsInlineToDo [
 	| messageNode |
 	messageNode := (RBParser parseExpression: '1 to: 2 by: 2 do: [:each |]').
 	self assert: messageNode isInlineToDo.
@@ -72,7 +72,7 @@ RBMessageNodeTest >> testIsInlineToDo [
 ]
 
 { #category : 'tests' }
-RBMessageNodeTest >> testSelectorAndArgumentNamesForComposedKeywords [
+ASTMessageNodeTest >> testSelectorAndArgumentNamesForComposedKeywords [
 		| tree message |
 		tree := self parseMethod: 'test self between: x and: y'.
 		message := tree sendNodes first.
@@ -84,7 +84,7 @@ RBMessageNodeTest >> testSelectorAndArgumentNamesForComposedKeywords [
 ]
 
 { #category : 'tests' }
-RBMessageNodeTest >> testSelectorAndArgumentNamesForComposedKeywordsAndComplexArgs [
+ASTMessageNodeTest >> testSelectorAndArgumentNamesForComposedKeywordsAndComplexArgs [
 		| tree message |
 		tree := self parseMethod: 'test self between: x + 2 and: (y foo: 3)'.
 		message := tree sendNodes first.
@@ -92,7 +92,7 @@ RBMessageNodeTest >> testSelectorAndArgumentNamesForComposedKeywordsAndComplexAr
 ]
 
 { #category : 'tests' }
-RBMessageNodeTest >> testSelectorAndArgumentNamesForSimpleKeywords [
+ASTMessageNodeTest >> testSelectorAndArgumentNamesForSimpleKeywords [
 		| tree message |
 		tree := self parseMethod: 'test self doit: 5'.
 		message := tree sendNodes first.
@@ -100,7 +100,7 @@ RBMessageNodeTest >> testSelectorAndArgumentNamesForSimpleKeywords [
 ]
 
 { #category : 'tests' }
-RBMessageNodeTest >> testSelectorAndArgumentNamesForUnary [
+ASTMessageNodeTest >> testSelectorAndArgumentNamesForUnary [
 		| tree message |
 		tree := self parseMethod: 'test self doit'.
 		message := tree sendNodes first.
@@ -108,7 +108,7 @@ RBMessageNodeTest >> testSelectorAndArgumentNamesForUnary [
 ]
 
 { #category : 'tests' }
-RBMessageNodeTest >> testSelectorInterval [
+ASTMessageNodeTest >> testSelectorInterval [
 		| tree message |
 		tree := self parseMethod: 'test self doit'.
 		message := tree sendNodes first.
@@ -119,7 +119,7 @@ RBMessageNodeTest >> testSelectorInterval [
 ]
 
 { #category : 'tests' }
-RBMessageNodeTest >> testSelectorPartsForBinaryMessages [
+ASTMessageNodeTest >> testSelectorPartsForBinaryMessages [
 	| tree message |
 	tree := self parseMethod: 'test 1 + 2 '.
 	message := tree sendNodes first.
@@ -127,7 +127,7 @@ RBMessageNodeTest >> testSelectorPartsForBinaryMessages [
 ]
 
 { #category : 'tests' }
-RBMessageNodeTest >> testSelectorPartsForKeywordMessages [
+ASTMessageNodeTest >> testSelectorPartsForKeywordMessages [
 		| tree message |
 		tree := self parseMethod: 'test self doit: 5'.
 		message := tree sendNodes first.
@@ -139,7 +139,7 @@ RBMessageNodeTest >> testSelectorPartsForKeywordMessages [
 ]
 
 { #category : 'tests' }
-RBMessageNodeTest >> testSelectorPartsForUnaryMessages [
+ASTMessageNodeTest >> testSelectorPartsForUnaryMessages [
 		| tree message |
 		tree := self parseMethod: 'test self doit'.
 		message := tree sendNodes first.
@@ -147,7 +147,7 @@ RBMessageNodeTest >> testSelectorPartsForUnaryMessages [
 ]
 
 { #category : 'tests' }
-RBMessageNodeTest >> testStart [
+ASTMessageNodeTest >> testStart [
 	| tree message delta |
 
 	tree := self parseMethod: 'test self doit.'.

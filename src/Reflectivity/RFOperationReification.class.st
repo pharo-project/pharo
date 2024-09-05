@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFOperationReification class >> entities [
-	^{ASTVariableNode. RBMessageNode. RBMethodNode . ASTReturnNode. ASTAssignmentNode. ASTLiteralNode. RBBlockNode . ASTLiteralArrayNode. ASTArrayNode}
+	^{ASTVariableNode. ASTMessageNode. RBMethodNode . ASTReturnNode. ASTAssignmentNode. ASTLiteralNode. ASTBlockNode . ASTLiteralArrayNode. ASTArrayNode}
 ]
 
 { #category : 'plugin interface' }
@@ -48,6 +48,18 @@ RFOperationReification >> genForASTAssignmentNode [
 ]
 
 { #category : 'generate' }
+RFOperationReification >> genForASTBlockNode [
+	"we just compile the block again"
+	| blockNode |
+
+	blockNode := RBParser parseExpression: entity formattedCode.
+	^ASTMessageNode
+		receiver: (ASTVariableNode named: #RFBlockOperation)
+		selector: #block:
+		arguments: {blockNode}
+]
+
+{ #category : 'generate' }
 RFOperationReification >> genForASTLiteralArrayNode [
 	"same as #value, no need to wrap as the literal understands #value"
 	^ASTLiteralArrayNode value: entity value
@@ -57,6 +69,14 @@ RFOperationReification >> genForASTLiteralArrayNode [
 RFOperationReification >> genForASTLiteralValueNode [
 	"same as #value, no need to wrap as the literal understands #value"
 	^ASTLiteralNode value: entity value
+]
+
+{ #category : 'generate' }
+RFOperationReification >> genForASTMessageNode [
+	^RBParser parseExpression: ('RFMessageOperation
+			receiver: RFReceiverReificationVar
+			selector: #{1}
+			arguments: RFArgumentsReificationVar.' format: {entity selector})
 ]
 
 { #category : 'generate' }
@@ -87,26 +107,6 @@ RFOperationReification >> genForASTVariableNode [
 		].
 
 	self error: 'not supported'
-]
-
-{ #category : 'generate' }
-RFOperationReification >> genForRBBlockNode [
-	"we just compile the block again"
-	| blockNode |
-
-	blockNode := RBParser parseExpression: entity formattedCode.
-	^RBMessageNode
-		receiver: (ASTVariableNode named: #RFBlockOperation)
-		selector: #block:
-		arguments: {blockNode}
-]
-
-{ #category : 'generate' }
-RFOperationReification >> genForRBMessageNode [
-	^RBParser parseExpression: ('RFMessageOperation
-			receiver: RFReceiverReificationVar
-			selector: #{1}
-			arguments: RFArgumentsReificationVar.' format: {entity selector})
 ]
 
 { #category : 'generate' }

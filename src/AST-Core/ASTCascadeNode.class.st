@@ -2,7 +2,7 @@
 ASTCascadeNode is an AST node for cascaded messages (e.g., ""self print1 ; print2"").
 
 Instance Variables:
-	messages	<SequenceableCollection of: RBMessageNode>	the messages 
+	messages	<SequenceableCollection of: ASTMessageNode>	the messages 
 	semicolons	<SequenceableCollection of: Integer>	positions of the ; between messages
 
 

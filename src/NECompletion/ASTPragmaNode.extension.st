@@ -1,7 +1,7 @@
-Extension { #name : 'RBPragmaNode' }
+Extension { #name : 'ASTPragmaNode' }
 
 { #category : '*NECompletion' }
-RBPragmaNode >> completionEntries: offset [
+ASTPragmaNode >> completionEntries: offset [
 	^Symbol allSymbols
 		select: [ :each | each beginsWith: self selector]
 		thenCollect: [ :each | NECSymbolEntry contents: each node: self ]

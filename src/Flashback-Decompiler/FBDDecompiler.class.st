@@ -245,9 +245,9 @@ FBDDecompiler >> extractFullBlock: aCompiledBlock numCopied: numCopied [
 { #category : 'private' }
 FBDDecompiler >> generateNativeBoostCallErrorMethodFrom: aCompiledMethod [
 	| seq args |
-	seq := RBSequenceNode
+	seq := ASTSequenceNode
 		statements:
-			{RBMessageNode receiver: (ASTVariableNode named: #CannotDecompileNativeBoostCalls) selector: #signal arguments: #()}.
+			{ASTMessageNode receiver: (ASTVariableNode named: #CannotDecompileNativeBoostCalls) selector: #signal arguments: #()}.
 	args := OrderedCollection new.
 	1 to: aCompiledMethod numArgs do: [ :i | args add: (ASTVariableNode named: 'arg' , i asString) ].
 	^ builder
@@ -472,7 +472,7 @@ FBDDecompiler >> popIntoTemporaryVariable: offset [
 { #category : 'initialize' }
 FBDDecompiler >> pragmasForMethod: aCompiledMethod [
 	^ aCompiledMethod pragmas collect: [ :each |
-		RBPragmaNode
+		ASTPragmaNode
 			selector: each selector
 			arguments: (each arguments collect: [ :arg | ASTLiteralNode value: arg ]) ]
 ]

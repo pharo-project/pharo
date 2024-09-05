@@ -8,7 +8,7 @@ Instance Variables:
 "
 Class {
 	#name : 'ASTPatternBlockNode',
-	#superclass : 'RBBlockNode',
+	#superclass : 'ASTBlockNode',
 	#instVars : [
 		'valueBlock'
 	],
@@ -23,24 +23,24 @@ ASTPatternBlockNode >> acceptVisitor: aProgramNodeVisitor [
 ]
 
 { #category : 'matching' }
-ASTPatternBlockNode >> addArgumentWithNameBasedOn: aString to: aRBBlockNode [
+ASTPatternBlockNode >> addArgumentWithNameBasedOn: aString to: aBlockNode [
 	| name index vars |
 	name := aString.
-	vars := aRBBlockNode allDefinedVariables.
+	vars := aBlockNode allDefinedVariables.
 	index := 0.
 	[vars includes: name] whileTrue:
 			[index := index + 1.
 			name := name , index printString].
-	aRBBlockNode
-		arguments: (aRBBlockNode arguments copyWith: (ASTVariableNode named: name))
+	aBlockNode
+		arguments: (aBlockNode arguments copyWith: (ASTVariableNode named: name))
 ]
 
 { #category : 'matching' }
-ASTPatternBlockNode >> constructLookupNodeFor: aString in: aRBBlockNode [
-	^ RBMessageNode
+ASTPatternBlockNode >> constructLookupNodeFor: aString in: aBlockNode [
+	^ ASTMessageNode
 		  receiver: ASTVariableNode selfNode
 		  selector: #lookupMatchFor:in:
-		  arguments: (Array with: (ASTLiteralNode value: aString) with: aRBBlockNode arguments last copy)
+		  arguments: (Array with: (ASTLiteralNode value: aString) with: aBlockNode arguments last copy)
 ]
 
 { #category : 'matching' }
@@ -55,7 +55,7 @@ ASTPatternBlockNode >> createMatchingBlock [
 		ifTrue:
 			[self
 				error: 'Search blocks can only contain arguments for the node and matching dictionary'].
-	newBlock := RBBlockNode arguments: arguments body: body.
+	newBlock := ASTBlockNode arguments: arguments body: body.
 	newBlock arguments isEmpty
 		ifTrue: [self addArgumentWithNameBasedOn: 'aNode' to: newBlock].
 	newBlock arguments size = 1
@@ -71,7 +71,7 @@ ASTPatternBlockNode >> createReplacingBlock [
 		ifTrue:
 			[self
 				error: 'Replace blocks can only contain an argument for the matching dictionary'].
-	newBlock := RBBlockNode arguments: arguments body: body.
+	newBlock := ASTBlockNode arguments: arguments body: body.
 	self arguments isEmpty
 		ifTrue: [self addArgumentWithNameBasedOn: 'aDictionary' to: newBlock].
 	self replacePatternNodesIn: newBlock.
@@ -103,13 +103,13 @@ ASTPatternBlockNode >> matchingBlock [
 ]
 
 { #category : 'matching' }
-ASTPatternBlockNode >> replacePatternNodesIn: aRBBlockNode [
-	aRBBlockNode body nodesDo:
+ASTPatternBlockNode >> replacePatternNodesIn: aBlockNode [
+	aBlockNode body nodesDo:
 			[:each |
 			(each isVariable and: [each isPatternNode])
 				ifTrue:
 					[each
-						replaceWith: (self constructLookupNodeFor: each name in: aRBBlockNode)]]
+						replaceWith: (self constructLookupNodeFor: each name in: aBlockNode)]]
 ]
 
 { #category : 'matching' }

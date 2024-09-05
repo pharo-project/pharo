@@ -259,7 +259,7 @@ ASTProgramNode >> asReturn [
 
 { #category : 'replacing' }
 ASTProgramNode >> asSequenceNode [
-	^RBSequenceNode statements: {self}
+	^ASTSequenceNode statements: {self}
 ]
 
 { #category : 'querying' }

@@ -13,7 +13,7 @@ Instance Variables:
 	keywordsPositions	<IntegerArray | nil>	the positions of the selector keywords
 	source	<String>	the source we compiled
 	scope	<OCMethodScope | nil> the scope associated with this code of this method
-	pragmas	< SequenceableCollection of: RBPragmaNodes > Nodes representing the pragma statements in this method
+	pragmas	< SequenceableCollection of: ASTPragmaNodes > Nodes representing the pragma statements in this method
 	compilationContext	<CCompilationContext | CompilationContext>
 
 "

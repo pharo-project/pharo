@@ -3,7 +3,7 @@ ifTrue: ifFalse: ifTrue:ifFalse: ifFalse:ifTrue: is used in a way that it can no
 
 This can be fixed by making sure that all arguments are static blocks.
 
-See the method RBMessageNode>>#isInlineIf for the exact implementation of the check that the compiler uses
+See the method ASTMessageNode>>#isInlineIf for the exact implementation of the check that the compiler uses
 "
 Class {
 	#name : 'ReNotOptimizedIfRule',
