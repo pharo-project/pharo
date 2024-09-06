@@ -126,12 +126,6 @@ MetacelloVersionSpec >> configMethodOn: aStream for: spec selector: selector las
 { #category : 'printing' }
 MetacelloVersionSpec >> configMethodOn: aStream indent: indent [
 
-	self configMethodOn: aStream last: true indent: indent
-]
-
-{ #category : 'printing' }
-MetacelloVersionSpec >> configMethodOn: aStream last: last indent: indent [
-
 	| spec hasRepositories hasPackageSpecs hasImport |
 	hasRepositories := (spec := self repositoriesSpec) isNotNil and: [ spec list isEmpty not ].
 	hasImport := self import isNotNil.
@@ -142,7 +136,13 @@ MetacelloVersionSpec >> configMethodOn: aStream last: last indent: indent [
 			packageDo: [ :package | member spec name ifNotNil: [ hasPackageSpecs := true ] ]
 			groupDo: [ :group | member spec name ifNotNil: [ hasPackageSpecs := true ] ] ].
 	self configMethodBasicOn: aStream last: (hasRepositories | hasPackageSpecs | hasImport) not indent: indent.
-	hasImport ifTrue: [ self configMethodValueOn: aStream for: self import selector: 'import:' last: (hasRepositories | hasPackageSpecs) not indent: indent ].
+	hasImport ifTrue: [
+		self
+			configMethodValueOn: aStream
+			for: self import
+			selector: 'import:'
+			last: (hasRepositories | hasPackageSpecs) not
+			indent: indent ].
 	hasRepositories ifTrue: [
 		spec map values size = 1
 			ifTrue: [
@@ -152,9 +152,14 @@ MetacelloVersionSpec >> configMethodOn: aStream last: last indent: indent [
 					nextPutAll: spec map values first description printString;
 					nextPutAll: '.'.
 				hasPackageSpecs ifTrue: [ aStream cr ] ]
-			ifFalse: [ self configMethodOn: aStream for: spec selector: 'repositories:' last: hasPackageSpecs not indent: indent ] ].
-	self configPackagesSpecMethodOn: aStream indent: indent.
-	last ifFalse: [ aStream cr ]
+			ifFalse: [
+				self
+					configMethodOn: aStream
+					for: spec
+					selector: 'repositories:'
+					last: hasPackageSpecs not
+					indent: indent ] ].
+	self configPackagesSpecMethodOn: aStream indent: indent
 ]
 
 { #category : 'printing' }
