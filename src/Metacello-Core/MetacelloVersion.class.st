@@ -2,7 +2,6 @@ Class {
 	#name : 'MetacelloVersion',
 	#superclass : 'Magnitude',
 	#instVars : [
-		'versionStatus',
 		'importedVersions',
 		'spec',
 		'versionNumber'
@@ -362,12 +361,6 @@ MetacelloVersion >> versionNumberFrom: aString [
 MetacelloVersion >> versionSpec [
 
 	^self spec
-]
-
-{ #category : 'accessing' }
-MetacelloVersion >> versionStatus: aSymbol [
-
-	versionStatus := aSymbol
 ]
 
 { #category : 'querying' }
