@@ -81,7 +81,7 @@ IconPacksFetchPresenter class >> reset [
 IconPacksFetchPresenter class >> settingsOn: aBuilder [
 	<systemsettings>
 
-	(aBuilder button: #openIconsPackManager)
+	(aBuilder button: #open)
 		parent: #appearance;
 		order: 2;
 		target: self;
