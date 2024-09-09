@@ -84,6 +84,7 @@ StRequestClassPresenter >> openModal [
 
 { #category : 'accessing' }
 StRequestClassPresenter >> packageName [
+	"Answer a <String> with the receiver's selected package"
 
 	^ packagePresenter selectedItem
 ]
