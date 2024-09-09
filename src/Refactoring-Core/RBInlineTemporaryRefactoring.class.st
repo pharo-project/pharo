@@ -44,34 +44,33 @@ RBInlineTemporaryRefactoring >> applicabilityPreconditions [
 		(ReDefinesSelectorsCondition new definesSelectors: (Array with: selector) in: class).
 		(ReBlockCondition new block: [
 			self checkSelectedInterval.
-			true ])
+			true ];
+			violatorErrorString: 'Check selected interval failed').
 	}
 ]
 
 { #category : 'preconditions' }
 RBInlineTemporaryRefactoring >> checkSelectedInterval [
 
-	self hasOnlyOneAssignment
+	| searcher matchesCount |
+	searcher := self parseTreeSearcher.
+	matchesCount := 0.
+	searcher 
+		matches: assignmentNode variable name , ' := ``@object'
+		do: [ :aNode | matchesCount := matchesCount + 1 ].
+	(matchesCount = 1)
 		ifFalse: [ self refactoringError: 'There are multiple assignments to the variable' ].
-	( RBReadBeforeWrittenTester
+	
+	(RBReadBeforeWrittenTester
 		isVariable: assignmentNode variable name
-		writtenBeforeReadIn: definingNode )
-		ifFalse: [ self refactoringError: 'The variable is possible read before it is assigned' ]
+		writtenBeforeReadIn: definingNode)
+		ifFalse: [ self refactoringError: 'The variable is possibly read before it is assigned' ].
+
 ]
 
 { #category : 'transforming' }
 RBInlineTemporaryRefactoring >> compileMethod [
 	class compileTree: sourceTree
-]
-
-{ #category : 'testing' }
-RBInlineTemporaryRefactoring >> hasOnlyOneAssignment [
-	| searcher |
-	searcher := self parseTreeSearcher.
-	searcher
-		matches: assignmentNode variable name , ' := ``@object'
-		do: [ :aNode :answer | answer + 1 ].
-	^ (searcher executeTree: definingNode initialAnswer: 0) == 1
 ]
 
 { #category : 'initialization' }
