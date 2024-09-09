@@ -38,14 +38,22 @@ RBInlineTemporaryRefactoring class >> model: aRBSmalltalk inline: anInterval fro
 ]
 
 { #category : 'preconditions' }
-RBInlineTemporaryRefactoring >> applicabilityPreconditions [
+RBInlineTemporaryRefactoring >> applicabilityPreconditions [ 
 
+	| validator |
+	
 	^ {
 		(ReDefinesSelectorsCondition new definesSelectors: (Array with: selector) in: class).
-		(ReBlockCondition new block: [
-			self checkSelectedInterval.
-			true ];
-			violatorErrorString: 'Check selected interval failed').
+		
+		(ReBlockCondition new 
+			block: [
+				self checkSelectedInterval.
+				validator := ReIsValidInstanceVariableName new.
+				(validator check: assignmentNode variable name)
+					ifFalse: [ 
+						self refactoringError: (validator violationMessageOn: assignmentNode variable name)].
+				true];
+			violatorErrorString: 'Check selected interval failed').		
 	}
 ]
 
