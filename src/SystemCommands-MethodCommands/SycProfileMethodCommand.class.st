@@ -52,7 +52,13 @@ SycProfileMethodCommand >> profileRegularMethod: aCompiledMethod [
 
 	self newProfilerPresenter
 		open;
-		profileBlock: [ aCompiledMethod valueWithReceiver: aCompiledMethod methodClass arguments: #(  ) ]
+		profileBlock: [ 
+			| receiver cmMethodClass |
+			cmMethodClass := aCompiledMethod methodClass.
+			receiver := aCompiledMethod methodClass isMeta
+				ifTrue: [ cmMethodClass instanceSide ]
+				ifFalse: [ cmMethodClass ].
+			aCompiledMethod valueWithReceiver: receiver arguments: #(  ) ]
 		displayCode: (self sourceCodeToDisplay: aCompiledMethod)
 ]
 
