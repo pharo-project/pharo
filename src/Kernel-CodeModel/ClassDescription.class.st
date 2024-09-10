@@ -12,7 +12,8 @@ Class {
 	#name : 'ClassDescription',
 	#superclass : 'Behavior',
 	#instVars : [
-		'protocols'
+		'protocols',
+		'vTable'
 	],
 	#category : 'Kernel-CodeModel-Classes',
 	#package : 'Kernel-CodeModel',
