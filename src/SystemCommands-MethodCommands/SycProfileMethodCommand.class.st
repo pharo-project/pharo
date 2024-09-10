@@ -75,7 +75,9 @@ SycProfileMethodCommand >> profileTestMethod: aCompiledMethod [
 { #category : 'execution' }
 SycProfileMethodCommand >> profilerPresenterClass [
 
-	^ StProfilerPresenter
+	^ Smalltalk
+		at: #StProfilerPresenter
+		ifAbsent: [ self error: 'Profiler not installed' ]
 ]
 
 { #category : 'initialization' }
