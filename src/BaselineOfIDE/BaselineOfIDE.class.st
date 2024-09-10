@@ -297,7 +297,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	RubAbstractTextArea highlightMessageSend: true.
 
-	DarkBlueTheme beCurrent.
+	(self class at: #PolymorphSystemSettings) defaultTheme beCurrent.
 
 	SDL_Event initialize.
 
