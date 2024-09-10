@@ -16,7 +16,8 @@ Class {
 		'className',
 		'newClassName',
 		'rbClass',
-		'rbMetaclass'
+		'rbMetaclass',
+		'superclassName'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -52,6 +53,13 @@ ReDuplicateClassDriver >> configureRefactoring [
 ]
 
 { #category : 'accessing' }
+ReDuplicateClassDriver >> newClass [
+	"Answer the new created <Class>"
+
+	^ (self model classNamed: self newClassName) binding value
+]
+
+{ #category : 'accessing' }
 ReDuplicateClassDriver >> newClassName [
 
 	^ newClassName
@@ -77,10 +85,12 @@ ReDuplicateClassDriver >> requestNewClass [
 				self
 					packageName: dialog presenter packageName;
 					tagName: dialog presenter tagName;
-					newClassName: dialog presenter newClassName.
+					newClassName: dialog presenter newClassName;
+					superclassName: dialog presenter selectedSuperclass.
 				refactoring
 					packageName: dialog presenter packageName;
 					className: dialog presenter newClassName;
+					superclassName: dialog presenter selectedSuperclass;					
 					sourceClass: className;
 					instanceMethods: dialog presenter selectedInstanceMethods;
 					classMethods: dialog presenter selectedClassMethods.
@@ -98,6 +108,11 @@ ReDuplicateClassDriver >> runRefactoring [
 	self requestNewClass.
 	requestDialog window isCancelled
 		ifTrue: [ ^ nil ].
+	model defineClass: [ :aBuilder |
+			aBuilder
+				superclass: requestDialog selectedSuperclass;
+				name: requestDialog newClassName;
+				package: requestDialog packageName ].
 	self applyChanges 
 ]
 
@@ -123,6 +138,18 @@ ReDuplicateClassDriver >> scopes: refactoringScopes [
 
 	rbClass := model classFor: selectedClass.
 	rbMetaclass := model classFor: selectedClass class.
+]
+
+{ #category : 'accessing' }
+ReDuplicateClassDriver >> superclassName [
+
+	^ superclassName
+]
+
+{ #category : 'accessing' }
+ReDuplicateClassDriver >> superclassName: anObject [
+
+	superclassName := anObject
 ]
 
 { #category : 'accessing' }
