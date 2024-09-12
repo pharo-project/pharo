@@ -313,6 +313,13 @@ StClassAndMethodsSelectionPresenter >> selectedSuperclass [
 	^ selectedSuperclassPresenter selectedItem
 ]
 
+{ #category : 'accessing' }
+StClassAndMethodsSelectionPresenter >> selectedSuperclassName [
+	"Answer a <Symbol> representing the receiver's selected superclass name"
+
+	^ self selectedSuperclass name
+]
+
 { #category : 'initialization' }
 StClassAndMethodsSelectionPresenter >> setTitleTo: aSpWindowPresenter [
 
