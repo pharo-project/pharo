@@ -95,7 +95,7 @@ RxMatcher >> allocateMarker [
 RxMatcher >> atBeginningOfLine [
 
 	^self lastChar
-		ifNotNil: [ :lc | lc = Cr or: [ lc = Lf ] ]
+		ifNotNil: [ :lc | (lc = Cr and: [ stream peek ~= Lf ]) or: [ lc = Lf ] ]
 		ifNil: [ true ]
 
 ]
@@ -117,7 +117,7 @@ RxMatcher >> atEnd [
 RxMatcher >> atEndOfLine [
 
 	^stream peek 
-		ifNotNil: [ :c | c = Cr or: [ c = Lf] ]
+		ifNotNil: [ :c | c = Cr or: [ c = Lf and: [ self lastChar ~= Cr ] ] ]
 		ifNil: [ true ]
 
 ]

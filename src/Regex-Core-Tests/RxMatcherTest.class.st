@@ -145,12 +145,19 @@ RxMatcherTest >> testEmptyStringAtBeginningOfWord [
 
 { #category : 'tests - empty' }
 RxMatcherTest >> testEmptyStringAtEndOfLine [
+	"Functionality depends on RxMatcher>>#atEndOfLine supporting #lf such that #crlf is considered as one line ending.
+	The whole approach of RxMatcher to deal with line endings might be worth a discussion.
+	Before this test was introduced, only #cr and #crlf would have worked, the latter one only because #lf had not been considered as related to line endings at all"
+	
 	| matcher |
 	matcher := self matcherClass forString: '$'.
-	self
-		assert: (matcher copy: 'foo1 bar1' , String cr , 'foo2 bar2' replacingMatchesWith: '*')
-			= ('foo1 bar1*', String cr , 'foo2 bar2*')
-		description: 'An empty string at the end of a line'
+	
+	{ String cr. String lf. String crlf } do: [ :eol |
+		self
+			assert: (matcher copy: 'foo1 bar1' , eol , 'foo2 bar2' replacingMatchesWith: '*')
+				= ('foo1 bar1*', eol , 'foo2 bar2*')
+			description: 'An empty string at the end of a line'
+	]
 ]
 
 { #category : 'tests - empty' }
