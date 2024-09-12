@@ -285,7 +285,7 @@ ASTBlockNode >> isConstant [
 	"is the block just returning a literal?"
 	^ body statements
 		ifEmpty: [ true "empty block returns nil" ]
-		ifNotEmpty: [:statements | statements first isLiteralNode ]
+		ifNotEmpty: [:statements | statements size = 1 and: [statements first isLiteralNode] ]
 ]
 
 { #category : 'errors' }
