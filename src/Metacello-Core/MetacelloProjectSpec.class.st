@@ -798,14 +798,6 @@ MetacelloProjectSpec >> unregisterProject [
         ifPresent: [ :existing :new | existing unregisterProject ]
 ]
 
-{ #category : 'development support' }
-MetacelloProjectSpec >> updateForSpawnMethod: sourceSpec [
-	"This means that this spec was used in a baseline and will be used in a version .... drop all information that isn't useful"
-
-	repositories := className := operator := loads := projectPackage := nil.
-	sourceSpec ifNotNil: [ versionString := sourceSpec versionString ]
-]
-
 { #category : 'scripting' }
 MetacelloProjectSpec >> validateForScriptLoad: aScriptEngine withDefaultVersionString: defaultVersionString withDefaultRepositoryDecription: defaultRepositoryDecription [
 

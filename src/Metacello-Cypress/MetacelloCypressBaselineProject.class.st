@@ -13,32 +13,11 @@ Metacello has an internal rule to not load Monticello packages of the same versi
 Class {
 	#name : 'MetacelloCypressBaselineProject',
 	#superclass : 'MetacelloMCBaselineProject',
-	#classVars : [
-		'UseCypressPackagesForAllBaselines'
-	],
 	#category : 'Metacello-Cypress',
 	#package : 'Metacello-Cypress'
 }
 
-{ #category : 'accessing' }
-MetacelloCypressBaselineProject class >> useCypressPackagesForAllBaselines [
-  UseCypressPackagesForAllBaselines ifNil: [ ^ false ].
-  ^ UseCypressPackagesForAllBaselines
-]
-
-{ #category : 'accessing' }
-MetacelloCypressBaselineProject class >> useCypressPackagesForAllBaselines: aBool [
-	"self useCypressPackagesForAllBaselines: true"
-
-	UseCypressPackagesForAllBaselines := aBool
-]
-
 { #category : 'spec classes' }
 MetacelloCypressBaselineProject >> baselineOfProjectSpecClass [
     ^ MetacelloCypressBaselineProjectSpec
-]
-
-{ #category : 'spec classes' }
-MetacelloCypressBaselineProject >> packageSpecClass [
-  ^ MetacelloCypressPackageSpec
 ]
