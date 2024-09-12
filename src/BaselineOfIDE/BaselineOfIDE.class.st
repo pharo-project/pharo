@@ -135,7 +135,6 @@ BaselineOfIDE >> baseline: spec [
 		self welcomeBrowser: spec.
 		self roassal: spec.
 		
-		spec package: 'DarkBlueTheme'.
 		spec package: 'IconPacks'.
 
 		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
