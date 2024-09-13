@@ -6,7 +6,7 @@ Class {
 	#tag : 'Parametrized'
 }
 
-{ #category : 'tests' }
+{ #category : 'building suites' }
 RBPullUpMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBPullUpMethodRefactoring };
@@ -275,6 +275,9 @@ RBPullUpMethodParametrizedTest >> testPullUpReferencesInstVar [
 RBPullUpMethodParametrizedTest >> testWarnDoesntPullUpReferencesInstVar [
 
 	| refactoring class |
+	rbClass = RBPullUpMethodTransformation ifTrue: [ " RBPullUpMethodTransformation shouldn't warn when instance variables are referenced "
+		self skip ].
+	
 	class := model classNamed:
 		         ('RBTransformation' , 'RuleTestData1') asSymbol.
 	refactoring := self

@@ -40,15 +40,17 @@ RBPullUpMethodTransformation class >> pullUp: selectorCollection from: aClass to
 { #category : 'preconditions' }
 RBPullUpMethodTransformation >> applicabilityPreconditions [
 
-	| conds |
-	conds := selectors collect: [ :each |
-		         RBCondition definesSelector: each in: class ].
-	^ conds , { (RBCondition withBlock: [
-			 self checkInstVars.
-			 self checkClassVars.
-			 self checkSuperclass.
-			 self checkSuperMessages.
-			 true ]) }
+	^ {
+		  (ReDefinesSelectorsCondition new
+			   definesSelectors: selectors
+			   in: class).
+		  (ReClassHasSubclassesCondition new
+			   class: targetSuperclass;
+			   subclassesList: { class name }).
+		  self preconditionNoReferencesToSharedVars.
+		  self preconditionNoOverrides.
+		  self preconditionNoSupersendsSent.
+		  self preconditionNoSupersendsReceived }
 ]
 
 { #category : 'executing' }
@@ -238,6 +240,41 @@ RBPullUpMethodTransformation >> copyDownMethods [
 	^ selectors flatCollect: [:each | self copyDownMethod: each]
 ]
 
+{ #category : 'preconditions' }
+RBPullUpMethodTransformation >> preconditionNoOverrides [
+
+	^ (ReDefinesSelectorsCondition new
+		   definesSelectors: selectors
+		   in: targetSuperclass) not
+	  | (ReClassesAreAbstractCondition new classes: { targetSuperclass })
+]
+
+{ #category : 'preconditions' }
+RBPullUpMethodTransformation >> preconditionNoReferencesToSharedVars [
+
+	^ ReMethodsDontReferToSharedVarsCondition new
+		  class: class
+		  selectors: selectors
+]
+
+{ #category : 'preconditions' }
+RBPullUpMethodTransformation >> preconditionNoSupersendsReceived [
+
+	^ ReMethodsReceiveNoSupersendsCondition new
+		  class: class
+		  targetSuperclass: targetSuperclass
+		  selectors: selectors
+]
+
+{ #category : 'preconditions' }
+RBPullUpMethodTransformation >> preconditionNoSupersendsSent [
+
+	^ ReMethodsSendNoSupersendsCondition new
+		  class: class
+		  targetSuperclass: targetSuperclass
+		  selectors: selectors
+]
+
 { #category : 'executing' }
 RBPullUpMethodTransformation >> pullUp: aSelector [
 	| source refactoring |
@@ -291,26 +328,25 @@ RBPullUpMethodTransformation >> removeDuplicateMethods [
 
 { #category : 'executing' }
 RBPullUpMethodTransformation >> removeDuplicatesOf: aSelector [
-	^ RBCustomTransformation
-		model: self model
-		with: [ :rbModel |
-			| tree |
-			tree := targetSuperclass parseTreeForSelector: aSelector.
-			targetSuperclass allSubclasses collect:
-			[:aClass |
-			((aClass directlyDefinesMethod: aSelector) and:
-					[(tree equalTo: (aClass parseTreeForSelector: aSelector) exceptForVariables: #())
-						and: [(aClass superclass whoDefinesMethod: aSelector) == targetSuperclass]])
-				ifTrue:
-					[removeDuplicates
-						ifFalse:
-							[removeDuplicates := self refactoringConfirmWarning:
-							'Do you want to remove duplicate subclass methods?'].
-					removeDuplicates ifTrue:[
-						self generateChangesFor: (RBRemoveMethodTransformation
-							model: self model
-							selector: aClass
-							from: aSelector) ]]]]
+
+	^ RBCustomTransformation model: self model with: [ :rbModel |
+		  | tree |
+		  tree := targetSuperclass parseTreeForSelector: aSelector.
+		  targetSuperclass allSubclasses collect: [ :aClass |
+			  ((aClass directlyDefinesMethod: aSelector) and: [
+				   (tree
+					    equalTo: (aClass parseTreeForSelector: aSelector)
+					    exceptForVariables: #(  )) and: [
+					   (aClass superclass whichClassIncludesSelector: aSelector)
+					   == targetSuperclass ] ]) ifTrue: [
+				  removeDuplicates ifFalse: [
+					  removeDuplicates := self refactoringConfirmWarning:
+						                      'Do you want to remove duplicate subclass methods?' ].
+				  removeDuplicates ifTrue: [
+					  self generateChangesFor: (RBRemoveMethodTransformation
+							   model: self model
+							   selector: aClass
+							   from: aSelector) ] ] ] ]
 ]
 
 { #category : 'executing' }
