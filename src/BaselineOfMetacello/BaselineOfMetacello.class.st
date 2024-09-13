@@ -16,7 +16,6 @@ BaselineOfMetacello >> baseline: spec [
 			package: 'FileSystem-Memory';
 			package: 'StartupPreferences';
 			package: 'PragmaCollector';
-			package: 'System-FileRegistry';
 			package: 'Metacello-Base';
 			package: 'Metacello-Bitbucket';
 			package: 'Metacello-Core';
