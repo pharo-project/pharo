@@ -22,20 +22,27 @@ Class {
 
 { #category : 'settings' }
 PolymorphSystemSettings class >> appearanceSettingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder group: #appearance)
-		label: 'Appearance' ;
+		label: 'Appearance';
 		description: 'All settings concerned with the look''n feel of your system';
 		with: [
 			(aBuilder pickOne: #uiThemeClass)
 				label: 'User interface theme';
 				target: self;
-				default: (Smalltalk at: #PharoLightTheme);
+				default: self defaultTheme;
 				order: 1;
 				domainValues: self uiThemeClassChoices.
 			self morphicSettingsOn: aBuilder.
 			self desktopSettingsOn: aBuilder.
-			self soundSettingsOn: aBuilder]
+			self soundSettingsOn: aBuilder ]
+]
+
+{ #category : 'settings' }
+PolymorphSystemSettings class >> defaultTheme [
+
+	^ DarkBlueTheme
 ]
 
 { #category : 'desktop' }

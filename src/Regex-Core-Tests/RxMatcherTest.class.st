@@ -145,12 +145,19 @@ RxMatcherTest >> testEmptyStringAtBeginningOfWord [
 
 { #category : 'tests - empty' }
 RxMatcherTest >> testEmptyStringAtEndOfLine [
+	"Functionality depends on RxMatcher>>#atEndOfLine supporting #lf such that #crlf is considered as one line ending.
+	The whole approach of RxMatcher to deal with line endings might be worth a discussion.
+	Before this test was introduced, only #cr and #crlf would have worked, the latter one only because #lf had not been considered as related to line endings at all"
+	
 	| matcher |
 	matcher := self matcherClass forString: '$'.
-	self
-		assert: (matcher copy: 'foo1 bar1' , String cr , 'foo2 bar2' replacingMatchesWith: '*')
-			= ('foo1 bar1*', String cr , 'foo2 bar2*')
-		description: 'An empty string at the end of a line'
+	
+	{ String cr. String lf. String crlf } do: [ :eol |
+		self
+			assert: (matcher copy: 'foo1 bar1' , eol , 'foo2 bar2' replacingMatchesWith: '*')
+				= ('foo1 bar1*', eol , 'foo2 bar2*')
+			description: 'An empty string at the end of a line'
+	]
 ]
 
 { #category : 'tests - empty' }
@@ -181,6 +188,22 @@ RxMatcherTest >> testEmptyStringNotAtWordBoundary [
 		assert: (matcher copy: 'foo bar' replacingMatchesWith: '*')
 			= 'f*o*o b*a*r'
 		description: 'An empty string not at a word boundary'
+]
+
+{ #category : 'tests' }
+RxMatcherTest >> testEscapedLineEndings [ 
+
+	self assert: (
+		((ClyRegexPattern with: '^bb\ncc') matches: 
+				(String streamContents: [ :s | #( 'aa' 'bb' 'cc') do: [ :e | s << e; lf] ]))
+			&
+		((ClyRegexPattern with: '^bb\rcc') matches: 
+				(String streamContents: [ :s | #( 'aa' 'bb' 'cc') do: [ :e | s << e; cr] ]))
+			&
+		((ClyRegexPattern with: '^bb\r\ncc') matches: 
+			(String streamContents: [ :s | #( 'aa' 'bb' 'cc') do: [ :e | s << e; cr; lf] ]))
+	)
+
 ]
 
 { #category : 'tests - henry' }
@@ -1034,6 +1057,18 @@ RxMatcherTest >> testHenry136 [
 { #category : 'tests - henry' }
 RxMatcherTest >> testHenry137 [
 	self runRegex: #('\((.*), (.*)\)' '(a, b)' true (2 'a' 3 'b'))
+]
+
+{ #category : 'tests' }
+RxMatcherTest >> testLineEndings [ 
+
+	self assert: ((ClyRegexPattern with: '^b') matches: 
+		(String streamContents: [ :s | #( 'aa' 'bb' 'cc') do: [ :e | s << e; cr] ])).
+	self assert: ((ClyRegexPattern with: '^b') matches: 
+		(String streamContents: [ :s | #( 'aa' 'bb' 'cc') do: [ :e | s << e; lf] ])).
+	self assert: ((ClyRegexPattern with: '^b') matches: 
+		(String streamContents: [ :s | #( 'aa' 'bb' 'cc') do: [ :e | s << e; cr; lf] ])).
+
 ]
 
 { #category : 'tests - protocol' }

@@ -135,7 +135,6 @@ BaselineOfIDE >> baseline: spec [
 		self welcomeBrowser: spec.
 		self roassal: spec.
 		
-		spec package: 'DarkBlueTheme'.
 		spec package: 'IconPacks'.
 
 		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
@@ -297,7 +296,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	RubAbstractTextArea highlightMessageSend: true.
 
-	DarkBlueTheme beCurrent.
+	(self class environment at: #PolymorphSystemSettings) defaultTheme beCurrent.
 
 	SDL_Event initialize.
 

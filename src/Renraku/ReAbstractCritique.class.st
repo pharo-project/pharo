@@ -141,7 +141,7 @@ ReAbstractCritique >> guidedBan [
 { #category : 'accessing' }
 ReAbstractCritique >> icon [
 
-	^ self iconNamed: ('small', rule severity capitalized, 'Icon') asSymbol
+	^ self iconNamed: ('small' , rule severity capitalized) asSymbol
 ]
 
 { #category : 'initialization' }

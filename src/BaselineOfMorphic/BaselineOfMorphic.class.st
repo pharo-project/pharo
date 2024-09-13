@@ -101,6 +101,7 @@ BaselineOfMorphic >> baseline: spec [
 				loads: 'core' ].
 
 		spec package: 'Polymorph-Widgets'.
+		spec package: 'DarkBlueTheme'.
 
 		spec package: 'Images-Animated'.
 
