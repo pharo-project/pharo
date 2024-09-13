@@ -61,6 +61,7 @@ ReDuplicateClassDriver >> newClass [
 
 { #category : 'accessing' }
 ReDuplicateClassDriver >> newClassName [
+	"Answer a <Symbol> representing the new duplicated class"
 
 	^ newClassName
 ]
@@ -90,7 +91,7 @@ ReDuplicateClassDriver >> requestNewClass [
 				refactoring
 					packageName: dialog presenter packageName;
 					className: dialog presenter newClassName;
-					superclassName: dialog presenter selectedSuperclass;					
+					superclassName: dialog presenter selectedSuperclassName;					
 					sourceClass: className;
 					instanceMethods: dialog presenter selectedInstanceMethods;
 					classMethods: dialog presenter selectedClassMethods.
