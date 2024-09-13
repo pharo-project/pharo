@@ -243,6 +243,7 @@ NECPreferences class >> settingsOn: aBuilder [
 						default: self defaultPopupDelay;
 						label: 'Popup appearance delay'.
 					(aBuilder pickOne: #popupShowWithShortcut)
+						target: self;
 						default: self defaultPopupShortcut;
 						label: 'Popup appears with this shortcut';
 						domainValues: self availablePopupShortcuts.
