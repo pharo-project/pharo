@@ -66,13 +66,6 @@ MetacelloVersion >> description [
     ^ self basicSpec description value
 ]
 
-{ #category : 'querying' }
-MetacelloVersion >> difference: aMetacelloVersion [
-	"Return a a dictionary of additions, removals and modifications"
-	
-	^self spec difference: aMetacelloVersion spec
-]
-
 { #category : 'private' }
 MetacelloVersion >> doFetchRequiredFromArray: anArray withEngine: anEngine [
 
