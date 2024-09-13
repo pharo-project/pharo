@@ -1,7 +1,7 @@
-Extension { #name : 'SycProfileMethodCommand' }
+Extension { #name : 'SycProfileTestMethodCommand' }
 
 { #category : '*Calypso-SystemTools-Core' }
-SycProfileMethodCommand class >> methodMenuActivation [
+SycProfileTestMethodCommand class >> methodMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byRootGroupItemFor: ClyMethod asCalypsoItemContext
