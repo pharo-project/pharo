@@ -42,7 +42,7 @@ produces
 			ASTSelectorNode
 			ASTVariableNode
 				ASTPatternVariableNode
-			RBAnnotationMarkNode
+			ASTAnnotationMarkNode
 			RBParseErrorNode
 				RBEnglobingErrorNode
 					RBArrayErrorNode

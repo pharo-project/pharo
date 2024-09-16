@@ -47,7 +47,7 @@ ClassHierarchyPrinterTest >> testOnlyASTNodes [
 			ASTSelectorNode
 			ASTVariableNode
 				ASTPatternVariableNode
-			RBAnnotationMarkNode
+			ASTAnnotationMarkNode
 			RBParseErrorNode
 				RBEnglobingErrorNode
 					RBArrayErrorNode
