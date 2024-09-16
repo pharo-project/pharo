@@ -27,11 +27,11 @@ ReEqualNilRule >> initialize [
 	self
 		replace: '``@object = nil' with: '``@object isNil';
 		replace: '``@object == nil' with: '``@object isNil';
-		replace: '``@object ~= nil' with: '``@object notNil';
-		replace: '``@object ~~ nil' with: '``@object notNil'
+		replace: '``@object ~= nil' with: '``@object isNotNil';
+		replace: '``@object ~~ nil' with: '``@object isNotNil'
 ]
 
 { #category : 'accessing' }
 ReEqualNilRule >> name [
-	^ '= nil -> isNil AND ~= nil -> notNil'
+	^ '= nil -> isNil AND ~= nil -> isNotNil'
 ]

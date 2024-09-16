@@ -33,6 +33,24 @@ PharoCommonTools class >> initialize [
 		registerToolClassNamed: self name
 ]
 
+{ #category : 'accessing - external projects' }
+PharoCommonTools class >> menuToploOn: aBuilder [
+	<worldMenu>
+
+	(aBuilder item: #LoadToplo)
+		parent: #Tools;
+		label: 'Load Toplo and Bloc';
+		icon: (self iconNamed: #smallLoadProject);
+		help: 'Load Toplo, a widget framework on top of Bloc.';
+		order: 100;
+		action: [
+			(Smalltalk classNamed: #Metacello) new
+				baseline: 'Toplo';
+				repository: (Smalltalk classNamed: #BaselineOfPharo) toploRepository;
+				onConflictUseIncoming;
+				load ]
+]
+
 { #category : 'settings' }
 PharoCommonTools class >> settingsOn: aBuilder [
 	<systemsettings>
@@ -82,13 +100,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						targetSelector: #tools;
 						label: 'Filelist';
 						default: (self environment at: #FileList);
-						domainValues: Smalltalk tools recentFileListTools];
-		with: [
-					(aBuilder pickOne: #changeSorterTool)
-						target: Smalltalk;
-						targetSelector: #tools;
-						label: 'Changesorter';
-						domainValues: Smalltalk tools recentChangeSorterTools]
+						domainValues: Smalltalk tools recentFileListTools]
 ]
 
 { #category : 'system startup' }
@@ -109,7 +121,7 @@ PharoCommonTools class >> worldMenuOn: aBuilder [
 		iconName: #smallSystemBrowser.
 	(aBuilder item: 'Git Repositories Browser')
 		order: 1;
-		icon: (self iconNamed: #komitterSmalltalkhubRemote);
+		iconName: #komitterSmalltalkhubRemote;
 		parent: #Browsing;
 		keyText: 'o, i';
 		help:
@@ -143,22 +155,6 @@ PharoCommonTools >> browserTool: aTool [
 PharoCommonTools >> changeList [
 
 	^ self toolNamed: #changeList
-]
-
-{ #category : 'registry access' }
-PharoCommonTools >> changeSorter [
-
-	^ self toolNamed: #changeSorter
-]
-
-{ #category : 'tools' }
-PharoCommonTools >> changeSorterTool [
-	^ self changeSorter
-]
-
-{ #category : 'tools' }
-PharoCommonTools >> changeSorterTool: aTool [
-	^ self register: aTool as: #changeSorter
 ]
 
 { #category : 'cleanup' }
@@ -251,11 +247,6 @@ PharoCommonTools >> recentBrowserTools [
 ]
 
 { #category : 'registration' }
-PharoCommonTools >> recentChangeSorterTools [
-	^ self recentToolsFor: #changeSorter
-]
-
-{ #category : 'registration' }
 PharoCommonTools >> recentFileListTools [
 	^ self recentToolsFor: #fileList
 ]
@@ -293,12 +284,6 @@ PharoCommonTools >> register: anTool as: aNameSelector [
 PharoCommonTools >> testRunner [
 
 	^ self toolNamed: #testRunner
-]
-
-{ #category : 'registry access' }
-PharoCommonTools >> timeProfiler [
-
-	^ self toolNamed: #timeProfiler
 ]
 
 { #category : 'private' }

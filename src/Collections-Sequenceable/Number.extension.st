@@ -18,7 +18,7 @@ Number >> to: stop by: step [
 
 { #category : '*Collections-Sequenceable' }
 Number >> to: stop by: step do: aBlock [
-	"Normally compiled in-line, and therefore not overridable.
+	"In some cases compiled in-line (see #isInlineToDo), and therefore not overridable.
 	Evaluate aBlock for each element of the interval (self to: stop by:
 step)."
 	| nextValue |

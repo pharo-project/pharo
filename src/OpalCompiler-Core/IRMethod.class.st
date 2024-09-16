@@ -132,15 +132,6 @@ IRMethod >> compiledMethod [
 
 ]
 
-{ #category : 'translating' }
-IRMethod >> compiledMethodWith: trailer [
-	self
-		deprecated: 'Use compiledMethod'
-		transformWith: '`@receiver compiledMethodWith: `@argument'
-			-> '`@receiver compiledMethod'.
-	^ self compiledMethod
-]
-
 { #category : 'enumerating' }
 IRMethod >> firstInstructionMatching: aBlock [
 	" return irNodes as a flat collection "
@@ -166,15 +157,6 @@ IRMethod >> generate [
 			compiledMethod classBinding: UndefinedObject binding.
 			compiledMethod selector: #UndefinedMethod ].
 	^ compiledMethod
-]
-
-{ #category : 'translating' }
-IRMethod >> generate: trailer [
-	self
-		deprecated: 'Use generate'
-		transformWith: '`@receiver generate: `@argument'
-			-> '`@receiver generate'.
-	^ self generate 
 ]
 
 { #category : 'translating' }
@@ -236,11 +218,12 @@ IRMethod >> isSend [
 ]
 
 { #category : 'printing' }
-IRMethod >> longPrintOn: stream [
+IRMethod >> longPrintString [
 
-	IRPrinter new
-		stream: stream;
-		visitNode: self
+	^ String streamContents: [ :stream |
+		IRPrinter new
+			stream: stream;
+			visitNode: self ]
 ]
 
 { #category : 'accessing' }

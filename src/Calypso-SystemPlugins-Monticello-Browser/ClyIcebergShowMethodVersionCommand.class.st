@@ -23,7 +23,7 @@ ClyIcebergShowMethodVersionCommand class >> canBeExecutedInContext: aToolContext
 
 	^ aToolContext isMethodSelected and: [
 		  (IceRepository registeredRepositoryIncludingPackage:
-			   aToolContext lastSelectedMethod package) notNil ]
+			   aToolContext lastSelectedMethod package) isNotNil ]
 ]
 
 { #category : 'accessing' }
@@ -62,7 +62,7 @@ ClyIcebergShowMethodVersionCommand >> execute [
 		^ self ].
 	repository := repositoriesWithPackage size > 1
 		ifTrue: [
-			UIManager default
+			self morphicUIManager
 				chooseFrom: (repositoriesWithPackage collect: [ :each | each name ])
 				values: repositoriesWithPackage
 				title: 'Repository' ]

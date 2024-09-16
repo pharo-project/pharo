@@ -1086,5 +1086,5 @@ ScrollBarMorph >> waitForDelay1: delay1 delay2: delay2 [
 
 { #category : 'stepping' }
 ScrollBarMorph >> wantsSteps [
-	^self scrollBarAction notNil
+	^self scrollBarAction isNotNil
 ]

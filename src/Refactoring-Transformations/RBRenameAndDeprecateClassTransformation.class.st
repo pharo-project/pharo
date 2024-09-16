@@ -29,6 +29,15 @@ Class {
 }
 
 { #category : 'api' }
+RBRenameAndDeprecateClassTransformation class >> model: aRBModel rename: aClassName [
+
+	^ self new
+		model: aRBModel;
+		className: aClassName
+		yourself
+]
+
+{ #category : 'api' }
 RBRenameAndDeprecateClassTransformation class >> model: aRBModel rename: aClassName to: aNewClassName [
 
 	^ self new
@@ -39,6 +48,13 @@ RBRenameAndDeprecateClassTransformation class >> model: aRBModel rename: aClassN
 ]
 
 { #category : 'api' }
+RBRenameAndDeprecateClassTransformation class >> rename: aClassName [
+
+	^ self new
+		className: aClassName
+]
+
+{ #category : 'api' }
 RBRenameAndDeprecateClassTransformation class >> rename: aClassName to: aNewClassName [
 
 	^ self new
@@ -46,31 +62,63 @@ RBRenameAndDeprecateClassTransformation class >> rename: aClassName to: aNewClas
 		newClassName: aNewClassName
 ]
 
+{ #category : 'preconditions' }
+RBRenameAndDeprecateClassTransformation >> applicabilityPreconditions [
+
+	| class |
+	class := self model classNamed: className.
+	^ { (ReClassesExistCondition new classes: { class }).
+		 (ReClassesAreNotMetaClassCondition new classes: { class }).
+		 (ReNameIsGlobalCondition new model: self model
+			   className: newClassName) not.
+	     (ReValidClassNameCondition new className: newClassName) }
+]
+
 { #category : 'executing' }
 RBRenameAndDeprecateClassTransformation >> buildTransformations [
 
 	^ transformations ifNil: [
-		  | class |
-		  class := self model classNamed: className.
-		  transformations := OrderedCollection
-			                     with: ((RBInsertNewClassTransformation className: self tmpName)
-					                      superclass: className asSymbol;
-					                      packageName: class packageName;
-					                      tagName: class tagName;
-					                      yourself)
-			                     with: (RBRenameClassRefactoring rename: className to: newClassName)
-			                     with: (RBRenameClassRefactoring rename: self tmpName to: className)
-			                     with: (RBDeprecateClassTransformation class: className) ]
+		transformations := OrderedCollection
+			with: (ReRenameClassRefactoring
+						model: self model
+						rename: className to: newClassName)
+			with: ((RBInsertNewClassTransformation
+					   model: self model
+						className: className)
+						superclass: newClassName asSymbol;
+						subclasses: #();
+						packageName: (self model classNamed: className) packageName)
+		with: (RBDeprecateClassTransformation
+						model: self model
+						className: className)]
+]
+
+{ #category : 'preconditions' }
+RBRenameAndDeprecateClassTransformation >> checkPreconditions [ 
+
+	self checkApplicabilityPreconditions 
+]
+
+{ #category : 'api' }
+RBRenameAndDeprecateClassTransformation >> className: aClassName [
+
+	className := aClassName asSymbol 
 ]
 
 { #category : 'api' }
 RBRenameAndDeprecateClassTransformation >> className: aClassName newClassName: aNewClassName [
 
-	className := aClassName.
-	newClassName := aNewClassName
+	className := aClassName asSymbol.
+	newClassName := aNewClassName asSymbol 
 ]
 
-{ #category : 'printing' }
+{ #category : 'api' }
+RBRenameAndDeprecateClassTransformation >> newClassName: aNewClassName [
+
+	newClassName := aNewClassName asSymbol 
+]
+
+{ #category : 'storing' }
 RBRenameAndDeprecateClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

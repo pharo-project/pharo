@@ -269,17 +269,6 @@ ClyBrowserToolMorph >> build [
 ]
 
 { #category : 'building' }
-ClyBrowserToolMorph >> buildAndDecorate [
-	self isBuilt ifTrue: [ ^self ] "somehow tab manager can call building process multiple times".
-	self setUpParametersFromModel.
-	self decorateContainerTab.
-	self build.
-	self buildStatusBar.
-	self applyDecorations.
-	self attachToSystem
-]
-
-{ #category : 'building' }
 ClyBrowserToolMorph >> buildPageAndDecorate [
 
 	self setUpParametersFromModel.
@@ -335,23 +324,6 @@ ClyBrowserToolMorph >> copyForBrowserStateSnapshot [
 	^self shallowCopy
 		resetStateForSnapshot;
 		yourself
-]
-
-{ #category : 'building' }
-ClyBrowserToolMorph >> createTab [
-	| menu |
-
-	menu := CmdMenu activatedBy: ClyBrowserTabCommandActivation.
-	menu buildInContext: context.
-
-	containerTab := TabMorph
-		label: self defaultTitle
-		icon: self defaultIcon
-		retrievingBlock: [ self buildAndDecorate ]
-		actions: menu buildBrowserTabActions.
-
-	containerTab model: self.
-	^ containerTab
 ]
 
 { #category : 'building' }

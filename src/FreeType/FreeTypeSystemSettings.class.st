@@ -34,7 +34,7 @@ FreeTypeSystemSettings class >> freeTypeSettingsOn: aBuilder [
 		label: 'Use Free type';
 		description:
 			'If checked, it allows the usage of Freetype fonts and updates available fonts by scanning the current system';
-		precondition: [ FT2Library current notNil ];
+		precondition: [ FT2Library current isNotNil ];
 		parent: #appearance;
 		order: 3;
 		with: [ (aBuilder pickOne: #monitorType)

@@ -223,7 +223,7 @@ TextMorph >> autoFitString [
 
 { #category : 'containment' }
 TextMorph >> avoidsOcclusions [
-	^container notNil and: [ container avoidsOcclusions ]
+	^container isNotNil and: [ container avoidsOcclusions ]
 ]
 
 { #category : 'accessing' }
@@ -700,7 +700,8 @@ TextMorph >> fillingOnOff [
 { #category : 'containment' }
 TextMorph >> fillsOwner [
 	"Answer true if I fill my owner's shape."
-	^container notNil and: [container fillsOwner]
+
+	^ container isNotNil and: [ container fillsOwner ]
 ]
 
 { #category : 'containment' }
@@ -752,7 +753,7 @@ TextMorph >> fit [
 							[para := paragraph.	"Save para (layoutChanged smashes it)"
 							super extent: newExtent.
 							paragraph := para]].
-			(container notNil and: [successor isNil])
+			(container isNotNil and: [successor isNil])
 				ifTrue:
 					[cBounds := container bounds truncated.
 					"23 sept 2000 - try to allow vertical growth"
@@ -944,7 +945,7 @@ TextMorph >> handlesMouseOver: evt [
 
 { #category : 'event handling' }
 TextMorph >> hasFocus [
-	^editor notNil
+	^editor isNotNil
 ]
 
 { #category : 'editing' }
@@ -1183,7 +1184,7 @@ TextMorph >> newContents: stringOrText [
 	newText := stringOrText isString
 		           ifTrue: [
 			           | textSize |
-			           (text notNil and: [
+			           (text isNotNil and: [
 				            (textSize := text size) > 0 and: [
 					            (text runLengthFor: 1) = textSize ] ])
 				           ifTrue: [
@@ -1295,7 +1296,7 @@ TextMorph >> paragraph [
 	"...Code here to recreate the paragraph..."
 	newParagraph  := (Paragraph new textOwner: self owner).
 
-	newParagraph wantsColumnBreaks: successor notNil.
+	newParagraph wantsColumnBreaks: successor isNotNil.
 	newParagraph
 		compose: text
 		style: textStyle copy
@@ -1586,7 +1587,7 @@ TextMorph >> setPredecessor: newPredecessor [
 TextMorph >> setSuccessor: newSuccessor [
 
 	successor := newSuccessor.
-	paragraph ifNotNil: [paragraph wantsColumnBreaks: successor notNil]
+	paragraph ifNotNil: [paragraph wantsColumnBreaks: successor isNotNil]
 ]
 
 { #category : 'initialization' }
@@ -1767,9 +1768,9 @@ TextMorph >> updateFromParagraph [
 						ifFalse:
 							[predecessor changed.	"really only last line"
 							self predecessorChanged]]].
-	((back := predecessor notNil
+	((back := predecessor isNotNil
 				and: [sel first <= self paragraph firstCharacterIndex]) or:
-				[successor notNil
+				[successor isNotNil
 					and: [sel first > (self paragraph lastCharacterIndex + 1)]])
 		ifTrue:
 			["The selection is no longer inside this paragraph.

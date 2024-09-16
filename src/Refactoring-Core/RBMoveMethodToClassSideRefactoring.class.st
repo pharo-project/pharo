@@ -87,6 +87,7 @@ RBMoveMethodToClassSideRefactoring >> checkVariableNamed: aString [
 
 { #category : 'executing' }
 RBMoveMethodToClassSideRefactoring >> generateChanges [
+	"Prepare, check the preconditions, and perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message). This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
 	
 	self prepareForExecution.
 
@@ -169,8 +170,8 @@ RBMoveMethodToClassSideRefactoring >> privateTransform [
 	method := class methodFor: method selector.
 	newClass := self model classNamed: class name, ' class'.
 	newSource2 := self getNewSource.
-	rbMethod := RBClassModelFactory rbMethod for: newClass source: newSource2 selector: method selector.
-	rbMethod2 := RBClassModelFactory rbMethod for: oldClass source: newSource selector: method selector.
+	rbMethod := self model rbMethodClass for: newClass source: newSource2 selector: method selector.
+	rbMethod2 := self model rbMethodClass for: oldClass source: newSource selector: method selector.
 	self removeMethod: method selector from: oldClass.
 	self addMethod: rbMethod to: newClass toProtocol: originalProtocol.
 	self addMethod: rbMethod2 to: oldClass toProtocol: originalProtocol
@@ -203,7 +204,7 @@ RBMoveMethodToClassSideRefactoring >> removeMethod: selector from: aRBClass [
 			from: aRBClass)
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBMoveMethodToClassSideRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

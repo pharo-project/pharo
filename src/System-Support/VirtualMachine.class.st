@@ -248,7 +248,7 @@ VirtualMachine >> gcStatisticsDuring: aBlockClosure [
 	incrementalGCTime := self totalIncrementalGCTime.
 	fullGCTime := self totalFullGCTime.
 	
-	timeToRun := aBlockClosure timeToRun.
+	timeToRun := aBlockClosure millisecondsToRun.
 
 	incrementalGCCount := self incrementalGCCount - incrementalGCCount.
 	fullGCCount := self fullGCCount - fullGCCount.
@@ -670,7 +670,7 @@ VirtualMachine >> optionAt: i [
 { #category : 'accessing' }
 VirtualMachine >> optionDash [
 	"VMs release in Mai 2013 use -- instead of - for VM command line options"
-	^ (Smalltalk vm interpreterSourceDate > '2013-05-17' asDate)
+	^ (Smalltalk vm interpreterSourceDate > (Date readFrom: '17-5-2013' pattern: 'd-m-y'))
 		ifTrue: [ '--' ]
 		ifFalse: [ '-' ]
 ]

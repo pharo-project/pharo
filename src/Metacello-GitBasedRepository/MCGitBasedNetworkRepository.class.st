@@ -145,43 +145,39 @@ MCGitBasedNetworkRepository class >> location: locationUrl version: versionStrin
 
 { #category : 'private' }
 MCGitBasedNetworkRepository class >> parseLocation: locationUrl version: versionString [
-  "self 
+	"self 
 	parseLocation: 'github://dalehenrich/MetacelloRepository:master/monticello/repos/itory/path'
 	version: nil
      "
 
-  | projectPath projectVersion repoPath headerSize desc projectDelim repoDelim versionDelim |
-  headerSize := self description size.
-  desc := locationUrl.
-  desc := desc copyFrom: headerSize + 1 to: desc size.
-  projectVersion := repoPath := nil.
-  projectDelim := desc indexOf: $/.
-  repoDelim := desc indexOf: $/ startingAt: projectDelim + 1.
-  (versionDelim := desc indexOf: $:) == 0
-    ifTrue: [ 
-      repoDelim == 0
-        ifTrue: [ projectPath := desc ]
-        ifFalse: [ 
-          projectPath := desc copyFrom: 1 to: repoDelim - 1.
-          repoPath := desc copyFrom: repoDelim + 1 to: desc size ] ]
-    ifFalse: [ 
-      projectPath := desc copyFrom: 1 to: versionDelim - 1.
-      repoDelim == 0
-        ifTrue: [ projectVersion := desc copyFrom: versionDelim + 1 to: desc size ]
-        ifFalse: [ 
-          projectPath := desc copyFrom: 1 to: versionDelim - 1.
-          self
-            parseProjectVersionField: [ :pv :rp | 
-              projectVersion := pv.
-              repoPath := rp ]
-            desc: desc
-            versionDelim: versionDelim ] ].
-  versionString ~~ nil
-    ifTrue: [ projectVersion := versionString ].
-  ^ self new
-    projectPath: projectPath
-    projectVersion: projectVersion
-    repoPath: repoPath
+	| projectPath projectVersion repoPath headerSize desc projectDelim repoDelim versionDelim |
+	headerSize := self description size.
+	desc := locationUrl.
+	desc := desc copyFrom: headerSize + 1 to: desc size.
+	projectVersion := repoPath := nil.
+	projectDelim := desc indexOf: $/.
+	repoDelim := desc indexOf: $/ startingAt: projectDelim + 1.
+	(versionDelim := desc indexOf: $:) == 0
+		ifTrue: [
+			repoDelim == 0
+				ifTrue: [ projectPath := desc ]
+				ifFalse: [
+					projectPath := desc copyFrom: 1 to: repoDelim - 1.
+					repoPath := desc copyFrom: repoDelim + 1 to: desc size ] ]
+		ifFalse: [
+			projectPath := desc copyFrom: 1 to: versionDelim - 1.
+			repoDelim == 0
+				ifTrue: [ projectVersion := desc copyFrom: versionDelim + 1 to: desc size ]
+				ifFalse: [
+					projectPath := desc copyFrom: 1 to: versionDelim - 1.
+					self
+						parseProjectVersionField: [ :pv :rp |
+							projectVersion := pv.
+							repoPath := rp ]
+						desc: desc
+						versionDelim: versionDelim ] ].
+	versionString ifNotNil: [ projectVersion := versionString ].
+	^ self new projectPath: projectPath projectVersion: projectVersion repoPath: repoPath
 ]
 
 { #category : 'private' }
@@ -256,13 +252,11 @@ MCGitBasedNetworkRepository class >> projectDirectoryFrom: projectPath version: 
 
 { #category : 'version patterns' }
 MCGitBasedNetworkRepository class >> projectVersionFromString: aString [
-  "strip leading $v if present and return an instance of MetacelloVersionNumber"
+	"strip leading $v if present and return an instance of MetacelloVersionNumber"
 
-  | versionString |
-  versionString := aString.
-  (versionString beginsWith: 'v')
-    ifTrue: [ versionString := versionString copyFrom: 2 to: versionString size ].
-  ^ MetacelloVersionNumber fromString: versionString
+	| versionString |
+	versionString := (aString beginsWith: 'v') ifTrue: [ aString allButFirst ] ifFalse: [ aString ].
+	^ MetacelloVersionNumber fromString: versionString
 ]
 
 { #category : 'private' }
@@ -274,7 +268,7 @@ MCGitBasedNetworkRepository class >> projectZipUrlFor: projectPath versionString
 MCGitBasedNetworkRepository class >> resetCacheDirectoryIfInvalid [
   "Reset if invalid"
 
-  repoCacheDirectory notNil
+  repoCacheDirectory isNotNil
     and: [ 
       (MCFileTreeFileUtils current directoryExists: repoCacheDirectory)
         ifFalse: [ repoCacheDirectory := nil ] ]
@@ -352,10 +346,12 @@ MCGitBasedNetworkRepository >> calculateRepositoryDirectory [
 
 { #category : 'initialization' }
 MCGitBasedNetworkRepository >> canUpgradeTo: anMCGitBasedRepository [
-  (anMCGitBasedRepository isKindOf: self class)
-    ifFalse: [ ^ false ].
-  ^ self projectPath = anMCGitBasedRepository projectPath
-    and: [ self repoPath = anMCGitBasedRepository repoPath ]
+
+	(anMCGitBasedRepository isKindOf: self class) ifFalse: [ ^ false ].
+
+	^ self projectPath = anMCGitBasedRepository projectPath and: [
+		  self repoPath = anMCGitBasedRepository repoPath and: [
+			  self projectVersion = anMCGitBasedRepository projectVersion ] ]
 ]
 
 { #category : 'accessing' }
@@ -409,6 +405,14 @@ MCGitBasedNetworkRepository >> ensureLocalRepository [
 	self resolveLocalRespository
 ]
 
+{ #category : 'fetching' }
+MCGitBasedNetworkRepository >> fetchPackageNamed: aName [
+
+	| references |
+	references := self packageNamed: aName.
+	MCCacheRepository default storeVersion: references
+]
+
 { #category : 'initialization' }
 MCGitBasedNetworkRepository >> flushCache [
   "the directory acts like a cache since we download the directory from a git-based repository (github, bitbucket, etc.)"
@@ -433,17 +437,6 @@ MCGitBasedNetworkRepository >> flushForScriptGet [
 		flushProjectEntry: self projectPath 
 		version: self projectVersion.
     self localRepository flushForScriptGet
-]
-
-{ #category : 'accessing' }
-MCGitBasedNetworkRepository >> goferReferences [
-	"delegate collection to local repository, but change them to be from *this* repository."
-
-	^ self localRepository goferReferences 
-		collect: [ :each | 
-			GoferResolvedReference 
-				name: each name 
-				repository: self ]
 ]
 
 { #category : 'accessing' }
@@ -479,6 +472,15 @@ MCGitBasedNetworkRepository >> isValid [
     ^ true
 ]
 
+{ #category : 'accessing' }
+MCGitBasedNetworkRepository >> loadPackageNamed: aString intoLoader: aMCVersionLoader [
+
+	| found |
+	found := self packageNamed: aString.
+	aMCVersionLoader addVersion: found.
+	^ { found . self }
+]
+
 { #category : 'private' }
 MCGitBasedNetworkRepository >> localRepository [
 	self ensureLocalRepository.
@@ -497,8 +499,13 @@ MCGitBasedNetworkRepository >> normalizeTagsData: jsonObject [
 ]
 
 { #category : 'accessing' }
-MCGitBasedNetworkRepository >> possiblyNewerVersionsOfAnyOf: someVersions [
-	^ self localRepository possiblyNewerVersionsOfAnyOf: someVersions
+MCGitBasedNetworkRepository >> packageNamed: aName ifPresent: presentBlock ifAbsent: absentBlock [
+	"delegate collection to local repository, but change them to be from *this* repository."
+
+	^ self localRepository
+		  packageNamed: aName
+		  ifPresent: presentBlock
+		  ifAbsent: absentBlock
 ]
 
 { #category : 'accessing' }
@@ -525,9 +532,9 @@ MCGitBasedNetworkRepository >> projectTagsUrlFor: aProjectPath [
 
 { #category : 'accessing' }
 MCGitBasedNetworkRepository >> projectVersion [
-    (projectVersion == nil or: [ projectVersion isEmpty ])
-        ifTrue: [ projectVersion := 'master' ].
-    ^ projectVersion
+
+	(projectVersion isNil or: [ projectVersion isEmpty ]) ifTrue: [ projectVersion := 'master' ].
+	^ projectVersion
 ]
 
 { #category : 'accessing' }

@@ -99,7 +99,7 @@ MCRepository >> description [
 	^ self class name
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 MCRepository >> displayStringOn: aStream [
 	aStream nextPutAll: self description
 ]
@@ -125,8 +125,33 @@ MCRepository >> isValid [
 ]
 
 { #category : 'accessing' }
-MCRepository >> possiblyNewerVersionsOfAnyOf: someVersions [
-	^#()
+MCRepository >> packageNamed: aName [
+
+	^ self packageNamed: aName ifAbsent: [ NotFound signal: aName ]
+]
+
+{ #category : 'accessing' }
+MCRepository >> packageNamed: aName ifAbsent: aBlock [
+
+	^ self
+		packageNamed: aName
+		ifPresent: [ :found | found ]
+		ifAbsent: aBlock
+]
+
+{ #category : 'accessing' }
+MCRepository >> packageNamed: aName ifPresent: aBlock [
+
+	^ self
+		  packageNamed: aName
+		  ifPresent: aBlock
+		  ifAbsent: [ NotFound signal: aName ]
+]
+
+{ #category : 'accessing' }
+MCRepository >> packageNamed: aName ifPresent: presentBlock ifAbsent: absentBlock [
+
+	^ absentBlock value
 ]
 
 { #category : 'printing' }
@@ -136,16 +161,6 @@ MCRepository >> printOn: aStream [
 		nextPut: $(;
 		nextPutAll: self description;
 		nextPut: $).
-]
-
-{ #category : 'storing' }
-MCRepository >> storeDependencies: aVersion [
-	MCCacheRepository uniqueInstance cacheAllFileNamesDuring: 
-		[self cacheAllFileNamesDuring: 
-			[aVersion allAvailableDependenciesDo:
-				[:dep |
-					(self includesVersionNamed: dep info name)
-						ifFalse: [self storeVersion: dep]]]]
 ]
 
 { #category : 'storing' }

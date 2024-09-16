@@ -66,21 +66,6 @@ ZipArchiveMember >> asDirectory [
 	^ZipDirectoryMember new copyFrom: self
 ]
 
-{ #category : 'extraction-ui' }
-ZipArchiveMember >> askOverwriteOptionsUsing: aUIManager onYes: yesBlock onNo: noBlock onRetryWithOverwrite: retryWithOverwriteBlock onCancel: cancelBlock [
-	| index |
-	[ index := aUIManager chooseFrom: {'Yes, overwrite' . 'No, don''t overwrite' . 'Overwrite ALL files' . 'Cancel operation'} lines: #(2) title: fileName , ' already exists. Overwrite?'.
-	index isNil ] whileTrue.
-	index = 1
-		ifTrue: [ yesBlock value ].
-	index = 2
-		ifTrue: [ noBlock value ].
-	index = 3
-		ifTrue: [ retryWithOverwriteBlock value ].
-	index = 4
-		ifTrue: [ cancelBlock value ]
-]
-
 { #category : 'accessing - spec fields' }
 ZipArchiveMember >> bitFlag [
 	"Per .ZIP File Format Specification Version: 6.3.2:
@@ -351,41 +336,19 @@ ZipArchiveMember >> endRead [
 	readDataRemaining := 0
 ]
 
-{ #category : 'extraction' }
-ZipArchiveMember >> extractInDirectory: dir [
-	self extractToFileNamed: self localFileName inDirectory: dir overwrite: true
-]
-
 { #category : 'extraction-ui' }
-ZipArchiveMember >> extractInDirectory: aDirectory informingOverwrite: shouldOverwrite onSuccess: successBlock onRetryWithOverwrite: retryWithOverwriteBlock onFailedOverwrite: failedBlock onAbortOverwrite: abortBlock [
+ZipArchiveMember >> extractInDirectory: aDirectory [
 	"Extract this entry into the given directory. Answer successBlock or call one of the other action blocks."
 
 	| path fileDir file localName |
 	path := fileName findTokens: '/'.
 	localName := path last.
-	fileDir := path allButLast inject: aDirectory into: [ :base :part | base / part ].
+	fileDir := path allButLast
+		           inject: aDirectory
+		           into: [ :base :part | base / part ].
 	fileDir ensureCreateDirectory.
 	file := fileDir / localName.
-	^ self
-		extractToFile: file
-		informingOverwrite: shouldOverwrite
-		onSuccess: successBlock
-		onRetryWithOverwrite: retryWithOverwriteBlock
-		onFailedOverwrite: failedBlock
-		onAbortOverwrite: abortBlock
-]
-
-{ #category : 'extraction-ui' }
-ZipArchiveMember >> extractInDirectory: aDirectory overwrite: shouldOverwrite [
-	"Extract this entry into the given directory. Answer #okay, #failed, #abort, or #retryWithOverwrite."
-
-	^ self
-		extractInDirectory: aDirectory
-		informingOverwrite: shouldOverwrite
-		onSuccess: [ ^ #okay ]
-		onRetryWithOverwrite: [ ^ #retryWithOverwrite ]
-		onFailedOverwrite: [ ^ #failed ]
-		onAbortOverwrite: [ ^ #abort ]
+	^ self extractToFile: file
 ]
 
 { #category : 'extraction' }
@@ -419,29 +382,13 @@ ZipArchiveMember >> extractTo: aStream from: start to: finish [
 ]
 
 { #category : 'private - extraction' }
-ZipArchiveMember >> extractToFile: aFile informingOverwrite: shouldOverwrite onSuccess: successBlock onRetryWithOverwrite: retryWithOverwriteBlock onFailedOverwrite: failedBlock onAbortOverwrite: abortBlock [
+ZipArchiveMember >> extractToFile: aFile [
 	"Extract this entry into the given file. Answer successBlock or call one of the other action blocks."
 
 	| file |
 	file := aFile.
-	(file exists and: [ shouldOverwrite not ])
-		ifTrue: [ | overwriteBlock |
-			overwriteBlock := [ file := [ file
-				ensureDelete;
-				ensureCreateFile ]
-				on: Error
-				do: [ :ex |
-					failedBlock cull: ex.
-					^ self ] ].
-			self
-				askOverwriteOptionsUsing: UIManager default
-				onYes: overwriteBlock
-				onNo: [ ^ #okay ]
-				onRetryWithOverwrite: [ retryWithOverwriteBlock value.
-					overwriteBlock value ]
-				onCancel: abortBlock ].
-	file binaryWriteStreamDo: [ :str | self extractTo: str ].
-	^ successBlock value
+	file exists ifTrue: [ ^ self ].
+	file binaryWriteStreamDo: [ :str | self extractTo: str ]
 ]
 
 { #category : 'extraction' }
@@ -471,6 +418,11 @@ ZipArchiveMember >> extractToFileNamed: aLocalFileName inDirectory: dir overwrit
 				ifFalse: [ file
 						ensureCreateFile;
 						binaryWriteStreamDo: [ :stream | self extractTo: stream ] ] ]
+]
+
+{ #category : 'extraction' }
+ZipArchiveMember >> extractWithOverwriteInDirectory: dir [
+	self extractToFileNamed: self localFileName inDirectory: dir overwrite: true
 ]
 
 { #category : 'accessing' }

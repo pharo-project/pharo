@@ -6,10 +6,10 @@ ImageFillStyle >> fillRectangle: aRectangle on: aCanvas [
 
 	self extent
 		ifNil: [aCanvas
-				translucentImage: self form
+				translucentFormSet: self formSet
 				at: self origin]
 		ifNotNil: [aCanvas clipBy: (self origin + self offset extent: self extent) during: [:c |
 					c
-						translucentImage: self form
+						translucentFormSet: self formSet
 						at: self origin]]
 ]

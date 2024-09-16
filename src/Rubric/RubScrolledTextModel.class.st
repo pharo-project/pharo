@@ -164,6 +164,14 @@ RubScrolledTextModel >> primarySelectionInterval [
 	^ primarySelectionInterval
 ]
 
+{ #category : 'private' }
+RubScrolledTextModel >> privateText: atextOrString [
+
+	"Use setText: because I don't update the morph that uses me."
+
+	text := atextOrString asText
+]
+
 { #category : 'view updating' }
 RubScrolledTextModel >> reconfigureViewWith: aBlockWithAScrolledTextMorphAsArgument [
 	self announce: (RubConfigurationChange new configurationBlock: aBlockWithAScrolledTextMorphAsArgument)
@@ -190,7 +198,7 @@ RubScrolledTextModel >> setPrimarySelectionInterval: anInterval [
 
 { #category : 'text managing' }
 RubScrolledTextModel >> setText: aText [
-	self text:  aText.
+	self privateText:  aText.
 	self announcer announce: RubTextUpdatedInModel.
 	^ true
 ]
@@ -211,7 +219,13 @@ RubScrolledTextModel >> text [
 	^ text ifNil: [ text := '' asText ]
 ]
 
-{ #category : 'text managing' }
+{ #category : 'private' }
 RubScrolledTextModel >> text: atextOrString [
-	text := atextOrString asText
+
+	self
+		deprecated: 'You should use setText: or privateText: if you are really in the same class'
+		transformWith: '`@receiver text: `@arg' -> '`@receiver setText: `@arg'.
+		
+			
+	^ self setText: atextOrString
 ]

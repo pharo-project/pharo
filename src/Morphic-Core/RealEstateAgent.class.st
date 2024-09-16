@@ -24,10 +24,10 @@ RealEstateAgent class >> assignCollapseFrameFor: aSSView [
 	verticalBorderDistance := 8.
 	otherFrames := (aSSView world windowsSatisfying: [ :w | w ~= aSSView ])
 		               collect: [ :w | w collapsedFrame ]
-		               thenSelect: [ :rect | rect notNil ].
+		               thenSelect: [ :rect | rect isNotNil ].
 	viewBox := aSSView world viewBox.
 	collapsedFrame := aSSView collapsedFrame.
-	extent := collapsedFrame notNil
+	extent := collapsedFrame isNotNil
 		          ifTrue: [ collapsedFrame extent ]
 		          ifFalse: [ aSSView getRawLabel width + aSSView labelWidgetAllowance @ (aSSView labelHeight + 2) ].
 	collapsedFrame ifNotNil: [ (otherFrames anySatisfy: [ :f | collapsedFrame intersects: f ]) ifFalse: [ "non overlapping" ^ collapsedFrame ] ].
@@ -51,7 +51,7 @@ RealEstateAgent class >> assignCollapsePointFor: aSSView [
 	"should be mult of 8, since manual move is gridded by 8"
 	otherFrames := ( aSSView world   windowsSatisfying: [:w | true])
 				collect: [:w | w collapsedFrame]
-				thenSelect: [:rect | rect notNil].
+				thenSelect: [:rect | rect isNotNil].
 	viewBox := aSSView world viewBox.
 	y := viewBox top.
 	[(y := y + grid) <= (viewBox height - grid)]
@@ -71,7 +71,7 @@ RealEstateAgent class >> cascadeFor: aView initialExtent: initialExtent world: a
 	| position allowedArea |
 	allowedArea := self maximumUsableAreaInWorld: aWorld.
 	position := aWorld currentWindow isMorph
-		ifFalse: [ aWorld center - (initialExtent / 2)]
+		ifFalse: [ aWorld center - (initialExtent // 2)]
 		ifTrue: [ aWorld currentWindow position + 20].
 	^ (position extent: initialExtent)
 		translatedAndSquishedToBeWithin: allowedArea
@@ -106,9 +106,11 @@ RealEstateAgent class >> initialize [
 RealEstateAgent class >> maximumUsableArea [
 
 	| allowedArea |
-	allowedArea := Display usableArea.
-	allowedArea := allowedArea intersect: self currentWorld visibleClearArea ifNone: [ allowedArea ].
-	^allowedArea
+	allowedArea := self currentWorld bounds.
+	allowedArea := allowedArea
+		               intersect: self currentWorld visibleClearArea
+		               ifNone: [ allowedArea ].
+	^ allowedArea
 ]
 
 { #category : 'accessing' }

@@ -64,7 +64,7 @@ Canvas >> contentsOfArea: aRectangle into: aForm [
 { #category : 'accessing' }
 Canvas >> depth [
 
-	^ Display depth
+	^ self subclassResponsibility
 ]
 
 { #category : 'testing' }
@@ -248,7 +248,7 @@ Canvas >> fillRectangle: aRectangle fillStyle: aFillStyle borderStyle: aBorderSt
        aFillStyle isTransparent ifFalse: [
                self fillRectangle: (aRectangle insetBy: aBorderStyle width) fillStyle: aFillStyle ].
 
-       (aBorderStyle notNil and: [aBorderStyle width]) >= 0 ifTrue: [ aBorderStyle frameRectangle: aRectangle on: self ]
+       (aBorderStyle isNotNil and: [aBorderStyle width]) >= 0 ifTrue: [ aBorderStyle frameRectangle: aRectangle on: self ]
 ]
 
 { #category : 'initialization' }
@@ -264,7 +264,13 @@ Canvas >> flush [
 { #category : 'accessing' }
 Canvas >> form [
 
-	^ Display
+	^ self subclassResponsibility
+]
+
+{ #category : 'private' }
+Canvas >> formSet: aFormSet at: aPoint sourceRect: sourceRect rule: rule [
+
+	^ self image: aFormSet asForm at: aPoint sourceRect: sourceRect rule: rule
 ]
 
 { #category : 'drawing - rectangles' }
@@ -612,6 +618,12 @@ Canvas >> origin [
 ]
 
 { #category : 'drawing - images' }
+Canvas >> paintFormSet: aFormSet at: aPoint [
+
+	self paintImage: aFormSet asForm at: aPoint
+]
+
+{ #category : 'drawing - images' }
 Canvas >> paintImage: aForm at: aPoint [
 	"Draw the given Form, which is assumed to be a Form or ColorForm following the convention that zero is the transparent pixel value."
 
@@ -686,6 +698,12 @@ Canvas >> stencil: stencilForm at: aPoint color: aColor [
 Canvas >> stencil: stencilForm at: aPoint sourceRect: sourceRect color: aColor [
 	"Flood this canvas with aColor wherever stencilForm has non-zero pixels"
 	^self subclassResponsibility
+]
+
+{ #category : 'drawing - images' }
+Canvas >> stencilFormSet: stencilFormSet at: aPoint color: aColor [
+
+	^ self stencil: stencilFormSet asForm at: aPoint color: aColor
 ]
 
 { #category : 'drawing - support' }

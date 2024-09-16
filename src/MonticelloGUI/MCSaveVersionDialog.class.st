@@ -63,10 +63,9 @@ MCSaveVersionDialog >> addAsLastLogMessage: aString [
 
 { #category : 'morphic ui' }
 MCSaveVersionDialog >> buttonSpecs [
-	^ #((Accept accept 'accept version name and log message')
-		(Cancel cancel 'cancel saving version')
-		('Old log messages...' oldLogMessages 're-use a previous log message')
-		) 
+
+	^ #( #( Accept accept 'accept version name and log message' )
+	     #( Cancel cancel 'cancel saving version' ) )
 ]
 
 { #category : 'morphic ui' }
@@ -99,19 +98,6 @@ MCSaveVersionDialog >> logMessage: aString [
 MCSaveVersionDialog >> maxLogMessageHistory [
 
 	^ self maxLogMessageHistory
-]
-
-{ #category : 'morphic ui' }
-MCSaveVersionDialog >> oldLogMessages [
-	| list index |
-	list := self previousMessages collect: [:s | s truncateWithElipsisTo: 30].
-	list ifEmpty: [UIManager default inform: 'No previous log message was entered'. ^ self].
-	index := UIManager default chooseFrom: list.
-	
-	"no comment was selected"
-	index isZero ifTrue: [ ^ self ].
-	
-	self logMessage: (self previousMessages at: index)
 ]
 
 { #category : 'log message history' }

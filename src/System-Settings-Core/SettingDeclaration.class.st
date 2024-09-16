@@ -117,6 +117,7 @@ SettingDeclaration >> addToList: anItem [
 { #category : 'accessing' }
 SettingDeclaration >> default [
 	^ default
+		ifNil: [ default := String empty ]
 ]
 
 { #category : 'accessing' }
@@ -253,7 +254,7 @@ SettingDeclaration >> inputWidget [
 	| inputWidget xtraDialogWidget |
 	xtraDialogWidget := super inputWidget.
 	inputWidget :=  self localInputWidgetSelector ifNotNil: [:localSel | self perform: localSel].
-	(inputWidget isNil and: [self typeClass notNil])
+	(inputWidget isNil and: [self typeClass isNotNil])
 		ifTrue: [inputWidget := (self inputWidgetSelectorInClass: self typeClass)
 			ifNotNil: [:selector | self typeClass perform: selector with: self]].
 	inputWidget

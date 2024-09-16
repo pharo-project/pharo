@@ -43,12 +43,10 @@ VariableBreakpoint class >> newForClass: aClass [
 
 { #category : 'notifications' }
 VariableBreakpoint class >> notifyBreakpointHit: aBreakpoint inContext: aContext node: node [
-	| announcement |
-	announcement := BreakpointHit
-		on: aBreakpoint
-		nodes: {node}.
-	announcement valueOrNil: (node variableValueInContext: aContext).
-	SystemAnnouncer announce: announcement
+
+	self codeSupportAnnouncer announce: ((BreakpointHit on: aBreakpoint nodes: { node })
+			 valueOrNil: (node variableValueInContext: aContext);
+			 yourself)
 ]
 
 { #category : 'API' }

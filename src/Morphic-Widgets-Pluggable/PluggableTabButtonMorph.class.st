@@ -240,7 +240,7 @@ PluggableTabButtonMorph >> update: aSelector [
 			aSelector = self textSelector
 				ifTrue: [
 					| morph |
-					morph := (aSelector isSymbol and: [ model notNil ])
+					morph := (aSelector isSymbol and: [ model isNotNil ])
 						ifTrue: [ (self model perform: aSelector) asMorph ]
 						ifFalse: [ aSelector value asMorph ].
 					self subMorph: morph ] ].

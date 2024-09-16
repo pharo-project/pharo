@@ -47,6 +47,25 @@ RBTransformationsTest >> testAddMethodCommentTransform [
 ]
 
 { #category : 'tests' }
+RBTransformationsTest >> testAddMethodCommentTransformWithExistingQuotationMarks [ 
+
+	| transformation method |
+	transformation := (RBAddMethodCommentTransformation
+		                   comment: '"New comment for method"'
+		                   inMethod: #one
+		                   inClass: self changeMockClass name)
+		                  generateChanges.
+
+	self assert: transformation model changes changes size equals: 1.
+
+	method := (transformation model classNamed: self changeMockClass name)
+		          methodFor: #one.
+	self
+		assert: method ast comments first contents
+		equals: 'New comment for method'
+]
+
+{ #category : 'tests' }
 RBTransformationsTest >> testAddMethodTransform [
 
 	| transformation class |
@@ -171,29 +190,16 @@ RBTransformationsTest >> testCustomTransform [
 RBTransformationsTest >> testDeprecateClassTransform [
 
 	| transformation class |
-	transformation := (RBDeprecateClassTransformation class:
+	transformation := (RBDeprecateClassTransformation className:
 		                   self changeMockClass name) generateChanges.
 
-	self assert: transformation model changes changes size equals: 4.
-
-	class := transformation model classNamed: self changeMockClass name.
-	self assert: class comment equals: 'Deprecated!!! Use superclass'.
+	self assert: transformation model changes changes size equals: 1.
 
 	class := transformation model metaclassNamed:
 		         self changeMockClass name.
-
 	self
-		assert: (class parseTreeForSelector: #new)
-		equals: (self parseMethod: 'new
-				self deprecated: ''Use superclass '' on: ''4 May 2016''  in: #Pharo60.
-				^ super new').
-	self
-		assert: (class parseTreeForSelector: #deprecated)
-		equals: (self parseMethod: 'deprecated ^ true').
-	self
-		assert: (class parseTreeForSelector: #systemIcon)
-		equals: (self parseMethod: 'systemIcon
-				^ Smalltalk ui icons iconNamed: #packageDelete')
+		assert: (class parseTreeForSelector: #isDeprecated)
+		equals: (self parseMethod: 'isDeprecated ^ true').
 ]
 
 { #category : 'tests' }
@@ -334,7 +340,7 @@ RBTransformationsTest >> testRenameClassTransform [
 	| transformation class newClassName oldClassName |
 	newClassName := #RBNewDummyClassName.
 	oldClassName := RBClassToRename name asSymbol.
-	transformation := (RBRenameClassRefactoring
+	transformation := (ReRenameClassRefactoring
 		                   rename: oldClassName
 		                   to: newClassName) generateChanges.
 

@@ -222,7 +222,7 @@ ClyNavigationEnvironment >> getPlugin: environmentPluginClass ifAbsent: absentBl
 ClyNavigationEnvironment >> handleSystemChange: aSystemAnnouncement [
 
 	| todoList todoSize anyResult |
-	todoList := 	(queryCache values select: [ :each | each notNil ]) as: IdentitySet.
+	todoList := 	(queryCache values select: [ :each | each isNotNil ]) as: IdentitySet.
 	todoSize := 0.
 	[[todoSize = todoList size] whileFalse: [
 		todoSize := todoList size.
@@ -351,5 +351,5 @@ ClyNavigationEnvironment >> updateUsing: newUpdateStrategy by: updateBlock [
 { #category : 'accessing' }
 ClyNavigationEnvironment >> withCachedQueriesDo: aBlock [
 
-	queryCache select: [ :each | each notNil ] thenDo: aBlock
+	queryCache select: [ :each | each isNotNil ] thenDo: aBlock
 ]

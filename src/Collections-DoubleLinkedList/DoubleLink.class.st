@@ -35,12 +35,12 @@ DoubleLink >> clearLinks [
 
 { #category : 'testing' }
 DoubleLink >> hasPredecessor [
-	^ previousLink notNil
+	^ previousLink isNotNil
 ]
 
 { #category : 'testing' }
 DoubleLink >> hasSuccessor [
-	^ nextLink notNil
+	^ nextLink isNotNil
 ]
 
 { #category : 'accessing' }

@@ -355,7 +355,7 @@ RGBehaviorStrategyUser >> sibling [
 	^ self behaviorStrategy sibling
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RGBehaviorStrategyUser >> storeOn: aStream [
 
 	^ self behaviorStrategy storeOn: aStream

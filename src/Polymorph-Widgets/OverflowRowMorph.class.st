@@ -121,7 +121,7 @@ OverflowRowMorph >> fitBaseMorphs [
 		proposed
 			removeMorph: (proposed submorphs at: proposed submorphs size - 1);
 			extent: proposed minExtent].
-	(proposed submorphCount = 1 and: [self moreButton owner notNil]) ifTrue: [
+	(proposed submorphCount = 1 and: [self moreButton owner isNotNil]) ifTrue: [
 		self moreButton hResizing: #spaceFill].
 	self
 		removeAllMorphs;
@@ -204,7 +204,7 @@ OverflowRowMorph >> moreMorphs [
 OverflowRowMorph >> moreVisible [
 	"Answer whether the more column is visible."
 
-	^(self moreMorph ifNil: [^false]) owner notNil
+	^(self moreMorph ifNil: [^false]) owner isNotNil
 ]
 
 { #category : 'instance creation' }

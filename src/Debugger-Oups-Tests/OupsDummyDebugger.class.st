@@ -134,11 +134,6 @@ OupsDummyDebugger >> tag: anObject [
 	tag := anObject
 ]
 
-{ #category : 'ui requests' }
-OupsDummyDebugger >> warningDefaultAction: aWarningException [
-	tag := aWarningException
-]
-
 { #category : 'helpers' }
 OupsDummyDebugger >> zeroDivide [
 	1/0

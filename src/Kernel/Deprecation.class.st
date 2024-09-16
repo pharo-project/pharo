@@ -71,18 +71,27 @@ Deprecation class >> deprecationsWhile: aBlock [
 
 { #category : 'class initialization' }
 Deprecation class >> initialize [
-	Log := nil "#deprecationsWhile: logs all deprecations here"
+	self reset
 ]
 
 { #category : 'settings' }
 Deprecation class >> raiseWarning [
 	"If true, then a dialog is popup for each deprecated method invocation"
-	^ RaiseWarning ifNil: [RaiseWarning := true]
+	^ RaiseWarning ifNil: [RaiseWarning := false]
 ]
 
 { #category : 'settings' }
 Deprecation class >> raiseWarning: aBoolean [
 	RaiseWarning := aBoolean
+]
+
+{ #category : 'class initialization' }
+Deprecation class >> reset [
+	<script>
+	Log := nil.
+	RaiseWarning := nil.
+	ShowWarning := nil.
+	Active := nil
 ]
 
 { #category : 'settings' }
@@ -132,11 +141,11 @@ Deprecation >> date: aDate [
 
 { #category : 'handling' }
 Deprecation >> defaultAction [
-	Log
-		ifNotNil: [:log | log add: self].
-	self logTranscript.
-	self raiseWarning
-		ifTrue: [super defaultAction]
+
+	Log ifNotNil: [ :log | log add: self ].
+	self showWarning ifTrue: [ self logTranscript ].
+	self raiseWarning ifTrue: [ super defaultAction ].
+	self shouldTransform ifTrue: [ self transform ]
 ]
 
 { #category : 'private' }
@@ -168,8 +177,7 @@ Deprecation >> hash [
 
 { #category : 'private' }
 Deprecation >> logTranscript [
-	self showWarning
-		ifTrue: [ DeprecationPerformedNotification signal: self messageText ]
+	DeprecationPerformedNotification signal: self messageText
 ]
 
 { #category : 'accessing' }
@@ -231,23 +239,28 @@ Deprecation >> signal [
 
 { #category : 'handling' }
 Deprecation >> transform [
+
 	| node rewriteRule aMethod |
-	self shouldTransform ifFalse: [ ^ self signal].
-	self rewriterClass ifNil:[ ^ self signal ].
+
+	self rewriterClass ifNil:[ ^ self ].
 	aMethod := self contextOfSender homeMethod.
-	aMethod isDoIt ifTrue:[ ^ self signal ]. "no need to transform doits"
+	
+	"no need to transform doits or non installed methods.
+	Non installed methods can arise if we are rewriting a closure whose home method was rewritten"
+	aMethod isDoIt ifTrue:[ ^ self ].
+	aMethod isInstalled ifFalse: [ ^ self ].
+	
 	node := self contextOfSender sourceNodeExecuted.
 	RecursionStopper during: [
 		rewriteRule := self rewriterClass new
 			replace: rule key with: rule value.
 		(rewriteRule executeTree: node)
-			ifFalse: [ ^ self signal ].
+			ifFalse: [ ^ self ].
 		node replaceWith: rewriteRule tree.
-		Author
-			useAuthor: 'AutoDeprecationRefactoring'
-			during: [aMethod origin compile: aMethod ast formattedCode classified: aMethod protocol].
-		Log  ifNotNil: [:log | log add: self].
-		self logTranscript]
+		aMethod origin
+			compile: aMethod ast formattedCode
+			classified: aMethod protocol.
+		Log ifNotNil: [ :log | log add: self ] ]
 ]
 
 { #category : 'accessing' }

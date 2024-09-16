@@ -77,7 +77,7 @@ EpDashboardPresenter >> createNewSessionLog [
 { #category : 'initialization' }
 EpDashboardPresenter >> initializeCreateLogButton [
 	createLogButton
-		icon: (self iconNamed: #addIcon);
+		icon: (self iconNamed: #add);
 		help: 'Start recording into new Log';
 		label: 'New session';
 		action: [ self createNewSessionLog ]
@@ -153,10 +153,10 @@ EpDashboardPresenter >> openSettingsBrowser [
 
 	| settingsBrowser settingsWindow |
 	settingsBrowser := SettingBrowser new
-		                   changePackageSet: (self packageOrganizer packageNamed: 'EpiceaBrowsers') asOrderedCollection;
+		                   changePackageSet:
+			                   {self packageOrganizer packageNamed: 'EpiceaBrowsers'};
 		                   yourself.
 	settingsWindow := settingsBrowser open.
-	settingsWindow position: Display extent - settingsWindow extent // 2.
 	settingsBrowser expandAll
 ]
 

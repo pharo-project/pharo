@@ -140,7 +140,7 @@ RubEditingArea >> hasBindingOf: aString [
 { #category : 'highlighting' }
 RubEditingArea >> hasHighlightSegment [
 
-	^ self getHighlightSegment notNil
+	^ self getHighlightSegment isNotNil
 ]
 
 { #category : 'event handling' }

@@ -11,9 +11,9 @@ Class {
 		'SDL2Constants',
 		'SDL2ConstantsHint'
 	],
-	#category : 'OSWindow-SDL2-Bindings',
+	#category : 'OSWindow-SDL2-Platforms',
 	#package : 'OSWindow-SDL2',
-	#tag : 'Bindings'
+	#tag : 'Platforms'
 }
 
 { #category : 'operations' }

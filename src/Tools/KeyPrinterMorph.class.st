@@ -40,7 +40,7 @@ KeyPrinterMorph >> handlesMouseDown: evt [
 
 { #category : 'event handling' }
 KeyPrinterMorph >> keyDown: anEvent [
-	UIManager default inform: anEvent key asString
+	self morphicUIManager inform: anEvent key asString
 ]
 
 { #category : 'event handling' }

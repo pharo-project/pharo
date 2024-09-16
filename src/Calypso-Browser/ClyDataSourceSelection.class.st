@@ -35,6 +35,8 @@ Internal Representation and Key Implementation Points.
 Class {
 	#name : 'ClyDataSourceSelection',
 	#superclass : 'Object',
+	#traits : 'TIsEmpty',
+	#classTraits : 'TIsEmpty classTrait',
 	#instVars : [
 		'items',
 		'rootDataSource'
@@ -151,6 +153,14 @@ ClyDataSourceSelection >> detachedItems [
 	then they should ask for #detachedItems"
 
 	^items collect: [:each | each copy]
+]
+
+{ #category : 'controlling' }
+ClyDataSourceSelection >> ensureVisibleFirstItem [
+	
+	rootDataSource table
+		selectIndexes: #();
+	 	selectFirst
 ]
 
 { #category : 'controlling' }

@@ -180,7 +180,7 @@ FreeTypeFontProvider >> fontFor: aLogicalFont familyName: familyName [
 	FT2Library current isAvailable ifFalse:[^nil].
 	info:= self fontInfoFor: aLogicalFont familyName: familyName.
 	info ifNil:[^nil].
-	answer := FreeTypeFont forLogicalFont: aLogicalFont fileInfo: info.
+	simulatedSqueakEmphasis := nil.
 	needsSimulatedBold := aLogicalFont isBoldOrBolder and:[(info isBolderThan: 500) not].
 	needsSimulatedSlant := aLogicalFont isItalicOrOblique and: [info isItalicOrOblique not].
 	(needsSimulatedBold or:[needsSimulatedSlant])
@@ -193,8 +193,8 @@ FreeTypeFontProvider >> fontFor: aLogicalFont familyName: familyName [
 					simulatedSqueakEmphasis := simulatedSqueakEmphasis + squeakBoldEmphasis].
 			needsSimulatedSlant
 				ifTrue:[
-					simulatedSqueakEmphasis := simulatedSqueakEmphasis + squeakItalicEmphasis].
-			answer simulatedEmphasis: simulatedSqueakEmphasis].
+					simulatedSqueakEmphasis := simulatedSqueakEmphasis + squeakItalicEmphasis]].
+	answer := FreeTypeFont forLogicalFont: aLogicalFont fileInfo: info simulatedEmphasis: simulatedSqueakEmphasis.
 	answer face validate.
 	answer face isValid ifFalse:[^nil].  "we may get this if startup causes text display BEFORE receiver has been updated from the system"
 	^answer
@@ -444,13 +444,13 @@ FreeTypeFontProvider >> updateFromFile: aFile [
 	| i face numFaces cachedInfo info cachedNumFaces path |
 
 	i:= 0.
-	[(cachedInfo := self validCachedInfoFor: aFile index: i) notNil]
+	[(cachedInfo := self validCachedInfoFor: aFile index: i) isNotNil]
 		whileTrue:[
 			i = 0 ifTrue: [ cachedNumFaces := cachedInfo numFaces ].
 			self addFileInfo: cachedInfo index: i.
 			i := i + 1.].
 
-	(cachedNumFaces notNil and:[ i >= cachedNumFaces ]) ifTrue:[ ^ self ].
+	(cachedNumFaces isNotNil and:[ i >= cachedNumFaces ]) ifTrue:[ ^ self ].
 
 	path := aFile fullName utf8Encoded asString.
 	[face := FreeTypeFace basicNew filename: path; index:  i.
@@ -459,7 +459,7 @@ FreeTypeFontProvider >> updateFromFile: aFile [
 	face loadFields]
 		on: FT2Error, PrimitiveFailed
 		do: [:e | ^self failedToOpen: face from: path index: i ].
-	(face height notNil  and:[face hasFamilyName and:[face hasStyleName and:[face isValid]]])
+	(face height isNotNil and:[face hasFamilyName and:[face hasStyleName and:[face isValid]]])
 		ifFalse: [ ^self failedToOpen:face from: path index: i ]
 		ifTrue: [
 			numFaces ifNil: [numFaces := face numFaces].

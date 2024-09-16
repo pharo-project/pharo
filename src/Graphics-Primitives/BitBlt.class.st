@@ -464,7 +464,7 @@ BitBlt >> copyBits [
 	combinationRule = Form oldErase1bitShape ifTrue: [ ^ self eraseBits ].
 
 	"Check if BitBlt doesn't support full color maps"
-	(colorMap notNil and: [ colorMap isColormap ]) ifTrue:
+	(colorMap isNotNil and: [ colorMap isColormap ]) ifTrue:
 		[ colorMap := colorMap colors.
 		^ self copyBits ].
 	"Check if clipping gots us way out of range"

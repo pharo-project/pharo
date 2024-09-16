@@ -108,8 +108,8 @@ ASTClassBuilderTest >> testCreateNormalClassSuperClass [
 	| class |
 	class := self buildClassFromDefinition: 'Xcrd << #TestSubClass' allowUndefined: true.
 
-	self assert: class superclass equals: (self class environment classNamed: 'Xcrd') ] ensure: [
-		self class environment at: 'Xcrd' ifPresent: [ :aClass | aClass removeFromSystem ] ]
+	self assert: class superclass equals: (self class environment classNamed: #Xcrd) ] ensure: [
+		self class environment at: #Xcrd ifPresent: [ :aClass | aClass removeFromSystem ] ]
 ]
 
 { #category : 'tests' }

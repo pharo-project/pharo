@@ -144,8 +144,8 @@ TabSelectorMorph >> drawSubmorphsOn: aCanvas [
 
 	|tab|
 	super drawSubmorphsOn: aCanvas.
-	(self hasKeyboardFocus and: [(tab := self selectedTab) notNil
-			and: [tab owner notNil]])
+	(self hasKeyboardFocus and: [(tab := self selectedTab) isNotNil
+			and: [tab owner isNotNil]])
 		ifTrue: [self clipSubmorphs
 				ifTrue: [aCanvas
 							clipBy: (aCanvas clipRect intersect: self clippingBounds ifNone:["done here" ^ self ])
@@ -589,7 +589,7 @@ TabSelectorMorph >> visibleTabRange: anInterval [
 TabSelectorMorph >> visibleTabs [
 	"Answer the tabs that are currently visible."
 
-	^self tabs select: [:t | t owner notNil]
+	^self tabs select: [:t | t owner isNotNil]
 ]
 
 { #category : 'accessing' }

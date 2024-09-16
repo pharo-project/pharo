@@ -122,7 +122,7 @@ ExternalStructure class >> compileAlias: spec withAccessors: aSymbol [
 			].
 	isPointerField
 		ifTrue: [ externalType := externalType asPointerType ].
-	( fieldName notNil and: [ self shouldGenerate: fieldName policy: aSymbol ] )
+	( fieldName isNotNil and: [ self shouldGenerate: fieldName policy: aSymbol ] )
 		ifTrue: [ self defineAliasAccessorsFor: fieldName type: externalType ].
 	newCompiledSpec := isPointerField
 		ifTrue: [ WordArray with: ( ExternalType structureSpec bitOr: ExternalType pointerSpec ) ]
@@ -190,7 +190,7 @@ ExternalStructure class >> compileFields: specArray withAccessors: aSymbol [
 		spec size > 2 ifTrue: [ "extra size"
 			spec third < typeSize ifTrue: [ ^ self error: 'Explicit type size is less than expected' ].
 			typeSize := spec third ].
-		(fieldName notNil and: [ self shouldGenerate: fieldName policy: aSymbol ]) ifTrue: [
+		(fieldName isNotNil and: [ self shouldGenerate: fieldName policy: aSymbol ]) ifTrue: [
 			self defineFieldAccessorsFor: fieldName startingAt: byteOffset type: externalType ].
 		typeSpec nextPutAll: (externalType embeddedSpecWithSize: typeSize).
 		byteOffset := byteOffset + typeSize ].
@@ -450,21 +450,6 @@ ExternalStructure >> compositeName [
 { #category : 'finalization' }
 ExternalStructure >> free [
 	"Free the handle pointed to by the receiver"
-	(handle notNil and:[handle isExternalAddress]) ifTrue:[handle free].
+	(handle isNotNil and:[handle isExternalAddress]) ifTrue:[handle free].
 	handle := nil
-]
-
-{ #category : 'printing' }
-ExternalStructure >> longPrintOn: aStream [
-	"Append to the argument, aStream, the names and values of all the record's variables."
-	| fields |
-	fields := self class fields.
-	(fields isEmpty or: [fields first isNil])
-		ifTrue: [fields := #()]
-		ifFalse: [fields first isArray ifFalse: [fields := Array with: fields]].
-	fields do: [ :field |
-		field first ifNotNil:
-			[aStream nextPutAll: field first; nextPut: $:; space; tab.
-			(self perform: field first) printOn: aStream.
-			aStream cr]]
 ]

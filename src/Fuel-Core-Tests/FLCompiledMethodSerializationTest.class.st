@@ -32,7 +32,7 @@ FLCompiledMethodSerializationTest >> testDoIt [
 	self deny: materialized isInstalled.
 	self assert: materialized isDoIt.
 	"we serialized the source, trailer is cleared"
-	self assert: materialized sourceCode notNil.
+	self assert: materialized sourceCode isNotNil.
 	self deny: materialized hasSourcePointer.
 
 	self assert: (materialized isEqualRegardlessTrailerTo: theCompiledMethod)
@@ -78,18 +78,18 @@ FLCompiledMethodSerializationTest >> testInstalledModified [
 	self deny: materialized isInstalled.
 	self deny: materialized isDoIt.
 	"we serialized the source"
-	self assert: materialized sourceCode notNil.
+	self assert: materialized sourceCode isNotNil.
 ]
 
 { #category : 'tests' }
 FLCompiledMethodSerializationTest >> testMethodAccessingAClassVariable [
 
 	| aClassWithVariable aMethod materializedMethod |
-	aClassWithVariable := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariablesFromString: 'A' ].
+	aClassWithVariable := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariables: #(A) ].
 
 	self classFactory silentlyCompile: 'm1 A:= 3' in: aClassWithVariable.
 	aMethod := aClassWithVariable >> #m1.
-	aClassWithVariable classVarNamed: #A put: 7.
+	aClassWithVariable writeClassVariableNamed: #A value: 7.
 
 	materializedMethod := self resultOfSerializeAndMaterialize: aMethod.
 
@@ -101,11 +101,11 @@ FLCompiledMethodSerializationTest >> testMethodAccessingAClassVariable [
 FLCompiledMethodSerializationTest >> testMethodAccessingAClassVariableInADoit [
 
 	| aClassWithVariable aMethod materializedMethod |
-	aClassWithVariable := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariablesFromString: 'A' ].
+	aClassWithVariable := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariables: #(A)].
 
 	self classFactory silentlyCompile: 'DoIt A:= 3' in: aClassWithVariable.
 	aMethod := aClassWithVariable >> #DoIt.
-	aClassWithVariable classVarNamed: #A put: 7.
+	aClassWithVariable writeClassVariableNamed: #A value: 7.
 
 	materializedMethod := self resultOfSerializeAndMaterialize: aMethod.
 
@@ -128,7 +128,7 @@ FLCompiledMethodSerializationTest >> testNotInstalled [
 	self deny: materialized isInstalled.
 	self deny: materialized isDoIt.
 	"we serialized the source, trailer is empty"
-	self assert: materialized sourceCode notNil.
+	self assert: materialized sourceCode isNotNil.
 	self deny: materialized hasSourcePointer.
 	
 	self assert: (materialized isEqualRegardlessTrailerTo: theCompiledMethod)

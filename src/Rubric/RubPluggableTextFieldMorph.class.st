@@ -57,7 +57,7 @@ RubPluggableTextFieldMorph >> checkTextWithConverter [
 	|string|
 	self converter ifNil: [^ self].
 	string := self text asString.
-	(string isEmpty and: [self default notNil]) or: [
+	(string isEmpty and: [self default isNotNil]) or: [
 		hasValidText := self converter isStringValid: string]
 ]
 

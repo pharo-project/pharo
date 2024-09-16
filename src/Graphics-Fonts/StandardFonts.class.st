@@ -178,31 +178,6 @@ StandardFonts class >> pointSizeForStyleNamed: aSymbol [
 ]
 
 { #category : 'font accessing' }
-StandardFonts class >> printStandardSystemFonts [
-	"self printStandardSystemFonts"
-
-	| string |
-	string := String streamContents: [ :s |
-
-	StandardFonts systemFontAspects do: [:selector |
-		| font |
-		font := StandardFonts perform: selector.
-		s
-			nextPutAll: selector; space;
-			nextPutAll: font familyName; space;
-			nextPutAll: (AbstractFont emphasisStringFor: font emphasis);
-			nextPutAll: ' points: ';
-			print: font pointSize;
-			nextPutAll: ' height: ';
-			print: font height;
-			cr
-		]].
-	UIManager default
-		longMessage: string
-		title: 'Current system font settings' translated
-]
-
-{ #category : 'font accessing' }
 StandardFonts class >> setAllStandardFontsTo: aFont [
 	self systemFontAspects do: [:selector | StandardFonts perform: (selector, ':') asSymbol with: aFont]
 ]

@@ -29,20 +29,33 @@ ProjectManager >> environment: anObject [
 
 { #category : 'testing' }
 ProjectManager >> hasProjects [
+	"Even if we do not have projects we have un undefined project."
 
-	^ self projects isNotEmpty
-]
-
-{ #category : 'testing' }
-ProjectManager >> isNotEmpty [
-
-	^ self projects isNotEmpty
+	^ true
 ]
 
 { #category : 'accessing' }
 ProjectManager >> projects [
+	"Maybe we should cache this and invalidate the cache when a package announcement or class (impacting baselines) is received?"
 
-	^ self environment allClasses
-		  select: [ :class | (class inheritsFrom: BaselineOf) and: [ class isProject ] ]
-		  thenCollect: [ :baseline | Project baseline: baseline ]
+	| projects packages |
+	projects := OrderedCollection new.
+	packages := OrderedCollection new.
+
+	self environment allClasses
+		select: [ :class | (class inheritsFrom: BaselineOf) and: [ class isProject ] ]
+		thenDo: [ :baseline |
+			| project |
+			project := Project baseline: baseline.
+			"We have in some projects some mock baselines that do not implement the #baseline method and end up crashing when we ask the packages... This is a safe guard. For example MicMockBaselineOf from Microdown (not the default loaded in the image)"
+			[
+			packages addAll: project packages.
+			projects add: project ] onErrorDo: [ "We skip this project." ] ].
+
+	packages := projects flatCollect: [ :project | project packages ].
+
+	(self environment organization packages reject: [ :package | package isUndefined or: [ packages identityIncludes: package ] ]) ifNotEmpty: [ :orphans |
+		projects add: (UndefinedProject packages: orphans) ].
+
+	^ projects
 ]

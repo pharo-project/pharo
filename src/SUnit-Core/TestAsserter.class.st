@@ -433,11 +433,11 @@ TestAsserter >> denyCollection: actualCollection includesAny: subcollection [
 
 { #category : 'asserting' }
 TestAsserter >> denyEmpty: aCollection [
-	"I raise an AssertionFailure if the giving collection is empty. I also provide a specialized message in case I failed"
+	"I raise an AssertionFailure if the giving collection is empty. I also provide a specialized message in case I failed.
+	
+	Not using #isNotEmpty like this objects as parameter can only implement #isEmpty and not both messages."
 
-	^ self
-		  assert: aCollection isNotEmpty
-		  description: aCollection asString , ' should not have been empty'
+	^ self assert: aCollection isEmpty not description: aCollection asString , ' should not have been empty'
 ]
 
 { #category : 'asserting' }
@@ -533,21 +533,25 @@ TestAsserter >> should: aBlock description: aString [
 
 { #category : 'asserting' }
 TestAsserter >> should: aBlock notTakeMoreThan: aDuration [
-    "Evaluate aBlock and if it takes more than given duration
+	"Evaluate aBlock and if it takes more than given duration
     to run we report a test failure. "
+
 	<debuggerCompleteToSender>
-	^ aBlock valueWithin: aDuration onTimeout: [
-		self
-			assert: false
-			description: ['Block evaluation took more than the expected <1p>' expandMacrosWith: aDuration]
-	]
+	^ self
+		  should: aBlock
+		  notTakeMoreThanMilliseconds: aDuration asMilliSeconds
 ]
 
 { #category : 'asserting' }
 TestAsserter >> should: aBlock notTakeMoreThanMilliseconds: anInteger [
-    "For compatibility with other Smalltalks"
+	"Evaluate aBlock and if it takes more than given duration
+    to run we report a test failure. "
 
-   self should: aBlock notTakeMoreThan: (Duration milliSeconds: anInteger)
+	<debuggerCompleteToSender>
+	^ aBlock valueWithinMilliseconds: anInteger onTimeout: [
+		  self assert: false description: [
+			  'Block evaluation took more than the expected <1p>'
+				  expandMacrosWith: anInteger ] ]
 ]
 
 { #category : 'asserting' }

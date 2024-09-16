@@ -14,6 +14,12 @@ MetacelloProjectReferenceSpec >> aboutToCopy [
     self projectReference className
 ]
 
+{ #category : 'visiting' }
+MetacelloProjectReferenceSpec >> acceptVisitor: aVisitor [
+	
+	^ aVisitor visitProjectReference: self
+]
+
 { #category : 'accessing' }
 MetacelloProjectReferenceSpec >> answers: aListOfPairs [
 
@@ -80,22 +86,42 @@ MetacelloProjectReferenceSpec >> mergeMap [
 { #category : 'merging' }
 MetacelloProjectReferenceSpec >> mergeSpec: anotherSpec [
 
-	| newSpec map anotherProjectReference |
+	| newSpec map |
 	newSpec := super mergeSpec: anotherSpec.
 	map := anotherSpec mergeMap.
-	(anotherProjectReference := map at: #projectReference) ~~ nil
-		ifTrue: [ 
-			newSpec projectReference: 
-				(newSpec projectReference == nil
-					ifTrue: [ anotherProjectReference ]
-					ifFalse: [ newSpec projectReference mergeSpec: anotherProjectReference ])].
-	^newSpec
+	(map at: #projectReference) ifNotNil: [ :anotherProjectReference |
+		newSpec projectReference: (newSpec projectReference
+				 ifNotNil: [ :reference | reference mergeSpec: anotherProjectReference ]
+				 ifNil: [ anotherProjectReference ]) ].
+	^ newSpec
 ]
 
 { #category : 'merging' }
 MetacelloProjectReferenceSpec >> nonOverridable [
 
 	^super nonOverridable, #( projectReference )
+]
+
+{ #category : 'loading' }
+MetacelloProjectReferenceSpec >> packageSpecsInLoadOrder [
+
+	| specs loadedSpecs loads |
+	specs := self projectReference version spec packageSpecsInLoadOrder.
+	loads := self projectReference loadListForVersion:
+		         self projectReference version.
+	loadedSpecs := specs select: [ :each | loads includes: each name ].
+	^ loadedSpecs flatCollect: [ :e | e packageSpecsInLoadOrder ]
+]
+
+{ #category : 'loading' }
+MetacelloProjectReferenceSpec >> packageSpecsInLoadOrderWithEngine: anEngine [
+
+	| specs loadedSpecs loads |
+	specs := self projectReference version spec packageSpecsInLoadOrder.
+	loads := self projectReference loadListForVersion:
+		         self projectReference version.
+	loadedSpecs := specs select: [ :each | loads includes: each name ].
+	^ loadedSpecs flatCollect: [ :e | e packageSpecsInLoadOrder ]
 ]
 
 { #category : 'copying' }
@@ -138,14 +164,13 @@ MetacelloProjectReferenceSpec >> referencedSpec [
 ]
 
 { #category : 'querying' }
-MetacelloProjectReferenceSpec >> relativeCurrentVersion [
-
-	^self projectReference relativeCurrentVersion
-]
-
-{ #category : 'querying' }
 MetacelloProjectReferenceSpec >> repositories [
     ^ self referencedSpec repositories
+]
+
+{ #category : 'accessing' }
+MetacelloProjectReferenceSpec >> repository: aStringOrMetacelloRepositorySpec [
+    ^ self projectReference repository: aStringOrMetacelloRepositorySpec
 ]
 
 { #category : 'loading' }
@@ -160,6 +185,24 @@ MetacelloProjectReferenceSpec >> requires: aCollection [
 	self shouldNotImplement
 ]
 
+{ #category : 'private' }
+MetacelloProjectReferenceSpec >> resolveToLoadableSpec [
+
+	^self projectReference resolveToLoadableSpec
+]
+
+{ #category : 'private' }
+MetacelloProjectReferenceSpec >> resolveToPackagesAndProjectsIn: aVersionSpec visited: visited [
+
+	^ { self }
+]
+
+{ #category : 'private' }
+MetacelloProjectReferenceSpec >> resolveToPackagesIn: aVersionSpec visited: visited [
+
+	^#()
+]
+
 { #category : 'querying' }
 MetacelloProjectReferenceSpec >> version [
 
@@ -169,7 +212,13 @@ MetacelloProjectReferenceSpec >> version [
 { #category : 'querying' }
 MetacelloProjectReferenceSpec >> versionOrNil [
 
-	^self projectReference versionOrNil
+	^ self projectReference versionOrNil
+]
+
+{ #category : 'accessing' }
+MetacelloProjectReferenceSpec >> versionString [
+
+	^self projectReference versionString
 ]
 
 { #category : 'querying' }

@@ -89,6 +89,12 @@ SystemNavigation >> allExistingProtocolsFor: instanceSide [
 			  ifFalse: [ class class protocolNames ] ]
 ]
 
+{ #category : 'query' }
+SystemNavigation >> allGlobalNamesStartingWith: aString do: aBlock caseSensitive: cs [
+
+	self environment keysDo: [ :globalName | (globalName beginsWith: aString caseSensitive: cs) ifTrue: [ aBlock value: globalName ] ]
+]
+
 { #category : 'private' }
 SystemNavigation >> allGlobalRefsOn: aSymbol [
 	"Answer all references to globals"
@@ -260,15 +266,6 @@ SystemNavigation >> allSymbolsStartingWith: aString do: aBlock [
 ]
 
 { #category : 'query' }
-SystemNavigation >> allUnimplementedCalls [
-	"call is not a good term here, these are selectors"
-	self
-		deprecated: 'Changed selector for coherency'
-		transformWith: '`@receiver allUnimplementedCalls' -> '`@receiver allSentButNotImplementedSelectors'.
-	^ self allSentButNotImplementedSelectors
-]
-
-{ #category : 'query' }
 SystemNavigation >> allUnsentMessagesIn: selectorSet [
 	"Answer the subset of selectorSet which are not sent anywhere in the system. As allSentMessages does not recurse into nested Arrays, filter with #allCallsOn, which does"
 
@@ -363,7 +360,7 @@ SystemNavigation >> obsoleteClasses [
 		allInstancesDo: [ :m |
 			| c |
 			c := m soleInstance.
-			(c notNil and: [ c isObsolete ])
+			(c isNotNil and: [ c isObsolete ])
 				ifTrue: [ obs add: c ] ].
 	^ obs asArray
 
@@ -413,23 +410,16 @@ from the system?'
 ]
 
 { #category : 'removing' }
-SystemNavigation >> removeMethod: aMethod inClass: aClass [
+SystemNavigation >> removeMethod: aCompiledMethod inClass: aClass [
 	"If a message is selected, create a Confirmer so the user can verify that
 	the currently selected message should be removed from the system. If
 	so, remove it. "
-	| messageName confirmation |
+	| messageName |
 
-	aMethod ifNil: [^ false].
-	messageName := aMethod selector.
-	confirmation := self confirmRemovalOf: messageName on: aClass.
-	confirmation = 3
-		ifTrue: [^ false].
+	aCompiledMethod ifNil: [ ^ false ].
+	messageName := aCompiledMethod selector.
 	(aClass includesLocalSelector: messageName)
 		ifTrue: [ aClass removeSelector: messageName ].
-
-	"In case organization not cached"
-	confirmation = 2
-		ifTrue: [self browseAllSendersOf: messageName].
 
 	^ true
 ]

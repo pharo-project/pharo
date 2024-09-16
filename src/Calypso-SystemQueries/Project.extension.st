@@ -5,7 +5,8 @@ Project class >> convertToCalypsoBrowserItem: aProject [
 
 	| item |
 	item := ClyBrowserItem named: aProject name with: aProject.
-	aProject hasPackages ifTrue: [ item markWithChildrenOf: self ].
+	"We cannot use `self` because my subclass also need to return Project.."
+	aProject hasPackages ifTrue: [ item markWithChildrenOf: Project ].
 	^ item
 ]
 
@@ -16,15 +17,9 @@ Project class >> defaultSortFunctionForCalypso [
 ]
 
 { #category : '*Calypso-SystemQueries' }
-Project >> includesClassesAffectedBy: aSystemAnnouncement [
+Project class >> prepareClassQueriesFrom: packages in: aNavigationEnvironment [
 
-	^ self packages anySatisfy: [ :package | package includesClassesAffectedBy: aSystemAnnouncement ]
-]
-
-{ #category : '*Calypso-SystemQueries' }
-Project class >> prepareClassQueriesFrom: projects in: aNavigationEnvironment [
-
-	^ {  }
+	^ { (ClyAllClassesQuery from: ClyProjectScope ofAll: packages in: aNavigationEnvironment) }
 ]
 
 { #category : '*Calypso-SystemQueries' }

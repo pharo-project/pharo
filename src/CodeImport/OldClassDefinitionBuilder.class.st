@@ -74,9 +74,20 @@ OldClassDefinitionBuilder class >> allowedSelectors [
 #weakSubclass:uses:instanceVariableNames:classVariableNames:poolDictionaries:package:
 
 #named:
+#named:uses:
+#named:package:
 #named:uses:category:
 #named:uses:package:
+#named:uses:category:env:
+#named:uses:package:env:
+#named:uses:slots:category:
+#named:uses:slots:package:
+#named:uses:slots:package:env:
+#named:uses:slots:category:env:
+#named:instanceVariableNames:package:
 #named:uses:instanceVariableNames:package:
+#named:uses:instanceVariableNames:package:env:
+#uses:instanceVariableNames:
 )
 ]
 
@@ -111,9 +122,26 @@ OldClassDefinitionBuilder >> ast: anObject [
 OldClassDefinitionBuilder >> build [
 
 	| layoutClass selectorParts superclassName subclassName instanceVariableNames classVariableNames packageName poolDictionariesNames traitsDefinition isTrait |
+	
 	superclassName := ast receiver formattedCode.
 	selectorParts := ast selector findBetweenSubstrings: { $: }.
 	isTrait := superclassName endsWith: ' classTrait'.
+	
+	ast selector == #uses:instanceVariableNames: ifTrue: [ | trait updatedTrait|
+		"this case does not fit in the scheme used later, we treat it specially here"
+
+		trait :=  self class compiler evaluate: superclassName.
+		self if: selectorParts includes: #uses do: [ :argument | traitsDefinition := argument value ].
+		self if: selectorParts includes: #instanceVariableNames do: [ :argument | instanceVariableNames := argument value ].
+
+		updatedTrait := trait instanceSide classInstaller update: trait instanceSide to: [ :aBuilder |
+			aBuilder
+				environment: trait environment;
+				classTraitComposition: (self class compiler evaluate: traitsDefinition formattedCode);
+				classSlots: instanceVariableNames.
+			isTrait ifTrue: [ aBuilder beTrait ]]. 
+		^ updatedTrait classSide	
+	].
 	layoutClass := FixedLayout.
 
 	self if: selectorParts includes: #subclass do: [ :argument | subclassName := argument value ].
@@ -182,7 +210,7 @@ OldClassDefinitionBuilder >> build [
 		  aBuilder package: converter packageName.
 		  aBuilder tag: converter tagName.
 
-		  poolDictionariesNames ifNotNil: [ aBuilder sharedPools: poolDictionariesNames ].
+		  poolDictionariesNames ifNotNil: [ aBuilder sharedPoolsFromString: poolDictionariesNames ].
 		  isTrait ifTrue: [ aBuilder beTrait ].
 		  traitsDefinition ifNotNil: [ aBuilder traitComposition: (self class compiler evaluate: traitsDefinition) ] ]
 ]

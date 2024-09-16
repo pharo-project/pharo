@@ -85,12 +85,6 @@ MCDictionaryRepository >> initialize [
 ]
 
 { #category : 'accessing' }
-MCDictionaryRepository >> possiblyNewerVersionsOfAnyOf: versionNames [ 
-
-	^#()
-]
-
-{ #category : 'accessing' }
 MCDictionaryRepository >> sortedVersionInfos [
 	| sorter |
 	sorter := MCVersionSorter new.

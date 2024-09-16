@@ -77,24 +77,6 @@ GIFReadWriter class >> exampleAnim [
 		]	ensure: [writer close]]
 ]
 
-{ #category : 'examples' }
-GIFReadWriter class >> grabScreenAndSaveOnDisk [
-	"GIFReadWriter grabScreenAndSaveOnDisk"
-	| form fileName |
-	
-	form := Screenshot new formScreenshotFromUserSelection.
-	form bits size = 0 ifTrue: [ ^ self inform: 'Empty region selected.' ].
-
-	fileName := (FileSystem disk workingDirectory / 'Pharo', 'gif') fullName.
-
-	UIManager default
-		informUser: 'Writing ' translated, fileName
-		during:
-			[ GIFReadWriter
-				putForm: form
-				onFileNamed: fileName ]
-]
-
 { #category : 'class initialization' }
 GIFReadWriter class >> initialize [
 
@@ -669,7 +651,7 @@ GIFReadWriter >> writeFrameHeader: anImageFrame [
 	"Write any Extensions and/or headers that apply
 	to individual frames/subimages"
 	| interlaceByte |
-	anImageFrame delay notNil | transparentIndex notNil ifTrue: [
+	anImageFrame delay isNotNil | transparentIndex ifNotNil: [
 		self writeGCEForFrame: anImageFrame ].
 
 	"Next is the image descriptor"

@@ -136,7 +136,7 @@ RGBehaviorDefinition >> allSelectors [
 
 	class:= self.
 	selectors := Set new.
-	[class notNil] whileTrue:
+	[class isNotNil] whileTrue:
 			[selectors addAll: class selectors.
 			class := class superclass ].
 	^selectors
@@ -175,7 +175,7 @@ RGBehaviorDefinition >> allSuperclasses [
 		ifAbsentPut:[ | supers sprClass |
 			supers := OrderedCollection new.
 			sprClass := self superclass.
-			[sprClass notNil] whileTrue:
+			[sprClass isNotNil] whileTrue:
 				[supers add: sprClass.
 				sprClass := sprClass superclass].
 			supers ]
@@ -209,11 +209,11 @@ RGBehaviorDefinition >> classSide [
 { #category : 'accessing - methods' }
 RGBehaviorDefinition >> compiledMethodNamed: selector [
 	"Retrieves the compiled method from aRGMethodDefinition"
-	| method |
 
-	^(method:= self methodNamed: selector) notNil
-	ifTrue: [ method compiledMethod ]
-	ifFalse:[ nil ]
+	| method |
+	^ (method := self methodNamed: selector)
+		  ifNotNil: [ method compiledMethod ]
+		  ifNil: [ nil ]
 ]
 
 { #category : 'file in/out' }
@@ -249,7 +249,7 @@ RGBehaviorDefinition >> extensionMethods [
 RGBehaviorDefinition >> hasDefinitionSource [
 	"Tests whether the receiver has a source definition."
 
-	^ self definitionSource notNil
+	^ self definitionSource isNotNil
 ]
 
 { #category : 'testing' }
@@ -275,7 +275,7 @@ RGBehaviorDefinition >> hasProtocols [
 { #category : 'testing' }
 RGBehaviorDefinition >> hasSuperclass [
 
-	^superclass notNil
+	^superclass isNotNil
 ]
 
 { #category : 'testing' }
@@ -322,7 +322,7 @@ RGBehaviorDefinition >> instanceSide [
 RGBehaviorDefinition >> isDefined [
 	"If the class exists in the environment"
 
-	^self realClass notNil
+	^self realClass isNotNil
 ]
 
 { #category : 'managing container' }
@@ -464,7 +464,7 @@ RGBehaviorDefinition >> soleInstance [
 	^self instanceSide
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RGBehaviorDefinition >> storeOn: aStream [
 	self name storeOn: aStream
 ]
@@ -515,28 +515,6 @@ RGBehaviorDefinition >> superclassName: aSymbol [
 
 	self annotationNamed: self class superclassNameKey
 		put: aSymbol
-]
-
-{ #category : 'accessing - deprecated parallel hierarchy' }
-RGBehaviorDefinition >> theMetaClass [
-	"This method is deprecated so consider to migrate."
-
-	self
-		deprecated: 'Please use #classSide instead'
-		transformWith: '`@receiver theMetaClass' -> '`@receiver classSide'.
-
-	^ self classSide
-]
-
-{ #category : 'accessing - deprecated parallel hierarchy' }
-RGBehaviorDefinition >> theNonMetaClass [
-	"This method is deprecated so consider to migrate."
-
-	self
-		deprecated: 'Please use #instanceSide instead'
-		transformWith: '`@receiver theNonMetaClass' -> '`@receiver instanceSide'.
-
-	^ self instanceSide
 ]
 
 { #category : 'annotations' }

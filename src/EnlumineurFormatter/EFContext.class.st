@@ -466,7 +466,7 @@ EFContext >> spacesInsideParenthesesString [
 	^ spacesInsideParentheses
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 EFContext >> storeOn: aStream [
 	aStream
 		nextPutAll: self class name;

@@ -45,29 +45,29 @@ MCVersionLoader >> announceLoad: aString do: aBlock [
 
 { #category : 'private' }
 MCVersionLoader >> announceLoadStop: aString [
-	SystemAnnouncer announce: (MCVersionLoaderStopped new
-		versionLoader: self;
-		label: aString; 
-		yourself)
+
+	self class codeSupportAnnouncer announce: (MCVersionLoaderStopped new
+			 versionLoader: self;
+			 label: aString;
+			 yourself)
 ]
 
 { #category : 'private' }
-MCVersionLoader >> basicLoadWithNameLike: aString [
+MCVersionLoader >> basicLoad [
+
 	| loader |
-	
-	self checkForModificationsIfCancel: [ ^ self] ifMerge: [ ^ self mergeVersions ].
-	
+	self
+		checkForModificationsIfCancel: [ ^ self ]
+		ifMerge: [ ^ self mergeVersions ].
+
 	loader := versions size > 1
-		ifTrue: [MCMultiPackageLoader new]
-		ifFalse: [MCPackageLoader new].
-		
-	versions do: [:ea |
-		ea canOptimizeLoading
-			ifTrue: [ea patch applyTo: loader]
-			ifFalse: [loader updatePackage: ea package withSnapshot: ea snapshot]].
-		
-	loader loadWithNameLike: aString.
-	versions do: [:ea | ea workingCopy loaded: ea]
+		          ifTrue: [ MCMultiPackageLoader new ]
+		          ifFalse: [ MCPackageLoader new ].
+	versions do: [ :ea |
+		loader updatePackage: ea package withSnapshot: ea snapshot ].
+
+	loader load.
+	versions do: [ :ea | ea workingCopy loaded: ea ]
 ]
 
 { #category : 'checking' }
@@ -110,8 +110,8 @@ MCVersionLoader >> ensurePackage: mcPackage [
 
 { #category : 'testing' }
 MCVersionLoader >> hasLocalModifications [
-	^ self localModifications isEmpty not
-	
+
+	^ self localModifications isNotEmpty
 ]
 
 { #category : 'testing' }
@@ -140,7 +140,8 @@ MCVersionLoader >> load [
 { #category : 'loading' }
 MCVersionLoader >> loadWithNameLike: aString [
 	" this is THE central entrypoint for all loading (gopher, metacello, monticello, ...) "
-	^ self announceLoad: aString do: [ self basicLoadWithNameLike: aString ]
+
+	^ self announceLoad: aString do: [ self basicLoad ]
 ]
 
 { #category : 'checking' }

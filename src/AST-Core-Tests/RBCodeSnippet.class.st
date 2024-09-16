@@ -193,7 +193,7 @@ RBCodeSnippet class >> badComments [
 			         nodeAt: 'DDD 00EEE0548884449994A0CCC00 FFF';
 			         styled: '""" 0 """ n """ . """ n """ 0 """';
 			         formattedCode: '[ "a""b""f" 1. "c" "d" 2 "e" ]';
-			         value: 1).
+			         value: 2).
 		        (self new
 			         source: '"a" [ "b" : "c" x "d" : "e" y "f" | "g" ] "h"';
 			         nodeAt: '888 00999000AAA030BBB000FFF0C0GGG000III00 JJJ';

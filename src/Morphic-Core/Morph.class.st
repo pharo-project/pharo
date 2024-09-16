@@ -147,7 +147,7 @@ Morph class >> morphsUnknownToTheirOwners [
 	self allSubInstances
 		do: [ :m |
 			| itsOwner |
-			(m isHandMorph not and: [ (itsOwner := m owner) notNil and: [ (itsOwner submorphs includes: m) not ] ])
+			(m isHandMorph not and: [ (itsOwner := m owner) isNotNil and: [ (itsOwner submorphs includes: m) not ] ])
 				ifTrue: [ problemMorphs add: m ] ].
 	^ problemMorphs
 ]
@@ -168,17 +168,6 @@ Morph class >> newBounds: bounds color: color [
 Morph class >> newSticky [
 
 	^ self new beSticky
-]
-
-{ #category : 'misc' }
-Morph class >> obtainArrowheadFor: aPrompt defaultValue: defaultPoint [
-	"Allow the user to supply a point to serve as an arrowhead size.  Answer nil if we fail to get a good point"
-
-	| result  |
-	result := UIManager default request: aPrompt initialAnswer: defaultPoint asString.
-	result isEmptyOrNil ifTrue: [^ nil].
-	^ [(Point readFrom: result readStream)]
-		on: Error do: [:ex |  nil]
 ]
 
 { #category : 'shortcuts' }
@@ -303,10 +292,10 @@ Morph >> addBorderStyleMenuItems: aMenu hand: aHandMorph [
 Morph >> addCellLayoutMenuItems: aMenu hand: aHand [
 	"Cell (e.g., child) related items"
 	| menu sub |
-	menu := UIManager default newMenuIn: self for: self.
+	menu := self morphicUIManager newMenuIn: self for: self.
 	menu addUpdating: #hasDisableTableLayoutString selector: #changeDisableTableLayout.
 	menu addLine.
-	sub := UIManager default newMenuIn: self for: self.
+	sub := self morphicUIManager newMenuIn: self for: self.
 	#(#rigid #shrinkWrap #spaceFill)
 		do: [ :sym |
 			sub
@@ -315,7 +304,7 @@ Morph >> addCellLayoutMenuItems: aMenu hand: aHand [
 				selector: #hResizing:
 				argumentList: (Array with: sym) ].
 	menu add: 'horizontal resizing' subMenu: sub.
-	sub := UIManager default newMenuIn: self for: self.
+	sub := self morphicUIManager newMenuIn: self for: self.
 	#(#rigid #shrinkWrap #spaceFill)
 		do: [ :sym |
 			sub
@@ -371,7 +360,7 @@ Morph >> addDropShadow [
 { #category : 'drop shadows' }
 Morph >> addDropShadowMenuItems: aMenu hand: aHand [
 	| menu |
-	menu := UIManager default newMenuIn: self for: self.
+	menu := self morphicUIManager newMenuIn: self for: self.
 	menu
 		addUpdating: #hasDropShadowString
 		selector: #toggleDropShadow.
@@ -389,7 +378,7 @@ Morph >> addEmbeddingMenuItemsTo: aMenu hand: aHandMorph [
 	potentialEmbeddingTargets := self potentialEmbeddingTargets.
 	potentialEmbeddingTargets size > 1
 		ifFalse: [ ^ self ].
-	menu := UIManager default newMenuIn: self for: self.
+	menu := self morphicUIManager newMenuIn: self for: self.
 	potentialEmbeddingTargets
 		reverseDo: [ :m |
 			menu
@@ -410,7 +399,7 @@ Morph >> addExportMenuItems: aMenu hand: aHandMorph [
 
 	aMenu
 		ifNotNil: [ | aSubMenu |
-			aSubMenu := UIManager default newMenuIn: self for: self.
+			aSubMenu := self morphicUIManager newMenuIn: self for: self.
 			aSubMenu add: 'BMP file' selector: #exportAsBMP.
 			aSubMenu add: 'GIF file' selector: #exportAsGIF.
 			aSubMenu add: 'JPEG file' selector: #exportAsJPEG.
@@ -427,7 +416,7 @@ Morph >> addExportMenuItems: aMenu hand: aHandMorph [
 Morph >> addFillStyleMenuItems: aMenu hand: aHand [
 	"Add the items for changing the current fill style of the Morph"
 	| menu |
-	menu := UIManager default newMenuIn: self for: self.
+	menu := self morphicUIManager newMenuIn: self for: self.
 	self fillStyle addFillStyleMenuItems: menu hand: aHand from: self.
 	menu addLine.
 	menu add: 'solid fill' selector: #useSolidFill.
@@ -473,7 +462,7 @@ Morph >> addHaloActionsTo: aMenu [
 	"Add items to aMenu representing actions requestable via halo"
 
 	| subMenu |
-	subMenu := UIManager default newMenuIn: self for: self.
+	subMenu := self morphicUIManager newMenuIn: self for: self.
 	subMenu
 	buildTitle: [ :menuTitle | menuTitle
 		bigTitle: self externalName
@@ -509,7 +498,7 @@ Morph >> addHaloActionsTo: aMenu [
 { #category : 'layout - menu' }
 Morph >> addLayoutMenuItems: topMenu hand: aHand [
 	| aMenu |
-	aMenu := UIManager default newMenuIn: self for: self.
+	aMenu := self morphicUIManager newMenuIn: self for: self.
 	aMenu addUpdating: #hasNoLayoutString selector: #changeNoLayout.
 	aMenu addUpdating: #hasProportionalLayoutString selector: #changeProportionalLayout.
 	aMenu addUpdating: #hasTableLayoutString selector: #changeTableLayout.
@@ -529,7 +518,7 @@ Morph >> addMiscExtrasTo: aMenu [
 	| subMenu |
 	self isWorldMorph
 		ifTrue: [ ^ self ].
-	subMenu := UIManager default newMenuIn: self for: self.
+	subMenu := self morphicUIManager newMenuIn: self for: self.
 	self renderedMorph isSystemWindow
 		ifFalse: [ subMenu add: 'put in a window' selector: #embedInWindow ].
 	subMenu add: 'adhere to edge...' selector: #adhereToEdge.
@@ -672,7 +661,7 @@ Morph >> addNestedYellowButtonItemsTo: aMenu event: evt [
 	(underMouse addMyYellowButtonMenuItemsToSubmorphMenus and: [ underMouse hasYellowButtonMenu ])
 		ifFalse: [ ^ self ].
 	aMenu addLine.
-	submenu := UIManager default newMenuIn: underMouse for: underMouse.
+	submenu := self morphicUIManager newMenuIn: underMouse for: underMouse.
 	underMouse addNestedYellowButtonItemsTo: submenu event: evt.
 	aMenu add: underMouse externalName icon: (underMouse iconOrThumbnailOfSize: 16) subMenu: submenu
 ]
@@ -709,7 +698,7 @@ Morph >> addStandardHaloMenuItemsTo: aMenu hand: aHandMorph [
 { #category : 'layout - menu' }
 Morph >> addTableLayoutMenuItems: aMenu hand: aHand [
 	| menu sub |
-	menu := UIManager default newMenuIn: self for: self.
+	menu := self morphicUIManager newMenuIn: self for: self.
 	menu addUpdating: #hasReverseCellsString selector: #changeReverseCells.
 	menu addUpdating: #hasClipLayoutCellsString selector: #changeClipLayoutCells.
 	menu addUpdating: #hasRubberBandCellsString selector: #changeRubberBandCells.
@@ -718,7 +707,7 @@ Morph >> addTableLayoutMenuItems: aMenu hand: aHand [
 	menu add: 'change min cell size...' selector: #changeMinCellSize:.
 	menu add: 'change max cell size...' selector: #changeMaxCellSize:.
 	menu addLine.
-	sub := UIManager default newMenuIn: self for: self.
+	sub := self morphicUIManager newMenuIn: self for: self.
 	#(#leftToRight #rightToLeft #topToBottom #bottomToTop)
 		do: [ :sym |
 			sub
@@ -727,7 +716,7 @@ Morph >> addTableLayoutMenuItems: aMenu hand: aHand [
 				selector: #changeListDirection:
 				argumentList: (Array with: sym) ].
 	menu add: 'list direction' subMenu: sub.
-	sub := UIManager default newMenuIn: self for: self.
+	sub := self morphicUIManager newMenuIn: self for: self.
 	#(#none #leftToRight #rightToLeft #topToBottom #bottomToTop)
 		do: [ :sym |
 			sub
@@ -736,7 +725,7 @@ Morph >> addTableLayoutMenuItems: aMenu hand: aHand [
 				selector: #wrapDirection:
 				argumentList: (Array with: sym) ].
 	menu add: 'wrap direction' subMenu: sub.
-	sub := UIManager default newMenuIn: self for: self.
+	sub := self morphicUIManager newMenuIn: self for: self.
 	#(#center #topLeft #topRight #bottomLeft #bottomRight #topCenter #leftCenter #rightCenter #bottomCenter)
 		do: [ :sym |
 			sub
@@ -745,7 +734,7 @@ Morph >> addTableLayoutMenuItems: aMenu hand: aHand [
 				selector: #cellPositioning:
 				argumentList: (Array with: sym) ].
 	menu add: 'cell positioning' subMenu: sub.
-	sub := UIManager default newMenuIn: self for: self.
+	sub := self morphicUIManager newMenuIn: self for: self.
 	#(#topLeft #bottomRight #center #justified)
 		do: [ :sym |
 			sub
@@ -754,7 +743,7 @@ Morph >> addTableLayoutMenuItems: aMenu hand: aHand [
 				selector: #listCentering:
 				argumentList: (Array with: sym) ].
 	menu add: 'list centering' subMenu: sub.
-	sub := UIManager default newMenuIn: self for: self.
+	sub := self morphicUIManager newMenuIn: self for: self.
 	#(#topLeft #bottomRight #center #justified)
 		do: [ :sym |
 			sub
@@ -763,7 +752,7 @@ Morph >> addTableLayoutMenuItems: aMenu hand: aHand [
 				selector: #wrapCentering:
 				argumentList: (Array with: sym) ].
 	menu add: 'wrap centering' subMenu: sub.
-	sub := UIManager default newMenuIn: self for: self.
+	sub := self morphicUIManager newMenuIn: self for: self.
 	#(#none #equal)
 		do: [ :sym |
 			sub
@@ -772,7 +761,7 @@ Morph >> addTableLayoutMenuItems: aMenu hand: aHand [
 				selector: #listSpacing:
 				argumentList: (Array with: sym) ].
 	menu add: 'list spacing' subMenu: sub.
-	sub := UIManager default newMenuIn: self for: self.
+	sub := self morphicUIManager newMenuIn: self for: self.
 	#(#none #localRect #localSquare #globalRect #globalSquare)
 		do: [ :sym |
 			sub
@@ -788,7 +777,7 @@ Morph >> addTableLayoutMenuItems: aMenu hand: aHand [
 { #category : 'text-anchor' }
 Morph >> addTextAnchorMenuItems: topMenu hand: aHand [
 	| aMenu |
-	aMenu := UIManager default newMenuIn: self for: self.
+	aMenu := self morphicUIManager newMenuIn: self for: self.
 	aMenu addUpdating: #hasInlineAnchorString selector: #changeInlineAnchor.
 	aMenu addUpdating: #hasParagraphAnchorString selector: #changeParagraphAnchor.
 	aMenu addUpdating: #hasDocumentAnchorString selector: #changeDocumentAnchor.
@@ -850,7 +839,7 @@ Morph >> addYellowButtonMenuItemsTo: aMenu event: evt [
 	self isWorldMorph ifFalse: [
 			self isFullOnScreen ifFalse: [aMenu add: 'move onscreen' selector: #goHome]].
 			self addLayoutMenuItems: aMenu hand: evt hand.
-			(owner notNil
+			(owner isNotNil
 					and: [owner isTextMorph])
 				ifTrue: [self addTextAnchorMenuItems: aMenu hand: evt hand].
 	self isWorldMorph ifFalse: [
@@ -874,7 +863,7 @@ Morph >> addedMorph: aMorph [
 { #category : 'menus' }
 Morph >> adhereToEdge [
 	| menu |
-	menu := UIManager default newMenuIn: self for: self.
+	menu := self morphicUIManager newMenuIn: self for: self.
 	#(top right bottom left - center - topLeft topRight bottomRight bottomLeft - none)
 		do: [:each |
 			each == #-
@@ -1104,7 +1093,7 @@ Morph >> asFormOfSize: extent [
 	| form transform rect |
 
 	rect := self bounds scaledAndCenteredIn: (0@0 extent: extent).
-	form := Form extent: rect extent depth: Display depth.
+	form := Form extent: rect extent depth: 32.
 	transform := MatrixTransform2x3 withScale: form extent / self extent.
 	form getCanvas
 		transformBy: transform
@@ -1197,7 +1186,7 @@ Morph >> balloonText [
 	a Viewer"
 
 	^ extension ifNotNil: [:ext | ext balloonText ifNotNil: [:text |
-				text asString withNoLineLongerThan: self theme settings maxBalloonHelpLineLength]]
+				text withNoLineLongerThan: self theme settings maxBalloonHelpLineLength]]
 ]
 
 { #category : 'theme' }
@@ -1234,7 +1223,7 @@ Morph >> becomeModal [
 { #category : 'base - widgets' }
 Morph >> beginsWith: aString fromList: aMorph [
 	| string |
-	string := self userString ifNil: [(self submorphs collect: [:m | m userString]) detect: [:us | us notNil] ifNone: ['']].
+	string := self userString ifNil: [(self submorphs collect: [:m | m userString]) detect: [:us | us isNotNil ] ifNone: ['']].
 
 	^ string asString beginsWith: aString fromList: aMorph
 ]
@@ -1420,7 +1409,7 @@ Morph >> buildDebugMenu: aHand [
 	 The hand argument is seemingly historical and plays no role presently"
 
 	| aMenu |
-	aMenu := UIManager default newMenuIn: self for: self.
+	aMenu := self morphicUIManager newMenuIn: self for: self.
 	(self hasProperty: #errorOnDraw)
 		ifTrue: [ aMenu add: 'start drawing again' selector: #resumeAfterDrawError ].
 	(self hasProperty: #drawError)
@@ -1448,7 +1437,7 @@ Morph >> buildHandleMenu: aHand [
 	"Build the morph menu for the given morph's halo's menu handle. This menu has two sections. The first section contains commands that are interpreted by the hand; the second contains commands provided by the target morph. This method allows the morph to decide which items should be included in the hand's section of the menu."
 
 	| menu |
-	menu := UIManager default newMenuIn: self for: self.
+	menu := self morphicUIManager newMenuIn: self for: self.
 	menu addLine.
 	self addStandardHaloMenuItemsTo: menu hand: aHand.
 	menu defaultTarget: aHand.
@@ -1464,7 +1453,7 @@ Morph >> buildMetaMenu: evt [
 	"Build the morph menu. This menu has two sections. The first section contains commands that are handled by the hand; the second contains commands handled by the argument morph."
 
 	| menu |
-	menu := UIManager default newMenuIn: self for: self.
+	menu := self morphicUIManager newMenuIn: self for: self.
 	menu add: 'grab' selector: #grabMorph:.
 	menu add: 'copy to paste buffer' selector: #copyToPasteBuffer:.
 	self maybeAddCollapseItemTo: menu.
@@ -1506,7 +1495,7 @@ Morph >> buildMetaMenu: evt [
 Morph >> buildYellowButtonMenu: aHand [
 	"build the morph menu for the yellow button"
 	| menu |
-	menu := UIManager default newMenuIn: self for: self.
+	menu := self morphicUIManager newMenuIn: self for: self.
 	self addNestedYellowButtonItemsTo: menu event: self activeHand lastEvent.
 	^ menu
 ]
@@ -1613,7 +1602,7 @@ Morph >> changeClipSubmorphs [
 Morph >> changeColorTarget: anObject selector: aSymbol originalColor: aColor hand: aHand [
 	"Put up a color picker for changing some kind of color."
 
-	(UIManager default chooseColor: aColor)
+	(self morphicUIManager chooseColor: aColor)
 		ifNotNil: [:nc | anObject perform: aSymbol with: nc]
 ]
 
@@ -1719,7 +1708,7 @@ Morph >> changeRubberBandCells [
 Morph >> changeShadowColor [
 	"Change the shadow color of the receiver -- triggered, e.g. from a menu"
 
-	(UIManager default chooseColor: self shadowColor)
+	(self morphicUIManager chooseColor: self shadowColor)
 		ifNotNil: [:nc | self shadowColor: nc]
 ]
 
@@ -1889,7 +1878,7 @@ Morph >> color: aColor [
 { #category : 'accessing' }
 Morph >> colorForInsets [
 	"Return the color to be used for shading inset borders.  The default is my own color, but it might want to be, eg, my owner's color.  Whoever's color ends up prevailing, the color itself gets the last chance to determine, so that when, for example, an InfiniteForm serves as the color, callers won't choke on some non-Color object being returned"
-	(color isColor and:[color isTransparent and:[owner notNil]]) ifTrue:[^owner colorForInsets].
+	(color isColor and:[color isTransparent and:[owner isNotNil]]) ifTrue:[^owner colorForInsets].
 	^ color colorForInsets
 ]
 
@@ -2049,7 +2038,7 @@ Morph >> defer: aValuable [
 	"aValuable will be executed in the next UI rendering cycle"
 	self owner
 		ifNotNil: [ self owner defer: aValuable]
-		ifNil: [ UIManager default defer: aValuable ]
+		ifNil: [ self morphicUIManager defer: aValuable ]
 ]
 
 { #category : 'halos and balloon help' }
@@ -2176,16 +2165,15 @@ Morph >> doFastReframe: ptName [
 	| newBounds |
 	"For fast display, only higlight the rectangle during loop"
 	newBounds := self boundsInWorld
-		newRectButtonPressedDo: [:rectangle :cursorPoint |
-			rectangle
-				withSideOrCorner: ptName
-				setToPoint: cursorPoint
-				minExtent: self minimumExtent
-		] inWorld: self world.
-	Display deferUpdatesIn: Display boundingBox while: [
-		self bounds: newBounds].
+		             newRectButtonPressedDo: [ :rectangle :cursorPoint |
+			             rectangle
+				             withSideOrCorner: ptName
+				             setToPoint: cursorPoint
+				             minExtent: self minimumExtent ]
+		             inWorld: self world.
+	self bounds: newBounds.
 
-	^newBounds
+	^ newBounds
 ]
 
 { #category : 'layout' }
@@ -2385,7 +2373,7 @@ Morph >> duplicateMorph: evt [
 { #category : 'halos and balloon help' }
 Morph >> editBalloonHelpContent: aString [
 	| reply |
-	reply := UIManager default
+	reply := self morphicUIManager
 		multiLineRequest: 'Edit the balloon help text for ' translated, self externalName
 		initialAnswer: (aString ifNil: [self noHelpString] ifNotNil: [aString])
 		answerHeight: 200.
@@ -2568,14 +2556,6 @@ Morph >> fitInWorld [
 Morph >> flash [
 
 	self flashColor: self flashFillStyle
-]
-
-{ #category : 'drawing' }
-Morph >> flashBounds [
-	"Flash the receiver's bounds  -- does not use the receiver's color, thus works with StringMorphs and SketchMorphs, etc., for which #flash is useless.  No senders initially, but useful to send this from a debugger or inspector"
-
-	5 timesRepeat:
-		[Display flash: self boundsInWorld  andWait: 120]
 ]
 
 { #category : 'macpal' }
@@ -3054,8 +3034,8 @@ Morph >> handleTextInputEvent: anEvent [
 { #category : 'events - processing' }
 Morph >> handleUnknownEvent: anEvent [
 	"An event of an unknown type was sent to the receiver. What shall we do?!"
-	self inform: 'Unknown event: ', anEvent printString.
-	anEvent printString displayAt: 0@0.
+
+	self inform: 'Unknown event: ' , anEvent printString.
 	anEvent wasHandled: true
 ]
 
@@ -3299,7 +3279,7 @@ Morph >> hasDropShadowString [
 { #category : 'accessing - extension' }
 Morph >> hasExtension [
 	"answer whether the receiver has extention"
-	^ extension notNil
+	^ extension isNotNil
 ]
 
 { #category : 'event handling' }
@@ -3355,7 +3335,7 @@ Morph >> hasProperty: aSymbol [
 { #category : 'layout - menu' }
 Morph >> hasProportionalLayoutString [
 	| layout |
-	^ ((layout := self layoutPolicy) notNil
+	^ ((layout := self layoutPolicy) isNotNil
 			and: [layout isProportionalLayout]) -> 'proportional layout' translated
 ]
 
@@ -3377,7 +3357,7 @@ Morph >> hasSubmorphs [
 { #category : 'layout - menu' }
 Morph >> hasTableLayoutString [
 	| layout |
-	^ ((layout := self layoutPolicy) notNil
+	^ ((layout := self layoutPolicy) isNotNil
 			and: [layout isTableLayout]) ->   'table layout' translated
 ]
 
@@ -3501,19 +3481,19 @@ Morph >> imageForm [
 
 { #category : 'drawing' }
 Morph >> imageForm: depth backgroundColor: aColor forRectangle: rect [
+
 	| canvas |
-	canvas := Display defaultCanvasClass extent: rect extent depth: depth.
-	canvas translateBy: rect topLeft negated
-		during:[:tempCanvas|
-			tempCanvas fillRectangle: rect color: aColor.
-			tempCanvas fullDrawMorph: self].
+	canvas := FormCanvas extent: rect extent depth: depth.
+	canvas translateBy: rect topLeft negated during: [ :tempCanvas |
+		tempCanvas fillRectangle: rect color: aColor.
+		tempCanvas fullDrawMorph: self ].
 	^ canvas form offset: rect topLeft
 ]
 
 { #category : 'drawing' }
 Morph >> imageForm: depth forRectangle: rect [
 	| canvas |
-	canvas := Display defaultCanvasClass extent: rect extent depth: depth.
+	canvas := FormCanvas extent: rect extent depth: depth.
 	canvas translateBy: rect topLeft negated
 		during:[:tempCanvas| tempCanvas fullDrawMorph: self].
 	^ canvas form offset: rect topLeft
@@ -3528,7 +3508,7 @@ Morph >> imageFormDepth: depth [
 { #category : 'drawing' }
 Morph >> imageFormForRectangle: rect [
 
-	^ self imageForm: Display depth forRectangle: rect
+	^ self imageForm: 32 forRectangle: rect
 ]
 
 { #category : 'user interface' }
@@ -3571,7 +3551,7 @@ Morph >> inspectAt: aPoint event: evt [
 	|  morphs target |
 	morphs := self morphsAt: aPoint.
 	(morphs includes: self) ifFalse:[morphs := morphs copyWith: self].
-	target := UIManager default
+	target := self morphicUIManager
 				chooseFrom: (morphs
 						collect: [:t |t class name asString])
 				values: morphs
@@ -3657,7 +3637,7 @@ Morph >> isFlexMorph [
 { #category : 'testing' }
 Morph >> isFlexed [
 	"Return true if the receiver is currently flexed"
-	^ owner notNil and: [owner isFlexMorph]
+	^ owner isNotNil and: [owner isFlexMorph]
 ]
 
 { #category : 'testing' }
@@ -3684,14 +3664,14 @@ Morph >> isHandMorph [
 { #category : 'structure' }
 Morph >> isInDockingBar [
 	"answer if the receiver is in a menu bar"
-	^ (owner notNil) and: [owner isDockingBar]
+	^ (owner isNotNil) and: [owner isDockingBar]
 ]
 
 { #category : 'structure' }
 Morph >> isInWorld [
 	"Return true if this morph is in a world."
 
-	^self world notNil
+	^self world isNotNil
 ]
 
 { #category : 'testing' }
@@ -4573,28 +4553,6 @@ Morph >> outermostWorldMorph [
 	^self world ifNil: [ self currentWorld ]
 ]
 
-{ #category : 'geometry' }
-Morph >> overlapsShadowForm: itsShadow bounds: itsBounds [
-	"Answer true if itsShadow and my shadow overlap at all"
-	| andForm overlapExtent |
-	overlapExtent := (itsBounds intersect: self fullBounds ifNone: [ ^ false ]) extent.
-	overlapExtent > (0 @ 0)
-		ifFalse: [^ false].
-	andForm := self shadowForm.
-	overlapExtent ~= self fullBounds extent
-		ifTrue: [andForm := andForm
-						contentsOfArea: (0 @ 0 extent: overlapExtent)].
-	andForm := andForm
-				copyBits: (self fullBounds translateBy: itsShadow offset negated)
-				from: itsShadow
-				at: 0 @ 0
-				clippingBox: (0 @ 0 extent: overlapExtent)
-				rule: Form and
-				fillColor: nil.
-	^ andForm bits
-		anySatisfy: [:w | w ~= 0]
-]
-
 { #category : 'structure' }
 Morph >> owner [
 	"Returns the owner of this morph, which may be nil."
@@ -4609,7 +4567,7 @@ Morph >> ownerChain [
 	| c next |
 	c := OrderedCollection with: self.
 	next := self.
-	[(next := next owner) notNil] whileTrue: [c add: next].
+	[(next := next owner) isNotNil] whileTrue: [c add: next].
 	^c asArray
 ]
 
@@ -4639,7 +4597,7 @@ Morph >> pasteUpMorphHandlingTabAmongFields [
 
 	| aPasteUp |
 	aPasteUp := self owner.
-	[aPasteUp notNil] whileTrue:
+	[aPasteUp isNotNil] whileTrue:
 		[aPasteUp tabAmongFields ifTrue:
 			[^ aPasteUp].
 		aPasteUp := aPasteUp owner].
@@ -5037,10 +4995,9 @@ Morph >> raisedColor [
 	itself gets the last chance to determine, so that when, for
 	example, an InfiniteForm serves as the color, callers won't choke
 	on some non-Color object being returned"
-	(color isColor
-			and: [color isTransparent
-					and: [owner notNil]])
-		ifTrue: [^ owner raisedColor].
+
+	(color isColor and: [ color isTransparent and: [ owner isNotNil ] ])
+		ifTrue: [ ^ owner raisedColor ].
 	^ color asColor raisedColor
 ]
 
@@ -5098,13 +5055,8 @@ Morph >> rejectDropEvent: anEvent [
 
 { #category : 'dropping/grabbing' }
 Morph >> rejectDropMorphEvent: evt [
-	"The receiver has been rejected, and must be put back somewhere.  There are three cases:
-	(1)  It remembers its former owner and position, and goes right back there
-	(2)  It remembers its former position only, in which case it was torn off from a parts bin, and the UI is that it floats back to its donor position and then vanishes."
-
-	self formerOwner ifNotNil: [ ^ self slideBackToFormerSituation: evt ].
-
-	self formerPosition ifNotNil: [ :position | ^ self vanishAfterSlidingTo: position event: evt ] "Position but no owner -- can just make it vanish"
+	
+	"Hook for subclasses"
 ]
 
 { #category : 'recategorized' }
@@ -5153,7 +5105,7 @@ Morph >> removeAlarm: aSelector [
 Morph >> removeAllMorphs [
 	| oldMorphs myWorld |
 	myWorld := self world.
-	(fullBounds notNil or:[myWorld notNil]) ifTrue:[self invalidRect: self fullBounds].
+	(fullBounds isNotNil or:[myWorld isNotNil]) ifTrue:[self invalidRect: self fullBounds].
 	submorphs do: [:m | myWorld ifNotNil: [ m outOfWorld: myWorld ]. m privateOwner: nil].
 	oldMorphs := submorphs.
 	submorphs := EmptyArray.
@@ -5168,7 +5120,7 @@ Morph >> removeAllMorphsIn: aCollection [
 	set := IdentitySet new: aCollection size * 4 // 3.
 	aCollection do: [:each | each owner == self ifTrue: [ set add: each]].
 	myWorld := self world.
-	(fullBounds notNil or:[myWorld notNil]) ifTrue:[self invalidRect: self fullBounds].
+	(fullBounds isNotNil or:[myWorld isNotNil]) ifTrue:[self invalidRect: self fullBounds].
 	set do: [:m | myWorld ifNotNil: [ m outOfWorld: myWorld ]. m privateOwner: nil].
 	submorphs := submorphs reject: [ :each | set includes: each].
 	set do: [ :m | self removedMorph: m ].
@@ -5301,7 +5253,7 @@ Morph >> requestTextEditingAt: aRectangle [
 { #category : 'accessing - extension' }
 Morph >> resetExtension [
 	"reset the extension slot if it is not needed"
-	(extension notNil and: [extension isDefault]) ifTrue: [extension := nil]
+	(extension isNotNil and: [extension isDefault]) ifTrue: [extension := nil]
 ]
 
 { #category : 'dropping/grabbing' }
@@ -5498,7 +5450,7 @@ Morph >> setBalloonText: stringOrText maxLineLength: aLength [
 	"Set receiver's balloon help text. Pass nil to remove the help."
 	(extension isNil and: [stringOrText isNil]) ifTrue: [^ self].
 	self assureExtension balloonText:
-		(stringOrText ifNotNil: [stringOrText asString withNoLineLongerThan: aLength])
+		(stringOrText ifNotNil: [stringOrText withNoLineLongerThan: aLength])
 ]
 
 { #category : 'accessing' }
@@ -5588,17 +5540,6 @@ Morph >> shadowColor [
 Morph >> shadowColor: aColor [
 	self shadowColor = aColor ifFalse: [self changed].
 	self setProperty: #shadowColor toValue: aColor
-]
-
-{ #category : 'drawing' }
-Morph >> shadowForm [
-	"Return a form representing the 'shadow' of the receiver - e.g., all pixels that are occupied by the receiver are one, all others are zero."
-	| canvas |
-	canvas := (Display defaultCanvasClass extent: self fullBounds extent depth: 1)
-				asShadowDrawingCanvas: Color black. "Color black represents one for 1bpp"
-	canvas translateBy: bounds topLeft negated
-		during:[:tempCanvas| tempCanvas fullDrawMorph: self].
-	^ canvas form offset: bounds topLeft
 ]
 
 { #category : 'drop shadows' }
@@ -5867,32 +5808,6 @@ Morph >> simulateRightMouseDown [
 Morph >> simulateRightMouseUp [
 	"Simulate mouse button up with the left button (red button for left, blue for middle, yellow for right)"
 	self simulateMouseUpWith: MouseEvent yellowButton
-]
-
-{ #category : 'dropping/grabbing' }
-Morph >> slideBackToFormerSituation: evt [
-	| slideForm formerOwner formerPosition aWorld startPoint endPoint trans |
-	formerOwner := self formerOwner.
-	formerPosition := self formerPosition.
-	aWorld := evt hand world.
-	trans := formerOwner transformFromWorld.
-	slideForm := trans isPureTranslation
-				ifTrue: [self imageForm offset: 0 @ 0]
-				ifFalse:
-					[((TransformationMorph new asFlexOf: self) transform: trans) imageForm
-						offset: 0 @ 0].
-	startPoint := evt hand fullBounds origin.
-	endPoint := trans localPointToGlobal: formerPosition.
-	owner removeMorph: self.
-	aWorld displayWorld.
-	slideForm
-		slideFrom: startPoint
-		to: endPoint
-		nSteps: 12
-		delay: 15.
-	formerOwner addMorph: self.
-	self position: formerPosition.
-	self justDroppedInto: formerOwner event: evt
 ]
 
 { #category : 'menus' }
@@ -6172,7 +6087,7 @@ Do not remove."
 Morph >> targetWith: evt [
 	"Some other morph become target of the receiver"
 	|  newTarget |
-	newTarget := UIManager default
+	newTarget := self morphicUIManager
 				chooseFrom: (self potentialTargets
 						collect: [:t | t class name asString])
 				values: self potentialTargets
@@ -6403,7 +6318,7 @@ Morph >> topRendererOrSelf [
 	self isWorldMorph ifTrue: [^self].	"ignore scaling of this world"
 	top := self.
 	topsOwner := top owner.
-	[topsOwner notNil and: [topsOwner isRenderer]] whileTrue:
+	[topsOwner isNotNil and: [topsOwner isRenderer]] whileTrue:
 			[top := topsOwner.
 			topsOwner := top owner].
 	^top
@@ -6646,19 +6561,6 @@ Morph >> valueOfProperty: aSymbol ifPresentDo: aBlock [
 	^ aBlock value: (extension valueOfProperty: aSymbol ifAbsent: [^ self])
 ]
 
-{ #category : 'dropping/grabbing' }
-Morph >> vanishAfterSlidingTo: aPosition event: evt [
-
-	| aForm aWorld startPoint endPoint |
-	aForm := self imageForm offset: 0@0.
-	aWorld := self world.
-	startPoint := evt hand fullBounds origin.
-	self delete.
-	aWorld displayWorld.
-	endPoint := aPosition.
-	aForm slideFrom: startPoint  to: endPoint nSteps: 12 delay: 15
-]
-
 { #category : 'copying' }
 Morph >> veryDeepCopyWith: deepCopier [
 	"Copy me and the entire tree of objects I point to.  An object in the tree twice is copied once, and both references point to him.  deepCopier holds a dictionary of objects we have seen.  See veryDeepInner:, veryDeepFixupWith:"
@@ -6716,7 +6618,7 @@ Morph >> visibleClearArea [
 Morph >> wantsBalloon [
 	"Answer true if receiver wants to show a balloon help text is a few moments."
 
-	^ (self balloonText notNil) and: [self balloonHelpEnabled]
+	^ (self balloonText isNotNil) and: [self balloonHelpEnabled]
 ]
 
 { #category : 'halos and balloon help' }

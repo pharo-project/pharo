@@ -28,7 +28,7 @@ SDL2 class >> checkForError [
 
 { #category : 'native' }
 SDL2 class >> checkLibraryName: aName [
-	^ (ExternalAddress loadSymbol: 'SDL_Init' from: aName) notNil
+	^ (ExternalAddress loadSymbol: 'SDL_Init' from: aName) isNotNil
 ]
 
 { #category : 'clipboard' }
@@ -290,7 +290,7 @@ SDL2 class >> initVideo [
 
 { #category : 'common' }
 SDL2 class >> isAvailable [
-	^ [ (ExternalAddress loadSymbol: 'SDL_Init' from: SDL2 moduleName) notNil ]
+	^ [ (ExternalAddress loadSymbol: 'SDL_Init' from: SDL2 moduleName) isNotNil ]
 		onErrorDo: [ false ]
 ]
 
@@ -334,7 +334,7 @@ SDL2 class >> moduleName [
 
 { #category : 'mouse' }
 SDL2 class >> mouseState [
-	^ self ffiCall: #( Uint32 SDL_GetMouseState ( nil , nil ) )
+	^ self ffiCall: #( Uint32 SDL_GetMouseState ( void* 0 , void* 0 ) )
 ]
 
 { #category : 'mouse' }
@@ -376,9 +376,19 @@ SDL2 class >> primClipboardText: text [
 
 { #category : 'cairo' }
 SDL2 class >> primCreateRGBSurfaceForCairoWidth: width height: height [
-	^ self ffiCall: #( SDL_Surface* SDL_CreateRGBSurface
-						( 0 , int width , int height , 32 ,
-						  16r00FF0000 , 16r0000FF00 , 16r000000FF , 0 ) )
+	"See: https://wiki.libsdl.org/SDL2/SDL_CreateRGBSurface"
+
+	^ self ffiCall: #(
+		SDL_Surface*
+		SDL_CreateRGBSurface (
+			Uint32 0,
+			int width,
+			int height,
+			int 32,
+			Uint32 16r00FF0000,
+			Uint32 16r0000FF00,
+			Uint32 16r000000FF,
+			Uint32 0 ) )
 ]
 
 { #category : 'audio' }

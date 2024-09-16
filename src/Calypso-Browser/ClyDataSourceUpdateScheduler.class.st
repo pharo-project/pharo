@@ -34,7 +34,8 @@ Class {
 
 { #category : 'controlling' }
 ClyDataSourceUpdateScheduler >> ensureRunning [
-	(process notNil and: [ process isTerminated not ]) ifTrue: [ ^self].
+
+	(process isNotNil and: [ process isTerminated not ]) ifTrue: [ ^self].
 
 	process := [ self processQueue ]
 		forkAt: Processor userBackgroundPriority + 1 named: 'Calypso update'
@@ -67,6 +68,6 @@ ClyDataSourceUpdateScheduler >> register: aDataSource [
 { #category : 'controlling' }
 ClyDataSourceUpdateScheduler >> runUpdateFor: dataSources [
 
-	UIManager default defer: [
+	MorphicUIManager new defer: [
 		dataSources do: [ :each | each runUpdate ] ]
 ]

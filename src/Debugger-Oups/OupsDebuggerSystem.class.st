@@ -151,5 +151,5 @@ OupsDebuggerSystem >> suspendDebuggedProcess: aDebugRequest [
 { #category : 'open debugger' }
 OupsDebuggerSystem >> warningRequest: aDebugRequest withUIManager: aCommandLineUIManager [
 
-	aCommandLineUIManager warningDefaultAction: aDebugRequest exception
+	aCommandLineUIManager handleWarning: aDebugRequest exception
 ]

@@ -111,6 +111,18 @@ Class {
 	#tag : 'Base'
 }
 
+{ #category : 'class initialization' }
+SessionManager class >> classRemoved: classRemoved [
+
+	self default unregisterClassNamed: classRemoved classRemoved name
+]
+
+{ #category : 'class initialization' }
+SessionManager class >> classRenamed: classRenamed [
+
+	self default renamedClass: classRenamed classRenamed from: classRenamed oldName to: classRenamed newName
+]
+
 { #category : 'accessing' }
 SessionManager class >> default [
 	^ Default ifNil: [ Default := self new ]
@@ -121,6 +133,16 @@ SessionManager class >> default: aSessionManager [
 	Default := aSessionManager
 ]
 
+{ #category : 'class initialization' }
+SessionManager class >> initialize [
+
+	self codeChangeAnnouncer unsubscribe: self.
+
+	self codeChangeAnnouncer weak
+		when: ClassRemoved send: #classRemoved: to: self;
+		when: ClassRenamed send: #classRenamed: to: self
+]
+
 { #category : 'initialization' }
 SessionManager class >> initializeKernelRegistrations [
 	"The session manager will be extracted from the KernelGroup of the bootstrap that is build by Espell. Because of that, the sessions needed by the KernelGroup needs to be initialized later in the bootstrap.
@@ -128,13 +150,14 @@ SessionManager class >> initializeKernelRegistrations [
 
 	self default
 		registerSystemClassNamed: #SmallInteger atPriority: 10;
+		registerSystemClassNamed: #Delay atPriority: 20;
+		registerSystemClassNamed: #ProcessorScheduler atPriority: 30;
 		registerSystemClassNamed: #OSPlatform atPriority: 50;
 		registerSystemClassNamed: #ExternalObject atPriority: 60;
 		registerSystemClassNamed: #FFIBackend atPriority: 60;
 		registerSystemClassNamed: #File atPriority: 90;
 		registerSystemClassNamed: #FinalizationProcess;
 		registerSystemClassNamed: #Stdio;
-		registerSystemClassNamed: #SharedRandom;
 		registerSystemClassNamed: #EndianDetector;
 		registerSystemClassNamed: #Symbol
 ]
@@ -226,29 +249,13 @@ SessionManager >> installSession: aWorkingSession [
 
 { #category : 'snapshot and quit' }
 SessionManager >> launchSnapshot: save andQuit: quit [
-	| isImageStarting snapshotResult |
+	| snapshotOperation |
 	ChangesLog default logSnapshot: save andQuit: quit.
+	snapshotOperation := SnapshotOperation save: save andQuit: quit withSessionManager: self.
 
-	self currentSession stop: quit.	"Image not usable from here until the session is restarted!"
-	save
-		ifTrue: [
-					snapshotResult := Smalltalk snapshotPrimitive.	"<-- PC frozen here on image file"
-					isImageStarting := snapshotResult == true. ]
-		ifFalse: [ isImageStarting := false ].
-	(quit and: [ isImageStarting not ])
-		ifTrue: [ Smalltalk quitPrimitive ].
+	snapshotOperation performSnapshot.
 
-	"create a new session object if we're booting"
-	isImageStarting ifTrue: [ self installNewSession ].
-
-	self currentSession start: isImageStarting.
-	snapshotResult
-		ifNil: [ self error: 'Failed to write image file (disk full?)' ]
-		ifNotNil: [
-			SystemAnnouncer uniqueInstance snapshotDone: isImageStarting ].
-
-	"We return the resuming state, which may be useful for users to know the state of the image"
-	^ isImageStarting
+	^ snapshotOperation
 ]
 
 { #category : 'accessing' }
@@ -380,22 +387,26 @@ SessionManager >> shutdownList [
 
 { #category : 'snapshot and quit' }
 SessionManager >> snapshot: save andQuit: quit [
-	| isImageStarting wait |
+	| snapshotOperation wait |
 	"We do the snapshot in a separate process in maximum priority to have always a clean startup.
 	This process will be interrupted by the fork, and will be resumed as soon as the snapshot finishes.
 	We synchronize these processes in case both are in the same priority.
 	When both arguments are false, do nothing and return false."
-	(save or: [ quit ])
-		ifFalse: [ ^ false ].
+
+	(save or: [ quit ]) ifFalse: [ ^ false ].
+
 	wait := Semaphore new.
-	[ isImageStarting := self launchSnapshot: save andQuit: quit.
-	  wait signal. ] forkAt: Processor timingPriority - 1.
+	[  snapshotOperation := self launchSnapshot: save andQuit: quit.
+	   wait signal ] forkAt: Processor timingPriority - 1.
 	wait wait.
 
-	"The execution of the deferred startup actions are executed in the caller thread."
-	self currentSession executeDeferredStartupActions: isImageStarting.
+	snapshotOperation hasError 
+		ifTrue: [ snapshotOperation error debug ].
 
-	^ isImageStarting
+	"The execution of the deferred startup actions are executed in the caller thread."
+	self currentSession executeDeferredStartupActions: snapshotOperation isImageStarting.
+
+	^ snapshotOperation
 ]
 
 { #category : 'accessing' }

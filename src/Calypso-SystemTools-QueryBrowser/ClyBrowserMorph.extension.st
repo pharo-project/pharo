@@ -68,8 +68,10 @@ ClyBrowserMorph >> spawnQueryBrowserOn: aQuery withState: navigationBlock [
 			"For slow queries we will not wait and open a browser to indicate execution progress"
 			^self inform: 'There are no ', targetQuery description ]  ].
 
-	self spawnBrowser: ClyQueryBrowserMorph withState: [ :browser |
-		browser queryScopes: self allNavigationScopes.
-		browser showResultOf: targetQuery.
-		navigationBlock valueWithPossibleArgs: {browser}]
+	self 
+		spawnBrowser: Smalltalk tools messageList
+		withState: [ :browser |
+			browser queryScopes: self allNavigationScopes.
+			browser showResultOf: targetQuery.
+			navigationBlock valueWithPossibleArgs: {browser} ]
 ]

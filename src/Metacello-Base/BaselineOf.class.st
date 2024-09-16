@@ -120,6 +120,15 @@ BaselineOf class >> version [
 	^ self project version
 ]
 
+{ #category : 'accessing' }
+BaselineOf class >> withAllPackageNames [
+	"Return the name of all packages I includes and the name of my package "
+
+	^ self allPackageNames
+		  add: self class package name;
+		  yourself
+]
+
 { #category : 'baselines' }
 BaselineOf >> baseline: spec [
 	<baseline>
@@ -139,25 +148,27 @@ BaselineOf >> baseline: spec [
 ]
 
 { #category : 'accessing' }
-BaselineOf >> packageRepository [
+BaselineOf >> newProjectWithRepositoryDescription: aListOrRepositoryDescriptions [
 
-	" Tries to determine a repository from which the baseline is being loaded. Useful for 
-	refering other baselines in the same repository. "
-	
-	^ (self class package mcWorkingCopy repositoryGroup repositories reject: [:each | each = MCCacheRepository uniqueInstance]) 
-		ifNotEmpty: [ :repositories | repositories anyOne ]
-		ifEmpty: [ nil ]
+	| newProject |
+	newProject := super newProjectWithRepositoryDescription:
+		           aListOrRepositoryDescriptions.
+	aListOrRepositoryDescriptions do: [ :desc |
+		newProject version spec repository: desc ].
+	^ newProject
 ]
 
 { #category : 'accessing' }
-BaselineOf >> packageRepositoryURL [
-
+BaselineOf >> packageRepositoryURLForSpec: spec [
 	" Tries to determine a repository URL from which the baseline is being loaded. Useful for 
 	refering other baselines in the same repository. "
 
-	^ self packageRepository
-		ifNotNil: [ :aRepository | aRepository description ]
-		ifNil: [ '' ]
+	^ spec repositoryDescriptions
+		  detect: [ :each | each beginsWith: 'tonel://' ]
+		  ifNone: [
+			  spec repositoryDescriptions
+				  ifEmpty: [ '' ]
+				  ifNotEmpty: [ :collection | collection anyOne ] ]
 ]
 
 { #category : 'baselines' }

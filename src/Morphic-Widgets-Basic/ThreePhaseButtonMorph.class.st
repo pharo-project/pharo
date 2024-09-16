@@ -94,7 +94,7 @@ ThreePhaseButtonMorph >> arguments: aCollection [
 ThreePhaseButtonMorph >> doButtonAction [
 	"Perform the action of this button. Subclasses may override this method. The default behavior is to send the button's actionSelector to its target object with its arguments."
 
-	(target notNil and: [actionSelector notNil])
+	(target isNotNil and: [actionSelector isNotNil])
 		ifTrue:
 			[Cursor normal
 				showWhile: [target perform: actionSelector withArguments: arguments].
@@ -306,7 +306,7 @@ ThreePhaseButtonMorph >> printOn: aStream [
 	arguments notEmpty
 		ifTrue: [string := arguments at: (2 min: arguments size)].
 	aStream nextPutAll: '('.
-	(string notNil and: [string ~~ self])
+	(string isNotNil and: [string ~~ self])
 		ifTrue:
 			[aStream
 				print: string;

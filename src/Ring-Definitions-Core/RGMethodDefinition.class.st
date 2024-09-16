@@ -308,7 +308,7 @@ RGMethodDefinition >> isDefined [
 	| rClass |
 	self selector isDoIt ifTrue:[ ^false ].
 	rClass := self realClass.
-	^rClass notNil and: [ rClass includesSelector: self selector ]
+	^rClass isNotNil and: [ rClass includesSelector: self selector ]
 ]
 
 { #category : 'testing' }
@@ -332,7 +332,7 @@ RGMethodDefinition >> isExtension [
 	^self
 		annotationNamed: self class isExtensionKey
 		ifAbsent: [
-			(self parent notNil and:[ self package notNil ])
+			(self parent isNotNil and:[ self package isNotNil ])
 				ifTrue: [ | value |
 					       value :=  self parent package ~= self package.
 						 self annotationNamed: self class isExtensionKey put: value.
@@ -383,7 +383,7 @@ RGMethodDefinition >> isLocalSelector [
 
 	| rClass |
 	rClass:= self realClass.
-	^rClass notNil and: [ rClass includesLocalSelector: self selector ]
+	^rClass isNotNil and: [ rClass includesLocalSelector: self selector ]
 ]
 
 { #category : 'testing' }
@@ -539,12 +539,11 @@ RGMethodDefinition >> protocol: anObject [
 
 { #category : 'source pointers' }
 RGMethodDefinition >> protocolAtPointer [
-
 	"A RGMethodDefinition that was set as historical will retrieve the protocol using the sourcePointer"
 
-	^ self sourcePointer notNil
-		ifTrue: [ SourceFiles protocolAt: self sourcePointer ]
-		ifFalse:[ nil ]
+	^ self sourcePointer
+		  ifNotNil: [ SourceFiles protocolAt: self sourcePointer ]
+		  ifNil: [ nil ]
 ]
 
 { #category : 'backward compatibility' }
@@ -596,12 +595,11 @@ RGMethodDefinition >> sourceCode: anObject [
 
 { #category : 'source pointers' }
 RGMethodDefinition >> sourceCodeAtPointer [
-
 	"A RGMethodDefinition that was set as historical will retrieve the sourceCode using the sourcePointer"
 
-	^ self sourcePointer notNil
-		ifTrue: [ SourceFiles sourceCodeAt: self sourcePointer ]
-		ifFalse:[ nil ]
+	^ self sourcePointer
+		  ifNotNil: [ SourceFiles sourceCodeAt: self sourcePointer ]
+		  ifNil: [ nil ]
 ]
 
 { #category : 'source pointers' }
@@ -638,12 +636,24 @@ RGMethodDefinition >> stamp: anObject [
 
 { #category : 'source pointers' }
 RGMethodDefinition >> stampAtPointer [
-
 	"A RGMethodDefinition that was set as historical will retrieve the stamp using the sourcePointer"
 
-	^ self sourcePointer notNil
-		ifTrue: [ SourceFiles timeStampAt: self sourcePointer ]
-		ifFalse:[ nil ]
+	^ self sourcePointer
+		  ifNotNil: [ SourceFiles timeStampAt: self sourcePointer ]
+		  ifNil: [ nil ]
+]
+
+{ #category : 'storing' }
+RGMethodDefinition >> storeOn: aStream [
+	aStream nextPut: $(.
+	aStream nextPutAll: self class asString.
+	aStream nextPutAll: ' className: '''.
+	aStream nextPutAll: self parentName.
+	aStream nextPutAll: ''' selector: '.
+	aStream nextPutAll: self selector printString.
+	aStream nextPutAll: ' isMeta: '.
+	aStream nextPutAll: self isMeta printString.
+	aStream nextPut: $)
 ]
 
 { #category : 'backward compatibility' }

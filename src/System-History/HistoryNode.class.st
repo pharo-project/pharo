@@ -109,7 +109,7 @@ HistoryNode >> close [
 
 { #category : 'opening-closing' }
 HistoryNode >> closeGroup [
-	(self current notNil
+	(self current isNotNil
 			and: [self current isComposite
 				and: [self current opened]])
 		ifTrue: [self current closeGroup]

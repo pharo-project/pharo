@@ -66,7 +66,7 @@ MorphTreeResizerMorph >> doubleClick: event [
 
 { #category : 'drawing' }
 MorphTreeResizerMorph >> drawOn: aCanvas [
-	(owner notNil and: [owner containsPoint: self position])
+	(owner isNotNil and: [owner containsPoint: self position])
 		ifTrue: [super drawOn: aCanvas]
 ]
 
@@ -92,9 +92,10 @@ MorphTreeResizerMorph >> mouseDown: anEvent [
 
 { #category : 'event handling' }
 MorphTreeResizerMorph >> mouseEnter: anEvent [
-	self canResizeColumn ifFalse: [^ self].
-	(owner notNil and: [owner bounds containsPoint: anEvent position])
-		ifTrue: [super mouseEnter: anEvent]
+
+	self canResizeColumn ifFalse: [ ^ self ].
+	(owner isNotNil and: [ owner bounds containsPoint: anEvent position ])
+		ifTrue: [ super mouseEnter: anEvent ]
 ]
 
 { #category : 'event handling' }
@@ -157,11 +158,11 @@ MorphTreeResizerMorph >> pressedFillStyle [
 
 { #category : 'submorphs - add/remove' }
 MorphTreeResizerMorph >> release [
+
 	traceMorph := nil.
 	oldColor := nil.
 	container := nil.
-	self releaseActionMap. "we are not sure if we need it"
-	super release
+	self releaseActionMap "we are not sure if we need it"
 ]
 
 { #category : 'instance creation' }

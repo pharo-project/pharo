@@ -73,8 +73,8 @@ DADependencyChecker >> computeTransitiveDependenciesOf: aPackageName visitedPack
 
 { #category : 'private' }
 DADependencyChecker >> daPackageFor: aPackageName [
-	^ (((self buildPackageRelationGraphFor: aPackageName) packages)
-			select: #isSeen) first
+
+	^ ((self buildPackageRelationGraphFor: aPackageName) packages select: #isSeen) first
 ]
 
 { #category : 'accessing' }

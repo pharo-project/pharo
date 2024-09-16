@@ -193,7 +193,7 @@ RBExtractSetUpMethodParametrizedTest >> testFailureExtractSetUpWhenIsNotFirstsSe
 RBExtractSetUpMethodParametrizedTest >> testFailureModelExistingSetUpMethod [
 
 	| class |
-	model := RBClassModelFactory rbNamespace new.
+	model := RBNamespace new.
 	class := model classNamed: #RBTestAsDataForExtractSetupTransformationTest.
 	class compile: 'setUp #setUp' classified: #( #accessing ).
 	self shouldFail:

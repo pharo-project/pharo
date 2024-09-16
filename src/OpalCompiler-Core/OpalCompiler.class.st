@@ -39,7 +39,8 @@ Class {
 		'logged',
 		'changeStamp',
 		'protocol',
-		'requestor'
+		'requestor',
+		'priorMethod'
 	],
 	#classInstVars : [
 		'overlayEnvironment'
@@ -110,7 +111,7 @@ OpalCompiler class >> overlayEnvironment [
 
 { #category : 'overlay' }
 OpalCompiler class >> overlayIsActive [
-	^overlayEnvironment notNil
+	^overlayEnvironment isNotNil
 ]
 
 { #category : 'overlay' }
@@ -213,6 +214,7 @@ OpalCompiler >> ast: anObject [
 
 	ast := anObject.
 	source := ast source.
+	ast compiledMethod ifNotNil: [ :method | self priorMethod: method ].
 
 	"If a compilation context exists in the AST, we use this one.
 	Otherwise, we assign our"
@@ -256,7 +258,7 @@ OpalCompiler >> callParsePlugins [
 
 	plugins := compilationContext astParseTransformPlugins ifEmpty: [ ^ self ].
 	plugins sort: [ :a :b | a priority > b priority ]. "priority 0 is sorted last"
-	plugins do: [ :each | ast := each transform: ast ]
+	plugins do: [ :each | ast := each transform: ast "In case I fail during the loading of code, check OCASTComplierPlugin class comment."]
 ]
 
 { #category : 'private' }
@@ -265,7 +267,7 @@ OpalCompiler >> callPlugins [
 
 	plugins := compilationContext astTransformPlugins ifEmpty: [ ^self ].
 	plugins sort: [ :a :b | a priority > b priority ]. "priority 0 is sorted last"
-	plugins do: [ :each | ast := each transform: ast ]
+	plugins do: [ :each | ast := each transform: ast "In case I fail during the loading of code, check OCASTComplierPlugin class comment."]
 ]
 
 { #category : 'accessing' }
@@ -539,12 +541,17 @@ OpalCompiler >> generateMethod [
 	method := ir compiledMethod.
 
 	ast compiledMethod: method.
-	ast 
-		propertyAt: #Undeclareds 
-		ifPresent: [:undeclareds | undeclareds do: [ :var | var registerMethod: method ]].
+	ast propertyAt: #Undeclareds ifPresent: [ :undeclareds | undeclareds do: [ :var | var registerMethod: method ] ].
 	method propertyAt: #source put: source.
-	self compilationContext noPattern ifTrue: [
-		method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
+	self isScripting ifTrue: [ method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
+
+	"If the prior method was not set explicitly, we set it because we will need it if we are not in the first compilation"
+	self priorMethod ifNil: [
+		self methodClass ifNotNil: [ :class | "In case the method comes from a trait, we ignore it because it means we are overriding the trait method in the class"
+			class compiledMethodAt: method selector ifPresent: [ :aMethod | aMethod isFromTrait ifFalse: [ self priorMethod: aMethod ] ] ] ].
+
+	"In case we are not compiling the method for the first time, we want to ensure that some properties are kept."
+	self priorMethod ifNotNil: [ priorMethod migratePersistingPropertiesIn: method ].
 	^ method
 ]
 
@@ -552,26 +559,36 @@ OpalCompiler >> generateMethod [
 OpalCompiler >> install [
 	"Compile and install a method in a class"
 
-	| class method logSource priorMethod |
-	class := self semanticScope targetClass.
+	| class method logSource |
+	class := self methodClass.
 	self assert: class isNotNil.
 
 	method := self compile ifNil: [ ^ nil ].
-	priorMethod := class compiledMethodAt: method selector ifAbsent: [  ].
 
-	changeStamp ifNil: [ changeStamp := Author changeStamp ].
+	changeStamp ifNil: [
+		changeStamp := Date today mmddyyyy , ' '
+		               ,
+			               ((String streamContents: [ :s |
+				                 Time now print24: true on: s ]) copyFrom: 1 to: 5) ].
 	logSource := self logged ifNil: [ true ].
-
-	class addAndClassifySelector: method selector withMethod: method inProtocol: protocol.
+	protocol := protocol ifNil: [
+		            self priorMethod ifNotNil: [ self priorMethod protocol ] ].
 
 	logSource ifTrue: [
-		"For the log we do not use `protocol` because in case it is nil, we keep the current classification or we classify under uncategorize in the method is not present in a protocol yet. So we ask to the method its protocol after classifying it."
 		method
 			putSource: source
-			class: class
-			protocol: method protocol
-			withStamp: changeStamp
-			priorMethod: priorMethod ].
+			withPreamble: [ :file | "It is possible the protocol might be wrong, fro example if the protocol is nil or and extension to the package of the class containing the method. But to fix this problem it would require to find the right protocol before classification and this is some work to do... And this logged protocol is not really used."
+				class
+					printProtocolChunk: protocol
+					on: file
+					withStamp: changeStamp
+					priorMethod: self priorMethod.
+				file cr ] ].
+
+	class
+		addAndClassifySelector: method selector
+		withMethod: method
+		inProtocol: protocol.
 
 	class instanceSide noteCompilationOf: method meta: class isClassSide.
 
@@ -598,14 +615,13 @@ OpalCompiler >> isInteractive [
 
 { #category : 'accessing' }
 OpalCompiler >> isScripting [
-	^ self semanticScope isDoItScope
+	^ self compilationContext isScripting
 ]
 
 { #category : 'accessing' }
 OpalCompiler >> isScripting: aBoolean [
 
-	(aBoolean and: [ self isScripting not ]) ifTrue: [
-		self semanticScope: OCReceiverDoItSemanticScope targetingNilReceiver ]
+	self compilationContext isScripting: aBoolean
 ]
 
 { #category : 'accessing' }
@@ -616,6 +632,12 @@ OpalCompiler >> logged [
 { #category : 'accessing' }
 OpalCompiler >> logged: aBoolean [
 	logged := aBoolean
+]
+
+{ #category : 'accessing' }
+OpalCompiler >> methodClass [
+
+	^ self semanticScope targetClass
 ]
 
 { #category : 'testing' }
@@ -731,6 +753,19 @@ OpalCompiler >> permitUndeclared [
 OpalCompiler >> permitUndeclared: aBoolean [
 
 	permitUndeclared := aBoolean
+]
+
+{ #category : 'accessing' }
+OpalCompiler >> priorMethod [
+
+	^ priorMethod
+]
+
+{ #category : 'accessing' }
+OpalCompiler >> priorMethod: aCompiledMethod [
+	"Setting the prior method all Opal to conserve some informations from a previous method to the new compiled method easily. For example it can keep some properties or the protocol."
+
+	priorMethod := aCompiledMethod
 ]
 
 { #category : 'accessing' }

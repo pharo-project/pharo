@@ -38,7 +38,7 @@ FLBlockClosureSerializationTest >> testBlockClosureChangeDifferentBytecodes [
 		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self assert: aClosure isClean.
-	self assert: aClosure notNil.
+	self assert: aClosure isNotNil.
 	
 	self serialize: aClosure.
 	self classFactory
@@ -87,7 +87,7 @@ FLBlockClosureSerializationTest >> testBlockClosureChangeSameBytecodes [
 		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self assert: aClosure isClean.
-	self assert: aClosure outerContext notNil.
+	self assert: aClosure outerContext isNotNil.
 	
 	self serialize: aClosure.
 	self classFactory
@@ -127,13 +127,13 @@ FLBlockClosureSerializationTest >> testBlockClosureChangeSameBytecodesConstant [
 FLBlockClosureSerializationTest >> testBlockClosureMaterializesClassVariablesCorrectly [
 
 	| class closure method |
-	class := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariablesFromString: 'ClassVariableForTesting' ].
+	class := self classFactory silentlyMake: [ :aBuilder | aBuilder sharedVariables: #(ClassVariableForTesting)].
 	self classFactory silentlyCompile: 'methodWithClosure  ^ [ ClassVariableForTesting ]' in: class.
 
 	method := class methodNamed: #methodWithClosure.
 	"Make sure we don't use global clusters here, which would simply perform a lookup"
 	self serializer fullySerializeBehavior: method methodClass.
-	closure := method valueWithReceiver: class new arguments: #(  ).
+	closure := method valueWithReceiver: class new.
 
 	self serialize: closure.
 
@@ -155,7 +155,7 @@ FLBlockClosureSerializationTest >> testBlockClosureRemoved [
 		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self assert: aClosure isClean.
-	self assert: aClosure outerContext notNil.
+	self assert: aClosure outerContext isNotNil.
 	
 	self serialize: aClosure.
 	aClass removeSelectorSilently: #methodWithClosure.
@@ -192,7 +192,7 @@ FLBlockClosureSerializationTest >> testBlockClosureRemovedNonClean [
 		in: aClass.
 	aClosure := aClass new perform: #methodWithClosure.
 	self deny: aClosure isClean.
-	self assert: aClosure outerContext notNil.
+	self assert: aClosure outerContext isNotNil.
 	
 	self serialize: aClosure.
 	aClass removeSelectorSilently: #methodWithClosure.

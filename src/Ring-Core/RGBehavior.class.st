@@ -562,6 +562,12 @@ RGBehavior >> isCompiledMethod [
 ]
 
 { #category : 'testing - layouts' }
+RGBehavior >> isDoubleWords [
+
+	^ self layout isDoubleWordLayout
+]
+
+{ #category : 'testing - layouts' }
 RGBehavior >> isEphemeron [
 
 	^ self layout isEphemeronLayout
@@ -1011,6 +1017,25 @@ RGBehavior >> removeProtocol: aSymbol [
 RGBehavior >> selectors [
 
 	^ self methods collect: [ :each | each name ]
+]
+
+{ #category : 'accessing - definition' }
+RGBehavior >> sharedPoolsDefinitionString [
+	"Answer a string of my class variable names separated by spaces."
+
+	^ String streamContents: [ :str |
+		  str nextPutAll: '{ '.
+		  self sharedPools
+			  do: [ :pool |
+				  str
+					  nextPut: $#;
+					  nextPutAll: pool name ]
+			  separatedBy: [
+				  str
+					  space;
+					  nextPut: $.;
+					  space ].
+		  str nextPutAll: '}' ]
 ]
 
 { #category : 'accessing - definition' }

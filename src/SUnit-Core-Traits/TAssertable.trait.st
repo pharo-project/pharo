@@ -211,7 +211,9 @@ TAssertable >> denyCollection: actual hasSameElements: expected [
 
 { #category : 'asserting' }
 TAssertable >> denyEmpty: aCollection [
-	^ self assert: aCollection isNotEmpty description: aCollection asString , ' should not have been empty'
+	"Not using #isNotEmpty like this objects as parameter can only implement #isEmpty and not both messages."
+
+	^ self assert: aCollection isEmpty not description: aCollection asString , ' should not have been empty'
 ]
 
 { #category : 'asserting' }
@@ -273,18 +275,25 @@ TAssertable >> should: aBlock notTakeMoreThan: aDuration [
     "Evaluate aBlock and if it takes more than given duration
     to run we report a test failure. "
 
-	^ aBlock valueWithin: aDuration onTimeout: [
-		self
-			assert: false
-			description: ['Block evaluation took more than the expected <1p>' expandMacrosWith: aDuration]
+	^ aBlock 
+		valueWithinMilliseconds: aDuration asMilliSeconds 
+		onTimeout: [
+			self
+				assert: false
+				description: ['Block evaluation took more than the expected <1p>' expandMacrosWith: aDuration ]
 	]
 ]
 
 { #category : 'asserting' }
-TAssertable >> should: aBlock notTakeMoreThanMilliseconds: anInteger [
-    "For compatibility with other Smalltalks"
+TAssertable >> should: aBlock notTakeMoreThanMilliseconds: milli [
+    "Evaluate aBlock and if it takes more than given milli of milliseconds
+    to run we report a test failure. "
 
-   self should: aBlock notTakeMoreThan: (Duration milliSeconds: anInteger)
+	^ aBlock valueWithinMilliseconds: milli onTimeout: [
+		self
+			assert: false
+			description: ['Block evaluation took more than the expected <1p>' expandMacrosWith: milli]
+	]
 ]
 
 { #category : 'asserting' }

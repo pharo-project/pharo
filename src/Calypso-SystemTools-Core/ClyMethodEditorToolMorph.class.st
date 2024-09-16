@@ -19,7 +19,7 @@ Subclasses should detect that editing method is going to be extension.
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	extendingPackage:		<RPackage>
+	extendingPackage:		<Package>
 	methodProtocol:		<Symbol> represents the name of the method protocol
 "
 Class {
@@ -223,12 +223,12 @@ ClyMethodEditorToolMorph >> setUpTargetClasses [
 
 { #category : 'events handling' }
 ClyMethodEditorToolMorph >> textChanged: aTextChanged [
+
 	super textChanged: aTextChanged.
-	ast := self currentEditedAST.
 	textMorph segments copy do: #delete.
 	IconStyler new
 	   stylerClasses: {ErrorNodeStyler . SemanticMessageIconStyler . SemanticWarningIconStyler };
-		styleText: textModel withAst: ast.
+		styleText: textModel withAst: self currentEditedAST.
 	^ ast
 ]
 

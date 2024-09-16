@@ -48,7 +48,7 @@ RBFindAndReplacePreviewPresenter class >> defaultLayout [
 { #category : 'specs' }
 RBFindAndReplacePreviewPresenter class >> example [
 	<script>
-	^ (self method: (RBRefactoring >> #convertMethod:for:using: ))
+	^ (self method: (RBRefactoring >> #checkClass:selector:using: ))
 ]
 
 { #category : 'specs' }
@@ -79,16 +79,13 @@ RBFindAndReplacePreviewPresenter >> initializeChangeList [
 
 { #category : 'initialization' }
 RBFindAndReplacePreviewPresenter >> initializeDialogWindow: aModalPresenter [
+	
 	aModalPresenter
-		addButton: 'Find' do: [ :presenter |
-			refactoring listToFindMatches: selectedRefactorings .
-			presenter
-				beOk;
-				close];
 		addButton: 'Cancel' do: [ :presenter |
-			presenter
-				beCancel;
-				close ]
+			presenter beCancel; close ];
+		addDefaultButton: 'Find' do: [ :presenter |
+			refactoring listToFindMatches: selectedRefactorings .
+			presenter beOk; close ]
 ]
 
 { #category : 'initialization' }
@@ -115,7 +112,7 @@ RBFindAndReplacePreviewPresenter >> initializePresenter [
 { #category : 'initialization' }
 RBFindAndReplacePreviewPresenter >> initializeWidgets [
 	changeList := self newTable.
-	label := (self newLabel)label: 'Find in:' .
+	label := self newLabel label: 'Find in:' .
 	dropList := self newDropList.
 	selectedRefactorings := OrderedCollection new.
 	self initializeDropList.
@@ -124,8 +121,8 @@ RBFindAndReplacePreviewPresenter >> initializeWidgets [
 
 { #category : 'initialization' }
 RBFindAndReplacePreviewPresenter >> method: aMethod [
-	method := aMethod.
 
+	method := aMethod.
 	selectedRefactorings := OrderedCollection newFrom:
 		(method origin methods select: [:each | each ~= method]).
 	changeList items: selectedRefactorings

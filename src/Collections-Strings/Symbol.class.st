@@ -70,30 +70,12 @@ Symbol class >> cleanUp [
 	self rehash
 ]
 
-{ #category : 'cleanup' }
-Symbol class >> compactSymbolTable [
-	"this used to create a set with just 25% empty space, but that reduces lookup performance"
-		self
-		deprecated: 'Use #rehash instead'
-		transformWith: '`@receiver compactSymbolTable' -> '`@receiver rehash'.
-	self rehash
-]
-
 { #category : 'symbol table' }
 Symbol class >> findInterned: aStringOrSymbol [
 
 	^(SymbolTable like: aStringOrSymbol) ifNil: [
 		NewSymbols like: aStringOrSymbol
 	]
-]
-
-{ #category : 'selector table' }
-Symbol class >> findInternedSelector: aString [
-	"return a selector if the argument is used as a selector, nil if not"
-	self deprecated: 'use #isSelectorSymbol instead'.
-	^ (self findInterned: aString) ifNotNil: [ :symbol |
-		  (self selectorTable like: symbol) ifNotNil: [ :selectorSymbol |
-			  selectorSymbol ] ]
 ]
 
 { #category : 'symbol table' }
@@ -129,24 +111,10 @@ Symbol class >> intern: aStringOrSymbol [
 		  NewSymbols add: aStringOrSymbol createSymbol ]
 ]
 
-{ #category : 'symbol table' }
-Symbol class >> lookup: aStringOrSymbol [
-	self
-		deprecated: 'Use #findInterned: instead'
-		transformWith: '`@receiver lookup: `@statements1' -> '`@receiver findInterned: `@statements1'.
-
-	^ self findInterned: aStringOrSymbol
-]
-
 { #category : 'instance creation' }
 Symbol class >> new: aSize [
 
 	self shouldNotImplement
-]
-
-{ #category : 'stream creation' }
-Symbol class >> new: size streamContents: aBlock [
-	^ (super new: size streamContents: aBlock) asSymbol
 ]
 
 { #category : 'instance creation' }
@@ -240,7 +208,7 @@ Symbol class >> selectorThatStartsCaseSensitive: leadingCharacters skipping: ski
 	firstMatch := leadingCharacters at: 1.
 	size > 1 ifTrue: [key := leadingCharacters copyFrom: 2 to: size].
 	self selectorTable do: [:each |
-			(each notNil and: [each size >= size]) ifTrue:
+			(each isNotNil and: [each size >= size]) ifTrue:
 				[
 					((each at: 1) == firstMatch and:
 						[key == nil or:
@@ -619,7 +587,7 @@ Symbol >> sorted: aSortBlockOrNil [
 	^self asArray sort: aSortBlockOrNil
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Symbol >> storeOn: aStream [
 
 	aStream nextPut: $#.

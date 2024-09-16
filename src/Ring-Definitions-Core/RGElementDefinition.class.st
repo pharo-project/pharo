@@ -103,15 +103,15 @@ RGElementDefinition class >> basicParseAuthorAliasFrom: aString [
 	unknown := nil.
 	aString isEmptyOrNil
 		ifTrue: [ ^ unknown ].
-	dateStartIndex := (aString indexOf: $/) - 1.	"If there is no / character in the timestamp, no author alias/name exists"
+	dateStartIndex := (aString indexOf: $-) - 1.	"If there is no / character in the timestamp, no author alias/name exists"
 	dateStartIndex = -1
 		ifTrue: [ ^ unknown ].
 	^ [
-	"Go the start of the date string (there can be 1 or 2 digits and a space separator can be missing at the front!!)"
-	(dateStartIndex >= 2 and: [ (aString at: dateStartIndex - 1) isDigit ])
-		ifTrue: [ dateStartIndex := dateStartIndex - 1 ].	"Extract only those tokens that do not possible represent date or time - meaning that authorname may be at the end"
+	"Go the start of the date string (there can be up to 4 digits and a space separator can be missing at the front!!)"
+	[dateStartIndex >= 4 and: [ (aString at: dateStartIndex - 1) isDigit ]]
+		whileTrue: [ dateStartIndex := dateStartIndex - 1 ].	"Extract only those tokens that do not possible represent date or time - meaning that authorname may be at the end"
 	tokens := (aString copyFrom: dateStartIndex to: aString size) substrings
-		reject: [ :token | (token occurrencesOf: $/) = 2 or: [ (token occurrencesOf: $:) = 1 ] ].	"only one token should be left if author name/alias exists"
+		reject: [ :token | (token occurrencesOf: $-) = 2 or: [ (token occurrencesOf: $:) = 1 ] ].	"only one token should be left if author name/alias exists"
 	^ tokens isEmpty
 		ifTrue: [
 			"if dateStartIndex is not 1 then the authorname may be at the beginning"
@@ -179,18 +179,18 @@ RGElementDefinition class >> parseTimestampFrom: aString default: anObject [
 	unknown := anObject.
 	aString isEmptyOrNil
 		ifTrue: [ ^ unknown ].
-	dateStartIndex := (aString indexOf: $/) - 1.	"If there is no / character in the timestamp, we cannot parse a date and return the epoch"
+	dateStartIndex := (aString indexOf: $-) - 1.	"If there is no / character in the timestamp, we cannot parse a date and return the epoch"
 	dateStartIndex = -1
 		ifTrue: [ ^ unknown ].
 	^ [
 	"Go the start of the date string (there can be 1 or 2 digits and a space separator can be missing at the front!!)"
-	(dateStartIndex >= 2 and: [ (aString at: dateStartIndex - 1) isDigit ])
-		ifTrue: [ dateStartIndex := dateStartIndex - 1 ].	"Extract only those tokens that possibly represent date or time"
+	[dateStartIndex >= 4 and: [ (aString at: dateStartIndex - 1) isDigit ]]
+		whileTrue: [ dateStartIndex := dateStartIndex - 1 ].	"Extract only those tokens that possibly represent date or time"
 	tokens := (aString copyFrom: dateStartIndex to: aString size) substrings
-		select: [ :token | (token occurrencesOf: $/) = 2 or: [ (token occurrencesOf: $:) = 1 ] ].	"2 tokens is a datetime"
+		select: [ :token | (token occurrencesOf: $-) = 2 or: [ (token occurrencesOf: $:) = 1 ] ].	"2 tokens is a datetime"
 	tokens size = 2
 		ifTrue: [ (tokens joinUsing: Character space) asDateAndTime ]
-		ifFalse: [ tokens first asDate asDateAndTime ] ]
+		ifFalse: [ DateAndTime fromString: tokens first ] ]
 		on: Exception
 		do: [ :e | unknown ]
 ]
@@ -277,7 +277,7 @@ RGElementDefinition >> instanceSideParentName [
 RGElementDefinition >> isDefined [
 	"isDefined when the receiver has its realClass defined in the system"
 
-	^self realClass notNil
+	^self realClass isNotNil
 ]
 
 { #category : 'accessing' }
@@ -293,14 +293,6 @@ RGElementDefinition >> isMeta [
 RGElementDefinition >> isMeta: aBoolean [
 
 	self annotationNamed: self class isMetaKey put: aBoolean
-]
-
-{ #category : 'accessing' }
-RGElementDefinition >> isMetaSide [
-	self
-		deprecated: 'Use isMeta instead'
-		transformWith: '`@receiver isMetaSide' -> '`@receiver isMeta'.
-	^ self isMeta
 ]
 
 { #category : 'accessing' }

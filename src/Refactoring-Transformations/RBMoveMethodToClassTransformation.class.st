@@ -41,12 +41,7 @@ RBMoveMethodToClassTransformation >> applicabilityPreconditions [
 
 { #category : 'transforming' }
 RBMoveMethodToClassTransformation >> classModelOf: aClass [
-	| classModel |
-	classModel := aClass isMeta
-		ifTrue: [ RBClassModelFactory rbMetaclass named: aClass name ]
-		ifFalse: [ RBClassModelFactory rbClass named: aClass name ].
-	classModel model: self model.
-	^classModel
+	^ self model classObjectFor: aClass
 ]
 
 { #category : 'transforming' }
@@ -60,7 +55,7 @@ RBMoveMethodToClassTransformation >> privateTransform [
 	| oldClass newClass rbMethod originalProtocol |
 	oldClass := self classModelOf: method methodClass.
 	newClass := self classModelOf: class.
-	rbMethod := RBClassModelFactory rbMethod for: newClass source: method sourceCode selector: method selector.
+	rbMethod := model rbMethodClass for: newClass source: method sourceCode selector: method selector.
 	originalProtocol := method protocolName.
 
 	(RBRemoveMethodTransformation 
@@ -73,7 +68,7 @@ RBMoveMethodToClassTransformation >> privateTransform [
 		withProtocol: originalProtocol) generateChanges
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBMoveMethodToClassTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

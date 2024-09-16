@@ -255,7 +255,7 @@ ImageMorph >> opacityString [
 { #category : 'menu commands' }
 ImageMorph >> readFromFile [
 	| fileName |
-	fileName := UIManager default
+	fileName := self morphicUIManager
 		request: 'Please enter the image file name' translated
 		initialAnswer: 'fileName'.
 	fileName isEmptyOrNil ifTrue: [^ self].
@@ -286,7 +286,8 @@ ImageMorph >> shouldFlex [
 
 { #category : 'testing' }
 ImageMorph >> wantsRecolorHandle [
-	^ formSet notNil and: [formSet depth = 1]
+
+	^ formSet isNotNil and: [formSet depth = 1]
 ]
 
 { #category : 'accessing' }

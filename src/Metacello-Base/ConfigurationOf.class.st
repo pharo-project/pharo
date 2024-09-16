@@ -67,6 +67,12 @@ Class {
 	#package : 'Metacello-Base'
 }
 
+{ #category : 'class initialization' }
+ConfigurationOf class >> initialize [
+
+	self deprecatedAliases: { #MetacelloBaseConfiguration }
+]
+
 { #category : 'accessing' }
 ConfigurationOf class >> project [
 
@@ -111,14 +117,34 @@ ConfigurationOf >> defaultBleedingEdgeVersion [
 ]
 
 { #category : 'accessing' }
+ConfigurationOf >> initalizeProjectWithRepositoryDescription: repositoryDescription [
+
+	^ project := self newProjectWithRepositoryDescription: repositoryDescription
+]
+
+{ #category : 'accessing' }
+ConfigurationOf >> newProjectWithRepositoryDescription: repositoryDescription [
+
+	| aProject |
+	aProject := self projectClass new projectAttributes:
+		            self customProjectAttributes.
+	aProject versionNumberClass: self versionNumberClass.
+	aProject setBaselineRepositoryDescription: repositoryDescription.
+	
+	"Construct the project"
+	MetacelloBaselineConstructor on: self project: aProject.
+	
+	 "change to #atomic if desired"
+	aProject loadType: #linear.
+	^ aProject
+]
+
+{ #category : 'accessing' }
 ConfigurationOf >> project [
 
 	^ project ifNil: [
-		  project := self projectClass new projectAttributes: self customProjectAttributes. "Create the Metacello project"
-		  project versionNumberClass: self versionNumberClass.
-		  project class versionConstructorClass on: self project: project. "Construct the project"
-		  project loadType: #linear. "change to #atomic if desired"
-		  project ]
+		  "By default we don't know where the project came from..."
+		  self initalizeProjectWithRepositoryDescription: #() ]
 ]
 
 { #category : 'accessing' }
@@ -129,7 +155,7 @@ ConfigurationOf >> project: aProject [
 
 { #category : 'accessing' }
 ConfigurationOf >> projectClass [
-    ^ MetacelloMCProject
+    ^ MetacelloProject
 ]
 
 { #category : 'private' }

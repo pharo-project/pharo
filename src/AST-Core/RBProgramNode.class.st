@@ -474,11 +474,6 @@ RBProgramNode >> defines: aName [
 	^false
 ]
 
-{ #category : 'testing' }
-RBProgramNode >> directlyUses: aNode [
-	^true
-]
-
 { #category : 'enumeration' }
 RBProgramNode >> do: aBlock [
 	"Hacked to fit collection protocols"
@@ -516,7 +511,14 @@ RBProgramNode >> equalTo: aNode withMapping: aDictionary [
 RBProgramNode >> errorNotices [
 	"The errors attached to the receiver"
 
-	^ self notices select: #isError
+	| notices |
+	
+	notices := self notices.
+	
+	"Optimization to avoid select in an empty collection"
+	notices ifEmpty: [ ^ #() ].
+
+	^ notices select: [ :e | e isError ]
 ]
 
 { #category : 'testing' }
@@ -563,6 +565,12 @@ RBProgramNode >> getCommentsFor: anInterval [
 ]
 
 { #category : 'testing' }
+RBProgramNode >> hasBlock [
+
+	^ false
+]
+
+{ #category : 'testing' }
 RBProgramNode >> hasComments [
 	"Answer whether the receiver as comments"
 
@@ -588,7 +596,19 @@ RBProgramNode >> hasNonLocalReturn [
 RBProgramNode >> hasProperty: aKey [
 	"Test if the property aKey is present."
 
-	^ properties notNil and: [ properties includesKey: aKey ]
+	^ properties isNotNil and: [ properties includesKey: aKey ]
+]
+
+{ #category : 'testing' }
+RBProgramNode >> hasSameExitPoint [
+
+	^ self hasSameExitPoint: false
+]
+
+{ #category : 'testing' }
+RBProgramNode >> hasSameExitPoint: aBoolean [ 
+
+	^ true
 ]
 
 { #category : 'comparing' }
@@ -663,13 +683,6 @@ RBProgramNode >> isCommentNode [
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isDirectlyUsed [
-	"This node is directly used as an argument, receiver, or part of an assignment."
-
-	^parent ifNil: [false] ifNotNil: [parent directlyUses: self]
-]
-
-{ #category : 'testing' }
 RBProgramNode >> isDynamicArray [
 	^ false
 ]
@@ -684,6 +697,25 @@ RBProgramNode >> isError [
 	"An error node is either a RBParseErrorNode (for syntactic errors) or has error information (for other errors)"
 
 	^ self errorNotices isNotEmpty
+]
+
+{ #category : 'testing' }
+RBProgramNode >> isEssential [
+	"This node can not be removed from the expression, else the expression is not valid anymore.
+	 An argument, receiver, or part of an assignment or part of a return can not be removed.
+	 This ensures that if the node would be removed, a resulting expression will still be syntatically correct.
+     For example, self foo can not be removed from the following:
+	^ self foo
+	x := self foo
+	self foo bar
+	self arg: self foo"
+
+	^parent ifNil: [false] ifNotNil: [parent isEssentialChild: self]
+]
+
+{ #category : 'testing' }
+RBProgramNode >> isEssentialChild: aNode [
+	^true
 ]
 
 { #category : 'testing' }
@@ -862,13 +894,18 @@ RBProgramNode >> isUnfinishedStatement [
 ]
 
 { #category : 'testing' }
-RBProgramNode >> isUsed [
+RBProgramNode >> isUsedAsReturnValue [
 	"Answer true if this node could be used as part of another expression. For example, you could use the
 	result of this node as a receiver of a message, an argument, the right part of an assignment, or the
 	return value of a block. This differs from isDirectlyUsed in that it is conservative since it also includes
 	return values of blocks."
 
-	^parent ifNil: [false] ifNotNil: [parent uses: self]
+	^parent ifNil: [false] ifNotNil: [parent isUsingAsReturnValue: self]
+]
+
+{ #category : 'testing' }
+RBProgramNode >> isUsingAsReturnValue: aNode [
+	^true
 ]
 
 { #category : 'testing' }
@@ -888,7 +925,7 @@ RBProgramNode >> isWorkspaceVariable [
 
 { #category : 'testing' }
 RBProgramNode >> lastIsReturn [
-	^self isReturn
+	^ false
 ]
 
 { #category : 'accessing - meta variable' }
@@ -1217,7 +1254,8 @@ RBProgramNode >> size [
 
 { #category : 'accessing' }
 RBProgramNode >> source [
-	^ parent notNil ifTrue: [ parent source ] ifFalse: [ nil ]
+
+	^ parent ifNotNil: [ parent source ]
 ]
 
 { #category : 'accessing' }
@@ -1263,6 +1301,26 @@ RBProgramNode >> statementNode [
 	^parent statementNode
 ]
 
+{ #category : 'querying' }
+RBProgramNode >> statementNodeIn: aSequenceBlockOrMethod [
+	"Return the statement within aSequenceBlockOrMethod that ultimately contains us,
+	skipping any intervening nested blocks.
+	
+	Note that to avoid repeatedly comparing large chunks of the tree, we use identity for comparison,
+	so the provided node must have come from the same parse as the receiver."
+
+	| sequence answer |
+	"Retrieve body from method or block node--we need a sequence"
+	sequence := aSequenceBlockOrMethod isSequence
+		            ifTrue: [ aSequenceBlockOrMethod ]
+		            ifFalse: [ aSequenceBlockOrMethod body ].
+	answer := self.
+	[ answer parent == sequence ] whileFalse: [
+		answer := answer parent ifNil: [
+			          ^ NotFound signalFor: self in: aSequenceBlockOrMethod ] ].
+	^ answer
+]
+
 { #category : 'accessing' }
 RBProgramNode >> statements [
 	^ #()
@@ -1286,11 +1344,6 @@ RBProgramNode >> tempVariableReadNodes [
 { #category : 'accessing' }
 RBProgramNode >> temporaryVariables [
 	^parent ifNil: [#()] ifNotNil: [parent temporaryVariables]
-]
-
-{ #category : 'testing' }
-RBProgramNode >> uses: aNode [
-	^true
 ]
 
 { #category : 'querying' }

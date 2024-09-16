@@ -71,10 +71,11 @@ EpHasImpactVisitor >> visitBehaviorNameChange: aChange [
 { #category : 'visitor' }
 EpHasImpactVisitor >> visitBehaviorRepackagedChange: aBehaviorRepackagedChange [
 
+	| classRepackaged |
+	classRepackaged := aBehaviorRepackagedChange behaviorAffected.
 	self
-		behaviorNamed: aBehaviorRepackagedChange behaviorAffectedName
-		ifPresent: [ :behavior |
-			^ behavior category ~= aBehaviorRepackagedChange behaviorAffected category ].
+		behaviorNamed: classRepackaged name
+		ifPresent: [ :behavior | ^ (behavior package name = classRepackaged package name and: [ behavior packageTag name = classRepackaged packageTag ]) not ].
 
 	^ true
 ]

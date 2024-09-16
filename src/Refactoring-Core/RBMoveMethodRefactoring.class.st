@@ -82,12 +82,26 @@ RBMoveMethodRefactoring >> addSelfReturn [
 	parseTree addSelfReturn
 ]
 
-{ #category : 'private' }
-RBMoveMethodRefactoring >> buildParseTree [
+{ #category : 'preconditions' }
+RBMoveMethodRefactoring >> applicabilityPreconditions [
 
-	parseTree := ( class parseTreeForSelector: selector ) copy.
-	parseTree ifNil: [ self refactoringError: 'Could not parse method' ].
-	parseTree doSemanticAnalysis
+	^ (RBCondition definesSelector: selector in: class)
+	  & (RBCondition withBlock: [
+			   self checkForPrimitiveMethod.
+			   self checkForSuperReferences.
+			   self checkAssignmentsToVariable.
+			   self getClassesToMoveTo.
+			   self checkTemporaryVariableNames.
+			   true ])
+]
+
+{ #category : 'preconditions' }
+RBMoveMethodRefactoring >> breakingChangePreconditions [
+
+	^ RBCondition withBlock: [
+		  self getArgumentNameForSelf.
+		  self getNewMethodName.
+		  true ]
 ]
 
 { #category : 'preconditions' }
@@ -306,7 +320,7 @@ RBMoveMethodRefactoring >> isMovingToArgument [
 { #category : 'testing' }
 RBMoveMethodRefactoring >> isMovingToInstVar [
 	^self isMovingToArgument not
-		and: [(class whoDefinesInstanceVariable: variable) notNil]
+		and: [(class whoDefinesInstanceVariable: variable) isNotNil]
 ]
 
 { #category : 'testing' }
@@ -317,17 +331,16 @@ RBMoveMethodRefactoring >> needsToReplaceSelfReferences [
 
 { #category : 'preconditions' }
 RBMoveMethodRefactoring >> preconditions [
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition withBlock:
-					[self buildParseTree.
-					self checkForPrimitiveMethod.
-					self checkForSuperReferences.
-					self checkAssignmentsToVariable.
-					self getClassesToMoveTo.
-					self getArgumentNameForSelf.
-					self checkTemporaryVariableNames.
-					self getNewMethodName.
-					true])
+
+	^ self applicabilityPreconditions & self breakingChangePreconditions
+]
+
+{ #category : 'transforming' }
+RBMoveMethodRefactoring >> prepareForExecution [ 
+
+	parseTree := ( class parseTreeForSelector: selector ) copy.
+	parseTree ifNil: [ self refactoringError: 'Could not parse method' ].
+	parseTree doSemanticAnalysis
 ]
 
 { #category : 'transforming' }
@@ -387,7 +400,7 @@ RBMoveMethodRefactoring >> selector: aSymbol class: aClass variable: aVariableNa
 	variable := aVariableName
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBMoveMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

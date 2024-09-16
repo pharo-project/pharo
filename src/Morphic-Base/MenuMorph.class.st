@@ -120,7 +120,7 @@ MenuMorph class >> confirm: queryString trueChoice: trueChoice falseChoice: fals
 		ifNotNil: [ :answer | ^ trueChoice = answer ].
 	aBlock := [ :v | result := v ].
 	menu := self new.
-	menu addTitle: queryString icon: (self iconNamed: #confirmIcon).
+	menu addTitle: queryString icon: (self iconNamed: #confirm).
 	menu
 		add: trueChoice
 		target: aBlock
@@ -214,11 +214,17 @@ MenuMorph >> activeSubmenu: aSubmenu [
 
 { #category : 'construction' }
 MenuMorph >> add: aLabelString icon: aForm subMenu: aMenuMorph [
+
+	^ self add: aLabelString iconFormSet: (aForm ifNotNil: [ FormSet form: aForm ]) subMenu: aMenuMorph
+]
+
+{ #category : 'construction' }
+MenuMorph >> add: aLabelString iconFormSet: aFormSet subMenu: aMenuMorph [
 	"Append the given submenu with the given label."
 
 	self addToggle: aLabelString target: nil selector: nil.
 	self lastItem
-		icon: aForm;
+		iconFormSet: aFormSet;
 		subMenu: aMenuMorph.
 	^ self
 ]
@@ -339,7 +345,7 @@ MenuMorph >> addCustomMenuItems: aCustomMenu hand: aHandMorph [
 { #category : 'actions' }
 MenuMorph >> addIfNeededTitle: aTitle andIcon: anIcon [
 
-	(aTitle notNil or: [ anIcon notNil ])
+	(aTitle isNotNil or: [ anIcon isNotNil ])
 		ifTrue: [ self addTitle: aTitle icon: anIcon ]
 ]
 
@@ -347,9 +353,9 @@ MenuMorph >> addIfNeededTitle: aTitle andIcon: anIcon [
 MenuMorph >> addItem [
 
 	| string sel |
-	string := UIManager default request: 'Label for new item?'.
+	string := self morphicUIManager request: 'Label for new item?'.
 	string isEmpty ifTrue: [^ self].
-	sel := UIManager default request: 'Selector?'.
+	sel := self morphicUIManager request: 'Selector?'.
 	sel isEmpty ifFalse: [sel := sel asSymbol].
 	self add: string selector: sel
 ]
@@ -378,9 +384,9 @@ MenuMorph >> addList: aList [
 				ifTrue: [ self addLine ]
 				ifFalse: [
 					self add: tuple first capitalized translated selector: tuple second.
-					(tuple size > 2 and: [ tuple third notNil ])
+					(tuple size > 2 and: [ tuple third isNotNil ])
 						ifTrue: [ self balloonTextForLastItem: tuple third translated ].
-					(tuple size > 3 and: [ tuple fourth notNil ])
+					(tuple size > 3 and: [ tuple fourth isNotNil ])
 						ifTrue: [ self lastItem icon: (self iconNamed: tuple fourth) ] ] ]
 ]
 
@@ -403,7 +409,7 @@ MenuMorph >> addSeparator [
 MenuMorph >> addTitle [
 
 	| string |
-	string := UIManager default request: 'Title for this menu?'.
+	string := self morphicUIManager request: 'Title for this menu?'.
 	string isEmptyOrNil ifTrue: [^ self].
 	self addTitle: string
 ]
@@ -640,7 +646,7 @@ MenuMorph >> deleteIfPopUp [
 	"Remove this menu from the screen if stayUp is not true. If it is a submenu, also remove its owning menu."
 
 	stayUp ifFalse: [self topRendererOrSelf delete].
-	(popUpOwner notNil and: [popUpOwner isMenuItemMorph]) ifTrue: [
+	(popUpOwner isNotNil and: [popUpOwner isMenuItemMorph]) ifTrue: [
 		popUpOwner isSelected: false.
 		(popUpOwner owner isMenuMorph)
 			ifTrue: [popUpOwner owner deleteIfPopUp]]
@@ -672,7 +678,7 @@ MenuMorph >> detachSubMenu: evt [
 	possibleTargets := self items select:[ :any | any hasSubMenu].
 	possibleTargets isEmpty ifTrue: [ ^self ].
 
-	index := UIManager default
+	index := self morphicUIManager
 			chooseFrom: (possibleTargets collect:[:t| t contents asString])
 			title: 'Which menu?' translated.
 	index = 0 ifTrue:[^self].
@@ -728,7 +734,7 @@ MenuMorph >> displayFiltered: evt [
 		self removeProperty: #feedbackMorph
 	].
 	    " This method is invoked with evt = nil from MenuMorph >> removeMatchString. The current implementation can't select an item without an event. (Yet :D)"
-       (evt notNil and: [ matches size >= 1 ])
+       (evt isNotNil and: [ matches size >= 1 ])
 		ifTrue: [self selectItem: matches first event: evt]
 ]
 
@@ -745,7 +751,7 @@ MenuMorph >> drawOn: aCanvas [
 
 	super drawOn: aCanvas.
 
-	(self activeHand notNil
+	(self activeHand isNotNil
 			and: [ self activeHand keyboardFocus == self
 					and: [self rootMenu hasProperty: #hasUsedKeyboard]])
 		ifTrue: [
@@ -806,7 +812,7 @@ MenuMorph >> handleFocusEvent: evt [
 MenuMorph >> handlesKeyboard: evt [
 	"Answer whether the receiver handles the keystroke represented by the event"
 
-	^ evt anyModifierKeyPressed not or: [evt commandKeyPressed and: [self commandKeyHandler notNil]]
+	^ evt anyModifierKeyPressed not or: [evt commandKeyPressed and: [self commandKeyHandler isNotNil]]
 ]
 
 { #category : 'events' }
@@ -911,7 +917,7 @@ MenuMorph >> justDroppedInto: aMorph event: evt [
 	| halo |
 	super justDroppedInto: aMorph event: evt.
 	halo := evt hand halo.
-	(halo notNil and:[halo target hasOwner: self]) ifTrue:[
+	(halo isNotNil and:[halo target hasOwner: self]) ifTrue:[
 		"Grabbed single menu item"
 		self addHalo: evt.
 	].
@@ -980,7 +986,7 @@ MenuMorph >> keyStroke: evt [
 		ifFalse: [ self rootMenu setProperty: #hasUsedKeyboard toValue: true.
 			self changed ].
 
-	(evt commandKeyPressed and: [ self commandKeyHandler notNil ])
+	(evt commandKeyPressed and: [ self commandKeyHandler isNotNil ])
 		ifTrue: [ self commandKeyHandler commandKeyTypedIntoMenu: evt.
 			^ self deleteIfPopUp: evt ].
 
@@ -1031,7 +1037,7 @@ MenuMorph >> layoutItems [
 		item icon ifNotNil: [maxIconWidth := maxIconWidth max: item icon width].
 		item hasSubMenu ifTrue: [item subMenu layoutItems]].
 	maxIconWidth isZero
-		ifFalse: [self addBlankIconsIfNecessary: (Smalltalk ui icons blankIconOfWidth: maxIconWidth)]
+		ifFalse: [self addBlankIconsIfNecessary: (Form extent: maxIconWidth @ 1 depth: 8)]
 ]
 
 { #category : 'events' }
@@ -1047,7 +1053,7 @@ MenuMorph >> maxItemsIconWidth [
 
 	^ self menuItems inject: 0 into: [ :maxWidth :menuItemMorph |
 		menuItemMorph hasIcon
-			ifTrue: [ maxWidth max: menuItemMorph iconForm width ]
+			ifTrue: [ maxWidth max: menuItemMorph toggledIconFormSet width ]
 			ifFalse: [ maxWidth ] ]
 ]
 
@@ -1326,7 +1332,7 @@ MenuMorph >> restoreFocus: originalFocusHolder in: aWorld [
 MenuMorph >> rightArrowStroked: evt [
 	"right arrow key"
 
-	(selectedItem notNil and: [ selectedItem hasSubMenu ])
+	(selectedItem isNotNil and: [ selectedItem hasSubMenu ])
 		ifTrue: [ evt hand newMouseFocus: selectedItem subMenu.
 			selectedItem subMenu moveSelectionDown: 1 event: evt.
 			evt hand newKeyboardFocus: selectedItem subMenu.

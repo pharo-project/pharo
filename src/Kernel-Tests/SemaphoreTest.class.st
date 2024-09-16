@@ -174,27 +174,25 @@ SemaphoreTest >> testSimpleCommunication [
 ]
 
 { #category : 'tests' }
-SemaphoreTest >> testWaitTimeDuration [
-	"Ensure that wait: aDuration behaves properly"
+SemaphoreTest >> testWaitAndWaitTimeoutTogether [
+	| semaphore value waitProcess waitTimeoutProcess |
+	semaphore := Semaphore new.
 
-	"Ensure that a timed out wait: aDuration returns true from the wait"
+	waitProcess := [ semaphore wait.
+	value := #wait ] fork.
 
-	self assert: (Semaphore new wait: 50 milliSeconds) identicalTo: true.
+	waitTimeoutProcess := [ semaphore waitTimeoutMilliseconds: 50.
+	value := #waitTimeout ] fork.
 
-	"Ensure that a signaled wait: aDuration returns false from the wait"
-	self assert: (Semaphore new signal wait: 50 milliSeconds) identicalTo: false
-]
+	"Wait for the timeout to happen"
+	(Delay forMilliseconds: 100) wait.
 
-{ #category : 'tests' }
-SemaphoreTest >> testWaitTimeDurationWithCompletionAndTimeoutBlocks [
-	"Ensure that wait:onCompletion:onTimeout: behaves properly"
+	"The waitTimeoutProcess should already have timed out.  This should release the waitProcess"
+	semaphore signal.
 
-	"Ensure that a timed out wait:onCompletion:onTimeout: returns the value of the timeout block"
+	[ waitProcess isTerminated and: [ waitTimeoutProcess isTerminated ] ] whileFalse: [ (Delay forMilliseconds: 100) wait ].
 
-	self assert: (Semaphore new wait: 50 milliSeconds onCompletion: [ #completed ] onTimeout: [ #timeout ]) identicalTo: #timeout.
-
-	"Ensure that a signaled wait:onCompletion:onTimeout: returns the value of the completed block"
-	self assert: (Semaphore new signal wait: 50 milliSeconds onCompletion: [ #completed ] onTimeout: [ #timeout ]) identicalTo: #completed
+	self assert: value equals: #wait
 ]
 
 { #category : 'tests' }
@@ -203,10 +201,10 @@ SemaphoreTest >> testWaitTimeoutMSecs [
 
 	"Ensure that a timed out waitTimeoutMSecs: returns true from the wait"
 
-	self assert: (Semaphore new waitTimeoutMSecs: 50) identicalTo: true.
+	self assert: (Semaphore new waitTimeoutMilliseconds: 50) identicalTo: true.
 
 	"Ensure that a signaled waitTimeoutMSecs: returns false from the wait"
-	self assert: (Semaphore new signal waitTimeoutMSecs: 50) identicalTo: false
+	self assert: (Semaphore new signal waitTimeoutMilliseconds: 50) identicalTo: false
 ]
 
 { #category : 'tests' }

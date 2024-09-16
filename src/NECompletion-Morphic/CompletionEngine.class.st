@@ -227,7 +227,7 @@ CompletionEngine >> handleKeystrokeWithoutMenu: aKeyboardEvent [
 { #category : 'testing' }
 CompletionEngine >> hasCompletionContext [
 
-	^ context notNil
+	^ context isNotNil
 ]
 
 { #category : 'menu morph' }
@@ -249,7 +249,7 @@ CompletionEngine >> invalidateEditorMorph [
 
 { #category : 'menu morph' }
 CompletionEngine >> isMenuOpen [
-	^menuMorph notNil
+	^menuMorph isNotNil
 ]
 
 { #category : 'testing' }
@@ -377,7 +377,7 @@ CompletionEngine >> resetCompletionDelay [
 
 	completionDelay := [
 			(Delay forMilliseconds: NECPreferences popupAutomaticDelay) wait.
-			UIManager default defer:  [
+			MorphicUIManager new defer:  [
 				editor atCompletionPosition ifTrue: [ self openMenuForced: false ]]
 		] fork
 ]

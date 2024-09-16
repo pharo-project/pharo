@@ -3,7 +3,6 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'project',
-		'loader',
 		'mutable'
 	],
 	#category : 'Metacello-Core-Specs',
@@ -14,19 +13,19 @@ Class {
 { #category : 'instance creation' }
 MetacelloSpec class >> for: aVersionMap [
 
-	^(self platformClass new)
-		for: aVersionMap;
-		yourself
-]
-
-{ #category : 'accessing' }
-MetacelloSpec class >> platformClass [
-
-	^self
+	^ self new
+		  for: aVersionMap;
+		  yourself
 ]
 
 { #category : 'merging' }
 MetacelloSpec >> aboutToCopy [
+]
+
+{ #category : 'visiting' }
+MetacelloSpec >> acceptVisitor: aVisitor [
+
+	self subclassResponsibility
 ]
 
 { #category : 'spec creation' }
@@ -39,12 +38,6 @@ MetacelloSpec >> addMember [
 MetacelloSpec >> answers [
 
 	^#()
-]
-
-{ #category : 'printing' }
-MetacelloSpec >> configMethodOn: aStream [
-
-	self configMethodOn: aStream indent: 0
 ]
 
 { #category : 'printing' }
@@ -102,26 +95,6 @@ MetacelloSpec >> label [
 	^self printString
 ]
 
-{ #category : 'accessing' }
-MetacelloSpec >> loader [
-
-	^ loader ifNil: [
-		  | prjctLoader |
-		  (prjctLoader := self project loader) == nil
-			  ifTrue: [ self loader: (self project loaderClass on: self) ]
-			  ifFalse: [ self loader: prjctLoader ].
-		  loader ]
-]
-
-{ #category : 'accessing' }
-MetacelloSpec >> loader: aLoader [
-    "We're interested in propogating the loader state, _except_ for the spec"
-
-    self shouldBeMutable.
-    loader := aLoader copy.
-    loader spec: self
-]
-
 { #category : 'importing' }
 MetacelloSpec >> mergeImportLoads: aLoadList [
     self error: 'import: can only be used with baseline project specs'
@@ -141,17 +114,13 @@ MetacelloSpec >> mergeMember [
 
 { #category : 'merging' }
 MetacelloSpec >> mergeSpec: aSpec [
-    | newSpec nonOverridable |
-    self validateMergeForSpec: aSpec.
-    newSpec := self copy.
-    nonOverridable := self nonOverridable.
-    aSpec mergeMap
-        keysAndValuesDo: [ :key :value | 
-            (nonOverridable includes: key)
-                ifFalse: [ 
-                    value ~~ nil
-                        ifTrue: [ newSpec instVarNamed: key asString put: value ] ] ].
-    ^ newSpec
+
+	| newSpec nonOverridable |
+	self validateMergeForSpec: aSpec.
+	newSpec := self copy.
+	nonOverridable := self nonOverridable.
+	aSpec mergeMap keysAndValuesDo: [ :key :value | (nonOverridable includes: key) ifFalse: [ value ifNotNil: [ newSpec instVarNamed: key asString put: value ] ] ].
+	^ newSpec
 ]
 
 { #category : 'mutability' }
@@ -167,10 +136,9 @@ MetacelloSpec >> nonOverridable [
 
 { #category : 'copying' }
 MetacelloSpec >> postCopy [
-    super postCopy.
-    mutable := nil.
-    loader ~~ nil
-        ifTrue: [ self loader: loader ].
+
+	super postCopy.
+	mutable := nil
 ]
 
 { #category : 'doits' }
@@ -219,9 +187,9 @@ MetacelloSpec >> removeMember [
 
 { #category : 'mutability' }
 MetacelloSpec >> shouldBeMutable [
-    self isMutable
-        ifTrue: [ ^ self ].
-    self error: 'Not allowed to modify an immutable object'
+
+	self isMutable ifTrue: [ ^ self ].
+	self error: 'Not allowed to modify an immutable object'
 ]
 
 { #category : 'merging' }

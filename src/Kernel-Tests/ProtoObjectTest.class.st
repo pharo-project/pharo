@@ -199,15 +199,15 @@ ProtoObjectTest >> testNextObject [
 	"In issue 4011 (https://github.com/pharo-project/pharo/issues/4011), "
 	"the image crashed if nextObject was called on a Character, SmallInteger or a SmallFloat64"
 
-	self assert: (nil nextObject notNil).
-	self assert: ('test' nextObject notNil).
+	self assert: (nil nextObject isNotNil).
+	self assert: ('test' nextObject isNotNil).
 
-	self should: [42 nextObject notNil] raise: ShouldNotImplement.
-	self should: [$x nextObject notNil] raise: ShouldNotImplement.
+	self should: [42 nextObject isNotNil] raise: ShouldNotImplement.
+	self should: [$x nextObject isNotNil] raise: ShouldNotImplement.
 
 	"Small Floats are only available in 64 bits VMs"
 	Smalltalk vm hasSmallFloats
-		ifTrue: [self should: [3.14 nextObject notNil] raise: ShouldNotImplement]
+		ifTrue: [self should: [3.14 nextObject isNotNil] raise: ShouldNotImplement]
 ]
 
 { #category : 'tests - testing' }

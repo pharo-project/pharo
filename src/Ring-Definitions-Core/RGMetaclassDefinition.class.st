@@ -26,12 +26,6 @@ RGMetaclassDefinition >> allClassVarNames [
 	^self instanceSide allClassVarNames
 ]
 
-{ #category : 'variables' }
-RGMetaclassDefinition >> allSharedPoolNames [
-
-	^self instanceSide allSharedPoolNames
-]
-
 { #category : 'accessing' }
 RGMetaclassDefinition >> baseClass: aRGClassDefinition [
 
@@ -94,7 +88,7 @@ RGMetaclassDefinition >> realClass [
 	^baseClass realClass classSide
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RGMetaclassDefinition >> storeOn: aStream [
 
 	aStream nextPut: $(.

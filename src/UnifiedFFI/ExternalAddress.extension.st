@@ -8,6 +8,20 @@ ExternalAddress >> adoptAddress: anExternalAddress [
 ]
 
 { #category : '*UnifiedFFI' }
+ExternalAddress class >> arrayOfStringsFrom: aCollection [
+	"answer a char**, terminated with nil"
+	| stringArray index |
+
+	stringArray := self allocate: (FFIExternalType pointerSize * (aCollection size + 1)).
+	index := 1.
+	aCollection do: [ :each | 
+		stringArray pointerAt: index put: (self fromString: each).
+		index := index + FFIExternalType pointerSize ].
+	stringArray pointerAt: index put: self null.
+	^ stringArray
+]
+
+{ #category : '*UnifiedFFI' }
 ExternalAddress >> asExternalAddress [
 
 	^ self
@@ -148,6 +162,21 @@ ExternalAddress >> floatAt: byteIndex put: value [
 ]
 
 { #category : '*UnifiedFFI' }
+ExternalAddress >> freeArrayOfStrings [
+	"this is used to free an array created with `arrayOfStringsFrom:`"
+	| string index |
+	
+	index := 1.
+	[ 
+		(string := self pointerAt: index) isNull ]
+	whileFalse: [ 
+		string free.
+		index := index + FFIExternalType pointerSize ].
+	
+	self free 
+]
+
+{ #category : '*UnifiedFFI' }
 ExternalAddress class >> fromAddress: aNumber [
 	"Answers an external address who points to aNumber"
 	^ self new fromAddress: aNumber
@@ -163,7 +192,7 @@ ExternalAddress class >> fromString: aString [
 	| result |
 
 	result := self allocate: aString size + 1.
-	(self assert: result notNil).
+	(self assert: result isNotNil).
 	result writeString: aString.
 	result unsignedByteAt: aString size + 1 put: 0.
 	^ result
@@ -273,7 +302,8 @@ ExternalAddress >> packToArity: arity [
 
 	rolledPointer := self.
 	"Start in 2 because first pointer is self"
-	2 to: arity do: [ :index | rolledPointer := rolledPointer pointerAutoRelease ].
+	2 to: arity do: [ :index | 
+		rolledPointer := rolledPointer pointer ].
 	^ rolledPointer
 ]
 
@@ -476,11 +506,14 @@ ExternalAddress >> uint8AtOffset: zeroBasedOffset put: value [
 { #category : '*UnifiedFFI-private' }
 ExternalAddress >> unpackFromArity: arity [
 	"This will 'unpack' a pointer from a certain arity. See #unpackToArity: for a better explanation."
-	| rolledPointer |
+	| rolledPointer previousPointer |
 
 	rolledPointer := self.
 	"Start in 2 because first pointer is self"
-	2 to: arity do: [ :index | rolledPointer := rolledPointer pointerAt: 1 ].
+	2 to: arity do: [ :index | 
+		previousPointer := rolledPointer.
+		rolledPointer := rolledPointer pointerAt: 1.
+		previousPointer free ].
 	^ rolledPointer
 ]
 

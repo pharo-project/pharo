@@ -421,7 +421,7 @@ OSKeySymbols class >> initialize [
 		(self hasClassVarNamed: classVarName) ifFalse: [
 			self addClassVarNamed: classVarName
 		].
-		self classVarNamed: classVarName put: symbolValue.
+		self writeClassVariableNamed: classVarName value: symbolValue.
 		OSKeySymbolValueToKeyboardKeyMap at: symbolValue put: keyboardKey.
 		OSKeySymbolNameToValueMap at: symbolName put: symbolValue.
 	]

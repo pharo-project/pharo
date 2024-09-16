@@ -43,11 +43,6 @@ RBClassEnvironment class >> onEnvironment: anEnvironment classes: aCollection [
 		classes: aCollection; yourself
 ]
 
-{ #category : 'visiting' }
-RBClassEnvironment >> acceptVisitor: aEnvVisitor [
-	^ aEnvVisitor visitClassEnv: self
-]
-
 { #category : 'adding' }
 RBClassEnvironment >> addClass: aClass [
 	aClass isMeta
@@ -106,12 +101,12 @@ RBClassEnvironment >> classesDo: aBlock [
 	classes do: [ :each |
 		| class |
 		class := self systemDictionary at: each ifAbsent: [ nil ].
-		(class notNil and: [ environment includesClass: class ])
+		(class isNotNil and: [ environment includesClass: class ])
 			ifTrue: [ aBlock value: class ] ].
-		metaClasses do: [ :each |
+	metaClasses do: [ :each |
 		| class |
 		class := self systemDictionary at: each ifAbsent: [ nil ].
-		(class notNil and: [ environment includesClass: class classSide ])
+		(class isNotNil and: [ environment includesClass: class classSide ])
 			ifTrue: [ aBlock value: class classSide ] ]
 ]
 
@@ -167,6 +162,12 @@ RBClassEnvironment >> metaClassSelectorDictionary [
 				yourself ]
 ]
 
+{ #category : 'accessing - classes' }
+RBClassEnvironment >> orphanClasses [
+
+	^ self classes reject: [ :class | class isMeta ]
+]
+
 { #category : 'copying' }
 RBClassEnvironment >> postCopy [
 	super postCopy.
@@ -193,6 +194,11 @@ RBClassEnvironment >> problemCount [
 ]
 
 { #category : 'removing' }
+RBClassEnvironment >> removeAll [
+	classes removeAll
+]
+
+{ #category : 'removing' }
 RBClassEnvironment >> removeClass: aClass [
 	aClass isMeta
 		ifTrue: [metaClasses remove: aClass soleInstance name ifAbsent: []]
@@ -207,7 +213,7 @@ RBClassEnvironment >> selectors [
 			self selectorsForClass: class do: [ :selector | stream nextPut: selector ] ] ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBClassEnvironment >> storeOn: aStream [
 	aStream nextPut: $(.
 	super storeOn: aStream.

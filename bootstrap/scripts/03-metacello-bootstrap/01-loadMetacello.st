@@ -4,23 +4,17 @@ mcPackages := #(
  'System-FileRegistry'
  'FileSystem-Memory'
  'StartupPreferences'
- 'ConfigurationCommandLineHandler-Core'
  'PragmaCollector'
  'System-FileRegistry'
- 'MonticelloConfigurations'
- 'Gofer-Core'
+ 'MonticelloFileTree-Core'
+ 'MonticelloFileTree-FileSystem-Utilities'
  'Metacello-Base'
  'Metacello-Core'
- 'MonticelloFileTree-Core'
- 'Metacello-MC'
- 'MonticelloFileTree-FileSystem-Utilities'
  'STON-Core'
  'Metacello-GitBasedRepository'
  'Metacello-Gitlab'
  'Metacello-GitHub'
  'Metacello-Bitbucket'
- 'Metacello-Platform'
- 'Metacello-ToolBox'
  'MetacelloCommandLineHandler-Core'
  ).
 
@@ -37,7 +31,11 @@ CompiledMethod allInstancesDo: [ :m | m cachePragmas ].
 MCFileTreeStCypressWriter initialize.
 MCFileTreeFileSystemUtils initialize.
 
+ConfigurationOf initialize.
 MetacelloPlatform initialize.
+
+"Init deprecated aliases for Pharo 12. To remove in Pharo 13"
+{ MetacelloPlatform . MetacelloProject . MetacelloProjectSpec . MetacelloTarget . MetacelloVersion . MetacelloVersionSpec } do: [ :class | class initialize ].
 
 STONWriter initialize.
 

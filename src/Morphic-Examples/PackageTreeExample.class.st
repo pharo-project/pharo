@@ -50,7 +50,7 @@ PackageTreeExample >> open [
 
 { #category : 'accessing' }
 PackageTreeExample >> rootItems [
-	^ RPackageOrganizer default packages
+	^ PackageOrganizer default packages
 ]
 
 { #category : 'accessing' }

@@ -170,17 +170,17 @@ SycRefactoringPreviewPresenter >> generateChanges [
 
 { #category : 'initialization' }
 SycRefactoringPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter [
+
 	aDialogWindowPresenter
 		title: self title;
 		initialExtent: 500 @ 500;
-		addButton: 'Apply'
-			do: [ :presenter |
+		addButton: 'Cancel' do: [ :presenter | presenter close ];
+		addDefaultButton: 'Apply' do: [ :presenter |
 			self accept.
-			presenter close ];
-		addButton: 'Cancel' do: [ :presenter | presenter close ]
+			presenter close ]
 ]
 
-{ #category : 'initialization' }
+{ #category : 'initialization - deprecated' }
 SycRefactoringPreviewPresenter >> initializePresenter [
 	super initializePresenter.
 	table
@@ -191,7 +191,7 @@ SycRefactoringPreviewPresenter >> initializePresenter [
 	table
 		whenActivatedDo: [ :selectedElement |
 			self toggleSelectionOf: selectedElement widget selection selectedItem ].
-
+	
 	scopeDropList
 		whenSelectedItemChangedDo: [ :scope | self updateChanges ]
 ]

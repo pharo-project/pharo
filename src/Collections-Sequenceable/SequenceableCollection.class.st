@@ -14,22 +14,6 @@ SequenceableCollection class >> isAbstract [
 	^self name = #SequenceableCollection
 ]
 
-{ #category : 'stream creation' }
-SequenceableCollection class >> new: newSize streamContents: blockWithArg [
-	"A variant of #streamContents: where the initial or even final size is given to optimize memory consumption"
-
-	"(Array new: 3 streamContents: [ :out | 3 timesRepeat: [ out nextPut: 42 ] ]) >>> #(42 42 42)"
-
-	| stream |
-	stream := WriteStream on: (self streamSpecies new: newSize).
-	blockWithArg value: stream.
-	"If the write position of stream is at the end of the internal buffer of stream (originalContents),
-	we can return it directly instead of making a copy as contents would do"
-	^ stream position = stream originalContents size
-		ifTrue: [ stream originalContents ]
-		ifFalse: [ stream contents ]
-]
-
 { #category : 'instance creation' }
 SequenceableCollection class >> ofSize: n [
 	"Create a new collection of size n with nil as its elements.
@@ -49,21 +33,6 @@ SequenceableCollection class >> streamContents: blockWithArg [
 	"(Array streamContents: [ :out | out nextPut: 1; nextPutAll: #(2 3 4); nextPut: 5 ]) >>> #(1 2 3 4 5)"
 
 	^ self new: 100 streamContents: blockWithArg
-]
-
-{ #category : 'stream creation' }
-SequenceableCollection class >> streamContents: blockWithArg limitedTo: sizeLimit [
-	"A variant of #streamContents: with a strict size limit"
-
-	"(String streamContents: [:s | 10 timesRepeat: [s nextPutAll: 'foo']] limitedTo: 9) >>> 'foofoofoo'"
-
-	| stream |
-	stream := LimitedWriteStream
-		on: (self streamSpecies new: (100 min: sizeLimit))
-		limit: sizeLimit
-		limitBlock: [ ^ stream contents ].
-	blockWithArg value: stream.
-	^ stream contents
 ]
 
 { #category : 'accessing' }
@@ -217,13 +186,6 @@ SequenceableCollection >> asArray [
 	^ Array withAll: self
 ]
 
-{ #category : 'converting' }
-SequenceableCollection >> asByteArray [
-	"Answer a ByteArray whose elements are the elements of the receiver."
-
-	^ ByteArray withAll: self
-]
-
 { #category : 'private' }
 SequenceableCollection >> asDigitsAt: anInteger in: aCollection do: aBlock [
 	self
@@ -248,28 +210,6 @@ SequenceableCollection >> asDigitsToPower: anInteger do: aBlock [
 ]
 
 { #category : 'converting' }
-SequenceableCollection >> asFloatArray [
-	"Answer a FloatArray whose elements are the elements of the receiver, in
-	the same order."
-
-	| floatArray |
-	floatArray := Float32Array new: self size.
-	1 to: self size do:[:i| floatArray at: i put: (self at: i) asFloat ].
-	^floatArray
-]
-
-{ #category : 'converting' }
-SequenceableCollection >> asIntegerArray [
-	"Answer an IntegerArray whose elements are the elements of the receiver, in
-	the same order."
-
-	| intArray |
-	intArray := IntegerArray new: self size.
-	1 to: self size do:[:i| intArray at: i put: (self at: i)].
-	^intArray
-]
-
-{ #category : 'converting' }
 SequenceableCollection >> asStringWithCr [
 	"Convert to a string with returns between items.  Elements are
 usually strings.
@@ -282,17 +222,6 @@ usually strings.
 			ifFalse: [each printOn: labelStream. labelStream cr]].
 	self size > 0 ifTrue: [labelStream skip: -1].
 	^ labelStream contents
-]
-
-{ #category : 'converting' }
-SequenceableCollection >> asWordArray [
-	"Answer a WordArray whose elements are the elements of the receiver, in
-	the same order."
-
-	| wordArray |
-	wordArray := WordArray new: self size.
-	1 to: self size do:[:i| wordArray at: i put: (self at: i)].
-	^wordArray
 ]
 
 { #category : 'accessing' }
@@ -1901,11 +1830,6 @@ SequenceableCollection >> putOn: aStream [
 	self do: [ :each | each putOn: aStream ]
 ]
 
-{ #category : 'converting' }
-SequenceableCollection >> readStream [
-	^ ReadStream on: self
-]
-
 { #category : 'streaming' }
 SequenceableCollection >> readStreamDo: aBlock [
 	"Evaluates the argument with the read stream of the collection. Answers the result."
@@ -2406,18 +2330,4 @@ SequenceableCollection >> withIndexSelect: elementAndIndexBlock [
 				| each |
 				(elementAndIndexBlock value: (each := self at: index) value: index)
 					ifTrue: [ stream nextPut: each ] ] ]
-]
-
-{ #category : 'converting' }
-SequenceableCollection >> writeStream [
-	^ WriteStream on: self
-]
-
-{ #category : 'streaming' }
-SequenceableCollection >> writeStreamDo: aBlock [
-	"Evaluates the argument with the write stream of the collection. Answers the result."
-
-	"(#() writeStreamDo: [ :stream | stream nextPut: '4'; space; nextPutAll: '34'. stream contents ]) >>> {'4'. Character space. $3. $4}"
-
-	^ aBlock value: self writeStream
 ]

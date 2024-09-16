@@ -162,7 +162,7 @@ PluggableListMorph >> allSubmorphNamesDo: nameBlock [
 PluggableListMorph >> autoDeselect [
 
 	^ autoDeselect
-		ifNil: [ self resetListSelector notNil ]
+		ifNil: [ self resetListSelector isNotNil ]
 		ifNotNil: [ autoDeselect ]
 ]
 
@@ -990,7 +990,7 @@ PluggableListMorph >> mouseMoveOnMultiple: event [
 
 	row = 0 ifTrue: [ ^ super mouseDown: event ].
 
-	(self potentialDropItem notNil and: [ self dropEnabled ]) ifTrue: [ ^ self ].
+	(self potentialDropItem isNotNil and: [ self dropEnabled ]) ifTrue: [ ^ self ].
 
 	dragOnOrOff ifNil:
 			["Was not set at mouse down, which means the mouse must have gone down in an area where there was no list item"
@@ -1698,7 +1698,7 @@ PluggableListMorph >> verifyContents [
 					ifTrue: [self selectionIndex]
 					ifFalse: [nil]].
 	self updateList.
-	existingSelection notNil
+	existingSelection isNotNil
 		ifTrue: [	self selectionIndex: existingSelection]
 		ifFalse:	[self changeModelSelection: 0]
 ]

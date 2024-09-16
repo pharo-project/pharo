@@ -158,29 +158,29 @@ DebugContext >> receiverClass [
 
 { #category : 'evaluating actions' }
 DebugContext >> recompileCurrentMethodTo: aText notifying: aNotifyer [
-	| classOrTraitOfMethod selector |
 
+	| classOrTraitOfMethod selector |
 	self context method isDoIt ifFalse: [
 		selector := self selectedClass compiler parseSelector: aText.
 		(self checkSelectorUnchanged: selector) ifFalse: [ ^ nil ] ].
 
-	self context method isInstalled ifFalse: [
+	(self selectedClass includesSelector: selector) ifFalse: [
 		^ self selectedClass compiler
-			protocol: self selectedMessageCategoryName;
-			isScripting: self selectedMessageName isDoIt;
-			requestor: aNotifyer;
-			compile: aText.
-	].
-	
-	classOrTraitOfMethod := self confirmOnTraitOverwrite: selector inClass: self selectedClass.
-	classOrTraitOfMethod ifNil:[ ^ nil] .
+			  protocol: self selectedMessageCategoryName;
+			  isScripting: self selectedMessageName isDoIt;
+			  requestor: aNotifyer;
+			  compile: aText ].
+
+	classOrTraitOfMethod := self
+		                        confirmOnTraitOverwrite: selector
+		                        inClass: self selectedClass.
+	classOrTraitOfMethod ifNil: [ ^ nil ].
 
 	^ classOrTraitOfMethod compiler
-		protocol: self selectedMessageCategoryName;
-		isScripting: self selectedMessageName isDoIt;
-		requestor: aNotifyer;
-		install: aText.
-
+		  protocol: self selectedMessageCategoryName;
+		  isScripting: self selectedMessageName isDoIt;
+		  requestor: aNotifyer;
+		  install: aText
 ]
 
 { #category : 'accessing' }

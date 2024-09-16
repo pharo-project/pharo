@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 set -x
-set -e
 
 if [ $# -lt 1 ]
   then
@@ -35,7 +34,7 @@ else
   if [ $RETRY_REMAINING -gt 0 ]
   then
     echo "Retry"
-    ./$0 $PHARO $VM $ARCHITECTURE `expr $RETRY_REMAINING - 1`
+    $0 $PHARO $VM $ARCHITECTURE `expr $RETRY_REMAINING - 1`
   else
     echo "Failed to download the VM"
   fi

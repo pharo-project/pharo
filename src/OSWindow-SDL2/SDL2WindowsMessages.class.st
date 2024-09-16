@@ -573,7 +573,7 @@ SDL2WindowsMessages class >> initializeVariablesSet7 [
 { #category : 'querying' }
 SDL2WindowsMessages class >> translateId: aNumber [
 
-	^ self classPool associations
+	^ self classVariables
 		  detect: [ :assoc | assoc value = aNumber ]
 		  ifFound: [ :assoc | assoc key ]
 		  ifNone: [ 'Unknown Message ' , aNumber printString ]

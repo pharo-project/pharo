@@ -52,7 +52,7 @@ MCDataStream >> readMethod [
 	xxHeader := self next.	"nArgs := (xxHeader >> 24) bitAnd: 16rF."	"nTemps := (xxHeader >> 18) bitAnd: 16r3F."	"largeBit := (xxHeader >> 17) bitAnd: 1."
 	nLits := xxHeader >> 9 bitAnd: 16rFF.	"primBits := ((xxHeader >> 19) bitAnd: 16r600) + (xxHeader bitAnd: 16r1FF)."
 	byteCodeSizePlusTrailer := instSize - newClass instSize - ((nLits + 1) * 4).	"0"
-	newMethod := newClass newMethod: byteCodeSizePlusTrailer header: xxHeader.
+	newMethod := newClass basicNew: byteCodeSizePlusTrailer header: xxHeader.
 	self setCurrentReference: refPosn.	"before readDataFrom:size:"
 	self beginReference: newMethod.
 	lits := newMethod numLiterals + 1.	"counting header"

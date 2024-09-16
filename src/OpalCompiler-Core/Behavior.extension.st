@@ -66,12 +66,6 @@ Behavior >> compilerClass [
 ]
 
 { #category : '*OpalCompiler-Core' }
-Behavior >> evaluate: aString [
-	self deprecated: 'You should not even use it as `self` does not impact the result' transformWith: '`@rcv evaluate: `@arg' -> '`@rcv compiler evaluate: `@arg'.
-	^self compiler evaluate: aString
-]
-
-{ #category : '*OpalCompiler-Core' }
 Behavior >> outerScope [
 	^self environment
 ]
@@ -106,13 +100,12 @@ Behavior >> recompileBasic: selector from: oldClass [
 	method := oldClass compiledMethodAt: selector.
 	newMethod := oldClass compiler
 				source: (oldClass sourceCodeAt: selector);
+				priorMethod: method;
 				class: self;
 				permitFaulty: true;
+				logged: false; "No need to log recompilation in the sources."
 				compile.   "Assume OK after proceed from SyntaxError"
 	newMethod sourcePointer: method sourcePointer.
-	
-	"For now we cannot persiste properties of methods during recompilation, so if we have an extension method, we save here the package in the new method."
-	method propertyAt: #extensionPackage ifPresent: [ :package | newMethod propertyAt: #extensionPackage put: package ].
 
 	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
 	^ newMethod

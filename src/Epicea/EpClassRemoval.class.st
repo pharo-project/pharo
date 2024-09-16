@@ -51,6 +51,14 @@ EpClassRemoval >> doesOverride: aCodeChange [
 		aCodeChange behaviorAffectedName = self behaviorAffectedName ]]
 ]
 
+{ #category : 'accessing' }
+EpClassRemoval >> fileOutEntryOn: aWriteStream [
+
+	aWriteStream 
+		nextPutAll: self behaviorAffectedName;
+		nextChunkPut: ' removeFromSystem'
+]
+
 { #category : 'initialization' }
 EpClassRemoval >> initializeClassRemoved: aRemovedClass [
 

@@ -32,7 +32,7 @@ OupsDebuggerSystemTest >> createDummyDebugRequestForUIProcess [
 		on: Exception
 		do: [ :e | exception := e ].
 	^ (OupsDummyDebugRequest newForException: exception)
-		  process: UIManager default uiProcess;
+		  process: MorphicUIManager uiProcess;
 		  yourself
 ]
 
@@ -63,7 +63,7 @@ OupsDebuggerSystemTest >> testEnsureExceptionIn [
 	|session|
 	session := DebugSession new process: nil context: OupsDummyDebugger new.
 	OupsDebuggerSystem basicNew ensureExceptionIn: session.
-	self assert: session exception notNil.
+	self assert: session exception isNotNil.
 	self assert: session exception class equals: OupsNullException.
 
 	session := DebugSession new exception: #tag.

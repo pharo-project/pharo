@@ -114,19 +114,6 @@ RBTemporaryToInstanceVariableTransformation >> applicabilityPreconditions [
 ]
 
 { #category : 'preconditions' }
-RBTemporaryToInstanceVariableTransformation >> breakingChangePreconditions [
-
-	^ RBCondition withBlock: [
-		  (class allSubclasses anySatisfy: [ :cls |
-			   cls definesInstanceVariable: temporaryVariableName asString ])
-			  ifTrue: [
-				  self refactoringWarning:
-					  ('One or more subclasses of <1p> already defines an<n>instance variable with the same name. Proceed anyway?'
-						   expandMacrosWith: class name) ].
-		  true ]
-]
-
-{ #category : 'preconditions' }
 RBTemporaryToInstanceVariableTransformation >> checkForValidTemporaryVariable [
 	| parseTree |
 	parseTree := class parseTreeForSelector: selector.
@@ -150,12 +137,6 @@ RBTemporaryToInstanceVariableTransformation >> class: aClass selector: aSelector
 	class := self model classObjectFor: aClass.
 	selector := aSelector.
 	temporaryVariableName := aVariableName
-]
-
-{ #category : 'preconditions' }
-RBTemporaryToInstanceVariableTransformation >> preconditions [
-
-	^ self applicabilityPreconditions & self breakingChangePreconditions
 ]
 
 { #category : 'executing' }
@@ -184,7 +165,7 @@ RBTemporaryToInstanceVariableTransformation >> removeTemporaryOfMethod: aSelecto
 	aMethod compileTree: matcher tree
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBTemporaryToInstanceVariableTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

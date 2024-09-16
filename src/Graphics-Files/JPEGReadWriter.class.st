@@ -753,7 +753,7 @@ JPEGReadWriter >> initialSOSSetup [
 { #category : 'public access' }
 JPEGReadWriter >> nextImage [
 
-	^ self nextImageDitheredToDepth: Display depth
+	^ self nextImageDitheredToDepth: 32
 ]
 
 { #category : 'public access' }

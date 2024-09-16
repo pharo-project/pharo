@@ -27,14 +27,7 @@ MCPackage >> = other [
 	^ other species = self species and: [other name = name]
 ]
 
-{ #category : 'accessing' }
-MCPackage >> correspondingRPackage [
-	"Use #systemPackage instead"
-
-	^ self systemPackage
-]
-
-{ #category : 'printing' }
+{ #category : 'displaying' }
 MCPackage >> displayStringOn: aStream [
 	aStream nextPutAll: self name
 ]
@@ -80,11 +73,6 @@ MCPackage >> name: aString [
 	name := aString
 ]
 
-{ #category : 'accessing' }
-MCPackage >> packageSet [
-	^ RPackageSet named: name
-]
-
 { #category : 'printing' }
 MCPackage >> printOn: aStream [
 	super printOn: aStream.
@@ -103,11 +91,11 @@ MCPackage >> snapshot [
 				   OrderedCollection new
 					   add: systemPackage asMCOrganizationDefinition;
 					   addAll: (systemPackage methods collect: [ :method | method asMCMethodDefinition ]);
-					   addAll: (systemPackage definedClasses flatCollect: [ :class | class classDefinitions ]);
+					   addAll: (systemPackage definedClasses collect: [ :class | class asClassDefinition ]);
 					   yourself ])
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 MCPackage >> storeOn: aStream [
 	aStream
 		nextPutAll: 'MCPackage';

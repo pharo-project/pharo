@@ -155,6 +155,25 @@ GrowlMorph class >> possibleTypes [
 	^ #( growl window )
 ]
 
+{ #category : 'test-result' }
+GrowlMorph class >> showTestResult: testResult with: message [
+
+	| color |
+	color := Color gray.
+	testResult hasPassed ifTrue: [
+		color := TestResult defaultColorBackGroundForPassingTest ].
+	testResult hasFailures ifTrue: [
+		color := TestResult defaultColorBackGroundForFailureTest ].
+	testResult hasErrors ifTrue: [
+		color := TestResult defaultColorBackGroundForErrorTest ].
+
+	^ self
+		  openWithLabel: message
+		  contents: testResult printString
+		  backgroundColor: color
+		  labelColor: Color black
+]
+
 { #category : 'position' }
 GrowlMorph class >> type [
 
@@ -268,7 +287,7 @@ GrowlMorph >> enabled [
 
 { #category : 'event handling' }
 GrowlMorph >> handlesMouseDown: evt [
-	^ actionBlock notNil or: [super handlesMouseDown: evt]
+	^ actionBlock isNotNil or: [super handlesMouseDown: evt]
 ]
 
 { #category : 'initialization' }

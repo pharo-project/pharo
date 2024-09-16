@@ -21,6 +21,14 @@ Project class >> baseline: aClass [
 		  yourself
 ]
 
+{ #category : 'comparing' }
+Project >> = anObject [
+
+	self == anObject ifTrue: [ ^ true ].
+	self class = anObject class ifFalse: [ ^ false ].
+	^ self baseline = anObject baseline
+]
+
 { #category : 'accessing' }
 Project >> baseline [
 	^ baseline
@@ -35,6 +43,13 @@ Project >> baseline: anObject [
 Project >> hasPackages [
 
 	^ self packages isNotEmpty
+]
+
+{ #category : 'comparing' }
+Project >> hash [
+	"Answer an integer value that is related to the identity of the receiver."
+
+	^ baseline hash
 ]
 
 { #category : 'testing' }
@@ -58,9 +73,7 @@ Project >> packageManager [
 { #category : 'accessing' }
 Project >> packages [
 
-	^ (self baseline allPackageNames
-		   select: [ :packageName | self packageManager hasPackage: packageName ]
-		   thenCollect: [ :packageName | self packageManager packageNamed: packageName ])
-		  addFirst: self baseline package;
-		  yourself
+	^ self baseline withAllPackageNames
+		  select: [ :packageName | self packageManager hasPackage: packageName ]
+		  thenCollect: [ :packageName | self packageManager packageNamed: packageName ]
 ]
