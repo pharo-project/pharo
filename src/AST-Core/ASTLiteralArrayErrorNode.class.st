@@ -15,8 +15,8 @@ Class {
 
 { #category : 'construction' }
 ASTLiteralArrayErrorNode class >> error: aToken withNodes: aCollection [
-	"A RBLiteralArrayErrorNode can only be created from the opening token by choice.
-	 Since the closure is a parentheses, the default assumption is to create a RBParenthesesErrorNode.
+	"An ASTLiteralArrayErrorNode can only be created from the opening token by choice.
+	 Since the closure is a parentheses, the default assumption is to create an ASTParenthesesErrorNode.
 	 This could be change by an analysis of prior nodes."
 	"If the collection is empty, there is only the token in the error."
 	^aCollection isEmpty

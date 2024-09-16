@@ -15,7 +15,7 @@ Class {
 
 { #category : 'construction' }
 ASTTemporariesErrorNode class >> error: aToken withNodes: aCollection [
-	"A RBTemporariesErrorNode can only be created from the opening token by choice.
+	"An ASTTemporariesErrorNode can only be created from the opening token by choice.
 	 Since the closure is a |, the default assumption is that it's a binary selector."
 	"If the collection is empty, there is only the token in the error."
 	^aCollection isEmpty

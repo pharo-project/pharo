@@ -15,7 +15,7 @@ Class {
 
 { #category : 'construction' }
 ASTPragmaErrorNode class >> error: aToken withNodes: aCollection [
-	"A RBPragmaErrorNode can only be created from the opening token by choice.
+	"An ASTPragmaErrorNode can only be created from the opening token by choice.
 	 Since the closure is a superior sign, the default assumption is that it's a binary selector."
 	"If the collection is empty, there is only the token in the error."
 	^aCollection isEmpty

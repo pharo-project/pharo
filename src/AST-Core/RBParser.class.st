@@ -41,7 +41,7 @@ RBParser class >> parseExpression: aString onError: aBlock [
 
 { #category : 'parsing' }
 RBParser class >> parseFaultyExpression: aString [
-	"parse aString even if syntactically incorrect. Instead of raising an error, we create an AST with RB RBParseErrorNode"
+	"parse aString even if syntactically incorrect. Instead of raising an error, we create an AST with ASTParseErrorNode"
 	^ self new
 		initializeParserWith: aString;
 		parseExpression
@@ -49,7 +49,7 @@ RBParser class >> parseFaultyExpression: aString [
 
 { #category : 'parsing' }
 RBParser class >> parseFaultyMethod: aString [
-	"parse aString even if syntactically incorrect. Instead of raising an error, we create an AST with RB RBParseErrorNode"
+	"parse aString even if syntactically incorrect. Instead of raising an error, we create an AST with ASTarseErrorNode"
 	^ self new
 		initializeParserWith: aString;
 		parseMethod

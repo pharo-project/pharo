@@ -6,7 +6,7 @@ RBParser parseFaultyExpression:
 or
 RBParser parseFaultyMethod: 
 
-The return value is either valid nodes representing the AST, or nodes representing the valid portion and an RBParseErrorNode for the remaining invalid code.
+The return value is either valid nodes representing the AST, or nodes representing the valid portion and an ASTParseErrorNode for the remaining invalid code.
 
 
 "
