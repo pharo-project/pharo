@@ -69,7 +69,7 @@ PharoDocCommentExpression >> isNotWellFormed [
 		(n isMessage and: [ n selector == #>>> ]) ifTrue: [ cpt := cpt + 1 ]].
 	cpt ~= 1 ifTrue: [ ^ true ].
 
-	"`self expressionNode` is a RBDoItMethodNode. The last statement should be a return of a binop of >>>"
+	"`self expressionNode` is a ASTDoItMethodNode. The last statement should be a return of a binop of >>>"
 	self expressionNode body statements last value selector ~= #>>> ifTrue: [ ^ true ].
 
 	^false

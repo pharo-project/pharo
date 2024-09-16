@@ -57,7 +57,7 @@ produces
 					RBUnfinishedStatementErrorNode
 		ASTMethodNode
 			ASTPatternMethodNode
-			RBDoItMethodNode
+			ASTDoItMethodNode
 	RBSlotInitializationNode
 '
 ```	
