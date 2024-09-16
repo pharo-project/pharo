@@ -179,7 +179,7 @@ RBParser >> currentToken [
 
 { #category : 'private - classes' }
 RBParser >> doItMethodNodeClass [
-	^ RBDoItMethodNode
+	^ ASTDoItMethodNode
 ]
 
 { #category : 'private - classes' }

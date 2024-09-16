@@ -214,7 +214,7 @@ ASTProgramNode >> asDoit [
 
 	| source |
 	source := self source.
-	^ RBDoItMethodNode new
+	^ ASTDoItMethodNode new
 		  body: self asSequenceNode;
 		  source: source
 ]
