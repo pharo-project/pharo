@@ -6,15 +6,15 @@ the closure : #[ array node .
 Forgetting the opening will be assumed to be a block node.
 "
 Class {
-	#name : 'RBLiteralByteArrayErrorNode',
-	#superclass : 'RBEnglobingErrorNode',
+	#name : 'ASTLiteralByteArrayErrorNode',
+	#superclass : 'ASTEnglobingErrorNode',
 	#category : 'AST-Core-Nodes - ErrorNodes',
 	#package : 'AST-Core',
 	#tag : 'Nodes - ErrorNodes'
 }
 
 { #category : 'construction' }
-RBLiteralByteArrayErrorNode class >> error: aToken withNodes: aCollection [
+ASTLiteralByteArrayErrorNode class >> error: aToken withNodes: aCollection [
 	"A RBLiteralByteArrayErrorNode can only be created from the opening token by choice.
 	 Since the closure is a bracket, the default assumption is to create a RBBlockErrorNode.
 	 This could be change by an analysis of prior nodes."
@@ -25,6 +25,6 @@ RBLiteralByteArrayErrorNode class >> error: aToken withNodes: aCollection [
 ]
 
 { #category : 'testing' }
-RBLiteralByteArrayErrorNode >> isLiteralByteArrayError [
+ASTLiteralByteArrayErrorNode >> isLiteralByteArrayError [
 	^true
 ]

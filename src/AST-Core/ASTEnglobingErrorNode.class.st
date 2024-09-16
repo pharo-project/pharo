@@ -14,8 +14,8 @@ Accessing to the parsed nodes contained inside the node is the method 'content'.
 
 "
 Class {
-	#name : 'RBEnglobingErrorNode',
-	#superclass : 'RBParseErrorNode',
+	#name : 'ASTEnglobingErrorNode',
+	#superclass : 'ASTParseErrorNode',
 	#instVars : [
 		'valueAfter',
 		'contents'
@@ -26,24 +26,24 @@ Class {
 }
 
 { #category : 'construction' }
-RBEnglobingErrorNode class >> error: aToken withNodes: aCollection [
+ASTEnglobingErrorNode class >> error: aToken withNodes: aCollection [
 
 	"Realise a selection between the different englobing error node classes possible according to the
 	 received token. If the value of the token is not recognised, we create an undetermined one."
 	('()' includes: aToken value)
-		ifTrue: [ ^RBParenthesesErrorNode error: aToken withNodes: aCollection ].
+		ifTrue: [ ^ASTParenthesesErrorNode error: aToken withNodes: aCollection ].
 	('[]' includes: aToken value)
-		ifTrue: [ ^RBBlockErrorNode error: aToken withNodes: aCollection ].
+		ifTrue: [ ^ASTBlockErrorNode error: aToken withNodes: aCollection ].
 	('#(' = aToken value asString)
-		ifTrue: [ ^RBLiteralArrayErrorNode error: aToken withNodes: aCollection ].
+		ifTrue: [ ^ASTLiteralArrayErrorNode error: aToken withNodes: aCollection ].
 	('#[' = aToken value asString)
-		ifTrue: [ ^RBLiteralByteArrayErrorNode error: aToken withNodes: aCollection ].
+		ifTrue: [ ^ASTLiteralByteArrayErrorNode error: aToken withNodes: aCollection ].
 	('{}' includes: aToken value)
-		ifTrue: [ ^RBArrayErrorNode error: aToken withNodes: aCollection ].
+		ifTrue: [ ^ASTArrayErrorNode error: aToken withNodes: aCollection ].
 	('|' = aToken value asString)
-		ifTrue: [ ^RBTemporariesErrorNode error: aToken withNodes: aCollection ].
+		ifTrue: [ ^ASTTemporariesErrorNode error: aToken withNodes: aCollection ].
 	('<' = aToken value asString)
-		ifTrue: [ ^RBPragmaErrorNode error: aToken withNodes: aCollection ].
+		ifTrue: [ ^ASTPragmaErrorNode error: aToken withNodes: aCollection ].
 	^self new
 		contents: aCollection;
 		start: aCollection first start;
@@ -52,7 +52,7 @@ RBEnglobingErrorNode class >> error: aToken withNodes: aCollection [
 ]
 
 { #category : 'instance creation' }
-RBEnglobingErrorNode class >> from: aParseErrorNode contents: anArrayOfNodes [
+ASTEnglobingErrorNode class >> from: aParseErrorNode contents: anArrayOfNodes [
 	"Transform a simple error node into a englobing one while preserving most information"
 
 	| start stop |
@@ -72,29 +72,29 @@ RBEnglobingErrorNode class >> from: aParseErrorNode contents: anArrayOfNodes [
 ]
 
 { #category : 'visiting' }
-RBEnglobingErrorNode >> acceptVisitor: aVisitor [
+ASTEnglobingErrorNode >> acceptVisitor: aVisitor [
 
 	^ aVisitor visitEnglobingErrorNode: self
 ]
 
 { #category : 'accessing' }
-RBEnglobingErrorNode >> children [
+ASTEnglobingErrorNode >> children [
 	^ contents
 ]
 
 { #category : 'accessing' }
-RBEnglobingErrorNode >> contents [
+ASTEnglobingErrorNode >> contents [
 	^contents
 ]
 
 { #category : 'accessing' }
-RBEnglobingErrorNode >> contents: aCollection [
+ASTEnglobingErrorNode >> contents: aCollection [
 	contents := aCollection.
 	aCollection do: [:each | each parent: self ]
 ]
 
 { #category : 'initialization' }
-RBEnglobingErrorNode >> initialize [
+ASTEnglobingErrorNode >> initialize [
 
 	super initialize.
 	contents := OrderedCollection new.
@@ -103,12 +103,12 @@ RBEnglobingErrorNode >> initialize [
 ]
 
 { #category : 'testing' }
-RBEnglobingErrorNode >> isEnglobingError [
+ASTEnglobingErrorNode >> isEnglobingError [
 	^true
 ]
 
 { #category : 'replacing' }
-RBEnglobingErrorNode >> replaceNode: aNode withNode: anotherNode [
+ASTEnglobingErrorNode >> replaceNode: aNode withNode: anotherNode [
 
 	self contents: (contents collect: [ :each |
 			 each == aNode
@@ -117,18 +117,18 @@ RBEnglobingErrorNode >> replaceNode: aNode withNode: anotherNode [
 ]
 
 { #category : 'accessing' }
-RBEnglobingErrorNode >> stop: anInterger [
+ASTEnglobingErrorNode >> stop: anInterger [
 	stop := anInterger
 ]
 
 { #category : 'accessing' }
-RBEnglobingErrorNode >> valueAfter [
+ASTEnglobingErrorNode >> valueAfter [
 
 	^ valueAfter
 ]
 
 { #category : 'accessing' }
-RBEnglobingErrorNode >> valueAfter: anObject [
+ASTEnglobingErrorNode >> valueAfter: anObject [
 
 	valueAfter := anObject
 ]

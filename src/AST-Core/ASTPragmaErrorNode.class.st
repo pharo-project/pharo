@@ -6,15 +6,15 @@ the closure : < pragma node .
 Forgetting the opening will be assumed to be a binary selector.
 "
 Class {
-	#name : 'RBPragmaErrorNode',
-	#superclass : 'RBEnglobingErrorNode',
+	#name : 'ASTPragmaErrorNode',
+	#superclass : 'ASTEnglobingErrorNode',
 	#category : 'AST-Core-Nodes - ErrorNodes',
 	#package : 'AST-Core',
 	#tag : 'Nodes - ErrorNodes'
 }
 
 { #category : 'construction' }
-RBPragmaErrorNode class >> error: aToken withNodes: aCollection [
+ASTPragmaErrorNode class >> error: aToken withNodes: aCollection [
 	"A RBPragmaErrorNode can only be created from the opening token by choice.
 	 Since the closure is a superior sign, the default assumption is that it's a binary selector."
 	"If the collection is empty, there is only the token in the error."
@@ -24,11 +24,11 @@ RBPragmaErrorNode class >> error: aToken withNodes: aCollection [
 ]
 
 { #category : 'testing' }
-RBPragmaErrorNode >> isPragmaError [
+ASTPragmaErrorNode >> isPragmaError [
 	^true
 ]
 
 { #category : 'testing' }
-RBPragmaErrorNode >> isPrimitive [
+ASTPragmaErrorNode >> isPrimitive [
 	^false
 ]

@@ -136,7 +136,7 @@ RBDumpVisitorTest >> testErrorNodeDump [
 	node := self parseFaultyExpression: '( +'.
 	dumpedNode := self compiler evaluate: node dump.
 
-	self assert: dumpedNode class equals: RBParenthesesErrorNode.
+	self assert: dumpedNode class equals: ASTParenthesesErrorNode.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString
 ]
