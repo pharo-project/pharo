@@ -259,7 +259,7 @@ RBParser >> messageNodeClass [
 
 { #category : 'private - classes' }
 RBParser >> methodNodeClass [
-	^ RBMethodNode
+	^ ASTMethodNode
 ]
 
 { #category : 'private' }

@@ -273,7 +273,7 @@ Breakpoint >> condition: aCondition [
 Breakpoint >> conditionBlockProducerMethodAST: conditionString [
 	| conditionBlockProducerMethodAST conditionAST |
 	conditionAST := self parserClass parseExpression: conditionString.
-	conditionBlockProducerMethodAST := RBMethodNode
+	conditionBlockProducerMethodAST := ASTMethodNode
 		selector: #conditionBlockGenerator
 		body:
 			(ASTReturnNode

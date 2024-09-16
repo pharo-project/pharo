@@ -99,6 +99,11 @@ RFReification >> genForASTMessageNode [
 ]
 
 { #category : 'generate' }
+RFReification >> genForASTMethodNode [
+	^self genForASTProgramNode
+]
+
+{ #category : 'generate' }
 RFReification >> genForASTPragmaNode [
 	^ self genForASTProgramNode
 ]
@@ -141,31 +146,6 @@ RFReification >> genForInstanceVariableSlot [
 { #category : 'generate' }
 RFReification >> genForLiteralVariable [
 	"overriden in subclass if needed"
-]
-
-{ #category : 'generate' }
-RFReification >> genForRBArgumentNode [
-	^self genForRBTemporaryNode
-]
-
-{ #category : 'generate' }
-RFReification >> genForRBGlobalNode [
-	^self genForASTVariableNode
-]
-
-{ #category : 'generate' }
-RFReification >> genForRBMethodNode [
-	^self genForASTProgramNode
-]
-
-{ #category : 'generate' }
-RFReification >> genForRBSelfNode [
-	^self genForASTProgramNode
-]
-
-{ #category : 'generate' }
-RFReification >> genForRBTemporaryNode [
-	^self genForASTVariableNode
 ]
 
 { #category : 'accessing' }

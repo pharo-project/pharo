@@ -427,7 +427,7 @@ RBParserTest >> testCreationProtocol [
 				arguments: (Array with: (ASTLiteralNode value: 0)))
 		to: (self parserClass parseExpression: 'self + 0').
 	messageNode := ASTMessageNode receiver: (ASTVariableNode selfNode) selector: (ASTSelectorNode value: #foo).
-	self compare: (RBMethodNode selector: #bar
+	self compare: (ASTMethodNode selector: #bar
 				body: (ASTSequenceNode statements: (OrderedCollection
 								with: (ASTCascadeNode messages: (OrderedCollection with: messageNode with: messageNode)))))
 		to: (self parserClass parseMethod: 'bar self foo; foo')

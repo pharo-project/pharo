@@ -1,37 +1,37 @@
-Extension { #name : 'RBMethodNode' }
+Extension { #name : 'ASTMethodNode' }
 
 { #category : '*Reflectivity' }
-RBMethodNode >> decreaseLinkCount [
+ASTMethodNode >> decreaseLinkCount [
 
 	self propertyAt: #linkCount put: ((self linkCount - 1) max: 0)
 ]
 
 { #category : '*Reflectivity' }
-RBMethodNode >> hasOption: aSymbol for: aLink [
+ASTMethodNode >> hasOption: aSymbol for: aLink [
 	"take the class and method overrides to options into account"
 	^(self optionsFor: aLink) includes: aSymbol
 ]
 
 { #category : '*Reflectivity' }
-RBMethodNode >> increaseLinkCount [
+ASTMethodNode >> increaseLinkCount [
 
 	self propertyAt: #linkCount put: self linkCount + 1
 ]
 
 { #category : '*Reflectivity' }
-RBMethodNode >> linkCount [
+ASTMethodNode >> linkCount [
 
 	^self propertyAt: #linkCount ifAbsentPut: [ 0 ]
 ]
 
 { #category : '*Reflectivity' }
-RBMethodNode >> linkCount: aNumber [
+ASTMethodNode >> linkCount: aNumber [
 
 	self propertyAt: #linkCount put: aNumber
 ]
 
 { #category : '*Reflectivity' }
-RBMethodNode >> metaLinkOptions [
+ASTMethodNode >> metaLinkOptions [
 	^{
 	#metaLinkOptionsFromClassAndMethod -> #( + optionCompileOnLinkInstallation).
 	#metaLinkOptions -> #( + optionCompileOnLinkInstallation)
@@ -39,7 +39,7 @@ RBMethodNode >> metaLinkOptions [
 ]
 
 { #category : '*Reflectivity' }
-RBMethodNode >> metaLinkOptionsFromClassAndMethod [
+ASTMethodNode >> metaLinkOptionsFromClassAndMethod [
 	| options |
 	options := Set new.
 	self methodClass
@@ -59,7 +59,7 @@ RBMethodNode >> metaLinkOptionsFromClassAndMethod [
 ]
 
 { #category : '*Reflectivity' }
-RBMethodNode >> optionsFor: aLink [
+ASTMethodNode >> optionsFor: aLink [
 	| options |
 	options := aLink options copy.
 	options addAll: self metaLinkOptionsFromClassAndMethod.

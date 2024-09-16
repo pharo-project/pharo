@@ -1,5 +1,5 @@
 Class {
-	#name : 'RBParseErrorNodeTest',
+	#name : 'ASTParseErrorNodeTest',
 	#superclass : 'RBParseTreeTest',
 	#category : 'AST-Core-Tests-Nodes',
 	#package : 'AST-Core-Tests',
@@ -7,7 +7,7 @@ Class {
 }
 
 { #category : 'tests' }
-RBParseErrorNodeTest >> testErrorNodeStart [
+ASTParseErrorNodeTest >> testErrorNodeStart [
 	"check that the start of the error node is correct"
 
 	| ast |

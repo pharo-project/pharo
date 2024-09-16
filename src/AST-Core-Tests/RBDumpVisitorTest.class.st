@@ -106,7 +106,7 @@ RBDumpVisitorTest >> testDumpOnObjectMethod [
 	node := (Object >> #readSlot:) ast.
 	dumpedNode := self compiler evaluate: node dump.
 
-	self assert: dumpedNode class equals: RBMethodNode.
+	self assert: dumpedNode class equals: ASTMethodNode.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString
 ]
@@ -124,7 +124,7 @@ RBDumpVisitorTest >> testDumpOnSelfClassMethods [
 	methods do: [ :each |
 		node := each ast.
 		dumpedNode := self compiler evaluate: node dump.
-		self assert: dumpedNode class equals: RBMethodNode.
+		self assert: dumpedNode class equals: ASTMethodNode.
 		self assert: node class equals: dumpedNode class.
 		self assert: node equals: dumpedNode ]
 ]
@@ -257,7 +257,7 @@ RBDumpVisitorTest >> testMethodNodeDump [
 	node := self parseMethod: 'foo <useless>'.
 	dumpedNode := self compiler evaluate: node dump.
 
-	self assert: dumpedNode class equals: RBMethodNode.
+	self assert: dumpedNode class equals: ASTMethodNode.
 	self assert: node class equals: dumpedNode class.
 	self assert: node printString equals: dumpedNode printString
 ]

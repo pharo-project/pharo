@@ -10,7 +10,7 @@ Class {
 CoSuperMessageHeuristicTest >> testDoesApplyForMethodNodeInContextWithNilclass [
 
 	self deny: (CoSuperMessageHeuristic new
-		appliesForNode: RBMethodNode new
+		appliesForNode: ASTMethodNode new
 		inContext: (CoCompletionContext new
 			completionClass: nil;
 			yourself))
@@ -20,7 +20,7 @@ CoSuperMessageHeuristicTest >> testDoesApplyForMethodNodeInContextWithNilclass [
 CoSuperMessageHeuristicTest >> testDoesApplyForMethodNodeInContextWithSuperclass [
 
 	self assert: (CoSuperMessageHeuristic new
-		appliesForNode: RBMethodNode new
+		appliesForNode: ASTMethodNode new
 		inContext: (CoCompletionContext new
 			completionClass: (CoMockClass new superclass: CoMockClass new);
 			yourself))
@@ -38,7 +38,7 @@ CoSuperMessageHeuristicTest >> testDoesApplyForSuperMessageSendNodes [
 CoSuperMessageHeuristicTest >> testDoesNotApplyForMethodNodeInContextWithNoSuperclass [
 
 	self deny: (CoSuperMessageHeuristic new
-		appliesForNode: RBMethodNode new
+		appliesForNode: ASTMethodNode new
 		inContext: (CoCompletionContext new
 			completionClass: (CoMockClass new superclass: nil);
 			yourself))

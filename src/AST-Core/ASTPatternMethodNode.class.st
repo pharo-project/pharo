@@ -8,7 +8,7 @@ Instance Variables:
 "
 Class {
 	#name : 'ASTPatternMethodNode',
-	#superclass : 'RBMethodNode',
+	#superclass : 'ASTMethodNode',
 	#instVars : [
 		'isList'
 	],
@@ -22,7 +22,7 @@ ASTPatternMethodNode class >> selector: aSelector keywordsPositions: positionLis
 	^(aSelector isPatternVariable)
 		ifTrue: [super selector: aSelector keywordsPositions: positionList arguments: valueNodes]
 		ifFalse:
-			[RBMethodNode selector: aSelector keywordsPositions: positionList arguments: valueNodes]
+			[ASTMethodNode selector: aSelector keywordsPositions: positionList arguments: valueNodes]
 ]
 
 { #category : 'matching' }
@@ -31,7 +31,7 @@ ASTPatternMethodNode >> copyInContext: aDictionary [
 	keywordSelector := self isSelectorList
 		ifTrue: [ aDictionary at: self selectorParts first ]
 		ifFalse: [ ('' join:(self selectorParts collect: [ :each | aDictionary at: each ])) asSymbol  ].
-	^ RBMethodNode new
+	^ ASTMethodNode new
 		selector: keywordSelector;
 		arguments: (self copyList: self arguments inContext: aDictionary);
 		pragmas: (self pragmas isEmpty
@@ -96,7 +96,7 @@ ASTPatternMethodNode >> matchSelectorAgainst: aNode inContext: aDictionary [
 
 { #category : 'private' }
 ASTPatternMethodNode >> matchingClass [
-	^RBMethodNode
+	^ASTMethodNode
 ]
 
 { #category : 'initialization' }

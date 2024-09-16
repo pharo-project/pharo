@@ -7,7 +7,7 @@ It allows to distinguish between ASTs of real methods and DoIts.
 "
 Class {
 	#name : 'RBDoItMethodNode',
-	#superclass : 'RBMethodNode',
+	#superclass : 'ASTMethodNode',
 	#category : 'AST-Core-Nodes',
 	#package : 'AST-Core',
 	#tag : 'Nodes'

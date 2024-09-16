@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFOperationReification class >> entities [
-	^{ASTVariableNode. ASTMessageNode. RBMethodNode . ASTReturnNode. ASTAssignmentNode. ASTLiteralNode. ASTBlockNode . ASTLiteralArrayNode. ASTArrayNode}
+	^{ASTVariableNode. ASTMessageNode. ASTMethodNode . ASTReturnNode. ASTAssignmentNode. ASTLiteralNode. ASTBlockNode . ASTLiteralArrayNode. ASTArrayNode}
 ]
 
 { #category : 'plugin interface' }
@@ -80,6 +80,18 @@ RFOperationReification >> genForASTMessageNode [
 ]
 
 { #category : 'generate' }
+RFOperationReification >> genForASTMethodNode [
+	| ast |
+	ast := RBParser parseExpression: 'RFMethodOperation new
+			receiver: self;
+			method: #toReplace;
+			arguments: RFArgumentsReificationVar.'.
+
+	ast messages second arguments: {(ASTLiteralNode value: entity methodNode methodClass >> entity methodNode selector)}.
+	^ast
+]
+
+{ #category : 'generate' }
 RFOperationReification >> genForASTReturnNode [
 	^RBParser parseExpression: 'RFReturnOperation new
 			context: thisContext;
@@ -107,18 +119,6 @@ RFOperationReification >> genForASTVariableNode [
 		].
 
 	self error: 'not supported'
-]
-
-{ #category : 'generate' }
-RFOperationReification >> genForRBMethodNode [
-	| ast |
-	ast := RBParser parseExpression: 'RFMethodOperation new
-			receiver: self;
-			method: #toReplace;
-			arguments: RFArgumentsReificationVar.'.
-
-	ast messages second arguments: {(ASTLiteralNode value: entity methodNode methodClass >> entity methodNode selector)}.
-	^ast
 ]
 
 { #category : 'preamble' }
