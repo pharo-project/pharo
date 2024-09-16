@@ -1,5 +1,5 @@
 "
-SUnit tests for RBMethodNode
+SUnit tests for ASTMethodNode
 "
 Class {
 	#name : 'ASTMethodNodeTest',

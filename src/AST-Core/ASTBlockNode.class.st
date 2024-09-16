@@ -1,7 +1,7 @@
 "
 ASTBlockNode is an AST node that represents a block ""[...]"".
 
-Like RBMethodNode, the scope attribute is only valid after doing a semantic analyzing step.
+Like ASTMethodNode, the scope attribute is only valid after doing a semantic analyzing step.
 
 Instance Variables:
 	arguments	<SequenceableCollection of: ASTVariableNode>	the arguments for the block

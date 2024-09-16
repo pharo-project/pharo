@@ -60,7 +60,7 @@ ClassHierarchyPrinterTest >> testOnlyASTNodes [
 					RBPragmaErrorNode
 					RBTemporariesErrorNode
 					RBUnfinishedStatementErrorNode
-		RBMethodNode
+		ASTMethodNode
 			ASTPatternMethodNode
 			RBDoItMethodNode
 	RBSlotInitializationNode

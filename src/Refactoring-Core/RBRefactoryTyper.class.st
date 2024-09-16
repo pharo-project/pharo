@@ -24,7 +24,7 @@ typer := (RBRefactoryTyper new runOn: ASTMessageNode).
 typer  guessTypesFor:'arguments'.  ""a Set(SequenceableCollection)""
 
 ""guess types for objects that may be put  into  'arguments' collection ""
-typer  guessTypesFor:'-arguments-' ""a Set(RBBlockNode RBMethodNode)""
+typer  guessTypesFor:'-arguments-' ""a Set(ASTBlockNode ASTMethodNode)""
 
 
 You can print a full report on all results with #printString.

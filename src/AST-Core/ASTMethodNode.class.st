@@ -1,5 +1,5 @@
 "
-RBMethodNode is the node that represents AST of a Smalltalk method.
+ASTMethodNode is the node that represents AST of a Smalltalk method.
 
 Some properties aren't known to the parser creating this Object. For example, the scope value isn't known by parsing the code but only after doing a
 semantic analysis. Likewise, the compilation context isn't needed until we try to do the semantic analysis. 

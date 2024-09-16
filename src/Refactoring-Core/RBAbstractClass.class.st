@@ -237,8 +237,8 @@ RBAbstractClass >> compile: aString withAttributesFrom: aRBMethod [
 ]
 
 { #category : 'method accessing' }
-RBAbstractClass >> compileTree: aRBMethodNode [
-	^ (self methodFor: aRBMethodNode selector) compileTree: aRBMethodNode
+RBAbstractClass >> compileTree: aMethodNode [
+	^ (self methodFor: aMethodNode selector) compileTree: aMethodNode
 ]
 
 { #category : 'transforming' }
