@@ -19,7 +19,7 @@ AST validations and transformations (and most likely compiler plugins) have the 
 Note: the node is not a value nor a variable, it is a placeholder at best.
 "
 Class {
-	#name : 'RBAnnotationMarkNode',
+	#name : 'ASTAnnotationMarkNode',
 	#superclass : 'ASTValueNode',
 	#instVars : [
 		'start',
@@ -31,62 +31,62 @@ Class {
 }
 
 { #category : 'comparing' }
-RBAnnotationMarkNode >> = anObject [
+ASTAnnotationMarkNode >> = anObject [
 	"All annotation marks are equivalent"
 	^self class = anObject class
 ]
 
 { #category : 'visiting' }
-RBAnnotationMarkNode >> acceptVisitor: aProgramNodeVisitor [
+ASTAnnotationMarkNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitAnnotationMarkNode: self
 ]
 
 { #category : 'comparing' }
-RBAnnotationMarkNode >> hash [
+ASTAnnotationMarkNode >> hash [
 
 	^ self class hash
 ]
 
 { #category : 'initialization' }
-RBAnnotationMarkNode >> initialize [
+ASTAnnotationMarkNode >> initialize [
 	super initialize.
 	start := 0
 ]
 
 { #category : 'testing' }
-RBAnnotationMarkNode >> isAnnotationMark [
+ASTAnnotationMarkNode >> isAnnotationMark [
 	^ true
 ]
 
 { #category : 'testing' }
-RBAnnotationMarkNode >> isHandled [
+ASTAnnotationMarkNode >> isHandled [
 
 	^ self emitValueBlock isNotNil
 ]
 
 { #category : 'testing' }
-RBAnnotationMarkNode >> needsParenthesis [
+ASTAnnotationMarkNode >> needsParenthesis [
 	^false
 ]
 
 { #category : 'accessing' }
-RBAnnotationMarkNode >> precedence [
+ASTAnnotationMarkNode >> precedence [
 	^0
 ]
 
 { #category : 'accessing' }
-RBAnnotationMarkNode >> start: aPosition [
+ASTAnnotationMarkNode >> start: aPosition [
 	"Beware, start is in fact `startWithoutParentheses` as in ASTValueNode, start includes parentheses"
 
 	start := aPosition
 ]
 
 { #category : 'accessing' }
-RBAnnotationMarkNode >> startWithoutParentheses [
+ASTAnnotationMarkNode >> startWithoutParentheses [
 	^ start
 ]
 
 { #category : 'accessing' }
-RBAnnotationMarkNode >> stopWithoutParentheses [
+ASTAnnotationMarkNode >> stopWithoutParentheses [
 	^ start
 ]

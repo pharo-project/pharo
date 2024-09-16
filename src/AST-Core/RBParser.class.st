@@ -939,7 +939,7 @@ RBParser >> parsePrimitiveObject [
 		| position |
 		position := currentToken start.
 		self step. "@"
-		^ RBAnnotationMarkNode new start: position ].
+		^ ASTAnnotationMarkNode new start: position ].
 
 	":id is only acceptable at the begin of a block. So just consume them as unexpected"
 	((currentToken isSpecial: $:) and: [ self nextToken isIdentifier ])

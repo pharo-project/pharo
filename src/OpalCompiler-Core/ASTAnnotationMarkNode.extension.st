@@ -1,7 +1,7 @@
-Extension { #name : 'RBAnnotationMarkNode' }
+Extension { #name : 'ASTAnnotationMarkNode' }
 
 { #category : '*OpalCompiler-Core' }
-RBAnnotationMarkNode >> emitValue: methodBuilder [
+ASTAnnotationMarkNode >> emitValue: methodBuilder [
 
 	emitValueBlock ifNotNil: [ ^ emitValueBlock value: methodBuilder ].
 	methodBuilder
@@ -11,13 +11,13 @@ RBAnnotationMarkNode >> emitValue: methodBuilder [
 ]
 
 { #category : '*OpalCompiler-Core' }
-RBAnnotationMarkNode >> emitValueBlock [
+ASTAnnotationMarkNode >> emitValueBlock [
 
 	^ emitValueBlock
 ]
 
 { #category : '*OpalCompiler-Core' }
-RBAnnotationMarkNode >> emitValueBlock: anObject [
+ASTAnnotationMarkNode >> emitValueBlock: anObject [
 
 	emitValueBlock := anObject
 ]
