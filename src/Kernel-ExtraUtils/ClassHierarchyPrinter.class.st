@@ -23,11 +23,15 @@ produces
 'ASTNode
 	ASTProgramNode
 		ASTCommentNode
+		ASTMethodNode
+			ASTDoItMethodNode
+			ASTPatternMethodNode
 		ASTPragmaNode
 			ASTPatternPragmaNode
 		ASTReturnNode
 		ASTSequenceNode
 		ASTValueNode
+			ASTAnnotationMarkNode
 			ASTArrayNode
 			ASTAssignmentNode
 			ASTBlockNode
@@ -39,25 +43,21 @@ produces
 				ASTLiteralValueNode
 			ASTMessageNode
 				ASTPatternMessageNode
+			ASTParseErrorNode
+				ASTEnglobingErrorNode
+					ASTArrayErrorNode
+					ASTAssignmentErrorNode
+					ASTBlockErrorNode
+					ASTInvalidCascadeErrorNode
+					ASTLiteralArrayErrorNode
+					ASTLiteralByteArrayErrorNode
+					ASTParenthesesErrorNode
+					ASTPragmaErrorNode
+					ASTTemporariesErrorNode
+					ASTUnfinishedStatementErrorNode
 			ASTSelectorNode
 			ASTVariableNode
 				ASTPatternVariableNode
-			ASTAnnotationMarkNode
-			RBParseErrorNode
-				RBEnglobingErrorNode
-					RBArrayErrorNode
-					RBAssignmentErrorNode
-					RBBlockErrorNode
-					RBInvalidCascadeErrorNode
-					RBLiteralArrayErrorNode
-					RBLiteralByteArrayErrorNode
-					RBParenthesesErrorNode
-					RBPragmaErrorNode
-					RBTemporariesErrorNode
-					RBUnfinishedStatementErrorNode
-		ASTMethodNode
-			ASTPatternMethodNode
-			ASTDoItMethodNode
 	RBSlotInitializationNode
 '
 ```	
