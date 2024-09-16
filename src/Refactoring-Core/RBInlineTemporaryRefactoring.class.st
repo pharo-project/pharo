@@ -39,41 +39,18 @@ RBInlineTemporaryRefactoring class >> model: aRBSmalltalk inline: anInterval fro
 
 { #category : 'preconditions' }
 RBInlineTemporaryRefactoring >> applicabilityPreconditions [ 
-
-	| validator |
 	
 	^ {
 		(ReDefinesSelectorsCondition new definesSelectors: (Array with: selector) in: class).
-		
+		(ReIsValidInstanceVariableName new name: assignmentNode variable name; check).
 		(ReBlockCondition new 
 			block: [
-				self checkSelectedInterval.
-				validator := ReIsValidInstanceVariableName new.
-				(validator check: assignmentNode variable name)
-					ifFalse: [ 
-						self refactoringError: (validator violationMessageOn: assignmentNode variable name)].
-				true];
-			violatorErrorString: 'Check selected interval failed').		
+				(ReSingleAssignmentCondition new 
+					initialize: assignmentNode name parseTree: self parseTreeSearcher; check).
+				(ReVariablesNotReadBeforeWrittenCondition new 
+					variables: {assignmentNode variable name}; subtree: sourceTree; check).
+				true]).
 	}
-]
-
-{ #category : 'preconditions' }
-RBInlineTemporaryRefactoring >> checkSelectedInterval [
-
-	| searcher matchesCount |
-	searcher := self parseTreeSearcher.
-	matchesCount := 0.
-	searcher 
-		matches: assignmentNode variable name , ' := ``@object'
-		do: [ :aNode | matchesCount := matchesCount + 1 ].
-	(matchesCount = 1)
-		ifFalse: [ self refactoringError: 'There are multiple assignments to the variable' ].
-	
-	(RBReadBeforeWrittenTester
-		isVariable: assignmentNode variable name
-		writtenBeforeReadIn: definingNode)
-		ifFalse: [ self refactoringError: 'The variable is possibly read before it is assigned' ].
-
 ]
 
 { #category : 'transforming' }
