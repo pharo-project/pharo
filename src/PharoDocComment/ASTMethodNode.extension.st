@@ -1,7 +1,7 @@
-Extension { #name : 'RBMethodNode' }
+Extension { #name : 'ASTMethodNode' }
 
 { #category : '*PharoDocComment' }
-RBMethodNode >> pharoDocCommentNodes [
+ASTMethodNode >> pharoDocCommentNodes [
 	"Return a collection of pharo comment nodes: expressions following the pattern"
 	"true >>> true"
 

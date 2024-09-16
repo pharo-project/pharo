@@ -6,12 +6,12 @@ RBParser parseFaultyExpression:
 or
 RBParser parseFaultyMethod: 
 
-The return value is either valid nodes representing the AST, or nodes representing the valid portion and an RBParseErrorNode for the remaining invalid code.
+The return value is either valid nodes representing the AST, or nodes representing the valid portion and an ASTParseErrorNode for the remaining invalid code.
 
 
 "
 Class {
-	#name : 'RBParseErrorNode',
+	#name : 'ASTParseErrorNode',
 	#superclass : 'ASTValueNode',
 	#instVars : [
 		'errorMessage',
@@ -26,69 +26,69 @@ Class {
 }
 
 { #category : 'comparing' }
-RBParseErrorNode >> = anObject [
+ASTParseErrorNode >> = anObject [
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
 	^anObject value = value and: [ anObject errorMessage = errorMessage ]
 ]
 
 { #category : 'visiting' }
-RBParseErrorNode >> acceptVisitor: aProgramNodeVisitor [
+ASTParseErrorNode >> acceptVisitor: aProgramNodeVisitor [
 	^ aProgramNodeVisitor visitParseErrorNode: self
 ]
 
 { #category : 'accessing' }
-RBParseErrorNode >> arguments [
+ASTParseErrorNode >> arguments [
 
 	"A parse error node has no arguments"
 	^ #()
 ]
 
 { #category : 'accessing' }
-RBParseErrorNode >> binding: anOCTempVariable [
+ASTParseErrorNode >> binding: anOCTempVariable [
 	"only for compatibility"
 ]
 
 { #category : 'accessing' }
-RBParseErrorNode >> body: aSequenceNode [
+ASTParseErrorNode >> body: aSequenceNode [
 	"I am not a valid MethodNode, but go one with parsing"
 ]
 
 { #category : 'accessing' }
-RBParseErrorNode >> errorMessage [
+ASTParseErrorNode >> errorMessage [
 	^ errorMessage
 ]
 
 { #category : 'accessing' }
-RBParseErrorNode >> errorMessage: anObject [
+ASTParseErrorNode >> errorMessage: anObject [
 	errorMessage := anObject
 ]
 
 { #category : 'accessing' }
-RBParseErrorNode >> errorPosition [
+ASTParseErrorNode >> errorPosition [
 
 	^ errorPosition
 ]
 
 { #category : 'accessing' }
-RBParseErrorNode >> errorPosition: anObject [
+ASTParseErrorNode >> errorPosition: anObject [
 
 	errorPosition := anObject
 ]
 
 { #category : 'testing' }
-RBParseErrorNode >> hasTemporaries [
+ASTParseErrorNode >> hasTemporaries [
 
 	^ false
 ]
 
 { #category : 'comparing' }
-RBParseErrorNode >> hash [
+ASTParseErrorNode >> hash [
 	^ (self value hash bitXor: self errorMessage hash)
 ]
 
 { #category : 'initialization' }
-RBParseErrorNode >> initialize [
+ASTParseErrorNode >> initialize [
 
 	super initialize.
 	"Add its own notice"
@@ -96,93 +96,93 @@ RBParseErrorNode >> initialize [
 ]
 
 { #category : 'errors' }
-RBParseErrorNode >> isError [
+ASTParseErrorNode >> isError [
 	^true
 ]
 
 { #category : 'errors' }
-RBParseErrorNode >> isFaulty [
+ASTParseErrorNode >> isFaulty [
 	^true
 ]
 
 { #category : 'testing' }
-RBParseErrorNode >> isParseError [
+ASTParseErrorNode >> isParseError [
 	^true
 ]
 
 { #category : 'testing' }
-RBParseErrorNode >> isUnary [
+ASTParseErrorNode >> isUnary [
 
 	^ false
 ]
 
 { #category : 'accessing' }
-RBParseErrorNode >> name [
+ASTParseErrorNode >> name [
 	"be polymorphic with variable nodes"
 
 	^ ''
 ]
 
 { #category : 'testing' }
-RBParseErrorNode >> needsParenthesis [
+ASTParseErrorNode >> needsParenthesis [
 	^ false
 ]
 
 { #category : 'accessing' }
-RBParseErrorNode >> selector [
+ASTParseErrorNode >> selector [
 	"A parse error node has an empty selector"
 	^ #''
 ]
 
 { #category : 'accessing' }
-RBParseErrorNode >> selectorParts [
+ASTParseErrorNode >> selectorParts [
 
 	^ #()
 ]
 
 { #category : 'accessing' }
-RBParseErrorNode >> source: aString [
+ASTParseErrorNode >> source: aString [
 	"I am not a valid MethodNode, but go one with parsing"
 ]
 
 { #category : 'accessing' }
-RBParseErrorNode >> start: aPosition [
+ASTParseErrorNode >> start: aPosition [
 	"Beware, start is in fact `startWithoutParentheses` as in ASTValueNode, start includes parentheses"
 
 	start := aPosition
 ]
 
 { #category : 'accessing' }
-RBParseErrorNode >> startWithoutParentheses [
+ASTParseErrorNode >> startWithoutParentheses [
 	^ start
 ]
 
 { #category : 'accessing' }
-RBParseErrorNode >> stop: aStopPosition [
+ASTParseErrorNode >> stop: aStopPosition [
 	"Beware, stop is in fact `stopWithoutParentheses` as in ASTValueNode, stop includes parentheses"
 
 	stop := aStopPosition
 ]
 
 { #category : 'accessing' }
-RBParseErrorNode >> stopWithoutParentheses [
+ASTParseErrorNode >> stopWithoutParentheses [
 	^ stop
 		ifNil: [start + value size - 1]
 		ifNotNil: [ stop ]
 ]
 
 { #category : 'accessing' }
-RBParseErrorNode >> temporaries [
+ASTParseErrorNode >> temporaries [
 
 	^ #()
 ]
 
 { #category : 'evaluating' }
-RBParseErrorNode >> value [
+ASTParseErrorNode >> value [
 	^value
 ]
 
 { #category : 'accessing' }
-RBParseErrorNode >> value: aString [
+ASTParseErrorNode >> value: aString [
 	value := aString
 ]

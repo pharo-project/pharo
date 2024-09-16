@@ -1,32 +1,32 @@
 "
-RBDoItMethodNode is the node that represents AST of DoIt expressions.
+ASTDoItMethodNode is the node that represents AST of DoIt expressions.
 It allows to distinguish between ASTs of real methods and DoIts. 
 
 - aMethodNode isDoIt
 
 "
 Class {
-	#name : 'RBDoItMethodNode',
-	#superclass : 'RBMethodNode',
+	#name : 'ASTDoItMethodNode',
+	#superclass : 'ASTMethodNode',
 	#category : 'AST-Core-Nodes',
 	#package : 'AST-Core',
 	#tag : 'Nodes'
 }
 
 { #category : 'initialization' }
-RBDoItMethodNode >> initialize [
+ASTDoItMethodNode >> initialize [
 	super initialize.
 
 	selector := #DoIt
 ]
 
 { #category : 'testing' }
-RBDoItMethodNode >> isDoIt [
+ASTDoItMethodNode >> isDoIt [
 	^true
 ]
 
 { #category : 'accessing' }
-RBDoItMethodNode >> sourceCode [
+ASTDoItMethodNode >> sourceCode [
 
 	| interval |
 	interval := self sourceInterval.
@@ -38,11 +38,11 @@ RBDoItMethodNode >> sourceCode [
 ]
 
 { #category : 'accessing' }
-RBDoItMethodNode >> start [
+ASTDoItMethodNode >> start [
 	^ body start
 ]
 
 { #category : 'accessing' }
-RBDoItMethodNode >> stop [
+ASTDoItMethodNode >> stop [
 	^ body stop
 ]

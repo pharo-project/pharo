@@ -41,7 +41,7 @@ RBParser class >> parseExpression: aString onError: aBlock [
 
 { #category : 'parsing' }
 RBParser class >> parseFaultyExpression: aString [
-	"parse aString even if syntactically incorrect. Instead of raising an error, we create an AST with RB RBParseErrorNode"
+	"parse aString even if syntactically incorrect. Instead of raising an error, we create an AST with ASTParseErrorNode"
 	^ self new
 		initializeParserWith: aString;
 		parseExpression
@@ -49,7 +49,7 @@ RBParser class >> parseFaultyExpression: aString [
 
 { #category : 'parsing' }
 RBParser class >> parseFaultyMethod: aString [
-	"parse aString even if syntactically incorrect. Instead of raising an error, we create an AST with RB RBParseErrorNode"
+	"parse aString even if syntactically incorrect. Instead of raising an error, we create an AST with ASTarseErrorNode"
 	^ self new
 		initializeParserWith: aString;
 		parseMethod
@@ -179,12 +179,12 @@ RBParser >> currentToken [
 
 { #category : 'private - classes' }
 RBParser >> doItMethodNodeClass [
-	^ RBDoItMethodNode
+	^ ASTDoItMethodNode
 ]
 
 { #category : 'private - classes' }
 RBParser >> englobingErrorNodeClass [
-	^RBEnglobingErrorNode
+	^ASTEnglobingErrorNode
 ]
 
 { #category : 'error handling' }
@@ -259,7 +259,7 @@ RBParser >> messageNodeClass [
 
 { #category : 'private - classes' }
 RBParser >> methodNodeClass [
-	^ RBMethodNode
+	^ ASTMethodNode
 ]
 
 { #category : 'private' }
@@ -293,7 +293,7 @@ RBParser >> parseAssignment [
 		err := self parseErrorNode: 'variable expected in assigment'.
 		self step. "Consume the :="
 		node := self parseAssignment. "parse the right side".
-		node := RBAssignmentErrorNode from: err contents: { node }.
+		node := ASTAssignmentErrorNode from: err contents: { node }.
 		node value: ':='.
 		^ node
 	].
@@ -452,7 +452,7 @@ RBParser >> parseCascadeMessage [
 		If in faulty mode, continue the execution and generate a faulty cascade node.
 		Note that this bad cascade node will be added to the list of messages."
 		err := self parseErrorNode: 'Message expected'.
-		node := RBInvalidCascadeErrorNode from: err contents: { node }
+		node := ASTInvalidCascadeErrorNode from: err contents: { node }
 	].
 	receiver := node receiver.
  	messages add: node.
@@ -525,7 +525,7 @@ RBParser >> parseErrorNode: aMessageString [
 	currentToken isError
 		ifTrue: [
 			"The current token is an error, consume it and use its content for the error node."
-			errorNode := RBParseErrorNode new
+			errorNode := ASTParseErrorNode new
 				errorMessage: currentToken cause;
 				value: currentToken value;
 				start: self errorPosition;
@@ -535,7 +535,7 @@ RBParser >> parseErrorNode: aMessageString [
 			^ errorNode].
 	"The current token is not an error but is unexpected. Maybe something is missing?
 	Anyway, the error node is an empty string and the current token will be used to continue the parsing."
-	^ RBParseErrorNode new
+	^ ASTParseErrorNode new
 		errorMessage: aMessageString;
 		value: '' asString;
 		start: self errorPosition;
@@ -658,7 +658,7 @@ RBParser >> parseLiteralArray [
 	scanner state: prevState.
 	self step.
 	faulty ifTrue: [
-		^ RBLiteralArrayErrorNode new
+		^ ASTLiteralArrayErrorNode new
 			value: startToken value asString;
 		 	start: startToken start;
 			contents: literals;
@@ -723,7 +723,7 @@ RBParser >> parseLiteralByteArray [
 	stop := currentToken stop.
 	self step.
 	faulty ifTrue: [
-		^ RBLiteralByteArrayErrorNode new
+		^ ASTLiteralByteArrayErrorNode new
 			value: startToken value asString;
 		 	start: startToken start;
 			contents: stream contents;
@@ -939,7 +939,7 @@ RBParser >> parsePrimitiveObject [
 		| position |
 		position := currentToken start.
 		self step. "@"
-		^ RBAnnotationMarkNode new start: position ].
+		^ ASTAnnotationMarkNode new start: position ].
 
 	":id is only acceptable at the begin of a block. So just consume them as unexpected"
 	((currentToken isSpecial: $:) and: [ self nextToken isIdentifier ])
@@ -947,7 +947,7 @@ RBParser >> parsePrimitiveObject [
 			| start |
 			start := currentToken start.
 			self step. ":"
-			errorNode := RBParseErrorNode new
+			errorNode := ASTParseErrorNode new
 				             errorMessage: 'Unexpected block parameter';
 				             start: start;
 				             errorPosition: start;
@@ -995,7 +995,7 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 				err := self parseErrorNode: 'Missing opener for closer: ', currentToken value asString.
 				"If the parsing failed because it did not match anything, there was nothing before the unexpected closer"
 				contents := startOfStatementToken = currentToken ifTrue: [ #() ] ifFalse: [ { node } ].
-				node := (RBUnfinishedStatementErrorNode from: err contents: contents)
+				node := (ASTUnfinishedStatementErrorNode from: err contents: contents)
 					valueAfter: currentToken value asString;
 					stop: currentToken stop.
 				self step ].
@@ -1004,7 +1004,7 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 	startOfStatementToken = currentToken ifTrue: [
 		"We did not progress, its mean that 1. we have a error node and 2. we are missing something (or found something unexpected, its the same thing)."
 		"Solution to recover. Consume the token to create the statement."
-		node := RBParseErrorNode new
+		node := ASTParseErrorNode new
 			errorMessage: 'Unexpected token';
 			value: currentToken value asString;
 			start: currentToken start;
@@ -1027,7 +1027,7 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 		 A better design is needed."
 		node isParseError ifFalse: [
 			err := self parseErrorNode: 'End of statement expected'.
-			node := RBUnfinishedStatementErrorNode from: err contents: { node } ]
+			node := ASTUnfinishedStatementErrorNode from: err contents: { node } ]
 	].
 
 	"Then consume all dots and comments coming after this well formed statement, if there was any"

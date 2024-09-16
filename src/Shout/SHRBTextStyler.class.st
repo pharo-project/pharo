@@ -1108,9 +1108,9 @@ SHRBTextStyler >> view: aViewOrMorph [
 ]
 
 { #category : 'visiting' }
-SHRBTextStyler >> visitAnnotationMarkNode: aRBAnnotationMarkNode [
+SHRBTextStyler >> visitAnnotationMarkNode: aAnnotationMarkNode [
 
-	self addStyle: #pragma from: aRBAnnotationMarkNode start to: aRBAnnotationMarkNode start.
+	self addStyle: #pragma from: aAnnotationMarkNode start to: aAnnotationMarkNode start.
 ]
 
 { #category : 'visiting' }

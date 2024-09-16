@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFSenderReification class >> entities [
-	^{ASTMessageNode . RBMethodNode}
+	^{ASTMessageNode . ASTMethodNode}
 ]
 
 { #category : 'plugin interface' }
@@ -25,7 +25,7 @@ RFSenderReification >> genForASTMessageNode [
 ]
 
 { #category : 'generate' }
-RFSenderReification >> genForRBMethodNode [
+RFSenderReification >> genForASTMethodNode [
 	^ASTMessageNode
 		receiver: (ASTMessageNode
 			receiver: ASTVariableNode thisContextNode

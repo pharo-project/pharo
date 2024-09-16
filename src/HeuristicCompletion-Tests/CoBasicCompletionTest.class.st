@@ -42,7 +42,7 @@ CoBasicCompletionTest >> completionClass [
 { #category : 'tests' }
 CoBasicCompletionTest >> innerASTNode [
 	| nodeInsideABlock |
-	RBMethodNode
+	ASTMethodNode
 		selector: #foo
 		arguments: (#(methodArgument) collect: [ :e | ASTVariableNode named: e ])
 		body:

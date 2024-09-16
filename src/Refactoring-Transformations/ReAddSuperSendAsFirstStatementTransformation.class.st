@@ -21,17 +21,17 @@ Class {
 }
 
 { #category : 'instance creation' }
-ReAddSuperSendAsFirstStatementTransformation class >> model: aRBNamespace methodTree: aRBMethodNode inClass: aRBClass [
+ReAddSuperSendAsFirstStatementTransformation class >> model: aRBNamespace methodTree: aMethodNode inClass: aRBClass [
 	^ self new
 		model: aRBNamespace ;
-		methodTree: aRBMethodNode inClass: aRBClass
+		methodTree: aMethodNode inClass: aRBClass
 ]
 
 { #category : 'initialization' }
-ReAddSuperSendAsFirstStatementTransformation >> methodTree: aRBMethodNode inClass: aRBClass [ 
+ReAddSuperSendAsFirstStatementTransformation >> methodTree: aMethodNode inClass: aRBClass [ 
 
-	method := aRBMethodNode.
-	selector := aRBMethodNode selector.
+	method := aMethodNode.
+	selector := aMethodNode selector.
 	class := aRBClass 
 ]
 

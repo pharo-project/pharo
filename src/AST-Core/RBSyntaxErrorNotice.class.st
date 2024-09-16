@@ -1,5 +1,5 @@
 "
-I am the implicit notice of a RBParseErrorNode
+I am the implicit notice of a ASTParseErrorNode
 "
 Class {
 	#name : 'RBSyntaxErrorNotice',

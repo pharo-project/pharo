@@ -28,11 +28,15 @@ ClassHierarchyPrinterTest >> testOnlyASTNodes [
 	'ASTNode
 	ASTProgramNode
 		ASTCommentNode
+		ASTMethodNode
+			ASTDoItMethodNode
+			ASTPatternMethodNode
 		ASTPragmaNode
 			ASTPatternPragmaNode
 		ASTReturnNode
 		ASTSequenceNode
 		ASTValueNode
+			ASTAnnotationMarkNode
 			ASTArrayNode
 			ASTAssignmentNode
 			ASTBlockNode
@@ -44,25 +48,21 @@ ClassHierarchyPrinterTest >> testOnlyASTNodes [
 				ASTLiteralValueNode
 			ASTMessageNode
 				ASTPatternMessageNode
+			ASTParseErrorNode
+				ASTEnglobingErrorNode
+					ASTArrayErrorNode
+					ASTAssignmentErrorNode
+					ASTBlockErrorNode
+					ASTInvalidCascadeErrorNode
+					ASTLiteralArrayErrorNode
+					ASTLiteralByteArrayErrorNode
+					ASTParenthesesErrorNode
+					ASTPragmaErrorNode
+					ASTTemporariesErrorNode
+					ASTUnfinishedStatementErrorNode
 			ASTSelectorNode
 			ASTVariableNode
 				ASTPatternVariableNode
-			RBAnnotationMarkNode
-			RBParseErrorNode
-				RBEnglobingErrorNode
-					RBArrayErrorNode
-					RBAssignmentErrorNode
-					RBBlockErrorNode
-					RBInvalidCascadeErrorNode
-					RBLiteralArrayErrorNode
-					RBLiteralByteArrayErrorNode
-					RBParenthesesErrorNode
-					RBPragmaErrorNode
-					RBTemporariesErrorNode
-					RBUnfinishedStatementErrorNode
-		RBMethodNode
-			ASTPatternMethodNode
-			RBDoItMethodNode
 	RBSlotInitializationNode
 '
 ]

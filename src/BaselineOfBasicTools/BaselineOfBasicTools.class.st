@@ -124,6 +124,21 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	ASTSelectorNode deprecatedAliases: { #RBSelectorNode }.
 	ASTPragmaNode deprecatedAliases: { #RBPragmaNode }.
 	ASTSequenceNode deprecatedAliases: { #RBSequenceNode }.
+	ASTAnnotationMarkNode deprecatedAliases: { #RBAnnotationMarkNode }.
+	ASTMethodNode deprecatedAliases: { #RBMethodNode }.
+	ASTDoItMethodNode deprecatedAliases: { #RBDoItMethodNode }.
+	ASTEnglobingErrorNode deprecatedAliases: { #RBEnglobingErrorNode }.
+	ASTArrayErrorNode deprecatedAliases: { #RBArrayErrorNode }.
+	ASTUnfinishedStatementErrorNode deprecatedAliases: { #RBUnfinishedStatementErrorNode }.
+	ASTLiteralByteArrayErrorNode deprecatedAliases: { #RBLiteralByteArrayErrorNode }.
+	ASTPragmaErrorNode deprecatedAliases: { #RBPragmaErrorNode }.
+	ASTLiteralArrayErrorNode deprecatedAliases: { #RBLiteralArrayErrorNode }.
+	ASTParenthesesErrorNode deprecatedAliases: { #RBParenthesesErrorNode }.
+	ASTAssignmentErrorNode deprecatedAliases: { #RBAssignmentErrorNode }.
+	ASTBlockErrorNode deprecatedAliases: { #RBBlockErrorNode }.
+	ASTTemporariesErrorNode deprecatedAliases: { #RBTemporariesErrorNode }.
+	ASTInvalidCascadeErrorNode deprecatedAliases: { #RBInvalidCascadeErrorNode }.
+	ASTParseErrorNode deprecatedAliases: { #RBParseErrorNode }.
 
 	ASTPatternMessageNode deprecatedAliases: { #RBPatternMessageNode }.
 	ASTPatternBlockNode deprecatedAliases: { #RBPatternBlockNode }.

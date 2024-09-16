@@ -1,7 +1,7 @@
-Extension { #name : 'RBMethodNode' }
+Extension { #name : 'ASTMethodNode' }
 
 { #category : '*NECompletion' }
-RBMethodNode >> completionEntries: offset [
+ASTMethodNode >> completionEntries: offset [
 	^Symbol selectorTable
 		select: [ :each | each beginsWith: self selector]
 		thenCollect: [ :each | NECSymbolEntry contents: each node: self ]

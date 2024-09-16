@@ -214,7 +214,7 @@ ASTProgramNode >> asDoit [
 
 	| source |
 	source := self source.
-	^ RBDoItMethodNode new
+	^ ASTDoItMethodNode new
 		  body: self asSequenceNode;
 		  source: source
 ]
@@ -694,7 +694,7 @@ ASTProgramNode >> isEnglobingError [
 
 { #category : 'notice' }
 ASTProgramNode >> isError [
-	"An error node is either a RBParseErrorNode (for syntactic errors) or has error information (for other errors)"
+	"An error node is either an ASTParseErrorNode (for syntactic errors) or has error information (for other errors)"
 
 	^ self errorNotices isNotEmpty
 ]

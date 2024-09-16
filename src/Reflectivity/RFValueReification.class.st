@@ -21,7 +21,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFValueReification class >> entities [
-	^{ASTValueNode . ASTReturnNode. RBMethodNode . Variable}
+	^{ASTValueNode . ASTReturnNode. ASTMethodNode . Variable}
 ]
 
 { #category : 'plugin interface' }
@@ -66,6 +66,11 @@ RFValueReification >> genForASTMessageNode [
 ]
 
 { #category : 'generate' }
+RFValueReification >> genForASTMethodNode [
+	^ASTVariableNode named: self varName
+]
+
+{ #category : 'generate' }
 RFValueReification >> genForASTReturnNode [
 	^ASTVariableNode named: self varName
 ]
@@ -92,11 +97,6 @@ RFValueReification >> genForInstanceVariableSlot [
 RFValueReification >> genForLiteralVariable [
 	"entity in this case is the binding of the literal"
 	^ASTLiteralNode value: entity value
-]
-
-{ #category : 'generate' }
-RFValueReification >> genForRBMethodNode [
-	^ASTVariableNode named: self varName
 ]
 
 { #category : 'generate' }

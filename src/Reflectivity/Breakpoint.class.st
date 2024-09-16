@@ -5,7 +5,7 @@ There are three types of breakpoints:
 -halt always: Once installed, they have to be explicitly removed (by using #remove on the instance side, or #removeAll on class side)
 -halt on condition: Before being installed prompts the user for a condition (a block with a boolean expression), and it is only triggered when that condition is met.
 
-Breakpoints are installed via SmartSuggestions menu (available for RBMethodNode, ASTMessageNode and ASTAssignmentNode), or programmatically:
+Breakpoints are installed via SmartSuggestions menu (available for ASTMethodNode, ASTMessageNode and ASTAssignmentNode), or programmatically:
 
 ""(Breakpoint inMethod: (Bar>>#foo2) inNode: ((Bar>>#foo2) ast allChildren at: 9) )
 break: #when: withArguments: { [ RFCounter counter isZero ] }
@@ -273,7 +273,7 @@ Breakpoint >> condition: aCondition [
 Breakpoint >> conditionBlockProducerMethodAST: conditionString [
 	| conditionBlockProducerMethodAST conditionAST |
 	conditionAST := self parserClass parseExpression: conditionString.
-	conditionBlockProducerMethodAST := RBMethodNode
+	conditionBlockProducerMethodAST := ASTMethodNode
 		selector: #conditionBlockGenerator
 		body:
 			(ASTReturnNode

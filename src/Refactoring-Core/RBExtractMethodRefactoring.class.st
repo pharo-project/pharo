@@ -203,7 +203,7 @@ RBExtractMethodRefactoring >> extractMethod [
 		ifTrue: [ self refactoringError: 'Select some code to extract' ].
 	isSequence := extractedParseTree isSequence
 		or: [ extractedParseTree isReturn ].
-	extractedParseTree := RBMethodNode
+	extractedParseTree := ASTMethodNode
 		selector: #value
 		arguments: #()
 		body:
