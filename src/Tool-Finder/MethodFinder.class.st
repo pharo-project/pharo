@@ -29,6 +29,12 @@ MethodFinder >> findMethodsByExampleInput: inputCollection andExpectedResult: ex
 ]
 
 { #category : 'public access' }
+MethodFinder >> methodFinderSendClass [
+
+	^ MethodFinderSend
+]
+
+{ #category : 'public access' }
 MethodFinder >> possibleSolutionsForInput: inputCollection [
 
 	| sends |
@@ -38,11 +44,9 @@ MethodFinder >> possibleSolutionsForInput: inputCollection [
 		| foundPermutationSends args receiver |
 		args := permutation allButFirst.
 		receiver := permutation first.
-		foundPermutationSends := (receiver evaluate class
-			                          allSelectorsToTestInMethodFinderWithArity:
-			                          inputCollection size - 1) collect: [
-			                         :method |
-			                         MethodFinderSend
+		foundPermutationSends := 
+			(receiver evaluate class allSelectorsToTestInMethodFinderWithArity: inputCollection size - 1) collect: [ : method |
+			                         self methodFinderSendClass
 				                         receiver: receiver evaluate
 				                         selector: method
 				                         withArguments: (args collect: #evaluate) ].
