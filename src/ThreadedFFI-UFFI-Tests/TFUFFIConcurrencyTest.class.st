@@ -2,7 +2,6 @@ Class {
 	#name : 'TFUFFIConcurrencyTest',
 	#superclass : 'TFUFFITestCase',
 	#instVars : [
-		'originalMethod',
 		'p1',
 		'p2'
 	],
