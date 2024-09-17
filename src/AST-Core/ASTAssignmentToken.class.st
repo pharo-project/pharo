@@ -3,25 +3,25 @@ RBAssignmentToken is the first-class representation of the assignment token ':='
 
 "
 Class {
-	#name : 'RBAssignmentToken',
-	#superclass : 'RBToken',
+	#name : 'ASTAssignmentToken',
+	#superclass : 'ASTToken',
 	#category : 'AST-Core-Tokens',
 	#package : 'AST-Core',
 	#tag : 'Tokens'
 }
 
 { #category : 'testing' }
-RBAssignmentToken >> isAssignment [
+ASTAssignmentToken >> isAssignment [
 	^true
 ]
 
 { #category : 'accessing' }
-RBAssignmentToken >> length [
+ASTAssignmentToken >> length [
 
 	^ 2
 ]
 
 { #category : 'evaluating' }
-RBAssignmentToken >> value [
+ASTAssignmentToken >> value [
 	^':='
 ]

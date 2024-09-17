@@ -3,8 +3,8 @@ I'm a scanned error.
 I can have multiple causes.
 "
 Class {
-	#name : 'RBErrorToken',
-	#superclass : 'RBValueToken',
+	#name : 'ASTErrorToken',
+	#superclass : 'ASTValueToken',
 	#instVars : [
 		'cause',
 		'location'
@@ -15,7 +15,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBErrorToken class >> value: value start: tokenStart cause: errorCause location: thePosition [
+ASTErrorToken class >> value: value start: tokenStart cause: errorCause location: thePosition [
 	^ self new
 		value: value
 			start: tokenStart
@@ -25,27 +25,27 @@ RBErrorToken class >> value: value start: tokenStart cause: errorCause location:
 ]
 
 { #category : 'accessing' }
-RBErrorToken >> cause [
+ASTErrorToken >> cause [
 	^ cause
 ]
 
 { #category : 'testing' }
-RBErrorToken >> isError [
+ASTErrorToken >> isError [
 	^true
 ]
 
 { #category : 'accessing' }
-RBErrorToken >> location [
+ASTErrorToken >> location [
 	^ location
 ]
 
 { #category : 'accessing' }
-RBErrorToken >> location: anInteger [
+ASTErrorToken >> location: anInteger [
 	location := anInteger
 ]
 
 { #category : 'accessing' }
-RBErrorToken >> value: theValue start: tokenStart cause: errorCause location: errorPosition [
+ASTErrorToken >> value: theValue start: tokenStart cause: errorCause location: errorPosition [
 	self value: theValue start: tokenStart.
 	location := errorPosition.
 	cause := errorCause

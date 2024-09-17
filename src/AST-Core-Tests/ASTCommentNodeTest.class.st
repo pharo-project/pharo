@@ -18,7 +18,7 @@ ASTCommentNodeTest >> testFoo [
 { #category : 'tests' }
 ASTCommentNodeTest >> testIntersectsInterval [
 	| node |
-	node:= ASTCommentNode with: (RBCommentToken value: 'Some sample text' start: 5 stop: 21).
+	node:= ASTCommentNode with: (ASTCommentToken value: 'Some sample text' start: 5 stop: 21).
 
 	self
 		assert: (node intersectsInterval: (4 to: 6)) description: 'either side of interval';

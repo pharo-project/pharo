@@ -1206,11 +1206,11 @@ RBParser >> parseVariableNode [
 RBParser >> patchLiteralMessage [
 
 	currentToken value == true
-		ifTrue: [ ^ currentToken := RBIdentifierToken value: 'true' start: currentToken start ].
+		ifTrue: [ ^ currentToken := ASTIdentifierToken value: 'true' start: currentToken start ].
 	currentToken value == false
-		ifTrue: [ ^ currentToken := RBIdentifierToken value: 'false' start: currentToken start ].
+		ifTrue: [ ^ currentToken := ASTIdentifierToken value: 'false' start: currentToken start ].
 	currentToken value
-		ifNil: [ ^ currentToken := RBIdentifierToken value: 'nil' start: currentToken start ]
+		ifNil: [ ^ currentToken := ASTIdentifierToken value: 'nil' start: currentToken start ]
 ]
 
 { #category : 'private' }
@@ -1227,9 +1227,9 @@ RBParser >> patchNegativeLiteral [
 						and: [(source at: (currentToken start min: source size)) = $-]])
 				ifFalse: [^self]].
 	nextToken := currentToken.
-	currentToken := RBBinarySelectorToken value: #- start: nextToken start.
+	currentToken := ASTBinarySelectorToken value: #- start: nextToken start.
 	nextToken value: nextToken value negated.
-	(nextToken isKindOf: RBNumberLiteralToken)
+	(nextToken isKindOf: ASTNumberLiteralToken)
 		ifTrue:
 			[nextToken source: (nextToken source allButFirst)].
 	nextToken start: nextToken start + 1

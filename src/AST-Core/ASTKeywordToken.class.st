@@ -2,24 +2,24 @@
 RBKeywordToken is the first-class representation of a keyword token (e.g. add:)
 "
 Class {
-	#name : 'RBKeywordToken',
-	#superclass : 'RBValueToken',
+	#name : 'ASTKeywordToken',
+	#superclass : 'ASTValueToken',
 	#category : 'AST-Core-Tokens',
 	#package : 'AST-Core',
 	#tag : 'Tokens'
 }
 
 { #category : 'testing' }
-RBKeywordToken >> isKeyword [
+ASTKeywordToken >> isKeyword [
 	^true
 ]
 
 { #category : 'testing' }
-RBKeywordToken >> isPatternVariable [
+ASTKeywordToken >> isPatternVariable [
 	^value first = RBScanner patternVariableCharacter
 ]
 
 { #category : 'testing' }
-RBKeywordToken >> isPrimitiveKeyword [
+ASTKeywordToken >> isPrimitiveKeyword [
 	^ self value = #primitive:
 ]

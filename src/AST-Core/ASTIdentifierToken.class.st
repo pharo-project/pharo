@@ -3,25 +3,25 @@ RBIdentifierToken is the first-class representation of an identifier token (e.g.
 
 "
 Class {
-	#name : 'RBIdentifierToken',
-	#superclass : 'RBValueToken',
+	#name : 'ASTIdentifierToken',
+	#superclass : 'ASTValueToken',
 	#category : 'AST-Core-Tokens',
 	#package : 'AST-Core',
 	#tag : 'Tokens'
 }
 
 { #category : 'testing' }
-RBIdentifierToken >> isIdentifier [
+ASTIdentifierToken >> isIdentifier [
 	^true
 ]
 
 { #category : 'testing' }
-RBIdentifierToken >> isKeywordPattern [
+ASTIdentifierToken >> isKeywordPattern [
 	^ self isPatternVariable	and: [ value second = RBScanner keywordPatternCharacter
 				and: [ value third ~= RBScanner cascadePatternCharacter ] ]
 ]
 
 { #category : 'testing' }
-RBIdentifierToken >> isPatternVariable [
+ASTIdentifierToken >> isPatternVariable [
 	^value first = RBScanner patternVariableCharacter
 ]

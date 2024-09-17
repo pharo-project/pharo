@@ -1,28 +1,28 @@
 Class {
-	#name : 'RBEOFToken',
-	#superclass : 'RBToken',
+	#name : 'ASTEOFToken',
+	#superclass : 'ASTToken',
 	#category : 'AST-Core-Tokens',
 	#package : 'AST-Core',
 	#tag : 'Tokens'
 }
 
 { #category : 'testing' }
-RBEOFToken >> isEOF [
+ASTEOFToken >> isEOF [
 	^true
 ]
 
 { #category : 'accessing' }
-RBEOFToken >> length [
+ASTEOFToken >> length [
 	^ 0
 ]
 
 { #category : 'accessing' }
-RBEOFToken >> source [
+ASTEOFToken >> source [
 	^ self value
 ]
 
 { #category : 'accessing' }
-RBEOFToken >> value [
+ASTEOFToken >> value [
 
 	^ ''
 ]

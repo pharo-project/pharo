@@ -7,8 +7,8 @@ Instance Variables:
 
 "
 Class {
-	#name : 'RBValueToken',
-	#superclass : 'RBToken',
+	#name : 'ASTValueToken',
+	#superclass : 'ASTToken',
 	#instVars : [
 		'value'
 	],
@@ -18,23 +18,23 @@ Class {
 }
 
 { #category : 'testing' }
-RBValueToken class >> isAbstract [
+ASTValueToken class >> isAbstract [
 
-	^ self == RBValueToken
+	^ self == ASTValueToken
 ]
 
 { #category : 'instance creation' }
-RBValueToken class >> value: aString start: anInteger [
+ASTValueToken class >> value: aString start: anInteger [
 	^self new value: aString start: anInteger
 ]
 
 { #category : 'private' }
-RBValueToken >> length [
+ASTValueToken >> length [
 	^value size
 ]
 
 { #category : 'printing' }
-RBValueToken >> printOn: aStream [
+ASTValueToken >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
 	value printOn: aStream.
@@ -42,22 +42,22 @@ RBValueToken >> printOn: aStream [
 ]
 
 { #category : 'accessing' }
-RBValueToken >> source [
+ASTValueToken >> source [
 	^ self value
 ]
 
 { #category : 'accessing' }
-RBValueToken >> value [
+ASTValueToken >> value [
 	^value
 ]
 
 { #category : 'accessing' }
-RBValueToken >> value: anObject [
+ASTValueToken >> value: anObject [
 	value := anObject
 ]
 
 { #category : 'initialization' }
-RBValueToken >> value: aString start: anInteger [
+ASTValueToken >> value: aString start: anInteger [
 	value := aString.
 	sourcePointer := anInteger
 ]
