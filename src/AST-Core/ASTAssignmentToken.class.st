@@ -1,5 +1,5 @@
 "
-RBAssignmentToken is the first-class representation of the assignment token ':='
+ASTAssignmentToken is the first-class representation of the assignment token ':='
 
 "
 Class {

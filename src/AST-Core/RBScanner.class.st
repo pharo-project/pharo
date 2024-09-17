@@ -9,7 +9,7 @@ Instance Variables:
 	characterType	<ByteSymbol>	The type of the next character. (e.g. #alphabetic, etc.)
 	classificationTable	<Array of: Symbol>	Mapping from Character values to their characterType.
 	comments	<Collection of: Interval>	Source intervals of scanned comments that must be attached to the next token.
-	nextToken <RBToken>	The ""free"" `next` token, used to store bad comment so no backtracking is needed
+	nextToken <ASTToken>	The ""free"" `next` token, used to store bad comment so no backtracking is needed
 	currentCharacter	<Character>	The character currently being processed.
 	extendedLiterals	<Boolean>	True if IBM-type literals are allowed. In VW, this is false.
 	nameSpaceCharacter	<Character>	The character used to separate namespaces.
@@ -325,8 +325,8 @@ RBScanner >> scanBackFrom: start [
 
 { #category : 'private - scanning' }
 RBScanner >> scanBinary: aClass [
-	"This method isn't supposed to be used in a public context as it accepts any kind of RBValueToken.
-	 The only 2 tokens supposed to be used are RBLiteralToken and RBBinarySelectorToken."
+	"This method isn't supposed to be used in a public context as it accepts any kind of ASTValueToken.
+	 The only 2 tokens supposed to be used are ASTLiteralToken and ASTBinarySelectorToken."
 
 	"This method trims separators but doesn't add comments to the token created."
 
@@ -539,7 +539,7 @@ RBScanner >> scanNumber [
 
 { #category : 'private - scanning' }
 RBScanner >> scanSpecialCharacter [
-	"Every given character gives a RBSpecialCharacterToken with only one character as value except for
+	"Every given character gives an ASTSpecialCharacterToken with only one character as value except for
 	 : followed by = which gives an assignement."
 	"The case of the assignement is the only one consuming more than 1 character."
 	| character |

@@ -1,5 +1,5 @@
 "
-RBSpecialCharacterToken is the first-class representation of special characters.
+ASTSpecialCharacterToken is the first-class representation of special characters.
 
 
 "
