@@ -458,11 +458,7 @@ RBSimpleFormatter >> visitLiteralArrayNode: aRBArrayLiteralNode [
 
 { #category : 'visiting' }
 RBSimpleFormatter >> visitLiteralNode: aLiteralNode [
-	self
-		writeString:
-			(aLiteralNode value isLiteral
-				ifFalse: [ '''<an unprintable nonliteral value>''' ]
-				ifTrue: [ aLiteralNode sourceText ])
+	self writeString: aLiteralNode sourceText
 ]
 
 { #category : 'visiting' }
