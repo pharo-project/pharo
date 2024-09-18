@@ -139,6 +139,21 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	ASTTemporariesErrorNode deprecatedAliases: { #RBTemporariesErrorNode }.
 	ASTInvalidCascadeErrorNode deprecatedAliases: { #RBInvalidCascadeErrorNode }.
 	ASTParseErrorNode deprecatedAliases: { #RBParseErrorNode }.
+	
+	ASTCommentToken deprecatedAliases: { #RBCommentToken}.
+	ASTLiteralToken deprecatedAliases: { #RBLiteralToken}.
+	ASTSpecialCharacterToken deprecatedAliases: { #RBSpecialCharacterToken}.
+	ASTIdentifierToken deprecatedAliases: { #RBIdentifierToken}.
+	ASTNumberLiteralToken deprecatedAliases: { #RBNumberLiteralToken}.
+	ASTToken deprecatedAliases: { #RBToken}.
+	ASTBinarySelectorToken deprecatedAliases: { #RBBinarySelectorToken}.
+	ASTKeywordToken deprecatedAliases: { #RBKeywordToken}.
+	ASTAssignmentToken deprecatedAliases: { #RBAssignmentToken}.
+	ASTErrorToken deprecatedAliases: { #RBErrorToken}.
+	ASTValueToken deprecatedAliases: { #RBValueToken}.
+	ASTEOFToken deprecatedAliases: { #RBEOFToken}.
+	ASTLiteralArrayToken deprecatedAliases: { #RBLiteralArrayToken}.
+	ASTPatternBlockToken deprecatedAliases: { #RBPatternBlockToken}.
 
 	ASTPatternMessageNode deprecatedAliases: { #RBPatternMessageNode }.
 	ASTPatternBlockNode deprecatedAliases: { #RBPatternBlockNode }.

@@ -7,8 +7,8 @@ Instance Variables:
 
 "
 Class {
-	#name : 'RBLiteralToken',
-	#superclass : 'RBValueToken',
+	#name : 'ASTLiteralToken',
+	#superclass : 'ASTValueToken',
 	#instVars : [
 		'stopPosition',
 		'source'
@@ -19,7 +19,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBLiteralToken class >> value: anObject [
+ASTLiteralToken class >> value: anObject [
 	| literal |
 	literal := anObject class == Array
 				ifTrue: [anObject collect: [:each | self value: each]]
@@ -31,12 +31,12 @@ RBLiteralToken class >> value: anObject [
 ]
 
 { #category : 'instance creation' }
-RBLiteralToken class >> value: aString start: anInteger stop: stopInteger [
+ASTLiteralToken class >> value: aString start: anInteger stop: stopInteger [
 	^ self value: aString start: anInteger stop: stopInteger source: nil
 ]
 
 { #category : 'instance creation' }
-RBLiteralToken class >> value: aString start: anInteger stop: stopInteger source: sourceText [
+ASTLiteralToken class >> value: aString start: anInteger stop: stopInteger source: sourceText [
 	^(self new)
 		value: aString
 			start: anInteger
@@ -46,37 +46,37 @@ RBLiteralToken class >> value: aString start: anInteger stop: stopInteger source
 ]
 
 { #category : 'testing' }
-RBLiteralToken >> isLiteralToken [
+ASTLiteralToken >> isLiteralToken [
 	^true
 ]
 
 { #category : 'private' }
-RBLiteralToken >> length [
+ASTLiteralToken >> length [
 	^stopPosition - self start + 1
 ]
 
 { #category : 'accessing' }
-RBLiteralToken >> realValue [
+ASTLiteralToken >> realValue [
 	^value
 ]
 
 { #category : 'accessing' }
-RBLiteralToken >> source [
+ASTLiteralToken >> source [
 	^source
 ]
 
 { #category : 'initialization' }
-RBLiteralToken >> source: aString [
+ASTLiteralToken >> source: aString [
 	source := aString
 ]
 
 { #category : 'accessing' }
-RBLiteralToken >> stop: anObject [
+ASTLiteralToken >> stop: anObject [
 	stopPosition := anObject
 ]
 
 { #category : 'storing' }
-RBLiteralToken >> storeOn: aStream [
+ASTLiteralToken >> storeOn: aStream [
 	value isSymbol
 		ifTrue:
 			[aStream nextPut: $#.
@@ -94,7 +94,7 @@ RBLiteralToken >> storeOn: aStream [
 ]
 
 { #category : 'initialization' }
-RBLiteralToken >> value: aString start: anInteger stop: stopInteger [
+ASTLiteralToken >> value: aString start: anInteger stop: stopInteger [
 	value := aString.
 	sourcePointer := anInteger.
 	stopPosition := stopInteger

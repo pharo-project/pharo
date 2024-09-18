@@ -2,10 +2,10 @@
 RBParser takes a source code string and generates an AST for it. This is a hand-written, recursive descent parser and has been optimized for speed. The simplest way to call this is either 'RBParser parseExpression: aString' if you want the AST for an expression, or 'RBParser parseMethod: aString' if you want to parse an entire method.
 
 Instance Variables:
-	currentToken	<RBToken>	The current token being processed.
+	currentToken	<ASTToken>	The current token being processed.
 	emptyStatements	<Boolean>	True if empty statements are allowed. In IBM, they are, in VW they aren't.
 	errorBlock	<BlockClosure>	The block to evaluate on a syntax error.
-	nextToken	<RBToken>	The next token that will be processed. This allows one-token lookahead.
+	nextToken	<ASTToken>	The next token that will be processed. This allows one-token lookahead.
 	scanner	<RBScanner>	The scanner that generates a stream of tokens to parse.
 	source	<String>	The source code to parse
 	tags	<Collection of: Interval>	The source intervals of the tags appearing at the top of a method (e.g. Primitive calls)
@@ -1206,11 +1206,11 @@ RBParser >> parseVariableNode [
 RBParser >> patchLiteralMessage [
 
 	currentToken value == true
-		ifTrue: [ ^ currentToken := RBIdentifierToken value: 'true' start: currentToken start ].
+		ifTrue: [ ^ currentToken := ASTIdentifierToken value: 'true' start: currentToken start ].
 	currentToken value == false
-		ifTrue: [ ^ currentToken := RBIdentifierToken value: 'false' start: currentToken start ].
+		ifTrue: [ ^ currentToken := ASTIdentifierToken value: 'false' start: currentToken start ].
 	currentToken value
-		ifNil: [ ^ currentToken := RBIdentifierToken value: 'nil' start: currentToken start ]
+		ifNil: [ ^ currentToken := ASTIdentifierToken value: 'nil' start: currentToken start ]
 ]
 
 { #category : 'private' }
@@ -1227,9 +1227,9 @@ RBParser >> patchNegativeLiteral [
 						and: [(source at: (currentToken start min: source size)) = $-]])
 				ifFalse: [^self]].
 	nextToken := currentToken.
-	currentToken := RBBinarySelectorToken value: #- start: nextToken start.
+	currentToken := ASTBinarySelectorToken value: #- start: nextToken start.
 	nextToken value: nextToken value negated.
-	(nextToken isKindOf: RBNumberLiteralToken)
+	(nextToken isKindOf: ASTNumberLiteralToken)
 		ifTrue:
 			[nextToken source: (nextToken source allButFirst)].
 	nextToken start: nextToken start + 1

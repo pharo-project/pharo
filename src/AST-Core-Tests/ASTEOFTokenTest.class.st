@@ -1,5 +1,5 @@
 Class {
-	#name : 'RBEOFTokenTest',
+	#name : 'ASTEOFTokenTest',
 	#superclass : 'TestCase',
 	#instVars : [
 		'token'
@@ -10,31 +10,31 @@ Class {
 }
 
 { #category : 'running' }
-RBEOFTokenTest >> setUp [
+ASTEOFTokenTest >> setUp [
 	super setUp.
-	token := RBEOFToken start: (1 to: 10)
+	token := ASTEOFToken start: (1 to: 10)
 ]
 
 { #category : 'tests' }
-RBEOFTokenTest >> testLength [
+ASTEOFTokenTest >> testLength [
 
 	self assert: token length equals: 0
 ]
 
 { #category : 'tests' }
-RBEOFTokenTest >> testSource [
+ASTEOFTokenTest >> testSource [
 
 	self assert: token source equals: String empty
 ]
 
 { #category : 'tests' }
-RBEOFTokenTest >> testValue [
+ASTEOFTokenTest >> testValue [
 
 	self assert: token value equals: String empty
 ]
 
 { #category : 'tests' }
-RBEOFTokenTest >> testisEOF [
+ASTEOFTokenTest >> testisEOF [
 
 	self assert: token isEOF
 ]

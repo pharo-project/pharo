@@ -54,7 +54,7 @@ ASTCommentNode class >> with: aCommentToken [
 { #category : 'instance creation' }
 ASTCommentNode class >> with: aString at: startPosition [
 
-	^ self with: (RBCommentToken
+	^ self with: (ASTCommentToken
 			   value: aString
 			   start: startPosition
 			   stop: startPosition + aString size - 1)
