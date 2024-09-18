@@ -63,7 +63,6 @@ ClassHierarchyPrinterTest >> testOnlyASTNodes [
 			ASTSelectorNode
 			ASTVariableNode
 				ASTPatternVariableNode
-	RBSlotInitializationNode
 '
 ]
 
