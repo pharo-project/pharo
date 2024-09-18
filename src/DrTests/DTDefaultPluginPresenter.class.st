@@ -153,7 +153,7 @@ DTDefaultPluginPresenter >> initializeItemsListAndLabel [
 		displayBlock: [ :item | item name ];
 		whenSelectionChangedDo: [ self whenItemsSelectionChanged: self selectedItems ];
 		beMultipleSelection;
-		contextMenu: [ (self rootCommandsGroup / 'List items menu') beRoot asMenuPresenter ].
+		actions: (self rootCommandsGroup / 'List items menu') beRoot.
 
 	packagesList
 		whenSelectionChangedDo: [ self whenPackagesSelectionChanged: self packagesSelected ]
@@ -168,7 +168,7 @@ DTDefaultPluginPresenter >> initializePackagesListAndLabel [
 		sortingBlock: #name ascending;
 		displayBlock: [ :package | package name ];
 		beMultipleSelection;
-		contextMenu: [ (self rootCommandsGroup / 'Package menu') beRoot asMenuPresenter ]
+		actions: self rootCommandsGroup / 'Package menu'
 ]
 
 { #category : 'initialization' }
@@ -204,8 +204,7 @@ DTDefaultPluginPresenter >> initializeResultsTreeAndLabel [
 		display: [ :node | node drTestsName ];
 		displayColor: [ :node | node displayColor ];
 		children: [ :node | node subResults ];
-		contextMenu: [
-			(self rootCommandsGroup / 'Results tools') beRoot asMenuPresenter ].
+		actions: self rootCommandsGroup / 'Results tools'.
 
 	resultsList outputActivationPort
 		transmitDo: [
@@ -382,8 +381,7 @@ DTDefaultPluginPresenter >> updateWithResults: someResults [
 	self updateResultViewsDropList.
 	self updateResultLabel.
 	self resultTree: lastResults buildTreeForUI.
-	resultsList contextMenu: [
-		(self rootCommandsGroup / 'Results tools') beRoot asMenuPresenter ]
+	resultsList actions: self rootCommandsGroup / 'Results tools'
 ]
 
 { #category : 'private' }
