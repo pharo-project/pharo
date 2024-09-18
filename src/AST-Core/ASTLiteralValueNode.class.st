@@ -79,12 +79,15 @@ ASTLiteralValueNode >> isString [
 ASTLiteralValueNode >> sourceText [
 
 	sourceText ifNotNil: [ ^ sourceText ].
-	^ String streamContents: [ :aStream |
-		  value class == Character
-			  ifTrue: [ "Character>>storeOn might return `Character space` (or something else) that is not a literal. So, force the `$x` syntax."
+	value isLiteral ifTrue: [  
+		^ String streamContents: [ :aStream |
+		 	 value class == Character
+			  	ifTrue: [ "Character>>storeOn might return `Character space` (or something else) that is not a literal. So, force the `$x` syntax."
 				  aStream nextPut: $$; nextPut: value ]
-			  ifFalse: [ "For other literals, we assume that storeOn returns a valid literal syntactic representation."
-				  value storeOn: aStream ] ]
+			  	ifFalse: [ "For other literals, we assume that storeOn returns a valid literal syntactic representation."
+				 	 value storeOn: aStream ] ] ] .
+		"if we abuse the node to store a normal object (e.g. used for metalinks), do not use #storeOn:"
+	^ '<an unprintable nonliteral value>'
 ]
 
 { #category : 'accessing' }
