@@ -87,7 +87,7 @@ ASTLiteralValueNode >> sourceText [
 			  	ifFalse: [ "For other literals, we assume that storeOn returns a valid literal syntactic representation."
 				 	 value storeOn: aStream ] ] ] .
 		"if we abuse the node to store a normal object (e.g. used for metalinks), do not use #storeOn:"
-	^ '<an unprintable nonliteral value>'
+	^ '''<an unprintable nonliteral value>'''
 ]
 
 { #category : 'accessing' }
