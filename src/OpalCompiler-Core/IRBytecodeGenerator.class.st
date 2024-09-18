@@ -665,6 +665,14 @@ IRBytecodeGenerator >> send: selector toSuperOf: behavior [
 			encoder genSendSuper: index numArgs: nArgs ]
 ]
 
+{ #category : 'encoding' }
+IRBytecodeGenerator >> sendVTable: index args: nArgs [ 
+
+	stack pop: nArgs.
+
+	encoder genSendVTable: index numArgs: nArgs
+]
+
 { #category : 'results' }
 IRBytecodeGenerator >> spurVMHeader: literalsSize [
 	^ (CompiledMethod headerFlagForEncoder: self encoderClass) +

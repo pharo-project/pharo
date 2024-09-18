@@ -408,6 +408,12 @@ IRBuilder >> send: selector toSuperOf: behavior [
 	^self add: (IRInstruction send: selector toSuperOf: behavior)
 ]
 
+{ #category : 'encoding' }
+IRBuilder >> sendVTable: index args: argCount [
+
+	^ self add: (IRInstruction sendVTable: index args: argCount)
+]
+
 { #category : 'mapping' }
 IRBuilder >> sourceByteIndex [
 

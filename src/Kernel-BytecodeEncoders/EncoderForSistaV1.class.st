@@ -1331,6 +1331,15 @@ EncoderForSistaV1 >> genSendSuper: selectorLiteralIndex numArgs: nArgs [
 		nextPut: extendedNArgs + (extendedIndex * 8)
 ]
 
+{ #category : 'generation' }
+EncoderForSistaV1 >> genSendVTable: index numArgs: numArgs [
+
+	self flag: #TODO. "Check the second byte"
+	stream
+		nextPut: 246;
+		nextPut: index << 3 + numArgs
+]
+
 { #category : 'bytecode generation' }
 EncoderForSistaV1 >> genSignedSingleExtendB: extendedIndex [
 	(extendedIndex between: -128 and: 127) ifFalse:

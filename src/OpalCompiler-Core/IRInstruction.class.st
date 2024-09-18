@@ -166,6 +166,15 @@ IRInstruction class >> send: selector toSuperOf: behavior [
 		yourself
 ]
 
+{ #category : 'encoding' }
+IRInstruction class >> sendVTable: index args: argCount [ 
+
+	^ IRSendVTable new
+		index: index;
+		args: argCount;
+		yourself
+]
+
 { #category : 'instance creation' }
 IRInstruction class >> storeInstVar: index [
 	^ IRStoreInstVar new
