@@ -197,7 +197,7 @@ LibTTYTest >> test2 [
 
 	self assertProcessSpawnedWithPseudoTerminalPath: '/bin/doesnotexist'
 		arguments: #('/bin/doesnotexist')
-		environment: Smalltalk os environment
+		environment: Dictionary new
 		input: ''
 		writes: 'Error in tty_spawn at execve(path, argv, envp): No such file or directory' , String crlf
 		hasStatus: 127.
