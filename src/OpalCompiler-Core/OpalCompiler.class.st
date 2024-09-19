@@ -280,7 +280,7 @@ OpalCompiler >> checkNotice: aNotice [
 	"This method handles all the logic of error handling.
 	
 	Error handing in the compiler is only performed at one place, after the parsing/semantic analysis/other parse plugins.
-	Each RBNotice in the AST is then checked with this method.
+	Each ASTNotice in the AST is then checked with this method.
 
 	There is only three outcomes:
 	* If this method returns true (OK), then the work of the compiler can continue.

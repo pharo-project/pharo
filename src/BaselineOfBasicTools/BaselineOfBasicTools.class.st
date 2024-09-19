@@ -140,6 +140,11 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	ASTInvalidCascadeErrorNode deprecatedAliases: { #RBInvalidCascadeErrorNode }.
 	ASTParseErrorNode deprecatedAliases: { #RBParseErrorNode }.
 	
+	ASTErrorNotice deprecatedAliases: { #RBErrorNotice }.
+	ASTWarningNotice deprecatedAliases: { #RBWarningNotice }.
+	ASTSyntaxErrorNotice deprecatedAliases: { #RBSyntaxErrorNotice }.
+	ASTNotice deprecatedAliases: { #RBNotice }.
+	
 	ASTCommentToken deprecatedAliases: { #RBCommentToken}.
 	ASTLiteralToken deprecatedAliases: { #RBLiteralToken}.
 	ASTSpecialCharacterToken deprecatedAliases: { #RBSpecialCharacterToken}.
