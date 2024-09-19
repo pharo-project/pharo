@@ -76,16 +76,16 @@ ASTProgramNode >> addError: anErrorMessage [
 	Semantic passes that check the validity of AST are the targetted clients of this method."
 
 	| notice |
-	notice := RBErrorNotice new messageText: anErrorMessage.
+	notice := ASTErrorNotice new messageText: anErrorMessage.
 	self addNotice: notice.
 	^ notice
 ]
 
 { #category : 'notice' }
-ASTProgramNode >> addNotice: aRBNotice [
+ASTProgramNode >> addNotice: aNotice [
 
-	(self propertyAt: #notices ifAbsentPut: [ OrderedCollection new ]) add: aRBNotice.
-	aRBNotice node: self
+	(self propertyAt: #notices ifAbsentPut: [ OrderedCollection new ]) add: aNotice.
+	aNotice node: self
 ]
 
 { #category : 'replacing' }
@@ -100,7 +100,7 @@ ASTProgramNode >> addWarning: aMessage [
 	| notice |
 	"Add a warning information to the node.
 	Semantic passes that check the validity of AST are the targetted clients of this method."
-	notice := RBWarningNotice new messageText: aMessage.
+	notice := ASTWarningNotice new messageText: aMessage.
 	self addNotice: notice.
 	^ notice
 ]

@@ -92,7 +92,7 @@ ASTParseErrorNode >> initialize [
 
 	super initialize.
 	"Add its own notice"
-	self addNotice: (RBSyntaxErrorNotice new)
+	self addNotice: (ASTSyntaxErrorNotice new)
 ]
 
 { #category : 'errors' }

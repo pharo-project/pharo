@@ -2,27 +2,27 @@
 I am the implicit notice of a ASTParseErrorNode
 "
 Class {
-	#name : 'RBSyntaxErrorNotice',
-	#superclass : 'RBErrorNotice',
+	#name : 'ASTSyntaxErrorNotice',
+	#superclass : 'ASTErrorNotice',
 	#category : 'AST-Core-Notice',
 	#package : 'AST-Core',
 	#tag : 'Notice'
 }
 
 { #category : 'testing' }
-RBSyntaxErrorNotice >> isSyntaxError [
+ASTSyntaxErrorNotice >> isSyntaxError [
 
 	^ true
 ]
 
 { #category : 'accessing' }
-RBSyntaxErrorNotice >> messageText [
+ASTSyntaxErrorNotice >> messageText [
 
 	^ node errorMessage
 ]
 
 { #category : 'error handling' }
-RBSyntaxErrorNotice >> position [
+ASTSyntaxErrorNotice >> position [
 
 	^ node errorPosition
 ]

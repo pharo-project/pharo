@@ -2,7 +2,7 @@
 I represent error and warning information on a AST node.
 "
 Class {
-	#name : 'RBNotice',
+	#name : 'ASTNotice',
 	#superclass : 'Object',
 	#instVars : [
 		'messageText',
@@ -14,7 +14,7 @@ Class {
 }
 
 { #category : 'comparing' }
-RBNotice >> <= other [
+ASTNotice >> <= other [
 
 	self errorLevel = other errorLevel ifFalse: [
 		^ self errorLevel > other errorLevel ]. "Errors before warnings"
@@ -22,7 +22,7 @@ RBNotice >> <= other [
 ]
 
 { #category : 'accessing' }
-RBNotice >> description [
+ASTNotice >> description [
 
 	^ String streamContents: [ :stream |
 		  stream
@@ -51,7 +51,7 @@ RBNotice >> description [
 ]
 
 { #category : 'error handling' }
-RBNotice >> errorLevel [
+ASTNotice >> errorLevel [
 
 	self isSyntaxError ifTrue: [ ^ 3 ].
 	self isError ifTrue: [ ^ 2 ].
@@ -60,68 +60,68 @@ RBNotice >> errorLevel [
 ]
 
 { #category : 'inspecting' }
-RBNotice >> inspectionSource [
+ASTNotice >> inspectionSource [
 
 	<inspectorPresentationOrder: 30 title: 'Source'>
 	^ node inspectionSource
 ]
 
 { #category : 'testing' }
-RBNotice >> isError [
+ASTNotice >> isError [
 
 	^ false
 ]
 
 { #category : 'testing' }
-RBNotice >> isSyntaxError [
+ASTNotice >> isSyntaxError [
 
 	^ false
 ]
 
 { #category : 'testing' }
-RBNotice >> isUndeclaredNotice [
+ASTNotice >> isUndeclaredNotice [
 
 	^ false
 ]
 
 { #category : 'testing' }
-RBNotice >> isWarning [
+ASTNotice >> isWarning [
 
 	^ false
 ]
 
 { #category : 'accessing' }
-RBNotice >> messageText [
+ASTNotice >> messageText [
 
 	^ messageText
 ]
 
 { #category : 'signaling' }
-RBNotice >> messageText: aString [
+ASTNotice >> messageText: aString [
 
 	messageText := aString
 ]
 
 { #category : 'accessing' }
-RBNotice >> node [
+ASTNotice >> node [
 
 	^ node
 ]
 
 { #category : 'accessing' }
-RBNotice >> node: anObject [
+ASTNotice >> node: anObject [
 
 	node := anObject
 ]
 
 { #category : 'error handling' }
-RBNotice >> position [
+ASTNotice >> position [
 
 	^ node start
 ]
 
 { #category : 'printing' }
-RBNotice >> printOn: aStream [
+ASTNotice >> printOn: aStream [
 
 	aStream
 		nextPutAll: self class name;
@@ -133,7 +133,7 @@ RBNotice >> printOn: aStream [
 ]
 
 { #category : 'signalling' }
-RBNotice >> signalError [
+ASTNotice >> signalError [
 	"If a debugger is opened here, it means that a code error (syntax error or semantic error)
 	was uncaught while compiling some code.
 	Inspect `self` to get a view of the problematic source code.
