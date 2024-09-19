@@ -197,7 +197,7 @@ LibTTYTest >> test2 [
 
 	self assertProcessSpawnedWithPseudoTerminalPath: '/bin/doesnotexist'
 		arguments: #('/bin/doesnotexist')
-		environment: Dictionary new
+		environment: (OrderedDictionary with: 'LC_ALL' -> 'C')
 		input: ''
 		writes: 'Error in tty_spawn at execve(path, argv, envp): No such file or directory' , String crlf
 		hasStatus: 127.
