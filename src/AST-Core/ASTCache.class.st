@@ -126,7 +126,7 @@ ASTCache >> at: aCompiledMethod ifAbsentPut: aBlock [
 ]
 
 { #category : 'accessing' }
-ASTCache >> at: aCompiledMethod put: aRBMethodNode [
+ASTCache >> at: aCompiledMethod put: aMethodNode [
 
 	"Cleanup weak AST. Note `associations` return a copy, so the iteration is safe"
 	| weakRef |
@@ -137,9 +137,9 @@ ASTCache >> at: aCompiledMethod put: aRBMethodNode [
 				ifAbsent: [ "prevent TOCTOU" ] ] ].
 
 	weakRef := WeakArray new: 1.
-	weakRef at: 1 put: aRBMethodNode.
+	weakRef at: 1 put: aMethodNode.
 	self weakDictionary at: aCompiledMethod put: weakRef.
-	^ aRBMethodNode
+	^ aMethodNode
 ]
 
 { #category : 'accessing' }

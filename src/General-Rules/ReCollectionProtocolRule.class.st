@@ -30,25 +30,40 @@ ReCollectionProtocolRule class >> uniqueIdentifierName [
 ReCollectionProtocolRule >> initialize [
 
 	super initialize.
-	self 		replace:
-			'`@collection do: [:`each | | `@temps | `@.Statements. `@object add: `@arg ]'
-		with:
-			'`@object addAll: (`@collection collect: [:`each | | `@temps | `@.Statements. `@arg ])';
-			
-		replace: '`@collection do: [:`each | | `@temps |
-			`@.Statements.
-			`@condition ifTrue: [| `@blockTemps |
-					`@.BlockStatements.
-					`@object add: `@arg ] ]'
-		with:
-			'`@object addAll: (`@collection select: [ :`each | | `@temps | `@.Statements. `@condition ifTrue: [| `@blockTemps |
-					`@.BlockStatements] ] )';
-			
-		replace: '`@collection do: [:`each | | `@temps |
-			`@.Statements.
-			`@condition ifFalse: [| `@blockTemps |
-					`@.BlockStatements.
-					`@object add: `@arg ] ]'
-		with: '`@object addAll: (`@collection select: [ :`each | | `@temps | `@.Statements. `@condition ifFalse: [| `@blockTemps |
-					`@.BlockStatements] ] )'
+	self
+		replace: '`@collection
+					do: [:`each |
+						| `@temps |
+						`@.Statements.
+						`@object add: `@arg ]'
+		with: '`@object
+					addAll: (`@collection
+									collect: [:`each |
+										| `@temps |
+										`@.Statements.
+										`@arg ])';
+
+		replace: '`@collection
+						do: [ :`each |
+							| `@temps |
+							`@.Statements.
+							`@condition ifTrue: [ `@object add: `@arg ] ]'
+		with: '`@object
+					addAll: (`@collection
+								select: [ :`each |
+									| `@temps |
+									`@.Statements.
+									`@condition ] )';
+
+		replace: '`@collection
+						do: [ :`each |
+							| `@temps |
+							`@.Statements.
+							`@condition ifFalse: [ `@object add: `@arg ] ]'
+		with: '`@object
+					addAll: (`@collection
+								reject: [ :`each |
+									| `@temps |
+									`@.Statements.
+									`@condition ] )'
 ]

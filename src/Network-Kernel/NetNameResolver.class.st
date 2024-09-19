@@ -305,6 +305,23 @@ NetNameResolver class >> nameForAddress: hostAddress timeout: secs [
 	^result
 ]
 
+{ #category : 'private' }
+NetNameResolver class >> nextSocketAddressInformation [
+
+	| addrSize addr info |
+	addrSize := self primGetAddressInfoSize.
+	addrSize < 0 ifTrue: [^nil].
+	addr := SocketAddress new: addrSize.
+	self primGetAddressInfoResult: addr.
+	info := SocketAddressInformation
+		withSocketAddress: addr
+		family: self primGetAddressInfoFamily
+		type: self primGetAddressInfoType
+		protocol: self primGetAddressInfoProtocol.
+	self primGetAddressInfoNext.
+	^info
+]
+
 { #category : 'primitives' }
 NetNameResolver class >> primAbortLookup [
 	"Abort the current lookup operation, freeing the name resolver for the next query."

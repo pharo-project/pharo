@@ -74,27 +74,27 @@ RTFSelfCallInterpreter >> send: aSelector fromClass: aClass [
 ]
 
 { #category : 'visiting' }
-RTFSelfCallInterpreter >> visitMessageNode: aRBMessageNode [
+RTFSelfCallInterpreter >> visitMessageNode: aMessageNode [
 	| selfSentMethod callNode |
-	aRBMessageNode receiver acceptVisitor: self.
-	aRBMessageNode arguments do: [ :each | each acceptVisitor: self ].
+	aMessageNode receiver acceptVisitor: self.
+	aMessageNode arguments do: [ :each | each acceptVisitor: self ].
 
-	(aRBMessageNode receiver isSelfVariable or: [ aRBMessageNode receiver isSuperVariable ])
+	(aMessageNode receiver isSelfVariable or: [ aMessageNode receiver isSuperVariable ])
 		ifFalse: [ ^ self ].
 
-	selfSentMethod := (aRBMessageNode receiver isSuperVariable
+	selfSentMethod := (aMessageNode receiver isSuperVariable
 		ifTrue: [ selfClass superclass ]
-		ifFalse: [ selfClass ]) lookupSelector: aRBMessageNode selector.
+		ifFalse: [ selfClass ]) lookupSelector: aMessageNode selector.
 
 	selfSentMethod class = RTFMethodTracer
 		ifTrue: [ selfSentMethod := selfSentMethod method ].
 
 	selfSentMethod
 		ifNil: [
-			Warning signal: ('#{1} can not be found in {2} nor in any super class.' format: { aRBMessageNode selector . selfClass name }).
+			Warning signal: ('#{1} can not be found in {2} nor in any super class.' format: { aMessageNode selector . selfClass name }).
 			^ self ].
 
-	callNode := RTFSelfCallNode astNode: aRBMessageNode compiledMethod: selfSentMethod.
+	callNode := RTFSelfCallNode astNode: aMessageNode compiledMethod: selfSentMethod.
 	callStack top addCall: callNode.
 
 	(considerClassesThat value: selfSentMethod methodClass)

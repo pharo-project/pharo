@@ -2,10 +2,10 @@
 RBParser takes a source code string and generates an AST for it. This is a hand-written, recursive descent parser and has been optimized for speed. The simplest way to call this is either 'RBParser parseExpression: aString' if you want the AST for an expression, or 'RBParser parseMethod: aString' if you want to parse an entire method.
 
 Instance Variables:
-	currentToken	<RBToken>	The current token being processed.
+	currentToken	<ASTToken>	The current token being processed.
 	emptyStatements	<Boolean>	True if empty statements are allowed. In IBM, they are, in VW they aren't.
 	errorBlock	<BlockClosure>	The block to evaluate on a syntax error.
-	nextToken	<RBToken>	The next token that will be processed. This allows one-token lookahead.
+	nextToken	<ASTToken>	The next token that will be processed. This allows one-token lookahead.
 	scanner	<RBScanner>	The scanner that generates a stream of tokens to parse.
 	source	<String>	The source code to parse
 	tags	<Collection of: Interval>	The source intervals of the tags appearing at the top of a method (e.g. Primitive calls)
@@ -41,7 +41,7 @@ RBParser class >> parseExpression: aString onError: aBlock [
 
 { #category : 'parsing' }
 RBParser class >> parseFaultyExpression: aString [
-	"parse aString even if syntactically incorrect. Instead of raising an error, we create an AST with RB RBParseErrorNode"
+	"parse aString even if syntactically incorrect. Instead of raising an error, we create an AST with ASTParseErrorNode"
 	^ self new
 		initializeParserWith: aString;
 		parseExpression
@@ -49,7 +49,7 @@ RBParser class >> parseFaultyExpression: aString [
 
 { #category : 'parsing' }
 RBParser class >> parseFaultyMethod: aString [
-	"parse aString even if syntactically incorrect. Instead of raising an error, we create an AST with RB RBParseErrorNode"
+	"parse aString even if syntactically incorrect. Instead of raising an error, we create an AST with ASTarseErrorNode"
 	^ self new
 		initializeParserWith: aString;
 		parseMethod
@@ -135,12 +135,12 @@ RBParser >> addPragma: aPragma [
 
 { #category : 'private - classes' }
 RBParser >> arrayNodeClass [
-	^ RBArrayNode
+	^ ASTArrayNode
 ]
 
 { #category : 'private - classes' }
 RBParser >> assignmentNodeClass [
-	^ RBAssignmentNode
+	^ ASTAssignmentNode
 ]
 
 { #category : 'testing' }
@@ -164,12 +164,12 @@ RBParser >> basicParsePragma [
 
 { #category : 'private - classes' }
 RBParser >> blockNodeClass [
-	^ RBBlockNode
+	^ ASTBlockNode
 ]
 
 { #category : 'private - classes' }
 RBParser >> cascadeNodeClass [
-	^ RBCascadeNode
+	^ ASTCascadeNode
 ]
 
 { #category : 'accessing' }
@@ -179,12 +179,12 @@ RBParser >> currentToken [
 
 { #category : 'private - classes' }
 RBParser >> doItMethodNodeClass [
-	^ RBDoItMethodNode
+	^ ASTDoItMethodNode
 ]
 
 { #category : 'private - classes' }
 RBParser >> englobingErrorNodeClass [
-	^RBEnglobingErrorNode
+	^ASTEnglobingErrorNode
 ]
 
 { #category : 'error handling' }
@@ -208,7 +208,7 @@ RBParser >> errorPosition [
 RBParser >> extractCommentsFrom: aToken [
 
 	aToken comments
-		collect: [:commentToken | RBComment with: commentToken ]
+		collect: [:commentToken | ASTCommentNode with: commentToken ]
 		into: comments
 ]
 
@@ -239,7 +239,7 @@ RBParser >> initializeParserWith: aString [
 
 { #category : 'private - classes' }
 RBParser >> literalArrayNodeClass [
-	^ RBLiteralArrayNode
+	^ ASTLiteralArrayNode
 ]
 
 { #category : 'private - classes' }
@@ -249,17 +249,17 @@ RBParser >> literalNodeClass [
 
 { #category : 'private - classes' }
 RBParser >> literalValueNodeClass [
-	^ RBLiteralValueNode
+	^ ASTLiteralValueNode
 ]
 
 { #category : 'private - classes' }
 RBParser >> messageNodeClass [
-	^ RBMessageNode
+	^ ASTMessageNode
 ]
 
 { #category : 'private - classes' }
 RBParser >> methodNodeClass [
-	^ RBMethodNode
+	^ ASTMethodNode
 ]
 
 { #category : 'private' }
@@ -293,7 +293,7 @@ RBParser >> parseAssignment [
 		err := self parseErrorNode: 'variable expected in assigment'.
 		self step. "Consume the :="
 		node := self parseAssignment. "parse the right side".
-		node := RBAssignmentErrorNode from: err contents: { node }.
+		node := ASTAssignmentErrorNode from: err contents: { node }.
 		node value: ':='.
 		^ node
 	].
@@ -452,7 +452,7 @@ RBParser >> parseCascadeMessage [
 		If in faulty mode, continue the execution and generate a faulty cascade node.
 		Note that this bad cascade node will be added to the list of messages."
 		err := self parseErrorNode: 'Message expected'.
-		node := RBInvalidCascadeErrorNode from: err contents: { node }
+		node := ASTInvalidCascadeErrorNode from: err contents: { node }
 	].
 	receiver := node receiver.
  	messages add: node.
@@ -525,7 +525,7 @@ RBParser >> parseErrorNode: aMessageString [
 	currentToken isError
 		ifTrue: [
 			"The current token is an error, consume it and use its content for the error node."
-			errorNode := RBParseErrorNode new
+			errorNode := ASTParseErrorNode new
 				errorMessage: currentToken cause;
 				value: currentToken value;
 				start: self errorPosition;
@@ -535,7 +535,7 @@ RBParser >> parseErrorNode: aMessageString [
 			^ errorNode].
 	"The current token is not an error but is unexpected. Maybe something is missing?
 	Anyway, the error node is an empty string and the current token will be used to continue the parsing."
-	^ RBParseErrorNode new
+	^ ASTParseErrorNode new
 		errorMessage: aMessageString;
 		value: '' asString;
 		start: self errorPosition;
@@ -658,7 +658,7 @@ RBParser >> parseLiteralArray [
 	scanner state: prevState.
 	self step.
 	faulty ifTrue: [
-		^ RBLiteralArrayErrorNode new
+		^ ASTLiteralArrayErrorNode new
 			value: startToken value asString;
 		 	start: startToken start;
 			contents: literals;
@@ -723,7 +723,7 @@ RBParser >> parseLiteralByteArray [
 	stop := currentToken stop.
 	self step.
 	faulty ifTrue: [
-		^ RBLiteralByteArrayErrorNode new
+		^ ASTLiteralByteArrayErrorNode new
 			value: startToken value asString;
 		 	start: startToken start;
 			contents: stream contents;
@@ -939,7 +939,7 @@ RBParser >> parsePrimitiveObject [
 		| position |
 		position := currentToken start.
 		self step. "@"
-		^ RBAnnotationMarkNode new start: position ].
+		^ ASTAnnotationMarkNode new start: position ].
 
 	":id is only acceptable at the begin of a block. So just consume them as unexpected"
 	((currentToken isSpecial: $:) and: [ self nextToken isIdentifier ])
@@ -947,7 +947,7 @@ RBParser >> parsePrimitiveObject [
 			| start |
 			start := currentToken start.
 			self step. ":"
-			errorNode := RBParseErrorNode new
+			errorNode := ASTParseErrorNode new
 				             errorMessage: 'Unexpected block parameter';
 				             start: start;
 				             errorPosition: start;
@@ -995,7 +995,7 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 				err := self parseErrorNode: 'Missing opener for closer: ', currentToken value asString.
 				"If the parsing failed because it did not match anything, there was nothing before the unexpected closer"
 				contents := startOfStatementToken = currentToken ifTrue: [ #() ] ifFalse: [ { node } ].
-				node := (RBUnfinishedStatementErrorNode from: err contents: contents)
+				node := (ASTUnfinishedStatementErrorNode from: err contents: contents)
 					valueAfter: currentToken value asString;
 					stop: currentToken stop.
 				self step ].
@@ -1004,7 +1004,7 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 	startOfStatementToken = currentToken ifTrue: [
 		"We did not progress, its mean that 1. we have a error node and 2. we are missing something (or found something unexpected, its the same thing)."
 		"Solution to recover. Consume the token to create the statement."
-		node := RBParseErrorNode new
+		node := ASTParseErrorNode new
 			errorMessage: 'Unexpected token';
 			value: currentToken value asString;
 			start: currentToken start;
@@ -1027,7 +1027,7 @@ RBParser >> parseStatementInto: statementList periodList: periods withAcceptedSt
 		 A better design is needed."
 		node isParseError ifFalse: [
 			err := self parseErrorNode: 'End of statement expected'.
-			node := RBUnfinishedStatementErrorNode from: err contents: { node } ]
+			node := ASTUnfinishedStatementErrorNode from: err contents: { node } ]
 	].
 
 	"Then consume all dots and comments coming after this well formed statement, if there was any"
@@ -1171,7 +1171,7 @@ RBParser >> parseUnaryPattern [
 { #category : 'private - parsing' }
 RBParser >> parseUnaryPragma [
 	"Current Token must be an Identifier."
-	"Return an RBPragmaNode."
+	"Return an ASTPragmaNode."
 	| selector |
 	selector := currentToken.
 	self step.
@@ -1206,11 +1206,11 @@ RBParser >> parseVariableNode [
 RBParser >> patchLiteralMessage [
 
 	currentToken value == true
-		ifTrue: [ ^ currentToken := RBIdentifierToken value: 'true' start: currentToken start ].
+		ifTrue: [ ^ currentToken := ASTIdentifierToken value: 'true' start: currentToken start ].
 	currentToken value == false
-		ifTrue: [ ^ currentToken := RBIdentifierToken value: 'false' start: currentToken start ].
+		ifTrue: [ ^ currentToken := ASTIdentifierToken value: 'false' start: currentToken start ].
 	currentToken value
-		ifNil: [ ^ currentToken := RBIdentifierToken value: 'nil' start: currentToken start ]
+		ifNil: [ ^ currentToken := ASTIdentifierToken value: 'nil' start: currentToken start ]
 ]
 
 { #category : 'private' }
@@ -1227,9 +1227,9 @@ RBParser >> patchNegativeLiteral [
 						and: [(source at: (currentToken start min: source size)) = $-]])
 				ifFalse: [^self]].
 	nextToken := currentToken.
-	currentToken := RBBinarySelectorToken value: #- start: nextToken start.
+	currentToken := ASTBinarySelectorToken value: #- start: nextToken start.
 	nextToken value: nextToken value negated.
-	(nextToken isKindOf: RBNumberLiteralToken)
+	(nextToken isKindOf: ASTNumberLiteralToken)
 		ifTrue:
 			[nextToken source: (nextToken source allButFirst)].
 	nextToken start: nextToken start + 1
@@ -1237,12 +1237,12 @@ RBParser >> patchNegativeLiteral [
 
 { #category : 'private - classes' }
 RBParser >> pragmaNodeClass [
-	^ RBPragmaNode
+	^ ASTPragmaNode
 ]
 
 { #category : 'private - classes' }
 RBParser >> returnNodeClass [
-	^ RBReturnNode
+	^ ASTReturnNode
 ]
 
 { #category : 'private - parsing' }
@@ -1275,12 +1275,12 @@ RBParser >> scannerNext [
 
 { #category : 'private - classes' }
 RBParser >> selectorNodeClass [
-	^ RBSelectorNode
+	^ ASTSelectorNode
 ]
 
 { #category : 'private - classes' }
 RBParser >> sequenceNodeClass [
-	^ RBSequenceNode
+	^ ASTSequenceNode
 ]
 
 { #category : 'accessing' }
@@ -1318,5 +1318,5 @@ RBParser >> stepBar [
 
 { #category : 'private - classes' }
 RBParser >> variableNodeClass [
-	^ RBVariableNode
+	^ ASTVariableNode
 ]

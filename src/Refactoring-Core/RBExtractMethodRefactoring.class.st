@@ -128,7 +128,7 @@ RBExtractMethodRefactoring >> checkSingleAssignment: varName [
 				[self
 					refactoringError: 'Cannot extract assignments to temporaries without all references'].
 	extractedParseTree
-		addNode: (RBReturnNode value: (RBVariableNode named: varName)).
+		addNode: (ASTReturnNode value: (ASTVariableNode named: varName)).
 	modifiedParseTree := self parseTreeRewriterClass
 				replace: self methodDelimiter
 				with: varName , ' := ' , self methodDelimiter
@@ -203,13 +203,13 @@ RBExtractMethodRefactoring >> extractMethod [
 		ifTrue: [ self refactoringError: 'Select some code to extract' ].
 	isSequence := extractedParseTree isSequence
 		or: [ extractedParseTree isReturn ].
-	extractedParseTree := RBMethodNode
+	extractedParseTree := ASTMethodNode
 		selector: #value
 		arguments: #()
 		body:
 			(extractedParseTree isSequence
 				ifTrue: [ extractedParseTree ]
-				ifFalse: [ RBSequenceNode
+				ifFalse: [ ASTSequenceNode
 						temporaries: #()
 						statements: (OrderedCollection with: extractedParseTree) ]).
 	extractedParseTree body temporaries
@@ -359,7 +359,7 @@ RBExtractMethodRefactoring >> methodDelimiter [
 RBExtractMethodRefactoring >> nameNewMethod: aSymbol [
 	| args newSend |
 	newExtractedSelector := aSymbol .
-	args := parameters collect: [ :parm | RBVariableNode named: parm ].
+	args := parameters collect: [ :parm | ASTVariableNode named: parm ].
 	extractedParseTree renameSelector: aSymbol andArguments: args asArray.
 	aSymbol numArgs = 0
 		ifTrue: [ modifiedParseTree := RBParseTreeRewriter replace: self methodDelimiter with: 'self ' , aSymbol asString in: modifiedParseTree.

@@ -29,7 +29,7 @@ RBCodeSnippet >> doSemanticAnalysis [
 	"Do the semantic analysis as with the compiler and return the AST of the whole method (possibly a DoIt method)"
 
 	"The responsability of scope and context is far from clear.
-	* using `RBMethodNode>>#doSemanticAnalysis` we cannot configure it.
+	* using `ASTMethodNode>>#doSemanticAnalysis` we cannot configure it.
 	* using `OCASTSemanticAnalyzer` just fails on uninitialised internal thing.
 	So just ask the compiler."
 

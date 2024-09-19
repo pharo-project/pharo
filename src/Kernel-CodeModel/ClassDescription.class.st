@@ -151,9 +151,15 @@ ClassDescription >> allUnreferencedInstanceVariables [
 
 { #category : 'accessing - method dictionary' }
 ClassDescription >> announceRecategorizationOf: compiledMethod oldProtocol: oldProtocol [
-
 	"We do not want to do anything when it comes from Traits."
+
 	compiledMethod isFromTrait ifTrue: [ ^ self ].
+
+	"Next line is to debug a bug with a nil oldProtocol. If we do not get the error before the release of Pharo 13 we can remove this line."
+	oldProtocol ifNil: [
+		self error:
+			'If you encounter this error please report it with the full error! (In Pharo issues or to Cyril Ferlicot) Old protocol is nil but should not be since we are in a recategorization. Stack: 
+		' , thisContext stack asString ].
 
 	self packageOrganizer repackageMethod: compiledMethod oldProtocol: oldProtocol newProtocol: compiledMethod protocol.
 	self codeChangeAnnouncer announce: (MethodRecategorized method: compiledMethod oldProtocol: oldProtocol)

@@ -26,7 +26,8 @@ Class {
 		'aClass',
 		'packageName',
 		'classMethods',
-		'instanceMethods'
+		'instanceMethods',
+		'superclassName'
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
@@ -197,4 +198,10 @@ ReCopyClassRefactoring >> privateTransform [
 ReCopyClassRefactoring >> sourceClass: classToCopy [
 
 	aClass := self classObjectFor: classToCopy
+]
+
+{ #category : 'accessing' }
+ReCopyClassRefactoring >> superclassName: aClassName [ 
+
+	superclassName := aClassName
 ]

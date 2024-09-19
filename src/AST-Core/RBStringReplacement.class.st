@@ -16,9 +16,9 @@ Class {
 		'stopPosition',
 		'string'
 	],
-	#category : 'AST-Core-Nodes',
+	#category : 'AST-Core-Matching',
 	#package : 'AST-Core',
-	#tag : 'Nodes'
+	#tag : 'Matching'
 }
 
 { #category : 'instance creation' }

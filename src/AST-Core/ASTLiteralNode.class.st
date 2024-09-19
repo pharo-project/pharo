@@ -28,8 +28,8 @@ ASTLiteralNode class >> value: aValue [
 	"we check here for Array and ByteArray explicitly, as subclasses should use ASTLiteralNode.
 	using #isByteArray would be inherited by subclasses"
 	^((aValue class == Array or: [aValue class == ByteArray])
-		ifTrue: [RBLiteralArrayNode]
-		ifFalse: [RBLiteralValueNode]) value: aValue
+		ifTrue: [ASTLiteralArrayNode]
+		ifFalse: [ASTLiteralValueNode]) value: aValue
 ]
 
 { #category : 'comparing' }

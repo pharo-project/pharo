@@ -19,6 +19,12 @@ CmCommandAborted >> initialize [
 		reason: 'Unkown reason'
 ]
 
+{ #category : 'notification' }
+CmCommandAborted >> notifyUserOfCommand: aCommand [
+
+	
+]
+
 { #category : 'accessing' }
 CmCommandAborted >> reason [
 	^ reason

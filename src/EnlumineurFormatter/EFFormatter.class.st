@@ -1086,7 +1086,7 @@ EFFormatter >> formatArray: anArrayNode [
 	| current |
 	codeStream nextPutAll: self spacesInsideArray.
 	(anArrayNode statements
-		reject: [ :each | each class = RBLiteralValueNode ])
+		reject: [ :each | each class = ASTLiteralValueNode ])
 		ifEmpty: [ anArrayNode statements
 				do: [ :each | 
 					current := each.
@@ -2184,9 +2184,7 @@ EFFormatter >> visitLiteralArrayNode: aRBArrayLiteralNode [
 
 { #category : 'visiting' }
 EFFormatter >> visitLiteralNode: aLiteralNode [
-	aLiteralNode value isLiteral
-		ifFalse: [ self writeString: '''<an unprintable nonliteral value>''' ]
-		ifTrue: [ self writeString: aLiteralNode sourceText ]
+		self writeString: aLiteralNode sourceText
 ]
 
 { #category : 'visiting' }

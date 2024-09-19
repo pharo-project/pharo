@@ -775,7 +775,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithLastReturnAndNonLocalR
 							instVar := true ifFalse: [ ^ 1 ].
 							instVar isOdd ifTrue: [ instVar := instVar + 1 ].
 							^ self end'.
-	sequence := RBSequenceNode statements: ast body statements allButFirst.
+	sequence := ASTSequenceNode statements: ast body statements allButFirst.
 	sequence parent: ast body.
 	self assert: sequence hasSameExitPoint 
 ]
@@ -788,7 +788,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithLastReturnExpectTrue [
 							self foo.
 							instVar := true ifFalse: [ 1 ].
 							^ 2'.
-	sequence := RBSequenceNode statements: ast body statements allButFirst.
+	sequence := ASTSequenceNode statements: ast body statements allButFirst.
 	sequence parent: ast body.
 	self assert: sequence hasSameExitPoint 
 ]
@@ -801,7 +801,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutAnyReturnsExpectTru
 							self foo.
 							instVar := true ifFalse: [ 1 ]
 							self end'.
-	sequence := RBSequenceNode statements: ast body statements allButFirst.
+	sequence := ASTSequenceNode statements: ast body statements allButFirst.
 	sequence parent: ast body.
 	self assert: sequence hasSameExitPoint 
 ]
@@ -817,7 +817,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutLastReturnAndMultip
 								whileTrue: [ instVar < 10 ].
 							instVar := true ifFalse: [ ^ 1 ].
 							self end'.
-	sequence := RBSequenceNode statements: ast body statements allButLast.
+	sequence := ASTSequenceNode statements: ast body statements allButLast.
 	sequence parent: ast body.
 	self deny: sequence hasSameExitPoint 
 ]
@@ -830,7 +830,7 @@ ASTProgramNodeTest >> testHasSameExitPointWhenSequenceWithoutLastReturnAndNonLoc
 							self foo.
 							instVar := true ifFalse: [ ^ 1 ]
 							self end'.
-	sequence := RBSequenceNode statements: ast body statements allButFirst.
+	sequence := ASTSequenceNode statements: ast body statements allButFirst.
 	sequence parent: ast body.
 	self deny: sequence hasSameExitPoint 
 ]
@@ -1292,11 +1292,11 @@ ASTProgramNodeTest >> testReplaceMethodBinary [
 	self assert: tree newSource equals: '~~ "1" first "2" ^ "3" 4 "5"'.
 
 	tree := self parseMethod: '= "1" anObject "2" ^ "3" 4 "5"'.
-	tree renameSelector: #assert: andArguments: (Array with: (RBVariableNode named: 'first')).
+	tree renameSelector: #assert: andArguments: (Array with: (ASTVariableNode named: 'first')).
 	self assert: tree newSource equals: 'assert: "1" first "2" ^ "3" 4 "5"'.
 
 	tree := self parseMethod: '= "1" anObject "2" ^ "3" 4 "5"'.
-	tree renameSelector: #assert:description: andArguments: (Array with: (RBVariableNode named: 'first') with: (RBVariableNode named: 'second')).
+	tree renameSelector: #assert:description: andArguments: (Array with: (ASTVariableNode named: 'first') with: (ASTVariableNode named: 'second')).
 	self assert: tree newSource equals: 'assert: first description: second "2" ^ "3" 4 "5"'
 ]
 
@@ -1312,11 +1312,11 @@ ASTProgramNodeTest >> testReplaceMethodKeyword [
 	self assert: tree newSource equals: '~~ "1" first "2" ^ "3" 4 "5"'.
 
 	tree := self parseMethod: 'deny: "1" anObject "2" ^ "3" 4 "5"'.
-	tree renameSelector: #assert: andArguments: (Array with: (RBVariableNode named: 'first')).
+	tree renameSelector: #assert: andArguments: (Array with: (ASTVariableNode named: 'first')).
 	self assert: tree newSource equals: 'assert: "1" first "2" ^ "3" 4 "5"'.
 
 	tree := self parseMethod: 'deny: "1" anObject "2" ^ "3" 4 "5"'.
-	tree renameSelector: #assert:description: andArguments: (Array with: (RBVariableNode named: 'first') with: (RBVariableNode named: 'second')).
+	tree renameSelector: #assert:description: andArguments: (Array with: (ASTVariableNode named: 'first') with: (ASTVariableNode named: 'second')).
 	self assert: tree newSource equals: 'assert: first description: second "2" ^ "3" 4 "5"'
 ]
 

@@ -4,6 +4,5 @@ Extension { #name : 'ClyTextEditor' }
 ClyTextEditor >> browseFullClass [
 	"self lineSelectAndEmptyCheck: [^ self]."
 
-	self evaluateSelectionAndDo: [:result |
-		self browser browseClassNamed: result class instanceSide name ]
+	self evaluateSelectionAndDo: [ :result | self browser browseClass: result class instanceSide ]
 ]

@@ -6,7 +6,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'node',
-		'builder'
+		'builder',
+		'callback'
 	],
 	#category : 'System-Settings-Browser',
 	#package : 'System-Settings-Browser'
@@ -20,6 +21,19 @@ SettingNodeBuilder >> asParentWhile: aBlock [
 { #category : 'accessing' }
 SettingNodeBuilder >> builder: aTreeBuilder [
 	builder := aTreeBuilder
+]
+
+{ #category : 'initialization' }
+SettingNodeBuilder >> buttonLabel: aString [ 
+	"Set the current's node declaration button label to aString"
+
+	node item actionLabel: aString
+]
+
+{ #category : 'accessing' }
+SettingNodeBuilder >> callback: aFullBlockClosure [ 
+
+	callback := aFullBlockClosure 
 ]
 
 { #category : 'declaration accessing' }

@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFNewValueReification class >> entities [
-	^{RBVariableNode. RBAssignmentNode}
+	^{ASTVariableNode. ASTAssignmentNode}
 ]
 
 { #category : 'plugin interface' }
@@ -20,14 +20,14 @@ RFNewValueReification class >> key [
 ]
 
 { #category : 'generate' }
-RFNewValueReification >> genForRBAssignmentNode [
-	^RBVariableNode named: #RFNewValueReificationVar
+RFNewValueReification >> genForASTAssignmentNode [
+	^ASTVariableNode named: #RFNewValueReificationVar
 ]
 
 { #category : 'generate' }
-RFNewValueReification >> genForRBVariableNode [
+RFNewValueReification >> genForASTVariableNode [
 	"same as #value for variableNodes"
-	^RBVariableNode named: #RFNewValueReificationVar
+	^ASTVariableNode named: #RFNewValueReificationVar
 ]
 
 { #category : 'preamble' }
