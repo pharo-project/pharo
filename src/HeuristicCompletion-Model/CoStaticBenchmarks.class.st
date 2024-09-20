@@ -131,7 +131,7 @@ CoStaticBenchmarks >> initialize [
 	builder := CoASTHeuristicsResultSetBuilder new
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'inspector' }
 CoStaticBenchmarks >> inspectionResults [
 
 	<inspectorPresentationOrder: 0 title: 'Results'>
