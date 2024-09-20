@@ -595,36 +595,33 @@ ReleaseTest >> testThatThereAreNoSelectorsRemainingThatAreSentButNotImplemented 
 
 { #category : 'tests - variables' }
 ReleaseTest >> testUndeclared [
-	| undeclaredVariables validExceptions remaining description  |
 
-	"we compile a second method with the undeclared #undeclaredStubInstVar1 to trigger the code path of removing twice in #cleanOutUndeclared"
+	| undeclaredVariables validExceptions remaining description |
+	[ "we compile a second method with the undeclared #undeclaredStubInstVar1 to trigger the code path of removing twice in #cleanOutUndeclared"
 	self class compile: 'methodForTest ^undeclaredStubInstVar1'.
 	Smalltalk cleanOutUndeclared.
-	undeclaredVariables := Undeclared associations select: [:each |
-			each isUndeclaredVariable].
+	undeclaredVariables := Undeclared associations select: [ :each | each isUndeclaredVariable ].
 
-	validExceptions := { #undeclaredStubInstVar1 . #undeclaredStubInstVar2 }.
+	validExceptions := { #undeclaredStubInstVar1. #undeclaredStubInstVar2. #Gofer }. "The laste one is for Smalltalk CI and our external projects... But we should find a better solution at some point."
 
 	"for now we filter by name, maybe filtering by variable would be better"
-	remaining := undeclaredVariables reject: [ :each | validExceptions includes: each name  ].
+	remaining := undeclaredVariables reject: [ :each | validExceptions includes: each name ].
 
 	"we look for one of the using methods of the undeclared var and report that,
 	this should be enough to fix it quickly"
 	description := String streamContents: [ :stream |
-			stream nextPutAll: 'Found undeclared Variables: '.
-			remaining do: [ :variable  |
-				| method |
-				method := variable usingMethods anyOne.
-				stream
-					cr
-					nextPutAll: variable name;
-					nextPutAll: ' in: ';
-					print: method methodClass;
-					nextPutAll: '>>';
-					print: method selector]].
+		               stream nextPutAll: 'Found undeclared Variables: '.
+		               remaining do: [ :variable |
+			               | method |
+			               method := variable usingMethods anyOne.
+			               stream cr
+				               nextPutAll: variable name;
+				               nextPutAll: ' in: ';
+				               print: method methodClass;
+				               nextPutAll: '>>';
+				               print: method selector ] ].
 
-	self assert: remaining isEmpty description: description.
-	self class removeSelector: #methodForTest.
+	self assert: remaining isEmpty description: description ] ensure: [ self class removeSelector: #methodForTest ]
 ]
 
 { #category : 'tests - package' }
