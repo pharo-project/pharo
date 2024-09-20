@@ -30,7 +30,7 @@ MessageDialogWindow >> defaultTextFont [
 MessageDialogWindow >> icon [
 	"Answer an icon for the receiver."
 
-	^ self iconNamed: #infoIcon
+	^ self iconNamed: #info
 ]
 
 { #category : 'accessing' }
