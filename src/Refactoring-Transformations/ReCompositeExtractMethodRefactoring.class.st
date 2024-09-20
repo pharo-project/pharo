@@ -291,7 +291,7 @@ ReCompositeExtractMethodRefactoring >> generateNewMethodWith: aMethodName [
 	args := aMethodName arguments collect: [ :p |
 		        ASTVariableNode named: p ].
 
-	newMethodNode := RBMethodNode
+	newMethodNode := ASTMethodNode
 		                 selector: newSelector
 		                 arguments: args asArray
 		                 body: (subtree isSequence

@@ -28,6 +28,15 @@ ByteArrayTest >> setUp [
 ]
 
 { #category : 'tests' }
+ByteArrayTest >> testAsInteger [ 
+	self assert: #[122] asInteger equals: 122.
+	self assert: #[122 8] asInteger equals: 31240.
+	self assert: #[0] asInteger equals: 0.
+	self assert: #[255] asInteger equals: 255.
+	self assert: #[] asInteger equals: 0
+]
+
+{ #category : 'tests' }
 ByteArrayTest >> testBooleanAt [
 	"Checking the result of ByteArray>>#booleanAt on a few instances of ByteArray. It should return false on 0-valued bytes and true on all other bytes (according to the integer to boolean C convention)."
 

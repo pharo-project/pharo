@@ -116,7 +116,7 @@ ReflectiveMethod >> generatePrimitiveWrapper [
 		                  variable: (ASTVariableNode named: #RFReifyValueVar)
 		                  value: send.
 
-	wrapperMethod := RBMethodNode
+	wrapperMethod := ASTMethodNode
 		                 selector: ast selector
 		                 arguments: ast arguments
 		                 body: assignmentNode asSequenceNode.

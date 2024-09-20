@@ -427,7 +427,7 @@ RBParserTest >> testCreationProtocol [
 				arguments: (Array with: (ASTLiteralNode value: 0)))
 		to: (self parserClass parseExpression: 'self + 0').
 	messageNode := ASTMessageNode receiver: (ASTVariableNode selfNode) selector: (ASTSelectorNode value: #foo).
-	self compare: (RBMethodNode selector: #bar
+	self compare: (ASTMethodNode selector: #bar
 				body: (ASTSequenceNode statements: (OrderedCollection
 								with: (ASTCascadeNode messages: (OrderedCollection with: messageNode with: messageNode)))))
 		to: (self parserClass parseMethod: 'bar self foo; foo')
@@ -1472,7 +1472,7 @@ RBParserTest >> testParseRegistersTheSourceInMethodNode [
 RBParserTest >> testParseUnfinishedBlockWithFaultyBody [
 	| node unfinishedBlockExp missingArgExp unfinishedBlockAndMissingArgExp validBlock unfinishedBlockWithReturnExp|
 	"Parsing a block as a faulty expression, where the block body is faulty and there is a missing closing bracket,
-the whole expression is replaced by a single RBParseErrorNode, this makes it difficult for the highlighter to
+the whole expression is replaced by a single ASTParseErrorNode, this makes it difficult for the highlighter to
 indicate the invalid expression."
 	unfinishedBlockExp := '[:x | x missingArg: 3. '.
 	missingArgExp := '[:x | x missingArg: . ]'.

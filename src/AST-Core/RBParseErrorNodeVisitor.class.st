@@ -1,5 +1,5 @@
 "
-Visit any RBParseErrorNode in the syntax tree and evaluate a generic block
+Visit any ASTParseErrorNode in the syntax tree and evaluate a generic block
 "
 Class {
 	#name : 'RBParseErrorNodeVisitor',

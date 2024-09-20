@@ -6,7 +6,7 @@ by the parser for all variables that aren't special builtin types like self/supe
 just ASTVariableNodes until the semantic analyser can deduce the type.
 
 Instance Variables:
-	name	<RBValueToken>	the variable's name I represent
+	name	<ASTValueToken>	the variable's name I represent
 	nameStart <Integer>	the position where I was found at the source code
 
 "

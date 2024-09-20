@@ -26,9 +26,9 @@ a sequence of expressions
 - ASTSequenceNode
 or a block or Method
 - ASTBlockNode
-- RBMethodNode
+- ASTMethodNode
 
-These nodes are part of a class hierarchy starting with ASTProgramNode an abstract class defining the common operations needed for all nodes. Every node knows about its child nodes, the source code location, any comment attached (comment prior to this node in the source code, or for RBMethodNodes the "method comment" line), and the type (by its subclass) - see the is-Methods in "testing"-protocol.
+These nodes are part of a class hierarchy starting with ASTProgramNode an abstract class defining the common operations needed for all nodes. Every node knows about its child nodes, the source code location, any comment attached (comment prior to this node in the source code, or for ASTMethodNodes the "method comment" line), and the type (by its subclass) - see the is-Methods in "testing"-protocol.
 
 Keep in mind that the syntax tree is created from the source code only and may not distinguish all possible type information without actually analyzing the semantic context. For example, a global variable is represented as RBGlobalNode, but just from parsing an expression, the AST only knows that this is a ASTVariableNode. You need to call doSemanticAnalysis on the parse tree to convert variable nodes into the  type they represent in the code.
 
@@ -54,7 +54,7 @@ Therefor a parser first translates the source code into an abstract syntax tree 
 
 The tree consists of nodes for every source code element, tagged it with some "type" information (the node subclass), source code location, and optional properties. And it represents the whole source code structure. 
 
-For example, the AST for the source code of a method has a RBMethodNode with child nodes RBArgument for the arguments (if any) and a ASTSequenceNode for the code body. The ASTSequenceNode has child nodes for any
+For example, the AST for the source code of a method has a ASTMethodNode with child nodes RBArgument for the arguments (if any) and a ASTSequenceNode for the code body. The ASTSequenceNode has child nodes for any
 defined temporaries and the actual code, ASTAssignmentNode for variable assignments, ASTMessageNode for message sends.
 
 This is how the structure for Numbers #sgn method AST looks:
@@ -66,7 +66,7 @@ RBParser parseMethod:'sign
 	^0'
 ```
 ```
-|->RBMethodNode sign
+|->ASTMethodNode sign
   |->ASTSequenceNode self > 0 ifTrue: [ ^ 1 ]. self < 0 ifTrue: [ ^ -1 ]. ^ 0
     |->ASTMessageNode ifTrue:
       |->ASTMessageNode >

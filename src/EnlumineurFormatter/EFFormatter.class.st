@@ -2184,9 +2184,7 @@ EFFormatter >> visitLiteralArrayNode: aRBArrayLiteralNode [
 
 { #category : 'visiting' }
 EFFormatter >> visitLiteralNode: aLiteralNode [
-	aLiteralNode value isLiteral
-		ifFalse: [ self writeString: '''<an unprintable nonliteral value>''' ]
-		ifTrue: [ self writeString: aLiteralNode sourceText ]
+		self writeString: aLiteralNode sourceText
 ]
 
 { #category : 'visiting' }

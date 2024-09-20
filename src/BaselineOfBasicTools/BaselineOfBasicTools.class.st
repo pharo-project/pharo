@@ -124,6 +124,41 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	ASTSelectorNode deprecatedAliases: { #RBSelectorNode }.
 	ASTPragmaNode deprecatedAliases: { #RBPragmaNode }.
 	ASTSequenceNode deprecatedAliases: { #RBSequenceNode }.
+	ASTAnnotationMarkNode deprecatedAliases: { #RBAnnotationMarkNode }.
+	ASTMethodNode deprecatedAliases: { #RBMethodNode }.
+	ASTDoItMethodNode deprecatedAliases: { #RBDoItMethodNode }.
+	ASTEnglobingErrorNode deprecatedAliases: { #RBEnglobingErrorNode }.
+	ASTArrayErrorNode deprecatedAliases: { #RBArrayErrorNode }.
+	ASTUnfinishedStatementErrorNode deprecatedAliases: { #RBUnfinishedStatementErrorNode }.
+	ASTLiteralByteArrayErrorNode deprecatedAliases: { #RBLiteralByteArrayErrorNode }.
+	ASTPragmaErrorNode deprecatedAliases: { #RBPragmaErrorNode }.
+	ASTLiteralArrayErrorNode deprecatedAliases: { #RBLiteralArrayErrorNode }.
+	ASTParenthesesErrorNode deprecatedAliases: { #RBParenthesesErrorNode }.
+	ASTAssignmentErrorNode deprecatedAliases: { #RBAssignmentErrorNode }.
+	ASTBlockErrorNode deprecatedAliases: { #RBBlockErrorNode }.
+	ASTTemporariesErrorNode deprecatedAliases: { #RBTemporariesErrorNode }.
+	ASTInvalidCascadeErrorNode deprecatedAliases: { #RBInvalidCascadeErrorNode }.
+	ASTParseErrorNode deprecatedAliases: { #RBParseErrorNode }.
+	
+	ASTErrorNotice deprecatedAliases: { #RBErrorNotice }.
+	ASTWarningNotice deprecatedAliases: { #RBWarningNotice }.
+	ASTSyntaxErrorNotice deprecatedAliases: { #RBSyntaxErrorNotice }.
+	ASTNotice deprecatedAliases: { #RBNotice }.
+	
+	ASTCommentToken deprecatedAliases: { #RBCommentToken}.
+	ASTLiteralToken deprecatedAliases: { #RBLiteralToken}.
+	ASTSpecialCharacterToken deprecatedAliases: { #RBSpecialCharacterToken}.
+	ASTIdentifierToken deprecatedAliases: { #RBIdentifierToken}.
+	ASTNumberLiteralToken deprecatedAliases: { #RBNumberLiteralToken}.
+	ASTToken deprecatedAliases: { #RBToken}.
+	ASTBinarySelectorToken deprecatedAliases: { #RBBinarySelectorToken}.
+	ASTKeywordToken deprecatedAliases: { #RBKeywordToken}.
+	ASTAssignmentToken deprecatedAliases: { #RBAssignmentToken}.
+	ASTErrorToken deprecatedAliases: { #RBErrorToken}.
+	ASTValueToken deprecatedAliases: { #RBValueToken}.
+	ASTEOFToken deprecatedAliases: { #RBEOFToken}.
+	ASTLiteralArrayToken deprecatedAliases: { #RBLiteralArrayToken}.
+	ASTPatternBlockToken deprecatedAliases: { #RBPatternBlockToken}.
 
 	ASTPatternMessageNode deprecatedAliases: { #RBPatternMessageNode }.
 	ASTPatternBlockNode deprecatedAliases: { #RBPatternBlockNode }.

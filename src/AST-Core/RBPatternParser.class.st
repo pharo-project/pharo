@@ -90,7 +90,7 @@ RBPatternParser >> parsePrimitiveLiteral [
 				ifTrue:
 					[self step.
 					^node].
-			currentToken := RBLiteralToken
+			currentToken := ASTLiteralToken
 						value: currentToken value asSymbol
 						start: currentToken start
 						stop: currentToken stop].

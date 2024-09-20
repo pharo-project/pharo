@@ -55,7 +55,7 @@ DebugPointNodeTarget >> node: aNode [
 { #category : 'removing' }
 DebugPointNodeTarget >> removeFromMethod: aMethod for: aDebugPoint [
 
-	aDebugPoint remove
+	aDebugPoint removeWithoutUninstall
 ]
 
 { #category : 'accessing' }

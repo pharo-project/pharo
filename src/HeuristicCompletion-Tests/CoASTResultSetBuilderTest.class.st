@@ -112,7 +112,7 @@ CoASTResultSetBuilderTest >> testBuildMethodHeuristic [
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBMethodNode new;
+		node: ASTMethodNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #method
@@ -125,7 +125,7 @@ CoASTResultSetBuilderTest >> testBuildParseErrorHeuristic [
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBParseErrorNode new;
+		node: ASTParseErrorNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #error
