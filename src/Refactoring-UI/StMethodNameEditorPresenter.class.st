@@ -156,30 +156,27 @@ StMethodNameEditorPresenter >> argumentsList [
 ]
 
 { #category : 'accessing' }
-StMethodNameEditorPresenter >> argumentsListMenu [
-	^ self newMenu
-		addGroup: [ :aGroup |
-			aGroup
-				addItem: [ :anItem |
-					anItem
-						name: 'Rename';
-						visibleIf: [ argumentsList selectedItem canBeRenamed ];
-						iconName: #edit;
-						action: [ self renameArgument: argumentsList selectedItem ] ];
-				addItem: [ :anItem |
-					anItem
-						name: 'Add';
-						visibleIf: [ self canAddArgs ];
-						iconName: #add;
-						action: [ self addArgumentAfter: argumentsList selectedItem ] ];
-				addItem: [ :anItem |
-					anItem
-						name: 'Remove';
-						visibleIf: [ argumentsList selectedItem canBeRemoved ];
-						shortcut: $x meta;
-						iconName: #remove;
-						description: 'Remove argument';
-						action: [ self removeArgument: argumentsList selectedItem ] ] ]
+StMethodNameEditorPresenter >> argumentsListActions [
+
+	^ SpActionGroup new
+		addActionWith: [ :anItem | anItem
+			name: 'Rename';
+			actionEnabled: [ argumentsList selectedItem canBeRenamed ];
+			iconName: #edit;
+			action: [ self renameArgument: argumentsList selectedItem ] ];
+		addActionWith: [ :anItem | anItem
+			name: 'Add';
+			actionEnabled: [ self canAddArgs ];
+			iconName: #add;
+			action: [ self addArgumentAfter: argumentsList selectedItem ] ];
+		addActionWith: [ :anItem | anItem
+			name: 'Remove';
+			actionEnabled: [ argumentsList selectedItem canBeRemoved ];
+			shortcutKey: $x actionModifier;
+			iconName: #remove;
+			description: 'Remove argument';
+			action: [ self removeArgument: argumentsList selectedItem ] ];
+		yourself
 ]
 
 { #category : 'accessing' }
@@ -229,11 +226,12 @@ StMethodNameEditorPresenter >> computePermutation [
 StMethodNameEditorPresenter >> connectPresenters [
 
 	selectorInput
-		bindKeyCombination: Character cr asKeyCombination
-		toAction: [ :p | self renameMethodAndClose: self owner ];
-
-		bindKeyCombination: Character escape asKeyCombination
-			toAction: [ self owner triggerCancelAction; close ]
+		addShortcutWith: [ :action | action 
+			shortcutKey: Character cr asKeyCombination;
+			action: [ self renameMethodAndClose: self owner ] ];
+		addShortcutWith: [ :action | action 
+			shortcutKey: Character escape asKeyCombination;
+			action: [ self owner triggerCancelAction; close ] ]
 ]
 
 { #category : 'layout' }
@@ -320,8 +318,10 @@ StMethodNameEditorPresenter >> initializeArgumentsList [
 		model ifEmpty: [
 			upButton disable.
 			downButton disable ] ].
-	argumentsList items: (methodName arguments collect: [:arg | RBArgumentName name: arg]);
-		contextMenu: self argumentsListMenu.
+	argumentsList 
+		items: (methodName arguments collect: [ :arg | RBArgumentName name: arg ]);
+		actions: self argumentsListActions.
+		
 	argumentsList items ifNotEmpty: [ argumentsList selectIndex: 1 ]
 ]
 
