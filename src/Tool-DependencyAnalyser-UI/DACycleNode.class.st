@@ -11,8 +11,7 @@ Class {
 
 { #category : 'building-menu' }
 DACycleNode >> addMenuEntriesOn: aMenu [
-	
-	self
+	"no menu"
 ]
 
 { #category : 'accessing' }

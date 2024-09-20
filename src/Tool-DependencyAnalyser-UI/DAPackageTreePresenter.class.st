@@ -24,40 +24,6 @@ DAPackageTreePresenter class >> isAbstract [
 	^self == DAPackageTreePresenter
 ]
 
-{ #category : 'actions' }
-DAPackageTreePresenter >> addDependenciesOptionsFor: selectedNodes on: menuGroup [
-	| namesOfSelected |
-	(self areClassToDependencyNodes: selectedNodes)
-		ifTrue: [
-			namesOfSelected := selectedNodes collect: [ :package | package content theClass ].
-			menuGroup
-				addMenuItem:
-					(SpMenuItemPresenter new
-						name: 'Browse dependencies from class';
-						action: [ self openTreeFor: namesOfSelected ]) ]
-]
-
-{ #category : 'actions' }
-DAPackageTreePresenter >> addPackageOptionsFor: selectedNodes on: menuGroup [
-
-	| selectedPackageNames |
-	(self arePackageNodes: selectedNodes) ifFalse: [ ^ self ].
-
-	selectedPackageNames := selectedNodes collect: [ :packageNode |
-		                        packageNode packageName ].
-	menuGroup addMenuItem: (SpMenuItemPresenter new
-			 name: 'Browse scoped dependencies';
-			 action: [
-				 (DAPackageDependenciesPresenter onPackagesNamed:
-						  selectedPackageNames) open ]).
-	selectedNodes size > 1 ifTrue: [
-		menuGroup addMenuItem: (SpMenuItemPresenter new
-				 name: 'Find cycles among packages';
-				 action: [
-					 (DACycleDetectionPresenter onPackagesNamed: selectedPackageNames)
-						 open ]) ]
-]
-
 { #category : 'testing' }
 DAPackageTreePresenter >> areClassToDependencyNodes: aCollectionOfItem [
 	^ aCollectionOfItem allSatisfy: [ :node |  node isClassToDependencyNode ]
@@ -65,6 +31,7 @@ DAPackageTreePresenter >> areClassToDependencyNodes: aCollectionOfItem [
 
 { #category : 'testing' }
 DAPackageTreePresenter >> arePackageNodes: aCollectionOfItem [
+
 	^ aCollectionOfItem allSatisfy: [ :node |  node isPackageNode ]
 ]
 
@@ -108,9 +75,12 @@ DAPackageTreePresenter >> defaultFormat [
 
 { #category : 'initialization' }
 DAPackageTreePresenter >> initializePresenters [
-	tree := self newTree
+
+	tree := self newTree	
 		beMultipleSelection;
-		bindKeyCombination: $b meta toAction: [ self selectedItemFromTree spawnNewBrowser ];
+		addShortcutWith: [ :action | action 
+			shortcutKey: $b actionModifier;
+			action: [ self selectedItemFromTree spawnNewBrowser ] ];
 		children: [ :node | node buildChildren ];
 		display: [ :node | node label ];
 		displayIcon: [ :node | node icon ];
@@ -124,21 +94,6 @@ DAPackageTreePresenter >> initializePresenters [
 		yourself.
 
 	browser := Smalltalk tools browser onDefaultEnvironment
-]
-
-{ #category : 'actions' }
-DAPackageTreePresenter >> loadMenuForSelectedItem [
-
-	| menu selectedNodes |
-	menu := self newMenu.
-
-	selectedNodes := self selectedItemsFromTree.
-	menu addGroup: [ :menuGroup |
-		self addPackageOptionsFor: selectedNodes on: menuGroup.
-		self addDependenciesOptionsFor: selectedNodes asSet on: menuGroup.
-		selectedNodes size = 1 ifTrue: [
-			selectedNodes first addMenuEntriesOn: menuGroup ] ].
-	^ menu
 ]
 
 { #category : 'actions' }
