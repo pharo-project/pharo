@@ -140,14 +140,20 @@ SycRefactoringPreviewPresenter >> command: aCommand [
 
 { #category : 'initialization' }
 SycRefactoringPreviewPresenter >> connectPresenters [
-	table bindKeyCombination: Character backspace asShortcut
-		toAction: [ self toggleSelectionOf: table selectedItem ].
+
+	table 
+		addShortcutWith: [ :action | action 
+			shortcutKey: Character backspace asKeyCombination;
+			action: [ self toggleSelectionOf: table selectedItem ] ].
 
 	{ table . scopeDropList . diffPresenter } do: [ :each |
-		each bindKeyCombination: Character cr asKeyCombination
-			toAction: [ self owner triggerOkAction; close ];
-		bindKeyCombination: Character escape asKeyCombination
-			toAction: [ self owner triggerCancelAction; close ] ]
+		each
+			addShortcutWith: [ :action | action 
+				shortcutKey: Character cr asKeyCombination;
+				action: [ self owner triggerOkAction; close ] ];
+			addShortcutWith: [ :action | action 
+				shortcutKey: Character escape asKeyCombination;
+				action: [ self owner triggerCancelAction; close ] ] ]
 ]
 
 { #category : 'accessing' }
