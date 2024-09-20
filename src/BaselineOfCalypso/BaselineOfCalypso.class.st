@@ -98,9 +98,6 @@ BaselineOfCalypso >> baseline: spec [
 			package: #'Calypso-SystemPlugins-Deprecation-Queries-Tests'
 			with: [
 				spec requires: #( #'Calypso-SystemPlugins-Deprecation-Queries' ) ];
-			package: #'Calypso-SystemPlugins-FileOut-Browser' with: [
-				spec requires: #( #'Calypso-SystemPlugins-FileOut-Queries'
-						   #'Calypso-SystemTools-Core' ) ];
 			package: #'Calypso-SystemPlugins-FileOut-Queries';
 			package: 'Calypso-SystemPlugins-InheritanceAnalysis-Browser'
 			with: [
@@ -230,7 +227,6 @@ BaselineOfCalypso >> baseline: spec [
 				   #'Calypso-SystemTools-OldToolCompatibillity'
 				   #'Calypso-SystemPlugins-Critic-Browser'
 				   'Calypso-SystemPlugins-InheritanceAnalysis-Browser'
-				   #'Calypso-SystemPlugins-FileOut-Browser'
 				   #'Calypso-SystemPlugins-MethodDiffTool'
 				   #'Calypso-SystemPlugins-Deprecation-Browser'
 				   #'Calypso-SystemPlugins-Reflectivity-Browser'
