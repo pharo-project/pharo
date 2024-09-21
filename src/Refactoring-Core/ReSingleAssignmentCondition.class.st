@@ -2,8 +2,8 @@ Class {
 	#name : 'ReSingleAssignmentCondition',
 	#superclass : 'ReReifiedCondition',
 	#instVars : [
-		'parseTree',
-		'variableName'
+		'variableName',
+		'definingNode'
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
@@ -13,20 +13,25 @@ Class {
 { #category : 'checking' }
 ReSingleAssignmentCondition >> check [
 
-	| searcher matchesCount |
-	searcher := parseTree.
-	matchesCount := 0.
-	searcher 
+	| searcher |
+	searcher := RBAbstractTransformation new parseTreeSearcher.
+	searcher
 		matches: variableName , ' := ``@object'
-		do: [ :aNode | matchesCount := matchesCount + 1 ].
-	^ matchesCount = 1
+		do: [ :aNode :answer | answer + 1 ].
+	^ (searcher executeTree: definingNode initialAnswer: 0) = 1 
+
 ]
 
-{ #category : 'initialization' }
-ReSingleAssignmentCondition >> initialize: aVariableName parseTree: aParseTree [
+{ #category : 'accessing' }
+ReSingleAssignmentCondition >> definingNode: aDefiningNode [
 
-	variableName := aVariableName.
-	parseTree := aParseTree
+	definingNode := aDefiningNode
+]
+
+{ #category : 'accessing' }
+ReSingleAssignmentCondition >> variableName: aVariableName [
+
+	variableName := aVariableName 
 ]
 
 { #category : 'displaying' }

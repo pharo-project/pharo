@@ -42,14 +42,11 @@ RBInlineTemporaryRefactoring >> applicabilityPreconditions [
 	
 	^ {
 		(ReDefinesSelectorsCondition new definesSelectors: (Array with: selector) in: class).
-		(ReIsValidInstanceVariableName new name: assignmentNode variable name; check).
-		(ReBlockCondition new 
-			block: [
-				(ReSingleAssignmentCondition new 
-					initialize: assignmentNode name parseTree: self parseTreeSearcher; check).
-				(ReVariablesNotReadBeforeWrittenCondition new 
-					variables: {assignmentNode variable name}; subtree: sourceTree; check).
-				true]).
+		(ReIsValidInstanceVariableName new name: assignmentNode variable name).
+		(ReSingleAssignmentCondition new
+			variableName: assignmentNode variable name; definingNode: sourceTree).
+		(ReVariablesNotReadBeforeWrittenCondition new 
+			variables: {assignmentNode variable name}; subtree: sourceTree)
 	}
 ]
 
