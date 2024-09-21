@@ -5,6 +5,21 @@ Class {
 	#package : 'Refactoring-Core-Tests'
 }
 
+{ #category : 'tests - fixture' }
+ReSingleAssignmentConditionTest >> multipleAssignmentMethod [
+
+	| testVariable |
+	testVariable := 1.
+	testVariable := 2.
+]
+
+{ #category : 'tests - fixture' }
+ReSingleAssignmentConditionTest >> singleAssignmentMethod [
+
+	| testVariable |
+	testVariable := 1.
+]
+
 { #category : 'tests' }
 ReSingleAssignmentConditionTest >> testMultipleAssignment [
 
