@@ -38,31 +38,16 @@ RBInlineTemporaryRefactoring class >> model: aRBSmalltalk inline: anInterval fro
 ]
 
 { #category : 'preconditions' }
-RBInlineTemporaryRefactoring >> applicabilityPreconditions [
-
+RBInlineTemporaryRefactoring >> applicabilityPreconditions [ 
+	
 	^ {
-		  (RBCondition definesSelector: selector in: class).
-		  (RBCondition withBlock: [
-			   self checkSelectedInterval.
-			   true ]) }
-]
-
-{ #category : 'preconditions' }
-RBInlineTemporaryRefactoring >> checkSelectedInterval [
-
-	sourceTree := class parseTreeForSelector: selector.
-	sourceTree ifNil: [ self refactoringError: 'Could not parse source' ].
-	assignmentNode := sourceTree whichNodeIsContainedBy: sourceInterval.
-	assignmentNode isAssignment
-		ifFalse: [ self refactoringError: 'The selected node is not an assignment statement' ].
-	definingNode := assignmentNode whoDefines:
-		                assignmentNode variable name.
-	self hasOnlyOneAssignment
-		ifFalse: [ self refactoringError: 'There are multiple assignments to the variable' ].
-	( RBReadBeforeWrittenTester
-		isVariable: assignmentNode variable name
-		writtenBeforeReadIn: definingNode )
-		ifFalse: [ self refactoringError: 'The variable is possible read before it is assigned' ]
+		(ReDefinesSelectorsCondition new definesSelectors: (Array with: selector) in: class).
+		(ReIsValidInstanceVariableName new name: assignmentNode variable name).
+		(ReSingleAssignmentCondition new
+			variableName: assignmentNode variable name; definingNode: sourceTree).
+		(ReVariablesNotReadBeforeWrittenCondition new 
+			variables: {assignmentNode variable name}; subtree: sourceTree)
+	}
 ]
 
 { #category : 'transforming' }
@@ -70,21 +55,25 @@ RBInlineTemporaryRefactoring >> compileMethod [
 	class compileTree: sourceTree
 ]
 
-{ #category : 'testing' }
-RBInlineTemporaryRefactoring >> hasOnlyOneAssignment [
-	| searcher |
-	searcher := self parseTreeSearcher.
-	searcher
-		matches: assignmentNode variable name , ' := ``@object'
-		do: [ :aNode :answer | answer + 1 ].
-	^ (searcher executeTree: definingNode initialAnswer: 0) == 1
-]
-
 { #category : 'initialization' }
 RBInlineTemporaryRefactoring >> inline: anInterval from: aSelector in: aClass [
 	class := self classObjectFor: aClass.
 	selector := aSelector.
 	sourceInterval := anInterval
+]
+
+{ #category : 'transforming' }
+RBInlineTemporaryRefactoring >> prepareForExecution [
+	
+	sourceTree := class parseTreeForSelector: selector.
+	sourceTree ifNil: [ self refactoringError: 'Could not parse source' ].
+	
+	assignmentNode := sourceTree whichNodeIsContainedBy: sourceInterval.
+	assignmentNode isAssignment
+		ifFalse: [ self refactoringError: 'The selected node is not an assignment statement' ].
+		
+	definingNode := assignmentNode whoDefines:
+		                assignmentNode variable name.
 ]
 
 { #category : 'transforming' }
