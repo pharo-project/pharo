@@ -196,17 +196,17 @@ ase try to rewrite the signature as a whole, what unfortunately drops the commen
 	[ (oldIntervals size = self keywordsPositions size and: [ oldArguments size = arguments size ])
 		ifTrue: [
 			self selectorParts keysAndValuesDo: [ :index :part |
-				self addReplacement: (RBStringReplacement
+				self addReplacement: (ASTStringReplacement
 					replaceFrom: (oldIntervals at: index) first
 					to: (oldIntervals at: index) last
 					with: part) ].
 			oldArguments with: arguments do: [ :old :new |
-				self addReplacement: (RBStringReplacement
+				self addReplacement: (ASTStringReplacement
 					replaceFrom: old start
 					to: old stop
 					with: new name) ] ]
 		ifFalse: [
-			self addReplacement: (RBStringReplacement
+			self addReplacement: (ASTStringReplacement
 				replaceFrom: oldIntervals first first
 				to: (oldArguments notEmpty
 					ifTrue: [ oldArguments last stop ]
@@ -322,9 +322,9 @@ ASTMethodNode >> extractSubtreeWith: aSourceCode [
 		ifTrue: [ ^ nil ].
 	extractedTree := extractedTree isSequence
 		ifTrue:
-			[ RBParseTreeSearcher treeMatchingStatements: aSourceCode in: self ]
+			[ ASTParseTreeSearcher treeMatchingStatements: aSourceCode in: self ]
 		ifFalse:
-			[ RBParseTreeSearcher treeMatching: aSourceCode in: self ].	"or: [aTree isReturn]"
+			[ ASTParseTreeSearcher treeMatching: aSourceCode in: self ].	"or: [aTree isReturn]"
 	^ extractedTree
 		"ifNotNil: [ extractedTree parent: (self parentOfSubtree: extractedTree) ]"
 ]
@@ -598,11 +598,11 @@ ASTMethodNode >> removePragmaNamed: aPragmaName [
 ASTMethodNode >> removeSubtree: aTree [
 
 	^ aTree isReturn
-		ifTrue: [ RBParseTreeRewriter
+		ifTrue: [ ASTParseTreeRewriter
 					 replace: aTree formattedCode
 					 with: '' in: self
 					 onInterval: aTree sourceInterval ]
-		ifFalse: [ RBParseTreeRewriter
+		ifFalse: [ ASTParseTreeRewriter
 					  replaceStatements: aTree formattedCode
 		 			  with: '' in: self
 					  onInterval: aTree sourceInterval ]
@@ -730,7 +730,7 @@ ASTMethodNode >> temporaryNames [
 ASTMethodNode >> variableWith: aSymbol [
 
 	| matcher block |
-	matcher := RBParseTreeSearcher new.
+	matcher := ASTParseTreeSearcher new.
 	block := [ :aNode :answer | aNode ].
 
 	matcher

@@ -7,8 +7,8 @@ Instance Variables:
 
 "
 Class {
-	#name : 'RBSearchRule',
-	#superclass : 'RBParseTreeRule',
+	#name : 'ASTSearchRule',
+	#superclass : 'ASTParseTreeRule',
 	#instVars : [
 		'answerBlock'
 	],
@@ -18,40 +18,40 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBSearchRule class >> searchFor: aString thenDo: aBlock [
+ASTSearchRule class >> searchFor: aString thenDo: aBlock [
 	^self new searchFor: aString thenDo: aBlock
 ]
 
 { #category : 'instance creation' }
-RBSearchRule class >> searchForMethod: aString thenDo: aBlock [
+ASTSearchRule class >> searchForMethod: aString thenDo: aBlock [
 	^self new searchForMethod: aString thenDo: aBlock
 ]
 
 { #category : 'instance creation' }
-RBSearchRule class >> searchForTree: aBRProgramNode thenDo: aBlock [
+ASTSearchRule class >> searchForTree: aBRProgramNode thenDo: aBlock [
 	^self new searchForTree: aBRProgramNode thenDo: aBlock
 ]
 
 { #category : 'testing' }
-RBSearchRule >> canMatch: aProgramNode [
+ASTSearchRule >> canMatch: aProgramNode [
 	owner answer: (answerBlock value: aProgramNode value: owner answer).
 	^true
 ]
 
 { #category : 'private - searching' }
-RBSearchRule >> searchFor: aString thenDo: aBlock [
+ASTSearchRule >> searchFor: aString thenDo: aBlock [
 	self searchString: aString.
 	answerBlock := aBlock
 ]
 
 { #category : 'private - searching' }
-RBSearchRule >> searchForMethod: aString thenDo: aBlock [
+ASTSearchRule >> searchForMethod: aString thenDo: aBlock [
 	self methodSearchString: aString.
 	answerBlock := aBlock
 ]
 
 { #category : 'private - searching' }
-RBSearchRule >> searchForTree: aBRProgramNode thenDo: aBlock [
+ASTSearchRule >> searchForTree: aBRProgramNode thenDo: aBlock [
 	searchTree := aBRProgramNode.
 	answerBlock := aBlock
 ]

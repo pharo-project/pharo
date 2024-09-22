@@ -31,7 +31,7 @@ RBMatchVisitor >> initialize [
 RBMatchVisitor >> replace: temp with: aString [
 	|definingNode|
 	definingNode := temp whoDefines: temp name.
-	(RBParseTreeRewriter rename: temp name to: aString) executeTree: definingNode
+	(ASTParseTreeRewriter rename: temp name to: aString) executeTree: definingNode
 ]
 
 { #category : 'visiting' }

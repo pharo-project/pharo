@@ -9,7 +9,7 @@ Instance Variables:
 
 "
 Class {
-	#name : 'RBStringReplacement',
+	#name : 'ASTStringReplacement',
 	#superclass : 'Object',
 	#instVars : [
 		'startPosition',
@@ -22,7 +22,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBStringReplacement class >> replaceFrom: startInteger to: stopInteger with: aString [
+ASTStringReplacement class >> replaceFrom: startInteger to: stopInteger with: aString [
 	^(self new)
 		startPosition: startInteger;
 		stopPosition: stopInteger;
@@ -31,31 +31,31 @@ RBStringReplacement class >> replaceFrom: startInteger to: stopInteger with: aSt
 ]
 
 { #category : 'accessing' }
-RBStringReplacement >> startPosition [
+ASTStringReplacement >> startPosition [
 	^startPosition
 ]
 
 { #category : 'initialization' }
-RBStringReplacement >> startPosition: anInteger [
+ASTStringReplacement >> startPosition: anInteger [
 	startPosition := anInteger
 ]
 
 { #category : 'accessing' }
-RBStringReplacement >> stopPosition [
+ASTStringReplacement >> stopPosition [
 	^stopPosition
 ]
 
 { #category : 'initialization' }
-RBStringReplacement >> stopPosition: anInteger [
+ASTStringReplacement >> stopPosition: anInteger [
 	stopPosition := anInteger
 ]
 
 { #category : 'accessing' }
-RBStringReplacement >> string [
+ASTStringReplacement >> string [
 	^string
 ]
 
 { #category : 'initialization' }
-RBStringReplacement >> string: aString [
+ASTStringReplacement >> string: aString [
 	string := aString
 ]

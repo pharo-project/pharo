@@ -143,6 +143,15 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	ASTAbstractFormatter deprecatedAliases: { #RBAbstractFormatter }.
 	ASTSimpleFormatter deprecatedAliases: { #RBSimpleFormatter }.
 	
+	ASTParseTreeSearcher deprecatedAliases: { #RBParseTreeSearcher }.
+	ASTParseTreeRule deprecatedAliases: { #RBParseTreeRule }.
+	ASTReplaceRule deprecatedAliases: { #RBReplaceRule }.
+	ASTSearchRule deprecatedAliases: { #RBSearchRule }.
+	ASTBlockReplaceRule deprecatedAliases: { #RBBlockReplaceRule }.
+	ASTParseTreeRewriter deprecatedAliases: { #RBParseTreeRewriter }.
+	ASTStringReplacement deprecatedAliases: { #RBStringReplacement }.
+	ASTStringReplaceRule deprecatedAliases: { #RBStringReplaceRule }.
+	
 	ASTErrorNotice deprecatedAliases: { #RBErrorNotice }.
 	ASTWarningNotice deprecatedAliases: { #RBWarningNotice }.
 	ASTSyntaxErrorNotice deprecatedAliases: { #RBSyntaxErrorNotice }.

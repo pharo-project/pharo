@@ -62,7 +62,7 @@ Supported charcters are listed below:
 		
 "
 Class {
-	#name : 'RBParseTreeSearcher',
+	#name : 'ASTParseTreeSearcher',
 	#superclass : 'RBProgramNodeVisitor',
 	#instVars : [
 		'searches',
@@ -77,7 +77,7 @@ Class {
 }
 
 { #category : 'private' }
-RBParseTreeSearcher class >> buildSelectorString: aSelector [
+ASTParseTreeSearcher class >> buildSelectorString: aSelector [
 	| stream keywords |
 	aSelector numArgs = 0 ifTrue: [^aSelector].
 	stream := String new writeStream.
@@ -94,7 +94,7 @@ RBParseTreeSearcher class >> buildSelectorString: aSelector [
 ]
 
 { #category : 'private' }
-RBParseTreeSearcher class >> buildSelectorTree: aSelector [
+ASTParseTreeSearcher class >> buildSelectorTree: aSelector [
 	aSelector isEmpty ifTrue: [^nil].
 	^RBParser parseRewriteExpression: '``@receiver '
 				, (self buildSelectorString: aSelector)
@@ -102,14 +102,14 @@ RBParseTreeSearcher class >> buildSelectorTree: aSelector [
 ]
 
 { #category : 'private' }
-RBParseTreeSearcher class >> buildTree: aString method: aBoolean [
+ASTParseTreeSearcher class >> buildTree: aString method: aBoolean [
 	^aBoolean
 		ifTrue: [RBParser parseRewriteMethod: aString]
 		ifFalse: [RBParser parseRewriteExpression: aString]
 ]
 
 { #category : 'instance creation' }
-RBParseTreeSearcher class >> getterMethod: aVarName [
+ASTParseTreeSearcher class >> getterMethod: aVarName [
 	^ self new
 		matchesMethod: '`method ^' , aVarName do: [:aNode :ans | aNode selector];
 		matchesMethod: '`method ^' , aVarName, ' ifNil:[ `@expr]' do: [:aNode :ans | aNode selector];
@@ -117,7 +117,7 @@ RBParseTreeSearcher class >> getterMethod: aVarName [
 ]
 
 { #category : 'instance creation' }
-RBParseTreeSearcher class >> justSendsSuper [
+ASTParseTreeSearcher class >> justSendsSuper [
 	^ self new
 		matchesAnyMethodOf: #(
 			'`@method: `@args ^ super `@method: `@args'
@@ -127,7 +127,7 @@ RBParseTreeSearcher class >> justSendsSuper [
 ]
 
 { #category : 'instance creation' }
-RBParseTreeSearcher class >> returnSetterMethod: aVarName [
+ASTParseTreeSearcher class >> returnSetterMethod: aVarName [
 	^(self new)
 		matchesMethod: '`method: `Arg ^' , aVarName , ' := `Arg'
 			do: [:aNode :ans | aNode selector];
@@ -135,7 +135,7 @@ RBParseTreeSearcher class >> returnSetterMethod: aVarName [
 ]
 
 { #category : 'instance creation' }
-RBParseTreeSearcher class >> setterMethod: aVarName [
+ASTParseTreeSearcher class >> setterMethod: aVarName [
 	^(self new)
 		matchesAnyMethodOf: (Array with: '`method: `Arg ' , aVarName , ' := `Arg'
 					with: '`method: `Arg ^' , aVarName , ' := `Arg')
@@ -144,7 +144,7 @@ RBParseTreeSearcher class >> setterMethod: aVarName [
 ]
 
 { #category : 'accessing' }
-RBParseTreeSearcher class >> treeMatching: aString in: aParseTree [
+ASTParseTreeSearcher class >> treeMatching: aString in: aParseTree [
 	self new
 		matches: aString do: [:aNode :answer | ^aNode];
 		executeTree: aParseTree.
@@ -152,7 +152,7 @@ RBParseTreeSearcher class >> treeMatching: aString in: aParseTree [
 ]
 
 { #category : 'accessing' }
-RBParseTreeSearcher class >> treeMatchingStatements: subtreeSourceString in: aParseTree [
+ASTParseTreeSearcher class >> treeMatchingStatements: subtreeSourceString in: aParseTree [
 	| notifier subtree |
 	notifier := self new.
 	subtree := RBParser parseExpression: subtreeSourceString.
@@ -173,53 +173,53 @@ RBParseTreeSearcher class >> treeMatchingStatements: subtreeSourceString in: aPa
 ]
 
 { #category : 'accessing' }
-RBParseTreeSearcher >> addArgumentRule: aParseTreeRule [
+ASTParseTreeSearcher >> addArgumentRule: aParseTreeRule [
 	argumentSearches add: aParseTreeRule.
 	aParseTreeRule owner: self
 ]
 
 { #category : 'accessing' }
-RBParseTreeSearcher >> addArgumentRules: ruleCollection [
+ASTParseTreeSearcher >> addArgumentRules: ruleCollection [
 	ruleCollection do: [:each | self addArgumentRule: each]
 ]
 
 { #category : 'accessing' }
-RBParseTreeSearcher >> addRule: aParseTreeRule [
+ASTParseTreeSearcher >> addRule: aParseTreeRule [
 	searches add: aParseTreeRule.
 	aParseTreeRule owner: self
 ]
 
 { #category : 'accessing' }
-RBParseTreeSearcher >> addRules: ruleCollection [
+ASTParseTreeSearcher >> addRules: ruleCollection [
 	ruleCollection do: [:each | self addRule: each]
 ]
 
 { #category : 'search' }
-RBParseTreeSearcher >> addSearch: anAssociation [
+ASTParseTreeSearcher >> addSearch: anAssociation [
 	"Create a search rule whose pattern is the association key and action is the association value."
 
 	self matches: anAssociation key do: anAssociation value
 ]
 
 { #category : 'search' }
-RBParseTreeSearcher >> addSearches: aCollectionOfAssociations [
+ASTParseTreeSearcher >> addSearches: aCollectionOfAssociations [
 	"Defines matching rules based on the list of Association (pattern * action)."
 
 	aCollectionOfAssociations do: [ :each | self addSearch: each ]
 ]
 
 { #category : 'accessing' }
-RBParseTreeSearcher >> answer [
+ASTParseTreeSearcher >> answer [
 	^answer
 ]
 
 { #category : 'accessing' }
-RBParseTreeSearcher >> answer: anObject [
+ASTParseTreeSearcher >> answer: anObject [
 	answer := anObject
 ]
 
 { #category : 'testing' }
-RBParseTreeSearcher >> canMatchMethod: aCompiledMethod [
+ASTParseTreeSearcher >> canMatchMethod: aCompiledMethod [
 	| actualMessages |
 	self messages isEmpty
 		ifTrue: [ ^ true ].
@@ -229,19 +229,19 @@ RBParseTreeSearcher >> canMatchMethod: aCompiledMethod [
 ]
 
 { #category : 'accessing' }
-RBParseTreeSearcher >> context [
+ASTParseTreeSearcher >> context [
 	^context
 ]
 
 { #category : 'accessing' }
-RBParseTreeSearcher >> executeMethod: aParseTree initialAnswer: anObject [
+ASTParseTreeSearcher >> executeMethod: aParseTree initialAnswer: anObject [
 	answer := anObject.
 	searches detect: [:each | (each performOn: aParseTree) isNotNil] ifNone: [].
 	^answer
 ]
 
 { #category : 'accessing' }
-RBParseTreeSearcher >> executeTree: aParseTree [
+ASTParseTreeSearcher >> executeTree: aParseTree [
 	"Save our current context, in case someone is performing another search inside a match."
 
 	| oldContext |
@@ -253,22 +253,22 @@ RBParseTreeSearcher >> executeTree: aParseTree [
 ]
 
 { #category : 'accessing' }
-RBParseTreeSearcher >> executeTree: aParseTree initialAnswer: aValue [
+ASTParseTreeSearcher >> executeTree: aParseTree initialAnswer: aValue [
 	answer := aValue.
 	^self executeTree: aParseTree
 ]
 
 { #category : 'private' }
-RBParseTreeSearcher >> foundMatch [
+ASTParseTreeSearcher >> foundMatch [
 ]
 
 { #category : 'testing' }
-RBParseTreeSearcher >> hasRules [
+ASTParseTreeSearcher >> hasRules [
 	^searches notEmpty
 ]
 
 { #category : 'initialization' }
-RBParseTreeSearcher >> initialize [
+ASTParseTreeSearcher >> initialize [
 	super initialize.
 	context := SmallDictionary new.
 	searches := OrderedCollection new.
@@ -276,7 +276,7 @@ RBParseTreeSearcher >> initialize [
 ]
 
 { #category : 'private' }
-RBParseTreeSearcher >> lookForMoreMatchesInContext: oldContext [
+ASTParseTreeSearcher >> lookForMoreMatchesInContext: oldContext [
 	oldContext keysAndValuesDo:
 			[:key :value |
 			(key isString not and: [key recurseInto])
@@ -284,56 +284,56 @@ RBParseTreeSearcher >> lookForMoreMatchesInContext: oldContext [
 ]
 
 { #category : 'searching' }
-RBParseTreeSearcher >> matches: aPatternedString do: aBlock [
+ASTParseTreeSearcher >> matches: aPatternedString do: aBlock [
 	"Configure the receiver to execute the block when the pattern will match a tree during the actual matching phase (see method executeTree:). A better name for this method could be ifMatches:do:.
 	aPattern can be any tree with patterns: '`@x' or '{ `@x . `@m}"
-	self addRule: (RBSearchRule searchFor: aPatternedString thenDo: aBlock)
+	self addRule: (ASTSearchRule searchFor: aPatternedString thenDo: aBlock)
 ]
 
 { #category : 'searching' }
-RBParseTreeSearcher >> matchesAnyArgumentOf: stringCollection do: aBlock [
+ASTParseTreeSearcher >> matchesAnyArgumentOf: stringCollection do: aBlock [
 	stringCollection do: [:each | self matchesArgument: each do: aBlock]
 ]
 
 { #category : 'searching' }
-RBParseTreeSearcher >> matchesAnyMethodOf: aStringCollection do: aBlock [
+ASTParseTreeSearcher >> matchesAnyMethodOf: aStringCollection do: aBlock [
 	aStringCollection do: [:each | self matchesMethod: each do: aBlock]
 ]
 
 { #category : 'searching' }
-RBParseTreeSearcher >> matchesAnyOf: aStringCollection do: aBlock [
+ASTParseTreeSearcher >> matchesAnyOf: aStringCollection do: aBlock [
 	aStringCollection do: [:each | self matches: each do: aBlock]
 ]
 
 { #category : 'searching' }
-RBParseTreeSearcher >> matchesAnyTreeOf: treeCollection do: aBlock [
+ASTParseTreeSearcher >> matchesAnyTreeOf: treeCollection do: aBlock [
 	treeCollection do: [:each | self matchesTree: each do: aBlock]
 ]
 
 { #category : 'searching' }
-RBParseTreeSearcher >> matchesArgument: aString do: aBlock [
+ASTParseTreeSearcher >> matchesArgument: aString do: aBlock [
 
-	self addArgumentRule: (RBSearchRule searchFor: aString thenDo: aBlock)
+	self addArgumentRule: (ASTSearchRule searchFor: aString thenDo: aBlock)
 ]
 
 { #category : 'searching' }
-RBParseTreeSearcher >> matchesArgumentTree: aBRProgramNode do: aBlock [
+ASTParseTreeSearcher >> matchesArgumentTree: aBRProgramNode do: aBlock [
 	self
-		addArgumentRule: (RBSearchRule searchForTree: aBRProgramNode thenDo: aBlock)
+		addArgumentRule: (ASTSearchRule searchForTree: aBRProgramNode thenDo: aBlock)
 ]
 
 { #category : 'searching' }
-RBParseTreeSearcher >> matchesMethod: aString do: aBlock [
-	self addRule: (RBSearchRule searchForMethod: aString thenDo: aBlock)
+ASTParseTreeSearcher >> matchesMethod: aString do: aBlock [
+	self addRule: (ASTSearchRule searchForMethod: aString thenDo: aBlock)
 ]
 
 { #category : 'searching' }
-RBParseTreeSearcher >> matchesTree: aBRProgramNode do: aBlock [
-	self addRule: (RBSearchRule searchForTree: aBRProgramNode thenDo: aBlock)
+ASTParseTreeSearcher >> matchesTree: aBRProgramNode do: aBlock [
+	self addRule: (ASTSearchRule searchForTree: aBRProgramNode thenDo: aBlock)
 ]
 
 { #category : 'accessing' }
-RBParseTreeSearcher >> messages [
+ASTParseTreeSearcher >> messages [
 	messages ifNotNil: [^messages].
 	argumentSearches notEmpty ifTrue: [^messages := #()].
 	messages := Set new.
@@ -349,7 +349,7 @@ RBParseTreeSearcher >> messages [
 ]
 
 { #category : 'private' }
-RBParseTreeSearcher >> performSearches: aSearchCollection on: aNode [
+ASTParseTreeSearcher >> performSearches: aSearchCollection on: aNode [
 	| value |
 	aSearchCollection do: [ :aSearchRule|
 		value := aSearchRule performOn: aNode.
@@ -360,7 +360,7 @@ RBParseTreeSearcher >> performSearches: aSearchCollection on: aNode [
 ]
 
 { #category : 'private' }
-RBParseTreeSearcher >> recusivelySearchInContext [
+ASTParseTreeSearcher >> recusivelySearchInContext [
 	"We need to save the matched context since the other searches might overwrite it."
 
 	| oldContext |
@@ -371,13 +371,13 @@ RBParseTreeSearcher >> recusivelySearchInContext [
 ]
 
 { #category : 'accessing - context' }
-RBParseTreeSearcher >> variableNamed: aString [
+ASTParseTreeSearcher >> variableNamed: aString [
 
 	^ (context associations detect: [ :assoc | assoc key name = aString  ]) value
 ]
 
 { #category : 'visiting' }
-RBParseTreeSearcher >> visitArgumentNode: aNode [
+ASTParseTreeSearcher >> visitArgumentNode: aNode [
 	| value |
 	value := self performSearches: argumentSearches on: aNode.
 	^ value
@@ -388,7 +388,7 @@ RBParseTreeSearcher >> visitArgumentNode: aNode [
 ]
 
 { #category : 'visiting' }
-RBParseTreeSearcher >> visitNode: aNode [
+ASTParseTreeSearcher >> visitNode: aNode [
 	| value |
 	value := self performSearches: searches on: aNode.
 	^ value

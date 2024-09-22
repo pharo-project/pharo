@@ -46,7 +46,7 @@ RBParseTreeRewriterTest >> parserClass [
 { #category : 'running' }
 RBParseTreeRewriterTest >> setUp [
 	super setUp.
-	rewriter := RBParseTreeRewriter new
+	rewriter := ASTParseTreeRewriter new
 ]
 
 { #category : 'tests - ok' }
@@ -236,7 +236,7 @@ self match.'.
 	replace := '`msg
 `@.statements.
 `object class.'.
-	rewriter := RBParseTreeRewriter new.
+	rewriter := ASTParseTreeRewriter new.
 	rewriter replaceMethod: search with: replace.
 	rewriter executeTree: ast.
 	"all statement nodes of the original AST still have the same parent"
@@ -246,7 +246,7 @@ self match.'.
 { #category : 'tests - to be refined' }
 RBParseTreeRewriterTest >> testRewriteDynamicArray [
 	| newSource |
-	rewriter := RBParseTreeRewriter new replace: '
+	rewriter := ASTParseTreeRewriter new replace: '
 		{`@first. `@second. `@third}' with: 'Array with: `@first  with: `@second  with: `@third'.
 
 	newSource := (rewriter executeTree: (self parseRewriteExpression: ' {(1 @ 255).	(Color lightMagenta). 3}'))
@@ -261,14 +261,14 @@ RBParseTreeRewriterTest >> testRewriteMethods [
 		do:
 			[:each |
 			| rewrite |
-			rewrite := RBParseTreeRewriter new.
+			rewrite := ASTParseTreeRewriter new.
 			rewrite replaceMethod: (each at: 3) with: each last.
 			self compare: (self
 						parseMethod: (rewrite
 								executeTree: (self parseMethod: each first);
 								tree) formattedCode)
 				to: (self parseMethod: (each at: 2)).
-			rewrite := RBParseTreeRewriter new.
+			rewrite := ASTParseTreeRewriter new.
 			rewrite replaceTree: (self parseRewriteMethod: (each at: 3))
 				withTree: (self parseRewriteMethod: each last).
 			self compare: (self
@@ -324,7 +324,7 @@ RBParseTreeRewriterTest >> testRewrites [
 			'`@rcvr d: `@arg2 e: `@arg1; f. self halt' )  ) do:
 		[:each |
 		| rewrite |
-		rewrite := RBParseTreeRewriter new.
+		rewrite := ASTParseTreeRewriter new.
 		rewrite replace: (each at: 3)
 			with: each last.
 		self compare: (self parseExpression: (rewrite executeTree: (self parseExpression: each first);

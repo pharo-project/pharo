@@ -8,7 +8,7 @@ Instance Variables:
 
 "
 Class {
-	#name : 'RBParseTreeRule',
+	#name : 'ASTParseTreeRule',
 	#superclass : 'Object',
 	#instVars : [
 		'searchTree',
@@ -20,57 +20,57 @@ Class {
 }
 
 { #category : 'testing' }
-RBParseTreeRule class >> isAbstract [
+ASTParseTreeRule class >> isAbstract [
 
-	^ self == RBParseTreeRule
+	^ self == ASTParseTreeRule
 ]
 
 { #category : 'instance creation' }
-RBParseTreeRule class >> methodSearch: aString [
+ASTParseTreeRule class >> methodSearch: aString [
 	^(self new)
 		methodSearchString: aString;
 		yourself
 ]
 
 { #category : 'instance creation' }
-RBParseTreeRule class >> search: aString [
+ASTParseTreeRule class >> search: aString [
 	^(self new)
 		searchString: aString;
 		yourself
 ]
 
 { #category : 'testing' }
-RBParseTreeRule >> canMatch: aProgramNode [
+ASTParseTreeRule >> canMatch: aProgramNode [
 	^true
 ]
 
 { #category : 'private' }
-RBParseTreeRule >> context [
+ASTParseTreeRule >> context [
 	^owner context
 ]
 
 { #category : 'matching' }
-RBParseTreeRule >> foundMatchFor: aProgramNode [
+ASTParseTreeRule >> foundMatchFor: aProgramNode [
 	^aProgramNode
 ]
 
 { #category : 'initialization' }
-RBParseTreeRule >> methodSearchString: aString [
+ASTParseTreeRule >> methodSearchString: aString [
 	searchTree := self parserClass parseRewriteMethod: aString
 ]
 
 { #category : 'initialize-release' }
-RBParseTreeRule >> owner: aParseTreeSearcher [
+ASTParseTreeRule >> owner: aParseTreeSearcher [
 	owner := aParseTreeSearcher
 ]
 
 { #category : 'initialization' }
-RBParseTreeRule >> parserClass [
+ASTParseTreeRule >> parserClass [
 	^ RBParser
 ]
 
 { #category : 'matching' }
-RBParseTreeRule >> performOn: aProgramNode [
+ASTParseTreeRule >> performOn: aProgramNode [
 	self context empty.
 	^((searchTree match: aProgramNode inContext: self context)
 		and: [self canMatch: aProgramNode])
@@ -81,11 +81,11 @@ RBParseTreeRule >> performOn: aProgramNode [
 ]
 
 { #category : 'initialization' }
-RBParseTreeRule >> searchString: aString [
+ASTParseTreeRule >> searchString: aString [
 	searchTree := self parserClass parseRewriteExpression: aString
 ]
 
 { #category : 'accessing' }
-RBParseTreeRule >> sentMessages [
+ASTParseTreeRule >> sentMessages [
 	^searchTree sentMessages
 ]

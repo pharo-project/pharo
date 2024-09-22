@@ -41,8 +41,8 @@ Instance Variables:
 	
 "
 Class {
-	#name : 'RBParseTreeRewriter',
-	#superclass : 'RBParseTreeSearcher',
+	#name : 'ASTParseTreeRewriter',
+	#superclass : 'ASTParseTreeSearcher',
 	#instVars : [
 		'tree'
 	],
@@ -52,7 +52,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBParseTreeRewriter class >> removeTemporaryNamed: aName [
+ASTParseTreeRewriter class >> removeTemporaryNamed: aName [
 	| rewriteRule |
 	rewriteRule := self new.
 	rewriteRule replace: '| `@temps1 ' , aName , ' `@temps2 | ``@.Statements'
@@ -61,7 +61,7 @@ RBParseTreeRewriter class >> removeTemporaryNamed: aName [
 ]
 
 { #category : 'instance creation' }
-RBParseTreeRewriter class >> rename: varName to: newVarName [
+ASTParseTreeRewriter class >> rename: varName to: newVarName [
 	| rewriteRule |
 	rewriteRule := self new.
 	rewriteRule
@@ -71,7 +71,7 @@ RBParseTreeRewriter class >> rename: varName to: newVarName [
 ]
 
 { #category : 'instance creation' }
-RBParseTreeRewriter class >> rename: varName to: newVarName handler: aBlock [
+ASTParseTreeRewriter class >> rename: varName to: newVarName handler: aBlock [
 	"Rename varName to newVarName, evaluating aBlock if there is a
 	temporary variable with the same name as newVarName. This
 	does not change temporary variables with varName."
@@ -89,7 +89,7 @@ RBParseTreeRewriter class >> rename: varName to: newVarName handler: aBlock [
 ]
 
 { #category : 'accessing' }
-RBParseTreeRewriter class >> replace: code with: newCode in: aParseTree [
+ASTParseTreeRewriter class >> replace: code with: newCode in: aParseTree [
 	^(self
 		replace: code
 		with: newCode
@@ -99,7 +99,7 @@ RBParseTreeRewriter class >> replace: code with: newCode in: aParseTree [
 ]
 
 { #category : 'accessing' }
-RBParseTreeRewriter class >> replace: code with: newCode in: aParseTree onInterval: anInterval [
+ASTParseTreeRewriter class >> replace: code with: newCode in: aParseTree onInterval: anInterval [
 	| rewriteRule |
 	rewriteRule := self new.
 	^rewriteRule
@@ -111,7 +111,7 @@ RBParseTreeRewriter class >> replace: code with: newCode in: aParseTree onInterv
 ]
 
 { #category : 'instance creation' }
-RBParseTreeRewriter class >> replace: code with: newCode method: aBoolean [
+ASTParseTreeRewriter class >> replace: code with: newCode method: aBoolean [
 	| rewriteRule |
 	rewriteRule := self new.
 	aBoolean
@@ -121,7 +121,7 @@ RBParseTreeRewriter class >> replace: code with: newCode method: aBoolean [
 ]
 
 { #category : 'instance creation' }
-RBParseTreeRewriter class >> replaceLiteral: literal with: newLiteral [
+ASTParseTreeRewriter class >> replaceLiteral: literal with: newLiteral [
 	| rewriteRule |
 	rewriteRule := self new.
 	rewriteRule replaceTree: (ASTLiteralNode value: literal)
@@ -130,7 +130,7 @@ RBParseTreeRewriter class >> replaceLiteral: literal with: newLiteral [
 ]
 
 { #category : 'accessing' }
-RBParseTreeRewriter class >> replaceStatements: code with: newCode in: aParseTree onInterval: anInterval [
+ASTParseTreeRewriter class >> replaceStatements: code with: newCode in: aParseTree onInterval: anInterval [
 	| tree replaceStmt |
 	tree := self buildTree: code method: false.
 	tree isSequence ifFalse: [ tree := ASTSequenceNode statements: (Array with: tree) ].
@@ -148,7 +148,7 @@ RBParseTreeRewriter class >> replaceStatements: code with: newCode in: aParseTre
 ]
 
 { #category : 'instance creation' }
-RBParseTreeRewriter class >> variable: aVarName getter: getMethod setter: setMethod [
+ASTParseTreeRewriter class >> variable: aVarName getter: getMethod setter: setMethod [
 	^self
 		variable: aVarName
 		getter: getMethod
@@ -157,7 +157,7 @@ RBParseTreeRewriter class >> variable: aVarName getter: getMethod setter: setMet
 ]
 
 { #category : 'instance creation' }
-RBParseTreeRewriter class >> variable: aVarName getter: getMethod setter: setMethod receiver: aString [
+ASTParseTreeRewriter class >> variable: aVarName getter: getMethod setter: setMethod receiver: aString [
 	| rewriteRule |
 	rewriteRule := self new.
 	rewriteRule
@@ -168,7 +168,7 @@ RBParseTreeRewriter class >> variable: aVarName getter: getMethod setter: setMet
 ]
 
 { #category : 'accessing' }
-RBParseTreeRewriter >> executeTree: aParseTree [
+ASTParseTreeRewriter >> executeTree: aParseTree [
 	"Replace the argument node based on the replace rules. Return false when no transformation has been applied, and true when a transformation occured.
 
 	Pay attention the method is not recompiled. Just the tree is modified. Look at class comment to see how the method can be compiled"
@@ -193,14 +193,14 @@ RBParseTreeRewriter >> executeTree: aParseTree [
 ]
 
 { #category : 'private' }
-RBParseTreeRewriter >> foundMatch [
+ASTParseTreeRewriter >> foundMatch [
 	"Set that the pattern matched is a successful"
 
 	answer := true
 ]
 
 { #category : 'private' }
-RBParseTreeRewriter >> lookForMoreMatchesInContext: oldContext [
+ASTParseTreeRewriter >> lookForMoreMatchesInContext: oldContext [
 	oldContext keysAndValuesDo: [:key :value |
 		(key isString not and: [key recurseInto])
 			ifTrue:
@@ -208,142 +208,142 @@ RBParseTreeRewriter >> lookForMoreMatchesInContext: oldContext [
 ]
 
 { #category : 'replacing' }
-RBParseTreeRewriter >> replace: searchString with: replaceString [
+ASTParseTreeRewriter >> replace: searchString with: replaceString [
    "Add a new replace pattern. To get the replacement executed invoke executeTree: method."
 
-	self addRule: (RBStringReplaceRule searchFor: searchString
+	self addRule: (ASTStringReplaceRule searchFor: searchString
 				replaceWith: replaceString)
 ]
 
 { #category : 'replacing' }
-RBParseTreeRewriter >> replace: searchString with: replaceString when: aBlock [
+ASTParseTreeRewriter >> replace: searchString with: replaceString when: aBlock [
 	"Add a new replace pattern when condition is true. To get the replacement executed invoke executeTree: method."
 
-	self addRule: (RBStringReplaceRule
+	self addRule: (ASTStringReplaceRule
 				searchFor: searchString
 				replaceWith: replaceString
 				when: aBlock)
 ]
 
 { #category : 'replacing' }
-RBParseTreeRewriter >> replace: searchString withValueFrom: replaceBlock [
-	self addRule: (RBBlockReplaceRule searchFor: searchString
+ASTParseTreeRewriter >> replace: searchString withValueFrom: replaceBlock [
+	self addRule: (ASTBlockReplaceRule searchFor: searchString
 				replaceWith: replaceBlock)
 ]
 
 { #category : 'replacing' }
-RBParseTreeRewriter >> replace: searchString withValueFrom: replaceBlock when: conditionBlock [
-	self addRule: (RBBlockReplaceRule
+ASTParseTreeRewriter >> replace: searchString withValueFrom: replaceBlock when: conditionBlock [
+	self addRule: (ASTBlockReplaceRule
 				searchFor: searchString
 				replaceWith: replaceBlock
 				when: conditionBlock)
 ]
 
 { #category : 'replacing' }
-RBParseTreeRewriter >> replaceArgument: searchString with: replaceString [
-	self addArgumentRule: (RBStringReplaceRule searchFor: searchString
+ASTParseTreeRewriter >> replaceArgument: searchString with: replaceString [
+	self addArgumentRule: (ASTStringReplaceRule searchFor: searchString
 				replaceWith: replaceString)
 ]
 
 { #category : 'replacing' }
-RBParseTreeRewriter >> replaceArgument: searchString with: replaceString when: aBlock [
-	self addArgumentRule: (RBStringReplaceRule
+ASTParseTreeRewriter >> replaceArgument: searchString with: replaceString when: aBlock [
+	self addArgumentRule: (ASTStringReplaceRule
 				searchFor: searchString
 				replaceWith: replaceString
 				when: aBlock)
 ]
 
 { #category : 'replacing' }
-RBParseTreeRewriter >> replaceArgument: searchString withValueFrom: replaceBlock [
-	self addArgumentRule: (RBBlockReplaceRule searchFor: searchString
+ASTParseTreeRewriter >> replaceArgument: searchString withValueFrom: replaceBlock [
+	self addArgumentRule: (ASTBlockReplaceRule searchFor: searchString
 				replaceWith: replaceBlock)
 ]
 
 { #category : 'replacing' }
-RBParseTreeRewriter >> replaceArgument: searchString withValueFrom: replaceBlock when: conditionBlock [
-	self addArgumentRule: (RBBlockReplaceRule
+ASTParseTreeRewriter >> replaceArgument: searchString withValueFrom: replaceBlock when: conditionBlock [
+	self addArgumentRule: (ASTBlockReplaceRule
 				searchFor: searchString
 				replaceWith: replaceBlock
 				when: conditionBlock)
 ]
 
 { #category : 'replacing' }
-RBParseTreeRewriter >> replaceMethod: searchString with: replaceString [
-	self addRule: (RBStringReplaceRule searchForMethod: searchString
+ASTParseTreeRewriter >> replaceMethod: searchString with: replaceString [
+	self addRule: (ASTStringReplaceRule searchForMethod: searchString
 				replaceWith: replaceString)
 ]
 
 { #category : 'replacing' }
-RBParseTreeRewriter >> replaceMethod: searchString with: replaceString when: aBlock [
-	self addRule: (RBStringReplaceRule
+ASTParseTreeRewriter >> replaceMethod: searchString with: replaceString when: aBlock [
+	self addRule: (ASTStringReplaceRule
 				searchForMethod: searchString
 				replaceWith: replaceString
 				when: aBlock)
 ]
 
 { #category : 'replacing' }
-RBParseTreeRewriter >> replaceMethod: searchString withValueFrom: replaceBlock [
-	self addRule: (RBBlockReplaceRule searchForMethod: searchString
+ASTParseTreeRewriter >> replaceMethod: searchString withValueFrom: replaceBlock [
+	self addRule: (ASTBlockReplaceRule searchForMethod: searchString
 				replaceWith: replaceBlock)
 ]
 
 { #category : 'replacing' }
-RBParseTreeRewriter >> replaceMethod: searchString withValueFrom: replaceBlock when: conditionBlock [
-	self addRule: (RBBlockReplaceRule
+ASTParseTreeRewriter >> replaceMethod: searchString withValueFrom: replaceBlock when: conditionBlock [
+	self addRule: (ASTBlockReplaceRule
 				searchForMethod: searchString
 				replaceWith: replaceBlock
 				when: conditionBlock)
 ]
 
 { #category : 'replacing' }
-RBParseTreeRewriter >> replaceTree: searchTree withTree: replaceTree [
+ASTParseTreeRewriter >> replaceTree: searchTree withTree: replaceTree [
 	"Add a replacement between a given tree and a replacement tree. To get the replacement executed invoke executeTree: method."
 
-	self addRule: (RBStringReplaceRule searchForTree: searchTree
+	self addRule: (ASTStringReplaceRule searchForTree: searchTree
 				replaceWith: replaceTree)
 ]
 
 { #category : 'replacing' }
-RBParseTreeRewriter >> replaceTree: searchTree withTree: replaceTree when: aBlock [
+ASTParseTreeRewriter >> replaceTree: searchTree withTree: replaceTree when: aBlock [
 	"Add a replacement between a given tree and a replacement tree when a condition. To get the replacement executed invoke executeTree: method."
 
-	self addRule: (RBStringReplaceRule
+	self addRule: (ASTStringReplaceRule
 				searchForTree: searchTree
 				replaceWith: replaceTree
 				when: aBlock)
 ]
 
 { #category : 'accessing' }
-RBParseTreeRewriter >> tree [
+ASTParseTreeRewriter >> tree [
 	"Return the rewritten tree"
 
 	^tree
 ]
 
 { #category : 'visiting' }
-RBParseTreeRewriter >> visitArgumentNodes: aNodeCollection [
+ASTParseTreeRewriter >> visitArgumentNodes: aNodeCollection [
 	^aNodeCollection collect: [:each | self visitArgumentNode: each]
 ]
 
 { #category : 'visitor - double dispatching' }
-RBParseTreeRewriter >> visitArrayNode: anArrayNode [
+ASTParseTreeRewriter >> visitArrayNode: anArrayNode [
 	anArrayNode statements: (anArrayNode statements collect: [:each | self visitNode: each])
 ]
 
 { #category : 'visitor - double dispatching' }
-RBParseTreeRewriter >> visitAssignmentNode: anAssignmentNode [
+ASTParseTreeRewriter >> visitAssignmentNode: anAssignmentNode [
 	anAssignmentNode variable: (self visitNode: anAssignmentNode variable).
 	anAssignmentNode value: (self visitNode: anAssignmentNode value)
 ]
 
 { #category : 'visitor - double dispatching' }
-RBParseTreeRewriter >> visitBlockNode: aBlockNode [
+ASTParseTreeRewriter >> visitBlockNode: aBlockNode [
 	aBlockNode arguments: (self visitArgumentNodes: aBlockNode arguments).
 	aBlockNode body: (self visitNode: aBlockNode body)
 ]
 
 { #category : 'visitor - double dispatching' }
-RBParseTreeRewriter >> visitCascadeNode: aCascadeNode [
+ASTParseTreeRewriter >> visitCascadeNode: aCascadeNode [
 
 	| newMessages notFound |
 
@@ -379,40 +379,40 @@ RBParseTreeRewriter >> visitCascadeNode: aCascadeNode [
 ]
 
 { #category : 'visitor - double dispatching' }
-RBParseTreeRewriter >> visitLiteralArrayNode: aRBArrayLiteralNode [
+ASTParseTreeRewriter >> visitLiteralArrayNode: aRBArrayLiteralNode [
 	aRBArrayLiteralNode contents: (aRBArrayLiteralNode contents collect: [ :each | self visitNode: each ])
 ]
 
 { #category : 'visitor - double dispatching' }
-RBParseTreeRewriter >> visitMessageNode: aMessageNode [
+ASTParseTreeRewriter >> visitMessageNode: aMessageNode [
 	aMessageNode receiver: (self visitNode: aMessageNode receiver).
 	aMessageNode arguments: (aMessageNode arguments collect: [ :each | self visitNode: each ])
 ]
 
 { #category : 'visitor - double dispatching' }
-RBParseTreeRewriter >> visitMethodNode: aMethodNode [
+ASTParseTreeRewriter >> visitMethodNode: aMethodNode [
 	aMethodNode arguments: (self visitArgumentNodes: aMethodNode arguments).
 	aMethodNode pragmas: (aMethodNode pragmas collect: [ :each | self visitNode: each ]).
 	aMethodNode body: (self visitNode: aMethodNode body)
 ]
 
 { #category : 'visitor - double dispatching' }
-RBParseTreeRewriter >> visitPragmaNode: aPragmaNode [
+ASTParseTreeRewriter >> visitPragmaNode: aPragmaNode [
 	aPragmaNode arguments: (aPragmaNode arguments collect: [ :each | self visitNode: each ])
 ]
 
 { #category : 'visitor - double dispatching' }
-RBParseTreeRewriter >> visitReturnNode: aReturnNode [
+ASTParseTreeRewriter >> visitReturnNode: aReturnNode [
 	aReturnNode value: (self visitNode: aReturnNode value)
 ]
 
 { #category : 'visitor - double dispatching' }
-RBParseTreeRewriter >> visitSequenceNode: aSequenceNode [
+ASTParseTreeRewriter >> visitSequenceNode: aSequenceNode [
 	aSequenceNode temporaries: (self visitTemporaryNodes: aSequenceNode temporaries).
 	aSequenceNode statements: (aSequenceNode statements collect: [ :each | self visitNode: each ])
 ]
 
 { #category : 'visiting' }
-RBParseTreeRewriter >> visitTemporaryNodes: aNodeCollection [
+ASTParseTreeRewriter >> visitTemporaryNodes: aNodeCollection [
 	^aNodeCollection collect: [:each | self visitTemporaryDeclarationNode: each]
 ]

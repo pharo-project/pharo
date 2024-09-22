@@ -1,7 +1,7 @@
-Extension { #name : 'RBParseTreeRewriter' }
+Extension { #name : 'ASTParseTreeRewriter' }
 
 { #category : '*Refactoring-Transformations' }
-RBParseTreeRewriter class >> replaceStatements: code with: newCode in: aParseTree [
+ASTParseTreeRewriter class >> replaceStatements: code with: newCode in: aParseTree [
 
 	| tree replaceStmt |
 	tree := self buildTree: code method: false.

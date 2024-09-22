@@ -42,7 +42,7 @@ RBParseTreeSearcherTest >> parseMethod: aString [
 
 { #category : 'helpers' }
 RBParseTreeSearcherTest >> parseTreeSearcher [
-	^ RBParseTreeSearcher new
+	^ ASTParseTreeSearcher new
 ]
 
 { #category : 'running' }

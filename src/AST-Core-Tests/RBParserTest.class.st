@@ -49,7 +49,7 @@ RBParserTest >> parseFaultyExpression: text [
 
 { #category : 'tests' }
 RBParserTest >> parseTreeSearcher [
-	^ RBParseTreeSearcher new
+	^ ASTParseTreeSearcher new
 ]
 
 { #category : 'private' }

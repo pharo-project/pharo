@@ -347,7 +347,7 @@ RBCondition class >> isValidMethodName: aString for: aClass [
 RBCondition class >> methodDefiningTemporary: aString in: aClass ignore: aBlock [
 
 	| searcher method |
-	searcher := RBParseTreeSearcher new.
+	searcher := ASTParseTreeSearcher new.
 	method := nil. "Shut-up the warning"
 	searcher matches: aString do: [ :aNode :answer | ^ method ].
 	aClass withAllSubclasses do: [ :class |

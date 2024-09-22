@@ -6,8 +6,8 @@ Instance Variables:
 
 "
 Class {
-	#name : 'RBBlockReplaceRule',
-	#superclass : 'RBReplaceRule',
+	#name : 'ASTBlockReplaceRule',
+	#superclass : 'ASTReplaceRule',
 	#instVars : [
 		'replaceBlock'
 	],
@@ -17,12 +17,12 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBBlockReplaceRule class >> searchFor: searchString replaceWith: replaceBlock [
+ASTBlockReplaceRule class >> searchFor: searchString replaceWith: replaceBlock [
 	^self new searchFor: searchString replaceWith: replaceBlock
 ]
 
 { #category : 'instance creation' }
-RBBlockReplaceRule class >> searchFor: searchString replaceWith: replaceBlock when: aBlock [
+ASTBlockReplaceRule class >> searchFor: searchString replaceWith: replaceBlock when: aBlock [
 	^self new
 		searchFor: searchString
 		replaceWith: replaceBlock
@@ -30,12 +30,12 @@ RBBlockReplaceRule class >> searchFor: searchString replaceWith: replaceBlock wh
 ]
 
 { #category : 'instance creation' }
-RBBlockReplaceRule class >> searchForMethod: searchString replaceWith: replaceBlock [
+ASTBlockReplaceRule class >> searchForMethod: searchString replaceWith: replaceBlock [
 	^self new searchForMethod: searchString replaceWith: replaceBlock
 ]
 
 { #category : 'instance creation' }
-RBBlockReplaceRule class >> searchForMethod: searchString replaceWith: replaceBlock when: aBlock [
+ASTBlockReplaceRule class >> searchForMethod: searchString replaceWith: replaceBlock when: aBlock [
 	^self new
 		searchForMethod: searchString
 		replaceWith: replaceBlock
@@ -43,12 +43,12 @@ RBBlockReplaceRule class >> searchForMethod: searchString replaceWith: replaceBl
 ]
 
 { #category : 'instance creation' }
-RBBlockReplaceRule class >> searchForTree: aProgramNode replaceWith: replaceBlock [
+ASTBlockReplaceRule class >> searchForTree: aProgramNode replaceWith: replaceBlock [
 	^self new searchForTree: aProgramNode replaceWith: replaceBlock
 ]
 
 { #category : 'instance creation' }
-RBBlockReplaceRule class >> searchForTree: aProgramNode replaceWith: replaceBlock when: aBlock [
+ASTBlockReplaceRule class >> searchForTree: aProgramNode replaceWith: replaceBlock when: aBlock [
 	^self new
 		searchForTree: aProgramNode
 		replaceWith: replaceBlock
@@ -56,7 +56,7 @@ RBBlockReplaceRule class >> searchForTree: aProgramNode replaceWith: replaceBloc
 ]
 
 { #category : 'matching' }
-RBBlockReplaceRule >> foundMatchFor: aProgramNode [
+ASTBlockReplaceRule >> foundMatchFor: aProgramNode [
 	| newNode |
 	newNode := replaceBlock value: aProgramNode.
 	aProgramNode replaceMethodSource: newNode.
@@ -64,43 +64,43 @@ RBBlockReplaceRule >> foundMatchFor: aProgramNode [
 ]
 
 { #category : 'initialization' }
-RBBlockReplaceRule >> initialize [
+ASTBlockReplaceRule >> initialize [
 	super initialize.
 	replaceBlock := [:aNode | aNode]
 ]
 
 { #category : 'private - searching' }
-RBBlockReplaceRule >> searchFor: searchString replaceWith: aBlock [
+ASTBlockReplaceRule >> searchFor: searchString replaceWith: aBlock [
 	self searchString: searchString.
 	replaceBlock := aBlock
 ]
 
 { #category : 'private - searching' }
-RBBlockReplaceRule >> searchFor: searchString replaceWith: replBlock when: verifyBlock [
+ASTBlockReplaceRule >> searchFor: searchString replaceWith: replBlock when: verifyBlock [
 	self searchFor: searchString replaceWith: replBlock.
 	verificationBlock := verifyBlock
 ]
 
 { #category : 'private - searching' }
-RBBlockReplaceRule >> searchForMethod: searchString replaceWith: aBlock [
+ASTBlockReplaceRule >> searchForMethod: searchString replaceWith: aBlock [
 	self methodSearchString: searchString.
 	replaceBlock := aBlock
 ]
 
 { #category : 'private - searching' }
-RBBlockReplaceRule >> searchForMethod: searchString replaceWith: replBlock when: verifyBlock [
+ASTBlockReplaceRule >> searchForMethod: searchString replaceWith: replBlock when: verifyBlock [
 	self searchForMethod: searchString replaceWith: replBlock.
 	verificationBlock := verifyBlock
 ]
 
 { #category : 'private - searching' }
-RBBlockReplaceRule >> searchForTree: aBRProgramNode replaceWith: aBlock [
+ASTBlockReplaceRule >> searchForTree: aBRProgramNode replaceWith: aBlock [
 	searchTree := aBRProgramNode.
 	replaceBlock := aBlock
 ]
 
 { #category : 'private - searching' }
-RBBlockReplaceRule >> searchForTree: aBRProgramNode replaceWith: replBlock when: verifyBlock [
+ASTBlockReplaceRule >> searchForTree: aBRProgramNode replaceWith: replBlock when: verifyBlock [
 	self searchForTree: aBRProgramNode replaceWith: replBlock.
 	verificationBlock := verifyBlock
 ]

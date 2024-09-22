@@ -11,8 +11,8 @@ Instance Variables:
 
 "
 Class {
-	#name : 'RBReplaceRule',
-	#superclass : 'RBParseTreeRule',
+	#name : 'ASTReplaceRule',
+	#superclass : 'ASTParseTreeRule',
 	#instVars : [
 		'verificationBlock'
 	],
@@ -22,64 +22,64 @@ Class {
 }
 
 { #category : 'testing' }
-RBReplaceRule class >> isAbstract [
+ASTReplaceRule class >> isAbstract [
 
-	^ self == RBReplaceRule
+	^ self == ASTReplaceRule
 ]
 
 { #category : 'testing' }
-RBReplaceRule >> canMatch: aProgramNode [
+ASTReplaceRule >> canMatch: aProgramNode [
 	^verificationBlock value: aProgramNode
 ]
 
 { #category : 'matching' }
-RBReplaceRule >> foundMatchFor: aProgramNode [
+ASTReplaceRule >> foundMatchFor: aProgramNode [
 	self subclassResponsibility
 ]
 
 { #category : 'initialization' }
-RBReplaceRule >> initialize [
+ASTReplaceRule >> initialize [
 	super initialize.
 	verificationBlock := [:aNode | true]
 ]
 
 { #category : 'matching' }
-RBReplaceRule >> replace: aProgramNode with: newNode [
+ASTReplaceRule >> replace: aProgramNode with: newNode [
 	aProgramNode replaceMethodSource: newNode
 ]
 
 { #category : 'private - searching' }
-RBReplaceRule >> searchFor: searchString replaceWith: replaceString [
+ASTReplaceRule >> searchFor: searchString replaceWith: replaceString [
 
 	self subclassResponsibility
 ]
 
 { #category : 'private - searching' }
-RBReplaceRule >> searchFor: searchString replaceWith: replaceString when: aBlock [
+ASTReplaceRule >> searchFor: searchString replaceWith: replaceString when: aBlock [
 
 	self subclassResponsibility
 ]
 
 { #category : 'private - searching' }
-RBReplaceRule >> searchForMethod: searchString replaceWith: replaceString [
+ASTReplaceRule >> searchForMethod: searchString replaceWith: replaceString [
 
 	self subclassResponsibility
 ]
 
 { #category : 'private - searching' }
-RBReplaceRule >> searchForMethod: searchString replaceWith: replaceString when: aBlock [
+ASTReplaceRule >> searchForMethod: searchString replaceWith: replaceString when: aBlock [
 
 	self subclassResponsibility
 ]
 
 { #category : 'private - searching' }
-RBReplaceRule >> searchForTree: aBRProgramNode replaceWith: replaceNode [
+ASTReplaceRule >> searchForTree: aBRProgramNode replaceWith: replaceNode [
 
 	self subclassResponsibility
 ]
 
 { #category : 'private - searching' }
-RBReplaceRule >> searchForTree: aBRProgramNode replaceWith: replaceString when: aBlock [
+ASTReplaceRule >> searchForTree: aBRProgramNode replaceWith: replaceString when: aBlock [
 
 	self subclassResponsibility
 ]
