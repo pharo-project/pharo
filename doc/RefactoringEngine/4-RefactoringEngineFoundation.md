@@ -9,7 +9,7 @@ This book contains some chapter about the core components
 - the Abstract Syntax Tree (AST)
 - the parser (`RBParser`)
 - the extended pattern parser (`RBPatternParser`)
-- the tree searcher / rewriter (`RBParseTreeSearcher`/`RBParseTreeRewriter`)
+- the tree searcher / rewriter (`ASTParseTreeSearcher`/`RBParseTreeRewriter`)
 
 ### AST Nodes
 
@@ -45,7 +45,7 @@ a `ProgramNodeVisitor` too.
 - Reflectivity Compiler. For reflectivity support, can add MetaLinks to the nodes of the compiled method and generate new methods with code injections augmenting or modifying the executed code.
 - Code formatter. (BIConfigurableFormatter/BISimpleFormatter) A code formatter walks over the AST tree and reformats the code (node positions) based on a simple format rule or a configurable formatting style.
 - TextStyler. SHRBTextStyler builds an attributed text representation of the source code, augmented with text font, color or emphasis attributes based on the current style settings.
-- `RBParseTreeSearcher` and `RBParseTreeRewriter`. The original users of this AST structure for searching and rewriting code, more on this in its own chapter.
+- `ASTParseTreeSearcher` and `RBParseTreeRewriter`. The original users of this AST structure for searching and rewriting code, more on this in its own chapter.
 
 ### RBParser
 

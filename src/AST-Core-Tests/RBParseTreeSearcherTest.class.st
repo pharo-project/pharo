@@ -1,5 +1,5 @@
 "
-SUnit tests for RBParseTreeSearcher
+SUnit tests for ASTParseTreeSearcher
 "
 Class {
 	#name : 'RBParseTreeSearcherTest',

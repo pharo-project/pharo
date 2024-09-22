@@ -11,7 +11,7 @@ Instance Variables:
 ***********************
 		
 ""
-	New comments: These comments are added in order to understand more how the RBParseTreeSearcher is working in Pharo, in addition of what special characters we can use to define the patterns we want to match.	
+	New comments: These comments are added in order to understand more how the ASTParseTreeSearcher is working in Pharo, in addition of what special characters we can use to define the patterns we want to match.	
 ""
 
 A- Instance side:

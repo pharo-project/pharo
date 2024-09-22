@@ -176,7 +176,7 @@ OCAnnotationTest >> testAnnotationConstexprIR [
 { #category : 'tests' }
 OCAnnotationTest >> testAnnotationIR [
 	"This test uses an AST plugin to detect a custom annotation `@meaning:`
-	(using `OCDynamicASTCompilerPlugin` and `RBParseTreeSearcher`)
+	(using `OCDynamicASTCompilerPlugin` and `ASTParseTreeSearcher`)
 	and attach a custom `emitValueBlock` to it.
 	It does not transform the AST.
 

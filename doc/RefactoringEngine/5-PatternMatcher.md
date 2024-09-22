@@ -16,7 +16,7 @@ a := a + 1
 
 creates a parse tree with an assignment node assigning to 'a', the value of sending the message '+' with argument 1 to the object 'a'.
 
-We could implement a refactoring operation (or directly use the RBParseTreeSearcher/Rewriter) to create a refactoring  for this kind of code. But of course, it would only work for code using this variable name.
+We could implement a refactoring operation (or directly use the ASTParseTreeSearcher/Rewriter) to create a refactoring  for this kind of code. But of course, it would only work for code using this variable name.
 
 We can define the expression with the meaning of 'increment a variable by one' by using a metavariable. All metavariables start with a ´ (backquote).
 
@@ -148,7 +148,7 @@ If we want to find the same call in the argument, we need to recurse into it by 
 
 ## Examples and usage of RBPatternParser expressions
 
-The chapter "RBPatternParser and metavariables" describes the added syntax elements for the RBPatternParser used in the refactoring engine (RBParseTreeSearcher/RBParseTreeRewriter).
+The chapter "RBPatternParser and metavariables" describes the added syntax elements for the RBPatternParser used in the refactoring engine (ASTParseTreeSearcher/RBParseTreeRewriter).
 
 In this chapter we show some example expressions and how to test and use them.
 
@@ -158,7 +158,7 @@ Search code
 The search code menu will put a search pattern template in the code pane:
 
 ```st
-RBParseTreeSearcher new
+ASTParseTreeSearcher new
 	matches: '`@object' do: [ :node :answer | node ];
 	matchesMethod: '`@method: `@args | `@temps | `@.statements' do: [ :node :answer | node ];
 	yourself
@@ -185,7 +185,7 @@ And most of the time you only want to use one, the code expression search or the
 A first example, replace the code pane content by:
 
 ```st
-RBParseTreeSearcher new
+ASTParseTreeSearcher new
 	matchesMethod: 'drawOn: `@args | `@temps | `@.statements' do: [ :node :answer | node ];
 	yourself
 ```
@@ -196,7 +196,7 @@ The result is actually the same as if we had searched for all implementors of #d
 Next example, replace the code pane content by:
 
 ```st
-RBParseTreeSearcher new
+ASTParseTreeSearcher new
 	matches: '`@object drawOn: `@args' do: [ :node :answer | node ];
 	yourself
 ```
@@ -208,7 +208,7 @@ The `do:` block can be used to further test or filter the found matches. The nod
 Example, search for all methods with at least one argument where the method name starts with `'perform'`:
 
 ```st
-RBParseTreeSearcher new
+ASTParseTreeSearcher new
 		matchesMethod: '`@method: `@args | `@temps | `@.statements'
 			do: [ :node :answer | 
 			((node selector beginsWith: 'perform') and: [ node arguments isEmpty not ])
@@ -217,13 +217,13 @@ RBParseTreeSearcher new
 		yourself
 ```
 
-Another way to use extended pattern syntax is to directly instantiate a `RBParseTreeSearcher` and execute it on a parse tree.
+Another way to use extended pattern syntax is to directly instantiate a `ASTParseTreeSearcher` and execute it on a parse tree.
 First we define the pattern, instantiate a tree searcher and tell him what to do when matching this pattern (just return the matched node) and execute it on the AST of Numbers method #asPoint.
 
 ```st
 | searcher pattern parseTree |
 pattern := '^ self'.
-searcher := RBParseTreeSearcher new.
+searcher := ASTParseTreeSearcher new.
 searcher matches: pattern do:[:node :answer |node].
 searcher executeTree: (Number>>#asPoint) ast initialAnswer: nil.
 ```
@@ -240,7 +240,7 @@ If we don't just want to match an expression but collecting all matching nodes, 
 | searcher pattern parseTree  selfMessages |
 selfMessages := Set new.
 pattern := 'self `@message: ``@args'.
-searcher := RBParseTreeSearcher new.
+searcher := ASTParseTreeSearcher new.
 searcher matches: pattern do:[:node :answer |  selfMessages add: node selector].
 searcher executeTree: (Morph>>#fullDrawOn:) ast initialAnswer: nil.
 selfMessages inspect.
