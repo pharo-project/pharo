@@ -141,6 +141,7 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	ASTParseErrorNode deprecatedAliases: { #RBParseErrorNode }.
 	
 	ASTAbstractFormatter deprecatedAliases: { #RBAbstractFormatter }.
+	ASTSimpleFormatter deprecatedAliases: { #RBSimpleFormatter }.
 	
 	ASTErrorNotice deprecatedAliases: { #RBErrorNotice }.
 	ASTWarningNotice deprecatedAliases: { #RBWarningNotice }.

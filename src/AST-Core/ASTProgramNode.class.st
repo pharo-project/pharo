@@ -45,7 +45,7 @@ Class {
 
 { #category : 'accessing' }
 ASTProgramNode class >> formatterClass [
-	^ FormatterClass ifNil: [ RBSimpleFormatter ] ifNotNil: [ FormatterClass ]
+	^ FormatterClass ifNil: [ ASTSimpleFormatter ] ifNotNil: [ FormatterClass ]
 ]
 
 { #category : 'accessing' }
