@@ -6,15 +6,15 @@ The block  has two optional parameters:
 	aNode (the node which contains the comment)
 "
 Class {
-	#name : 'RBCommentNodeVisitor',
-	#superclass : 'RBAbstractBlockVisitor',
+	#name : 'ASTCommentNodeVisitor',
+	#superclass : 'ASTAbstractBlockVisitor',
 	#category : 'AST-Core-Visitors',
 	#package : 'AST-Core',
 	#tag : 'Visitors'
 }
 
 { #category : 'visiting' }
-RBCommentNodeVisitor >> visitNode: aNode [
+ASTCommentNodeVisitor >> visitNode: aNode [
 	aNode comments ifNotEmpty: [ :commentNodes |
 		commentNodes do: [ :commentNode |
 			self visitBlock cull: commentNode cull: aNode ] ].

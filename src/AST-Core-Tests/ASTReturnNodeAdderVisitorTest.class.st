@@ -11,7 +11,7 @@ ASTReturnNodeAdderVisitorTest >> testAddReturnWhenArrayExpectReturnAdded [
 
 	| expression visitor result expect |
 	expression := RBParser parseExpression: '{ x . ''a'' . #a }'.
-	visitor := RBReturnNodeAdderVisitor new.
+	visitor := ASTReturnNodeAdderVisitor new.
 	result := visitor visit: expression.
 	
 	expect := RBParser parseExpression: '^ { x . ''a'' . #a }'.
@@ -23,7 +23,7 @@ ASTReturnNodeAdderVisitorTest >> testAddReturnWhenAssignmentExpectReturnAdded [
 
 	| expression visitor result expect |
 	expression := RBParser parseExpression: 'a := self foo'.
-	visitor := RBReturnNodeAdderVisitor new.
+	visitor := ASTReturnNodeAdderVisitor new.
 	result := visitor visit: expression.
 	
 	expect := RBParser parseExpression: '^ a := self foo'.
@@ -35,7 +35,7 @@ ASTReturnNodeAdderVisitorTest >> testAddReturnWhenBlockExpectReturnAdded [
 
 	| expression visitor result expect |
 	expression := RBParser parseExpression: '[ a := self foo ]'.
-	visitor := RBReturnNodeAdderVisitor new.
+	visitor := ASTReturnNodeAdderVisitor new.
 	result := visitor visit: expression.
 	
 	expect := RBParser parseExpression: '^ [ a := self foo ]'.
@@ -47,7 +47,7 @@ ASTReturnNodeAdderVisitorTest >> testAddReturnWhenCascadeMessageExpectReturnAdde
 
 	| expression visitor result expect |
 	expression := RBParser parseExpression: 'self foo; bar; end'.
-	visitor := RBReturnNodeAdderVisitor new.
+	visitor := ASTReturnNodeAdderVisitor new.
 	result := visitor visit: expression.
 	
 	expect := RBParser parseExpression: '^ self foo; bar; end'.
@@ -59,7 +59,7 @@ ASTReturnNodeAdderVisitorTest >> testAddReturnWhenLiteralExpectReturnAdded [
 
 	| expression visitor result expect |
 	expression := RBParser parseExpression: '1'.
-	visitor := RBReturnNodeAdderVisitor new.
+	visitor := ASTReturnNodeAdderVisitor new.
 	result := visitor visit: expression.
 	
 	expect := RBParser parseExpression: '^ 1'.
@@ -71,7 +71,7 @@ ASTReturnNodeAdderVisitorTest >> testAddReturnWhenMessageSendExpectReturnAdded [
 
 	| expression visitor result expect |
 	expression := RBParser parseExpression: 'self foo'.
-	visitor := RBReturnNodeAdderVisitor new.
+	visitor := ASTReturnNodeAdderVisitor new.
 	result := visitor visit: expression.
 	
 	expect := RBParser parseExpression: '^ self foo'.
@@ -83,7 +83,7 @@ ASTReturnNodeAdderVisitorTest >> testAddReturnWhenReturnNodeExpectNoChanges [
 
 	| expression visitor result |
 	expression := RBParser parseExpression: '^ 2'.
-	visitor := RBReturnNodeAdderVisitor new.
+	visitor := ASTReturnNodeAdderVisitor new.
 	result := visitor visit: expression.
 	
 	self assert: expression equals: result
@@ -94,7 +94,7 @@ ASTReturnNodeAdderVisitorTest >> testAddReturnWhenSequenceExpectReturnAdded [
 
 	| expression visitor result expect |
 	expression := RBParser parseExpression: 'self foo. self bar'.
-	visitor := RBReturnNodeAdderVisitor new.
+	visitor := ASTReturnNodeAdderVisitor new.
 	result := visitor visit: expression.
 	
 	expect := RBParser parseExpression: 'self foo. ^ self bar'.
@@ -106,7 +106,7 @@ ASTReturnNodeAdderVisitorTest >> testAddReturnWhenVariableExpectReturnAdded [
 
 	| expression visitor result expect |
 	expression := RBParser parseExpression: 'x'.
-	visitor := RBReturnNodeAdderVisitor new.
+	visitor := ASTReturnNodeAdderVisitor new.
 	result := visitor visit: expression.
 	
 	expect := RBParser parseExpression: '^ x'.

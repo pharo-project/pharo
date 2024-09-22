@@ -3,7 +3,7 @@ I am a visitor to change temporaries and arguments to generic names (`tempMatch 
 "
 Class {
 	#name : 'RBMatchVisitor',
-	#superclass : 'RBProgramNodeVisitor',
+	#superclass : 'ASTProgramNodeVisitor',
 	#instVars : [
 		'arguments',
 		'temporaries',

@@ -13,8 +13,8 @@ Class {
 ASTReadBeforeWrittenTesterTest >> testReadBeforeWritten [
 	#(#('a ifTrue: [^self]' true) #('self foo. a := b' false) #('condition ifTrue: [a := b] ifFalse: [self foo: a]' true) #('condition ifTrue: [a := b] ifFalse: [self foo]. a isNil' true) #('condition ifTrue: [a := b]. a := c' false) #('[a := b] whileFalse: [a isNil]' false) #('self foo: b' false))
 		do: [ :each |
-			self assert: ((RBReadBeforeWrittenTester readBeforeWritten: #('a') in: (self parseExpression: each first)) includes: 'a') identicalTo: each last.
-			self assert: (RBReadBeforeWrittenTester isVariable: 'a' readBeforeWrittenIn: (self parseExpression: each first)) equals: each last ].
+			self assert: ((ASTReadBeforeWrittenTester readBeforeWritten: #('a') in: (self parseExpression: each first)) includes: 'a') identicalTo: each last.
+			self assert: (ASTReadBeforeWrittenTester isVariable: 'a' readBeforeWrittenIn: (self parseExpression: each first)) equals: each last ].
 	#('| temp read written written1 |
 			read ifTrue: [^self].
 			written1 := self foo ifFalse: [written := true] ifTrue: [written := false].
@@ -31,7 +31,7 @@ ASTReadBeforeWrittenTesterTest >> testReadBeforeWritten [
 			self do: [:each | each & read]')
 		do: [ :each |
 			| read |
-			read := RBReadBeforeWrittenTester variablesReadBeforeWrittenIn: (self parseExpression: each).
+			read := ASTReadBeforeWrittenTester variablesReadBeforeWrittenIn: (self parseExpression: each).
 			self assert: (read size = 1 and: [ read includes: 'read' ]) ]
 ]
 
@@ -39,7 +39,7 @@ ASTReadBeforeWrittenTesterTest >> testReadBeforeWritten [
 ASTReadBeforeWrittenTesterTest >> testReadBeforeWritten1 [
 	self
 		assertEmpty:
-			(RBReadBeforeWrittenTester
+			(ASTReadBeforeWrittenTester
 				variablesReadBeforeWrittenIn:
 					(self
 						parseMethod:

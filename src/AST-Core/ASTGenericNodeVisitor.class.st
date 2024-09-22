@@ -2,15 +2,15 @@
 Visit any RBProgrmNode in the syntax tree and evaluate a generic block
 "
 Class {
-	#name : 'RBGenericNodeVisitor',
-	#superclass : 'RBAbstractBlockVisitor',
+	#name : 'ASTGenericNodeVisitor',
+	#superclass : 'ASTAbstractBlockVisitor',
 	#category : 'AST-Core-Visitors',
 	#package : 'AST-Core',
 	#tag : 'Visitors'
 }
 
 { #category : 'visiting' }
-RBGenericNodeVisitor >> visitNode: aNode [
+ASTGenericNodeVisitor >> visitNode: aNode [
 	super visitNode: aNode.
 	self visitBlock value: aNode
 ]

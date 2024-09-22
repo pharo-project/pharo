@@ -21,7 +21,7 @@ ASTDumpVisitorTest >> testAPI [
 	| node |
 	node := self parseExpression: 'self foo'.
 	self
-		assert: (RBDumpVisitor new visit: node) contents
+		assert: (ASTDumpVisitor new visit: node) contents
 		equals: 'ASTMessageNode receiver: (ASTVariableNode named: #self) selector: #foo'
 ]
 

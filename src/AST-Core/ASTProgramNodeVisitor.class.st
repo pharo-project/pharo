@@ -4,7 +4,7 @@ RBProgramNodeVisitor is an abstract visitor for the ASTProgramNodes.
 
 "
 Class {
-	#name : 'RBProgramNodeVisitor',
+	#name : 'ASTProgramNodeVisitor',
 	#superclass : 'Object',
 	#category : 'AST-Core-Visitors',
 	#package : 'AST-Core',
@@ -12,126 +12,126 @@ Class {
 }
 
 { #category : 'testing' }
-RBProgramNodeVisitor class >> isAbstract [
+ASTProgramNodeVisitor class >> isAbstract [
 
-	^ self == RBProgramNodeVisitor
+	^ self == ASTProgramNodeVisitor
 ]
 
 { #category : 'API' }
-RBProgramNodeVisitor >> visit: aMessageNode [
+ASTProgramNodeVisitor >> visit: aMessageNode [
 	^ aMessageNode acceptVisitor: self
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitAnnotationMarkNode: aAnnotationValueNode [
+ASTProgramNodeVisitor >> visitAnnotationMarkNode: aAnnotationValueNode [
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitArgumentNode: anArgumentNode [
+ASTProgramNodeVisitor >> visitArgumentNode: anArgumentNode [
 	"Sent *each time* an argument node is found"
 
 	^ self visitVariableNode: anArgumentNode
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitArgumentNodes: aNodeCollection [
+ASTProgramNodeVisitor >> visitArgumentNodes: aNodeCollection [
 	"Sent *once* when visiting method and block nodes"
 
 	^ aNodeCollection do: [ :each | self visitArgumentNode: each ]
 ]
 
 { #category : 'visiting - variables' }
-RBProgramNodeVisitor >> visitArgumentVariableNode: anArgumentNode [
+ASTProgramNodeVisitor >> visitArgumentVariableNode: anArgumentNode [
 
 	^ self visitLocalVariableNode: anArgumentNode
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitArrayNode: anArrayNode [
+ASTProgramNodeVisitor >> visitArrayNode: anArrayNode [
 	anArrayNode children do: [ :each | self visitNode: each ]
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitAssignmentNode: anAssignmentNode [
+ASTProgramNodeVisitor >> visitAssignmentNode: anAssignmentNode [
 	self visitNode: anAssignmentNode variable.
 	self visitNode: anAssignmentNode value
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitBlockNode: aBlockNode [
+ASTProgramNodeVisitor >> visitBlockNode: aBlockNode [
 	self visitArgumentNodes: aBlockNode arguments.
 	self visitNode: aBlockNode body
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitCascadeNode: aCascadeNode [
+ASTProgramNodeVisitor >> visitCascadeNode: aCascadeNode [
 	aCascadeNode messages do: [ :each | self visitNode: each ]
 ]
 
 { #category : 'visiting - variables' }
-RBProgramNodeVisitor >> visitClassVariableNode: aNode [
+ASTProgramNodeVisitor >> visitClassVariableNode: aNode [
 
 	^ self visitLiteralVariableNode: aNode
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitCommentNode: aComment [
+ASTProgramNodeVisitor >> visitCommentNode: aComment [
 	"Note: currenlty, comment nodes are not automatically visited by `RBProgramNodeVisitor`.
 	This method can still be reached by custom visitors and direct visit on a comment node."
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
+ASTProgramNodeVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
 	anEnglobingErrorNode contents do: [ :each | self visitNode: each ]
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitGlobalNode: aSelfNode [
+ASTProgramNodeVisitor >> visitGlobalNode: aSelfNode [
 	^ self visitVariableNode: aSelfNode
 ]
 
 { #category : 'visiting - variables' }
-RBProgramNodeVisitor >> visitGlobalVariableNode: aNode [
+ASTProgramNodeVisitor >> visitGlobalVariableNode: aNode [
 
 	^ self visitLiteralVariableNode: aNode
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitInstanceVariableNode: aSelfNode [
+ASTProgramNodeVisitor >> visitInstanceVariableNode: aSelfNode [
 	^ self visitVariableNode: aSelfNode
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitLiteralArrayNode: aLiteralArrayNode [
+ASTProgramNodeVisitor >> visitLiteralArrayNode: aLiteralArrayNode [
 	aLiteralArrayNode contents do: [ :each | self visitNode: each ]
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitLiteralNode: aLiteralNode [
+ASTProgramNodeVisitor >> visitLiteralNode: aLiteralNode [
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitLiteralValueNode: aLiteralValueNode [
+ASTProgramNodeVisitor >> visitLiteralValueNode: aLiteralValueNode [
 	"Redirect the message by default to #visitLiteralNode: for retrocompatibility (pharo 8)"
 
 	^ self visitLiteralNode: aLiteralValueNode
 ]
 
 { #category : 'visiting - variables' }
-RBProgramNodeVisitor >> visitLiteralVariableNode: aNode [
+ASTProgramNodeVisitor >> visitLiteralVariableNode: aNode [
 	"to be backward compatible, we visit for Gloabls here (there used to be no difference)"
 
 	^ self visitGlobalNode: aNode
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitLocalVariableNode: aNode [
+ASTProgramNodeVisitor >> visitLocalVariableNode: aNode [
 	"call visitTemporaryNode: for backward compatibility"
 	^ self visitTemporaryNode: aNode
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitMessageNode: aMessageNode [
+ASTProgramNodeVisitor >> visitMessageNode: aMessageNode [
 	(aMessageNode isCascaded not or: [ aMessageNode isFirstCascaded ])
 		ifTrue: [ self visitNode: aMessageNode receiver ].
 	self visitNode: aMessageNode selectorNode.
@@ -139,72 +139,72 @@ RBProgramNodeVisitor >> visitMessageNode: aMessageNode [
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitMethodNode: aMethodNode [
+ASTProgramNodeVisitor >> visitMethodNode: aMethodNode [
 	self visitArgumentNodes: aMethodNode arguments.
 	self visitPragmaNodes: aMethodNode pragmas.
 	self visitNode: aMethodNode body
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitNode: aNode [
+ASTProgramNodeVisitor >> visitNode: aNode [
 	^ aNode acceptVisitor: self
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitParseErrorNode: anErrorNode [
+ASTProgramNodeVisitor >> visitParseErrorNode: anErrorNode [
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitPatternBlockNode: aPatternBlockNode [
+ASTProgramNodeVisitor >> visitPatternBlockNode: aPatternBlockNode [
 	self visitArgumentNodes: aPatternBlockNode arguments.
 	self visitNode: aPatternBlockNode body
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitPatternWrapperBlockNode: aPatternWrapperBlockNode [
+ASTProgramNodeVisitor >> visitPatternWrapperBlockNode: aPatternWrapperBlockNode [
 	self visitNode: aPatternWrapperBlockNode wrappedNode.
 	self visitArgumentNodes: aPatternWrapperBlockNode arguments.
 	self visitNode: aPatternWrapperBlockNode body
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitPragmaNode: aPragmaNode [
+ASTProgramNodeVisitor >> visitPragmaNode: aPragmaNode [
 	aPragmaNode arguments do: [ :each | self visitNode: each ]
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitPragmaNodes: aNodeCollection [
+ASTProgramNodeVisitor >> visitPragmaNodes: aNodeCollection [
 	"Sent *once* when visiting a method node"
 	^ aNodeCollection do: [ :each | self visitPragmaNode: each ].
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitReturnNode: aReturnNode [
+ASTProgramNodeVisitor >> visitReturnNode: aReturnNode [
 	^ self visitNode: aReturnNode value
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitSelectorNode: aSelectorNode [
+ASTProgramNodeVisitor >> visitSelectorNode: aSelectorNode [
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitSelfNode: aSelfNode [
+ASTProgramNodeVisitor >> visitSelfNode: aSelfNode [
 	^ self visitVariableNode: aSelfNode
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitSequenceNode: aSequenceNode [
+ASTProgramNodeVisitor >> visitSequenceNode: aSequenceNode [
 	self visitTemporaryNodes: aSequenceNode temporaries.
 	aSequenceNode statements do: [ :each | self visitNode: each ]
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitSuperNode: aSuperNode [
+ASTProgramNodeVisitor >> visitSuperNode: aSuperNode [
 	^ self visitVariableNode: aSuperNode
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitTemporaryDeclarationNode: aTemporaryDeclarationNode [
+ASTProgramNodeVisitor >> visitTemporaryDeclarationNode: aTemporaryDeclarationNode [
 	"| temp |
 	temp is a temporary node as we can find in the body of methods, but it can't be visited the same way.
 	Redirect the message on argumentNodeVisitor as a way to keep retrocompatibility"
@@ -213,14 +213,14 @@ RBProgramNodeVisitor >> visitTemporaryDeclarationNode: aTemporaryDeclarationNode
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitTemporaryNode: aNode [
+ASTProgramNodeVisitor >> visitTemporaryNode: aNode [
 	"Sent *each time* a temporary node is found"
 
 	^ self visitVariableNode: aNode
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitTemporaryNodes: aNodeCollection [
+ASTProgramNodeVisitor >> visitTemporaryNodes: aNodeCollection [
 	"This is triggered when defining the temporaries between the pipes"
 
 	^ aNodeCollection
@@ -228,17 +228,17 @@ RBProgramNodeVisitor >> visitTemporaryNodes: aNodeCollection [
 ]
 
 { #category : 'visiting - variables' }
-RBProgramNodeVisitor >> visitTemporaryVariableNode: aNode [
+ASTProgramNodeVisitor >> visitTemporaryVariableNode: aNode [
 
 	^ self visitLocalVariableNode: aNode
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitThisContextNode: aThisContextNode [
+ASTProgramNodeVisitor >> visitThisContextNode: aThisContextNode [
 	^ self visitVariableNode: aThisContextNode
 ]
 
 { #category : 'visiting' }
-RBProgramNodeVisitor >> visitVariableNode: aVariableNode [
+ASTProgramNodeVisitor >> visitVariableNode: aVariableNode [
 	^ aVariableNode
 ]

@@ -13,8 +13,8 @@ Instance Variables
 
 "
 Class {
-	#name : 'RBDumpVisitor',
-	#superclass : 'RBProgramNodeVisitor',
+	#name : 'ASTDumpVisitor',
+	#superclass : 'ASTProgramNodeVisitor',
 	#instVars : [
 		'stream'
 	],
@@ -24,29 +24,29 @@ Class {
 }
 
 { #category : 'accessing' }
-RBDumpVisitor >> contents [
+ASTDumpVisitor >> contents [
 	^ stream contents
 ]
 
 { #category : 'initialization' }
-RBDumpVisitor >> initialize [
+ASTDumpVisitor >> initialize [
 	stream := String new writeStream
 ]
 
 { #category : 'initialization' }
-RBDumpVisitor >> stream [
+ASTDumpVisitor >> stream [
 	^ stream
 ]
 
 { #category : 'visiting' }
-RBDumpVisitor >> visitAnnotationMarkNode: aRBAnnotationValueNode [
+ASTDumpVisitor >> visitAnnotationMarkNode: aRBAnnotationValueNode [
 	stream
 		nextPutAll: aRBAnnotationValueNode class name;
 		nextPutAll: ' new'
 ]
 
 { #category : 'visiting' }
-RBDumpVisitor >> visitArrayNode: anArrayNode [
+ASTDumpVisitor >> visitArrayNode: anArrayNode [
 	stream
 		nextPutAll: anArrayNode class name;
 		nextPutAll: ' statements: { '.
@@ -58,7 +58,7 @@ RBDumpVisitor >> visitArrayNode: anArrayNode [
 ]
 
 { #category : 'visiting' }
-RBDumpVisitor >> visitAssignmentNode: anAssignmentNode [
+ASTDumpVisitor >> visitAssignmentNode: anAssignmentNode [
 	stream
 		nextPutAll: anAssignmentNode class name;
 		nextPutAll: ' variable: ('.
@@ -69,7 +69,7 @@ RBDumpVisitor >> visitAssignmentNode: anAssignmentNode [
 ]
 
 { #category : 'visiting' }
-RBDumpVisitor >> visitBlockNode: aBlockNode [
+ASTDumpVisitor >> visitBlockNode: aBlockNode [
 	stream nextPutAll: aBlockNode class name.
 	aBlockNode arguments
 		ifNotEmpty: [ stream nextPutAll: ' arguments: {'.
@@ -84,7 +84,7 @@ RBDumpVisitor >> visitBlockNode: aBlockNode [
 ]
 
 { #category : 'visiting' }
-RBDumpVisitor >> visitCascadeNode:aCascadeNode [
+ASTDumpVisitor >> visitCascadeNode:aCascadeNode [
 	stream
 		nextPutAll: aCascadeNode class name;
 		nextPutAll: ' messages: {'.
@@ -96,7 +96,7 @@ RBDumpVisitor >> visitCascadeNode:aCascadeNode [
 ]
 
 { #category : 'visiting' }
-RBDumpVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
+ASTDumpVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
 
 	stream
 		nextPutAll: '(';
@@ -122,7 +122,7 @@ RBDumpVisitor >> visitEnglobingErrorNode: anEnglobingErrorNode [
 ]
 
 { #category : 'visiting' }
-RBDumpVisitor >> visitLiteralArrayNode: aLiteralArrayNode [
+ASTDumpVisitor >> visitLiteralArrayNode: aLiteralArrayNode [
 
 	stream nextPutAll: aLiteralArrayNode class name;
 		nextPutAll: ' value: ';
@@ -139,12 +139,12 @@ RBDumpVisitor >> visitLiteralArrayNode: aLiteralArrayNode [
 ]
 
 { #category : 'visiting' }
-RBDumpVisitor >> visitLiteralNode: aLiteralNode [
+ASTDumpVisitor >> visitLiteralNode: aLiteralNode [
 	self visitLiteralValueNode: aLiteralNode
 ]
 
 { #category : 'visiting' }
-RBDumpVisitor >> visitLiteralValueNode: aLiteralValueNode [
+ASTDumpVisitor >> visitLiteralValueNode: aLiteralValueNode [
 	stream
 		nextPutAll: aLiteralValueNode class name;
 		nextPutAll: ' value: '.
@@ -152,7 +152,7 @@ RBDumpVisitor >> visitLiteralValueNode: aLiteralValueNode [
 ]
 
 { #category : 'visiting' }
-RBDumpVisitor >> visitMessageNode: aMessageNode [
+ASTDumpVisitor >> visitMessageNode: aMessageNode [
 	stream
 		nextPutAll: aMessageNode class name;
 		nextPutAll: ' receiver: ('.
@@ -169,7 +169,7 @@ RBDumpVisitor >> visitMessageNode: aMessageNode [
 ]
 
 { #category : 'visiting' }
-RBDumpVisitor >> visitMethodNode: aMethodNode [
+ASTDumpVisitor >> visitMethodNode: aMethodNode [
 	| hasPragmas |
 	hasPragmas := aMethodNode pragmas isNotEmpty.
 	hasPragmas
@@ -200,7 +200,7 @@ RBDumpVisitor >> visitMethodNode: aMethodNode [
 ]
 
 { #category : 'visiting' }
-RBDumpVisitor >> visitParseErrorNode: aParseErrorNode [
+ASTDumpVisitor >> visitParseErrorNode: aParseErrorNode [
 	stream
 		nextPutAll: aParseErrorNode class name;
 		nextPutAll: ' new errorMessage: ';
@@ -216,7 +216,7 @@ RBDumpVisitor >> visitParseErrorNode: aParseErrorNode [
 ]
 
 { #category : 'visiting' }
-RBDumpVisitor >> visitPragmaNode: aPragmaNode [
+ASTDumpVisitor >> visitPragmaNode: aPragmaNode [
 	stream
 		nextPutAll: aPragmaNode class name;
 		nextPutAll: ' selector: '.
@@ -230,7 +230,7 @@ RBDumpVisitor >> visitPragmaNode: aPragmaNode [
 ]
 
 { #category : 'visiting' }
-RBDumpVisitor >> visitReturnNode: aReturnNode [
+ASTDumpVisitor >> visitReturnNode: aReturnNode [
 	stream
 		nextPutAll: aReturnNode class name;
 		nextPutAll: ' value: ('.
@@ -239,7 +239,7 @@ RBDumpVisitor >> visitReturnNode: aReturnNode [
 ]
 
 { #category : 'visiting' }
-RBDumpVisitor >> visitSequenceNode: aSequenceNode [
+ASTDumpVisitor >> visitSequenceNode: aSequenceNode [
 	stream nextPutAll: aSequenceNode class name.
 	aSequenceNode temporaries
 		ifNotEmpty: [ stream nextPutAll: ' temporaries: {'.
@@ -257,7 +257,7 @@ RBDumpVisitor >> visitSequenceNode: aSequenceNode [
 ]
 
 { #category : 'visiting' }
-RBDumpVisitor >> visitVariableNode: aVariableNode [
+ASTDumpVisitor >> visitVariableNode: aVariableNode [
 	stream
 		nextPutAll: aVariableNode class name;
 		nextPutAll: ' named: '.

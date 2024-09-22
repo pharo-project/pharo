@@ -486,7 +486,7 @@ ASTProgramNode >> dump [
 	"Generate a literal expression that recreates the receiver"
 
 	| visitor |
-	visitor := RBDumpVisitor new.
+	visitor := ASTDumpVisitor new.
 	self acceptVisitor: visitor.
 	^ visitor contents
 ]

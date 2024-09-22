@@ -88,7 +88,7 @@ RBExtractMethodRefactoring >> checkAssignments: variableNames [
 		ifTrue:
 			[self refactoringError: 'Cannot extract assignment without all references.'].
 	removeAssigned removeAll: outsideVars.
-	(RBReadBeforeWrittenTester readBeforeWritten: removeAssigned
+	(ASTReadBeforeWrittenTester readBeforeWritten: removeAssigned
 		in: extractedParseTree) ifNotEmpty:
 			[self refactoringError: 'Cannot extract assignment if read before written.'].
 	removeAssigned do: [:each | (node whoDefines: each) removeTemporaryNamed: each].
@@ -121,7 +121,7 @@ RBExtractMethodRefactoring >> checkSelfReturns [
 
 { #category : 'transforming' }
 RBExtractMethodRefactoring >> checkSingleAssignment: varName [
-	((RBReadBeforeWrittenTester isVariable: varName
+	((ASTReadBeforeWrittenTester isVariable: varName
 		readBeforeWrittenIn: extractedParseTree)
 			or: [extractedParseTree containsReturn])
 			ifTrue:

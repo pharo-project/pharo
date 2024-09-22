@@ -80,7 +80,7 @@ RBExtractSetUpMethodRefactoring >> checkAssignments: variableNames [
 				select: [:each | (node whoDefines: each) references: each].
 	outsideVars do: [ :var | self checkSingleAssignment: var ].
 	removeAssigned removeAll: outsideVars.
-	(RBReadBeforeWrittenTester readBeforeWritten: removeAssigned
+	(ASTReadBeforeWrittenTester readBeforeWritten: removeAssigned
 		in: extractedParseTree) ifNotEmpty:
 			[self refactoringError: 'Cannot extract assignment if read before written.'].
 	removeAssigned do: [:each | (node whoDefines: each) removeTemporaryNamed: each].
@@ -90,7 +90,7 @@ RBExtractSetUpMethodRefactoring >> checkAssignments: variableNames [
 { #category : 'transforming' }
 RBExtractSetUpMethodRefactoring >> checkSingleAssignment: varName [
 
-	((RBReadBeforeWrittenTester isVariable: varName
+	((ASTReadBeforeWrittenTester isVariable: varName
 		readBeforeWrittenIn: extractedParseTree)
 			or: [extractedParseTree containsReturn])
 			ifTrue:

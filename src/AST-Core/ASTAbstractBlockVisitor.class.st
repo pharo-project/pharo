@@ -4,8 +4,8 @@ Subclasses provide specific node type capabilties
 
 "
 Class {
-	#name : 'RBAbstractBlockVisitor',
-	#superclass : 'RBProgramNodeVisitor',
+	#name : 'ASTAbstractBlockVisitor',
+	#superclass : 'ASTProgramNodeVisitor',
 	#instVars : [
 		'visitBlock'
 	],
@@ -15,13 +15,13 @@ Class {
 }
 
 { #category : 'testing' }
-RBAbstractBlockVisitor class >> isAbstract [
+ASTAbstractBlockVisitor class >> isAbstract [
 
-	^ self == RBAbstractBlockVisitor
+	^ self == ASTAbstractBlockVisitor
 ]
 
 { #category : 'enumerating' }
-RBAbstractBlockVisitor class >> visit: aTree anySatisfy: aBlock [
+ASTAbstractBlockVisitor class >> visit: aTree anySatisfy: aBlock [
 	self
 		visit: aTree
 		do: [ :node | (aBlock value: node) ifTrue: [ ^ true ] ].
@@ -29,13 +29,13 @@ RBAbstractBlockVisitor class >> visit: aTree anySatisfy: aBlock [
 ]
 
 { #category : 'enumerating' }
-RBAbstractBlockVisitor class >> visit: aTree detect: aBlock [
+ASTAbstractBlockVisitor class >> visit: aTree detect: aBlock [
 
 	^self visit: aTree detect: aBlock ifNone: [ NotFound signalFor: aBlock ]
 ]
 
 { #category : 'enumerating' }
-RBAbstractBlockVisitor class >> visit: aTree detect: aBlock ifNone: anErrorBlock [
+ASTAbstractBlockVisitor class >> visit: aTree detect: aBlock ifNone: anErrorBlock [
 	self
 		visit: aTree
 		do: [ :node | (aBlock value: node) ifTrue: [ ^ node ] ].
@@ -43,14 +43,14 @@ RBAbstractBlockVisitor class >> visit: aTree detect: aBlock ifNone: anErrorBlock
 ]
 
 { #category : 'enumerating' }
-RBAbstractBlockVisitor class >> visit: aTree do: aBlock [
+ASTAbstractBlockVisitor class >> visit: aTree do: aBlock [
 	^self new
 		visitBlock: aBlock;
 		visitNode: aTree
 ]
 
 { #category : 'enumerating' }
-RBAbstractBlockVisitor class >> visit: aTree noneSatisfy: aBlock [
+ASTAbstractBlockVisitor class >> visit: aTree noneSatisfy: aBlock [
 	self
 		visit: aTree
 		do: [ :node | (aBlock value: node) ifTrue: [ ^ false ] ].
@@ -58,7 +58,7 @@ RBAbstractBlockVisitor class >> visit: aTree noneSatisfy: aBlock [
 ]
 
 { #category : 'enumerating' }
-RBAbstractBlockVisitor class >> visit: aTree select: aBlock [
+ASTAbstractBlockVisitor class >> visit: aTree select: aBlock [
 	| result |
 	result := OrderedCollection new.
 	self visit: aTree do: [ :node |
@@ -67,11 +67,11 @@ RBAbstractBlockVisitor class >> visit: aTree select: aBlock [
 ]
 
 { #category : 'accessing' }
-RBAbstractBlockVisitor >> visitBlock [
+ASTAbstractBlockVisitor >> visitBlock [
 	^ visitBlock
 ]
 
 { #category : 'accessing' }
-RBAbstractBlockVisitor >> visitBlock: anObject [
+ASTAbstractBlockVisitor >> visitBlock: anObject [
 	visitBlock := anObject
 ]

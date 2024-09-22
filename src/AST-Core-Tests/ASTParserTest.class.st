@@ -1514,7 +1514,7 @@ ASTParserTest >> testParserErrorsWithErrorBlock [
 					parseExpression.
 
 				errorCount := 0.
-				RBParseErrorNodeVisitor visit: ast do: [ :n | errorCount := errorCount + 1 ].
+				ASTParseErrorNodeVisitor visit: ast do: [ :n | errorCount := errorCount + 1 ].
 				self assert: errorCount equals: each last ]
 ]
 

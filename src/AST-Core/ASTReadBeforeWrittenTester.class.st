@@ -9,8 +9,8 @@ Instance Variables:
 
 "
 Class {
-	#name : 'RBReadBeforeWrittenTester',
-	#superclass : 'RBProgramNodeVisitor',
+	#name : 'ASTReadBeforeWrittenTester',
+	#superclass : 'ASTProgramNodeVisitor',
 	#instVars : [
 		'read',
 		'checkNewTemps',
@@ -22,18 +22,18 @@ Class {
 }
 
 { #category : 'accessing' }
-RBReadBeforeWrittenTester class >> isVariable: aString readBeforeWrittenIn: aBRProgramNode [
+ASTReadBeforeWrittenTester class >> isVariable: aString readBeforeWrittenIn: aBRProgramNode [
 	^(self isVariable: aString writtenBeforeReadIn: aBRProgramNode) not
 ]
 
 { #category : 'accessing' }
-RBReadBeforeWrittenTester class >> isVariable: aString writtenBeforeReadIn: aBRProgramNode [
+ASTReadBeforeWrittenTester class >> isVariable: aString writtenBeforeReadIn: aBRProgramNode [
 	^(self readBeforeWritten: (Array with: aString) in: aBRProgramNode)
 		isEmpty
 ]
 
 { #category : 'accessing' }
-RBReadBeforeWrittenTester class >> readBeforeWritten: varNames in: aParseTree [
+ASTReadBeforeWrittenTester class >> readBeforeWritten: varNames in: aParseTree [
 	^(self new)
 		checkNewTemps: false;
 		initializeVars: varNames;
@@ -42,19 +42,19 @@ RBReadBeforeWrittenTester class >> readBeforeWritten: varNames in: aParseTree [
 ]
 
 { #category : 'accessing' }
-RBReadBeforeWrittenTester class >> variablesReadBeforeWrittenIn: aParseTree [
+ASTReadBeforeWrittenTester class >> variablesReadBeforeWrittenIn: aParseTree [
 	^(self new)
 		executeTree: aParseTree;
 		read
 ]
 
 { #category : 'initialization' }
-RBReadBeforeWrittenTester >> checkNewTemps: aBoolean [
+ASTReadBeforeWrittenTester >> checkNewTemps: aBoolean [
 	checkNewTemps := aBoolean
 ]
 
 { #category : 'private' }
-RBReadBeforeWrittenTester >> copyDictionary: aDictionary [
+ASTReadBeforeWrittenTester >> copyDictionary: aDictionary [
 	"We could send aDictionary the copy message, but that doesn't copy the associations."
 
 	| newDictionary |
@@ -64,22 +64,22 @@ RBReadBeforeWrittenTester >> copyDictionary: aDictionary [
 ]
 
 { #category : 'private' }
-RBReadBeforeWrittenTester >> createScope [
+ASTReadBeforeWrittenTester >> createScope [
 	scopeStack add: (self copyDictionary: scopeStack last)
 ]
 
 { #category : 'private' }
-RBReadBeforeWrittenTester >> currentScope [
+ASTReadBeforeWrittenTester >> currentScope [
 	^scopeStack last
 ]
 
 { #category : 'accessing' }
-RBReadBeforeWrittenTester >> executeTree: aParseTree [
+ASTReadBeforeWrittenTester >> executeTree: aParseTree [
 	^self visitNode: aParseTree
 ]
 
 { #category : 'initialization' }
-RBReadBeforeWrittenTester >> initialize [
+ASTReadBeforeWrittenTester >> initialize [
 	super initialize.
 	scopeStack := OrderedCollection with: Dictionary new.
 	read := Set new.
@@ -87,12 +87,12 @@ RBReadBeforeWrittenTester >> initialize [
 ]
 
 { #category : 'initialization' }
-RBReadBeforeWrittenTester >> initializeVars: varNames [
+ASTReadBeforeWrittenTester >> initializeVars: varNames [
 	varNames do: [:each | self currentScope at: each put: nil]
 ]
 
 { #category : 'private' }
-RBReadBeforeWrittenTester >> processBlock: aNode [
+ASTReadBeforeWrittenTester >> processBlock: aNode [
 	| newScope |
 	self createScope.
 	self executeTree: aNode body.
@@ -104,7 +104,7 @@ RBReadBeforeWrittenTester >> processBlock: aNode [
 ]
 
 { #category : 'private' }
-RBReadBeforeWrittenTester >> processIfTrueIfFalse: aNode [
+ASTReadBeforeWrittenTester >> processIfTrueIfFalse: aNode [
 
 	| trueScope falseScope |
 
@@ -127,7 +127,7 @@ RBReadBeforeWrittenTester >> processIfTrueIfFalse: aNode [
 ]
 
 { #category : 'private' }
-RBReadBeforeWrittenTester >> processStatementNode: aNode [
+ASTReadBeforeWrittenTester >> processStatementNode: aNode [
 
 	| temps |
 
@@ -150,26 +150,26 @@ RBReadBeforeWrittenTester >> processStatementNode: aNode [
 ]
 
 { #category : 'accessing' }
-RBReadBeforeWrittenTester >> read [
+ASTReadBeforeWrittenTester >> read [
 	self currentScope
 		keysAndValuesDo: [:key :value | value == true ifTrue: [read add: key]].
 	^read
 ]
 
 { #category : 'private' }
-RBReadBeforeWrittenTester >> removeScope [
+ASTReadBeforeWrittenTester >> removeScope [
 	^scopeStack removeLast
 ]
 
 { #category : 'private' }
-RBReadBeforeWrittenTester >> variableRead: aNode [
+ASTReadBeforeWrittenTester >> variableRead: aNode [
 
 	( self currentScope includesKey: aNode name )
 		ifTrue: [ ( self currentScope at: aNode name ) ifNil: [ self currentScope at: aNode name put: true ] ]
 ]
 
 { #category : 'private' }
-RBReadBeforeWrittenTester >> variableWritten: aNode [
+ASTReadBeforeWrittenTester >> variableWritten: aNode [
 
 	( self currentScope includesKey: aNode variable name )
 		ifTrue: [ ( self currentScope at: aNode variable name )
@@ -178,18 +178,18 @@ RBReadBeforeWrittenTester >> variableWritten: aNode [
 ]
 
 { #category : 'visiting' }
-RBReadBeforeWrittenTester >> visitAssignmentNode: anAssignmentNode [
+ASTReadBeforeWrittenTester >> visitAssignmentNode: anAssignmentNode [
 	self visitNode: anAssignmentNode value.
 	self variableWritten: anAssignmentNode
 ]
 
 { #category : 'visiting' }
-RBReadBeforeWrittenTester >> visitBlockNode: aBlockNode [
+ASTReadBeforeWrittenTester >> visitBlockNode: aBlockNode [
 	self processBlock: aBlockNode
 ]
 
 { #category : 'visiting' }
-RBReadBeforeWrittenTester >> visitMessageNode: aMessageNode [
+ASTReadBeforeWrittenTester >> visitMessageNode: aMessageNode [
 	((#(#whileTrue: #whileFalse: #whileTrue #whileFalse #whileNil:)
 		includes: aMessageNode selector) and: [aMessageNode receiver isBlock])
 		ifTrue: [self executeTree: aMessageNode receiver body]
@@ -203,11 +203,11 @@ RBReadBeforeWrittenTester >> visitMessageNode: aMessageNode [
 ]
 
 { #category : 'visiting' }
-RBReadBeforeWrittenTester >> visitSequenceNode: aSequenceNode [
+ASTReadBeforeWrittenTester >> visitSequenceNode: aSequenceNode [
 	self processStatementNode: aSequenceNode
 ]
 
 { #category : 'visiting' }
-RBReadBeforeWrittenTester >> visitVariableNode: aVariableNode [
+ASTReadBeforeWrittenTester >> visitVariableNode: aVariableNode [
 	self variableRead: aVariableNode
 ]

@@ -63,7 +63,7 @@ Supported charcters are listed below:
 "
 Class {
 	#name : 'ASTParseTreeSearcher',
-	#superclass : 'RBProgramNodeVisitor',
+	#superclass : 'ASTProgramNodeVisitor',
 	#instVars : [
 		'searches',
 		'answer',

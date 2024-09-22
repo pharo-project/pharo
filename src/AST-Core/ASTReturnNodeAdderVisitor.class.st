@@ -2,57 +2,57 @@
 I am a visitor that wraps a node in a return node. If the node is sequence it will wrap the last statement in a return.
 "
 Class {
-	#name : 'RBReturnNodeAdderVisitor',
-	#superclass : 'RBProgramNodeVisitor',
+	#name : 'ASTReturnNodeAdderVisitor',
+	#superclass : 'ASTProgramNodeVisitor',
 	#category : 'AST-Core-Visitors',
 	#package : 'AST-Core',
 	#tag : 'Visitors'
 }
 
 { #category : 'visiting' }
-RBReturnNodeAdderVisitor >> visitArrayNode: aNode [
+ASTReturnNodeAdderVisitor >> visitArrayNode: aNode [
 
 	^ ASTReturnNode value: aNode
 ]
 
 { #category : 'visiting' }
-RBReturnNodeAdderVisitor >> visitAssignmentNode: aNode [
+ASTReturnNodeAdderVisitor >> visitAssignmentNode: aNode [
 
 	^ ASTReturnNode value: aNode
 ]
 
 { #category : 'visiting' }
-RBReturnNodeAdderVisitor >> visitBlockNode: aNode [
+ASTReturnNodeAdderVisitor >> visitBlockNode: aNode [
 
 	^ ASTReturnNode value: aNode
 ]
 
 { #category : 'visiting' }
-RBReturnNodeAdderVisitor >> visitCascadeNode: aNode [
+ASTReturnNodeAdderVisitor >> visitCascadeNode: aNode [
 
 	^ ASTReturnNode value: aNode
 ]
 
 { #category : 'visiting' }
-RBReturnNodeAdderVisitor >> visitLiteralNode: aNode [
+ASTReturnNodeAdderVisitor >> visitLiteralNode: aNode [
 
 	^ ASTReturnNode value: aNode
 ]
 
 { #category : 'visiting' }
-RBReturnNodeAdderVisitor >> visitMessageNode: aNode [
+ASTReturnNodeAdderVisitor >> visitMessageNode: aNode [
 
 	^ ASTReturnNode value: aNode
 ]
 
 { #category : 'visiting' }
-RBReturnNodeAdderVisitor >> visitReturnNode: aNode [
+ASTReturnNodeAdderVisitor >> visitReturnNode: aNode [
 
 	^ aNode
 ]
 
 { #category : 'visiting' }
-RBReturnNodeAdderVisitor >> visitSequenceNode: aNode [
+ASTReturnNodeAdderVisitor >> visitSequenceNode: aNode [
 
 	"Add return returns the newly added return node, but nobody uses it"
 	aNode addReturn.
@@ -60,7 +60,7 @@ RBReturnNodeAdderVisitor >> visitSequenceNode: aNode [
 ]
 
 { #category : 'visiting' }
-RBReturnNodeAdderVisitor >> visitVariableNode: aNode [
+ASTReturnNodeAdderVisitor >> visitVariableNode: aNode [
 
 	^ ASTReturnNode value: aNode
 ]
