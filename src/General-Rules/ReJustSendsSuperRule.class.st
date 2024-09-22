@@ -58,5 +58,5 @@ ReJustSendsSuperRule >> basicCheck: aMethod [
 { #category : 'initialization' }
 ReJustSendsSuperRule >> initialize [
 	super initialize.
-	matcher := RBParseTreeSearcher justSendsSuper
+	matcher := ASTParseTreeSearcher justSendsSuper
 ]

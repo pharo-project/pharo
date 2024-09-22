@@ -16,7 +16,7 @@ Whereas, in #visitMethodNode:,  the effectTranslator is used, because no value i
 "
 Class {
 	#name : 'OCASTTranslator',
-	#superclass : 'RBProgramNodeVisitor',
+	#superclass : 'ASTProgramNodeVisitor',
 	#instVars : [
 		'methodBuilder',
 		'nextUniqueInlineID'

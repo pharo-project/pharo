@@ -473,7 +473,7 @@ CDFluidClassDefinitionParser >> parse: aString [
 CDFluidClassDefinitionParser >> parseRootNode: expressionTree [
 
 	| searcher |
-	searcher := RBParseTreeSearcher new.
+	searcher := ASTParseTreeSearcher new.
 	searcher
 		matches: 'Trait << `#name' do: [ :aNode :answer |
 			classNameNode := searcher variableNamed: '`#name'.

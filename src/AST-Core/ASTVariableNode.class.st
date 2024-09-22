@@ -257,7 +257,7 @@ ASTVariableNode >> references: aVariableName [
 
 { #category : 'replacing' }
 ASTVariableNode >> replaceSourceFrom: aNode [
-	self addReplacement: (RBStringReplacement
+	self addReplacement: (ASTStringReplacement
 				replaceFrom: aNode start
 				to: aNode stop
 				with: self name)
@@ -265,7 +265,7 @@ ASTVariableNode >> replaceSourceFrom: aNode [
 
 { #category : 'replacing' }
 ASTVariableNode >> replaceSourceWith: aNode [
-	self addReplacement: (RBStringReplacement
+	self addReplacement: (ASTStringReplacement
 				replaceFrom: self start
 				to: self stop
 				with: aNode formattedCode)

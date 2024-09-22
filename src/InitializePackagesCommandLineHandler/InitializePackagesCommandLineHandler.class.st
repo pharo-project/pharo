@@ -16,7 +16,7 @@ Protocols are provided in file where every method has one line and provides foll
 The <cr> line ending is expected for protocols and packages file.
 
 Protocols file exxample:
-RBReplaceRule	false	searchForTree:replaceWith:	matching
+ASTReplaceRule	false	searchForTree:replaceWith:	matching
 ASTPatternPragmaNode	true	selector:keywordsPositions:arguments:	instance creation
 			
 Packages file contains list of packages where every package is on own line.

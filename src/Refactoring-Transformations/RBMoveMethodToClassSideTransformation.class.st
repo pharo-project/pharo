@@ -79,7 +79,7 @@ RBMoveMethodToClassSideTransformation >> getNewSource [
 	| rewriter node temp |
 	temp := self temporaryName.
 	node := RBParser parseMethod: method source.
-	rewriter := RBParseTreeRewriter new replace: 'self' with: temp.
+	rewriter := ASTParseTreeRewriter new replace: 'self' with: temp.
 	(rewriter executeTree: node)
 		ifTrue: [
 			node := RBParser parseMethod: rewriter tree formattedCode.

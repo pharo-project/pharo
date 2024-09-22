@@ -1,6 +1,6 @@
 Class {
 	#name : 'ASTMessageNodeTest',
-	#superclass : 'RBParseTreeTest',
+	#superclass : 'ASTParseTreeTest',
 	#category : 'AST-Core-Tests-Nodes',
 	#package : 'AST-Core-Tests',
 	#tag : 'Nodes'

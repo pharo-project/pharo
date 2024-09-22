@@ -525,7 +525,7 @@ Breakpoint >> rewriteASTToSimulateExecutionInADifferentContext: anAST [
 		For example, a reference to a variable named flower is rewritten into `ThisContext readVariableNamed: #flower`
 	4) Rewriting references to `thisContext` into references to `ThisContext`
 	5) Rewriting references to `self` into references to `ThisContext receiver`"
-	rewriter := RBParseTreeRewriter new.
+	rewriter := ASTParseTreeRewriter new.
 	semanticallyAnalysedMethodAST := anAST doSemanticAnalysis.	"To find which variables are undefined"
 	rewriter
 		replace: (ASTVariableNode named: #ThisContext) name
@@ -553,7 +553,7 @@ Breakpoint >> rewriteASTToSimulateExecutionInADifferentContext: anAST [
 		executeTree: semanticallyAnalysedMethodAST;
 		tree.
 	analysedIntermediateAST := intermediateAST doSemanticAnalysis.
-	rewriter2 := RBParseTreeRewriter new.
+	rewriter2 := ASTParseTreeRewriter new.
 	allUndeclaredVariableNodes := analysedIntermediateAST allChildren
 		select: [ :astElem | astElem isVariable and: [ astElem isUndeclaredVariable ] ].
 	allUndeclaredVariableSymbols := (allUndeclaredVariableNodes

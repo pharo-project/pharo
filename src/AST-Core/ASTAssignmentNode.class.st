@@ -171,7 +171,7 @@ ASTAssignmentNode >> replaceSourceWith: aNode [
 	"Check if we need to convert the assignment. Also check if we are being replaced with a setter message send. If so, create the replacements to edit the original source."
 
 	(aNode isAssignment and: [ aNode assignmentOperator ~= self assignmentOperator ]) ifTrue: [
-		self addReplacement: (RBStringReplacement
+		self addReplacement: (ASTStringReplacement
 			replaceFrom: self assignmentPosition
 			to: self assignmentPosition + self assignmentOperator size - 1
 			with: aNode assignmentOperator).
@@ -186,15 +186,15 @@ ASTAssignmentNode >> replaceSourceWith: aNode [
 		and: [aNode arguments first precedence >= aNode precedence])
 			ifTrue:
 				[self
-					addReplacement: (RBStringReplacement
+					addReplacement: (ASTStringReplacement
 								replaceFrom: self value start
 								to: self value start - 1
 								with: '(');
-					addReplacement: (RBStringReplacement
+					addReplacement: (ASTStringReplacement
 								replaceFrom: self value stop + 1
 								to: self value stop
 								with: ')')].
-	self addReplacement: (RBStringReplacement
+	self addReplacement: (ASTStringReplacement
 				replaceFrom: self variable start
 				to: self assignmentPosition + 1
 				with: aNode receiver name , ' ' , aNode selector)

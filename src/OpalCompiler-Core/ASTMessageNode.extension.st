@@ -108,7 +108,7 @@ ASTMessageNode >> isInlineToDo [
 	block isBlock ifFalse: [^ false].
 	block arguments size = 1 ifFalse: [^ false].
 	self arguments first isVariable ifTrue: [
-		(RBParseTreeSearcher new
+		(ASTParseTreeSearcher new
 			matches: self arguments first name , ' := `@object' do: [:n :a | true];
 			executeTree: block initialAnswer: false) ifTrue: [^ false].
 	].

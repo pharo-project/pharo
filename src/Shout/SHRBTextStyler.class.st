@@ -3,7 +3,7 @@ I'm the one who visits node to coloring the code
 "
 Class {
 	#name : 'SHRBTextStyler',
-	#superclass : 'RBProgramNodeVisitor',
+	#superclass : 'ASTProgramNodeVisitor',
 	#instVars : [
 		'charAttr',
 		'parentheseLevel',

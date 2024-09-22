@@ -72,7 +72,7 @@ RBRefactoryTyper class >> newFor: aRBNamespace [
 { #category : 'accessing' }
 RBRefactoryTyper class >> typesFor: variableName in: aParseTree model: aRBSmalltalk [
 	| searcher messages |
-	searcher := RBParseTreeSearcher new.
+	searcher := ASTParseTreeSearcher new.
 	searcher matches: variableName , ' `@message: ``@args'
 		do:
 			[:aNode :answer |
@@ -291,7 +291,7 @@ RBRefactoryTyper >> parseTreeSearcher [
 
 { #category : 'selectors' }
 RBRefactoryTyper >> parseTreeSearcherClass [
-	^ RBParseTreeSearcher
+	^ ASTParseTreeSearcher
 ]
 
 { #category : 'printing' }

@@ -98,7 +98,7 @@ ReCompositeExtractMethodRefactoring >> addReturnIfNeeded: newMethodNode [
 		ifTrue: [
 			newMethodNode addNode: (ASTReturnNode value:
 					 (ASTVariableNode named: assignments first asString)) ]
-		ifFalse: [ RBReturnNodeAdderVisitor new visit: newMethodNode ].
+		ifFalse: [ ASTReturnNodeAdderVisitor new visit: newMethodNode ].
 ]
 
 { #category : 'preconditions' }

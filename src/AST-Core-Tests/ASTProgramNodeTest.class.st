@@ -3,7 +3,7 @@ SUnit tests for ASTProgramNode
 "
 Class {
 	#name : 'ASTProgramNodeTest',
-	#superclass : 'RBParseTreeTest',
+	#superclass : 'ASTParseTreeTest',
 	#instVars : [
 		'node'
 	],

@@ -76,7 +76,7 @@ OCASTCheckerTest >> testExampleSelf [
 	self assert: ast scope tempVars size equals: 0.
 	self assert: (ast scope lookupVar: 'self') isSelfVariable.
 
-	assignment := RBParseTreeSearcher treeMatching: 'self result: ``@anything' in: ast.
+	assignment := ASTParseTreeSearcher treeMatching: 'self result: ``@anything' in: ast.
 	self assert: assignment arguments first variable isSelfVariable
 ]
 
@@ -96,7 +96,7 @@ OCASTCheckerTest >> testExampleSuper [
 	self assert: ast scope tempVars size equals: 0.
 	self assert: (ast scope lookupVar: 'super') isSuperVariable.
 
-	assignment := RBParseTreeSearcher treeMatching: 'self result:``@anything' in: ast.
+	assignment := ASTParseTreeSearcher treeMatching: 'self result:``@anything' in: ast.
 	self assert: assignment arguments first variable isSuperVariable
 ]
 
@@ -116,7 +116,7 @@ OCASTCheckerTest >> testExampleThisContext [
 	self assert: ast scope tempVars size equals: 0.
 	self assert: (ast scope lookupVar: 'thisContext') isThisContextVariable.
 
-	assignment := RBParseTreeSearcher treeMatching: 'self result: ``@anything' in: ast.
+	assignment := ASTParseTreeSearcher treeMatching: 'self result: ``@anything' in: ast.
 	self assert: assignment arguments first variable isThisContextVariable
 ]
 
@@ -138,7 +138,7 @@ OCASTCheckerTest >> testInstanceVar [
 	self assertEmpty: ast scope tempVars.
 	self assert: (ast scope outerScope lookupVar: 'iVar') isInstanceVariable.
 
-	assignment := RBParseTreeSearcher treeMatching: '`var := ``@anything' in: ast.
+	assignment := ASTParseTreeSearcher treeMatching: '`var := ``@anything' in: ast.
 	self assert: assignment variable isInstanceVariable
 ]
 

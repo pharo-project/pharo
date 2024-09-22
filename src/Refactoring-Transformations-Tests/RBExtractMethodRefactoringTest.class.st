@@ -35,7 +35,7 @@ RBExtractMethodRefactoringTest >> testExtractMethodThatMovesTemporaryVariable [
 	| rule |
 	rule := self foo1.
 	self rewriteUsing: rule').
-	self assert: (class parseTreeForSelector: #foo1) equals: (self parseMethod: 'foo1 | rule | 	rule := RBParseTreeRewriter new.
+	self assert: (class parseTreeForSelector: #foo1) equals: (self parseMethod: 'foo1 | rule | 	rule := ASTParseTreeRewriter new.
 	rule addSearch: ''super `@message: ``@args''
 				-> (
 					[:aNode |
