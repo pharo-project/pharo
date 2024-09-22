@@ -1,13 +1,13 @@
 Class {
-	#name : 'RBErrorNodeParserTest',
-	#superclass : 'RBParserTest',
+	#name : 'ASTErrorNodeParserTest',
+	#superclass : 'ASTParserTest',
 	#category : 'AST-Core-Tests-Parser',
 	#package : 'AST-Core-Tests',
 	#tag : 'Parser'
 }
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyAssigment [
+ASTErrorNodeParserTest >> testFaultyAssigment [
 
 	| node |
 	node := self parserClass parseFaultyExpression: ':=1'.
@@ -22,7 +22,7 @@ RBErrorNodeParserTest >> testFaultyAssigment [
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyAssigment2 [
+ASTErrorNodeParserTest >> testFaultyAssigment2 [
 
 	| node |
 	node := self parserClass parseFaultyExpression: 'a:='.
@@ -36,7 +36,7 @@ RBErrorNodeParserTest >> testFaultyAssigment2 [
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyBinaryMessageSendArgument [
+ASTErrorNodeParserTest >> testFaultyBinaryMessageSendArgument [
 
 	| node |
 	node := self parserClass parseFaultyExpression: '12 +'.
@@ -54,7 +54,7 @@ RBErrorNodeParserTest >> testFaultyBinaryMessageSendArgument [
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyBinaryMessageSendArgumentInside [
+ASTErrorNodeParserTest >> testFaultyBinaryMessageSendArgumentInside [
 
 	| node0 node |
 	node0 := self parserClass parseFaultyExpression: '[12 +]'.
@@ -74,7 +74,7 @@ RBErrorNodeParserTest >> testFaultyBinaryMessageSendArgumentInside [
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyBinaryMessageSendArgumentShouldHaveTheCorrectMessage [
+ASTErrorNodeParserTest >> testFaultyBinaryMessageSendArgumentShouldHaveTheCorrectMessage [
 
 	| node |
 	node := self parserClass parseFaultyExpression: '+ arg'.
@@ -85,7 +85,7 @@ RBErrorNodeParserTest >> testFaultyBinaryMessageSendArgumentShouldHaveTheCorrect
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyBinaryMessageSendReceiver [
+ASTErrorNodeParserTest >> testFaultyBinaryMessageSendReceiver [
 
 	| node |
 	node := self parserClass parseFaultyExpression: '+ 12'.
@@ -103,7 +103,7 @@ RBErrorNodeParserTest >> testFaultyBinaryMessageSendReceiver [
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyBinaryMessageSendReceiverInside [
+ASTErrorNodeParserTest >> testFaultyBinaryMessageSendReceiverInside [
 
 	| node0 node |
 	node0 := self parserClass parseFaultyExpression: '[+ 12]'.
@@ -123,7 +123,7 @@ RBErrorNodeParserTest >> testFaultyBinaryMessageSendReceiverInside [
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyBinaryMessageSendWithLiteralArgumentShouldHaveTheCorrectMessage [
+ASTErrorNodeParserTest >> testFaultyBinaryMessageSendWithLiteralArgumentShouldHaveTheCorrectMessage [
 
 	| node |
 	node := self parserClass parseFaultyExpression: '+ 12'.
@@ -137,7 +137,7 @@ RBErrorNodeParserTest >> testFaultyBinaryMessageSendWithLiteralArgumentShouldHav
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyBlockUnclosed [
+ASTErrorNodeParserTest >> testFaultyBlockUnclosed [
 
 	| node |
 	node := self parserClass parseFaultyExpression: '[1+2'.
@@ -149,7 +149,7 @@ RBErrorNodeParserTest >> testFaultyBlockUnclosed [
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyBlockUnopeneed [
+ASTErrorNodeParserTest >> testFaultyBlockUnopeneed [
 
 	| node |
 	node := self parserClass parseFaultyExpression: '1+2]'.
@@ -161,7 +161,7 @@ RBErrorNodeParserTest >> testFaultyBlockUnopeneed [
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyCascade [
+ASTErrorNodeParserTest >> testFaultyCascade [
 
 	| node |
 	node := self parserClass parseFaultyExpression: '; ]'.
@@ -172,7 +172,7 @@ RBErrorNodeParserTest >> testFaultyCascade [
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyCascadeCascadeMessageExpected [
+ASTErrorNodeParserTest >> testFaultyCascadeCascadeMessageExpected [
 
 	| node |
 	node := self parserClass parseFaultyExpression: '1 foo;'.
@@ -196,7 +196,7 @@ RBErrorNodeParserTest >> testFaultyCascadeCascadeMessageExpected [
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyCascadeCascadeMessageExpected2 [
+ASTErrorNodeParserTest >> testFaultyCascadeCascadeMessageExpected2 [
 
 	| node |
 	node := self parserClass parseFaultyExpression: '1 foo;;bar'.
@@ -223,7 +223,7 @@ RBErrorNodeParserTest >> testFaultyCascadeCascadeMessageExpected2 [
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyCascadeCascadeMessageExpected3 [
+ASTErrorNodeParserTest >> testFaultyCascadeCascadeMessageExpected3 [
 
 	| node |
 	node := self parserClass parseFaultyExpression: '1 foo;;'.
@@ -254,7 +254,7 @@ RBErrorNodeParserTest >> testFaultyCascadeCascadeMessageExpected3 [
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyCascadeMessageExpected [
+ASTErrorNodeParserTest >> testFaultyCascadeMessageExpected [
 
 	| node |
 	node := self parserClass parseFaultyExpression: ';foo'.
@@ -279,7 +279,7 @@ RBErrorNodeParserTest >> testFaultyCascadeMessageExpected [
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyCascadeMessageExpected2 [
+ASTErrorNodeParserTest >> testFaultyCascadeMessageExpected2 [
 
 	| node |
 	node := self parserClass parseFaultyExpression: ';;foo'.
@@ -311,7 +311,7 @@ RBErrorNodeParserTest >> testFaultyCascadeMessageExpected2 [
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyCascadeMessageExpected3 [
+ASTErrorNodeParserTest >> testFaultyCascadeMessageExpected3 [
 
 	| node |
 	node := self parserClass parseFaultyExpression: '(1 foo); bar'.
@@ -340,7 +340,7 @@ RBErrorNodeParserTest >> testFaultyCascadeMessageExpected3 [
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyCascadeMessageExpected4 [
+ASTErrorNodeParserTest >> testFaultyCascadeMessageExpected4 [
 
 	| node |
 	node := self parserClass parseFaultyExpression: '1; bar'.
@@ -368,7 +368,7 @@ RBErrorNodeParserTest >> testFaultyCascadeMessageExpected4 [
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyLiterabByteArray [
+ASTErrorNodeParserTest >> testFaultyLiterabByteArray [
 
 	| source node |
 	source := '#[ 1 hello 3 ]'.
@@ -394,7 +394,7 @@ RBErrorNodeParserTest >> testFaultyLiterabByteArray [
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyMessageSendShouldHaveTheCorrectMessage [
+ASTErrorNodeParserTest >> testFaultyMessageSendShouldHaveTheCorrectMessage [
 
 	| node |
 	node := self parserClass parseFaultyExpression: 'msg: arg'.
@@ -405,7 +405,7 @@ RBErrorNodeParserTest >> testFaultyMessageSendShouldHaveTheCorrectMessage [
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyMessageSendWithLiteralArgumentShouldHaveTheCorrectMessage [
+ASTErrorNodeParserTest >> testFaultyMessageSendWithLiteralArgumentShouldHaveTheCorrectMessage [
 
 	| node |
 	node := self parserClass parseFaultyExpression: 'msg: 12'.
@@ -420,7 +420,7 @@ RBErrorNodeParserTest >> testFaultyMessageSendWithLiteralArgumentShouldHaveTheCo
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyMessageSendWithSymbolsArgumentShouldHaveTheCorrectMessage [
+ASTErrorNodeParserTest >> testFaultyMessageSendWithSymbolsArgumentShouldHaveTheCorrectMessage [
 
 	| node |
 	node := self parserClass parseFaultyExpression: 'msg: #lala: and:12'.
@@ -436,7 +436,7 @@ RBErrorNodeParserTest >> testFaultyMessageSendWithSymbolsArgumentShouldHaveTheCo
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyMethodConsumesEntireStream [
+ASTErrorNodeParserTest >> testFaultyMethodConsumesEntireStream [
 
 	| parser |
 	parser := self parserClass new.
@@ -447,7 +447,7 @@ RBErrorNodeParserTest >> testFaultyMethodConsumesEntireStream [
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyMethodWithSignatureKeepsSignature [
+ASTErrorNodeParserTest >> testFaultyMethodWithSignatureKeepsSignature [
 
 	| node |
 	node := self parserClass parseFaultyMethod: 'ret ^ 1 ^ 2'.
@@ -457,7 +457,7 @@ RBErrorNodeParserTest >> testFaultyMethodWithSignatureKeepsSignature [
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyMethodWithoutSignatureHasAnErrorNodeAndContinueParsing [
+ASTErrorNodeParserTest >> testFaultyMethodWithoutSignatureHasAnErrorNodeAndContinueParsing [
 
 	| node |
 	node := self parserClass parseFaultyMethod: '1 between: 2 and: 3'.
@@ -472,7 +472,7 @@ RBErrorNodeParserTest >> testFaultyMethodWithoutSignatureHasAnErrorNodeAndContin
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyNumericLiteral [
+ASTErrorNodeParserTest >> testFaultyNumericLiteral [
 
 	| node |
 	node := self parserClass parseFaultyExpression: '000r'.
@@ -489,7 +489,7 @@ RBErrorNodeParserTest >> testFaultyNumericLiteral [
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyNumericLiteral2 [
+ASTErrorNodeParserTest >> testFaultyNumericLiteral2 [
 
 	| node |
 	node := self parserClass parseFaultyExpression: '2rx'.
@@ -506,7 +506,7 @@ RBErrorNodeParserTest >> testFaultyNumericLiteral2 [
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyStringLiteral [
+ASTErrorNodeParserTest >> testFaultyStringLiteral [
 
 	| node |
 	node := self parserClass parseFaultyExpression: '''foo'',''bar'.
@@ -523,7 +523,7 @@ RBErrorNodeParserTest >> testFaultyStringLiteral [
 ]
 
 { #category : 'tests' }
-RBErrorNodeParserTest >> testFaultyStringLiteral2 [
+ASTErrorNodeParserTest >> testFaultyStringLiteral2 [
 
 	| node |
 	node := self parserClass parseFaultyExpression: '''foo'','''.

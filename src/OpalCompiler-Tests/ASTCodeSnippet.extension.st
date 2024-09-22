@@ -1,7 +1,7 @@
-Extension { #name : 'RBCodeSnippet' }
+Extension { #name : 'ASTCodeSnippet' }
 
 { #category : '*OpalCompiler-Tests' }
-RBCodeSnippet >> compile [
+ASTCodeSnippet >> compile [
 
 	^ [ OpalCompiler new
 		  permitFaulty: true;
@@ -16,7 +16,7 @@ RBCodeSnippet >> compile [
 ]
 
 { #category : '*OpalCompiler-Tests' }
-RBCodeSnippet >> compileOnError: aBlock [
+ASTCodeSnippet >> compileOnError: aBlock [
 
 	^ [ OpalCompiler new
 		  isScripting: isScripting;
@@ -24,7 +24,7 @@ RBCodeSnippet >> compileOnError: aBlock [
 ]
 
 { #category : '*OpalCompiler-Tests' }
-RBCodeSnippet >> doSemanticAnalysis [
+ASTCodeSnippet >> doSemanticAnalysis [
 
 	"Do the semantic analysis as with the compiler and return the AST of the whole method (possibly a DoIt method)"
 
@@ -39,7 +39,7 @@ RBCodeSnippet >> doSemanticAnalysis [
 ]
 
 { #category : '*OpalCompiler-Tests' }
-RBCodeSnippet >> doSemanticAnalysisOnError: aBlock [
+ASTCodeSnippet >> doSemanticAnalysisOnError: aBlock [
 
 	^ [ OpalCompiler new
 		  isScripting: isScripting;

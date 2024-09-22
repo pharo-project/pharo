@@ -1,7 +1,7 @@
-Extension { #name : 'RBCodeSnippetTest' }
+Extension { #name : 'ASTCodeSnippetTest' }
 
 { #category : '*OpalCompiler-Tests' }
-RBCodeSnippetTest >> testCompileFailBlock [
+ASTCodeSnippetTest >> testCompileFailBlock [
 
 	| method error |
 	error := nil.
@@ -25,7 +25,7 @@ RBCodeSnippetTest >> testCompileFailBlock [
 ]
 
 { #category : '*OpalCompiler-Tests' }
-RBCodeSnippetTest >> testCompileFaulty [
+ASTCodeSnippetTest >> testCompileFaulty [
 
 	| method |
 
@@ -49,7 +49,7 @@ RBCodeSnippetTest >> testCompileFaulty [
 ]
 
 { #category : '*OpalCompiler-Tests' }
-RBCodeSnippetTest >> testCompileOnError [
+ASTCodeSnippetTest >> testCompileOnError [
 
 	| method error |
 	error := nil.
@@ -67,7 +67,7 @@ RBCodeSnippetTest >> testCompileOnError [
 ]
 
 { #category : '*OpalCompiler-Tests' }
-RBCodeSnippetTest >> testCompileOnErrorResume [
+ASTCodeSnippetTest >> testCompileOnErrorResume [
 
 	| method error |
 	error := nil.
@@ -82,7 +82,7 @@ RBCodeSnippetTest >> testCompileOnErrorResume [
 ]
 
 { #category : '*OpalCompiler-Tests' }
-RBCodeSnippetTest >> testCompileUndeclaredFaultyFailBlock [
+ASTCodeSnippetTest >> testCompileUndeclaredFaultyFailBlock [
 
 	| method error |
 	error := nil.
@@ -107,7 +107,7 @@ RBCodeSnippetTest >> testCompileUndeclaredFaultyFailBlock [
 ]
 
 { #category : '*OpalCompiler-Tests' }
-RBCodeSnippetTest >> testCompileWithRequestor [
+ASTCodeSnippetTest >> testCompileWithRequestor [
 
 	| requestor method |
 	requestor := OCMockRequestor new.
@@ -137,7 +137,7 @@ RBCodeSnippetTest >> testCompileWithRequestor [
 ]
 
 { #category : '*OpalCompiler-Tests' }
-RBCodeSnippetTest >> testDoSemanticAnalysis [
+ASTCodeSnippetTest >> testDoSemanticAnalysis [
 	"We should test more than that"
 
 	| ast |
@@ -149,7 +149,7 @@ RBCodeSnippetTest >> testDoSemanticAnalysis [
 ]
 
 { #category : '*OpalCompiler-Tests' }
-RBCodeSnippetTest >> testDoSemanticAnalysisOnError [
+ASTCodeSnippetTest >> testDoSemanticAnalysisOnError [
 	"We should test more than that"
 
 	| ast error |
@@ -165,7 +165,7 @@ RBCodeSnippetTest >> testDoSemanticAnalysisOnError [
 ]
 
 { #category : '*OpalCompiler-Tests' }
-RBCodeSnippetTest >> testDump [
+ASTCodeSnippetTest >> testDump [
 
 	| ast dump ast2 dump2 |
 	ast := snippet parse.
@@ -177,7 +177,7 @@ RBCodeSnippetTest >> testDump [
 ]
 
 { #category : '*OpalCompiler-Tests' }
-RBCodeSnippetTest >> testExecute: method [
+ASTCodeSnippetTest >> testExecute: method [
 
 	| runBlock phonyArgs |
 	self skipIf: #exec.
@@ -190,7 +190,7 @@ RBCodeSnippetTest >> testExecute: method [
 ]
 
 { #category : '*OpalCompiler-Tests' }
-RBCodeSnippetTest >> testExecuteBlock: aRunBlock [
+ASTCodeSnippetTest >> testExecuteBlock: aRunBlock [
 
 	| runBlock |
 	"a block that apply value on aRunBlock until it's no more a block"

@@ -1,7 +1,7 @@
-Extension { #name : 'RBCodeSnippet' }
+Extension { #name : 'ASTCodeSnippet' }
 
 { #category : '*Shout-Tests' }
-RBCodeSnippet >> mockedStyledText [
+ASTCodeSnippet >> mockedStyledText [
 
 	| text |
 	text := self source asText.
@@ -17,7 +17,7 @@ RBCodeSnippet >> mockedStyledText [
 ]
 
 { #category : '*Shout-Tests' }
-RBCodeSnippet >> styledText [
+ASTCodeSnippet >> styledText [
 
 	| text |
 	text := self source asText.

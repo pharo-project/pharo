@@ -2,21 +2,21 @@
 SUnit tests for BISimpleFormatter
 "
 Class {
-	#name : 'RBFormatterTest',
-	#superclass : 'RBParseTreeTest',
+	#name : 'ASTFormatterTest',
+	#superclass : 'ASTParseTreeTest',
 	#category : 'AST-Core-Tests-Formatter',
 	#package : 'AST-Core-Tests',
 	#tag : 'Formatter'
 }
 
 { #category : 'private' }
-RBFormatterTest >> formatClass: aClass [
+ASTFormatterTest >> formatClass: aClass [
 	aClass selectors
 		do: [ :each | self formatClass: aClass selector: each ]
 ]
 
 { #category : 'private' }
-RBFormatterTest >> formatClass: aClass selector: aSymbol [
+ASTFormatterTest >> formatClass: aClass selector: aSymbol [
 	| source tree1 tree2 |
 	source := aClass sourceCodeAt: aSymbol.
 	tree1 := self parserClass parseMethod: source.
@@ -27,12 +27,12 @@ RBFormatterTest >> formatClass: aClass selector: aSymbol [
 ]
 
 { #category : 'private' }
-RBFormatterTest >> formatterClass [
+ASTFormatterTest >> formatterClass [
   ^ASTSimpleFormatter
 ]
 
 { #category : 'tests' }
-RBFormatterTest >> testCoreSystem [
+ASTFormatterTest >> testCoreSystem [
 	#(#Object #Behavior #Boolean #True #False #Integer #SmallInteger #Collection #String)
 		do: [ :each |
 			| class |
@@ -43,7 +43,7 @@ RBFormatterTest >> testCoreSystem [
 ]
 
 { #category : 'tests' }
-RBFormatterTest >> testFormatPragmaWithLastIsSymbolArgument [
+ASTFormatterTest >> testFormatPragmaWithLastIsSymbolArgument [
 	| inputSource tree outputSource |
 	"formatter should not create invalid code by removing whitespace between #= and >"
 	inputSource := 'foo  <selector: #= > ^ self'.
@@ -65,7 +65,7 @@ RBFormatterTest >> testFormatPragmaWithLastIsSymbolArgument [
 ]
 
 { #category : 'tests' }
-RBFormatterTest >> testLiteralDynamicArray [
+ASTFormatterTest >> testLiteralDynamicArray [
 	| source tree1 |
 	source := 'foo ^ { ''film'' . ''FILM''} '.
 	tree1 := self parseMethod: source.
@@ -73,7 +73,7 @@ RBFormatterTest >> testLiteralDynamicArray [
 ]
 
 { #category : 'tests' }
-RBFormatterTest >> testParseError [
+ASTFormatterTest >> testParseError [
 
 	| source node |
 	source := ' +  foo:  )'.
@@ -82,7 +82,7 @@ RBFormatterTest >> testParseError [
 ]
 
 { #category : 'tests' }
-RBFormatterTest >> testPreserveLiteralArrayFormat [
+ASTFormatterTest >> testPreserveLiteralArrayFormat [
 	| inputSource literalArrayNode |
 	"symbols within a literal array can omit the # character, if it is used that way,
 	the formatter should not add a # character but just use the source form."
@@ -92,7 +92,7 @@ RBFormatterTest >> testPreserveLiteralArrayFormat [
 ]
 
 { #category : 'tests' }
-RBFormatterTest >> testPreserveLiteralNumberFormat [
+ASTFormatterTest >> testPreserveLiteralNumberFormat [
 	| inputSource numbersNode |
 	"Literal numbers can be written in different ways, integer, integer with
 	radix float, fractional constants. The formatter should not change the

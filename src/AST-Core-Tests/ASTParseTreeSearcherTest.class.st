@@ -2,7 +2,7 @@
 SUnit tests for ASTParseTreeSearcher
 "
 Class {
-	#name : 'RBParseTreeSearcherTest',
+	#name : 'ASTParseTreeSearcherTest',
 	#superclass : 'TestCase',
 	#instVars : [
 		'searcher'
@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : 'asserting' }
-RBParseTreeSearcherTest >> assertCodeForSymbolAt: aSymbol in: myContextDictionary equals: expectedCode [
+ASTParseTreeSearcherTest >> assertCodeForSymbolAt: aSymbol in: myContextDictionary equals: expectedCode [
 
 	^self
 		assert: (myContextDictionary at: aSymbol asSymbol)
@@ -21,7 +21,7 @@ RBParseTreeSearcherTest >> assertCodeForSymbolAt: aSymbol in: myContextDictionar
 ]
 
 { #category : 'asserting' }
-RBParseTreeSearcherTest >> assertCodeForVariableNodeNamed: name in: myContextDictionary equals: expectedCode [
+ASTParseTreeSearcherTest >> assertCodeForVariableNodeNamed: name in: myContextDictionary equals: expectedCode [
 
 	^ self
 		  assert:(myContextDictionary at: (ASTPatternVariableNode named: name)) formattedCode
@@ -29,30 +29,30 @@ RBParseTreeSearcherTest >> assertCodeForVariableNodeNamed: name in: myContextDic
 ]
 
 { #category : 'helpers' }
-RBParseTreeSearcherTest >> parseExpression: aString [
+ASTParseTreeSearcherTest >> parseExpression: aString [
 
 	^ RBParser parseExpression: aString
 ]
 
 { #category : 'helpers' }
-RBParseTreeSearcherTest >> parseMethod: aString [
+ASTParseTreeSearcherTest >> parseMethod: aString [
 
 	^ RBParser parseMethod: aString
 ]
 
 { #category : 'helpers' }
-RBParseTreeSearcherTest >> parseTreeSearcher [
+ASTParseTreeSearcherTest >> parseTreeSearcher [
 	^ ASTParseTreeSearcher new
 ]
 
 { #category : 'running' }
-RBParseTreeSearcherTest >> setUp [
+ASTParseTreeSearcherTest >> setUp [
 	super setUp.
 	searcher := self parseTreeSearcher
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testAListDoesNotMatchComposedMessagesBecauseOfTreeMismatch [
+ASTParseTreeSearcherTest >> testAListDoesNotMatchComposedMessagesBecauseOfTreeMismatch [
 	"Using `@arg, we looking for multiple lists in one match pattern at the same time.
 	Lists can be any receiver or args."
 
@@ -70,7 +70,7 @@ RBParseTreeSearcherTest >> testAListDoesNotMatchComposedMessagesBecauseOfTreeMis
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testAListDoesNotMatchComposedMessagesBecauseOfTreeMismatch2 [
+ASTParseTreeSearcherTest >> testAListDoesNotMatchComposedMessagesBecauseOfTreeMismatch2 [
 	"Using `@arg, we looking for multiple lists in one match pattern at the same time.
 	Lists can be any receiver or args."
 
@@ -87,7 +87,7 @@ RBParseTreeSearcherTest >> testAListDoesNotMatchComposedMessagesBecauseOfTreeMis
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testAListMatchesComposedMessages [
+ASTParseTreeSearcherTest >> testAListMatchesComposedMessages [
 	"Using `@arg, we looking for multiple lists in one match pattern at the same time.
 	Lists can be any receiver or args."
 
@@ -103,7 +103,7 @@ RBParseTreeSearcherTest >> testAListMatchesComposedMessages [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testDoesNotMultipleKeywordsWithoutAList [
+ASTParseTreeSearcherTest >> testDoesNotMultipleKeywordsWithoutAList [
 	"this test shows that to match a multi keyword message, you need to have a list (@) in the pattern"
 	| contextDictionary |
 	searcher
@@ -116,7 +116,7 @@ RBParseTreeSearcherTest >> testDoesNotMultipleKeywordsWithoutAList [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testMacthesDoisMatchingStatementsInDynamicArray [
+ASTParseTreeSearcherTest >> testMacthesDoisMatchingStatementsInDynamicArray [
 	"pattern with statementlist in a dynamic array, to match all dynamic array expressions"
 
 	| contextDictionary |
@@ -126,7 +126,7 @@ RBParseTreeSearcherTest >> testMacthesDoisMatchingStatementsInDynamicArray [
 ]
 
 { #category : 'tests - arguments' }
-RBParseTreeSearcherTest >> testMatchesArgumentToTestImplicitAddArgument [
+ASTParseTreeSearcherTest >> testMatchesArgumentToTestImplicitAddArgument [
 
 	"Here we can see the difference between matchesArgument: and matches:.
 	 We can see that the matchContextArgList is filled with the all a arguments in the code by calling matchesArgument:do: instead of matches:do:
@@ -159,7 +159,7 @@ RBParseTreeSearcherTest >> testMatchesArgumentToTestImplicitAddArgument [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testMatchesDoDoesNotMatchAllElementsOfDynamicArray [
+ASTParseTreeSearcherTest >> testMatchesDoDoesNotMatchAllElementsOfDynamicArray [
 	"Matches in context for arraynodes wrongly matched all array statements against the last variable, if all variables are pattern-list-variables"
 
 	| contextDictionary |
@@ -174,7 +174,7 @@ RBParseTreeSearcherTest >> testMatchesDoDoesNotMatchAllElementsOfDynamicArray [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testMatchesDoIsMatchingAllElementsOfDynamicArray [
+ASTParseTreeSearcherTest >> testMatchesDoIsMatchingAllElementsOfDynamicArray [
 	"Matches in context for arraynodes wrongly matched all array statements against the last variable, if all variables are pattern-list-variables"
 
 	| contextDictionary |
@@ -190,7 +190,7 @@ RBParseTreeSearcherTest >> testMatchesDoIsMatchingAllElementsOfDynamicArray [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testMatchesDoIsMatchingPatternedExpressionWithLiterals [
+ASTParseTreeSearcherTest >> testMatchesDoIsMatchingPatternedExpressionWithLiterals [
 	""
 
 	| contextDictionary |
@@ -205,7 +205,7 @@ RBParseTreeSearcherTest >> testMatchesDoIsMatchingPatternedExpressionWithLiteral
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testMatchesDoIsNotMatchingPatternedExpressionWithLiterals [
+ASTParseTreeSearcherTest >> testMatchesDoIsNotMatchingPatternedExpressionWithLiterals [
 
 	| contextDictionary |
 	searcher
@@ -218,7 +218,7 @@ RBParseTreeSearcherTest >> testMatchesDoIsNotMatchingPatternedExpressionWithLite
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testMatchingAnyNodeWithoutConstrainingThePattern [
+ASTParseTreeSearcherTest >> testMatchingAnyNodeWithoutConstrainingThePattern [
 	"A receiver list can be: a simple receiver like self, or a complex receiver like (self newRequestTo: aString)."
 
 	| contextDictionary |
@@ -233,7 +233,7 @@ RBParseTreeSearcherTest >> testMatchingAnyNodeWithoutConstrainingThePattern [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testMatchingReceiver [
+ASTParseTreeSearcherTest >> testMatchingReceiver [
 	"A receiver list can be: a simple receiver like self, or a complex receiver like (self newRequestTo: aString). So here we are looking for any receiver followed by put."
 
 	| contextDictionary |
@@ -246,7 +246,7 @@ RBParseTreeSearcherTest >> testMatchingReceiver [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testMatchingReceiver2 [
+ASTParseTreeSearcherTest >> testMatchingReceiver2 [
 	"A receiver list can be: a simple receiver like self, or a complex receiver like (self newRequestTo: aString). So here we are looking for any receiver followed by put."
 
 	| contextDictionary |
@@ -259,7 +259,7 @@ RBParseTreeSearcherTest >> testMatchingReceiver2 [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testMatchingReceiverAndMultiKeywordSelector [
+ASTParseTreeSearcherTest >> testMatchingReceiverAndMultiKeywordSelector [
 
 	| contextDictionary |
 	searcher
@@ -272,7 +272,7 @@ RBParseTreeSearcherTest >> testMatchingReceiverAndMultiKeywordSelector [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testMatchingReceiverAndMultiKeywordSelector2 [
+ASTParseTreeSearcherTest >> testMatchingReceiverAndMultiKeywordSelector2 [
 
 	| contextDictionary |
 	searcher
@@ -291,7 +291,7 @@ RBParseTreeSearcherTest >> testMatchingReceiverAndMultiKeywordSelector2 [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testMatchingReceiverAndSelector [
+ASTParseTreeSearcherTest >> testMatchingReceiverAndSelector [
 
 	| contextDictionary |
 	searcher
@@ -309,7 +309,7 @@ RBParseTreeSearcherTest >> testMatchingReceiverAndSelector [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testMatchingReceiverAndSelector2 [
+ASTParseTreeSearcherTest >> testMatchingReceiverAndSelector2 [
 
 	| contextDictionary |
 	searcher
@@ -323,7 +323,7 @@ RBParseTreeSearcherTest >> testMatchingReceiverAndSelector2 [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testMatchingReceiverComposite [
+ASTParseTreeSearcherTest >> testMatchingReceiverComposite [
 
 	"A receiver list can be: a simple receiver like self, or a complex receiver like (self newRequestTo: aString). So here we are looking for any receiver followed by put."
 
@@ -342,7 +342,7 @@ RBParseTreeSearcherTest >> testMatchingReceiverComposite [
 ]
 
 { #category : 'tests - to de refined' }
-RBParseTreeSearcherTest >> testSearchListComplex [
+ASTParseTreeSearcherTest >> testSearchListComplex [
 
 	"Here we are looking for multiple lists in one match pattern at the same time.
 	Lists can be any receiver or arguments"
@@ -367,7 +367,7 @@ RBParseTreeSearcherTest >> testSearchListComplex [
 ]
 
 { #category : 'tests - to de refined' }
-RBParseTreeSearcherTest >> testSearchListComplexNotMatching [
+ASTParseTreeSearcherTest >> testSearchListComplexNotMatching [
 
 	"Here we are looking for multiple lists in one match pattern at the same time.
 	Lists can be any receiver or argument"
@@ -381,7 +381,7 @@ RBParseTreeSearcherTest >> testSearchListComplexNotMatching [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testSearchListReceiverNotMatching [
+ASTParseTreeSearcherTest >> testSearchListReceiverNotMatching [
 	"A receiver list can be: a simple receiver like self, or a complex receiver like (self newRequestTo: aString). So here we are looking for any receiver followed by put. "
 
 	| contextDictionary |
@@ -396,7 +396,7 @@ RBParseTreeSearcherTest >> testSearchListReceiverNotMatching [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testSearchListTempVars [
+ASTParseTreeSearcherTest >> testSearchListTempVars [
 
 	"Here we are looking for a method that contains a list of temporary vars followed by myVar1 and then a receiver followed by message messageTofind"
 	"The below example is correct, matching with our pattern even if we have multiple variables"
@@ -419,7 +419,7 @@ RBParseTreeSearcherTest >> testSearchListTempVars [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testSearchListTempVarsNotMatching [
+ASTParseTreeSearcherTest >> testSearchListTempVarsNotMatching [
 
 	"here we are looking for a method that containns a list of temporary vars followed by myVar1 and then a receiver followed by message messageTofind"
 
@@ -436,7 +436,7 @@ RBParseTreeSearcherTest >> testSearchListTempVarsNotMatching [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testSearchLiteralArray [
+ASTParseTreeSearcherTest >> testSearchLiteralArray [
 
 	"so here we are looking for any literal with message size
 	Litteral can be an array."
@@ -456,7 +456,7 @@ RBParseTreeSearcherTest >> testSearchLiteralArray [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testSearchLiteralCollectNotWorking [
+ASTParseTreeSearcherTest >> testSearchLiteralCollectNotWorking [
 
 	"so here we are looking for any literal with message size; Ordered Collection is not a literal. "
 
@@ -470,7 +470,7 @@ RBParseTreeSearcherTest >> testSearchLiteralCollectNotWorking [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testSearchLiteralNumber [
+ASTParseTreeSearcherTest >> testSearchLiteralNumber [
 
 	"so here we are looking for any literal with message size; Litteral can be a number."
 
@@ -484,7 +484,7 @@ RBParseTreeSearcherTest >> testSearchLiteralNumber [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testSearchLiteralString [
+ASTParseTreeSearcherTest >> testSearchLiteralString [
 
 	"so here we are looking for any literal with message size; Litteral can be a string"
 
@@ -498,7 +498,7 @@ RBParseTreeSearcherTest >> testSearchLiteralString [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testSearchRecurseInto [
+ASTParseTreeSearcherTest >> testSearchRecurseInto [
 	"Here we are testing the recurse into, which looks inside @vars for pattern that matches @vars + 1"
 
 	searcher matches: '``@vars + 1' do: [ :aNode :answer | answer + 1 ].
@@ -514,7 +514,7 @@ RBParseTreeSearcherTest >> testSearchRecurseInto [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testSearchRecurseIntoNotMatching [
+ASTParseTreeSearcherTest >> testSearchRecurseIntoNotMatching [
 	"Here we are testing the recurse into, which looks inside @vars for pattern that matches @vars + 1"
 
 	searcher matches: '``@vars + 1' do: [ :aNode :answer | answer + 1 ].
@@ -527,7 +527,7 @@ RBParseTreeSearcherTest >> testSearchRecurseIntoNotMatching [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testSearchSelectors [
+ASTParseTreeSearcherTest >> testSearchSelectors [
 	"So here we are looking for an expression that starts with a receiver followed by at: message , then a list of arguments, then another selector that could be any selector ... followed by a second list of args"
 
 	| contextDictionary |
@@ -543,7 +543,7 @@ RBParseTreeSearcherTest >> testSearchSelectors [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testSearchSelectorsMultiArgs [
+ASTParseTreeSearcherTest >> testSearchSelectorsMultiArgs [
 
 	"So here we are looking for an expression that starts with a receiver followed by at: message , then a list of arguments, then another selector that could be any selector ... followed by a second list of args"
 
@@ -559,7 +559,7 @@ RBParseTreeSearcherTest >> testSearchSelectorsMultiArgs [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testSearchSelectorsNotMatching [
+ASTParseTreeSearcherTest >> testSearchSelectorsNotMatching [
 
 	"So here we are looking for an expression that starts with a receiver followed by at: message , then a list of arguments, then another selector that could be any selector ... followed by a second list of args"
 
@@ -573,7 +573,7 @@ RBParseTreeSearcherTest >> testSearchSelectorsNotMatching [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testSearchStatements [
+ASTParseTreeSearcherTest >> testSearchStatements [
 
 	"No comment yet ..."
 
@@ -589,7 +589,7 @@ RBParseTreeSearcherTest >> testSearchStatements [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testSearching [
+ASTParseTreeSearcherTest >> testSearching [
 	searcher
 		matches: '``@rcv at: `#arg `sel: ``@arg1'
 		do: [ :aT :answer | answer + 1 ].
@@ -631,7 +631,7 @@ RBParseTreeSearcherTest >> testSearching [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testSearchingComposedMessage [
+ASTParseTreeSearcherTest >> testSearchingComposedMessage [
 
 	searcher
 		matches: '``@rcv at: ``@arg'
@@ -645,7 +645,7 @@ RBParseTreeSearcherTest >> testSearchingComposedMessage [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testSearchingComposedSelector [
+ASTParseTreeSearcherTest >> testSearchingComposedSelector [
 
 	searcher
 		matches: '``@rcv at: ``@arg `sel: ``@arg1'
@@ -660,7 +660,7 @@ RBParseTreeSearcherTest >> testSearchingComposedSelector [
 ]
 
 { #category : 'tests - selectors' }
-RBParseTreeSearcherTest >> testSearchingComposedSelector2 [
+ASTParseTreeSearcherTest >> testSearchingComposedSelector2 [
 
 	searcher
 		matches: '``@rcv at: ``@arg'
@@ -674,7 +674,7 @@ RBParseTreeSearcherTest >> testSearchingComposedSelector2 [
 ]
 
 { #category : 'tests - selectors' }
-RBParseTreeSearcherTest >> testSearchingComposedSelectorWithCascade [
+ASTParseTreeSearcherTest >> testSearchingComposedSelectorWithCascade [
 
 	searcher
 		matches: '``@rcv at: ``@arg `sel: ``@arg1'
@@ -695,7 +695,7 @@ RBParseTreeSearcherTest >> testSearchingComposedSelectorWithCascade [
 ]
 
 { #category : 'tests - selectors' }
-RBParseTreeSearcherTest >> testSearchingComposedSelectorWithListIsNotWorking [
+ASTParseTreeSearcherTest >> testSearchingComposedSelectorWithListIsNotWorking [
 
 	searcher
 		matches: '``@rcv at: ``@arg `@sel: ``@arg1'
@@ -713,7 +713,7 @@ RBParseTreeSearcherTest >> testSearchingComposedSelectorWithListIsNotWorking [
 ]
 
 { #category : 'tests - selectors' }
-RBParseTreeSearcherTest >> testSearchingComposedSelectorwithinCascade [
+ASTParseTreeSearcherTest >> testSearchingComposedSelectorwithinCascade [
 
 	searcher
 		matches: '``@rcv at: ``@arg'
@@ -727,7 +727,7 @@ RBParseTreeSearcherTest >> testSearchingComposedSelectorwithinCascade [
 ]
 
 { #category : 'tests - selectors' }
-RBParseTreeSearcherTest >> testSearchingKeywordsPartWithOptionInTheMiddleIsBogus [
+ASTParseTreeSearcherTest >> testSearchingKeywordsPartWithOptionInTheMiddleIsBogus [
 
 	searcher
 		matches: 'self at: 3 `@sel2: `@arg2 put: self '
@@ -750,7 +750,7 @@ RBParseTreeSearcherTest >> testSearchingKeywordsPartWithOptionInTheMiddleIsBogus
 ]
 
 { #category : 'tests - selectors' }
-RBParseTreeSearcherTest >> testSearchingOptionKeywordsPartComposedSelector [
+ASTParseTreeSearcherTest >> testSearchingOptionKeywordsPartComposedSelector [
 
 	searcher
 		matches: '``@rcv `@sel: ``@arg'
@@ -772,7 +772,7 @@ RBParseTreeSearcherTest >> testSearchingOptionKeywordsPartComposedSelector [
 ]
 
 { #category : 'tests - selectors' }
-RBParseTreeSearcherTest >> testSearchingOptionKeywordsPartComposedSelector2 [
+ASTParseTreeSearcherTest >> testSearchingOptionKeywordsPartComposedSelector2 [
 	"we do not understand why it is green. I should not because the second expression does not contain at:."
 	searcher
 		matches: '`@rcv `@sel: `@arg at: 3 `@sel2: `@arg2'
@@ -794,7 +794,7 @@ RBParseTreeSearcherTest >> testSearchingOptionKeywordsPartComposedSelector2 [
 ]
 
 { #category : 'tests - add search' }
-RBParseTreeSearcherTest >> testSimpleAddSearch [
+ASTParseTreeSearcherTest >> testSimpleAddSearch [
 
 	| res |
 	searcher addSearch: '`@Super << `#ASymbol' -> [ :aNode :anAnswer | res := #class ].
@@ -803,7 +803,7 @@ RBParseTreeSearcherTest >> testSimpleAddSearch [
 ]
 
 { #category : 'tests - add search' }
-RBParseTreeSearcherTest >> testSimpleAddSearches [
+ASTParseTreeSearcherTest >> testSimpleAddSearches [
 
 	| res |
 	searcher addSearches: { '`@Super << `#ASymbol' -> [ :aNode :anAnswer | res := #class ]}.
@@ -812,7 +812,7 @@ RBParseTreeSearcherTest >> testSimpleAddSearches [
 ]
 
 { #category : 'tests' }
-RBParseTreeSearcherTest >> testWithoutAListDoesNotMatchComposedMessages [
+ASTParseTreeSearcherTest >> testWithoutAListDoesNotMatchComposedMessages [
 	"Using `arg, and not `@arg, we looking for multiple lists in one match pattern at the same time.
 	Lists can be any receiver or args."
 

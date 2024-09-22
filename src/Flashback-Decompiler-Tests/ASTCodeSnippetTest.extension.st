@@ -1,7 +1,7 @@
-Extension { #name : 'RBCodeSnippetTest' }
+Extension { #name : 'ASTCodeSnippetTest' }
 
 { #category : '*Flashback-Decompiler-Tests' }
-RBCodeSnippetTest >> testDecompile [
+ASTCodeSnippetTest >> testDecompile [
 
 	| method ast |
 	method := snippet compile.
@@ -14,7 +14,7 @@ RBCodeSnippetTest >> testDecompile [
 ]
 
 { #category : '*Flashback-Decompiler-Tests' }
-RBCodeSnippetTest >> testDecompileIR [
+ASTCodeSnippetTest >> testDecompileIR [
 
 	| method ir |
 	method := snippet compile.

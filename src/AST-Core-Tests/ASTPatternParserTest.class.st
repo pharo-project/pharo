@@ -4,20 +4,20 @@ RBPatternParser needs some extra tests not covered by RBPatternTest for its exte
 (pattern variables and pattern blocks)
 "
 Class {
-	#name : 'RBPatternParserTest',
-	#superclass : 'RBParserTest',
+	#name : 'ASTPatternParserTest',
+	#superclass : 'ASTParserTest',
 	#category : 'AST-Core-Tests-Parser',
 	#package : 'AST-Core-Tests',
 	#tag : 'Parser'
 }
 
 { #category : 'accessing' }
-RBPatternParserTest class >> parserClass [
+ASTPatternParserTest class >> parserClass [
 	^ RBPatternParser
 ]
 
 { #category : 'tests - matching' }
-RBPatternParserTest >> testMatchingPatternBlockNode1 [
+ASTPatternParserTest >> testMatchingPatternBlockNode1 [
 	| searchPattern tree |
 	searchPattern := RBPatternParser
 		parseExpression: '(`a = `b) `{`a name size = `b name size}'.
@@ -26,7 +26,7 @@ RBPatternParserTest >> testMatchingPatternBlockNode1 [
 ]
 
 { #category : 'tests - matching' }
-RBPatternParserTest >> testMatchingPatternBlockNode2 [
+ASTPatternParserTest >> testMatchingPatternBlockNode2 [
 	| searchPattern tree |
 	searchPattern := RBPatternParser
 		parseExpression: '(`a = `b) `{`a name anySatisfy: [ :e | `b name includes: e]}'.
@@ -35,7 +35,7 @@ RBPatternParserTest >> testMatchingPatternBlockNode2 [
 ]
 
 { #category : 'tests - parsing' }
-RBPatternParserTest >> testParseFaultyPatternBlock [
+ASTPatternParserTest >> testParseFaultyPatternBlock [
 	| node patternBlockNoArgButBar patternBlockNoArgButColon unfinishedBlock varWithUnfinishedBlock |
 	"parsing pattern block should mark this block as faulty, if it is unfinished no closing brace, or missing parts (colon but no arg,
 	no arg but vertical bar)"
@@ -51,7 +51,7 @@ RBPatternParserTest >> testParseFaultyPatternBlock [
 ]
 
 { #category : 'tests - parsing' }
-RBPatternParserTest >> testPatternNotStringExpression [
+ASTPatternParserTest >> testPatternNotStringExpression [
 	| searchPattern tree |
 	searchPattern := RBPatternParser parseExpression: '`{ :node | node isString }'.
 
@@ -62,7 +62,7 @@ RBPatternParserTest >> testPatternNotStringExpression [
 ]
 
 { #category : 'tests - parsing' }
-RBPatternParserTest >> testPatternStringExpression [
+ASTPatternParserTest >> testPatternStringExpression [
 	| searchPattern tree |
 	searchPattern := RBPatternParser parseExpression: '`{ :node | node isString }'.
 
@@ -73,7 +73,7 @@ RBPatternParserTest >> testPatternStringExpression [
 ]
 
 { #category : 'tests - parsing' }
-RBPatternParserTest >> testPatternVariable [
+ASTPatternParserTest >> testPatternVariable [
 	| searchPattern |
 	searchPattern := RBPatternParser parseExpression: '`a'.
 	self assert: searchPattern class = ASTPatternVariableNode.
@@ -81,7 +81,7 @@ RBPatternParserTest >> testPatternVariable [
 ]
 
 { #category : 'tests - parsing' }
-RBPatternParserTest >> testPatternVariableSimpleVariable [
+ASTPatternParserTest >> testPatternVariableSimpleVariable [
 	| searchPattern |
 	searchPattern := RBPatternParser parseExpression: '`a'.
 	self assert: searchPattern class = ASTPatternVariableNode.
@@ -89,7 +89,7 @@ RBPatternParserTest >> testPatternVariableSimpleVariable [
 ]
 
 { #category : 'tests - parsing' }
-RBPatternParserTest >> testPatternVariableSymbol [
+ASTPatternParserTest >> testPatternVariableSymbol [
 	| searchPattern |
 	searchPattern := RBPatternParser parseExpression: '`#aSymbol'.
 	self assert: searchPattern class = ASTPatternVariableNode.

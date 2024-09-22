@@ -2,7 +2,7 @@
 SUnit tests for RBParseTreeRewriter
 "
 Class {
-	#name : 'RBParseTreeRewriterTest',
+	#name : 'ASTParseTreeRewriterTest',
 	#superclass : 'TestCase',
 	#instVars : [
 		'rewriter'
@@ -13,44 +13,44 @@ Class {
 }
 
 { #category : 'utilities' }
-RBParseTreeRewriterTest >> compare: anObject to: anotherObject [
+ASTParseTreeRewriterTest >> compare: anObject to: anotherObject [
 	self assert: anObject hash equals: anotherObject hash.
 	self assert: anObject equals: anotherObject
 ]
 
 { #category : 'helpers' }
-RBParseTreeRewriterTest >> parseExpression: aString [
+ASTParseTreeRewriterTest >> parseExpression: aString [
 	^ self parserClass parseExpression: aString
 ]
 
 { #category : 'helpers' }
-RBParseTreeRewriterTest >> parseMethod: aString [
+ASTParseTreeRewriterTest >> parseMethod: aString [
 	^ self parserClass parseMethod: aString
 ]
 
 { #category : 'helpers' }
-RBParseTreeRewriterTest >> parseRewriteExpression: aString [
+ASTParseTreeRewriterTest >> parseRewriteExpression: aString [
 	^ self parserClass parseRewriteExpression: aString
 ]
 
 { #category : 'helpers' }
-RBParseTreeRewriterTest >> parseRewriteMethod: aString [
+ASTParseTreeRewriterTest >> parseRewriteMethod: aString [
 	^ self parserClass parseRewriteMethod: aString
 ]
 
 { #category : 'helpers' }
-RBParseTreeRewriterTest >> parserClass [
+ASTParseTreeRewriterTest >> parserClass [
 	^ RBParser
 ]
 
 { #category : 'running' }
-RBParseTreeRewriterTest >> setUp [
+ASTParseTreeRewriterTest >> setUp [
 	super setUp.
 	rewriter := ASTParseTreeRewriter new
 ]
 
 { #category : 'tests - ok' }
-RBParseTreeRewriterTest >> testBlockRewrites [
+ASTParseTreeRewriterTest >> testBlockRewrites [
 	"This test shows that several rules can be used to specify different rewrite actions: the location in the tree structure, simple expression (self foo) using the node of the expression itself, and depending on the node kinds."
 
 	| tree |
@@ -74,7 +74,7 @@ RBParseTreeRewriterTest >> testBlockRewrites [
 ]
 
 { #category : 'tests - ok' }
-RBParseTreeRewriterTest >> testBlockRewritesAreNotChained [
+ASTParseTreeRewriterTest >> testBlockRewritesAreNotChained [
 	"This test shows that rewrite rules are not chained sequentially. One is applied and this is it."
 
 	| tree |
@@ -95,7 +95,7 @@ RBParseTreeRewriterTest >> testBlockRewritesAreNotChained [
 ]
 
 { #category : 'tests - ok' }
-RBParseTreeRewriterTest >> testBlockRewritesArguments [
+ASTParseTreeRewriterTest >> testBlockRewritesArguments [
 	"this test just shows that all the arguments are replaced. Check in contrast with testBlockRewritesArgumentsTakeIntoAccountConditions"
 	| tree |
 	tree := self
@@ -124,7 +124,7 @@ RBParseTreeRewriterTest >> testBlockRewritesArguments [
 ]
 
 { #category : 'tests - ok' }
-RBParseTreeRewriterTest >> testBlockRewritesArgumentsTakeIntoAccountConditions [
+ASTParseTreeRewriterTest >> testBlockRewritesArgumentsTakeIntoAccountConditions [
 	"this test shows that the condition controls the rewriting on the terms: here the bar argument is not rewritten because the condition is set to false."
 	| tree |
 	tree := self
@@ -151,7 +151,7 @@ RBParseTreeRewriterTest >> testBlockRewritesArgumentsTakeIntoAccountConditions [
 ]
 
 { #category : 'tests - ok' }
-RBParseTreeRewriterTest >> testBlockRewritesFirstRuleTakePrecedence [
+ASTParseTreeRewriterTest >> testBlockRewritesFirstRuleTakePrecedence [
 	| tree |
 	tree := self treeToBeRewritten.
 	"Here the rule says that we only replace in the rightmost children of the return node."
@@ -170,7 +170,7 @@ RBParseTreeRewriterTest >> testBlockRewritesFirstRuleTakePrecedence [
 ]
 
 { #category : 'tests - ok' }
-RBParseTreeRewriterTest >> testBlockRewritesWithTrueConditionIsNotExecutedWhenNotMatchingCorrectNode [
+ASTParseTreeRewriterTest >> testBlockRewritesWithTrueConditionIsNotExecutedWhenNotMatchingCorrectNode [
 	"This test shows that even if the condition of the rule is true, it will not be applied on inadequate nodes.
 	Here, replaceArgument: is not for plain variable but only method arguments."
 
@@ -190,7 +190,7 @@ RBParseTreeRewriterTest >> testBlockRewritesWithTrueConditionIsNotExecutedWhenNo
 ]
 
 { #category : 'tests - to be refined' }
-RBParseTreeRewriterTest >> testMultimatch [
+ASTParseTreeRewriterTest >> testMultimatch [
 	| count |
 	count := 0.
 	rewriter
@@ -204,7 +204,7 @@ RBParseTreeRewriterTest >> testMultimatch [
 ]
 
 { #category : 'tests - to be refined' }
-RBParseTreeRewriterTest >> testPatternCascade [
+ASTParseTreeRewriterTest >> testPatternCascade [
 
 	rewriter replace: 'self `;messages; foo: 4; `;messages1'
 		with: 'self `;messages1; bar: 4; `;messages'.
@@ -217,7 +217,7 @@ RBParseTreeRewriterTest >> testPatternCascade [
 ]
 
 { #category : 'tests - ok' }
-RBParseTreeRewriterTest >> testRewriteDoesNotReuseOriginalNodes [
+ASTParseTreeRewriterTest >> testRewriteDoesNotReuseOriginalNodes [
 	"Due to a bug in ASTPatternVariableNode copyInContext method, creating a new astTree from the rewriter reused some nodes
 	 of the original tree, this results in two trees sharing the identical nodes. The original AST now contained statement nodes
 	that don't refer to the same parent (the method node) and that is wrong."
@@ -244,7 +244,7 @@ self match.'.
 ]
 
 { #category : 'tests - to be refined' }
-RBParseTreeRewriterTest >> testRewriteDynamicArray [
+ASTParseTreeRewriterTest >> testRewriteDynamicArray [
 	| newSource |
 	rewriter := ASTParseTreeRewriter new replace: '
 		{`@first. `@second. `@third}' with: 'Array with: `@first  with: `@second  with: `@third'.
@@ -255,7 +255,7 @@ RBParseTreeRewriterTest >> testRewriteDynamicArray [
 ]
 
 { #category : 'tests - to be refined' }
-RBParseTreeRewriterTest >> testRewriteMethods [
+ASTParseTreeRewriterTest >> testRewriteMethods [
 	"#('source' 'target' 'source pattern' 'target pattern')"
 	#(#('arg1: a arg2: b | temp1 temp2 | self stmt1 ifTrue: [^a]. self arg1: a arg2: b' 'arg2: a arg1: b | temp1 temp2 | self stmt1 ifTrue: [^a]. self arg2: b arg2: a' '`arg1: `var1 `arg2: `var2 | `@temps | ``@.stmts. self `arg1: `var1 `arg2: `var2. `@.stmts1' '`arg2: `var1 `arg1: `var2 | `@temps | ``@.stmts. self `arg2: `var2 `arg2: `var1. `@.stmts1') #('arg1: a arg2: b | temp1 temp2 | self stmt1. self arg1: a arg2: b' 'arg1: a arg2: b | temp1 temp2 | [self stmt1] repeat' '`@args: `@vars | `@temps | `@.stmts. self `@args: `@vars' '`@args: `@vars | `@temps | [`@.stmts] repeat') #('+ a | temps | ^self primitiveValue' '- a | temps | ^self primitiveValue' '+ `temp | `@tmps | `@.stmts' '- `temp | `@tmps | `@.stmts') #('a self stmt1. self stmt2' 'a self stmt1. self stmt2' 'b | `@temps | `@.stmts' 'c | `@temps | `@.stmts') #('a <foo: 1 bar: 2>' 'a <bar: 2 foo: 1>' 'a <`sel1: `#arg1 `sel2: `#arg2>' 'a <`sel2: `#arg2 `sel1: `#arg1>') #('a <foo> self foo' 'b <foo> self foo' 'a `@.stmts' 'b `@.stmts'))
 		do:
@@ -279,7 +279,7 @@ RBParseTreeRewriterTest >> testRewriteMethods [
 ]
 
 { #category : 'tests - to be refined' }
-RBParseTreeRewriterTest >> testRewrites [
+ASTParseTreeRewriterTest >> testRewrites [
 	"#('source' 'target' 'source pattern' 'target pattern')"
 	#(
 		(	'[:c | |a| a foo1; foo2]'
@@ -333,7 +333,7 @@ RBParseTreeRewriterTest >> testRewrites [
 ]
 
 { #category : 'setup' }
-RBParseTreeRewriterTest >> treeToBeRewritten [
+ASTParseTreeRewriterTest >> treeToBeRewritten [
 	^ self parserClass
 		parseMethod:
 			'method: asdf

@@ -5,7 +5,7 @@ Parametrized matrix test class to run various test on code snippets.
 The only parameter is the instance variable `snippet` that is the current code snippet <RBCodeSnippet>.
 "
 Class {
-	#name : 'RBCodeSnippetTest',
+	#name : 'ASTCodeSnippetTest',
 	#superclass : 'ParametrizedTestCase',
 	#instVars : [
 		'snippet'
@@ -16,40 +16,40 @@ Class {
 }
 
 { #category : 'building suites' }
-RBCodeSnippetTest class >> testParameters [
+ASTCodeSnippetTest class >> testParameters [
 
 	^ ParametrizedTestMatrix new
-		  forSelector: #snippet addOptions: RBCodeSnippet allSnippets;
+		  forSelector: #snippet addOptions: ASTCodeSnippet allSnippets;
 		  yourself
 ]
 
 { #category : 'private' }
-RBCodeSnippetTest >> performTest [
+ASTCodeSnippetTest >> performTest [
 
 	self skipIf: testSelector asSymbol.
 	^ super performTest
 ]
 
 { #category : 'asserting' }
-RBCodeSnippetTest >> skipIf: aSymbol [
+ASTCodeSnippetTest >> skipIf: aSymbol [
 
 	snippet ifSkip: aSymbol then: [ self skip ]
 ]
 
 { #category : 'accessing' }
-RBCodeSnippetTest >> snippet [
+ASTCodeSnippetTest >> snippet [
 
 	^ snippet
 ]
 
 { #category : 'accessing' }
-RBCodeSnippetTest >> snippet: anObject [
+ASTCodeSnippetTest >> snippet: anObject [
 
 	snippet := anObject
 ]
 
 { #category : 'tests' }
-RBCodeSnippetTest >> testCodeImporter [
+ASTCodeSnippetTest >> testCodeImporter [
 
 	| string importer class runBlock |
 	"Code importer meed a plain expression or use a custom format"
@@ -95,7 +95,7 @@ RBCodeSnippetTest >> testCodeImporter [
 ]
 
 { #category : 'tests' }
-RBCodeSnippetTest >> testFormattedCode [
+ASTCodeSnippetTest >> testFormattedCode [
 
 	| ast |
 	ast := snippet parse.
@@ -103,7 +103,7 @@ RBCodeSnippetTest >> testFormattedCode [
 ]
 
 { #category : 'tests' }
-RBCodeSnippetTest >> testMonticello [
+ASTCodeSnippetTest >> testMonticello [
 
 	| definition |
 
@@ -142,7 +142,7 @@ RBCodeSnippetTest >> testMonticello [
 ]
 
 { #category : 'tests' }
-RBCodeSnippetTest >> testParse [
+ASTCodeSnippetTest >> testParse [
 
 	| ast |
 	ast := snippet parse.
@@ -175,7 +175,7 @@ RBCodeSnippetTest >> testParse [
 ]
 
 { #category : 'tests' }
-RBCodeSnippetTest >> testParseOnError [
+ASTCodeSnippetTest >> testParseOnError [
 
 	| ast error |
 	error := nil.
@@ -190,7 +190,7 @@ RBCodeSnippetTest >> testParseOnError [
 ]
 
 { #category : 'tests' }
-RBCodeSnippetTest >> testSimpleFormattedCode [
+ASTCodeSnippetTest >> testSimpleFormattedCode [
 
 	| ast fast east |
 	ast := snippet parse.

@@ -1,7 +1,7 @@
-Extension { #name : 'RBCodeSnippetScriptingTest' }
+Extension { #name : 'ASTCodeSnippetScriptingTest' }
 
 { #category : '*OpalCompiler-Tests' }
-RBCodeSnippetScriptingTest >> testEvaluateFailBlock [
+ASTCodeSnippetScriptingTest >> testEvaluateFailBlock [
 
 	| runBlock error |
 	self skipIf: #exec.
@@ -22,7 +22,7 @@ RBCodeSnippetScriptingTest >> testEvaluateFailBlock [
 ]
 
 { #category : '*OpalCompiler-Tests' }
-RBCodeSnippetScriptingTest >> testEvaluateFaulty [
+ASTCodeSnippetScriptingTest >> testEvaluateFaulty [
 
 	| runBlock |
 	self skipIf: #exec.
@@ -36,7 +36,7 @@ RBCodeSnippetScriptingTest >> testEvaluateFaulty [
 ]
 
 { #category : '*OpalCompiler-Tests' }
-RBCodeSnippetScriptingTest >> testEvaluateOnError [
+ASTCodeSnippetScriptingTest >> testEvaluateOnError [
 
 	| runBlock value |
 	self skipIf: #exec.
@@ -52,7 +52,7 @@ RBCodeSnippetScriptingTest >> testEvaluateOnError [
 ]
 
 { #category : '*OpalCompiler-Tests' }
-RBCodeSnippetScriptingTest >> testEvaluateOnErrorResume [
+ASTCodeSnippetScriptingTest >> testEvaluateOnErrorResume [
 
 	| runBlock value |
 	self skipIf: #exec.

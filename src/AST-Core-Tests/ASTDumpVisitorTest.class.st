@@ -2,21 +2,21 @@
 SUnit tests for the RBDumpVisitor visit, called by the #dump method on ASTProgramNodes.
 "
 Class {
-	#name : 'RBDumpVisitorTest',
-	#superclass : 'RBParseTreeTest',
+	#name : 'ASTDumpVisitorTest',
+	#superclass : 'ASTParseTreeTest',
 	#category : 'AST-Core-Tests-Visitors',
 	#package : 'AST-Core-Tests',
 	#tag : 'Visitors'
 }
 
 { #category : 'tests' }
-RBDumpVisitorTest >> compiler [
+ASTDumpVisitorTest >> compiler [
 
 	^ Smalltalk compiler
 ]
 
 { #category : 'tests - api' }
-RBDumpVisitorTest >> testAPI [
+ASTDumpVisitorTest >> testAPI [
 
 	| node |
 	node := self parseExpression: 'self foo'.
@@ -26,7 +26,7 @@ RBDumpVisitorTest >> testAPI [
 ]
 
 { #category : 'tests' }
-RBDumpVisitorTest >> testArrayNodeDump [
+ASTDumpVisitorTest >> testArrayNodeDump [
 
 	| node dumpedNode |
 	"Empty Array"
@@ -47,7 +47,7 @@ RBDumpVisitorTest >> testArrayNodeDump [
 ]
 
 { #category : 'tests' }
-RBDumpVisitorTest >> testAssignmentNodeDump [
+ASTDumpVisitorTest >> testAssignmentNodeDump [
 
 	| node dumpedNode |
 	node := self parseExpression: 'a := 3.'.
@@ -59,7 +59,7 @@ RBDumpVisitorTest >> testAssignmentNodeDump [
 ]
 
 { #category : 'tests' }
-RBDumpVisitorTest >> testBlockNodeDump [
+ASTDumpVisitorTest >> testBlockNodeDump [
 
 	| node dumpedNode |
 	"Simple block"
@@ -88,7 +88,7 @@ RBDumpVisitorTest >> testBlockNodeDump [
 ]
 
 { #category : 'tests' }
-RBDumpVisitorTest >> testCascadeNodeDump [
+ASTDumpVisitorTest >> testCascadeNodeDump [
 
 	| node dumpedNode |
 	node := self parseExpression: 'self foo; bar'.
@@ -100,7 +100,7 @@ RBDumpVisitorTest >> testCascadeNodeDump [
 ]
 
 { #category : 'tests' }
-RBDumpVisitorTest >> testDumpOnObjectMethod [
+ASTDumpVisitorTest >> testDumpOnObjectMethod [
 
 	| node dumpedNode |
 	node := (Object >> #readSlot:) ast.
@@ -112,7 +112,7 @@ RBDumpVisitorTest >> testDumpOnObjectMethod [
 ]
 
 { #category : 'tests' }
-RBDumpVisitorTest >> testDumpOnSelfClassMethods [
+ASTDumpVisitorTest >> testDumpOnSelfClassMethods [
 
 	| methods node dumpedNode |
 	methods := {
@@ -130,7 +130,7 @@ RBDumpVisitorTest >> testDumpOnSelfClassMethods [
 ]
 
 { #category : 'tests' }
-RBDumpVisitorTest >> testErrorNodeDump [
+ASTDumpVisitorTest >> testErrorNodeDump [
 
 	| node dumpedNode |
 	node := self parseFaultyExpression: '( +'.
@@ -142,7 +142,7 @@ RBDumpVisitorTest >> testErrorNodeDump [
 ]
 
 { #category : 'tests' }
-RBDumpVisitorTest >> testGlobalNodeDump [
+ASTDumpVisitorTest >> testGlobalNodeDump [
 
 	| node dumpedNode |
 	"Global nodes are only generated when a semantic analysis is triggered on a method"
@@ -157,7 +157,7 @@ RBDumpVisitorTest >> testGlobalNodeDump [
 ]
 
 { #category : 'tests' }
-RBDumpVisitorTest >> testLiteralArrayNodeDump [
+ASTDumpVisitorTest >> testLiteralArrayNodeDump [
 
 	| node dumpedNode |
 	node := self parseExpression: '#(1 $a true ''a'')'.
@@ -169,7 +169,7 @@ RBDumpVisitorTest >> testLiteralArrayNodeDump [
 ]
 
 { #category : 'tests' }
-RBDumpVisitorTest >> testLiteralValueNodeDump [
+ASTDumpVisitorTest >> testLiteralValueNodeDump [
 
 	| node dumpedNode |
 	"Numeric are literals"
@@ -214,7 +214,7 @@ RBDumpVisitorTest >> testLiteralValueNodeDump [
 ]
 
 { #category : 'tests' }
-RBDumpVisitorTest >> testMessageNodeDump [
+ASTDumpVisitorTest >> testMessageNodeDump [
 
 	| node dumpedNode |
 	"Simple selector"
@@ -251,7 +251,7 @@ RBDumpVisitorTest >> testMessageNodeDump [
 ]
 
 { #category : 'tests' }
-RBDumpVisitorTest >> testMethodNodeDump [
+ASTDumpVisitorTest >> testMethodNodeDump [
 
 	| node dumpedNode |
 	node := self parseMethod: 'foo <useless>'.
@@ -263,7 +263,7 @@ RBDumpVisitorTest >> testMethodNodeDump [
 ]
 
 { #category : 'tests' }
-RBDumpVisitorTest >> testPragmaNodeDump [
+ASTDumpVisitorTest >> testPragmaNodeDump [
 
 	| node dumpedNode |
 	node := self parseMethod: 'foo <useless>'.
@@ -277,7 +277,7 @@ RBDumpVisitorTest >> testPragmaNodeDump [
 ]
 
 { #category : 'tests' }
-RBDumpVisitorTest >> testReturnNodeDump [
+ASTDumpVisitorTest >> testReturnNodeDump [
 
 	| node dumpedNode |
 	node := self parseExpression: '^ 1 + 1'.
@@ -289,7 +289,7 @@ RBDumpVisitorTest >> testReturnNodeDump [
 ]
 
 { #category : 'tests' }
-RBDumpVisitorTest >> testSelfNodeDump [
+ASTDumpVisitorTest >> testSelfNodeDump [
 
 	| node dumpedNode |
 	node := self parseExpression: 'self'.
@@ -301,7 +301,7 @@ RBDumpVisitorTest >> testSelfNodeDump [
 ]
 
 { #category : 'tests' }
-RBDumpVisitorTest >> testSequenceNodeDump [
+ASTDumpVisitorTest >> testSequenceNodeDump [
 
 	| node dumpedNode |
 	node := self parseExpression: 'foo. bar.'.
@@ -313,7 +313,7 @@ RBDumpVisitorTest >> testSequenceNodeDump [
 ]
 
 { #category : 'tests' }
-RBDumpVisitorTest >> testSuperNodeDump [
+ASTDumpVisitorTest >> testSuperNodeDump [
 
 	| node dumpedNode |
 	node := self parseExpression: 'super'.
@@ -325,7 +325,7 @@ RBDumpVisitorTest >> testSuperNodeDump [
 ]
 
 { #category : 'tests' }
-RBDumpVisitorTest >> testThisContextNodeDump [
+ASTDumpVisitorTest >> testThisContextNodeDump [
 
 	| node dumpedNode |
 	node := self parseExpression: 'thisContext'.
@@ -337,7 +337,7 @@ RBDumpVisitorTest >> testThisContextNodeDump [
 ]
 
 { #category : 'tests' }
-RBDumpVisitorTest >> testVariableNodeDump [
+ASTDumpVisitorTest >> testVariableNodeDump [
 
 	| node dumpedNode |
 	node := self parseExpression: 'a'.
@@ -349,6 +349,6 @@ RBDumpVisitorTest >> testVariableNodeDump [
 ]
 
 { #category : 'tests' }
-RBDumpVisitorTest >> uselessMethod [
+ASTDumpVisitorTest >> uselessMethod [
 	"used for test"
 ]

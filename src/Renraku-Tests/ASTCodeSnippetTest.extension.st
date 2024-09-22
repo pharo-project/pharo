@@ -1,7 +1,7 @@
-Extension { #name : 'RBCodeSnippetTest' }
+Extension { #name : 'ASTCodeSnippetTest' }
 
 { #category : '*Renraku-Tests' }
-RBCodeSnippetTest >> testCritiques [
+ASTCodeSnippetTest >> testCritiques [
 
 	| ast critiques |
 	ast := snippet parse.

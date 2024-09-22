@@ -2,15 +2,15 @@
 SUnit tests for RBReadBeforeWrittenTester
 "
 Class {
-	#name : 'RBReadBeforeWrittenTesterTest',
-	#superclass : 'RBParseTreeTest',
+	#name : 'ASTReadBeforeWrittenTesterTest',
+	#superclass : 'ASTParseTreeTest',
 	#category : 'AST-Core-Tests-Visitors',
 	#package : 'AST-Core-Tests',
 	#tag : 'Visitors'
 }
 
 { #category : 'tests' }
-RBReadBeforeWrittenTesterTest >> testReadBeforeWritten [
+ASTReadBeforeWrittenTesterTest >> testReadBeforeWritten [
 	#(#('a ifTrue: [^self]' true) #('self foo. a := b' false) #('condition ifTrue: [a := b] ifFalse: [self foo: a]' true) #('condition ifTrue: [a := b] ifFalse: [self foo]. a isNil' true) #('condition ifTrue: [a := b]. a := c' false) #('[a := b] whileFalse: [a isNil]' false) #('self foo: b' false))
 		do: [ :each |
 			self assert: ((RBReadBeforeWrittenTester readBeforeWritten: #('a') in: (self parseExpression: each first)) includes: 'a') identicalTo: each last.
@@ -36,7 +36,7 @@ RBReadBeforeWrittenTesterTest >> testReadBeforeWritten [
 ]
 
 { #category : 'tests' }
-RBReadBeforeWrittenTesterTest >> testReadBeforeWritten1 [
+ASTReadBeforeWrittenTesterTest >> testReadBeforeWritten1 [
 	self
 		assertEmpty:
 			(RBReadBeforeWrittenTester

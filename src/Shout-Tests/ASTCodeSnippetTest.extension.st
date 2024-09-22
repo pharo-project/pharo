@@ -1,7 +1,7 @@
-Extension { #name : 'RBCodeSnippetTest' }
+Extension { #name : 'ASTCodeSnippetTest' }
 
 { #category : '*Shout-Tests' }
-RBCodeSnippetTest >> testStyler [
+ASTCodeSnippetTest >> testStyler [
 	"We should test more than that"
 
 	| text |

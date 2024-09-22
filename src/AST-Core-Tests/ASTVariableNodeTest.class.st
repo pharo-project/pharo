@@ -3,7 +3,7 @@ SUnit tests for ASTVariableNode
 "
 Class {
 	#name : 'ASTVariableNodeTest',
-	#superclass : 'RBParseTreeTest',
+	#superclass : 'ASTParseTreeTest',
 	#category : 'AST-Core-Tests-Nodes',
 	#package : 'AST-Core-Tests',
 	#tag : 'Nodes'

@@ -3,7 +3,7 @@ SUnit tests for ASTMethodNode
 "
 Class {
 	#name : 'ASTMethodNodeTest',
-	#superclass : 'RBParseTreeTest',
+	#superclass : 'ASTParseTreeTest',
 	#category : 'AST-Core-Tests-Nodes',
 	#package : 'AST-Core-Tests',
 	#tag : 'Nodes'

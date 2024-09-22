@@ -1,13 +1,13 @@
 Class {
-	#name : 'RBReturnNodeAdderVisitorTest',
-	#superclass : 'RBParseTreeTest',
+	#name : 'ASTReturnNodeAdderVisitorTest',
+	#superclass : 'ASTParseTreeTest',
 	#category : 'AST-Core-Tests-Visitors',
 	#package : 'AST-Core-Tests',
 	#tag : 'Visitors'
 }
 
 { #category : 'tests' }
-RBReturnNodeAdderVisitorTest >> testAddReturnWhenArrayExpectReturnAdded [
+ASTReturnNodeAdderVisitorTest >> testAddReturnWhenArrayExpectReturnAdded [
 
 	| expression visitor result expect |
 	expression := RBParser parseExpression: '{ x . ''a'' . #a }'.
@@ -19,7 +19,7 @@ RBReturnNodeAdderVisitorTest >> testAddReturnWhenArrayExpectReturnAdded [
 ]
 
 { #category : 'tests' }
-RBReturnNodeAdderVisitorTest >> testAddReturnWhenAssignmentExpectReturnAdded [
+ASTReturnNodeAdderVisitorTest >> testAddReturnWhenAssignmentExpectReturnAdded [
 
 	| expression visitor result expect |
 	expression := RBParser parseExpression: 'a := self foo'.
@@ -31,7 +31,7 @@ RBReturnNodeAdderVisitorTest >> testAddReturnWhenAssignmentExpectReturnAdded [
 ]
 
 { #category : 'tests' }
-RBReturnNodeAdderVisitorTest >> testAddReturnWhenBlockExpectReturnAdded [
+ASTReturnNodeAdderVisitorTest >> testAddReturnWhenBlockExpectReturnAdded [
 
 	| expression visitor result expect |
 	expression := RBParser parseExpression: '[ a := self foo ]'.
@@ -43,7 +43,7 @@ RBReturnNodeAdderVisitorTest >> testAddReturnWhenBlockExpectReturnAdded [
 ]
 
 { #category : 'tests' }
-RBReturnNodeAdderVisitorTest >> testAddReturnWhenCascadeMessageExpectReturnAdded [
+ASTReturnNodeAdderVisitorTest >> testAddReturnWhenCascadeMessageExpectReturnAdded [
 
 	| expression visitor result expect |
 	expression := RBParser parseExpression: 'self foo; bar; end'.
@@ -55,7 +55,7 @@ RBReturnNodeAdderVisitorTest >> testAddReturnWhenCascadeMessageExpectReturnAdded
 ]
 
 { #category : 'tests' }
-RBReturnNodeAdderVisitorTest >> testAddReturnWhenLiteralExpectReturnAdded [
+ASTReturnNodeAdderVisitorTest >> testAddReturnWhenLiteralExpectReturnAdded [
 
 	| expression visitor result expect |
 	expression := RBParser parseExpression: '1'.
@@ -67,7 +67,7 @@ RBReturnNodeAdderVisitorTest >> testAddReturnWhenLiteralExpectReturnAdded [
 ]
 
 { #category : 'tests' }
-RBReturnNodeAdderVisitorTest >> testAddReturnWhenMessageSendExpectReturnAdded [
+ASTReturnNodeAdderVisitorTest >> testAddReturnWhenMessageSendExpectReturnAdded [
 
 	| expression visitor result expect |
 	expression := RBParser parseExpression: 'self foo'.
@@ -79,7 +79,7 @@ RBReturnNodeAdderVisitorTest >> testAddReturnWhenMessageSendExpectReturnAdded [
 ]
 
 { #category : 'tests' }
-RBReturnNodeAdderVisitorTest >> testAddReturnWhenReturnNodeExpectNoChanges [
+ASTReturnNodeAdderVisitorTest >> testAddReturnWhenReturnNodeExpectNoChanges [
 
 	| expression visitor result |
 	expression := RBParser parseExpression: '^ 2'.
@@ -90,7 +90,7 @@ RBReturnNodeAdderVisitorTest >> testAddReturnWhenReturnNodeExpectNoChanges [
 ]
 
 { #category : 'tests' }
-RBReturnNodeAdderVisitorTest >> testAddReturnWhenSequenceExpectReturnAdded [
+ASTReturnNodeAdderVisitorTest >> testAddReturnWhenSequenceExpectReturnAdded [
 
 	| expression visitor result expect |
 	expression := RBParser parseExpression: 'self foo. self bar'.
@@ -102,7 +102,7 @@ RBReturnNodeAdderVisitorTest >> testAddReturnWhenSequenceExpectReturnAdded [
 ]
 
 { #category : 'tests' }
-RBReturnNodeAdderVisitorTest >> testAddReturnWhenVariableExpectReturnAdded [
+ASTReturnNodeAdderVisitorTest >> testAddReturnWhenVariableExpectReturnAdded [
 
 	| expression visitor result expect |
 	expression := RBParser parseExpression: 'x'.
