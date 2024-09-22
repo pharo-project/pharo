@@ -7,7 +7,7 @@ I could be improved, but the goal is to get the information is a more or less ok
 "
 Class {
 	#name : 'RBSimpleFormatter',
-	#superclass : 'RBAbstractFormatter',
+	#superclass : 'ASTAbstractFormatter',
 	#instVars : [
 		'codeStream',
 		'indent',
