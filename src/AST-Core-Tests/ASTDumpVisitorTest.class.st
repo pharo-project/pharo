@@ -1,5 +1,5 @@
 "
-SUnit tests for the RBDumpVisitor visit, called by the #dump method on ASTProgramNodes.
+SUnit tests for the ASTDumpVisitor visit, called by the #dump method on ASTProgramNodes.
 "
 Class {
 	#name : 'ASTDumpVisitorTest',

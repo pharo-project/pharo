@@ -5,7 +5,7 @@ This is handy because we can simply serialize the object in a textual form witho
 I'm used by reflexivity.
 
 try me! 
-(RBDumpVisitor >> #stream) ast dump
+(ASTDumpVisitor >> #stream) ast dump
 
 Instance Variables
 	stream:		<Object>		The stream holding the output. Filled up throughout the visit.

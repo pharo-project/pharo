@@ -1,5 +1,5 @@
 "
-RBProgramNodeVisitor is an abstract visitor for the ASTProgramNodes.
+ASTProgramNodeVisitor is an abstract visitor for the ASTProgramNodes.
 
 
 "
@@ -76,7 +76,7 @@ ASTProgramNodeVisitor >> visitClassVariableNode: aNode [
 
 { #category : 'visiting' }
 ASTProgramNodeVisitor >> visitCommentNode: aComment [
-	"Note: currenlty, comment nodes are not automatically visited by `RBProgramNodeVisitor`.
+	"Note: currenlty, comment nodes are not automatically visited by `ASTProgramNodeVisitor`.
 	This method can still be reached by custom visitors and direct visit on a comment node."
 ]
 

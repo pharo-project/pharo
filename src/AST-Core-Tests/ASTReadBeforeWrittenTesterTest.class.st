@@ -1,5 +1,5 @@
 "
-SUnit tests for RBReadBeforeWrittenTester
+SUnit tests for ASTReadBeforeWrittenTester
 "
 Class {
 	#name : 'ASTReadBeforeWrittenTesterTest',

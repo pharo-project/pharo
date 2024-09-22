@@ -12,7 +12,7 @@ Subclasses must implement the following messages:
 
 The #start and #stop methods are used to find the source that corresponds to this node. ""source copyFrom: self start to: self stop"" should return the source for this node.
 
-The #acceptVisitor: method is used by RBProgramNodeVisitors (the visitor pattern). This will also require updating all the RBProgramNodeVisitors so that they know of the new node.
+The #acceptVisitor: method is used by ASTProgramNodeVisitors (the visitor pattern). This will also require updating all the ASTProgramNodeVisitors so that they know of the new node.
 
 The #isFaulty method is used to distinguish between valid nodes and nodes created from an invalid source Smalltalk code. For example, code parsed with RBParsers #parseFaultyExpression: or #parseFaultyMethod:.
 
