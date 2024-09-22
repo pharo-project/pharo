@@ -148,7 +148,7 @@ If we want to find the same call in the argument, we need to recurse into it by 
 
 ## Examples and usage of RBPatternParser expressions
 
-The chapter "RBPatternParser and metavariables" describes the added syntax elements for the RBPatternParser used in the refactoring engine (ASTParseTreeSearcher/RBParseTreeRewriter).
+The chapter "RBPatternParser and metavariables" describes the added syntax elements for the RBPatternParser used in the refactoring engine (ASTParseTreeSearcher/ASTParseTreeRewriter).
 
 In this chapter we show some example expressions and how to test and use them.
 

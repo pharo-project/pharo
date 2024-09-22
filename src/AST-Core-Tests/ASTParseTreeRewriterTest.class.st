@@ -1,5 +1,5 @@
 "
-SUnit tests for RBParseTreeRewriter
+SUnit tests for ASTParseTreeRewriter
 "
 Class {
 	#name : 'ASTParseTreeRewriterTest',

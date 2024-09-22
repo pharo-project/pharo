@@ -9,7 +9,7 @@ Class {
 { #category : 'tests' }
 OCAnnotationTest >> testAnnotationAST [
 	"This test uses an AST plugin to detect and transform a custom annotation `@meaning:`
-	(using `OCDynamicASTCompilerPlugin` and `RBParseTreeRewriter`).
+	(using `OCDynamicASTCompilerPlugin` and `ASTParseTreeRewriter`).
 	
 	The annotation (the full message node) is transformed into a simple literal node."
 

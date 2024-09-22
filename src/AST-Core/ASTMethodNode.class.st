@@ -8,7 +8,7 @@ Instance Variables:
 	arguments	<SequenceableCollection of: ASTVariableNode>	the arguments to the method
 	body	<BRSequenceNode>	the body/statements of the method
 	nodeReplacements	<Dictionary>	a dictionary of oldNode -> newNode replacements
-	replacements	<Collection of: RBStringReplacement>	the collection of string replacements for each node replacement in the parse tree
+	replacements	<Collection of: ASTStringReplacement>	the collection of string replacements for each node replacement in the parse tree
 	selector	<Symbol>	the method name
 	keywordsPositions	<IntegerArray | nil>	the positions of the selector keywords
 	source	<String>	the source we compiled

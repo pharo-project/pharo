@@ -22,7 +22,7 @@ ASTPluginMeaningOfLife >> transform [
 	| rule |
 	"copy the AST as we modify it"
 	self copyAST.
-	"we use the RBParseTreeRewriter to do the change, another option is to do it directly using
+	"we use the ASTParseTreeRewriter to do the change, another option is to do it directly using
 	e.g #replaceWith:"
 	rule := ASTParseTreeRewriter
 		        replaceLiteral: 42

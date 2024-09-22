@@ -5,7 +5,7 @@ ParseTreeRewriter walks over and transforms its ASTProgramNode (tree). If the tr
 Here is a little script to rewrite a self halt into self dormantHalt. 
 
 	| rewriter node |
-	rewriter := RBParseTreeRewriter new.
+	rewriter := ASTParseTreeRewriter new.
 	rewriter replace: 'self halt' with: 'self dormatHalt'.
 	node := (ProtoObjectTest>>#testIfNil) parseTree.
 	rewriter executeTree: node.
@@ -17,7 +17,7 @@ rewriter tree.
 Now here is a full script showing how to compile the method back. 
 
    | rewriter ok method |
-	rewriter := RBParseTreeRewriter new.
+	rewriter := ASTParseTreeRewriter new.
 	rewriter replaceMethod: self searchPattern with: self targetPattern.
 	method := (BIArrayExpressionTest>>#testNoExtraSpaceAroundPeriod).
 	ok := rewriter executeTree: method parseTree.
@@ -175,7 +175,7 @@ ASTParseTreeRewriter >> executeTree: aParseTree [
 
 	"here is a little script showing a possible way to use executeTree:
 	| rewriter node |
-	rewriter := RBParseTreeRewriter new.
+	rewriter := ASTParseTreeRewriter new.
 	rewriter replace: 'self halt' with: 'self dormatHalt'.
 	node := (ProtoObjectTest>>#testIfNil) parseTree.
 	rewriter executeTree: node.
