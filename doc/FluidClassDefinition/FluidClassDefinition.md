@@ -106,10 +106,22 @@ By default, a class has a `FixedLayout` and you do not have to specify a layout.
 ### The message `traits:`
 
 In Pharo, a class can be composed out of trait composition using the message ` traits:`.
+For example, let's have a look into the `SpListPresenter` class that uses two traits.
 
+```
+SpAbstractListPresenter << #SpListPresenter
+	traits: {SpTSearchable + SpTDecoratedText};
+	slots: {
+			 #allowToSelect => ObservableSlot .
+			 #autoDeselect => ObservableSlot .
+			 #headerTitle => ObservableSlot .
+			 #display => ObservableSlot .
+			 #icon => ObservableSlot };
+	tag: 'Widgets-Table';
+	package: 'Spec2-Core'
+```
 
-
-
+Note that to use more that one trait, you need to send the message `+` to the trait classes.
 
 ### Non-default instance variables
 
