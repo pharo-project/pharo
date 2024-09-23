@@ -48,6 +48,11 @@ MyClassBeta >> methodReferencingSharedAndInstVariable [
 ]
 
 { #category : 'dummy methods' }
+MyClassBeta >> methodReferencingSharedVarDefinedInItsDefiningClassAndOneInItsSuperclass [
+	^ { SharedVarA . SharedVarB } 
+]
+
+{ #category : 'dummy methods' }
 MyClassBeta >> methodReferencingSharedVariable [
 	^ SharedVarB
 ]

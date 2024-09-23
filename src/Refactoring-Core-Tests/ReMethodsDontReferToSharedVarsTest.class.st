@@ -1,19 +1,31 @@
 Class {
-	#name : 'ReMethodsReferToSharedVariablesTest',
+	#name : 'ReMethodsDontReferToSharedVarsTest',
 	#superclass : 'TestCase',
 	#category : 'Refactoring-Core-Tests',
 	#package : 'Refactoring-Core-Tests'
 }
 
 { #category : 'tests' }
-ReMethodsReferToSharedVariablesTest >> model [
+ReMethodsDontReferToSharedVarsTest >> model [
 
 	^ RBNamespace onEnvironment:
-		  (RBClassEnvironment classes: {MyClassBeta})
+		  (RBClassEnvironment classes: {MyClassBeta . MyClassBetaSub})
 ]
 
 { #category : 'tests' }
-ReMethodsReferToSharedVariablesTest >> testMethodDoesNotReferToSharedVariables [
+ReMethodsDontReferToSharedVarsTest >> testMethodReferencingInstVarDefinedInItsOwnClassAndAnotherOneDefinedInItsSuperclass [
+	| myClassBeta cond |
+	myClassBeta := self model classNamed: #MyClassBeta.
+	
+	cond := ReMethodsDontReferToSharedVarsCondition new 
+		class: myClassBeta selectors: { #methodReferencingSharedVarDefinedInItsDefiningClassAndOneInItsSuperclass }.
+		
+	" the method refers to and shared variable defined in its own defining class, therefore the condition fails "
+	self deny: cond check
+]
+
+{ #category : 'tests' }
+ReMethodsDontReferToSharedVarsTest >> testMethodReferencingNoSharedVariables [
 	| myClassBeta cond |
 	myClassBeta := self model classNamed: #MyClassBeta.
 	
@@ -25,7 +37,7 @@ ReMethodsReferToSharedVariablesTest >> testMethodDoesNotReferToSharedVariables [
 ]
 
 { #category : 'tests' }
-ReMethodsReferToSharedVariablesTest >> testMethodRefersSharedVariableDefinedInItsClass [
+ReMethodsDontReferToSharedVarsTest >> testMethodRefersSharedVarDefinedInItsOwnClass [
 	| myClassB cond |
 	myClassB := self model classNamed: #MyClassBeta.
 	
@@ -37,7 +49,7 @@ ReMethodsReferToSharedVariablesTest >> testMethodRefersSharedVariableDefinedInIt
 ]
 
 { #category : 'tests' }
-ReMethodsReferToSharedVariablesTest >> testMethodRefersSharedVariableDefinedInItsSuperclass [
+ReMethodsDontReferToSharedVarsTest >> testMethodRefersSharedVarDefinedInItsSuperclass [
 	| myClassB cond |
 	myClassB := self model classNamed: #MyClassBeta.
 	
