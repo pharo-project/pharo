@@ -47,7 +47,6 @@ RBExtractToTemporaryRefactoring >> applicabilityPreconditions [
 		  (ReIsValidInstanceVariableName new name: newVariableName).
 		  (ReBlockCondition new 
 				block: [
-					self verifySelectedInterval.
 			   		self checkVariableName.
 			   		true ]) }
 ]
@@ -119,6 +118,8 @@ RBExtractToTemporaryRefactoring >> prepareForExecution [
 	selectedParseTree := self parserClass
 		parseExpression: selectedSources
 		onError: [ :message :position | self refactoringError: 'Invalid selection' ].
+	selectedParseTree isSequence
+		ifTrue: [ self refactoringError: 'Cannot assign temp to multiple statements' ].	
 	parseTree ifNil: [ 
 			parseTree := class parseTreeForSelector: selector.
 			parseTree ifNil: [ self refactoringError: 'Could not parse method' ]
@@ -162,11 +163,4 @@ RBExtractToTemporaryRefactoring >> storeOn: aStream [
 		nextPutAll: ' in: '.
 	class storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : 'preconditions' }
-RBExtractToTemporaryRefactoring >> verifySelectedInterval [
-
-	selectedParseTree isSequence
-		ifTrue: [ self refactoringError: 'Cannot assign temp to multiple statements' ]
 ]
