@@ -21,6 +21,11 @@ MyClassBeta >> methodDuplicatedInSibling [
 ]
 
 { #category : 'dummy methods' }
+MyClassBeta >> methodDuplicatedInSubclass [
+	^ self
+]
+
+{ #category : 'dummy methods' }
 MyClassBeta >> methodForPullUp [
 	^ 24
 ]

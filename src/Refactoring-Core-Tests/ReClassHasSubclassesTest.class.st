@@ -1,6 +1,9 @@
 Class {
 	#name : 'ReClassHasSubclassesTest',
 	#superclass : 'TestCase',
+	#instVars : [
+		'model'
+	],
 	#category : 'Refactoring-Core-Tests',
 	#package : 'Refactoring-Core-Tests'
 }
@@ -8,11 +11,11 @@ Class {
 { #category : 'tests' }
 ReClassHasSubclassesTest >> model [
 
-	^ RBNamespace onEnvironment: (RBClassEnvironment classes: {
+	^ model ifNil: [ model := RBNamespace onEnvironment: (RBClassEnvironment classes: {
 				   MyClassAlpha.
 				   MyClassBeta.
 				   MyClassBetaSibling.
-				   Object })
+				   Object })]
 ]
 
 { #category : 'tests' }

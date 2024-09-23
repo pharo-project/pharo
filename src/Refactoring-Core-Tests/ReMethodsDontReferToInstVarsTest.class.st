@@ -1,6 +1,9 @@
 Class {
 	#name : 'ReMethodsDontReferToInstVarsTest',
 	#superclass : 'TestCase',
+	#instVars : [
+		'model'
+	],
 	#category : 'Refactoring-Core-Tests',
 	#package : 'Refactoring-Core-Tests'
 }
@@ -8,8 +11,8 @@ Class {
 { #category : 'accessing' }
 ReMethodsDontReferToInstVarsTest >> model [
 
-	^ RBNamespace onEnvironment:
-		  (RBClassEnvironment classes: {MyClassBeta . MyClassBetaSub})
+	^ model ifNil: [ model := RBNamespace onEnvironment:
+		  (RBClassEnvironment classes: {MyClassBeta . MyClassBetaSub})]
 ]
 
 { #category : 'tests' }

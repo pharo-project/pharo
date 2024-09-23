@@ -1,6 +1,9 @@
 Class {
 	#name : 'ReMethodsDontReferToSharedVarsTest',
 	#superclass : 'TestCase',
+	#instVars : [
+		'model'
+	],
 	#category : 'Refactoring-Core-Tests',
 	#package : 'Refactoring-Core-Tests'
 }
@@ -8,8 +11,8 @@ Class {
 { #category : 'tests' }
 ReMethodsDontReferToSharedVarsTest >> model [
 
-	^ RBNamespace onEnvironment:
-		  (RBClassEnvironment classes: {MyClassBeta . MyClassBetaSub})
+	^ model ifNil: [ model := RBNamespace onEnvironment:
+		  (RBClassEnvironment classes: {MyClassBeta . MyClassBetaSub})]
 ]
 
 { #category : 'tests' }

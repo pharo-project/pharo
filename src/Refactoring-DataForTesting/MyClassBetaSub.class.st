@@ -13,6 +13,11 @@ Class {
 }
 
 { #category : 'dummy methods' }
+MyClassBetaSub >> methodDuplicatedInSubclass [
+	^ self
+]
+
+{ #category : 'dummy methods' }
 MyClassBetaSub >> methodReferencingInstVarDefinedInItsDefiningClassAndOneInItsSuperclass [
 	^ {instVarB  . instVarBSub}
 ]
