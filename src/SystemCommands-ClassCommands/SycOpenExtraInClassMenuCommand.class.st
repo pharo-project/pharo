@@ -9,7 +9,9 @@ Class {
 SycOpenExtraInClassMenuCommand class >> browserContextMenuActivation [
 	<classAnnotation>
 
-	^ CmdContextMenuActivation byRootGroupItemOrder: 1.56 for: ClyClass asCalypsoItemContext
+	^ CmdContextMenuActivation 
+		byRootGroupItemOrder: 10200 
+		for: ClyClass asCalypsoItemContext
 ]
 
 { #category : 'execution' }
