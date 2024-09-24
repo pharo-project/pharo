@@ -3,33 +3,37 @@ I'm a IdentitySet with weak elements
 "
 Class {
 	#name : #WeakIdentitySet,
-	#superclass : #WeakSet,
+	#superclass : #IdentitySet,
+	#instVars : [
+		'flag'
+	],
 	#category : #'Collections-Weak-Base'
 }
 
-{ #category : #private }
-WeakIdentitySet >> scanFor: anObject [
-	"Scan the key array for the first slot containing either flag (indicating an empty slot) or an element that matches anObject. Answer the index of that slot or raise an error if no slot is found. This method will be overridden in various subclasses that have different interpretations for matching elements."
+{ #category : #adding }
+WeakIdentitySet >> add: newObject [
+	"Include newObject as one of the receiver's elements, but only if
+	not already present. Answer newObject."
 
-	| index start |
-	index := start := anObject identityHash \\ array size + 1.
-	[
-		| element |
-		((element := array at: index) == flag or: [ element enclosedElement == anObject ])
-			ifTrue: [ ^index ].
-		(index := index \\ array size + 1) = start ] whileFalse.
-	self errorNoFreeSpace
+	| index |
+	index := self scanFor: newObject.
+	(array at: index) ifNil: [
+		self atNewIndex: index put: (WeakSetEncloserElement new
+				 enclosedElement: newObject;
+				 container: self;
+				 yourself) ].
+	^ newObject
 ]
 
 { #category : #private }
-WeakIdentitySet >> scanForEmptySlotFor: aKey [
-	"Scan the key array for the first slot containing an empty slot (indicated by flag or a nil). Answer the index of that slot. This method will be overridden in various subclasses that have different interpretations for matching elements."
+WeakIdentitySet >> noCheckAdd: newObject [
+	"This method should be deprecated"
 
-	| index start |
-	index := start := aKey identityHash \\ array size + 1.
-	[
-		| element |
-		((element := array at: index) == flag or: [ element == nil ]) ifTrue: [ ^index ].
-		(index := index \\ array size + 1) = start ] whileFalse.
-	self errorNoFreeSpace
+	array
+		at: (self findElementOrNil: newObject)
+		put: (WeakSetEncloserElement new
+				 enclosedElement: newObject;
+				 container: self;
+				 yourself).
+	tally := tally + 1
 ]

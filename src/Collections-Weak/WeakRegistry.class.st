@@ -6,7 +6,7 @@ In contrast to old implementation, it doesn't spending linear time , checking wh
 "
 Class {
 	#name : #WeakRegistry,
-	#superclass : #Collection,
+	#superclass : #Object,
 	#category : #'Collections-Weak-Registration'
 }
 
@@ -14,6 +14,12 @@ Class {
 WeakRegistry class >> default [
 
 	^ FinalizationRegistry default
+]
+
+{ #category : #testing }
+WeakRegistry class >> isDeprecated [
+
+	^ true
 ]
 
 { #category : #'instance creation' }

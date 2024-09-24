@@ -50,10 +50,25 @@ WeakIdentitySetTest >> testAddIdenticalElements [
 
 { #category : #tests }
 WeakIdentitySetTest >> testAddIncludesSizeReclaim [
-	"It is complex test in superclass to check how elements are garbage collected.
-	And how #includes: behavios after that.
-	The logic is based on WeakSet and it is not compatible to WeakIdentitySet.
-	Adopting this test for WeakIdentitySest is not simple task"
+	| ws o2 o3 |
+	o2 := 1 / 2.
+	o3 := '123' copy.
+	ws := self classToBeTested new.
+	ws add: o2.
+	ws add: o3.
+	self assert: ws size equals: 2.
+	self assert: (ws includes: o2).
+	self assert: (ws includes: o3).
+
+	"only one copy is added"
+	ws add: o3 copy.
+	self assert: ws size equals: 3.
+
+	"reclame objects so that slots of ws are nilled out"
+	o2 := o3 := nil.
+	2 timesRepeat: [ Smalltalk garbageCollect ].
+
+	self assert: ws size equals: 0
 ]
 
 { #category : #tests }
@@ -61,4 +76,20 @@ WeakIdentitySetTest >> testCollisions [
 	"It is complex test in superclass to check how collisions are resolved.
 	The logic is based on WeakSet and it is not compatible to WeakIdentitySet.
 	Adopting this test for WeakIdentitySest is not simple task"
+]
+
+{ #category : #tests }
+WeakIdentitySetTest >> testIncludesOfDuplicate [
+	| ws o2 o3 |
+	o2 := 1 / 2.
+	o3 := '123' copy.
+	ws := self classToBeTested new.
+	ws add: o2.
+	ws add: o3.
+	self assert: ws size equals: 2.
+	self assert: (ws includes: o2).
+	self assert: (ws includes: o3).
+
+	"inclusion test does use identity"
+	self deny: (ws includes: o3 copy)
 ]
