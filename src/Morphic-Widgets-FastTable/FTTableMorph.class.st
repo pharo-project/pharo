@@ -295,7 +295,27 @@ FTTableMorph >> disableFunction [
 
 { #category : #'event handling' }
 FTTableMorph >> doubleClick: event [
-	(self selectionModeStrategy selectableIndexContainingPoint: event cursorPoint) ifNotNil: [ :index | self doAnnounce: (FTStrongSelectionChanged index: index event: event) ]
+
+	(self selectionModeStrategy selectableIndexContainingPoint:
+		 event cursorPoint) ifNotNil: [ :firstClickedIndex |
+		| pdcEvent |
+		pdcEvent := event asPseudoDoubleClickEvent.
+		(self selectionModeStrategy selectableIndexContainingPoint:
+			 pdcEvent secondEvent position) ifNotNil: [ :secondClickedIndex |
+			firstClickedIndex = secondClickedIndex
+				ifFalse: [
+					self selectionStrategy
+						selectIndex: secondClickedIndex
+						event: pdcEvent secondEvent ]
+				ifTrue: [
+					self selectedIndexes
+						detect: [ :i | i = secondClickedIndex ]
+						ifNone: [
+							self selectionStrategy
+								selectIndex: secondClickedIndex
+								event: pdcEvent secondEvent ].
+					self doAnnounce:
+						(FTStrongSelectionChanged index: secondClickedIndex event: event) ] ] ]
 ]
 
 { #category : #drawing }
