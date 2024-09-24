@@ -45,16 +45,10 @@ RBExtractToTemporaryRefactoring >> applicabilityPreconditions [
 	^ {
 			(ReDefinesSelectorsCondition new definesSelectors: (Array with: selector) in: class).
 		  	(ReIsValidInstanceVariableName new name: newVariableName).
-			(ReDirectlyDefinesInstanceVariableCondition
-		   		classNamed: class name
-		   		inModel: self model
-		   		instanceVariables: { newVariableName }).
-			(ReDirectlyDefinesSharedVariableCondition
-			   class: class
-			   sharedVariables: { newVariableName }).
-			(ReIsTemporaryVariableCondition new
-				parseTree: parseTree;
-				variableName: newVariableName ).
+			(ReCheckVariableNameCondition
+				class: class
+				variableName: newVariableName 
+				parseTree: parseTree ).
 		}
 ]
 
@@ -131,7 +125,6 @@ RBExtractToTemporaryRefactoring >> privateTransform [
 RBExtractToTemporaryRefactoring >> selectedSource [
 
 	| source |
-
 	source := class sourceCodeFor: selector.
 	source ifNil: [ self refactoringError: 'Couldn''t find sources' ].
 	( ( sourceInterval first between: 1 and: source size )
