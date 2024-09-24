@@ -1,4 +1,6 @@
 "
+(Estoy malo)
+
 I am a refactoring for creating accessors for variables.
 - Setters and getters are only created if they do not already exist in the class and its subclasses.
 - Now in addition I verify that a method with the same name does not already exist in the superclass. In such as case, the setter gets a numbered name.
@@ -136,7 +138,7 @@ RBCreateAccessorsForVariableTransformation >> defineGetterMethod [
 			 sourceCode: ('<1s><r><r><t>^ <2s>'
 					  expandMacrosWith: self selector
 					  with: variableName)
-			 in: self definingClass
+			 in: (self model classObjectFor: self definingClass name)
 			 withProtocol: #accessing ).
 
 	^ selector
@@ -145,7 +147,7 @@ RBCreateAccessorsForVariableTransformation >> defineGetterMethod [
 { #category : 'transforming' }
 RBCreateAccessorsForVariableTransformation >> defineSetterMethod [
 	| definingClass string |
-	definingClass := self definingClass.
+	definingClass := self model classObjectFor: self definingClass name.
 	string := self needsReturnForSetter
 				ifTrue: ['<1s> anObject<r><r><t>^ <2s> := anObject']
 				ifFalse: ['<1s> anObject<r><r><t><2s> := anObject'].
