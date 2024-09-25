@@ -37,7 +37,7 @@ NautilusRefactoring >> chooseFrom: anArray title: aString lines: aCollection [
 { #category : 'display' }
 NautilusRefactoring >> handleMethodNameRequest: aMethodName [
 	|dialog|
-	dialog := SycMethodNameEditorPresenter
+	dialog := StMethodNameEditorPresenter
 		openOn: aMethodName
 		canRenameArgs: false
 		canRemoveArgs: false
@@ -129,7 +129,7 @@ NautilusRefactoring >> selectVariableToMoveMethodTo: aSelector class: aClass [
 
 	parseTree := aClass parseTreeForSelector: aSelector.
 	parseTree
-		ifNil: [ parseTree := RBMethodNode selector: #value body: ( RBSequenceNode statements: #() ) ].
+		ifNil: [ parseTree := ASTMethodNode selector: #value body: ( ASTSequenceNode statements: #() ) ].
 	nameList := OrderedCollection new.
 	nameList
 		addAll: parseTree argumentNames sorted;

@@ -20,6 +20,20 @@ RBAddParameterParametrizedTest >> constructor [
 	^ #addParameterToMethod:in:newSelector:permutation:newArgs:
 ]
 
+{ #category : 'mocking' }
+RBAddParameterParametrizedTest >> rbModelForVariableTest [
+
+	| newModel classEnvironment |
+	
+	classEnvironment := RBClassEnvironment classes: { RBClassDataForRefactoringTest . OrderedCollection . RBLintRuleTestData . RBRefactoring . Object}.
+	newModel := self defaultNamespaceClass onEnvironment: classEnvironment.
+	newModel name: 'Test'.
+	
+	self defineFooBarIn: newModel.
+
+	^ newModel
+]
+
 { #category : 'running' }
 RBAddParameterParametrizedTest >> setUp [
 	super setUp.
@@ -34,7 +48,7 @@ RBAddParameterParametrizedTest >> testAddParameterAndRenameParameters [
 	and rewriting the code in a bad way so for now do not change them."
 	newSelector := #called:bar:on:.
 	newArg := RBArgumentName name: 'anObject' value: '#(1.0)'.
-	refactoring := self createRefactoringWithArguments:
+	refactoring := self createRefactoringWithModel: model andArguments:
 		{ oldSelector . RBClassDataForRefactoringTest . newSelector . #(1 -1 2) . { newArg }}.
 	refactoring renameMap: (Array with: ((RBArgumentName name: 'aBlock') newName: 'aBlock1')).
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
@@ -61,7 +75,7 @@ RBAddParameterParametrizedTest >> testAddParameterForTwoArgumentMessage [
 	and rewriting the code in a bad way so for now do not change them."
 	newSelector := #called:bar:on:.
 	newArg := RBArgumentName name: 'anObject' value: '#(1.0)'.
-	refactoring := self createRefactoringWithArguments:
+	refactoring := self createRefactoringWithModel: model andArguments:
 		{oldSelector . RBClassDataForRefactoringTest . newSelector . #(1 -1 2) . { newArg }}.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
@@ -85,7 +99,7 @@ RBAddParameterParametrizedTest >> testAddParameterThatReferencesABlockWithInstan
 	oldSelector := ('test' , 'Foo:') asSymbol.
 	newSelector := #testFoo:bar:.
 	newArg := RBArgumentName name: 'aFoo' value: '[ :each | each + instanceVariable ]'.
-	refactoring := self createRefactoringWithArguments:
+	refactoring := self createRefactoringWithModel: model andArguments:
 		{oldSelector . RBClassDataForRefactoringTest . newSelector . #(1 -1) . {newArg}}.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
@@ -108,7 +122,7 @@ RBAddParameterParametrizedTest >> testAddParameterThatReferencesGlobalAndLiteral
 	oldSelector := ('test' , 'Foo:') asSymbol.
 	newSelector := #testFoo:bar:.
 	newArg := RBArgumentName name: 'anObject' value: 'OrderedCollection new: 5'.
-	refactoring := self createRefactoringWithArguments:
+	refactoring := self createRefactoringWithModel: model andArguments:
 		{ oldSelector . RBClassDataForRefactoringTest . newSelector . #(1 -1) . {newArg} }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
@@ -130,7 +144,7 @@ RBAddParameterParametrizedTest >> testAddParameterThatReferencesInstanceVariable
 	oldSelector := ('test' , 'Foo:') asSymbol.
 	newSelector := #testFoo:bar:.
 	newArg := RBArgumentName name: 'aFoo' value: 'instanceVariable'.
-	refactoring := self createRefactoringWithArguments:
+	refactoring := self createRefactoringWithModel: model andArguments:
 		{oldSelector . RBClassDataForRefactoringTest . newSelector . #(1 -1) . {newArg}}.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
@@ -175,7 +189,7 @@ RBAddParameterParametrizedTest >> testAddParameterThatReferencesSelf [
 	oldSelector := ('test' , 'Foo:') asSymbol.
 	newSelector := #testFoo:bar:.
 	newArg := RBArgumentName name: 'aFoo' value: 'self printString'.
-	refactoring := self createRefactoringWithArguments:
+	refactoring := self createRefactoringWithModel: model andArguments:
 		{oldSelector . RBClassDataForRefactoringTest . newSelector . #(1 -1) . {newArg}}.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
@@ -199,7 +213,7 @@ RBAddParameterParametrizedTest >> testAddTwoParameters [
 	newSelector := #testColl:foo:string:.
 	newArgs := Array with: (RBArgumentName name: 'aColl' value: 'OrderedCollection new: 5')
 		with: (RBArgumentName name: 'aString' value: '''string''').
-	refactoring := self createRefactoringWithArguments:
+	refactoring := self createRefactoringWithModel: model andArguments:
 		{ oldSelector . RBClassDataForRefactoringTest . newSelector . #(-1 1 -2) . newArgs }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBClassDataForRefactoringTest.
@@ -219,7 +233,7 @@ RBAddParameterParametrizedTest >> testFailureBadDefaultValueForNewArgument [
 
 	| newArg |
 	newArg := RBArgumentName name: 'anObject' value: 'brokenExpression:'.
-	self shouldFail: (self createRefactoringWithArguments: {
+	self shouldFail: (self createRefactoringWithModel: model andArguments: {
 				 #name.
 				 RBLintRuleTestData.
 				 #name:.
@@ -240,7 +254,7 @@ RBAddParameterParametrizedTest >> testFailureInvalidNumArgsOfNewSelector [
 
 	| newArg |
 	newArg := RBArgumentName name: 'anObject' value: 'nil'.
-	self shouldFail: (self createRefactoringWithArguments: {
+	self shouldFail: (self createRefactoringWithModel: model andArguments: {
 				 #checkSendersAccessTo:.
 				 RBLintRuleTestData.
 				 #checkSendersAccessTo:.

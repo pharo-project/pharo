@@ -135,7 +135,7 @@ BaselineOfIDE >> baseline: spec [
 		self welcomeBrowser: spec.
 		self roassal: spec.
 		
-		spec package: 'DarkBlueTheme'.
+		spec package: 'IconPacks'.
 
 		spec baseline: 'ThreadedFFI' with: [ spec repository: repository ].
 
@@ -285,9 +285,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	KMRepository reset.
 	Morph shortcutsHandler: KMShortcutHandler new.
 
-	MCSaveVersionDialog previousMessages add: String new.
-
-	RBProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [ RBSimpleFormatter ]).
+	ASTProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [ ASTSimpleFormatter ]).
 
 	Color flushCache.
 
@@ -298,7 +296,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	RubAbstractTextArea highlightMessageSend: true.
 
-	DarkBlueTheme beCurrent.
+	(self class environment at: #PolymorphSystemSettings) defaultTheme beCurrent.
 
 	SDL_Event initialize.
 
@@ -306,9 +304,6 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 
 	"Making HeuristicCompletion the default completion engine"
 	RubSmalltalkEditor completionEngineClass: CoCompletionEngine.
-	
-	"This should be removed in Pharo 14."
-	ASTNode deprecatedAliases: { #RBNode }.
 
 	self loadIceberg.
 	self loadExtraTools.

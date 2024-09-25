@@ -59,6 +59,6 @@ ReTempsReadBeforeWrittenRule >> check: aMethod forCritiquesDo: aCriticBlock [
 { #category : 'running' }
 ReTempsReadBeforeWrittenRule >> findReadsBeforeWrittenTemporariesIn: aMethod [
 
-	^ (RBReadBeforeWrittenTester variablesReadBeforeWrittenIn:
+	^ (ASTReadBeforeWrittenTester variablesReadBeforeWrittenIn:
 		   aMethod ast) array select: #isNotNil
 ]

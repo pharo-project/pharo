@@ -472,7 +472,7 @@ SmalltalkImage >> defaultLogFileName [
 
 { #category : 'accessing' }
 SmalltalkImage >> environment [
-	"For conversion from Smalltalk to SystemDictionary"
+	"For conversion from Smalltalk to SystemEnvironment"
 
 	^globals
 ]
@@ -711,16 +711,16 @@ SmalltalkImage >> getFileNameFromUser [
 
 { #category : 'accessing' }
 SmalltalkImage >> globals [
-	"Answer the global SystemDictionary"
+	"Answer the global SystemEnvironment"
 	^globals
 ]
 
 { #category : 'private' }
-SmalltalkImage >> globals: aSystemDictionary [
+SmalltalkImage >> globals: aSystemEnvironment [
 	"Sets the system-wide globals"
 
 	globals ifNotNil: [self error: 'Cannot overwrite existing globals'].
-	globals := aSystemDictionary
+	globals := aSystemEnvironment
 ]
 
 { #category : 'memory space' }
@@ -886,7 +886,7 @@ SmalltalkImage >> lastQuitLogPosition [
 
 { #category : 'sources, change log' }
 SmalltalkImage >> lastQuitLogPosition: aNumber [
-	"should be only use to ensure the transition from SystemDictionary to SmalltalkImage, then  	be removed"
+	"should be only use to ensure the transition from SystemEnvironment to SmalltalkImage, then be removed"
 
 	LastQuitLogPosition := aNumber
 ]

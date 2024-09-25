@@ -120,7 +120,7 @@ MetaLink >> arguments [
 { #category : 'link api' }
 MetaLink >> arguments: anArray [
 	"anArray - elements can be either:
-		- aSymbol, which will be converted into an instance of RFReification. For a list of reifications available to the node to which you wish to link, do: `aNode availableReifications`. If you don't have the particular node handy, since the reifications depend only on the node's class, you can also do e.g. `RBMethodNode new availableReifications`
+		- aSymbol, which will be converted into an instance of RFReification. For a list of reifications available to the node to which you wish to link, do: `aNode availableReifications`. If you don't have the particular node handy, since the reifications depend only on the node's class, you can also do e.g. `ASTMethodNode new availableReifications`
 		- anASTNode"
 
 	arguments := anArray.
@@ -348,7 +348,7 @@ MetaLink >> metaObject: anObject [
 { #category : 'accessing' }
 MetaLink >> methods [
 	^nodes flatCollect: [ :entity |
-		(entity isKindOf: RBProgramNode)
+		(entity isKindOf: ASTProgramNode)
 			ifTrue: [ {entity methodNode compiledMethod}  ]
 			ifFalse: [ entity usingMethods ] ]
 ]

@@ -167,8 +167,11 @@ SycRefactoringPreviewPresenter >> generateChanges [
 	| rbEnvironment |
 	changes := command asRefactorings.
 	rbEnvironment := self activeRBEnvironment.
-	changes do: [ :each |
-		each model environment: rbEnvironment.
+	changes do: [ :each | | model |
+		model := (RBNamespace onEnvironment: rbEnvironment )
+				name: 'Changes for ', each class name asString;
+				yourself.
+		each model: model.
 		each generateChanges ]
 ]
 
@@ -292,7 +295,7 @@ SycRefactoringPreviewPresenter >> updateTablePresenter [
 	"We get the environment to apply the changes from any element in the changes instance variable"
 	anEnvironment := self activeRBEnvironment.
 	aCompositeChange := RBCompositeRefactoryChange new
-		onSystemDictionary: anEnvironment.
+		onSystemEnvironment: anEnvironment.
 	changes do: [ :each | aCompositeChange addChange: each ].
 
 	table items: (self changesFrom: aCompositeChange forEnvironment: anEnvironment).

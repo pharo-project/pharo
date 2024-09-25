@@ -51,16 +51,6 @@ Class {
 }
 
 { #category : 'user requests' }
-ClySystemBrowserContext >> confirmUnusedClasses: variables [
-	^tool confirmUnusedClasses: variables
-]
-
-{ #category : 'user requests' }
-ClySystemBrowserContext >> confirmUnusedVariables: variables [
-	^tool confirmUnusedVariables: variables
-]
-
-{ #category : 'user requests' }
 ClySystemBrowserContext >> confirmUnusedVariablesInDefiningClass: variables [
 	^tool confirmUnusedVariablesInDefiningClass: variables
 ]
@@ -175,48 +165,28 @@ ClySystemBrowserContext >> refactoringScopes [
 ]
 
 { #category : 'user requests' }
-ClySystemBrowserContext >> requestMultiplePackages: queryTitle [
-
-	^ tool searchDialog
-		requestMultipleObjects: queryTitle
-		from: ClyAllPackagesQuery sorted
-]
-
-{ #category : 'user requests' }
-ClySystemBrowserContext >> requestMultipleVariables: queryTitle from: classes [
-
-	^tool searchDialog
-		requestMultipleObjects: queryTitle
-		from: ClyAllInstanceVariablesQuery sorted
-		inScope: (ClyClassScope ofAll: classes) withInheritedScope
-]
-
-{ #category : 'user requests' }
-ClySystemBrowserContext >> requestSimpleVariable: queryTitle from: classes [
-
-	^tool searchDialog
-		requestSingleObject: queryTitle
-		from: ClyAllInstanceVariablesQuery sorted
-		inScope: (ClyClassScope ofAll: classes) withInheritedScope
-]
-
-{ #category : 'user requests' }
 ClySystemBrowserContext >> requestSingleClass: queryTitle [
 
-	^tool searchDialog requestSingleObject: queryTitle from: ClyAllClassesQuery sorted
+	^ StBrowserSearchPresenter searchConfiguring: [ :presenter :dialog |
+		  dialog title: queryTitle.
+		  presenter items: (self browser itemsForQuery: ClyAllClassesQuery sorted) ]
 ]
 
 { #category : 'user requests' }
 ClySystemBrowserContext >> requestSingleClass: queryTitle from: classCollection [
-	^tool searchDialog
-		requestSingleObject: queryTitle
-		from: ClyAllClassesQuery hierarchical
-		inScope: (ClyClassScope ofAll: classCollection)
+
+	^ StBrowserSearchPresenter searchConfiguring: [ :presenter :dialog |
+		  dialog title: queryTitle.
+		  presenter items:
+			  ((self browser itemsForQuery: ClyAllClassesQuery hierarchical inScope: (ClyClassScope ofAll: classCollection)) collect: [ :item | item actualObject ]) ]
 ]
 
 { #category : 'user requests' }
 ClySystemBrowserContext >> requestSinglePackage: queryTitle [
-	^tool searchDialog requestSingleObject: queryTitle from: ClyAllPackagesQuery sorted
+
+	^ StBrowserSearchPresenter searchConfiguring: [ :presenter :dialog |
+		  dialog title: queryTitle.
+		  presenter items: (self browser itemsForQuery: ClyAllPackagesQuery sorted) ]
 ]
 
 { #category : 'selection-classes' }

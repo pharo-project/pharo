@@ -80,7 +80,7 @@ RBExtractSetUpMethodRefactoring >> checkAssignments: variableNames [
 				select: [:each | (node whoDefines: each) references: each].
 	outsideVars do: [ :var | self checkSingleAssignment: var ].
 	removeAssigned removeAll: outsideVars.
-	(RBReadBeforeWrittenTester readBeforeWritten: removeAssigned
+	(ASTReadBeforeWrittenTester readBeforeWritten: removeAssigned
 		in: extractedParseTree) ifNotEmpty:
 			[self refactoringError: 'Cannot extract assignment if read before written.'].
 	removeAssigned do: [:each | (node whoDefines: each) removeTemporaryNamed: each].
@@ -90,7 +90,7 @@ RBExtractSetUpMethodRefactoring >> checkAssignments: variableNames [
 { #category : 'transforming' }
 RBExtractSetUpMethodRefactoring >> checkSingleAssignment: varName [
 
-	((RBReadBeforeWrittenTester isVariable: varName
+	((ASTReadBeforeWrittenTester isVariable: varName
 		readBeforeWrittenIn: extractedParseTree)
 			or: [extractedParseTree containsReturn])
 			ifTrue:
@@ -107,9 +107,9 @@ RBExtractSetUpMethodRefactoring >> checkSingleAssignment: varName [
 { #category : 'transforming' }
 RBExtractSetUpMethodRefactoring >> nameNewMethod: aSymbol [
 	| args |
-	args := parameters collect: [ :parm | RBVariableNode named: parm ].
+	args := parameters collect: [ :parm | ASTVariableNode named: parm ].
 	extractedParseTree renameSelector: aSymbol andArguments: args asArray.
-	modifiedParseTree := RBParseTreeRewriter replace: self methodDelimiter with: '#callToSetUp' in: modifiedParseTree
+	modifiedParseTree := ASTParseTreeRewriter replace: self methodDelimiter with: '#callToSetUp' in: modifiedParseTree
 ]
 
 { #category : 'transforming' }

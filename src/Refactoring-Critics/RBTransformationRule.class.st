@@ -33,7 +33,7 @@ RBTransformationRule class >> initialize [
 
 { #category : 'private - initialization' }
 RBTransformationRule class >> initializeRecursiveSelfRule [
-	RecursiveSelfRule := RBParseTreeSearcher new.
+	RecursiveSelfRule := ASTParseTreeSearcher new.
 	RecursiveSelfRule
 		matchesAnyMethodOf: #(
 			'`@methodName: `@args | `@temps | self `@methodName: `@args1'
@@ -99,7 +99,7 @@ RBTransformationRule >> hasConflicts [
 { #category : 'initialization' }
 RBTransformationRule >> initialize [
 	super initialize.
-	rewriteRule := RBParseTreeRewriter new
+	rewriteRule := ASTParseTreeRewriter new
 ]
 
 { #category : 'testing' }

@@ -88,7 +88,7 @@ RBExtractMethodRefactoring >> checkAssignments: variableNames [
 		ifTrue:
 			[self refactoringError: 'Cannot extract assignment without all references.'].
 	removeAssigned removeAll: outsideVars.
-	(RBReadBeforeWrittenTester readBeforeWritten: removeAssigned
+	(ASTReadBeforeWrittenTester readBeforeWritten: removeAssigned
 		in: extractedParseTree) ifNotEmpty:
 			[self refactoringError: 'Cannot extract assignment if read before written.'].
 	removeAssigned do: [:each | (node whoDefines: each) removeTemporaryNamed: each].
@@ -121,14 +121,14 @@ RBExtractMethodRefactoring >> checkSelfReturns [
 
 { #category : 'transforming' }
 RBExtractMethodRefactoring >> checkSingleAssignment: varName [
-	((RBReadBeforeWrittenTester isVariable: varName
+	((ASTReadBeforeWrittenTester isVariable: varName
 		readBeforeWrittenIn: extractedParseTree)
 			or: [extractedParseTree containsReturn])
 			ifTrue:
 				[self
 					refactoringError: 'Cannot extract assignments to temporaries without all references'].
 	extractedParseTree
-		addNode: (RBReturnNode value: (RBVariableNode named: varName)).
+		addNode: (ASTReturnNode value: (ASTVariableNode named: varName)).
 	modifiedParseTree := self parseTreeRewriterClass
 				replace: self methodDelimiter
 				with: varName , ' := ' , self methodDelimiter
@@ -203,13 +203,13 @@ RBExtractMethodRefactoring >> extractMethod [
 		ifTrue: [ self refactoringError: 'Select some code to extract' ].
 	isSequence := extractedParseTree isSequence
 		or: [ extractedParseTree isReturn ].
-	extractedParseTree := RBMethodNode
+	extractedParseTree := ASTMethodNode
 		selector: #value
 		arguments: #()
 		body:
 			(extractedParseTree isSequence
 				ifTrue: [ extractedParseTree ]
-				ifFalse: [ RBSequenceNode
+				ifFalse: [ ASTSequenceNode
 						temporaries: #()
 						statements: (OrderedCollection with: extractedParseTree) ]).
 	extractedParseTree body temporaries
@@ -282,7 +282,7 @@ RBExtractMethodRefactoring >> getIntervalForSource: aString [
 	method := class methodFor: selector.
 	expression := RBParser parseExpression: aString.
 
-	searcher := RBParseTreeSearcher new.
+	searcher := ASTParseTreeSearcher new.
 	searcher matchesTree: expression do: [ :aNode :answer | aNode ].
 	matchedNode := searcher executeTree: method ast.
 	matchedNode ifNil: [ self refactoringError: 'Could not find given source in the method.' ].
@@ -359,10 +359,10 @@ RBExtractMethodRefactoring >> methodDelimiter [
 RBExtractMethodRefactoring >> nameNewMethod: aSymbol [
 	| args newSend |
 	newExtractedSelector := aSymbol .
-	args := parameters collect: [ :parm | RBVariableNode named: parm ].
+	args := parameters collect: [ :parm | ASTVariableNode named: parm ].
 	extractedParseTree renameSelector: aSymbol andArguments: args asArray.
 	aSymbol numArgs = 0
-		ifTrue: [ modifiedParseTree := RBParseTreeRewriter replace: self methodDelimiter with: 'self ' , aSymbol asString in: modifiedParseTree.
+		ifTrue: [ modifiedParseTree := ASTParseTreeRewriter replace: self methodDelimiter with: 'self ' , aSymbol asString in: modifiedParseTree.
 			^ self ].
 	newSend := String
 		streamContents: [ :str |
@@ -375,7 +375,7 @@ RBExtractMethodRefactoring >> nameNewMethod: aSymbol [
 						nextPut: $ ;
 						nextPutAll: arg asString;
 						nextPut: $  ] ].
-	modifiedParseTree := RBParseTreeRewriter replace: self methodDelimiter with: newSend in: modifiedParseTree.
+	modifiedParseTree := ASTParseTreeRewriter replace: self methodDelimiter with: newSend in: modifiedParseTree.
 	self parameterMap do: [ :e |
 	(self parseTreeRewriterClass rename: e newName to: e name) executeTree: modifiedParseTree ]
 ]

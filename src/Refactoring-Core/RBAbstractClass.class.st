@@ -210,6 +210,12 @@ RBAbstractClass >> classSide [
 	^ model metaclassNamed: self name
 ]
 
+{ #category : 'accessing' }
+RBAbstractClass >> classVariableNames [
+
+	^ self subclassResponsibility
+]
+
 { #category : 'method accessing' }
 RBAbstractClass >> compile: aString [
 	^ self compile: aString withAttributesFrom: (self methodFor: (self parserClass parseMethodPattern: aString))
@@ -237,8 +243,8 @@ RBAbstractClass >> compile: aString withAttributesFrom: aRBMethod [
 ]
 
 { #category : 'method accessing' }
-RBAbstractClass >> compileTree: aRBMethodNode [
-	^ (self methodFor: aRBMethodNode selector) compileTree: aRBMethodNode
+RBAbstractClass >> compileTree: aMethodNode [
+	^ (self methodFor: aMethodNode selector) compileTree: aMethodNode
 ]
 
 { #category : 'transforming' }
@@ -594,7 +600,7 @@ RBAbstractClass >> parseTreeForSelector: aSelector [
 
 { #category : 'accessing' }
 RBAbstractClass >> parseTreeSearcherClass [
-	^ RBParseTreeSearcher
+	^ ASTParseTreeSearcher
 ]
 
 { #category : 'printing' }

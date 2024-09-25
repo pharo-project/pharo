@@ -190,7 +190,7 @@ FBDDecompiler >> directedSuperSend: selector numArgs: numberArguments [
 { #category : 'data flow instructions' }
 FBDDecompiler >> doDup [
 	| dupTemp |
-	simulatedStack last class == RBVariableNode
+	simulatedStack last class == ASTVariableNode
 		ifTrue: [ ^ simulatedStack addLast: simulatedStack last ].
 	self incrTempCount.
 	dupTemp := self newTemp.
@@ -245,11 +245,11 @@ FBDDecompiler >> extractFullBlock: aCompiledBlock numCopied: numCopied [
 { #category : 'private' }
 FBDDecompiler >> generateNativeBoostCallErrorMethodFrom: aCompiledMethod [
 	| seq args |
-	seq := RBSequenceNode
+	seq := ASTSequenceNode
 		statements:
-			{RBMessageNode receiver: (RBVariableNode named: #CannotDecompileNativeBoostCalls) selector: #signal arguments: #()}.
+			{ASTMessageNode receiver: (ASTVariableNode named: #CannotDecompileNativeBoostCalls) selector: #signal arguments: #()}.
 	args := OrderedCollection new.
-	1 to: aCompiledMethod numArgs do: [ :i | args add: (RBVariableNode named: 'arg' , i asString) ].
+	1 to: aCompiledMethod numArgs do: [ :i | args add: (ASTVariableNode named: 'arg' , i asString) ].
 	^ builder
 		codeMethod: aCompiledMethod selector
 		arguments: args
@@ -472,9 +472,9 @@ FBDDecompiler >> popIntoTemporaryVariable: offset [
 { #category : 'initialize' }
 FBDDecompiler >> pragmasForMethod: aCompiledMethod [
 	^ aCompiledMethod pragmas collect: [ :each |
-		RBPragmaNode
+		ASTPragmaNode
 			selector: each selector
-			arguments: (each arguments collect: [ :arg | RBLiteralNode value: arg ]) ]
+			arguments: (each arguments collect: [ :arg | ASTLiteralNode value: arg ]) ]
 ]
 
 { #category : 'data flow instructions' }

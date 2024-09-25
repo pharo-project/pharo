@@ -57,11 +57,6 @@ MCDefinition >> fullClassName [
 ]
 
 { #category : 'comparing' }
-MCDefinition >> fullTimeStamp [
-	^ DateAndTime current
-]
-
-{ #category : 'comparing' }
 MCDefinition >> hash [
 	^ self description hash
 ]
@@ -125,13 +120,6 @@ MCDefinition >> postload [
 { #category : 'installing' }
 MCDefinition >> postloadOver: aDefinition [
 	self postload
-]
-
-{ #category : 'annotations' }
-MCDefinition >> printAnnotations: requests on: aStream [
-	"Add a string for an annotation pane, trying to fulfill the browser annotationRequests."
-
-	aStream nextPutAll: 'not yet implemented'
 ]
 
 { #category : 'printing' }

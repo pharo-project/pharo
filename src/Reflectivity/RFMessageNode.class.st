@@ -3,7 +3,7 @@ A message node
 "
 Class {
 	#name : 'RFMessageNode',
-	#superclass : 'RBMessageNode',
+	#superclass : 'ASTMessageNode',
 	#category : 'Reflectivity-Compiler',
 	#package : 'Reflectivity',
 	#tag : 'Compiler'

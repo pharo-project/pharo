@@ -43,12 +43,12 @@ CleanBlockClosure >> doPrintOn: aStream [
 	aStream nextPutAll: self sourceNode value sourceCode
 ]
 
-{ #category : 'accessing' }
+{ #category : 'testing' }
 CleanBlockClosure >> hasLiteral: aLiteral [
 	^self compiledBlock hasLiteral: aLiteral
 ]
 
-{ #category : 'accessing' }
+{ #category : 'testing' }
 CleanBlockClosure >> hasLiteralSuchThat: aLiteral [
 	^self compiledBlock hasLiteralSuchThat: aLiteral
 ]
@@ -82,6 +82,12 @@ CleanBlockClosure >> literal [
 ]
 
 { #category : 'accessing' }
+CleanBlockClosure >> literals [
+
+	^ self compiledBlock literals
+]
+
+{ #category : 'accessing' }
 CleanBlockClosure >> literalsEvenTheOnesInTheInnerBlocks [
 	^self compiledBlock literalsEvenTheOnesInTheInnerBlocks
 ]
@@ -99,6 +105,12 @@ CleanBlockClosure >> outerCode [
 { #category : 'accessing' }
 CleanBlockClosure >> outerCode: aCompiledCode [
 	self compiledBlock outerCode: aCompiledCode
+]
+
+{ #category : 'accessing' }
+CleanBlockClosure >> pathOfLiteralIndexes [
+	
+	^ self compiledBlock pathOfLiteralIndexes allButLast
 ]
 
 { #category : 'scanning' }

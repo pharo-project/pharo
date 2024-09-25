@@ -23,7 +23,7 @@ RGGlobalVariable >> addoptToParentStub [
 ]
 
 { #category : 'analyzing' }
-RGGlobalVariable >> analyzeRead: aRBVariableNode by: anOCASTSemanticAnalyzer [
+RGGlobalVariable >> analyzeRead: aVariableNode by: anOCASTSemanticAnalyzer [
 ]
 
 { #category : 'managing container' }

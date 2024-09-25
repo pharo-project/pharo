@@ -42,19 +42,19 @@ CoBasicCompletionTest >> completionClass [
 { #category : 'tests' }
 CoBasicCompletionTest >> innerASTNode [
 	| nodeInsideABlock |
-	RBMethodNode
+	ASTMethodNode
 		selector: #foo
-		arguments: (#(methodArgument) collect: [ :e | RBVariableNode named: e ])
+		arguments: (#(methodArgument) collect: [ :e | ASTVariableNode named: e ])
 		body:
-			(RBSequenceNode
-				temporaries: (#(methodTemporary) collect: [ :e | RBVariableNode named: e ])
+			(ASTSequenceNode
+				temporaries: (#(methodTemporary) collect: [ :e | ASTVariableNode named: e ])
 				statements:
-					{(RBBlockNode
-						arguments: (#(blockArgument) collect: [ :e | RBVariableNode named: e ])
+					{(ASTBlockNode
+						arguments: (#(blockArgument) collect: [ :e | ASTVariableNode named: e ])
 						body:
-							(RBSequenceNode
-								temporaries: (#(blockTemporary) collect: [ :e | RBVariableNode named: e ])
-								statements: {(nodeInsideABlock := RBVariableNode named: '')}))}).
+							(ASTSequenceNode
+								temporaries: (#(blockTemporary) collect: [ :e | ASTVariableNode named: e ])
+								statements: {(nodeInsideABlock := ASTVariableNode named: '')}))}).
 	^ nodeInsideABlock
 ]
 

@@ -1,7 +1,7 @@
 Extension { #name : 'WorkspaceVariable' }
 
 { #category : '*Shout' }
-WorkspaceVariable >> styleNameIn: aRBVariableNode [
+WorkspaceVariable >> styleNameIn: aVariableNode [
 
 	^ #tempVar
 ]

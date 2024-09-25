@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFOperationReification class >> entities [
-	^{RBVariableNode. RBMessageNode. RBMethodNode . RBReturnNode. RBAssignmentNode. RBLiteralNode. RBBlockNode . RBLiteralArrayNode. RBArrayNode}
+	^{ASTVariableNode. ASTMessageNode. ASTMethodNode . ASTReturnNode. ASTAssignmentNode. ASTLiteralNode. ASTBlockNode . ASTLiteralArrayNode. ASTArrayNode}
 ]
 
 { #category : 'plugin interface' }
@@ -20,12 +20,12 @@ RFOperationReification class >> key [
 ]
 
 { #category : 'generate' }
-RFOperationReification >> genForRBArrayNode [
-	^RBVariableNode named: #RFReifyValueVar
+RFOperationReification >> genForASTArrayNode [
+	^ASTVariableNode named: #RFReifyValueVar
 ]
 
 { #category : 'generate' }
-RFOperationReification >> genForRBAssignmentNode [
+RFOperationReification >> genForASTAssignmentNode [
 	entity variable isLocalVariable ifTrue: [
 		^RBParser parseExpression: ('RFTempWrite new
 			assignedValue: RFNewValueReificationVar;
@@ -42,37 +42,37 @@ RFOperationReification >> genForRBAssignmentNode [
 		ast := RBParser parseExpression: ('RFGlobalWrite new
 			assignedValue: RFNewValueReificationVar;
 			variable: #toReplace.').
-		ast messages second arguments: {(RBLiteralNode value: entity variable binding)}.
+		ast messages second arguments: {(ASTLiteralNode value: entity variable binding)}.
 		^ast].
 	self error: 'not supported'
 ]
 
 { #category : 'generate' }
-RFOperationReification >> genForRBBlockNode [
+RFOperationReification >> genForASTBlockNode [
 	"we just compile the block again"
 	| blockNode |
 
 	blockNode := RBParser parseExpression: entity formattedCode.
-	^RBMessageNode
-		receiver: (RBVariableNode named: #RFBlockOperation)
+	^ASTMessageNode
+		receiver: (ASTVariableNode named: #RFBlockOperation)
 		selector: #block:
 		arguments: {blockNode}
 ]
 
 { #category : 'generate' }
-RFOperationReification >> genForRBLiteralArrayNode [
+RFOperationReification >> genForASTLiteralArrayNode [
 	"same as #value, no need to wrap as the literal understands #value"
-	^RBLiteralArrayNode value: entity value
+	^ASTLiteralArrayNode value: entity value
 ]
 
 { #category : 'generate' }
-RFOperationReification >> genForRBLiteralValueNode [
+RFOperationReification >> genForASTLiteralValueNode [
 	"same as #value, no need to wrap as the literal understands #value"
-	^RBLiteralNode value: entity value
+	^ASTLiteralNode value: entity value
 ]
 
 { #category : 'generate' }
-RFOperationReification >> genForRBMessageNode [
+RFOperationReification >> genForASTMessageNode [
 	^RBParser parseExpression: ('RFMessageOperation
 			receiver: RFReceiverReificationVar
 			selector: #{1}
@@ -80,26 +80,26 @@ RFOperationReification >> genForRBMessageNode [
 ]
 
 { #category : 'generate' }
-RFOperationReification >> genForRBMethodNode [
+RFOperationReification >> genForASTMethodNode [
 	| ast |
 	ast := RBParser parseExpression: 'RFMethodOperation new
 			receiver: self;
 			method: #toReplace;
 			arguments: RFArgumentsReificationVar.'.
 
-	ast messages second arguments: {(RBLiteralNode value: entity methodNode methodClass >> entity methodNode selector)}.
+	ast messages second arguments: {(ASTLiteralNode value: entity methodNode methodClass >> entity methodNode selector)}.
 	^ast
 ]
 
 { #category : 'generate' }
-RFOperationReification >> genForRBReturnNode [
+RFOperationReification >> genForASTReturnNode [
 	^RBParser parseExpression: 'RFReturnOperation new
 			context: thisContext;
 			returnValue: RFReifyValueVar'
 ]
 
 { #category : 'generate' }
-RFOperationReification >> genForRBVariableNode [
+RFOperationReification >> genForASTVariableNode [
 	entity isInstanceVariable ifTrue: [
 		^RBParser parseExpression: ('RFSlotRead new
 			object: self;
@@ -113,7 +113,7 @@ RFOperationReification >> genForRBVariableNode [
 	entity variable isLiteralVariable ifTrue: [ | ast |
 			ast := RBParser parseExpression: 'RFGlobalRead new
 				variable: #toReplace'.
-			ast arguments: {(RBLiteralNode value: entity binding)}.
+			ast arguments: {(ASTLiteralNode value: entity binding)}.
 
 			^ast.
 		].
@@ -137,9 +137,9 @@ RFOperationReification >> preambleForArray: aNode [
 	(1 to: aNode size) withIndexDo: [:each :index |
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
-			arguments add:  (RBVariableNode named: name).
+			arguments add:  (ASTVariableNode named: name).
 	].
-	preamble addAll: (RBArrayNode statements: arguments).
+	preamble addAll: (ASTArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: 'RFReifyValueVar').
 	preamble addAll: arguments.
 	^ preamble
@@ -168,9 +168,9 @@ RFOperationReification >> preambleForMessage: aNode [
 	(1 to: aNode numArgs) withIndexDo: [:each :index |
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
-			arguments add:  (RBVariableNode named: name).
+			arguments add:  (ASTVariableNode named: name).
 	].
-	preamble addAll: (RBArrayNode statements: arguments).
+	preamble addAll: (ASTArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: 'RFArgumentsReificationVar').
 	preamble addAll: arguments.
 	^ preamble
@@ -180,8 +180,8 @@ RFOperationReification >> preambleForMessage: aNode [
 RFOperationReification >> preambleForMethod: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
-	arguments := aNode argumentNames collect: [ :name | RBVariableNode named: name].
-	preamble addAll: (RBArrayNode statements: arguments).
+	arguments := aNode argumentNames collect: [ :name | ASTVariableNode named: name].
+	preamble addAll: (ASTArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: 'RFArgumentsReificationVar').
 	^ preamble
 ]

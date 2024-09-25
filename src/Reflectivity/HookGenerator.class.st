@@ -45,7 +45,7 @@ HookGenerator >> beforeHooks [
 { #category : 'ast manipulation' }
 HookGenerator >> encloseInBlock: nodeOrCollection [
 	"Creates a new block node from a node or a list of nodes"
-	^ RBBlockNode body: nodeOrCollection asSequenceNode
+	^ ASTBlockNode body: nodeOrCollection asSequenceNode
 ]
 
 { #category : 'initialize' }
@@ -65,7 +65,7 @@ HookGenerator >> entity: anEntity node: aNode links: aCollection [
 { #category : 'private' }
 HookGenerator >> genReification: aSymbolOrNode for: aLink [
 	| plugin |
-	(aSymbolOrNode isKindOf: RBProgramNode) ifTrue: [ ^ aSymbolOrNode].
+	(aSymbolOrNode isKindOf: ASTProgramNode) ifTrue: [ ^ aSymbolOrNode].
 	plugin := aSymbolOrNode isSymbol
 		ifTrue: [(plugins at: aSymbolOrNode ifAbsent: [self error: 'reification not supported for this entity']) entity: entity link: aLink]
 		ifFalse: [ aSymbolOrNode link: aLink; entity: entity. aSymbolOrNode ].
@@ -78,7 +78,7 @@ HookGenerator >> generateArguments: aMetalink [
 
 	arguments := aMetalink arguments collect: [: each | self genReification: each for: aMetalink].
 	(self hasOption: #argsAsArray for: aMetalink) ifTrue:
-		[ ^RBArrayNode statements: arguments ].
+		[ ^ASTArrayNode statements: arguments ].
 	^arguments
 ]
 
@@ -90,21 +90,21 @@ HookGenerator >> hasOption: aSymbol for: aLink [
 
 { #category : 'results' }
 HookGenerator >> hook [
-	^RBSequenceNode statements: (links collect:  [ :link | self hookFor: link ])
+	^ASTSequenceNode statements: (links collect:  [ :link | self hookFor: link ])
 ]
 
 { #category : 'private' }
 HookGenerator >> hookFor: aLink [
 	| receiver hook arguments |
 
-	(self hasOption: #optionDisabledLink for: aLink) ifTrue: [ ^RBSequenceNode new ].
+	(self hasOption: #optionDisabledLink for: aLink) ifTrue: [ ^ASTSequenceNode new ].
 
 	receiver := aLink metaObject isSymbol
 		ifTrue: [ self genReification: aLink metaObject for: aLink ]
 		ifFalse: [
 			(self hasOption: #optionInlineMetaObject for: aLink)
-				ifTrue: [RBLiteralNode value: aLink metaObject]
-				ifFalse: [RBMessageNode receiver: (RBLiteralNode value: aLink)
+				ifTrue: [ASTLiteralNode value: aLink metaObject]
+				ifFalse: [ASTMessageNode receiver: (ASTLiteralNode value: aLink)
 											 selector: #metaObject ]].
 	arguments := self generateArguments: aLink.
 
@@ -114,9 +114,9 @@ HookGenerator >> hookFor: aLink [
 		arguments: arguments.
 
 	(self hasOption: #optionOneShot for: aLink) ifTrue: [
-			hook := RBSequenceNode statements: {
-				RBMessageNode
-					receiver: (RBLiteralNode value: aLink)
+			hook := ASTSequenceNode statements: {
+				ASTMessageNode
+					receiver: (ASTLiteralNode value: aLink)
 					selector: #uninstall.
 				hook }].
 	aLink hasCondition ifTrue: [hook := self wrapCondition: hook link: aLink].
@@ -167,7 +167,7 @@ HookGenerator >> preamble [
 		plugins do: [ :plugin | (link allReifications includes: plugin key) ifTrue: [preamble addAll: ((plugin entity: entity link: link) preamble: entity)]].
 		link control = #instead ifTrue: [
 				"for instead links, the preamble needs to clean the stack. For now just implemented for message sends"
-				((entity isKindOf: RBProgramNode) and: [node isMessage]) ifTrue: [
+				((entity isKindOf: ASTProgramNode) and: [node isMessage]) ifTrue: [
 					entity numArgs + 1 timesRepeat: [preamble add: (RFStorePopIntoTempNode named: #RFBalancestack)]]]].
 	^preamble
 ]
@@ -193,10 +193,10 @@ HookGenerator >> wrapCondition: hook link: aLink [
 	].
 
 	linkBlock := self encloseInBlock: hook asSequenceNode.
-	conditionExpression := RBMessageNode
+	conditionExpression := ASTMessageNode
 			receiver: ((self hasOption: #optionInlineCondition for: aLink)
-				ifTrue: [RBLiteralNode value: aLink condition]
-				ifFalse:[RBMessageNode receiver: (RBLiteralNode value: aLink)
+				ifTrue: [ASTLiteralNode value: aLink condition]
+				ifFalse:[ASTMessageNode receiver: (ASTLiteralNode value: aLink)
 											 selector: #condition ])
 			selector: condSelector
 			arguments: condArguments.
@@ -209,7 +209,7 @@ HookGenerator >> wrapCondition: hook link: aLink [
 { #category : 'ast manipulation' }
 HookGenerator >> wrapInContext: hook link: aLink [
 	^RFMessageNode
-		receiver: (RBLiteralNode value: aLink)
+		receiver: (ASTLiteralNode value: aLink)
 		selector: #valueInContext:
 		arguments: {self encloseInBlock: hook}
 ]

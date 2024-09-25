@@ -92,7 +92,7 @@ RBBrowserEnvironment >> allClasses [
 
 { #category : 'accessing - classes' }
 RBBrowserEnvironment >> allClassesAndTraits [
-	" compatibility method with SystemDictionary "
+	" compatibility method with SystemEnvironment"
 
 	| allClassesAndTraits |
 	allClassesAndTraits := OrderedCollection new: 4096.
@@ -410,14 +410,6 @@ RBBrowserEnvironment >> includesSelector: aSelector in: aClass [
 	^ true
 ]
 
-{ #category : 'actions' }
-RBBrowserEnvironment >> inspectIn: spec [
-
-	^ (spec instantiate: SpFilteringListPresenter)
-		  items: self basisObjects asArray;
-		  yourself
-]
-
 { #category : 'environments' }
 RBBrowserEnvironment >> instVarReadersTo: instVarName in: aClass [
 	^RBVariableEnvironment
@@ -714,14 +706,14 @@ RBBrowserEnvironment >> selectionParseTreeIntervalFor: aString [
 	answerBlock := [ :aNode :answer | ^ aNode sourceInterval ].
 	self searchStrings do: [ :each |
 		| matcher tree |
-		matcher := RBParseTreeSearcher new.
-		matcher matchesTree: (RBLiteralNode value: each) do: answerBlock.
+		matcher := ASTParseTreeSearcher new.
+		matcher matchesTree: (ASTLiteralNode value: each) do: answerBlock.
 		each isSymbol
 			ifTrue: [
-				tree := RBParseTreeSearcher buildSelectorTree: each.
+				tree := ASTParseTreeSearcher buildSelectorTree: each.
 				tree ifNotNil: [ matcher matchesTree: tree do: answerBlock ] ]
 			ifFalse: [
-				tree := RBVariableNode named: each.
+				tree := ASTVariableNode named: each.
 				matcher
 					matchesTree: tree do: answerBlock;
 					matchesArgumentTree: tree do: answerBlock ].

@@ -19,7 +19,7 @@ CoLiteralMessageHeuristic >> appliesForNode: aNode inContext: aContext [
 ]
 
 { #category : 'requests' }
-CoLiteralMessageHeuristic >> buildFetcherFor: aRBMessageNode inContext: aContext [
+CoLiteralMessageHeuristic >> buildFetcherFor: aMessageNode inContext: aContext [
 
-	^ self newMessageInHierarchyFetcherForClass: aRBMessageNode receiver value class inASTNode: aRBMessageNode
+	^ self newMessageInHierarchyFetcherForClass: aMessageNode receiver value class inASTNode: aMessageNode
 ]

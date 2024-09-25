@@ -151,7 +151,10 @@ RBNamespaceTest >> testClassesReferencingClass [
 
 { #category : 'tests - classes' }
 RBNamespaceTest >> testCommentChange [
-	| cl |
+	| cl classenv |
+	classenv := RBClassEnvironment class: self class.
+	namespace := RBNamespace onEnvironment: classenv.
+	
 	cl := namespace classNamed: self class name.
 	self assert: cl comment isString.
 	cl comment: 'a comment'.
@@ -166,7 +169,10 @@ RBNamespaceTest >> testCommentChange [
 
 { #category : 'tests - classes' }
 RBNamespaceTest >> testDefineClassAfterDeletedChange [
-
+	| packageenv |
+	packageenv := RBPackageEnvironment packageNames: { self class packageName }.
+	namespace := RBNamespace onEnvironment: packageenv.
+	
 	namespace removeClassNamed: self class name.
 	self deny: (namespace includesClassNamed: self class name).
 	namespace defineClass: [ :aBuilder | aBuilder fillFor: self class ].
@@ -176,7 +182,10 @@ RBNamespaceTest >> testDefineClassAfterDeletedChange [
 
 { #category : 'tests - classes' }
 RBNamespaceTest >> testDefineClassChange [
-
+	| classenv |
+	classenv := RBClassEnvironment classes: {}.
+	namespace := RBNamespace onEnvironment: classenv.
+	
 	namespace defineClass: [ :aBuilder |
 		aBuilder
 			superclassName: #RefactoringBrowserTest;
@@ -282,9 +291,13 @@ RBNamespaceTest >> testReferencesPrintOn [
 { #category : 'tests - classes' }
 RBNamespaceTest >> testReferencesPrintOnAfterAddition [
 
-	| hasFoundObject hasFoundSelf |
+	| classenv hasFoundObject hasFoundSelf |
+	classenv := RBClassEnvironment classes: { Object . self class }.
+	namespace := RBNamespace onEnvironment: classenv.
+	
 	hasFoundObject := false.
 	hasFoundSelf := false.
+	
 	(namespace classNamed: #Object)
 		compile: 'someTestReference self printOn: nil'
 		classified: 'testing'.
@@ -305,7 +318,10 @@ RBNamespaceTest >> testReferencesPrintOnAfterAddition [
 { #category : 'tests - classes' }
 RBNamespaceTest >> testReferencesPrintOnAfterRemove [
 
-	| hasFoundObject hasFoundSelf |
+	| classenv hasFoundObject hasFoundSelf |
+	classenv := RBClassEnvironment classes: { Object . self class }.
+	namespace := RBNamespace onEnvironment: classenv.
+	
 	hasFoundObject := false.
 	hasFoundSelf := false.
 
@@ -326,7 +342,10 @@ RBNamespaceTest >> testReferencesPrintOnAfterRemove [
 
 { #category : 'tests - classes' }
 RBNamespaceTest >> testRemoveClassChange [
-
+	| classenv |
+	classenv := RBClassEnvironment classes: { self class }.
+	namespace := RBNamespace onEnvironment: classenv.
+	
 	namespace removeClassNamed: self class name.
 	self deny: (namespace includesClassNamed: self class name).
 	self assert: (namespace classNamed: self class name) isNil
@@ -335,7 +354,11 @@ RBNamespaceTest >> testRemoveClassChange [
 { #category : 'tests - classes' }
 RBNamespaceTest >> testReparentSuperclassChange [
 
-	| superclass subclasses |
+	| classes classenv superclass subclasses |
+	classes := TestCase subclasses asOrderedCollection addAll: { TestCase . TestCase superclass }; yourself.
+	classenv := RBClassEnvironment classes: classes.
+	namespace := RBNamespace onEnvironment: classenv.
+	
 	superclass := namespace classFor: TestCase superclass.
 	subclasses := TestCase subclasses collect: [:each | namespace classFor: each].
 	namespace reparentClasses: subclasses to: superclass.

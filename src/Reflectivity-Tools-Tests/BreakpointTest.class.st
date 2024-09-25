@@ -32,8 +32,8 @@ BreakpointTest >> setUp [
 	super setUp.
 	cls := self newDummyClass.
 	previousBreakpoints := Breakpoint all copy.
-	oldSystemAnnouncer := SystemAnnouncer uniqueInstance.
-	SystemAnnouncer announcer: nil.
+	oldSystemAnnouncer := self class codeSupportAnnouncer.
+	self class environment codeSupportAnnouncer: nil.
 	Breakpoint registerInterestToSystemAnnouncement.
 	Breakpoint all removeAll
 ]
@@ -43,7 +43,7 @@ BreakpointTest >> tearDown [
 
 	Breakpoint removeAll.
 	Breakpoint all addAll: previousBreakpoints.
-	SystemAnnouncer announcer: oldSystemAnnouncer.
+	self class environment codeSupportAnnouncer: oldSystemAnnouncer.
 	cls ifNotNil: [ cls isObsolete ifFalse: [ cls removeFromSystem ] ].
 	self packageOrganizer removePackage: 'DummyPackage'.
 	super tearDown
@@ -350,7 +350,7 @@ BreakpointTest >> testSelf_conditionBlockProducerMethodAST [
 { #category : 'tests' }
 BreakpointTest >> testSetAsBreakpointProperty [
 	| node breakpoint breakpoint2 |
-	node := RBProgramNode new.
+	node := ASTProgramNode new.
 	breakpoint := Breakpoint new.
 	breakpoint2 := Breakpoint new.
 	breakpoint node: node.

@@ -131,7 +131,7 @@ Deprecation >> contextOfDeprecatedMethod [
 
 { #category : 'accessing' }
 Deprecation >> contextOfSender [
-	^context sender
+	^context home sender
 ]
 
 { #category : 'accessing' }
@@ -201,7 +201,7 @@ Deprecation >> raiseWarning [
 
 { #category : 'private' }
 Deprecation >> rewriterClass [
-	^ self class environment at: #RBParseTreeRewriter ifAbsent: [ nil ]
+	^ self class environment at: #ASTParseTreeRewriter ifAbsent: [ nil ]
 ]
 
 { #category : 'accessing' }
@@ -244,7 +244,12 @@ Deprecation >> transform [
 
 	self rewriterClass ifNil:[ ^ self ].
 	aMethod := self contextOfSender homeMethod.
-	aMethod isDoIt ifTrue:[ ^ self ]. "no need to transform doits"
+	
+	"no need to transform doits or non installed methods.
+	Non installed methods can arise if we are rewriting a closure whose home method was rewritten"
+	aMethod isDoIt ifTrue:[ ^ self ].
+	aMethod isInstalled ifFalse: [ ^ self ].
+	
 	node := self contextOfSender sourceNodeExecuted.
 	RecursionStopper during: [
 		rewriteRule := self rewriterClass new

@@ -4,7 +4,7 @@ I'm in charge to styling an ast with highlighting. To highglight something I nee
 "
 Class {
 	#name : 'IconStyler',
-	#superclass : 'RBProgramNodeVisitor',
+	#superclass : 'ASTProgramNodeVisitor',
 	#instVars : [
 		'textModel',
 		'stylerClasses'
@@ -156,6 +156,11 @@ IconStyler >> textModel: anObject [
 	textModel := anObject
 ]
 
+{ #category : 'accessing' }
+IconStyler >> theme [
+	^ Smalltalk ui theme
+]
+
 { #category : 'visiting' }
 IconStyler >> visitArgumentNode: anArgumentNode [
 	self addIconStyle: anArgumentNode.
@@ -193,9 +198,9 @@ IconStyler >> visitEnglobingErrorNode: anEnglobingNode [
 ]
 
 { #category : 'visiting' }
-IconStyler >> visitLiteralArrayNode: aRBLiteralArrayNode [
-	self addIconStyle: aRBLiteralArrayNode.
-	super visitLiteralArrayNode: aRBLiteralArrayNode
+IconStyler >> visitLiteralArrayNode: aLiteralArrayNode [
+	self addIconStyle: aLiteralArrayNode.
+	super visitLiteralArrayNode: aLiteralArrayNode
 ]
 
 { #category : 'visiting' }

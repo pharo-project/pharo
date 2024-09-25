@@ -16,6 +16,57 @@ ClassHierarchyPrinterTest >> setUp [
 ]
 
 { #category : 'tests' }
+ClassHierarchyPrinterTest >> testOnlyASTNodes [
+
+	printer
+		forClass: ASTNode;
+		doNotShowState;
+		doNotShowSuperclasses;
+		excludedClasses: (ASTNode withAllSubclasses select: [ :each | each name beginsWith: 'RBPattern' ]);
+		limitedToClasses: (ASTNode withAllSubclasses select: [:each | (each name beginsWith: 'RB') or: [ each name beginsWith: 'AST' ]]).
+	self assert: printer print equals:
+	'ASTNode
+	ASTProgramNode
+		ASTCommentNode
+		ASTMethodNode
+			ASTDoItMethodNode
+			ASTPatternMethodNode
+		ASTPragmaNode
+			ASTPatternPragmaNode
+		ASTReturnNode
+		ASTSequenceNode
+		ASTValueNode
+			ASTAnnotationMarkNode
+			ASTArrayNode
+			ASTAssignmentNode
+			ASTBlockNode
+				ASTPatternBlockNode
+					ASTPatternWrapperBlockNode
+			ASTCascadeNode
+			ASTLiteralNode
+				ASTLiteralArrayNode
+				ASTLiteralValueNode
+			ASTMessageNode
+				ASTPatternMessageNode
+			ASTParseErrorNode
+				ASTEnglobingErrorNode
+					ASTArrayErrorNode
+					ASTAssignmentErrorNode
+					ASTBlockErrorNode
+					ASTInvalidCascadeErrorNode
+					ASTLiteralArrayErrorNode
+					ASTLiteralByteArrayErrorNode
+					ASTParenthesesErrorNode
+					ASTPragmaErrorNode
+					ASTTemporariesErrorNode
+					ASTUnfinishedStatementErrorNode
+			ASTSelectorNode
+			ASTVariableNode
+				ASTPatternVariableNode
+'
+]
+
+{ #category : 'tests' }
 ClassHierarchyPrinterTest >> testOnlyFreeText [
 
 	printer
@@ -30,52 +81,6 @@ ClassHierarchyPrinterTest >> testOnlyFreeText [
 	self assert: printer print equals: 'Start
 	Tabbed
 End'
-]
-
-{ #category : 'tests' }
-ClassHierarchyPrinterTest >> testOnlyASTNodes [
-
-	printer
-		forClass: ASTNode;
-		doNotShowState;
-		doNotShowSuperclasses;
-		excludedClasses: (ASTNode withAllSubclasses select: [ :each | each name beginsWith: 'RBPattern' ]);
-		limitedToClasses: (ASTNode withAllSubclasses select: [:each | (each name beginsWith: 'RB') or: [ each name beginsWith: 'AST' ]]).
-	self assert: printer print equals:
-	'ASTNode
-	RBProgramNode
-		RBComment
-		RBMethodNode
-			RBDoItMethodNode
-		RBPragmaNode
-		RBReturnNode
-		RBSequenceNode
-		RBValueNode
-			RBAnnotationMarkNode
-			RBArrayNode
-			RBAssignmentNode
-			RBBlockNode
-			RBCascadeNode
-			RBLiteralNode
-				RBLiteralArrayNode
-				RBLiteralValueNode
-			RBMessageNode
-			RBParseErrorNode
-				RBEnglobingErrorNode
-					RBArrayErrorNode
-					RBAssignmentErrorNode
-					RBBlockErrorNode
-					RBInvalidCascadeErrorNode
-					RBLiteralArrayErrorNode
-					RBLiteralByteArrayErrorNode
-					RBParenthesesErrorNode
-					RBPragmaErrorNode
-					RBTemporariesErrorNode
-					RBUnfinishedStatementErrorNode
-			RBSelectorNode
-			RBVariableNode
-	RBSlotInitializationNode
-'
 ]
 
 { #category : 'tests' }

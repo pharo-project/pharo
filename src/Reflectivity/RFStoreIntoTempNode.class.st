@@ -3,7 +3,7 @@ I define a temp that I can store into
 "
 Class {
 	#name : 'RFStoreIntoTempNode',
-	#superclass : 'RBVariableNode',
+	#superclass : 'ASTVariableNode',
 	#category : 'Reflectivity-Compiler',
 	#package : 'Reflectivity',
 	#tag : 'Compiler'

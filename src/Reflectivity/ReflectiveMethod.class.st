@@ -33,7 +33,9 @@ ReflectiveMethod >> ast [
 
 { #category : 'evaluation' }
 ReflectiveMethod >> compileAST [
+
 	| method |
+	compiledMethod saveBcToASTCacheWithAST: ast.
 	OCASTSemanticCleaner clean: ast.
 	ast compilationContext
 		semanticAnalyzerClass: RFSemanticAnalyzer;
@@ -43,7 +45,7 @@ ReflectiveMethod >> compileAST [
 	"#generateMethod sets the generated method as a property, put back the old"
 	ast compiledMethod: compiledMethod.
 	method sourcePointer: compiledMethod sourcePointer.
-	^method.
+	^ method
 ]
 
 { #category : 'evaluation' }
@@ -103,18 +105,18 @@ ReflectiveMethod >> generatePrimitiveWrapper [
 	| wrappedMethod send wrapperMethod assignmentNode |
 	wrappedMethod := self compileAST.
 
-	send := RBMessageNode
-		        receiver: RBVariableNode selfNode
+	send := ASTMessageNode
+		        receiver: ASTVariableNode selfNode
 		        selector: #rFwithArgs:executeMethod:
 		        arguments: {
-				        (RBArrayNode statements: ast arguments).
-				        (RBLiteralNode value: self compiledMethod) }.
+				        (ASTArrayNode statements: ast arguments).
+				        (ASTLiteralNode value: self compiledMethod) }.
 
-	assignmentNode := RBAssignmentNode
-		                  variable: (RBVariableNode named: #RFReifyValueVar)
+	assignmentNode := ASTAssignmentNode
+		                  variable: (ASTVariableNode named: #RFReifyValueVar)
 		                  value: send.
 
-	wrapperMethod := RBMethodNode
+	wrapperMethod := ASTMethodNode
 		                 selector: ast selector
 		                 arguments: ast arguments
 		                 body: assignmentNode asSequenceNode.

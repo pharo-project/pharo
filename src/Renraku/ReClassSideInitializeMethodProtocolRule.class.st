@@ -4,19 +4,21 @@ Class side #initialize method should be in 'class initialization' protocol
 Class {
 	#name : 'ReClassSideInitializeMethodProtocolRule',
 	#superclass : 'ReProperClassMethodProtocolRule',
-	#category : 'Renraku-Clean Code',
+	#category : 'Renraku-Rules',
 	#package : 'Renraku',
-	#tag : 'Clean Code'
+	#tag : 'Rules'
 }
 
-{ #category : 'accessing' }
-ReClassSideInitializeMethodProtocolRule class >> protocolName [
+{ #category : 'accessing - defaults' }
+ReClassSideInitializeMethodProtocolRule class >> protocolName [ 
 
 	^ 'class initialization'
+
 ]
 
-{ #category : 'accessing' }
-ReClassSideInitializeMethodProtocolRule class >> selector [
+{ #category : 'accessing - defaults' }
+ReClassSideInitializeMethodProtocolRule class >> selector [ 
 
 	^ #initialize
+
 ]

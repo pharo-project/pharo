@@ -28,7 +28,7 @@ ReShouldSendSuperInitializeAsFirstMessage class >> group [
 { #category : 'utilities' }
 ReShouldSendSuperInitializeAsFirstMessage class >> parseTreeSearcher [
 
-	^ RBParseTreeSearcher new
+	^ ASTParseTreeSearcher new
 ]
 
 { #category : 'accessing' }

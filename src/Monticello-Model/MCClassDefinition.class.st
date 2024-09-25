@@ -311,11 +311,6 @@ MCClassDefinition >> isClassDefinition [
 	^ true
 ]
 
-{ #category : 'testing' }
-MCClassDefinition >> isCodeDefinition [
-	^ true
-]
-
 { #category : 'printing' }
 MCClassDefinition >> kindOfSubclass [
 	type = #normal ifTrue: [^ ' subclass: '].
@@ -402,16 +397,6 @@ MCClassDefinition >> postCopy [
 
 	super postCopy.
 	variables := variables copy
-]
-
-{ #category : 'annotations' }
-MCClassDefinition >> printAnnotations: requests on: aStream [
-	"Add a string for an annotation pane, trying to fulfill the browser annotationRequests"
-
-	requests do: [ :aRequest |
-		aRequest == #requirements ifTrue: [
-			self requirements do: [ :req | aStream nextPutAll: req ] separatedBy: [ aStream space ]]
-	] separatedBy: [ aStream space ].
 ]
 
 { #category : 'printing' }

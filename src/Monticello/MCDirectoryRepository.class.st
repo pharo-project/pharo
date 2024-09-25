@@ -69,7 +69,8 @@ MCDirectoryRepository >> includesFileNamed: aString [
 { #category : 'testing' }
 MCDirectoryRepository >> includesVersionNamed: aString [
 	"avoid slow default implementation and directly check for existing files"
-	^ (self allFileNamesForVersionNamed: aString) isEmpty not
+
+	^ (self allFileNamesForVersionNamed: aString) isNotEmpty
 ]
 
 { #category : 'initialization' }
@@ -102,12 +103,7 @@ MCDirectoryRepository >> readStreamForFileNamed: aString do: aBlock [
 ]
 
 { #category : 'i/o' }
-MCDirectoryRepository >> writeStreamForFileNamed: aString replace: shouldReplace do: aBlock [
+MCDirectoryRepository >> writeStreamForFileNamed: aString do: aBlock [
 
-	| file |
-	file := directory / aString.
-
-	shouldReplace ifTrue: [ file ensureDelete ].
-
-	file binaryWriteStreamDo: aBlock
+	directory / aString binaryWriteStreamDo: aBlock
 ]

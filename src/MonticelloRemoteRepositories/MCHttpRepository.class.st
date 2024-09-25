@@ -4,7 +4,7 @@ I support the general protocol for listing files in a remote repository.
 "
 Class {
 	#name : 'MCHttpRepository',
-	#superclass : 'MCFileBasedRepository',
+	#superclass : 'MCRemoteFileBasedRepository',
 	#instVars : [
 		'location',
 		'user',
@@ -35,23 +35,6 @@ MCHttpRepository class >> basicFromUrl: aZnUrl [
 MCHttpRepository class >> clearPasswords [
 	self allSubInstancesDo: [:ea | ea password: ''].
 
-]
-
-{ #category : 'creation template' }
-MCHttpRepository class >> creationTemplate [
-	^self creationTemplateLocation: self baseURL
-		user: ''
-		password: ''
-
-]
-
-{ #category : 'creation template' }
-MCHttpRepository class >> creationTemplateLocation: location user: user password: password [
-	^
-self name, '
-	location: {1}
-	user: {2}
-	password: {3}' format: {location printString. user printString. password printString}
 ]
 
 { #category : 'accessing' }
@@ -116,11 +99,6 @@ MCHttpRepository class >> urlSchemes [
 	^ #(http https)
 ]
 
-{ #category : 'converting' }
-MCHttpRepository >> asCreationTemplate [
-	^self class creationTemplateLocation: self location user: user password: password
-]
-
 { #category : 'private' }
 MCHttpRepository >> assertBinaryResponse: response [ 
 
@@ -138,10 +116,8 @@ MCHttpRepository >> assertNonBinaryResponse: response [
 MCHttpRepository >> cacheRawVersionNamed: aString stream: contents [
 	"directly forward the contents to the cache repository. 
 	this avoids and unnecessary serialization step"
-	MCCacheRepository uniqueInstance 
-		writeStreamForFileNamed: aString 
-		replace: true 
-		do: [ :s| s nextPutAll: contents ]
+
+	MCCacheRepository uniqueInstance writeStreamWithReplacingForFileNamed: aString do: [ :s | s nextPutAll: contents ]
 ]
 
 { #category : 'accessing' }
@@ -398,16 +374,16 @@ MCHttpRepository >> versionReaderForFileNamed: aString do: aBlock [
 ]
 
 { #category : 'i/o' }
-MCHttpRepository >> writeStreamForFileNamed: aString replace: ignoreBoolean do: aBlock [
+MCHttpRepository >> writeStreamForFileNamed: aString do: aBlock [
+
 	| entity |
 	entity := self entityStreamContents: aBlock.
-	self displayProgress: 'Uploading ', aString during: [
+	self displayProgress: 'Uploading ' , aString during: [
 		self httpClient
 			entity: entity;
-			ifFail: [ :exception | 
-				(exception isKindOf: ZnHttpUnsuccessful) 
-					ifTrue: [ ^ self handleUnsuccessfulResponse: exception response ].
-				self error: 'Could not save ', aString, ': ', exception printString ];
+			ifFail: [ :exception |
+				(exception isKindOf: ZnHttpUnsuccessful) ifTrue: [ ^ self handleUnsuccessfulResponse: exception response ].
+				self error: 'Could not save ' , aString , ': ' , exception printString ];
 			url: (self urlForFileNamed: aString);
 			put ]
 ]

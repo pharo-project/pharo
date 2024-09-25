@@ -198,6 +198,11 @@ ClyTextEditorToolMorph >> editingText [
 	self subclassResponsibility
 ]
 
+{ #category : 'accessing' }
+ClyTextEditorToolMorph >> editionTimestamp [
+  ^ Date today yyyymmdd, ' ', (Time now print24 first: 5)
+]
+
 { #category : 'selecting text' }
 ClyTextEditorToolMorph >> findAnyString: strings in: text [
 

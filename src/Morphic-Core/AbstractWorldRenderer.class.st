@@ -273,6 +273,11 @@ AbstractWorldRenderer >> formatRenderingTimeMeasurement: measurement [
 			  (measurement value printPaddedWith: Character space to: 5) }
 ]
 
+{ #category : 'operations' }
+AbstractWorldRenderer >> fullscreenMode: aValue [
+	"We ignore the value by default - subclasses might handle fullscreen mode"
+]
+
 { #category : 'accessing' }
 AbstractWorldRenderer >> icon: aForm [
 

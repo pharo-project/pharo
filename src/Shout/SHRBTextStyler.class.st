@@ -3,7 +3,7 @@ I'm the one who visits node to coloring the code
 "
 Class {
 	#name : 'SHRBTextStyler',
-	#superclass : 'RBProgramNodeVisitor',
+	#superclass : 'ASTProgramNodeVisitor',
 	#instVars : [
 		'charAttr',
 		'parentheseLevel',
@@ -134,6 +134,87 @@ SHRBTextStyler class >> blueStyleTable [
 			(blockArgsBar 							(black))
 
 			(pragma 						(green muchDarker)))
+]
+
+{ #category : 'styles' }
+SHRBTextStyler class >> darkBlueStyleTable [
+	<styleTable: 'DarkBlue'>
+
+			"(symbol color [emphasisSymbolOrArray [textStyleName [pixelHeight]]])"
+ ^ #(
+			(default 								white)
+			(invalid 								'FF8A80') 
+
+			(comment 								'7D8C93')
+
+			(character 							('E38C1E' lighter))
+			(number 								('FFE54B'))
+			(symbol 								('E38C1E'))
+			(string 								('E38C1E'))
+
+			(selector 								white)
+
+			(#true 								('00CC6E' darker))
+			(#false 								('00CC6E' darker))
+			(#nil 									('00CC6E' darker))
+
+			(#self 								'00CC6E')
+			(#super								'00CC6E')
+			(#thisContext 						'00CC6E')
+			(#return 								'00CC6E' bold)
+
+			(patternArg 							'03a9f4' bold)
+			(argument 							'03a9f4')
+										
+			(instVar 								'ffa000')										
+
+			(patternTempVar 					'00acc1')
+			(tempVar 								'00acc1')
+																					
+			(blockPatternArg 					'0091ea' italic)
+			(blockArg 							'0091ea' italic)
+
+			(blockPatternTempVar 				'00838f' italic)
+			(blockTempVar 						'00838f' italic)
+
+			(poolConstant 						'A7E2ED' bold)
+			(classVar 							'A7E2ED' bold)
+			(globalVar 							white bold)
+
+
+			(incompleteIdentifier 			'E8E2B7' italic)
+			(incompleteSelector				'E8E2B7' italic)
+
+			(undefinedIdentifier 				'FF8A80')
+			(undefinedSelector 					'FF8A80')
+
+			(patternSelector 						nil bold)
+			(blockArgColon 						white)
+			(parenthesis 					white)
+			(parenthesis1 					(green muchLighter))
+			(parenthesis2 					(magenta muchLighter))
+			(parenthesis3 					('FF8A80' muchLighter))
+			(parenthesis4 					(green lighter))
+			(parenthesis5 					(orange lighter))
+			(parenthesis6 					(magenta lighter))
+			(parenthesis7 					blue)
+			(block 							white)
+			(block1 						(green muchLighter))
+			(block2 						(magenta muchLighter))
+			(block3 						(red muchLighter))
+			(block4 						(green lighter))
+			(block5 						(orange lighter))
+			(block6 						(magenta lighter))
+			(block7 						blue)
+			(brace 							white)
+			(cascadeSeparator 					white bold)
+			(statementSeparator 				white bold)
+			(methodTempBar 						white)
+			(blockTempBar 						white)
+			(blockArgsBar 						white)
+
+			
+			(pragma 									'B4DD6E'))
 ]
 
 { #category : 'styles' }
@@ -417,12 +498,33 @@ SHRBTextStyler class >> styleTable: anArray [
 ]
 
 { #category : 'styles' }
+SHRBTextStyler class >> styleTableName [
+	"Answer a <String> representing the current style name"
+	
+	self styleTablePragmas 
+		detect: [ : p | (self perform: p methodSelector) = self styleTable ]
+		ifFound: [ : p | ^ p argumentAt: 1 ]
+		ifNone: [ self error: 'Style table unknown' ]
+
+]
+
+{ #category : 'styles' }
 SHRBTextStyler class >> styleTableNamed: aString [
 
-	^ (Pragma allNamed: #styleTable: in: self class)
+	^ self styleTablePragmas
 		detect: [ :each | (each argumentAt: 1) = aString ]
 		ifFound: [ :each | self perform: each methodSelector ]
 		ifNone: [ nil ]
+]
+
+{ #category : 'styles' }
+SHRBTextStyler class >> styleTablePragmas [
+	"Answer a <Collection> of <Pragma> each representing a Shout style"
+
+	^ Pragma
+		  allNamed: #styleTable:
+		  from: self class
+		  to: SHRBTextStyler class
 ]
 
 { #category : 'styles' }
@@ -983,6 +1085,12 @@ SHRBTextStyler >> stylingEnabled: aBoolean [
 	stylingEnabled := aBoolean
 ]
 
+{ #category : 'private' }
+SHRBTextStyler >> text [
+
+	^ text
+]
+
 { #category : 'styling' }
 SHRBTextStyler >> unstyledTextFrom: aText [
 	"return a Text object without all styling attributes"
@@ -1000,9 +1108,9 @@ SHRBTextStyler >> view: aViewOrMorph [
 ]
 
 { #category : 'visiting' }
-SHRBTextStyler >> visitAnnotationMarkNode: aRBAnnotationMarkNode [
+SHRBTextStyler >> visitAnnotationMarkNode: aAnnotationMarkNode [
 
-	self addStyle: #pragma from: aRBAnnotationMarkNode start to: aRBAnnotationMarkNode start.
+	self addStyle: #pragma from: aAnnotationMarkNode start to: aAnnotationMarkNode start.
 ]
 
 { #category : 'visiting' }
@@ -1054,12 +1162,12 @@ SHRBTextStyler >> visitEnglobingErrorNode: anEnglobingErrorNode [
 ]
 
 { #category : 'visiting' }
-SHRBTextStyler >> visitLiteralArrayNode: aRBLiteralArrayNode [
+SHRBTextStyler >> visitLiteralArrayNode: aLiteralArrayNode [
 	"We reuse the nested brackets/parenthesis style.
 	The main point it to easyly match opener and closer, nor necesarily to add type semanting"
 
 	| style |
-	aRBLiteralArrayNode isForByteArray
+	aLiteralArrayNode isForByteArray
 		ifTrue: [
 			style := self bracketStyleName.
 			bracketLevel := bracketLevel + 1 ]
@@ -1069,16 +1177,16 @@ SHRBTextStyler >> visitLiteralArrayNode: aRBLiteralArrayNode [
 
 	self
 		addStyle: style
-		from: aRBLiteralArrayNode startWithoutParentheses
-		to: aRBLiteralArrayNode startWithoutParentheses + aRBLiteralArrayNode openerSize - 1.
+		from: aLiteralArrayNode startWithoutParentheses
+		to: aLiteralArrayNode startWithoutParentheses + aLiteralArrayNode openerSize - 1.
 	self
 		addStyle: style
-		from: aRBLiteralArrayNode stopWithoutParentheses
-		to: aRBLiteralArrayNode stopWithoutParentheses.
+		from: aLiteralArrayNode stopWithoutParentheses
+		to: aLiteralArrayNode stopWithoutParentheses.
 
-	aRBLiteralArrayNode contents do: [ :each | self visitNode: each ].
+	aLiteralArrayNode contents do: [ :each | self visitNode: each ].
 
-	aRBLiteralArrayNode isForByteArray
+	aLiteralArrayNode isForByteArray
 		ifTrue: [ bracketLevel := bracketLevel - 1 ]
 		ifFalse: [ parentheseLevel := parentheseLevel - 1 ]
 ]

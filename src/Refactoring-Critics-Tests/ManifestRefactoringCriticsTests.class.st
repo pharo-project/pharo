@@ -9,6 +9,12 @@ Class {
 	#tag : 'Manifest'
 }
 
+{ #category : 'deprecation' }
+ManifestRefactoringCriticsTests class >> isDeprecated [ 
+
+	^ true
+]
+
 { #category : 'code-critics' }
 ManifestRefactoringCriticsTests class >> ruleReCompactSourceCodeRuleV1FalsePositive [
 

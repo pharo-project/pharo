@@ -30,7 +30,7 @@ Implementation remarks
 "
 Class {
 	#name : 'EFFormatter',
-	#superclass : 'RBAbstractFormatter',
+	#superclass : 'ASTAbstractFormatter',
 	#instVars : [
 		'codeStream',
 		'indent',
@@ -1086,7 +1086,7 @@ EFFormatter >> formatArray: anArrayNode [
 	| current |
 	codeStream nextPutAll: self spacesInsideArray.
 	(anArrayNode statements
-		reject: [ :each | each class = RBLiteralValueNode ])
+		reject: [ :each | each class = ASTLiteralValueNode ])
 		ifEmpty: [ anArrayNode statements
 				do: [ :each | 
 					current := each.
@@ -2184,9 +2184,7 @@ EFFormatter >> visitLiteralArrayNode: aRBArrayLiteralNode [
 
 { #category : 'visiting' }
 EFFormatter >> visitLiteralNode: aLiteralNode [
-	aLiteralNode value isLiteral
-		ifFalse: [ self writeString: '''<an unprintable nonliteral value>''' ]
-		ifTrue: [ self writeString: aLiteralNode sourceText ]
+		self writeString: aLiteralNode sourceText
 ]
 
 { #category : 'visiting' }
@@ -2227,20 +2225,20 @@ EFFormatter >> visitParseErrorNode: aNode [
 ]
 
 { #category : 'visiting - patterns' }
-EFFormatter >> visitPatternBlockNode: aRBPatternBlockNode [ 
+EFFormatter >> visitPatternBlockNode: aPatternBlockNode [ 
 	codeStream nextPut: $`.
 	self 
 		bracketWith: '{}' 
-		around: [self formatBlock: aRBPatternBlockNode]
+		around: [self formatBlock: aPatternBlockNode]
 ]
 
 { #category : 'visiting - patterns' }
-EFFormatter >> visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode [
-	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
+EFFormatter >> visitPatternWrapperBlockNode: aPatternWrapperBlockNode [
+	self visitNode: aPatternWrapperBlockNode wrappedNode.
 	codeStream nextPut: $`.
 	self 
 		bracketWith: '{}' 
-		around: [self formatBlock: aRBPatternWrapperBlockNode]
+		around: [self formatBlock: aPatternWrapperBlockNode]
 ]
 
 { #category : 'visiting' }

@@ -56,7 +56,7 @@ OpalCompiler class >> compilerClasses [
 	^self package definedClasses
 
 	"Compiler and AST:
-	self package definedClasses, RBProgramNode package definedClasses, {TRBProgramNodeVisitor}
+	self package definedClasses, ASTProgramNode package definedClasses
 	"
 ]
 
@@ -280,7 +280,7 @@ OpalCompiler >> checkNotice: aNotice [
 	"This method handles all the logic of error handling.
 	
 	Error handing in the compiler is only performed at one place, after the parsing/semantic analysis/other parse plugins.
-	Each RBNotice in the AST is then checked with this method.
+	Each ASTNotice in the AST is then checked with this method.
 
 	There is only three outcomes:
 	* If this method returns true (OK), then the work of the compiler can continue.
@@ -420,8 +420,8 @@ OpalCompiler >> decompileMethod: aCompiledMethod [
 		at: #FBDDecompiler
 		ifPresent: [ :decompilerClass | [ decompilerClass new decompile: aCompiledMethod ]
 			on: Error
-			do: [ RBMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'Decompilation failed'.  ] ]
-		ifAbsent: [ RBMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'No decompiler available'. ]
+			do: [ ASTMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'Decompilation failed'.  ] ]
+		ifAbsent: [ ASTMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'No decompiler available'. ]
 ]
 
 { #category : 'private' }

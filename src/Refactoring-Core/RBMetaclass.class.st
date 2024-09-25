@@ -51,6 +51,12 @@ RBMetaclass >> classSide [
 	^ self
 ]
 
+{ #category : 'accessing' }
+RBMetaclass >> classVariableNames [
+
+	^ self instanceSide classVariableNames
+]
+
 { #category : 'testing' }
 RBMetaclass >> directlyDefinesClassVariable: aString [
 
@@ -60,6 +66,12 @@ RBMetaclass >> directlyDefinesClassVariable: aString [
 { #category : 'testing' }
 RBMetaclass >> directlyDefinesPoolDictionary: aString [
 	^ self instanceSide directlyDefinesPoolDictionary: aString
+]
+
+{ #category : 'testing' }
+RBMetaclass >> isManifest [
+
+	^ self instanceSide isManifest
 ]
 
 { #category : 'testing' }

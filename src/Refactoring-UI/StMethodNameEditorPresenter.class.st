@@ -353,7 +353,8 @@ StMethodNameEditorPresenter >> initializeDialogWindow: aModalPresenter [
 					ifNil: [ '' ]
 					ifNotNil: [ :selector | ' : "', selector, '"' ]);		
 		addButton: 'Cancel' do: [ :presenter | presenter beCancel; close ];
-		addDefaultButton: 'Rename' do: [ :presenter | self renameMethodAndClose: presenter ]
+		addDefaultButton: 'Rename' do: [ :presenter | self renameMethodAndClose: presenter ];
+		whenOpenedDo: [ selectorInput takeKeyboardFocus; selectAll ]
 ]
 
 { #category : 'initialization' }

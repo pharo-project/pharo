@@ -7,7 +7,7 @@
 #document inst vars and their usage
 anonSubclassesRegistry <Dictionary: (Class -> WeakSet of: AnonymousClass)> This table contains for a given class all its anonymous subclasses for which there are instance specific links. Each anonymous class has exactly one instance.
 
-nodesForObjects <WeakKeyDictionary (Object -> WeakSet of: RBMethodNode)>
+nodesForObjects <WeakKeyDictionary (Object -> WeakSet of: ASTMethodNode)>
 
 links <WeakKeyDictionary (MetaLink -> WeakSet of: Object)> For each instance specific link, stores all objects it does affect. Used only for counting the number of objects affected by a given link. Maybe could be removed and replaced by a computation.
 
@@ -30,21 +30,6 @@ As already said, when putting a link on a node for a specific object an anonymou
 The link installer listens for method source code changes and  must update its anonymous classes nodes with those changes. Not done yet. See LinkInstaller >> #methodChanged:
 
 Also there is the problem of renaming a method in a class for which an anonymous subclass with a copy of this method has been made.
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 "
 Class {
 	#name : 'MetaLinkInstaller',
@@ -307,7 +292,9 @@ MetaLinkInstaller >> reinstallPermaLink: permalink onNode: node [
 		ifFalse: [ node link: link.
 			^ self ].
 	instances := (linksRegistry objectsForLink: link)
-		select: [ :i | i originalClass = permalink slotOrVarClass ].
+		select: [ :i | 
+			"use perform as no method #oiginalClass exists"
+			(i perform: #originalClass) = permalink slotOrVarClass ].
 	instances do: [ :instance | node link: link forObject: instance ]
 ]
 

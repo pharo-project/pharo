@@ -6,14 +6,11 @@ The driver could be instantiated by providing a superclass, and additionally, a 
 "
 Class {
 	#name : 'ReAddSubclassDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReClassInteractionDriver',
 	#instVars : [
 		'superclass',
 		'subclass',
-		'comment',
-		'tagName',
-		'packageName',
-		'packageNames'
+		'comment'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -39,14 +36,6 @@ ReAddSubclassDriver class >> superclass: aClass packageNames: packages [
 		packageNames: packages;
 		initialize;
 		yourself
-]
-
-{ #category : 'execution' }
-ReAddSubclassDriver >> changes [
-	"Remember should not call generateChanges"
-
-	refactoring privateTransform.
-	^ refactoring changes
 ]
 
 { #category : 'accessing' }
@@ -89,32 +78,12 @@ ReAddSubclassDriver >> packageName [
 
 ]
 
-{ #category : 'accessing' }
-ReAddSubclassDriver >> packageName: anObject [
-
-	packageName := anObject
-]
-
-{ #category : 'accessing' }
-ReAddSubclassDriver >> packageNames [
-	"Answer a <Collection> of packages to be displayed as potential targets of the new receiver's subclass"
-
-	^ packageNames
-		ifNil: [ packageNames := OrderedCollection new ]
-]
-
-{ #category : 'accessing' }
-ReAddSubclassDriver >> packageNames: anObject [
-
-	packageNames := anObject
-]
-
 { #category : 'initialization' }
 ReAddSubclassDriver >> requestSingleSubclass [
 
 	(StRefactoringAddClassPresenter on: self)
 		onCancel: [ : dialog | dialog close ];
-		onAccept: [ :dialog | 
+		onAccept: [ :dialog |
 			self
 				packageName: dialog presenter packageName;
 				tagName: dialog presenter tagName;
@@ -127,9 +96,9 @@ ReAddSubclassDriver >> requestSingleSubclass [
 ReAddSubclassDriver >> runRefactoring [
 
 	self configureRefactoring.
-	refactoring failedApplicabilityPreconditions 
+	refactoring failedApplicabilityPreconditions
 		ifNotEmpty: [ : conditions | ^ self informConditions: conditions ].
-	self applyChanges.
+	self applyChanges
 ]
 
 { #category : 'accessing' }
@@ -171,10 +140,4 @@ ReAddSubclassDriver >> tagName [
 	^ tagName
 		ifNil: [ self superclass tagName ]
 
-]
-
-{ #category : 'accessing' }
-ReAddSubclassDriver >> tagName: anObject [
-
-	tagName := anObject
 ]

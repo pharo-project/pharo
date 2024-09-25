@@ -13,7 +13,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFMethodToExecuteReification class >> entities [
-	^{RBMessageNode}
+	^{ASTMessageNode}
 ]
 
 { #category : 'plugin interface' }
@@ -22,11 +22,11 @@ RFMethodToExecuteReification class >> key [
 ]
 
 { #category : 'generate' }
-RFMethodToExecuteReification >> genForRBMessageNode [
-	^RBMessageNode
-		receiver: (RBMessageNode receiver: (RBVariableNode named: #RFReceiverReificationVar) selector: #class)
+RFMethodToExecuteReification >> genForASTMessageNode [
+	^ASTMessageNode
+		receiver: (ASTMessageNode receiver: (ASTVariableNode named: #RFReceiverReificationVar) selector: #class)
 		selector: #lookupSelector:
-		arguments: (RBLiteralValueNode value: entity selector)
+		arguments: (ASTLiteralValueNode value: entity selector)
 ]
 
 { #category : 'preamble' }
@@ -44,7 +44,7 @@ RFMethodToExecuteReification >> preambleForMessage: aNode [
 		(1 to: aNode numArgs) withIndexDo: [:each :index |
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
-			preamble add:  (RBVariableNode named: name).
+			preamble add:  (ASTVariableNode named: name).
 	].
 
 	^ preamble

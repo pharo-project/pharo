@@ -134,11 +134,6 @@ CompiledMethod >> allIgnoredNotImplementedSelectors [
 		  ifNil: [ #(  ) ]
 ]
 
-{ #category : 'source code management' }
-CompiledMethod >> argumentNames [
-	^ self propertyAt: #argumentNames ifAbsent: [ super argumentNames ]
-]
-
 { #category : 'accessing - pragmas & properties' }
 CompiledMethod >> cachePragmas [
 
@@ -541,6 +536,12 @@ CompiledMethod >> name [
 CompiledMethod >> overriddenMethod [
 
 	^ self methodClass superclass ifNotNil: [ :class | class lookupSelector: self selector ]
+]
+
+{ #category : 'accessing' }
+CompiledMethod >> pathOfLiteralIndexes [
+	
+	^ #[]
 ]
 
 { #category : 'private' }

@@ -3,13 +3,17 @@ Browser for snapshots
 "
 Class {
 	#name : 'MCSnapshotBrowser',
-	#superclass : 'MCCodeTool',
+	#superclass : 'Model',
 	#instVars : [
 		'categorySelection',
 		'classSelection',
 		'protocolSelection',
 		'methodSelection',
-		'switch'
+		'switch',
+		'items',
+		'modal',
+		'morph',
+		'label'
 	],
 	#category : 'MonticelloGUI-Tools',
 	#package : 'MonticelloGUI',
@@ -18,7 +22,13 @@ Class {
 
 { #category : 'instance creation' }
 MCSnapshotBrowser class >> forSnapshot: aSnapshot [
+
 	^ self new snapshot: aSnapshot
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> accept [
+	" do nothing by default"
 ]
 
 { #category : 'accessing' }
@@ -30,10 +40,121 @@ MCSnapshotBrowser >> allClassNames [
 ]
 
 { #category : 'morphic ui' }
+MCSnapshotBrowser >> arrowKey: aCharacter from: aPluggableListMorph [ 
+	"backstop"
+]
+
+{ #category : 'menus' }
+MCSnapshotBrowser >> browseMessages [
+	"Present a menu of the currently selected message, as well as all messages sent by it.  Open a message set browser of all implementors of the selector chosen."
+
+	self systemNavigation browseAllImplementorsOf: (self selectedMessageName ifNil: [ ^nil ])
+]
+
+{ #category : 'menus' }
+MCSnapshotBrowser >> browseMethodFull [
+	"Create and schedule a full Browser and then select the current class and message."
+
+	| myClass |
+	(myClass := self selectedClassOrMetaClass) ifNotNil:
+		[Smalltalk tools browser openOnClass: myClass selector: self selectedMessageName]
+]
+
+{ #category : 'menus' }
+MCSnapshotBrowser >> browseSendersOfMessages [
+	"Present a menu of the currently selected message, as well as all messages sent by it.  Open a message set browser of all senders of the selector chosen."
+
+	self systemNavigation browseAllSendersOf: (self selectedMessageName ifNil: [ ^nil ])
+]
+
+{ #category : 'menus' }
+MCSnapshotBrowser >> browseVersions [
+	"Create and schedule a message set browser on all versions of the 
+	currently selected message selector."
+	
+	Smalltalk tools versionBrowser  
+		browseVersionsForClass:  self selectedClassOrMetaClass 
+		selector: self selectedMessageName
+		
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> buildWindow [
+	| window |
+	window := SystemWindow labelled: self label.
+	window model: self.
+	self widgetSpecs do: [:spec |
+		| send fractions offsets |
+		send := spec first.
+		fractions := spec at: 2 ifAbsent: [#(0 0 1 1)].
+		offsets := spec at: 3 ifAbsent: [#(0 0 0 0)].
+		window
+			addMorph: (self perform: send first withArguments: send allButFirst)
+			fullFrame:
+				(LayoutFrame new 
+					leftFraction: fractions first; 
+					topFraction: fractions second;
+					rightFraction: fractions third ; 
+					bottomFraction: fractions fourth; 
+					leftOffset: offsets first;
+					topOffset: offsets second;
+					rightOffset: offsets third;
+					bottomOffset: offsets fourth)].
+	^ window
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> buttonEnabled [
+	^ true
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> buttonRow [
+	^ self buttonRow: self buttonSpecs
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> buttonRow: specArray [
+	| aRow |
+	aRow := PanelMorph new.
+	aRow layoutPolicy: TableLayout new; listDirection: #leftToRight.
+	aRow hResizing: #spaceFill; vResizing: #spaceFill; rubberBandCells: true.
+	aRow clipSubmorphs: true; borderWidth: 0.
+	aRow layoutInset: 2@2; cellInset: 1.
+	aRow wrapCentering: #center; cellPositioning: #leftCenter.
+	specArray do:
+		[:triplet | | aButton state |
+			state := triplet at: 5 ifAbsent: [#buttonState].
+			aButton := PluggableButtonMorph
+				on: self
+				getState: state
+				action: #performButtonAction:enabled:.
+			aButton
+				hResizing: #spaceFill;
+				vResizing: #spaceFill;
+				label: triplet first asString;
+				getEnabledSelector: (triplet at: 4 ifAbsent: [#buttonEnabled]);
+				arguments: (Array with: triplet second with: (triplet at: 4 ifAbsent: [#buttonEnabled])).
+			aRow addMorphBack: aButton.
+			aButton setBalloonText: triplet third].
+	^ aRow
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> buttonSelected [
+	^ false
+]
+
+{ #category : 'morphic ui' }
 MCSnapshotBrowser >> buttonSpecs [
 	^ #(('instance' switchBeInstance 'show instance' buttonEnabled switchIsInstance)
 		('?' switchBeComment 'show comment' buttonEnabled switchIsComment)
 		('class' switchBeClass 'show class' buttonEnabled switchIsClass))
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> buttonState [
+	^ false
 ]
 
 { #category : 'listing' }
@@ -89,19 +210,28 @@ MCSnapshotBrowser >> classDefinitionString [
 	].
 ]
 
+{ #category : 'menus' }
+MCSnapshotBrowser >> classHierarchy [
+	"Create and schedule a class list browser on the receiver's hierarchy."
+
+	self systemNavigation 
+		browseHierarchy: self selectedClassOrMetaClass
+		selector: self selectedMessageName	"OK if nil"
+]
+
 { #category : 'listing' }
 MCSnapshotBrowser >> classList [
 	^ self visibleClasses
 ]
 
 { #category : 'menus' }
-MCSnapshotBrowser >> classListMenu: aMenu [ 
-	classSelection ifNil: [ ^aMenu ].
-	super classListMenu: aMenu.
+MCSnapshotBrowser >> classListMenu: aMenu [
+
+	classSelection ifNil: [ ^ aMenu ].
 	aMenu
+		addList: #( #- #( 'Browse full (b)' browseMethodFull ) #( 'Browse hierarchy (h)' classHierarchy ) #- #( 'Show hierarchy' methodHierarchy ) );
 		addLine;
-		add: ('Load class {1}'  format: {classSelection})
-		selector: #loadClassSelection.
+		add: ('Load class {1}' format: { classSelection }) selector: #loadClassSelection.
 	^ aMenu
 ]
 
@@ -121,6 +251,20 @@ MCSnapshotBrowser >> classSelection: aNumber [
 ]
 
 { #category : 'morphic ui' }
+MCSnapshotBrowser >> close [
+	self window delete
+]
+
+{ #category : 'menus' }
+MCSnapshotBrowser >> copySelector [
+	"Copy the selected selector to the clipboard"
+
+	| selector |
+	(selector := self selectedMessageName) ifNotNil:
+		[Clipboard clipboardText: selector asString]
+]
+
+{ #category : 'morphic ui' }
 MCSnapshotBrowser >> defaultLabel [
 	^ 'Snapshot Browser'
 ]
@@ -133,6 +277,55 @@ MCSnapshotBrowser >> extensionClassNames [
 { #category : 'accessing' }
 MCSnapshotBrowser >> extensionsCategory [
 	^ '*Extensions'
+]
+
+{ #category : 'menus' }
+MCSnapshotBrowser >> fileOutMessage [
+	"Put a description of the selected message on a file"
+
+	| fileName |
+	self selectedMessageName ifNotNil: [
+		Cursor write showWhile: [
+			self selectedClassOrMetaClass fileOutMethod:
+				self selectedMessageName ].
+		^ self ].
+	items isEmpty ifTrue: [ ^ self ].
+	fileName := MorphicUIManager new
+		            request: 'File out on which file?'
+		            initialAnswer: 'methods'.
+	Cursor write showWhile: [
+		| internalStream |
+		internalStream := WriteStream on: (String new: 1000).
+		internalStream
+			header;
+			timeStamp.
+		items do: [ :patchOp |
+			patchOp definition isMethodDefinition ifTrue: [
+				(patchOp definition actualClass isNotNil and: [
+					 patchOp definition actualClass includesSelector:
+						 patchOp definition selector ])
+					ifTrue: [
+						patchOp definition actualClass
+							printMethodChunk: patchOp definition selector
+							on: internalStream ]
+					ifFalse: [
+						internalStream nextChunkPut:
+							patchOp definition className , ' removeSelector: '
+							, patchOp definition selector printString ] ].
+			patchOp definition isClassDefinition ifTrue: [
+				patchOp definition actualClass
+					ifNotNil: [
+						internalStream nextChunkPut:
+							patchOp definition actualClass definition.
+						patchOp definition comment ifNotNil: [
+							patchOp definition actualClass putCommentOnFile: internalStream ] ]
+					ifNil: [
+						internalStream nextChunkPut:
+							patchOp definition className , ' removeFromSystem' ] ] ].
+		CodeExporter
+			writeSourceCodeFrom: internalStream
+			baseName: fileName
+			isSt: true ]
 ]
 
 { #category : 'accessing' }
@@ -148,6 +341,48 @@ MCSnapshotBrowser >> initialExtent [
 { #category : 'menus' }
 MCSnapshotBrowser >> inspectSelection [
 	^ self methodSelection inspect
+]
+
+{ #category : 'utilities' }
+MCSnapshotBrowser >> interactionModel [
+	^ self
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> label [
+	^ label ifNil: [self defaultLabel]
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> label: aString [
+
+	label := aString
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> listMorph: listSymbol [
+
+	| selectionSymbol |
+	selectionSymbol := (listSymbol , 'Selection') asSymbol.
+
+	^ PluggableListMorph
+		  on: self
+		  list: (listSymbol , 'List') asSymbol
+		  selected: selectionSymbol
+		  changeSelected: (selectionSymbol , ':') asSymbol
+		  menu: (listSymbol , 'ListMenu:') asSymbol
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> listMorph: listSymbol selection: selectionSymbol menu: menuSymbol keystroke: keystrokeSymbol [
+	^ (PluggableListMorph
+		on: self
+		list: listSymbol
+		selected: selectionSymbol
+		changeSelected: (selectionSymbol, ':') asSymbol
+		menu: menuSymbol)
+		keystrokeActionSelector: keystrokeSymbol;
+		yourself
 ]
 
 { #category : 'menus' }
@@ -179,6 +414,12 @@ MCSnapshotBrowser >> loadProtocolSelection [
 	self methodsForSelectedProtocol do: [ :m | m load ].
 ]
 
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> menu [
+	" returns nil to let the editing mode offer the right menu"
+	^ nil
+]
+
 { #category : 'text' }
 MCSnapshotBrowser >> metaclassDefinitionString [
 	| defs |
@@ -194,16 +435,50 @@ MCSnapshotBrowser >> metaclassDefinitionString [
 	].
 ]
 
+{ #category : 'menus' }
+MCSnapshotBrowser >> methodHierarchy [
+	"Create and schedule a method browser on the hierarchy of implementors."
+
+	self systemNavigation methodHierarchyBrowserForClass: self selectedClassOrMetaClass
+		selector: self selectedMessageName
+]
+
 { #category : 'listing' }
 MCSnapshotBrowser >> methodList [
 	^ self visibleMethods collect: [:ea | ea selector]
 ]
 
 { #category : 'menus' }
-MCSnapshotBrowser >> methodListMenu: aMenu [ 
-	super methodListMenu: aMenu.
-	( self selectedMessageName isNotNil and: [ methodSelection isLoadable ] )
-		ifTrue: [ aMenu addLine; add: 'Load method' selector: #loadMethodSelection ].
+MCSnapshotBrowser >> methodListKey: aKeystroke from: aListMorph [ 
+	aKeystroke caseOf: {
+		[$b] -> [self browseMethodFull].
+		[$h] -> [self classHierarchy].
+		[$o] -> [self fileOutMessage].
+		[$c] -> [self copySelector].
+		[$n] -> [self browseSendersOfMessages].
+		[$m] -> [self browseMessages].
+		[$i] -> [self methodHierarchy].
+		[$v] -> [self browseVersions]}
+		 otherwise: []
+]
+
+{ #category : 'menus' }
+MCSnapshotBrowser >> methodListMenu: aMenu [
+
+	self selectedMessageName
+		ifNil: [ items isNotEmpty ifTrue: [ aMenu add: 'FileOut (o)' selector: #fileOutMessage ] ]
+		ifNotNil: [
+			aMenu addList:
+				#( #( 'Browse full (b)' browseMethodFull ) #( 'Browse hierarchy (h)' classHierarchy ) #- #( 'FileOut (o)' fileOutMessage ) #( 'Copy selector (c)'
+				      copySelector ) ).
+			aMenu addList: #( #- #( 'Browse senders (n)' browseSendersOfMessages ) #( 'Browse implementors (m)' browseMessages )
+				   #( 'Inheritance (i)' methodHierarchy ) #( 'Versions (v)' browseVersions ) ) ].
+
+
+	(self selectedMessageName isNotNil and: [ methodSelection isLoadable ]) ifTrue: [
+		aMenu
+			addLine;
+			add: 'Load method' selector: #loadMethodSelection ].
 	^ aMenu
 ]
 
@@ -260,6 +535,17 @@ MCSnapshotBrowser >> packageClasses [
 { #category : 'listing' }
 MCSnapshotBrowser >> packageOrganizations [
 	^ items select: [:ea | ea isOrganizationDefinition]
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> performButtonAction: anActionSelector enabled: anEnabledSelector [
+	(self perform: anEnabledSelector) 
+		ifTrue: [ self perform: anActionSelector ]
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> preferredColor [  
+	^ (Color r: 0.627 g: 0.69 b: 0.976)
 ]
 
 { #category : 'listing' }
@@ -333,6 +619,29 @@ MCSnapshotBrowser >> selectedMessageName [
 
 ]
 
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> shoutAboutToStyle: aPluggableShoutMorphOrView [
+	^ false
+]
+
+{ #category : 'opening' }
+MCSnapshotBrowser >> show [
+	"Open the tool returning the window."
+
+	modal := false.
+	self window openInWorld.
+	^ self window
+]
+
+{ #category : 'opening' }
+MCSnapshotBrowser >> showLabelled: labelString [
+
+	modal := false.
+	self label: labelString.
+	self window openInWorld.
+	^ self window
+]
+
 { #category : 'switch' }
 MCSnapshotBrowser >> signalSwitchChanged [
 	self protocolSelection: 0.
@@ -349,6 +658,11 @@ MCSnapshotBrowser >> signalSwitchChanged [
 MCSnapshotBrowser >> snapshot: aSnapshot [
 	items := aSnapshot definitions asSortedCollection.
 	self categorySelection: 0.
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> summary: aString [
+	" do nothing by default"
 ]
 
 { #category : 'switch' }
@@ -403,6 +717,22 @@ MCSnapshotBrowser >> text: aTextOrString [
 	self changed: #text
 ]
 
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> textMorph: aSymbol [
+	| textMorph |
+	textMorph := RubPluggableTextMorph new
+		getTextSelector: aSymbol;
+		setTextSelector: (aSymbol , ':') asSymbol;
+		on: self;
+		beWrapped;
+		hScrollbarShowNever;
+		beForSmalltalkScripting;
+		yourself.
+	textMorph announcer when: RubTextAcceptRequest send: #accept to: self.
+	textMorph hasUnacceptedEdits: false.
+	^ textMorph
+]
+
 { #category : 'listing' }
 MCSnapshotBrowser >> visibleCategories [
 	^ ((self packageOrganizations flatCollect: [ :ea | ea categories ]),
@@ -447,4 +777,10 @@ MCSnapshotBrowser >> widgetSpecs [
 		((buttonRow) (0.25 0.4 0.5 0.4) (0 -30 0 0))
 		((textMorph: text) (0 0.4 1 1))
 		) 
+]
+
+{ #category : 'morphic ui' }
+MCSnapshotBrowser >> window [
+
+	^ morph ifNil: [ morph := self buildWindow ]
 ]

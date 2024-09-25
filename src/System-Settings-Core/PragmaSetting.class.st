@@ -280,6 +280,15 @@ PragmaSetting >> precondition: aValuable [
 	precondition := aValuable
 ]
 
+{ #category : 'printing' }
+PragmaSetting >> printOn: aStream [
+
+	aStream
+		<< '[Setting: ';
+		<< self name asString;
+		<< ']'
+]
+
 { #category : 'accessing' }
 PragmaSetting >> realTarget [
 	^ target isSymbol
