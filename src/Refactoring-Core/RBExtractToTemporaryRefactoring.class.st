@@ -11,7 +11,8 @@ Class {
 		'sourceInterval',
 		'selector',
 		'newVariableName',
-		'parseTree'
+		'parseTree',
+		'selectedParseTree'
 	],
 	#category : 'Refactoring-Core-Refactorings-Unused',
 	#package : 'Refactoring-Core',
@@ -42,35 +43,18 @@ RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval
 RBExtractToTemporaryRefactoring >> applicabilityPreconditions [
 
 	^ {
-		  (RBCondition definesSelector: selector in: class).
-		  (RBCondition
-			   isValidInstanceVariableName: newVariableName
-			   for: class).
-		  (RBCondition withBlock: [
-			   self verifySelectedInterval.
-			   self checkVariableName.
-			   true ]) }
-]
-
-{ #category : 'preconditions' }
-RBExtractToTemporaryRefactoring >> checkVariableName [
-	(class whoDefinesInstanceVariable: newVariableName) ifNotNil:
-			[self refactoringError: ('<1p> defines an instance variable named <2s>'
-						expandMacrosWith: class
-						with: newVariableName)].
-	(class whoDefinesClassVariable: newVariableName) ifNotNil:
-			[self refactoringError: ('<1p> defines a class variabled named <2s>'
-						expandMacrosWith: class
-						with: newVariableName)].
-	(self parseTree allDefinedVariables includes: newVariableName)
-		ifTrue:
-			[self refactoringError: ('<1s> is already a temporary variable name'
-						expandMacrosWith: newVariableName)]
+			(ReDefinesSelectorsCondition new definesSelectors: (Array with: selector) in: class).
+		  	(ReIsValidInstanceVariableName new name: newVariableName).
+			(ReCheckVariableNameCondition
+				class: class
+				variableName: newVariableName 
+				parseTree: parseTree ).
+		}
 ]
 
 { #category : 'transforming' }
 RBExtractToTemporaryRefactoring >> compileNewMethod [
-	class compileTree: self parseTree
+	class compileTree: parseTree
 ]
 
 { #category : 'transforming' }
@@ -95,7 +79,7 @@ RBExtractToTemporaryRefactoring >> extract: anInterval to: aString from: aSelect
 RBExtractToTemporaryRefactoring >> insertTemporary [
 
 	| node statementNode nodeReferences scope |
-	node := self parseTree whichNodeIsContainedBy: sourceInterval.
+	node := parseTree whichNodeIsContainedBy: sourceInterval.
 	(node isNotNil and: [ node isValue ]) ifFalse: [
 		self refactoringError: 'Cannot assign to non-value nodes' ].
 	scope := node methodOrBlockNode.
@@ -111,14 +95,23 @@ RBExtractToTemporaryRefactoring >> insertTemporary [
 		each replaceWith: (ASTVariableNode named: newVariableName) ]
 ]
 
-{ #category : 'private - accessing' }
-RBExtractToTemporaryRefactoring >> parseTree [
+{ #category : 'transforming' }
+RBExtractToTemporaryRefactoring >> prepareForExecution [
 
-	parseTree
-		ifNil: [ parseTree := class parseTreeForSelector: selector.
+	| selectedSources |
+	selectedSources := self selectedSource.
+	selectedParseTree := self parserClass
+		parseExpression: selectedSources
+		onError: [ :message :position | self refactoringError: 'Invalid selection' ].
+	selectedParseTree isSequence
+		ifTrue: [ self refactoringError: 'Cannot assign temp to multiple statements' ].	
+	parseTree ifNil: [ 
+			parseTree := class parseTreeForSelector: selector.
 			parseTree ifNil: [ self refactoringError: 'Could not parse method' ]
 			].
-	^ parseTree doSemanticAnalysis
+		parseTree doSemanticAnalysis
+
+
 ]
 
 { #category : 'transforming' }
@@ -132,7 +125,6 @@ RBExtractToTemporaryRefactoring >> privateTransform [
 RBExtractToTemporaryRefactoring >> selectedSource [
 
 	| source |
-
 	source := class sourceCodeFor: selector.
 	source ifNil: [ self refactoringError: 'Couldn''t find sources' ].
 	( ( sourceInterval first between: 1 and: source size )
@@ -155,15 +147,4 @@ RBExtractToTemporaryRefactoring >> storeOn: aStream [
 		nextPutAll: ' in: '.
 	class storeOn: aStream.
 	aStream nextPut: $)
-]
-
-{ #category : 'preconditions' }
-RBExtractToTemporaryRefactoring >> verifySelectedInterval [
-	| selectedParseTree selectedSources |
-	selectedSources := self selectedSource.
-	selectedParseTree := self parserClass
-		parseExpression: selectedSources
-		onError: [ :message :position | self refactoringError: 'Invalid selection' ].
-	selectedParseTree isSequence
-		ifTrue: [ self refactoringError: 'Cannot assign temp to multiple statements' ]
 ]

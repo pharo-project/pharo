@@ -136,7 +136,7 @@ RBCreateAccessorsForVariableTransformation >> defineGetterMethod [
 			 sourceCode: ('<1s><r><r><t>^ <2s>'
 					  expandMacrosWith: self selector
 					  with: variableName)
-			 in: self definingClass
+			 in: (self model classObjectFor: self definingClass name)
 			 withProtocol: #accessing ).
 
 	^ selector
@@ -145,7 +145,7 @@ RBCreateAccessorsForVariableTransformation >> defineGetterMethod [
 { #category : 'transforming' }
 RBCreateAccessorsForVariableTransformation >> defineSetterMethod [
 	| definingClass string |
-	definingClass := self definingClass.
+	definingClass := self model classObjectFor: self definingClass name.
 	string := self needsReturnForSetter
 				ifTrue: ['<1s> anObject<r><r><t>^ <2s> := anObject']
 				ifFalse: ['<1s> anObject<r><r><t><2s> := anObject'].
