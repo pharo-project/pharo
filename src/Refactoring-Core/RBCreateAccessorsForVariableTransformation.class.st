@@ -1,6 +1,4 @@
 "
-(Estoy malo)
-
 I am a refactoring for creating accessors for variables.
 - Setters and getters are only created if they do not already exist in the class and its subclasses.
 - Now in addition I verify that a method with the same name does not already exist in the superclass. In such as case, the setter gets a numbered name.
