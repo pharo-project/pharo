@@ -109,12 +109,6 @@ MessageDialogWindow >> newTextMorph [
 	^self newText: ' '
 ]
 
-{ #category : 'theme' }
-MessageDialogWindow >> playOpenSound [
-	"Play the themed sound for opening.
-	Do nothing at present, done by the UIManager."
-]
-
 { #category : 'accessing' }
 MessageDialogWindow >> text: aStringOrText [
 	"Set the text."
