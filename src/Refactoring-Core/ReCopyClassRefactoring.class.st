@@ -27,7 +27,8 @@ Class {
 		'packageName',
 		'classMethods',
 		'instanceMethods',
-		'superclassName'
+		'superclassName',
+		'packageTagName'
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
@@ -92,6 +93,7 @@ ReCopyClassRefactoring >> copyClass [
 			 superclass: aClass superclass;
 			 packageName: self packageName;
 			 comment: aClass comment;
+			 tagName: self packageTagName;
 			 yourself)
 ]
 
@@ -183,6 +185,18 @@ ReCopyClassRefactoring >> packageName [
 ReCopyClassRefactoring >> packageName: anObject [
 
 	packageName := anObject
+]
+
+{ #category : 'accessing' }
+ReCopyClassRefactoring >> packageTagName [
+
+	^ packageTagName
+]
+
+{ #category : 'accessing' }
+ReCopyClassRefactoring >> packageTagName: aString [
+
+	packageTagName := aString
 ]
 
 { #category : 'transforming' }
