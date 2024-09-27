@@ -1,6 +1,6 @@
 Class {
 	#name : 'BaselineOfCalypsoNavigationModel',
-	#superclass : 'Object',
+	#superclass : 'BaselineOf',
 	#category : 'BaselineOfCalypsoNavigationModel',
 	#package : 'BaselineOfCalypsoNavigationModel'
 }
