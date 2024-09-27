@@ -65,6 +65,12 @@ ReAbstractRule class >> checksPackage [
 	^ false
 ]
 
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> designFlawGroup [
+
+	^ 'Design Flaws'
+]
+
 { #category : 'accessing' }
 ReAbstractRule class >> enabled [
 
