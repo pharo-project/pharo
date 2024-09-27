@@ -33,7 +33,7 @@ BaselineOfCalypso >> baseline: spec [
 					   #ClassAnnotation ) ];
 			package: #'Calypso-SystemQueries-Tests' with: [
 				spec requires:
-						#( #'Calypso-NavigationModel-Tests'
+						#( #'CalypsoNavigationModel'
 						   #ClassAnnotationTests #'Calypso-SystemQueries'
 						   #'Calypso-SystemQueries-Tests-PWithSingleClass'
 						   #'Calypso-SystemQueries-Tests-PExtendedByP1'
@@ -240,7 +240,7 @@ BaselineOfCalypso >> baseline: spec [
 			with: #( #'Calypso-SystemPlugins-Monticello-Browser' );
 			group: 'MinimalEnvironmentTests'
 			with:
-				#( #'Calypso-NavigationModel-Tests'
+				#( #'CalypsoNavigationModel'
 				   #'Calypso-SystemQueries-Tests' #'Calypso-SystemPlugins-Traits-Queries-Tests'
 				   'Calypso-SystemPlugins-InheritanceAnalysis-Queries-Tests'
 				   #'Calypso-SystemPlugins-Deprecation-Queries-Tests'
