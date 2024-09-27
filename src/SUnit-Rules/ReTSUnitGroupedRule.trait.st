@@ -10,5 +10,5 @@ Trait {
 
 { #category : 'accessing' }
 ReTSUnitGroupedRule >> group [
-	^ self sunitGroup
+	^ ReAbstractRule sunitGroup
 ]
