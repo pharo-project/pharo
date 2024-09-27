@@ -37,6 +37,12 @@ Class {
 	#tag : 'Rules'
 }
 
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> bugsGroup [
+
+	^ 'Bugs'
+]
+
 { #category : 'testing - interest' }
 ReAbstractRule class >> checksClass [
 	"Not checking a class by default - but subclasses should return true when the receiver rule checks on class level."
