@@ -30,7 +30,7 @@ Class {
 
 { #category : 'accessing' }
 ReGuardClauseRule class >> group [
-	^ 'Coding Idiom Violation'
+	^ self codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

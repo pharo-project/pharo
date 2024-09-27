@@ -16,7 +16,7 @@ ReNoClassCommentRule class >> checksClass [
 
 { #category : 'accessing' }
 ReNoClassCommentRule class >> group [
-	^ 'Coding Idiom Violation'
+	^ self codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

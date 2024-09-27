@@ -72,6 +72,12 @@ ReAbstractRule class >> checksPackage [
 ]
 
 { #category : 'accessing - rule group' }
+ReAbstractRule class >> codingIdiomViolationGroup [
+
+	^ 'Coding Idiom Violation'
+]
+
+{ #category : 'accessing - rule group' }
 ReAbstractRule class >> designFlawGroup [
 
 	^ 'Design Flaws'
