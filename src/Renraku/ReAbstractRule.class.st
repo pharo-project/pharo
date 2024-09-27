@@ -52,7 +52,7 @@ ReAbstractRule class >> apiHintsGroup [
 { #category : 'accessing - rule group' }
 ReAbstractRule class >> architecturalGroup [
 
-	^ self architecturalGroup
+	^ 'Architectural'
 ]
 
 { #category : 'accessing - rule group' }
