@@ -107,9 +107,8 @@ RBExtractToTemporaryRefactoring >> prepareForExecution [
 		ifTrue: [ self refactoringError: 'Cannot assign temp to multiple statements' ].	
 	parseTree ifNil: [ 
 			parseTree := class parseTreeForSelector: selector.
-			parseTree ifNil: [ self refactoringError: 'Could not parse method' ]
-			].
-		parseTree doSemanticAnalysis
+			parseTree ifNil: [ self refactoringError: 'Could not parse method' ]].
+	parseTree doSemanticAnalysis
 
 
 ]
