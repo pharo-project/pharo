@@ -43,6 +43,12 @@ ReGuardClauseRule class >> ruleName [
 	^ 'Replace single branch conditional with guard clause'
 ]
 
+{ #category : 'accessing' }
+ReGuardClauseRule class >> severity [
+
+	^ #information
+]
+
 { #category : 'initialization' }
 ReGuardClauseRule >> initialize [
 	super initialize.
