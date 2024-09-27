@@ -126,6 +126,16 @@ OSWindowMorphicEventHandler >> convertPosition: aPosition [
 	^ morphicWorld worldState worldRenderer convertWindowMouseEventPosition: aPosition
 ]
 
+{ #category : #'as yet unclassified' }
+OSWindowMorphicEventHandler >> convertText: aString [ 
+
+	"I convert the string if some well-known problematic characters are found.
+	Currently I am converting the 'Modifier Letter Circumflex Accent (U+02C6) without a modifying character to the circunflex (U+005E).
+	See issue #16132'"
+
+	^ aString copy replaceAll: (Character value: 16r02C6) with: $^.
+]
+
 { #category : #events }
 OSWindowMorphicEventHandler >> dispatchMorphicEvent: anEvent [
 	morphicWorld defer: [
@@ -302,7 +312,7 @@ OSWindowMorphicEventHandler >> visitTextInputEvent: anEvent [
 			^ TextInputEvent new
 				  setHand: self activeHand;
 				  setPosition: (self convertPosition: anEvent position);
-				  text: anEvent text;
+				  text: (self convertText: anEvent text);
 				  wasHandled: false ]
 ]
 
