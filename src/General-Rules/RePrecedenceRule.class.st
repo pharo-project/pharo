@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 RePrecedenceRule class >> group [
-	^ 'Potential Bugs'
+	^ self potentialBugsGroup
 ]
 
 { #category : 'accessing' }

@@ -16,7 +16,7 @@ ReAddRemoveDependentsRule class >> checksClass [
 
 { #category : 'accessing' }
 ReAddRemoveDependentsRule class >> group [
-	^ 'Potential Bugs'
+	^ self potentialBugsGroup
 ]
 
 { #category : 'accessing' }

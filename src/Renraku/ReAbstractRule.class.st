@@ -160,6 +160,12 @@ ReAbstractRule class >> methodOfInteresetSelectors [
 	^ #(checksMethod checksClass checksPackage checksNode)
 ]
 
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> potentialBugsGroup [
+
+	^ 'Potential Bugs'
+]
+
 { #category : 'accessing' }
 ReAbstractRule class >> rationale [
 	"Answer an explanation of the rule, usually in one line. Long description can be obtained using longDescription."
