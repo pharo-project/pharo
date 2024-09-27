@@ -136,7 +136,7 @@ RBCreateAccessorsForVariableTransformation >> defineGetterMethod [
 			 sourceCode: ('<1s><r><r><t>^ <2s>'
 					  expandMacrosWith: self selector
 					  with: variableName)
-			 in: self definingClass name
+			 in: self definingClass
 			 withProtocol: #accessing ).
 
 	^ selector
