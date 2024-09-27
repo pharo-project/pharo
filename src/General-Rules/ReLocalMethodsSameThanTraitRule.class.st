@@ -16,7 +16,7 @@ ReLocalMethodsSameThanTraitRule class >> checksClass [
 
 { #category : 'accessing' }
 ReLocalMethodsSameThanTraitRule class >> group [
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }

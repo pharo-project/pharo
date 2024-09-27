@@ -21,7 +21,7 @@ PharoBootstrapRule class >> checksPackage [
 { #category : 'accessing' }
 PharoBootstrapRule class >> group [
 
-	^ 'Architectural'
+	^ self architecturalGroup
 ]
 
 { #category : 'accessing' }

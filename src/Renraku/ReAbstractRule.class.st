@@ -38,6 +38,12 @@ Class {
 }
 
 { #category : 'accessing - rule group' }
+ReAbstractRule class >> architecturalGroup [
+
+	^ self architecturalGroup
+]
+
+{ #category : 'accessing - rule group' }
 ReAbstractRule class >> bugsGroup [
 
 	^ 'Bugs'
@@ -161,6 +167,12 @@ ReAbstractRule class >> methodOfInteresetSelectors [
 ]
 
 { #category : 'accessing - rule group' }
+ReAbstractRule class >> optimizationGroup [
+
+	^ 'Optimization'
+]
+
+{ #category : 'accessing - rule group' }
 ReAbstractRule class >> potentialBugsGroup [
 
 	^ 'Potential Bugs'
@@ -174,6 +186,12 @@ ReAbstractRule class >> rationale [
 		self deprecated: 'The method #rationale of rules should be implemented on the class side in Pharo 13+ and not in instance sice.'.
 		^ self new rationale ].
 	^ self comment
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> rubricGroup [
+
+	^ 'Rubric'
 ]
 
 { #category : 'accessing' }

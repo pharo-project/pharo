@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 ReSearchingLiteralRule class >> group [
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }

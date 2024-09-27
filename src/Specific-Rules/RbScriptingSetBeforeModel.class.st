@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 RbScriptingSetBeforeModel class >> group [
-	^ 'Rubric'
+	^ self rubricGroup
 ]
 
 { #category : 'initialization' }
