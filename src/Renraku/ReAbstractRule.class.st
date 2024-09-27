@@ -78,6 +78,12 @@ ReAbstractRule class >> checksPackage [
 ]
 
 { #category : 'accessing - rule group' }
+ReAbstractRule class >> cleanCodeGroup [
+
+	^ 'Clean Code'
+]
+
+{ #category : 'accessing - rule group' }
 ReAbstractRule class >> codingIdiomViolationGroup [
 
 	^ 'Coding Idiom Violation'
