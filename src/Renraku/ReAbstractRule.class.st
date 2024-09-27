@@ -38,6 +38,18 @@ Class {
 }
 
 { #category : 'accessing - rule group' }
+ReAbstractRule class >> apiChangeGroup [
+
+	^ 'API Change'
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> apiHintsGroup [
+
+	^ 'API Hints'
+]
+
+{ #category : 'accessing - rule group' }
 ReAbstractRule class >> architecturalGroup [
 
 	^ self architecturalGroup
@@ -130,6 +142,12 @@ ReAbstractRule class >> identifierMinorVersionNumber [
 	^ 1
 ]
 
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> instanceMethodProtocolGroup [
+
+	^ 'Instance Method Protocol'
+]
+
 { #category : 'testing' }
 ReAbstractRule class >> isAbstract [
 
@@ -170,6 +188,12 @@ ReAbstractRule class >> isVisible [
 ReAbstractRule class >> methodOfInteresetSelectors [
 
 	^ #(checksMethod checksClass checksPackage checksNode)
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> methodProtocolNameGroup [
+
+	^ 'Method Protocol Name'
 ]
 
 { #category : 'accessing - rule group' }

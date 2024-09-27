@@ -12,7 +12,7 @@ Class {
 { #category : 'accessing' }
 SettingDontTranslateDescriptionRule class >> group [
 
-	^ 'API Hints'
+	^ self apiHintsGroup
 ]
 
 { #category : 'accessing' }
