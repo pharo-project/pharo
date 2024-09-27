@@ -215,6 +215,12 @@ ReAbstractRule class >> severity [
 ]
 
 { #category : 'accessing - rule group' }
+ReAbstractRule class >> styleGroup [
+
+	^ 'Style'
+]
+
+{ #category : 'accessing - rule group' }
 ReAbstractRule class >> sunitGroup [
 
 	^ 'SUnit'
