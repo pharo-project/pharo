@@ -19,8 +19,7 @@ ReTestClassNameShouldNotEndWithTests class >> checksClass [
 
 { #category : 'accessing' }
 ReTestClassNameShouldNotEndWithTests class >> group [
-
-	^ 'SUnit'
+	^ self sunitGroup
 ]
 
 { #category : 'accessing' }

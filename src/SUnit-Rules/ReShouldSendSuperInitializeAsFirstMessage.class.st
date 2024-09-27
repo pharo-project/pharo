@@ -21,8 +21,7 @@ ReShouldSendSuperInitializeAsFirstMessage class >> checksMethod [
 
 { #category : 'accessing' }
 ReShouldSendSuperInitializeAsFirstMessage class >> group [
-
-	^ 'Clean Code'
+	^ self cleanCodeGroup
 ]
 
 { #category : 'utilities' }

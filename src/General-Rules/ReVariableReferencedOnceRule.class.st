@@ -16,7 +16,7 @@ ReVariableReferencedOnceRule class >> checksClass [
 
 { #category : 'accessing' }
 ReVariableReferencedOnceRule class >> group [
-	^ 'Design Flaws'
+	^ self designFlawGroup
 ]
 
 { #category : 'accessing' }

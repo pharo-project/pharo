@@ -17,7 +17,7 @@ ReUnconditionalRecursionRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReUnconditionalRecursionRule class >> group [
-	^ 'Potential Bugs'
+	^ self potentialBugsGroup
 ]
 
 { #category : 'accessing' }

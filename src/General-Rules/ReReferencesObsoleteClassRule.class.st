@@ -12,7 +12,7 @@ Class {
 
 { #category : 'accessing' }
 ReReferencesObsoleteClassRule class >> group [
-	^ 'Bugs'
+	^ self bugsGroup
 ]
 
 { #category : 'accessing' }

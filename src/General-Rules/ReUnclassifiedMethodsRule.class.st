@@ -16,7 +16,7 @@ ReUnclassifiedMethodsRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReUnclassifiedMethodsRule class >> group [
-	^ 'Style'
+	^ self styleGroup
 ]
 
 { #category : 'accessing' }

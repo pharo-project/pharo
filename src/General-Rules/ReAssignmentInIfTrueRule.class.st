@@ -19,7 +19,7 @@ Class {
 
 { #category : 'accessing' }
 ReAssignmentInIfTrueRule class >> group [
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }

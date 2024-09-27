@@ -19,8 +19,7 @@ ReTestClassNotInPackageWithTestEndingNameRule class >> checksClass [
 
 { #category : 'accessing' }
 ReTestClassNotInPackageWithTestEndingNameRule class >> group [
-
-	^ 'SUnit'
+	^ self sunitGroup
 ]
 
 { #category : 'accessing' }

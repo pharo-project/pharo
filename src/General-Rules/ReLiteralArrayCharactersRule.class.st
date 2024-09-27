@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 ReLiteralArrayCharactersRule class >> group [
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }

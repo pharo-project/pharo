@@ -17,7 +17,7 @@ Class {
 { #category : 'accessing' }
 ReAsClassRule class >> group [
 
-	^ 'Design Flaws'
+	^ self designFlawGroup
 ]
 
 { #category : 'accessing' }

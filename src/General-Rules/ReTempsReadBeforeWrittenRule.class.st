@@ -28,7 +28,7 @@ ReTempsReadBeforeWrittenRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReTempsReadBeforeWrittenRule class >> group [
-	^ 'Potential Bugs'
+	^ self potentialBugsGroup
 ]
 
 { #category : 'accessing' }

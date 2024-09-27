@@ -19,8 +19,7 @@ ReShouldSendSuperSetUpAsFirstMessage class >> checksMethod [
 
 { #category : 'accessing' }
 ReShouldSendSuperSetUpAsFirstMessage class >> group [
-
-	^ 'SUnit'
+	^ self sunitGroup
 ]
 
 { #category : 'utilities' }
