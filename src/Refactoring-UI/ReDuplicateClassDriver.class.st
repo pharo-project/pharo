@@ -81,6 +81,7 @@ ReDuplicateClassDriver >> requestNewClass [
 			withClassMethods: rbMetaclass allMethods;
 			baseClassName: self className;
 			basePackageName: (self model environment at: self className) packageName;
+			basePackageTagName: (self model environment at: self className) packageTag name;
 			onCancel: [ : dialog | dialog close ];
 			onAccept: [ :dialog |
 				self
@@ -94,7 +95,8 @@ ReDuplicateClassDriver >> requestNewClass [
 					superclassName: dialog presenter selectedSuperclassName;					
 					sourceClass: className;
 					instanceMethods: dialog presenter selectedInstanceMethods;
-					classMethods: dialog presenter selectedClassMethods.
+					classMethods: dialog presenter selectedClassMethods;
+					packageTagName: dialog presenter tagName.
 
 				dialog close ];
 			selectAll;
@@ -151,10 +153,4 @@ ReDuplicateClassDriver >> superclassName [
 ReDuplicateClassDriver >> superclassName: anObject [
 
 	superclassName := anObject
-]
-
-{ #category : 'accessing' }
-ReDuplicateClassDriver >> tagName [
-
-	^ tagName
 ]
