@@ -7,6 +7,9 @@ A World, the entire Smalltalk screen, is a PasteUpMorph.  A World responds true 
 Class {
 	#name : 'WorldMorph',
 	#superclass : 'PasteUpMorph',
+	#instVars : [
+		'zoomFactor'
+	],
 	#classVars : [
 		'AllowDropFiles',
 		'CursorOwnerWorld',
@@ -75,20 +78,6 @@ WorldMorph class >> displayScaleFactor: aNumber [
 	displayScaleFactor := aNumber
 ]
 
-{ #category : 'setting' }
-WorldMorph class >> displayScaleFactorSettingsOn: aBuilder [
-	<systemsettings>
-
-	(aBuilder range: #scaleFactor)
-		parent: #appearance;
-		order: 3;
-		default: 1;
-		label: 'Display scale factor';
-		description: 'Specify scale factor for UI elements. This setting does not affect defined font sizes.';
-		target: self;
-		range: (0.5 to: 5 by: 0.5)
-]
-
 { #category : 'settings' }
 WorldMorph class >> displaySettingsOn: aBuilder [
 	<systemsettings>
@@ -152,18 +141,51 @@ WorldMorph class >> removeExtraWorld: aWorld [
 { #category : 'setting' }
 WorldMorph class >> scaleFactor [
 
-	^ World scaleFactor
+	self
+		deprecated: 'Use #zoomFactor instead.'
+		transformWith: '`@rcv scaleFactor' -> '`@rcv zoomFactor'.
+	^ self zoomFactor
 ]
 
 { #category : 'setting' }
 WorldMorph class >> scaleFactor: aValue [
 
-	World scaleFactor: aValue
+	self
+		deprecated: 'Use #zoomFactor: instead.'
+		transformWith: '`@rcv scaleFactor: `@arg1' -> '`@rcv zoomFactor: `@arg1'.
+	^ self zoomFactor: aValue
 ]
 
 { #category : 'settings' }
 WorldMorph class >> toggleFullscreen [
 	self fullscreen: self isFullscreen not
+]
+
+{ #category : 'setting' }
+WorldMorph class >> zoomFactor [
+
+	^ World zoomFactor
+]
+
+{ #category : 'setting' }
+WorldMorph class >> zoomFactor: aValue [
+
+	World zoomFactor: aValue
+]
+
+{ #category : 'setting' }
+WorldMorph class >> zoomFactorSettingsOn: aBuilder [
+	<systemsettings>
+
+	(aBuilder pickOne: #zoomFactor)
+		parent: #appearance;
+		order: 3;
+		default: 100;
+		label: 'Zoom factor';
+		description: 'Specify zoom factor for UI elements. Bigger zooms in. Smaller zooms out.';
+		target: self;
+		domainValues: (#( 1 1.5 2 2.5 3 3.5 4 4.5 5 ) collect: [ :e | 
+			(e * 100) asInteger asString, '%' -> e ])
 ]
 
 { #category : 'operations' }
@@ -674,4 +696,16 @@ WorldMorph >> worldMenu [
 WorldMorph >> worldState [
 
 	^ worldState
+]
+
+{ #category : 'accessing' }
+WorldMorph >> zoomFactor [
+
+	^ zoomFactor
+]
+
+{ #category : 'accessing' }
+WorldMorph >> zoomFactor: newScaleFactor [
+	
+	zoomFactor := newScaleFactor
 ]
