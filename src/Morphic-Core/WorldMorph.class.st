@@ -180,7 +180,7 @@ WorldMorph class >> zoomFactorSettingsOn: aBuilder [
 	(aBuilder pickOne: #zoomFactor)
 		parent: #appearance;
 		order: 3;
-		default: 100;
+		default: 1;
 		label: 'Zoom factor';
 		description: 'Specify zoom factor for UI elements. Bigger zooms in. Smaller zooms out.';
 		target: self;
