@@ -14,7 +14,10 @@ BaselineOfCalypsoNavigationModel >> baseline: spec [
 		spec
 			package: #'Calypso-NavigationModel';
 			package: #'Calypso-NavigationModel-Tests'
-				with: [ spec requires: #( #'Calypso-NavigationModel' ) ] ].
+				with: [ spec requires: #( #'Calypso-NavigationModel' ) ].
 
-	spec group: 'default' with: #( 'Calypso-NavigationModel' 'Calypso-NavigationModel-Tests' ).
+	spec 
+		group: 'default' with: #( 'Core' 'Tests' );
+		group: 'Core' with: #('ClassAnnotation');
+		group: 'Tests' with: #('ClassAnnotation-Tests') ]
 ]

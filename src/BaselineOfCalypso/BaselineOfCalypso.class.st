@@ -28,12 +28,10 @@ BaselineOfCalypso >> baseline: spec [
 			baseline: 'CalypsoNavigationModel' with: [ spec repository: repository ].
 
 		spec
-			package: #'Calypso-SystemQueries' with: [
-				spec requires: #( #'Calypso-NavigationModel'
-					   #ClassAnnotation ) ];
+			package: #'Calypso-SystemQueries' with: [ spec requires: #( #CalypsoNavigationModel #ClassAnnotation ) ];
 			package: #'Calypso-SystemQueries-Tests' with: [
 				spec requires:
-						#( #'CalypsoNavigationModel'
+						#( #CalypsoNavigationModel
 						   #ClassAnnotationTests #'Calypso-SystemQueries'
 						   #'Calypso-SystemQueries-Tests-PWithSingleClass'
 						   #'Calypso-SystemQueries-Tests-PExtendedByP1'
