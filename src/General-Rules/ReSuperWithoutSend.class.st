@@ -16,7 +16,7 @@ Class {
 
 { #category : 'accessing' }
 ReSuperWithoutSend class >> group [
-	^ 'Design Flaws'
+	^ self designFlawGroup
 ]
 
 { #category : 'accessing' }

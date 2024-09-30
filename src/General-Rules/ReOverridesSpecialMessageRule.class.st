@@ -21,7 +21,7 @@ ReOverridesSpecialMessageRule class >> classShouldNotOverride [
 
 { #category : 'accessing' }
 ReOverridesSpecialMessageRule class >> group [
-	^ 'Bugs'
+	^ self bugsGroup
 ]
 
 { #category : 'private' }

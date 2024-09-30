@@ -36,11 +36,6 @@ SettingTreeBuilder >> group: aSymbol [
 	^ self nodeClass: PragmaSetting name: aSymbol
 ]
 
-{ #category : 'tree building' }
-SettingTreeBuilder >> launcher: aSymbol [
-	^ self nodeClass: SystemSettingLauncher name: aSymbol
-]
-
 { #category : 'accessing' }
 SettingTreeBuilder >> nodeClass [
 	^ SettingNode

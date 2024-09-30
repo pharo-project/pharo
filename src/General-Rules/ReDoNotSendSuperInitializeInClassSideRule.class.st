@@ -21,7 +21,7 @@ Class {
 
 { #category : 'accessing' }
 ReDoNotSendSuperInitializeInClassSideRule class >> group [
-	^ 'Potential Bugs'
+	^ self potentialBugsGroup
 ]
 
 { #category : 'accessing' }
