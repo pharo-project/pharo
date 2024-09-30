@@ -32,11 +32,12 @@ SycExtractTempCommand >> applyResultInContext: aSourceCodeContext [
 { #category : 'converting' }
 SycExtractTempCommand >> asRefactorings [
 
-	^ {RBExtractToTemporaryRefactoring
-		  extract: sourceNode sourceInterval
-		  to: tempName
-		  from: method selector
-		  in: method origin}
+	^ {ReExtractToTemporaryDriver new
+		  sourceInterval: sourceNode sourceInterval
+		  newVariableName: tempName
+		  selector: method selector
+		  class: method origin;
+		  runRefactoring }
 ]
 
 { #category : 'accessing' }

@@ -76,6 +76,15 @@ ReExtractToTemporaryDriver >> runRefactoring [
 	self applyChanges
 ]
 
+{ #category : 'initialization' }
+ReExtractToTemporaryDriver >> sourceInterval: anInterval newVariableName: aVariableName selector: aSelector class: aClass [
+
+    sourceInterval := anInterval.
+    newVariableName := aVariableName.
+    selector := aSelector.
+    class := aClass.
+]
+
 { #category : 'validation' }
 ReExtractToTemporaryDriver >> validateName: aName onPresenter: presenter [
 
