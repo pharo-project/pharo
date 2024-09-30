@@ -5,7 +5,7 @@ Class {
 	#name : #MCReader,
 	#superclass : #Object,
 	#instVars : [
-		'stream'
+		#stream
 	],
 	#category : #'Monticello-Storing'
 }

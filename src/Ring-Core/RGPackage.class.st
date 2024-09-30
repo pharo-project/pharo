@@ -8,9 +8,9 @@ Class {
 	#name : #RGPackage,
 	#superclass : #RGObject,
 	#instVars : [
-		'definedBehaviors',
-		'extensionMethods',
-		'tagsForClasses'
+		#definedBehaviors,
+		#extensionMethods,
+		#tagsForClasses
 	],
 	#category : #'Ring-Core-Kernel'
 }

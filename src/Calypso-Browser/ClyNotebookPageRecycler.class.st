@@ -9,9 +9,9 @@ Class {
 	#name : #ClyNotebookPageRecycler,
 	#superclass : #Object,
 	#instVars : [
-		'tools',
-		'targetedTools',
-		'isMatched'
+		#tools,
+		#targetedTools,
+		#isMatched
 	],
 	#category : #'Calypso-Browser-Tabs'
 }

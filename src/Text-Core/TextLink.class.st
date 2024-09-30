@@ -5,7 +5,7 @@ Class {
 	#name : #TextLink,
 	#superclass : #TextAction,
 	#instVars : [
-		'classAndMethod'
+		#classAndMethod
 	],
 	#category : #'Text-Core-Attributes'
 }

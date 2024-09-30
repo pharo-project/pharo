@@ -9,8 +9,8 @@ Class {
 	#name : #ZnApplicationFormUrlEncodedEntity,
 	#superclass : #ZnEntity,
 	#instVars : [
-		'fields',
-		'representation'
+		#fields,
+		#representation
 	],
 	#category : #'Zinc-HTTP-Core'
 }

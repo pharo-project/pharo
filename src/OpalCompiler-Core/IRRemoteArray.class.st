@@ -5,8 +5,8 @@ Class {
 	#name : #IRRemoteArray,
 	#superclass : #Object,
 	#instVars : [
-		'size',
-		'index'
+		#size,
+		#index
 	],
 	#category : #'OpalCompiler-Core-Bytecode'
 }

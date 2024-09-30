@@ -22,7 +22,7 @@ s1 asSymbol == s2 asSymbol. ""true""
 Comparing Symbols takes less time than comparing Strings.
 
 ```
-[ #stringA = #stringB ] bench. ""26,812,864 per second""
+[ #stringA = #stringB ] bench. ""26,812,864 per second ""
 [ 'StringA' = 'StringB' ] bench. ""3,492,987 per second""
 ```
 "
@@ -30,9 +30,10 @@ Class {
 	#name : #Symbol,
 	#superclass : #String,
 	#classVars : [
-		'NewSymbols',
-		'SelectorTable',
-		'SymbolTable'
+		#NewSymbols,
+		#SelectorTable,
+		#StrictComparison,
+		#SymbolTable
 	],
 	#category : #'Collections-Strings-Base'
 }
@@ -213,8 +214,8 @@ Symbol class >> rehash [
    "Symbol rehash"
 	"Rebuild the hash table, reclaiming unreferenced Symbols."
 
-	SymbolTable := WeakSet withAll: self allSubInstances.
-	NewSymbols := WeakSet new.
+	SymbolTable := WeakSetOfSymbols  withAll: self allSubInstances.
+	NewSymbols := WeakSetOfSymbols  new.
 	self resetSelectorTable
 ]
 
@@ -254,12 +255,36 @@ Symbol class >> selectorThatStartsCaseSensitive: leadingCharacters skipping: ski
 Symbol class >> shutDown: aboutToQuit [
 
 	SymbolTable addAll: NewSymbols.
-	NewSymbols := WeakSet new
+	NewSymbols := WeakSetOfSymbols  new
 ]
 
 { #category : #accessing }
 Symbol class >> streamSpecies [
 	^ String
+]
+
+{ #category : #setting }
+Symbol class >> strictComparison [
+
+	^ StrictComparison ifNil: [ false ]
+]
+
+{ #category : #setting }
+Symbol class >> strictComparison: aBoolean [
+
+	StrictComparison := aBoolean
+]
+
+{ #category : #setting }
+Symbol class >> symbolComparisonSettingOn: aBuilder [
+
+	<systemsettings>
+	(aBuilder setting: #strictComparison)
+		parent: #pharoSystem;
+		label: 'Strict comparison of Symbols';
+		default: false;
+		target: self;
+		description: 'Symbols and Strings having the same contents return false when compared using ='
 ]
 
 { #category : #'symbol table' }
@@ -341,6 +366,8 @@ Symbol >> , otherSymbolOrString [
 { #category : #comparing }
 Symbol >> = aSymbol [
 	"Compare the receiver and aSymbol."
+	Symbol strictComparison ifTrue: [ ^ self == aSymbol ].
+	
 	self == aSymbol ifTrue: [^ true].
 	self class == aSymbol class ifTrue: [^ false].
 	"Use String comparison otherwise"
@@ -543,6 +570,20 @@ Symbol >> prepareForDelivery [
 Symbol >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 
 	self errorNoModification
+]
+
+{ #category : #converting }
+Symbol >> reversed [
+	^ super reversed asSymbol
+]
+
+{ #category : #comparing }
+Symbol >> sameContents: aSymbol [
+	"Compare the receiver and aSymbol."
+	self == aSymbol ifTrue: [^ true].
+	self class == aSymbol class ifTrue: [^ false].
+	"Use String comparison otherwise"
+	^ super = aSymbol
 ]
 
 { #category : #converting }

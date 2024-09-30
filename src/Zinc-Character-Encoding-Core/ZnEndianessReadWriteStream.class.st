@@ -5,7 +5,7 @@ Class {
 	#name : #ZnEndianessReadWriteStream,
 	#superclass : #Object,
 	#instVars : [
-		'stream'
+		#stream
 	],
 	#category : #'Zinc-Character-Encoding-Core'
 }

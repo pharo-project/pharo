@@ -2,8 +2,8 @@ Class {
 	#name : #MetacelloErrorInProjectConstructionNotification,
 	#superclass : #Notification,
 	#instVars : [
-		'versionString',
-		'exception'
+		#versionString,
+		#exception
 	],
 	#category : #'Metacello-Core-Exceptions-Notifications'
 }

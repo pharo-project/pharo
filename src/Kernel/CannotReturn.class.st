@@ -6,7 +6,7 @@ Class {
 	#name : #CannotReturn,
 	#superclass : #Error,
 	#instVars : [
-		'result'
+		#result
 	],
 	#category : #'Kernel-Exceptions'
 }

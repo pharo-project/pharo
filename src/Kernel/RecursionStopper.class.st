@@ -11,10 +11,10 @@ Class {
 	#name : #RecursionStopper,
 	#superclass : #Object,
 	#instVars : [
-		'activeMethods'
+		#activeMethods
 	],
 	#classVars : [
-		'Default'
+		#Default
 	],
 	#category : #'Kernel-Processes'
 }

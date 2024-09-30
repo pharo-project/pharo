@@ -2,7 +2,7 @@ Class {
 	#name : #DAMessageSendAnalyzerTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'analyzer'
+		#analyzer
 	],
 	#category : #'Tool-DependencyAnalyser-Tests-Core'
 }

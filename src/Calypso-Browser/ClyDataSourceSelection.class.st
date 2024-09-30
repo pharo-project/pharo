@@ -36,8 +36,8 @@ Class {
 	#name : #ClyDataSourceSelection,
 	#superclass : #Object,
 	#instVars : [
-		'items',
-		'rootDataSource'
+		#items,
+		#rootDataSource
 	],
 	#category : #'Calypso-Browser-DataSource'
 }

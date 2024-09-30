@@ -27,10 +27,10 @@ Class {
 	#superclass : #ByteArray,
 	#type : #compiledMethod,
 	#classVars : [
-		'LargeFrame',
-		'PrimaryBytecodeSetEncoderClass',
-		'SecondaryBytecodeSetEncoderClass',
-		'SmallFrame'
+		#LargeFrame,
+		#PrimaryBytecodeSetEncoderClass,
+		#SecondaryBytecodeSetEncoderClass,
+		#SmallFrame
 	],
 	#category : #'Kernel-Methods'
 }

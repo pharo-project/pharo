@@ -9,10 +9,10 @@ Class {
 	#name : #SyntaxErrorNotification,
 	#superclass : #Notification,
 	#instVars : [
-		'inClass',
-		'code',
-		'doitFlag',
-		'location'
+		#inClass,
+		#code,
+		#doitFlag,
+		#location
 	],
 	#category : #'OpalCompiler-Core-Exception'
 }

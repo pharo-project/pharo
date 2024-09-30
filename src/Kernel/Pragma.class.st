@@ -16,12 +16,12 @@ Class {
 	#name : #Pragma,
 	#superclass : #Object,
 	#instVars : [
-		'method',
-		'arguments',
-		'selector'
+		#method,
+		#arguments,
+		#selector
 	],
 	#classInstVars : [
-		'pragmaCache'
+		#pragmaCache
 	],
 	#category : #'Kernel-Pragmas'
 }

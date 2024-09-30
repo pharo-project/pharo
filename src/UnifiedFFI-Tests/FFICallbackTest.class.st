@@ -5,7 +5,7 @@ Class {
 	#name : #FFICallbackTest,
 	#superclass : #TestCase,
 	#pools : [
-		'FFITestEnumeration'
+		#FFITestEnumeration
 	],
 	#category : #'UnifiedFFI-Tests-Tests'
 }

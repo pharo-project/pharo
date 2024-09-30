@@ -5,13 +5,13 @@ Class {
 	#name : #ChunkFileFormatParser,
 	#superclass : #Object,
 	#instVars : [
-		'readStream',
-		'parsedDeclarations',
-		'classSelector',
-		'classTraitSelector',
-		'commentStampSelector',
-		'methodsForSelector',
-		'reorganizeSelector'
+		#readStream,
+		#parsedDeclarations,
+		#classSelector,
+		#classTraitSelector,
+		#commentStampSelector,
+		#methodsForSelector,
+		#reorganizeSelector
 	],
 	#category : #'CodeImport-Utilities'
 }
@@ -241,11 +241,11 @@ ChunkFileFormatParser >> parseNextDeclaration [
 			[
 			| substrings |
 			substrings := nextChunk parseLiterals.
-			(substrings includes: self methodsForSelector asString)
+			(substrings includes: self methodsForSelector)
 				ifTrue: [ ^ self parseMethodDeclarations: substrings ].
-			(substrings includes: self commentStampSelector asString)
+			(substrings includes: self commentStampSelector)
 				ifTrue: [ ^ self parseCommentDeclaration: substrings ].
-			(substrings includes: self reorganizeSelector asString)
+			(substrings includes: self reorganizeSelector)
 				ifTrue: [ ^ self parseClassOrganization: substrings ] ]
 ]
 

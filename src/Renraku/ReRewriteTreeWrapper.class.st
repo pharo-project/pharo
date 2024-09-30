@@ -5,7 +5,7 @@ Class {
 	#name : #ReRewriteTreeWrapper,
 	#superclass : #ReRewriteWrapper,
 	#instVars : [
-		'tree'
+		#tree
 	],
 	#category : #'Renraku-Rules-Rewrite'
 }

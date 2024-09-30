@@ -7,7 +7,7 @@ Class {
 	#name : #ClassModificationApplied,
 	#superclass : #ClassAnnouncement,
 	#instVars : [
-		'modifiedClass'
+		#modifiedClass
 	],
 	#category : #'System-Announcements-System-Classes'
 }

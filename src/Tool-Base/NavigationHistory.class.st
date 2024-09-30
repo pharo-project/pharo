@@ -5,10 +5,10 @@ Class {
 	#name : #NavigationHistory,
 	#superclass : #Object,
 	#instVars : [
-		'storage',
-		'index',
-		'maxSize',
-		'paused'
+		#storage,
+		#index,
+		#maxSize,
+		#paused
 	],
 	#category : #'Tool-Base-Utilities'
 }

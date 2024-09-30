@@ -14,8 +14,8 @@ Class {
 	#name : #ZnStringEntity,
 	#superclass : #ZnEntity,
 	#instVars : [
-		'string',
-		'encoder'
+		#string,
+		#encoder
 	],
 	#category : #'Zinc-HTTP-Core'
 }

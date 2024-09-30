@@ -2,9 +2,9 @@ Class {
 	#name : #MetacelloSpec,
 	#superclass : #Object,
 	#instVars : [
-		'project',
-		'loader',
-		'mutable'
+		#project,
+		#loader,
+		#mutable
 	],
 	#category : #'Metacello-Core-Specs'
 }

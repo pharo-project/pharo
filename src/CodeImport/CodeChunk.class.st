@@ -5,7 +5,7 @@ Class {
 	#name : #CodeChunk,
 	#superclass : #Object,
 	#instVars : [
-		'contents'
+		#contents
 	],
 	#category : #'CodeImport-Chunks'
 }

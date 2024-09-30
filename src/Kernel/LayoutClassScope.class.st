@@ -6,7 +6,7 @@ Class {
 	#superclass : #AbstractLayoutScope,
 	#type : #variable,
 	#instVars : [
-		'parentScope'
+		#parentScope
 	],
 	#category : #'Kernel-Layout'
 }

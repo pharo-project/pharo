@@ -8,10 +8,10 @@ Class {
 	#name : #RBExtractToTemporaryRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'sourceInterval',
-		'selector',
-		'newVariableName',
-		'parseTree'
+		#sourceInterval,
+		#selector,
+		#newVariableName,
+		#parseTree
 	],
 	#category : #'Refactoring-Core-Refactorings-Unused'
 }

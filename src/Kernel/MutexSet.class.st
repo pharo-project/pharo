@@ -5,7 +5,7 @@ Class {
 	#name : #MutexSet,
 	#superclass : #Object,
 	#instVars : [
-		'array'
+		#array
 	],
 	#category : #'Kernel-Processes'
 }

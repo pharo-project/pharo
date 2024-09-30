@@ -32,7 +32,7 @@ Class {
 	#name : #ClyCompositeQuery,
 	#superclass : #ClyQuery,
 	#instVars : [
-		'subqueries'
+		#subqueries
 	],
 	#category : #'Calypso-NavigationModel-Query'
 }

@@ -5,7 +5,7 @@ Class {
 	#name : #FFIExternalEnumerationType,
 	#superclass : #FFIExternalReferenceType,
 	#instVars : [
-		'representationType'
+		#representationType
 	],
 	#category : #'UnifiedFFI-Types'
 }

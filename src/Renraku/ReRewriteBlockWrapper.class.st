@@ -5,7 +5,7 @@ Class {
 	#name : #ReRewriteBlockWrapper,
 	#superclass : #ReRewriteWrapper,
 	#instVars : [
-		'block'
+		#block
 	],
 	#category : #'Renraku-Rules-Rewrite'
 }

@@ -2,8 +2,8 @@ Class {
 	#name : #MCVersionTest,
 	#superclass : #MCTestCase,
 	#instVars : [
-		'version',
-		'visited'
+		#version,
+		#visited
 	],
 	#category : #'Monticello-Tests-Base'
 }

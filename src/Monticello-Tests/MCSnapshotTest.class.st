@@ -2,7 +2,7 @@ Class {
 	#name : #MCSnapshotTest,
 	#superclass : #MCTestCase,
 	#instVars : [
-		'snapshot'
+		#snapshot
 	],
 	#category : #'Monticello-Tests-Snapshots'
 }

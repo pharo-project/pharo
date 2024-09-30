@@ -9,7 +9,7 @@ Class {
 	#name : #MCSnapshotReader,
 	#superclass : #MCReader,
 	#instVars : [
-		'definitions'
+		#definitions
 	],
 	#category : #'Monticello-Storing'
 }

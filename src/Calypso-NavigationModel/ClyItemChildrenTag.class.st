@@ -20,10 +20,10 @@ Class {
 	#name : #ClyItemChildrenTag,
 	#superclass : #ClyProperty,
 	#instVars : [
-		'childrenType'
+		#childrenType
 	],
 	#classVars : [
-		'Types'
+		#Types
 	],
 	#category : #'Calypso-NavigationModel-Tag'
 }

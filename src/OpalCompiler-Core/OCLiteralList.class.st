@@ -7,8 +7,8 @@ Class {
 	#name : #OCLiteralList,
 	#superclass : #Object,
 	#instVars : [
-		'literalsDict',
-		'first'
+		#literalsDict,
+		#first
 	],
 	#category : #'OpalCompiler-Core-Extras'
 }

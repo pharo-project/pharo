@@ -5,10 +5,10 @@ Class {
 	#name : #FFITestStructure4Int64Structure,
 	#superclass : #FFIExternalStructure,
 	#classVars : [
-		'OFFSET_W',
-		'OFFSET_X',
-		'OFFSET_Y',
-		'OFFSET_Z'
+		#'OFFSET_W',
+		#'OFFSET_X',
+		#'OFFSET_Y',
+		#'OFFSET_Z'
 	],
 	#category : #'UnifiedFFI-Tests-Test-Data'
 }

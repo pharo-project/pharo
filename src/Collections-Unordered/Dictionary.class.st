@@ -875,12 +875,12 @@ Dictionary >> scanFor: anObject [
 
 	"Search from (hash mod size) to the end."
 	start to: finish do:
-		[:index | ((element := array at: index) == nil or: [element key = anObject])
+		[:index | ((element := array at: index) == nil or: [element key sameContents: anObject])
 			ifTrue: [^ index ]].
 
 	"Search from 1 to where we started."
 	1 to: start-1 do:
-		[:index | ((element := array at: index) == nil or: [element key = anObject])
+		[:index | ((element := array at: index) == nil or: [element key sameContents: anObject])
 			ifTrue: [^ index ]].
 
 	^ 0  "No match AND no empty slot"

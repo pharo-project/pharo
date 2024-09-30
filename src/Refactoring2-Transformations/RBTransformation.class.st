@@ -16,12 +16,12 @@ Class {
 	#traits : 'RBTRefactoringBuilder',
 	#classTraits : 'RBTRefactoringBuilder classTrait',
 	#instVars : [
-		'model',
-		'options',
-		'preconditionChecking'
+		#model,
+		#options,
+		#preconditionChecking
 	],
 	#classVars : [
-		'RefactoringOptions'
+		#RefactoringOptions
 	],
 	#category : #'Refactoring2-Transformations-Model'
 }

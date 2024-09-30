@@ -5,7 +5,7 @@ Class {
 	#name : #FFIExternalStructureType,
 	#superclass : #FFIExternalType,
 	#instVars : [
-		'objectClass'
+		#objectClass
 	],
 	#category : #'UnifiedFFI-Types'
 }

@@ -29,9 +29,9 @@ Class {
 	#name : #SHTextStyler,
 	#superclass : #Object,
 	#instVars : [
-		'text',
-		'view',
-		'stylingEnabled'
+		#text,
+		#view,
+		#stylingEnabled
 	],
 	#category : #'Shout-Styling'
 }

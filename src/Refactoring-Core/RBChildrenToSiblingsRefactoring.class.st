@@ -24,8 +24,8 @@ Class {
 	#name : #RBChildrenToSiblingsRefactoring,
 	#superclass : #RBClassRefactoring,
 	#instVars : [
-		'parent',
-		'subclasses'
+		#parent,
+		#subclasses
 	],
 	#category : #'Refactoring-Core-Refactorings-Unused'
 }

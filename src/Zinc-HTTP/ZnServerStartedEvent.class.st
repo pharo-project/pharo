@@ -6,7 +6,7 @@ Class {
 	#name : #ZnServerStartedEvent,
 	#superclass : #ZnServerLogEvent,
 	#instVars : [
-		'description'
+		#description
 	],
 	#category : #'Zinc-HTTP-Logging'
 }

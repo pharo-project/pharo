@@ -33,17 +33,17 @@ Class {
 	#name : #ZnBase64Encoder,
 	#superclass : #Object,
 	#instVars : [
-		'alphabet',
-		'inverse',
-		'lineLength',
-		'lineEnd',
-		'whitespace',
-		'padding',
-		'strict'
+		#alphabet,
+		#inverse,
+		#lineLength,
+		#lineEnd,
+		#whitespace,
+		#padding,
+		#strict
 	],
 	#classVars : [
-		'DefaultAlphabet',
-		'DefaultInverse'
+		#DefaultAlphabet,
+		#DefaultInverse
 	],
 	#category : #'Zinc-Character-Encoding-Core'
 }

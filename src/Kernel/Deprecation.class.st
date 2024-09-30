@@ -26,18 +26,18 @@ Class {
 	#name : #Deprecation,
 	#superclass : #Warning,
 	#instVars : [
-		'context',
-		'explanationString',
-		'deprecationDate',
-		'versionString',
-		'rule',
-		'condition'
+		#context,
+		#explanationString,
+		#deprecationDate,
+		#versionString,
+		#rule,
+		#condition
 	],
 	#classVars : [
-		'Active',
-		'Log',
-		'RaiseWarning',
-		'ShowWarning'
+		#Active,
+		#Log,
+		#RaiseWarning,
+		#ShowWarning
 	],
 	#category : #'Kernel-Exceptions'
 }

@@ -10,8 +10,8 @@ Class {
 	#name : #RBLiteralArrayNode,
 	#superclass : #RBLiteralNode,
 	#instVars : [
-		'isByteArray',
-		'contents'
+		#isByteArray,
+		#contents
 	],
 	#category : #'AST-Core-Nodes'
 }

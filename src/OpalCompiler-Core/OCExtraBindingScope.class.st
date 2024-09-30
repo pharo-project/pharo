@@ -19,7 +19,7 @@ Class {
 	#name : #OCExtraBindingScope,
 	#superclass : #OCAbstractScope,
 	#instVars : [
-		'bindings'
+		#bindings
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }

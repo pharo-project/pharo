@@ -76,12 +76,12 @@ Class {
 	#name : #Monitor,
 	#superclass : #Object,
 	#instVars : [
-		'mutex',
-		'ownerProcess',
-		'nestingLevel',
-		'defaultQueue',
-		'queueDict',
-		'queuesMutex'
+		#mutex,
+		#ownerProcess,
+		#nestingLevel,
+		#defaultQueue,
+		#queueDict,
+		#queuesMutex
 	],
 	#category : #'Kernel-Processes'
 }

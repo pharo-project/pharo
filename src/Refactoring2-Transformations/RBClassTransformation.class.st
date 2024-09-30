@@ -5,9 +5,9 @@ Class {
 	#name : #RBClassTransformation,
 	#superclass : #RBTransformation,
 	#instVars : [
-		'className',
-		'class',
-		'environment'
+		#className,
+		#class,
+		#environment
 	],
 	#category : #'Refactoring2-Transformations-Model'
 }

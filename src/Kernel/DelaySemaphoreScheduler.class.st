@@ -5,8 +5,8 @@ Class {
 	#name : #DelaySemaphoreScheduler,
 	#superclass : #DelayBasicScheduler,
 	#instVars : [
-		'readyToSchedule',
-		'readyToUnschedule'
+		#readyToSchedule,
+		#readyToUnschedule
 	],
 	#category : #'Kernel-Delays'
 }

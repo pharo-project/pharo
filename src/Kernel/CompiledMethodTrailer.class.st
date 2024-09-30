@@ -76,11 +76,11 @@ Class {
 	#name : #CompiledMethodTrailer,
 	#superclass : #Object,
 	#instVars : [
-		'data',
-		'encodedData',
-		'kind',
-		'size',
-		'method'
+		#data,
+		#encodedData,
+		#kind,
+		#size,
+		#method
 	],
 	#category : #'Kernel-Methods'
 }

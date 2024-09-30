@@ -11,7 +11,7 @@ Class {
 	#name : #ClyCollapsedDataSource,
 	#superclass : #ClyDataSource,
 	#instVars : [
-		'expandedItems'
+		#expandedItems
 	],
 	#category : #'Calypso-Browser-DataSource'
 }

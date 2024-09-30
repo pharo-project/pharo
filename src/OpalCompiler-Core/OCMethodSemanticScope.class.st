@@ -11,7 +11,7 @@ Class {
 	#name : #OCMethodSemanticScope,
 	#superclass : #OCSemanticScope,
 	#instVars : [
-		'targetClass'
+		#targetClass
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }

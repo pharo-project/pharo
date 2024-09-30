@@ -7,7 +7,7 @@ Class {
 	#name : #RuntimeSyntaxError,
 	#superclass : #Error,
 	#instVars : [
-		'errorNode'
+		#errorNode
 	],
 	#category : #'Kernel-Exceptions'
 }

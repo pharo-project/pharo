@@ -5,7 +5,7 @@ Class {
 	#name : #IRTempAccess,
 	#superclass : #IRAccess,
 	#instVars : [
-		'name'
+		#name
 	],
 	#category : #'OpalCompiler-Core-IR-Nodes'
 }

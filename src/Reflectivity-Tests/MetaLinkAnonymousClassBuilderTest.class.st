@@ -2,8 +2,8 @@ Class {
 	#name : #MetaLinkAnonymousClassBuilderTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'builder',
-		'object'
+		#builder,
+		#object
 	],
 	#category : #'Reflectivity-Tests-Base'
 }

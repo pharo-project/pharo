@@ -21,14 +21,14 @@ Class {
 	#name : #HashTableSizes,
 	#superclass : #Object,
 	#instVars : [
-		'candidate',
-		'goodPrimes',
-		'primesToAvoid',
-		'valuesNotToDivide'
+		#candidate,
+		#goodPrimes,
+		#primesToAvoid,
+		#valuesNotToDivide
 	],
 	#classInstVars : [
-		'sizes',
-		'smallSizesLookupTable'
+		#sizes,
+		#smallSizesLookupTable
 	],
 	#category : #'Collections-Unordered-Utilities'
 }

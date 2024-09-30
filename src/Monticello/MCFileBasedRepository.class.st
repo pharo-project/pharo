@@ -5,9 +5,9 @@ Class {
 	#name : #MCFileBasedRepository,
 	#superclass : #MCRepository,
 	#instVars : [
-		'cache',
-		'allFileNames',
-		'cacheFileNames'
+		#cache,
+		#allFileNames,
+		#cacheFileNames
 	],
 	#category : #'Monticello-Repositories'
 }

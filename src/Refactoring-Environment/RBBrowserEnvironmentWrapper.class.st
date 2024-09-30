@@ -8,7 +8,7 @@ Class {
 	#name : #RBBrowserEnvironmentWrapper,
 	#superclass : #RBBrowserEnvironment,
 	#instVars : [
-		'environment'
+		#environment
 	],
 	#category : #'Refactoring-Environment'
 }

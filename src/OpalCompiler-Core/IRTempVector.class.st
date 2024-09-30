@@ -7,8 +7,8 @@ Class {
 	#name : #IRTempVector,
 	#superclass : #IRInstruction,
 	#instVars : [
-		'name',
-		'vars'
+		#name,
+		#vars
 	],
 	#category : #'OpalCompiler-Core-IR-Nodes'
 }

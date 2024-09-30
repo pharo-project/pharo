@@ -19,16 +19,16 @@ Class {
 	#name : #FFICallout,
 	#superclass : #Object,
 	#instVars : [
-		'fnSpec',
-		'options',
-		'requestor',
-		'methodArgs',
-		'receiver',
-		'method',
-		'stringEncodingStrategy'
+		#fnSpec,
+		#options,
+		#requestor,
+		#methodArgs,
+		#receiver,
+		#method,
+		#stringEncodingStrategy
 	],
 	#classVars : [
-		'TypeAliases'
+		#TypeAliases
 	],
 	#category : #'UnifiedFFI-Callouts'
 }
@@ -108,7 +108,7 @@ FFICallout class >> typeAliases [
 FFICallout >> aliasForType: aTypeName [
 	| alias |
 
-	alias := aTypeName.
+	alias := aTypeName asSymbol.
 	(requestor notNil and: [ requestor respondsTo: #externalTypeAlias: ])
 		ifTrue: [
 			alias := requestor externalTypeAlias: aTypeName.
@@ -172,7 +172,7 @@ FFICallout >> loaderForArgNamed: argName [
 	loader := self loaderFromMethodArgsNamed: argName.
 	loader ifNil: [
 		"special case, receiver argument"
-		argName = 'self' ifTrue: [ loader := self receiverArgumentLoader ].
+		argName asSymbol = #'self' ifTrue: [ loader := self receiverArgumentLoader ].
 		loader ifNil: [
 			"Ask the requestor for the argument"
 			loader := requestor ffiInstVarArgument: argName generator: self.
@@ -197,7 +197,7 @@ FFICallout >> loaderForArgNamed: argName indirectIndex: anIndex [
 FFICallout >> loaderFromMethodArgsNamed: argName [
 	| index |
 	methodArgs ifNil: [ ^ nil ].
-	index := methodArgs indexOf: argName ifAbsent: [ nil ].
+	index := methodArgs indexOf: argName asSymbol ifAbsent: [ nil ].
 	^ index ifNotNil: [
 		"ok, this is a method argument"
 		^ FFIMethodArgument new

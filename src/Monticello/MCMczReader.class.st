@@ -5,9 +5,9 @@ Class {
 	#name : #MCMczReader,
 	#superclass : #MCVersionReader,
 	#instVars : [
-		'zip',
-		'infoCache',
-		'filename'
+		#zip,
+		#infoCache,
+		#filename
 	],
 	#category : #'Monticello-Storing'
 }

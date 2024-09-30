@@ -10,7 +10,7 @@ Class {
 	#name : #RBValueToken,
 	#superclass : #RBToken,
 	#instVars : [
-		'value'
+		#value
 	],
 	#category : #'AST-Core-Tokens'
 }

@@ -2,10 +2,10 @@ Class {
 	#name : #MetacelloAbstractPackageSpec,
 	#superclass : #MetacelloSpec,
 	#instVars : [
-		'name',
-		'requires',
-		'includes',
-		'answers'
+		#name,
+		#requires,
+		#includes,
+		#answers
 	],
 	#category : #'Metacello-Core-Specs'
 }

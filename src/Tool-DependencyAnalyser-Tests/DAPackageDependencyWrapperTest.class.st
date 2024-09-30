@@ -2,8 +2,8 @@ Class {
 	#name : #DAPackageDependencyWrapperTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'packageA',
-		'aPDPackageDependencyWrapper'
+		#packageA,
+		#aPDPackageDependencyWrapper
 	],
 	#category : #'Tool-DependencyAnalyser-Tests-Packages'
 }

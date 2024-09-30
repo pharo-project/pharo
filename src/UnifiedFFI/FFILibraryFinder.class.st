@@ -10,7 +10,7 @@ Class {
 	#name : #FFILibraryFinder,
 	#superclass : #Object,
 	#instVars : [
-		'userPaths'
+		#userPaths
 	],
 	#category : #'UnifiedFFI-Libraries'
 }

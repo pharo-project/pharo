@@ -11,9 +11,9 @@ Class {
 	#name : #RBPullUpMethodRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'removeDuplicates',
-		'selectors',
-		'targetSuperclass'
+		#removeDuplicates,
+		#selectors,
+		#targetSuperclass
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

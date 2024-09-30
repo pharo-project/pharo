@@ -2,8 +2,8 @@ Class {
 	#name : #SlotAnnouncementsTest,
 	#superclass : #SlotClassBuilderTest,
 	#instVars : [
-		'announcement',
-		'collectedAnnouncements'
+		#announcement,
+		#collectedAnnouncements
 	],
 	#category : #'Slot-Tests-ClassBuilder'
 }

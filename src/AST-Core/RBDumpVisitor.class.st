@@ -16,7 +16,7 @@ Class {
 	#name : #RBDumpVisitor,
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
-		'stream'
+		#stream
 	],
 	#category : #'AST-Core-Visitors'
 }

@@ -5,7 +5,7 @@ Class {
 	#name : #CmDuplicatedEntryName,
 	#superclass : #Error,
 	#instVars : [
-		'entryName'
+		#entryName
 	],
 	#category : #'Commander2-Errors'
 }

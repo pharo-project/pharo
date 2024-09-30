@@ -5,9 +5,9 @@ Class {
 	#name : #ZnRequestResponseHandledEvent,
 	#superclass : #ZnServerLogEvent,
 	#instVars : [
-		'request',
-		'response',
-		'duration'
+		#request,
+		#response,
+		#duration
 	],
 	#category : #'Zinc-HTTP-Logging'
 }

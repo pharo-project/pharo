@@ -20,7 +20,7 @@ Class {
 	#name : #RBRemoveTemporaryVariableTransformation,
 	#superclass : #RBMethodTransformation,
 	#instVars : [
-		'variableName'
+		#variableName
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }
@@ -95,6 +95,6 @@ RBRemoveTemporaryVariableTransformation >> storeOn: aStream [
 RBRemoveTemporaryVariableTransformation >> variable: aVariableName inMethod: aSelector inClass: aClass [
 
 	self className: aClass.
-	selector := aSelector.
-	variableName := aVariableName
+	selector := aSelector asSymbol.
+	variableName := aVariableName asSymbol
 ]

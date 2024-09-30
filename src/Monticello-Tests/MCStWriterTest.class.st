@@ -2,8 +2,8 @@ Class {
 	#name : #MCStWriterTest,
 	#superclass : #MCTestCase,
 	#instVars : [
-		'stream',
-		'writer'
+		#stream,
+		#writer
 	],
 	#category : #'Monticello-Tests-IO'
 }

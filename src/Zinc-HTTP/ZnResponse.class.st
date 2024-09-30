@@ -10,7 +10,7 @@ Class {
 	#name : #ZnResponse,
 	#superclass : #ZnMessage,
 	#instVars : [
-		'statusLine'
+		#statusLine
 	],
 	#category : #'Zinc-HTTP-Core'
 }

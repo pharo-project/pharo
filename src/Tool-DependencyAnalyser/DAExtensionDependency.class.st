@@ -10,8 +10,8 @@ Class {
 	#name : #DAExtensionDependency,
 	#superclass : #DADependencyFromClass,
 	#instVars : [
-		'selector',
-		'method'
+		#selector,
+		#method
 	],
 	#category : #'Tool-DependencyAnalyser-Core'
 }

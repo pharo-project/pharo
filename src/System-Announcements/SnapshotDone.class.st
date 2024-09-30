@@ -7,7 +7,7 @@ Class {
 	#name : #SnapshotDone,
 	#superclass : #SystemAnnouncement,
 	#instVars : [
-		'isNewImage'
+		#isNewImage
 	],
 	#category : #'System-Announcements-System-Base'
 }

@@ -23,7 +23,7 @@ Class {
 	#name : #FFISystemV64CallbackArgumentReader,
 	#superclass : #FFIAbstract64BitsArgumentReader,
 	#instVars : [
-		'currentFloatRegisterIndex'
+		#currentFloatRegisterIndex
 	],
 	#category : #'UnifiedFFI-Callbacks'
 }

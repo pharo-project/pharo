@@ -2,10 +2,10 @@ Class {
 	#name : #ClassRenameFixTest,
 	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
-		'previousChangeSet',
-		'testsChangeSet',
-		'newClassName',
-		'originalName'
+		#previousChangeSet,
+		#testsChangeSet,
+		#newClassName,
+		#originalName
 	],
 	#category : #'Tests-System'
 }

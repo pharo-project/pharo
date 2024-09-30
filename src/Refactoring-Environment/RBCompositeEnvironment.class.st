@@ -2,7 +2,7 @@ Class {
 	#name : #RBCompositeEnvironment,
 	#superclass : #RBBrowserEnvironmentWrapper,
 	#instVars : [
-		'otherEnvironment'
+		#otherEnvironment
 	],
 	#category : #'Refactoring-Environment'
 }

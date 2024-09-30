@@ -36,8 +36,8 @@ Class {
 	#name : #DoItVariable,
 	#superclass : #Variable,
 	#instVars : [
-		'actualVariable',
-		'doItContext'
+		#actualVariable,
+		#doItContext
 	],
 	#category : #'Kernel-Variables'
 }

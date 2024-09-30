@@ -5,7 +5,7 @@ Class {
 	#name : #FFITestNestingStructureWithArray,
 	#superclass : #FFIExternalStructure,
 	#classVars : [
-		'OFFSET_NESTED'
+		#'OFFSET_NESTED'
 	],
 	#category : #'UnifiedFFI-Tests-Test-Data'
 }

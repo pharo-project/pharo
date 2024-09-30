@@ -5,7 +5,7 @@ Class {
 	#name : #DADependentPackageItemDiff,
 	#superclass : #DAAbstractItemDiff,
 	#instVars : [
-		'parent'
+		#parent
 	],
 	#category : #'Tool-DependencyAnalyser-Diff'
 }

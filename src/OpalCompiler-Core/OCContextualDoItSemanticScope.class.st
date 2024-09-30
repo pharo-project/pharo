@@ -19,8 +19,8 @@ Class {
 	#name : #OCContextualDoItSemanticScope,
 	#superclass : #OCDoItSemanticScope,
 	#instVars : [
-		'targetContext',
-		'importedVariables'
+		#targetContext,
+		#importedVariables
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }

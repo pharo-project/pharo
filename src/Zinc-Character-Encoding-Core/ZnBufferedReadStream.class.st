@@ -13,10 +13,10 @@ Class {
 	#name : #ZnBufferedReadStream,
 	#superclass : #Object,
 	#instVars : [
-		'stream',
-		'buffer',
-		'position',
-		'limit'
+		#stream,
+		#buffer,
+		#position,
+		#limit
 	],
 	#category : #'Zinc-Character-Encoding-Core'
 }

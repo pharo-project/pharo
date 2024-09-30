@@ -7,8 +7,8 @@ Class {
 	#name : #ZnMessage,
 	#superclass : #Object,
 	#instVars : [
-		'headers',
-		'entity'
+		#headers,
+		#entity
 	],
 	#category : #'Zinc-HTTP-Core'
 }

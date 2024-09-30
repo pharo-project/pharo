@@ -2,8 +2,8 @@ Class {
 	#name : #ReflectivityReificationTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'tag',
-		'link'
+		#tag,
+		#link
 	],
 	#category : #'Reflectivity-Tests-Base'
 }

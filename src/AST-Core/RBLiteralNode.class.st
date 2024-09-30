@@ -9,8 +9,8 @@ Class {
 	#name : #RBLiteralNode,
 	#superclass : #RBValueNode,
 	#instVars : [
-		'start',
-		'stop'
+		#start,
+		#stop
 	],
 	#category : #'AST-Core-Nodes'
 }

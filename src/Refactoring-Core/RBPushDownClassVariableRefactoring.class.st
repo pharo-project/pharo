@@ -7,7 +7,7 @@ Class {
 	#name : #RBPushDownClassVariableRefactoring,
 	#superclass : #RBVariableRefactoring,
 	#instVars : [
-		'destinationClass'
+		#destinationClass
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

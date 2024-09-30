@@ -5,7 +5,7 @@ Class {
 	#name : #ReSourceAnchor,
 	#superclass : #Object,
 	#instVars : [
-		'sourceEntity'
+		#sourceEntity
 	],
 	#category : #'Renraku-SourceAnchors'
 }

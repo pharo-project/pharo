@@ -8,7 +8,7 @@ Class {
 	#name : #OCOptimizedBlockScope,
 	#superclass : #OCBlockScope,
 	#instVars : [
-		'isInlinedLoop'
+		#isInlinedLoop
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }

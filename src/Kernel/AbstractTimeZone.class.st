@@ -8,7 +8,7 @@ Class {
 	#name : #AbstractTimeZone,
 	#superclass : #Object,
 	#pools : [
-		'ChronologyConstants'
+		#ChronologyConstants
 	],
 	#category : #'Kernel-Chronology'
 }

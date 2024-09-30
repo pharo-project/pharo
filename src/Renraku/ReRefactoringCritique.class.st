@@ -5,8 +5,8 @@ Class {
 	#name : #ReRefactoringCritique,
 	#superclass : #ReAbstractCritique,
 	#instVars : [
-		'refactoring',
-		'alreadyExecuted'
+		#refactoring,
+		#alreadyExecuted
 	],
 	#category : #'Renraku-Critiques'
 }

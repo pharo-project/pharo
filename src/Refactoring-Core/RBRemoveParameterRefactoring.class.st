@@ -10,8 +10,8 @@ Class {
 	#name : #RBRemoveParameterRefactoring,
 	#superclass : #RBChangeMethodNameRefactoring,
 	#instVars : [
-		'parameterIndex',
-		'argument'
+		#parameterIndex,
+		#argument
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -45,7 +45,7 @@ RBRemoveParameterRefactoring >> applyValidations [
 	argument ifNil: [
 		self refactoringFailure: 'This method does not have an argument' ].
 	parameterIndex := tree argumentNames
-		                  indexOf: argument
+		                  indexOf: argument asSymbol
 		                  ifAbsent: [
 		                  self refactoringFailure: 'Select a parameter!!' ].
 	oldSelector numArgs == 0 ifTrue: [
@@ -103,9 +103,9 @@ RBRemoveParameterRefactoring >> newSelector: aSelector [
 
 { #category : #initialization }
 RBRemoveParameterRefactoring >> removeParameter: aString in: aClass selector: aSelector [
-	oldSelector := aSelector.
+	oldSelector := aSelector asSymbol.
 	class := self classObjectFor: aClass.
-	argument := aString
+	argument := aString asSymbol
 ]
 
 { #category : #printing }

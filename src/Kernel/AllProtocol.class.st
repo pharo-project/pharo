@@ -5,7 +5,7 @@ Class {
 	#name : #AllProtocol,
 	#superclass : #AbstractProtocol,
 	#instVars : [
-		'protocolOrganizer'
+		#protocolOrganizer
 	],
 	#category : #'Kernel-Protocols'
 }

@@ -5,7 +5,7 @@ Class {
 	#name : #FFIExternalValueHolderTest,
 	#superclass : #TestCase,
 	#classVars : [
-		'TIME_T_PTR'
+		#'TIME_T_PTR'
 	],
 	#category : #'UnifiedFFI-Tests-Tests'
 }

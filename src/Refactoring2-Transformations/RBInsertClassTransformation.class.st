@@ -21,9 +21,9 @@ Class {
 	#name : #RBInsertClassTransformation,
 	#superclass : #RBClassTransformation,
 	#instVars : [
-		'superclass',
-		'subclasses',
-		'category'
+		#superclass,
+		#subclasses,
+		#category
 	],
 	#category : #'Refactoring2-Transformations-Model'
 }

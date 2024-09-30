@@ -5,8 +5,8 @@ Class {
 	#name : #FFIMethodArgument,
 	#superclass : #FFIFunctionArgumentLoader,
 	#instVars : [
-		'index',
-		'argName'
+		#index,
+		#argName
 	],
 	#category : #'UnifiedFFI-Arguments'
 }
@@ -18,7 +18,7 @@ FFIMethodArgument >> argName [
 
 { #category : #accessing }
 FFIMethodArgument >> argName: anObject [
-	argName := anObject
+	argName := anObject asSymbol
 ]
 
 { #category : #'emitting code' }

@@ -35,8 +35,8 @@ Class {
 	#name : #ClyAsyncQueryResult,
 	#superclass : #ClyQueryResult,
 	#instVars : [
-		'actualResult',
-		'buildProcess'
+		#actualResult,
+		#buildProcess
 	],
 	#category : #'Calypso-NavigationModel-Result'
 }

@@ -20,7 +20,7 @@ Class {
 	#name : #RGTraitCompositionVisitor,
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
-		'traitComposition'
+		#traitComposition
 	],
 	#category : #'Ring-Core-Parsing'
 }

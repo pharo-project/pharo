@@ -15,12 +15,12 @@ Class {
 	#name : #ReSmalllintChecker,
 	#superclass : #RBSmalllintChecker,
 	#instVars : [
-		'manifestClassCache',
-		'methodRules',
-		'nodeRules',
-		'classRules',
-		'packageRules',
-		'critiques'
+		#manifestClassCache,
+		#methodRules,
+		#nodeRules,
+		#classRules,
+		#packageRules,
+		#critiques
 	],
 	#category : #'Renraku-CriticBrowser'
 }

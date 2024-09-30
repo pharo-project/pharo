@@ -32,7 +32,7 @@ Class {
 	#name : #FFICompilerPlugin,
 	#superclass : #OCStaticASTCompilerPlugin,
 	#classVars : [
-		'FFICalloutSelectors'
+		#FFICalloutSelectors
 	],
 	#category : #'UnifiedFFI-Base'
 }

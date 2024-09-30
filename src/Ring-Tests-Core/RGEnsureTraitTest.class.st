@@ -2,8 +2,8 @@ Class {
 	#name : #RGEnsureTraitTest,
 	#superclass : #RGTest,
 	#instVars : [
-		'environment',
-		'definition'
+		#environment,
+		#definition
 	],
 	#category : #'Ring-Tests-Core'
 }

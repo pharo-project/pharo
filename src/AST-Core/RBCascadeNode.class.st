@@ -11,8 +11,8 @@ Class {
 	#name : #RBCascadeNode,
 	#superclass : #RBValueNode,
 	#instVars : [
-		'messages',
-		'semicolons'
+		#messages,
+		#semicolons
 	],
 	#category : #'AST-Core-Nodes'
 }

@@ -6,8 +6,8 @@ Class {
 	#name : #Protocol,
 	#superclass : #AbstractProtocol,
 	#instVars : [
-		'name',
-		'methodSelectors'
+		#name,
+		#methodSelectors
 	],
 	#category : #'Kernel-Protocols'
 }

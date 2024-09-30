@@ -15,7 +15,7 @@ Class {
 	#name : #RBRemoveHierarchyMethodRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'selectors'
+		#selectors
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

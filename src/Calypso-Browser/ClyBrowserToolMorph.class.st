@@ -126,13 +126,13 @@ Class {
 	#name : #ClyBrowserToolMorph,
 	#superclass : #BorderedMorph,
 	#instVars : [
-		'browser',
-		'context',
-		'decorators',
-		'containerTab',
-		'isDirty',
-		'isManagedByUser',
-		'statusBar'
+		#browser,
+		#context,
+		#decorators,
+		#containerTab,
+		#isDirty,
+		#isManagedByUser,
+		#statusBar
 	],
 	#category : #'Calypso-Browser-UI'
 }

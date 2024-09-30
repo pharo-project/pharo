@@ -2,16 +2,16 @@ Class {
 	#name : #MetacelloVersionSpec,
 	#superclass : #MetacelloSpec,
 	#instVars : [
-		'versionString',
-		'blessing',
-		'description',
-		'author',
-		'timestamp',
-		'preLoadDoIt',
-		'postLoadDoIt',
-		'packageList',
-		'importName',
-		'importArray'
+		#versionString,
+		#blessing,
+		#description,
+		#author,
+		#timestamp,
+		#preLoadDoIt,
+		#postLoadDoIt,
+		#packageList,
+		#importName,
+		#importArray
 	],
 	#category : #'Metacello-Core-Specs'
 }
@@ -509,7 +509,7 @@ MetacelloVersionSpec >> packageNamed: aString forMap: map ifAbsent: absentBlock 
     "import: only allowed to be used with baseline project specs"
 
     ^ self
-        packageNamed: aString
+        packageNamed: aString asSymbol
         forLoad: true
         forMap: map
         ifAbsent: absentBlock

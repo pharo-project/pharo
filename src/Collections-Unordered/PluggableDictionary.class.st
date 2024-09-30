@@ -10,8 +10,8 @@ Class {
 	#name : #PluggableDictionary,
 	#superclass : #Dictionary,
 	#instVars : [
-		'hashBlock',
-		'equalBlock'
+		#hashBlock,
+		#equalBlock
 	],
 	#category : #'Collections-Unordered-Dictionaries'
 }

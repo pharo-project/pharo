@@ -7,8 +7,8 @@ Class {
 	#name : #MethodRemoved,
 	#superclass : #MethodAnnouncement,
 	#instVars : [
-		'protocol',
-		'methodOrigin'
+		#protocol,
+		#methodOrigin
 	],
 	#category : #'System-Announcements-System-Methods'
 }

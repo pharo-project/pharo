@@ -5,8 +5,8 @@ Class {
 	#name : #MCVersionLoaderStopped,
 	#superclass : #Announcement,
 	#instVars : [
-		'versionLoader',
-		'label'
+		#versionLoader,
+		#label
 	],
 	#category : #'Monticello-Announcements'
 }

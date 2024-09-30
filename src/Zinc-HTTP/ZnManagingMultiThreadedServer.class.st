@@ -11,8 +11,8 @@ Class {
 	#name : #ZnManagingMultiThreadedServer,
 	#superclass : #ZnMultiThreadedServer,
 	#instVars : [
-		'lock',
-		'connections'
+		#lock,
+		#connections
 	],
 	#category : #'Zinc-HTTP-Client-Server'
 }

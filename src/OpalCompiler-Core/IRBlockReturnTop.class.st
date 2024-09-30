@@ -5,7 +5,7 @@ Class {
 	#name : #IRBlockReturnTop,
 	#superclass : #IRReturn,
 	#instVars : [
-		'successor'
+		#successor
 	],
 	#category : #'OpalCompiler-Core-IR-Nodes'
 }

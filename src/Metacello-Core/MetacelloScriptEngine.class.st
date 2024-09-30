@@ -5,13 +5,13 @@ Class {
 	#name : #MetacelloScriptEngine,
 	#superclass : #Object,
 	#instVars : [
-		'root',
-		'projectSpec',
-		'options'
+		#root,
+		#projectSpec,
+		#options
 	],
 	#classVars : [
-		'DefaultRepositoryDescription',
-		'DefaultVersionString'
+		#DefaultRepositoryDescription,
+		#DefaultVersionString
 	],
 	#category : #'Metacello-Core-Scripts'
 }

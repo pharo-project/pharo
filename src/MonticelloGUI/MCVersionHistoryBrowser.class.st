@@ -5,10 +5,10 @@ Class {
 	#name : #MCVersionHistoryBrowser,
 	#superclass : #MCTool,
 	#instVars : [
-		'ancestry',
-		'index',
-		'package',
-		'infos'
+		#ancestry,
+		#index,
+		#package,
+		#infos
 	],
 	#category : #'MonticelloGUI-Tools'
 }

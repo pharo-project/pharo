@@ -6,7 +6,7 @@ Class {
 	#name : #TaCompositionElement,
 	#superclass : #TaAbstractComposition,
 	#instVars : [
-		'innerClass'
+		#innerClass
 	],
 	#category : #'TraitsV2-Compositions'
 }

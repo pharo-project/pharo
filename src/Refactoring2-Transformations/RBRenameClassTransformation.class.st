@@ -17,7 +17,7 @@ Class {
 	#name : #RBRenameClassTransformation,
 	#superclass : #RBClassTransformation,
 	#instVars : [
-		'newClassName'
+		#newClassName
 	],
 	#category : #'Refactoring2-Transformations-Model'
 }

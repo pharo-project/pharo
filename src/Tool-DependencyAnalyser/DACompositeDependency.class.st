@@ -7,7 +7,7 @@ Class {
 	#name : #DACompositeDependency,
 	#superclass : #DAPackageDependency,
 	#instVars : [
-		'dependencies'
+		#dependencies
 	],
 	#category : #'Tool-DependencyAnalyser-Core'
 }

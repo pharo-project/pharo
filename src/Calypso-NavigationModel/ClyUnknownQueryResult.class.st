@@ -9,7 +9,7 @@ Class {
 	#name : #ClyUnknownQueryResult,
 	#superclass : #ClyQueryResult,
 	#classInstVars : [
-		'instance'
+		#instance
 	],
 	#category : #'Calypso-NavigationModel-Result'
 }

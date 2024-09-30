@@ -10,15 +10,15 @@ Class {
 	#traits : 'TSortTest - {#testSort. #testSortUsingSortBlock} + TIncludesTest + (TCloneTest - {#testCopyCreatesNewObject}) + TCopyPreservingIdentityTest + TCopyTest + (TSetArithmetic - {#testDifferenceWithNonNullIntersection}) + TIterateSequencedReadableTest + TSequencedConcatenationTest + TPrintOnSequencedTest + TAsStringCommaAndDelimiterSequenceableTest + TIndexAccess + (TIndexAccessForMultipliness - {#testIdentityIndexOfIAbsentDuplicate. #testIdentityIndexOfDuplicate. #collectionWithNonIdentitySameAtEndAndBegining}) + TSequencedElementAccessTest + TSubCollectionAccess + (TCopySequenceableSameContents - {#testShuffled}) + (TCopyPartOfSequenceable - {#testCopyEmptyMethod. #integerCollectionWithoutEqualElements}) + TCopyPartOfSequenceableForMultipliness + TCopySequenceableWithReplacement + TBeginsEndsWith + TConvertAsSortedTest + (TConvertTest - {#testAsByteArray. #integerCollectionWithoutEqualElements}) + TCopySequenceableWithOrWithoutSpecificElements + TConvertAsSetForMultiplinessTest + TSequencedStructuralEqualityTest + TOccurrencesForMultiplinessTest',
 	#classTraits : 'TSortTest classTrait + TIncludesTest classTrait + TCloneTest classTrait + TCopyPreservingIdentityTest classTrait + TCopyTest classTrait + TSetArithmetic classTrait + TIterateSequencedReadableTest classTrait + TSequencedConcatenationTest classTrait + TPrintOnSequencedTest classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TIndexAccess classTrait + TIndexAccessForMultipliness classTrait + TSequencedElementAccessTest classTrait + TSubCollectionAccess classTrait + TCopySequenceableSameContents classTrait + TCopyPartOfSequenceable classTrait + TCopyPartOfSequenceableForMultipliness classTrait + TCopySequenceableWithReplacement classTrait + TBeginsEndsWith classTrait + TConvertAsSortedTest classTrait + TConvertTest classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TConvertAsSetForMultiplinessTest classTrait + TSequencedStructuralEqualityTest classTrait + TOccurrencesForMultiplinessTest classTrait',
 	#instVars : [
-		'emptySymbol',
-		'nonEmptySymbol5ElementsNoDuplicates',
-		'notIn',
-		'collectionNotIncluded',
-		'collectionSize4',
-		'collection1Element',
-		'sameAtEndAndBegining',
-		'with2timeSubcollection',
-		'subcollection3ElementsSorted'
+		#emptySymbol,
+		#nonEmptySymbol5ElementsNoDuplicates,
+		#notIn,
+		#collectionNotIncluded,
+		#collectionSize4,
+		#collection1Element,
+		#sameAtEndAndBegining,
+		#with2timeSubcollection,
+		#subcollection3ElementsSorted
 	],
 	#category : #'Collections-Strings-Tests-Base'
 }

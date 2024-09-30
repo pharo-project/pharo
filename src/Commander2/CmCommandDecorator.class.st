@@ -9,7 +9,7 @@ Class {
 	#traits : 'CmTDecorator',
 	#classTraits : 'CmTDecorator classTrait',
 	#instVars : [
-		'decoratedCommand'
+		#decoratedCommand
 	],
 	#category : #'Commander2-Commands'
 }

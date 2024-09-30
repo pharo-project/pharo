@@ -10,8 +10,8 @@ Class {
 	#name : #RBSelectorNode,
 	#superclass : #RBValueNode,
 	#instVars : [
-		'value',
-		'keywordPositions'
+		#value,
+		#keywordPositions
 	],
 	#category : #'AST-Core-Nodes'
 }

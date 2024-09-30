@@ -8,8 +8,8 @@ Class {
 	#name : #RBProtocolEnvironment,
 	#superclass : #RBBrowserEnvironmentWrapper,
 	#instVars : [
-		'class',
-		'protocols'
+		#class,
+		#protocols
 	],
 	#category : #'Refactoring-Environment'
 }

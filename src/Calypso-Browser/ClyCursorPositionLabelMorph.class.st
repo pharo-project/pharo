@@ -11,7 +11,7 @@ Class {
 	#name : #ClyCursorPositionLabelMorph,
 	#superclass : #ClyTextMorphToolMorph,
 	#instVars : [
-		'labelMorph'
+		#labelMorph
 	],
 	#category : #'Calypso-Browser-TextEditors'
 }

@@ -6,9 +6,9 @@ Class {
 	#name : #FFICalloutMethodBuilderTestContext,
 	#superclass : #Object,
 	#instVars : [
-		'selector',
-		'argumentNames',
-		'methodClass'
+		#selector,
+		#argumentNames,
+		#methodClass
 	],
 	#category : #'UnifiedFFI-Tests-Test-Data'
 }

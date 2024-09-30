@@ -14,7 +14,7 @@ Class {
 	#name : #RBReplaceRule,
 	#superclass : #RBParseTreeRule,
 	#instVars : [
-		'verificationBlock'
+		#verificationBlock
 	],
 	#category : #'AST-Core-Matching'
 }

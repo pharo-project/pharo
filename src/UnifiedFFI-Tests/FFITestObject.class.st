@@ -5,8 +5,8 @@ Class {
 	#name : #FFITestObject,
 	#superclass : #FFIExternalObject,
 	#instVars : [
-		'a',
-		'c'
+		#a,
+		#c
 	],
 	#category : #'UnifiedFFI-Tests-Tests'
 }

@@ -5,7 +5,7 @@ Class {
 	#name : #RBCommentToken,
 	#superclass : #RBValueToken,
 	#instVars : [
-		'stopPosition'
+		#stopPosition
 	],
 	#category : #'AST-Core-Tokens'
 }

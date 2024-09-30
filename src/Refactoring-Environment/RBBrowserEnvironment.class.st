@@ -26,13 +26,13 @@ Class {
 	#name : #RBBrowserEnvironment,
 	#superclass : #Object,
 	#instVars : [
-		'label',
-		'searchStrings',
-		'accessGuard',
-		'queryCache',
-		'plugins',
-		'updateStrategy',
-		'updateGuard'
+		#label,
+		#searchStrings,
+		#accessGuard,
+		#queryCache,
+		#plugins,
+		#updateStrategy,
+		#updateGuard
 	],
 	#category : #'Refactoring-Environment'
 }

@@ -10,7 +10,7 @@ Class {
 	#name : #MCDoItParser,
 	#superclass : #Object,
 	#instVars : [
-		'source'
+		#source
 	],
 	#category : #'Monticello-Chunk Format'
 }

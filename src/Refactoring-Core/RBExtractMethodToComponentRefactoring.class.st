@@ -10,9 +10,9 @@ Class {
 	#name : #RBExtractMethodToComponentRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'selector',
-		'extractionInterval',
-		'extractedMethodSelector'
+		#selector,
+		#extractionInterval,
+		#extractedMethodSelector
 	],
 	#category : #'Refactoring-Core-Refactorings-Unused'
 }

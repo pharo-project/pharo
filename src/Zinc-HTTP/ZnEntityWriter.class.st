@@ -9,8 +9,8 @@ Class {
 	#name : #ZnEntityWriter,
 	#superclass : #Object,
 	#instVars : [
-		'headers',
-		'stream'
+		#headers,
+		#stream
 	],
 	#category : #'Zinc-HTTP-Streaming'
 }

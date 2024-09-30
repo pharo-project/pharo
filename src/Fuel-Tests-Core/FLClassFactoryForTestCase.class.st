@@ -22,12 +22,12 @@ Class {
 	#name : #FLClassFactoryForTestCase,
 	#superclass : #Object,
 	#instVars : [
-		'createdClasses',
-		'createdTraits',
-		'environment'
+		#createdClasses,
+		#createdTraits,
+		#environment
 	],
 	#classVars : [
-		'Counter'
+		#Counter
 	],
 	#category : #'Fuel-Tests-Core-Support-ClassFactory'
 }

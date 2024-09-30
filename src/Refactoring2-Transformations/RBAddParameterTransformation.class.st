@@ -2,8 +2,8 @@ Class {
 	#name : #RBAddParameterTransformation,
 	#superclass : #RBChangeMethodNameTransformation,
 	#instVars : [
-		'newArgs',
-		'senders'
+		#newArgs,
+		#senders
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

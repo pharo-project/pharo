@@ -6,7 +6,7 @@ Class {
 	#name : #CategoryAdded,
 	#superclass : #SystemAnnouncement,
 	#instVars : [
-		'categoryName'
+		#categoryName
 	],
 	#category : #'System-Announcements-System-Categories'
 }

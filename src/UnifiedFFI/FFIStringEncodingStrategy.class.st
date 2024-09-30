@@ -6,7 +6,7 @@ Class {
 	#name : #FFIStringEncodingStrategy,
 	#superclass : #Object,
 	#instVars : [
-		'encoding'
+		#encoding
 	],
 	#category : #'UnifiedFFI-Strings'
 }

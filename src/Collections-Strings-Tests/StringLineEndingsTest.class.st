@@ -2,11 +2,11 @@ Class {
 	#name : #StringLineEndingsTest,
 	#superclass : #ParametrizedTestCase,
 	#instVars : [
-		'targetLineEnding',
-		'originLineEnding',
-		'testingSubjectWithTargetLineEnding',
-		'testingSubjectWithOriginLineEnding',
-		'templateString'
+		#targetLineEnding,
+		#originLineEnding,
+		#testingSubjectWithTargetLineEnding,
+		#testingSubjectWithOriginLineEnding,
+		#templateString
 	],
 	#category : #'Collections-Strings-Tests-Base'
 }

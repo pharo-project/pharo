@@ -16,7 +16,7 @@ Class {
 	#name : #ClyBrowserItemContext,
 	#superclass : #AnnotationContext,
 	#instVars : [
-		'itemType'
+		#itemType
 	],
 	#category : #'Calypso-Browser-Contexts'
 }

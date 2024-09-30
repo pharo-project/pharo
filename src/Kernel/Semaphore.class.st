@@ -16,7 +16,7 @@ Class {
 	#name : #Semaphore,
 	#superclass : #LinkedList,
 	#instVars : [
-		'excessSignals'
+		#excessSignals
 	],
 	#category : #'Kernel-Processes'
 }

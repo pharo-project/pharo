@@ -115,15 +115,15 @@ Class {
 	#name : #ClyNavigationEnvironment,
 	#superclass : #Object,
 	#instVars : [
-		'plugins',
-		'updateStrategy',
-		'accessGuard',
-		'updateGuard',
-		'system',
-		'queryCache'
+		#plugins,
+		#updateStrategy,
+		#accessGuard,
+		#updateGuard,
+		#system,
+		#queryCache
 	],
 	#classInstVars : [
-		'defaultGlobalEnvironments'
+		#defaultGlobalEnvironments
 	],
 	#category : #'Calypso-NavigationModel-Model'
 }

@@ -6,7 +6,7 @@ Class {
 	#name : #FFIArchitecture,
 	#superclass : #Object,
 	#classInstVars : [
-		'uniqueInstance'
+		#uniqueInstance
 	],
 	#category : #'UnifiedFFI-Architecture'
 }

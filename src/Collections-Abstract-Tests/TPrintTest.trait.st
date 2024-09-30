@@ -77,7 +77,7 @@ TPrintTest >> testPrintOn [
 	splittedString := printed findBetweenSubstrings: { ' '. '('. ')' }.
 	self assertCollection: splittedString hasSameElements: {
 			self prefix.
-			self nonEmpty class name } , allElementsAsString
+			self nonEmpty class name asString } , allElementsAsString
 ]
 
 { #category : #'tests - printing' }

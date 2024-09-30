@@ -6,9 +6,9 @@ Class {
 	#name : #FileCompilerRequestor,
 	#superclass : #Object,
 	#instVars : [
-		'contents',
-		'fileReference',
-		'interactive'
+		#contents,
+		#fileReference,
+		#interactive
 	],
 	#category : #'CodeImport-Utilities'
 }

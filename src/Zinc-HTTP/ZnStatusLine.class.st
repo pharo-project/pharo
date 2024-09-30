@@ -9,9 +9,9 @@ Class {
 	#name : #ZnStatusLine,
 	#superclass : #Object,
 	#instVars : [
-		'version',
-		'code',
-		'reason'
+		#version,
+		#code,
+		#reason
 	],
 	#category : #'Zinc-HTTP-Core'
 }

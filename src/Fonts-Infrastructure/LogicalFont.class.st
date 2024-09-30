@@ -5,21 +5,21 @@ Class {
 	#name : #LogicalFont,
 	#superclass : #AbstractFont,
 	#instVars : [
-		'realFont',
-		'emphasis',
-		'familyName',
-		'fallbackFamilyNames',
-		'pointSize',
-		'stretchValue',
-		'weightValue',
-		'slantValue',
-		'derivatives',
-		'boldDerivative',
-		'italicDerivative',
-		'boldItalicDerivative'
+		#realFont,
+		#emphasis,
+		#familyName,
+		#fallbackFamilyNames,
+		#pointSize,
+		#stretchValue,
+		#weightValue,
+		#slantValue,
+		#derivatives,
+		#boldDerivative,
+		#italicDerivative,
+		#boldItalicDerivative
 	],
 	#classInstVars : [
-		'all'
+		#all
 	],
 	#category : #'Fonts-Infrastructure-Logical'
 }
@@ -53,7 +53,7 @@ LogicalFont class >> familyName: familyName fallbackFamilyNames: fallbackFamilyN
 
 	^ self all
 		  detect: [ :each |
-			  each familyName = familyName and: [
+			  each familyName = familyName asSymbol and: [
 				  each fallbackFamilyNames = fallbackFamilyNames and: [
 					  each pointSize = pointSize and: [
 						  each weightValue = weight and: [

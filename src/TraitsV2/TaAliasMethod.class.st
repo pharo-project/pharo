@@ -7,7 +7,7 @@ Class {
 	#name : #TaAliasMethod,
 	#superclass : #TaSingleComposition,
 	#instVars : [
-		'aliases'
+		#aliases
 	],
 	#category : #'TraitsV2-Compositions'
 }

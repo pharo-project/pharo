@@ -7,7 +7,7 @@ Class {
 	#name : #RBAbstractBlockVisitor,
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
-		'visitBlock'
+		#visitBlock
 	],
 	#category : #'AST-Core-Visitors'
 }

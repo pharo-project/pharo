@@ -8,8 +8,8 @@ Class {
 	#name : #ClassAdded,
 	#superclass : #ClassAnnouncement,
 	#instVars : [
-		'classAdded',
-		'classCategory'
+		#classAdded,
+		#classCategory
 	],
 	#category : #'System-Announcements-System-Classes'
 }

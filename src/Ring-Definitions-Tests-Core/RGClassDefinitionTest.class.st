@@ -13,7 +13,7 @@ RGClassDefinitionTest >> testAddingMethods [
 	newClass := RGClassDefinition named: #OrderedCollection.
 	newMethod := (RGMethodDefinition named: #add:)
 		parent: newClass;
-		protocol: 'adding';
+		protocol: #'adding';
 		sourceCode:
 			'add: newObject
 									^self addLast: newObject'.
@@ -116,7 +116,7 @@ RGClassDefinitionTest >> testExistingClass [
 	self assert: newClass hasMetaclass.
 	metaClass := newClass classSide.
 	self assert: metaClass isMeta.
-	self assert: metaClass name equals: 'OrderedCollection class'.
+	self assert: metaClass name equals: #'OrderedCollection class'.
 	self assert: metaClass instanceSide equals: newClass.
 	self assert: metaClass realClass equals: OrderedCollection class
 ]

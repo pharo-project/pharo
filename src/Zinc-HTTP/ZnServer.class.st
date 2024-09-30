@@ -16,13 +16,13 @@ Class {
 	#name : #ZnServer,
 	#superclass : #Object,
 	#instVars : [
-		'options',
-		'sessionManager',
-		'newOptions'
+		#options,
+		#sessionManager,
+		#newOptions
 	],
 	#classVars : [
-		'AlwaysRestart',
-		'ManagedServers'
+		#AlwaysRestart,
+		#ManagedServers
 	],
 	#category : #'Zinc-HTTP-Client-Server'
 }

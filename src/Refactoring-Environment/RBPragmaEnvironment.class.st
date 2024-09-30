@@ -8,8 +8,8 @@ Class {
 	#name : #RBPragmaEnvironment,
 	#superclass : #RBBrowserEnvironmentWrapper,
 	#instVars : [
-		'keywords',
-		'condition'
+		#keywords,
+		#condition
 	],
 	#category : #'Refactoring-Environment'
 }

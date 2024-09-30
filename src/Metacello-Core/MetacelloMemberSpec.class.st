@@ -2,8 +2,8 @@ Class {
 	#name : #MetacelloMemberSpec,
 	#superclass : #MetacelloSpec,
 	#instVars : [
-		'name',
-		'spec'
+		#name,
+		#spec
 	],
 	#category : #'Metacello-Core-Members'
 }
@@ -53,7 +53,7 @@ MetacelloMemberSpec >> name [
 { #category : #accessing }
 MetacelloMemberSpec >> name: aString [
 
-	name := aString
+	name := aString asSymbol
 ]
 
 { #category : #accessing }

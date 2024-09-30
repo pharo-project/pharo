@@ -17,7 +17,7 @@ Class {
 	#name : #ZnCommonLogFormat,
 	#superclass : #Object,
 	#instVars : [
-		'combined'
+		#combined
 	],
 	#category : #'Zinc-HTTP-Logging'
 }

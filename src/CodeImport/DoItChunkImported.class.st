@@ -5,9 +5,9 @@ Class {
 	#name : #DoItChunkImported,
 	#superclass : #SystemAnnouncement,
 	#instVars : [
-		'contents',
-		'requestor',
-		'logSource'
+		#contents,
+		#requestor,
+		#logSource
 	],
 	#category : #'CodeImport-Utilities'
 }

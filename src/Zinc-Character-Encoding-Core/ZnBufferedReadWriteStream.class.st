@@ -15,9 +15,9 @@ Class {
 	#name : #ZnBufferedReadWriteStream,
 	#superclass : #Object,
 	#instVars : [
-		'readStream',
-		'writeStream',
-		'lastRead'
+		#readStream,
+		#writeStream,
+		#lastRead
 	],
 	#category : #'Zinc-Character-Encoding-Core'
 }

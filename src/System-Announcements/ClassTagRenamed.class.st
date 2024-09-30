@@ -5,7 +5,7 @@ Class {
 	#name : #ClassTagRenamed,
 	#superclass : #ClassTagAnnouncement,
 	#instVars : [
-		'newName'
+		#newName
 	],
 	#category : #'System-Announcements-System-Packages'
 }

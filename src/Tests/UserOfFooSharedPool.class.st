@@ -5,7 +5,7 @@ Class {
 	#name : #UserOfFooSharedPool,
 	#superclass : #Object,
 	#pools : [
-		'FooSharedPool'
+		#FooSharedPool
 	],
 	#category : #'Tests-System'
 }

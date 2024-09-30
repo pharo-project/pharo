@@ -5,9 +5,9 @@ Class {
 	#name : #FFICalloutAPITest,
 	#superclass : #TestCase,
 	#instVars : [
-		'senderCtx',
-		'uffiCtx',
-		'lastUffiCtx'
+		#senderCtx,
+		#uffiCtx,
+		#lastUffiCtx
 	],
 	#category : #'UnifiedFFI-Tests-Tests'
 }

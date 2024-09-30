@@ -45,9 +45,9 @@ Class {
 	#name : #SmallDictionary,
 	#superclass : #Collection,
 	#instVars : [
-		'keys',
-		'values',
-		'size'
+		#keys,
+		#values,
+		#size
 	],
 	#category : #'Collections-Unordered-Dictionaries'
 }

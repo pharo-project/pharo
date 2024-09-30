@@ -6,9 +6,9 @@ Class {
 	#name : #DATarjanAlgorithm,
 	#superclass : #Object,
 	#instVars : [
-		'runningIndex',
-		'stack',
-		'stronglyConnectedComponents'
+		#runningIndex,
+		#stack,
+		#stronglyConnectedComponents
 	],
 	#category : #'Tool-DependencyAnalyser-Core'
 }

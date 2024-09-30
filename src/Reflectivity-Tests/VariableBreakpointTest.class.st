@@ -2,14 +2,14 @@ Class {
 	#name : #VariableBreakpointTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'obj1',
-		'obj2',
-		'wp',
-		'obj3',
-		'obj4',
-		'observer',
-		'testClass',
-		'testSubclass'
+		#obj1,
+		#obj2,
+		#wp,
+		#obj3,
+		#obj4,
+		#observer,
+		#testClass,
+		#testSubclass
 	],
 	#category : #'Reflectivity-Tests-Breakpoints'
 }

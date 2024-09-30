@@ -11,7 +11,7 @@ Class {
 	#name : #ZnServerGenericLogEvent,
 	#superclass : #ZnServerLogEvent,
 	#instVars : [
-		'subject'
+		#subject
 	],
 	#category : #'Zinc-HTTP-Logging'
 }

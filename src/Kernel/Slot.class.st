@@ -26,8 +26,8 @@ Class {
 	#name : #Slot,
 	#superclass : #Variable,
 	#instVars : [
-		'owningClass',
-		'definingClass'
+		#owningClass,
+		#definingClass
 	],
 	#category : #'Kernel-Variables'
 }

@@ -16,7 +16,7 @@ Class {
 	#name : #ReImplementedNotSentRule,
 	#superclass : #ReAbstractRule,
 	#classInstVars : [
-		'allMessages'
+		#allMessages
 	],
 	#category : #'GeneralRules-Migrated'
 }

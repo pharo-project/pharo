@@ -20,11 +20,11 @@ Class {
 	#name : #RBPatternVariableNode,
 	#superclass : #RBVariableNode,
 	#instVars : [
-		'recurseInto',
-		'isList',
-		'isLiteral',
-		'isStatement',
-		'isAnything'
+		#recurseInto,
+		#isList,
+		#isLiteral,
+		#isStatement,
+		#isAnything
 	],
 	#category : #'AST-Core-Pattern'
 }

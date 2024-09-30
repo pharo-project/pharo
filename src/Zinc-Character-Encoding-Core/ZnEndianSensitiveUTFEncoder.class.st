@@ -8,7 +8,7 @@ Class {
 	#name : #ZnEndianSensitiveUTFEncoder,
 	#superclass : #ZnUTFEncoder,
 	#instVars : [
-		'endianness'
+		#endianness
 	],
 	#category : #'Zinc-Character-Encoding-Core'
 }

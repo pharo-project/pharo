@@ -30,14 +30,14 @@ Class {
 	#name : #ZnClient,
 	#superclass : #Object,
 	#instVars : [
-		'request',
-		'response',
-		'connection',
-		'lastUsed',
-		'options',
-		'session',
-		'logLevel',
-		'newOptions'
+		#request,
+		#response,
+		#connection,
+		#lastUsed,
+		#options,
+		#session,
+		#logLevel,
+		#newOptions
 	],
 	#category : #'Zinc-HTTP-Client-Server'
 }

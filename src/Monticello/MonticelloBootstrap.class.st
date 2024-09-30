@@ -18,8 +18,8 @@ Class {
 	#name : #MonticelloBootstrap,
 	#superclass : #Object,
 	#instVars : [
-		'directory',
-		'localRepository'
+		#directory,
+		#localRepository
 	],
 	#category : #'Monticello-Base'
 }

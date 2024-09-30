@@ -10,7 +10,7 @@ Class {
 	#name : #ZnServerSessionManager,
 	#superclass : #Object,
 	#instVars : [
-		'sessions'
+		#sessions
 	],
 	#category : #'Zinc-HTTP-Support'
 }

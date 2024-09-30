@@ -20,7 +20,7 @@ Class {
 	#name : #ClyBrowserToolDecorator,
 	#superclass : #Object,
 	#instVars : [
-		'browserTool'
+		#browserTool
 	],
 	#category : #'Calypso-Browser-UI'
 }

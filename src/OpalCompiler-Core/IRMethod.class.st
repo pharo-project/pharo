@@ -6,16 +6,16 @@ Class {
 	#name : #IRMethod,
 	#superclass : #Object,
 	#instVars : [
-		'sourceNode',
-		'startSequence',
-		'numArgs',
-		'properties',
-		'tempMap',
-		'pragmas',
-		'additionalLiterals',
-		'compiledMethod',
-		'compilationContext',
-		'irPrimitive'
+		#sourceNode,
+		#startSequence,
+		#numArgs,
+		#properties,
+		#tempMap,
+		#pragmas,
+		#additionalLiterals,
+		#compiledMethod,
+		#compilationContext,
+		#irPrimitive
 	],
 	#category : #'OpalCompiler-Core-IR-Nodes'
 }

@@ -6,7 +6,7 @@ Class {
 	#name : #FFIUnsupportedUntypedLiteral,
 	#superclass : #Error,
 	#instVars : [
-		'literal'
+		#literal
 	],
 	#category : #'UnifiedFFI-Exceptions'
 }

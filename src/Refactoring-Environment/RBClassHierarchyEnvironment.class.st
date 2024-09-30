@@ -9,7 +9,7 @@ Class {
 	#name : #RBClassHierarchyEnvironment,
 	#superclass : #RBBrowserEnvironmentWrapper,
 	#instVars : [
-		'class'
+		#class
 	],
 	#category : #'Refactoring-Environment'
 }

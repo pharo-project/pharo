@@ -21,7 +21,7 @@ Class {
 	#name : #RBRemoveMessageSendTransformation,
 	#superclass : #RBMethodTransformation,
 	#instVars : [
-		'message'
+		#message
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

@@ -2,8 +2,8 @@ Class {
 	#name : #CoverageDemoTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'link',
-		'selector'
+		#link,
+		#selector
 	],
 	#category : #'Reflectivity-Tests-Base'
 }

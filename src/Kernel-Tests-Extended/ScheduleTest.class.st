@@ -90,7 +90,7 @@ ScheduleTest >> testDateAndTimes [
 	self assert: aSchedule dateAndTimes size equals: 104.
 	self assert: aSchedule dateAndTimes first equals: firstEvent.
 	answer := true.
-	aSchedule dateAndTimes do: [ :each | (each dayOfWeekName = 'Saturday' or: [ each dayOfWeekName = 'Sunday' ]) ifFalse: [ ^ false ] ].
+	aSchedule dateAndTimes do: [ :each | (each dayOfWeekName = #'Saturday' or: [ each dayOfWeekName = #'Sunday' ]) ifFalse: [ ^ false ] ].
 	self assert: answer
 ]
 

@@ -5,15 +5,15 @@ Class {
 	#name : #MCClassDefinition,
 	#superclass : #MCDefinition,
 	#instVars : [
-		'name',
-		'superclassName',
-		'variables',
-		'category',
-		'type',
-		'comment',
-		'commentStamp',
-		'traitComposition',
-		'classTraitComposition'
+		#name,
+		#superclassName,
+		#variables,
+		#category,
+		#type,
+		#comment,
+		#commentStamp,
+		#traitComposition,
+		#classTraitComposition
 	],
 	#category : #'Monticello-Modeling'
 }
@@ -60,7 +60,7 @@ MCClassDefinition >> = aDefinition [
 		and: [ superclassName = aDefinition superclassName
 		and: [ self traitCompositionString = aDefinition traitCompositionString
 		and: [ self classTraitCompositionString = aDefinition classTraitCompositionString
-		and: [ category = aDefinition category
+		and: [ (category sameContents: aDefinition category)
 		and: [ type = aDefinition type and: [ self sortedVariables = aDefinition sortedVariables and: [ comment = aDefinition comment ] ] ] ] ] ] ]
 ]
 
@@ -79,7 +79,7 @@ MCClassDefinition >> actualClass [
 
 { #category : #initializing }
 MCClassDefinition >> addVariables: aCollection ofType: aClass [
-	variables addAll: (aCollection collect: [:var | aClass name: var asString]).
+	variables addAll: (aCollection collect: [:var | aClass name: var]).
 ]
 
 { #category : #accessing }
@@ -276,9 +276,9 @@ type: typeSymbol
 comment: commentString
 commentStamp: stampStringOrNil [
 	name := nameString asSymbol.
-	superclassName := superclassString ifNil: ['nil'] ifNotNil: [superclassString asSymbol].
-	category := categoryString.
-	name = #CompiledMethod ifTrue: [type := #compiledMethod] ifFalse: [type := typeSymbol].
+	superclassName := superclassString ifNil: [#'nil'] ifNotNil: [superclassString asSymbol].
+	category := categoryString asSymbol.
+	name = #CompiledMethod ifTrue: [type := #compiledMethod] ifFalse: [type := typeSymbol asSymbol].
 	comment := commentString withInternalLineEndings.
 	commentStamp := stampStringOrNil ifNil: [self defaultCommentStamp].
 	variables := OrderedCollection  new.
@@ -302,7 +302,7 @@ type: typeSymbol
 comment: commentString
 commentStamp: stampStringOrNil [
 	name := nameString asSymbol.
-	superclassName := superclassString ifNil: ['nil'] ifNotNil: [superclassString asSymbol].
+	superclassName := superclassString ifNil: [#'nil'] ifNotNil: [superclassString asSymbol].
 	traitComposition := traitCompositionString.
 	classTraitComposition := classTraitCompositionString.
 	category := categoryString.

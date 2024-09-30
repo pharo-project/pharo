@@ -36,8 +36,8 @@ BasicBehaviorClassMetaclassTest >> testMetaclass [
 { #category : #tests }
 BasicBehaviorClassMetaclassTest >> testMetaclassName [
 
-	self assert: Dictionary class name equals: 'Dictionary class'.
-	self assert: OrderedCollection class name equals: 'OrderedCollection class'
+	self assert: Dictionary class name equals: #'Dictionary class'.
+	self assert: OrderedCollection class name equals: #'OrderedCollection class'
 ]
 
 { #category : #tests }

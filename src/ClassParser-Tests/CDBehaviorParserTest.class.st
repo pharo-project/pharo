@@ -21,7 +21,7 @@ CDBehaviorParserTest >> classDefinitionString [
 { #category : #helpers }
 CDBehaviorParserTest >> className [
 
-	^ 'TheClass'
+	^ #'TheClass'
 ]
 
 { #category : #helpers }

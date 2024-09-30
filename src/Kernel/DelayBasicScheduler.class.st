@@ -63,15 +63,15 @@ Class {
 	#name : #DelayBasicScheduler,
 	#superclass : #DelayNullScheduler,
 	#instVars : [
-		'ticker',
-		'runTimerEventLoop',
-		'timerEventLoop',
-		'suspendedDelays',
-		'activeDelay',
-		'suspendSemaphore',
-		'timingSemaphore',
-		'delayToStart',
-		'delayToStop'
+		#ticker,
+		#runTimerEventLoop,
+		#timerEventLoop,
+		#suspendedDelays,
+		#activeDelay,
+		#suspendSemaphore,
+		#timingSemaphore,
+		#delayToStart,
+		#delayToStop
 	],
 	#category : #'Kernel-Delays'
 }

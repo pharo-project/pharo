@@ -21,15 +21,15 @@ Class {
 	#name : #RBExtractMethodTransformation,
 	#superclass : #RBCompositeMethodTransformation,
 	#instVars : [
-		'sourceCode',
-		'newSelector',
-		'newMethod',
-		'parseTree',
-		'subtree',
-		'arguments',
-		'temporaries',
-		'assignments',
-		'existingSelector'
+		#sourceCode,
+		#newSelector,
+		#newMethod,
+		#parseTree,
+		#subtree,
+		#arguments,
+		#temporaries,
+		#assignments,
+		#existingSelector
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

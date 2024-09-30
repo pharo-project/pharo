@@ -16,7 +16,7 @@ Class {
 	#name : #FFIUnknownLibrary,
 	#superclass : #FFILibrary,
 	#instVars : [
-		'libraryName'
+		#libraryName
 	],
 	#category : #'UnifiedFFI-Libraries'
 }

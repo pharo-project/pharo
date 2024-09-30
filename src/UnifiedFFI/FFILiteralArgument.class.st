@@ -5,8 +5,8 @@ Class {
 	#name : #FFILiteralArgument,
 	#superclass : #FFIFunctionArgumentLoader,
 	#instVars : [
-		'value',
-		'type'
+		#value,
+		#type
 	],
 	#category : #'UnifiedFFI-Arguments'
 }

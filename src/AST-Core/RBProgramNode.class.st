@@ -32,11 +32,11 @@ Class {
 	#name : #RBProgramNode,
 	#superclass : #RBNode,
 	#instVars : [
-		'parent',
-		'properties'
+		#parent,
+		#properties
 	],
 	#classVars : [
-		'FormatterClass'
+		#FormatterClass
 	],
 	#category : #'AST-Core-Nodes'
 }

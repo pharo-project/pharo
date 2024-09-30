@@ -8,12 +8,12 @@ Class {
 	#name : #RBCreateCascadeRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'selector',
-		'selectedInterval',
-		'parseTree',
-		'sequenceNode',
-		'statementNodes',
-		'transformedNode'
+		#selector,
+		#selectedInterval,
+		#parseTree,
+		#sequenceNode,
+		#statementNodes,
+		#transformedNode
 	],
 	#category : #'Refactoring-Core-Refactorings-Unused'
 }

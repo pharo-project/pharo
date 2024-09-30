@@ -14,11 +14,11 @@ Class {
 	#name : #ZnSimplifiedClientTransactionEvent,
 	#superclass : #ZnClientLogEvent,
 	#instVars : [
-		'method',
-		'url',
-		'response',
-		'size',
-		'duration'
+		#method,
+		#url,
+		#response,
+		#size,
+		#duration
 	],
 	#category : #'Zinc-HTTP-Logging'
 }

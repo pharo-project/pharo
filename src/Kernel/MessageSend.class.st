@@ -12,9 +12,9 @@ Class {
 	#name : #MessageSend,
 	#superclass : #Object,
 	#instVars : [
-		'receiver',
-		'selector',
-		'arguments'
+		#receiver,
+		#selector,
+		#arguments
 	],
 	#category : #'Kernel-Messaging'
 }

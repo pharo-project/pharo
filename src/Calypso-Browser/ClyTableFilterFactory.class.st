@@ -13,8 +13,8 @@ Class {
 	#name : #ClyTableFilterFactory,
 	#superclass : #Object,
 	#instVars : [
-		'itemFilterClass',
-		'stringPattern'
+		#itemFilterClass,
+		#stringPattern
 	],
 	#category : #'Calypso-Browser-Table'
 }

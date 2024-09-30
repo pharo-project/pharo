@@ -9,7 +9,7 @@ Class {
 	#name : #TextURL,
 	#superclass : #TextAction,
 	#instVars : [
-		'url'
+		#url
 	],
 	#category : #'Text-Core-Attributes'
 }

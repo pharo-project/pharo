@@ -9,7 +9,7 @@ Class {
 	#name : #FFIConstantArgument,
 	#superclass : #FFIFunctionArgument,
 	#instVars : [
-		'value'
+		#value
 	],
 	#category : #'UnifiedFFI-Arguments'
 }
@@ -67,7 +67,7 @@ FFIConstantArgument >> resolveUsing: aResolver [
 		resolvedType := type resolveUsing: aResolver forArgument: self.
 		resolvedType loader: loader.
 		^ self ].
-	(value isNil or: [ value = 'NULL' ]) ifTrue: [
+	(value isNil or: [ value sameContents: 'NULL' ]) ifTrue: [
 		loader := FFILiteralArgument value: ExternalAddress null type: (aResolver resolveType: #'void *').
 		resolvedType := type resolveUsing: aResolver forArgument: self.
 		resolvedType loader: loader.

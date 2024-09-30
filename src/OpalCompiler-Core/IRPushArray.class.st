@@ -7,8 +7,8 @@ Class {
 	#name : #IRPushArray,
 	#superclass : #IRInstruction,
 	#instVars : [
-		'size',
-		'cons'
+		#size,
+		#cons
 	],
 	#category : #'OpalCompiler-Core-IR-Nodes'
 }

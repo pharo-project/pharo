@@ -9,7 +9,7 @@ Class {
 	#name : #IRLiteralVariableAccess,
 	#superclass : #IRAccess,
 	#instVars : [
-		'association'
+		#association
 	],
 	#category : #'OpalCompiler-Core-IR-Nodes'
 }

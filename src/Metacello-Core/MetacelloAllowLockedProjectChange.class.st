@@ -2,7 +2,7 @@ Class {
 	#name : #MetacelloAllowLockedProjectChange,
 	#superclass : #MetacelloResolveProjectUpgrade,
 	#instVars : [
-		'operationString'
+		#operationString
 	],
 	#category : #'Metacello-Core-Scripts'
 }

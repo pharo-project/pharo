@@ -13,7 +13,7 @@ Class {
 	#name : #RBAddClassCommentTransformation,
 	#superclass : #RBClassTransformation,
 	#instVars : [
-		'comment'
+		#comment
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

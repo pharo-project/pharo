@@ -9,7 +9,7 @@ Class {
 	#name : #RBBlockReplaceRule,
 	#superclass : #RBReplaceRule,
 	#instVars : [
-		'replaceBlock'
+		#replaceBlock
 	],
 	#category : #'AST-Core-Matching'
 }

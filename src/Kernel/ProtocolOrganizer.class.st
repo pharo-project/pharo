@@ -7,8 +7,8 @@ Class {
 	#name : #ProtocolOrganizer,
 	#superclass : #Object,
 	#instVars : [
-		'allProtocol',
-		'protocols'
+		#allProtocol,
+		#protocols
 	],
 	#category : #'Kernel-Protocols'
 }
@@ -58,7 +58,7 @@ ProtocolOrganizer >> allProtocolsNames [
 { #category : #'protocol - adding' }
 ProtocolOrganizer >> classify: aSymbol inProtocolNamed: aProtocolName [
 	| name protocol |
-	name := aProtocolName.
+	name := aProtocolName asSymbol.
 	name = allProtocol name ifTrue: [ name := Protocol unclassified ].
 
 	"maybe here we should check if this method already belong to another protocol"
@@ -98,7 +98,7 @@ ProtocolOrganizer >> getProtocolNamed: aByteString ifNone: aBlockClosure [
 { #category : #testing }
 ProtocolOrganizer >> hasProtocolNamed: aString [
 
-	^ self allProtocols anySatisfy: [ :each | each name = aString ]
+	^ self allProtocols anySatisfy: [ :each | each name = aString asSymbol ]
 ]
 
 { #category : #testing }
@@ -143,7 +143,7 @@ ProtocolOrganizer >> protocolNamed: aName [
 { #category : #accessing }
 ProtocolOrganizer >> protocolNamed: aString ifAbsent: aBlock [
 	^  self allProtocols
-		detect: [ :e | e name = aString ]
+		detect: [ :e | e name = aString asSymbol ]
 		ifNone: aBlock
 ]
 

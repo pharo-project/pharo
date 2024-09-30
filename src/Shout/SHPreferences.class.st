@@ -5,11 +5,11 @@ Class {
 	#name : #SHPreferences,
 	#superclass : #Object,
 	#classVars : [
-		'CustomStyleTable',
-		'Groups'
+		#CustomStyleTable,
+		#Groups
 	],
 	#classInstVars : [
-		'enabled'
+		#enabled
 	],
 	#category : #'Shout-Styling'
 }

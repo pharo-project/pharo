@@ -5,7 +5,7 @@ Class {
 	#name : #CmCommandCollector,
 	#superclass : #CmVisitor,
 	#instVars : [
-		'commandsCollected'
+		#commandsCollected
 	],
 	#category : #'Commander2-Visitors'
 }

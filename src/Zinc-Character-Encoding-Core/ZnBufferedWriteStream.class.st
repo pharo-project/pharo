@@ -14,9 +14,9 @@ Class {
 	#name : #ZnBufferedWriteStream,
 	#superclass : #Object,
 	#instVars : [
-		'stream',
-		'buffer',
-		'position'
+		#stream,
+		#buffer,
+		#position
 	],
 	#category : #'Zinc-Character-Encoding-Core'
 }

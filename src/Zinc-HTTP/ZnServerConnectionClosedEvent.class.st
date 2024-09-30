@@ -5,7 +5,7 @@ Class {
 	#name : #ZnServerConnectionClosedEvent,
 	#superclass : #ZnServerLogEvent,
 	#instVars : [
-		'address'
+		#address
 	],
 	#category : #'Zinc-HTTP-Logging'
 }

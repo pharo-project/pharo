@@ -5,7 +5,7 @@ Class {
 	#name : #ReCritiqueBanned,
 	#superclass : #ReSingleCritiqueEvent,
 	#instVars : [
-		'entityBanLevel'
+		#entityBanLevel
 	],
 	#category : #'Renraku-Announcements'
 }

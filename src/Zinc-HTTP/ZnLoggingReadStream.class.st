@@ -24,10 +24,10 @@ Class {
 	#name : #ZnLoggingReadStream,
 	#superclass : #Object,
 	#instVars : [
-		'stream',
-		'logger',
-		'identifier',
-		'logLevel'
+		#stream,
+		#logger,
+		#identifier,
+		#logLevel
 	],
 	#category : #'Zinc-HTTP-Streaming'
 }

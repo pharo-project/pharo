@@ -5,7 +5,7 @@ Class {
 	#name : #TextStyleAsFontFamily,
 	#superclass : #AbstractFontFamily,
 	#instVars : [
-		'textStyle'
+		#textStyle
 	],
 	#category : #'Fonts-Infrastructure-Derived'
 }

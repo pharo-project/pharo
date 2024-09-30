@@ -5,7 +5,7 @@ Class {
 	#name : #FLBlockClosureSerializationTest,
 	#superclass : #FLSerializationTest,
 	#classVars : [
-		'ClassVariableForTesting'
+		#ClassVariableForTesting
 	],
 	#category : #'Fuel-Tests-Core-Base'
 }

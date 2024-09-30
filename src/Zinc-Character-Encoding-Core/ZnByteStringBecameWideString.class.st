@@ -9,8 +9,8 @@ Class {
 	#name : #ZnByteStringBecameWideString,
 	#superclass : #Error,
 	#instVars : [
-		'byteString',
-		'wideString'
+		#byteString,
+		#wideString
 	],
 	#category : #'Zinc-Character-Encoding-Core'
 }

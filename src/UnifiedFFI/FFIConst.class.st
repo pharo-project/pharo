@@ -7,8 +7,8 @@ Class {
 	#name : #FFIConst,
 	#superclass : #FFIExternalType,
 	#instVars : [
-		'value',
-		'type'
+		#value,
+		#type
 	],
 	#category : #'UnifiedFFI-Types'
 }

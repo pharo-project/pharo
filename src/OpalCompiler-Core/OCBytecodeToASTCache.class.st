@@ -15,10 +15,10 @@ Class {
 	#name : #OCBytecodeToASTCache,
 	#superclass : #Object,
 	#instVars : [
-		'firstBcOffset',
-		'lastBcOffset',
-		'bcToASTMap',
-		'methodOrBlockNode'
+		#firstBcOffset,
+		#lastBcOffset,
+		#bcToASTMap,
+		#methodOrBlockNode
 	],
 	#category : #'OpalCompiler-Core-Bytecode'
 }

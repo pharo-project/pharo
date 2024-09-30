@@ -2,7 +2,7 @@ Class {
 	#name : #MetacelloScriptProjectSpecNotification,
 	#superclass : #MetacelloScriptNotification,
 	#instVars : [
-		'projectSpec'
+		#projectSpec
 	],
 	#category : #'Metacello-Core-Scripts'
 }

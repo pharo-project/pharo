@@ -11,8 +11,8 @@ Class {
 	#name : #RBParseTreeRule,
 	#superclass : #Object,
 	#instVars : [
-		'searchTree',
-		'owner'
+		#searchTree,
+		#owner
 	],
 	#category : #'AST-Core-Matching'
 }

@@ -6,7 +6,7 @@ Class {
 	#name : #InstructionClient,
 	#superclass : #Object,
 	#instVars : [
-		'mappedInlinePrimitiveHandlers'
+		#mappedInlinePrimitiveHandlers
 	],
 	#category : #'Kernel-Methods'
 }

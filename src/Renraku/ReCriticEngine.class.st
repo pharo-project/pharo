@@ -11,7 +11,7 @@ Class {
 	#name : #ReCriticEngine,
 	#superclass : #Object,
 	#classInstVars : [
-		'uniqueInstance'
+		#uniqueInstance
 	],
 	#category : #'Renraku-Utility'
 }

@@ -5,8 +5,8 @@ Class {
 	#name : #UnixDynamicLoader,
 	#superclass : #DynamicLoader,
 	#classVars : [
-		'RTLD_LAZY',
-		'RTLD_NOW'
+		#'RTLD_LAZY',
+		#'RTLD_NOW'
 	],
 	#category : #'UnifiedFFI-Libraries'
 }

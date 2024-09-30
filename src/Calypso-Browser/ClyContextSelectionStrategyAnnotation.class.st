@@ -7,7 +7,7 @@ Class {
 	#name : #ClyContextSelectionStrategyAnnotation,
 	#superclass : #ClassAnnotation,
 	#instVars : [
-		'targetItemType'
+		#targetItemType
 	],
 	#category : #'Calypso-Browser-Contexts'
 }

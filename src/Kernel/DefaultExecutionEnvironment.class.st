@@ -10,7 +10,7 @@ Class {
 	#name : #DefaultExecutionEnvironment,
 	#superclass : #ExecutionEnvironment,
 	#classInstVars : [
-		'instance'
+		#instance
 	],
 	#category : #'Kernel-Processes'
 }

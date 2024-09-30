@@ -5,8 +5,8 @@ Class {
 	#name : #FFITestStructure2Int64Structure,
 	#superclass : #FFIExternalStructure,
 	#classVars : [
-		'OFFSET_X',
-		'OFFSET_Y'
+		#'OFFSET_X',
+		#'OFFSET_Y'
 	],
 	#category : #'UnifiedFFI-Tests-Test-Data'
 }

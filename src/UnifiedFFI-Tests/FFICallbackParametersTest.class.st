@@ -5,10 +5,10 @@ Class {
 	#name : #FFICallbackParametersTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'callback'
+		#callback
 	],
 	#pools : [
-		'FFITestEnumeration'
+		#FFITestEnumeration
 	],
 	#category : #'UnifiedFFI-Tests-Tests'
 }

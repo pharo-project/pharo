@@ -9,7 +9,7 @@ Class {
 	#name : #DirtyTestError,
 	#superclass : #Error,
 	#instVars : [
-		'executionEnvironment'
+		#executionEnvironment
 	],
 	#category : #'SUnit-Core-Kernel'
 }

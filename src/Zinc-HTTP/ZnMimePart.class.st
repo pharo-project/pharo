@@ -11,8 +11,8 @@ Class {
 	#name : #ZnMimePart,
 	#superclass : #Object,
 	#instVars : [
-		'headers',
-		'entity'
+		#headers,
+		#entity
 	],
 	#category : #'Zinc-HTTP-Core'
 }

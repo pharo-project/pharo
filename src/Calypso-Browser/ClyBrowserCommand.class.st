@@ -8,7 +8,7 @@ Class {
 	#name : #ClyBrowserCommand,
 	#superclass : #CmdCommand,
 	#instVars : [
-		'browser'
+		#browser
 	],
 	#category : #'Calypso-Browser-Commands'
 }

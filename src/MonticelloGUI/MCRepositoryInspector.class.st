@@ -5,11 +5,11 @@ Class {
 	#name : #MCRepositoryInspector,
 	#superclass : #MCVersionInspector,
 	#instVars : [
-		'repository',
-		'packages',
-		'versions',
-		'selectedPackage',
-		'selectedVersion'
+		#repository,
+		#packages,
+		#versions,
+		#selectedPackage,
+		#selectedVersion
 	],
 	#category : #'MonticelloGUI-Tools'
 }

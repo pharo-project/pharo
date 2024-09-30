@@ -2,7 +2,7 @@ Class {
 	#name : #RBComposeParametrizedTest,
 	#superclass : #RBWithDifferentConstructorsParametrizedTest,
 	#instVars : [
-		'isComposed'
+		#isComposed
 	],
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }

@@ -5,8 +5,8 @@ Class {
 	#name : #MethodRepackaged,
 	#superclass : #MethodAnnouncement,
 	#instVars : [
-		'newPackage',
-		'oldPackage'
+		#newPackage,
+		#oldPackage
 	],
 	#category : #'System-Announcements-System-Packages'
 }

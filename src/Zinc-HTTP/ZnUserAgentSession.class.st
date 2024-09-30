@@ -11,9 +11,9 @@ Class {
 	#name : #ZnUserAgentSession,
 	#superclass : #Object,
 	#instVars : [
-		'cookiejar',
-		'credentials',
-		'currentRealm'
+		#cookiejar,
+		#credentials,
+		#currentRealm
 	],
 	#category : #'Zinc-HTTP-Support'
 }

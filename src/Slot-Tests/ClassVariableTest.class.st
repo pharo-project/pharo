@@ -5,10 +5,10 @@ Class {
 	#name : #ClassVariableTest,
 	#superclass : #TestCase,
 	#classVars : [
-		'TestVariable'
+		#TestVariable
 	],
 	#pools : [
-		'TestSharedPool'
+		#TestSharedPool
 	],
 	#category : #'Slot-Tests-VariablesAndSlots'
 }

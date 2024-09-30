@@ -8,7 +8,7 @@ Class {
 	#name : #ReProperMethodProtocolNameRule,
 	#superclass : #ReAbstractRule,
 	#instVars : [
-		'methodProtocolName'
+		#methodProtocolName
 	],
 	#category : #'Renraku-Rules'
 }

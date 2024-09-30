@@ -23,10 +23,10 @@ Class {
 	#name : #ClyTextEditorToolMorph,
 	#superclass : #ClyBrowserToolMorph,
 	#instVars : [
-		'textModel',
-		'textMorph',
-		'changesCancelRequested',
-		'applyingChanges'
+		#textModel,
+		#textMorph,
+		#changesCancelRequested,
+		#applyingChanges
 	],
 	#category : #'Calypso-Browser-TextEditors'
 }
