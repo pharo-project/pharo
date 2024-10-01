@@ -1089,3 +1089,11 @@ CompiledCode >> writesRef: literalAssociation [
 CompiledCode >> writesSlot: aSlot [
 	^aSlot isWrittenIn: self
 ]
+
+{ #category : 'inspecting' }
+CompiledCode >> xray [
+
+    <primitive: 217>
+    self error
+
+]
