@@ -8,7 +8,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'literalsDict',
-		'first'
+		'first',
+		'messageSends'
 	],
 	#category : 'OpalCompiler-Core-Extras',
 	#package : 'OpalCompiler-Core',
@@ -16,14 +17,29 @@ Class {
 }
 
 { #category : 'adding' }
-OCLiteralList >> addLiteral: anObject [
+OCLiteralList >> addIndexedElement: anObject to: aCollection [
+
+	| index |
+	index := messageSends size * 2 + literalsDict size + 1.
 
 	"I keep the first element, so it can be easily returned"
-	literalsDict ifEmpty: [ first := anObject ].
+	index = 1 ifTrue: [ first := anObject ].
 
 	"The index of the last inserted element is the the size of the literalsDict,
 	as the elements are always added and never removed"
-	^ literalsDict at: anObject ifAbsentPut: [ literalsDict size + 1 ]
+	^ aCollection at: anObject ifAbsentPut: index.
+]
+
+{ #category : 'adding' }
+OCLiteralList >> addLiteral: anObject [
+
+	^ self addIndexedElement: anObject to: literalsDict
+]
+
+{ #category : 'adding' }
+OCLiteralList >> addMessageSelector: selector [
+
+	^ self addIndexedElement: selector to: messageSends
 ]
 
 { #category : 'converting' }
@@ -31,9 +47,10 @@ OCLiteralList >> asArray [
 
 	| result |
 
-	result := Array new: literalsDict size.
+	result := Array new: messageSends size * 2 + literalsDict size.
 
 	literalsDict associationsDo: [ :anAssoc | result at: anAssoc value put: anAssoc key ].
+	messageSends associationsDo: [ :anAssoc | result at: anAssoc value put: anAssoc key ].
 
 	^ result
 ]
@@ -48,7 +65,8 @@ OCLiteralList >> first [
 OCLiteralList >> initialize [
 
 	super initialize.
-	literalsDict := OCLiteralDictionary new
+	literalsDict := OCLiteralDictionary new.
+	messageSends := OCLiteralDictionary new.
 ]
 
 { #category : 'testing' }

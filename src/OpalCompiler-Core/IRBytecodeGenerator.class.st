@@ -430,6 +430,17 @@ IRBytecodeGenerator >> mapBytesTo: instr [
 ]
 
 { #category : 'private' }
+IRBytecodeGenerator >> methodSelectorIndexOf: object [
+
+	| index |
+
+	index := literals addMessageSelector: object.
+
+	"conversion from 1 based to 0 based"
+	^ index - 1
+]
+
+{ #category : 'private' }
 IRBytecodeGenerator >> newDummySeqId [
 
 	^ Object new
@@ -645,7 +656,7 @@ IRBytecodeGenerator >> send: selector [
 			  genSendSpecial:
 			  (self encoderClass specialSelectors indexOf: selector)
 			  numArgs: nArgs ].
-	encoder genSend: (self literalIndexOf: selector) numArgs: nArgs
+	encoder genSend: (self methodSelectorIndexOf: selector) numArgs: nArgs
 ]
 
 { #category : 'instructions' }
@@ -653,7 +664,7 @@ IRBytecodeGenerator >> send: selector toSuperOf: behavior [
 	| index nArgs |
 	nArgs := selector numArgs.
 	stack pop: nArgs.
-	index := self literalIndexOf: selector.
+	index := self methodSelectorIndexOf: selector.
 
 	inBlock
 		ifTrue: [
