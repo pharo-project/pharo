@@ -20,7 +20,7 @@ Class {
 OCLiteralList >> addIndexedElement: anObject to: aCollection [
 
 	| index |
-	index := messageSends size * 2 + literalsDict size + 1.
+	index := messageSends size * 3 + literalsDict size + 1.
 
 	"I keep the first element, so it can be easily returned"
 	index = 1 ifTrue: [ first := anObject ].
@@ -47,7 +47,7 @@ OCLiteralList >> asArray [
 
 	| result |
 
-	result := Array new: messageSends size * 2 + literalsDict size.
+	result := Array new: messageSends size * 3 + literalsDict size.
 
 	literalsDict associationsDo: [ :anAssoc | result at: anAssoc value put: anAssoc key ].
 	messageSends associationsDo: [ :anAssoc | result at: anAssoc value put: anAssoc key ].
