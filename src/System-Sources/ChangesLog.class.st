@@ -163,5 +163,6 @@ ChangesLog >> registerToAnnouncements [
 		when: ClassRemoved send: #logClassRemoved: to: self;
 		when: ClassRenamed send: #logClassRenamed: to: self;
 		when: MethodRemoved send: #logMethodRemoved: to: self.
-	self class codeSupportAnnouncer when: ExpressionEvaluated send: #logExpressionEvaluated: to: self
+	self class codeSupportAnnouncer weak 
+		when: ExpressionEvaluated send: #logExpressionEvaluated: to: self
 ]
