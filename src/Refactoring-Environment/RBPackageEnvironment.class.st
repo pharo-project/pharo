@@ -88,18 +88,16 @@ RBPackageEnvironment >> classesAndSelectorsDo: aBlock [
 
 { #category : 'accessing' }
 RBPackageEnvironment >> classesDo: aBlock [
-	| enumerated enumerator |
+
+	| enumerated |
 	enumerated := IdentitySet new.
-	enumerator := [ :each |
-		(enumerated includes: each) ifFalse: [
-			(environment includesClass: each)
-				ifTrue: [ aBlock value: each ].
-			(environment includesClass: each classSide)
-				ifTrue: [ aBlock value: each classSide].
-			enumerated add: each ] ].
+
 	packages do: [ :package |
-		package classes do: enumerator.
-		package extendedClasses do: enumerator ]
+		package classes , package extendedClasses do: [ :class |
+			(enumerated includes: class) ifFalse: [
+				(environment includesClass: class) ifTrue: [ aBlock value: class ].
+				(environment includesClass: class classSide) ifTrue: [ aBlock value: class classSide ].
+				enumerated add: class ] ] ]
 ]
 
 { #category : 'testing' }
@@ -110,7 +108,7 @@ RBPackageEnvironment >> definesClass: aClass [
 { #category : 'testing' }
 RBPackageEnvironment >> includesClass: aClass [
 
-	^ (super includesClass: aClass) and: [ self packages anySatisfy: [ :package | (package includesClass: aClass) or: [ package extendsClass: aClass ] ] ]
+	^ (super includesClass: aClass) and: [ self packages anySatisfy: [ :package | package definesOrExtendsClass: aClass ] ]
 ]
 
 { #category : 'testing' }
