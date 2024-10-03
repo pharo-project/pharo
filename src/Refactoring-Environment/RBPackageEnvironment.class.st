@@ -110,8 +110,7 @@ RBPackageEnvironment >> definesClass: aClass [
 { #category : 'testing' }
 RBPackageEnvironment >> includesClass: aClass [
 
-	^ (super includesClass: aClass) and: [
-		  self packages anySatisfy: [ :package | (package includesClass: aClass) or: [ (package extensionProtocolsForClass: aClass) isNotEmpty ] ] ]
+	^ (super includesClass: aClass) and: [ self packages anySatisfy: [ :package | (package includesClass: aClass) or: [ package extendsClass: aClass ] ] ]
 ]
 
 { #category : 'testing' }

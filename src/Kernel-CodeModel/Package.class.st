@@ -253,9 +253,12 @@ Package >> extendedClasses [
 Package >> extendsClass: aClass [
 	"Returns true if the receiver extends aClass (that is defined in another package)"
 
-	| canonizedName |
-	canonizedName := aClass instanceSide name.
-	^ self extendedClassNames includes: canonizedName
+	| class |
+	class := aClass instanceSide.
+
+	extensionSelectors keysDo: [ :extendedClass | extendedClass instanceSide = class ifTrue: [ ^ true ] ].
+
+	^ false
 ]
 
 { #category : 'accessing' }
