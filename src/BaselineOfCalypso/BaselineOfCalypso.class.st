@@ -28,10 +28,10 @@ BaselineOfCalypso >> baseline: spec [
 			baseline: 'CalypsoNavigationModel' with: [ spec repository: repository ].
 
 		spec
-			package: #'Calypso-SystemQueries' with: [ spec requires: #( #CalypsoNavigationModel #ClassAnnotation ) ];
+			package: #'Calypso-SystemQueries' with: [ spec requires: #( 'CalypsoNavigationModel' #ClassAnnotation ) ];
 			package: #'Calypso-SystemQueries-Tests' with: [
 				spec requires:
-						#( #CalypsoNavigationModel
+						#( 'CalypsoNavigationModel'
 						   #ClassAnnotationTests #'Calypso-SystemQueries'
 						   #'Calypso-SystemQueries-Tests-PWithSingleClass'
 						   #'Calypso-SystemQueries-Tests-PExtendedByP1'
@@ -170,7 +170,7 @@ BaselineOfCalypso >> baseline: spec [
 			package: #'Calypso-SystemPlugins-DependencyAnalyser-Browser'
 			with: [ spec requires: #( #'Calypso-SystemTools-Core' ) ];
 			package: #'Calypso-Browser' with: [
-				spec requires: #( #'Calypso-NavigationModel'
+				spec requires: #( 'CalypsoNavigationModel'
 					   #Commander ) ];
 			package: #'Calypso-Browser-Tests'
 			with: [ spec requires: #( #'Calypso-Browser' ) ];
@@ -200,7 +200,7 @@ BaselineOfCalypso >> baseline: spec [
 
 
 		spec
-			group: 'CoreEnvironment' with: #( #'Calypso-NavigationModel' );
+			group: 'CoreEnvironment' with: #( #'CalypsoNavigationModel' );
 			group: 'CoreBrowser' with: #( #'Calypso-Browser' );
 			group: 'MinimalEnvironment'
 			with:
@@ -238,7 +238,7 @@ BaselineOfCalypso >> baseline: spec [
 			with: #( #'Calypso-SystemPlugins-Monticello-Browser' );
 			group: 'MinimalEnvironmentTests'
 			with:
-				#( #'CalypsoNavigationModel'
+				#( 'CalypsoNavigationModel'
 				   #'Calypso-SystemQueries-Tests' #'Calypso-SystemPlugins-Traits-Queries-Tests'
 				   'Calypso-SystemPlugins-InheritanceAnalysis-Queries-Tests'
 				   #'Calypso-SystemPlugins-Deprecation-Queries-Tests'
