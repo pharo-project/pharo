@@ -7,11 +7,17 @@ Class {
 
 { #category : 'baselines' }
 BaselineOfCalypsoNavigationModel >> baseline: spec [
-
 	<baseline>
-	
+	| repository |
+	repository := self packageRepositoryURLForSpec: spec.
+
 	spec for: #common do: [ 
 		spec
+			baseline: 'ClassAnnotation' with: [
+				spec
+					repository: repository;
+					loads: 'Core' ];
+			
 			package: #'Calypso-NavigationModel';
 			package: #'Calypso-NavigationModel-Tests'
 				with: [ spec requires: #( #'Calypso-NavigationModel' ) ].
