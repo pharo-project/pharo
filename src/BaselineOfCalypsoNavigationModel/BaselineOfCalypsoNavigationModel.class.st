@@ -16,7 +16,7 @@ BaselineOfCalypsoNavigationModel >> baseline: spec [
 			baseline: 'ClassAnnotation' with: [
 				spec
 					repository: repository;
-					loads: 'Core' ];
+					loads: 'default' ];
 			
 			package: #'Calypso-NavigationModel';
 			package: #'Calypso-NavigationModel-Tests'
