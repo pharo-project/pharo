@@ -431,6 +431,18 @@ RubCharacterScanner >> textColor: ignored [
 	"Overridden in DisplayScanner"
 ]
 
+{ #category : #accessing }
+RubCharacterScanner >> textStyle [
+
+	^ textStyle
+]
+
+{ #category : #accessing }
+RubCharacterScanner >> textStyle: anObject [
+
+	textStyle := anObject
+]
+
 { #category : #'multilingual scanning' }
 RubCharacterScanner >> widthOf: char inFont: aFont [
 

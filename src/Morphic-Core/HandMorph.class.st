@@ -1047,15 +1047,6 @@ HandMorph >> savePatchFrom: aCanvas [
 	^damageRect
 ]
 
-{ #category : #'selected object' }
-HandMorph >> selectedObject [
-	"answer the selected object for the hand or nil is none"
-	| halo |
-	halo := self halo.
-	halo ifNil: [^ nil].
-	^ halo target renderedMorph
-]
-
 { #category : #'private - events' }
 HandMorph >> sendEvent: anEvent focus: focusHolder [
 	"Send the event to the morph currently holding the focus, or if none to the owner of the hand."
