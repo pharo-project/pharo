@@ -18,8 +18,7 @@ ReMissingSuperSendsRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReMissingSuperSendsRule class >> group [
-
-	^ 'Potential Bugs'
+	^ self potentialBugsGroup
 ]
 
 { #category : 'accessing' }

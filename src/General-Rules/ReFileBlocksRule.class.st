@@ -27,7 +27,7 @@ Class {
 
 { #category : 'accessing' }
 ReFileBlocksRule class >> group [
-	^ 'Potential Bugs'
+	^ self potentialBugsGroup
 ]
 
 { #category : 'accessing' }

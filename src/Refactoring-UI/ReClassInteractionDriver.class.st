@@ -57,7 +57,8 @@ ReClassInteractionDriver >> scopes: refactoringScopes [
 
 { #category : 'accessing' }
 ReClassInteractionDriver >> tagName [
-	^ self subclassResponsibility
+
+	^ tagName
 ]
 
 { #category : 'accessing' }

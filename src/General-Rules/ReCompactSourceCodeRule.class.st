@@ -47,8 +47,7 @@ ReCompactSourceCodeRule class >> criticizeFinalDotInMethodBody: aBoolean [
 
 { #category : 'accessing' }
 ReCompactSourceCodeRule class >> group [
-
-	^ 'Clean Code'
+	^ self cleanCodeGroup
 ]
 
 { #category : 'class initialization' }

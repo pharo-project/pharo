@@ -16,8 +16,7 @@ ReNoNilAssignationInInitializeRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReNoNilAssignationInInitializeRule class >> group [
-
-	^ 'Style'
+	^ self styleGroup
 ]
 
 { #category : 'accessing' }

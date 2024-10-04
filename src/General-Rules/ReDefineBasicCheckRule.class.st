@@ -20,7 +20,7 @@ ReDefineBasicCheckRule class >> checksClass [
 
 { #category : 'accessing' }
 ReDefineBasicCheckRule class >> group [
-	^ 'Coding Idiom Violation'
+	^ self codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

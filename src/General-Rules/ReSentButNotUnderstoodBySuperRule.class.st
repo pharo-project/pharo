@@ -17,8 +17,7 @@ ReSentButNotUnderstoodBySuperRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReSentButNotUnderstoodBySuperRule class >> group [
-
-	^ 'Bugs'
+	^ self bugsGroup
 ]
 
 { #category : 'accessing' }

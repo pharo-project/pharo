@@ -11,8 +11,7 @@ Class {
 
 { #category : 'accessing' }
 ReIfTrueIfFalseUselessRule class >> group [
-
-	^ 'Design Flaws'
+	^ self designFlawGroup
 ]
 
 { #category : 'accessing' }

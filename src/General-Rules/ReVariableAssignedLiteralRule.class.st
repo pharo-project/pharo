@@ -17,7 +17,7 @@ ReVariableAssignedLiteralRule class >> checksClass [
 
 { #category : 'accessing' }
 ReVariableAssignedLiteralRule class >> group [
-	^ 'Design Flaws'
+	^ self designFlawGroup
 ]
 
 { #category : 'accessing' }
