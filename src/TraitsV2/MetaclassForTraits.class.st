@@ -95,6 +95,16 @@ MetaclassForTraits >> name [
 	^ thisClass ifNil: [ 'a MetaclassForTraits' ] ifNotNil: [ thisClass name asString , ' classTrait' ]
 ]
 
+{ #category : #accessing }
+MetaclassForTraits >> nonTraitedClassMethods [
+	^self methods reject: [ : cm | cm methodClass == TraitedClass ]
+]
+
+{ #category : #accessing }
+MetaclassForTraits >> nonTraitedClassSelectors [
+	^self nonTraitedClassMethods collect: [ : each | each selector ]
+]
+
 { #category : #'organization updating' }
 MetaclassForTraits >> notifyOfRecategorizedSelector: selector from: oldCategory to: newCategory [
 	"When there is a recategorization of a selector, I propagate the changes to my users"
