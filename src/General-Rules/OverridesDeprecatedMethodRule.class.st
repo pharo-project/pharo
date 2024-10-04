@@ -18,7 +18,7 @@ OverridesDeprecatedMethodRule class >> checksMethod [
 
 { #category : 'accessing' }
 OverridesDeprecatedMethodRule class >> group [
-	^ 'Potential Bugs'
+	^ self potentialBugsGroup
 ]
 
 { #category : 'accessing' }

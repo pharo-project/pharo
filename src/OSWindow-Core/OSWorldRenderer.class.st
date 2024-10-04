@@ -357,7 +357,7 @@ OSWorldRenderer >> requestTextEditingAt: aRectangle [
 { #category : 'accessing' }
 OSWorldRenderer >> screenScaleFactor [
 
-	^ world scaleFactor * self windowScaleFactor
+	^ world zoomFactor * self windowScaleFactor
 ]
 
 { #category : 'system startup' }

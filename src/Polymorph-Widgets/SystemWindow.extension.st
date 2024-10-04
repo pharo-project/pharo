@@ -365,11 +365,9 @@ SystemWindow >> bringBehind: aMorph [
 SystemWindow >> closeBoxHit [
 	"The user clicked on the close-box control in the window title.
 	For Mac users only, the Mac convention of option-click-on-close-box is obeyed if the mac option key is down.
-	If we have a modal child then don't delete.
-	Play the close sound now since this is the only time we know that the close is user-initiated."
+	If we have a modal child then don't delete."
 
 	self allowedToClose ifFalse: [^self].
-	self playCloseSound.
 	self close
 ]
 
@@ -378,9 +376,6 @@ SystemWindow >> collapseBoxHit [
 	"The user has clicked on the collapse box.
 	Collapse or expand the receiver as appropriate."
 
-	self isCollapsed
-		ifTrue: [self playRestoreUpSound]
-		ifFalse: [self playMinimizeSound].
 	self collapseOrExpand
 ]
 
@@ -480,7 +475,6 @@ SystemWindow >> expandBoxHit [
 	"The fullscreen expand box has been hit"
 
 	self isCollapsed ifTrue: [
-		self playRestoreUpSound.
 		self
 			hide;
 			collapseOrExpand.
@@ -491,12 +485,10 @@ SystemWindow >> expandBoxHit [
 		^ self show ].
 	self unexpandedFrame
 		ifNil: [
-			self playMaximizeSound.
 			self
 				unexpandedFrame: fullFrame;
 				fullscreen ]
 		ifNotNil: [
-			self playRestoreDownSound.
 			self
 				bounds: self unexpandedFrame;
 				unexpandedFrame: nil ].
@@ -949,48 +941,6 @@ SystemWindow class >> passivateTopWindow [
 		TopWindow := nil.
 		window privateBePassive.
 	]
-]
-
-{ #category : '*Polymorph-Widgets' }
-SystemWindow >> playCloseSound [
-	"Play the themed sound for closing."
-
-	self theme windowCloseSound play
-]
-
-{ #category : '*Polymorph-Widgets' }
-SystemWindow >> playMaximizeSound [
-	"Play the themed sound for maximizing."
-
-	self theme windowMaximizeSound play
-]
-
-{ #category : '*Polymorph-Widgets' }
-SystemWindow >> playMinimizeSound [
-	"Play the themed sound for maximizing."
-
-	self theme windowMinimizeSound play
-]
-
-{ #category : '*Polymorph-Widgets' }
-SystemWindow >> playOpenSound [
-	"Play the themed sound for opening."
-
-	self theme windowOpenSound play
-]
-
-{ #category : '*Polymorph-Widgets' }
-SystemWindow >> playRestoreDownSound [
-	"Play the themed sound for restoring from maximized."
-
-	self theme windowRestoreDownSound play
-]
-
-{ #category : '*Polymorph-Widgets' }
-SystemWindow >> playRestoreUpSound [
-	"Play the themed sound for restoring from minimized."
-
-	self theme windowRestoreUpSound play
 ]
 
 { #category : '*Polymorph-Widgets' }

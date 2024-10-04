@@ -35,8 +35,7 @@ PolymorphSystemSettings class >> appearanceSettingsOn: aBuilder [
 				order: 1;
 				domainValues: self uiThemeClassChoices.
 			self morphicSettingsOn: aBuilder.
-			self desktopSettingsOn: aBuilder.
-			self soundSettingsOn: aBuilder ]
+			self desktopSettingsOn: aBuilder ]
 ]
 
 { #category : 'settings' }
@@ -1210,42 +1209,6 @@ PolymorphSystemSettings class >> showDesktopLogo: aBoolean [
 	ShowDesktopLogo = aBoolean ifTrue: [^ self].
 	ShowDesktopLogo := aBoolean.
 	self desktopLogoChanged
-]
-
-{ #category : 'sound' }
-PolymorphSystemSettings class >> soundSettingsOn: aBuilder [
-	(aBuilder setting: #soundEnabled)
-		label: 'Sound';
-		target: SoundSystem;
-		default: false;
-		noOrdering;
-		with: [
-			(aBuilder setting: #useThemeSounds)
-				label: 'Use theme sounds';
-				target: SoundTheme;
-				default: true;
-				with: [
-					(aBuilder pickOne: #soundThemeClass)
-						label: 'Sound theme' ;
-						target: self;
-						domainValues: self soundThemeClassChoices]]
-]
-
-{ #category : 'sound' }
-PolymorphSystemSettings class >> soundThemeClass [
-	^ SoundTheme current class
-]
-
-{ #category : 'sound' }
-PolymorphSystemSettings class >> soundThemeClass: aSoundThemeClass [
-	aSoundThemeClass ifNil: [^ self].
-	self soundThemeClass ~= aSoundThemeClass
-		ifTrue: [aSoundThemeClass beCurrent]
-]
-
-{ #category : 'sound' }
-PolymorphSystemSettings class >> soundThemeClassChoices [
-	^ SoundTheme allThemeClasses collect: [:c | c themeName -> c]
 ]
 
 { #category : 'morphic' }

@@ -17,7 +17,7 @@ Class {
 
 { #category : 'accessing' }
 ReNotOptimizedIfNilRule class >> group [
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }

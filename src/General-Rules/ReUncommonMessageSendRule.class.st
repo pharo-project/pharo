@@ -18,7 +18,7 @@ ReUncommonMessageSendRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReUncommonMessageSendRule class >> group [
-	^ 'Potential Bugs'
+	^ self potentialBugsGroup
 ]
 
 { #category : 'accessing' }

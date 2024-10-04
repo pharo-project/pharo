@@ -16,7 +16,7 @@ ReReturnsBooleanAndOtherRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReReturnsBooleanAndOtherRule class >> group [
-	^ 'Potential Bugs'
+	^ self potentialBugsGroup
 ]
 
 { #category : 'accessing' }

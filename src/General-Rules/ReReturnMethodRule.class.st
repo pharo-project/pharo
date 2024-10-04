@@ -19,8 +19,7 @@ ReReturnMethodRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReReturnMethodRule class >> group [
-
-	^ 'Bugs'
+	^ self bugsGroup
 ]
 
 { #category : 'accessing' }

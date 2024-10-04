@@ -37,12 +37,6 @@ CleanBlockClosure class >> compiledBlock: aCompiledBlock [
 		compiledBlock: aCompiledBlock
 ]
 
-{ #category : 'printing' }
-CleanBlockClosure >> doPrintOn: aStream [
-
-	aStream nextPutAll: self sourceNode value sourceCode
-]
-
 { #category : 'testing' }
 CleanBlockClosure >> hasLiteral: aLiteral [
 	^self compiledBlock hasLiteral: aLiteral

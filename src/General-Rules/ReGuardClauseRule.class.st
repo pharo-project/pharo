@@ -30,7 +30,7 @@ Class {
 
 { #category : 'accessing' }
 ReGuardClauseRule class >> group [
-	^ 'Coding Idiom Violation'
+	^ self codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }
@@ -41,6 +41,12 @@ ReGuardClauseRule class >> rationale [
 { #category : 'accessing' }
 ReGuardClauseRule class >> ruleName [
 	^ 'Replace single branch conditional with guard clause'
+]
+
+{ #category : 'accessing' }
+ReGuardClauseRule class >> severity [
+
+	^ #information
 ]
 
 { #category : 'initialization' }

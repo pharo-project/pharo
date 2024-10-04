@@ -16,7 +16,7 @@ ReMultiplePeriodsTerminatingStatementRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReMultiplePeriodsTerminatingStatementRule class >> group [
-	^ 'Potential Bugs'
+	^ self potentialBugsGroup
 ]
 
 { #category : 'accessing' }
