@@ -1820,6 +1820,17 @@ Context >> runUntilErrorOrReturnFrom: aSender [
 ]
 
 { #category : #'debugger access' }
+Context >> searchDoIt [
+
+	"Search down into the call stack and look for a DoIt context.
+	Return `nil` if not found."
+	
+	self belongsToDoIt ifTrue: [ ^ self home ].
+	sender ifNil: [ ^nil ].
+	^ sender searchDoIt.
+]
+
+{ #category : #'debugger access' }
 Context >> selector [
 	"Answer the selector of the method that created the receiver."
 
@@ -2290,6 +2301,16 @@ Context >> unwindTo: aContext [
 			context unwindComplete: true.
 			unwindBlock := context unwindBlock.
 			unwindBlock value ]]
+]
+
+{ #category : #'debugger access' }
+Context >> variableNamesOf: anObject [
+
+	"Retrieve the names of the arguments and temporary variables, if any, that refer to the given object."
+
+	^self astScope allTemps
+		select: [ :v | (v readInContext: self) == anObject ]
+		thenCollect: [ :v | v name ]
 ]
 
 { #category : #private }

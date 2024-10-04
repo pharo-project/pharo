@@ -48,6 +48,12 @@ ContextTest class >> returnNonActiveContextOfBlock [
 	^ Block value
 ]
 
+{ #category : #utilities }
+ContextTest >> DoIt [
+
+	"Mock DoIt method that does not do things"
+]
+
 { #category : #private }
 ContextTest >> privRestartArgBlockTest [
 	"This tests may loop endlessly if incorrect, so call it from another method testing it does not time out"
@@ -270,6 +276,38 @@ ContextTest >> testReturn [
 ]
 
 { #category : #tests }
+ContextTest >> testSearchDoIt [
+
+	|doit|
+	
+	doit := Context
+		sender: thisContext
+		receiver: nil
+		method: self class >> #DoIt
+		arguments: #().
+
+	aMethodContext := Context
+		sender: doit
+		receiver: aReceiver
+		method: aCompiledMethod
+		arguments: #().
+		
+	self assert: (aMethodContext searchDoIt) equals: doit
+]
+
+{ #category : #tests }
+ContextTest >> testSearchDoItNil [
+
+	aMethodContext := Context
+		sender: thisContext
+		receiver: aReceiver
+		method: aCompiledMethod
+		arguments: #().
+		
+	self assert: (aMethodContext searchDoIt) equals: nil
+]
+
+{ #category : #tests }
 ContextTest >> testSetUp [
 	"Note: In addition to verifying that the setUp worked the way it was expected to, testSetUp is used to illustrate the meaning of the simple access methods, methods that are not normally otherwise 'tested'"
 
@@ -410,6 +448,60 @@ ContextTest >> testSteppingReturnSelfMethod [
 
 	newContext := newContext step.
 	self assert: newContext identicalTo: aMethodContext
+]
+
+{ #category : #tests }
+ContextTest >> testvariableNamesOf [
+
+	| a b c d |
+	a := 'hello'.
+	b := 'hel' , 'lo'.
+
+	self assert: (thisContext variableNamesOf: a) equals: #( #a ).
+
+	c := a.
+
+	self assert: (thisContext variableNamesOf: a) sorted 	equals: #( #a #c ).
+
+	d := a.
+
+	{ a } do: [ :z | 
+		| t |
+		self assert: (thisContext variableNamesOf: a) sorted equals: #( #a #c #d #z ).
+		t := z.
+		c := nil.
+		self assert: (thisContext variableNamesOf: a) sorted equals: #( #a #d #t #z ) ].
+]
+
+{ #category : #tests }
+ContextTest >> testvariableNamesOf: x and: y [
+
+	| a b c d e |
+		
+	a := x.
+	b := y.
+	c := a.
+
+	self assert: (thisContext variableNamesOf: a) sorted equals: #( #a #c #x ).
+
+	d := a.
+
+	{ a } do: [ :z | 
+		| t |
+		self assert: (thisContext variableNamesOf: a) sorted equals: #( #a #c #d #x #z ).
+		t := a.
+		c := nil.
+		e := a.
+		self assert: (thisContext variableNamesOf: a) sorted equals: #( #a #d #e #t #x #z ).
+		].
+	
+	a := nil
+]
+
+{ #category : #tests }
+ContextTest >> testvariableNamesOfWithArgs [
+
+	self testvariableNamesOf: 'hello' and: 'world'
 ]
 
 { #category : #tests }
