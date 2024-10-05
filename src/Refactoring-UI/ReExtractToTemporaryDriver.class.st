@@ -7,8 +7,7 @@ Class {
 		'selector',
 		'class',
 		'shouldEscape',
-		'variableNameEditorPresenterClass',
-		'newMessage'
+		'variableNameEditorPresenterClass'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -30,11 +29,6 @@ ReExtractToTemporaryDriver >> changes [
 	
 	^ refactoring privateTransform; changes
 
-]
-
-{ #category : 'execution' }
-ReExtractToTemporaryDriver >> configureMessage [
-	refactoring newSelector: newMessage selector.
 ]
 
 { #category : 'resources' }
