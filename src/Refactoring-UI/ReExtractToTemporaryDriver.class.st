@@ -7,7 +7,8 @@ Class {
 		'selector',
 		'class',
 		'shouldEscape',
-		'variableNameEditorPresenterClass'
+		'variableNameEditorPresenterClass',
+		'stream'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -95,7 +96,6 @@ ReExtractToTemporaryDriver >> scopes: aCollection [
 { #category : 'initialization' }
 ReExtractToTemporaryDriver >> setErrorTextFromCondition: aCondition onPresenter: aPresenter [
 
-	| stream |
 	stream := WriteStream on: String new.
 	aCondition violationMessageOn: stream.
 	aPresenter setErrorText: stream contents
@@ -104,11 +104,9 @@ ReExtractToTemporaryDriver >> setErrorTextFromCondition: aCondition onPresenter:
 { #category : 'validation' }
 ReExtractToTemporaryDriver >> validateName: aName onPresenter: presenter [
  
-	| firstCondition secondCondition result errorMessages stream |
+	| firstCondition secondCondition result errorMessages |
    	firstCondition := refactoring preconditionValidInstVarName.
 	secondCondition := refactoring preconditionCheckVariableName.
-	stream := WriteStream on: String new.
-
 	errorMessages := OrderedCollection new.
 	
 	result := (firstCondition check and: [ secondCondition check ]).
