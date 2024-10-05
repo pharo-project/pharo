@@ -7,8 +7,7 @@ Class {
 		'selector',
 		'class',
 		'shouldEscape',
-		'variableNameEditorPresenterClass',
-		'stream'
+		'variableNameEditorPresenterClass'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -93,42 +92,31 @@ ReExtractToTemporaryDriver >> scopes: aCollection [
 	scopes := aCollection
 ]
 
-{ #category : 'initialization' }
-ReExtractToTemporaryDriver >> setErrorTextFromCondition: aCondition onPresenter: aPresenter [
-
-	stream := WriteStream on: String new.
-	aCondition violationMessageOn: stream.
-	aPresenter setErrorText: stream contents
-]
-
 { #category : 'validation' }
 ReExtractToTemporaryDriver >> validateName: aName onPresenter: presenter [
  
-	| firstCondition secondCondition result errorMessages |
+	| firstCondition secondCondition result firstStream secondStream errorMessages |
    	firstCondition := refactoring preconditionValidInstVarName.
 	secondCondition := refactoring preconditionCheckVariableName.
-	errorMessages := OrderedCollection new.
+	firstStream := WriteStream on: String new.
+	secondStream := WriteStream on: String new.
+	
+	firstCondition check ifFalse: [ 
+        firstCondition violationMessageOn: firstStream ].
+	secondCondition check ifFalse: [ 
+        secondCondition violationMessageOn: secondStream ].
+	errorMessages := firstStream contents.
+	errorMessages := errorMessages , (errorMessages isEmpty
+							ifFalse: [ '. ', secondStream contents ]
+							ifTrue: [ secondStream contents ]).
 	
 	result := (firstCondition check and: [ secondCondition check ]).
     
    result 
-       ifFalse: [ 
-           firstCondition check ifFalse: [ 
-               self setErrorTextFromCondition: firstCondition onPresenter: presenter.
-               errorMessages add: (firstCondition violationMessageOn: stream).
-           ].
-           secondCondition check ifFalse: [ 
-               self setErrorTextFromCondition: secondCondition onPresenter: presenter.
-               errorMessages add: (secondCondition violationMessageOn: stream ).
-           ].
-           shouldEscape := true.
-       ]
+		ifFalse: [
+      		shouldEscape := true.
+			presenter setErrorText: errorMessages ]
        ifTrue: [ presenter setErrorText: '' ].
-
-	errorMessages isEmpty
-		ifFalse: [ 
-           presenter setErrorText: (errorMessages join: ', ').
-       ]. 
    
 	^ result.
 ]

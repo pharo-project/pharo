@@ -44,11 +44,8 @@ RBExtractToTemporaryRefactoring >> applicabilityPreconditions [
 
 	^ {
 			(ReDefinesSelectorsCondition new definesSelectors: { selector } in: class).
-			(ReIsValidInstanceVariableName new name: newVariableName).
-			(ReCheckVariableNameCondition
-				class: class 
-      			variableName: newVariableName 
-     			parseTree: parseTree)
+			self preconditionValidInstVarName.
+			self preconditionCheckVariableName
 		}
 ]
 

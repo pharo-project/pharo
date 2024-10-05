@@ -38,10 +38,10 @@ ReExtractToTemporaryDriverTest >> testExtractToTemporaryExpectChanges [
 
 	| driver driverChanges |
 	driver := ReExtractToTemporaryDriver new
-					 extract: (130 to: 138)
-					 to: 'variable'
-		          from: #noMoveDefinition
-		          in: RBClassDataForRefactoringTest.
+					extract: (130 to: 138)
+					to: 'variable'
+		         from: #noMoveDefinition
+		         in: RBClassDataForRefactoringTest.
 
 	self setUpDriver: driver.
 	
@@ -67,7 +67,7 @@ ReExtractToTemporaryDriverTest >> testFailureInvalidVariableName [
 
 	self setUpMocksOn: driver.
 
-	self should: [ driver runRefactoring ] raise: Error.
+	self should: [ driver runRefactoring ] raise: RBRefactoringError.
 ]
 
 { #category : 'tests' }
