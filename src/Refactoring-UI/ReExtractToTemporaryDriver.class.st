@@ -30,6 +30,15 @@ ReExtractToTemporaryDriver >> configureRefactoring [
 							in: class
 ]
 
+{ #category : 'instance creation' }
+ReExtractToTemporaryDriver >> extract: anInterval to: aString from: aSelector in: aClass [
+
+	class := RBNamespace new classObjectFor: aClass.
+	selector := aSelector.
+	sourceInterval := anInterval.
+	newVariableName := aString
+]
+
 { #category : 'initialization' }
 ReExtractToTemporaryDriver >> initialize [ 
 	
@@ -38,51 +47,56 @@ ReExtractToTemporaryDriver >> initialize [
 ]
 
 { #category : 'execution' }
-ReExtractToTemporaryDriver >> requestSelectorBasedOn: aSelector [
+ReExtractToTemporaryDriver >> requestSelector [
 
-	selector := self defaultRequestDialog 
-						title: 'Please provide a selector';
-						label: 'The selector should be defined.';
-						validateAnswer: [ :string :presenter |
-							self validateSelector: string onPresenter: presenter ];
-						text: aSelector printString;
-						openModal.
-	^ selector
-						
+	^ self requestUserInput: 'Please provide a selector'
+			 label: 'The selector should be defined.'  
+			 validate: [ :string :presenter | self validateSelector: string onPresenter: presenter ]
 ]
 
 { #category : 'execution' }
-ReExtractToTemporaryDriver >> requestVariableNameBasedOn: aName [
+ReExtractToTemporaryDriver >> requestUserInput: aTitle label: aLabel validate: aValidationBlock [
 
-	newVariableName := self defaultRequestDialog
-								title: 'Please provide a new variable name';
-								label: 'The new name should be valid and not used.';
-        						validateAnswer: [ :string :presenter | 
-            						self validateName: string onPresenter: presenter ];
-       						text: aName;
-        						openModal.
-	^ newVariableName
+	| userInput |
+	userInput := self defaultRequestDialog
+												title: aTitle;
+												label: aLabel;
+												validateAnswer: aValidationBlock;
+												openModal.
+	^ userInput
+]
+
+{ #category : 'execution' }
+ReExtractToTemporaryDriver >> requestVariableName [
+
+	^ self requestUserInput: 'Please provide a variable name'
+			 label: 'The variable name should be defined.'  
+			 validate: [ :string :presenter | self validateName: string onPresenter: presenter ]
 ]
 
 { #category : 'execution' }
 ReExtractToTemporaryDriver >> runRefactoring [
 
 	self configureRefactoring.
-	selector := self requestSelectorBasedOn: refactoring selector.
+	
+	selector := self requestSelector.
 	shouldEscape ifTrue: [ ^ self ].
 	
-	newVariableName := self requestVariableNameBasedOn: refactoring newVariableName.
+	refactoring prepareForExecution.
+	
+	newVariableName := self requestVariableName.
 	shouldEscape ifTrue: [ ^ self ].
+	
 	self applyChanges
 ]
 
 { #category : 'initialization' }
-ReExtractToTemporaryDriver >> sourceInterval: anInterval newVariableName: aVariableName selector: aSelector class: aClass [
+ReExtractToTemporaryDriver >> setErrorTextFromCondition: aCondition onPresenter: aPresenter [
 
-    sourceInterval := anInterval.
-    newVariableName := aVariableName.
-    selector := aSelector.
-    class := aClass.
+	| stream |
+	stream := WriteStream on: String new.
+	aCondition violationMessageOn: stream.
+	aPresenter setErrorText: stream contents
 ]
 
 { #category : 'validation' }
@@ -91,13 +105,18 @@ ReExtractToTemporaryDriver >> validateName: aName onPresenter: presenter [
 	| firstCondition secondCondition result |
 	firstCondition := ReIsValidInstanceVariableName new name: aName.
 	secondCondition := ReCheckVariableNameCondition
-		 class: refactoring class
+		 class: class
 		 variableName: aName
 		 parseTree: refactoring parseTree.
 	result := (firstCondition check and: [ secondCondition check ]).
 	
 	result 
-		ifFalse: [ presenter setErrorText: 'Variable not valid or already defined.'. shouldEscape := true ] 
+		ifFalse: [
+			firstCondition check ifFalse: [
+				self setErrorTextFromCondition: firstCondition onPresenter: presenter ].
+			secondCondition check ifFalse: [ 
+				self setErrorTextFromCondition: secondCondition onPresenter: presenter ].
+			shouldEscape := true ] 
 		ifTrue: [ presenter setErrorText: '' ].
 		
 	^ result
@@ -106,16 +125,12 @@ ReExtractToTemporaryDriver >> validateName: aName onPresenter: presenter [
 { #category : 'private' }
 ReExtractToTemporaryDriver >> validateSelector: aSelector onPresenter: presenter [
 
-	| condition result |
+	| condition violators |
 	condition := ReDefinesSelectorsCondition new 
-		definesSelectors: (Array with: aSelector ) in: refactoring class.
-	result := condition check.
+		definesSelectors: { selector } in: class.
+	violators := condition violators.
 	
-	result
-		ifFalse: [ presenter setErrorText: 
-										'The selector ', aSelector printString, ' is not defined in the class.'. 
-					shouldEscape := true ]
-	  	ifTrue: [ presenter setErrorText: '' ].
-	
-	^ result 
+ 	violators isEmpty
+		ifFalse: [ self setErrorTextFromCondition: condition onPresenter: presenter . ^ false ]
+	  	ifTrue: [ presenter setErrorText: ''. ^ true ]. 
 ]

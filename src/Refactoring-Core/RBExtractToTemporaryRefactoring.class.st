@@ -43,7 +43,7 @@ RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval
 RBExtractToTemporaryRefactoring >> applicabilityPreconditions [
 
 	^ {
-			(ReDefinesSelectorsCondition new definesSelectors: (Array with: selector) in: class).
+			(ReDefinesSelectorsCondition new definesSelectors: { selector } in: class).
 		  	(ReIsValidInstanceVariableName new name: newVariableName).
 			(ReCheckVariableNameCondition
 				class: class
@@ -95,6 +95,11 @@ RBExtractToTemporaryRefactoring >> insertTemporary [
 		each replaceWith: (ASTVariableNode named: newVariableName) ]
 ]
 
+{ #category : 'accessing' }
+RBExtractToTemporaryRefactoring >> parseTree [
+	^ parseTree
+]
+
 { #category : 'transforming' }
 RBExtractToTemporaryRefactoring >> prepareForExecution [
 
@@ -109,8 +114,6 @@ RBExtractToTemporaryRefactoring >> prepareForExecution [
 			parseTree := class parseTreeForSelector: selector.
 			parseTree ifNil: [ self refactoringError: 'Could not parse method' ]].
 	parseTree doSemanticAnalysis
-
-
 ]
 
 { #category : 'transforming' }
