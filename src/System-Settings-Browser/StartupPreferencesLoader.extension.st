@@ -1,6 +1,21 @@
 Extension { #name : 'StartupPreferencesLoader' }
 
 { #category : '*System-Settings-Browser' }
+StartupPreferencesLoader class >> defineStartUpActionMenuOn: aBuilder [
+	<worldMenu>
+	
+	(aBuilder item: #SystemStartupCreator)
+		action: [ self default 
+						addTemplateForStartupInDirectory: self preferencesGeneralFolder named: 'PharoPreferences.st' ];
+		label: 'Define a preference file';
+		parent: #SystemStartup;
+		order: 2;
+		help: 'Propose and define a startup action file for the current version of Pharo.';
+		iconName: #scriptManager.
+	aBuilder withSeparatorAfter
+]
+
+{ #category : '*System-Settings-Browser' }
 StartupPreferencesLoader class >> startupGeneralPrefererencesFolderMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #SystemStartupFolder)
@@ -22,7 +37,7 @@ StartupPreferencesLoader class >> startupLoaderMenuOn: aBuilder [
 		order: 1;
 		help: 'Run startup scripts.';
 		iconName: #scriptManager.
-	aBuilder withSeparatorAfter
+
 ]
 
 { #category : '*System-Settings-Browser' }
