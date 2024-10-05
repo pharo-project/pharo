@@ -15,22 +15,15 @@ ReExtractToTemporaryDriverTest >> setUpMocksOn: driver [
     dialog 
         on: #variableName
         respond: (RBArgumentName name: 'tempVar').
-        
-    dialog
-        on: #variableName
-        respond: (RBArgumentName name: #anotherVar).
     
     driver requestDialog: dialog.
     
     requestClass := MockObject new.
     requestClass
         on: #openOn:withInvalidArgs:canRenameArgs:canRemoveArgs:canAddArgs:canEditName:
-        respond: dialog;
-        on: #openOn:withInvalidArgs:canRenameArgs:canRemoveArgs:canAddArgs:canEditName:
         respond: dialog.
     
     driver variableNameEditorPresenterClass: requestClass.
-
 ]
 
 { #category : 'tests' }
@@ -81,8 +74,6 @@ ReExtractToTemporaryDriverTest >> testFailureNonExistantSelector [
       in: RBClassDataForRefactoringTest.
     
 	self setUpDriver: driver.
-	
-	self setUpMocksOn: driver.
     
    self should: [ driver runRefactoring ] raise: RBRefactoringError.
 ]

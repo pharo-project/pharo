@@ -14,16 +14,6 @@ Class {
 	#tag : 'Drivers'
 }
 
-{ #category : 'testing' }
-ReExtractToTemporaryDriver >> canEditName [
-	^ true
-]
-
-{ #category : 'testing' }
-ReExtractToTemporaryDriver >> canRenameArgs [
-	^ false
-]
-
 { #category : 'execution' }
 ReExtractToTemporaryDriver >> changes [
 	
