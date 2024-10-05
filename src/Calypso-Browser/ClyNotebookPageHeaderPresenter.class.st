@@ -47,7 +47,7 @@ ClyNotebookPageHeaderPresenter >> initializePresenters [
 		addStyle: 'fixed';
 		yourself.
 	closeImage := self newImage
-		image: (self application iconNamed: #glamorousClose);
+		image: (self application iconNamed: #close);
 		yourself.
 
 	closeImage eventHandler
