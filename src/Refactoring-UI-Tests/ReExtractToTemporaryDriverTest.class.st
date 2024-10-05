@@ -1,18 +1,42 @@
 Class {
 	#name : 'ReExtractToTemporaryDriverTest',
 	#superclass : 'ReDriverTest',
-	#instVars : [
-		'driver'
-	],
 	#category : 'Refactoring-UI-Tests-Driver',
 	#package : 'Refactoring-UI-Tests',
 	#tag : 'Driver'
 }
 
+{ #category : 'initialization' }
+ReExtractToTemporaryDriverTest >> setUpMocksOn: driver [
+
+    | requestClass dialog |
+    dialog := MockObject new.
+    
+    dialog 
+        on: #variableName
+        respond: (RBArgumentName name: 'tempVar').
+        
+    dialog
+        on: #variableName
+        respond: (RBArgumentName name: #anotherVar).
+    
+    driver requestDialog: dialog.
+    
+    requestClass := MockObject new.
+    requestClass
+        on: #openOn:withInvalidArgs:canRenameArgs:canRemoveArgs:canAddArgs:canEditName:
+        respond: dialog;
+        on: #openOn:withInvalidArgs:canRenameArgs:canRemoveArgs:canAddArgs:canEditName:
+        respond: dialog.
+    
+    driver variableNameEditorPresenterClass: requestClass.
+
+]
+
 { #category : 'tests' }
 ReExtractToTemporaryDriverTest >> testExtractToTemporaryExpectChanges [
 
-	| driverChanges |
+	| driver driverChanges |
 	driver := ReExtractToTemporaryDriver new
 					 extract: (130 to: 138)
 					 to: 'variable'
@@ -20,6 +44,8 @@ ReExtractToTemporaryDriverTest >> testExtractToTemporaryExpectChanges [
 		          in: RBClassDataForRefactoringTest.
 
 	self setUpDriver: driver.
+	
+	self setUpMocksOn: driver.
 
 	driver runRefactoring.
 	driverChanges := driver refactoring changes.
@@ -30,27 +56,33 @@ ReExtractToTemporaryDriverTest >> testExtractToTemporaryExpectChanges [
 { #category : 'tests' }
 ReExtractToTemporaryDriverTest >> testFailureInvalidVariableName [
 
-    driver := ReExtractToTemporaryDriver new
-        extract: (51 to: 60)
-        to: 'collection'
-        from: #modifiesCollection
-        in: RBClassDataForRefactoringTest.
+	| driver |
+	driver := ReExtractToTemporaryDriver new
+		extract: (51 to: 60)
+      to: 'collection'
+      from: #modifiesCollection
+      in: RBClassDataForRefactoringTest.
 
-    self setUpDriver: driver.
-    
-    self should: [ driver runRefactoring ] raise: Error.
+   self setUpDriver: driver.
+
+	self setUpMocksOn: driver.
+
+	self should: [ driver runRefactoring ] raise: Error.
 ]
 
 { #category : 'tests' }
 ReExtractToTemporaryDriverTest >> testFailureNonExistantSelector [
+
+	| driver |    
+   driver := ReExtractToTemporaryDriver new
+		extract: (14 to: 23)
+      to: 'asdf'
+      from: #checkClass1:
+      in: RBClassDataForRefactoringTest.
     
-    driver := ReExtractToTemporaryDriver new
-        extract: (14 to: 23)
-        to: 'asdf'
-        from: #checkClass1:
-        in: RBClassDataForRefactoringTest.
+	self setUpDriver: driver.
+	
+	self setUpMocksOn: driver.
     
-    self setUpDriver: driver.
-    
-    self should: [ driver runRefactoring ] raise: Error.
+   self should: [ driver runRefactoring ] raise: RBRefactoringError.
 ]

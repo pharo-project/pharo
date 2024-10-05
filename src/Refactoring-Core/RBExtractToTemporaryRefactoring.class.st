@@ -44,11 +44,11 @@ RBExtractToTemporaryRefactoring >> applicabilityPreconditions [
 
 	^ {
 			(ReDefinesSelectorsCondition new definesSelectors: { selector } in: class).
-		  	(ReIsValidInstanceVariableName new name: newVariableName).
+			(ReIsValidInstanceVariableName new name: newVariableName).
 			(ReCheckVariableNameCondition
-				class: class
-				variableName: newVariableName 
-				parseTree: parseTree ).
+				class: class 
+      			variableName: newVariableName 
+     			parseTree: parseTree)
 		}
 ]
 
@@ -98,6 +98,21 @@ RBExtractToTemporaryRefactoring >> insertTemporary [
 { #category : 'accessing' }
 RBExtractToTemporaryRefactoring >> parseTree [
 	^ parseTree
+]
+
+{ #category : 'preconditions' }
+RBExtractToTemporaryRefactoring >> preconditionCheckVariableName [
+    
+    ^ ReCheckVariableNameCondition
+		class: class 
+      variableName: newVariableName 
+      parseTree: parseTree
+]
+
+{ #category : 'preconditions' }
+RBExtractToTemporaryRefactoring >> preconditionValidInstVarName [
+
+	^ ReIsValidInstanceVariableName new name: newVariableName
 ]
 
 { #category : 'transforming' }

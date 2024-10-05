@@ -6,18 +6,35 @@ Class {
 		'newVariableName',
 		'selector',
 		'class',
-		'shouldEscape'
+		'shouldEscape',
+		'variableNameEditorPresenterClass',
+		'newMessage'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers'
 }
 
+{ #category : 'testing' }
+ReExtractToTemporaryDriver >> canEditName [
+	^ true
+]
+
+{ #category : 'testing' }
+ReExtractToTemporaryDriver >> canRenameArgs [
+	^ false
+]
+
 { #category : 'execution' }
 ReExtractToTemporaryDriver >> changes [
 	
 	^ refactoring privateTransform; changes
 
+]
+
+{ #category : 'execution' }
+ReExtractToTemporaryDriver >> configureMessage [
+	refactoring newSelector: newMessage selector.
 ]
 
 { #category : 'resources' }
@@ -46,32 +63,21 @@ ReExtractToTemporaryDriver >> initialize [
 	shouldEscape := false.
 ]
 
-{ #category : 'execution' }
-ReExtractToTemporaryDriver >> requestSelector [
-
-	^ self requestUserInput: 'Please provide a selector'
-			 label: 'The selector should be defined.'  
-			 validate: [ :string :presenter | self validateSelector: string onPresenter: presenter ]
-]
-
-{ #category : 'execution' }
-ReExtractToTemporaryDriver >> requestUserInput: aTitle label: aLabel validate: aValidationBlock [
-
-	| userInput |
-	userInput := self defaultRequestDialog
-												title: aTitle;
-												label: aLabel;
-												validateAnswer: aValidationBlock;
-												openModal.
-	^ userInput
+{ #category : 'accessing' }
+ReExtractToTemporaryDriver >> model: aModel [
+	model := aModel
 ]
 
 { #category : 'execution' }
 ReExtractToTemporaryDriver >> requestVariableName [
 
-	^ self requestUserInput: 'Please provide a variable name'
-			 label: 'The variable name should be defined.'  
-			 validate: [ :string :presenter | self validateName: string onPresenter: presenter ]
+	newVariableName := self defaultRequestDialog
+										title: 'Please provide a variable name';
+										label: 'The variable name should be defined.';
+										validateAnswer:[ :string :presenter |
+											self validateName: string onPresenter: presenter ];
+										openModal.
+	^ newVariableName 
 ]
 
 { #category : 'execution' }
@@ -79,15 +85,17 @@ ReExtractToTemporaryDriver >> runRefactoring [
 
 	self configureRefactoring.
 	
-	selector := self requestSelector.
-	shouldEscape ifTrue: [ ^ self ].
-	
 	refactoring prepareForExecution.
 	
 	newVariableName := self requestVariableName.
 	shouldEscape ifTrue: [ ^ self ].
 	
 	self applyChanges
+]
+
+{ #category : 'accessing' }
+ReExtractToTemporaryDriver >> scopes: aCollection [ 
+	scopes := aCollection
 ]
 
 { #category : 'initialization' }
@@ -101,36 +109,45 @@ ReExtractToTemporaryDriver >> setErrorTextFromCondition: aCondition onPresenter:
 
 { #category : 'validation' }
 ReExtractToTemporaryDriver >> validateName: aName onPresenter: presenter [
+ 
+	| firstCondition secondCondition result errorMessages stream |
+   	firstCondition := refactoring preconditionValidInstVarName.
+	secondCondition := refactoring preconditionCheckVariableName.
+	stream := WriteStream on: String new.
 
-	| firstCondition secondCondition result |
-	firstCondition := ReIsValidInstanceVariableName new name: aName.
-	secondCondition := ReCheckVariableNameCondition
-		 class: class
-		 variableName: aName
-		 parseTree: refactoring parseTree.
-	result := (firstCondition check and: [ secondCondition check ]).
+	errorMessages := OrderedCollection new.
 	
-	result 
-		ifFalse: [
-			firstCondition check ifFalse: [
-				self setErrorTextFromCondition: firstCondition onPresenter: presenter ].
-			secondCondition check ifFalse: [ 
-				self setErrorTextFromCondition: secondCondition onPresenter: presenter ].
-			shouldEscape := true ] 
-		ifTrue: [ presenter setErrorText: '' ].
-		
-	^ result
+	result := (firstCondition check and: [ secondCondition check ]).
+    
+   result 
+       ifFalse: [ 
+           firstCondition check ifFalse: [ 
+               self setErrorTextFromCondition: firstCondition onPresenter: presenter.
+               errorMessages add: (firstCondition violationMessageOn: stream).
+           ].
+           secondCondition check ifFalse: [ 
+               self setErrorTextFromCondition: secondCondition onPresenter: presenter.
+               errorMessages add: (secondCondition violationMessageOn: stream ).
+           ].
+           shouldEscape := true.
+       ]
+       ifTrue: [ presenter setErrorText: '' ].
+
+	errorMessages isEmpty
+		ifFalse: [ 
+           presenter setErrorText: (errorMessages join: ', ').
+       ]. 
+   
+	^ result.
 ]
 
-{ #category : 'private' }
-ReExtractToTemporaryDriver >> validateSelector: aSelector onPresenter: presenter [
+{ #category : 'accessing' }
+ReExtractToTemporaryDriver >> variableNameEditorPresenterClass [
+    ^ variableNameEditorPresenterClass ifNil: [ variableNameEditorPresenterClass := StMethodNameEditorPresenter]
 
-	| condition violators |
-	condition := ReDefinesSelectorsCondition new 
-		definesSelectors: { selector } in: class.
-	violators := condition violators.
-	
- 	violators isEmpty
-		ifFalse: [ self setErrorTextFromCondition: condition onPresenter: presenter . ^ false ]
-	  	ifTrue: [ presenter setErrorText: ''. ^ true ]. 
+]
+
+{ #category : 'accessing' }
+ReExtractToTemporaryDriver >> variableNameEditorPresenterClass: aClass [
+	variableNameEditorPresenterClass := aClass
 ]
