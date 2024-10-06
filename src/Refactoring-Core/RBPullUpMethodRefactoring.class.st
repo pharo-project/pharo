@@ -69,9 +69,7 @@ RBPullUpMethodRefactoring >> applicabilityPreconditions [
 { #category : 'preconditions' }
 RBPullUpMethodRefactoring >> breakingChangePreconditions [
 
-	^ {
-		  self preconditionNoReferencesToInstVars.
-		  self preconditionNoDuplicateMethods }
+	^ { self preconditionNoReferencesToInstVars }
 ]
 
 { #category : 'preconditions' }
@@ -275,16 +273,6 @@ RBPullUpMethodRefactoring >> copyDownMethods [
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodRefactoring >> preconditionNoDuplicateMethods [
-
-	^ ReMethodsHaveNoDuplicatesCondition new
-		targetSuperclass: targetSuperclass ;
-		selectors: selectors;
-		class: class;
-		yourself
-]
-
-{ #category : 'preconditions' }
 RBPullUpMethodRefactoring >> preconditionNoOverrides [
 
 	^ (ReDefinesSelectorsCondition new
@@ -340,7 +328,8 @@ RBPullUpMethodRefactoring >> privateTransform [
 	self
 		copyDownMethods;
 		pullUpMethods;
-		removePulledUpMethods
+		removePulledUpMethods;
+		removeDuplicateMethods
 ]
 
 { #category : 'transforming' }
@@ -401,9 +390,23 @@ RBPullUpMethodRefactoring >> pullUpVariable: aVariable [
 	self generateChangesFor: refactoring
 ]
 
-{ #category : 'transforming' }
+{ #category : 'to be migrated without a precondition' }
 RBPullUpMethodRefactoring >> removeDuplicateMethods [
-	selectors do: [:each | self removeDuplicatesOf: each]
+	"The logic of this method should be really revisited. 
+	There is no need to use a precondition to compute duplicated methods that should be removed.
+	We will fix that in another pass."
+	
+	| cond |
+	"This behavior should only be used as an optimisation
+	e.g. to clean up once the method is pull up and it only remove
+	methods with the same name and body. Do not invoke this method in another    
+	situation."
+	
+	cond := self toBeChangedPreconditionNoDuplicateMethods.
+	
+	cond withViolatorsDo: [ :aSelector :aClass |
+		self generateChangesFor:
+			(RBRemoveMethodTransformation selector: aSelector from: aClass) ]
 ]
 
 { #category : 'transforming' }
@@ -472,4 +475,14 @@ RBPullUpMethodRefactoring >> targetClass [
 RBPullUpMethodRefactoring >> targetSuperclass [
 
 	^ targetSuperclass
+]
+
+{ #category : 'to be migrated without a precondition' }
+RBPullUpMethodRefactoring >> toBeChangedPreconditionNoDuplicateMethods [
+
+	^ ReMethodsHaveNoDuplicatesCondition new
+		targetSuperclass: targetSuperclass ;
+		selectors: selectors;
+		class: class;
+		yourself
 ]

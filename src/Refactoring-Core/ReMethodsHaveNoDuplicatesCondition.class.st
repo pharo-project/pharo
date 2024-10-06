@@ -15,11 +15,6 @@ Class {
 	#tag : 'Conditions'
 }
 
-{ #category : 'choices' }
-ReMethodsHaveNoDuplicatesCondition class >> strategyChoiceClass [
-	^ ReRemoveDuplicateMethodsChoice 
-]
-
 { #category : 'accessing' }
 ReMethodsHaveNoDuplicatesCondition >> class: aRBClass [
 	class := aRBClass
