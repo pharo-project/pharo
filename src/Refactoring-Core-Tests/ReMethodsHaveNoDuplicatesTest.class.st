@@ -63,6 +63,38 @@ ReMethodsHaveNoDuplicatesTest >> testMethodNotDuplicatedInSubclass [
 		class: myClassBeta;
 		yourself.
 		
-	" the method has a duplicate in MyClassBeta's subclass, therefore the condition fails "
+	" the method has a duplicate in MyClassBeta's subclass, therefore the condition should fail"
 	self deny: cond check
+]
+
+{ #category : 'tests' }
+ReMethodsHaveNoDuplicatesTest >> testMethodNotDuplicatedInSubclassMoreComplex [
+	| myClassAlpha myClassBeta cond |
+	myClassAlpha := self model classNamed: #MyClassAlpha. 
+	myClassBeta := self model classNamed: #MyClassBeta.
+	
+	cond := ReMethodsHaveNoDuplicatesCondition new
+		targetSuperclass: myClassAlpha;
+		selectors: { #duplicatedInSubclassMoreComplexBody };
+		class: myClassBeta;
+		yourself.
+		
+	" the method has a duplicate in MyClassBeta's subclass, therefore the condition should fail"
+	self deny: cond check
+]
+
+{ #category : 'tests' }
+ReMethodsHaveNoDuplicatesTest >> testMethodNotDuplicatedInSubclassWithDifferentSelector [
+	| myClassAlpha myClassBeta cond |
+	myClassAlpha := self model classNamed: #MyClassAlpha. 
+	myClassBeta := self model classNamed: #MyClassBeta.
+	
+	cond := ReMethodsHaveNoDuplicatesCondition new
+		targetSuperclass: myClassAlpha;
+		selectors: { #methodDuplicatedInSubclass2 };
+		class: myClassBeta;
+		yourself.
+		
+	" the method has a different selector so it is not a duplicate in MyClassBeta's subclass, therefore the condition should pass"
+	self assert: cond check
 ]
