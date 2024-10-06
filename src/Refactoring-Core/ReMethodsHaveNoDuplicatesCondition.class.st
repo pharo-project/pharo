@@ -37,10 +37,9 @@ ReMethodsHaveNoDuplicatesCondition >> duplicatesOf: aSelector [
 		((each directlyDefinesMethod: aSelector) and: [
 			 (tree
 				  equalTo: (each parseTreeForSelector: aSelector)
-				  exceptForVariables: #(  )) ]) ifTrue: [
-			duplicates add: {
-					aSelector .
-					each } ] ]. "`each` is the class where the duplicate method is defined"
+				  exceptForVariables: #(  )) ]) 
+					ifTrue: [ 	duplicates add: { aSelector . each } ] 
+				]. "`each` is the class where the duplicate method is defined"
 		^ duplicates
 ]
 
@@ -53,6 +52,12 @@ ReMethodsHaveNoDuplicatesCondition >> model: aRBNamespace [
 { #category : 'accessing' }
 ReMethodsHaveNoDuplicatesCondition >> selectors: aCollection [ 
 	selectors := aCollection
+]
+
+{ #category : 'accessing' }
+ReMethodsHaveNoDuplicatesCondition >> siblingsOfSource [
+
+	^ targetSuperclass allSubclasses reject: [ :each | each = class ].
 ]
 
 { #category : 'accessing' }
@@ -80,11 +85,8 @@ ReMethodsHaveNoDuplicatesCondition >> violationMessageOn: aStream [
 ReMethodsHaveNoDuplicatesCondition >> violators [
 
 	violators ifNotNil: [ ^ violators ].
-
 	violators := OrderedCollection new.
-	
 	violators addAll: (selectors flatCollect: [ :aSelector | self duplicatesOf: aSelector ]).
-	
 	^ violators
 
 ]

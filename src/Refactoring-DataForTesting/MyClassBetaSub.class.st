@@ -13,8 +13,18 @@ Class {
 }
 
 { #category : 'dummy methods' }
+MyClassBetaSub >> duplicatedInSubclassMoreComplexBody [
+	^ 42 + 666
+]
+
+{ #category : 'dummy methods' }
 MyClassBetaSub >> methodDuplicatedInSubclass [
 	^ self
+]
+
+{ #category : 'dummy methods' }
+MyClassBetaSub >> methodDuplicatedInSubclass3 [
+	^ 42 + 666
 ]
 
 { #category : 'dummy methods' }

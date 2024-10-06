@@ -11,7 +11,7 @@ Class {
 
 { #category : 'dummy methods' }
 MyClassBetaSibling >> methodDuplicatedInSibling [
-	^ self
+	^ 38 * 101
 ]
 
 { #category : 'dummy methods' }
