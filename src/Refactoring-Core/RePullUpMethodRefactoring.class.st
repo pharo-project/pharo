@@ -390,43 +390,31 @@ RePullUpMethodRefactoring >> pullUpVariable: aVariable [
 	self generateChangesFor: refactoring
 ]
 
-{ #category : 'to be migrated without a precondition' }
+{ #category : 'cleaning after refactoring' }
 RePullUpMethodRefactoring >> removeDuplicateMethods [
-	"The logic of this method should be really revisited. 
-	There is no need to use a precondition to compute duplicated methods that should be removed.
-	We will fix that in another pass."
 	
-	| cond |
 	"This behavior should only be used as an optimisation
 	e.g. to clean up once the method is pull up and it only remove
 	methods with the same name and body. Do not invoke this method in another    
 	situation."
 	
-	cond := self toBeChangedPreconditionNoDuplicateMethods.
-	
-	cond withViolatorsDo: [ :aSelector :aClass |
-		self generateChangesFor:
-			(RBRemoveMethodTransformation selector: aSelector from: aClass) ]
+	selectors do: [ :each | self removeDuplicatesOf: each ]
 ]
 
-{ #category : 'transforming' }
+{ #category : 'cleaning after refactoring' }
 RePullUpMethodRefactoring >> removeDuplicatesOf: aSelector [
 
-	| tree |
-	tree := targetSuperclass parseTreeForSelector: aSelector.
-	targetSuperclass allSubclasses do: [ :each |
+	| tree siblings |
+	tree := class parseTreeForSelector: aSelector.
+	siblings := targetSuperclass allSubclasses reject: [ :each | each = class ].
+	
+	siblings do: [ :each |
 		((each directlyDefinesMethod: aSelector) and: [
 			 (tree
 				  equalTo: (each parseTreeForSelector: aSelector)
-				  exceptForVariables: #(  )) and: [
-				 (each superclass whichClassIncludesSelector: aSelector)
-				 == targetSuperclass ] ]) ifTrue: [
-			removeDuplicates ifFalse: [
-				removeDuplicates := self refactoringConfirmWarning:
-					                    'Do you want to remove duplicate subclass methods?' ].
-			removeDuplicates ifTrue: [
-				self generateChangesFor:
-					(RBRemoveMethodTransformation selector: aSelector from: each) ] ] ]
+				  exceptForVariables: #(  )) ]) ifTrue: [
+			self generateChangesFor:
+				(RBRemoveMethodTransformation selector: aSelector from: each) ] ]. 
 ]
 
 { #category : 'transforming' }
@@ -475,14 +463,4 @@ RePullUpMethodRefactoring >> targetClass [
 RePullUpMethodRefactoring >> targetSuperclass [
 
 	^ targetSuperclass
-]
-
-{ #category : 'to be migrated without a precondition' }
-RePullUpMethodRefactoring >> toBeChangedPreconditionNoDuplicateMethods [
-
-	^ ReMethodsHaveNoDuplicatesCondition new
-		targetSuperclass: targetSuperclass ;
-		selectors: selectors;
-		class: class;
-		yourself
 ]
