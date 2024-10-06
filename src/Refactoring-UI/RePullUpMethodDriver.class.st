@@ -103,7 +103,7 @@ RePullUpMethodDriver >> configureAndRunRefactoring [
 { #category : 'resources' }
 RePullUpMethodDriver >> configureRefactoring [
 
-	refactoring := RBPullUpMethodRefactoring
+	refactoring := RePullUpMethodRefactoring
 		               model: model
 		               pullUp: (methods collect: [ :each | each selector ])
 		               from: class name

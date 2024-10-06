@@ -8,7 +8,7 @@ If the method already exists and the superclass is abstract or not referenced an
 
 "
 Class {
-	#name : 'RBPullUpMethodRefactoring',
+	#name : 'RePullUpMethodRefactoring',
 	#superclass : 'RBMethodRefactoring',
 	#instVars : [
 		'removeDuplicates',
@@ -21,7 +21,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-RBPullUpMethodRefactoring class >> model: aRBSmalltalk pullUp: selectorCollection from: aClass [
+RePullUpMethodRefactoring class >> model: aRBSmalltalk pullUp: selectorCollection from: aClass [
 	^ self new
 		model: aRBSmalltalk;
 		pullUp: selectorCollection from: aClass;
@@ -29,7 +29,7 @@ RBPullUpMethodRefactoring class >> model: aRBSmalltalk pullUp: selectorCollectio
 ]
 
 { #category : 'instance creation' }
-RBPullUpMethodRefactoring class >> model: aRBSmalltalk pullUp: selectorCollection from: aClass to: aSuperClass [
+RePullUpMethodRefactoring class >> model: aRBSmalltalk pullUp: selectorCollection from: aClass to: aSuperClass [
 	^ self new
 		model: aRBSmalltalk;
 		pullUp: selectorCollection from: aClass to: aSuperClass;
@@ -37,19 +37,19 @@ RBPullUpMethodRefactoring class >> model: aRBSmalltalk pullUp: selectorCollectio
 ]
 
 { #category : 'instance creation' }
-RBPullUpMethodRefactoring class >> pullUp: selectorCollection from: aClass [
+RePullUpMethodRefactoring class >> pullUp: selectorCollection from: aClass [
 	^ self new
 		pullUp: selectorCollection from: aClass
 ]
 
 { #category : 'instance creation' }
-RBPullUpMethodRefactoring class >> pullUp: selectorCollection from: aClass to: aSuperClass [
+RePullUpMethodRefactoring class >> pullUp: selectorCollection from: aClass to: aSuperClass [
 	^ self new
 		pullUp: selectorCollection from: aClass to: aSuperClass
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodRefactoring >> applicabilityPreconditions [
+RePullUpMethodRefactoring >> applicabilityPreconditions [
 	" Check that all selectors are defined in `class`, 
 	and that `class` is in the hierarchy of subclasses of `targetSuperclass` "
 
@@ -67,13 +67,13 @@ RBPullUpMethodRefactoring >> applicabilityPreconditions [
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodRefactoring >> breakingChangePreconditions [
+RePullUpMethodRefactoring >> breakingChangePreconditions [
 
 	^ { self preconditionNoReferencesToInstVars }
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodRefactoring >> checkBackReferencesTo: aSelector [
+RePullUpMethodRefactoring >> checkBackReferencesTo: aSelector [
 	"If `aSelector` is defined in `targetSuperclass` or one of its superclasses check for
 	super sends to `aSelector` in `targetSuperclass` hierarchy.
 	Display an error to the user about potential breaking changes with overriding `aSelector`
@@ -103,12 +103,12 @@ RBPullUpMethodRefactoring >> checkBackReferencesTo: aSelector [
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodRefactoring >> checkClassVars [
+RePullUpMethodRefactoring >> checkClassVars [
 	selectors do: [:each | self checkClassVarsFor: each]
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodRefactoring >> checkClassVarsFor: aSelector [
+RePullUpMethodRefactoring >> checkClassVarsFor: aSelector [
 	"Checks if `aSelector` refers to any of the class variables."
 
 	class instanceSide classVariableNames do:
@@ -121,12 +121,12 @@ RBPullUpMethodRefactoring >> checkClassVarsFor: aSelector [
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodRefactoring >> checkInstVars [
+RePullUpMethodRefactoring >> checkInstVars [
 	selectors do: [:each | self checkInstVarsFor: each]
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodRefactoring >> checkInstVarsFor: aSelector [
+RePullUpMethodRefactoring >> checkInstVarsFor: aSelector [
 	"Checks if `aSelector` refers to one of the instance variables and offers to perform
 	`PullUpInstanceVariableRefactoring` refactoring such variables exist."
 
@@ -143,7 +143,7 @@ RBPullUpMethodRefactoring >> checkInstVarsFor: aSelector [
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodRefactoring >> checkSiblingSuperSendsFrom: aRBClass [
+RePullUpMethodRefactoring >> checkSiblingSuperSendsFrom: aRBClass [
 	"Checks if `aRBClass` selector sends super message to one of the methods selected to be push up
 	from the `class`.
 	If that stands and the super message selector is defined in `class` or one of its superclasses
@@ -170,13 +170,13 @@ RBPullUpMethodRefactoring >> checkSiblingSuperSendsFrom: aRBClass [
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodRefactoring >> checkSuperMessages [
+RePullUpMethodRefactoring >> checkSuperMessages [
 	self checkSuperSendsFromPushedUpMethods.
 	self checkSuperSendsFromSiblings
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodRefactoring >> checkSuperSendsFromPushedUpMethods [
+RePullUpMethodRefactoring >> checkSuperSendsFromPushedUpMethods [
 	"Check if one of the selectors sends a super message to a method defined in `targetSuperclass`."
 
 	selectors do:
@@ -192,7 +192,7 @@ RBPullUpMethodRefactoring >> checkSuperSendsFromPushedUpMethods [
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodRefactoring >> checkSuperSendsFromSiblings [
+RePullUpMethodRefactoring >> checkSuperSendsFromSiblings [
 	"Checks if a class in the `targetClass` subclasses (except for `class` and its subclasses)
 	send super message to one of the selected messages."
 
@@ -202,7 +202,7 @@ RBPullUpMethodRefactoring >> checkSuperSendsFromSiblings [
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodRefactoring >> checkSuperclass [
+RePullUpMethodRefactoring >> checkSuperclass [
 	"Checks if one of the methods to push up is overriden from the `targetSuperclass`.
 	If there are overrides and `targetSuperclass` is not abstract a pop-up warns the user.
 	Also, if there are overrides check for back references (that is if one of the other classes in
@@ -228,7 +228,7 @@ RBPullUpMethodRefactoring >> checkSuperclass [
 ]
 
 { #category : 'private' }
-RBPullUpMethodRefactoring >> copyDownMethod: aSelector [
+RePullUpMethodRefactoring >> copyDownMethod: aSelector [
 
 	| oldProtocol oldSource superclassDefiner subclasses refactoring |
 	superclassDefiner := targetSuperclass whichClassIncludesSelector:
@@ -268,12 +268,12 @@ RBPullUpMethodRefactoring >> copyDownMethod: aSelector [
 ]
 
 { #category : 'transforming' }
-RBPullUpMethodRefactoring >> copyDownMethods [
+RePullUpMethodRefactoring >> copyDownMethods [
 	selectors do: [:each | self copyDownMethod: each]
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodRefactoring >> preconditionNoOverrides [
+RePullUpMethodRefactoring >> preconditionNoOverrides [
 
 	^ (ReDefinesSelectorsCondition new
 		   definesSelectors: selectors
@@ -284,7 +284,7 @@ RBPullUpMethodRefactoring >> preconditionNoOverrides [
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodRefactoring >> preconditionNoReferencesToInstVars [
+RePullUpMethodRefactoring >> preconditionNoReferencesToInstVars [
 
 	^ ReMethodsDontReferToInstVarsCondition new
 		  class: class
@@ -292,7 +292,7 @@ RBPullUpMethodRefactoring >> preconditionNoReferencesToInstVars [
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodRefactoring >> preconditionNoReferencesToSharedVars [
+RePullUpMethodRefactoring >> preconditionNoReferencesToSharedVars [
 
 	^ ReMethodsDontReferToSharedVarsCondition new
 		   class: class
@@ -300,7 +300,7 @@ RBPullUpMethodRefactoring >> preconditionNoReferencesToSharedVars [
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodRefactoring >> preconditionNoSupersendsReceived [
+RePullUpMethodRefactoring >> preconditionNoSupersendsReceived [
 
 	^ ReMethodsReceiveNoSupersendsCondition new
 		   class: class
@@ -309,7 +309,7 @@ RBPullUpMethodRefactoring >> preconditionNoSupersendsReceived [
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodRefactoring >> preconditionNoSupersendsSent [
+RePullUpMethodRefactoring >> preconditionNoSupersendsSent [
 
 	^ ReMethodsSendNoSupersendsCondition new
 		   class: class
@@ -318,13 +318,13 @@ RBPullUpMethodRefactoring >> preconditionNoSupersendsSent [
 ]
 
 { #category : 'preconditions' }
-RBPullUpMethodRefactoring >> preconditions [
+RePullUpMethodRefactoring >> preconditions [
 
 	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
 { #category : 'transforming' }
-RBPullUpMethodRefactoring >> privateTransform [
+RePullUpMethodRefactoring >> privateTransform [
 	self
 		copyDownMethods;
 		pullUpMethods;
@@ -333,7 +333,7 @@ RBPullUpMethodRefactoring >> privateTransform [
 ]
 
 { #category : 'transforming' }
-RBPullUpMethodRefactoring >> pullUp: aSelector [
+RePullUpMethodRefactoring >> pullUp: aSelector [
 	| source refactoring |
 	source := class sourceCodeFor: aSelector.
 	source ifNil: [self refactoringError: 'Source for method not available'].
@@ -351,12 +351,12 @@ RBPullUpMethodRefactoring >> pullUp: aSelector [
 ]
 
 { #category : 'initialization' }
-RBPullUpMethodRefactoring >> pullUp: selectorCollection from: aClass [
+RePullUpMethodRefactoring >> pullUp: selectorCollection from: aClass [
 	self pullUp: selectorCollection from: aClass to: aClass superclass
 ]
 
 { #category : 'initialization' }
-RBPullUpMethodRefactoring >> pullUp: selectorCollection from: aClass to: aSuperClass [
+RePullUpMethodRefactoring >> pullUp: selectorCollection from: aClass to: aSuperClass [
 
 	class := self classObjectFor: aClass.
 	targetSuperclass := self classObjectFor: aSuperClass .
@@ -365,12 +365,12 @@ RBPullUpMethodRefactoring >> pullUp: selectorCollection from: aClass to: aSuperC
 ]
 
 { #category : 'transforming' }
-RBPullUpMethodRefactoring >> pullUpMethods [
+RePullUpMethodRefactoring >> pullUpMethods [
 	selectors do: [:each | self pullUp: each]
 ]
 
 { #category : 'transforming' }
-RBPullUpMethodRefactoring >> pullUpSharedVariable: aVariable [
+RePullUpMethodRefactoring >> pullUpSharedVariable: aVariable [
 
 	| refactoring |
 	refactoring := RBPullUpClassVariableRefactoring
@@ -381,7 +381,7 @@ RBPullUpMethodRefactoring >> pullUpSharedVariable: aVariable [
 ]
 
 { #category : 'transforming' }
-RBPullUpMethodRefactoring >> pullUpVariable: aVariable [
+RePullUpMethodRefactoring >> pullUpVariable: aVariable [
 	| refactoring |
 	refactoring :=  RBPullUpInstanceVariableRefactoring
 			model: self model
@@ -391,7 +391,7 @@ RBPullUpMethodRefactoring >> pullUpVariable: aVariable [
 ]
 
 { #category : 'to be migrated without a precondition' }
-RBPullUpMethodRefactoring >> removeDuplicateMethods [
+RePullUpMethodRefactoring >> removeDuplicateMethods [
 	"The logic of this method should be really revisited. 
 	There is no need to use a precondition to compute duplicated methods that should be removed.
 	We will fix that in another pass."
@@ -410,7 +410,7 @@ RBPullUpMethodRefactoring >> removeDuplicateMethods [
 ]
 
 { #category : 'transforming' }
-RBPullUpMethodRefactoring >> removeDuplicatesOf: aSelector [
+RePullUpMethodRefactoring >> removeDuplicatesOf: aSelector [
 
 	| tree |
 	tree := targetSuperclass parseTreeForSelector: aSelector.
@@ -430,7 +430,7 @@ RBPullUpMethodRefactoring >> removeDuplicatesOf: aSelector [
 ]
 
 { #category : 'transforming' }
-RBPullUpMethodRefactoring >> removePulledUpMethods [
+RePullUpMethodRefactoring >> removePulledUpMethods [
 
 	selectors do: [ :each |
 		self generateChangesFor:
@@ -438,17 +438,17 @@ RBPullUpMethodRefactoring >> removePulledUpMethods [
 ]
 
 { #category : 'initialization' }
-RBPullUpMethodRefactoring >> selectors [
+RePullUpMethodRefactoring >> selectors [
 	^ selectors
 ]
 
 { #category : 'initialization' }
-RBPullUpMethodRefactoring >> selectors: aList [
+RePullUpMethodRefactoring >> selectors: aList [
 	selectors := aList
 ]
 
 { #category : 'storing' }
-RBPullUpMethodRefactoring >> storeOn: aStream [
+RePullUpMethodRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' pullUp: '.
@@ -459,7 +459,7 @@ RBPullUpMethodRefactoring >> storeOn: aStream [
 ]
 
 { #category : 'initialization' }
-RBPullUpMethodRefactoring >> superClass: anObject [
+RePullUpMethodRefactoring >> superClass: anObject [
 	(anObject allSubclasses includes: class realClass )
 		ifFalse: [ self refactoringError:
 			('<1s> is not a superclass of <2p>' expandMacrosWith: anObject with: class name ) ].
@@ -467,18 +467,18 @@ RBPullUpMethodRefactoring >> superClass: anObject [
 ]
 
 { #category : 'initialization' }
-RBPullUpMethodRefactoring >> targetClass [
+RePullUpMethodRefactoring >> targetClass [
 	^ class
 ]
 
 { #category : 'accessing' }
-RBPullUpMethodRefactoring >> targetSuperclass [
+RePullUpMethodRefactoring >> targetSuperclass [
 
 	^ targetSuperclass
 ]
 
 { #category : 'to be migrated without a precondition' }
-RBPullUpMethodRefactoring >> toBeChangedPreconditionNoDuplicateMethods [
+RePullUpMethodRefactoring >> toBeChangedPreconditionNoDuplicateMethods [
 
 	^ ReMethodsHaveNoDuplicatesCondition new
 		targetSuperclass: targetSuperclass ;
