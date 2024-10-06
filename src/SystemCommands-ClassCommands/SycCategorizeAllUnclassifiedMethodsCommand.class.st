@@ -10,7 +10,7 @@ Class {
 
 { #category : 'accessing' }
 SycCategorizeAllUnclassifiedMethodsCommand >> defaultMenuIconName [
-	^#glamorousBrowse
+	^#browse
 ]
 
 { #category : 'accessing' }
