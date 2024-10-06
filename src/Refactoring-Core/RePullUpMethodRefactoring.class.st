@@ -103,46 +103,6 @@ RePullUpMethodRefactoring >> checkBackReferencesTo: aSelector [
 ]
 
 { #category : 'preconditions' }
-RePullUpMethodRefactoring >> checkClassVars [
-	selectors do: [:each | self checkClassVarsFor: each]
-]
-
-{ #category : 'preconditions' }
-RePullUpMethodRefactoring >> checkClassVarsFor: aSelector [
-	"Checks if `aSelector` refers to any of the class variables."
-
-	class instanceSide classVariableNames do:
-		[ :each |
-		((class whichSelectorsReferToClassVariable: each) includes: aSelector) ifTrue:
-			[ self refactoringError: ('<1p> refers to <2s> which is defined in <3p>'
-					expandMacrosWith: aSelector
-					with: each
-					with: class) ] ]
-]
-
-{ #category : 'preconditions' }
-RePullUpMethodRefactoring >> checkInstVars [
-	selectors do: [:each | self checkInstVarsFor: each]
-]
-
-{ #category : 'preconditions' }
-RePullUpMethodRefactoring >> checkInstVarsFor: aSelector [
-	"Checks if `aSelector` refers to one of the instance variables and offers to perform
-	`PullUpInstanceVariableRefactoring` refactoring such variables exist."
-
-	class instanceVariableNames do:
-			[:each |
-			((class whichSelectorsReferToInstanceVariable: each) includes: aSelector) ifTrue:
-					[ (self confirm: ('<1p> refers to #<2s> which is defined in <3p>. Do you want pull up variable #<2s> also?' expandMacrosWith: aSelector
-								with: each
-								with: class))
-						ifTrue: [ self pullUpVariable: each ]
-						ifFalse: [ self refactoringWarning: 'You are about to pull your method without the instance variable it uses.
-						It will bring the system is an inconsistent state. But this may be what you want.
-						So do you want to pull up anyway?' ] ]]
-]
-
-{ #category : 'preconditions' }
 RePullUpMethodRefactoring >> checkSuperclass [
 	"Checks if one of the methods to push up is overriden from the `targetSuperclass`.
 	If there are overrides and `targetSuperclass` is not abstract a pop-up warns the user.
