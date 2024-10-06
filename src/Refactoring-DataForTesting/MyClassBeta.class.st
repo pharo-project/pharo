@@ -22,7 +22,7 @@ MyClassBeta >> duplicatedInSubclassMoreComplexBody [
 
 { #category : 'dummy methods' }
 MyClassBeta >> methodDuplicatedInSibling [
-	^ self
+	^ 38 * 101
 ]
 
 { #category : 'dummy methods' }

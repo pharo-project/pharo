@@ -55,6 +55,12 @@ ReMethodsHaveNoDuplicatesCondition >> selectors: aCollection [
 ]
 
 { #category : 'accessing' }
+ReMethodsHaveNoDuplicatesCondition >> siblingsOfSource [
+
+	^ targetSuperclass allSubclasses reject: [ :each | each = class ].
+]
+
+{ #category : 'accessing' }
 ReMethodsHaveNoDuplicatesCondition >> targetSuperclass: aRBClass [ 
 	targetSuperclass := aRBClass
 ]
