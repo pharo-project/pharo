@@ -143,65 +143,6 @@ RePullUpMethodRefactoring >> checkInstVarsFor: aSelector [
 ]
 
 { #category : 'preconditions' }
-RePullUpMethodRefactoring >> checkSiblingSuperSendsFrom: aRBClass [
-	"Checks if `aRBClass` selector sends super message to one of the methods selected to be push up
-	from the `class`.
-	If that stands and the super message selector is defined in `class` or one of its superclasses
-	warn the user.
-	Repeat the process for all subclasses of `aRBClass`"
-
-	aRBClass selectors do: [ :each |
-		| tree |
-		tree := aRBClass parseTreeForSelector: each.
-		tree ifNotNil: [
-			tree superMessages do: [ :aSelector |
-				(selectors includes: aSelector) ifTrue: [
-					| definer |
-					definer := aRBClass superclass whichClassIncludesSelector:
-						           aSelector.
-					(definer isNotNil and: [ class includesClass: definer ]) ifTrue: [
-						self refactoringError:
-							('Cannot pull up <1s> since <2p>>><3s> sends a super message to it.'
-								 expandMacrosWith: aSelector
-								 with: aRBClass
-								 with: each) ] ] ] ] ].
-	aRBClass allSubclasses do: [ :each |
-		self checkSiblingSuperSendsFrom: each ]
-]
-
-{ #category : 'preconditions' }
-RePullUpMethodRefactoring >> checkSuperMessages [
-	self checkSuperSendsFromPushedUpMethods.
-	self checkSuperSendsFromSiblings
-]
-
-{ #category : 'preconditions' }
-RePullUpMethodRefactoring >> checkSuperSendsFromPushedUpMethods [
-	"Check if one of the selectors sends a super message to a method defined in `targetSuperclass`."
-
-	selectors do:
-			[:each |
-			| parseTree |
-			parseTree := class parseTreeForSelector: each.
-			parseTree superMessages
-				detect: [:sup | targetSuperclass directlyDefinesMethod: sup]
-				ifFound:
-					[self
-						refactoringError: ('Cannot pull up <1s> since it sends a super message that is defined in the superclass.'
-								expandMacrosWith: each)]]
-]
-
-{ #category : 'preconditions' }
-RePullUpMethodRefactoring >> checkSuperSendsFromSiblings [
-	"Checks if a class in the `targetClass` subclasses (except for `class` and its subclasses)
-	send super message to one of the selected messages."
-
-	| siblings |
-	siblings := targetSuperclass subclasses reject: [:each | each = class].
-	siblings do: [:aRBClass | self checkSiblingSuperSendsFrom: aRBClass]
-]
-
-{ #category : 'preconditions' }
 RePullUpMethodRefactoring >> checkSuperclass [
 	"Checks if one of the methods to push up is overriden from the `targetSuperclass`.
 	If there are overrides and `targetSuperclass` is not abstract a pop-up warns the user.
