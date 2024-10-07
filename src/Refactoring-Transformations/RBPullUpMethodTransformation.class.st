@@ -260,7 +260,7 @@ RBPullUpMethodTransformation >> preconditionNoReferencesToSharedVars [
 { #category : 'preconditions' }
 RBPullUpMethodTransformation >> preconditionNoSupersendsReceived [
 
-	^ ReMethodsReceiveNoSupersendsCondition new
+	^ ReMethodsHaveNoSuperCallInSiblingsCondition new
 		  class: class
 		  targetSuperclass: targetSuperclass
 		  selectors: selectors
@@ -269,7 +269,7 @@ RBPullUpMethodTransformation >> preconditionNoSupersendsReceived [
 { #category : 'preconditions' }
 RBPullUpMethodTransformation >> preconditionNoSupersendsSent [
 
-	^ ReMethodsSendNoSupersendsCondition new
+	^ ReNoSupersendToTargetClassCondition new
 		  class: class
 		  targetSuperclass: targetSuperclass
 		  selectors: selectors

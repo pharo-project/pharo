@@ -203,7 +203,7 @@ RePullUpMethodRefactoring >> preconditionNoReferencesToSharedVars [
 { #category : 'preconditions' }
 RePullUpMethodRefactoring >> preconditionNoSupersendsReceived [
 
-	^ ReMethodsReceiveNoSupersendsCondition new
+	^ ReMethodsHaveNoSuperCallInSiblingsCondition new
 		   class: class
 		   targetSuperclass: targetSuperclass
 		   selectors: selectors
@@ -212,7 +212,7 @@ RePullUpMethodRefactoring >> preconditionNoSupersendsReceived [
 { #category : 'preconditions' }
 RePullUpMethodRefactoring >> preconditionNoSupersendsSent [
 
-	^ ReMethodsSendNoSupersendsCondition new
+	^ ReNoSupersendToTargetClassCondition new
 		   class: class
 		   targetSuperclass: targetSuperclass
 		   selectors: selectors
