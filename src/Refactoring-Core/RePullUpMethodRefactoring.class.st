@@ -195,7 +195,7 @@ RePullUpMethodRefactoring >> preconditionNoReferencesToInstVars [
 { #category : 'preconditions' }
 RePullUpMethodRefactoring >> preconditionNoReferencesToSharedVars [
 
-	^ ReMethodsDontReferToSharedVarsCondition new
+	^ ReMethodsDontReferToLocalSharedVarsCondition new
 		   class: class
 		   selectors: selectors
 ]

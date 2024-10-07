@@ -252,7 +252,7 @@ RBPullUpMethodTransformation >> preconditionNoOverrides [
 { #category : 'preconditions' }
 RBPullUpMethodTransformation >> preconditionNoReferencesToSharedVars [
 
-	^ ReMethodsDontReferToSharedVarsCondition new
+	^ ReMethodsDontReferToLocalSharedVarsCondition new
 		  class: class
 		  selectors: selectors
 ]
