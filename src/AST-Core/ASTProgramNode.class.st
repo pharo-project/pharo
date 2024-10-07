@@ -274,15 +274,20 @@ ASTProgramNode >> assigns: aVariableName [
 
 { #category : 'querying' }
 ASTProgramNode >> bestNodeFor: anInterval [
-	| selectedChildren selectedComments |
-	anInterval ifNil: [^nil ].
-	selectedComments := self getCommentsFor: anInterval.
-	(self intersectsInterval: anInterval) ifFalse: [^selectedComments ifNil: [ nil ] ifNotNil: [ selectedComments size = 1 ifTrue: [ selectedComments first ] ifFalse: [ nil ] ] ].
-	(self containedBy: anInterval) ifTrue: [^self].
 
-	selectedChildren := self children select: [:each |
-		each intersectsInterval: anInterval
-	].
+	| selectedChildren selectedComments |
+	anInterval ifNil: [ ^ nil ].
+	selectedComments := self getCommentsFor: anInterval.
+	(self intersectsInterval: anInterval) ifFalse: [
+				^ selectedComments 
+					ifNil: [ nil ] 
+					ifNotNil: [ selectedComments size = 1 
+									ifTrue: [ selectedComments first ] 
+									ifFalse: [ nil ] ] ].
+	(self containedBy: anInterval) ifTrue: [ ^ self].
+
+	selectedChildren := self children 
+		select: [:each | each intersectsInterval: anInterval ].
 
 	^ selectedChildren size = 1
 		ifTrue: [ selectedChildren first bestNodeFor: anInterval ]
@@ -633,8 +638,10 @@ ASTProgramNode >> instanceVariableWriteNodes [
 
 { #category : 'testing' }
 ASTProgramNode >> intersectsInterval: anInterval [
-	^(anInterval first between: self start and: self stop)
-		or: [self start between: anInterval first and: anInterval last]
+	"Returns whether the node shape is included within the intervale, ending inside the interval, or starting within the interval"
+
+	^ (anInterval first between: self start and: self stop)
+		or: [ self start between: anInterval first and: anInterval last ]
 ]
 
 { #category : 'testing' }
@@ -1378,14 +1385,15 @@ ASTProgramNode >> warningNotices [
 
 { #category : 'querying' }
 ASTProgramNode >> whichNodeIsContainedBy: anInterval [
+
 	| selectedChildren |
-	(self intersectsInterval: anInterval) ifFalse: [^nil].
-	(self containedBy: anInterval) ifTrue: [^self].
+	(self intersectsInterval: anInterval) ifFalse: [ ^ nil ].
+	(self containedBy: anInterval) ifTrue: [ ^self ].
 	selectedChildren := self children
-				select: [:each | each intersectsInterval: anInterval].
-	^selectedChildren size == 1
-		ifTrue: [selectedChildren first whichNodeIsContainedBy: anInterval]
-		ifFalse: [nil]
+				select: [:each | each intersectsInterval: anInterval ].
+	^ selectedChildren size == 1
+		ifTrue: [ selectedChildren first whichNodeIsContainedBy: anInterval ]
+		ifFalse: [ nil ]
 ]
 
 { #category : 'querying' }
