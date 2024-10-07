@@ -31,7 +31,7 @@ OCMethodSemanticScope >> targetClass [
 ]
 
 { #category : 'accessing' }
-OCMethodSemanticScope >> targetClass: anObject [
+OCMethodSemanticScope >> targetClass: arg1 [
 
-	targetClass := anObject
+	targetClass := arg1
 ]

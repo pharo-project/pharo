@@ -13,61 +13,74 @@ Class {
 }
 
 { #category : 'visiting' }
-CopiedLocalVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
-	^ originalVar acceptVisitor: aProgramNodeVisitor node: aNode
+CopiedLocalVariable >> acceptVisitor: arg1 node: arg2 [
+
+	^ originalVar acceptVisitor: arg1 node: arg2
 ]
 
 { #category : 'queries' }
 CopiedLocalVariable >> definingNode [
+
 	^ scope node temporaries
-		detect: [ :each | each variable == self ]
-		ifNone: [ nil ]
+		  detect: [ :arg1 | arg1 variable == self ]
+		  ifNone: [  ]
 ]
 
 { #category : 'accessing' }
-CopiedLocalVariable >> index: anIndex [
-	self scope == originalVar scope ifTrue: [ originalVar index: anIndex ].
-	super index: anIndex
+CopiedLocalVariable >> index: arg1 [
+
+	self scope == originalVar scope ifTrue: [ originalVar index: arg1 ].
+	super index: arg1
 ]
 
 { #category : 'testing' }
 CopiedLocalVariable >> isArgumentVariable [
-	^originalVar isArgumentVariable
+
+	^ originalVar isArgumentVariable
 ]
 
 { #category : 'testing' }
 CopiedLocalVariable >> isCopying [
-	^true
+
+	^ true
 ]
 
 { #category : 'testing' }
 CopiedLocalVariable >> isTempVariable [
+
 	^ originalVar isTempVariable
 ]
 
 { #category : 'read/write usage' }
 CopiedLocalVariable >> isUninitialized [
-	^originalVar isUninitialized
+
+	^ originalVar isUninitialized
 ]
 
 { #category : 'testing' }
 CopiedLocalVariable >> isWritable [
-	^originalVar isWritable
+
+	^ originalVar isWritable
 ]
 
 { #category : 'accessing' }
 CopiedLocalVariable >> originalVar [
+
 	^ originalVar
 ]
 
 { #category : 'accessing' }
-CopiedLocalVariable >> originalVar: anObject [
-	originalVar := anObject
+CopiedLocalVariable >> originalVar: arg1 [
+
+	originalVar := arg1
 ]
 
 { #category : 'debugging' }
-CopiedLocalVariable >> writeFromContext: aContext scope: contextScope value: aValue [
-	self isWritable ifFalse: [ 	^self error: 'Arguments are read only' ].
-	"we need to change this var, all the other copies, and the orginal"
-	^contextScope setCopyingTempToAllScopesUpToDefTemp: originalVar to: aValue from: aContext
+CopiedLocalVariable >> writeFromContext: arg1 scope: arg2 value: arg3 [
+
+	self isWritable ifFalse: [ ^ self error: 'Arguments are read only' ].
+	^ arg2
+		  setCopyingTempToAllScopesUpToDefTemp: originalVar
+		  to: arg3
+		  from: arg1
 ]

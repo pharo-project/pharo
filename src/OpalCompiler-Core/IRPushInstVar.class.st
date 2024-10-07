@@ -10,12 +10,14 @@ Class {
 }
 
 { #category : 'visiting' }
-IRPushInstVar >> accept: aVisitor [
-	^ aVisitor visitPushInstVar: self
+IRPushInstVar >> accept: arg1 [
+
+	^ arg1 visitPushInstVar: self
 ]
 
 { #category : 'testing' }
 IRPushInstVar >> canBeQuickReturn [
+
 	^ true
 ]
 
@@ -27,7 +29,9 @@ IRPushInstVar >> isRemovableByPop [
 
 { #category : 'accessing' }
 IRPushInstVar >> quickRetNode [
-	^ IRReturnInstVar new
-		index: index;
-		yourself
+
+	| tmp1 |
+	tmp1 := IRReturnInstVar new.
+	tmp1 index: index.
+	^ tmp1 yourself
 ]

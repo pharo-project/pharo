@@ -17,49 +17,55 @@ Class {
 }
 
 { #category : 'visiting' }
-IRPushFullClosure >> accept: aVisitor [
-	^ aVisitor visitPushFullClosure: self
+IRPushFullClosure >> accept: arg1 [
+
+	^ arg1 visitPushFullClosure: self
 ]
 
 { #category : 'accessing' }
 IRPushFullClosure >> compiledBlock [
+
 	^ compiledBlock
 ]
 
 { #category : 'accessing' }
-IRPushFullClosure >> compiledBlock: anObject [
-	compiledBlock := anObject
+IRPushFullClosure >> compiledBlock: arg1 [
+
+	compiledBlock := arg1
 ]
 
 { #category : 'accessing' }
 IRPushFullClosure >> copiedValues [
+
 	^ copiedValues
 ]
 
 { #category : 'accessing' }
-IRPushFullClosure >> copiedValues: anObject [
-	copiedValues := anObject
+IRPushFullClosure >> copiedValues: arg1 [
+
+	copiedValues := arg1
 ]
 
 { #category : 'debugging' }
-IRPushFullClosure >> indexForVarNamed: aName [
-	^ sourceNode ir indexForVarNamed: aName
+IRPushFullClosure >> indexForVarNamed: arg1 [
+
+	^ sourceNode ir indexForVarNamed: arg1
 ]
 
 { #category : 'accessing' }
 IRPushFullClosure >> outerContextNeeded [
 
-	^ outerContextNeeded ifNil: [ true ]
+	^ outerContextNeeded == nil or: [ outerContextNeeded ]
 ]
 
 { #category : 'accessing' }
-IRPushFullClosure >> outerContextNeeded: anObject [
+IRPushFullClosure >> outerContextNeeded: arg1 [
 
-	outerContextNeeded := anObject
+	outerContextNeeded := arg1
 ]
 
 { #category : 'scoping' }
-IRPushFullClosure >> remapCopiedValueAt: index oldOne: aTemp newOne: aRemote [
+IRPushFullClosure >> remapCopiedValueAt: arg1 oldOne: arg2 newOne: arg3 [
 
-	self copiedValues at: index put: aRemote
+	self copiedValues at: arg1 put: arg3
 ]

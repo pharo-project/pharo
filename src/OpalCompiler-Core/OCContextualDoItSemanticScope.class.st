@@ -34,25 +34,26 @@ OCContextualDoItSemanticScope class >> targetingContext: aContext [
 ]
 
 { #category : 'code evaluation' }
-OCContextualDoItSemanticScope >> announceDoItEvaluation: aSourceString by: aSystemAnnouncer [
+OCContextualDoItSemanticScope >> announceDoItEvaluation: arg1 by: arg2 [
 
-	aSystemAnnouncer evaluated: aSourceString context: targetContext
+	arg2 evaluated: arg1 context: targetContext
 ]
 
 { #category : 'testing' }
-OCContextualDoItSemanticScope >> hasBindingThatBeginsWith: aString [
+OCContextualDoItSemanticScope >> hasBindingThatBeginsWith: arg1 [
 
-	(targetContext astScope hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
-
-	^super hasBindingThatBeginsWith: aString
+	(targetContext astScope hasBindingThatBeginsWith: arg1) ifTrue: [
+		^ true ].
+	nil.
+	^ super hasBindingThatBeginsWith: arg1
 ]
 
 { #category : 'lookup' }
-OCContextualDoItSemanticScope >> importVariable: aVariable [
+OCContextualDoItSemanticScope >> importVariable: arg1 [
 
-	^importedVariables
-		at: aVariable name
-		ifAbsentPut: [ aVariable asDoItVariableFrom: targetContext ]
+	^ importedVariables
+		  at: arg1 name
+		  ifAbsentPut: [ arg1 asDoItVariableFrom: targetContext ]
 ]
 
 { #category : 'accessing' }
@@ -62,29 +63,31 @@ OCContextualDoItSemanticScope >> importedVariables [
 ]
 
 { #category : 'accessing' }
-OCContextualDoItSemanticScope >> importedVariables: anObject [
+OCContextualDoItSemanticScope >> importedVariables: arg1 [
 
-	importedVariables := anObject
+	importedVariables := arg1
 ]
 
 { #category : 'initialization' }
 OCContextualDoItSemanticScope >> initialize [
-	super initialize.
 
+	super initialize.
 	importedVariables := Dictionary new
 ]
 
 { #category : 'lookup' }
-OCContextualDoItSemanticScope >> lookupVar: name [
+OCContextualDoItSemanticScope >> lookupVar: arg1 [
 
-	(targetContext lookupVar: name) ifNotNil: [ :v | ^self importVariable: v].
-
-	^super lookupVar: name
+	| tmp1 tmp3 |
+	tmp3 := tmp1 := targetContext lookupVar: arg1.
+	tmp3 ifNotNil: [ ^ self importVariable: tmp1 ].
+	^ super lookupVar: arg1
 ]
 
 { #category : 'accessing' }
 OCContextualDoItSemanticScope >> receiver [
-	^targetContext receiver
+
+	^ targetContext receiver
 ]
 
 { #category : 'accessing' }
@@ -94,7 +97,7 @@ OCContextualDoItSemanticScope >> targetContext [
 ]
 
 { #category : 'accessing' }
-OCContextualDoItSemanticScope >> targetContext: aContext [
+OCContextualDoItSemanticScope >> targetContext: arg1 [
 
-	targetContext := aContext
+	targetContext := arg1
 ]

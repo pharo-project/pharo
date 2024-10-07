@@ -14,15 +14,18 @@ Class {
 
 { #category : 'testing' }
 IRRemoteTempAccess >> isRemoteTemp [
+
 	^ true
 ]
 
 { #category : 'accessing' }
 IRRemoteTempAccess >> tempVectorName [
+
 	^ tempVectorName
 ]
 
 { #category : 'accessing' }
-IRRemoteTempAccess >> tempVectorName: anObject [
-	tempVectorName := anObject
+IRRemoteTempAccess >> tempVectorName: arg1 [
+
+	tempVectorName := arg1
 ]

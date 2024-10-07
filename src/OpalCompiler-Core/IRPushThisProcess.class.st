@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'visiting' }
-IRPushThisProcess >> accept: aVisitor [
-	^ aVisitor visitPushThisProcess: self
+IRPushThisProcess >> accept: arg1 [
+
+	^ arg1 visitPushThisProcess: self
 ]
 
 { #category : 'testing' }

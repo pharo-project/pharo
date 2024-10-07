@@ -28,22 +28,27 @@ Class {
 
 { #category : 'temp vars' }
 OCExtraBindingScope >> allTemps [
-	^#()
+
+	^ #(  )
 ]
 
 { #category : 'accessing' }
 OCExtraBindingScope >> bindings [
+
 	^ bindings
 ]
 
 { #category : 'accessing' }
-OCExtraBindingScope >> bindings: anObject [
-	bindings := anObject
+OCExtraBindingScope >> bindings: arg1 [
+
+	bindings := arg1
 ]
 
 { #category : 'lookup' }
-OCExtraBindingScope >> lookupVar: name [
-	^(bindings bindingOf: name asSymbol)
-		ifNotNil: [ :var | var ]
-		ifNil: [ super lookupVar: name ]
+OCExtraBindingScope >> lookupVar: arg1 [
+
+	| tmp1 |
+	^ (tmp1 := bindings bindingOf: arg1 asSymbol)
+		  ifNil: [ super lookupVar: arg1 ]
+		  ifNotNil: [ tmp1 ]
 ]

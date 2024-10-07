@@ -10,8 +10,9 @@ Class {
 }
 
 { #category : 'visiting' }
-IRPushDup >> accept: aVisitor [
-	^ aVisitor visitPushDup: self
+IRPushDup >> accept: arg1 [
+
+	^ arg1 visitPushDup: self
 ]
 
 { #category : 'testing' }

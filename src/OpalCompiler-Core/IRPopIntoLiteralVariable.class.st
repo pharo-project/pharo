@@ -10,6 +10,7 @@ Class {
 }
 
 { #category : 'visiting' }
-IRPopIntoLiteralVariable >> accept: aVisitor [
-	^ aVisitor visitPopIntoLiteralVariable: self
+IRPopIntoLiteralVariable >> accept: arg1 [
+
+	^ arg1 visitPopIntoLiteralVariable: self
 ]

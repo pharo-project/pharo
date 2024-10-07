@@ -23,64 +23,67 @@ OCAbstractMethodScope class >> isAbstract [
 ]
 
 { #category : 'temp vars - copying' }
-OCAbstractMethodScope >> addCopyingTemp: aTempVar [
-	^copiedVars at: aTempVar name put: (aTempVar createCopiedVariableFor: self)
+OCAbstractMethodScope >> addCopyingTemp: arg1 [
+
+	^ copiedVars at: arg1 name put: (arg1 createCopiedVariableFor: self)
 ]
 
 { #category : 'temp vars - copying' }
-OCAbstractMethodScope >> addCopyingTempToAllScopesUpToDefTemp: aVar [
+OCAbstractMethodScope >> addCopyingTempToAllScopesUpToDefTemp: arg1 [
 
-	(self copiedVarNames includes: aVar name) ifFalse: [self addCopyingTemp: aVar].
-	self = aVar scope ifTrue: [^ self].
-	^ self outerScope addCopyingTempToAllScopesUpToDefTemp: aVar
+	(self copiedVarNames includes: arg1 name) ifFalse: [
+		self addCopyingTemp: arg1 ].
+	self = arg1 scope ifTrue: [ ^ self ].
+	nil.
+	^ self outerScope addCopyingTempToAllScopesUpToDefTemp: arg1
 ]
 
 { #category : 'temp vars' }
-OCAbstractMethodScope >> addTemp: aTempVar [
-	aTempVar scope: self.
-	^ tempVars
-		at: aTempVar name
-		put: aTempVar
+OCAbstractMethodScope >> addTemp: arg1 [
+
+	arg1 scope: self.
+	^ tempVars at: arg1 name put: arg1
 ]
 
 { #category : 'temp vars - vector' }
-OCAbstractMethodScope >> addVectorTemp: aTemp [
-	^ tempVector
-		at:  aTemp name
-		put: (OCVectorTempVariable new
-			name: aTemp name;
-			vectorName: self tempVectorName;
-			scope: self;
-			usage: aTemp usage;
-			escaping: aTemp escaping;
-			yourself)
+OCAbstractMethodScope >> addVectorTemp: arg1 [
+
+	| tmp2 |
+	tmp2 := OCVectorTempVariable new.
+	tmp2
+		name: arg1 name;
+		vectorName: self tempVectorName;
+		scope: self;
+		usage: arg1 usage;
+		escaping: arg1 escaping.
+	^ tempVector at: arg1 name put: tmp2 yourself
 ]
 
 { #category : 'temp vars' }
 OCAbstractMethodScope >> allTempNames [
-	^self allTemps collect: [: each | each name]
+
+	^ self allTemps collect: [ :arg1 | arg1 name ]
 ]
 
 { #category : 'temp vars' }
 OCAbstractMethodScope >> allTemps [
-	"return all temps defined, even the ones in the outer scope that are not used in the current.
-	 This includes the arguments. We do not need to care about shadowed temps as temp shadowing is not allowed."
 
-	^ Array streamContents: [ :str |
-			self outerScope allTemps
-				do: [ :var |
-					(self localTempNames includes: var name)
-						ifFalse: [ str nextPut: var ] ].
-			str nextPutAll: self localTemps ]
+	^ Array streamContents: [ :arg1 |
+		  self outerScope allTemps do: [ :arg2 |
+			  (self localTempNames includes: arg2 name) ifFalse: [
+				  arg1 nextPut: arg2 ] ].
+		  arg1 nextPutAll: self localTemps ]
 ]
 
 { #category : 'temp vars - copying' }
 OCAbstractMethodScope >> copiedVarNames [
+
 	^ copiedVars keys
 ]
 
 { #category : 'temp vars - copying' }
 OCAbstractMethodScope >> copiedVars [
+
 	^ copiedVars
 ]
 
@@ -88,73 +91,80 @@ OCAbstractMethodScope >> copiedVars [
 OCAbstractMethodScope >> copyEscapingReads [
 
 	self tempVars values
-		select: [ :each | each isEscapingRead ]
-		thenDo: [ :each | self addCopyingTemp: each ]
+		select: [ :arg1 | arg1 isEscapingRead ]
+		thenDo: [ :arg2 | self addCopyingTemp: arg2 ]
 ]
 
 { #category : 'lookup' }
-OCAbstractMethodScope >> hasBindingThatBeginsWith: aString [
-	"check weather there are any temporaries defined that start with aString"
-	(copiedVars hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
-	(tempVector hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
-	(tempVars hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
+OCAbstractMethodScope >> hasBindingThatBeginsWith: arg1 [
 
-	^ self outerScope hasBindingThatBeginsWith: aString
+	(copiedVars hasBindingThatBeginsWith: arg1) ifTrue: [ ^ true ].
+	nil.
+	(tempVector hasBindingThatBeginsWith: arg1) ifTrue: [ ^ true ].
+	nil.
+	(tempVars hasBindingThatBeginsWith: arg1) ifTrue: [ ^ true ].
+	nil.
+	^ self outerScope hasBindingThatBeginsWith: arg1
 ]
 
 { #category : 'temp vars - vector' }
 OCAbstractMethodScope >> hasTempVector [
+
 	^ tempVector isNotEmpty
 ]
 
 { #category : 'accessing' }
-OCAbstractMethodScope >> id: int [
-	id := int
+OCAbstractMethodScope >> id: arg1 [
+
+	id := arg1
 ]
 
 { #category : 'initialization' }
 OCAbstractMethodScope >> initialize [
 
-	tempVars :=  OrderedDictionary new.
-	tempVector  := OrderedDictionary new.
+	tempVars := OrderedDictionary new.
+	tempVector := OrderedDictionary new.
 	copiedVars := OrderedDictionary new.
 	id := 0
 ]
 
 { #category : 'temp vars' }
 OCAbstractMethodScope >> localTempNames [
-	^self localTemps collect: [:each | each name]
+
+	^ self localTemps collect: [ :arg1 | arg1 name ]
 ]
 
 { #category : 'temp vars' }
 OCAbstractMethodScope >> localTemps [
-	"all temps accessed in the context... for tempVectors, it takes all the vars even those not used here"
 
-	^ Array streamContents: [ :str |
-			copiedVars valuesDo: [ :var |
-					var isStoringTempVector
-						ifTrue: [ var originalVar scope tempVector
-								do: [ :tempVectorVars | str nextPut: tempVectorVars ] ] ].
-			str nextPutAll: tempVars values]
+	^ Array streamContents: [ :arg1 |
+		  copiedVars valuesDo: [ :arg2 |
+			  arg2 isStoringTempVector ifTrue: [
+				  arg2 originalVar scope tempVector do: [ :arg3 |
+					  arg1 nextPut: arg3 ] ] ].
+		  arg1 nextPutAll: tempVars values ]
 ]
 
 { #category : 'lookup' }
-OCAbstractMethodScope >> lookupDefiningContextForVariable: var startingFrom: aContext [
-	"Is this the definition context for var? If it not, we look in the outer context using the corresponding outer scope. If found, we return the context"
+OCAbstractMethodScope >> lookupDefiningContextForVariable: arg1 startingFrom: arg2 [
 
-	^self = var scope
-		ifFalse: [ self outerScope lookupDefiningContextForVariable: var startingFrom: (self nextOuterScopeContextOf: aContext) ]
-		ifTrue: [ aContext ]
+	^ self = arg1 scope
+		  ifTrue: [ arg2 ]
+		  ifFalse: [
+			  self outerScope
+				  lookupDefiningContextForVariable: arg1
+				  startingFrom: (self nextOuterScopeContextOf: arg2) ]
 ]
 
 { #category : 'lookup' }
-OCAbstractMethodScope >> lookupVar: name [
+OCAbstractMethodScope >> lookupVar: arg1 [
 
-	copiedVars at: name ifPresent: [:v | ^ v].
-	tempVector at: name ifPresent: [:v | ^ v].
-	tempVars at: name ifPresent: [:v | ^ v].
-	name = self tempVectorName ifTrue: [ ^ self tempVectorVar ].
-	^ super lookupVar: name
+	copiedVars at: arg1 ifPresent: [ :arg2 | ^ arg2 ].
+	tempVector at: arg1 ifPresent: [ :arg3 | ^ arg3 ].
+	tempVars at: arg1 ifPresent: [ :arg4 | ^ arg4 ].
+	arg1 = self tempVectorName ifTrue: [ ^ self tempVectorVar ].
+	nil.
+	^ super lookupVar: arg1
 ]
 
 { #category : 'scope' }
@@ -167,74 +177,87 @@ OCAbstractMethodScope >> methodScope [
 OCAbstractMethodScope >> moveEscapingWritesToTempVector [
 
 	self tempVars values
-		select: [ :each | each isEscapingWrite ]
-		thenDo: [ :each | self moveToVectorTemp: each ]
+		select: [ :arg1 | arg1 isEscapingWrite ]
+		thenDo: [ :arg2 | self moveToVectorTemp: arg2 ]
 ]
 
 { #category : 'temp vars - vector' }
-OCAbstractMethodScope >> moveToVectorTemp: aTempVar [
+OCAbstractMethodScope >> moveToVectorTemp: arg1 [
 
-	self addVectorTemp: aTempVar.
-	self removeTemp: aTempVar
+	self
+		addVectorTemp: arg1;
+		removeTemp: arg1
 ]
 
 { #category : 'scope' }
-OCAbstractMethodScope >> newBlockScope: int [
-	^ OCBlockScope new outerScope: self; id: int; yourself
+OCAbstractMethodScope >> newBlockScope: arg1 [
+
+	| tmp2 |
+	tmp2 := OCBlockScope new.
+	tmp2
+		outerScope: self;
+		id: arg1.
+	^ tmp2 yourself
 ]
 
 { #category : 'scope' }
-OCAbstractMethodScope >> newOptimizedBlockScope: int [
-	^ OCOptimizedBlockScope new
-			outerScope: self;
-			id: int;
-			yourself
+OCAbstractMethodScope >> newOptimizedBlockScope: arg1 [
+
+	| tmp2 |
+	tmp2 := OCOptimizedBlockScope new.
+	tmp2
+		outerScope: self;
+		id: arg1.
+	^ tmp2 yourself
 ]
 
 { #category : 'lookup' }
-OCAbstractMethodScope >> nextOuterScopeContextOf: aContext [
-	^aContext
+OCAbstractMethodScope >> nextOuterScopeContextOf: arg1 [
+
+	^ arg1
 ]
 
 { #category : 'accessing' }
 OCAbstractMethodScope >> node [
-	^node
+
+	^ node
 ]
 
 { #category : 'accessing' }
-OCAbstractMethodScope >> node: aNode [
-	node := aNode
+OCAbstractMethodScope >> node: arg1 [
+
+	node := arg1
 ]
 
 { #category : 'scope' }
 OCAbstractMethodScope >> outerNotOptimizedScope [
-	^self
+
+	
 ]
 
 { #category : 'scope' }
 OCAbstractMethodScope >> popScope [
-	"Propogate free var usages to their outer vars, then return outer scope"
 
 	^ self outerScope
 ]
 
 { #category : 'temp vars' }
-OCAbstractMethodScope >> removeTemp: tempVar [
+OCAbstractMethodScope >> removeTemp: arg1 [
 
-	tempVars removeKey: tempVar name
+	tempVars removeKey: arg1 name
 ]
 
 { #category : 'temp vars - copying' }
-OCAbstractMethodScope >> setCopyingTempToAllScopesUpToDefTemp: aVar to: aValue from: aContext [
-	"we need to update all the copies if we change the value of a copied temp"
+OCAbstractMethodScope >> setCopyingTempToAllScopesUpToDefTemp: arg1 to: arg2 from: arg3 [
 
-	self = aVar scope
-		ifTrue: [ ^ aVar writeFromLocalContext: aContext put: aValue ].
-	(self lookupVar: aVar name) writeFromLocalContext: aContext put: aValue.
-	^self outerScope
-		setCopyingTempToAllScopesUpToDefTemp: aVar
-		to: aValue
-		from: (self nextOuterScopeContextOf: aContext)
+	self = arg1 scope ifTrue: [
+		^ arg1 writeFromLocalContext: arg3 put: arg2 ].
+	nil.
+	(self lookupVar: arg1 name) writeFromLocalContext: arg3 put: arg2.
+	^ self outerScope
+		  setCopyingTempToAllScopesUpToDefTemp: arg1
+		  to: arg2
+		  from: (self nextOuterScopeContextOf: arg3)
 ]
 
 { #category : 'temp vars' }
@@ -246,7 +269,9 @@ OCAbstractMethodScope >> tempVarNames [
 { #category : 'temp vars' }
 OCAbstractMethodScope >> tempVarNamesWithoutArguments [
 
-	^ tempVars values reject: [ :each | each isArgumentVariable ] thenCollect: [ :each | each name ]
+	^ tempVars values
+		  reject: [ :arg1 | arg1 isArgumentVariable ]
+		  thenCollect: [ :arg2 | arg2 name ]
 ]
 
 { #category : 'temp vars' }
@@ -257,28 +282,32 @@ OCAbstractMethodScope >> tempVars [
 
 { #category : 'temp vars - vector' }
 OCAbstractMethodScope >> tempVector [
+
 	^ tempVector
 ]
 
 { #category : 'temp vars - vector' }
 OCAbstractMethodScope >> tempVectorName [
-	"the name of the tempVector is not a valid name of a temp variable
-	 This way we avoid name clashes "
-	^'0vector', id asString
+
+	^ '0vector' , id asString
 ]
 
 { #category : 'temp vars - vector' }
 OCAbstractMethodScope >> tempVectorVar [
-	^ tempVectorVar ifNil: [ tempVectorVar := TemporaryVariable new
-			name: self tempVectorName;
-			scope: self;
-			yourself]
+
+	^ tempVectorVar
+		  ifNil: [
+			  | tmp2 |
+			  tmp2 := TemporaryVariable new.
+			  tmp2
+				  name: self tempVectorName;
+				  scope: self.
+			  tempVectorVar := tmp2 yourself ]
+		  ifNotNil: [ tempVectorVar ]
 ]
 
 { #category : 'temp vars - vector' }
 OCAbstractMethodScope >> tempVectorVarNames [
-	"As other users are taking the values directly from the tempVector Dictionary,
-	it is important that the collect is performed like this. As in this way it has always the order dependending on the hash of the String (that is constant).
-	If done with collect:as: it has the order of the Dictionary that is almost random (changes from image run to image run)"
-	^ (self tempVector collect: [:each| each name]) asArray
+
+	^ (self tempVector collect: [ :arg1 | arg1 name ]) asArray
 ]

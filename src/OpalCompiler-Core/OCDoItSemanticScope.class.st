@@ -23,22 +23,25 @@ OCDoItSemanticScope class >> isAbstract [
 ]
 
 { #category : 'code evaluation' }
-OCDoItSemanticScope >> evaluateDoIt: doItMethod [
+OCDoItSemanticScope >> evaluateDoIt: arg1 [
 
-	^self receiver withArgs: #() executeMethod: doItMethod
+	^ self receiver withArgs: #(  ) executeMethod: arg1
 ]
 
 { #category : 'testing' }
 OCDoItSemanticScope >> isDoItScope [
-	^true
+
+	^ true
 ]
 
 { #category : 'accessing' }
 OCDoItSemanticScope >> receiver [
+
 	^ self subclassResponsibility
 ]
 
 { #category : 'accessing' }
 OCDoItSemanticScope >> targetClass [
+
 	^ self receiver class
 ]

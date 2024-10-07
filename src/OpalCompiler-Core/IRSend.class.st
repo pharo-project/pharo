@@ -14,30 +14,33 @@ Class {
 }
 
 { #category : 'visiting' }
-IRSend >> accept: aVisitor [
-	^ aVisitor visitSend: self
+IRSend >> accept: arg1 [
+
+	^ arg1 visitSend: self
 ]
 
 { #category : 'testing' }
 IRSend >> isSend [
-	^true
+
+	^ true
 ]
 
 { #category : 'testing' }
 IRSend >> isSuperSend [
 
-    ^ superOf isNotNil
+	^ superOf isNotNil
 ]
 
 { #category : 'accessing' }
 IRSend >> selector [
-	^selector
+
+	^ selector
 ]
 
 { #category : 'accessing' }
-IRSend >> selector: symbol [
+IRSend >> selector: arg1 [
 
-	selector := symbol
+	selector := arg1
 ]
 
 { #category : 'accessing' }
@@ -47,7 +50,7 @@ IRSend >> superOf [
 ]
 
 { #category : 'accessing' }
-IRSend >> superOf: behavior [
+IRSend >> superOf: arg1 [
 
-	superOf := behavior
+	superOf := arg1
 ]

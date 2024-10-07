@@ -16,36 +16,43 @@ Class {
 }
 
 { #category : 'visiting' }
-IRTempVector >> accept: aVisitor [
-	^ aVisitor visitTempVector: self
+IRTempVector >> accept: arg1 [
+
+	^ arg1 visitTempVector: self
 ]
 
 { #category : 'accessing' }
-IRTempVector >> indexForVarNamed: aName [
-	^vars indexOf: aName
+IRTempVector >> indexForVarNamed: arg1 [
+
+	^ vars indexOf: arg1
 ]
 
 { #category : 'testing' }
 IRTempVector >> isTempVector [
-	^true
+
+	^ true
 ]
 
 { #category : 'accessing' }
 IRTempVector >> name [
+
 	^ name
 ]
 
 { #category : 'accessing' }
-IRTempVector >> name: anObject [
-	name := anObject
+IRTempVector >> name: arg1 [
+
+	name := arg1
 ]
 
 { #category : 'accessing' }
 IRTempVector >> vars [
+
 	^ vars
 ]
 
 { #category : 'accessing' }
-IRTempVector >> vars: anObject [
-	vars := anObject
+IRTempVector >> vars: arg1 [
+
+	vars := arg1
 ]

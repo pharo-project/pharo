@@ -53,15 +53,15 @@ OCDynamicASTCompilerPlugin >> priority [
 ]
 
 { #category : 'accessing' }
-OCDynamicASTCompilerPlugin >> priority: anObject [
+OCDynamicASTCompilerPlugin >> priority: arg1 [
 
-	priority := anObject
+	priority := arg1
 ]
 
 { #category : 'transforming' }
-OCDynamicASTCompilerPlugin >> transform: ast [
+OCDynamicASTCompilerPlugin >> transform: arg1 [
 
-	^ transformBlock value: ast copy
+	^ transformBlock value: arg1 copy
 ]
 
 { #category : 'accessing' }
@@ -71,7 +71,7 @@ OCDynamicASTCompilerPlugin >> transformBlock [
 ]
 
 { #category : 'accessing' }
-OCDynamicASTCompilerPlugin >> transformBlock: anObject [
+OCDynamicASTCompilerPlugin >> transformBlock: arg1 [
 
-	transformBlock := anObject
+	transformBlock := arg1
 ]

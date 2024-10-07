@@ -11,21 +11,25 @@ Class {
 
 { #category : 'testing' }
 OCBlockScope >> hasEscapingVars [
+
 	^ self inComingCopiedVarNames isNotEmpty
 ]
 
 { #category : 'accessing' }
 OCBlockScope >> inComingCopiedVarNames [
+
 	^ self copiedVarNames intersection: outerScope copiedVarNames
 ]
 
 { #category : 'testing' }
 OCBlockScope >> isBlockScope [
+
 	^ true
 ]
 
 { #category : 'testing' }
 OCBlockScope >> isInsideOptimizedLoop [
+
 	^ self outerScope isInsideOptimizedLoop
 ]
 
@@ -36,10 +40,9 @@ OCBlockScope >> isOptimized [
 ]
 
 { #category : 'lookup' }
-OCBlockScope >> nextOuterScopeContextOf: aContext [
+OCBlockScope >> nextOuterScopeContextOf: arg1 [
 
-	"Returns the next context to lookup a variable name from within outer scope.
-	If it is block context then we return outer context for lookup.
-	But if it is method context lookup will continue in same context but within outer scope"
-	^ aContext outerContext ifNil: [ aContext ]
+	| tmp1 |
+	tmp1 := arg1 outerContext.
+	^ tmp1 ifNil: [ arg1 ] ifNotNil: [ tmp1 ]
 ]
