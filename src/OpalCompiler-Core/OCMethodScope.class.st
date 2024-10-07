@@ -11,12 +11,11 @@ Class {
 
 { #category : 'testing' }
 OCMethodScope >> isMethodScope [
-
-	^ true
+	^true
 ]
 
 { #category : 'scope' }
 OCMethodScope >> methodScope [
 
-	
+	^ self
 ]

@@ -20,67 +20,59 @@ Class {
 }
 
 { #category : 'private' }
-IRFix >> convertRet: arg1 forSeq: arg2 [
-
-	| tmp1 tmp2 |
-	tmp1 := arg1 key.
-	tmp2 := arg1 value.
-	arg2
-		replaceNode: tmp1
-		withNode: (tmp1 quickRetNode sourceNode: tmp2 sourceNode);
-		remove: tmp2
+IRFix >> convertRet: assoc forSeq: seq [
+	| push ret |
+	push := assoc key.
+	ret := assoc value.
+	seq replaceNode: push withNode: (push quickRetNode sourceNode: ret sourceNode).
+	seq remove: ret
 ]
 
 { #category : 'private' }
-IRFix >> convertStorePop: arg1 forSeq: arg2 [
-
-	| tmp1 tmp2 |
-	tmp1 := arg1 key.
-	tmp2 := arg1 value.
-	arg2
-		replaceNode: tmp1
-		withNode: (tmp1 popIntoNode sourceNode: tmp1 sourceNode);
-		remove: tmp2
+IRFix >> convertStorePop: assoc forSeq: seq [
+	| store pop |
+	store := assoc key.
+	pop := assoc value.
+	seq replaceNode: store withNode: (store popIntoNode sourceNode: store sourceNode).
+	seq remove: pop
 ]
 
 { #category : 'initialization' }
 IRFix >> initialize [
 
 	super initialize.
+
 	storePopToFix := OrderedCollection new.
 	retToFix := OrderedCollection new
 ]
 
 { #category : 'visiting' }
-IRFix >> visitInstruction: arg1 [
-
-	self visitNode: arg1.
-	prevInstr := arg1
+IRFix >> visitInstruction: instr [
+	self visitNode: instr.
+	prevInstr := instr
 ]
 
 { #category : 'visiting' }
-IRFix >> visitPop: arg1 [
-
-	prevInstr ifNil: [ ^ self ] ifNotNil: [ prevInstr ].
+IRFix >> visitPop: pop [
+	prevInstr ifNil: [ ^ self ].
 	prevInstr isStore ifFalse: [ ^ self ].
-	storePopToFix add: prevInstr -> arg1
+	"store then pop, however, cannot remove instr while iterating over the collection"
+	storePopToFix add: prevInstr -> pop
 ]
 
 { #category : 'visiting' }
-IRFix >> visitReturn: arg1 [
-
-	prevInstr ifNil: [ ^ self ] ifNotNil: [ prevInstr ].
+IRFix >> visitReturn: ret [
+	prevInstr ifNil: [ ^ self ].
 	prevInstr canBeQuickReturn ifFalse: [ ^ self ].
-	retToFix add: prevInstr -> arg1
+	retToFix add: prevInstr -> ret
 ]
 
 { #category : 'visiting' }
-IRFix >> visitSequence: arg1 [
-
+IRFix >> visitSequence: instructionSequence [
 	prevInstr := nil.
 	storePopToFix reset.
 	retToFix reset.
-	super visitSequence: arg1.
-	retToFix do: [ :arg2 | self convertRet: arg2 forSeq: arg1 ].
-	storePopToFix do: [ :arg3 | self convertStorePop: arg3 forSeq: arg1 ]
+	super visitSequence: instructionSequence.
+	retToFix do: [ :each | self convertRet: each forSeq: instructionSequence ].
+	storePopToFix do: [ :each | self convertStorePop: each forSeq: instructionSequence ]
 ]

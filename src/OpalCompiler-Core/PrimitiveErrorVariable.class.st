@@ -22,19 +22,16 @@ PrimitiveErrorVariable class >> node: aVariableNode [
 ]
 
 { #category : 'visiting' }
-PrimitiveErrorVariable >> acceptVisitor: arg1 node: arg2 [
-
-	^ arg1 visitTemporaryVariableNode: arg2
+PrimitiveErrorVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
+	^ aProgramNodeVisitor visitTemporaryVariableNode: aNode
 ]
 
 { #category : 'queries' }
 PrimitiveErrorVariable >> definingNode [
-
-	^ node
+	^node
 ]
 
 { #category : 'accessing' }
-PrimitiveErrorVariable >> node: arg1 [
-
-	node := arg1
+PrimitiveErrorVariable >> node: anObject [
+	node := anObject
 ]

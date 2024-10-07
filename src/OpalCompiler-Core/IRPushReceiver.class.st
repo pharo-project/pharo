@@ -10,14 +10,12 @@ Class {
 }
 
 { #category : 'visiting' }
-IRPushReceiver >> accept: arg1 [
-
-	^ arg1 visitPushReceiver: self
+IRPushReceiver >> accept: aVisitor [
+	^ aVisitor visitPushReceiver: self
 ]
 
 { #category : 'testing' }
 IRPushReceiver >> canBeQuickReturn [
-
 	^ true
 ]
 
@@ -29,12 +27,10 @@ IRPushReceiver >> isRemovableByPop [
 
 { #category : 'testing' }
 IRPushReceiver >> isSelf [
-
-	^ true
+	^true
 ]
 
 { #category : 'accessing' }
 IRPushReceiver >> quickRetNode [
-
 	^ IRReturnReceiver new
 ]

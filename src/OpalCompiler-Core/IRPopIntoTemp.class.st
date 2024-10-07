@@ -10,14 +10,12 @@ Class {
 }
 
 { #category : 'visiting' }
-IRPopIntoTemp >> accept: arg1 [
-
-	^ arg1 visitPopIntoTemp: self
+IRPopIntoTemp >> accept: aVisitor [
+	^ aVisitor visitPopIntoTemp: self
 ]
 
 { #category : 'accessing' }
 IRPopIntoTemp >> nextBytecodeOffsetAfterJump [
-
-	^ self sequence last destination last destination first
-		  bytecodeOffset
+	"if we are in to:do: answers the next byte code offset"
+	^ self sequence last destination last destination first bytecodeOffset
 ]

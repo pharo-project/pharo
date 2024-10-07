@@ -10,22 +10,18 @@ Class {
 }
 
 { #category : 'visiting' }
-IRStoreTemp >> accept: arg1 [
-
-	^ arg1 visitStoreTemp: self
+IRStoreTemp >> accept: aVisitor [
+	^ aVisitor visitStoreTemp: self
 ]
 
 { #category : 'testing' }
 IRStoreTemp >> isStore [
-
 	^ true
 ]
 
 { #category : 'accessing' }
 IRStoreTemp >> popIntoNode [
-
-	| tmp2 |
-	tmp2 := IRPopIntoTemp new.
-	tmp2 name: name.
-	^ tmp2 yourself
+	^ IRPopIntoTemp new
+		name: name;
+		yourself
 ]

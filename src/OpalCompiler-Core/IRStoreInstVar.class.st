@@ -10,22 +10,18 @@ Class {
 }
 
 { #category : 'visiting' }
-IRStoreInstVar >> accept: arg1 [
-
-	^ arg1 visitStoreInstVar: self
+IRStoreInstVar >> accept: aVisitor [
+	^ aVisitor visitStoreInstVar: self
 ]
 
 { #category : 'testing' }
 IRStoreInstVar >> isStore [
-
 	^ true
 ]
 
 { #category : 'accessing' }
 IRStoreInstVar >> popIntoNode [
-
-	| tmp2 |
-	tmp2 := IRPopIntoInstVar new.
-	tmp2 index: index.
-	^ tmp2 yourself
+	^ IRPopIntoInstVar new
+		index: index;
+		yourself
 ]

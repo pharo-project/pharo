@@ -10,17 +10,15 @@ Class {
 }
 
 { #category : 'visiting' }
-TemporaryVariable >> acceptVisitor: arg1 node: arg2 [
-
-	^ arg1 visitTemporaryVariableNode: arg2
+TemporaryVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
+	^ aProgramNodeVisitor visitTemporaryVariableNode: aNode
 ]
 
 { #category : 'queries' }
 TemporaryVariable >> definingNode [
-
 	^ scope node temporaries
-		  detect: [ :arg1 | arg1 variable == self ]
-		  ifNone: [  ]
+		detect: [ :each | each variable == self ]
+		ifNone: [ nil ]
 ]
 
 { #category : 'testing' }

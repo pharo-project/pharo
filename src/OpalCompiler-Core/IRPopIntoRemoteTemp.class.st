@@ -10,7 +10,6 @@ Class {
 }
 
 { #category : 'visiting' }
-IRPopIntoRemoteTemp >> accept: arg1 [
-
-	^ arg1 visitPopIntoRemoteTemp: self
+IRPopIntoRemoteTemp >> accept: aVisitor [
+	^ aVisitor visitPopIntoRemoteTemp: self
 ]

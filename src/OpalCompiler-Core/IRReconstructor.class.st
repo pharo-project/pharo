@@ -16,41 +16,42 @@ Class {
 
 { #category : 'instructions' }
 IRReconstructor >> blockReturnTop [
-
 	self fixPushNilsForTemps.
 	^ super blockReturnTop
 ]
 
 { #category : 'initialize' }
-IRReconstructor >> createTempVectorNamed: arg1 withVars: arg2 [
-
+IRReconstructor >> createTempVectorNamed: name withVars: anArray [
+	" Don't add the temp yet, we only know it's index at the end of the block or method "
+	"self addVectorTemps: anArray"
+	" Update the byte index to point before the pushing of the new vector "
 	sourceMapByteIndex := sourceMapByteIndex - 2.
-	self add: (IRInstruction createTempVectorNamed: arg1 withVars: arg2)
+	self add: (IRInstruction createTempVectorNamed: name withVars: anArray)
 ]
 
 { #category : 'accessing' }
 IRReconstructor >> currentSequence [
-
-	^ currentSequence
+	^currentSequence
 ]
 
 { #category : 'accessing' }
-IRReconstructor >> currentSequence: arg1 [
-
-	currentSequence := arg1
+IRReconstructor >> currentSequence: aSeq [
+	currentSequence := aSeq
 ]
 
 { #category : 'removing' }
 IRReconstructor >> fixPushNilsForTemps [
+	" There are pushConstant: nil in the beginning of the blocksequence for all of the defined temps.
+	  We got these pushConstant: nil in. Now our closure will generate them again, meaning we will double
+	  the number of pushConstant: nil in the final block. To avoid this, we strip the ones we got in from the IR.  "
 
-	| tmp1 |
-	tmp1 := self currentScope blockSequence sequence.
-	self currentScope definedTemps do: [ :arg1 | tmp1 removeFirst ]
+	| blocksequence |
+	blocksequence := self currentScope blockSequence sequence.
+	self currentScope definedTemps do: [ :temp | blocksequence removeFirst ]
 ]
 
 { #category : 'initialization' }
 IRReconstructor >> initialize [
-
 	temps := Dictionary new.
 	remoteTemps := Dictionary new.
 	closureCopiedValues := Dictionary new.
@@ -60,87 +61,79 @@ IRReconstructor >> initialize [
 
 { #category : 'testing' }
 IRReconstructor >> isLastClosureInstruction [
-
-	| tmp1 |
-	tmp1 := jumpAheadStacks
-		        at: sourceMapByteIndex + 1
-		        ifAbsent: [ ^ false ].
-	^ tmp1 anySatisfy: [ :arg1 | arg1 = self currentScope ]
+	| nextJumps |
+	nextJumps := jumpAheadStacks at: sourceMapByteIndex + 1 ifAbsent: [ ^ false ].
+	^ nextJumps anySatisfy: [ :anOrigin | anOrigin = self currentScope ]
 ]
 
 { #category : 'instructions' }
-IRReconstructor >> pushFullClosureCompiledBlock: arg1 copiedValues: arg2 [
+IRReconstructor >> pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedValues [
+	| anInstruction |
+	anInstruction := super pushFullClosureCompiledBlock: compiledBlock copiedValues: copiedValues.
 
-	| tmp1 |
-	tmp1 := super pushFullClosureCompiledBlock: arg1 copiedValues: arg2.
-	tmp1 copiedValues withIndexDo: [ :arg3 :arg4 |
-		self
-			rememberReference: tmp1 -> arg4
-			to: arg3
-			in: closureCopiedValues ]
+	anInstruction copiedValues withIndexDo: [ :aValue :index |
+		self rememberReference: anInstruction -> index to: aValue in: closureCopiedValues ]
 ]
 
 { #category : 'instructions' }
-IRReconstructor >> pushRemoteTemp: arg1 inVector: arg2 [
-
-	| tmp1 |
-	tmp1 := super pushRemoteTemp: arg1 inVector: arg2.
-	self rememberReference: tmp1 to: arg2 in: remoteTemps
+IRReconstructor >> pushRemoteTemp: name inVector: nameOfVector [
+	| anInstruction |
+	anInstruction := super pushRemoteTemp: name inVector: nameOfVector.
+	self rememberReference: anInstruction to: nameOfVector in: remoteTemps
 ]
 
 { #category : 'instructions' }
-IRReconstructor >> pushTemp: arg1 [
-
-	| tmp1 |
-	tmp1 := super pushTemp: arg1.
-	self rememberReference: tmp1 to: arg1 in: temps
+IRReconstructor >> pushTemp: aSelector [
+	| anInstruction |
+	anInstruction := super pushTemp: aSelector.
+	self rememberReference: anInstruction to: aSelector in: temps
 ]
 
 { #category : 'remapping' }
-IRReconstructor >> remapTemp: arg1 toRemote: arg2 [
+IRReconstructor >> remapTemp: aTemp toRemote: aRemote [
+	(temps removeKey: aTemp ifAbsent: [ #() ])
+		do: [ :tempAccess |
+			tempAccess name: aRemote.
+			self rememberReference: tempAccess to: aRemote in: temps ].
 
-	(temps removeKey: arg1 ifAbsent: [ #(  ) ]) do: [ :arg3 |
-		arg3 name: arg2.
-		self rememberReference: arg3 to: arg2 in: temps ].
-	(remoteTemps removeKey: arg1 ifAbsent: [ #(  ) ]) do: [ :arg4 |
-		arg4 tempVectorName: arg2.
-		self rememberReference: arg4 to: arg2 in: remoteTemps ].
-	(closureCopiedValues removeKey: arg1 ifAbsent: [ #(  ) ]) do: [ :arg5 |
-		| tmp1 tmp2 |
-		tmp1 := arg5 key.
-		tmp2 := arg5 value.
-		tmp1 remapCopiedValueAt: tmp2 oldOne: arg1 newOne: arg2.
-		self rememberReference: arg5 to: arg2 in: closureCopiedValues ]
+	(remoteTemps removeKey: aTemp ifAbsent: [ #() ])
+		do: [ :tempAccess |
+			tempAccess tempVectorName: aRemote.
+			self rememberReference: tempAccess to: aRemote in: remoteTemps. ].
+
+	(closureCopiedValues removeKey: aTemp ifAbsent: [ #() ])
+		do: [ :aClosureAndIndex | |closure index|
+			closure := aClosureAndIndex key.
+			index := aClosureAndIndex value.
+			closure remapCopiedValueAt: index oldOne: aTemp newOne: aRemote.
+			self rememberReference: aClosureAndIndex to: aRemote in: closureCopiedValues. ]
 ]
 
 { #category : 'remapping' }
-IRReconstructor >> rememberReference: arg1 to: arg2 in: arg3 [
-
-	(arg3 at: arg2 ifAbsentPut: [ OrderedCollection new ]) add: arg1
+IRReconstructor >> rememberReference: anInstruction to: name in: dictionary [
+	(dictionary at: name ifAbsentPut: [ OrderedCollection new ])
+		add: anInstruction
 ]
 
 { #category : 'removing' }
-IRReconstructor >> removeLast: arg1 [
-
-	sourceMapByteIndex := sourceMapByteIndex - arg1.
-	^ (currentSequence removeLast: arg1) collect: [ :arg2 |
-		  arg2 isTemp ifFalse: [
-			  self error: 'Should only remove temp accesses!' ].
-		  arg2 name ]
+IRReconstructor >> removeLast: n [
+	" Make the address of the instruction be the address of the first removed instruction. "
+	sourceMapByteIndex := sourceMapByteIndex - n.
+	^ (currentSequence removeLast: n) collect: [ :node |
+		node isTemp ifFalse: [ self error: 'Should only remove temp accesses!' ].
+		node name ]
 ]
 
 { #category : 'instructions' }
-IRReconstructor >> storeRemoteTemp: arg1 inVector: arg2 [
-
-	| tmp1 |
-	tmp1 := super storeRemoteTemp: arg1 inVector: arg2.
-	self rememberReference: tmp1 to: arg2 in: remoteTemps
+IRReconstructor >> storeRemoteTemp: name inVector: nameOfVector [
+	| anInstruction |
+	anInstruction := super storeRemoteTemp: name inVector: nameOfVector.
+	self rememberReference: anInstruction to: nameOfVector in: remoteTemps
 ]
 
 { #category : 'instructions' }
-IRReconstructor >> storeTemp: arg1 [
-
-	| tmp1 |
-	tmp1 := super storeTemp: arg1.
-	self rememberReference: tmp1 to: arg1 in: temps
+IRReconstructor >> storeTemp: aSelector [
+	| anInstruction |
+	anInstruction := super storeTemp: aSelector.
+	self rememberReference: anInstruction to: aSelector in: temps
 ]

@@ -18,24 +18,20 @@ Class {
 
 { #category : 'accessing' }
 IRLiteralVariableAccess >> association [
-
-	^ association
+	^association
 ]
 
 { #category : 'accessing' }
-IRLiteralVariableAccess >> association: arg1 [
-
-	association := arg1
+IRLiteralVariableAccess >> association: anAssociation [
+	association := anAssociation
 ]
 
 { #category : 'testing' }
 IRLiteralVariableAccess >> isLiteralVariable [
-
-	^ true
+	^true
 ]
 
 { #category : 'accessing' }
 IRLiteralVariableAccess >> name [
-
-	^ association key
+	^association key
 ]

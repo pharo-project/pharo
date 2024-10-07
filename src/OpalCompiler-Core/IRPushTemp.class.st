@@ -10,9 +10,8 @@ Class {
 }
 
 { #category : 'visiting' }
-IRPushTemp >> accept: arg1 [
-
-	^ arg1 visitPushTemp: self
+IRPushTemp >> accept: aVisitor [
+	^ aVisitor visitPushTemp: self
 ]
 
 { #category : 'testing' }

@@ -13,14 +13,12 @@ Class {
 }
 
 { #category : 'visiting' }
-IRPushLiteral >> accept: arg1 [
-
-	^ arg1 visitPushLiteral: self
+IRPushLiteral >> accept: aVisitor [
+	^ aVisitor visitPushLiteral: self
 ]
 
 { #category : 'testing' }
 IRPushLiteral >> canBeQuickReturn [
-
 	^ true
 ]
 
@@ -31,13 +29,13 @@ IRPushLiteral >> isPushLiteral [
 ]
 
 { #category : 'testing' }
-IRPushLiteral >> isPushLiteral: arg1 [
-
-	^ arg1 value: literal
+IRPushLiteral >> isPushLiteral: valueTest [
+	^ valueTest value: literal
 ]
 
 { #category : 'testing' }
 IRPushLiteral >> isRemovableByPop [
+	"Be conservative to keep symbols and other things"
 
 	^ (#( nil true false ) includes: literal) or: [ literal isNumber ]
 ]
@@ -49,16 +47,14 @@ IRPushLiteral >> literal [
 ]
 
 { #category : 'accessing' }
-IRPushLiteral >> literal: arg1 [
+IRPushLiteral >> literal: object [
 
-	literal := arg1
+	literal := object
 ]
 
 { #category : 'accessing' }
 IRPushLiteral >> quickRetNode [
-
-	| tmp2 |
-	tmp2 := IRReturnLiteral new.
-	tmp2 literal: literal.
-	^ tmp2 yourself
+	^ IRReturnLiteral new
+		literal: literal;
+		yourself
 ]

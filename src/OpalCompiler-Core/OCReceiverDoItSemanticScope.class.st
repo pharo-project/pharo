@@ -41,9 +41,9 @@ OCReceiverDoItSemanticScope >> receiver [
 ]
 
 { #category : 'accessing' }
-OCReceiverDoItSemanticScope >> receiver: arg1 [
+OCReceiverDoItSemanticScope >> receiver: anObject [
 
-	targetReceiver := arg1
+	targetReceiver := anObject
 ]
 
 { #category : 'accessing' }
@@ -53,7 +53,7 @@ OCReceiverDoItSemanticScope >> targetReceiver [
 ]
 
 { #category : 'accessing' }
-OCReceiverDoItSemanticScope >> targetReceiver: arg1 [
+OCReceiverDoItSemanticScope >> targetReceiver: anObject [
 
-	targetReceiver := arg1
+	targetReceiver := anObject
 ]
