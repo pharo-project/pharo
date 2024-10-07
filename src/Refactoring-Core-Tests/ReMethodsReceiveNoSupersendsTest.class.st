@@ -53,7 +53,7 @@ ReMethodsReceiveNoSupersendsTest >> testMethodThatIsSentToSuperFromASiblingsMeth
 ]
 
 { #category : 'tests' }
-ReMethodsReceiveNoSupersendsTest >> testMethodThatIsSentToSuperInLeaveFromASiblingsMethod [
+ReMethodsReceiveNoSupersendsTest >> testMethodThatIsSentToSuperInLeafFromASiblingsMethod [
 	
 	| myClassAlpha myClassBeta cond |
 	myClassAlpha := self model classNamed: #MyClassAlpha. 
