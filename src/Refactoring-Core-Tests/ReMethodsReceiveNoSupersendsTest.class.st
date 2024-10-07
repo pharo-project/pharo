@@ -16,6 +16,7 @@ ReMethodsReceiveNoSupersendsTest >> model [
 			           (RBClassEnvironment classes: {
 					            MyClassBeta.
 					            MyClassBetaSibling.
+								   MyClassBetaSub.
 					            MyClassAlpha }) ]
 ]
 
@@ -46,6 +47,22 @@ ReMethodsReceiveNoSupersendsTest >> testMethodThatIsSentToSuperFromASiblingsMeth
 			class: myClassBeta 
 		   targetSuperclass: myClassAlpha 
 		   selectors: { #methodForSupersend }.
+	
+	" a method in MyClassBetaSibling sends `methodForSupersend` to `super`, therefore the condition fails "
+	self deny: cond check
+]
+
+{ #category : 'tests' }
+ReMethodsReceiveNoSupersendsTest >> testMethodThatIsSentToSuperInLeaveFromASiblingsMethod [
+	
+	| myClassAlpha myClassBeta cond |
+	myClassAlpha := self model classNamed: #MyClassAlpha. 
+	myClassBeta := self model classNamed: #MyClassBetaSibling.
+	
+	cond := ReMethodsHaveNoSuperCallInSiblingsCondition new
+			class: myClassBeta 
+		   targetSuperclass: myClassAlpha 
+		   selectors: { #methodForSupersendInLeaf }.
 	
 	" a method in MyClassBetaSibling sends `methodForSupersend` to `super`, therefore the condition fails "
 	self deny: cond check

@@ -15,6 +15,11 @@ MyClassBetaSibling >> methodDuplicatedInSibling [
 ]
 
 { #category : 'dummy methods' }
+MyClassBetaSibling >> methodForSupersendInLeaf [
+	^ 22
+]
+
+{ #category : 'dummy methods' }
 MyClassBetaSibling >> sendSuper [
 	^ super methodForSupersend 
 ]
