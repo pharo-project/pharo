@@ -18,6 +18,12 @@ MyClassAlpha >> methodForSupersend [
 ]
 
 { #category : 'dummy methods' }
+MyClassAlpha >> methodForSupersendInLeaf [
+
+	^ 11
+]
+
+{ #category : 'dummy methods' }
 MyClassAlpha >> methodOverriden [
 	^ 24
 ]

@@ -72,19 +72,6 @@ RBPullUpMethodParametrizedTest >> constructor [
 ]
 
 { #category : 'failure tests' }
-RBPullUpMethodParametrizedTest >> testFailurePullUpClassMethod [
-
-	| class |
-	class := model classNamed: #Object.
-	class addClassVariable: #Foo.
-	class classSide compile: 'foo ^Foo' classified: #( #accessing ).
-	self shouldFail:
-		(self createRefactoringWithModel: model andArguments: {
-				 #( #foo ).
-				 class classSide })
-]
-
-{ #category : 'failure tests' }
 RBPullUpMethodParametrizedTest >> testFailurePullUpWhenSuperClassDoesNotDirectlyImplement [
 
 	| classEnvironment classes |
@@ -176,6 +163,19 @@ RBPullUpMethodParametrizedTest >> testFailurePullUpWithSuperSendThatCannotBeCopi
 		(self createRefactoringWithModel: model andArguments: {
 				 #( #foo ).
 				 class })
+]
+
+{ #category : 'failure tests' }
+RBPullUpMethodParametrizedTest >> testFailureWhenPulledMethodRefersToLocalSharedVar [
+
+	| class |
+	class := model classNamed: #Object.
+	class addClassVariable: #Foo.
+	class classSide compile: 'foo ^Foo' classified: #( #accessing ).
+	self shouldFail:
+		(self createRefactoringWithModel: model andArguments: {
+				 #( #foo ).
+				 class classSide })
 ]
 
 { #category : 'tests' }

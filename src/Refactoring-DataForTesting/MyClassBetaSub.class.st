@@ -28,6 +28,11 @@ MyClassBetaSub >> methodDuplicatedInSubclass3 [
 ]
 
 { #category : 'dummy methods' }
+MyClassBetaSub >> methodForSupersendInLeaf [
+	^ super methodForSupersendInLeaf 
+]
+
+{ #category : 'dummy methods' }
 MyClassBetaSub >> methodReferencingInstVarDefinedInItsDefiningClassAndOneInItsSuperclass [
 	^ {instVarB  . instVarBSub}
 ]

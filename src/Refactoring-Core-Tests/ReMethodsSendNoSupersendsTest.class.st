@@ -24,7 +24,7 @@ ReMethodsSendNoSupersendsTest >> testMethodNotSendingAMessageToSuper [
 	myClassAlpha := self model classNamed: #MyClassAlpha. 
 	myClassBeta := self model classNamed: #MyClassBeta.
 	
-	cond := ReMethodsSendNoSupersendsCondition new
+	cond := ReNoSupersendToTargetClassCondition new
 			class: myClassBeta
 		   targetSuperclass: myClassAlpha
 		   selectors: { #methodForPullUp }.
@@ -39,7 +39,7 @@ ReMethodsSendNoSupersendsTest >> testMethodSendingMessageToSuper [
 	myClassAlpha := self model classNamed: #MyClassAlpha. 
 	myClassBeta := self model classNamed: #MyClassBeta.
 	
-	cond := ReMethodsSendNoSupersendsCondition new
+	cond := ReNoSupersendToTargetClassCondition new
 			class: myClassBeta
 		   targetSuperclass: myClassAlpha
 		   selectors: { #methodWithSuperSend }.

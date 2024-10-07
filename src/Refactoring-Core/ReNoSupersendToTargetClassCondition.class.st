@@ -1,8 +1,17 @@
 "
-I am a refactoring condition that checks if a method, defined in `class`, is doing a supercall to a method defined in `targetSuperclass`. For clarity, `class` is one of `targetSuperclass` subclasses
+I am a refactoring condition that checks if a method, defined in `class` (the source of a pulled method), is doing a supercall to a method defined in `targetSuperclass`. 
+For clarity, `class` is one of `targetSuperclass` subclasses.
+
+```
+A >> foo ^ 12
+
+   B >> xxx ^ super foo + 23 
+```
+
+Here the condition does not hold when class is B because B >> xxx is doing a supercall and moving it up would change the behavior of xxx.
 "
 Class {
-	#name : 'ReMethodsSendNoSupersendsCondition',
+	#name : 'ReNoSupersendToTargetClassCondition',
 	#superclass : 'ReMethodsCondition',
 	#instVars : [
 		'class',
@@ -15,7 +24,7 @@ Class {
 }
 
 { #category : 'initialization' }
-ReMethodsSendNoSupersendsCondition >> class: rbClassA targetSuperclass: rbClassB selectors: aCollection [ 
+ReNoSupersendToTargetClassCondition >> class: rbClassA targetSuperclass: rbClassB selectors: aCollection [ 
 
 	class := rbClassA.
 	targetSuperclass := rbClassB.
@@ -23,7 +32,7 @@ ReMethodsSendNoSupersendsCondition >> class: rbClassA targetSuperclass: rbClassB
 ]
 
 { #category : 'displaying' }
-ReMethodsSendNoSupersendsCondition >> violationMessageOn: aStream [
+ReNoSupersendToTargetClassCondition >> violationMessageOn: aStream [
 
 	self violators do: [ :violator |
 		aStream
@@ -34,7 +43,7 @@ ReMethodsSendNoSupersendsCondition >> violationMessageOn: aStream [
 ]
 
 { #category : 'accessing' }
-ReMethodsSendNoSupersendsCondition >> violators [
+ReNoSupersendToTargetClassCondition >> violators [
 
 	violators ifNotNil: [ ^ violators ].
 	
