@@ -108,7 +108,7 @@ FinderSearchStrategy >> methodSearch: aSelectBlock [
 	| result |
 	result := OrderedCollection new.
 	aSelectBlock ifNil: [ ^ result ].
-	finder packagesSelection classesAndTraits
+	finder packagesSelection classes
 		do: [ :class |
 			class methodsDo: [ :method | (aSelectBlock value: method) ifTrue: [ result add: method ] ].
 			class classSide methodsDo: [ :method | (aSelectBlock value: method) ifTrue: [ result add: method ] ] ]
