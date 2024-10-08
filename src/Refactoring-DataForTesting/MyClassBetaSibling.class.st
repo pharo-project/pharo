@@ -20,6 +20,12 @@ MyClassBetaSibling >> methodForSupersendInLeaf [
 ]
 
 { #category : 'dummy methods' }
+MyClassBetaSibling >> methodWithSuperSend [
+	"I'm different that the implementation in my superclass and sibling."
+	^ 12
+]
+
+{ #category : 'dummy methods' }
 MyClassBetaSibling >> sendSuper [
 	^ super methodForSupersend 
 ]

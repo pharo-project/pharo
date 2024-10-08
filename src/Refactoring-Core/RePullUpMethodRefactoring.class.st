@@ -79,20 +79,27 @@ RePullUpMethodRefactoring >> checkBackReferencesTo: aSelector [
 	in `targetSuperclass` "
 
 	| definingClass pullUpParseTree |
-	definingClass := targetSuperclass whichClassIncludesSelector:
-		                 aSelector.
+	definingClass := targetSuperclass whichClassIncludesSelector: aSelector.
 	definingClass ifNil: [ ^ self ].
 	pullUpParseTree := class parseTreeForSelector: aSelector.
+	
+
 	targetSuperclass allSubclasses do: [ :each |
 		each selectors do: [ :sel |
 			| parseTree |
 			parseTree := each parseTreeForSelector: sel.
+
+		"Check whether there is a method (potentially with a different name) in the subclasses that performs
+		a super call that would read the targetSuperclass or above method."
+			
 			(parseTree isNotNil and: [
 				 (parseTree superMessages includes: aSelector) and: [
 					 definingClass == (each whoDefinesMethod: aSelector) ] ])
 				ifTrue: [
+					"do not do anything if the method has the same name and the same body. why?"
 					(aSelector == sel and: [
 						 parseTree equalTo: pullUpParseTree exceptForVariables: #(  ) ])
+					
 						ifFalse: [
 							self refactoringError:
 								('Cannot pull up <1s> since it would override the method defined in <2p>'

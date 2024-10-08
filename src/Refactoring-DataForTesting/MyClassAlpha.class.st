@@ -27,3 +27,9 @@ MyClassAlpha >> methodForSupersendInLeaf [
 MyClassAlpha >> methodOverriden [
 	^ 24
 ]
+
+{ #category : 'dummy methods' }
+MyClassAlpha >> methodWithSuperSend [
+	"One of my subclass has the same implementation and its sibling not"
+	^ super class
+]
