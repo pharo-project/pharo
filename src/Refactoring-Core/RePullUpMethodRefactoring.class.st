@@ -11,7 +11,6 @@ Class {
 	#name : 'RePullUpMethodRefactoring',
 	#superclass : 'RBMethodRefactoring',
 	#instVars : [
-		'removeDuplicates',
 		'selectors',
 		'targetSuperclass'
 	],
@@ -92,7 +91,6 @@ RePullUpMethodRefactoring >> checkBackReferencesTo: aSelector [
 				 (parseTree superMessages includes: aSelector) and: [
 					 definingClass == (each whoDefinesMethod: aSelector) ] ])
 				ifTrue: [
-					removeDuplicates := true.
 					(aSelector == sel and: [
 						 parseTree equalTo: pullUpParseTree exceptForVariables: #(  ) ])
 						ifFalse: [
@@ -112,19 +110,25 @@ RePullUpMethodRefactoring >> checkSuperclass [
 	| overrideSelectors |
 	overrideSelectors := selectors
 		select: [ :each | targetSuperclass directlyDefinesMethod: each ].
+		
+	"Remove overriden selectors that have exactly the same body in the superclass
+	since the pullUp may fix this. "	
 	overrideSelectors := overrideSelectors
 		reject: [ :each |
 			| myTree superTree |
 			myTree := class parseTreeForSelector: each.
 			superTree := targetSuperclass parseTreeForSelector: each.
 			superTree equalTo: myTree exceptForVariables: #() ].
+		
 	overrideSelectors ifEmpty: [ ^ self ].
+	
 	targetSuperclass isAbstract
 		ifFalse: [ self
 				refactoringError:
 					('Non-abstract class <2p> already defines <1p>'
 						expandMacrosWith: overrideSelectors asArray first
 						with: targetSuperclass) ].
+					
 	overrideSelectors do: [ :each | self checkBackReferencesTo: each ]
 ]
 
@@ -262,7 +266,6 @@ RePullUpMethodRefactoring >> pullUp: selectorCollection from: aClass to: aSuperC
 	class := self classObjectFor: aClass.
 	targetSuperclass := self classObjectFor: aSuperClass .
 	selectors := selectorCollection.
-	removeDuplicates := false
 ]
 
 { #category : 'transforming' }

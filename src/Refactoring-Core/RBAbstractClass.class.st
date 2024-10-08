@@ -817,7 +817,9 @@ RBAbstractClass >> typeOfClassVariable: aSymbol [
 
 { #category : 'testing' }
 RBAbstractClass >> whichClassIncludesSelector: aSelector [
-
+	"Answer the class on the receiver's superclass chain where the
+	argument, aSymbol (a message selector), will be found. Answer nil if none found."
+	
 	(self directlyDefinesMethod: aSelector) ifTrue: [ ^ self ].
 	^ self superclass ifNotNil: [
 		  self superclass whichClassIncludesSelector: aSelector ]
