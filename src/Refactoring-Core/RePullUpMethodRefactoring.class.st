@@ -122,9 +122,14 @@ RePullUpMethodRefactoring >> preconditionNoOverrides [
 	^ (ReDefinesSelectorsCondition new
 		   definesSelectors: selectors
 		   in: targetSuperclass) not 
-	  |
+	
+	"we can pull up methods that are not already present in the target
+	Now if the method in the target is the same than the pulled one (without super) or if the super method is abstract - subclassResponsible, shouldBeImplemented we can pull freely."
+		
+	"  |
 	  (ReClassesAreAbstractCondition new 
 			classes: { targetSuperclass })
+			"
 ]
 
 { #category : 'preconditions' }
