@@ -404,6 +404,12 @@ RBExtractMethodRefactoring >> parameterMap: aDictionary [
 ]
 
 { #category : 'transforming' }
+RBExtractMethodRefactoring >> parameters [
+
+	^ parameters
+]
+
+{ #category : 'transforming' }
 RBExtractMethodRefactoring >> parameters: anOrderedCollection [
 	parameters := anOrderedCollection
 ]
