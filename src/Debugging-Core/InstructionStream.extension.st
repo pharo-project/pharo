@@ -112,6 +112,13 @@ InstructionStream >> selectorToSendOrSelf [
 ]
 
 { #category : '*Debugging-Core' }
+InstructionStream >> selectorToSendOrSelfx [
+	"If this instruction is a send, answer the selector, otherwise answer self."
+ 
+	^ self method encoderClass selectorToSendOrItselfForx: self in: self method at: pc
+]
+
+{ #category : '*Debugging-Core' }
 InstructionStream >> thirdByte [
 	"Answer the third byte of the current bytecode."
 

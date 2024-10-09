@@ -282,6 +282,11 @@ IRBytecodeGenerator >> goto: seqId [
 	self from: currentSeqId goto: seqId
 ]
 
+{ #category : 'instructions' }
+IRBytecodeGenerator >> hasInlineCaches [
+	^ true
+]
+
 { #category : 'results' }
 IRBytecodeGenerator >> hasPrimitive [
 	"do I have a primitive? Both normal primitive and quick return"
@@ -679,10 +684,11 @@ IRBytecodeGenerator >> send: selector toSuperOf: behavior [
 { #category : 'results' }
 IRBytecodeGenerator >> spurVMHeader: literalsSize [
 	^ (CompiledMethod headerFlagForEncoder: self encoderClass) +
+		(self hasInlineCaches asInteger bitShift: 28) +
 		(self numArgs bitShift: 24) +
-		( self numTemps bitShift: 18) +
-		literalsSize +
-		(self hasPrimitive asBit bitShift: 16)
+		(self numTemps bitShift: 18) +
+		(self hasPrimitive asBit bitShift: 16) +
+		literalsSize
 ]
 
 { #category : 'results' }
