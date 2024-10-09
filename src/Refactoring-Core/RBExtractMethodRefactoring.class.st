@@ -67,7 +67,6 @@ RBExtractMethodRefactoring >> applicabilityPreconditions [
 	^ {
 		  (RBCondition definesSelector: selector in: class).
 		  (RBCondition withBlock: [
-			   self extractMethod.
 			   self checkSpecialExtractions.
 			   self checkReturn.
 			   needsReturn ifTrue: [ extractedParseTree addReturn ].
@@ -418,6 +417,12 @@ RBExtractMethodRefactoring >> placeholderNode [
 		in: modifiedParseTree.
 	node ifNil: [ self refactoringError: 'Cannot extract code' ].
 	^ node
+]
+
+{ #category : 'transforming' }
+RBExtractMethodRefactoring >> prepareForExecution [ 
+
+	self extractMethod.
 ]
 
 { #category : 'transforming' }
