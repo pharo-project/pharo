@@ -188,7 +188,7 @@ RBExtractMethodRefactoring >> extract: anInterval from: aSelector in: aClass [
 
 { #category : 'transforming' }
 RBExtractMethodRefactoring >> extractMethod [
-	| parseTree isSequence extractCode subtree newCode |
+	| parseTree isSequence extractCode newCode |
 	extractCode := self getExtractedSource.
 	extractedParseTree := self parserClass new
 		source: extractCode;
@@ -218,17 +218,14 @@ RBExtractMethodRefactoring >> extractMethod [
 	parseTree := class parseTreeForSelector: selector.
 	parseTree
 		ifNil: [ self refactoringError: 'Could not parse ' , selector printString ].
-	subtree := isSequence
-		ifTrue: [ self parseTreeSearcherClass
-				treeMatchingStatements: extractedParseTree body formattedCode
-				in: parseTree ]
-		ifFalse:
-			[ self parseTreeSearcherClass treeMatching: extractCode in: parseTree ].
-	subtree
-		ifNil: [ self refactoringError: 'Could not extract code from method' ].
-	newCode := self methodDelimiter.
 	isSequence
-		ifTrue: [ | stmts |
+		ifTrue: [ 
+			| subtree stmts |
+			subtree := self parseTreeSearcherClass
+				treeMatchingStatements: extractedParseTree body formattedCode
+				in: parseTree.
+			subtree ifNil: [ self refactoringError: 'Could not extract code from method' ].
+			newCode := self methodDelimiter.
 			stmts := extractedParseTree body statements.
 			stmts
 				ifNotEmpty: [ stmts last isAssignment
@@ -236,18 +233,22 @@ RBExtractMethodRefactoring >> extractMethod [
 							name := stmts last variable name.
 							(self shouldExtractAssignmentTo: name)
 								ifFalse: [ newCode := '<1s> := <2s>' expandMacrosWith: name with: newCode.
-									stmts at: stmts size put: stmts last value ] ] ] ].
-	modifiedParseTree := isSequence
-		ifTrue: [ self parseTreeRewriterClass
+									stmts at: stmts size put: stmts last value ] ] ].
+			modifiedParseTree := self parseTreeRewriterClass
 				replaceStatements: subtree formattedCode
 				with: newCode
 				in: parseTree
 				onInterval: extractionInterval ]
-		ifFalse: [ self parseTreeRewriterClass
+		ifFalse: [ 
+			| subtree |
+			subtree := self parseTreeSearcherClass treeMatching: extractCode in: parseTree.
+			subtree ifNil: [ self refactoringError: 'Could not extract code from method' ].
+			newCode := self methodDelimiter.
+			modifiedParseTree := self parseTreeRewriterClass
 				replace: subtree formattedCode
 				with: newCode
 				in: parseTree
-				onInterval: extractionInterval ]
+				onInterval: extractionInterval ].
 ]
 
 { #category : 'instance creation' }
