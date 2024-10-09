@@ -70,7 +70,6 @@ RBExtractMethodRefactoring >> applicabilityPreconditions [
 			   self checkSpecialExtractions.
 			   self checkReturn.
 			   needsReturn ifTrue: [ extractedParseTree addReturn ].
-			   self checkTemporaries.
 			   true ]) }
 ]
 
@@ -423,6 +422,7 @@ RBExtractMethodRefactoring >> placeholderNode [
 RBExtractMethodRefactoring >> prepareForExecution [ 
 
 	self extractMethod.
+	self checkTemporaries.
 ]
 
 { #category : 'transforming' }
