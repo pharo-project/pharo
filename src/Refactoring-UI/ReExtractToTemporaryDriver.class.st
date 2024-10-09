@@ -50,8 +50,7 @@ ReExtractToTemporaryDriver >> initialize [
 { #category : 'accessing' }
 ReExtractToTemporaryDriver >> requestDialogWith: variableName [
 
-	| dialog |
-	dialog := (self variableNameEditorPresenterClass
+	^ requestDialog := (self variableNameEditorPresenterClass
 			openOn: variableName
 			withInvalidArgs: []
 			canRenameArgs: false
@@ -63,8 +62,8 @@ ReExtractToTemporaryDriver >> requestDialogWith: variableName [
 { #category : 'execution' }
 ReExtractToTemporaryDriver >> requestVariableName [
 
-	| dialog |
-	newVariableName := RBArgumentName name: ''.
+	| dialog variableName|
+	variableName := RBArgumentName name: ''.
 	dialog := self requestDialogWith: newVariableName .
 	dialog ifNil: [ shouldEscape := true. ^ self ].
 	
