@@ -233,6 +233,23 @@ RBExtractMethodRefactoring >> extract: anInterval from: aSelector in: aClass [
 RBExtractMethodRefactoring >> extractMethod [
 	| isSequence extractCode |
 	extractCode := self getExtractedSource.
+	self extractParseTreeForSelection: extractCode.
+	(extractedParseTree isSequence
+		and: [ extractedParseTree statements isEmpty ])
+		ifTrue: [ self refactoringError: 'Select some code to extract' ].
+	isSequence := extractedParseTree isSequence
+		or: [ extractedParseTree isReturn ].
+		
+	self wrapExtractedParseTreeInMethodNode: extractCode.
+
+	isSequence
+		ifTrue: [ self createModifiedParseTreeForSequenceSelection ]
+		ifFalse: [ self createModifiedParseTreeForNonSequenceSelection ].
+]
+
+{ #category : 'preparation' }
+RBExtractMethodRefactoring >> extractParseTreeForSelection: extractCode [
+
 	extractedParseTree := self parserClass new
 		source: extractCode;
 		parseExpression.
@@ -240,28 +257,7 @@ RBExtractMethodRefactoring >> extractMethod [
 		ifNil: [ self refactoringError: 'Invalid source to extract' ].
 	extractedParseTree isFaulty
 		ifTrue: [ self
-				refactoringError: 'Invalid source to extract - ' , extractedParseTree allErrorNotices first messageText ].
-	(extractedParseTree isSequence
-		and: [ extractedParseTree statements isEmpty ])
-		ifTrue: [ self refactoringError: 'Select some code to extract' ].
-	isSequence := extractedParseTree isSequence
-		or: [ extractedParseTree isReturn ].
-	extractedParseTree := ASTMethodNode
-		selector: #value
-		arguments: #()
-		body:
-			(extractedParseTree isSequence
-				ifTrue: [ extractedParseTree ]
-				ifFalse: [ ASTSequenceNode
-						temporaries: #()
-						statements: (OrderedCollection with: extractedParseTree) ]).
-	extractedParseTree body temporaries
-		ifNotEmpty: [ extractedParseTree body temporaries: #() ].
-	extractedParseTree source: extractCode.
-
-	isSequence
-		ifTrue: [ self createModifiedParseTreeForSequenceSelection ]
-		ifFalse: [ self createModifiedParseTreeForNonSequenceSelection ].
+			refactoringError: 'Invalid source to extract - ' , extractedParseTree allErrorNotices first messageText ].
 ]
 
 { #category : 'instance creation' }
@@ -546,4 +542,21 @@ RBExtractMethodRefactoring >> validateRenameNode: aParseTree withOldName: oldNam
 { #category : 'renaming' }
 RBExtractMethodRefactoring >> validateRenameOf: oldName to: newName [
 	self validateRenameNode: extractedParseTree withOldName: oldName toWithName: newName
+]
+
+{ #category : 'preparation' }
+RBExtractMethodRefactoring >> wrapExtractedParseTreeInMethodNode: extractCode [
+
+	extractedParseTree := ASTMethodNode
+		selector: #value
+		arguments: #()
+		body:
+			(extractedParseTree isSequence
+				ifTrue: [ extractedParseTree ]
+				ifFalse: [ ASTSequenceNode
+						temporaries: #()
+						statements: (OrderedCollection with: extractedParseTree) ]).
+	extractedParseTree body temporaries
+		ifNotEmpty: [ extractedParseTree body temporaries: #() ].
+	extractedParseTree source: extractCode.
 ]
