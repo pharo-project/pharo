@@ -169,6 +169,49 @@ RBExtractMethodRefactoring >> compileExtractedMethod [
 		  withAttributesFrom: (class methodFor: selector)
 ]
 
+{ #category : 'preparation' }
+RBExtractMethodRefactoring >> createModifiedParseTreeForNonSequenceSelection [
+
+	| parseTree subtree newCode |
+	parseTree := class parseTreeForSelector: selector.
+	parseTree ifNil: [ self refactoringError: 'Could not parse ' , selector printString ].
+	subtree := self parseTreeSearcherClass treeMatching: extractedParseTree sourceCode in: parseTree.
+	subtree ifNil: [ self refactoringError: 'Could not extract code from method' ].
+	newCode := self methodDelimiter.
+	modifiedParseTree := self parseTreeRewriterClass
+		replace: subtree formattedCode
+		with: newCode
+		in: parseTree
+		onInterval: extractionInterval
+]
+
+{ #category : 'preparation' }
+RBExtractMethodRefactoring >> createModifiedParseTreeForSequenceSelection [
+
+	| parseTree subtree stmts newCode |
+	parseTree := class parseTreeForSelector: selector.
+	parseTree
+		ifNil: [ self refactoringError: 'Could not parse ' , selector printString ].
+	subtree := self parseTreeSearcherClass
+		treeMatchingStatements: extractedParseTree body formattedCode
+		in: parseTree.
+	subtree ifNil: [ self refactoringError: 'Could not extract code from method' ].
+	newCode := self methodDelimiter.
+	stmts := extractedParseTree body statements.
+	stmts
+		ifNotEmpty: [ stmts last isAssignment
+			ifTrue: [ | name |
+					name := stmts last variable name.
+					(self shouldExtractAssignmentTo: name)
+						ifFalse: [ newCode := '<1s> := <2s>' expandMacrosWith: name with: newCode.
+							stmts at: stmts size put: stmts last value ] ] ].
+	modifiedParseTree := self parseTreeRewriterClass
+		replaceStatements: subtree formattedCode
+		with: newCode
+		in: parseTree
+		onInterval: extractionInterval
+]
+
 { #category : 'transforming' }
 RBExtractMethodRefactoring >> existingSelector [
 	"Try to find an existing method instead of creating a new one"
@@ -188,7 +231,7 @@ RBExtractMethodRefactoring >> extract: anInterval from: aSelector in: aClass [
 
 { #category : 'transforming' }
 RBExtractMethodRefactoring >> extractMethod [
-	| parseTree isSequence extractCode newCode |
+	| isSequence extractCode |
 	extractCode := self getExtractedSource.
 	extractedParseTree := self parserClass new
 		source: extractCode;
@@ -215,40 +258,10 @@ RBExtractMethodRefactoring >> extractMethod [
 	extractedParseTree body temporaries
 		ifNotEmpty: [ extractedParseTree body temporaries: #() ].
 	extractedParseTree source: extractCode.
-	parseTree := class parseTreeForSelector: selector.
-	parseTree
-		ifNil: [ self refactoringError: 'Could not parse ' , selector printString ].
+
 	isSequence
-		ifTrue: [ 
-			| subtree stmts |
-			subtree := self parseTreeSearcherClass
-				treeMatchingStatements: extractedParseTree body formattedCode
-				in: parseTree.
-			subtree ifNil: [ self refactoringError: 'Could not extract code from method' ].
-			newCode := self methodDelimiter.
-			stmts := extractedParseTree body statements.
-			stmts
-				ifNotEmpty: [ stmts last isAssignment
-						ifTrue: [ | name |
-							name := stmts last variable name.
-							(self shouldExtractAssignmentTo: name)
-								ifFalse: [ newCode := '<1s> := <2s>' expandMacrosWith: name with: newCode.
-									stmts at: stmts size put: stmts last value ] ] ].
-			modifiedParseTree := self parseTreeRewriterClass
-				replaceStatements: subtree formattedCode
-				with: newCode
-				in: parseTree
-				onInterval: extractionInterval ]
-		ifFalse: [ 
-			| subtree |
-			subtree := self parseTreeSearcherClass treeMatching: extractCode in: parseTree.
-			subtree ifNil: [ self refactoringError: 'Could not extract code from method' ].
-			newCode := self methodDelimiter.
-			modifiedParseTree := self parseTreeRewriterClass
-				replace: subtree formattedCode
-				with: newCode
-				in: parseTree
-				onInterval: extractionInterval ].
+		ifTrue: [ self createModifiedParseTreeForSequenceSelection ]
+		ifFalse: [ self createModifiedParseTreeForNonSequenceSelection ].
 ]
 
 { #category : 'instance creation' }
