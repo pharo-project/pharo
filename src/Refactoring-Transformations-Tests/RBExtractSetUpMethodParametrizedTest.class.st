@@ -117,58 +117,6 @@ RBExtractSetUpMethodParametrizedTest >> testExtractSetUpAndConvertTwoTempsToInst
 	aNumber := 4')
 ]
 
-{ #category : 'tests' }
-RBExtractSetUpMethodParametrizedTest >> testExtractSetUpWorksWellInOtherMethod [
-	| class refactoring |
-	self skip.
-	 
-	"if we extract as Setup 
-		 aString2 := 'Some string'.
-		self someMethod.
-	from method testExtractSetupExample6
-	
-	we get effectively and correctly the expression removed from the other methods such as 
-	
-		testExtractSetupExample8
-
-		| aNumber |
-		""this is an example to see if the extracted as setup expressions are also extracted from this one too.""
-		aNumber := 4
-	
-	Now I do not succeed to convert this in a test.
-	So I skip it for now.
-	
-	"
-	refactoring := self createRefactoringWithArguments: { (47 to: 109) . #testExtractSetupExample6 . RBTestAsDataForExtractSetupTransformationTest }.
-	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RBTestAsDataForExtractSetupTransformationTest.
-	self assert: (class instanceVariableNames includes: #aString2).
-	self assert: (class instanceVariableNames includes: #aNumber).
-	
-	"Pay attention that method body is created this way to support potential selector rename"
-	
-	self 
-		assert: (class parseTreeForSelector: #testExtractSetupExample6) 
-		equals: (self parseMethod: #testExtractSetupExample6 asString, Character cr asString,
-'self assert: aString2 isNotEmpty.
-	self deny: (aString2 , aNumber asString) isEmpty.
-	self assert: true').
-	
-	"no idea what the extraction is not executed in testExtractSetupExample8 because when trying it works.
-	This may be due to the fact that nautilus refactoring defines different options! "
-	self 
-		assert: (class parseTreeForSelector: #testExtractSetupExample8) 
-		equals: (self parseMethod: #testExtractSetupExample8 asString, Character cr asString,
-'	| aNumber |
-	"this is an example to see if the extracted as setup expressions are also extracted from this one too."
-	aNumber := 4').
-	
-	self assert: (class parseTreeForSelector: #setUp) equals: (self parseMethod: 'setUp
-	super setUp.
-	aString2 := ''Some string''.
-	self someMethod.')
-]
-
 { #category : 'failure tests' }
 RBExtractSetUpMethodParametrizedTest >> testFailureBadClass [
 	model := self modelOnClasses: { RBLintRuleTestData }.
