@@ -69,7 +69,6 @@ RBExtractMethodRefactoring >> applicabilityPreconditions [
 		  (RBCondition withBlock: [
 			   self checkSpecialExtractions.
 			   self checkReturn.
-			   needsReturn ifTrue: [ extractedParseTree addReturn ].
 			   true ]) }
 ]
 
@@ -95,6 +94,7 @@ RBExtractMethodRefactoring >> checkAssignments: variableNames [
 
 { #category : 'transforming' }
 RBExtractMethodRefactoring >> checkReturn [
+
 	needsReturn := self placeholderNode isUsedAsReturnValue.
 	extractedParseTree containsReturn ifFalse: [^self].
 	extractedParseTree lastIsReturn ifTrue: [^self].
@@ -429,6 +429,7 @@ RBExtractMethodRefactoring >> prepareForExecution [
 RBExtractMethodRefactoring >> privateTransform [
 
 	| existingSelector |
+	needsReturn ifTrue: [ extractedParseTree addReturn ].
 	existingSelector := self existingSelector.
 	self nameNewMethod: (existingSelector
 			 ifNil: [ newExtractedSelector ifNil: [ self getNewMethodName ] ]
