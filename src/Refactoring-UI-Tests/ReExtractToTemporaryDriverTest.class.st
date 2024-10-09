@@ -49,10 +49,12 @@ ReExtractToTemporaryDriverTest >> testExtractToTemporaryExpectChanges [
 { #category : 'tests' }
 ReExtractToTemporaryDriverTest >> testFailureInvalidVariableName [
 
-	| driver |
+	| driver rbclasses |
+	rbclasses := RBClassEnvironment classes: { RBClassDataForRefactoringTest }.
 	driver := ReExtractToTemporaryDriver new
+		scopes: { rbclasses };
 		extract: (51 to: 60)
-      to: 'collection'
+      to: '1collection'
       from: #modifiesCollection
       in: RBClassDataForRefactoringTest.
 
@@ -66,8 +68,10 @@ ReExtractToTemporaryDriverTest >> testFailureInvalidVariableName [
 { #category : 'tests' }
 ReExtractToTemporaryDriverTest >> testFailureNonExistantSelector [
 
-	| driver |    
+	| driver rbclasses |
+	rbclasses := RBClassEnvironment classes: { RBClassDataForRefactoringTest }.
    driver := ReExtractToTemporaryDriver new
+		scopes: { rbclasses };
 		extract: (14 to: 23)
       to: 'asdf'
       from: #checkClass1:

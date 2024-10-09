@@ -48,7 +48,6 @@ SycExtractTempCommand >> execute [
 		to: tempName
 		from: method selector
 		in: method origin;
-		model: RBBrowserEnvironment new;
 		scopes: toolContext refactoringScopes; runRefactoring
 ]
 

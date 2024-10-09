@@ -48,20 +48,27 @@ ReExtractToTemporaryDriver >> initialize [
 ]
 
 { #category : 'accessing' }
-ReExtractToTemporaryDriver >> model: aModel [
-	model := aModel
+ReExtractToTemporaryDriver >> requestDialogWith: variableName [
+
+	| dialog |
+	dialog := (self variableNameEditorPresenterClass
+			openOn: variableName
+			withInvalidArgs: []
+			canRenameArgs: false
+			canRemoveArgs: false
+			canAddArgs: false
+			canEditName: true ) presenter.
 ]
 
 { #category : 'execution' }
 ReExtractToTemporaryDriver >> requestVariableName [
 
-	newVariableName := self defaultRequestDialog
-										title: 'Please provide a variable name';
-										label: 'The variable name should be defined.';
-										validateAnswer:[ :string :presenter |
-											self validateName: string onPresenter: presenter ];
-										openModal.
-	^ newVariableName 
+	| dialog |
+	newVariableName := RBArgumentName name: ''.
+	dialog := self requestDialogWith: newVariableName .
+	dialog ifNil: [ shouldEscape := true. ^ self ].
+	
+	^ dialog variableName
 ]
 
 { #category : 'execution' }
@@ -79,7 +86,8 @@ ReExtractToTemporaryDriver >> runRefactoring [
 
 { #category : 'accessing' }
 ReExtractToTemporaryDriver >> scopes: aCollection [ 
-	scopes := aCollection
+	scopes := aCollection.
+	model :=  self refactoringScopeOn: scopes first
 ]
 
 { #category : 'validation' }
