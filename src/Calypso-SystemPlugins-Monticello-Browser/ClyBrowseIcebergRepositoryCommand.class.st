@@ -44,7 +44,7 @@ ClyBrowseIcebergRepositoryCommand >> execute [
 { #category : 'accessing' }
 ClyBrowseIcebergRepositoryCommand >> iconName [
 
-	^ #glamorousBrowse
+	^ #browse
 ]
 
 { #category : 'accessing' }

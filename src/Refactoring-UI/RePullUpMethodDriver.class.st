@@ -23,8 +23,7 @@ Class {
 		'notInstVarRefs',
 		'notSharedVarRefs',
 		'notSupersendsReceived',
-		'notSupersendsSent',
-		'notDuplicateMethods'
+		'notSupersendsSent'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -104,7 +103,7 @@ RePullUpMethodDriver >> configureAndRunRefactoring [
 { #category : 'resources' }
 RePullUpMethodDriver >> configureRefactoring [
 
-	refactoring := RBPullUpMethodRefactoring
+	refactoring := RePullUpMethodRefactoring
 		               model: model
 		               pullUp: (methods collect: [ :each | each selector ])
 		               from: class name
@@ -198,14 +197,6 @@ RePullUpMethodDriver >> pullUpReferencedSharedVars [
 		refactoring pullUpSharedVariable: sharedVar ]
 ]
 
-{ #category : 'actions' }
-RePullUpMethodDriver >> removeDuplicateMethods [
-
-	notDuplicateMethods withViolatorsDo: [ :aSelector :aClass |
-		refactoring generateChangesFor:
-			(RBRemoveMethodTransformation selector: aSelector from: aClass) ]
-]
-
 { #category : 'execution' }
 RePullUpMethodDriver >> runRefactoring [
 
@@ -247,5 +238,5 @@ RePullUpMethodDriver >> setBreakingChangesPreconditions [
 	notSharedVarRefs := refactoring preconditionNoReferencesToSharedVars.
 	notSupersendsSent := refactoring preconditionNoSupersendsSent.
 	notSupersendsReceived := refactoring preconditionNoSupersendsReceived.
-	notDuplicateMethods := refactoring preconditionNoDuplicateMethods 
+	
 ]

@@ -36,7 +36,7 @@ ClyShowGroupsInMethodBrowserCommand class >> fullBrowserMethodGroupMenuActivatio
 
 { #category : 'accessing' }
 ClyShowGroupsInMethodBrowserCommand >> defaultMenuIconName [
-	^#glamorousBrowse
+	^#browse
 ]
 
 { #category : 'accessing' }

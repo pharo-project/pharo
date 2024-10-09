@@ -162,10 +162,10 @@ ScalingCanvas class >> exampleImageMorph1 [
 
 	^ self privateExampleWithMorph: (Morph new
 		color: Color veryVeryLightGray;
-		addMorph: ((ImageMorph withForm: (self iconNamed: #glamorousSearch))
+		addMorph: ((ImageMorph withForm: (self iconNamed: #search))
 			position: 4@4;
 			yourself);
-		addMorph: ((ImageMorph withForm: (self iconNamed: #glamorousSearch) copy)
+		addMorph: ((ImageMorph withForm: (self iconNamed: #search) copy)
 			position: 24@4;
 			yourself);
 		extent: 44@24;

@@ -1103,6 +1103,13 @@ Behavior >> isImmediateClass [
 	^self instSpec = 7
 ]
 
+{ #category : 'testing - class hierarchy' }
+Behavior >> isInClassHierarchyOf: aClass [
+
+	^ (self includesBehavior: aClass) or: [
+		  aClass includesBehavior: self ]
+]
+
 { #category : 'testing' }
 Behavior >> isManifest [
 	^ false

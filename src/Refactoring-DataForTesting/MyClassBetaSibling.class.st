@@ -11,7 +11,12 @@ Class {
 
 { #category : 'dummy methods' }
 MyClassBetaSibling >> methodDuplicatedInSibling [
-	^ self
+	^ 38 * 101
+]
+
+{ #category : 'dummy methods' }
+MyClassBetaSibling >> methodForSupersendInLeaf [
+	^ 22
 ]
 
 { #category : 'dummy methods' }

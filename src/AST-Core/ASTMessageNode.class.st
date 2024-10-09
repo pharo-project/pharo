@@ -88,9 +88,11 @@ ASTMessageNode >> arguments: argCollection [
 
 { #category : 'querying' }
 ASTMessageNode >> bestNodeFor: anInterval [
+
 	| comments |
-	(self intersectsInterval: anInterval) ifFalse: [ ^nil ] .
-	(self containedBy: anInterval) ifTrue: [^self].
+	(self intersectsInterval: anInterval) ifFalse: [ ^ nil ].
+	(self containedBy: anInterval) ifTrue: [ ^ self ].
+	
 	self keywordsIntervals do:
 			[:each |
 			((each rangeIncludes: anInterval first)
