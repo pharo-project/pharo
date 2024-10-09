@@ -23,7 +23,7 @@ SycFileOutMethodCommand >> execute [
 { #category : 'accessing' }
 SycFileOutMethodCommand >> icon [
 
-	^ self iconNamed: #smallCopy
+	^ self iconNamed: #save
 ]
 
 { #category : 'accessing' }
