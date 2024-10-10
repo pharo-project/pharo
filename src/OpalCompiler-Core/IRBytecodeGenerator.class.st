@@ -639,6 +639,14 @@ IRBytecodeGenerator >> send: selector [
 	| nArgs |
 	nArgs := selector numArgs.
 	stack pop: nArgs.
+	(compilationContext optionOptimiseVTable and: [
+		 self encoderClass vTableSelectors includes: selector ]) ifTrue: [
+		self haltOnce.
+		self assert: nArgs = 0.
+		^ self
+			  sendVTable: (self encoderClass vTableSelectors indexOf: selector)
+			  args: nArgs ].
+
 	(compilationContext optionOptimiseSpecialSends and: [
 		 self encoderClass specialSelectors includes: selector ]) ifTrue: [
 		^ encoder
@@ -663,6 +671,14 @@ IRBytecodeGenerator >> send: selector toSuperOf: behavior [
 		ifFalse: [
 			self addLastLiteral: behavior binding.
 			encoder genSendSuper: index numArgs: nArgs ]
+]
+
+{ #category : 'encoding' }
+IRBytecodeGenerator >> sendVTable: index args: nArgs [ 
+
+	stack pop: nArgs.
+
+	encoder genSendVTable: index numArgs: nArgs
 ]
 
 { #category : 'results' }

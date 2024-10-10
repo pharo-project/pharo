@@ -93,6 +93,12 @@ BytecodeEncoder class >> stackDeltaForPrimitive: primitiveIndex in: method [
 	^ 0
 ]
 
+{ #category : 'bytecode decoding' }
+BytecodeEncoder class >> vTableSelectors [
+	^ #(#cornerStyle #initialize #owner #world #layoutFrame #isEmpty #snapToEdgeIfAppropriate #postCopy #enclosedElement #kmDispatcher #subclasses #children #isNotNil #layoutProperties #name #asAnnouncement #highlightedForDrop #highlightedForMouseDown)
+
+]
+
 { #category : 'bytecode generation' }
 BytecodeEncoder >> genPushSpecialLiteral: aLiteral [
 

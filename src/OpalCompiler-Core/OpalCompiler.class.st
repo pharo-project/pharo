@@ -99,9 +99,38 @@ OpalCompiler class >> evaluate: textOrString [
 		evaluate
 ]
 
+{ #category : 'v-table' }
+OpalCompiler class >> fillAllVTables [
+
+	| selectors |
+	selectors := CompilationContext default encoderClass vTableSelectors.
+
+	Smalltalk allClassesDo: [ :class |
+		| vTable |
+		vTable := Array new: selectors size.
+		selectors doWithIndex: [ :sel :i |
+			vTable at: i put: (class lookupSelector: sel) ].
+		class vTable: vTable ]
+]
+
 { #category : 'public' }
 OpalCompiler class >> isActive [
 	^Smalltalk compilerClass == self
+]
+
+{ #category : 'v-table' }
+OpalCompiler class >> megamorphicCalls [
+
+	| col |
+	col := OrderedCollection new.
+	CompiledMethod allInstances do: [ :m |
+		m xray do: [ :pic |
+			pic second ifNil: [ "If mega-morphic"
+				pic trace.
+				m printString traceCr.
+				col add: pic -> m ] ] ].
+
+	^ col
 ]
 
 { #category : 'overlay' }

@@ -285,6 +285,12 @@ IRTranslator >> visitSend: send [
 ]
 
 { #category : 'visiting' }
+IRTranslator >> visitSendVTable: anIRSendVTable [
+
+	gen sendVTable: anIRSendVTable index args: anIRSendVTable args
+]
+
+{ #category : 'visiting' }
 IRTranslator >> visitSequence: instructionSequence [
 	self label: instructionSequence orderNumber.
 	super visitSequence: instructionSequence

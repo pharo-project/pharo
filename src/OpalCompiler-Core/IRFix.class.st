@@ -68,6 +68,12 @@ IRFix >> visitReturn: ret [
 ]
 
 { #category : 'visiting' }
+IRFix >> visitSendVTable: anIRSendVTable [ 
+
+	"Nothing"
+]
+
+{ #category : 'visiting' }
 IRFix >> visitSequence: instructionSequence [
 	prevInstr := nil.
 	storePopToFix reset.

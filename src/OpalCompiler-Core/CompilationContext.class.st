@@ -567,6 +567,11 @@ CompilationContext >> optionOptimiseSpecialSends [
 ]
 
 { #category : 'options' }
+CompilationContext >> optionOptimiseVTable [
+	^ options includes: #optionOptimiseVTable
+]
+
+{ #category : 'options' }
 CompilationContext >> optionOptimizeIR [
 	^ options includes: #optionOptimizeIR
 ]

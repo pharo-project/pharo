@@ -12,7 +12,8 @@ Class {
 	#name : 'ClassDescription',
 	#superclass : 'Behavior',
 	#instVars : [
-		'protocols'
+		'protocols',
+		'vTable'
 	],
 	#category : 'Kernel-CodeModel-Classes',
 	#package : 'Kernel-CodeModel',
@@ -1184,6 +1185,11 @@ ClassDescription >> usesPoolVarNamed: aString [
 	"Only classes may use a pool variable named: aString"
 	<reflection: 'Class structural inspection - Shared pool inspection'>
 	^ false
+]
+
+{ #category : 'accessing' }
+ClassDescription >> vTable: aCollection [ 
+	vTable := aCollection
 ]
 
 { #category : 'queries' }
