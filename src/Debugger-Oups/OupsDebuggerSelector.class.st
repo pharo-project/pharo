@@ -46,7 +46,7 @@ OupsDebuggerSelector class >> handleDebuggerErrorsSettingsOn: aBuilder [
 
 { #category : 'accessing' }
 OupsDebuggerSelector >> debuggers: aCollection [
-	debuggers := Stack newFrom: aCollection
+	debuggers := Stack withAll: aCollection
 ]
 
 { #category : 'accessing' }
