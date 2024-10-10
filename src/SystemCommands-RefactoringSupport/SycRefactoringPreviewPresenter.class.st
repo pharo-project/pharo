@@ -158,11 +158,13 @@ SycRefactoringPreviewPresenter >> existChanges [
 { #category : 'actions' }
 SycRefactoringPreviewPresenter >> generateChanges [
 
-	| rbEnvironment |
-	changes := command asRefactorings.
+	| env rbEnvironment |
+	
 	rbEnvironment := self activeRBEnvironment.
+	env := RBNamespace onEnvironment: rbEnvironment.
+	changes := command asRefactoringsFrom: env.
 	changes do: [ :each | | model |
-		model := (RBNamespace onEnvironment: rbEnvironment )
+		model := env
 				name: 'Changes for ', each class name asString;
 				yourself.
 		each model: model.

@@ -11,8 +11,17 @@ Class {
 { #category : 'execution' }
 SycGenerateVariableAccessorCommand >> asRefactorings [
 
-	^self
+	^ self
 		createRefactorings: self refactoringClass
+		using: [ :refactoring :var |
+			refactoring classVariable: var isClassVariable ]
+]
+
+{ #category : 'execution' }
+SycGenerateVariableAccessorCommand >> asRefactoringsFrom: aRBEnvironment [
+
+	^ self
+		createRefactorings: (self refactoringClass model: aRBEnvironment)
 		using: [ :refactoring :var |
 			refactoring classVariable: var isClassVariable ]
 ]
