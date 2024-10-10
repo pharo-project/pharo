@@ -684,7 +684,7 @@ IRBytecodeGenerator >> send: selector toSuperOf: behavior [
 { #category : 'results' }
 IRBytecodeGenerator >> spurVMHeader: literalsSize [
 	^ (CompiledMethod headerFlagForEncoder: self encoderClass) +
-		(self hasInlineCaches asInteger bitShift: 28) +
+		(self hasInlineCaches asBit bitShift: 28) +
 		(self numArgs bitShift: 24) +
 		(self numTemps bitShift: 18) +
 		(self hasPrimitive asBit bitShift: 16) +
