@@ -14,3 +14,9 @@ Class {
 SycRefactoringPreviewMockCommand >> asRefactorings [
 	^ { SycMockRBRefactoring new  }
 ]
+
+{ #category : 'converting' }
+SycRefactoringPreviewMockCommand >> asRefactoringsFrom: aRBNamespace [ 
+
+	^ { SycMockRBRefactoring new  }
+]
