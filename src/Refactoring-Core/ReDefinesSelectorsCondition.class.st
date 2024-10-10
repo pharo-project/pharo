@@ -1,3 +1,6 @@
+"
+Verifies that a given class directly defines a given set of selectors.
+"
 Class {
 	#name : 'ReDefinesSelectorsCondition',
 	#superclass : 'ReMethodsCondition',
