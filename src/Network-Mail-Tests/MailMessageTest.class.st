@@ -154,12 +154,30 @@ MailMessageTest >> testMultiPartMixed [
 MailMessageTest >> testRecipientList [
 
 	| message |
-	message := MailMessage fromRfc822: 'To: pharo-project@lists.gforge.inria.fr, pharo-users@lists.gforge.inria.fr'.
-
+	message := MailMessage fromRfc822:
+		           'To: pharo-project@lists.pharo.org, "Pharo Users" <pharo-users@lists.pharo.org>'.
 	self
 		assert: message recipientList size equals: 2;
-		assert: message recipientList first equals: 'pharo-project@lists.gforge.inria.fr';
-		assert: message recipientList second equals: 'pharo-users@lists.gforge.inria.fr'
+		assert: message recipientList first
+		equals: 'pharo-project@lists.pharo.org';
+		assert: message recipientList second
+		equals: 'pharo-users@lists.pharo.org'.
+
+	message
+		setField: 'cc'
+		toString: '"Pharo Development" <pharo-dev@lists.pharo.org>'.
+	self assert: message recipientList size equals: 3.
+	self
+		assert: message recipientList third
+		equals: 'pharo-dev@lists.pharo.org'.
+
+	message
+		setField: 'bcc'
+		toString: '"Pharo IOT" <pharo-iot@lists.pharo.org>'.
+	self assert: message recipientList size equals: 4.
+	self
+		assert: message recipientList fourth
+		equals: 'pharo-iot@lists.pharo.org'
 ]
 
 { #category : 'tests' }
