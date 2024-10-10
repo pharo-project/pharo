@@ -6,10 +6,10 @@ Class {
 	#tag : 'Parametrized'
 }
 
-{ #category : 'tests' }
+{ #category : 'building suites' }
 RBPullUpMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBPullUpMethodRefactoring };
+		addCase: { #rbClass -> RePullUpMethodRefactoring };
 		addCase: { #rbClass -> RBPullUpMethodTransformation };
 		yourself
 ]
@@ -69,19 +69,6 @@ RBPullUpMethodParametrizedTest >> addClassHierarchyForPools [
 { #category : 'accessing' }
 RBPullUpMethodParametrizedTest >> constructor [
 	^ #pullUp:from:
-]
-
-{ #category : 'failure tests' }
-RBPullUpMethodParametrizedTest >> testFailurePullUpClassMethod [
-
-	| class |
-	class := model classNamed: #Object.
-	class addClassVariable: #Foo.
-	class classSide compile: 'foo ^Foo' classified: #( #accessing ).
-	self shouldFail:
-		(self createRefactoringWithModel: model andArguments: {
-				 #( #foo ).
-				 class classSide })
 ]
 
 { #category : 'failure tests' }
@@ -178,6 +165,19 @@ RBPullUpMethodParametrizedTest >> testFailurePullUpWithSuperSendThatCannotBeCopi
 				 class })
 ]
 
+{ #category : 'failure tests' }
+RBPullUpMethodParametrizedTest >> testFailureWhenPulledMethodRefersToLocalSharedVar [
+
+	| class |
+	class := model classNamed: #Object.
+	class addClassVariable: #Foo.
+	class classSide compile: 'foo ^Foo' classified: #( #accessing ).
+	self shouldFail:
+		(self createRefactoringWithModel: model andArguments: {
+				 #( #foo ).
+				 class classSide })
+]
+
 { #category : 'tests' }
 RBPullUpMethodParametrizedTest >> testPullUpAndCopyDown [
 	| class |
@@ -263,19 +263,21 @@ RBPullUpMethodParametrizedTest >> testPullUpReferencesInstVar [
 	class := model classNamed: ('RBTransformation', 'RuleTestData1') asSymbol.
 	refactoring := self createRefactoringWithModel: model
 		andArguments: { #(#foo ) . class }.
-	[ self executeRefactoring: refactoring ] valueSupplyingAnswer: true.
+	self proceedThroughWarning: [ self executeRefactoring: refactoring  ].
 	superClass := model classNamed: ('RBFooLint', 'RuleTestData1') asSymbol.
 	self assert: (superClass parseTreeForSelector: #foo)
 				equals: (self parseMethod: 'foo ^ foo').
-	self assert: (superClass directlyDefinesInstanceVariable: #foo).
 	self deny: (class directlyDefinesMethod: #foo).
-	self deny: (class directlyDefinesInstanceVariable: #foo)
+	self assert: (class directlyDefinesInstanceVariable: #foo)
 ]
 
 { #category : 'failure tests' }
 RBPullUpMethodParametrizedTest >> testWarnDoesntPullUpReferencesInstVar [
 
 	| refactoring class |
+	rbClass = RBPullUpMethodTransformation ifTrue: [ " RBPullUpMethodTransformation shouldn't warn when instance variables are referenced "
+		self skip ].
+	
 	class := model classNamed:
 		         ('RBTransformation' , 'RuleTestData1') asSymbol.
 	refactoring := self

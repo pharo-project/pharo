@@ -22,7 +22,7 @@ ReDefineEntityComplianceCheckRule class >> complianceMethods [
 
 { #category : 'accessing' }
 ReDefineEntityComplianceCheckRule class >> group [
-	^ 'Coding Idiom Violation'
+	^ self codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

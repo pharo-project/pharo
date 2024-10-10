@@ -28,7 +28,7 @@ ReTempsReadBeforeWrittenRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReTempsReadBeforeWrittenRule class >> group [
-	^ 'Potential Bugs'
+	^ self potentialBugsGroup
 ]
 
 { #category : 'accessing' }
@@ -59,6 +59,6 @@ ReTempsReadBeforeWrittenRule >> check: aMethod forCritiquesDo: aCriticBlock [
 { #category : 'running' }
 ReTempsReadBeforeWrittenRule >> findReadsBeforeWrittenTemporariesIn: aMethod [
 
-	^ (RBReadBeforeWrittenTester variablesReadBeforeWrittenIn:
+	^ (ASTReadBeforeWrittenTester variablesReadBeforeWrittenIn:
 		   aMethod ast) array select: #isNotNil
 ]

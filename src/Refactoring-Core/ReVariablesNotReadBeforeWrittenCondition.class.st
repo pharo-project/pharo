@@ -14,7 +14,7 @@ ReVariablesNotReadBeforeWrittenCondition >> check [
 
 	(subtree isNil or: [ variables isNil ]) ifTrue: [ ^ false ].
 	
-	^ (RBReadBeforeWrittenTester
+	^ (ASTReadBeforeWrittenTester
 		   readBeforeWritten: variables
 		   in: subtree) isEmpty
 ]

@@ -18,7 +18,7 @@ ReClassVariableNeitherReadNorWrittenRule class >> checksClass [
 
 { #category : 'accessing' }
 ReClassVariableNeitherReadNorWrittenRule class >> group [
-	^ 'Clean Code'
+	^ self cleanCodeGroup
 ]
 
 { #category : 'accessing' }

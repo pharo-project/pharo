@@ -16,7 +16,7 @@ ReThemeAccessRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReThemeAccessRule class >> group [
-	^ 'API Hints'
+	^ self apiHintsGroup
 ]
 
 { #category : 'class initialization' }

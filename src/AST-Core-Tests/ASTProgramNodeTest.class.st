@@ -3,7 +3,7 @@ SUnit tests for ASTProgramNode
 "
 Class {
 	#name : 'ASTProgramNodeTest',
-	#superclass : 'RBParseTreeTest',
+	#superclass : 'ASTParseTreeTest',
 	#instVars : [
 		'node'
 	],
@@ -38,7 +38,7 @@ ASTProgramNodeTest >> getAllNodesFromAST [
 ASTProgramNodeTest >> getMethodString [
 	^'toto
 		"First comment"
-		| temp varaibles |
+		| temp variables |
 		"Second comment"
 		assignement := " Third comment " #node.
 		"Fourth comment"
@@ -357,6 +357,24 @@ ASTProgramNodeTest >> testBestNodeFirstTempsAndFirstCommentGivesVariableNode [
 ]
 
 { #category : 'tests - bestNodeFor' }
+ASTProgramNodeTest >> testBestNodeForAStatementStrictMatch [
+	| ast start body |
+	body := 
+'m
+| a |
+a := 1.
+'.
+	
+	start := 'm
+| a |
+' size.
+		
+	ast := (RBParser parseMethod: body) bestNodeFor: (start to: start + 6).
+	self assert: ast isAssignment .
+	self assert: ast sourceCode equals: 'a := 1'
+]
+
+{ #category : 'tests - best node for comments' }
 ASTProgramNodeTest >> testBestNodeForCommentInbetweenStatements [
 	| ast string start |
 	string := '"Fourth comment"'.
@@ -366,7 +384,7 @@ ASTProgramNodeTest >> testBestNodeForCommentInbetweenStatements [
 	self assert: ast contents equals: 'Fourth comment'
 ]
 
-{ #category : 'tests - bestNodeFor' }
+{ #category : 'tests - best node for comments' }
 ASTProgramNodeTest >> testBestNodeForCommentInsideACascadeNodeOnMessageNode [
 	| ast string start |
 	string := '"Seventh comment"'.
@@ -376,7 +394,7 @@ ASTProgramNodeTest >> testBestNodeForCommentInsideACascadeNodeOnMessageNode [
 	self assert: ast contents equals: 'Seventh comment'
 ]
 
-{ #category : 'tests - bestNodeFor' }
+{ #category : 'tests - best node for comments' }
 ASTProgramNodeTest >> testBestNodeForCommentInsideACascadeNodeOnReceiver [
 	| ast string start |
 	string := '"Sixth comment"'.
@@ -386,7 +404,7 @@ ASTProgramNodeTest >> testBestNodeForCommentInsideACascadeNodeOnReceiver [
 	self assert: ast contents equals: 'Sixth comment'
 ]
 
-{ #category : 'tests - bestNodeFor' }
+{ #category : 'tests - best node for comments' }
 ASTProgramNodeTest >> testBestNodeForCommentInsideAssignementNode [
 	| ast string start |
 	string := '" Third comment "'.
@@ -396,7 +414,7 @@ ASTProgramNodeTest >> testBestNodeForCommentInsideAssignementNode [
 	self assert: ast contents equals: ' Third comment '
 ]
 
-{ #category : 'tests - bestNodeFor' }
+{ #category : 'tests - best node for comments' }
 ASTProgramNodeTest >> testBestNodeForCommentInsideMessageNode [
 	| ast string start |
 	string := '"Fifth comment"'.
@@ -406,7 +424,7 @@ ASTProgramNodeTest >> testBestNodeForCommentInsideMessageNode [
 	self assert: ast contents equals: 'Fifth comment'
 ]
 
-{ #category : 'tests - bestNodeFor' }
+{ #category : 'tests - best node for comments' }
 ASTProgramNodeTest >> testBestNodeForCommentInsideMethodNode [
 	| ast string start |
 	string := '"First comment"'.
@@ -416,7 +434,7 @@ ASTProgramNodeTest >> testBestNodeForCommentInsideMethodNode [
 	self assert: ast contents equals: 'First comment'
 ]
 
-{ #category : 'tests - bestNodeFor' }
+{ #category : 'tests - best node for comments' }
 ASTProgramNodeTest >> testBestNodeForCommentInsideReturnNode [
 	| ast string start |
 	string := '"return"'.
@@ -426,7 +444,7 @@ ASTProgramNodeTest >> testBestNodeForCommentInsideReturnNode [
 	self assert: ast contents equals: 'return'
 ]
 
-{ #category : 'tests - bestNodeFor' }
+{ #category : 'tests - best node for comments' }
 ASTProgramNodeTest >> testBestNodeForCommentInsideSequenceNode [
 	| ast string start |
 	string := '"Second comment"'.
@@ -437,6 +455,46 @@ ASTProgramNodeTest >> testBestNodeForCommentInsideSequenceNode [
 ]
 
 { #category : 'tests - bestNodeFor' }
+ASTProgramNodeTest >> testBestNodeForReturnAStatementWhenIntervalInStatement [
+	| ast start body |
+	body := 
+'m
+| a |
+a := 1111111111111111.
+'.
+	
+	start := 'm
+| a |
+' size.
+		
+	ast := (RBParser parseMethod: body) bestNodeFor: (start to: start + 6).
+	self assert: ast isAssignment.
+	self assert: ast sourceCode equals: 'a := 1111111111111111'
+]
+
+{ #category : 'tests - bestNodeFor' }
+ASTProgramNodeTest >> testBestNodeForReturnAStatementWhenIntervalInStatementWithoutLeftPart [
+	<expectedFailure>
+	"This tests shows that when the selection is not close to variable but to the colon 
+	the assignment is not returned but a literal (the righ value)"
+	| ast start body |
+	body := 
+'m
+| a |
+a := 1111111111111111.
+'.
+	
+	start := 'm
+| a |
+' size.
+		
+	ast := (RBParser parseMethod: body) bestNodeFor: (start + 2 to: start + 6).
+	self assert: ast isAssignment.
+	self assert: ast sourceCode equals: 'a := 1111111111111111'.
+	
+]
+
+{ #category : 'tests - bestNodeForPosition' }
 ASTProgramNodeTest >> testBestNodeForStatementInsideMethodNodeReturnsStatement [
 
 	| bestNode string |
@@ -448,6 +506,31 @@ ASTProgramNodeTest >> testBestNodeForStatementInsideMethodNodeReturnsStatement [
 		assert: bestNode isAssignment;
 		assert: bestNode sourceCode
 		equals: 'assignement := " Third comment " #node'
+]
+
+{ #category : 'tests - bestNodeFor' }
+ASTProgramNodeTest >> testBestNodeForTwoStatementsOurOfThree [
+	| ast start body selection |
+	body := 
+'m
+| a |
+a := 1.
+a := 2.
+a := 3.
+'.
+	
+	start := 'm
+| a |
+' size.
+	selection := 'a := 1.
+a := 2.' size.
+		
+	ast := (RBParser parseMethod: body) bestNodeFor: (start to: start + selection).
+	self assert: ast isSequence.
+	self assert: ast sourceCode equals: '| a |
+a := 1.
+a := 2.
+a := 3.'
 ]
 
 { #category : 'tests - bestNodeFor' }
@@ -1388,7 +1471,7 @@ ASTProgramNodeTest >> testSentMessages [
 ]
 
 { #category : 'tests - comments' }
-ASTProgramNodeTest >> testSetCommentsToNil [
+ASTProgramNodeTest >> testSetCommentsToNilSetAnEmptyCollection [
 
 	self node comments: nil.
 	self assert: self node comments equals: #()

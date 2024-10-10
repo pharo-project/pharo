@@ -172,7 +172,7 @@ RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval editingMode
 		node := ast bestNodeFor: (start to: stop).
 
 		node ifNil: [
-			node := RBParseErrorNodeVisitor
+			node := ASTParseErrorNodeVisitor
 				visit: ast
 				detect: [ :n | n intersectsInterval: (start to: start)]
 				ifNone: [ ^aBlock value ]].
@@ -186,7 +186,7 @@ RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval editingMode
 						node := newNode ].
 				].
 
-			node := RBGenericNodeVisitor
+			node := ASTGenericNodeVisitor
 				visit: node
 				detect: [ :n | n intersectsInterval: (start to: start) ]
 				ifNone: [ node ] ] ].
@@ -1175,7 +1175,7 @@ RubSmalltalkEditor >> widenSelectionIn: sourceCode selection: selectionInterval 
 	stop := node stop max: cursorIndex - 1.
 
 	comments := OrderedCollection new.
-	RBCommentNodeVisitor visit: node do: [ :cmnts | comments add: cmnts ].
+	ASTCommentNodeVisitor visit: node do: [ :cmnts | comments add: cmnts ].
 
 	comments
 		detect: [ :c | c start < cursorIndex and: [ c stop >= cursorIndex ] ]

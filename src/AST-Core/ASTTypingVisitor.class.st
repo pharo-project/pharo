@@ -26,7 +26,7 @@ Instance variables:
 "
 Class {
 	#name : 'ASTTypingVisitor',
-	#superclass : 'RBProgramNodeVisitor',
+	#superclass : 'ASTProgramNodeVisitor',
 	#instVars : [
 		'variableTypes',
 		'shortcutKernelMessages',

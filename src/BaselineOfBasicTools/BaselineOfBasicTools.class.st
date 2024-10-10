@@ -140,6 +140,27 @@ BaselineOfBasicTools >> postload: loader package: packageSpec [
 	ASTInvalidCascadeErrorNode deprecatedAliases: { #RBInvalidCascadeErrorNode }.
 	ASTParseErrorNode deprecatedAliases: { #RBParseErrorNode }.
 	
+	ASTAbstractFormatter deprecatedAliases: { #RBAbstractFormatter }.
+	ASTSimpleFormatter deprecatedAliases: { #RBSimpleFormatter }.
+	
+	ASTParseTreeSearcher deprecatedAliases: { #RBParseTreeSearcher }.
+	ASTParseTreeRule deprecatedAliases: { #RBParseTreeRule }.
+	ASTReplaceRule deprecatedAliases: { #RBReplaceRule }.
+	ASTSearchRule deprecatedAliases: { #RBSearchRule }.
+	ASTBlockReplaceRule deprecatedAliases: { #RBBlockReplaceRule }.
+	ASTParseTreeRewriter deprecatedAliases: { #RBParseTreeRewriter }.
+	ASTStringReplacement deprecatedAliases: { #RBStringReplacement }.
+	ASTStringReplaceRule deprecatedAliases: { #RBStringReplaceRule }.
+	
+	ASTReadBeforeWrittenTester deprecatedAliases: { #RBReadBeforeWrittenTester }.
+	ASTProgramNodeVisitor deprecatedAliases: { #RBProgramNodeVisitor }.
+	ASTReturnNodeAdderVisitor deprecatedAliases: { #RBReturnNodeAdderVisitor }.
+	ASTParseErrorNodeVisitor deprecatedAliases: { #RBParseErrorNodeVisitor }.
+	ASTCommentNodeVisitor deprecatedAliases: { #RBCommentNodeVisitor }.
+	ASTGenericNodeVisitor deprecatedAliases: { #RBGenericNodeVisitor }.
+	ASTDumpVisitor deprecatedAliases: { #RBDumpVisitor }.
+	ASTAbstractBlockVisitor deprecatedAliases: { #RBAbstractBlockVisitor }.
+	
 	ASTErrorNotice deprecatedAliases: { #RBErrorNotice }.
 	ASTWarningNotice deprecatedAliases: { #RBWarningNotice }.
 	ASTSyntaxErrorNotice deprecatedAliases: { #RBSyntaxErrorNotice }.

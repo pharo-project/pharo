@@ -18,7 +18,7 @@ ReInconsistentMethodClassificationRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReInconsistentMethodClassificationRule class >> group [
-	^ 'Design Flaws'
+	^ self designFlawGroup
 ]
 
 { #category : 'accessing' }

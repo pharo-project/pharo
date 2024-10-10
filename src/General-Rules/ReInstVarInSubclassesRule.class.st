@@ -18,7 +18,7 @@ ReInstVarInSubclassesRule class >> checksClass [
 
 { #category : 'accessing' }
 ReInstVarInSubclassesRule class >> group [
-	^ 'Design Flaws'
+	^ self designFlawGroup
 ]
 
 { #category : 'accessing' }

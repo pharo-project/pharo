@@ -30,7 +30,7 @@ Implementation remarks
 "
 Class {
 	#name : 'EFFormatter',
-	#superclass : 'RBAbstractFormatter',
+	#superclass : 'ASTAbstractFormatter',
 	#instVars : [
 		'codeStream',
 		'indent',

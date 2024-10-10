@@ -60,6 +60,12 @@ StClassAndMethodsSelectionPresenter >> basePackageName: aString [
 ]
 
 { #category : 'accessing' }
+StClassAndMethodsSelectionPresenter >> basePackageTagName: aString [
+
+	tagPresenter selectItem: aString
+]
+
+{ #category : 'accessing' }
 StClassAndMethodsSelectionPresenter >> classMethods [
 
 	^ classMethods

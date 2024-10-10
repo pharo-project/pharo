@@ -92,13 +92,9 @@ RBBrowserEnvironment >> allClasses [
 
 { #category : 'accessing - classes' }
 RBBrowserEnvironment >> allClassesAndTraits [
-	" compatibility method with SystemEnvironment"
+	"compatibility method with SystemEnvironment"
 
-	| allClassesAndTraits |
-	allClassesAndTraits := OrderedCollection new: 4096.
-	self allClassesAndTraitsDo: [ :each |
-		allClassesAndTraits add: each ].
-	^ allClassesAndTraits asArray
+	^ self allClasses
 ]
 
 { #category : 'private' }
@@ -226,23 +222,6 @@ RBBrowserEnvironment >> classesAndSelectorsDo: aBlock [
 	self classesDo: [ :class |
 		self selectorsForClass: class do: [ :sel |
 			aBlock value: class value: sel ]]
-]
-
-{ #category : 'accessing - classes' }
-RBBrowserEnvironment >> classesAndTraits [
-
-	| classesAndTraits |
-	classesAndTraits := OrderedCollection new: 4096.
-	self classesAndTraitsDo: [ :each |
-		classesAndTraits add: each ].
-	^ classesAndTraits asArray
-]
-
-{ #category : 'accessing - classes' }
-RBBrowserEnvironment >> classesAndTraitsDo: aBlock [
-	self allClassesAndTraitsDo: [ :each |
-		(self includesClass: each)
-			ifTrue: [ aBlock value: each ] ]
 ]
 
 { #category : 'accessing - classes' }
@@ -706,11 +685,11 @@ RBBrowserEnvironment >> selectionParseTreeIntervalFor: aString [
 	answerBlock := [ :aNode :answer | ^ aNode sourceInterval ].
 	self searchStrings do: [ :each |
 		| matcher tree |
-		matcher := RBParseTreeSearcher new.
+		matcher := ASTParseTreeSearcher new.
 		matcher matchesTree: (ASTLiteralNode value: each) do: answerBlock.
 		each isSymbol
 			ifTrue: [
-				tree := RBParseTreeSearcher buildSelectorTree: each.
+				tree := ASTParseTreeSearcher buildSelectorTree: each.
 				tree ifNotNil: [ matcher matchesTree: tree do: answerBlock ] ]
 			ifFalse: [
 				tree := ASTVariableNode named: each.

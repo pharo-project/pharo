@@ -308,6 +308,7 @@ PragmaSetting >> target [
 
 { #category : 'accessing' }
 PragmaSetting >> target: anObject [
+
 	target := anObject
 ]
 

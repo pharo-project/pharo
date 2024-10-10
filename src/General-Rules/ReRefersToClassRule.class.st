@@ -17,7 +17,7 @@ ReRefersToClassRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReRefersToClassRule class >> group [
-	^ 'Design Flaws'
+	^ self designFlawGroup
 ]
 
 { #category : 'accessing' }

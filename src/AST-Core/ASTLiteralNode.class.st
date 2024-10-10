@@ -79,7 +79,7 @@ ASTLiteralNode >> precedence [
 
 { #category : 'private - replacing' }
 ASTLiteralNode >> replaceSourceFrom: aNode [
-	self addReplacement: (RBStringReplacement
+	self addReplacement: (ASTStringReplacement
 				replaceFrom: aNode start
 				to: aNode stop
 				with: self formattedCode)
@@ -87,7 +87,7 @@ ASTLiteralNode >> replaceSourceFrom: aNode [
 
 { #category : 'private - replacing' }
 ASTLiteralNode >> replaceSourceWith: aNode [
-	self addReplacement: (RBStringReplacement
+	self addReplacement: (ASTStringReplacement
 				replaceFrom: self start
 				to: self stop
 				with: aNode formattedCode)

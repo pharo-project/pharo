@@ -1,6 +1,6 @@
 Class {
 	#name : 'ASTMessageNodeTest',
-	#superclass : 'RBParseTreeTest',
+	#superclass : 'ASTParseTreeTest',
 	#category : 'AST-Core-Tests-Nodes',
 	#package : 'AST-Core-Tests',
 	#tag : 'Nodes'
@@ -53,8 +53,10 @@ ASTMessageNodeTest >> testArgumentPartsForUnaryMessages [
 
 { #category : 'tests' }
 ASTMessageNodeTest >> testIntersectsInterval [
+
 		| tree message |
 		tree := self parseMethod: 'test self doit.'.
+		self assert: 'test self doit.' size equals: 15.
 		message := tree sendNodes first.
 		self assert: (message intersectsInterval: (13 to: 14)).	" last 't' selected "
 		self assert: (message intersectsInterval: (14 to: 13)).	" caret placed between 't' and '.' "

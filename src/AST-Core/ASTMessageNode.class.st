@@ -88,9 +88,11 @@ ASTMessageNode >> arguments: argCollection [
 
 { #category : 'querying' }
 ASTMessageNode >> bestNodeFor: anInterval [
+
 	| comments |
-	(self intersectsInterval: anInterval) ifFalse: [ ^nil ] .
-	(self containedBy: anInterval) ifTrue: [^self].
+	(self intersectsInterval: anInterval) ifFalse: [ ^ nil ].
+	(self containedBy: anInterval) ifTrue: [ ^ self ].
+	
 	self keywordsIntervals do:
 			[:each |
 			((each rangeIncludes: anInterval first)
@@ -354,11 +356,11 @@ ASTMessageNode >> replaceContainmentSourceWith: aNode [
 				ifTrue: [self receiver]
 				ifFalse: [self arguments detect: [:each | (self mappingFor: each) = aNode]].
 	self
-		addReplacement: (RBStringReplacement
+		addReplacement: (ASTStringReplacement
 					replaceFrom: self start
 					to: originalNode start - 1
 					with: (needsParenthesis ifTrue: ['('] ifFalse: ['']));
-		addReplacement: (RBStringReplacement
+		addReplacement: (ASTStringReplacement
 					replaceFrom: originalNode stop + 1
 					to: self stop
 					with: (needsParenthesis ifTrue: [')'] ifFalse: ['']))
@@ -397,7 +399,7 @@ ASTMessageNode >> replaceSourceWithMessageNode: aNode [
 				ifFalse:
 					[^super replaceSourceWith: aNode].
 			self addReplacement:
-				(RBStringReplacement
+				(ASTStringReplacement
 					replaceFrom: self receiver start
 					to: self receiver stop
 					with: aNode receiver name)].
@@ -406,11 +408,11 @@ ASTMessageNode >> replaceSourceWithMessageNode: aNode [
 			[(self hasParentheses not and: [self parent precedence <= aNode precedence])
 				ifTrue:
 					[self
-						addReplacement: (RBStringReplacement
+						addReplacement: (ASTStringReplacement
 									replaceFrom: self start
 									to: self start - 1
 									with: '(');
-						addReplacement: (RBStringReplacement
+						addReplacement: (ASTStringReplacement
 									replaceFrom: self stop + 1
 									to: self stop
 									with: ')')]].
@@ -421,7 +423,7 @@ ASTMessageNode >> replaceSourceWithMessageNode: aNode [
 	self selectorParts keysAndValuesDo: [:index :oldPart|
 			(newSelectorParts at: index) ~= oldPart
 				ifTrue:
-					[self addReplacement: (RBStringReplacement
+					[self addReplacement: (ASTStringReplacement
 								replaceFrom: (oldkeywordsIntervals at: index) first
 								to: (oldkeywordsIntervals at: index) last
 								with: ((isBinaryToKeyword

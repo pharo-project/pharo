@@ -19,7 +19,7 @@ ReJustSendsSuperRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReJustSendsSuperRule class >> group [
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }
@@ -58,5 +58,5 @@ ReJustSendsSuperRule >> basicCheck: aMethod [
 { #category : 'initialization' }
 ReJustSendsSuperRule >> initialize [
 	super initialize.
-	matcher := RBParseTreeSearcher justSendsSuper
+	matcher := ASTParseTreeSearcher justSendsSuper
 ]

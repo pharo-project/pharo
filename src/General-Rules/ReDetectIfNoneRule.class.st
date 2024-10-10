@@ -22,7 +22,7 @@ Class {
 
 { #category : 'accessing' }
 ReDetectIfNoneRule class >> group [
-	^ 'Coding Idiom Violation'
+	^ self codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

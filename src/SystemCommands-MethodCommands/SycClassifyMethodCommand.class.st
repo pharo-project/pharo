@@ -25,7 +25,7 @@ SycClassifyMethodCommand >> applyResultInContext: aToolContext [
 { #category : 'accessing' }
 SycClassifyMethodCommand >> defaultMenuIconName [
 
-	^ #glamorousBrowse
+	^ #browse
 ]
 
 { #category : 'accessing' }

@@ -23,7 +23,7 @@ FinderClassesSearchStrategy >> computeListOfClasses [
 
 	result := OrderedCollection new.
 
-	finder packagesSelection classesAndTraitsDo: [ :class |
+	finder packagesSelection classesDo: [ :class |
 		(finder useRegEx
 			 ifTrue: [ regex search: class name ]
 			 ifFalse: [ class name includesSubstring: finder searchingString caseSensitive: false ]) ifTrue: [ result add: class ] ].

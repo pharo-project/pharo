@@ -19,7 +19,7 @@ Class {
 
 { #category : 'accessing' }
 ReModifiesCollectionRule class >> group [
-	^ 'Potential Bugs'
+	^ self potentialBugsGroup
 ]
 
 { #category : 'accessing' }

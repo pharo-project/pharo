@@ -6,11 +6,10 @@ Class {
 	#tag : 'Parametrized'
 }
 
-{ #category : 'tests' }
+{ #category : 'building suites' }
 RBExtractToTemporaryParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		addCase: { #rbClass -> RBExtractToTemporaryRefactoring };
-		addCase: { #rbClass -> RBExtractToTemporaryTransformation };
 		yourself
 ]
 

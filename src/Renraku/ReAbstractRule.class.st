@@ -37,6 +37,30 @@ Class {
 	#tag : 'Rules'
 }
 
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> apiChangeGroup [
+
+	^ #'API Change'
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> apiHintsGroup [
+
+	^ #'API Hints'
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> architecturalGroup [
+
+	^ #Architectural
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> bugsGroup [
+
+	^ #Bugs
+]
+
 { #category : 'testing - interest' }
 ReAbstractRule class >> checksClass [
 	"Not checking a class by default - but subclasses should return true when the receiver rule checks on class level."
@@ -63,6 +87,24 @@ ReAbstractRule class >> checksPackage [
 	"Not checking a package by default - but subclasses should return true when the receiver rule checks on package level."
 
 	^ false
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> cleanCodeGroup [
+
+	^ #'Clean Code'
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> codingIdiomViolationGroup [
+
+	^ #'Coding Idiom Violation'
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> designFlawGroup [
+
+	^ #'Design Flaws'
 ]
 
 { #category : 'accessing' }
@@ -98,6 +140,12 @@ ReAbstractRule class >> identifierMinorVersionNumber [
 	"This number identifies the version of the rule definition. Each time the rule is updated and its changes invalidates previous false positives identification (and as such should be reassessed by developers) the number should be increased."
 
 	^ 1
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> instanceMethodProtocolGroup [
+
+	^ #'Instance Method Protocol'
 ]
 
 { #category : 'testing' }
@@ -142,6 +190,24 @@ ReAbstractRule class >> methodOfInteresetSelectors [
 	^ #(checksMethod checksClass checksPackage checksNode)
 ]
 
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> methodProtocolNameGroup [
+
+	^ #'Method Protocol Name'
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> optimizationGroup [
+
+	^ #Optimization
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> potentialBugsGroup [
+
+	^ #'Potential Bugs'
+]
+
 { #category : 'accessing' }
 ReAbstractRule class >> rationale [
 	"Answer an explanation of the rule, usually in one line. Long description can be obtained using longDescription."
@@ -150,6 +216,12 @@ ReAbstractRule class >> rationale [
 		self deprecated: 'The method #rationale of rules should be implemented on the class side in Pharo 13+ and not in instance sice.'.
 		^ self new rationale ].
 	^ self comment
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> rubricGroup [
+
+	^ #Rubric
 ]
 
 { #category : 'accessing' }
@@ -170,6 +242,18 @@ ReAbstractRule class >> severity [
 		self deprecated: 'The method #severity of rules should be implemented on the class side in Pharo 13+ and not in instance sice.'.
 		^ self new severity ].
 	^ #warning
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> styleGroup [
+
+	^ #Style
+]
+
+{ #category : 'accessing - rule group' }
+ReAbstractRule class >> sunitGroup [
+
+	^ #SUnit
 ]
 
 { #category : 'manifest' }

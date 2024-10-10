@@ -4,7 +4,7 @@ I visit each node in the abstract syntax tree while growing and shrinking a scop
 "
 Class {
 	#name : 'OCASTSemanticAnalyzer',
-	#superclass : 'RBProgramNodeVisitor',
+	#superclass : 'ASTProgramNodeVisitor',
 	#instVars : [
 		'scope',
 		'outerScope',

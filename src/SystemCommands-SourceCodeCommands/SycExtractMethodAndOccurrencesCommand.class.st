@@ -41,7 +41,7 @@ SycExtractMethodAndOccurrencesCommand >> asRefactorings [
 
 { #category : 'accessing' }
 SycExtractMethodAndOccurrencesCommand >> defaultMenuIconName [
-	^ #glamorousRestart
+	^ #restart
 ]
 
 { #category : 'accessing' }
@@ -80,7 +80,7 @@ SycExtractMethodAndOccurrencesCommand >> setUpOptionToChangeMethodNameDuring: re
 	| dialog |
 	refactoring setOption: #methodName toUse: [ :methodName :ref | | invalidArgs |
 		invalidArgs := self computeInvalidArgNamesForSelector: method selector.
-		dialog := SycMethodNameEditorPresenter
+		dialog := StMethodNameEditorPresenter
 			openOn: methodName
 			withInvalidArgs: invalidArgs
 			canRenameArgs: true

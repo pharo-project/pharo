@@ -37,7 +37,7 @@ NautilusRefactoring >> chooseFrom: anArray title: aString lines: aCollection [
 { #category : 'display' }
 NautilusRefactoring >> handleMethodNameRequest: aMethodName [
 	|dialog|
-	dialog := SycMethodNameEditorPresenter
+	dialog := StMethodNameEditorPresenter
 		openOn: aMethodName
 		canRenameArgs: false
 		canRemoveArgs: false

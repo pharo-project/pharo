@@ -24,7 +24,7 @@ ReLongMethodsRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReLongMethodsRule class >> group [
-	^ 'Design Flaws'
+	^ self designFlawGroup
 ]
 
 { #category : 'private' }

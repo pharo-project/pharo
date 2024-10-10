@@ -20,7 +20,7 @@ ReExcessiveArgumentsRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReExcessiveArgumentsRule class >> group [
-	^ 'Design Flaws'
+	^ self designFlawGroup
 ]
 
 { #category : 'accessing' }

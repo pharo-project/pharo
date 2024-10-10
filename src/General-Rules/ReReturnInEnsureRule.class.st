@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 ReReturnInEnsureRule class >> group [
-	^ 'Potential Bugs'
+	^ self potentialBugsGroup
 ]
 
 { #category : 'accessing' }

@@ -12,7 +12,7 @@ Class {
 
 { #category : 'accessing' }
 ReUsesWorldGlobalRule class >> group [
-	^ 'Bugs'
+	^ self bugsGroup
 ]
 
 { #category : 'accessing' }
