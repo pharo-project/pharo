@@ -58,6 +58,25 @@ NetNameResolver class >> addressForName: hostName timeout: secs [
 	^ result asSocketAddress
 ]
 
+{ #category : 'lookups' }
+NetNameResolver class >> addressForUnixDomain: path [
+	"Create a socket address that can be used on Socket newIPC connectTo:"
+
+	| deadline size result |
+	deadline := Time millisecondClockValue -> (60 * 1000).
+	result := nil.
+
+	self resolverMutex critical: [
+		(self waitForResolverReadyUntil: deadline)
+		ifTrue: [
+			self primGetAddressInfoHost: '' service: path flags: 0 family: 1 type: 0 protocol: 0.
+			size := self primGetAddressInfoSize.
+			result := ByteArray new: size withAll: 0.
+			self primGetAddressInfoResult: result.
+			^ result ]
+		ifFalse: [ ^ NameLookupFailure signalFor: path ] ]
+]
+
 { #category : 'address string utils' }
 NetNameResolver class >> addressFromIPv6String: aString [
 	"Return a ByteArray corresponding to an IPv6 address in text format"
@@ -548,11 +567,18 @@ NetNameResolver class >> stringFromAddress: addr [
 	"Return a string representing the given host address as four decimal bytes delimited with decimal points."
 	"NetNameResolver stringFromAddress: NetNameResolver localHostAddress"
 
-	| s |
+	| s size  |
 	(addr isKindOf: SocketAddress) ifTrue: [^addr printString copyUpTo: $( ].
+
+	"If size is AddressHeaderSize + sizeof (struct sockaddr_un), it's likely IPC"
+	size := addr size.
+	(size = 118) ifTrue: [ | limit |
+		limit := addr indexOf: 0 startingAt: 11 ifAbsent: size + 1.
+		^ (addr copyFrom: 11 to: limit - 1) asString ].
+
 	"If the incoming addr is a size 16 ByteArray, we assume it is
 	representing an IPv6 address."
-	(addr size = 16) ifTrue: [ ^ self stringFromIPv6Address: addr ].
+	(size = 16) ifTrue: [ ^ self stringFromIPv6Address: addr ].
 
 	"Otherwise write out in IPv4 format"
 	s := WriteStream on: ''.
