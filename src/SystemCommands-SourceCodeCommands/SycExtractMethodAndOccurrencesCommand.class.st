@@ -41,7 +41,7 @@ SycExtractMethodAndOccurrencesCommand >> asRefactorings [
 
 { #category : 'accessing' }
 SycExtractMethodAndOccurrencesCommand >> defaultMenuIconName [
-	^ #glamorousRestart
+	^ #restart
 ]
 
 { #category : 'accessing' }

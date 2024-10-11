@@ -20,7 +20,7 @@ SycInspectVariableCommand class >> canBeExecutedInContext: aToolContext [
 
 { #category : 'accessing' }
 SycInspectVariableCommand >> defaultMenuIconName [
-	^#glamorousInspect
+	^#inspect
 ]
 
 { #category : 'accessing' }

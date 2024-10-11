@@ -16,13 +16,23 @@ Class {
 }
 
 { #category : 'dummy methods' }
+MyClassBeta >> duplicatedInSubclassMoreComplexBody [
+	^ 42 + 666
+]
+
+{ #category : 'dummy methods' }
 MyClassBeta >> methodDuplicatedInSibling [
-	^ self
+	^ 38 * 101
 ]
 
 { #category : 'dummy methods' }
 MyClassBeta >> methodDuplicatedInSubclass [
 	^ self
+]
+
+{ #category : 'dummy methods' }
+MyClassBeta >> methodDuplicatedInSubclass2 [
+	^ 42 + 666
 ]
 
 { #category : 'dummy methods' }
@@ -69,8 +79,8 @@ MyClassBeta >> methodReferencingSharedVariableFromSuperclass [
 
 { #category : 'dummy methods' }
 MyClassBeta >> methodWithSuperSend [
-	" I send a message to super "
-	^ super methodForSupersend
+	"I have the same implementation that my superclass. One of my sibling has a different definition."
+	^ super class
 ]
 
 { #category : 'dummy methods' }

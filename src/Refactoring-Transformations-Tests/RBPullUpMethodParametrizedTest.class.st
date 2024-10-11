@@ -9,7 +9,7 @@ Class {
 { #category : 'building suites' }
 RBPullUpMethodParametrizedTest class >> testParameters [
 	^ ParametrizedTestMatrix new
-		addCase: { #rbClass -> RBPullUpMethodRefactoring };
+		addCase: { #rbClass -> RePullUpMethodRefactoring };
 		addCase: { #rbClass -> RBPullUpMethodTransformation };
 		yourself
 ]
@@ -69,19 +69,6 @@ RBPullUpMethodParametrizedTest >> addClassHierarchyForPools [
 { #category : 'accessing' }
 RBPullUpMethodParametrizedTest >> constructor [
 	^ #pullUp:from:
-]
-
-{ #category : 'failure tests' }
-RBPullUpMethodParametrizedTest >> testFailurePullUpClassMethod [
-
-	| class |
-	class := model classNamed: #Object.
-	class addClassVariable: #Foo.
-	class classSide compile: 'foo ^Foo' classified: #( #accessing ).
-	self shouldFail:
-		(self createRefactoringWithModel: model andArguments: {
-				 #( #foo ).
-				 class classSide })
 ]
 
 { #category : 'failure tests' }
@@ -176,6 +163,19 @@ RBPullUpMethodParametrizedTest >> testFailurePullUpWithSuperSendThatCannotBeCopi
 		(self createRefactoringWithModel: model andArguments: {
 				 #( #foo ).
 				 class })
+]
+
+{ #category : 'failure tests' }
+RBPullUpMethodParametrizedTest >> testFailureWhenPulledMethodRefersToLocalSharedVar [
+
+	| class |
+	class := model classNamed: #Object.
+	class addClassVariable: #Foo.
+	class classSide compile: 'foo ^Foo' classified: #( #accessing ).
+	self shouldFail:
+		(self createRefactoringWithModel: model andArguments: {
+				 #( #foo ).
+				 class classSide })
 ]
 
 { #category : 'tests' }

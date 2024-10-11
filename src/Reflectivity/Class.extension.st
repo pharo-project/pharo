@@ -6,13 +6,6 @@ Class >> intanceSpecificMetaLinksAvailable [
 ]
 
 { #category : '*Reflectivity' }
-Class >> isInClassHierarchyOf: aClass [
-
-	^ (self includesBehavior: aClass) or: [
-		  aClass includesBehavior: self ]
-]
-
-{ #category : '*Reflectivity' }
 Class >> link: aMetaLink toClassVariable: aClassVariable [
 	aClassVariable link: aMetaLink
 ]

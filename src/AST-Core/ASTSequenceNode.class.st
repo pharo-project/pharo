@@ -244,8 +244,8 @@ ASTSequenceNode >> bestNodeFor: anInterval [
 
 	node := super bestNodeFor: anInterval.
 	node == self ifTrue: [
-		(temporaries isEmpty and: [ statements size == 1 ]) ifTrue: [
-			^ statements first ] ].
+		(temporaries isEmpty and: [ statements size == 1 ]) 
+			ifTrue: [ ^ statements first ] ].
 	^ node
 ]
 
@@ -573,11 +573,11 @@ ASTSequenceNode >> transformLastToReturn [
 
 { #category : 'querying' }
 ASTSequenceNode >> whichNodeIsContainedBy: anInterval [
+
 	| node |
 	node := super whichNodeIsContainedBy: anInterval.
 	node == self
-		ifTrue:
-			[(temporaries isEmpty and: [statements size == 1])
-				ifTrue: [^statements first]].
-	^node
+		ifTrue: [(temporaries isEmpty and: [statements size == 1])
+						ifTrue: [ ^ statements first ] ].
+	^ node
 ]

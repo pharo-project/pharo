@@ -208,7 +208,7 @@ DADependencyTreePresenter >> filter: aString [
 DADependencyTreePresenter >> initializeButtons [
 
 	buttonRefresh
-		icon: (self iconNamed: #glamorousRefresh);
+		icon: (self iconNamed: #refresh);
 		label: ''.
 	buttonBrowseCycles := self newButton
 		help: 'Find all the cycles where the package is in the system';

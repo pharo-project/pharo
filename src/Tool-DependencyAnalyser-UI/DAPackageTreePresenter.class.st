@@ -88,7 +88,7 @@ DAPackageTreePresenter >> initializePresenters [
 		yourself.
 
 	buttonRefresh := self newButton
-		icon: (self iconNamed: #glamorousRefresh);
+		icon: (self iconNamed: #refresh);
 		label: 'Refresh';
 		help: 'Refresh the list of analyzed packages';
 		yourself.

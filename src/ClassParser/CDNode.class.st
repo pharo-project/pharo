@@ -48,12 +48,13 @@ CDNode >> ast [
 
 { #category : 'selection' }
 CDNode >> bestNodeFor: anInterval [
+	
 	| selectedChildren |
-	(self intersectsInterval: anInterval) ifFalse: [^nil].
-	(self containedBy: anInterval) ifTrue: [^self].
+	(self intersectsInterval: anInterval) ifFalse: [ ^nil ].
+	(self containedBy: anInterval) ifTrue: [ ^ self ].
 	selectedChildren := self children
 				select: [:each | each intersectsInterval: anInterval].
-	^selectedChildren size == 1
+	^ selectedChildren size == 1
 		ifTrue: [selectedChildren first bestNodeFor: anInterval]
 		ifFalse: [self]
 ]
@@ -83,7 +84,9 @@ CDNode >> initialize [
 
 { #category : 'selection' }
 CDNode >> intersectsInterval: anInterval [
-	^(anInterval first between: self start and: self stop)
+	"Returns whether the node shape is included within the intervale, ending inside the interval, or starting within the interval"
+	
+	^ (anInterval first between: self start and: self stop)
 		or: [self start between: anInterval first and: anInterval last]
 ]
 
