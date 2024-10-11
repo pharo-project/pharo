@@ -474,3 +474,18 @@ RBAbstractTransformation >> transform [
 RBAbstractTransformation >> trueCondition [
 	^ RBCondition true
 ]
+
+{ #category : 'private' }
+RBAbstractTransformation >> uniqueMethodNameFor: anInteger [
+	"anInteger is the number of arguments/parameters"
+	| before after index name |
+	before := 'a'.
+	after := ''.
+	anInteger timesRepeat: [after := after , 'z:'].
+	index := 0.
+
+	[name := before , index printString , after.
+	(Symbol findInterned: name) isNotNil]
+			whileTrue: [index := index + 1].
+	^name asSymbol
+]

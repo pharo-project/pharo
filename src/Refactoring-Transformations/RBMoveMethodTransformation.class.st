@@ -419,20 +419,6 @@ RBMoveMethodTransformation >> storeOn: aStream [
 		nextPutAll: ''')'
 ]
 
-{ #category : 'private' }
-RBMoveMethodTransformation >> uniqueMethodNameFor: anInteger [
-	| before after index name |
-	before := 'a'.
-	after := ''.
-	anInteger timesRepeat: [after := after , 'z:'].
-	index := 0.
-
-	[name := before , index printString , after.
-	(Symbol findInterned: name) isNotNil]
-			whileTrue: [index := index + 1].
-	^name asSymbol
-]
-
 { #category : 'transforming' }
 RBMoveMethodTransformation >> verifyTemporaryVariableDoesNotOverride [
 	(parseTree allDefinedVariables includes: selfVariableName)
