@@ -66,14 +66,6 @@ RBCreateAccessorsForVariableTransformation class >> isTransformation [
 ]
 
 { #category : 'instance creation' }
-RBCreateAccessorsForVariableTransformation class >> model: aRBSmalltalk [
-
-	^ self new 
-		model: aRBSmalltalk;
-		yourself
-]
-
-{ #category : 'instance creation' }
 RBCreateAccessorsForVariableTransformation class >> model: aRBSmalltalk classVariable: aVarName class: aClass [
 
 	^ self model: aRBSmalltalk variable: aVarName class: aClass classVariable: true
