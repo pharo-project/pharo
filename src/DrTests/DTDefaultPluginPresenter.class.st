@@ -59,17 +59,18 @@ DTDefaultPluginPresenter class >> buildPackageGroupWith: presenterInstance [
 
 { #category : 'private - commands' }
 DTDefaultPluginPresenter class >> buildResultGroupWith: presenterInstance [
-	| commandGroup pluginCommands |
+	| commandGroup pluginCommands plugin |
 
 	commandGroup := (CmCommandGroup named: 'Results tools') asSpecGroup
 		description: 'Commands related to result.';
 		register: (DTResultBrowseCommand forSpecContext: presenterInstance) beHiddenWhenCantBeRun;
 		yourself.
 
-	pluginCommands := presenterInstance plugin
-		buildContextualMenuGroupWith: presenterInstance.
-	pluginCommands entries ifEmpty: [ ^ commandGroup ].
+	plugin := presenterInstance plugin.
+	plugin ifNil: [ ^ commandGroup ].
 
+	pluginCommands := plugin buildContextualMenuGroupWith: presenterInstance.
+	pluginCommands entries ifEmpty: [ ^ commandGroup ].
 	^ commandGroup
 		register: pluginCommands beDisplayedAsGroup;
 		yourself
