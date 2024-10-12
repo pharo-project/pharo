@@ -10,6 +10,12 @@ Class {
 	#tag : 'Core'
 }
 
+{ #category : 'accessing' }
+EnhancedDebugSession >> bytecodeForHalt [
+
+	^ 218 "This is an unknown bytecode that should be left always unknown to be used for halt in the image side"
+]
+
 { #category : 'menu - operations' }
 EnhancedDebugSession >> findNextContext: aContext [ 
 	
@@ -33,6 +39,28 @@ EnhancedDebugSession >> findNextContext: aContext [
 	
 	^ blockContext
 
+]
+
+{ #category : 'initialization' }
+EnhancedDebugSession >> initialize [ 
+	
+	super initialize.
+	originalBlocks := OrderedCollection new.
+	newBlocks := OrderedCollection new.
+]
+
+{ #category : 'preparation' }
+EnhancedDebugSession >> prepareContextForStepThrough: aContext [ 
+	
+	1 to: aContext size do: [ :idx | 
+		self updateFullBlocksOf: aContext withIndex: idx ]
+]
+
+{ #category : 'clean-up' }
+EnhancedDebugSession >> revertBlocks [
+
+	newBlocks asArray elementsForwardIdentityTo: originalBlocks asArray.
+	
 ]
 
 { #category : 'debugging actions' }
@@ -77,4 +105,24 @@ EnhancedDebugSession >> stepThrough: aContext [
 			ifFalse: [ newContext ]).
 
 	self triggerEvent: #stepThrough
+]
+
+{ #category : 'preparation' }
+EnhancedDebugSession >> updateFullBlocksOf: aContext withIndex: anIndex [ 
+	
+	| originalBlock newBlock newCompiledBlock |
+	
+	originalBlock := aContext at: anIndex.
+	originalBlock isBlock ifFalse: [ ^ self ].
+	
+	newBlock := originalBlock clone.
+	newCompiledBlock := newBlock compiledBlock clone.
+	newBlock compiledBlock: newCompiledBlock. 
+	
+	newCompiledBlock byteAt: newCompiledBlock initialPC put: self bytecodeForHalt.
+	
+	originalBlocks add: originalBlock.
+	newBlocks add: newBlock.
+	
+	aContext at: anIndex put: newBlock.
 ]
