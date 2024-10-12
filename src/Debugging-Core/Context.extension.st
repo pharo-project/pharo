@@ -77,7 +77,10 @@ Context >> respondsToUnknownBytecode [
 	
 	| unknownBytecode |
 	unknownBytecode := self compiledCode at: self pc.
-	self error: 'VM cannot run unknown bytecode ', unknownBytecode printString
+	^ UnknownBytecode new 
+		bytecode: unknownBytecode;
+		pc: self pc;
+		signal: 'VM cannot run unknown bytecode ', unknownBytecode printString
 ]
 
 { #category : '*Debugging-Core' }
