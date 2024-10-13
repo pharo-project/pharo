@@ -25,6 +25,7 @@ ReRenameVariableDriver >> changes [
 ReRenameVariableDriver >> configureRefactoring [
 
 	refactoring := self refactoringClass
+		               model: model
 		               variable: oldName
 		               class: class
 ]
