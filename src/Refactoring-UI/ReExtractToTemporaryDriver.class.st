@@ -26,9 +26,16 @@ ReExtractToTemporaryDriver >> configureRefactoring [
 
 	refactoring := RBExtractToTemporaryRefactoring 
 							extract: sourceInterval
-						 	to: newVariableName
 							from: selector
 							in: class
+]
+
+{ #category : 'instance creation' }
+ReExtractToTemporaryDriver >> extract: anInterval from: aSelector in: aClass [
+
+	class := RBNamespace new classObjectFor: aClass.
+	selector := aSelector.
+	sourceInterval := anInterval
 ]
 
 { #category : 'instance creation' }
@@ -51,20 +58,15 @@ ReExtractToTemporaryDriver >> initialize [
 ReExtractToTemporaryDriver >> requestDialogWith: variableName [
 
 	^ requestDialog := (self variableNameEditorPresenterClass
-			openOn: variableName
-			withInvalidArgs: []
-			canRenameArgs: false
-			canRemoveArgs: false
-			canAddArgs: false
-			canEditName: true ) presenter.
+			openOn: variableName ) presenter.
 ]
 
 { #category : 'execution' }
 ReExtractToTemporaryDriver >> requestVariableName [
 
 	| dialog variableName|
-	variableName := RBArgumentName name: ''.
-	dialog := self requestDialogWith: newVariableName .
+	variableName := RBArgumentName name: 'newVariableName'.
+	dialog := self requestDialogWith: variableName.
 	dialog ifNil: [ shouldEscape := true. ^ self ].
 	
 	^ dialog variableName
@@ -78,7 +80,10 @@ ReExtractToTemporaryDriver >> runRefactoring [
 	refactoring prepareForExecution.
 	
 	newVariableName := self requestVariableName.
+	refactoring extract: sourceInterval to: newVariableName from: selector in: class.
 	shouldEscape ifTrue: [ ^ self ].
+	refactoring preconditionValidInstVarName check ifFalse: [ ^ self].
+	refactoring preconditionCheckVariableName check ifFalse: [ ^ self ].
 	
 	self applyChanges
 ]
@@ -89,38 +94,9 @@ ReExtractToTemporaryDriver >> scopes: aCollection [
 	model :=  self refactoringScopeOn: scopes first
 ]
 
-{ #category : 'validation' }
-ReExtractToTemporaryDriver >> validateName: aName onPresenter: presenter [
- 
-	| firstCondition secondCondition result firstStream secondStream errorMessages |
-   	firstCondition := refactoring preconditionValidInstVarName.
-	secondCondition := refactoring preconditionCheckVariableName.
-	firstStream := WriteStream on: String new.
-	secondStream := WriteStream on: String new.
-	
-	firstCondition check ifFalse: [ 
-        firstCondition violationMessageOn: firstStream ].
-	secondCondition check ifFalse: [ 
-        secondCondition violationMessageOn: secondStream ].
-	errorMessages := firstStream contents.
-	errorMessages := errorMessages , (errorMessages isEmpty
-							ifFalse: [ '. ', secondStream contents ]
-							ifTrue: [ secondStream contents ]).
-	
-	result := (firstCondition check and: [ secondCondition check ]).
-    
-   result 
-		ifFalse: [
-      		shouldEscape := true.
-			presenter setErrorText: errorMessages ]
-       ifTrue: [ presenter setErrorText: '' ].
-   
-	^ result.
-]
-
 { #category : 'accessing' }
 ReExtractToTemporaryDriver >> variableNameEditorPresenterClass [
-    ^ variableNameEditorPresenterClass ifNil: [ variableNameEditorPresenterClass := StMethodNameEditorPresenter]
+    ^ variableNameEditorPresenterClass ifNil: [ variableNameEditorPresenterClass := StVariableNameEditorPresenter ]
 
 ]
 

@@ -20,6 +20,14 @@ Class {
 }
 
 { #category : 'instance creation' }
+RBExtractToTemporaryRefactoring class >> extract: anInterval from: aSelector in: aClass [
+	^ self new
+		extract: anInterval
+		from: aSelector
+		in: aClass
+]
+
+{ #category : 'instance creation' }
 RBExtractToTemporaryRefactoring class >> extract: anInterval to: aString from: aSelector in: aClass [
 	^ self new
 		extract: anInterval
@@ -62,6 +70,13 @@ RBExtractToTemporaryRefactoring >> constructAssignmentFrom: aNode [
 	In this case the caller is done making use of the parent backlink,
 	but it seems sensible to keep it intact whenever possible."
 	^ASTAssignmentNode variable: valueNode value: aNode copy.
+]
+
+{ #category : 'instance creation' }
+RBExtractToTemporaryRefactoring >> extract: aSelector from: anInterval in: aClass [ 
+	class := self classObjectFor: aClass.
+	selector := aSelector.
+	sourceInterval := anInterval
 ]
 
 { #category : 'initialization' }
@@ -108,6 +123,7 @@ RBExtractToTemporaryRefactoring >> preconditionCheckVariableName [
 
 { #category : 'preconditions' }
 RBExtractToTemporaryRefactoring >> preconditionValidInstVarName [
+	"Here we ensure that new temporary name is not overlapping with existing instance variable."
 
 	^ ReIsValidInstanceVariableName new name: newVariableName
 ]

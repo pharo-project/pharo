@@ -14,13 +14,13 @@ ReExtractToTemporaryDriverTest >> setUpMocksOn: driver [
     
     dialog 
         on: #variableName
-        respond: (RBArgumentName name: 'tempVar').
+        respond: (RBArgumentName name: 'temp').
     
     driver requestDialog: dialog.
     
     requestClass := MockObject new.
     requestClass
-        on: #openOn:withInvalidArgs:canRenameArgs:canRemoveArgs:canAddArgs:canEditName:
+        on: #openOn:
         respond: dialog.
     
     driver variableNameEditorPresenterClass: requestClass.
@@ -29,10 +29,11 @@ ReExtractToTemporaryDriverTest >> setUpMocksOn: driver [
 { #category : 'tests' }
 ReExtractToTemporaryDriverTest >> testExtractToTemporaryExpectChanges [
 
-	| driver driverChanges |
+	| driver driverChanges rbclasses|
+	rbclasses := RBClassEnvironment classes: { RBClassDataForRefactoringTest }.
 	driver := ReExtractToTemporaryDriver new
-					extract: (130 to: 138)
-					to: 'variable'
+					scopes: { rbclasses };
+					extract: (52 to: 73)
 		         from: #noMoveDefinition
 		         in: RBClassDataForRefactoringTest.
 
@@ -49,18 +50,26 @@ ReExtractToTemporaryDriverTest >> testExtractToTemporaryExpectChanges [
 { #category : 'tests' }
 ReExtractToTemporaryDriverTest >> testFailureInvalidVariableName [
 
-	| driver rbclasses |
+	| driver rbclasses dialog requestClass|
 	rbclasses := RBClassEnvironment classes: { RBClassDataForRefactoringTest }.
 	driver := ReExtractToTemporaryDriver new
 		scopes: { rbclasses };
 		extract: (51 to: 60)
-      to: '1collection'
       from: #modifiesCollection
       in: RBClassDataForRefactoringTest.
 
    self setUpDriver: driver.
 
-	self setUpMocksOn: driver.
+    dialog := MockObject new.
+    dialog 
+        on: #variableName
+        respond: (RBArgumentName name: 'collection').
+    driver requestDialog: dialog.
+    requestClass := MockObject new.
+    requestClass
+        on: #openOn:
+        respond: dialog.
+    driver variableNameEditorPresenterClass: requestClass.
 
 	self should: [ driver runRefactoring ] raise: RBRefactoringError.
 ]
@@ -68,16 +77,26 @@ ReExtractToTemporaryDriverTest >> testFailureInvalidVariableName [
 { #category : 'tests' }
 ReExtractToTemporaryDriverTest >> testFailureNonExistantSelector [
 
-	| driver rbclasses |
+	| driver rbclasses dialog requestClass |
 	rbclasses := RBClassEnvironment classes: { RBClassDataForRefactoringTest }.
    driver := ReExtractToTemporaryDriver new
 		scopes: { rbclasses };
 		extract: (14 to: 23)
-      to: 'asdf'
       from: #checkClass1:
       in: RBClassDataForRefactoringTest.
     
 	self setUpDriver: driver.
+	
+	dialog := MockObject new.
+    dialog 
+        on: #variableName
+        respond: (RBArgumentName name: 'asdf').
+    driver requestDialog: dialog.
+    requestClass := MockObject new.
+    requestClass
+        on: #openOn:
+        respond: dialog.
+    driver variableNameEditorPresenterClass: requestClass.
     
    self should: [ driver runRefactoring ] raise: RBRefactoringError.
 ]
