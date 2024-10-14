@@ -29,7 +29,7 @@ ReMethodsSendNoSupersendsTest >> testMethodNotSendingAMessageToSuper [
 		   targetSuperclass: myClassAlpha
 		   selectors: { #methodForPullUp }.
 		
-	" the method has a duplicate in MyClassBeta's sibling (MyClassBetaSibling), therefore the condition fails "
+	"this is a simple method without any super sends, so we are good"
 	self assert: cond check
 ]
 
@@ -43,7 +43,7 @@ ReMethodsSendNoSupersendsTest >> testMethodSendingMessageToSuper [
 			class: myClassBeta
 		   targetSuperclass: myClassAlpha
 		   selectors: { #methodWithSuperSend }.
-		
-	" the method has a duplicate in MyClassBeta's sibling (MyClassBetaSibling), therefore the condition fails "
+
+	"methodWithSuperSend sends a super to target superclass, if we would pull this up, behavior may change"
 	self deny: cond check
 ]
