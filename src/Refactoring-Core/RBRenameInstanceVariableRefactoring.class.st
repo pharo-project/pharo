@@ -129,6 +129,8 @@ RBRenameInstanceVariableRefactoring >> removeOldAccessors [
 	oldAccessors := (class allSelectors
 		select: [ :each | each = variableName asSymbol or: [ each = (variableName , ':') asSymbol ] ]
 		thenCollect: [ :each | class methodFor: each ]) asOrderedCollection.
+	"If we didn't find accessors, we will not add them later and rename references"
+	oldAccessors ifEmpty: [ renameAccessors := false ].
 	oldAccessors do: [ :each |
 		self generateChangesFor:
 			(RBRemoveMethodTransformation selector: each selector from: class) ]
