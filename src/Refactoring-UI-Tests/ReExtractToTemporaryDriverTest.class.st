@@ -14,7 +14,7 @@ ReExtractToTemporaryDriverTest >> setUpMocksOn: driver [
     
     dialog 
         on: #variableName
-        respond: (RBArgumentName name: 'temp').
+        respond: ('temp').
     
     driver requestDialog: dialog.
     
@@ -34,7 +34,7 @@ ReExtractToTemporaryDriverTest >> testExtractToTemporaryExpectChanges [
 	driver := ReExtractToTemporaryDriver new
 					scopes: { rbclasses };
 					extract: (52 to: 73)
-		         from: #noMoveDefinition
+		         from: #caller2
 		         in: RBClassDataForRefactoringTest.
 
 	self setUpDriver: driver.
@@ -63,7 +63,7 @@ ReExtractToTemporaryDriverTest >> testFailureInvalidVariableName [
     dialog := MockObject new.
     dialog 
         on: #variableName
-        respond: (RBArgumentName name: 'collection').
+        respond: ('collection').
     driver requestDialog: dialog.
     requestClass := MockObject new.
     requestClass
@@ -90,7 +90,7 @@ ReExtractToTemporaryDriverTest >> testFailureNonExistantSelector [
 	dialog := MockObject new.
     dialog 
         on: #variableName
-        respond: (RBArgumentName name: 'asdf').
+        respond: ('asdf').
     driver requestDialog: dialog.
     requestClass := MockObject new.
     requestClass

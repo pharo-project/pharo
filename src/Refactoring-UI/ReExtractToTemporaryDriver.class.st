@@ -24,7 +24,7 @@ ReExtractToTemporaryDriver >> changes [
 { #category : 'resources' }
 ReExtractToTemporaryDriver >> configureRefactoring [
 
-	refactoring := RBExtractToTemporaryRefactoring 
+	refactoring := RBExtractToTemporaryRefactoring
 							extract: sourceInterval
 							from: selector
 							in: class
@@ -35,7 +35,7 @@ ReExtractToTemporaryDriver >> extract: anInterval from: aSelector in: aClass [
 
 	class := RBNamespace new classObjectFor: aClass.
 	selector := aSelector.
-	sourceInterval := anInterval
+	sourceInterval := anInterval.
 ]
 
 { #category : 'instance creation' }
@@ -65,7 +65,7 @@ ReExtractToTemporaryDriver >> requestDialogWith: variableName [
 ReExtractToTemporaryDriver >> requestVariableName [
 
 	| dialog variableName|
-	variableName := RBArgumentName name: 'newVariableName'.
+	variableName := 'newVariableName'.
 	dialog := self requestDialogWith: variableName.
 	dialog ifNil: [ shouldEscape := true. ^ self ].
 	
@@ -82,7 +82,7 @@ ReExtractToTemporaryDriver >> runRefactoring [
 	newVariableName := self requestVariableName.
 	refactoring extract: sourceInterval to: newVariableName from: selector in: class.
 	shouldEscape ifTrue: [ ^ self ].
-	refactoring preconditionValidInstVarName check ifFalse: [ ^ self].
+	refactoring preconditionValidInstVarName check ifFalse: [ ^ self ].
 	refactoring preconditionCheckVariableName check ifFalse: [ ^ self ].
 	
 	self applyChanges

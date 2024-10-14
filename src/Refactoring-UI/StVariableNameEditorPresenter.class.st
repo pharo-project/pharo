@@ -73,6 +73,15 @@ StVariableNameEditorPresenter >> defaultLayout [
 		yourself
 ]
 
+{ #category : 'simple dialog helpers' }
+StVariableNameEditorPresenter >> inform: aString [
+
+	^ self application newInform
+		title: aString;
+		acceptLabel: 'Got it !';
+		openDialog
+]
+
 { #category : 'initialization' }
 StVariableNameEditorPresenter >> initializeDialogWindow: aModalPresenter [
 
@@ -114,6 +123,17 @@ StVariableNameEditorPresenter >> request: aString initialAnswer: aSecondString [
 			label: aString;
 			text: aSecondString;
 			openModal
+]
+
+{ #category : 'accessing - model' }
+StVariableNameEditorPresenter >> setModelBeforeInitialization: aRBVariableName [
+	variableName := aRBVariableName
+]
+
+{ #category : 'printing' }
+StVariableNameEditorPresenter >> showError: aString [
+
+	errorLabel label: aString
 ]
 
 { #category : 'initialization' }

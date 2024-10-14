@@ -73,10 +73,10 @@ RBExtractToTemporaryRefactoring >> constructAssignmentFrom: aNode [
 ]
 
 { #category : 'instance creation' }
-RBExtractToTemporaryRefactoring >> extract: aSelector from: anInterval in: aClass [ 
+RBExtractToTemporaryRefactoring >> extract: anInterval from: aSelector in: aClass [ 
 	class := self classObjectFor: aClass.
 	selector := aSelector.
-	sourceInterval := anInterval
+	sourceInterval := anInterval.
 ]
 
 { #category : 'initialization' }
