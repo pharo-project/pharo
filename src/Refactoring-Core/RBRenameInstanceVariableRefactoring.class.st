@@ -74,10 +74,7 @@ RBRenameInstanceVariableRefactoring >> applicabilityPreconditions [
 
 	^ {
 		  (ReIsValidInstanceVariableName name: newName).
-		  (ReDefinesInstanceVariableCondition
-			   classNamed: class name
-			   inModel: self model
-			   instanceVariables: { variableName }).
+		  self preconditionDirectlyDefinesVariable.
 		  (ReIsVariableNotDefinedInHierarchy name: newName class: class).
 		  (ReNameIsGlobalCondition new model: self model className: newName)
 			  not }
@@ -108,6 +105,15 @@ RBRenameInstanceVariableRefactoring >> newName [
 { #category : 'accessing' }
 RBRenameInstanceVariableRefactoring >> newName: anObject [
 	newName := anObject
+]
+
+{ #category : 'as yet unclassified' }
+RBRenameInstanceVariableRefactoring >> preconditionDirectlyDefinesVariable [
+
+	^ ReDefinesInstanceVariableCondition
+			   classNamed: class name
+			   inModel: self model
+			   instanceVariables: { variableName }
 ]
 
 { #category : 'transforming' }
