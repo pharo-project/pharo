@@ -7,6 +7,19 @@ Class {
 }
 
 { #category : 'failure tests' }
+RBPullUpMethodRefactoringTest >> testWarnDoesntPullUpReferencesInstVar [
+
+	| refactoring class |
+	class := model classNamed:
+		         ('RBTransformation' , 'RuleTestData1') asSymbol.
+	refactoring := RePullUpMethodRefactoring
+		               model: model
+		               pullUp: #( #foo )
+		               from: class.
+	self shouldWarn: refactoring
+]
+
+{ #category : 'failure tests' }
 RBPullUpMethodRefactoringTest >> testWarnWhenPullUpWillOverrideMethodFromSuperclass [
 
 	model defineClass: [ :aBuilder |

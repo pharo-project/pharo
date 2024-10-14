@@ -254,20 +254,3 @@ RBPullUpMethodParametrizedTest >> testPullUpReferencesInstVar [
 	self deny: (class directlyDefinesMethod: #foo).
 	self assert: (class directlyDefinesInstanceVariable: #foo)
 ]
-
-{ #category : 'failure tests' }
-RBPullUpMethodParametrizedTest >> testWarnDoesntPullUpReferencesInstVar [
-
-	| refactoring class |
-	rbClass = RBPullUpMethodTransformation ifTrue: [ " RBPullUpMethodTransformation shouldn't warn when instance variables are referenced "
-		self skip ].
-	
-	class := model classNamed:
-		         ('RBTransformation' , 'RuleTestData1') asSymbol.
-	refactoring := self
-		               createRefactoringWithModel: model
-		               andArguments: {
-				               #( #foo ).
-				               class }.
-	[ self shouldWarn: refactoring ] valueSupplyingAnswer: false
-]
