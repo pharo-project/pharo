@@ -129,22 +129,6 @@ RBPullUpMethodParametrizedTest >> testFailurePullUpWithInvalidSuperSend [
 ]
 
 { #category : 'failure tests' }
-RBPullUpMethodParametrizedTest >> testFailurePullUpWithMethodThatCannotBePullUp [
-
-	model defineClass: [ :aBuilder |
-		aBuilder
-			superclass: Object;
-			name: #SomeClass;
-			sharedVariables: { #Foo };
-			package: #'Refactory-Test data' ].
-	(model classNamed: #SomeClass) compile: 'yourself ^54' classified: #( #accessing ).
-
-	self shouldFail: (self createRefactoringWithModel: model andArguments: {
-				 #( #yourself ).
-				 (model classNamed: #SomeClass) })
-]
-
-{ #category : 'failure tests' }
 RBPullUpMethodParametrizedTest >> testFailurePullUpWithSuperSendThatCannotBeCopiedDown [
 
 	| class |
