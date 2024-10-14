@@ -174,7 +174,7 @@ RBInlineMethodRefactoring >> compileMethod [
 	class compileTree: sourceParseTree
 ]
 
-{ #category : 'text selection' }
+{ #category : 'only for testing' }
 RBInlineMethodRefactoring >> findFirstOccurrenceOf: searchedString in: textToSearchIn [
 	"Return the first index of aString in textToSearchIn "
 	| firstIndex |
@@ -222,7 +222,7 @@ RBInlineMethodRefactoring >> inlineSelector [
 	^ sourceMessage selector
 ]
 
-{ #category : 'initialization' }
+{ #category : 'only for testing' }
 RBInlineMethodRefactoring >> inlineSource: messageSendSource fromMethod: aSelector inClass: aClassName [
 	
 	sourceSelector := aSelector.
@@ -482,7 +482,7 @@ RBInlineMethodRefactoring >> rewriteInlinedTree [
 				addSelfReturn]
 ]
 
-{ #category : 'initialization' }
+{ #category : 'only for testing' }
 RBInlineMethodRefactoring >> sourceIntervalForMessageSend: messageSendSource [ 
 
 	| rbMethod start |
