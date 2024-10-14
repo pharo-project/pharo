@@ -140,6 +140,7 @@ ReRenameMethodRefactoring >> newNameDoesNotRequireRefactoringPrecondition [
 { #category : 'private' }
 ReRenameMethodRefactoring >> parseTreeRewriterInstance [
 
+	self flag: #'dead code - double check if it is lost during the refactoring'.
 	^ self hasPermutedArguments
 		  ifTrue: [ self parseTreeRewriterClass new ]
 		  ifFalse: [
