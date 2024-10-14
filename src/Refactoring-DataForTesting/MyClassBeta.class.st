@@ -80,7 +80,7 @@ MyClassBeta >> methodReferencingSharedVariableFromSuperclass [
 { #category : 'dummy methods' }
 MyClassBeta >> methodWithSuperSend [
 	"I have the same implementation that my superclass. One of my sibling has a different definition."
-	^ super class
+	^ super methodWithSuperSend
 ]
 
 { #category : 'dummy methods' }

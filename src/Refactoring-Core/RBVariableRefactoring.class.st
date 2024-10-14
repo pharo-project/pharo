@@ -30,7 +30,8 @@ RBVariableRefactoring class >> model: aRBSmalltalk variable: aVarName class: aCl
 { #category : 'instance creation' }
 RBVariableRefactoring class >> variable: aVarName class: aClass [
 	^ self new
-		variable: aVarName class: aClass
+		variable: aVarName class: aClass;
+		yourself
 ]
 
 { #category : 'initialization' }
