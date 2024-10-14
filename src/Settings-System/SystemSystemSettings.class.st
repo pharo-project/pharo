@@ -17,9 +17,9 @@ SystemSystemSettings class >> systemSettingOn: aBuilder [
 		description: 'Settings related to Tools'.
 
 	(aBuilder group: #SCM)
-		label: 'Software Configuration Management';
+		label: 'SCM';
 		parent: #tools;
-		description: 'Settings related to version management and code sharing'.
+		description: 'Settings related to Software Configuration Management (version management and code sharing)'.
 
 	(aBuilder group: #pharoSystem)
 		label: 'System';
