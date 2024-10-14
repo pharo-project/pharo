@@ -1,33 +1,21 @@
 "
-It provides a presenter for editing a method name. The editor also handles arguments and currently can:
+It provides a presenter for editing a variable name. The editor ensures the entered variable name is non-empty.
 
-- Add an argument by clicking in `+` button. 
-- Remove an argument (currently selecting the argument, right-click to bring a contextual menu and then choose `Remove` option).
-- Re-order arguments by clicking on each argument and using up and down arrows.
+Additionally, it provides options to handle validation and user interaction, such as:
+	• Entering a variable name in the provided input field.
+	• Validating the variable name to ensure it is not empty.
+	• Confirming the variable name input using the 'Rename' button or keyboard shortcut (Enter).
+	• Cancelling the operation using the 'Cancel' button or the 'Escape'
 
 ## Example
 
-To edit a method with one argument:
+To edit a variable name, use the following snippet:
 ```
-StMethodNameEditorPresenter
-	openOn: (RBMethodName
-		selector: (ObjectMockForTest >> #variable:) selector
-		arguments: #(#arg1))
-		canRenameArgs: true
-		canRemoveArgs: true
-		canAddArgs: true.
+StVariableNameEditorPresenter
+	openOn: ('exampleName').
 ```
 
-To edit a method without arguments:
-```
-StMethodNameEditorPresenter
-	openOn: (RBMethodName
-		selector: (ObjectMockForTest >> #variable) selector
-		arguments: #())
-		canRenameArgs: true
-		canRemoveArgs: true
-		canAddArgs: true.
-```
+This will open the variable name editor with the specified name pre-filled in the input field.
 "
 Class {
 	#name : 'StVariableNameEditorPresenter',
@@ -106,7 +94,7 @@ StVariableNameEditorPresenter >> renameVariableAndClose: presenter [
     variable := variableInput text.
     variable isEmptyOrNil ifTrue: [
         self showError: 'Variable name cannot be empty'.
-        ^ CmdCommandAborted signal ].
+		  ^ self ].
 
 	^ [ variableName
 			newVariableName: variableInput text.

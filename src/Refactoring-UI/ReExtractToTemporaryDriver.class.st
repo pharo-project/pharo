@@ -38,15 +38,6 @@ ReExtractToTemporaryDriver >> extract: anInterval from: aSelector in: aClass [
 	sourceInterval := anInterval.
 ]
 
-{ #category : 'instance creation' }
-ReExtractToTemporaryDriver >> extract: anInterval to: aString from: aSelector in: aClass [
-
-	class := RBNamespace new classObjectFor: aClass.
-	selector := aSelector.
-	sourceInterval := anInterval.
-	newVariableName := aString
-]
-
 { #category : 'initialization' }
 ReExtractToTemporaryDriver >> initialize [ 
 	
@@ -80,7 +71,7 @@ ReExtractToTemporaryDriver >> runRefactoring [
 	refactoring prepareForExecution.
 	
 	newVariableName := self requestVariableName.
-	refactoring extract: sourceInterval to: newVariableName from: selector in: class.
+	refactoring extractToVariable: newVariableName.
 	shouldEscape ifTrue: [ ^ self ].
 	refactoring preconditionValidInstVarName check ifFalse: [ ^ self ].
 	refactoring preconditionCheckVariableName check ifFalse: [ ^ self ].

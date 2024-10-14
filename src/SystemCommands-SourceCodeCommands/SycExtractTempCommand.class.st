@@ -45,7 +45,6 @@ SycExtractTempCommand >> execute [
 
 	ReExtractToTemporaryDriver new
 		extract: sourceNode sourceInterval
-		to: tempName
 		from: method selector
 		in: method origin;
 		scopes: toolContext refactoringScopes; runRefactoring
@@ -64,7 +63,6 @@ SycExtractTempCommand >> prepareFullExecutionInContext: aSourceCodeContext [
 		request: 'New temp name'
 		initialAnswer: ''
 		title: 'Extract code to temp variable'.
-	tempName isEmptyOrNil ifTrue: [ CmdCommandAborted signal ].
 	
 	toolContext := aSourceCodeContext
 ]

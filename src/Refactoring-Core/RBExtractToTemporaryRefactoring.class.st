@@ -79,11 +79,16 @@ RBExtractToTemporaryRefactoring >> extract: anInterval from: aSelector in: aClas
 	sourceInterval := anInterval.
 ]
 
-{ #category : 'initialization' }
-RBExtractToTemporaryRefactoring >> extract: anInterval to: aString from: aSelector in: aClass [
+{ #category : 'instance creation' }
+RBExtractToTemporaryRefactoring >> extract: anInterval to: aString from: aSelector in: aClass [ 
 	class := self classObjectFor: aClass.
 	selector := aSelector.
 	sourceInterval := anInterval.
+	newVariableName := aString
+]
+
+{ #category : 'initialization' }
+RBExtractToTemporaryRefactoring >> extractToVariable: aString [
 	newVariableName := aString
 ]
 

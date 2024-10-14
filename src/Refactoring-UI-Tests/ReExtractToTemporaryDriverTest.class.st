@@ -48,7 +48,7 @@ ReExtractToTemporaryDriverTest >> testExtractToTemporaryExpectChanges [
 ]
 
 { #category : 'tests' }
-ReExtractToTemporaryDriverTest >> testFailureInvalidVariableName [
+ReExtractToTemporaryDriverTest >> testFailureInvalidVariableNameWhenVariableIsAlreadyTemporary [
 
 	| driver rbclasses dialog requestClass|
 	rbclasses := RBClassEnvironment classes: { RBClassDataForRefactoringTest }.
