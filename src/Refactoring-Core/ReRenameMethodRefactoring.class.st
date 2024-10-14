@@ -122,6 +122,11 @@ ReRenameMethodRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
 	self renameArgumentsIn: parseTree
 ]
 
+{ #category : 'instance creation' }
+ReRenameMethodRefactoring >> newName: aString [ 
+	newSelector := aString.
+]
+
 { #category : 'preconditions' }
 ReRenameMethodRefactoring >> newNameDoesNotRequireRefactoringPrecondition [
 
