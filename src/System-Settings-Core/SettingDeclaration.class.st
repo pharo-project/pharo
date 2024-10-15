@@ -147,19 +147,23 @@ SettingDeclaration >> emptyList [
 
 { #category : 'export' }
 SettingDeclaration >> exportSettingAction [
-	| targetSymbol currentValue |
+	"Export settings for those configured with a target <Symbol>. Otherwise we ignore the export for now"
 
-	targetSymbol := self target isSymbol
-						ifTrue: [ self target ]
-						ifFalse: [ self target name asSymbol ].
+	^ (self targetSymbolOrObject isSymbol and: [
+		   self hasDefault not or: [
+			   self default ~= self findCurrentSettingValue ] ])
+		  ifTrue: [ self startupAction ]
+		  ifFalse: [ "We do nothing" nil ]
+]
 
-	currentValue := self targetSelector
-						ifNil: [ (Smalltalk at: targetSymbol) perform: self getSelector ]
-						ifNotNil: [:s | ((Smalltalk at: targetSymbol) perform: s) perform: self getSelector].
+{ #category : 'export' }
+SettingDeclaration >> findCurrentSettingValue [
 
-	^ (self hasDefault not or: [ (self default = currentValue) not ])
-		ifTrue: [ self startupAction ]
-		ifFalse: [ "We do nothing" nil ]
+	| targetSymbolOrObject |
+	targetSymbolOrObject := self targetSymbolOrObject.
+	^ self targetSelector
+		ifNil: [ (Smalltalk at: targetSymbolOrObject) perform: self getSelector ]
+		ifNotNil: [ : s | ((Smalltalk at: targetSymbolOrObject) perform: s) perform: self getSelector].
 ]
 
 { #category : 'accessing' }
@@ -542,30 +546,39 @@ SettingDeclaration >> settingStoreOn: aStream [
 
 { #category : 'export' }
 SettingDeclaration >> startupAction [
-	"I assume here that the receiver is always a class"
+	"Assume that the receiver is always a class"
 
-	 | targetSymbol currentValue |
-
-	targetSymbol := self target isSymbol
-						ifTrue: [ self target ]
-						ifFalse: [ self target name asSymbol ].
-
-	currentValue := self targetSelector
-						ifNil: [ (Smalltalk at: targetSymbol) perform: self getSelector ]
-						ifNotNil: [:s | ((Smalltalk at: targetSymbol) perform: s) perform: self getSelector].
 	^ StartupAction
 		name: self label
-		code: (String streamContents: [:s |
-					self targetSelector ifNotNil: [ s << '(' ].
-					s << '(Smalltalk at: '.
-					targetSymbol asSymbol printOn: s.
-					self targetSelector ifNotNil: [:ts | s << ') perform: '. ts printOn: s ].
-					s << ') perform: '.
-					self setSelector asSymbol printOn: s.
-					s << ' with: ('.
-					currentValue settingStoreOn: s.
-					s <<')' ])
+		code: self startupActionCode
 		runOnce: true
+]
+
+{ #category : 'export' }
+SettingDeclaration >> startupActionCode [
+
+	| currentValue |
+	currentValue := self findCurrentSettingValue.
+	^ String streamContents: [ :s |
+		  self targetSelector ifNotNil: [ s << '(' ].
+		  s << '(Smalltalk at: '.
+		  self targetSymbolOrObject asSymbol printOn: s.
+		  self targetSelector ifNotNil: [ :ts |
+			  s << ') perform: '.
+			  ts printOn: s ].
+		  s << ') perform: '.
+		  self setSelector asSymbol printOn: s.
+		  s << ' with: ('.
+		  currentValue settingStoreOn: s.
+		  s << ')' ]
+]
+
+{ #category : 'export' }
+SettingDeclaration >> targetSymbolOrObject [
+
+	^ self target isSymbol
+		  ifTrue: [ self target ]
+		  ifFalse: [ self target exportSettingAction ]
 ]
 
 { #category : 'accessing' }

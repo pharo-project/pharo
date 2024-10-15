@@ -58,6 +58,12 @@ Class {
 	#tag : 'Objects'
 }
 
+{ #category : 'export' }
+Object class >> exportSettingAction [
+	
+	^ self
+]
+
 { #category : 'documentation' }
 Object class >> howToModifyPrimitives [
 	"You are allowed to write methods which specify primitives, but please use
@@ -810,6 +816,12 @@ Object >> explicitRequirement [
 	[ sender return: (self perform: sender selector withArguments: sender arguments inSuperclass: sender methodClass superclass) ]
 		on: MessageNotUnderstood
 		do: [ self error: 'Explicitly required method' ]
+]
+
+{ #category : 'export' }
+Object >> exportSettingAction [
+
+	^ self
 ]
 
 { #category : 'finalization' }
