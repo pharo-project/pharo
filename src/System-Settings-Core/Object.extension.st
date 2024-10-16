@@ -15,5 +15,5 @@ Object class >> exportSettingAction [
 { #category : '*System-Settings-Core' }
 Object >> exportSettingAction [
 
-	^ self
+	^ self class exportSettingAction
 ]
