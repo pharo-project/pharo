@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'building-menu' }
-DAMethodImplementationNode >> addMenuEntriesOn: anActionGroup [
+DAMethodImplementationNode >> addMenuActionsOn: anActionGroup [
 	| method |
 	
 	method := self content.

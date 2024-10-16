@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'building-menu' }
-DACycleNode >> addMenuEntriesOn: aMenu [
+DACycleNode >> addMenuActionsOn: anActionGroup [
 	"no menu"
 ]
 
