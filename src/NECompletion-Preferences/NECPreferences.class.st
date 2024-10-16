@@ -20,7 +20,8 @@ Class {
 		'popupShowWithShortcut',
 		'smartCharactersWithSingleSpace',
 		'smartCharactersWithDoubleSpace',
-		'showCompletionDetails'
+		'showCompletionDetails',
+		'overwriteAutocompletedCharacters'
 	],
 	#category : 'NECompletion-Preferences',
 	#package : 'NECompletion-Preferences'
@@ -64,6 +65,12 @@ NECPreferences class >> caseSensitive: aBoolean [
 { #category : 'defaults' }
 NECPreferences class >> defaultBackgroundColor [
 	^ self theme menuColor
+]
+
+{ #category : 'defaults' }
+NECPreferences class >> defaultOverwriteAutocompletedCharacters [
+
+	^ false
 ]
 
 { #category : 'defaults' }
@@ -142,6 +149,16 @@ NECPreferences class >> initialize [
 	popupAutomaticDelay := self defaultPopupDelay.
 	showCompletionDetails := self defaultShowCompletionDetails.
 	NECEntry spaceAfterCompletion: true
+]
+
+{ #category : 'accessing' }
+NECPreferences class >> overwriteAutocompletedCharacters [
+	^ overwriteAutocompletedCharacters
+]
+
+{ #category : 'accessing' }
+NECPreferences class >> overwriteAutocompletedCharacters: aBoolean [
+	overwriteAutocompletedCharacters := aBoolean
 ]
 
 { #category : 'accessing' }
@@ -236,7 +253,10 @@ NECPreferences class >> settingsOn: aBuilder [
 						label: 'Smart Characters with Double Space';
 						default: '[]{}';
 				 		description: 'Enumerate the characters which are automatically inserted with a two spaces in between.'.
-					(aBuilder setting: #popupShowAutomatic)
+					(aBuilder setting: #overwriteAutocompletedCharacters)
+						label: 'Overwrite autocompleted characters';
+						default: false;
+				 		description: 'When you type a character that has been auto-completed, the editor should not insert it again but instead overwrite the existing one.'.					(aBuilder setting: #popupShowAutomatic)
 						default: self defaultPopupShowAutomatic;
 						label: 'Popup is automatic'.
 					(aBuilder setting: #popupAutomaticDelay)
