@@ -70,6 +70,12 @@ RBRenameArgumentOrTemporaryRefactoring >> class: aClass selector: aSelector inte
 	newName := aString
 ]
 
+{ #category : 'accessing' }
+RBRenameArgumentOrTemporaryRefactoring >> newName: aString [
+
+	newName := aString
+]
+
 { #category : 'tranforming' }
 RBRenameArgumentOrTemporaryRefactoring >> privateTransform [
 	| definingNode variableNode |
@@ -92,6 +98,12 @@ RBRenameArgumentOrTemporaryRefactoring >> renameNode: aParseTree [
 	(aParseTree allDefinedVariables includes: newName)
 		ifTrue: [ self refactoringError: newName asString , ' is already defined' ].
 	(self parseTreeRewriterClass rename: oldName to: newName) executeTree: aParseTree
+]
+
+{ #category : 'accessing' }
+RBRenameArgumentOrTemporaryRefactoring >> sourceClass [
+
+	^ class
 ]
 
 { #category : 'storing' }

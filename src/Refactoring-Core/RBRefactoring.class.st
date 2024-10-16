@@ -168,11 +168,11 @@ RBRefactoring >> safeMethodNameFor: aClass basedOn: aString [
 ]
 
 { #category : 'private' }
-RBRefactoring >> safeVariableNameFor: aClass temporaries: allTempVars basedOn: aString [
+RBRefactoring >> safeVariableNameFor: aClass temporaries: allTempAndArgs basedOn: aString [
 	| baseString i newString |
 	newString := baseString := aString.
 	i := 0.
-	[ (allTempVars includes: newString) or: [ aClass definesInstanceVariable: newString ] ]
+	[ (allTempAndArgs includes: newString) or: [ aClass definesInstanceVariable: newString ] ]
 		whileTrue: [
 			i := i + 1.
 			newString := baseString , i printString ].

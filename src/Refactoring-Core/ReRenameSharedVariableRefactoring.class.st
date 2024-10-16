@@ -62,7 +62,7 @@ ReRenameSharedVariableRefactoring >> newName: anObject [
 	newName := anObject
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'preconditions' }
 ReRenameSharedVariableRefactoring >> preconditionDirectlyDefinesVariable [
 
 	^ ReDirectlyDefinesSharedVariableCondition
