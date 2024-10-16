@@ -43,7 +43,7 @@ StVariableNameEditorPresenter >> connectPresenters [
 
 	variableInput
 		bindKeyCombination: Character cr asKeyCombination
-		toAction: [ :p | self renameVariableAndClose: self owner ];
+		toAction: [ :p | self extractToVariableAndClose: self owner ];
 
 		bindKeyCombination: Character escape asKeyCombination
 			toAction: [ self owner triggerCancelAction; close ]
@@ -57,60 +57,39 @@ StVariableNameEditorPresenter >> defaultLayout [
 		beColumnNotHomogeneous;
 		column: 2 expand: true;
 		build: [ :builder | builder
-			add: 'Variable name'; add: variableInput; nextRow ];
+			add: 'Variable name:'; add: variableInput; nextRow;
+			add: errorLabel; nextRow ];
 		yourself
 ]
 
-{ #category : 'simple dialog helpers' }
-StVariableNameEditorPresenter >> inform: aString [
+{ #category : 'action' }
+StVariableNameEditorPresenter >> extractToVariableAndClose: presenter [
 
-	^ self application newInform
-		title: aString;
-		acceptLabel: 'Got it !';
-		openDialog
+	 | variable |
+    variable := variableInput text.
+    variable isEmptyOrNil ifTrue: [
+    	self showError: 'Variable name cannot be empty. Please enter a variable name.'. ^ self ].
+	variableName := variable.
+	presenter 
+		beOk; 
+		close. 
 ]
 
 { #category : 'initialization' }
 StVariableNameEditorPresenter >> initializeDialogWindow: aModalPresenter [
 
 	aModalPresenter
-		initialExtent: 400 @ 200 ;
-		title: 'Variable name editor';	
+		initialExtent: 600 @ 300 ;
+		title: 'Variable name editor';
 		addButton: 'Cancel' do: [ :presenter | presenter beCancel; close ];
-		addDefaultButton: 'Rename' do: [ :presenter | self renameVariableAndClose: presenter ];
+		addDefaultButton: 'Extract' do: [ :presenter | self extractToVariableAndClose: presenter ];
 		whenOpenedDo: [ variableInput takeKeyboardFocus; selectAll ]
 ]
 
 { #category : 'initialization' }
 StVariableNameEditorPresenter >> initializePresenters [
-
-	variableInput := self newTextInput
-]
-
-{ #category : 'action' }
-StVariableNameEditorPresenter >> renameVariableAndClose: presenter [
-
-	 | variable |
-    variable := variableInput text.
-    variable isEmptyOrNil ifTrue: [
-        self showError: 'Variable name cannot be empty'.
-		  ^ self ].
-
-	^ [ variableName
-			newVariableName: variableInput text.
-		presenter 
-			beOk; 
-			close].
-]
-
-{ #category : 'action' }
-StVariableNameEditorPresenter >> request: aString initialAnswer: aSecondString [
-
-	^ self application newRequest
-			title: 'Information needed';
-			label: aString;
-			text: aSecondString;
-			openModal
+	variableInput := self newTextInput.
+	errorLabel := self newLabel
 ]
 
 { #category : 'accessing - model' }
@@ -120,19 +99,12 @@ StVariableNameEditorPresenter >> setModelBeforeInitialization: aRBVariableName [
 
 { #category : 'printing' }
 StVariableNameEditorPresenter >> showError: aString [
-
 	errorLabel label: aString
 ]
 
 { #category : 'initialization' }
 StVariableNameEditorPresenter >> updatePresenter [
-
-	variableInput text: variableName newVariableName.
-]
-
-{ #category : 'accessing - ui' }
-StVariableNameEditorPresenter >> variableInput [
-	^ variableInput 
+	variableInput text: variableName.
 ]
 
 { #category : 'accessing' }

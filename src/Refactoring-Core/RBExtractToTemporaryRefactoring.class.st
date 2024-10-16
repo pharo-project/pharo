@@ -37,13 +37,12 @@ RBExtractToTemporaryRefactoring class >> extract: anInterval to: aString from: a
 ]
 
 { #category : 'instance creation' }
-RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval to: aString from: aSelector in: aClass [
+RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval  from: aSelector in: aClass [
 	^ self new
 		model: aRBSmalltalk;
 		extract: anInterval
-			to: aString
-			from: aSelector
-			in: aClass;
+		from: aSelector
+		in: aClass;
 		yourself
 ]
 
@@ -121,9 +120,9 @@ RBExtractToTemporaryRefactoring >> parseTree [
 RBExtractToTemporaryRefactoring >> preconditionCheckVariableName [
     
     ^ ReCheckVariableNameCondition
-		class: class 
-      variableName: newVariableName 
-      parseTree: parseTree
+			class: class 
+  	   		variableName: newVariableName 
+      		parseTree: parseTree
 ]
 
 { #category : 'preconditions' }

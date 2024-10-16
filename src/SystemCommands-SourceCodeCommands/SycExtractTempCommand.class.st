@@ -58,11 +58,6 @@ SycExtractTempCommand >> isComplexRefactoring [
 { #category : 'execution' }
 SycExtractTempCommand >> prepareFullExecutionInContext: aSourceCodeContext [
 	super prepareFullExecutionInContext: aSourceCodeContext.
-
-	tempName := self morphicUIManager
-		request: 'New temp name'
-		initialAnswer: ''
-		title: 'Extract code to temp variable'.
 	
 	toolContext := aSourceCodeContext
 ]

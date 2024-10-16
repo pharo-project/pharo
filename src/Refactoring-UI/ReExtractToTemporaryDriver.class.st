@@ -25,6 +25,7 @@ ReExtractToTemporaryDriver >> changes [
 ReExtractToTemporaryDriver >> configureRefactoring [
 
 	refactoring := RBExtractToTemporaryRefactoring
+							model: model
 							extract: sourceInterval
 							from: selector
 							in: class
@@ -56,10 +57,9 @@ ReExtractToTemporaryDriver >> requestDialogWith: variableName [
 ReExtractToTemporaryDriver >> requestVariableName [
 
 	| dialog variableName|
-	variableName := 'newVariableName'.
+	variableName := 'enter a variable name'.
 	dialog := self requestDialogWith: variableName.
 	dialog ifNil: [ shouldEscape := true. ^ self ].
-	
 	^ dialog variableName
 ]
 
@@ -75,7 +75,7 @@ ReExtractToTemporaryDriver >> runRefactoring [
 	shouldEscape ifTrue: [ ^ self ].
 	refactoring preconditionValidInstVarName check ifFalse: [ ^ self ].
 	refactoring preconditionCheckVariableName check ifFalse: [ ^ self ].
-	
+	refactoring  checkPreconditions.
 	self applyChanges
 ]
 
