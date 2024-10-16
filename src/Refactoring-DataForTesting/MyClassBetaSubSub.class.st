@@ -6,7 +6,7 @@ Class {
 	#tag : 'StaticModel'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'dummy methods' }
 MyClassBetaSubSub >> overridenInSubclassAndNoWhereElse [
 
 	^ super overridenInSubclassAndNoWhereElse + 1
