@@ -107,7 +107,7 @@ RBRenameInstanceVariableRefactoring >> newName: anObject [
 	newName := anObject
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'preconditions' }
 RBRenameInstanceVariableRefactoring >> preconditionDirectlyDefinesVariable [
 
 	^ ReDefinesInstanceVariableCondition
