@@ -45,3 +45,9 @@ RBEquivalentMethodSubclassHolder >> someNumber [
 
 	^ 1
 ]
+
+{ #category : 'accessing' }
+RBEquivalentMethodSubclassHolder >> yourself [
+
+	^ self
+]

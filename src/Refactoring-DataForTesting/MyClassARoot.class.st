@@ -25,13 +25,13 @@ MyClassARoot class >> accessingFromClassSide [
 { #category : 'accessing' }
 MyClassARoot >> accessing [
 
-	^ instVarName1 
+	^ instVarName1
 ]
 
 { #category : 'accessing' }
 MyClassARoot >> accessingSharedVariable [
 
-	^ Shared1 
+	^ Shared1
 ]
 
 { #category : 'initialization' }

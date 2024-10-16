@@ -6,7 +6,7 @@ Class {
 	#tag : 'ForSharedPool'
 }
 
-{ #category : 'tests perform' }
+{ #category : 'tests - perform' }
 RBSharedPoolForTestData1 >> msg4 [
 
 	^ Var1
