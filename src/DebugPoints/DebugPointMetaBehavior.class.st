@@ -18,11 +18,11 @@ Class {
 { #category : 'adding' }
 DebugPointMetaBehavior >> addToDebugPoint: aDebugPoint [
 
-	aDebugPoint addSideEffectBehavior: self
+	aDebugPoint addMetaBehavior: self
 ]
 
 { #category : 'removing' }
 DebugPointMetaBehavior >> removeFromDebugPoint: aDebugPoint [
 
-	aDebugPoint removeSideEffectBehavior: self
+	aDebugPoint removeMetaBehavior: self
 ]

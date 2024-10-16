@@ -26,7 +26,7 @@ ClyAddWatchDebugPointCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 ClyAddWatchDebugPointCommand >> defaultMenuItemName [
-	^' Add Watch to: ',  sourceNode displaySourceCode
+	^' Watch ',  sourceNode displaySourceCode
 ]
 
 { #category : 'execution' }
