@@ -10,16 +10,48 @@ Class {
 }
 
 { #category : 'tests' }
-ReMethodsHaveNoSuperCallInSiblingsConditionTest >> testTargetClassIsTwoLevelsAboveAndSuperSendInSubclass [
+ReMethodsHaveNoSuperCallInSiblingsConditionTest >> testFailureWhenSiblingSendsSuperToTargetClass [
 
-	| model myClassAlpha myClassBetaSub cond |
-	model := self modelOnClasses: { MyClassAlpha . MyClassBeta. MyClassBetaSub . MyClassBetaSubSub }.
-	myClassAlpha := model classNamed: #MyClassAlpha. 
-	myClassBetaSub := model classNamed: #MyClassBetaSub.
+	| model target source cond |
+	model := self modelOnClasses: { MyClassAlpha . MyClassBeta. MyClassBetaSub . MyClassBetaSubSub . MyClassBetaSibling }.
+	target := model classNamed: #MyClassAlpha. 
+	source := model classNamed: #MyClassBeta.
 	
 	cond := ReMethodsHaveNoSuperCallInSiblingsCondition new
-			class: myClassBetaSub
-		   targetSuperclass: myClassAlpha
+			class: source
+		   targetSuperclass: target
+		   selectors: { #methodForSupersend }.
+
+	self deny: cond check
+]
+
+{ #category : 'tests' }
+ReMethodsHaveNoSuperCallInSiblingsConditionTest >> testTargetClassIsSuperclassAndSuperSendInSubclass [
+
+	| model target source cond |
+	model := self modelOnClasses: { MyClassAlpha . MyClassBeta. MyClassBetaSub . MyClassBetaSubSub . MyClassBetaSibling }.
+	target := model classNamed: #MyClassBeta. 
+	source := model classNamed: #MyClassBetaSub.
+	
+	cond := ReMethodsHaveNoSuperCallInSiblingsCondition new
+			class: source
+		   targetSuperclass: target
+		   selectors: { #overridenInSubclassAndNoWhereElse }.
+
+	self assert: cond check
+]
+
+{ #category : 'tests' }
+ReMethodsHaveNoSuperCallInSiblingsConditionTest >> testTargetClassIsTwoLevelsAboveAndSuperSendInSubclass [
+
+	| model target source cond |
+	model := self modelOnClasses: { MyClassAlpha . MyClassBeta. MyClassBetaSub . MyClassBetaSubSub . MyClassBetaSibling }.
+	target := model classNamed: #MyClassAlpha. 
+	source := model classNamed: #MyClassBetaSub.
+	
+	cond := ReMethodsHaveNoSuperCallInSiblingsCondition new
+			class: source
+		   targetSuperclass: target
 		   selectors: { #overridenInSubclassAndNoWhereElse }.
 
 	self assert: cond check
