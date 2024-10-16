@@ -9,7 +9,7 @@ Class {
 ReRenameSharedVariableDriverTest >> testInvalidNameFollowedByAValideOne [
 
 	| rbclasses driver requestDialog |
-	rbclasses := RBClassEnvironment classes: { MyClassARoot }.
+	rbclasses := RBClassEnvironment classes: { MyClassARoot . MySubAccessingSuperclassState }.
 	driver := ReRenameSharedVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #Shared1
@@ -28,32 +28,26 @@ ReRenameSharedVariableDriverTest >> testInvalidNameFollowedByAValideOne [
 { #category : 'tests' }
 ReRenameSharedVariableDriverTest >> testValidNameAndUndefinedVariable [
 
-	| rbclasses driver requestDialog |
-	self skip.
-	rbclasses := RBClassEnvironment classes: { MyClassARoot }.
+	| rbclasses driver |
+	rbclasses := RBClassEnvironment classes: { MyClassARoot . MySubAccessingSuperclassState }.
 	driver := ReRenameSharedVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #Shared3
 		          for: MyClassARoot.
 	"Variable `Shared3` is not defined in `MyClassARoot`"
 	self setUpDriver: driver.
-	requestDialog := MockObject new.
-	requestDialog on: #openModal respond: #Shared2.
-	requestDialog on: #openModal respond: #Shared277676.
-	requestDialog on: #title: respond: 'nothing'.
-	requestDialog on: #text: respond: 'nothing'.
-	driver requestDialog: requestDialog.
-
-	"self halt."
-	"It loops from here"
-	driver runRefactoring
+	
+	driver runRefactoring.
+	
+	"Nothing happened since the vairable does not exist and we stop immediately."
+	self assert: driver refactoring model changes changes size equals: 0
 ]
 
 { #category : 'tests' }
 ReRenameSharedVariableDriverTest >> testValidNameAndUnusedVariable [
 
 	| rbclasses driver requestDialog |
-	rbclasses := RBClassEnvironment classes: { MyClassARoot }.
+	rbclasses := RBClassEnvironment classes: { MyClassARoot . MySubAccessingSuperclassState }.
 	driver := ReRenameSharedVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #Shared2
@@ -74,7 +68,7 @@ ReRenameSharedVariableDriverTest >> testValidNameAndUnusedVariable [
 ReRenameSharedVariableDriverTest >> testValidNameAndUsedVariable [
 
 	| rbclasses driver requestDialog |
-	rbclasses := RBClassEnvironment classes: { MyClassARoot }.
+	rbclasses := RBClassEnvironment classes: { MyClassARoot . MySubAccessingSuperclassState }.
 	driver := ReRenameSharedVariableDriver new
 		          scopes: { rbclasses }
 		          variable: #Shared2
