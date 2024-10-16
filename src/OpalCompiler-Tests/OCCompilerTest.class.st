@@ -198,6 +198,15 @@ OCCompilerTest >> testNoShadowing [
 		^nil ]
 ]
 
+{ #category : 'tests' }
+OCCompilerTest >> testOptimizedToDo [
+	| stream results |
+	results := OrderedCollection new.
+	stream := #( 1 5 ) readStream.
+	stream next to: stream next do: [ :i | results add: i ].
+	self assertCollection: results  hasSameElements: #(1 2 3 4 5)
+]
+
 { #category : 'tests - shadowing' }
 OCCompilerTest >> testPseudoVariableShadowing [
 
