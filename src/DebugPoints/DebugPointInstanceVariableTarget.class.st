@@ -7,7 +7,8 @@ Class {
 	#name : 'DebugPointInstanceVariableTarget',
 	#superclass : 'DebugPointClassTarget',
 	#instVars : [
-		'accessStrategy'
+		'accessStrategy',
+		'targetClass'
 	],
 	#category : 'DebugPoints-Implementations',
 	#package : 'DebugPoints',
@@ -110,5 +111,11 @@ DebugPointInstanceVariableTarget >> removeFromMethod: aMethod for: aDebugPoint [
 { #category : 'accessing' }
 DebugPointInstanceVariableTarget >> targetClass [
 
-	^ self instanceVariable owningClass
+	^ targetClass ifNil: [ targetClass := self instanceVariable owningClass ]
+]
+
+{ #category : 'accessing' }
+DebugPointInstanceVariableTarget >> targetClass: anObject [
+
+	^ targetClass := anObject
 ]

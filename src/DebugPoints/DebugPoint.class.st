@@ -213,19 +213,6 @@ DebugPoint >> install [
 	self target install: self link
 ]
 
-{ #category : 'API' }
-DebugPoint >> instanceVariable: aSlot accessStrategy: aSymbol [
-
-	target := DebugPointInstanceVariableTarget new
-		          instanceVariable: aSlot;
-		          accessStrategy: aSymbol;
-		          yourself.
-
-	name := 'var_{1}_{2}' format: {
-			        aSlot name.
-			        aSymbol }
-]
-
 { #category : 'accessing' }
 DebugPoint >> link [
 
@@ -392,6 +379,20 @@ DebugPoint >> target [
 DebugPoint >> targetClass [
 
 	^ self target targetClass
+]
+
+{ #category : 'API' }
+DebugPoint >> targetClass: aClass instanceVariable: aSlot accessStrategy: aSymbol [
+
+	target := DebugPointInstanceVariableTarget new
+					 targetClass: aClass;
+		          instanceVariable: aSlot;
+		          accessStrategy: aSymbol;
+		          yourself.
+
+	name := 'var_{1}_{2}' format: {
+			        aSlot name.
+			        aSymbol }
 ]
 
 { #category : 'scope' }
