@@ -174,7 +174,7 @@ RBInlineMethodRefactoring >> compileMethod [
 	class compileTree: sourceParseTree
 ]
 
-{ #category : 'text selection' }
+{ #category : 'only for testing' }
 RBInlineMethodRefactoring >> findFirstOccurrenceOf: searchedString in: textToSearchIn [
 	"Return the first index of aString in textToSearchIn "
 	| firstIndex |
@@ -222,7 +222,7 @@ RBInlineMethodRefactoring >> inlineSelector [
 	^ sourceMessage selector
 ]
 
-{ #category : 'initialization' }
+{ #category : 'only for testing' }
 RBInlineMethodRefactoring >> inlineSource: messageSendSource fromMethod: aSelector inClass: aClassName [
 	
 	sourceSelector := aSelector.
@@ -444,10 +444,10 @@ RBInlineMethodRefactoring >> replaceArguments [
 	sourceMessage arguments reversed
 		with: inlineParseTree arguments reversed
 		do: [ :replacement :source |
-			self flag: #todo. "shouldInlineExpression can produce bogus transformations.
+			self flag: #todo. "shouldNotCreateExtraBindings can produce bogus transformations.
 			Mainly by evaluating multiple time expressions. We can fix this by ensuring that
 			binding creation is only done when the argument expression (or self) is used multiple times.
-			This will avoid that ProtectField refactoring uses shouldInlineExpression."
+			This will avoid that ProtectField refactoring uses shouldNotCreateExtraBindings."
 			(replacement isImmediateNode or: [ self shouldNotCreateExtraBindings: replacement newSource ])
 				ifTrue: [ self replaceArgument: source with: replacement ]
 				ifFalse: [ self addTemporary: source assignedTo: replacement ] ]
@@ -482,7 +482,7 @@ RBInlineMethodRefactoring >> rewriteInlinedTree [
 				addSelfReturn]
 ]
 
-{ #category : 'initialization' }
+{ #category : 'only for testing' }
 RBInlineMethodRefactoring >> sourceIntervalForMessageSend: messageSendSource [ 
 
 	| rbMethod start |

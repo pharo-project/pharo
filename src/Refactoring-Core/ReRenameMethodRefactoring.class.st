@@ -122,6 +122,11 @@ ReRenameMethodRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
 	self renameArgumentsIn: parseTree
 ]
 
+{ #category : 'instance creation' }
+ReRenameMethodRefactoring >> newName: aString [ 
+	newSelector := aString.
+]
+
 { #category : 'preconditions' }
 ReRenameMethodRefactoring >> newNameDoesNotRequireRefactoringPrecondition [
 
@@ -135,6 +140,7 @@ ReRenameMethodRefactoring >> newNameDoesNotRequireRefactoringPrecondition [
 { #category : 'private' }
 ReRenameMethodRefactoring >> parseTreeRewriterInstance [
 
+	self flag: #'dead code - double check if it is lost during the refactoring'.
 	^ self hasPermutedArguments
 		  ifTrue: [ self parseTreeRewriterClass new ]
 		  ifFalse: [

@@ -270,15 +270,14 @@ RBClass >> removeProtocolNamed: aString [
 
 { #category : 'variable accessing' }
 RBClass >> renameClassVariable: oldName to: newName around: aBlock [
+
 	self privateClassVariableNames
 		at: (self privateClassVariableNames indexOf: oldName asSymbol)
 		put: newName asSymbol.
 	^ self model
-		performChange: (changeFactory
-								renameClassVariable: oldName
-								to: newName
-								in: self)
-		around: aBlock
+		  perform: aBlock
+		  onlyWithChange:
+		  (changeFactory renameClassVariable: oldName to: newName in: self)
 ]
 
 { #category : 'accessing' }

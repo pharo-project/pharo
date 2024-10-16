@@ -60,7 +60,6 @@ RePullUpMethodRefactoring >> applicabilityPreconditions [
 			   class: targetSuperclass;
 			   subclassesList: { class name }).
 		  self preconditionNoReferencesToSharedVars.
-		  self preconditionNoOverrides.
 		  self preconditionNoSupersendsSent.
 		  self preconditionNoSupersendsReceived }
 ]
@@ -68,7 +67,8 @@ RePullUpMethodRefactoring >> applicabilityPreconditions [
 { #category : 'preconditions' }
 RePullUpMethodRefactoring >> breakingChangePreconditions [
 
-	^ { self preconditionNoReferencesToInstVars }
+	^ { self preconditionNoReferencesToInstVars .
+		 self preconditionNoOverrides }
 ]
 
 { #category : 'private' }
