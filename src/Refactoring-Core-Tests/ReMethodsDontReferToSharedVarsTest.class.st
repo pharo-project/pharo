@@ -20,7 +20,7 @@ ReMethodsDontReferToSharedVarsTest >> testMethodReferencingInstVarDefinedInItsOw
 	| myClassBeta cond |
 	myClassBeta := self model classNamed: #MyClassBeta.
 	
-	cond := ReMethodsDontReferToSharedVarsCondition new 
+	cond := ReMethodsDontReferToLocalSharedVarsCondition new 
 		class: myClassBeta selectors: { #methodReferencingSharedVarDefinedInItsDefiningClassAndOneInItsSuperclass }.
 		
 	" the method refers to and shared variable defined in its own defining class, therefore the condition fails "
@@ -32,7 +32,7 @@ ReMethodsDontReferToSharedVarsTest >> testMethodReferencingNoSharedVariables [
 	| myClassBeta cond |
 	myClassBeta := self model classNamed: #MyClassBeta.
 	
-	cond := ReMethodsDontReferToSharedVarsCondition new 
+	cond := ReMethodsDontReferToLocalSharedVarsCondition new 
 		class: myClassBeta selectors: { #methodForPullUp }.
 		
 	" the method does not refer to shared variables "
@@ -44,7 +44,7 @@ ReMethodsDontReferToSharedVarsTest >> testMethodRefersSharedVarDefinedInItsOwnCl
 	| myClassB cond |
 	myClassB := self model classNamed: #MyClassBeta.
 	
-	cond := ReMethodsDontReferToSharedVarsCondition new 
+	cond := ReMethodsDontReferToLocalSharedVarsCondition new 
 		class: myClassB selectors: { #methodReferencingSharedVariable }.
 		
 	" the method refers to a shared variable directly defined in MyClassBeta "
@@ -56,7 +56,7 @@ ReMethodsDontReferToSharedVarsTest >> testMethodRefersSharedVarDefinedInItsSuper
 	| myClassB cond |
 	myClassB := self model classNamed: #MyClassBeta.
 	
-	cond := ReMethodsDontReferToSharedVarsCondition new 
+	cond := ReMethodsDontReferToLocalSharedVarsCondition new 
 		class: myClassB selectors: { #methodReferencingSharedVariableFromSuperclass }.
 		
 	" the method refers to a shared variable defined in MyClassBeta's superclass "

@@ -504,8 +504,9 @@ SettingDeclaration >> realValue: anObject [
 
 { #category : 'accessing' }
 SettingDeclaration >> selector: aSymbol [
+
 	self getSelector: aSymbol.
-	self setSelector: (aSymbol, ':') asSymbol
+	self setSelector: aSymbol asMutator
 ]
 
 { #category : 'accessing' }

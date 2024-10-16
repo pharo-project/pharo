@@ -74,10 +74,7 @@ RBRenameInstanceVariableRefactoring >> applicabilityPreconditions [
 
 	^ {
 		  (ReIsValidInstanceVariableName name: newName).
-		  (ReDefinesInstanceVariableCondition
-			   classNamed: class name
-			   inModel: self model
-			   instanceVariables: { variableName }).
+		  self preconditionDirectlyDefinesVariable.
 		  (ReIsVariableNotDefinedInHierarchy name: newName class: class).
 		  (ReNameIsGlobalCondition new model: self model className: newName)
 			  not }
@@ -110,6 +107,15 @@ RBRenameInstanceVariableRefactoring >> newName: anObject [
 	newName := anObject
 ]
 
+{ #category : 'preconditions' }
+RBRenameInstanceVariableRefactoring >> preconditionDirectlyDefinesVariable [
+
+	^ ReDefinesInstanceVariableCondition
+			   classNamed: class name
+			   inModel: self model
+			   instanceVariables: { variableName }
+]
+
 { #category : 'transforming' }
 RBRenameInstanceVariableRefactoring >> privateTransform [
 	renameAccessors ifTrue: [
@@ -129,6 +135,8 @@ RBRenameInstanceVariableRefactoring >> removeOldAccessors [
 	oldAccessors := (class allSelectors
 		select: [ :each | each = variableName asSymbol or: [ each = (variableName , ':') asSymbol ] ]
 		thenCollect: [ :each | class methodFor: each ]) asOrderedCollection.
+	"If we didn't find accessors, we will not add them later and rename references"
+	oldAccessors ifEmpty: [ renameAccessors := false ].
 	oldAccessors do: [ :each |
 		self generateChangesFor:
 			(RBRemoveMethodTransformation selector: each selector from: class) ]

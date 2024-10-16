@@ -20,7 +20,7 @@ ReTestCaseShouldNotUseInitializeRule class >> checksClass [
 
 { #category : 'accessing' }
 ReTestCaseShouldNotUseInitializeRule class >> group [
-	^ 'Clean Code'
+	^ self cleanCodeGroup
 ]
 
 { #category : 'accessing' }

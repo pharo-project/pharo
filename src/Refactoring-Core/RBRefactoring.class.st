@@ -168,11 +168,11 @@ RBRefactoring >> safeMethodNameFor: aClass basedOn: aString [
 ]
 
 { #category : 'private' }
-RBRefactoring >> safeVariableNameFor: aClass temporaries: allTempVars basedOn: aString [
+RBRefactoring >> safeVariableNameFor: aClass temporaries: allTempAndArgs basedOn: aString [
 	| baseString i newString |
 	newString := baseString := aString.
 	i := 0.
-	[ (allTempVars includes: newString) or: [ aClass definesInstanceVariable: newString ] ]
+	[ (allTempAndArgs includes: newString) or: [ aClass definesInstanceVariable: newString ] ]
 		whileTrue: [
 			i := i + 1.
 			newString := baseString , i printString ].
@@ -183,20 +183,6 @@ RBRefactoring >> safeVariableNameFor: aClass temporaries: allTempVars basedOn: a
 RBRefactoring >> transform [ 
 
 	self deprecated: 'Use privateTransform instead' transformWith: '`@rec transform' -> '`@rec privateTransform'
-]
-
-{ #category : 'private' }
-RBRefactoring >> uniqueMethodNameFor: anInteger [
-	| before after index name |
-	before := 'a'.
-	after := ''.
-	anInteger timesRepeat: [after := after , 'z:'].
-	index := 0.
-
-	[name := before , index printString , after.
-	(Symbol findInterned: name) isNotNil]
-			whileTrue: [index := index + 1].
-	^name asSymbol
 ]
 
 { #category : 'utilities' }

@@ -68,17 +68,21 @@ RBPullUpMethodTransformation >> buildTransformations [
 RBPullUpMethodTransformation >> checkBackReferencesTo: aSelector [
 
 	| definingClass pullUpParseTree |
-	definingClass := targetSuperclass whichClassIncludesSelector:
-		                 aSelector.
+	definingClass := targetSuperclass whichClassIncludesSelector: aSelector.
 	definingClass ifNil: [ ^ self ].
+	
 	pullUpParseTree := class parseTreeForSelector: aSelector.
+	
 	targetSuperclass allSubclasses do: [ :each |
 		each selectors do: [ :sel |
 			| parseTree |
+			
+			"Check if a subclass is doing a super call that will invoke the method in targetSuperclass or above"
 			parseTree := each parseTreeForSelector: sel.
 			(parseTree isNotNil and: [
 				 (parseTree superMessages includes: aSelector) and: [
 					 definingClass == (each whoDefinesMethod: aSelector) ] ])
+			
 				ifTrue: [
 					removeDuplicates := true.
 					(aSelector == sel and: [
@@ -252,7 +256,7 @@ RBPullUpMethodTransformation >> preconditionNoOverrides [
 { #category : 'preconditions' }
 RBPullUpMethodTransformation >> preconditionNoReferencesToSharedVars [
 
-	^ ReMethodsDontReferToSharedVarsCondition new
+	^ ReMethodsDontReferToLocalSharedVarsCondition new
 		  class: class
 		  selectors: selectors
 ]
@@ -260,7 +264,7 @@ RBPullUpMethodTransformation >> preconditionNoReferencesToSharedVars [
 { #category : 'preconditions' }
 RBPullUpMethodTransformation >> preconditionNoSupersendsReceived [
 
-	^ ReMethodsReceiveNoSupersendsCondition new
+	^ ReMethodsHaveNoSuperCallInSiblingsCondition new
 		  class: class
 		  targetSuperclass: targetSuperclass
 		  selectors: selectors
@@ -269,7 +273,7 @@ RBPullUpMethodTransformation >> preconditionNoSupersendsReceived [
 { #category : 'preconditions' }
 RBPullUpMethodTransformation >> preconditionNoSupersendsSent [
 
-	^ ReMethodsSendNoSupersendsCondition new
+	^ ReNoSupersendToTargetClassCondition new
 		  class: class
 		  targetSuperclass: targetSuperclass
 		  selectors: selectors

@@ -237,7 +237,9 @@ PragmaSetting >> labelMorphFor: aContainer [
 
 { #category : 'accessing' }
 PragmaSetting >> name [
-	^ name ifNil: [super name] ifNotNil: [name]
+	^ name 
+		ifNil: [ 'Unnamed ' , self class name ] 
+		ifNotNil: [ name ]
 ]
 
 { #category : 'accessing' }
@@ -308,6 +310,7 @@ PragmaSetting >> target [
 
 { #category : 'accessing' }
 PragmaSetting >> target: anObject [
+
 	target := anObject
 ]
 

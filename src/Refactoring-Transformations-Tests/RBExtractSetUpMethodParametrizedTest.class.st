@@ -80,7 +80,6 @@ RBExtractSetUpMethodParametrizedTest >> testExtractSetUpAndConvertTempsToInstVar
 { #category : 'tests' }
 RBExtractSetUpMethodParametrizedTest >> testExtractSetUpAndConvertTwoTempsToInstVars [
 	| class refactoring |
-	self skip.
 	refactoring := self createRefactoringWithArguments: { (47 to: 109) . #testExtractSetupExample6 . RBTestAsDataForExtractSetupTransformationTest }.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #RBTestAsDataForExtractSetupTransformationTest.
@@ -103,11 +102,6 @@ RBExtractSetUpMethodParametrizedTest >> testExtractSetUpAndConvertTwoTempsToInst
 	aNumber := 4.
 	self assert: aString2 isNotEmpty.').
 	
-	"I do not get why the following is not working since the expression has been correctly removed from testExtractSetupExample6
-	and in addition the tests with a single iv works and we have the two instance variables. 
-	After trying during too long, I saw that the options of the refactorings can be changing (nautilus refactoring defines others and these are the ones
-	used interactively. In addition randomly I got some do you want to search in the complete hierarchy."
-	
 	self 
 		assert: (class parseTreeForSelector: #setUp) 
 		equals: (self parseMethod: 'setUp
@@ -115,58 +109,6 @@ RBExtractSetUpMethodParametrizedTest >> testExtractSetUpAndConvertTwoTempsToInst
 	aString2 := ''Some string''.
 	self someMethod.
 	aNumber := 4')
-]
-
-{ #category : 'tests' }
-RBExtractSetUpMethodParametrizedTest >> testExtractSetUpWorksWellInOtherMethod [
-	| class refactoring |
-	self skip.
-	 
-	"if we extract as Setup 
-		 aString2 := 'Some string'.
-		self someMethod.
-	from method testExtractSetupExample6
-	
-	we get effectively and correctly the expression removed from the other methods such as 
-	
-		testExtractSetupExample8
-
-		| aNumber |
-		""this is an example to see if the extracted as setup expressions are also extracted from this one too.""
-		aNumber := 4
-	
-	Now I do not succeed to convert this in a test.
-	So I skip it for now.
-	
-	"
-	refactoring := self createRefactoringWithArguments: { (47 to: 109) . #testExtractSetupExample6 . RBTestAsDataForExtractSetupTransformationTest }.
-	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #RBTestAsDataForExtractSetupTransformationTest.
-	self assert: (class instanceVariableNames includes: #aString2).
-	self assert: (class instanceVariableNames includes: #aNumber).
-	
-	"Pay attention that method body is created this way to support potential selector rename"
-	
-	self 
-		assert: (class parseTreeForSelector: #testExtractSetupExample6) 
-		equals: (self parseMethod: #testExtractSetupExample6 asString, Character cr asString,
-'self assert: aString2 isNotEmpty.
-	self deny: (aString2 , aNumber asString) isEmpty.
-	self assert: true').
-	
-	"no idea what the extraction is not executed in testExtractSetupExample8 because when trying it works.
-	This may be due to the fact that nautilus refactoring defines different options! "
-	self 
-		assert: (class parseTreeForSelector: #testExtractSetupExample8) 
-		equals: (self parseMethod: #testExtractSetupExample8 asString, Character cr asString,
-'	| aNumber |
-	"this is an example to see if the extracted as setup expressions are also extracted from this one too."
-	aNumber := 4').
-	
-	self assert: (class parseTreeForSelector: #setUp) equals: (self parseMethod: 'setUp
-	super setUp.
-	aString2 := ''Some string''.
-	self someMethod.')
 ]
 
 { #category : 'failure tests' }

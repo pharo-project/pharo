@@ -22,19 +22,13 @@ ReSettings class >> cleanUp [
 ReSettings class >> resetButtonSettingsOn: aBuilder [
 	<systemsettings>
 
-	(aBuilder group: #'resetRules')
+	(aBuilder button: #resetWithInform)
 		order: 10;
-		target: self;
+		target: ReRuleManager;
 		label: 'Rule cache';
 		parent: #qualityAssistant;
 		description: 'Renraku (the engine behind quality rules) caches the rule objects for performance boost. Here you can reset the cache, this may be useful if you''ve implemented a new rule and want to include it.';
-		dialog: [
-			SimpleButtonMorph new
-				target: ReRuleManager;
-				label: 'Reset rule cache';
-				actionSelector: #resetWithInform;
-				themeChanged;
-				yourself ]
+		buttonLabel: 'Reset'
 ]
 
 { #category : 'settings-accessing' }

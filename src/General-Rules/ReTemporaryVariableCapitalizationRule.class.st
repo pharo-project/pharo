@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 ReTemporaryVariableCapitalizationRule class >> group [
-	^ 'Style'
+	^ self styleGroup
 ]
 
 { #category : 'accessing' }

@@ -10,8 +10,6 @@ SycPullUpMethodCommand class >> methodContextMenuActivation [
 { #category : '*Calypso-SystemTools-Core' }
 SycPullUpMethodCommand class >> methodShortcutActivation [
 	
-	self flag: 'Uncomment when SycPushUpMethodCommand has been removed.'
-	"
 	<classAnnotation>
-	^CmdShortcutActivation by: $p meta, $u meta for: ClyMethod asCalypsoItemContext"
+	^CmdShortcutActivation by: $p meta, $u meta for: ClyMethod asCalypsoItemContext
 ]

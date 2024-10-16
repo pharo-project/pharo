@@ -49,7 +49,7 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 	     #'Refactoring-Critics' #'Commander-Core' #Reflectivity
 	     #'Reflectivity-Tools' #Shout 'HeuristicCompletion-Model'
 	     #VariablesLibrary #'Spec2-CommonWidgets' #'NewTools-Scopes'
-		  #'Traits-Tests' )
+		  #'Traits-Tests' 'NewTools-Scopes')
 ]
 
 { #category : 'known dependencies' }
@@ -65,7 +65,7 @@ SystemDependenciesTest >> knownIDEDependencies [
 
 	^ #( 'Spec2-CommonWidgets' #'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits'
 	     #'AI-Algorithms-Graph' 'DebugPoints' 'Microdown' 'Microdown-RichTextComposer'
-	     #'NewTools-Scopes' #'NewTools-Scopes-Editor' )
+	     #'NewTools-Scopes' #'Calypso-NavigationModel'  #'NewTools-Scopes-Editor' )
 ]
 
 { #category : 'known dependencies' }
@@ -128,7 +128,7 @@ SystemDependenciesTest >> knownUIDependencies [
 	"ideally this list should be empty"
 
 	^ #('AST-Core-Tests'  'Athens-Cairo' 'Athens-Core'
-	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'HeuristicCompletion-Model' 'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets')
+	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'HeuristicCompletion-Model' 'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets' 'NewTools-Scopes')
 ]
 
 { #category : 'accessing' }

@@ -24,7 +24,7 @@ SycPullUpMethodCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 SycPullUpMethodCommand >> defaultMenuItemName [
-	^'Pull up'
+	^'(R) Pull up'
 ]
 
 { #category : 'execution' }

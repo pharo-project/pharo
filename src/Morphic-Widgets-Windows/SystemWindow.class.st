@@ -1606,11 +1606,8 @@ SystemWindow >> postOpenInWorld: aWorld [
 { #category : 'opening' }
 SystemWindow >> preOpenInWorld: aWorld [
 	"This msg and its callees result in the window being activeOnlyOnTop"
-	self bounds: (RealEstateAgent
-		initialFrameFor: self
-		initialExtent: self initialExtent
-		world: aWorld).
-	self playOpenSound
+
+	self bounds: (RealEstateAgent initialFrameFor: self initialExtent: self initialExtent world: aWorld)
 ]
 
 { #category : 'printing' }

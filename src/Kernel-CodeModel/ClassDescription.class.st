@@ -42,7 +42,8 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 
 	self isAnonymous ifTrue: [ ^ self ].
 
-	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
+	"The old protocol should never be nil. But we are not in an ideal world sadly :( We got reported some cases where some code was loaded but had an error during the loading preventing a method that got added to the method dictionary to have an associated protocol. If this happens, we consider that we categorize it for the first time to avoid announcing a MethodRecategorized with an old protocol that is nil."
+	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin or: [ oldProtocol isNil ] ])
 		ifTrue: [
 			(self packageOrganizer packageForProtocol: newProtocol from: self) addMethod: compiledMethod.
 			self codeChangeAnnouncer announce: (MethodAdded method: compiledMethod) ]
@@ -154,12 +155,6 @@ ClassDescription >> announceRecategorizationOf: compiledMethod oldProtocol: oldP
 	"We do not want to do anything when it comes from Traits."
 
 	compiledMethod isFromTrait ifTrue: [ ^ self ].
-
-	"Next line is to debug a bug with a nil oldProtocol. If we do not get the error before the release of Pharo 13 we can remove this line."
-	oldProtocol ifNil: [
-		self error:
-			'If you encounter this error please report it with the full error! (In Pharo issues or to Cyril Ferlicot) Old protocol is nil but should not be since we are in a recategorization. Stack: 
-		' , thisContext stack asString ].
 
 	self packageOrganizer repackageMethod: compiledMethod oldProtocol: oldProtocol newProtocol: compiledMethod protocol.
 	self codeChangeAnnouncer announce: (MethodRecategorized method: compiledMethod oldProtocol: oldProtocol)

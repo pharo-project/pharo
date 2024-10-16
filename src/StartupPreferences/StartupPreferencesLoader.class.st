@@ -24,6 +24,7 @@ will define a script sample startup.st in your unix root on unix
 
 Its contents is 
 
+```
 StartupPreferencesLoader default executeAtomicItems: {
 	StartupAtomicItem name: 'Open Help' code: 'Workspace openContents: ''Here is just an example of how to use the StartupPreferencesLoader.
 I should only be displayed once.
@@ -32,9 +33,11 @@ You can also see StartupPreferencesLoader class>>#example'' label: ''Help''' isS
 	StartupAtomicItem name: 'Open Workspace' code: 'Workspace openContents: ''I should be displayed each time'''.
 }
 
-EXAMPLE 1
-============
+```
 
+### EXAMPLE 1
+
+```
 	"" an example of script generation ""
 	| item1 item2 |
 	item1 := StartupAction name: 'Open Help' code: 'Smalltalk tools workspace openContents: ''Here is just an example of how to use the StartupPreferencesLoader.
@@ -45,11 +48,13 @@ I should only be displayed once.
 	StartupPreferencesLoader default addAtStartupInGeneralPreferenceFolder: {item1. item2}.
 	
 	StartupPreferencesLoader default loadFromDefaultLocations.
-	StartupPreferencesLoader default loadFromDefaultLocations.
+```
 
-EXAMPLE 2
-============
 
+
+### EXAMPLE 2
+
+```
 	"" it's my personal script provided as example""
 	| items |
 	items := OrderedCollection new.
@@ -70,9 +75,13 @@ EXAMPLE 2
 	StartupPreferencesLoader default addAtStartupInImageDirectory: items.
 	
 	StartupPreferencesLoader default loadFromDefaultLocations.
+```
 
-EXAMPLE 3
-============
+
+
+### EXAMPLE 3
+
+```
 
 	| items |
 	items := OrderedCollection new.
@@ -96,6 +105,8 @@ EXAMPLE 3
 		FileStream stdout lf; nextPutAll: 'Finished'; lf.
 		 ]).
 	StartupPreferencesLoader default addAtStartupInImageDirectory: items 
+```	
+
 "
 Class {
 	#name : 'StartupPreferencesLoader',
@@ -258,6 +269,14 @@ StartupPreferencesLoader >> addAtStartupInPreferenceVersionFolder: aCollection n
 ]
 
 { #category : 'private' }
+StartupPreferencesLoader >> addTemplateForStartupInDirectory: aFileReference named: fileName [
+	
+	aFileReference ensureCreateDirectory.
+	aFileReference / fileName writeStreamDo: [ :stream | 
+		stream nextPutAll: self templateString ]
+]
+
+{ #category : 'private' }
 StartupPreferencesLoader >> buildStreamFor: aCollection [
 	^ String
 		streamContents:
@@ -375,4 +394,37 @@ StartupPreferencesLoader >> removeScriptFromImageDirectory [
 StartupPreferencesLoader >> retrieveFilesStream [
 
 	^ StartupPreferencesHandler new perform
+]
+
+{ #category : 'private' }
+StartupPreferencesLoader >> templateString [
+
+	^ 'StartupPreferencesLoader default executeAtomicItems: {
+	StartupAction 
+		name: ''Logo'' 
+		code: [ PolymorphSystemSettings showDesktopLogo: false] .
+	StartupAction 
+		name: ''Git Settings'' 
+		code: [ 
+			Iceberg enableMetacelloIntegration: true.
+			IceCredentialsProvider sshCredentials
+					username: ''git'';
+					publicKey: ''/Users/XXX/.ssh/id_rsa.pub'';
+					privateKey: ''/Users/XX/.ssh/id_rsa''.
+			IceCredentialStore current
+					storeCredential: (IcePlaintextCredentials new
+					username: ''GHUSER'';
+					password: ''PassWord'';
+					host: ''github.com'';
+					yourself).		
+
+
+			IceCredentialStore current
+				storeCredential: (IceTokenCredentials new
+					username: ''GHUSER'';
+					token: ''YOUR TOKEN'';
+					yourself) 
+				forHostname: ''github.com''.
+			]. 
+}.'
 ]

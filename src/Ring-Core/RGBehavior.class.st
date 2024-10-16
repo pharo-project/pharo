@@ -485,7 +485,9 @@ RGBehavior >> hasTraitComposition [
 
 { #category : 'queries - methods' }
 RGBehavior >> includesSelector: aString [
-
+	"Answer whether the message whose selector is the argument is in the
+	method dictionary of the receiver's class."
+	
 	^ self selectors includes: aString
 ]
 

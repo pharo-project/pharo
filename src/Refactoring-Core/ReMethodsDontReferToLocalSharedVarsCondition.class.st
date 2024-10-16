@@ -3,7 +3,7 @@ I am a refactoring condition that checks if a method refers to any of the shared
 I do not check for shared variables defined in my class superclasses
 "
 Class {
-	#name : 'ReMethodsDontReferToSharedVarsCondition',
+	#name : 'ReMethodsDontReferToLocalSharedVarsCondition',
 	#superclass : 'ReMethodsCondition',
 	#instVars : [
 		'class',
@@ -15,25 +15,25 @@ Class {
 }
 
 { #category : 'choices' }
-ReMethodsDontReferToSharedVarsCondition class >> strategyChoiceClass [
+ReMethodsDontReferToLocalSharedVarsCondition class >> strategyChoiceClass [
 	^ RePushUpSharedVariableChoice
 ]
 
 { #category : 'initialization' }
-ReMethodsDontReferToSharedVarsCondition >> class: aRBClass selectors: aCollection [ 
+ReMethodsDontReferToLocalSharedVarsCondition >> class: aRBClass selectors: aCollection [ 
 
 	class := aRBClass.
 	selectors := aCollection 
 ]
 
 { #category : 'accessing' }
-ReMethodsDontReferToSharedVarsCondition >> referencedSharedVariables [
+ReMethodsDontReferToLocalSharedVarsCondition >> referencedSharedVariables [
 
 	^ self violators collect: [ :violator | violator at: 2 ]
 ]
 
 { #category : 'displaying' }
-ReMethodsDontReferToSharedVarsCondition >> violationMessageOn: aStream [
+ReMethodsDontReferToLocalSharedVarsCondition >> violationMessageOn: aStream [
 
 	self violators do: [ :violator |
 		| selector instVar |
@@ -47,7 +47,7 @@ ReMethodsDontReferToSharedVarsCondition >> violationMessageOn: aStream [
 ]
 
 { #category : 'accessing' }
-ReMethodsDontReferToSharedVarsCondition >> violators [
+ReMethodsDontReferToLocalSharedVarsCondition >> violators [
 
 	violators ifNotNil: [ ^ violators ].
 

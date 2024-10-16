@@ -298,9 +298,10 @@ RGBehaviorDefinition >> includesProtocol: aString [
 
 { #category : 'accessing - methods' }
 RGBehaviorDefinition >> includesSelector: selector [
-	"Looks if selector is a key in the methods dictionary"
+	"Answer whether the message whose selector is the argument is in the
+	method dictionary of the receiver's class."
 
-	^methods includesKey: selector asSymbol
+	^ methods includesKey: selector asSymbol
 ]
 
 { #category : 'initialization' }

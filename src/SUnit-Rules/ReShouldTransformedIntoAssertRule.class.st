@@ -13,8 +13,7 @@ Class {
 
 { #category : 'accessing' }
 ReShouldTransformedIntoAssertRule class >> group [
-
-	^ 'SUnit'
+	^ self sunitGroup
 ]
 
 { #category : 'accessing' }

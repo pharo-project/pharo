@@ -19,7 +19,7 @@ ReBaselineProperlyPackagedRule class >> checksClass [
 
 { #category : 'accessing' }
 ReBaselineProperlyPackagedRule class >> group [
-	^ 'Design Flaws'
+	^ self designFlawGroup
 ]
 
 { #category : 'accessing' }

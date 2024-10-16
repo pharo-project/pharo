@@ -19,8 +19,7 @@ ReShouldSendSuperTearDownAsLastMessage class >> checksMethod [
 
 { #category : 'accessing' }
 ReShouldSendSuperTearDownAsLastMessage class >> group [
-
-	^ 'SUnit'
+	^ self sunitGroup
 ]
 
 { #category : 'utilities' }

@@ -40,7 +40,7 @@ SycExtractMethodCommand >> createRefactoring [
 
 { #category : 'accessing' }
 SycExtractMethodCommand >> defaultMenuIconName [
-	^ #glamorousRestart
+	^ #restart
 ]
 
 { #category : 'accessing' }

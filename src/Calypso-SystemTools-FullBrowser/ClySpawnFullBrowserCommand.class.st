@@ -49,7 +49,7 @@ ClySpawnFullBrowserCommand class >> fullBrowserDoubleClickMenuActivation [
 
 { #category : 'accessing' }
 ClySpawnFullBrowserCommand >> defaultMenuIconName [
-	^#glamorousBrowse
+	^#browse
 ]
 
 { #category : 'accessing' }
