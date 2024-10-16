@@ -171,7 +171,7 @@ echo $(date -u) "[Compiler] Installing Traits through Hermes"
 
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" save ${TRAITS_IMAGE_NAME}
 ${VM} "${TRAITS_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Traits.hermes --save
-${VM} "${TRAITS_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Kernel-Traits.hermes Collections-Abstract-Traits.hermes CodeImport-Traits.hermes --save
+${VM} "${TRAITS_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Kernel-Traits.hermes CodeImport-Traits.hermes --save
 zip "${TRAITS_IMAGE_NAME}.zip" "${TRAITS_IMAGE_NAME}.image"
 
 #Bootstrap Initialization: Class and Package initialization

@@ -4,22 +4,22 @@ Extension { #name : 'RGTraitDefinitionTest' }
 RGTraitDefinitionTest >> testAsFullTraitDefinition [
 
 	| rgClass |
-	rgClass := TSortable asRingDefinition.
+	rgClass := TAssertable asRingDefinition.
 	self assertEmpty: rgClass methods.
 	self assert: rgClass superclass isNil.
 	self assertEmpty: rgClass subclasses.
-	self assert: rgClass package name equals: #'Collections-Abstract-Traits'.
+	self assert: rgClass package name equals: #'SUnit-Core-Traits'.
 
-	rgClass := TSortable asFullRingDefinition.
+	rgClass := TAssertable asFullRingDefinition.
 	self denyEmpty: rgClass methods.
-	self assert: (rgClass methodNamed: #isSorted) package isNotNil.
+	self assert: (rgClass methodNamed: #assert:equals:) package isNotNil.
 	self assert: rgClass superclass isNotNil.
 	self assert: rgClass superclass name equals: #Trait.
 	self assertEmpty: rgClass subclasses.
 	self assert: rgClass package isNotNil.
 	self assert: rgClass package equals: rgClass instanceSide package.
-	self assert: rgClass package name equals: #'Collections-Abstract-Traits'.
-	self assert: rgClass packageTag equals: #Base.
+	self assert: rgClass package name equals: #'SUnit-Core-Traits'.
+	self assert: rgClass packageTag equals: #Uncategorized.
 
 	self assert: rgClass superclass superclass isNil.
 	self assert: rgClass superclass package name equals: #Traits.
