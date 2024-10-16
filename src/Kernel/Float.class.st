@@ -179,6 +179,7 @@ Float class >> infinity [
 { #category : 'class initialization' }
 Float class >> initialize [
 	"Float initialize"
+
 	"Constants from Computer Approximations, pp. 182-183:
 		Pi = 3.14159265358979323846264338327950288
 		Pi/2 = 1.57079632679489661923132169163975144
@@ -200,10 +201,12 @@ Float class >> initialize [
 
 	"Defines precision of approximated mathematical functions such as trigonometric functions.
 	Use a small enough epsilon value to make approximations as good as possible."
+	"This one should probably be removed and we should use DefaultComparisionValue but I'm not sure it's that simple to remove a class var of Float."
 	MathApproximationEpsilon := 0.000000000001.
-	
-	"Default precision used for comparing two float numbers"
-	DefaultComparisonPrecision := 0.0001.
+
+	"Default precision used for comparing two float numbers.
+	Using value described in Numerical Recipes, 3rd edition, Section 5.7, which is pages 229-230 corresponding to the square root of the machine epsilon"
+	DefaultComparisonPrecision := self machineEpsilon sqrt.
 
 	MaxVal := 1.7976931348623157e308.
 	MaxValLn := 709.782712893384.
