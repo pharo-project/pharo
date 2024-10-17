@@ -41,3 +41,9 @@ MyClassBetaSub >> methodReferencingInstVarDefinedInItsDefiningClassAndOneInItsSu
 MyClassBetaSub >> methodReferencingInstanceVariableDefinedInSuperclass [
 	^ instVarB
 ]
+
+{ #category : 'dummy methods' }
+MyClassBetaSub >> overridenInSubclassAndNoWhereElse [
+	"This is used to test pull up method when the target class is two levels above and I have override in subclass."
+	^ 42
+]
