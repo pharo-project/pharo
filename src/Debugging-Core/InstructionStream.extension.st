@@ -93,7 +93,7 @@ InstructionStream >> scanFor: scanBlock [
 	[pc <= end] whileTrue: 
 		[(scanBlock value: (byte := method at: pc)) ifTrue:
 			[^true].
-		 pc := pc + (encoderClass bytecodeSize: byte)].
+		 pc := pc + (encoderClass instructionSizeAt: pc of: method)].
 	^false
 ]
 
@@ -109,13 +109,6 @@ InstructionStream >> selectorToSendOrSelf [
 	"If this instruction is a send, answer the selector, otherwise answer self."
  
 	^ self method encoderClass selectorToSendOrItselfFor: self in: self method at: pc
-]
-
-{ #category : '*Debugging-Core' }
-InstructionStream >> selectorToSendOrSelfx [
-	"If this instruction is a send, answer the selector, otherwise answer self."
- 
-	^ self method encoderClass selectorToSendOrItselfForx: self in: self method at: pc
 ]
 
 { #category : '*Debugging-Core' }

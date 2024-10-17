@@ -282,7 +282,7 @@ IRBytecodeGenerator >> goto: seqId [
 	self from: currentSeqId goto: seqId
 ]
 
-{ #category : 'instructions' }
+{ #category : 'results' }
 IRBytecodeGenerator >> hasInlineCaches [
 	^ true
 ]
@@ -687,8 +687,8 @@ IRBytecodeGenerator >> spurVMHeader: literalsSize [
 		(self hasInlineCaches asBit bitShift: 28) +
 		(self numArgs bitShift: 24) +
 		(self numTemps bitShift: 18) +
-		(self hasPrimitive asBit bitShift: 16) +
-		literalsSize
+		literalsSize +
+		(self hasPrimitive asBit bitShift: 16)
 ]
 
 { #category : 'results' }

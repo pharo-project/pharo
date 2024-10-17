@@ -86,6 +86,12 @@ ReflectiveMethod >> destroyTwin [
 ]
 
 { #category : 'forwarding' }
+ReflectiveMethod >> doFlushCache [
+	"See MethodDictionary class comment."
+	<primitive: 116>
+]
+
+{ #category : 'forwarding' }
 ReflectiveMethod >> doesNotUnderstand: aMessage [
 	^aMessage sendTo: compiledMethod
 ]
@@ -93,7 +99,9 @@ ReflectiveMethod >> doesNotUnderstand: aMessage [
 { #category : 'forwarding' }
 ReflectiveMethod >> flushCache [
 	"See MethodDictionary class comment."
-	<primitive: 116>
+	"Q: Is this correct?"
+	Smalltalk cleanAllICsForMethod: self.
+	self doFlushCache
 ]
 
 { #category : 'evaluation' }

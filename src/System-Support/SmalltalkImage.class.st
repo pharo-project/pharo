@@ -315,6 +315,39 @@ SmalltalkImage >> classOrTraitNamed: aString [
 	^ globals classOrTraitNamed: aString
 ]
 
+{ #category : 'inline cache management' }
+SmalltalkImage >> cleanAllICs [
+	'Cleaning all ICs!' traceCr.
+	self cleanAllICsWhere: [ :m :i | true ]
+]
+
+{ #category : 'inline cache management' }
+SmalltalkImage >> cleanAllICsForMethod: aCompiledMethod [
+	('Cleaning all ICs for the compiled method `', aCompiledMethod, '`!') traceCr.
+	self cleanAllICsWhere: [ :m :i | aCompiledMethod = (m literalAt: i + 2) ]
+]
+
+{ #category : 'inline cache management' }
+SmalltalkImage >> cleanAllICsForSelector: aSelector [
+	('Cleaning all ICs for the selector `', aSelector, '`') traceCr.
+	self cleanAllICsWhere: [ :m :i | aSelector = (m literalAt: i) ]
+]
+
+{ #category : 'inline cache management' }
+SmalltalkImage >> cleanAllICsWhere: anICCondition [
+
+| loopBody |
+loopBody := [ :m |
+	m hasInlineCaches ifTrue: [
+		m localSendsiteIndices do: [ :i |
+			(anICCondition value: m value: i) ifTrue: [
+				m literalAt: i + 1 put: nil. 
+				m literalAt: i + 2 put: nil ] ] ] ].
+
+CompiledBlock allInstancesDo: loopBody.
+CompiledMethod allInstancesDo: loopBody.
+]
+
 { #category : 'housekeeping' }
 SmalltalkImage >> cleanOutUndeclared [
 	| unreferenced |
@@ -468,6 +501,13 @@ SmalltalkImage >> datedVersion [
 SmalltalkImage >> defaultLogFileName [
 
 	^ 'PharoDebug.log'
+]
+
+{ #category : 'external' }
+SmalltalkImage >> doUnbindExternalPrimitives [
+	"Primitive. Force all external primitives to be looked up again afterwards. Since external primitives that have not found are bound for fast failure this method will force the lookup of all primitives again so that after adding some plugin the primitives may be found."
+	<primitive: 570>
+	"Do nothing if the primitive fails for compatibility with older VMs"
 ]
 
 { #category : 'accessing' }
@@ -1845,8 +1885,8 @@ SmalltalkImage >> traitNames [
 { #category : 'external' }
 SmalltalkImage >> unbindExternalPrimitives [
 	"Primitive. Force all external primitives to be looked up again afterwards. Since external primitives that have not found are bound for fast failure this method will force the lookup of all primitives again so that after adding some plugin the primitives may be found."
-	<primitive: 570>
-	"Do nothing if the primitive fails for compatibility with older VMs"
+	self cleanAllICs.
+	self doUnbindExternalPrimitives.
 ]
 
 { #category : 'special objects' }

@@ -192,6 +192,13 @@ CompiledMethod >> displayStringOn: aStream [
 ]
 
 { #category : 'accessing' }
+CompiledMethod >> doFlushCache [
+	"Tell the virtual machine to remove all references to this method from its method lookup caches, and to discard any optimized version 	of the method, if it has any of these.  This must be done whenever a method is modified in place, such as modifying its literals or 	machine code, to reflect the revised code.  c.f. Behavior>>flushCache & Symbol>>flushCache.  Essential.	 See MethodDictionary class 	comment."
+
+	<primitive: 116>
+]
+
+{ #category : 'accessing' }
 CompiledMethod >> endPC [
 	"Answer the index of the last bytecode"
 	^ self size - self class trailerSize
@@ -201,7 +208,8 @@ CompiledMethod >> endPC [
 CompiledMethod >> flushCache [
 	"Tell the virtual machine to remove all references to this method from its method lookup caches, and to discard any optimized version 	of the method, if it has any of these.  This must be done whenever a method is modified in place, such as modifying its literals or 	machine code, to reflect the revised code.  c.f. Behavior>>flushCache & Symbol>>flushCache.  Essential.	 See MethodDictionary class 	comment."
 
-	<primitive: 116>
+	Smalltalk cleanAllICsForMethod: self.
+	self doFlushCache
 ]
 
 { #category : 'source code management' }
