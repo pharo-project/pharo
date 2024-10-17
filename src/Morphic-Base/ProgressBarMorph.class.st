@@ -130,10 +130,8 @@ ProgressBarMorph >> extent: aPoint [
 	"Update the bar fillStyle if appropriate."
 
 	super extent: aPoint.
-	self fillStyle isOrientedFill ifTrue: [
-		self fillStyle: (self theme progressBarFillStyleFor: self)].
-	self barFillStyle isOrientedFill ifTrue: [
-		self barFillStyle: ( self theme progressBarProgressFillStyleFor: self)]
+	self fillStyle isOrientedFill ifTrue: [ self fillStyle: self theme progressBarFillColor ].
+	self barFillStyle isOrientedFill ifTrue: [ self barFillStyle: self theme progressBarProgressFillColor ]
 ]
 
 { #category : 'accessing' }
@@ -154,10 +152,10 @@ ProgressBarMorph >> initialize [
 	width := DefaultWidth.
 	cachedWidth := 0.
 	self
-		fillStyle: (self theme progressBarFillStyleFor: self);
-		borderStyle: (self theme progressBarBorderStyleFor: self);
-		barFillStyle: (self theme progressBarProgressFillStyleFor: self);
-		extent: width@height  + (2 * self borderWidth)
+		fillStyle: self theme progressBarFillColor;
+		borderStyle: self theme progressBarBorderStyle;
+		barFillStyle: self theme progressBarProgressFillColor;
+		extent: width @ height + (2 * self borderWidth)
 ]
 
 { #category : 'private' }
