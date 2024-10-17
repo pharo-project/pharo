@@ -336,16 +336,12 @@ SmalltalkImage >> cleanAllICsForSelector: aSelector [
 { #category : 'inline cache management' }
 SmalltalkImage >> cleanAllICsWhere: anICCondition [
 
-| loopBody |
-loopBody := [ :m |
+CompiledCode allSubInstancesDo: [ :m |
 	m hasInlineCaches ifTrue: [
 		m localSendsiteIndices do: [ :i |
 			(anICCondition value: m value: i) ifTrue: [
 				m literalAt: i + 1 put: nil. 
 				m literalAt: i + 2 put: nil ] ] ] ].
-
-CompiledBlock allInstancesDo: loopBody.
-CompiledMethod allInstancesDo: loopBody.
 ]
 
 { #category : 'housekeeping' }
