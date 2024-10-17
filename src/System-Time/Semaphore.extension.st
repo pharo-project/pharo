@@ -21,3 +21,13 @@ Semaphore >> wait: aDuration onCompletion: completionBlock onTimeout: timeoutBlo
 		  onCompletion: completionBlock
 		  onTimeout: timeoutBlock
 ]
+
+{ #category : '*System-Time' }
+Semaphore >> waitTimeoutMSecs: anInteger [
+
+	self
+		deprecated: 'Use #waitTimeoutMilliseconds: instead'
+		transformWith:
+		'`@x waitTimeoutMSecs: `@y' -> '`@x waitTimeoutMilliseconds: `@y'.
+	^ self waitTimeoutMilliseconds: anInteger
+]
