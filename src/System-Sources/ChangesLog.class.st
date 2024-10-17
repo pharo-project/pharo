@@ -28,17 +28,25 @@ ChangesLog class >> default [
 
 { #category : 'accessing' }
 ChangesLog class >> registerInterestToSystemAnnouncement [
-	<systemEventRegistration>
 
-	DefaultInstance ifNotNil: [:defaultInstance |
-		SystemAnnouncer uniqueInstance unsubscribe: defaultInstance.
-		defaultInstance registerToAnnouncements. ]
+	<systemEventRegistration>
+	DefaultInstance ifNotNil: [ :defaultInstance |
+		self unsubscribeAnnouncersOfDefaultInstance.
+		defaultInstance registerToAnnouncements ]
 ]
 
 { #category : 'class initialization' }
 ChangesLog class >> reset [
-	SystemAnnouncer uniqueInstance unsubscribe: DefaultInstance.
+
+	self unsubscribeAnnouncersOfDefaultInstance.
 	DefaultInstance := nil
+]
+
+{ #category : 'accessing' }
+ChangesLog class >> unsubscribeAnnouncersOfDefaultInstance [
+
+	self codeChangeAnnouncer unsubscribe: DefaultInstance.
+	self codeSupportAnnouncer unsubscribe: DefaultInstance
 ]
 
 { #category : 'private' }
@@ -150,17 +158,11 @@ ChangesLog >> recordStartupStamp [
 
 { #category : 'event-listening' }
 ChangesLog >> registerToAnnouncements [
-	SystemAnnouncer uniqueInstance weak
-		when: ClassRemoved
-			send: #logClassRemoved:
-			to: self;
-		when: ClassRenamed
-			send: #logClassRenamed:
-			to: self;
-		when: MethodRemoved
-			send: #logMethodRemoved:
-			to: self;
-		when: ExpressionEvaluated
-			send: #logExpressionEvaluated:
-			to: self
+
+	self class codeChangeAnnouncer weak
+		when: ClassRemoved send: #logClassRemoved: to: self;
+		when: ClassRenamed send: #logClassRenamed: to: self;
+		when: MethodRemoved send: #logMethodRemoved: to: self.
+	self class codeSupportAnnouncer weak 
+		when: ExpressionEvaluated send: #logExpressionEvaluated: to: self
 ]
