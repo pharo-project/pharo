@@ -25,6 +25,7 @@ ProtocolAnnouncementsTest >> testAddProtocolAnnouncement2 [
 
 	self when: ProtocolAdded do: [ :ann |
 		self assert: ann protocol name equals: #king.
+		self assert: ann protocol owningClass equals: class.
 		self assert: ann classReorganized name equals: self classNameForTests ].
 
 	class addProtocol: (Protocol named: #king).
