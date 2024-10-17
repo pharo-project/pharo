@@ -160,16 +160,16 @@ DADependencyTreePresenter >> buildRoots [
 
 { #category : 'initialization' }
 DADependencyTreePresenter >> connectPresenters [
+	
 	super connectPresenters.
+	
 	self actionOnButtons.
-	tree
-		whenSelectedItemChangedDo: [ :item |
-			item
-				ifNil: [ buttonBrowseCycles enabled: false ]
-				ifNotNil: [
-					buttonBrowseCycles enabled: true.
-					tree contextMenu: [ self loadMenuForSelectedItem ].
-					self tree selectedItem selectInBrowser ] ]
+	tree whenSelectedItemChangedDo: [ :item |
+		item
+			ifNil: [ buttonBrowseCycles enabled: false ]
+			ifNotNil: [
+				buttonBrowseCycles enabled: true.
+				self tree selectedItem selectInBrowser ] ]
 ]
 
 { #category : 'saving' }
@@ -245,12 +245,32 @@ DADependencyTreePresenter >> initializeButtons [
 
 { #category : 'initialization' }
 DADependencyTreePresenter >> initializePresenters [
+
 	super initializePresenters.
 	packageLabel := self newLabel label: 'Analysis of packages'.
 	textPackageField := self newTextInput
 		placeholder: 'Enter a package name';
 		entryCompletion: self packagesEntryCompletion.
-	self initializeButtons
+	self initializeButtons.
+	
+	tree actionsWith: [ :group | group 
+		addActionWith: [ :action | action 
+			name: 'Browse scoped dependencies';
+			actionEnabled: [ self selectedPackageNames isNotEmpty ];
+			action: [
+				 (DAPackageDependenciesPresenter onPackagesNamed: self selectedPackageNames) 
+					application: self application;
+					open ] ];
+		addActionWith: [ :action | action 
+			name: 'Find cycles among packages';
+			action: [
+				(DACycleDetectionPresenter onPackagesNamed: self selectedPackageNames)
+					application: self application;
+					open ] ];
+		addActionWith: [ :action | action 
+			name: 'Browse dependencies from class';
+			actionEnabled: [ self areClassToDependencyNodes: self selectedItemsFromTree ];
+			action: [  self openTreeFor: self selectedNames ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -342,6 +362,19 @@ DADependencyTreePresenter >> saveCurrentRelationGraph [
 { #category : 'accessing' }
 DADependencyTreePresenter >> seenPackagesName [
 	^ self relationGraph seenPackagesName
+]
+
+{ #category : 'initialization' }
+DADependencyTreePresenter >> selectedNames [
+
+	^ self selectedItemsFromTree collect: [ :package | package content theClass ]
+]
+
+{ #category : 'initialization' }
+DADependencyTreePresenter >> selectedPackageNames [
+		
+	^ self selectedItemsFromTree collect: [ :packageNode | packageNode packageName ]
+
 ]
 
 { #category : 'accessing' }

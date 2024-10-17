@@ -59,17 +59,18 @@ DTDefaultPluginPresenter class >> buildPackageGroupWith: presenterInstance [
 
 { #category : 'private - commands' }
 DTDefaultPluginPresenter class >> buildResultGroupWith: presenterInstance [
-	| commandGroup pluginCommands |
+	| commandGroup pluginCommands plugin |
 
 	commandGroup := (CmCommandGroup named: 'Results tools') asSpecGroup
 		description: 'Commands related to result.';
 		register: (DTResultBrowseCommand forSpecContext: presenterInstance) beHiddenWhenCantBeRun;
 		yourself.
 
-	pluginCommands := presenterInstance plugin
-		buildContextualMenuGroupWith: presenterInstance.
-	pluginCommands entries ifEmpty: [ ^ commandGroup ].
+	plugin := presenterInstance plugin.
+	plugin ifNil: [ ^ commandGroup ].
 
+	pluginCommands := plugin buildContextualMenuGroupWith: presenterInstance.
+	pluginCommands entries ifEmpty: [ ^ commandGroup ].
 	^ commandGroup
 		register: pluginCommands beDisplayedAsGroup;
 		yourself
@@ -153,7 +154,7 @@ DTDefaultPluginPresenter >> initializeItemsListAndLabel [
 		displayBlock: [ :item | item name ];
 		whenSelectionChangedDo: [ self whenItemsSelectionChanged: self selectedItems ];
 		beMultipleSelection;
-		contextMenu: [ (self rootCommandsGroup / 'List items menu') beRoot asMenuPresenter ].
+		actions: (self rootCommandsGroup / 'List items menu') beRoot.
 
 	packagesList
 		whenSelectionChangedDo: [ self whenPackagesSelectionChanged: self packagesSelected ]
@@ -168,7 +169,7 @@ DTDefaultPluginPresenter >> initializePackagesListAndLabel [
 		sortingBlock: #name ascending;
 		displayBlock: [ :package | package name ];
 		beMultipleSelection;
-		contextMenu: [ (self rootCommandsGroup / 'Package menu') beRoot asMenuPresenter ]
+		actions: self rootCommandsGroup / 'Package menu'
 ]
 
 { #category : 'initialization' }
@@ -204,8 +205,7 @@ DTDefaultPluginPresenter >> initializeResultsTreeAndLabel [
 		display: [ :node | node drTestsName ];
 		displayColor: [ :node | node displayColor ];
 		children: [ :node | node subResults ];
-		contextMenu: [
-			(self rootCommandsGroup / 'Results tools') beRoot asMenuPresenter ].
+		actions: self rootCommandsGroup / 'Results tools'.
 
 	resultsList outputActivationPort
 		transmitDo: [
@@ -382,8 +382,7 @@ DTDefaultPluginPresenter >> updateWithResults: someResults [
 	self updateResultViewsDropList.
 	self updateResultLabel.
 	self resultTree: lastResults buildTreeForUI.
-	resultsList contextMenu: [
-		(self rootCommandsGroup / 'Results tools') beRoot asMenuPresenter ]
+	resultsList actions: self rootCommandsGroup / 'Results tools'
 ]
 
 { #category : 'private' }

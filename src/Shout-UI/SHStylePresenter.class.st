@@ -151,7 +151,6 @@ SHStylePresenter >> initializeThemeList [
 	"Private - The receiver's theme list contains the names of the available theme styles in the system"
 
 	themeListPresenter := self newList.
-	themeListPresenter model comparisonStrategy: [ : t1 : t2 | t1 class themeName = t2 class themeName ].
 	themeListPresenter
 		headerTitle: 'Themes';
 		items: self themePrototypes;

@@ -60,7 +60,7 @@ BaselineOfPharo class >> iceberg [
 		newName: 'Iceberg' 
 		owner: 'pharo-vcs' 
 		project: 'iceberg' 
-		version: 'Pharo13' 
+		version: 'p13-actions'
 		sourceDir: nil
 ]
 
@@ -95,7 +95,7 @@ BaselineOfPharo class >> newTools [
 		newName: 'NewTools' 
 		owner: 'pharo-spec' 
 		project: 'NewTools' 
-		version: 'Pharo13'
+		version: 'p13-actions'
 ]
 
 { #category : 'repository urls' }
@@ -153,7 +153,7 @@ BaselineOfPharo class >> spec [
 		newName: 'Spec2' 
 		owner: 'pharo-spec' 
 		project:'Spec' 
-		version: 'Pharo13'
+		version: 'p13-actions'
 ]
 
 { #category : 'repository urls' }
@@ -187,7 +187,7 @@ BaselineOfPharo class >> welcomeBrowser [
 		newName: 'WelcomeBrowser' 
 		owner: 'pharo-spec' 
 		project: 'NewTools-WelcomeBrowser' 
-		version: 'Pharo13'
+		version: 'main'
 ]
 
 { #category : 'repository urls' }

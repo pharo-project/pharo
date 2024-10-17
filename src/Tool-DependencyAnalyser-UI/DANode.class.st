@@ -23,7 +23,7 @@ DANode class >> isAbstract [
 ]
 
 { #category : 'building-menu' }
-DANode >> addMenuEntriesOn: aMenuGroup [
+DANode >> addMenuActionsOn: anActionGroup [
 	"overide this method to add contextual menu on nodes"
 ]
 
