@@ -9,7 +9,8 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'name',
-		'methodSelectors'
+		'methodSelectors',
+		'owningClass'
 	],
 	#category : 'Kernel-CodeModel-Classes',
 	#package : 'Kernel-CodeModel',
@@ -29,6 +30,14 @@ Protocol class >> named: aStrings [
 
 	^ self new
 		  name: aStrings;
+		  yourself
+]
+
+{ #category : 'instance creation' }
+Protocol class >> named: aString class: aClass [
+
+	^ (self named: aString)
+		  owningClass: aClass;
 		  yourself
 ]
 
@@ -110,6 +119,18 @@ Protocol >> name [
 { #category : 'accessing' }
 Protocol >> name: anObject [
 	name := anObject asSymbol
+]
+
+{ #category : 'accessing' }
+Protocol >> owningClass [
+
+	^ owningClass
+]
+
+{ #category : 'accessing' }
+Protocol >> owningClass: aClass [
+
+	owningClass := aClass
 ]
 
 { #category : 'printing' }
