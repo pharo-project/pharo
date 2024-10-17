@@ -888,9 +888,14 @@ CompiledCode >> refersToLiteral: aLiteral [
 	even if embedded in array structure."
 
 	1 to: self numLiterals - self literalsToSkip do: [ :index |
+		| currentLiteral |
 		"exclude selector or additional method state (penultimate slot)
 		and methodClass or outerCode (last slot)"
-		((self literalAt: index) refersToLiteral: aLiteral)
+		currentLiteral := self literalAt: index.
+		(currentLiteral isCompiledMethod not and: [
+			currentLiteral isCompiledBlock not and: [
+				(currentLiteral class inheritsFrom: CompiledBlock) not and: [
+					currentLiteral refersToLiteral: aLiteral ] ] ])
 			ifTrue: [ ^ true ] ].
 
 	^ false
