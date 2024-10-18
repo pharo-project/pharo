@@ -413,15 +413,9 @@ UIThemePalette >> popoverButtonColor [
 ]
 
 { #category : 'colors' }
-UIThemePalette >> progressBarColorFor: anObject [
+UIThemePalette >> progressBarColor [
 
-	^ paletteDictionary at: #progressBarColorFor: ifAbsentPut: [ colorConfigurator progressBarColorFor: anObject  ]
-]
-
-{ #category : 'colors' }
-UIThemePalette >> progressBarProgressColorFor: anObject [
-
-	^ paletteDictionary at: #progressBarProgressColorFor: ifAbsentPut: [ colorConfigurator progressBarProgressColorFor: anObject  ]
+	^ paletteDictionary at: #progressBarColor ifAbsentPut: [ colorConfigurator progressBarColor ]
 ]
 
 { #category : 'colors' }

@@ -236,7 +236,7 @@ UITheme >> baseColorFor: aWidget [
 ]
 
 { #category : 'private' }
-UITheme >> basePassiveBackgroundColorFor: aButton [
+UITheme >> basePassiveBackgroundColor [
 
 	^ colorPalette basePassiveBackgroundColor
 ]
@@ -501,7 +501,7 @@ UITheme >> buttonSelectedDisabledFillStyleFor: aButton [
 UITheme >> buttonSelectedFillStyleFor: aButton [
 	"Return the normal button fillStyle for the given button."
 
-	^ SolidFillStyle color: (self lightSelectionColorFor: aButton)
+	^ SolidFillStyle color: self lightSelectionColor
 ]
 
 { #category : 'border-styles - buttons' }
@@ -1416,7 +1416,7 @@ UITheme >> desktopImageLayout [
 UITheme >> dialogWindowActiveFillStyleFor: aWindow [
 	"Return the window active fillStyle for the given window."
 
-	^self windowActiveFillStyleFor: aWindow
+	^ self windowActiveFillStyle
 ]
 
 { #category : 'fill-styles' }
@@ -2006,12 +2006,6 @@ UITheme >> lightColorFor: aButton [
 UITheme >> lightSelectionColor [
 
 	^ colorPalette lightSelectionColor
-]
-
-{ #category : 'private' }
-UITheme >> lightSelectionColorFor: aMorph [
-
-	^ self lightSelectionColor
 ]
 
 { #category : 'accessing - colors' }
@@ -3676,8 +3670,8 @@ UITheme >> paneColorFor: aWindow [
 	"Answer the pane color that should be used."
 
 	^ (self fadedBackgroundWindows
-		ifTrue: [ aWindow fillStyleToUse ]
-		ifFalse: [ self windowActiveFillStyleFor: aWindow ]) asColor
+		   ifTrue: [ aWindow fillStyleToUse ]
+		   ifFalse: [ self windowActiveFillStyle ]) asColor
 ]
 
 { #category : 'services' }
@@ -3733,46 +3727,40 @@ UITheme >> proceedIn: aThemedMorph text: aStringOrText title: aString [
 ]
 
 { #category : 'border-styles' }
-UITheme >> progressBarBorderStyleFor: aProgressBar [
-	"Return the progress bar borderStyle for the given progress bar."
+UITheme >> progressBarBorderStyle [
+	"Return the progress bar borderStyle for a progress bar."
 
-	|c|
-	c := self progressBarColorFor: aProgressBar.
-	^BorderStyle simple
-		width: 1 scaledByDisplayScaleFactor;
-		baseColor: c
+	| c |
+	c := self progressBarColor.
+	^ BorderStyle simple
+		  width: 1 scaledByDisplayScaleFactor;
+		  baseColor: c
 ]
 
 { #category : 'basic-colors' }
-UITheme >> progressBarColorFor: aProgressBar [
-
+UITheme >> progressBarColor [
 	"Answer the colour for the given progress bar."
 
-	^ colorPalette progressBarColorFor: aProgressBar
+	^ colorPalette progressBarColor
 ]
 
 { #category : 'fill-styles' }
-UITheme >> progressBarFillStyleFor: aProgressBar [
-	^ self basePassiveBackgroundColorFor: aProgressBar
-]
+UITheme >> progressBarFillColor [
 
-{ #category : 'basic-colors' }
-UITheme >> progressBarProgressColorFor: aProgressBar [
-
-	"Answer the colour for the progress part of the given progress bar."
-
-	^ colorPalette progressBarProgressColorFor: aProgressBar
+	^ self basePassiveBackgroundColor
 ]
 
 { #category : 'fill-styles' }
-UITheme >> progressBarProgressFillStyleFor: aProgressBar [
-	^ (self lightSelectionColorFor: aProgressBar)
+UITheme >> progressBarProgressFillColor [
+
+	^ self lightSelectionColor
 ]
 
 { #category : 'fill-styles' }
-UITheme >> progressFillStyleFor: aProgress [
-	"Return the progress fillStyle for the given progress morph."
-	^ self windowActiveFillStyleFor: aProgress
+UITheme >> progressFillStyle [
+	"Return the progress fillStyle for progress morph."
+
+	^ self windowActiveFillStyle
 ]
 
 { #category : 'services' }
@@ -4186,8 +4174,7 @@ UITheme >> secondarySelectionColor [
 { #category : 'private' }
 UITheme >> selectedFillStyleFor: aMorph height: anInteger [
 
-
-	^ SolidFillStyle color: (self lightSelectionColorFor:  aMorph)
+	^ SolidFillStyle color: self lightSelectionColor
 ]
 
 { #category : 'accessing - colors' }
@@ -4631,7 +4618,7 @@ UITheme >> textEditorDisabledBorderStyleFor: aTextEditor [
 UITheme >> textEditorDisabledFillStyleFor: aTextEditor [
 	"Return the disabled fillStyle for the given text editor."
 
-	^self basePassiveBackgroundColorFor: aTextEditor
+	^ self basePassiveBackgroundColor
 ]
 
 { #category : 'services' }
@@ -4902,9 +4889,10 @@ UITheme >> windowActiveDropShadowStyle: anObject [
 ]
 
 { #category : 'fill-styles' }
-UITheme >> windowActiveFillStyleFor: aWindow [
+UITheme >> windowActiveFillStyle [
 	"We do not want the lighting effect when the window goes inactive"
-	^SolidFillStyle color: self baseColor
+
+	^ SolidFillStyle color: self baseColor
 ]
 
 { #category : 'fill-styles' }
@@ -5025,7 +5013,8 @@ UITheme >> windowExtentChangedFor: aWindow [
 { #category : 'fill-styles' }
 UITheme >> windowInactiveFillStyleFor: aWindow [
 	"We do not want the lighting effect when the window goes inactive"
-	^self windowActiveFillStyleFor: aWindow
+
+	^ self windowActiveFillStyle
 ]
 
 { #category : 'fill-styles' }
