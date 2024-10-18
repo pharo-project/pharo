@@ -66,15 +66,26 @@ ReExtractToTemporaryDriver >> requestVariableName [
 { #category : 'execution' }
 ReExtractToTemporaryDriver >> runRefactoring [
 
+	| checkVariableName checkVariableDefinition messageStream |
+
 	self configureRefactoring.
 	
 	refactoring prepareForExecution.
 	
 	newVariableName := self requestVariableName.
-	refactoring extractToVariable: newVariableName.
 	shouldEscape ifTrue: [ ^ self ].
-	refactoring preconditionValidInstVarName check ifFalse: [ ^ self ].
-	refactoring preconditionCheckVariableName check ifFalse: [ ^ self ].
+	refactoring extractToVariable: newVariableName.
+	
+	messageStream := WriteStream on: String new.
+	checkVariableName := refactoring preconditionValidInstVarName.
+   checkVariableName check ifFalse: [
+   		checkVariableName violationMessageOn: messageStream.
+		self variableNameEditorPresenterClass new showError: messageStream contents ].
+	checkVariableDefinition := refactoring preconditionCheckVariableName.
+	checkVariableDefinition check ifFalse: [
+   		checkVariableDefinition violationMessageOn: messageStream.
+      self variableNameEditorPresenterClass new showError: messageStream contents ].
+
 	refactoring  checkPreconditions.
 	self applyChanges
 ]
