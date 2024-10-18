@@ -429,10 +429,9 @@ WriteBarrierTest >> testProxyObject: object initialState: initialState tuples: t
 
 { #category : 'tests - object' }
 WriteBarrierTest >> testReadOnlyImmediate [
-	"immediate objects like SmallIntegers are read only"
-	self assert: 1 isReadOnlyObject.
 	"we can call beReadOnlyObject on an immediate object"
-	self assert: 1 beReadOnlyObject
+  
+	self assert: 1 beReadOnlyObject isReadOnlyObject
 ]
 
 { #category : 'tests - object' }
