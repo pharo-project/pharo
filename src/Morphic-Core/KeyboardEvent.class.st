@@ -9,7 +9,8 @@ Class {
 		'charCode',
 		'scanCode',
 		'key',
-		'supressNextKeyPress'
+		'supressNextKeyPress',
+		'isRepeat'
 	],
 	#category : 'Morphic-Core-Events',
 	#package : 'Morphic-Core',
@@ -79,6 +80,18 @@ KeyboardEvent >> isKeystroke [
 { #category : 'testing' }
 KeyboardEvent >> isMouseMove [
 	^false
+]
+
+{ #category : 'accessing' }
+KeyboardEvent >> isRepeat [
+
+	^ isRepeat
+]
+
+{ #category : 'accessing' }
+KeyboardEvent >> isRepeat: anObject [
+
+	isRepeat := anObject
 ]
 
 { #category : 'keyboard' }

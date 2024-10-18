@@ -683,7 +683,6 @@ OSSDL2BackendWindow >> visitKeyDownEvent: event [
 	self convertButtonState: SDL2 mouseState modState: keysym mod modifiers: osEvent modifiers.
 	self convertNumpadKeysOf: osEvent.
 
-	osEvent repeat = 1 ifTrue: [ ^ self ].
 	^ osEvent deliver
 ]
 
@@ -700,7 +699,6 @@ OSSDL2BackendWindow >> visitKeyUpEvent: event [
 	self convertButtonState: SDL2 mouseState modState: keysym mod modifiers: osEvent modifiers.
 	self convertNumpadKeysOf: osEvent.
 
-	osEvent repeat = 1 ifTrue: [ ^ self ].
 	^ osEvent deliver
 ]
 
