@@ -15,7 +15,7 @@ Class {
 { #category : 'displaying' }
 ReGenerateAccessorsDriver class >> refactoringClass [
 
-	^ RBCreateAccessorsForVariableTransformation
+	^ ReCreateAccessorsForVariableTransformation
 ]
 
 { #category : 'configuration' }

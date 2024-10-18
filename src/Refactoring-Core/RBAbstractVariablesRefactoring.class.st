@@ -48,7 +48,7 @@ RBAbstractVariablesRefactoring >> abstractClassVariable: aString [
 
 	| refactoring rewriter nonMetaClass |
 	nonMetaClass := fromClass instanceSide.
-	refactoring := RBCreateAccessorsForVariableTransformation
+	refactoring := ReCreateAccessorsForVariableTransformation
 		               model: self model
 		               variable: aString
 		               class: nonMetaClass
@@ -88,7 +88,7 @@ RBAbstractVariablesRefactoring >> abstractClassVariables [
 RBAbstractVariablesRefactoring >> abstractInstanceVariable: aString [
 
 	| refactoring rewriter |
-	refactoring := RBCreateAccessorsForVariableTransformation
+	refactoring := ReCreateAccessorsForVariableTransformation
 		               model: self model
 		               variable: aString
 		               class: fromClass

@@ -5,7 +5,8 @@ Class {
 	#name : 'MyClassBeta',
 	#superclass : 'MyClassAlpha',
 	#instVars : [
-		'instVarB'
+		'instVarB',
+		'fooAccessor'
 	],
 	#classVars : [
 		'SharedVarB'
@@ -18,6 +19,18 @@ Class {
 { #category : 'dummy methods' }
 MyClassBeta >> duplicatedInSubclassMoreComplexBody [
 	^ 42 + 666
+]
+
+{ #category : 'accessing' }
+MyClassBeta >> fooAccessor [
+
+	^ fooAccessor
+]
+
+{ #category : 'accessing' }
+MyClassBeta >> fooAccessor: anObject [
+
+	fooAccessor := anObject
 ]
 
 { #category : 'dummy methods' }

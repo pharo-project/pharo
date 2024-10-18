@@ -1,7 +1,7 @@
-Extension { #name : 'RBCreateAccessorsForVariableTransformation' }
+Extension { #name : 'ReCreateAccessorsForVariableTransformation' }
 
 { #category : '*NautilusRefactoring' }
-RBCreateAccessorsForVariableTransformation >> whatToDisplayIn: aBrowser [
+ReCreateAccessorsForVariableTransformation >> whatToDisplayIn: aBrowser [
 
 	^ (self changes changes
 		select: [:change | {getterMethodName. setterMethodName} includes: change selector ])

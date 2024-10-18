@@ -46,5 +46,5 @@ SycGenerateVariableAccessorCommand >> prepareFullExecutionInContext: aToolContex
 { #category : 'factory method' }
 SycGenerateVariableAccessorCommand >> refactoringClass [
 
-	^ RBCreateAccessorsForVariableTransformation
+	^ ReCreateAccessorsForVariableTransformation
 ]
