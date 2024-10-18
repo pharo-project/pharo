@@ -11,7 +11,8 @@ Class {
 	#name : 'SycExtractTempCommand',
 	#superclass : 'SycSourceCodeRefactoringCommand',
 	#instVars : [
-		'tempName'
+		'tempName',
+		'toolContext'
 	],
 	#category : 'SystemCommands-SourceCodeCommands',
 	#package : 'SystemCommands-SourceCodeCommands'
@@ -25,18 +26,8 @@ SycExtractTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
 { #category : 'execution' }
 SycExtractTempCommand >> applyResultInContext: aSourceCodeContext [
 	super applyResultInContext: aSourceCodeContext.
-
+	
 	aSourceCodeContext showVariableNamed: tempName
-]
-
-{ #category : 'converting' }
-SycExtractTempCommand >> asRefactorings [
-
-	^ {RBExtractToTemporaryRefactoring
-		  extract: sourceNode sourceInterval
-		  to: tempName
-		  from: method selector
-		  in: method origin}
 ]
 
 { #category : 'accessing' }
@@ -50,12 +41,23 @@ SycExtractTempCommand >> defaultMenuItemName [
 ]
 
 { #category : 'execution' }
+SycExtractTempCommand >> execute [
+
+	ReExtractToTemporaryDriver new
+		extract: sourceNode sourceInterval
+		from: method selector
+		in: method origin;
+		scopes: toolContext refactoringScopes; runRefactoring
+]
+
+{ #category : 'testing' }
+SycExtractTempCommand >> isComplexRefactoring [
+	^ false
+]
+
+{ #category : 'execution' }
 SycExtractTempCommand >> prepareFullExecutionInContext: aSourceCodeContext [
 	super prepareFullExecutionInContext: aSourceCodeContext.
-
-	tempName := self morphicUIManager
-		request: 'New temp name'
-		initialAnswer: ''
-		title: 'Extract code to temp variable'.
-	tempName isEmptyOrNil ifTrue: [ CmdCommandAborted signal ]
+	
+	toolContext := aSourceCodeContext
 ]
