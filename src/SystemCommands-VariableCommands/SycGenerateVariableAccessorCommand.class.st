@@ -8,15 +8,6 @@ Class {
 	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : 'execution' }
-SycGenerateVariableAccessorCommand >> asRefactorings [
-
-	^self
-		createRefactorings: self refactoringClass
-		using: [ :refactoring :var |
-			refactoring classVariable: var isClassVariable ]
-]
-
 { #category : 'accessing' }
 SycGenerateVariableAccessorCommand >> defaultMenuIconName [
 	^ #smallAdd
@@ -27,6 +18,29 @@ SycGenerateVariableAccessorCommand >> defaultMenuItemName [
 	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
 
 	^ self refactoringClass menuItemString
+]
+
+{ #category : 'execution' }
+SycGenerateVariableAccessorCommand >> execute [
+	
+	(ReGenerateAccessorsDriver new 
+		targetClass: variables first definingClass;
+		scopes: toolContext refactoringScopes;
+		selectedVariables: (variables collect: [:each | each name ]) ) runRefactoring
+	
+
+]
+
+{ #category : 'factory method' }
+SycGenerateVariableAccessorCommand >> isComplexRefactoring [ 
+	
+	^ false
+]
+
+{ #category : 'execution' }
+SycGenerateVariableAccessorCommand >> prepareFullExecutionInContext: aToolContext [
+	super prepareFullExecutionInContext: aToolContext.
+	toolContext := aToolContext.
 ]
 
 { #category : 'factory method' }
