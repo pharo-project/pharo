@@ -86,6 +86,51 @@ RubTextEditorTest >> testNextWord [
 ]
 
 { #category : 'tests' }
+RubTextEditorTest >> testNextWordStopOnUpperCase [
+
+	| textSize |
+	string := 'loRem ipSum '.
+	editor addString: string.
+	textSize := string size.
+	self assert: (editor nextWord: -999 stopOnUpperCase: true) equals: 3. "Out of range means start of text"
+	self assert: (editor nextWord: 0 stopOnUpperCase: true) equals: 3. "Out of range means start of text"
+
+	1 to: 3 do: [ :i |
+		"From:   |loRem ipSum 
+		 To:     lo|Rem ipSum 
+		 Should be: lo|Rem ipSum "
+		self assert: (editor nextWord: i stopOnUpperCase: true) equals: 3 ].
+
+	4 to: 5 do: [ :i |
+		"From:   loR|em ipSum 
+		 To:     loRe|m ipSum 
+		 Should be: loRem| ipSum "
+		self assert: (editor nextWord: i stopOnUpperCase: true) equals: 6 ].
+
+
+	"Lorem| ipsum >> Lorem |ipsum"
+	self assert: (editor nextWord: 6 stopOnUpperCase: true) equals: 7.
+
+	7 to: 8 do: [ :i |
+		"From:   loRem |ipSum 
+		 To:     loRem i|pSum 
+		 Should be: loRem ip|Sum "
+		self assert: (editor nextWord: i stopOnUpperCase: true) equals: 9 ].
+
+	10 to: 11 do: [ :i |
+		"From:   loRem ip|Sum 
+		 To:     loRem ipSum| 
+		 Should be: loRem ipSum| "
+		self assert: (editor nextWord: i stopOnUpperCase: true) equals: 12 ].
+
+	"There is a space after ipsum:"
+	"Lorem ipsum| >> Lorem ipsum |"
+	self assert: (editor nextWord: 12 stopOnUpperCase: true) equals: 13.
+
+	self assert: (editor nextWord: 999 stopOnUpperCase: true) equals: textSize + 1. "Out of range"
+]
+
+{ #category : 'tests' }
 RubTextEditorTest >> testPreviousWord [
 
 	| textSize |
@@ -95,17 +140,54 @@ RubTextEditorTest >> testPreviousWord [
 
 	1 to: 7 do: [ :i |
 		"From:   |Lorem ipsum
-		 To:     Lore|m ipsum
-		 Should be: Lorem| ipsum"
+		 To:     Lorem |ipsum
+		 Should be: |Lorem ipsum"
 		self assert: (editor previousWord: i) equals: 1 ].
 
 	8 to: 13 do: [ :i |
 		"From:   Lorem |ipsum
-		 To:     Lorem ipsu|m
-		 Should be: Lorem ipsum|"
+		 To:     Lorem ipsum|
+		 Should be: Lorem |ipsum"
 		self assert: (editor previousWord: i) equals: 7 ].
 
 	self assert: (editor previousWord: 999) equals: 7. "Out of range"
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testPreviousWordStopOnUpperCase [
+
+	| textSize |
+	string := 'LoRem ipSum '.
+	editor addString: string.
+	textSize := string size.
+	self assert: (editor previousWord: -999 stopOnUpperCase: true) equals: 1. "Out of range"
+	self assert: (editor previousWord: 0 stopOnUpperCase: true) equals: 1. "Out of range"
+
+	1 to: 3 do: [ :i |
+		"From:   |LoRem ipSum 
+		 To:     Lo|Rem ipSum 
+		 Should be: |LoRem ipSum "
+		self assert: (editor previousWord: i stopOnUpperCase: true) equals: 1 ].
+
+	4 to: 7 do: [ :i |
+		"From:   LoR|em ipSum 
+		 To:     LoRem |ipSum 
+		 Should be: Lo|Rem ipSum "
+		self assert: (editor previousWord: i stopOnUpperCase: true) equals: 3 ].
+
+	8 to: 9 do: [ :i |
+		"From:   LoRem i|pSum 
+		 To:     LoRem ip|Sum 
+		 Should be: Lorem |ipsum"
+		self assert: (editor previousWord: i stopOnUpperCase: true) equals: 7 ].
+
+	10 to: 13 do: [ :i |
+		"From:   LoRem ipS|um 
+		 To:     LoRem ipSum|
+		 Should be: LoRem ip|Sum"
+		self assert: (editor previousWord: i stopOnUpperCase: true) equals: 9 ].
+
+	self assert: (editor previousWord: 999 stopOnUpperCase: true) equals: 9. "Out of range"
 ]
 
 { #category : 'tests' }
