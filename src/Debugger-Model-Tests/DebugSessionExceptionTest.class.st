@@ -7,6 +7,22 @@ Class {
 }
 
 { #category : 'helpers' }
+DebugSessionExceptionTest >> debuggedProcessException [
+
+	^ thisProcess
+		  evaluate: [ LocalProcessException value ]
+		  onBehalfOf: process
+]
+
+{ #category : 'helpers' }
+DebugSessionExceptionTest >> debuggedProcessException: anObject [
+
+	^ thisProcess
+		  evaluate: [ LocalProcessException value: anObject ]
+		  onBehalfOf: process
+]
+
+{ #category : 'helpers' }
 DebugSessionExceptionTest >> methodWithHalt [
 	<haltOrBreakpointForTesting>
 	self halt.
@@ -19,7 +35,7 @@ DebugSessionExceptionTest >> testDefaultDebuggerException [
 	self settingUpSessionAndProcessAndContextForBlock: [
 		self methodWithHalt ].
 	
-	self assert: LocalProcessException value equals: nil.
+	self assert: self debuggedProcessException equals: nil.
 	self assert: session exception equals: nil
 ]
 
@@ -28,12 +44,12 @@ DebugSessionExceptionTest >> testProcessExceptionPrevailsOverSessionException [
 
 	self settingUpSessionAndProcessAndContextForBlock: [
 		self methodWithHalt ].
-	
+
 	session exception: 1.
 	self assert: session exception equals: 1.
 	
-	LocalProcessException value: 2.
-	self assert: session exception equals: LocalProcessException value.
+	self debuggedProcessException: 2.
+	self assert: session exception equals: self debuggedProcessException.
 	self assert: session exception equals: 2
 ]
 
