@@ -41,7 +41,7 @@ RBInlineTemporaryRefactoring class >> model: aRBSmalltalk inline: anInterval fro
 RBInlineTemporaryRefactoring >> applicabilityPreconditions [ 
 	
 	^ {
-		(ReDefinesSelectorsCondition new definesSelectors: (Array with: selector) in: class).
+		(ReDefinesSelectorsCondition new definesSelectors: { selector } in: class).
 		(ReIsValidInstanceVariableName new name: assignmentNode variable name).
 		(ReSingleAssignmentCondition new
 			variableName: assignmentNode variable name; definingNode: sourceTree).
