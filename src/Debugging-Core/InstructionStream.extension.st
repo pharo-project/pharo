@@ -93,7 +93,7 @@ InstructionStream >> scanFor: scanBlock [
 	[pc <= end] whileTrue: 
 		[(scanBlock value: (byte := method at: pc)) ifTrue:
 			[^true].
-		 pc := pc + (encoderClass bytecodeSize: byte)].
+		 pc := pc + (encoderClass instructionSizeAt: pc of: method)].
 	^false
 ]
 

@@ -283,6 +283,11 @@ IRBytecodeGenerator >> goto: seqId [
 ]
 
 { #category : 'results' }
+IRBytecodeGenerator >> hasInlineCaches [
+	^ true
+]
+
+{ #category : 'results' }
 IRBytecodeGenerator >> hasPrimitive [
 	"do I have a primitive? Both normal primitive and quick return"
 	primNumber > 0 ifTrue: [ ^true ].
@@ -427,6 +432,17 @@ IRBytecodeGenerator >> mapBytesTo: instr [
 	This is later used to calculate the total byte offset of instruction in generated code,
 	see #bytecodes"
 	instrMap add: instr -> (bytes size + 1)
+]
+
+{ #category : 'private' }
+IRBytecodeGenerator >> methodSelectorIndexOf: object [
+
+	| index |
+
+	index := literals addMessageSelector: object.
+
+	"conversion from 1 based to 0 based"
+	^ index - 1
 ]
 
 { #category : 'private' }
@@ -645,7 +661,7 @@ IRBytecodeGenerator >> send: selector [
 			  genSendSpecial:
 			  (self encoderClass specialSelectors indexOf: selector)
 			  numArgs: nArgs ].
-	encoder genSend: (self literalIndexOf: selector) numArgs: nArgs
+	encoder genSend: (self methodSelectorIndexOf: selector) numArgs: nArgs
 ]
 
 { #category : 'instructions' }
@@ -653,7 +669,7 @@ IRBytecodeGenerator >> send: selector toSuperOf: behavior [
 	| index nArgs |
 	nArgs := selector numArgs.
 	stack pop: nArgs.
-	index := self literalIndexOf: selector.
+	index := self methodSelectorIndexOf: selector.
 
 	inBlock
 		ifTrue: [
@@ -668,8 +684,9 @@ IRBytecodeGenerator >> send: selector toSuperOf: behavior [
 { #category : 'results' }
 IRBytecodeGenerator >> spurVMHeader: literalsSize [
 	^ (CompiledMethod headerFlagForEncoder: self encoderClass) +
+		(self hasInlineCaches asBit bitShift: 28) +
 		(self numArgs bitShift: 24) +
-		( self numTemps bitShift: 18) +
+		(self numTemps bitShift: 18) +
 		literalsSize +
 		(self hasPrimitive asBit bitShift: 16)
 ]
