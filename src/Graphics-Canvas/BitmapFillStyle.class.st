@@ -35,13 +35,16 @@ BitmapFillStyle class >> fromForm: aForm [
 
 { #category : 'instance creation' }
 BitmapFillStyle class >> fromUser [
+
 	| fill |
+	self deprecated: 'This message doesn''t have senders and  '.
+	
 	fill := self form: Screenshot new formScreenshotFromUserSelection.
-	fill origin: 0@0.
+	fill origin: 0 @ 0.
 	fill direction: fill form width @ 0.
 	fill normal: 0 @ fill form height.
 	fill tileFlag: true. "So that we can fill arbitrary objects"
-	^fill
+	^ fill
 ]
 
 { #category : 'converting' }
