@@ -33,11 +33,11 @@ OmBlock >> atLocalName: aString ifPresent: presentBlockClosure ifAbsent: absentB
 	| index |
 	self checkIfMustRefreshBlock.
 
-	index := aString asInteger - self firstLocalNameAsInteger + 1.
+	index := aString extractIntegerPart - self firstLocalNameAsInteger + 1.
 
 	^ index > positions size
-		ifTrue: [ absentBlockClosure value ]
-		ifFalse: [presentBlockClosure value: (positions at: index) ]
+		  ifTrue: [ absentBlockClosure value ]
+		  ifFalse: [ presentBlockClosure value: (positions at: index) ]
 ]
 
 { #category : 'refreshing' }
@@ -58,7 +58,8 @@ OmBlock >> firstEntryReference [
 
 { #category : 'accessing' }
 OmBlock >> firstLocalNameAsInteger [
-	^ self firstEntryReference localName asInteger
+
+	^ self firstEntryReference localName extractIntegerPart
 ]
 
 { #category : 'initialization' }

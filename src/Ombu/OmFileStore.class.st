@@ -415,16 +415,17 @@ OmFileStore >> refreshEntryPositionsByLocalNameStartingAt: firstStreamPosition s
 	(+ would need special care of WideStrings)"
 
 	| localNameAsInteger |
-	localNameAsInteger := initialLocalName asInteger.
+	localNameAsInteger := initialLocalName extractIntegerPart.
 
-	self readEntriesWith: [:readStream |
+	self readEntriesWith: [ :readStream |
 		readStream position: firstStreamPosition.
 		self newEntryReader
 			stream: readStream;
 			entryPositionsDo: [ :entryPosition |
-				entryPositionsByLocalName at: localNameAsInteger asString put: entryPosition.
-				localNameAsInteger := localNameAsInteger + 1 ].
-		]
+				entryPositionsByLocalName
+					at: localNameAsInteger asString
+					put: entryPosition.
+				localNameAsInteger := localNameAsInteger + 1 ] ]
 ]
 
 { #category : 'accessing' }
