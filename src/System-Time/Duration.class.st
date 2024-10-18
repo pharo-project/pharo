@@ -100,10 +100,10 @@ Duration class >> readFrom: aStream [
 
 	| sign days hours minutes seconds nanos nanosBuffer |
 	sign := (aStream peekFor: $-) ifTrue: [-1] ifFalse: [1].
-	days := (aStream upTo: $:) asInteger sign: sign.
-	hours := (aStream upTo: $:) asInteger sign: sign.
-	minutes := (aStream upTo: $:) asInteger sign: sign.
-	seconds := (aStream upTo: $.) asInteger sign: sign.
+	days := (aStream upTo: $:) extractIntegerPart sign: sign.
+	hours := (aStream upTo: $:) extractIntegerPart sign: sign.
+	minutes := (aStream upTo: $:) extractIntegerPart sign: sign.
+	seconds := (aStream upTo: $.) extractIntegerPart sign: sign.
 	nanosBuffer := '000000000' copy.
 	nanos := nanosBuffer writeStream.
 	[aStream atEnd not and: [aStream peek isDigit]]
@@ -114,7 +114,7 @@ Duration class >> readFrom: aStream [
 		hours: hours
 		minutes: minutes
 		seconds: seconds
-		nanoSeconds: (nanosBuffer asInteger sign: sign)
+		nanoSeconds: (nanosBuffer extractIntegerPart sign: sign)
 ]
 
 { #category : 'instance creation simple' }

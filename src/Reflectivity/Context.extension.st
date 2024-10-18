@@ -55,7 +55,7 @@ Context >> currentBytecode: currentBytecode equalsToNewBytecode: newBytecode wit
 						  ifFalse: [ false ]
 						  ifTrue: [
 							  | currentJumpPc newJumpPc currentJumpBytecode newJumpBytecode |
-							  currentJumpPc := (currentSplitDescription at: 2) asInteger.
+							  currentJumpPc := (currentSplitDescription at: 2)  extractIntegerPart.
 							  newJumpPc := (newSplitDescription at: 2) asInteger.
 							  currentJumpBytecode := currentSymbolicBytecodes
 								                         detect: [ :csb |
