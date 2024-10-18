@@ -17,7 +17,7 @@ Class {
 RubTextEditorTest >> setUp [
 
 	super setUp.
-	editor := RubTextEditor forTextArea: RubTextFieldArea new.
+	editor := RubTextEditor forTextArea: RubEditingArea new.
 	"Add text with a paragraph"
 	string := 'Lorem ipsum '.
 	editor addString: string
@@ -69,10 +69,7 @@ RubTextEditorTest >> testNextWord [
 		 Should be: Lorem| ipsum"
 		self assert: (editor nextWord: i) equals: 6 ].
 
-	"Lorem| ipsum >> Lorem |ipsum"
-	self assert: (editor nextWord: 6) equals: 7.
-
-	7 to: 11 do: [ :i |
+	6 to: 11 do: [ :i |
 		"From:   Lorem |ipsum
 		 To:     Lorem ipsu|m
 		 Should be: Lorem ipsum|"
@@ -83,6 +80,72 @@ RubTextEditorTest >> testNextWord [
 	self assert: (editor nextWord: 12) equals: 13.
 
 	self assert: (editor nextWord: 999) equals: textSize + 1. "Out of range"
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testNextWordAtEndOfLineGoesToStartOfFirstWordOfNextLine [
+
+	editor addString: 'a
+	a
+a'.
+
+	self assert: (editor nextWord: 2) equals: 4
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testNextWordAtEndOfLineGoesToStartOfNextLine [
+
+	editor addString: 'a
+
+a'.
+
+	self assert: (editor nextWord: 2) equals: 3
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testNextWordAtLineWithSpacesGoesToEndOfCurrentLine [
+
+	editor addString: 'a  
+
+  a'.
+
+	self assert: (editor nextWord: 2) equals: 4
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testNextWordAtStartOfEmptyLineGoesToStartOfNextLine [
+
+	editor addString: 'a
+
+a'.
+
+	self assert: (editor nextWord: 3) equals: 4
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testNextWordAtStartOfFirstWordGoesToEndOfLine [
+
+	editor addString: 'a
+
+a'.
+
+	self assert: (editor nextWord: 4) equals: 5
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testNextWordGoesToEndOfCurrentWord [
+
+	editor addString: 'abc d'.
+
+	self assert: (editor nextWord: 3) equals: 4
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testNextWordSkipsCurrentSpacesAndGoesToEndOfCurrentWord [
+
+	editor addString: 'abc d'.
+
+	self assert: (editor nextWord: 4) equals: 6
 ]
 
 { #category : 'tests' }
@@ -99,13 +162,91 @@ RubTextEditorTest >> testPreviousWord [
 		 Should be: Lorem| ipsum"
 		self assert: (editor previousWord: i) equals: 1 ].
 
-	8 to: 13 do: [ :i |
+	8 to: 12 do: [ :i |
 		"From:   Lorem |ipsum
 		 To:     Lorem ipsu|m
 		 Should be: Lorem ipsum|"
 		self assert: (editor previousWord: i) equals: 7 ].
 
 	self assert: (editor previousWord: 999) equals: 7. "Out of range"
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testPreviousWordAtEmptyLineGoesToEndOfPreviousLine [
+
+	editor addString: 'a
+
+a'.
+
+	self assert: (editor previousWord: 3) equals: 2
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testPreviousWordAtEndOfFirstWordOfLineGoesToStartOfLine [
+
+	editor addString: 'a
+
+a'.
+
+	self assert: (editor previousWord: 5) equals: 4
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testPreviousWordAtLineWithSpacesGoesToStartOfCurrentLine [
+
+	editor addString: 'a
+
+  a'.
+
+	self assert: (editor previousWord: 6) equals: 4
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testPreviousWordAtStartOfLineGoesToEndOfLastWordOfPreviousLine [
+
+	editor addString: 'a	
+a'.
+
+	self assert: (editor previousWord: 4) equals: 2
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testPreviousWordAtStartOfLineGoesToPreviousLine [
+
+	editor addString: 'a
+
+a'.
+
+	self assert: (editor previousWord: 4) equals: 3
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testPreviousWordGoesToStartOfCurrentWord [
+
+	editor addString: 'abc def'.
+
+	self assert: (editor previousWord: 6) equals: 5
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testPreviousWordSkipsCurrentSpacesAndGoesToStartOfCurrentWord [
+
+	editor addString: 'abc def'.
+
+	self assert: (editor previousWord: 5) equals: 1
+]
+
+{ #category : 'test-selection' }
+RubTextEditorTest >> testSelectFromBeginToEnd [
+
+	editor addString: 'a
+
+a'.
+
+	editor selectMark: 1 point: 5.
+	self assert: editor selection equals: 'a
+
+a'.
 ]
 
 { #category : 'tests' }
@@ -170,9 +311,9 @@ RubTextEditorTest >> testSelectWordMarkPoint [
 	self assert: editor markIndex equals: 7.
 	self assert: editor pointIndex equals: 12.
 
-	editor selectWordMark: 9 point: 12. "Lorem ipsum dolor sit amet >> Lorem [ipsum ]dolor sit amet "
+	editor selectWordMark: 9 point: 12. "Lorem ipsum dolor sit amet >> Lorem [ipsum dolor] sit amet "
 	self assert: editor markIndex equals: 7.
-	self assert: editor pointIndex equals: 13.
+	self assert: editor pointIndex equals: 18.
 
 	editor selectWordMark: 3 point: 24. "Lorem ipsum dolor sit amet >> [Lorem ipsum dolor sit amet ]"
 	self assert: editor markIndex equals: 1.
