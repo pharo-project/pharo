@@ -13,7 +13,9 @@ Process >> complete: aContext [
 	suspendedContext := pair first.
 	^ pair second
 		ifNil: [ suspendedContext ]
-		ifNotNil: [ :error | error completeProcess: self with: aContext ]
+		ifNotNil: [ :error | 
+			LocalProcessException value: error.
+			error completeProcess: self with: aContext ]
 ]
 
 { #category : '*Debugging-Core' }
