@@ -101,12 +101,6 @@ ReRenameClassDriver >> runRefactoring [
 	
 ]
 
-{ #category : 'accessing' }
-ReRenameClassDriver >> scopes: aScope [
-
-	scopes := aScope
-]
-
 { #category : 'validation' }
 ReRenameClassDriver >> validateName: aName onPresenter: presenter [ 
 	
