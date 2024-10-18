@@ -34,8 +34,7 @@ TEST_NAME_PREFIX=$(basename `find ${CACHE} -name "Pharo*.zip" | head -n 1` | cut
 #  - removing the prefix "Pharo"
 TEST_VM_VERSION=`echo ${TEST_NAME_PREFIX} | cut -d'.' -f 1 | cut -d'-' -f 1 | cut -c6-`0
 
-#Use always the latest VM
-TEST_VM_KIND="vmLatest"
+TEST_VM_KIND="vm"
 
 ${BOOTSTRAP_REPOSITORY:-.}/bootstrap/scripts/getPharoVM.sh ${TEST_VM_VERSION} ${TEST_VM_KIND} ${1}
 
