@@ -1,15 +1,16 @@
 "
 A Protocol is a categorization of methods in Pharo. 
-A class has methods, and the methods are classified into protocols.
-A class holds my instances (for now through ClassOrganization but we want to remove this class in the future) and I hold the selectors of the methods that are inside me.
-I have a name that is used in browsers to display the different protocols.
+A class has methods, and the methods are classified into protocols. We currently have 1 protocol by method.
+A class holds my instances and I hold the selectors of the methods that are inside me.
+I have a name that is used in browsers to display the different protocols and I know which class owns me.
 "
 Class {
 	#name : 'Protocol',
 	#superclass : 'Object',
 	#instVars : [
 		'name',
-		'methodSelectors'
+		'methodSelectors',
+		'owningClass'
 	],
 	#category : 'Kernel-CodeModel-Classes',
 	#package : 'Kernel-CodeModel',
@@ -29,6 +30,14 @@ Protocol class >> named: aStrings [
 
 	^ self new
 		  name: aStrings;
+		  yourself
+]
+
+{ #category : 'instance creation' }
+Protocol class >> named: aString class: aClass [
+
+	^ (self named: aString)
+		  owningClass: aClass;
 		  yourself
 ]
 
@@ -110,6 +119,19 @@ Protocol >> name [
 { #category : 'accessing' }
 Protocol >> name: anObject [
 	name := anObject asSymbol
+]
+
+{ #category : 'accessing' }
+Protocol >> owningClass [
+	"The owning class is the class in which I am defined."
+
+	^ owningClass
+]
+
+{ #category : 'accessing' }
+Protocol >> owningClass: aClass [
+
+	owningClass := aClass
 ]
 
 { #category : 'printing' }
