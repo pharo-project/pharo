@@ -108,7 +108,9 @@ DebugSession >> createModelForContext: aContext [
 { #category : 'accessing' }
 DebugSession >> exception [
 
-	^ LocalProcessException value ifNil: [ exception ]
+	^ (thisProcess
+		   evaluate: [ LocalProcessException value ]
+		   onBehalfOf: interruptedProcess) ifNil: [ exception ]
 ]
 
 { #category : 'accessing' }
