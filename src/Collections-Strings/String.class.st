@@ -694,7 +694,7 @@ String >> asInteger [
 	"'1.234' asInteger >>> 1"
 
 	(NumberParser isNumber: self) ifFalse: [
-		self error: 'The string is not a valid integer' ].
+		self error: 'The string ', self surroundedBySingleQuotes , ' is not a valid integer' ].
 	^ NumberParser parse: self
 ]
 
