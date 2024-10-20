@@ -10,7 +10,7 @@ I am a driver object responsible for invoking refactorings. I am responsible for
 
 "
 Class {
-	#name : 'RBInteractionDriver',
+	#name : 'ReInteractionDriver',
 	#superclass : 'Object',
 	#instVars : [
 		'model',
@@ -28,26 +28,26 @@ Class {
 }
 
 { #category : 'testing' }
-RBInteractionDriver class >> isAbstract [
+ReInteractionDriver class >> isAbstract [
 
-	^ self == RBInteractionDriver
+	^ self == ReInteractionDriver
 ]
 
 { #category : 'displaying' }
-RBInteractionDriver class >> menuItemString [
+ReInteractionDriver class >> menuItemString [
 	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
 
 	^ self refactoringClass menuItemString
 ]
 
 { #category : 'displaying' }
-RBInteractionDriver class >> refactoringClass [
+ReInteractionDriver class >> refactoringClass [
 
 	self subclassResponsibility
 ]
 
 { #category : 'execution' }
-RBInteractionDriver >> application [
+ReInteractionDriver >> application [
 	"For now use the singleton. Normally the application should be passed from Calypso and the command"
 	
 	^ StPharoApplication current
@@ -55,7 +55,7 @@ RBInteractionDriver >> application [
 ]
 
 { #category : 'execution' }
-RBInteractionDriver >> applyChanges [
+ReInteractionDriver >> applyChanges [
 
 	| applied |
 	applied := self openPreviewWithChanges: self changes.
@@ -65,7 +65,7 @@ RBInteractionDriver >> applyChanges [
 ]
 
 { #category : 'execution' }
-RBInteractionDriver >> changes [
+ReInteractionDriver >> changes [
 	"Drivers should not call generateChanges of Refactoring because generateChanges is performing the preconditions and raising errors 
 	The API method generateChanges is for refactoring scripting."
 	
@@ -74,20 +74,20 @@ RBInteractionDriver >> changes [
 ]
 
 { #category : 'private' }
-RBInteractionDriver >> defaultInformDialog [
+ReInteractionDriver >> defaultInformDialog [
 
   ^ self application newInform
 ]
 
 { #category : 'configuration' }
-RBInteractionDriver >> defaultRequestDialog [
+ReInteractionDriver >> defaultRequestDialog [
 	"We do not use a subclassResponsibility because all the drivers do not have to."
 
 	^ SpRequestDialog new
 ]
 
 { #category : 'configuration' }
-RBInteractionDriver >> defaultSelectDialog [
+ReInteractionDriver >> defaultSelectDialog [
 	"We do not use a subclassResponsibility because all the drivers do not have to."
 	
 	^ self
@@ -95,33 +95,33 @@ RBInteractionDriver >> defaultSelectDialog [
 ]
 
 { #category : 'execution' }
-RBInteractionDriver >> furtherActionFor: aReport [
+ReInteractionDriver >> furtherActionFor: aReport [
 	
 	aReport browse
 ]
 
 { #category : 'private' }
-RBInteractionDriver >> informConditions: conditions [ 
+ReInteractionDriver >> informConditions: conditions [ 
 	"The receiver has multiple failed applicability conditions and more than one could fail, inform all failures"
 
 	conditions do: [ : cond | self inform: cond errorString ].
 ]
 
 { #category : 'private' }
-RBInteractionDriver >> informDialog [
+ReInteractionDriver >> informDialog [
 	"I'm hook to inject mock in tests. The driver should specialize defaultInformDialog"
 	
 	^ informDialog ifNil: [ informDialog := self defaultInformDialog ]
 ]
 
 { #category : 'private' }
-RBInteractionDriver >> informDialog: aDialog [
+ReInteractionDriver >> informDialog: aDialog [
 
 	 informDialog := aDialog
 ]
 
 { #category : 'initialization' }
-RBInteractionDriver >> initialize [
+ReInteractionDriver >> initialize [
 
 	super initialize.
 	stoppedBeforeApplyingRefactoring := false.
@@ -129,19 +129,19 @@ RBInteractionDriver >> initialize [
 ]
 
 { #category : 'accessing' }
-RBInteractionDriver >> model [
+ReInteractionDriver >> model [
 	"Answer the receiver's <RBBrowserEnvironment>"
 
 	^ model
 ]
 
 { #category : 'accessing' }
-RBInteractionDriver >> model: aRBBrowserEnvironment [ 
+ReInteractionDriver >> model: aRBBrowserEnvironment [ 
 	model := aRBBrowserEnvironment
 ]
 
 { #category : 'execution' }
-RBInteractionDriver >> openPreviewWithChanges: changes [
+ReInteractionDriver >> openPreviewWithChanges: changes [
 	
 	^ (self previewPresenterClass
 		 changes: changes
@@ -152,7 +152,7 @@ RBInteractionDriver >> openPreviewWithChanges: changes [
 ]
 
 { #category : 'configuration' }
-RBInteractionDriver >> previewPresenterClass [
+ReInteractionDriver >> previewPresenterClass [
 
 	^ previewPresenterClass ifNil: [ previewPresenterClass := StRefactoringPreviewPresenter ] 
 	
@@ -160,7 +160,7 @@ RBInteractionDriver >> previewPresenterClass [
 ]
 
 { #category : 'configuration' }
-RBInteractionDriver >> previewPresenterClass: aClass [
+ReInteractionDriver >> previewPresenterClass: aClass [
 
 	 previewPresenterClass := aClass
 	
@@ -168,44 +168,44 @@ RBInteractionDriver >> previewPresenterClass: aClass [
 ]
 
 { #category : 'resources' }
-RBInteractionDriver >> refactoring [
+ReInteractionDriver >> refactoring [
 	^ refactoring
 ]
 
 { #category : 'utilities' }
-RBInteractionDriver >> refactoringScopeOn: aScope [
+ReInteractionDriver >> refactoringScopeOn: aScope [
 
 	^ RBNamespace onEnvironment: aScope asRBEnvironment
 ]
 
 { #category : 'private' }
-RBInteractionDriver >> requestDialog [
+ReInteractionDriver >> requestDialog [
 	"I'm hook for the injection of mock in tests. Subclasses should only redefine defaultRequestDialog if needed."
 	
 	^ requestDialog ifNil: [ requestDialog := self defaultRequestDialog ]
 ]
 
 { #category : 'accessing' }
-RBInteractionDriver >> requestDialog: aStRequestDialog [
+ReInteractionDriver >> requestDialog: aStRequestDialog [
 
 	requestDialog := aStRequestDialog
 ]
 
 { #category : 'execution' }
-RBInteractionDriver >> runRefactoring [
+ReInteractionDriver >> runRefactoring [
 
 	self subclassResponsibility
 ]
 
 { #category : 'configuration' }
-RBInteractionDriver >> selectDialog [
+ReInteractionDriver >> selectDialog [
 	
 	^ selectDialog ifNil: [ selectDialog := self defaultSelectDialog ].
 	
 ]
 
 { #category : 'configuration' }
-RBInteractionDriver >> selectDialog: aDialog [
+ReInteractionDriver >> selectDialog: aDialog [
 	
 	selectDialog := aDialog 
 	
