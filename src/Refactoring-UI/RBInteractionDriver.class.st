@@ -197,6 +197,18 @@ RBInteractionDriver >> runRefactoring [
 	self subclassResponsibility
 ]
 
+{ #category : 'accessing' }
+RBInteractionDriver >> scopes [
+
+	^ scopes
+]
+
+{ #category : 'accessing' }
+RBInteractionDriver >> scopes: anObject [
+
+	scopes := anObject
+]
+
 { #category : 'configuration' }
 RBInteractionDriver >> selectDialog [
 	
