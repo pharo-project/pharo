@@ -1351,6 +1351,14 @@ String >> expandMacrosWithArguments: anArray [
 { #category : 'converting' }
 String >> extractIntegerPart [
 	"Returns the first signed integer it can find or nil."
+	
+	"'1' extractIntegerPart >>> 1"
+	"'-1' extractIntegerPart >>> -1"
+	"'10qwe' extractIntegerPart >>> 10"
+	"'a10q' extractIntegerPart >>> 10"
+	"'a10q22' extractIntegerPart >>> 10"
+	"'1.234' extractIntegerPart >>> 1"
+	"'a' extractIntegerPart >>> nil"
 
 	| start stream |
 	start := self findFirst: [ :char | char isDigit ].
