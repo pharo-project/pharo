@@ -50,7 +50,7 @@ RBAbstractTransformationTest >> testAPI [
 	"all classes must implement #storeOn: and #privateTransform"
 
 	| incompleteTransformations |
-	incompleteTransformations := RBTransformation allSubclasses
+	incompleteTransformations := ReTransformation allSubclasses
 		select: [ :each |
 			| selectors |
 			selectors := each methods collect: [:m | m selector].
@@ -73,7 +73,7 @@ RBAbstractTransformationTest >> testBuildSelectorStringWithPermuteMapAndNewArgum
 	permutations := 1 to: 3.
 	args := #().
 	
-	trans := RBAbstractTransformation new.
+	trans := ReAbstractTransformation new.
 	selectorString := trans buildSelectorString: selector withPermuteMap: permutations andNewArguments: args.
 	 
 	self assert: selectorString equals: 'a123: ``@arg1 b123: ``@arg2 c123: ``@arg3 '
@@ -89,7 +89,7 @@ RBAbstractTransformationTest >> testBuildSelectorStringWithPermuteMapAndNewArgum
 	 			 RBArgumentName name: 'argM' value: '5'
 			  }.
 	
-	trans := RBAbstractTransformation new.
+	trans := ReAbstractTransformation new.
 	selectorString := trans buildSelectorString: selector withPermuteMap: permutations andNewArguments: args.
 	 
 	self assert: selectorString equals: 'a123: ``@arg1 c123: (5) b123: ([ :each | each + 2 ]) '
@@ -103,7 +103,7 @@ RBAbstractTransformationTest >> testBuildSelectorStringWithPermuteMapAndNewArgum
 	permutations := #(2 3 1).
 	args := #().
 	
-	trans := RBAbstractTransformation new.
+	trans := ReAbstractTransformation new.
 	selectorString := trans buildSelectorString: selector withPermuteMap: permutations andNewArguments: args.
 	 
 	self assert: selectorString equals: 'b123: ``@arg2 a123: ``@arg3 c123: ``@arg1 '
@@ -117,7 +117,7 @@ RBAbstractTransformationTest >> testBuildSelectorStringWithPermuteMapAndNewArgum
 	permutations := #(2 -1 1).
 	args := { RBArgumentName name: 'anArg' value: 'OrderedCollection new' }.
 	
-	trans := RBAbstractTransformation new.
+	trans := ReAbstractTransformation new.
 	selectorString := trans buildSelectorString: selector withPermuteMap: permutations andNewArguments: args.
 	 
 	self assert: selectorString equals: 'b123: ``@arg2 a123: (OrderedCollection new) c123: ``@arg1 '
@@ -131,7 +131,7 @@ RBAbstractTransformationTest >> testBuildSelectorStringWithPermuteMapAndNewArgum
 	permutations := #(1).
 	args := #().
 	
-	trans := RBAbstractTransformation new.
+	trans := ReAbstractTransformation new.
 	selectorString := trans buildSelectorString: selector withPermuteMap: permutations andNewArguments: args.
 	 
 	self assert: selectorString equals: 'b123'

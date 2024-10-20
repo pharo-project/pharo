@@ -5,7 +5,7 @@ For example, the propagation of a 'message rename' is to change the senders of t
 "
 Class {
 	#name : 'EpRBPropagateRefactoring',
-	#superclass : 'RBRefactoring',
+	#superclass : 'ReRefactoring',
 	#instVars : [
 		'targetRefactoring'
 	],

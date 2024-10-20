@@ -44,7 +44,7 @@ RBRemoveClassTransformation class >> cannotRemoveTopLevelClassErrorMesssage [
 RBRemoveClassTransformation class >> classNames: aCollection [
 
 	^ self
-		model: RBTransformation new model
+		model: ReTransformation new model
 		classNames: aCollection
 ]
 

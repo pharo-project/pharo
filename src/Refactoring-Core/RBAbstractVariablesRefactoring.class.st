@@ -6,7 +6,7 @@ For example RBMoveMethodRefactoring uses me.
 "
 Class {
 	#name : 'RBAbstractVariablesRefactoring',
-	#superclass : 'RBRefactoring',
+	#superclass : 'ReRefactoring',
 	#instVars : [
 		'tree',
 		'fromClass',

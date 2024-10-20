@@ -5,7 +5,7 @@ I only provide a helper method for generating  selector names.
 "
 Class {
 	#name : 'RBMethodRefactoring',
-	#superclass : 'RBRefactoring',
+	#superclass : 'ReRefactoring',
 	#instVars : [
 		'class'
 	],
