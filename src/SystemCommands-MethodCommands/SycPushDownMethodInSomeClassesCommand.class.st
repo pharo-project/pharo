@@ -32,7 +32,7 @@ SycPushDownMethodInSomeClassesCommand >> defaultMenuItemName [
 { #category : 'execution' }
 SycPushDownMethodInSomeClassesCommand >> executeRefactorings [
 
-	(RBPushDownMethodInSomeClassesDriver
+	(RePushDownMethodInSomeClassesDriver
 		model: model
 		scopes: refactoringScopes
 		pushDownMethods: methods) runRefactoring

@@ -12,7 +12,7 @@ You can create my instance and execute the refactoring by running:
 ```
 "
 Class {
-	#name : 'RBPushDownMethodInSomeClassesDriver',
+	#name : 'RePushDownMethodInSomeClassesDriver',
 	#superclass : 'RePushDownMethodDriver',
 	#instVars : [
 		'classes'
@@ -23,7 +23,7 @@ Class {
 }
 
 { #category : 'resources' }
-RBPushDownMethodInSomeClassesDriver >> configureRefactoring [
+RePushDownMethodInSomeClassesDriver >> configureRefactoring [
 
 	refactoring :=  RBPushDownMethodRefactoring
 		model: model
@@ -33,14 +33,14 @@ RBPushDownMethodInSomeClassesDriver >> configureRefactoring [
 ]
 
 { #category : 'execution' }
-RBPushDownMethodInSomeClassesDriver >> gatherUserInput [
+RePushDownMethodInSomeClassesDriver >> gatherUserInput [
 
 	super gatherUserInput.
 	classes := self selectClasses
 ]
 
 { #category : 'initialization' }
-RBPushDownMethodInSomeClassesDriver >> model: aRBNamespace scopes: refactoringScopes pushDownMethods: methodsList [
+RePushDownMethodInSomeClassesDriver >> model: aRBNamespace scopes: refactoringScopes pushDownMethods: methodsList [
 
 	model := aRBNamespace.
 	scopes := refactoringScopes.
@@ -49,7 +49,7 @@ RBPushDownMethodInSomeClassesDriver >> model: aRBNamespace scopes: refactoringSc
 ]
 
 { #category : 'resources' }
-RBPushDownMethodInSomeClassesDriver >> refactoring [
+RePushDownMethodInSomeClassesDriver >> refactoring [
 
 	refactoring :=  RBPushDownMethodRefactoring
 		model: model
@@ -59,7 +59,7 @@ RBPushDownMethodInSomeClassesDriver >> refactoring [
 ]
 
 { #category : 'execution' }
-RBPushDownMethodInSomeClassesDriver >> runRefactoring [
+RePushDownMethodInSomeClassesDriver >> runRefactoring [
 
 	self gatherUserInput.
 	methods ifNil: [ ^ self ].
@@ -69,7 +69,7 @@ RBPushDownMethodInSomeClassesDriver >> runRefactoring [
 ]
 
 { #category : 'execution' }
-RBPushDownMethodInSomeClassesDriver >> selectClasses [
+RePushDownMethodInSomeClassesDriver >> selectClasses [
 
 	| dialog |
 	dialog := StVariablesSelectionPresenter
