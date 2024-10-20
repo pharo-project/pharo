@@ -12,7 +12,7 @@ Script
 ```
 "
 Class {
-	#name : 'RBRemoveMethodsInHierarchyRefactoring',
+	#name : 'ReRemoveMethodsInHierarchyRefactoring',
 	#superclass : 'ReRemoveMethodsRefactoring',
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
@@ -20,13 +20,13 @@ Class {
 }
 
 { #category : 'removing' }
-RBRemoveMethodsInHierarchyRefactoring class >> selectors: aSelectorsCollection from: aClass [ 
+ReRemoveMethodsInHierarchyRefactoring class >> selectors: aSelectorsCollection from: aClass [ 
 	
 	^ self new selectors: aSelectorsCollection from: aClass
 ]
 
 { #category : 'transforming' }
-RBRemoveMethodsInHierarchyRefactoring >> initializeRefactorings [
+ReRemoveMethodsInHierarchyRefactoring >> initializeRefactorings [
 
 	classSelectorMapping keysAndValuesDo: [ :class :selectors |
 		class allSubclasses do: [ :aClass |
@@ -34,7 +34,7 @@ RBRemoveMethodsInHierarchyRefactoring >> initializeRefactorings [
 ]
 
 { #category : 'transforming' }
-RBRemoveMethodsInHierarchyRefactoring >> remove: aSelectorsCollection in: aClass [
+ReRemoveMethodsInHierarchyRefactoring >> remove: aSelectorsCollection in: aClass [
 
 	| containingMethods |
 	containingMethods := aSelectorsCollection select: [ :sel |
@@ -47,7 +47,7 @@ RBRemoveMethodsInHierarchyRefactoring >> remove: aSelectorsCollection in: aClass
 ]
 
 { #category : 'accessing' }
-RBRemoveMethodsInHierarchyRefactoring >> selectors: aSelectorsCollection from: aClass [
+ReRemoveMethodsInHierarchyRefactoring >> selectors: aSelectorsCollection from: aClass [
 
 	super selectors: aSelectorsCollection from: aClass.
 	self initializeRefactorings 
