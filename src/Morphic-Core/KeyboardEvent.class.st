@@ -54,7 +54,8 @@ KeyboardEvent >> hash [
 KeyboardEvent >> initialize [
 
 	super initialize.
-	supressNextKeyPress := false
+	supressNextKeyPress := false.
+	isRepeat := false
 ]
 
 { #category : 'testing' }
