@@ -507,6 +507,7 @@ String >> = aString [
 
 	" 'def' = 'abc' >>> false"
 
+	(Symbol strictComparison and: [ aString isSymbol ]) ifTrue: [ ^ false ].
 	(aString isString and: [ self size = aString size ]) ifFalse: [ ^ false ].
 	^ (self compare: self with: aString) = 0
 ]
@@ -1008,7 +1009,7 @@ String >> copyReplaceAll: oldSubstring with: newSubstring [
 	"Answer a copy of the receiver in which all occurrences of oldSubstring have been replaced by newSubstring"
 	"('ab cd ab ef ab' copyReplaceAll: 'ab' with: 'zk') >>> 'zk cd zk ef zk'"
     | idx |
-    self = oldSubstring ifTrue: [ ^ newSubstring copy ].
+    (self sameContents: oldSubstring) ifTrue: [ ^ newSubstring copy ].
     oldSubstring isEmpty ifTrue: [ ^ self copy ].
     idx := 1.
     ^ self species new: self size streamContents: [ :stream | | foundIdx |

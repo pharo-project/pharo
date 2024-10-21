@@ -834,7 +834,7 @@ ClassDescription >> protocolNameOfSelector: aSelector [
 { #category : 'protocols' }
 ClassDescription >> protocolNamed: aString [
 
-	^ self protocolNamed: aString ifAbsent: [ NotFound signalFor: aString ]
+	^ self protocolNamed: aString asSymbol ifAbsent: [ NotFound signalFor: aString ]
 ]
 
 { #category : 'protocols' }

@@ -196,7 +196,7 @@ PointerLayout >> resolveSlot: aName [
 
 { #category : 'accessing' }
 PointerLayout >> resolveSlot: aName ifFound: foundBlock ifNone: noneBlock [
-	^ slotScope resolveSlot: aName ifFound: foundBlock ifNone: noneBlock
+	^ slotScope resolveSlot: aName asSymbol ifFound: foundBlock ifNone: noneBlock
 ]
 
 { #category : 'testing' }

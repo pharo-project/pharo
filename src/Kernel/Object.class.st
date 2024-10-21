@@ -1623,6 +1623,11 @@ Object >> retryWithGC: execBlock until: testBlock [
 	^execBlock value
 ]
 
+{ #category : 'comparing' }
+Object >> sameContents: anObject [
+	^ self = anObject
+]
+
 { #category : 'write barrier' }
 Object >> setIsReadOnlyObject: aBoolean [
 	"If the VM supports read-only objects it will not write to read-only objects.

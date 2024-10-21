@@ -121,7 +121,7 @@ FFIFunctionParser >> parseArgument [
 			argName := argName.
 			indirectIndex := self parseInt ].
 	"for sole 'void' fake argument "
-	(typeAndPtrArity = #('void' 0) and: [ argName isNil ])
+	((typeAndPtrArity first sameContents: 'void') and: [ typeAndPtrArity second = 0 and: [ argName isNil ]])
 		ifTrue: [ ^ nil ].
 	argument := self
 		argName: argName
