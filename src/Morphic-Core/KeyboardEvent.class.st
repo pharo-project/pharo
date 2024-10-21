@@ -90,9 +90,9 @@ KeyboardEvent >> isRepeat [
 ]
 
 { #category : 'accessing' }
-KeyboardEvent >> isRepeat: anObject [
+KeyboardEvent >> isRepeat: aBoolean [
 
-	isRepeat := anObject
+	isRepeat := aBoolean
 ]
 
 { #category : 'keyboard' }
