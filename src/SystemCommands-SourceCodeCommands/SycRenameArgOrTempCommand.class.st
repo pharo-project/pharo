@@ -10,7 +10,8 @@ Class {
 	#name : 'SycRenameArgOrTempCommand',
 	#superclass : 'SycSourceCodeRefactoringCommand',
 	#instVars : [
-		'newName'
+		'newName',
+		'toolContext'
 	],
 	#category : 'SystemCommands-SourceCodeCommands',
 	#package : 'SystemCommands-SourceCodeCommands'
@@ -30,15 +31,6 @@ SycRenameArgOrTempCommand >> applyResultInContext: aSourceCodeContext [
 	aSourceCodeContext showVariableNamed: newName
 ]
 
-{ #category : 'execution' }
-SycRenameArgOrTempCommand >> asRefactorings [
-	^ {RBRenameArgumentOrTemporaryRefactoring
-		renameTemporaryFrom: sourceNode sourceInterval
-		to: newName
-		in: method origin
-		selector: method selector}
-]
-
 { #category : 'accessing' }
 SycRenameArgOrTempCommand >> defaultMenuIconName [
 	^ #edit
@@ -50,12 +42,25 @@ SycRenameArgOrTempCommand >> defaultMenuItemName [
 ]
 
 { #category : 'execution' }
-SycRenameArgOrTempCommand >> prepareFullExecutionInContext: aSourceCodeContext [
-	super prepareFullExecutionInContext: aSourceCodeContext.
+SycRenameArgOrTempCommand >> execute [
 
-	newName := self morphicUIManager
-		request: 'New name of the variable'
-		initialAnswer: sourceNode name
-		title: 'Rename a temp variable'.
-	newName isEmptyOrNil | (newName = sourceNode name) ifTrue: [ CmdCommandAborted signal ]
+	^ (ReRenameArgumentOrTemporaryDriver new
+		   sourceNode: sourceNode;
+		   method: method;
+		   scopes: toolContext refactoringScopes;
+		   yourself) runRefactoring
+]
+
+{ #category : 'testing' }
+SycRenameArgOrTempCommand >> isComplexRefactoring [
+
+	^ false
+]
+
+{ #category : 'execution' }
+SycRenameArgOrTempCommand >> prepareFullExecutionInContext: aToolContext [
+
+	super prepareFullExecutionInContext: aToolContext.
+
+	toolContext := aToolContext
 ]

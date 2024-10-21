@@ -141,8 +141,3 @@ ReExtractMethodDriver >> runRefactoring [
 	"self configureMessage."
 	self applyChanges 
 ]
-
-{ #category : 'accessing' }
-ReExtractMethodDriver >> scopes: aCollection [ 
-	scopes := aCollection
-]
