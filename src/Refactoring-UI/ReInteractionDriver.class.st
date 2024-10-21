@@ -198,13 +198,13 @@ ReInteractionDriver >> runRefactoring [
 ]
 
 { #category : 'accessing' }
-RBInteractionDriver >> scopes [
+ReInteractionDriver >> scopes [
 
 	^ scopes
 ]
 
 { #category : 'accessing' }
-RBInteractionDriver >> scopes: anObject [
+ReInteractionDriver >> scopes: anObject [
 
 	scopes := anObject
 ]

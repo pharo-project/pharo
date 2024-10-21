@@ -90,9 +90,9 @@ StRequestClassPresenter >> packageName [
 ]
 
 { #category : 'accessing - model' }
-StRequestClassPresenter >> setModelBeforeInitialization: aRBInteractionDriver [
+StRequestClassPresenter >> setModelBeforeInitialization: anInteractionDriver [
 
-	driver := aRBInteractionDriver
+	driver := anInteractionDriver
 ]
 
 { #category : 'initialization' }
