@@ -14,7 +14,7 @@ You can create my instance and execute the refactoring by running:
 "
 Class {
 	#name : 'RBMoveMethodsToClassSideDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#category : 'Refactoring-UI-Drivers to migrate to new architecture',
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers to migrate to new architecture'
@@ -47,7 +47,7 @@ RBMoveMethodsToClassSideDriver >> runRefactoring [
 					          openModal.
 				dialog ifTrue: [
 					self furtherActionFor:
-						(RBOverrideMethod new refactoring: refactoring) ].
+						(ReOverrideMethod new refactoring: refactoring) ].
 				err return ]
 ]
 

@@ -1,5 +1,5 @@
 Class {
-	#name : 'RBAbstractTransformation',
+	#name : 'ReAbstractTransformation',
 	#superclass : 'Object',
 	#instVars : [
 		'model',
@@ -14,25 +14,25 @@ Class {
 }
 
 { #category : 'displaying' }
-RBAbstractTransformation class >> basicMenuItemString [
+ReAbstractTransformation class >> basicMenuItemString [
 
 	^ self subclassResponsibility
 ]
 
 { #category : 'cleanup' }
-RBAbstractTransformation class >> cleanUp [
+ReAbstractTransformation class >> cleanUp [
 	"RefactoringOptions holds on to blocks, we should make sure to recreate them
 	 so the block references the current method"
 	self initializeRefactoringOptions
 ]
 
 { #category : 'class initialization' }
-RBAbstractTransformation class >> initialize [
+ReAbstractTransformation class >> initialize [
 	self initializeRefactoringOptions
 ]
 
 { #category : 'private - initialization' }
-RBAbstractTransformation class >> initializeRefactoringOptions [
+ReAbstractTransformation class >> initializeRefactoringOptions [
 	RefactoringOptions := IdentityDictionary new.
 	RefactoringOptions
 		at: #implementorToInline
@@ -67,13 +67,13 @@ RBAbstractTransformation class >> initializeRefactoringOptions [
 ]
 
 { #category : 'testing' }
-RBAbstractTransformation class >> isTransformation [
+ReAbstractTransformation class >> isTransformation [
 
 	^ false
 ]
 
 { #category : 'displaying' }
-RBAbstractTransformation class >> menuItemString [
+ReAbstractTransformation class >> menuItemString [
 
 	^ (self isTransformation
 		   ifTrue: [ '(T) ' ]
@@ -81,25 +81,25 @@ RBAbstractTransformation class >> menuItemString [
 ]
 
 { #category : 'accessing' }
-RBAbstractTransformation class >> refactoringOptions [
+ReAbstractTransformation class >> refactoringOptions [
 	^ RefactoringOptions
 ]
 
 { #category : 'preconditions' }
-RBAbstractTransformation >> applicabilityPreconditions [
+ReAbstractTransformation >> applicabilityPreconditions [
 
 	^ #(  )
 ]
 
 { #category : 'private' }
-RBAbstractTransformation >> buildSelectorString: aSelector [
+ReAbstractTransformation >> buildSelectorString: aSelector [
 	aSelector numArgs = 0 ifTrue: [^aSelector].
 	^self buildSelectorString: aSelector
 		withPermuteMap: (1 to: aSelector numArgs)
 ]
 
 { #category : 'private' }
-RBAbstractTransformation >> buildSelectorString: aSelector withPermuteMap: aPermutationCollection [
+ReAbstractTransformation >> buildSelectorString: aSelector withPermuteMap: aPermutationCollection [
 
 	aSelector numArgs == 0 ifTrue: [^aSelector asString].
 	^ self 
@@ -109,7 +109,7 @@ RBAbstractTransformation >> buildSelectorString: aSelector withPermuteMap: aPerm
 ]
 
 { #category : 'private' }
-RBAbstractTransformation >> buildSelectorString: aSelector withPermuteMap: aPermutationCollection andNewArguments: anArgumentsCollection [
+ReAbstractTransformation >> buildSelectorString: aSelector withPermuteMap: aPermutationCollection andNewArguments: anArgumentsCollection [
 	| stream keywords |
 	aSelector numArgs == 0 ifTrue: [^aSelector asString].
 	stream := WriteStream on: String new.
@@ -136,13 +136,13 @@ RBAbstractTransformation >> buildSelectorString: aSelector withPermuteMap: aPerm
 ]
 
 { #category : 'accessing' }
-RBAbstractTransformation >> changes [
+ReAbstractTransformation >> changes [
 
 	^ self model changes
 ]
 
 { #category : 'scripting api - conditions' }
-RBAbstractTransformation >> checkApplicabilityPreconditions [
+ReAbstractTransformation >> checkApplicabilityPreconditions [
 	"Check a preconditions and raise an error on violations. This method is part of the scripting API since it raises an error."
 	
 	| failedPreconditions |
@@ -152,23 +152,23 @@ RBAbstractTransformation >> checkApplicabilityPreconditions [
 ]
 
 { #category : 'condition definitions' }
-RBAbstractTransformation >> checkInstanceVariableName: aName in: aClass [
+ReAbstractTransformation >> checkInstanceVariableName: aName in: aClass [
 	^RBCondition checkInstanceVariableName: aName in: aClass
 ]
 
 { #category : 'condition definitions' }
-RBAbstractTransformation >> checkMethodName: aName in: aClass [
+ReAbstractTransformation >> checkMethodName: aName in: aClass [
 	^RBCondition checkMethodName: aName in: aClass
 ]
 
 { #category : 'scripting api - conditions' }
-RBAbstractTransformation >> checkPreconditions [
+ReAbstractTransformation >> checkPreconditions [
 
 	self checkApplicabilityPreconditions
 ]
 
 { #category : 'preconditions' }
-RBAbstractTransformation >> classExist [
+ReAbstractTransformation >> classExist [
 
 	| className |
 	^ RBCondition
@@ -177,7 +177,7 @@ RBAbstractTransformation >> classExist [
 ]
 
 { #category : 'private' }
-RBAbstractTransformation >> convertMethod: selector for: aClass using: searchReplacer [
+ReAbstractTransformation >> convertMethod: selector for: aClass using: searchReplacer [
 	"Convert the parse tree for selector using the searchReplacer. If a
 	change is made then compile it into the changeBuilder."
 
@@ -189,7 +189,7 @@ RBAbstractTransformation >> convertMethod: selector for: aClass using: searchRep
 ]
 
 { #category : 'accessing' }
-RBAbstractTransformation >> copyOptionsFrom: aDictionary [
+ReAbstractTransformation >> copyOptionsFrom: aDictionary [
 	| dict |
 	dict := self options.
 	dict == self class refactoringOptions
@@ -204,26 +204,26 @@ RBAbstractTransformation >> copyOptionsFrom: aDictionary [
 ]
 
 { #category : 'initialize' }
-RBAbstractTransformation >> defaultEnvironment [
+ReAbstractTransformation >> defaultEnvironment [
 
 	^ RBBrowserEnvironment new
 ]
 
 { #category : 'preconditions' }
-RBAbstractTransformation >> eagerlyCheckApplicabilityPreconditions [
+ReAbstractTransformation >> eagerlyCheckApplicabilityPreconditions [
 
 	self applicabilityPreconditions do: [ :cond |
 		cond check ifFalse: [ RBRefactoringError signalFor: { cond } ] ]
 ]
 
 { #category : 'condition definitions' }
-RBAbstractTransformation >> emptyCondition [
+ReAbstractTransformation >> emptyCondition [
 	self deprecated: 'Use trueCondition' transformWith: '`@rec emptyCondition' -> '`@rec trueCondition'. 
 	^ RBCondition true
 ]
 
 { #category : 'transforming' }
-RBAbstractTransformation >> execute [
+ReAbstractTransformation >> execute [
 	"Check precondition, execute the transformation that produces changes and finally execute the changes. This method is part of the scripting API. It should not be called from the driver."
 	
 	self generateChanges.
@@ -231,14 +231,14 @@ RBAbstractTransformation >> execute [
 ]
 
 { #category : 'preconditions' }
-RBAbstractTransformation >> failedApplicabilityPreconditions [
+ReAbstractTransformation >> failedApplicabilityPreconditions [
 	"Returne the failed preconditions without raising error. It should only be called by drivers."
 	
 	^ self applicabilityPreconditions reject: [ :cond | cond check ]
 ]
 
 { #category : 'scripting api - executing' }
-RBAbstractTransformation >> generateChanges [
+ReAbstractTransformation >> generateChanges [
 	"Prepare, check the preconditions, perform the actual transformation (i.e., creating a list of changes that can be accessible using the changes message), and return the changes. This method should not be invoked from drivers since drivers usually check in finer grained mode the preconditions - and that this stage they already checked the preconditions."
 	
 	self prepareForExecution.
@@ -250,7 +250,7 @@ RBAbstractTransformation >> generateChanges [
 ]
 
 { #category : 'transforming' }
-RBAbstractTransformation >> generateChangesFor: aRefactoring [
+ReAbstractTransformation >> generateChangesFor: aRefactoring [
 	"I will generate changes and save them in the model, BUT I will not apply them!
 	Use me when a refactorings is composed of multiple other refactorings"
 
@@ -261,7 +261,7 @@ RBAbstractTransformation >> generateChangesFor: aRefactoring [
 ]
 
 { #category : 'accessing' }
-RBAbstractTransformation >> model [
+ReAbstractTransformation >> model [
 
 	^ model
 		ifNil: [ model := (RBNamespace onEnvironment: self defaultEnvironment )
@@ -272,63 +272,63 @@ RBAbstractTransformation >> model [
 ]
 
 { #category : 'accessing' }
-RBAbstractTransformation >> model: aRBNamespace [
+ReAbstractTransformation >> model: aRBNamespace [
 
 	model := aRBNamespace
 ]
 
 { #category : 'To be removed' }
-RBAbstractTransformation >> openBrowserOn: anEnvironment [
+ReAbstractTransformation >> openBrowserOn: anEnvironment [
 
 	^ (self options at: #openBrowser)
 		value: self value: anEnvironment
 ]
 
 { #category : 'accessing' }
-RBAbstractTransformation >> options [
+ReAbstractTransformation >> options [
 
 	^ options ifNil: [ options := self class refactoringOptions copy ]
 ]
 
 { #category : 'accessing' }
-RBAbstractTransformation >> options: aDictionary [
+ReAbstractTransformation >> options: aDictionary [
 
 	options := aDictionary
 ]
 
 { #category : 'parsing' }
-RBAbstractTransformation >> parseTreeRewriter [
+ReAbstractTransformation >> parseTreeRewriter [
 	^ self parseTreeRewriterClass new
 ]
 
 { #category : 'parsing' }
-RBAbstractTransformation >> parseTreeRewriterClass [
+ReAbstractTransformation >> parseTreeRewriterClass [
 	^ ASTParseTreeRewriter
 ]
 
 { #category : 'parsing' }
-RBAbstractTransformation >> parseTreeSearcher [
+ReAbstractTransformation >> parseTreeSearcher [
 	^ self parseTreeSearcherClass new
 ]
 
 { #category : 'parsing' }
-RBAbstractTransformation >> parseTreeSearcherClass [
+ReAbstractTransformation >> parseTreeSearcherClass [
 	^ ASTParseTreeSearcher
 ]
 
 { #category : 'parsing' }
-RBAbstractTransformation >> parserClass [
+ReAbstractTransformation >> parserClass [
 	^ RBParser
 ]
 
 { #category : 'transforming' }
-RBAbstractTransformation >> performChanges [
+ReAbstractTransformation >> performChanges [
 	
 	self performChanges: self changes
 ]
 
 { #category : 'transforming' }
-RBAbstractTransformation >> performChanges: aCompositeChange [
+ReAbstractTransformation >> performChanges: aCompositeChange [
 	"Perform the changes contained in a composite change"
 	
 	RBRefactoryChangeManager instance
@@ -336,7 +336,7 @@ RBAbstractTransformation >> performChanges: aCompositeChange [
 ]
 
 { #category : 'accessing' }
-RBAbstractTransformation >> poolVariableNamesFor: aClass [
+ReAbstractTransformation >> poolVariableNamesFor: aClass [
 	| pools |
 	pools := Set new.
 	aClass withAllSuperclasses do:
@@ -348,31 +348,31 @@ RBAbstractTransformation >> poolVariableNamesFor: aClass [
 ]
 
 { #category : 'accessing' }
-RBAbstractTransformation >> poolVariableNamesIn: poolName [
+ReAbstractTransformation >> poolVariableNamesIn: poolName [
 	^(self model classNamed: poolName) classPool keys
 ]
 
 { #category : 'preconditions' }
-RBAbstractTransformation >> preconditions [
+ReAbstractTransformation >> preconditions [
 	"By default we define applicabilityPreconditions, if you need to check
 	breakingChangePreconditions, you need to override me"
 	^ self applicabilityPreconditions
 ]
 
 { #category : 'transforming' }
-RBAbstractTransformation >> prepareForExecution [
+ReAbstractTransformation >> prepareForExecution [
 	"I am empty by default. You can override me to initialize your instance variables just before execution.
 	I am typicaly a place where names (of classes, methods, etc.) are converted to RB model entities."
 ]
 
 { #category : 'transforming' }
-RBAbstractTransformation >> privateTransform [ 
+ReAbstractTransformation >> privateTransform [ 
 
 	self subclassResponsibility 
 ]
 
 { #category : 'exceptions' }
-RBAbstractTransformation >> refactoringConfirmWarning: aString [
+ReAbstractTransformation >> refactoringConfirmWarning: aString [
 	| ret |
 	ret := self uiManager
 		confirm: aString
@@ -381,44 +381,44 @@ RBAbstractTransformation >> refactoringConfirmWarning: aString [
 ]
 
 { #category : 'exceptions' }
-RBAbstractTransformation >> refactoringError: aString [
+ReAbstractTransformation >> refactoringError: aString [
 	^ RBRefactoringError signal: aString
 ]
 
 { #category : 'accessing' }
-RBAbstractTransformation >> refactoringErrorClass [
+ReAbstractTransformation >> refactoringErrorClass [
 
 	^ RBRefactoringError 
 ]
 
 { #category : 'exceptions' }
-RBAbstractTransformation >> refactoringWarning: aString [
+ReAbstractTransformation >> refactoringWarning: aString [
 	^ RBRefactoringWarning signal: aString
 ]
 
 { #category : 'exceptions' }
-RBAbstractTransformation >> refactoringWarning: aString with: aBlock [
+ReAbstractTransformation >> refactoringWarning: aString with: aBlock [
 	^ RBRefactoringWarning signal: aString with: aBlock
 ]
 
 { #category : 'requests' }
-RBAbstractTransformation >> requestImplementorToInline: implementorsCollection [
+ReAbstractTransformation >> requestImplementorToInline: implementorsCollection [
 	^(self options at: #implementorToInline) value: self
 		value: implementorsCollection
 ]
 
 { #category : 'requests' }
-RBAbstractTransformation >> requestMethodNameFor: aMethodName [
+ReAbstractTransformation >> requestMethodNameFor: aMethodName [
 	^(self options at: #methodName) cull: aMethodName cull: self
 ]
 
 { #category : 'requests' }
-RBAbstractTransformation >> requestSelfArgumentName [
+ReAbstractTransformation >> requestSelfArgumentName [
 	^(self options at: #selfArgumentName) value: self
 ]
 
 { #category : 'utilities' }
-RBAbstractTransformation >> safeMethodNameFor: aClass basedOn: aString [
+ReAbstractTransformation >> safeMethodNameFor: aClass basedOn: aString [
 	"Creates an unused method name containing aString"
 
 	| baseString newString hasParam i |
@@ -438,7 +438,7 @@ RBAbstractTransformation >> safeMethodNameFor: aClass basedOn: aString [
 ]
 
 { #category : 'requests' }
-RBAbstractTransformation >> selectVariableToMoveMethodTo: aSelector class: aClass [
+ReAbstractTransformation >> selectVariableToMoveMethodTo: aSelector class: aClass [
 	^(self options at: #selectVariableToMoveTo)
 		value: self
 		value: aClass
@@ -446,7 +446,7 @@ RBAbstractTransformation >> selectVariableToMoveMethodTo: aSelector class: aClas
 ]
 
 { #category : 'requests' }
-RBAbstractTransformation >> selectVariableTypesFrom: initialTypeCollection selected: selectedTypeCollection [
+ReAbstractTransformation >> selectVariableTypesFrom: initialTypeCollection selected: selectedTypeCollection [
 	^ (self options at: #variableTypes)
 		value: self
 		value: initialTypeCollection
@@ -454,7 +454,7 @@ RBAbstractTransformation >> selectVariableTypesFrom: initialTypeCollection selec
 ]
 
 { #category : 'accessing' }
-RBAbstractTransformation >> setOption: aSymbol toUse: aBlock [
+ReAbstractTransformation >> setOption: aSymbol toUse: aBlock [
 	"Unshare on usage"
 	
 	| dict |
@@ -465,17 +465,17 @@ RBAbstractTransformation >> setOption: aSymbol toUse: aBlock [
 ]
 
 { #category : 'requests' }
-RBAbstractTransformation >> shouldExtractAssignmentTo: aString [
+ReAbstractTransformation >> shouldExtractAssignmentTo: aString [
 	^(self options at: #extractAssignment) value: self value: aString
 ]
 
 { #category : 'requests' }
-RBAbstractTransformation >> shouldNotCreateExtraBindings: aString [
+ReAbstractTransformation >> shouldNotCreateExtraBindings: aString [
 	^(self options at: #shouldNotCreateExtraBindings) value: self value: aString
 ]
 
 { #category : 'requests' }
-RBAbstractTransformation >> shouldOverride: aSelector in: aClass [
+ReAbstractTransformation >> shouldOverride: aSelector in: aClass [
 	^(self options at: #alreadyDefined)
 		value: self
 		value: aClass
@@ -483,7 +483,7 @@ RBAbstractTransformation >> shouldOverride: aSelector in: aClass [
 ]
 
 { #category : 'transforming' }
-RBAbstractTransformation >> transform [
+ReAbstractTransformation >> transform [
 	"Do the actual operations."
 	self deprecated: 'Use generateChanges or privateTransform instead. Check subclasses for more details.'. 
 	
@@ -491,12 +491,12 @@ RBAbstractTransformation >> transform [
 ]
 
 { #category : 'condition definitions' }
-RBAbstractTransformation >> trueCondition [
+ReAbstractTransformation >> trueCondition [
 	^ RBCondition true
 ]
 
 { #category : 'private' }
-RBAbstractTransformation >> uniqueMethodNameFor: anInteger [
+ReAbstractTransformation >> uniqueMethodNameFor: anInteger [
 	"anInteger is the number of arguments/parameters"
 	| before after index name |
 	before := 'a'.

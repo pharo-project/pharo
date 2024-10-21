@@ -7,7 +7,7 @@ If this class is ""empty"" (has no methods and no variables), any subclass is re
 "
 Class {
 	#name : 'ReRemoveClassRefactoring',
-	#superclass : 'RBRefactoring',
+	#superclass : 'ReRefactoring',
 	#instVars : [
 		'classNames',
 		'classesDictionary'

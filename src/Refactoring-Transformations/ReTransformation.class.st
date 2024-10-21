@@ -11,15 +11,15 @@ My main API is
 
 "
 Class {
-	#name : 'RBTransformation',
-	#superclass : 'RBAbstractTransformation',
+	#name : 'ReTransformation',
+	#superclass : 'ReAbstractTransformation',
 	#category : 'Refactoring-Transformations-Model',
 	#package : 'Refactoring-Transformations',
 	#tag : 'Model'
 }
 
 { #category : 'private - initialization' }
-RBTransformation class >> initializeRefactoringOptions [
+ReTransformation class >> initializeRefactoringOptions [
 
 	RefactoringOptions := IdentityDictionary new.
 	RefactoringOptions
@@ -52,14 +52,14 @@ RBTransformation class >> initializeRefactoringOptions [
 ]
 
 { #category : 'converting' }
-RBTransformation >> asRefactoring [
+ReTransformation >> asRefactoring [
 
 	self deprecated: 'This method is a no-op and can be removed' transformWith: '`@rec asRefactoring' -> '`@rec'.
 	^ self yourself
 ]
 
 { #category : 'transforming' }
-RBTransformation >> transform [
+ReTransformation >> transform [
 
 	self deprecated: 'Use generateChanges instead' transformWith: '`@rec transform' -> '`@rec generateChanges'.
 	
@@ -74,7 +74,7 @@ RBTransformation >> transform [
 ]
 
 { #category : 'displaying' }
-RBTransformation >> whatToDisplayIn: aBrowser [
+ReTransformation >> whatToDisplayIn: aBrowser [
 
 	^ self changes changes
 		flatCollect: [ :e | e whatToDisplayIn: aBrowser ]

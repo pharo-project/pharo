@@ -1,6 +1,6 @@
 Class {
 	#name : 'ReExtractMethodDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'class',
 		'newMessage',

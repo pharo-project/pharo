@@ -13,7 +13,7 @@ RBRefactoringBrowserTest class >> isAbstract [
 { #category : 'private' }
 RBRefactoringBrowserTest >> abstractTransformationClassVariable [
 
-	^ RBAbstractTransformation classVariables first name
+	^ ReAbstractTransformation classVariables first name
 ]
 
 { #category : 'private' }

@@ -1,14 +1,14 @@
-Extension { #name : 'RBRefactoring' }
+Extension { #name : 'ReRefactoring' }
 
 { #category : '*Epicea-Refactorings' }
-RBRefactoring >> asEpiceaEvent [
+ReRefactoring >> asEpiceaEvent [
 	^ (EpGenericRefactoring canAccept: self)
 		ifTrue: [ EpGenericRefactoring for: self ]
 		ifFalse: [ EpUnknownRefactoring for: self ]
 ]
 
 { #category : '*Epicea-Refactorings' }
-RBRefactoring >> propagateTransformation [
+ReRefactoring >> propagateTransformation [
 	"Perform the *secondary transformation* of the refactoring. Refactorings perform a main
 	transformations and optionally a secondary transformations.
 	For example, in a class rename, the main transformations may be removing the class and adding

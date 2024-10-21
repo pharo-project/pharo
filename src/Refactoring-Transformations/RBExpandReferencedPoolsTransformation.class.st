@@ -1,6 +1,6 @@
 Class {
 	#name : 'RBExpandReferencedPoolsTransformation',
-	#superclass : 'RBTransformation',
+	#superclass : 'ReTransformation',
 	#instVars : [
 		'pools',
 		'fromClass',

@@ -3,7 +3,7 @@ I'm an interaction class in charge of stirring the application or not of removin
 "
 Class {
 	#name : 'ReRemoveSharedVariablesDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'class',
 		'variables'

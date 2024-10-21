@@ -27,7 +27,7 @@ RBClassRegexRefactoring new
 "
 Class {
 	#name : 'RBRegexRefactoring',
-	#superclass : 'RBRefactoring',
+	#superclass : 'ReRefactoring',
 	#instVars : [
 		'matchers'
 	],

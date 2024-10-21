@@ -5,7 +5,7 @@ I'll check that the interval selected by the user is right. I'll ask a new name 
 "
 Class {
 	#name : 'ReRenameArgumentOrTemporaryDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'sourceNode',
 		'newName',

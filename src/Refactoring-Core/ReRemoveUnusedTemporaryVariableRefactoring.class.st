@@ -3,7 +3,7 @@ I am a refactoring that removes all unused temporary variables from a method.
 "
 Class {
 	#name : 'ReRemoveUnusedTemporaryVariableRefactoring',
-	#superclass : 'RBRefactoring',
+	#superclass : 'ReRefactoring',
 	#instVars : [
 		'selector',
 		'class',

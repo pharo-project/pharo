@@ -25,46 +25,46 @@ A RBRefactoringManager  is used to collect the executed refactorings and provide
 
 "
 Class {
-	#name : 'RBRefactoring',
-	#superclass : 'RBAbstractTransformation',
+	#name : 'ReRefactoring',
+	#superclass : 'ReAbstractTransformation',
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
 	#tag : 'Refactorings'
 }
 
 { #category : 'testing' }
-RBRefactoring class >> isAbstract [
+ReRefactoring class >> isAbstract [
 
-	^ self == RBRefactoring
+	^ self == ReRefactoring
 ]
 
 { #category : 'accessing signal' }
-RBRefactoring class >> preconditionSignal [
+ReRefactoring class >> preconditionSignal [
 	^ RBRefactoringError , RBRefactoringWarning
 ]
 
 { #category : 'converting' }
-RBRefactoring >> asRefactoring [
+ReRefactoring >> asRefactoring [
 
 	self deprecated: 'This method is a no-op and can be removed' transformWith: '`@rec asRefactoring' -> '`@rec'.
 	^ self
 ]
 
 { #category : 'preconditions' }
-RBRefactoring >> breakingChangePreconditions [
+ReRefactoring >> breakingChangePreconditions [
 
 	^ #(  )
 ]
 
 { #category : 'testing' }
-RBRefactoring >> canReferenceVariable: aString in: aClass [
+ReRefactoring >> canReferenceVariable: aString in: aClass [
 	(aClass definesVariable: aString) ifTrue: [^true].
 	(self model includesGlobal: aString asSymbol) ifTrue: [^true].
 	^(self poolVariableNamesFor: aClass) includes: aString
 ]
 
 { #category : 'scripting api - conditions' }
-RBRefactoring >> checkBreakingChangePreconditions [
+ReRefactoring >> checkBreakingChangePreconditions [
 	"Check a preconditions and raise an error on violations. This method is part of the scripting API since it raises an error."
 	
 	| failedPreconditions |
@@ -74,7 +74,7 @@ RBRefactoring >> checkBreakingChangePreconditions [
 ]
 
 { #category : 'private' }
-RBRefactoring >> checkClass: aRBClass selector: aSelector using: aMatcher [
+ReRefactoring >> checkClass: aRBClass selector: aSelector using: aMatcher [
 	| parseTree |
 	parseTree := aRBClass parseTreeForSelector: aSelector.
 	parseTree ifNotNil: [aMatcher executeTree: parseTree].
@@ -82,14 +82,14 @@ RBRefactoring >> checkClass: aRBClass selector: aSelector using: aMatcher [
 ]
 
 { #category : 'scripting api - conditions' }
-RBRefactoring >> checkPreconditions [ 
+ReRefactoring >> checkPreconditions [ 
 
 	self checkApplicabilityPreconditions.
 	self checkBreakingChangePreconditions 
 ]
 
 { #category : 'private' }
-RBRefactoring >> classObjectFor: anObject [
+ReRefactoring >> classObjectFor: anObject [
 
 	(anObject isBehavior or: [ anObject isTrait ]) ifTrue: [
 		^ self model classFor: anObject ].
@@ -99,7 +99,7 @@ RBRefactoring >> classObjectFor: anObject [
 ]
 
 { #category : 'private' }
-RBRefactoring >> convertAllReferencesToClass: aRBClass using: searchReplacer [
+ReRefactoring >> convertAllReferencesToClass: aRBClass using: searchReplacer [
 	self model allReferencesToClass: aRBClass
 		do:
 			[:method |
@@ -110,7 +110,7 @@ RBRefactoring >> convertAllReferencesToClass: aRBClass using: searchReplacer [
 ]
 
 { #category : 'private' }
-RBRefactoring >> convertClasses: classSet select: aBlock using: searchReplacer [
+ReRefactoring >> convertClasses: classSet select: aBlock using: searchReplacer [
 	classSet do:
 			[:aClass |
 			(aBlock value: aClass) do:
@@ -122,14 +122,14 @@ RBRefactoring >> convertClasses: classSet select: aBlock using: searchReplacer [
 ]
 
 { #category : 'preconditions' }
-RBRefactoring >> failedBreakingChangePreconditions [
+ReRefactoring >> failedBreakingChangePreconditions [
 	"Returne the failed preconditions without raising error. It should only be called by drivers."
 	
 	^ self breakingChangePreconditions reject: [ :cond | cond check ]
 ]
 
 { #category : 'private' }
-RBRefactoring >> onError: aBlock do: errorBlock [
+ReRefactoring >> onError: aBlock do: errorBlock [
 	^aBlock on: self class preconditionSignal
 		do:
 			[:ex |
@@ -138,7 +138,7 @@ RBRefactoring >> onError: aBlock do: errorBlock [
 ]
 
 { #category : 'removing' }
-RBRefactoring >> removeReturnsOf: parseTree [
+ReRefactoring >> removeReturnsOf: parseTree [
 	| rewriter |
 	rewriter := self parseTreeRewriter.
 	rewriter replace: '^``@object' with: '``@object'.
@@ -148,7 +148,7 @@ RBRefactoring >> removeReturnsOf: parseTree [
 ]
 
 { #category : 'private' }
-RBRefactoring >> safeVariableNameFor: aClass temporaries: allTempAndArgs basedOn: aString [
+ReRefactoring >> safeVariableNameFor: aClass temporaries: allTempAndArgs basedOn: aString [
 	| baseString i newString |
 	newString := baseString := aString.
 	i := 0.
@@ -160,13 +160,13 @@ RBRefactoring >> safeVariableNameFor: aClass temporaries: allTempAndArgs basedOn
 ]
 
 { #category : 'transforming' }
-RBRefactoring >> transform [ 
+ReRefactoring >> transform [ 
 
 	self deprecated: 'Use privateTransform instead' transformWith: '`@rec transform' -> '`@rec privateTransform'
 ]
 
 { #category : 'utilities' }
-RBRefactoring >> whichVariableNode: aParseTree inInterval: anInterval name: aName [
+ReRefactoring >> whichVariableNode: aParseTree inInterval: anInterval name: aName [
 	| matcher block |
 	matcher := self parseTreeSearcher.
 	block := [ :aNode :answer |

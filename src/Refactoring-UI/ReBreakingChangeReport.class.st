@@ -1,5 +1,5 @@
 Class {
-	#name : 'RBBreakingChangeReport',
+	#name : 'ReBreakingChangeReport',
 	#superclass : 'Object',
 	#instVars : [
 		'environment',
@@ -11,18 +11,18 @@ Class {
 }
 
 { #category : 'accessing' }
-RBBreakingChangeReport >> environment [
+ReBreakingChangeReport >> environment [
 
 	^ environment
 ]
 
 { #category : 'accessing' }
-RBBreakingChangeReport >> refactoring [
+ReBreakingChangeReport >> refactoring [
 	^ refactoring
 ]
 
 { #category : 'accessing' }
-RBBreakingChangeReport >> refactoring: aRefactoring [
+ReBreakingChangeReport >> refactoring: aRefactoring [
 
 	refactoring := aRefactoring.
 	environment := RBBrowserEnvironment new 
