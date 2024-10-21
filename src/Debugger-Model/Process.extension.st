@@ -29,6 +29,12 @@ Process >> newDebugSessionNamed: aString startedAt: aContext [
 ]
 
 { #category : '*Debugger-Model' }
+Process >> newEnhancedDebugSessionNamed: aString startedAt: aContext [
+
+	^EnhancedDebugSession named: aString on: self startedAt: aContext
+]
+
+{ #category : '*Debugger-Model' }
 Process >> popTo: aContext [
 	"Pop self down to aContext by remote returning from aContext's callee.  Unwind blocks will be executed on the way.
 	This is done by pushing a new context on top which executes 'aContext callee return' then resuming self until aContext is reached.  This way any errors raised in an unwind block will get handled by senders in self and not by senders in the activeProcess.
