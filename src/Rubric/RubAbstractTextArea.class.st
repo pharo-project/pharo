@@ -1744,7 +1744,13 @@ RubAbstractTextArea >> recomputeSelection [
 
 { #category : 'multi level undo' }
 RubAbstractTextArea >> redoTypeIn: aText interval: anInterval [
-	self handleEdit: [self editor redoTypeIn: aText interval: anInterval]
+	
+	^ self redoTypeIn: aText interval: anInterval selection: anInterval
+]
+
+{ #category : 'multi level undo' }
+RubAbstractTextArea >> redoTypeIn: aText interval: anInterval selection: selection [
+	self handleEdit: [self editor redoTypeIn: aText interval: anInterval selection: selection]
 ]
 
 { #category : 'caching' }
@@ -2105,7 +2111,13 @@ RubAbstractTextArea >> undoRedoExchange: aninterval with: anotherInterval [
 
 { #category : 'multi level undo' }
 RubAbstractTextArea >> undoTypeIn: aText interval: anInterval [
-	self handleEdit: [self editor undoTypeIn: aText interval: anInterval]
+
+	^ self undoTypeIn: aText interval: anInterval selection: anInterval
+]
+
+{ #category : 'multi level undo' }
+RubAbstractTextArea >> undoTypeIn: aText interval: anInterval selection: aSelection [
+	self handleEdit: [self editor undoTypeIn: aText interval: anInterval selection: aSelection]
 ]
 
 { #category : 'private' }
