@@ -31,6 +31,12 @@ CompletionEngineTest >> editorTextWithCaret [
 	^ (source copyFrom: 1 to: editor caret-1), '|', (source copyFrom: editor caret to: source size)
 ]
 
+{ #category : 'helpers' }
+CompletionEngineTest >> expectText: aString [ 
+
+	self assert: editor text asString equals: aString
+]
+
 { #category : 'accessing' }
 CompletionEngineTest >> interactionModel [
 
@@ -994,4 +1000,48 @@ CompletionEngineTest >> testSmartQuoteSurroundsSelection [
 
 	controller smartCharacterWithEvent: (self keyboardPressFor: $').
 	self assert: editor text equals: ' ''text'' '
+]
+
+{ #category : 'tests - undo' }
+CompletionEngineTest >> testUndoAutocompleteLeavesCursorInOriginalPosition [
+
+	"If the caret is at the end of a word, replace the entire word"
+	editor addString: 'self'.
+	editor closeTypeIn.
+	editor unselect.
+	
+	"Put the cursor after the `sel` token, and then we will simulate code completion"
+	self selectAt: 'self' size - 1.
+
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'selection'.
+	
+	editor undo.
+	self expectText: 'self'.
+	self assert: editor selectionInterval equals: (3 to: 2)
+]
+
+{ #category : 'tests - undo' }
+CompletionEngineTest >> testUndoCompletionEntryKeepsFollowingLine [
+
+	"If the caret is at the end of a word, replace the entire word"
+
+	| text |
+	text := 'self mEthOdThatDoes
+nextLine'.
+
+	self
+		setEditorText: text;
+		selectAt: text lines first size.
+
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'mEthOdThatDoesNotExist'.
+
+	editor undo.
+	
+	self assert: editor text asString equals: text
 ]

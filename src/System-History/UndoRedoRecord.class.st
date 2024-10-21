@@ -78,6 +78,15 @@ UndoRedoRecord >> doMessage: aMessageSend [
 	^ self redoMessage: aMessageSend
 ]
 
+{ #category : 'printing' }
+UndoRedoRecord >> printOn: aStream [
+
+	super printOn: aStream.
+	aStream nextPutAll: '('.
+	aStream print: redoMessage arguments.
+	aStream nextPutAll: ')'
+]
+
 { #category : 'redo-undo' }
 UndoRedoRecord >> redo [
 	^self redoMessage value
