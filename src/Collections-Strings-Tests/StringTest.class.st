@@ -450,6 +450,7 @@ StringTest >> testAsInteger [
 	self should: [ '1796exportFixes-tkMX' asInteger ] raise: Error.
 	self should: [ 'donald' asInteger ] raise: Error.
 	self should: [ 'abc234def567' asInteger ] raise: Error.
+	self should: [ '123 4' asInteger ] raise: Error.
 	self assert: '-94' asInteger equals: -94.
 	self assert: '9432' asInteger equals: 9432
 ]
