@@ -686,13 +686,16 @@ String >> asHex [
 
 { #category : 'converting' }
 String >> asInteger [
-	"Return the integer present in the receiver, or nil. In case of float, returns the integer part."
+	"Return the integer present in the receiver. The receiver has to be a valid integer."
+
 	"'1' asInteger >>> 1"
 	"'-1' asInteger >>> -1"
 	"'10' asInteger >>> 10"
-	"'a' asInteger >>> nil"
 	"'1.234' asInteger >>> 1"
-	^self asSignedInteger
+
+	(NumberParser isNumber: self) ifFalse: [
+		self error: 'The string ', self surroundedBySingleQuotes , ' is not a valid integer' ].
+	^ NumberParser parse: self
 ]
 
 { #category : 'converting' }
@@ -732,19 +735,6 @@ String >> asPluralBasedOn: aNumberOrCollection [
 ]
 
 { #category : 'converting' }
-String >> asSignedInteger [
-	"Returns the first signed integer it can find or nil."
-
-	| start stream |
-	start := self findFirst: [:char | char isDigit].
-	start isZero ifTrue: [^ nil].
-	stream := self readStream position: start - 1.
-	((stream position ~= 0) and: [stream peekBack = $-])
-		ifTrue: [stream back].
-	^ Integer readFrom: stream
-]
-
-{ #category : 'converting' }
 String >> asString [
 	"Answer this string."
 
@@ -766,12 +756,9 @@ String >> asTime [
 
 { #category : 'converting' }
 String >> asUnsignedInteger [
-	"Returns the first integer it can find or nil."
-	| start stream |
-	start := self findFirst: [ :char | char isDigit ].
-	start isZero ifTrue: [ ^ nil ].
-	stream := self readStream position: start - 1.
-	^ Integer readFrom: stream
+
+
+	^ self asInteger abs
 ]
 
 { #category : 'converting' }
@@ -1359,6 +1346,27 @@ String >> expandMacrosWithArguments: anArray [
 									(char == $%
 										ifTrue: [ readStream next ]
 										ifFalse: [ char ]) ] ] ]
+]
+
+{ #category : 'converting' }
+String >> extractIntegerPart [
+	"Returns the first signed integer it can find or nil."
+	
+	"'1' extractIntegerPart >>> 1"
+	"'-1' extractIntegerPart >>> -1"
+	"'10qwe' extractIntegerPart >>> 10"
+	"'a10q' extractIntegerPart >>> 10"
+	"'a10q22' extractIntegerPart >>> 10"
+	"'1.234' extractIntegerPart >>> 1"
+	"'a' extractIntegerPart >>> nil"
+
+	| start stream |
+	start := self findFirst: [ :char | char isDigit ].
+	start isZero ifTrue: [ ^ nil ].
+	stream := self readStream position: start - 1.
+	(stream position ~= 0 and: [ stream peekBack = $- ]) ifTrue: [
+		stream back ].
+	^ Integer readFrom: stream
 ]
 
 { #category : 'finding/searching' }

@@ -447,11 +447,12 @@ StringTest >> testAsHTMLString [
 { #category : 'tests - converting' }
 StringTest >> testAsInteger [
 
-	self assert: '1796exportFixes-tkMX' asInteger equals: 1796.
-	self assert: 'donald' asInteger isNil.
-	self assert: 'abc234def567' asInteger equals: 234.
+	self should: [ '1796exportFixes-tkMX' asInteger ] raise: Error.
+	self should: [ 'donald' asInteger ] raise: Error.
+	self should: [ 'abc234def567' asInteger ] raise: Error.
+	self should: [ '123 4' asInteger ] raise: Error.
 	self assert: '-94' asInteger equals: -94.
-	self assert: 'foo-bar-92' asInteger equals: -92
+	self assert: '9432' asInteger equals: 9432
 ]
 
 { #category : 'tests' }
@@ -534,6 +535,16 @@ StringTest >> testAsTime [
 	self assert: '1:00' asTime asString equals: '1:00 am'.
 	self assert: '1' asTime asString equals: '1:00 am'.
 	self assert: '13' asTime asString equals: '1:00 pm'
+]
+
+{ #category : 'tests' }
+StringTest >> testAsUnsignedInteger [
+
+	self should: [ 'test' asUnsignedInteger ] raise: Error.
+	self should: [ 'test-10test' asUnsignedInteger ] raise: Error.
+	self assert: '-1234567890' asUnsignedInteger equals: 1234567890.
+	self assert: '-12345' asUnsignedInteger equals: 12345.
+	self assert: '111' asUnsignedInteger equals: 111
 ]
 
 { #category : 'tests' }
@@ -861,6 +872,16 @@ StringTest >> testExpandMacrosWithArgumentsLongText [
 	"printString truncates strings"
 	self assert: ('<1p>' expandMacrosWith: ('a' repeat: 10)) size equals: 12.
 	self assert: ('<1p>' expandMacrosWith: ('a' repeat: 100000)) size equals: 100002
+]
+
+{ #category : 'tests' }
+StringTest >> testExtractIntegerPart [
+
+	self assert: '1796exportFixes-tkMX' extractIntegerPart equals: 1796.
+	self assert: 'donald' extractIntegerPart isNil.
+	self assert: 'abc234def567' extractIntegerPart equals: 234.
+	self assert: '-94' extractIntegerPart equals: -94.
+	self assert: 'foo-bar-92' extractIntegerPart equals: -92
 ]
 
 { #category : 'tests' }

@@ -52,11 +52,11 @@ OmBlockFileStore >> initialize [
 { #category : 'accessing' }
 OmBlockFileStore >> readEntryForLocalName: aString ifPresent: presentBlockClosure ifAbsent: absentBlockClosure [
 
-	^ (self blockForLocalNameAsInteger: aString asInteger)
-			atLocalName: aString
-			ifPresent: [ :position |
-				presentBlockClosure value: (self nextEntryFromPosition: position) ]
-			ifAbsent: absentBlockClosure
+	^ (self blockForLocalNameAsInteger: aString extractIntegerPart)
+		  atLocalName: aString
+		  ifPresent: [ :position |
+			  presentBlockClosure value: (self nextEntryFromPosition: position) ]
+		  ifAbsent: absentBlockClosure
 ]
 
 { #category : 'refreshing' }
