@@ -9,7 +9,8 @@ Class {
 		'charCode',
 		'scanCode',
 		'key',
-		'supressNextKeyPress'
+		'supressNextKeyPress',
+		'isRepeat'
 	],
 	#category : 'Morphic-Core-Events',
 	#package : 'Morphic-Core',
@@ -53,7 +54,8 @@ KeyboardEvent >> hash [
 KeyboardEvent >> initialize [
 
 	super initialize.
-	supressNextKeyPress := false
+	supressNextKeyPress := false.
+	isRepeat := false
 ]
 
 { #category : 'testing' }
@@ -79,6 +81,18 @@ KeyboardEvent >> isKeystroke [
 { #category : 'testing' }
 KeyboardEvent >> isMouseMove [
 	^false
+]
+
+{ #category : 'accessing' }
+KeyboardEvent >> isRepeat [
+
+	^ isRepeat
+]
+
+{ #category : 'accessing' }
+KeyboardEvent >> isRepeat: aBoolean [
+
+	isRepeat := aBoolean
 ]
 
 { #category : 'keyboard' }
