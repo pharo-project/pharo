@@ -89,6 +89,12 @@ KMCategory >> hasKeymapNamed: aKeymapEntryName at: aPlatform [
 	^ (self entriesAt: aPlatform) hasKeymapNamed: aKeymapEntryName
 ]
 
+{ #category : 'accessing' }
+KMCategory >> icon [
+
+	^ self iconNamed: #keymapBrowser
+]
+
 { #category : 'initialization' }
 KMCategory >> initialize [
 
@@ -135,6 +141,11 @@ KMCategory >> matches: aString [
 KMCategory >> matchesCompletely: aString [
 	^ self keymaps anySatisfy: [ :entry |
 		entry matchesCompletely: aString ]
+]
+
+{ #category : 'accessing' }
+KMCategory >> model [
+	^ self
 ]
 
 { #category : 'accessing' }
