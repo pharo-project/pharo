@@ -50,7 +50,6 @@ KMDescriptionPresenter class >> menuCommandOn: aBuilder [
 KMDescriptionPresenter class >> open [
 	"Open the receiver's on all the system keymap categories"
 
-	KMRepository reset.
 	^ self new
 		addShortcutActivationCmdInstances;
 		addKeymapCategoryInstances;
