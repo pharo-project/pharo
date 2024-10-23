@@ -82,6 +82,13 @@ CmdShortcutActivation class >> settingInputWidgetForNode: aShortcutSetting [
 	^ theme newRow: {catcherMorph}
 ]
 
+{ #category : 'accessing' }
+CmdShortcutActivation >> action [
+	"Answer a <CompiledMethod> defining the receiver's action"
+
+	^ self annotatedClass class lookupSelector: self declarationSelector
+]
+
 { #category : 'settings' }
 CmdShortcutActivation >> buildSettingNodeOn: aBuilder [
 	| nodeBuilder |
