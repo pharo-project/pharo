@@ -19,27 +19,11 @@ ScriptBehavior class >> isAbstract [
 	^ false
 ]
 
-{ #category : 'accessing' }
-ScriptBehavior >> context [
-	^self getArgument: #context
-]
-
-{ #category : 'accessing' }
-ScriptBehavior >> evaluate: expression withContext: aContext [
-
-	^ Smalltalk compiler
-		  source: expression;
-		  context: aContext;
-		  receiver: aContext receiver;
-		  bindings: { (#thisContext -> aContext) };
-		  evaluate
-]
-
 { #category : 'execution' }
 ScriptBehavior >> execute [
 
 	self script ifNil: [ ^ true ].
-	self evaluate: self script withContext: self context.
+	self debugPoint evaluateInContext: self script.
 	^ true
 ]
 
