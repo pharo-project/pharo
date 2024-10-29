@@ -97,6 +97,24 @@ FreeTypeSystemSettings class >> ft2LibraryVersion [
 ]
 
 { #category : 'settings' }
+FreeTypeSystemSettings class >> glyphShapesHelpText [
+
+	^ 'Changes the glyph shapes:'
+								,
+									'
+o FULL: glyph shapes features are snapped to pixel boundaries. Glyphs are monochrome, with no anti-aliasing. This option changes the shapes the most.'
+								,
+									'
+o LIGHT: glyph shapes features are partially snapped to pixel boundaries. This option changes the shapes less than with Full, resulting in better shapes, but less contrast.'
+								,
+									'
+o NORMAL: glyph shapes features are snapped to pixel boundaries. Glyphs are anti-aliased.'
+								,
+									'
+o NONE: use the original glyph shapes without snapping their features to pixel boundaries. This gives the best shapes, but with less contrast and more fuzziness.'
+]
+
+{ #category : 'settings' }
 FreeTypeSystemSettings class >> loadFt2Library [
 	^ LoadFT2Library ifNil: [LoadFT2Library := false]
 ]
