@@ -182,9 +182,10 @@ KMDescriptionPresenter >> initializeShortcutList [
 
 { #category : 'initialization' }
 KMDescriptionPresenter >> initializeWindow: aWindowPresenter [
+
 	aWindowPresenter
 		title: 'Shortcuts Editor';
-		initialExtent: 600 @ 350
+		initialExtent: 900 @ 650
 ]
 
 { #category : 'initialization' }
