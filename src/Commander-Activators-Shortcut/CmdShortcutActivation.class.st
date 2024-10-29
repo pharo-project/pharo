@@ -34,30 +34,29 @@ Class {
 }
 
 { #category : 'settings' }
-CmdShortcutActivation class >> buildSettingsFor: activations on: aBuilder [
-	| sorted |
-	sorted := activations sorted: [ :a :b | a commandClass name <= b commandClass name ].
-	sorted do: [ :each |	each buildSettingNodeOn: aBuilder]
-]
-
-{ #category : 'settings' }
 CmdShortcutActivation class >> buildSettingsOn: aBuilder [
 	<systemsettings>
-	(aBuilder group: #shortcuts)
-		label: 'Shortcuts';
+
+	(aBuilder button: #openShortcutsEditor)
+		order: 1;
+		parent: #tools;
+		buttonLabel: 'Open';
+		label: 'Shortcuts Editor';
 		description: 'All System Command Shortcuts';
-		with: [
-			self buildSettingsFor: self redefiningInstances on: aBuilder.
-			self
-				buildSettingsFor: (self registeredInstances copyWithoutAll: self redefiningInstances)
-				on: aBuilder.
-		]
+		target: self.
+
 ]
 
 { #category : 'instance creation' }
 CmdShortcutActivation class >> by: aKeyCombination for: anAnnotationUser [
 	^(self for: anAnnotationUser)
 		keyCombination: aKeyCombination
+]
+
+{ #category : 'settings' }
+CmdShortcutActivation class >> openShortcutsEditor [
+
+	KMDescriptionPresenter open
 ]
 
 { #category : 'well known shortcuts' }
@@ -74,28 +73,11 @@ CmdShortcutActivation class >> renamingFor: anAnnotationUser [
 	^self by: $r meta for: anAnnotationUser
 ]
 
-{ #category : 'settings' }
-CmdShortcutActivation class >> settingInputWidgetForNode: aShortcutSetting [
-	| catcherMorph theme |
-	theme := UITheme builder.
-	catcherMorph := KMCatcherMorph for: aShortcutSetting.
-	^ theme newRow: {catcherMorph}
-]
-
 { #category : 'accessing' }
 CmdShortcutActivation >> action [
 	"Answer a <CompiledMethod> defining the receiver's action"
 
 	^ self annotatedClass class lookupSelector: self declarationSelector
-]
-
-{ #category : 'settings' }
-CmdShortcutActivation >> buildSettingNodeOn: aBuilder [
-	| nodeBuilder |
-	nodeBuilder := aBuilder
-		nodeClass: CmdShortcutSetting name: self id.
-	nodeBuilder node item shortcutActivation: self.
-	^nodeBuilder
 ]
 
 { #category : 'printing' }
