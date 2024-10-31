@@ -28,6 +28,7 @@ Class {
 		'receiver'
 	],
 	#classVars : [
+		'ExceptionsToCapture',
 		'PrimitiveFailToken',
 		'SpecialPrimitiveSimulators',
 		'TryNamedPrimitiveTemplateMethod'

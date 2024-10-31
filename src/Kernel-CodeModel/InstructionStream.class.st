@@ -262,8 +262,7 @@ InstructionStream >> interpretNextSistaV1InstructionFor: client [
 		 offset < 8 ifTrue:
 		 	[^client popIntoTemporaryVariable: offset].
 		 offset = 8 ifTrue: [ ^ client doPop ].
-		 offset = 9 ifTrue: [ 		byte traceCr.
-^ client trap ].
+		 offset = 9 ifTrue: [ ^ client trap ].
 
 		^self interpretUnusedBytecode: client at: savedPC].
 	"2 byte and 3 byte codes"
