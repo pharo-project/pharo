@@ -131,7 +131,6 @@ BaselineOfIDE >> baseline: spec [
 		self drTests: spec.
 		self microdown: spec.
 		spec package: #'BeautifulComments'  with: [ spec requires:  #( 'Microdown') ].
-		self documentBrowserCore: spec.
 		self welcomeBrowser: spec.
 		self roassal: spec.
 		
@@ -142,12 +141,18 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Kernel-ExtraUtils' ]
 ]
 
+{ #category : 'actions' }
+BaselineOfIDE >> classNamed: aSymbol [
+
+	^ self class environment classNamed: aSymbol
+]
+
 { #category : 'baselines - dependencies' }
 BaselineOfIDE >> documentBrowserCore: spec [
 
 	spec baseline: 'NewToolsDocumentBrowser' with: [
 		spec
-			repository: (self class environment at: #BaselineOfPharo) documentBrowserRepository;
+			repository: (self classNamed: #BaselineOfPharo) documentBrowserRepository;
 			loads: 'Core+Tests' ]
 ]
 
@@ -174,8 +179,7 @@ BaselineOfIDE >> loadExtraTools [
 
 	Metacello new
 		baseline: 'NewToolsDocumentBrowser';
-		repository: (self class environment at: #BaselineOfPharo)
-				documentBrowserRepository;
+		repository: (self classNamed: #BaselineOfPharo) documentBrowserRepository;
 		onConflictUseIncoming;
 		load.
 
@@ -194,14 +198,14 @@ BaselineOfIDE >> loadIceberg [
 
 	Metacello new
 		baseline: 'Iceberg';
-		repository: (self class environment at: #BaselineOfPharo) icebergRepository;
+		repository: (self classNamed: #BaselineOfPharo) icebergRepository;
 		onConflictUseLoaded;
 		load.
-	(Smalltalk classNamed: #Iceberg) enableMetacelloIntegration: true.
+	(self classNamed: #Iceberg) enableMetacelloIntegration: true.
 
 	Smalltalk os environment at: #GITHUB_TOKEN ifPresent: [ :token |
 		| credentials |
-		credentials := (Smalltalk classNamed: #IceTokenCredentials) new
+		credentials := (self classNamed: #IceTokenCredentials) new
 			               username:
 				               (Smalltalk os environment
 					                at: #GITHUB_USER
@@ -210,7 +214,7 @@ BaselineOfIDE >> loadIceberg [
 			               host: 'github.com';
 			               yourself.
 
-		(Smalltalk classNamed: #IceCredentialStore) current storeCredential: credentials forHostname: 'github.com'.
+		(self classNamed: #IceCredentialStore) current storeCredential: credentials forHostname: 'github.com'.
 		'Using authentification for Github API' traceCr ].
 
 	self registerPharo.
@@ -226,7 +230,7 @@ BaselineOfIDE >> loadIceberg [
 { #category : 'actions' }
 BaselineOfIDE >> makeCalypsoDefaultBrowser [
 
-	(self class environment at: #ClyBrowserMorph) beAllDefault.
+	(self classNamed: #ClyBrowserMorph) beAllDefault.
 ]
 
 { #category : 'baselines - dependencies' }
@@ -234,7 +238,7 @@ BaselineOfIDE >> microdown: spec [
 
 	spec baseline: 'Microdown' with: [ 
 		spec 
-			repository: (self class environment at: #BaselineOfPharo) microdownRepository;
+			repository: (self classNamed: #BaselineOfPharo) microdownRepository;
 			loads: #('RichText' 'Tests') ]
 ]
 
@@ -243,14 +247,14 @@ BaselineOfIDE >> newTools: spec [
 
 	spec baseline: 'NewTools' with: [
 		spec 
-			repository: (self class environment at: #BaselineOfPharo) newToolsRepository;
+			repository: (self classNamed: #BaselineOfPharo) newToolsRepository;
 			loads: #('default') ].
 ]
 
 { #category : 'private - register' }
 BaselineOfIDE >> pharoPluginClass [
 	
-	^ Smalltalk classNamed: #IcePharoPlugin
+	^ self classNamed: #IcePharoPlugin
 ]
 
 { #category : 'actions' }
@@ -371,7 +375,7 @@ BaselineOfIDE >> registerProject: projectName externalProject: externalProject b
 	| baselineClass className |
 
 	className := ('BaselineOf', baselineName) asSymbol.
-	baselineClass := Smalltalk classNamed: className.
+	baselineClass := self classNamed: className.
 	baselineClass ifNil: [ ^ self ].
 
 	self pharoPluginClass
@@ -391,7 +395,7 @@ BaselineOfIDE >> roassal: spec [
 		baseline: 'Roassal' 
  		with: [ 
 			spec 
-				repository: (self class environment at: #BaselineOfPharo) roassalRepository;
+				repository: (self classNamed: #BaselineOfPharo) roassalRepository;
     			loads: #( 'Core' 'Tests') ]
 ]
 
@@ -400,7 +404,7 @@ BaselineOfIDE >> specCode: spec [
 
 	spec baseline: 'SpecCode' with: [ 
 		spec
-			repository: (self class environment at: #BaselineOfPharo) specRepository;
+			repository: (self classNamed: #BaselineOfPharo) specRepository;
 			className: 'BaselineOfSpec2';
 			loads: #('Code' 'CodeTests') ]
 ]
@@ -409,5 +413,5 @@ BaselineOfIDE >> specCode: spec [
 BaselineOfIDE >> welcomeBrowser: spec [
 
 	spec baseline: 'WelcomeBrowser' with: [
-		spec repository: (self class environment at: #BaselineOfPharo) welcomeBrowserRepository ]
+		spec repository: (self classNamed: #BaselineOfPharo) welcomeBrowserRepository ]
 ]
