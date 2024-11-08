@@ -9,6 +9,11 @@ Class {
 	#package : 'Debugging-Core'
 }
 
+{ #category : 'testing' }
+UnknownBytecode class >> captureIfSignalledWhenStepping [
+	^self == UnknownBytecode 
+]
+
 { #category : 'accessing' }
 UnknownBytecode >> bytecode [
 	^ bytecode

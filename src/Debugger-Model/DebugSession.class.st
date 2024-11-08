@@ -558,7 +558,10 @@ DebugSession >> stepOver: aContext [
 { #category : 'debugging actions' }
 DebugSession >> stepThrough [
 
-	self stepThrough: interruptedContext
+	1halt.	
+	[self stepThrough: interruptedContext] 
+		on: UnknownBytecode 
+		do: [ :e | self halt ]
 ]
 
 { #category : 'debugging actions' }

@@ -1,6 +1,9 @@
 Class {
 	#name : 'StepThroughTest',
 	#superclass : 'DebuggerTest',
+	#instVars : [
+		'aBlock'
+	],
 	#category : 'Debugger-Model-Tests-Core',
 	#package : 'Debugger-Model-Tests',
 	#tag : 'Core'
@@ -56,6 +59,39 @@ StepThroughTest >> stepC1 [
 StepThroughTest >> stepC2 [
 
 	^ 5
+]
+
+{ #category : 'helper' }
+StepThroughTest >> stepD1 [
+
+	aBlock := [ 2 + 3 ].
+	
+	self stepD2
+	
+]
+
+{ #category : 'helper' }
+StepThroughTest >> stepD2 [
+
+	aBlock value
+]
+
+{ #category : 'helper' }
+StepThroughTest >> stepE1 [
+
+	| tmpBlock |
+	tmpBlock := [ 2 - 3 ].
+	
+	self evalBlockThenReturnOne: tmpBlock	
+]
+
+{ #category : 'helper' }
+StepThroughTest >> stepF1 [
+
+	| tmpBlock |
+	tmpBlock := [ 2 - 3 ].
+	
+	tmpBlock value
 ]
 
 { #category : 'tests' }
@@ -118,6 +154,91 @@ StepThroughTest >> testStepThroughDoesTheSameThingAsStepOverWhenNoBlockIsInvolve
 	self assert: node isMessage.
 	self assert: node receiver isSelfVariable.
 	self assert: node selector equals: #stepB3
+]
+
+{ #category : 'tests' }
+StepThroughTest >> testStepThroughInABlockInAInstanceVariable [
+	"In a context c, define a block b, send a message to another method to get b evaluated.
+	Testing that a step through on this message send moves the execution to the point where the block b is about to be evaluated."
+	| node expectedMethod |
+		
+	self settingUpSessionAndProcessAndContextForBlock: [ self stepD1 ].
+
+	session stepInto.
+	session stepInto.
+	session stepInto.
+
+	"Reached node 'self evalBlock: [ self stepC2 ] afterLoop: 10' of method stepC1"
+	"Checking that the execution is indeed at this node"
+	self assert: (session interruptedContext method) equals: (self class lookupSelector: #stepD1).
+	node := (self class lookupSelector:#stepD1) sourceNodeForPC: session interruptedContext pc.
+
+	session stepThrough.
+
+	"With fullblocks the method of the suspended context is a compiledBlock, not the method having it"
+	expectedMethod := (self class lookupSelector: #stepD1) literalAt: 1 .
+
+	"Checking that after the step through, the execution is at the 'self stepA2' node of the stepA1 method"
+	self assert: (session interruptedContext method) equals: expectedMethod.
+	node := expectedMethod sourceNodeForPC: session interruptedContext pc.
+	self assert: node isMessage.
+	self assert: node receiver value equals: 2.
+	self assert: node selector equals: #+
+]
+
+{ #category : 'tests' }
+StepThroughTest >> testStepThroughInABlockInATemporary [
+
+	| node expectedMethod |
+		
+	self settingUpSessionAndProcessAndContextForBlock: [ self stepE1 ].
+
+	session stepInto.
+	session stepInto.
+	session stepInto.
+
+	self assert: (session interruptedContext method) equals: (self class lookupSelector: #stepE1).
+	node := (self class lookupSelector:#stepE1) sourceNodeForPC: session interruptedContext pc.
+
+1halt.
+	session stepThrough.
+
+	"With fullblocks the method of the suspended context is a compiledBlock, not the method having it"
+	expectedMethod := (self class lookupSelector: #stepE1) literalAt: 1 .
+
+	"Checking that after the step through, the execution is at the 'self stepA2' node of the stepA1 method"
+	self assert: (session interruptedContext method) equals: expectedMethod.
+	node := expectedMethod sourceNodeForPC: session interruptedContext pc.
+	self assert: node isMessage.
+	self assert: node receiver value equals: 2.
+	self assert: node selector equals: #-
+]
+
+{ #category : 'tests' }
+StepThroughTest >> testStepThroughInABlockInATemporaryDirectly [
+
+	| node expectedMethod |
+		
+	self settingUpSessionAndProcessAndContextForBlock: [ self stepF1 ].
+
+	session stepInto.
+	session stepInto.
+	session stepInto.
+
+	self assert: (session interruptedContext method) equals: (self class lookupSelector: #stepF1).
+	node := (self class lookupSelector:#stepF1) sourceNodeForPC: session interruptedContext pc.
+
+	session stepThrough.
+
+	"With fullblocks the method of the suspended context is a compiledBlock, not the method having it"
+	expectedMethod := (self class lookupSelector: #stepF1) literalAt: 1 .
+
+	"Checking that after the step through, the execution is at the 'self stepA2' node of the stepA1 method"
+	self assert: (session interruptedContext method) equals: expectedMethod.
+	node := expectedMethod sourceNodeForPC: session interruptedContext pc.
+	self assert: node isMessage.
+	self assert: node receiver value equals: 2.
+	self assert: node selector equals: #-
 ]
 
 { #category : 'tests' }

@@ -110,10 +110,15 @@ EnhancedDebugSession >> stepThrough: aContext [
 { #category : 'preparation' }
 EnhancedDebugSession >> updateFullBlocksOf: aContext withIndex: anIndex [ 
 	
-	| originalBlock newBlock newCompiledBlock |
+	| originalBlock newBlock newCompiledBlock blockIndex |
 	
 	originalBlock := aContext at: anIndex.
 	originalBlock isBlock ifFalse: [ ^ self ].
+
+	(blockIndex := originalBlocks indexOf: originalBlock) > 0
+		ifTrue: [ 
+			aContext at: anIndex put: (newBlocks at: blockIndex). 
+			^ self ].
 	
 	newBlock := originalBlock clone.
 	newCompiledBlock := newBlock compiledBlock clone.

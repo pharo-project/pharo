@@ -285,6 +285,9 @@ InstructionStream >> interpretSistaV1ExtendedPush: extB for: client [
 
 { #category : 'interpreting' }
 InstructionStream >> interpretUnusedBytecode: client at: startPC [
+
+	"We recover the PC to the real bytecode that is unknown"	
+	client pc: startPC. 
 	^ client unusedBytecode
 ]
 
