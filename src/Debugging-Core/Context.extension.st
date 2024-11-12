@@ -394,6 +394,20 @@ Context >> unusedBytecode [
 ]
 
 { #category : '*Debugging-Core' }
+Context >> unusedBytecode: aBytecode at: startPC [
+
+	| selector newContext |
+
+	"I am the implementation when the unusedBycode is detected by the instruction stream.
+	I should not throw the exception, but do the same behavior than the VM. Pushing a new Context with the unusedBytecode selector (taken from the specialObjectsArray"
+	
+	selector := Smalltalk specialObjectsArray at:58.
+	newContext := self class sender: self receiver: self method: (self class lookupSelector: selector) arguments: #().
+
+	^ newContext
+]
+
+{ #category : '*Debugging-Core' }
 Context >> updatePCForQuickPrimitiveRestart [
 
 	({self returnBooleanPrimitive.	self returnSelfPrimitive } includes: self method primitive) 

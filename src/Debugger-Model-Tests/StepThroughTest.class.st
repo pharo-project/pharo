@@ -200,7 +200,6 @@ StepThroughTest >> testStepThroughInABlockInATemporary [
 	self assert: (session interruptedContext method) equals: (self class lookupSelector: #stepE1).
 	node := (self class lookupSelector:#stepE1) sourceNodeForPC: session interruptedContext pc.
 
-1halt.
 	session stepThrough.
 
 	"With fullblocks the method of the suspended context is a compiledBlock, not the method having it"

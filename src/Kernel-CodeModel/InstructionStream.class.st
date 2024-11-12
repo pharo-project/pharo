@@ -288,7 +288,7 @@ InstructionStream >> interpretUnusedBytecode: client at: startPC [
 
 	"We recover the PC to the real bytecode that is unknown"	
 	client pc: startPC. 
-	^ client unusedBytecode
+	^ client unusedBytecode: (self compiledCode at: startPC) at: startPC
 ]
 
 { #category : 'scanning' }

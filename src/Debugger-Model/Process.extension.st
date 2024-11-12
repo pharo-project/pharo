@@ -31,7 +31,7 @@ Process >> newDebugSessionNamed: aString startedAt: aContext [
 { #category : '*Debugger-Model' }
 Process >> newEnhancedDebugSessionNamed: aString startedAt: aContext [
 
-	^EnhancedDebugSession named: aString on: self startedAt: aContext
+	^ EnhancedDebugSession named: aString on: self startedAt: aContext
 ]
 
 { #category : '*Debugger-Model' }

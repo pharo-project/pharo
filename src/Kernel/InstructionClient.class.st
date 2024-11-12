@@ -233,3 +233,10 @@ InstructionClient >> trap [
 InstructionClient >> unusedBytecode [
 		"an unused bytecode is encountered"
 ]
+
+{ #category : 'instruction decoding' }
+InstructionClient >> unusedBytecode: aBytecode at: startPC [
+
+	"I will just call the default operation"
+	self unusedBytecode 
+]
