@@ -197,12 +197,6 @@ SymbolicBytecodeBuilder >> pushClosureTemps: numTemps [
 ]
 
 { #category : 'instruction decoding' }
-SymbolicBytecodeBuilder >> pushConsArrayWithElements: numElements [
-
-	self addBytecode: 'pop ', numElements printString, ' into (Array new: ', numElements printString, ')'
-]
-
-{ #category : 'instruction decoding' }
 SymbolicBytecodeBuilder >> pushConstant: obj [
 	"Print the Push Constant, obj, on Top Of Stack bytecode."
 
@@ -235,6 +229,12 @@ SymbolicBytecodeBuilder >> pushLiteralVariable: anAssociation [
 SymbolicBytecodeBuilder >> pushNewArrayOfSize: numElements [
  
 	self addBytecode: 'push: (Array new: ', numElements printString, ')'
+]
+
+{ #category : 'instruction decoding' }
+SymbolicBytecodeBuilder >> pushNewArrayStackInitWithElements: numElements [
+
+	self addBytecode: 'pop ', numElements printString, ' into (Array new: ', numElements printString, ')'
 ]
 
 { #category : 'instruction decoding' }

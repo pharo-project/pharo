@@ -498,14 +498,6 @@ FBDDecompiler >> pushCleanClosure: aCompiledBlock [
 ]
 
 { #category : 'data flow instructions' }
-FBDDecompiler >> pushConsArrayWithElements: numElements [
-	| array |
-	array := Array new: numElements.
-	numElements to: 1 by: -1 do: [ :i | array at: i put: simulatedStack removeLast ].
-	simulatedStack addLast: (builder codeArray: array)
-]
-
-{ #category : 'data flow instructions' }
 FBDDecompiler >> pushConstant: value [
 	value isEmbeddedBlock ifTrue: [ ^self pushCleanClosure: value compiledBlock  ].
 	simulatedStack addLast: (builder codeLiteral: value)
@@ -541,6 +533,14 @@ FBDDecompiler >> pushNewArrayOfSize: numElements [
 	tempVect := self createNTemps: numElements.
 	currentSequence addTemporariesNamed: (tempVect collect: [ :e | e name ]).
 	simulatedStack addLast: tempVect
+]
+
+{ #category : 'data flow instructions' }
+FBDDecompiler >> pushNewArrayStackInitWithElements: numElements [
+	| array |
+	array := Array new: numElements.
+	numElements to: 1 by: -1 do: [ :i | array at: i put: simulatedStack removeLast ].
+	simulatedStack addLast: (builder codeArray: array)
 ]
 
 { #category : 'data flow instructions' }

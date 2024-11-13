@@ -144,30 +144,30 @@ returnReceiver
 ]
 
 { #category : 'tests' }
-IRPrinterTest >> testPushConsArray [
+IRPrinterTest >> testPushNewArrayNilInit [
 	| ir |
-	ir := IRBuilderTest new testPushConsArray.
+	ir := IRBuilderTest new testPushNewArrayNilInit.
+	self
+		assert: ir longPrintString
+		equals:
+			'
+label: 1
+pushNewArrayNilInit: 1
+returnTop
+'
+]
+
+{ #category : 'tests' }
+IRPrinterTest >> testPushNewArrayStackInit [
+	| ir |
+	ir := IRBuilderTest new testPushNewArrayStackInit.
 	self
 		assert: ir longPrintString
 		equals:
 			'
 label: 1
 pushReceiver
-pushConsArray: 1
-returnTop
-'
-]
-
-{ #category : 'tests' }
-IRPrinterTest >> testPushNewArray [
-	| ir |
-	ir := IRBuilderTest new testPushNewArray.
-	self
-		assert: ir longPrintString
-		equals:
-			'
-label: 1
-pushNewArray: 1
+pushNewArrayStackInit: 1
 returnTop
 '
 ]

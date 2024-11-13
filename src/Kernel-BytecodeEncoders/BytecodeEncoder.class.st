@@ -151,11 +151,6 @@ BytecodeEncoder >> sizePop [
 ]
 
 { #category : 'opcode sizing' }
-BytecodeEncoder >> sizePushConsArray: numElements [
-	^self sizeOpcodeSelector: #genPushConsArray: withArguments: {numElements}
-]
-
-{ #category : 'opcode sizing' }
 BytecodeEncoder >> sizePushInstVar: instVarIndex [
 	^self sizeOpcodeSelector: #genPushInstVar: withArguments: {instVarIndex}
 ]
@@ -176,8 +171,13 @@ BytecodeEncoder >> sizePushLiteralVar: literalIndex [
 ]
 
 { #category : 'opcode sizing' }
-BytecodeEncoder >> sizePushNewArray: size [
-	^self sizeOpcodeSelector: #genPushNewArray: withArguments: {size}
+BytecodeEncoder >> sizePushNewArrayNilInit: size [
+	^self sizeOpcodeSelector: #genPushNewArrayNilInit: withArguments: {size}
+]
+
+{ #category : 'opcode sizing' }
+BytecodeEncoder >> sizePushNewArrayStackInit: numElements [
+	^self sizeOpcodeSelector: #genPushNewArrayStackInit: withArguments: {numElements}
 ]
 
 { #category : 'opcode sizing' }

@@ -204,11 +204,6 @@ FBIRBytecodeDecompiler >> pushActiveContext [
 ]
 
 { #category : 'instruction decoding' }
-FBIRBytecodeDecompiler >> pushConsArrayWithElements: numElements [
-	irBuilder pushConsArray: numElements
-]
-
-{ #category : 'instruction decoding' }
 FBIRBytecodeDecompiler >> pushConstant: value [
 	irBuilder pushLiteral: value
 ]
@@ -232,6 +227,11 @@ FBIRBytecodeDecompiler >> pushLiteralVariable: assoc [
 { #category : 'instruction decoding' }
 FBIRBytecodeDecompiler >> pushNewArrayOfSize: size [
 	newTempVector := IRRemoteArray new size: size
+]
+
+{ #category : 'instruction decoding' }
+FBIRBytecodeDecompiler >> pushNewArrayStackInitWithElements: numElements [
+	irBuilder pushNewArrayStackInit: numElements
 ]
 
 { #category : 'instruction decoding' }

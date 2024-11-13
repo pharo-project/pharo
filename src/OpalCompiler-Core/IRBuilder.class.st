@@ -306,12 +306,6 @@ IRBuilder >> properties: aDict [
 ]
 
 { #category : 'instructions' }
-IRBuilder >> pushConsArray: size [
-
-	self add: (IRInstruction pushConsArray: size)
-]
-
-{ #category : 'instructions' }
 IRBuilder >> pushDup [
 
 	self add: IRInstruction pushDup
@@ -348,9 +342,15 @@ IRBuilder >> pushLiteralVariable: object [
 ]
 
 { #category : 'instructions' }
-IRBuilder >> pushNewArray: size [
+IRBuilder >> pushNewArrayNilInit: size [
 
-	self add: (IRInstruction pushNewArray: size)
+	self add: (IRInstruction pushNewArrayNilInit: size)
+]
+
+{ #category : 'instructions' }
+IRBuilder >> pushNewArrayStackInit: size [
+
+	self add: (IRInstruction pushNewArrayStackInit: size)
 ]
 
 { #category : 'instructions' }

@@ -50,14 +50,6 @@ IRInstruction class >> popTop [
 ]
 
 { #category : 'instance creation' }
-IRInstruction class >> pushConsArray: aSize [
-	^IRPushArray new
-		size: aSize;
-		cons: true;
-		yourself
-]
-
-{ #category : 'instance creation' }
 IRInstruction class >> pushDup [
 
 	^ IRPushDup new
@@ -104,11 +96,19 @@ IRInstruction class >> pushLiteralVariable: object [
 ]
 
 { #category : 'instance creation' }
-IRInstruction class >> pushNewArray: aSize [
+IRInstruction class >> pushNewArrayNilInit: aSize [
 
 	^IRPushArray new
 		size: aSize;
-		cons: false;
+		initsFromStack: false;
+		yourself
+]
+
+{ #category : 'instance creation' }
+IRInstruction class >> pushNewArrayStackInit: aSize [
+	^IRPushArray new
+		size: aSize;
+		initsFromStack: true;
 		yourself
 ]
 

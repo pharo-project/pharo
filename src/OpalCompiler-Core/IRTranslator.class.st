@@ -179,11 +179,11 @@ IRTranslator >> visitPopIntoTemp: tmp [
 { #category : 'visiting' }
 IRTranslator >> visitPushArray: array [
 
-	array cons
+	array initsFromStack
 		ifTrue: [
-			gen pushConsArray: array size ]
+			gen pushNewArrayStackInit: array size ]
 		ifFalse: [
-			gen pushNewArray: array size ]
+			gen pushNewArrayNilInit: array size ]
 ]
 
 { #category : 'visiting' }
@@ -328,6 +328,6 @@ IRTranslator >> visitStoreTemp: tmp [
 IRTranslator >> visitTempVector: tempVector [
 
 	tempVectorStack push: tempVector.
-	gen pushNewArray: tempVector vars size.
+	gen pushNewArrayNilInit: tempVector vars size.
 	gen storePopTemp: (self currentScope indexForVarNamed: tempVector name)
 ]

@@ -512,7 +512,7 @@ OCASTTranslator >> visitArrayNode: anArrayNode [
 
 	elementNodes := anArrayNode children.
 	elementNodes do: [:node | self visitNode: node].
-	methodBuilder pushConsArray: elementNodes size
+	methodBuilder pushNewArrayStackInit: elementNodes size
 ]
 
 { #category : 'visitor - double dispatching' }

@@ -114,7 +114,7 @@ FFICalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec ffiLib
 	"iterate arguments in order (in the function) to create the function call"
 	functionSpec arguments do: [ :each | each emitArgument: builder context: sender inCallout: self requestor ].
 	"create the array"
-	builder pushConsArray: functionSpec arguments size.
+	builder pushNewArrayStackInit: functionSpec arguments size.
 	"send call and store into result"
 	builder send: #invokeWithArguments:.
 	functionSpec arguments do: [ :each | each emitReturnArgument: builder context: sender ].

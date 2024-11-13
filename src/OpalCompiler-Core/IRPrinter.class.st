@@ -100,11 +100,11 @@ IRPrinter >> visitPopIntoTemp: tmp [
 { #category : 'visiting' }
 IRPrinter >> visitPushArray: array [
 
-	array cons
+	array initsFromStack
 		ifTrue: [
-			stream nextPutAll: 'pushConsArray: ' ]
+			stream nextPutAll: 'pushNewArrayStackInit: ' ]
 		ifFalse: [
-			stream nextPutAll: 'pushNewArray: ' ].
+			stream nextPutAll: 'pushNewArrayNilInit: ' ].
 	array size printOn: stream
 ]
 

@@ -315,11 +315,30 @@ IRBuilderTest >> testPopTop [
 ]
 
 { #category : 'tests' }
-IRBuilderTest >> testPushConsArray [
+IRBuilderTest >> testPushNewArrayNilInit [
+
+	| iRMethod aCompiledMethod receiver |
+	iRMethod := IRBuilder new
+
+		pushNewArrayNilInit: 1;
+		returnTop;
+		ir.
+
+	aCompiledMethod := iRMethod compiledMethod.
+
+	receiver :=  (5@8).
+
+	self assert: (aCompiledMethod isKindOf: CompiledMethod).
+	self assert: ((aCompiledMethod valueWithReceiver: receiver) first isNil).
+	^iRMethod
+]
+
+{ #category : 'tests' }
+IRBuilderTest >> testPushNewArrayStackInit [
 	| iRMethod aCompiledMethod receiver |
 	iRMethod := IRBuilder new
 		pushReceiver;
-		pushConsArray: 1;
+		pushNewArrayStackInit: 1;
 		returnTop;
 		ir.
 
@@ -333,11 +352,11 @@ IRBuilderTest >> testPushConsArray [
 ]
 
 { #category : 'tests' }
-IRBuilderTest >> testPushConsArray2 [
+IRBuilderTest >> testPushNewArrayStackInit2 [
 	| iRMethod aCompiledMethod receiver |
 	iRMethod := IRBuilder new
 		pushLiteral: 'hi!';
-		pushConsArray: 1;
+		pushNewArrayStackInit: 1;
 		returnTop;
 		ir.
 
@@ -348,25 +367,6 @@ IRBuilderTest >> testPushConsArray2 [
 	self assert: (aCompiledMethod isKindOf: CompiledMethod).
 	self assert: (aCompiledMethod valueWithReceiver: receiver) equals: #('hi!').
 	^ iRMethod
-]
-
-{ #category : 'tests' }
-IRBuilderTest >> testPushNewArray [
-
-	| iRMethod aCompiledMethod receiver |
-	iRMethod := IRBuilder new
-
-		pushNewArray: 1;
-		returnTop;
-		ir.
-
-	aCompiledMethod := iRMethod compiledMethod.
-
-	receiver :=  (5@8).
-
-	self assert: (aCompiledMethod isKindOf: CompiledMethod).
-	self assert: ((aCompiledMethod valueWithReceiver: receiver) first isNil).
-	^iRMethod
 ]
 
 { #category : 'tests' }

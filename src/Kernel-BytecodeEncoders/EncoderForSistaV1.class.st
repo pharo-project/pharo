@@ -1034,17 +1034,6 @@ EncoderForSistaV1 >> genPushCharacter: aCharacterOrCode [
 		nextPut: (code bitAnd: 255)
 ]
 
-{ #category : 'bytecode generation' }
-EncoderForSistaV1 >> genPushConsArray: size [
-	(size < 0 or: [size > 127]) ifTrue:
-		[^self outOfRangeError: 'size' index: size range: 0 to: 127].
-	"231		11100111	jkkkkkkk	Push (Array new: kkkkkkk) (j = 0)
-									&	Pop kkkkkkk elements into: (Array new: kkkkkkk) (j = 1)"
-	stream
-		nextPut: 231;
-		nextPut: size + 128
-]
-
 { #category : 'extended bytecode generation' }
 EncoderForSistaV1 >> genPushFullClosure: compiledBlockLiteralIndex numCopied: numCopied receiverOnStack: receiverOnStack outerContextNeeded: outerContextNeeded [
 	"*	249		11111001 	xxxxxxxx	siyyyyyy	push Closure Compiled block literal index xxxxxxxx (+ Extend A * 256) numCopied yyyyyy receiverOnStack: s = 1 ignoreOuterContext: i = 1"
@@ -1155,7 +1144,7 @@ EncoderForSistaV1 >> genPushLiteralVar: literalIndex [
 ]
 
 { #category : 'bytecode generation' }
-EncoderForSistaV1 >> genPushNewArray: size [
+EncoderForSistaV1 >> genPushNewArrayNilInit: size [
 	(size < 0 or: [size > 127]) ifTrue:
 		[^self outOfRangeError: 'size' index: size range: 0 to: 127].
 	"231		11100111	jkkkkkkk	Push (Array new: kkkkkkk) (j = 0)
@@ -1163,6 +1152,17 @@ EncoderForSistaV1 >> genPushNewArray: size [
 	stream
 		nextPut: 231;
 		nextPut: size
+]
+
+{ #category : 'bytecode generation' }
+EncoderForSistaV1 >> genPushNewArrayStackInit: size [
+	(size < 0 or: [size > 127]) ifTrue:
+		[^self outOfRangeError: 'size' index: size range: 0 to: 127].
+	"231		11100111	jkkkkkkk	Push (Array new: kkkkkkk) (j = 0)
+									&	Pop kkkkkkk elements into: (Array new: kkkkkkk) (j = 1)"
+	stream
+		nextPut: 231;
+		nextPut: size + 128
 ]
 
 { #category : 'bytecode generation' }

@@ -81,7 +81,7 @@ RFASTTranslator >> visitArrayNode: anArrayNode [
 	self emitMetaLinkBefore: anArrayNode.
 	anArrayNode hasMetalinkInstead
 		ifTrue: [ self emitMetaLinkInstead: anArrayNode ]
-		ifFalse: [ methodBuilder pushConsArray: elementNodes size ].
+		ifFalse: [ methodBuilder pushNewArrayStackInit: elementNodes size ].
 	self emitMetaLinkAfterNoEnsure: anArrayNode
 ]
 

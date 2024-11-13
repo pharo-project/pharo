@@ -259,9 +259,9 @@ FBIRBytecodeDecompilerTest >> testPopTop [
 ]
 
 { #category : 'tests' }
-FBIRBytecodeDecompilerTest >> testPushConsArray [
+FBIRBytecodeDecompilerTest >> testPushNewArrayStackInit [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testPushConsArray.
+	ir1 := IRBuilderTest new testPushNewArrayStackInit.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -270,9 +270,9 @@ FBIRBytecodeDecompilerTest >> testPushConsArray [
 ]
 
 { #category : 'tests' }
-FBIRBytecodeDecompilerTest >> testPushConsArray2 [
+FBIRBytecodeDecompilerTest >> testPushNewArrayStackInit2 [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testPushConsArray2.
+	ir1 := IRBuilderTest new testPushNewArrayStackInit2.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.

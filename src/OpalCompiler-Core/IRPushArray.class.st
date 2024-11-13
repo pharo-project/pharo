@@ -8,7 +8,7 @@ Class {
 	#superclass : 'IRInstruction',
 	#instVars : [
 		'size',
-		'cons'
+		'initsFromStack'
 	],
 	#category : 'OpalCompiler-Core-IR-Nodes',
 	#package : 'OpalCompiler-Core',
@@ -20,20 +20,20 @@ IRPushArray >> accept: aVisitor [
 	^ aVisitor visitPushArray: self
 ]
 
-{ #category : 'accessing' }
-IRPushArray >> cons [
-	^ cons
-]
-
-{ #category : 'accessing' }
-IRPushArray >> cons: aBool [
-	cons := aBool
-]
-
 { #category : 'initialization' }
 IRPushArray >> initialize [
 	size := 0.
-	cons := false
+	initsFromStack := false
+]
+
+{ #category : 'accessing' }
+IRPushArray >> initsFromStack [
+	^ initsFromStack
+]
+
+{ #category : 'accessing' }
+IRPushArray >> initsFromStack: aBool [
+	initsFromStack := aBool
 ]
 
 { #category : 'accessing' }

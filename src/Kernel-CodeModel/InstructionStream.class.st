@@ -77,7 +77,7 @@ InstructionStream >> interpretNext2ByteSistaV1Instruction: bytecode for: client 
 		bytecode = 231 ifTrue:
 			[^byte < 128
 				ifTrue: [client pushNewArrayOfSize: byte]
-				ifFalse: [client pushConsArrayWithElements: byte - 128]].
+				ifFalse: [client pushNewArrayStackInitWithElements: byte - 128]].
 		bytecode = 232 ifTrue:
 			[^client pushConstant: (extB bitShift: 8) + byte].
 		^client pushConstant: (Character value: (extB bitShift: 8) + byte)].

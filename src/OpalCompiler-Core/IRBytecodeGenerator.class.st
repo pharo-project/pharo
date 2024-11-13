@@ -491,13 +491,6 @@ IRBytecodeGenerator >> properties: propDict [
 ]
 
 { #category : 'instructions' }
-IRBytecodeGenerator >> pushConsArray: size [
-	stack push.
-	stack pop: size.
-	encoder genPushConsArray: size
-]
-
-{ #category : 'instructions' }
 IRBytecodeGenerator >> pushDup [
 	stack push.
 	encoder genDup
@@ -540,9 +533,16 @@ IRBytecodeGenerator >> pushLiteralVariable: object [
 ]
 
 { #category : 'instructions' }
-IRBytecodeGenerator >> pushNewArray: size [
+IRBytecodeGenerator >> pushNewArrayNilInit: size [
 	stack push.
-	encoder genPushNewArray: size
+	encoder genPushNewArrayNilInit: size
+]
+
+{ #category : 'instructions' }
+IRBytecodeGenerator >> pushNewArrayStackInit: size [
+	stack push.
+	stack pop: size.
+	encoder genPushNewArrayStackInit: size
 ]
 
 { #category : 'instructions' }

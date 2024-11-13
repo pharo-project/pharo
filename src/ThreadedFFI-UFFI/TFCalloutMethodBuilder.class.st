@@ -117,7 +117,7 @@ TFCalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec ffiLibr
 			each resolvedType tfExternalTypeWithArity emitMarshallToPrimitive: builder ].
 
 	"create the array"
-	builder pushConsArray: functionSpec arguments size.
+	builder pushNewArrayStackInit: functionSpec arguments size.
 	builder addTemp: #argumentsArray.
 	builder storeTemp: #argumentsArray.
 

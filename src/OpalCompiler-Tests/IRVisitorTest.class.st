@@ -68,16 +68,16 @@ IRVisitorTest >> testPopTop [
 ]
 
 { #category : 'tests' }
-IRVisitorTest >> testPushConsArray [
+IRVisitorTest >> testPushNewArrayNilInit [
 	| ir |
-	ir := IRBuilderTest new testPushConsArray.
+	ir := IRBuilderTest new testPushNewArrayNilInit.
 	self interpret: ir
 ]
 
 { #category : 'tests' }
-IRVisitorTest >> testPushNewArray [
+IRVisitorTest >> testPushNewArrayStackInit [
 	| ir |
-	ir := IRBuilderTest new testPushNewArray.
+	ir := IRBuilderTest new testPushNewArrayStackInit.
 	self interpret: ir
 ]
 

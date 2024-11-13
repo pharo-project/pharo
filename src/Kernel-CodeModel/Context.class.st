@@ -1516,15 +1516,6 @@ Context >> pushClosureTemps: numTemps [
 ]
 
 { #category : 'instruction decoding' }
-Context >> pushConsArrayWithElements: numElements [
-	| array |
-	array := Array new: numElements.
-	numElements to: 1 by: -1 do: [ :i |
-		array at: i put: self pop ].
-	self push: array
-]
-
-{ #category : 'instruction decoding' }
 Context >> pushConstant: value [
 	"Simulate the action of bytecode that pushes the constant, value, on the
 	top of the stack."
@@ -1557,6 +1548,15 @@ Context >> pushLiteralVariable: value [
 { #category : 'instruction decoding' }
 Context >> pushNewArrayOfSize: arraySize [
 	self push: (Array new: arraySize)
+]
+
+{ #category : 'instruction decoding' }
+Context >> pushNewArrayStackInitWithElements: numElements [
+	| array |
+	array := Array new: numElements.
+	numElements to: 1 by: -1 do: [ :i |
+		array at: i put: self pop ].
+	self push: array
 ]
 
 { #category : 'instruction decoding' }

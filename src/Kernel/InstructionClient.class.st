@@ -149,11 +149,6 @@ InstructionClient >> pushClosureTemps: numTemps [
 ]
 
 { #category : 'instruction decoding' }
-InstructionClient >> pushConsArrayWithElements: numElements [
-	"Push Cons Array of size numElements popping numElements items from the stack into the array bytecode."
-]
-
-{ #category : 'instruction decoding' }
 InstructionClient >> pushConstant: value [
 	"Push Constant, value, on Top Of Stack bytecode."
 ]
@@ -171,6 +166,11 @@ InstructionClient >> pushLiteralVariable: anAssociation [
 { #category : 'instruction decoding' }
 InstructionClient >> pushNewArrayOfSize: numElements [
 	"Push New Array of size numElements bytecode."
+]
+
+{ #category : 'instruction decoding' }
+InstructionClient >> pushNewArrayStackInitWithElements: numElements [
+	"Push new Array of size numElements and fill it by popping numElements items from the stack into the array bytecode."
 ]
 
 { #category : 'instruction decoding' }
