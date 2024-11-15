@@ -2,7 +2,8 @@ Class {
 	#name : 'StepThroughTest',
 	#superclass : 'DebuggerTest',
 	#instVars : [
-		'aBlock'
+		'aBlock',
+		'failed'
 	],
 	#category : 'Debugger-Model-Tests-Core',
 	#package : 'Debugger-Model-Tests',
@@ -92,6 +93,33 @@ StepThroughTest >> stepF1 [
 	tmpBlock := [ 2 - 3 ].
 	
 	tmpBlock value
+]
+
+{ #category : 'helper' }
+StepThroughTest >> stepG1 [
+
+	| sem |
+
+	sem := Semaphore new.
+
+	self stepG2: [ 1 + 3 ] sem: sem.
+
+]
+
+{ #category : 'helper' }
+StepThroughTest >> stepG2: aTmp sem: sem [
+
+	[
+	sem wait.
+	[
+	aTmp value.
+	failed := false ] onErrorDo: [ failed := true ] ] forkAt:
+		Processor activePriority + 1.
+				
+	sem signal.
+	
+	[ failed isNil ] whileTrue: [ Processor yield ].
+
 ]
 
 { #category : 'tests' }
@@ -238,6 +266,21 @@ StepThroughTest >> testStepThroughInABlockInATemporaryDirectly [
 	self assert: node isMessage.
 	self assert: node receiver value equals: 2.
 	self assert: node selector equals: #-
+]
+
+{ #category : 'tests' }
+StepThroughTest >> testStepThroughInOtherProcess [
+
+	self settingUpSessionAndProcessAndContextForBlock: [ self stepG1 ].
+
+	session stepInto.
+	
+	session stepThrough.
+	session stepThrough.
+	session stepThrough.
+	session stepThrough.
+		
+	self deny: failed.
 ]
 
 { #category : 'tests' }
