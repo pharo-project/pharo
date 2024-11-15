@@ -54,24 +54,6 @@ EnhancedDebugSessionWithHaltingBlock >> revertBlocks [
 ]
 
 { #category : 'debugging actions' }
-EnhancedDebugSessionWithHaltingBlock >> stepOver: aContext [
-	"Send the selected message in selectedContext, and regain control
-	after the invoked method returns."
-
-	| newContext |
-	aContext stepIntoQuickMethod: false.
-	(self isContextPostMortem: aContext) ifTrue: [^ self].
-
-	newContext := interruptedProcess completeStep: aContext.
-	self updateContextTo:
-		(newContext == aContext
-			ifTrue: [ (self stepToFirstInterestingBytecodeIn: interruptedProcess) ]
-			ifFalse: [ newContext ]).
-
-	self triggerEvent: #stepOver
-]
-
-{ #category : 'debugging actions' }
 EnhancedDebugSessionWithHaltingBlock >> stepThrough: aContext [
 	"Send messages until you return to selectedContext.
 	 Used to step into a block in the method."
@@ -83,7 +65,9 @@ EnhancedDebugSessionWithHaltingBlock >> stepThrough: aContext [
 	
 	self prepareContextForStepThrough: aContext.
 	
+	interruptedProcess psValueAt: (DebuggerSteppingState soleInstance index) put: true.
 	newContext := interruptedProcess completeStep: aContext.
+	interruptedProcess psValueAt: (DebuggerSteppingState soleInstance index) put: false.
 
 	newContext := self findNextContext: newContext.
 

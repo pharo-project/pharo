@@ -53,7 +53,8 @@ EnhancedDebugSession >> initialize [
 EnhancedDebugSession >> prepareContextForStepThrough: aContext [ 
 	
 	1 to: aContext size do: [ :idx | 
-		self updateFullBlocksOf: aContext withIndex: idx ]
+		self updateFullBlocksOf: aContext withIndex: idx ].
+	
 ]
 
 { #category : 'clean-up' }
@@ -61,24 +62,6 @@ EnhancedDebugSession >> revertBlocks [
 
 	newBlocks asArray elementsForwardIdentityTo: originalBlocks asArray.
 	
-]
-
-{ #category : 'debugging actions' }
-EnhancedDebugSession >> stepOver: aContext [
-	"Send the selected message in selectedContext, and regain control
-	after the invoked method returns."
-
-	| newContext |
-	aContext stepIntoQuickMethod: false.
-	(self isContextPostMortem: aContext) ifTrue: [^ self].
-
-	newContext := interruptedProcess completeStep: aContext.
-	self updateContextTo:
-		(newContext == aContext
-			ifTrue: [ (self stepToFirstInterestingBytecodeIn: interruptedProcess) ]
-			ifFalse: [ newContext ]).
-
-	self triggerEvent: #stepOver
 ]
 
 { #category : 'debugging actions' }

@@ -10,10 +10,10 @@ Class {
 	#tag : 'Core'
 }
 
-{ #category : 'as yet unclassified' }
+{ #category : 'exceptions' }
 HaltingBlock >> haltIfStepping [
 	
-	self halt
+	DebuggerSteppingState value ifTrue: [ self halt ]
 ]
 
 { #category : 'accessing' }
