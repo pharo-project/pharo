@@ -113,7 +113,7 @@ StepThroughTest >> stepG2: aTmp sem: sem [
 	sem wait.
 	[
 	aTmp value.
-	failed := false ] onErrorDo: [ failed := true ] ] forkAt:
+	failed := false ] on: Exception do: [ failed := true ] ] forkAt:
 		Processor activePriority + 1.
 				
 	sem signal.
