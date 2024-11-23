@@ -46,6 +46,19 @@ EpUnifiedBrowserPresenter class >> worldMenuItemOn: aBuilder [
 		order: 1
 ]
 
+{ #category : 'layout' }
+EpUnifiedBrowserPresenter >> defaultLayout [
+
+	^ SpBoxLayout newTopToBottom
+		add: toolbarPresenter expand: false;
+		add: (SpPanedLayout newLeftToRight
+			positionOfSlider: 35 percent;
+			add: logNodesPresenter;
+			add: logPresenter;
+			yourself);
+		yourself
+]
+
 { #category : 'refreshing' }
 EpUnifiedBrowserPresenter >> freshLogFromSelection: selection [
 	^ selection selectedItems
@@ -76,6 +89,7 @@ EpUnifiedBrowserPresenter >> freshLogFromSelection: selection [
 
 { #category : 'initialization' }
 EpUnifiedBrowserPresenter >> initializePresenter [
+
 	super initializePresenter.
 	logNodesPresenter whenSelectionChangedDo: [ :selection | self refreshWithLogSelection: selection ].
 	self initializeRefreshOnSessionUpdate.
@@ -85,14 +99,9 @@ EpUnifiedBrowserPresenter >> initializePresenter [
 { #category : 'initialization' }
 EpUnifiedBrowserPresenter >> initializePresenters [
 
-	self layout: (SpBoxLayout newTopToBottom
-		add: (toolbarPresenter := self newToolbar) expand: false;
-		add: (SpPanedLayout newLeftToRight
-			positionOfSlider: 35 percent;
-			add: (logNodesPresenter := self instantiate: EpLogNodeGraphPresenter);
-			add: (logPresenter := self instantiate: EpLogBrowserPresenter);
-			yourself);
-		yourself).
+	toolbarPresenter := self newToolbar.
+	logNodesPresenter := self instantiate: EpLogNodeGraphPresenter.
+	logPresenter := self instantiate: EpLogBrowserPresenter.
 
 	logNodesPresenter whenSelectionChangedDo: [ :selection |
 		self refreshWithLogSelection: selection ].
@@ -133,6 +142,7 @@ EpUnifiedBrowserPresenter >> initializeToolbar [
 
 { #category : 'initialization' }
 EpUnifiedBrowserPresenter >> initializeWindow: aWindowPresenter [
+
 	aWindowPresenter
 		title: 'Epicea - Code Changes';
 		initialExtent: (950 @ 650) scaledByDisplayScaleFactor;

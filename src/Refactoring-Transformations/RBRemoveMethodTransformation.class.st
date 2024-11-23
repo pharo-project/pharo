@@ -52,7 +52,7 @@ RBRemoveMethodTransformation class >> selector: aSelector from: aClassName [
 { #category : 'api' }
 RBRemoveMethodTransformation class >> selectors: aCollection from: aClassName [
 
-	^ self model: RBTransformation new model selectors: aCollection from: aClassName
+	^ self model: ReTransformation new model selectors: aCollection from: aClassName
 ]
 
 { #category : 'preconditions' }

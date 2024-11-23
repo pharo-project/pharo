@@ -3,7 +3,7 @@ Abstract class that groups behavior related to method generation.
 "
 Class {
 	#name : 'ReGenerateMethodDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'targetClass',
 		'selectedVariables'

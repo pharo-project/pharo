@@ -128,7 +128,7 @@ ClyFullBrowserMorph class >> openWithState: navigationBlock [
 
 { #category : 'tools registration' }
 ClyFullBrowserMorph class >> registerToolsOn: registry [
-	"Add ourselves to registry. See [Smalltalk tools]"
+
 	registry register: self as: #browser
 ]
 

@@ -97,6 +97,13 @@ TFDerivedType >> marshallToPrimitive: aValue [
 	^ aValue
 ]
 
+{ #category : 'marshalling' }
+TFDerivedType >> optimizeFor: aFFIFunctionArgument in: anIRBuilder ifCannot: aFullBlockClosure [ 
+	
+	"Just doing the non-optimized version"
+	aFullBlockClosure value
+]
+
 { #category : 'reading-writing' }
 TFDerivedType >> readReturnValue: anExternalAddress [
 

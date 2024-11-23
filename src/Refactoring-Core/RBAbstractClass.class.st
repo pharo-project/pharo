@@ -692,15 +692,17 @@ RBAbstractClass >> removedMethods [
 
 { #category : 'variable accessing' }
 RBAbstractClass >> renameInstanceVariable: oldName to: newName around: aBlock [
+
 	self privateInstanceVariableNames
 		at: (self privateInstanceVariableNames indexOf: oldName asString)
 		put: newName asString.
 	^ self model
-		performChange: (changeFactory
-							renameInstanceVariable: oldName
-							to: newName
-							in: self)
-		around: aBlock
+		  perform: aBlock
+		  onlyWithChange:
+		  (changeFactory
+			   renameInstanceVariable: oldName
+			   to: newName
+			   in: self)
 ]
 
 { #category : 'method accessing' }
@@ -817,7 +819,9 @@ RBAbstractClass >> typeOfClassVariable: aSymbol [
 
 { #category : 'testing' }
 RBAbstractClass >> whichClassIncludesSelector: aSelector [
-
+	"Answer the class on the receiver's superclass chain where the
+	argument, aSymbol (a message selector), will be found. Answer nil if none found."
+	
 	(self directlyDefinesMethod: aSelector) ifTrue: [ ^ self ].
 	^ self superclass ifNotNil: [
 		  self superclass whichClassIncludesSelector: aSelector ]

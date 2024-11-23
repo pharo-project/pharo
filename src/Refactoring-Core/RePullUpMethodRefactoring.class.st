@@ -11,7 +11,6 @@ Class {
 	#name : 'RePullUpMethodRefactoring',
 	#superclass : 'RBMethodRefactoring',
 	#instVars : [
-		'removeDuplicates',
 		'selectors',
 		'targetSuperclass'
 	],
@@ -61,7 +60,6 @@ RePullUpMethodRefactoring >> applicabilityPreconditions [
 			   class: targetSuperclass;
 			   subclassesList: { class name }).
 		  self preconditionNoReferencesToSharedVars.
-		  self preconditionNoOverrides.
 		  self preconditionNoSupersendsSent.
 		  self preconditionNoSupersendsReceived }
 ]
@@ -69,63 +67,8 @@ RePullUpMethodRefactoring >> applicabilityPreconditions [
 { #category : 'preconditions' }
 RePullUpMethodRefactoring >> breakingChangePreconditions [
 
-	^ { self preconditionNoReferencesToInstVars }
-]
-
-{ #category : 'preconditions' }
-RePullUpMethodRefactoring >> checkBackReferencesTo: aSelector [
-	"If `aSelector` is defined in `targetSuperclass` or one of its superclasses check for
-	super sends to `aSelector` in `targetSuperclass` hierarchy.
-	Display an error to the user about potential breaking changes with overriding `aSelector`
-	in `targetSuperclass` "
-
-	| definingClass pullUpParseTree |
-	definingClass := targetSuperclass whichClassIncludesSelector:
-		                 aSelector.
-	definingClass ifNil: [ ^ self ].
-	pullUpParseTree := class parseTreeForSelector: aSelector.
-	targetSuperclass allSubclasses do: [ :each |
-		each selectors do: [ :sel |
-			| parseTree |
-			parseTree := each parseTreeForSelector: sel.
-			(parseTree isNotNil and: [
-				 (parseTree superMessages includes: aSelector) and: [
-					 definingClass == (each whoDefinesMethod: aSelector) ] ])
-				ifTrue: [
-					removeDuplicates := true.
-					(aSelector == sel and: [
-						 parseTree equalTo: pullUpParseTree exceptForVariables: #(  ) ])
-						ifFalse: [
-							self refactoringError:
-								('Cannot pull up <1s> since it would override the method defined in <2p>'
-									 expandMacrosWith: aSelector
-									 with: definingClass) ] ] ] ]
-]
-
-{ #category : 'preconditions' }
-RePullUpMethodRefactoring >> checkSuperclass [
-	"Checks if one of the methods to push up is overriden from the `targetSuperclass`.
-	If there are overrides and `targetSuperclass` is not abstract a pop-up warns the user.
-	Also, if there are overrides check for back references (that is if one of the other classes in
-	`targetSuperclass` hierarchy depends on original method defined in `targetSuperclass`)."
-
-	| overrideSelectors |
-	overrideSelectors := selectors
-		select: [ :each | targetSuperclass directlyDefinesMethod: each ].
-	overrideSelectors := overrideSelectors
-		reject: [ :each |
-			| myTree superTree |
-			myTree := class parseTreeForSelector: each.
-			superTree := targetSuperclass parseTreeForSelector: each.
-			superTree equalTo: myTree exceptForVariables: #() ].
-	overrideSelectors ifEmpty: [ ^ self ].
-	targetSuperclass isAbstract
-		ifFalse: [ self
-				refactoringError:
-					('Non-abstract class <2p> already defines <1p>'
-						expandMacrosWith: overrideSelectors asArray first
-						with: targetSuperclass) ].
-	overrideSelectors do: [ :each | self checkBackReferencesTo: each ]
+	^ { self preconditionNoReferencesToInstVars .
+		 self preconditionNoOverrides }
 ]
 
 { #category : 'private' }
@@ -179,9 +122,14 @@ RePullUpMethodRefactoring >> preconditionNoOverrides [
 	^ (ReDefinesSelectorsCondition new
 		   definesSelectors: selectors
 		   in: targetSuperclass) not 
-	  |
+	
+	"we can pull up methods that are not already present in the target
+	Now if the method in the target is the same than the pulled one (without super) or if the super method is abstract - subclassResponsible, shouldBeImplemented we can pull freely."
+		
+	"  |
 	  (ReClassesAreAbstractCondition new 
 			classes: { targetSuperclass })
+			"
 ]
 
 { #category : 'preconditions' }
@@ -262,7 +210,6 @@ RePullUpMethodRefactoring >> pullUp: selectorCollection from: aClass to: aSuperC
 	class := self classObjectFor: aClass.
 	targetSuperclass := self classObjectFor: aSuperClass .
 	selectors := selectorCollection.
-	removeDuplicates := false
 ]
 
 { #category : 'transforming' }

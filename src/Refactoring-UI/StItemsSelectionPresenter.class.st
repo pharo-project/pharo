@@ -86,11 +86,14 @@ StItemsSelectionPresenter >> components [
 { #category : 'initialization' }
 StItemsSelectionPresenter >> connectPresenters [
 
-	table bindKeyCombination: Character backspace asShortcut
-		toAction: [ table toggleSelection ].
+	table addShortcutWith: [ :action | action 
+		shortcutKey: Character backspace asShortcut;
+		action: [ table toggleSelection ] ].
+	
 	self components do: [ :each |
-	each bindKeyCombination: Character cr asKeyCombination
-		toAction: [ :presenter | self accept: presenter] ]
+		each addShortcutWith: [ :action | action 
+			shortcutKey: Character cr asKeyCombination;
+			action: [ self accept: each ] ] ]
 ]
 
 { #category : 'initialization' }

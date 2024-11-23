@@ -1,6 +1,6 @@
 Class {
 	#name : 'ReClassInteractionDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'packageNames',
 		'packageName',

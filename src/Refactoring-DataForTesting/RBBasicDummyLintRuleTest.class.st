@@ -1232,7 +1232,7 @@ RBBasicDummyLintRuleTest >> anInstVar [
 	^ anInstVar
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RBBasicDummyLintRuleTest >> anInstVar: anObject [
 	anInstVar := anObject
 ]
@@ -1298,7 +1298,7 @@ RBBasicDummyLintRuleTest >> problemCount [
 	^result problemCount
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RBBasicDummyLintRuleTest >> resetResult [
 	result := result copyEmpty.
 	result label: name
@@ -1309,7 +1309,7 @@ RBBasicDummyLintRuleTest >> result [
 	^result
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RBBasicDummyLintRuleTest >> result: aResult [
 	result := aResult copyEmpty
 ]

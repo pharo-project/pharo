@@ -164,7 +164,7 @@ ZnMultiPartFormDataEntity >> printContentsOn: stream [
 	self parts printElementsOn: stream
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMultiPartFormDataEntity >> readBinaryFrom: stream [
 	"Switch to streaming implementation later on"
 
@@ -180,7 +180,7 @@ ZnMultiPartFormDataEntity >> readBinaryFrom: stream [
 	self parse: bytes boundary: self getBoundary asByteArray binary: true
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMultiPartFormDataEntity >> readFrom: stream [
 	"Switch to streaming implementation later on"
 

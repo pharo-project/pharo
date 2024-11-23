@@ -42,7 +42,7 @@ RBAbstractInstanceVariableRefactoring >> abstractReferences [
 RBAbstractInstanceVariableRefactoring >> accessorsRefactoring [
 
 	^ accessorsRefactoring
-		ifNil: [ accessorsRefactoring := RBCreateAccessorsForVariableTransformation
+		ifNil: [ accessorsRefactoring := ReCreateAccessorsForVariableTransformation
 				model: self model
 				variable: variableName
 				class: class

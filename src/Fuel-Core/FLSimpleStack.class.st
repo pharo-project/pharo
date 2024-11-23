@@ -49,7 +49,7 @@ FLSimpleStack >> grow [
 	array := newArray
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 FLSimpleStack >> initialize: hintSize [
 
 	array := Array new: hintSize.

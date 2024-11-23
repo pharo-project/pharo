@@ -228,6 +228,8 @@ RBParser >> getErrorFromClosuresWithMissingOpenings: aCollection [
 
 { #category : 'initialization' }
 RBParser >> initialize [
+
+	super initialize.
 	comments := OrderedCollection new
 ]
 

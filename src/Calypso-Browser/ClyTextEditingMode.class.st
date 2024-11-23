@@ -41,7 +41,7 @@ ClyTextEditingMode >> browserTool: aTextEditorTool [
 	browserTool := aTextEditorTool
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ClyTextEditingMode >> editorClass [
 	^ClyTextEditor
 ]
@@ -63,7 +63,7 @@ ClyTextEditingMode >> isScripting: anObject [
 	isForScripting := anObject
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ClyTextEditingMode >> updateTextAreaWhenPlugged [
 	super updateTextAreaWhenPlugged.
 	isForScripting ifTrue: [ self textArea shoutStyler beForSmalltalkScripting]

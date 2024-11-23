@@ -236,7 +236,7 @@ UITheme >> baseColorFor: aWidget [
 ]
 
 { #category : 'private' }
-UITheme >> basePassiveBackgroundColorFor: aButton [
+UITheme >> basePassiveBackgroundColor [
 
 	^ colorPalette basePassiveBackgroundColor
 ]
@@ -501,7 +501,7 @@ UITheme >> buttonSelectedDisabledFillStyleFor: aButton [
 UITheme >> buttonSelectedFillStyleFor: aButton [
 	"Return the normal button fillStyle for the given button."
 
-	^ SolidFillStyle color: (self lightSelectionColorFor: aButton)
+	^ SolidFillStyle color: self lightSelectionColor
 ]
 
 { #category : 'border-styles - buttons' }
@@ -736,12 +736,11 @@ UITheme >> chooseColorIn: aThemedMorph title: aString color: aColor for: aBlock 
 UITheme >> chooseDirectoryIn: aThemedMorph title: title path: path [
 	"Answer the result of a file dialog with the given title, choosing directories only."
 
-	| dialog |
-	dialog := (FileDialogWindow newWithTheme: aThemedMorph theme)
-		title: title;
-		answerDirectory.
-	path ifNotNil: [ dialog selectPath: path ].
-	^ dialog openModal answer
+	^ self directoryDialogWindowClass new
+		  defaultFolder: (path ifNil: [ StFileSystemModel defaultDirectory ]);
+		  title: (title ifNil: [ 'Choose Directory' translated ]);
+		  openModal;
+		  selectedEntry
 ]
 
 { #category : 'services' }
@@ -761,18 +760,19 @@ UITheme >> chooseExistingFileReferenceIn: aThemedMorph title: title extensions: 
 	path and preview type.
 	Answer nil or a filename."
 
-	| dialog pathFileReference |
-	pathFileReference := path asFileReference.
-	dialog := FileDialogWindow basicNew
-		basicTheme: aThemedMorph theme;
-		previewType: preview;
-		fileNameText: pathFileReference basename;
-		initialize;
-		title: title;
-		answerPathName.
-	exts ifNotNil: [ dialog validExtensions: exts ].
-	path ifNotNil: [ dialog selectPath: pathFileReference pathString ].
-	^ dialog openModal answer ifNotNil: #asFileReference
+	| dialog |
+	
+	dialog := self fileDialogWindowClass new.
+	exts 
+		ifNotNil: [ dialog filter: (StCustomExtensionsFilter extensions: exts) ].
+	path 
+		ifNotNil: [ dialog nameText: path basename ].
+	^ dialog
+		defaultFolder: (path ifNil: [ StFileSystemModel defaultDirectory ]);
+		title: (title ifNil: [ 'Choose File' translated ]);
+		openModal;
+		selectedEntry
+
 ]
 
 { #category : 'services' }
@@ -781,15 +781,18 @@ UITheme >> chooseFileIn: aThemedMorph title: title extensions: exts path: path p
 	Answer nil or a filename."
 
 	| dialog |
-	dialog := FileDialogWindow basicNew
-		basicTheme: aThemedMorph theme;
-		previewType: preview;
-		initialize;
-		title: title;
-		answerFileEntry.
-	exts ifNotNil: [ dialog validExtensions: exts ].
-	path ifNotNil: [ dialog selectPath: path ].
-	^ dialog openModal answer
+	
+	dialog := self fileDialogWindowClass new.
+	exts 
+		ifNotNil: [ dialog filter: (StCustomExtensionsFilter extensions: exts) ].
+	path 
+		ifNotNil: [ dialog nameText: path basename ].
+	^ dialog
+		defaultFolder: (path ifNil: [ StFileSystemModel defaultDirectory ]);
+		title: (title ifNil: [ 'Choose File' translated ] ifNotNil: [ title ]);
+		openModal;
+		selectedEntry
+
 ]
 
 { #category : 'services' }
@@ -798,15 +801,18 @@ UITheme >> chooseForSaveFileReferenceIn: aThemedMorph title: title extensions: e
 	path and preview type.
 	Answer nil or a filename."
 
-	| dialog pathFileReference |
-	pathFileReference := path asFileReference.
-	dialog := (FileDialogWindow newWithTheme: aThemedMorph theme)
-		title: title;
-		fileNameText: pathFileReference basename;
-		answerSaveFile.
-	exts ifNotNil: [ dialog validExtensions: exts ].
-	path ifNotNil: [ dialog selectPath: path ].
-	^ dialog openModal answer
+	| dialog |
+	
+	dialog := self fileSaveDialogWindowClass new.
+	exts 
+		ifNotNil: [ dialog filter: (StCustomExtensionsFilter extensions: exts) ].
+	path 
+		ifNotNil: [ dialog nameText: path asFileReference basename ].
+	^ dialog
+		defaultFolder: (path ifNil: [ StFileSystemModel defaultDirectory ]);
+		title: (title ifNil: [ 'Save as' translated ] ifNotNil: [ title ]);
+		openModal;
+		selectedEntry
 ]
 
 { #category : 'services' }
@@ -816,19 +822,17 @@ UITheme >> chooseFullFileNameIn: aThemedMorph title: title patterns: patterns pa
 	Answer nil or a filename."
 
 	| dialog |
-	dialog := FileDialogWindow basicNew
-		basicTheme: aThemedMorph theme;
-		previewType: preview;
-		initialize;
-		title: title;
-		answerPathName.
-	patterns
-		ifNotNil: [ dialog
-				fileSelectionBlock: [ :de |
-					(dialog defaultFileSelectionBlock value: de)
-						and: [ de isDirectory or: [ patterns anySatisfy: [ :pat | pat match: de name ] ] ] ] ].
-	path ifNotNil: [ dialog selectPath: path ].
-	^ dialog openModal answer
+	
+	dialog := self fileDialogWindowClass new.
+	path 
+		ifNotNil: [ dialog nameText: path basename ].
+	^ dialog
+		defaultFolder: (path ifNil: [ StFileSystemModel defaultDirectory ]);
+		title: (title ifNil: [ 'Choose File' translated ]);
+		openModal;
+		selectedEntry.
+	
+
 ]
 
 { #category : 'services' }
@@ -1416,7 +1420,7 @@ UITheme >> desktopImageLayout [
 UITheme >> dialogWindowActiveFillStyleFor: aWindow [
 	"Return the window active fillStyle for the given window."
 
-	^self windowActiveFillStyleFor: aWindow
+	^ self windowActiveFillStyle
 ]
 
 { #category : 'fill-styles' }
@@ -1495,6 +1499,14 @@ UITheme >> diffRemovedLinesBackgroundColor [
 	"Answer the color used to show removals in a diff view."
 
 	^ colorPalette diffRemovedLinesBackgroundColor
+]
+
+{ #category : 'services' }
+UITheme >> directoryDialogWindowClass [
+
+	^ self class environment 
+		at: #StOpenDirectoryPresenter
+		ifAbsent: [  self error: 'Directory dialog support is missing in the image' ]
 ]
 
 { #category : 'accessing - colors' }
@@ -1833,6 +1845,22 @@ UITheme >> fadedBackgroundWindows [
 	^ self settings fadedBackgroundWindows
 ]
 
+{ #category : 'services' }
+UITheme >> fileDialogWindowClass [
+
+	^ self class environment 
+		at: #StOpenFilePresenter
+		ifAbsent: [  self error: 'File dialog support is missing in the image' ]
+]
+
+{ #category : 'services' }
+UITheme >> fileSaveDialogWindowClass [
+
+	^ self class environment 
+		at: #StSaveFilePresenter
+		ifAbsent: [  self error: 'File dialog support is missing in the image' ]
+]
+
 { #category : 'accessing' }
 UITheme >> flatMenu [
 	^ self settings flatMenu
@@ -2006,12 +2034,6 @@ UITheme >> lightColorFor: aButton [
 UITheme >> lightSelectionColor [
 
 	^ colorPalette lightSelectionColor
-]
-
-{ #category : 'private' }
-UITheme >> lightSelectionColorFor: aMorph [
-
-	^ self lightSelectionColor
 ]
 
 { #category : 'accessing - colors' }
@@ -3676,8 +3698,8 @@ UITheme >> paneColorFor: aWindow [
 	"Answer the pane color that should be used."
 
 	^ (self fadedBackgroundWindows
-		ifTrue: [ aWindow fillStyleToUse ]
-		ifFalse: [ self windowActiveFillStyleFor: aWindow ]) asColor
+		   ifTrue: [ aWindow fillStyleToUse ]
+		   ifFalse: [ self windowActiveFillStyle ]) asColor
 ]
 
 { #category : 'services' }
@@ -3733,46 +3755,40 @@ UITheme >> proceedIn: aThemedMorph text: aStringOrText title: aString [
 ]
 
 { #category : 'border-styles' }
-UITheme >> progressBarBorderStyleFor: aProgressBar [
-	"Return the progress bar borderStyle for the given progress bar."
+UITheme >> progressBarBorderStyle [
+	"Return the progress bar borderStyle for a progress bar."
 
-	|c|
-	c := self progressBarColorFor: aProgressBar.
-	^BorderStyle simple
-		width: 1 scaledByDisplayScaleFactor;
-		baseColor: c
+	| c |
+	c := self progressBarColor.
+	^ BorderStyle simple
+		  width: 1 scaledByDisplayScaleFactor;
+		  baseColor: c
 ]
 
 { #category : 'basic-colors' }
-UITheme >> progressBarColorFor: aProgressBar [
-
+UITheme >> progressBarColor [
 	"Answer the colour for the given progress bar."
 
-	^ colorPalette progressBarColorFor: aProgressBar
+	^ colorPalette progressBarColor
 ]
 
 { #category : 'fill-styles' }
-UITheme >> progressBarFillStyleFor: aProgressBar [
-	^ self basePassiveBackgroundColorFor: aProgressBar
-]
+UITheme >> progressBarFillColor [
 
-{ #category : 'basic-colors' }
-UITheme >> progressBarProgressColorFor: aProgressBar [
-
-	"Answer the colour for the progress part of the given progress bar."
-
-	^ colorPalette progressBarProgressColorFor: aProgressBar
+	^ self basePassiveBackgroundColor
 ]
 
 { #category : 'fill-styles' }
-UITheme >> progressBarProgressFillStyleFor: aProgressBar [
-	^ (self lightSelectionColorFor: aProgressBar)
+UITheme >> progressBarProgressFillColor [
+
+	^ self lightSelectionColor
 ]
 
 { #category : 'fill-styles' }
-UITheme >> progressFillStyleFor: aProgress [
-	"Return the progress fillStyle for the given progress morph."
-	^ self windowActiveFillStyleFor: aProgress
+UITheme >> progressFillStyle [
+	"Return the progress fillStyle for progress morph."
+
+	^ self windowActiveFillStyle
 ]
 
 { #category : 'services' }
@@ -4186,8 +4202,7 @@ UITheme >> secondarySelectionColor [
 { #category : 'private' }
 UITheme >> selectedFillStyleFor: aMorph height: anInteger [
 
-
-	^ SolidFillStyle color: (self lightSelectionColorFor:  aMorph)
+	^ SolidFillStyle color: self lightSelectionColor
 ]
 
 { #category : 'accessing - colors' }
@@ -4631,7 +4646,7 @@ UITheme >> textEditorDisabledBorderStyleFor: aTextEditor [
 UITheme >> textEditorDisabledFillStyleFor: aTextEditor [
 	"Return the disabled fillStyle for the given text editor."
 
-	^self basePassiveBackgroundColorFor: aTextEditor
+	^ self basePassiveBackgroundColor
 ]
 
 { #category : 'services' }
@@ -4902,9 +4917,10 @@ UITheme >> windowActiveDropShadowStyle: anObject [
 ]
 
 { #category : 'fill-styles' }
-UITheme >> windowActiveFillStyleFor: aWindow [
+UITheme >> windowActiveFillStyle [
 	"We do not want the lighting effect when the window goes inactive"
-	^SolidFillStyle color: self baseColor
+
+	^ SolidFillStyle color: self baseColor
 ]
 
 { #category : 'fill-styles' }
@@ -5025,7 +5041,8 @@ UITheme >> windowExtentChangedFor: aWindow [
 { #category : 'fill-styles' }
 UITheme >> windowInactiveFillStyleFor: aWindow [
 	"We do not want the lighting effect when the window goes inactive"
-	^self windowActiveFillStyleFor: aWindow
+
+	^ self windowActiveFillStyle
 ]
 
 { #category : 'fill-styles' }

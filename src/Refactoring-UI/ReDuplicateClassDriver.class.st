@@ -137,7 +137,7 @@ ReDuplicateClassDriver >> scopes: refactoringScopes [
 	
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes last.
-	selectedClass := model environment classes anyOne.	
+	selectedClass := model environment allNonMetaClasses anyOne.	
 
 	rbClass := model classFor: selectedClass.
 	rbMetaclass := model classFor: selectedClass class.

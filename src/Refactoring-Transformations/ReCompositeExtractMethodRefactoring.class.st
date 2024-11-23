@@ -29,7 +29,8 @@ Class {
 		'arguments',
 		'temporaries',
 		'assignments',
-		'needsReturn'
+		'needsReturn',
+		'interval'
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',
@@ -265,12 +266,12 @@ ReCompositeExtractMethodRefactoring >> extractInterval: anInterval from: aSelect
 	
 	class := self model classNamed: aClassName.
 	selector := aSelector.
-	sourceCode := self getSourceFromInterval: anInterval
+	interval := anInterval.
 ]
 
 { #category : 'api' }
 ReCompositeExtractMethodRefactoring >> extractInterval: anInterval from: aSelector to: aNewSelector in: aClassName [
-	
+
 	self extractInterval: anInterval from: aSelector in: aClassName.
 	newSelector := aNewSelector.
 	
@@ -308,13 +309,13 @@ ReCompositeExtractMethodRefactoring >> generateNewMethodWith: aMethodName [
 ]
 
 { #category : 'instance creation' }
-ReCompositeExtractMethodRefactoring >> getSourceFromInterval: anInterval [
+ReCompositeExtractMethodRefactoring >> getSourceFromInterval [
 	| source |
 	source := class sourceCodeFor: selector.
-	((anInterval first between: 1 and: source size)
-		and: [anInterval last between: 1 and: source size])
+	((interval first between: 1 and: source size)
+		and: [interval last between: 1 and: source size])
 			ifFalse: [self refactoringError: 'Invalid interval'].
-	^source copyFrom: anInterval first to: anInterval last
+	^source copyFrom: interval first to: interval last
 ]
 
 { #category : 'utilities' }
@@ -457,6 +458,7 @@ ReCompositeExtractMethodRefactoring >> preconditionTemporariesAreNotReadBeforeWr
 { #category : 'transforming' }
 ReCompositeExtractMethodRefactoring >> prepareForExecution [
 
+	sourceCode ifNil: [ sourceCode := self getSourceFromInterval ].
 	subtree := self calculateSubtree.
 	subtree ifNotNil: [  
 		temporaries := self calculateTemporaries.

@@ -38,7 +38,7 @@ MCModification >> fromSource [
 	^ obsoletion source
 ]
 
-{ #category : 'initializing' }
+{ #category : 'initialization' }
 MCModification >> initializeWithBase: base target: target [
 	obsoletion := base.
 	modification := target.

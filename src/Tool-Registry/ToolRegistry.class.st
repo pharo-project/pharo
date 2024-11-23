@@ -62,36 +62,13 @@ ToolRegistry >> announcer [
 	^ announcer
 ]
 
-{ #category : 'misc' }
-ToolRegistry >> browseDirectToolReferences [
-	"Smalltalk tools browseDirectToolReferences"
-	"Browse all direct references of all of my registered tools.
-	Useful for converting calls like:
-
-		MyTool foo
-	into:
-		Smalltalk tools myTool foo 	"
-
-	| bindings |
-
-	bindings := tools values select: [:each | each value isBehavior ]
-		thenCollect: [:each | each value binding ].
-	bindings := bindings copyWith: (Smalltalk bindingOf: #ToolSet).
-
-	^  SystemNavigation new
-		browseMessageList: (
-			SystemNavigation new allMethodsSelect: [:m |
-				(m literals select: [:lit| lit isVariableBinding ]) includesAnyOf: bindings ] )
-		name: 'All direct references to tools to fix'
-]
-
 { #category : 'handling DNU' }
 ToolRegistry >> doesNotUnderstand: aMessage [
 	"Return a tool identified by a message selector.
 	We need to handle special case, when no debugger registered.
 	"
 	| tool |
-	tool := tools at: aMessage selector ifAbsent: nil.
+	tool := tools at: aMessage selector ifAbsent: [nil].
 	tool ifNotNil: [ ^ tool value ].
 
 	^super doesNotUnderstand: aMessage
@@ -99,6 +76,7 @@ ToolRegistry >> doesNotUnderstand: aMessage [
 
 { #category : 'testing' }
 ToolRegistry >> hasToolNamed: aToolName [
+
 	^ tools includesKey: aToolName
 ]
 
@@ -112,7 +90,7 @@ ToolRegistry >> initDefaultToolSet [
 	Object withAllSubclassesDo: [:ea |
 	"evaluate only for classes which directly implement this message,
 	not via subclassing"
-		(ea isMeta  and: [
+		(ea isMeta and: [
 			ea includesSelector: #registerToolsOn: ]) ifTrue: [
 			 ea instanceSide registerToolsOn: self  ]].
 	] on: Warning do: [:ex | ex resume ]
@@ -121,21 +99,21 @@ ToolRegistry >> initDefaultToolSet [
 { #category : 'initialization' }
 ToolRegistry >> initialize [
 
-	"symbols used as keys "
 	tools := IdentityDictionary new.
-
 	self initDefaultToolSet
 ]
 
 { #category : 'tools' }
 ToolRegistry >> inspector [
 	"understand by Object, so we need to work around not getting a DNU"
+	
 	^self doesNotUnderstand: (Message selector: #inspector)
 ]
 
 { #category : 'menu' }
 ToolRegistry >> menuItems [
-	"Answer the menu items available for this tool set"
+	"Answer the menu items available for this tool set. This is only used by the morphic fallBackMenu.
+	See Worldstate fallbackMenuOn:"
 
 	^#(
 		('System Browser' 			#openClassBrowser)
@@ -196,11 +174,14 @@ ToolRegistry >> register: anObject as: aNameSelector [
 { #category : 'registration' }
 ToolRegistry >> remove: aName [
 
-	| toolToRemove |
+	self 
+		deprecated: 'Use unregisterToolWithRole:' 
+		on: '17/11/2024'  
+		in: #pharo13 
+		transformWith:  '`@receiver remove: `@arg'
+						-> '`@receiver unregisterToolWithRole: `@arg'.
+	self unregisterToolWithRole: aName
 
-	"remove tool with given name"
-	toolToRemove := tools removeKey: aName ifAbsent: [].
-	self announcer announce: (ToolRegistryToolRegistered tool: toolToRemove name: aName)
 ]
 
 { #category : 'announcer' }
@@ -217,6 +198,14 @@ ToolRegistry >> transcript [
 	implement this method, so transcript can be accessed via
 	Smalltalk tools transcript , as any other tool "
 	^ Transcript
+]
+
+{ #category : 'registration' }
+ToolRegistry >> unregisterToolWithRole: aName [
+
+	| toolToRemove |
+	toolToRemove := tools removeKey: aName ifAbsent: [].
+	self announcer announce: (ToolRegistryToolRegistered tool: toolToRemove name: aName)
 ]
 
 { #category : 'misc' }

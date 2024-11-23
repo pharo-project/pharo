@@ -375,6 +375,7 @@ ASTMethodNode >> hash [
 
 { #category : 'initialization' }
 ASTMethodNode >> initialize [
+	super initialize.
 	arguments := #().
 	pragmas := #().
 	replacements := SortedCollection sortBlock:

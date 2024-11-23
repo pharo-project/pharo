@@ -10,9 +10,8 @@ Class {
 }
 
 { #category : 'building-menu' }
-DACycleNode >> addMenuEntriesOn: aMenu [
-	
-	self
+DACycleNode >> addMenuActionsOn: anActionGroup [
+	"no menu"
 ]
 
 { #category : 'accessing' }

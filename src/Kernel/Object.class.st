@@ -453,8 +453,10 @@ Object >> beReadOnlyObject [
 	 cause the VM to send attemptToAssign:withIndex: to the read-only object.
 	 An attempt to modify a read-only object in a primitive will cause the
 	 primitive to fail with a #'no modification' error code.
-	 Set the read-only flag of the receiver to true and answer the previous vaue of the flag."
-	^self setIsReadOnlyObject: true
+	 Set the read-only flag of the receiver to true and answer the object itself."
+
+	self setIsReadOnlyObject: true.
+	^ self
 ]
 
 { #category : 'write barrier' }
@@ -798,18 +800,6 @@ Object >> errorSubscriptBounds: index [
 	"Create an error notification that an improper integer was used as an index."
 
 	SubscriptOutOfBounds signalFor: index
-]
-
-{ #category : 'error handling' }
-Object >> explicitRequirement [
-	"If one of the superclasses can perform the selector, we execute the method of that class, otherwise, the explicit requirement error is thrown"
-
-	<debuggerCompleteToSender>
-	| sender |
-	sender := thisContext sender.
-	[ sender return: (self perform: sender selector withArguments: sender arguments inSuperclass: sender methodClass superclass) ]
-		on: MessageNotUnderstood
-		do: [ self error: 'Explicitly required method' ]
 ]
 
 { #category : 'finalization' }

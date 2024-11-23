@@ -63,12 +63,9 @@ RBExtractSetUpMethodRefactoring >> applicabilityPreconditions [
 		ifNotNil: [ self trueCondition ]).
 	  (RBCondition withBlock: [ class allSuperclasses anySatisfy: [ :e | e name = #TestCase ] ]).
 	  (RBCondition withBlock:
-		[self extractMethod.
-		self checkSpecialExtractions.
-		self checkReturn.
-		needsReturn ifTrue: [extractedParseTree addReturn].
-		self checkTemporaries.
-		true]) }
+		[ self checkSpecialExtractions.
+		  self checkReturn.
+		  true]) }
 ]
 
 { #category : 'transforming' }
@@ -116,9 +113,10 @@ RBExtractSetUpMethodRefactoring >> nameNewMethod: aSymbol [
 RBExtractSetUpMethodRefactoring >> privateTransform [
 
 	| existingSelector |
+	needsReturn ifTrue: [extractedParseTree addReturn].
 	existingSelector := self existingSelector.
 	self nameNewMethod: #setUp.
-	existingSelector ifNil: [
+	(existingSelector isNil or: [ existingSelector ~= #setUp ]) ifTrue: [
 		self renameAllParameters.
 		extractedParseTree body addNodeFirst: (RBParser parseExpression: 'super setUp').
 		self generateChangesFor:
@@ -126,7 +124,7 @@ RBExtractSetUpMethodRefactoring >> privateTransform [
 				sourceCode: extractedParseTree newSource
 				in: class
 				withProtocol: #running)].
-	modifiedParseTree body removeNode: (modifiedParseTree body statements at: 1).
+	modifiedParseTree body removeNode: (modifiedParseTree body statements first).
 	class compileTree: modifiedParseTree
 ]
 

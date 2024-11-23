@@ -9,6 +9,13 @@ Class {
 	#tag : 'Drivers'
 }
 
+{ #category : 'execution' }
+ReRenameInstanceVariableDriver >> configureRefactoring [
+
+	super configureRefactoring.
+	refactoring renameAccessors: true
+]
+
 { #category : 'factory method' }
 ReRenameInstanceVariableDriver >> refactoringClass [
 

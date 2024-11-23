@@ -5,7 +5,8 @@ Class {
 	#name : 'MyClassBeta',
 	#superclass : 'MyClassAlpha',
 	#instVars : [
-		'instVarB'
+		'instVarB',
+		'fooAccessor'
 	],
 	#classVars : [
 		'SharedVarB'
@@ -18,6 +19,18 @@ Class {
 { #category : 'dummy methods' }
 MyClassBeta >> duplicatedInSubclassMoreComplexBody [
 	^ 42 + 666
+]
+
+{ #category : 'accessing' }
+MyClassBeta >> fooAccessor [
+
+	^ fooAccessor
+]
+
+{ #category : 'accessing' }
+MyClassBeta >> fooAccessor: anObject [
+
+	fooAccessor := anObject
 ]
 
 { #category : 'dummy methods' }
@@ -79,8 +92,8 @@ MyClassBeta >> methodReferencingSharedVariableFromSuperclass [
 
 { #category : 'dummy methods' }
 MyClassBeta >> methodWithSuperSend [
-	" I send a message to super "
-	^ super methodForSupersend
+	"I have the same implementation that my superclass. One of my sibling has a different definition."
+	^ super methodWithSuperSend
 ]
 
 { #category : 'dummy methods' }

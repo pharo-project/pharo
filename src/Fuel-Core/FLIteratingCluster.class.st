@@ -56,7 +56,7 @@ FLIteratingCluster >> clusterSerializeStepWith: anEncoder [
 	anEncoder encodeUint32: objects size
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 FLIteratingCluster >> initializeAnalyzing [
 
 	super initializeAnalyzing.

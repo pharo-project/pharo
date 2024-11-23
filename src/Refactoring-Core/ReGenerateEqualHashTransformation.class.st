@@ -72,7 +72,7 @@ ReGenerateEqualHashTransformation class >> model: aNamespace className: aClass v
 ReGenerateEqualHashTransformation >> accessorForVariable: aString [
 
 	| refactoring |
-	refactoring := RBCreateAccessorsForVariableTransformation
+	refactoring := ReCreateAccessorsForVariableTransformation
 		               model: self model
 		               variable: aString
 		               class: self theClass

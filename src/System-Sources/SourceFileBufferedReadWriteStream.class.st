@@ -88,7 +88,7 @@ SourceFileBufferedReadWriteStream >> closed [
 	^ innerStream closed
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 SourceFileBufferedReadWriteStream >> collectionSpecies [
 	^ innerStream isBinary
 		ifTrue: [ ByteArray ]
@@ -314,7 +314,7 @@ SourceFileBufferedReadWriteStream >> size [
 	^ streamSize max: (bufferOffset + bufferLength)
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 SourceFileBufferedReadWriteStream >> sizeBuffer: size [
 
 	bufferLength > 0 ifTrue: [ self flush ].

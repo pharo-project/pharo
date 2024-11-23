@@ -44,8 +44,11 @@ ReMethodsHaveNoSuperCallInSiblingsCondition >> checkSiblingSuperSendsFrom: aRBCl
 					definer := aRBClass superclass whichClassIncludesSelector:  aSelector.
 
 					(definer isNotNil and: [ class includesClass: definer ]) ifTrue: [
-						violators add: { aSelector. aRBClass. each }  ] ] ] ] ].
-	aRBClass allSubclasses do: [ :each |
+						violators add: { aSelector. aRBClass . each }  ] ] ] ] ].
+	"if we are pulling up to a target subclass that is two or more classes above `class`
+	it is not enough to reject class in `checkSuperSendsFromSiblings`, but we need to check
+	it for each subclass as well, otherwise we can have false negatives"
+	aRBClass subclasses reject: [ :each | each = class ] thenDo: [ :each |
 		self checkSiblingSuperSendsFrom: each ]
 ]
 
@@ -72,9 +75,9 @@ ReMethodsHaveNoSuperCallInSiblingsCondition >> violationMessageOn: aStream [
 	| messageSent senderClass senderMessage |
 	
 	self violators do: [ :violator |
-		messageSent := violator at: 1.
-		senderClass := violator at: 2.
-		senderMessage := violator at: 3.
+		messageSent := violator first.
+		senderClass := violator second .
+		senderMessage := violator third.
 		
 		aStream
 			nextPutAll: senderClass name;
@@ -89,7 +92,7 @@ ReMethodsHaveNoSuperCallInSiblingsCondition >> violationMessageOn: aStream [
 { #category : 'accessing' }
 ReMethodsHaveNoSuperCallInSiblingsCondition >> violators [
 	violators ifNotNil: [ ^ violators ].
-	violators := #() asOrderedCollection.
+	violators := OrderedCollection new.
 	self checkSuperSendsFromSiblings.
 	^ violators
 ]

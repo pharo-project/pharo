@@ -14,7 +14,7 @@ pkgPrefix := 'PrefixOfPackageNames'.
 newClassPrefix := 'ZG'.
 env := RBBrowserEnvironment new 
 			forPackageNames: (Package organizer packageNames select: [ : pkgName | (pkgName beginsWith: pkgPrefix) ]).
-model := (RBClassModelFactory rbNamespace onEnvironment: env) name: 'MyModel'; yourself.
+model := (RBNamespace onEnvironment: env) name: 'MyModel'; yourself.
 RBClassRegexRefactoring new
 	model: model;
 	renameClasses; 					""Here I just want a rename no copy""
@@ -27,7 +27,7 @@ RBClassRegexRefactoring new
 "
 Class {
 	#name : 'RBRegexRefactoring',
-	#superclass : 'RBRefactoring',
+	#superclass : 'ReRefactoring',
 	#instVars : [
 		'matchers'
 	],

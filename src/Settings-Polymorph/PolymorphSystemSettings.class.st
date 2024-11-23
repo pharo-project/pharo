@@ -238,7 +238,6 @@ PolymorphSystemSettings class >> desktopSettingsOn: aBuilder [
 				with: [
 					(aBuilder setting: #desktopLogoFileName)
 						type: #FilePathEncoder;
-						default: '';
 						description: 'The path of an image file for your own logo, the default pharo logo is used if empty.' ;
 						label: 'Logo image file name'].
 			self desktopColorSettingsOn: aBuilder.

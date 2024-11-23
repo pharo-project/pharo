@@ -3,7 +3,7 @@ I'm an abstract model for user interaction for the rename variables refactoring.
 "
 Class {
 	#name : 'ReRenameVariableDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'oldName',
 		'class',
@@ -25,6 +25,7 @@ ReRenameVariableDriver >> changes [
 ReRenameVariableDriver >> configureRefactoring [
 
 	refactoring := self refactoringClass
+		               model: model
 		               variable: oldName
 		               class: class
 ]
@@ -82,7 +83,9 @@ ReRenameVariableDriver >> runRefactoring [
 
 	self configureRefactoring.
 	shouldEscape := false.
-
+	"We cannot rename something that doesn'e exist.
+	If we don't check this before `prepareRefactoringInteractively` it will loop indefinetely since this precondition will always fail."
+	refactoring preconditionDirectlyDefinesVariable check ifFalse: [ ^ self ].
 	self prepareRefactoringInteractively.
 	shouldEscape ifTrue: [ ^ self ].
 

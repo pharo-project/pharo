@@ -1445,7 +1445,7 @@ MorphTreeMorph >> registerRequestHandlers [
 	self model announcer when: MorphTreeChangeRequest send: #changeRequest: to: self
 ]
 
-{ #category : 'initialize - release' }
+{ #category : 'initialization' }
 MorphTreeMorph >> release [
 
 	lineColorBlock := nil.

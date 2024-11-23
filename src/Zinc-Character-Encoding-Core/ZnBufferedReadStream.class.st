@@ -67,7 +67,7 @@ ZnBufferedReadStream >> back [
 				char ] ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnBufferedReadStream >> close [
 	stream close
 ]
@@ -242,7 +242,7 @@ ZnBufferedReadStream >> nextWord [
 	^ self nextIntegerOfSize: 2 signed: false bigEndian: true
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnBufferedReadStream >> on: readStream [
 	stream := readStream.
 	self sizeBuffer: self defaultBufferSize
@@ -359,7 +359,7 @@ ZnBufferedReadStream >> size [
 	^ stream size
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnBufferedReadStream >> sizeBuffer: size [
 	buffer := self collectionSpecies new: size
 ]

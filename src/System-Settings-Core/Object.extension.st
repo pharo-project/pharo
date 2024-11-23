@@ -5,3 +5,21 @@ Object >> acceptSettings: aVisitor [
 
 	^ aVisitor visitObject: self
 ]
+
+{ #category : '*System-Settings-Core' }
+Object class >> exportSettingAction [
+	
+	^ self
+]
+
+{ #category : '*System-Settings-Core' }
+Object >> exportSettingAction [
+
+	^ self class exportSettingAction
+]
+
+{ #category : '*System-Settings-Core' }
+Object class >> settingDeclarationDefault [
+
+	^ nil
+]

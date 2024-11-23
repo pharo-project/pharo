@@ -152,18 +152,29 @@ RubTextEditor >> addString: aString [
 
 { #category : 'undo - redo private' }
 RubTextEditor >> addTypeInUndoRecord [
-	| begin stop undoText redoText |
-	begin := self startOfTyping min: self stopIndex.
-	stop := self stopIndex max: self startOfTyping.
+	| begin stop undoText redoText selectionBeforeChange |
+	begin := self startOfTyping.
+	stop := self stopIndex.
+
+	selectionBeforeChange := self selectionInterval.
 	self editingState previousInterval: (begin to: stop - 1).
 	undoText := self nullText.
 	redoText := stop > begin
 			ifTrue: [self text copyFrom: begin to: stop - 1]
 			ifFalse: [self nullText].
-	((undoText isEmpty and: [redoText isEmpty]) and: [self editingState previousInterval size < 1])
-			ifFalse: [self
-				redoArray: { textArea. #redoTypeIn:interval:.  {redoText. begin to: begin + self selection size - 1} }
-				undoArray: {textArea. #undoTypeIn:interval:.  {undoText. begin to: stop - 1} }]
+
+	((undoText isEmpty and: [redoText isEmpty])
+		and: [self editingState previousInterval size < 1]) ifTrue: [ ^ self ] .
+
+	self
+		redoArray: { textArea. #redoTypeIn:interval:selection:. { 
+			redoText. 
+			begin to: begin - 1.
+			selectionBeforeChange } }
+		undoArray: { textArea. #undoTypeIn:interval:selection:. { 
+			undoText.
+			begin to: stop - 1.
+			(begin to: begin -1) } }
 ]
 
 { #category : 'new selection' }
@@ -781,6 +792,7 @@ RubTextEditor >> defaultCommandKeymapping [
 	(KeyboardKey enter -> #crWithIndent:).
 	(KeyboardKey escape -> #escape:).
 	(KeyboardKey left -> #cursorLeft:).
+	(KeyboardKey space -> #space:).
 	(KeyboardKey right -> #cursorRight:).
 	(KeyboardKey up -> #cursorUp:).
 	(KeyboardKey down -> #cursorDown:).
@@ -849,21 +861,6 @@ RubTextEditor >> doubleClick: evt [
 		ifTrue: [ self selectWord ].
 	self setEmphasisHereFromText.
 	self storeSelectionInText
-]
-
-{ #category : 'editing keys' }
-RubTextEditor >> duplicate: aKeyboardEvent [
-	"Paste the current selection over the prior selection, if it is non-overlapping and
-	 legal.  Undoer & Redoer: undoAndReselect."
-
-	self closeTypeIn.
-	(self hasSelection and: [self isDisjointFrom: self editingState previousInterval])
-		ifTrue: "Something to duplicate"
-			[self replace: self editingState previousInterval with: self selection and:
-				[self selectAt: self pointIndex]]
-		ifFalse:
-			[textArea flash].
-	^true
 ]
 
 { #category : 'accessing - selection' }
@@ -1903,10 +1900,13 @@ RubTextEditor >> redoArray: doArray undoArray: undoArray [
 ]
 
 { #category : 'undoers - redoers' }
-RubTextEditor >> redoTypeIn: aText interval: anInterval [
+RubTextEditor >> redoTypeIn: aText interval: anInterval selection: selection [
+
 	self selectInterval: anInterval.
-	self replace: self selectionInterval with: aText and:
-		[self selectInterval: (anInterval first to: anInterval first + aText size - 1)]
+	self
+		replace: self selectionInterval
+		with: aText
+		and: [ self selectInterval: selection ]
 ]
 
 { #category : 'accessing' }
@@ -1914,17 +1914,45 @@ RubTextEditor >> replace: xoldInterval with: newText and: selectingBlock [
 	"Replace the text in oldInterval with newText and
 	execute selectingBlock to establish the new selection.
 	Create an UndoRecord to allow perfect undoing."
-	| prevSel currInterval |
+
+	self replace: xoldInterval with: newText and: selectingBlock selection: self selectionInterval
+]
+
+{ #category : 'accessing' }
+RubTextEditor >> replace: xoldInterval with: newText and: selectingBlock selection: fromSelection [
+	"Replace the text in oldInterval with newText and
+	execute selectingBlock to establish the new selection.
+	Create an UndoRecord to allow perfect undoing."
+
+	| prevSel currInterval cursorAfterInsertion |
 	self selectInterval: xoldInterval.
 	prevSel := self selection.
 	currInterval := self selectionInterval.
 	self editingState previousInterval: currInterval.
+
 	self zapSelectionWith: newText.
+	cursorAfterInsertion := currInterval first + newText size - 1.
+
 	selectingBlock value.
-	((prevSel isEmpty and: [newText isEmpty]) and: [currInterval size < 1])
-		ifFalse: [self
-			redoArray: {textArea. #redoTypeIn:interval:. {newText. currInterval}}
-			undoArray: {textArea. #undoTypeIn:interval:. {prevSel. currInterval first to: currInterval first + newText size - 1}}]
+
+	((prevSel isEmpty and: [ newText isEmpty ]) and: [
+		 currInterval size < 1 ]) ifTrue: [ ^ self ].
+
+	self
+		redoArray: {
+				textArea.
+				#redoTypeIn:interval:selection:.
+				{
+					newText.
+					currInterval.
+					(cursorAfterInsertion + 1 to: cursorAfterInsertion) } }
+		undoArray: {
+				textArea.
+				#undoTypeIn:interval:selection:.
+				{
+					prevSel.
+					(currInterval first to: currInterval first + newText size - 1).
+					fromSelection } }
 ]
 
 { #category : 'find-select' }
@@ -1957,7 +1985,15 @@ RubTextEditor >> replaceAll: aRegex with: aText startingAt: startIdx [
 
 { #category : 'accessing' }
 RubTextEditor >> replaceSelectionWith: aText [
-	self replace: self selectionInterval with: aText and: []
+
+	self
+		replaceSelectionWith: aText
+		fromSelection: self selectionInterval
+]
+
+{ #category : 'accessing' }
+RubTextEditor >> replaceSelectionWith: aText fromSelection: fromSelection [
+	self replace: self selectionInterval with: aText and: [] selection: fromSelection
 ]
 
 { #category : 'accessing' }
@@ -2393,6 +2429,20 @@ RubTextEditor >> shouldEscapeCharacter: aCharacter [
 	^ #($" $') includes: aCharacter
 ]
 
+{ #category : 'typing/selecting keys' }
+RubTextEditor >> space: aKeyboardEvent [
+	"Append a space to the stream of characters and commit the undo/redo transaction.
+	This allows to manage undo/redo at a per-word granularity"
+
+	"We are consuming the space keydown event, do not send a keypress for it"
+	aKeyboardEvent supressNextKeyPress:  true.
+
+	self closeTypeIn.
+	self addString: String space.
+	self unselect.
+	^false
+]
+
 { #category : 'keymapping' }
 RubTextEditor >> specialShiftCmdKeys [
 
@@ -2503,6 +2553,7 @@ RubTextEditor >> swapChars: aKeyboardEvent [
 RubTextEditor >> tab: aKeyboardEvent [
 	"Append a line feed character to the stream of characters."
 
+	self closeTypeIn.
 	self addString: String tab.
 	self unselect.
 	^false
@@ -2617,10 +2668,13 @@ RubTextEditor >> undoRedoTransaction: aBlock [
 ]
 
 { #category : 'undoers - redoers' }
-RubTextEditor >> undoTypeIn: aText interval: anInterval [
+RubTextEditor >> undoTypeIn: aText interval: anInterval selection: aSelection [
+
 	self selectInterval: anInterval.
-	self replace: anInterval with: aText and:
-		[self selectInterval: (anInterval first to: anInterval first - 1)]
+	self
+		replace: anInterval
+		with: aText
+		and: [ self selectInterval: aSelection ]
 ]
 
 { #category : 'private' }

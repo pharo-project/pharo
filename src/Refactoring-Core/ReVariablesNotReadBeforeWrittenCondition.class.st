@@ -19,7 +19,7 @@ ReVariablesNotReadBeforeWrittenCondition >> check [
 		   in: subtree) isEmpty
 ]
 
-{ #category : 'initiali' }
+{ #category : 'initialization' }
 ReVariablesNotReadBeforeWrittenCondition >> variables: aCollection [ 
 	
 	variables := aCollection 

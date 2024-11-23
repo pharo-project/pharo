@@ -21,12 +21,12 @@ RxsLookaround class >> with: anRsxPiece [
 		initializePiece: anRsxPiece
 ]
 
-{ #category : 'initialize - release' }
+{ #category : 'initialization' }
 RxsLookaround >> beNegative [
 	positive := false
 ]
 
-{ #category : 'initialize - release' }
+{ #category : 'initialization' }
 RxsLookaround >> bePositive [
 	positive := true
 ]
@@ -38,7 +38,7 @@ RxsLookaround >> dispatchTo: aBuilder [
 	^aBuilder syntaxLookaround: self
 ]
 
-{ #category : 'initialize - release' }
+{ #category : 'initialization' }
 RxsLookaround >> initializePiece: anRsxPiece [
 	super initialize.
 	piece := anRsxPiece

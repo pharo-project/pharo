@@ -201,7 +201,7 @@ Semaphore >> signalAll [
 	whileFalse: [ self signal ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 Semaphore >> terminateProcess [
 	"Terminate the process waiting on this semaphore, if any."
 

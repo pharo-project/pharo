@@ -15,7 +15,7 @@ transformation := (RBCustomTransformation with: [ :model |
 "
 Class {
 	#name : 'RBCustomTransformation',
-	#superclass : 'RBTransformation',
+	#superclass : 'ReTransformation',
 	#instVars : [
 		'transformationBlock'
 	],

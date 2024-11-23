@@ -16,8 +16,8 @@ Class {
 RBClassTest >> setUp [
 
 	super setUp.
-	rbNamespace := RBNamespace onEnvironment: (RBClassEnvironment classes:  {Behavior. Class. ClassDescription. MOPTestClassD. Model. MyClassB. Object. Object. Object class. ProtoObject class. RBAbstractTransformation. RBAbstractTransformation. RBClassRefactoring. RBRefactoring. Trait2}).
-	abstractTransformationClass := rbNamespace classNamed: #RBAbstractTransformation.
+	rbNamespace := RBNamespace onEnvironment: (RBClassEnvironment classes:  {Behavior. Class. ClassDescription. MOPTestClassD. Model. MyClassB. Object. Object. Object class. ProtoObject class. ReAbstractTransformation. ReAbstractTransformation. RBClassRefactoring. ReRefactoring. Trait2}).
+	abstractTransformationClass := rbNamespace classNamed: #ReAbstractTransformation.
 	objectClass := rbNamespace classNamed: #Object.
 	refactoringClass := rbNamespace classNamed: #RBClassRefactoring.
 	rbNamespace defineClass: [ :aBuilder |

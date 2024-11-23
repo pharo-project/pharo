@@ -77,23 +77,10 @@ ClyScopedSystemEnvironment >> compileANewClassFrom: newClassDefinitionString not
 	^ super compileANewClassFrom: newClassDefinitionString notifying: aController startingFrom: oldClass
 ]
 
-{ #category : 'package management' }
-ClyScopedSystemEnvironment >> createPackageNamed: packageName [
-	"ToDo: Should we allow new packages creation in calypso while displaying a scope?"
-	^ packageOrganizer addPackage: packageName
-]
-
 { #category : 'accessing' }
 ClyScopedSystemEnvironment >> definedClassesInPackage: aPackage [
 
 	^ scope definedClasses select: [ :class | class package = aPackage ]
-]
-
-{ #category : 'accessing' }
-ClyScopedSystemEnvironment >> ensurePackage: packageName [
-	"Should we allow creating new packages while calypso is displaying a scope?".
-	
-	^ packageOrganizer ensurePackage: packageName
 ]
 
 { #category : 'accessing' }
@@ -114,12 +101,6 @@ ClyScopedSystemEnvironment >> includesClassNamed: aSymbol [
 	
 	class := globals at: aSymbol ifAbsent: [^ false].
 	^ scope includesClass: class
-]
-
-{ #category : 'accessing' }
-ClyScopedSystemEnvironment >> packageNamed: aString [
-	
-	^packageOrganizer packageNamed: aString
 ]
 
 { #category : 'accessing' }

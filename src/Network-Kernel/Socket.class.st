@@ -361,7 +361,7 @@ Socket >> accept [
 	^Socket acceptFrom: self
 ]
 
-{ #category : 'initialize - destroy' }
+{ #category : 'initialization' }
 Socket >> acceptFrom: aSocket [
 	"Initialize a new socket handle from an accept call"
 
@@ -409,7 +409,7 @@ Socket >> bindTo: aSocketAddress [
 
 ]
 
-{ #category : 'initialize - destroy' }
+{ #category : 'initialization' }
 Socket >> bindTo: anAddress port: aPort [
 	"Bind to the local port <aPort>, on the interface specified by <anAddress>
 	(`SocketAddress zero` specifies all interfaces).
@@ -418,7 +418,7 @@ Socket >> bindTo: anAddress port: aPort [
 	self primSocket: socketHandle bindTo: anAddress port: aPort
 ]
 
-{ #category : 'initialize - destroy' }
+{ #category : 'initialization' }
 Socket >> bindToPort: aPort [
 	"Bind to the local port <aPort>, often in order to listen for incoming connections."
 
@@ -548,7 +548,7 @@ Socket >> dataAvailable [
 	^ self primSocketReceiveDataAvailable: socketHandle
 ]
 
-{ #category : 'initialize - destroy' }
+{ #category : 'initialization' }
 Socket >> destroy [
 	"Destroy this socket. Its connection, if any, is aborted and its resources are freed.
 	Any processes waiting on the socket are freed immediately, but it is up to them to
@@ -685,7 +685,7 @@ Socket >> initialize: socketType family: addressFamily [
 		ifNotNil: [ self register ]
 ]
 
-{ #category : 'initialize - destroy' }
+{ #category : 'initialization' }
 Socket >> initializeNetwork [
 	self class initializeNetwork
 ]

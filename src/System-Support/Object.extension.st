@@ -8,8 +8,13 @@ Object >> isPrimitiveError [
 
 { #category : '*System-Support' }
 Object class >> registerToolsOn: aToolRegistry [
-
-	" Override to register any tools for Smalltalk tools registry. "
+	"Override to register any tools to the toolregistry. 
+	
+	Typically subclasses should do 
+	
+		registry register: self as: #XXXX
+	
+	"
 ]
 
 { #category : '*System-Support' }

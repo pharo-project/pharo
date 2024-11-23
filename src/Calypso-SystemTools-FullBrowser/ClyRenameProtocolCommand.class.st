@@ -14,7 +14,8 @@ Class {
 	#superclass : 'CmdCommand',
 	#instVars : [
 		'methodGroup',
-		'newName'
+		'newName',
+		'selectedClass'
 	],
 	#category : 'Calypso-SystemTools-FullBrowser-Commands-MethodGroups',
 	#package : 'Calypso-SystemTools-FullBrowser',
@@ -53,8 +54,16 @@ ClyRenameProtocolCommand >> defaultMenuItemName [
 
 { #category : 'execution' }
 ClyRenameProtocolCommand >> execute [
+	"The basic implementation iterates over the methods selected and update their protocol. Then Calypso is updated via the announcements of recategorization.
+	But this leads to a problem when there is no method in the selected protocol. In that case I'm updating directly the class to remove the old protocol and add the new one, which will update Calypso.
+	I hesitated to rename the protocol in the latest selected class but we could have multiple classes selected so I'm keeping part of the old implementation instead."
 
-	methodGroup categorizeMethodsIn: newName
+	methodGroup isEmpty
+		ifTrue: [
+			selectedClass
+				removeProtocol: methodGroup name;
+				addProtocol: newName ]
+		ifFalse: [ methodGroup categorizeMethodsIn: newName ]
 ]
 
 { #category : 'accessing' }
@@ -82,6 +91,7 @@ ClyRenameProtocolCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.
 
+	selectedClass := aToolContext lastSelectedClass.
 	methodGroup := aToolContext lastSelectedMethodGroup.
 
 	newName := StProtocolNameChooserPresenter requestProtocolNameConfiguring: [ :presenter |

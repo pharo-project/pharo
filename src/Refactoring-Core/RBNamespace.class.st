@@ -505,7 +505,7 @@ RBNamespace >> packageNamed: aSymbol [
 ]
 
 { #category : 'private - changes' }
-RBNamespace >> performChange: aCompositeRefactoryChange around: aBlock [
+RBNamespace >> perform: aBlock onlyWithChange: aCompositeRefactoryChange [
 	| oldChanges |
 	changes addChange: aCompositeRefactoryChange.
 	oldChanges := changes.
@@ -640,13 +640,14 @@ RBNamespace >> removeProtocolNamed: aString in: aClass [
 
 { #category : 'changes' }
 RBNamespace >> renameClass: aRBClass to: aSymbol around: aBlock [
+
 	| change value dict |
 	change := changeFactory renameClass: aRBClass to: aSymbol.
-	self performChange: change around: aBlock.
+	self perform: aBlock onlyWithChange: change.
 	self flushCaches.
 	dict := (newClasses includesKey: aRBClass name)
-		ifTrue: [ newClasses ]
-		ifFalse: [ changedClasses ].
+		        ifTrue: [ newClasses ]
+		        ifFalse: [ changedClasses ].
 	self markAsRemoved: aRBClass name.
 	self unmarkAsRemoved: aSymbol.
 	value := dict at: aRBClass name.
@@ -661,18 +662,19 @@ RBNamespace >> renameClass: aRBClass to: aSymbol around: aBlock [
 
 { #category : 'private - changes' }
 RBNamespace >> renameInstanceVariable: oldName to: newName in: aRBClass around: aBlock [
-	^self performChange: (changeFactory
-				renameInstanceVariable: oldName
-				to: newName
-				in: aRBClass)
-		around: aBlock
+
+	^ self perform: aBlock onlyWithChange: (changeFactory
+			   renameInstanceVariable: oldName
+			   to: newName
+			   in: aRBClass)
 ]
 
 { #category : 'changes' }
 RBNamespace >> renamePackage: aRBPackage to: aSymbol [
+
 	| change value dict |
 	change := changeFactory renamePackage: aRBPackage to: aSymbol.
-	self performChange: change around: [].
+	self perform: [  ] onlyWithChange: change.
 	self flushCaches.
 	dict := changedPackages.
 	self markPackageAsRemoved: aRBPackage name.

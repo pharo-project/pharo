@@ -118,7 +118,7 @@ MenuRegistrationExample class >> toolsOn: aBuilder [
 				icon: (aBuilder iconNamed: Smalltalk tools transcript  taskbarIconName).
 			(aBuilder item: #'File Browser')
 				selector: #openFileList;
-				icon: (aBuilder iconNamed: Smalltalk tools fileList taskbarIconName).
+				icon: (self  iconNamed: #smallWindow).
 			(aBuilder item: #'Process Browser')
 				selector: #openProcessBrowser;
 				icon: (aBuilder iconNamed: Smalltalk tools processBrowser taskbarIconName);

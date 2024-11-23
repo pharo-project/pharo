@@ -23,13 +23,13 @@ ReCyclomaticComplexityRule class >> group [
 { #category : 'accessing' }
 ReCyclomaticComplexityRule class >> rationale [ 
 
-	^ 'When the cyclomatic complexity is heigh, try to refactor your code'
+	^ 'When the cyclomatic complexity is high, try to refactor your code'
 ]
 
 { #category : 'accessing' }
 ReCyclomaticComplexityRule class >> ruleName [
 
-	^ 'The cyclomatic complexity is heigh'
+	^ 'The cyclomatic complexity is high'
 ]
 
 { #category : 'running' }

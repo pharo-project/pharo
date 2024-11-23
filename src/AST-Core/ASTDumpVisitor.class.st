@@ -30,6 +30,8 @@ ASTDumpVisitor >> contents [
 
 { #category : 'initialization' }
 ASTDumpVisitor >> initialize [
+
+	super initialize.
 	stream := String new writeStream
 ]
 

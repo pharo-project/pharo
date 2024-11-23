@@ -27,7 +27,7 @@ ActionSettingDeclaration >> inputWidget [
 
 	^ SimpleButtonMorph new
 		target: self target;
-		label: (self label ifNil: [ '(Error: no label defined)' ]);
+		label: (self actionLabel ifNil: [ '(Error: no label defined)' ]);
 		actionSelector: self name;
 		themeChanged; "This is to avoid green button?"
 		yourself
@@ -38,4 +38,9 @@ ActionSettingDeclaration >> realValue [
 	"Private - Morphic requirement. To be deleted when morphic gets removed"
 
 	^ false
+]
+
+{ #category : 'accessing' }
+ActionSettingDeclaration >> realValue: anObject [
+	"Private - Do nothing, to prevent raising an Error in updateSettingNode:"
 ]

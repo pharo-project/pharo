@@ -338,7 +338,7 @@ CompletionEngine >> replaceTokenInEditorWith: aString [
 
 	The completion context uses this API to insert text into the text editor"
 
-	| newString wordEnd old doubleSpace wordStart |
+	| newString wordEnd doubleSpace wordStart oldSelectionInterval |
 
 	newString := aString.
 	wordStart := self completionTokenStart.
@@ -355,12 +355,12 @@ CompletionEngine >> replaceTokenInEditorWith: aString [
 	"If the returned index is the size of the text that means that the caret is at the end of the text and there is no more word after, so add 1 to the index to be out of range to select the entierely word because of the selectInvisiblyFrom:to: remove 1 just after to be at the end of then final word"
 	wordEnd > self editor text size ifTrue:[ wordEnd := wordEnd + 1 ].
 
+	oldSelectionInterval := self editor selectionInterval.
 	self editor
 		selectInvisiblyFrom: wordStart
 		to: wordEnd - 1.
-	old := self editor selection.
 
-	self editor replaceSelectionWith: newString.
+	self editor replaceSelectionWith: newString fromSelection: oldSelectionInterval.
 
 	doubleSpace := newString indexOfSubCollection: '  ' startingAt: 1 ifAbsent: [ newString size ].
 	self editor selectAt: wordStart + doubleSpace.

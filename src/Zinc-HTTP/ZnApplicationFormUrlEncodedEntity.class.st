@@ -126,7 +126,7 @@ ZnApplicationFormUrlEncodedEntity >> printContentsOn: stream [
 	fields printElementsOn: stream
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnApplicationFormUrlEncodedEntity >> readFrom: stream [
 	"We parse from stream, limited to content length if available."
 

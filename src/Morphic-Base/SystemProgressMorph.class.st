@@ -410,8 +410,8 @@ SystemProgressMorph >> update: aSymbol [
 SystemProgressMorph >> updateColor [
 	"Callback from theme"
 
-	self theme preferGradientFill ifFalse: [^ self].
-	self fillStyle: (self theme progressFillStyleFor: self)
+	self theme preferGradientFill ifFalse: [ ^ self ].
+	self fillStyle: self theme progressFillStyle
 ]
 
 { #category : 'updating' }

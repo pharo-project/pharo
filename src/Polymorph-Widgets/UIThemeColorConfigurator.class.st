@@ -419,15 +419,9 @@ UIThemeColorConfigurator >> popoverButtonColor [
 ]
 
 { #category : 'colors' }
-UIThemeColorConfigurator >> progressBarColorFor: anObject [
+UIThemeColorConfigurator >> progressBarColor [
 
 	^ themeSettings progressBarColor
-]
-
-{ #category : 'colors' }
-UIThemeColorConfigurator >> progressBarProgressColorFor: anObject [
-
-	^ themeSettings progressBarProgressColor
 ]
 
 { #category : 'colors' }

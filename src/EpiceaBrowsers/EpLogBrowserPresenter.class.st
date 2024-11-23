@@ -91,26 +91,6 @@ EpLogBrowserPresenter >> addFilter: aFilter [
 	self refresh
 ]
 
-{ #category : 'menu' }
-EpLogBrowserPresenter >> addMenuItemsForSelectedItemsIn: aMenu [
-
-	aMenu addGroup: [ :aGroup |
-		self menuActionsForSelectedItems do: [ :oldStyleMenuItemArray |
-			aGroup addItem: [ :anItem |
-				anItem
-					name: oldStyleMenuItemArray first;
-					description: oldStyleMenuItemArray third;
-					icon: (self iconNamed: oldStyleMenuItemArray fourth);
-					action: [ self perform: oldStyleMenuItemArray second ] ] ] ].
-
-	aMenu addGroup: [ :aGroup |
-		aGroup addItem: [ :anItem |
-			anItem
-				name: 'Filters';
-				icon: (self iconNamed: #smallFind);
-				subMenu: self filtersSubMenu ] ]
-]
-
 { #category : 'menu - operations' }
 EpLogBrowserPresenter >> applyAllChangesAndCloseWindow [
 
@@ -227,33 +207,6 @@ EpLogBrowserPresenter >> cleanEntryContent [
 	self refreshEntryContentWith: #()
 ]
 
-{ #category : 'menu' }
-EpLogBrowserPresenter >> codeChangesMenuActions [
-
-	^ {
-		{ 'Apply...'.
-		#openPreviewToApplySelectedChanges.
-		'Preview the application of selected code changes (open a new window to show the effect of re-applying the changes in current image)'.
-		#smallRedo.
-		$p command }.
-		{ 'Revert...'.
-		#openPreviewToRevertSelectedChanges.
-		'Preview the reversion of selected code changes (open a new window to show the effect of reverting the changes in current image)'.
-		#smallUndo.
-		$r command }.
-		{ 'Browse current'.
-		#browseSelection.
-		'Browse working copy of entity affected in the selected event(s)'.
-		#nautilusIcon.
-		$b command } .
-		{ 'File out'.
-		#fileOutSelection.
-		'File out the selected code changes'.
-		#smallSave.
-		$s command }.		
-	}
-]
-
 { #category : 'accessing' }
 EpLogBrowserPresenter >> commentsLog [
 
@@ -293,6 +246,76 @@ EpLogBrowserPresenter >> fileOutSelection [
 	entries := self selectedCodeChanges collect: [ :each | each content ].
 
 	EpChunkExporter fileOut: entries.
+
+]
+
+{ #category : 'menu' }
+EpLogBrowserPresenter >> filterActions [
+
+	^ SpActionGroup new
+		beDisplayedAsSubMenu;
+		name: 'Filters';
+		addActionWith: [ :anItem | anItem
+			name: 'Clean action filters';
+			iconName: #smallDelete;
+			action: [ self removeAllFilters ];
+			actionEnabled: [ self filters isEmptyOrNil not ] ];
+		addGroupWith: [ :aGroup | aGroup 
+			beDisplayedAsGroup;
+			addActionWith: [ :anItem | anItem
+				name: EpLatestCodeChangeFilter title;
+				description: EpLatestCodeChangeFilter comment;
+				iconName: #smallFind;
+				action: [ self filterLatestCodeChanges ] ];
+			 addActionWith: [ :anItem | anItem
+				name: EpImpactCodeChangeFilter title;
+				description: EpImpactCodeChangeFilter comment;
+				iconName: #smallFind;
+				action: [ self filterImpactCodeChanges ] ] ];
+		addGroupWith: [ :aGroup | aGroup
+			beDisplayedAsGroup; 
+			addActionWith: [ :anItem | anItem
+				name: EpEntryReferencesFilter title;
+				iconName: #smallFind;
+				action: [ self filterSelection ] ];
+			addActionWith: [ :anItem | anItem
+				name: 'Show only changes to this method';
+				description: 'Show only additions, modifications or removals of this method.';
+				iconName: #smallFind;
+				action: [ self filterAllChangesToSelection ] ] ;
+			addActionWith: [ :anItem | anItem
+				name: 'Show only changes to this class or trait';
+				description: 'Show only changes in the scope of this class or trait.';
+				iconName: #smallFind;
+				action: [ self filterAllChangesToSelectionBehavior ] ];
+			 addActionWith: [ :anItem | anItem
+				name: 'Show only changes in this package';
+				description: 'Show only additions, modifications or removals of this package.';
+				iconName: #smallFind;
+				action: [ self filterAllChangesToSelectionPackage ] ] ];
+		addGroupWith: [ :aGroup | aGroup
+			beDisplayedAsGroup; 
+			addActionWith: [ :anItem | anItem
+				name: 'Show only if done today';
+				iconName: #calendar;
+				action: [ self filterToday ] ];
+			addActionWith: [ :anItem | anItem
+				name: 'Hide events done after';
+				iconName: #calendar;
+				action: [ self filterBefore ] ]; 
+			addActionWith: [ :anItem | anItem
+				name: 'Hide events done before';
+				iconName: #calendar;
+				action: [ self filterAfter ] ] ];
+		addGroupWith: [ :aGroup | 
+			aGroup beDisplayedAsGroup.
+			EpPluggableFilter allFilters do: [ :aFilter |
+				aGroup addActionWith: [ :anItem | anItem
+					name: aFilter title;
+					iconName: #smallFind;
+					description: aFilter title;
+					action: [ self addFilter: aFilter ] ] ] ];
+		yourself
 
 ]
 
@@ -527,7 +550,7 @@ EpLogBrowserPresenter >> initializePresenters [
 		beMultipleSelection;
 		display: [ :entryReference | self morphForItemAt: entryReference ];
 		whenSelectionChangedDo: [ self refreshEntryContentDeferrer schedule ];
-		contextMenu: [ self menuMorphForSelectedItems ].
+		actions: self menuActions.
 		
 	self initializeSearchPresenters.
 
@@ -600,30 +623,40 @@ EpLogBrowserPresenter >> logOffEvent: anEvent [
 ]
 
 { #category : 'menu' }
-EpLogBrowserPresenter >> menuActionsForSelectedItems [
+EpLogBrowserPresenter >> menuActions [
 
-	| selectedReferences |
-	selectedReferences := self selectedEntryReferences.
-
-	selectedReferences isEmpty ifTrue: [ ^#() ].
-
-	selectedReferences size = 1 ifTrue: [
-		| event |
-		event := (self itemForEntryReference: selectedReferences anyOne) event.
-		(event isEpRefactoring and: [ event canBuildRBRefactoring ])
-			ifTrue: [ ^ self refactoringMenuActions ]].
-
-	^ self codeChangesMenuActions
-]
-
-{ #category : 'menu' }
-EpLogBrowserPresenter >> menuMorphForSelectedItems [
-	| aMenu |
-	aMenu := self newMenu.
-
-	showEntryItemMenu ifTrue: [ self addMenuItemsForSelectedItemsIn: aMenu ].
-
-	^ aMenu
+	^ SpActionGroup new
+		addActionWith: [ :action | action 
+			name: 'Apply';
+			description: 'Preview the application of selected code changes (open a new window to show the effect of re-applying the changes in current image)';
+			iconName: #smallRedo;
+			shortcutKey: $p actionModifier;
+			action: [ self openPreviewToApplySelectedChanges ];
+			actionEnabled: [ self itemsPresenter selectedItem isNotNil ] ];
+		addActionWith: [ :action | action 
+			name: 'Revert';
+			description: 'Preview the reversion of selected code changes (open a new window to show the effect of reverting the changes in current image)';
+			iconName: #smallUndo;
+			shortcutKey: $r actionModifier;
+			action: [ self openPreviewToRevertSelectedChanges ];
+			actionEnabled: [ self itemsPresenter selectedItem isNotNil ] ];
+		addActionWith: [ :action | action 
+			name: 'Browse current';
+			description: 'Browse working copy of entity affected in the selected event(s)';
+			iconName: #nautilusIcon;
+			shortcutKey: $b actionModifier;
+			action: [ self browseSelection ];
+			actionEnabled: [ self itemsPresenter selectedItem isNotNil ] ];
+		addActionWith: [ :action | action 
+			name: 'File out';
+			description: 'File out the selected code changes';
+			iconName: #smallSave;
+			shortcutKey: $s actionModifier;
+			action: [ self fileOutSelection ];
+			actionEnabled: [ self itemsPresenter selectedItem isNotNil ] ];
+		add: self filterActions;
+		yourself
+		
 ]
 
 { #category : 'accessing' }

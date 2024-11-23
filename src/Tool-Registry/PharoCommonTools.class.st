@@ -55,7 +55,7 @@ PharoCommonTools class >> menuToploOn: aBuilder [
 PharoCommonTools class >> settingsOn: aBuilder [
 	<systemsettings>
 
-	Smalltalk tools class == self
+	self tools class == self
 		ifFalse: [ ^ self ].
 	(aBuilder group: #pharoTools)
 		parent: #pharoSystem;
@@ -69,7 +69,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						setSelector: #browserTool:;
 						label: 'System browser';
 						default: (self environment at: #ClyFullBrowserMorph);
-						domainValues: Smalltalk tools recentBrowserTools ];
+						domainValues: self tools recentBrowserTools ];
 		with: [
 					(aBuilder pickOne: #inspectorTool)
 						target: Smalltalk;
@@ -78,7 +78,7 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						setSelector: #inspectorTool:;
 						default: (self environment at: #StInspectorPresenter);
 						label: 'Inspector';
-						domainValues: Smalltalk tools recentInspectorTools ];
+						domainValues: self tools recentInspectorTools ];
 		with: [
 					(aBuilder pickOne: #workspaceTool)
 						target: Smalltalk;
@@ -93,32 +93,40 @@ PharoCommonTools class >> settingsOn: aBuilder [
 						target: Smalltalk;
 						targetSelector: #tools;
 						label: 'Versionbrowser';
-						domainValues: Smalltalk tools recentVersionBrowserTools ];
+						domainValues: self tools recentVersionBrowserTools ];
 		with: [
 					(aBuilder pickOne: #fileListTool)
 						target: Smalltalk;
 						targetSelector: #tools;
 						label: 'Filelist';
-						default: (self environment at: #FileList);
-						domainValues: Smalltalk tools recentFileListTools]
+						default: (self environment at: #StFileSystemPresenter);
+						domainValues: self tools recentFileListTools]
 ]
 
 { #category : 'system startup' }
 PharoCommonTools class >> shutDown: aboutToQuit [
-	Smalltalk image tools cleanUp
+	self tools cleanUp
+]
+
+{ #category : 'settings' }
+PharoCommonTools class >> tools [
+
+	^ Smalltalk tools
 ]
 
 { #category : 'world menu' }
 PharoCommonTools class >> worldMenuOn: aBuilder [
 
 	<worldMenu>
+	
 	(aBuilder item: #'System Browser')
 		parent: #Browsing;
-		action: [ Smalltalk tools openClassBrowser ];
+		action: [ self tools openClassBrowser ];
 		order: 0;
 		keyText: 'o, b';
 		help: 'System browser to browse and edit code.';
 		iconName: #smallSystemBrowser.
+		
 	(aBuilder item: 'Git Repositories Browser')
 		order: 1;
 		iconName: #komitterSmalltalkhubRemote;

@@ -147,6 +147,16 @@ StartupPreferencesLoader class >> default [
 ]
 
 { #category : 'instance creation' }
+StartupPreferencesLoader class >> fromSton: stonReader [
+	"Create a new instance and delegate decoding to instance side.
+	Override only when new instance should be created directly (see implementors). "
+
+	^ self default
+		fromSton: stonReader;
+		yourself
+]
+
+{ #category : 'instance creation' }
 StartupPreferencesLoader class >> new [
 
 	^ self error: 'use #default instead'

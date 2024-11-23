@@ -21,6 +21,14 @@ BenchTFFI >> doCallWith: aFloat another: aDouble [
 	^ self ffiCall: #(float sumAFloatAndADouble(float aFloat, double aDouble))
 ]
 
+{ #category : 'private' }
+BenchTFFI >> doSumWithPointers [
+
+	^ self ffiCall: #(int64 sum_int64_t(void* 1, void* 0))
+
+	
+]
+
 { #category : 'accessing' }
 BenchTFFI >> ffiLibrary [
 

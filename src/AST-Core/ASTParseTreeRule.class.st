@@ -59,7 +59,7 @@ ASTParseTreeRule >> methodSearchString: aString [
 	searchTree := self parserClass parseRewriteMethod: aString
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ASTParseTreeRule >> owner: aParseTreeSearcher [
 	owner := aParseTreeSearcher
 ]

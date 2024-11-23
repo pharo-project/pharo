@@ -26,12 +26,6 @@ FFIFunctionArgumentLoader >> emitArgument: aBuilder context: aContext [
 ]
 
 { #category : 'emitting code' }
-FFIFunctionArgumentLoader >> emitArgument: aBuilder context: aContext inCallout: aCallout [
-
-	self emitArgument: aBuilder context: aContext
-]
-
-{ #category : 'emitting code' }
 FFIFunctionArgumentLoader >> emitArgument: aBuilder context: aContext objectClass: objectClass instVarName: aName [
 	self subclassResponsibility
 ]
@@ -119,6 +113,12 @@ FFIFunctionArgumentLoader >> emitPointerArityUnpack: aBuilder type: aType contex
 		objectClass: objectClass
 		instVarName: aName
 		arity: aType pointerArity
+]
+
+{ #category : 'testing' }
+FFIFunctionArgumentLoader >> isLiteralArgument [
+
+	^ false
 ]
 
 { #category : 'private' }

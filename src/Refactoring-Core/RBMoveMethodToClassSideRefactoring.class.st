@@ -46,7 +46,7 @@ Class {
 { #category : 'refactoring' }
 RBMoveMethodToClassSideRefactoring >> accessorsFor: variableName [
 
-	^ RBCreateAccessorsForVariableTransformation
+	^ ReCreateAccessorsForVariableTransformation
 				model: self model
 				variable: variableName
 				class: class

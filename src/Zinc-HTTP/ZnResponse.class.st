@@ -292,13 +292,13 @@ ZnResponse >> printOn: stream [
 	stream nextPut: $)
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnResponse >> readEntityFrom: stream [
 	(self isInformational or: [ self isNoContent or: [ self isNotModified ] ])
 		ifFalse: [ super readEntityFrom: stream ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnResponse >> readHeaderFrom: stream [
 	self statusLine: (ZnStatusLine readFrom: stream).
 	super readHeaderFrom: stream

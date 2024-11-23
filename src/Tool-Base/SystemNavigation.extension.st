@@ -485,6 +485,10 @@ SystemNavigation >> openBrowserFor: aLiteral withMethods: aCollection [
 
 { #category : '*Tool-Base' }
 SystemNavigation >> tools [
-
+	
+	self flag: #todo.
+	"When the new message list will be available we should turn this into 
+	application tools.
+	"
 	^ Smalltalk tools
 ]
