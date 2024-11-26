@@ -20,6 +20,14 @@ Class {
 }
 
 { #category : 'instance creation' }
+RBExtractToTemporaryRefactoring class >> extract: anInterval from: aSelector in: aClass [
+	^ self new
+		extract: anInterval
+		from: aSelector
+		in: aClass
+]
+
+{ #category : 'instance creation' }
 RBExtractToTemporaryRefactoring class >> extract: anInterval to: aString from: aSelector in: aClass [
 	^ self new
 		extract: anInterval
@@ -29,13 +37,12 @@ RBExtractToTemporaryRefactoring class >> extract: anInterval to: aString from: a
 ]
 
 { #category : 'instance creation' }
-RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval to: aString from: aSelector in: aClass [
+RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval  from: aSelector in: aClass [
 	^ self new
 		model: aRBSmalltalk;
 		extract: anInterval
-			to: aString
-			from: aSelector
-			in: aClass;
+		from: aSelector
+		in: aClass;
 		yourself
 ]
 
@@ -43,12 +50,9 @@ RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval
 RBExtractToTemporaryRefactoring >> applicabilityPreconditions [
 
 	^ {
-			(ReDefinesSelectorsCondition new definesSelectors: (Array with: selector) in: class).
-		  	(ReIsValidInstanceVariableName new name: newVariableName).
-			(ReCheckVariableNameCondition
-				class: class
-				variableName: newVariableName 
-				parseTree: parseTree ).
+			(ReDefinesSelectorsCondition new definesSelectors: { selector } in: class).
+			self preconditionValidInstVarName.
+			self preconditionCheckVariableName
 		}
 ]
 
@@ -67,11 +71,23 @@ RBExtractToTemporaryRefactoring >> constructAssignmentFrom: aNode [
 	^ASTAssignmentNode variable: valueNode value: aNode copy.
 ]
 
-{ #category : 'initialization' }
-RBExtractToTemporaryRefactoring >> extract: anInterval to: aString from: aSelector in: aClass [
+{ #category : 'instance creation' }
+RBExtractToTemporaryRefactoring >> extract: anInterval from: aSelector in: aClass [ 
 	class := self classObjectFor: aClass.
 	selector := aSelector.
 	sourceInterval := anInterval.
+]
+
+{ #category : 'instance creation' }
+RBExtractToTemporaryRefactoring >> extract: anInterval to: aString from: aSelector in: aClass [ 
+	class := self classObjectFor: aClass.
+	selector := aSelector.
+	sourceInterval := anInterval.
+	newVariableName := aString
+]
+
+{ #category : 'initialization' }
+RBExtractToTemporaryRefactoring >> extractToVariable: aString [
 	newVariableName := aString
 ]
 
@@ -95,6 +111,26 @@ RBExtractToTemporaryRefactoring >> insertTemporary [
 		each replaceWith: (ASTVariableNode named: newVariableName) ]
 ]
 
+{ #category : 'accessing' }
+RBExtractToTemporaryRefactoring >> parseTree [
+	^ parseTree
+]
+
+{ #category : 'preconditions' }
+RBExtractToTemporaryRefactoring >> preconditionCheckVariableName [
+    
+    ^ ReCheckVariableNameCondition
+			class: class 
+  	   		variableName: newVariableName 
+      		parseTree: parseTree
+]
+
+{ #category : 'preconditions' }
+RBExtractToTemporaryRefactoring >> preconditionValidInstVarName [
+
+	^ ReIsValidInstanceVariableName new name: newVariableName
+]
+
 { #category : 'transforming' }
 RBExtractToTemporaryRefactoring >> prepareForExecution [
 
@@ -107,11 +143,8 @@ RBExtractToTemporaryRefactoring >> prepareForExecution [
 		ifTrue: [ self refactoringError: 'Cannot assign temp to multiple statements' ].	
 	parseTree ifNil: [ 
 			parseTree := class parseTreeForSelector: selector.
-			parseTree ifNil: [ self refactoringError: 'Could not parse method' ]
-			].
-		parseTree doSemanticAnalysis
-
-
+			parseTree ifNil: [ self refactoringError: 'Could not parse method' ]].
+	parseTree doSemanticAnalysis
 ]
 
 { #category : 'transforming' }
