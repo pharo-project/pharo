@@ -264,6 +264,12 @@ SmalltalkImage >> bindingOf: varName [
 	^globals bindingOf: varName
 ]
 
+{ #category : 'sources - date' }
+SmalltalkImage >> buildDateString [
+
+	^ 'Build date: ' , SystemVersion current date asString
+]
+
 { #category : 'memory space' }
 SmalltalkImage >> bytesLeft [
 	"Answer the number of bytes of space available. Does a full garbage collection."
@@ -1820,7 +1826,10 @@ SmalltalkImage >> supportsQueueingFinalization: aBoolean [
 
 { #category : 'sources, change log' }
 SmalltalkImage >> systemInformationString [
-	^ String cr, 'Pharo ', SystemVersion current dottedMajorMinorPatch,  String cr, self lastUpdateString, String cr, String cr, String cr, self licenseString
+
+	^ String cr , 'Pharo ' , SystemVersion current dottedMajorMinorPatch
+	  , String cr , self lastUpdateString , String cr
+	  , self buildDateString , String cr , String cr , self licenseString
 ]
 
 { #category : 'sources, change log' }

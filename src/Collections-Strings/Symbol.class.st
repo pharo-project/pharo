@@ -196,6 +196,12 @@ Symbol class >> rehash [
 	self resetSelectorTable
 ]
 
+{ #category : 'accessing' }
+Symbol class >> reservedLiterals [
+
+	^ PseudoVariable lookupDictionary keys union: #( #nil #true #false )
+]
+
 { #category : 'cleanup' }
 Symbol class >> resetSelectorTable [
 	^ SelectorTable := nil

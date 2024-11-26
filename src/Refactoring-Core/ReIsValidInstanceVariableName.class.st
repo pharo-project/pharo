@@ -20,7 +20,7 @@ ReIsValidInstanceVariableName >> check [
 	string isEmpty ifTrue: [
 		violator := name.
 		^ false ].
-	(self class reservedNames includes: string) ifTrue: [
+	(Symbol reservedLiterals includes: string) ifTrue: [
 		violator := name.
 		^ false ].
 	string first isUppercase ifTrue: [

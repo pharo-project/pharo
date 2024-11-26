@@ -1,8 +1,8 @@
 "
-Checks that a class or its superclasses define a variable.
+This condition checks whether a class or its subclasses defines a variable.
 "
 Class {
-	#name : 'ReDefinesInstanceVariableCondition',
+	#name : 'ReHierarchyDefinesInstanceVariableCondition',
 	#superclass : 'ReClassCondition',
 	#instVars : [
 		'instanceVariables'
@@ -13,7 +13,7 @@ Class {
 }
 
 { #category : 'instance creation' }
-ReDefinesInstanceVariableCondition class >> classNamed: aString inModel: aRBNamespace instanceVariables: aCollection [ 
+ReHierarchyDefinesInstanceVariableCondition class >> classNamed: aString inModel: aRBNamespace instanceVariables: aCollection [ 
 	
 	^ (self classNamed: aString inModel: aRBNamespace)
 		instanceVariables: aCollection;
@@ -21,26 +21,26 @@ ReDefinesInstanceVariableCondition class >> classNamed: aString inModel: aRBName
 ]
 
 { #category : 'checking' }
-ReDefinesInstanceVariableCondition >> check [
+ReHierarchyDefinesInstanceVariableCondition >> check [
 	
-	violators := instanceVariables reject: [ :shared | class definesInstanceVariable: shared ].
+	violators := instanceVariables reject: [ :var | class hierarchyDefinesInstanceVariable: var ].
 	^ violators isEmpty
 ]
 
 { #category : 'private' }
-ReDefinesInstanceVariableCondition >> errorBlock [
+ReHierarchyDefinesInstanceVariableCondition >> errorBlock [
 	^ [ class printString
 				, ' <1?: > define <1?s:> instance variable ' , instanceVariables ]
 ]
 
 { #category : 'accessing' }
-ReDefinesInstanceVariableCondition >> instanceVariables: aColOfStrings [
+ReHierarchyDefinesInstanceVariableCondition >> instanceVariables: aColOfStrings [
 
 	instanceVariables := aColOfStrings
 ]
 
 { #category : 'displaying' }
-ReDefinesInstanceVariableCondition >> violationMessageOn: aStream [
+ReHierarchyDefinesInstanceVariableCondition >> violationMessageOn: aStream [
 
 	^ violators do: [ :violator |
 		  aStream

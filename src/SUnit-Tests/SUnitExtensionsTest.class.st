@@ -4,9 +4,6 @@ SUnit tests for extensions to SUnit
 Class {
 	#name : 'SUnitExtensionsTest',
 	#superclass : 'TestCase',
-	#instVars : [
-		'stream'
-	],
 	#category : 'SUnit-Tests-Core',
 	#package : 'SUnit-Tests',
 	#tag : 'Core'

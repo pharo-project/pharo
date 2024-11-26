@@ -38,7 +38,7 @@ RBCondition class >> checkClassVarName: aName in: aClass [
 	| string |
 	aName isString ifFalse: [^false].
 	string := aName asString.
-	(self reservedNames includes: string) ifTrue: [^false].
+	(Symbol reservedLiterals includes: string) ifTrue: [^false].
 	string isEmpty ifTrue: [^false].
 	string first isUppercase ifFalse: [^false].
 	^RBScanner isVariable: string
@@ -51,7 +51,7 @@ RBCondition class >> checkInstanceVariableName: aName in: aClass [
 	aName isString ifFalse: [ ^ false ].
 	string := aName.
 	string ifEmpty: [ ^ false ].
-	(self reservedNames includes: string) ifTrue: [ ^ false ].
+	(Symbol reservedLiterals includes: string) ifTrue: [ ^ false ].
 	string first isUppercase ifTrue: [ ^ false ].
 	^ RBScanner isVariable: string
 ]
@@ -381,11 +381,6 @@ RBCondition class >> referencesInstanceVariable: aString in: aClass [
 		  (aClass whichSelectorsReferToInstanceVariable: aString) isNotEmpty ]
 		  errorString: aClass printString
 			  , ' <1?:does not >reference<1?s:> instance variable ' , aString
-]
-
-{ #category : 'utilities' }
-RBCondition class >> reservedNames [
-	^#('self' 'true' 'false' 'nil' 'thisContext' 'super')
 ]
 
 { #category : 'instance creation' }

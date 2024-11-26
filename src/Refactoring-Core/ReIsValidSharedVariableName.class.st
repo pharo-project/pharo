@@ -17,7 +17,7 @@ ReIsValidSharedVariableName >> check [
 		violator := name.
 		^ false ].
 	string := name asString.
-	(self class reservedNames includes: string) ifTrue: [
+	(Symbol reservedLiterals includes: string) ifTrue: [
 		violator := name.
 		^ false ].
 	string isEmpty ifTrue: [

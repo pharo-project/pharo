@@ -110,7 +110,7 @@ RBRenameInstanceVariableRefactoring >> newName: anObject [
 { #category : 'preconditions' }
 RBRenameInstanceVariableRefactoring >> preconditionDirectlyDefinesVariable [
 
-	^ ReDefinesInstanceVariableCondition
+	^ ReDirectlyDefinesInstanceVariableCondition
 			   classNamed: class name
 			   inModel: self model
 			   instanceVariables: { variableName }
