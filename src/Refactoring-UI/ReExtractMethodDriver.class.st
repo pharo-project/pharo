@@ -1,6 +1,6 @@
 Class {
 	#name : 'ReExtractMethodDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'class',
 		'newMessage',
@@ -140,9 +140,4 @@ ReExtractMethodDriver >> runRefactoring [
 	refactoring newSelector: newMessage selector.
 	"self configureMessage."
 	self applyChanges 
-]
-
-{ #category : 'accessing' }
-ReExtractMethodDriver >> scopes: aCollection [ 
-	scopes := aCollection
 ]

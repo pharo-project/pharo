@@ -19,14 +19,13 @@ ReShouldSendSuperTearDownAsLastMessage class >> checksMethod [
 
 { #category : 'accessing' }
 ReShouldSendSuperTearDownAsLastMessage class >> group [
-
-	^ 'SUnit'
+	^ self sunitGroup
 ]
 
 { #category : 'utilities' }
 ReShouldSendSuperTearDownAsLastMessage class >> parseTreeSearcher [
 
-	^ RBParseTreeSearcher new
+	^ ASTParseTreeSearcher new
 ]
 
 { #category : 'accessing' }

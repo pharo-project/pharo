@@ -164,7 +164,7 @@ RBAddMethodChange >> protocols [
 	^ protocols
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RBAddMethodChange >> protocols: aCollectionOrProtocol [
 
 	protocols := (aCollectionOrProtocol isCollection and: [ aCollectionOrProtocol isString not])

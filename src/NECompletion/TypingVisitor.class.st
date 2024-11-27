@@ -3,7 +3,7 @@ A visitor that does the typing for better completion. No type guessing, just usi
 "
 Class {
 	#name : 'TypingVisitor',
-	#superclass : 'RBProgramNodeVisitor',
+	#superclass : 'ASTProgramNodeVisitor',
 	#instVars : [
 		'typeStack'
 	],

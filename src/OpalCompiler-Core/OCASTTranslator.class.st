@@ -16,7 +16,7 @@ Whereas, in #visitMethodNode:,  the effectTranslator is used, because no value i
 "
 Class {
 	#name : 'OCASTTranslator',
-	#superclass : 'RBProgramNodeVisitor',
+	#superclass : 'ASTProgramNodeVisitor',
 	#instVars : [
 		'methodBuilder',
 		'nextUniqueInlineID'
@@ -498,9 +498,9 @@ OCASTTranslator >> translateFullBlock: aBlockNode [
 ]
 
 { #category : 'visiting' }
-OCASTTranslator >> visitAnnotationMarkNode: aRBAnnotationValueNode [
+OCASTTranslator >> visitAnnotationMarkNode: aAnnotationValueNode [
 
-	self emitRuntimeError: aRBAnnotationValueNode
+	self emitRuntimeError: aAnnotationValueNode
 ]
 
 { #category : 'visitor - double dispatching' }
@@ -642,12 +642,12 @@ OCASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 ]
 
 { #category : 'visitor - double dispatching' }
-OCASTTranslator >> visitLargeArrayNode: aRBArrayNode [
+OCASTTranslator >> visitLargeArrayNode: anArrayNode [
 	"Long form: using at:put:"
 	methodBuilder pushLiteralVariable: Array binding.
-	methodBuilder pushLiteral: aRBArrayNode statements size.
+	methodBuilder pushLiteral: anArrayNode statements size.
 	methodBuilder send: #new:.
-	aRBArrayNode statements withIndexDo: [  :each :index |
+	anArrayNode statements withIndexDo: [  :each :index |
 		methodBuilder pushDup.
 		methodBuilder pushLiteral: index.
 		self visitNode: each.
@@ -657,9 +657,9 @@ OCASTTranslator >> visitLargeArrayNode: aRBArrayNode [
 ]
 
 { #category : 'visitor - double dispatching' }
-OCASTTranslator >> visitLiteralArrayNode: aRBLiteralArrayNode [
+OCASTTranslator >> visitLiteralArrayNode: aLiteralArrayNode [
 
-	methodBuilder pushLiteral: aRBLiteralArrayNode value
+	methodBuilder pushLiteral: aLiteralArrayNode value
 ]
 
 { #category : 'visitor - double dispatching' }

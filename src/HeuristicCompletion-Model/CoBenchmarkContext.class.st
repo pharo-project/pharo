@@ -32,6 +32,12 @@ CoBenchmarkContext >> completionClass [
 ]
 
 { #category : 'accessing' }
+CoBenchmarkContext >> completionToken [
+	
+	^ callsite selector
+]
+
+{ #category : 'accessing' }
 CoBenchmarkContext >> doItContext [
 
 	^ nil

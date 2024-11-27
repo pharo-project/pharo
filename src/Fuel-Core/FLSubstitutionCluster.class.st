@@ -44,7 +44,7 @@ FLSubstitutionCluster >> add: anObject substitutedBy: anotherObject traceWith: a
 			aAnalysis trace: anotherObject ].
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 FLSubstitutionCluster >> initializeAnalyzing [
 
 	super initializeAnalyzing.

@@ -16,7 +16,7 @@ ReVariableReferencedOnceRule class >> checksClass [
 
 { #category : 'accessing' }
 ReVariableReferencedOnceRule class >> group [
-	^ 'Design Flaws'
+	^ self designFlawGroup
 ]
 
 { #category : 'accessing' }
@@ -42,7 +42,7 @@ ReVariableReferencedOnceRule >> check: aClass forCritiquesDo: aCriticBlock [
 		  | usingMethods |
 		  usingMethods := slot usingMethods.
 		  usingMethods size = 1 ifFalse:  [ ^ self ].
-		  (RBReadBeforeWrittenTester
+		  (ASTReadBeforeWrittenTester
 				  isVariable: slot name
 				  writtenBeforeReadIn: usingMethods first ast) ifTrue: [aCriticBlock cull: (self critiqueFor: aClass about: slot  name)   ]]
 ]

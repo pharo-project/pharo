@@ -317,6 +317,12 @@ SliderMorph >> sliderThickness [
 	^ 7
 ]
 
+{ #category : 'theme' }
+SliderMorph >> themeChanged [
+	super themeChanged.
+	self initializeSlider 
+]
+
 { #category : 'accessing' }
 SliderMorph >> thumbColor [
 	"Color of the draggable 'thumb'"

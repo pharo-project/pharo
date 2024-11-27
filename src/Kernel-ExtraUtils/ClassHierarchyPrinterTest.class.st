@@ -27,37 +27,42 @@ ClassHierarchyPrinterTest >> testOnlyASTNodes [
 	self assert: printer print equals:
 	'ASTNode
 	ASTProgramNode
+		ASTCommentNode
+		ASTMethodNode
+			ASTDoItMethodNode
+			ASTPatternMethodNode
+		ASTPragmaNode
+			ASTPatternPragmaNode
+		ASTReturnNode
+		ASTSequenceNode
 		ASTValueNode
+			ASTAnnotationMarkNode
+			ASTArrayNode
+			ASTAssignmentNode
+			ASTBlockNode
+				ASTPatternBlockNode
+					ASTPatternWrapperBlockNode
+			ASTCascadeNode
 			ASTLiteralNode
-				RBLiteralArrayNode
-				RBLiteralValueNode
-			RBAnnotationMarkNode
-			RBArrayNode
-			RBAssignmentNode
-			RBBlockNode
-			RBCascadeNode
-			RBMessageNode
-			RBParseErrorNode
-				RBEnglobingErrorNode
-					RBArrayErrorNode
-					RBAssignmentErrorNode
-					RBBlockErrorNode
-					RBInvalidCascadeErrorNode
-					RBLiteralArrayErrorNode
-					RBLiteralByteArrayErrorNode
-					RBParenthesesErrorNode
-					RBPragmaErrorNode
-					RBTemporariesErrorNode
-					RBUnfinishedStatementErrorNode
-			RBSelectorNode
-			RBVariableNode
-		RBComment
-		RBMethodNode
-			RBDoItMethodNode
-		RBPragmaNode
-		RBReturnNode
-		RBSequenceNode
-	RBSlotInitializationNode
+				ASTLiteralArrayNode
+				ASTLiteralValueNode
+			ASTMessageNode
+				ASTPatternMessageNode
+			ASTParseErrorNode
+				ASTEnglobingErrorNode
+					ASTArrayErrorNode
+					ASTAssignmentErrorNode
+					ASTBlockErrorNode
+					ASTInvalidCascadeErrorNode
+					ASTLiteralArrayErrorNode
+					ASTLiteralByteArrayErrorNode
+					ASTParenthesesErrorNode
+					ASTPragmaErrorNode
+					ASTTemporariesErrorNode
+					ASTUnfinishedStatementErrorNode
+			ASTSelectorNode
+			ASTVariableNode
+				ASTPatternVariableNode
 '
 ]
 

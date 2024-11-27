@@ -7,7 +7,7 @@ In particular I propose different refactorings based on the situation:
 "
 Class {
 	#name : 'ReRemoveClassDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'classes',
 		'haveNoReferences',

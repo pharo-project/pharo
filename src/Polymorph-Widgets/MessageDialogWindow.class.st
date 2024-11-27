@@ -30,7 +30,7 @@ MessageDialogWindow >> defaultTextFont [
 MessageDialogWindow >> icon [
 	"Answer an icon for the receiver."
 
-	^ self iconNamed: #infoIcon
+	^ self iconNamed: #info
 ]
 
 { #category : 'accessing' }
@@ -107,12 +107,6 @@ MessageDialogWindow >> newIconMorph [
 MessageDialogWindow >> newTextMorph [
 	"Answer a text morph."
 	^self newText: ' '
-]
-
-{ #category : 'theme' }
-MessageDialogWindow >> playOpenSound [
-	"Play the themed sound for opening.
-	Do nothing at present, done by the UIManager."
 ]
 
 { #category : 'accessing' }

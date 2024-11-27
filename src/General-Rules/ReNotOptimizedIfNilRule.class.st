@@ -3,7 +3,7 @@ ifNil: ifNotNil: ifNil:ifNotNil: ifNotNil:ifNil: is used in a way that it can no
 
 This can be fixed by making sure that all arguments are static blocks.
 
-See the method RBMessageNode>>#isInlineIfNil for the exact implementation of the check that the compiler uses
+See the method ASTMessageNode>>#isInlineIfNil for the exact implementation of the check that the compiler uses
 
 
 "
@@ -17,7 +17,7 @@ Class {
 
 { #category : 'accessing' }
 ReNotOptimizedIfNilRule class >> group [
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }

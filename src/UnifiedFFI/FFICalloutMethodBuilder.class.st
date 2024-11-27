@@ -112,7 +112,7 @@ FFICalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec ffiLib
 	"save ffi call as literal"
 	builder pushLiteral: (self createFFICalloutLiteralFromSpec: functionSpec).
 	"iterate arguments in order (in the function) to create the function call"
-	functionSpec arguments do: [ :each | each emitArgument: builder context: sender inCallout: self requestor ].
+	functionSpec arguments do: [ :each | each emitResolvedTypeArgument: builder context: sender inCallout: self requestor ].
 	"create the array"
 	builder pushConsArray: functionSpec arguments size.
 	"send call and store into result"

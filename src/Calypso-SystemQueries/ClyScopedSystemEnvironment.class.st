@@ -12,6 +12,12 @@ Class {
 	#tag : 'Domain'
 }
 
+{ #category : 'comparing' }
+ClyScopedSystemEnvironment >> = anObject [
+
+	^ anObject class = self class and: [ anObject scope = self scope ]
+]
+
 { #category : 'accessing' }
 ClyScopedSystemEnvironment >> asGlobalScopeIn: aNavigationEnvironment [
 	^ super asGlobalScopeIn: aNavigationEnvironment
@@ -71,23 +77,22 @@ ClyScopedSystemEnvironment >> compileANewClassFrom: newClassDefinitionString not
 	^ super compileANewClassFrom: newClassDefinitionString notifying: aController startingFrom: oldClass
 ]
 
-{ #category : 'package management' }
-ClyScopedSystemEnvironment >> createPackageNamed: packageName [
-	"ToDo: Should we allow new packages creation in calypso while displaying a scope?"
-	^ packageOrganizer addPackage: packageName
-]
-
 { #category : 'accessing' }
-ClyScopedSystemEnvironment >> ensurePackage: packageName [
-	"Should we allow creating new packages while calypso is displaying a scope?".
-	
-	^ packageOrganizer ensurePackage: packageName
+ClyScopedSystemEnvironment >> definedClassesInPackage: aPackage [
+
+	^ scope definedClasses select: [ :class | class package = aPackage ]
 ]
 
 { #category : 'accessing' }
 ClyScopedSystemEnvironment >> extractPackageNameFrom: aDefinitionString [
 
 	^ (CDFluidClassDefinitionParser parse: aDefinitionString) packageName
+]
+
+{ #category : 'comparing' }
+ClyScopedSystemEnvironment >> hash [
+
+	^ self scope hash
 ]
 
 { #category : 'accessing' }
@@ -99,15 +104,30 @@ ClyScopedSystemEnvironment >> includesClassNamed: aSymbol [
 ]
 
 { #category : 'accessing' }
-ClyScopedSystemEnvironment >> packageNamed: aString [
-	
-	^packageOrganizer packageNamed: aString
-]
-
-{ #category : 'accessing' }
 ClyScopedSystemEnvironment >> packages [
 	
 	^ scope packages
+]
+
+{ #category : 'printing' }
+ClyScopedSystemEnvironment >> printOn: aStream [
+
+	| title |
+	title := self class name.
+	aStream
+		nextPutAll: (title first isVowel
+				 ifTrue: [ 'an ' ]
+				 ifFalse: [ 'a ' ]);
+		nextPutAll: title.
+
+	aStream nextPut: $(.
+	aStream nextPutAll: scope label.
+	aStream nextPut: $)
+]
+
+{ #category : 'accessing' }
+ClyScopedSystemEnvironment >> scope [
+	^ scope
 ]
 
 { #category : 'accessing' }

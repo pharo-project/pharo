@@ -7,7 +7,8 @@ Class {
 		'instanceMethods',
 		'classMethods',
 		'methodsNotebookPresenter',
-		'codePresenter'
+		'codePresenter',
+		'selectedSuperclassPresenter'
 	],
 	#category : 'Refactoring-UI-UI',
 	#package : 'Refactoring-UI',
@@ -59,6 +60,12 @@ StClassAndMethodsSelectionPresenter >> basePackageName: aString [
 ]
 
 { #category : 'accessing' }
+StClassAndMethodsSelectionPresenter >> basePackageTagName: aString [
+
+	tagPresenter selectItem: aString
+]
+
+{ #category : 'accessing' }
 StClassAndMethodsSelectionPresenter >> classMethods [
 
 	^ classMethods
@@ -86,9 +93,10 @@ StClassAndMethodsSelectionPresenter >> defaultLayout [
 			beColumnNotHomogeneous;
 			column: 2 expand: true;
 			build: [ :builder | builder
-				add: 'New class name: '; add: textInput; nextRow;
+				add: 'Superclass '; add: selectedSuperclassPresenter; nextRow; 
+				add: 'New class name '; add: textInput; nextRow;
 				add: 'Package'; add: packagePresenter; nextRow;
-				add: 'Tag'; add: tagPresenter; nextRow ]) height: 100;
+				add: 'Tag'; add: tagPresenter; nextRow ]) height: 130;
 		add: (SpPanedLayout newLeftToRight 
 			add: methodsNotebookPresenter;
 			add: codePresenter;
@@ -205,6 +213,7 @@ StClassAndMethodsSelectionPresenter >> initializePresenters [
 
 	super initializePresenters.
 	self
+		initializeSuperclassPresenter;
 		initializeNotebookPresenter;
 		initializeCodePresenter.
 	methodsNotebookPresenter update.
@@ -212,6 +221,22 @@ StClassAndMethodsSelectionPresenter >> initializePresenters [
 		acceptLabel: 'Create';
 		validateAnswer: self validateAnswerBlock;
 		initializeFocus
+]
+
+{ #category : 'initialization' }
+StClassAndMethodsSelectionPresenter >> initializeSuperclassPresenter [
+	"Private - We could get all classes for the superclasses list, but it takes longer to get them so it affects DX 
+	allClasses := modelEnvironment rootEnvironment allClasses
+	"
+	| modelEnvironment modelEnvironmentClasses |
+	
+	modelEnvironment := driver model environment.
+	modelEnvironmentClasses := modelEnvironment allClasses collect: [ : c | c superclass ].
+	selectedSuperclassPresenter := self newDropList
+		startWithSelection;
+		items: (modelEnvironmentClasses sortedAs: #name);
+		displayIcon: [ : className | self iconNamed: #class ];
+		yourself.
 ]
 
 { #category : 'accessing' }
@@ -285,6 +310,20 @@ StClassAndMethodsSelectionPresenter >> selectedInstanceMethods [
 StClassAndMethodsSelectionPresenter >> selectedInstanceMethods: anObject [
 
 	selectedInstanceMethods := anObject
+]
+
+{ #category : 'accessing' }
+StClassAndMethodsSelectionPresenter >> selectedSuperclass [
+	"Answer the receiver's selected super<Class>"
+
+	^ selectedSuperclassPresenter selectedItem
+]
+
+{ #category : 'accessing' }
+StClassAndMethodsSelectionPresenter >> selectedSuperclassName [
+	"Answer a <Symbol> representing the receiver's selected superclass name"
+
+	^ self selectedSuperclass name
 ]
 
 { #category : 'initialization' }

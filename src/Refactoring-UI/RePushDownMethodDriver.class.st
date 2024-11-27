@@ -13,7 +13,7 @@ You can create my instance and execute the refactoring by running:
 "
 Class {
 	#name : 'RePushDownMethodDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'methods',
 		'class',
@@ -49,7 +49,7 @@ RePushDownMethodDriver >> browseSubclassesSuperSends [
 	subclassesSendSuper violators keysAndValuesDo: [ :violator :references |
 		"we should pass the application! "
 		StMessageBrowser
-			browse: (references collect: [ :ref | ref method ])
+			browse: (references collect: [ :ref | ref compiledMethod ])
 			asSendersOf: violator realClass ]
 ]
 

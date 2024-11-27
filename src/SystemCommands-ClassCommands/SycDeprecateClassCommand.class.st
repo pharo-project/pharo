@@ -53,9 +53,7 @@ SycDeprecateClassCommand >> isComplexRefactoring [
 
 { #category : 'execution' }
 SycDeprecateClassCommand >> prepareFullExecutionInContext: aToolContext [
+
 	super prepareFullExecutionInContext: aToolContext.
-	newName := aToolContext browser searchDialog
-		requestSingleObject: 'Choose new class'
-		from: ClyAllClassesQuery sorted.
-	newName ifNil: [ CmdCommandAborted signal]
+	newName := aToolContext requestSingleClass: 'Choose new class'
 ]

@@ -18,7 +18,7 @@ ReUsesTrueRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReUsesTrueRule class >> group [
-	^ 'Bugs'
+	^ self bugsGroup
 ]
 
 { #category : 'accessing' }

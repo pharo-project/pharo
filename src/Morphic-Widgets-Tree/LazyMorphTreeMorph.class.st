@@ -13,7 +13,7 @@ Class {
 	#package : 'Morphic-Widgets-Tree'
 }
 
-{ #category : 'initialize - release' }
+{ #category : 'initialization' }
 LazyMorphTreeMorph >> adjustSubmorphPositionsFrom: start to: stop [
 	"Fixed to not require setting item widths to 9999."
 
@@ -27,12 +27,12 @@ LazyMorphTreeMorph >> adjustSubmorphPositionsFrom: start to: stop [
 		p := p + (0@h)]
 ]
 
-{ #category : 'initialize - release' }
+{ #category : 'initialization' }
 LazyMorphTreeMorph >> buildRowMorphsFrom: aNodeMorph [
 	self buildRowMorphsFrom: aNodeMorph increment: self lazyIncrement
 ]
 
-{ #category : 'initialize - release' }
+{ #category : 'initialization' }
 LazyMorphTreeMorph >> buildRowMorphsFrom: aNodeMorph increment: anIncrement [
 
 	Cursor wait
@@ -43,7 +43,7 @@ LazyMorphTreeMorph >> buildRowMorphsFrom: aNodeMorph increment: anIncrement [
 			self buildRowMorphsFromIndex: idx to: max]
 ]
 
-{ #category : 'initialize - release' }
+{ #category : 'initialization' }
 LazyMorphTreeMorph >> buildRowMorphsFromIndex: startIndex to: stopIndex [
 	| rowMorphsWidths subs |
 	subs := self allNodeMorphs.
@@ -62,12 +62,12 @@ LazyMorphTreeMorph >> indentingItemClass [
 	^ LazyMorphTreeNodeMorph
 ]
 
-{ #category : 'initialize - release' }
+{ #category : 'initialization' }
 LazyMorphTreeMorph >> lazyIncrement [
 	^ lazyIncrement ifNil: [ lazyIncrement := 20 ]
 ]
 
-{ #category : 'initialize - release' }
+{ #category : 'initialization' }
 LazyMorphTreeMorph >> lazyIncrement: anInteger [
 	lazyIncrement := anInteger
 ]

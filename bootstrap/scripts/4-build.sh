@@ -225,6 +225,7 @@ ${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "Smalltalk vm par
 
 ${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "MCCacheRepository uniqueInstance enable. FFIMethodRegistry resetAll. PharoSourcesCondenser condenseNewSources. Smalltalk garbageCollect"
 ${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" clean --release
+${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "SystemBuildInfo current initializeForRelease"
 
 ${VM} "${PHARO_IMAGE_NAME}.image" "${IMAGE_FLAGS}" save "Pharo"
 echo "${PHARO_SHORT_VERSION}" > pharo.version

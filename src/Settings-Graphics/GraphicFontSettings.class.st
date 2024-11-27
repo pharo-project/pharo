@@ -4,9 +4,18 @@ Settings for the fonts
 Class {
 	#name : 'GraphicFontSettings',
 	#superclass : 'Model',
+	#classVars : [
+		'FontSize'
+	],
 	#category : 'Settings-Graphics',
 	#package : 'Settings-Graphics'
 }
+
+{ #category : 'fonts' }
+GraphicFontSettings class >> defaulFontSize [
+
+	^ #medium
+]
 
 { #category : 'fonts' }
 GraphicFontSettings class >> displayScaleFactorForStyleNamed: aSymbol [
@@ -17,34 +26,36 @@ GraphicFontSettings class >> displayScaleFactorForStyleNamed: aSymbol [
 ]
 
 { #category : 'fonts' }
-GraphicFontSettings class >> fontChoiceButtonForStyle: aSymbol label: aLabel [
-	| label |
-	label := StringMorph
-				contents: aLabel asString
-				font: (TextStyle default fontOfPointSize: (StandardFonts pointSizeForStyleNamed: aSymbol)).
-	^ (self theme
-		newButtonIn: self
-		for: self
-		getState: nil
-		action: #setFontsToStyleNamed:
-		arguments: { aSymbol }
-		getEnabled: nil
-		getLabel: nil
-		help: ('Change font style to ', aLabel) translated)
-			label: label;
-			yourself
+GraphicFontSettings class >> fontSize [
+
+	^ FontSize
+		ifNil: [ FontSize := self defaulFontSize ]
 ]
 
 { #category : 'fonts' }
-GraphicFontSettings class >> fontSizeRow [
-	^ self theme newRowIn: self for: {
-			self theme buttonLabelForText: 'Predefined styles: ' translated.
-			self fontChoiceButtonForStyle: #small label: 'Small' translated.
-			self fontChoiceButtonForStyle: #medium label: 'Medium' translated.
-			self fontChoiceButtonForStyle: #large label: 'Large' translated.
-			self fontChoiceButtonForStyle: #veryLarge label: 'Very large' translated.
-			self fontChoiceButtonForStyle: #huge label: 'Huge' translated.
-	}
+GraphicFontSettings class >> fontSize: aSymbol [
+
+	FontSize := aSymbol.
+	self setFontsToStyleNamed: aSymbol.
+]
+
+{ #category : 'fonts' }
+GraphicFontSettings class >> fontSizeRowSettingsOn: aBuilder [
+	<systemsettings>
+
+	(aBuilder pickOne: #fontSize)
+		parent: #standardFonts;
+		label: 'Predefined Styles';
+		description: '';
+		target: GraphicFontSettings;		
+		selector: #fontSize;
+		default: self fontSize;
+		domainValues: {
+				('Small' -> #small).
+				('Medium' -> #medium).
+				('Large' -> #large).
+				('Very large' -> #veryLarge).
+				('Huge' -> #huge) }
 ]
 
 { #category : 'fonts' }
@@ -95,7 +106,6 @@ GraphicFontSettings class >> standardFontsSettingsOn: aBuilder [
 	(aBuilder group: #standardFonts)
 		label: 'Standard fonts';
 		target: StandardFonts;
-		dialog: [self fontSizeRow];
 		parent: #appearance;
 		order: 4;
 		with: [

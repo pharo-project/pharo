@@ -26,7 +26,7 @@ Instance variables:
 "
 Class {
 	#name : 'ASTTypingVisitor',
-	#superclass : 'RBProgramNodeVisitor',
+	#superclass : 'ASTProgramNodeVisitor',
 	#instVars : [
 		'variableTypes',
 		'shortcutKernelMessages',
@@ -213,6 +213,7 @@ ASTTypingVisitor >> fixedPointAnalysis: aNode [
 { #category : 'initialization' }
 ASTTypingVisitor >> initialize [
 
+	super initialize.
 	variableTypes := IdentityDictionary new.
 	returnTypes := IdentityDictionary new.
 	unknownMethods := Set new.

@@ -18,6 +18,26 @@ TFDoubleType >> emitMarshallToPrimitive: builder [
 	builder send: #asFloat
 ]
 
+{ #category : 'marshalling' }
+TFDoubleType >> optimizeFor: aFFIFunctionArgument in: anIRBuilder ifCannot: aFullBlockClosure [
+
+	| literalValue |
+	
+	aFFIFunctionArgument loader isLiteralArgument 
+		ifTrue: [
+			literalValue := aFFIFunctionArgument loader value.
+
+			(literalValue isKindOf: Number)
+				ifTrue: [ 
+					anIRBuilder pushLiteral: literalValue asFloat.
+					^ self ]].
+
+	super
+		optimizeFor: aFFIFunctionArgument
+		in: anIRBuilder
+		ifCannot: aFullBlockClosure
+]
+
 { #category : 'reading' }
 TFDoubleType >> readValue: anExternalAddress offset: offset [
 

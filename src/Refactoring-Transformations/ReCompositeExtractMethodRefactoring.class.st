@@ -29,7 +29,8 @@ Class {
 		'arguments',
 		'temporaries',
 		'assignments',
-		'needsReturn'
+		'needsReturn',
+		'interval'
 	],
 	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',
@@ -96,9 +97,9 @@ ReCompositeExtractMethodRefactoring >> addReturnIfNeeded: newMethodNode [
 	
 	assignments size = 1
 		ifTrue: [
-			newMethodNode addNode: (RBReturnNode value:
-					 (RBVariableNode named: assignments first asString)) ]
-		ifFalse: [ RBReturnNodeAdderVisitor new visit: newMethodNode ].
+			newMethodNode addNode: (ASTReturnNode value:
+					 (ASTVariableNode named: assignments first asString)) ]
+		ifFalse: [ ASTReturnNodeAdderVisitor new visit: newMethodNode ].
 ]
 
 { #category : 'preconditions' }
@@ -265,12 +266,12 @@ ReCompositeExtractMethodRefactoring >> extractInterval: anInterval from: aSelect
 	
 	class := self model classNamed: aClassName.
 	selector := aSelector.
-	sourceCode := self getSourceFromInterval: anInterval
+	interval := anInterval.
 ]
 
 { #category : 'api' }
 ReCompositeExtractMethodRefactoring >> extractInterval: anInterval from: aSelector to: aNewSelector in: aClassName [
-	
+
 	self extractInterval: anInterval from: aSelector in: aClassName.
 	newSelector := aNewSelector.
 	
@@ -289,15 +290,15 @@ ReCompositeExtractMethodRefactoring >> generateNewMethodWith: aMethodName [
 
 	| args newMethodNode |
 	args := aMethodName arguments collect: [ :p |
-		        RBVariableNode named: p ].
+		        ASTVariableNode named: p ].
 
-	newMethodNode := RBMethodNode
+	newMethodNode := ASTMethodNode
 		                 selector: newSelector
 		                 arguments: args asArray
 		                 body: (subtree isSequence
 				                  ifTrue: [ subtree ]
 				                  ifFalse: [
-					                  RBSequenceNode
+					                  ASTSequenceNode
 						                  temporaries: #(  )
 						                  statements: (OrderedCollection with: subtree) ]).
 	temporaries do: [ :each | newMethodNode body addTemporaryNamed: each ].
@@ -308,13 +309,13 @@ ReCompositeExtractMethodRefactoring >> generateNewMethodWith: aMethodName [
 ]
 
 { #category : 'instance creation' }
-ReCompositeExtractMethodRefactoring >> getSourceFromInterval: anInterval [
+ReCompositeExtractMethodRefactoring >> getSourceFromInterval [
 	| source |
 	source := class sourceCodeFor: selector.
-	((anInterval first between: 1 and: source size)
-		and: [anInterval last between: 1 and: source size])
+	((interval first between: 1 and: source size)
+		and: [interval last between: 1 and: source size])
 			ifFalse: [self refactoringError: 'Invalid interval'].
-	^source copyFrom: anInterval first to: anInterval last
+	^source copyFrom: interval first to: interval last
 ]
 
 { #category : 'utilities' }
@@ -457,6 +458,7 @@ ReCompositeExtractMethodRefactoring >> preconditionTemporariesAreNotReadBeforeWr
 { #category : 'transforming' }
 ReCompositeExtractMethodRefactoring >> prepareForExecution [
 
+	sourceCode ifNil: [ sourceCode := self getSourceFromInterval ].
 	subtree := self calculateSubtree.
 	subtree ifNotNil: [  
 		temporaries := self calculateTemporaries.

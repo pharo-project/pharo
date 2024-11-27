@@ -1,10 +1,10 @@
-# RBParseTreeSearcher description
+# ASTParseTreeSearcher description
 
 After figuring out what are the patterns that can be used and what kind of matches they can perform, now we can move forward to 
-discover how `RBParseTreeSearcher` class works in Pharo. 
-It will help use to understand in the last section how RBParseTreeSearcher and defined patterns work together to find the matches we are looking for.
+discover how `ASTParseTreeSearcher` class works in Pharo. 
+It will help use to understand in the last section how ASTParseTreeSearcher and defined patterns work together to find the matches we are looking for.
 
-`RBParseTreeSearcher` looks for a defined pattern using the ‘wildcards’ of a matcher defined as a Tree, and on success (when match is found) 
+`ASTParseTreeSearcher` looks for a defined pattern using the ‘wildcards’ of a matcher defined as a Tree, and on success (when match is found) 
 a block is executed.
 
 
@@ -15,7 +15,7 @@ a block is executed.
 The do block takes two parameters: `:aNode` and `:answer`. The `aNode` refers to each node of the pattern defined, and the answer can be used for example 
 to increment value on each node match.
 
-The blocks defined in `#matches:do:` are called rules, and they are stored only in success in instance searches of RBParseTreeSearcher defined below.
+The blocks defined in `#matches:do:` are called rules, and they are stored only in success in instance searches of ASTParseTreeSearcher defined below.
 
 ### The executeTree: message
 `executeTree:` takes aParseTree as input parameter, which is the possible matching code that we are looking for, and starts the matching process 
@@ -37,7 +37,7 @@ Consider the following example which is using the methods presented above:
 
 ```
 |searcher dict|
-searcher := RBParseTreeSearcher new.
+searcher := ASTParseTreeSearcher new.
 searcher
     matches: '`@rcv at:`@arg `sel:`@arg1'
     do: [ :aNode :answer | dict := searcher context ].

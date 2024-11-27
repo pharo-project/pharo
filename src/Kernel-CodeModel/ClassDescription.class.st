@@ -42,7 +42,8 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 
 	self isAnonymous ifTrue: [ ^ self ].
 
-	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin ])
+	"The old protocol should never be nil. But we are not in an ideal world sadly :( We got reported some cases where some code was loaded but had an error during the loading preventing a method that got added to the method dictionary to have an associated protocol. If this happens, we consider that we categorize it for the first time to avoid announcing a MethodRecategorized with an old protocol that is nil."
+	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin or: [ oldProtocol isNil ] ])
 		ifTrue: [
 			(self packageOrganizer packageForProtocol: newProtocol from: self) addMethod: compiledMethod.
 			self codeChangeAnnouncer announce: (MethodAdded method: compiledMethod) ]
@@ -66,7 +67,7 @@ ClassDescription >> addProtocol: aProtocol [
 
 	(self hasProtocol: aProtocol) ifTrue: [ ^ self protocolNamed: protocolName ].
 
-	protocol := Protocol named: protocolName.
+	protocol := Protocol named: protocolName class: self.
 
 	oldProtocols := self protocolNames copy.
 
@@ -151,8 +152,8 @@ ClassDescription >> allUnreferencedInstanceVariables [
 
 { #category : 'accessing - method dictionary' }
 ClassDescription >> announceRecategorizationOf: compiledMethod oldProtocol: oldProtocol [
-
 	"We do not want to do anything when it comes from Traits."
+
 	compiledMethod isFromTrait ifTrue: [ ^ self ].
 
 	self packageOrganizer repackageMethod: compiledMethod oldProtocol: oldProtocol newProtocol: compiledMethod protocol.

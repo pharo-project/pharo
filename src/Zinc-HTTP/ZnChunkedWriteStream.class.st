@@ -29,7 +29,7 @@ ZnChunkedWriteStream class >> on: writeStream [
 		yourself
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnChunkedWriteStream >> binary [
 	stream binary
 ]
@@ -39,7 +39,7 @@ ZnChunkedWriteStream >> chunkCount [
 	^ chunkCount
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnChunkedWriteStream >> close [
 	self finish.
 	stream close
@@ -55,14 +55,14 @@ ZnChunkedWriteStream >> extraHeaders [
 	^ extraHeaders ifNil: [ extraHeaders := ZnHeaders new ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnChunkedWriteStream >> finish [
 	self writeChunkSize: 0.
 	self crlf.
 	extraHeaders ifNotNil: [ extraHeaders writeOn: stream ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnChunkedWriteStream >> flush [
 	stream flush
 ]
@@ -114,7 +114,7 @@ ZnChunkedWriteStream >> nextPutAll: collection [
 		startingAt: 1
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnChunkedWriteStream >> on: writeStream [
 	stream := writeStream
 ]

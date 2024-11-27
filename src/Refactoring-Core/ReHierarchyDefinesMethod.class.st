@@ -23,7 +23,10 @@ ReHierarchyDefinesMethod >> check [
 ReHierarchyDefinesMethod >> doesClass: argClass definesMethod: aSelector [
 	"We could avoid the aSelector argument. I do not have a good name."
 	
-	(argClass directlyDefinesMethod: aSelector) ifTrue: [ violators add: argClass. ^ true].
+	(argClass directlyDefinesMethod: aSelector) 
+		ifTrue: [ 
+			violators add: argClass. 
+			^ true].
 	^ argClass superclass isNotNil and: [ self doesClass: argClass superclass definesMethod: aSelector ]
 ]
 
@@ -50,7 +53,7 @@ ReHierarchyDefinesMethod >> selector: aSymbol [
 ReHierarchyDefinesMethod >> subclassOf: argClass redefines: aSelector [
 
 	| defs |
-	defs := argClass allSubclasses select: [ :each | (each directlyDefinesMethod: aSelector) ].
+	defs := argClass allSubclasses select: [ :each | each directlyDefinesMethod: aSelector ].
 	defs ifNotEmpty: [ violators add: defs. ^ true ].
-	^ false.
+	^ false
 ]

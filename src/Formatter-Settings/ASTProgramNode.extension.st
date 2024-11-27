@@ -10,7 +10,7 @@ ASTProgramNode class >> defaultFormatter [
 { #category : '*Formatter-Settings' }
 ASTProgramNode class >> formatters [
 
-	^ (RBAbstractFormatter subclasses reject: [ :each | each isAbstract ])
+	^ (ASTAbstractFormatter subclasses reject: [ :each | each isAbstract ])
 			sort: [ :a :b | a priority > b priority ]
 ]
 

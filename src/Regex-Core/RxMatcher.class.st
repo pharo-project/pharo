@@ -94,7 +94,10 @@ RxMatcher >> allocateMarker [
 { #category : 'testing' }
 RxMatcher >> atBeginningOfLine [
 
-	^self position = 0 or: [self lastChar = Cr]
+	^self lastChar
+		ifNotNil: [ :lc | (lc = Cr and: [ stream peek ~= Lf ]) or: [ lc = Lf ] ]
+		ifNil: [ true ]
+
 ]
 
 { #category : 'testing' }
@@ -113,7 +116,10 @@ RxMatcher >> atEnd [
 { #category : 'testing' }
 RxMatcher >> atEndOfLine [
 
-	^self atEnd or: [stream peek = Cr]
+	^stream peek 
+		ifNotNil: [ :c | c = Cr or: [ c = Lf and: [ self lastChar ~= Cr ] ] ]
+		ifNil: [ true ]
+
 ]
 
 { #category : 'testing' }

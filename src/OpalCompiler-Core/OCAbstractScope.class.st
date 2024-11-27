@@ -65,7 +65,7 @@ OCAbstractScope >> outerScope [
 	^ outerScope
 ]
 
-{ #category : 'initializing' }
+{ #category : 'initialization' }
 OCAbstractScope >> outerScope: aSemScope [
 
 	outerScope := aSemScope

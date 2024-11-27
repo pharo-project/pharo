@@ -6,7 +6,7 @@ I am cleaning the semantic analysis of the AST.
 "
 Class {
 	#name : 'OCASTSemanticCleaner',
-	#superclass : 'RBProgramNodeVisitor',
+	#superclass : 'ASTProgramNodeVisitor',
 	#category : 'OpalCompiler-Core-Semantics',
 	#package : 'OpalCompiler-Core',
 	#tag : 'Semantics'

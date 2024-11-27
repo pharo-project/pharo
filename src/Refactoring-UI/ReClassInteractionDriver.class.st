@@ -1,6 +1,6 @@
 Class {
 	#name : 'ReClassInteractionDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'packageNames',
 		'packageName',
@@ -57,7 +57,8 @@ ReClassInteractionDriver >> scopes: refactoringScopes [
 
 { #category : 'accessing' }
 ReClassInteractionDriver >> tagName [
-	^ self subclassResponsibility
+
+	^ tagName
 ]
 
 { #category : 'accessing' }

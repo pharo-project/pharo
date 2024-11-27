@@ -49,7 +49,7 @@ DecoratorStream >> nextPut: anObject [
 	^anObject
 ]
 
-{ #category : 'initialize - release' }
+{ #category : 'initialization' }
 DecoratorStream >> on: aStream [
 
 	self initialize.

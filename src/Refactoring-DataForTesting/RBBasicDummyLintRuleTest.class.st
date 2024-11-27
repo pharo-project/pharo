@@ -963,7 +963,7 @@ RBBasicDummyLintRuleTest class >> tempsReadBeforeWritten [
 			variables := self parseTreeSearcherClass nonBlockTempsIn: context parseTree.
 			variables isEmpty
 				ifFalse:
-					[(RBReadBeforeWrittenTester variablesReadBeforeWrittenIn: context parseTree)
+					[(ASTReadBeforeWrittenTester variablesReadBeforeWrittenIn: context parseTree)
 						do:
 							[:each |
 							result addClass: context selectedClass selector: context selector.
@@ -1166,7 +1166,7 @@ RBBasicDummyLintRuleTest class >> variableReferencedOnce [
 								tree := defClass parseTreeForSelector: selector.
 								tree isNotNil
 									ifTrue:
-										[(RBReadBeforeWrittenTester readBeforeWritten: (Array with: each) in: tree)
+										[(ASTReadBeforeWrittenTester readBeforeWritten: (Array with: each) in: tree)
 											isEmpty
 												ifTrue:
 													[result addClass: defClass selector: selector.
@@ -1232,7 +1232,7 @@ RBBasicDummyLintRuleTest >> anInstVar [
 	^ anInstVar
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RBBasicDummyLintRuleTest >> anInstVar: anObject [
 	anInstVar := anObject
 ]
@@ -1298,7 +1298,7 @@ RBBasicDummyLintRuleTest >> problemCount [
 	^result problemCount
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RBBasicDummyLintRuleTest >> resetResult [
 	result := result copyEmpty.
 	result label: name
@@ -1309,7 +1309,7 @@ RBBasicDummyLintRuleTest >> result [
 	^result
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RBBasicDummyLintRuleTest >> result: aResult [
 	result := aResult copyEmpty
 ]

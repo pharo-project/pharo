@@ -31,7 +31,7 @@ and every reference to the old vars color / font / style will be replaced by tex
 "
 Class {
 	#name : 'RBSplitClassRefactoring',
-	#superclass : 'RBRefactoring',
+	#superclass : 'ReRefactoring',
 	#instVars : [
 		'class',
 		'instanceVariables',
@@ -69,7 +69,7 @@ RBSplitClassRefactoring class >> model: aRBSmalltalk class: class instanceVariab
 RBSplitClassRefactoring >> abstractReferenceTo: each [
 
 	| setterMethod replacer accessorRef getterMethod |
-	accessorRef := RBCreateAccessorsForVariableTransformation
+	accessorRef := ReCreateAccessorsForVariableTransformation
 		               variable: each
 		               class: newClass
 		               classVariable: false.

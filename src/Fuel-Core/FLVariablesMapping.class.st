@@ -65,13 +65,13 @@ FLVariablesMapping >> initializeMaterializingFrom: aDecoder [
 	possibleTraitVariables := Dictionary new
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 FLVariablesMapping >> initializeWithClass: aClass [
 	self initialize.
 	theClass := aClass
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 FLVariablesMapping >> initializeWithClass: aClass references: aCollection [
 	self initialize.
 	theClass := aClass.

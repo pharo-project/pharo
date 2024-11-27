@@ -5,7 +5,7 @@ All that I provide is the package name, my subclass refactorings are operating o
 "
 Class {
 	#name : 'RBPackageRefactoring',
-	#superclass : 'RBRefactoring',
+	#superclass : 'ReRefactoring',
 	#instVars : [
 		'packageName',
 		'newName'

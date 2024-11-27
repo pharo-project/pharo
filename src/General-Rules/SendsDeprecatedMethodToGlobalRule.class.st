@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 SendsDeprecatedMethodToGlobalRule class >> group [
-	^ 'Design Flaws'
+	^ self designFlawGroup
 ]
 
 { #category : 'accessing' }

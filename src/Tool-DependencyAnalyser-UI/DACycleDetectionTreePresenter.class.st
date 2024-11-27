@@ -26,7 +26,12 @@ DACycleDetectionTreePresenter class >> onPackagesMatch: match [
 
 { #category : 'instance creation' }
 DACycleDetectionTreePresenter class >> onPackagesNamed: aCollection [
-	^ self new
+	self flag: #IncreaseTechnicalDebt.
+	"The flow is BAD AND WRONG! 
+	We should not explicit use StPharoApplication current this is a bad practice. Now I have no idea how to do it otherwise. So let us propagate bad practices.
+	You like debt: here it is"
+
+	^ (self newApplication: StPharoApplication current) 
 		initializeWithPackageName: aCollection;
 		yourself
 ]
@@ -98,6 +103,17 @@ DACycleDetectionTreePresenter >> defaultLayout [
 		yourself
 ]
 
+{ #category : 'initialization' }
+DACycleDetectionTreePresenter >> doSelectPackageAsRightDependency [
+	| item method |
+
+	item := tree selectedItem.
+	method := item content.
+	(TheManifestBuilder of: self packageUnderAnalysis packageManifest)
+		addManuallyResolvedDependency: method package name.
+	"TODO: run the analysis again"
+]
+
 { #category : 'protocol' }
 DACycleDetectionTreePresenter >> extent [
 	^ 1000@600
@@ -122,23 +138,21 @@ DACycleDetectionTreePresenter >> filterWithPackages: aCollectionOfPDPackage [
 
 { #category : 'initialization' }
 DACycleDetectionTreePresenter >> initializePresenters [
+
 	super initializePresenters.
 
-	tree whenSelectedItemChangedDo: [ :item | | menu |
-		item ifNotNil: [
-			menu := self newMenu.
-			item addMenuEntriesOn: menu.
-			tree contextMenu: menu. ] ].
+	tree addActionWith: [ :action | action
+		name: 'Select this package as the right dependency';
+		actionEnabled: [ self selectedItemIsMethod  ];
+		action: [ self doSelectPackageAsRightDependency ] ].
 
 	cyclesLabel := self newLabel
 			label: 'Analysis of cycles'.
 
 	buttonSort := self newButton
-			help: 'Sort cycles by the number of packages involved in the cycle';
-			label: 'Sort by length';
-			action: [ self reversedRoots  ].
-
-	self layout: self defaultLayout
+		help: 'Sort cycles by the number of packages involved in the cycle';
+		label: 'Sort by length';
+		action: [ self reversedRoots  ]
 ]
 
 { #category : 'initialization' }
@@ -160,4 +174,14 @@ DACycleDetectionTreePresenter >> refresh [
 { #category : 'accessing' }
 DACycleDetectionTreePresenter >> reversedRoots [
 	self tree roots: (self tree roots reversed)
+]
+
+{ #category : 'initialization' }
+DACycleDetectionTreePresenter >> selectedItemIsMethod [
+	| item |
+	
+	item := tree selectedItem.
+	item ifNil: [ ^ false ].
+	
+	^ item content isKindOf: CompiledMethod
 ]

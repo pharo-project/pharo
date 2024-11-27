@@ -44,7 +44,7 @@ TaDeepAliasMethod >> sourceCodeAt: aSelector [
 	| originalSourceCode parseTree rewriter |
 	originalSourceCode := super sourceCodeAt: aSelector.
 	parseTree := RBParser parseMethod: originalSourceCode.
-	rewriter := RBParseTreeRewriter new.
+	rewriter := ASTParseTreeRewriter new.
 
 	self aliases
 		associationsDo:

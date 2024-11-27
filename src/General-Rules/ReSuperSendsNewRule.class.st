@@ -12,7 +12,7 @@ Class {
 
 { #category : 'accessing' }
 ReSuperSendsNewRule class >> group [
-	^ 'Bugs'
+	^ self bugsGroup
 ]
 
 { #category : 'accessing' }

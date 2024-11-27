@@ -36,7 +36,7 @@ RFClassReification >> genForLiteralVariable [
 
 { #category : 'generate' }
 RFClassReification >> generate [
-	^RBMessageNode
-		receiver: RBVariableNode selfNode
+	^ASTMessageNode
+		receiver: ASTVariableNode selfNode
 		selector: #class
 ]

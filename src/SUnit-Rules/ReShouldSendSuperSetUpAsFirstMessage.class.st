@@ -19,14 +19,13 @@ ReShouldSendSuperSetUpAsFirstMessage class >> checksMethod [
 
 { #category : 'accessing' }
 ReShouldSendSuperSetUpAsFirstMessage class >> group [
-
-	^ 'SUnit'
+	^ self sunitGroup
 ]
 
 { #category : 'utilities' }
 ReShouldSendSuperSetUpAsFirstMessage class >> parseTreeSearcher [
 
-	^ RBParseTreeSearcher new
+	^ ASTParseTreeSearcher new
 ]
 
 { #category : 'accessing' }

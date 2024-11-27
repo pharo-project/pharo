@@ -100,7 +100,10 @@ Morph >> attachKeymapCategory: aCategoryName targetting: anObject [
 
 { #category : '*Morphic-Base-keymapping' }
 Morph >> bindKeyCombination: aShortcut toAction: anAction [
-	self kmDispatcher bindKeyCombination: aShortcut asKeyCombination toAction: anAction
+	
+	self kmDispatcher 
+		bindKeyCombination: aShortcut asKeyCombination 
+		toAction: anAction
 ]
 
 { #category : '*Morphic-Base' }
@@ -368,12 +371,6 @@ Morph >> kmDispatcher [
 { #category : '*Morphic-Base' }
 Morph >> newTransformationMorph [
 	^TransformationMorph new
-]
-
-{ #category : '*Morphic-Base-keymapping' }
-Morph >> on: aShortcut do: anAction [
-
-	^ self bindKeyCombination: aShortcut toAction: anAction
 ]
 
 { #category : '*Morphic-Base' }

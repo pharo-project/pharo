@@ -2102,6 +2102,30 @@ StringTest >> testWithNoLineLongerThan [
 		  equals: ('Sample text' , String cr , 'to line break' , String cr , 'at some point')
 ]
 
+{ #category : 'tests - internet' }
+StringTest >> testWithPlatformLineEndings [
+
+	| platformLineEnding |
+	platformLineEnding := OSPlatform current lineEnding.
+
+	{
+		('abc' -> 'abc').
+		('abc' , String cr -> ('abc' , platformLineEnding)).
+		('abc' , String lf -> ('abc' , platformLineEnding)).
+		('abc' , String crlf -> ('abc' , platformLineEnding)).
+		(String cr , 'abc' -> (platformLineEnding , 'abc')).
+		(String lf , 'abc' -> (platformLineEnding , 'abc')).
+		(String crlf , 'abc' -> (platformLineEnding , 'abc')).
+		('abc' , String cr , String cr , 'abc' -> ('abc' , platformLineEnding , platformLineEnding , 'abc')).
+		('abc' , String lf , String lf , 'abc' -> ('abc' , platformLineEnding , platformLineEnding , 'abc')).
+		('abc' , String crlf , String crlf , 'abc' -> ('abc' , platformLineEnding , platformLineEnding , 'abc')).
+		(String cr , 'abc' , String cr , String crlf , 'abc' , String lf
+		 -> (platformLineEnding , 'abc' , platformLineEnding , platformLineEnding , 'abc' , platformLineEnding)).
+		(String lf , 'abc' , String lf , String crlf , 'abc' , String cr
+		 -> (platformLineEnding , 'abc' , platformLineEnding , platformLineEnding , 'abc' , platformLineEnding)) } do: [ :each |
+		self assert: each key withPlatformLineEndings equals: each value ]
+]
+
 { #category : 'tests - converting' }
 StringTest >> testWithSeparatorsCompacted [
 	#(

@@ -1,7 +1,7 @@
 Extension { #name : 'CopiedLocalVariable' }
 
 { #category : '*Shout' }
-CopiedLocalVariable >> styleNameIn: aRBVariableNode [
+CopiedLocalVariable >> styleNameIn: aVariableNode [
 
-	^ originalVar styleNameIn: aRBVariableNode
+	^ originalVar styleNameIn: aVariableNode
 ]

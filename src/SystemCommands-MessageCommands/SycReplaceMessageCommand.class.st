@@ -65,7 +65,7 @@ SycReplaceMessageCommand >> prepareFullExecutionInContext: aToolContext [
 	methodName := RBMethodName
 		              selector: originalMessage selector
 		              arguments: originalMessage argumentNames copy.
-	dialog := SycMethodNameEditorPresenter openOn: methodName.
+	dialog := StMethodNameEditorPresenter openOn: methodName.
 	dialog cancelled ifTrue: [ CmdCommandAborted signal ].
 
 	originalMessage selector = methodName selector ifTrue: [

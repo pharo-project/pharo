@@ -33,14 +33,15 @@ Class {
 { #category : 'tools registry' }
 DrTests class >> beDefaultTestRunner [
 	<script>
-
-	self registerToolsOn: Smalltalk tools
+	
+	self initialize
+	
 ]
 
 { #category : 'class initialization' }
 DrTests class >> initialize [
 
-	Smalltalk tools register: self as: #testRunner
+	self currentApplication register: self as: #testRunner
 ]
 
 { #category : 'world menu' }
@@ -68,10 +69,9 @@ DrTests class >> open [
 
 { #category : 'tools registry' }
 DrTests class >> registerToolsOn: registry [
-	"Note: For now, DrTests is only available for preview, thus the following code is commented."
 
-	"Add DrTests to registry to replace the old test runner."
-	"registry register: self as: #testRunner"
+	registry register: self as: #testRunner
+
 ]
 
 { #category : 'initialization' }

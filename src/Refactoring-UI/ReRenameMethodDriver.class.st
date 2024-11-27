@@ -3,7 +3,7 @@ I'm a model for user interaction for the rename method refactoring.
 "
 Class {
 	#name : 'ReRenameMethodDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'class',
 		'originalMessage',

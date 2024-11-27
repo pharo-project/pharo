@@ -214,8 +214,9 @@ ExternalBrowser >> protocols [
 
 { #category : 'structure accessing' }
 ExternalBrowser >> protocolsOfClass: aClass [
+	"Answer a <Collection> of <String> with the protocol names of aClass"
 
-	^ aClass protocolNames
+	^ aClass protocols
 ]
 
 { #category : 'refresh' }
@@ -261,7 +262,11 @@ ExternalBrowser >> selectorsOfProtocol: aProtocol [
 { #category : 'structure accessing' }
 ExternalBrowser >> showClassDefinition [
 
-	method text: (self classes selectedItem definitionString ifNil: [ '' ])
+	| selectedItem |
+	
+	method text: ((selectedItem := self classes selectedItem) hasDefinitionSource
+		ifTrue: [  selectedItem definitionSource ]
+		ifFalse: [ String empty ])
 ]
 
 { #category : 'accessing' }

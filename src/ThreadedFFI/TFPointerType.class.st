@@ -18,6 +18,32 @@ TFPointerType >> emitMarshallToPrimitive: builder [
 	builder send: #tfPointerAddress
 ]
 
+{ #category : 'marshalling' }
+TFPointerType >> optimizeFor: aFFIFunctionArgument in: anIRBuilder ifCannot: aFullBlockClosure [
+
+	| literalValue |
+	
+	aFFIFunctionArgument loader isLiteralArgument 
+		ifTrue: [
+			literalValue := aFFIFunctionArgument loader value.
+
+			"If I have a SmallInteger literal I can directly to the tfPointerAddress"			
+			(literalValue isKindOf: SmallInteger)
+				ifTrue: [ 
+					anIRBuilder pushLiteral: literalValue tfPointerAddress.
+					^ self ].
+
+			"If I have already a Null external address I can avoid the message send"			
+			(literalValue = ExternalAddress null) 
+				ifTrue: [ anIRBuilder pushLiteral: literalValue. 
+					^ self]].
+
+	super
+		optimizeFor: aFFIFunctionArgument
+		in: anIRBuilder
+		ifCannot: aFullBlockClosure
+]
+
 { #category : 'reading' }
 TFPointerType >> readValue: anExternalAddress offset: offset [
 

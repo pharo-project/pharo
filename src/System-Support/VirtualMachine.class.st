@@ -44,6 +44,18 @@ VirtualMachine >> architectureName [
 	^ Smalltalk vm getSystemAttribute: 1003
 ]
 
+{ #category : 'parameters' }
+VirtualMachine >> avoidSearchingSegmentsWithPinnedObjects [
+
+	^ self parameterAt: 86
+]
+
+{ #category : 'parameters' }
+VirtualMachine >> avoidSearchingSegmentsWithPinnedObjects: aBoolean [
+
+	^ self parameterAt: 86 put: aBoolean 
+]
+
 { #category : 'accessing' }
 VirtualMachine >> buildDate [
 	"Return a String reflecting the build date of the VM"
@@ -822,6 +834,7 @@ VirtualMachine >> parameterLabels [
 		83 'From Perm to Old Space Remembered set max size'
 		84 'From Perm to New Space Remembered set used size'
 		85 'From Perm to New Space Remembered set max size'
+		86 'If avoids to search a segment with pinned objects when clonning a young object'
 		)
 ]
 

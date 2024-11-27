@@ -93,3 +93,6 @@ Pharo is an open source project very friendly to contributions of the users. See
 ## Pharo friendly links and organizations
 
 [http://github.com/Pharo-project/PharoMap](http://github.com/Pharo-project/PharoMap)
+
+## Stargazers over time
+[![Stargazers over time](https://starchart.cc/pharo-project/pharo.svg?background=%23FFFFFF&axis=%23333333&line=%232f81f7)](https://starchart.cc/pharo-project/pharo)

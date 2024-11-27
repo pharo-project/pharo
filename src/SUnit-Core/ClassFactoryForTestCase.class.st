@@ -262,7 +262,8 @@ ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior storingSource:
 
 { #category : 'private' }
 ClassFactoryForTestCase >> silentlyDo: aBlock [
-	^ SystemAnnouncer uniqueInstance suspendAllWhile: aBlock
+
+	^ self class codeChangeAnnouncer suspendAllWhile: aBlock
 ]
 
 { #category : 'creating' }

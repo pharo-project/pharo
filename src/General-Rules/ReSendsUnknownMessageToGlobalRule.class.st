@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 ReSendsUnknownMessageToGlobalRule class >> group [
-	^ 'Bugs'
+	^ self bugsGroup
 ]
 
 { #category : 'accessing' }

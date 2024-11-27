@@ -18,7 +18,7 @@ Class {
 { #category : 'accessing' }
 ReIconHardcodedMessageRule class >> group [
 
-	^ 'API Change'
+	^ self apiChangeGroup
 ]
 
 { #category : 'accessing' }

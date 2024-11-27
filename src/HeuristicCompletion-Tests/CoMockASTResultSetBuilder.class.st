@@ -21,17 +21,17 @@ CoMockASTResultSetBuilder >> heuristic [
 ]
 
 { #category : 'accessing' }
-CoMockASTResultSetBuilder >> visitArrayNode: aRBArrayNode [
+CoMockASTResultSetBuilder >> visitArrayNode: anArrayNode [
 
 	heuristic := #array.
-	^ super visitArrayNode: aRBArrayNode
+	^ super visitArrayNode: anArrayNode
 ]
 
 { #category : 'accessing' }
-CoMockASTResultSetBuilder >> visitAssignmentNode: aRBAssignmentNode [
+CoMockASTResultSetBuilder >> visitAssignmentNode: aAssignmentNode [
 
 	heuristic := #assignment.
-	^ super visitAssignmentNode: aRBAssignmentNode
+	^ super visitAssignmentNode: aAssignmentNode
 ]
 
 { #category : 'accessing' }
@@ -42,10 +42,10 @@ CoMockASTResultSetBuilder >> visitBlockNode: aNode [
 ]
 
 { #category : 'accessing' }
-CoMockASTResultSetBuilder >> visitCascadeNode: aRBCascadeNode [
+CoMockASTResultSetBuilder >> visitCascadeNode: aCascadeNode [
 
 	heuristic := #cascade.
-	^ super visitCascadeNode: aRBCascadeNode
+	^ super visitCascadeNode: aCascadeNode
 ]
 
 { #category : 'accessing' }
@@ -84,10 +84,10 @@ CoMockASTResultSetBuilder >> visitParseErrorNode: aNode [
 ]
 
 { #category : 'visiting' }
-CoMockASTResultSetBuilder >> visitPragmaNode: aRBPragmaNode [
+CoMockASTResultSetBuilder >> visitPragmaNode: aPragmaNode [
 
 	heuristic := #pragma.
-	^ super visitPragmaNode: aRBPragmaNode
+	^ super visitPragmaNode: aPragmaNode
 ]
 
 { #category : 'accessing' }

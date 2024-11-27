@@ -12,7 +12,7 @@ Subclasses must implement the following messages:
 
 The #start and #stop methods are used to find the source that corresponds to this node. ""source copyFrom: self start to: self stop"" should return the source for this node.
 
-The #acceptVisitor: method is used by RBProgramNodeVisitors (the visitor pattern). This will also require updating all the RBProgramNodeVisitors so that they know of the new node.
+The #acceptVisitor: method is used by ASTProgramNodeVisitors (the visitor pattern). This will also require updating all the ASTProgramNodeVisitors so that they know of the new node.
 
 The #isFaulty method is used to distinguish between valid nodes and nodes created from an invalid source Smalltalk code. For example, code parsed with RBParsers #parseFaultyExpression: or #parseFaultyMethod:.
 
@@ -45,7 +45,7 @@ Class {
 
 { #category : 'accessing' }
 ASTProgramNode class >> formatterClass [
-	^ FormatterClass ifNil: [ RBSimpleFormatter ] ifNotNil: [ FormatterClass ]
+	^ FormatterClass ifNil: [ ASTSimpleFormatter ] ifNotNil: [ FormatterClass ]
 ]
 
 { #category : 'accessing' }
@@ -76,16 +76,16 @@ ASTProgramNode >> addError: anErrorMessage [
 	Semantic passes that check the validity of AST are the targetted clients of this method."
 
 	| notice |
-	notice := RBErrorNotice new messageText: anErrorMessage.
+	notice := ASTErrorNotice new messageText: anErrorMessage.
 	self addNotice: notice.
 	^ notice
 ]
 
 { #category : 'notice' }
-ASTProgramNode >> addNotice: aRBNotice [
+ASTProgramNode >> addNotice: aNotice [
 
-	(self propertyAt: #notices ifAbsentPut: [ OrderedCollection new ]) add: aRBNotice.
-	aRBNotice node: self
+	(self propertyAt: #notices ifAbsentPut: [ OrderedCollection new ]) add: aNotice.
+	aNotice node: self
 ]
 
 { #category : 'replacing' }
@@ -100,7 +100,7 @@ ASTProgramNode >> addWarning: aMessage [
 	| notice |
 	"Add a warning information to the node.
 	Semantic passes that check the validity of AST are the targetted clients of this method."
-	notice := RBWarningNotice new messageText: aMessage.
+	notice := ASTWarningNotice new messageText: aMessage.
 	self addNotice: notice.
 	^ notice
 ]
@@ -214,7 +214,7 @@ ASTProgramNode >> asDoit [
 
 	| source |
 	source := self source.
-	^ RBDoItMethodNode new
+	^ ASTDoItMethodNode new
 		  body: self asSequenceNode;
 		  source: source
 ]
@@ -259,7 +259,7 @@ ASTProgramNode >> asReturn [
 
 { #category : 'replacing' }
 ASTProgramNode >> asSequenceNode [
-	^RBSequenceNode statements: {self}
+	^ASTSequenceNode statements: {self}
 ]
 
 { #category : 'querying' }
@@ -274,15 +274,20 @@ ASTProgramNode >> assigns: aVariableName [
 
 { #category : 'querying' }
 ASTProgramNode >> bestNodeFor: anInterval [
-	| selectedChildren selectedComments |
-	anInterval ifNil: [^nil ].
-	selectedComments := self getCommentsFor: anInterval.
-	(self intersectsInterval: anInterval) ifFalse: [^selectedComments ifNil: [ nil ] ifNotNil: [ selectedComments size = 1 ifTrue: [ selectedComments first ] ifFalse: [ nil ] ] ].
-	(self containedBy: anInterval) ifTrue: [^self].
 
-	selectedChildren := self children select: [:each |
-		each intersectsInterval: anInterval
-	].
+	| selectedChildren selectedComments |
+	anInterval ifNil: [ ^ nil ].
+	selectedComments := self getCommentsFor: anInterval.
+	(self intersectsInterval: anInterval) ifFalse: [
+				^ selectedComments 
+					ifNil: [ nil ] 
+					ifNotNil: [ selectedComments size = 1 
+									ifTrue: [ selectedComments first ] 
+									ifFalse: [ nil ] ] ].
+	(self containedBy: anInterval) ifTrue: [ ^ self].
+
+	selectedChildren := self children 
+		select: [:each | each intersectsInterval: anInterval ].
 
 	^ selectedChildren size = 1
 		ifTrue: [ selectedChildren first bestNodeFor: anInterval ]
@@ -486,7 +491,7 @@ ASTProgramNode >> dump [
 	"Generate a literal expression that recreates the receiver"
 
 	| visitor |
-	visitor := RBDumpVisitor new.
+	visitor := ASTDumpVisitor new.
 	self acceptVisitor: visitor.
 	^ visitor contents
 ]
@@ -633,8 +638,10 @@ ASTProgramNode >> instanceVariableWriteNodes [
 
 { #category : 'testing' }
 ASTProgramNode >> intersectsInterval: anInterval [
-	^(anInterval first between: self start and: self stop)
-		or: [self start between: anInterval first and: anInterval last]
+	"Returns whether the node shape is included within the intervale, ending inside the interval, or starting within the interval"
+
+	^ (anInterval first between: self start and: self stop)
+		or: [ self start between: anInterval first and: anInterval last ]
 ]
 
 { #category : 'testing' }
@@ -694,7 +701,7 @@ ASTProgramNode >> isEnglobingError [
 
 { #category : 'notice' }
 ASTProgramNode >> isError [
-	"An error node is either a RBParseErrorNode (for syntactic errors) or has error information (for other errors)"
+	"An error node is either an ASTParseErrorNode (for syntactic errors) or has error information (for other errors)"
 
 	^ self errorNotices isNotEmpty
 ]
@@ -1378,14 +1385,15 @@ ASTProgramNode >> warningNotices [
 
 { #category : 'querying' }
 ASTProgramNode >> whichNodeIsContainedBy: anInterval [
+
 	| selectedChildren |
-	(self intersectsInterval: anInterval) ifFalse: [^nil].
-	(self containedBy: anInterval) ifTrue: [^self].
+	(self intersectsInterval: anInterval) ifFalse: [ ^ nil ].
+	(self containedBy: anInterval) ifTrue: [ ^self ].
 	selectedChildren := self children
-				select: [:each | each intersectsInterval: anInterval].
-	^selectedChildren size == 1
-		ifTrue: [selectedChildren first whichNodeIsContainedBy: anInterval]
-		ifFalse: [nil]
+				select: [:each | each intersectsInterval: anInterval ].
+	^ selectedChildren size == 1
+		ifTrue: [ selectedChildren first whichNodeIsContainedBy: anInterval ]
+		ifFalse: [ nil ]
 ]
 
 { #category : 'querying' }

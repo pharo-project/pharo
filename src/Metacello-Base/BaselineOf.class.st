@@ -147,6 +147,24 @@ BaselineOf >> baseline: spec [
 	"
 ]
 
+{ #category : 'queries' }
+BaselineOf >> classNamed: aSymbol [
+
+	^ self class environment at: aSymbol asSymbol
+]
+
+{ #category : 'queries' }
+BaselineOf >> classNamed: aSymbol ifPresent: aBlock [
+
+	^ self class environment at: aSymbol asSymbol ifPresent: aBlock
+]
+
+{ #category : 'queries' }
+BaselineOf >> classNamed: aSymbol ifPresent: aBlock ifAbsent: absentBlock [
+
+	^ self class environment at: aSymbol asSymbol ifPresent: aBlock ifAbsent: absentBlock
+]
+
 { #category : 'accessing' }
 BaselineOf >> newProjectWithRepositoryDescription: aListOrRepositoryDescriptions [
 
@@ -156,6 +174,12 @@ BaselineOf >> newProjectWithRepositoryDescription: aListOrRepositoryDescriptions
 	aListOrRepositoryDescriptions do: [ :desc |
 		newProject version spec repository: desc ].
 	^ newProject
+]
+
+{ #category : 'queries' }
+BaselineOf >> os [
+
+	^ OSPlatform current
 ]
 
 { #category : 'accessing' }
@@ -180,6 +204,12 @@ BaselineOf >> pharoVersionsFrom: aVersion [
 { #category : 'accessing' }
 BaselineOf >> projectClass [
     ^ MetacelloMCBaselineProject
+]
+
+{ #category : 'queries' }
+BaselineOf >> tools [
+
+	^ Smalltalk tools
 ]
 
 { #category : 'accessing' }

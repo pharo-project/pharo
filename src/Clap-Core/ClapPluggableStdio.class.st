@@ -32,7 +32,7 @@ ClapPluggableStdio class >> onByteArraysWithInputBytes: aByteArray [
 		error: #[] writeStream
 ]
 
-{ #category : 'initializing' }
+{ #category : 'initialization' }
 ClapPluggableStdio >> initializeInput: inputStream output: outputStream error: errorStream [
 	in := inputStream.
 	out := outputStream.

@@ -21,14 +21,13 @@ ReShouldSendSuperInitializeAsFirstMessage class >> checksMethod [
 
 { #category : 'accessing' }
 ReShouldSendSuperInitializeAsFirstMessage class >> group [
-
-	^ 'Clean Code'
+	^ self cleanCodeGroup
 ]
 
 { #category : 'utilities' }
 ReShouldSendSuperInitializeAsFirstMessage class >> parseTreeSearcher [
 
-	^ RBParseTreeSearcher new
+	^ ASTParseTreeSearcher new
 ]
 
 { #category : 'accessing' }

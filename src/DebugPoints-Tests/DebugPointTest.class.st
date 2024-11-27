@@ -519,9 +519,17 @@ DebugPointTest >> testModifyMethodWithBreakpoint [
 		      on: (DummyTestClass >> #dummy) ast.
 	self assertCollection: DebugPoint all includesAll: { dp }.
 	self should: [ DummyTestClass new dummy ] raise: Break.
+	self
+		assert: (DummyTestClass >> #dummy) sourceCode
+		equals: 'dummy ^42'.
+
 	DummyTestClass compile: 'dummy ^43'.
+
 	self denyCollection: DebugPoint all includesAll: { dp }.
-	self shouldnt: [ DummyTestClass new dummy ] raise: Break
+	self shouldnt: [ DummyTestClass new dummy ] raise: Break.
+	self
+		assert: (DummyTestClass >> #dummy) sourceCode
+		equals: 'dummy ^43'
 ]
 
 { #category : 'tests' }
@@ -825,6 +833,22 @@ DebugPointTest >> testRemoveClassWithBreakpoint [
 	self assertCollection: DebugPoint all includesAll: { dp }.
 	cls removeFromSystem.
 	self assertEmpty: Breakpoint all
+]
+
+{ #category : 'tests' }
+DebugPointTest >> testRemoveMethodWithBreakpoint [
+
+	cls compile: 'dummy ^42'.
+	dp := DebugPointManager
+		      installNew: BreakDebugPoint
+		      on: (cls >> #dummy) ast.
+	self assertCollection: DebugPoint all includesAll: { dp }.
+	self should: [ cls new dummy ] raise: Break.
+
+	(cls >> #dummy) removeFromSystem.
+
+	self denyCollection: DebugPoint all includesAll: { dp }.
+	self should: [ cls new dummy ] raise: MessageNotUnderstood
 ]
 
 { #category : 'tests' }

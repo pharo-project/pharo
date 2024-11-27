@@ -18,7 +18,7 @@ Class {
 
 { #category : 'accessing' }
 ReKeysDoRule class >> group [
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }

@@ -47,12 +47,16 @@ ExternalAddress >> boolean8AtOffset: zeroBasedOffset put: value [
 { #category : '*UnifiedFFI' }
 ExternalAddress >> booleanAt: byteIndex [
 	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self boolean8AtOffset: byteIndex - 1
 ]
 
 { #category : '*UnifiedFFI' }
 ExternalAddress >> booleanAt: byteIndex put: value [
 	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self boolean8AtOffset: byteIndex - 1 put: value
 ]
 
@@ -109,12 +113,16 @@ ExternalAddress >> copyFromOffset: startZeroBasedOffset to: endZeroBasedOffset [
 { #category : '*UnifiedFFI' }
 ExternalAddress >> doubleAt: byteIndex [
 	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self float64AtOffset: byteIndex - 1
 ]
 
 { #category : '*UnifiedFFI' }
 ExternalAddress >> doubleAt: byteIndex put: value [
 	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self float64AtOffset: byteIndex - 1 put: value
 ]
 
@@ -152,12 +160,16 @@ ExternalAddress >> float64AtOffset: zeroBasedOffset put: value [
 { #category : '*UnifiedFFI' }
 ExternalAddress >> floatAt: byteIndex [
 	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self float32AtOffset: byteIndex - 1
 ]
 
 { #category : '*UnifiedFFI' }
 ExternalAddress >> floatAt: byteIndex put: value [
 	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self float32AtOffset: byteIndex - 1 put: value
 ]
 
@@ -333,12 +345,16 @@ ExternalAddress >> pointer [
 { #category : '*UnifiedFFI' }
 ExternalAddress >> pointerAt: byteIndex [
 	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self pointerAtOffset: byteIndex - 1
 ]
 
 { #category : '*UnifiedFFI' }
 ExternalAddress >> pointerAt: byteIndex put: value [
 	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self pointerAtOffset: byteIndex - 1 put: value
 ]
 
@@ -419,41 +435,65 @@ ExternalAddress >> replaceFrom: start to: stop with: replacement startingAt: rep
 
 { #category : '*UnifiedFFI' }
 ExternalAddress >> signedCharAt: byteOffset [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self char8AtOffset: byteOffset - 1
 ]
 
 { #category : '*UnifiedFFI' }
 ExternalAddress >> signedCharAt: byteIndex put: aCharacter [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self char8AtOffset: byteIndex - 1 put: aCharacter
 ]
 
 { #category : '*UnifiedFFI' }
 ExternalAddress >> signedLongAt: byteIndex [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self int32AtOffset: byteIndex - 1
 ]
 
 { #category : '*UnifiedFFI' }
 ExternalAddress >> signedLongAt: byteIndex put: value [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self int32AtOffset: byteIndex - 1 put: value
 ]
 
 { #category : '*UnifiedFFI' }
 ExternalAddress >> signedLongLongAt: byteIndex [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self int64AtOffset: byteIndex - 1
 ]
 
 { #category : '*UnifiedFFI' }
 ExternalAddress >> signedLongLongAt: byteIndex put: value [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self int64AtOffset: byteIndex - 1 put: value
 ]
 
 { #category : '*UnifiedFFI' }
 ExternalAddress >> signedShortAt: byteIndex [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self int16AtOffset: byteIndex - 1
 ]
 
 { #category : '*UnifiedFFI' }
 ExternalAddress >> signedShortAt: byteIndex put: value [
+	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self int16AtOffset: byteIndex - 1 put: value
 ]
 
@@ -527,60 +567,80 @@ ExternalAddress >> unpackHandleFromArity: arity [
 { #category : '*UnifiedFFI' }
 ExternalAddress >> unsignedByteAt: byteIndex [
 	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self uint8AtOffset: byteIndex - 1
 ]
 
 { #category : '*UnifiedFFI' }
 ExternalAddress >> unsignedByteAt: byteIndex put: value [
 	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self uint8AtOffset: byteIndex - 1 put: value
 ]
 
 { #category : '*UnifiedFFI' }
 ExternalAddress >> unsignedCharAt: byteIndex [
 	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self char8AtOffset: byteIndex - 1
 ]
 
 { #category : '*UnifiedFFI' }
 ExternalAddress >> unsignedCharAt: byteIndex put: aCharacter [
 	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self char8AtOffset: byteIndex - 1 put: aCharacter
 ]
 
 { #category : '*UnifiedFFI' }
 ExternalAddress >> unsignedLongAt: byteIndex [
 	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self uint32AtOffset: byteIndex - 1
 ]
 
 { #category : '*UnifiedFFI' }
 ExternalAddress >> unsignedLongAt: byteIndex put: value [
 	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self uint32AtOffset: byteIndex - 1 put: value
 ]
 
 { #category : '*UnifiedFFI' }
 ExternalAddress >> unsignedLongLongAt: byteIndex [
 	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self uint64AtOffset: byteIndex - 1
 ]
 
 { #category : '*UnifiedFFI' }
 ExternalAddress >> unsignedLongLongAt: byteIndex put: value [
 	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self uint64AtOffset: byteIndex - 1 put: value
 ]
 
 { #category : '*UnifiedFFI' }
 ExternalAddress >> unsignedShortAt: byteIndex [
 	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self uint16AtOffset: byteIndex - 1
 ]
 
 { #category : '*UnifiedFFI' }
 ExternalAddress >> unsignedShortAt: byteIndex put: value [
 	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
+
+	<ignoreMethodWithEquivalentInSuperclass>
 	^ self uint16AtOffset: byteIndex - 1 put: value
 ]
 

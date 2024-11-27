@@ -19,7 +19,7 @@ AthensCairoTransform class >> for: cairoCanvas [
 	^ self new canvas: cairoCanvas
 ]
 
-{ #category : 'initializing' }
+{ #category : 'initialization' }
 AthensCairoTransform >> canvas: aCairoCanvas [
 	canvas := aCairoCanvas
 ]

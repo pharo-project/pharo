@@ -37,7 +37,7 @@ MCRemoval >> fromSource [
 	^ definition diffSource
 ]
 
-{ #category : 'initializing' }
+{ #category : 'initialization' }
 MCRemoval >> intializeWithDefinition: aDefinition [
 	definition := aDefinition
 ]

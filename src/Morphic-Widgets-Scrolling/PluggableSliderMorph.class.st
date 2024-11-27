@@ -430,6 +430,12 @@ PluggableSliderMorph >> sliderColor: newColor [
 	slider ifNotNil: [slider borderStyle baseColor: newColor]
 ]
 
+{ #category : 'theme' }
+PluggableSliderMorph >> themeChanged [
+	super themeChanged.
+	self fillStyle: self fillStyleToUse
+]
+
 { #category : 'protocol' }
 PluggableSliderMorph >> update: aParameter [
 

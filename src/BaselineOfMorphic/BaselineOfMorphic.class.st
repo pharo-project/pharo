@@ -101,6 +101,7 @@ BaselineOfMorphic >> baseline: spec [
 				loads: 'core' ].
 
 		spec package: 'Polymorph-Widgets'.
+		spec package: 'DarkBlueTheme'.
 
 		spec package: 'Images-Animated'.
 
@@ -115,7 +116,6 @@ BaselineOfMorphic >> baseline: spec [
 		"the following package is listed here to be after Setting core 
 		however conceptually it could be placed somewhere else."
 		spec package: 'Formatter-Settings'.
-		spec package: 'System-Sound'.
 
 		spec package: 'Text-Diff'.
 		spec package: 'Text-Edition'.

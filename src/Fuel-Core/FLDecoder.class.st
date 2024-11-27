@@ -81,7 +81,7 @@ FLDecoder >> initialize [
 	self initializeMigrations
 ]
 
-{ #category : 'initializing' }
+{ #category : 'initialization' }
 FLDecoder >> initializeMigrations [
 	migrationsBySource := IdentityDictionary new.
 	migrationsByTarget := IdentityDictionary new.

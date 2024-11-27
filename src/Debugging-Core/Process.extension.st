@@ -6,32 +6,16 @@ Process >> complete: aContext [
 
 	| ctxt pair |
 	ctxt := suspendedContext.
-	suspendedContext := nil.	"disable this process while running its stack in active process below"
+	suspendedContext := nil. "disable this process while running its stack in active process below"
 	pair := Processor activeProcess
-				evaluate: [ ctxt runUntilErrorOrReturnFrom: aContext ]
-				onBehalfOf: self.
+		        evaluate: [ ctxt runUntilErrorOrReturnFrom: aContext ]
+		        onBehalfOf: self.
 	suspendedContext := pair first.
-	^ pair second
-		ifNil: [ suspendedContext ]
-		ifNotNil: [ :error | error completeProcess: self with: aContext ]
-]
-
-{ #category : '*Debugging-Core' }
-Process >> debug [
-	^ self debugWithTitle: 'Debug'
-]
-
-{ #category : '*Debugging-Core' }
-Process >> debugWithTitle: title [
-
-	| context |
-	context := self isActiveProcess
-		           ifTrue: [ thisContext ]
-		           ifFalse: [ self suspendedContext ].
-	UIManager default
-		requestDebuggerOpeningForProcess: self
-		named: title
-		inContext: context
+	^ pair second ifNil: [ suspendedContext ] ifNotNil: [ :error |
+		  thisProcess
+			  evaluate: [ LocalProcessException value: error ]
+			  onBehalfOf: self.
+		  error completeProcess: self with: aContext ]
 ]
 
 { #category : '*Debugging-Core' }

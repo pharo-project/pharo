@@ -26,7 +26,7 @@ StMethodNameEditorPresenterTest >> methodNamedFor: aSymbol [
 { #category : 'running' }
 StMethodNameEditorPresenterTest >> setUp [
 	super setUp.
-	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:)
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:)
 ]
 
 { #category : 'running' }
@@ -39,15 +39,15 @@ StMethodNameEditorPresenterTest >> tearDown [
 { #category : 'tests - argument selection' }
 StMethodNameEditorPresenterTest >> testAddArgument [
 
-	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
 	methodNameEditor canAddArgs: false.
-	(methodNameEditor argumentsList contextMenu menuGroups first menuItems do: [ :e |
-		(e name = 'Add') ifTrue: [ self deny: e isVisible ] ]).
+	(methodNameEditor argumentsList actions allCommands do: [ :e |
+		(e name = 'Add') ifTrue: [ self deny: e isEnabled ] ]).
 
-	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
 	methodNameEditor canAddArgs: true.
-	(methodNameEditor argumentsList contextMenu menuGroups first menuItems do: [ :e |
-		(e name = 'Add') ifTrue: [ self assert: e isVisible ] ])
+	(methodNameEditor argumentsList actions allCommands do: [ :e |
+		(e name = 'Add') ifTrue: [ self assert: e isEnabled ] ])
 ]
 
 { #category : 'tests - up/down buttons' }
@@ -150,40 +150,40 @@ StMethodNameEditorPresenterTest >> testInitialArgumentListAutoSelection [
 
 { #category : 'tests - initial state' }
 StMethodNameEditorPresenterTest >> testInitialButtonDownIsDisable [
-	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a).
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a).
 	self deny: methodNameEditor downButton isEnabled
 ]
 
 { #category : 'tests - initial state' }
 StMethodNameEditorPresenterTest >> testInitialButtonUpIsDisable [
-	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a).
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a).
 	self deny: methodNameEditor upButton isEnabled
 ]
 
 { #category : 'tests - argument selection' }
 StMethodNameEditorPresenterTest >> testRemoveArguments [
 
-	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
 	methodNameEditor canRemoveArgs: false.
-	(methodNameEditor argumentsList contextMenu menuGroups first menuItems do: [ :e |
-		(e name = 'Remove') ifTrue: [ self deny: e isVisible ] ]).
+	(methodNameEditor argumentsList actions allCommands do: [ :e |
+		(e name = 'Remove') ifTrue: [ self deny: e isEnabled ] ]).
 
-	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
 	methodNameEditor canRemoveArgs: true.
-	(methodNameEditor argumentsList contextMenu menuGroups first menuItems do: [ :e |
-		(e name = 'Remove') ifTrue: [ self assert: e isVisible ] ])
+	(methodNameEditor argumentsList actions allCommands do: [ :e |
+		(e name = 'Remove') ifTrue: [ self assert: e isEnabled ] ])
 ]
 
 { #category : 'tests - argument selection' }
 StMethodNameEditorPresenterTest >> testRenameArgument [
 
-	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
 	methodNameEditor canRenameArgs: false.
-	(methodNameEditor argumentsList contextMenu menuGroups first menuItems do: [ :e |
-		(e name = 'Rename') ifTrue: [ self deny: e isVisible ] ]).
+	(methodNameEditor argumentsList actions allCommands do: [ :e |
+		(e name = 'Rename') ifTrue: [ self deny: e isEnabled ] ]).
 
-	methodNameEditor := SycMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
 	methodNameEditor canRenameArgs: true.
-	(methodNameEditor argumentsList contextMenu menuGroups first menuItems do: [ :e |
-		(e name = 'Rename') ifTrue: [ self assert: e isVisible ] ])
+	(methodNameEditor argumentsList actions allCommands do: [ :e |
+		(e name = 'Rename') ifTrue: [ self assert: e isEnabled ] ])
 ]

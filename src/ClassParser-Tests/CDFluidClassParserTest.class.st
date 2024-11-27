@@ -511,7 +511,7 @@ CDFluidClassParserTest >> testWeakSubclass [
 CDFluidClassParserTest >> testWithRB [
 
 	| dict searcher |
-	searcher := RBParseTreeSearcher new.
+	searcher := ASTParseTreeSearcher new.
 	searcher
 		matches: '`superklass << `#ClassName
 		slots: {};
@@ -528,7 +528,7 @@ CDFluidClassParserTest >> testWithRB [
 CDFluidClassParserTest >> testWithRB10 [
 
 	| searcher kind |
-	searcher := RBParseTreeSearcher new.
+	searcher := ASTParseTreeSearcher new.
 	searcher
 		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | kind := #traitInstance ];
 		matches: 'Trait << `@symb classTrait' do: [:aNode :answer | kind := #traitClass ];
@@ -547,7 +547,7 @@ CDFluidClassParserTest >> testWithRB10 [
 CDFluidClassParserTest >> testWithRB10WithError [
 
 	| searcher kind |
-	searcher := RBParseTreeSearcher new.
+	searcher := ASTParseTreeSearcher new.
 
 	searcher
 		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | kind := #traitInstance ];
@@ -567,7 +567,7 @@ CDFluidClassParserTest >> testWithRB10WithError [
 CDFluidClassParserTest >> testWithRB3 [
 
 	| searcher coll|
-	searcher := RBParseTreeSearcher new.
+	searcher := ASTParseTreeSearcher new.
 	coll := OrderedCollection new.
 	searcher
 		matches: '^self' do: [:aNode :answer | coll add: aNode ];
@@ -583,7 +583,7 @@ CDFluidClassParserTest >> testWithRB3 [
 CDFluidClassParserTest >> testWithRB4 [
 
 	| searcher coll|
-	searcher := RBParseTreeSearcher new.
+	searcher := ASTParseTreeSearcher new.
 	coll := OrderedCollection new.
 	searcher
 		matches: '`@tm := `@val' do: [:aNode :answer | coll add: aNode ];
@@ -600,7 +600,7 @@ CDFluidClassParserTest >> testWithRB4 [
 CDFluidClassParserTest >> testWithRB5 [
 
 	| searcher coll|
-	searcher := RBParseTreeSearcher new.
+	searcher := ASTParseTreeSearcher new.
 	coll := OrderedCollection new.
 	searcher
 		matches: '`@tm << `#symb' do: [:aNode :answer | coll add: #instance ];
@@ -620,7 +620,7 @@ CDFluidClassParserTest >> testWithRB5 [
 CDFluidClassParserTest >> testWithRB6 [
 
 	| searcher coll|
-	searcher := RBParseTreeSearcher new.
+	searcher := ASTParseTreeSearcher new.
 	coll := OrderedCollection new.
 	searcher
 		matches: '`@tm << `#symb' do: [:aNode :answer | coll add: #instance ];
@@ -640,7 +640,7 @@ CDFluidClassParserTest >> testWithRB6 [
 CDFluidClassParserTest >> testWithRB7 [
 
 	| searcher coll|
-	searcher := RBParseTreeSearcher new.
+	searcher := ASTParseTreeSearcher new.
 	coll := OrderedCollection new.
 	searcher
 		matches: '`@tm << `#symb' do: [:aNode :answer | coll add: #instance ];
@@ -660,7 +660,7 @@ CDFluidClassParserTest >> testWithRB7 [
 CDFluidClassParserTest >> testWithRB8 [
 
 	| searcher coll|
-	searcher := RBParseTreeSearcher new.
+	searcher := ASTParseTreeSearcher new.
 	coll := OrderedCollection new.
 	searcher
 		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | coll add: #traitInstance ];
@@ -680,7 +680,7 @@ CDFluidClassParserTest >> testWithRB8 [
 CDFluidClassParserTest >> testWithRB9 [
 
 	| searcher coll|
-	searcher := RBParseTreeSearcher new.
+	searcher := ASTParseTreeSearcher new.
 	coll := OrderedCollection new.
 	searcher
 		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | coll add: #traitInstance ];

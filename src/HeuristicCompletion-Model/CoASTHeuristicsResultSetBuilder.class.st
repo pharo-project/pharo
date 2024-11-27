@@ -78,22 +78,22 @@ CoASTHeuristicsResultSetBuilder >> visitLiteralValueNode: aNode [
 ]
 
 { #category : 'visiting' }
-CoASTHeuristicsResultSetBuilder >> visitMessageNode: aRBMessageNode [ 
+CoASTHeuristicsResultSetBuilder >> visitMessageNode: aMessageNode [ 
 
-	completionContext completionToken ifEmpty: [ ^ super visitMessageNode: aRBMessageNode ].
+	completionContext completionToken ifEmpty: [ ^ super visitMessageNode: aMessageNode ].
 
 	^ self
-		configureFetcherForNode: aRBMessageNode
+		configureFetcherForNode: aMessageNode
 		usingHeuristicAvoidingRepetitions: self messageHeuristic
 ]
 
 { #category : 'visiting' }
-CoASTHeuristicsResultSetBuilder >> visitMethodNode: aRBMethodNode [
+CoASTHeuristicsResultSetBuilder >> visitMethodNode: aMethodNode [
 
-	completionContext completionToken ifEmpty: [ ^ super visitMethodNode: aRBMethodNode ].
+	completionContext completionToken ifEmpty: [ ^ super visitMethodNode: aMethodNode ].
 
 	^ self
-		configureFetcherForNode: aRBMethodNode
+		configureFetcherForNode: aMethodNode
 		usingHeuristicAvoidingRepetitions: self methodNodeHeuristic
 ]
 
@@ -111,7 +111,7 @@ CoASTHeuristicsResultSetBuilder >> visitValueNode: aNode [
 			we just inject a synthetic message node in the AST with an empty selector.
 			This empty selector will then be completed according to the existing rules and heuristics.
 			It is a little hackish but we believe in magic."
-			aMessageNode := RBMessageNode new.
+			aMessageNode := ASTMessageNode new.
 			aNode replaceWith: aMessageNode.
 			aMessageNode receiver: aNode.
 			aMessageNode selector: #''.
@@ -123,11 +123,11 @@ CoASTHeuristicsResultSetBuilder >> visitValueNode: aNode [
 ]
 
 { #category : 'visiting' }
-CoASTHeuristicsResultSetBuilder >> visitVariableNode: aRBVariableNode [
+CoASTHeuristicsResultSetBuilder >> visitVariableNode: aVariableNode [
 
-	completionContext completionToken ifEmpty: [ ^ super visitVariableNode: aRBVariableNode ].
+	completionContext completionToken ifEmpty: [ ^ super visitVariableNode: aVariableNode ].
 
 	^ self
-		configureFetcherForNode: aRBVariableNode
+		configureFetcherForNode: aVariableNode
 		usingHeuristicAvoidingRepetitions: self variablesHeuristic
 ]

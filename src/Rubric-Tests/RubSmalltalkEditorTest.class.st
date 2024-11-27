@@ -383,7 +383,7 @@ RubSmalltalkEditorTest >> testBestNodeWithInvalidPlaygroundParsableError [
 
 	self
 		positionAfter: 'isSymbol ]';
-		assertPlaygroundNodeValue: 'RBBlockNode([ node isSymbol ])'
+		assertPlaygroundNodeValue: 'ASTBlockNode([ node isSymbol ])'
 ]
 
 { #category : 'tests - bestNodeIn' }

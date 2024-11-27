@@ -31,7 +31,7 @@ EpCompositeRefactoring >> childrenRefactorings [
 	^ childrenRefactorings
 ]
 
-{ #category : 'initializing' }
+{ #category : 'initialization' }
 EpCompositeRefactoring >> initializeWith: someRefactorings [
 	self initialize.
 	childrenRefactorings := someRefactorings collect: [:each | each asEpiceaEvent]

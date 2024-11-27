@@ -160,6 +160,18 @@ BehaviorTest >> testHasProperty [
 	self deny: (self class hasProperty: #testKeySelector)
 ]
 
+{ #category : 'tests - testing - class hierarchy' }
+BehaviorTest >> testIncludesBehavior [
+	self assert: (Object includesBehavior: Object).
+	self assert: (Behavior includesBehavior: Object).
+	self deny: (Object includesBehavior: Behavior).
+	self deny: (Protocol includesBehavior: Behavior).
+	self deny: (Behavior includesBehavior: Protocol).
+	"it should work for metaclasses, too"
+	self assert: (Metaclass class includesBehavior: Class).
+	self assert: (Metaclass class includesBehavior: Behavior class)
+]
+
 { #category : 'tests' }
 BehaviorTest >> testIncludesMethod [
 	self assert: (Object includesMethod: Object>>#halt).
@@ -167,6 +179,18 @@ BehaviorTest >> testIncludesMethod [
 
 	self assert: (Point includesMethod: Point>>#x).
 	self deny: (LookupKey includesMethod: Point>>#x)
+]
+
+{ #category : 'tests - testing - class hierarchy' }
+BehaviorTest >> testInheritsFrom [
+	self deny: (Object inheritsFrom: Object).
+	self assert: (Behavior inheritsFrom: Object).
+	self deny: (Object inheritsFrom: Behavior).
+	self deny: (Protocol inheritsFrom: Behavior).
+	self deny: (Behavior inheritsFrom: Protocol).
+	"it should work for metaclasses, too"
+	self assert: (Metaclass class inheritsFrom: Class).
+	self assert: (Metaclass class inheritsFrom: Behavior class)
 ]
 
 { #category : 'metrics' }
@@ -184,6 +208,18 @@ BehaviorTest >> testIsAbstract [
 	
 	self deny: Class isAbstract.
 	self deny: Object isAbstract
+]
+
+{ #category : 'tests - testing - class hierarchy' }
+BehaviorTest >> testIsInClassHierarchyOf [
+	self assert: (Object isInClassHierarchyOf: Object).
+	self assert: (Behavior isInClassHierarchyOf: Object).
+	self assert: (Object isInClassHierarchyOf: Behavior).
+	self deny: (Protocol isInClassHierarchyOf: Behavior).
+	self deny: (Behavior isInClassHierarchyOf: Protocol).
+	"it should work for metaclasses, too"
+	self assert: (Metaclass class isInClassHierarchyOf: Class).
+	self assert: (Metaclass class isInClassHierarchyOf: Behavior class)
 ]
 
 { #category : 'tests' }

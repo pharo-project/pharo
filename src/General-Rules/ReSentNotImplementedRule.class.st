@@ -16,7 +16,7 @@ ReSentNotImplementedRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReSentNotImplementedRule class >> group [
-	^ 'Bugs'
+	^ self bugsGroup
 ]
 
 { #category : 'accessing' }

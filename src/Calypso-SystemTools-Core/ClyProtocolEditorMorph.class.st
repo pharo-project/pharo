@@ -88,7 +88,7 @@ ClyProtocolEditorMorph >> buildResetButton [
 		target: self;
 		actionSelector: #resetProtocolAndPackage;
 		arguments: #();
-		labelFormSet: (self iconFormSetNamed: #glamorousClose);
+		labelFormSet: (self iconFormSetNamed: #close);
 		color: Color transparent;
 		borderWidth: 0;
 		hResizing: #shinkWrap;

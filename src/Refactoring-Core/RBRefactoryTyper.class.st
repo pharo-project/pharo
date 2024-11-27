@@ -18,13 +18,13 @@ typer guessTypeFor: '-variablename-'
 Example usage: 
 | typer |
 ""create and initialize for a class to analyze""
-typer := (RBRefactoryTyper new runOn: RBMessageNode).
+typer := (RBRefactoryTyper new runOn: ASTMessageNode).
 
-""guess types for RBMessageNodes instane var 'arguments' ""
+""guess types for ASTMessageNodes instane var 'arguments' ""
 typer  guessTypesFor:'arguments'.  ""a Set(SequenceableCollection)""
 
 ""guess types for objects that may be put  into  'arguments' collection ""
-typer  guessTypesFor:'-arguments-' ""a Set(RBBlockNode RBMethodNode)""
+typer  guessTypesFor:'-arguments-' ""a Set(ASTBlockNode ASTMethodNode)""
 
 
 You can print a full report on all results with #printString.
@@ -72,7 +72,7 @@ RBRefactoryTyper class >> newFor: aRBNamespace [
 { #category : 'accessing' }
 RBRefactoryTyper class >> typesFor: variableName in: aParseTree model: aRBSmalltalk [
 	| searcher messages |
-	searcher := RBParseTreeSearcher new.
+	searcher := ASTParseTreeSearcher new.
 	searcher matches: variableName , ' `@message: ``@args'
 		do:
 			[:aNode :answer |
@@ -190,7 +190,7 @@ RBRefactoryTyper >> guessTypeFromAssignment: aNode [
 	type := nil.
 	aNode value isAssignment
 		ifTrue: [ ^ self
-				guessTypeFromAssignment: ( RBAssignmentNode variable: aNode variable value: aNode value value )
+				guessTypeFromAssignment: ( ASTAssignmentNode variable: aNode variable value: aNode value value )
 			].
 	aNode value isBlock
 		ifTrue: [ type := model classFor: [  ] class ].
@@ -291,7 +291,7 @@ RBRefactoryTyper >> parseTreeSearcher [
 
 { #category : 'selectors' }
 RBRefactoryTyper >> parseTreeSearcherClass [
-	^ RBParseTreeSearcher
+	^ ASTParseTreeSearcher
 ]
 
 { #category : 'printing' }

@@ -32,7 +32,7 @@ RFASTTranslator >> emitMetaLinkAfterEnsure: aNode [
 
 	"this saves the value from top of stack, executed [operation <here>] ensure: [ afterhook ] "
 	aNode postambles do: [ :each | self visitNode: each ].
-	ensureBlock := RBBlockNode body: (RBSequenceNode statements: aNode afterHooks).
+	ensureBlock := ASTBlockNode body: (ASTSequenceNode statements: aNode afterHooks).
 
 	ensureBlock parent: aNode.
 	ensureBlock scope: (aNode parent scope newBlockScope: 20).
@@ -173,13 +173,13 @@ RFASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 ]
 
 { #category : 'visitor - double dispatching' }
-RFASTTranslator >> visitLiteralArrayNode: aRBLiteralArrayNode [
-	self emitPreamble: aRBLiteralArrayNode.
-	self emitMetaLinkBefore: aRBLiteralArrayNode.
-	aRBLiteralArrayNode hasMetalinkInstead
-		ifTrue: [ self emitMetaLinkInstead: aRBLiteralArrayNode ]
-		ifFalse: [ methodBuilder pushLiteral: aRBLiteralArrayNode value ].
-	self emitMetaLinkAfterNoEnsure: aRBLiteralArrayNode
+RFASTTranslator >> visitLiteralArrayNode: aLiteralArrayNode [
+	self emitPreamble: aLiteralArrayNode.
+	self emitMetaLinkBefore: aLiteralArrayNode.
+	aLiteralArrayNode hasMetalinkInstead
+		ifTrue: [ self emitMetaLinkInstead: aLiteralArrayNode ]
+		ifFalse: [ methodBuilder pushLiteral: aLiteralArrayNode value ].
+	self emitMetaLinkAfterNoEnsure: aLiteralArrayNode
 ]
 
 { #category : 'visitor - double dispatching' }
@@ -298,7 +298,7 @@ RFASTTranslator >> visitSequenceNode: aSequenceNode [
 { #category : 'visitor - double dispatching' }
 RFASTTranslator >> visitSequenceWithAfter: aSequenceNode [
 	| wrappedBlock compiledBlock |
-	wrappedBlock := RBBlockNode body: (RBSequenceNode statements: aSequenceNode statements).
+	wrappedBlock := ASTBlockNode body: (ASTSequenceNode statements: aSequenceNode statements).
 	wrappedBlock parent: aSequenceNode.
 	wrappedBlock scope: (aSequenceNode parent scope newBlockScope: 20).
 	 (aSequenceNode parent scope copiedVars, aSequenceNode parent scope tempVars) do: [ :var |

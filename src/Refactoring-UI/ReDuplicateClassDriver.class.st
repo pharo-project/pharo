@@ -16,7 +16,8 @@ Class {
 		'className',
 		'newClassName',
 		'rbClass',
-		'rbMetaclass'
+		'rbMetaclass',
+		'superclassName'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -52,7 +53,15 @@ ReDuplicateClassDriver >> configureRefactoring [
 ]
 
 { #category : 'accessing' }
+ReDuplicateClassDriver >> newClass [
+	"Answer the new created <Class>"
+
+	^ (self model classNamed: self newClassName) binding value
+]
+
+{ #category : 'accessing' }
 ReDuplicateClassDriver >> newClassName [
+	"Answer a <Symbol> representing the new duplicated class"
 
 	^ newClassName
 ]
@@ -72,18 +81,22 @@ ReDuplicateClassDriver >> requestNewClass [
 			withClassMethods: rbMetaclass allMethods;
 			baseClassName: self className;
 			basePackageName: (self model environment at: self className) packageName;
+			basePackageTagName: (self model environment at: self className) packageTag name;
 			onCancel: [ : dialog | dialog close ];
 			onAccept: [ :dialog |
 				self
 					packageName: dialog presenter packageName;
 					tagName: dialog presenter tagName;
-					newClassName: dialog presenter newClassName.
+					newClassName: dialog presenter newClassName;
+					superclassName: dialog presenter selectedSuperclass.
 				refactoring
 					packageName: dialog presenter packageName;
 					className: dialog presenter newClassName;
+					superclassName: dialog presenter selectedSuperclassName;					
 					sourceClass: className;
 					instanceMethods: dialog presenter selectedInstanceMethods;
-					classMethods: dialog presenter selectedClassMethods.
+					classMethods: dialog presenter selectedClassMethods;
+					packageTagName: dialog presenter tagName.
 
 				dialog close ];
 			selectAll;
@@ -98,6 +111,11 @@ ReDuplicateClassDriver >> runRefactoring [
 	self requestNewClass.
 	requestDialog window isCancelled
 		ifTrue: [ ^ nil ].
+	model defineClass: [ :aBuilder |
+			aBuilder
+				superclass: requestDialog selectedSuperclass;
+				name: requestDialog newClassName;
+				package: requestDialog packageName ].
 	self applyChanges 
 ]
 
@@ -119,14 +137,20 @@ ReDuplicateClassDriver >> scopes: refactoringScopes [
 	
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes last.
-	selectedClass := model environment classes anyOne.	
+	selectedClass := model environment allNonMetaClasses anyOne.	
 
 	rbClass := model classFor: selectedClass.
 	rbMetaclass := model classFor: selectedClass class.
 ]
 
 { #category : 'accessing' }
-ReDuplicateClassDriver >> tagName [
+ReDuplicateClassDriver >> superclassName [
 
-	^ tagName
+	^ superclassName
+]
+
+{ #category : 'accessing' }
+ReDuplicateClassDriver >> superclassName: anObject [
+
+	superclassName := anObject
 ]

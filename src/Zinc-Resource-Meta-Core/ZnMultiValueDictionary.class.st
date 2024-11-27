@@ -81,7 +81,7 @@ ZnMultiValueDictionary >> checkLimitForKey: aKey [
 		ifTrue: [ (ZnTooManyDictionaryEntries limit: self limit) signal ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMultiValueDictionary >> initialize: n [
 	super initialize: n.
 	limit := self class defaultLimit
@@ -106,12 +106,12 @@ ZnMultiValueDictionary >> limit [
 	^ limit
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMultiValueDictionary >> limit: numberOfEntries [
 	limit := numberOfEntries
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMultiValueDictionary >> unlimited [
 	self limit: nil
 ]

@@ -27,8 +27,8 @@ BreakpointObserverTest >> setUp [
 
 	super setUp.
 	previousBreakpoints := Breakpoint all copy.
-	oldSystemAnnouncer := SystemAnnouncer uniqueInstance.
-	SystemAnnouncer announcer: nil.
+	oldSystemAnnouncer := self class codeSupportAnnouncer.
+	self class environment codeSupportAnnouncer: nil.
 	cls := self newDummyClass.
 	breakpoint := Breakpoint new.
 	cls compile: 'dummy ^42'.
@@ -45,13 +45,13 @@ BreakpointObserverTest >> tearDown [
 	self packageOrganizer removePackage: 'DummyPackage'.
 	Breakpoint removeAll.
 	Breakpoint all addAll: previousBreakpoints.
-	SystemAnnouncer announcer: oldSystemAnnouncer.
+	self class environment codeSupportAnnouncer: oldSystemAnnouncer.
 	super tearDown
 ]
 
 { #category : 'tests' }
 BreakpointObserverTest >> testNotifyBreakpointAdded [
-	SystemAnnouncer uniqueInstance when: BreakpointAdded send: #update: to: observer.
+	self class codeSupportAnnouncer when: BreakpointAdded send: #update: to: observer.
 	breakpoint install.
 	self assert: observer tag class equals: BreakpointAdded.
 	self assert: observer tag breakpoint identicalTo: breakpoint.
@@ -60,7 +60,7 @@ BreakpointObserverTest >> testNotifyBreakpointAdded [
 
 { #category : 'tests' }
 BreakpointObserverTest >> testNotifyBreakpointHit [
-	SystemAnnouncer uniqueInstance when: BreakpointHit send: #update: to: observer.
+	self class codeSupportAnnouncer when: BreakpointHit send: #update: to: observer.
 	breakpoint install.
 	self should: [cls new dummy] raise: Break.
 	self assert: observer tag class equals: BreakpointHit.
@@ -71,7 +71,7 @@ BreakpointObserverTest >> testNotifyBreakpointHit [
 { #category : 'tests' }
 BreakpointObserverTest >> testNotifyBreakpointRemoved [
 	breakpoint install.
-	SystemAnnouncer uniqueInstance when: BreakpointRemoved send: #update: to: observer.
+	self class codeSupportAnnouncer when: BreakpointRemoved send: #update: to: observer.
 	breakpoint remove.
 	self assert: observer tag class equals: BreakpointRemoved.
 	self assert: observer tag breakpoint identicalTo: breakpoint.

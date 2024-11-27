@@ -17,7 +17,7 @@ RBPatternScanner >> scanPatternVariable [
 	currentCharacter = ${
 		ifTrue:
 			[self step.
-			^RBPatternBlockToken value: '`{' start: tokenStart].
+			^ASTPatternBlockToken value: '`{' start: tokenStart].
 	[characterType = #alphabetic] whileFalse:
 			[characterType = #eof
 				ifTrue: [ ^ self scanError: 'Meta variable expected'].

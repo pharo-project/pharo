@@ -177,7 +177,7 @@ RBSelectorEnvironment >> classNames [
 		yourself
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RBSelectorEnvironment >> classSelectors: classSelectorDictionary metaClassSelectors: metaClassSelectorDictionary [
 	classSelectors := classSelectorDictionary.
 	metaClassSelectors := metaClassSelectorDictionary

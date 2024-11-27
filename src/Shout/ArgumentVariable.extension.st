@@ -1,15 +1,15 @@
 Extension { #name : 'ArgumentVariable' }
 
 { #category : '*Shout' }
-ArgumentVariable >> styleNameIn: aRBVariableNode [
+ArgumentVariable >> styleNameIn: aVariableNode [
 
 	^ self isDefinedByBlock
 		  ifTrue: [
-			  aRBVariableNode isDefinition
+			  aVariableNode isDefinition
 				  ifTrue: [ #blockPatternArg ]
 				  ifFalse: [ #blockArg ] ]
 		  ifFalse: [
-			  aRBVariableNode isDefinition			
+			  aVariableNode isDefinition			
 				  ifTrue: [ #patternArg ]
 				  ifFalse: [ #argument ] ]
 ]

@@ -386,7 +386,7 @@ ClyBrowserMorph >> initialExtent [
 ClyBrowserMorph >> initialize [
 	super initialize.
 	navigationStarted := false.
-	navigationHistory := ClyNavigationHistory new.
+	navigationHistory := self class navigationHistoryClass new.
 	plugins := SortedCollection sortBlock: [ :a :b | a priority <= b priority ].
 	self extent: self initialExtent.
 	self changeProportionalLayout.
@@ -444,6 +444,22 @@ ClyBrowserMorph >> itemsChanged [
 	navigationStarted := true.
 
 	[self rebuildToolsForChangedEnvironment] ensure: [ navigationStarted := false ]
+]
+
+{ #category : 'accessing' }
+ClyBrowserMorph >> itemsForQuery: aQuery [
+
+	^ (aQuery isBoundToEnvironment
+		   ifTrue: [ aQuery ]
+		   ifFalse: [ aQuery withScope: self systemScope ]) execute items
+]
+
+{ #category : 'accessing' }
+ClyBrowserMorph >> itemsForQuery: aQuery inScope: aScope [
+
+	aScope bindTo: self navigationEnvironment.
+
+	^ self itemsForQuery: (aScope adoptQuery: aQuery)
 ]
 
 { #category : 'keymapping' }
@@ -632,11 +648,6 @@ ClyBrowserMorph >> recordNavigationState: aBrowserNavigationState [
 ClyBrowserMorph >> removePlugin: aBrowserPlugin [
 
 	plugins removeAllSuchThat: [ :each | each class = aBrowserPlugin class ]
-]
-
-{ #category : 'tools support' }
-ClyBrowserMorph >> searchDialog [
-	^ClyBrowserSearchDialogWindow for: self
 ]
 
 { #category : 'initialization' }

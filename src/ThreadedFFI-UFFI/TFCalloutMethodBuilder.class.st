@@ -95,6 +95,23 @@ TFCalloutMethodBuilder >> createFFICalloutLiteralFromSpec: functionSpec [
 ]
 
 { #category : 'private' }
+TFCalloutMethodBuilder >> emitArgument: anFFIFunctionArgument optimizingIn: builder [
+
+	| tfExternalTypeWithArity |
+	tfExternalTypeWithArity := anFFIFunctionArgument resolvedType tfExternalTypeWithArity.
+
+	tfExternalTypeWithArity
+		optimizeFor: anFFIFunctionArgument
+		in: builder
+		ifCannot: [
+			anFFIFunctionArgument
+				emitResolvedTypeArgument: builder
+				context: sender
+				inCallout: self requestor.
+			tfExternalTypeWithArity emitMarshallToPrimitive: builder ]
+]
+
+{ #category : 'private' }
 TFCalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec ffiLibrary: ffiLibrary [
 
 	TFCalloutAPI isTracing ifTrue: [
@@ -112,9 +129,7 @@ TFCalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec ffiLibr
 	"iterate arguments in order (in the function) to create the function call"
 
 	functionSpec arguments
-		do: [ :each |
-			each emitArgument: builder context: sender inCallout: self requestor.
-			each resolvedType tfExternalTypeWithArity emitMarshallToPrimitive: builder ].
+		do: [ :each | self emitArgument: each optimizingIn:builder ].
 
 	"create the array"
 	builder pushConsArray: functionSpec arguments size.

@@ -18,7 +18,7 @@ ReGlobalVariablesUsageRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReGlobalVariablesUsageRule class >> group [
-	^ 'Design Flaws'
+	^ self designFlawGroup
 ]
 
 { #category : 'accessing' }

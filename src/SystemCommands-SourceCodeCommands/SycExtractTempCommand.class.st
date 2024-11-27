@@ -29,10 +29,10 @@ SycExtractTempCommand >> applyResultInContext: aSourceCodeContext [
 	aSourceCodeContext showVariableNamed: tempName
 ]
 
-{ #category : 'execution' }
+{ #category : 'converting' }
 SycExtractTempCommand >> asRefactorings [
 
-	^ {RBExtractToTemporaryTransformation
+	^ {RBExtractToTemporaryRefactoring
 		  extract: sourceNode sourceInterval
 		  to: tempName
 		  from: method selector

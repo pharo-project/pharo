@@ -5,7 +5,7 @@ See `CoverageCollector>>#callgraph` for details.
 "
 Class {
 	#name : 'SequenceGraphVisitor',
-	#superclass : 'RBProgramNodeVisitor',
+	#superclass : 'ASTProgramNodeVisitor',
 	#instVars : [
 		'edges',
 		'currentNode',

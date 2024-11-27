@@ -42,7 +42,7 @@ Class {
 
 { #category : 'accessing' }
 ReShouldntRaiseErrorRule class >> group [
-	^ 'Coding Idiom Violation'
+	^ self codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

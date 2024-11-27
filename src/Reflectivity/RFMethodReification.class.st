@@ -25,7 +25,7 @@ RFMethodReification class >> key [
 
 { #category : 'generate' }
 RFMethodReification >> genForASTProgramNode [
-	^RBMessageNode
-		receiver: (RBMessageNode receiver: (ASTLiteralNode value: entity) selector: #methodNode)
+	^ASTMessageNode
+		receiver: (ASTMessageNode receiver: (ASTLiteralNode value: entity) selector: #methodNode)
 		selector: #compiledMethod
 ]

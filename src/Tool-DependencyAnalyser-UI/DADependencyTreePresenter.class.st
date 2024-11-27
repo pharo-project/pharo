@@ -50,10 +50,14 @@ DADependencyTreePresenter class >> onPackagesMatch: match [
 
 { #category : 'instance creation' }
 DADependencyTreePresenter class >> onPackagesNamed: aCollection [
-
-	^ self new
-		  initializeWith: aCollection;
-		  yourself
+	self flag: #IncreaseTechnicalDebt.
+		"The flow is BAD AND WRONG! 
+	We should not explicit use StPharoApplication current this is a bad practice. Now I have no idea how to do it otherwise. So let us propagate bad practices.
+	You like debt: here it is"
+	
+	^ (self newApplication: StPharoApplication current) 
+		initializeWith: aCollection;
+		yourself
 ]
 
 { #category : 'specs' }
@@ -160,16 +164,16 @@ DADependencyTreePresenter >> buildRoots [
 
 { #category : 'initialization' }
 DADependencyTreePresenter >> connectPresenters [
+	
 	super connectPresenters.
+	
 	self actionOnButtons.
-	tree
-		whenSelectedItemChangedDo: [ :item |
-			item
-				ifNil: [ buttonBrowseCycles enabled: false ]
-				ifNotNil: [
-					buttonBrowseCycles enabled: true.
-					tree contextMenu: [ self loadMenuForSelectedItem ].
-					self tree selectedItem selectInBrowser ] ]
+	tree whenSelectedItemChangedDo: [ :item |
+		item
+			ifNil: [ buttonBrowseCycles enabled: false ]
+			ifNotNil: [
+				buttonBrowseCycles enabled: true.
+				self tree selectedItem selectInBrowser ] ]
 ]
 
 { #category : 'saving' }
@@ -208,7 +212,7 @@ DADependencyTreePresenter >> filter: aString [
 DADependencyTreePresenter >> initializeButtons [
 
 	buttonRefresh
-		icon: (self iconNamed: #glamorousRefresh);
+		icon: (self iconNamed: #refresh);
 		label: ''.
 	buttonBrowseCycles := self newButton
 		help: 'Find all the cycles where the package is in the system';
@@ -245,12 +249,32 @@ DADependencyTreePresenter >> initializeButtons [
 
 { #category : 'initialization' }
 DADependencyTreePresenter >> initializePresenters [
+
 	super initializePresenters.
 	packageLabel := self newLabel label: 'Analysis of packages'.
 	textPackageField := self newTextInput
 		placeholder: 'Enter a package name';
 		entryCompletion: self packagesEntryCompletion.
-	self initializeButtons
+	self initializeButtons.
+	
+	tree actionsWith: [ :group | group 
+		addActionWith: [ :action | action 
+			name: 'Browse scoped dependencies';
+			actionEnabled: [ self selectedPackageNames isNotEmpty ];
+			action: [
+				 (DAPackageDependenciesPresenter onPackagesNamed: self selectedPackageNames) 
+					application: self application;
+					open ] ];
+		addActionWith: [ :action | action 
+			name: 'Find cycles among packages';
+			action: [
+				(DACycleDetectionPresenter onPackagesNamed: self selectedPackageNames)
+					application: self application;
+					open ] ];
+		addActionWith: [ :action | action 
+			name: 'Browse dependencies from class';
+			actionEnabled: [ self areClassToDependencyNodes: self selectedItemsFromTree ];
+			action: [  self openTreeFor: self selectedNames ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -342,6 +366,19 @@ DADependencyTreePresenter >> saveCurrentRelationGraph [
 { #category : 'accessing' }
 DADependencyTreePresenter >> seenPackagesName [
 	^ self relationGraph seenPackagesName
+]
+
+{ #category : 'initialization' }
+DADependencyTreePresenter >> selectedNames [
+
+	^ self selectedItemsFromTree collect: [ :package | package content theClass ]
+]
+
+{ #category : 'initialization' }
+DADependencyTreePresenter >> selectedPackageNames [
+		
+	^ self selectedItemsFromTree collect: [ :packageNode | packageNode packageName ]
+
 ]
 
 { #category : 'accessing' }

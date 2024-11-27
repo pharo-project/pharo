@@ -11,7 +11,7 @@ ivar := scopes first lookupVar: #iVar
 "
 Class {
 	#name : 'OCScopesCollector',
-	#superclass : 'RBProgramNodeVisitor',
+	#superclass : 'ASTProgramNodeVisitor',
 	#instVars : [
 		'scopes'
 	],

@@ -440,7 +440,7 @@ MCGitBasedNetworkRepository >> goferVersionFrom: aVersionReference [
 	^ self localRepository goferVersionFrom: aVersionReference
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 MCGitBasedNetworkRepository >> hasNoLoadConflicts: anMCGitBasedRepository [
   (anMCGitBasedRepository isKindOf: self class)
     ifFalse: [ ^ false ].

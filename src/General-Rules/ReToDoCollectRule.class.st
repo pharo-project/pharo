@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 ReToDoCollectRule class >> group [
-	^ 'Coding Idiom Violation'
+	^ self codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

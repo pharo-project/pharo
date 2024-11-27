@@ -16,10 +16,10 @@ CoTypedReceiverMessageHeuristic >> appliesForNode: aNode inContext: aContext [
 ]
 
 { #category : 'requests' }
-CoTypedReceiverMessageHeuristic >> buildFetcherFor: aRBMessageNode inContext: aContext [
+CoTypedReceiverMessageHeuristic >> buildFetcherFor: aMessageNode inContext: aContext [
 
 	^ self
 		  newMessageInHierarchyFetcherForClass:
-		  (aRBMessageNode receiver propertyAt: #type)
-		  inASTNode: aRBMessageNode
+		  (aMessageNode receiver propertyAt: #type)
+		  inASTNode: aMessageNode
 ]

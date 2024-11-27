@@ -13,7 +13,7 @@ Class {
 
 { #category : 'accessing' }
 ReCollectSelectNotUsedRule class >> group [
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }

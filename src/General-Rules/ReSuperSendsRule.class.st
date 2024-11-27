@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 ReSuperSendsRule class >> group [
-	^ 'Design Flaws'
+	^ self designFlawGroup
 ]
 
 { #category : 'accessing' }
