@@ -240,8 +240,9 @@ MCSpecSnapshotBrowserTest >> testClassSelected [
 
 { #category : 'testing' }
 MCSpecSnapshotBrowserTest >> testClassSideClassSelected [
-	self clickOnButton: 'Class'.
+
 	self selectMockClassA.
+	self clickOnButton: 'Class'.
 	
 	self assertAListMatches: self allCategories.
 	self assertAListMatches: self definedClasses.

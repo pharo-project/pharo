@@ -113,8 +113,7 @@ MCSpecSnapshotBrowser >> connectPresenters [
 		transmitTo: protocolsPresenter
 		transform: [ : aClass | aClass
 		  ifNotNil: [ self visibleProtocols ]
-		  ifNil: [ Array empty ] ]
-		postTransmission: [ :destination :origin | destination selectItem: (destination items collect: #value) ].
+		  ifNil: [ Array empty ] ].
 		
 	classesPresenter
 		transmitTo: classDefinitionPresenter 
@@ -230,8 +229,7 @@ MCSpecSnapshotBrowser >> initializeMethodsPresenter [
 	methodsPresenter
 		items: OrderedCollection new;
 		headerTitle: 'Methods';
-		display: [ : aCompiledMethod | aCompiledMethod selector ];
-		sortingBlock: [ :a :b | a selector < b selector ];
+		sortingBlock: [ :a :b | a < b ];
 		contextMenu: [ (self rootCommandsGroup / 'RushMethodsSelContextualMenu') beRoot asMenuPresenter ]
 ]
 
@@ -264,11 +262,14 @@ MCSpecSnapshotBrowser >> initializeSideSelectorPresenter [
 		whenActivatedDo: [ 
 			protocolsPresenter 
 				headerTitle: 'Class protocols';
-				items: self visibleProtocols ];
+				items: self visibleProtocols.
+			classDefinitionPresenter text: self metaclassDefinitionString ];
+
 		whenDeactivatedDo: [ 
 			protocolsPresenter 
 				headerTitle: 'Instance protocols';
-				items: self visibleProtocols ];
+				items: self visibleProtocols.
+			classDefinitionPresenter text: self classDefinitionString  ];
 		yourself.
 ]
 
@@ -289,6 +290,20 @@ MCSpecSnapshotBrowser >> isClassSide [
 ]
 
 { #category : 'initialization' }
+MCSpecSnapshotBrowser >> metaclassDefinitionString [
+	| defs |
+	defs := items select: [:ea | (ea isClassDefinition or: [ea isClassDefinitionExtension])
+			and: [ea className = self classSelection]].
+
+	defs isEmpty ifTrue: [^ 'This class is defined elsewhere.'].
+
+	^ String streamContents: [:stream | 
+		defs asArray sort 
+			do: [:ea | ea printClassDefinitionOn: stream]
+			separatedBy: [stream nextPut: $.; cr] ].
+]
+
+{ #category : 'initialization' }
 MCSpecSnapshotBrowser >> methodsForSelectedClass [
 
 	^ items select: [ :ea | ea className = self classSelection and: [ ea isMethodDefinition and: [ ea classIsMeta = self switchIsClass ] ] ]
@@ -303,7 +318,7 @@ MCSpecSnapshotBrowser >> methodsForSelectedProtocol [
 	methods := self methodsForSelectedClass asOrderedCollection.
 	(self protocolSelection = '-- all --') 
 		ifFalse: [methods removeAllSuchThat: [:ea | ea protocol ~= self protocolSelection]].
-	^ methods 
+	^ methods collect: #selector
 	
 								
 ]
@@ -356,13 +371,15 @@ MCSpecSnapshotBrowser >> switchIsClass [
 ]
 
 { #category : 'callbacks' }
-MCSpecSnapshotBrowser >> updateSourceCode: aMCMethodDefinition [ 
+MCSpecSnapshotBrowser >> updateSourceCode: aMCMethodSelector [ 
 
-	self class environment 
-		at: aMCMethodDefinition actualClass
-		ifPresent: [ : cls | srcCodePresenter beForMethod: aMCMethodDefinition method ]
-		ifAbsent: [ srcCodePresenter text: aMCMethodDefinition source ].
-	^ aMCMethodDefinition source
+	| mcDef |
+	mcDef := items detect: [ : mcObject |
+		(mcObject isMethodDefinition and: [ mcObject className = self classSelection ])
+			and: [ mcObject selector = aMCMethodSelector ] ].
+	
+	srcCodePresenter text: mcDef source.
+	^  mcDef source
 ]
 
 { #category : 'accessing' }
@@ -387,6 +404,7 @@ MCSpecSnapshotBrowser >> visibleClasses [
 
 { #category : 'listing' }
 MCSpecSnapshotBrowser >> visibleMethods [
+
 	^ self classSelection 
 		ifNil: [#()]
 		ifNotNil: [self methodsForSelectedProtocol]
