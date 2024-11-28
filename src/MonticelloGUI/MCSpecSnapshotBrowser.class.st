@@ -1,6 +1,6 @@
 Class {
 	#name : 'MCSpecSnapshotBrowser',
-	#superclass : 'SpPresenter',
+	#superclass : 'StPresenter',
 	#instVars : [
 		'srcCodePresenter',
 		'classesPresenter',
@@ -18,6 +18,34 @@ Class {
 	#tag : 'Tools'
 }
 
+{ #category : 'commands' }
+MCSpecSnapshotBrowser class >> buildCommandsGroupWith: presenterInstance forRoot: rootCommandGroup [
+
+	super
+		buildCommandsGroupWith: presenterInstance
+		forRoot: rootCommandGroup.
+	rootCommandGroup 
+		register: ((CmCommandGroup named: 'MCMethodsSelContextualMenu') asSpecGroup
+					  register: ((MCLoadMethodCommand
+							    forSpecWithIconNamed: #loadMethod
+							    shortcutKey: 'B' asShortcut) context: presenterInstance);
+					  beDisplayedAsGroup;
+					  yourself);
+		register: ((CmCommandGroup named: 'MCClassSelContextualMenu') asSpecGroup
+					  register: ((MCLoadClassCommand
+							    forSpecWithIconNamed: #loadClass
+							    shortcutKey: 'C' asShortcut) context: presenterInstance);
+					  beDisplayedAsGroup;
+					  yourself);
+		register: ((CmCommandGroup named: 'MCCategorySelContextualMenu') asSpecGroup
+					  register: ((MCLoadCategoryCommand
+							    forSpecWithIconNamed: #loadCategory
+							    shortcutKey: 'K' asShortcut) context: presenterInstance);
+					  beDisplayedAsGroup;
+					  yourself);
+		yourself.
+]
+
 { #category : 'instance creation' }
 MCSpecSnapshotBrowser class >> forSnapshot: aMCSnapshot [
 
@@ -30,12 +58,6 @@ MCSpecSnapshotBrowser >> allClassNames [
 		select: [:ea | (ea isOrganizationDefinition | ea isScriptDefinition) not]
 		thenCollect: [:ea | ea className]) asSet.
 
-]
-
-{ #category : 'accessing' }
-MCSpecSnapshotBrowser >> application [
-
-	^ StPharoApplication current
 ]
 
 { #category : 'initialization' }
@@ -105,21 +127,23 @@ MCSpecSnapshotBrowser >> connectPresenters [
 		
 	classesPresenter
 		transmitTo: classDefinitionPresenter 
-		transform: [ : aClass | self classDefinitionString ].
+		transform: [ : aClass | self classDefinitionString ]
+		postTransmission: [ : p | p unselectAll. ].
 		
 	protocolsPresenter
 		transmitTo: methodsPresenter
 		transform: [ : aProtocolName | 
 			aProtocolName
 				ifNotNil: [ self visibleMethods ]
-				ifNil: [ #(  ) ] ].
+				ifNil: [ Array empty ] ].
 			
 	methodsPresenter
 		transmitTo: srcCodePresenter
 		transform: [ :aMethod |
 			aMethod
 				ifNotNil: [ self updateSourceCode: aMethod ]
-				ifNil: [ '' ] ].
+				ifNil: [ '' ] ]
+		postTransmission: [ : p | p unselectAll. ]
 ]
 
 { #category : 'layout' }
@@ -172,7 +196,7 @@ MCSpecSnapshotBrowser >> initializeCategoriesPresenter [
 		headerTitle: 'Categories';   
 		displayIcon: [ : aPackage | self iconNamed: aPackage systemIconName ];
 		sortingBlock: [ :a :b | a < b ] ;
-		contextMenu: [ (self rootCommandsGroup / 'RushPackageSelContextualMenu') beRoot asMenuPresenter ].
+		contextMenu: [ (self rootCommandsGroup / 'MCCategorySelContextualMenu') beRoot asMenuPresenter ].
 
 ]
 
@@ -193,7 +217,7 @@ MCSpecSnapshotBrowser >> initializeClassesPresenter [
 		headerTitle: 'Classes';
 		displayIcon: [ :aClass | self iconNamed: aClass systemIconName ];
 		sortingBlock: [ :a :b | a < b ];
-		contextMenu: [ (self rootCommandsGroup / 'RushClassSelContextualMenu') beRoot asMenuPresenter ]
+		contextMenu: [ (self rootCommandsGroup / 'MCClassSelContextualMenu') beRoot asMenuPresenter ]
 ]
 
 { #category : 'initialization' }
@@ -201,6 +225,8 @@ MCSpecSnapshotBrowser >> initializeCodePresenter [
 
 	srcCodePresenter := self newCode
 		beNotEditable;
+		withoutSyntaxHighlight;
+		withLineNumbers;
 		yourself.
 ]
 
@@ -218,7 +244,7 @@ MCSpecSnapshotBrowser >> initializeMethodsPresenter [
 		items: OrderedCollection new;
 		headerTitle: 'Methods';
 		sortingBlock: [ :a :b | a < b ];
-		contextMenu: [ (self rootCommandsGroup / 'RushMethodsSelContextualMenu') beRoot asMenuPresenter ]
+		contextMenu: [ (self rootCommandsGroup / 'MCMethodsSelContextualMenu') beRoot asMenuPresenter ]
 ]
 
 { #category : 'initialization' }
@@ -251,13 +277,17 @@ MCSpecSnapshotBrowser >> initializeSideSelectorPresenter [
 			protocolsPresenter 
 				headerTitle: 'Class protocols';
 				items: self visibleProtocols.
-			classDefinitionPresenter text: self metaclassDefinitionString ];
+			classDefinitionPresenter 
+				text: self metaclassDefinitionString;
+				unselectAll ];
 
 		whenDeactivatedDo: [ 
 			protocolsPresenter 
 				headerTitle: 'Instance protocols';
 				items: self visibleProtocols.
-			classDefinitionPresenter text: self classDefinitionString  ];
+			classDefinitionPresenter 
+				text: self classDefinitionString;
+				unselectAll  ];
 		yourself.
 ]
 
@@ -295,6 +325,16 @@ MCSpecSnapshotBrowser >> metaclassDefinitionString [
 MCSpecSnapshotBrowser >> methodsForSelectedClass [
 
 	^ items select: [ :ea | ea className = self classSelection and: [ ea isMethodDefinition and: [ ea classIsMeta = self switchIsClass ] ] ]
+]
+
+{ #category : 'executing' }
+MCSpecSnapshotBrowser >> methodsForSelectedClassCategory [
+
+	| visibleClasses |
+	visibleClasses := self visibleClasses.
+	^ items select: [ :ea |
+		  (visibleClasses includes: ea className) and: [
+			  ea isMethodDefinition and: [ ea classIsMeta = self switchIsClass ] ] ]
 ]
 
 { #category : 'accessing' }
@@ -365,8 +405,6 @@ MCSpecSnapshotBrowser >> updateSourceCode: aMCMethodSelector [
 	mcDef := items detect: [ : mcObject |
 		(mcObject isMethodDefinition and: [ mcObject className = self classSelection ])
 			and: [ mcObject selector = aMCMethodSelector ] ].
-	
-	srcCodePresenter text: mcDef source.
 	^  mcDef source
 ]
 
@@ -404,6 +442,8 @@ MCSpecSnapshotBrowser >> visibleProtocols [
 	| methods |
 
 	methods := self methodsForSelectedClass.
-	commentPresenter text: self classCommentString.
+	commentPresenter 
+		text: self classCommentString;
+		unselectAll.
 	^ (methods collect: [ :ea | ea category ]) asSet asSortedCollection
 ]
