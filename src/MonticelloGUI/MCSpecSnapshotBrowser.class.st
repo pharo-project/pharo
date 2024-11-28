@@ -27,7 +27,7 @@ MCSpecSnapshotBrowser class >> application [
 { #category : 'instance creation' }
 MCSpecSnapshotBrowser class >> forSnapshot: aMCSnapshot [
 
-	^ self new snapshot: aMCSnapshot
+	^ self on: aMCSnapshot
 ]
 
 { #category : 'instance creation' }
@@ -98,18 +98,6 @@ MCSpecSnapshotBrowser >> classTarget: aClass [
 	^ self isClassSide
 		  ifTrue: [ aClass class ]
 		  ifFalse: [ aClass ]
-]
-
-{ #category : 'initialization' }
-MCSpecSnapshotBrowser >> collectOrganizationProtocols: aClass [
-	"Answer a <Collection> of <Association> from aClass protocols, if any"
-
-	^ aClass
-		  ifNotNil: [
-			  (self classTarget: aClass) protocols
-				  collect: [ :each | (self classTarget: aClass) -> each ]
-				  as: OrderedCollection ]
-		  ifNil: [ Array empty ]
 ]
 
 { #category : 'initialization' }
@@ -265,8 +253,7 @@ MCSpecSnapshotBrowser >> initializeProtocolsPresenter [
 
 	protocolsPresenter := self newFilteringList.
 	protocolsPresenter
-		headerTitle: 'Protocols';
-		sortingBlock: [ :a :b | a < b ]
+		headerTitle: 'Protocols'
 ]
 
 { #category : 'initialization' }
@@ -277,11 +264,11 @@ MCSpecSnapshotBrowser >> initializeSideSelectorPresenter [
 		whenActivatedDo: [ 
 			protocolsPresenter 
 				headerTitle: 'Class protocols';
-				items: (self collectOrganizationProtocols: self selectedClass class) ];
+				items: self visibleProtocols ];
 		whenDeactivatedDo: [ 
 			protocolsPresenter 
 				headerTitle: 'Instance protocols';
-				items: (self collectOrganizationProtocols: self selectedClass) ];
+				items: self visibleProtocols ];
 		yourself.
 ]
 
