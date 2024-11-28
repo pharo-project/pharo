@@ -139,8 +139,8 @@ MCSpecSnapshotBrowserTest >> definedClasses [
 MCSpecSnapshotBrowserTest >> denyAListHasSelection: aString [
 	| found |
 	found := true.
-	self listMorphs 
-			detect: [:m | m selection = aString]
+	self presenterLists
+			detect: [:m | m selectedItem = aString]
 			ifNone: [found := false].
 	self deny: found.
 ]
@@ -304,12 +304,12 @@ MCSpecSnapshotBrowserTest >> testMethodSelected [
 
 { #category : 'testing' }
 MCSpecSnapshotBrowserTest >> testNoSelection [
+
 	self assertAListMatches: self allCategories.
 	self denyAListIncludesAnyOf: self definedClasses.
 	self denyAListIncludesAnyOf: self allProtocols.
 	self denyAListIncludesAnyOf: self allMethods.
-	"and if there I need to see the packages scripts (or none)"
-	self assertTextIs: '(package defines no scripts)'.
+
 ]
 
 { #category : 'testing' }

@@ -105,9 +105,10 @@ MCSpecSnapshotBrowser >> connectPresenters [
 
 	categoriesPresenter 
 		transmitTo: classesPresenter
-		transform: [ : aCategory | aCategory
-			ifNotNil: [ self visibleClasses ]
-			ifNil: [ Array empty ] ].
+		transform: [ : aCategory | 
+			aCategory
+				ifNotNil: [ self visibleClasses ]
+				ifNil: [	Array empty ] ].
 
 	classesPresenter
 		transmitTo: protocolsPresenter
