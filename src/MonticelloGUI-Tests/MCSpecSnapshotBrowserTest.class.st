@@ -28,13 +28,6 @@ MCSpecSnapshotBrowserTest >> allProtocols [
 ]
 
 { #category : 'asserting' }
-MCSpecSnapshotBrowserTest >> assertAListIncludes: anArrayOfStrings [
-	self listMorphs 
-			detect: [:m | m getList includesAll: anArrayOfStrings]
-			ifNone: [self assert: false].
-]
-
-{ #category : 'asserting' }
 MCSpecSnapshotBrowserTest >> assertAListMatches: strings [
 
 	| lists |
