@@ -25,20 +25,21 @@ RubWorkspaceExample class >> exampleWindowWithScrolledText [
 { #category : 'examples' }
 RubWorkspaceExample class >> exampleWithCustomShortcut [
 
-	 |  window text |
-    text := RubScrolledTextMorph new.
+	| window text |
+	text := RubScrolledTextMorph new.
 
-    "define a custom shortcut  - notice  the call to textArea"
+	"define a custom shortcut  - notice  the call to textArea"
 
-    text textArea removeKeyCombination: $s meta.
-	 text setText: 'Hit cmd $s to revert the text'.
-    text textArea on: $s meta do:[
-        text setText: text text asString reverse].
+	text textArea removeKeyCombination: $s meta.
+	text setText: 'Hit cmd $s to revert the text'.
+	text textArea
+		bindKeyCombination: $s meta
+		toActions: [ text setText: text text asString reverse ].
 
-    window := StandardWindow new.
-    window addMorph: text fullFrame: LayoutFrame identity.
-    window title: 'Custom shortcuts example'.
-    window openInWorld
+	window := StandardWindow new.
+	window addMorph: text fullFrame: LayoutFrame identity.
+	window title: 'Custom shortcuts example'.
+	window openInWorld
 ]
 
 { #category : 'instance creation' }

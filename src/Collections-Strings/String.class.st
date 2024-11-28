@@ -2849,6 +2849,13 @@ String >> withNoLineLongerThan: aNumber [
 				stream nextPutAll: (self copyFrom: pastEnd to: end) ] ]
 ]
 
+{ #category : 'platform conventions' }
+String >> withPlatformLineEndings [
+	"Answer a new instance where all occurrences of CRLF, CR and LF are substituted with the line ending used by default by the current platform."
+
+	^ self withLineEndings: OSPlatform current lineEnding
+]
+
 { #category : 'converting' }
 String >> withSeparatorsCompacted [
     "Returns a copy of the receiver with each sequence of whitespace (separator)

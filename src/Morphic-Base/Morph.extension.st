@@ -373,12 +373,6 @@ Morph >> newTransformationMorph [
 	^TransformationMorph new
 ]
 
-{ #category : '*Morphic-Base-keymapping' }
-Morph >> on: aShortcut do: anAction [
-
-	^ self bindKeyCombination: aShortcut toAction: anAction
-]
-
 { #category : '*Morphic-Base' }
 Morph >> on: eventName send: selector to: recipient [
 	self eventHandler ifNil: [self eventHandler: MorphicEventHandler new].
