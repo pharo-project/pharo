@@ -3,14 +3,13 @@ Browser for snapshots
 "
 Class {
 	#name : 'MCSnapshotBrowser',
-	#superclass : 'Model',
+	#superclass : 'MCSpecSnapshotBrowser',
 	#instVars : [
 		'categorySelection',
 		'classSelection',
 		'protocolSelection',
 		'methodSelection',
 		'switch',
-		'items',
 		'modal',
 		'morph',
 		'label'

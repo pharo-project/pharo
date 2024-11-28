@@ -18,23 +18,10 @@ Class {
 	#tag : 'Tools'
 }
 
-{ #category : 'accessing' }
-MCSpecSnapshotBrowser class >> application [
-
-	^ StPharoApplication current
-]
-
 { #category : 'instance creation' }
 MCSpecSnapshotBrowser class >> forSnapshot: aMCSnapshot [
 
 	^ self on: aMCSnapshot
-]
-
-{ #category : 'instance creation' }
-MCSpecSnapshotBrowser class >> open [ 
-	<script>
-	
-	^ self new open
 ]
 
 { #category : 'accessing' }
