@@ -3391,27 +3391,10 @@ UITheme >> newTaskbarButtonIn: aTaskbar for: aWindow [
 ]
 
 { #category : 'morph creation' }
-UITheme >> newTaskbarThumbnailIn: aThemedMorph for: aWindow [
+UITheme >> newTaskbarThumbnailFor: aWindow taskbarButton: aButton [
 	"Answer a taskbar thumbnail morph for the given window."
 
-	|answer thumb|
-	thumb := aWindow taskbarThumbnail.
-	answer := PanelMorph new
-		hResizing: #shrinkWrap;
-		vResizing: #shrinkWrap;
-		changeTableLayout;
-		layoutInset: 8 scaledByDisplayScaleFactor;
-		cellInset: 4 scaledByDisplayScaleFactor;
-		addMorphBack: thumb;
-		addMorphBack: ((self
-			buttonLabelForText: (aWindow labelString truncateWithElipsisTo: 50))
-				color: Color white).
-	answer
-		extent: answer minExtent;
-		fillStyle: (self taskListFillStyleFor: answer);
-		borderStyle: (self taskbarThumbnailNormalBorderStyleFor: aWindow);
-		cornerStyle: (self taskbarThumbnailCornerStyleFor: answer).
-	^answer
+	^ TaskbarThumbnailMorph for: aWindow taskbarButton: aButton theme: self
 ]
 
 { #category : 'morph creation' }

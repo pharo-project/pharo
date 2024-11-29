@@ -87,15 +87,18 @@ SystemWindow >> taskbarButtonClicked [
 SystemWindow >> taskbarButtonEntered: aButton event: evt in: aMorph [
 	"The mouse has entered out taskbar button.
 	Show a thumbnail."
+	| taskbar |
+	taskbar := aButton owner.
 
-	aButton owner ifNotNil: [:buttonBar | |thumb|
+	taskbar ifNotNil: [:buttonBar | |thumb|
 		buttonBar showWindowPreview ifFalse: [^self].
-		thumb := self valueOfProperty: #taskbarThumbnail.
-		thumb
-			ifNil: [thumb := self theme newTaskbarThumbnailIn: self for: self]
-			ifNotNil: [^self].
-		self setProperty: #taskbarThumbnail toValue: thumb.
-		thumb bottomLeft: ((aButton left min: aButton owner right - thumb width)@ (aButton owner top - 4)).
+		thumb := taskbar valueOfProperty: #taskbarThumbnail.
+		thumb ifNotNil: [
+			thumb window = self ifTrue: [^self].
+			thumb delete ].
+		thumb := self theme newTaskbarThumbnailFor: self taskbarButton: aButton.
+		taskbar setProperty: #taskbarThumbnail toValue: thumb.
+		thumb bottomLeft: (aButton left min: taskbar right - thumb width)@ (taskbar top - 4).
 		thumb openInWorld]
 ]
 
@@ -113,12 +116,6 @@ SystemWindow >> taskbarButtonFor: aTaskbar [
 SystemWindow >> taskbarButtonLeft: aButton event: evt in: aMorph [
 	"The mouse has left our taskbar button.
 	Remove our thumbnail."
-
-	self
-		valueOfProperty: #taskbarThumbnail
-		ifPresentDo: [:thumb |
-			thumb delete.
-			self removeProperty: #taskbarThumbnail]
 ]
 
 { #category : '*Morphic-Widgets-Taskbar' }
