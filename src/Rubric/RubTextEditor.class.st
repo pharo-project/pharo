@@ -1661,7 +1661,6 @@ RubTextEditor >> nextWord: position [
 	Position N + 1 is after the Nth character"
 	initialPosition := 1 max: position.
 	index := initialPosition.
-	position traceCr.
 
 	string := self string.
 	size := string size + 1.

@@ -513,7 +513,7 @@ NumberParser >> readExponent [
 			sourceStream skip: ((eneg or: [ epos ]) ifTrue: [ -2 ] ifFalse: [ -1 ]).
 			^ false ].
 		
-	"If the exponent is bigger than our max exponent, we return an error".
+	"If the exponent is bigger than our max exponent, we return an error"
 	exponent > self maxExponent
 		ifTrue: [ 
 				self expected: 'Exponent is larger than ' , self maxExponent printString , ' (Check Settings)'.

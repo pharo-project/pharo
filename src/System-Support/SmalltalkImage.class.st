@@ -1193,7 +1193,7 @@ SmalltalkImage >> newSpecialObjectsArray [
 	newArray at: 26 put: #mustBeBoolean.
 	newArray at: 27 put: ByteArray.
 	newArray at: 28 put: nil. "was Process."
-	newArray at: 29 put: nil. "was compact classes".
+	newArray at: 29 put: nil. "was compact classes"
 	newArray at: 30 put: ((self primitiveGetSpecialObjectsArray at: 30) ifNil: [Semaphore new]). "delay Semaphore"
 	newArray at: 31 put: ((self primitiveGetSpecialObjectsArray at: 31) ifNil: [Semaphore new]). "user interrupt Semaphore"
 	newArray at: 32 put: Float32Array. "was the prototype Float"

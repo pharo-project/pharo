@@ -467,7 +467,7 @@ OpalCompiler >> evaluate [
 	ast ifNil: [ ^ doItMethod ].
 	value := self semanticScope evaluateDoIt: doItMethod.
 
-	self logged == true ifTrue: [ self semanticScope announceDoItEvaluation: source by: SystemAnnouncer uniqueInstance ].
+	self logged == true ifTrue: [ self semanticScope announceDoItEvaluation: source by: self class codeSupportAnnouncer ].
 	^ value
 ]
 

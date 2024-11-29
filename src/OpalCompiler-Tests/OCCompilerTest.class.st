@@ -53,7 +53,8 @@ OCCompilerTest >> notify: aString at: aSmallInteger in: aReadStream [
 
 { #category : 'running' }
 OCCompilerTest >> runCase [
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ super runCase ]
+
+	self class codeChangeAnnouncer suspendAllWhile: [ super runCase ]
 ]
 
 { #category : 'running' }
