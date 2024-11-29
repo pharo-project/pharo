@@ -25,25 +25,64 @@ MCSpecSnapshotBrowser class >> buildCommandsGroupWith: presenterInstance forRoot
 		buildCommandsGroupWith: presenterInstance
 		forRoot: rootCommandGroup.
 	rootCommandGroup 
-		register: ((CmCommandGroup named: 'MCMethodsSelContextualMenu') asSpecGroup
-					  register: ((MCLoadMethodCommand
-							    forSpecWithIconNamed: #loadMethod
-							    shortcutKey: 'B' asShortcut) context: presenterInstance);
-					  beDisplayedAsGroup;
-					  yourself);
-		register: ((CmCommandGroup named: 'MCClassSelContextualMenu') asSpecGroup
-					  register: ((MCLoadClassCommand
-							    forSpecWithIconNamed: #loadClass
-							    shortcutKey: 'C' asShortcut) context: presenterInstance);
-					  beDisplayedAsGroup;
-					  yourself);
+		"Package category commands"
 		register: ((CmCommandGroup named: 'MCCategorySelContextualMenu') asSpecGroup
 					  register: ((MCLoadCategoryCommand
-							    forSpecWithIconNamed: #loadCategory
+							    forSpecWithIconNamed: #smallLoadProject
 							    shortcutKey: 'K' asShortcut) context: presenterInstance);
 					  beDisplayedAsGroup;
 					  yourself);
-		yourself.
+
+		"Class commands"
+		register: ((CmCommandGroup named: 'MCClassSelContextualMenu') asSpecGroup
+					  register: ((MCLoadClassCommand
+							    forSpecWithIconNamed: #smallLoadProject
+							    shortcutKey: 'C' asShortcut) context: presenterInstance);
+					  register: ((MCBrowseFullClassCommand
+							    forSpecWithIconNamed: #browse
+							    shortcutKey: 'B' asShortcut) context: presenterInstance);
+					  register: ((MCBrowseHierarchyClassCommand
+							    forSpecWithIconNamed: #smallHierarchyBrowser
+							    shortcutKey: 'H' asShortcut) context: presenterInstance);
+					  beDisplayedAsGroup;
+					  yourself);
+
+		"Protocol commands"
+		register: ((CmCommandGroup named: 'MCProtocolsSelContextualMenu') asSpecGroup
+					  register: ((MCLoadProtocolCommand
+							    forSpecWithIconNamed: #smallLoadProject
+							    shortcutKey: 'P' asShortcut) context: presenterInstance);
+					  beDisplayedAsGroup;
+					  yourself);
+
+		"Method commands"
+		register: ((CmCommandGroup named: 'MCMethodsSelContextualMenu') asSpecGroup
+					  register: ((MCLoadMethodCommand
+							    forSpecWithIconNamed: #smallLoadProject
+							    shortcutKey: 'B' asShortcut) context: presenterInstance);
+					  register: ((MCBrowseFullMethodCommand
+							    forSpecWithIconNamed: #browse
+							    shortcutKey: 'M' asShortcut) context: presenterInstance);
+					  register: ((MCBrowseHierarchyMethodCommand
+							    forSpecWithIconNamed: #smallHierarchyBrowser 
+							    shortcutKey: 'Y' asShortcut) context: presenterInstance);
+					  register: ((MCBrowseMethodImplementorsCommand
+							    forSpecWithIconNamed: #browseMethodImplementors
+							    shortcutKey: 'T' asShortcut) context: presenterInstance);
+					  register: ((MCBrowseMethodInheritanceCommand
+							    forSpecWithIconNamed: #browseMethodInheritance
+							    shortcutKey: 'E' asShortcut) context: presenterInstance);
+					  register: ((MCBrowseMethodVersionsCommand
+							    forSpecWithIconNamed: #versionControl
+							    shortcutKey: 'V' asShortcut) context: presenterInstance);
+					  register: ((MCFileOutMethodCommand
+							    forSpecWithIconNamed: #save
+							    shortcutKey: 'O' asShortcut) context: presenterInstance);
+					  register: ((MCCopySelectorCommand
+							    forSpecWithIconNamed: #smallCopy
+							    shortcutKey: 'C' asShortcut) context: presenterInstance);
+					  beDisplayedAsGroup;
+					  yourself)
 ]
 
 { #category : 'instance creation' }
@@ -182,6 +221,54 @@ MCSpecSnapshotBrowser >> extensionsCategory [
 	^ '*Extensions'
 ]
 
+{ #category : 'file in/out' }
+MCSpecSnapshotBrowser >> fileOutMessage [
+	"Put a description of the selected message on a file"
+
+	| fileName |
+	self selectedMessageName ifNotNil: [
+		Cursor write showWhile: [
+			self selectedClassOrMetaClass fileOutMethod: self selectedMessageName ].
+			^ self ].
+	items isEmpty ifTrue: [ ^ self ].
+	fileName := MorphicUIManager new
+		            request: 'File out on which file?'
+		            initialAnswer: 'methods'.
+	Cursor write showWhile: [
+		| internalStream |
+		internalStream := WriteStream on: (String new: 1000).
+		internalStream
+			header;
+			timeStamp.
+		items do: [ :patchOp |
+			patchOp definition isMethodDefinition ifTrue: [
+				(patchOp definition actualClass isNotNil and: [
+					 patchOp definition actualClass includesSelector:
+						 patchOp definition selector ])
+					ifTrue: [
+						patchOp definition actualClass
+							printMethodChunk: patchOp definition selector
+							on: internalStream ]
+					ifFalse: [
+						internalStream nextChunkPut:
+							patchOp definition className , ' removeSelector: '
+							, patchOp definition selector printString ] ].
+			patchOp definition isClassDefinition ifTrue: [
+				patchOp definition actualClass
+					ifNotNil: [
+						internalStream nextChunkPut:
+							patchOp definition actualClass definition.
+						patchOp definition comment ifNotNil: [
+							patchOp definition actualClass putCommentOnFile: internalStream ] ]
+					ifNil: [
+						internalStream nextChunkPut:
+							patchOp definition className , ' removeFromSystem' ] ] ].
+		CodeExporter
+			writeSourceCodeFrom: internalStream
+			baseName: fileName
+			isSt: true ]
+]
+
 { #category : 'accessing' }
 MCSpecSnapshotBrowser >> hasExtensions [
 	^ self extensionClassNames notEmpty
@@ -265,7 +352,8 @@ MCSpecSnapshotBrowser >> initializeProtocolsPresenter [
 
 	protocolsPresenter := self newFilteringList.
 	protocolsPresenter
-		headerTitle: 'Protocols'
+		headerTitle: 'Protocols';
+		contextMenu: [ (self rootCommandsGroup / 'MCProtocolsSelContextualMenu') beRoot asMenuPresenter ]
 ]
 
 { #category : 'initialization' }
@@ -373,10 +461,33 @@ MCSpecSnapshotBrowser >> protocolSelection [
 	^ protocolsPresenter selectedItem
 ]
 
+{ #category : 'file in/out' }
+MCSpecSnapshotBrowser >> selectedClassOrMetaClass [
+
+	| class |
+
+	self classSelection ifNil: [ ^ nil ].
+	class := self class environment 
+		at: self classSelection 
+		ifAbsent: [ ^ nil ].
+	^ self switchIsClass
+		ifTrue: [ class class ]
+		ifFalse: [ class ]
+]
+
+{ #category : 'file in/out' }
+MCSpecSnapshotBrowser >> selectedMessageName [
+	"Answer a <Symbol> representing the currently selected method selector"
+
+	^ self selectedMethod 
+		ifNotNil: [ ^ self selectedMethod selector ].
+
+]
+
 { #category : 'accessing' }
 MCSpecSnapshotBrowser >> selectedMethod [
 
-	^ methodsPresenter selectedItem
+	^ self methodsForSelectedClass anyOne
 ]
 
 { #category : 'accessing - model' }

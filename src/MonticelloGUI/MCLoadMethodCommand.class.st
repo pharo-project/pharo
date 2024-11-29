@@ -1,6 +1,6 @@
 Class {
 	#name : 'MCLoadMethodCommand',
-	#superclass : 'MCSnapshotBrowserCommand',
+	#superclass : 'MCBrowserAbstractMethodCommand',
 	#category : 'MonticelloGUI-Commands',
 	#package : 'MonticelloGUI',
 	#tag : 'Commands'
@@ -9,20 +9,18 @@ Class {
 { #category : 'default' }
 MCLoadMethodCommand class >> defaultName [
 
-	^ 'Load method'
+	^ 'Load method...'
+]
+
+{ #category : 'testing' }
+MCLoadMethodCommand >> canBeExecuted [ 
+
+	^ super canBeExecuted and: [ self selectedMethodDefinition isLoadable ]
 ]
 
 { #category : 'executing' }
 MCLoadMethodCommand >> execute [
 	"Load the selected method"
 
-	self selectedMethod ifNil: [ ^ self ].
-	self selectedMethod isLoadable
-		ifTrue: [ self selectedMethod load. ].
-]
-
-{ #category : 'accessing - selection' }
-MCLoadMethodCommand >> selectedMethod [
-
-	^ context selectedMethod
+	self selectedMethod load
 ]

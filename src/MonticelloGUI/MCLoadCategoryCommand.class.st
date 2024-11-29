@@ -9,7 +9,13 @@ Class {
 { #category : 'default' }
 MCLoadCategoryCommand class >> defaultName [
 
-	^ 'Load category'
+	^ 'Load category...'
+]
+
+{ #category : 'testing' }
+MCLoadCategoryCommand >> canBeExecuted [ 
+
+	^ self categorySelection notNil
 ]
 
 { #category : 'executing' }
@@ -22,8 +28,9 @@ MCLoadCategoryCommand >> categorySelection [
 MCLoadCategoryCommand >> execute [
 	"Load the entire selected category"
 
-	self categorySelection ifNil: [ ^ self ].
-	self methodsForSelectedClassCategory do: [ :m | m load ].
+	self methodsForSelectedClassCategory 
+		do: [ :m | m load ]
+		displayingProgress: 'Loading definitions...'
 ]
 
 { #category : 'executing' }

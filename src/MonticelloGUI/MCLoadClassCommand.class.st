@@ -1,6 +1,6 @@
 Class {
 	#name : 'MCLoadClassCommand',
-	#superclass : 'MCSnapshotBrowserCommand',
+	#superclass : 'MCBrowserAbstractClassCommand',
 	#category : 'MonticelloGUI-Commands',
 	#package : 'MonticelloGUI',
 	#tag : 'Commands'
@@ -9,19 +9,20 @@ Class {
 { #category : 'default' }
 MCLoadClassCommand class >> defaultName [
 
-	^ 'Load class'
+	^ 'Load class...'
 ]
 
 { #category : 'executing' }
 MCLoadClassCommand >> execute [
 	"Load the selected class"
 
-	self selectedClass ifNil: [ ^ self ].
 	self packageClasses
 		detect: [ :ea | ea className = self selectedClass ]
 		ifFound: [ :packageClass | 
 			packageClass load.
-			self methodsForSelectedClass do: [ :m | m load ] ]
+			self methodsForSelectedClass 
+				do: [ :m | m load ]
+				displayingProgress: 'Loading definitions...' ]
 ]
 
 { #category : 'executing' }
@@ -34,10 +35,4 @@ MCLoadClassCommand >> methodsForSelectedClass [
 MCLoadClassCommand >> packageClasses [
 
 	^ context packageClasses
-]
-
-{ #category : 'executing' }
-MCLoadClassCommand >> selectedClass [
-
-	^ context selectedClass
 ]
