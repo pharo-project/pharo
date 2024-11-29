@@ -46,6 +46,13 @@ TaskbarThumbnailMorph >> button: aButton [
 		to: self
 ]
 
+{ #category : 'submorphs - add/remove' }
+TaskbarThumbnailMorph >> delete [
+	"NOTE: We should only remove it if we are the current thumbnail"
+	taskbar removeProperty: #taskbarThumbnail.
+	super delete
+]
+
 { #category : 'event handling' }
 TaskbarThumbnailMorph >> handlesMouseOver: evt [
 
