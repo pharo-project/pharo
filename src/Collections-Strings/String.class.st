@@ -2369,7 +2369,7 @@ String >> sameAs: aString [
 
 { #category : #comparing }
 String >> sameContents: aSymborOrString [
-	^ self = aSymborOrString
+	^ self = aSymborOrString asString
 ]
 
 { #category : #accessing }
