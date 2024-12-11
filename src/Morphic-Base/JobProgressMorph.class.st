@@ -63,6 +63,12 @@ JobProgressMorph >> current: aNumber [
 	self changed
 ]
 
+{ #category : 'action' }
+JobProgressMorph >> debug [
+
+	job isRunning ifTrue: [ job debug ]
+]
+
 { #category : 'API' }
 JobProgressMorph >> decrement [
 
@@ -119,7 +125,7 @@ JobProgressMorph >> initializeJob: aJob [
 		font: StandardFonts defaultFont.
 	bar := JobProgressBarMorph new.
 	bar
-		on: #mouseUp send: #interrupt to: aJob;
+		on: #mouseUp send: #debug to: self;
 		hResizing: #spaceFill.
 	self updateLayout
 ]

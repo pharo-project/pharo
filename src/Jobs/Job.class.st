@@ -23,8 +23,7 @@ Class {
 		'parent',
 		'process',
 		'owner',
-		'announcer',
-		'interruptBlock'
+		'announcer'
 	],
 	#classInstVars : [
 		'jobAnnouncer'
@@ -233,7 +232,6 @@ Job >> initialize [
 	title := ''.
 	isRunning := false.
 	children := OrderedCollection new.
-	interruptBlock := [ process debug ]
 ]
 
 { #category : 'accessing' }
@@ -241,24 +239,6 @@ Job >> installOn: aPresenter [
 	"this method is provider for compatibility"
 	
 	announcer := aPresenter announcer
-]
-
-{ #category : 'running' }
-Job >> interrupt [
-
-	self isRunning ifTrue: [ interruptBlock cull: self ]
-]
-
-{ #category : 'accessing' }
-Job >> interruptBlock [
-
-	^ interruptBlock
-]
-
-{ #category : 'accessing' }
-Job >> interruptBlock: aBlock [
-
-	interruptBlock := aBlock
 ]
 
 { #category : 'testing' }
@@ -382,12 +362,6 @@ Job >> run [
 		during: [ ^ block cull: self ] ]
 	ensure: [ 
 		self cleanupAfterRunning ]
-]
-
-{ #category : 'running' }
-Job >> terminate [
-
-	process terminate
 ]
 
 { #category : 'accessing' }
