@@ -94,6 +94,23 @@ PragmaTest >> testHash [
 	self assert: yetAnotherAtPragma hash equals: atPragma hash
 ]
 
+{ #category : #tests }
+PragmaTest >> testPragmaAddingProperty [
+ 	self assert: (Pragma allNamed: #testPragmaArg1:arg2:arg3:) notEmpty.
+ 	(self class>>#methodWithPragma) propertyAt: #hello put: #something.
+ 	Smalltalk garbageCollect.
+ 	self assert: (Pragma allNamed: #testPragmaArg1:arg2:arg3:) notEmpty
+]
+
+{ #category : #tests }
+PragmaTest >> testRecompile [
+ 	self assert: (Pragma allNamed: #testPragmaArg1:arg2:arg3:) notEmpty.
+ 	self class compile: 'methodWithPragma
+ 	<testPragmaArg1: #toto arg2: 2 arg3: true>' classified: 'helper'.
+ 	Smalltalk garbageCollect.
+ 	self assert: (Pragma allNamed: #testPragmaArg1:arg2:arg3:) notEmpty
+]
+
 { #category : #'tests - cache' }
 PragmaTest >> testall [
 	self assert: Pragma all first class equals: Pragma

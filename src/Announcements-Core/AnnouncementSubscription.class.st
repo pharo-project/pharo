@@ -102,3 +102,9 @@ AnnouncementSubscription >> valuable: aValuable [
 	self action:  aValuable.
 	self subscriber: aValuable receiver
 ]
+
+{ #category : #finalization }
+AnnouncementSubscription >> unregister [
+
+	"Nothing, for compatibility with weak subscriptions"
+]

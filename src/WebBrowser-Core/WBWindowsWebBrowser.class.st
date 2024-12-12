@@ -24,10 +24,10 @@ WBWindowsWebBrowser class >> shellExecute: lpOperation file: lpFile parameters: 
 
 	^ self ffiCall: #(
 			FFIConstantHandle ShellExecuteA(
-     				0, "Operation is not associated with a window"
-     				String* lpOperation,
-         			String* lpFile,
-     				String* lpParameters,
-     				String* lpDirectory,
+     				int 0, "Operation is not associated with a window"
+     				String lpOperation,
+         			String lpFile,
+     				String lpParameters,
+     				String lpDirectory,
         			int nShowCmd)) module: #shell32
 ]

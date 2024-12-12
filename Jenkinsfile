@@ -152,15 +152,15 @@ def bootstrapImage(architectures){
 
           stage ("Full Image-${architecture}") {
             shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/4-build.sh"
-            stash includes: "bootstrap-cache/*.zip,bootstrap-cache/*.sources,bootstrap/scripts/**", name: "bootstrap${architecture}"
+            stash includes: "build/bootstrap-cache/*.zip,build/bootstrap-cache/*.sources,bootstrap/scripts/**", name: "bootstrap${architecture}"
           }
 
           if( isDevelopmentBranch() ) {
             stage("Upload to files.pharo.org-${architecture}") {
-              dir("bootstrap-cache") {
-                  shell "BUILD_NUMBER=${env.BUILD_ID} bash ../bootstrap/scripts/prepare_for_upload.sh ${architecture}"
-                sshagent (credentials: ['b5248b59-a193-4457-8459-e28e9eb29ed7']) {
-                  shell "bash ../bootstrap/scripts/upload_to_files.pharo.org.sh"
+              dir("build/bootstrap-cache") {
+                  shell "BUILD_NUMBER=${env.BUILD_ID} bash ../../bootstrap/scripts/prepare_for_upload.sh ${architecture}"
+                sshagent (credentials: ['files-pharo-org-inria']) {
+                  shell "bash ../../bootstrap/scripts/upload_to_files.pharo.org.sh"
                 }
               }
             }
@@ -176,7 +176,7 @@ def bootstrapImage(architectures){
               archiveArtifacts allowEmptyArchive: true, artifacts: "crash-bootstrap.dmp", fingerprint: true
           }
 
-        archiveArtifacts artifacts: 'bootstrap-cache/*.zip,bootstrap-cache/*.sources', fingerprint: true
+        archiveArtifacts artifacts: 'build/bootstrap-cache/*.zip,build/bootstrap-cache/*.sources', fingerprint: true
         cleanWs()
       }
       }

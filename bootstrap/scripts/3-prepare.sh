@@ -11,5 +11,6 @@ SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
 
 set_version_variables
 
-${VM} Pharo.image ${IMAGE_FLAGS} ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/prepare_image.st --save --quit
-${VM} Pharo.image ${IMAGE_FLAGS} ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/bootstrap.st --ARCH=${BOOTSTRAP_ARCH} --BUILD_NUMBER=${BUILD_NUMBER} --VERSION_INFO="${PHARO_NAME_PREFIX}-${PHARO_COMMIT_HASH}" --quit
+cd ${BOOTSTRAP_CACHE}
+${VM_BOOTSTRAP} Pharo.image ${IMAGE_FLAGS} ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/prepare_image.st --save --quit
+${VM_BOOTSTRAP} Pharo.image ${IMAGE_FLAGS} ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/bootstrap.st --ARCH=${BOOTSTRAP_ARCH} --BUILD_NUMBER=${BUILD_NUMBER} --VERSION_INFO="${PHARO_NAME_PREFIX}-${PHARO_COMMIT_HASH}" --quit

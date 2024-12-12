@@ -38,6 +38,17 @@ if [ ! -e "${BOOTSTRAP_VMTARGET}" ]; then
 	echo "Target VM: $(${VM} --version)"
 fi
 
+if [ ! -e "${BOOTSTRAP_DOWNLOADS}/vmBootstrap/pharo" ]; then
+
+	rm -rf "${BOOTSTRAP_DOWNLOADS}/vmBootstrap"
+	mkdir ${BOOTSTRAP_DOWNLOADS}/vmBootstrap
+	cd ${BOOTSTRAP_DOWNLOADS}/vmBootstrap
+
+	${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/getPharoVM.sh 100 vm $BOOTSTRAP_ARCH
+	cd -
+	echo "Bootstrap VM: $(${VM_BOOTSTRAP} --version)"
+fi 
+
 if [ ! -e "${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip" ]; then
 	download_to https://github.com/guillep/PharoBootstrap/releases/download/v1.7.8/bootstrapImage.zip ${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip
 fi 
@@ -59,11 +70,13 @@ fi
 
 # bootstrap image
 if [ ! -e "./Pharo.image" ]; then
+    cd ${BOOTSTRAP_CACHE}
 	unzip -u ${BOOTSTRAP_DOWNLOADS}/bootstrapImage.zip -d .
 fi
 
 # PharoV6 sources
 if [ ! -e "${BOOTSTRAP_CACHE}/PharoV60.sources" ]; then
+    cd ${BOOTSTRAP_CACHE}
 	unzip -u ${BOOTSTRAP_DOWNLOADS}/PharoV60.sources.zip -d ${BOOTSTRAP_CACHE}
 fi
 

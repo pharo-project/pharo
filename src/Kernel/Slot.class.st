@@ -161,10 +161,8 @@ Slot >> ensureSlotInitializationFor: aClass [
 { #category : #comparing }
 Slot >> hasSameDefinitionAs: otherSlot [
 
-	"equal definition. Slots an have additional state that is not part of the definitoon
-	(e.g. the index in IndexSlot).
-	This method then is overriden to not take that state into account"
-	^self = otherSlot
+	"Equal definition. Slots an have additional state that is not part of the definition (e.g. the index in IndexSlot), and data that is part of it (see subclass override)"
+ 	^self class = otherSlot class and: [self name = otherSlot name]
 ]
 
 { #category : #initialization }

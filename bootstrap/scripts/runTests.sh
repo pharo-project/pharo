@@ -9,10 +9,10 @@ set -o xtrace
 # The first parameter is the architecture
 # The second parameter is the stage name
 
-CACHE="${BOOTSTRAP_CACHE:-bootstrap-cache}"
-
 SCRIPTS="$(cd "$(dirname "${BASH_SOURCE[0]}")" ; pwd -P)"
 . ${SCRIPTS}/envvars.sh
+
+CACHE="${BOOTSTRAP_CACHE}"
 
 find ${CACHE}
 
@@ -21,7 +21,7 @@ find ${CACHE}
 # WARNING: I'm assuming CACHE=bootstrap-cache
 # WARNING: If you change this, you will need to change "runKernelTests.sh" too
 #
-TEST_NAME_PREFIX=$(find ${CACHE} -name "Pharo*.zip" | head -n 1 | cut -d'/' -f 2 | cut -d'-' -f 1-2)
+TEST_NAME_PREFIX=$(basename `find ${CACHE} -name "Pharo*.zip" | head -n 1` | cut -d'-' -f 1-2)
 
 # Extract the VM version from the image file version, avoiding going to git to extract the tags
 # This is handy in later stages of the build process when no repository is available, e.g., to run the tests

@@ -1706,7 +1706,9 @@ RubAbstractTextArea >> recomputeSelection [
 	"The same characters are selected but their coordinates may have changed.
 	Redetermine the selection according to the start and stop block indices;
 	do not highlight."
-
+	
+	"workaround, guard for empty paragraph. https://github.com/pharo-project/pharo/issues/12502"
+ 	self editingState paragraph lines isEmpty ifTrue: [ ^self ].
 	self markIndex: self markIndex pointIndex: self pointIndex
 ]
 

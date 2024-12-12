@@ -60,6 +60,12 @@ TaSingleComposition >> hash [
 	^ inner hash
 ]
 
+{ #category : #testing }
+TaSingleComposition >> includesTrait: aTrait [
+
+	^ inner includesTrait: aTrait
+]
+
 { #category : #'transforming selectors' }
 TaSingleComposition >> initializeSelectorForMe [
 	^ inner initializeSelectorForMe

@@ -87,6 +87,12 @@ TaEmptyComposition >> hash [
 ]
 
 { #category : #testing }
+TaEmptyComposition >> includesTrait: aTrait [
+
+	^ false
+]
+
+{ #category : #testing }
 TaEmptyComposition >> isAliasSelector: aString [
 
 	^ false

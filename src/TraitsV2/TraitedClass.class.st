@@ -195,6 +195,13 @@ TraitedClass >> includesLocalSelector: aSymbol [
 ]
 
 { #category : #testing }
+TraitedClass >> includesTrait: aTrait [
+
+	<reflection: 'Class structural inspection - Traits'>
+	^ self traitComposition includesTrait: aTrait
+]
+
+{ #category : #testing }
 TraitedClass >> isAliasSelector: aSymbol [
 	"Return true if the selector aSymbol is an alias defined
 	in my or in another composition somewhere deeper in

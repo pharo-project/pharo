@@ -273,11 +273,10 @@ OSSDL2BackendWindow >> diagonalDPI [
 
 { #category : #accessing }
 OSSDL2BackendWindow >> extent [
-	| w h |
-	w := ByteArray new: 4.
-	h := ByteArray new: 4.
-	sdl2Window getSizeW: w h: h.
-	^ (w signedLongAt: 1) @ (h signedLongAt: 1)
+
+	^ ExternalAddress allocate: 4 allocate: 4 during: [ :w :h |
+		  sdl2Window getSizeW: w h: h.
+		  (w signedLongAt: 1) @ (h signedLongAt: 1) ]
 ]
 
 { #category : #accessing }
@@ -287,7 +286,7 @@ OSSDL2BackendWindow >> extent: newExtent [
 
 { #category : #private }
 OSSDL2BackendWindow >> fetchDPI [
-	| displayIndex ddpi hdpi vdpi newDiagonalDPI newScreenScaleFactor |
+	| displayIndex newDiagonalDPI newScreenScaleFactor |
 	"In OS X disable the computation of a DPI based scale factor. These values
 	are completely wrong and we are getting scale factors that are very large
 	even in non-retina display. This workaround does not affect the support for
@@ -301,23 +300,26 @@ OSSDL2BackendWindow >> fetchDPI [
 	displayIndex := sdl2Window getDisplayIndex.
 	displayIndex < 0 ifTrue: [ ^ false ].
 
-	ddpi := ByteArray new: 4.
-	hdpi := ByteArray new: 4.
-	vdpi := ByteArray new: 4.
-	(SDL2 getDisplay: displayIndex ddpi: ddpi hdpi: hdpi vdpi: vdpi) = 0 ifFalse: [ ^ false ].
+	ExternalAddress 
+		allocateMemoryOfSizes: #(4 4 4)
+		during: [ :ddpi :hdpi :vdpi |
+						(SDL2 getDisplay: displayIndex ddpi: ddpi hdpi: hdpi vdpi: vdpi) = 0 
+							ifFalse: [ ^ false ].
 
-	newDiagonalDPI := ddpi floatAt: 1.
-	"Allow automatic scale of factor increments of 5%. We need to
-	round due to precision issues which may result in an almost 1 scale factor, but not exactly one.
-	This has to be at least a divisor of 25% which are normal scale factor increments that are selectable in Windows.
-	"
-	newScreenScaleFactor := newDiagonalDPI / self screenScaleFactorBaseDPI roundTo: 0.05.
-	(screenScaleFactor closeTo: newScreenScaleFactor) ifTrue: [ ^ false ].
+						newDiagonalDPI := ddpi floatAt: 1.
+						"Allow automatic scale of factor increments of 5%. We need to
+						round due to precision issues which may result in an almost 1 scale factor, but not exactly one.
+						This has to be at least a divisor of 25% which are normal scale factor increments that are selectable in Windows.
+						"
+						newScreenScaleFactor := newDiagonalDPI / self screenScaleFactorBaseDPI roundTo: 0.05.
+						(screenScaleFactor closeTo: newScreenScaleFactor) ifTrue: [ ^ false ].
 
-	horizontalDPI := hdpi floatAt: 1.
-	verticalDPI := vdpi floatAt: 1.
-	diagonalDPI := newDiagonalDPI.
-	screenScaleFactor := newScreenScaleFactor.
+						horizontalDPI := hdpi floatAt: 1.
+						verticalDPI := vdpi floatAt: 1.
+						diagonalDPI := newDiagonalDPI.
+						screenScaleFactor := newScreenScaleFactor			
+	].
+
 	^ true
 ]
 
@@ -448,11 +450,10 @@ OSSDL2BackendWindow >> minimize [
 
 { #category : #'event handling' }
 OSSDL2BackendWindow >> mousePosition [
-	| x y |
-	x := ByteArray new: 4.
-	y := ByteArray new: 4.
-	SDL2 mouseStateX: x y: y.
-	^ ( x signedLongAt: 1) @ (y signedLongAt: 1)
+
+	^ ExternalAddress allocate: 4 allocate: 4 during: [ :x :y |
+		SDL2 mouseStateX: x y: y.
+		(x signedLongAt: 1) @ (y signedLongAt: 1) ]
 ]
 
 { #category : #'instance creation' }
@@ -504,11 +505,13 @@ OSSDL2BackendWindow >> platformSpecificHandle [
 
 { #category : #accessing }
 OSSDL2BackendWindow >> position [
-	| x y |
-	x := ByteArray new: ExternalType long byteSize.
-	y := ByteArray new: ExternalType long byteSize.
-	sdl2Window getPositionX: x y: y.
-	^ ( x signedLongAt: 1) @ (y signedLongAt: 1)
+
+	^ ExternalAddress
+		  allocate: ExternalType long byteSize
+		  allocate: ExternalType long byteSize
+		  during: [ :x :y |
+			  sdl2Window getPositionX: x y: y.
+			  (x signedLongAt: 1) @ (y signedLongAt: 1) ]
 ]
 
 { #category : #accessing }

@@ -70,6 +70,6 @@ ToolShortcutsCategory >> saveImage [
 	^ KMKeymap
 		shortcut: PharoShortcuts current saveImageShortcut
 		action: [
-			(Smalltalk snapshot: true andQuit: false)
-				ifFalse: [ UIManager default inform: 'Image saved' ] ]
+			(Smalltalk snapshot: true andQuit: false) hasSavedSuccessfully
+				ifTrue: [ UIManager default inform: 'Image saved' ] ]
 ]

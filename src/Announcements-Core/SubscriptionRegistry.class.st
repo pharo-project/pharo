@@ -84,8 +84,10 @@ SubscriptionRegistry >> remove: subscription [
 { #category : #'add/remove' }
 SubscriptionRegistry >> removeSubscriber: subscriber [
 
-	^ self protected: [
-		subscriptions removeAllSuchThat: [:subscription | subscription subscriber == subscriber ]]
+	^ self protected: [ | toRemove |
+		toRemove := subscriptions select: [ :subscription | subscription subscriber == subscriber ].
+		toRemove do: [ :e | e unregister ].
+		subscriptions removeAll: toRemove ]
 ]
 
 { #category : #'add/remove' }

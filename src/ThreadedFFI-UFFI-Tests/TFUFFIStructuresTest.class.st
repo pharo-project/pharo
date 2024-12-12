@@ -81,6 +81,35 @@ TFUFFIStructuresTest >> testPassingByParameterAStructInPharo [
 ]
 
 { #category : #tests }
+TFUFFIStructuresTest >> testPassingByReferenceAStructInArrayInC [
+
+	| pointArray return aPoint |
+	pointArray := FFIExternalArray externalNewType: TFPointTestStruct size: 3.
+	pointArray autoRelease.
+
+	aPoint := pointArray third.
+	aPoint x: 17.
+	aPoint y: 23.
+
+	return := self passStructByReference: aPoint.
+	self assert: return tfPointerAddress equals: aPoint getHandle tfPointerAddress
+]
+
+{ #category : #tests }
+TFUFFIStructuresTest >> testPassingByReferenceAStructInArrayInPharo [
+
+	| pointArray return aPoint |
+	pointArray := FFIExternalArray newType: TFPointTestStruct size: 3.
+
+	aPoint := pointArray third.
+	aPoint x: 17.
+	aPoint y: 23.
+
+	return := self passStructByReference: aPoint.
+	self assert: return tfPointerAddress equals: aPoint getHandle tfPointerAddress
+]
+
+{ #category : #tests }
 TFUFFIStructuresTest >> testPassingByReferenceAStructInC [
 
 	| aPoint return |
