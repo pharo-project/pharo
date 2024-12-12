@@ -446,9 +446,10 @@ RBRefactoryTyper >> refineTypesByLookingAtAssignments [
 	| searcher needsSearch |
 	needsSearch := false.
 	searcher := self parseTreeSearcher.
+
 	variableTypes
 		keysAndValuesDo: [ :key :value |
-			key first = $- asSymbol
+			key first = $-
 				ifFalse: [ needsSearch := true.
 					searcher
 						matches: key , ' := ``@object'
