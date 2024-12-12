@@ -5,10 +5,10 @@ Class {
 	#name : #BlockLocalTempCounter,
 	#superclass : #InstructionClient,
 	#instVars : [
-		'stackPointer',
-		'scanner',
-		'blockEnd',
-		'joinOffsets'
+		#stackPointer,
+		#scanner,
+		#blockEnd,
+		#joinOffsets
 	],
 	#category : #'Debugging-Core'
 }

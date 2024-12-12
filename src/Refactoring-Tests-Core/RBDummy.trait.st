@@ -1,7 +1,7 @@
 Trait {
 	#name : #RBDummy,
 	#instVars : [
-		'var1'
+		#var1
 	],
 	#category : #'Refactoring-Tests-Core-Data'
 }

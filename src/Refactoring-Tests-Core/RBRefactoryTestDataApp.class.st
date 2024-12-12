@@ -2,7 +2,7 @@ Class {
 	#name : #RBRefactoryTestDataApp,
 	#superclass : #Object,
 	#instVars : [
-		'temporaryVariable'
+		#temporaryVariable
 	],
 	#category : #'Refactoring-Tests-Core-Data'
 }

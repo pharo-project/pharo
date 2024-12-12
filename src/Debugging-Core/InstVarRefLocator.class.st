@@ -9,7 +9,7 @@ Class {
 	#name : #InstVarRefLocator,
 	#superclass : #InstructionClient,
 	#instVars : [
-		'bingo'
+		#bingo
 	],
 	#category : #'Debugging-Core'
 }

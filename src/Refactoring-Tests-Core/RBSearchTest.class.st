@@ -2,8 +2,8 @@ Class {
 	#name : #RBSearchTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'classSearches',
-		'currentSelector'
+		#classSearches,
+		#currentSelector
 	],
 	#category : #'Refactoring-Tests-Core-Base'
 }

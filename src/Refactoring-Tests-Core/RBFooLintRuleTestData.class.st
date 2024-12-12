@@ -2,7 +2,7 @@ Class {
 	#name : #RBFooLintRuleTestData,
 	#superclass : #RBLintRuleTestData,
 	#instVars : [
-		'result'
+		#result
 	],
 	#category : #'Refactoring-Tests-Core-Data'
 }

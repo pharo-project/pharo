@@ -7,10 +7,10 @@ Class {
 	#name : #SymbolicBytecodeBuilder,
 	#superclass : #InstructionClient,
 	#instVars : [
-		'method',
-		'scanner',
-		'oldPC',
-		'symbolicBytecodes'
+		#method,
+		#scanner,
+		#oldPC,
+		#symbolicBytecodes
 	],
 	#category : #'Debugging-Core'
 }
