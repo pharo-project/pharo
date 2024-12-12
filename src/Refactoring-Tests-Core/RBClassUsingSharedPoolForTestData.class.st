@@ -4,7 +4,7 @@ Class {
 	#traits : 'RBDummy',
 	#classTraits : 'RBDummy classTrait',
 	#pools : [
-		#RBSharedPoolForTestData
+		'RBSharedPoolForTestData'
 	],
 	#category : #'Refactoring-Tests-Core-Data'
 }

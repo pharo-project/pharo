@@ -2,12 +2,12 @@ Class {
 	#name : #RBTransformationRuleTestData,
 	#superclass : #RBFooLintRuleTestData,
 	#instVars : [
-		#rewriteRule,
-		#builder,
-		#class
+		'rewriteRule',
+		'builder',
+		'class'
 	],
 	#classVars : [
-		#RecursiveSelfRule
+		'RecursiveSelfRule'
 	],
 	#category : #'Refactoring-Tests-Core-Data'
 }

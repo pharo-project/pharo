@@ -2,7 +2,7 @@ Class {
 	#name : #RBTest,
 	#superclass : #TestCase,
 	#instVars : [
-		#aString
+		'aString'
 	],
 	#category : #'Refactoring-Tests-Core-Data'
 }

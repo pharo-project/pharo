@@ -2,10 +2,10 @@ Class {
 	#name : #RBTransformationRuleTestData1,
 	#superclass : #RBFooLintRuleTestData1,
 	#instVars : [
-		#foo
+		'foo'
 	],
 	#classVars : [
-		#A
+		'A'
 	],
 	#category : #'Refactoring-Tests-Core-Data'
 }

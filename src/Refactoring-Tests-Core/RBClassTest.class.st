@@ -2,11 +2,10 @@ Class {
 	#name : #RBClassTest,
 	#superclass : #RBRefactoringBrowserTest,
 	#instVars : [
-		#rbNamespace,
-		#objectClass,
-		#newClass,
-		#messageNodeClass,
-		#x
+		'rbNamespace',
+		'objectClass',
+		'newClass',
+		'messageNodeClass'
 	],
 	#category : #'Refactoring-Tests-Core-Base'
 }

@@ -2,7 +2,7 @@ Class {
 	#name : #RBNamespaceTest,
 	#superclass : #RBRefactoringBrowserTest,
 	#instVars : [
-		#modelFactory
+		'modelFactory'
 	],
 	#category : #'Refactoring-Tests-Core-Base'
 }

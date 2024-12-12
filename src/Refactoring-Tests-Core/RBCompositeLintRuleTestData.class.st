@@ -2,7 +2,7 @@ Class {
 	#name : #RBCompositeLintRuleTestData,
 	#superclass : #RBLintRuleTestData,
 	#instVars : [
-		#rules
+		'rules'
 	],
 	#category : #'Refactoring-Tests-Core-Data'
 }
