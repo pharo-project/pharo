@@ -37,11 +37,11 @@ ByteSymbolTest >> testNewFrom [
 	| dt |
 	dt := DateAndTime now asString asSymbol.
 	ByteSymbol newFrom: dt.
-	self assert: (Symbol allSymbols select: [ :e | e asString = dt ]) size equals: 1.
+	self assert: (Symbol allSymbols select: [ :e | e asString = dt asString ]) size equals: 1.
 	self assert: (ByteSymbol allInstances select: [ :e | e = dt ]) size equals: 1.
-	self assert: (Symbol allSymbols select: [ :e | e asString = dt ]) equals: (ByteSymbol allInstances select: [ :e | e = dt ]).
+	self assert: (Symbol allSymbols select: [ :e | e asString = dt asString ]) equals: (ByteSymbol allInstances select: [ :e | e = dt ]).
 	ByteSymbol newFrom: dt.
-	self assert: (Symbol allSymbols select: [ :e | e asString = dt ]) size equals: 1.
+	self assert: (Symbol allSymbols select: [ :e | e asString = dt asString ]) size equals: 1.
 	self assert: (ByteSymbol allInstances select: [ :e | e = dt ]) size equals: 1
 ]
 

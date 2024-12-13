@@ -1053,12 +1053,12 @@ RBParserTest >> testModifying [
 	self
 		assertEmpty:
 			(tree argumentNames asSet
-				removeAll: #('a' 'b');
+				removeAll: #(a b);
 				yourself).
 	self
 		assertEmpty:
 			(tree allDefinedVariables asSet
-				removeAll: #('a' 'b' 'd');
+				removeAll: #(a b d);
 				yourself).
 	tree := self parserClass parseExpression: 'self foo: 0'.
 	tree selector: #+.
@@ -1720,11 +1720,11 @@ RBParserTest >> testQuerying [
 	self assert: (tree whichNodeIsContainedBy: (91 to: 119)) selector value equals: #foo:foo:foo:.
 	self assert: (tree whichNodeIsContainedBy: (69 to: 121)) isBlock.
 	self assert: (tree whichNodeIsContainedBy: (69 to: 118)) isNil.
-	self assert: aNode blockVariables asSortedCollection asArray equals: #('arg1').
-	self assert: aNode temporaryVariables asSortedCollection asArray equals: #('b').
-	self assert: tree allDefinedVariables asSortedCollection asArray equals: #('a' 'arg1' 'b').
-	self assert: tree allArgumentVariables asSortedCollection asArray equals: #('a' 'arg1').
-	self assert: tree allTemporaryVariables asSortedCollection asArray equals: #('b')
+	self assert: aNode blockVariables asSortedCollection asArray equals: #(arg1).
+	self assert: aNode temporaryVariables asSortedCollection asArray equals: #(b).
+	self assert: tree allDefinedVariables asSortedCollection asArray equals: #(a arg1 b).
+	self assert: tree allArgumentVariables asSortedCollection asArray equals: #(a arg1).
+	self assert: tree allTemporaryVariables asSortedCollection asArray equals: #(b)
 ]
 
 { #category : #'to be reworked' }

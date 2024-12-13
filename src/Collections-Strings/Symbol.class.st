@@ -30,10 +30,10 @@ Class {
 	#name : #Symbol,
 	#superclass : #String,
 	#classVars : [
-		#NewSymbols,
-		#SelectorTable,
-		#StrictComparison,
-		#SymbolTable
+		'NewSymbols',
+		'SelectorTable',
+		'StrictComparison',
+		'SymbolTable'
 	],
 	#category : #'Collections-Strings-Base'
 }
@@ -521,6 +521,12 @@ Symbol >> isUnary [
 	"#between:and: isUnary >>> false"
 
 	^ self precedence = 1
+]
+
+{ #category : #converting }
+Symbol >> keywords [
+
+	^ super keywords collect: [ :e | e asSymbol ]
 ]
 
 { #category : #comparing }

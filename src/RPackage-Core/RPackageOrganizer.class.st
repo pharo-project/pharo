@@ -657,7 +657,7 @@ RPackageOrganizer >> packageMatchingExtensionName: anExtensionName [
 				(aSymbol size > tmpPackageName size)
 					ifTrue: [ tmpPackageName := aSymbol ]]].
 
-	^ tmpPackageName = #''
+	^ (tmpPackageName sameContents: '')
 		ifTrue: [ nil ]
 		ifFalse: [ self packageNamed: tmpPackageName ]
 ]
