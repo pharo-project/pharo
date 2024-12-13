@@ -19,16 +19,16 @@ Class {
 	#name : #FFICallout,
 	#superclass : #Object,
 	#instVars : [
-		#fnSpec,
-		#options,
-		#requestor,
-		#methodArgs,
-		#receiver,
-		#method,
-		#stringEncodingStrategy
+		'fnSpec',
+		'options',
+		'requestor',
+		'methodArgs',
+		'receiver',
+		'method',
+		'stringEncodingStrategy'
 	],
 	#classVars : [
-		#TypeAliases
+		'TypeAliases'
 	],
 	#category : #'UnifiedFFI-Callouts'
 }
@@ -361,7 +361,7 @@ FFICallout >> resolveType: aTypeName [
 		newName last = $* ifTrue: [
 			ptrArity := ptrArity + 1.
 			newName := newName allButLast ].
-		name = newName
+		name sameContents: newName
 	] whileFalse.
 
 	resolver := requestor

@@ -45,14 +45,14 @@ Class {
 	#name : #RBBlockNode,
 	#superclass : #RBValueNode,
 	#instVars : [
-		#left,
-		#right,
-		#colons,
-		#arguments,
-		#bar,
-		#body,
-		#scope,
-		#bcToASTCache
+		'left',
+		'right',
+		'colons',
+		'arguments',
+		'bar',
+		'body',
+		'scope',
+		'bcToASTCache'
 	],
 	#category : #'AST-Core-Nodes'
 }
@@ -185,7 +185,7 @@ RBBlockNode >> copyInContext: aDictionary [
 
 { #category : #testing }
 RBBlockNode >> defines: aName [
-	^arguments anySatisfy: [:each | each name = aName]
+	^arguments anySatisfy: [:each | each name sameContents: aName]
 ]
 
 { #category : #testing }

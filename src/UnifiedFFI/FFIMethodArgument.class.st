@@ -5,8 +5,8 @@ Class {
 	#name : #FFIMethodArgument,
 	#superclass : #FFIFunctionArgumentLoader,
 	#instVars : [
-		#index,
-		#argName
+		'index',
+		'argName'
 	],
 	#category : #'UnifiedFFI-Arguments'
 }

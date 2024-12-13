@@ -15,11 +15,11 @@ Class {
 	#name : #RBPragmaNode,
 	#superclass : #RBProgramNode,
 	#instVars : [
-		#selector,
-		#keywordsPositions,
-		#arguments,
-		#left,
-		#right
+		'selector',
+		'keywordsPositions',
+		'arguments',
+		'left',
+		'right'
 	],
 	#category : #'AST-Core-Nodes'
 }
@@ -91,7 +91,7 @@ RBPragmaNode >> copyInContext: aDictionary [
 
 { #category : #testing }
 RBPragmaNode >> defines: aName [
-	^ self isPrimitive and: [ arguments anySatisfy: [ :each | each value = aName ] ]
+	^ self isPrimitive and: [ arguments anySatisfy: [ :each | each value sameContents: aName ] ]
 ]
 
 { #category : #comparing }
