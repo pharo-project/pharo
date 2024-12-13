@@ -530,9 +530,9 @@ FileReferenceTest >> testGlob [
 	self assert: children size identicalTo: 4.	"including root"
 	children := ref glob: [ :node | node basename size > 1 ].
 	self assert: children size identicalTo: 3.	"without root"
-	children := ref glob: [ :node | node basename = #gamma ].
+	children := ref glob: [ :node | node basename = 'gamma' ].
 	self assert: children size identicalTo: 1.	"gamma"
-	self assert: children first basename equals: #gamma ]
+	self assert: children first basename equals: 'gamma' ]
 		ensure: [ (filesystem / 'alpha') ensureDeleteAll ]
 ]
 

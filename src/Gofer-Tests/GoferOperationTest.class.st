@@ -88,6 +88,7 @@ GoferOperationTest >> testCleanup [
 	environment organization addCategory: #'GoferFoo-Empty'.
 	class organization addCategory: #empty.
 	class class organization addCategory: #empty.
+
 	gofer cleanup.
 	self deny: (Smalltalk organization categories includes: #'GoferFoo-Empty').
 	self deny: (class organization categories includes: #'GoferFoo-Empty').
