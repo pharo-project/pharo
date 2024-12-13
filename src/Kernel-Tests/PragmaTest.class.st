@@ -15,7 +15,7 @@ Class {
 
 { #category : #helper }
 PragmaTest >> methodWithPragma [
-	<testPragmaArg1: #toto arg2: 2 arg3: true>
+ 	<testPragmaArg1: #toto arg2: 2 arg3: true>
 ]
 
 { #category : #running }
