@@ -45,7 +45,7 @@ SystemDependenciesTest >> externalDependendiesOf: packagesCollection [
 SystemDependenciesTest >> knownBasicToolsDependencies [
 	"ideally this list should be empty"
 
-	^ #( 'AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' #'Athens-Morphic'
+	^ #('Athens-Cairo' 'Athens-Core' #'Athens-Morphic'
 	     #'Refactoring-Critics' #'Commander-Core' #Reflectivity
 	     #'Reflectivity-Tools' #Shout 'HeuristicCompletion-Model'
 	     #VariablesLibrary #'Spec2-CommonWidgets' #'NewTools-Scopes'
