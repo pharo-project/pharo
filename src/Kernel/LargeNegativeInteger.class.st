@@ -124,14 +124,6 @@ LargeNegativeInteger >> positive [
 	^ false
 ]
 
-{ #category : 'printing' }
-LargeNegativeInteger >> printOn: aStream base: b [
-	"Append a representation of this number in base b on aStream."
-
-	aStream nextPut: $-.
-	self abs printOn: aStream base: b
-]
-
 { #category : 'testing' }
 LargeNegativeInteger >> sign [
 	"Optimization. Answer -1 since receiver is less than 0."

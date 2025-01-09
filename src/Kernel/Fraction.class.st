@@ -297,16 +297,6 @@ Fraction >> numerator [
 ]
 
 { #category : 'printing' }
-Fraction >> printOn: aStream base: base [
-
-	aStream nextPut: $(.
-	numerator printOn: aStream base: base.
-	aStream nextPut: $/.
-	denominator printOn: aStream base: base.
-	aStream nextPut: $)
-]
-
-{ #category : 'printing' }
 Fraction >> printOn: aStream showingDecimalPlaces: placesDesired [
 	"Same as super, but provides a faster implementation by inlining some Fraction protocol thus avoiding intermediate Fraction creation."
 
