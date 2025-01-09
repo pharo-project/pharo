@@ -66,7 +66,7 @@ FLUserGuidesTest >> testConsiderGlobal [
 { #category : 'tests-Getting Started' }
 FLUserGuidesTest >> testDemo [
 	| sourceArray loadedArray |
-	CompilationContext optionCleanBlockClosure ifTrue: [ ^ self skip ].
+	OCCompilationContext optionCleanBlockClosure ifTrue: [ ^ self skip ].
 
 	sourceArray := Array
 		with: 'a string'

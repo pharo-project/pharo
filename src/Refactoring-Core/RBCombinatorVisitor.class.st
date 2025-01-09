@@ -3,7 +3,7 @@ I am a visitor to find differents combinations of sequences nodes
 "
 Class {
 	#name : 'RBCombinatorVisitor',
-	#superclass : 'ASTProgramNodeVisitor',
+	#superclass : 'OCProgramNodeVisitor',
 	#instVars : [
 		'combinations'
 	],

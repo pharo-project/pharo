@@ -323,6 +323,7 @@ RBNamespace >> createNewClassFor: aBehavior [
 			rbMetaType := self rbMetaclassClass ].
 	nonMeta := rbType existingNamed: className model: self.
 	meta := rbMetaType existingNamed: className model: self.
+	nonMeta traitComposition: aBehavior traitComposition.
 	nonMeta packageName: aBehavior package name.
 	aBehavior packageTag isRoot ifFalse: [ nonMeta tagName: aBehavior packageTag name ].
 	^ changedClasses at: className put: (Array with: nonMeta with: meta)

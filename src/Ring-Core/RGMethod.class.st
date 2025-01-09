@@ -112,7 +112,7 @@ RGMethod >> ast [
 { #category : 'private' }
 RGMethod >> astFromSource [
 
-	^ RBParser parseMethod: self sourceCode
+	^ OCParser parseMethod: self sourceCode
 ]
 
 { #category : 'accessing - backend' }
@@ -319,7 +319,7 @@ RGMethod >> package: anRGPackage [
 { #category : 'accessing' }
 RGMethod >> parseTree [
 	| tree |
-	tree := RBParser
+	tree := OCParser
 		  parseMethod: self sourceCode
 		  onError: [ :str :pos | ^ nil ].
 	tree ifNotNil: [ tree doSemanticAnalysis ].
@@ -503,7 +503,7 @@ RGMethod >> sourceCodeForNoSelector [
 { #category : 'accessing' }
 RGMethod >> sourceCodeForNoSource [
 
-	^ self selector asMethodPreamble, String cr, String tab, '"source code for the method model not set"'
+	^ self selector asMethodSignature, String cr, String tab, '"source code for the method model not set"'
 ]
 
 { #category : 'accessing - backend' }

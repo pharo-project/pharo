@@ -295,7 +295,7 @@ FLBlockClosureSerializationTest >> testBlockClosureWithThreeArguments [
 FLBlockClosureSerializationTest >> testCleanBlockClosure [
 
 	| aClosure meterialized |
-	CompilationContext optionCleanBlockClosure ifFalse: [ ^ self skip ].
+	OCCompilationContext optionCleanBlockClosure ifFalse: [ ^ self skip ].
 
 	aClosure := [ :x | x objects detect: [ :y | y isInteger ] ].
 	self assert: aClosure isClean.
@@ -323,7 +323,7 @@ FLBlockClosureSerializationTest >> testNestedBlockClosureConstant [
 FLBlockClosureSerializationTest >> testNestedCleanBlockClosure [
 
 	| aClosure meterialized |
-	CompilationContext optionCleanBlockClosure ifFalse: [ ^ self skip ].
+	OCCompilationContext optionCleanBlockClosure ifFalse: [ ^ self skip ].
 
 	aClosure := [ [ :x | x objects detect: [ :y | y isInteger ] ] ] value.
 	self assert: aClosure isClean.

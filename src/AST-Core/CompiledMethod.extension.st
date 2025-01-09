@@ -10,7 +10,7 @@ CompiledMethod >> ast [
 	 ((self hasLiteral: #runtimeUndeclaredReadInContext:) or: [self hasLiteral: #runtimeUndeclaredWrite:inContext:])
  			ifTrue: [self isInstalled ifTrue: [self recompile]].
 	
-	^ ASTCache at: self
+	^ OCASTCache at: self
 ]
 
 { #category : '*AST-Core' }

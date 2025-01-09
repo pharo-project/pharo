@@ -218,18 +218,16 @@ SourceFileArray >> protocolAt: sourcePointer for: sourceDataPointers [
 	"Answer the protocol for a given method, retrieved from the sources or changes file. Answer unfound protocol if no protocol is available."
 
 	| preamble protocol tokens protocolPosition |
-	protocol := 'unfound protocol'.	"this is to indicate that the tagging in the source does not use the correct format.
+	protocol := 'unfound protocol'. "this is to indicate that the tagging in the source does not use the correct format.
 	We will have to fix that. For example some traits methods are wrongly tagged.
 	see http://code.google.com/p/pharo/issues/detail?id=4581"
 	preamble := self sourcedDataAt: sourcePointer.
 	preamble = 'Trait method' ifTrue: [ ^ nil ].
 	(preamble includesSubstring: sourceDataPointers key) ifTrue: [
-		tokens := preamble parseLiterals.
+		tokens := OCParser parseLiterals: preamble.
 		protocolPosition := tokens indexOf: sourceDataPointers key.
-		protocolPosition = 0
-			ifFalse: [
-				"New format gives change protocol and unified prior pointer"
-				protocol := tokens at: protocolPosition + 1 ] ].
+		protocolPosition = 0 ifFalse: [ "New format gives change protocol and unified prior pointer"
+			protocol := tokens at: protocolPosition + 1 ] ].
 	^ protocol
 ]
 
@@ -422,14 +420,11 @@ SourceFileArray >> timeStampAt: sourcePointer for: sourceDataPointers [
 	stamp := ''.
 	flushChanges ifFalse: [ ^ stamp ].
 	preamble := self sourcedDataAt: sourcePointer.
-	(preamble includesSubstring: sourceDataPointers key)
-		ifTrue: [
-			tokens := preamble parseLiterals.
-			stampPosition := tokens indexOf: sourceDataPointers value.
-			stampPosition = 0
-				ifFalse: [
-					"New format gives change stamp and unified prior pointer"
-					stamp := tokens at: stampPosition + 1 ] ].
+	(preamble includesSubstring: sourceDataPointers key) ifTrue: [
+		tokens := OCParser parseLiterals: preamble.
+		stampPosition := tokens indexOf: sourceDataPointers value.
+		stampPosition = 0 ifFalse: [ "New format gives change stamp and unified prior pointer"
+			stamp := tokens at: stampPosition + 1 ] ].
 	^ stamp
 ]
 

@@ -16,14 +16,6 @@ Class {
 	#tag : 'Drivers'
 }
 
-{ #category : 'execution' }
-ReRenameArgumentOrTemporaryDriver >> changes [
-
-	^ refactoring
-		  privateTransform;
-		  changes
-]
-
 { #category : 'resources' }
 ReRenameArgumentOrTemporaryDriver >> configureRefactoring [
 
@@ -60,26 +52,26 @@ ReRenameArgumentOrTemporaryDriver >> runRefactoring [
 	| cancelled |
 	self configureRefactoring.
 	refactoring prepareForExecution. "This is needed to set some info in the refactoring such as the parse tree or the defining node."
-	(refactoring applicabilityPreconditionsIndependentOfTheNewName reject: [ :condition | condition check ]) ifNotEmpty: [
-		^ self inform: 'The interval selected is not right to rename a temporary variable.' ].
+	
+	(refactoring applicabilityPreconditionsIndependentOfTheNewName reject: [ :condition | condition check ]) 
+		ifNotEmpty: [ ^ self inform: 'The interval selected is not right to rename a temporary variable.' ].
 
 	cancelled := false.
-
-	[
-	refactoring newName: (self defaultRequestDialog 
+	[ refactoring newName: (self defaultRequestDialog 
 			 title: 'Rename a temp variable';
 			 label: 'New name of the variable';
 			 text: sourceNode name  ;
-			 
-			 onCancel: [ "We cannot return in this block so we save the result as a boolean to check it later." cancelled := true ];
+			 "We cannot return in this block so we save the result as a boolean to check it later."
+			 onCancel: [  cancelled := true ];
 			 openModal).
 
 	cancelled ifTrue: [ ^ self inform: 'Refactoring cancelled' ].
 
-	refactoring applicabilityPreconditionsOfTheNewName allSatisfy: [ :condition | condition check ] ] whileFalse: [
-		refactoring applicabilityPreconditionsOfTheNewName
-			detect: [ :condition | condition check ]
-			ifFound: [ :condition | self inform: condition errorString ] ].
+	refactoring applicabilityPreconditionsOfTheNewName allSatisfy: [ :condition | condition check ] ] 
+		whileFalse: [
+			refactoring applicabilityPreconditionsOfTheNewName
+				detect: [ :condition | condition check ]
+				ifFound: [ :condition | self inform: condition errorString ] ].
 
 	self applyChanges
 ]

@@ -111,7 +111,7 @@ CoASTHeuristicsResultSetBuilder >> visitValueNode: aNode [
 			we just inject a synthetic message node in the AST with an empty selector.
 			This empty selector will then be completed according to the existing rules and heuristics.
 			It is a little hackish but we believe in magic."
-			aMessageNode := ASTMessageNode new.
+			aMessageNode := OCMessageNode new.
 			aNode replaceWith: aMessageNode.
 			aMessageNode receiver: aNode.
 			aMessageNode selector: #''.

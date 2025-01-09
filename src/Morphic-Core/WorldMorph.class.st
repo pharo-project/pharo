@@ -578,8 +578,15 @@ WorldMorph >> runStepMethods [
 ]
 
 { #category : 'accessing' }
-WorldMorph >> scaleFactor: newScaleFactor [
-	self setProperty: #scaleFactor toValue: newScaleFactor
+WorldMorph >> scaleFactor: newZoomFactor [
+
+	self
+		deprecated: 'Use #zoomFactor: instead'
+		on: '20/12/2024'
+		in: #Pharo13
+		transformWith:
+		'`@receiver scaleFactor: `@arg' -> '`@receiver zoomFactor: `@arg'.
+	self zoomFactor: newZoomFactor
 ]
 
 { #category : 'stepping' }

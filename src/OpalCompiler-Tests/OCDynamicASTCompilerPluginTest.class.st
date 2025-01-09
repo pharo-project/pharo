@@ -13,7 +13,7 @@ OCDynamicASTCompilerPluginTest >> testCreateAndUseDynamicCompilerPlugin [
 
 	plugin := OCDynamicASTCompilerPlugin
 		          newFromTransformBlock: [ :ast |
-			          (ASTParseTreeRewriter
+			          (OCParseTreeRewriter
 				           replaceLiteral: 42
 				           with: 'meaning of life') executeTree: ast.
 			          ast ]

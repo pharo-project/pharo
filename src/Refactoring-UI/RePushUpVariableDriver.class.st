@@ -14,12 +14,6 @@ Class {
 }
 
 { #category : 'execution' }
-RePushUpVariableDriver >> changes [
-
-	^ refactoring privateTransform; changes
-]
-
-{ #category : 'execution' }
 RePushUpVariableDriver >> configureRefactoring [
 
 	" we should manage multiple instance variables"
@@ -39,9 +33,6 @@ RePushUpVariableDriver >> refactoringClass [
 RePushUpVariableDriver >> runRefactoring [
 
 	self configureRefactoring.
-	
-	"refactoring preconditionDirectlyDefinesVariable check ifFalse: [ ^ self ]."
-
 	self applyChanges
 ]
 

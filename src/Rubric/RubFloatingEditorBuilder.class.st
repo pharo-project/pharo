@@ -117,6 +117,7 @@ RubFloatingEditorBuilder >> autoAccept: aBoolean [
 
 { #category : 'private' }
 RubFloatingEditorBuilder >> buildEditor [
+
 	editor := RubScrolledTextMorph new forbidMenu.
 	editor
 		autoAccept: autoAccept;
@@ -130,11 +131,18 @@ RubFloatingEditorBuilder >> buildEditor [
 	editor
 		beWrapped;
 		font: font;
-		margins: (Margin left: 2 right: 2 top: 0 bottom: 1);
+		margins: (Margin
+				 left: 2
+				 right: 2
+				 top: 0
+				 bottom: 1);
 		selectFrom: initialContents size + 1 to: initialContents size.
 
 	"until we have better a rub text editor for text field like components"
-	editor textArea on: PharoShortcuts current findShortcut do:[:x | "nothing, we don't need a search within a floating editor widget"].
+	editor textArea
+		bindKeyCombination: PharoShortcuts current findShortcut
+		toAction: [ :x | "nothing, we don't need a search within a floating editor widget"
+			 ].
 	editor textArea withoutSelectionBar.
 	^ self customizedEditor
 ]

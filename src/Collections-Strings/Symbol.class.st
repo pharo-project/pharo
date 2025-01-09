@@ -165,14 +165,6 @@ Symbol class >> rawIntern: aStringOrSymbol [
 		  NewSymbols add: aStringOrSymbol createSymbol ]
 ]
 
-{ #category : 'instance creation' }
-Symbol class >> readFrom: strm [
-	"Symbol readFromString: '#abc'"
-
-	strm peek = $# ifFalse: [self error: 'Symbols must be introduced by #'].
-    	^ strm contents parseLiterals first
-]
-
 { #category : 'selector table' }
 Symbol class >> rebuildSelectorTable [
 
@@ -346,6 +338,25 @@ Symbol >> asAccessor [
 
 	self endsWithAColon ifFalse:[ ^ self ].
 	^ (self withoutSuffix: ':') asSymbol
+]
+
+{ #category : 'converting' }
+Symbol >> asMethodSignature [
+	"Returns the method signature method name with parameters based on the receiving selector."
+	
+	self numArgs = 0
+		ifTrue: [ ^ self asString ].
+	^ String
+		streamContents: [ :str |
+			| keywords |
+			keywords := self keywords.
+			keywords
+				doWithIndex: [ :each :index |
+					str
+						nextPutAll: each;
+						nextPutAll: ' var';
+						nextPutAll: index asString.
+					index = keywords size ifFalse: [ str space ] ] ]
 ]
 
 { #category : 'converting' }

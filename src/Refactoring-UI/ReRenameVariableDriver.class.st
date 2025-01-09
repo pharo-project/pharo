@@ -16,12 +16,6 @@ Class {
 }
 
 { #category : 'execution' }
-ReRenameVariableDriver >> changes [
-
-	^ refactoring privateTransform; changes
-]
-
-{ #category : 'execution' }
 ReRenameVariableDriver >> configureRefactoring [
 
 	refactoring := self refactoringClass
@@ -84,7 +78,8 @@ ReRenameVariableDriver >> runRefactoring [
 	self configureRefactoring.
 	shouldEscape := false.
 	"We cannot rename something that doesn'e exist.
-	If we don't check this before `prepareRefactoringInteractively` it will loop indefinetely since this precondition will always fail."
+	If we don't check this before `prepareRefactoringInteractively` 
+	it will loop indefinetely since this precondition will always fail."
 	refactoring preconditionDirectlyDefinesVariable check ifFalse: [ ^ self ].
 	self prepareRefactoringInteractively.
 	shouldEscape ifTrue: [ ^ self ].

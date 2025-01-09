@@ -5,8 +5,9 @@ Class {
 		'classSearches',
 		'currentSelector'
 	],
-	#category : 'Refactoring-Core-Tests',
-	#package : 'Refactoring-Core-Tests'
+	#category : 'Refactoring-Core-Tests-Model',
+	#package : 'Refactoring-Core-Tests',
+	#tag : 'Model'
 }
 
 { #category : 'accessing' }
@@ -63,7 +64,7 @@ RBSearchTest >> buildSimpleLiteralSearch [
 		matchesAnyTreeOf:
 			(Array
 				with:
-					(RBParser
+					(OCParser
 						parseExpression:
 							'#(''bugs'' ''possible bugs'' ''unnecessary code'' ''intention revealing'' ''miscellaneous'')'))
 		do: [ :aNode :answer |
@@ -160,7 +161,7 @@ RBSearchTest >> currentSelector [
 
 { #category : 'accessing' }
 RBSearchTest >> parseTreeSearcher [
-	^ ASTParseTreeSearcher new
+	^ OCParseTreeSearcher new
 ]
 
 { #category : 'running' }

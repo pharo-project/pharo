@@ -72,7 +72,7 @@ RBRefactoryTyper class >> newFor: aRBNamespace [
 { #category : 'accessing' }
 RBRefactoryTyper class >> typesFor: variableName in: aParseTree model: aRBSmalltalk [
 	| searcher messages |
-	searcher := ASTParseTreeSearcher new.
+	searcher := OCParseTreeSearcher new.
 	searcher matches: variableName , ' `@message: ``@args'
 		do:
 			[:aNode :answer |
@@ -190,7 +190,7 @@ RBRefactoryTyper >> guessTypeFromAssignment: aNode [
 	type := nil.
 	aNode value isAssignment
 		ifTrue: [ ^ self
-				guessTypeFromAssignment: ( ASTAssignmentNode variable: aNode variable value: aNode value value )
+				guessTypeFromAssignment: ( OCAssignmentNode variable: aNode variable value: aNode value value )
 			].
 	aNode value isBlock
 		ifTrue: [ type := model classFor: [  ] class ].
@@ -291,7 +291,7 @@ RBRefactoryTyper >> parseTreeSearcher [
 
 { #category : 'selectors' }
 RBRefactoryTyper >> parseTreeSearcherClass [
-	^ ASTParseTreeSearcher
+	^ OCParseTreeSearcher
 ]
 
 { #category : 'printing' }

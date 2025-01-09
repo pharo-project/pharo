@@ -35,7 +35,7 @@ ReflectivityReificationTest >> testAccessTemp [
 	link := MetaLink new
 		metaObject: self;
 		selector: #tagExec:;
-		arguments: {(ASTVariableNode named: #temp)}.
+		arguments: {(OCVariableNode named: #temp)}.
 	varNode link: link.
 	self assert: varNode hasMetalink.
 	self assert: tag isNil.

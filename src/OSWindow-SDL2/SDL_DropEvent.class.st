@@ -45,7 +45,7 @@ SDL_DropEvent >> file [
 { #category : 'accessing - structure variables' }
 SDL_DropEvent >> file: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_FILE put: anObject getHandle
+	handle pointerAt: OFFSET_FILE put: anObject getHandle.
 ]
 
 { #category : 'accessing - structure variables' }

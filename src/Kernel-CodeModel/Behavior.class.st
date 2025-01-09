@@ -414,7 +414,10 @@ Behavior >> basicNewTenured [
 	See more information in the newTenured method comment."
 
 	<primitive: 596 error: ec>
-	self error: 'Could not allocated object in the old space. Primitive error'
+	ec == #'insufficient object memory' ifTrue: [
+		^ self handleFailingBasicNew ].
+	self isVariable ifTrue: [ ^ self basicNew: 0 ].
+	self primitiveFailed
 ]
 
 { #category : 'instance creation' }
@@ -424,7 +427,12 @@ Behavior >> basicNewTenured: sizeRequested [
 	See more information in the newTenured method comment."
 
 	<primitive: 597 error: ec>
-	self error: 'Could not allocated object in the old space. Primitive error'
+	ec == #'insufficient object memory' ifTrue: [
+		^ self handleFailingBasicNew: sizeRequested ].
+	self isVariable ifFalse: [
+		self error:
+			self printString , ' cannot have variable sized instances' ].
+	self primitiveFailed
 ]
 
 { #category : 'obsolete subclasses' }
@@ -1431,7 +1439,7 @@ Behavior >> propertyAt: propName ifAbsent: aBlock [
 Behavior >> propertyAt: propName put: propValue [
 	^ self ensureProperties
 		at: propName
-		ifAbsentPut: propValue
+		put: propValue
 ]
 
 { #category : 'accessing' }

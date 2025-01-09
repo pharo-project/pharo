@@ -28,7 +28,7 @@ OCCompilerSyntaxErrorNotifyingTest >> enumerateAllSelections [
 	1 to: self numberOfSelections do: [ :n |
 		| result |
 		result := [ self evaluateSelectionNumber: n ]
-			          on: CodeError
+			          on: OCCodeError
 			          do: [ :exc |
 				          | expectedNotification expectedNotificationLocation |
 				          expectedNotification := (expectedErrors at: n)

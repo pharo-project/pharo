@@ -157,16 +157,16 @@ RBMoveMethodRefactoring >> checkTemporaryVariableNames [
 { #category : 'transforming' }
 RBMoveMethodRefactoring >> compileDelegatorMethod [
 	| statementNode delegatorNode tree |
-	delegatorNode := ASTMessageNode
-		                 receiver: (ASTVariableNode named: variable)
+	delegatorNode := OCMessageNode
+		                 receiver: (OCVariableNode named: variable)
 		                 selector: parseTree selector
 		                 keywordsPositions: parseTree keywordsPositions
 		                 arguments: (parseTree argumentNames collect: [ :each |
 				                  each = selfVariableName
-					                  ifTrue: [ ASTVariableNode selfNode ]
-					                  ifFalse: [ ASTVariableNode named: each ] ]).
-	self hasOnlySelfReturns ifFalse: [ delegatorNode := ASTReturnNode value: delegatorNode ].
-	statementNode := ASTSequenceNode temporaries: #(  ) statements: (Array with: delegatorNode).
+					                  ifTrue: [ OCVariableNode selfNode ]
+					                  ifFalse: [ OCVariableNode named: each ] ]).
+	self hasOnlySelfReturns ifFalse: [ delegatorNode := OCReturnNode value: delegatorNode ].
+	statementNode := OCSequenceNode temporaries: #(  ) statements: (Array with: delegatorNode).
 	(tree := class parseTreeForSelector: selector) body: statementNode.
 	class compileTree: tree
 ]
@@ -285,7 +285,7 @@ RBMoveMethodRefactoring >> getNewMethodName [
 	] whileTrue: [  ].
 	parseTree
 		renameSelector: newSelector
-		andArguments: ( parameters collect: [ :each | ASTVariableNode named: each ] ) asArray
+		andArguments: ( parameters collect: [ :each | OCVariableNode named: each ] ) asArray
 ]
 
 { #category : 'transforming' }

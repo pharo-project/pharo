@@ -38,7 +38,10 @@ SDL_Window >> createAcceleratedRenderer [
 
 { #category : 'rendering' }
 SDL_Window >> createDefaultRenderer [
-	^ self createRenderer: -1 flags: 0
+
+	^ self
+		  createRenderer: -1 "Find the first available rendering driver with the matching options"
+		  flags: OSPlatform current sdlPlatform defaultRendererFlags
 ]
 
 { #category : 'rendering' }

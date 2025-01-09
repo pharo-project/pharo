@@ -16,12 +16,12 @@ Class {
 RBConditionTest >> setUp [
 	| classenv classes |
 	super setUp.
-	classes := { Object . ASTMessageNode . TextConstants } asOrderedCollection addAll: self class withAllSuperclasses; yourself.
+	classes := { Object . OCMessageNode . TextConstants } asOrderedCollection addAll: self class withAllSuperclasses; yourself.
 	classenv := RBClassEnvironment classes: classes.
 	rbNamespace := RBNamespace onEnvironment: classenv.
 	
 	objectClass := rbNamespace classNamed: #Object.
-	messageNodeClass := rbNamespace classNamed: #ASTMessageNode.
+	messageNodeClass := rbNamespace classNamed: #OCMessageNode.
 	rbNamespace defineClass: [ :aBuilder |
 		aBuilder
 			superclass: Object;

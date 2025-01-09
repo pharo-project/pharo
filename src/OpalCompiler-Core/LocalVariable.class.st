@@ -1,5 +1,11 @@
 "
-I model local Variables
+I model local variables: temporaries, arguments, remote vector temps, primitive error variables.... but also compilation internal variables such as copied local variables. 
+
+I represent if the variable
+
+- is initialized
+- can be written to 
+- ....
 "
 Class {
 	#name : 'LocalVariable',

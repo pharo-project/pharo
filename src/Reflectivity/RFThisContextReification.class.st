@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFThisContextReification class >> entities [
-	^{ASTProgramNode . Variable}
+	^{OCProgramNode . Variable}
 ]
 
 { #category : 'plugin interface' }
@@ -21,15 +21,15 @@ RFThisContextReification class >> key [
 
 { #category : 'generate' }
 RFThisContextReification >> genForASTProgramNode [
-	^ASTVariableNode thisContextNode
+	^OCVariableNode thisContextNode
 ]
 
 { #category : 'generate' }
 RFThisContextReification >> genForInstanceVariableSlot [
-	^ASTVariableNode thisContextNode
+	^OCVariableNode thisContextNode
 ]
 
 { #category : 'generate' }
 RFThisContextReification >> genForLiteralVariable [
-	^ASTVariableNode thisContextNode
+	^OCVariableNode thisContextNode
 ]

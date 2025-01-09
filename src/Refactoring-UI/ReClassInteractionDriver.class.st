@@ -11,14 +11,6 @@ Class {
 	#tag : 'Drivers'
 }
 
-{ #category : 'execution' }
-ReClassInteractionDriver >> changes [
-	"Remember should not call generateChanges"
-
-	refactoring privateTransform.
-	^ refactoring changes
-]
-
 { #category : 'accessing' }
 ReClassInteractionDriver >> configureRefactoring [
 	^ self subclassResponsibility

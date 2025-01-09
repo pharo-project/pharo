@@ -41,11 +41,11 @@ RBInlineMethodFromComponentRefactoring >> addSelfReferenceToInlineParseTree [
 	(rewriter executeTree: inlineParseTree)
 		ifTrue: [inlineParseTree := rewriter tree].
 	newArguments := inlineParseTree arguments asOrderedCollection.
-	newArguments addFirst: (ASTVariableNode named: variableName).
+	newArguments addFirst: (OCVariableNode named: variableName).
 	inlineParseTree
 		renameSelector: (self addArgumentToSelector: inlineParseTree selector)
 		andArguments: newArguments.
-	sourceMessage receiver replaceWith: (ASTVariableNode named: variableName)
+	sourceMessage receiver replaceWith: (OCVariableNode named: variableName)
 ]
 
 { #category : 'transforming' }

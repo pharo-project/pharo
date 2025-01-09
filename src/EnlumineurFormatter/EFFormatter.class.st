@@ -30,7 +30,7 @@ Implementation remarks
 "
 Class {
 	#name : 'EFFormatter',
-	#superclass : 'ASTAbstractFormatter',
+	#superclass : 'OCAbstractFormatter',
 	#instVars : [
 		'codeStream',
 		'indent',
@@ -1086,7 +1086,7 @@ EFFormatter >> formatArray: anArrayNode [
 	| current |
 	codeStream nextPutAll: self spacesInsideArray.
 	(anArrayNode statements
-		reject: [ :each | each class = ASTLiteralValueNode ])
+		reject: [ :each | each class = OCLiteralValueNode ])
 		ifEmpty: [ anArrayNode statements
 				do: [ :each | 
 					current := each.

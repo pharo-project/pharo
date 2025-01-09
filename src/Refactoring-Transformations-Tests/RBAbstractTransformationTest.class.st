@@ -25,7 +25,7 @@ RBAbstractTransformationTest >> parseMethod: aString [
 
 { #category : 'parsing' }
 RBAbstractTransformationTest >> parserClass [
-	^ RBParser
+	^ OCParser
 ]
 
 { #category : 'running' }

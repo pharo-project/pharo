@@ -66,7 +66,7 @@ SDL_SysWMEvent >> msg [
 { #category : 'accessing - structure variables' }
 SDL_SysWMEvent >> msg: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_MSG put: anObject getHandle
+	handle pointerAt: OFFSET_MSG put: anObject getHandle.
 ]
 
 { #category : 'printing' }

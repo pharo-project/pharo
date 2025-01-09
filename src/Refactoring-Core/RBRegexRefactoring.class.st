@@ -13,7 +13,7 @@ Here is a sample of a script that will change of the YK* classes of package Pref
 pkgPrefix := 'PrefixOfPackageNames'.
 newClassPrefix := 'ZG'.
 env := RBBrowserEnvironment new 
-			forPackageNames: (Package organizer packageNames select: [ : pkgName | (pkgName beginsWith: pkgPrefix) ]).
+			forPackageNames: (PackageOrganizer default packageNames select: [ : pkgName | (pkgName beginsWith: pkgPrefix) ]).
 model := (RBNamespace onEnvironment: env) name: 'MyModel'; yourself.
 RBClassRegexRefactoring new
 	model: model;
@@ -22,8 +22,8 @@ RBClassRegexRefactoring new
   execute.
 ```
 
-- ==renameClasses== renames the classes in place
-- ==copyclasses== copies the classes (pay attention we are not sure that it is fully working)
+- `renameClasses` renames the classes in place
+- `copyclasses` copies the classes (pay attention we are not sure that it is fully working)
 "
 Class {
 	#name : 'RBRegexRefactoring',

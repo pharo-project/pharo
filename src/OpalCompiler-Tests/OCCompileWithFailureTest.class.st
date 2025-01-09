@@ -42,7 +42,7 @@ OCCompileWithFailureTest >> testEvalSimpleMethodWithError [
 	self assert: compiler ast isMethod.
 	self assert: compiler ast isFaulty.
 
-	self should: [cm valueWithReceiver: nil] raise: RuntimeSyntaxError
+	self should: [cm valueWithReceiver: nil] raise: OCRuntimeSyntaxError
 ]
 
 { #category : 'tests' }
@@ -56,5 +56,5 @@ OCCompileWithFailureTest >> testParenthesis [
     compile.
 	self assert: compiler ast isDoIt.
 	self assert: compiler ast isFaulty.
-	self should: [cm valueWithReceiver: nil] raise: RuntimeSyntaxError
+	self should: [cm valueWithReceiver: nil] raise: OCRuntimeSyntaxError
 ]

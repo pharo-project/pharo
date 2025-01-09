@@ -10,16 +10,9 @@ Class {
 }
 
 { #category : 'tests' }
-ReDuplicateClassDriverTest >> classToBeDeleted [
+ReDuplicateClassDriverTest >> newName [
 
 	^ #ReClassCopiedToBeDeleted
-]
-
-{ #category : 'tests' }
-ReDuplicateClassDriverTest >> classToBeDuplicated [
-	"Answer the <Class> which will be duplicated"
-	
-	^ ReClassToBeDuplicated 
 ]
 
 { #category : 'tests' }
@@ -30,10 +23,10 @@ ReDuplicateClassDriverTest >> setUpMocksOn: driver [
 	dialog
 		on: #window respond: SpDialogWindowPresenter new beOk;
 		on:	 #newClassName respond: #ReClassCopiedToBeDeleted;
+		on: #packageName respond: #SomePackage;
 		on: #isCancelled respond: true;
 		on: #openModal respond: dialog.
 	driver requestDialog: dialog.
-	driver configureRefactoring.
 	
 	requestClass := MockObject new.
 	requestClass
@@ -47,36 +40,67 @@ ReDuplicateClassDriverTest >> setUpMocksOn: driver [
 { #category : 'running' }
 ReDuplicateClassDriverTest >> tearDown [ 
 
-	(testingEnvironment notNil and: [ testingEnvironment classNames includes: self classToBeDeleted ])
-		ifTrue: [ testingEnvironment removeClass: self classToBeDeleted ].
+	(testingEnvironment notNil and: [ testingEnvironment classNames includes: self newName ])
+		ifTrue: [ testingEnvironment removeClass: self newName ].
 	super tearDown.
 ]
 
 { #category : 'tests' }
 ReDuplicateClassDriverTest >> testDuplicateClass [
 
-	| driver rbClass driverChanges refactoring methodChanges |
-
-	testingEnvironment := RBClassEnvironment class: self classToBeDuplicated.
-	driver := ReDuplicateClassDriver basicNew.
+	| driver rbClass driverChanges methodChanges |
+	testingEnvironment := RBClassEnvironment classes: {
+			                      ReClassToBeDuplicated.
+			                      ReClassToBeDuplicated superclass }.
+	driver := ReDuplicateClassDriver className:
+		          ReClassToBeDuplicated name.
 
 	self setUpMocksOn: driver.
 
 	driver scopes: { testingEnvironment }.
 	rbClass := testingEnvironment classes anyOne.
-	
-	refactoring := ReCopyClassRefactoring new.
-	refactoring	className: self classToBeDeleted.
-	refactoring sourceClass: rbClass.
-	driver runRefactoring: refactoring.
-	driverChanges := driver refactoring changes.
-	self 
-		assert: driverChanges changes size 
-		equals: 5.
 
-	methodChanges := driverChanges changes select: [ : amc | amc isKindOf: RBAddMethodChange ].
-	self 
-		assert: (methodChanges select: [ : mc | mc selector = #hash or: [ mc selector = #= ] ]) size
+	driver runRefactoring.
+	driverChanges := driver refactoring changes.
+	self assert: driverChanges changes size equals: 5.
+
+	methodChanges := driverChanges changes select: [ :amc |
+		                 amc isKindOf: RBAddMethodChange ].
+	self
+		assert: (methodChanges select: [ :mc |
+				 mc selector = #hash or: [ mc selector = #= ] ]) size
+		equals: 2
+]
+
+{ #category : 'tests' }
+ReDuplicateClassDriverTest >> testDuplicateClassWithTrait [
+
+	| driver rbClass driverChanges methodChanges classAddition |
+	testingEnvironment := RBClassEnvironment classes: {
+			                      ReClassToBeDuplicatedWithTraits.
+			                      ReClassToBeDuplicatedWithTraits superclass }.
+	driver := ReDuplicateClassDriver className:
+		          ReClassToBeDuplicatedWithTraits name.
+
+	self setUpMocksOn: driver.
+
+	driver scopes: { testingEnvironment }.
+	rbClass := testingEnvironment classes anyOne.
+
+	driver runRefactoring.
+	driverChanges := driver refactoring changes.
+	self assert: driverChanges changes size equals: 5.
+
+	methodChanges := driverChanges changes select: [ :amc |
+		                 amc isKindOf: RBAddMethodChange ].
+	self
+		assert: (methodChanges select: [ :mc |
+				 mc selector = #hash or: [ mc selector = #= ] ]) size
 		equals: 2.
 
+	classAddition := driverChanges changes detect: [ :c |
+		                 c isKindOf: RBAddClassChange ].
+	self
+		assert: classAddition traitComposition asString
+		equals: ReClassToBeDuplicatedWithTraits traitCompositionString
 ]

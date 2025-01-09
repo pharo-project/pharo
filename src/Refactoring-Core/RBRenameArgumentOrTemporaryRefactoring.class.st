@@ -114,7 +114,7 @@ RBRenameArgumentOrTemporaryRefactoring >> prepareForExecution [
 		                whichVariableNode: parseTree
 		                inInterval: interval
 		                name: oldName. ]
-		on: CodeError 
+		on: OCCodeError 
 		do: [ self refactoringError: 'Selected code does not contain any variables or contains multiple of them.' ].
 	(variableNode isNil or: [ variableNode isVariable not ]) ifTrue: [
 		self refactoringError: oldName asString , ' isn''t a valid variable' ].

@@ -36,7 +36,7 @@ OCASTTranslatorTest class >> testParameters [
 OCASTTranslatorTest >> compilationContext [
 
 	| context |
-	context := CompilationContext new
+	context := OCCompilationContext new
 		           encoderClass: self encoder;
 		           bindings: globals;
 		           yourself.
@@ -53,7 +53,7 @@ OCASTTranslatorTest >> compileExample: aSelector [
 { #category : 'support' }
 OCASTTranslatorTest >> compileSource: source [
 	| ir ast |
-	ast := RBParser parseMethod: source.
+	ast := OCParser parseMethod: source.
 	ast compilationContext: self compilationContext.
 	ast compiler
 		class: OCOpalExamples;

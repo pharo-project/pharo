@@ -32,13 +32,6 @@ ReRemoveInstanceVariablesDriver >> browseInstanceVariableReferences [
 		
 ]
 
-{ #category : 'execution' }
-ReRemoveInstanceVariablesDriver >> changes [
-	"We only perform the changes."
-	
-	^ refactoring privateTransform; changes
-]
-
 { #category : 'resources' }
 ReRemoveInstanceVariablesDriver >> configureRefactoring [
 

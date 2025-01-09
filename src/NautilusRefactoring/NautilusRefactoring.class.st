@@ -129,7 +129,7 @@ NautilusRefactoring >> selectVariableToMoveMethodTo: aSelector class: aClass [
 
 	parseTree := aClass parseTreeForSelector: aSelector.
 	parseTree
-		ifNil: [ parseTree := ASTMethodNode selector: #value body: ( ASTSequenceNode statements: #() ) ].
+		ifNil: [ parseTree := OCMethodNode selector: #value body: ( OCSequenceNode statements: #() ) ].
 	nameList := OrderedCollection new.
 	nameList
 		addAll: parseTree argumentNames sorted;

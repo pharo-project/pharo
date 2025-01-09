@@ -105,18 +105,18 @@ ReflectiveMethod >> generatePrimitiveWrapper [
 	| wrappedMethod send wrapperMethod assignmentNode |
 	wrappedMethod := self compileAST.
 
-	send := ASTMessageNode
-		        receiver: ASTVariableNode selfNode
+	send := OCMessageNode
+		        receiver: OCVariableNode selfNode
 		        selector: #rFwithArgs:executeMethod:
 		        arguments: {
-				        (ASTArrayNode statements: ast arguments).
-				        (ASTLiteralNode value: self compiledMethod) }.
+				        (OCArrayNode statements: ast arguments).
+				        (OCLiteralNode value: self compiledMethod) }.
 
-	assignmentNode := ASTAssignmentNode
-		                  variable: (ASTVariableNode named: #RFReifyValueVar)
+	assignmentNode := OCAssignmentNode
+		                  variable: (OCVariableNode named: #RFReifyValueVar)
 		                  value: send.
 
-	wrapperMethod := ASTMethodNode
+	wrapperMethod := OCMethodNode
 		                 selector: ast selector
 		                 arguments: ast arguments
 		                 body: assignmentNode asSequenceNode.
@@ -141,7 +141,7 @@ ReflectiveMethod >> increaseLinkCount [
 { #category : 'invalidate' }
 ReflectiveMethod >> installCompiledMethod [
 	self installMethod: compiledMethod.
-	ASTCache default at: compiledMethod put: ast
+	OCASTCache default at: compiledMethod put: ast
 ]
 
 { #category : 'invalidate' }
@@ -231,6 +231,10 @@ ReflectiveMethod >> printOn: aStream [
 ReflectiveMethod >> recompileAST [
 
 	compiledMethod := self compileAST.
+	"This is bad.
+	Reflectivity has its own method installation process
+	This makes us duplicate behavior in here to pass the properties of old methods to ones"
+	ast compiledMethod migratePersistingPropertiesIn: compiledMethod.
 	ast compiledMethod: compiledMethod.
 	compiledMethod reflectiveMethod: self
 ]

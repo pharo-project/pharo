@@ -1,22 +1,9 @@
 "
-I visit an abstract syntax tree and generate IR (intermediate representation) instructions for each node by sending the appropriate message to my methodBuilder (an IRBuilder).  I hold onto my two subclasses 
-OCASTTranslatorForValue for generating instructions for effect and value, and
-OCASTTranslatorForEffect for generating instructions for effect only.
-
-Which one to use depends on the AST nodes and whether the code will only be executed (for effect only) or if the value is used afterwards (for value).
-
-For example, when translating a return, the value to return needs to be pushed on stack, so the valueTranslator is used:
-visitReturnNode: aReturnNode 
-	valueTranslator visitNode: aReturnNode value.
-	methodBuilder returnTop.
-	
-Whereas, in #visitMethodNode:,  the effectTranslator is used, because no value is pushed on stack at the end of the method body:
-...effectTranslator visitNode: aMethodNode body..
-
+I visit an abstract syntax tree and generate IR (intermediate representation) instructions for each node by sending the appropriate message to my methodBuilder (an `IRBuilder`).
 "
 Class {
 	#name : 'OCASTTranslator',
-	#superclass : 'ASTProgramNodeVisitor',
+	#superclass : 'OCProgramNodeVisitor',
 	#instVars : [
 		'methodBuilder',
 		'nextUniqueInlineID'
@@ -293,7 +280,7 @@ OCASTTranslator >> emitRuntimeError: aNode [
 	errors := aNode allErrorNotices.
 
 	methodBuilder
-		pushLiteralVariable: RuntimeSyntaxError binding;
+		pushLiteralVariable: OCRuntimeSyntaxError binding;
 		pushLiteral: (errors isEmpty
 				 ifTrue: [ 'Syntax error' ]
 				 ifFalse: [ errors first messageText ]);
@@ -429,7 +416,7 @@ OCASTTranslator >> initialize [
 
 	super initialize.
 	
-	methodBuilder := IRBuilder new.
+	methodBuilder := OCIRBuilder new.
 	nextUniqueInlineID := 0
 ]
 
@@ -462,7 +449,7 @@ OCASTTranslator >> subTranslator [
 OCASTTranslator >> translateConstantBlock: aBlockNode [
 	| ir |
 	"even though we never execute the compiledBlock, we create it so that the BlockClosure can use e.g. to query on the bytecode level"
-	ir := IRBuilder new
+	ir := OCIRBuilder new
 				mapToNode: aBlockNode;
 				numArgs: aBlockNode arguments size;
 				pushLiteral: aBlockNode constantValue;

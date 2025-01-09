@@ -393,7 +393,7 @@ RBExtractMethodTransformationTest >> testWithTemporaryVariable [
 	self
 		assert: (class parseTreeForSelector: #foo1)
 		equals: (self parseMethod: 'foo1 | rule |
-				rule := ASTParseTreeRewriter new.
+				rule := OCParseTreeRewriter new.
 				rule addSearch: ''super `@message: ``@args''
 					-> ([:aNode |
 					(class withAllSubclasses

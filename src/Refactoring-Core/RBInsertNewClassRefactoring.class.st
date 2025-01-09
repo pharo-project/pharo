@@ -21,7 +21,8 @@ Class {
 		'subclasses',
 		'comment',
 		'packageName',
-		'tagName'
+		'tagName',
+		'traitComposition'
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
@@ -87,7 +88,8 @@ RBInsertNewClassRefactoring >> privateTransform [
 				name: className;
 				package: packageName;
 				tag: tagName;
-				comment: self comment ];
+				comment: self comment;
+				traitComposition: (traitComposition ifNil: #()) ];
 		reparentClasses: subclasses to: (self model classNamed: className)
 ]
 
@@ -132,4 +134,10 @@ RBInsertNewClassRefactoring >> tagName [
 RBInsertNewClassRefactoring >> tagName: anObject [
 
 	tagName := anObject
+]
+
+{ #category : 'accessing' }
+RBInsertNewClassRefactoring >> traitComposition: aTraitComposition [
+
+	traitComposition := aTraitComposition
 ]

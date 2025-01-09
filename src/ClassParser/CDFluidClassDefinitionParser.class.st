@@ -473,7 +473,7 @@ CDFluidClassDefinitionParser >> parse: aString [
 CDFluidClassDefinitionParser >> parseRootNode: expressionTree [
 
 	| searcher |
-	searcher := ASTParseTreeSearcher new.
+	searcher := OCParseTreeSearcher new.
 	searcher
 		matches: 'Trait << `#name' do: [ :aNode :answer |
 			classNameNode := searcher variableNamed: '`#name'.
@@ -529,7 +529,7 @@ CDFluidClassDefinitionParser >> parseSelectorPart: aString withArgument: aNode [
 
 { #category : 'private - class factory' }
 CDFluidClassDefinitionParser >> parserClass [
-	^ RBParser
+	^ OCParser
 ]
 
 { #category : 'private - class factory' }

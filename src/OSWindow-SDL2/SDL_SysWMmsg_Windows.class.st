@@ -40,7 +40,7 @@ SDL_SysWMmsg_Windows >> hwnd [
 { #category : 'accessing - structure variables' }
 SDL_SysWMmsg_Windows >> hwnd: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_HWND put: anObject getHandle
+	handle pointerAt: OFFSET_HWND put: anObject getHandle.
 ]
 
 { #category : 'testing' }

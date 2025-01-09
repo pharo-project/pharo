@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFNodeReification class >> entities [
-	^{ASTProgramNode}
+	^{OCProgramNode}
 ]
 
 { #category : 'plugin interface' }
@@ -21,5 +21,5 @@ RFNodeReification class >> key [
 
 { #category : 'generate' }
 RFNodeReification >> genForASTProgramNode [
-	^ASTLiteralNode value: entity
+	^OCLiteralNode value: entity
 ]

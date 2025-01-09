@@ -359,10 +359,9 @@ StMethodNameEditorPresenter >> initializeDialogWindow: aModalPresenter [
 
 { #category : 'initialization' }
 StMethodNameEditorPresenter >> initializePresenters [
-
+	
 	selectorInput := self newTextInput.
 	selectorInput whenTextChangedDo: [ :text | self updateLabel ].
-	selectorInput editable: self canEditName.
 	selectorInput editable: self canEditName.
 
 	previewResult := self newLabel.

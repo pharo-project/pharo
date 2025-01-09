@@ -9,6 +9,20 @@ Class {
 	#tag : 'Editing-Core'
 }
 
+{ #category : 'asserting' }
+RubTextEditorTest >> assertPreviousJumpPointFrom: actualFrom to: actualTo equals: expected [
+
+	| actualIndexFrom actualIndexTo expectedIndex |
+	actualIndexFrom := actualFrom indexOf: $¶.
+	actualIndexTo := actualTo indexOf: $¶.
+	expectedIndex := expected indexOf: $¶.
+
+	actualIndexFrom to: actualIndexTo do: [ :i |
+		self
+			assert: (editor previousWord: i stopOnUpperCase: true)
+			equals: expectedIndex ]
+]
+
 { #category : 'running' }
 RubTextEditorTest >> setUp [
 
@@ -154,27 +168,17 @@ RubTextEditorTest >> testPreviousWord [
 
 	1 to: 7 do: [ :i |
 		"From:   |Lorem ipsum
-		 To:     Lore|m ipsum
-		 Should be: Lorem| ipsum"
+		 To:     Lorem |ipsum
+		 Should be: |Lorem ipsum"
 		self assert: (editor previousWord: i) equals: 1 ].
 
 	8 to: 12 do: [ :i |
 		"From:   Lorem |ipsum
-		 To:     Lorem ipsu|m
-		 Should be: Lorem ipsum|"
+		 To:     Lorem ipsum|
+		 Should be: Lorem |ipsum"
 		self assert: (editor previousWord: i) equals: 7 ].
 
 	self assert: (editor previousWord: 999) equals: 7. "Out of range"
-]
-
-{ #category : 'tests' }
-RubTextEditorTest >> testPreviousWordAtEmptyLineGoesToEndOfPreviousLine [
-
-	editor addString: 'a
-
-a'.
-
-	self assert: (editor previousWord: 3) equals: 2
 ]
 
 { #category : 'tests' }
@@ -230,6 +234,24 @@ RubTextEditorTest >> testPreviousWordSkipsCurrentSpacesAndGoesToStartOfCurrentWo
 	editor addString: 'abc def'.
 
 	self assert: (editor previousWord: 5) equals: 1
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testPreviousWordStopOnUpperCaseManyUpercases [
+
+	string := 'AAAb'.
+	editor addString: string.
+
+	self
+		assertPreviousJumpPointFrom: 	'AAAb¶'
+		to: 							  		'AAA¶b'
+		equals: 						  		'AA¶Ab'.	
+
+	self
+		assertPreviousJumpPointFrom:	'AA¶Ab'
+		to: 							  		'¶AAAb'
+		equals: 						  		'¶AAAb'.	
+
 ]
 
 { #category : 'test-selection' }

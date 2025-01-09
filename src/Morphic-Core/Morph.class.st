@@ -5418,11 +5418,6 @@ Morph >> scale: newScale [
 	"Backstop for morphs that don't have to do something special to set their scale"
 ]
 
-{ #category : 'accessing' }
-Morph >> scaleFactor [
-	^self valueOfProperty: #scaleFactor ifAbsent: [ 1.0 ]
-]
-
 { #category : 'geometry' }
 Morph >> screenLocation [
 	"For compatibility only"

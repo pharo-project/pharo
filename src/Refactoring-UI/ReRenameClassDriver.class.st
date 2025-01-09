@@ -19,12 +19,6 @@ ReRenameClassDriver class >> rename: oldName [
 		yourself
 ]
 
-{ #category : 'execution' }
-ReRenameClassDriver >> changes [
-
-	^ refactoring privateTransform; changes
-]
-
 { #category : 'resources' }
 ReRenameClassDriver >> configureRefactoring [
 	

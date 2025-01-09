@@ -3,7 +3,7 @@ I am a visitor to change temporaries and arguments to generic names (`tempMatch 
 "
 Class {
 	#name : 'RBMatchVisitor',
-	#superclass : 'ASTProgramNodeVisitor',
+	#superclass : 'OCProgramNodeVisitor',
 	#instVars : [
 		'arguments',
 		'temporaries',
@@ -31,7 +31,7 @@ RBMatchVisitor >> initialize [
 RBMatchVisitor >> replace: temp with: aString [
 	|definingNode|
 	definingNode := temp whoDefines: temp name.
-	(ASTParseTreeRewriter rename: temp name to: aString) executeTree: definingNode
+	(OCParseTreeRewriter rename: temp name to: aString) executeTree: definingNode
 ]
 
 { #category : 'visiting' }

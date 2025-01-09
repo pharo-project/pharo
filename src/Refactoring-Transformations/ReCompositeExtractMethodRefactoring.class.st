@@ -97,9 +97,9 @@ ReCompositeExtractMethodRefactoring >> addReturnIfNeeded: newMethodNode [
 	
 	assignments size = 1
 		ifTrue: [
-			newMethodNode addNode: (ASTReturnNode value:
-					 (ASTVariableNode named: assignments first asString)) ]
-		ifFalse: [ ASTReturnNodeAdderVisitor new visit: newMethodNode ].
+			newMethodNode addNode: (OCReturnNode value:
+					 (OCVariableNode named: assignments first asString)) ]
+		ifFalse: [ OCReturnNodeAdderVisitor new visit: newMethodNode ].
 ]
 
 { #category : 'preconditions' }
@@ -290,15 +290,15 @@ ReCompositeExtractMethodRefactoring >> generateNewMethodWith: aMethodName [
 
 	| args newMethodNode |
 	args := aMethodName arguments collect: [ :p |
-		        ASTVariableNode named: p ].
+		        OCVariableNode named: p ].
 
-	newMethodNode := ASTMethodNode
+	newMethodNode := OCMethodNode
 		                 selector: newSelector
 		                 arguments: args asArray
 		                 body: (subtree isSequence
 				                  ifTrue: [ subtree ]
 				                  ifFalse: [
-					                  ASTSequenceNode
+					                  OCSequenceNode
 						                  temporaries: #(  )
 						                  statements: (OrderedCollection with: subtree) ]).
 	temporaries do: [ :each | newMethodNode body addTemporaryNamed: each ].

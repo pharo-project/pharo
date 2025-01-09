@@ -94,9 +94,12 @@ SignalLogger class >> resetAllInstances [
 
 { #category : 'class initialization' }
 SignalLogger class >> resetInstance [
+
 	<script>
 
-	instance := nil
+	instance ifNotNil: [
+		Beacon instance unsubscribe: instance.
+		instance := nil ]
 ]
 
 { #category : 'registration' }

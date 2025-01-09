@@ -139,3 +139,9 @@ RBAddClassChange >> textToDisplay [
 
 	^ 'Add class change for ' , self builder name
 ]
+
+{ #category : 'accessing' }
+RBAddClassChange >> traitComposition [
+
+	^ builder traitComposition
+]

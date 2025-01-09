@@ -290,7 +290,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 	KMRepository reset.
 	Morph shortcutsHandler: KMShortcutHandler new.
 
-	ASTProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [ ASTSimpleFormatter ]).
+	OCProgramNode formatterClass: (self class environment at: #EFFormatter ifAbsent: [ OCSimpleFormatter ]).
 
 	Color flushCache.
 

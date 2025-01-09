@@ -39,7 +39,7 @@ ReAddSuperSendAsFirstStatementTransformation >> methodTree: aMethodNode inClass:
 ReAddSuperSendAsFirstStatementTransformation >> privateTransform [ 
 
 	| superSend |
-	superSend := ASTMessageNode receiver: ASTVariableNode superNode selector: selector.
+	superSend := OCMessageNode receiver: OCVariableNode superNode selector: selector.
 	method body addNodeFirst: superSend.
 	class compileTree: method
 ]
