@@ -9,9 +9,9 @@ Class {
 	#name : #ZnStatusLine,
 	#superclass : #Object,
 	#instVars : [
-		#version,
-		#code,
-		#reason
+		'version',
+		'code',
+		'reason'
 	],
 	#category : #'Zinc-HTTP-Core'
 }
@@ -194,7 +194,7 @@ ZnStatusLine >> version [
 { #category : #accessing }
 ZnStatusLine >> version: string [
 	version := ZnConstants knownHTTPVersions
-		detect: [ :each | each = string ]
+		detect: [ :each | each sameContents: string ]
 		ifNone: [ (ZnUnknownHttpVersion version: string) signal ]
 ]
 

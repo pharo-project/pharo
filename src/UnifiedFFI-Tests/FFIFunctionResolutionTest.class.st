@@ -2,7 +2,7 @@ Class {
 	#name : #FFIFunctionResolutionTest,
 	#superclass : #FFIAbstractTest,
 	#instVars : [
-		#stack
+		'stack'
 	],
 	#category : #'UnifiedFFI-Tests-Tests'
 }
@@ -66,7 +66,7 @@ FFIFunctionResolutionTest >> testResolveArgumentVariableShouldSetArgumentVariabl
 	argument resolveUsing: resolver.
 	argument loader emitArgument: self context: context.
 
-	self assert: stack pop equals: { #temp . 'arg' }
+	self assert: stack pop equals:  #(#temp #arg)
 ]
 
 { #category : #tests }

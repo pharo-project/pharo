@@ -107,12 +107,12 @@ ZnReadEvalPrintDelegate >> handlePostRequest: request [
 
 { #category : #public }
 ZnReadEvalPrintDelegate >> handleRequest: request [
-	request uri firstPathSegment = #repl
+	(request uri firstPathSegment sameContents: #repl)
 		ifTrue: [
-			request method = #GET
+			(request method sameContents: #GET)
 				ifTrue: [
 					^ self handleGetRequest: request ].
-			(request method = #POST and: [ request hasEntity and: [ request contentType isBinary not ] ])
+			((request method sameContents: #POST) and: [ request hasEntity and: [ request contentType isBinary not ] ])
 				ifTrue: [
 					^ self handlePostRequest: request ] ].
 	^ ZnResponse notFound: request uri

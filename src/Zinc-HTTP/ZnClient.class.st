@@ -30,14 +30,14 @@ Class {
 	#name : #ZnClient,
 	#superclass : #Object,
 	#instVars : [
-		#request,
-		#response,
-		#connection,
-		#lastUsed,
-		#options,
-		#session,
-		#logLevel,
-		#newOptions
+		'request',
+		'response',
+		'connection',
+		'lastUsed',
+		'options',
+		'session',
+		'logLevel',
+		'newOptions'
 	],
 	#category : #'Zinc-HTTP-Client-Server'
 }
@@ -309,7 +309,7 @@ ZnClient >> curl [
 		request hasEntity ifTrue: [
 			 stream << 'echo ' << request entity asByteArray hex << ' | xxd -r -p | ' ].
 		stream << 'curl'.
-		request method = #GET ifFalse: [ stream << ' -X ' << request method ].
+		(request method sameContents: #GET) ifFalse: [ stream << ' -X ' << request method ].
 		stream space; print: request uri.
 		request headersDo: [ :key :value |
 			stream << ' -H"' << key << ':' << value << '"' ].

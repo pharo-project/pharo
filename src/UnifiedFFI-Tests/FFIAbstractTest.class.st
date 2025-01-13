@@ -2,11 +2,11 @@ Class {
 	#name : #FFIAbstractTest,
 	#superclass : #TestCase,
 	#instVars : [
-		#intType,
-		#int32Type,
-		#voidType,
-		#charType,
-		#uint32Type
+		'intType',
+		'int32Type',
+		'voidType',
+		'charType',
+		'uint32Type'
 	],
 	#category : #'UnifiedFFI-Tests-Tests'
 }
@@ -30,17 +30,17 @@ FFIAbstractTest >> externalTypeAlias: aTypeName [
 { #category : #private }
 FFIAbstractTest >> ffiBindingOf: aString [
 
-	aString = '_test_type_int'
+	(aString sameContents: '_test_type_int')
 		ifTrue: [ ^ aString -> intType ].
-	aString = '_test_type_bool'
+	(aString sameContents: '_test_type_bool')
 		ifTrue: [ ^ aString -> int32Type ].
-	aString = '_test_type_uint32'
+	(aString sameContents: '_test_type_uint32')
 		ifTrue: [ ^ aString -> int32Type ].
-	aString = '_test_type_int32'
+	(aString sameContents: '_test_type_int32')
 		ifTrue: [ ^ aString -> int32Type ].
-	aString = '_test_type_void'
+	(aString sameContents: '_test_type_void')
 		ifTrue: [ ^ aString -> voidType ].
-	aString = '_test_type_char'
+	(aString sameContents: '_test_type_char')
 		ifTrue: [ ^ aString -> charType ].
 	self error: 'Type not recognized: ', aString
 ]

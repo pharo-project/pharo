@@ -5,8 +5,8 @@ Class {
 	#name : #FFIFunctionParserTest,
 	#superclass : #FFIAbstractTest,
 	#instVars : [
-		#ctx,
-		#resolver
+		'ctx',
+		'resolver'
 	],
 	#category : #'UnifiedFFI-Tests-Tests'
 }
@@ -158,7 +158,7 @@ FFIFunctionParserTest >> testParseAnonymousFunction [
 		self assert: (args at: 1) asOldArraySpec equals: #(nil nil 0 0).
 		self assert: (args at: 2) asOldArraySpec equals: #(nil nil 'nil' 0).
 		self assert: (args at: 3) asOldArraySpec equals: #(nil nil -10 0).
-		self assert: (args at: 4) asOldArraySpec equals: #(nil nil FOO_BAR 0).
+		self assert: (args at: 4) asOldArraySpec equals: #(nil nil 'FOO_BAR' 0).
 		self assert: (args at: 5) asOldArraySpec equals: #(a nil int 0).
 		self assert: (args at: 6) asOldArraySpec equals: #(_b nil int 1).
 		self assert: (args at: 7) asOldArraySpec equals: #(c nil char 2).
