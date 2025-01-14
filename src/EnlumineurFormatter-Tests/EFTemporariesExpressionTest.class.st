@@ -10,15 +10,15 @@ EFTemporariesExpressionTest >> basicCommentFormatConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-	useBasicCommentFormat: true;
-	formatCommentCloseToStatements:true;
-	indentStyle: #tabulation;
-	numberOfNewLinesAfterTemporaries:0;
-	retainBlankLinesBeforeComments:false;
-	indentExtraSpaces:0
+		  useBasicCommentFormat: true;
+		  formatCommentCloseToStatements: true;
+		  indentStyle: #tabulation;
+		  numberOfNewLinesAfterTemporaries: 0;
+		  retainBlankLinesBeforeComments: false;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'configurations' }
@@ -39,15 +39,15 @@ EFTemporariesExpressionTest >> dontRetainBlankLinesBeforeComments [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		retainBlankLinesBeforeComments: false;
-		useBasicCommentFormat: false;
-		formatCommentCloseToStatements:false;
-		indentStyle: #tabulation;
-		numberOfNewLinesAfterTemporaries:0;
-		indentExtraSpaces:0
+		  retainBlankLinesBeforeComments: false;
+		  useBasicCommentFormat: false;
+		  formatCommentCloseToStatements: false;
+		  indentStyle: #tabulation;
+		  numberOfNewLinesAfterTemporaries: 0;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'configurations' }
@@ -55,15 +55,15 @@ EFTemporariesExpressionTest >> newLinesAfterTemporariesConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
-		
+			EFContext new storeOn: s]"
+
 	^ self contextClass basicNew
-		numberOfNewLinesAfterTemporaries: 1;
-		useBasicCommentFormat: false;
-		formatCommentCloseToStatements:false;
-		indentStyle: #tabulation;
-		retainBlankLinesBeforeComments:false;
-		indentExtraSpaces:0
+		  numberOfNewLinesAfterTemporaries: 1;
+		  useBasicCommentFormat: false;
+		  formatCommentCloseToStatements: false;
+		  indentStyle: #tabulation;
+		  retainBlankLinesBeforeComments: false;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'configurations' }
@@ -71,15 +71,15 @@ EFTemporariesExpressionTest >> noNewLinesAfterTemporariesConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		numberOfNewLinesAfterTemporaries: 0;
-		useBasicCommentFormat: false;
-		formatCommentCloseToStatements:false;
-		indentStyle: #tabulation;
-		retainBlankLinesBeforeComments:false;
-		indentExtraSpaces:0
+		  numberOfNewLinesAfterTemporaries: 0;
+		  useBasicCommentFormat: false;
+		  formatCommentCloseToStatements: false;
+		  indentStyle: #tabulation;
+		  retainBlankLinesBeforeComments: false;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'configurations' }
@@ -87,16 +87,16 @@ EFTemporariesExpressionTest >> notBasicCommentFormatConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		useBasicCommentFormat: false;
-		formatCommentCloseToStatements:true;
-		indentStyle: #tabulation;
-		numberOfNewLinesAfterTemporaries:0;
-		retainBlankLinesBeforeComments:false;
-		maxLineLength: 50;
-		indentExtraSpaces:0
+		  useBasicCommentFormat: false;
+		  formatCommentCloseToStatements: true;
+		  indentStyle: #tabulation;
+		  numberOfNewLinesAfterTemporaries: 0;
+		  retainBlankLinesBeforeComments: false;
+		  maxLineLength: 50;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'configurations' }
@@ -104,15 +104,16 @@ EFTemporariesExpressionTest >> retainBlankLinesBeforeComments [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
+
 	^ self contextClass basicNew
-		numberOfNewLinesAfterTemporaries: 1;
-		useBasicCommentFormat: false;
-		formatCommentCloseToStatements:true;
-		maxLineLength:50;
-		indentStyle: #tabulation;
-		retainBlankLinesBeforeComments:true;
-		indentExtraSpaces:0
+		  numberOfNewLinesAfterTemporaries: 1;
+		  useBasicCommentFormat: false;
+		  formatCommentCloseToStatements: true;
+		  maxLineLength: 50;
+		  indentStyle: #tabulation;
+		  retainBlankLinesBeforeComments: true;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'tests' }
@@ -271,13 +272,13 @@ EFTemporariesExpressionTest >> twoLinesAfterTemporariesConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
-		
+			EFContext new storeOn: s]"
+
 	^ self contextClass basicNew
-		numberOfNewLinesAfterTemporaries: 2;
-		useBasicCommentFormat: false;
-		formatCommentCloseToStatements:false;
-		indentStyle: #tabulation;
-		retainBlankLinesBeforeComments:false;
-		indentExtraSpaces:0
+		  numberOfNewLinesAfterTemporaries: 2;
+		  useBasicCommentFormat: false;
+		  formatCommentCloseToStatements: false;
+		  indentStyle: #tabulation;
+		  retainBlankLinesBeforeComments: false;
+		  indentExtraSpaces: 0
 ]

@@ -57,6 +57,16 @@ OCParserTest >> parserClass [
 	^ self class parserClass
 ]
 
+{ #category : 'tests - methodClass' }
+OCParserTest >> testASTHasClass [
+
+	| ast |
+	ast := OCParser parseMethod: (Point>>#degrees) sourceCode.
+	ast methodClass: Point. 
+	self deny: ast methodClass isNil.
+	self assert: ast methodClass equals: Point
+]
+
 { #category : 'tests - parsing' }
 OCParserTest >> testArray [
 	| tree |

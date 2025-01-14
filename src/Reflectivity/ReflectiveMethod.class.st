@@ -231,6 +231,10 @@ ReflectiveMethod >> printOn: aStream [
 ReflectiveMethod >> recompileAST [
 
 	compiledMethod := self compileAST.
+	"This is bad.
+	Reflectivity has its own method installation process
+	This makes us duplicate behavior in here to pass the properties of old methods to ones"
+	ast compiledMethod migratePersistingPropertiesIn: compiledMethod.
 	ast compiledMethod: compiledMethod.
 	compiledMethod reflectiveMethod: self
 ]

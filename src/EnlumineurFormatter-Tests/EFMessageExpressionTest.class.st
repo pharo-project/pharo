@@ -282,19 +282,19 @@ EFMessageExpressionTest >> noIdentsForKeyWordConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		indentStyle: #tabulation;
-		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
-		maxLineLength: 50;
-		newLineBeforeFirstKeyword: true;
-		keepBlockInMessage: false;
-		numberOfArgumentsForMultiLine: 1;
-		indentsForKeywords: 0;
-		indentExtraSpaces:0
+		  indentStyle: #tabulation;
+		  formatCommentCloseToStatements: false;
+		  multiLineMessages: Array new;
+		  oneLineMessages: Array new;
+		  maxLineLength: 50;
+		  newLineBeforeFirstKeyword: true;
+		  keepBlockInMessage: false;
+		  numberOfArgumentsForMultiLine: 1;
+		  indentsForKeywords: 0;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'configurations' }
@@ -302,20 +302,20 @@ EFMessageExpressionTest >> noTraditionalBinaryPrecedenceConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		indentStyle: #tabulation;
-		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
-		numberOfArgumentsForMultiLine: 10;
-		indentsForKeywords: 0;
-		maxLineLength: 50;
-		newLineBeforeFirstKeyword: false;
-		keepBlockInMessage: false;
-		numberOfSpacesInsideParentheses: 0;
-		indentExtraSpaces: 0
+		  indentStyle: #tabulation;
+		  formatCommentCloseToStatements: false;
+		  multiLineMessages: Array new;
+		  oneLineMessages: Array new;
+		  numberOfArgumentsForMultiLine: 10;
+		  indentsForKeywords: 0;
+		  maxLineLength: 50;
+		  newLineBeforeFirstKeyword: false;
+		  keepBlockInMessage: false;
+		  numberOfSpacesInsideParentheses: 0;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'configurations' }
@@ -396,20 +396,20 @@ EFMessageExpressionTest >> simpleConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		indentStyle: #tabulation;
-		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
-		numberOfArgumentsForMultiLine: 10;
-		indentsForKeywords: 0;
-		maxLineLength: 50;
-		newLineBeforeFirstKeyword: false;
-		keepBlockInMessage: false;
-		numberOfSpacesInsideParentheses: 0;
-		indentExtraSpaces: 0
+		  indentStyle: #tabulation;
+		  formatCommentCloseToStatements: false;
+		  multiLineMessages: Array new;
+		  oneLineMessages: Array new;
+		  numberOfArgumentsForMultiLine: 10;
+		  indentsForKeywords: 0;
+		  maxLineLength: 50;
+		  newLineBeforeFirstKeyword: false;
+		  keepBlockInMessage: false;
+		  numberOfSpacesInsideParentheses: 0;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'tests - binary' }
@@ -1396,19 +1396,19 @@ EFMessageExpressionTest >> twoIdentsForKeyWordConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		indentStyle: #tabulation;
-		formatCommentCloseToStatements: false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
-		numberOfArgumentsForMultiLine: 1;
-		indentsForKeywords: 2;
-		maxLineLength: 50;
-		newLineBeforeFirstKeyword: true;
-		keepBlockInMessage: false;
-		indentExtraSpaces:0
+		  indentStyle: #tabulation;
+		  formatCommentCloseToStatements: false;
+		  multiLineMessages: Array new;
+		  oneLineMessages: Array new;
+		  numberOfArgumentsForMultiLine: 1;
+		  indentsForKeywords: 2;
+		  maxLineLength: 50;
+		  newLineBeforeFirstKeyword: true;
+		  keepBlockInMessage: false;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'configurations' }

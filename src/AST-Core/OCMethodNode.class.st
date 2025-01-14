@@ -677,7 +677,7 @@ OCMethodNode >> selectorParts [
 OCMethodNode >> semanticScope: aSemanticScope [
 	compilationContext ifNil: [
 		compilationContext := aSemanticScope targetClass compiler compilationContext].
-
+	self scope: aSemanticScope.
 	self compilationContext semanticScope: aSemanticScope
 ]
 

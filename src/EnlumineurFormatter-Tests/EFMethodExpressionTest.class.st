@@ -10,7 +10,7 @@ EFMethodExpressionTest >> basicCommentFormatConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -27,7 +27,7 @@ EFMethodExpressionTest >> basicConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -47,7 +47,7 @@ EFMethodExpressionTest >> bigMethodeConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -81,7 +81,7 @@ EFMethodExpressionTest >> cascadeConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -108,7 +108,7 @@ EFMethodExpressionTest >> newLineBetweenTopCommentsConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -128,7 +128,7 @@ EFMethodExpressionTest >> noNewLineBetweenTopCommentsConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -145,7 +145,7 @@ EFMethodExpressionTest >> noNewLinesAfterCommentConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -162,7 +162,7 @@ EFMethodExpressionTest >> notBasicCommentFormatConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -180,7 +180,7 @@ EFMethodExpressionTest >> oneNewLineAfterCommentConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -188,7 +188,7 @@ EFMethodExpressionTest >> oneNewLineAfterCommentConfiguration [
 		  useBasicCommentFormat: false;
 		  maxLineLength: 50;
 		  numberOfNewLinesAfterMethodSignature: 1;
-  		  numberOfNewLinesAfterMethodSignatureWithMethodComment: 1; 
+		  numberOfNewLinesAfterMethodSignatureWithMethodComment: 1;
 		  numberOfNewLinesAfterMethodComment: 2;
 		  indentExtraSpaces: 0
 ]
@@ -198,11 +198,11 @@ EFMethodExpressionTest >> oneNewLinesAfterSignatureConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		indentStyle: #tabulation;
-		formatCommentCloseToStatements:false
+		  indentStyle: #tabulation;
+		  formatCommentCloseToStatements: false
 ]
 
 { #category : 'configurations' }
@@ -210,7 +210,7 @@ EFMethodExpressionTest >> signatureConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -225,7 +225,7 @@ EFMethodExpressionTest >> signatureNotOnMultipleLinesConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -241,7 +241,7 @@ EFMethodExpressionTest >> signatureOnMultipleLinesConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;
@@ -258,7 +258,7 @@ EFMethodExpressionTest >> spaceIndentConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  numberOfSpacesInIndent: 10;
@@ -602,7 +602,7 @@ EFMethodExpressionTest >> twoNewLinesAfterSignatureConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
 		  indentStyle: #tabulation;

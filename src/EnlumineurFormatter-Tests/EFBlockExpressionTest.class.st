@@ -231,25 +231,25 @@ EFBlockExpressionTest >> newLineBeforeEndBracketConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		numberOfSpacesInsideBlock:1;
-		periodAtEndOfBlock: false;
-		periodAtEndOfMethod: false;
-		lineUpBlockBrackets: true;
-		indentStyle: #tabulation;
-		keepBlockInMessage: true;
-		retainBlankLinesBetweenStatements: false;
-		minimumNewLinesBetweenStatements: 1;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
-		numberOfArgumentsForMultiLine: 5;
-		indentsForKeywords: 1;
-		newLineBeforeFirstKeyword: false;
-		formatCommentCloseToStatements: true;
-		maxLineLength: 50;
-		indentExtraSpaces:0
+		  numberOfSpacesInsideBlock: 1;
+		  periodAtEndOfBlock: false;
+		  periodAtEndOfMethod: false;
+		  lineUpBlockBrackets: true;
+		  indentStyle: #tabulation;
+		  keepBlockInMessage: true;
+		  retainBlankLinesBetweenStatements: false;
+		  minimumNewLinesBetweenStatements: 1;
+		  multiLineMessages: Array new;
+		  oneLineMessages: Array new;
+		  numberOfArgumentsForMultiLine: 5;
+		  indentsForKeywords: 1;
+		  newLineBeforeFirstKeyword: false;
+		  formatCommentCloseToStatements: true;
+		  maxLineLength: 50;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'configurations' }
@@ -257,25 +257,25 @@ EFBlockExpressionTest >> noNewLineBeforeEndBracketConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		numberOfSpacesInsideBlock:1;
-		periodAtEndOfBlock: false;
-		periodAtEndOfMethod: false;
-		lineUpBlockBrackets: false;
-		indentStyle: #tabulation;
-		keepBlockInMessage: true;
-		retainBlankLinesBetweenStatements: false;
-		minimumNewLinesBetweenStatements: 1;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
-		numberOfArgumentsForMultiLine: 5;
-		indentsForKeywords: 1;
-		newLineBeforeFirstKeyword: false;
-		formatCommentCloseToStatements: true;
-		maxLineLength: 50;
-		indentExtraSpaces:0
+		  numberOfSpacesInsideBlock: 1;
+		  periodAtEndOfBlock: false;
+		  periodAtEndOfMethod: false;
+		  lineUpBlockBrackets: false;
+		  indentStyle: #tabulation;
+		  keepBlockInMessage: true;
+		  retainBlankLinesBetweenStatements: false;
+		  minimumNewLinesBetweenStatements: 1;
+		  multiLineMessages: Array new;
+		  oneLineMessages: Array new;
+		  numberOfArgumentsForMultiLine: 5;
+		  indentsForKeywords: 1;
+		  newLineBeforeFirstKeyword: false;
+		  formatCommentCloseToStatements: true;
+		  maxLineLength: 50;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'configurations' }
@@ -338,25 +338,25 @@ EFBlockExpressionTest >> periodAtEndConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		numberOfSpacesInsideBlock:1;
-		periodAtEndOfBlock: true;
-		periodAtEndOfMethod: false;
-		lineUpBlockBrackets: false;
-		indentStyle: #tabulation;
-		keepBlockInMessage: false;
-		retainBlankLinesBetweenStatements: false;
-		minimumNewLinesBetweenStatements: 1;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
-		numberOfArgumentsForMultiLine: 5;
-		indentsForKeywords: 1;
-		newLineBeforeFirstKeyword: false;
-		formatCommentCloseToStatements: true;
-		maxLineLength: 50;
-		indentExtraSpaces:0
+		  numberOfSpacesInsideBlock: 1;
+		  periodAtEndOfBlock: true;
+		  periodAtEndOfMethod: false;
+		  lineUpBlockBrackets: false;
+		  indentStyle: #tabulation;
+		  keepBlockInMessage: false;
+		  retainBlankLinesBetweenStatements: false;
+		  minimumNewLinesBetweenStatements: 1;
+		  multiLineMessages: Array new;
+		  oneLineMessages: Array new;
+		  numberOfArgumentsForMultiLine: 5;
+		  indentsForKeywords: 1;
+		  newLineBeforeFirstKeyword: false;
+		  formatCommentCloseToStatements: true;
+		  maxLineLength: 50;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'configurations' }
