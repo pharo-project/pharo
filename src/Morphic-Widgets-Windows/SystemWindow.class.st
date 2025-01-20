@@ -613,7 +613,7 @@ SystemWindow >> addClosedWindow: aModel [
 	self class lastClosedWindows size >= 5 ifTrue: [
 		self class lastClosedWindows removeLast close ].
 	self class lastClosedWindows addFirst: aModel.
-	"self presenter refresh"
+	self presenter refresh
 ]
 
 { #category : 'menu actions' }
