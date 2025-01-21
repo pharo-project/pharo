@@ -5,21 +5,21 @@ Class {
 	#name : #LogicalFont,
 	#superclass : #AbstractFont,
 	#instVars : [
-		#realFont,
-		#emphasis,
-		#familyName,
-		#fallbackFamilyNames,
-		#pointSize,
-		#stretchValue,
-		#weightValue,
-		#slantValue,
-		#derivatives,
-		#boldDerivative,
-		#italicDerivative,
-		#boldItalicDerivative
+		'realFont',
+		'emphasis',
+		'familyName',
+		'fallbackFamilyNames',
+		'pointSize',
+		'stretchValue',
+		'weightValue',
+		'slantValue',
+		'derivatives',
+		'boldDerivative',
+		'italicDerivative',
+		'boldItalicDerivative'
 	],
 	#classInstVars : [
-		#all
+		'all'
 	],
 	#category : #'Fonts-Infrastructure-Logical'
 }
@@ -50,17 +50,18 @@ LogicalFont class >> familyName: familyName fallbackFamilyNames: fallbackFamilyN
 	"^self all asArray"
 
 	"^(self all collect:[:each | each]) asArray"
-
+	| familyNameAsString |
+	familyNameAsString := familyName asString.
 	^ self all
 		  detect: [ :each |
-			  each familyName = familyName asSymbol and: [
+			  each familyName = familyNameAsString and: [
 				  each fallbackFamilyNames = fallbackFamilyNames and: [
 					  each pointSize = pointSize and: [
 						  each weightValue = weight and: [
 							  each stretchValue = stretch and: [ each slantValue = slant ] ] ] ] ] ]
 		  ifNone: [
 			  self new
-				  familyName: familyName;
+				  familyName: familyNameAsString;
 				  fallbackFamilyNames: fallbackFamilyNames;
 				  pointSize: pointSize;
 				  weightValue: weight;
