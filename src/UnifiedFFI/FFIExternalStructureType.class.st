@@ -35,12 +35,6 @@ FFIExternalStructureType >> basicHandle: aHandle at: index put: value [
 	^ LibC memCopy: value getHandle to: aHandle + (index - 1) size: self externalTypeSize
 ]
 
-{ #category : 'callbacks' }
-FFIExternalStructureType >> callbackReturnOn: callbackContext for: anObject [
-
-	^ self error: 'Cannot return an external structure by copy. It is not yet implemented'
-]
-
 { #category : 'accessing' }
 FFIExternalStructureType >> callbackValueFor: anAlien at: index [
 	"This is the value for a callback.

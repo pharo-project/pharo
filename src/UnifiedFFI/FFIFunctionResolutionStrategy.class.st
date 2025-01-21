@@ -21,14 +21,3 @@ FFIFunctionResolutionStrategy >> isApplicableFor: aRequestor [
 	"answers true if function should be resolved using this strategy"
 	self subclassResponsibility
 ]
-
-{ #category : 'resolving' }
-FFIFunctionResolutionStrategy >> resolve: anExternalFunction [
-	anExternalFunction setHandle: (self resolveFunction: anExternalFunction)
-]
-
-{ #category : 'resolving' }
-FFIFunctionResolutionStrategy >> resolveFunction: anExternalFunction [
-	"answers the solved function address (an ExternalAddress)"
-	self subclassResponsibility
-]

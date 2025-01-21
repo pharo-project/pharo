@@ -26,13 +26,6 @@ FFIVoid >> basicHandle: aHandle at: index put: value [
 ]
 
 { #category : 'accessing' }
-FFIVoid >> callbackReturnOn: callbackContext for: anObject [
-	"Void returns does not set anything"
-	self isPointer ifFalse: [ ^ nil ].
-	^ callbackContext wordResult: anObject asInteger
-]
-
-{ #category : 'accessing' }
 FFIVoid >> defaultReturnOnError [
 
 	^ nil

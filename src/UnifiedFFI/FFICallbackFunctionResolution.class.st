@@ -23,58 +23,12 @@ absolute: aNumber
 Class {
 	#name : 'FFICallbackFunctionResolution',
 	#superclass : 'FFIFunctionResolutionStrategy',
-	#classVars : [
-		'CallbackRegistry'
-	],
 	#category : 'UnifiedFFI-Callouts',
 	#package : 'UnifiedFFI',
 	#tag : 'Callouts'
 }
 
-{ #category : 'private' }
-FFICallbackFunctionResolution class >> callbackNamed: functionName ifAbsent: aBlock [
-	^ self callbackRegistry
-		at: functionName asSymbol
-		ifAbsent: aBlock
-]
-
-{ #category : 'private' }
-FFICallbackFunctionResolution class >> callbackRegistry [
-	^ CallbackRegistry ifNil: [ CallbackRegistry := Dictionary new ]
-]
-
-{ #category : 'cleanup' }
-FFICallbackFunctionResolution class >> cleanUp [
-	self reset
-]
-
-{ #category : 'registration' }
-FFICallbackFunctionResolution class >> registerCallback: aCallback as: functionName [
-	self callbackRegistry
-		at: functionName asSymbol
-		put: aCallback
-]
-
-{ #category : 'class initialization' }
-FFICallbackFunctionResolution class >> reset [
-	CallbackRegistry := nil
-]
-
-{ #category : 'registration' }
-FFICallbackFunctionResolution class >> unregister: functionName [
-	self callbackRegistry removeKey: functionName asSymbol
-]
-
 { #category : 'testing' }
 FFICallbackFunctionResolution >> isApplicableFor: aRequestor [
 	^ aRequestor optionAt: #optCallbackCall
-]
-
-{ #category : 'resolving' }
-FFICallbackFunctionResolution >> resolveFunction: anExternalFunction [
-	| callback |
-	callback := self class
-		callbackNamed: anExternalFunction name
-		ifAbsent: [ self error: 'Callback #', anExternalFunction name, ' not registered!' ].
-	^ callback thunk asExternalAddress
 ]

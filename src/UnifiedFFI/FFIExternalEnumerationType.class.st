@@ -44,11 +44,6 @@ FFIExternalEnumerationType >> basicHandle: aHandle at: index put: value [
 		with: value getHandle
 ]
 
-{ #category : 'accessing' }
-FFIExternalEnumerationType >> callbackReturnOn: callbackContext for: anObject [
-    ^ super callbackReturnOn: callbackContext for: anObject value
-]
-
 { #category : 'emitting code' }
 FFIExternalEnumerationType >> emitReturn: aBuilder resultTempVar: resultVar context: aContext [
 	"| tmpResult |

@@ -29,8 +29,3 @@ FFI_x86_64 >> externalSizeTType [
 FFI_x86_64 >> externalULongType [
 	^ ExternalType unsignedLongLong
 ]
-
-{ #category : 'default abi' }
-FFI_x86_64 >> returnSingleFloatsAsDoubles [
-	^ false
-]

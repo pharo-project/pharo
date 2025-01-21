@@ -35,13 +35,6 @@ FFIFloat32 >> basicHandle: aHandle at: index put: value [
 	^ aHandle floatAt: index put: value
 ]
 
-{ #category : 'accessing' }
-FFIFloat32 >> callbackReturnOn: callbackContext for: aFloat [
-	^ FFIArchitecture forCurrentArchitecture returnSingleFloatsAsDoubles
-		ifTrue: [ callbackContext floatResult: aFloat ]
-		ifFalse: [ callbackContext singleFloatResult: aFloat ]
-]
-
 { #category : 'emitting code' }
 FFIFloat32 >> emitPointerArityRoll: aBuilder context: aContext [
 	self loader

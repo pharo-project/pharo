@@ -17,11 +17,3 @@ Class {
 FFIIndirectFunctionResolution >> isApplicableFor: aRequestor [
 	^ aRequestor optionAt: #optIndirectCall
 ]
-
-{ #category : 'resolving' }
-FFIIndirectFunctionResolution >> resolveFunction: anExternalFunction [
-	^ (ExternalAddress
-		loadSymbol: anExternalFunction name
-		module: anExternalFunction module)
-		pointerAt: 1
-]

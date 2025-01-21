@@ -21,8 +21,3 @@ FFI_i386 >> newCallbackArgumentReaderForCallback: aCallback inContext: aCallback
 		forCallback: aCallback
 		inContext: aCallbackContext
 ]
-
-{ #category : 'default abi' }
-FFI_i386 >> returnSingleFloatsAsDoubles [
-	^ true
-]

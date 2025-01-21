@@ -10,11 +10,6 @@ Class {
 }
 
 { #category : 'accessing' }
-FFIFloatType >> callbackReturnOn: callbackContext for: aFloat [
-	^ callbackContext floatResult: aFloat
-]
-
-{ #category : 'accessing' }
 FFIFloatType >> defaultReturnOnError [
 
 	^ 0.0

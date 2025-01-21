@@ -85,11 +85,6 @@ FFIArchitecture >> longTypeSize [
 	^ self externalLongType byteSize
 ]
 
-{ #category : 'default abi' }
-FFIArchitecture >> returnSingleFloatsAsDoubles [
-	self subclassResponsibility
-]
-
 { #category : 'types' }
 FFIArchitecture >> sizeTTypeSize [
 	^ self externalSizeTType byteSize
