@@ -929,6 +929,12 @@ Context >> instVarAt: index put: value [
 	^ super instVarAt: index put: value
 ]
 
+{ #category : 'private - exceptions' }
+Context >> invalidFFICall [
+
+	self error
+]
+
 { #category : 'testing' }
 Context >> isBlockContext [
 	"Is this executing a block versus a method?  In the new closure

@@ -37,15 +37,10 @@ TFStringType >> callbackReadValue: anExternalAddress [
 ]
 
 { #category : 'marshalling' }
-TFStringType >> emitFreeIfNeededOfIndex: argIndex argumentsArrayTempName: argumentsArrayTempName withBuilder: anIRBuilder [
-
-	"I will send the message #freeValueIfNeeded: to myself with the argument from the argumentArray at the position passed as parameter.
-	It is important that I do not leave nothing in the stack"
+TFStringType >> emitFreeIfNeededOfIndex: argIndex argument: argument withBuilder: anIRBuilder [
 
 	anIRBuilder pushLiteral: self.
-	anIRBuilder pushTemp: argumentsArrayTempName.
-	anIRBuilder pushLiteral: argIndex.
-	anIRBuilder send: #at:.
+	anIRBuilder pushTemp: argument tempName.
 	anIRBuilder send: #freeValueIfNeeded:.
 	anIRBuilder popTop
 ]
@@ -57,14 +52,16 @@ TFStringType >> emitMarshallFromPrimitive: anIRBuilder [
 ]
 
 { #category : 'marshalling' }
-TFStringType >> emitMarshallToPrimitive: anIRBuilder [
+TFStringType >> emitMarshallToPrimitive: anIRBuilder argument: anArg [
 
-	anIRBuilder addTemp: #__marshall_temp.
-	anIRBuilder storeTemp: #__marshall_temp.
+	anIRBuilder addTemp: anArg tempName.
+	anIRBuilder storeTemp: anArg tempName.
 	anIRBuilder popTop.
 	anIRBuilder pushLiteral: self.
-	anIRBuilder pushTemp: #__marshall_temp.
-	anIRBuilder send: #prepareStringForMarshalling:
+	anIRBuilder pushTemp: anArg tempName.
+	anIRBuilder send: #prepareStringForMarshalling:.
+	anIRBuilder storeTemp: anArg tempName.
+
 ]
 
 { #category : 'freeing' }

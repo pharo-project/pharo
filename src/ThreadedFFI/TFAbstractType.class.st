@@ -28,6 +28,19 @@ TFAbstractType >> callbackWrite: aNumber into: anExternalAddress [
 	self write: aNumber into: anExternalAddress
 ]
 
+{ #category : 'marshalling' }
+TFAbstractType >> emitMarshallToPrimitive: builder [
+
+	"Nothing to do in this case"
+]
+
+{ #category : 'marshalling' }
+TFAbstractType >> emitMarshallToPrimitive: builder argument: anArg [
+
+	"Nothing to do in this case"
+	^ self emitMarshallToPrimitive: builder
+]
+
 { #category : 'accessing' }
 TFAbstractType >> isValid [
 

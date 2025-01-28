@@ -31,3 +31,9 @@ FFIClassVariableArgument >> emitArgument: aBuilder context: aContext [
 FFIClassVariableArgument >> rolledPointerTempName [
 	^ self rolledPointerTempNameFor: self argName
 ]
+
+{ #category : 'as yet unclassified' }
+FFIClassVariableArgument >> tempName [
+
+	^ #'_tmp_' , argName
+]

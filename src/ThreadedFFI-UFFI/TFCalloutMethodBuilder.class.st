@@ -4,8 +4,12 @@ I override some methods to correctly generate TFFI methods when using UFFI.
 Class {
 	#name : 'TFCalloutMethodBuilder',
 	#superclass : 'FFICalloutMethodBuilder',
+	#instVars : [
+		'useBytecode'
+	],
 	#classVars : [
-		'ABI_MAPPING'
+		'ABI_MAPPING',
+		'UseBytecode'
 	],
 	#pools : [
 		'TFAbiTypes'
@@ -75,10 +79,29 @@ TFCalloutMethodBuilder class >> initializeABIMapping [
 		} asDictionary
 ]
 
+{ #category : 'accessing' }
+TFCalloutMethodBuilder class >> useBytecode [
+
+	^ UseBytecode ifNil: [ UseBytecode := false ]
+]
+
+{ #category : 'accessing' }
+TFCalloutMethodBuilder class >> useBytecode: aValue [
+
+	UseBytecode := aValue
+]
+
 { #category : 'calling convention' }
 TFCalloutMethodBuilder >> abiConstantFor: aSelector [
 
 	^ self class abiConstantFor: aSelector
+]
+
+{ #category : 'private' }
+TFCalloutMethodBuilder >> canUseBytecode: aRunner [ 
+
+	^ aRunner = TFSameThreadRunner uniqueInstance and: useBytecode.
+
 ]
 
 { #category : 'private' }
@@ -108,11 +131,14 @@ TFCalloutMethodBuilder >> emitArgument: anFFIFunctionArgument optimizingIn: buil
 				emitResolvedTypeArgument: builder
 				context: sender
 				inCallout: self requestor.
-			tfExternalTypeWithArity emitMarshallToPrimitive: builder ]
+			tfExternalTypeWithArity emitMarshallToPrimitive: builder argument: anFFIFunctionArgument resolvedType loader ]
 ]
 
 { #category : 'private' }
 TFCalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec ffiLibrary: ffiLibrary [
+
+	(self canUseBytecode: ffiLibrary uniqueInstance runner)
+		ifTrue: [ ^ self generateFFICalloutUsingBytecode: builder spec: functionSpec ffiLibrary: ffiLibrary].
 
 	TFCalloutAPI isTracing ifTrue: [
 		TFCalloutAPI trace: sender.
@@ -142,9 +168,9 @@ TFCalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec ffiLibr
 	functionSpec arguments withIndexDo: [ :each :index|
 		each emitReturnArgument: builder context: sender.
 		each resolvedType tfExternalTypeWithArity
-			emitFreeIfNeededOfIndex: index
-			argumentsArrayTempName: #argumentsArray
-			withBuilder: builder  ].
+			emitFreeIfNeededOfIndex: index 
+			argument: each loader
+			withBuilder: builder ].
 
 	"Additional marshall in the case of TFFI"
 	functionSpec returnType resolvedType tfExternalTypeWithArity emitMarshallFromPrimitive: builder.
@@ -156,4 +182,62 @@ TFCalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec ffiLibr
 		resultTempVar: #result
 		context: sender
 		inCallout: self requestor
+]
+
+{ #category : 'private' }
+TFCalloutMethodBuilder >> generateFFICalloutUsingBytecode: builder spec: functionSpec ffiLibrary: ffiLibrary [ 
+
+
+	| functionDefinition |
+	TFCalloutAPI isTracing ifTrue: [
+		TFCalloutAPI trace: sender.
+		builder
+			pushLiteral: TFCalloutAPI;
+			pushLiteral: sender;
+			send: #trace: ].
+
+	functionDefinition := self createFFICalloutLiteralFromSpec: functionSpec.
+	functionDefinition validate.
+
+	"iterate arguments in order (in the function) to create the function call"
+	functionSpec arguments
+		do: [ :each | self emitArgument: each optimizingIn:builder ].
+
+	builder sameThreadCallout: functionDefinition.
+
+	functionSpec arguments withIndexDo: [ :each :index|
+		each emitReturnArgument: builder context: sender.
+		each resolvedType tfExternalTypeWithArity
+			emitFreeIfNeededOfIndex: index 
+			argument: each loader
+			withBuilder: builder  ].
+
+	"Additional marshall in the case of TFFI"
+	functionSpec returnType resolvedType tfExternalTypeWithArity emitMarshallFromPrimitive: builder.
+
+	"convert in case return type needs it. And return reseult"
+
+	functionSpec returnType resolvedType tfExternalTypeWithArity isVoid ifTrue: [ 
+		^ builder 
+			pushReceiver;
+			returnTop ].
+
+	^ functionSpec returnType
+		emitReturn: builder
+		resultTempVar: #result
+		context: sender
+		inCallout: self requestor
+]
+
+{ #category : 'private' }
+TFCalloutMethodBuilder >> initialize [ 
+	
+	super initialize.
+	useBytecode := self class useBytecode
+]
+
+{ #category : 'private' }
+TFCalloutMethodBuilder >> useBytecode: aValue [
+
+	useBytecode := aValue
 ]

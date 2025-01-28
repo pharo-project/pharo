@@ -222,6 +222,7 @@ FFIFunctionParserTest >> testParseFunction2 [
 
 		builder := (FFIBackend current calloutAPIClass inContext: nil) newBuilder
 			sender: ctx;
+			useBytecode: false;
 			yourself.
 			"signature: functionSignature;
 			sender: sender."
@@ -229,6 +230,112 @@ FFIFunctionParserTest >> testParseFunction2 [
 		method2 := builder generateMethodFromSpec: functionSpec2.
 		self assert: method1 bytecodes equals: method2 bytecodes.
 		self assert: (method1 literals allButFirst: 2) equals: (method1 literals allButFirst: 2)]
+]
+
+{ #category : 'tests' }
+FFIFunctionParserTest >> testParseFunction3 [
+
+	| functionSpec1 builder method1 |
+	functionSpec1 := self newParser parseNamedFunction:
+		                 #( int SDL_LockTexture ( self , void* 0 , void** _b , int * d_ ) ).
+
+	functionSpec1 resolveUsing: resolver.
+
+	builder := (FFIBackend current calloutAPIClass inContext: nil)
+		           newBuilder
+						useBytecode: true;
+		           sender: ctx;
+		           yourself.
+	"signature: functionSignature;
+			sender: sender."
+	method1 := builder generateMethodFromSpec: functionSpec1.
+
+]
+
+{ #category : 'tests' }
+FFIFunctionParserTest >> testParseFunction4 [
+
+	| functionSpec1 builder method1 |
+	functionSpec1 := self newParser parseNamedFunction:
+		                 #( int git_libgit2_init() ).
+
+	functionSpec1 resolveUsing: resolver.
+
+
+	builder := (FFIBackend current calloutAPIClass inContext: nil)
+		           newBuilder
+						useBytecode: true;
+		           sender: ctx;
+		           yourself.
+	"signature: functionSignature;
+			sender: sender."
+	method1 := builder generateMethodFromSpec: functionSpec1.
+
+]
+
+{ #category : 'tests' }
+FFIFunctionParserTest >> testParseFunction5 [
+
+	| functionSpec1 builder method1 |
+	functionSpec1 := self newParser parseNamedFunction:
+		                 #( void objc_registerClassPair(void* _b) ).
+
+	functionSpec1 resolveUsing: resolver.
+
+
+	builder := (FFIBackend current calloutAPIClass inContext: nil)
+		           newBuilder
+						useBytecode: true;
+		           sender: ctx;
+		           yourself.
+	"signature: functionSignature;
+			sender: sender."
+	method1 := builder generateMethodFromSpec: functionSpec1.
+
+]
+
+{ #category : 'tests' }
+FFIFunctionParserTest >> testParseFunction6 [
+
+	| functionSpec1 builder method1 |
+	functionSpec1 := self newParser parseNamedFunction:
+		                 #( void* objc_msgSend(void* d_, void* _b)).
+
+	functionSpec1 resolveUsing: resolver.
+
+
+	builder := (FFIBackend current calloutAPIClass inContext: nil)
+		           newBuilder
+						useBytecode: true;
+		           sender: ctx;
+		           yourself.
+	"signature: functionSignature;
+			sender: sender."
+
+	method1 := builder generateMethodFromSpec: functionSpec1.
+
+]
+
+{ #category : 'tests' }
+FFIFunctionParserTest >> testParseFunction7 [
+
+	| functionSpec1 builder method1 |
+	functionSpec1 := self newParser parseNamedFunction:
+		                 #( void* objc_msgSend(String d_, void* _b)).
+
+	functionSpec1 resolveUsing: resolver.
+
+
+	builder := (FFIBackend current calloutAPIClass inContext: nil)
+		           newBuilder
+						useBytecode: true;
+		           sender: ctx;
+		           yourself.
+	"signature: functionSignature;
+			sender: sender."
+
+	method1 := builder generateMethodFromSpec: functionSpec1.
+
 ]
 
 { #category : 'tests' }

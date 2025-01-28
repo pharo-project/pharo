@@ -281,6 +281,12 @@ OCIRTranslatorVisitor >> visitReturnReceiver: rec [
 ]
 
 { #category : 'visiting' }
+OCIRTranslatorVisitor >> visitSameThreadCallout: anOCIRSameThreadCallout [ 
+
+	^ gen sameThreadCallout: anOCIRSameThreadCallout functionDefinition 
+]
+
+{ #category : 'visiting' }
 OCIRTranslatorVisitor >> visitSend: send [
 
 	send superOf

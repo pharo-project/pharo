@@ -298,17 +298,11 @@ TFBasicType >> byteSize [
 ]
 
 { #category : 'marshalling' }
-TFBasicType >> emitFreeIfNeededOfIndex: argIndex argumentsArrayTempName: argumentsArrayTempName withBuilder: anIRBuilder [
+TFBasicType >> emitFreeIfNeededOfIndex: argIndex argument: argument withBuilder: anIRBuilder [
 ]
 
 { #category : 'marshalling' }
 TFBasicType >> emitMarshallFromPrimitive: aBuilder [
-]
-
-{ #category : 'marshalling' }
-TFBasicType >> emitMarshallToPrimitive: builder [
-
-	"Nothing to do in this case"
 ]
 
 { #category : 'writing' }

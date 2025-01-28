@@ -73,7 +73,7 @@ InstructionStream >> interpretNext2ByteSistaV1Instruction: bytecode for: client 
 				 ^client pushConstant: literal].
 			bytecode = 229 ifTrue:
 				[^client pushTemporaryVariable: byte].
-			^client pushClosureTemps: byte].
+			^client sameThreadCallout: byte].
 		bytecode = 231 ifTrue:
 			[^byte < 128
 				ifTrue: [client pushNewArrayOfSize: byte]

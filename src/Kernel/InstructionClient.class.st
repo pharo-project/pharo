@@ -196,6 +196,12 @@ InstructionClient >> pushTemporaryVariable: offset [
 ]
 
 { #category : 'instruction decoding' }
+InstructionClient >> sameThreadCallout: literalIndex [ 
+
+	
+]
+
+{ #category : 'instruction decoding' }
 InstructionClient >> send: selector super: supered numArgs: numberArguments [
 	"Send Message With Selector, selector, bytecode. The argument,
 	supered, indicates whether the receiver of the message is specified with

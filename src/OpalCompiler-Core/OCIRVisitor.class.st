@@ -121,6 +121,12 @@ OCIRVisitor >> visitReturnReceiver: rec [
 ]
 
 { #category : 'visiting' }
+OCIRVisitor >> visitSameThreadCallout: anOCIRSameThreadCallout [ 
+
+	
+]
+
+{ #category : 'visiting' }
 OCIRVisitor >> visitSend: send [
 ]
 
