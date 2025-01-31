@@ -74,9 +74,9 @@ TFFIBackend >> isAvailable [
 { #category : 'instance creation' }
 TFFIBackend >> loadSymbol: moduleSymbol module: module [
 
-	| encodedModule key foundAddress |
+	| encodedModule key |
 	encodedModule := module ifNotNil: [ module utf8Encoded asString ].
-	key := module , '.' , moduleSymbol.
+	key := module ifNil: [ moduleSymbol ] ifNotNil: [ module , '.' , moduleSymbol ].
 
 	^ self symbolCache 
 		at: key
