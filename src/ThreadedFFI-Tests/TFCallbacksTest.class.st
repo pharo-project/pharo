@@ -18,7 +18,13 @@ TFCallbacksTest >> callCallback: aCallback [
 	function := TFExternalFunction fromAddress: aCallback getHandle
 		definition: functionDefinition.
 
-	runner invokeFunction: function withArguments: {}
+	self invokeFunction: function withArguments: {}
+]
+
+{ #category : 'executing' }
+TFCallbacksTest >> invokeFunction: fun withArguments: arguments [
+
+	^ runner invokeFunction: fun withArguments: arguments
 ]
 
 { #category : 'instance creation' }
@@ -129,7 +135,7 @@ TFCallbacksTest >> testReentrantCalloutsDuringCallback [
 		forCallback: [ :times |
 			times = 7
 				ifTrue: [ times ]
-				ifFalse: [ runner invokeFunction: fun withArguments: {callback getHandle. times + 1} ] ]
+				ifFalse: [ self invokeFunction: fun withArguments: {callback getHandle. times + 1} ] ]
 		parameters: { TFBasicType sint32. }
 		returnType: TFBasicType sint32
 		runner: runner.
@@ -155,7 +161,7 @@ TFCallbacksTest >> testReentrantCalloutsDuringCallbackUsingSameProcessForCallbac
 			            times = 7
 				            ifTrue: [ times ]
 				            ifFalse: [
-					            runner invokeFunction: fun withArguments: {
+					            self invokeFunction: fun withArguments: {
 							            callback getHandle.
 							            (times + 1) } ] ]
 		            parameters: { TFBasicType sint }
@@ -189,6 +195,6 @@ TFCallbacksTest >> testSingleCalloutDuringCallback [
 			parameterTypes: {TFBasicType pointer. TFBasicType sint}
 			returnType: TFBasicType sint).
 
-	returnValue := runner invokeFunction: fun withArguments: {callback getHandle. 3}.
+	returnValue := self invokeFunction: fun withArguments: {callback getHandle. 3}.
 	self assert: returnValue equals: 42
 ]

@@ -12,7 +12,7 @@ Class {
 TFTestCase class >> testParameters [
 
 	^ ParametrizedTestMatrix new
-		forSelector: #runner addOptions: { [ TFSameThreadRunner uniqueInstance ]. [ TFWorker named: 'fortest' ]. }
+		forSelector: #runner addOptions: { [ TFSameThreadRunner uniqueInstance ]". [ TFWorker named: 'fortest' ]." }
 ]
 
 { #category : 'accessing' }
