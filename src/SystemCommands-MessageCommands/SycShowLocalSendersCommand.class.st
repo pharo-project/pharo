@@ -32,12 +32,6 @@ SycShowLocalSendersCommand >> execute [
 	Smalltalk tools messageList browse: self searchInTheWholeHierarchy.
 ]
 
-{ #category : 'testing' }
-SycShowLocalSendersCommand >> isComplexRefactoring [
-
-	^ false
-]
-
 { #category : 'execution' }
 SycShowLocalSendersCommand >> searchInTheWholeHierarchy [
 

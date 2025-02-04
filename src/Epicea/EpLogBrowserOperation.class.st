@@ -37,7 +37,7 @@ EpLogBrowserOperation >> entryReferences [
 	^ entryReferences
 ]
 
-{ #category : 'initializing' }
+{ #category : 'initialization' }
 EpLogBrowserOperation >> initializeWith: aCollectionOfEntryReferences [
 	self initialize.
 	entryReferences := aCollectionOfEntryReferences

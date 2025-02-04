@@ -8,12 +8,6 @@ Class {
 	#package : 'Calypso-SystemPlugins-DebugPoints-Browser'
 }
 
-{ #category : 'testing' }
-ClyAddWatchDebugPointCommand class >> canBeExecutedInContext: aBrowserContext [
-
-	^ (super canBeExecutedInContext: aBrowserContext)
-]
-
 { #category : 'activation' }
 ClyAddWatchDebugPointCommand class >> contextMenuOrder [
 	^4

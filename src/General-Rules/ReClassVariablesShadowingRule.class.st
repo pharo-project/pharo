@@ -17,7 +17,7 @@ ReClassVariablesShadowingRule class >> checksClass [
 
 { #category : 'accessing' }
 ReClassVariablesShadowingRule class >> group [
-	^ 'Design Flaws'
+	^ self designFlawGroup
 ]
 
 { #category : 'accessing' }

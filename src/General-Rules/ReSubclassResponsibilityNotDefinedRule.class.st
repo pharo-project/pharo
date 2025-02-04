@@ -16,7 +16,7 @@ ReSubclassResponsibilityNotDefinedRule class >> checksClass [
 
 { #category : 'accessing' }
 ReSubclassResponsibilityNotDefinedRule class >> group [
-	^ 'Bugs'
+	^ self bugsGroup
 ]
 
 { #category : 'accessing' }

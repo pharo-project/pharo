@@ -298,9 +298,10 @@ RGBehaviorDefinition >> includesProtocol: aString [
 
 { #category : 'accessing - methods' }
 RGBehaviorDefinition >> includesSelector: selector [
-	"Looks if selector is a key in the methods dictionary"
+	"Answer whether the message whose selector is the argument is in the
+	method dictionary of the receiver's class."
 
-	^methods includesKey: selector asSymbol
+	^ methods includesKey: selector asSymbol
 ]
 
 { #category : 'initialization' }
@@ -538,10 +539,10 @@ RGBehaviorDefinition >> traitNames [
 	"Assuming that traits in a composition can be identified by
 	testing for the first character being an uppercase character
 	(and thus not a special character such as {, # etc.)"
-	| tokens |
 
-	tokens := self traitCompositionSource parseLiterals flattened.
-	^tokens select: [:each | each first isUppercase]
+	| tokens |
+	tokens := (OCParser parseLiterals: self traitCompositionSource) flattened.
+	^ tokens select: [ :each | each first isUppercase ]
 ]
 
 { #category : 'accessing' }

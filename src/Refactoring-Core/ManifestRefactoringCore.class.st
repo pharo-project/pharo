@@ -8,3 +8,17 @@ Class {
 	#package : 'Refactoring-Core',
 	#tag : 'Manifest'
 }
+
+{ #category : 'code-critics' }
+ManifestRefactoringCore class >> ruleNoUnusedInstanceVariableRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGClassDefinition #(#ReIsTemporaryVariableCondition)) #'2024-09-24T05:27:08.432121+02:00') )
+]
+
+{ #category : 'code-critics' }
+ManifestRefactoringCore class >> ruleVariableReferencedOnceRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGClassDefinition #(#ReIsTemporaryVariableCondition)) #'2024-09-24T05:26:59.705114+02:00') )
+]

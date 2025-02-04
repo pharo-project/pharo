@@ -264,7 +264,7 @@ RBBasicLintRuleTestData >> anInstVar [
 	^ anInstVar
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RBBasicLintRuleTestData >> anInstVar: anObject [
 	anInstVar := anObject
 ]
@@ -336,7 +336,7 @@ RBBasicLintRuleTestData >> problemCount [
 	^result problemCount
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RBBasicLintRuleTestData >> resetResult [
 	result := result copyEmpty.
 	result label: name
@@ -347,7 +347,7 @@ RBBasicLintRuleTestData >> result [
 	^result
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RBBasicLintRuleTestData >> result: aResult [
 	result := aResult copyEmpty
 ]

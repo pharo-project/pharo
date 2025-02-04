@@ -1,3 +1,6 @@
+"
+Checks that a class or its superclasses define a variable.
+"
 Class {
 	#name : 'ReDefinesInstanceVariableCondition',
 	#superclass : 'ReClassCondition',

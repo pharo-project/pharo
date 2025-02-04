@@ -20,7 +20,7 @@ FLGZipStrategy class >> newWithTarget: aStreamStrategy [
 		yourself
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 FLGZipStrategy >> initializeWith: aStreamStrategy [
 
 	self initialize.

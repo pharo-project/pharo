@@ -59,7 +59,7 @@ GrowlMorph class >> growlSettingsOn: aBuilder [
 		description: 'All settings concerned with the notifications popup look''n feel';
 		with: [
 			(aBuilder pickOne: #type)
-				label: 'Popup notifycation type';
+				label: 'Popup notification type';
 				target: self;
 				default: #growl;
 				order: 1;

@@ -126,12 +126,6 @@ MetacelloVersionSpec >> configMethodOn: aStream for: spec selector: selector las
 { #category : 'printing' }
 MetacelloVersionSpec >> configMethodOn: aStream indent: indent [
 
-	self configMethodOn: aStream last: true indent: indent
-]
-
-{ #category : 'printing' }
-MetacelloVersionSpec >> configMethodOn: aStream last: last indent: indent [
-
 	| spec hasRepositories hasPackageSpecs hasImport |
 	hasRepositories := (spec := self repositoriesSpec) isNotNil and: [ spec list isEmpty not ].
 	hasImport := self import isNotNil.
@@ -142,7 +136,13 @@ MetacelloVersionSpec >> configMethodOn: aStream last: last indent: indent [
 			packageDo: [ :package | member spec name ifNotNil: [ hasPackageSpecs := true ] ]
 			groupDo: [ :group | member spec name ifNotNil: [ hasPackageSpecs := true ] ] ].
 	self configMethodBasicOn: aStream last: (hasRepositories | hasPackageSpecs | hasImport) not indent: indent.
-	hasImport ifTrue: [ self configMethodValueOn: aStream for: self import selector: 'import:' last: (hasRepositories | hasPackageSpecs) not indent: indent ].
+	hasImport ifTrue: [
+		self
+			configMethodValueOn: aStream
+			for: self import
+			selector: 'import:'
+			last: (hasRepositories | hasPackageSpecs) not
+			indent: indent ].
 	hasRepositories ifTrue: [
 		spec map values size = 1
 			ifTrue: [
@@ -152,9 +152,14 @@ MetacelloVersionSpec >> configMethodOn: aStream last: last indent: indent [
 					nextPutAll: spec map values first description printString;
 					nextPutAll: '.'.
 				hasPackageSpecs ifTrue: [ aStream cr ] ]
-			ifFalse: [ self configMethodOn: aStream for: spec selector: 'repositories:' last: hasPackageSpecs not indent: indent ] ].
-	self configPackagesSpecMethodOn: aStream indent: indent.
-	last ifFalse: [ aStream cr ]
+			ifFalse: [
+				self
+					configMethodOn: aStream
+					for: spec
+					selector: 'repositories:'
+					last: hasPackageSpecs not
+					indent: indent ] ].
+	self configPackagesSpecMethodOn: aStream indent: indent
 ]
 
 { #category : 'printing' }
@@ -272,61 +277,6 @@ MetacelloVersionSpec >> description [
 MetacelloVersionSpec >> description: anObject [
 
 	description := anObject asMetacelloValueHolderFor: self
-]
-
-{ #category : 'querying' }
-MetacelloVersionSpec >> difference: otherVersionSpec [
-	"Return a dictionary of additions, removals and modifications"
-
-	| report myProjectSpecs myPackageSpecs otherProjectSpecs otherPackageSpecs |
-	report := MetacelloVersionDiffReport new.
-	myProjectSpecs := Dictionary new.
-	myPackageSpecs := Dictionary new.
-	self
-		projectDo: [ :projectSpec | myProjectSpecs at: projectSpec name put: projectSpec ]
-		packageDo: [ :packageSpec | myPackageSpecs at: packageSpec name put: packageSpec ]
-		groupDo: [ :ignored |  ].
-	otherProjectSpecs := Dictionary new.
-	otherPackageSpecs := Dictionary new.
-	otherVersionSpec
-		projectDo: [ :projectSpec | otherProjectSpecs at: projectSpec name put: projectSpec ]
-		packageDo: [ :packageSpec | otherPackageSpecs at: packageSpec name put: packageSpec ]
-		groupDo: [ :ignored |  ].
-	myProjectSpecs valuesDo: [ :myProjectSpec |
-		(otherProjectSpecs at: myProjectSpec name ifAbsent: [  ])
-			ifNotNil: [ :otherProjectSpec |
-				myProjectSpec versionString = otherProjectSpec versionString ifFalse: [
-					report modifications at: myProjectSpec name put: {
-							myProjectSpec versionString.
-							otherProjectSpec versionString } ] ]
-			ifNil: [
-				report removals at: myProjectSpec name put: {
-						myProjectSpec versionString.
-						'' } ] ].
-	otherProjectSpecs valuesDo: [ :otherProjectSpec |
-		(myProjectSpecs at: otherProjectSpec name ifAbsent: [  ]) ifNil: [
-			report additions at: otherProjectSpec name put: {
-					''.
-					otherProjectSpec versionString } ] ].
-	myPackageSpecs valuesDo: [ :myPackageSpec |
-		| otherPackageSpec |
-		otherPackageSpec := otherPackageSpecs at: myPackageSpec name ifAbsent: [  ].
-		otherPackageSpec
-			ifNotNil: [
-				myPackageSpec file = otherPackageSpec file ifFalse: [
-					report modifications at: myPackageSpec name put: {
-							myPackageSpec file.
-							otherPackageSpec file } ] ]
-			ifNil: [
-				report removals at: myPackageSpec name put: {
-						myPackageSpec file.
-						'' } ] ].
-	otherPackageSpecs valuesDo: [ :otherPackageSpec |
-		(myPackageSpecs at: otherPackageSpec name ifAbsent: [  ]) ifNil: [
-			report additions at: otherPackageSpec name put: {
-					''.
-					otherPackageSpec file } ] ].
-	^ report
 ]
 
 { #category : 'accessing' }
@@ -637,50 +587,27 @@ MetacelloVersionSpec >> repositorySpecs [
 ]
 
 { #category : 'loading' }
-MetacelloVersionSpec >> resolveToLoadableSpec: aString forMap: map packages: packageMap [
+MetacelloVersionSpec >> resolveToLoadableSpecs: aRequiredCollection [
 
-	| package |
-	package := self packageNamed: aString forMap: map ifAbsent: [ ^ self error: 'Name not found: ' , aString ].
-	packageMap at: package name put: package.
-	^ { package }
-]
-
-{ #category : 'loading' }
-MetacelloVersionSpec >> resolveToLoadableSpecs: nameList [
-	"Resolves names in namelist to the  list of packages and projects in the version that would be loaded. Projects are 
-	not traversed during the transitive closure. The scope is that of the version itself.
-	   If the spec is a package, answer a list including the package and the transitive closure on 
-			its #requires: and #includes: fields.
-	   If the spec is a project, answer the project.
-	   If the spec is a group, answers the list of packages in the #includes: field of the group. 
-			Groups in the #includes: field are expanded following the transitive closure on groups"
-
-	| map |
-	map := Dictionary new.
-	self resolveToLoadableSpecs: nameList map: map.
-	^ map values
-]
-
-{ #category : 'loading' }
-MetacelloVersionSpec >> resolveToLoadableSpecs: required map: packageMap [
-
-	| reqd allReqd map newReqd |
-	reqd := required copy.
-	allReqd := Set new.
+	| packageMap required managedRequirements map |
+	packageMap := Dictionary new.
+	required := aRequiredCollection copy.
+	managedRequirements := Set new.
 	map := self packages map.
-	[ reqd isEmpty ] whileFalse: [
+	[ required isEmpty ] whileFalse: [
+		| newReqd |
 		newReqd := Set new.
-		reqd do: [ :req |
-			(self resolveToLoadableSpec: req forMap: map packages: packageMap) do: [ :loadableSpec |
-				newReqd addAll: loadableSpec requires.
-				newReqd addAll: loadableSpec includes ] ].
-		allReqd addAll: reqd.
-		newReqd removeAllFoundIn: allReqd.
-		reqd := newReqd ].
-	packageMap keys do: [ :pkgName |
-		(packageMap at: pkgName) resolveToLoadableSpec
-			ifNotNil: [ packageMap at: pkgName put: (packageMap at: pkgName) resolveToLoadableSpec ]
-			ifNil: [ packageMap removeKey: pkgName ] ]
+		required do: [ :req |
+			| loadableSpec |
+			loadableSpec := self packageNamed: req forMap: map ifAbsent: [ ^ self error: 'Name not found: ' , req ].
+			"If the loadable spec is a Group we ignore it."
+			loadableSpec resolveToLoadableSpec ifNotNil: [ :resolvedSpec | packageMap at: loadableSpec name put: resolvedSpec ].
+			newReqd addAll: loadableSpec requires.
+			newReqd addAll: loadableSpec includes ].
+		managedRequirements addAll: required.
+		newReqd removeAllFoundIn: managedRequirements.
+		required := newReqd ].
+	^ packageMap
 ]
 
 { #category : 'accessing' }

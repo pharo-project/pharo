@@ -155,12 +155,6 @@ MetacelloAbstractPackageSpec >> label [
 	^self name
 ]
 
-{ #category : 'loading' }
-MetacelloAbstractPackageSpec >> loadUsing: aLoader gofer: gofer  withEngine: anEngine [
-
-	^self subclassResponsibility
-]
-
 { #category : 'merging' }
 MetacelloAbstractPackageSpec >> mergeIntoMetacelloPackages: aMetacelloPackagesSpec [
 

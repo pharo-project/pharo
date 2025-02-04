@@ -12,13 +12,13 @@ MorphicRenderLoop >> defer: aValuable [
 	self currentWorld defer: aValuable
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 MorphicRenderLoop >> doOneCycle [
 
 	WorldMorph doOneCycle
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 MorphicRenderLoop >> doOneCycleWhile: aBlock [
 
 	[ aBlock value ] whileTrue: [

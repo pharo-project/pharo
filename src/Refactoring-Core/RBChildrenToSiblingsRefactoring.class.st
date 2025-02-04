@@ -144,7 +144,7 @@ RBChildrenToSiblingsRefactoring >> pullUpClassInstanceVariables [
 	newSuperclass := self abstractSuperclass classSide.
 	parent classSide instanceVariableNames do:
 		[ :each |
-		self generateChangesFor: (RBPullUpInstanceVariableRefactoring
+		self generateChangesFor: (RePullUpInstanceVariableRefactoring
 				model: self model
 				variable: each
 				class: newSuperclass) ]
@@ -168,7 +168,7 @@ RBChildrenToSiblingsRefactoring >> pullUpInstanceVariables [
 	newSuperclass := self abstractSuperclass.
 	parent instanceVariableNames do:
 			[:each |
-			self generateChangesFor: (RBPullUpInstanceVariableRefactoring
+			self generateChangesFor: (RePullUpInstanceVariableRefactoring
 						model: self model
 						variable: each
 						class: newSuperclass)]

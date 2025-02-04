@@ -15,8 +15,7 @@ Class {
 
 { #category : 'accessing' }
 RePointRule class >> group [
-
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }

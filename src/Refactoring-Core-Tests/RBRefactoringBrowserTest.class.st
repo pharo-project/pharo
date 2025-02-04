@@ -1,8 +1,9 @@
 Class {
 	#name : 'RBRefactoringBrowserTest',
 	#superclass : 'AbstractEnvironmentTestCase',
-	#category : 'Refactoring-Core-Tests',
-	#package : 'Refactoring-Core-Tests'
+	#category : 'Refactoring-Core-Tests-Model',
+	#package : 'Refactoring-Core-Tests',
+	#tag : 'Model'
 }
 
 { #category : 'testing' }
@@ -13,7 +14,7 @@ RBRefactoringBrowserTest class >> isAbstract [
 { #category : 'private' }
 RBRefactoringBrowserTest >> abstractTransformationClassVariable [
 
-	^ RBAbstractTransformation classVariables first name
+	^ ReAbstractTransformation classVariables first name
 ]
 
 { #category : 'private' }
@@ -34,7 +35,7 @@ RBRefactoringBrowserTest >> parseMethod: aString [
 
 { #category : 'private' }
 RBRefactoringBrowserTest >> parserClass [
-	^ RBParser
+	^ OCParser
 ]
 
 { #category : 'private' }

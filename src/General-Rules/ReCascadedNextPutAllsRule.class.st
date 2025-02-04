@@ -20,7 +20,7 @@ Class {
 
 { #category : 'accessing' }
 ReCascadedNextPutAllsRule class >> group [
-	^ 'Coding Idiom Violation'
+	^ self codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

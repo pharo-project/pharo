@@ -23,5 +23,5 @@ OCASTBasicTranslatorTest >> testSyntaxError [
 
 	self
 		should: [ self compileSource: 'foo (']
-		raise: CodeError
+		raise: OCCodeError
 ]

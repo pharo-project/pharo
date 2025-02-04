@@ -346,6 +346,12 @@ Number >> isZero [
 	^self = 0
 ]
 
+{ #category : 'comparing' }
+Number >> literalEqual: other [
+
+	^ self class == other class and: [self = other]
+]
+
 { #category : 'arithmetic' }
 Number >> negated [
 	"Answer a Number that is the negation of the receiver."

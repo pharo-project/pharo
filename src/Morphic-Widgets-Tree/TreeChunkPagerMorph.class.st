@@ -26,7 +26,7 @@ TreeChunkPagerMorph >> atBottom: aBoolean [
 		ifTrue: [atBottom := aBoolean]
 ]
 
-{ #category : 'initialize - release' }
+{ #category : 'initialization' }
 TreeChunkPagerMorph >> buildPanel [
 	| widgets nextButton lastPageButton searchEditor |
 	self removeAllMorphs.
@@ -180,7 +180,7 @@ TreeChunkPagerMorph >> onLastPage [
 	^ self lastIndex = self nodeList size
 ]
 
-{ #category : 'initialize - release' }
+{ #category : 'initialization' }
 TreeChunkPagerMorph >> updateContents [
 	treeMorph vIsScrollable
 		ifFalse: [self atBottom: true].

@@ -1,12 +1,12 @@
-3. RBParseTreeSearcher examples with pattern code
+3. ASTParseTreeSearcher examples with pattern code
 
-Finally, in this section we use patterns with the RBParseTreeSearcher class and do some magic by finding some matches in Pharo code !
+Finally, in this section we use patterns with the ASTParseTreeSearcher class and do some magic by finding some matches in Pharo code !
 
 Consider the following example:
 
 ```
 | dict searcher|
-searcher := RBParseTreeSearcher new.
+searcher := ASTParseTreeSearcher new.
 
 searcher  
    matches: '`@receiver assert: `@arg equals: true'

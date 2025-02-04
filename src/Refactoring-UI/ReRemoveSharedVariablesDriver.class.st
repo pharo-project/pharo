@@ -3,7 +3,7 @@ I'm an interaction class in charge of stirring the application or not of removin
 "
 Class {
 	#name : 'ReRemoveSharedVariablesDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'class',
 		'variables'
@@ -28,12 +28,6 @@ ReRemoveSharedVariablesDriver >> breakingChoices [
 ReRemoveSharedVariablesDriver >> browseSharedVariableReferences [
 
 	StMessageBrowser browse: refactoring violators
-]
-
-{ #category : 'execution' }
-ReRemoveSharedVariablesDriver >> changes [
-
-	^ refactoring privateTransform; changes
 ]
 
 { #category : 'resources' }

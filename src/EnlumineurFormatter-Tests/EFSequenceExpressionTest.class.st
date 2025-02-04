@@ -50,22 +50,20 @@ EFSequenceExpressionTest >> dontRetainBlankLinesBeforeCommentsConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
-
-		
 	^ self contextClass basicNew
-		retainBlankLinesBeforeComments:false;
-		formatCommentCloseToStatements:true;
-		indentStyle: #tabulation;
-		numberOfNewLinesAfterTemporaries:0;
-		useBasicCommentFormat:false;
-		maxLineLength:50;
-		retainBlankLinesBetweenStatements:false;
-		minimumNewLinesBetweenStatements:0;
-		periodAtEndOfBlock:false;
-		periodAtEndOfMethod:false;
-		indentExtraSpaces:0
+		  retainBlankLinesBeforeComments: false;
+		  formatCommentCloseToStatements: true;
+		  indentStyle: #tabulation;
+		  numberOfNewLinesAfterTemporaries: 0;
+		  useBasicCommentFormat: false;
+		  maxLineLength: 50;
+		  retainBlankLinesBetweenStatements: false;
+		  minimumNewLinesBetweenStatements: 0;
+		  periodAtEndOfBlock: false;
+		  periodAtEndOfMethod: false;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'configurations' }
@@ -73,20 +71,20 @@ EFSequenceExpressionTest >> dontRetainBlankLinesBetweenStatementsConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		retainBlankLinesBetweenStatements: false;
-		retainBlankLinesBeforeComments:false;
-		formatCommentCloseToStatements:true;
-		indentStyle: #tabulation;
-		numberOfNewLinesAfterTemporaries:0;
-		useBasicCommentFormat:false;
-		maxLineLength:50;
-		minimumNewLinesBetweenStatements:0;
-		periodAtEndOfBlock:false;
-		periodAtEndOfMethod:false;
-		indentExtraSpaces:0
+		  retainBlankLinesBetweenStatements: false;
+		  retainBlankLinesBeforeComments: false;
+		  formatCommentCloseToStatements: true;
+		  indentStyle: #tabulation;
+		  numberOfNewLinesAfterTemporaries: 0;
+		  useBasicCommentFormat: false;
+		  maxLineLength: 50;
+		  minimumNewLinesBetweenStatements: 0;
+		  periodAtEndOfBlock: false;
+		  periodAtEndOfMethod: false;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'configurations' }
@@ -191,26 +189,26 @@ EFSequenceExpressionTest >> periodAtEndOfMethodConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		periodAtEndOfBlock:true;
-		periodAtEndOfMethod:true;
-		formatCommentCloseToStatements:true;
-		indentStyle: #tabulation;
-		numberOfNewLinesAfterTemporaries:0;
-		retainBlankLinesBeforeComments:false;
-		useBasicCommentFormat:false;
-		maxLineLength:50;
-		retainBlankLinesBetweenStatements:false;
-		minimumNewLinesBetweenStatements:0;
-		numberOfSpacesInsideBlock:1;
-		lineUpBlockBrackets: true;
-		multiLineMessages:Array new;
-		oneLineMessages:Array new;
-		numberOfArgumentsForMultiLine:2;
-		newLineBeforeFirstKeyword:false;
-		indentExtraSpaces:0
+		  periodAtEndOfBlock: true;
+		  periodAtEndOfMethod: true;
+		  formatCommentCloseToStatements: true;
+		  indentStyle: #tabulation;
+		  numberOfNewLinesAfterTemporaries: 0;
+		  retainBlankLinesBeforeComments: false;
+		  useBasicCommentFormat: false;
+		  maxLineLength: 50;
+		  retainBlankLinesBetweenStatements: false;
+		  minimumNewLinesBetweenStatements: 0;
+		  numberOfSpacesInsideBlock: 1;
+		  lineUpBlockBrackets: true;
+		  multiLineMessages: Array new;
+		  oneLineMessages: Array new;
+		  numberOfArgumentsForMultiLine: 2;
+		  newLineBeforeFirstKeyword: false;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'configurations' }
@@ -218,20 +216,20 @@ EFSequenceExpressionTest >> retainBlankLinesBeforeCommentsConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		retainBlankLinesBeforeComments:true;
-		formatCommentCloseToStatements:true;
-		indentStyle: #tabulation;
-		numberOfNewLinesAfterTemporaries:0;
-		useBasicCommentFormat:false;
-		maxLineLength:50;
-		retainBlankLinesBetweenStatements:false;
-		minimumNewLinesBetweenStatements:0;
-		periodAtEndOfBlock:false;
-		periodAtEndOfMethod:false;
-		indentExtraSpaces:0
+		  retainBlankLinesBeforeComments: true;
+		  formatCommentCloseToStatements: true;
+		  indentStyle: #tabulation;
+		  numberOfNewLinesAfterTemporaries: 0;
+		  useBasicCommentFormat: false;
+		  maxLineLength: 50;
+		  retainBlankLinesBetweenStatements: false;
+		  minimumNewLinesBetweenStatements: 0;
+		  periodAtEndOfBlock: false;
+		  periodAtEndOfMethod: false;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'configurations' }
@@ -239,20 +237,20 @@ EFSequenceExpressionTest >> retainBlankLinesBetweenStatementsConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		retainBlankLinesBetweenStatements: true;
-		retainBlankLinesBeforeComments:false;
-		formatCommentCloseToStatements:true;
-		indentStyle: #tabulation;
-		numberOfNewLinesAfterTemporaries:0;
-		useBasicCommentFormat:false;
-		maxLineLength:50;
-		minimumNewLinesBetweenStatements:0;
-		periodAtEndOfBlock:false;
-		periodAtEndOfMethod:false;
-		indentExtraSpaces:0
+		  retainBlankLinesBetweenStatements: true;
+		  retainBlankLinesBeforeComments: false;
+		  formatCommentCloseToStatements: true;
+		  indentStyle: #tabulation;
+		  numberOfNewLinesAfterTemporaries: 0;
+		  useBasicCommentFormat: false;
+		  maxLineLength: 50;
+		  minimumNewLinesBetweenStatements: 0;
+		  periodAtEndOfBlock: false;
+		  periodAtEndOfMethod: false;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'tests' }

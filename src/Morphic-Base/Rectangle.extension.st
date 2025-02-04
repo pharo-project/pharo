@@ -21,22 +21,19 @@ Rectangle >> newRectButtonPressedDo: newRectBlock inWorld: aWorld [
 
 	buttonNow := hand anyButtonPressed.
 	rect := self.
-	self drawReverseFrame: rect.
+
 
 	hand captureEventsWhile: [:evt |
 		evt isMouse ifTrue: [
 			buttonNow := evt anyButtonPressed.
 			newRect := newRectBlock value: rect value: evt cursorPoint.
 			newRect = rect ifFalse:
-				[self drawReverseFrame: rect.
-				self drawReverseFrame: newRect.
-				rect := newRect ].
+				[ rect := newRect ].
 
 			 buttonNow
 			] ifFalse: [ true ]
 		].
 
-	self drawReverseFrame: rect.
 	aWorld activeHand
 		newMouseFocus: nil;
 		showTemporaryCursor: nil.

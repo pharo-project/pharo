@@ -28,6 +28,9 @@ To have them appear elsewhere, also override my class-side `TestAsserter class>>
 Class {
 	#name : 'TestAsserter',
 	#superclass : 'Object',
+	#classVars : [
+		'LogFailureStream'
+	],
 	#category : 'SUnit-Core-Kernel',
 	#package : 'SUnit-Core',
 	#tag : 'Kernel'
@@ -55,7 +58,14 @@ TestAsserter class >> classForTestSuite [
 
 { #category : 'logging' }
 TestAsserter class >> failureLog [
-	^ Smalltalk tools transcript
+	^ LogFailureStream ifNil: [ self failureLog: String new writeStream. LogFailureStream ]
+]
+
+{ #category : 'logging' }
+TestAsserter class >> failureLog: aStream [ 
+	"So that we can pass a different stream if needed."
+	
+	LogFailureStream := aStream
 ]
 
 { #category : 'logging' }
@@ -67,8 +77,15 @@ TestAsserter class >> isLogging [
 
 { #category : 'logging' }
 TestAsserter class >> logFailure: aString [
+	"It provides a way to log something at the class level.
+	Note that they are two levels of logging one at the class and other at instance. So isLogging should be defined in subclasses at the right place.
+	Clearly this duplication is strange."
+	
 	self isLogging ifTrue:
-		[self failureLog cr; nextPutAll: aString; flush]
+		[ self failureLog 
+				cr; 
+				nextPutAll: aString; 
+				flush ]
 ]
 
 { #category : 'factory' }

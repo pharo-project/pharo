@@ -16,7 +16,7 @@ You can invoke me with:
 "
 Class {
 	#name : 'RBDeprecateClassDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'className',
 		'newClassName'

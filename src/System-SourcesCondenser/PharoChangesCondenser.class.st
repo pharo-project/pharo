@@ -89,6 +89,8 @@ PharoChangesCondenser >> fileIndex [
 
 { #category : 'initialization' }
 PharoChangesCondenser >> initialize [
+
+	super initialize.
 	self reset
 ]
 

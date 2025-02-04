@@ -1,7 +1,20 @@
 "
 I am a regex refactoring renaming protocol names.
+Here is a typical examples.
 
-See comment of superclass for a nice script to be adapated to package names.
+```
+| newClassPrefix env model |
+env := RBBrowserEnvironment new 
+			forClasses: (Smalltalk allClasses 
+									select: [ :each | each protocolNames includes: #'initialize-release' ]).
+			
+model := (RBNamespace onEnvironment: env) name: 'MyModel'; yourself.
+
+RBProtocolRegexTransformation new
+	model: model;
+	replace: 'initialize-release' with: 'initialization';
+  execute.
+```
 "
 Class {
 	#name : 'RBProtocolRegexTransformation',

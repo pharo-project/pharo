@@ -188,14 +188,18 @@ ClyTextEditorToolMorph >> editingMode [
 	| editingMode |
 	editingMode := ClyTextEditingMode browserTool: self.
 	editingMode
-		classOrMetaClass: self selectedClassOrMetaClass;
-		isScripting: self isScripting.
+		classOrMetaClass: self selectedClassOrMetaClass.
 	^editingMode
 ]
 
 { #category : 'accessing' }
 ClyTextEditorToolMorph >> editingText [
 	self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+ClyTextEditorToolMorph >> editionTimestamp [
+  ^ Date today yyyymmdd, ' ', (Time now print24 first: 5)
 ]
 
 { #category : 'selecting text' }

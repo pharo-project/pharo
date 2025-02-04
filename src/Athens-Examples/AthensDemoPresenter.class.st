@@ -62,6 +62,8 @@ AthensDemoPresenter >> initializeWidgets [
 
 { #category : 'initialization' }
 AthensDemoPresenter >> initializeWindow: aWindowPresenter [
+
+	super initializeWindow: aWindowPresenter.
 	aWindowPresenter
 		title: 'Athens demos';
 		initialExtent: demo morph extent + (0 @ 100)

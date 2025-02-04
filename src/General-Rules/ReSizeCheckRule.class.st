@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 ReSizeCheckRule class >> group [
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }

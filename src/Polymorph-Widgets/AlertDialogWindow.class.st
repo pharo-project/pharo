@@ -20,5 +20,5 @@ AlertDialogWindow class >> taskbarIconName [
 AlertDialogWindow >> icon [
 	"Answer an icon for the receiver."
 
-	^ self iconNamed: #warningIcon
+	^ self iconNamed: #warning
 ]

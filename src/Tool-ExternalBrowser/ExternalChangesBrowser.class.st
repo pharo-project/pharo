@@ -48,6 +48,12 @@ ExternalChangesBrowser class >> defaultLayout [
 		yourself
 ]
 
+{ #category : 'accessing' }
+ExternalChangesBrowser class >> defaultPreferredExtent [
+
+	^ 500@600
+]
+
 { #category : 'examples' }
 ExternalChangesBrowser class >> example1 [
 
@@ -262,13 +268,6 @@ ExternalChangesBrowser >> initializePresenters [
 	codePane := self newCode
 ]
 
-{ #category : 'initialization' }
-ExternalChangesBrowser >> initializeWindow: aWindow [
-
-	aWindow initialExtent: 500@600.
-	aWindow title: 'Changes Browser'
-]
-
 { #category : 'private' }
 ExternalChangesBrowser >> openPolymorphComparisonFrom: targetMethodSource to: originalMethodSource belongingTo: aClass from: aChange labeled: aLabel inWindowLabeled: aWindowLabel [
 
@@ -287,4 +286,10 @@ ExternalChangesBrowser >> openPolymorphComparisonFrom: targetMethodSource to: or
 ExternalChangesBrowser >> selectAllButton [
 
 	^ selectAllButton
+]
+
+{ #category : 'initialization' }
+ExternalChangesBrowser >> windowTitle [
+
+	^ 'Changes Browser'
 ]

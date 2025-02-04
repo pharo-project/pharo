@@ -59,7 +59,7 @@ MCScriptDefinition >> evaluate [
 	self class compiler evaluate: script
 ]
 
-{ #category : 'initializing' }
+{ #category : 'initialization' }
 MCScriptDefinition >> initializeWithScript: aString packageName: packageString [
 	script := aString.
 	packageName := packageString

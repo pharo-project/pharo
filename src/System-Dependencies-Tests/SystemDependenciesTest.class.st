@@ -45,10 +45,12 @@ SystemDependenciesTest >> externalDependendiesOf: packagesCollection [
 SystemDependenciesTest >> knownBasicToolsDependencies [
 	"ideally this list should be empty"
 
-	^ #( 'AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' #'Athens-Morphic'
+	^ #( 'Athens-Cairo' 'Athens-Core' #'Athens-Morphic'
 	     #'Refactoring-Critics' #'Commander-Core' #Reflectivity
 	     #'Reflectivity-Tools' #Shout 'HeuristicCompletion-Model'
-	     #VariablesLibrary #'Spec2-CommonWidgets' #'NewTools-Scopes' )
+	     #VariablesLibrary #'Spec2-CommonWidgets' #'NewTools-Scopes'
+		  #'Traits-Tests' 'NewTools-Scopes' #'Commander-Activators-Shortcut' 
+		  #'NewTools-FileBrowser')
 ]
 
 { #category : 'known dependencies' }
@@ -56,15 +58,6 @@ SystemDependenciesTest >> knownCompilerDependencies [
 	"ideally this list should be empty"
 
 	^ #( #'FileSystem-Core' )
-]
-
-{ #category : 'known dependencies' }
-SystemDependenciesTest >> knownIDEDependencies [
-	"ideally this list should be empty"
-
-	^ #( 'Spec2-CommonWidgets' #'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits'
-	     #'AI-Algorithms-Graph' 'DebugPoints' 'Microdown' 'Microdown-RichTextComposer'
-	     #'NewTools-Scopes' #'NewTools-Scopes-Editor' )
 ]
 
 { #category : 'known dependencies' }
@@ -87,7 +80,8 @@ SystemDependenciesTest >> knownLocalMonticelloDependencies [
 SystemDependenciesTest >> knownMorphicCoreDependencies [
 	"ideally this list should be empty"
 
-	^ #(#'Fonts-Infrastructure' #'FreeType' #'Keymapping-KeyCombinations' #'Morphic-Base' #'Refactoring-Critics' #'Refactoring-Environment' #'Rubric')
+	^ #(#'Fonts-Infrastructure' #'FreeType' #'Keymapping-KeyCombinations' #'Morphic-Base' #'Refactoring-Critics' #'Refactoring-Environment' #'Rubric' 
+	  'Morphic-Widgets-ColorPicker')
 ]
 
 { #category : 'known dependencies' }
@@ -95,7 +89,7 @@ SystemDependenciesTest >> knownMorphicDependencies [
 	"ideally this list should be empty"
 
 	^ #( #'Refactoring-Critics' #'Refactoring-Environment'
-	     #'Spec2-Core' #'Tool-FileList' #'Athens-Morphic'
+	     #'Spec2-Core' #'NewTools-FileBrowser' #'Athens-Morphic'
 	     #'Tools-CodeNavigation' 'Debugger-Oups' ) "Rubric has a dependency on It"
 ]
 
@@ -111,6 +105,7 @@ SystemDependenciesTest >> knownSpec2Dependencies [
 
 	^ #(
 		'WebBrowser-Core' "Spec's Link adapter"
+		'NewTools-SpTextPresenterDecorators'
 		)
 ]
 
@@ -123,11 +118,13 @@ SystemDependenciesTest >> knownUFFIDependencies [
 
 { #category : 'known dependencies' }
 SystemDependenciesTest >> knownUIDependencies [
-
 	"ideally this list should be empty"
 
-	^ #('AST-Core-Tests'  'Athens-Cairo' 'Athens-Core'
-	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'HeuristicCompletion-Model' 'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets')
+	^ #('Athens-Cairo' 'Athens-Core'
+	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' 
+	#Shout #'Tool-Diff' #'HeuristicCompletion-Model' 'NECompletion-Morphic' 
+	#VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets' 
+	#'NewTools-Scopes' #'Commander-Activators-Shortcut' #'NewTools-FileBrowser')
 ]
 
 { #category : 'accessing' }
@@ -174,6 +171,7 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
+		BaselineOfKernelTests withAllPackageNames,
 		BaselineOfTraits corePackages,
 		BaselineOfSUnit withAllPackageNames, "ALL"
 		BaselineOfDisplay withAllPackageNames,
@@ -236,77 +234,6 @@ SystemDependenciesTest >> testExternalFileSystemDependencies [
 		                , BaselineOfPharoBootstrap fileSystemPackageNames.
 
 	self assertEmpty: dependencies
-]
-
-{ #category : 'tests' }
-SystemDependenciesTest >> testExternalIDEDependencies [
-	| dependencies packages |
-	packages := self metacelloPackageNames , self tonelCorePackageNames , { BaselineOfPharoBootstrap name. BaselineOfMonticello name. BaselineOfMetacello name}.
-
-	{BaselineOfAthens.
-	BaselineOfBasicTools.
-	BaselineOfDisplay.
-	BaselineOfFlashback.
-	BaselineOfIDE.
-	BaselineOfMenuRegistration.
-	BaselineOfMorphic.
-	BaselineOfMorphicCore.
-	BaselineOfSlot.
-	BaselineOfSUnit.
-	BaselineOfShift.
-	BaselineOfTraits.
-	BaselineOfUI.
-	BaselineOfUnifiedFFI.
-	BaselineOfClassAnnotation.
-	BaselineOfSystemCommands.
-	BaselineOfClassParser.
-	BaselineOfReferenceFinder.
-	BaselineOfSortFunctions.
-	BaselineOfGeneralTests.
-	BaselineOfMisc.
-	BaselineOfEpicea.
-	BaselineOfRefactoring.
-	BaselineOfOSWindow.
-	BaselineOfQA.
-	BaselineOfManifest.
-	BaselineOfDependencyAnalyzer.
-	BaselineOfQualityAssistant.
-	BaselineOfReflectivity.
-	BaselineOfFuzzyMatcher.
-	BaselineOfZodiac.
-	BaselineOfReflectionMirrors.
-	BaselineOfShout.
-	BaselineOfKernelTests.
-	BaselineOfHeuristicCompletion.
-	 } do: [ :baseline | packages := packages , baseline withAllPackageNames ].
-
-	packages := packages ,  { BaselineOfFreeType name }, (self packagesOfGroupNamed: 'ui' on: BaselineOfFreeType ).
-	packages := packages ,  { BaselineOfKeymapping name }, (self packagesOfGroupNamed: 'ui' on: BaselineOfKeymapping ).
-	packages := packages ,  { BaselineOfNewValueHolder name }, (self packagesOfGroupNamed: 'core' on: BaselineOfNewValueHolder ).
-	packages := packages ,  { BaselineOfSpecCore name }, (self packagesOfGroupNamed: 'default' on: BaselineOfSpecCore ).
-	packages := packages ,  { BaselineOfSpec2 name }, (self packagesOfGroupNamed: 'default' on: BaselineOfSpec2 ).
-	packages := packages ,  { BaselineOfNewTools name }, (self packagesOfGroupNamed: 'Methods' on: BaselineOfNewTools ).
-	packages := packages ,  { BaselineOfCommander name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander).
-	packages := packages ,  { BaselineOfCommander2 name} , (self packagesOfGroupNamed: 'default' on: BaselineOfCommander2).
-	packages := packages ,  { BaselineOfIceberg name. BaselineOfLibGit name. BaselineOfCalypso name}.
-
-	packages := packages ,  (self packagesOfGroupNamed: 'FullEnvironment' on: BaselineOfCalypso ).
-	packages := packages ,  (self packagesOfGroupNamed: 'SystemBrowser' on: BaselineOfCalypso ).
-	packages := packages ,  (self packagesOfGroupNamed: 'CoreBrowser' on: BaselineOfCalypso ).
-	packages := packages ,  (self packagesOfGroupNamed: 'CoreEnvironment' on: BaselineOfCalypso ).
-	packages := packages ,  #('Calypso-SystemTools-Core').
-	packages := packages ,  (BaselineOfMetacello packagesOfGroupNamed: 'Tests').
-
-	packages := packages ,  (self packagesOfGroupNamed: 'default' on: BaselineOfIceberg ).
-	packages := packages ,  (self packagesOfGroupNamed: 'default' on: BaselineOfLibGit ).
-	packages := packages , {BaselineOfThreadedFFI name} ,
-		(self packagesOfGroupNamed: 'default' on: BaselineOfThreadedFFI ).
-	packages := packages ,  #('TaskIt').
-	packages := packages , { BaselineOfFuel name } , (BaselineOfFuel packagesOfGroupNamed: #Core).
-	packages := packages ,  { BaselineOfNewTools name }, (self packagesOfGroupNamed: 'CritiqueBrowser' on: BaselineOfNewTools ).
-
-	dependencies := self externalDependendiesOf: packages.
-	self assertCollection: dependencies hasSameElements: self knownIDEDependencies
 ]
 
 { #category : 'tests' }

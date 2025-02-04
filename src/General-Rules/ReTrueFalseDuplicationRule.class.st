@@ -22,7 +22,7 @@ Class {
 
 { #category : 'accessing' }
 ReTrueFalseDuplicationRule class >> group [
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }

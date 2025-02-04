@@ -34,7 +34,8 @@ UnixResolverTest >> testXdgParseUserDirLineDocuments [
 	"Ensure that a path of the form '$HOME/Documents' answers the expected value.
 	Note that this test can be run on any platform."
 	| stream path relativePath |
-
+	
+	OSPlatform current isUnix ifFalse: [ ^ self skip ].
 	stream := '"$HOME/Documents"' readStream.
 	path := resolver xdgParseUserDirLine: stream.
 	relativePath := path relativeTo: resolver home.
@@ -47,6 +48,7 @@ UnixResolverTest >> testXdgParseUserDirLineNotRoot [
 	Note that this test can be run on any platform."
 	| stream path |
 
+	OSPlatform current isUnix ifFalse: [ ^ self skip ].
 	stream := '"$HOME/"' readStream.
 	path := resolver xdgParseUserDirLine: stream.
 	self deny: path isRoot

@@ -57,18 +57,6 @@ StRequestClassPresenter >> initializeTagsPresenter [
 		yourself.
 ]
 
-{ #category : 'initialization' }
-StRequestClassPresenter >> initializeWindow: aSpWindowPresenter [
-
-	super initializeWindow: aSpWindowPresenter.
-	self
-		setTitleTo: aSpWindowPresenter;
-		setWindowIconTo: aSpWindowPresenter.
-
-	aSpWindowPresenter
-		aboutText: String empty
-]
-
 { #category : 'accessing' }
 StRequestClassPresenter >> newClassName [
 	"Answer a <String> containing the current contents of the new class name presenter"
@@ -84,24 +72,15 @@ StRequestClassPresenter >> openModal [
 
 { #category : 'accessing' }
 StRequestClassPresenter >> packageName [
+	"Answer a <String> with the receiver's selected package"
 
 	^ packagePresenter selectedItem
 ]
 
 { #category : 'accessing - model' }
-StRequestClassPresenter >> setModelBeforeInitialization: aRBInteractionDriver [
+StRequestClassPresenter >> setModelBeforeInitialization: anInteractionDriver [
 
-	driver := aRBInteractionDriver
-]
-
-{ #category : 'initialization' }
-StRequestClassPresenter >> setTitleTo: aSpWindowPresenter [ 
-	^ self subclassResponsibility
-]
-
-{ #category : 'initialization' }
-StRequestClassPresenter >> setWindowIconTo: aSpWindowPresenter [
-	^ self subclassResponsibility
+	driver := anInteractionDriver
 ]
 
 { #category : 'accessing' }

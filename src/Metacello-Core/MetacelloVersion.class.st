@@ -2,7 +2,6 @@ Class {
 	#name : 'MetacelloVersion',
 	#superclass : 'Magnitude',
 	#instVars : [
-		'versionStatus',
 		'importedVersions',
 		'spec',
 		'versionNumber'
@@ -65,13 +64,6 @@ MetacelloVersion >> defaultPackageNamesToLoad: defaultList [
 { #category : 'querying' }
 MetacelloVersion >> description [
     ^ self basicSpec description value
-]
-
-{ #category : 'querying' }
-MetacelloVersion >> difference: aMetacelloVersion [
-	"Return a a dictionary of additions, removals and modifications"
-	
-	^self spec difference: aMetacelloVersion spec
 ]
 
 { #category : 'private' }
@@ -362,12 +354,6 @@ MetacelloVersion >> versionNumberFrom: aString [
 MetacelloVersion >> versionSpec [
 
 	^self spec
-]
-
-{ #category : 'accessing' }
-MetacelloVersion >> versionStatus: aSymbol [
-
-	versionStatus := aSymbol
 ]
 
 { #category : 'querying' }

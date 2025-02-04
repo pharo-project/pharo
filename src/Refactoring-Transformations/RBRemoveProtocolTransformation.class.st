@@ -2,12 +2,14 @@
 I am responsible for removing a protocol in a class
 
 Usage:
+```
 | transformation |
 transformation := (RBRemoveProtocolTransformation
-			protocol: 'empty protocol'
+			protocol: 'empty protocol 1'
 			inClass: #RBDummyEmptyClass)
-			transform.
-(ChangesBrowser changes: transformation model changes changes) open
+			generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 	
 Preconditions:
 - The class exists;

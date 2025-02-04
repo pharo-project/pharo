@@ -18,13 +18,18 @@ ReMissingSuperSendsRule class >> checksMethod [
 
 { #category : 'accessing' }
 ReMissingSuperSendsRule class >> group [
-
-	^ 'Potential Bugs'
+	^ self potentialBugsGroup
 ]
 
 { #category : 'accessing' }
 ReMissingSuperSendsRule class >> ruleName [
 	^ 'Missing super sends in selected methods.'
+]
+
+{ #category : 'accessing' }
+ReMissingSuperSendsRule class >> severity [
+
+	^ #error
 ]
 
 { #category : 'accessing' }
@@ -58,5 +63,5 @@ ReMissingSuperSendsRule >> basicCheck: aMethod [
 ReMissingSuperSendsRule >> methodsRequiringSuper [
 
 	^ #( #release #postCopy #postBuildWith: #preBuildWith: #postOpenWith:
-	     #noticeOfWindowClose: #initialize )
+	     #noticeOfWindowClose: #initialize #initializeWindow: ) 
 ]

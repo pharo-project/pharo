@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 ReUnoptimizedAndOrRule class >> group [
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }

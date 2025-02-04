@@ -152,6 +152,20 @@ FFIStructure class >> compileFields: specArray withAccessors: aSymbol [
 ]
 
 { #category : 'private' }
+FFIStructure class >> compileMethodNamed: aSymbol code: aString classified: protocol [
+
+	"If we detect we have a method in the class with the right code but an equivalent is already in a superclass we can remove it to clean."
+	self
+		compiledMethodAt: aSymbol
+		ifPresent: [ :method | method sourceCode = aString and: [ method hasEquivalentMethodInSuperclass ifTrue: [ ^ method removeFromSystem ] ] ].
+
+	"If we already have the method we do not need to compile it. The method can come from a superclass having the same fields"
+	(self lookupSelector: aSymbol) ifNotNil: [ :method | method sourceCode = aString ifTrue: [ ^ self ] ].
+
+	self compile: aString classified: self generatedFieldProtocolName
+]
+
+{ #category : 'private' }
 FFIStructure class >> defineFieldAccessorsFor: fieldName startingAt: byteOffset type: type [
 	"Define read/write accessors for the given field.
 	 This method is equivallent to his parent, but it changes a couple of things:
@@ -182,23 +196,19 @@ FFIStructure class >> defineFieldAccessorsFor: fieldName type: type [
 	 This method is equivallent to his parent, but it changes a couple of things:
 	 - type is FFIExternalType and not ExternalType
 	 - it generates to another protocol, not accessing"
+
 	| code |
+	(type isVoid and: [ type isPointer not ]) ifTrue: [ ^ self ].
 
-	(type isVoid and: [ type isPointer not ]) ifTrue:[ ^ self ].
-
-	code := fieldName,'
+	code := fieldName , '
 	"This method was automatically generated"
-	', (type offsetReadFieldAt: (self offsetVariableNameFor: fieldName)).
-	self
-		compile: code
-		classified: self generatedFieldProtocolName.
+	' , (type offsetReadFieldAt: (self offsetVariableNameFor: fieldName)).
+	self compileMethodNamed: fieldName code: code classified: self generatedFieldProtocolName.
 
-	code := fieldName,': anObject
+	code := fieldName , ': anObject
 	"This method was automatically generated"
-	', (type offsetWriteFieldAt: (self offsetVariableNameFor: fieldName) with:'anObject').
-	self
-		compile: code
-		classified: self generatedFieldProtocolName
+	' , (type offsetWriteFieldAt: (self offsetVariableNameFor: fieldName) with: 'anObject').
+	self compileMethodNamed: fieldName asMutator code: code classified: self generatedFieldProtocolName
 ]
 
 { #category : 'private' }

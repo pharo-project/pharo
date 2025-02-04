@@ -9,12 +9,6 @@ Class {
 	#tag : 'Nodes'
 }
 
-{ #category : 'building-menu' }
-DACycleNode >> addMenuEntriesOn: aMenu [
-	
-	self
-]
-
 { #category : 'accessing' }
 DACycleNode >> childNodeClassFor: anItem [
 	^ DAPackageUnderAnalysisNode

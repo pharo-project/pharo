@@ -4,8 +4,6 @@ I am a command to extract selected ast node into separate method
 Class {
 	#name : 'SycExtractMethodAndOccurrencesCommand',
 	#superclass : 'SycSourceCodeRefactoringCommand',
-	#traits : 'TRefactoringCommandSupport',
-	#classTraits : 'TRefactoringCommandSupport classTrait',
 	#instVars : [
 		'selectedTextInterval'
 	],
@@ -43,12 +41,12 @@ SycExtractMethodAndOccurrencesCommand >> asRefactorings [
 
 { #category : 'accessing' }
 SycExtractMethodAndOccurrencesCommand >> defaultMenuIconName [
-	^ #glamorousRestart
+	^ #restart
 ]
 
 { #category : 'accessing' }
 SycExtractMethodAndOccurrencesCommand >> defaultMenuItemName [
-	^ '(R) Extract method'
+	^ '(Old refactor) Extract method with occurrences'
 ]
 
 { #category : 'execution' }
@@ -82,7 +80,7 @@ SycExtractMethodAndOccurrencesCommand >> setUpOptionToChangeMethodNameDuring: re
 	| dialog |
 	refactoring setOption: #methodName toUse: [ :methodName :ref | | invalidArgs |
 		invalidArgs := self computeInvalidArgNamesForSelector: method selector.
-		dialog := SycMethodNameEditorPresenter
+		dialog := StMethodNameEditorPresenter
 			openOn: methodName
 			withInvalidArgs: invalidArgs
 			canRenameArgs: true

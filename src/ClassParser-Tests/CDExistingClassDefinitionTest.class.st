@@ -30,7 +30,7 @@ CDExistingClassDefinitionTest >> secondInstanceVariableName [
 ]
 
 { #category : 'helpers' }
-CDExistingClassDefinitionTest >> testClassNameNodeIsPolymorphicToRBVariableNode [
+CDExistingClassDefinitionTest >> testClassNameNodeIsPolymorphicToASTVariableNode [
 
 	| nameNode |
 	nameNode := classDefinition classNameNode.
@@ -56,7 +56,7 @@ CDExistingClassDefinitionTest >> testGettingExistingClassNameBinding [
 ]
 
 { #category : 'helpers' }
-CDExistingClassDefinitionTest >> testSharedSlotNodeArePolymorphicToRBVariableNodes [
+CDExistingClassDefinitionTest >> testSharedSlotNodeArePolymorphicToASTVariableNodes [
 
 	| classVarNode |
 	classVarNode := classDefinition sharedVariableNodes first.
@@ -71,7 +71,7 @@ CDExistingClassDefinitionTest >> testSharedSlotNodeArePolymorphicToRBVariableNod
 ]
 
 { #category : 'helpers' }
-CDExistingClassDefinitionTest >> testSlotNodeArePolymorphicToRBVariableNodes [
+CDExistingClassDefinitionTest >> testSlotNodeArePolymorphicToASTVariableNodes [
 
 	| slotNode |
 	slotNode := classDefinition slotNodes first.

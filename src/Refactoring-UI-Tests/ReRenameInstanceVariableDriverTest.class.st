@@ -32,10 +32,7 @@ ReRenameInstanceVariableDriverTest >> testInvalidNameFollowedByAValidNameExpectS
 { #category : 'tests' }
 ReRenameInstanceVariableDriverTest >> testValidNameAndUndefinedVariable [
 
-	| rbclasses driver requestDialog |
-	self skip.
-	"I do not understand this test and it loops with my changes."
-	
+	| rbclasses driver |	
 	rbclasses := RBClassEnvironment classes: { MyClassARoot }.
 	driver := ReRenameInstanceVariableDriver new
 		          scopes: { rbclasses }
@@ -44,16 +41,10 @@ ReRenameInstanceVariableDriverTest >> testValidNameAndUndefinedVariable [
 		
 	"Variable `inexistantVariable` is not defined in `MyClassARoot`"
 	self setUpDriver: driver.
-
-	requestDialog := MockObject new.
-	requestDialog on: #openModal respond: #inexistantVariable1.
-	requestDialog on: #title: respond: 'nothing'.
-	requestDialog on: #text: respond: 'nothing'.
-	driver requestDialog: requestDialog.
-
-	"self halt."
-	"It loops from here."
- 	driver runRefactoring 
+ 	driver runRefactoring.
+	
+	"Nothing happened since the vairable does not exist and we stop immediately."
+	self assert: driver refactoring model changes changes size equals: 0
 ]
 
 { #category : 'tests' }

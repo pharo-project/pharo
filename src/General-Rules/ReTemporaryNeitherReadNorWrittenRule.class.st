@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 ReTemporaryNeitherReadNorWrittenRule class >> group [
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }

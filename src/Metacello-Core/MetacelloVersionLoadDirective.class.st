@@ -40,12 +40,6 @@ MetacelloVersionLoadDirective >> loadDirectives: anObject [
 	loadDirectives := anObject
 ]
 
-{ #category : 'actions' }
-MetacelloVersionLoadDirective >> newWithEngine: aLoadPolicy [
-
-	self subclassResponsibility
-]
-
 { #category : 'enumerating' }
 MetacelloVersionLoadDirective >> packageDirectivesDo: aBlock [
 
@@ -59,23 +53,10 @@ MetacelloVersionLoadDirective >> packages [
 ]
 
 { #category : 'printing' }
-MetacelloVersionLoadDirective >> printLoadDirectivesOn: aStream indent: indent [
-
-	self loadDirectives do: [:each |
-		aStream cr. 
-		each printOn: aStream indent: indent + 1 ].
-]
-
-{ #category : 'printing' }
 MetacelloVersionLoadDirective >> printOn: aStream indent: indent [
 
 	super printOn: aStream indent: indent.
-	self printLoadDirectivesOn: aStream indent: indent
-]
-
-{ #category : 'accessing' }
-MetacelloVersionLoadDirective >> spec [
-	"Expected to be a MetacelloVersionSpec"
-
-	^ spec
+	self loadDirectives do: [ :each |
+		aStream cr.
+		each printOn: aStream indent: indent + 1 ]
 ]

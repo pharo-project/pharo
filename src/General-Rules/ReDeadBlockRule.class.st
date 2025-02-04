@@ -12,7 +12,7 @@ Class {
 
 { #category : 'accessing' }
 ReDeadBlockRule class >> group [
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }

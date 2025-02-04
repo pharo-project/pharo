@@ -2,12 +2,14 @@
 Removes a method from a class. Only the selector of the method is needed.
 
 Usage:
+```
 | transformation |
 transformation := (RBRemoveMethodTransformation 
-		selector: #transform
+		selector: #privateTransform
 		from: RBRemoveMethodTransformation)
-		transform. 
-(ChangesBrowser changes: transformation model changes changes) open
+		generateChanges. 
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 Checks whether there are any references to this method
@@ -52,7 +54,7 @@ RBRemoveMethodTransformation class >> selector: aSelector from: aClassName [
 { #category : 'api' }
 RBRemoveMethodTransformation class >> selectors: aCollection from: aClassName [
 
-	^ self model: RBTransformation new model selectors: aCollection from: aClassName
+	^ self model: ReTransformation new model selectors: aCollection from: aClassName
 ]
 
 { #category : 'preconditions' }

@@ -21,7 +21,7 @@ CompletionSorter class >> kind [
 
 { #category : 'tools registry' }
 CompletionSorter class >> register [
-	CompletionContext sorterClass: AlphabeticSorter
+	CompletionContext sorterClass: SizeSorter
 ]
 
 { #category : 'accessing' }

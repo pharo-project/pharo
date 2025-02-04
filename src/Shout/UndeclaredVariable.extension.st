@@ -1,9 +1,9 @@
 Extension { #name : 'UndeclaredVariable' }
 
 { #category : '*Shout' }
-UndeclaredVariable >> styleNameIn: aRBVariableNode [
+UndeclaredVariable >> styleNameIn: aVariableNode [
 
-	^ (aRBVariableNode scope hasBindingThatBeginsWith: self name)
+	^ (aVariableNode scope hasBindingThatBeginsWith: self name)
 		  ifTrue: [ #incompleteIdentifier ]
 		  ifFalse: [ #undefinedIdentifier ]
 ]

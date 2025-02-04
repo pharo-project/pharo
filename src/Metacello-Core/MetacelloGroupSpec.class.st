@@ -53,11 +53,6 @@ MetacelloGroupSpec >> includeSpecNamesForPackageOrdering: aVersionSpec [
 ]
 
 { #category : 'loading' }
-MetacelloGroupSpec >> loadUsing: aLoader gofer: gofer withEngine: anEngine [
-	"noop"
-]
-
-{ #category : 'loading' }
 MetacelloGroupSpec >> packageSpecsInLoadOrder [
 
 	^ (self project version spec packageSpecsInLoadOrder select: [ :each |

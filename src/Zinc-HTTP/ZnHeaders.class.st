@@ -303,7 +303,7 @@ ZnHeaders >> printOn: stream [
 	self isEmpty ifFalse: [ self headers printElementsOn: stream ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnHeaders >> readFrom: stream [
 	| line reader |
 	reader := ZnLineReader on: stream.
@@ -361,7 +361,7 @@ ZnHeaders >> singleAt: headerName ifAbsent: block [
 		ifFalse: [ value last ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnHeaders >> unlimited [
 	self headers unlimited
 ]

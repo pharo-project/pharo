@@ -4,6 +4,10 @@ I am a command to push up given variables
 Class {
 	#name : 'SycPushUpVariableCommand',
 	#superclass : 'SycRefactorVariableCommand',
+	#instVars : [
+		'refactoringScopes',
+		'variable'
+	],
 	#category : 'SystemCommands-VariableCommands',
 	#package : 'SystemCommands-VariableCommands'
 }
@@ -16,20 +20,36 @@ SycPushUpVariableCommand class >> sourceCodeMenuActivation [
 ]
 
 { #category : 'execution' }
-SycPushUpVariableCommand >> asRefactorings [
-
-	^self
-		createRefactorings: RBPullUpInstanceVariableRefactoring
-		using: [ :refactoring :var |
-			refactoring variable: var name class: var definingClass superclass]
-]
-
-{ #category : 'accessing' }
 SycPushUpVariableCommand >> defaultMenuIconName [
 	^ #up
 ]
 
 { #category : 'accessing' }
 SycPushUpVariableCommand >> defaultMenuItemName [
-	^'Push up'
+	^'(R) Push up'
+]
+
+{ #category : 'accessing' }
+SycPushUpVariableCommand >> executeRefactorings [
+
+	(RePushUpVariableDriver new
+		scopes: refactoringScopes
+		variable: variable actualVariable name
+		to: variable definingClass superclass) runRefactoring
+]
+
+{ #category : 'accessing' }
+SycPushUpVariableCommand >> isComplexRefactoring [
+
+	^ false
+]
+
+{ #category : 'accessing' }
+SycPushUpVariableCommand >> prepareFullExecutionInContext: aToolContext [
+
+	super prepareFullExecutionInContext: aToolContext.
+	refactoringScopes := aToolContext refactoringScopes.
+	toolContext := aToolContext.
+	variable := toolContext lastSelectedVariable.
+	
 ]

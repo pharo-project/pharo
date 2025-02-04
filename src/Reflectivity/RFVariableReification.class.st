@@ -14,7 +14,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFVariableReification class >> entities [
-	^{RBVariableNode. Variable}
+	^{OCVariableNode. Variable}
 ]
 
 { #category : 'plugin interface' }
@@ -23,20 +23,20 @@ RFVariableReification class >> key [
 ]
 
 { #category : 'generate' }
+RFVariableReification >> genForASTVariableNode [
+
+	entity isTempVariable ifTrue: [ ^self error: 'Temps can not be reified yet' ].
+	^OCLiteralNode value: entity binding
+]
+
+{ #category : 'generate' }
 RFVariableReification >> genForInstanceVariableSlot [
 	"entity in this case is the binding of the literal"
-	^ASTLiteralNode value: entity
+	^OCLiteralNode value: entity
 ]
 
 { #category : 'generate' }
 RFVariableReification >> genForLiteralVariable [
 	"entity in this case is the binding of the literal"
-	^ASTLiteralNode value: entity
-]
-
-{ #category : 'generate' }
-RFVariableReification >> genForRBVariableNode [
-
-	entity isTempVariable ifTrue: [ ^self error: 'Temps can not be reified yet' ].
-	^ASTLiteralNode value: entity binding
+	^OCLiteralNode value: entity
 ]

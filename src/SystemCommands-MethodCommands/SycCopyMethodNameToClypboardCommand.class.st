@@ -1,3 +1,6 @@
+"
+Copy selected methods selector into Clipboard as testOriginalSelector
+"
 Class {
 	#name : 'SycCopyMethodNameToClypboardCommand',
 	#superclass : 'SycMethodCommand',

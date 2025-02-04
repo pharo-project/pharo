@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 ReReturnsIfTrueRule class >> group [
-	^ 'Potential Bugs'
+	^ self potentialBugsGroup
 ]
 
 { #category : 'accessing' }

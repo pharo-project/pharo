@@ -117,7 +117,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'System-Platforms'.
 		spec package: 'System-SessionManager'.
 		spec package: 'System-Sources'.
-		spec package: 'System-SourcesCondenser'.
 		spec package: 'System-Support'.
 
 		spec package: 'UIManager'.
@@ -207,7 +206,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'CodeImport'.
 			'CodeImportCommandLineHandlers'.
 			'ClassDefinitionPrinters'.
-			'System-SourcesCondenser'.
 			'Debugging-Utils'.
 			'OpalCompiler-Core'}.
 		

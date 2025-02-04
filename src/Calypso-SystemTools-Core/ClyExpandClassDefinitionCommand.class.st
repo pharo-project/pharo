@@ -35,7 +35,7 @@ ClyExpandClassDefinitionCommand >> applyResultInContext: aToolContext [
 
 { #category : 'accessing' }
 ClyExpandClassDefinitionCommand >> defaultMenuIconName [
-	^#glamorousBrowse
+	^#browse
 ]
 
 { #category : 'accessing' }

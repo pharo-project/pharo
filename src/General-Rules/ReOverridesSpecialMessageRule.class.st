@@ -21,12 +21,12 @@ ReOverridesSpecialMessageRule class >> classShouldNotOverride [
 
 { #category : 'accessing' }
 ReOverridesSpecialMessageRule class >> group [
-	^ 'Bugs'
+	^ self bugsGroup
 ]
 
 { #category : 'private' }
 ReOverridesSpecialMessageRule class >> metaclassShouldNotOverride [
-	^ #( #basicNew #basicNew #class #comment #name )
+	^ #( #basicNew #basicNew #class #comment #name #preferredExtent )
 ]
 
 { #category : 'accessing' }

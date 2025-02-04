@@ -2,13 +2,15 @@
 Removes a subtree from a method. This is a first step on providing small AST tranformations. It might replace the message send, assignment, return, etc. transformations proposed by other tools. This transformation can also be reused by more complex ones, such as Extract Method.
 
 Usage:
+```
 | transformation |
 transformation := (RBRemoveSubtreeTransformation
-		code: 'selector := aSelector'
-		from: #selector:from:
-		in: #RBRemoveMethodTransformation)
-		transform. 
-(ChangesBrowser changes: transformation model changes changes) open
+		remove: 'selector := aSelector'
+		fromMethod: #selector:from:
+		inClass: #RBRemoveMethodTransformation)
+			generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 - the class and method exist

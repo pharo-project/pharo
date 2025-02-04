@@ -47,7 +47,7 @@ Collection >> do: aBlock displayingProgress: aStringOrBlock every: msecs [
 
 			(index = 1 or: [ index + 1 = size or: [(Time millisecondsSince: lastUpdate) >= msecs]]) 
 				ifTrue: [ 
-					job currentValue: index..
+					job currentValue: index.
 					oldLabel = (newLabel := (labelBlock cull: each) ifNil: [oldLabel]) 
 						ifFalse: [
 							job title: newLabel.

@@ -3,7 +3,7 @@ I'm a model for user interaction for the remove instance variable refactoring.
 "
 Class {
 	#name : 'ReRemoveInstanceVariablesDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'class',
 		'variables'
@@ -30,13 +30,6 @@ ReRemoveInstanceVariablesDriver >> browseInstanceVariableReferences [
 	StMessageBrowser
 		browse: refactoring violators
 		
-]
-
-{ #category : 'execution' }
-ReRemoveInstanceVariablesDriver >> changes [
-	"We only perform the changes."
-	
-	^ refactoring privateTransform; changes
 ]
 
 { #category : 'resources' }
@@ -92,11 +85,4 @@ ReRemoveInstanceVariablesDriver >> scopes: refactoringScopes variables: aCollect
 	model := self refactoringScopeOn: scopes first.
 	variables := aCollection.
 	class := aClass
-]
-
-{ #category : 'execution' }
-ReRemoveInstanceVariablesDriver >> selectDialog [
-	
-	^ selectDialog ifNil: [ selectDialog := self defaultSelectDialog ].
-	
 ]

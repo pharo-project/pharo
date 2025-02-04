@@ -10,7 +10,7 @@ Class {
 
 { #category : 'accessing' }
 SycBrowseClassCommand >> defaultMenuIconName [
-	^#glamorousBrowse
+	^#browse
 ]
 
 { #category : 'accessing' }

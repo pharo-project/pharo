@@ -30,7 +30,7 @@ ZnBivalentWriteStream class >> on: writeStream [
 		yourself
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnBivalentWriteStream >> close [
 	stream close
 ]
@@ -87,7 +87,7 @@ ZnBivalentWriteStream >> nextPutAll: collection [
 		ifFalse: [ stream nextPutAll: collection asString ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnBivalentWriteStream >> on: writeStream [
 	stream := writeStream
 ]

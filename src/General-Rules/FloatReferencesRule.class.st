@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 FloatReferencesRule class >> group [
-	^ 'Bugs'
+	^ self bugsGroup
 ]
 
 { #category : 'accessing' }

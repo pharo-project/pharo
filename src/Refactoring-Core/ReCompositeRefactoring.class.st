@@ -4,7 +4,7 @@ I will fail on the first one that fails.
 "
 Class {
 	#name : 'ReCompositeRefactoring',
-	#superclass : 'RBRefactoring',
+	#superclass : 'ReRefactoring',
 	#instVars : [
 		'refactorings'
 	],

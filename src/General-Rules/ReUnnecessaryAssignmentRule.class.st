@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 ReUnnecessaryAssignmentRule class >> group [
-	^ 'Optimization'
+	^ self optimizationGroup
 ]
 
 { #category : 'accessing' }

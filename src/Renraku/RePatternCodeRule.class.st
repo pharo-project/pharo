@@ -38,7 +38,7 @@ RePatternCodeRule >> afterCheck: aNode mappings: mappingDict [
 { #category : 'private' }
 RePatternCodeRule >> flattenMatchMap: aDictionary [
 	^ aDictionary keysAndValuesDo: [ :key :val |
-		((key isKindOf: ASTProgramNode) and: [
+		((key isKindOf: OCProgramNode) and: [
 		 key isPatternNode ])
 			ifTrue: [
 				aDictionary

@@ -21,7 +21,8 @@ MySubAccessingSuperclassState class >> sharedOnlyInClassSideSubclass [
 { #category : 'accessing' }
 MySubAccessingSuperclassState >> accessing [
 
-	^ instVarName1  
+	"Duplicate here on purpose for testing purposes"
+	^ instVarName1
 ]
 
 { #category : 'accessing' }
@@ -33,6 +34,7 @@ MySubAccessingSuperclassState >> accessing2InSub [
 { #category : 'accessing' }
 MySubAccessingSuperclassState >> accessingSharedVariable [
 
+	"Duplicate here on purpose for testing purposes"
 	^ Shared1 
 ]
 

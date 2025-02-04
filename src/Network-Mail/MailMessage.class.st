@@ -273,6 +273,12 @@ MailMessage >> attachmentSeparator [
 ]
 
 { #category : 'accessing' }
+MailMessage >> bcc [
+
+	^self fieldsNamed: 'bcc' separatedBy: ', '
+]
+
+{ #category : 'accessing' }
 MailMessage >> body [
 	"return just the body of the message"
 	^body
@@ -726,7 +732,9 @@ MailMessage >> readStringLineFrom: aStream [
 { #category : 'accessing' }
 MailMessage >> recipientList [
 
-	^ (self to findTokens: $,) collect: [ :e | e trimLeft ]
+	^ (MailAddressParser addressesIn: self to)
+	  , (MailAddressParser addressesIn: self cc)
+	  , (MailAddressParser addressesIn: self bcc)
 ]
 
 { #category : 'printing/formatting' }

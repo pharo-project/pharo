@@ -34,8 +34,15 @@ ClyPackageScope >> classGroupProvidersDo: aBlock [
 
 { #category : 'queries' }
 ClyPackageScope >> classesDo: aBlock [
+
 	self packagesDo: [ :package |
-		package definedClasses do: aBlock]
+		| classes |
+		classes := (environment isNotNil and: [ environment system isNotNil ])
+			           ifTrue: [
+			           environment system definedClassesInPackage: package ]
+			           ifFalse: [ package definedClasses ].
+
+		classes do: aBlock ]
 ]
 
 { #category : 'system changes' }

@@ -28,6 +28,13 @@ SDLAbstractPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
 	self subclassResponsibility
 ]
 
+{ #category : 'configuration' }
+SDLAbstractPlatform >> defaultRendererFlags [
+	"We have no special flags for the renderer.
+	SDL_RENDERER_PRESENTVSYNC was shown to crash on certain windows machines with external screens"
+	^ 0
+]
+
 { #category : 'initialization' }
 SDLAbstractPlatform >> initPlatformSpecific [
 

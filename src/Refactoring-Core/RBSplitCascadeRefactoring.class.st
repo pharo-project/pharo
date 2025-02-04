@@ -63,12 +63,12 @@ RBSplitCascadeRefactoring >> extractReceiver [
 		basedOn: 'receiver'.
 	ancestorNode parent
 		addTemporaryNamed: name;
-		addNode: (RBAssignmentNode
-			variable: (RBVariableNode named: name)
+		addNode: (OCAssignmentNode
+			variable: (OCVariableNode named: name)
 			value: cascadeNode receiver)
 		before: ancestorNode.
 	cascadeNode messages
-		do: [ :each | each receiver: (RBVariableNode named: name) ]
+		do: [ :each | each receiver: (OCVariableNode named: name) ]
 ]
 
 { #category : 'preconditions' }
@@ -137,7 +137,7 @@ RBSplitCascadeRefactoring >> split: anInterval from: aSelector in: aClass [
 RBSplitCascadeRefactoring >> splitCascade [
 	ancestorNode parent
 		addNode: (beforeNodes size > 1
-			ifTrue: [ RBCascadeNode messages: beforeNodes ]
+			ifTrue: [ OCCascadeNode messages: beforeNodes ]
 			ifFalse: [ beforeNodes first ])
 		before: ancestorNode.
 	afterNodes size > 1

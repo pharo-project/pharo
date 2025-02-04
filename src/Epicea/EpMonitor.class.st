@@ -528,7 +528,8 @@ EpMonitor >> subscribeToSystemAnnouncer [
 		(ClassRepackaged -> [ :ann | self classRepackaged: ann ]).
 		(ClassRenamed -> [ :ann | self classRenamed: ann ]).
 		(ClassCommented -> [ :ann | self classCommented: ann ]).
-		(MethodRecategorized -> [ :ann | self methodRecategorized: ann ]) } asDictionary keysAndValuesDo: [ :announcement :block |
+		(MethodRecategorized -> [ :ann | self methodRecategorized: ann ]) .
+		 } asDictionary keysAndValuesDo: [ :announcement :block |
 		self systemAnnouncer weak
 			when: announcement
 			do: [ :ann | "During the tests, we should only log with Epicea if the test case declare it wants logging."

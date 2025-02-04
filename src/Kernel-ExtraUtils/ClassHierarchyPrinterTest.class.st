@@ -19,45 +19,43 @@ ClassHierarchyPrinterTest >> setUp [
 ClassHierarchyPrinterTest >> testOnlyASTNodes [
 
 	printer
-		forClass: ASTNode;
+		forClass: OCNode;
 		doNotShowState;
 		doNotShowSuperclasses;
-		excludedClasses: (ASTNode withAllSubclasses select: [ :each | each name beginsWith: 'RBPattern' ]);
-		limitedToClasses: (ASTNode withAllSubclasses select: [:each | (each name beginsWith: 'RB') or: [ each name beginsWith: 'AST' ]]).
-	self assert: printer print equals:
-	'ASTNode
-	ASTProgramNode
-		ASTValueNode
-			ASTLiteralNode
-				RBLiteralArrayNode
-				RBLiteralValueNode
-			RBAnnotationMarkNode
-			RBArrayNode
-			RBAssignmentNode
-			RBBlockNode
-			RBCascadeNode
-			RBMessageNode
-			RBParseErrorNode
-				RBEnglobingErrorNode
-					RBArrayErrorNode
-					RBAssignmentErrorNode
-					RBBlockErrorNode
-					RBInvalidCascadeErrorNode
-					RBLiteralArrayErrorNode
-					RBLiteralByteArrayErrorNode
-					RBParenthesesErrorNode
-					RBPragmaErrorNode
-					RBTemporariesErrorNode
-					RBUnfinishedStatementErrorNode
-			RBSelectorNode
-			RBVariableNode
-		RBComment
-		RBMethodNode
-			RBDoItMethodNode
-		RBPragmaNode
-		RBReturnNode
-		RBSequenceNode
-	RBSlotInitializationNode
+		excludedClasses: (OCNode withAllSubclasses select: [ :each | each name beginsWith: 'OCPattern' ]);
+		limitedToClasses: (OCNode withAllSubclasses select: [:each | (each name beginsWith: 'OC')]).
+	self assert: printer print equals: 'OCNode
+	OCProgramNode
+		OCCommentNode
+		OCMethodNode
+			OCDoItMethodNode
+		OCPragmaNode
+		OCReturnNode
+		OCSequenceNode
+		OCValueNode
+			OCAnnotationMarkNode
+			OCArrayNode
+			OCAssignmentNode
+			OCBlockNode
+			OCCascadeNode
+			OCLiteralNode
+				OCLiteralArrayNode
+				OCLiteralValueNode
+			OCMessageNode
+			OCParseErrorNode
+				OCEnglobingErrorNode
+					OCArrayErrorNode
+					OCAssignmentErrorNode
+					OCBlockErrorNode
+					OCInvalidCascadeErrorNode
+					OCLiteralArrayErrorNode
+					OCLiteralByteArrayErrorNode
+					OCParenthesesErrorNode
+					OCPragmaErrorNode
+					OCTemporariesErrorNode
+					OCUnfinishedStatementErrorNode
+			OCSelectorNode
+			OCVariableNode
 '
 ]
 

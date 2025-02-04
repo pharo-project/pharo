@@ -22,9 +22,10 @@ Class {
 ExternalDropHandler class >> chooseServiceFrom: aCollection [
 	"private - choose a service from aCollection asking the user if
 	needed"
-	aCollection size = 1 ifTrue: [^ aCollection anyOne].
-	^ self morphicUIManager chooseFrom: (aCollection collect: [:each |
-			each label]) values: aCollection
+
+	^ self morphicUIManager
+		  chooseFrom: (aCollection collect: [ :each | each label ])
+		  values: aCollection
 ]
 
 { #category : 'cleanup' }
@@ -52,37 +53,38 @@ ExternalDropHandler class >> initialize [
 { #category : 'accessing' }
 ExternalDropHandler class >> lookupExternalDropHandler: aFileReference [
 
-	| types serviceHandler |
+	| types |
 	types := aFileReference mimeTypes.
 
 	types ifNotNil: [
-		self registeredHandlers do: [:handler |
-			(handler matchesTypes: types)
-				ifTrue: [^handler]]].
+		self registeredHandlers do: [ :handler |
+			(handler matchesTypes: types) ifTrue: [ ^ handler ] ] ].
 
-	self registeredHandlers do: [:handler |
-		(handler matchesExtension: aFileReference extension)
-				ifTrue: [^handler]].
-	serviceHandler := self lookupServiceBasedHandler: aFileReference.
-	^serviceHandler
-		ifNil: [self defaultHandler]
+	self registeredHandlers do: [ :handler |
+		(handler matchesExtension: aFileReference extension) ifTrue: [
+			^ handler ] ].
+	^ self lookupServiceBasedHandler: aFileReference
 ]
 
 { #category : 'accessing' }
 ExternalDropHandler class >> lookupServiceBasedHandler: aFileReference [
-	"the file was just droped, let's do our job"
+	"Choose the service handler from those installed, and if none, present a default one.
+	Let the user choose.
+	
+	If the user cancels, return nil.
+	Otherwise, return the user's choice"
+
 	| services theOne |
-
-	services := (Smalltalk tools fileList itemsForFile: aFileReference)
+	services := (FileServices itemsForFile: aFileReference fullName)
 		reject: [:svc | self unwantedSelectors includes: svc selector].
-
-	"no service, default behavior"
-	services isEmpty
-		ifTrue: [^nil].
+	services := services copyWith: self defaultHandler.
 
 	theOne := self chooseServiceFrom: services.
-	^theOne
-		ifNotNil: [ExternalDropHandler type: nil extension: nil action: [:stream | theOne performServiceFor: aFileReference]]
+	^ theOne ifNotNil: [
+		  self
+			  type: nil
+			  extension: nil
+			  action: [ :stream | theOne performServiceFor: aFileReference ] ]
 ]
 
 { #category : 'accessing' }

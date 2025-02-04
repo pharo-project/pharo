@@ -42,11 +42,6 @@ ZnConstants class >> frameworkLicense [
 ]
 
 { #category : 'accessing' }
-ZnConstants class >> frameworkMCVersion [
-	MCWorkingCopy managersForClass: self class do: [ :each | ^ each ancestors first name ]
-]
-
-{ #category : 'accessing' }
 ZnConstants class >> frameworkName [
 	^ 'Zinc HTTP Components'
 ]

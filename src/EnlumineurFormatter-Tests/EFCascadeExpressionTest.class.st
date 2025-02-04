@@ -27,27 +27,27 @@ EFCascadeExpressionTest >> multilineMessageConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		newLineAfterCascade: true;
-		newLineBeforeFirstCascade: true;
-		formatCommentCloseToStatements:false;
-		multiLineMessages:#(#multi:line:);
-		oneLineMessages: Array new;
-		numberOfArgumentsForMultiLine:3;
-		maxLineLength:50;
-		keepBlockInMessage:true;
-		indentStyle: #tabulation;
-		newLineBeforeFirstKeyword:false;
-		numberOfSpacesInsideBlock:1;
-		retainBlankLinesBetweenStatements:false;
-		minimumNewLinesBetweenStatements:1;
-		indentsForKeywords:0;
-		periodAtEndOfBlock:false;
-		periodAtEndOfMethod: false;
-		lineUpBlockBrackets:false;
-		indentExtraSpaces:0
+		  newLineAfterCascade: true;
+		  newLineBeforeFirstCascade: true;
+		  formatCommentCloseToStatements: false;
+		  multiLineMessages: #( #multi:line: );
+		  oneLineMessages: Array new;
+		  numberOfArgumentsForMultiLine: 3;
+		  maxLineLength: 50;
+		  keepBlockInMessage: true;
+		  indentStyle: #tabulation;
+		  newLineBeforeFirstKeyword: false;
+		  numberOfSpacesInsideBlock: 1;
+		  retainBlankLinesBetweenStatements: false;
+		  minimumNewLinesBetweenStatements: 1;
+		  indentsForKeywords: 0;
+		  periodAtEndOfBlock: false;
+		  periodAtEndOfMethod: false;
+		  lineUpBlockBrackets: false;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'configurations' }
@@ -55,24 +55,20 @@ EFCascadeExpressionTest >> newLineAfterCascadeConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
-
-"	^ self contextClass new
-
-"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		newLineAfterCascade: true;
-		newLineBeforeFirstCascade: false;
-		formatCommentCloseToStatements:false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
-		numberOfArgumentsForMultiLine:3;
-		maxLineLength:50;
-		keepBlockInMessage:false;
-		indentStyle: #tabulation;
-		newLineBeforeFirstKeyword:false;
-		indentExtraSpaces: 0
+		  newLineAfterCascade: true;
+		  newLineBeforeFirstCascade: false;
+		  formatCommentCloseToStatements: false;
+		  multiLineMessages: Array new;
+		  oneLineMessages: Array new;
+		  numberOfArgumentsForMultiLine: 3;
+		  maxLineLength: 50;
+		  keepBlockInMessage: false;
+		  indentStyle: #tabulation;
+		  newLineBeforeFirstKeyword: false;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'configurations' }
@@ -80,20 +76,20 @@ EFCascadeExpressionTest >> newLineBeforeAndAfterCascadeConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		newLineAfterCascade: true;
-		newLineBeforeFirstCascade: true;
-		formatCommentCloseToStatements:false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
-		numberOfArgumentsForMultiLine:3;
-		maxLineLength:50;
-		keepBlockInMessage:false;
-		indentStyle: #tabulation;
-		newLineBeforeFirstKeyword:false;
-		indentExtraSpaces:0
+		  newLineAfterCascade: true;
+		  newLineBeforeFirstCascade: true;
+		  formatCommentCloseToStatements: false;
+		  multiLineMessages: Array new;
+		  oneLineMessages: Array new;
+		  numberOfArgumentsForMultiLine: 3;
+		  maxLineLength: 50;
+		  keepBlockInMessage: false;
+		  indentStyle: #tabulation;
+		  newLineBeforeFirstKeyword: false;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'configurations' }
@@ -101,20 +97,20 @@ EFCascadeExpressionTest >> newLineBeforeCascadeConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"		
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		newLineAfterCascade: false;
-		newLineBeforeFirstCascade: true;
-		formatCommentCloseToStatements:false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
-		numberOfArgumentsForMultiLine:3;
-		maxLineLength:50;
-		keepBlockInMessage:false;
-		indentStyle: #tabulation;
-		newLineBeforeFirstKeyword:false;
-		indentExtraSpaces:0
+		  newLineAfterCascade: false;
+		  newLineBeforeFirstCascade: true;
+		  formatCommentCloseToStatements: false;
+		  multiLineMessages: Array new;
+		  oneLineMessages: Array new;
+		  numberOfArgumentsForMultiLine: 3;
+		  maxLineLength: 50;
+		  keepBlockInMessage: false;
+		  indentStyle: #tabulation;
+		  newLineBeforeFirstKeyword: false;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'configurations' }
@@ -122,20 +118,20 @@ EFCascadeExpressionTest >> noNewLineAfterCascadeConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		newLineAfterCascade: false;
-		newLineBeforeFirstCascade: false;
-		formatCommentCloseToStatements:false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
-		numberOfArgumentsForMultiLine:3;
-		maxLineLength:50;
-		keepBlockInMessage:false;
-		indentStyle: #tabulation;
-		newLineBeforeFirstKeyword:false;
-		indentExtraSpaces: 0
+		  newLineAfterCascade: false;
+		  newLineBeforeFirstCascade: false;
+		  formatCommentCloseToStatements: false;
+		  multiLineMessages: Array new;
+		  oneLineMessages: Array new;
+		  numberOfArgumentsForMultiLine: 3;
+		  maxLineLength: 50;
+		  keepBlockInMessage: false;
+		  indentStyle: #tabulation;
+		  newLineBeforeFirstKeyword: false;
+		  indentExtraSpaces: 0
 ]
 
 { #category : 'configurations' }
@@ -143,19 +139,19 @@ EFCascadeExpressionTest >> noNewLineBeforeCascadeConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		newLineAfterCascade: false;
-		newLineBeforeFirstCascade: false;
-		formatCommentCloseToStatements:false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
-		numberOfArgumentsForMultiLine:3;
-		maxLineLength:50;
-		keepBlockInMessage:false;
-		indentStyle: #tabulation;
-		newLineBeforeFirstKeyword:false
+		  newLineAfterCascade: false;
+		  newLineBeforeFirstCascade: false;
+		  formatCommentCloseToStatements: false;
+		  multiLineMessages: Array new;
+		  oneLineMessages: Array new;
+		  numberOfArgumentsForMultiLine: 3;
+		  maxLineLength: 50;
+		  keepBlockInMessage: false;
+		  indentStyle: #tabulation;
+		  newLineBeforeFirstKeyword: false
 ]
 
 { #category : 'configurations' }

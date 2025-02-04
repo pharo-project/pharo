@@ -24,8 +24,3 @@ KMShiftModifier >> initialize [
 KMShiftModifier >> matchesEvent: aKeyboardEvent [
 	^ aKeyboardEvent shiftPressed
 ]
-
-{ #category : 'printing' }
-KMShiftModifier >> printingPosition [
-	^4
-]

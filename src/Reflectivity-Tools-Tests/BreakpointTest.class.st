@@ -24,7 +24,7 @@ BreakpointTest >> newDummyClass [
 
 { #category : 'tests' }
 BreakpointTest >> parserClass [
-	^ RBParser
+	^ OCParser
 ]
 
 { #category : 'running' }
@@ -32,8 +32,8 @@ BreakpointTest >> setUp [
 	super setUp.
 	cls := self newDummyClass.
 	previousBreakpoints := Breakpoint all copy.
-	oldSystemAnnouncer := SystemAnnouncer uniqueInstance.
-	SystemAnnouncer announcer: nil.
+	oldSystemAnnouncer := self class codeSupportAnnouncer.
+	self class environment codeSupportAnnouncer: nil.
 	Breakpoint registerInterestToSystemAnnouncement.
 	Breakpoint all removeAll
 ]
@@ -43,7 +43,7 @@ BreakpointTest >> tearDown [
 
 	Breakpoint removeAll.
 	Breakpoint all addAll: previousBreakpoints.
-	SystemAnnouncer announcer: oldSystemAnnouncer.
+	self class environment codeSupportAnnouncer: oldSystemAnnouncer.
 	cls ifNotNil: [ cls isObsolete ifFalse: [ cls removeFromSystem ] ].
 	self packageOrganizer removePackage: 'DummyPackage'.
 	super tearDown
@@ -110,7 +110,7 @@ BreakpointTest >> testBreakLink [
 	link := breakpoint link.
 	self assert: link metaObject identicalTo: breakpoint.
 	self assert: link selector equals: #breakInContext:node:.
-	self assertCollection: link options equals: (MetaLink new parseOptions: breakpoint options) options.
+	self assertCollection: link options options equals: (MetaLink new parseOptions: breakpoint options) options options.
 	self assertCollection: link arguments equals: #(#context #node)
 ]
 
@@ -350,7 +350,7 @@ BreakpointTest >> testSelf_conditionBlockProducerMethodAST [
 { #category : 'tests' }
 BreakpointTest >> testSetAsBreakpointProperty [
 	| node breakpoint breakpoint2 |
-	node := ASTProgramNode new.
+	node := OCProgramNode new.
 	breakpoint := Breakpoint new.
 	breakpoint2 := Breakpoint new.
 	breakpoint node: node.

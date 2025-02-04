@@ -18,7 +18,7 @@ ast acceptVisitor: visitor.
 "
 Class {
 	#name : 'RGTraitCompositionVisitor',
-	#superclass : 'RBProgramNodeVisitor',
+	#superclass : 'OCProgramNodeVisitor',
 	#instVars : [
 		'traitComposition'
 	],
@@ -31,7 +31,7 @@ Class {
 RGTraitCompositionVisitor >> parse: anExpressionString for: anRGTraitCompositionDefinition [
 
 	| ast result |
-	ast := (RBParser parseExpression: anExpressionString).
+	ast := (OCParser parseExpression: anExpressionString).
 	self traitComposition: anRGTraitCompositionDefinition.
 	result := ast acceptVisitor: self.
 
@@ -59,9 +59,9 @@ RGTraitCompositionVisitor >> visitArrayNode: anArrayNode [
 ]
 
 { #category : 'visiting' }
-RGTraitCompositionVisitor >> visitLiteralArrayNode: aRBLiteralArrayNode [
+RGTraitCompositionVisitor >> visitLiteralArrayNode: aLiteralArrayNode [
 
-	^ aRBLiteralArrayNode contents collect: [:each | self visitNode: each]
+	^ aLiteralArrayNode contents collect: [:each | self visitNode: each]
 ]
 
 { #category : 'visiting' }

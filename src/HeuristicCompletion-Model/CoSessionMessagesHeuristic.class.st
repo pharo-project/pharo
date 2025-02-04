@@ -19,7 +19,7 @@ CoSessionMessagesHeuristic >> appliesForNode: aNode inContext: aContext [
 ]
 
 { #category : 'requests' }
-CoSessionMessagesHeuristic >> buildFetcherFor: aRBMessageNode inContext: aContext [
+CoSessionMessagesHeuristic >> buildFetcherFor: aMessageNode inContext: aContext [
 
 	^ CoCollectionFetcher onCollection: session words
 ]

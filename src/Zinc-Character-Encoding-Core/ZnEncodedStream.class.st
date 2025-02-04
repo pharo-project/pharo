@@ -40,7 +40,7 @@ ZnEncodedStream class >> on: wrappedStream encoding: encoding [
 		yourself
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnEncodedStream >> close [
 	stream close
 ]
@@ -55,12 +55,12 @@ ZnEncodedStream >> encoder [
 	^ encoder ifNil: [ encoder := self class defaultEncoder ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnEncodedStream >> encoder: characterEncoder [
 	encoder := characterEncoder
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnEncodedStream >> encoding: encoding [
 	encoder := encoding asZnCharacterEncoder
 ]
@@ -80,7 +80,7 @@ ZnEncodedStream >> isStream [
   ^ true
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnEncodedStream >> on: wrappedStream [
 	stream := wrappedStream
 ]

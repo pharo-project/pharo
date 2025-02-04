@@ -237,7 +237,7 @@ ZnMimePart >> printOn: stream [
 	stream nextPut: $)
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMimePart >> readBinaryFrom: stream [
 	| entityReader |
 	self headers: (ZnHeaders readFrom: stream).
@@ -246,7 +246,7 @@ ZnMimePart >> readBinaryFrom: stream [
 	self entity: entityReader readEntity
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMimePart >> readFrom: stream [
 	self headers: (ZnHeaders readFrom: stream).
 	self entity: (self entityReaderOn: stream) readEntity

@@ -27,7 +27,7 @@ SycExtractSetUpCommand >> asRefactorings [
 
 { #category : 'accessing' }
 SycExtractSetUpCommand >> defaultMenuIconName [
-	^ #glamorousRestart
+	^ #restart
 ]
 
 { #category : 'accessing' }

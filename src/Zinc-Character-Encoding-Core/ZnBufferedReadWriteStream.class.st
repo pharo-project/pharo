@@ -184,7 +184,7 @@ ZnBufferedReadWriteStream >> size [
 	^ readStream size
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnBufferedReadWriteStream >> sizeBuffer: anInteger [
 
 	readStream sizeBuffer: anInteger.

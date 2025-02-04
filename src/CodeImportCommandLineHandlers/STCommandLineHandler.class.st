@@ -116,7 +116,7 @@ STCommandLineHandler >> end [
 STCommandLineHandler >> handleError: error [
 	"for syntax errors we print more detailed error informations"
 
-	(error isKindOf: CodeError) ifTrue: [
+	(error isKindOf: OCCodeError) ifTrue: [
 		self class printCodeError: error ].
 
 	error pass
@@ -127,7 +127,7 @@ STCommandLineHandler >> handleError: error reference: aReference [
 	"Print a header before failing on an errro / syntax notification from the the script loaded by the given request"
 
 	"Display CodeError nicely"
-	(error isKindOf: CodeError)
+	(error isKindOf: OCCodeError)
 		ifTrue: [ self class printCodeError: error ].
 
 	"spit out a warning if in headless mode, otherwise a debugger will popup"

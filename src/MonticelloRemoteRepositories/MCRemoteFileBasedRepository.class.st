@@ -37,7 +37,7 @@ MCRemoteFileBasedRepository >> loadVersionFromFileNamed: aString [
 
 	(MCCacheRepository uniqueInstance includesFileNamed: aString) ifTrue: [ ^ MCCacheRepository uniqueInstance loadVersionFromFileNamed: aString ].
 
-	super loadVersionFromFileNamed: aString
+	^ super loadVersionFromFileNamed: aString
 ]
 
 { #category : 'interface' }

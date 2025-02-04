@@ -50,7 +50,7 @@ ZnEndianessReadWriteStream >> nextLittleEndianNumber: n put: value [
 	stream nextPutAll: bytes
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnEndianessReadWriteStream >> on: aStream [
 
 	stream := aStream

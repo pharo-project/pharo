@@ -93,7 +93,7 @@ RBClassRegexRefactoring >> privateTransform [
 			replacement = class name asString ifFalse: [
 				refactoring := self perform: mode
 					with: class with: replacement asSymbol.
-				(refactoring isNotNil and: [ refactoring preconditions check ])
+				(refactoring isNotNil and: [ refactoring preconditions allSatisfy: [ :each | each check ] ])
 					ifTrue: [ refactoring privateTransform ] ] ] ]
 ]
 

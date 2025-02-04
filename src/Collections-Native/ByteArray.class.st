@@ -87,8 +87,9 @@ ByteArray >> asInteger [
 
 	| integer |
 	integer := 0.
-	self withIndexDo: [ :each :index |
-		integer := integer + (each bitShift: (self size - index) * 8) ].
+	1 to: self size do: [ :index |
+		"we use inlined to:do: instead of #withIndexDo:"
+		integer := integer + ((self at: index) bitShift: (self size - index) * 8) ].
 	^ integer
 ]
 
@@ -261,6 +262,12 @@ ByteArray >> isLiteral [
 	"so that #(1 #[1 2 3] 5) prints itself"
 	""
 	^ self class == ByteArray
+]
+
+{ #category : 'comparing' }
+ByteArray >> literalEqual: other [
+
+	^ self class == other class and: [self = other]
 ]
 
 { #category : 'platform independent access' }

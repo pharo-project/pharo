@@ -9,17 +9,17 @@ Class {
 { #category : 'tests' }
 OCAnnotationTest >> testAnnotationAST [
 	"This test uses an AST plugin to detect and transform a custom annotation `@meaning:`
-	(using `OCDynamicASTCompilerPlugin` and `RBParseTreeRewriter`).
+	(using `OCDynamicASTCompilerPlugin` and `ASTParseTreeRewriter`).
 	
 	The annotation (the full message node) is transformed into a simple literal node."
 
 	| plugin result |
 	plugin := OCDynamicASTCompilerPlugin
 		          newFromTransformBlock: [ :ast |
-			          (RBParseTreeRewriter new
+			          (OCParseTreeRewriter new
 				           replace: '@meaning: `@arg'
 				           withValueFrom: [ :node |
-					           ASTLiteralNode value:
+					           OCLiteralNode value:
 						           ((node arguments first isLiteralNode and: [
 							             node arguments first value = 42 ])
 							            ifTrue: [ 'meaning of life' ]
@@ -49,7 +49,7 @@ OCAnnotationTest >> testAnnotationBinding [
 	| plugin result |
 	plugin := OCDynamicASTCompilerPlugin
 		          newFromTransformBlock: [ :ast | "In fact, there is no transformation"
-			          (RBParseTreeSearcher new
+			          (OCParseTreeSearcher new
 				           matches: '@binding: `@arg'
 				           do: [ :node :ans | "Static syntax check"
 					           node arguments first isVariable
@@ -58,7 +58,7 @@ OCAnnotationTest >> testAnnotationBinding [
 							           "Also add a compile-time error for faulty modes"
 							           node receiver emitValueBlock: [ :methodBuilder |
 								           methodBuilder
-									           pushLiteralVariable: RuntimeSyntaxError binding;
+									           pushLiteralVariable: OCRuntimeSyntaxError binding;
 									           pushLiteral: 'Variable expected';
 									           send: #signal: ] ]
 						           ifTrue: [ "It's a real variable, to use the binding.
@@ -97,7 +97,7 @@ OCAnnotationTest >> testAnnotationBinding [
 				addParsePlugin: plugin;
 				permitFaulty: true;
 				evaluate: '@binding: 42' ]
-		raise: RuntimeSyntaxError
+		raise: OCRuntimeSyntaxError
 ]
 
 { #category : 'tests' }
@@ -110,14 +110,14 @@ OCAnnotationTest >> testAnnotationConstexprAST [
 	| plugin result |
 	plugin := OCDynamicASTCompilerPlugin
 		          newFromTransformBlock: [ :ast |
-			          (RBParseTreeRewriter new
+			          (OCParseTreeRewriter new
 				           replace: '@constexpr: `@arg'
 				           withValueFrom: [ :node |
 					           | value |
 					           "Evaluate the argument, self is bound to the class"
 					           value := node arguments first evaluateForReceiver:
 						                    node methodNode methodClass instanceSide.
-					           ASTLiteralNode value: value ]) executeTree: ast.
+					           OCLiteralNode value: value ]) executeTree: ast.
 			          ast ]
 		          andPriority: 0.
 
@@ -145,7 +145,7 @@ OCAnnotationTest >> testAnnotationConstexprIR [
 	| plugin result |
 	plugin := OCDynamicASTCompilerPlugin
 		          newFromTransformBlock: [ :ast | "In fact, there is no transformation. Just an addition to the annotation mark"
-			          (RBParseTreeSearcher new
+			          (OCParseTreeSearcher new
 				           matches: '@constexpr: `@arg'
 				           do: [ :node :ans |
 					           | value |
@@ -176,7 +176,7 @@ OCAnnotationTest >> testAnnotationConstexprIR [
 { #category : 'tests' }
 OCAnnotationTest >> testAnnotationIR [
 	"This test uses an AST plugin to detect a custom annotation `@meaning:`
-	(using `OCDynamicASTCompilerPlugin` and `RBParseTreeSearcher`)
+	(using `OCDynamicASTCompilerPlugin` and `ASTParseTreeSearcher`)
 	and attach a custom `emitValueBlock` to it.
 	It does not transform the AST.
 
@@ -186,7 +186,7 @@ OCAnnotationTest >> testAnnotationIR [
 	| plugin result |
 	plugin := OCDynamicASTCompilerPlugin
 		          newFromTransformBlock: [ :ast | "In fact, there is no transformation. Just an addition to the annotation mark"
-			          (RBParseTreeSearcher new
+			          (OCParseTreeSearcher new
 				           matches: '@meaning: `@arg'
 				           do: [ :node :ans |
 					           node receiver emitValueBlock: [ :methodBuilder |

@@ -206,12 +206,6 @@ FT_Face             cairo_ft_scaled_font_lock_face      (cairo_scaled_font_t *sc
 		void cairo_ft_scaled_font_lock_face (self))
 ]
 
-{ #category : 'external resource management' }
-CairoScaledFont >> resourceData [
-
-	^ self getHandle
-]
-
 { #category : 'accessing' }
 CairoScaledFont >> status [
 "cairo_status_t      cairo_scaled_font_status            (cairo_scaled_font_t *scaled_font);"

@@ -127,7 +127,7 @@ FFICalloutAPI >> function: functionSignature library: moduleNameOrLibrary [
 		methodClass: sender methodClass.	"Replace with generated ffi method, but save old one for future use"
 	ffiMethod
 		propertyAt: #ffiNonCompiledMethod
-		put: (sender methodClass methodDict at: sender selector).	"For senders search, one need to keep the selector in the properties"
+		put: sender method.	"For senders search, one need to keep the selector in the properties"
 	ffiMethod propertyAt: #ffiMethodSelector put: ffiMethodSelector.
 	sender methodClass methodDict at: sender selector put: ffiMethod.	"Register current method as compiled for ffi"
 	FFIMethodRegistry uniqueInstance registerMethod: ffiMethod.	"Resend"

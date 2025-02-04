@@ -21,6 +21,12 @@ Class {
 }
 
 { #category : 'world menu' }
+SHStylePresenter class >> defaultPreferredExtent [
+
+	^ 950 @ 650
+]
+
+{ #category : 'world menu' }
 SHStylePresenter class >> descriptionText [
 
 	^ 'A tool to select the code style for the system'
@@ -43,7 +49,7 @@ SHStylePresenter class >> menuCommandOn: aBuilder [
 SHStylePresenter class >> open [
 	<script> 
 
-	^ self new open
+	^ (self newApplication: StPharoApplication current) open
 ]
 
 { #category : 'private' }
@@ -151,22 +157,12 @@ SHStylePresenter >> initializeThemeList [
 	"Private - The receiver's theme list contains the names of the available theme styles in the system"
 
 	themeListPresenter := self newList.
-	themeListPresenter model comparisonStrategy: [ : t1 : t2 | t1 class themeName = t2 class themeName ].
 	themeListPresenter
 		headerTitle: 'Themes';
 		items: self themePrototypes;
 		display: [ : aTheme | aTheme class themeName ];
 		selectItem: self theme;
 		whenSelectedItemChangedDo: [ :item | self updatePreview ].
-]
-
-{ #category : 'initialization' }
-SHStylePresenter >> initializeWindow: aWindowPresenter [
-
-	aWindowPresenter 
-		initialExtent: (950 @ 650) scaledByDisplayScaleFactor;
-		windowIcon: (self application iconNamed: #smallWindow);
-		title: 'Code Styler'.
 ]
 
 { #category : 'callbacks' }
@@ -271,4 +267,16 @@ SHStylePresenter >> updatePreview [
 
 	classDefinitionPreviewPresenter morph: self classDefinitionText.
 	methodPreviewPresenter morph: self methodText
+]
+
+{ #category : 'initialization' }
+SHStylePresenter >> windowIcon [
+
+	^ self iconNamed: #smallWindow
+]
+
+{ #category : 'initialization' }
+SHStylePresenter >> windowTitle [
+
+	^ 'Code Styler'
 ]

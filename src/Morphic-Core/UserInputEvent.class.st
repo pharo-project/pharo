@@ -126,6 +126,14 @@ UserInputEvent >> handler: anObject [
 	handler := anObject
 ]
 
+{ #category : 'modifier state' }
+UserInputEvent >> metaKeyPressed [
+
+	^ Smalltalk platform isMacOS
+		  ifTrue: [ self commandKeyPressed ]
+		  ifFalse: [ self controlKeyPressed ]
+]
+
 { #category : 'printing' }
 UserInputEvent >> modifierString [
 	"Return a string identifying the currently pressed modifiers"

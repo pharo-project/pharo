@@ -13,7 +13,7 @@ Class {
 
 { #category : 'accessing' }
 ReAtIfAbsentRule class >> group [
-	^ 'Coding Idiom Violation'
+	^ self codingIdiomViolationGroup
 ]
 
 { #category : 'accessing' }

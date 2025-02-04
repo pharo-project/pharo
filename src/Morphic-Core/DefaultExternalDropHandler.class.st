@@ -22,13 +22,16 @@ DefaultExternalDropHandler class >> unload [
 	ExternalDropHandler defaultHandler: nil
 ]
 
-{ #category : 'private' }
-DefaultExternalDropHandler >> chooseServiceFrom: aCollection [
-	"private - choose a service from aCollection asking the user if
-	needed"
-	aCollection size = 1
-		ifTrue: [^ aCollection anyOne].
-	^ self morphicUIManager chooseFrom: (aCollection collect: [:each | each label]) values: aCollection
+{ #category : 'accessing' }
+DefaultExternalDropHandler >> label [
+	
+	^ 'Default - inspect'
+]
+
+{ #category : 'performing service' }
+DefaultExternalDropHandler >> performServiceFor: aFileReference [
+
+	aFileReference inspect
 ]
 
 { #category : 'private' }

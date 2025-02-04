@@ -20,5 +20,5 @@ DenyDialogWindow class >> taskbarIconName [
 DenyDialogWindow >> icon [
 	"Answer an icon for the receiver."
 
-	^ self iconNamed: #lockIcon
+	^ self iconNamed: #lock
 ]

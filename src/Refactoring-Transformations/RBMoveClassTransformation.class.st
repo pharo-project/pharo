@@ -7,10 +7,10 @@ Usage:
 | transformation |
 transformation := (RBMoveClassTransformation
 	move: #RBMoveClassTransformation
-	toPackage: #'Refactoring2-Refactorings-Tests'
+	toPackage: #'Refactoring-Transformations-Tests'
 	inTag: #Utilities) ""The tag is optional""
-	transform.
-(ChangesBrowser changes: transformation model changes changes) open
+	generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
 ```
 
 Preconditions:

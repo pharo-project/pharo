@@ -38,7 +38,7 @@ CompiledBlock >> sourceNodeForPC: aPC [
 	self method
 		propertyAt: self bcToASTCacheKey asSymbol
 		ifPresent: [ :bcToASTCache |
-			blockNode sourceNodeForPC: aPC usingBcToASTCache: bcToASTCache ].
+			bcToASTCache nodeForPC: aPC ].
 	^ blockNode sourceNodeForPC: aPC
 ]
 

@@ -22,7 +22,7 @@ ReSubtreeCondition >> check [
 ]
 
 { #category : 'accessing' }
-ReSubtreeCondition >> subtree: aRBMethodNode [
+ReSubtreeCondition >> subtree: aMethodNode [
 
-	subtree := aRBMethodNode
+	subtree := aMethodNode
 ]

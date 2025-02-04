@@ -1,13 +1,13 @@
 Extension { #name : 'TestCase' }
 
 { #category : '*DrTests' }
-TestCase >> drTestsIsAbstract [
-	^ false
+TestCase class >> drTestsIsAbstract [
+	^ self isAbstract
 ]
 
 { #category : '*DrTests' }
-TestCase class >> drTestsIsAbstract [
-	^ self isAbstract
+TestCase >> drTestsIsAbstract [
+	^ false
 ]
 
 { #category : '*DrTests' }

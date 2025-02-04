@@ -650,6 +650,16 @@ String >> asDuration [
  	^ Duration fromString: self
 ]
 
+{ #category : 'accessing' }
+String >> asFileName [
+	"Answer a String made up from the receiver that is an acceptable file name."
+
+	| string checkedString |
+	string := FileSystem disk checkName: self fixErrors: true.
+	checkedString := FilePathEncoder encode: string.
+	^ FilePathEncoder decode: checkedString
+]
+
 { #category : 'converting' }
 String >> asFourCode [
 	"'abcd' asFourCode >>> -513645724"
@@ -2191,6 +2201,12 @@ String >> linesDo: aBlock [
 ]
 
 { #category : 'comparing' }
+String >> literalEqual: other [
+
+	^ self class == other class and: [self = other]
+]
+
+{ #category : 'comparing' }
 String >> match: text [
 	"Answer whether text matches the pattern in this string.
 	Matching ignores upper/lower case differences.
@@ -2837,6 +2853,13 @@ String >> withNoLineLongerThan: aNumber [
 				lineStart <= endWithoutDelimiters ]
 					whileTrue: [stream cr].
 				stream nextPutAll: (self copyFrom: pastEnd to: end) ] ]
+]
+
+{ #category : 'platform conventions' }
+String >> withPlatformLineEndings [
+	"Answer a new instance where all occurrences of CRLF, CR and LF are substituted with the line ending used by default by the current platform."
+
+	^ self withLineEndings: OSPlatform current lineEnding
 ]
 
 { #category : 'converting' }

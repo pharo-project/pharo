@@ -72,7 +72,7 @@ ReGenerateEqualHashTransformation class >> model: aNamespace className: aClass v
 ReGenerateEqualHashTransformation >> accessorForVariable: aString [
 
 	| refactoring |
-	refactoring := RBCreateAccessorsForVariableTransformation
+	refactoring := ReCreateAccessorsForVariableTransformation
 		               model: self model
 		               variable: aString
 		               class: self theClass
@@ -96,25 +96,25 @@ ReGenerateEqualHashTransformation >> compileEqual [
 		do: [ :each |
 			| accessor |
 			accessor := self accessorForVariable: each.
-			comparison := RBMessageNode
-				receiver: (RBVariableNode named: each)
+			comparison := OCMessageNode
+				receiver: (OCVariableNode named: each)
 				selector: #=
 				arguments:
 					(Array
 						with:
-							(RBMessageNode
-								receiver: (RBVariableNode named: 'anObject')
+							(OCMessageNode
+								receiver: (OCVariableNode named: 'anObject')
 								selector: accessor)).
 			statement := statement
 				ifNil: [ comparison ]
-				ifNotNil: [ RBMessageNode
+				ifNotNil: [ OCMessageNode
 						receiver: comparison
 						selector: #and:
 						arguments:
 							(Array
 								with:
-									(RBBlockNode
-										body: (RBSequenceNode statements: (Array with: statement)))) ] ].
+									(OCBlockNode
+										body: (OCSequenceNode statements: (Array with: statement)))) ] ].
 	method
 		addNode: statement;
 		addReturn.
@@ -135,12 +135,12 @@ ReGenerateEqualHashTransformation >> compileHash [
 	statement := nil.
 	variables reversed
 		do: [ :each |
-			hash := RBMessageNode
-				receiver: (RBVariableNode named: each)
+			hash := OCMessageNode
+				receiver: (OCVariableNode named: each)
 				selector: #hash.
 			statement := statement
 				ifNil: [ hash ]
-				ifNotNil: [ RBMessageNode
+				ifNotNil: [ OCMessageNode
 						receiver: hash
 						selector: #bitXor:
 						arguments: (Array with: statement) ] ].

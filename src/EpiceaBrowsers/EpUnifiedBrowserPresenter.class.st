@@ -18,11 +18,17 @@ Class {
 	#tag : 'UI-Unified'
 }
 
+{ #category : 'accessing' }
+EpUnifiedBrowserPresenter class >> defaultPreferredExtent [
+
+	^ (950 @ 650)
+]
+
 { #category : 'instance creation' }
 EpUnifiedBrowserPresenter class >> open [
 
 	<script>
-	^ self new
+	^ (self newApplication: StPharoApplication current)
 		  refresh;
 		  open;
 		  yourself
@@ -44,6 +50,19 @@ EpUnifiedBrowserPresenter class >> worldMenuItemOn: aBuilder [
 		iconName: self taskbarIconName;
 		help: 'Browse recorded change logs during from Pharo coding sessions and replay changes.';
 		order: 1
+]
+
+{ #category : 'layout' }
+EpUnifiedBrowserPresenter >> defaultLayout [
+
+	^ SpBoxLayout newTopToBottom
+		add: toolbarPresenter expand: false;
+		add: (SpPanedLayout newLeftToRight
+			positionOfSlider: 35 percent;
+			add: logNodesPresenter;
+			add: logPresenter;
+			yourself);
+		yourself
 ]
 
 { #category : 'refreshing' }
@@ -76,6 +95,7 @@ EpUnifiedBrowserPresenter >> freshLogFromSelection: selection [
 
 { #category : 'initialization' }
 EpUnifiedBrowserPresenter >> initializePresenter [
+
 	super initializePresenter.
 	logNodesPresenter whenSelectionChangedDo: [ :selection | self refreshWithLogSelection: selection ].
 	self initializeRefreshOnSessionUpdate.
@@ -85,14 +105,9 @@ EpUnifiedBrowserPresenter >> initializePresenter [
 { #category : 'initialization' }
 EpUnifiedBrowserPresenter >> initializePresenters [
 
-	self layout: (SpBoxLayout newTopToBottom
-		add: (toolbarPresenter := self newToolbar) expand: false;
-		add: (SpPanedLayout newLeftToRight
-			positionOfSlider: 35 percent;
-			add: (logNodesPresenter := self instantiate: EpLogNodeGraphPresenter);
-			add: (logPresenter := self instantiate: EpLogBrowserPresenter);
-			yourself);
-		yourself).
+	toolbarPresenter := self newToolbar.
+	logNodesPresenter := self instantiate: EpLogNodeGraphPresenter.
+	logPresenter := self instantiate: EpLogBrowserPresenter.
 
 	logNodesPresenter whenSelectionChangedDo: [ :selection |
 		self refreshWithLogSelection: selection ].
@@ -133,9 +148,9 @@ EpUnifiedBrowserPresenter >> initializeToolbar [
 
 { #category : 'initialization' }
 EpUnifiedBrowserPresenter >> initializeWindow: aWindowPresenter [
+
+	super initializeWindow: aWindowPresenter.	
 	aWindowPresenter
-		title: 'Epicea - Code Changes';
-		initialExtent: (950 @ 650) scaledByDisplayScaleFactor;
 		whenClosedDo: [ self updatesAnnouncer unsubscribe: self ]
 ]
 
@@ -198,4 +213,10 @@ EpUnifiedBrowserPresenter >> selectDirectory [
 { #category : 'initialization' }
 EpUnifiedBrowserPresenter >> updatesAnnouncer [
 	^ EpMonitor current sessionStore announcer
+]
+
+{ #category : 'initialization' }
+EpUnifiedBrowserPresenter >> windowTitle [
+	^  'Epicea - Code Changes'
+		
 ]

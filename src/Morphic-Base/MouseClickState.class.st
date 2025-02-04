@@ -23,6 +23,7 @@ Class {
 		'firstClickDown',
 		'firstClickUp',
 		'firstClickTime',
+		'firstClickGlobalPosition',
 		'clickSelector',
 		'dragSelector',
 		'dragThreshold',
@@ -116,6 +117,8 @@ MouseClickState >> client: aMorph click: aClickSelector dblClick: aDblClickSelec
 	dragThreshold := aNumber.
 	firstClickDown := firstClickEvent.
 	firstClickTime := firstClickEvent timeStamp.
+	firstClickGlobalPosition := (aMorph transformedFrom: firstClickEvent hand owner)
+		localPointToGlobal: firstClickEvent position.
 	clickState := #firstClickDown.
 	localStamp := Time millisecondClockValue
 ]
@@ -221,7 +224,9 @@ MouseClickState >> dragThreshold: anObject [
 MouseClickState >> event: aMouseEvent [
 	self
 		firstClickDown: aMouseEvent;
-		firstClickTime: aMouseEvent timeStamp
+		firstClickTime: aMouseEvent timeStamp;
+		firstClickGlobalPosition: ((clickClient transformedFrom: aMouseEvent hand owner)
+			localPointToGlobal: aMouseEvent position)
 ]
 
 { #category : 'accessing' }
@@ -234,6 +239,18 @@ MouseClickState >> firstClickDown [
 MouseClickState >> firstClickDown: anObject [
 
 	firstClickDown := anObject
+]
+
+{ #category : 'accessing' }
+MouseClickState >> firstClickGlobalPosition [
+
+	^ firstClickGlobalPosition
+]
+
+{ #category : 'accessing' }
+MouseClickState >> firstClickGlobalPosition: anObject [
+
+	firstClickGlobalPosition := anObject
 ]
 
 { #category : 'accessing' }
@@ -268,8 +285,8 @@ MouseClickState >> handleEvent: evt from: aHand [
 	| localEvt timedOut isDrag isDragSecond |
 	timedOut := (evt timeStamp - firstClickTime) > doubleClickTime.
 	localEvt := evt transformedBy: (clickClient transformedFrom: aHand owner).
-	isDrag := (localEvt position - firstClickDown position) r > dragThreshold.
-	isDragSecond := localEvt position ~= firstClickDown position.
+	isDrag := (evt position - firstClickGlobalPosition) r > dragThreshold.
+	isDragSecond := evt position ~= firstClickGlobalPosition.
 	clickState == #firstClickDown ifTrue: [
 		"Careful here - if we had a slow cycle we may have a timedOut mouseUp event"
 		(timedOut and:[localEvt isMouseUp not]) ifTrue:[

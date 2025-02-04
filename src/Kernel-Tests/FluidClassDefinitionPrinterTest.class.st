@@ -72,7 +72,6 @@ FluidClassDefinitionPrinterTest >> testCompactClassTemplate [
 
 	self assert: (FluidClassDefinitionPrinter new compactClassDefinitionTemplateInPackage: 'Kernel' tag: #Basic) equals: 'Object << #MyClass
 	slots: {};
-	sharedVariables: {};
 	tag: #Basic;
 	package: ''Kernel'''
 ]

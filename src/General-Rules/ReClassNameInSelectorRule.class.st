@@ -11,14 +11,14 @@ Class {
 	#tag : 'Style'
 }
 
-{ #category : 'testing' }
+{ #category : 'testing - interest' }
 ReClassNameInSelectorRule class >> checksMethod [
 	^ true
 ]
 
 { #category : 'accessing' }
 ReClassNameInSelectorRule class >> group [
-	^ 'Style'
+	^ self styleGroup
 ]
 
 { #category : 'accessing' }
@@ -31,7 +31,7 @@ ReClassNameInSelectorRule class >> ruleName [
 	^ 'Redundant class name in selector'
 ]
 
-{ #category : 'accessing' }
+{ #category : 'manifest' }
 ReClassNameInSelectorRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 

@@ -178,19 +178,31 @@ Socket class >> newAcceptCheck [
 
 { #category : 'instance creation' }
 Socket class >> newTCP [
+
+	^ self newTCP: SocketAddressInformation addressFamilyUnspecified
+]
+
+{ #category : 'instance creation' }
+Socket class >> newTCP: family [
 	"Create a socket and initialize it for TCP"
 
 	self initializeNetwork.
-	^ [ super new initialize: TCPSocketType ] repeatWithGCIf: [ :socket |
+	^ [ super new initialize: TCPSocketType family: family ] repeatWithGCIf: [ :socket |
 		  socket isValid not ]
 ]
 
 { #category : 'instance creation' }
 Socket class >> newUDP [
+
+	^ self newUDP: SocketAddressInformation addressFamilyUnspecified
+]
+
+{ #category : 'instance creation' }
+Socket class >> newUDP: family [
 	"Create a socket and initialize it for UDP"
 
 	self initializeNetwork.
-	^ [ super new initialize: UDPSocketType ] repeatWithGCIf: [ :socket |
+	^ [ super new initialize: UDPSocketType family: family ] repeatWithGCIf: [ :socket |
 		  socket isValid not ]
 ]
 
@@ -349,7 +361,7 @@ Socket >> accept [
 	^Socket acceptFrom: self
 ]
 
-{ #category : 'initialize - destroy' }
+{ #category : 'initialization' }
 Socket >> acceptFrom: aSocket [
 	"Initialize a new socket handle from an accept call"
 
@@ -384,7 +396,20 @@ Socket >> address [
 	^self localAddress
 ]
 
-{ #category : 'initialize - destroy' }
+{ #category : 'ipv6' }
+Socket >> bindTo: aSocketAddress [
+
+	| status |
+	self initializeNetwork.
+	status := self primSocketConnectionStatus: socketHandle.
+	(status == Unconnected)
+		ifFalse: [InvalidSocketStatusException signal: 'Socket status must Unconnected when binding it to an address'].
+
+	self primSocket: socketHandle bindTo: aSocketAddress.
+
+]
+
+{ #category : 'initialization' }
 Socket >> bindTo: anAddress port: aPort [
 	"Bind to the local port <aPort>, on the interface specified by <anAddress>
 	(`SocketAddress zero` specifies all interfaces).
@@ -393,7 +418,7 @@ Socket >> bindTo: anAddress port: aPort [
 	self primSocket: socketHandle bindTo: anAddress port: aPort
 ]
 
-{ #category : 'initialize - destroy' }
+{ #category : 'initialization' }
 Socket >> bindToPort: aPort [
 	"Bind to the local port <aPort>, often in order to listen for incoming connections."
 
@@ -440,6 +465,19 @@ Socket >> closeAndDestroy: timeoutSeconds [
 			self destroy]
 ]
 
+{ #category : 'ipv6' }
+Socket >> connectNonBlockingTo: aSocketAddress [
+
+	| status |
+	self initializeNetwork.
+	status := self primSocketConnectionStatus: socketHandle.
+	(status == Unconnected)
+		ifFalse: [InvalidSocketStatusException signal: 'Socket status must Unconnected before opening a new connection'].
+
+	self primSocket: socketHandle connectTo: aSocketAddress.
+
+]
+
 { #category : 'connection open/close' }
 Socket >> connectNonBlockingTo: hostAddress port: port [
 	"Initiate a connection to the given port at the given host address. This operation will return immediately; follow it with waitForConnectionUntil: to wait until the connection is established."
@@ -451,6 +489,12 @@ Socket >> connectNonBlockingTo: hostAddress port: port [
 		ifFalse: [InvalidSocketStatusException signal: 'Socket status must Unconnected before opening a new connection'].
 
 	self primSocket: socketHandle connectTo: hostAddress port: port
+]
+
+{ #category : 'ipv6' }
+Socket >> connectTo: aSocketAddress [
+
+	self connectTo: aSocketAddress waitForConnectionFor: Socket standardTimeout
 ]
 
 { #category : 'connection open/close' }
@@ -479,6 +523,16 @@ Socket >> connectTo: hostAddress port: port waitForConnectionFor: timeout [
 				, port asString ]
 ]
 
+{ #category : 'ipv6' }
+Socket >> connectTo: aSocketAddress waitForConnectionFor: timeout [ 
+
+	self connectNonBlockingTo: aSocketAddress.
+	self
+		waitForConnectionFor: timeout
+		ifTimedOut: [ConnectionTimedOut signal: ('Cannot connect to {1}' translated format: {aSocketAddress printString})]
+		ifRefused: [ConnectionRefused signal: ('Cannot connect to {1}' translated format: {aSocketAddress printString})]
+]
+
 { #category : 'connection open/close' }
 Socket >> connectToHostNamed: hostName port: portNumber [
 	| serverIP |
@@ -494,7 +548,7 @@ Socket >> dataAvailable [
 	^ self primSocketReceiveDataAvailable: socketHandle
 ]
 
-{ #category : 'initialize - destroy' }
+{ #category : 'initialization' }
 Socket >> destroy [
 	"Destroy this socket. Its connection, if any, is aborted and its resources are freed.
 	Any processes waiting on the socket are freed immediately, but it is up to them to
@@ -602,7 +656,7 @@ foo waitForConnectionUntil: (Socket standardDeadline).
 ]
 
 { #category : 'initialization' }
-Socket >> initialize: socketType [
+Socket >> initialize: socketType family: addressFamily [
 	"Initialize a new socket handle. If socket creation fails, socketHandle will be set to nil."
 
 	| semaIndex readSemaIndex writeSemaIndex |
@@ -614,7 +668,7 @@ Socket >> initialize: socketType [
 	readSemaIndex := Smalltalk registerExternalObject: readSemaphore.
 	writeSemaIndex := Smalltalk registerExternalObject: writeSemaphore.
 	socketHandle := self
-		primSocketCreateNetwork: 0
+		primSocketCreateNetwork: addressFamily
 		type: socketType
 		receiveBufferSize: 8000
 		sendBufSize: 8000
@@ -631,7 +685,7 @@ Socket >> initialize: socketType [
 		ifNotNil: [ self register ]
 ]
 
-{ #category : 'initialize - destroy' }
+{ #category : 'initialization' }
 Socket >> initializeNetwork [
 	self class initializeNetwork
 ]
@@ -1644,6 +1698,24 @@ Socket >> waitForConnectionFor: timeout ifClosed: closedBlock ifTimedOut: timeou
 
 	status == WaitingForConnection ifTrue: [ ^ timeoutBlock value ].
 	status == Connected ifFalse: [ ^ closedBlock value ]
+]
+
+{ #category : 'waiting' }
+Socket >> waitForConnectionFor: timeout ifTimedOut: timeoutBlock ifRefused: refusedBlock [
+	"Wait up until the given deadline for a connection to be established. Return true if it is established by the deadline, false if not."
+
+	| deadline timeLeft status |
+	deadline := Time millisecondClockValue + (timeout * 1000) truncated.
+	(status := self primSocketConnectionStatus: socketHandle) == Connected ifTrue: [^true].
+	[ (status == WaitingForConnection) and: [ (timeLeft := deadline - Time millisecondClockValue) > 0 ] ]
+		whileTrue: [
+			semaphore waitTimeoutMilliseconds: timeLeft.
+			status := self primSocketConnectionStatus: socketHandle ].
+	status == Connected ifTrue: [ ^true ].
+	status == WaitingForConnection 
+		ifTrue: [ timeoutBlock value ]
+		ifFalse: [ refusedBlock value ].
+	^false
 ]
 
 { #category : 'waiting' }

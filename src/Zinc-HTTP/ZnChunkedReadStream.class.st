@@ -49,7 +49,7 @@ ZnChunkedReadStream >> chunkCount [
 	^ chunkCount
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnChunkedReadStream >> close [
 	stream ifNotNil: [ stream close. stream := nil ]
 ]
@@ -207,7 +207,7 @@ ZnChunkedReadStream >> next: requestedCount into: collection startingAt: offset 
 		ifFalse: [ collection copyFrom: 1 to: offset + readCount - 1 ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnChunkedReadStream >> on: readStream [
 	stream := readStream
 ]

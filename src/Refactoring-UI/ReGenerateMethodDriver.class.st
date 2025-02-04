@@ -3,7 +3,7 @@ Abstract class that groups behavior related to method generation.
 "
 Class {
 	#name : 'ReGenerateMethodDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'targetClass',
 		'selectedVariables'
@@ -12,15 +12,6 @@ Class {
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers'
 }
-
-{ #category : 'execution' }
-ReGenerateMethodDriver >> changes [
-	"Remember should not call generateChanges"
-
-	^ refactoring privateTransform; changes
-
-
-]
 
 { #category : 'execution' }
 ReGenerateMethodDriver >> configureRefactoring [
@@ -60,18 +51,12 @@ ReGenerateMethodDriver >> refactoringClass [
 { #category : 'execution' }
 ReGenerateMethodDriver >> runRefactoring [
 
-	| changes |
-	
 	self selectDialog
 		ifNil: [ ^ self ]
 		ifNotNil: [ selectedVariables := self selectDialog selectedItems ].
 	selectedVariables ifEmpty: [ ^ self ].
-
 	self configureRefactoring.
-	changes := refactoring generateChanges.
-	self openPreviewWithChanges: changes 
-
-
+	self applyChanges.
 ]
 
 { #category : 'accessing' }

@@ -13,8 +13,7 @@ Class {
 
 { #category : 'accessing' }
 ReAssertEqualSignIntoAssertEqualsRule class >> group [
-
-	^ 'SUnit'
+	^ self sunitGroup
 ]
 
 { #category : 'accessing' }

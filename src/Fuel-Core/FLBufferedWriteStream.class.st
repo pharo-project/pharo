@@ -110,7 +110,7 @@ FLBufferedWriteStream >> flushBufferIfFull [
 		ifTrue: [ self flushBuffer ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 FLBufferedWriteStream >> initializeOn: writeStream bufferSize: aSize [
 
 	self initialize.
@@ -119,7 +119,7 @@ FLBufferedWriteStream >> initializeOn: writeStream bufferSize: aSize [
 	position := 0.
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 FLBufferedWriteStream >> initializeStream: aWriteStream [
 	stream := aWriteStream.
 	"This is ugly, but it is an optimization for #flushBuffer"

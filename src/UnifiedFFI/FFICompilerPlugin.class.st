@@ -64,9 +64,9 @@ FFICompilerPlugin class >> initializeFFICalloutSelectors [
 { #category : 'installation' }
 FFICompilerPlugin class >> install [
 	<script>
-	(CompilationContext defaultTransformationPlugins includes: self)
+	(OCCompilationContext defaultTransformationPlugins includes: self)
 		ifTrue: [ ^ self ].
-	CompilationContext addDefaultTransformationPlugin: self.
+	OCCompilationContext addDefaultTransformationPlugin: self.
 	self recompileSenders
 ]
 
@@ -84,7 +84,7 @@ FFICompilerPlugin class >> recompileSenders [
 { #category : 'installation' }
 FFICompilerPlugin class >> uninstall [
 	<script>
-	CompilationContext removeDefaultTransformationPlugin: self.
+	OCCompilationContext removeDefaultTransformationPlugin: self.
 	self recompileSenders
 ]
 

@@ -10,13 +10,16 @@ And an option for requesting the new method selector.
 For all selected classes a method implementing the original method is created, and if the original code uses some references to self, a parameter needs to be added to provided the former implementor.
 
 Usage:
+```
 | transformation |
 transformation := (RBMoveMethodTransformation
-				selector: aSelector
-				class: aClass
-				variable: aVariable)
-				transform.
-				
+				selector: #isBlack
+				class: Color
+				variable: #rbg)
+				privateTransform;
+				generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```		
 For example, moving the method #isBlack from class Color to its instvar #rgb for the type ""Integer"" creates a method 
 
 
@@ -174,16 +177,16 @@ RBMoveMethodTransformation >> checkTemporaryVariableNames [
 { #category : 'transforming' }
 RBMoveMethodTransformation >> compileDelegatorMethod [
 	| statementNode delegatorNode tree |
-	delegatorNode := RBMessageNode
-		                 receiver: (RBVariableNode named: variable)
+	delegatorNode := OCMessageNode
+		                 receiver: (OCVariableNode named: variable)
 		                 selector: parseTree selector
 		                 keywordsPositions: parseTree keywordsPositions
 		                 arguments: (parseTree argumentNames collect: [ :each |
 				                  each = selfVariableName
-					                  ifTrue: [ RBVariableNode selfNode ]
-					                  ifFalse: [ RBVariableNode named: each ] ]).
-	self hasOnlySelfReturns ifFalse: [ delegatorNode := RBReturnNode value: delegatorNode ].
-	statementNode := RBSequenceNode temporaries: #(  ) statements: (Array with: delegatorNode).
+					                  ifTrue: [ OCVariableNode selfNode ]
+					                  ifFalse: [ OCVariableNode named: each ] ]).
+	self hasOnlySelfReturns ifFalse: [ delegatorNode := OCReturnNode value: delegatorNode ].
+	statementNode := OCSequenceNode temporaries: #(  ) statements: (Array with: delegatorNode).
 	(tree := class parseTreeForSelector: selector) body: statementNode.
 	class compileTree: tree
 ]
@@ -284,7 +287,7 @@ RBMoveMethodTransformation >> getNewMethodName [
 		ifTrue: [ newSelector := newMethodName selector ]
 		ifFalse: [ self refactoringWarning: 'Invalid method name' ].
 	parameters := newMethodName arguments.
-	( self checkMethodName: newSelector in: class )
+	( self isValidSelector: newSelector )
 		ifFalse: [ self refactoringWarning: newSelector , ' is not a valid selector name.'.
 			newSelector := nil
 			].
@@ -302,7 +305,7 @@ RBMoveMethodTransformation >> getNewMethodName [
 	] whileTrue: [  ].
 	parseTree
 		renameSelector: newSelector
-		andArguments: ( parameters collect: [ :each | RBVariableNode named: each ] ) asArray
+		andArguments: ( parameters collect: [ :each | OCVariableNode named: each ] ) asArray
 ]
 
 { #category : 'transforming' }
@@ -417,20 +420,6 @@ RBMoveMethodTransformation >> storeOn: aStream [
 		nextPutAll: ' variable: ''';
 		nextPutAll: variable;
 		nextPutAll: ''')'
-]
-
-{ #category : 'private' }
-RBMoveMethodTransformation >> uniqueMethodNameFor: anInteger [
-	| before after index name |
-	before := 'a'.
-	after := ''.
-	anInteger timesRepeat: [after := after , 'z:'].
-	index := 0.
-
-	[name := before , index printString , after.
-	(Symbol findInterned: name) isNotNil]
-			whileTrue: [index := index + 1].
-	^name asSymbol
 ]
 
 { #category : 'transforming' }

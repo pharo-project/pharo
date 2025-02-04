@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 ReNotEqualityOperatorsRule class >> group [
-	^ 'Bugs'
+	^ self bugsGroup
 ]
 
 { #category : 'accessing' }
