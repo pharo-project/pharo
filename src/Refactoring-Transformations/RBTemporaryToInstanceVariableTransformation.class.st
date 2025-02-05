@@ -12,14 +12,16 @@ The temporary variables with the same name in hierarchy will be removed, and rep
 Example
 --------------------
 
-Example: 
+Example:
+```
 | transformation |
 transformation := (RBTemporaryToInstanceVariableRefactoring 
-				class: MyClassA
+				class: RBDummyEmptyClass
     			selector: #someMethod
     			variable: 'log') 
-				transform.
-(ChangesBrowser changes: transformation model changes changes) open
+				generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Script refactoring:
 ```
@@ -127,7 +129,7 @@ RBTemporaryToInstanceVariableTransformation >> checkForValidTemporaryVariable [
 	(parseTree allArgumentVariables includes: temporaryVariableName)
 		ifTrue:
 			[self refactoringError: temporaryVariableName , ' is a block parameter'].
-	(ASTReadBeforeWrittenTester isVariable: temporaryVariableName
+	(OCReadBeforeWrittenTester isVariable: temporaryVariableName
 		readBeforeWrittenIn: parseTree)
 			ifTrue:
 				[self

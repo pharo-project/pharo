@@ -3,7 +3,7 @@ I'm the one who visits node to coloring the code
 "
 Class {
 	#name : 'SHRBTextStyler',
-	#superclass : 'ASTProgramNodeVisitor',
+	#superclass : 'OCProgramNodeVisitor',
 	#instVars : [
 		'charAttr',
 		'parentheseLevel',
@@ -932,7 +932,7 @@ SHRBTextStyler >> privateStyle: aText [
 { #category : 'testing' }
 SHRBTextStyler >> representsASelector: aSymbol [
 
-	^ aSymbol isSelectorSymbol
+	^ aSymbol isUsedAsSelectorSymbol
 ]
 
 { #category : 'private' }

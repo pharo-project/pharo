@@ -273,16 +273,16 @@ Breakpoint >> condition: aCondition [
 Breakpoint >> conditionBlockProducerMethodAST: conditionString [
 	| conditionBlockProducerMethodAST conditionAST |
 	conditionAST := self parserClass parseExpression: conditionString.
-	conditionBlockProducerMethodAST := ASTMethodNode
+	conditionBlockProducerMethodAST := OCMethodNode
 		selector: #conditionBlockGenerator
 		body:
-			(ASTReturnNode
+			(OCReturnNode
 				value:
-					(ASTBlockNode
-						arguments: {(ASTVariableNode named: 'ThisContext')}
+					(OCBlockNode
+						arguments: {(OCVariableNode named: 'ThisContext')}
 						body:
-							(ASTMessageNode
-								receiver: (ASTVariableNode named: 'Breakpoint')
+							(OCMessageNode
+								receiver: (OCVariableNode named: 'Breakpoint')
 								selector: #checkBreakConditionValue:
 								arguments: {conditionAST}) asSequenceNode)) asSequenceNode.
 	conditionBlockProducerMethodAST := self
@@ -460,7 +460,7 @@ Breakpoint >> options: anArray [
 
 { #category : 'api' }
 Breakpoint >> parserClass [
-	^ RBParser
+	^ OCParser
 ]
 
 { #category : 'removing' }
@@ -525,13 +525,13 @@ Breakpoint >> rewriteASTToSimulateExecutionInADifferentContext: anAST [
 		For example, a reference to a variable named flower is rewritten into `ThisContext readVariableNamed: #flower`
 	4) Rewriting references to `thisContext` into references to `ThisContext`
 	5) Rewriting references to `self` into references to `ThisContext receiver`"
-	rewriter := ASTParseTreeRewriter new.
+	rewriter := OCParseTreeRewriter new.
 	semanticallyAnalysedMethodAST := anAST doSemanticAnalysis.	"To find which variables are undefined"
 	rewriter
-		replace: (ASTVariableNode named: #ThisContext) name
+		replace: (OCVariableNode named: #ThisContext) name
 		with:
 			'(ThisContext readVariableNamed: #'
-				, (ASTVariableNode named: #ThisContext) name , ')'.
+				, (OCVariableNode named: #ThisContext) name , ')'.
 	allMessageNodes := semanticallyAnalysedMethodAST allChildren
 		select: [ :astElem | astElem isMessage ].
 	receiverSuperclassValueNode := self parserClass
@@ -542,18 +542,18 @@ Breakpoint >> rewriteASTToSimulateExecutionInADifferentContext: anAST [
 				ifTrue: [ rewriter
 						replaceTree: msgNode
 						withTree:
-							(ASTMessageNode
+							(OCMessageNode
 								receiver: (self parserClass parseExpression: 'ThisContext receiver')
 								selector: #perform:withArguments:inSuperclass:
 								arguments:
-									{(ASTLiteralValueNode value: msgNode selector).
-									(ASTArrayNode statements: msgNode arguments).
+									{(OCLiteralValueNode value: msgNode selector).
+									(OCArrayNode statements: msgNode arguments).
 									receiverSuperclassValueNode}) ] ].
 	intermediateAST := rewriter
 		executeTree: semanticallyAnalysedMethodAST;
 		tree.
 	analysedIntermediateAST := intermediateAST doSemanticAnalysis.
-	rewriter2 := ASTParseTreeRewriter new.
+	rewriter2 := OCParseTreeRewriter new.
 	allUndeclaredVariableNodes := analysedIntermediateAST allChildren
 		select: [ :astElem | astElem isVariable and: [ astElem isUndeclaredVariable ] ].
 	allUndeclaredVariableSymbols := (allUndeclaredVariableNodes

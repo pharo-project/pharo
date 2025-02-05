@@ -1,5 +1,5 @@
 "
-I am a symbol table where variable names are associated with SemVars.  Each context (method/closure) get a fresh scope that inherits from its outer scope.
+I am a symbol table where variable names are associated with semantics variables.  Each context (method/closure) gets a fresh scope that inherits from its outer scope.
 "
 Class {
 	#name : 'OCAbstractScope',

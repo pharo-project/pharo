@@ -128,8 +128,10 @@ WindowAnnouncementTest >> testScrolling [
 
 { #category : 'tests - window creation and deletion' }
 WindowAnnouncementTest >> testWindowCreation [
+
 	| t oldBounds newBounds |
 	t := 0.
+	[
 	self currentWorld announcer when: WindowResizing do: [ :ann | t := t + 1 ] for: self.
 	window := SystemWindow labelled: 'foo'.
 	window setProperty: #minimumExtent toValue: 1 @ 1.
@@ -139,12 +141,16 @@ WindowAnnouncementTest >> testWindowCreation [
 	self assert: t equals: 0.
 	window extent: 50 @ 60.
 	newBounds := window bounds.
-	self assert: t equals: 1
+	self assert: t equals: 1 ] ensure: [ self currentWorld announcer unsubscribe: self ]
 ]
 
 { #category : 'tests - window creation and deletion' }
 WindowAnnouncementTest >> testWindowCreationAndDeletion [
-	| t newWindowCreated |
+
+	| t newWindowCreated oldValue |
+	oldValue := SystemWindow useHideForClose.
+	[
+	SystemWindow useHideForClose: false. "This is needed because else the windows close announcement will not be fired now."
 	t := 0.
 	self currentWorld announcer
 		when: WindowOpened
@@ -166,7 +172,9 @@ WindowAnnouncementTest >> testWindowCreationAndDeletion [
 	window delete.
 
 	self assert: t equals: 11.
-	self assert: window identicalTo: newWindowCreated
+	self assert: window identicalTo: newWindowCreated ] ensure: [
+		SystemWindow useHideForClose: oldValue.
+		self currentWorld announcer unsubscribe: self ]
 ]
 
 { #category : 'tests - window creation and deletion' }
@@ -174,7 +182,8 @@ WindowAnnouncementTest >> testWindowLabelling [
 	"Test change of label for a window."
 
 	| labels win |
-	labels := #().
+	labels := #(  ).
+	[
 	self currentWorld announcer
 		when: WindowLabelled
 		do: [ :ann |
@@ -184,8 +193,8 @@ WindowAnnouncementTest >> testWindowLabelling [
 	window := SystemWindow labelled: 'foo'.
 	window openInWorld.
 	self assert: win equals: window.
-	self assert: labels equals: #('foo').
+	self assert: labels equals: #( 'foo' ).
 	window setLabel: 'bar'.
 	self assert: win equals: window.
-	self assert: labels equals: #('foo' 'bar')
+	self assert: labels equals: #( 'foo' 'bar' ) ] ensure: [ self currentWorld announcer unsubscribe: self ]
 ]

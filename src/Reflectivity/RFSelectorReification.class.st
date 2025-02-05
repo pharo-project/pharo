@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFSelectorReification class >> entities [
-	^{ASTMessageNode. ASTMethodNode}
+	^{OCMessageNode. OCMethodNode}
 ]
 
 { #category : 'plugin interface' }

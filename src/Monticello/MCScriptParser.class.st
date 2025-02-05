@@ -16,11 +16,12 @@ MCScriptParser class >> pattern [
 
 { #category : 'actions' }
 MCScriptParser >> addDefinitionsTo: aCollection [
+
 	| tokens definition |
-	tokens := source parseLiterals.
+	tokens := OCParser parseLiterals: source.
 	definition := MCScriptDefinition
-		scriptSelector: tokens second allButLast
-		script: tokens third
-		packageName: tokens first third.
-	aCollection add: definition.
+		              scriptSelector: tokens second allButLast
+		              script: tokens third
+		              packageName: tokens first third.
+	aCollection add: definition
 ]

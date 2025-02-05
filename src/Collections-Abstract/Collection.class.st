@@ -524,13 +524,6 @@ Collection >> copyWithAll: aCollection [
 ]
 
 { #category : 'copying' }
-Collection >> copyWithDependent: newElement [
-	"Answer a new collection with newElement added (as last
-	element if sequenceable)."
-	^self copyWith: newElement
-]
-
-{ #category : 'copying' }
 Collection >> copyWithout: oldElement [
 	"Answer a copy of the receiver that does not contain any
 	elements equal to oldElement."

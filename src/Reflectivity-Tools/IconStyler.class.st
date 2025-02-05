@@ -4,7 +4,7 @@ I'm in charge to styling an ast with highlighting. To highglight something I nee
 "
 Class {
 	#name : 'IconStyler',
-	#superclass : 'ASTProgramNodeVisitor',
+	#superclass : 'OCProgramNodeVisitor',
 	#instVars : [
 		'textModel',
 		'stylerClasses'

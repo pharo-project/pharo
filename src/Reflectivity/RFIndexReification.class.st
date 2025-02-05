@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFIndexReification class >> entities [
-	^{ASTVariableNode. ASTAssignmentNode}
+	^{OCVariableNode. OCAssignmentNode}
 ]
 
 { #category : 'plugin interface' }

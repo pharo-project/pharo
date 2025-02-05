@@ -6,11 +6,14 @@ My preconditions verify that the new name is different from the current package 
 I change all the references of the classes that are defined within the package, and if there is a manifest, it is updated with the new name of the package. 
 
 Usage:
+```
 | transformation |
 transformation := (RBRenamePackageTransformation
-				rename: (self getPackageNamed: #'Refactoring2-Transformations-Tests')
+				rename: #'Refactoring-Transformations-Tests'
 				to: #'Refactoring2-Transformations-Tests1')
-				transform.
+				generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 "
 Class {
 	#name : 'RBRenamePackageTransformation',

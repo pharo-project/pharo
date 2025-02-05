@@ -27,8 +27,6 @@ BenchTFFISameThread >> doSumWithConstants [
 BenchTFFISameThread >> doSumWithPointers [
 
 	^ self ffiCall: #(int64 sum_int64_t(void* 1, void* 0))
-
-	
 ]
 
 { #category : 'private' }

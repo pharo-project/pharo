@@ -131,6 +131,48 @@ SourceFileArrayTest >> testForkedWrite [
 ]
 
 { #category : 'tests' }
+SourceFileArrayTest >> testParseStampWithConflict [
+
+	| sourceFiles timestamp preamble |
+	sourceFiles := SourceFileArray new.
+
+	preamble := 'SourceFileArray methodsFor: ''public - stamp: reading'' stamp: ''1/14/2025 10:16'' prior: 62647896'.
+	timestamp := sourceFiles
+		             timeStampFromPreamble: preamble
+		             for: sourceFiles sourceDataPointers.
+
+	self assert: timestamp equals: '1/14/2025 10:16'
+]
+
+{ #category : 'tests' }
+SourceFileArrayTest >> testParseStampWithNoStamp [
+
+	| sourceFiles timestamp preamble |
+	sourceFiles := SourceFileArray new.
+
+	preamble := 'AeBenchBlurConvexPolygonRunner methodsFor: ''running'''.
+	timestamp := sourceFiles
+		             timeStampFromPreamble: preamble
+		             for: sourceFiles sourceDataPointers.
+
+	self assert: timestamp equals: ''
+]
+
+{ #category : 'tests' }
+SourceFileArrayTest >> testParseStampWithoutConflict [
+
+	| sourceFiles timestamp preamble |
+	sourceFiles := SourceFileArray new.
+
+	preamble := 'SourceFileArray methodsFor: ''public - string reading'' stamp: ''1/14/2025 10:16'' prior: 62647896'.
+	timestamp := sourceFiles
+		             timeStampFromPreamble: preamble
+		             for: sourceFiles sourceDataPointers.
+
+	self assert: timestamp equals: '1/14/2025 10:16'
+]
+
+{ #category : 'tests' }
 SourceFileArrayTest >> testProtocol [
 	"Test that we can access protocol correctly"
 

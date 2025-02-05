@@ -2,13 +2,15 @@
 I am responsible for adding a pragma inside a method. In this implementation, all pragma definition, e.g., '<selector: args>' must be described.
 
 Usage:
+```
 | transformation |
 transformation := (RBAddPragmaTransformation
 				pragma: '<pragaForTesting: 213>'
 				inMethod: #methodBefore
 				inClass: #RBAddPragmaTransformationTest)
-				transform.
-(ChangesBrowser changes: transformation model changes changes) open
+				generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 - the class exists,

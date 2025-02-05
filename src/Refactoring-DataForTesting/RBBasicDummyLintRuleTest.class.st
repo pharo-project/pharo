@@ -963,7 +963,7 @@ RBBasicDummyLintRuleTest class >> tempsReadBeforeWritten [
 			variables := self parseTreeSearcherClass nonBlockTempsIn: context parseTree.
 			variables isEmpty
 				ifFalse:
-					[(ASTReadBeforeWrittenTester variablesReadBeforeWrittenIn: context parseTree)
+					[(OCReadBeforeWrittenTester variablesReadBeforeWrittenIn: context parseTree)
 						do:
 							[:each |
 							result addClass: context selectedClass selector: context selector.
@@ -1166,7 +1166,7 @@ RBBasicDummyLintRuleTest class >> variableReferencedOnce [
 								tree := defClass parseTreeForSelector: selector.
 								tree isNotNil
 									ifTrue:
-										[(ASTReadBeforeWrittenTester readBeforeWritten: (Array with: each) in: tree)
+										[(OCReadBeforeWrittenTester readBeforeWritten: (Array with: each) in: tree)
 											isEmpty
 												ifTrue:
 													[result addClass: defClass selector: selector.

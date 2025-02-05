@@ -15,9 +15,9 @@ Class {
 }
 
 { #category : 'accessing' }
-StRefactoringAddClassPresenter class >> defaultExtent [
+StRefactoringAddClassPresenter class >> defaultPreferredExtent [
 
-	^ (500 @ 450) scaledByDisplayScaleFactor
+	^ 500 @ 450
 ]
 
 { #category : 'accessing' }
@@ -103,14 +103,14 @@ StRefactoringAddClassPresenter >> open [
 		centered
 ]
 
-{ #category : 'initialization' }
-StRefactoringAddClassPresenter >> setTitleTo: aSpWindowPresenter [
+{ #category : 'accessing' }
+StRefactoringAddClassPresenter >> windowIcon [
 
-	aSpWindowPresenter title: 'Add new subclass of ' , driver superclass name
+	^ self iconNamed: #add
 ]
 
-{ #category : 'initialization' }
-StRefactoringAddClassPresenter >> setWindowIconTo: aSpWindowPresenter [
+{ #category : 'accessing' }
+StRefactoringAddClassPresenter >> windowTitle [ 
 
-	aSpWindowPresenter windowIcon: (self iconNamed: #add)
+	^ 'Add new subclass of ' , driver superclass name
 ]

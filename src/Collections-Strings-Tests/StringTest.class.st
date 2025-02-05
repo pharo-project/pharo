@@ -487,18 +487,22 @@ StringTest >> testAsSignedInteger [
 
 { #category : 'tests - converting' }
 StringTest >> testAsSmalltalkComment [
+
 	| exampleStrings |
-	exampleStrings := #('' ' ' '"' '""' '"""' 'abc"abc' 'abc""abc' 'abc"hello"abc' 'abc"' '"abc').
+	exampleStrings := #( '' ' ' '"' '""' '"""' 'abc"abc' 'abc""abc'
+	                     'abc"hello"abc' 'abc"' '"abc' ).
 
 	"check that the result of scanning the comment is empty"
-	exampleStrings
-		do: [ :s |
-			| tokens |
-			tokens := s asComment parseLiterals.
-			self assertEmpty: tokens ].
+	exampleStrings do: [ :s |
+		| tokens |
+		tokens := OCParser parseLiterals: s asComment.
+		self assertEmpty: tokens ].
 
 	"check that the result has the same non-quote characters as the original"
-	exampleStrings do: [ :s | self assert: (s copyWithout: $") equals: (s asComment copyWithout: $") ].
+	exampleStrings do: [ :s |
+		self
+			assert: (s copyWithout: $")
+			equals: (s asComment copyWithout: $") ].
 
 	"finnaly, test for some common kinds of inputs"
 	self assert: '' asComment equals: '""'.
@@ -1446,12 +1450,6 @@ StringTest >> testIsPatternVariable [
 
 	self deny: 'notAPattern:varible:' isPatternVariable.
 	self deny: 'notAPattern' isPatternVariable
-]
-
-{ #category : 'tests - testing' }
-StringTest >> testIsValidSelector [
-	self assert: 'class' isValidSelector.
-	self deny: '0class' isValidSelector
 ]
 
 { #category : 'tests' }

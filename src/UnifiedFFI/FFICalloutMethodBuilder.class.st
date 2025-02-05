@@ -133,7 +133,7 @@ FFICalloutMethodBuilder >> generateMethodFromSpec: functionSpec [
 
 	ffiLibrary := self extractLibrary.
 
-	ir := IRBuilder buildIR: [ :builder | | r |
+	ir := OCIRBuilder buildIR: [ :builder | | r |
 
 		"Copy the properties of the old method"
 		sender methodProperties

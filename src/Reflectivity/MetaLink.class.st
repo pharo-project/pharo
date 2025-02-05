@@ -152,12 +152,14 @@ MetaLink >> condition [
 
 { #category : 'link api' }
 MetaLink >> condition: aCondition [
-	condition:= aCondition.
-	self optionInlineCondition ifTrue: [^self invalidate].
-	nodes do: [ :node |  | methodNode |
+
+	condition := aCondition.
+	self optionInlineCondition ifTrue: [ ^ self invalidate ].
+	nodes do: [ :node |
+		| methodNode |
 		methodNode := node methodNode.
-		(methodNode metaLinkOptionsFromClassAndMethod includes: #optionInlineCondition)
-			 ifTrue: [ methodNode method invalidate ] ]
+		(methodNode metaLinkOptionsFromClassAndMethod includesOption:
+			 #optionInlineCondition) ifTrue: [ methodNode method invalidate ] ]
 ]
 
 { #category : 'link api' }
@@ -203,7 +205,7 @@ MetaLink >> definitionString [
 			str nextPutAll: 'condition: '; nextPutAll: condition printString; nextPut: $;.
 			].
 		str cr;tab.
-		str nextPutAll: 'options: '; nextPutAll: options asArray printString; nextPut: $..
+		str nextPutAll: 'options: '; nextPutAll: options options asArray printString; nextPut: $..
 	]
 ]
 
@@ -218,8 +220,9 @@ MetaLink >> disable [
 { #category : 'private' }
 MetaLink >> doesNotUnderstand: message [
 
-	(message selector isUnary and: [ message selector beginsWith: 'option'] )
-		ifTrue: [ ^ options includes: message selector ].
+	(message selector isUnary and: [
+		 message selector beginsWith: 'option' ]) ifTrue: [
+		^ options includesOption: message selector ].
 
 	^ super doesNotUnderstand: message
 ]
@@ -266,7 +269,7 @@ MetaLink >> initialize [
 	control := #before.
 	selector := #value.
 	arguments := #().
-	options := Set new.
+	options := OCCompilationContext new.
 	self parseOptions: self class defaultOptions
 ]
 
@@ -337,18 +340,20 @@ MetaLink >> metaObject [
 
 { #category : 'link api' }
 MetaLink >> metaObject: anObject [
+
 	metaObject := anObject.
-	self optionInlineMetaObject ifTrue: [^self invalidate].
-	nodes do: [ :node | | methodNode |
+	self optionInlineMetaObject ifTrue: [ ^ self invalidate ].
+	nodes do: [ :node |
+		| methodNode |
 		methodNode := node methodNode.
-		(methodNode metaLinkOptionsFromClassAndMethod includes: #optionInlineMetaObject)
-			 ifTrue: [ methodNode method invalidate ] ]
+		(methodNode metaLinkOptionsFromClassAndMethod includesOption:
+			 #optionInlineMetaObject) ifTrue: [ methodNode method invalidate ] ]
 ]
 
 { #category : 'accessing' }
 MetaLink >> methods [
 	^nodes flatCollect: [ :entity |
-		(entity isKindOf: ASTProgramNode)
+		(entity isKindOf: OCProgramNode)
 			ifTrue: [ {entity methodNode compiledMethod}  ]
 			ifFalse: [ entity usingMethods ] ]
 ]
@@ -365,7 +370,8 @@ MetaLink >> option: anArray [
 
 { #category : 'options' }
 MetaLink >> optionAnnounce [
-	^ options includes: #optionAnnounce
+
+	^ options includesOption: #optionAnnounce
 ]
 
 { #category : 'options' }
@@ -390,7 +396,8 @@ MetaLink >> optionArgsAsArray: aBoolean [
 
 { #category : 'options' }
 MetaLink >> optionCompileOnLinkInstallation [
-	^ options includes: #optionCompileOnLinkInstallation
+
+	^ options includesOption: #optionCompileOnLinkInstallation
 ]
 
 { #category : 'options' }
@@ -414,7 +421,8 @@ MetaLink >> optionDisabledLink: aBoolean [
 
 { #category : 'options' }
 MetaLink >> optionInlineCondition [
-	^ options includes: #optionInlineCondition
+
+	^ options includesOption: #optionInlineCondition
 ]
 
 { #category : 'options' }
@@ -426,7 +434,8 @@ MetaLink >> optionInlineCondition: aBoolean [
 
 { #category : 'options' }
 MetaLink >> optionInlineMetaObject [
-	^ options includes: #optionInlineMetaObject
+
+	^ options includesOption: #optionInlineMetaObject
 ]
 
 { #category : 'options' }

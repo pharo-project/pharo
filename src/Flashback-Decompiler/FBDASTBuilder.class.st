@@ -26,24 +26,24 @@ FBDASTBuilder >> codeAnyLitInd: anAssociation [
 	| varName |
 	"class binding on the class side has nil as key"
 	varName := anAssociation key ifNil: [ 'class binding' ] ifNotNil: [ anAssociation key ].
-	^ (ASTVariableNode named: varName)
+	^ (OCVariableNode named: varName)
 		binding: anAssociation;
 		yourself
 ]
 
 { #category : 'building' }
 FBDASTBuilder >> codeArgument: tempName [
-	^ ASTVariableNode named: tempName
+	^ OCVariableNode named: tempName
 ]
 
 { #category : 'building' }
 FBDASTBuilder >> codeArray: array [
-	^ ASTArrayNode statements: array
+	^ OCArrayNode statements: array
 ]
 
 { #category : 'building' }
 FBDASTBuilder >> codeAssignment: value to: variable [
-	^ ASTAssignmentNode variable: variable value: value
+	^ OCAssignmentNode variable: variable value: value
 ]
 
 { #category : 'building' }
@@ -53,7 +53,7 @@ FBDASTBuilder >> codeBlock: body [
 
 { #category : 'building' }
 FBDASTBuilder >> codeBlock: body arguments: args [
-	^ ASTBlockNode arguments: args body: body
+	^ OCBlockNode arguments: args body: body
 ]
 
 { #category : 'building' }
@@ -63,7 +63,7 @@ FBDASTBuilder >> codeBlockFromStatements: statements [
 
 { #category : 'building' }
 FBDASTBuilder >> codeCascade: messages [
-	^ ASTCascadeNode messages: messages
+	^ OCCascadeNode messages: messages
 ]
 
 { #category : 'building' }
@@ -80,7 +80,7 @@ FBDASTBuilder >> codeConditionalNode: expr trueSequence: seq1 falseSequence: seq
 
 { #category : 'building' }
 FBDASTBuilder >> codeEmptyBlock [
-	^ ASTBlockNode body: (self codeSequence: #())
+	^ OCBlockNode body: (self codeSequence: #())
 ]
 
 { #category : 'building' }
@@ -90,17 +90,17 @@ FBDASTBuilder >> codeEmptySequence [
 
 { #category : 'building' }
 FBDASTBuilder >> codeInstanceVariable: offset [
-	^ ASTVariableNode named: (methodClass allSlots at: offset) name
+	^ OCVariableNode named: (methodClass allSlots at: offset) name
 ]
 
 { #category : 'building' }
 FBDASTBuilder >> codeLiteral: lit [
-	^ ASTLiteralNode value: lit
+	^ OCLiteralNode value: lit
 ]
 
 { #category : 'building' }
 FBDASTBuilder >> codeLiteralValue: lit [
-	^ ASTLiteralValueNode value: lit
+	^ OCLiteralValueNode value: lit
 ]
 
 { #category : 'building' }
@@ -115,20 +115,20 @@ FBDASTBuilder >> codeLoopNode: bool condition: seq1 body: seq2 [
 
 { #category : 'building' }
 FBDASTBuilder >> codeMessage: selector receiver: rcvr arguments:args [
-	^ ASTMessageNode receiver: rcvr selector: selector arguments: args
+	^ OCMessageNode receiver: rcvr selector: selector arguments: args
 ]
 
 { #category : 'building' }
 FBDASTBuilder >> codeMethod: selector arguments: args body: body pragmas: pragmas class: class [
 
-	^ (ASTMethodNode selector: selector arguments: args body: body)
+	^ (OCMethodNode selector: selector arguments: args body: body)
 		pragmas: pragmas;
 		doSemanticAnalysisIn: class
 ]
 
 { #category : 'building' }
 FBDASTBuilder >> codeReceiver [
-	^ ASTVariableNode selfNode
+	^ OCVariableNode selfNode
 ]
 
 { #category : 'building' }
@@ -143,37 +143,37 @@ FBDASTBuilder >> codeRepeatNode: body [
 
 { #category : 'building' }
 FBDASTBuilder >> codeReturn: value [
-	^ ASTReturnNode value: value
+	^ OCReturnNode value: value
 ]
 
 { #category : 'building' }
 FBDASTBuilder >> codeSelf [
-	^ ASTVariableNode selfNode
+	^ OCVariableNode selfNode
 ]
 
 { #category : 'building' }
 FBDASTBuilder >> codeSequence: temps [
-	^ ASTSequenceNode temporaries: temps statements: OrderedCollection new
+	^ OCSequenceNode temporaries: temps statements: OrderedCollection new
 ]
 
 { #category : 'building' }
 FBDASTBuilder >> codeSuper [
-	^ ASTVariableNode superNode
+	^ OCVariableNode superNode
 ]
 
 { #category : 'building' }
 FBDASTBuilder >> codeTemp: tempName [
-	^ ASTVariableNode named: tempName
+	^ OCVariableNode named: tempName
 ]
 
 { #category : 'building' }
 FBDASTBuilder >> codeThisContext [
-	^ ASTVariableNode thisContextNode
+	^ OCVariableNode thisContextNode
 ]
 
 { #category : 'building' }
 FBDASTBuilder >> codeVariable: variable [
-	^ ASTVariableNode named: variable
+	^ OCVariableNode named: variable
 ]
 
 { #category : 'accessing' }

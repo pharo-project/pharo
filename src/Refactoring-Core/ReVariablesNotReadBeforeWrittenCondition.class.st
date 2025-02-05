@@ -14,7 +14,7 @@ ReVariablesNotReadBeforeWrittenCondition >> check [
 
 	(subtree isNil or: [ variables isNil ]) ifTrue: [ ^ false ].
 	
-	^ (ASTReadBeforeWrittenTester
+	^ (OCReadBeforeWrittenTester
 		   readBeforeWritten: variables
 		   in: subtree) isEmpty
 ]

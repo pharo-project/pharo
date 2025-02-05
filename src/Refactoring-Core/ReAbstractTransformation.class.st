@@ -92,6 +92,28 @@ ReAbstractTransformation >> applicabilityPreconditions [
 ]
 
 { #category : 'private' }
+ReAbstractTransformation >> buildParametersForSelector: aSelector [
+	"(self new buildParametersForSelector: #cratpoc:freeFloc:) >>> #('param1' 'param2')"
+	
+	| params |
+	params := OrderedCollection new. 
+	1 
+		to: aSelector numArgs 
+		do: [ :i | params add: 'param', i asString ].
+	^ params asArray
+]
+
+{ #category : 'private' }
+ReAbstractTransformation >> buildParamtersForSelector: aSelector [
+	| params |
+	params := OrderedCollection new. 
+	1 
+		to: aSelector numArgs 
+		do: [ :i | params add: 'param', i asString ].
+	^ params 
+]
+
+{ #category : 'private' }
 ReAbstractTransformation >> buildSelectorString: aSelector [
 	aSelector numArgs = 0 ifTrue: [^aSelector].
 	^self buildSelectorString: aSelector
@@ -154,11 +176,6 @@ ReAbstractTransformation >> checkApplicabilityPreconditions [
 { #category : 'condition definitions' }
 ReAbstractTransformation >> checkInstanceVariableName: aName in: aClass [
 	^RBCondition checkInstanceVariableName: aName in: aClass
-]
-
-{ #category : 'condition definitions' }
-ReAbstractTransformation >> checkMethodName: aName in: aClass [
-	^RBCondition checkMethodName: aName in: aClass
 ]
 
 { #category : 'scripting api - conditions' }
@@ -260,6 +277,23 @@ ReAbstractTransformation >> generateChangesFor: aRefactoring [
 	aRefactoring generateChanges
 ]
 
+{ #category : 'testing' }
+ReAbstractTransformation >> isValidSelector [
+	"Check I could be a valid selector (name of method).
+	 For checking if there is symbol like me used as a selector, see Symbol>>#isSelectorSymbol"
+
+	^ OCScanner isSelector: self
+]
+
+{ #category : 'testing' }
+ReAbstractTransformation >> isValidSelector: aString [
+	"Returns the boolean true if aString is a valid selector (name of method).
+	 For checking if there is symbol like me used as a selector, see Symbol>>#isSelectorSymbol"
+
+	"Pay attention RBCondition >> #isValidSelector is returning an Condition object."
+	^ OCScanner isSelector: aString
+]
+
 { #category : 'accessing' }
 ReAbstractTransformation >> model [
 
@@ -303,7 +337,7 @@ ReAbstractTransformation >> parseTreeRewriter [
 
 { #category : 'parsing' }
 ReAbstractTransformation >> parseTreeRewriterClass [
-	^ ASTParseTreeRewriter
+	^ OCParseTreeRewriter
 ]
 
 { #category : 'parsing' }
@@ -313,12 +347,12 @@ ReAbstractTransformation >> parseTreeSearcher [
 
 { #category : 'parsing' }
 ReAbstractTransformation >> parseTreeSearcherClass [
-	^ ASTParseTreeSearcher
+	^ OCParseTreeSearcher
 ]
 
 { #category : 'parsing' }
 ReAbstractTransformation >> parserClass [
-	^ RBParser
+	^ OCParser
 ]
 
 { #category : 'transforming' }
@@ -428,6 +462,8 @@ ReAbstractTransformation >> safeMethodNameFor: aClass basedOn: aString [
 	hasParam := newString last = $:.
 	hasParam ifTrue: [
 		baseString := newString copyFrom: 1 to: newString size - 1 ].
+	newString asSymbol isBinary ifTrue: [ 
+		^ baseString asSymbol ].
 	i := 0.
 	[ aClass hierarchyDefinesMethod: newString asSymbol ] whileTrue: [
 		i := i + 1.

@@ -50,13 +50,3 @@ KMMetaModifier >> matches: aKeyboardEvent [
 KMMetaModifier >> matchesEvent: aKeyboardEvent [
 	^ OSPlatform current defaultModifier matchesEvent: aKeyboardEvent
 ]
-
-{ #category : 'printing' }
-KMMetaModifier >> printOsRepresentationOn: aStream [
-	aStream << Smalltalk os menuShortcutModifierString
-]
-
-{ #category : 'printing' }
-KMMetaModifier >> printingPosition [
-	^1
-]

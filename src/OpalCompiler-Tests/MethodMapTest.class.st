@@ -27,7 +27,7 @@ MethodMapTest >> inlinedBlockSourceNode [
 { #category : 'helpers' }
 MethodMapTest >> parseExpression: aString [
 
-	^ RBParser parseExpression: aString
+	^ OCParser parseExpression: aString
 ]
 
 { #category : 'tests - ast mapping' }
@@ -178,7 +178,7 @@ MethodMapTest >> testMethodSourceNodeAtInitialPC [
 
 { #category : 'tests - ast mapping' }
 MethodMapTest >> testMethodSourceNodeAtPC [
-	self assert: (((Object>>#halt) sourceNodeForPC:  (Smalltalk vm for32bit: 22 for64bit: 42)) isKindOf: ASTMessageNode)
+	self assert: (((Object>>#halt) sourceNodeForPC:  (Smalltalk vm for32bit: 22 for64bit: 42)) isKindOf: OCMessageNode)
 ]
 
 { #category : 'tests - ast mapping' }
@@ -207,9 +207,9 @@ MethodMapTest >> testTempNamedTempCopyingNestedBlock2 [
 
 { #category : 'tests - ast mapping' }
 MethodMapTest >> testThisContextSourceNode [
-	self assert: (thisContext sourceNode isKindOf: ASTMethodNode).
-	self assert: ([thisContext sourceNode] value isKindOf: ASTBlockNode).
-	self assert: ([true ifTrue: [thisContext sourceNode]]value isKindOf: ASTBlockNode)
+	self assert: (thisContext sourceNode isKindOf: OCMethodNode).
+	self assert: ([thisContext sourceNode] value isKindOf: OCBlockNode).
+	self assert: ([true ifTrue: [thisContext sourceNode]]value isKindOf: OCBlockNode)
 ]
 
 { #category : 'tests - ast mapping' }
@@ -217,5 +217,5 @@ MethodMapTest >> testThisContextSourceNodeInInlinedMessage [
 	| inlinedBlockSourceNode |
 	"we get the method node as this is what created the context"
 	inlinedBlockSourceNode := self inlinedBlockSourceNode.
-	self assert: (inlinedBlockSourceNode isKindOf: ASTMethodNode)
+	self assert: (inlinedBlockSourceNode isKindOf: OCMethodNode)
 ]

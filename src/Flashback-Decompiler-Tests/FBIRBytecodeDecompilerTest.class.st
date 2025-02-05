@@ -25,7 +25,7 @@ FBIRBytecodeDecompilerTest >> tearDown [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testBugOffset [
 	| iRMethod aCompiledMethod ir method |
-	iRMethod := IRBuilder new
+	iRMethod := OCIRBuilder new
 		addTemps: #(#a #b);
 		pushTemp: #b;
 		pushTemp: #a;
@@ -58,7 +58,7 @@ FBIRBytecodeDecompilerTest >> testDecompileBytecodeGeneratorTest [
 { #category : 'tests - examples' }
 FBIRBytecodeDecompilerTest >> testDecompileIRBuilderTestClass [
 	| decompiledIR aCompiledMethod |
-	IRBuilderTest methods
+	OCIRBuilderTest methods
 		do: [ :each |
 			decompiledIR := FBIRBytecodeDecompiler new decompile: each.
 			aCompiledMethod := decompiledIR compiledMethod ]
@@ -75,7 +75,7 @@ FBIRBytecodeDecompilerTest >> testDecompilerOrderedCollectionDo [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testDup [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testDup.
+	ir1 := OCIRBuilderTest new testDup.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -85,7 +85,7 @@ FBIRBytecodeDecompilerTest >> testDup [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testInstVar [
 	| ir1 ir2 method method2 |
-	ir1 := IRBuilderTest new testInstVar.
+	ir1 := OCIRBuilderTest new testInstVar.
 	method := ir1 compiledMethod.
 	ir2 := method decompileIR.
 	method2 := ir2 compiledMethod.
@@ -97,7 +97,7 @@ FBIRBytecodeDecompilerTest >> testInstVar [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testJumpAheadTo [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testJumpAheadTo.
+	ir1 := OCIRBuilderTest new testJumpAheadTo.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -107,7 +107,7 @@ FBIRBytecodeDecompilerTest >> testJumpAheadTo [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testJumpAheadToIf [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testJumpAheadToIf.
+	ir1 := OCIRBuilderTest new testJumpAheadToIf.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -118,7 +118,7 @@ FBIRBytecodeDecompilerTest >> testJumpAheadToIf [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testJumpBackTo [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testJumpBackTo.
+	ir1 := OCIRBuilderTest new testJumpBackTo.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -129,7 +129,7 @@ FBIRBytecodeDecompilerTest >> testJumpBackTo [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testLiteralArray [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testLiteralArray.
+	ir1 := OCIRBuilderTest new testLiteralArray.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -140,7 +140,7 @@ FBIRBytecodeDecompilerTest >> testLiteralArray [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testLiteralBoolean [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testLiteralBoolean.
+	ir1 := OCIRBuilderTest new testLiteralBoolean.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -151,7 +151,7 @@ FBIRBytecodeDecompilerTest >> testLiteralBoolean [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testLiteralCharacter [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testLiteralCharacter.
+	ir1 := OCIRBuilderTest new testLiteralCharacter.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -162,7 +162,7 @@ FBIRBytecodeDecompilerTest >> testLiteralCharacter [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testLiteralFloat [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testLiteralFloat.
+	ir1 := OCIRBuilderTest new testLiteralFloat.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -173,7 +173,7 @@ FBIRBytecodeDecompilerTest >> testLiteralFloat [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testLiteralInteger [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testLiteralInteger.
+	ir1 := OCIRBuilderTest new testLiteralInteger.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -184,7 +184,7 @@ FBIRBytecodeDecompilerTest >> testLiteralInteger [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testLiteralNil [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testLiteralNil.
+	ir1 := OCIRBuilderTest new testLiteralNil.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -195,7 +195,7 @@ FBIRBytecodeDecompilerTest >> testLiteralNil [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testLiteralString [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testLiteralString.
+	ir1 := OCIRBuilderTest new testLiteralString.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -206,7 +206,7 @@ FBIRBytecodeDecompilerTest >> testLiteralString [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testLiteralSymbol [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testLiteralSymbol.
+	ir1 := OCIRBuilderTest new testLiteralSymbol.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -217,7 +217,7 @@ FBIRBytecodeDecompilerTest >> testLiteralSymbol [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testLiteralVariableClass [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testLiteralVariableClass.
+	ir1 := OCIRBuilderTest new testLiteralVariableClass.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -228,7 +228,7 @@ FBIRBytecodeDecompilerTest >> testLiteralVariableClass [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testLiteralVariableClassVariable [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testLiteralVariableClassVariable.
+	ir1 := OCIRBuilderTest new testLiteralVariableClassVariable.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -239,7 +239,7 @@ FBIRBytecodeDecompilerTest >> testLiteralVariableClassVariable [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testLiteralVariableGlobale [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new setUp; testLiteralVariableGlobale.
+	ir1 := OCIRBuilderTest new setUp; testLiteralVariableGlobale.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -250,7 +250,7 @@ FBIRBytecodeDecompilerTest >> testLiteralVariableGlobale [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testPopTop [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testPopTop.
+	ir1 := OCIRBuilderTest new testPopTop.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -261,7 +261,7 @@ FBIRBytecodeDecompilerTest >> testPopTop [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testPushConsArray [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testPushConsArray.
+	ir1 := OCIRBuilderTest new testPushConsArray.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -272,7 +272,7 @@ FBIRBytecodeDecompilerTest >> testPushConsArray [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testPushConsArray2 [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testPushConsArray2.
+	ir1 := OCIRBuilderTest new testPushConsArray2.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -283,7 +283,7 @@ FBIRBytecodeDecompilerTest >> testPushConsArray2 [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testPushSelf [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testPushSelf.
+	ir1 := OCIRBuilderTest new testPushSelf.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -294,7 +294,7 @@ FBIRBytecodeDecompilerTest >> testPushSelf [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testPushTempArgument [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testPushTempArgument.
+	ir1 := OCIRBuilderTest new testPushTempArgument.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -305,7 +305,7 @@ FBIRBytecodeDecompilerTest >> testPushTempArgument [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testPushTempTemp [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testPushTempTemp.
+	ir1 := OCIRBuilderTest new testPushTempTemp.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -316,7 +316,7 @@ FBIRBytecodeDecompilerTest >> testPushTempTemp [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testPushThisContext [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testPushThisContext.
+	ir1 := OCIRBuilderTest new testPushThisContext.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -327,7 +327,7 @@ FBIRBytecodeDecompilerTest >> testPushThisContext [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testReturnTop [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testReturnTop.
+	ir1 := OCIRBuilderTest new testReturnTop.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -338,7 +338,7 @@ FBIRBytecodeDecompilerTest >> testReturnTop [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testSendSuper [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testSendSuper.
+	ir1 := OCIRBuilderTest new testSendSuper.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -349,7 +349,7 @@ FBIRBytecodeDecompilerTest >> testSendSuper [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testStoreIntoVariable [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testStoreIntoVariable.
+	ir1 := OCIRBuilderTest new testStoreIntoVariable.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.
@@ -360,7 +360,7 @@ FBIRBytecodeDecompilerTest >> testStoreIntoVariable [
 { #category : 'tests' }
 FBIRBytecodeDecompilerTest >> testStoreTemp [
 	| ir1 ir2 method |
-	ir1 := IRBuilderTest new testStoreTemp.
+	ir1 := OCIRBuilderTest new testStoreTemp.
 	method := ir1 compiledMethod.
 	ir2 := FBIRBytecodeDecompiler new decompile: method.
 	self deny: ir2 compiledMethod identicalTo: method.

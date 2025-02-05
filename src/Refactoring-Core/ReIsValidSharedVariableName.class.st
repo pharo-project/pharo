@@ -26,7 +26,7 @@ ReIsValidSharedVariableName >> check [
 	string first isUppercase ifFalse: [
 		violator := name.
 		^ false ].
-	(RBScanner isVariable: string) ifFalse: [
+	(OCScanner isVariable: string) ifFalse: [
 		violator := name.
 		^ false ].
 	^ true

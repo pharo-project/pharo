@@ -48,20 +48,20 @@ EFArrayExpressionTest >> maxLineLengthConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		formatCommentCloseToStatements: false;
-		maxLineLength: 12;
-		retainBlankLinesBetweenStatements: false;
-		minimumNewLinesBetweenStatements: 1;
-		indentStyle: #tabulation;
-		periodAtEndOfBlock: false;
-		periodAtEndOfMethod: false;
-		indentExtraSpaces: 0;
-		numberOfSpacesInsideArray: 0;
-		numberOfSpacesBeforeDotInDynamicArray: 0.
-		"here since we shortcut the initialize method we have to set the numberOfSpace...
+		  formatCommentCloseToStatements: false;
+		  maxLineLength: 12;
+		  retainBlankLinesBetweenStatements: false;
+		  minimumNewLinesBetweenStatements: 1;
+		  indentStyle: #tabulation;
+		  periodAtEndOfBlock: false;
+		  periodAtEndOfMethod: false;
+		  indentExtraSpaces: 0;
+		  numberOfSpacesInsideArray: 0;
+		  numberOfSpacesBeforeDotInDynamicArray: 0
+	"here since we shortcut the initialize method we have to set the numberOfSpace...
 		manually so that the spacesBefore string is correctly computed."
 ]
 
@@ -70,20 +70,20 @@ EFArrayExpressionTest >> maxLineLengthConfigurationWithSpaceBefore [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		formatCommentCloseToStatements: false;
-		maxLineLength: 12;
-		retainBlankLinesBetweenStatements: false;
-		minimumNewLinesBetweenStatements: 1;
-		indentStyle: #tabulation;
-		periodAtEndOfBlock: false;
-		periodAtEndOfMethod: false;
-		indentExtraSpaces: 0;
-		numberOfSpacesInsideArray: 0;
-		numberOfSpacesBeforeDotInDynamicArray: 1.
-		"here since we shortcut the initialize method we have to set the numberOfSpace...
+		  formatCommentCloseToStatements: false;
+		  maxLineLength: 12;
+		  retainBlankLinesBetweenStatements: false;
+		  minimumNewLinesBetweenStatements: 1;
+		  indentStyle: #tabulation;
+		  periodAtEndOfBlock: false;
+		  periodAtEndOfMethod: false;
+		  indentExtraSpaces: 0;
+		  numberOfSpacesInsideArray: 0;
+		  numberOfSpacesBeforeDotInDynamicArray: 1
+	"here since we shortcut the initialize method we have to set the numberOfSpace...
 		manually so that the spacesBefore string is correctly computed."
 ]
 
@@ -134,25 +134,25 @@ EFArrayExpressionTest >> periodAtEndOfMethod [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		formatCommentCloseToStatements: false;
-		maxLineLength: 12;
-		indentsForKeywords: 0;
-		retainBlankLinesBetweenStatements: false;
-		minimumNewLinesBetweenStatements: 1;
-		indentStyle: #tabulation;
-		indentExtraSpaces: 0;
-		periodAtEndOfBlock: false;
-		periodAtEndOfMethod: true;
-		multiLineMessages: #();
-		oneLineMessages: #();
-		numberOfSpacesInsideParentheses: 0;
-		numberOfArgumentsForMultiLine: 2;
-		newLineBeforeFirstKeyword: false;
-		numberOfSpacesInsideArray: 0;
-		numberOfSpacesBeforeDotInDynamicArray: 0
+		  formatCommentCloseToStatements: false;
+		  maxLineLength: 12;
+		  indentsForKeywords: 0;
+		  retainBlankLinesBetweenStatements: false;
+		  minimumNewLinesBetweenStatements: 1;
+		  indentStyle: #tabulation;
+		  indentExtraSpaces: 0;
+		  periodAtEndOfBlock: false;
+		  periodAtEndOfMethod: true;
+		  multiLineMessages: #(  );
+		  oneLineMessages: #(  );
+		  numberOfSpacesInsideParentheses: 0;
+		  numberOfArgumentsForMultiLine: 2;
+		  newLineBeforeFirstKeyword: false;
+		  numberOfSpacesInsideArray: 0;
+		  numberOfSpacesBeforeDotInDynamicArray: 0
 ]
 
 { #category : 'configurations' }

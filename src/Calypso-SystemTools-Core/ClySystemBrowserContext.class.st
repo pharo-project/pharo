@@ -199,15 +199,14 @@ ClySystemBrowserContext >> requestSingleClass: queryTitle from: classCollection 
 { #category : 'user requests' }
 ClySystemBrowserContext >> requestSinglePackage: queryTitle [
 
-	^ StBrowserSearchPresenter searchConfiguring: [ :presenter :dialog |
-		  dialog title: queryTitle.
-		  presenter items:
-			  (self browser itemsForQuery: ClyAllPackagesQuery sorted).
-		  self class rememberedPackage ifNotNil: [
-			  presenter searchWithItem: self class rememberedPackage ].
-		  dialog okAction: [
-			  self class rememberedPackage: presenter selectedItem
-			  "Mémorise la sélection ici" ] ]
+	| selectedPackage |
+	selectedPackage := StBrowserSearchPresenter searchConfiguring: [ :presenter :dialog |
+		                   dialog title: queryTitle.
+		                   presenter items: (self browser itemsForQuery: ClyAllPackagesQuery sorted).
+		                   self class rememberedPackage ifNotNil: [ presenter searchWithItem: self class rememberedPackage ] ].
+
+	self class rememberedPackage: selectedPackage.
+	^ selectedPackage
 ]
 
 { #category : 'selection-classes' }

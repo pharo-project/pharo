@@ -34,55 +34,47 @@ FTCharMapRec class >> fieldsDesc [
 { #category : 'accessing - structure variables' }
 FTCharMapRec >> encoding [
 	"This method was automatically generated"
-
-	^ handle signedLongAt: OFFSET_ENCODING
+	^handle signedLongAt: OFFSET_ENCODING
 ]
 
 { #category : 'accessing - structure variables' }
 FTCharMapRec >> encoding: anObject [
 	"This method was automatically generated"
-
 	handle signedLongAt: OFFSET_ENCODING put: anObject
 ]
 
 { #category : 'accessing - structure variables' }
 FTCharMapRec >> encoding_id [
 	"This method was automatically generated"
-
-	^ handle unsignedShortAt: OFFSET_ENCODING_ID
+	^handle unsignedShortAt: OFFSET_ENCODING_ID
 ]
 
 { #category : 'accessing - structure variables' }
 FTCharMapRec >> encoding_id: anObject [
 	"This method was automatically generated"
-
 	handle unsignedShortAt: OFFSET_ENCODING_ID put: anObject
 ]
 
 { #category : 'accessing - structure variables' }
 FTCharMapRec >> face [
 	"This method was automatically generated"
-
-	^ FTFaceRec fromHandle: (handle pointerAt: OFFSET_FACE)
+	^FTFaceRec fromHandle: (handle pointerAt: OFFSET_FACE)
 ]
 
 { #category : 'accessing - structure variables' }
 FTCharMapRec >> face: anObject [
 	"This method was automatically generated"
-
-	handle pointerAt: OFFSET_FACE put: anObject getHandle
+	handle pointerAt: OFFSET_FACE put: anObject getHandle.
 ]
 
 { #category : 'accessing - structure variables' }
 FTCharMapRec >> platform_id [
 	"This method was automatically generated"
-
-	^ handle unsignedShortAt: OFFSET_PLATFORM_ID
+	^handle unsignedShortAt: OFFSET_PLATFORM_ID
 ]
 
 { #category : 'accessing - structure variables' }
 FTCharMapRec >> platform_id: anObject [
 	"This method was automatically generated"
-
 	handle unsignedShortAt: OFFSET_PLATFORM_ID put: anObject
 ]

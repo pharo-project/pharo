@@ -119,7 +119,7 @@ BaselineOfPharo class >> roassal [
 		  newName: 'Roassal'
 		  owner: 'pharo-graphics'
 		  project: 'Roassal'
-		  version: 'v1.06f'
+		  version: 'Pharo13'
 ]
 
 { #category : 'repository urls' }
@@ -177,23 +177,6 @@ BaselineOfPharo class >> toplo [
 BaselineOfPharo class >> toploRepository [
 
 	^ (self externalProjectNamed: 'Toplo') repository
-]
-
-{ #category : 'accessing - external projects' }
-BaselineOfPharo class >> welcomeBrowser [
-	<externalProject>
-	
-	^ PharoExternalProject 
-		newName: 'WelcomeBrowser' 
-		owner: 'pharo-spec' 
-		project: 'NewTools-WelcomeBrowser' 
-		version: 'main'
-]
-
-{ #category : 'repository urls' }
-BaselineOfPharo class >> welcomeBrowserRepository [
-
-	^ (self externalProjectNamed: 'WelcomeBrowser') repository
 ]
 
 { #category : 'baselines' }

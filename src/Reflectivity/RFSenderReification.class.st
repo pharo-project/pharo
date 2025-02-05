@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFSenderReification class >> entities [
-	^{ASTMessageNode . ASTMethodNode}
+	^{OCMessageNode . OCMethodNode}
 ]
 
 { #category : 'plugin interface' }
@@ -21,14 +21,14 @@ RFSenderReification class >> key [
 
 { #category : 'generate' }
 RFSenderReification >> genForASTMessageNode [
-	^ASTVariableNode selfNode
+	^OCVariableNode selfNode
 ]
 
 { #category : 'generate' }
 RFSenderReification >> genForASTMethodNode [
-	^ASTMessageNode
-		receiver: (ASTMessageNode
-			receiver: ASTVariableNode thisContextNode
+	^OCMessageNode
+		receiver: (OCMessageNode
+			receiver: OCVariableNode thisContextNode
 			selector: #sender)
 		selector: #receiver
 ]

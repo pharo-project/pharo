@@ -15,7 +15,8 @@ Class {
 		'comment',
 		'classPool',
 		'packageName',
-		'tagName'
+		'tagName',
+		'traitComposition'
 	],
 	#classVars : [
 		'LookupComment'
@@ -47,13 +48,14 @@ RBClass class >> initialize [
 
 { #category : 'instance creation' }
 RBClass class >> named: aSymbol [
-	^(self new)
+	^ self new 
 		name: aSymbol;
 		yourself
 ]
 
 { #category : 'variable accessing' }
 RBClass >> addClassVariable: aString [
+	
 	self privateClassVariableNames add: aString asSymbol.
 	model addClassVariable: aString to: self.
 	self classPool at: aString put: nil
@@ -61,6 +63,7 @@ RBClass >> addClassVariable: aString [
 
 { #category : 'variable accessing' }
 RBClass >> addPoolDictionary: aString [
+
 	self privatePoolDictionaryNames add: aString asSymbol.
 	model addPool: aString to: self
 ]
@@ -73,7 +76,8 @@ RBClass >> addProtocolNamed: aString [
 
 { #category : 'accessing' }
 RBClass >> allClassVariableNames [
-
+	"Returns all the shared variables of the class (e.g. including its superclass)"
+	
 	| sprClass |
 	sprClass := self superclass.
 	^ sprClass
@@ -93,16 +97,21 @@ RBClass >> allPoolDictionaryNames [
 
 { #category : 'accessing' }
 RBClass >> classPool [
-	^classPool ifNil: [ classPool := Dictionary new ]
+
+	^ classPool ifNil: [ classPool := Dictionary new ]
 ]
 
 { #category : 'accessing' }
 RBClass >> classVariableNames [
-	^self privateClassVariableNames copy
+	"Returns a copy of the shared variable names of the receiver"
+	
+	^ self privateClassVariableNames copy
 ]
 
 { #category : 'accessing' }
 RBClass >> classVariableNames: aCollectionOfStrings [
+	"Initializing to nil the shared variables named in the argument."
+
 	classVariableNames := (aCollectionOfStrings
 				collect: [:each | self classPool at: each asSymbol put: nil.
 					each asSymbol]) asOrderedCollection
@@ -110,6 +119,8 @@ RBClass >> classVariableNames: aCollectionOfStrings [
 
 { #category : 'accessing' }
 RBClass >> comment [
+	"Compute if necessary the comment, store it and return it"
+	
 	^ comment = LookupComment
 		ifTrue: [
 			comment := self isDefined
@@ -125,8 +136,9 @@ RBClass >> comment: aString [
 
 { #category : 'testing' }
 RBClass >> directlyDefinesClassVariable: aString [
-
-	^self classVariableNames includes: aString asSymbol
+	"Returns whether the class defines locally the shared variable whose name is given in argument."
+	
+	^ self classVariableNames includes: aString asSymbol
 ]
 
 { #category : 'testing' }
@@ -142,6 +154,8 @@ RBClass >> hasSubclasses [
 
 { #category : 'initialization' }
 RBClass >> initialize [
+	"LookupComment is a tag indicating that the comment has not been set."
+	
 	super initialize.
 	comment := LookupComment
 ]
@@ -154,7 +168,8 @@ RBClass >> instanceSide [
 
 { #category : 'testing' }
 RBClass >> isEmptyClass [
-
+	"A class is empty when it has no instance variable, shared variables and methods."
+	
 	^ self classVariableNames isEmpty and: [
 				  self instanceVariableNames isEmpty and: [
 					  self selectors isEmpty]]
@@ -240,7 +255,7 @@ RBClass >> privatePoolDictionaryNames [
 	^poolDictionaryNames
 ]
 
-{ #category : 'initialization' }
+{ #category : 'private' }
 RBClass >> realName: aSymbol [
 	self realClass: (self model environment at: aSymbol)
 ]
@@ -301,4 +316,16 @@ RBClass >> tagName [
 RBClass >> tagName: anObject [
 
 	tagName := anObject
+]
+
+{ #category : 'accessing' }
+RBClass >> traitComposition [
+	
+	^ traitComposition
+]
+
+{ #category : 'accessing' }
+RBClass >> traitComposition: aComposition [
+	
+	traitComposition := aComposition
 ]

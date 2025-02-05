@@ -32,9 +32,7 @@ RubWorkspaceExample class >> exampleWithCustomShortcut [
 
 	text textArea removeKeyCombination: $s meta.
 	text setText: 'Hit cmd $s to revert the text'.
-	text textArea
-		bindKeyCombination: $s meta
-		toActions: [ text setText: text text asString reverse ].
+	text textArea bindKeyCombination: $s meta toAction: [ text setText: text text asString reverse ].
 
 	window := StandardWindow new.
 	window addMorph: text fullFrame: LayoutFrame identity.

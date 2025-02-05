@@ -40,7 +40,7 @@ RBLintRuleTestData class >> parseTreeSearcher [
 
 { #category : 'parsing' }
 RBLintRuleTestData class >> parseTreeSearcherClass [
-	^ ASTParseTreeSearcher
+	^ OCParseTreeSearcher
 ]
 
 { #category : 'foo' }

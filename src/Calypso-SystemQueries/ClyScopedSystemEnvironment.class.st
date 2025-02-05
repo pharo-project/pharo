@@ -31,12 +31,6 @@ ClyScopedSystemEnvironment >> asRBEnvironment [
 ]
 
 { #category : 'class management' }
-ClyScopedSystemEnvironment >> classNamed: aString [
-	
-	^globals classNamed: aString
-]
-
-{ #category : 'class management' }
 ClyScopedSystemEnvironment >> classNamed: aString ifAbsent: aBlockClosure [
 
 	^ globals
@@ -49,15 +43,6 @@ ClyScopedSystemEnvironment >> classNamed: aString ifAbsent: aBlockClosure [
 						  ifFalse: aBlockClosure ]
 				  ifFalse: aBlockClosure ]
 		  ifAbsent: aBlockClosure
-]
-
-{ #category : 'class management' }
-ClyScopedSystemEnvironment >> classNamed: aString ifPresent: aBlockClosure ifAbsent: anotherBlockClosure [
-
-	^ globals
-		  at: aString
-		  ifPresent: aBlockClosure
-		  ifAbsent: anotherBlockClosure
 ]
 
 { #category : 'compiling' }

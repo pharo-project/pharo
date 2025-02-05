@@ -42,14 +42,14 @@ ReDuplicateClassDriver >> className [
 { #category : 'accessing' }
 ReDuplicateClassDriver >> className: aClassName [
 
-	className := aClassName.
+	className := aClassName
 
 ]
 
 { #category : 'accessing' }
 ReDuplicateClassDriver >> configureRefactoring [
 
-	refactoring := ReCopyClassRefactoring new.
+	refactoring := ReDuplicateClassRefactoring copyClass: rbClass
 ]
 
 { #category : 'accessing' }
@@ -77,8 +77,8 @@ ReDuplicateClassDriver >> requestNewClass [
 
 	^ requestDialog ifNil: [
 		requestDialog := (StClassAndMethodsSelectionPresenter on: self)
-			withInstanceMethods: rbClass methods
-			withClassMethods: rbMetaclass allMethods;
+			withInstanceMethods: rbClass localMethods
+			withClassMethods: rbMetaclass localMethods;
 			baseClassName: self className;
 			basePackageName: (self model environment at: self className) packageName;
 			basePackageTagName: (self model environment at: self className) packageTag name;
@@ -109,14 +109,14 @@ ReDuplicateClassDriver >> runRefactoring [
 
 	self configureRefactoring.
 	self requestNewClass.
-	requestDialog window isCancelled
-		ifTrue: [ ^ nil ].
-	model defineClass: [ :aBuilder |
-			aBuilder
-				superclass: requestDialog selectedSuperclass;
-				name: requestDialog newClassName;
-				package: requestDialog packageName ].
-	self applyChanges 
+	requestDialog window isCancelled ifTrue: [ ^ nil ].
+	refactoring
+		superclassName: requestDialog selectedSuperclass name;
+		className: requestDialog newClassName;
+		packageName: requestDialog packageName;
+		packageTagName: requestDialog tagName.
+
+	self applyChanges
 ]
 
 { #category : 'execution' }
@@ -133,14 +133,10 @@ ReDuplicateClassDriver >> runRefactoring: aReCopyClassRefactoring [
 { #category : 'accessing' }
 ReDuplicateClassDriver >> scopes: refactoringScopes [
 
-	| selectedClass |
-	
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes last.
-	selectedClass := model environment allNonMetaClasses anyOne.	
-
-	rbClass := model classFor: selectedClass.
-	rbMetaclass := model classFor: selectedClass class.
+	rbClass := model classNamed: className.
+	rbMetaclass := model metaclassNamed: className.
 ]
 
 { #category : 'accessing' }

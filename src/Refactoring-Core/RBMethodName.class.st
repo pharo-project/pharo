@@ -45,11 +45,18 @@ RBMethodName >> arguments: nameCollection [
 	self changed: #arguments
 ]
 
+{ #category : 'initialization' }
+RBMethodName >> initialize [
+
+	super initialize.
+	selector := #f
+]
+
 { #category : 'testing' }
 RBMethodName >> isValid [
 	"Return whether the receiver looks like a method with a selector in sync with the arguments in a possible class"
 
-	^ 	selector isString and: [ selector isValidSelector
+	^ 	selector isString and: [ (OCScanner isSelector: selector)
 			and: [ selector numArgs = arguments size ]]
 ]
 

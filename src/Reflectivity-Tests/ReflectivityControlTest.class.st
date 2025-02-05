@@ -330,7 +330,7 @@ ReflectivityControlTest >> testAfterSend [
 	self assert: (ReflectivityExamples >> #exampleMethod) class equals: ReflectiveMethod.
 	self assert: tag isNil.
 	self assert: ReflectivityExamples new exampleMethod equals: 5.
-	self assert: tag class equals: ASTMessageNode.
+	self assert: tag class equals: OCMessageNode.
 	self assert: (ReflectivityExamples >> #exampleMethod) class equals: CompiledMethod
 ]
 
@@ -350,7 +350,7 @@ ReflectivityControlTest >> testAfterSendWeak [
 	self assert: (ReflectivityExamples >> #exampleMethod) class equals: ReflectiveMethod.
 	self assert: tag isNil.
 	self assert: ReflectivityExamples new exampleMethod equals: 5.
-	self assert: tag class equals: ASTMessageNode.
+	self assert: tag class equals: OCMessageNode.
 	self deny: ((ReflectivityExamples >> #exampleMethod) messages includes: #ensure:).
 	self assert: (ReflectivityExamples >> #exampleMethod) class equals: CompiledMethod
 ]
@@ -708,7 +708,7 @@ ReflectivityControlTest >> testBeforeSend [
 	self assert: (ReflectivityExamples >> #exampleMethod) class equals: ReflectiveMethod.
 	self assert: tag isNil.
 	self assert: ReflectivityExamples new exampleMethod equals: 5.
-	self assert: tag class equals: ASTMessageNode.
+	self assert: tag class equals: OCMessageNode.
 	self assert: (ReflectivityExamples >> #exampleMethod) class equals: CompiledMethod
 ]
 
@@ -842,14 +842,14 @@ ReflectivityControlTest >> testConditionDisableEnableNoArguments [
 	self assert: sendNode hasMetalinkBefore.
 	self assert: tag isNil.
 	ReflectivityExamples new exampleMethod.
-	self assert: tag class equals: ASTMessageNode.
+	self assert: tag class equals: OCMessageNode.
 	tag := nil.
 	link disable.
 	ReflectivityExamples new exampleMethod.
 	self assert: tag isNil.
 	link enable.
 	ReflectivityExamples new exampleMethod.
-	self assert: tag class equals: ASTMessageNode
+	self assert: tag class equals: OCMessageNode
 ]
 
 { #category : 'tests - conditions' }
@@ -867,14 +867,14 @@ ReflectivityControlTest >> testConditionDisableEnableWithArguments [
 	self assert: sendNode hasMetalinkBefore.
 	self assert: tag isNil.
 	ReflectivityExamples new exampleMethod.
-	self assert: tag class equals: ASTMessageNode.
+	self assert: tag class equals: OCMessageNode.
 	tag := nil.
 	link disable.
 	ReflectivityExamples new exampleMethod.
 	self assert: tag isNil.
 	link enable.
 	ReflectivityExamples new exampleMethod.
-	self assert: tag class equals: ASTMessageNode
+	self assert: tag class equals: OCMessageNode
 ]
 
 { #category : 'tests - level' }
@@ -894,7 +894,7 @@ ReflectivityControlTest >> testConditionMetaLevel [
 	self assert: sendNode hasMetalinkBefore.
 	self assert: tag isNil.
 	ReflectivityExamples new exampleMethod.
-	self assert: tag class equals: ASTMessageNode
+	self assert: tag class equals: OCMessageNode
 ]
 
 { #category : 'tests - conditions' }
@@ -910,7 +910,7 @@ ReflectivityControlTest >> testConditionWithArgument [
 	self assert: sendNode hasMetalinkBefore.
 	self assert: tag isNil.
 	self assert: ReflectivityExamples new exampleMethod equals: 5.
-	self assert: tag class equals: ASTMessageNode.
+	self assert: tag class equals: OCMessageNode.
 	link condition: [ :node | node == 5 ].
 	tag := nil.
 	self assert: ReflectivityExamples new exampleMethod equals: 5.
@@ -930,7 +930,7 @@ ReflectivityControlTest >> testConditionWithArgument2 [
 	self assert: sendNode hasMetalinkBefore.
 	self assert: tag isNil.
 	self assert: ReflectivityExamples new exampleMethod equals: 5.
-	self assert: tag class equals: ASTMessageNode.
+	self assert: tag class equals: OCMessageNode.
 	link condition: [ :node | node == 5 ].
 	tag := nil.
 	self assert: ReflectivityExamples new exampleMethod equals: 5.
@@ -1214,7 +1214,7 @@ ReflectivityControlTest >> testInsteadSequence [
 		metaObject: self;
 		control: #instead;
 		selector: #tagExec.
-	self assert: (seqNode isKindOf: ASTSequenceNode).
+	self assert: (seqNode isKindOf: OCSequenceNode).
 	seqNode link: link.
 	self assert: seqNode hasMetalinkInstead.
 	self assert: (ReflectivityExamples >> #exampleAssignment) class equals: ReflectiveMethod.

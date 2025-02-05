@@ -20,12 +20,6 @@ DAReverseTreePresenter class >> onRelationGraph: aRelationGraph [
 	^ self on: aRelationGraph
 ]
 
-{ #category : 'specs' }
-DAReverseTreePresenter class >> title [
-
-	^ 'Package Dependencies Reverse Analysis'
-]
-
 { #category : 'private' }
 DAReverseTreePresenter >> buildRoots [
 	| collectionOfWrapper |
@@ -176,4 +170,10 @@ DAReverseTreePresenter >> treeActions [
 { #category : 'private' }
 DAReverseTreePresenter >> updatePackageLabel [
 	packageLabel label: 'Analysis of ' , self tree roots size asString , ' package(s)'
+]
+
+{ #category : 'accessing' }
+DAReverseTreePresenter >> windowTitle [
+
+	^ 'Package Dependencies Reverse Analysis'
 ]

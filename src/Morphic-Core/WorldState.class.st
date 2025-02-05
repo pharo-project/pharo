@@ -123,6 +123,7 @@ WorldState class >> easySelectingWorld: aBoolean [
 
 { #category : 'world menu items' }
 WorldState class >> helpOn: aBuilder [
+
 	<worldMenu>
 	(aBuilder item: #Help)
 		order: 99;
@@ -130,12 +131,7 @@ WorldState class >> helpOn: aBuilder [
 		with: [
 			(aBuilder group: #PharoHelp)
 				order: 2;
-				withSeparatorAfter.
-			(aBuilder item: #'About...')
-				order: 99;
-				iconName: #smallInfo;
-				help: 'Informations about this version of Pharo.';
-				action: [ Smalltalk aboutThisSystem ] ]
+				withSeparatorAfter ]
 ]
 
 { #category : 'class initialization' }
@@ -555,7 +551,15 @@ WorldState >> fallbackMenuOn: menu [
 	menu addLine.
 	menu
 		defaultTarget: Smalltalk tools;
-		addList: Smalltalk tools menuItems.
+		addList: #(
+		('System Browser' 			#openClassBrowser)
+		-
+		('Transcript' 				#openTranscript)
+		('File Browser'				#openFileList)
+		-
+		('Test Runner'				#openTestRunner)
+		('Process Browser' 			#openProcessBrowser)
+	).
 	menu addLine.
 	menu add: 'Save'
 		target: self class

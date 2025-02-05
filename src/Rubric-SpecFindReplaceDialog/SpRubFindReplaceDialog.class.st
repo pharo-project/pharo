@@ -25,32 +25,36 @@ Class {
 
 { #category : 'layout' }
 SpRubFindReplaceDialog class >> defaultLayout [
+
 	<spec>
 	^ SpBoxLayout newVertical
-		add: #findInput expand: false;
-		add: (SpGridLayout new
-			beColumnHomogeneous;
-			beRowHomogeneous;
-			add: #regExpCheckBox at: 1@1;
-			add: #backwardsCheckBox at: 2@1;
-			add: #caseCheckBox at: 1@2;
-			add: #wrapCheckBox at: 2@2;
-			add: #entireCheckBox at: 1@3;
-			yourself);
-		addLast: (SpBoxLayout newHorizontal
-			borderWidth: 5;
-			spacing: 5;
-			add: #replaceLabel  expand: false fill: false padding: 0;
-			add: #replaceTextInput;
-			yourself);
-		"addLast: (SpBoxLayout newHorizontal
+		  add: #findInput expand: false;
+		  add: (SpGridLayout new
+				   beColumnHomogeneous;
+				   beRowHomogeneous;
+				   add: #regExpCheckBox atPoint: 1 @ 1;
+				   add: #backwardsCheckBox atPoint: 2 @ 1;
+				   add: #caseCheckBox atPoint: 1 @ 2;
+				   add: #wrapCheckBox atPoint: 2 @ 2;
+				   add: #entireCheckBox at: 1 @ 3;
+				   yourself);
+		  addLast: (SpBoxLayout newHorizontal
+				   borderWidth: 5;
+				   spacing: 5;
+				   add: #replaceLabel
+				   expand: false
+				   fill: false
+				   padding: 0;
+				   add: #replaceTextInput;
+				   yourself);
+		  "addLast: (SpBoxLayout newHorizontal
 			borderWidth: 3;
 			spacing: 5;
 			add: #findButton;
 			add: #replaceButton;
 			add: #replaceAllButton;
 			add: #cancelButton);"
-		yourself
+			  yourself
 ]
 
 { #category : 'morphic dependencies' }

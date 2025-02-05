@@ -19,12 +19,6 @@ Class {
 	#tag : 'Refactorings'
 }
 
-{ #category : 'removing' }
-ReRemoveMethodsInHierarchyRefactoring class >> selectors: aSelectorsCollection from: aClass [ 
-	
-	^ self new selectors: aSelectorsCollection from: aClass
-]
-
 { #category : 'transforming' }
 ReRemoveMethodsInHierarchyRefactoring >> initializeRefactorings [
 

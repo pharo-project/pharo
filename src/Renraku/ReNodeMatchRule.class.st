@@ -42,14 +42,14 @@ ReNodeMatchRule class >> isVisible [
 ReNodeMatchRule >> addMatchingExpression: aString [
 	"add a string of rewrite expression to be matched by rule"
 
-	matchers add: (RBParser parseRewriteExpression: aString)
+	matchers add: (OCParser parseRewriteExpression: aString)
 ]
 
 { #category : 'adding' }
 ReNodeMatchRule >> addMatchingMethod: aString [
 	"add a string of rewrite expression which should be parsed as a method"
 
-	matchers add: (RBParser parseRewriteMethod: aString)
+	matchers add: (OCParser parseRewriteMethod: aString)
 ]
 
 { #category : 'running' }

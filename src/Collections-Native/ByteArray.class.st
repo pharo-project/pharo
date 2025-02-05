@@ -264,6 +264,12 @@ ByteArray >> isLiteral [
 	^ self class == ByteArray
 ]
 
+{ #category : 'comparing' }
+ByteArray >> literalEqual: other [
+
+	^ self class == other class and: [self = other]
+]
+
 { #category : 'platform independent access' }
 ByteArray >> longAt: index bigEndian: aBool [
 	"Return a 32bit integer quantity starting from the given byte index"

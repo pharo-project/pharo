@@ -4,22 +4,24 @@ Removes a potential non empty class (to your own risk) and reparent its children
 ## Usage:
 
 ```
-(RBRemoveClassTransformation
+| transformation |
+transformation := (RBRemoveClassTransformation
 	className: #RBRemoveClassTransformationTest)
-	execute.
+	generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
 ```
 
 To get the changes
 
 ```
-| transf | 
+| transf |
 transf := (RBRemoveClassTransformation
 	className: #RBRemoveClassTransformationTest)
 	generateChanges.
 (StRefactoringPreviewPresenter changes: transf scopes: {RBBrowserEnvironment new}) open
 ```
 
-To view changes check `StRefactoringPreviewPresenter changes: aCompositeRefactoring scopes: scopes
+To view changes check `StRefactoringPreviewPresenter>>changes:scopes:`
 
 ## Preconditions:
 - class must exist
@@ -28,9 +30,9 @@ To view changes check `StRefactoringPreviewPresenter changes: aCompositeRefactor
 Class {
 	#name : 'RBRemoveClassTransformation',
 	#superclass : 'RBClassTransformation',
-	#category : 'Refactoring-Transformations-Model',
+	#category : 'Refactoring-Transformations-Model-Unused',
 	#package : 'Refactoring-Transformations',
-	#tag : 'Model'
+	#tag : 'Model-Unused'
 }
 
 { #category : 'private' }

@@ -37,12 +37,6 @@ RePullUpInstanceVariableRefactoring >> breakingChangePreconditions [
 		   true ]) }
 ]
 
-{ #category : 'preconditions' }
-RePullUpInstanceVariableRefactoring >> preconditions [
-
-	^ self applicabilityPreconditions
-]
-
 { #category : 'transforming' }
 RePullUpInstanceVariableRefactoring >> privateTransform [
 	"Remove all the variables in the hierarchy below the classes and define one on the top."

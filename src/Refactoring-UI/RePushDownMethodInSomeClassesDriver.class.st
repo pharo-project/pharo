@@ -64,7 +64,6 @@ RePushDownMethodInSomeClassesDriver >> runRefactoring [
 	self gatherUserInput.
 	methods ifNil: [ ^ self ].
 	classes ifNil: [ ^ self ].
-	
 	self configureAndRunRefactoring 
 ]
 

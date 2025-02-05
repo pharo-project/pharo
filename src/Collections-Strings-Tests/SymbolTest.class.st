@@ -378,9 +378,16 @@ SymbolTest >> testIsLiteralSymbol [
 ]
 
 { #category : 'tests - selectors' }
-SymbolTest >> testIsSelectorSymbol [
-	self deny: #'no selector exist with spaces' isSelectorSymbol.
-	self assert: #assert:equals: isSelectorSymbol
+SymbolTest >> testIsUsedAsSelectorSymbol [
+	self deny: #'no selector exist with spaces' isUsedAsSelectorSymbol.
+	
+	"a valid selector used in the system"
+	self assert: #assert:equals: isUsedAsSelectorSymbol.
+	
+
+	"a valid selector not used in the system"
+	self deny: #assert:equals1942: isUsedAsSelectorSymbol.
+	self assert: (OCScanner isSelector: #assert:equals1942:) 
 ]
 
 { #category : 'tests' }

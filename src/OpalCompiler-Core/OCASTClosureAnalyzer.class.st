@@ -1,9 +1,10 @@
 "
 I visit the AST of method a second time (after OCASTSemanticAnalyzer) to analyze temps related to closures.
+I annotate the AST to generate temp vector. 
 "
 Class {
 	#name : 'OCASTClosureAnalyzer',
-	#superclass : 'ASTProgramNodeVisitor',
+	#superclass : 'OCProgramNodeVisitor',
 	#instVars : [
 		'scope'
 	],

@@ -146,13 +146,6 @@ Array >> beReadOnlyLiteral [
 	self do: [ :each | each beReadOnlyLiteral ]
 ]
 
-{ #category : 'copying' }
-Array >> copyWithDependent: newElement [
-
-	self isEmpty ifTrue: [ ^ DependentsArray with: newElement ].
-	^ self copyWith: newElement
-]
-
 { #category : 'displaying' }
 Array >> displayString [
 

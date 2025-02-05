@@ -110,16 +110,6 @@ RePullUpMethodDriver >> configureRefactoring [
 		               to: superclass name
 ]
 
-{ #category : 'ui - dialogs' }
-RePullUpMethodDriver >> failedPreconditionsErrorString [
-
-	^ String streamContents: [ :stream |
-		  refactoring failedApplicabilityPreconditions do: [ :cond |
-			  cond check ifFalse: [
-				  cond violationMessageOn: stream.
-				  stream cr ] ] ]
-]
-
 { #category : 'execution' }
 RePullUpMethodDriver >> gatherUserInput [
 	self selectMethodsAndClass
@@ -203,7 +193,6 @@ RePullUpMethodDriver >> runRefactoring [
 	"the user can still select if needed. Nil = cancel refactoring"
 	self gatherUserInput.
 	methods ifNil: [ ^ self ].
-	
 	self configureAndRunRefactoring
 ]
 

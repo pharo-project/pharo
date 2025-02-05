@@ -30,12 +30,6 @@ ReRemoveSharedVariablesDriver >> browseSharedVariableReferences [
 	StMessageBrowser browse: refactoring violators
 ]
 
-{ #category : 'execution' }
-ReRemoveSharedVariablesDriver >> changes [
-
-	^ refactoring privateTransform; changes
-]
-
 { #category : 'resources' }
 ReRemoveSharedVariablesDriver >> configureRefactoring [
 

@@ -41,12 +41,6 @@ SycRemoveMethodCommand >> execute [
 ]
 
 { #category : 'execution' }
-SycRemoveMethodCommand >> isComplexRefactoring [ 
-
-	^ false
-]
-
-{ #category : 'execution' }
 SycRemoveMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	toolContext := aToolContext.

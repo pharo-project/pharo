@@ -2201,6 +2201,12 @@ String >> linesDo: aBlock [
 ]
 
 { #category : 'comparing' }
+String >> literalEqual: other [
+
+	^ self class == other class and: [self = other]
+]
+
+{ #category : 'comparing' }
 String >> match: text [
 	"Answer whether text matches the pattern in this string.
 	Matching ignores upper/lower case differences.

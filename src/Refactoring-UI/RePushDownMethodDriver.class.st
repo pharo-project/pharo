@@ -155,7 +155,6 @@ RePushDownMethodDriver >> runRefactoring [
 	"the user can still select if needed. Nil = cancel refactoring"
 	self gatherUserInput.
 	methods ifNil: [ ^ self ].
-	
 	self configureAndRunRefactoring
 ]
 

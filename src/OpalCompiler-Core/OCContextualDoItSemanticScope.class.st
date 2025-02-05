@@ -8,12 +8,13 @@ I implement a visibility of varibles defined in the target context:
 Thus the doIt expressions can transparently access ""external"" variables.
 In debugger it means that users can execute or debug the code containing local variables. 
 
-Internally I convert all external variables using #asDoItVariable message and cache them in #importedVariables dictionary. This way I ensure the only instance of DoItVariable per each external variable (the variable lookup can happens multiple times for same name).  
+Internally I convert all external variables using the message `asDoItVariable` and cache them in `importedVariables` dictionary. This way I ensure the only instance of DoItVariable per each external variable (the variable lookup can happens multiple times for same name).  
 
 My instances can be created using following expression:
 
+```
 	OCContextualDoItSemanticScope targetingContext: thisContext 
-
+```
 "
 Class {
 	#name : 'OCContextualDoItSemanticScope',

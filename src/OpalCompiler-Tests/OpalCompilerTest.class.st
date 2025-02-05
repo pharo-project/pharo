@@ -220,7 +220,7 @@ OpalCompilerTest >> testInstallException [
 	self deny: (MockForCompilation includesSelector: #foo).
 
 	[ method := MockForCompilation compiler install: 'foo ^¿' ]
-		on: CodeError
+		on: OCCodeError
 		do: [ :error | message := error messageText , ' :(' ].
 
 	self deny: (MockForCompilation includesSelector: #foo).
@@ -245,7 +245,7 @@ OpalCompilerTest >> testInstallRequestor [
 		          changeStamp: 'JP 3/24/2023 18:39';
 		          protocol: 'hitching';
 		          install ]
-		on: CodeError
+		on: OCCodeError
 		do: [  ].
 
 	self deny: (MockForCompilation includesSelector: #foo).

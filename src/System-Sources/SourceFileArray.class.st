@@ -217,19 +217,21 @@ SourceFileArray >> protocolAt: sourcePointer [
 SourceFileArray >> protocolAt: sourcePointer for: sourceDataPointers [
 	"Answer the protocol for a given method, retrieved from the sources or changes file. Answer unfound protocol if no protocol is available."
 
-	| preamble protocol tokens protocolPosition |
-	protocol := 'unfound protocol'.	"this is to indicate that the tagging in the source does not use the correct format.
+	| preamble protocol |
+	protocol := 'unfound protocol'. "this is to indicate that the tagging in the source does not use the correct format.
 	We will have to fix that. For example some traits methods are wrongly tagged.
 	see http://code.google.com/p/pharo/issues/detail?id=4581"
 	preamble := self sourcedDataAt: sourcePointer.
 	preamble = 'Trait method' ifTrue: [ ^ nil ].
 	(preamble includesSubstring: sourceDataPointers key) ifTrue: [
-		tokens := preamble parseLiterals.
-		protocolPosition := tokens indexOf: sourceDataPointers key.
-		protocolPosition = 0
-			ifFalse: [
-				"New format gives change protocol and unified prior pointer"
-				protocol := tokens at: protocolPosition + 1 ] ].
+		| stream |
+		" Extract the protocol string from the method preamble.
+		A Preamble is a string of the shape:
+		
+		SourceFileArray methodsFor: 'public - string reading' stamp: '1/14/2025 10:16' prior: 62647896"
+		stream := preamble readStream.
+		stream skipTo: $'.
+		protocol := stream upTo: $' ].
 	^ protocol
 ]
 
@@ -418,18 +420,42 @@ SourceFileArray >> timeStampAt: sourcePointer [
 SourceFileArray >> timeStampAt: sourcePointer for: sourceDataPointers [
 	"Answer the authoring time-stamp for the given method, retrieved from the sources or changes file. Answer the empty string if no time stamp is available."
 
-	| preamble stamp tokens stampPosition |
-	stamp := ''.
-	flushChanges ifFalse: [ ^ stamp ].
+	| preamble |
+	flushChanges ifFalse: [ ^ '' ].
 	preamble := self sourcedDataAt: sourcePointer.
-	(preamble includesSubstring: sourceDataPointers key)
-		ifTrue: [
-			tokens := preamble parseLiterals.
-			stampPosition := tokens indexOf: sourceDataPointers value.
-			stampPosition = 0
-				ifFalse: [
-					"New format gives change stamp and unified prior pointer"
-					stamp := tokens at: stampPosition + 1 ] ].
+	^ self timeStampFromPreamble: preamble for: sourceDataPointers
+]
+
+{ #category : 'public - string reading' }
+SourceFileArray >> timeStampFromPreamble: preamble for: sourceDataPointers [
+	"Answer the authoring time-stamp for the given method, retrieved from the sources or changes file. Answer the empty string if no time stamp is available."
+
+	| stamp index |
+	stamp := ''.
+	(preamble includesSubstring: sourceDataPointers key) ifTrue: [
+		| stream |
+		" Extract the timestamp string from the preamble.
+		This can be a method or a class comment preamble.
+		A method Preamble is a string of the shape:
+		
+			SourceFileArray methodsFor: 'public - string reading' stamp: '1/14/2025 10:16' prior: 62647896
+		
+		A class comment preamble is a string of the shape
+		
+			SHClassWithComment commentStamp: 'anStamp' prior: 0
+		
+		
+		Lookup for the key stamp/commentStamp:, then take the string coming after that"
+		
+		index := preamble findLastOccurrenceOfString: sourceDataPointers value startingAt: 1.
+		index = 0 ifFalse: [
+			stream :=
+				ReadStream
+					on: preamble
+					from: index + sourceDataPointers value size
+					to: preamble size.
+			stream upTo: $'.
+			stamp := stream upTo: $' ] ].
 	^ stamp
 ]
 

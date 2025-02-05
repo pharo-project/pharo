@@ -6,7 +6,7 @@ One example are methods that contains message send that is a #halt (and any of i
 "
 Class {
 	#name : 'OCASTMethodMetadataAnalyser',
-	#superclass : 'ASTProgramNodeVisitor',
+	#superclass : 'OCProgramNodeVisitor',
 	#category : 'OpalCompiler-Core-Semantics',
 	#package : 'OpalCompiler-Core',
 	#tag : 'Semantics'

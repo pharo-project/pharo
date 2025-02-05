@@ -312,6 +312,16 @@ BehaviorTest >> testPropertyValueAtPut [
 ]
 
 { #category : 'tests - properties' }
+BehaviorTest >> testPropertyValueAtPutChangeGetLatestPutValue [
+
+	self class propertyAt: #testKeySelector put: 42.
+	self assert: (self class propertyAt: #testKeySelector) equals: 42.
+	self class propertyAt: #testKeySelector put: 46.
+	self assert: (self class propertyAt: #testKeySelector) equals: 46.
+	self class removeProperty: #testKeySelector
+]
+
+{ #category : 'tests - properties' }
 BehaviorTest >> testRemoveProperty [
 	self class propertyAt: #testKeySelector put: 1.
 	self class removeProperty: #testKeySelector.

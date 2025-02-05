@@ -69,7 +69,8 @@ ReInteractionDriver >> changes [
 	"Drivers should not call generateChanges of Refactoring because generateChanges is performing the preconditions and raising errors 
 	The API method generateChanges is for refactoring scripting."
 	
-	^ self subclassResponsibility 
+	refactoring privateTransform.
+	^ refactoring changes
 
 ]
 
@@ -92,6 +93,24 @@ ReInteractionDriver >> defaultSelectDialog [
 	
 	^ self
 	
+]
+
+{ #category : 'ui - dialogs' }
+ReInteractionDriver >> failedPreconditionsErrorString [
+
+	^ String streamContents: [ :stream |
+		  refactoring failedApplicabilityPreconditions do: [ :cond |
+				  cond violationMessageOn: stream.
+				  stream cr ] ]
+]
+
+{ #category : 'ui - dialogs' }
+ReInteractionDriver >> failedPreconditionsErrorString: conditions [
+
+	^ String streamContents: [ :stream |
+		  conditions do: [ :cond |
+				  cond violationMessageOn: stream.
+				  stream cr ] ]
 ]
 
 { #category : 'execution' }
@@ -142,13 +161,11 @@ ReInteractionDriver >> model: aRBBrowserEnvironment [
 
 { #category : 'execution' }
 ReInteractionDriver >> openPreviewWithChanges: changes [
-	
-	^ (self previewPresenterClass
-		 changes: changes
-		 scopes: scopes)
-		application: self application;
-		refactoring: self refactoring;
-		openModal
+
+	^ (self previewPresenterClass for: changes scopes: scopes)
+		  application: self application;
+		  refactoring: self refactoring;
+		  openModal
 ]
 
 { #category : 'configuration' }
@@ -178,17 +195,19 @@ ReInteractionDriver >> refactoringScopeOn: aScope [
 	^ RBNamespace onEnvironment: aScope asRBEnvironment
 ]
 
-{ #category : 'private' }
+{ #category : 'configuration' }
 ReInteractionDriver >> requestDialog [
-	"I'm hook for the injection of mock in tests. Subclasses should only redefine defaultRequestDialog if needed."
 	
 	^ requestDialog ifNil: [ requestDialog := self defaultRequestDialog ]
+	
 ]
 
-{ #category : 'accessing' }
-ReInteractionDriver >> requestDialog: aStRequestDialog [
+{ #category : 'configuration' }
+ReInteractionDriver >> requestDialog: aDialog [
+	
+	requestDialog := aDialog
 
-	requestDialog := aStRequestDialog
+	
 ]
 
 { #category : 'execution' }

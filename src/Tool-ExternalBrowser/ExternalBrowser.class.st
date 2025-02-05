@@ -62,6 +62,12 @@ ExternalBrowser class >> defaultLayout [
 		yourself
 ]
 
+{ #category : 'accessing' }
+ExternalBrowser class >> defaultPreferredExtent [
+
+	^ 800@600
+]
+
 { #category : 'examples' }
 ExternalBrowser class >> example [
 	<example>
@@ -177,13 +183,6 @@ ExternalBrowser >> initializePresenter [
 		add: method
 ]
 
-{ #category : 'initialization' }
-ExternalBrowser >> initializeWindow: aWindow [
-
-	aWindow title: 'External Package Browser'.
-	aWindow initialExtent: 800@600
-]
-
 { #category : 'accessing' }
 ExternalBrowser >> method [
 	^ method
@@ -279,4 +278,9 @@ ExternalBrowser >> showClassSide [
 ExternalBrowser >> updatePresenter [
 
 	packages items: self model packages
+]
+
+{ #category : 'initialization' }
+ExternalBrowser >> windowTitle [
+	^  'External Package Browser'
 ]

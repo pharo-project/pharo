@@ -383,7 +383,7 @@ RubSmalltalkEditorTest >> testBestNodeWithInvalidPlaygroundParsableError [
 
 	self
 		positionAfter: 'isSymbol ]';
-		assertPlaygroundNodeValue: 'ASTBlockNode([ node isSymbol ])'
+		assertPlaygroundNodeValue: 'OCBlockNode([ node isSymbol ])'
 ]
 
 { #category : 'tests - bestNodeIn' }
@@ -547,7 +547,7 @@ RubSmalltalkEditorTest >> testCompileForIn [
 	self assert: (nil executeMethod: method) equals: 42.
 
 	method := editor compile: '40+¿' for: nil in: nil.
-	self should: [ nil executeMethod: method ] raise: RuntimeSyntaxError
+	self should: [ nil executeMethod: method ] raise: OCRuntimeSyntaxError
 ]
 
 { #category : 'tests - copy' }
@@ -599,7 +599,7 @@ RubSmalltalkEditorTest >> testEvaluateAndDo [
 	self
 		shouldnt: [
 		result := editor evaluate: '40+¿' andDo: [ :value | value ] ]
-		raise: RuntimeSyntaxError.
+		raise: OCRuntimeSyntaxError.
 	self assert: result isNil.
 ]
 

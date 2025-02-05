@@ -26,7 +26,7 @@ ReIsValidInstanceVariableName >> check [
 	string first isUppercase ifTrue: [
 		violator := name.
 		^ false ].
-	(RBScanner isVariable: string) ifFalse: [
+	(OCScanner isVariable: string) ifFalse: [
 		violator := name.
 		^ false ].
 	^ true

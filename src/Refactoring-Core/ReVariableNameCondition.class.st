@@ -20,14 +20,6 @@ ReVariableNameCondition class >> name: aString [
 ]
 
 { #category : 'accessing' }
-ReVariableNameCondition >> errorString [
-
-	^ String streamContents: [ :stream |
-		self violationMessageOn: stream
-		]
-]
-
-{ #category : 'accessing' }
 ReVariableNameCondition >> name: aString [
 	name := aString
 ]

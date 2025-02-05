@@ -34,10 +34,8 @@ ReGenerateAccessorsDriver >> configureRefactoring [
 { #category : 'configuration' }
 ReGenerateAccessorsDriver >> runRefactoring [
 
-	| changes |
 	self configureRefactoring.
-	changes := refactoring generateChanges.
-	self openPreviewWithChanges: changes 
+	self applyChanges
 ]
 
 { #category : 'configuration' }

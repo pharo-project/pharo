@@ -5,27 +5,25 @@ Class {
 	#name : 'KMDescriptionPresenter',
 	#superclass : 'SpPresenter',
 	#instVars : [
-		'shortcutList',
 		'actionBar',
 		'categoryList',
-		'shortcutDetails',
-		'selectedAction'
+		'shortcutTable',
+		'inputPresenter'
 	],
 	#category : 'Keymapping-Tools-Spec',
 	#package : 'Keymapping-Tools-Spec'
 }
 
+{ #category : 'accessing' }
+KMDescriptionPresenter class >> defaultPreferredExtent [
+
+	^ 900 @ 650
+]
+
 { #category : 'instance creation' }
 KMDescriptionPresenter class >> descriptionText [
 
-	^ 'Show the description of shortcuts for the system'
-]
-
-{ #category : 'examples' }
-KMDescriptionPresenter class >> example [
-	self new
-		kmCategories: #(WindowShortcuts);
-		open
+	^ 'Show the system''s shortcuts'
 ]
 
 { #category : 'accessing' }
@@ -38,7 +36,7 @@ KMDescriptionPresenter class >> icon [
 KMDescriptionPresenter class >> menuCommandOn: aBuilder [
 	<worldMenu>
 
-	(aBuilder item: 'Shortcuts Editor')
+	(aBuilder item: 'Shortcuts Browser')
 		action: [ self open ];
 		order: 34;
 		parent: #Tools;
@@ -48,218 +46,141 @@ KMDescriptionPresenter class >> menuCommandOn: aBuilder [
 
 { #category : 'instance creation' }
 KMDescriptionPresenter class >> open [
-	"Open the receiver's on all the system keymap categories"
 
-	^ self new
-		addShortcutActivationCmdInstances;
-		addKeymapCategoryInstances;
-		addAllAPIsEntry;
-		open
+	<script>
+	^ (self newApplication: StPharoApplication current) open
 ]
 
-{ #category : 'api' }
-KMDescriptionPresenter >> addAllAPIsEntry [
+{ #category : 'initialization' }
+KMDescriptionPresenter >> allAPIsEntry [
 	"Set the receiver's category items to a list of categories in aCollectionOfSymbols.
 	We also build an 'All' category including all keymaps in aCollectionOfSymbols"
 
-	| newCategoryItem kmNamedCategories |
-	
-	newCategoryItem := KMCategoryItemPresenter new categoryName: 'All'.
-	kmNamedCategories := KMRepository default categories.
-	kmNamedCategories inject: newCategoryItem into: [ : a : b | a , b ].
+	| newCategoryItem |
+	newCategoryItem := KMCategoryAll new categoryName: 'All'.
+	KMRepository default categories inject: newCategoryItem into: [ : a : b | a , b ].
 	newCategoryItem addAll: self shortcutActivationCmdInstances.
-
-	categoryList prependCollection: {newCategoryItem}
-]
-
-{ #category : 'api - keymaps' }
-KMDescriptionPresenter >> addKeymapCategoryInstances [
-
-	self kmCategories: KMRepository default categories keys
-]
-
-{ #category : 'api - commander' }
-KMDescriptionPresenter >> addShortcutActivationCmdInstances [
-
-	categoryList appendCollection: self shortcutActivationCategoriesItems.
+	^ newCategoryItem
 ]
 
 { #category : 'initialization' }
 KMDescriptionPresenter >> connectPresenters [
 
-	categoryList
-		transmitTo: shortcutList
-		transform: [ :item | self keymapsAtCategory: item ].
-
-	shortcutList
-		transmitTo: shortcutDetails
-		transform: [ :item | self shortcutDetailsFor: item ]
-		postTransmission: [ :presenter | selectedAction ifNotNil: [ :actionBlock | self updateCodePresenter: actionBlock ] ]
+	categoryList transmitTo: shortcutTable transform: [ :item | self keymapsAtCategory: item model ].
+	inputPresenter whenTextChangedDo: [ :text | self filterTable: text ].
+	shortcutTable whenActivatedDo: [ :item | item value inspect selectedItem ]
 ]
 
 { #category : 'layout' }
 KMDescriptionPresenter >> defaultLayout [
 
-	^ SpPanedLayout newTopToBottom
-		  add: (SpBoxLayout newTopToBottom
-				   spacing: 5;
-				   add: (SpBoxLayout newLeftToRight
-						    add: 'Filter scopes' expand: false;
-						    add: categoryList;
-						    yourself)
-				   expand: false;
-				   add: shortcutList);
-		  add: (SpBoxLayout newTopToBottom
-				   add: shortcutDetails;
-				   add: actionBar withConstraints: [ :c | c height: 25 ]);
+	^ SpBoxLayout newTopToBottom
+		  spacing: 6;
+		  add: (SpBoxLayout newLeftToRight
+				   add: 'Filter scopes' expand: false;
+				   add: categoryList;
+				   yourself)
+		  expand: false;
+		  add: inputPresenter expand: false;
+		  add: shortcutTable;
+		  add: actionBar withConstraints: [ :c | c height: 25 ];
 		  yourself
 ]
 
 { #category : 'callbacks' }
-KMDescriptionPresenter >> highlightColor [
+KMDescriptionPresenter >> filterTable: aText [
 
-	^ self application configuration isDarkTheme 
-		ifTrue: [ Color lightGray ]
-		ifFalse: [ Color veryVeryLightGray ]
+	| newItems |
+	aText ifEmpty: [
+		shortcutTable items: (self keymapsAtCategory: categoryList selectedItem).
+		^ self ].
+
+	newItems := (self keymapsAtCategory: categoryList selectedItem) select: [ :each |
+		            { each name. each scopeName. each description } anySatisfy: [ :aString | 
+								aString includesSubstring: aText caseSensitive: false ] ].
+	shortcutTable items: newItems
 ]
 
 { #category : 'initialization' }
-KMDescriptionPresenter >> initializeActionBar [
+KMDescriptionPresenter >> initialize [
 
-	actionBar := self newActionBar.
-	actionBar
-		addLast:
-			(SpButtonPresenter new
-				action: [ self window close ];
-				label: 'Close';
-				yourself)
-]
+	| shortcutCategories |
+	super initialize.
 
-{ #category : 'initialization' }
-KMDescriptionPresenter >> initializeCategoryList [
-
-	categoryList := self newDropList.
-	categoryList display: [ :category | category name ].
+	shortcutCategories := { self allAPIsEntry } , self shortcutActivationCategoriesItems
+	                      , (KMRepository default categories keys collect: [ :e | KMRepository default categoryForName: e ]).
+	categoryList items: shortcutCategories
 ]
 
 { #category : 'initialization' }
 KMDescriptionPresenter >> initializePresenters [
 
-	self
-		initializeCategoryList; 
-		initializeShortcutList;
-		initializeShortcutDetails;
-		initializeActionBar
-]
+	categoryList := self newDropList
+		                display: [ :category | category name ];
+		                yourself.
+	inputPresenter := self newTextInput
+		                  placeholder: 'Filter';
+		                  yourself.
 
-{ #category : 'initialization' }
-KMDescriptionPresenter >> initializeShortcutDetails [
-
-	shortcutDetails := self newCode.
-
-]
-
-{ #category : 'initialization' }
-KMDescriptionPresenter >> initializeShortcutList [
-
-	shortcutList := self newTable.
-	shortcutList
+	shortcutTable := self newTable.
+	shortcutTable
+		activateOnDoubleClick;
 		addColumn: (SpStringTableColumn new
-			title: 'API';
-			evaluated: [ : each | each class name ];
-			beSortable;
-			yourself);
-		addColumn: (SpStringTableColumn new  
-			title: 'Scope'; 
-			evaluated: [ :each | each scopeName ]; 
-			beSortable;
-			yourself);
+				 title: 'Name';
+				 evaluated: #name;
+				 beSortable;
+				 yourself);
 		addColumn: (SpStringTableColumn title: 'Shortcut' evaluated: #shortcut);
-		addColumn: (SpStringTableColumn title: 'Name' evaluated: #name);
 		addColumn: (SpStringTableColumn title: 'Description' evaluated: #description);
+		addColumn: (SpStringTableColumn new
+				 title: 'Scope';
+				 evaluated: [ :each | each scopeName ];
+				 beSortable;
+				 width: 150;
+				 yourself);
 		beResizable.
+
+	actionBar := self newActionBar.
+	actionBar
+		addLast: (SpButtonPresenter new
+				 action: [ self application tools browser openOnClass:  shortcutTable selectedItem action methodClass selector: shortcutTable selectedItem action selector ];
+				 label: 'Browse';
+				 yourself);
+		addLast: (SpButtonPresenter new
+				 action: [ self application tools inspector openOn: shortcutTable selectedItem inspect ];
+				 label: 'Inspect';
+				 yourself)
+]
+
+{ #category : 'callbacks' }
+KMDescriptionPresenter >> keymapsAtCategory: aKMCategoryOrKMCategoryAll [
+	"Answer a <Collection> of keymaps"
+	^ aKMCategoryOrKMCategoryAll shortcuts
 ]
 
 { #category : 'initialization' }
-KMDescriptionPresenter >> initializeWindow: aWindowPresenter [
-	aWindowPresenter
-		title: 'Shortcuts Editor';
-		initialExtent: 900 @ 650
-]
-
-{ #category : 'initialization' }
-KMDescriptionPresenter >> keymapsAtCategory: aKMCategoryOrKMCategoryItemPresenter [
-	"Answer a <Collection> of keymaps "
-
-	^ (aKMCategoryOrKMCategoryItemPresenter isKindOf: KMCategoryItemPresenter) 
-		ifFalse: [ (aKMCategoryOrKMCategoryItemPresenter model entriesAt: #all) keymaps asOrderedCollection ]
-		ifTrue: [ aKMCategoryOrKMCategoryItemPresenter shortcuts ]
-]
-
-{ #category : 'api - keymaps' }
-KMDescriptionPresenter >> kmCategories: aCollectionOfSymbols [
-	"Set the receiver's category items to a list of categories in aCollectionOfSymbols.
-	We also build an 'All' category including all keymaps in aCollectionOfSymbols"
-
-	categoryList appendCollection: (self kmCategoriesAt: aCollectionOfSymbols)
-]
-
-{ #category : 'api - keymaps' }
-KMDescriptionPresenter >> kmCategoriesAt: aCollectionOfSymbols [
-
-	^ aCollectionOfSymbols 
-		collect: [ :e | KMRepository default categoryForName: e ]
-		as: OrderedCollection
-]
-
-{ #category : 'api - commander' }
-KMDescriptionPresenter >> shortcutActivationCategories [
-	"Answer a <Collection> of <...> representing each a category of shortcuts created using the Commander 1 framework"
-
-	^ (self shortcutActivationCmdInstances 
-		groupedBy: [ : cmdShortcutActivation | cmdShortcutActivation annotatedClass packageName ]) values
-]
-
-{ #category : 'api - commander' }
 KMDescriptionPresenter >> shortcutActivationCategoriesItems [
 	"Answer a <Collection> of <KMCategoryItemPresenter> representing each a category of shortcuts created using the Commander 1 framework"
+	
+	| shortcutActivationCategories |
+	shortcutActivationCategories := (self shortcutActivationCmdInstances groupedBy: [ :cmdShortcutActivation |
+		                                 cmdShortcutActivation annotatedClass packageName ]) values.
 
-	^ self shortcutActivationCategories
-			collect: [ : shortcuts | 
-				KMCategoryItemPresenter new 
-					categoryName: shortcuts anyOne annotatedClass packageName;
-					shortcuts: shortcuts;
-					yourself ]
+	^ shortcutActivationCategories collect: [ :shortcuts |
+		  KMCategoryAll new
+			  categoryName: shortcuts anyOne annotatedClass packageName;
+			  shortcuts: shortcuts;
+			  yourself ]
 ]
 
-{ #category : 'api - commander' }
+{ #category : 'initialization' }
 KMDescriptionPresenter >> shortcutActivationCmdInstances [
 
 	^ CmdShortcutActivation registeredInstances copyWithoutAll: CmdShortcutActivation redefiningInstances
 ]
 
-{ #category : 'callbacks' }
-KMDescriptionPresenter >> shortcutDetailsFor: anObject [ 
+{ #category : 'initialization' }
+KMDescriptionPresenter >> windowTitle [
 
-	^ anObject 
-		ifNotNil: [ : aKMKeymapOrCmdShortcutActivation | 
-			selectedAction := aKMKeymapOrCmdShortcutActivation action.
-			selectedAction method sourceCode ]
-		ifNil: [ String empty ]
-]
-
-{ #category : 'callbacks' }
-KMDescriptionPresenter >> updateCodePresenter: actionBlock [
-
-	shortcutDetails
-		beForMethod: selectedAction method;
-		text: selectedAction method sourceCode.
-
-	selectedAction isClosure ifTrue: [
-		shortcutDetails addTextSegmentDecoration:
-			(SpTextPresenterDecorator forHighlight
-				 interval: (selectedAction sourceNode sourceInterval first to:
-						  selectedAction sourceNode sourceInterval last + 1);
-				 highlightColor: self highlightColor;
-				 yourself) ]
+	^ 'Shortcuts Browser'
 ]

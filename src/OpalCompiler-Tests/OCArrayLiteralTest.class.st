@@ -9,7 +9,7 @@ Class {
 { #category : 'running' }
 OCArrayLiteralTest >> runCase [
 
-	SystemAnnouncer uniqueInstance suspendAllWhile: [ super runCase ]
+	self class codeChangeAnnouncer suspendAllWhile: [ super runCase ]
 ]
 
 { #category : 'running' }

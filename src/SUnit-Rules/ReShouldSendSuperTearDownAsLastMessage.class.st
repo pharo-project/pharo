@@ -25,7 +25,7 @@ ReShouldSendSuperTearDownAsLastMessage class >> group [
 { #category : 'utilities' }
 ReShouldSendSuperTearDownAsLastMessage class >> parseTreeSearcher [
 
-	^ ASTParseTreeSearcher new
+	^ OCParseTreeSearcher new
 ]
 
 { #category : 'accessing' }

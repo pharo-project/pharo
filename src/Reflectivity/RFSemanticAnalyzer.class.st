@@ -71,7 +71,7 @@ RFSemanticAnalyzer >> visitMethodNode: aMethodNode [
 	aMethodNode arguments do: [:node | self declareArgumentNode: node ].
 	aMethodNode pragmas do: [:each | self visitNode: each].
 	(aMethodNode hasProperty: #wrapperMethod)
-		ifTrue: [self declareTemporaryNode: (ASTVariableNode named: #RFReifyValueVar)].
+		ifTrue: [self declareTemporaryNode: (OCVariableNode named: #RFReifyValueVar)].
 	self analyseForLinksForNodes: aMethodNode.
 	self visitNode: aMethodNode body
 ]

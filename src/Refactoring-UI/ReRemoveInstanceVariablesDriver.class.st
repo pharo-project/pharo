@@ -32,13 +32,6 @@ ReRemoveInstanceVariablesDriver >> browseInstanceVariableReferences [
 		
 ]
 
-{ #category : 'execution' }
-ReRemoveInstanceVariablesDriver >> changes [
-	"We only perform the changes."
-	
-	^ refactoring privateTransform; changes
-]
-
 { #category : 'resources' }
 ReRemoveInstanceVariablesDriver >> configureRefactoring [
 
@@ -92,11 +85,4 @@ ReRemoveInstanceVariablesDriver >> scopes: refactoringScopes variables: aCollect
 	model := self refactoringScopeOn: scopes first.
 	variables := aCollection.
 	class := aClass
-]
-
-{ #category : 'execution' }
-ReRemoveInstanceVariablesDriver >> selectDialog [
-	
-	^ selectDialog ifNil: [ selectDialog := self defaultSelectDialog ].
-	
 ]

@@ -39,5 +39,5 @@ SDL_SysWMinfo_WindowsRTInfo >> window [
 { #category : 'accessing - structure variables' }
 SDL_SysWMinfo_WindowsRTInfo >> window: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_WINDOW put: anObject getHandle
+	handle pointerAt: OFFSET_WINDOW put: anObject getHandle.
 ]

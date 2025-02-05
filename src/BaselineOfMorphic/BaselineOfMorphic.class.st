@@ -258,9 +258,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	TextConstants initialize.
 
-	"Initialize Fuel"
-	FLLargeIdentityHashedCollection initialize.
-
 	Stdio stdout
 		nextPutAll: 'starting...';
 		lf.
@@ -285,13 +282,12 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	   #FreeTypeCache #FreeTypeSettings #FreeTypeSubPixelAntiAliasedGlyphRenderer
 	   #FT2Constants #GIFReadWriter #GlobalIdentifier #HaloMorph
 	   #CharacterScanner #ImageMorph #JPEGHuffmanTable #JPEGReadStream
-	   #Locale #MczInstaller #MD5NonPrimitive
-	   #MenuItemMorph #MenuMorph #RxMatcher #RxParser #RxsPredicate
-	   #SHA1 #ShortIntegerArray #SystemProgressMorph #SystemWindow
-	   #TestCase #TextContainer #TextDiffBuilder #ThumbnailMorph
-	   #TransferMorph #UITheme #ZnByteEncoder #ZnConstants #ZnMimeType
-	   #ZnNetworkingUtils #ZnServer #ZnSingleThreadedServer ) do: [ :each |
-		(Smalltalk globals at: each) initialize ].
+	   #Locale #MczInstaller #MD5NonPrimitive #MenuItemMorph
+	   #MenuMorph #RxMatcher #RxParser #RxsPredicate #SHA1 #ShortIntegerArray
+	   #SystemProgressMorph #SystemWindow #TestCase #TextContainer
+	   #TextDiffBuilder #ThumbnailMorph #TransferMorph #UITheme #ZnByteEncoder
+	   #ZnConstants #ZnMimeType #ZnNetworkingUtils #ZnServer #ZnSingleThreadedServer )
+		do: [ :each | (Smalltalk globals at: each) initialize ].
 
 	BalloonMorph setBalloonColorTo: Color yellow.
 
@@ -324,12 +320,12 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	PolymorphSystemSettings desktopColor: Color white.
 
 	#( #AbstractFont #BalloonMorph #Clipboard #EmbeddedFreeTypeFontInstaller
-	   #FLCompiledMethodCluster #FLLargeIdentityHashedCollection
-	   #FreeTypeFontProvider #GradientFillStyle #IconicButtonMorph
-	   #KMLog #LogicalFont #LucidaGrandeRegular #OSEnvironment
-	   #ScrollBarMorph #StrikeFont #SystemSettingsPersistence
-	   #TabMorph #TaskbarMorph #TextAction #TextConstants #TextStyle )
-		do: [ :each | (Smalltalk globals at: each) initialize ].
+	   #FLCompiledMethodCluster #FreeTypeFontProvider
+	   #GradientFillStyle #IconicButtonMorph #KMLog #LogicalFont
+	   #LucidaGrandeRegular #OSEnvironment #ScrollBarMorph
+	   #StrikeFont #SystemSettingsPersistence #TabMorph #TaskbarMorph
+	   #TextAction #TextConstants #TextStyle ) do: [ :each |
+		(Smalltalk globals at: each) initialize ].
 
 	LogicalFontManager current addFontProvider:
 		FreeTypeFontProvider current.

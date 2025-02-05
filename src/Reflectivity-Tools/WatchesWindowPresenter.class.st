@@ -28,6 +28,12 @@ WatchesWindowPresenter class >> defaultLayout [
 			yourself
 ]
 
+{ #category : 'accessing' }
+WatchesWindowPresenter class >> defaultPreferredExtent [
+
+	^ 270@240
+]
+
 { #category : 'instance creation' }
 WatchesWindowPresenter class >> on: aWatchpoint [
 	| inst |
@@ -70,8 +76,7 @@ WatchesWindowPresenter >> initializePresenters [
 { #category : 'initialization' }
 WatchesWindowPresenter >> initializeWindow: aWindowPresenter [
 
-	aWindowPresenter initialExtent: 270@240.
-	aWindowPresenter title: self title.
+	super initializeWindow: aWindowPresenter. 
 	aWindowPresenter whenOpenedDo: [ self startService ].
 	aWindowPresenter whenClosedDo: [ self stopService ].
 ]

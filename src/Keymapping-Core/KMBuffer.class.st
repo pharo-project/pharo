@@ -18,7 +18,7 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'initialize-release' }
+{ #category : 'class initialization' }
 KMBuffer class >> resetUniqueInstance [
 	uniqueInstance := nil
 ]

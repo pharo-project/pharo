@@ -123,6 +123,7 @@ ReRenameMethodDriver >> methodNameEditorPresenterClass: aClass [
 
 { #category : 'initialization' }
 ReRenameMethodDriver >> model: aModel renameMethodSignature: aMessage in: aClass [ 
+
 	model := aModel.
 	originalMessage := aMessage.
 	"while we could think that the class is not needed, it is because a rename should not override existing methods."
@@ -155,11 +156,30 @@ ReRenameMethodDriver >> requestDialogWith: methodName [
 { #category : 'interaction' }
 ReRenameMethodDriver >> requestNewMessage [
 
-	| methodName dialog  |
+	| methodName dialog parameters |
 	
+	"when we rename from a method list or clicking on the method signature in the method body
+	the parameters passed to the refactoring are ok. 
+	Now when the user selected a call site the arguments make no sense.
+	"
+	parameters := originalMessage argumentNames.
+	
+	
+	"We need a nice way to know whether a piece of code is an identifier
+	parametersAreWrong := parameters anySatisfy: [ :each | (RBScanner on: each readStream) scanToken isIdentifier not ].
+	parametersAreWrong .... Like that we could make the difference 
+	bewteeen rename from call site and rename from method signature. "
+							
+	"For now always use the one of an implementor that is not necessarily 
+	the one of method - this can happen that we rename a method clicking clickin on its signature
+	and in this case we may have different parameters. "										
+	parameters := originalMessage selector implementors 
+							ifNotEmpty: [:m | m first  argumentNames ]
+							ifEmpty: [ refactoring buildParamtersForSelector: originalMessage selector ].										
+											
 	methodName := RBMethodName
 		              selector: originalMessage selector
-		              arguments: originalMessage argumentNames.
+		              arguments: parameters.
 	dialog := self requestDialogWith: methodName.
 	
 	dialog ifNil: [ shouldEscape := true. ^ self ].

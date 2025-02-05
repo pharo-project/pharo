@@ -83,7 +83,7 @@ FLIteratingCluster >> materializeInstancesStepWith: aDecoder [
 FLIteratingCluster >> newAnalyzingCollection [
 	"Answer a collection for the objects that correspond to this cluster."
 
-	^ FLLargeIdentitySet new
+	^ IdentitySet new
 ]
 
 { #category : 'accessing' }
@@ -108,7 +108,7 @@ FLIteratingCluster >> printOn: aStream [
 
 { #category : 'accessing' }
 FLIteratingCluster >> references [
-	^ references ifNil: [  references := FLLargeIdentityDictionary new ]
+	^ references ifNil: [  references := IdentityDictionary new ]
 ]
 
 { #category : 'analyzing' }

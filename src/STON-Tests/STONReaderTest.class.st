@@ -160,10 +160,10 @@ STONReaderTest >> testDeepStructure [
 	structure := deepest.
 	1 * 1024 timesRepeat: [ structure := Array with: structure ].
 	structure := Array with: holder with: structure.
-	writer := STON writer optimizeForLargeStructures.
+	writer := STON writer.
 	ston := String streamContents: [ :out | (writer on: out) nextPut: structure ].
 	"After reading, the second pass will have to go down the structure to resolve the reference."
-	reader := STON reader optimizeForLargeStructures.
+	reader := STON reader.
 	result := (reader on: ston readStream) next.
 	self assert: result equals: structure
 ]

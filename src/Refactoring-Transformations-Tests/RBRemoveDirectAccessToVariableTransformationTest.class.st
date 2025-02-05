@@ -129,7 +129,7 @@ RBRemoveDirectAccessToVariableTransformationTest >> testTransform [
 		assert: (class parseTreeForSelector: #superSends)
 		equals: (self parseMethod: 'superSends
 		| rule |
-		rule := ASTParseTreeRewriter new.
+		rule := OCParseTreeRewriter new.
 		rule addSearch: ''super `@message: ``@args''
 			-> (
 				[:aNode |
