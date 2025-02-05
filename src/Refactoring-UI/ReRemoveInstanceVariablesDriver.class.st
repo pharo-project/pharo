@@ -86,10 +86,3 @@ ReRemoveInstanceVariablesDriver >> scopes: refactoringScopes variables: aCollect
 	variables := aCollection.
 	class := aClass
 ]
-
-{ #category : 'execution' }
-ReRemoveInstanceVariablesDriver >> selectDialog [
-	
-	^ selectDialog ifNil: [ selectDialog := self defaultSelectDialog ].
-	
-]

@@ -73,7 +73,7 @@ CompiledMethodTest >> deprecatedMethod4 [
 
 		deprecated: 'Example of a deprecated method with transform'
 		on: '01/01/1970'
-		in: #Pharo6
+		in: 'pharoX'
 		transformWith: '`@receiver deprecatedMethod4'
 						-> '`@receiver deprecatedMethod4'
 ]

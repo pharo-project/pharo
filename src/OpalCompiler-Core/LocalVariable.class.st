@@ -56,7 +56,7 @@ LocalVariable >> analyzeWrite: aVariableNode by: aSemanticAnalyzer [
 
 { #category : 'converting' }
 LocalVariable >> asDoItVariableFrom: aContext [
-	^ DoItVariable fromContext: aContext variable: self
+	^ OCDoItVariable fromContext: aContext variable: self
 ]
 
 { #category : 'converting' }

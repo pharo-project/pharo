@@ -267,7 +267,7 @@ RBMoveMethodRefactoring >> getNewMethodName [
 		ifTrue: [ newSelector := newMethodName selector ]
 		ifFalse: [ self refactoringWarning: 'Invalid method name' ].
 	parameters := newMethodName arguments.
-	( self checkMethodName: newSelector in: class )
+	( self isValidSelector: newSelector )
 		ifFalse: [ self refactoringWarning: newSelector , ' is not a valid selector name.'.
 			newSelector := nil
 			].

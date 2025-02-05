@@ -160,8 +160,11 @@ OCScanner class >> patternVariableCharacter [
 OCScanner class >> scanTokenObjects: aStringOrStream [
 	"Return the tokens objects."
 
-	self deprecated: 'Use scanTokens:' on: '18/12/2024'  in: #pharo13  transformWith:  '`@receiver scanTokenObjects: `@arg '
-						-> '`@receiver scanTokens: `@arg '.
+	self deprecated: 'Use scanTokens:' 
+		on: '18/12/2024'  
+		in: 'pharo13'
+		transformWith:  '`@receiver scanTokenObjects: `@arg '
+			-> '`@receiver scanTokens: `@arg '.
 	^ self scanTokens: aStringOrStream
 ]
 

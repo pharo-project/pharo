@@ -14,11 +14,15 @@ Class {
 
 { #category : 'dummy methods' }
 MyClassBetaSub >> duplicatedInSubclassMoreComplexBody [
+
+	"Duplicate here on purpose for testing purposes"
 	^ 42 + 666
 ]
 
 { #category : 'dummy methods' }
 MyClassBetaSub >> methodDuplicatedInSubclass [
+
+	"Duplicate here on purpose for testing purposes"
 	^ self
 ]
 

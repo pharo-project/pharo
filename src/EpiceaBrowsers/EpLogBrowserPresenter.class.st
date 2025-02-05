@@ -59,6 +59,12 @@ EpLogBrowserPresenter class >> defaultLog [
 	^ EpMonitor current log
 ]
 
+{ #category : 'accessing' }
+EpLogBrowserPresenter class >> defaultPreferredExtent [
+
+	^ 550@700
+]
+
 { #category : 'instance creation' }
 EpLogBrowserPresenter class >> newWithLog: aLog [
 
@@ -178,7 +184,7 @@ EpLogBrowserPresenter >> browseSelection [
 
 	self selectedEntryItems
 		select: [ :each | each entry content isCodeChange ]
-		thenDo: [ :each | each browseItem ]
+		thenDo: [ :each | each eventAccept: (EpBrowseVisitor new application: self application; yourself) ]
 ]
 
 { #category : 'private' }
@@ -582,11 +588,6 @@ EpLogBrowserPresenter >> initializeSearchPresenters [
 		yourself.
 ]
 
-{ #category : 'initialization' }
-EpLogBrowserPresenter >> initializeWindow: aWindowPresenter [
-	aWindowPresenter initialExtent: (550 @ 700) scaledByDisplayScaleFactor
-]
-
 { #category : 'menu - operations' }
 EpLogBrowserPresenter >> inspectSelection [
 
@@ -685,6 +686,7 @@ EpLogBrowserPresenter >> newItemForEntryReference: entryReference [
 	^ EpEntryItem new
 		browser: self;
 		entry: entry;
+		application: self application;
 		triggerItems: triggers;
 		yourself
 ]

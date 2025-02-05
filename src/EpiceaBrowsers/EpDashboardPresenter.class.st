@@ -35,6 +35,12 @@ EpDashboardPresenter class >> defaultLayout [
 		yourself
 ]
 
+{ #category : 'accessing' }
+EpDashboardPresenter class >> defaultPreferredExtent [
+
+	^ 450 @ 200
+]
+
 { #category : 'instance creation' }
 EpDashboardPresenter class >> open [
 	^ self new
@@ -46,12 +52,6 @@ EpDashboardPresenter class >> open [
 { #category : 'icons' }
 EpDashboardPresenter class >> taskbarIconName [
 	^ #config
-]
-
-{ #category : 'specs' }
-EpDashboardPresenter class >> title [
-
-	^ 'Epicea - Dashboard'
 ]
 
 { #category : 'actions' }
@@ -128,9 +128,8 @@ EpDashboardPresenter >> initializeWidgets [
 
 { #category : 'initialization' }
 EpDashboardPresenter >> initializeWindow: aWindowPresenter [
+	super initializeWindow: aWindowPresenter.
 	aWindowPresenter
-		title: 'Epicea - Dashboard';
-		initialExtent: 450 @ 200;
 		whenClosedDo: [ self monitor announcer unsubscribe: self ]
 ]
 
@@ -198,4 +197,9 @@ EpDashboardPresenter >> refreshEnableMonitorButtonPresenter [
 EpDashboardPresenter >> updatePresenter [
 
 	self refresh
+]
+
+{ #category : 'initialization' }
+EpDashboardPresenter >> windowTitle [
+	^ 'Epicea - Dashboard'
 ]

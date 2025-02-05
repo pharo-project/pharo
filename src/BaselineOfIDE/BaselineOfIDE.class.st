@@ -69,10 +69,10 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Rubric-SpecFindReplaceDialog'.
 
 		spec package: 'OpalCompiler-UI'.
+		spec package: 'OpalCompiler-UI-Tests'.
 
 		self load: 'Metacello' group: 'Tests' spec: spec.
 
-		spec package: 'MonticelloGUI-Tests'.
 		"Later we will load the UI of enlumineur probably here
 		"
 		spec baseline: 'Shout' with: [ spec repository: repository ].

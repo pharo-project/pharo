@@ -19,7 +19,7 @@ EFPragmaExpressionTest >> testPragmaNoExtraSpace [
 	| expr source |
 	expr := OCParser parsePragma:'<   Pragma   >'.
 	configurationSelector := #basicConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals: '<Pragma>'
 ]
 
@@ -28,7 +28,7 @@ EFPragmaExpressionTest >> testPragmaNoExtraSpace2 [
 	| expr source |
 	expr := OCParser parsePragma:'<func:     ''(3+4)''       res:      7>'.
 	configurationSelector := #basicConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals: '<func: ''(3+4)'' res: 7>'
 ]
 
@@ -37,6 +37,6 @@ EFPragmaExpressionTest >> testPragmaNoExtraSpaceBetweenMethodeAndArgument [
 	| expr source |
 	expr := OCParser parsePragma:'<primitive:    41>'.
 	configurationSelector := #basicConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals: '<primitive: 41>'
 ]

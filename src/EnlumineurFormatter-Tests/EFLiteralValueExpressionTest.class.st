@@ -26,7 +26,7 @@ EFLiteralValueExpressionTest >> testNotLitteral [
 	| expr source |
 	expr := OCLiteralValueNode value: Object.
 	configurationSelector := #basicConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals: '''<an unprintable nonliteral value>'''
 ]
 

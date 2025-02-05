@@ -77,6 +77,12 @@ RBRefactoryChange >> initialize [
 	changeFactory := RBRefactoryChangeManager changeFactory
 ]
 
+{ #category : 'testing' }
+RBRefactoryChange >> isInScope: anEnvironment [
+
+	^ self subclassResponsibility
+]
+
 { #category : 'accessing' }
 RBRefactoryChange >> name [
 

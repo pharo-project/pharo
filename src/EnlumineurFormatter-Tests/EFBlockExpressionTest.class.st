@@ -583,7 +583,7 @@ EFBlockExpressionTest >> testNoExtraSpaceAroundBlock [
 	| expr source |
 	expr := self parserClass parseExpression: '   ', self openBracket, '2', self closeBracket, '   '.
 	configurationSelector := #basicConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals: self openBracket, ' 2 ', self closeBracket
 ]
 
@@ -744,6 +744,6 @@ EFBlockExpressionTest >> validate: stringInsideBlock isFormattedAs: expectedStri
 	| expr source |
 	expr := self parserClass parseExpression: self openBracket , stringInsideBlock, self closeBracket.
 	configurationSelector := aConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals: self openBracket , expectedStringInsideBlock , self closeBracket
 ]

@@ -1452,12 +1452,6 @@ StringTest >> testIsPatternVariable [
 	self deny: 'notAPattern' isPatternVariable
 ]
 
-{ #category : 'tests - testing' }
-StringTest >> testIsValidSelector [
-	self assert: 'class' isValidSelector.
-	self deny: '0class' isValidSelector
-]
-
 { #category : 'tests' }
 StringTest >> testIsWideString [
 

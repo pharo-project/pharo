@@ -2,12 +2,14 @@
 I am responsible for moving a method to class side.
 
 Usage:
+```
 | transformation |
 transformation := (RBMoveMethodToClassSideTransformation
-				method: #method
-				class: #RBMoveMethodTransformationTest)
-				transform.
-(ChangesBrowser changes: transformation model changes changes) open
+				method: RBMoveMethodParametrizedTest>>#testMoveMethodIntoClass
+				class: #RBMoveMethodParametrizedTest)
+				generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 - the method exists and belongs to instance side.

@@ -21,6 +21,12 @@ Class {
 }
 
 { #category : 'world menu' }
+SHStylePresenter class >> defaultPreferredExtent [
+
+	^ 950 @ 650
+]
+
+{ #category : 'world menu' }
 SHStylePresenter class >> descriptionText [
 
 	^ 'A tool to select the code style for the system'
@@ -43,7 +49,7 @@ SHStylePresenter class >> menuCommandOn: aBuilder [
 SHStylePresenter class >> open [
 	<script> 
 
-	^ self new open
+	^ (self newApplication: StPharoApplication current) open
 ]
 
 { #category : 'private' }
@@ -159,15 +165,6 @@ SHStylePresenter >> initializeThemeList [
 		whenSelectedItemChangedDo: [ :item | self updatePreview ].
 ]
 
-{ #category : 'initialization' }
-SHStylePresenter >> initializeWindow: aWindowPresenter [
-
-	aWindowPresenter 
-		initialExtent: (950 @ 650) scaledByDisplayScaleFactor;
-		windowIcon: (self application iconNamed: #smallWindow);
-		title: 'Code Styler'.
-]
-
 { #category : 'callbacks' }
 SHStylePresenter >> methodText [
 
@@ -270,4 +267,16 @@ SHStylePresenter >> updatePreview [
 
 	classDefinitionPreviewPresenter morph: self classDefinitionText.
 	methodPreviewPresenter morph: self methodText
+]
+
+{ #category : 'initialization' }
+SHStylePresenter >> windowIcon [
+
+	^ self iconNamed: #smallWindow
+]
+
+{ #category : 'initialization' }
+SHStylePresenter >> windowTitle [
+
+	^ 'Code Styler'
 ]

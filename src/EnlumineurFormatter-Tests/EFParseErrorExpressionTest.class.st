@@ -22,7 +22,7 @@ EFParseErrorExpressionTest >> testParseError [
 	| expr source |
 	expr := OCParser parseFaultyExpression: '#(1 3 4'.
 	configurationSelector := #basicConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals: '#( 1 3 4'
 ]
 
@@ -32,6 +32,6 @@ EFParseErrorExpressionTest >> testParseError2 [
 	| expr source |
 	expr := OCParser parseFaultyExpression: '1 := '.
 	configurationSelector := #basicConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals: '1. := '
 ]

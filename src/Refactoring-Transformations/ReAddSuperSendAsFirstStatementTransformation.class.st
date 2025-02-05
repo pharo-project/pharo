@@ -3,7 +3,7 @@ I am a small transformation that adds super call to given method as a first stat
 
 You can use me like this:
 ```
-ReAddSuperSendAsFirstStatementTransformation 
+(ReAddSuperSendAsFirstStatementTransformation 
 	model: self model
 	methodTree: method
 	inClass: class) execute

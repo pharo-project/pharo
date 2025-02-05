@@ -171,6 +171,7 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
+		BaselineOfKernelTests withAllPackageNames,
 		BaselineOfTraits corePackages,
 		BaselineOfSUnit withAllPackageNames, "ALL"
 		BaselineOfDisplay withAllPackageNames,

@@ -105,6 +105,11 @@ RBRefactoryClassChange >> hash [
 	^ self changeClassName hash
 ]
 
+{ #category : 'testing' }
+RBRefactoryClassChange >> isInScope: aRBBrowserEnvironment [ 
+	^ aRBBrowserEnvironment includesClass: self changeClass.
+]
+
 { #category : 'private' }
 RBRefactoryClassChange >> isMeta [
 

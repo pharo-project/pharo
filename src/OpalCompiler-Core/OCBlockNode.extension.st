@@ -25,11 +25,6 @@ OCBlockNode >> ir: aIRMethodNode [
 ]
 
 { #category : '*OpalCompiler-Core' }
-OCBlockNode >> irInstruction [
-	^ self parent methodOrBlockNode ir firstInstructionMatching: [:instr | instr sourceNode == self ]
-]
-
-{ #category : '*OpalCompiler-Core' }
 OCBlockNode >> isClean [
 	"a block is clean if..."
 	"it or any embedded blocks do not need self"
@@ -92,10 +87,4 @@ OCBlockNode >> resetBcToASTCache [
 { #category : '*OpalCompiler-Core' }
 OCBlockNode >> sourceNodeForPC: anInteger [
 	^ self bcToASTCache nodeForPC: anInteger
-]
-
-{ #category : '*OpalCompiler-Core' }
-OCBlockNode >> sourceNodeForPC: anInteger usingBcToASTCache: aBcToASTCache [
-
-	^ aBcToASTCache nodeForPC: anInteger
 ]

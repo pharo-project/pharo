@@ -2,13 +2,15 @@
 Creates another class with a subset of instance variables from an existing class. References to instance variables in the original class will be replaced by invocations to getters and setters on the new class.
 
 Usage:
+```
+| transformation |
 transformation := (RBSplitClassTransformation
 	class: #RBRemoveDirectAccessToVariableTransformation
 	instanceVariables: #(receiver)
 	newClassName: #RBRemoveAccessWithReceiverTransformation
 	referenceVariableName: #newReceiver)
-	transform.
-(ChangesBrowser changes: transformation model changes changes) open
+			generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
 
 In this example,
 the class ""RBRemoveAccessWithReceiverTransformation"" will be created with the variable ""receiver"". The variable ""receiver"" will be removed from the original class ""RBRemoveDirectAccessToVariableTransformation"". All references to ""receiver"" in this class and its subclasses will be replaced by: ""newReceiver receiver ..."" or ""newReceiver receiver: ...""

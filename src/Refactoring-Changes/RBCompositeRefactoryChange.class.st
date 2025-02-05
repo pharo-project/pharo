@@ -168,6 +168,11 @@ RBCompositeRefactoryChange >> initialize [
 	changes := OrderedCollection new
 ]
 
+{ #category : 'testing' }
+RBCompositeRefactoryChange >> isInScope: aRBBrowserEnvironment [ 
+	^ aRBBrowserEnvironment includesClass: self changeClass.
+]
+
 { #category : 'accessing' }
 RBCompositeRefactoryChange >> newName [
 

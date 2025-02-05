@@ -161,13 +161,11 @@ ReInteractionDriver >> model: aRBBrowserEnvironment [
 
 { #category : 'execution' }
 ReInteractionDriver >> openPreviewWithChanges: changes [
-	
-	^ (self previewPresenterClass
-		 changes: changes
-		 scopes: scopes)
-		application: self application;
-		refactoring: self refactoring;
-		openModal
+
+	^ (self previewPresenterClass for: changes scopes: scopes)
+		  application: self application;
+		  refactoring: self refactoring;
+		  openModal
 ]
 
 { #category : 'configuration' }

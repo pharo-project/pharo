@@ -2,13 +2,15 @@
 Adds accessors (getter and setter) for a variable in a class, if they do not exist.
 
 Usage:
+```
 | transformation |
 transformation := (RBAddVariableAccessorTransformation
 	variable: 'variableName'
 	class: #RBVariableTransformation
 	classVariable: false)
-	transform.
-(ChangesBrowser changes: transformation model changes changes) open
+		generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 - the variable with which the accessors will be created shall exist. The parameter isClassVariable indicates whether to look in the instance or class variables.

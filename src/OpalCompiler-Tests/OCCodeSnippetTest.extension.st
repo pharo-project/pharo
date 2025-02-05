@@ -1,6 +1,32 @@
 Extension { #name : 'OCCodeSnippetTest' }
 
 { #category : '*OpalCompiler-Tests' }
+OCCodeSnippetTest >> compileSnippet: anOCCodeSnippet [ 
+
+	^ [ OpalCompiler new
+		  permitFaulty: true;
+		  isScripting: anOCCodeSnippet isScripting;
+		  compile: anOCCodeSnippet source ]
+	on: OCCodeError do: [ :e |
+		"Compilation should success, because its the *faulty* mode".
+		"If this is expected, then just return nil"
+		anOCCodeSnippet ifSkip: #compile then: [^ nil ].
+		"Otherwise, pass the error"
+		e pass ]
+]
+
+{ #category : '*OpalCompiler-Tests' }
+OCCodeSnippetTest >> compileSnippet: aSnippet onError: errorBlock [
+
+	^ [
+	  OpalCompiler new
+		  isScripting: aSnippet isScripting;
+		  compile: aSnippet source ]
+		  on: OCCodeError
+		  do: [ :e | errorBlock cull: e ]
+]
+
+{ #category : '*OpalCompiler-Tests' }
 OCCodeSnippetTest >> testCompileFailBlock [
 
 	| method error |
@@ -30,7 +56,7 @@ OCCodeSnippetTest >> testCompileFaulty [
 	| method |
 
 	self skipIf: #compile.
-	method := snippet compile.
+	method := self compileSnippet: snippet.
 	self assert: method isCompiledMethod.
 
 	snippet isFaulty
@@ -53,7 +79,7 @@ OCCodeSnippetTest >> testCompileOnError [
 
 	| method error |
 	error := nil.
-	method := snippet compileOnError: [ :e |
+	method := self compileSnippet: snippet onError: [ :e |
 		          self assert:
 			          (snippet hasNotice: e messageText at: e position).
 		          self assert: error isNil. "single invocation"
@@ -71,7 +97,7 @@ OCCodeSnippetTest >> testCompileOnErrorResume [
 
 	| method error |
 	error := nil.
-	method := snippet compileOnError: [ :e |
+	method := self compileSnippet: snippet onError: [ :e |
 		          self assert:
 			          (snippet hasNotice: e messageText at: e position).
 		          error := e.

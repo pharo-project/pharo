@@ -89,12 +89,6 @@ MiniDrTests >> switchUI [
 	self switchToDrTest
 ]
 
-{ #category : 'accessing' }
-MiniDrTests >> title [
-
-	^ 'DrTests'
-]
-
 { #category : 'updating' }
 MiniDrTests >> updateUI [
 
@@ -110,4 +104,10 @@ MiniDrTests >> updateWithResults: results [
 
 	self pluginResult: results.
 	self updateUI
+]
+
+{ #category : 'accessing' }
+MiniDrTests >> windowTitle [
+
+	^ 'DrTests'
 ]

@@ -16,6 +16,12 @@ Class {
 	#tag : 'Core'
 }
 
+{ #category : 'specs' }
+DACycleDetectionTreePresenter class >> defaultPreferredExtent [
+
+	^ 1000@600
+]
+
 { #category : 'instance creation' }
 DACycleDetectionTreePresenter class >> onPackagesMatch: match [
 	^ (self onPackagesNamed:
@@ -184,4 +190,10 @@ DACycleDetectionTreePresenter >> selectedItemIsMethod [
 	item ifNil: [ ^ false ].
 	
 	^ item content isKindOf: CompiledMethod
+]
+
+{ #category : 'accessing' }
+DACycleDetectionTreePresenter >> windowTitle [
+
+	^ 'Cycles analysis'
 ]

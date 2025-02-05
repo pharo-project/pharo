@@ -10,39 +10,6 @@ Class {
 }
 
 { #category : 'tests' }
-OCVariableNodeTest >> testIsDefinedByBlock [
-
-	| ast temps args |
-	ast := self class compiler parse: 'myMethod: arg
-  | test |
-  test := 2.
-  test.
-	[ :test2 | | test3| test2. test3].
-  ^test'.
-	temps := ast allChildren select: [ :each | each isTempVariable ].
-	"test is defined by the method"
-	self deny: temps first isDefinedByBlock.
-	self deny: temps second isDefinedByBlock.
-	self deny: temps third isDefinedByBlock.
-
-	"test3 definition"
-	self assert: ast blockNodes first arguments first isDefinedByBlock.
-	"test3 definition"
-	self assert: temps fourth isDefinedByBlock.
-	"test 3 use"
-	self assert: temps fifth isDefinedByBlock.
-	"and we are out if the block"
-	self deny: temps sixth isDefinedByBlock.
-
-	args := ast allChildren select: [ :each | each isArgumentVariable ].
-	"method arg"
-	self deny: args first isDefinedByBlock.
-	self assert: args second isDefinedByBlock.
-	"use of test3"
-	self assert: args third isDefinedByBlock
-]
-
-{ #category : 'tests' }
 OCVariableNodeTest >> testStartForReplacement [
 
 	| source tree dTemporary |

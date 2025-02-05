@@ -10,13 +10,16 @@ And an option for requesting the new method selector.
 For all selected classes a method implementing the original method is created, and if the original code uses some references to self, a parameter needs to be added to provided the former implementor.
 
 Usage:
+```
 | transformation |
 transformation := (RBMoveMethodTransformation
-				selector: aSelector
-				class: aClass
-				variable: aVariable)
-				transform.
-				
+				selector: #isBlack
+				class: Color
+				variable: #rbg)
+				privateTransform;
+				generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```		
 For example, moving the method #isBlack from class Color to its instvar #rgb for the type ""Integer"" creates a method 
 
 
@@ -284,7 +287,7 @@ RBMoveMethodTransformation >> getNewMethodName [
 		ifTrue: [ newSelector := newMethodName selector ]
 		ifFalse: [ self refactoringWarning: 'Invalid method name' ].
 	parameters := newMethodName arguments.
-	( self checkMethodName: newSelector in: class )
+	( self isValidSelector: newSelector )
 		ifFalse: [ self refactoringWarning: newSelector , ' is not a valid selector name.'.
 			newSelector := nil
 			].

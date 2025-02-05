@@ -157,7 +157,7 @@ SDLOSXPharoMenu >> allocatePharoMenuTarget [
 { #category : 'menu options' }
 SDLOSXPharoMenu >> doAbout [
 
-	UIManager default defer: [ Smalltalk aboutThisSystem ]
+	UIManager default defer: [ StPharoSettings openPharoAbout ]
 ]
 
 { #category : 'private' }

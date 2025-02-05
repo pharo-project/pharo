@@ -49,7 +49,9 @@ AbstractDrTestsPresenter >> currentPlugin: anObject [
 	currentPlugin announcer
 		when: DTUpdateResults
 		send: #handlePluginResultUpdate:
-		to: self
+		to: self.
+
+	self withWindowDo: [ :aWindow | aWindow title: self windowTitle ]
 ]
 
 { #category : 'events' }

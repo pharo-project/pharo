@@ -33,9 +33,9 @@ SpRubFindReplaceDialog class >> defaultLayout [
 				   beColumnHomogeneous;
 				   beRowHomogeneous;
 				   add: #regExpCheckBox atPoint: 1 @ 1;
-				   add: #backwardsCheckBox at: 2 @ 1;
-				   add: #caseCheckBox at: 1 @ 2;
-				   add: #wrapCheckBox at: 2 @ 2;
+				   add: #backwardsCheckBox atPoint: 2 @ 1;
+				   add: #caseCheckBox atPoint: 1 @ 2;
+				   add: #wrapCheckBox atPoint: 2 @ 2;
 				   add: #entireCheckBox at: 1 @ 3;
 				   yourself);
 		  addLast: (SpBoxLayout newHorizontal

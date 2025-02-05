@@ -483,7 +483,14 @@ Symbol >> isOrientedFill [
 
 { #category : 'testing' }
 Symbol >> isSelectorSymbol [
-	^ self class selectorTable includes: self
+
+	self deprecated:  'Use isUsedAsSelectorSymbol'
+		on: '02/02/2025' 
+		in:  'pharo13'
+		transformWith: 
+			'`@rec isSelectorSymbol' -> '`@rec isUsedAsSelectorSymbol'.
+
+	^ self isUsedAsSelectorSymbol
 ]
 
 { #category : 'testing' }
@@ -500,6 +507,14 @@ Symbol >> isUnary [
 	"#between:and: isUnary >>> false"
 
 	^ self precedence = 1
+]
+
+{ #category : 'testing' }
+Symbol >> isUsedAsSelectorSymbol [
+	"Returns whether the receiver is currently used as a method selector.
+	Notice that a symbol representing a valid method selector could return false if there are no method installed with such selector."
+	
+	^ self class selectorTable includes: self
 ]
 
 { #category : 'sorting' }

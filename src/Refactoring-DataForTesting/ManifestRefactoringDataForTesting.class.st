@@ -10,6 +10,13 @@ Class {
 }
 
 { #category : 'code-critics' }
+ManifestRefactoringDataForTesting class >> ruleEquivalentSuperclassMethodsRuleV1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGClassDefinition #(#MyClassBetaSub)) #'2025-01-28T16:34:02.039066+01:00') )
+]
+
+{ #category : 'code-critics' }
 ManifestRefactoringDataForTesting class >> ruleNoUnusedInstanceVariableRuleV1FalsePositive [
 
 	<ignoreForCoverage>

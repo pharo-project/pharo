@@ -4,12 +4,13 @@ Removes a variable from a class. It does not remove it if there is a direct acce
 Usage:
 
 ```
+| transformation |
 transformation := (RBRemoveVariableTransformation 
 	variable: 'isClassVariable'
 	class: #RBVariableTransformation
 	classVariable: false)
-	transform. 
-(ChangesBrowser changes: transformation model changes changes) open
+			generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
 ```
 
 Preconditions:

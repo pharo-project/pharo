@@ -54,19 +54,19 @@ RBConditionTest >> testCheckFailEarlyAndDoesNotCoverEveryConditions [
 RBConditionTest >> testCheckInvalidMethodName [
 	"Usually used to validate input."
 
-	self deny: (RBCondition checkMethodName: 'fofo fo').
-	self deny: (RBCondition checkMethodName: '123fofo').
-	self deny: (RBCondition checkMethodName: 'foo::').
-	self deny: (RBCondition checkMethodName: 'agr:goo:aa').
-	self deny: (RBCondition checkMethodName: 'foo:123:').
-	self deny: (RBCondition checkMethodName: 'foo[arg]').
-	self deny: (RBCondition checkMethodName: 'foo:=arg').
-	self deny: (RBCondition checkMethodName: 'foo:arg)').
-	self deny: (RBCondition checkMethodName: 'foo:(arg)').
-	self deny: (RBCondition checkMethodName: 'foo:+arg)').
-	self deny: (RBCondition checkMethodName: '<<foo:<<arg)').
-	self deny: (RBCondition checkMethodName: 'foo:agr^:').
-	self deny: (RBCondition checkMethodName: 'foo:agr')
+	self deny: (RBCondition isValidSelector: 'fofo fo') check.
+	self deny: (RBCondition isValidSelector: '123fofo') check.
+	self deny: (RBCondition isValidSelector: 'foo::') check.
+	self deny: (RBCondition isValidSelector: 'agr:goo:aa') check.
+	self deny: (RBCondition isValidSelector: 'foo:123:') check.
+	self deny: (RBCondition isValidSelector: 'foo[arg]') check.
+	self deny: (RBCondition isValidSelector: 'foo:=arg') check.
+	self deny: (RBCondition isValidSelector: 'foo:arg)') check.
+	self deny: (RBCondition isValidSelector: 'foo:(arg)') check.
+	self deny: (RBCondition isValidSelector: 'foo:+arg)') check.
+	self deny: (RBCondition isValidSelector: '<<foo:<<arg)') check.
+	self deny: (RBCondition isValidSelector: 'foo:agr^:') check.
+	self deny: (RBCondition isValidSelector: 'foo:agr') check
 ]
 
 { #category : 'tests' }
@@ -118,10 +118,10 @@ RBConditionTest >> testCheckThatOnlyFailingConditionErrorIsReportedTrueCaseFirst
 { #category : 'tests' }
 RBConditionTest >> testCheckValidMethodName [
 	"Usually used to validate input."
-	self assert: (RBCondition checkMethodName: 'foo').
-	self assert: (RBCondition checkMethodName: #foo).
-
-	self assert: (RBCondition checkMethodName: #+)
+	
+	self assert: (RBCondition isValidSelector: 'foo') check.
+	self assert: (RBCondition isValidSelector: #foo) check.
+	self assert: (RBCondition isValidSelector: #+) check
 ]
 
 { #category : 'tests - references' }

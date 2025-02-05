@@ -448,15 +448,17 @@ RubTextEditor >> characterGroupAt: index in: aString [
 	character := aString at: index.
 
 	character isSeparator ifTrue: [ ^ #separator ].
-	character isAlphaNumeric ifTrue: [
-		character isUppercase
-			ifTrue: [ ^ #upper ]
-			ifFalse: [ ^ #lower ] ].
 
-	"exclude '|<>=' from the syntax and consider them binary"
+	character isAlphaNumeric ifTrue: [
+		^ character isUppercase
+			  ifTrue: [ #upper ]
+			  ifFalse: [ #lower ] ].
+
+	"exclude '|<>=' from the syntax and consider them binary, except for ':='"
 	(('^"''[](){}$#;:.' includes: character) or: [
-		 character = $= and: [ (aString at: (index - 1 max: 1)) = $: ] ]) 
-			ifTrue: [ ^ #syntax ].
+		 character = $= and: [ (aString at: (index - 1 max: 1)) = $: ] ])
+		ifTrue: [ ^ #syntax ].
+
 	^ #binary
 ]
 
@@ -1695,45 +1697,48 @@ RubTextEditor >> nextWord: position [
 
 { #category : 'private' }
 RubTextEditor >> nextWord: position stopOnUpperCase: stopOnUpperCase [
+
+	| string index size initialPosition groupAtStart currentGroup |
 	"Positions go from 1 to size + 1
 	Position N + 1 is after the Nth character"
-
-	| string index characterGroupAtStart size initialPosition currentGroup |
-	index := initialPosition := 1 max: position.
 	string := self string.
 	size := string size + 1.
+	index := initialPosition := 1 max: position.
+
 	position >= string size ifTrue: [ ^ size ].
 
-	[
+	[ "Skip blanks"
 	index < string size and: [
 		{
 			Character space.
 			Character tab } includes: (string at: index) ] ] whileTrue: [
 		index := index + 1 ].
 
-	characterGroupAtStart := self characterGroupAt: index in: string.
+	groupAtStart := self characterGroupAt: index in: string.
+
+	"Go at least once forward to guarantee progress"
 	index = initialPosition ifTrue: [ index := index + 1 ].
+
 	"Do not stop if we are in an uppercase->lowercase transition"
-	(characterGroupAtStart = #upper and: [
-		 (self characterGroupAt: index in: string) = #lower ]) ifTrue: [
-		characterGroupAtStart := #lower ].
+	(groupAtStart = #upper and: [
+		 stopOnUpperCase not or: [
+			 (self characterGroupAt: index in: string) = #lower ] ]) ifTrue: [
+		groupAtStart := #lower ].
 
-	[
-	| nextCharacterInDirection |
-	"If we reach the end"
-	index >= size ifTrue: [ ^ index ].
-
-	nextCharacterInDirection := string at: index.
-	nextCharacterInDirection = Character cr ifTrue: [ ^ index ].
+	[ "Stop when we reach the end, a new line, or a different character group"
+	index >= size ifTrue: [ ^ size ].
+	(string at: index) = Character cr ifTrue: [ ^ index ].
 
 	currentGroup := self characterGroupAt: index in: string.
-	currentGroup = characterGroupAtStart or: [
-		(currentGroup = #upper and: [ characterGroupAtStart = #lower ])
-			and: [ stopOnUpperCase not ] ] ] whileTrue: [ index := index + 1 ].
+	(stopOnUpperCase not and: [ currentGroup = #upper ]) ifTrue: [
+		currentGroup := #lower ].
 
-	"Moving to the right from upper to lower, we want to stop before the last upper"
-	(characterGroupAtStart = #upper and: [ currentGroup = #lower ])
-		ifTrue: [ index := index - 1 ].
+	currentGroup = groupAtStart ] whileTrue: [ index := index + 1 ].
+
+	"Moving to the right from upper to lower, we want to stop left of the upper"
+	(stopOnUpperCase and: [
+		 groupAtStart = #upper and: [ currentGroup = #lower ] ]) ifTrue: [
+		index := index - 1 ].
 
 	^ index
 ]
@@ -1887,58 +1892,52 @@ RubTextEditor >> previousWord: position [
 { #category : 'private' }
 RubTextEditor >> previousWord: position stopOnUpperCase: stopOnUpperCase [
 
-	| string index size initialPosition afterCaretIsAlpha nextCharacterInDirection characterGroupAtStart groupBeforeCaret groupAfterCaret |
+	| string index size initialPosition groupAtStart currentGroup |
 	"Positions go from 1 to size + 1
 	Position N + 1 is after the Nth character"
 	string := self string.
 	size := string size + 1.
-
-	initialPosition := size min: position.
-	index := initialPosition.
+	index := initialPosition := size min: position.
 
 	position <= 2 ifTrue: [ ^ 1 ].
 
-	(string at: index - 1) = Character cr ifTrue: [ index := index - 1 ].
-
-	[
-	| currentChar |
-	currentChar := string at: index - 1.
-	currentChar = Character cr ifTrue: [ ^ index ].
-	currentChar isSeparator ] whileTrue: [ index := index - 1 ].
-
-	"Go always at least once backwards to guarantee progress"
-	index := index - 1.
-
-	characterGroupAtStart := self characterGroupAt: index in: string.
-
-	afterCaretIsAlpha := index = 1 or: [
-		                     #( #lower #upper ) includes:
-			                     characterGroupAtStart ].
-	index <= 1 ifTrue: [ ^ index ].
-	nextCharacterInDirection := string at: index - 1.
-	nextCharacterInDirection = Character cr ifTrue: [ ^ index ].
-
-	[ "If we reach the end"
-	index <= 1 ifTrue: [ ^ index ].
-
-	nextCharacterInDirection := string at: index - 1.
-	nextCharacterInDirection = Character cr ifTrue: [ ^ index ].
-
-	groupBeforeCaret := self characterGroupAt: index in: string.
-	(stopOnUpperCase not and: [ groupBeforeCaret = #upper ]) ifTrue: [
-		groupBeforeCaret := #lower ].
-	groupAfterCaret := self characterGroupAt: index - 1 in: string.
-	(stopOnUpperCase not and: [ groupAfterCaret = #upper ]) ifTrue: [
-		groupAfterCaret := #lower ].
-
-	groupAfterCaret = groupBeforeCaret and: [ index > 1 ] ] whileTrue: [
+	[ "Skip blanks"
+	index > 1 and: [
+		{
+			Character space.
+			Character tab } includes: (string at: index - 1) ] ] whileTrue: [
 		index := index - 1 ].
 
-	"Moving to the left from lower to upper, we want to stop before the upper"
-	(groupBeforeCaret = #lower and: [ groupAfterCaret = #upper ])
-		ifFalse: [ index := index + 1 ].
+	groupAtStart := self characterGroupAt: index - 1 in: string.
 
-	^ index - 1
+	"Go at least once backward to guarantee progress"
+	index = initialPosition ifTrue: [ index := index - 1 ].
+
+	"Stop if we are in a lowercase->uppercase transition"
+	groupAtStart = #upper ifTrue: [
+		stopOnUpperCase
+			ifFalse: [ groupAtStart := #lower ]
+			ifTrue: [
+				(index < string size and: [
+					 (self characterGroupAt: index + 1 in: string) = #lower ])
+					ifTrue: [ ^ index ] ] ].
+
+	[ "Stop when we reach the end, a new line, or a different character group"
+	index <= 1 ifTrue: [ ^ 1 ].
+	(string at: index - 1) = Character cr ifTrue: [ ^ index ].
+
+	currentGroup := self characterGroupAt: index - 1 in: string.
+	(stopOnUpperCase not and: [ currentGroup = #upper ]) ifTrue: [
+		currentGroup := #lower ].
+
+	currentGroup = groupAtStart ] whileTrue: [ index := index - 1 ].
+
+	"Moving to the left from lower to upper, we want to stop left of the upper"
+	(stopOnUpperCase and: [
+		 groupAtStart = #lower and: [ currentGroup = #upper ] ]) ifTrue: [
+		index := index - 1 ].
+
+	^ index
 ]
 
 { #category : 'accessing - selection' }

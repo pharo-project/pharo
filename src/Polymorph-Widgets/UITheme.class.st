@@ -149,7 +149,7 @@ UITheme class >> newDefault [
 	^self new
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'class initialization' }
 UITheme class >> resetBuilder [
 	<script>
 
@@ -801,18 +801,20 @@ UITheme >> chooseForSaveFileReferenceIn: aThemedMorph title: title extensions: e
 	path and preview type.
 	Answer nil or a filename."
 
-	| dialog |
-	
+	| dialog directory |
 	dialog := self fileSaveDialogWindowClass new.
-	exts 
-		ifNotNil: [ dialog filter: (StCustomExtensionsFilter extensions: exts) ].
-	path 
-		ifNotNil: [ dialog nameText: path asFileReference basename ].
+	exts ifNotNil: [
+		dialog filter: (StCustomExtensionsFilter extensions: exts) ].
+	path ifNotNil: [
+		dialog nameText: path asFileReference nextVersion basename ].
+	directory := path
+		             ifNil: [ StFileSystemModel defaultDirectory ]
+		             ifNotNil: [ path parent ].
 	^ dialog
-		defaultFolder: (path ifNil: [ StFileSystemModel defaultDirectory ]);
-		title: (title ifNil: [ 'Save as' translated ] ifNotNil: [ title ]);
-		openModal;
-		selectedEntry
+		  defaultFolder: directory;
+		  title: (title ifNil: [ 'Save as' translated ] ifNotNil: [ title ]);
+		  openModal;
+		  selectedEntry
 ]
 
 { #category : 'services' }
@@ -1194,12 +1196,19 @@ UITheme >> createBoxOfSize: finalSizeInteger color: aColor [
 UITheme >> createCloseBoxFor: aSystemWindow [
 	"Answer a button for closing the window."
 
+	| announcement |
 	^ (self
 		   newCloseControlIn: aSystemWindow
 		   for: aSystemWindow
 		   action: [
-			   aSystemWindow hide.
-			   aSystemWindow addClosedWindow: aSystemWindow ]
+			   SystemWindow useHideForClose
+				   ifTrue: [
+					   aSystemWindow hide.
+					   announcement := WindowClosed new
+						                   window: aSystemWindow;
+						                   yourself.
+					   self currentWorld announcer announce: announcement ]
+				   ifFalse: [ aSystemWindow closeBoxHit ] ]
 		   help: 'Close this window' translated) extent:
 		  aSystemWindow boxExtent
 ]

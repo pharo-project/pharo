@@ -432,8 +432,8 @@ TaskbarMorph >> updateTasks [
 	wm := self windows.
 	taskbarTasksFromWorldMorph := (wm collect: [ :m | m taskbarTask ])
 		                              reject: [ :task |
-		                              task isNil or: [
-			                              task morph visible not ] ].
+			                              task isNil or: [
+				                              task morph hasProperty: #isClosed] ] .
 
 	self tasks: taskbarTasksFromWorldMorph.
 	deadTasks := self orderedTasks difference: self tasks.

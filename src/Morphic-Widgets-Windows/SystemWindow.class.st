@@ -30,11 +30,8 @@ Class {
 		'CloseBoxImage',
 		'CollapseBoxImage',
 		'FullscreenMargin',
-		'TopWindow'
-	],
-	#classInstVars : [
-		'lastClosedWindows',
-		'presenter'
+		'TopWindow',
+		'UseHideForClose'
 	],
 	#category : 'Morphic-Widgets-Windows-Widgets',
 	#package : 'Morphic-Widgets-Windows',
@@ -280,11 +277,16 @@ SystemWindow class >> closeBoxImage [
 
 { #category : 'top window' }
 SystemWindow class >> closeTopWindow [
+
+	| announcement |
 	"Try to close the top window.  It may of course decline"
 	TopWindow ifNotNil: [ :window |
 		TopWindow := nil.
-		window delete.
-	]
+		window hide.
+		announcement := WindowClosed new
+			                window: window;
+			                yourself.
+		self currentWorld announcer announce: announcement ]
 ]
 
 { #category : 'accessing' }
@@ -337,12 +339,6 @@ SystemWindow class >> labelled: labelString [
 ]
 
 { #category : 'accessing' }
-SystemWindow class >> lastClosedWindows [
-
-	^ lastClosedWindows ifNil: [  lastClosedWindows := OrderedCollection new ]
-]
-
-{ #category : 'accessing' }
 SystemWindow class >> menuBoxImage [
 
 	^ (Form
@@ -362,24 +358,6 @@ SystemWindow class >> noteTopWindowIn: aWorld [
 	aWorld submorphsDo: [:m |
 		(m isSystemWindow and: [m isCollapsed not]) ifTrue: [
 			^m activate]]
-]
-
-{ #category : 'opening' }
-SystemWindow class >> openLastClosedWindows [ 
-	<script>
-	| pres |
-	pres := self presenter.
-	pres
-		items: self lastClosedWindows;
-		openWithLayout: SpClosedWindowListPresenter layoutWithOrdering.
-	pres resetSelection.
-	pres withWindowDo: [ :w | w title: 'Last Closed Windows' ].
-	^ pres
-]
-
-{ #category : 'accessing' }
-SystemWindow class >> presenter [ 
-	^ presenter ifNil: [ presenter := SpClosedWindowListPresenter new ]
 ]
 
 { #category : 'top window' }
@@ -472,6 +450,18 @@ SystemWindow class >> topWindow [
 	^ TopWindow
 ]
 
+{ #category : 'accessing' }
+SystemWindow class >> useHideForClose [
+
+	^ UseHideForClose ifNil: [ UseHideForClose := false ]
+]
+
+{ #category : 'setting' }
+SystemWindow class >> useHideForClose: aBoolean [
+
+	UseHideForClose := aBoolean 
+]
+
 { #category : 'top window' }
 SystemWindow class >> wakeUpTopWindowUponStartup [
 	TopWindow ifNotNil:
@@ -483,57 +473,48 @@ SystemWindow class >> wakeUpTopWindowUponStartup [
 { #category : 'menu items' }
 SystemWindow class >> windowMenuOn: aBuilder [
 	"To inject your custom items in a specific place, note that each item increases in order by 1. For example, if you wanted your item to be the second item, you could give it an #order: 1.5"
-
+ 
 	<windowMenu>
 	| closableLabel draggableLabel maximizeLabel |
-	(aBuilder item: #FakeClose)
-		order: 1.0;
-		action: [ aBuilder model hide. self new addClosedWindow: aBuilder model ];
-		iconName: #windowClose;
-		enabledBlock: [ aBuilder model allowedToClose ];
-		withSeparatorAfter.
-			(aBuilder item: #Close)
+	
+	(aBuilder item: #Destroy)
 		order: 1.0;
 		action: [ aBuilder model closeBoxHit ];
 		iconName: #windowClose;
-		enabledBlock: [ aBuilder model allowedToClose ];
-		withSeparatorAfter.
+		enabledBlock: [ aBuilder model allowedToClose ].
 	(aBuilder item: #About)
 		action: [ aBuilder model showAbout ];
 		iconName: #smallHelp;
 		withSeparatorAfter.
-	(aBuilder item: #'Change title')
-		action: [ aBuilder model relabel ].
+	(aBuilder item: #'Change title') action: [ aBuilder model relabel ].
 	(aBuilder item: #'Copy title')
 		action: [ aBuilder model copyTitle ];
 		withSeparatorAfter.
-	(aBuilder item: #'Send to back')
-		action: [ aBuilder model sendToBack ].
+	(aBuilder item: #'Send to back') action: [ aBuilder model sendToBack ].
 	(aBuilder item: #'Make next-to-topmost')
 		action: [ aBuilder model makeSecondTopmost ];
 		withSeparatorAfter.
-	(aBuilder item: #'Create window group')
-		action: [ aBuilder model createWindowGroup ].
+	(aBuilder item: #'Create window group') action: [
+		aBuilder model createWindowGroup ].
 	(aBuilder item: #'Open as external window')
 		action: [ aBuilder model openAsExternalWindow ];
 		withSeparatorAfter.
 	closableLabel := aBuilder model mustNotClose
-		ifFalse: [ #'Make unclosable' ]
-		ifTrue: [ #'Make closable' ].
-	(aBuilder item: closableLabel)
-		action: [
-			(closableLabel = #'Make unclosable')
-				ifTrue: [ aBuilder model makeUnclosable ]
-				ifFalse:[ aBuilder model makeClosable] ].
+		                 ifFalse: [ #'Make unclosable' ]
+		                 ifTrue: [ #'Make closable' ].
+	(aBuilder item: closableLabel) action: [
+		closableLabel = #'Make unclosable'
+			ifTrue: [ aBuilder model makeUnclosable ]
+			ifFalse: [ aBuilder model makeClosable ] ].
 	draggableLabel := aBuilder model isSticky
-		ifTrue: [ #'Make draggable' ]
-		ifFalse: [ #'Make undraggable' ].
+		                  ifTrue: [ #'Make draggable' ]
+		                  ifFalse: [ #'Make undraggable' ].
 	(aBuilder item: draggableLabel)
 		action: [ aBuilder model toggleStickiness ];
 		withSeparatorAfter.
 	maximizeLabel := aBuilder model isMaximized
-		ifTrue: [ #Restore ]
-		ifFalse: [ #Maximize ].
+		                 ifTrue: [ #Restore ]
+		                 ifFalse: [ #Maximize ].
 	(aBuilder item: maximizeLabel)
 		action: [ aBuilder model expandBoxHit ];
 		iconName: #windowMaximizeForm
@@ -605,15 +586,6 @@ SystemWindow >> addCloseBox [
 	frame := LayoutFrame identity leftOffset: 2.
 	closeBox layoutFrame: frame.
 	labelArea addMorphBack: closeBox
-]
-
-{ #category : 'adding' }
-SystemWindow >> addClosedWindow: aModel [
-
-	self class lastClosedWindows size >= 5 ifTrue: [
-		self class lastClosedWindows removeLast close ].
-	self class lastClosedWindows addFirst: aModel.
-	"self presenter refresh"
 ]
 
 { #category : 'menu actions' }
@@ -954,23 +926,27 @@ SystemWindow >> deleteCloseBox [
 
 { #category : 'open/close' }
 SystemWindow >> deleteDiscardingChanges [
+
 	| thisWorld announcement |
-	self removePaneSplitters.	"in case we add some panes and reopen!"
+	self removePaneSplitters. "in case we add some panes and reopen!"
 	thisWorld := self world.
 	self isFlexed
 		ifTrue: [ owner delete ]
 		ifFalse: [ super delete ].
-	model
-		ifNotNil: [ model
-				windowIsClosing;
-				releaseActionMap ].
+	model ifNotNil: [
+		model
+			windowIsClosing;
+			releaseActionMap ].
 	model := nil.
 	SystemWindow noteTopWindowIn: thisWorld.
+
 	announcement := WindowClosed new
-		window: self;
-		yourself.
+		                window: self;
+		                yourself.
 	self announce: announcement.
-	self currentWorld announcer announce: announcement
+	self useHideForClose ifFalse: [
+		self currentWorld announcer announce: announcement ].
+	
 ]
 
 { #category : 'menu building' }
@@ -1293,12 +1269,6 @@ SystemWindow >> labelRect [
 { #category : 'label' }
 SystemWindow >> labelWidgetAllowance [
 	^ labelWidgetAllowance ifNil: [self setLabelWidgetAllowance]
-]
-
-{ #category : 'accessing' }
-SystemWindow >> lastClosedWindows [
-
-	^ self class lastClosedWindows
 ]
 
 { #category : 'layout' }
@@ -1667,12 +1637,6 @@ SystemWindow >> preOpenInWorld: aWorld [
 	self bounds: (RealEstateAgent initialFrameFor: self initialExtent: self initialExtent world: aWorld)
 ]
 
-{ #category : 'accessing' }
-SystemWindow >> presenter [ 
-
-	^ self class presenter
-]
-
 { #category : 'activation' }
 SystemWindow >> privateBePassive [
 	"private"
@@ -2035,6 +1999,12 @@ SystemWindow >> updatePaneColors [
 SystemWindow >> updatePanesFromSubmorphs [
 	"Having removed some submorphs, make sure this is reflected in my paneMorphs."
 	paneMorphs := paneMorphs select: [ :pane | submorphs includes: pane ]
+]
+
+{ #category : 'accessing' }
+SystemWindow >> useHideForClose [
+
+	^ self class useHideForClose
 ]
 
 { #category : 'resize/collapse' }

@@ -2,13 +2,13 @@
 Parent class of all Pharo tutorials.
 
 To create your own tutorial:
-- subclass AbstractTutorial
-- implement a few methods which returns a Lesson instance
+- subclass `AbstractTutorial`
+- implement a few methods which returns an instance of `Lesson`
 - implement the method #tutorial which returns a collection of selectors that when executed create related lessons.
 
-For example, see MockTutorial (minimalist) and PharoySntaxTutorial (default PharoTutorial one).
+For example, see `MockTutorial` (minimalist) and `PharoySyntaxTutorial` (default PharoTutorial one).
 
-See the PharoTutorial class comment to execute your own tutorial.
+See the `PharoTutorial` class comment to execute your own tutorial.
 "
 Class {
 	#name : 'AbstractTutorial',
@@ -84,6 +84,7 @@ AbstractTutorial >> size [
 { #category : 'tutorial' }
 AbstractTutorial >> tutorial [
 	"Should return an Array of selectors which returns Lesson instances.
-	See SmalltalkSyntaxTutorial."
+	See PharoSyntaxTutorial."
+	
 	^ self shouldBeImplemented
 ]

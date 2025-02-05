@@ -57,18 +57,6 @@ StRequestClassPresenter >> initializeTagsPresenter [
 		yourself.
 ]
 
-{ #category : 'initialization' }
-StRequestClassPresenter >> initializeWindow: aSpWindowPresenter [
-
-	super initializeWindow: aSpWindowPresenter.
-	self
-		setTitleTo: aSpWindowPresenter;
-		setWindowIconTo: aSpWindowPresenter.
-
-	aSpWindowPresenter
-		aboutText: String empty
-]
-
 { #category : 'accessing' }
 StRequestClassPresenter >> newClassName [
 	"Answer a <String> containing the current contents of the new class name presenter"
@@ -93,16 +81,6 @@ StRequestClassPresenter >> packageName [
 StRequestClassPresenter >> setModelBeforeInitialization: anInteractionDriver [
 
 	driver := anInteractionDriver
-]
-
-{ #category : 'initialization' }
-StRequestClassPresenter >> setTitleTo: aSpWindowPresenter [ 
-	^ self subclassResponsibility
-]
-
-{ #category : 'initialization' }
-StRequestClassPresenter >> setWindowIconTo: aSpWindowPresenter [
-	^ self subclassResponsibility
 ]
 
 { #category : 'accessing' }

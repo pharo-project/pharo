@@ -306,7 +306,7 @@ RBExtractMethodRefactoring >> getNewMethodName [
 	[newMethodName := self requestMethodNameFor: methodName.
 	newMethodName ifNil: [self refactoringError: 'Did not extract code'].
 	newSelector := newMethodName selector.
-	(self checkMethodName: newSelector in: class)
+	(self isValidSelector: newSelector)
 		ifFalse:
 			[self refactoringWarning: newSelector , ' is not a valid selector name.'.
 			newSelector := nil].

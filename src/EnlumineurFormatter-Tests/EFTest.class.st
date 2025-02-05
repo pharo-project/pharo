@@ -38,14 +38,7 @@ EFTest >> formatExpression: anExpression [
 
 	| expr |
 	expr := self parseExpression: anExpression.
-	^ self formatter format: expr.
-]
-
-{ #category : 'hooks' }
-EFTest >> formatter [
-	^ self formatterClass new
-		installNewContext: (self perform: configurationSelector)
-		yourself
+	^ self newFormatter format: expr.
 ]
 
 { #category : 'hooks' }
@@ -57,6 +50,13 @@ EFTest >> formatterClass [
 { #category : 'hooks' }
 EFTest >> formatterClass: aFormatterClass [
 	formatterClass := aFormatterClass
+]
+
+{ #category : 'hooks' }
+EFTest >> newFormatter [
+	^ self formatterClass new
+		installNewContext: (self perform: configurationSelector)
+		yourself
 ]
 
 { #category : 'hooks' }
