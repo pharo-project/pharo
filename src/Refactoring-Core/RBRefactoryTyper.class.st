@@ -11,35 +11,36 @@ I analyze message sends to the instance variables and try to guess the type by l
 
 If I can guess the type to be a collection, I'll try to investigate the types of the possible contained elements as well.
 You can ask for the guessed type of the variable: 
-typer guessTypeFor: 'variablename'
+`typer guessTypeFor: 'variablename'`
 and the contained elements: 
-typer guessTypeFor: '-variablename-'
+`typer guessTypeFor: '-variablename-'`
 
 Example usage: 
+```
 | typer |
 ""create and initialize for a class to analyze""
-typer := (RBRefactoryTyper new runOn: ASTMessageNode).
+typer := (RBRefactoryTyper new runOn: OCMessageNode).
 
 ""guess types for ASTMessageNodes instane var 'arguments' ""
 typer  guessTypesFor:'arguments'.  ""a Set(SequenceableCollection)""
 
 ""guess types for objects that may be put  into  'arguments' collection ""
-typer  guessTypesFor:'-arguments-' ""a Set(ASTBlockNode ASTMethodNode)""
-
+typer  guessTypesFor:'-arguments-' ""a Set(OCBlockNode OCMethodNode)""
+```
 
 You can print a full report on all results with #printString.
-
+```
 (RBRefactoryTyper new runOn: Point ) printString.
 ""'Point
 	x	<Integer>
 	y	<Integer>
 '""
-
+```
 There are two class side methods, one for creating an instance and setting the environment used to resolve names - a RBNamespace.
 
 And another one for guessing types in a parseTree:
 
-RBRefactoryTyper typesFor: 'var' in: (RBParser parseExpression: 'var squared') model: RBNamespace new ""a Set(Number Collection)""
+`RBRefactoryTyper typesFor: 'var' in: (RBParser parseExpression: 'var squared') model: RBNamespace new ""a Set(Number Collection)""`
 (Here, I can guess the types Number and Collections as these are the classes implementing the message #squared)
 
 

@@ -43,7 +43,7 @@ MCTraitDefinition >> classSlotDefinitionString [
 ]
 
 { #category : 'installing' }
-MCTraitDefinition >> createClass [
+MCTraitDefinition >> createClassInEnvironment: anEnvironent [
 
 	^ [
 	  self class classInstaller make: [ :aBuilder |
@@ -56,7 +56,8 @@ MCTraitDefinition >> createClass [
 			  package: self packageName;
 			  tag: self tagName;
 			  comment: comment stamp: commentStamp;
-			  beTrait ] ]
+			  beTrait.
+			anEnvironent ifNotNil: [ aBuilder environment: anEnvironent ] ] ]
 		  on: Warning , DuplicatedVariableError
 		  do: [ :ex | ex resume ]
 ]

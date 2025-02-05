@@ -27,12 +27,6 @@ SycSuperclassImplementorsCommand >> execute [
 ]
 
 { #category : 'execution' }
-SycSuperclassImplementorsCommand >> isComplexRefactoring [
-
-	^ false
-]
-
-{ #category : 'execution' }
 SycSuperclassImplementorsCommand >> searchInTheWholeHierarchy [
 
 	| mthImplementors |

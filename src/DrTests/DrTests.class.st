@@ -38,6 +38,12 @@ DrTests class >> beDefaultTestRunner [
 	
 ]
 
+{ #category : 'api' }
+DrTests class >> defaultPreferredExtent [ 
+
+	^  800@600
+]
+
 { #category : 'class initialization' }
 DrTests class >> initialize [
 
@@ -62,7 +68,7 @@ DrTests class >> menuCommandOn: aBuilder [
 DrTests class >> open [
 	<script>
 
-	^ self new
+	^ (self newApplication: StPharoApplication current) 
 		  open;
 		  yourself
 ]
@@ -174,15 +180,6 @@ DrTests >> initializeStatusLabel [
 	statusLabel := self newLabel
 ]
 
-{ #category : 'initialization' }
-DrTests >> initializeWindow: aWindowPresenter [
-
-	aWindowPresenter
-		title: self title;
-		initialExtent: 800@600;
-		windowIcon: (self iconNamed: self class systemIconName)
-]
-
 { #category : 'private' }
 DrTests >> menuForSelectedResult: menu [
 
@@ -288,12 +285,6 @@ DrTests >> testsConfiguration: aDTTestsConfiguration [
 	self pluginPresenter itemsList selectItems: aDTTestsConfiguration items
 ]
 
-{ #category : 'accessing' }
-DrTests >> title [
-
-	^ 'Dr Tests - ' , currentPlugin pluginName
-]
-
 { #category : 'updating' }
 DrTests >> updateStatus: aString [
 	self statusLabel
@@ -319,4 +310,12 @@ DrTests >> updateWithResults: results [
 
 	pluginResult := results.
 	pluginPresenter updateWithResults: results
+]
+
+{ #category : 'accessing' }
+DrTests >> windowTitle [
+
+	^ self currentPlugin 
+		ifNotNil: [ :p | 'Dr Tests - ' , currentPlugin pluginName ]
+		ifNil: [ 'Dr Tests' ]
 ]

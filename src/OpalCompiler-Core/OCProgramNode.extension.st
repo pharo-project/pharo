@@ -13,11 +13,6 @@ OCProgramNode >> doSemanticAnalysisIn: aClass [
 ]
 
 { #category : '*OpalCompiler-Core' }
-OCProgramNode >> irInstruction [
-	^ self methodOrBlockNode ir firstInstructionMatching: [:instr | instr sourceNode == self ]
-]
-
-{ #category : '*OpalCompiler-Core' }
 OCProgramNode >> isAccessingSelf [
 	"return true if accessing an ivar, self or super"
 	^ self children anySatisfy: [ :child | child isAccessingSelf ]

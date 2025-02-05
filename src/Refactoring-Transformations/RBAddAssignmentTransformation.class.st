@@ -1,15 +1,17 @@
 "
 I am responsible for adding an assignment statement (variable := anExpression) inside a method. Both variable and expression are passed as arguments separately.
 
-Usage: 
+Usage:
+```
 | transformation |
 transformation := (RBAddAssignmentTransformation
 				variable: 'variable'
 				value: '1 asString'
 				inMethod: #methodBefore
 				inClass: #RBAddAssignmentTransformationTest)
-				transform.
-(ChangesBrowser changes: transformation model changes changes) open
+				generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 - Checks whether there is a variable in this environment with the given name.

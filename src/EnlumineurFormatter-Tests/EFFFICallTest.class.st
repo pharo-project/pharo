@@ -37,7 +37,7 @@ EFFFICallTest >> testOtherFFI [
 	'.
 	expr := OCParser parseMethod: originalSource.
 	configurationSelector := #basicConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals: originalSource
 ]
 
@@ -50,7 +50,7 @@ EFFFICallTest >> testOtherFFI2 [
 	'.
 	expr := OCParser parseMethod: originalSource.
 	configurationSelector := #basicConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals: originalSource
 ]
 
@@ -70,7 +70,7 @@ EFFFICallTest >> testOtherFFI3 [
 				double anOffset) )	'.
 	expr := OCParser parseMethod: originalSource.
 	configurationSelector := #basicConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals: originalSource
 ]
 
@@ -83,7 +83,7 @@ EFFFICallTest >> testSimpleFFI [
 	'.
 	expr := OCParser parseMethod: originalSource. 
 	configurationSelector := #basicConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals: originalSource
 ]
 
@@ -99,7 +99,7 @@ EFFFICallTest >> testSimpleFFISafelyOptions [
 		options: #()'.
 	expr := OCParser parseMethod: originalSource. 
 	configurationSelector := #basicConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals: originalSource
 ]
 
@@ -117,6 +117,6 @@ EFFFICallTest >> testSimpleFFISafelyOptions2 [
 		options: #()'.
 	expr := OCParser parseMethod: originalSource. 
 	configurationSelector := #basicConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals: originalSource
 ]

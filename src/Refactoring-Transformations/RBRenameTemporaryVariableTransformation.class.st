@@ -1,14 +1,16 @@
 "
 RBRenameTemporaryVariableTransformation is responsible for renaming temporary variables, including arguments, inside a method.
 
-Example: 
+Example:
+```
 | transformation |
 transformation := (RBRenameTemporaryVariableTransformation 
 				rename: #rules to: #asdf
-				in: #RBLintRuleTest
+				in: #RBDummyLintRuleTest
 				selector: #openEditor)
-				transform.
-(ChangesBrowser changes: transformation model changes changes) open
+			generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 	
 Preconditions:
 - Check whether this method has a temporary variable with the given name.

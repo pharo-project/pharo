@@ -37,7 +37,7 @@ FLFullHeaderSerializationTest >> testJustMaterializeHeader [
 FLFullHeaderSerializationTest >> testPostMaterializationActions [
 
 	| aClass |
-	OCCompilationContext optionCleanBlockClosure ifTrue: [ ^ self skip ].
+	Smalltalk compiler compilationContext optionCleanBlockClosure ifTrue: [ ^ self skip ].
 
 	aClass := self classFactory make: [ :aBuilder | aBuilder sharedVariables: #(TestClassVariable TestClassVariable2) ].
 	self classFactory
@@ -70,7 +70,7 @@ FLFullHeaderSerializationTest >> testPostMaterializationActionsMustBeClean [
 FLFullHeaderSerializationTest >> testPreMaterializationActions [
 
 	| aClass |
-	OCCompilationContext optionCleanBlockClosure ifTrue: [ ^ self skip ].
+	Smalltalk compiler compilationContext optionCleanBlockClosure ifTrue: [ ^ self skip ].
 
 	aClass := self classFactory make: [ :aBuilder | aBuilder sharedVariables: #(TestClassVariable TestClassVariable2) ].
 	self classFactory

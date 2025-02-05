@@ -40,26 +40,6 @@ Context >> executedPC [
 ]
 
 { #category : '*OpalCompiler-Core' }
-Context >> isBlockReturn: aPC [
-	^method encoderClass isBlockReturnAt: aPC in: method
-]
-
-{ #category : '*OpalCompiler-Core' }
-Context >> isPushLiteralNil: aPC [
-	^ (self compiledCode at: aPC) = method encoderClass pushNilByte
-]
-
-{ #category : '*OpalCompiler-Core' }
-Context >> isPushTemp: aPC [
-	^ self compiledCode encoderClass isPushTempAt: aPC in: method
-]
-
-{ #category : '*OpalCompiler-Core' }
-Context >> isReturnAt: aPC [
-	^method encoderClass isReturnAt: aPC in: method
-]
-
-{ #category : '*OpalCompiler-Core' }
 Context >> lookupVar: aSymbol [
 	^ self astScope lookupVar: aSymbol
 ]

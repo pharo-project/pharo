@@ -69,10 +69,10 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'Rubric-SpecFindReplaceDialog'.
 
 		spec package: 'OpalCompiler-UI'.
+		spec package: 'OpalCompiler-UI-Tests'.
 
 		self load: 'Metacello' group: 'Tests' spec: spec.
 
-		spec package: 'MonticelloGUI-Tests'.
 		"Later we will load the UI of enlumineur probably here
 		"
 		spec baseline: 'Shout' with: [ spec repository: repository ].
@@ -127,12 +127,11 @@ BaselineOfIDE >> baseline: spec [
 			group: 'Tool-DependencyAnalyser-UI-Tab'
 			spec: spec.
 		self specCode: spec.
+		self roassal: spec.
+		self microdown: spec.
 		self newTools: spec.
 		self drTests: spec.
-		self microdown: spec.
 		spec package: #'BeautifulComments'  with: [ spec requires:  #( 'Microdown') ].
-		self welcomeBrowser: spec.
-		self roassal: spec.
 		
 		spec package: 'IconPacks'.
 
@@ -223,7 +222,6 @@ BaselineOfIDE >> loadIceberg [
 	self registerProject: 'Roassal'.
 	self registerProject: 'Microdown'.
 	self registerProject: 'DocumentBrowser' baseline: 'NewToolsDocumentBrowser' otherBaselines: #().
-	self registerProject: 'WelcomeBrowser'.
 	self registerIceberg
 ]
 
@@ -408,11 +406,4 @@ BaselineOfIDE >> specCode: spec [
 			repository: (self classNamed: #BaselineOfPharo) specRepository;
 			className: 'BaselineOfSpec2';
 			loads: #('Code' 'CodeTests') ]
-]
-
-{ #category : 'baselines - dependencies' }
-BaselineOfIDE >> welcomeBrowser: spec [
-
-	spec baseline: 'WelcomeBrowser' with: [
-		spec repository: (self classNamed: #BaselineOfPharo) welcomeBrowserRepository ]
 ]

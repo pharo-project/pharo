@@ -67,7 +67,7 @@ FLFullBlockClosureSerializationTest >> testBlockClosureChangeDifferentBytecodesC
 	aClosure := aClass new perform: #methodWithClosure.
 	self assert: aClosure isClean.
 	self assertConstantBlockOuterContextBasedOnCompilationOption: aClosure.
-	OCCompilationContext optionConstantBlockClosure ifTrue: [ 
+	Smalltalk compiler compilationContext optionConstantBlockClosure ifTrue: [ 
 		self assert: aClosure class equals: (Smalltalk at: #ConstantBlockClosure) ].
 	
 	self serializer fullySerializeMethod: aClosure compiledBlock method.
@@ -119,7 +119,7 @@ FLFullBlockClosureSerializationTest >> testBlockClosureChangeSameBytecodesConsta
 	aClosure := aClass new perform: #methodWithClosure.
 	self assert: aClosure isClean.
 	self assertConstantBlockOuterContextBasedOnCompilationOption: aClosure.
-	OCCompilationContext optionConstantBlockClosure ifTrue: [ 
+	Smalltalk compiler compilationContext optionConstantBlockClosure ifTrue: [ 
 		self assert: aClosure class equals: (Smalltalk at: #ConstantBlockClosure) ].
 	
 	self serializer fullySerializeMethod: aClosure compiledBlock method.
@@ -168,7 +168,7 @@ FLFullBlockClosureSerializationTest >> testBlockClosureRemovedConstant [
 	aClosure := aClass new perform: #methodWithClosure.
 	self assert: aClosure isClean.
 	self assertConstantBlockOuterContextBasedOnCompilationOption: aClosure.
-	OCCompilationContext optionConstantBlockClosure ifTrue: [ 
+	Smalltalk compiler compilationContext optionConstantBlockClosure ifTrue: [ 
 		self assert: aClosure class equals: (Smalltalk at: #ConstantBlockClosure) ].
 	
 	self serializer fullySerializeMethod: aClosure compiledBlock method.

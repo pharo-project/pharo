@@ -15,6 +15,11 @@ Class {
 	#tag : 'Core'
 }
 
+{ #category : 'accessing' }
+DAWelcomePresenter class >> defaultPreferredExtent [ 
+	^ (800@800)
+]
+
 { #category : 'world menu' }
 DAWelcomePresenter class >> menuCommandOn: aBuilder [
 	<worldMenu>
@@ -28,12 +33,6 @@ DAWelcomePresenter class >> menuCommandOn: aBuilder [
 		action: [ self new open ]
 ]
 
-{ #category : 'specs' }
-DAWelcomePresenter class >> title [
-
-	^ 'Package Dependencies Browser'
-]
-
 { #category : 'layout' }
 DAWelcomePresenter >> defaultLayout [
 
@@ -41,11 +40,6 @@ DAWelcomePresenter >> defaultLayout [
 		add: choosePresenter;
 		add: browseDependenciesButton expand: false;
 		yourself
-]
-
-{ #category : 'accessing' }
-DAWelcomePresenter >> initialExtent [
-	^ (800@800)
 ]
 
 { #category : 'initialization' }
@@ -64,14 +58,6 @@ DAWelcomePresenter >> initializePresenters [
 		yourself
 ]
 
-{ #category : 'initialization' }
-DAWelcomePresenter >> initializeWindow: aWindowPresenter [
-
-	aWindowPresenter
-		title: self class title;
-		initialExtent: self initialExtent
-]
-
 { #category : 'action' }
 DAWelcomePresenter >> openDependencyAnalyzer [
 	(DAPackageDependenciesPresenter onPackagesNamed: self selectedPackageNames) open.
@@ -86,4 +72,10 @@ DAWelcomePresenter >> selectedPackageNames [
 { #category : 'accessing' }
 DAWelcomePresenter >> selectedPackages [
 	^ choosePresenter chosenItems
+]
+
+{ #category : 'accessing' }
+DAWelcomePresenter >> windowTitle [
+
+	^ 'Package Dependencies Browser'
 ]

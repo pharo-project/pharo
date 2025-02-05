@@ -72,9 +72,20 @@ CompletionEngine >> completionToken [
 { #category : 'replacement' }
 CompletionEngine >> completionTokenStart [
 	"This is the position in the editor where the completion token starts"
+
+	| caret |
 	self editor caret <= 1 ifTrue: [ ^ self editor caret ].
-	(self editor isWordCharacterAt: self editor caret - 1 in: self editor text) ifFalse: [^ self editor caret ].	
-	^ self editor previousWord: self editor caret
+	(self editor
+		 isWordCharacterAt: self editor caret - 1
+		 in: self editor text) ifFalse: [ ^ self editor caret ].
+
+	"Look back.
+	If the caret is at the end of a keyword (i.e., just after a colon) go back twice"
+	caret := self editor caret.
+	(self editor characterAt: caret - 1) = $: ifTrue: [
+		caret := self editor previousWord: caret ].
+	caret := self editor previousWord: caret.
+	^ caret
 ]
 
 { #category : 'accessing' }
@@ -338,34 +349,52 @@ CompletionEngine >> replaceTokenInEditorWith: aString [
 
 	The completion context uses this API to insert text into the text editor"
 
-	| newString wordEnd doubleSpace wordStart oldSelectionInterval |
+	| newString doubleSpace oldSelectionInterval replacementInterval wordStart wordEnd |
 
 	newString := aString.
-	wordStart := self completionTokenStart.
+	oldSelectionInterval := self editor selectionInterval.
+	replacementInterval := self replacementInterval.
+	wordStart := replacementInterval first.
+	wordEnd := replacementInterval last.
 
-	"If completionToken is not empty, the end is the end of the whole word (according to the editor)"
-	wordEnd := wordStart = editor caret
-		ifTrue: [ wordStart ]
-		ifFalse: [ self editor nextWord: self editor caret - 1].
+	self editor
+		selectInvisiblyFrom: wordStart
+		to: wordEnd.
 
 	"Do not insert an aditional space if there is already one"
 	(newString last = $  and: [
 		wordEnd <= self editor text size and: [
-			(self editor text at: wordEnd) = $ ]]) ifTrue: [ newString := newString copyWithoutIndex: newString size ].
-	"If the returned index is the size of the text that means that the caret is at the end of the text and there is no more word after, so add 1 to the index to be out of range to select the entierely word because of the selectInvisiblyFrom:to: remove 1 just after to be at the end of then final word"
-	wordEnd > self editor text size ifTrue:[ wordEnd := wordEnd + 1 ].
-
-	oldSelectionInterval := self editor selectionInterval.
-	self editor
-		selectInvisiblyFrom: wordStart
-		to: wordEnd - 1.
+			(self editor text at: wordEnd + 1) = $ ]]) ifTrue: [ newString := newString copyWithoutIndex: newString size ].
 
 	self editor replaceSelectionWith: newString fromSelection: oldSelectionInterval.
-
 	doubleSpace := newString indexOfSubCollection: '  ' startingAt: 1 ifAbsent: [ newString size ].
 	self editor selectAt: wordStart + doubleSpace.
 
 	self editor morph invalidRect: self editor morph bounds
+]
+
+{ #category : 'replacement' }
+CompletionEngine >> replacementInterval [
+
+	| wordEnd wordStart |
+	wordStart := self completionTokenStart.
+
+	"If completionToken is not empty, the end is the end of the whole word (according to the editor)"
+	wordEnd := wordStart = editor caret
+		           ifTrue: [ wordStart ]
+		           ifFalse: [ self editor nextWord: wordStart ].
+
+	"If this is a keyword (i.e., ends with a : and not a :=), replace the colon too, as we want to replace selector parts"
+	(wordEnd <= self editor text size and: [
+		 (self editor characterAt: wordEnd) = $: ]) ifTrue: [
+		(wordEnd + 1 <= self editor text size and: [
+			 (self editor characterAt: wordEnd + 1) = $= ]) ifFalse: [
+			wordEnd := wordEnd + 1 ] ].
+
+	"If the returned index is the size of the text that means that the caret is at the end of the text and there is no more word after, so add 1 to the index to be out of range to select the entierely word because of the selectInvisiblyFrom:to: remove 1 just after to be at the end of then final word"
+	wordEnd > self editor text size ifTrue: [ wordEnd := wordEnd + 1 ].
+
+	^ wordStart to: wordEnd - 1
 ]
 
 { #category : 'private' }
@@ -602,6 +631,14 @@ CompletionEngine >> stopCompletionDelay [
 
     completionDelay ifNotNil: [
         completionDelay isTerminating ifFalse: [ completionDelay terminate ] ]
+]
+
+{ #category : 'replacement' }
+CompletionEngine >> tokenToReplace [
+
+	| interval |
+	interval := self replacementInterval.
+	^ self editor text copyFrom: interval first to: interval last
 ]
 
 { #category : 'keyboard' }

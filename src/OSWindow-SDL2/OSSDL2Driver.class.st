@@ -296,11 +296,10 @@ OSSDL2Driver >> setupEventLoop [
 			EventLoopProcess terminate.
 			EventLoopProcess := nil ] ].
 
-	EventLoopProcess := [ self eventLoop ] forkAt: Processor lowIOPriority.
+	EventLoopProcess := [ self eventLoop ] forkAt:
+		                    Processor lowIOPriority.
 
-	EventLoopProcess
-		name: 'SDL2 Event loop';
-		resume
+	EventLoopProcess name: 'SDL2 Event loop'
 ]
 
 { #category : 'system startup' }

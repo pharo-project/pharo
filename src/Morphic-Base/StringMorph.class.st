@@ -236,16 +236,6 @@ StringMorph >> drawOn: aCanvas [
 ]
 
 { #category : 'accessing' }
-StringMorph >> editorProvider [
-	^ self valueOfProperty: #editorProvider ifAbsent: []
-]
-
-{ #category : 'accessing' }
-StringMorph >> editorProvider: aValuable [
-	self setProperty: #editorProvider toValue: aValuable
-]
-
-{ #category : 'accessing' }
 StringMorph >> emphasis: aCodeOrTextEmphasis [
 	"Set my emphasis to aCodeOrTextEmphasis, which is either a TextEmphasis object,
 	or a numeric code that is treated as a bitmask.   In the case of a TextEmphasis,
@@ -347,16 +337,6 @@ StringMorph >> fullBounds [
 ]
 
 { #category : 'event handling' }
-StringMorph >> handlesMouseDown: evt [
-	"If the shift key is pressed then yes.
-	As normal if StringMorph class>> editableStringMorph  returns false."
-
-	^ (self isEditable: evt)
-		ifTrue: [true]
-		ifFalse: [super handlesMouseDown: evt]
-]
-
-{ #category : 'event handling' }
 StringMorph >> hasFocus [
 	^ hasFocus
 ]
@@ -407,32 +387,11 @@ StringMorph >> interimContents: aString [
 	self contents: aString
 ]
 
-{ #category : 'accessing' }
-StringMorph >> isEditable [
-
-	^ self editorProvider isNotNil
-]
-
-{ #category : 'testing' }
-StringMorph >> isEditable: evt [
-	"If the shift key is pressed then yes.
-	As normal if StringMorph class>> editableStringMorph  returns false."
-
-	^(self isEditable and: [evt shiftPressed])
-]
-
 { #category : 'testing' }
 StringMorph >> isTranslucentButNotTransparent [
 	"Answer true if this any of this morph is translucent but not transparent."
 
 	^ true
-]
-
-{ #category : 'private - editing' }
-StringMorph >> launchEditor: evt [
-	" Launch an editor to edit my contents "
-	self editorProvider ifNil: [ ^self ].
-	self editorProvider openEditorForStringMorph: self
 ]
 
 { #category : 'editing' }
@@ -463,16 +422,6 @@ StringMorph >> minimumWidth [
 	"Answer the minimum width that the receiver can have.  A nonzero value here keeps the receiver from degenerating into something that cannot ever be seen or touched again!  Obeyed by fitContents."
 
 	^ 3
-]
-
-{ #category : 'event handling' }
-StringMorph >> mouseDown: evt [
-	"If the shift key is pressed, make this string the keyboard input focus.
-	Process as normal if StringMorph class>> editableStringMorph  returns false."
-
-	(self isEditable: evt)
-		ifTrue: [self launchEditor: evt]
-		ifFalse: [super mouseDown: evt]
 ]
 
 { #category : 'accessing' }

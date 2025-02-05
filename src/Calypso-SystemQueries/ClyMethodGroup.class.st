@@ -213,6 +213,13 @@ ClyMethodGroup >> printOn: aStream [
 ]
 
 { #category : 'operations' }
+ClyMethodGroup >> removeProtocolFrom: aCollectionOfClasses [
+	"Do nothing at this level."
+
+	
+]
+
+{ #category : 'operations' }
 ClyMethodGroup >> removeWithMethods [
 	self methods do: [ :each | each removeFromSystem ]
 ]

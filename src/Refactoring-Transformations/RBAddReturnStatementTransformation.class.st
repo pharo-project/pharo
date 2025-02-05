@@ -2,13 +2,15 @@
 I am responsible for adding a return statement inside a method. In this implementation, all the return value (including the '^') shall be described.
 
 Usage: 
+```
 | transformation |
 transformation := (RBAddReturnStatementTransformation
 				return: '^ variable'
 				inMethod: #methodBefore
 				inClass: #RBAddReturnStatementTransformationTest)
-				transform.
-(ChangesBrowser changes: transformation model changes changes) open
+				generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 - the method does not have a return statement

@@ -99,11 +99,6 @@ SycRemoveMessageArgumentCommand >> prepareFullExecutionInContext: aToolContext [
 	self abort
 ]
 
-{ #category : 'accessing' }
-SycRemoveMessageArgumentCommand >> refactoredClass: aClass [ 
-	refactoredClass := aClass
-]
-
 { #category : 'execution' }
 SycRemoveMessageArgumentCommand >> resultMessageSelector [
 	^ self methodName selector

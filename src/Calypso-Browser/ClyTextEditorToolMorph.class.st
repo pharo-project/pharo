@@ -188,8 +188,7 @@ ClyTextEditorToolMorph >> editingMode [
 	| editingMode |
 	editingMode := ClyTextEditingMode browserTool: self.
 	editingMode
-		classOrMetaClass: self selectedClassOrMetaClass;
-		isScripting: self isScripting.
+		classOrMetaClass: self selectedClassOrMetaClass.
 	^editingMode
 ]
 

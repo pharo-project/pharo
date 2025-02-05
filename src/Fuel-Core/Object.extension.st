@@ -18,11 +18,6 @@ Object >> fuelCheckEphemeronSupport [
 ]
 
 { #category : '*Fuel-Core' }
-Object >> fuelIsEphemeron [
-	^ self class classLayout class == EphemeronLayout
-]
-
-{ #category : '*Fuel-Core' }
 Object >> fuelWasMourned [
 	^ false
 ]

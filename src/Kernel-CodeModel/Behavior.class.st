@@ -415,8 +415,8 @@ Behavior >> basicNewTenured [
 
 	<primitive: 596 error: ec>
 	ec == #'insufficient object memory' ifTrue: [
-		^ self handleFailingBasicNew ].
-	self isVariable ifTrue: [ ^ self basicNew: 0 ].
+		^ self handleFailingBasicNewTenured ].
+	self isVariable ifTrue: [ ^ self basicNewTenured: 0 ].
 	self primitiveFailed
 ]
 
@@ -428,10 +428,9 @@ Behavior >> basicNewTenured: sizeRequested [
 
 	<primitive: 597 error: ec>
 	ec == #'insufficient object memory' ifTrue: [
-		^ self handleFailingBasicNew: sizeRequested ].
+		^ self handleFailingBasicNewTenured: sizeRequested ].
 	self isVariable ifFalse: [
-		self error:
-			self printString , ' cannot have variable sized instances' ].
+		self error: self printString , ' cannot have variable sized instances' ].
 	self primitiveFailed
 ]
 
@@ -772,6 +771,61 @@ Behavior >> handleFailingBasicNew: sizeRequested [
 ]
 
 { #category : 'private' }
+Behavior >> handleFailingBasicNewTenured [
+	"handleFailingBasicNew gets sent after basicNew has failed and allowed
+	 a scavenging garbage collection to occur.  The scavenging collection
+	 will have happened as the VM is activating the (failing) basicNew.  If
+	 handleFailingBasicNew fails then the scavenge failed to reclaim sufficient
+	 space and a global garbage collection is required.  Retry after garbage
+	 collecting and growing memory if necessary.
+
+	 Primitive. Answer an instance of this class with the number of indexable
+	 variables specified by the argument, sizeRequested.  Fail if this class is not
+	 indexable or if the argument is not a positive Integer, or if there is not
+	 enough memory available. Essential. See Object documentation whatIsAPrimitive."
+
+	<primitive: 596>
+	Smalltalk garbageCollect < 1048576 ifTrue: [ Smalltalk growMemoryByAtLeast: 1048576 ].
+	^ self handleFailingFailingBasicNewTenured "retry after global garbage collect"
+]
+
+{ #category : 'private' }
+Behavior >> handleFailingBasicNewTenured: sizeRequested [
+	"handleFailingBasicNew: gets sent after basicNew: has failed and allowed
+	 a scavenging garbage collection to occur.  The scavenging collection
+	 will have happened as the VM is activating the (failing) basicNew:.  If
+	 handleFailingBasicNew: fails then the scavenge failed to reclaim sufficient
+	 space and a global garbage collection is required.  Retry after garbage
+	 collecting and growing memory if necessary.
+
+	 Primitive. Answer an instance of this class with the number of indexable
+	 variables specified by the argument, sizeRequested.  Fail if this class is not
+	 indexable or if the argument is not a positive Integer, or if there is not
+	 enough memory available. Essential. See Object documentation whatIsAPrimitive."
+
+	<primitive: 597>
+	| bytesRequested |
+	bytesRequested := self byteSizeOfInstanceOfSize: sizeRequested.
+	^ Smalltalk garbageCollect < bytesRequested
+		  ifTrue: [
+			  Smalltalk growMemoryByAtLeast: bytesRequested
+			  "retry after global garbage collect and possible grow".
+			  self handleFailingFailingBasicNewTenured: sizeRequested ]
+		  ifFalse: [ self handleFailingBasicNewTenuredWithGC: sizeRequested ]
+]
+
+{ #category : 'private' }
+Behavior >> handleFailingBasicNewTenuredWithGC: sizeRequested [
+	"handleFailingBasicNewWithGC: gets sent after basicNew: has failed, a GC has been	performed and the allocation still fails even though enough memory was reported 	as available. Given that this has happened when there is plenty of virtual memory available, assume that the GC has reported incorrectly and try one more time anyway.	 Primitive. Answer an instance of this class with the number of indexable	 variables specified by the argument, sizeRequested.  Fail if this class is not	 indexable or if the argument is not a positive Integer, or if there is not	 enough memory available. Essential. See Object documentation whatIsAPrimitive."
+
+	<primitive: 597>
+	| bytesRequested |
+	bytesRequested := self byteSizeOfInstanceOfSize: sizeRequested.
+	Smalltalk growMemoryByAtLeast: bytesRequested.
+	^ self handleFailingFailingBasicNewTenured: sizeRequested
+]
+
+{ #category : 'private' }
 Behavior >> handleFailingBasicNewWithGC: sizeRequested [
 	"handleFailingBasicNewWithGC: gets sent after basicNew: has failed, a GC has been	performed and the allocation still fails even though enough memory was reported 	as available. Given that this has happened when there is plenty of virtual memory available, assume that the GC has reported incorrectly and try one more time anyway.	 Primitive. Answer an instance of this class with the number of indexable	 variables specified by the argument, sizeRequested.  Fail if this class is not	 indexable or if the argument is not a positive Integer, or if there is not	 enough memory available. Essential. See Object documentation whatIsAPrimitive."
 
@@ -814,6 +868,41 @@ Behavior >> handleFailingFailingBasicNew: sizeRequested [
 	"space must be low."
 	OutOfMemory signal.
 	^self basicNew: sizeRequested  "retry if user proceeds"
+]
+
+{ #category : 'private' }
+Behavior >> handleFailingFailingBasicNewTenured [
+	"This basicNew gets sent after handleFailingBasicNew: has done a full
+	 garbage collection and possibly grown memory.  If this basicNew fails
+	 then the system really is low on space, so raise the OutOfMemory signal.
+
+	 Primitive. Answer an instance of this class with the number of indexable
+	 variables specified by the argument, sizeRequested.  Fail if this class is not
+	 indexable or if the argument is not a positive Integer, or if there is not
+	 enough memory available. Essential. See Object documentation whatIsAPrimitive."
+
+	"space must be low"
+
+	<primitive: 596>
+	OutOfMemory signal.
+	^ self basicNewTenured "retry if user proceeds"
+]
+
+{ #category : 'private' }
+Behavior >> handleFailingFailingBasicNewTenured: sizeRequested [
+	"This basicNew: gets sent after handleFailingBasicNew: has done a full
+	 garbage collection and possibly grown memory.  If this basicNew: fails
+	 then the system really is low on space, so raise the OutOfMemory signal.
+
+	 Primitive. Answer an instance of this class with the number of indexable
+	 variables specified by the argument, sizeRequested.  Fail if this class is not
+	 indexable or if the argument is not a positive Integer, or if there is not
+	 enough memory available. Essential. See Object documentation whatIsAPrimitive."
+
+	<primitive: 597>
+	"space must be low."
+	OutOfMemory signal.
+	^self basicNewTenured: sizeRequested  "retry if user proceeds"
 ]
 
 { #category : 'testing' }

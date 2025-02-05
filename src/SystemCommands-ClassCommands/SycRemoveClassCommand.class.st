@@ -29,11 +29,6 @@ SycRemoveClassCommand >> execute [
 				 classes:  classes) runRefactoring
 ]
 
-{ #category : 'testing' }
-SycRemoveClassCommand >> isComplexRefactoring [
-	^ false
-]
-
 { #category : 'execution' }
 SycRemoveClassCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.

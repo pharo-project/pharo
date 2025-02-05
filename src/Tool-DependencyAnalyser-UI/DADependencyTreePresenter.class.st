@@ -395,3 +395,9 @@ DADependencyTreePresenter >> treeRoots [
 DADependencyTreePresenter >> updatePackageLabel [
 	packageLabel label: 'Analysis of ' , self sizeOfRoots asString , ' package(s)'
 ]
+
+{ #category : 'accessing' }
+DADependencyTreePresenter >> windowTitle [ 
+
+	^ 'Dependencies analysis'
+]

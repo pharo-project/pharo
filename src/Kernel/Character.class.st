@@ -272,6 +272,12 @@ Character class >> supportsNonASCII [
 		((self environment  at: #EncodedCharSet) charsetAt: 255) name = #Unicode ]
 ]
 
+{ #category : 'constants' }
+Character class >> syntaxCharacters [
+
+	^ '^"''|[](){}$#<>=;:.' copy
+]
+
 { #category : 'accessing - untypeable characters' }
 Character class >> tab [
 	"Answer the Character representing a tab."
@@ -779,14 +785,15 @@ Character >> isSpecial [
 ]
 
 { #category : 'testing' }
-Character >> isSpecialSyntaxValid [
-
-	^ '^"''[](){}#$:;.=' includes: self
+Character >> isSurrogateOther [
+^ self characterSet isSurrogateOther: self
 ]
 
 { #category : 'testing' }
-Character >> isSurrogateOther [
-^ self characterSet isSurrogateOther: self
+Character >> isSyntax [
+	"Answer whether the receiver is part of the Smalltalk syntax, i.e. ^""'|[](){}$#<>=;:."
+
+	^ self class syntaxCharacters includes: self
 ]
 
 { #category : 'testing' }

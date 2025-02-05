@@ -178,15 +178,16 @@ MCClassDefinition >> commentStamp: anObject [
 ]
 
 { #category : 'installing' }
-MCClassDefinition >> createClass [
+MCClassDefinition >> createClassInEnvironment: anEnvironent [
 
-	| superClass |
+	| superClass targetEnvironment |
 	"Ignore Context definition because of troubles with class migration on bootstrapped image. Temporary solution."
 	name = #Context ifTrue: [
 		Context comment = comment ifFalse: [ Context comment: comment stamp: self commentStamp ].
 		^ self ].
 
 	superClass := superclassName = #nil ifFalse: [ self class environment at: superclassName ].
+	targetEnvironment := anEnvironent ifNil: [ superClass environment ].
 	^ [
 	  self class classInstaller make: [ :builder |
 		  builder
@@ -202,7 +203,7 @@ MCClassDefinition >> createClass [
 			  comment: comment stamp: self commentStamp;
 			  package: self packageName;
 			  tag: self tagName;
-			  environment: superClass environment ] ]
+			  environment: targetEnvironment ] ]
 		  on: Warning , DuplicatedVariableError
 		  do: [ :ex | ex resume ]
 ]
@@ -346,7 +347,14 @@ MCClassDefinition >> layoutClassName [
 
 { #category : 'installing' }
 MCClassDefinition >> load [
-	self createClass
+	self loadInEnvironment: nil
+]
+
+{ #category : 'installing' }
+MCClassDefinition >> loadInEnvironment: anEnvironment [
+
+	self createClassInEnvironment: anEnvironment
+
 ]
 
 { #category : 'accessing' }

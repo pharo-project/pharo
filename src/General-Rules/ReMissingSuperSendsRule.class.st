@@ -27,6 +27,12 @@ ReMissingSuperSendsRule class >> ruleName [
 ]
 
 { #category : 'accessing' }
+ReMissingSuperSendsRule class >> severity [
+
+	^ #error
+]
+
+{ #category : 'accessing' }
 ReMissingSuperSendsRule class >> uniqueIdentifierName [
 	"This number should be unique and should change only when the rule completely change semantics"
 
@@ -57,5 +63,5 @@ ReMissingSuperSendsRule >> basicCheck: aMethod [
 ReMissingSuperSendsRule >> methodsRequiringSuper [
 
 	^ #( #release #postCopy #postBuildWith: #preBuildWith: #postOpenWith:
-	     #noticeOfWindowClose: #initialize )
+	     #noticeOfWindowClose: #initialize #initializeWindow: ) 
 ]

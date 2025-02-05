@@ -8,11 +8,14 @@ This way client code using A will be able to load and get all the behavior of An
 
 
 Usage:
+```
+| transformation |
 transformation := (RBRenameAndDeprecateClassTransformation 
 				rename: #DANode
 				to: #DANodePresenter)
-				transform. 
-(ChangesBrowser changes: transformation model changes changes) open
+			generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 
 "

@@ -4,7 +4,7 @@ Extension { #name : 'OCCodeSnippetTest' }
 OCCodeSnippetTest >> testDecompile [
 
 	| method ast |
-	method := snippet compile.
+	method := self compileSnippet: snippet.
 	method ifNil: [ ^ self skip ]. "Another test responsibility"
 	ast := method decompile.
 	self assert: ast isMethod.
@@ -17,7 +17,7 @@ OCCodeSnippetTest >> testDecompile [
 OCCodeSnippetTest >> testDecompileIR [
 
 	| method ir |
-	method := snippet compile.
+	method := self compileSnippet: snippet.
 	method ifNil: [ ^ self skip ]. "Another test responsibility"
 	ir := method decompileIR.
 	self assert: ir class equals: OCIRMethod.

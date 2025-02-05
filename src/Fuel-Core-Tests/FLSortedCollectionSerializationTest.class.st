@@ -54,7 +54,7 @@ FLSortedCollectionSerializationTest >> testSortedCollection [
 	self assert: x ~= y"
 
 	| aSortBlock aSortedCollection materialized |
-	OCCompilationContext optionCleanBlockClosure ifTrue: [ ^ self skip ].
+	Smalltalk compiler compilationContext optionCleanBlockClosure ifTrue: [ ^ self skip ].
 
 	aSortBlock := [ :a :b | a >= b ].
 	aSortedCollection := SortedCollection sortBlock: aSortBlock.
@@ -72,7 +72,7 @@ FLSortedCollectionSerializationTest >> testSortedCollectionWithClassVariableChan
 	"Tests serialization of a SortedCollection whose sortBlock has a reference to a class variable and its value is changed. See also FLBlockClosureSerializationTest >> testBlockClosureWithClassVariableChanges  and FLCompiledMethodSerializationTest >> testMethodChangingClassVariable"
 
 	| aSortedCollection materialized compiledBlock index literalHolder |
-	OCCompilationContext optionCleanBlockClosure ifTrue: [ ^ self skip ].
+	Smalltalk compiler compilationContext optionCleanBlockClosure ifTrue: [ ^ self skip ].
 
 	ClassVariableForTesting := false.
 	
@@ -103,7 +103,7 @@ FLSortedCollectionSerializationTest >> testSortedCollectionWithClassVariableRefe
 	self assert: x ~= y"
 
 	| aSortedCollection materialized |
-	OCCompilationContext optionCleanBlockClosure ifTrue: [ ^ self skip ].
+	Smalltalk compiler compilationContext optionCleanBlockClosure ifTrue: [ ^ self skip ].
 
 	ClassVariableForTesting := false.
 

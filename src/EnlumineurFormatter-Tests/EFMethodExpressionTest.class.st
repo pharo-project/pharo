@@ -279,7 +279,7 @@ EFMethodExpressionTest >> testBasic [
 	| expr source |
 	expr := OCParser parseMethod: 'aMethod <pragma> "aComment" body'.
 	configurationSelector := #basicConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethod
 	"aComment"
@@ -292,7 +292,7 @@ EFMethodExpressionTest >> testBasic2 [
 	| expr source |
 	expr := OCParser parseMethod: 'aMethod <pragma1> <pragma2> "aComment1" "aComment2"  body'.
 	configurationSelector := #newLineBetweenTopCommentsConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethod
 	"aComment1"
@@ -307,7 +307,7 @@ EFMethodExpressionTest >> testBasicSpaceIndent [
 	| expr source |
 	expr := OCParser parseMethod: 'aMethod <pragma> "aComment" body'.
 	configurationSelector := #spaceIndentConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethod
           "aComment"
@@ -328,7 +328,7 @@ EFMethodExpressionTest >> testBigMethod [
 	tmp to: 10 do: [:i | Transcript show:i ; cr ;cr]
 	'.
 	configurationSelector := #bigMethodeConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	"aComment"
@@ -349,7 +349,7 @@ EFMethodExpressionTest >> testCommentBasicFormat [
 	| expr source |
 	expr := OCParser parseMethod: 'aMethode "   aComment   "'.
 	configurationSelector := #basicCommentFormatConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	"   aComment   "
@@ -361,7 +361,7 @@ EFMethodExpressionTest >> testCommentNotBasicFormat [
 	| expr source |
 	expr := OCParser parseMethod: 'aMethode "   aComment   "'.
 	configurationSelector := #notBasicCommentFormatConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	"aComment   "
@@ -373,7 +373,7 @@ EFMethodExpressionTest >> testFormatBody [
 	| expr source |
 	expr := OCParser parseMethod: 'aMethode a:=1'.
 	configurationSelector := #basicConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	a := 1'
@@ -384,7 +384,7 @@ EFMethodExpressionTest >> testIndentCascade [
 	| expr source |
 	expr := OCParser parseMethod: 'aMethode	Transcript cr; show: ''foo'';	cr. Transcript cr;cr'.
 	configurationSelector := #cascadeConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	Transcript
@@ -405,7 +405,7 @@ EFMethodExpressionTest >> testMethodWithMessageArgument [
 	1 to: 10 do: [:i | Transcript show:i ; cr ;cr]
 	'.
 	configurationSelector := #bigMethodeConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethod
 	1 to: 10 do: [:i |
@@ -421,7 +421,7 @@ EFMethodExpressionTest >> testNewLinesAfterComment [
 	| expr source |
 	expr := OCParser parseMethod: 'aMethode "aComment"'.
 	configurationSelector := #oneNewLineAfterCommentConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	"aComment"
@@ -434,7 +434,7 @@ EFMethodExpressionTest >> testNewLinesAfterComment2 [
 	| expr source |
 	expr := OCParser parseMethod: 'aMethode "aComment" "anotherComment"'.
 	configurationSelector := #oneNewLineAfterCommentConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	"aComment"
@@ -449,7 +449,7 @@ EFMethodExpressionTest >> testNewLinesAfterGluedComment [
 	| expr source |
 	expr := OCParser parseMethod: 'aMethode"aComment""anotherComment"'.
 	configurationSelector := #oneNewLineAfterCommentConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	"aComment""anotherComment"
@@ -462,7 +462,7 @@ EFMethodExpressionTest >> testNewLinesBetweenTopComments [
 	| expr source |
 	expr := OCParser parseMethod: 'aMethode "aComment" "anotherComment"'.
 	configurationSelector := #newLineBetweenTopCommentsConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	"aComment"
@@ -475,7 +475,7 @@ EFMethodExpressionTest >> testNoNewLinesAfterComment [
 	| expr source |
 	expr := OCParser parseMethod: 'aMethode "aComment"'.
 	configurationSelector := #basicCommentFormatConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	"aComment"
@@ -487,7 +487,7 @@ EFMethodExpressionTest >> testNoNewLinesAfterGluedComment [
 	| expr source |
 	expr := OCParser parseMethod: 'aMethode "aComment""anotherComment"'.
 	configurationSelector := #noNewLinesAfterCommentConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	"aComment""anotherComment"
@@ -499,7 +499,7 @@ EFMethodExpressionTest >> testNoNewLinesAfterSignature [
 	| expr source |
 	expr := OCParser parseMethod: 'aMethode'.
 	configurationSelector := #signatureConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	'
@@ -510,7 +510,7 @@ EFMethodExpressionTest >> testNoNewLinesBetweenTopComments [
 	| expr source |
 	expr := OCParser parseMethod: 'aMethode "aComment" "anotherComment"'.
 	configurationSelector := #noNewLineBetweenTopCommentsConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	"aComment"	"anotherComment"	'
@@ -521,7 +521,7 @@ EFMethodExpressionTest >> testOneNewLinesAfterSignature [
 	| expr source |
 	expr := OCParser parseMethod: 'aMethode'.
 	configurationSelector := #oneNewLineAfterCommentConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	'
@@ -532,7 +532,7 @@ EFMethodExpressionTest >> testPragma [
 	| expr source |
 	expr := OCParser parseMethod: 'aMethode <pragma>'.
 	configurationSelector := #notBasicCommentFormatConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	<pragma>
@@ -544,7 +544,7 @@ EFMethodExpressionTest >> testSignatureNotOnMultipleLines [
 	| expr source |
 	expr := OCParser parseMethod: 'aMethode:arg1 foo:arg2'.
 	configurationSelector := #signatureNotOnMultipleLinesConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode: arg1 foo: arg2
 	'
@@ -555,7 +555,7 @@ EFMethodExpressionTest >> testSignatureOnMultipleLines [
 	| expr source |
 	expr := OCParser parseMethod: 'aMethode: arg1 foo:arg2'.
 	configurationSelector := #signatureOnMultipleLinesConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode: arg1
 	foo: arg2
@@ -567,7 +567,7 @@ EFMethodExpressionTest >> testSignatureWithArgument [
 	| expr source |
 	expr := OCParser parseMethod: 'aMethode:arg'.
 	configurationSelector := #signatureNotOnMultipleLinesConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode: arg
 	'
@@ -578,7 +578,7 @@ EFMethodExpressionTest >> testSignatureWithoutArgument [
 	| expr source |
 	expr := OCParser parseMethod: 'aMethode'.
 	configurationSelector := #basicConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 	'
@@ -589,7 +589,7 @@ EFMethodExpressionTest >> testTwoNewLinesAfterSignature [
 	| expr source |
 	expr := OCParser parseMethod: 'aMethode'.
 	configurationSelector := #twoNewLinesAfterSignatureConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals:
 'aMethode
 

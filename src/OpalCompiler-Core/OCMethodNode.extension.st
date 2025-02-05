@@ -2,13 +2,18 @@ Extension { #name : 'OCMethodNode' }
 
 { #category : '*OpalCompiler-Core' }
 OCMethodNode >> bcToASTCache [
-	^ bcToASTCache ifNil: [ bcToASTCache := OCBytecodeToASTCache generateForNode: self ]
+
+	^ self propertyAt: #bcToASTCache ifAbsentPut: [ OCBytecodeToASTCache generateForNode: self ]
 ]
 
 { #category : '*OpalCompiler-Core' }
 OCMethodNode >> bcToASTCache: anObject [
 
-	bcToASTCache := anObject
+	anObject ifNil: [ 
+		^ self
+			removeProperty: #bcToASTCache
+			ifAbsent: [ "Do nothing" ] ]. 
+	self propertyAt: #bcToASTCache put: anObject.
 ]
 
 { #category : '*OpalCompiler-Core' }

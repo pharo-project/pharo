@@ -14,6 +14,12 @@ Class {
 	#package : 'Tool-DependencyAnalyser-UI-Tab'
 }
 
+{ #category : 'accessing' }
+DATabPackageDependenciesPresenter class >> defaultPreferredExtent [ 
+
+	^ 800 @ 400
+]
+
 { #category : 'examples' }
 DATabPackageDependenciesPresenter class >> example [
 
@@ -92,12 +98,6 @@ DATabPackageDependenciesPresenter >> initializePresenters [
 		icon: (self iconNamed: #objects);
 		action: [ self openDependencyAnalyzer ];
 		yourself
-]
-
-{ #category : 'initialization' }
-DATabPackageDependenciesPresenter >> initializeWindow: aWindowPresenter [
-
-	aWindowPresenter initialExtent: 800 @ 400
 ]
 
 { #category : 'initialization' }

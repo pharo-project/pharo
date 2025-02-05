@@ -80,7 +80,7 @@ OCLiteralToken >> storeOn: aStream [
 	value isSymbol
 		ifTrue:
 			[aStream nextPut: $#.
-			(value isValidSelector and: [value ~~ #'||'])
+			((OCScanner isSelector: value) and: [value ~~ #'||'])
 				ifTrue: [aStream nextPutAll: value]
 				ifFalse: [value asString printOn: aStream].
 			^self].

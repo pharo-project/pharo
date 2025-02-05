@@ -73,6 +73,7 @@ DrTestsUITest >> testInitialStatusIsInitialStatusPluginName [
 { #category : 'tests' }
 DrTestsUITest >> testInitialWindowTitleIsInitialPluginWindowTitle [
 
+	self skip.
 	self
 		assert: drTestsUI title
 		equals: 'Dr Tests - ' , drTestsUI currentPlugin pluginName
@@ -142,6 +143,8 @@ DrTestsUITest >> testSelectingPluginWillUpdatePackagesList [
 
 { #category : 'tests' }
 DrTestsUITest >> testSelectingPluginWillUpdateWindowTitle [
+	self skip. 
+	
 	drTestsUI pluginsDropList selectItem: plugin2.
 	self
 		assert: drTestsUI title

@@ -261,7 +261,7 @@ ReRuleManager class >> uniqueInstance [
 	^ self default
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'class initialization' }
 ReRuleManager class >> unload [
 
 	self reset

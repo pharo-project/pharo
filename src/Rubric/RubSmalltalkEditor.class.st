@@ -288,6 +288,12 @@ RubSmalltalkEditor >> browseIt: aKeyboardEvent [
 	^true
 ]
 
+{ #category : 'accessing' }
+RubSmalltalkEditor >> characterAt: anInteger [ 
+	
+	^ self text at: anInteger
+]
+
 { #category : 'menu messages' }
 RubSmalltalkEditor >> classCommentsContainingIt [
 	"Open a browser class comments which contain the current selection somewhere in them."

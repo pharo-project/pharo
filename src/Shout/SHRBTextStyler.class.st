@@ -932,7 +932,7 @@ SHRBTextStyler >> privateStyle: aText [
 { #category : 'testing' }
 SHRBTextStyler >> representsASelector: aSymbol [
 
-	^ aSymbol isSelectorSymbol
+	^ aSymbol isUsedAsSelectorSymbol
 ]
 
 { #category : 'private' }

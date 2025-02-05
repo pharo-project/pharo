@@ -90,7 +90,7 @@ FLDictionaryCollectionCluster >> referencesOf: aDictionary do: aBlock [
 { #category : 'analyzing' }
 FLDictionaryCollectionCluster >> specialAssociationsOf: aDictionary do: aBlock [
 	aDictionary associationsDo: [ :association |
-		association fuelIsEphemeron
+		association class isEphemeronClass
 			ifFalse: [ aBlock value: association ]
 			ifTrue: [
 				self

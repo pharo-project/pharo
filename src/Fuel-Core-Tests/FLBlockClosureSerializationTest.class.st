@@ -295,9 +295,28 @@ FLBlockClosureSerializationTest >> testBlockClosureWithThreeArguments [
 FLBlockClosureSerializationTest >> testCleanBlockClosure [
 
 	| aClosure meterialized |
-	OCCompilationContext optionCleanBlockClosure ifFalse: [ ^ self skip ].
+	Smalltalk compiler compilationContext optionCleanBlockClosure ifFalse: [ ^ self skip ].
 
 	aClosure := [ :x | x objects detect: [ :y | y isInteger ] ].
+	self assert: aClosure isClean.
+	self assert: aClosure outerContext isNil.
+
+	self serializer addPostMaterializationAction: aClosure.
+	self serialize: 87.
+
+	self materializer disableMethodChangedWarning.
+	meterialized := self materialized.
+
+	self assert: meterialized equals: 87
+]
+
+{ #category : 'tests' }
+FLBlockClosureSerializationTest >> testNestedBlockClosureClean [
+
+	| aClosure meterialized |
+	Smalltalk compiler compilationContext optionCleanBlockClosure ifFalse: [ ^ self skip ].
+
+	aClosure := [ [ :x | x objects detect: [ :y | y isInteger ] ] ] value.
 	self assert: aClosure isClean.
 	self assert: aClosure outerContext isNil.
 
@@ -317,23 +336,4 @@ FLBlockClosureSerializationTest >> testNestedBlockClosureConstant [
 	materializedClosure := self resultOfSerializeAndMaterialize: closure.
 	closure assertWellMaterializedInto: materializedClosure in: self.
 	self assert: materializedClosure value value equals: 42
-]
-
-{ #category : 'tests' }
-FLBlockClosureSerializationTest >> testNestedCleanBlockClosure [
-
-	| aClosure meterialized |
-	OCCompilationContext optionCleanBlockClosure ifFalse: [ ^ self skip ].
-
-	aClosure := [ [ :x | x objects detect: [ :y | y isInteger ] ] ] value.
-	self assert: aClosure isClean.
-	self assert: aClosure outerContext isNil.
-
-	self serializer addPostMaterializationAction: aClosure.
-	self serialize: 87.
-
-	self materializer disableMethodChangedWarning.
-	meterialized := self materialized.
-
-	self assert: meterialized equals: 87
 ]

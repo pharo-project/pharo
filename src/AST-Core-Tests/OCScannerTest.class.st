@@ -85,6 +85,12 @@ OCScannerTest >> testCommentTokenStopAtLastQuote [
 	self assert: token stop equals: (str findString: comment) + comment size - 1
 ]
 
+{ #category : 'tests - isSelector' }
+OCScannerTest >> testIsValidSelector [
+	self assert: (OCScanner isSelector: 'class').
+	self deny: (OCScanner isSelector: '0class')
+]
+
 { #category : 'tests - Comment' }
 OCScannerTest >> testMultipleCommentTokensAreWellSeparated [
 	| scanner token comments |
