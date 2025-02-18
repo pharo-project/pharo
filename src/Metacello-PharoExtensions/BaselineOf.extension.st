@@ -54,7 +54,7 @@ BaselineOf >> packageRepositoryURL [
 { #category : #'*Metacello-PharoExtensions' }
 BaselineOf class >> packagesOfGroupNamed: aName [
 
-	^ (self version groups detect: [ :g | g name sameContents: aName ]) includes
+	^ (self version groups detect: [ :g | [ g name sameContents: aName ] on: MessageNotUnderstood do: [ g name = aName ] ]) includes
 ]
 
 { #category : #'*Metacello-PharoExtensions' }
