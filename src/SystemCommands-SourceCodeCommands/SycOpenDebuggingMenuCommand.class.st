@@ -30,3 +30,9 @@ SycOpenDebuggingMenuCommand >> defaultMenuItemName [
 
 	^ 'Breakpoints'
 ]
+
+{ #category : 'accessing' }
+SycOpenDebuggingMenuCommand >> description [
+
+	^ 'Opens the breakpoint menu after a right click on the source code.'
+]

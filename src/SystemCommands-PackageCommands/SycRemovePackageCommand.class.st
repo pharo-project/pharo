@@ -39,6 +39,12 @@ SycRemovePackageCommand >> defaultMenuItemName [
 	^'Remove'
 ]
 
+{ #category : 'accessing' }
+SycRemovePackageCommand >> description [
+
+	^ 'Removes Packages.'
+]
+
 { #category : 'execution' }
 SycRemovePackageCommand >> execute [
 

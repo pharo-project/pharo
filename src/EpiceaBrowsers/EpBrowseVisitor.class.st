@@ -22,7 +22,7 @@ EpBrowseVisitor >> application: anApplication [
 { #category : 'visitor' }
 EpBrowseVisitor >> browseClass: aClass [
 
-	application tools browser openOnClass: aClass
+	(application toolNamed: #browser) openOnClass: aClass
 ]
 
 { #category : 'visitor' }
@@ -44,7 +44,8 @@ EpBrowseVisitor >> visitMethodChange: aChange [
 	self behaviorNamed: aChange behaviorAffectedName ifPresent: [ :behavior |
 		behavior
 			compiledMethodAt: aChange methodAffectedSelector
-			ifPresent: [ :method | application tools browser openOnMethod: method ]
+			ifPresent: [ :method | 
+					(application toolNamed: #browser) openOnMethod: method ]
 			ifAbsent: [ application inform: 'Cannot find ' , behavior asString , '>>' , aChange methodAffectedSelector.
 				self browseClass: behavior ] ]
 ]
@@ -56,7 +57,7 @@ EpBrowseVisitor >> visitPackageChange: aChange [
 	package := self packageOrganizer 
 					packageNamed: aChange packageName 
 					ifAbsent: [ ^ application inform: 'Package ' , aChange packageName , ' not found.' ].
-	application tools browser openOnPackage: package 
+	(application toolNamed: #browser) openOnPackage: package 
 ]
 
 { #category : 'visitor' }
@@ -70,7 +71,7 @@ EpBrowseVisitor >> visitPackageTagChange: aPackageTagChange [
 		tagNamed: aPackageTagChange tagName
 		ifAbsent: [ ^ application inform: 'Tag named ' , aPackageTagChange tagName , ' not found in package named ' , aPackageTagChange packageName ].
 			
-	application tools browser
+	(application toolNamed: #browser)
 	 openWithState: [ :browser |
 		  browser selectPackage: package andTag: aPackageTagChange tagName ]
 ]

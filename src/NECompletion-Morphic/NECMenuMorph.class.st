@@ -281,7 +281,9 @@ NECMenuMorph >> detailMessage [
 
 	^ self itemsCount isZero
 		  ifTrue: [ 'no entries' ]
-		  ifFalse: [ 'cmd+B browse entry' ]
+		  ifFalse: [
+			  (OSPlatform current defaultModifier + $b) asString
+			  , ' browse entry' ]
 ]
 
 { #category : 'accessing' }

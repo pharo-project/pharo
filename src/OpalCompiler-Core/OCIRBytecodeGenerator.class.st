@@ -163,15 +163,9 @@ OCIRBytecodeGenerator >> compiledBlock [
 	| lits quickPrimitive header cb |
 	lits := self literals allButLast "1 free only for compiledBlock".
 	quickPrimitive := self quickMethodPrim.
-	"disabled for now"
-	"(primNumber = 0 and: [quickPrimitive > 0]) ifTrue: [
-		""if we are a quick method we need to add a bytecode at the beginning. #bytecodes
-		takes primitiveBytes into account""
-		primitiveBytes := (ByteArray new: 4) writeStream.
-		encoder stream: primitiveBytes.
-		encoder genCallPrimitive: quickPrimitive.
-	]."
-	header := self spurVMHeader: lits size.
+
+	"Compiled blocks never call primitives"
+	header := self spurVMHeader: lits size hasPrimitive: false.
 	cb := CompiledBlock basicNew: self bytecodes size header: header.
 	(WriteStream with: cb)
 		position: cb initialPC - 1;
@@ -194,7 +188,7 @@ OCIRBytecodeGenerator >> compiledMethod [
 		encoder stream: primitiveBytes.
 		encoder genCallPrimitive: quickPrimitive.
 	].
-	^ self compiledMethodHeader: (self spurVMHeader: lits size) literals: lits
+	^ self compiledMethodHeader: (self spurVMHeader: lits size hasPrimitive: self hasPrimitive) literals: lits
 ]
 
 { #category : 'results' }
@@ -286,7 +280,8 @@ OCIRBytecodeGenerator >> goto: seqId [
 
 { #category : 'results' }
 OCIRBytecodeGenerator >> hasPrimitive [
-	"do I have a primitive? Both normal primitive and quick return"
+	"Compute if the method is a primitive or quick method.
+	Invalid for closures"
 	primNumber > 0 ifTrue: [ ^true ].
 	^ self endPrimNumber > 0
 ]
@@ -668,12 +663,12 @@ OCIRBytecodeGenerator >> send: selector toSuperOf: behavior [
 ]
 
 { #category : 'results' }
-OCIRBytecodeGenerator >> spurVMHeader: literalsSize [
+OCIRBytecodeGenerator >> spurVMHeader: literalsSize hasPrimitive: hasPrimitive [
 	^ (CompiledMethod headerFlagForEncoder: self encoderClass) +
 		(self numArgs bitShift: 24) +
 		( self numTemps bitShift: 18) +
 		literalsSize +
-		(self hasPrimitive asBit bitShift: 16)
+		(hasPrimitive asBit bitShift: 16)
 ]
 
 { #category : 'results' }

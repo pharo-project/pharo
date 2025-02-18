@@ -12,7 +12,7 @@ Class {
 { #category : 'utilities' }
 OpenToolTest >> openInspectorOn: anObject [
 
-	^ Smalltalk tools inspector inspect: anObject
+	^ (Smalltalk tools toolNamed: #inspector) inspect: anObject
 ]
 
 { #category : 'tests - implementors' }

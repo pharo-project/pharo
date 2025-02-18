@@ -8,12 +8,12 @@ CompiledBlock >> browse [
 	
 	method isInstalled
 		ifTrue: [
-			^ Smalltalk tools browser
+			^ (Smalltalk tools toolNamed: #browser)
 				openOnClass: self methodClass
 				selector: self selector
 				highlight: self sourceNode sourceCode ]
 		ifFalse: [
-			^ Smalltalk tools browser
+			^ (Smalltalk tools toolNamed: #browser)
 				openOnClass: self methodClass
 				selector: self selector ]
 

@@ -142,7 +142,7 @@ Random >> maxValue [
 Random >> next [
 	"Answer a random Float in the interval [0 to 1)."
 
-	^ (self privateNextValue / (self maxValue + 1) ) asFloat 
+	^ (self privateNextValue asFloat / (self maxValue + 1) ) 
 ]
 
 { #category : 'accessing' }

@@ -9,19 +9,13 @@ Class {
 { #category : 'tests' }
 ReUseSetUpRuleTest >> testRule [
 
-	| critiques |
-	self class compile: 'initialize' classified: 'initialization'.
-	[ critiques := self myCritiquesOnMethod: self class >> #initialize.
-	self assert: critiques size equals: 1 ] ensure: [
-		(self class >> #initialize) removeFromSystem ]
+	self generateMethod: 'initialize' classified: 'initialization'.
+	self assert: (self myCritiquesOnMethod: self class >> #initialize) size equals: 1
 ]
 
 { #category : 'tests' }
 ReUseSetUpRuleTest >> testRuleNotViolated [
 
-	| critiques |
-	self class compile: 'setUp'.
-	[ critiques := self myCritiquesOnClass: self class.
-	self assertEmpty: critiques ] ensure: [
-		(self class >> #setUp) removeFromSystem ]
+	self generateMethod: 'setUp'.
+	self assertEmpty: (self myCritiquesOnClass: self class)
 ]

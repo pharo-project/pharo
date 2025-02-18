@@ -460,6 +460,7 @@ WorldMorph >> initialize [
 
 	worldState := WorldState new.
 	super initialize.
+	zoomFactor := 1.
 
 	self class codeSupportAnnouncer weak when: FullscreenAnnouncement send: #fullscreenChanged: to: self
 ]

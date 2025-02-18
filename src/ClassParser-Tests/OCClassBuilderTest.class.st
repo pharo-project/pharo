@@ -321,5 +321,7 @@ OCClassBuilderTest >> testUseUndefinedClass [
 			buildEnvironment: self class environment;
 			buildFromAST: ast ].
 	self assert: [ (self class environment at: #PoPouet) isUndefined ] ] ensure: [
-		self class environment at: #PoPouet ifPresent: [ :class | class removeFromSystem ] ]
+		self class environment at: #PoPouet ifPresent: [ :class | "We first need to remove TestClass before removing PoPouet."
+			class subclassesDo: [ :subclass | subclass removeFromSystem ].
+			class removeFromSystem ] ]
 ]

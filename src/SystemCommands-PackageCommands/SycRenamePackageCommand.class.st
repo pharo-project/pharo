@@ -33,6 +33,12 @@ SycRenamePackageCommand >> defaultMenuItemName [
 	^'Rename'
 ]
 
+{ #category : 'accessing' }
+SycRenamePackageCommand >> description [
+
+	^ 'Rename package'
+]
+
 { #category : 'execution' }
 SycRenamePackageCommand >> execute [
 

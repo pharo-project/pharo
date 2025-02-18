@@ -35,7 +35,7 @@ DebugPointInstanceVariableTarget >> accessStrategy: aSymbol [
 { #category : 'actions' }
 DebugPointInstanceVariableTarget >> browse [
 
-	(Smalltalk tools browser openOnClass:
+	((Smalltalk tools toolNamed: #browser) openOnClass:
 			 self instanceVariable owningClass)
 		switchToVariables;
 		selectVariableNamed: self instanceVariable name

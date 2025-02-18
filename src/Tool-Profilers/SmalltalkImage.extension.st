@@ -56,14 +56,14 @@ SmalltalkImage >> reportCPUandRAM [
 
 	"Process list"
 	'Log-ProcessList.txt' asFileReference writeStreamDo: [ :aStream |
-		self tools processBrowser new processNameList do: [ :each |
+		(self tools toolNamed: #processBrowser) new processNameList do: [ :each |
 			aStream nextPutAll: each; cr ] ].
 
 "Fork all these, so they run in sequence, as the system is back running"
 [
 	"Process taking most CPU"
 	'Log-ThePig.txt' asFileReference writeStreamDo: [ :aStream |
-		self tools processBrowser dumpPigStackOn: aStream ].
+		(self tools toolNamed: #processBrowser) dumpPigStackOn: aStream ].
 
 	"Tally of all processes"
 	'Log-FullTally.txt' asFileReference writeStreamDo: [ :aStream |

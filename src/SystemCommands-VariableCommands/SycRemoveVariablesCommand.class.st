@@ -33,6 +33,12 @@ SycRemoveVariablesCommand >> defaultMenuItemName [
 	^ 'Remove'
 ]
 
+{ #category : 'accessing' }
+SycRemoveVariablesCommand >> description [
+
+	^ 'Removes Variables.'
+]
+
 { #category : 'execution' }
 SycRemoveVariablesCommand >> execute [
 	"Clearly from the UI we do not accept variables mixed from different classes and kinds"

@@ -37,7 +37,7 @@ SettingNode >> allChildren [
 { #category : 'menu' }
 SettingNode >> browseDeclaration [
 	"open a browser on the method which defines myself"
-	Smalltalk tools browser
+	(Smalltalk tools toolNamed: #browser)
 		openOnClass: self methodClass class selector: self selector
 ]
 

@@ -23,18 +23,13 @@ ReJustSendsSuperRuleTest >> tearDown [
 ]
 
 { #category : 'tests' }
-ReJustSendsSuperRuleTest >> testRule [ 
+ReJustSendsSuperRuleTest >> testRule [
 
-	| superClass class critiques |
-	
+	| superClass class |
 	superClass := classFactory make: [ :aBuilder | aBuilder ].
-	superClass compile: 'method ^ 3'  classified: 'test-helper'.
-	
-	class := classFactory make: [ :aBuilder | aBuilder 
-		superclass: superClass ].
+	superClass compile: 'method ^ 3' classified: 'test-helper'.
+
+	class := classFactory make: [ :aBuilder | aBuilder superclass: superClass ].
 	class compile: 'method ^ super method' classified: 'test-helper'.
-	
-	critiques := self myCritiquesOnMethod: class >> #method.
-	self assert: critiques size equals: 1 
-	
+	self assert: (self myCritiquesOnMethod: class >> #method) size equals: 1
 ]

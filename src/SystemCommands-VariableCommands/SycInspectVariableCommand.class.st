@@ -28,6 +28,12 @@ SycInspectVariableCommand >> defaultMenuItemName [
 	^'Inspect'
 ]
 
+{ #category : 'accessing' }
+SycInspectVariableCommand >> description [
+
+	^ 'Inspect variable value'
+]
+
 { #category : 'execution' }
 SycInspectVariableCommand >> execute [
 

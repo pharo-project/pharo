@@ -51,6 +51,12 @@ SycRenameMessageCommand >> defaultMenuItemName [
 	^ '(R) Rename'
 ]
 
+{ #category : 'accessing' }
+SycRenameMessageCommand >> description [
+
+	^ 'Rename method'
+]
+
 { #category : 'execution' }
 SycRenameMessageCommand >> execute [
 

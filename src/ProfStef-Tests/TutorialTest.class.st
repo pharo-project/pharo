@@ -1,22 +1,26 @@
-"
-Trait for testing tutorials
-"
-Trait {
-	#name : 'TTutorialTest',
-	#category : 'ProfStef-Tests-Traits',
+Class {
+	#name : 'TutorialTest',
+	#superclass : 'TestCase',
+	#category : 'ProfStef-Tests-Tests',
 	#package : 'ProfStef-Tests',
-	#tag : 'Traits'
+	#tag : 'Tests'
 }
 
+{ #category : 'testing' }
+TutorialTest class >> isAbstract [
+
+	^self = TutorialTest
+]
+
 { #category : 'tests' }
-TTutorialTest >> testEachSelectorExists [
+TutorialTest >> testEachSelectorExists [
 	self testedTutorial tutorial do: [:aSelector|
-		self assert: (self tutorial respondsTo: aSelector)
+		self assert: (self testedTutorial respondsTo: aSelector)
 	]
 ]
 
 { #category : 'tests' }
-TTutorialTest >> testEachSelectorReturnsALesson [
+TutorialTest >> testEachSelectorReturnsALesson [
 	| answer |
 	self testedTutorial tutorial do: [:aSelector|
 		answer := (self testedTutorial perform: aSelector).
@@ -25,7 +29,7 @@ TTutorialTest >> testEachSelectorReturnsALesson [
 ]
 
 { #category : 'tests' }
-TTutorialTest >> testLessonAtReturnsCorrespondingLesson [
+TutorialTest >> testLessonAtReturnsCorrespondingLesson [
 	| answer |
 	1 to: (self testedTutorial tutorial size) do: [:index|
 		answer := self testedTutorial lessonAt: index.
@@ -34,17 +38,11 @@ TTutorialTest >> testLessonAtReturnsCorrespondingLesson [
 ]
 
 { #category : 'tests' }
-TTutorialTest >> testNotEmpty [
+TutorialTest >> testNotEmpty [
 	self assert: self testedTutorial tutorial notEmpty
 ]
 
 { #category : 'tests' }
-TTutorialTest >> testSizeReturnsNumberOfSelectors [
+TutorialTest >> testSizeReturnsNumberOfSelectors [
 	self assert: (self testedTutorial tutorial size) equals: self testedTutorial size
-]
-
-{ #category : 'requirements' }
-TTutorialTest >> testedTutorial [
-	"Returns an instance of an AbstractTutorial subclass"
-	^ self explicitRequirement
 ]

@@ -31,7 +31,7 @@ ThreadSafeTranscript >> interactionModel [
 ThreadSafeTranscript class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Transcript')
-		action: [ Smalltalk tools transcript open ];
+		action: [ (Smalltalk tools toolNamed: #transcript) open ];
 		order: 2;
 		parent: #InputOutput;
 		help: 'Transcript';
@@ -67,4 +67,10 @@ ThreadSafeTranscript >> openLabel: aString [
 	m onAnnouncement: MorphDeleted do: [ self announcer unsubscribe: m  ].
 	window addMorph: m frame: (0 @ 0 corner: 1 @ 1).
 	^ window openInWorld
+]
+
+{ #category : '*Transcript-Tool' }
+ThreadSafeTranscript class >> registerToolsOn: aRegistry [
+
+	aRegistry register: self as: #transcript
 ]

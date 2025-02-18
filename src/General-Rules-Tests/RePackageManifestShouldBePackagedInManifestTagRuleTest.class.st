@@ -26,25 +26,21 @@ RePackageManifestShouldBePackagedInManifestTagRuleTest >> tearDown [
 { #category : 'tests' }
 RePackageManifestShouldBePackagedInManifestTagRuleTest >> testRule [
 
-	| critiques manifest | 
-	manifest := classfactory make: [ :builder | builder superclass: PackageManifest;
-		tag: 'SomeWhere' ].
-	
-	critiques := self myCritiquesOnClass: manifest.
-	self assert: critiques size equals: 1
-	
-	
+	| manifest |
+	manifest := classfactory make: [ :builder |
+		            builder
+			            superclass: PackageManifest;
+			            tag: 'SomeWhere' ].
+	self assert: (self myCritiquesOnClass: manifest) size equals: 1
 ]
 
 { #category : 'tests' }
 RePackageManifestShouldBePackagedInManifestTagRuleTest >> testRuleNotViolated [
 
-	| critiques manifest | 
-	manifest := classfactory make: [ :builder | builder superclass: PackageManifest;
-		tag: 'Manifest' ].
-	
-	critiques := self myCritiquesOnClass: manifest.
-	self assertEmpty: critiques
-	
-	
+	| manifest |
+	manifest := classfactory make: [ :builder |
+		            builder
+			            superclass: PackageManifest;
+			            tag: 'Manifest' ].
+	self assertEmpty: (self myCritiquesOnClass: manifest)
 ]

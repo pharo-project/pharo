@@ -11,7 +11,7 @@ Class {
 
 { #category : 'accessing' }
 PackageClassNodeExample >> browseItem [
-	Smalltalk tools browser openOnClass: self item
+	(Smalltalk  toolNamed: #browser) openOnClass: self item
 ]
 
 { #category : 'menu' }

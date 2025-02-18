@@ -84,6 +84,12 @@ ClyShowMessageSenderCommand >> defaultMenuItemName [
 	^'Senders'
 ]
 
+{ #category : 'accessing' }
+ClyShowMessageSenderCommand >> description [
+
+	^ 'Show all message senders.'
+]
+
 { #category : 'execution' }
 ClyShowMessageSenderCommand >> execute [
 

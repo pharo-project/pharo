@@ -56,6 +56,12 @@ ClyRemoveClassGroupCommand >> defaultMenuItemName [
 	^'Remove'
 ]
 
+{ #category : 'accessing' }
+ClyRemoveClassGroupCommand >> description [
+
+^ 'Removes class group with containing classes.'
+]
+
 { #category : 'execution' }
 ClyRemoveClassGroupCommand >> execute [
 

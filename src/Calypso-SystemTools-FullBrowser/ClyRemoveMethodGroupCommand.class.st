@@ -36,6 +36,12 @@ ClyRemoveMethodGroupCommand >> defaultMenuItemName [
 	^'Remove'
 ]
 
+{ #category : 'accessing' }
+ClyRemoveMethodGroupCommand >> description [
+
+^ 'Removes method group with containing methods.'
+]
+
 { #category : 'execution' }
 ClyRemoveMethodGroupCommand >> execute [
 

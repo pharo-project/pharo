@@ -3,5 +3,5 @@ Extension { #name : 'RGElementDefinition' }
 { #category : '*Tool-Base' }
 RGElementDefinition >> browse [
 
-	^ self tools browser openOnClass: self realClass
+	^ (self tools toolNamed: #browser) openOnClass: self realClass
 ]

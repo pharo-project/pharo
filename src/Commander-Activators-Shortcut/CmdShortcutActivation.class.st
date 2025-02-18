@@ -33,29 +33,10 @@ Class {
 	#package : 'Commander-Activators-Shortcut'
 }
 
-{ #category : 'settings' }
-CmdShortcutActivation class >> buildSettingsOn: aBuilder [
-	<systemsettings>
-
-	(aBuilder button: #openShortcutsEditor)
-		order: 1;
-		parent: #tools;
-		buttonLabel: 'Open';
-		label: 'Shortcuts Editor';
-		description: 'All System Command Shortcuts';
-		target: self
-]
-
 { #category : 'instance creation' }
 CmdShortcutActivation class >> by: aKeyCombination for: anAnnotationUser [
 	^(self for: anAnnotationUser)
 		keyCombination: aKeyCombination
-]
-
-{ #category : 'settings' }
-CmdShortcutActivation class >> openShortcutsEditor [
-
-	KMDescriptionPresenter open
 ]
 
 { #category : 'well known shortcuts' }

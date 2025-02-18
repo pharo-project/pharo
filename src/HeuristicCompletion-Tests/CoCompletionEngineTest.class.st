@@ -4,8 +4,9 @@ Class {
 	#instVars : [
 		'oldSort'
 	],
-	#category : 'HeuristicCompletion-Tests',
-	#package : 'HeuristicCompletion-Tests'
+	#category : 'HeuristicCompletion-Tests-Core',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Core'
 }
 
 { #category : 'testing' }

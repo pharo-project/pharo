@@ -30,3 +30,9 @@ SycOpenAdvancedDebuggingMenuCommand >> defaultMenuItemName [
 
 	^ 'Debugging'
 ]
+
+{ #category : 'accessing' }
+SycOpenAdvancedDebuggingMenuCommand >> description [
+
+	^ 'Open the advanced debugging menu after a right click on the source code.'
+]

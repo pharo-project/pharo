@@ -102,7 +102,10 @@ OCClosureTest >> testConstantBlockClosure [
 	"this is a test that enales optionCleanBlockClosure and check that clean blocks work"
 	block := [1].
 	self assert: block isClean.
+	self deny: block hasPrimitive.
 	self assert: block class equals: ConstantBlockClosure.
+	self assert: block compiledBlock numTemps equals: 0.
+	self assert: block compiledBlock numArgs equals: 0.
 	self assert: block outerContext isNil.
 	self assert: block value equals: 1.
 	self assert: (block valueWithArguments: #()) equals: 1.
@@ -117,7 +120,10 @@ OCClosureTest >> testConstantBlockClosure [
 
 	block := [:arg | 1].
 	self assert: block isClean.
+	self deny: block hasPrimitive.
 	self assert: block class equals: ConstantBlockClosure1Arg.
+	self assert: block compiledBlock numTemps equals: 1.
+	self assert: block compiledBlock numArgs equals: 1.
 	self assert: block outerContext isNil.
 	self assert: (block value: nil) equals: 1.
 	self assert: (block valueWithArguments: #(2)) equals: 1.
@@ -129,7 +135,10 @@ OCClosureTest >> testConstantBlockClosure [
 
 	block := [:arg1 :arg2 | 1].
 	self assert: block isClean.
+	self deny: block hasPrimitive.
 	self assert: block class equals: ConstantBlockClosure2Arg.
+	self assert: block compiledBlock numTemps equals: 2.
+	self assert: block compiledBlock numArgs equals: 2.
 	self assert: block outerContext isNil.
 	self assert: (block value: nil value: nil) equals: 1.
 	self assert: (block valueWithArguments: #(2 2)) equals: 1.
@@ -143,8 +152,11 @@ OCClosureTest >> testConstantBlockClosure [
 
 	block := [:arg1 :arg2 :arg3 | 1].
 	self assert: block isClean.
+	self deny: block hasPrimitive.
 	self assert: block sourceNode isConstant.
 	self assert: block class equals: ConstantBlockClosure3Arg.
+	self assert: block compiledBlock numTemps equals: 3.
+	self assert: block compiledBlock numArgs equals: 3.
 	self assert: block outerContext isNil.
 	self assert: (block value: nil value: nil value: nil) equals: 1.
 	self assert: (block valueWithArguments: #(2 2 2)) equals: 1.
@@ -157,9 +169,12 @@ OCClosureTest >> testConstantBlockClosure [
 
 	block := [:arg1 :arg2 :arg3 :arg4 | 1].
 	self assert: block isClean.
+	self deny: block hasPrimitive.
 	self assert: block sourceNode isConstant.
 	"but we do not compile it as a ConstantBLockCloure for now"
 	self assert: block class equals: CleanBlockClosure.
+	self assert: block compiledBlock numTemps equals: 4.
+	self assert: block compiledBlock numArgs equals: 4.
 
 	self should: [block value] raise: ArgumentsCountMismatch.
 	self should: [block value: nil] raise: ArgumentsCountMismatch.
@@ -170,8 +185,11 @@ OCClosureTest >> testConstantBlockClosure [
 
 	block := [:arg1 :arg2 :arg3 :arg4 :arg5 | 1].
 	self assert: block isClean.
+	self deny: block hasPrimitive.
 	self assert: block sourceNode isConstant.
 	self assert: block class equals: CleanBlockClosure.
+	self assert: block compiledBlock numTemps equals: 5.
+	self assert: block compiledBlock numArgs equals: 5.
 
  	self should: [block value] raise: ArgumentsCountMismatch.
  	self should: [block value: nil] raise: ArgumentsCountMismatch.

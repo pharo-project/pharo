@@ -96,7 +96,7 @@ Breakpoint class >> browseAll [
 
 	| methods |
 	methods := self all flatCollect: [ :breakpoint | breakpoint link methods ].
-	Smalltalk tools messageList browse: methods
+	(Smalltalk tools toolNamed: #messageList) browse: methods
 ]
 
 { #category : 'testing' }

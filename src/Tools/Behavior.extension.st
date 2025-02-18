@@ -3,7 +3,7 @@ Extension { #name : 'Behavior' }
 { #category : '*Tools' }
 Behavior >> browse [
 
-	^  Smalltalk tools browser openOnClass: self
+	^  (Smalltalk tools toolNamed: #browser) openOnClass: self
 ]
 
 { #category : '*Tools' }

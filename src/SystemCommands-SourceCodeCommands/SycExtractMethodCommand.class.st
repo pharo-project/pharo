@@ -49,6 +49,12 @@ SycExtractMethodCommand >> defaultMenuItemName [
 	^ '(Old refactor) Extract method (no occurrences)'
 ]
 
+{ #category : 'accessing' }
+SycExtractMethodCommand >> description [
+
+	^ 'Extracts selected ast node into separate method.'
+]
+
 { #category : 'execution' }
 SycExtractMethodCommand >> readParametersFromContext: aSourceCodeContext [
 	super readParametersFromContext: aSourceCodeContext.

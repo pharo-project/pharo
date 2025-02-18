@@ -270,15 +270,6 @@ PasteUpMorph >> collapseNonWindows [
 	self nonWindows reject: [:m | m isSticky] thenDo: [:m | m collapse]
 ]
 
-{ #category : 'world menu' }
-PasteUpMorph >> commandKeySelectors [
-	"Answer my command-key table"
-
-	| aDict |
-	aDict := self valueOfProperty: #commandKeySelectors ifAbsentPut: [self initializeDesktopCommandKeySelectors].
-	^ aDict
-]
-
 { #category : 'menu & halo' }
 PasteUpMorph >> contentsMenu: aMenu [
 	"Build the menu used from PopUpContentsMenu:"
@@ -343,20 +334,6 @@ PasteUpMorph >> defersHaloOnClickTo: aSubMorph [
 { #category : 'world menu' }
 PasteUpMorph >> discoveredWorldMenu [
 	^ owner discoveredWorldMenu
-]
-
-{ #category : 'world menu' }
-PasteUpMorph >> dispatchCommandKeyInWorld: aChar event: evt [
-	"Dispatch the desktop command key if possible.  Answer whether handled"
-
-	| aMessageSend |
-	aMessageSend := self commandKeySelectors at: aChar ifAbsent: [^ false].
-	aMessageSend selector numArgs = 0
-		ifTrue:
-			[aMessageSend value]
-		ifFalse:
-			[aMessageSend valueWithArguments: (Array with: evt)].
-	^ true
 ]
 
 { #category : 'menu & halo' }
@@ -597,21 +574,6 @@ PasteUpMorph >> initialize [
 	super initialize.
 	self enableDragNDrop.
 	self clipSubmorphs: true
-]
-
-{ #category : 'world menu' }
-PasteUpMorph >> initializeDesktopCommandKeySelectors [
-	"Provide the starting settings for desktop command key selectors.  Answer the dictionary."
-
-	"ActiveWorld initializeDesktopCommandKeySelectors"
-	| dict |
-	dict := IdentityDictionary new.
-	self defaultDesktopCommandKeyTriplets do:
-		[:trip | | messageSend |
-			messageSend := MessageSend receiver: trip second selector: trip third.
-			dict at: trip first put: messageSend].
-	self setProperty: #commandKeySelectors toValue: dict.
-	^ dict
 ]
 
 { #category : 'world menu' }

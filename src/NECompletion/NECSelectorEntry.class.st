@@ -20,7 +20,7 @@ NECSelectorEntry >> browse [
 
 	^ self
 		findMethodAndDo: [ :method |
-			Smalltalk tools browser
+			(Smalltalk tools toolNamed: #browser)
 				openOnClass: method methodClass
 				selector: method selector.
 			true ]

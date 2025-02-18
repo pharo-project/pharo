@@ -16,6 +16,11 @@ Class {
 }
 
 { #category : 'specs' }
+DAAddPackagePresenter class >> defaultPreferredExtent [
+	^ (600@600)
+]
+
+{ #category : 'specs' }
 DAAddPackagePresenter class >> title [
 
 	^ 'Choose packages to add'
@@ -68,11 +73,6 @@ DAAddPackagePresenter >> dependenciesPresenter [
 DAAddPackagePresenter >> dependenciesPresenter: aPackageTreePresenter [
 	dependenciesPresenter := aPackageTreePresenter.
 	self buildList
-]
-
-{ #category : 'api' }
-DAAddPackagePresenter >> initialExtent [
-	^ (600@600)
 ]
 
 { #category : 'initialization' }

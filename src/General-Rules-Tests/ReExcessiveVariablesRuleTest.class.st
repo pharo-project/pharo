@@ -24,20 +24,15 @@ ReExcessiveVariablesRuleTest >> tearDown [
 { #category : 'tests' }
 ReExcessiveVariablesRuleTest >> testRule [
 
-	| critiques myClass |
-	myClass := classFactory make: [ :builder |
-		           builder slots:
-			           { #a. #b. #c. #d. #e. #f. #g. #h. #i. #j. #k } ].
-	critiques := self myCritiquesOnClass:  myClass.
-	self assert: critiques size equals: 1
+	| myClass |
+	myClass := classFactory make: [ :builder | builder slots: { #a. #b. #c. #d. #e. #f. #g. #h. #i. #j. #k } ].
+	self assert: (self myCritiquesOnClass: myClass) size equals: 1
 ]
 
 { #category : 'tests' }
 ReExcessiveVariablesRuleTest >> testRuleNotViolated [
 
-	| critiques myClass |
-	myClass := classFactory make: [ :builder |
-		           builder slots: { #a. #b. #c } ].
-	critiques := self myCritiquesOnClass: myClass.
-	self assertEmpty: critiques
+	| myClass |
+	myClass := classFactory make: [ :builder | builder slots: { #a. #b. #c } ].
+	self assertEmpty: (self myCritiquesOnClass: myClass)
 ]

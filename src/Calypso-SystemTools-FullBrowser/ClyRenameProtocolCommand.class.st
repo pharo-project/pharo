@@ -52,6 +52,12 @@ ClyRenameProtocolCommand >> defaultMenuItemName [
 	^'Rename'
 ]
 
+{ #category : 'accessing' }
+ClyRenameProtocolCommand >> description [ 
+
+^'Renames method protocol.'
+]
+
 { #category : 'execution' }
 ClyRenameProtocolCommand >> execute [
 	"The basic implementation iterates over the methods selected and update their protocol. Then Calypso is updated via the announcements of recategorization.

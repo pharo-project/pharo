@@ -24,25 +24,19 @@ ReNoNilAssignationInInitializeRuleTest >> tearDown [
 ]
 
 { #category : 'tests' }
-ReNoNilAssignationInInitializeRuleTest >> testRule [ 
+ReNoNilAssignationInInitializeRuleTest >> testRule [
 
-	| critiques class |
+	| class |
 	class := classfactory make: [ :builder | builder slots: { #inst } ].
-	class compile: 'initialize super initialize. inst := nil' classified: 'initialization' .
-	
-	critiques := self myCritiquesOnMethod: class >> #initialize.
-	self assert: critiques size equals: 1
-	
+	class compile: 'initialize super initialize. inst := nil' classified: 'initialization'.
+	self assert: (self myCritiquesOnMethod: class >> #initialize) size equals: 1
 ]
 
 { #category : 'tests' }
-ReNoNilAssignationInInitializeRuleTest >> testRuleNotViolated [ 
+ReNoNilAssignationInInitializeRuleTest >> testRuleNotViolated [
 
-	| critiques class |
+	| class |
 	class := classfactory make: [ :builder | builder slots: { #inst } ].
-	class compile: 'initialize super initialize' classified: 'initialization' .
-	
-	critiques := self myCritiquesOnMethod: class >> #initialize.
-	self assertEmpty: critiques
-	
+	class compile: 'initialize super initialize' classified: 'initialization'.
+	self assertEmpty: (self myCritiquesOnMethod: class >> #initialize)
 ]

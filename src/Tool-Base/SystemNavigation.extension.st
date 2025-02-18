@@ -134,7 +134,7 @@ SystemNavigation >> browseAllUsersOfTrait: aTrait [
 
 	"Launch a class-list list browser on all classes or traits which import aTrait"
 
-	^ self tools messageList browseClasses: aTrait traitUsers
+	^ (self tools toolNamed: #messageList) browseClasses: aTrait traitUsers
 ]
 
 { #category : '*Tool-Base' }
@@ -207,7 +207,7 @@ SystemNavigation >> browseClassesWithNamesContaining: aString caseSensitive: cas
 		           class name
 			           includesSubstring: aString
 			           caseSensitive: caseSensitive ].
-	^ self tools messageList browseClasses: classes
+	^ (self tools toolNamed: #messageList) browseClasses: classes
 ]
 
 { #category : '*Tool-Base' }
@@ -222,7 +222,7 @@ SystemNavigation >> browseHierarchy: aClass selector: aSelector [
 	"Open a browser"
 
 	aClass ifNil: [ ^ self ].
-	^ self tools browser new
+	^ (self tools toolNamed: #browser) new
 		  spawnHierarchyForClass: aClass selector: aSelector;
 		  yourself
 ]
@@ -261,7 +261,7 @@ SystemNavigation >> browseMessageList: messageList name: labelString autoSelect:
 	methods isEmpty ifTrue: [
 		^ self inform: 'There are no ' , String cr , labelString ].
 
-	^ self tools messageList new
+	^ (self tools toolNamed: #messageList) new
 		  messages: methods;
 		  title: labelString;
 		  autoSelect: autoSelectString;

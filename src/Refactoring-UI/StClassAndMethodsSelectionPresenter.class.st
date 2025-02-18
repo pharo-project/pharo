@@ -41,7 +41,7 @@ StClassAndMethodsSelectionPresenter class >> buildStMethodsSelectionContextualGr
 ]
 
 { #category : 'accessing' }
-StClassAndMethodsSelectionPresenter class >> defaultExtent [
+StClassAndMethodsSelectionPresenter class >> defaultPreferredExtent [
 
 	^ 500 @ 700
 ]

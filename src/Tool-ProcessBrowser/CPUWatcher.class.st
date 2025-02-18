@@ -91,7 +91,7 @@ CPUWatcher class >> pigFinding: aBoolean [
 
 { #category : 'accessing' }
 CPUWatcher class >> processBrowser [
-	^ Smalltalk tools processBrowser
+	^ Smalltalk tools toolNamed: #processBrowser
 ]
 
 { #category : 'system startup' }

@@ -6,9 +6,9 @@ A mock is an object that simulates the behavior of a real object or component in
 Class {
 	#name : 'CoMockEngine',
 	#superclass : 'Object',
-	#category : 'HeuristicCompletion-Tests-Core',
+	#category : 'HeuristicCompletion-Tests-Mocks',
 	#package : 'HeuristicCompletion-Tests',
-	#tag : 'Core'
+	#tag : 'Mocks'
 }
 
 { #category : 'accessing' }

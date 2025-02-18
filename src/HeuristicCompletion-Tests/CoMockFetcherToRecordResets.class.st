@@ -9,9 +9,9 @@ Class {
 	#instVars : [
 		'resetingCount'
 	],
-	#category : 'HeuristicCompletion-Tests-Core',
+	#category : 'HeuristicCompletion-Tests-Mocks',
 	#package : 'HeuristicCompletion-Tests',
-	#tag : 'Core'
+	#tag : 'Mocks'
 }
 
 { #category : 'enumerating' }

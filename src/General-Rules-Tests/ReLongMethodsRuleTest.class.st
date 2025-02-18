@@ -59,18 +59,12 @@ ReLongMethodsRuleTest >> smallMethod [
 
 { #category : 'tests' }
 ReLongMethodsRuleTest >> testRule [
-	|critiques| 
-	critiques := self myCritiquesOnMethod: self class >> #longMethods.
-	self assert: critiques size equals: 1 
 
-	
+	self assert: (self myCritiquesOnMethod: self class >> #longMethods) size equals: 1
 ]
 
 { #category : 'tests' }
 ReLongMethodsRuleTest >> testRuleNotViolated [
-	|critiques| 
-	critiques := self myCritiquesOnMethod: self class >> #smallMethod.
-	self assertEmpty: critiques
 
-	
+	self assertEmpty: (self myCritiquesOnMethod: self class >> #smallMethod)
 ]

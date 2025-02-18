@@ -20,3 +20,9 @@ ClyRunTestsFromPackagesCommand class >> fullBrowserClassGroupTableIconActivation
 
 	^ClyTableIconCommandActivation for: ClyFullBrowserClassGroupContext
 ]
+
+{ #category : 'accessing' }
+ClyRunTestsFromPackagesCommand >> description [
+
+	^ 'Run all tests from selected packages.'
+]

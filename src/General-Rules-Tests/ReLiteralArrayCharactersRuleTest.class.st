@@ -7,21 +7,15 @@ Class {
 }
 
 { #category : 'tests' }
-ReLiteralArrayCharactersRuleTest >> testRule [ 
+ReLiteralArrayCharactersRuleTest >> testRule [
 
-	| critiques | 
-	
-	self class compile: 'method ^ #($a $b $c)' classified: 'test-helper'.
-	[ critiques := self myCritiquesOnMethod: self class >> #method.
-	 self assert: critiques size equals: 1 ] ensure: [ (self class >> #method) removeFromSystem ] 
+	self generateMethod: 'method ^ #($a $b $c)'.
+	self assert: (self myCritiquesOnMethod: self class >> #method) size equals: 1
 ]
 
 { #category : 'tests' }
 ReLiteralArrayCharactersRuleTest >> testRuleNotViolated [
 
-	| critiques | 
-	
-	self class compile: 'method ^ #($a $b 1)' classified: 'test-helper'.
-	[ critiques := self myCritiquesOnMethod: self class >> #method.
-	 self assertEmpty: critiques ] ensure: [ (self class >> #method) removeFromSystem ] 
+	self generateMethod: 'method ^ #($a $b 1)'.
+	self assertEmpty: (self myCritiquesOnMethod: self class >> #method)
 ]

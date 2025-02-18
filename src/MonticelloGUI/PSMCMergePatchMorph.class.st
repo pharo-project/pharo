@@ -70,7 +70,7 @@ PSMCMergePatchMorph >> allConflictsMenu [
 PSMCMergePatchMorph >> browseClass [
 	"Browse the class of the selected item."
 
-	^ Smalltalk tools browser
+	^ (Smalltalk tools toolNamed: #browser)
 		openOnClass: self selectedChangeWrapper actualClass
 		selector: self selectedMessageName
 ]
@@ -95,7 +95,7 @@ PSMCMergePatchMorph >> browseSenders [
 PSMCMergePatchMorph >> browseVersions [
 	"Browse the method versions."
 
-	Smalltalk tools versionBrowser
+	(Smalltalk tools toolNamed: #versionBrowser)
 			browseVersionsForClass: self selectedChangeWrapper actualClass
 			selector: self selectedMessageName
 ]

@@ -153,6 +153,15 @@ CompiledBlock >> methodNode [
 	^ self outerCode methodNode
 ]
 
+{ #category : 'initialization' }
+CompiledBlock >> needsFrameSize: newFrameSize [
+	"Set the largeFrameBit to accomodate the newFrameSize"
+
+	self numTemps + newFrameSize > LargeFrame ifTrue: [
+		^ self error: 'Cannot compile -- stack including temps is too deep' ].
+	self setFrameBit: self numTemps + newFrameSize > SmallFrame
+]
+
 { #category : 'accessing' }
 CompiledBlock >> outerCode [
 	"answer the compiled code that I am installed in, or nil if none."
@@ -198,12 +207,6 @@ CompiledBlock >> pcInOuter [
 CompiledBlock >> pragmas [
 	<reflection: 'Class structural inspection - Pragma'>
 	^ #()
-]
-
-{ #category : 'accessing' }
-CompiledBlock >> primitive [
-	"for now we do not compile Quick CompiedBlocks, see IRBytecodeGenerator>>#compiledBlockWith:"
-	^0
 ]
 
 { #category : 'printing' }

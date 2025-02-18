@@ -17,8 +17,7 @@ CoGlobalSelectorFetcher >> entriesDo: aBlock [
 	astNode ifNotNil: [ :node | node parent ifNotNil: [ :parent | "Try first to continue the parent keyword message"
 		(parent isMessage and: [ parent isKeyword ]) ifTrue: [
 			self systemNavigation
-				allSelectorsStartingWith:
-				parent selector , filter completionString
+				allSelectorsStartingWith: parent selector , filter completionString
 				do: [ :e |
 					aBlock value: ((NECSelectorEntry
 							 contents: (e copyFrom: parent selector size + 1 to: e size)

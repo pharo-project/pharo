@@ -34,6 +34,14 @@ DarkBlueTheme >> buttonNormalBorderStyleFor: aButton [
 		baseColor: self buttonColor darker
 ]
 
+{ #category : 'initialization' }
+DarkBlueTheme >> defaultSettings [
+
+	^ super defaultSettings
+		  menuSelectionTextColor: Color white twiceDarker;
+		  yourself
+]
+
 { #category : 'accessing' }
 DarkBlueTheme >> shStyleTableName [
 

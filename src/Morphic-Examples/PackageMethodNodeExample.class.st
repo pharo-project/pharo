@@ -11,7 +11,9 @@ Class {
 
 { #category : 'accessing' }
 PackageMethodNodeExample >> browseItem [
-	Smalltalk tools browser openOnClass: self itemClass  selector: self selector
+	(Smalltalk tools toolNamed: #browser) 
+		openOnClass: self itemClass  
+		selector: self selector
 ]
 
 { #category : 'results' }

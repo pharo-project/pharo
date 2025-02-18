@@ -27,6 +27,12 @@ SycPushDownMethodCommand >> defaultMenuItemName [
 	^'Push down'
 ]
 
+{ #category : 'accessing' }
+SycPushDownMethodCommand >> description [
+
+	^ 'Push down methods.'
+]
+
 { #category : 'execution' }
 SycPushDownMethodCommand >> executeRefactorings [
 

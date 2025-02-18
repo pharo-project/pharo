@@ -8,11 +8,12 @@ Class {
 	#superclass : 'Object',
 	#instVars : [
 		'ast',
-		'methodClass'
+		'methodClass',
+		'selector'
 	],
-	#category : 'HeuristicCompletion-Tests-Core',
+	#category : 'HeuristicCompletion-Tests-Mocks',
 	#package : 'HeuristicCompletion-Tests',
-	#tag : 'Core'
+	#tag : 'Mocks'
 }
 
 { #category : 'accessing' }
@@ -29,6 +30,18 @@ CoMockMethod >> methodClass [
 { #category : 'accessing' }
 CoMockMethod >> methodClass: aCoMockClass [
 	methodClass := aCoMockClass
+]
+
+{ #category : 'accessing' }
+CoMockMethod >> selector [
+
+	^ selector
+]
+
+{ #category : 'accessing' }
+CoMockMethod >> selector: aSymbol [
+	"optional but for some tests it can be handy."
+	selector := aSymbol
 ]
 
 { #category : 'accessing' }

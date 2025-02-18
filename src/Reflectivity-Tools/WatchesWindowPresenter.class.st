@@ -188,7 +188,7 @@ WatchesWindowPresenter >> setupMenu [
 						label: nil;
 						help: 'Browse ...';
 						icon: (self iconNamed: #nautilus);
-						action: [ self application tools browser openOnMethod: self watch compiledMethod ];
+						action: [ (self application toolNamed: #browser) openOnMethod: self watch compiledMethod ];
 						yourself).
 
 	menu

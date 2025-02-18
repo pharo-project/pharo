@@ -41,6 +41,12 @@ SycRenameArgOrTempCommand >> defaultMenuItemName [
 	^'Rename temp'
 ]
 
+{ #category : 'accessing' }
+SycRenameArgOrTempCommand >> description [
+
+	^ 'Renames temp variable in given method.'
+]
+
 { #category : 'execution' }
 SycRenameArgOrTempCommand >> execute [
 

@@ -25,43 +25,35 @@ ReThemeAccessRuleTest >> tearDown [
 { #category : 'tests' }
 ReThemeAccessRuleTest >> testRuleForModel [
 
-	| critiques model| 
+	| model |
 	model := classfactory make: [ :builder | builder superclass: Model ].
 	model compile: 'method ^ Smalltalk ui theme' classified: 'test-helper'.
-	critiques := self myCritiquesOnMethod: model >> #method.
-	self assert: critiques size equals: 1
-	
+	self assert: (self myCritiquesOnMethod: model >> #method) size equals: 1
 ]
 
 { #category : 'tests' }
 ReThemeAccessRuleTest >> testRuleForMorph [
 
-	| critiques model| 
+	| model |
 	model := classfactory make: [ :builder | builder superclass: Morph ].
 	model compile: 'method ^ Smalltalk ui theme' classified: 'test-helper'.
-	critiques := self myCritiquesOnMethod: model >> #method.
-	self assert: critiques size equals: 1
-	
+	self assert: (self myCritiquesOnMethod: model >> #method) size equals: 1
 ]
 
 { #category : 'tests' }
-ReThemeAccessRuleTest >> testRuleNotViolatedForModel [ 
+ReThemeAccessRuleTest >> testRuleNotViolatedForModel [
 
-	| critiques model| 
+	| model |
 	model := classfactory make: [ :builder | builder superclass: Model ].
 	model compile: 'method ^ self theme' classified: 'test-helper'.
-	critiques := self myCritiquesOnMethod: model >> #method.
-	self assertEmpty: critiques
-	
+	self assertEmpty: (self myCritiquesOnMethod: model >> #method)
 ]
 
 { #category : 'tests' }
 ReThemeAccessRuleTest >> testRuleNotViolatedForMorph [
 
-	| critiques model| 
+	| model |
 	model := classfactory make: [ :builder | builder superclass: Morph ].
 	model compile: 'method ^ self theme' classified: 'test-helper'.
-	critiques := self myCritiquesOnMethod: model >> #method.
-	self assertEmpty: critiques
-	
+	self assertEmpty: (self myCritiquesOnMethod: model >> #method)
 ]

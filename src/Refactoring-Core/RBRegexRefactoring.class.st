@@ -53,6 +53,7 @@ RBRegexRefactoring >> execute: aString [
 
 { #category : 'private' }
 RBRegexRefactoring >> execute: aString replace: aRegex with: aReadStream [
+	
 	| stream |
 	^ aRegex copy: aString translatingMatchesUsing: [ :match |
 		stream := WriteStream on: (String new: 2 * aString size).
@@ -61,7 +62,14 @@ RBRegexRefactoring >> execute: aString replace: aRegex with: aReadStream [
 			aReadStream atEnd ifFalse: [
 				aReadStream peek isDigit
 					ifFalse: [ stream nextPut: aReadStream next ]
-					ifTrue: [ stream nextPutAll: (aRegex subexpression: aReadStream next asInteger - $0 asInteger + 1) ] ] ].
+					ifTrue: [
+						aRegex subexpressionCount = 2
+							ifTrue: [ stream nextPutAll: (aRegex subexpression: aReadStream next asInteger - $0 asInteger + 1) ] 
+							ifFalse: [ stream nextPutAll: (aRegex subexpression: aReadStream next asInteger - $0 asInteger) ]
+						
+						
+						
+						 ] ] ].
 		aReadStream reset.
 		stream contents ]
 ]

@@ -49,6 +49,12 @@ SycNewExtractMethodCommand >> defaultMenuItemName [
 	^ '(NewImplementation) Extract method'
 ]
 
+{ #category : 'accessing' }
+SycNewExtractMethodCommand >> description [
+
+	^ 'Extract selected ast node into separate method.'
+]
+
 { #category : 'converting' }
 SycNewExtractMethodCommand >> execute [
 

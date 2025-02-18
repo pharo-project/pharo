@@ -26,19 +26,15 @@ ReClassVariableCapitalizationRuleTest >> tearDown [
 { #category : 'tests' }
 ReClassVariableCapitalizationRuleTest >> testPoolVariableNameStartWithLowerCase [
 
-	| critiques myClass |
-	myClass := classFactory make: [ :builder |
-		           builder sharedVariables: { #pool }].
-	critiques := self myCritiquesOnClass: myClass.
-	self assert: critiques size equals: 1
+	| myClass |
+	myClass := classFactory make: [ :builder | builder sharedVariables: { #pool } ].
+	self assert: (self myCritiquesOnClass: myClass) size equals: 1
 ]
 
 { #category : 'tests' }
 ReClassVariableCapitalizationRuleTest >> testRuleNotViolated [
 
-	| critiques myClass |
-	myClass := classFactory make: [ :builder |
-		           builder sharedVariables: { #Pool } ].
-	critiques := self myCritiquesOnClass: myClass.
-	self assertEmpty: critiques 
+	| myClass |
+	myClass := classFactory make: [ :builder | builder sharedVariables: { #Pool } ].
+	self assertEmpty: (self myCritiquesOnClass: myClass)
 ]

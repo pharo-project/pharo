@@ -137,7 +137,7 @@ starting loopback test' traceCr.
 	('loopback test done; time = ' , t printString) traceCr.
 	((bytesToSend asFloat / t roundTo: 0.01) printString
 	 , '* 1000 bytes/sec') traceCr.
-	Smalltalk tools transcript endEntry
+	(Smalltalk tools toolNamed: #transcript) endEntry
 ]
 
 { #category : 'utilities' }

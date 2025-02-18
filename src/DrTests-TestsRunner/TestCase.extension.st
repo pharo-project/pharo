@@ -7,7 +7,14 @@ TestCase >> asResultForDrTest [
 
 { #category : '*DrTests-TestsRunner' }
 TestCase >> drTestsBrowse [
-	Smalltalk tools browser openOnClass: self class selector: self selector
+
+	"May be using double dispatch would be better
+	so that the application of DrTest can open tools 
+	without relying on this global."
+	
+	(Smalltalk  tools toolNamed: #browser) 
+		openOnClass: self class 
+		selector: self selector
 ]
 
 { #category : '*DrTests-TestsRunner' }

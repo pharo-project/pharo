@@ -27,6 +27,12 @@ SycMoveMethodsToClassSideCommand >> defaultMenuItemName [
 	^'Move to class side'
 ]
 
+{ #category : 'accessing' }
+SycMoveMethodsToClassSideCommand >> description [
+
+	^ 'Move method to the class side.'
+]
+
 { #category : 'execution' }
 SycMoveMethodsToClassSideCommand >> execute [
 

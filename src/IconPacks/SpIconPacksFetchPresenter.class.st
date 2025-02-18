@@ -331,13 +331,6 @@ SpIconPacksFetchPresenter >> initializeSearchPresenters [
 		yourself.
 ]
 
-{ #category : 'initialization' }
-SpIconPacksFetchPresenter >> initializeWindow: aWindowPresenter [
-
-	super initializeWindow: aWindowPresenter.
-	aWindowPresenter centered
-]
-
 { #category : 'accessing' }
 SpIconPacksFetchPresenter >> installedFetchPacks [
 	"Answer a <Collection> with the receiver's icon packs which are installed in the system"

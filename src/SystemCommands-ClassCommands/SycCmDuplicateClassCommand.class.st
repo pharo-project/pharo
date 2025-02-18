@@ -27,6 +27,12 @@ SycCmDuplicateClassCommand >> applyResultInContext: aClyFullBrowserClassContext 
 	"Nothing"
 ]
 
+{ #category : 'accessing' }
+SycCmDuplicateClassCommand >> description [
+
+	^ 'Duplicate Class.'
+]
+
 { #category : 'executing' }
 SycCmDuplicateClassCommand >> executeRefactoring [
 	"The class name is necessary so the browser can select the new subclass"

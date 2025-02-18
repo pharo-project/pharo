@@ -135,8 +135,10 @@ ProcessBrowser class >> dumpTallyOnTranscript: tally [
 	"tally is from ProcessorScheduler>>tallyCPUUsageFor:
 	Dumps lines with percentage of time, hash of process, and a friendly name"
 
-	self dumpTally: tally on: Smalltalk tools transcript.
-	Smalltalk tools transcript flush.
+	| t | 
+	t := (Smalltalk tools toolNamed: #transcript).
+	self dumpTally: tally on: t.
+	t flush.
 ]
 
 { #category : 'class initialization' }
@@ -360,7 +362,7 @@ ProcessBrowser class >> terminateProcess: aProcess [
 ProcessBrowser >> browseContext [
 
 	selectedContext ifNil: [ ^ self ].
-	self tools browser
+	(self tools toolNamed: #browser)
 		openOnClass: self selectedClass
 		selector: self selectedSelector
 ]

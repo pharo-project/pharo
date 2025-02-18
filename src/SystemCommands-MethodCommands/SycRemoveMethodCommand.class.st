@@ -32,6 +32,12 @@ SycRemoveMethodCommand >> defaultMenuItemName [
 	^'(R) Remove'
 ]
 
+{ #category : 'accessing' }
+SycRemoveMethodCommand >> description [
+
+	^ 'Removes methods.'
+]
+
 { #category : 'execution' }
 SycRemoveMethodCommand >> execute [
 	

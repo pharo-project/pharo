@@ -3,20 +3,11 @@ Tests for HowToMakeYourOwnTutorial
 "
 Class {
 	#name : 'HowToMakeYourOwnTutorialTest',
-	#superclass : 'TestCase',
-	#traits : 'TTutorialTest',
-	#classTraits : 'TTutorialTest classTrait',
+	#superclass : 'TutorialTest',
 	#category : 'ProfStef-Tests-Tests',
 	#package : 'ProfStef-Tests',
 	#tag : 'Tests'
 }
-
-{ #category : 'tests' }
-HowToMakeYourOwnTutorialTest >> testEachSelectorExists [
-	self testedTutorial tutorial do: [:aSelector|
-		self assert: (self testedTutorial respondsTo: aSelector)
-	]
-]
 
 { #category : 'tests' }
 HowToMakeYourOwnTutorialTest >> testedTutorial [

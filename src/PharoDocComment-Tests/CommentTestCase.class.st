@@ -42,6 +42,10 @@ CommentTestCase >> docCommentNode: aDocComment [
 
 { #category : 'actions' }
 CommentTestCase >> drTestsBrowse [
+	"May be using double dispatch would be better
+	so that the application of DrTest can open tools 
+	without relying on this global."
+
  	docCommentNode browse
 ]
 

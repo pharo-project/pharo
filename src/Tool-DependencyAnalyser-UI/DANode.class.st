@@ -29,7 +29,7 @@ DANode >> addMenuActionsOn: anActionGroup [
 
 { #category : 'browse-nautilus' }
 DANode >> browseClass: classToBrowse [
-	Smalltalk tools browser openOnClass: classToBrowse
+	(Smalltalk tools toolNamed: #browser) openOnClass: classToBrowse
 ]
 
 { #category : 'accessing' }

@@ -20,10 +20,16 @@ SycSuperclassImplementorsCommand >> defaultMenuItemName [
 	^ 'Hierarchical implementors'
 ]
 
+{ #category : 'accessing' }
+SycSuperclassImplementorsCommand >> description [
+
+	^ 'Finds Hierarchical implementors'
+]
+
 { #category : 'execution' }
 SycSuperclassImplementorsCommand >> execute [
 
-	Smalltalk tools messageList browse: self searchInTheWholeHierarchy.
+	(Smalltalk tools toolNamed: #messageList) browse: self searchInTheWholeHierarchy.
 ]
 
 { #category : 'execution' }

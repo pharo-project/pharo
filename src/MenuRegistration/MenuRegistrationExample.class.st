@@ -19,14 +19,13 @@ MenuRegistrationExample class >> mostUsedToolsOn: aBuilder [
 	(aBuilder group: #Tools)
 		withSeparatorAfter;
 		order: 0;
-		target: Smalltalk tools;
 		with: [
 			(aBuilder item: #'System browser')
-				selector: #openClassBrowser;
-				icon: (aBuilder iconNamed: Smalltalk tools browser taskbarIconName).
+				action: [ (Smalltalk tools toolNamed: #browser) open  ] ;
+				icon: (aBuilder iconNamed: #smallSystemBrowser).
 			(aBuilder item: #Playground)
-				selector: #openPlayground;
-				icon: (aBuilder iconNamed: Smalltalk tools workspace taskbarIconName).
+				action: [ (Smalltalk tools toolNamed: #workspace) open ];
+				icon: (aBuilder iconNamed: #workspace).
 			]
 ]
 
@@ -39,7 +38,7 @@ MenuRegistrationExample class >> myOwnCoolMenuRegistrationOn: aBuilder [
 		with: [
 			(aBuilder item: #MyOwnCoolTool)
 				label: 'My own cool tool also here';
-				target: Smalltalk tools workspace;
+				target: (Smalltalk tools toolNamed: #workspace);
 				selector: #openContents: ;
 				arguments: #('yep, my own cool tool can be also opened from a world sub-menu ! :)')]
 ]
@@ -50,7 +49,7 @@ MenuRegistrationExample class >> myOwnCoolToolRegistrationOn: aBuilder [
 	(aBuilder item: #MyOwnCoolTool)
 		parent: #Tools;
 		label: 'My own cool tool';
-		target: Smalltalk tools workspace;
+		target: (Smalltalk tools toolNamed: #workspace) ;
 		selector: #openContents: ;
 		arguments: #('yep, my own cool tool can be opened from the world menu ! :)')
 ]
@@ -109,18 +108,17 @@ MenuRegistrationExample class >> toolsOn: aBuilder [
 	<worldMenuExample>
 	(aBuilder item: #Tools)
 		order: 1.0;
-		target: Smalltalk tools;
 		iconName: #smallDoIt;
 		withSeparatorAfter;
 		with: [
 			(aBuilder item: #Transcript)
-				selector: #openTranscript;
-				icon: (aBuilder iconNamed: Smalltalk tools transcript  taskbarIconName).
+				action: [ (Smalltalk tools toolNamed: #transcript) open] ;
+				icon: (aBuilder iconNamed: #smallDebug).
 			(aBuilder item: #'File Browser')
-				selector: #openFileList;
+				action: [ (Smalltalk tools toolNamed: #fileList) open] ;
 				icon: (self  iconNamed: #smallWindow).
 			(aBuilder item: #'Process Browser')
 				selector: #openProcessBrowser;
-				icon: (aBuilder iconNamed: Smalltalk tools processBrowser taskbarIconName);
+				icon: (aBuilder iconNamed: #processBrowser);
 				withSeparatorAfter]
 ]

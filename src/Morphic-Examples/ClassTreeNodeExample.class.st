@@ -14,7 +14,7 @@ Class {
 
 { #category : 'accessing' }
 ClassTreeNodeExample >> browseItem [
-	Smalltalk tools browser openOnClass: self item
+	(Smalltalk tools toolNamed: #browser) openOnClass: self item
 ]
 
 { #category : 'menu' }

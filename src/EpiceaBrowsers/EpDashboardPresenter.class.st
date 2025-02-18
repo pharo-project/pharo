@@ -128,6 +128,7 @@ EpDashboardPresenter >> initializeWidgets [
 
 { #category : 'initialization' }
 EpDashboardPresenter >> initializeWindow: aWindowPresenter [
+
 	super initializeWindow: aWindowPresenter.
 	aWindowPresenter
 		whenClosedDo: [ self monitor announcer unsubscribe: self ]

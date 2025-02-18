@@ -17,6 +17,12 @@ Class {
 }
 
 { #category : 'testing' }
+DAPackageAnalyzerPresenter class >> defaultPreferredExtent [ 
+
+	^ 1500@800
+]
+
+{ #category : 'testing' }
 DAPackageAnalyzerPresenter class >> isAbstract [
 
 	^ self == DAPackageAnalyzerPresenter
@@ -69,11 +75,6 @@ DAPackageAnalyzerPresenter >> delete [
 { #category : 'accessing' }
 DAPackageAnalyzerPresenter >> dependenciesPresenter [
 	^ self model
-]
-
-{ #category : 'morphic ui' }
-DAPackageAnalyzerPresenter >> initialExtent [
-	^ (1500@800)
 ]
 
 { #category : 'initialization' }

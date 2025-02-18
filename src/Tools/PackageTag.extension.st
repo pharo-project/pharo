@@ -3,6 +3,6 @@ Extension { #name : 'PackageTag' }
 { #category : '*Tools' }
 PackageTag >> browse [
 
-	^ Smalltalk tools browser openWithState: [ :browser |
+	^ (Smalltalk tools toolNamed: #browser) openWithState: [ :browser |
 		  browser selectPackage: self package andTag: self name ]
 ]

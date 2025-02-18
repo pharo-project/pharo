@@ -22,17 +22,11 @@ ReMethodSelectorKeywordCasingRuleTest >> keyWordMethodWith: a WrongCasingAtEnd: 
 { #category : 'tests' }
 ReMethodSelectorKeywordCasingRuleTest >> testRule [
 
-	| critiques |
-	critiques := self myCritiquesOnMethod: self class >> #keyWordMethodWith:WrongCasingAtEnd:.
-
-	self assert: critiques size equals: 1
+	self assert: (self myCritiquesOnMethod: self class >> #keyWordMethodWith:WrongCasingAtEnd:) size equals: 1
 ]
 
 { #category : 'tests' }
 ReMethodSelectorKeywordCasingRuleTest >> testRuleUppercaseAtStart [
 
-	| critiques |
-	critiques := self myCritiquesOnMethod: self class >> #KeyWordMethodWith:wrongCasingAtEnd:.
-
-	self assert: critiques size equals: 1
+	self assert: (self myCritiquesOnMethod: self class >> #KeyWordMethodWith:wrongCasingAtEnd:) size equals: 1
 ]

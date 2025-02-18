@@ -9,38 +9,20 @@ Class {
 { #category : 'tests' }
 ReStatementsAfterReturnConditionalRuleTest >> testRule [
 
-	| critiques |
-	self class
-		compile: 'method 1 = 1 ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ]. 2'
-		classified: 'test-helper'.
-	[
-	critiques := self myCritiquesOnMethod: self class >> #method.
-	self assert: critiques size equals: 1 ] ensure: [
-		(self class >> #method)  removeFromSystem ]
+	self generateMethod: 'method 1 = 1 ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ]. 2'.
+	self assert: (self myCritiquesOnMethod: self class >> #method) size equals: 1
 ]
 
 { #category : 'tests' }
 ReStatementsAfterReturnConditionalRuleTest >> testRuleNotViolated [
 
-	| critiques |
-	self class
-		compile: 'method 1 = 1 ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ].'
-		classified: 'test-helper'.
-	[
-	critiques := self myCritiquesOnMethod: self class >> #method.
-	self assertEmpty: critiques ] ensure: [
-		(self class >> #method) removeFromSystem ]
+	self generateMethod: 'method 1 = 1 ifTrue: [ ^ 1 ] ifFalse: [ ^ 2 ].'.
+	self assertEmpty: (self myCritiquesOnMethod: self class >> #method)
 ]
 
 { #category : 'tests' }
 ReStatementsAfterReturnConditionalRuleTest >> testRuleNotViolatedWithNotReturnInBranch [
 
-	| critiques |
-	self class
-		compile: 'method 1 = 1 ifTrue: [  ] ifFalse: [ ^ 2 ]. 2'
-		classified: 'test-helper'.
-	[
-	critiques := self myCritiquesOnMethod: self class >> #method.
-	self assertEmpty: critiques ] ensure: [
-		(self class >> #method) removeFromSystem ]
+	self generateMethod: 'method 1 = 1 ifTrue: [  ] ifFalse: [ ^ 2 ]. 2'.
+	self assertEmpty: (self myCritiquesOnMethod: self class >> #method)
 ]
