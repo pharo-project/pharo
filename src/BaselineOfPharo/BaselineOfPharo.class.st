@@ -195,8 +195,23 @@ BaselineOfPharo >> baseline: spec [
 			spec
 				repository: repository;
 				loads: #( 'IcebergSupport' ) ].
+			
+		self
+			load: 'DependencyAnalyzer'
+			group: 'Tool-DependencyAnalyser-UI-Tab'
+			spec: spec.
+
 
 		spec package: 'Deprecated13' ]
+]
+
+{ #category : 'baselines' }
+BaselineOfPharo >> load: aProject group: aGroupName spec: spec [
+
+	spec baseline: aProject with: [
+		spec
+			repository: (self packageRepositoryURLForSpec: spec);
+			loads: aGroupName ]
 ]
 
 { #category : 'actions' }
