@@ -6,6 +6,9 @@ This is an abstract class, subclasses should implement #socketStreamClass
 Class {
 	#name : 'ZdcAbstractSocketStreamTest',
 	#superclass : 'TestCase',
+	#instVars : [
+		'port'
+	],
 	#category : 'Zodiac-Tests',
 	#package : 'Zodiac-Tests'
 }
@@ -35,20 +38,22 @@ ZdcAbstractSocketStreamTest >> listenBacklogSize [
 ]
 
 { #category : 'private' }
-ZdcAbstractSocketStreamTest >> openConnectionToHost: host port: port [
-	^ self socketStreamClass
-		openConnectionToHost: host port: port
+ZdcAbstractSocketStreamTest >> openConnectionToHost: host port: aPort [
+
+	^ self socketStreamClass openConnectionToHost: host port: aPort
 ]
 
 { #category : 'private' }
-ZdcAbstractSocketStreamTest >> openConnectionToHostNamed: host port: port [
-	^ self socketStreamClass
-		openConnectionToHostNamed: host port: port
+ZdcAbstractSocketStreamTest >> openConnectionToHostNamed: host port: aPort [
+
+	^ self socketStreamClass openConnectionToHostNamed: host port: aPort
 ]
 
 { #category : 'accessing' }
 ZdcAbstractSocketStreamTest >> port [
-	^ 1701
+	"We randomize ports because the Pharo CI can run multiple images with their tests at the same time and in some cases a port is already used. So we take a random port among 100 ports and this should make the probability of having a random failure really low."
+
+	^ port ifNil: [ port := 1701 + 100 atRandom ]
 ]
 
 { #category : 'private' }
@@ -90,15 +95,15 @@ ZdcAbstractSocketStreamTest >> serverPriority [
 ]
 
 { #category : 'private' }
-ZdcAbstractSocketStreamTest >> serverSocketOn: port [
+ZdcAbstractSocketStreamTest >> serverSocketOn: aPort [
+
 	| socket |
 	(socket := Socket newTCP)
 		setOption: 'TCP_NODELAY' value: 1;
 		setOption: 'SO_SNDBUF' value: self socketBufferSize;
-		setOption: 'SO_RCVBUF' value: self socketBufferSize .
-	socket listenOn: port backlogSize: self listenBacklogSize.
-	socket isValid
-		ifFalse: [ self error: 'Cannot create socket on port ', port printString ].
+		setOption: 'SO_RCVBUF' value: self socketBufferSize.
+	socket listenOn: aPort backlogSize: self listenBacklogSize.
+	socket isValid ifFalse: [ self error: 'Cannot create socket on port ' , aPort printString ].
 	^ socket
 ]
 
