@@ -25,15 +25,17 @@ This method creates the proper literal in the given environment. Some of the lit
 for example the classes.
 "
 Class {
-	#name : #HEExportedLiteral,
-	#superclass : #HEAbstractExported,
+	#name : 'HEExportedLiteral',
+	#superclass : 'HEAbstractExported',
 	#instVars : [
 		'value'
 	],
-	#category : #'Hermes-Model'
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HEExportedLiteral class >> readFrom: aReader [
 	| tag subclass |
 	tag := aReader readByte.
@@ -43,25 +45,25 @@ HEExportedLiteral class >> readFrom: aReader [
 		yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 HEExportedLiteral >> asExportedLiteral [
 	"I am already an exported literal, I do not need any conversion"
 	^ self
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEExportedLiteral >> asLiteralIn: anEnvironment [
 
 	self subclassResponsibility
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEExportedLiteral >> doReadFrom: aReader [
 	"Main template method to read the instance from the reader stream"
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEExportedLiteral >> value [
 	^ value
 ]

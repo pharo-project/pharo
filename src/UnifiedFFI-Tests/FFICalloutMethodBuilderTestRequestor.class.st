@@ -3,12 +3,14 @@ I'm a callout for testing the method builder.
 Basically, I do not introspect any variable :P
 "
 Class {
-	#name : #FFICalloutMethodBuilderTestRequestor,
-	#superclass : #FFICallout,
-	#category : #'UnifiedFFI-Tests-Test-Data'
+	#name : 'FFICalloutMethodBuilderTestRequestor',
+	#superclass : 'FFICallout',
+	#category : 'UnifiedFFI-Tests-Test-Data',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Test-Data'
 }
 
-{ #category : #'argument loaders' }
+{ #category : 'argument loaders' }
 FFICalloutMethodBuilderTestRequestor >> loaderFromMethodArgsNamed: argName [
 	(argName beginsWith: 'var')
 		ifTrue: [ ^

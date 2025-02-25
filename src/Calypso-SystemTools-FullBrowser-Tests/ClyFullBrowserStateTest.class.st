@@ -1,10 +1,11 @@
 Class {
-	#name : #ClyFullBrowserStateTest,
-	#superclass : #ClyBrowserStateTest,
-	#category : #'Calypso-SystemTools-FullBrowser-Tests'
+	#name : 'ClyFullBrowserStateTest',
+	#superclass : 'ClyBrowserStateTest',
+	#category : 'Calypso-SystemTools-FullBrowser-Tests',
+	#package : 'Calypso-SystemTools-FullBrowser-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyFullBrowserStateTest >> restoreBrowserInstance [
 
 	self snapshotState.
@@ -12,14 +13,14 @@ ClyFullBrowserStateTest >> restoreBrowserInstance [
 	navigationState applyTo: browser
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyFullBrowserStateTest >> setUp [
 	super setUp.
 
 	browser prepareInitialState
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyFullBrowserStateTest >> testRestoredBrowserInstanceWithMetaLevelScope [
 
 	browser metaLevelScope: #testScope.
@@ -29,7 +30,7 @@ ClyFullBrowserStateTest >> testRestoredBrowserInstanceWithMetaLevelScope [
 	self assert: browser metaLevelScope equals: #testScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyFullBrowserStateTest >> testRestoredBrowserInstanceWithMethodGroupQuery [
 
 	browser methodGroupQuery: #testQuery.
@@ -39,7 +40,7 @@ ClyFullBrowserStateTest >> testRestoredBrowserInstanceWithMethodGroupQuery [
 	self assert: browser methodGroupQuery equals: #testQuery
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyFullBrowserStateTest >> testRestoredBrowserInstanceWithSystemScope [
 
 	browser systemScope: #testScope.
@@ -49,7 +50,7 @@ ClyFullBrowserStateTest >> testRestoredBrowserInstanceWithSystemScope [
 	self assert: browser systemScope equals: #testScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyFullBrowserStateTest >> testRetrievesMetaLevelScope [
 
 	self snapshotState.
@@ -57,7 +58,7 @@ ClyFullBrowserStateTest >> testRetrievesMetaLevelScope [
 	self assert: navigationState metaLevelScope equals: browser metaLevelScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyFullBrowserStateTest >> testRetrievesMethodGroupContent [
 
 	self snapshotState.
@@ -65,7 +66,7 @@ ClyFullBrowserStateTest >> testRetrievesMethodGroupContent [
 	self assert: navigationState methodGroupQuery equals: browser methodGroupQuery
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyFullBrowserStateTest >> testRetrievesSystemScope [
 
 	self snapshotState.

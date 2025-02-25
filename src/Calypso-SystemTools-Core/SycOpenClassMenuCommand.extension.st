@@ -1,6 +1,6 @@
-Extension { #name : #SycOpenClassMenuCommand }
+Extension { #name : 'SycOpenClassMenuCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycOpenClassMenuCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
@@ -8,7 +8,7 @@ SycOpenClassMenuCommand class >> fullBrowserMenuActivation [
 		for: ClyClass asCalypsoItemContext
 ]
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycOpenClassMenuCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 

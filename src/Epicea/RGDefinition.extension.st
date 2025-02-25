@@ -1,6 +1,6 @@
-Extension { #name : #RGDefinition }
+Extension { #name : 'RGDefinition' }
 
-{ #category : #'*Epicea-Ring' }
+{ #category : '*Epicea-Ring' }
 RGDefinition >> asEpiceaRingDefinition [
 
 	^ self

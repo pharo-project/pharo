@@ -2,17 +2,19 @@
 I'm a tree node representing a specific message send in the package under analysis.
 "
 Class {
-	#name : #DAMessageSendNode,
-	#superclass : #DAMethodDependencyNode,
-	#category : #'Tool-DependencyAnalyser-UI-Nodes'
+	#name : 'DAMessageSendNode',
+	#superclass : 'DAMethodDependencyNode',
+	#category : 'Tool-DependencyAnalyser-UI-Nodes',
+	#package : 'Tool-DependencyAnalyser-UI',
+	#tag : 'Nodes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAMessageSendNode >> icon [
-	^ self iconNamed: #smallLanguageIcon
+	^ self iconNamed: #smallLanguage
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 DAMessageSendNode >> label [
 	^ String streamContents: [ :stream |
 		stream

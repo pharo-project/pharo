@@ -2,18 +2,20 @@
 SUnit tests for class BitBlt 
 "
 Class {
-	#name : #BitBltTest,
-	#superclass : #ClassTestCase,
-	#category : #'Graphics-Tests-Primitives'
+	#name : 'BitBltTest',
+	#superclass : 'ClassTestCase',
+	#category : 'Graphics-Tests-Primitives',
+	#package : 'Graphics-Tests',
+	#tag : 'Primitives'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 BitBltTest >> classToBeTested [
 
 	^BitBlt
 ]
 
-{ #category : #'tests - bugs' }
+{ #category : 'tests - bugs' }
 BitBltTest >> testAlphaCompositing [
 	| bb f1 f2 mixColor result eps |
 	f1 := Form extent: 1 @ 1 depth: 32.
@@ -34,7 +36,7 @@ BitBltTest >> testAlphaCompositing [
 		self assert: result alpha equals: 1.0 ]
 ]
 
-{ #category : #'tests - bugs' }
+{ #category : 'tests - bugs' }
 BitBltTest >> testAlphaCompositing2 [
 	| bb f1 f2 mixColor result eps |
 	f1 := Form extent: 1 @ 1 depth: 32.
@@ -54,7 +56,7 @@ BitBltTest >> testAlphaCompositing2 [
 		self assert: result alpha equals: mixColor alpha ]
 ]
 
-{ #category : #'tests - bugs' }
+{ #category : 'tests - bugs' }
 BitBltTest >> testAlphaCompositing2Simulated [
 	testingEnvironment
 		at: #BitBltSimulation
@@ -76,7 +78,7 @@ BitBltTest >> testAlphaCompositing2Simulated [
 				self assert: result alpha equals: mixColor alpha ] ]
 ]
 
-{ #category : #'tests - bugs' }
+{ #category : 'tests - bugs' }
 BitBltTest >> testAlphaCompositingSimulated [
 	testingEnvironment
 		at: #BitBltSimulation
@@ -97,22 +99,4 @@ BitBltTest >> testAlphaCompositingSimulated [
 				self assert: (result red - mixColor alpha) abs < eps.
 				self assert: (result blue - (1.0 - mixColor alpha)) abs < eps.
 				self assert: result alpha equals: 1.0 ] ]
-]
-
-{ #category : #'tests - bugs' }
-BitBltTest >> testPeekerUnhibernateBug [
-
-	| bitBlt |
-	bitBlt := BitBlt bitPeekerFromForm: Display.
-	bitBlt destForm hibernate.
-	bitBlt pixelAt: 1 @ 1
-]
-
-{ #category : #'tests - bugs' }
-BitBltTest >> testPokerUnhibernateBug [
-
-	| bitBlt |
-	bitBlt := BitBlt bitPokerToForm: Display.
-	bitBlt sourceForm hibernate.
-	bitBlt pixelAt: 1 @ 1 put: 0
 ]

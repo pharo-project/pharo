@@ -7,51 +7,49 @@ Instance Variables
 newName:  <String>
 "
 Class {
-	#name : #SycMigrateReferencesOfClassCommand,
-	#superclass : #SycSingleClassCommand,
+	#name : 'SycMigrateReferencesOfClassCommand',
+	#superclass : 'SycSingleClassCommand',
 	#instVars : [
 		'newName'
 	],
-	#category : #'SystemCommands-ClassCommands'
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 SycMigrateReferencesOfClassCommand >> asRefactorings [
 	| refactoring |
-	refactoring :=  RBDeprecateClassRefactoring deprecate: targetClass in: newName name.
+	refactoring :=  RBDeprecateClassRefactoring deprecate: targetClass name in: newName name.
 	refactoring shouldFixSubclasses: false.
 	refactoring shouldCopyExtensions: false.
 	refactoring shouldRemoveExtensions: false.
 	^ { refactoring }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMigrateReferencesOfClassCommand >> defaultMenuIconName [
 	^ #source
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMigrateReferencesOfClassCommand >> defaultMenuItemName [
 	^'Migrate references'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycMigrateReferencesOfClassCommand >> execute [
 
 	self asRefactorings do: [ :ref | ref execute ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycMigrateReferencesOfClassCommand >> isComplexRefactoring [
 	^ true
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycMigrateReferencesOfClassCommand >> prepareFullExecutionInContext: aToolContext [
 
 	super prepareFullExecutionInContext: aToolContext.
-	newName := aToolContext browser searchDialog
-		requestSingleObject: 'Choose new class'
-		from: ClyAllClassesQuery sorted.
-	newName ifNil: [ CmdCommandAborted signal]
+	newName := aToolContext requestSingleClass: 'Choose new class'
 ]

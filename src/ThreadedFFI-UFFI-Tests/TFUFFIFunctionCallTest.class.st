@@ -1,29 +1,30 @@
 Class {
-	#name : #TFUFFIFunctionCallTest,
-	#superclass : #TFUFFITestCase,
-	#category : #'ThreadedFFI-UFFI-Tests'
+	#name : 'TFUFFIFunctionCallTest',
+	#superclass : 'TFUFFITestCase',
+	#category : 'ThreadedFFI-UFFI-Tests',
+	#package : 'ThreadedFFI-UFFI-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIFunctionCallTest >> calloutWithManyArguments: arg1 and: arg2 and: arg3 and: arg4 and: arg5 and: arg6 and: arg7 and: arg8 and: arg9 and: arg10 [
 	^ self
 		ffiCall:
 			#(int multipleArgumentCallout #(int arg1 , int arg2 , int arg3 , int arg4 , int arg5 , int arg6 , int arg7 , int arg8 , int arg9 , int arg10))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIFunctionCallTest >> longCallout: seconds [
 
 	^ self ffiCall: #(int longCallout(int seconds))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIFunctionCallTest >> shortCallout [
 
 	^ self ffiCall: #(int shortCallout())
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIFunctionCallTest >> testCalloutWithManyArguments [
 
 	| result |
@@ -41,7 +42,7 @@ TFUFFIFunctionCallTest >> testCalloutWithManyArguments [
 	self assert: result equals: 55
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIFunctionCallTest >> testLongCalloutDoesNotBlockImage [
 
 	"Tricky test.
@@ -70,7 +71,7 @@ TFUFFIFunctionCallTest >> testLongCalloutDoesNotBlockImage [
 	self assert: orderOfFinishing first equals: #waitingForCallout
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFUFFIFunctionCallTest >> testShortCallout [
 
 	| semaphore result |

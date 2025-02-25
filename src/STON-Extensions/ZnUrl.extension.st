@@ -1,11 +1,11 @@
-Extension { #name : #ZnUrl }
+Extension { #name : 'ZnUrl' }
 
-{ #category : #'*STON-Extensions' }
+{ #category : '*STON-Extensions' }
 ZnUrl >> stonContainSubObjects [
 	^ false
 ]
 
-{ #category : #'*STON-Extensions' }
+{ #category : '*STON-Extensions' }
 ZnUrl >> stonOn: stonWriter [
 	stonWriter
 		writeObject: self

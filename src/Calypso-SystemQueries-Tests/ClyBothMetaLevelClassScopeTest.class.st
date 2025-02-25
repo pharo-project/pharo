@@ -1,16 +1,18 @@
 Class {
-	#name : #ClyBothMetaLevelClassScopeTest,
-	#superclass : #ClyLocalClassScopeTest,
-	#category : #'Calypso-SystemQueries-Tests-Scopes'
+	#name : 'ClyBothMetaLevelClassScopeTest',
+	#superclass : 'ClyLocalClassScopeTest',
+	#category : 'Calypso-SystemQueries-Tests-Scopes',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Scopes'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyBothMetaLevelClassScopeTest >> scopeClass [
 
 	^ClyBothMetaLevelClassScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBothMetaLevelClassScopeTest >> testClassEnumeration [
 	scope := ClyBothMetaLevelClassScope ofAll: {ClyClass1FromP1Mock. ClyClass2FromP1Mock}.
 
@@ -19,7 +21,7 @@ ClyBothMetaLevelClassScopeTest >> testClassEnumeration [
 	self assert: result asArray equals: {ClyClass1FromP1Mock. ClyClass2FromP1Mock}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBothMetaLevelClassScopeTest >> testClassEnumerationWhenMetaClassIsBasis [
 	scope := ClyBothMetaLevelClassScope of: ClyClass1FromP1Mock class.
 
@@ -28,7 +30,7 @@ ClyBothMetaLevelClassScopeTest >> testClassEnumerationWhenMetaClassIsBasis [
 	self assert: result asArray equals: {ClyClass1FromP1Mock}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBothMetaLevelClassScopeTest >> testMethodsEnumerationWhenBasisIsClass [
 	scope := ClyBothMetaLevelClassScope of: ClyClass1FromP1Mock.
 
@@ -38,7 +40,7 @@ ClyBothMetaLevelClassScopeTest >> testMethodsEnumerationWhenBasisIsClass [
 	self assert: (result includesAll: ClyClass1FromP1Mock classSide localMethods)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyBothMetaLevelClassScopeTest >> testMethodsEnumerationWhenBasisIsMetaclass [
 	scope := ClyBothMetaLevelClassScope of: ClyClass1FromP1Mock classSide.
 

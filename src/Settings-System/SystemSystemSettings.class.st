@@ -2,12 +2,13 @@
 Settings for the system itself
 "
 Class {
-	#name : #SystemSystemSettings,
-	#superclass : #Object,
-	#category : #'Settings-System'
+	#name : 'SystemSystemSettings',
+	#superclass : 'Object',
+	#category : 'Settings-System',
+	#package : 'Settings-System'
 }
 
-{ #category : #settings }
+{ #category : 'settings' }
 SystemSystemSettings class >> systemSettingOn: aBuilder [
 	<systemsettings>
 
@@ -16,9 +17,9 @@ SystemSystemSettings class >> systemSettingOn: aBuilder [
 		description: 'Settings related to Tools'.
 
 	(aBuilder group: #SCM)
-		label: 'Software Configuration Management';
+		label: 'SCM';
 		parent: #tools;
-		description: 'Settings related to version management and code sharing'.
+		description: 'Settings related to Software Configuration Management (version management and code sharing)'.
 
 	(aBuilder group: #pharoSystem)
 		label: 'System';

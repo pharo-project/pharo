@@ -16,52 +16,54 @@ Internal Representation and Key Implementation Points.
 	activator:		<CmdCommandActivator>
 "
 Class {
-	#name : #ClyBrowserToolbarItemMorph,
-	#superclass : #Morph,
+	#name : 'ClyBrowserToolbarItemMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'activator'
 	],
-	#category : #'Calypso-Browser-Toolbar'
+	#category : 'Calypso-Browser-Toolbar',
+	#package : 'Calypso-Browser',
+	#tag : 'Toolbar'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyBrowserToolbarItemMorph class >> activatingBy: aCommandActivator [
 	^self new
 		activator: aCommandActivator
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolbarItemMorph >> activator [
 	^activator
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolbarItemMorph >> activator: aCommandActivator [
 	activator := aCommandActivator.
 	self build
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolbarItemMorph >> addIcon: anIcon [
 
 	self addMorphFront: anIcon asMorph
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserToolbarItemMorph >> build [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolbarItemMorph >> defaultColor [
 	^Color transparent
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyBrowserToolbarItemMorph >> executeCommand [
 	activator executeCommand
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyBrowserToolbarItemMorph >> initialize [
 	super initialize.
 	self
@@ -69,10 +71,10 @@ ClyBrowserToolbarItemMorph >> initialize [
 		listDirection: #leftToRight;
 		hResizing: #shrinkWrap;
 		vResizing: #shrinkWrap;
-		cellInset: 4
+		cellInset: 4 scaledByDisplayScaleFactor
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyBrowserToolbarItemMorph >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
@@ -80,7 +82,7 @@ ClyBrowserToolbarItemMorph >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserToolbarItemMorph >> title [
 	^activator menuItemName
 ]

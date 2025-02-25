@@ -2,35 +2,37 @@
 I am the abstract superclass for all classes that are results of a plugin in DrTests.
 "
 Class {
-	#name : #DTPluginResult,
-	#superclass : #Object,
-	#category : #'DrTests-Model'
+	#name : 'DTPluginResult',
+	#superclass : 'Object',
+	#category : 'DrTests-Model',
+	#package : 'DrTests',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTPluginResult >> backgroundColorStyle [
 
 	^ 'testResult'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTPluginResult >> buildTreeForUI [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTPluginResult >> summarizeInfo [
 	"Text showed in miniDrTests with info of the result "
 
 	^ self asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTPluginResult >> textColor [
 	^ TestResult defaultColorText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTPluginResult >> theme [
 	^ Smalltalk ui theme
 ]

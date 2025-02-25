@@ -10,13 +10,13 @@ Instance variables:
 	target 		<Object>		The target of the associated action.
 	selector 		<Symbol>	The associated action.
 	arguments 	<Array>		The arguments for the associated action.
-	icon		<Form | nil>	An optional icon form to be displayed to my left.
+	iconFormSet	<FormSet | nil>	An optional icon form set to be displayed to my left.
 
 
 "
 Class {
-	#name : #MenuItemMorph,
-	#superclass : #StringMorph,
+	#name : 'MenuItemMorph',
+	#superclass : 'StringMorph',
 	#instVars : [
 		'isEnabled',
 		'subMenu',
@@ -24,43 +24,55 @@ Class {
 		'target',
 		'selector',
 		'arguments',
-		'icon',
+		'iconFormSet',
 		'keyText'
 	],
 	#classVars : [
-		'BottomArrow',
-		'LeftArrow',
-		'SubMenuMarker',
-		'UpArrow'
+		'BottomArrowFormSet',
+		'LeftArrowFormSet',
+		'SubMenuMarkerFormSet',
+		'UpArrowFormSet'
 	],
-	#category : #'Morphic-Base-Menus'
+	#category : 'Morphic-Base-Menus',
+	#package : 'Morphic-Base',
+	#tag : 'Menus'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 MenuItemMorph class >> initialize [
 
-	| f |
-	f := Form
-		extent: 5@9
-		fromArray: #(2147483648 3221225472 3758096384 4026531840 4160749568 4026531840 3758096384 3221225472 2147483648)
-		offset: 0@0.
+	| forms rotatedFormSets |
 
-	SubMenuMarker := (ColorForm mappingWhiteToTransparentFrom: f) asFormOfDepth: 32.
-	BottomArrow := SubMenuMarker rotateBy: 90.
-	LeftArrow := SubMenuMarker rotateBy: 180.
-	UpArrow := SubMenuMarker rotateBy: 270
+	forms := (1 to: 2) collect: [ :scale |
+		| rectangle |
+		rectangle := (0 @ -1) corner: (1@2) * 4 * scale + 1.
+		(FormCanvas extent: (5@9) * scale)
+			drawPolygon: { rectangle topLeft. rectangle rightCenter. rectangle bottomLeft }
+				fillStyle: (SolidFillStyle color: Color black);
+			form ].
+	SubMenuMarkerFormSet := FormSet forms: forms.
+	rotatedFormSets := #(90 180 270) collect: [ :degrees |
+		| form1 form2 |
+		form1 := forms first rotateBy: degrees.
+		form2 := (FormCanvas extent: form1 extent * 2)
+			drawImage: (forms second rotateBy: degrees) at: 0@0;
+			form.
+		FormSet forms: { form1. form2 } ].
+	BottomArrowFormSet := rotatedFormSets first.
+	LeftArrowFormSet := rotatedFormSets second.
+	UpArrowFormSet := rotatedFormSets third
 ]
 
-{ #category : #grabbing }
+{ #category : 'grabbing' }
 MenuItemMorph >> aboutToBeGrabbedBy: aHand [
 	"Don't allow the receiver to act outside a Menu"
 	| menu box |
-	(owner notNil and:[owner hasSubmorphs ]) ifTrue:[
+	(owner isNotNil and:[owner hasSubmorphs ]) ifTrue:[
 		"I am a lonely menuitem already; just grab my owner"
 		owner stayUp: true.
 		^owner aboutToBeGrabbedBy: aHand].
 	box := self bounds.
-	menu := UIManager default newMenuIn: self for: nil.
+	menu := self morphicUIManager newMenuIn: self for: nil.
 	menu addMorphFront: self.
 	menu bounds: box.
 	menu stayUp: true.
@@ -68,7 +80,7 @@ MenuItemMorph >> aboutToBeGrabbedBy: aHand [
 	^menu
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 MenuItemMorph >> activateOwnerMenu: evt [
 	"Activate our owner menu; e.g., pass control to it.
 	 If it does not contain the pointer position, pass it through the owner chain."
@@ -90,7 +102,7 @@ MenuItemMorph >> activateOwnerMenu: evt [
 	^ false
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 MenuItemMorph >> activateSubmenu: evt [
 	"Activate our submenu; e.g., pass control to it"
 	subMenu ifNil:[^false]. "not applicable"
@@ -100,12 +112,12 @@ MenuItemMorph >> activateSubmenu: evt [
 	^true
 ]
 
-{ #category : #selecting }
+{ #category : 'selecting' }
 MenuItemMorph >> adjacentTo [
 	^ {self bounds topRight + (10 @ 0). self bounds topLeft}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> allWordingsNotInSubMenus: verbotenSubmenuContentsList [
 	"Answer a collection of the wordings of all items and subitems, but omit the stay-up item, and also any items in any submenu whose tag is in verbotenSubmenuContentsList"
 
@@ -120,46 +132,46 @@ MenuItemMorph >> allWordingsNotInSubMenus: verbotenSubmenuContentsList [
 	^ Array with: self contents asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> arguments [
 
 	^ arguments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> arguments: aCollection [
 
 	arguments := aCollection
 ]
 
-{ #category : #private }
-MenuItemMorph >> bottomArrow [
+{ #category : 'private' }
+MenuItemMorph >> bottomArrowFormSet [
 
-	^ BottomArrow
+	^ BottomArrowFormSet
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> contentString [
 	^self valueOfProperty: #contentString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> contentString: aString [
 	aString ifNil: [self removeProperty: #contentString]
 		ifNotNil: [self setProperty: #contentString toValue: aString]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> contents: aString [
 	^self contents: aString withMarkers: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> contents: aString withMarkers: aBool [
 	^self contents: aString withMarkers: aBool inverse: false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> contents: aString withMarkers: aBool inverse: inverse [
 	"Set the menu item entry. If aBool is true, parse aString for embedded markers."
 
@@ -193,19 +205,19 @@ MenuItemMorph >> contents: aString withMarkers: aBool inverse: inverse [
 	self addMorphFront: marker
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MenuItemMorph >> defaultBounds [
 "answer the default bounds for the receiver"
 	^ 0 @ 0 extent: 10 @ 10
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MenuItemMorph >> deleteIfPopUp: evt [
 	"Recurse up for nested pop ups"
 	owner ifNotNil:[owner deleteIfPopUp: evt]
 ]
 
-{ #category : #selecting }
+{ #category : 'selecting' }
 MenuItemMorph >> deselect: evt [
 	self isSelected: false.
 	subMenu ifNotNil: [
@@ -213,7 +225,7 @@ MenuItemMorph >> deselect: evt [
 		self removeAlarm: #deselectTimeOut:]
 ]
 
-{ #category : #'meta actions' }
+{ #category : 'meta actions' }
 MenuItemMorph >> deselectItem [
 	| item |
 	self isSelected: false.
@@ -223,7 +235,7 @@ MenuItemMorph >> deselectItem [
 		(item isMenuItemMorph) ifTrue: [item deselectItem]]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 MenuItemMorph >> deselectTimeOut: evt [
 	"Deselect timout. Now really deselect"
 
@@ -233,23 +245,23 @@ MenuItemMorph >> deselectTimeOut: evt [
 			owner selectItem: nil event: evt ]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 MenuItemMorph >> doButtonAction [
 	"Called programattically, this should trigger the action for which the receiver is programmed"
 
 	self invokeWithEvent: nil
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 MenuItemMorph >> drawIconOn: aCanvas [
-	| iconForm |
+	| toggledIconFormSet |
 	self hasIcon ifFalse: [ ^ self ].
 
-	iconForm := self iconForm.
-	aCanvas translucentImage: iconForm at: bounds left @ (self top + ((self height - iconForm height) // 2))
+	toggledIconFormSet := self toggledIconFormSet.
+	aCanvas translucentFormSet: toggledIconFormSet at: bounds left @ (self top + ((self height - toggledIconFormSet height) // 2))
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 MenuItemMorph >> drawOn: aCanvas [
 	| stringColor |
 	stringColor := self shouldBeHighlighted
@@ -265,7 +277,7 @@ MenuItemMorph >> drawOn: aCanvas [
 	self drawSubmenuMarkerOn: aCanvas
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 MenuItemMorph >> drawSubmenuMarkerOn: aCanvas [
 	| subMenuMarker subMenuMarkerPosition |
 	self hasSubMenu
@@ -275,12 +287,12 @@ MenuItemMorph >> drawSubmenuMarkerOn: aCanvas [
 	aCanvas paintImage: subMenuMarker at: subMenuMarkerPosition
 ]
 
-{ #category : #grabbing }
+{ #category : 'grabbing' }
 MenuItemMorph >> duplicateMorph: evt [
 	"Make and return a duplicate of the receiver's argument"
 	| dup menu |
 	dup := self duplicate isSelected: false.
-	menu := UIManager default newMenuIn: self for: nil.
+	menu := self morphicUIManager newMenuIn: self for: nil.
 	menu addMorphFront: dup.
 	menu bounds: self bounds.
 	menu stayUp: true.
@@ -288,21 +300,21 @@ MenuItemMorph >> duplicateMorph: evt [
 	^menu
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> enabled [
 	"Delegate to exisitng method."
 
 	^self isEnabled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> enabled: aBoolean [
 	"Delegate to exisitng method."
 
 	self isEnabled: aBoolean
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 MenuItemMorph >> handleMouseUp: anEvent [
 	"The handling of control between menu item requires them to act on mouse up even if not the current focus. This is different from the default behavior which really only wants to handle mouse ups when they got mouse downs before"
 	anEvent wasHandled ifTrue:[^self]. "not interested"
@@ -313,74 +325,78 @@ MenuItemMorph >> handleMouseUp: anEvent [
 		ifFalse:[self mouseUp: anEvent]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 MenuItemMorph >> handlesMouseDown: evt [
 
 	^ true
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 MenuItemMorph >> handlesMouseOver: anEvent [
 	^true
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 MenuItemMorph >> handlesMouseOverDragging: evt [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> hasIcon [
 	"Answer whether the receiver has an icon."
-	^ icon notNil
+	^ iconFormSet isNotNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> hasIconOrMarker [
 	"Answer whether the receiver has an icon or a marker."
 	^ self hasIcon or: [ self hasMarker ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> hasMarker [
 	"Answer whether the receiver has a marker morph."
 	^self hasSubmorphs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> hasSubMenu [
 	"Return true if the receiver has a submenu"
-	^subMenu notNil
+	^subMenu isNotNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> hasSubMenu: aMenuMorph [
 	subMenu ifNil:[^false].
 	subMenu == aMenuMorph ifTrue:[^true].
 	^subMenu hasSubMenu: aMenuMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> icon [
-	"answer the receiver's icon"
-	^ icon
+
+	^ self iconFormSet ifNotNil: [ :formSet | formSet asForm ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> icon: aForm [
-	"change the the receiver's icon"
-	icon := aForm
+
+	self iconFormSet: (aForm ifNotNil: [ FormSet form: aForm ])
 ]
 
-{ #category : #private }
-MenuItemMorph >> iconForm [
-	"private - answer the form to be used as the icon"
-	^ isEnabled
-		ifTrue: [self icon]
-		ifFalse: [self icon asGrayScale]
+{ #category : 'accessing' }
+MenuItemMorph >> iconFormSet [
+	"answer the receiver's icon form set"
+	^ iconFormSet
 ]
 
-{ #category : #initialization }
+{ #category : 'accessing' }
+MenuItemMorph >> iconFormSet: aFormSet [
+	"change the the receiver's icon form set"
+	iconFormSet := aFormSet
+]
+
+{ #category : 'initialization' }
 MenuItemMorph >> initialize [
 	"initialize the state of the receiver"
 
@@ -397,7 +413,7 @@ MenuItemMorph >> initialize [
 		vResizing: #shrinkWrap
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 MenuItemMorph >> invokeWithEvent: evt [
 	"Perform the action associated with the given menu item."
 
@@ -422,13 +438,13 @@ MenuItemMorph >> invokeWithEvent: evt [
 		self changed]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> isEnabled [
 
 	^ isEnabled
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MenuItemMorph >> isEnabled: aBoolean [
 
 	isEnabled = aBoolean ifTrue: [^ self].
@@ -436,62 +452,62 @@ MenuItemMorph >> isEnabled: aBoolean [
 	self color: (aBoolean ifTrue: [Color black] ifFalse: [Color gray])
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MenuItemMorph >> isMenuItemMorph [
 	^ true
 ]
 
-{ #category : #selecting }
+{ #category : 'selecting' }
 MenuItemMorph >> isSelected [
 	^ isSelected
 ]
 
-{ #category : #selecting }
+{ #category : 'selecting' }
 MenuItemMorph >> isSelected: aBoolean [
 
 	isSelected := aBoolean.
 	self changed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> isStayUpItem [
 
 	^selector == #toggleStayUp:
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> keyText [
 	"Answer the value of keyText"
 
 	^ keyText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> keyText: anObject [
 	"Set the value of keyText"
 
 	keyText := anObject
 ]
 
-{ #category : #private }
-MenuItemMorph >> leftArrow [
+{ #category : 'private' }
+MenuItemMorph >> leftArrowFormSet [
 
-	^ LeftArrow
+	^ LeftArrowFormSet
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 MenuItemMorph >> menuStringBounds [
 	| stringBounds |
 	stringBounds := bounds.
-	self hasIcon ifTrue: [ | iconForm |
-		iconForm := self iconForm.
-		stringBounds := stringBounds left: stringBounds left + iconForm width + 2 ].
+	self hasIcon ifTrue: [ | toggledIconFormSet |
+		toggledIconFormSet := self toggledIconFormSet.
+		stringBounds := stringBounds left: stringBounds left + toggledIconFormSet width + 2 ].
 	self hasMarker ifTrue: [
 		stringBounds := stringBounds left: stringBounds left + self submorphBounds width + 8 ].
 	^ stringBounds top: (stringBounds top + stringBounds bottom - self fontToUse height) // 2
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 MenuItemMorph >> minHeight [
 	| iconHeight |
 	iconHeight := self hasIcon
@@ -500,7 +516,7 @@ MenuItemMorph >> minHeight [
 	^ self fontToUse height max: iconHeight
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 MenuItemMorph >> minWidth [
 	| subMenuWidth iconWidth markerWidth |
 	subMenuWidth := self hasSubMenu
@@ -516,37 +532,35 @@ MenuItemMorph >> minWidth [
 		+ subMenuWidth + iconWidth + markerWidth + 10
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 MenuItemMorph >> mouseDown: evt [
 	"Handle a mouse down event. Menu items get activated when the mouse is over them."
 
-	(evt shiftPressed and: [ self isEditable ])
-		ifTrue: [^ super mouseDown: evt].  "enable label editing"
 	evt hand newMouseFocus: owner. "Redirect to menu for valid transitions"
 	owner selectItem: self event: evt
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 MenuItemMorph >> mouseEnter: evt [
 	"The mouse entered the receiver"
 
 	owner ifNotNil: [owner stayUp ifFalse: [self mouseEnterDragging: evt]]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 MenuItemMorph >> mouseEnterDragging: evt [
 	"The mouse entered the receiver. Do nothing if we're not in a 'valid menu transition', meaning that the current hand focus must be aimed at the owning menu."
 	evt hand mouseFocus == owner ifTrue:[owner selectItem: self event: evt]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 MenuItemMorph >> mouseLeave: evt [
 	"The mouse has left the interior of the receiver..."
 
 	owner ifNotNil: [owner stayUp ifFalse: [self mouseLeaveDragging: evt]]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 MenuItemMorph >> mouseLeaveDragging: evt [
 
 	"The mouse left the receiver. Do nothing if we're not in a 'valid menu transition', meaning that the current hand focus must be aimed at the owning menu."
@@ -559,7 +573,7 @@ MenuItemMorph >> mouseLeaveDragging: evt [
 		ifNotNil: [ self addAlarm: #deselectTimeOut: with: evt after: 500 ]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 MenuItemMorph >> mouseUp: evt [
 	"Handle a mouse up event. Menu items get activated when the mouse is over them. Do nothing if we're not in a 'valid menu transition', meaning that the current hand focus must be aimed at the owning menu."
 	evt hand mouseFocus == owner ifFalse: [^self].
@@ -571,7 +585,7 @@ MenuItemMorph >> mouseUp: evt [
 	self invokeWithEvent: evt
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MenuItemMorph >> offImage [
 	"Return the form to be used for indicating an off marker"
 	| form |
@@ -582,7 +596,7 @@ MenuItemMorph >> offImage [
 	^form
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MenuItemMorph >> onImage [
 	"Return the form to be used for indicating an on marker"
 	| form |
@@ -594,13 +608,13 @@ MenuItemMorph >> onImage [
 	^form
 ]
 
-{ #category : #private }
-MenuItemMorph >> rightArrow [
+{ #category : 'private' }
+MenuItemMorph >> rightArrowFormSet [
 
-	^ SubMenuMarker
+	^ SubMenuMarkerFormSet
 ]
 
-{ #category : #selecting }
+{ #category : 'selecting' }
 MenuItemMorph >> select: evt [
 	self isSelected: true.
 	owner activeSubmenu: subMenu.
@@ -613,75 +627,80 @@ MenuItemMorph >> select: evt [
 		subMenu selectItem: nil event: evt]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MenuItemMorph >> selectionFillStyle [
 	"answer the fill style to use with the receiver is the selected
 	element"
 
-	Display depth <= 2 ifTrue: [ ^ Color gray ].
 	^ self theme menuSelectionColor
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MenuItemMorph >> selectionTextColor [
 	^ color negated
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> selector [
 
 	^ selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> selector: aSymbol [
 
 	selector := aSymbol
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MenuItemMorph >> shouldBeHighlighted [
 	^ isSelected and: [ isEnabled ]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 MenuItemMorph >> showShortcut [
 
 	ShortcutReminder showShortcut: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> subMenu [
 
 	^ subMenu
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> subMenu: aMenuMorph [
 
 	subMenu := aMenuMorph.
 	self changed
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MenuItemMorph >> subMenuMarker [
-	"private - answer the form to be used as submenu marker"
-	 ^ self rightArrow
+
+	 ^ self subMenuMarkerFormSet asForm
 ]
 
-{ #category : #accessing }
+{ #category : 'private' }
+MenuItemMorph >> subMenuMarkerFormSet [
+	"private - answer the form set to be used as submenu marker"
+	 ^ self rightArrowFormSet
+]
+
+{ #category : 'accessing' }
 MenuItemMorph >> target [
 
 	^ target
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenuItemMorph >> target: anObject [
 
 	target := anObject
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 MenuItemMorph >> themeChanged [
 	"Also pass on to the submenu if any."
 
@@ -689,24 +708,34 @@ MenuItemMorph >> themeChanged [
 	self subMenu ifNotNil:[ :m | m themeChanged ]
 ]
 
-{ #category : #private }
-MenuItemMorph >> upArrow [
-
-	^ UpArrow
+{ #category : 'private' }
+MenuItemMorph >> toggledIconFormSet [
+	"private - answer the form set to be used as the icon"
+	| baseIconFormSet |
+	baseIconFormSet := self iconFormSet.
+	^ isEnabled
+		ifTrue: [ baseIconFormSet ]
+		ifFalse: [
+			FormSet extent: baseIconFormSet extent depth: 8
+				forms: (baseIconFormSet forms collect: [ :form | form asGrayScale ]) ]
 ]
 
-{ #category : #copying }
+{ #category : 'private' }
+MenuItemMorph >> upArrowFormSet [
+
+	^ UpArrowFormSet
+]
+
+{ #category : 'copying' }
 MenuItemMorph >> veryDeepFixupWith: deepCopier [
 	"If target and arguments fields were weakly copied, fix them here.  If they were in the tree being copied, fix them up, otherwise point to the originals!!"
 
 	super veryDeepFixupWith: deepCopier.
-	target := deepCopier references at: target ifAbsent: [target].
-	arguments notNil ifTrue:
-	[arguments := arguments collect: [:each |
-		deepCopier references at: each ifAbsent: [each]]]
+	target := deepCopier references at: target ifAbsent: [ target ].
+	arguments ifNotNil: [ arguments := arguments collect: [ :each | deepCopier references at: each ifAbsent: [ each ] ] ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 MenuItemMorph >> veryDeepInner: deepCopier [
 	"Copy all of my instance variables. Some need to be not copied
 	at all, but shared. Warning!! Every instance variable defined in
@@ -716,14 +745,14 @@ MenuItemMorph >> veryDeepInner: deepCopier [
 	isEnabled := isEnabled veryDeepCopyWith: deepCopier.
 	subMenu := subMenu veryDeepCopyWith: deepCopier.
 	isSelected := isSelected veryDeepCopyWith: deepCopier.
-	icon := icon veryDeepCopyWith: deepCopier.
+	iconFormSet := iconFormSet veryDeepCopyWith: deepCopier.
 	"target := target.		Weakly copied"
 	"selector := selector.		a Symbol"
 	arguments := arguments
 ]
 
-{ #category : #'meta actions' }
+{ #category : 'meta actions' }
 MenuItemMorph >> wantsHaloFromClick [
 	"Only if I'm not a lonely submenu"
-	^owner notNil and:[ owner hasSubmorphs ]
+	^owner isNotNil and:[ owner hasSubmorphs ]
 ]

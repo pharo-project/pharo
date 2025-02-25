@@ -12,8 +12,8 @@ repeat - This value is non-zero if this event was originated by a repeated key s
 symbol - A virtual platform independent identifier for a keyboard key. Valid values are defined in the OSKeySymbols pool dictionary.
 "
 Class {
-	#name : #OSKeyboardEvent,
-	#superclass : #OSEvent,
+	#name : 'OSKeyboardEvent',
+	#superclass : 'OSEvent',
 	#instVars : [
 		'scanCode',
 		'symbol',
@@ -23,10 +23,12 @@ Class {
 		'repeat',
 		'handled'
 	],
-	#category : #'OSWindow-Core-Events'
+	#category : 'OSWindow-Core-Events',
+	#package : 'OSWindow-Core',
+	#tag : 'Events'
 }
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 OSKeyboardEvent >> asKeyCombination [
 	| modifier control command shift alt char |
 
@@ -48,33 +50,33 @@ OSKeyboardEvent >> asKeyCombination [
 	^ modifier + char
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSKeyboardEvent >> character [
 
 	^ character
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSKeyboardEvent >> character: anObject [
 
 	character := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSKeyboardEvent >> characterCode [
 	"answer the unicode value"
 
 	^ character ifNil: [0] ifNotNil: [ character charCode ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSKeyboardEvent >> initialize [
 	super initialize.
 	modifiers := OSStateModifiers new.
 	handled := false
 ]
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 OSKeyboardEvent >> modifiedCharacter [
 
 	self character ifNotNil: [ :c | ^ c ].
@@ -82,25 +84,25 @@ OSKeyboardEvent >> modifiedCharacter [
 	^ Character value: 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSKeyboardEvent >> modifiers [
 
 	^ modifiers
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSKeyboardEvent >> position [
 
 	^ position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSKeyboardEvent >> position: anObject [
 
 	position := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 OSKeyboardEvent >> printOn: stream [
 	super printOn: stream.
 	stream space; nextPutAll: 'scanCode: '; print: scanCode.
@@ -109,46 +111,46 @@ OSKeyboardEvent >> printOn: stream [
 	stream space; nextPutAll: 'modifiers: '; print: modifiers
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSKeyboardEvent >> repeat [
 	^ repeat
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSKeyboardEvent >> repeat: anObject [
 	repeat := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSKeyboardEvent >> scanCode [
 
 	^ scanCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSKeyboardEvent >> scanCode: anObject [
 
 	scanCode := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSKeyboardEvent >> symbol [
 
 	^ symbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSKeyboardEvent >> symbol: anObject [
 
 	symbol := anObject
 ]
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 OSKeyboardEvent >> wasHandled [
 	^ handled
 ]
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 OSKeyboardEvent >> wasHandled: aBoolean [
 	handled := aBoolean
 ]

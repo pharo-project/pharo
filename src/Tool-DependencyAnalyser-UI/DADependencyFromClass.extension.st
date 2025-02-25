@@ -1,6 +1,6 @@
-Extension { #name : #DADependencyFromClass }
+Extension { #name : 'DADependencyFromClass' }
 
-{ #category : #'*Tool-DependencyAnalyser-UI' }
+{ #category : '*Tool-DependencyAnalyser-UI' }
 DADependencyFromClass >> nodeClass [
 	self subclassResponsibility
 ]

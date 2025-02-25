@@ -2,12 +2,13 @@
 SUnit tests for MailMessage
 "
 Class {
-	#name : #MailMessageTest,
-	#superclass : #TestCase,
-	#category : #'Network-Mail-Tests'
+	#name : 'MailMessageTest',
+	#superclass : 'TestCase',
+	#category : 'Network-Mail-Tests',
+	#package : 'Network-Mail-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MailMessageTest >> testAttachment [
 	"Test if the attachment of a file to a mail works.
 		Create a file and attach it to a MailMessage. After that, delete the file.
@@ -62,7 +63,7 @@ ZA==
 				reject: [ :each | 'CelesteAttachment*' match: each ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MailMessageTest >> testCreateFromString [
 
 	| text message |
@@ -93,7 +94,7 @@ Mike
 		assert: message cc equals: 'cc1@scn.org, cc1also@test.org, cc2@scn.org'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MailMessageTest >> testMultiPartAlternative [
 	| m txt html  part1 part2 |
 
@@ -121,7 +122,7 @@ MailMessageTest >> testMultiPartAlternative [
 		assert: part2 body content equals: html
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MailMessageTest >> testMultiPartMixed [
 	| m txt html  part1 part2 |
 
@@ -149,19 +150,37 @@ MailMessageTest >> testMultiPartMixed [
 		assert: part2 body content equals: html
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MailMessageTest >> testRecipientList [
 
 	| message |
-	message := MailMessage fromRfc822: 'To: pharo-project@lists.gforge.inria.fr, pharo-users@lists.gforge.inria.fr'.
-
+	message := MailMessage fromRfc822:
+		           'To: pharo-project@lists.pharo.org, "Pharo Users" <pharo-users@lists.pharo.org>'.
 	self
 		assert: message recipientList size equals: 2;
-		assert: message recipientList first equals: 'pharo-project@lists.gforge.inria.fr';
-		assert: message recipientList second equals: 'pharo-users@lists.gforge.inria.fr'
+		assert: message recipientList first
+		equals: 'pharo-project@lists.pharo.org';
+		assert: message recipientList second
+		equals: 'pharo-users@lists.pharo.org'.
+
+	message
+		setField: 'cc'
+		toString: '"Pharo Development" <pharo-dev@lists.pharo.org>'.
+	self assert: message recipientList size equals: 3.
+	self
+		assert: message recipientList third
+		equals: 'pharo-dev@lists.pharo.org'.
+
+	message
+		setField: 'bcc'
+		toString: '"Pharo IOT" <pharo-iot@lists.pharo.org>'.
+	self assert: message recipientList size equals: 4.
+	self
+		assert: message recipientList fourth
+		equals: 'pharo-iot@lists.pharo.org'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MailMessageTest >> testSimpleCreate [
 
 	| message |

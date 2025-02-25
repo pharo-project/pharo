@@ -1,14 +1,16 @@
 Class {
-	#name : #MetaLinkAnonymousClassBuilderTest,
-	#superclass : #TestCase,
+	#name : 'MetaLinkAnonymousClassBuilderTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'builder',
 		'object'
 	],
-	#category : #'Reflectivity-Tests-Base'
+	#category : 'Reflectivity-Tests-Base',
+	#package : 'Reflectivity-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 MetaLinkAnonymousClassBuilderTest >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
 	super setUp.
@@ -16,7 +18,7 @@ MetaLinkAnonymousClassBuilderTest >> setUp [
 	object := ReflectivityExamples new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetaLinkAnonymousClassBuilderTest >> testAllSubclassesOfWithSelector [
 	| anonClass1 anonClass2 compiledMethods |
 	anonClass1 := builder newAnonymousSubclassFor: ReflectivityExamples.
@@ -31,14 +33,14 @@ MetaLinkAnonymousClassBuilderTest >> testAllSubclassesOfWithSelector [
 	self assert: compiledMethods asArray first identicalTo: anonClass1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetaLinkAnonymousClassBuilderTest >> testAnonSubclassesRegistering [
 	|subclasses|
 	subclasses := WeakSet with: (builder newAnonymousSubclassFor: ReflectivityExamples).
 	self assertCollection: (builder anonSubclassesFor: ReflectivityExamples) equals: subclasses
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetaLinkAnonymousClassBuilderTest >> testAnonymousClassForObject [
 
 	|originalClass anonClass|
@@ -50,7 +52,7 @@ MetaLinkAnonymousClassBuilderTest >> testAnonymousClassForObject [
 	self assert: (builder anonymousClassForObject: anonClass new) identicalTo: anonClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetaLinkAnonymousClassBuilderTest >> testClassAccessFromClassBuilder [
 	|class subclass realClass|
 	class := object class.
@@ -66,23 +68,25 @@ MetaLinkAnonymousClassBuilderTest >> testClassAccessFromClassBuilder [
 	self assert: (builder requestClassOfObject: object) identicalTo: realClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetaLinkAnonymousClassBuilderTest >> testCompileClassAccessorForAnonymousClass [
+
 	| class |
 	class := ReflectivityExamples newAnonymousSubclass.
 	builder compileClassAccessorForAnonymousClass: class.
+	
 	self
-		assert: (class methodDict at: #class) sourceCode
+		assert: (class compiledMethodAt: #class) sourceCode
 		equals: builder classAccessorsForAnonymousClasses first.
 	self
-		assert: (class methodDict at: #originalClass) sourceCode
+		assert: (class compiledMethodAt: #originalClass) sourceCode
 		equals: builder classAccessorsForAnonymousClasses second.
 	self
-		assert: (class methodDict at: #realClass) sourceCode
+		assert: (class compiledMethodAt: #realClass) sourceCode
 		equals: builder classAccessorsForAnonymousClasses third
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetaLinkAnonymousClassBuilderTest >> testCompileMethodFromIn [
 	|node anonClass compiledMethod|
 	node := (ReflectivityExamples >> #exampleAssignment) ast statements first.
@@ -93,7 +97,7 @@ MetaLinkAnonymousClassBuilderTest >> testCompileMethodFromIn [
 	self assert: compiledMethod sourceCode equals: node methodNode sourceCode
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetaLinkAnonymousClassBuilderTest >> testCompiledMethodsOfSelectorInAnonSubClassesOf [
 	| anonClass compiledMethods |
 	anonClass := builder newAnonymousSubclassFor: ReflectivityExamples.
@@ -106,7 +110,7 @@ MetaLinkAnonymousClassBuilderTest >> testCompiledMethodsOfSelectorInAnonSubClass
 	self assert: compiledMethods asArray first methodClass identicalTo: anonClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetaLinkAnonymousClassBuilderTest >> testCompiledMethodsOfSelectorinClasses [
 	| anonClass1 anonClass2 compiledMethods |
 	anonClass1 := ReflectivityExamples newAnonymousSubclass.
@@ -121,12 +125,12 @@ MetaLinkAnonymousClassBuilderTest >> testCompiledMethodsOfSelectorinClasses [
 	self assert: compiledMethods asArray first methodClass identicalTo: anonClass1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetaLinkAnonymousClassBuilderTest >> testEmptyAnonSubclasses [
 	self assertCollection: (builder anonSubclassesFor: ReflectivityExamples) equals: Array new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetaLinkAnonymousClassBuilderTest >> testMigrateObjectToAnonymousClass [
 	|class subclass realClass originalClass currentClass|
 	class := object class.
@@ -137,13 +141,14 @@ MetaLinkAnonymousClassBuilderTest >> testMigrateObjectToAnonymousClass [
 	self assert: realClass identicalTo: subclass.
 	self assert: (builder soleInstanceOf: realClass) identicalTo: object.
 
-	originalClass := object originalClass.
+	"originalClass is defined in #classAccessorsForAnonymousClasses"
+	originalClass := object perform: #originalClass.
 	currentClass := object class.
 	self assert: currentClass identicalTo: class.
 	self assert: currentClass identicalTo: originalClass
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetaLinkAnonymousClassBuilderTest >> testMigrateObjectToOriginalClass [
 	|class subclass|
 	class := object class.
@@ -152,11 +157,11 @@ MetaLinkAnonymousClassBuilderTest >> testMigrateObjectToOriginalClass [
 	builder migrateObjectToOriginalClass: object.
 
 	self should: [ object realClass ] raise: MessageNotUnderstood.
-	self should: [ object originalClass ] raise: MessageNotUnderstood.
+	self should: [ object perform: #originalClass ] raise: MessageNotUnderstood.
 	self assert: object class identicalTo: class
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetaLinkAnonymousClassBuilderTest >> testNewAnonymousSubclass [
 	|class|
 	class := (builder newAnonymousSubclassFor: ReflectivityExamples).
@@ -165,7 +170,7 @@ MetaLinkAnonymousClassBuilderTest >> testNewAnonymousSubclass [
 	self assert: class new class identicalTo: ReflectivityExamples
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetaLinkAnonymousClassBuilderTest >> testRemoveMethodNodeFromObject [
 	|node anonClass|
 	node := (object class >> #exampleAssignment) ast.
@@ -185,7 +190,7 @@ MetaLinkAnonymousClassBuilderTest >> testRemoveMethodNodeFromObject [
 	self denyCollection: object class selectors includesAll: {#exampleAssignment}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetaLinkAnonymousClassBuilderTest >> testWeakMigratedObjectsRegistry [
 	|originalClass anonClass|
 	originalClass := object class.

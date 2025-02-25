@@ -1,10 +1,12 @@
 Class {
-	#name : #StSelectClassAndMethodsPresenter,
-	#superclass : #StAbstractSelectionPresenter,
-	#category : #'Refactoring-UI'
+	#name : 'StSelectClassAndMethodsPresenter',
+	#superclass : 'StAbstractSelectionPresenter',
+	#category : 'Refactoring-UI-UI',
+	#package : 'Refactoring-UI',
+	#tag : 'UI'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 StSelectClassAndMethodsPresenter class >> example [
 	<script>
 	^ (self label: 'example ...'
@@ -15,17 +17,17 @@ StSelectClassAndMethodsPresenter class >> example [
 		acceptBlock: [ :item :items |  ] )
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 StSelectClassAndMethodsPresenter class >> title [
 	^ 'Methods'
 ]
 
-{ #category : #attributes }
+{ #category : 'attributes' }
 StSelectClassAndMethodsPresenter >> columnName [
 	^ 'Methods'
 ]
 
-{ #category : #attributes }
+{ #category : 'attributes' }
 StSelectClassAndMethodsPresenter >> columnSelector [
 	^ #selector
 ]

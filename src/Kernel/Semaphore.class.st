@@ -13,15 +13,17 @@ While conceptually a semaphore has a list and a counter of excess signals. At th
 This is a design simplification for the virtual machine.
 "
 Class {
-	#name : #Semaphore,
-	#superclass : #LinkedList,
+	#name : 'Semaphore',
+	#superclass : 'LinkedList',
 	#instVars : [
 		'excessSignals'
 	],
-	#category : #'Kernel-Processes'
+	#category : 'Kernel-Processes',
+	#package : 'Kernel',
+	#tag : 'Processes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Semaphore class >> forMutualExclusion [
 	"Answer an instance of me that contains a single signal. This new
 	instance can now be used for mutual exclusion (see the critical: message
@@ -30,26 +32,26 @@ Semaphore class >> forMutualExclusion [
 	^self new signal
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Semaphore class >> new [
 	"Answer a new instance of Semaphore that contains no signals."
 
 	^self basicNew initSignals
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Semaphore >> = anObject [
 	^ self == anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Semaphore >> consumeAllSignals [
 	"Consume any excess signals the receiver may have accumulated."
 
 	excessSignals := 0
 ]
 
-{ #category : #'mutual exclusion' }
+{ #category : 'mutual exclusion' }
 Semaphore >> critical: mutuallyExcludedBlock [
 	"Evaluate mutuallyExcludedBlock only if the receiver is not currently in
 	the process of running the critical: message. If the receiver is, evaluate
@@ -80,7 +82,7 @@ Semaphore >> critical: mutuallyExcludedBlock [
 	^blockValue
 ]
 
-{ #category : #'mutual exclusion' }
+{ #category : 'mutual exclusion' }
 Semaphore >> critical: mutuallyExcludedBlock ifCurtailed: terminationBlock [
 	"Evaluate mutuallyExcludedBlock only if the receiver is not currently in
 	the process of running the critical: message. If the receiver is, evaluate
@@ -88,7 +90,7 @@ Semaphore >> critical: mutuallyExcludedBlock ifCurtailed: terminationBlock [
 	^self critical:[mutuallyExcludedBlock ifCurtailed: terminationBlock]
 ]
 
-{ #category : #'mutual exclusion' }
+{ #category : 'mutual exclusion' }
 Semaphore >> critical: mutuallyExcludedBlock ifError: errorBlock [
 	"Evaluate mutuallyExcludedBlock only if the receiver is not currently in
 	the process of running the critical: message. If the receiver is, evaluate
@@ -105,7 +107,7 @@ Semaphore >> critical: mutuallyExcludedBlock ifError: errorBlock [
 	^blockValue
 ]
 
-{ #category : #'mutual exclusion' }
+{ #category : 'mutual exclusion' }
 Semaphore >> critical: mutuallyExcludedBlock ifLocked: alternativeBlock [
 	"Evaluate mutuallyExcludedBlock only if the receiver is not currently in
 	the process of running the critical: message. If the receiver is, evaluate
@@ -123,7 +125,7 @@ test is written carefully so that it will result in bytecodes only."
 	^self critical: mutuallyExcludedBlock
 ]
 
-{ #category : #'mutual exclusion' }
+{ #category : 'mutual exclusion' }
 Semaphore >> criticalReleasingOnError: mutuallyExcludedBlock [
 	"This is like #critical: but releasing the lock if there is an exception in the block"
 	| blockValue caught |
@@ -142,7 +144,7 @@ Semaphore >> criticalReleasingOnError: mutuallyExcludedBlock [
 	^blockValue
 ]
 
-{ #category : #'process termination handling' }
+{ #category : 'process termination handling' }
 Semaphore >> handleProcessTerminationOfWaitingContext: suspendedContext [
 
 	^suspendedContext homeMethod == (Semaphore compiledMethodAt: #critical:)
@@ -150,25 +152,25 @@ Semaphore >> handleProcessTerminationOfWaitingContext: suspendedContext [
 		ifFalse: [ suspendedContext]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Semaphore >> hash [
 	^ self identityHash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Semaphore >> initSignals [
 	"Consume any excess signals the receiver may have accumulated."
 
 	excessSignals := 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Semaphore >> isSignaled [
 	"Return true if this semaphore is currently signaled"
 	^excessSignals > 0
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Semaphore >> resumeProcess: aProcess [
 	"Remove the given process from the list of waiting processes (if it's there) and resume it.  This is used when a process asked for its wait to be timed out."
 
@@ -177,7 +179,7 @@ Semaphore >> resumeProcess: aProcess [
 	process ifNotNil: [process resume]
 ]
 
-{ #category : #communication }
+{ #category : 'communication' }
 Semaphore >> signal [
 	"Primitive. Send a signal through the receiver. If one or more processes
 	have been suspended trying to receive a signal, allow the first one to
@@ -192,14 +194,21 @@ Semaphore >> signal [
 		ifFalse: [Processor resume: self removeFirstLink]"
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'communication' }
+Semaphore >> signalAll [
+
+	[ self isEmpty ]
+	whileFalse: [ self signal ]
+]
+
+{ #category : 'initialization' }
 Semaphore >> terminateProcess [
 	"Terminate the process waiting on this semaphore, if any."
 
 	self ifNotEmpty: [ self removeFirst terminate ]
 ]
 
-{ #category : #communication }
+{ #category : 'communication' }
 Semaphore >> wait [
 	"Primitive. The active Process must receive a signal through the receiver
 	before proceeding. If no signal has been sent, the active Process will be
@@ -214,27 +223,8 @@ Semaphore >> wait [
 		ifFalse: [self addLastLink: Processor activeProcess suspend]"
 ]
 
-{ #category : #communication }
-Semaphore >> wait: aDuration [
-	"Wait on this semaphore for up to the given time duration, then timeout.
-	Return true if the deadline expired, false otherwise."
-	| d |
-	d := DelayWaitTimeout new setDelay: aDuration asMilliSeconds forSemaphore: self.
-	^d wait
-]
-
-{ #category : #communication }
-Semaphore >> wait: aDuration onCompletion: completionBlock onTimeout: timeoutBlock [
-	"Wait on this semaphore for up to the given time duration, then timeout.
-	If the deadline expired execute timeoutBlock, otherwise execute completionBlock.
-	Return the value returned by the executed block."
-	| d |
-	d := DelayWaitTimeout new setDelay: aDuration asMilliSeconds forSemaphore: self.
-	^d waitOnCompletion: completionBlock onTimeout: timeoutBlock
-]
-
-{ #category : #communication }
-Semaphore >> waitTimeoutMSecs: anInteger [
+{ #category : 'communication' }
+Semaphore >> waitTimeoutMilliseconds: anInteger [
 	"Wait on this semaphore for up to the given number of milliseconds, then timeout.
 	Return true if the deadline expired, false otherwise."
 	| d |
@@ -242,19 +232,31 @@ Semaphore >> waitTimeoutMSecs: anInteger [
 	^d wait
 ]
 
-{ #category : #communication }
-Semaphore >> waitTimeoutSeconds: anInteger [
-	"Wait on this semaphore for up to the given number of seconds, then timeout.
-	Return true if the deadline expired, false otherwise."
-	^self waitTimeoutMSecs: anInteger * 1000
-]
-
-{ #category : #communication }
-Semaphore >> waitTimeoutSeconds: anInteger onCompletion: completionBlock onTimeout: timeoutBlock [
+{ #category : 'communication' }
+Semaphore >> waitTimeoutMilliseconds: anInteger onCompletion: completionBlock onTimeout: timeoutBlock [
 	"Wait on this semaphore for up to the given number of seconds, then timeout.
 	If the deadline expired execute timeoutBlock, otherwise execute completionBlock.
 	Return the value returned by the executed block."
 	| d |
-	d := DelayWaitTimeout new setDelay: (anInteger * 1000 max: 0) forSemaphore: self.
+	d := DelayWaitTimeout new setDelay: (anInteger max: 0) forSemaphore: self.
 	^d waitOnCompletion: completionBlock onTimeout: timeoutBlock
+]
+
+{ #category : 'communication' }
+Semaphore >> waitTimeoutSeconds: anInteger [
+	"Wait on this semaphore for up to the given number of seconds, then timeout.
+	Return true if the deadline expired, false otherwise."
+	^self waitTimeoutMilliseconds: anInteger * 1000
+]
+
+{ #category : 'communication' }
+Semaphore >> waitTimeoutSeconds: anInteger onCompletion: completionBlock onTimeout: timeoutBlock [
+	"Wait on this semaphore for up to the given number of seconds, then timeout.
+	If the deadline expired execute timeoutBlock, otherwise execute completionBlock.
+	Return the value returned by the executed block."
+
+	^ self
+		  waitTimeoutMilliseconds: anInteger * 1000
+		  onCompletion: completionBlock
+		  onTimeout: timeoutBlock
 ]

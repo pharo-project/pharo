@@ -2,12 +2,14 @@
 I represent a running task. A running task cannot be asked to be executed while it is running. Cancelling a running task will throw an exception and interrupt its execution.
 "
 Class {
-	#name : #TKTRunningTaskState,
-	#superclass : #TKTTaskState,
-	#category : #'TaskIt-Kernel'
+	#name : 'TKTRunningTaskState',
+	#superclass : 'TKTTaskState',
+	#category : 'TaskIt-Kernel',
+	#package : 'TaskIt',
+	#tag : 'Kernel'
 }
 
-{ #category : #cancelling }
+{ #category : 'cancelling' }
 TKTRunningTaskState >> cancelTaskExecution: aTaskExecution reason: aReason [
 
 	| cancelState activeContext timeoutContext |
@@ -21,13 +23,13 @@ TKTRunningTaskState >> cancelTaskExecution: aTaskExecution reason: aReason [
 	aTaskExecution setCancelStateWithReason: aReason
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TKTRunningTaskState >> isRunning [
 
 	^ true
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 TKTRunningTaskState >> performTaskExecution: aTaskExecution [
 
 	self error: 'task is already running'

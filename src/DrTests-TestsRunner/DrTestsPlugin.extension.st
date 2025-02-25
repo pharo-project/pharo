@@ -1,6 +1,6 @@
-Extension { #name : #DrTestsPlugin }
+Extension { #name : 'DrTestsPlugin' }
 
-{ #category : #'*DrTests-TestsRunner' }
+{ #category : '*DrTests-TestsRunner' }
 DrTestsPlugin >> buildReRunConfigurationFrom: aDrTests [
 	"Builds a configuration for the plugin by reading the information held by the UI (aDrTests) and the last value of results."
 

@@ -5,13 +5,35 @@ I allow to modify class properties (package, tags and variables) using text edit
 And in addition I allow to create new classes by typing new class name
 "
 Class {
-	#name : #ClyClassDefinitionEditorToolMorph,
-	#superclass : #ClyClassEditorToolMorph,
-	#category : #'Calypso-SystemTools-Core-Editors-Classes'
+	#name : 'ClyClassDefinitionEditorToolMorph',
+	#superclass : 'ClyClassEditorToolMorph',
+	#category : 'Calypso-SystemTools-Core-Editors-Classes',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'Editors-Classes'
 }
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyClassDefinitionEditorToolMorph >> applyChanges [
+
+	| code ast |
+	code := self pendingText.
+
+	"The next line are here for the compatibility with the old class definition."
+	ast := OCParser parseFaultyExpression: code.
+	(OldClassDefinitionBuilder isOldClassCreation: ast) ifTrue: [
+		Warning signal:
+			'The class definition used is the old Pharo class definition. Now the Fluid class definition should be used. Check the comment of ShiftClassBuilder to know the syntax.'.
+		^ self applyChangesAsOldClassDefinition: ast ].
+
+	^ (self codeLooksLikeAClassDefinition: code)
+		  ifTrue: [ self applyChangesAsClassDefinition ]
+		  ifFalse: [
+			  self pendingText: code copy. "no idea why we have to copy"
+			  self applyChangesAsMethodDefinition ]
+]
+
+{ #category : 'operations' }
+ClyClassDefinitionEditorToolMorph >> applyChangesAsClassDefinition [
 
 	| newClass |
 	newClass := browser
@@ -20,20 +42,55 @@ ClyClassDefinitionEditorToolMorph >> applyChanges [
 		            startingFrom: editingClass.
 
 	newClass ifNil: [ ^ false ].
-
-	editingClass == newClass ifFalse: [ self removeFromBrowser ].
 	browser selectClass: newClass.
 	^ true
 ]
 
-{ #category : #'to sort' }
+{ #category : 'operations' }
+ClyClassDefinitionEditorToolMorph >> applyChangesAsMethodDefinition [
+
+ 	| newMethod selector selectedClass |
+ 	selectedClass := self editingClass.
+
+ 	selector := selectedClass
+ 		            compile: self pendingText asString
+ 		            notifying: textMorph.
+
+ 	selector ifNil: [ ^ false ].
+ 	newMethod := selectedClass >> selector.
+ 	MethodClassifier classify: newMethod.
+
+ 	self removeFromBrowser.
+ 	browser tabManager desiredSelection: { ClyMethodCodeEditorToolMorph }.
+ 	browser selectMethod: newMethod.
+ 	^ true
+]
+
+{ #category : 'operations' }
+ClyClassDefinitionEditorToolMorph >> applyChangesAsOldClassDefinition: ast [
+
+	| newClass |
+	newClass := OldClassDefinitionBuilder buildFromAST: ast.
+
+	newClass ifNil: [ ^ false ].
+	browser selectClass: newClass.
+	^ true
+]
+
+{ #category : 'operations' }
+ClyClassDefinitionEditorToolMorph >> codeLooksLikeAClassDefinition: code [
+
+	^ code isEmpty or: [ code asString lines first includesSubstring: '<<' ]
+]
+
+{ #category : 'to sort' }
 ClyClassDefinitionEditorToolMorph >> createTextContext [
 	^self selectedSourceNode
 		ifNil: [ super createTextContext ]
 		ifNotNil: [ :astNode | ClyClassDefinitionContext for: self selectedNode: astNode]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyClassDefinitionEditorToolMorph >> decorateContainerTab [
 	| title |
 	super decorateContainerTab.
@@ -45,44 +102,43 @@ ClyClassDefinitionEditorToolMorph >> decorateContainerTab [
 	containerTab label: title
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyClassDefinitionEditorToolMorph >> defaultIconName [
-	^#class
+
+	self editingClass isTrait ifTrue: [ ^ #trait ].
+	^ #class
 ]
 
-{ #category : #'to sort' }
+{ #category : 'to sort' }
 ClyClassDefinitionEditorToolMorph >> editingText [
 	"Answer a <String> with the receivers class definition"
 
 	^ editingClass definitionString
 ]
 
-{ #category : #building }
-ClyClassDefinitionEditorToolMorph >> fillStatusBar [
-	super fillStatusBar.
-	statusBar addCommandItem: (ClyFluidClassDefinitionSwitchMorph for: self)
-]
-
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassDefinitionEditorToolMorph >> isCommandAvailable: aCommand [
 
 	^ aCommand canBeExecutedInClassEditor: self
 ]
 
-{ #category : #'to sort' }
-ClyClassDefinitionEditorToolMorph >> parseClassDefinition [
-
-	self editingClass needsSlotClassDefinition
-		ifTrue: [ ^ ClassDefinitionPrinter fluid classDefinitionParserClass parse: self editingText].
-	^ ClassDefinitionPrinter new classDefinitionParserClass parse: self editingText
+{ #category : 'rubric interaction model' }
+ClyClassDefinitionEditorToolMorph >> isScripting [
+	^ self codeLooksLikeAClassDefinition: self pendingText.
 ]
 
-{ #category : #'selecting text' }
+{ #category : 'to sort' }
+ClyClassDefinitionEditorToolMorph >> parseClassDefinition [
+
+	^ CDFluidClassDefinitionParser parse: self editingText
+]
+
+{ #category : 'selecting text' }
 ClyClassDefinitionEditorToolMorph >> selectSourceNode: aCDNode [
 	textMorph setSelection: aCDNode sourceInterval
 ]
 
-{ #category : #'selecting text' }
+{ #category : 'selecting text' }
 ClyClassDefinitionEditorToolMorph >> selectVariableNamed: aString [
 	| classDefinition varNode |
 	classDefinition := self parseClassDefinition.
@@ -92,7 +148,7 @@ ClyClassDefinitionEditorToolMorph >> selectVariableNamed: aString [
 	self selectSourceNode: varNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyClassDefinitionEditorToolMorph >> selectedSourceNode [
 	| selectedInterval definitionNode |
 	selectedInterval := self selectedTextInterval.
@@ -102,7 +158,7 @@ ClyClassDefinitionEditorToolMorph >> selectedSourceNode [
 		ifNil: [ definitionNode ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyClassDefinitionEditorToolMorph >> setUpModelFromContext [
 
 	super setUpModelFromContext.

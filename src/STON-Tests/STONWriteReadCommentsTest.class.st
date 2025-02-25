@@ -1,25 +1,26 @@
 Class {
-	#name : #STONWriteReadCommentsTest,
-	#superclass : #STONWriteReadTest,
-	#category : #'STON-Tests-Write-Read'
+	#name : 'STONWriteReadCommentsTest',
+	#superclass : 'STONWriteReadTest',
+	#category : 'STON-Tests-Write-Read',
+	#package : 'STON-Tests',
+	#tag : 'Write-Read'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 STONWriteReadCommentsTest >> materialize: string [
 	^ STON reader
 		on: (STONCStyleCommentsSkipStream on: string readStream);
-		optimizeForLargeStructures;
 		next
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONWriteReadCommentsTest >> reader: string [
 	^ STON reader
 		on: (STONCStyleCommentsSkipStream on: string readStream);
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONWriteReadCommentsTest >> serialize: anObject [
 	^ String streamContents: [ :stream |
 		stream << '/* initial comment */'.

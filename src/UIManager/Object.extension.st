@@ -1,6 +1,6 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*UIManager' }
+{ #category : '*UIManager' }
 Object >> confirm: queryString [
 	"Put up a yes/no menu with caption queryString. Answer true if the
 	response is yes, false if no. This is a modal question--the user must
@@ -11,7 +11,7 @@ Object >> confirm: queryString [
 	^ UIManager default confirm: queryString
 ]
 
-{ #category : #'*UIManager' }
+{ #category : '*UIManager' }
 Object >> inform: aString [
 	"Display a message for the user to read and then dismiss."
 
@@ -19,7 +19,7 @@ Object >> inform: aString [
 		ifFalse: [ UIManager default inform: aString ]
 ]
 
-{ #category : #'*UIManager' }
+{ #category : '*UIManager' }
 Object >> primitiveError: aString [
 	"This method is called when the error handling results in a recursion in
 	calling on error: or halt or halt:."
@@ -27,7 +27,7 @@ Object >> primitiveError: aString [
 	UIManager default onPrimitiveError: aString
 ]
 
-{ #category : #'*UIManager' }
+{ #category : '*UIManager' }
 Object >> uiManager [
 	^ UIManager default
 ]

@@ -1,10 +1,12 @@
 Class {
-	#name : #CompiledBlockTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Classes'
+	#name : 'CompiledBlockTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Classes',
+	#package : 'Kernel-Tests',
+	#tag : 'Classes'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 CompiledBlockTest >> testLiteralEqual [
 	"Check that if we have two compiledblocks that are equal, there are two in the literals
 	and that they are not #literalEqual:"
@@ -24,7 +26,7 @@ CompiledBlockTest >> testLiteralEqual [
 	self assert: compiledBlocks first equals: compiledBlocks second
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CompiledBlockTest >> testPcInOuter [
 	| methodToTest compiledBlocks |
 	methodToTest := self class compiler compile: 'testWrongHeightlightSingleValue

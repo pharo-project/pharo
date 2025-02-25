@@ -1,6 +1,6 @@
-Extension { #name : #ClyDeprecatedMethodsQuery }
+Extension { #name : 'ClyDeprecatedMethodsQuery' }
 
-{ #category : #'*Calypso-SystemPlugins-Deprecation-Browser' }
+{ #category : '*Calypso-SystemPlugins-Deprecation-Browser' }
 ClyDeprecatedMethodsQuery >> decorateMethodGroupTableCell: anItemCellMorph of: groupItem [
 	super decorateMethodGroupTableCell: anItemCellMorph of: groupItem.
 

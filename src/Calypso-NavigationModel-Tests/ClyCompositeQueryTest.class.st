@@ -1,37 +1,38 @@
 Class {
-	#name : #ClyCompositeQueryTest,
-	#superclass : #ClyQueryTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClyCompositeQueryTest',
+	#superclass : 'ClyQueryTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyCompositeQueryTest class >> isAbstract [
 	^self = ClyCompositeQueryTest
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyCompositeQueryTest >> queryClass [
 	self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyCompositeQueryTest >> subqueryFromScope: aScope [
 	aScope bindTo: environment.
 	^ ClyReturningScopeBasisExampleQuery
 		from: aScope
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyCompositeQueryTest >> subqueryFromScope: aScopeClass of: aBasisObject [
 	^self subqueryFromScope: (aScopeClass of: aBasisObject)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyCompositeQueryTest >> subqueryFromScopeOf: aBasisObject [
 	^self subqueryFromScope: ClyExampleScope of: aBasisObject
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyCompositeQueryTest >> testCompareWithSimilarQueryWhichSubqueryHasDifferentScope [
 	| query2 |
 	query2 := self queryClass with: {(self subqueryFromScopeOf: self class superclass)}.
@@ -39,7 +40,7 @@ ClyCompositeQueryTest >> testCompareWithSimilarQueryWhichSubqueryHasDifferentSco
 	self deny: query equals: query2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyCompositeQueryTest >> testConvertingAsRestrictedByAnotherScope [
 
 	| convertedQuery restrictedScope |
@@ -51,7 +52,7 @@ ClyCompositeQueryTest >> testConvertingAsRestrictedByAnotherScope [
 	self assert: (convertedQuery subqueries collect: [:each | each scope]) equals: (query subqueries collect: [ :each | each scope withNewBasisObjects: #(restrictedBasis) ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyCompositeQueryTest >> testConvertingWithNewScope [
 	| newScope convertedQuery |
 	newScope := ClyExample2Scope of: #someBasis in: environment.
@@ -64,7 +65,7 @@ ClyCompositeQueryTest >> testConvertingWithNewScope [
 	self assert: (convertedQuery subqueries collect: [:each | each scope] as: Set) equals: {newScope} asSet
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyCompositeQueryTest >> testConvertingWithNewScopeBasis [
 	| convertedQuery |
 	convertedQuery := query withScopeOf: #(newBasis).
@@ -75,14 +76,14 @@ ClyCompositeQueryTest >> testConvertingWithNewScopeBasis [
 	self assert: (convertedQuery subqueries collect: [:each | each scope]) equals: (query subqueries collect: [ :each | each scope withNewBasisObjects: #(newBasis) ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyCompositeQueryTest >> testCreationWithEmptySubqueriesShouldReturnUnknownQuery [
 	query := self queryClass with: {}.
 
 	self assert: query identicalTo: ClyUnknownQuery instance
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyCompositeQueryTest >> testExecutesConcreteQueryClass [
 	query subqueries: { self subqueryFromScopeOf: #basis }.
 
@@ -93,7 +94,7 @@ ClyCompositeQueryTest >> testExecutesConcreteQueryClass [
 	self deny: (query executesQuery: ClyReturningScopeBasis2ExampleQuery)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyCompositeQueryTest >> testFixingStateBeforeExecutionShouldFixSubqueriesState [
 
 	query fixStateBeforeExecution.
@@ -103,7 +104,7 @@ ClyCompositeQueryTest >> testFixingStateBeforeExecutionShouldFixSubqueriesState 
 		self assert: each scope isReadOnlyObject]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyCompositeQueryTest >> testHasCompositeScopeFromSubqueries [
 
 	| scope |
@@ -112,7 +113,7 @@ ClyCompositeQueryTest >> testHasCompositeScopeFromSubqueries [
 	self assert: scope subscopes equals: (query subqueries collect: [:each | each scope])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyCompositeQueryTest >> testIsExecutedFromConcreteScopeClass [
 
 	self assert: (query isExecutedFromScope: ClyExampleScope).
@@ -121,7 +122,7 @@ ClyCompositeQueryTest >> testIsExecutedFromConcreteScopeClass [
 	self deny: (query isExecutedFromScope: Array)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyCompositeQueryTest >> testIsExecutedFromEmptyScope [
 
 	self deny: query isExecutedFromEmptyScope.
@@ -130,7 +131,7 @@ ClyCompositeQueryTest >> testIsExecutedFromEmptyScope [
 	self assert: query isExecutedFromEmptyScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyCompositeQueryTest >> testIsExecutedFromMultipleScopeWhenSingleSubqueryIsBasedOnIt [
 
 	query subqueries: {
@@ -140,7 +141,7 @@ ClyCompositeQueryTest >> testIsExecutedFromMultipleScopeWhenSingleSubqueryIsBase
 	self assert: query isExecutedFromMultipleScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyCompositeQueryTest >> testIsExecutedFromMultipleScopeWhenSubqueriesAreFromScopesOfDifferentObjects [
 
 	query subqueries: {
@@ -151,7 +152,7 @@ ClyCompositeQueryTest >> testIsExecutedFromMultipleScopeWhenSubqueriesAreFromSco
 	self assert: query isExecutedFromMultipleScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyCompositeQueryTest >> testIsExecutedFromScopeOfBasisObject [
 
 	self assert: (query isExecutedFromScopeOf: query scope basisObjects anyOne).
@@ -159,7 +160,7 @@ ClyCompositeQueryTest >> testIsExecutedFromScopeOfBasisObject [
 	self deny: (query isExecutedFromScopeOf: #someObject)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyCompositeQueryTest >> testIsExecutedFromSingleScopeWhenSingleSubqueryIsBasedOnIt [
 
 	query subqueries: {
@@ -169,7 +170,7 @@ ClyCompositeQueryTest >> testIsExecutedFromSingleScopeWhenSingleSubqueryIsBasedO
 	self assert: query isExecutedFromSingleScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyCompositeQueryTest >> testIsExecutedFromSingleScopeWhenSubqueriesAreFromDifferentScopesOfSameObject [
 
 	query subqueries: {
@@ -180,7 +181,7 @@ ClyCompositeQueryTest >> testIsExecutedFromSingleScopeWhenSubqueriesAreFromDiffe
 	self assert: query isExecutedFromSingleScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyCompositeQueryTest >> testNotExecutedFromMultipleScopeWhenAllSubqueriesAreFromEmptyScope [
 
 	query subqueries: {
@@ -191,7 +192,7 @@ ClyCompositeQueryTest >> testNotExecutedFromMultipleScopeWhenAllSubqueriesAreFro
 	self deny: query isExecutedFromMultipleScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyCompositeQueryTest >> testNotExecutedFromMultipleScopeWhenSingleSubqueryIsBasedOnScopeOfSingleObject [
 
 	query subqueries: {
@@ -201,7 +202,7 @@ ClyCompositeQueryTest >> testNotExecutedFromMultipleScopeWhenSingleSubqueryIsBas
 	self deny: query isExecutedFromMultipleScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyCompositeQueryTest >> testNotExecutedFromMultipleScopeWhenSingleSubqueryIsFromEmptyScope [
 
 	query subqueries: {
@@ -211,7 +212,7 @@ ClyCompositeQueryTest >> testNotExecutedFromMultipleScopeWhenSingleSubqueryIsFro
 	self deny: query isExecutedFromMultipleScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyCompositeQueryTest >> testNotExecutedFromMultipleScopeWhenSubqueriesAreFromDifferentScopesOfSameObject [
 
 	query subqueries: {
@@ -222,7 +223,7 @@ ClyCompositeQueryTest >> testNotExecutedFromMultipleScopeWhenSubqueriesAreFromDi
 	self deny: query isExecutedFromMultipleScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyCompositeQueryTest >> testNotExecutedFromSingleScopeWhenAllSubqueriesAreFromEmptyScope [
 
 	query subqueries: {
@@ -233,7 +234,7 @@ ClyCompositeQueryTest >> testNotExecutedFromSingleScopeWhenAllSubqueriesAreFromE
 	self deny: query isExecutedFromSingleScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyCompositeQueryTest >> testNotExecutedFromSingleScopeWhenSubqueriesAreFromScopesOfDifferentObjects [
 
 	query subqueries: {

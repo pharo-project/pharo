@@ -2,12 +2,14 @@
 Tests for different FFI types
 "
 Class {
-	#name : #FFITypesTest,
-	#superclass : #TestCase,
-	#category : #'UnifiedFFI-Tests-Tests'
+	#name : 'FFITypesTest',
+	#superclass : 'TestCase',
+	#category : 'UnifiedFFI-Tests-Tests',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #ranges }
+{ #category : 'ranges' }
 FFITypesTest >> signed1ByteNumbers [
 	^ {
 		-128.
@@ -18,7 +20,7 @@ FFITypesTest >> signed1ByteNumbers [
  	}
 ]
 
-{ #category : #ranges }
+{ #category : 'ranges' }
 FFITypesTest >> signed2ByteNumbers [
 	^ {
 		-32768.
@@ -38,7 +40,7 @@ FFITypesTest >> signed2ByteNumbers [
  	}
 ]
 
-{ #category : #ranges }
+{ #category : 'ranges' }
 FFITypesTest >> signed4ByteNumbers [
 	^ {
 		-2147483648.
@@ -67,7 +69,7 @@ FFITypesTest >> signed4ByteNumbers [
  	}
 ]
 
-{ #category : #ranges }
+{ #category : 'ranges' }
 FFITypesTest >> signed8ByteNumbers [
 	^ {
 		-9223372036854775808.
@@ -102,7 +104,7 @@ FFITypesTest >> signed8ByteNumbers [
  	}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFITypesTest >> testSigned1ByteIntegers [
 	self signed1ByteNumbers do: [ :int |
 		|ref|
@@ -111,7 +113,7 @@ FFITypesTest >> testSigned1ByteIntegers [
 		self assert: (ref integerAt: 1 size: 1 signed: true) equals: int ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFITypesTest >> testSigned2ByteIntegers [
 	self signed2ByteNumbers do: [ :int |
 		|ref|
@@ -120,7 +122,7 @@ FFITypesTest >> testSigned2ByteIntegers [
 		self assert: (ref integerAt: 1 size: 2 signed: true) equals: int ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFITypesTest >> testSigned4ByteIntegers [
 	self signed4ByteNumbers do: [ :int |
 		|ref|
@@ -129,7 +131,7 @@ FFITypesTest >> testSigned4ByteIntegers [
 		self assert: (ref integerAt: 1 size: 4 signed: true) equals: int ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFITypesTest >> testSignedAtWithDiferentSizes [
 	"This is tests for issue 17757"
 	| ref|
@@ -147,7 +149,7 @@ FFITypesTest >> testSignedAtWithDiferentSizes [
 	self assert: (ref integerAt: 1 size: 8 signed: true) equals: -10
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFITypesTest >> testSignedByteAtPutIntegers [
 	self signed1ByteNumbers do: [ :int |
 		|ref|
@@ -156,7 +158,7 @@ FFITypesTest >> testSignedByteAtPutIntegers [
 		self assert: (ref signedByteAt: 1) equals: int ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFITypesTest >> testSignedLong [
 	self signed4ByteNumbers do: [ :int |
 		|ref|
@@ -165,7 +167,7 @@ FFITypesTest >> testSignedLong [
 		self assert: (ref signedLongAt: 1) equals: int ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFITypesTest >> testSignedLongLong [
 	self signed8ByteNumbers do: [ :int |
 		|ref|
@@ -174,7 +176,7 @@ FFITypesTest >> testSignedLongLong [
 		self assert: (ref signedLongLongAt: 1) equals: int ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFITypesTest >> testSignedShortAtPutIntegers [
 	self signed2ByteNumbers do: [ :int |
 		|ref|
@@ -183,7 +185,7 @@ FFITypesTest >> testSignedShortAtPutIntegers [
 		self assert: (ref signedShortAt: 1) equals: int ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFITypesTest >> testUnsigned1ByteIntegers [
 	self unsigned1ByteNumbers do: [ :int |
 		|ref|
@@ -192,7 +194,7 @@ FFITypesTest >> testUnsigned1ByteIntegers [
 		self assert: (ref integerAt: 1 size: 1 signed: false) equals: int ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFITypesTest >> testUnsigned2ByteIntegers [
 	self unsigned2ByteNumbers do: [ :int |
 		|ref|
@@ -201,7 +203,7 @@ FFITypesTest >> testUnsigned2ByteIntegers [
 		self assert: (ref integerAt: 1 size: 2 signed: false) equals: int ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFITypesTest >> testUnsigned4ByteIntegers [
 	self unsigned4ByteNumbers do: [ :int |
 		|ref|
@@ -210,7 +212,7 @@ FFITypesTest >> testUnsigned4ByteIntegers [
 		self assert: (ref integerAt: 1 size: 4 signed: false) equals: int ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFITypesTest >> testUnsignedByteAtPutIntegers [
 	self unsigned1ByteNumbers do: [ :int |
 		|ref|
@@ -219,7 +221,7 @@ FFITypesTest >> testUnsignedByteAtPutIntegers [
 		self assert: (ref unsignedByteAt: 1) equals: int ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFITypesTest >> testUnsignedLong [
 	self unsigned4ByteNumbers do: [ :int |
 		|ref|
@@ -228,7 +230,7 @@ FFITypesTest >> testUnsignedLong [
 		self assert: (ref unsignedLongAt: 1) equals: int ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFITypesTest >> testUnsignedLongLong [
 	self unsigned8ByteNumbers do: [ :int |
 		|ref|
@@ -237,7 +239,7 @@ FFITypesTest >> testUnsignedLongLong [
 		self assert: (ref unsignedLongLongAt: 1) equals: int ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFITypesTest >> testUnsignedShortAtPutIntegers [
 	self unsigned2ByteNumbers do: [ :int |
 		|ref|
@@ -246,7 +248,7 @@ FFITypesTest >> testUnsignedShortAtPutIntegers [
 		self assert: (ref unsignedShortAt: 1) equals: int ]
 ]
 
-{ #category : #ranges }
+{ #category : 'ranges' }
 FFITypesTest >> unsigned1ByteNumbers [
 	^ {
 		0.
@@ -258,7 +260,7 @@ FFITypesTest >> unsigned1ByteNumbers [
  	}
 ]
 
-{ #category : #ranges }
+{ #category : 'ranges' }
 FFITypesTest >> unsigned2ByteNumbers [
 	^ {
 		0.
@@ -276,7 +278,7 @@ FFITypesTest >> unsigned2ByteNumbers [
  	}
 ]
 
-{ #category : #ranges }
+{ #category : 'ranges' }
 FFITypesTest >> unsigned4ByteNumbers [
 	^ {
 		0.
@@ -300,7 +302,7 @@ FFITypesTest >> unsigned4ByteNumbers [
  	}
 ]
 
-{ #category : #ranges }
+{ #category : 'ranges' }
 FFITypesTest >> unsigned8ByteNumbers [
 	^ {
 		0.

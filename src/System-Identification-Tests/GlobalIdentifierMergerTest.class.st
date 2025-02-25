@@ -2,17 +2,18 @@
 A GlobalIdentifierMergerTest is a test class for testing the behavior of GlobalIdentifierMerger
 "
 Class {
-	#name : #GlobalIdentifierMergerTest,
-	#superclass : #TestCase,
+	#name : 'GlobalIdentifierMergerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'existing',
 		'stored',
 		'merger'
 	],
-	#category : #'System-Identification-Tests'
+	#category : 'System-Identification-Tests',
+	#package : 'System-Identification-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 GlobalIdentifierMergerTest >> setUp [
 	super setUp.
 	existing := Dictionary new.
@@ -21,7 +22,7 @@ GlobalIdentifierMergerTest >> setUp [
 	merger existing: existing; stored: stored
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierMergerTest >> testMerge [
 	"Existing is empty. Stored has value."
 	stored at: #a put: 42.
@@ -30,7 +31,7 @@ GlobalIdentifierMergerTest >> testMerge [
 	self assert: (existing at: #a) equals: 42
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierMergerTest >> testMerge2 [
 	"Existing has something. Stored has another key."
 
@@ -44,7 +45,7 @@ GlobalIdentifierMergerTest >> testMerge2 [
 	self assert: (existing at: #b) equals: 21
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierMergerTest >> testMerge3 [
 	"Existing has same key as stored."
 
@@ -57,7 +58,7 @@ GlobalIdentifierMergerTest >> testMerge3 [
 	self assert: (existing at: #a) equals: 42
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierMergerTest >> testMerge4 [
 	"Existing has different computer id as stored."
 
@@ -77,7 +78,7 @@ GlobalIdentifierMergerTest >> testMerge4 [
 	self assert: (existing at: #c) equals: 23
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierMergerTest >> testMerge5 [
 	"Existing has different computer id as stored."
 
@@ -96,7 +97,7 @@ GlobalIdentifierMergerTest >> testMerge5 [
 	self assert: (existing at: #c) equals: 44
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierMergerTest >> testMerge6 [
 	"Existing has different computer id as stored."
 
@@ -115,7 +116,7 @@ GlobalIdentifierMergerTest >> testMerge6 [
 	self assert: (existing at: #c) equals: 23
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierMergerTest >> testMerge7 [
 	"Ensure that it converts computerUUID into string."
 
@@ -125,7 +126,7 @@ GlobalIdentifierMergerTest >> testMerge7 [
 	self assert: (existing at: #computerUUID) equals: (stored at: #computerUUID) asString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalIdentifierMergerTest >> testMerge8 [
 	"Ensure that it converts secretUUID into string."
 

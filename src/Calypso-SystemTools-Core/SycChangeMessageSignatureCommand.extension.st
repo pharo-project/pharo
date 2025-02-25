@@ -1,12 +1,12 @@
-Extension { #name : #SycChangeMessageSignatureCommand }
+Extension { #name : 'SycChangeMessageSignatureCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycChangeMessageSignatureCommand class >> browserMenuOrder [
 	<classAnnotationDependency>
 	^2.1
 ]
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycChangeMessageSignatureCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 

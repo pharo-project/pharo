@@ -69,23 +69,25 @@ same simple interface as streams.
 
 "
 Class {
-	#name : #Generator,
-	#superclass : #Stream,
+	#name : 'Generator',
+	#superclass : 'Stream',
 	#instVars : [
 		'block',
 		'next',
 		'continue',
 		'home'
 	],
-	#category : #'Collections-Streams-Base'
+	#category : 'Collections-Streams-Base',
+	#package : 'Collections-Streams',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Generator class >> on: aBlock [
 	^ self basicNew initializeOn: aBlock
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Generator class >> onDo: aBlock [
 
 	"Helper to tranform any `do:`-like method into a generator."
@@ -97,7 +99,7 @@ Generator class >> onDo: aBlock [
 	^ self on: [ :generator | aBlock value: [ :arg | generator yield: arg ] ]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 Generator class >> somePrimes [
 	"self somePrimes"
 
@@ -107,14 +109,14 @@ Generator class >> somePrimes [
 		[generator atEnd] whileFalse:[ str nextPutAll: generator next printString; cr]]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Generator >> atEnd [
 	"Answer whether the receiver can access any more objects."
 
 	^ continue isNil or: [ continue isDead ]
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 Generator >> close [
 	"Close the receiving generator and unwind its ensure-blocks."
 
@@ -122,7 +124,7 @@ Generator >> close [
 	continue := block := next := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Generator >> contents [
 	"Answer the contents of this generator. Do not call this method on infinite generators."
 
@@ -133,7 +135,7 @@ Generator >> contents [
 	^ stream contents
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Generator >> fork [
 	| result |
 	home := thisContext.
@@ -144,13 +146,13 @@ Generator >> fork [
 	^ result
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Generator >> initializeOn: aBlock [
 	block := aBlock.
 	self reset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Generator >> next [
 	"Generate and answer the next object in the receiver."
 
@@ -160,7 +162,7 @@ Generator >> next [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Generator >> nextPut: anObject [
 	"Add anObject into the generator. A synonym to #yield: and value:."
 
@@ -171,19 +173,19 @@ Generator >> nextPut: anObject [
 	^ previous
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Generator >> peek [
 	"Answer the upcoming object of the receiver."
 
 	^ next
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Generator >> printOn: aStream [
 	aStream nextPutAll: self class name; nextPutAll: ' on: '; print: block
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Generator >> reset [
 	"Reset the generator, i.e., start it over"
 	continue ifNotNil:[continue unwindTo: home].
@@ -192,21 +194,21 @@ Generator >> reset [
 	self fork
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Generator >> size [
 	"A generator does not know its size."
 
 	^ self shouldNotImplement
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 Generator >> value: anObject [
 	"Allows passing generators as arguments to methods expecting blocks.
 	A synonym for #yield: / #nextPut:."
 	^ self nextPut: anObject
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 Generator >> yield: anObject [
 	"Yield the next value to the consumer of the generator.
 	A synonym for #nextPut:"

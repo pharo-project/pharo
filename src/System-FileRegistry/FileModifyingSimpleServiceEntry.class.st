@@ -6,12 +6,14 @@ Such changes include:
  - file modification
 "
 Class {
-	#name : #FileModifyingSimpleServiceEntry,
-	#superclass : #SimpleServiceEntry,
-	#category : #'System-FileRegistry-Base'
+	#name : 'FileModifyingSimpleServiceEntry',
+	#superclass : 'SimpleServiceEntry',
+	#category : 'System-FileRegistry-Base',
+	#package : 'System-FileRegistry',
+	#tag : 'Base'
 }
 
-{ #category : #'performing service' }
+{ #category : 'performing service' }
 FileModifyingSimpleServiceEntry >> performServiceFor: anObject [
 	| retval |
 	retval := super performServiceFor: anObject.

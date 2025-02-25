@@ -1,29 +1,40 @@
 "
 I am a regex refactoring renaming protocol names.
+Here is a typical examples.
 
-See comment of superclass for a nice script to be adapated to package names.
+```
+| newClassPrefix env model |
+env := RBBrowserEnvironment new 
+			forClasses: (Smalltalk allClasses 
+									select: [ :each | each protocolNames includes: #'initialize-release' ]).
+			
+model := (RBNamespace onEnvironment: env) name: 'MyModel'; yourself.
+
+RBProtocolRegexTransformation new
+	model: model;
+	replace: 'initialize-release' with: 'initialization';
+  execute.
+```
 "
 Class {
-	#name : #RBProtocolRegexTransformation,
-	#superclass : #RBRegexRefactoring,
-	#category : #'Refactoring-Core-Transformation-Unused'
+	#name : 'RBProtocolRegexTransformation',
+	#superclass : 'RBRegexRefactoring',
+	#category : 'Refactoring-Core-Transformation-Unused',
+	#package : 'Refactoring-Core',
+	#tag : 'Transformation-Unused'
 }
 
-{ #category : #transforming }
-RBProtocolRegexTransformation >> transform [
+{ #category : 'transforming' }
+RBProtocolRegexTransformation >> privateTransform [
 
-	| original replacement |
-
-	self model
-		allClassesDo: [ :class |
-			class selectors
-				do: [ :selector |
-					original := ( class realClass whichCategoryIncludesSelector: selector ) asString.
-					original
-						ifNotNil: [ replacement := self execute: original.
-							replacement = original
-								ifFalse: [ class compile: ( class sourceCodeFor: selector ) classified: replacement ]
-							]
-					]
-			]
+	| replacement |
+	self model allClassesDo: [ :class |
+		class selectors do: [ :selector |
+			(class realClass protocolNameOfSelector: selector) asString ifNotNil: [ :original |
+				replacement := self execute: original.
+				replacement = original ifFalse: [ self generateChangesFor:
+																(RBAddMethodTransformation
+																	sourceCode: (class sourceCodeFor: selector)
+																	in: class
+																	withProtocol: replacement)] ] ] ]
 ]

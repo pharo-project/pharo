@@ -3,12 +3,14 @@ I group commands in the browser toolbar which should be represented as general b
 I allow to place all button based commands at the end of toolbar.
 "
 Class {
-	#name : #ClyButtonToolbarGroup,
-	#superclass : #CmdMenuGroup,
-	#category : #'Calypso-Browser-Toolbar'
+	#name : 'ClyButtonToolbarGroup',
+	#superclass : 'CmdMenuGroup',
+	#category : 'Calypso-Browser-Toolbar',
+	#package : 'Calypso-Browser',
+	#tag : 'Toolbar'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyButtonToolbarGroup >> order [
 	^5000
 ]

@@ -6,22 +6,24 @@ When serialized I get the name of the trait.
 When deserialized I find the trait in the target environment
 "
 Class {
-	#name : #HETraitLiteral,
-	#superclass : #HESymbol,
-	#category : #'Hermes-Model'
+	#name : 'HETraitLiteral',
+	#superclass : 'HESymbol',
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HETraitLiteral class >> tag [
 	^ 19
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 HETraitLiteral >> asLiteralIn: env [
 	^ env classNamed: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HETraitLiteral >> value: aTrait [
 	value := aTrait name
 ]

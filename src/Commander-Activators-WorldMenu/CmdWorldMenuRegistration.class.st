@@ -11,30 +11,31 @@ Registration is done during class initialization. Or you can reevaluate it with:
 	CmdWorldMenuRegistration attachShorctutsToWorld 
 "
 Class {
-	#name : #CmdWorldMenuRegistration,
-	#superclass : #Object,
-	#category : #'Commander-Activators-WorldMenu'
+	#name : 'CmdWorldMenuRegistration',
+	#superclass : 'Object',
+	#category : 'Commander-Activators-WorldMenu',
+	#package : 'Commander-Activators-WorldMenu'
 }
 
-{ #category : #'world menu' }
+{ #category : 'world menu' }
 CmdWorldMenuRegistration class >> createCommandContext [
 
 	^CmdWorldMenuContext for: self currentWorld
 ]
 
-{ #category : #'world menu' }
+{ #category : 'world menu' }
 CmdWorldMenuRegistration class >> enableWorldShortcuts [
 	<script>
 	CmdKMDispatcher attachedTo: self currentWorld withCommandsFrom: self
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 CmdWorldMenuRegistration class >> initialize [
 
 	self enableWorldShortcuts
 ]
 
-{ #category : #'world menu' }
+{ #category : 'world menu' }
 CmdWorldMenuRegistration class >> registerMenuOn: aBuilder [
 	<worldMenu>
 

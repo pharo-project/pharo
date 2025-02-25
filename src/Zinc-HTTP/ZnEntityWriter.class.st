@@ -6,57 +6,59 @@ I deal with chunking and gzip encoding.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnEntityWriter,
-	#superclass : #Object,
+	#name : 'ZnEntityWriter',
+	#superclass : 'Object',
 	#instVars : [
 		'headers',
 		'stream'
 	],
-	#category : #'Zinc-HTTP-Streaming'
+	#category : 'Zinc-HTTP-Streaming',
+	#package : 'Zinc-HTTP',
+	#tag : 'Streaming'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEntityWriter >> contentType [
 	^ (self headers includesKey: 'Content-Type')
 		ifTrue: [ self headers contentType ]
 		ifFalse: [ ZnMimeType default ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEntityWriter >> headers [
 	^ headers
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEntityWriter >> headers: znHeaders [
 	headers := znHeaders
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntityWriter >> isChunked [
 	| transferEncoding |
 	transferEncoding := self headers at: 'Transfer-Encoding' ifAbsent: [ ^ false ].
 	^ transferEncoding = 'chunked' or: [ transferEncoding beginsWith: 'chunked' ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntityWriter >> isGzipped [
 	| contentEncoding |
 	contentEncoding := self headers at: 'Content-Encoding' ifAbsent: [ ^ false ].
 	^ contentEncoding = 'gzip'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEntityWriter >> stream [
 	^ stream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEntityWriter >> stream: writeStream [
 	stream := writeStream
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnEntityWriter >> writeEntity: entity [
 	| actualStream gzipStream bufferedStream chunkedStream isChunked |
 	actualStream := stream.

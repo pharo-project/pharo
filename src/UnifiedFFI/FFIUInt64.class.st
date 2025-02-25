@@ -3,32 +3,34 @@ I'm an unsigned int type (64bits)
 I map to a ulonglong type. 
 "
 Class {
-	#name : #FFIUInt64,
-	#superclass : #FFIIntegerType,
-	#category : #'UnifiedFFI-Types'
+	#name : 'FFIUInt64',
+	#superclass : 'FFIIntegerType',
+	#category : 'UnifiedFFI-Types',
+	#package : 'UnifiedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIUInt64 class >> externalType [
 	^ ExternalType unsignedLongLong
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIUInt64 class >> externalTypeAlignment [
 	^ OSPlatform current ffiInt64Alignment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIUInt64 class >> externalTypeSize [
 	^ 8
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIUInt64 >> basicHandle: aHandle at: index [
 	^ aHandle signedLongLongAt: index
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIUInt64 >> basicHandle: aHandle at: index put: value [
 	^ aHandle signedLongLongAt: index	put: value
 ]

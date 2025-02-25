@@ -1,7 +1,7 @@
-Extension { #name : #GlobalVariable }
+Extension { #name : 'GlobalVariable' }
 
-{ #category : #'*Shout' }
-GlobalVariable >> styleNameIn: aRBVariableNode [
+{ #category : '*Shout' }
+GlobalVariable >> styleNameIn: aVariableNode [
 
 	^ #globalVar
 ]

@@ -3,40 +3,43 @@ To facilitate unit tests without interferring with the live VM interface,
 I simulate the VM code for the millisecond primitives.
 "
 Class {
-	#name : #DelayMillisecondTickerSimulation,
-	#superclass : #DelayMillisecondTicker,
+	#name : 'DelayMillisecondTickerSimulation',
+	#superclass : 'DelayMillisecondTicker',
 	#instVars : [
 		'vmSimNow',
 		'vmSimTheTimerSemaphore',
 		'vmSimNextWakeupTick'
 	],
-	#category : #'Kernel-Delays'
+	#category : 'Kernel-Delays',
+	#package : 'Kernel',
+	#tag : 'Delays'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DelayMillisecondTickerSimulation >> initialize [
 	super initialize.
 	vmSimTheTimerSemaphore := Semaphore new.
 	vmSimNow := 0
 ]
 
-{ #category : #'api-system' }
+{ #category : 'api-system' }
 DelayMillisecondTickerSimulation >> nowTick [
 	^vmSimNow
 ]
 
-{ #category : #'private - primitives' }
+{ #category : 'private - primitives' }
 DelayMillisecondTickerSimulation >> primSignal: sempahore atMilliseconds: nextTick [
 	"This is a simulation of the primitive, working hand-in-hand with #simulate_vmMilliseconds:"
+
 	(sempahore isKindOf: Semaphore) ifTrue: [
 		vmSimTheTimerSemaphore := sempahore.
 		vmSimNextWakeupTick := nextTick ].
-	(sempahore = nil) ifTrue: [
+	sempahore ifNil: [
 		vmSimTheTimerSemaphore := nil.
-		vmSimNextWakeupTick := 0]
+		vmSimNextWakeupTick := 0 ]
 ]
 
-{ #category : #'api-system' }
+{ #category : 'api-system' }
 DelayMillisecondTickerSimulation >> simulate_vmMilliseconds: milliseconds [
 
 	vmSimNextWakeupTick ~= 0 ifTrue: [
@@ -48,7 +51,7 @@ DelayMillisecondTickerSimulation >> simulate_vmMilliseconds: milliseconds [
  		]
 ]
 
-{ #category : #'api-system' }
+{ #category : 'api-system' }
 DelayMillisecondTickerSimulation >> vmSimNextWakeupMilliseconds [
 	^vmSimNextWakeupTick
 ]

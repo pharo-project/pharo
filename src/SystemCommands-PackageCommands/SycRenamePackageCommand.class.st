@@ -5,45 +5,52 @@ Internal Representation and Key Implementation Points.
 
     Instance Variables
 	newName:		<String>
-	package:		<RPackage>
+	package:		<Package>
 "
 Class {
-	#name : #SycRenamePackageCommand,
-	#superclass : #CmdCommand,
+	#name : 'SycRenamePackageCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'package',
 		'newName'
 	],
-	#category : #'SystemCommands-PackageCommands'
+	#category : 'SystemCommands-PackageCommands',
+	#package : 'SystemCommands-PackageCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycRenamePackageCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isPackageSelected
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenamePackageCommand >> defaultMenuIconName [
 	^ #edit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenamePackageCommand >> defaultMenuItemName [
 	^'Rename'
 ]
 
-{ #category : #execution }
+{ #category : 'accessing' }
+SycRenamePackageCommand >> description [
+
+	^ 'Rename package'
+]
+
+{ #category : 'execution' }
 SycRenamePackageCommand >> execute [
 
 	(RBRenamePackageRefactoring rename: package name to: newName) execute
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRenamePackageCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
 	package := aToolContext lastSelectedPackage.
-	newName := UIManager default
+	newName := self morphicUIManager
 		request: 'New name of the package'
 		initialAnswer: package name
 		title: 'Rename a package'.

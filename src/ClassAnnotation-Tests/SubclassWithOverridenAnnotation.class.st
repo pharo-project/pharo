@@ -1,10 +1,12 @@
 Class {
-	#name : #SubclassWithOverridenAnnotation,
-	#superclass : #ClassWithSingleAnnotation,
-	#category : #'ClassAnnotation-Tests-Examples-Annotated classes'
+	#name : 'SubclassWithOverridenAnnotation',
+	#superclass : 'ClassWithSingleAnnotation',
+	#category : 'ClassAnnotation-Tests-Examples-Annotated classes',
+	#package : 'ClassAnnotation-Tests',
+	#tag : 'Examples-Annotated classes'
 }
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 SubclassWithOverridenAnnotation class >> annotationExample [
 	<classAnnotation>
 

@@ -2,12 +2,14 @@
 I represent a zip file system entry for a directory. Together with ZipFileSystemFile I take care of lazily accessing archive members.
 "
 Class {
-	#name : #ZipFileSystemDirectory,
-	#superclass : #MemoryFileSystemDirectory,
-	#category : #'FileSystem-Zip-Base'
+	#name : 'ZipFileSystemDirectory',
+	#superclass : 'MemoryFileSystemDirectory',
+	#category : 'FileSystem-Zip-Base',
+	#package : 'FileSystem-Zip',
+	#tag : 'Base'
 }
 
-{ #category : #creation }
+{ #category : 'creation' }
 ZipFileSystemDirectory >> ensureCreateFile: aFileName [
 	^ self
 		fileEntryAt: aFileName

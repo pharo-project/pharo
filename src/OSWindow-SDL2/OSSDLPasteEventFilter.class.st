@@ -1,6 +1,6 @@
 Class {
-	#name : #OSSDLPasteEventFilter,
-	#superclass : #Object,
+	#name : 'OSSDLPasteEventFilter',
+	#superclass : 'Object',
 	#instVars : [
 		'next',
 		'lastEvents',
@@ -9,16 +9,18 @@ Class {
 	#pools : [
 		'SDL2Constants'
 	],
-	#category : #'OSWindow-SDL2-Base'
+	#category : 'OSWindow-SDL2-Base',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Base'
 }
 
-{ #category : #'last events' }
+{ #category : 'last events' }
 OSSDLPasteEventFilter >> addEvent: aEvent [
 
 	self lastEvents add: aEvent
 ]
 
-{ #category : #'events-processing' }
+{ #category : 'events-processing' }
 OSSDLPasteEventFilter >> changeEventsToIncludeModifier [
 
 	| modifierToUse defaultModifier |
@@ -40,19 +42,19 @@ OSSDLPasteEventFilter >> changeEventsToIncludeModifier [
 			ifTrue: [ anEvent keysym mod: (anEvent keysym mod bitOr: modifierToUse) ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDLPasteEventFilter >> currentState [
 
 	^ currentState ifNil: [ currentState := 1 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDLPasteEventFilter >> currentState: aValue [
 
 	currentState := aValue
 ]
 
-{ #category : #'events-processing' }
+{ #category : 'events-processing' }
 OSSDLPasteEventFilter >> dispatchEvent: aSDLEvent [
 
 	"
@@ -109,14 +111,14 @@ OSSDLPasteEventFilter >> dispatchEvent: aSDLEvent [
 	^ next dispatchEvent: aSDLEvent
 ]
 
-{ #category : #'last events' }
+{ #category : 'last events' }
 OSSDLPasteEventFilter >> flushEvents [
 
 	self lastEvents do: [ :anEvent | next dispatchEvent: anEvent ].
 	self lastEvents removeAll
 ]
 
-{ #category : #'events-processing' }
+{ #category : 'events-processing' }
 OSSDLPasteEventFilter >> isKeyDownV: aSDLEvent [
 
 	^ aSDLEvent isKeyDownEvent
@@ -124,7 +126,7 @@ OSSDLPasteEventFilter >> isKeyDownV: aSDLEvent [
 			and: [aSDLEvent keysym sym = SDLK_v]]
 ]
 
-{ #category : #'events-processing' }
+{ #category : 'events-processing' }
 OSSDLPasteEventFilter >> isKeyUpV: aSDLEvent [
 
 	^ aSDLEvent isKeyUpEvent
@@ -132,19 +134,19 @@ OSSDLPasteEventFilter >> isKeyUpV: aSDLEvent [
 			and: [aSDLEvent keysym sym = SDLK_v]]
 ]
 
-{ #category : #'last events' }
+{ #category : 'last events' }
 OSSDLPasteEventFilter >> lastEvents [
 
 	^ lastEvents ifNil: [ lastEvents := OrderedCollection new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDLPasteEventFilter >> next [
 
 	^ next
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDLPasteEventFilter >> next: anObject [
 
 	next := anObject

@@ -11,18 +11,19 @@ Installs:
 - Graphics-* packages (Form, Bitmap, GrafPort...)
 "
 Class {
-	#name : #BaselineOfDisplay,
-	#superclass : #BaselineOf,
+	#name : 'BaselineOfDisplay',
+	#superclass : 'BaselineOf',
 	#instVars : [
 		'initializersEnabled'
 	],
 	#classVars : [
 		'Initialized'
 	],
-	#category : #BaselineOfDisplay
+	#category : 'BaselineOfDisplay',
+	#package : 'BaselineOfDisplay'
 }
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfDisplay >> baseline: spec [
 	<baseline>
 
@@ -31,6 +32,7 @@ BaselineOfDisplay >> baseline: spec [
 		spec postLoadDoIt: #'postload:package:'.
 		
 		spec 
+			package: 'Colors';
 			package: 'Graphics-Display Objects';
 			package: 'Graphics-Primitives' with: [ spec requires: 'Graphics-Display Objects' ];
 			package: 'Graphics-Transformations'
@@ -38,7 +40,7 @@ BaselineOfDisplay >> baseline: spec [
 		 ].
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfDisplay >> installBitmap [
 
 	"install new Bitmap class to special objects array"
@@ -51,41 +53,32 @@ BaselineOfDisplay >> installBitmap [
 	Smalltalk specialObjectsArray becomeForward: array.
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfDisplay >> postload: loader package: packageSpec [
 
-	| display |
-	
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
 	
 	self installBitmap.
 
-	display := (Smalltalk classNamed: #DisplayScreen) new.
-	display setExtent: 0@0 depth: 2.
-	Smalltalk globals at: #Display put: display.
-
 	Cursor webLink. "set the webLink cursor shape"
 					
 	Cursor initialize.
-	DisplayScreen initialize.
 	BitBlt initialize.
 	Form initialize.
+	Color initialize.
 	
 	MCMethodDefinition initializersEnabled: initializersEnabled.
 
 	Initialized := true.
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfDisplay >> preload: loader package: packageSpec [
-
 	"Ignore pre and post loads if already executed"
+
 	Initialized = true ifTrue: [ ^ self ].
 
-	"Declare global variable"
-	Smalltalk globals at: #Display put: nil.
-
 	initializersEnabled := MCMethodDefinition initializersEnabled.
-	MCMethodDefinition initializersEnabled: false.
+	MCMethodDefinition initializersEnabled: false
 ]

@@ -2,21 +2,30 @@
 A minified version of the DrTest tool.
 "
 Class {
-	#name : #MiniDrTests,
-	#superclass : #AbstractDrTestsPresenter,
+	#name : 'MiniDrTests',
+	#superclass : 'AbstractDrTestsPresenter',
 	#instVars : [
-		'startButton'
+		'startButton',
+		'pluginPresenter'
 	],
-	#category : #'DrTests-Spec'
+	#category : 'DrTests-Spec',
+	#package : 'DrTests',
+	#tag : 'Spec'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+MiniDrTests class >> defaultPreferredExtent [ 
+
+	^  200@180
+]
+
+{ #category : 'accessing' }
 MiniDrTests >> currentPlugin: anObject [
 
 	currentPlugin := anObject
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 MiniDrTests >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -26,13 +35,13 @@ MiniDrTests >> defaultLayout [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MiniDrTests >> evaluateStyle [
 
 	^ pluginResult backgroundColorStyle
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MiniDrTests >> initializeButtons [
 
 	super initializeButtons.
@@ -45,45 +54,42 @@ MiniDrTests >> initializeButtons [
 		yourself
 ]
 
-{ #category : #initialization }
-MiniDrTests >> initializeWindow: aWindowPresenter [
+{ #category : 'accessing' }
+MiniDrTests >> pluginPresenter [
 
-	super initializeWindow: aWindowPresenter.
-	aWindowPresenter
-		title: self title;
-		initialExtent: 200@180;
-		windowIcon: (self iconNamed: self class systemIconName)
+	^ pluginPresenter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+MiniDrTests >> receivePluginPresenter: aPluginPresenter [
+
+	pluginPresenter := aPluginPresenter
+]
+
+{ #category : 'accessing' }
 MiniDrTests >> startButton [
 	^ startButton
 ]
 
-{ #category : #'private - actions' }
+{ #category : 'private - actions' }
 MiniDrTests >> switchToDrTest [
 
 	(DrTests newApplication: self application)
 		reloadConfiguration: testsConfiguration
-			withResults: pluginResult
-			andPlugin: currentPlugin;
+		withResults: pluginResult
+		andPlugin: currentPlugin
+		andPresenter: self pluginPresenter;
 		open
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MiniDrTests >> switchUI [
 
 	super switchUI.
 	self switchToDrTest
 ]
 
-{ #category : #accessing }
-MiniDrTests >> title [
-
-	^ 'DrTests'
-]
-
-{ #category : #updating }
+{ #category : 'updating' }
 MiniDrTests >> updateUI [
 
 	super updateUI.
@@ -93,9 +99,15 @@ MiniDrTests >> updateUI [
 	startButton label: pluginResult summarizeInfo
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MiniDrTests >> updateWithResults: results [
 
 	self pluginResult: results.
 	self updateUI
+]
+
+{ #category : 'accessing' }
+MiniDrTests >> windowTitle [
+
+	^ 'DrTests'
 ]

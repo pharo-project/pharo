@@ -8,20 +8,22 @@ I generate a new nonce value for every 401 response I trigger.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnDigestAuthenticator,
-	#superclass : #ZnBasicAuthenticator,
+	#name : 'ZnDigestAuthenticator',
+	#superclass : 'ZnBasicAuthenticator',
 	#instVars : [
 		'nonces'
 	],
-	#category : #'Zinc-HTTP-Support'
+	#category : 'Zinc-HTTP-Support',
+	#package : 'Zinc-HTTP',
+	#tag : 'Support'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnDigestAuthenticator class >> hasMD5Support [
 	^ (self md5Hash: 'test') isNil not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnDigestAuthenticator class >> md5Hash: aString [
 	| hash env|
 	env := self environment.
@@ -40,7 +42,7 @@ ZnDigestAuthenticator class >> md5Hash: aString [
 	^ hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnDigestAuthenticator class >> parseAuthRequest: headerValue [
 	| data dict |
 	dict := Dictionary new.
@@ -56,19 +58,19 @@ ZnDigestAuthenticator class >> parseAuthRequest: headerValue [
 	^ dict
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnDigestAuthenticator >> a1for: username [
 	| password |
 	password := credentials at: username ifAbsent: [ ^ nil ].
 	^ self class md5Hash: username, ':', self realm, ':', password
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnDigestAuthenticator >> a2forUrl: uri method: method [
 	^ self class md5Hash: method, ':', uri
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnDigestAuthenticator >> authHeader [
 	| nonce opaque |
 	nonce := self createNonce.
@@ -77,21 +79,21 @@ ZnDigestAuthenticator >> authHeader [
 	^ 'Digest realm="', self realm, '", nonce="', nonce, '", opaque="', opaque, '"'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnDigestAuthenticator >> createNonce [
 	| pt |
 	pt := DateAndTime now asString, ':', Random new next asString.
 	^ self class md5Hash: pt
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnDigestAuthenticator >> createOpaque [
 	| pt |
 	pt := Random new next asString, ':', DateAndTime now asString.
 	^ self class md5Hash: pt
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnDigestAuthenticator >> isRequestAuthenticated: request [
 	| authorization response cresponse a1 a2 nonce opaque |
 	authorization := self class parseAuthRequest: (request headers at: 'Authorization' ifAbsent: [ ^ false ]).
@@ -106,7 +108,7 @@ ZnDigestAuthenticator >> isRequestAuthenticated: request [
 	^ (response = cresponse)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnDigestAuthenticator >> nonces [
 	^ nonces ifNil: [ nonces := Dictionary new ]
 ]

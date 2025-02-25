@@ -1,28 +1,24 @@
 Class {
-	#name : #CDMetaclassDefinitionNode,
-	#superclass : #CDBehaviorDefinitionNode,
-	#category : #'ClassParser-Model'
+	#name : 'CDMetaclassDefinitionNode',
+	#superclass : 'CDBehaviorDefinitionNode',
+	#category : 'ClassParser-Model',
+	#package : 'ClassParser',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDMetaclassDefinitionNode >> existingClassIfAbsent: aBlock [
 	| existingClass |
 	existingClass := super existingClassIfAbsent: aBlock.
 	^existingClass classSide
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDMetaclassDefinitionNode >> isClassSide [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDMetaclassDefinitionNode >> isInstanceSide [
 	^ false
-]
-
-{ #category : #testing }
-CDMetaclassDefinitionNode >> selector [
-
-	^ tokens at: 3
 ]

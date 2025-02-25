@@ -1,10 +1,11 @@
 Class {
-	#name : #TFPoolTest,
-	#superclass : #TestCase,
-	#category : #'ThreadedFFI-Tests'
+	#name : 'TFPoolTest',
+	#superclass : 'TestCase',
+	#category : 'ThreadedFFI-Tests',
+	#package : 'ThreadedFFI-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFPoolTest >> testGrowBy [
 	| pool |
 
@@ -16,7 +17,7 @@ TFPoolTest >> testGrowBy [
 	self assert: pool size equals: 7
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFPoolTest >> testPopulate [
 	| pool |
 
@@ -27,7 +28,7 @@ TFPoolTest >> testPopulate [
 	self assert: pool elements equals: #(1 1 1 1 1 1 1 1 1 1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFPoolTest >> testReturnOne [
 	| pool |
 
@@ -42,7 +43,7 @@ TFPoolTest >> testReturnOne [
 	self assert: pool size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TFPoolTest >> testTakeOne [
 	| pool i |
 

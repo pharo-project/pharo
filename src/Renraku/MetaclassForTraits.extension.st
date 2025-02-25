@@ -1,6 +1,6 @@
-Extension { #name : #MetaclassForTraits }
+Extension { #name : 'MetaclassForTraits' }
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 MetaclassForTraits >> reBanName [
 
 	^ self name, ' (Trait)'

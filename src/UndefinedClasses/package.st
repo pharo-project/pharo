@@ -1,1 +1,1 @@
-Package { #name : #UndefinedClasses }
+Package { #name : 'UndefinedClasses' }

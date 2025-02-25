@@ -1,11 +1,11 @@
-Extension { #name : #Number }
+Extension { #name : 'Number' }
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 Number >> stonContainSubObjects [
 	^ false
 ]
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 Number >> stonOn: stonWriter [
 	stonWriter writeFloat: self asFloat
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #CmdMenuGroup }
+Extension { #name : 'CmdMenuGroup' }
 
-{ #category : #'*Commander-Spec2-Compatibility' }
+{ #category : '*Commander-Spec2-Compatibility' }
 CmdMenuGroup >> addToMenuPresenter: aSpMenuPresenter [
 	| subMenuPresenter |
 	subMenuPresenter := SpMenuPresenter new.

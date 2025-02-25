@@ -7,31 +7,33 @@ I am singleton:
 Tools which define specific environments could add polymorphic behaviour to me
 "
 Class {
-	#name : #DefaultExecutionEnvironment,
-	#superclass : #ExecutionEnvironment,
+	#name : 'DefaultExecutionEnvironment',
+	#superclass : 'ExecutionEnvironment',
 	#classInstVars : [
 		'instance'
 	],
-	#category : #'Kernel-Processes'
+	#category : 'Kernel-Processes',
+	#package : 'Kernel',
+	#tag : 'Processes'
 }
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 DefaultExecutionEnvironment class >> beActive [
 
 	CurrentExecutionEnvironment restoreDefault
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 DefaultExecutionEnvironment class >> beActiveDuring: aBlock [
 
 	^self instance beActiveDuring: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DefaultExecutionEnvironment class >> instance [
 	^instance ifNil: [ instance := self new ]
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 DefaultExecutionEnvironment >> prepareForNewProcess: aProcess [
 ]

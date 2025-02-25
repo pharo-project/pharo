@@ -1,6 +1,6 @@
-Extension { #name : #Association }
+Extension { #name : 'Association' }
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Association >> treeNodeHead [
 
 	^ (key isKindOf: Association)
@@ -8,7 +8,7 @@ Association >> treeNodeHead [
 		ifFalse: [ key ]
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Association >> treeNodeTail [
 
 	^ (key isKindOf: Association)

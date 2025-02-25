@@ -1,6 +1,6 @@
-Extension { #name : #Trait }
+Extension { #name : 'Trait' }
 
-{ #category : #'*Polymorph-Widgets-Themes' }
+{ #category : '*Polymorph-Widgets-Themes' }
 Trait >> systemIconName [
 
 	^ #trait

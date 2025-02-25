@@ -13,32 +13,33 @@ has to be sent to the other side.
 I am propably too primitive to be used directly, see ZdcSecureSocketStream for a higher level client.
 "
 Class {
-	#name : #ZdcAbstractSSLSession,
-	#superclass : #Object,
-	#category : #'Zodiac-Core'
+	#name : 'ZdcAbstractSSLSession',
+	#superclass : 'Object',
+	#category : 'Zodiac-Core',
+	#package : 'Zodiac-Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZdcAbstractSSLSession class >> isAbstract [
 
 	^self == ZdcAbstractSSLSession
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZdcAbstractSSLSession >> accept: srcBuf from: start to: stop into: dstBuf [
 	"Start or continue the server handshake using the given input token"
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcAbstractSSLSession >> certificateName [
 	"The name of the local certificate to provide to the remote peer"
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcAbstractSSLSession >> certificateName: aString [
 	"Sets the name of the local certificate to provide to the remote peer.
 	OpenSSL: The name is the full path to a .pem file.
@@ -47,7 +48,7 @@ ZdcAbstractSSLSession >> certificateName: aString [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcAbstractSSLSession >> certificateVerificationState [
 	"Returns the certificate verification bits. The returned value indicates
 	whether the certificate is valid. The two standard values are:
@@ -64,42 +65,42 @@ ZdcAbstractSSLSession >> certificateVerificationState [
 	self subclassResponsibility
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZdcAbstractSSLSession >> connect: srcBuf from: start to: stop into: dstBuf [
 	"Start or continue the client handshake using the given input token"
 
 	self subclassResponsibility
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZdcAbstractSSLSession >> decrypt: srcBuf from: start to: stop into: dstBuf [
 	"Decrypt the input in srcBuf from start to stop into dstBuf."
 
 	self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZdcAbstractSSLSession >> destroy [
 	"Do any necessary cleanup when I am no longer needed"
 
 	self subclassResponsibility
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZdcAbstractSSLSession >> encrypt: srcBuf from: start to: stop into: dstBuf [
 	"Encrypt the input in srcBuf from start to stop into dstBuf."
 
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZdcAbstractSSLSession >> isConnected [
 	"Returns true if the SSL handshake has been completed"
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcAbstractSSLSession >> peerCertificateName [
 	"Returns the certificate name of the remote peer.
 	The method only returns a name if the certificate has been verified"
@@ -107,14 +108,14 @@ ZdcAbstractSSLSession >> peerCertificateName [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcAbstractSSLSession >> serverName [
 	"Get the Server Name Indication (SNI) property"
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcAbstractSSLSession >> serverName: serverName [
 	"Set the Server Name Indication (SNI) to serverName,
 	the fully qualified domain name of the host to connect to.
@@ -123,7 +124,7 @@ ZdcAbstractSSLSession >> serverName: serverName [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZdcAbstractSSLSession >> sslState [
 	"Returns the current state of the SSL connection:
 		0 - Unused

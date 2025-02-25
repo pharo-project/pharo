@@ -2,27 +2,29 @@
 Allows to render a morph as a scene in athens
 "
 Class {
-	#name : #AthensMorphScene,
-	#superclass : #Object,
+	#name : 'AthensMorphScene',
+	#superclass : 'Object',
 	#instVars : [
 		'morph'
 	],
-	#category : #'Athens-Examples-Morphic'
+	#category : 'Athens-Examples-Morphic',
+	#package : 'Athens-Examples',
+	#tag : 'Morphic'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensMorphScene >> morph [
 
 	^ morph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensMorphScene >> morph: anObject [
 
 	morph := anObject
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensMorphScene >> renderOn:aCanvas [
 	morph fullDrawOnAthensCanvas: aCanvas
 ]

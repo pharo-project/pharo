@@ -16,21 +16,23 @@ Internal Representation and Key Implementation Points.
 	actualObjectSortFunction:		<SortFunction>
 "
 Class {
-	#name : #ClySortBrowserItemFunction,
-	#superclass : #ClySortFunction,
+	#name : 'ClySortBrowserItemFunction',
+	#superclass : 'ClySortFunction',
 	#instVars : [
 		'actualObjectSortFunction'
 	],
-	#category : #'Calypso-NavigationModel-Model'
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClySortBrowserItemFunction class >> with: actualObjectSortFunction [
 	^self new
 		actualObjectSortFunction: actualObjectSortFunction
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClySortBrowserItemFunction >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -39,24 +41,24 @@ ClySortBrowserItemFunction >> = anObject [
 	^ actualObjectSortFunction = anObject actualObjectSortFunction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySortBrowserItemFunction >> actualObjectSortFunction [
 	^ actualObjectSortFunction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySortBrowserItemFunction >> actualObjectSortFunction: anObject [
 	actualObjectSortFunction := anObject
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ClySortBrowserItemFunction >> collate: aBrowserItem1 with: aBrowserItem2 [
 	^actualObjectSortFunction
 		collate: aBrowserItem1 actualObject
 		with: aBrowserItem2 actualObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClySortBrowserItemFunction >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 

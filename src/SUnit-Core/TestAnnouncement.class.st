@@ -2,28 +2,30 @@
 Notify about testing a test
 "
 Class {
-	#name : #TestAnnouncement,
-	#superclass : #Announcement,
+	#name : 'TestAnnouncement',
+	#superclass : 'Announcement',
 	#instVars : [
 		'test'
 	],
-	#category : #'SUnit-Core-Kernel'
+	#category : 'SUnit-Core-Kernel',
+	#package : 'SUnit-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TestAnnouncement class >> with: aTestCase [
 	^self new
 		test: aTestCase;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestAnnouncement >> test [
 
 	^ test
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestAnnouncement >> test: aTest [
 
 	test := aTest

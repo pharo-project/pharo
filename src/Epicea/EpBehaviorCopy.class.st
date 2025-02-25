@@ -2,16 +2,18 @@
 I represent a copy of a class or a trait .
 "
 Class {
-	#name : #EpBehaviorCopy,
-	#superclass : #EpEvent,
+	#name : 'EpBehaviorCopy',
+	#superclass : 'EpEvent',
 	#instVars : [
 		'definition',
 		'newName'
 	],
-	#category : #'Epicea-Model'
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpBehaviorCopy class >> fromBehavior: aClass newName: aName [
 
 	^ self basicNew
@@ -20,18 +22,18 @@ EpBehaviorCopy class >> fromBehavior: aClass newName: aName [
 		yourself
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpBehaviorCopy >> accept: aVisitor [
 	^ aVisitor visitBehaviorCopy: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpBehaviorCopy >> definition [
 
 	^ definition
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 EpBehaviorCopy >> initializeWithBehavior: aClass newName: aName [
 	self initialize.
 
@@ -39,7 +41,7 @@ EpBehaviorCopy >> initializeWithBehavior: aClass newName: aName [
 	newName := aName asSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpBehaviorCopy >> newName [
 
 	^ newName

@@ -1,6 +1,6 @@
-Extension { #name : #SycRemoveEmptyMethodTagsCommand }
+Extension { #name : 'SycRemoveEmptyMethodTagsCommand' }
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 SycRemoveEmptyMethodTagsCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 

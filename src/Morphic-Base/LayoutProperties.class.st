@@ -2,17 +2,19 @@
 This class provides a compact bit encoding for the most commonly used layout properties.
 "
 Class {
-	#name : #LayoutProperties,
-	#superclass : #Object,
+	#name : 'LayoutProperties',
+	#superclass : 'Object',
 	#instVars : [
 		'hResizing',
 		'vResizing',
 		'disableLayout'
 	],
-	#category : #'Morphic-Base-Layouts'
+	#category : 'Morphic-Base-Layouts',
+	#package : 'Morphic-Base',
+	#tag : 'Layouts'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 LayoutProperties >> asTableLayoutProperties [
 	^(TableLayoutProperties new)
 		hResizing: self hResizing;
@@ -21,56 +23,56 @@ LayoutProperties >> asTableLayoutProperties [
 		yourself
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 LayoutProperties >> cellInset [
 	"Default"
 	^0
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 LayoutProperties >> cellPositioning [
 	^#center
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 LayoutProperties >> cellSpacing [
 	"Default"
 	^#none
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutProperties >> disableTableLayout [
 	^disableLayout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutProperties >> disableTableLayout: aBool [
 	disableLayout := aBool
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutProperties >> hResizing [
 	^hResizing
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutProperties >> hResizing: aSymbol [
 	hResizing := aSymbol
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 LayoutProperties >> includesTableProperties [
 	^false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LayoutProperties >> initialize [
 	super initialize.
 	hResizing := vResizing := #rigid.
 	disableLayout := false
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 LayoutProperties >> initializeFrom: defaultProvider [
 	"Initialize the receiver from a default provider"
 	self hResizing: defaultProvider hResizing.
@@ -78,65 +80,65 @@ LayoutProperties >> initializeFrom: defaultProvider [
 	self disableTableLayout: defaultProvider disableTableLayout
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 LayoutProperties >> layoutInset [
 	^0
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 LayoutProperties >> listCentering [
 	"Default"
 	^#topLeft
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 LayoutProperties >> listDirection [
 	"Default"
 	^#topToBottom
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 LayoutProperties >> listSpacing [
 	"Default"
 	^#none
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 LayoutProperties >> maxCellSize [
 	^SmallInteger maxVal
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 LayoutProperties >> minCellSize [
 	^0
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 LayoutProperties >> reverseTableCells [
 	^false
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 LayoutProperties >> rubberBandCells [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutProperties >> vResizing [
 	^vResizing
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LayoutProperties >> vResizing: aSymbol [
 	vResizing := aSymbol
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 LayoutProperties >> wrapCentering [
 	^#topLeft
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 LayoutProperties >> wrapDirection [
 	^#none
 ]

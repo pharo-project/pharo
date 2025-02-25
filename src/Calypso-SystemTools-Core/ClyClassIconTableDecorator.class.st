@@ -5,25 +5,23 @@ My decoration logic is a bit complex. I am supposed to work in remote browser to
 So instead I find same class in my local environment and ask it for the icon.
 "
 Class {
-	#name : #ClyClassIconTableDecorator,
-	#superclass : #ClyClassTableDecorator,
-	#category : #'Calypso-SystemTools-Core-TableDecorators'
+	#name : 'ClyClassIconTableDecorator',
+	#superclass : 'ClyClassTableDecorator',
+	#category : 'Calypso-SystemTools-Core-TableDecorators',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'TableDecorators'
 }
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyClassIconTableDecorator class >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
 
 	| icon |
 	super decorateMainTableCell: anItemCellMorph of: aDataSourceItem.
 
-   icon := self iconNamed: (Object environment
+   icon := self iconFormSetNamed: (Object environment
 		at: aDataSourceItem name asSymbol
 		ifPresent: [ :aClass | aClass systemIconName ]
 		ifAbsent: [ Object systemIconName ]).
 
     anItemCellMorph definitionMorph: icon asMorph
-]
-
-{ #category : #decoration }
-ClyClassIconTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 ]

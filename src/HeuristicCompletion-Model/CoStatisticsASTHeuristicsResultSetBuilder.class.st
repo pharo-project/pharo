@@ -2,15 +2,17 @@
 I am a result set builder that builds heuristics using statistic support
 "
 Class {
-	#name : #CoStatisticsASTHeuristicsResultSetBuilder,
-	#superclass : #CoASTHeuristicsResultSetBuilder,
+	#name : 'CoStatisticsASTHeuristicsResultSetBuilder',
+	#superclass : 'CoASTHeuristicsResultSetBuilder',
 	#instVars : [
 		'statistics'
 	],
-	#category : #'HeuristicCompletion-Model-Statistics'
+	#category : 'HeuristicCompletion-Model-Statistics',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Statistics'
 }
 
-{ #category : #heuristics }
+{ #category : 'heuristics' }
 CoStatisticsASTHeuristicsResultSetBuilder >> newHeuristicBuilder [
 
 	^ CoStatisticsHeuristicBuilder new
@@ -18,12 +20,12 @@ CoStatisticsASTHeuristicsResultSetBuilder >> newHeuristicBuilder [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatisticsASTHeuristicsResultSetBuilder >> statistics [
 	^ statistics
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatisticsASTHeuristicsResultSetBuilder >> statistics: anObject [
 	statistics := anObject
 ]

@@ -6,32 +6,34 @@ I hold a nounce and opaque.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnDigestCredential,
-	#superclass : #ZnBasicCredential,
+	#name : 'ZnDigestCredential',
+	#superclass : 'ZnBasicCredential',
 	#instVars : [
 		'nonce',
 		'opaque'
 	],
-	#category : #'Zinc-HTTP-Support'
+	#category : 'Zinc-HTTP-Support',
+	#package : 'Zinc-HTTP',
+	#tag : 'Support'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnDigestCredential class >> authName [
 	^ 'Digest'
 ]
 
-{ #category : #computation }
+{ #category : 'computation' }
 ZnDigestCredential >> a1 [
 	^ ZnDigestAuthenticator md5Hash: self username, ':', self realm, ':', self password
 ]
 
-{ #category : #computation }
+{ #category : 'computation' }
 ZnDigestCredential >> a2ForUrl: urlObject method: method [
 	"This doesn't support all qop options yet."
 	^ ZnDigestAuthenticator md5Hash: method, ':', (self uriPathFrom: urlObject)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnDigestCredential >> authTokenForUrl: urlObject method: method [
 	| result |
 	result := WriteStream on: String new.
@@ -61,12 +63,12 @@ ZnDigestCredential >> authTokenForUrl: urlObject method: method [
 	^ result contents
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnDigestCredential >> isComplete [
-	^ super isComplete & nonce notNil
+	^ super isComplete & nonce isNotNil
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnDigestCredential >> linkToAuthRequest: aHeader [
 	| data |
 	data := self parseAuthRequest: aHeader.
@@ -74,42 +76,42 @@ ZnDigestCredential >> linkToAuthRequest: aHeader [
 	self realm: (data at: 'realm' ifAbsent: [ '' ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnDigestCredential >> nonce [
 	^ nonce
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnDigestCredential >> nonce: anObject [
 	nonce := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnDigestCredential >> opaque [
 	^ opaque
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnDigestCredential >> opaque: anObject [
 	opaque := anObject
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnDigestCredential >> parseAuthRequest: aHeader [
 	^ ZnDigestAuthenticator parseAuthRequest: aHeader
 ]
 
-{ #category : #computation }
+{ #category : 'computation' }
 ZnDigestCredential >> responseForUrl: urlObject method: method [
 	^ ZnDigestAuthenticator md5Hash: self a1, ':', self nonce, ':', (self a2ForUrl: urlObject method: method)
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnDigestCredential >> setAuthorizationHeader: headers for: urlObject method: method [
 	headers at: 'Authorization' put: (self authTokenForUrl: urlObject method: method)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnDigestCredential >> uriPathFrom: urlObject [
 	^ urlObject pathPrintString ifNil: [ '/' ]
 ]

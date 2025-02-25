@@ -2,17 +2,19 @@
 I am a root of hierarchy of commands to run any kind of tests
 "
 Class {
-	#name : #ClyTestCommand,
-	#superclass : #CmdCommand,
-	#category : #'Calypso-SystemPlugins-SUnit-Browser-Commands'
+	#name : 'ClyTestCommand',
+	#superclass : 'CmdCommand',
+	#category : 'Calypso-SystemPlugins-SUnit-Browser-Commands',
+	#package : 'Calypso-SystemPlugins-SUnit-Browser',
+	#tag : 'Commands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTestCommand class >> isAbstract [
 	^self = ClyTestCommand
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyTestCommand >> applyResultInContext: aToolContext [
 	super applyResultInContext: aToolContext.
 	"Following code forces browser update to not wait for deferred updating logic
@@ -22,32 +24,19 @@ ClyTestCommand >> applyResultInContext: aToolContext [
 	aToolContext activeQueryView dataSource runUpdate
 ]
 
-{ #category : #'context menu support' }
-ClyTestCommand >> defaultMenuIcon [
+{ #category : 'context menu support' }
+ClyTestCommand >> defaultMenuIconName [
 
-	^self testResult createIcon
+	^self testResult iconName
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyTestCommand >> notifyUserAboutResults: testResult with: message [
 
-	| color |
-	color := Color gray.
-	testResult hasPassed
-		ifTrue: [ color := TestResult defaultColorBackGroundForPassingTest ].
-	testResult hasFailures
-		ifTrue: [ color := TestResult defaultColorBackGroundForFailureTest ].
-	testResult hasErrors
-		ifTrue: [ color := TestResult defaultColorBackGroundForErrorTest ].
-
-	GrowlMorph
-		openWithLabel: message
-		contents: testResult printString
-		backgroundColor: color
-		labelColor: Color black
+	GrowlMorph showTestResult: testResult with: message
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTestCommand >> testResult [
 	self subclassResponsibility
 ]

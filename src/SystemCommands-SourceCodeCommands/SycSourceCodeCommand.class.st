@@ -5,63 +5,42 @@ Internal Representation and Key Implementation Points.
 
     Instance Variables
 	method:		<CompiledMethod>
-	sourceNode:		<RBProgramNode>
+	sourceNode:		<ASTProgramNode>
 "
 Class {
-	#name : #SycSourceCodeCommand,
-	#superclass : #CmdCommand,
-	#traits : 'TRefactoringCommandSupport',
-	#classTraits : 'TRefactoringCommandSupport classTrait',
+	#name : 'SycSourceCodeCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'method',
 		'sourceNode'
 	],
-	#category : #'SystemCommands-SourceCodeCommands'
+	#category : 'SystemCommands-SourceCodeCommands',
+	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycSourceCodeCommand class >> isAbstract [
 	^self = SycSourceCodeCommand
 ]
 
-{ #category : #'instance creation' }
-SycSourceCodeCommand class >> method: aMethod node: aRBProgramNode [
+{ #category : 'instance creation' }
+SycSourceCodeCommand class >> method: aMethod node: aProgramNode [
 	^self new
 		method: aMethod;
-		sourceNode: aRBProgramNode
+		sourceNode: aProgramNode
 ]
 
-{ #category : #execution }
-SycSourceCodeCommand >> asRefactorings [
-	self subclassResponsibility
-]
-
-{ #category : #execution }
-SycSourceCodeCommand >> execute [
-
-	self executeRefactoring: self asRefactorings
-]
-
-{ #category : #private }
-SycSourceCodeCommand >> executeRefactoring: refactoring [
-
-	self initializeDefaultOptionsOf: refactoring.
-	[ refactoring execute ]
-		on: RBRefactoringError
-		do: [ :e | UIManager default alert: e messageText ]
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycSourceCodeCommand >> method [
 	^ method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycSourceCodeCommand >> method: anObject [
 	method := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycSourceCodeCommand >> readParametersFromContext: aSourceCodeContext [
 	super readParametersFromContext: aSourceCodeContext.
 
@@ -69,12 +48,12 @@ SycSourceCodeCommand >> readParametersFromContext: aSourceCodeContext [
 	sourceNode := aSourceCodeContext lastSelectedSourceNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycSourceCodeCommand >> sourceNode [
 	^ sourceNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycSourceCodeCommand >> sourceNode: anObject [
 	sourceNode := anObject
 ]

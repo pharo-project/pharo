@@ -4,22 +4,24 @@ I am abstract, my subclasses should at least implement `#visitCommand:`.
 I define default behaviour for visiting a command group.
 "
 Class {
-	#name : #CmVisitor,
-	#superclass : #Object,
-	#category : #'Commander2-Visitors'
+	#name : 'CmVisitor',
+	#superclass : 'Object',
+	#category : 'Commander2-Visitors',
+	#package : 'Commander2',
+	#tag : 'Visitors'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CmVisitor >> visit: anObject [
 	^ anObject acceptVisitor: self
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CmVisitor >> visitCommand: aCmCommandEntry [
 	^ self subclassResponsibility
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CmVisitor >> visitCommandGroup: aCmCommandsGroup [
 	^ aCmCommandsGroup entries collect: [ :entry |
 		entry acceptVisitor: self ]

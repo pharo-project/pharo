@@ -92,17 +92,18 @@ If application wants context menu based on commands then it needs to hook into c
 In future Commander will be deeply integrated in UI. So many things will work automatically
 "
 Class {
-	#name : #CmdCommand,
-	#superclass : #Object,
-	#category : #'Commander-Core'
+	#name : 'CmdCommand',
+	#superclass : 'Object',
+	#category : 'Commander-Core',
+	#package : 'Commander-Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdCommand class >> canBeExecutedInContext: aToolContext [
 	^self isAbstract not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommand class >> defaultMenuIconName [
 	"For compatibility the actual icon named can be defined on class side.
 	But right way it to use same instance side method.
@@ -113,23 +114,23 @@ CmdCommand class >> defaultMenuIconName [
 	^nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommand class >> defaultMenuItemName [
 	"It should be defined on instance side.
 	But for compatibility default instance side method delegates to class side"
 	^self name
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdCommand class >> isAbstract [
 	^self = CmdCommand
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 CmdCommand >> applyResultInContext: aToolContext [
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 CmdCommand >> asCommandActivator [
 	^CmdCommandActivator new
 		command: self;
@@ -137,16 +138,22 @@ CmdCommand >> asCommandActivator [
 		activationStrategy: (CmdManualActivationStrategy withAnnotatedClass: self class)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommand >> defaultMenuIcon [
+
+	^ self defaultMenuIconFormSet ifNotNil: [ :formSet | formSet asForm ]
+]
+
+{ #category : 'accessing' }
+CmdCommand >> defaultMenuIconFormSet [
 	"By default the result is nil which is not really nice
 	but it is already expected by many tools.	So it is easy to allow nil.
 	For simple cases users should implement class side method #defaultMenuIconName"
 	^self defaultMenuIconName ifNotNil: [ :iconName |
-		Smalltalk ui iconNamed: iconName ]
+		Smalltalk ui iconFormSetNamed: iconName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommand >> defaultMenuIconName [
 	"For compatibility it delegates actual logic to class side. But it should be just
 		^nil
@@ -158,7 +165,7 @@ CmdCommand >> defaultMenuIconName [
 	^self class defaultMenuIconName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommand >> defaultMenuItemName [
 	"For compatibility default instance side method delegates to class side.
 	But normally it should just return
@@ -167,31 +174,43 @@ CmdCommand >> defaultMenuItemName [
 	^self class defaultMenuItemName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommand >> description [
 	"By default the result is nil which is not really nice
 	but it is already expected by many tools. So it is easy to allow nil"
 	^nil
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 CmdCommand >> execute [
 	self subclassResponsibility
 ]
 
-{ #category : #execution }
+{ #category : 'accessing' }
+CmdCommand >> morphicUIManager [
+
+	^ MorphicUIManager new
+]
+
+{ #category : 'execution' }
 CmdCommand >> prepareFullExecutionInContext: aToolContext [
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 CmdCommand >> readParametersFromContext: aToolContext [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdCommand >> secureMenuIcon [
 	"In case when icon should be mandatory property of command
 	users should call this method. It ensure Form instance
 	which will indicate missing icon as a problem"
 
 	^self defaultMenuIcon ifNil: [ Smalltalk ui iconNamed: #error ]
+]
+
+{ #category : 'accessing' }
+CmdCommand >> specUIManager [
+
+	^ SpAlertDialog new
 ]

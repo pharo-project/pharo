@@ -1,24 +1,26 @@
 Class {
-	#name : #PopupChoiceOrRequestDialogWindow,
-	#superclass : #PopupChoiceDialogWindow,
+	#name : 'PopupChoiceOrRequestDialogWindow',
+	#superclass : 'PopupChoiceDialogWindow',
 	#instVars : [
 		'okButton'
 	],
-	#category : #'Polymorph-Widgets-Windows'
+	#category : 'Polymorph-Widgets-Windows',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Windows'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopupChoiceOrRequestDialogWindow class >> minWidth [
 	^250
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopupChoiceOrRequestDialogWindow >> extent: aPoint [
 	"Make the choices area at least fill the scroll area."
 	^super extent: (aPoint x max: self class minWidth)@(aPoint y)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopupChoiceOrRequestDialogWindow >> filter: aString [
 	"Set the value of filter used to match the choices.
 	Clear any selected items here so that potential requests for
@@ -29,7 +31,7 @@ PopupChoiceOrRequestDialogWindow >> filter: aString [
 		embeddedMenu selectItem: nil event: nil]. "clear selection in other menus"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopupChoiceOrRequestDialogWindow >> filterValue [
 
 	^filter isEmpty
@@ -37,28 +39,29 @@ PopupChoiceOrRequestDialogWindow >> filterValue [
 		ifFalse: [ filter ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PopupChoiceOrRequestDialogWindow >> newButtons [
 	"Answer new buttons as appropriate."
 	self filterMorph: self newFilterEntry.
 	self okButton: self newOKButton.
-	^Array
-		with: self filterMorph
-		with: self okButton
-		with: self newCancelButton
+	^ {
+		self filterMorph.
+		self newCancelButton.
+		self okButton isDefault: true 
+	}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PopupChoiceOrRequestDialogWindow >> okButton [
 	^okButton
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PopupChoiceOrRequestDialogWindow >> okButton: aMorph [
 	okButton := aMorph
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 PopupChoiceOrRequestDialogWindow >> processEnter: anEvent [
 	(super processEnter: anEvent)
 		ifFalse: [ self okButton performAction ].

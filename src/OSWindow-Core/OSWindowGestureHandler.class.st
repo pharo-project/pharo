@@ -2,8 +2,8 @@
 I am a handler who can manage gestures and provide them informations on past and current touch events
 "
 Class {
-	#name : #OSWindowGestureHandler,
-	#superclass : #OSWindowEventGestureVisitor,
+	#name : 'OSWindowGestureHandler',
+	#superclass : 'OSWindowEventGestureVisitor',
 	#instVars : [
 		'fingers',
 		'fingerCount',
@@ -11,30 +11,32 @@ Class {
 		'devicesFingers',
 		'lastUpdateTimestamp'
 	],
-	#category : #'OSWindow-Core-Gestures'
+	#category : 'OSWindow-Core-Gestures',
+	#package : 'OSWindow-Core',
+	#tag : 'Gestures'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGestureHandler >> fingerCount [
 	^ fingerCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGestureHandler >> fingerCount: anObject [
 	fingerCount := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGestureHandler >> fingers [
 	^ fingers
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGestureHandler >> fingersFromDevice: id [
 	^ devicesFingers at: id ifAbsent: [ ^ fingers values ]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OSWindowGestureHandler >> handleGestureEvent: anEvent [
 	self handleEvent: anEvent.
 
@@ -42,7 +44,7 @@ OSWindowGestureHandler >> handleGestureEvent: anEvent [
 	self sendEventToGestures: anEvent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSWindowGestureHandler >> initialize [
 	registeredGestures := OrderedCollection new.
 	devicesFingers := Dictionary new.
@@ -50,29 +52,29 @@ OSWindowGestureHandler >> initialize [
 	fingerCount := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGestureHandler >> lastUpdateTimestamp [
 	^ lastUpdateTimestamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowGestureHandler >> lastUpdateTimestamp: anObject [
 	lastUpdateTimestamp := anObject
 ]
 
-{ #category : #'detector registering' }
+{ #category : 'detector registering' }
 OSWindowGestureHandler >> registerGesture: aGesture [
 	registeredGestures add: aGesture.
 	aGesture eventHandler: self
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OSWindowGestureHandler >> sendEventToGestures: anEvent [
 	registeredGestures
 		do: [ :gesture | gesture handleEvent: anEvent ]
 ]
 
-{ #category : #'handling fingers' }
+{ #category : 'handling fingers' }
 OSWindowGestureHandler >> trackFinger: anEvent [
 	| newFingerTracker |
 	"Creating a new finger tracker"
@@ -85,12 +87,12 @@ OSWindowGestureHandler >> trackFinger: anEvent [
 	^ newFingerTracker
 ]
 
-{ #category : #'detector registering' }
+{ #category : 'detector registering' }
 OSWindowGestureHandler >> unregisterGesture: anOSTouchGesture [
 	registeredGestures remove: anOSTouchGesture
 ]
 
-{ #category : #'handling fingers' }
+{ #category : 'handling fingers' }
 OSWindowGestureHandler >> untrackFinger: anEvent [
 	| removedTracker |
 	fingerCount := fingerCount - 1.
@@ -98,12 +100,12 @@ OSWindowGestureHandler >> untrackFinger: anEvent [
 	(devicesFingers at: anEvent deviceId) remove: removedTracker
 ]
 
-{ #category : #'handling fingers' }
+{ #category : 'handling fingers' }
 OSWindowGestureHandler >> updateGesturesActiveFingers [
 	registeredGestures do: [ :gesture | gesture activeFingers: (self fingersFromDevice: gesture deviceId) ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowGestureHandler >> visitTouchPointerDownEvent: anEvent [
 	self trackFinger: anEvent.
 
@@ -118,7 +120,7 @@ OSWindowGestureHandler >> visitTouchPointerDownEvent: anEvent [
 	self visitTouchActionPointerDownEvent: anEvent
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowGestureHandler >> visitTouchPointerMoveEvent: anEvent [
 	| fingerTracker |
 	fingerTracker := fingers at: anEvent fingerId ifAbsent: [ self trackFinger: anEvent].
@@ -131,7 +133,7 @@ OSWindowGestureHandler >> visitTouchPointerMoveEvent: anEvent [
 	self visitTouchActionPointerMoveEvent: anEvent
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowGestureHandler >> visitTouchPointerUpEvent: anEvent [
 	self untrackFinger: anEvent.
 	lastUpdateTimestamp := anEvent timestamp.

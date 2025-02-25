@@ -1,1 +1,1 @@
-Package { #name : #'Commander-Activators-WorldMenu' }
+Package { #name : 'Commander-Activators-WorldMenu' }

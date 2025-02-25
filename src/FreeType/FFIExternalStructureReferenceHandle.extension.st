@@ -1,6 +1,6 @@
-Extension { #name : #FFIExternalStructureReferenceHandle }
+Extension { #name : 'FFIExternalStructureReferenceHandle' }
 
-{ #category : #'*FreeType' }
+{ #category : '*FreeType' }
 FFIExternalStructureReferenceHandle >> asExternalAddress [
 	^ handle + startOffset
 ]

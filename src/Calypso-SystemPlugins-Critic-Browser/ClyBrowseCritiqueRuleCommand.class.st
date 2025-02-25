@@ -11,38 +11,39 @@ Internal Representation and Key Implementation Points.
 	criticClass:		<aClass> 		The critic class to browse.
 "
 Class {
-	#name : #ClyBrowseCritiqueRuleCommand,
-	#superclass : #ClyCritiqueCommand,
-	#category : #'Calypso-SystemPlugins-Critic-Browser'
+	#name : 'ClyBrowseCritiqueRuleCommand',
+	#superclass : 'ClyCritiqueCommand',
+	#category : 'Calypso-SystemPlugins-Critic-Browser',
+	#package : 'Calypso-SystemPlugins-Critic-Browser'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyBrowseCritiqueRuleCommand class >> browserContextMenuActivation [
 	<classAnnotation>
 	^ CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: ClyCriticContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyBrowseCritiqueRuleCommand class >> criticTableIconActivation [
 	"We do not want this command to appear in the command icons next to critiques, so we override the method."
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowseCritiqueRuleCommand >> defaultMenuIconName [
 	^ #smallSystemBrowser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowseCritiqueRuleCommand >> defaultMenuItemName [
 	^ 'Browse rule'
 ]
 
-{ #category : #'table decoration' }
+{ #category : 'table decoration' }
 ClyBrowseCritiqueRuleCommand >> description [
 	^ 'Command to browse the class defining the rule producing the critique.'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyBrowseCritiqueRuleCommand >> execute [
 	self critique rule class browse
 ]

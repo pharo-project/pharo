@@ -2,15 +2,17 @@
 I am a Warning raised to the user if the list of manually resolved dependencies contains a package that does not exist in the system.
 "
 Class {
-	#name : #DAUnknownManuallyResolvedPackage,
-	#superclass : #Warning,
+	#name : 'DAUnknownManuallyResolvedPackage',
+	#superclass : 'Warning',
 	#instVars : [
 		'package'
 	],
-	#category : #'Tool-DependencyAnalyser-Core'
+	#category : 'Tool-DependencyAnalyser-Core',
+	#package : 'Tool-DependencyAnalyser',
+	#tag : 'Core'
 }
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 DAUnknownManuallyResolvedPackage class >> signalOn: aPackageName [
 
 	^ self new
@@ -18,19 +20,19 @@ DAUnknownManuallyResolvedPackage class >> signalOn: aPackageName [
 		  signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAUnknownManuallyResolvedPackage >> messageText [
 	^ messageText
 		ifNil: [ package , ' dependency declared in the package Manifest as manuallyResolvedDependencies not detected in the system!' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAUnknownManuallyResolvedPackage >> package [
 
 	^ package
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAUnknownManuallyResolvedPackage >> package: anObject [
 
 	package := anObject

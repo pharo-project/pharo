@@ -2,22 +2,24 @@
 I am an abstract base class of refactorings modifying class or instance variables.
 "
 Class {
-	#name : #RBVariableRefactoring,
-	#superclass : #RBRefactoring,
+	#name : 'RBVariableRefactoring',
+	#superclass : 'ReRefactoring',
 	#instVars : [
 		'class',
 		'variableName'
 	],
-	#category : #'Refactoring-Core-Refactorings'
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBVariableRefactoring class >> isAbstract [
 
 	^ self == RBVariableRefactoring
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBVariableRefactoring class >> model: aRBSmalltalk variable: aVarName class: aClass [
 	^ self new
 		model: aRBSmalltalk;
@@ -25,13 +27,19 @@ RBVariableRefactoring class >> model: aRBSmalltalk variable: aVarName class: aCl
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBVariableRefactoring class >> variable: aVarName class: aClass [
 	^ self new
-		variable: aVarName class: aClass
+		variable: aVarName class: aClass;
+		yourself
 ]
 
-{ #category : #printing }
+{ #category : 'initialization' }
+RBVariableRefactoring >> refactoredClassName [
+	^ class name
+]
+
+{ #category : 'storing' }
 RBVariableRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -42,8 +50,14 @@ RBVariableRefactoring >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #initialization }
-RBVariableRefactoring >> variable: aVarName class: aClass [
-	class := self classObjectFor: aClass.
+{ #category : 'initialization' }
+RBVariableRefactoring >> variable: aVarName class: aClassName [
+	class := self classObjectFor: aClassName.
 	variableName := aVarName
+]
+
+{ #category : 'accessing' }
+RBVariableRefactoring >> variableName [
+
+	^ variableName
 ]

@@ -2,33 +2,36 @@
 I am a command to switch full browser to raw packages mode. 
 "
 Class {
-	#name : #ClySwitchToPackagesCommand,
-	#superclass : #ClySwitchPackageViewModeCommand,
-	#category : #'Calypso-SystemTools-FullBrowser-Commands-Packages'
+	#name : 'ClySwitchToPackagesCommand',
+	#superclass : 'ClySwitchPackageViewModeCommand',
+	#category : 'Calypso-SystemTools-FullBrowser-Commands-Packages',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'Commands-Packages'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClySwitchToPackagesCommand class >> toolbarOrder [
 	^1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySwitchToPackagesCommand >> defaultMenuItemName [
 
 	^ 'All Packages'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySwitchToPackagesCommand >> description [
 	^ 'Click to show all packages'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClySwitchToPackagesCommand >> execute [
-	^browser switchToPackages
+
+	^ browser switchToPackages
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySwitchToPackagesCommand >> isAppliedToBrowser [
 
 	^ (browser packageView showsItemsFromQuery: ClyAllPackagesQuery) and: [ browser isScopedModeEnabled not ]

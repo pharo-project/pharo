@@ -2,39 +2,40 @@
 I'm only for SUnit TestCases.
 "
 Class {
-	#name : #NECTestSuperClass,
-	#superclass : #Object,
+	#name : 'NECTestSuperClass',
+	#superclass : 'Object',
 	#instVars : [
 		'superInstVar'
 	],
 	#classVars : [
 		'SuperClassVar'
 	],
-	#category : #'NECompletion-Tests'
+	#category : 'NECompletion-Tests',
+	#package : 'NECompletion-Tests'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 NECTestSuperClass class >> initialize [
 	SuperClassVar := Dictionary new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 NECTestSuperClass >> initialize [
 	superInstVar := Dictionary new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 NECTestSuperClass >> testIt: aString [
 	self subclassResponsibility
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 NECTestSuperClass >> toBeOverriden: anArgument [
 	15 > 16
 		ifTrue: [self sample * anArgument ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 NECTestSuperClass >> toBeOverridenWithReturn [
 	^ 'saga'
 ]

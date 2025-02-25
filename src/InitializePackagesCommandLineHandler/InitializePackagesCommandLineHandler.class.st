@@ -16,8 +16,8 @@ Protocols are provided in file where every method has one line and provides foll
 The <cr> line ending is expected for protocols and packages file.
 
 Protocols file exxample:
-RBReplaceRule	false	searchForTree:replaceWith:	matching
-RBPatternPragmaNode	true	selector:keywordsPositions:arguments:	instance creation
+ASTReplaceRule	false	searchForTree:replaceWith:	matching
+ASTPatternPragmaNode	true	selector:keywordsPositions:arguments:	instance creation
 			
 Packages file contains list of packages where every package is on own line.
 
@@ -25,69 +25,57 @@ Examples:
 	pharo Pharo.image initializePackages --protocols=protocols.txt --packages=packages.txt --save
 "
 Class {
-	#name : #InitializePackagesCommandLineHandler,
-	#superclass : #CommandLineHandler,
-	#category : #InitializePackagesCommandLineHandler
+	#name : 'InitializePackagesCommandLineHandler',
+	#superclass : 'CommandLineHandler',
+	#category : 'InitializePackagesCommandLineHandler',
+	#package : 'InitializePackagesCommandLineHandler'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InitializePackagesCommandLineHandler class >> commandName [
 	^ 'initializePackages'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 InitializePackagesCommandLineHandler class >> description [
 	^ 'Initialize packages and protocols from a given lists'
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 InitializePackagesCommandLineHandler >> activate [
 
-	self activateHelp
-		ifTrue: [ ^ self ].
+	self activateHelp ifTrue: [ ^ self ].
 
-	(self hasOption: 'protocols')
-			ifTrue: [ self initializeProtocolsFrom: (self optionAt: 'protocols')].
+	(self hasOption: 'protocols') ifTrue: [ self initializeProtocolsFrom: (self optionAt: 'protocols') ].
 
-	(self hasOption: 'packages')
-			ifTrue: [ self initializePackagesFrom: (self optionAt: 'packages')].
+	(self hasOption: 'packages') ifTrue: [ self initializePackages ].
 
-	(self hasOption: 'save')
-		ifTrue: [ Smalltalk snapshot: true andQuit: false ].
+	(self hasOption: 'save') ifTrue: [ Smalltalk snapshot: true andQuit: false ].
 	self exitSuccess
 ]
 
-{ #category : #activation }
-InitializePackagesCommandLineHandler >> initializePackagesFrom: aFileName [
+{ #category : 'activation' }
+InitializePackagesCommandLineHandler >> initializePackages [
 
-	| packages |
-
-	packages := OrderedCollection new.
-	(File named: aFileName) readStreamDo: [:binaryStream | | stream |
-		stream := ZnCharacterReadStream on: binaryStream encoding: 'utf8'.
-		[stream atEnd] whileFalse: [
-			packages add: (stream upTo: Character cr)]].
-
-	RPackageOrganizer default basicInitializeFromPackagesList: packages.
-	RPackageOrganizer registerInterestToSystemAnnouncement
+	PackageOrganizer default basicBootstrapInitialize
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 InitializePackagesCommandLineHandler >> initializeProtocolsFrom: aFileName [
 
-	(File named: aFileName) readStreamDo: [:binaryStream | | stream |
+	(File named: aFileName) readStreamDo: [ :binaryStream |
+		| stream |
 		stream := ZnCharacterReadStream on: binaryStream encoding: 'utf8'.
-		[stream atEnd] whileFalse: [ | line items selector class |
+		[ stream atEnd ] whileFalse: [
+			| line items selector class |
 			line := stream upTo: Character cr.
 			items := line findTokens: String tab.
-			class := (items second = 'true')
-				ifTrue: [(Smalltalk classOrTraitNamed: items first) classSide]
-				ifFalse: [Smalltalk classOrTraitNamed: items first].
+			class := items second = 'true'
+				         ifTrue: [ (Smalltalk classOrTraitNamed: items first) classSide ]
+				         ifFalse: [ Smalltalk classOrTraitNamed: items first ].
 			selector := items third asSymbol.
 
-			class ifNil: [
-				self error: ('Could not found class: ', items first printString , ' for selector: ', selector printString) ].
+			class ifNil: [ self error: 'Could not found class: ' , items first printString , ' for selector: ' , selector printString ].
 
-			(class selectors includes: selector)
-				ifTrue: [class organization classify: selector under: items fourth]]]
+			(class selectors includes: selector) ifTrue: [ class classify: selector under: items fourth ] ] ]
 ]

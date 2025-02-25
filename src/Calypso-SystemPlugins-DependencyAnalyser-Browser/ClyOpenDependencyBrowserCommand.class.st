@@ -2,24 +2,25 @@
 I am a command to open dependency browser on set of packages
 "
 Class {
-	#name : #ClyOpenDependencyBrowserCommand,
-	#superclass : #SycPackageCommand,
-	#category : #'Calypso-SystemPlugins-DependencyAnalyser-Browser'
+	#name : 'ClyOpenDependencyBrowserCommand',
+	#superclass : 'SycPackageCommand',
+	#category : 'Calypso-SystemPlugins-DependencyAnalyser-Browser',
+	#package : 'Calypso-SystemPlugins-DependencyAnalyser-Browser'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyOpenDependencyBrowserCommand class >> packageContextMenuActivation [
 	<classAnnotation>
 
-	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: RPackage asCalypsoItemContext
+	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: Package asCalypsoItemContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyOpenDependencyBrowserCommand >> defaultMenuItemName [
 	^'Browse dependencies'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyOpenDependencyBrowserCommand >> execute [
 
 	| packageNames |

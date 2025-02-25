@@ -2,12 +2,13 @@
 Unit test for chained sort functions
 "
 Class {
-	#name : #ChainedSortFunctionTest,
-	#superclass : #TestCase,
-	#category : #'SortFunctions-Tests'
+	#name : 'ChainedSortFunctionTest',
+	#superclass : 'TestCase',
+	#category : 'SortFunctions-Tests',
+	#package : 'SortFunctions-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChainedSortFunctionTest >> testComparisonOfFunctions [
 
 	self assert: #name ascending, #surname equals: #name ascending, #surname.
@@ -18,7 +19,7 @@ ChainedSortFunctionTest >> testComparisonOfFunctions [
 	self deny: #name ascending, #surname ascending equals: #name ascending, #surname descending
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ChainedSortFunctionTest >> testEvaluation [
 
 	| function |

@@ -40,8 +40,8 @@ process)
 
 "
 Class {
-	#name : #ProcessBrowser,
-	#superclass : #Model,
+	#name : 'ProcessBrowser',
+	#superclass : 'Model',
 	#instVars : [
 		'selectedProcess',
 		'selectedContext',
@@ -64,10 +64,11 @@ Class {
 		'SuspendedProcesses',
 		'WellKnownProcesses'
 	],
-	#category : #'Tool-ProcessBrowser'
+	#category : 'Tool-ProcessBrowser',
+	#package : 'Tool-ProcessBrowser'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ProcessBrowser class >> cleanUp [
  	"Remove terminated processes from my suspended list"
 	<script>
@@ -76,13 +77,13 @@ ProcessBrowser class >> cleanUp [
 		ea isTerminated ifTrue: [self suspendedProcesses removeKey: ea]]
 ]
 
-{ #category : #'process control' }
+{ #category : 'process control' }
 ProcessBrowser class >> debugProcess: aProcess [
 	self resumeProcess: aProcess.
 	aProcess debugWithTitle: 'Interrupted from the Process Browser'
 ]
 
-{ #category : #'CPU utilization' }
+{ #category : 'CPU utilization' }
 ProcessBrowser class >> dumpPigStackOn: aStream [
 	"Must run forked on its own process, so the monitored behavior is not affected too much"
 
@@ -113,7 +114,7 @@ ProcessBrowser class >> dumpPigStackOn: aStream [
 				aStream cr]]
 ]
 
-{ #category : #'CPU utilization' }
+{ #category : 'CPU utilization' }
 ProcessBrowser class >> dumpTally: tally on: aStream [
 	"tally is from ProcessorScheduler>>tallyCPUUsageFor:
 	Dumps lines with percentage of time, hash of process, and a friendly name"
@@ -129,27 +130,29 @@ ProcessBrowser class >> dumpTally: tally on: aStream [
 	]
 ]
 
-{ #category : #'CPU utilization' }
+{ #category : 'CPU utilization' }
 ProcessBrowser class >> dumpTallyOnTranscript: tally [
 	"tally is from ProcessorScheduler>>tallyCPUUsageFor:
 	Dumps lines with percentage of time, hash of process, and a friendly name"
 
-	self dumpTally: tally on: Transcript.
-	Transcript flush
+	| t | 
+	t := (Smalltalk tools toolNamed: #transcript).
+	self dumpTally: tally on: t.
+	t flush.
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ProcessBrowser class >> initialize [
 	SuspendedProcesses ifNil: [ SuspendedProcesses := IdentityDictionary new ].
 	self registerWellKnownProcesses
 ]
 
-{ #category : #'process control' }
+{ #category : 'process control' }
 ProcessBrowser class >> isUIProcess: aProcess [
-	^ aProcess == UIManager default uiProcess
+	^ aProcess == MorphicUIManager uiProcess
 ]
 
-{ #category : #'world menu' }
+{ #category : 'world menu' }
 ProcessBrowser class >> menuCommandOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #'Process Browser')
@@ -157,10 +160,10 @@ ProcessBrowser class >> menuCommandOn: aBuilder [
 		order: 3;
 		action:[ self open ];
 		help: 'Provides a view of all of the processes (threads) executing in Smalltalk.';
-		icon: (aBuilder iconNamed: self taskbarIconName)
+		iconName: self taskbarIconName
 ]
 
-{ #category : #'process control' }
+{ #category : 'process control' }
 ProcessBrowser class >> nameAndRulesFor: aProcess [
 	"Answer a nickname and two flags: allow-stop, and allow-debug"
 	| rules |
@@ -173,7 +176,7 @@ ProcessBrowser class >> nameAndRulesFor: aProcess [
 	^ rules
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ProcessBrowser class >> open [
 	"Create and schedule a ProcessBrowser."
 	<script>
@@ -182,7 +185,7 @@ ProcessBrowser class >> open [
 	^ self new build
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ProcessBrowser class >> processBrowserSettingsOn: aBuilder [
 
 	<systemsettings>
@@ -204,13 +207,13 @@ ProcessBrowser class >> processBrowserSettingsOn: aBuilder [
 				description: 'Try to identify CPU demanding processes during CPU monitoring and offer their termination'  ]
 ]
 
-{ #category : #'tools registry' }
+{ #category : 'tools registry' }
 ProcessBrowser class >> registerToolsOn: registry [
 	"Add ourselves to registry. See [Smalltalk tools]"
 	registry register: self as: #processBrowser
 ]
 
-{ #category : #'process control' }
+{ #category : 'process control' }
 ProcessBrowser class >> registerWellKnownProcess: aBlockForProcess label: nickname allowStop: allowStop allowDebug: allowDebug [
 	"Add an entry to the registry of well known processes. aBlockForProcess
 	evaluates to a known process to be identified by nickname, and allowStop
@@ -220,7 +223,7 @@ ProcessBrowser class >> registerWellKnownProcess: aBlockForProcess label: nickna
 	WellKnownProcesses add: aBlockForProcess->[{nickname . allowStop . allowDebug}]
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 ProcessBrowser class >> registerWellKnownProcesses [
 	"Associate each well-known process with a nickname and two flags: allow-stop, and allow-debug.
 	Additional processes may be added to this list as required"
@@ -237,7 +240,7 @@ ProcessBrowser class >> registerWellKnownProcesses [
 		allowStop: false
 		allowDebug: false.
 	self
-		registerWellKnownProcess: [ WeakArray runningFinalizationProcess ]
+		registerWellKnownProcess: [ FinalizationProcess runningFinalizationProcess ]
 		label: nil
 		allowStop: false
 		allowDebug: false.
@@ -247,7 +250,7 @@ ProcessBrowser class >> registerWellKnownProcesses [
 		allowStop: false
 		allowDebug: false.
 	self
-		registerWellKnownProcess: [ UIManager default uiProcess ]
+		registerWellKnownProcess: [ MorphicUIManager uiProcess ]
 		label: nil
 		allowStop: false
 		allowDebug: false.
@@ -264,7 +267,13 @@ ProcessBrowser class >> registerWellKnownProcesses [
 		allowDebug: false
 ]
 
-{ #category : #'process control' }
+{ #category : 'cleanup' }
+ProcessBrowser class >> restartMethods [
+
+	self registerWellKnownProcesses
+]
+
+{ #category : 'process control' }
 ProcessBrowser class >> resumeProcess: aProcess [
 	| priority |
 	priority := self suspendedProcesses
@@ -274,7 +283,7 @@ ProcessBrowser class >> resumeProcess: aProcess [
 	aProcess suspendedContext ifNotNil: [ aProcess resume ]
 ]
 
-{ #category : #'process control' }
+{ #category : 'process control' }
 ProcessBrowser class >> setProcess: aProcess toPriority: priority [
 	| oldPriority |
 	oldPriority := self suspendedProcesses at: aProcess ifAbsent: [ ].
@@ -283,7 +292,7 @@ ProcessBrowser class >> setProcess: aProcess toPriority: priority [
 	^oldPriority
 ]
 
-{ #category : #'process control' }
+{ #category : 'process control' }
 ProcessBrowser class >> suspendProcess: aProcess [
 	| priority |
 	priority := aProcess priority.
@@ -299,7 +308,7 @@ ProcessBrowser class >> suspendProcess: aProcess [
 	aProcess priority: priority
 ]
 
-{ #category : #'process control' }
+{ #category : 'process control' }
 ProcessBrowser class >> suspendedProcesses [
 	"Answer a collection of processes that my instances have suspended.
 	This is so that they don't get garbage collected."
@@ -307,7 +316,7 @@ ProcessBrowser class >> suspendedProcesses [
 		ifNil: [ SuspendedProcesses := IdentityDictionary new ]
 ]
 
-{ #category : #'CPU utilization' }
+{ #category : 'CPU utilization' }
 ProcessBrowser class >> tallyCPUUsageFor: seconds [
 	"Compute CPU usage using a 10-msec sample for the given number of seconds,
 	then dump the usage statistics on the Transcript. The UI is free to continue, meanwhile"
@@ -315,29 +324,31 @@ ProcessBrowser class >> tallyCPUUsageFor: seconds [
 	^self tallyCPUUsageFor: seconds every: 10
 ]
 
-{ #category : #'CPU utilization' }
+{ #category : 'CPU utilization' }
 ProcessBrowser class >> tallyCPUUsageFor: seconds every: msec [
 	"Compute CPU usage using a msec millisecond sample for the given number of seconds,
 	then dump the usage statistics on the Transcript. The UI is free to continue, meanwhile"
+
 	"ProcessBrowser tallyCPUUsageFor: 10 every: 100"
 
 	| promise |
 	promise := Processor tallyCPUUsageFor: seconds every: msec.
 
-	[ | tally |
-		tally := promise value.
-		UIManager default defer: [ self dumpTallyOnTranscript: tally ].
-	] fork
+	[
+	| tally |
+	tally := promise value.
+	MorphicUIManager new defer: [ self dumpTallyOnTranscript: tally ] ]
+		fork
 ]
 
-{ #category : #icons }
+{ #category : 'icons' }
 ProcessBrowser class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."
 
 	^#processBrowser
 ]
 
-{ #category : #'process control' }
+{ #category : 'process control' }
 ProcessBrowser class >> terminateProcess: aProcess [
 	aProcess ifNotNil: [
 		self suspendedProcesses
@@ -347,37 +358,16 @@ ProcessBrowser class >> terminateProcess: aProcess [
 	]
 ]
 
-{ #category : #'process control' }
-ProcessBrowser class >> unregisterWellKnownProcess: aProcess [
-	"Remove the first registry entry that matches aProcess. Use
-	with caution if more than one registry entry may match aProcess."
-
-	"self unregisterWellKnownProcess: Smalltalk lowSpaceWatcherProcess"
-
-	WellKnownProcesses detect: [ :e | e key value == aProcess ] ifFound: [ :entry | WellKnownProcesses remove: entry ]
-]
-
-{ #category : #'process control' }
-ProcessBrowser class >> wasProcessSuspendedByProcessBrowser: aProcess [
-	^self suspendedProcesses includesKey: aProcess
-]
-
-{ #category : #'stack list' }
+{ #category : 'stack list' }
 ProcessBrowser >> browseContext [
 
 	selectedContext ifNil: [ ^ self ].
-	self tools browser
+	(self tools toolNamed: #browser)
 		openOnClass: self selectedClass
 		selector: self selectedSelector
 ]
 
-{ #category : #views }
-ProcessBrowser >> browsedEnvironment [
-
-	^ Smalltalk globals
-]
-
-{ #category : #views }
+{ #category : 'views' }
 ProcessBrowser >> build [
 	| window  scrolledText |
 	window := (SystemWindow labelled: 'later') model: self.
@@ -415,14 +405,14 @@ ProcessBrowser >> build [
 	^ window
 ]
 
-{ #category : #'process actions' }
+{ #category : 'process actions' }
 ProcessBrowser >> changePriority [
 	| str newPriority nameAndRules |
 	nameAndRules := self nameAndRulesForSelectedProcess.
 	nameAndRules third
 		ifFalse: [self inform: 'Nope, won''t change priority of ' , nameAndRules first.
 			^ self].
-	str := UIManager default
+	str := self morphicUIManager
 				request: 'New priority'
 		  initialAnswer: selectedProcess priority asString.
 	str ifNil: [str := String new].
@@ -437,7 +427,7 @@ ProcessBrowser >> changePriority [
 	self updateProcessList
 ]
 
-{ #category : #'stack list' }
+{ #category : 'stack list' }
 ProcessBrowser >> changeStackListTo: aCollection [
 
         stackList := aCollection.
@@ -446,7 +436,7 @@ ProcessBrowser >> changeStackListTo: aCollection [
 	textModel setText: self methodText.
 ]
 
-{ #category : #'process actions' }
+{ #category : 'process actions' }
 ProcessBrowser >> debugProcess [
 	| nameAndRules |
 	nameAndRules := self nameAndRulesForSelectedProcess.
@@ -456,63 +446,34 @@ ProcessBrowser >> debugProcess [
 	self class debugProcess: selectedProcess
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessBrowser >> deferredMessageRecipient: anObject [
 	deferredMessageRecipient := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessBrowser >> doItContext [
 	^selectedContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessBrowser >> doItReceiver [
 	^selectedContext ifNil: [ selectedProcess ] ifNotNil: [ selectedContext receiver ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ProcessBrowser >> ensureCPUWatcherMonitoring [
 
 	self startCPUWatcher.
 	^ true
 ]
 
-{ #category : #'stack list' }
-ProcessBrowser >> exploreContext [
-	selectedContext inspect
-]
-
-{ #category : #'process actions' }
-ProcessBrowser >> explorePointers [
-
-	| saved |
-	selectedProcess ifNil: [ ^ self ].
-	saved := selectedProcess.
-	[
-	selectedProcess := nil.
-	(self tools hasToolNamed: #pointerExplorer)
-		ifTrue: [ self tools pointerExplorer openOn: saved ]
-		ifFalse: [ self inspectPointers ] ] ensure: [
-		selectedProcess := saved ]
-]
-
-{ #category : #'process list' }
-ProcessBrowser >> exploreProcess [
-	selectedProcess inspect
-]
-
-{ #category : #'stack list' }
-ProcessBrowser >> exploreReceiver [
-	selectedContext ifNotNil: [ selectedContext receiver inspect ]
-]
-
-{ #category : #'process list' }
+{ #category : 'process list' }
 ProcessBrowser >> findContext [
 	| initialProcessIndex initialStackIndex found |
 	initialProcessIndex := self processListIndex.
 	initialStackIndex := self stackListIndex.
-	searchString := UIManager default
+	searchString := self morphicUIManager
 			request: 'Enter a string to search for in the process stack lists'
 	  initialAnswer: searchString.
 	searchString isEmptyOrNil
@@ -526,12 +487,12 @@ ProcessBrowser >> findContext [
 	^ found
 ]
 
-{ #category : #views }
+{ #category : 'views' }
 ProcessBrowser >> hasView [
 	^self dependents isEmptyOrNil not
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ProcessBrowser >> initialize [
 	super initialize.
 	self class registerWellKnownProcesses.
@@ -544,78 +505,80 @@ ProcessBrowser >> initialize [
 	self updateProcessList; processListIndex: 1
 ]
 
-{ #category : #'stack list' }
+{ #category : 'stack list' }
 ProcessBrowser >> inspectContext [
 	selectedContext inspect
 ]
 
-{ #category : #'process actions' }
+{ #category : 'process actions' }
 ProcessBrowser >> inspectPointers [
+
 	| tc pointers |
 	selectedProcess ifNil: [ ^ self ].
 	tc := thisContext.
-	pointers := selectedProcess pointersToExcept: { self processList. tc. self}.
+	pointers := selectedProcess pointersToExcept: {
+			            self processList.
+			            tc.
+			            self }.
 	pointers ifEmpty: [ ^ self ].
 	pointers inspectWithLabel: 'Objects pointing to ' , selectedProcess browserPrintString
 ]
 
-{ #category : #'process list' }
+{ #category : 'process list' }
 ProcessBrowser >> inspectProcess [
 	selectedProcess inspect
 ]
 
-{ #category : #'stack list' }
+{ #category : 'stack list' }
 ProcessBrowser >> inspectReceiver [
-	selectedContext
-		ifNotNil: [selectedContext receiver inspect]
+
+	selectedContext ifNotNil: [ selectedContext receiver inspect ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ProcessBrowser >> isAutoUpdating [
-	^autoUpdateProcess notNil and: [ autoUpdateProcess isSuspended  not ]
+
+	^ autoUpdateProcess isNotNil and: [ autoUpdateProcess isSuspended  not ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ProcessBrowser >> isAutoUpdatingPaused [
-	^autoUpdateProcess notNil and: [ autoUpdateProcess isSuspended ]
+
+	^ autoUpdateProcess isNotNil and: [ autoUpdateProcess isSuspended ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ProcessBrowser >> isScripting [
 	^self doItContext belongsToDoIt
 ]
 
-{ #category : #'process list' }
+{ #category : 'process list' }
 ProcessBrowser >> keyEventsDict [
 
 	^ keyEventsDict ifNil: [
 		keyEventsDict := Dictionary newFromPairs:  #(
 			$i #inspectProcess
-			$I #exploreProcess
-			$e #explorePointers
 			$P #inspectPointers
 			$t #terminateProcess
 			$r #resumeProcess
 			$s #suspendProcess
 			$d #debugProcess
 			$p #changePriority
-			$m #messageTally
 			$f #findContext
 			$g #nextContext
 			$a #toggleAutoUpdate
 			$u #updateProcessList
 			$S #signalSemaphore
-			$k #moreStack
 			)
 		]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ProcessBrowser >> mayBeStartCPUWatcher [
 	cpuWatcherMonitoring ifTrue: [ self setUpdateCallbackAfter: 7 ]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ProcessBrowser >> menuProcessList: aMenuMorph [
 
 	selectedProcess
@@ -627,23 +590,11 @@ ProcessBrowser >> menuProcessList: aMenuMorph [
 				selector: #inspectProcess;
 				target: self;
 				yourself).
-			aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Explore')
-				keyText: 'I';
-				selector: #exploreProcess;
-				target: self;
-				yourself).
 			aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Inspect Pointers')
 				keyText: 'P';
 				selector: #inspectPointers;
 				target: self;
 				yourself).
-			(Smalltalk globals includesKey: #PointerExplorer)
-				ifTrue: [
-					aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Explore pointers')
-						keyText: 'e';
-						selector: #explorePointers;
-						target: self;
-						yourself). ].
 
 			nameAndRules second
 				ifTrue: [
@@ -680,12 +631,6 @@ ProcessBrowser >> menuProcessList: aMenuMorph [
 						target: self;
 						yourself) ].
 
-			aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Profile messages')
-				keyText: 'm';
-				selector: #messageTally;
-				target: self;
-				yourself).
-
 			(selectedProcess suspendingList isKindOf: Semaphore)
 				ifTrue: [
 					aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Signal Semaphore')
@@ -693,12 +638,6 @@ ProcessBrowser >> menuProcessList: aMenuMorph [
 						selector: #signalSemaphore;
 						target: self;
 						yourself). ].
-
-			aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Full stack')
-				keyText: 'k';
-				selector: #moreStack;
-				target: self;
-				yourself).
 
 			aMenuMorph addMenuItem: (MenuLineMorph new)].
 
@@ -748,7 +687,7 @@ ProcessBrowser >> menuProcessList: aMenuMorph [
 	^ aMenuMorph
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ProcessBrowser >> menuStackList: aMenuMorph [
 
 	aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Inspect context')
@@ -757,30 +696,11 @@ ProcessBrowser >> menuStackList: aMenuMorph [
 		target: self;
 		yourself).
 
-	aMenuMorph addMenuItem: ((ToggleMenuItemMorph new contents: #'Explore context')
-		keyText: 'C';
-		selector: #exploreContext;
-		target: self;
-		yourself).
-
 	aMenuMorph addMenuItem: MenuLineMorph new.
-
-	aMenuMorph addMenuItem:((ToggleMenuItemMorph new contents: #'Explore context')
-		keyText: 'C';
-		selector: #exploreContext;
-		target: self;
-		yourself).
-
 
 	aMenuMorph addMenuItem:((ToggleMenuItemMorph new contents: #'Inspect receiver')
 		keyText: 'i';
 		selector: #inspectReceiver;
-		target: self;
-		yourself).
-
-	aMenuMorph addMenuItem:((ToggleMenuItemMorph new contents: #'Explore receiver')
-		keyText: 'I';
-		selector: #exploreReceiver;
 		target: self;
 		yourself).
 
@@ -793,23 +713,7 @@ ProcessBrowser >> menuStackList: aMenuMorph [
 		yourself)
 ]
 
-{ #category : #'stack list' }
-ProcessBrowser >> messageTally [
-
-	| secString secs |
-	secString := UIManager default
-		             request: 'Profile for how many seconds?'
-		             initialAnswer: '4'.
-	secString ifNil: [ secString := String new ].
-	secs := secString asNumber asInteger.
-	(secs isNil or: [ secs isZero ]) ifTrue: [ ^ self ].
-	[
-	self tools timeProfiler
-		spyOnProcess: selectedProcess
-		forMilliseconds: secs * 1000 ] forkAt: selectedProcess priority + 1
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessBrowser >> methodText [
 	^ methodText ifNil: [methodText := selectedContext
 						ifNil: ['']
@@ -826,25 +730,26 @@ ProcessBrowser >> methodText [
 								to: pcRange last]]
 ]
 
-{ #category : #'stack list' }
-ProcessBrowser >> moreStack [
-	self updateStackList: 2000
+{ #category : 'process actions' }
+ProcessBrowser >> morphicUIManager [
+
+	^ MorphicUIManager new
 ]
 
-{ #category : #'process actions' }
+{ #category : 'process actions' }
 ProcessBrowser >> nameAndRulesFor: aProcess [
 	"Answer a nickname and two flags: allow-stop, and allow-debug"
 	aProcess == autoUpdateProcess ifTrue: [ ^{'my auto-update process'. true. true} ].
 	^self class nameAndRulesFor: aProcess
 ]
 
-{ #category : #'process actions' }
+{ #category : 'process actions' }
 ProcessBrowser >> nameAndRulesForSelectedProcess [
 	"Answer a nickname and two flags: allow-stop, and allow-debug"
 	^self nameAndRulesFor: selectedProcess
 ]
 
-{ #category : #'process list' }
+{ #category : 'process list' }
 ProcessBrowser >> nextContext [
 	| initialProcessIndex initialStackIndex found |
 	searchString isEmpty ifTrue: [ ^false ].
@@ -868,21 +773,14 @@ ProcessBrowser >> nextContext [
 	^ found
 ]
 
-{ #category : #'process list' }
+{ #category : 'process list' }
 ProcessBrowser >> notify: errorString at: location in: aStream [
 	"A syntax error happened when I was trying to highlight my pc.
 	Raise a signal so that it can be ignored."
 	Warning signal: 'syntax error'
 ]
 
-{ #category : #updating }
-ProcessBrowser >> pauseAutoUpdate [
-	self isAutoUpdating
-		ifTrue: [ autoUpdateProcess suspend ].
-	self updateProcessList
-]
-
-{ #category : #'stack list' }
+{ #category : 'stack list' }
 ProcessBrowser >> pcRange [
 	"Answer the indices in the source code for the method corresponding to
 	the selected context's program counter value."
@@ -891,7 +789,7 @@ ProcessBrowser >> pcRange [
 	^selectedContext pcRangeContextIsActive: (stackListIndex = 1)
 ]
 
-{ #category : #'process list' }
+{ #category : 'process list' }
 ProcessBrowser >> prettyNameForProcess: aProcess [
 	| nameAndRules |
 	aProcess ifNil: [ ^'<nil>' ].
@@ -899,17 +797,17 @@ ProcessBrowser >> prettyNameForProcess: aProcess [
 	^ aProcess browserPrintStringWith: nameAndRules first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessBrowser >> processList [
 	^ processList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessBrowser >> processListIndex [
 	^ processListIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessBrowser >> processListIndex: index [
 	processListIndex := index.
 	selectedProcess := processList
@@ -919,12 +817,12 @@ ProcessBrowser >> processListIndex: index [
 	self changed: #processListIndex
 ]
 
-{ #category : #'process list' }
+{ #category : 'process list' }
 ProcessBrowser >> processListKey: aKey from: aView [
 	self perform: (self keyEventsDict at: aKey ifAbsent: [ ^ self ])
 ]
 
-{ #category : #'process list' }
+{ #category : 'process list' }
 ProcessBrowser >> processNameList [
 	"since processList is a WeakArray, we have to strengthen the result"
 	| tally |
@@ -938,7 +836,7 @@ ProcessBrowser >> processNameList [
 			percent , (self prettyNameForProcess: each) ]
 ]
 
-{ #category : #'process actions' }
+{ #category : 'process actions' }
 ProcessBrowser >> resumeProcess [
 	selectedProcess
 		ifNil: [^ self].
@@ -946,7 +844,7 @@ ProcessBrowser >> resumeProcess [
 	self updateProcessList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessBrowser >> selectedClass [
 	"Answer the class in which the currently selected context's method was  found."
 	^ selectedClass
@@ -956,22 +854,22 @@ ProcessBrowser >> selectedClass [
 				ifNotNil: [ selectedContext methodClass ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessBrowser >> selectedClassOrMetaClass [
 	^self doItReceiver class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessBrowser >> selectedMethod [
 	^selectedContext ifNotNil: [ selectedContext method ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessBrowser >> selectedProcess [
 	^selectedProcess
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessBrowser >> selectedSelector [
 	"Answer the class in which the currently selected context's method was
 	found."
@@ -982,7 +880,7 @@ ProcessBrowser >> selectedSelector [
 				ifNotNil: [selectedContext selector]]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ProcessBrowser >> setUpdateCallbackAfter: seconds [
 	deferredMessageRecipient
 		ifNotNil: [
@@ -993,7 +891,7 @@ ProcessBrowser >> setUpdateCallbackAfter: seconds [
 			deferredMessageRecipient defer: [ self updateProcessList ] ] fork ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ProcessBrowser >> shoutAboutToStyle: aPluggableShoutMorphOrView [
 
 	selectedContext ifNil: [^false].
@@ -1001,7 +899,7 @@ ProcessBrowser >> shoutAboutToStyle: aPluggableShoutMorphOrView [
 	^ true
 ]
 
-{ #category : #'process actions' }
+{ #category : 'process actions' }
 ProcessBrowser >> signalSemaphore [
 	(selectedProcess suspendingList isKindOf: Semaphore)
 		ifFalse: [^ self].
@@ -1011,20 +909,20 @@ ProcessBrowser >> signalSemaphore [
 	self updateProcessList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessBrowser >> stackList [
 	^ stackList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessBrowser >> stackListIndex [
 	^ stackListIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessBrowser >> stackListIndex: index [
 	stackListIndex := index.
-	selectedContext := (stackList notNil
+	selectedContext := (stackList isNotNil
 						and: [index > 0]) ifTrue:
 							[stackList at: index ifAbsent: []].
 	selectedClass := nil.
@@ -1033,30 +931,28 @@ ProcessBrowser >> stackListIndex: index [
 	textModel setText: self methodText
 ]
 
-{ #category : #views }
+{ #category : 'views' }
 ProcessBrowser >> stackListKey: aKey from: aView [
 	aKey = $c ifTrue: [ self inspectContext].
-	aKey = $C ifTrue: [ self exploreContext].
 	aKey = $i ifTrue: [ self inspectReceiver].
-	aKey = $I ifTrue: [ self exploreReceiver].
 	aKey = $b ifTrue: [ self browseContext]
 ]
 
-{ #category : #'stack list' }
+{ #category : 'stack list' }
 ProcessBrowser >> stackListMenu: aMenu [
 	selectedContext ifNil: [^ aMenu].
 	self menuStackList: aMenu.
 	^ aMenu
 ]
 
-{ #category : #'stack list' }
+{ #category : 'stack list' }
 ProcessBrowser >> stackNameList [
 	^ stackList
 		ifNil: [#()]
 		ifNotNil: [stackList collect: [:each | each asString]]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ProcessBrowser >> startAutoUpdate [
 	self isAutoUpdatingPaused ifTrue: [ ^autoUpdateProcess resume ].
 	self isAutoUpdating
@@ -1071,7 +967,7 @@ ProcessBrowser >> startAutoUpdate [
 	self updateProcessList
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ProcessBrowser >> startCPUWatcher [
 
 	CPUWatcher isMonitoring ifTrue: [ ^ self ].
@@ -1080,7 +976,7 @@ ProcessBrowser >> startCPUWatcher [
 	self setUpdateCallbackAfter: 7
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ProcessBrowser >> stopAutoUpdate [
 	autoUpdateProcess ifNotNil: [
 		autoUpdateProcess terminate.
@@ -1088,7 +984,7 @@ ProcessBrowser >> stopAutoUpdate [
 	self updateProcessList
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ProcessBrowser >> stopCPUWatcher [
 
 	CPUWatcher stopMonitoring.
@@ -1096,7 +992,7 @@ ProcessBrowser >> stopCPUWatcher [
 	cpuWatcherMonitoring := false	"so a manual restart won't be killed later"
 ]
 
-{ #category : #'process actions' }
+{ #category : 'process actions' }
 ProcessBrowser >> suspendProcess [
 	| nameAndRules |
 	selectedProcess isSuspended
@@ -1109,7 +1005,7 @@ ProcessBrowser >> suspendProcess [
 	self updateProcessList
 ]
 
-{ #category : #'process actions' }
+{ #category : 'process actions' }
 ProcessBrowser >> terminateProcess [
 	| nameAndRules |
 	nameAndRules := self nameAndRulesForSelectedProcess.
@@ -1120,25 +1016,25 @@ ProcessBrowser >> terminateProcess [
 	self updateProcessList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ProcessBrowser >> text [
 	^methodText
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ProcessBrowser >> toggleAutoUpdate [
 	self isAutoUpdating
 		ifTrue: [ self stopAutoUpdate ]
 		ifFalse: [ self startAutoUpdate ]
 ]
 
-{ #category : #'stack list' }
+{ #category : 'stack list' }
 ProcessBrowser >> tools [
 
 	^ Smalltalk tools
 ]
 
-{ #category : #'process list' }
+{ #category : 'process list' }
 ProcessBrowser >> updateProcessList [
 	| oldSelectedProcess newIndex now |
 	now := Time millisecondClockValue.
@@ -1163,38 +1059,26 @@ ProcessBrowser >> updateProcessList [
 	self processListIndex: newIndex
 ]
 
-{ #category : #'stack list' }
+{ #category : 'stack list' }
 ProcessBrowser >> updateStackList [
-	self updateStackList: 20
-]
 
-{ #category : #'stack list' }
-ProcessBrowser >> updateStackList: depth [
 	| suspendedContext oldHighlight |
-	selectedProcess
-		ifNil: [^ self changeStackListTo: nil].
-	(stackList notNil and: [ stackListIndex > 0 ])
-		ifTrue: [oldHighlight := stackList at: stackListIndex].
+	selectedProcess ifNil: [ ^ self changeStackListTo: nil ].
+
+	(stackList isNotNil and: [ stackListIndex > 0 ]) ifTrue: [ oldHighlight := stackList at: stackListIndex ].
 	selectedProcess == Processor activeProcess
-		ifTrue: [self
-				changeStackListTo: (thisContext stackOfSize: depth)]
-		ifFalse: [suspendedContext := selectedProcess suspendedContext.
+		ifTrue: [ self changeStackListTo: thisContext stack ]
+		ifFalse: [
+			suspendedContext := selectedProcess suspendedContext.
 			suspendedContext
-				ifNil: [self changeStackListTo: nil]
-				ifNotNil: [self
-						changeStackListTo: (suspendedContext stackOfSize: depth)]].
-	self
-		stackListIndex: (stackList
-				ifNil: [0]
-				ifNotNil: [stackList indexOf: oldHighlight])
+				ifNil: [ self changeStackListTo: nil ]
+				ifNotNil: [ self changeStackListTo: suspendedContext stack ] ].
+	self stackListIndex: (stackList
+			 ifNil: [ 0 ]
+			 ifNotNil: [ stackList indexOf: oldHighlight ])
 ]
 
-{ #category : #'process actions' }
-ProcessBrowser >> wasProcessSuspendedByProcessBrowser: aProcess [
-	^self class suspendedProcesses includesKey: aProcess
-]
-
-{ #category : #initialization }
+{ #category : 'initialization' }
 ProcessBrowser >> windowIsClosing [
 
 	cpuWatcherMonitoring ifTrue: [ CPUWatcher stopMonitoring ]

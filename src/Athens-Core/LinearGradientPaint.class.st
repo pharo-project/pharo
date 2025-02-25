@@ -12,21 +12,23 @@ Also check the comment of my superclass to know better how and when you can use 
 
 "
 Class {
-	#name : #LinearGradientPaint,
-	#superclass : #GradientPaint,
+	#name : 'LinearGradientPaint',
+	#superclass : 'GradientPaint',
 	#instVars : [
 		'start',
 		'stop'
 	],
-	#category : #'Athens-Core-Paints'
+	#category : 'Athens-Core-Paints',
+	#package : 'Athens-Core',
+	#tag : 'Paints'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LinearGradientPaint class >> from: aStartPoint  to: aStopPoint [
 	^ self new start: aStartPoint; stop: aStopPoint; yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 LinearGradientPaint >> asAthensPaintOn: aCanvas [
 	^ aCanvas surface
 			createLinearGradient: self colorRamp
@@ -34,25 +36,25 @@ LinearGradientPaint >> asAthensPaintOn: aCanvas [
 				stop: self stop
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LinearGradientPaint >> start [
 
 	^ start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LinearGradientPaint >> start: anObject [
 
 	start := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LinearGradientPaint >> stop [
 
 	^ stop
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LinearGradientPaint >> stop: anObject [
 
 	stop := anObject

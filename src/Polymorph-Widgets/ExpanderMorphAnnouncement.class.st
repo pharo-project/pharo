@@ -2,34 +2,36 @@
 Common superclass for expander announcements
 "
 Class {
-	#name : #ExpanderMorphAnnouncement,
-	#superclass : #Announcement,
+	#name : 'ExpanderMorphAnnouncement',
+	#superclass : 'Announcement',
 	#instVars : [
 		'expanderMorph'
 	],
-	#category : #'Polymorph-Widgets-Announcements'
+	#category : 'Polymorph-Widgets-Announcements',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Announcements'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ExpanderMorphAnnouncement class >> isAbstract [
 
 	 ^self == ExpanderMorphAnnouncement
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExpanderMorphAnnouncement class >> on: anExpanderMorph [
 	"Answer a new announcement for the given expander."
 
 	^self new expanderMorph: anExpanderMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpanderMorphAnnouncement >> expanderMorph [
 
 	^ expanderMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExpanderMorphAnnouncement >> expanderMorph: anObject [
 
 	expanderMorph := anObject

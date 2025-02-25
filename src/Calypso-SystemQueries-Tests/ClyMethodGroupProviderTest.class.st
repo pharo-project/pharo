@@ -1,27 +1,29 @@
 Class {
-	#name : #ClyMethodGroupProviderTest,
-	#superclass : #ClyItemGroupProviderTest,
-	#category : #'Calypso-SystemQueries-Tests-Domain'
+	#name : 'ClyMethodGroupProviderTest',
+	#superclass : 'ClyItemGroupProviderTest',
+	#category : 'Calypso-SystemQueries-Tests-Domain',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Domain'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodGroupProviderTest class >> isAbstract [
 	^self == ClyMethodGroupProviderTest
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodGroupProviderTest >> buildGroupsFor: aClass [
 	| classScope |
 	classScope := ClyClassScope of: aClass in: environment.
 	builtGroups := groupProvider buildGroupsFrom: classScope
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodGroupProviderTest >> classSampleWhichHasGroup [
 	self subclassResponsibility
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodGroupProviderTest >> testBuildingGroups [
 
 	self buildGroupsFor: self classSampleWhichHasGroup.

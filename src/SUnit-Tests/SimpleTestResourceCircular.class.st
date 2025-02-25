@@ -2,12 +2,14 @@
 I'm a simple test resource for test purposes
 "
 Class {
-	#name : #SimpleTestResourceCircular,
-	#superclass : #SimpleTestResource,
-	#category : #'SUnit-Tests-Resources'
+	#name : 'SimpleTestResourceCircular',
+	#superclass : 'SimpleTestResource',
+	#category : 'SUnit-Tests-Resources',
+	#package : 'SUnit-Tests',
+	#tag : 'Resources'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleTestResourceCircular class >> resources [
 
 	^ preventAvailability

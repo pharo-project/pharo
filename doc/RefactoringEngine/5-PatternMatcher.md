@@ -2,19 +2,21 @@
 
 Generating an AST of Smalltalk source code and implementing a program node visitor gives already great and powerful capabilities. The refactoring framework extends this expressiveness by including so called "metavariables".
 
-As this expressions are using an extended syntax - metavariables aren't known to the `RBParser` - a special parser is needed to parse this expression, the `RBPatternParser`. The following pages describe the added syntax elements. 
+As these expressions are using an extended syntax - metavariables aren't known to the `RBParser` - a special parser is needed to parse this expression, the `RBPatternParser`. The following pages describe the added syntax elements. 
 
 Metavariables are a part of a parser expression, just like any other Smalltalk code, but instead of representing an expression with the exact name, they form a variable that can be unify with any real code expression with the same *structure*.
 
 ### An example:
+
 Parsing an expression like:
 
 ```st
 a := a + 1 
 ```
+
 creates a parse tree with an assignment node assigning to 'a', the value of sending the message '+' with argument 1 to the object 'a'.
 
-We could implement a refactoring operation (or directly use the RBParseTreeSearcher/Rewriter) to create a refactoring  for this kind of code. But of course, it would only work for code using this variable name.
+We could implement a refactoring operation (or directly use the ASTParseTreeSearcher/Rewriter) to create a refactoring  for this kind of code. But of course, it would only work for code using this variable name.
 
 We can define the expression with the meaning of 'increment a variable by one' by using a metavariable. All metavariables start with a ´ (backquote).
 
@@ -47,7 +49,7 @@ matches a single variable
 ``` 
 matches multiple items in this position
 
-For example, 
+For example,
 
 ```
 `@a add: `@b
@@ -65,7 +67,7 @@ or the return of another expression
 'self data add: self'
 ```
 
-Furthermore we can restrict the expression to be matched to be a literal instead of variable by using the prefix '#':
+Furthermore, we can restrict the expression to be matched to be a literal instead of variable by using the prefix '#':
 
 ```
 `@exp add: `#item
@@ -97,7 +99,7 @@ but not
 
 Similar to a statement ending with a dot, the metavariable prefix `'.'` defines a variable matching a statement, resp. `'.@'` a (possible empty) list of statements.
 
-Example, match ifTrue:ifFalse: with first statement in true and false block being the same
+Example, match `ifTrue:ifFalse:` with first statement in true and false block being the same
 
 ```
 `@exp ifTrue:[`.stm. 
@@ -146,17 +148,17 @@ If we want to find the same call in the argument, we need to recurse into it by 
 
 ## Examples and usage of RBPatternParser expressions
 
-The chapter "RBPatternParser and metavariables" describes the added syntax elements for the RBPatternParser used in the refactoring engine (RBParseTreeSearcher/RBParseTreeRewriter).
+The chapter "RBPatternParser and metavariables" describes the added syntax elements for the RBPatternParser used in the refactoring engine (ASTParseTreeSearcher/ASTParseTreeRewriter).
 
 In this chapter we show some example expressions and how to test and use them.
 
-Calypso has a search function that is the simples way to use and see the result of searching expressions with pattern syntax. Open the the class menu / Refactoring / Code Rewrite / Search code or Rewrite code entry.
+Calypso has a search function that is the simplest way to use and see the result of searching expressions with pattern syntax. Open the the class menu / Refactoring / Code Rewrite / Search code or Rewrite code entry.
 
 Search code
 The search code menu will put a search pattern template in the code pane:
 
 ```st
-RBParseTreeSearcher new
+ASTParseTreeSearcher new
 	matches: '`@object' do: [ :node :answer | node ];
 	matchesMethod: '`@method: `@args | `@temps | `@.statements' do: [ :node :answer | node ];
 	yourself
@@ -164,7 +166,7 @@ RBParseTreeSearcher new
 
 This template defines two match rules, one for the code search 'matches:' and one for the named method search 'matchesMethod', the former looks for expression in any method while the latter one matches whole methods.
 
-You can replace the example pattern 
+You can replace the example pattern
 
 ```
 `@object`
@@ -175,14 +177,15 @@ or
 ```
 `@method: ``@args | `@temps | `@.statements
 ```
-by the search pattern you want to use. 
+
+by the search pattern you want to use.
 
 And most of the time you only want to use one, the code expression search or the method search.
 
 A first example, replace the code pane content by:
 
 ```st
-RBParseTreeSearcher new
+ASTParseTreeSearcher new
 	matchesMethod: 'drawOn: `@args | `@temps | `@.statements' do: [ :node :answer | node ];
 	yourself
 ```
@@ -193,19 +196,19 @@ The result is actually the same as if we had searched for all implementors of #d
 Next example, replace the code pane content by:
 
 ```st
-RBParseTreeSearcher new
+ASTParseTreeSearcher new
 	matches: '`@object drawOn: `@args' do: [ :node :answer | node ];
 	yourself
 ```
 
-The result is similar to looking for senders of `drawOn:` (not the same actually, as sendersOf also looks for methods containing the symbol `#drawOn:`).	
-	
+The result is similar to looking for senders of `drawOn:` (not the same actually, as sendersOf also looks for methods containing the symbol `#drawOn:`).
+
 The `do:` block can be used to further test or filter the found matches. The node is the current matched node and the answer is not needed here. It is important that for every entry you want to include in the result to return "the node" and for everything else return "nil"
 
 Example, search for all methods with at least one argument where the method name starts with `'perform'`:
 
 ```st
-RBParseTreeSearcher new
+ASTParseTreeSearcher new
 		matchesMethod: '`@method: `@args | `@temps | `@.statements'
 			do: [ :node :answer | 
 			((node selector beginsWith: 'perform') and: [ node arguments isEmpty not ])
@@ -214,18 +217,18 @@ RBParseTreeSearcher new
 		yourself
 ```
 
-Another way to use extended pattern syntax is to directly instantiate a `RBParseTreeSearcher` and execute it on a parse tree.
+Another way to use extended pattern syntax is to directly instantiate a `ASTParseTreeSearcher` and execute it on a parse tree.
 First we define the pattern, instantiate a tree searcher and tell him what to do when matching this pattern (just return the matched node) and execute it on the AST of Numbers method #asPoint.
 
 ```st
 | searcher pattern parseTree |
 pattern := '^ self'.
-searcher := RBParseTreeSearcher new.
+searcher := ASTParseTreeSearcher new.
 searcher matches: pattern do:[:node :answer |node].
 searcher executeTree: (Number>>#asPoint) ast initialAnswer: nil.
 ```
 
-it will return nil, since no node in that method returns 'self'. If we execute the searcher instead on the method for class `Point`, it will return the found node, a `RBReturnNode`
+it will return nil, since no node in that method returns 'self'. If we execute the searcher instead on the method for class `Point`, it will return the found node, an `ASTReturnNode`
 
 ```st
 searcher executeTree: (Point>>#asPoint) ast initialAnswer: nil.
@@ -237,7 +240,7 @@ If we don't just want to match an expression but collecting all matching nodes, 
 | searcher pattern parseTree  selfMessages |
 selfMessages := Set new.
 pattern := 'self `@message: ``@args'.
-searcher := RBParseTreeSearcher new.
+searcher := ASTParseTreeSearcher new.
 searcher matches: pattern do:[:node :answer |  selfMessages add: node selector].
 searcher executeTree: (Morph>>#fullDrawOn:) ast initialAnswer: nil.
 selfMessages inspect.
@@ -245,12 +248,11 @@ selfMessages inspect.
 
 This will collect all messages send to self in method Morph>>#fullDrawOn:
 
-
 ### RBBrowserEnvironment
 
 The first and main use for browser environments are to restrict the namespace in which a refactoring operation is applied. For example, if you want to rename a method and and update all senders of this method, but only in a certain package, you can create a RBNamespace from a scoped 'view' of the classes from the whole system. Only the classes in this restricted environment are affected by the transformation.
 
-In the mean time other tools are using this environment classes as well. Finder, MessageBrowser or the SystemBrowser can work with a scoped environment to show and operate only on classes and methods in this environment.
+In the meantime other tools are using this environment classes as well. Finder, MessageBrowser or the SystemBrowser can work with a scoped environment to show and operate only on classes and methods in this environment.
 
 There are different subclasses of RBBrowserEnvironment for the different kind of 'scopes'. 
 
@@ -323,8 +325,8 @@ A more generic way to create an environment by giving an explicit 'test'-block t
 
 ```st
 |implementedByMe|
-implementedByMe := RBBrowserEnvironment new selectMethods:[:m | m author = Author fullName ].
+implementedByMe := RBBrowserEnvironment new selectMethods:[:m | m selector size > 10 ].
 implementedByMe browse.
 ```
 
-This opens (may be slow) a browser with all classes with methods having my (current Author) name for its current methods version author stamp.
+This opens (may be slow) a browser with all classes with methods having a selector larger than 10 characters.

@@ -1,6 +1,6 @@
-Extension { #name : #TextAction }
+Extension { #name : 'TextAction' }
 
-{ #category : #'*Rubric-Editing-Core' }
+{ #category : '*Rubric-Editing-Core' }
 TextAction >> rubActOnClick: anEvent for: anObject in: paragraph editor: editor [
 	"sent when a user clicks on a piece of text to which I am applied in an editor"
 

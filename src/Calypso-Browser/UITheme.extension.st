@@ -1,6 +1,6 @@
-Extension { #name : #UITheme }
+Extension { #name : 'UITheme' }
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 UITheme >> calypsoFrozenItemColor [
 	"For Pharo 6 compatibilit reason it is not separate overrides in concrete theme classes.
 	But this trick still allows override this color on external themes.

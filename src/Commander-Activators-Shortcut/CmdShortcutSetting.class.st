@@ -17,28 +17,29 @@ Internal Representation and Key Implementation Points.
 	shortcutActivation:		<CmdShortuctCommandActivation>
 "
 Class {
-	#name : #CmdShortcutSetting,
-	#superclass : #SettingDeclaration,
+	#name : 'CmdShortcutSetting',
+	#superclass : 'SettingDeclaration',
 	#instVars : [
 		'shortcutActivation'
 	],
-	#category : #'Commander-Activators-Shortcut'
+	#category : 'Commander-Activators-Shortcut',
+	#package : 'Commander-Activators-Shortcut'
 }
 
-{ #category : #'shortcut editor' }
+{ #category : 'shortcut editor' }
 CmdShortcutSetting >> accept: aKeyCombination [
 
 	shortcutActivation redefineBy: [  shortcutActivation keyCombination: aKeyCombination ].
 	self updated
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 CmdShortcutSetting >> acceptSettings: aVisitor [
 
 	shortcutActivation isRedefined ifTrue: [ ^ aVisitor visitCmdShortcutSetting: self]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdShortcutSetting >> default [
 
 	^shortcutActivation isRedefined
@@ -46,26 +47,26 @@ CmdShortcutSetting >> default [
 		ifFalse: [ shortcutActivation ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdShortcutSetting >> hasDefault [
 
 	^shortcutActivation isRedefined
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 CmdShortcutSetting >> markRedefinedStatus [
 	(label beginsWith: '*') ifTrue: [label := label allButFirst].
 
 	shortcutActivation isRedefined ifTrue: [ label := '*', label ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdShortcutSetting >> realValue [
 
 	^ shortcutActivation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdShortcutSetting >> realValue: aShortcutActivation [
 
 	shortcutActivation redefineBy: [
@@ -74,7 +75,7 @@ CmdShortcutSetting >> realValue: aShortcutActivation [
 	self updated
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdShortcutSetting >> setToDefault [
 
 	shortcutActivation := shortcutActivation revertRedefinedInstanceIfAbsent: [
@@ -84,17 +85,17 @@ CmdShortcutSetting >> setToDefault [
 	self updated
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdShortcutSetting >> shortcut [
 	^shortcutActivation keyCombination
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdShortcutSetting >> shortcutActivation [
 	^ shortcutActivation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdShortcutSetting >> shortcutActivation: aShortcutActivation [
 	shortcutActivation := aShortcutActivation.
 
@@ -103,7 +104,7 @@ CmdShortcutSetting >> shortcutActivation: aShortcutActivation [
 	self markRedefinedStatus
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 CmdShortcutSetting >> updated [
 
 	self markRedefinedStatus.

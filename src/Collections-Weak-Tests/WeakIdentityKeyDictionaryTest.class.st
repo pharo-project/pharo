@@ -2,23 +2,25 @@
 SUnit tests for weak identity key dictionaries
 "
 Class {
-	#name : #WeakIdentityKeyDictionaryTest,
-	#superclass : #WeakKeyDictionaryTest,
-	#category : #'Collections-Weak-Tests-Dictionaries'
+	#name : 'WeakIdentityKeyDictionaryTest',
+	#superclass : 'WeakKeyDictionaryTest',
+	#category : 'Collections-Weak-Tests-Dictionaries',
+	#package : 'Collections-Weak-Tests',
+	#tag : 'Dictionaries'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 WeakIdentityKeyDictionaryTest >> canBeUnhealthy [
 	^ false
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 WeakIdentityKeyDictionaryTest >> classToBeTested [
 
 	^ WeakIdentityKeyDictionary
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakIdentityKeyDictionaryTest >> testFinalizeValuesWhenLastChainContinuesAtFront [
 	| objectWithHashModulo dictionary capacity a b c |
 	objectWithHashModulo := [ :requestedHash :modulo |
@@ -41,13 +43,13 @@ WeakIdentityKeyDictionaryTest >> testFinalizeValuesWhenLastChainContinuesAtFront
 	self assert: (dictionary array at: 1) key identicalTo: c.
 	a := nil.
 	Smalltalk garbageCollect.
-	dictionary finalizeValues.
+
 	self assert: (dictionary includesKey: b).
 	self assert: (dictionary includesKey: c).
-	self assert: dictionary slowSize equals: 2
+	self assert: dictionary size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakIdentityKeyDictionaryTest >> testNoNils [
 	| d |
 	d := WeakIdentityKeyDictionary new

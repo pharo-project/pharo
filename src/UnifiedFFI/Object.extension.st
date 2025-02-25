@@ -1,11 +1,11 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Object >> calloutAPIClass [
 	^ self ffiLibrary calloutAPIClass
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Object >> ffiCall: fnSpec [
 	<ffiCalloutTranslator>
 
@@ -17,7 +17,7 @@ Object >> ffiCall: fnSpec [
 	self ffiCall: fnSpec library: self ffiLibrary options: #()
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Object >> ffiCall: fnSpec fixedArgumentCount: fixedArgumentsCount [
 	<ffiCalloutTranslator>
 
@@ -36,14 +36,14 @@ Object >> ffiCall: fnSpec fixedArgumentCount: fixedArgumentsCount [
 		fixedArgumentCount: fixedArgumentsCount
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Object >> ffiCall: fnSpec library: aLibrary [
 	<ffiCalloutTranslator>
 
 	self ffiCall: fnSpec library: aLibrary options: #()
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Object >> ffiCall: fnSpec library: aLibrary fixedArgumentCount: fixedArgumentsCount [
 	<ffiCalloutTranslator>
 
@@ -57,7 +57,7 @@ Object >> ffiCall: fnSpec library: aLibrary fixedArgumentCount: fixedArgumentsCo
 		fixedArgumentCount: fixedArgumentsCount
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Object >> ffiCall: fnSpec library: aLibrary options: callOptions [
 	<ffiCalloutTranslator>
 
@@ -65,7 +65,7 @@ Object >> ffiCall: fnSpec library: aLibrary options: callOptions [
 	^ self ffiCall: fnSpec library: aLibrary options: callOptions fixedArgumentCount: 0
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Object >> ffiCall: fnSpec library: aLibrary options: callOptions fixedArgumentCount: fixedArgumentsCount [
 	<ffiCalloutTranslator>
 
@@ -78,33 +78,33 @@ Object >> ffiCall: fnSpec library: aLibrary options: callOptions fixedArgumentCo
 		function: fnSpec library: ffiLibrary
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Object >> ffiCall: fnSpec module: aModuleName [
 	<ffiCalloutTranslator>
 
 	self ffiCall: fnSpec library: aModuleName options: #()
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Object >> ffiCall: fnSpec module: aModuleName options: callOptions [
 	<ffiCalloutTranslator>
 
 	self ffiCall: fnSpec library: aModuleName options: callOptions
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Object >> ffiCall: fnSpec options: callOptions [
 	<ffiCalloutTranslator>
 
 	self ffiCall: fnSpec library: self ffiLibrary options: callOptions
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Object >> ffiCallingConvention [
 	^ OSPlatform current ffiCallingConvention
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Object >> ffiCalloutIn: aContext [
 	"For backwards compatibility.
 	It receives the context that is performing the ffi callout.
@@ -112,7 +112,7 @@ Object >> ffiCalloutIn: aContext [
 	^ self calloutAPIClass inContext: aContext
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Object >> ffiLibrary [
 
 	"This method returns the ffiLibrary to use in the Foreign-Function calls performed in this object.
@@ -134,19 +134,19 @@ Object >> ffiLibrary [
 	^ self ffiLibraryName asFFILibrary
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Object >> ffiLibraryName [
 	self flag: 'HACK: avoid direct subclassResponsibility to not break RB test cases..'.
 	^ SubclassResponsibility signalFor: thisContext selector
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Object >> isExternalType [
 
 	^ false
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Object >> newCallbackWithSignature: signature block: aBlock [
 	"This method is used to create a callback in the same library and callout api of the receiver"
 
@@ -157,7 +157,7 @@ Object >> newCallbackWithSignature: signature block: aBlock [
 			library: self ffiLibrary
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Object >> newCallbackWithSignature: signature block: aBlock library: aFFILibrary [
 	"This method is used to create a callback in the callout api of the receiver"
 
@@ -168,7 +168,7 @@ Object >> newCallbackWithSignature: signature block: aBlock library: aFFILibrary
 			library: aFFILibrary
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Object >> packToArity: arity [
 	"This will answer a pointer to this object.
 	 It is like doing ==var ptr=&aVariable== in C (up to arity).
@@ -182,7 +182,7 @@ Object >> packToArity: arity [
 	^ rolledPointer
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 Object >> pointer [
 	"Answers a pointer to me (see overrides for implementations)"
 	self error: 'You cannot get a pointer to me.'

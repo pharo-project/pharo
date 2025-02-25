@@ -1,10 +1,11 @@
 Class {
-	#name : #MetacelloReferenceTestCase,
-	#superclass : #TestCase,
-	#category : #'Metacello-TestsReference'
+	#name : 'MetacelloReferenceTestCase',
+	#superclass : 'TestCase',
+	#category : 'Metacello-TestsReference',
+	#package : 'Metacello-TestsReference'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloReferenceTestCase >> conditionResult: resultString [ 
 	"GemStone unconditionally prints Symbols with quotes, Squeak and Pharo do not"
 
@@ -18,14 +19,14 @@ MetacelloReferenceTestCase >> conditionResult: resultString [
 								copyReplaceAll: '#postloadForProject' with: '#''postloadForProject'''
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloReferenceTestCase >> expectedPrintString [
     ^ 'spec blessing: #''baseline''.
 spec description: ''Descriptive comment''.
 spec preLoadDoIt: #''preloadForVersion''.
 spec postLoadDoIt: #''postloadForVersion''.
 spec author: ''dkh''.
-spec timestamp: ''10/7/2009 14:40''.
+spec timestamp: ''12009-07-10T14:40''.
 spec repositories: [
 	spec
 		repository: ''/opt/mc/repository'';
@@ -102,7 +103,7 @@ spec
 	removeGroup: ''default''.'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloReferenceTestCase >> testReferenceConfig [
 	| spec map string expected |
 	spec := (MetacelloReferenceConfig project version: '1.0-baseline') spec.
@@ -145,7 +146,7 @@ MetacelloReferenceTestCase >> testReferenceConfig [
 			repository: ''http://www.example.com/r'' username: ''foo'' password: ''bar'' ].'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloReferenceTestCase >> testReferenceConfigPrintString [
 	| version string expected x y |
 	version := MetacelloReferenceConfig project version: '1.0-baseline'.

@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-Critic-Queries' }
+Package { #name : 'Calypso-SystemPlugins-Critic-Queries' }

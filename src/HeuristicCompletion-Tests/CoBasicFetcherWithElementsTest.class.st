@@ -1,37 +1,39 @@
 Class {
-	#name : #CoBasicFetcherWithElementsTest,
-	#superclass : #CoBasicFetcherTest,
+	#name : 'CoBasicFetcherWithElementsTest',
+	#superclass : 'CoBasicFetcherTest',
 	#instVars : [
 		'expectedElements'
 	],
-	#category : #'HeuristicCompletion-Tests-Core'
+	#category : 'HeuristicCompletion-Tests-Core',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoBasicFetcherWithElementsTest class >> isAbstract [
 
 	^ self == CoBasicFetcherWithElementsTest
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CoBasicFetcherWithElementsTest >> firstExpectedElement [
 
 	^ expectedElements first
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CoBasicFetcherWithElementsTest >> secondExpectedElement [
 
 	^ expectedElements second
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoBasicFetcherWithElementsTest >> testNewFetcherWithElementsShouldNotBeAtEnd [
 
 	self deny: self fetcher atEnd
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoBasicFetcherWithElementsTest >> testNextManyAfterLimitShouldStopAfterLimit [
 
 	| fetchedElements |
@@ -41,7 +43,7 @@ CoBasicFetcherWithElementsTest >> testNextManyAfterLimitShouldStopAfterLimit [
 	self assert: fetchedElements size equals: expectedElements size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoBasicFetcherWithElementsTest >> testNextManyShouldReturnCollection [
 
 	| fetchedElements expected |
@@ -52,20 +54,20 @@ CoBasicFetcherWithElementsTest >> testNextManyShouldReturnCollection [
 	self assert: fetchedElements size equals: expected size
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoBasicFetcherWithElementsTest >> testNextNextShouldReturnSecondExpectedElement [
 
 	self fetcher next.
 	self assertEntry: self fetcher next equals: self secondExpectedElement
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoBasicFetcherWithElementsTest >> testNextShouldReturnFirstElement [
 
 	self assertEntry: self fetcher next equals: self firstExpectedElement
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoBasicFetcherWithElementsTest >> testResetShouldRestartGenerator [
 
 	| fetchedElements |

@@ -6,22 +6,24 @@ When serialized I get the name of the base class.
 When deserialized I find the metaclass in the target environment
 "
 Class {
-	#name : #HEExportedMetaclass,
-	#superclass : #HESymbol,
-	#category : #'Hermes-Model'
+	#name : 'HEExportedMetaclass',
+	#superclass : 'HESymbol',
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEExportedMetaclass class >> tag [
 	^ 16
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 HEExportedMetaclass >> asLiteralIn: env [
 	^ (env classNamed: value) class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEExportedMetaclass >> value: aMetaclass [
 	value := aMetaclass instanceSide name
 ]

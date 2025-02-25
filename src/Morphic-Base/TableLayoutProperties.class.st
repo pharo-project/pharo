@@ -2,8 +2,8 @@
 Properties for Table layouts like inset, spacing, ...
 "
 Class {
-	#name : #TableLayoutProperties,
-	#superclass : #LayoutProperties,
+	#name : 'TableLayoutProperties',
+	#superclass : 'LayoutProperties',
 	#instVars : [
 		'cellInset',
 		'cellPositioning',
@@ -19,45 +19,47 @@ Class {
 		'minCellSize',
 		'maxCellSize'
 	],
-	#category : #'Morphic-Base-Layouts'
+	#category : 'Morphic-Base-Layouts',
+	#package : 'Morphic-Base',
+	#tag : 'Layouts'
 }
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 TableLayoutProperties >> cellInset [
 	^cellInset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TableLayoutProperties >> cellInset: aNumber [
 	cellInset := aNumber
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 TableLayoutProperties >> cellPositioning [
 	^cellPositioning
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TableLayoutProperties >> cellPositioning: aSymbol [
 	cellPositioning := aSymbol
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 TableLayoutProperties >> cellSpacing [
 	^cellSpacing
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TableLayoutProperties >> cellSpacing: aSymbol [
 	cellSpacing := aSymbol
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TableLayoutProperties >> includesTableProperties [
 	^true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TableLayoutProperties >> initialize [
 	super initialize.
 	cellSpacing := listSpacing := wrapDirection := #none.
@@ -69,102 +71,102 @@ TableLayoutProperties >> initialize [
 	maxCellSize := 1073741823. "SmallInteger maxVal"
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 TableLayoutProperties >> layoutInset [
 	^layoutInset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TableLayoutProperties >> layoutInset: aNumber [
 	layoutInset := aNumber
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 TableLayoutProperties >> listCentering [
 	^listCentering
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TableLayoutProperties >> listCentering: aSymbol [
 	listCentering := aSymbol
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 TableLayoutProperties >> listDirection [
 	^listDirection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TableLayoutProperties >> listDirection: aSymbol [
 	listDirection := aSymbol
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 TableLayoutProperties >> listSpacing [
 	^listSpacing
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TableLayoutProperties >> listSpacing: aSymbol [
 	listSpacing := aSymbol
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 TableLayoutProperties >> maxCellSize [
 	^maxCellSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TableLayoutProperties >> maxCellSize: aNumber [
 	maxCellSize := aNumber
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 TableLayoutProperties >> minCellSize [
 	^minCellSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TableLayoutProperties >> minCellSize: aNumber [
 	minCellSize := aNumber
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 TableLayoutProperties >> reverseTableCells [
 	^reverseTableCells
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TableLayoutProperties >> reverseTableCells: aBool [
 	reverseTableCells := aBool
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 TableLayoutProperties >> rubberBandCells [
 	^rubberBandCells
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TableLayoutProperties >> rubberBandCells: aBool [
 	rubberBandCells := aBool
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 TableLayoutProperties >> wrapCentering [
 	^wrapCentering
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TableLayoutProperties >> wrapCentering: aSymbol [
 	wrapCentering := aSymbol
 ]
 
-{ #category : #'table defaults' }
+{ #category : 'table defaults' }
 TableLayoutProperties >> wrapDirection [
 	^wrapDirection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TableLayoutProperties >> wrapDirection: aSymbol [
 	wrapDirection := aSymbol
 ]

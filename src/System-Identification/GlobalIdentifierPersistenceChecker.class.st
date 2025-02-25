@@ -4,12 +4,13 @@ I check whether a persistence should be stored. I return answer of `FileIdentifi
 I collaborate with GlobalIdentifierPersistence that uses me for checking before any disk operation.
 "
 Class {
-	#name : #GlobalIdentifierPersistenceChecker,
-	#superclass : #Object,
-	#category : #'System-Identification'
+	#name : 'GlobalIdentifierPersistenceChecker',
+	#superclass : 'Object',
+	#category : 'System-Identification',
+	#package : 'System-Identification'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 GlobalIdentifierPersistenceChecker >> isEnabled [
 	"See class comment or https://pharo.manuscript.com/f/cases/19944."
 	^ FileLocator home exists and: [ FileLocator home fileSystem isWritable ]

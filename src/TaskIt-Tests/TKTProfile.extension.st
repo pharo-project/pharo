@@ -1,6 +1,6 @@
-Extension { #name : #TKTProfile }
+Extension { #name : 'TKTProfile' }
 
-{ #category : #'*TaskIt-Tests' }
+{ #category : '*TaskIt-Tests' }
 TKTProfile class >> test [
 	<profile: #test>
 

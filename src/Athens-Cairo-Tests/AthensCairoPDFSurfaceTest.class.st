@@ -1,10 +1,12 @@
 Class {
-	#name : #AthensCairoPDFSurfaceTest,
-	#superclass : #AthensCairoExportSurfaceTest,
-	#category : #'Athens-Cairo-Tests-Core'
+	#name : 'AthensCairoPDFSurfaceTest',
+	#superclass : 'AthensCairoExportSurfaceTest',
+	#category : 'Athens-Cairo-Tests-Core',
+	#package : 'Athens-Cairo-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoPDFSurfaceTest >> athensSurfaceClass [
 
 	^ AthensCairoPDFSurface

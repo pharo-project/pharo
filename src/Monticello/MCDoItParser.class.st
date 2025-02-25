@@ -7,30 +7,32 @@ MCDoitParser invokes automatically its subclasses to parse the correct source.
 Each Doit entities (entities which are defined as doits) extend this entry point to add specific behavior.
 "
 Class {
-	#name : #MCDoItParser,
-	#superclass : #Object,
+	#name : 'MCDoItParser',
+	#superclass : 'Object',
 	#instVars : [
 		'source'
 	],
-	#category : #'Monticello-Chunk Format'
+	#category : 'Monticello-Chunk Format',
+	#package : 'Monticello',
+	#tag : 'Chunk Format'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 MCDoItParser class >> concreteSubclasses [
 	^ self allSubclasses reject: [:c | c isAbstract]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCDoItParser class >> forDoit: aString [
 	^ (self subclassForDoit: aString) ifNotNil: [:c | c new source: aString]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCDoItParser class >> isAbstract [
 	^ self pattern isNil
 ]
 
-{ #category : #'factory identification hook' }
+{ #category : 'factory identification hook' }
 MCDoItParser class >> pattern [
 	"return a pattern matching expression to identify the parser corresponding to the expression.
 	Subclasses should specialize it."
@@ -38,22 +40,22 @@ MCDoItParser class >> pattern [
 	^ nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCDoItParser class >> subclassForDoit: aString [
 	^ self concreteSubclasses detect: [:ea | ea pattern match: aString] ifNone: []
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCDoItParser >> addDefinitionsTo: aCollection [
 	self subclassResponsibility 
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDoItParser >> source [
 	^ source
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCDoItParser >> source: aString [
 	source := aString
 ]

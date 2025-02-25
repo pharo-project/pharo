@@ -1,6 +1,6 @@
-Extension { #name : #ExternalAddress }
+Extension { #name : 'ExternalAddress' }
 
-{ #category : #'*ThreadedFFI-UFFI' }
+{ #category : '*ThreadedFFI-UFFI' }
 ExternalAddress >> thunk [
 	^ self
 ]

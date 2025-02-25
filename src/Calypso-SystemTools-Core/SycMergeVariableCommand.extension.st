@@ -1,6 +1,6 @@
-Extension { #name : #SycMergeVariableCommand }
+Extension { #name : 'SycMergeVariableCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycMergeVariableCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 

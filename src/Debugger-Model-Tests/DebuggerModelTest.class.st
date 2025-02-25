@@ -2,17 +2,19 @@
 SUnit tests for the debugger model
 "
 Class {
-	#name : #DebuggerModelTest,
-	#superclass : #TestCase,
+	#name : 'DebuggerModelTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'session',
 		'process',
 		'context'
 	],
-	#category : #'Debugger-Model-Tests-Model'
+	#category : 'Debugger-Model-Tests-Model',
+	#package : 'Debugger-Model-Tests',
+	#tag : 'Model'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 DebuggerModelTest >> setUp [
 	super setUp.
 	context := [ Set new ] asContext.
@@ -23,7 +25,7 @@ DebuggerModelTest >> setUp [
 	session:= process newDebugSessionNamed: 'test session' startedAt: context
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DebuggerModelTest >> testClearDebugSession [
 
 	session clear.
@@ -32,7 +34,7 @@ DebuggerModelTest >> testClearDebugSession [
 	self assert: session interruptedProcess equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DebuggerModelTest >> testCorrectlyCreateDebugSession [
 
 	self assert: session isNotNil.
@@ -41,7 +43,7 @@ DebuggerModelTest >> testCorrectlyCreateDebugSession [
 	self assert: session interruptedContext printString equals: '[ Set new ] in DebuggerModelTest>>setUp'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DebuggerModelTest >> testStepInto [
 
 	self deny: (session isContextPostMortem: context).
@@ -55,7 +57,7 @@ DebuggerModelTest >> testStepInto [
 	self assert: session interruptedContext printString equals: 'Set class(HashedCollection class)>>new'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DebuggerModelTest >> testStepOver [
 
 	self assert: session interruptedContext equals: context.
@@ -66,7 +68,7 @@ DebuggerModelTest >> testStepOver [
 	self assert: session interruptedContext printString equals: '[ Set new ] in DebuggerModelTest>>setUp'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DebuggerModelTest >> testUnwindAndRestartToContext [
 
 	context := [ 2 squared ] asContext.
@@ -89,7 +91,7 @@ DebuggerModelTest >> testUnwindAndRestartToContext [
 	self assert: session interruptedContext pc equals: (Number >> #squared) initialPC + 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DebuggerModelTest >> testUnwindAndRestartToQuickMethodContext [
 
 	context := [ #foo asSymbol ] asContext.

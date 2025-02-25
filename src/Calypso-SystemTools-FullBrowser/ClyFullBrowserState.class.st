@@ -9,41 +9,43 @@ Internal Representation and Key Implementation Points.
 	methodGroupQuery:		<ClyQuery>
 "
 Class {
-	#name : #ClyFullBrowserState,
-	#superclass : #ClyBrowserState,
+	#name : 'ClyFullBrowserState',
+	#superclass : 'ClyBrowserState',
 	#instVars : [
 		'metaLevelScope',
 		'methodGroupQuery'
 	],
-	#category : #'Calypso-SystemTools-FullBrowser-UI'
+	#category : 'Calypso-SystemTools-FullBrowser-UI',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'UI'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ClyFullBrowserState >> createBrowser [
 	^ClyFullBrowserMorph new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFullBrowserState >> metaLevelScope [
 	^ metaLevelScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFullBrowserState >> metaLevelScope: anObject [
 	metaLevelScope := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFullBrowserState >> methodGroupQuery [
 	^ methodGroupQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFullBrowserState >> methodGroupQuery: aQuery [
 	methodGroupQuery := aQuery
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyFullBrowserState >> restoreStateOf: aBrowser [
 	super restoreStateOf: aBrowser.
 
@@ -52,7 +54,7 @@ ClyFullBrowserState >> restoreStateOf: aBrowser [
 		methodGroupQuery: methodGroupQuery
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyFullBrowserState >> retrieveStateFrom: aBrowser [
 	super retrieveStateFrom: aBrowser.
 

@@ -166,12 +166,14 @@ S y n t a x
 
 "
 Class {
-	#name : #STON,
-	#superclass : #Object,
-	#category : #'STON-Core-Facade'
+	#name : 'STON',
+	#superclass : 'Object',
+	#category : 'STON-Core-Facade',
+	#package : 'STON-Core',
+	#tag : 'Facade'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STON class >> associationClass [
 	"Return the class of STON associations, Association, a system wide constant"
 
@@ -180,7 +182,7 @@ STON class >> associationClass [
 	^ Association
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STON class >> classNameKey [
 	"Return the key that will be used to add a property with the class name
 	when an unknown class is read and the option STONReader>>#acceptUnknownClasses: is true,
@@ -191,7 +193,7 @@ STON class >> classNameKey [
 	^ #className
 ]
 
-{ #category : #convencience }
+{ #category : 'convencience' }
 STON class >> fromStream: readStream [
 	"Parse and materialize the STON representation in the character readStream"
 
@@ -204,7 +206,7 @@ STON class >> fromStream: readStream [
 	^ (self reader on: readStream) next
 ]
 
-{ #category : #convencience }
+{ #category : 'convencience' }
 STON class >> fromStreamWithComments: readStream [
 	"Parse and materialize the STON representation in the character readStream,
 	skipping C-style comments"
@@ -214,7 +216,7 @@ STON class >> fromStreamWithComments: readStream [
 	^ (self reader on: (STONCStyleCommentsSkipStream on: readStream)) next
 ]
 
-{ #category : #convencience }
+{ #category : 'convencience' }
 STON class >> fromString: string [
 	"Parse and materialize the STON representation in string"
 
@@ -223,7 +225,7 @@ STON class >> fromString: string [
 	^ self fromStream: string readStream
 ]
 
-{ #category : #convencience }
+{ #category : 'convencience' }
 STON class >> fromStringWithComments: string [
 	"Parse and materialize the STON representation in string,
 	skipping C-style comments"
@@ -233,7 +235,7 @@ STON class >> fromStringWithComments: string [
 	^ self fromStreamWithComments: string readStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STON class >> jsonWriter [
 	"Shortcut to create a new STONWriter instance configured to output JSON"
 
@@ -243,7 +245,7 @@ STON class >> jsonWriter [
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STON class >> listClass [
 	"Return the class of STON lists, Array, a system wide constant"
 
@@ -252,7 +254,7 @@ STON class >> listClass [
 	^ Array
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STON class >> mapClass [
 	"Return the class of STON maps, Dictionary, a system wide constant"
 
@@ -261,7 +263,7 @@ STON class >> mapClass [
 	^ Dictionary
 ]
 
-{ #category : #convencience }
+{ #category : 'convencience' }
 STON class >> put: object asJsonOnStream: writeStream [
 	"Write the JSON serialization of object to the character writeStream.
 	Note that the object graph can only contain lists (Array) and maps (Dictionary)"
@@ -272,7 +274,7 @@ STON class >> put: object asJsonOnStream: writeStream [
 	(self jsonWriter on: writeStream) nextPut: object
 ]
 
-{ #category : #convencience }
+{ #category : 'convencience' }
 STON class >> put: object asJsonOnStreamPretty: writeStream [
 	"Write the pretty printed JSON serialization of object to the character writeStream.
 	Note that the object graph can only contain lists (Array) and maps (Dictionary)"
@@ -285,7 +287,7 @@ STON class >> put: object asJsonOnStreamPretty: writeStream [
 		nextPut: object
 ]
 
-{ #category : #convencience }
+{ #category : 'convencience' }
 STON class >> put: object onStream: writeStream [
 	"Write the STON serialization of object to the character writeStream"
 
@@ -298,7 +300,7 @@ STON class >> put: object onStream: writeStream [
 	(self writer on: writeStream) nextPut: object
 ]
 
-{ #category : #convencience }
+{ #category : 'convencience' }
 STON class >> put: object onStreamPretty: writeStream [
 	"Write the pretty printed STON serialization of object to the character writeStream"
 
@@ -309,14 +311,14 @@ STON class >> put: object onStreamPretty: writeStream [
 		nextPut: object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STON class >> reader [
 	"Shortcut to create a new STONReader instance"
 
 	^ STONReader new
 ]
 
-{ #category : #convencience }
+{ #category : 'convencience' }
 STON class >> toJsonString: object [
 	"Return a String with the JSON serialization of object.
 	Note that the object graph can only contain lists (Array) and maps (Dictionary)"
@@ -327,7 +329,7 @@ STON class >> toJsonString: object [
 			self put: object asJsonOnStream: stream ]
 ]
 
-{ #category : #convencience }
+{ #category : 'convencience' }
 STON class >> toJsonStringPretty: object [
 	"Return a String with the pretty printed JSON serialization of object.
 	Note that the object graph can only contain lists (Array) and maps (Dictionary)"
@@ -338,7 +340,7 @@ STON class >> toJsonStringPretty: object [
 			self put: object asJsonOnStreamPretty: stream ]
 ]
 
-{ #category : #convencience }
+{ #category : 'convencience' }
 STON class >> toString: object [
 	"Return a String with the STON serialization of object"
 
@@ -348,7 +350,7 @@ STON class >> toString: object [
 			self put: object onStream: stream ]
 ]
 
-{ #category : #convencience }
+{ #category : 'convencience' }
 STON class >> toStringPretty: object [
 	"Return a String with the pretty printed STON serialization of object"
 
@@ -358,7 +360,7 @@ STON class >> toStringPretty: object [
 			self put: object onStreamPretty: stream ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STON class >> writer [
 	"Shortcut to create a new STONWriter instance"
 

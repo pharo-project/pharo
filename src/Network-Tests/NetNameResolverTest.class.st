@@ -2,22 +2,24 @@
 SUnit tests for NetNameResolver 
 "
 Class {
-	#name : #NetNameResolverTest,
-	#superclass : #TestCase,
-	#category : #'Network-Tests-Kernel'
+	#name : 'NetNameResolverTest',
+	#superclass : 'TestCase',
+	#category : 'Network-Tests-Kernel',
+	#package : 'Network-Tests',
+	#tag : 'Kernel'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NetNameResolverTest >> localHostAddressIsLoopBackAddress [
 		^NetNameResolver localHostAddress = NetNameResolver loopBackAddress
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NetNameResolverTest >> localHostNameIsLoopBackName [
 		^NetNameResolver localHostName = NetNameResolver loopBackName
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NetNameResolverTest >> testLocalHostAddress [
 	self skip. "This test is currently broken"
 	NetNameResolver isConnected
@@ -25,7 +27,7 @@ NetNameResolverTest >> testLocalHostAddress [
 		ifFalse: [self assert: self localHostAddressIsLoopBackAddress]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 NetNameResolverTest >> testLocalHostName [
 	self deny: NetNameResolver localHostName isNil.
 	NetNameResolver isConnected

@@ -1,19 +1,27 @@
 Class {
-	#name : #MetacelloValueHolderSpec,
-	#superclass : #MetacelloSpec,
+	#name : 'MetacelloValueHolderSpec',
+	#superclass : 'MetacelloSpec',
 	#instVars : [
 		'value'
 	],
-	#category : #'Metacello-Core-Specs'
+	#category : 'Metacello-Core-Specs',
+	#package : 'Metacello-Core',
+	#tag : 'Specs'
 }
 
-{ #category : #printing }
+{ #category : 'private' }
+MetacelloValueHolderSpec >> asMetacelloValueHolderFor: aMetacelloVersionSpec [
+
+	^ self
+]
+
+{ #category : 'printing' }
 MetacelloValueHolderSpec >> configMethodOn: aStream indent: indent [
 
 	aStream tab: indent; nextPutAll: 'spec value: ', self value printString
 ]
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloValueHolderSpec >> mergeMap [
 
 	| map |
@@ -22,53 +30,24 @@ MetacelloValueHolderSpec >> mergeMap [
 	^map
 ]
 
-{ #category : #private }
-MetacelloValueHolderSpec >> setAuthorInMetacelloVersion: aMetacelloVersionSpec [
-
-	aMetacelloVersionSpec setAuthor: self
-]
-
-{ #category : #private }
-MetacelloValueHolderSpec >> setBlessingInMetacelloVersion: aMetacelloVersionSpec [
-
-	aMetacelloVersionSpec setBlessing: self
-]
-
-{ #category : #private }
-MetacelloValueHolderSpec >> setDescriptionInMetacelloVersion: aMetacelloVersionSpec [
-
-	aMetacelloVersionSpec setDescription: self
-]
-
-{ #category : #private }
+{ #category : 'private' }
 MetacelloValueHolderSpec >> setPostLoadDoItInMetacelloSpec: aMetacelloSpec [
 
 	aMetacelloSpec setPostLoadDoIt: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MetacelloValueHolderSpec >> setPreLoadDoItInMetacelloSpec: aMetacelloSpec [
 
 	aMetacelloSpec setPreLoadDoIt: self
 ]
 
-{ #category : #private }
-MetacelloValueHolderSpec >> setTimestampInMetacelloVersion: aMetacelloVersionSpec [
-
-	aMetacelloVersionSpec setTimestamp: self
-]
-
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloValueHolderSpec >> value [
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloValueHolderSpec >> value: anObject [
 	value := anObject
-]
-
-{ #category : #construction }
-MetacelloValueHolderSpec >> value: anObject constructor: aVersionConstructor [
-    aVersionConstructor valueForValueHolder: anObject
 ]

@@ -2,17 +2,19 @@
 I interface to the millisecond based VM primitives.
 "
 Class {
-	#name : #DelayMillisecondTicker,
-	#superclass : #AbstractDelayTicker,
-	#category : #'Kernel-Delays'
+	#name : 'DelayMillisecondTicker',
+	#superclass : 'AbstractDelayTicker',
+	#category : 'Kernel-Delays',
+	#package : 'Kernel',
+	#tag : 'Delays'
 }
 
-{ #category : #'api-system' }
+{ #category : 'api-system' }
 DelayMillisecondTicker >> millisecondsUntilTick: microsecondsTick [
 	^((microsecondsTick - self nowTick) max: 0)
 ]
 
-{ #category : #'api-system' }
+{ #category : 'api-system' }
 DelayMillisecondTicker >> nowTick [
 	"Copied from Time class >> primMillisecondClock."
 	"Primitive. Answer the number of milliseconds since the millisecond clock
@@ -22,19 +24,19 @@ DelayMillisecondTicker >> nowTick [
 	^ 0
 ]
 
-{ #category : #'private - primitives' }
+{ #category : 'private - primitives' }
 DelayMillisecondTicker >> primSignal: aSemaphore atMilliseconds: aSmallInteger [
 	"Signal the semaphore when the millisecond clock reaches the value of the second argument. Fail if the first argument is neither a Semaphore nor nil. Essential. See Object documentation whatIsAPrimitive."
 	<primitive: 136>
 	^self primitiveFailed
 ]
 
-{ #category : #'api-system' }
+{ #category : 'api-system' }
 DelayMillisecondTicker >> tickAfterMilliseconds: milliseconds [
 	^self nowTick "milliseconds" + milliseconds
 ]
 
-{ #category : #'api-system' }
+{ #category : 'api-system' }
 DelayMillisecondTicker >> waitForUserSignalled: timingSemaphore orExpired: activeDelay [
 	|nextTick|
 	"Sleep until the active delay is due, or timingSemaphore signalled by DelayScheduler user-api."

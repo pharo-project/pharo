@@ -4,8 +4,8 @@ The Morphic ui manager.
 I was packaged in toolbuilder and I may change in the future. For the moment, the goal is to unload toolbuilder. 
 "
 Class {
-	#name : #MorphicUIManager,
-	#superclass : #UIManager,
+	#name : 'MorphicUIManager',
+	#superclass : 'UIManager',
 	#traits : 'TEasilyThemed - {#theme}',
 	#classTraits : 'TEasilyThemed classTrait',
 	#instVars : [
@@ -14,16 +14,17 @@ Class {
 	#classVars : [
 		'UIProcess'
 	],
-	#category : #'Polymorph-Widgets-Themes'
+	#category : 'Polymorph-Widgets',
+	#package : 'Polymorph-Widgets'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphicUIManager class >> isActiveManager [
 	"Answer whether I should act as the active ui manager"
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MorphicUIManager class >> isValidForCurrentSystemConfiguration [
 
 	^ Smalltalk isHeadless not
@@ -32,7 +33,7 @@ MorphicUIManager class >> isValidForCurrentSystemConfiguration [
 			and: [ Smalltalk isInteractiveGraphic ] ]
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 MorphicUIManager class >> restartMethods [
    UIProcess ifNotNil: [
 	| process |
@@ -41,13 +42,13 @@ MorphicUIManager class >> restartMethods [
 	process terminate. ]
 ]
 
-{ #category : #'ui process' }
+{ #category : 'ui process' }
 MorphicUIManager class >> uiProcess [
 
 	^ UIProcess
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MorphicUIManager >> activate [
 
 	self currentWorld worldState worldRenderer: (AbstractWorldRenderer detectCorrectOneForWorld: self currentWorld).
@@ -57,17 +58,16 @@ MorphicUIManager >> activate [
 	WorldMorph extraWorldList do: [:each | each restoreMorphicDisplay].
 
 	activeTranscript
+		ifNotNil: [ 
+			Transcript := activeTranscript ]
 		ifNil: [
-			Transcript class == ThreadSafeTranscript ifFalse: [
-				ThreadSafeTranscript install
-			]
-		]
-		ifNotNil: [ Transcript := activeTranscript ].
-
+			Transcript class == ThreadSafeTranscript 
+				ifFalse: [ ThreadSafeTranscript install ] ].
+			
 	SystemProgressMorph enable
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicUIManager >> chooseDirectory: label from: dir [
 	"Answer the user choice of a directory."
 
@@ -82,7 +82,7 @@ MorphicUIManager >> chooseDirectory: label from: dir [
 		path: (dir ifNotNil: [dir fullName])
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 MorphicUIManager >> chooseFrom: aList lines: linesArray message: messageString title: aString [
 	"Choose an item from the given list. Answer the selected item."
 
@@ -94,7 +94,7 @@ MorphicUIManager >> chooseFrom: aList lines: linesArray message: messageString t
 		title: aString) ifNil: [0]
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicUIManager >> chooseFrom: aList lines: linesArray title: aString [
 	"Choose an item from the given list. Answer the index of the selected item."
 
@@ -105,7 +105,7 @@ MorphicUIManager >> chooseFrom: aList lines: linesArray title: aString [
 		title: aString) ifNil: [0]
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 MorphicUIManager >> chooseFrom: labelList values: valueList lines: linesArray message: messageString title: aString [
 	"Choose an item from the given list. Answer the selected item."
 
@@ -118,7 +118,7 @@ MorphicUIManager >> chooseFrom: labelList values: valueList lines: linesArray me
 		lines: linesArray
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicUIManager >> chooseFrom: labelList values: valueList lines: linesArray title: aString [
 	"Choose an item from the given list. Answer the selected item."
 
@@ -136,7 +136,7 @@ MorphicUIManager >> chooseFrom: labelList values: valueList lines: linesArray ti
 		lines: linesArray
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicUIManager >> chooseFullFileNameMatching: patterns label: label [
 	"Let the user choose a file matching the given patterns"
 
@@ -150,7 +150,7 @@ MorphicUIManager >> chooseFullFileNameMatching: patterns label: label [
 		preview: false
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 MorphicUIManager >> chooseOrRequestFrom: aList lines: linesArray title: aString [
 	"Choose an item from the given list.
 	 Answer the value selected of the selected item or the new string entered."
@@ -162,13 +162,13 @@ MorphicUIManager >> chooseOrRequestFrom: aList lines: linesArray title: aString 
 		title: aString
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicUIManager >> chooseOrRequestFrom: aList title: aString [
 	"Choose an item from the given list. Answer the index of the selected item."
 	^self chooseOrRequestFrom: aList lines: #() title: aString
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 MorphicUIManager >> chooseOrRequestFrom: labelList values: valueList lines: linesArray title: aString [
 	"Choose an item from the given list.
 	 Answer the value selected of the selected item or the new string entered."
@@ -181,7 +181,7 @@ MorphicUIManager >> chooseOrRequestFrom: labelList values: valueList lines: line
 		lines: linesArray
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicUIManager >> confirm: aStringOrText [
 	"Put up a question dialog (without cancel).
 	Answer true if the response is yes, false if no.
@@ -190,7 +190,7 @@ MorphicUIManager >> confirm: aStringOrText [
 	^ self confirm: aStringOrText label: 'Question' translated
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicUIManager >> confirm: questionStringOrText label: labelStringOrText [
 	"Put up a question dialog (without cancel).
 	Answer true if the response is yes, false if no.
@@ -206,7 +206,7 @@ MorphicUIManager >> confirm: questionStringOrText label: labelStringOrText [
 		title: labelStringOrText
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 MorphicUIManager >> confirm: queryString label: title trueChoice: trueChoice falseChoice: falseChoice cancelChoice: cancelChoice default: defaultOption [
 	"Put up a yes/no/cancel menu with caption queryString. The actual wording for the choices will be as provided in the trueChoice, falseChoice and cancelChoice parameters.
 	defaultOption should be one of true, false or nil to set the default button.
@@ -225,7 +225,7 @@ MorphicUIManager >> confirm: queryString label: title trueChoice: trueChoice fal
 		title: title
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicUIManager >> confirm: aStringOrText orCancel: cancelBlock [
 	"Put up a question dialog (with cancel) with the text queryString.
 	Answer true if the response is yes, false if no.
@@ -242,7 +242,7 @@ MorphicUIManager >> confirm: aStringOrText orCancel: cancelBlock [
 		title: 'Question' translated) ifNil: cancelBlock
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 MorphicUIManager >> confirm: queryString trueChoice: trueChoice falseChoice: falseChoice [
 	"Put up a yes/no menu with caption queryString. The actual wording for the two choices will be as provided in the trueChoice and falseChoice parameters. Answer true if the response is the true-choice, false if it's the false-choice.
 	This is a modal question -- the user must respond one way or the other."
@@ -255,7 +255,7 @@ MorphicUIManager >> confirm: queryString trueChoice: trueChoice falseChoice: fal
 		default: nil
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 MorphicUIManager >> confirm: queryString trueChoice: trueChoice falseChoice: falseChoice cancelChoice: cancelChoice default: defaultOption [
 	"Put up a yes/no/cancel menu with caption queryString. The actual wording for the choices will be as provided in the trueChoice, falseChoice and cancelChoice parameters.
 	defaultOption should be one of true, false or nil to set the default button.
@@ -271,15 +271,9 @@ MorphicUIManager >> confirm: queryString trueChoice: trueChoice falseChoice: fal
 		default: defaultOption
 ]
 
-{ #category : #'ui requests' }
-MorphicUIManager >> currentWorld [
-
-	ActiveWorld ifNotNil: [ ^ ActiveWorld ].
-	^ World
-]
-
-{ #category : #private }
+{ #category : 'private' }
 MorphicUIManager >> deactivate [
+
 	activeTranscript := Transcript.
 	SystemProgressMorph disable.
 
@@ -289,7 +283,7 @@ MorphicUIManager >> deactivate [
 	self currentWorld worldState worldRenderer: (NullWorldRenderer forWorld: self currentWorld)
 ]
 
-{ #category : #debug }
+{ #category : 'debug' }
 MorphicUIManager >> debugProcess: process context: context label: title fullView: bool notification: notificationString [
 
 	(OupsDebugRequest newForContext: context)
@@ -298,13 +292,13 @@ MorphicUIManager >> debugProcess: process context: context label: title fullView
 		submit
 ]
 
-{ #category : #'ui process' }
+{ #category : 'ui process' }
 MorphicUIManager >> defer: aValuable [
 	"aValuable will be executed in the next UI rendering cycle"
 	self currentWorld defer: aValuable
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicUIManager >> edit: aText label: labelString accept: aBlockOrNil [
 	"Open an editor on the given string/text"
 
@@ -314,12 +308,12 @@ MorphicUIManager >> edit: aText label: labelString accept: aBlockOrNil [
 				setText: aText asString;
 				yourself.
 	aBlockOrNil ifNotNil: [
-		pane announcer when: RubTextAcceptRequest do: [:aRequest | aBlockOrNil value: aRequest morph text]].
+		pane announcer when: RubTextAcceptRequest do: [:aRequest | aBlockOrNil value: aRequest morph text] for: self].
 	window addMorph: pane frame: (0@0 corner: 1@1); openInWorld.
 	^ window
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 MorphicUIManager >> enterOrRequestFrom: aList lines: linesArray title: aString [
 	"Choose an item from the given list.
 	 Answer the value selected of the selected item or the new string entered."
@@ -331,13 +325,13 @@ MorphicUIManager >> enterOrRequestFrom: aList lines: linesArray title: aString [
 		title: aString
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicUIManager >> enterOrRequestFrom: aList title: aString [
 	"Choose an item from the given list. Answer the index of the selected item."
 	^self enterOrRequestFrom: aList lines: #() title: aString
 ]
 
-{ #category : #services }
+{ #category : 'services' }
 MorphicUIManager >> enterOrRequestFrom: labelList values: valueList lines: linesArray title: aString [
 	"Choose an item from the given list.
 	 Answer the value selected of the selected item or the new string entered."
@@ -350,32 +344,40 @@ MorphicUIManager >> enterOrRequestFrom: labelList values: valueList lines: lines
 		lines: linesArray
 ]
 
-{ #category : #'ui requests' }
-MorphicUIManager >> fontFromUser: priorFont [
-
-	^ StrikeFont fromUser: priorFont allowKeyboard: true
-]
-
-{ #category : #'handle debug requests' }
+{ #category : 'handle debug requests' }
 MorphicUIManager >> handleDebugRequest: aDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
 	<debuggerCompleteToSender>
 	anOupsDebuggerSystem openDebuggerOnRequest: aDebugRequest
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 MorphicUIManager >> handleError: anError log: shouldLog [
-	shouldLog
-		ifTrue: [ self logError: anError ].
+
+	shouldLog ifTrue: [ self logError: anError ].
 	(OupsDebugRequest newForException: anError) submit
 ]
 
-{ #category : #'handle debug requests' }
+{ #category : 'error handling' }
+MorphicUIManager >> handleNotification: aNotification [
+
+	aNotification messageText traceCr.
+	aNotification resume
+]
+
+{ #category : 'error handling' }
+MorphicUIManager >> handleWarning: aWarning [
+	"The user should be notified of the occurrence of an exceptional occurrence and given an option of continuing or aborting the computation. The description of the occurrence should include any text specified as the argument of the #signal: message."
+
+	(OupsWarningRequest newForException: aWarning) submit
+]
+
+{ #category : 'handle debug requests' }
 MorphicUIManager >> handleWarningDebugRequest: aWarningDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
 	<debuggerCompleteToSender>
 	anOupsDebuggerSystem openDebuggerOnRequest: aWarningDebugRequest
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicUIManager >> inform: aStringOrText [
 	"Display a message for the user to read and then dismiss."
 
@@ -386,7 +388,7 @@ MorphicUIManager >> inform: aStringOrText [
 		contents: aStringOrText
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicUIManager >> informUserDuring: aBlock [
 	"Display a message as progress	during execution of the given block."
 	"UIManager default informUserDuring: [:bar|
@@ -402,7 +404,7 @@ MorphicUIManager >> informUserDuring: aBlock [
 		during: [:bar | aBlock value: bar]
 ]
 
-{ #category : #debug }
+{ #category : 'debug' }
 MorphicUIManager >> lowSpaceWarningMessage [
 	"Return a notifier message string to be presented when space is running low."
 
@@ -424,22 +426,7 @@ Here are some suggestions:
 '
 ]
 
-{ #category : #'ui requests' }
-MorphicUIManager >> merge: merger informing: aString [
-
-	| mergeMorph  window |
-	mergeMorph := PSMCMergeMorph forMerger: merger.
-	mergeMorph
-		fromDescription: 'Working copy' translated;
-		toDescription: aString.
-	window := mergeMorph newWindow
-		title: aString;
-		yourself.
-	window openModal.
-	^ mergeMorph merged
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphicUIManager >> modalMorph [
 	"Answer the morph that should be used to handle modality."
 	| sender receiver foundWorld |
@@ -460,7 +447,7 @@ MorphicUIManager >> modalMorph [
 		ifNil: [self currentWorld]
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicUIManager >> multiLineRequest: queryString  initialAnswer: defaultAnswer answerHeight: answerHeight [
 	"Create a multi-line instance of me whose question is queryString with
 	the given initial answer. Answer the string the user accepts.  Answer nil if the user cancels.  An
@@ -482,26 +469,7 @@ MorphicUIManager >> multiLineRequest: queryString  initialAnswer: defaultAnswer 
 			ifNotNil: [:text | text asString]
 ]
 
-{ #category : #'ui requests' }
-MorphicUIManager >> newDisplayDepthNoRestore: pixelSize [
-
-	"Change depths.  Check if there is enough space!  , di"
-	| area need |
-	pixelSize = Display depth ifTrue: [^ Display  "no change"].
-	pixelSize abs < Display depth ifFalse:
-		["Make sure there is enough space"
-		area := Display boundingBox area. "pixels"
-		need := (area * (pixelSize abs - Display depth) // 8)  "new bytes needed"
-				+ Smalltalk lowSpaceThreshold.
-		(Smalltalk garbageCollectMost <= need
-			and: [Smalltalk garbageCollect <= need])
-			ifTrue: [self error: 'Insufficient free space']].
-	Display setExtent: Display extent depth: pixelSize.
-
-	DisplayScreen startUp
-]
-
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicUIManager >> newMenuIn: aThemedMorph for: aModel [
 	"Answer a new menu."
 	"UIManager default"
@@ -509,13 +477,7 @@ MorphicUIManager >> newMenuIn: aThemedMorph for: aModel [
 		newMenuIn: aThemedMorph for: aModel
 ]
 
-{ #category : #events }
-MorphicUIManager >> onEventSensorStartup: anEventSensor [
-
-	anEventSensor flushAllButDandDEvents
-]
-
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicUIManager >> onFontsChanged [
 
 	StringMorph allSubInstancesDo: [ :s | s layoutChanged ].
@@ -524,45 +486,48 @@ MorphicUIManager >> onFontsChanged [
 	self currentWorld ifNotNil: [ :w | w changed ]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 MorphicUIManager >> onPrimitiveError: aString [
+
 	| message |
-	message := String
-				streamContents: [:s |
-					| context |
-					s nextPutAll: '*** System error handling failed ***'.
-					s cr; nextPutAll: aString.
-					context := thisContext sender sender.
-					20
-						timesRepeat: [context == nil
-								ifFalse: [s cr; print: (context := context sender)]]].
+	message := String streamContents: [ :s |
+		           | context |
+		           s nextPutAll: '*** System error handling failed ***'.
+		           s
+			           cr;
+			           nextPutAll: aString.
+		           context := thisContext sender sender.
+		           20 timesRepeat: [
+			           context ifNotNil: [
+				           s
+					           cr;
+					           print: (context := context sender) ] ] ].
 	Stdio stderr << message.
 	"init hands and redisplay"
 	self currentWorld install
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphicUIManager >> preferredCornerStyle [
 	^ self theme preferredCornerStyle
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicUIManager >> request: queryString initialAnswer: defaultAnswer [
 	"Create an instance of me whose question is queryString with the given initial answer. Invoke it centered at the given point, and answer the string the user accepts. Answer the empty string if the user cancels."
 
-
-	 ^ self
-		request: queryString
-		initialAnswer: defaultAnswer
-		title: 'Provide the following information'
+	^ self
+		  request: queryString
+		  initialAnswer: defaultAnswer
+		  title: 'Provide the following information'
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicUIManager >> request: aStringOrText initialAnswer: defaultAnswer entryCompletion: anEntryCompletion [
 	^ self request: aStringOrText initialAnswer: defaultAnswer title: 'Information Required' translated entryCompletion: anEntryCompletion
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicUIManager >> request: aStringOrText initialAnswer: defaultAnswer title: aTitle [
 	"Create an instance of me whose question is queryString with the given
 	initial answer. Answer the string the user accepts.
@@ -581,7 +546,7 @@ MorphicUIManager >> request: aStringOrText initialAnswer: defaultAnswer title: a
 		entryText: defaultAnswer)
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicUIManager >> request: aStringOrText initialAnswer: defaultAnswer title: aTitle entryCompletion: anEntryCompletion [
 	"Create an instance of me whose question is queryString with the given
 	initial answer. Answer the string the user accepts.
@@ -601,7 +566,7 @@ MorphicUIManager >> request: aStringOrText initialAnswer: defaultAnswer title: a
 		entryCompletion: anEntryCompletion)
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicUIManager >> requestPassword: aStringOrText [
 	"Request for a password.
 	Allow for interception with a ProvideAnswerNotification handler.
@@ -618,21 +583,7 @@ MorphicUIManager >> requestPassword: aStringOrText [
 		entryText: ''
 ]
 
-{ #category : #'ui requests' }
-MorphicUIManager >> restoreDisplay [
-
-	self currentWorld fullRepaintNeeded
-]
-
-{ #category : #'ui requests' }
-MorphicUIManager >> restoreDisplayAfter: aBlock [
-
-	aBlock value.
-	self currentWorld activeHand waitButton.
-	self currentWorld fullRepaintNeeded
-]
-
-{ #category : #'ui process' }
+{ #category : 'ui process' }
 MorphicUIManager >> resumeUIProcess: aProcess [
 	"Adopt aProcess as the project process -- probably because of proceeding from a debugger"
 
@@ -640,12 +591,12 @@ MorphicUIManager >> resumeUIProcess: aProcess [
 	UIProcess resume
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 MorphicUIManager >> showWaitCursorWhile: aBlock [
 	Cursor wait showWhile: aBlock
 ]
 
-{ #category : #'ui process' }
+{ #category : 'ui process' }
 MorphicUIManager >> spawnNewProcess [
 
 	UIProcess := [ MorphicRenderLoop new doOneCycleWhile: [ true ] ] newProcess priority:
@@ -655,25 +606,18 @@ MorphicUIManager >> spawnNewProcess [
 		resume
 ]
 
-{ #category : #'ui requests' }
-MorphicUIManager >> systemNotificationDefaultAction: aNotification [
-
-	aNotification messageText traceCr.
-	aNotification resume
-]
-
-{ #category : #'ui process' }
+{ #category : 'ui process' }
 MorphicUIManager >> terminateUIProcess [
 	UIProcess suspend; terminate.
 	UIProcess := nil "?"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphicUIManager >> theme [
 	^ Smalltalk ui theme
 ]
 
-{ #category : #'ui process' }
+{ #category : 'ui process' }
 MorphicUIManager >> uiProcess [
 	" Answer the currently active UI process for morphic world.
 	Client should check explicitly if #uiProcess answers nil or not (see other implementations)"
@@ -681,21 +625,14 @@ MorphicUIManager >> uiProcess [
 	^ UIProcess
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 MorphicUIManager >> unhandledErrorDefaultAction: anException [
 
 	"The current computation is terminated. The cause of the error should be logged or reported to the user. If the program is operating in an interactive debugging environment the computation should be suspended and the debugger activated."
 	anException debug
 ]
 
-{ #category : #'handle debug requests' }
-MorphicUIManager >> warningDefaultAction: anException [
-	"The user should be notified of the occurrence of an exceptional occurrence and given an option of continuing or aborting the computation. The description of the occurrence should include any text specified as the argument of the #signal: message."
-	self flag: 'This looks like a code smell'.
-	(OupsWarningRequest newForException: anException) submit
-]
-
-{ #category : #'global state' }
+{ #category : 'global state' }
 MorphicUIManager >> world [
 	^ self currentWorld
 ]

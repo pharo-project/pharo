@@ -1,6 +1,6 @@
-Extension { #name : #MacOSPlatform }
+Extension { #name : 'MacOSPlatform' }
 
-{ #category : #'*Keymapping-KeyCombinations' }
+{ #category : '*Keymapping-KeyCombinations' }
 MacOSPlatform >> defaultModifier [
 
 	^ KMModifier command

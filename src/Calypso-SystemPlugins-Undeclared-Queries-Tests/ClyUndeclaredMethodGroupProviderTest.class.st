@@ -1,16 +1,17 @@
 Class {
-	#name : #ClyUndeclaredMethodGroupProviderTest,
-	#superclass : #ClyMethodGroupProviderTest,
-	#category : #'Calypso-SystemPlugins-Undeclared-Queries-Tests'
+	#name : 'ClyUndeclaredMethodGroupProviderTest',
+	#superclass : 'ClyMethodGroupProviderTest',
+	#category : 'Calypso-SystemPlugins-Undeclared-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-Undeclared-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyUndeclaredMethodGroupProviderTest >> classSampleWhichHasGroup [
 
 	^ClyClassWithUndeclares
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyUndeclaredMethodGroupProviderTest >> groupProviderClass [
 	^ClyUndeclaredMethodGroupProvider
 ]

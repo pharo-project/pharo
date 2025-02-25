@@ -2,24 +2,26 @@
 Called in the debugger to generate methods when you click on the create button
 "
 Class {
-	#name : #DynamicMessageImplementor,
-	#superclass : #Object,
+	#name : 'DynamicMessageImplementor',
+	#superclass : 'Object',
 	#instVars : [
 		'message',
 		'class',
 		'argumentNames',
 		'stream'
 	],
-	#category : #'Debugger-Model-Utilities'
+	#category : 'Debugger-Model-Utilities',
+	#package : 'Debugger-Model',
+	#tag : 'Utilities'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DynamicMessageImplementor class >> for: aMessage in: aClass [
 
 	^ self new initializeFor: aMessage in: aClass
 ]
 
-{ #category : #'evaluating-private' }
+{ #category : 'evaluating-private' }
 DynamicMessageImplementor >> argumentNameAt: anIndex [
 
 	| argumentName argument |
@@ -33,38 +35,38 @@ DynamicMessageImplementor >> argumentNameAt: anIndex [
 	^ argumentName
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DynamicMessageImplementor >> hasParameter: aKeyword [
 
 	^ aKeyword last = $: or: [ message selector isInfix ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DynamicMessageImplementor >> initializeFor: aMessage in: aClass [
 
 	message := aMessage.
 	class := aClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DynamicMessageImplementor >> isMessageAGetter [
 
 	^ message numArgs = 0 and: [ class instVarNames includes: message selector ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DynamicMessageImplementor >> isMessageASetter [
 
 	^ message numArgs = 1 and: [ class instVarNames includes: message selector allButLast ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DynamicMessageImplementor >> messageShouldBeImplemented [
 
 	^ (self isMessageAGetter | self isMessageASetter) not
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 DynamicMessageImplementor >> value [
 
 	argumentNames := Set new.
@@ -74,14 +76,14 @@ DynamicMessageImplementor >> value [
 	^ stream contents
 ]
 
-{ #category : #'evaluating-private' }
+{ #category : 'evaluating-private' }
 DynamicMessageImplementor >> write: aKeyword of: anIndex [
 
 	stream nextPutAll: aKeyword.
 	self writeArgumentNameIfNecessaryOf: aKeyword at: anIndex
 ]
 
-{ #category : #'evaluating-private' }
+{ #category : 'evaluating-private' }
 DynamicMessageImplementor >> writeArgumentNameAt: anIndex [
 
 	| argumentName |
@@ -93,13 +95,13 @@ DynamicMessageImplementor >> writeArgumentNameAt: anIndex [
 		space
 ]
 
-{ #category : #'evaluating-private' }
+{ #category : 'evaluating-private' }
 DynamicMessageImplementor >> writeArgumentNameIfNecessaryOf: aKeyword at: anIndex [
 
 	(self hasParameter: aKeyword) ifTrue: [ self writeArgumentNameAt: anIndex ]
 ]
 
-{ #category : #'evaluating-private' }
+{ #category : 'evaluating-private' }
 DynamicMessageImplementor >> writeGetterSourceCode [
 
 	stream
@@ -109,19 +111,19 @@ DynamicMessageImplementor >> writeGetterSourceCode [
 		nextPutAll: message selector
 ]
 
-{ #category : #'evaluating-private' }
+{ #category : 'evaluating-private' }
 DynamicMessageImplementor >> writeGetterSourceCodeIfNecessary [
 
 	self isMessageAGetter ifTrue: [ self writeGetterSourceCode ]
 ]
 
-{ #category : #'evaluating-private' }
+{ #category : 'evaluating-private' }
 DynamicMessageImplementor >> writeMethodName [
 
 	message selector keywords doWithIndex: [ :aKeyword :anIndex | self write: aKeyword of: anIndex ]
 ]
 
-{ #category : #'evaluating-private' }
+{ #category : 'evaluating-private' }
 DynamicMessageImplementor >> writeSetterSourceCode [
 
 	stream
@@ -132,13 +134,13 @@ DynamicMessageImplementor >> writeSetterSourceCode [
 		nextPutAll: argumentNames anyOne
 ]
 
-{ #category : #'evaluating-private' }
+{ #category : 'evaluating-private' }
 DynamicMessageImplementor >> writeSetterSourceCodeIfNecessary [
 
 	self isMessageASetter ifTrue: [ self writeSetterSourceCode ]
 ]
 
-{ #category : #'evaluating-private' }
+{ #category : 'evaluating-private' }
 DynamicMessageImplementor >> writeShouldBeImplemented [
 
 	stream
@@ -149,13 +151,13 @@ DynamicMessageImplementor >> writeShouldBeImplemented [
 		nextPut: $.
 ]
 
-{ #category : #'evaluating-private' }
+{ #category : 'evaluating-private' }
 DynamicMessageImplementor >> writeShouldBeImplementedIfNecessary [
 
 	self messageShouldBeImplemented ifTrue: [ self writeShouldBeImplemented ]
 ]
 
-{ #category : #'evaluating-private' }
+{ #category : 'evaluating-private' }
 DynamicMessageImplementor >> writeSourceCode [
 
 	self writeMethodName.

@@ -1,55 +1,57 @@
 Class {
-	#name : #RubGhostTextDisplayer,
-	#superclass : #RubScrolledTextExtraSurface,
+	#name : 'RubGhostTextDisplayer',
+	#superclass : 'RubScrolledTextExtraSurface',
 	#instVars : [
 		'ghostText',
 		'textColor'
 	],
-	#category : #'Rubric-Editing-Widgets'
+	#category : 'Rubric-Editing-Widgets',
+	#package : 'Rubric',
+	#tag : 'Editing-Widgets'
 }
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubGhostTextDisplayer class >> key [
 	^ #ghostText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubGhostTextDisplayer >> bold [
 	self handleTextChangeWhile: [ghostText selectAll; bold; deselect]
 ]
 
-{ #category : #alignment }
+{ #category : 'alignment' }
 RubGhostTextDisplayer >> centered [
 	self handleTextChangeWhile: [ ghostText centered ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubGhostTextDisplayer >> computedPositionFrom: aRectangle [
 	^ self scrollBounds topLeft
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubGhostTextDisplayer >> computedWidthFrom: aRectangle [
 	^  self scrollBounds width
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RubGhostTextDisplayer >> defaultTextColor [
 	^ self theme ghostTextColor
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 RubGhostTextDisplayer >> extent: aPoint [
 	super extent: aPoint.
 	self showHideGhostText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubGhostTextDisplayer >> font: aFont [
 	self handleTextChangeWhile: [ghostText textFont: aFont]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubGhostTextDisplayer >> fontName: aFontName pointSize: anInteger [
 	self
 		handleTextChangeWhile: [
@@ -60,41 +62,41 @@ RubGhostTextDisplayer >> fontName: aFontName pointSize: anInteger [
 					self changed ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubGhostTextDisplayer >> fontPointSize: anInteger [
 	self handleTextChangeWhile: [ghostText fontPointSize: anInteger]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubGhostTextDisplayer >> ghostText [
 	"Return the editing area of the ghostText"
 	^ ghostText
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubGhostTextDisplayer >> handleTextChangeWhile: aBlock [
 	aBlock value.
 	self showHideGhostText
 ]
 
-{ #category : #alignment }
+{ #category : 'alignment' }
 RubGhostTextDisplayer >> leftFlush [
 	self handleTextChangeWhile: [ ghostText leftFlush ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubGhostTextDisplayer >> level [
 	^ SmallInteger maxVal  - 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubGhostTextDisplayer >> manageLayoutInBounds: aRectangle [
 	| ret |
 	self handleTextChangeWhile: [ ret := super manageLayoutInBounds: aRectangle ].
 	^ ret
 ]
 
-{ #category : #'submorphs - accessing' }
+{ #category : 'submorphs - accessing' }
 RubGhostTextDisplayer >> noteNewOwner: aMorph [
 	super noteNewOwner: aMorph.
 	ghostText := self paragraphProvider defaultGhostTextMorph.
@@ -103,19 +105,19 @@ RubGhostTextDisplayer >> noteNewOwner: aMorph [
 	self textArea announcer when: MorphLostFocus send: #showHideGhostText to: self
 ]
 
-{ #category : #alignment }
+{ #category : 'alignment' }
 RubGhostTextDisplayer >> rightFlush [
 	self
 		handleTextChangeWhile: [ ghostText rightFlush ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubGhostTextDisplayer >> setTextWith: aText [
 	ghostText setTextWith: aText asText.
 	ghostText  textColor: self textColor
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubGhostTextDisplayer >> showHideGhostText [
 	self textArea text
 		ifNotEmpty: [ self removeAllMorphs ]
@@ -124,31 +126,31 @@ RubGhostTextDisplayer >> showHideGhostText [
 			self addMorph: ghostText ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 RubGhostTextDisplayer >> textChanged [
 	self showHideGhostText.
 	super textChanged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubGhostTextDisplayer >> textColor [
 	^ textColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubGhostTextDisplayer >> textColor: aColor [
 	textColor := aColor.
 	self
 		handleTextChangeWhile: [ ghostText textColor: aColor ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubGhostTextDisplayer >> updateMarginsWith: aMargin [
 	self
 		handleTextChangeWhile: [ ghostText updateMarginsWith: aMargin]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubGhostTextDisplayer >> updateTextWith: aText [
 	self
 		handleTextChangeWhile: [

@@ -8,7 +8,9 @@ ZnServerSessions are created lazily.
 
 "
 Class {
-	#name : #ZnCurrentServerSession,
-	#superclass : #ProcessLocalVariable,
-	#category : #'Zinc-HTTP-Variables'
+	#name : 'ZnCurrentServerSession',
+	#superclass : 'ProcessLocalVariable',
+	#category : 'Zinc-HTTP-Variables',
+	#package : 'Zinc-HTTP',
+	#tag : 'Variables'
 }

@@ -10,17 +10,19 @@ here subclasses should define what to do with given change
 here subclasses can publish all collected changes at once when their logic is to collect events instead of instant announcing them
 "
 Class {
-	#name : #ClyEnvironmentUpdateStrategy,
-	#superclass : #Object,
-	#category : #'Calypso-NavigationModel-Model'
+	#name : 'ClyEnvironmentUpdateStrategy',
+	#superclass : 'Object',
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyEnvironmentUpdateStrategy >> announceChangesOf: aQueryResult [
 	self subclassResponsibility
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ClyEnvironmentUpdateStrategy >> publishCollectedChanges [
 	self subclassResponsibility
 ]

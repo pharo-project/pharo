@@ -1,15 +1,11 @@
 Class {
-	#name : #MetacelloMCVersionSpecTestCase,
-	#superclass : #MetacelloVersionSpecTestCase,
-	#category : #'Metacello-TestsMCCore'
+	#name : 'MetacelloMCVersionSpecTestCase',
+	#superclass : 'MetacelloVersionSpecTestCase',
+	#category : 'Metacello-TestsMCCore',
+	#package : 'Metacello-TestsMCCore'
 }
 
-{ #category : #accessing }
-MetacelloMCVersionSpecTestCase >> projectClass [
-    ^ MetacelloMCProject
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloMCVersionSpecTestCase >> testMCVersionMergeSpec [
 	| versionA versionB version repository package group projectReferenceSpec |
 	versionA := self versionSpec
@@ -98,7 +94,7 @@ MetacelloMCVersionSpecTestCase >> testMCVersionMergeSpec [
 	self assert: (group includes includes: 'Tests')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloMCVersionSpecTestCase >> testMCVersionSpec [
 	| version projectReferenceSpec group package repository |
 	version := self versionSpec

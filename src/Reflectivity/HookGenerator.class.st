@@ -5,48 +5,50 @@ New version
 -> returns the complete AST for the hook.
 "
 Class {
-	#name : #HookGenerator,
-	#superclass : #Object,
+	#name : 'HookGenerator',
+	#superclass : 'Object',
 	#instVars : [
 		'entity',
 		'node',
 		'links',
 		'plugins'
 	],
-	#category : #'Reflectivity-Core'
+	#category : 'Reflectivity-Core',
+	#package : 'Reflectivity',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HookGenerator class >> entity: anEntity node: aNode [
 	^self new entity: anEntity node: aNode links: anEntity links
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 HookGenerator class >> node: aNode [
 	^self entity: aNode node: aNode
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 HookGenerator >> afterHooks [
 	^ links
 			select: [ :each | each control = #after ]
 			thenCollect:  [ :link | (self hookFor: link) parent: node]
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 HookGenerator >> beforeHooks [
 	^links
 			select: [ :each | each control = #before ]
 			thenCollect:  [ :link | (self hookFor: link) parent: node]
 ]
 
-{ #category : #'ast manipulation' }
+{ #category : 'ast manipulation' }
 HookGenerator >> encloseInBlock: nodeOrCollection [
 	"Creates a new block node from a node or a list of nodes"
-	^ RBBlockNode body: nodeOrCollection asSequenceNode
+	^ OCBlockNode body: nodeOrCollection asSequenceNode
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 HookGenerator >> entity: anEntity node: aNode links: aCollection [
 	plugins := Dictionary new.
 	node := aNode.
@@ -60,49 +62,50 @@ HookGenerator >> entity: anEntity node: aNode links: aCollection [
 		]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HookGenerator >> genReification: aSymbolOrNode for: aLink [
 	| plugin |
-	(aSymbolOrNode isKindOf: RBProgramNode) ifTrue: [ ^ aSymbolOrNode].
+	(aSymbolOrNode isKindOf: OCProgramNode) ifTrue: [ ^ aSymbolOrNode].
 	plugin := aSymbolOrNode isSymbol
 		ifTrue: [(plugins at: aSymbolOrNode ifAbsent: [self error: 'reification not supported for this entity']) entity: entity link: aLink]
 		ifFalse: [ aSymbolOrNode link: aLink; entity: entity. aSymbolOrNode ].
 	^plugin perform: self selectorForNode
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HookGenerator >> generateArguments: aMetalink [
 	| arguments |
 
 	arguments := aMetalink arguments collect: [: each | self genReification: each for: aMetalink].
 	(self hasOption: #argsAsArray for: aMetalink) ifTrue:
-		[ ^RBArrayNode statements: arguments ].
+		[ ^OCArrayNode statements: arguments ].
 	^arguments
 ]
 
-{ #category : #options }
+{ #category : 'options' }
 HookGenerator >> hasOption: aSymbol for: aLink [
 	"take the class and method overrides to options into account"
-	^(node methodNode optionsFor: aLink) includes: aSymbol
+
+	^ (node methodNode optionsFor: aLink) includesOption: aSymbol
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 HookGenerator >> hook [
-	^RBSequenceNode statements: (links collect:  [ :link | self hookFor: link ])
+	^OCSequenceNode statements: (links collect:  [ :link | self hookFor: link ])
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 HookGenerator >> hookFor: aLink [
 	| receiver hook arguments |
 
-	(self hasOption: #optionDisabledLink for: aLink) ifTrue: [ ^RBSequenceNode new ].
+	(self hasOption: #optionDisabledLink for: aLink) ifTrue: [ ^OCSequenceNode new ].
 
 	receiver := aLink metaObject isSymbol
 		ifTrue: [ self genReification: aLink metaObject for: aLink ]
 		ifFalse: [
 			(self hasOption: #optionInlineMetaObject for: aLink)
-				ifTrue: [RBLiteralNode value: aLink metaObject]
-				ifFalse: [RBMessageNode receiver: (RBLiteralNode value: aLink)
+				ifTrue: [OCLiteralNode value: aLink metaObject]
+				ifFalse: [OCMessageNode receiver: (OCLiteralNode value: aLink)
 											 selector: #metaObject ]].
 	arguments := self generateArguments: aLink.
 
@@ -112,9 +115,9 @@ HookGenerator >> hookFor: aLink [
 		arguments: arguments.
 
 	(self hasOption: #optionOneShot for: aLink) ifTrue: [
-			hook := RBSequenceNode statements: {
-				RBMessageNode
-					receiver: (RBLiteralNode value: aLink)
+			hook := OCSequenceNode statements: {
+				OCMessageNode
+					receiver: (OCLiteralNode value: aLink)
 					selector: #uninstall.
 				hook }].
 	aLink hasCondition ifTrue: [hook := self wrapCondition: hook link: aLink].
@@ -125,7 +128,7 @@ HookGenerator >> hookFor: aLink [
 	^ hook
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 HookGenerator >> insteadHooks [
 	| insteadLinks |
 	insteadLinks := ((links select: [ :each | each control = #instead ])) asArray.
@@ -133,17 +136,17 @@ HookGenerator >> insteadHooks [
 	^(self hookFor: insteadLinks last) parent: node
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HookGenerator >> links [
 	^links
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HookGenerator >> plugins [
 	^ plugins
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 HookGenerator >> postamble [
 	| postamble |
 	"This is code executed just before the #after link"
@@ -155,7 +158,7 @@ HookGenerator >> postamble [
 	^postamble
 ]
 
-{ #category : #results }
+{ #category : 'results' }
 HookGenerator >> preamble [
 	| preamble |
 	"Very simplistic now: needs to do some optimizatons"
@@ -165,18 +168,18 @@ HookGenerator >> preamble [
 		plugins do: [ :plugin | (link allReifications includes: plugin key) ifTrue: [preamble addAll: ((plugin entity: entity link: link) preamble: entity)]].
 		link control = #instead ifTrue: [
 				"for instead links, the preamble needs to clean the stack. For now just implemented for message sends"
-				((entity isKindOf: RBProgramNode) and: [node isMessage]) ifTrue: [
+				((entity isKindOf: OCProgramNode) and: [node isMessage]) ifTrue: [
 					entity numArgs + 1 timesRepeat: [preamble add: (RFStorePopIntoTempNode named: #RFBalancestack)]]]].
 	^preamble
 ]
 
-{ #category : #'ast manipulation' }
+{ #category : 'ast manipulation' }
 HookGenerator >> selectorForNode [
 	"The selector to be called on the Reification plugin"
-	^('genFor' , entity class name) asSymbol
+	^('genFor' , (entity class name copyReplaceAll: 'OC' with: 'AST')) asSymbol
 ]
 
-{ #category : #'ast manipulation' }
+{ #category : 'ast manipulation' }
 HookGenerator >> wrapCondition: hook link: aLink [
 	| linkBlock conditionExpression condSelector condArguments linkConditionArguments|
 
@@ -191,10 +194,10 @@ HookGenerator >> wrapCondition: hook link: aLink [
 	].
 
 	linkBlock := self encloseInBlock: hook asSequenceNode.
-	conditionExpression := RBMessageNode
+	conditionExpression := OCMessageNode
 			receiver: ((self hasOption: #optionInlineCondition for: aLink)
-				ifTrue: [RBLiteralNode value: aLink condition]
-				ifFalse:[RBMessageNode receiver: (RBLiteralNode value: aLink)
+				ifTrue: [OCLiteralNode value: aLink condition]
+				ifFalse:[OCMessageNode receiver: (OCLiteralNode value: aLink)
 											 selector: #condition ])
 			selector: condSelector
 			arguments: condArguments.
@@ -204,10 +207,10 @@ HookGenerator >> wrapCondition: hook link: aLink [
 				arguments: {linkBlock}
 ]
 
-{ #category : #'ast manipulation' }
+{ #category : 'ast manipulation' }
 HookGenerator >> wrapInContext: hook link: aLink [
 	^RFMessageNode
-		receiver: (RBLiteralNode value: aLink)
+		receiver: (OCLiteralNode value: aLink)
 		selector: #valueInContext:
 		arguments: {self encloseInBlock: hook}
 ]

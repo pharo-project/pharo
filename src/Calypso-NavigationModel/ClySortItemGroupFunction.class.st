@@ -4,12 +4,14 @@ I implement sorting groups, kind of ClyItemGroup.
 I sort them first by priority and after by name
 "
 Class {
-	#name : #ClySortItemGroupFunction,
-	#superclass : #ClySortFunction,
-	#category : #'Calypso-NavigationModel-Model'
+	#name : 'ClySortItemGroupFunction',
+	#superclass : 'ClySortFunction',
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ClySortItemGroupFunction >> collate: aGroup1 with: aGroup2 [
 	"ascending order by name but descending by priority"
 

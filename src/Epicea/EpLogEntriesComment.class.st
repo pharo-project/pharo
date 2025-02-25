@@ -2,16 +2,18 @@
 I represent a comment to Epicea entries  performed in an EpLogBrowser.
 "
 Class {
-	#name : #EpLogEntriesComment,
-	#superclass : #EpLogBrowserOperation,
+	#name : 'EpLogEntriesComment',
+	#superclass : 'EpLogBrowserOperation',
 	#instVars : [
 		'newComment',
 		'oldComment'
 	],
-	#category : #'Epicea-Model'
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpLogEntriesComment class >> entryReferences: aCollection oldComment: aString newComment: anotherString [
 	^ self basicNew
 		initializeWithEntryReferences: aCollection
@@ -20,17 +22,17 @@ EpLogEntriesComment class >> entryReferences: aCollection oldComment: aString ne
 		yourself
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpLogEntriesComment >> accept: aVisitor [
 	^ aVisitor visitLogCommentModification: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogEntriesComment >> comment [
 	^ self newComment
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 EpLogEntriesComment >> copyWithEntryReferences: aCollection [
 	^ self class
 		entryReferences: aCollection
@@ -38,25 +40,25 @@ EpLogEntriesComment >> copyWithEntryReferences: aCollection [
 		newComment: self newComment
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpLogEntriesComment >> initializeWithEntryReferences: aCollection oldComment: theOldComment newComment: theNewComment [
 	self initializeWith: aCollection.
 	oldComment := theOldComment.
 	newComment := theNewComment
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpLogEntriesComment >> isEpLogEntriesComment [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogEntriesComment >> newComment [
 	^ newComment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogEntriesComment >> oldComment [
 	^ oldComment
 ]

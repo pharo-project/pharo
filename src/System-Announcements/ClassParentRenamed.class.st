@@ -6,17 +6,19 @@ showing the class definition or package organizer depending on the changed class
 may need to be updated or track the changes.
 "
 Class {
-	#name : #ClassParentRenamed,
-	#superclass : #ClassAnnouncement,
+	#name : 'ClassParentRenamed',
+	#superclass : 'ClassAnnouncement',
 	#instVars : [
 		'classAffected',
 		'parentOldName',
 		'parentNewName'
 	],
-	#category : #'System-Announcements-System-Classes'
+	#category : 'System-Announcements-System-Classes',
+	#package : 'System-Announcements',
+	#tag : 'System-Classes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClassParentRenamed class >> classParentOf: aClass renamedFrom: oldName to: newName [
 	^ self new
 		parentOldName: oldName;
@@ -25,32 +27,32 @@ ClassParentRenamed class >> classParentOf: aClass renamedFrom: oldName to: newNa
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassParentRenamed >> classAffected [
 	^ classAffected
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassParentRenamed >> classAffected: anObject [
 	classAffected := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassParentRenamed >> parentNewName [
 	^ parentNewName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassParentRenamed >> parentNewName: anObject [
 	parentNewName := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassParentRenamed >> parentOldName [
 	^ parentOldName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassParentRenamed >> parentOldName: anObject [
 	parentOldName := anObject
 ]

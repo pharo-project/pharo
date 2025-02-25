@@ -24,103 +24,101 @@ For subclasses I provide notion of slow plugins and methods to enable/disable th
 Any system plugin can implement #isSlow as true. It is important for slow machines (like Raspberry) to be able easily disable all heavy logic in the browser.
 "
 Class {
-	#name : #ClySystemEnvironmentPlugin,
-	#superclass : #ClyEnvironmentPlugin,
+	#name : 'ClySystemEnvironmentPlugin',
+	#superclass : 'ClyEnvironmentPlugin',
 	#classVars : [
 		'SlowPluginsAreDisabled'
 	],
-	#category : #'Calypso-SystemQueries-Domain'
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySystemEnvironmentPlugin class >> disableSlowPlugins [
 	<script>
 	SlowPluginsAreDisabled := true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySystemEnvironmentPlugin class >> enableSlowPlugins [
 	<script>
 	SlowPluginsAreDisabled := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySystemEnvironmentPlugin class >> isAbstract [
 	^self = ClySystemEnvironmentPlugin
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySystemEnvironmentPlugin class >> isAutoActivated [
 	(SlowPluginsAreDisabled = true and: [ self isSlow ]) ifTrue: [ ^false ].
 
 	^super isAutoActivated
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySystemEnvironmentPlugin class >> isRelatedTo: aSystem [
 
 	^aSystem isKindOf: ClySystemEnvironment
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySystemEnvironmentPlugin class >> isSlow [
 	^false
 ]
 
-{ #category : #'groups collecting' }
+{ #category : 'groups collecting' }
 ClySystemEnvironmentPlugin >> collectClassGroupProviders [
 	^#()
 ]
 
-{ #category : #'query metadata' }
-ClySystemEnvironmentPlugin >> collectMetadataOfClassGroups: aQueryResult [
-]
-
-{ #category : #'query metadata' }
+{ #category : 'query metadata' }
 ClySystemEnvironmentPlugin >> collectMetadataOfClasses: aQueryResult [
 ]
 
-{ #category : #'query metadata' }
+{ #category : 'query metadata' }
 ClySystemEnvironmentPlugin >> collectMetadataOfMethodGroups: aQueryResult [
 ]
 
-{ #category : #'query metadata' }
+{ #category : 'query metadata' }
 ClySystemEnvironmentPlugin >> collectMetadataOfMethods: aQueryResult [
 ]
 
-{ #category : #'query metadata' }
+{ #category : 'query metadata' }
 ClySystemEnvironmentPlugin >> collectMetadataOfPackages: aQueryResult [
 ]
 
-{ #category : #'query metadata' }
+{ #category : 'query metadata' }
 ClySystemEnvironmentPlugin >> collectMetadataOfProjects: aQueryResult [
 ]
 
-{ #category : #'groups collecting' }
+{ #category : 'groups collecting' }
 ClySystemEnvironmentPlugin >> collectMethodGroupProviders [
 	^#()
 ]
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClySystemEnvironmentPlugin >> decorateBrowserItem: anItem ofClass: aClass [
 ]
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClySystemEnvironmentPlugin >> decorateBrowserItem: anItem ofClassGroup: aClassGroup [
 ]
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClySystemEnvironmentPlugin >> decorateBrowserItem: anEnvironmentItem ofMethod: aMethod [
 ]
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClySystemEnvironmentPlugin >> decorateBrowserItem: anItem ofMethodGroup: aMethodGroup [
 ]
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClySystemEnvironmentPlugin >> decorateBrowserItem: anItem ofPackage: aPackage [
 ]
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClySystemEnvironmentPlugin >> decorateBrowserItem: anItem ofProject: aProject [
 ]

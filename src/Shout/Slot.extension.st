@@ -1,7 +1,7 @@
-Extension { #name : #Slot }
+Extension { #name : 'Slot' }
 
-{ #category : #'*Shout' }
-Slot >> styleNameIn: aRBVariableNode [
+{ #category : '*Shout' }
+Slot >> styleNameIn: aVariableNode [
 
 	^ #instVar
 ]

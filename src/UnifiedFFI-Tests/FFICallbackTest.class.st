@@ -2,30 +2,32 @@
 Tests for callbacks
 "
 Class {
-	#name : #FFICallbackTest,
-	#superclass : #TestCase,
+	#name : 'FFICallbackTest',
+	#superclass : 'TestCase',
 	#pools : [
 		'FFITestEnumeration'
 	],
-	#category : #'UnifiedFFI-Tests-Tests'
+	#category : 'UnifiedFFI-Tests-Tests',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallbackTest >> floatregargsp [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFICallbackTest >> intregargsp [
 	^ nil
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FFICallbackTest >> runCaseManaged [
 	^ self runCase
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICallbackTest >> testCqsort [
 	| unsorted expected values callback results |
 
@@ -49,7 +51,7 @@ FFICallbackTest >> testCqsort [
 	self assert: results equals: expected
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICallbackTest >> testCqsortWithByteArray [
 	| unsorted expected values callback results |
 
@@ -74,7 +76,7 @@ FFICallbackTest >> testCqsortWithByteArray [
 	self assert: results equals: expected
 ]
 
-{ #category : #support }
+{ #category : 'support' }
 FFICallbackTest >> wordResult: anInteger [
 	"For testEnumerationReturnValue, simulate a method invoked
 	from FFICallback>>valueInContext, so that I can be passed as a fake context."

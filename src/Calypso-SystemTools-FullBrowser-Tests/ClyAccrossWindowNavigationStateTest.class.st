@@ -1,10 +1,11 @@
 Class {
-	#name : #ClyAccrossWindowNavigationStateTest,
-	#superclass : #ClyNavigationHistoryTest,
-	#category : #'Calypso-SystemTools-FullBrowser-Tests'
+	#name : 'ClyAccrossWindowNavigationStateTest',
+	#superclass : 'ClyNavigationHistoryTest',
+	#category : 'Calypso-SystemTools-FullBrowser-Tests',
+	#package : 'Calypso-SystemTools-FullBrowser-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyAccrossWindowNavigationStateTest >> restoreBrowserInstance [
 
 	self snapshotState.
@@ -12,13 +13,13 @@ ClyAccrossWindowNavigationStateTest >> restoreBrowserInstance [
 	browser := navigationState createBrowser
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyAccrossWindowNavigationStateTest >> snapshotState [
 
 	navigationState := ClyAccrossWindowNavigationState from: browser
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAccrossWindowNavigationStateTest >> testCreatesBrowserWithNavigationEnvironment [
 
 	self restoreBrowserInstance.
@@ -26,7 +27,7 @@ ClyAccrossWindowNavigationStateTest >> testCreatesBrowserWithNavigationEnvironme
 	self assert: browser navigationEnvironment equals: environment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAccrossWindowNavigationStateTest >> testCreatesBrowserWithNavigationHistory [
 
 	self restoreBrowserInstance.
@@ -34,7 +35,7 @@ ClyAccrossWindowNavigationStateTest >> testCreatesBrowserWithNavigationHistory [
 	self assert: browser navigationHistory equals: navigationState navigationHistory
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAccrossWindowNavigationStateTest >> testCreatesBrowserWithPlugins [
 	browser addPlugin: ClyStandardBrowserPlugin new.
 
@@ -45,7 +46,7 @@ ClyAccrossWindowNavigationStateTest >> testCreatesBrowserWithPlugins [
 	self deny: navigationState browserPlugins first identicalTo: browser plugins first
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAccrossWindowNavigationStateTest >> testPluginsWithoutBrowser [
 
 	browser addPlugin: ClyStandardBrowserPlugin new.
@@ -55,7 +56,7 @@ ClyAccrossWindowNavigationStateTest >> testPluginsWithoutBrowser [
 	self assert: navigationState browserPlugins first browser isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAccrossWindowNavigationStateTest >> testRetrievesBrowserEnvironment [
 
 	self snapshotState.
@@ -63,7 +64,7 @@ ClyAccrossWindowNavigationStateTest >> testRetrievesBrowserEnvironment [
 	self assert: navigationState navigationEnvironment equals: environment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAccrossWindowNavigationStateTest >> testRetrievesBrowserState [
 
 	self snapshotState.
@@ -71,7 +72,7 @@ ClyAccrossWindowNavigationStateTest >> testRetrievesBrowserState [
 	self assert: (navigationState browserState isKindOf: ClyBrowserState )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAccrossWindowNavigationStateTest >> testRetrievesNavigationHistory [
 
 	self snapshotState.
@@ -79,7 +80,7 @@ ClyAccrossWindowNavigationStateTest >> testRetrievesNavigationHistory [
 	self assert: navigationState navigationHistory equals: browser navigationHistory
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAccrossWindowNavigationStateTest >> testRetrievesPlugins [
 
 	browser addPlugin: ClyStandardBrowserPlugin new.

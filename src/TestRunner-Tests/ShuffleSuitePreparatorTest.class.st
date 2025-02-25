@@ -1,13 +1,15 @@
 Class {
-	#name : #ShuffleSuitePreparatorTest,
-	#superclass : #TestCase,
+	#name : 'ShuffleSuitePreparatorTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'runner'
 	],
-	#category : #'TestRunner-Tests-Preparators'
+	#category : 'TestRunner-Tests-Preparators',
+	#package : 'TestRunner-Tests',
+	#tag : 'Preparators'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ShuffleSuitePreparatorTest >> testSuitePreparator [
 	
 	|initialSuite initialSuiteCopy|

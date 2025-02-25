@@ -38,15 +38,17 @@ method1
 ```
 "
 Class {
-	#name : #RBInlineParameterRefactoring,
-	#superclass : #RBRemoveParameterRefactoring,
+	#name : 'RBInlineParameterRefactoring',
+	#superclass : 'RBParameterRemovalRefactoring',
 	#instVars : [
 		'expressions'
 	],
-	#category : #'Refactoring-Core-Refactorings-Unused'
+	#category : 'Refactoring-Core-Refactorings-Unused',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings-Unused'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBInlineParameterRefactoring class >> inlineParameter: aString in: aClass selector: aSelector [
 	^ self new
 		inlineParameter: aString
@@ -54,7 +56,7 @@ RBInlineParameterRefactoring class >> inlineParameter: aString in: aClass select
 		selector: aSelector
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBInlineParameterRefactoring class >> model: aRBSmalltalk inlineParameter: aString in: aClass selector: aSelector [
 	^ self new
 		model: aRBSmalltalk;
@@ -64,7 +66,7 @@ RBInlineParameterRefactoring class >> model: aRBSmalltalk inlineParameter: aStri
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBInlineParameterRefactoring >> allExpressionsToInline [
 	| coll |
 	coll := Set new.
@@ -77,7 +79,21 @@ RBInlineParameterRefactoring >> allExpressionsToInline [
 	^coll asOrderedCollection
 ]
 
-{ #category : #private }
+{ #category : 'preconditions' }
+RBInlineParameterRefactoring >> applicabilityPreconditions [
+
+	self getNewSelector.
+	expressions := self allExpressionsToInline.
+	^ super applicabilityPreconditions , {
+		  ((RBCondition withBlock: [ expressions isNotEmpty ]) errorMacro:
+			   'No callers. Use Remove Method instead.').
+		  ((RBCondition withBlock: [ expressions size = 1 ]) errorMacro:
+			   'All values passed as this argument must be identical.').
+		  ((RBCondition withBlock: [ expressions first isLiteralNode ])
+			   errorMacro: 'All values passed must be literal.') }
+]
+
+{ #category : 'private' }
 RBInlineParameterRefactoring >> expressionsToInlineFrom: aTree [
 	| searcher |
 	searcher := self parseTreeSearcher.
@@ -90,37 +106,24 @@ RBInlineParameterRefactoring >> expressionsToInlineFrom: aTree [
 	^ searcher executeTree: aTree initialAnswer: OrderedCollection new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBInlineParameterRefactoring >> inlineParameter: aString in: aClass selector: aSelector [
 	oldSelector := aSelector.
 	class := self classObjectFor: aClass.
 	argument := aString
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBInlineParameterRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
 	| node assignment |
 	node := (parseTree arguments at: parameterIndex) copy.
 	parseTree body addTemporaryNamed: node name.
-	assignment := RBAssignmentNode variable: node copy value: expressions first.
+	assignment := OCAssignmentNode variable: node copy value: expressions first.
 	parseTree body addNodeFirst: assignment.
 	super modifyImplementorParseTree: parseTree in: aClass
 ]
 
-{ #category : #preconditions }
-RBInlineParameterRefactoring >> myConditions [
-	self getNewSelector.
-	expressions := self allExpressionsToInline.
-	^(RBCondition definesSelector: oldSelector in: class)
-		& ((RBCondition withBlock: [expressions isNotEmpty ])
-				errorMacro: 'No callers. Use Remove Method instead.')
-			& ((RBCondition withBlock: [expressions size = 1])
-					errorMacro: 'All values passed as this argument must be identical.')
-			& ((RBCondition withBlock: [expressions first isLiteralNode])
-					errorMacro: 'All values passed must be literal.')
-]
-
-{ #category : #printing }
+{ #category : 'storing' }
 RBInlineParameterRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

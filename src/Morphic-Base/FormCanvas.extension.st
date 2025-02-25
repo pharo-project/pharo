@@ -1,6 +1,6 @@
-Extension { #name : #FormCanvas }
+Extension { #name : 'FormCanvas' }
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 FormCanvas >> drawString: aString from: firstIndex to: lastIndex autoBoundAt: aPoint font: fontOrNil color: c [
 	| font textStyle portRect bounds character width carriageReturn lineWidth lineHeight |
 	carriageReturn := Character cr.
@@ -40,7 +40,7 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex autoBoundAt: aP
 	port clipRect: portRect
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 FormCanvas >> roundCornersOf: aMorph in: bounds during: aBlock [
 	aMorph wantsRoundedCorners ifFalse:[^aBlock value].
 	(self seesNothingOutside: (CornerRounder rectWithinCornersOf: bounds))
@@ -52,7 +52,7 @@ FormCanvas >> roundCornersOf: aMorph in: bounds during: aBlock [
 		corners: aMorph roundedCorners
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 FormCanvas >> roundShadowCornersOf: aMorph in: bounds during: aBlock [
 	aMorph wantsRoundedCorners ifFalse:[^aBlock value].
 	(self seesNothingOutside: (CornerRounder rectWithinCornersOf: bounds))

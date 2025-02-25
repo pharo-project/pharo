@@ -12,29 +12,31 @@ Internal Representation and Key Implementation Points.
 	direction:		<Integer>
 "
 Class {
-	#name : #ClySortFunction,
-	#superclass : #Object,
+	#name : 'ClySortFunction',
+	#superclass : 'Object',
 	#instVars : [
 		'direction'
 	],
-	#category : #'Calypso-NavigationModel-Model'
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClySortFunction class >> ascending [
 
 	^self new
 		direction: 1
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClySortFunction class >> descending [
 
 	^self new
 		direction: -1
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClySortFunction >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -45,40 +47,40 @@ ClySortFunction >> = anObject [
 	^ direction = anObject direction
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ClySortFunction >> collate: anObject1 with: anObject2 [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySortFunction >> direction [
 	^ direction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySortFunction >> direction: anObject [
 	direction := anObject
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClySortFunction >> forBrowserItems [
 	^ClySortBrowserItemFunction with: self
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClySortFunction >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ direction hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClySortFunction >> initialize [
 	super initialize.
 	direction := 1
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ClySortFunction >> value: anObject1 value: anObject2 [
 	| result |
 	result := (self collate: anObject1 with: anObject2) * direction.

@@ -7,17 +7,18 @@ It is generally not useful to create a new instance, and the recommended pattern
 For other objects  that don't understand threeWayCompareTo: it is necessary to use a custom SortFunction rather than the default one.
 "
 Class {
-	#name : #DefaultSortFunction,
-	#superclass : #SortFunction,
-	#category : #'SortFunctions-Core'
+	#name : 'DefaultSortFunction',
+	#superclass : 'SortFunction',
+	#category : 'SortFunctions-Core',
+	#package : 'SortFunctions-Core'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 DefaultSortFunction class >> initialize [
 	Default := self new
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 DefaultSortFunction >> collate: anObject with: anotherObject [
 	^anObject threeWayCompareTo: anotherObject
 ]

@@ -1,10 +1,12 @@
 Class {
-	#name : #ClapDocumentationTest,
-	#superclass : #TestCase,
-	#category : #'Clap-Tests-Integration'
+	#name : 'ClapDocumentationTest',
+	#superclass : 'TestCase',
+	#category : 'Clap-Tests-Integration',
+	#package : 'Clap-Tests',
+	#tag : 'Integration'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapDocumentationTest >> testHelloShortUsage [
 	| command doc lines |
 	command := ClapCommandLineExamples hello.

@@ -2,12 +2,14 @@
 TextStyleAsFont Family members
 "
 Class {
-	#name : #TextStyleAsFontFamilyMember,
-	#superclass : #AbstractFontFamilyMember,
-	#category : #'Fonts-Infrastructure-Derived'
+	#name : 'TextStyleAsFontFamilyMember',
+	#superclass : 'AbstractFontFamilyMember',
+	#category : 'Fonts-Infrastructure-Derived',
+	#package : 'Fonts-Infrastructure',
+	#tag : 'Derived'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TextStyleAsFontFamilyMember >> <= aTextStyleAsFontFamilyMember [
 
 	| orderedItems |
@@ -18,22 +20,22 @@ TextStyleAsFontFamilyMember >> <= aTextStyleAsFontFamilyMember [
 	  <= (orderedItems indexOf: aTextStyleAsFontFamilyMember styleName)
 ]
 
-{ #category : #'squeak emphasis' }
+{ #category : 'squeak emphasis' }
 TextStyleAsFontFamilyMember >> emphasisCode [
-	"Answer the squeak emphasis code (1=bold, 2=italic, 3=boldItalic etc"
+	"Answer the emphasis code (1=bold, 2=italic, 3=boldItalic etc"
 
 	| answer |
 	answer := 0.
 	(styleName includesSubstring: 'Italic') ifTrue: [
-		answer := answer bitOr: LogicalFont squeakSlantItalic ].
+		answer := answer bitOr: LogicalFont pharoSlantItalic ].
 	(styleName includesSubstring: 'Condensed') ifTrue: [
-		answer := answer bitOr: LogicalFont squeakStretchCondensed ].
+		answer := answer bitOr: LogicalFont stretchExtraExtended ].
 	(styleName includesSubstring: 'Bold') ifTrue: [
-		answer := answer bitOr: LogicalFont squeakWeightBold ].
+		answer := answer bitOr: LogicalFont pharoWeightBold ].
 	^ answer
 ]
 
-{ #category : #'LogicalFont emphasis' }
+{ #category : 'LogicalFont emphasis' }
 TextStyleAsFontFamilyMember >> slantValue [
 
 	^ (styleName includesSubstring: 'Italic')
@@ -41,7 +43,7 @@ TextStyleAsFontFamilyMember >> slantValue [
 		  ifFalse: [ LogicalFont slantRegular ]
 ]
 
-{ #category : #'LogicalFont emphasis' }
+{ #category : 'LogicalFont emphasis' }
 TextStyleAsFontFamilyMember >> stretchValue [
 
 	^ (styleName includesSubstring: 'Condensed')
@@ -49,7 +51,7 @@ TextStyleAsFontFamilyMember >> stretchValue [
 		  ifFalse: [ LogicalFont stretchRegular ]
 ]
 
-{ #category : #'LogicalFont emphasis' }
+{ #category : 'LogicalFont emphasis' }
 TextStyleAsFontFamilyMember >> weightValue [
 
 	^ (styleName includesSubstring: 'Bold')

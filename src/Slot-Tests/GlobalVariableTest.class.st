@@ -2,12 +2,14 @@
 Tests for GlobalVariable
 "
 Class {
-	#name : #GlobalVariableTest,
-	#superclass : #TestCase,
-	#category : #'Slot-Tests-VariablesAndSlots'
+	#name : 'GlobalVariableTest',
+	#superclass : 'TestCase',
+	#category : 'Slot-Tests-VariablesAndSlots',
+	#package : 'Slot-Tests',
+	#tag : 'VariablesAndSlots'
 }
 
-{ #category : #'tests - properties' }
+{ #category : 'tests - properties' }
 GlobalVariableTest >> testIsReadInMethod [
 
 	self assert: (Object binding isReadIn: self class >> testSelector).
@@ -15,18 +17,18 @@ GlobalVariableTest >> testIsReadInMethod [
 							isReadIn: self class >> testSelector)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GlobalVariableTest >> testIsShadowing [
 	self deny: Object binding isShadowing
 ]
 
-{ #category : #'tests - properties' }
+{ #category : 'tests - properties' }
 GlobalVariableTest >> testNotWrittenInMethod [
 
 	self deny: (Object binding isWrittenIn: self class >> testSelector)
 ]
 
-{ #category : #'tests - properties' }
+{ #category : 'tests - properties' }
 GlobalVariableTest >> testPropertyAtPut [
 
 	| testValue |
@@ -40,7 +42,7 @@ GlobalVariableTest >> testPropertyAtPut [
 	self assert: self class binding properties isNil
 ]
 
-{ #category : #'tests - properties' }
+{ #category : 'tests - properties' }
 GlobalVariableTest >> testRemoveProperty [
 
 	self class binding propertyAt: #testKeySelector put: 1.
@@ -53,7 +55,7 @@ GlobalVariableTest >> testRemoveProperty [
 	self assert: self class binding properties isNil
 ]
 
-{ #category : #'tests - properties' }
+{ #category : 'tests - properties' }
 GlobalVariableTest >> testScope [
 
 	self assert: Object binding scope equals: Object environment.

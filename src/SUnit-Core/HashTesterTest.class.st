@@ -2,12 +2,14 @@
 I am a simple test case to check that HashTester works correctly
 "
 Class {
-	#name : #HashTesterTest,
-	#superclass : #TestCase,
-	#category : #'SUnit-Core-Utilities'
+	#name : 'HashTesterTest',
+	#superclass : 'TestCase',
+	#category : 'SUnit-Core-Utilities',
+	#package : 'SUnit-Core',
+	#tag : 'Utilities'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 HashTesterTest >> testBasicBehaviour [
 
 	self

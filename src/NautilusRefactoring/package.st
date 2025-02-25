@@ -1,1 +1,1 @@
-Package { #name : #NautilusRefactoring }
+Package { #name : 'NautilusRefactoring' }

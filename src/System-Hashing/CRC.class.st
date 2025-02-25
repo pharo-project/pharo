@@ -82,8 +82,8 @@ The performance of this implementation (tested for crc16) is equal to the perfor
 	times average floor. --> 759
 "
 Class {
-	#name : #CRC,
-	#superclass : #Checksum,
+	#name : 'CRC',
+	#superclass : 'Checksum',
 	#instVars : [
 		'width',
 		'polynome',
@@ -98,10 +98,12 @@ Class {
 		'runMethodSelector',
 		'lowestByteShift'
 	],
-	#category : #'System-Hashing-Checksums'
+	#category : 'System-Hashing-Checksums',
+	#package : 'System-Hashing',
+	#tag : 'Checksums'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CRC class >> crc16FromCollection: aCollection [
 	| instance |
 	instance :=
@@ -113,7 +115,7 @@ CRC class >> crc16FromCollection: aCollection [
 	^ instance runRefInRefOut
 ]
 
-{ #category : #'accessing - tables' }
+{ #category : 'accessing - tables' }
 CRC class >> crc16Table [
 	^ #(	16r0000	16rC0C1	16rC181	16r0140	16rC301	16r03C0	16r0280	16rC241
 			16rC601	16r06C0	16r0780	16rC741	16r0500	16rC5C1	16rC481	16r0440
@@ -149,7 +151,7 @@ CRC class >> crc16Table [
 			16r8201	16r42C0	16r4380	16r8341	16r4100	16r81C1	16r8081	16r4040)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CRC class >> crc32FromCollection: aCollection [
 	| instance |
 	instance :=
@@ -161,7 +163,7 @@ CRC class >> crc32FromCollection: aCollection [
 	^ instance runRefInRefOut
 ]
 
-{ #category : #'accessing - tables' }
+{ #category : 'accessing - tables' }
 CRC class >> crc32Table [
 	^ #(	 16r00000000	 16r77073096	 16rEE0E612C	 16r990951BA
 			 16r076DC419	 16r706AF48F	 16rE963A535	 16r9E6495A3
@@ -229,7 +231,7 @@ CRC class >> crc32Table [
 			 16rB40BBE37	 16rC30C8EA1	 16r5A05DF1B	 16r2D02EF8D)
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 CRC class >> update: oldCrc from: start to: stop in: aCollection [
 	| newCrc |
 	<primitive: 'primitiveUpdateGZipCrc32' module: 'ZipPlugin'>
@@ -240,7 +242,7 @@ CRC class >> update: oldCrc from: start to: stop in: aCollection [
 	^newCrc
 ]
 
-{ #category : #'accessing - implementations' }
+{ #category : 'accessing - implementations' }
 CRC >> beCrc16 [
 	self
 		width: 16;
@@ -252,7 +254,7 @@ CRC >> beCrc16 [
 		finallyXorWith: 16r0
 ]
 
-{ #category : #'accessing - implementations' }
+{ #category : 'accessing - implementations' }
 CRC >> beCrc32 [
 	self
 		width: 32;
@@ -264,18 +266,18 @@ CRC >> beCrc32 [
 		finallyXorWith: 16rFFFFFFFF
 ]
 
-{ #category : #'private - bit manipulation' }
+{ #category : 'private - bit manipulation' }
 CRC >> bitMaskAt: anInteger [
 	^ 0 bitAt: anInteger put: 1
 ]
 
-{ #category : #'accessing - parameters' }
+{ #category : 'accessing - parameters' }
 CRC >> finallyXorWith: anInteger [
 	"The final XOR of the output will be performed with this value"
 	finalXorBytes := anInteger
 ]
 
-{ #category : #'private - tables' }
+{ #category : 'private - tables' }
 CRC >> generateLookupTable [
 	"lookup tables have 256 entries"
 	^ Array
@@ -283,35 +285,35 @@ CRC >> generateLookupTable [
 		streamContents: [ :aStream | self printLookupTableOn: aStream ]
 ]
 
-{ #category : #'private - bit manipulation' }
+{ #category : 'private - bit manipulation' }
 CRC >> invertedBitMaskAt: anInteger [
 	anInteger < 1 ifTrue: [ ^ 16rFFFFFFFF ].
 	^ 16rFFFFFFFF bitAt: anInteger put: 0
 ]
 
-{ #category : #'accessing - parameters' }
+{ #category : 'accessing - parameters' }
 CRC >> lookupTable: anArray [
 	lookupTable := anArray
 ]
 
-{ #category : #'private - bit manipulation' }
+{ #category : 'private - bit manipulation' }
 CRC >> lowestByteShift [
 	^ lowestByteShift ifNil: [ lowestByteShift := width - 8 ]
 ]
 
-{ #category : #'accessing - parameters' }
+{ #category : 'accessing - parameters' }
 CRC >> message: anObject [
 	message := anObject asByteArray
 ]
 
-{ #category : #'accessing - parameters' }
+{ #category : 'accessing - parameters' }
 CRC >> polynome: anInteger [
 	"The polynome used for polynomial division.
 	It should be of the same length as the register width (see #width:)."
 	polynome := anInteger
 ]
 
-{ #category : #'private - tables' }
+{ #category : 'private - tables' }
 CRC >> printLookupTableOn: aStream [
 	| topBit |
 	topBit := self bitMaskAt: width.
@@ -330,7 +332,7 @@ CRC >> printLookupTableOn: aStream [
 		aStream nextPut: register ]
 ]
 
-{ #category : #'private - bit manipulation' }
+{ #category : 'private - bit manipulation' }
 CRC >> reflect: anInteger onLowerBits: anotherInteger [
 	| register test |
 	register := anInteger.
@@ -345,7 +347,7 @@ CRC >> reflect: anInteger onLowerBits: anotherInteger [
 	^ register
 ]
 
-{ #category : #'accessing - parameters' }
+{ #category : 'accessing - parameters' }
 CRC >> reflectInput: aBoolean [
 	"Determines if each byte should be reflected before processing.
 	If false, bit 7 will be treated as most significant bit.
@@ -353,25 +355,25 @@ CRC >> reflectInput: aBoolean [
 	shouldReflectInput := aBoolean
 ]
 
-{ #category : #'accessing - parameters' }
+{ #category : 'accessing - parameters' }
 CRC >> reflectOutput: aBoolean [
 	"Determines if the output is reflected before the final XOR."
 	shouldReflectOutput := aBoolean
 ]
 
-{ #category : #'accessing - parameters' }
+{ #category : 'accessing - parameters' }
 CRC >> registerFill: anInteger [
 	"The initial value of the CRC register"
 	registerFill := anInteger
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 CRC >> run [
 	lookupTable ifNil: [ lookupTable := self generateLookupTable ].
 	^ self perform: self runMethodSelector
 ]
 
-{ #category : #'private - run methods' }
+{ #category : 'private - run methods' }
 CRC >> runMethodSelector [
 	^ runMethodSelector ifNil: [
 		runMethodSelector :=
@@ -386,7 +388,7 @@ CRC >> runMethodSelector [
 						ifFalse: [ #runNonRefInNonRefOut ] ] ]
 ]
 
-{ #category : #'private - run methods' }
+{ #category : 'private - run methods' }
 CRC >> runNonRefInNonRefOut [
 	theRegister := registerFill.
 	1 to: message size do: [ :byteIndex |
@@ -397,7 +399,7 @@ CRC >> runNonRefInNonRefOut [
 	^ finalXorBytes bitXor: theRegister
 ]
 
-{ #category : #'private - run methods' }
+{ #category : 'private - run methods' }
 CRC >> runNonRefInRefOut [
 	Warning signal: 'unverified implementation'.
 	theRegister := registerFill.
@@ -409,7 +411,7 @@ CRC >> runNonRefInRefOut [
 	^ finalXorBytes bitXor: theRegister
 ]
 
-{ #category : #'private - run methods' }
+{ #category : 'private - run methods' }
 CRC >> runRefInNonRefOut [
 	Warning signal: 'unverified implementation'.
 	theRegister := registerFill.
@@ -421,7 +423,7 @@ CRC >> runRefInNonRefOut [
 	^ finalXorBytes bitXor: theRegister
 ]
 
-{ #category : #'private - run methods' }
+{ #category : 'private - run methods' }
 CRC >> runRefInRefOut [
 	theRegister := registerFill.
 	1 to: message size do: [ :byteIndex |
@@ -432,14 +434,14 @@ CRC >> runRefInRefOut [
 	^ finalXorBytes bitXor: theRegister
 ]
 
-{ #category : #'accessing - parameters' }
+{ #category : 'accessing - parameters' }
 CRC >> width: anInteger [
 	"width of the register (on how many bits the CRC is calculated).
 	usually 16 or 32"
 	width := anInteger
 ]
 
-{ #category : #'private - bit manipulation' }
+{ #category : 'private - bit manipulation' }
 CRC >> widthMask [
 	"bit mask (all ones)"
 	^ widthMask ifNil: [ widthMask := (2 raisedTo: width) - 1 ]

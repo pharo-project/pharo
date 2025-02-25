@@ -1,32 +1,32 @@
-Extension { #name : #Morph }
+Extension { #name : 'Morph' }
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 Morph >> activate [
 	"Mark the receiver and submorphs as active (foreground)."
 
 	self submorphsDo: [:m | m activate]
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 Morph >> collapse [
 	CollapsedMorph new beReplacementFor: self
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 Morph >> containingWindow [
 	"Answer a window that contains the receiver"
 
 	^ self ownerThatIsA: SystemWindow
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 Morph >> dialogWindow [
 	"Answer the receiver's dialog window."
 
 	^self ownerThatIsA: DialogWindowMorph
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 Morph >> embedInWindow [
 
 	| window worldToUse |
@@ -41,7 +41,7 @@ Morph >> embedInWindow [
 	window activate
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 Morph >> embeddedInMorphicWindowLabeled: labelString [
 	| window |
 	window := (SystemWindow labelled: labelString) model: nil.
@@ -50,13 +50,13 @@ Morph >> embeddedInMorphicWindowLabeled: labelString [
 	^ window
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 Morph >> isInSystemWindow [
 	"answer if the receiver is in a system window"
 	^ owner isMorph and:[owner isSystemWindow or:[owner isInSystemWindow]]
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 Morph >> isWindowActive: aSystemWindow [
 	"Answer whether the given window is active.
 	Implement in morphs that are designed to embed system windows.
@@ -65,7 +65,7 @@ Morph >> isWindowActive: aSystemWindow [
 	^self owner ifNil: [true] ifNotNil: [:o | o isWindowActive: aSystemWindow]
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 Morph >> nextMorphAcrossInWindow [
 	"Answer the next morph in the window. Traverse
 	from the receiver to its next sibling or owner's next sibling etc."
@@ -74,7 +74,7 @@ Morph >> nextMorphAcrossInWindow [
 		(self owner ifNil: [^self]) nextMorphAcrossInWindow]
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 Morph >> nextMorphInWindow [
 	"Answer the next morph in the window. Traverse
 	from the receiver to its first child or next sibling or owner's next sibling etc."
@@ -84,7 +84,7 @@ Morph >> nextMorphInWindow [
 		ifFalse: [self nextMorphAcrossInWindow]
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 Morph >> nextMorphWantingFocus [
 	"Answer the next morph that wants keyboard focus."
 
@@ -96,19 +96,19 @@ Morph >> nextMorphWantingFocus [
 		ifTrue: [m]
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 Morph >> openInWindow [
 
 	^self openInWindowLabeled: self defaultLabel
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 Morph >> openInWindowLabeled: aString [
 
 	^self openInWindowLabeled: aString inWorld: self currentWorld
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 Morph >> openInWindowLabeled: aString inWorld: aWorld [
 	"Changed to include the inset margin in the bound calculation."
 
@@ -117,18 +117,18 @@ Morph >> openInWindowLabeled: aString inWorld: aWorld [
 		openInWorld: aWorld
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 Morph >> previousMorphInWindow [
 	"Answer the next morph in the window. Traverse
 	from the receiver to its previous sibling's last submorph (recursive)
 	or owner's previous sibling's last submorph (recursive) etc."
 
-	^self submorphBefore notNil
-		ifTrue: [self submorphBefore lastSubmorphRecursive]
-		ifFalse: [self owner]
+	^ self submorphBefore
+		  ifNotNil: [ self submorphBefore lastSubmorphRecursive ]
+		  ifNil: [ self owner ]
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 Morph >> previousMorphWantingFocus [
 	"Answer the previous morph that wants keyboard focus."
 
@@ -140,13 +140,13 @@ Morph >> previousMorphWantingFocus [
 		ifTrue: [m]
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 Morph >> selection [
 
 	^ nil
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 Morph >> shadowMargins [
 	"Answer the margins of my shadow"
 	|left right top bottom deltaX deltaY|
@@ -156,14 +156,14 @@ Morph >> shadowMargins [
 	^Margin left: left right: right top: top bottom: bottom
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 Morph >> window [
 	"Answer the receiver's window."
 
 	^self ownerThatIsA: SystemWindow
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 Morph >> wrappedInWindow [
 	"Changed to include the inset margin in the bound calculation."
 

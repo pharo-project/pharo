@@ -1,9 +1,9 @@
 ## Using environment
 
 The first and main use for browser environments are to restrict the namespace in which a refactoring operation is applied. 
-For example, if you want to rename a method and and update all senders of this method, but only in a certain package, you can create a `RBNamespace` from a scoped 'view' of the classes from the whole system. Only the classes in this restricted environment are affected by the transformation.
+For example, if you want to rename a method and update all senders of this method, but only in a certain package, you can create a `RBNamespace` from a scoped 'view' of the classes from the whole system. Only the classes in this restricted environment are affected by the transformation.
 
-In the mean time other tools are using this environment classes as well. Finder, MessageBrowser or the SystemBrowser can work with a scoped environment to show and operate only on classes and methods in this environment.
+In the meantime other tools are using this environment classes as well. Finder, MessageBrowser or the SystemBrowser can work with a scoped environment to show and operate only on classes and methods in this environment.
 
 There are different subclasses of RBBrowserEnvironment for the different kind of 'scopes'. 
 
@@ -82,8 +82,8 @@ A more generic way to create an environment by giving an explicit 'test'-block t
 ```st
 | implementedByMe |
 implementedByMe := RBBrowserEnvironment new 
-			selectMethods: [:m | m author = Author fullName ].
+			selectMethods: [:m | m selector size > 10 ].
 implementedByMe browse.
 ```
 
-This opens (may be slow) a browser with all classes with methods having my (current Author) name for its current methods version author stamp.
+This opens (may be slow) a browser with all classes with methods having a selector larger than 10 characters.

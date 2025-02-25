@@ -2,15 +2,17 @@
 I am a mock attribute to help the testing of the styler.
 "
 Class {
-	#name : #SHRBTextFlagAttribute,
-	#superclass : #TextAttribute,
+	#name : 'SHRBTextFlagAttribute',
+	#superclass : 'TextAttribute',
 	#instVars : [
 		'name'
 	],
-	#category : #'Shout-Tests-Styling'
+	#category : 'Shout-Tests-Styling',
+	#package : 'Shout-Tests',
+	#tag : 'Styling'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SHRBTextFlagAttribute class >> named: aString [
 
 	^ self new
@@ -18,19 +20,19 @@ SHRBTextFlagAttribute class >> named: aString [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SHRBTextFlagAttribute >> name [
 
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SHRBTextFlagAttribute >> name: anObject [
 
 	name := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SHRBTextFlagAttribute >> printOn: aStream [
 
 	super printOn: aStream.

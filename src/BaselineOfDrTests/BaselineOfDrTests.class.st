@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfDrTests,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfDrTests
+	#name : 'BaselineOfDrTests',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfDrTests',
+	#package : 'BaselineOfDrTests'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfDrTests >> baseline: spec [
 	<baseline>
 	spec
@@ -26,7 +27,13 @@ BaselineOfDrTests >> baseline: spec [
 			spec package: 'DrTests-RottenGreenTestsFinder' with: [ spec requires: #('rotten-tests-finder') ]. ]
 ]
 
-{ #category : #baselines }
+{ #category : 'actions' }
+BaselineOfDrTests >> postload: loader package: packageSpec [
+
+	self tools register: DrTests as: #testRunner
+]
+
+{ #category : 'baselines' }
 BaselineOfDrTests >> rottenTestsFinder: spec [
 	
 	spec 

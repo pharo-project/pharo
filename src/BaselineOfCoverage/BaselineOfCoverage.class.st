@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfCoverage,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfCoverage
+	#name : 'BaselineOfCoverage',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfCoverage',
+	#package : 'BaselineOfCoverage'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfCoverage >> baseline: spec [
 	<baseline>
 	spec

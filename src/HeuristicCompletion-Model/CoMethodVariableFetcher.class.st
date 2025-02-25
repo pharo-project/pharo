@@ -5,37 +5,39 @@ That is, block temporaries, block arguments, method temporaries and method argum
 From a given ast node, I walk up the tree looking for scopes and yield the variables I find.
 "
 Class {
-	#name : #CoMethodVariableFetcher,
-	#superclass : #CoFetcher,
+	#name : 'CoMethodVariableFetcher',
+	#superclass : 'CoFetcher',
 	#instVars : [
 		'completionASTNode'
 	],
-	#category : #'HeuristicCompletion-Model-Fetchers'
+	#category : 'HeuristicCompletion-Model-Fetchers',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Fetchers'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoMethodVariableFetcher >> completionASTNode [
 	^ completionASTNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoMethodVariableFetcher >> completionASTNode: anObject [
 	completionASTNode := anObject
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CoMethodVariableFetcher >> entriesDo: aBlock [
 
 	self methodVariableNamesDo: [ :each |
 		aBlock value: (NECLocalEntry contents: each node: completionASTNode) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoMethodVariableFetcher >> methodVariableNamesDo: aBlock [
 
 	| currentNode |
 	currentNode := completionASTNode.
-	[ currentNode notNil ] whileTrue: [
+	[ currentNode isNotNil ] whileTrue: [
 		"ASTs are strange.
 		There is no way to ask the variables defined in the scope in an ordered way.
 		Hack our way through"

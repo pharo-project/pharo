@@ -1,6 +1,6 @@
-Extension { #name : #IndentingListItemMorph }
+Extension { #name : 'IndentingListItemMorph' }
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 IndentingListItemMorph >> changed [
 	"Need to invalidate the selection frame."
 
@@ -9,7 +9,7 @@ IndentingListItemMorph >> changed [
 	super changed
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 IndentingListItemMorph >> drawMouseDownHighlightOn: aCanvas [
 	"Draw with a dotted border."
 
@@ -24,7 +24,7 @@ IndentingListItemMorph >> drawMouseDownHighlightOn: aCanvas [
 			 dashes: #(1 1)]
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 IndentingListItemMorph >> lastChild [
 	"Answer the last child."
 
@@ -34,7 +34,7 @@ IndentingListItemMorph >> lastChild [
 	^c
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 IndentingListItemMorph >> measureContents [
 	"Round up in case fractional."
 
@@ -47,7 +47,7 @@ IndentingListItemMorph >> measureContents [
 		@ ((contents heightToDisplayInTree: self) max: f height) + (self layoutInset * 2)) ceiling
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 IndentingListItemMorph >> openItemPath: anArray [
 	"Open a path based on wrapper item equivalence. Generally more specific
 	than #openPath: (string based)."
@@ -74,7 +74,7 @@ IndentingListItemMorph >> openItemPath: anArray [
 	^container setSelectedMorph: nil
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 IndentingListItemMorph >> outerBounds [
 	"Return the 'outer' bounds of the receiver, e.g., the bounds that need to be invalidated when the receiver changes."
 
@@ -84,7 +84,7 @@ IndentingListItemMorph >> outerBounds [
 	^box left: (box left min: self selectionFrame left)
 ]
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 IndentingListItemMorph >> selectionFrame [
 	"Answer the selection frame rectangle."
 

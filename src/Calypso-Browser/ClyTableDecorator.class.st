@@ -48,45 +48,47 @@ To specify plugin following class side method should be overridden:
 By default any decorators is bound to ClyStandardBrowserPlugin
 "
 Class {
-	#name : #ClyTableDecorator,
-	#superclass : #Object,
-	#category : #'Calypso-Browser-Table'
+	#name : 'ClyTableDecorator',
+	#superclass : 'Object',
+	#category : 'Calypso-Browser-Table',
+	#package : 'Calypso-Browser',
+	#tag : 'Table'
 }
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyTableDecorator class >> browserPluginClass [
 	^ClyStandardBrowserPlugin
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyTableDecorator class >> decorateMainTableCell: anItemCellMorph inContext: itemContext [
 
 	self decorateMainTableCell: anItemCellMorph of: itemContext lastSelectedItem
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyTableDecorator class >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
 
 	self decorateTableCell: anItemCellMorph of: aDataSourceItem
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyTableDecorator class >> decorateTableCell: anItemCellMorph inContext: itemContext [
 
 	self decorateTableCell: anItemCellMorph of: itemContext lastSelectedItem
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTableDecorator class >> isAbstract [
 	^self = ClyTableDecorator
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyTableDecorator class >> priority [
 	"Decorators can override table cell properties. Priorities allow manage these overrides.
 	So developers can specify what decoration is more important.
@@ -95,7 +97,7 @@ ClyTableDecorator class >> priority [
 	^0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTableDecorator class >> wantsDecorateTableCellInContext: singleItemContext [
 	(singleItemContext browser hasPluginOf: self browserPluginClass)
 		ifFalse: [ ^false ].
@@ -103,7 +105,7 @@ ClyTableDecorator class >> wantsDecorateTableCellInContext: singleItemContext [
 	^self wantsDecorateTableCellOf: singleItemContext lastSelectedItem
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTableDecorator class >> wantsDecorateTableCellOf: aDataSourceItem [
 	^true
 ]

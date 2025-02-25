@@ -1,15 +1,15 @@
-Extension { #name : #TemporaryVariable }
+Extension { #name : 'TemporaryVariable' }
 
-{ #category : #'*Shout' }
-TemporaryVariable >> styleNameIn: aRBVariableNode [
+{ #category : '*Shout' }
+TemporaryVariable >> styleNameIn: aVariableNode [
 
 	^ self isDefinedByBlock
 		  ifTrue: [
-			  aRBVariableNode isDefinition
+			  aVariableNode isDefinition
 				  ifTrue: [ #blockPatternTempVar ]
 				  ifFalse: [ #blockTempVar ] ]
 		  ifFalse: [
-			  aRBVariableNode isDefinition
+			  aVariableNode isDefinition
 				  ifTrue: [ #patternTempVar ]
 				  ifFalse: [ #tempVar ] ]
 ]

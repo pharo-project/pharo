@@ -4,7 +4,9 @@ I'm a specialized error exception used mainly during failures in applying of cha
 
 "
 Class {
-	#name : #RGResolvingError,
-	#superclass : #Error,
-	#category : #'Ring-Core-Kernel'
+	#name : 'RGResolvingError',
+	#superclass : 'Error',
+	#category : 'Ring-Core-Kernel',
+	#package : 'Ring-Core',
+	#tag : 'Kernel'
 }

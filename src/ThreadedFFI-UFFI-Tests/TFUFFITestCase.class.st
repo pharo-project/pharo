@@ -1,36 +1,37 @@
 Class {
-	#name : #TFUFFITestCase,
-	#superclass : #ParametrizedTestCase,
+	#name : 'TFUFFITestCase',
+	#superclass : 'ParametrizedTestCase',
 	#instVars : [
 		'ffiLibrary'
 	],
-	#category : #'ThreadedFFI-UFFI-Tests'
+	#category : 'ThreadedFFI-UFFI-Tests',
+	#package : 'ThreadedFFI-UFFI-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 TFUFFITestCase class >> isAbstract [
 
 	^ self == TFUFFITestCase
 ]
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 TFUFFITestCase class >> testParameters [
 
 	^ ParametrizedTestMatrix new
 		forSelector: #ffiLibrary addOptions: { TFTestLibraryUsingSameThreadRunner. TFTestLibraryUsingWorker. }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFUFFITestCase >> ffiLibrary [
 	^ ffiLibrary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFUFFITestCase >> ffiLibrary: anObject [
 	ffiLibrary := anObject
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TFUFFITestCase >> runCaseManaged [
 
 	"Skipping in running on an old VM"
@@ -39,7 +40,7 @@ TFUFFITestCase >> runCaseManaged [
 	super runCaseManaged
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TFUFFITestCase >> tearDown [
 
 	"I have to reset the FFI callout methods to be recompiled using the test runner"

@@ -3,7 +3,9 @@ I am an error that indicates the callback cannot return because the session wher
 The image has been saved and continue in a new session. The callback cannot return.
 "
 Class {
-	#name : #TFInvalidSessionCallbackReturn,
-	#superclass : #TFCallbackCannotReturn,
-	#category : #'ThreadedFFI-Callbacks'
+	#name : 'TFInvalidSessionCallbackReturn',
+	#superclass : 'TFCallbackCannotReturn',
+	#category : 'ThreadedFFI-Callbacks',
+	#package : 'ThreadedFFI',
+	#tag : 'Callbacks'
 }

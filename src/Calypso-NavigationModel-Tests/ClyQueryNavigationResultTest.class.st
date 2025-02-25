@@ -1,31 +1,32 @@
 Class {
-	#name : #ClyQueryNavigationResultTest,
-	#superclass : #ClyAbstractNavigationEnvironmentTest,
+	#name : 'ClyQueryNavigationResultTest',
+	#superclass : 'ClyAbstractNavigationEnvironmentTest',
 	#instVars : [
 		'queryResult',
 		'query'
 	],
-	#category : #'Calypso-NavigationModel-Tests'
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryNavigationResultTest class >> isAbstract [
 	^self = ClyQueryNavigationResultTest
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyQueryNavigationResultTest >> createQuery [
 
 	^ClyReturningScopeBasisExampleQuery
 		from: (ClyExampleScope emptyIn: environment)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyQueryNavigationResultTest >> createQueryResult [
 	self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyQueryNavigationResultTest >> setUp [
 	super setUp.
 
@@ -37,19 +38,19 @@ ClyQueryNavigationResultTest >> setUp [
 	We do not need it in tests where we usually just test fillWith: logic"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyQueryNavigationResultTest >> testCheckingForEmpty [
 	self
 		assert: queryResult isEmpty;
 		deny: queryResult notEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyQueryNavigationResultTest >> testComparisonWithAnotherKindOfResult [
 	self deny: queryResult equals: ClyQueryResult new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyQueryNavigationResultTest >> testComparisonWithCopy [
 
 	| queryResult2 |
@@ -58,13 +59,13 @@ ClyQueryNavigationResultTest >> testComparisonWithCopy [
 	self assert: queryResult equals: queryResult2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyQueryNavigationResultTest >> testComparisonWithItself [
 
 	self assert: queryResult equals: queryResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyQueryNavigationResultTest >> testComparisonWithSimilarResult [
 
 	| queryResult2 |
@@ -75,17 +76,17 @@ ClyQueryNavigationResultTest >> testComparisonWithSimilarResult [
 	self assert: queryResult hash equals: queryResult2 hash
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyQueryNavigationResultTest >> testForceLazyRebuild [
 
-	self assert: queryResult items notNil.
+	self assert: queryResult items isNotNil.
 
 	queryResult forceLazyRebuild.
 
 	self assert: queryResult needsRebuild
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyQueryNavigationResultTest >> testIsBuiltWhenItemsExist [
 
 	queryResult initializeItems.
@@ -93,7 +94,7 @@ ClyQueryNavigationResultTest >> testIsBuiltWhenItemsExist [
 	self assert: queryResult isBuilt
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyQueryNavigationResultTest >> testItemsChangedNotificationShouldResetItems [
 
 	queryResult initializeItems.
@@ -105,7 +106,7 @@ ClyQueryNavigationResultTest >> testItemsChangedNotificationShouldResetItems [
 	self assert: queryResult items isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyQueryNavigationResultTest >> testNeedsRebuildByDefault [
 
 	queryResult := self createQueryResult.
@@ -113,7 +114,7 @@ ClyQueryNavigationResultTest >> testNeedsRebuildByDefault [
 	self assert: queryResult needsRebuild
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyQueryNavigationResultTest >> testPreparation [
 	| newQuery newResult |
 	newQuery := self createQuery.

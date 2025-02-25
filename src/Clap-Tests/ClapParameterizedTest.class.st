@@ -1,15 +1,17 @@
 Class {
-	#name : #ClapParameterizedTest,
-	#superclass : #ClapParameterTest,
-	#category : #'Clap-Tests-Unit'
+	#name : 'ClapParameterizedTest',
+	#superclass : 'ClapParameterTest',
+	#category : 'Clap-Tests-Unit',
+	#package : 'Clap-Tests',
+	#tag : 'Unit'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClapParameterizedTest class >> isAbstract [
 	^ self = ClapParameterizedTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapParameterizedTest >> testAddPositional [
 	| subject pos |
 	subject := self namedSubject.
@@ -22,7 +24,7 @@ ClapParameterizedTest >> testAddPositional [
 	self assert: (subject positionals includes: pos)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClapParameterizedTest >> testIdentifierConflict [
 	| subject first second |
 	subject := self namedSubject.

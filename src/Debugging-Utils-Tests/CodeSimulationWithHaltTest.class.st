@@ -1,21 +1,22 @@
 Class {
-	#name : #CodeSimulationWithHaltTest,
-	#superclass : #CodeSimulationTest,
-	#category : #'Debugging-Utils-Tests'
+	#name : 'CodeSimulationWithHaltTest',
+	#superclass : 'CodeSimulationTest',
+	#category : 'Debugging-Utils-Tests',
+	#package : 'Debugging-Utils-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 CodeSimulationWithHaltTest >> methodWithHalt [
 	<haltOrBreakpointForTesting>
 	self halt
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CodeSimulationWithHaltTest >> testHalt [
 	self should: [ self runSimulated: [ self methodWithHalt ] ] raise: Halt
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CodeSimulationWithHaltTest >> testHaltWithHaltHandler [
 	self
 		runSimulated: [ [ self methodWithHalt ]

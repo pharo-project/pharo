@@ -2,31 +2,33 @@
 A fetcher that relies on a `SystemNavigation`
 "
 Class {
-	#name : #CoGlobalFetcher,
-	#superclass : #CoFetcher,
+	#name : 'CoGlobalFetcher',
+	#superclass : 'CoFetcher',
 	#instVars : [
 		'astNode',
 		'systemNavigation'
 	],
-	#category : #'HeuristicCompletion-Model-Fetchers'
+	#category : 'HeuristicCompletion-Model-Fetchers',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Fetchers'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoGlobalFetcher >> astNode [
 	^ astNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoGlobalFetcher >> astNode: anObject [
 	astNode := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoGlobalFetcher >> systemNavigation [
 	^ systemNavigation ifNil: [ SystemNavigation new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoGlobalFetcher >> systemNavigation: anObject [
 	systemNavigation := anObject
 ]

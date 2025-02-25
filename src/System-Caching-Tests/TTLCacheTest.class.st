@@ -1,20 +1,21 @@
 Class {
-	#name : #TTLCacheTest,
-	#superclass : #LRUCacheTest,
-	#category : #'System-Caching-Tests'
+	#name : 'TTLCacheTest',
+	#superclass : 'LRUCacheTest',
+	#category : 'System-Caching-Tests',
+	#package : 'System-Caching-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 TTLCacheTest class >> shouldInheritSelectors [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TTLCacheTest >> newCache [
 	^ TTLCache new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TTLCacheTest >> testExpiring [
 	| cache didComputeValue |
 	cache := self newCache.
@@ -24,7 +25,7 @@ TTLCacheTest >> testExpiring [
 	self assert: didComputeValue.
 	self assert: (cache includesKey: #foo).
 	self assert: (cache at: #foo ifAbsentPut: [ self fail ]) equals: 100.
-	1 second asDelay wait.
+	(Delay forSeconds: 1) wait.
 	didComputeValue := false.
 	cache at: #foo ifAbsentPut: [ didComputeValue := true. 101 ].
 	self assert: didComputeValue.
@@ -33,7 +34,7 @@ TTLCacheTest >> testExpiring [
 	cache validateInvariantWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TTLCacheTest >> testRemoveStaleValues [
 	| cache keys |
 	cache := self newCache.
@@ -41,7 +42,7 @@ TTLCacheTest >> testRemoveStaleValues [
 	cache at: #foo ifAbsentPut: [ 100 ].
 	cache at: #bar ifAbsentPut: [ 200 ].
 	self deny: cache isEmpty.
-	1 second asDelay wait.
+	(Delay forSeconds: 1) wait.
 	keys := cache removeStaleValues.
 	self assertEmpty: cache.
 	self assert: keys asArray sorted equals: #(bar foo).

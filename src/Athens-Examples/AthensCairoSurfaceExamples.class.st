@@ -4,17 +4,19 @@ I show examples of rendering in a AthensCairoSurface.
 My class-side has example methods, and I also inherit many examples from my superclass.
 "
 Class {
-	#name : #AthensCairoSurfaceExamples,
-	#superclass : #AthensSurfaceExamples,
-	#category : #'Athens-Examples-Cairo'
+	#name : 'AthensCairoSurfaceExamples',
+	#superclass : 'AthensSurfaceExamples',
+	#category : 'Athens-Examples-Cairo',
+	#package : 'Athens-Examples',
+	#tag : 'Cairo'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensCairoSurfaceExamples class >> exampleAnimatedTigerInMorphicWindow [
 	^ AthensTigerWindow openAnimated
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensCairoSurfaceExamples class >> exampleDrawTextPath [
 
 	| surf  font |
@@ -57,7 +59,7 @@ AthensCairoSurfaceExamples class >> exampleDrawTextPath [
 	surf asMorph openInWindow
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 AthensCairoSurfaceExamples class >> exampleExportTigerOn: anAthensSurface [
 	(AthensTiger on: anAthensSurface)
 		position: 300 @ -200;
@@ -65,7 +67,7 @@ AthensCairoSurfaceExamples class >> exampleExportTigerOn: anAthensSurface [
 	anAthensSurface finish. "Required to end the file"
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensCairoSurfaceExamples class >> exampleExportTigerToPDF [
 
 	| surface |
@@ -76,7 +78,7 @@ AthensCairoSurfaceExamples class >> exampleExportTigerToPDF [
 	self exampleExportTigerOn: surface
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensCairoSurfaceExamples class >> exampleExportTigerToSVG [
 
 	| surface |
@@ -87,12 +89,12 @@ AthensCairoSurfaceExamples class >> exampleExportTigerToSVG [
 	self exampleExportTigerOn: surface
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensCairoSurfaceExamples class >> exampleFlake [
 	AthensFlakeDemo open
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensCairoSurfaceExamples class >> exampleInterop [
 
 "
@@ -121,7 +123,7 @@ A cairo image surface bits are exposed to bitblt operations via surface plugin.
 	surf asMorph openInWindow
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 AthensCairoSurfaceExamples class >> newSurface: extent [
 
 	^ AthensCairoSurface extent: extent

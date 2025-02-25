@@ -1,6 +1,6 @@
-Extension { #name : #EllipseMorph }
+Extension { #name : 'EllipseMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 EllipseMorph >> asAthensShapeOn: anAthensCanvas [
 	| halfWidth halfHeight |
 	self bounds area > 0
@@ -24,7 +24,7 @@ EllipseMorph >> asAthensShapeOn: anAthensCanvas [
 					to: halfWidth negated @ halfHeight negated ]
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 EllipseMorph >> drawOnAthensCanvas: anAthensCanvas [
 	| border ellipse |
 	self bounds area > 0

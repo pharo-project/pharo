@@ -2,22 +2,24 @@
 I am a context menu group which holds all generated ClySwitchQueryScopeCommand items
 "
 Class {
-	#name : #ClySwitchScopeMenuGroup,
-	#superclass : #CmdMenuGroup,
-	#category : #'Calypso-SystemTools-QueryBrowser-Commands-Controlling'
+	#name : 'ClySwitchScopeMenuGroup',
+	#superclass : 'CmdMenuGroup',
+	#category : 'Calypso-SystemTools-QueryBrowser-Commands-Controlling',
+	#package : 'Calypso-SystemTools-QueryBrowser',
+	#tag : 'Commands-Controlling'
 }
 
-{ #category : #parents }
+{ #category : 'parents' }
 ClySwitchScopeMenuGroup class >> parentGroup [
 	^ClyQueryMenuGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySwitchScopeMenuGroup >> name [
 	^'Switch scope to'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySwitchScopeMenuGroup >> order [
 	^50000
 ]

@@ -2,19 +2,27 @@
 I run all tests from selected packages
 "
 Class {
-	#name : #ClyRunTestsFromPackagesCommand,
-	#superclass : #ClyRunTestsForPackageOrClassGroupCommand,
-	#category : #'Calypso-SystemPlugins-SUnit-Browser-Commands'
+	#name : 'ClyRunTestsFromPackagesCommand',
+	#superclass : 'ClyRunTestsForPackageOrClassGroupCommand',
+	#category : 'Calypso-SystemPlugins-SUnit-Browser-Commands',
+	#package : 'Calypso-SystemPlugins-SUnit-Browser',
+	#tag : 'Commands'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyRunTestsFromPackagesCommand class >> contextClass [
-	^RPackage asCalypsoItemContext
+	^Package asCalypsoItemContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyRunTestsFromPackagesCommand class >> fullBrowserClassGroupTableIconActivation [
 	<classAnnotation>
 
 	^ClyTableIconCommandActivation for: ClyFullBrowserClassGroupContext
+]
+
+{ #category : 'accessing' }
+ClyRunTestsFromPackagesCommand >> description [
+
+	^ 'Run all tests from selected packages.'
 ]

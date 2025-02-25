@@ -1,6 +1,6 @@
-Extension { #name : #Behavior }
+Extension { #name : 'Behavior' }
 
-{ #category : #'*ThreadedFFI-UFFI' }
+{ #category : '*ThreadedFFI-UFFI' }
 Behavior >> basicNewPinned [
 
 	<primitive: 598 error: ec>
@@ -10,7 +10,7 @@ Behavior >> basicNewPinned [
 		yourself
 ]
 
-{ #category : #'*ThreadedFFI-UFFI' }
+{ #category : '*ThreadedFFI-UFFI' }
 Behavior >> basicNewPinned: requestedSize [
 
 	<primitive: 599 error: ec>
@@ -20,13 +20,13 @@ Behavior >> basicNewPinned: requestedSize [
 		yourself
 ]
 
-{ #category : #'*ThreadedFFI-UFFI' }
+{ #category : '*ThreadedFFI-UFFI' }
 Behavior >> newPinned [
 
 	^ self basicNewPinned initialize
 ]
 
-{ #category : #'*ThreadedFFI-UFFI' }
+{ #category : '*ThreadedFFI-UFFI' }
 Behavior >> newPinned: sizeRequested [
 
 	^ (self basicNewPinned: sizeRequested) initialize

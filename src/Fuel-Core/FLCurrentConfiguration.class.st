@@ -6,7 +6,9 @@ To obtain the current configuration, uses should use the TFLConfigurable trait a
 
 "
 Class {
-	#name : #FLCurrentConfiguration,
-	#superclass : #DynamicVariable,
-	#category : #'Fuel-Core-Configuration'
+	#name : 'FLCurrentConfiguration',
+	#superclass : 'DynamicVariable',
+	#category : 'Fuel-Core-Configuration',
+	#package : 'Fuel-Core',
+	#tag : 'Configuration'
 }

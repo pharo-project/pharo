@@ -44,46 +44,48 @@ var value  ""will read the value""
 ]]]
 "
 Class {
-	#name : #FFIExternalValueHolder,
-	#superclass : #Object,
+	#name : 'FFIExternalValueHolder',
+	#superclass : 'Object',
 	#instVars : [
 		'data'
 	],
 	#classInstVars : [
 		'type'
 	],
-	#category : #'UnifiedFFI-Objects'
+	#category : 'UnifiedFFI-Objects',
+	#package : 'UnifiedFFI',
+	#tag : 'Objects'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFIExternalValueHolder class >> asExternalTypeOn: generator [
 	^ FFIExternalValueHolderType
 		objectClass: self
 		representationType: self type
 ]
 
-{ #category : #'class factory' }
+{ #category : 'class factory' }
 FFIExternalValueHolder class >> ofType: aTypeName [
 	^ FFIExternalValueHolder newAnonymousSubclass
 		type: (FFIExternalType resolveType: aTypeName)
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 FFIExternalValueHolder class >> reset [
 	type := nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIExternalValueHolder class >> type [
 	^ type ifNil: [ type := FFIExternalType resolveType: self typeDecl ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIExternalValueHolder class >> type: aType [
 	type := aType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalValueHolder class >> typeDecl [
 	"Define the type for this value holder.
 	 It can be anything that FFIExternalType class>>resolveType: can resolve.
@@ -91,31 +93,31 @@ FFIExternalValueHolder class >> typeDecl [
 	^ self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIExternalValueHolder >> initialize [
 	data := ByteArray new: self type typeSize.
 	super initialize
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFIExternalValueHolder >> tfPointerAddress [
 
 	^ data tfPointerAddress
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalValueHolder >> type [
 	^ self class type
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalValueHolder >> value [
 	^ self type
 		handle: data
 		at: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalValueHolder >> value: anObject [
 	self type
 		handle: data

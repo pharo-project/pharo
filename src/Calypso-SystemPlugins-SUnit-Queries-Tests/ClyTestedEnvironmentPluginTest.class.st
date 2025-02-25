@@ -1,13 +1,14 @@
 Class {
-	#name : #ClyTestedEnvironmentPluginTest,
-	#superclass : #ClyAbstractNavigationEnvironmentTest,
+	#name : 'ClyTestedEnvironmentPluginTest',
+	#superclass : 'ClyAbstractNavigationEnvironmentTest',
 	#instVars : [
 		'plugin'
 	],
-	#category : #'Calypso-SystemPlugins-SUnit-Queries-Tests'
+	#category : 'Calypso-SystemPlugins-SUnit-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-SUnit-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyTestedEnvironmentPluginTest >> setUpEnvironment [
 	super setUpEnvironment.
 
@@ -16,7 +17,7 @@ ClyTestedEnvironmentPluginTest >> setUpEnvironment [
 	plugin environment: environment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTestedEnvironmentPluginTest >> testFindTestCaseCoveringTestedClass [
 
 	| foundClass |
@@ -25,7 +26,7 @@ ClyTestedEnvironmentPluginTest >> testFindTestCaseCoveringTestedClass [
 	self assert: foundClass equals: ClyTestedClassMockTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTestedEnvironmentPluginTest >> testFindTestCaseCoveringTestedMetaclass [
 
 	| foundClass |
@@ -34,7 +35,7 @@ ClyTestedEnvironmentPluginTest >> testFindTestCaseCoveringTestedMetaclass [
 	self assert: foundClass equals: ClyTestedClassMockTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTestedEnvironmentPluginTest >> testFindTestCaseCoveringUntestedClass [
 
 	| foundClass |
@@ -43,7 +44,7 @@ ClyTestedEnvironmentPluginTest >> testFindTestCaseCoveringUntestedClass [
 	self assert: foundClass equals: #noResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTestedEnvironmentPluginTest >> testFindTestCaseWithAnotherSuffixCoveringTestedClass [
 
 	| foundClass |
@@ -52,7 +53,7 @@ ClyTestedEnvironmentPluginTest >> testFindTestCaseWithAnotherSuffixCoveringTeste
 	self assert: foundClass equals: ClyTestedClass2MockTest
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTestedEnvironmentPluginTest >> testFindTestedClassCoveredByTestCase [
 
 	| foundClass |
@@ -61,7 +62,7 @@ ClyTestedEnvironmentPluginTest >> testFindTestedClassCoveredByTestCase [
 	self assert: foundClass equals: ClyTestedClassMock
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTestedEnvironmentPluginTest >> testFindTestedClassCoveredByTestCaseWhenItAbsent [
 
 	| foundClass |
@@ -70,7 +71,7 @@ ClyTestedEnvironmentPluginTest >> testFindTestedClassCoveredByTestCaseWhenItAbse
 	self assert: foundClass equals: #noResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTestedEnvironmentPluginTest >> testFindTestedClassCoveredByTestCaseWithAnotherSuffix [
 
 	| foundClass |
@@ -79,7 +80,7 @@ ClyTestedEnvironmentPluginTest >> testFindTestedClassCoveredByTestCaseWithAnothe
 	self assert: foundClass equals: ClyTestedClass2Mock
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTestedEnvironmentPluginTest >> testFindTestedClassCoveredByTestCaseWithoutSuffix [
 
 	| foundClass |
@@ -88,7 +89,7 @@ ClyTestedEnvironmentPluginTest >> testFindTestedClassCoveredByTestCaseWithoutSuf
 	self assert: foundClass equals: #noResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTestedEnvironmentPluginTest >> testFindingTestCoveringMethod [
 	{((ClyTestedClassMock >> #one) -> (ClyTestedClassMockTest >> #testOne)) . ((ClyTestedClassMock >> #one:) -> (ClyTestedClassMockTest >> #testOne)).
 	((ClyTestedClassMock >> #two) -> (ClyTestedClassMockTest >> #testTwo)) . ((ClyTestedClassMock >> #two:) -> (ClyTestedClassMockTest >> #testTwo)).
@@ -100,7 +101,7 @@ ClyTestedEnvironmentPluginTest >> testFindingTestCoveringMethod [
 	((ClyTestedClassMockTest >> #testOneTwo) -> nil)} do: [ :each | self assert: (plugin findTestMethodCovering: each key ifAbsent: nil) identicalTo: each value ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTestedEnvironmentPluginTest >> testNormalizingSelectorForComparison [
 	#(#one #one: #two #two: #one:two: #oneTwo: #+ #- #+-)
 		with: #('one' 'one' 'two' 'two' 'onetwo' 'onetwo' '+' '-' '+-')

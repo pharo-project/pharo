@@ -19,43 +19,45 @@ Implementation Points
 My total* methods could be cached for perf
 "
 Class {
-	#name : #SpaceTallyResult,
-	#superclass : #Object,
+	#name : 'SpaceTallyResult',
+	#superclass : 'Object',
 	#instVars : [
 		'items'
 	],
-	#category : #'Tool-Profilers-Space'
+	#category : 'Tool-Profilers-Space',
+	#package : 'Tool-Profilers',
+	#tag : 'Space'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SpaceTallyResult class >> new: aSize [
 	^ self new
 		itemSize: aSize;
 		yourself
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 SpaceTallyResult >> addItem: aSpaceTallyItem [
 	items add: aSpaceTallyItem
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpaceTallyResult >> initialize [
 	super initialize.
 	items := OrderedCollection new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpaceTallyResult >> itemSize: aSize [
 	items := OrderedCollection new: aSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpaceTallyResult >> items [
 	^ items
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpaceTallyResult >> itemsForThreshold: threshold [
 	| totalInstSpace |
 	threshold <= 0
@@ -68,17 +70,17 @@ SpaceTallyResult >> itemsForThreshold: threshold [
 		asSortedCollection: [ :s :s2 | s spaceForInstances > s2 spaceForInstances ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpaceTallyResult >> totalCodeSpace [
 	^ self items sum: #codeSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpaceTallyResult >> totalInstCount [
 	^ self items sum: #instanceCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpaceTallyResult >> totalInstSpace [
 	^ self items sum: #spaceForInstances
 ]

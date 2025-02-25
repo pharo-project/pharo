@@ -15,54 +15,55 @@ Internal Representation and Key Implementation Points.
 	providesMethodGroup:		<Boolean>
 "
 Class {
-	#name : #ClyCriticEnvironmentPlugin,
-	#superclass : #ClySystemEnvironmentPlugin,
+	#name : 'ClyCriticEnvironmentPlugin',
+	#superclass : 'ClySystemEnvironmentPlugin',
 	#instVars : [
 		'providesMethodGroup'
 	],
 	#classInstVars : [
 		'providesMethodGroupByDefault'
 	],
-	#category : #'Calypso-SystemPlugins-Critic-Queries'
+	#category : 'Calypso-SystemPlugins-Critic-Queries',
+	#package : 'Calypso-SystemPlugins-Critic-Queries'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCriticEnvironmentPlugin class >> disableMethodGroup [
 	providesMethodGroupByDefault := false.
 	(ClyNavigationEnvironment currentImage getPlugin: self ifAbsent: [^self])
 		providesMethodGroup: false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCriticEnvironmentPlugin class >> enableMethodGroup [
 	providesMethodGroupByDefault := true.
 	(ClyNavigationEnvironment currentImage getPlugin: self ifAbsent: [^self])
 		providesMethodGroup: true
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ClyCriticEnvironmentPlugin class >> isEnabled [
 	^self providesMethodGroupByDefault
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ClyCriticEnvironmentPlugin class >> isEnabled: aBoolean [
 	aBoolean
 		ifTrue: [ self enableMethodGroup ]
 		ifFalse: [ self disableMethodGroup ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyCriticEnvironmentPlugin class >> isSlow [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCriticEnvironmentPlugin class >> providesMethodGroupByDefault [
 	^providesMethodGroupByDefault ifNil: [ false ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ClyCriticEnvironmentPlugin class >> settingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #isEnabled)
@@ -73,26 +74,26 @@ ClyCriticEnvironmentPlugin class >> settingsOn: aBuilder [
 		target: self
 ]
 
-{ #category : #'method groups' }
+{ #category : 'method groups' }
 ClyCriticEnvironmentPlugin >> collectMethodGroupProviders [
 	providesMethodGroup ifFalse: [ ^#() ].
 
 	^{ClyCriticMethodGroupProvider new}
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyCriticEnvironmentPlugin >> initialize [
 	super initialize.
 
 	providesMethodGroup := self class providesMethodGroupByDefault
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCriticEnvironmentPlugin >> providesMethodGroup [
 	^ providesMethodGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCriticEnvironmentPlugin >> providesMethodGroup: anObject [
 	providesMethodGroup := anObject
 ]

@@ -9,22 +9,23 @@ I was introduced to check actual annotation inside ensure block. So if #isForbid
 But if it not fails then such annotation is replaced by me. And outer place where annotation is added to the registry can safelly check #isForbidden without error guard.  
 "
 Class {
-	#name : #ForbiddenClassAnnotation,
-	#superclass : #ClassAnnotation,
-	#category : #ClassAnnotation
+	#name : 'ForbiddenClassAnnotation',
+	#superclass : 'ClassAnnotation',
+	#category : 'ClassAnnotation',
+	#package : 'ClassAnnotation'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ForbiddenClassAnnotation >> actualAnnotation [
 	^self freshInstance
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ForbiddenClassAnnotation >> isForbidden [
 	^true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ForbiddenClassAnnotation >> printOn: aStream [
 	super printOn: aStream.
 

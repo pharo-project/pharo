@@ -7,18 +7,20 @@ The structs are always passed in the stack.
 I do not modify the behavior of my superclass.
 "
 Class {
-	#name : #FFIi386CallbackArgumentReader,
-	#superclass : #FFICallbackArgumentReader,
-	#category : #'UnifiedFFI-Callbacks'
+	#name : 'FFIi386CallbackArgumentReader',
+	#superclass : 'FFICallbackArgumentReader',
+	#category : 'UnifiedFFI-Callbacks',
+	#package : 'UnifiedFFI',
+	#tag : 'Callbacks'
 }
 
-{ #category : #types }
+{ #category : 'types' }
 FFIi386CallbackArgumentReader >> stackIntegerType [
 
 	^ FFIInt32 new
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 FFIi386CallbackArgumentReader >> stackUnsignedIntegerType [
 
 	^ FFIUInt32 new

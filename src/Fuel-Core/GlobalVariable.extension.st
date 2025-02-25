@@ -1,6 +1,6 @@
-Extension { #name : #GlobalVariable }
+Extension { #name : 'GlobalVariable' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 GlobalVariable >> fuelAccept: aGeneralMapper [
 	aGeneralMapper visitGlobalVariable: self
 ]

@@ -149,8 +149,8 @@ One of following flags (as LoadTargetXXX) can be used to further specify the res
 
 "
 Class {
-	#name : #FT2Constants,
-	#superclass : #SharedPool,
+	#name : 'FT2Constants',
+	#superclass : 'SharedPool',
 	#classVars : [
 		'LoadCropBitmap',
 		'LoadDefault',
@@ -188,10 +188,12 @@ Class {
 		'StyleFlagBold',
 		'StyleFlagItalic'
 	],
-	#category : #'FreeType-Base'
+	#category : 'FreeType-Base',
+	#package : 'FreeType',
+	#tag : 'Base'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 FT2Constants class >> initialize [
 	"FT2Constants initialize"
 

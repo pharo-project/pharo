@@ -1,6 +1,6 @@
-Extension { #name : #SimpleHierarchicalListMorph }
+Extension { #name : 'SimpleHierarchicalListMorph' }
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 SimpleHierarchicalListMorph >> themeChanged [
 	"Update the selection colour."
 

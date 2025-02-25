@@ -9,22 +9,23 @@ The encoding of type is equivalent to that of the basic type in class ExternalTy
 
 "
 Class {
-	#name : #ExternalData,
-	#superclass : #ExternalStructure,
+	#name : 'ExternalData',
+	#superclass : 'ExternalStructure',
 	#instVars : [
 		'type'
 	],
-	#category : #'FFI-Kernel'
+	#category : 'FFI-Kernel',
+	#package : 'FFI-Kernel'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ExternalData class >> compileFields [
 	"Ensure proper initialization of ExternalType when first loading"
 	ExternalType initialize.
 	^super compileFields
 ]
 
-{ #category : #'field definition' }
+{ #category : 'field definition' }
 ExternalData class >> fields [
 	"ExternalData defineFields"
 	"Note: The definition is for completeness only.
@@ -32,20 +33,20 @@ ExternalData class >> fields [
 	^#(nil 'void*')
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExternalData class >> fromHandle: aHandle type: aType [
 	"Create a pointer to the given type"
 	"ExternalData fromHandle: ExternalAddress new type: ExternalType float"
 	^self basicNew setHandle: aHandle type: aType
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExternalData class >> new [
 	"You better not..."
 	^self shouldNotImplement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalData >> bytesFromCString [
 	"Assume that the receiver represents a C string and convert it to a Smalltalk string."
 
@@ -55,45 +56,7 @@ ExternalData >> bytesFromCString [
 	^ handle bytesFromCString
 ]
 
-{ #category : #converting }
-ExternalData >> fromCString [
-	self
-		deprecated:  'Please use #bytesFromCString instead'
-		transformWith:  '`@receiver fromCString'
-						-> '`@receiver bytesFromCString utf8Decoded'.
-
-	type isPointerType ifFalse: [self error: 'External object is not a pointer type.'].
-
-	^ handle fromCString
-]
-
-{ #category : #converting }
-ExternalData >> fromCStrings [
-	"Assume that the receiver represents a set of C strings and is terminated by a empty string and convert it to a Smalltalk ordered collection of strings"
-
-	| stream index char strings str |
-
-	self
-		deprecated:  'This method returns strings that are not decoded. Please use #bytesFromCString with the rifght decoder instead'.
-
-	type isPointerType ifFalse: [self error: 'External object is not a pointer type.'].
-	strings := OrderedCollection new.
-	index := 1.
-	[
-		stream := WriteStream on: String new.
-		[(char := handle unsignedCharAt: index) = 0 asCharacter]
-			whileFalse: [
-				stream nextPut: char.
-				index := index + 1
-			].
-		str := stream contents.
-		strings addLast: str.
-		str isEmpty
-	] whileFalse.
-	^strings
-]
-
-{ #category : #printing }
+{ #category : 'printing' }
 ExternalData >> printOn: stream [
 
 	stream
@@ -103,13 +66,13 @@ ExternalData >> printOn: stream [
 	self getHandle printOn: stream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ExternalData >> setHandle: aHandle type: aType [
 	handle := aHandle.
 	type := aType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalData >> utf8StringFromCString [
 	"Assume that the receiver represents a C string containing UTF8 characters and convert
 	 it to a Smalltalk string."

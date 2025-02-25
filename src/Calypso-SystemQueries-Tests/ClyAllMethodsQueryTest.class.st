@@ -1,22 +1,24 @@
 Class {
-	#name : #ClyAllMethodsQueryTest,
-	#superclass : #ClyMethodQueryTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClyAllMethodsQueryTest',
+	#superclass : 'ClyMethodQueryTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyAllMethodsQueryTest >> createQuery [
 	^ ClyAllMethodsQuery from: ClyClassScope of: Object in: environment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAllMethodsQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope
 		of: (ClyClass1FromP1Mock >> #tag1Method1) in: environment).
 	self deny: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAllMethodsQueryTest >> testFromSingleClass [
 
 	self queryFromScope: ClyClassScope of: ClyClass1FromP1Mock.

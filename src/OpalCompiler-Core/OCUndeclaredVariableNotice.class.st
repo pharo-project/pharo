@@ -1,17 +1,13 @@
 Class {
-	#name : #OCUndeclaredVariableNotice,
-	#superclass : #RBNotice,
-	#category : #'OpalCompiler-Core-FrontEnd'
+	#name : 'OCUndeclaredVariableNotice',
+	#superclass : 'OCErrorNotice',
+	#category : 'OpalCompiler-Core-FrontEnd',
+	#package : 'OpalCompiler-Core',
+	#tag : 'FrontEnd'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OCUndeclaredVariableNotice >> isUndeclaredNotice [
 
 	^ true
-]
-
-{ #category : #correcting }
-OCUndeclaredVariableNotice >> reparator [
-
-	^ OCCodeReparator new node: self node
 ]

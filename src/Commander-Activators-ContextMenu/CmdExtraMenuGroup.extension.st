@@ -1,6 +1,6 @@
-Extension { #name : #CmdExtraMenuGroup }
+Extension { #name : 'CmdExtraMenuGroup' }
 
-{ #category : #'*Commander-Activators-ContextMenu' }
+{ #category : '*Commander-Activators-ContextMenu' }
 CmdExtraMenuGroup >> buildContextMenu: aMenu [
 	aMenu addLine.
 

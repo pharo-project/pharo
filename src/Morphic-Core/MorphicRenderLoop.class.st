@@ -1,22 +1,24 @@
 Class {
-	#name : #MorphicRenderLoop,
-	#superclass : #Object,
-	#category : #'Morphic-Core-Kernel'
+	#name : 'MorphicRenderLoop',
+	#superclass : 'Object',
+	#category : 'Morphic-Core-Kernel',
+	#package : 'Morphic-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #'deferred message' }
+{ #category : 'deferred message' }
 MorphicRenderLoop >> defer: aValuable [
 
 	self currentWorld defer: aValuable
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialization' }
 MorphicRenderLoop >> doOneCycle [
 
 	WorldMorph doOneCycle
 ]
 
-{ #category : #'initialize-release' }
+{ #category : 'initialization' }
 MorphicRenderLoop >> doOneCycleWhile: aBlock [
 
 	[ aBlock value ] whileTrue: [

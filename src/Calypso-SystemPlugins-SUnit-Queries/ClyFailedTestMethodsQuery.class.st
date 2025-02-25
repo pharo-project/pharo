@@ -2,12 +2,13 @@
 I return all failed tests from given test cases available in my scope
 "
 Class {
-	#name : #ClyFailedTestMethodsQuery,
-	#superclass : #ClyMethodQuery,
-	#category : #'Calypso-SystemPlugins-SUnit-Queries'
+	#name : 'ClyFailedTestMethodsQuery',
+	#superclass : 'ClyMethodQuery',
+	#category : 'Calypso-SystemPlugins-SUnit-Queries',
+	#package : 'Calypso-SystemPlugins-SUnit-Queries'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyFailedTestMethodsQuery >> buildResult: aQueryResult [
 	| failedTests |
 	failedTests := OrderedCollection new.
@@ -22,7 +23,7 @@ ClyFailedTestMethodsQuery >> buildResult: aQueryResult [
 	aQueryResult fillWith: failedTests
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyFailedTestMethodsQuery >> checkEmptyResult [
 
 	scope classesDo: [ :each |
@@ -32,7 +33,7 @@ ClyFailedTestMethodsQuery >> checkEmptyResult [
 	^true
 ]
 
-{ #category : #'item group decoration' }
+{ #category : 'item group decoration' }
 ClyFailedTestMethodsQuery >> decorateItemGroup: methodGroupItem [
 	| property |
 	super decorateItemGroup: methodGroupItem.
@@ -47,13 +48,13 @@ ClyFailedTestMethodsQuery >> decorateItemGroup: methodGroupItem [
 	methodGroupItem addProperty: property
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyFailedTestMethodsQuery >> description [
 
 	^'failed tests'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyFailedTestMethodsQuery >> selectsMethod: aMethod [
 
 	^aMethod isTestMethod and: [aMethod isPassedTest not]

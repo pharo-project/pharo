@@ -1,14 +1,22 @@
 Class {
-	#name : #EpHasImpactFilterTest,
-	#superclass : #TestCase,
+	#name : 'EpHasImpactFilterTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'classFactory',
 		'impactFilter'
 	],
-	#category : #'EpiceaBrowsers-Tests-Filters'
+	#category : 'EpiceaBrowsers-Tests-Filters',
+	#package : 'EpiceaBrowsers-Tests',
+	#tag : 'Filters'
 }
 
-{ #category : #running }
+{ #category : 'asserting' }
+EpHasImpactFilterTest class >> shouldLogWithEpicea [
+
+	^ true
+]
+
+{ #category : 'running' }
 EpHasImpactFilterTest >> setUp [
 	super setUp.
 	classFactory := ClassFactoryForTestCase new.
@@ -17,13 +25,13 @@ EpHasImpactFilterTest >> setUp [
 		yourself
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 EpHasImpactFilterTest >> tearDown [
 	classFactory cleanUp.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpHasImpactFilterTest >> testClassSideMethodWithImpact [
 	| anEvent aClass |
 	aClass := classFactory newClass classSide.
@@ -33,7 +41,7 @@ EpHasImpactFilterTest >> testClassSideMethodWithImpact [
 	self assert: (impactFilter accepts: anEvent)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpHasImpactFilterTest >> testClassSideMethodWithoutImpact [
 	| anEvent aClass |
 	aClass := classFactory newClass classSide.
@@ -42,7 +50,7 @@ EpHasImpactFilterTest >> testClassSideMethodWithoutImpact [
 	self deny: (impactFilter accepts: anEvent)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpHasImpactFilterTest >> testClassWithClassSideImpact [
 	| anEvent aClass |
 	aClass := classFactory newClass.
@@ -51,7 +59,7 @@ EpHasImpactFilterTest >> testClassWithClassSideImpact [
 	self assert: (impactFilter accepts: anEvent)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpHasImpactFilterTest >> testClassWithInstanceSideImpact [
 	| anEvent aClass |
 	aClass := classFactory newClass.
@@ -60,7 +68,7 @@ EpHasImpactFilterTest >> testClassWithInstanceSideImpact [
 	self assert: (impactFilter accepts: anEvent)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpHasImpactFilterTest >> testClassWithoutImpact [
 	| anEvent aClass |
 	aClass := classFactory newClass.
@@ -68,7 +76,7 @@ EpHasImpactFilterTest >> testClassWithoutImpact [
 	self deny: (impactFilter accepts: anEvent)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpHasImpactFilterTest >> testCommentWithImpact [
 	| anEvent aClass |
 	aClass := classFactory newClass.
@@ -84,7 +92,7 @@ EpHasImpactFilterTest >> testCommentWithImpact [
 	self assert: (impactFilter accepts: anEvent)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpHasImpactFilterTest >> testCommentWithoutImpact [
 	| anEvent aClass |
 	aClass := classFactory newClass.
@@ -100,7 +108,7 @@ EpHasImpactFilterTest >> testCommentWithoutImpact [
 	self deny: (impactFilter accepts: anEvent)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpHasImpactFilterTest >> testMethodWithImpact [
 	| anEvent aClass |
 	aClass := classFactory newClass.
@@ -110,7 +118,7 @@ EpHasImpactFilterTest >> testMethodWithImpact [
 	self assert: (impactFilter accepts: anEvent)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpHasImpactFilterTest >> testMethodWithoutImpact [
 	| anEvent aClass |
 	aClass := classFactory newClass.
@@ -119,24 +127,15 @@ EpHasImpactFilterTest >> testMethodWithoutImpact [
 	self deny: (impactFilter accepts: anEvent)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpHasImpactFilterTest >> testProtocolRemovalOfTraitProtocol [
-	| anEntry aClass |
 
-	aClass := classFactory
-		newSubclassOf: classFactory defaultSuperclass
-		uses: TAssertable
-		instanceVariableNames: ''
-		classVariableNames: ''
-		category: classFactory defaultTagPostfix.
-	anEntry := OmEntry content: (EpProtocolRemoval
-		behavior: aClass asRingDefinition
-		protocol: #private).
+	| anEntry aClass |
+	aClass := classFactory make: [ :aBuilder | aBuilder traitComposition: TAssertable ].
+	anEntry := OmEntry content: (EpProtocolRemoval behavior: aClass asRingDefinition protocol: #private).
 	self deny: (impactFilter accepts: anEntry).
 
-	aClass
-		compile: 'a ^1'
-		classified: #private.
+	aClass compile: 'a ^1' classified: #private.
 
 	self assert: (impactFilter accepts: anEntry)
 ]

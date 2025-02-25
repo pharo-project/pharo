@@ -1,10 +1,11 @@
 Class {
-	#name : #ClySortBrowserItemFunctionTest,
-	#superclass : #ClySortFunctionTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClySortBrowserItemFunctionTest',
+	#superclass : 'ClySortFunctionTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortBrowserItemFunctionTest >> testCompareTwoItemsOfClasses [
 
 	function := ClySortBrowserItemFunction with: ClySortByNameFunction ascending.
@@ -14,7 +15,7 @@ ClySortBrowserItemFunctionTest >> testCompareTwoItemsOfClasses [
 	self assert: (function value: Object asCalypsoBrowserItem value: Object asCalypsoBrowserItem)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortBrowserItemFunctionTest >> testComparisonWithAnotherFunction [
 	| function2 |
 	function := ClySortBrowserItemFunction with: ClySortByNameFunction ascending.

@@ -8,8 +8,8 @@ For convenience, the #forms message will respond with a collection of the Forms 
 Unlike ImageMorph (from whom I do not subclass), my extent must be explicitly set since each frame's form can have different dimensions and offsets.
 "
 Class {
-	#name : #AnimatedImageMorph,
-	#superclass : #Morph,
+	#name : 'AnimatedImageMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'frames',
 		'frameStream',
@@ -18,10 +18,11 @@ Class {
 		'prevFrame',
 		'currentDisposal'
 	],
-	#category : #'Images-Animated'
+	#category : 'Images-Animated',
+	#package : 'Images-Animated'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AnimatedImageMorph class >> fromGIFReader: aGIFReader [
 	"Respond with an instance of the receiver
 	configured from a GIFReader instance"
@@ -31,27 +32,27 @@ AnimatedImageMorph class >> fromGIFReader: aGIFReader [
 		color: aGIFReader backgroundColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimatedImageMorph >> backgroundColor [
 	^ self color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimatedImageMorph >> backgroundColor: aColor [
 	self color: aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimatedImageMorph >> currentFrame [
 	^ currentFrame
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 AnimatedImageMorph >> defaultDelay [
 	^ 100
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AnimatedImageMorph >> drawOn: aCanvas [
 	"currentFrame ifNil: [ ^ self ]."
 	aCanvas
@@ -59,29 +60,29 @@ AnimatedImageMorph >> drawOn: aCanvas [
 		at: self bounds origin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimatedImageMorph >> forms [
 	^ frames collect: [ :frame | frame form ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimatedImageMorph >> frameStream [
 	^ frameStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimatedImageMorph >> frames [
 	^ frames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimatedImageMorph >> frames: aCollection [
 	"A collection of AnimagedImageFrame instances"
 	frames := aCollection.
 	frameStream := ReadStream on: frames
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AnimatedImageMorph >> initialize [
 	super initialize.
 	self color: Color transparent.
@@ -90,7 +91,7 @@ AnimatedImageMorph >> initialize [
 	activeForm := Form extent: self extent
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AnimatedImageMorph >> leaveCurrent [
 	"Update the activeForm using the #leaveCurrent
 	disposal method"
@@ -103,12 +104,12 @@ AnimatedImageMorph >> leaveCurrent [
 	activeForm := canvas form
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnimatedImageMorph >> prevFrame [
 	^ prevFrame
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AnimatedImageMorph >> restoreBackground [
 	"Update the activeForm using the #restoreBackground
 	disposal method"
@@ -131,7 +132,7 @@ AnimatedImageMorph >> restoreBackground [
 	activeForm := canvas form
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 AnimatedImageMorph >> step [
 	frameStream ifNil: [ ^ self ].
 	frameStream atEnd ifTrue: [
@@ -154,13 +155,13 @@ AnimatedImageMorph >> step [
 	self changed
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 AnimatedImageMorph >> stepTime [
 	frameStream ifNil: [ ^ self defaultDelay ].
 	^ currentFrame delay
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AnimatedImageMorph >> updateActiveForm [
 
 	"Update the activeForm of the receiver based upon the

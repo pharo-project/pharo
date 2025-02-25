@@ -6,27 +6,29 @@ Adding an object to a LinkedList which is not a Link will create a ValueLink con
 value - The object this link points to.
 "
 Class {
-	#name : #ValueLink,
-	#superclass : #Link,
+	#name : 'ValueLink',
+	#superclass : 'Link',
 	#instVars : [
 		'value'
 	],
-	#category : #'Collections-Support-Links'
+	#category : 'Collections-Support-Links',
+	#package : 'Collections-Support',
+	#tag : 'Links'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ValueLink class >> value:	 aValue [
 	^self new value: aValue
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ValueLink >> = anotherObject [
 	^self species == anotherObject species
 		and: [self value = anotherObject value
 				and: [self nextLink == anotherObject nextLink]]
 ]
 
-{ #category : #dispatched }
+{ #category : 'dispatched' }
 ValueLink >> asLinkPrepend: anObject [
 
 	^ (super asLinkPrepend: anObject)
@@ -34,24 +36,24 @@ ValueLink >> asLinkPrepend: anObject [
 		  yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ValueLink >> hash [
 	^self value hash bitXor: nextLink identityHash
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ValueLink >> printOn: aStream [
 	aStream nextPutAll: 'ValueLink('.
 	value printOn: aStream.
 	aStream nextPut: $)
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 ValueLink >> value [
 	^value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ValueLink >> value: aValue [
 	value := aValue
 ]

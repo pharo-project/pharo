@@ -13,22 +13,24 @@ Examples:
 	pharo Pharo.image save bar --delete-old
 "
 Class {
-	#name : #SaveCommandLineHandler,
-	#superclass : #CommandLineHandler,
-	#category : #'System-BasicCommandLineHandler-Base'
+	#name : 'SaveCommandLineHandler',
+	#superclass : 'CommandLineHandler',
+	#category : 'System-BasicCommandLineHandler-Base',
+	#package : 'System-BasicCommandLineHandler',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaveCommandLineHandler class >> commandName [
 	^ 'save'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SaveCommandLineHandler class >> description [
 	^ 'Rename the image and changes file'
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 SaveCommandLineHandler >> activate [
 	self activateHelp
 		ifTrue: [  ^ self ].
@@ -43,7 +45,7 @@ SaveCommandLineHandler >> activate [
 	self saveImage
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 SaveCommandLineHandler >> saveImage [
 	| imageName oldImageFile oldChangesFile |
 
@@ -51,7 +53,7 @@ SaveCommandLineHandler >> saveImage [
 	oldImageFile := File named: Smalltalk imagePath.
 	oldChangesFile := File named: (Smalltalk imagePath copyUpToLast: '.') , '.changes'.
 
-	(Smalltalk saveAs: imageName)
+	(Smalltalk saveAs: imageName) isImageStarting
 		ifTrue: [
 			"rebooting, when executing this, we are already in the renamed image"
 			^ self ].

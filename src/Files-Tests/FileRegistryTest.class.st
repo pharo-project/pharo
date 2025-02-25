@@ -1,10 +1,12 @@
 Class {
-	#name : #FileRegistryTest,
-	#superclass : #TestCase,
-	#category : #'Files-Tests-Core'
+	#name : 'FileRegistryTest',
+	#superclass : 'TestCase',
+	#category : 'Files-Tests-Core',
+	#package : 'Files-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileRegistryTest >> testFilesAreRegisteredInWeakRegistry [
 
 	|  f |
@@ -13,7 +15,7 @@ FileRegistryTest >> testFilesAreRegisteredInWeakRegistry [
 		ensure: [ f ifNotNil: [ f close ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileRegistryTest >> testRegistryShouldBeCleaned [
 
 	| oldSize |

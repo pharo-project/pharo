@@ -1,6 +1,6 @@
-Extension { #name : #ZnBufferedReadStream }
+Extension { #name : 'ZnBufferedReadStream' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 ZnBufferedReadStream >> fuelNextWordsInto: aWordObject [
 	"This method is the same as nextWordsInto: but the restoreEndianness is only done if needed"
 	| byteSize source pos blt |

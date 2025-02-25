@@ -5,25 +5,27 @@ Several subscriptions by the same object is possible.
 I know how to make myself weak or strong, only use this capability if it can't be determined at subscribe time though, as it uses become: (for thread-safety), which is quite slow.
 "
 Class {
-	#name : #AnnouncementSubscription,
-	#superclass : #AbstractAnnouncementSubscription,
+	#name : 'AnnouncementSubscription',
+	#superclass : 'AbstractAnnouncementSubscription',
 	#instVars : [
 		'subscriber'
 	],
-	#category : #'Announcements-Core-Subscription'
+	#category : 'Announcements-Core-Subscription',
+	#package : 'Announcements-Core',
+	#tag : 'Subscription'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 AnnouncementSubscription >> makeStrong [
-	" i am already strong. Do nothing "
+	"I am already strong. Do nothing "
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AnnouncementSubscription >> makeWeak [
 
 	action isBlock ifTrue: [
 		self error: 'Not currently available due to missing ephemerons support'
-		].
+	].
 
 	^ announcer replace: self with:
 		(WeakAnnouncementSubscription new
@@ -33,12 +35,20 @@ AnnouncementSubscription >> makeWeak [
 			announcementClass: announcementClass)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnnouncementSubscription >> subscriber [
+
 	^ subscriber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnnouncementSubscription >> subscriber: aSubscriber [
+
 	subscriber := aSubscriber
+]
+
+{ #category : 'finalization' }
+AnnouncementSubscription >> unregister [
+
+	"Nothing, for compatibility with weak subscriptions"
 ]

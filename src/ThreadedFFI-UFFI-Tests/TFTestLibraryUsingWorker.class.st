@@ -2,12 +2,13 @@
 I am a test library using a worker runner
 "
 Class {
-	#name : #TFTestLibraryUsingWorker,
-	#superclass : #TFTestLibraryUsingSameThreadRunner,
-	#category : #'ThreadedFFI-UFFI-Tests'
+	#name : 'TFTestLibraryUsingWorker',
+	#superclass : 'TFTestLibraryUsingSameThreadRunner',
+	#category : 'ThreadedFFI-UFFI-Tests',
+	#package : 'ThreadedFFI-UFFI-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFTestLibraryUsingWorker >> runner [
 
 	^ TFWorker default

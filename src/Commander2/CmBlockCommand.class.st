@@ -4,50 +4,52 @@ I  execute a block as my action.
 
 "
 Class {
-	#name : #CmBlockCommand,
-	#superclass : #CmCommand,
+	#name : 'CmBlockCommand',
+	#superclass : 'CmCommand',
 	#instVars : [
 		'block',
 		'canBeExecutedBlock'
 	],
-	#category : #'Commander2-Commands'
+	#category : 'Commander2-Commands',
+	#package : 'Commander2',
+	#tag : 'Commands'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmBlockCommand >> block [
 	^ block
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmBlockCommand >> block: anObject [
 	block := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmBlockCommand >> canBeExecuted [
 	self hasContext
 		ifFalse: [ ^ super canBeExecuted ].	"When no context is set, we consider the command to be runnable. So we call super."
 	^ self canBeExecutedBlock value: self context
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmBlockCommand >> canBeExecutedBlock [
 	^ canBeExecutedBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmBlockCommand >> canBeExecutedBlock: anObject [
 	canBeExecutedBlock := anObject
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 CmBlockCommand >> execute [
 	self hasContext
 		ifTrue: [ block value: self context ]
 		ifFalse: [ block value ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CmBlockCommand >> initialize [
 	super initialize.
 	self canBeExecutedBlock: [ :ctxt | true ]

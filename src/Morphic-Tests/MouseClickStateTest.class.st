@@ -1,15 +1,17 @@
 Class {
-	#name : #MouseClickStateTest,
-	#superclass : #TestCase,
+	#name : 'MouseClickStateTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'morph',
 		'hand',
 		'event'
 	],
-	#category : #'Morphic-Tests-Event'
+	#category : 'Morphic-Tests-Event',
+	#package : 'Morphic-Tests',
+	#tag : 'Event'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 MouseClickStateTest >> setUp [
 	super setUp.
 	morph := MockMorph new.
@@ -27,14 +29,14 @@ MouseClickStateTest >> setUp [
 		stamp: Time millisecondClockValue
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MouseClickStateTest >> tearDown [
 	morph delete.
 	morph := event := hand := nil.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MouseClickStateTest >> testClickFromMorph [
 	| mcs |
 	mcs := MouseClickState new.
@@ -44,7 +46,24 @@ MouseClickStateTest >> testClickFromMorph [
 		 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+MouseClickStateTest >> testDoubleClickShouldNotTriggerIfClickedOutsideBounds [
+	(hand mouseClickStateFor: morph event: event)
+		doubleClickSelector: #myMagicDoubleClick:.
+	"the first click does not do anything"
+	hand handleEvent: event.
+	event setType: #mouseUp.
+	hand handleEvent: event.
+
+	"Out of bounds"
+	event setPosition: morph bounds topRight + 100.
+	event setType: #mouseDown.
+	hand handleEvent: event.
+
+	self deny: morph hasMyMagicDoubleClickActivated
+]
+
+{ #category : 'tests' }
 MouseClickStateTest >> testHandleEventFrom [
 	hand
 		waitForClicksOrDrag: morph
@@ -66,7 +85,7 @@ MouseClickStateTest >> testHandleEventFrom [
 	self assert: morph hasMyMagicClickActivated
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MouseClickStateTest >> testHandleEventFromDragDoubleClick [
 	(hand mouseClickStateFor: morph event: event)
 		doubleClickSelector: #myMagicDoubleClick:.

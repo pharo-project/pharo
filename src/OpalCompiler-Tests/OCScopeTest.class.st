@@ -1,40 +1,42 @@
 Class {
-	#name : #OCScopeTest,
-	#superclass : #TestCase,
+	#name : 'OCScopeTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'ivarForTesting'
 	],
 	#classVars : [
 		'MyClassVarForTesting'
 	],
-	#category : #'OpalCompiler-Tests-Semantic'
+	#category : 'OpalCompiler-Tests-Semantic',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'Semantic'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCScopeTest class >> myClassVarForTesting [
 
 	^MyClassVarForTesting
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCScopeTest >> ivarForTesting [
 
 	^ ivarForTesting
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCScopeTest >> testHasBindingThatBeginsWithClassVar [
 	self assert: (thisContext astScope hasBindingThatBeginsWith: 'MyClass').
 	self deny: (thisContext astScope hasBindingThatBeginsWith: 'NonExMYCL')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCScopeTest >> testHasBindingThatBeginsWithGlobal [
 	self assert: (thisContext astScope hasBindingThatBeginsWith: 'Obj').
 	self deny: (thisContext astScope hasBindingThatBeginsWith: 'OBj')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCScopeTest >> testHasBindingThatBeginsWithSlot [
 	self assert: (thisContext astScope hasBindingThatBeginsWith: 'ivarFo').
 	self deny: (thisContext astScope hasBindingThatBeginsWith: 'ivarForDoesNotExist').
@@ -44,7 +46,7 @@ OCScopeTest >> testHasBindingThatBeginsWithSlot [
 	self assert: (thisContext astScope hasBindingThatBeginsWith: 'sup')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCScopeTest >> testHasBindingThatBeginsWithTemp [
 	| tempForTesting |
 	tempForTesting := 'only',  'forTest'.

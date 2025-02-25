@@ -17,17 +17,19 @@ string
 
 "
 Class {
-	#name : #DiffElement,
-	#superclass : #Object,
+	#name : 'DiffElement',
+	#superclass : 'Object',
 	#instVars : [
 		'string',
 		'hash',
 		'match'
 	],
-	#category : #'Text-Diff-Utilities'
+	#category : 'Text-Diff-Utilities',
+	#package : 'Text-Diff',
+	#tag : 'Utilities'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DiffElement class >> string: aString [
 
 	^self new
@@ -35,7 +37,7 @@ DiffElement class >> string: aString [
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DiffElement >> = anObject [
 
 	^anObject class == self class and: [
@@ -43,38 +45,38 @@ DiffElement >> = anObject [
 			anObject string = string ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DiffElement >> hasMatch [
 
-	^match notNil
+	^match isNotNil
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 DiffElement >> hash [
 
 	^hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffElement >> match [
 
 	^match
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffElement >> match: aDiffMatch [
 
 	match := aDiffMatch
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffElement >> matches: aDiffMatch [
 
 	match := aDiffMatch.
 	aDiffMatch match: self
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DiffElement >> printOn: aStream [
 
 	super printOn: aStream.
@@ -88,13 +90,13 @@ DiffElement >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffElement >> string [
 
 	^string
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffElement >> string: aString [
 
 	string := aString.

@@ -9,119 +9,107 @@ My associated filesystem can be accessed as follows:
       DiskStore currentFileSystem
 "
 Class {
-	#name : #FileSystemStore,
-	#superclass : #Object,
-	#category : #'FileSystem-Core-Kernel'
+	#name : 'FileSystemStore',
+	#superclass : 'Object',
+	#category : 'FileSystem-Core-Kernel',
+	#package : 'FileSystem-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemStore class >> delimiter [
 	^ self shouldBeImplemented
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemStore class >> isCaseSensitive [
 	^ self shouldBeImplemented
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemStore class >> separator [
 	self shouldBeImplemented
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemStore >> accessTimeOf: aPath [
 	"Return the date of last access of the File described by aPath"
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileSystemStore >> basenameFromEntry: aNode [
 	"Used to extract the basename from the low-level representation (node / entry) from the store."
 	self subclassResponsibility
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 FileSystemStore >> basicCreationTimeOf: aNode [
 	"Used to decide whether the low-level representation (node / entry) from the store is a readable
 	file or a directory whose contents can be listed."
 	self subclassResponsibility
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 FileSystemStore >> basicEntry: directoryEntry path: aPath nodesDo: aBlock [
 	self subclassResponsibility
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 FileSystemStore >> basicIsDirectory: aNode [
 	"Used to decide whether the low-level representation (node / entry) from the store is a directory.
 	This private message should only be called form within the store."
 	self subclassResponsibility
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 FileSystemStore >> basicIsFile: aNode [
 	"Used to decide whether the low-level representation (node / entry) from the store is a file.
 	This private message should only be called form within the store."
 	self subclassResponsibility
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 FileSystemStore >> basicIsSymlink: aNode [
 	^self subclassResponsibility
 ]
 
-{ #category : #abstract }
-FileSystemStore >> basicIsWritable: aNode [
-	"Used to decide whether the low-level representation (node / entry) from the store is
-	a writable file or can be changed."
-	self subclassResponsibility
-]
-
-{ #category : #abstract }
-FileSystemStore >> basicModificationTime: aNode [
-	"Used to decide whether the low-level representation (node / entry) from the store is a readable
-	file or a directory whose contents can be listed."
-	self subclassResponsibility
-]
-
-{ #category : #'error signalling' }
+{ #category : 'error signalling' }
 FileSystemStore >> basicOpen: aPath writable: aBoolean [
 	"open the file at the given path and return an identifier"
 	self subclassResponsibility
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 FileSystemStore >> basicPosixPermissions: aNode [
 	"Used to get the posix permissions from a low-level filesystem entry / node"
 	self subclassResponsibility
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 FileSystemStore >> basicSizeOf: aNode [
 	"Used to get the size of the low-level representation (node / entry) "
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemStore >> checkExists: aPath [
 
 	(self exists: aPath) ifFalse:
 		[ FileDoesNotExistException signalWith: aPath ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileSystemStore >> checkName: aString fixErrors: fixErrors [
 	^ self subclassResponsibility
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 FileSystemStore >> close [
 	"Some kinds of filesystems need to open connections to external resources"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileSystemStore >> copy: sourcePath ifAbsent: absentBlock to: destinationPath ifPresent: presentBlock fileSystem: aFilesystem [
 
 	| buffer out in |
@@ -149,12 +137,12 @@ FileSystemStore >> copy: sourcePath ifAbsent: absentBlock to: destinationPath if
 		out ifNotNil: [ out close ]]
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 FileSystemStore >> createDirectory: aPath [
 	self subclassResponsibility
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileSystemStore >> creationTimeOf: aPath [
 	"Return the date of creation of the File described by aPath"
 	^ self
@@ -163,28 +151,28 @@ FileSystemStore >> creationTimeOf: aPath [
 		ifAbsent: [ self signalFileDoesNotExist: aPath ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemStore >> defaultWorkingDirectory [
 	^ Path root
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 FileSystemStore >> delete: aPath [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemStore >> delimiter [
 	^ self class delimiter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemStore >> deviceIdOf: aPath [
 	"Return the device id of the File described by aPath"
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileSystemStore >> directoryAt: aPath  directoryNodesDo: aBlock [
 	^ self
 		directoryAt: aPath
@@ -193,7 +181,7 @@ FileSystemStore >> directoryAt: aPath  directoryNodesDo: aBlock [
 				ifTrue: [ aBlock value: entry ]]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileSystemStore >> directoryAt: aPath fileNodesDo: aBlock [
 	^ self
 		directoryAt: aPath
@@ -202,7 +190,7 @@ FileSystemStore >> directoryAt: aPath fileNodesDo: aBlock [
 				ifFalse: [ aBlock value: entry ]]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileSystemStore >> directoryAt: aPath ifAbsent: absentBlock directoryNodesDo: aBlock [
 	^ self
 		directoryAt: aPath
@@ -212,7 +200,7 @@ FileSystemStore >> directoryAt: aPath ifAbsent: absentBlock directoryNodesDo: aB
 				ifTrue: [ aBlock value: entry ]]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileSystemStore >> directoryAt: aPath ifAbsent: absentBlock fileNodesDo: aBlock [
 	^ self
 		directoryAt: aPath
@@ -222,7 +210,7 @@ FileSystemStore >> directoryAt: aPath ifAbsent: absentBlock fileNodesDo: aBlock 
 				ifFalse: [ aBlock value: entry ]]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileSystemStore >> directoryAt: aPath ifAbsent: absentBlock nodesDo: aBlock [
 	^ self
 		nodeAt: aPath
@@ -233,7 +221,7 @@ FileSystemStore >> directoryAt: aPath ifAbsent: absentBlock nodesDo: aBlock [
 		ifAbsent: absentBlock
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileSystemStore >> directoryAt: aPath nodesDo: aBlock [
 	^ self
 		nodeAt: aPath
@@ -244,14 +232,14 @@ FileSystemStore >> directoryAt: aPath nodesDo: aBlock [
 		ifAbsent: [ self signalDirectoryDoesNotExist: aPath ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileSystemStore >> ensureCreateDirectory: aPath [
 	((self exists: aPath) and: [ self isDirectory: aPath]) ifTrue: [ ^ self ].
 	self ensureCreateDirectory: aPath parent.
 	self createDirectory: aPath
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileSystemStore >> entryAt: aPath fileSystem: aFilesystem [
 
 	self checkExists: aPath.
@@ -260,12 +248,12 @@ FileSystemStore >> entryAt: aPath fileSystem: aFilesystem [
 		path: aPath
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileSystemStore >> entryFromNode: node path: path for: aFileystem [
 	^self subclassResponsibility
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileSystemStore >> exists: aPath [
 	self
 		nodeAt: aPath
@@ -273,41 +261,41 @@ FileSystemStore >> exists: aPath [
 		ifAbsent: [ ^ false ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileSystemStore >> filename: aByteString matches: aByteString2 [
 	^ aByteString = aByteString2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemStore >> gidOf: aPath [
 	"Return the gid of the File described by aPath"
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 FileSystemStore >> inodeOf: aPath [
 	"Return the inode number of the File described by aPath"
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemStore >> isBlock: aPath [
 	"Return a boolean indicating whether the File described by aPath is a block device"
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemStore >> isCaseSensitive [
 	^ self class isCaseSensitive
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemStore >> isCharacter: aPath [
 	"Return a boolean indicating whether the File described by aPath is character based"
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileSystemStore >> isDirectory: aPath [
 	aPath isRoot ifTrue: [ ^ true ].
 	self
@@ -316,18 +304,18 @@ FileSystemStore >> isDirectory: aPath [
 		ifAbsent: [ ^ false ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemStore >> isExecutable: aPath [
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemStore >> isFIFO: aPath [
 	"Return a boolean indicating whether the File described by aPath is FIFO"
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileSystemStore >> isFile: aPath [
 	"slow solution for big directories! "
 	^ self
@@ -336,24 +324,31 @@ FileSystemStore >> isFile: aPath [
 		ifAbsent: [ ^ false ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
+FileSystemStore >> isHidden: aResolvable attributes: statAttributesArray [
+	"Answer a boolean indicating whether the file is hidden or not."
+
+	^ self subclassResponsibility
+]
+
+{ #category : 'testing' }
 FileSystemStore >> isReadable: aPath [
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemStore >> isRegular: aPath [
 	"Return a boolean indicating whether the File described by aPath is a regular file"
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FileSystemStore >> isSocket: aPath [
 	"Return a boolean indicating whether the File described by aPath is a socket"
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileSystemStore >> isSymlink: aPath [
 	aPath isRoot ifTrue: [ ^ true ].
 	self
@@ -362,14 +357,12 @@ FileSystemStore >> isSymlink: aPath [
 		ifAbsent: [ ^ false ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileSystemStore >> isWritable: aPath [
-	self nodeAt: aPath
-		ifPresent: [ :entry | ^ self basicIsWritable: entry ]
-		ifAbsent: [ ^ false ]
+	self subclassResponsibility
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileSystemStore >> modificationTimeOf: aPath [
 	"Returns the last date of modification of the File described by aPath"
 	^ self
@@ -378,7 +371,7 @@ FileSystemStore >> modificationTimeOf: aPath [
 		ifAbsent: [ self signalFileDoesNotExist: aPath ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileSystemStore >> nodeAt: aPath [
 	^ self
 		nodeAt: aPath
@@ -386,37 +379,37 @@ FileSystemStore >> nodeAt: aPath [
 		ifAbsent: [ NotFound signalFor: aPath in: self ]
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 FileSystemStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemStore >> numberOfHardLinks: aPath [
 	"Return the number of hard links to the File described by aPath"
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 FileSystemStore >> open [
 	"Some kinds of filesystems need to open connections to external resources"
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FileSystemStore >> pathFromString: aString [
 	"Use the unix convention by default, since many filesystems are based on it."
 
 	^ Path from: aString delimiter: self delimiter
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileSystemStore >> permissions: aPath [
 	self nodeAt: aPath
 		ifPresent: [ :entry | ^ FileSystemPermission posixPermissions: (self basicPosixPermissions: entry) ]
 		ifAbsent: [ ^ FileSystemPermission default ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FileSystemStore >> printPath: aPath on: out [
 	"Use the unix convention by default, since it's the most common."
 
@@ -424,7 +417,7 @@ FileSystemStore >> printPath: aPath on: out [
 	^ aPath printOn: out delimiter: self delimiter
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileSystemStore >> rename: sourcePath ifAbsent: absentBlock to: destinationPath ifPresent: presentBlock fileSystem: anFSFilesystem [
 
 	| result |
@@ -435,39 +428,39 @@ FileSystemStore >> rename: sourcePath ifAbsent: absentBlock to: destinationPath 
 	^ self
 ]
 
-{ #category : #abstract }
+{ #category : 'abstract' }
 FileSystemStore >> rename: sourcePath to: destinationPath [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemStore >> separator [
 	^ self class separator
 ]
 
-{ #category : #'error signalling' }
+{ #category : 'error signalling' }
 FileSystemStore >> signalDirectoryDoesNotExist: aPath [
 	^ DirectoryDoesNotExist signalWith: aPath
 ]
 
-{ #category : #'error signalling' }
+{ #category : 'error signalling' }
 FileSystemStore >> signalDirectoryExists: aPath [
 	^ DirectoryExists signalWith: aPath
 ]
 
-{ #category : #'error signalling' }
+{ #category : 'error signalling' }
 FileSystemStore >> signalFileDoesNotExist: aPath [
 	^ FileDoesNotExistException
 		signalWithFile: (File named: aPath asPath pathString)
 		writeMode: false
 ]
 
-{ #category : #'error signalling' }
+{ #category : 'error signalling' }
 FileSystemStore >> signalFileExists: aPath [
 	^ FileExists signalWith: aPath
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 FileSystemStore >> sizeOf: aPath [
 	"Return the size of the File described by aPath"
 	^ self
@@ -476,13 +469,13 @@ FileSystemStore >> sizeOf: aPath [
 		ifAbsent: [ self signalFileDoesNotExist: aPath ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FileSystemStore >> stringFromPath: aPath [
 	^ String streamContents: [ :out |
 		self printPath: aPath on: out ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FileSystemStore >> symlinkEntryAt: aPath fileSystem: aFilesystem [
 
 	^ DiskSymlinkDirectoryEntry
@@ -490,13 +483,13 @@ FileSystemStore >> symlinkEntryAt: aPath fileSystem: aFilesystem [
 		path: aPath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemStore >> targetPath: aPath [
 	"Return the target file of the File described by aPath.  For a regular file, this is itself, for a symbolic link, it is the file pointed to by the symbolic link"
 	^FileAttributeNotSupported signalWith: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileSystemStore >> uid: aPath [
 	"Return the uid of the File described by aPath"
 	^FileAttributeNotSupported signalWith: self

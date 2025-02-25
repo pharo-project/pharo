@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemTools-QueryBrowser' }
+Package { #name : 'Calypso-SystemTools-QueryBrowser' }

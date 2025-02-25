@@ -1,6 +1,6 @@
-Extension { #name : #ClassVariable }
+Extension { #name : 'ClassVariable' }
 
-{ #category : #'*SystemCommands-VariableCommands' }
+{ #category : '*SystemCommands-VariableCommands' }
 ClassVariable >> createRefactoring: variableRefactoringClass for: declarationClass [
 	^variableRefactoringClass classVariableAnalog
 			variable: self name

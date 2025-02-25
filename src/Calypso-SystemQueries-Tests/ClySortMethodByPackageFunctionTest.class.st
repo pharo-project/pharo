@@ -1,10 +1,12 @@
 Class {
-	#name : #ClySortMethodByPackageFunctionTest,
-	#superclass : #ClySortFunctionTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClySortMethodByPackageFunctionTest',
+	#superclass : 'ClySortFunctionTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortMethodByPackageFunctionTest >> testAscendingDifferentPackage [
 
 	function := ClySortMethodByPackageFunction ascending.
@@ -14,7 +16,7 @@ ClySortMethodByPackageFunctionTest >> testAscendingDifferentPackage [
 	self assert: (function value: Object >> #printOn: value: Object >> #printString )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortMethodByPackageFunctionTest >> testAscendingSamePackageDifferentClass [
 
 	function := ClySortMethodByPackageFunction ascending.
@@ -23,7 +25,7 @@ ClySortMethodByPackageFunctionTest >> testAscendingSamePackageDifferentClass [
 	self assert: (function value: Object >> #printString value: True >> #not )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortMethodByPackageFunctionTest >> testAscendingSamePackageSameClassDifferentSelector [
 
 	function := ClySortMethodByPackageFunction ascending.
@@ -32,7 +34,7 @@ ClySortMethodByPackageFunctionTest >> testAscendingSamePackageSameClassDifferent
 	self assert: (function value: Object >> #printString value: Object >> #yourself )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortMethodByPackageFunctionTest >> testDescendingDifferentPackage [
 
 	function := ClySortMethodByPackageFunction descending.
@@ -41,7 +43,7 @@ ClySortMethodByPackageFunctionTest >> testDescendingDifferentPackage [
 	self assert: (function value: Object >> #printString value: Number >> #printString )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortMethodByPackageFunctionTest >> testDescendingSamePackageDifferentClass [
 
 	function := ClySortMethodByPackageFunction descending.
@@ -50,7 +52,7 @@ ClySortMethodByPackageFunctionTest >> testDescendingSamePackageDifferentClass [
 	self assert: (function value: True >> #not value: Object >> #printString)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortMethodByPackageFunctionTest >> testDescendingSamePackageSameClassDifferentSelector [
 
 	function := ClySortMethodByPackageFunction descending.

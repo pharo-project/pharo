@@ -18,16 +18,18 @@ Internal Representation and Key Implementation Points.
 	scriptBlock:		<BlockClosure>
 "
 Class {
-	#name : #ClyQueryBrowserFilter,
-	#superclass : #ClyItemStringFilter,
+	#name : 'ClyQueryBrowserFilter',
+	#superclass : 'ClyItemStringFilter',
 	#instVars : [
 		'scriptBlock',
 		'badScript'
 	],
-	#category : #'Calypso-SystemQueries-Queries'
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ClyQueryBrowserFilter >> createBlockFromPattern [
 
 	(pattern value endsWith: ']') ifFalse: [
@@ -38,14 +40,14 @@ ClyQueryBrowserFilter >> createBlockFromPattern [
 		on: Exception do: [:err | badScript := true ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyQueryBrowserFilter >> initialize [
 	super initialize.
 
 	badScript := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryBrowserFilter >> matches: aBrowserItem [
 	| actualObject |
 	actualObject := aBrowserItem class = ClyBrowserItem
@@ -57,7 +59,7 @@ ClyQueryBrowserFilter >> matches: aBrowserItem [
 	^actualObject matchesQueryBrowserFilter: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryBrowserFilter >> matchesByScript: anObject [
 
 	badScript ifTrue: [ ^true ].
@@ -67,7 +69,7 @@ ClyQueryBrowserFilter >> matchesByScript: anObject [
 	^[(scriptBlock value: anObject) ~~ false] onErrorDo: [ false ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryBrowserFilter >> matchesString: aString [
 
 	^pattern matches: aString

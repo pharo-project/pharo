@@ -2,18 +2,20 @@
 This class keeps a maps for key symbols that are represented by Morphic as special characters.
 "
 Class {
-	#name : #SDL2SpecialCharacterMapping,
-	#superclass : #Object,
+	#name : 'SDL2SpecialCharacterMapping',
+	#superclass : 'Object',
 	#classVars : [
 		'Mapping'
 	],
 	#pools : [
 		'SDL2Constants'
 	],
-	#category : #'OSWindow-SDL2-Bindings'
+	#category : 'OSWindow-SDL2-Bindings',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Bindings'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL2SpecialCharacterMapping class >> initialize [
 	"
 	self initialize
@@ -37,7 +39,7 @@ SDL2SpecialCharacterMapping class >> initialize [
 	} pairsDo: [ :key :val | Mapping at: key put: val ]
 ]
 
-{ #category : #'symbol mapping' }
+{ #category : 'symbol mapping' }
 SDL2SpecialCharacterMapping class >> mapKeySymbol: keySym ifAbsent: aBlock [
 	^( Mapping at: keySym ifAbsent: [^ aBlock value ]) asCharacter
 ]

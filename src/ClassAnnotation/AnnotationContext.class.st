@@ -9,22 +9,23 @@ For simplicity there is one simple context implementation the SimpleAnnotationCo
 Look at subclasses comments for details.
 "
 Class {
-	#name : #AnnotationContext,
-	#superclass : #Object,
-	#category : #ClassAnnotation
+	#name : 'AnnotationContext',
+	#superclass : 'Object',
+	#category : 'ClassAnnotation',
+	#package : 'ClassAnnotation'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 AnnotationContext >> , anAnnotationContext [
 	^ CompositeAnnotationContext with: { self. anAnnotationContext asAnnotationContext}
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AnnotationContext >> asAnnotationContext [
 	^self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AnnotationContext >> describes: anAnnotationUser [
 	"The annotation context describes users of annotation.
 	Subclasses should decide if given anAnnotationUser is appropriate annotation user.

@@ -2,17 +2,18 @@
 I am a command to inline selected temp variable (represented by source node)
 "
 Class {
-	#name : #SycInlineTempCommand,
-	#superclass : #SycSourceCodeRefactoringCommand,
-	#category : #'SystemCommands-SourceCodeCommands'
+	#name : 'SycInlineTempCommand',
+	#superclass : 'SycSourceCodeRefactoringCommand',
+	#category : 'SystemCommands-SourceCodeCommands',
+	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycInlineTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
 	^ (super canBeExecutedInContext: aSourceCodeContext) and: [ aSourceCodeContext isTempVariableSelected]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycInlineTempCommand >> asRefactorings [
 	| assignment |
 	assignment := sourceNode methodNode assignmentNodes
@@ -24,12 +25,12 @@ SycInlineTempCommand >> asRefactorings [
 		in: method origin}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycInlineTempCommand >> defaultMenuIconName [
-	^ ##smallRightFlushIcon
+	^ ##smallRightFlush
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycInlineTempCommand >> defaultMenuItemName [
 	^'Inline temp'
 ]

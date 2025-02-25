@@ -1,1 +1,1 @@
-Package { #name : #'CodeImport-Tests' }
+Package { #name : 'CodeImport-Tests' }

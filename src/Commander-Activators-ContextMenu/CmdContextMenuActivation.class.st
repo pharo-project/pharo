@@ -27,7 +27,8 @@ Commands  can override this method to build something specific but by default th
 Look also at my superclass CmdMenuCommandActivator comment for more details
 "
 Class {
-	#name : #CmdContextMenuActivation,
-	#superclass : #CmdMenuCommandActivationStrategy,
-	#category : #'Commander-Activators-ContextMenu'
+	#name : 'CmdContextMenuActivation',
+	#superclass : 'CmdMenuCommandActivationStrategy',
+	#category : 'Commander-Activators-ContextMenu',
+	#package : 'Commander-Activators-ContextMenu'
 }

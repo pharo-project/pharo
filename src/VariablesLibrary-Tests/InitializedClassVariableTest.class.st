@@ -1,12 +1,15 @@
 Class {
-	#name : #InitializedClassVariableTest,
-	#superclass : #SlotSilentTest,
-	#category : #'VariablesLibrary-Tests-Tests'
+	#name : 'InitializedClassVariableTest',
+	#superclass : 'SlotSilentTest',
+	#category : 'VariablesLibrary-Tests-Tests',
+	#package : 'VariablesLibrary-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 InitializedClassVariableTest >> testInitializedClassVariableCompiled [
 	| classVar |
+	<ignoreNotImplementedSelectors: #(ClassVar ClassVar:)>
 	classVar := #ClassVar => InitializedClassVariable default: 5.
 	aClass := self make: [ :builder | builder sharedVariables: {classVar}].
 
@@ -16,7 +19,7 @@ InitializedClassVariableTest >> testInitializedClassVariableCompiled [
 	self assert: aClass new ClassVar equals: 6
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 InitializedClassVariableTest >> testInitializedClassVariableReadReflective [
 	| classVar |
 	classVar := #ClassVar => InitializedClassVariable default: 5.
@@ -27,7 +30,7 @@ InitializedClassVariableTest >> testInitializedClassVariableReadReflective [
 	self assert: classVar read equals: 10
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 InitializedClassVariableTest >> testInitializedClassVariableReflectiveBlock [
 	| classVar |
 	classVar := #ClassVar => InitializedClassVariable default: [5].
@@ -38,7 +41,7 @@ InitializedClassVariableTest >> testInitializedClassVariableReflectiveBlock [
 	self assert: classVar read equals: 10
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 InitializedClassVariableTest >> testInitializedClassVariableReflectiveBlockParameter [
 	| classVar |
 	classVar := #ClassVar => InitializedClassVariable default: [:class | class].

@@ -2,7 +2,9 @@
 I am raised on an attempt to write to a read-only file store.
 "
 Class {
-	#name : #ReadOnlyFileException,
-	#superclass : #FileException,
-	#category : #'Files-Core'
+	#name : 'ReadOnlyFileException',
+	#superclass : 'FileException',
+	#category : 'Files-Core',
+	#package : 'Files',
+	#tag : 'Core'
 }

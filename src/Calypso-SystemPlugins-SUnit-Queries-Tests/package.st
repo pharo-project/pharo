@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-SUnit-Queries-Tests' }
+Package { #name : 'Calypso-SystemPlugins-SUnit-Queries-Tests' }

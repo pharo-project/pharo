@@ -2,16 +2,18 @@
 I simply hold the method names that have to be called before/after each other
 "
 Class {
-	#name : #ReInvocationSequenceRuleSequence,
-	#superclass : #Object,
+	#name : 'ReInvocationSequenceRuleSequence',
+	#superclass : 'Object',
 	#instVars : [
 		'before',
 		'after'
 	],
-	#category : #'Renraku-Rules'
+	#category : 'Renraku-Rules',
+	#package : 'Renraku',
+	#tag : 'Rules'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ReInvocationSequenceRuleSequence class >> before: beforeSymbol after: afterSymbol [
 
 	^ self new
@@ -20,39 +22,39 @@ ReInvocationSequenceRuleSequence class >> before: beforeSymbol after: afterSymbo
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReInvocationSequenceRuleSequence >> after [
 	^ after
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ReInvocationSequenceRuleSequence >> afterDescriptionString [
 
 	^ self descriptionStringFor: after
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReInvocationSequenceRuleSequence >> afterMatches: aSymbol [
 	^ after includes: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReInvocationSequenceRuleSequence >> before [
 	^ before
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ReInvocationSequenceRuleSequence >> beforeDescriptionString [
 
 	^ self descriptionStringFor: before
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReInvocationSequenceRuleSequence >> beforeMatches: aSymbol [
 	^ before includes: aSymbol
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ReInvocationSequenceRuleSequence >> descriptionStringFor: aSet [
 
 	^ aSet size = 1
@@ -60,7 +62,7 @@ ReInvocationSequenceRuleSequence >> descriptionStringFor: aSet [
 		ifFalse: [ 'any one of #', (aSet joinUsing: ', #'), ' messages' ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReInvocationSequenceRuleSequence >> initializeBefore: beforeSymols after: afterSymbols [
 
 	before :=

@@ -1,6 +1,6 @@
-Extension { #name : #TrianglePaintPatch }
+Extension { #name : 'TrianglePaintPatch' }
 
-{ #category : #'*Athens-Cairo' }
+{ #category : '*Athens-Cairo' }
 TrianglePaintPatch >> addToCairoMeshGradientPaint: meshGradientPaint [
 	meshGradientPaint
 		beginPatch;

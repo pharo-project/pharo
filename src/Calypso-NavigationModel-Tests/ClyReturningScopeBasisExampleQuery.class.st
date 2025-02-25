@@ -1,13 +1,14 @@
 Class {
-	#name : #ClyReturningScopeBasisExampleQuery,
-	#superclass : #ClyTypedQuery,
+	#name : 'ClyReturningScopeBasisExampleQuery',
+	#superclass : 'ClyTypedQuery',
 	#instVars : [
 		'extraParameter'
 	],
-	#category : #'Calypso-NavigationModel-Tests'
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyReturningScopeBasisExampleQuery >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -16,36 +17,36 @@ ClyReturningScopeBasisExampleQuery >> = anObject [
 	^ extraParameter = anObject extraParameter
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyReturningScopeBasisExampleQuery >> buildResult: aQueryResult [
 	"For tests we need predictable order of query result items"
 
 	aQueryResult fillWith: (scope basisObjects sorted: #printString ascending)
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyReturningScopeBasisExampleQuery >> checkEmptyResult [
 	^scope basisObjects isEmpty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyReturningScopeBasisExampleQuery >> extraParameter [
 	^ extraParameter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyReturningScopeBasisExampleQuery >> extraParameter: anObject [
 	extraParameter := anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyReturningScopeBasisExampleQuery >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^super hash bitXor: extraParameter hash
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyReturningScopeBasisExampleQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 	^false
 ]

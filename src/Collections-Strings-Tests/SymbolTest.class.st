@@ -5,8 +5,8 @@ This is the unit test for the class Symbol. Unit tests are a good way to exercis
 	- the sunit class category
 "
 Class {
-	#name : #SymbolTest,
-	#superclass : #CollectionRootTest,
+	#name : 'SymbolTest',
+	#superclass : 'CollectionRootTest',
 	#traits : 'TSortTest - {#testSort. #testSortUsingSortBlock} + TIncludesTest + (TCloneTest - {#testCopyCreatesNewObject}) + TCopyPreservingIdentityTest + TCopyTest + (TSetArithmetic - {#testDifferenceWithNonNullIntersection}) + TIterateSequencedReadableTest + TSequencedConcatenationTest + TPrintOnSequencedTest + TAsStringCommaAndDelimiterSequenceableTest + TIndexAccess + (TIndexAccessForMultipliness - {#testIdentityIndexOfIAbsentDuplicate. #testIdentityIndexOfDuplicate. #collectionWithNonIdentitySameAtEndAndBegining}) + TSequencedElementAccessTest + TSubCollectionAccess + (TCopySequenceableSameContents - {#testShuffled}) + (TCopyPartOfSequenceable - {#testCopyEmptyMethod. #integerCollectionWithoutEqualElements}) + TCopyPartOfSequenceableForMultipliness + TCopySequenceableWithReplacement + TBeginsEndsWith + TConvertAsSortedTest + (TConvertTest - {#testAsByteArray. #integerCollectionWithoutEqualElements}) + TCopySequenceableWithOrWithoutSpecificElements + TConvertAsSetForMultiplinessTest + TSequencedStructuralEqualityTest + TOccurrencesForMultiplinessTest',
 	#classTraits : 'TSortTest classTrait + TIncludesTest classTrait + TCloneTest classTrait + TCopyPreservingIdentityTest classTrait + TCopyTest classTrait + TSetArithmetic classTrait + TIterateSequencedReadableTest classTrait + TSequencedConcatenationTest classTrait + TPrintOnSequencedTest classTrait + TAsStringCommaAndDelimiterSequenceableTest classTrait + TIndexAccess classTrait + TIndexAccessForMultipliness classTrait + TSequencedElementAccessTest classTrait + TSubCollectionAccess classTrait + TCopySequenceableSameContents classTrait + TCopyPartOfSequenceable classTrait + TCopyPartOfSequenceableForMultipliness classTrait + TCopySequenceableWithReplacement classTrait + TBeginsEndsWith classTrait + TConvertAsSortedTest classTrait + TConvertTest classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TConvertAsSetForMultiplinessTest classTrait + TSequencedStructuralEqualityTest classTrait + TOccurrencesForMultiplinessTest classTrait',
 	#instVars : [
@@ -20,161 +20,163 @@ Class {
 		'with2timeSubcollection',
 		'subcollection3ElementsSorted'
 	],
-	#category : #'Collections-Strings-Tests-Base'
+	#category : 'Collections-Strings-Tests-Base',
+	#package : 'Collections-Strings-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> anotherElementNotIn [
 	^ notIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> anotherElementOrAssociationIn [
 	" return an element (or an association for Dictionary ) present  in 'collection' "
 	^ self collection anyOne
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> anotherElementOrAssociationNotIn [
 	" return an element (or an association for Dictionary )not present  in 'collection' "
 	^ notIn
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 SymbolTest >> classToBeTested [
 
 	^ Symbol
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> collection [
 
 	^ nonEmptySymbol5ElementsNoDuplicates
 ]
 
-{ #category : #'tests - set arithmetic' }
+{ #category : 'tests - set arithmetic' }
 SymbolTest >> collectionClass [
 	"Return the class to be used to create instances of the class tested"
 
 	^ Symbol
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> collectionMoreThan1NoDuplicates [
 	" return a collection of size > 1 without equal elements"
 	^ nonEmptySymbol5ElementsNoDuplicates
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> collectionNotIncluded [
 " return a collection for wich each element is not included in 'nonEmpty' "
 	^ collectionNotIncluded
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> collectionWith1TimeSubcollection [
 " return a collection including 'oldSubCollection'  only one time "
 	^ nonEmptySymbol5ElementsNoDuplicates
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> collectionWith2TimeSubcollection [
 " return a collection including 'oldSubCollection'  two or many time "
 	^ with2timeSubcollection
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> collectionWithElementsToRemove [
 " return a collection of elements included in 'nonEmpty'  "
 	^ subcollection3ElementsSorted
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> collectionWithEqualElements [
 " return a collecition including atLeast two elements equal"
 
 ^ sameAtEndAndBegining
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> collectionWithSameAtEndAndBegining [
 	" return a collection with elements at end and begining equals .
 (others elements of the collection are not equal to those elements)"
 	^ sameAtEndAndBegining
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> collectionWithSortableElements [
 	" return a collection only including elements that can be sorted (understanding '<' )"
 	^ nonEmptySymbol5ElementsNoDuplicates
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> collectionWithoutEqualElements [
 
 " return a collection not including equal elements "
 	^ nonEmptySymbol5ElementsNoDuplicates
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> collectionWithoutNilElements [
 " return a collection that doesn't includes a nil element  and that doesn't includes equal elements'"
 	^nonEmptySymbol5ElementsNoDuplicates
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> elementInForElementAccessing [
 " return an element inculded in 'moreThan4Elements'"
 	^ self moreThan4Elements anyOne
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> elementInForIndexAccessing [
 " return an element included in 'collectionMoreThan1NoDuplicates' "
 	^ self collectionMoreThan1NoDuplicates anyOne
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> elementNotIn [
 "return an element not included in 'nonEmpty' "
 
 	^ notIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> elementNotInForElementAccessing [
 " return an element not included in 'moreThan4Elements' "
 	^ notIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> elementNotInForIndexAccessing [
 " return an element not included in 'collectionMoreThan1NoDuplicates' "
 	^ notIn
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> elementNotInForOccurrences [
 	^ notIn
 ]
 
-{ #category : #'tests - copying' }
+{ #category : 'tests - copying' }
 SymbolTest >> elementToAdd [
 	^ $u
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> elementTwiceInForOccurrences [
 " return an element included exactly two time in # collectionWithEqualElements"
 ^ sameAtEndAndBegining first
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> empty [
 	^ emptySymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SymbolTest >> expectedBehavior [
 	^ {
 		  ([ Symbol readFromString: '#''abc''' ] -> #abc).
@@ -183,75 +185,75 @@ SymbolTest >> expectedBehavior [
 		  ([ Symbol readFromString: '#ab@c' ] -> #ab) }
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> firstCollection [
 " return a collection that will be the first part of the concatenation"
 	^ nonEmptySymbol5ElementsNoDuplicates
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> indexInForCollectionWithoutDuplicates [
 " return an index between 'collectionWithoutEqualsElements'  bounds"
 	^ 2
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> indexInNonEmpty [
 	"Return an index between bounds of 'nonEmpty'"
 
 	^ 2
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> moreThan3Elements [
 	" return a collection including atLeast 3 elements"
 	^ nonEmptySymbol5ElementsNoDuplicates
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> moreThan4Elements [
 
 " return a collection including at leat 4 elements"
 	^ nonEmptySymbol5ElementsNoDuplicates
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> nonEmpty [
 	^ nonEmptySymbol5ElementsNoDuplicates
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> nonEmpty1Element [
 " return a collection of size 1 including one element"
 	^collection1Element
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> nonEmptyMoreThan1Element [
 " return a collection that don't includes equal elements'"
 	^nonEmptySymbol5ElementsNoDuplicates
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> oldSubCollection [
 " return a subCollection included in collectionWith1TimeSubcollection .
 ex :   subCollection := #( 2 3 4) and collectionWith1TimeSubcollection := #(1 2 3 4 5)"
 	^ subcollection3ElementsSorted
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> replacementCollection [
 " return a collection that will be used to replace 'oldSubcollection' in ' collectionWith1TimeSubcollection'  "
 	^ collection1Element
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> secondCollection [
 " return a collection that will be the second part of the concatenation"
 	^ collectionSize4
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 SymbolTest >> setUp [
 	super setUp.
 	emptySymbol := #''.
@@ -265,25 +267,35 @@ SymbolTest >> setUp [
 	collectionNotIncluded := #zz
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> sizeCollection [
 	"Answers a collection whose #size is 4"
 	^ collectionSize4
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> sortedInAscendingOrderCollection [
 	"Return a collection sorted in ascending order"
 	^ collectionSize4
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> subCollectionNotIn [
 " return a collection for which at least one element is not included in 'moreThan4Elements' "
 	^ collectionNotIncluded
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+SymbolTest >> testAsAccessor [
+	self assert: #x: asAccessor equals: #x.
+	self assert: #x asAccessor equals: #x.
+	self should: [ self assert: #x:: asAccessor ] raise: Error.	
+	self should: [ self assert: #keyword:selector: asAccessor ] raise: Error.
+	self should: [ self assert: #+ asAccessor ] raise: Error.
+	self should: [ self assert: #'' asAccessor ] raise: Error.	
+]
+
+{ #category : 'tests' }
 SymbolTest >> testAsMutator [
 	self assert: #x asMutator equals: #x:.
 	"return receiver if it is already a mutator"
@@ -291,7 +303,7 @@ SymbolTest >> testAsMutator [
 	self assert: #x asMutator isSymbol
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SymbolTest >> testCapitalized [
 	| uc lc |
 	uc := #MElViN.
@@ -300,7 +312,7 @@ SymbolTest >> testCapitalized [
 	self assert: uc capitalized equals: uc
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SymbolTest >> testConcatenationIsSymbol [
 	"Concatenating 2 symbols results in another symbol"
 
@@ -324,11 +336,11 @@ SymbolTest >> testConcatenationIsSymbol [
 	self deny: 'foo' , #bar identicalTo: #foobar
 ]
 
-{ #category : #'tests - copy' }
+{ #category : 'tests - copy' }
 SymbolTest >> testCopyNonEmptyWithoutAllNotIncluded [
 ]
 
-{ #category : #'tests - copy' }
+{ #category : 'tests - copy' }
 SymbolTest >> testCopyNotSame [
 	"There is only one symbol, the copy is the same"
 
@@ -337,7 +349,7 @@ SymbolTest >> testCopyNotSame [
 	self assert: copy identicalTo: self nonEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SymbolTest >> testDisplayString [
 
 	| actual |
@@ -345,7 +357,7 @@ SymbolTest >> testDisplayString [
 	self assert: actual equals: 'some symbol'
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 SymbolTest >> testEndsWithAColon [
 
 	self assert: #fred: endsWithAColon.
@@ -355,7 +367,7 @@ SymbolTest >> testEndsWithAColon [
 	self deny: #fred endsWithAColon
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SymbolTest >> testIsLiteralSymbol [
 
 	self assert: ('*+-/\~=<>&@%,|' allSatisfy: [:char | (Symbol with: char) isLiteralSymbol])
@@ -365,19 +377,35 @@ SymbolTest >> testIsLiteralSymbol [
 		description: 'valid ascii selector symbols can be printed without string quotes'
 ]
 
-{ #category : #'tests - selectors' }
-SymbolTest >> testIsSelectorSymbol [
-	self deny: #'no selector exist with spaces' isSelectorSymbol.
-	self assert: #assert:equals: isSelectorSymbol
+{ #category : 'tests - selectors' }
+SymbolTest >> testIsUsedAsSelectorSymbol [
+	self deny: #'no selector exist with spaces' isUsedAsSelectorSymbol.
+	
+	"a valid selector used in the system"
+	self assert: #assert:equals: isUsedAsSelectorSymbol.
+	
+
+	"a valid selector not used in the system"
+	self deny: #assert:equals1942: isUsedAsSelectorSymbol.
+	self assert: (OCScanner isSelector: #assert:equals1942:) 
 ]
 
-{ #category : #requirements }
+{ #category : 'tests' }
+SymbolTest >> testKeywordsStrict [
+
+	self assert: #foo: keywordsStrict equals: #( 'foo:' ).
+	self assert: #foo:bar: keywordsStrict equals: #( 'foo:' 'bar:' ).
+	self assert: #foo keywordsStrict equals: #(  ).
+	self assert: #+ keywordsStrict equals: #(  )
+]
+
+{ #category : 'requirements' }
 SymbolTest >> testNew [
 
 	self should: [Symbol new: 5 ] raise: self defaultTestError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SymbolTest >> testNumArgs2 [
 	"TODO: need to be extended to support shrinking and for selectors like #+ "
 
@@ -405,7 +433,7 @@ SymbolTest >> testNumArgs2 [
 	self assert: (#test:with:with: numArgs: 4) equals: #test:with:with:with:
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SymbolTest >> testNumArgsBinary [
 	self assert: '-' numArgs equals: 1.
 	self assert: '++' numArgs equals: 1.
@@ -423,7 +451,7 @@ SymbolTest >> testNumArgsBinary [
 	self assert: '*a' numArgs equals: -1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SymbolTest >> testNumArgsKeyword1 [
 	self assert: 'name:' numArgs equals: 1.
 
@@ -444,7 +472,7 @@ SymbolTest >> testNumArgsKeyword1 [
 	self assert: '123name:' numArgs equals: -1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SymbolTest >> testNumArgsKeyword2 [
 	self assert: 'name:with:' numArgs equals: 2.
 
@@ -470,7 +498,7 @@ SymbolTest >> testNumArgsKeyword2 [
 	self assert: 'name:with123:' numArgs equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SymbolTest >> testNumArgsUnary [
 	self assert: 'name' numArgs equals: 0.
 
@@ -491,7 +519,31 @@ SymbolTest >> testNumArgsUnary [
 	self assert: '123name' numArgs equals: -1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
+SymbolTest >> testPrecedence [
+	self assert: #x precedence equals: 1.
+	self assert: #abs precedence equals: 1.
+	self assert: #_abs precedence equals: 1.
+
+	self assert: #+ precedence equals: 2.
+	self assert: #+- precedence equals: 2.
+	self assert: #>>> precedence equals: 2.
+
+	self assert: #x: precedence equals: 3.
+	self assert: #abs: precedence equals: 3.
+	self assert: #_abs: precedence equals: 3.
+
+	self assert: #x:y: precedence equals: 3.
+	self assert: #abs:y: precedence equals: 3.
+	self assert: #_abs:y: precedence equals: 3.
+
+	self assert: #'0' precedence equals: 0.
+	self assert: #'.' precedence equals: 0.
+	self assert: #':' precedence equals: 0.
+
+]
+
+{ #category : 'tests' }
 SymbolTest >> testPrintOn [
 
 	| printed allElementsAsString |
@@ -503,12 +555,12 @@ SymbolTest >> testPrintOn [
 	self assert: printed equals: $# asString , ('' join: allElementsAsString)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SymbolTest >> testReadFrom [
 	self expectedBehavior do: [ :association | self assert: association key value identicalTo: association value ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SymbolTest >> testUncapitalized [
 	| uc lc |
 	uc := #MElViN.
@@ -517,13 +569,13 @@ SymbolTest >> testUncapitalized [
 	self assert: lc uncapitalized equals: lc
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> unsortedCollection [
 " retur a collection that is not yat sorted"
 	^ with2timeSubcollection
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 SymbolTest >> withEqualElements [
 	" return a collection  including equal elements (classic equality)"
 	^ sameAtEndAndBegining

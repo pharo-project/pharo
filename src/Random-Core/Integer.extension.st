@@ -1,6 +1,6 @@
-Extension { #name : #Integer }
+Extension { #name : 'Integer' }
 
-{ #category : #'*Random-Core' }
+{ #category : '*Random-Core' }
 Integer >> atRandom [
 	"Answer a random integer from 1 to self.  This implementation uses a
 	shared generator. Heavy users should their own implementation or use
@@ -11,7 +11,7 @@ Integer >> atRandom [
 	^ self atRandom: SharedRandom globalGenerator
 ]
 
-{ #category : #'*Random-Core' }
+{ #category : '*Random-Core' }
 Integer >> atRandom: aGenerator [
 	"Answer a random integer from 1 to self picked from aGenerator."
 

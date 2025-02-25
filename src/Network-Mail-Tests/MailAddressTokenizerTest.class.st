@@ -1,10 +1,11 @@
 Class {
-	#name : #MailAddressTokenizerTest,
-	#superclass : #TestCase,
-	#category : #'Network-Mail-Tests'
+	#name : 'MailAddressTokenizerTest',
+	#superclass : 'TestCase',
+	#category : 'Network-Mail-Tests',
+	#package : 'Network-Mail-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MailAddressTokenizerTest >> testTokensInAscii [
 	"Basic test that the tokenizer returns the correct values"
 
@@ -18,7 +19,7 @@ MailAddressTokenizerTest >> testTokensInAscii [
 		equals: {#Atom->'first'. #Atom->'last'. $<->'<'. #Atom->'person'. $@->'@'. #Atom->'company'. $.->'.'. #Atom->'com'. $>->'>'}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MailAddressTokenizerTest >> testTokensInLatin [
 	"RFC6531 (February 2012) allows character values > 127.
 	Check that the parser handles values between 128 and 255 (which can be correctly represented with single byte encoding)"
@@ -50,7 +51,7 @@ MailAddressTokenizerTest >> testTokensInLatin [
 			$>->'>'}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MailAddressTokenizerTest >> testTokensInUnicode [
 	"RFC6531 (February 2012) allows character values > 127.
 	Check that the parser handles values greater than 255 (which require multi-byte encoding)"

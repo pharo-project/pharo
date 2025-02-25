@@ -2,12 +2,14 @@
 I find libraries in a Windows system.
 "
 Class {
-	#name : #FFIWindowsLibraryFinder,
-	#superclass : #FFILibraryFinder,
-	#category : #'UnifiedFFI-Libraries'
+	#name : 'FFIWindowsLibraryFinder',
+	#superclass : 'FFILibraryFinder',
+	#category : 'UnifiedFFI-Libraries',
+	#package : 'UnifiedFFI',
+	#tag : 'Libraries'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIWindowsLibraryFinder >> basePaths [
 
 	^ {
@@ -15,7 +17,7 @@ FFIWindowsLibraryFinder >> basePaths [
 	Smalltalk vm directory }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIWindowsLibraryFinder >> knownPaths [
 
 	^ (OSEnvironment current at: 'PATH' ifAbsent: [ '' ]) substrings: ';'

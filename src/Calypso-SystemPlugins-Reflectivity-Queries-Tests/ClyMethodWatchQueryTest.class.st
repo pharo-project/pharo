@@ -1,18 +1,20 @@
 Class {
-	#name : #ClyMethodWatchQueryTest,
-	#superclass : #ClyMethodQueryTest,
+	#name : 'ClyMethodWatchQueryTest',
+	#superclass : 'ClyMethodQueryTest',
 	#instVars : [
 		'installedWatchpoints'
 	],
-	#category : #'Calypso-SystemPlugins-Reflectivity-Queries-Tests-Watchpoints'
+	#category : 'Calypso-SystemPlugins-Reflectivity-Queries-Tests-Watchpoints',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Queries-Tests',
+	#tag : 'Watchpoints'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodWatchQueryTest >> createQuery [
 	^ClyMethodWatchQuery from: ClyClassScope of: self class in: environment
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodWatchQueryTest >> installWatchInto: selector [
 	| watchpoint |
 	watchpoint := Watch in: (self class >> selector) ast sendNodes last.
@@ -20,32 +22,32 @@ ClyMethodWatchQueryTest >> installWatchInto: selector [
 	^watchpoint
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodWatchQueryTest >> methodWithWatch [
 	"Currently watchpoint is only compatible with message nodes.
 	So we can't install it directly on method node"
 	^1+2
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodWatchQueryTest >> methodWithoutWatch [
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodWatchQueryTest >> setUp [
 	super setUp.
 
 	installedWatchpoints := OrderedCollection new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodWatchQueryTest >> setUpEnvironment [
 	super setUpEnvironment.
 
 	environment addPlugin: ClyReflectiveEnvironmentPlugin new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodWatchQueryTest >> tearDown [
 	installedWatchpoints do: [ :each | each uninstall ].
 	installedWatchpoints removeAll.
@@ -53,7 +55,7 @@ ClyMethodWatchQueryTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodWatchQueryTest >> testCheckIfEmpty [
 	self installWatchInto: #methodWithWatch.
 	query scope: (ClyMethodScope
@@ -65,7 +67,7 @@ ClyMethodWatchQueryTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodWatchQueryTest >> testDecoratingMethodWithExecutionCounter [
 
 	| plugin method methodItem |
@@ -79,7 +81,7 @@ ClyMethodWatchQueryTest >> testDecoratingMethodWithExecutionCounter [
 	self assert: (methodItem isMarkedWith: ClyMethodWithWatchTag)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodWatchQueryTest >> testFromTwoMethods [
 	self installWatchInto: #methodWithWatch.
 	self queryFromScope: ClyMethodScope ofAll: {
@@ -89,13 +91,13 @@ ClyMethodWatchQueryTest >> testFromTwoMethods [
 	self assert: foundSelectors sorted asArray equals: #(#methodWithWatch)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodWatchQueryTest >> testNotSelectsMethodWithoutWatch [
 
 	self deny: (query selectsMethod: self class >> #methodWithoutWatch)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodWatchQueryTest >> testSelectsMethodWithWatch [
 	self installWatchInto: #methodWithWatch.
 

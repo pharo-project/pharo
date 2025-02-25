@@ -2,8 +2,8 @@
 I'm an example that shows a tiger that moves via rotation, translation and zoom in a Morph window.
 "
 Class {
-	#name : #AthensTigerWindow,
-	#superclass : #StandardWindow,
+	#name : 'AthensTigerWindow',
+	#superclass : 'StandardWindow',
 	#instVars : [
 		'surface',
 		'scale',
@@ -11,10 +11,12 @@ Class {
 		'example',
 		'rotation'
 	],
-	#category : #'Athens-Examples-Morphic'
+	#category : 'Athens-Examples-Morphic',
+	#package : 'Athens-Examples',
+	#tag : 'Morphic'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 AthensTigerWindow class >> openAnimated [
 	<script>
 
@@ -25,19 +27,19 @@ AthensTigerWindow class >> openAnimated [
 		startStepping
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTigerWindow class >> surfaceExtent [
 	^ 400 @ 400
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensTigerWindow >> drawOn: aCanvas [
 
 	super drawOn: aCanvas.
 	aCanvas drawImage: surface asForm at: self layoutBounds origin
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensTigerWindow >> initialize [
 
 	super initialize.
@@ -48,12 +50,12 @@ AthensTigerWindow >> initialize [
 	frames := 0
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 AthensTigerWindow >> rotationSpeed [
 	^1
 ]
 
-{ #category : #'stepping and presenter' }
+{ #category : 'stepping and presenter' }
 AthensTigerWindow >> step [
 	| zoom |
 	rotation := rotation + self rotationSpeed.
@@ -69,7 +71,7 @@ AthensTigerWindow >> step [
 	self changed
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 AthensTigerWindow >> stepTime [
 	^ 50
 ]

@@ -1,32 +1,34 @@
 Class {
-	#name : #ClyConstantMethodQueryTest,
-	#superclass : #ClyMethodQueryTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClyConstantMethodQueryTest',
+	#superclass : 'ClyMethodQueryTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyConstantMethodQueryTest >> createQuery [
 	^ (ClyConstantMethodQuery
 		with: {self class >> #method1. self class >> #method2})
 			scope: (ClyExampleScope emptyIn: environment)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyConstantMethodQueryTest >> method1 [
 	^#method1
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyConstantMethodQueryTest >> method2 [
 	^#method2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyConstantMethodQueryTest >> testCheckIfEmpty [
 	self deny: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyConstantMethodQueryTest >> testComparison [
 	self assert: (ClyConstantMethodQuery with: {(self class >> #method1)}) equals: (ClyConstantMethodQuery with: {(self class >> #method1)}).
 
@@ -35,7 +37,7 @@ ClyConstantMethodQueryTest >> testComparison [
 	self deny: (ClyConstantMethodQuery with: {(self class >> #method1)}) equals: (ClyConstantMethodQuery with: {(self class >> #method2)})
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyConstantMethodQueryTest >> testConvertingToAsyncQuery [
 	| convertedQuery |
 	convertedQuery := query async.
@@ -43,7 +45,7 @@ ClyConstantMethodQueryTest >> testConvertingToAsyncQuery [
 	self assert: convertedQuery identicalTo: query
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyConstantMethodQueryTest >> testConvertingToSemiAsyncQuery [
 	| convertedQuery |
 	convertedQuery := query semiAsync.
@@ -51,7 +53,7 @@ ClyConstantMethodQueryTest >> testConvertingToSemiAsyncQuery [
 	self assert: convertedQuery identicalTo: query
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyConstantMethodQueryTest >> testEmptyWhenNoMethods [
 	query scope: (ClyMethodScope of: (self class >> #method1) in: environment).
 
@@ -60,7 +62,7 @@ ClyConstantMethodQueryTest >> testEmptyWhenNoMethods [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyConstantMethodQueryTest >> testFromPackageScope [
 
 	self queryFromScope: ClyPackageScope of: self class package.
@@ -70,7 +72,7 @@ ClyConstantMethodQueryTest >> testFromPackageScope [
 	self assert: (resultItems identityIncludes: self class >> #method2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyConstantMethodQueryTest >> testFromSystemScope [
 
 	self queryFromScope: ClySystemEnvironmentScope of: ClySystemEnvironment currentImage.
@@ -80,7 +82,7 @@ ClyConstantMethodQueryTest >> testFromSystemScope [
 	self assert: (resultItems identityIncludes: self class >> #method2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyConstantMethodQueryTest >> testFromWrongClassScope [
 
 	self queryFromScope: ClyClassScope of: self class superclass.
@@ -88,27 +90,27 @@ ClyConstantMethodQueryTest >> testFromWrongClassScope [
 	self assert: resultItems isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyConstantMethodQueryTest >> testIsEmptyFromEmptyMethodScope [
 	"Constant query do not depends on scope. So we redefine this method"
 	<expectedFailure>
 	super testIsEmptyFromEmptyMethodScope
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyConstantMethodQueryTest >> testNotEmptyFromEmptyMethodScope [
 	query scope: (ClyMethodScope emptyIn: environment).
 
 	self deny: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyConstantMethodQueryTest >> testNotSelectsMethodOnWhichItIsBased [
 
 	self deny: (query selectsMethod: Point >> #x)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyConstantMethodQueryTest >> testSelectsMethodOnWhichItIsBased [
 
 	self assert: (query selectsMethod: self class >> #method1)

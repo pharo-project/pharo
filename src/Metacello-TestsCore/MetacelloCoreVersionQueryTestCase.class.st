@@ -1,10 +1,12 @@
 Class {
-	#name : #MetacelloCoreVersionQueryTestCase,
-	#superclass : #TestCase,
-	#category : #'Metacello-TestsCore-Configs'
+	#name : 'MetacelloCoreVersionQueryTestCase',
+	#superclass : 'TestCase',
+	#category : 'Metacello-TestsCore-Configs',
+	#package : 'Metacello-TestsCore',
+	#tag : 'Configs'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 MetacelloCoreVersionQueryTestCase >> baseline10: spec [
     <version: '1.0-baseline'>
     spec
@@ -23,7 +25,7 @@ MetacelloCoreVersionQueryTestCase >> baseline10: spec [
                 group: 'Recursive' with: #('Core' 'Recursive')	"recursive group definition" ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 MetacelloCoreVersionQueryTestCase >> baseline11: spec [
     <version: '1.1-baseline' imports: #('1.0-baseline')>
     spec
@@ -42,7 +44,7 @@ MetacelloCoreVersionQueryTestCase >> baseline11: spec [
                 yourself ]
 ]
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 MetacelloCoreVersionQueryTestCase >> baseline20: spec [
     <version: '2.0-baseline'>
     spec
@@ -68,13 +70,13 @@ MetacelloCoreVersionQueryTestCase >> baseline20: spec [
                 group: 'Recursive' with: #('Core' 'Recursive')	"recursive group definition" ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloCoreVersionQueryTestCase >> project [
 
 	^self projectWith: #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloCoreVersionQueryTestCase >> projectWith: projectAttributes [
     | project |
     "Construct Metacello project"
@@ -84,7 +86,7 @@ MetacelloCoreVersionQueryTestCase >> projectWith: projectAttributes [
     ^ project
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloCoreVersionQueryTestCase >> testBaseline10Groups [
 	| project version expected list |
 	project := self project.
@@ -95,7 +97,7 @@ MetacelloCoreVersionQueryTestCase >> testBaseline10Groups [
 	list do: [ :pkg | self assert: (expected includes: pkg name) ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloCoreVersionQueryTestCase >> testBaseline10Projects [
 	| project version expected list |
 	project := self project.
@@ -104,45 +106,4 @@ MetacelloCoreVersionQueryTestCase >> testBaseline10Projects [
 	list := version projects.
 	self assert: list size equals: expected size.
 	list do: [ :pkg | self assert: (expected includes: pkg name) ]
-]
-
-{ #category : #tests }
-MetacelloCoreVersionQueryTestCase >> testBaseline10ResolveToLoadableSpecs01 [
-	| project version expected list |
-	project := self project.
-	version := project version: '1.0-baseline'.
-	expected := #('UTF8').
-	list := version resolveToLoadableSpecs: #('UTF8').
-	self assert: list size equals: expected size.
-	list do: [ :pkg | self assert: (expected includes: pkg name) ].
-	expected := #('UTF8').
-	list := version resolveToLoadableSpecs: #('Recursive').
-	self assert: list size equals: expected size.
-	list do: [ :pkg | self assert: (expected includes: pkg name) ]
-]
-
-{ #category : #tests }
-MetacelloCoreVersionQueryTestCase >> testDifference [
-	| project expected fromVersionString toVersionString report actual |
-	project := self project.
-	fromVersionString := '1.1-baseline'.
-	toVersionString := '2.0-baseline'.
-	report := (project version: fromVersionString) difference: (project version: toVersionString).
-	report
-		from: fromVersionString;
-		to: toVersionString;
-		configuration: 'Test Configuration'.
-	expected := 'Test Configuration ''1.1-baseline'' to ''2.0-baseline''
-	Additions:
-		UTF9
-			'''' to ''1.0-baseline''
-	Modifications:
-		UTF8
-			''1.0-baseline'' to ''stable''
-	Removals:
-		UTF7
-			''1.0-baseline'' to ''''
-'.
-	actual := report printString.
-	self assert: expected equals: actual
 ]

@@ -2,27 +2,29 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TOccurrencesTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TOccurrencesTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TOccurrencesTest >> collectionWithoutEqualElements [
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TOccurrencesTest >> elementNotInForOccurrences [
 " return an element notIncluded in #collectionWithoutEqualElements"
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TOccurrencesTest >> empty [
 	self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TOccurrencesTest >> test0FixtureOccurrencesTest [
 	| tmp |
 	self empty.
@@ -38,7 +40,7 @@ TOccurrencesTest >> test0FixtureOccurrencesTest [
 	self deny: (self collectionWithoutEqualElements includes: self elementNotInForOccurrences)
 ]
 
-{ #category : #'tests - occurrencesOf' }
+{ #category : 'tests - occurrencesOf' }
 TOccurrencesTest >> testOccurrencesOf [
 	| collection |
 	collection := self collectionWithoutEqualElements .
@@ -46,14 +48,14 @@ TOccurrencesTest >> testOccurrencesOf [
 	collection do: [ :each | self assert: (collection occurrencesOf: each) equals: 1 ]
 ]
 
-{ #category : #'tests - occurrencesOf' }
+{ #category : 'tests - occurrencesOf' }
 TOccurrencesTest >> testOccurrencesOfEmpty [
 	| result |
 	result := self empty occurrencesOf: self collectionWithoutEqualElements anyOne.
 	self assert: result equals: 0
 ]
 
-{ #category : #'tests - occurrencesOf' }
+{ #category : 'tests - occurrencesOf' }
 TOccurrencesTest >> testOccurrencesOfNotIn [
 
 	| result |

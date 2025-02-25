@@ -1,10 +1,12 @@
 Class {
-	#name : #RGVariableLayout,
-	#superclass : #RGPointerLayout,
-	#category : #'Ring-Core-Kernel'
+	#name : 'RGVariableLayout',
+	#superclass : 'RGPointerLayout',
+	#category : 'Ring-Core-Kernel',
+	#package : 'Ring-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #description }
+{ #category : 'description' }
 RGVariableLayout class >> subclassDefiningSymbol [
 	"Answer a keyword that describes the receiver's kind of subclass
 	Note: this is for printing the ST80 style class definiton."
@@ -12,7 +14,7 @@ RGVariableLayout class >> subclassDefiningSymbol [
 	^ #variableSubclass:
 ]
 
-{ #category : #'testing - types' }
+{ #category : 'testing - types' }
 RGVariableLayout >> isVariableLayout [
 
 	^ true

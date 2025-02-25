@@ -26,15 +26,17 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #ClyCompositeScope,
-	#superclass : #ClyScope,
+	#name : 'ClyCompositeScope',
+	#superclass : 'ClyScope',
 	#instVars : [
 		'subscopes'
 	],
-	#category : #'Calypso-NavigationModel-Model'
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyCompositeScope class >> on: subscopes [
 	subscopes size = 1 ifTrue: [ ^subscopes anyOne ].
 
@@ -42,26 +44,26 @@ ClyCompositeScope class >> on: subscopes [
 		subscopes: subscopes
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyCompositeScope class >> on: subscopes in: aNavigationEnvironment [
 	^(self on: subscopes)
 		bindTo: aNavigationEnvironment
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyCompositeScope class >> on: subscopes in: aNavigationEnvironment named: aString [
 	^(self on: subscopes in: aNavigationEnvironment)
 		name: aString
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 ClyCompositeScope >> , anotherTypedScope [
 	(anotherTypedScope isKindOf: ClyTypedScope) ifFalse: [
 		^self error: 'Complex composition is not supported' ].
 	^ClyCompositeScope on: (subscopes copyWith: anotherTypedScope)
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyCompositeScope >> adoptQuery: aQuery [
 	| subqueries result |
 	subqueries := subscopes collect: [ :each | aQuery withScope: each ].
@@ -70,14 +72,14 @@ ClyCompositeScope >> adoptQuery: aQuery [
 	^result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCompositeScope >> bindTo: aNavigationEnvironment [
 	super bindTo: aNavigationEnvironment.
 
 	subscopes do: [ :each | each bindTo: aNavigationEnvironment]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyCompositeScope >> printBasisObject: anObject on: aStream [
 
 	| actualScope |
@@ -85,7 +87,7 @@ ClyCompositeScope >> printBasisObject: anObject on: aStream [
 	^actualScope printBasisObject: anObject on: aStream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyCompositeScope >> printDescriptionOn: aStream [
 
 	name ifNotNil: [ ^super printDescriptionOn: aStream ].
@@ -96,17 +98,17 @@ ClyCompositeScope >> printDescriptionOn: aStream [
 	aStream skip: -2 "composite scope must include at least on subscope"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyCompositeScope >> representsScope: aScopeClass [
 	^subscopes anySatisfy: [ :each | each representsScope: aScopeClass ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCompositeScope >> subscopes [
 	^ subscopes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCompositeScope >> subscopes: aCollection [
 	aCollection ifEmpty: [ ^self error: 'ClyCompositeScope should include at least one subscope' ].
 
@@ -115,7 +117,7 @@ ClyCompositeScope >> subscopes: aCollection [
 	self basisObjects: (subscopes flatCollect: [ :each | each basisObjects ])
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyCompositeScope >> supportsQuery: aQuery [
 	^aQuery isKindOf: ClyCompositeQuery
 ]

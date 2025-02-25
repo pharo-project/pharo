@@ -2,15 +2,17 @@
 I am a gradient that is defined by the composition of multiple patches.
 "
 Class {
-	#name : #MeshGradientPaint,
-	#superclass : #AthensAbstractPaint,
+	#name : 'MeshGradientPaint',
+	#superclass : 'AthensAbstractPaint',
 	#instVars : [
 		'patches'
 	],
-	#category : #'Athens-Core-Paints'
+	#category : 'Athens-Core-Paints',
+	#package : 'Athens-Core',
+	#tag : 'Paints'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 MeshGradientPaint >> addCircleSliceCenter: center radius: radius startAngle: sliceStartAngle endAngle: sliceEndAngle colors: colors [
 	| sliceStartPoint sliceEndPoint f sliceControlPoint1 sliceControlPoint2 sliceCenter |
 	sliceStartPoint := Point r: radius theta: sliceStartAngle.
@@ -39,48 +41,48 @@ MeshGradientPaint >> addCircleSliceCenter: center radius: radius startAngle: sli
 		]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MeshGradientPaint >> addCoonsPatchWithPoints: controlPoints colors: colors [
 	self assert: controlPoints size = 12.
 	self assert: colors size = 4.
 	^ self addPatch: (CoonsPaintPatch controlPoints: controlPoints colors: colors)
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MeshGradientPaint >> addPatch: patch [
 	patches add: patch
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MeshGradientPaint >> addTriangleWithPoints: controlPoints colors: colors [
 	self assert: controlPoints size = 3.
 	self assert: colors size = 3.
 	^ self addPatch: (TrianglePaintPatch controlPoints: controlPoints colors: colors)
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 MeshGradientPaint >> asAthensPaintOn: aCanvas [
 	^ aCanvas surface
 		createMeshGradientWithPatches: patches
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MeshGradientPaint >> buildPatchWith: aBlock [
 	^ self addPatch: (GenericPaintPatch new buildBlock: aBlock)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MeshGradientPaint >> initialize [
 	super initialize.
 	patches := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MeshGradientPaint >> patches [
 	^ patches
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MeshGradientPaint >> patches: aListOfPatches [
 	patches := aListOfPatches copy
 ]

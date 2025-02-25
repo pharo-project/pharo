@@ -2,12 +2,13 @@
 A SycAddNewPackageCommandTest is a test class for testing the behavior of SycAddNewPackageCommand
 "
 Class {
-	#name : #SycAddNewPackageCommandTest,
-	#superclass : #TestCase,
-	#category : #'SystemCommands-PackageCommands-Tests'
+	#name : 'SycAddNewPackageCommandTest',
+	#superclass : 'TestCase',
+	#category : 'SystemCommands-PackageCommands-Tests',
+	#package : 'SystemCommands-PackageCommands-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycAddNewPackageCommandTest >> testExecute [
 
 	| systemEnvironment command |
@@ -25,7 +26,7 @@ SycAddNewPackageCommandTest >> testExecute [
 
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SycAddNewPackageCommandTest >> testExecuteAlreadyExists [
 
 	| systemEnvironment command |
@@ -34,7 +35,7 @@ SycAddNewPackageCommandTest >> testExecuteAlreadyExists [
 		on: #createPackageNamed:
 		with: 'Test-Package'
 		verify: [ 
-			RPackageConflictError signal:
+			PackageConflictError signal:
 				'A package named Test-Package already exists' ].
 	systemEnvironment
 		on: #packageNamed:

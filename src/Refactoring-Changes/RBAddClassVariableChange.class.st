@@ -2,12 +2,14 @@
 I am a refactoring for a class variable addition. My changes are executed on the instance side.
 "
 Class {
-	#name : #RBAddClassVariableChange,
-	#superclass : #RBRefactoryVariableChange,
-	#category : #'Refactoring-Changes-Changes-Variables'
+	#name : 'RBAddClassVariableChange',
+	#superclass : 'RBRefactoryVariableChange',
+	#category : 'Refactoring-Changes-Changes-Variables',
+	#package : 'Refactoring-Changes',
+	#tag : 'Changes-Variables'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 RBAddClassVariableChange >> asUndoOperation [
 
 	^ changeFactory
@@ -15,14 +17,14 @@ RBAddClassVariableChange >> asUndoOperation [
 		  from: self changeClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBAddClassVariableChange >> changeClass: aBehavior [
 
 	super changeClass: aBehavior.
 	isMeta := false
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBAddClassVariableChange >> changeString [
 
 	^ 'Add class variable <1s> to <2s>'
@@ -30,7 +32,7 @@ RBAddClassVariableChange >> changeString [
 		  with: self displayClassName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBAddClassVariableChange >> changeSymbol [
 
 	^ #addClassVarNamed:

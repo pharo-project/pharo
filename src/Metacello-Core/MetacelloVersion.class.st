@@ -1,83 +1,140 @@
 Class {
-	#name : #MetacelloVersion,
-	#superclass : #Magnitude,
+	#name : 'MetacelloVersion',
+	#superclass : 'Magnitude',
 	#instVars : [
-		'spec',
-		'versionNumber',
 		'importedVersions',
-		'versionStatus'
+		'spec',
+		'versionNumber'
 	],
-	#category : #'Metacello-Core-Model'
+	#category : 'Metacello-Core-Model',
+	#package : 'Metacello-Core',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloVersion class >> fromSpec: aMetacelloVersionSpec [
     ^ (self new versionNumber: aMetacelloVersionSpec versionNumber)
         spec: aMetacelloVersionSpec;
         yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MetacelloVersion class >> fromString: aString [
 
 	^self new versionNumber: aString asMetacelloVersionNumber
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MetacelloVersion >> < aMetacelloVersion [
 
 	aMetacelloVersion species = self species ifFalse: [ ^false ].
 	^self versionNumber < aMetacelloVersion versionNumber
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MetacelloVersion >> = aMetacelloVersion [
 
 	aMetacelloVersion species = self species ifFalse: [ ^false ].
 	^self versionNumber = aMetacelloVersion versionNumber
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> author [
 
 	^self spec author value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersion >> basicSpec [
     ^ self spec
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> blessing [
     ^ self basicSpec blessing value
 ]
 
-{ #category : #private }
-MetacelloVersion >> computeVersionStatus [
-    ^ #'noStatus'
+{ #category : 'querying' }
+MetacelloVersion >> defaultPackageNamesToLoad: defaultList [
+	"Answer the list of packages and projects to be loaded: packages already loaded plust defaultList"
+	
+	^ self packageAndProjectNamesToLoad: defaultList loader: nil
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> description [
     ^ self basicSpec description value
 ]
 
-{ #category : #querying }
-MetacelloVersion >> difference: aMetacelloVersion [
-	"Return a a dictionary of additions, removals and modifications"
-	
-	^self spec difference: aMetacelloVersion spec
+{ #category : 'private' }
+MetacelloVersion >> doFetchRequiredFromArray: anArray withEngine: anEngine [
+
+	^ self
+		  doWithProgress: [
+		  self fetchRequiredFromArray: anArray withEngine: anEngine ]
+		  label: 'Fetching'
+		  silently: anEngine silently
 ]
 
-{ #category : #querying }
-MetacelloVersion >> expandToLoadableSpecNames: nameList [
-	"Just like #resolveToLoadableSpecs:, but returns list of spec names instead of specs"
-	
-	^self spec expandToLoadableSpecNames: nameList
+{ #category : 'private' }
+MetacelloVersion >> doLoadRequiredFromArray: anArray withEngine: anEngine [
+
+	^ self
+		  doWithProgress: [
+		  self loadRequiredFromArray: anArray withEngine: anEngine ]
+		  label: 'Loading'
+		  silently: anEngine silently
 ]
 
-{ #category : #querying }
+{ #category : 'private' }
+MetacelloVersion >> doRecordRequiredFromArray: anArray withEngine: anEngine [
+
+	^ self
+		  doWithProgress: [
+		  self recordRequiredFromArray: anArray withEngine: anEngine ]
+		  label: 'Recording'
+		  silently: anEngine silently
+]
+
+{ #category : 'private' }
+MetacelloVersion >> doWithProgress: aBlock label: aLabel silently: silently [
+
+	| displayString oldBypassProgress |
+	displayString := ' ' , self versionNumber printString , ' of '
+	                 , self spec projectLabel.
+	MetacelloNotification signal: aLabel , displayString , '...'.
+	oldBypassProgress := MetacelloPlatform current bypassProgressBars.
+
+	silently ifTrue: [
+		MetacelloPlatform current bypassProgressBars: true ].
+
+	[
+	MetacelloPlatform current
+		do: [
+			| result |
+			result := aBlock value.
+
+			MetacelloNotification signal:
+				'...finished ' , self versionNumber printString.
+			^ result ]
+		displaying: aLabel , displayString ] ensure: [
+		MetacelloPlatform current bypassProgressBars: oldBypassProgress ]
+]
+
+{ #category : 'private' }
+MetacelloVersion >> fetchRequiredFromArray: anArray withEngine: anEngine [
+
+	| directive |
+	directive := self
+		              recordRequiredFromArray:
+		              (self defaultPackageNamesToLoad: anArray)
+		              withEngine: anEngine.
+
+	directive acceptVisitor: (MetacelloFetchTarget on: anEngine).
+	^ directive
+]
+
+{ #category : 'querying' }
 MetacelloVersion >> groups [
 	"Answers the list of groups associated with this version"
 	
@@ -87,127 +144,134 @@ MetacelloVersion >> groups [
 	^groups
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MetacelloVersion >> hash [
 
 	^self versionNumber hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersion >> importedVersions [
 
-	importedVersions == nil ifTrue: [ importedVersions := #() ].
-	^importedVersions
+	^ importedVersions ifNil: [ importedVersions := #(  ) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersion >> importedVersions: aCollection [
 
 	importedVersions := aCollection
 ]
 
-{ #category : #testing }
-MetacelloVersion >> isAllLoadedToSpec [
-	"all projects and packages are loaded and match specification"
-	
-	^self spec isAllLoadedToSpec
+{ #category : 'private' }
+MetacelloVersion >> loadRequiredFromArray: anArray withEngine: anEngine [
+
+	| directive |
+	directive := self
+		             fetchRequiredFromArray:
+		             (self defaultPackageNamesToLoad: anArray)
+		             withEngine: anEngine.
+	directive acceptVisitor: (MetacelloLoadTarget on: anEngine).
+	^ directive
 ]
 
-{ #category : #testing }
-MetacelloVersion >> isLoadedMatchConstraints [
-	"all loaded projects and packages match constraints"
-	
-	^self spec isLoadedMatchConstraints
+{ #category : 'actions' }
+MetacelloVersion >> loadUsingTarget: aTarget withEngine: anEngine [
+
+	^self doLoadRequiredFromArray: self spec defaultPackageNames withEngine: anEngine
 ]
 
-{ #category : #testing }
-MetacelloVersion >> isLoadedToSpec [
-	"all loaded projects and packages match specifications"
-	
-	^self spec isLoadedToSpec
-]
-
-{ #category : #testing }
-MetacelloVersion >> isPossibleBaseline [
-
-	^self spec isPossibleBaseline
-]
-
-{ #category : #testing }
-MetacelloVersion >> isSomethingLoaded [
-	"at least one project or package has been loaded"
-	
-	^self spec isSomethingLoaded
-]
-
-{ #category : #actions }
-MetacelloVersion >> load [
-
-	^self subclassResponsibility
-]
-
-{ #category : #actions }
-MetacelloVersion >> load: required [
-
-	^self subclassResponsibility
-]
-
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> loader [
 
 	^self spec loader
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloVersion >> name [
 
 	^self versionString
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
+MetacelloVersion >> packageAndProjectNamesToLoad: defaultList loader: aLoader [
+	"Answer the list of packages and projects to be loaded: packages already loaded plust defaultList"
+
+	defaultList isEmpty ifTrue: [ ^ self spec defaultPackageNames ].
+	^ defaultList
+]
+
+{ #category : 'querying' }
 MetacelloVersion >> packageNamed: aString [
 
 	^self packageNamed: aString ifAbsent: [ ^nil ].
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> packageNamed: aString ifAbsent: aBlock [
 
-	| pkg |
-	(pkg := self spec packageNamed: aString ifAbsent: []) == nil
-		ifTrue: [ ^aBlock value ].
-	^pkg referencedSpec
+	^ (self spec packageNamed: aString ifAbsent: [  ])
+		  ifNil: [ aBlock value ]
+		  ifNotNil: [ :pkg | pkg referencedSpec ]
 ]
 
-{ #category : #printing }
+{ #category : 'querying' }
+MetacelloVersion >> packages [
+	"Answers the list of packages associated with this version"
+
+	| packages |
+	packages := OrderedCollection new.
+	self spec projectDo: [:ignored | ] packageDo: [:pkg | packages add: pkg ] groupDo: [:ignored | ].
+	^packages
+]
+
+{ #category : 'querying' }
+MetacelloVersion >> packagesForSpecNamed: aString [
+	"resolves list of packages associated with the named spec.
+	   If the spec is a packages, answer a list including only the package. #requires: and #includes:
+			fields in the package are ignored.
+	   If the spec is a project, answers an empty list.
+	   If the spec is a group, answers the list of packages in the #includes: field of the group. 
+			Groups in the #includes: field are expanded following the transitive closure on groups"
+	"If there is no spec named <aString>, answers an empty list"
+
+	^self packagesForSpecNamed: aString ifAbsent: [ ^#() ]
+]
+
+{ #category : 'querying' }
+MetacelloVersion >> packagesForSpecNamed: aString ifAbsent: aBlock [
+	"resolves list of packages associated with the named spec.
+	   If the spec is a packages, answer a list including only the package. #requires: and #includes:
+			fields in the package are ignored.
+	   If the spec is a project, answers an empty list.
+	   If the spec is a group, answers the list of packages in the #includes: field of the group. 
+			Groups in the #includes: field are expanded following the transitive closure on groups"
+
+	"If there is no spec named <aString>, aBlock is evaluated"
+
+	^ (self spec packageNamed: aString ifAbsent: aBlock) resolveToPackagesIn: self spec visited: MetacelloVisitedPackages new
+]
+
+{ #category : 'printing' }
 MetacelloVersion >> printOn: aStream [
-    | label vs |
-    (#(structural broken) includes: self blessing) not
-        ifTrue: [ 
-            (vs := self versionStatus) == #'somethingLoaded'
-                ifTrue: [ aStream nextPutAll: '<>' ].
-            vs == #'loadedMatchConstraints'
-                ifTrue: [ aStream nextPutAll: '>=' ].
-            vs == #'loadedToSpec'
-                ifTrue: [ aStream nextPut: $~ ] ].
-    self versionNumber printOn: aStream.
-    self basicSpec ~~ nil
-        ifTrue: [ 
-            (label := self projectLabel) isEmpty
-                ifFalse: [ aStream nextPutAll: ' [' , label , ']' ] ]
+
+	| label |
+	self versionNumber printOn: aStream.
+	self basicSpec ifNotNil: [
+		(label := self projectLabel) isEmpty ifFalse: [
+			aStream nextPutAll: ' [' , label , ']' ] ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> project [
     ^ self basicSpec project
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersion >> projectLabel [
     ^ self basicSpec projectLabel
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> projects [
 	"Answers the list of projects associated with this version"
 
@@ -217,100 +281,88 @@ MetacelloVersion >> projects [
 	^projects
 ]
 
-{ #category : #querying }
-MetacelloVersion >> resolveToLoadableSpecs: nameList [
-	"Resolves names in namelist to the  list of packages and projects in the version that would be loaded. Projects are 
-	not traversed during the transitive closure. The scope is that of the version itself.
-	   If the spec is a package, answer a list including the package and the transitive closure on 
-			its #requires: and #includes: fields.
-	   If the spec is a project, answer the project.
-	   If the spec is a group, answers the list of packages in the #includes: field of the group. 
-			Groups in the #includes: field are expanded following the transitive closure on groups"
+{ #category : 'private' }
+MetacelloVersion >> recordRequiredFromArray: anArray withEngine: anEngine [
 
-	^self spec resolveToLoadableSpecs: nameList
+	| target |
+	target := MetacelloRecordTarget on: anEngine.
+	target required: anArray.
+
+	self spec acceptVisitor: target.
+
+	^ target specBuilder root
 ]
 
-{ #category : #accessing }
+{ #category : 'actions' }
+MetacelloVersion >> recordWithEngine: anEngine [
+
+	^self doRecordRequiredFromArray: self spec defaultPackageNames withEngine: anEngine
+]
+
+{ #category : 'accessing' }
 MetacelloVersion >> spec [
 
 	^spec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersion >> spec: aMetacellVersionSpec [
 
 	spec := aMetacellVersionSpec
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> timestamp [
     ^ self basicSpec timestamp value
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MetacelloVersion >> unload [
 
 	^self spec unload
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> versionKey [
-    "version printString, without the versionStatus decorations, suitable for using as a unique key for the 
+	"version printString, without the versionStatus decorations, suitable for using as a unique key for the 
 	 receiver in a dictionary"
 
-    ^ String
-        streamContents: [ :aStream | 
-            | label |
-            self versionNumber printOn: aStream.
-            self basicSpec ~~ nil
-                ifTrue: [ 
-                    (label := self projectLabel) isEmpty
-                        ifFalse: [ aStream nextPutAll: ' [' , label , ']' ] ] ]
+	^ String streamContents: [ :aStream |
+		  | label |
+		  self versionNumber printOn: aStream.
+		  self basicSpec ifNotNil: [ (label := self projectLabel) isEmpty ifFalse: [ aStream nextPutAll: ' [' , label , ']' ] ] ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> versionNumber [
 
 	^versionNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersion >> versionNumber: aVersionNumber [
 
 	versionNumber := aVersionNumber
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> versionNumberFrom: aString [
     ^ self versionNumber class fromString: aString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersion >> versionSpec [
 
 	^self spec
 ]
 
-{ #category : #accessing }
-MetacelloVersion >> versionStatus [
-
-	versionStatus == nil ifTrue: [ versionStatus := self computeVersionStatus].
-	^versionStatus
-]
-
-{ #category : #accessing }
-MetacelloVersion >> versionStatus: aSymbol [
-
-	versionStatus := aSymbol
-]
-
-{ #category : #querying }
+{ #category : 'querying' }
 MetacelloVersion >> versionString [
 
 	^self versionNumber versionString
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MetacelloVersion >> ~> aMetacelloVersion [
 
 	aMetacelloVersion species = self species ifFalse: [ ^false ].

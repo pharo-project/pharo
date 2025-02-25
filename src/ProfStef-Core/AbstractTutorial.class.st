@@ -2,21 +2,22 @@
 Parent class of all Pharo tutorials.
 
 To create your own tutorial:
-- subclass AbstractTutorial
-- implement a few methods which returns a Lesson instance
+- subclass `AbstractTutorial`
+- implement a few methods which returns an instance of `Lesson`
 - implement the method #tutorial which returns a collection of selectors that when executed create related lessons.
 
-For example, see MockTutorial (minimalist) and PharoySntaxTutorial (default PharoTutorial one).
+For example, see `MockTutorial` (minimalist) and `PharoySyntaxTutorial` (default PharoTutorial one).
 
-See the PharoTutorial class comment to execute your own tutorial.
+See the `PharoTutorial` class comment to execute your own tutorial.
 "
 Class {
-	#name : #AbstractTutorial,
-	#superclass : #Object,
-	#category : #'ProfStef-Core'
+	#name : 'AbstractTutorial',
+	#superclass : 'Object',
+	#category : 'ProfStef-Core',
+	#package : 'ProfStef-Core'
 }
 
-{ #category : #'tutorial metainfo' }
+{ #category : 'tutorial metainfo' }
 AbstractTutorial class >> contentsOfTutorials [
 	^ String
 		streamContents: [ :aStream |
@@ -32,7 +33,7 @@ AbstractTutorial class >> contentsOfTutorials [
 						cr ] ]
 ]
 
-{ #category : #'tutorial metainfo' }
+{ #category : 'tutorial metainfo' }
 AbstractTutorial class >> title [
 	"Return the title of the tutorial by parsing the class name
 	like a Wiki link and interspersing whitespaces between the tokens"
@@ -44,30 +45,30 @@ AbstractTutorial class >> title [
 	^' ' join: (groups pairsCollect: [ :sep :rest | sep , rest ])
 ]
 
-{ #category : #'tutorial metainfo' }
+{ #category : 'tutorial metainfo' }
 AbstractTutorial class >> tutorials [
-	^ (self subclasses sort: [ :a :b | a name < b name ])
-		reject: [ :aTutorial | aTutorial package name = 'ProfStef-Tests' ]
+
+	^ (self subclasses sort: [ :a :b | a name < b name ]) reject: [ :aTutorial | aTutorial package name = 'ProfStef-Tests' ]
 ]
 
-{ #category : #tutorial }
+{ #category : 'tutorial' }
 AbstractTutorial >> indexOfLesson: aSelector [
 	^self tutorial indexOf: aSelector
 ]
 
-{ #category : #tutorial }
+{ #category : 'tutorial' }
 AbstractTutorial >> lessonAt: anInteger [
 	| lessonSelector |
 	lessonSelector := self tutorial at: anInteger.
 	^ self perform: lessonSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractTutorial >> lessons [
 	^ self tutorial collect: [:aSelector| self perform: aSelector]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 AbstractTutorial >> printOn: aStream [
 	aStream
 		nextPutAll: 'a Pharo Tutorial (';
@@ -75,14 +76,15 @@ AbstractTutorial >> printOn: aStream [
 		nextPutAll: ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractTutorial >> size [
 	^ self tutorial size
 ]
 
-{ #category : #tutorial }
+{ #category : 'tutorial' }
 AbstractTutorial >> tutorial [
 	"Should return an Array of selectors which returns Lesson instances.
-	See SmalltalkSyntaxTutorial."
+	See PharoSyntaxTutorial."
+	
 	^ self shouldBeImplemented
 ]

@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfIDE }
+Package { #name : 'BaselineOfIDE' }

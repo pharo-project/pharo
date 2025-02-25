@@ -4,38 +4,39 @@ I am a base class for commands which perform operations with given packages.
 Internal Representation and Key Implementation Points.
 
     Instance Variables
-	packages:		<Collection of<RPackage>>
+	packages:		<Collection of<Package>>
 "
 Class {
-	#name : #SycPackageCommand,
-	#superclass : #CmdCommand,
+	#name : 'SycPackageCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'packages'
 	],
-	#category : #'SystemCommands-PackageCommands'
+	#category : 'SystemCommands-PackageCommands',
+	#package : 'SystemCommands-PackageCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycPackageCommand class >> canBeExecutedInContext: aToolContext [
 	^aToolContext isPackageSelected
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycPackageCommand class >> isAbstract [
 	^self = SycPackageCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycPackageCommand >> packages [
 	^ packages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycPackageCommand >> packages: anObject [
 	packages := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycPackageCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 

@@ -1,18 +1,20 @@
 Class {
-	#name : #ClyMethodCallCountersQueryTest,
-	#superclass : #ClyMethodQueryTest,
+	#name : 'ClyMethodCallCountersQueryTest',
+	#superclass : 'ClyMethodQueryTest',
 	#instVars : [
 		'installedCounters'
 	],
-	#category : #'Calypso-SystemPlugins-Reflectivity-Queries-Tests-ExecutionCounters'
+	#category : 'Calypso-SystemPlugins-Reflectivity-Queries-Tests-ExecutionCounters',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Queries-Tests',
+	#tag : 'ExecutionCounters'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodCallCountersQueryTest >> createQuery [
 	^ClyMethodCallCountersQuery from: ClyClassScope of: self class in: environment
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodCallCountersQueryTest >> installCounterInto: selector [
 	| counter |
 	counter := ExecutionCounter installOn: (self class >> selector) ast sendNodes last.
@@ -20,30 +22,30 @@ ClyMethodCallCountersQueryTest >> installCounterInto: selector [
 	^counter
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodCallCountersQueryTest >> methodWithCounter [
 	^1+2
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodCallCountersQueryTest >> methodWithoutCounter [
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodCallCountersQueryTest >> setUp [
 	super setUp.
 
 	installedCounters := OrderedCollection new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodCallCountersQueryTest >> setUpEnvironment [
 	super setUpEnvironment.
 
 	environment addPlugin: ClyReflectiveEnvironmentPlugin new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodCallCountersQueryTest >> tearDown [
 	installedCounters do: [ :each | each uninstall ].
 	installedCounters removeAll.
@@ -51,7 +53,7 @@ ClyMethodCallCountersQueryTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodCallCountersQueryTest >> testCheckIfEmpty [
 	self installCounterInto: #methodWithCounter.
 	query scope: (ClyMethodScope
@@ -63,7 +65,7 @@ ClyMethodCallCountersQueryTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodCallCountersQueryTest >> testDecoratingMethodWithExecutionCounter [
 
 	| plugin method methodItem |
@@ -77,7 +79,7 @@ ClyMethodCallCountersQueryTest >> testDecoratingMethodWithExecutionCounter [
 	self assert: (methodItem isMarkedWith: ClyMethodWithExecutionCounterTag)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodCallCountersQueryTest >> testFromTwoMethods [
 	self installCounterInto: #methodWithCounter.
 	self queryFromScope: ClyMethodScope ofAll: {
@@ -87,13 +89,13 @@ ClyMethodCallCountersQueryTest >> testFromTwoMethods [
 	self assert: foundSelectors sorted asArray equals: #(#methodWithCounter)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodCallCountersQueryTest >> testNotSelectsMethodWithoutCounter [
 
 	self deny: (query selectsMethod: self class >> #methodWithoutCounter)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodCallCountersQueryTest >> testSelectsMethodWithCounter [
 	self installCounterInto: #methodWithCounter.
 

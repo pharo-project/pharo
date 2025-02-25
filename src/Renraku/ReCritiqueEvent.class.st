@@ -2,20 +2,22 @@
 A Renraku critic event about an entity
 "
 Class {
-	#name : #ReCritiqueEvent,
-	#superclass : #Announcement,
+	#name : 'ReCritiqueEvent',
+	#superclass : 'Announcement',
 	#instVars : [
 		'entity'
 	],
-	#category : #'Renraku-Announcements'
+	#category : 'Renraku-Announcements',
+	#package : 'Renraku',
+	#tag : 'Announcements'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReCritiqueEvent >> entity [
 	^ entity
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReCritiqueEvent >> entity: anObject [
 
 	entity := anObject

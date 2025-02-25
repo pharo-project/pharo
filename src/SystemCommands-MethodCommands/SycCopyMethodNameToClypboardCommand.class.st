@@ -1,25 +1,29 @@
+"
+Copy selected methods selector into Clipboard as testOriginalSelector
+"
 Class {
-	#name : #SycCopyMethodNameToClypboardCommand,
-	#superclass : #SycMethodCommand,
-	#category : #'SystemCommands-MethodCommands'
+	#name : 'SycCopyMethodNameToClypboardCommand',
+	#superclass : 'SycMethodCommand',
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCopyMethodNameToClypboardCommand >> defaultMenuIconName [
 	^#smallCopy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCopyMethodNameToClypboardCommand >> defaultMenuItemName [
-	^'Copy name(s) to Clipboard'
+	^'Copy method name(s) to Clipboard'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCopyMethodNameToClypboardCommand >> description [
 	^'Copy selected methods into Clipboard as class>>selector'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycCopyMethodNameToClypboardCommand >> execute [
 	| text |
 	text := (methods collect: [ :each | each displayString ]) joinUsing: String cr.

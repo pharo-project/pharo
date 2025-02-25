@@ -73,8 +73,8 @@ Monitor>>waitUntil: aBlock for: aSymbol maxMilliseconds: anInteger
 Same as Monitor>>waitUntil: (resp. Monitor>>waitUntil:for:), but the process gets automatically woken up when the specified time has passed.
 "
 Class {
-	#name : #Monitor,
-	#superclass : #Object,
+	#name : 'Monitor',
+	#superclass : 'Object',
 	#instVars : [
 		'mutex',
 		'ownerProcess',
@@ -83,22 +83,24 @@ Class {
 		'queueDict',
 		'queuesMutex'
 	],
-	#category : #'Kernel-Processes'
+	#category : 'Kernel-Processes',
+	#package : 'Kernel',
+	#tag : 'Processes'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 Monitor >> checkOwnerProcess [
 	self isOwnerProcess
 		ifFalse: [self error: 'Monitor access violation']
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Monitor >> cleanup [
 	self checkOwnerProcess.
 	self critical: [self privateCleanup]
 ]
 
-{ #category : #synchronization }
+{ #category : 'synchronization' }
 Monitor >> critical: aBlock [
 	"Critical section.
 	Executes aBlock as a critical section. At any time, only one process can be executing code
@@ -112,13 +114,13 @@ Monitor >> critical: aBlock [
 		ensure: [self exit]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Monitor >> defaultQueue [
 	defaultQueue ifNil: [defaultQueue := OrderedCollection new].
 	^ defaultQueue
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Monitor >> enter [
 	self isOwnerProcess ifTrue: [
 		nestingLevel := nestingLevel + 1.
@@ -129,7 +131,7 @@ Monitor >> enter [
 	]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Monitor >> exit [
 	nestingLevel := nestingLevel - 1.
 	nestingLevel < 1 ifTrue: [
@@ -138,7 +140,7 @@ Monitor >> exit [
 	]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Monitor >> exitAndWaitInQueue: anOrderedCollection maxMilliseconds: anIntegerOrNil [
 	| lock delay |
 	lock := queuesMutex
@@ -154,7 +156,7 @@ Monitor >> exitAndWaitInQueue: anOrderedCollection maxMilliseconds: anIntegerOrN
 	self enter
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Monitor >> initialize [
 	super initialize.
 	mutex := Semaphore forMutualExclusion.
@@ -162,12 +164,12 @@ Monitor >> initialize [
 	nestingLevel := 0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Monitor >> isOwnerProcess [
 	^ Processor activeProcess == ownerProcess
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Monitor >> privateCleanup [
 
 	queuesMutex critical: [
@@ -177,25 +179,25 @@ Monitor >> privateCleanup [
 			queueDict ifEmpty: [ queueDict := nil ] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Monitor >> queueDict [
 	^ queueDict ifNil: [queueDict := IdentityDictionary new]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Monitor >> queueFor: aSymbol [
 	aSymbol ifNil: [^self defaultQueue].
 	^self queueDict at: aSymbol ifAbsentPut: [OrderedCollection new]
 ]
 
-{ #category : #'signaling-default' }
+{ #category : 'signaling-default' }
 Monitor >> signal [
 	"One process waiting for the default event is woken up."
 
 	^ self signal: nil
 ]
 
-{ #category : #'signaling-specific' }
+{ #category : 'signaling-specific' }
 Monitor >> signal: aSymbolOrNil [
 	"One process waiting for the given event is woken up. If there is no process waiting
 	for this specific event, a process waiting for the default event gets resumed."
@@ -207,14 +209,14 @@ Monitor >> signal: aSymbolOrNil [
 	self signalQueue: queue
 ]
 
-{ #category : #'signaling-default' }
+{ #category : 'signaling-default' }
 Monitor >> signalAll [
 	"All processes waiting for the default event are woken up."
 
 	^ self signalAll: nil
 ]
 
-{ #category : #'signaling-specific' }
+{ #category : 'signaling-specific' }
 Monitor >> signalAll: aSymbolOrNil [
 	"All process waiting for the given event or the default event are woken up."
 
@@ -225,7 +227,7 @@ Monitor >> signalAll: aSymbolOrNil [
 	queue ~~ self defaultQueue ifTrue: [self signalAllInQueue: queue]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Monitor >> signalAllInQueue: anOrderedCollection [
 	 queuesMutex critical: [
 		anOrderedCollection removeAllSuchThat: [ :each |
@@ -233,7 +235,7 @@ Monitor >> signalAllInQueue: anOrderedCollection [
 				true ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Monitor >> signalLock: aSemaphore inQueue: anOrderedCollection [
 	queuesMutex critical: [
 		aSemaphore signal.
@@ -241,13 +243,13 @@ Monitor >> signalLock: aSemaphore inQueue: anOrderedCollection [
 	]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Monitor >> signalQueue: anOrderedCollection [
 
 	queuesMutex critical: [ anOrderedCollection ifNotEmpty: [ anOrderedCollection removeFirst signal ] ]
 ]
 
-{ #category : #'signaling-specific' }
+{ #category : 'signaling-specific' }
 Monitor >> signalReallyAll [
 	"All processes waiting for any events (default or specific) are woken up."
 
@@ -257,7 +259,7 @@ Monitor >> signalReallyAll [
 		self signalAllInQueue: queue]
 ]
 
-{ #category : #'waiting - basic' }
+{ #category : 'waiting - basic' }
 Monitor >> wait [
 	"Unconditional waiting for the default event.
 	The current process gets blocked and leaves the monitor, which means that the monitor
@@ -267,7 +269,7 @@ Monitor >> wait [
 	^ self waitMaxMilliseconds: nil
 ]
 
-{ #category : #'waiting - specific' }
+{ #category : 'waiting - specific' }
 Monitor >> waitFor: aSymbolOrNil [
 	"Unconditional waiting for the non-default event represented by the argument symbol.
 	Same as Monitor>>wait, but the process gets only reactivated by the specific event and
@@ -276,7 +278,7 @@ Monitor >> waitFor: aSymbolOrNil [
 	^ self waitFor: aSymbolOrNil maxMilliseconds: nil
 ]
 
-{ #category : #'waiting - timeout' }
+{ #category : 'waiting - timeout' }
 Monitor >> waitFor: aSymbolOrNil maxMilliseconds: anIntegerOrNil [
 	"Same as Monitor>>waitFor:, but the process gets automatically woken up when the
 	specified time has passed."
@@ -285,7 +287,7 @@ Monitor >> waitFor: aSymbolOrNil maxMilliseconds: anIntegerOrNil [
 	self waitInQueue: (self queueFor: aSymbolOrNil) maxMilliseconds: anIntegerOrNil
 ]
 
-{ #category : #'waiting - timeout' }
+{ #category : 'waiting - timeout' }
 Monitor >> waitFor: aSymbolOrNil maxSeconds: aNumber [
 	"Same as Monitor>>waitFor:, but the process gets automatically woken up when the
 	specified time has passed."
@@ -293,12 +295,12 @@ Monitor >> waitFor: aSymbolOrNil maxSeconds: aNumber [
 	^ self waitFor: aSymbolOrNil maxMilliseconds: (aNumber * 1000) asInteger
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Monitor >> waitInQueue: anOrderedCollection maxMilliseconds: anIntegerOrNil [
 	self exitAndWaitInQueue: anOrderedCollection maxMilliseconds: anIntegerOrNil
 ]
 
-{ #category : #'waiting - timeout' }
+{ #category : 'waiting - timeout' }
 Monitor >> waitMaxMilliseconds: anIntegerOrNil [
 	"Same as Monitor>>wait, but the process gets automatically woken up when the
 	specified time has passed."
@@ -306,7 +308,7 @@ Monitor >> waitMaxMilliseconds: anIntegerOrNil [
 	^ self waitFor: nil maxMilliseconds: anIntegerOrNil
 ]
 
-{ #category : #'waiting - timeout' }
+{ #category : 'waiting - timeout' }
 Monitor >> waitMaxSeconds: aNumber [
 	"Same as Monitor>>wait, but the process gets automatically woken up when the
 	specified time has passed."
@@ -314,7 +316,7 @@ Monitor >> waitMaxSeconds: aNumber [
 	^ self waitMaxMilliseconds: (aNumber * 1000) asInteger
 ]
 
-{ #category : #'waiting - basic' }
+{ #category : 'waiting - basic' }
 Monitor >> waitUntil: aBlock [
 	"Conditional waiting for the default event.
 	See Monitor>>waitWhile: aBlock."
@@ -322,7 +324,7 @@ Monitor >> waitUntil: aBlock [
 	^ self waitUntil: aBlock for: nil
 ]
 
-{ #category : #'waiting - specific' }
+{ #category : 'waiting - specific' }
 Monitor >> waitUntil: aBlock for: aSymbolOrNil [
 	"Confitional waiting for the non-default event represented by the argument symbol.
 	See Monitor>>waitWhile:for: aBlock."
@@ -330,7 +332,7 @@ Monitor >> waitUntil: aBlock for: aSymbolOrNil [
 	^ self waitUntil: aBlock for: aSymbolOrNil maxMilliseconds: nil
 ]
 
-{ #category : #'waiting - timeout' }
+{ #category : 'waiting - timeout' }
 Monitor >> waitUntil: aBlock for: aSymbolOrNil maxMilliseconds: anIntegerOrNil [
 	"Same as Monitor>>waitUntil:for:, but the process gets automatically woken up when the
 	specified time has passed."
@@ -338,7 +340,7 @@ Monitor >> waitUntil: aBlock for: aSymbolOrNil maxMilliseconds: anIntegerOrNil [
 	^ self waitWhile: [aBlock value not] for: aSymbolOrNil maxMilliseconds: anIntegerOrNil
 ]
 
-{ #category : #'waiting - timeout' }
+{ #category : 'waiting - timeout' }
 Monitor >> waitUntil: aBlock for: aSymbolOrNil maxSeconds: aNumber [
 	"Same as Monitor>>waitUntil:for:, but the process gets automatically woken up when the
 	specified time has passed."
@@ -346,7 +348,7 @@ Monitor >> waitUntil: aBlock for: aSymbolOrNil maxSeconds: aNumber [
 	^ self waitUntil: aBlock for: aSymbolOrNil maxMilliseconds: (aNumber * 1000) asInteger
 ]
 
-{ #category : #'waiting - timeout' }
+{ #category : 'waiting - timeout' }
 Monitor >> waitUntil: aBlock maxMilliseconds: anIntegerOrNil [
 	"Same as Monitor>>waitUntil:, but the process gets automatically woken up when the
 	specified time has passed."
@@ -354,7 +356,7 @@ Monitor >> waitUntil: aBlock maxMilliseconds: anIntegerOrNil [
 	^ self waitUntil: aBlock for: nil maxMilliseconds: anIntegerOrNil
 ]
 
-{ #category : #'waiting - timeout' }
+{ #category : 'waiting - timeout' }
 Monitor >> waitUntil: aBlock maxSeconds: aNumber [
 	"Same as Monitor>>waitUntil:, but the process gets automatically woken up when the
 	specified time has passed."
@@ -362,7 +364,7 @@ Monitor >> waitUntil: aBlock maxSeconds: aNumber [
 	^ self waitUntil: aBlock maxMilliseconds: (aNumber * 1000) asInteger
 ]
 
-{ #category : #'waiting - basic' }
+{ #category : 'waiting - basic' }
 Monitor >> waitWhile: aBlock [
 	"Conditional waiting for the default event.
 	The current process gets blocked and leaves the monitor only if the argument block
@@ -374,7 +376,7 @@ Monitor >> waitWhile: aBlock [
 	^ self waitWhile: aBlock for: nil
 ]
 
-{ #category : #'waiting - specific' }
+{ #category : 'waiting - specific' }
 Monitor >> waitWhile: aBlock for: aSymbolOrNil [
 	"Confitional waiting for the non-default event represented by the argument symbol.
 	Same as Monitor>>waitWhile:for:, but the process gets only reactivated by the specific
@@ -383,7 +385,7 @@ Monitor >> waitWhile: aBlock for: aSymbolOrNil [
 	^ self waitWhile: aBlock for: aSymbolOrNil maxMilliseconds: nil
 ]
 
-{ #category : #'waiting - timeout' }
+{ #category : 'waiting - timeout' }
 Monitor >> waitWhile: aBlock for: aSymbolOrNil maxMilliseconds: anIntegerOrNil [
 	"Same as Monitor>>waitWhile:for:, but the process gets automatically woken up when the
 	specified time has passed."
@@ -392,7 +394,7 @@ Monitor >> waitWhile: aBlock for: aSymbolOrNil maxMilliseconds: anIntegerOrNil [
 	self waitWhile: aBlock inQueue: (self queueFor: aSymbolOrNil) maxMilliseconds: anIntegerOrNil
 ]
 
-{ #category : #'waiting - timeout' }
+{ #category : 'waiting - timeout' }
 Monitor >> waitWhile: aBlock for: aSymbolOrNil maxSeconds: aNumber [
 	"Same as Monitor>>waitWhile:for:, but the process gets automatically woken up when the
 	specified time has passed."
@@ -400,12 +402,12 @@ Monitor >> waitWhile: aBlock for: aSymbolOrNil maxSeconds: aNumber [
 	^ self waitWhile: aBlock for: aSymbolOrNil maxMilliseconds: (aNumber * 1000) asInteger
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Monitor >> waitWhile: aBlock inQueue: anOrderedCollection maxMilliseconds: anIntegerOrNil [
 	[aBlock value] whileTrue: [self exitAndWaitInQueue: anOrderedCollection maxMilliseconds: anIntegerOrNil]
 ]
 
-{ #category : #'waiting - timeout' }
+{ #category : 'waiting - timeout' }
 Monitor >> waitWhile: aBlock maxMilliseconds: anIntegerOrNil [
 	"Same as Monitor>>waitWhile:, but the process gets automatically woken up when the
 	specified time has passed."
@@ -413,7 +415,7 @@ Monitor >> waitWhile: aBlock maxMilliseconds: anIntegerOrNil [
 	^ self waitWhile: aBlock for: nil maxMilliseconds: anIntegerOrNil
 ]
 
-{ #category : #'waiting - timeout' }
+{ #category : 'waiting - timeout' }
 Monitor >> waitWhile: aBlock maxSeconds: aNumber [
 	"Same as Monitor>>waitWhile:, but the process gets automatically woken up when the
 	specified time has passed."

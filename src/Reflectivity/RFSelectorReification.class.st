@@ -2,27 +2,29 @@
 I am the selector of a message send or method
 "
 Class {
-	#name : #RFSelectorReification,
-	#superclass : #RFReification,
-	#category : #'Reflectivity-Reifications'
+	#name : 'RFSelectorReification',
+	#superclass : 'RFReification',
+	#category : 'Reflectivity-Reifications',
+	#package : 'Reflectivity',
+	#tag : 'Reifications'
 }
 
-{ #category : #'plugin interface' }
+{ #category : 'plugin interface' }
 RFSelectorReification class >> entities [
-	^{RBMessageNode. RBMethodNode}
+	^{OCMessageNode. OCMethodNode}
 ]
 
-{ #category : #'plugin interface' }
+{ #category : 'plugin interface' }
 RFSelectorReification class >> key [
 	^#selector
 ]
 
-{ #category : #generate }
-RFSelectorReification >> genForRBMessageNode [
+{ #category : 'generate' }
+RFSelectorReification >> genForASTMessageNode [
 	^entity selector asLiteralNode
 ]
 
-{ #category : #generate }
-RFSelectorReification >> genForRBMethodNode [
+{ #category : 'generate' }
+RFSelectorReification >> genForASTMethodNode [
 	^entity selector asLiteralNode
 ]

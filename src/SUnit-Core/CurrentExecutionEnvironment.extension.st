@@ -1,12 +1,12 @@
-Extension { #name : #CurrentExecutionEnvironment }
+Extension { #name : 'CurrentExecutionEnvironment' }
 
-{ #category : #'*SUnit-Core' }
+{ #category : '*SUnit-Core' }
 CurrentExecutionEnvironment class >> runTestCase: aTestCase [
 
 	self value runTestCase: aTestCase
 ]
 
-{ #category : #'*SUnit-Core' }
+{ #category : '*SUnit-Core' }
 CurrentExecutionEnvironment class >> runTestsBy: aBlock [
 
 	self value runTestsBy: aBlock

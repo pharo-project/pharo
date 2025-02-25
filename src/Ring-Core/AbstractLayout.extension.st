@@ -1,6 +1,6 @@
-Extension { #name : #AbstractLayout }
+Extension { #name : 'AbstractLayout' }
 
-{ #category : #'*Ring-Core' }
+{ #category : '*Ring-Core' }
 AbstractLayout >> asRingMinimalDefinitionIn: anRGEnvironment [
 
 	self subclassResponsibility

@@ -2,38 +2,35 @@
 A DAReverseDependentPackageNode is used to display a dependent package in a reverse tree.
 "
 Class {
-	#name : #DAReverseDependentPackageNode,
-	#superclass : #DAAbstractPackageNode,
-	#category : #'Tool-DependencyAnalyser-UI-Nodes'
+	#name : 'DAReverseDependentPackageNode',
+	#superclass : 'DAAbstractPackageNode',
+	#category : 'Tool-DependencyAnalyser-UI-Nodes',
+	#package : 'Tool-DependencyAnalyser-UI',
+	#tag : 'Nodes'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 DAReverseDependentPackageNode >> childNodeClassFor: anItem [
 	^ anItem nodeClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAReverseDependentPackageNode >> children [
 	^ self dependenciesToParentNode dependencies
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DAReverseDependentPackageNode >> dependenciesToParentNode [
 	^ self content daPackage
 		compositeDependencyTo: (self parentNode content daPackage)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAReverseDependentPackageNode >> hasChildren [
 	^ self dependenciesToParentNode isNotNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAReverseDependentPackageNode >> icon [
-	^ self iconNamed: #backIcon
-]
-
-{ #category : #accessing }
-DAReverseDependentPackageNode >> rPackage [
-	^ self content rPackageSet
+	^ self iconNamed: #back
 ]

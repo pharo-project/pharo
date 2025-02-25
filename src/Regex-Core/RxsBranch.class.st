@@ -8,22 +8,24 @@ Instance variables:
 	branch		<RxsBranch|RxsEpsilon>
 "
 Class {
-	#name : #RxsBranch,
-	#superclass : #RxsNode,
+	#name : 'RxsBranch',
+	#superclass : 'RxsNode',
 	#instVars : [
 		'piece',
 		'branch'
 	],
-	#category : #'Regex-Core-Nodes'
+	#category : 'Regex-Core-Nodes',
+	#package : 'Regex-Core',
+	#tag : 'Nodes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxsBranch >> branch [
 
 	^branch
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxsBranch >> dispatchTo: aMatcher [
 	"Inform the matcher of the kind of the node, and it
 	will do whatever it has to."
@@ -31,7 +33,7 @@ RxsBranch >> dispatchTo: aMatcher [
 	^aMatcher syntaxBranch: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxsBranch >> initializePiece: aPiece branch: aBranch [
 	"See class comment for instance variables description."
 
@@ -39,19 +41,19 @@ RxsBranch >> initializePiece: aPiece branch: aBranch [
 	branch := aBranch
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RxsBranch >> isNullable [
 
 	^piece isNullable and: [branch isNil or: [branch isNullable]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxsBranch >> piece [
 
 	^piece
 ]
 
-{ #category : #optimization }
+{ #category : 'optimization' }
 RxsBranch >> tryMergingInto: aStream [
 
 	"Concatenation of a few simple characters can be optimized

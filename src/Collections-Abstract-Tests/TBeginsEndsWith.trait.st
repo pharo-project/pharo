@@ -2,21 +2,23 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TBeginsEndsWith,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TBeginsEndsWith',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TBeginsEndsWith >> empty [
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TBeginsEndsWith >> nonEmpty [
 	self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TBeginsEndsWith >> test0FixtureBeginsEndsWithTest [
 	self nonEmpty.
 	self denyEmpty: self nonEmpty.
@@ -25,7 +27,7 @@ TBeginsEndsWith >> test0FixtureBeginsEndsWithTest [
 	self assertEmpty: self empty
 ]
 
-{ #category : #'tests - begins ends with' }
+{ #category : 'tests - begins ends with' }
 TBeginsEndsWith >> testsBeginsWith [
 
 	self assert: (self nonEmpty beginsWith: (self nonEmpty copyUpTo: self nonEmpty last)).
@@ -33,14 +35,14 @@ TBeginsEndsWith >> testsBeginsWith [
 	self deny: (self nonEmpty beginsWith: (self nonEmpty copyWith: self nonEmpty first))
 ]
 
-{ #category : #'tests - begins ends with' }
+{ #category : 'tests - begins ends with' }
 TBeginsEndsWith >> testsBeginsWithEmpty [
 
 	self assert: (self nonEmpty beginsWith:(self empty)).
 	self deny: (self empty beginsWith:(self nonEmpty))
 ]
 
-{ #category : #'tests - begins ends with' }
+{ #category : 'tests - begins ends with' }
 TBeginsEndsWith >> testsEndsWith [
 
 	self assert: (self nonEmpty endsWith: self nonEmpty copyWithoutFirst).
@@ -48,7 +50,7 @@ TBeginsEndsWith >> testsEndsWith [
 	self deny: (self nonEmpty endsWith: (self nonEmpty copyWith: self nonEmpty first))
 ]
 
-{ #category : #'tests - begins ends with' }
+{ #category : 'tests - begins ends with' }
 TBeginsEndsWith >> testsEndsWithEmpty [
 
 	self assert: (self nonEmpty endsWith: self empty).

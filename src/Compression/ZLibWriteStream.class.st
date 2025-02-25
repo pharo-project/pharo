@@ -12,30 +12,32 @@ compressed := zipStream encodedStream contents.
 ```
 "
 Class {
-	#name : #ZLibWriteStream,
-	#superclass : #ZipWriteStream,
-	#category : #'Compression-Streams'
+	#name : 'ZLibWriteStream',
+	#superclass : 'ZipWriteStream',
+	#category : 'Compression-Streams',
+	#package : 'Compression',
+	#tag : 'Streams'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZLibWriteStream >> on: aCollectionOrStream [
 	super on: aCollectionOrStream.
 	crc := 1
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZLibWriteStream >> updateCrc: adler from: start to: stop in: aCollection [
 	"Update crc using the Adler32 checksum technique from RFC1950"
 	^ Adler32 update: adler from:  start to:  stop in: aCollection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZLibWriteStream >> writeFooter [
 	"Store the Adler32 checksum as the last 4 bytes."
 	3 to: 0 by: -1 do:[:i| encoder nextBytePut: (crc >> (i*8) bitAnd: 255)]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZLibWriteStream >> writeHeader [
 	"Write header information"
 	encoder nextBits: 8 put: 120. "deflate method with 15bit window size"

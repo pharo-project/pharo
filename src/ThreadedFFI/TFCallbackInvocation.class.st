@@ -3,15 +3,17 @@ I represent the callback invocation.
 I have information about the activation of a given callback.
 "
 Class {
-	#name : #TFCallbackInvocation,
-	#superclass : #FFIExternalObject,
+	#name : 'TFCallbackInvocation',
+	#superclass : 'FFIExternalObject',
 	#instVars : [
 		'callback'
 	],
-	#category : #'ThreadedFFI-Callbacks'
+	#category : 'ThreadedFFI-Callbacks',
+	#package : 'ThreadedFFI',
+	#tag : 'Callbacks'
 }
 
-{ #category : #operations }
+{ #category : 'operations' }
 TFCallbackInvocation >> arguments [
 	| parameterTypes argumentsAddress |
 
@@ -22,7 +24,7 @@ TFCallbackInvocation >> arguments [
 		type callbackReadValue: (argumentsAddress pointerAt: 1 + ((idx - 1) * Smalltalk wordSize)) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallbackInvocation >> argumentsAddress [
 
 	^ TFBasicType pointer
@@ -30,24 +32,24 @@ TFCallbackInvocation >> argumentsAddress [
 		offset: 1 + (TFBasicType pointer byteSize * 2)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallbackInvocation >> callback [
 
 	^ callback
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallbackInvocation >> callback: aTFCallback [
 	callback := aTFCallback
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallbackInvocation >> callbackData [
 
 	^ TFBasicType pointer callbackReadValue: handle
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TFCallbackInvocation >> execute [
 	| returnValue transformedArguments |
 
@@ -70,7 +72,7 @@ TFCallbackInvocation >> execute [
 			self runner returnCallback: self ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFCallbackInvocation >> primCallbackReturn [
 	<primitive: 'primitiveCallbackReturn'>
 
@@ -80,7 +82,7 @@ TFCallbackInvocation >> primCallbackReturn [
 	^ self primitiveFailed
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TFCallbackInvocation >> returnExecution [
 
 	"It returns true if the callback can return, and false if the order is not correct and should retry later"
@@ -90,19 +92,19 @@ TFCallbackInvocation >> returnExecution [
 		ifFalse: [ false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallbackInvocation >> returnHolder [
 
 	^ TFBasicType pointer readValue: handle offset: 1 + TFBasicType pointer byteSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFCallbackInvocation >> runner [
 
 	^ self callback runner
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TFCallbackInvocation >> writeReturnValue: aValue [
 
 	self callback returnType

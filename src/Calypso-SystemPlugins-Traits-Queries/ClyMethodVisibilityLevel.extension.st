@@ -1,6 +1,6 @@
-Extension { #name : #ClyMethodVisibilityLevel }
+Extension { #name : 'ClyMethodVisibilityLevel' }
 
-{ #category : #'*Calypso-SystemPlugins-Traits-Queries' }
+{ #category : '*Calypso-SystemPlugins-Traits-Queries' }
 ClyMethodVisibilityLevel >> asTraitVisibility [
 	self subclassResponsibility
 ]

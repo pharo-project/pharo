@@ -2,35 +2,50 @@
 SUnit tests for class RunArray
 "
 Class {
-	#name : #RunArrayTest,
-	#superclass : #TestCase,
-	#traits : 'TSequenceableTruncatedToSize',
-	#classTraits : 'TSequenceableTruncatedToSize classTrait',
+	#name : 'RunArrayTest',
+	#superclass : 'TestCase',
+	#traits : 'TSequenceableTruncatedToSize + (TCreationWithTest - {#testWithAll})',
+	#classTraits : 'TSequenceableTruncatedToSize classTrait + TCreationWithTest classTrait',
 	#instVars : [
 		'collectionWith5Elements'
 	],
-	#category : #'Collections-Support-Tests'
+	#category : 'Collections-Support-Tests',
+	#package : 'Collections-Support-Tests'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
+RunArrayTest >> collectionClass [
+	"Return the class to be used to create instances of the class tested"
+
+	^ RunArray
+]
+
+{ #category : 'requirements' }
+RunArrayTest >> collectionMoreThan5Elements [
+" return a collection including at least 5 elements"
+
+	^ collectionWith5Elements
+]
+
+{ #category : 'requirements' }
 RunArrayTest >> collectionWith5Elements [
 
 	^ collectionWith5Elements
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 RunArrayTest >> setUp [
 
 	super setUp.
 	collectionWith5Elements := RunArray newFrom: #(10 20 30 40 50)
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : 'tests - instance creation' }
 RunArrayTest >> testANewRunArrayIsEmpty [
 	self assertEmpty: RunArray new
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 RunArrayTest >> testAdd [
 
 	| run |
@@ -45,7 +60,7 @@ RunArrayTest >> testAdd [
 	self assert: run size equals: 3
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 RunArrayTest >> testAddAddsAsLastElement [
 
 	| run |
@@ -58,7 +73,7 @@ RunArrayTest >> testAddAddsAsLastElement [
 	self assert: (run at: 3) equals: $B
 ]
 
-{ #category : #'tests - accessing' }
+{ #category : 'tests - accessing' }
 RunArrayTest >> testAt [
 
 	| array |
@@ -69,7 +84,7 @@ RunArrayTest >> testAt [
 	self assert: (array at: 3) equals: 5
 ]
 
-{ #category : #'tests - accessing' }
+{ #category : 'tests - accessing' }
 RunArrayTest >> testAtPut [
 
 	| array |
@@ -82,7 +97,7 @@ RunArrayTest >> testAtPut [
 	self assert: array asArray equals: #(1 2 5 2 2)
 ]
 
-{ #category : #'tests - accessing' }
+{ #category : 'tests - accessing' }
 RunArrayTest >> testAtPut2 [
 
 	| array |
@@ -93,14 +108,14 @@ RunArrayTest >> testAtPut2 [
 	self should: [array at: $b put: 5] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RunArrayTest >> testFindLast [
 
 	self assert: ((RunArray newFrom: #(10 20 30 40 50)) findLast: [ :each | each > 10 ]) equals: 5.
 	self assert: ((RunArray newFrom: #(10 20 30 40 50)) findLast: [ :each | each > 60 ]) equals: 0
 ]
 
-{ #category : #'tests - accessing' }
+{ #category : 'tests - accessing' }
 RunArrayTest >> testFirst [
 
 	| array |
@@ -111,7 +126,7 @@ RunArrayTest >> testFirst [
 	self assert: array first equals: $a
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : 'tests - instance creation' }
 RunArrayTest >> testIsSelfEvaluating [
 	| array array2 |
 	array := RunArray new: 5 withAll: 2.
@@ -122,7 +137,7 @@ RunArrayTest >> testIsSelfEvaluating [
 		description: 'a self evaluating should evaluate as self']
 ]
 
-{ #category : #'tests - accessing' }
+{ #category : 'tests - accessing' }
 RunArrayTest >> testLast [
 
 	| array |
@@ -133,7 +148,7 @@ RunArrayTest >> testLast [
 	self assert: array last equals: $d
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : 'tests - instance creation' }
 RunArrayTest >> testNew [
 
 	| array |
@@ -141,25 +156,20 @@ RunArrayTest >> testNew [
 	self assert: array size equals: 0
 ]
 
-{ #category : #'tests - instance creation' }
-RunArrayTest >> testNewFromArray [
+{ #category : 'tests - instance creation' }
+RunArrayTest >> testNewFrom [
 
 	| array |
 	array := RunArray newFrom: #($a $b $b $b $b $c $c $a).
 	self assert: array size equals: 8.
-	self assert: array asArray equals: #($a $b $b $b $b $c $c $a)
-]
+	self assert: array asArray equals: #($a $b $b $b $b $c $c $a).
 
-{ #category : #'tests - instance creation' }
-RunArrayTest >> testNewFromString [
-
-	| array |
 	array := RunArray newFrom: 'abbbbcca'.
 	self assert: array size equals: 8.
 	self assert: array asArray equals: #($a $b $b $b $b $c $c $a)
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : 'tests - instance creation' }
 RunArrayTest >> testNewWithAll [
 
 	| array |
@@ -168,7 +178,7 @@ RunArrayTest >> testNewWithAll [
 	self assert: array asArray equals: #(2 2 2 2 2)
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : 'tests - instance creation' }
 RunArrayTest >> testNewWithSize [
 	|array|
 	array := RunArray new: 5.
@@ -176,7 +186,7 @@ RunArrayTest >> testNewWithSize [
 	1 to: 5 do: [:index | self assert: (array at: index) isNil]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RunArrayTest >> testRunArrayAdjacentMerge [
 	"This demonstrates that adjancent runs with equal attributes are merged."
 
@@ -189,7 +199,7 @@ RunArrayTest >> testRunArrayAdjacentMerge [
 	self assert: runArray runs size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RunArrayTest >> testRunArrayInvariant [
 	"This verifies that the fundamental invariant of a RunArray is always satisfied.
 	 This method is a bit tricky. First, it uses Object>>instVarNamed: to access instance
@@ -212,7 +222,7 @@ RunArrayTest >> testRunArrayInvariant [
 			 lastIndex = (lastOffset + lengthOfPreviousRuns + 1) ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RunArrayTest >> testRunArrayReversal [
 	"This tests the reversal of a RunArray."
 
@@ -225,7 +235,7 @@ RunArrayTest >> testRunArrayReversal [
 	self assert: runArray reversed runs size equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RunArrayTest >> testRunArrayRunsAreNotMerged [
 	"This demonstrates that different runs are not merged."
 
@@ -238,7 +248,7 @@ RunArrayTest >> testRunArrayRunsAreNotMerged [
 	self assert: runArray runs size equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RunArrayTest >> testRunArrayRunsSize [
 	"This demonstrates that the size of a run array is the sum of the sizes of its runs."
 
@@ -251,7 +261,7 @@ RunArrayTest >> testRunArrayRunsSize [
 	self assert: runArray size equals: 15
 ]
 
-{ #category : #'tests - accessing' }
+{ #category : 'tests - accessing' }
 RunArrayTest >> testRunLengthAt [
 
 	| array |
@@ -266,7 +276,7 @@ RunArrayTest >> testRunLengthAt [
 	self assert: (array runLengthAt: 8) equals: 1
 ]
 
-{ #category : #'tests - instance creation' }
+{ #category : 'tests - instance creation' }
 RunArrayTest >> testRunsValues [
 
 	| array |
@@ -275,7 +285,7 @@ RunArrayTest >> testRunsValues [
 	self assert: array asArray equals: #($a $b $b $b $b $c $c $a)
 ]
 
-{ #category : #'tests - accessing' }
+{ #category : 'tests - accessing' }
 RunArrayTest >> testWithStartStopAndValueDo [
 
 	| array elements startStops |

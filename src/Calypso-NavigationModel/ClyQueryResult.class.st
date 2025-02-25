@@ -153,8 +153,8 @@ Internal Representation and Key Implementation Points.
 	needsRebuild:	Boolean
 "
 Class {
-	#name : #ClyQueryResult,
-	#superclass : #Object,
+	#name : 'ClyQueryResult',
+	#superclass : 'Object',
 	#instVars : [
 		'environment',
 		'buildingQuery',
@@ -164,15 +164,17 @@ Class {
 		'announcer',
 		'needsRebuild'
 	],
-	#category : #'Calypso-NavigationModel-Result'
+	#category : 'Calypso-NavigationModel-Result',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Result'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryResult class >> isExpandedHierarchy [
 	^false
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyQueryResult >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -183,36 +185,36 @@ ClyQueryResult >> = anObject [
 	^ items = anObject items
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResult >> addMetaProperty: aProperty [
 	"I allow to annotate result about its internal items. For example SUnit plugin annotate method query result with summary about test runs"
 
 	self metadata addProperty: aProperty
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyQueryResult >> adoptForBrowser [
 
 	^ClyQueryResultBrowserAdapter for: self
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyQueryResult >> allItems [
 
 	^self itemsStartingAt: 1 count: self size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResult >> announcer [
 	^announcer
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyQueryResult >> beProtected [
 	accessGuard := Mutex new
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyQueryResult >> buildWith: objects [
 	"it is suitable method to build result manually avoiding query logic.
 	needsRebuild false value will prevent rebuilding when accessing items which were manually filled"
@@ -221,24 +223,24 @@ ClyQueryResult >> buildWith: objects [
 	self fillWith: objects
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResult >> buildingQuery [
 	^ buildingQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResult >> buildingQuery: anEnvironmentQuery [
 	buildingQuery := anEnvironmentQuery
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyQueryResult >> cancelRebuild [
 
 	items ifNil: [self initializeItems].
 	needsRebuild := false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyQueryResult >> collectMetadata [
 	self protectAccessWhile: [
 		metadata ifNotNil: [ ^self ].
@@ -249,27 +251,27 @@ ClyQueryResult >> collectMetadata [
 	]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyQueryResult >> defaultItems [
 	^OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResult >> environment [
 	^ environment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResult >> environment: anObject [
 	environment := anObject
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyQueryResult >> fillWith: queriedObjects [
 	self subclassResponsibility
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyQueryResult >> forceLazyRebuild [
 	"This method allows reset result cache without observers notification.
 	It can be suitable for some queries to not force observers update after changes
@@ -281,7 +283,7 @@ ClyQueryResult >> forceLazyRebuild [
 		items := nil]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyQueryResult >> forceRebuild [
 
 	self forceLazyRebuild.
@@ -289,12 +291,12 @@ ClyQueryResult >> forceRebuild [
 	self notifyObservers
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResult >> getMetaProperty: aPropertyClass [
 	^self metadata getProperty: aPropertyClass
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyQueryResult >> handleSystemChange: aSystemAnnouncement [
 	needsRebuild ifTrue: [ ^self ].
 	aSystemAnnouncement shouldBeConsideredByCalypsoEnvironment ifFalse: [ ^self ]. "some system events can happen in wrong system state or be just obsolete. This little hook allows skip such events"
@@ -304,7 +306,7 @@ ClyQueryResult >> handleSystemChange: aSystemAnnouncement [
 			ifTrue: [ self itemsChanged]]
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyQueryResult >> handleSystemChange: aSystemAnnouncement byProcessingList: allProcessingResults [
 	needsRebuild ifTrue: [ ^allProcessingResults remove: self ].
 	aSystemAnnouncement shouldBeConsideredByCalypsoEnvironment
@@ -316,13 +318,13 @@ ClyQueryResult >> handleSystemChange: aSystemAnnouncement byProcessingList: allP
 	allProcessingResults remove: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryResult >> hasMetaProperty: aPropertyClass [
 
 	^self metadata hasProperty: aPropertyClass
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyQueryResult >> hasSubscriber: anObject [
 
 	announcer ifNil: [ ^false].
@@ -330,68 +332,70 @@ ClyQueryResult >> hasSubscriber: anObject [
 	^announcer hasSubscriber: anObject
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyQueryResult >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ items hash
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyQueryResult >> initialize [
 	super initialize.
 	needsRebuild := true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyQueryResult >> initializeItems [
 	items := self defaultItems
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryResult >> isBuilt [
-	^items notNil
+
+	^ items isNotNil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryResult >> isEmpty [
 	^self size = 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryResult >> isProtected [
-	^accessGuard notNil
+
+	^ accessGuard isNotNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResult >> itemAt: index [
 	^items at: index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResult >> items [
 	^ items
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResult >> items: anObject [
 	items := anObject
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyQueryResult >> itemsChanged [
 
 	self forceRebuild
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyQueryResult >> itemsStartingAt: startIndex count: size [
 
 	^self protectItemsWhile: [
 		items copyFrom: startIndex to: (startIndex + size - 1 min: items size)]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyQueryResult >> itemsStartingWhere: conditionBlock count: size [
 
 	| firstItemIndex |
@@ -400,41 +404,41 @@ ClyQueryResult >> itemsStartingWhere: conditionBlock count: size [
 	^self itemsStartingAt: firstItemIndex count: size
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyQueryResult >> itemsWhere: conditionBlock [
 	^self protectItemsWhile: [
 		items select: conditionBlock]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResult >> metadata [
 	^metadata ifNil: [ self collectMetadata. metadata ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryResult >> needsRebuild [
 	^needsRebuild
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryResult >> notEmpty [
 	^self isEmpty not
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyQueryResult >> notifyChanges [
 
 	announcer announce: ClyEnvironmentChanged
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyQueryResult >> notifyObservers [
 
 	announcer ifNil: [ ^self ].
 	environment announceChangesOf: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResult >> openBrowserCursorFor: anItemObserver [
 
 	| cursor |
@@ -443,7 +447,7 @@ ClyQueryResult >> openBrowserCursorFor: anItemObserver [
 	^cursor
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyQueryResult >> prepareNewFor: aQuery in: aNavigationEnvironment [
 	^self copy
 		environment: aNavigationEnvironment;
@@ -451,7 +455,7 @@ ClyQueryResult >> prepareNewFor: aQuery in: aNavigationEnvironment [
 		beProtected
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyQueryResult >> protectAccessWhile: aBlock [
 
 	^accessGuard critical: [
@@ -459,7 +463,7 @@ ClyQueryResult >> protectAccessWhile: aBlock [
 	]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyQueryResult >> protectItemsWhile: aBlock [
 
 	^self protectAccessWhile: [
@@ -468,18 +472,18 @@ ClyQueryResult >> protectItemsWhile: aBlock [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResult >> rawItems [
 	^items
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResult >> rawItemsDo: aBlock [
 
 	^self rawItems do: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResult >> rawItemsOf: itemTypeClass do: aBlock [
 
 	^self rawItemsDo: [:each |
@@ -488,14 +492,14 @@ ClyQueryResult >> rawItemsOf: itemTypeClass do: aBlock [
 	]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyQueryResult >> rebuild [
 	self initializeItems.
 	buildingQuery buildResult: self.
 	metadata := nil	"metadata is computed and updated lazily"
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyQueryResult >> rebuildIfNeeded [
 	self protectAccessWhile: [
 
@@ -506,22 +510,22 @@ ClyQueryResult >> rebuildIfNeeded [
 	]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyQueryResult >> representsBrowserItems [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResult >> scope [
 	^buildingQuery scope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyQueryResult >> size [
 	^self protectItemsWhile: [items size]
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyQueryResult >> subscribe: anObject [
 
 	announcer ifNil: [ announcer := Announcer new].
@@ -529,7 +533,7 @@ ClyQueryResult >> subscribe: anObject [
 	announcer when: ClyEnvironmentChanged send: #itemsChanged to: anObject
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyQueryResult >> unsubscribe: anObject [
 
 	announcer ifNil: [ ^self ].

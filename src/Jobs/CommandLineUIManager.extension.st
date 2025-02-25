@@ -1,6 +1,6 @@
-Extension { #name : #CommandLineUIManager }
+Extension { #name : 'CommandLineUIManager' }
 
-{ #category : #'*Jobs' }
+{ #category : '*Jobs' }
 CommandLineUIManager >> informUserDuring: aBlock [
 	self
 		displayProgress: ''

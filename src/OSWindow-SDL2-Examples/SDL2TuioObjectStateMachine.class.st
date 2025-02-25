@@ -1,6 +1,6 @@
 Class {
-	#name : #SDL2TuioObjectStateMachine,
-	#superclass : #Object,
+	#name : 'SDL2TuioObjectStateMachine',
+	#superclass : 'Object',
 	#instVars : [
 		'color',
 		'position',
@@ -8,62 +8,64 @@ Class {
 		'objectId',
 		'objectNumber'
 	],
-	#category : #'OSWindow-SDL2-Examples-Touch'
+	#category : 'OSWindow-SDL2-Examples-Touch',
+	#package : 'OSWindow-SDL2-Examples',
+	#tag : 'Touch'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2TuioObjectStateMachine >> angle [
 	^ angle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2TuioObjectStateMachine >> angle: anObject [
 	angle := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2TuioObjectStateMachine >> color [
 	^color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2TuioObjectStateMachine >> color: anObject [
 	color := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SDL2TuioObjectStateMachine >> initialize [
 	position := 0@0.
 	color := Color random.
 	angle := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2TuioObjectStateMachine >> objectId [
 	^ objectId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2TuioObjectStateMachine >> objectId: anObject [
 	objectId := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2TuioObjectStateMachine >> objectNumber [
 	^ objectNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2TuioObjectStateMachine >> objectNumber: anObject [
 	objectNumber := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2TuioObjectStateMachine >> position [
 	^ position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2TuioObjectStateMachine >> position: anObject [
 	position := anObject
 ]

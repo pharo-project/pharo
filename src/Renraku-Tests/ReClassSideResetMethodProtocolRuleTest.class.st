@@ -1,86 +1,26 @@
 Class {
-	#name : #ReClassSideResetMethodProtocolRuleTest,
-	#superclass : #TestCase,
-	#instVars : [
-		'testClassName',
-		'testClass'
-	],
-	#category : #'Renraku-Tests'
+	#name : 'ReClassSideResetMethodProtocolRuleTest',
+	#superclass : 'ReProperClassMethodProtocolRuleTest',
+	#category : 'Renraku-Tests-Rules',
+	#package : 'Renraku-Tests',
+	#tag : 'Rules'
 }
 
-{ #category : #running }
-ReClassSideResetMethodProtocolRuleTest >> setUp [
+{ #category : 'accessing' }
+ReClassSideResetMethodProtocolRuleTest >> properProtocolName [
 
-	super setUp.
-
-	testClassName := #ReClassSideResetMethodProtocolRuleTestTestClass.
-	testClass := Object subclass: testClassName
+	^ 'class initialization'
 ]
 
-{ #category : #running }
-ReClassSideResetMethodProtocolRuleTest >> tearDown [
+{ #category : 'accessing' }
+ReClassSideResetMethodProtocolRuleTest >> sampleMethod [
 
-	testClass removeFromSystem.
-
-	super tearDown
-]
-
-{ #category : #running }
-ReClassSideResetMethodProtocolRuleTest >> testAutomatedFix [
-
-	| method critiques refactoring |
-	testClass class
-		compile: 'reset
+	^ 'reset
 	^ self'
-		classified: 'class warfare'.
-
-	method := testClass class methodNamed: #reset.
-
-	critiques := ReClassSideResetMethodProtocolRule new check: method.
-	refactoring := critiques first refactoring transform.
-	RBRefactoryChangeManager instance performChange: refactoring changes.
-
-	self assert: method protocol equals: #'class initialization'
 ]
 
-{ #category : #running }
-ReClassSideResetMethodProtocolRuleTest >> testIgnoredMethodWrongProtocol [
+{ #category : 'accessing' }
+ReClassSideResetMethodProtocolRuleTest >> selector [ 
 
-	| method critiques |
-	testClass class compile: 'resetIrrelevant
-	^ self' classified: 'class warfare'.
-
-	method := (testClass class methodNamed: #resetIrrelevant).
-
-	critiques := ReClassSideResetMethodProtocolRule new check: method.
-	self assert: critiques isEmpty
-]
-
-{ #category : #running }
-ReClassSideResetMethodProtocolRuleTest >> testRightMethodRightProtocol [
-
-	| method critiques |
-	testClass class compile: 'reset
-	^ self' classified: 'class initialization'.
-
-	method := (testClass class methodNamed: #reset).
-
-	critiques := ReClassSideResetMethodProtocolRule new check: method.
-	self assert: critiques isEmpty
-]
-
-{ #category : #running }
-ReClassSideResetMethodProtocolRuleTest >> testRightMethodWrongProtocol [
-
-	| method critiques |
-	testClass class
-		compile: 'reset
-	^ self'
-		classified: 'class warfare'.
-
-	method := testClass class methodNamed: #reset.
-
-	critiques := ReClassSideResetMethodProtocolRule
-		             new check: method.
-	self deny: critiques isEmpty
+	^ #reset
 ]

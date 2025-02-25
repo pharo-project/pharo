@@ -9,12 +9,37 @@ This RF strategy will take the AST from the ReflectiveMethod, should it have bee
 The side effect is that the AST of these methods will survive a ASTCache reset and thus image restart.
 "
 Class {
-	#name : #RFReflectivityASTCacheStrategy,
-	#superclass : #Object,
-	#category : #'Reflectivity-Compiler'
+	#name : 'RFReflectivityASTCacheStrategy',
+	#superclass : 'Object',
+	#category : 'Reflectivity-Compiler',
+	#package : 'Reflectivity',
+	#tag : 'Compiler'
 }
 
-{ #category : #accessing }
+{ #category : 'system annoucements' }
+RFReflectivityASTCacheStrategy class >> handleMethodModified: aMethodModified [
+
+	aMethodModified oldMethod saveBcToASTCacheWithAST:
+		aMethodModified oldMethod ast
+]
+
+{ #category : 'class initialization' }
+RFReflectivityASTCacheStrategy class >> initialize [
+
+	self subscribeToMethodModified
+]
+
+{ #category : 'system annoucements' }
+RFReflectivityASTCacheStrategy class >> subscribeToMethodModified [
+
+	<script>
+	self codeChangeAnnouncer weak
+		when: MethodModified
+		send: #handleMethodModified:
+		to: self
+]
+
+{ #category : 'accessing' }
 RFReflectivityASTCacheStrategy >> getASTFor: aCompiledMethod [
 	^ aCompiledMethod reflectiveMethod
 		ifNil: [ aCompiledMethod parseTree ]

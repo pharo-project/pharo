@@ -3,17 +3,19 @@ Abstract super class for exceptions signalled by clients based on the telnet pro
 
 "
 Class {
-	#name : #TelnetProtocolError,
-	#superclass : #ProtocolClientError,
-	#category : #'Network-Protocols-Exceptions'
+	#name : 'TelnetProtocolError',
+	#superclass : 'ProtocolClientError',
+	#category : 'Network-Protocols-Exceptions',
+	#package : 'Network-Protocols',
+	#tag : 'Exceptions'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TelnetProtocolError >> code [
 	^self protocolInstance responseCode
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TelnetProtocolError >> isCommandUnrecognized [
 	^ self code = 500
 ]

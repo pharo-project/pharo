@@ -5,12 +5,14 @@ By default I use #defaultMenuItemName to be used as a title of toolbar UI elemen
 But if you want the title which is different from context menu then you should override #defaultToolbarItemName in the instance side of command
 "
 Class {
-	#name : #ClyToolbarActivation,
-	#superclass : #CmdMenuCommandActivationStrategy,
-	#category : #'Calypso-Browser-Toolbar'
+	#name : 'ClyToolbarActivation',
+	#superclass : 'CmdMenuCommandActivationStrategy',
+	#category : 'Calypso-Browser-Toolbar',
+	#package : 'Calypso-Browser',
+	#tag : 'Toolbar'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyToolbarActivation >> menuItemNameFor: aCommand [
 	^ menuItemName ifNil: [ aCommand defaultToolbarItemName ]
 ]

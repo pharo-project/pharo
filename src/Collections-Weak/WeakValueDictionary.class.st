@@ -9,18 +9,20 @@ The key is the key the user is giving me, but if the user gives me a nil as valu
 When the value of a WeakValueAssociation is a collection element wrapper on nil, then it means the user directly gave us a nil. In case the value of the WeakValueAssociation is nil, it means that we originally had a value that was garbaged collected.
 "
 Class {
-	#name : #WeakValueDictionary,
-	#superclass : #Dictionary,
-	#category : #'Collections-Weak-Dictionaries'
+	#name : 'WeakValueDictionary',
+	#superclass : 'Dictionary',
+	#category : 'Collections-Weak-Dictionaries',
+	#package : 'Collections-Weak',
+	#tag : 'Dictionaries'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 WeakValueDictionary >> add: anAssociation [
 	self at: anAssociation key put: anAssociation value.
 	^ anAssociation
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 WeakValueDictionary >> associationAt: key ifAbsent: aBlock [
 	"Answer the association with the given key.
 	If the key is not found, return the result of evaluating aBlock."
@@ -30,7 +32,7 @@ WeakValueDictionary >> associationAt: key ifAbsent: aBlock [
 		ifNotNil: [ :assoc | assoc key -> assoc value enclosedElement ]
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 WeakValueDictionary >> associationsDo: aBlock [
 	"Evaluate aBlock for each of the receiver's elements (key/value associations)."
 
@@ -38,7 +40,7 @@ WeakValueDictionary >> associationsDo: aBlock [
 	array do: [ :each | each value ifNotNil: [ :value | aBlock value: each key -> value enclosedElement ] ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 WeakValueDictionary >> at: key ifAbsent: aBlock [
 	"Answer the value associated with the key or, if key isn't found,
 	answer the result of evaluating aBlock."
@@ -48,7 +50,7 @@ WeakValueDictionary >> at: key ifAbsent: aBlock [
 			ifNotNil: [ :value | value enclosedElement ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 WeakValueDictionary >> at: key ifPresent: aBlock [
 	"Lookup the given key in the receiver. If it is present, answer the
 	value of evaluating the given block optionally with the value associated
@@ -58,7 +60,7 @@ WeakValueDictionary >> at: key ifPresent: aBlock [
 	^ (array at: (self findElementOrNil: key)) value ifNotNil: [ :value | aBlock cull: value enclosedElement ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WeakValueDictionary >> at: key put: anObject [
 	"Set the value at key to be anObject.  If key is not found, create a new
 	entry for key and set is value to anObject. Answer anObject."
@@ -71,7 +73,7 @@ WeakValueDictionary >> at: key put: anObject [
 	^ anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WeakValueDictionary >> includesKey: key [
 	"Answer whether the receiver has a key equal to the argument and also that the value associated to this key was not garbage collected."
 
@@ -80,7 +82,7 @@ WeakValueDictionary >> includesKey: key [
 		ifNotNil: [ :value | value value isNotNil ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WeakValueDictionary >> rehash [
 	| newSelf |
 	newSelf := self species new: self size.
@@ -88,7 +90,7 @@ WeakValueDictionary >> rehash [
 	array := newSelf array
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WeakValueDictionary >> size [
 	| count |
 	count := 0.
@@ -96,7 +98,7 @@ WeakValueDictionary >> size [
 	^ count
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 WeakValueDictionary >> valuesDo: aBlock [
 	"See comments in Dictionary>>valuesDo:.  The code keeps
 	a reference to the value to facilitate debugging"

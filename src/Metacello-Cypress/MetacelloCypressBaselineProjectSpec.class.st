@@ -2,12 +2,14 @@
 I am a project spec specific to metadataless projects (filetree/tonel).
 "
 Class {
-	#name : #MetacelloCypressBaselineProjectSpec,
-	#superclass : #MetacelloMCBaselineOfProjectSpec,
-	#category : #'Metacello-Cypress-Specs'
+	#name : 'MetacelloCypressBaselineProjectSpec',
+	#superclass : 'MetacelloMCBaselineOfProjectSpec',
+	#category : 'Metacello-Cypress-Specs',
+	#package : 'Metacello-Cypress',
+	#tag : 'Specs'
 }
 
-{ #category : #merging }
+{ #category : 'merging' }
 MetacelloCypressBaselineProjectSpec >> validateMergeForSpec: aSpec [
 	"This method is needed because without it, it is not possible to use a MetacelloCypressBaselineProject kind of project and copy a dependency definition via #project:copyFrom:with:.
 	

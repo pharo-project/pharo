@@ -38,63 +38,49 @@ The category 'menu' is for backward compatibility with ToolSet. We should remove
 
 "
 Class {
-	#name : #ToolRegistry,
-	#superclass : #Object,
+	#name : 'ToolRegistry',
+	#superclass : 'Object',
 	#instVars : [
 		'tools',
 		'announcer'
 	],
-	#category : #'Tool-Registry'
+	#category : 'Tool-Registry',
+	#package : 'Tool-Registry'
 }
 
-{ #category : #announcer }
+{ #category : 'cleanup' }
+ToolRegistry class >> cleanUp: aggressive [
+
+	aggressive ifTrue: [
+		self allSubInstancesDo: [ :each | each resetAnnouncer ] ]
+]
+
+{ #category : 'announcer' }
 ToolRegistry >> announcer [
 	announcer ifNil: [ announcer := Announcer new ].
 
 	^ announcer
 ]
 
-{ #category : #misc }
-ToolRegistry >> browseDirectToolReferences [
-	"Smalltalk tools browseDirectToolReferences"
-	"Browse all direct references of all of my registered tools.
-	Useful for converting calls like:
-
-		MyTool foo
-	into:
-		Smalltalk tools myTool foo 	"
-
-	| bindings |
-
-	bindings := tools values select: [:each | each value isBehavior ]
-		thenCollect: [:each | each value binding ].
-	bindings := bindings copyWith: (Smalltalk bindingOf: #ToolSet).
-
-	^  SystemNavigation new
-		browseMessageList: (
-			SystemNavigation new allMethodsSelect: [:m |
-				(m literals select: [:lit| lit isVariableBinding ]) includesAnyOf: bindings ] )
-		name: 'All direct references to tools to fix'
-]
-
-{ #category : #'handling DNU' }
+{ #category : 'handling DNU' }
 ToolRegistry >> doesNotUnderstand: aMessage [
 	"Return a tool identified by a message selector.
 	We need to handle special case, when no debugger registered.
 	"
 	| tool |
-	tool := tools at: aMessage selector ifAbsent: nil.
+	tool := tools at: aMessage selector ifAbsent: [nil].
 	tool ifNotNil: [ ^ tool value ].
 
 	^super doesNotUnderstand: aMessage
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ToolRegistry >> hasToolNamed: aToolName [
+
 	^ tools includesKey: aToolName
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ToolRegistry >> initDefaultToolSet [
 
 	"Query the system for registering tools"
@@ -104,106 +90,116 @@ ToolRegistry >> initDefaultToolSet [
 	Object withAllSubclassesDo: [:ea |
 	"evaluate only for classes which directly implement this message,
 	not via subclassing"
-		(ea isMeta  and: [
+		(ea isMeta and: [
 			ea includesSelector: #registerToolsOn: ]) ifTrue: [
 			 ea instanceSide registerToolsOn: self  ]].
 	] on: Warning do: [:ex | ex resume ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ToolRegistry >> initialize [
 
-	"symbols used as keys "
 	tools := IdentityDictionary new.
-
 	self initDefaultToolSet
 ]
 
-{ #category : #tools }
-ToolRegistry >> inspector [
-	"understand by Object, so we need to work around not getting a DNU"
-	^self doesNotUnderstand: (Message selector: #inspector)
-]
-
-{ #category : #menu }
-ToolRegistry >> menuItems [
-	"Answer the menu items available for this tool set"
-
-	^#(
-		('System Browser' 			#openClassBrowser)
-		-
-		('Playground'				#openWorkspace)
-		('Transcript' 				#openTranscript)
-		('File Browser'				#openFileList)
-		-
-		('Test Runner'				#openTestRunner)
-		('Process Browser' 			#openProcessBrowser)
-		-
-		('Monticello Browser'		#openMonticelloBrowser)
-		('Change Sorter'			#openChangeSorter)
-	)
-]
-
-{ #category : #menu }
+{ #category : 'only for fallback menu' }
 ToolRegistry >> openClassBrowser [
-	^ self browser open
+	"nobody else beside the fallbakc menu should invoke this method. 
+	This method exists because the menu cannot accept a block so we cannot express
+		menu
+			target: Smalltalk tools  
+			action: [ :t | t browser open ]
+			
+		but only 
+		menu
+			target: Smalltalk tools  
+			seleector: openBrowser"
+
+	^ (self toolNamed: #browser) open
 ]
 
-{ #category : #menu }
+{ #category : 'only for fallback menu' }
 ToolRegistry >> openFileList [
-	self fileList open
+	"nobody else beside the fallbakc menu should invoke this method. 
+	This method exists because the menu cannot accept a block so we cannot express
+		menu
+			target: Smalltalk tools  
+			action: [ :t | t browser open ]
+			
+		but only 
+		menu
+			target: Smalltalk tools  
+			seleector: openBrowser"
+
+	^ (self toolNamed: #fileList) open
 ]
 
-{ #category : #menu }
-ToolRegistry >> openMonticelloBrowser [
-	self monticelloBrowser open
-]
-
-{ #category : #menu }
+{ #category : 'only for fallback menu' }
 ToolRegistry >> openProcessBrowser [
 	self using: #processBrowser do: [:tool |
 		tool open
 		]
 ]
 
-{ #category : #menu }
-ToolRegistry >> openRecentChangesLog [
-	self changeList browseRecentLog
-]
-
-{ #category : #menu }
+{ #category : 'only for fallback menu' }
 ToolRegistry >> openTestRunner [
-	self using: #testRunner do: [:tool | tool open ]
+	"nobody else beside the fallbakc menu should invoke this method. 
+	This method exists because the menu cannot accept a block so we cannot express
+		menu
+			target: Smalltalk tools  
+			action: [ :t | t browser open ]
+			
+		but only 
+		menu
+			target: Smalltalk tools  
+			seleector: openBrowser"
+
+	^ (self toolNamed: #testRunner) open
 ]
 
-{ #category : #menu }
+{ #category : 'only for fallback menu' }
 ToolRegistry >> openTranscript [
-	^ self transcript open
+	"nobody else beside the fallbakc menu should invoke this method. 
+	This method exists because the menu cannot accept a block so we cannot express
+		menu
+			target: Smalltalk tools  
+			action: [ :t | t browser open ]
+			
+		but only 
+		menu
+			target: Smalltalk tools  
+			seleector: openBrowser"
+
+	^ (self toolNamed: #transcript) open
 ]
 
-{ #category : #menu }
+{ #category : 'only for fallback menu' }
 ToolRegistry >> openWorkspace [
-	^ self workspace open
+	^ (self toolNamed: #workspace) open
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 ToolRegistry >> register: anObject as: aNameSelector [
 	"Register a tool class under given name"
 	tools at: aNameSelector put: anObject.
 	self announcer announce: (ToolRegistryToolRegistered tool: anObject name: aNameSelector)
 ]
 
-{ #category : #registration }
+{ #category : 'registration' }
 ToolRegistry >> remove: aName [
 
-	| toolToRemove |
+	self 
+		deprecated: 'Use unregisterToolWithRole:' 
+		on: '17/11/2024'  
+		in: 'pharo13' 
+		transformWith:  '`@receiver remove: `@arg'
+						-> '`@receiver unregisterToolWithRole: `@arg'.
+	self unregisterToolWithRole: aName
 
-	"remove tool with given name"
-	toolToRemove := tools removeKey: aName ifAbsent: [].
-	self announcer announce: (ToolRegistryToolRegistered tool: toolToRemove name: aName)
 ]
 
-{ #category : #announcer }
+{ #category : 'announcer' }
 ToolRegistry >> resetAnnouncer [
 	"unregister all current weak subscriptions because it can cause a memory leak"
 
@@ -211,31 +207,58 @@ ToolRegistry >> resetAnnouncer [
 	announcer := nil.
 ]
 
-{ #category : #tools }
+{ #category : 'registration' }
+ToolRegistry >> toolNamed: aName [
+
+	^ tools at: aName ifAbsent: [ self error: 'No tool named: ', aName, ' available' ]
+]
+
+{ #category : 'tools' }
 ToolRegistry >> transcript [
-	"No need to register transcript. But for uniformity,
-	implement this method, so transcript can be accessed via
-	Smalltalk tools transcript , as any other tool "
+	"We should rewrite the transcript as a spec UI. 
+	In addition we should implement the Transcript as a circular structure
+	so that we do not have to register to stepGlobal to flush it and avoid memory leak."
+	
+	"check 
+		ThreadSafeTranscript>>#stepGlobal.
+		WorldState >> #runStepMethodsIn: 
+	"
+
 	^ Transcript
 ]
 
-{ #category : #misc }
+{ #category : 'registration' }
+ToolRegistry >> unregisterToolWithRole: aName [
+
+	| toolToRemove |
+	toolToRemove := tools removeKey: aName ifAbsent: [].
+	self announcer announce: (ToolRegistryToolRegistered tool: toolToRemove name: aName)
+]
+
+{ #category : 'registration' }
 ToolRegistry >> using: aToolName do: aBlock [
 	"Evaluate a block for tool found under corresponding name or silently ignore if its not found or nil"
-	| tool |
 
+	| tool |
 	tool := tools at: aToolName ifAbsent: [ ^ self ].
 	tool ifNotNil: [ ^ aBlock value: tool value ]
 ]
 
-{ #category : #announcer }
-ToolRegistry >> whenToolRegistered: aBlock [
+{ #category : 'announcer' }
+ToolRegistry >> whenToolRegisteredSend: aSelector to: aSubscriber [
 
-	self announcer weak when: ToolRegistryToolRegistered do: aBlock
+	self announcer weak
+		when: ToolRegistryToolRegistered
+		send: aSelector
+		to: aSubscriber
+		
 ]
 
-{ #category : #announcer }
-ToolRegistry >> whenToolUnregistered: aBlock [
+{ #category : 'announcer' }
+ToolRegistry >> whenToolUnregisteredSend: aSelector  to: aSubscriber [
 
-	self announcer weak when: ToolRegistryToolUnregistered do: aBlock
+	self announcer weak
+		when: ToolRegistryToolUnregistered
+		send: aSelector
+		to: aSubscriber
 ]

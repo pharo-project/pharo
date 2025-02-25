@@ -1,13 +1,15 @@
 Class {
-	#name : #DebugSessionContextsTest,
-	#superclass : #DebuggerTest,
+	#name : 'DebugSessionContextsTest',
+	#superclass : 'DebuggerTest',
 	#instVars : [
 		'debuggedThisContext'
 	],
-	#category : #'Debugger-Model-Tests-Core'
+	#category : 'Debugger-Model-Tests-Core',
+	#package : 'Debugger-Model-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 DebugSessionContextsTest >> setUp [
 	"Creates a debugSession in a way that mimicks the real way DebugSessions are created normally in the image (in a process, a halt is raised, the process creates a debugSession and gets suspended). Note that this isn't a perfect replica of the normal way a debugSession gets created, because the normal way involves the UIManager and would create a pre-debug window."
 
@@ -19,13 +21,13 @@ DebugSessionContextsTest >> setUp [
 	[ process isSuspended ] whileFalse: [ 100 milliSeconds wait ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DebugSessionContextsTest >> testInitialContentOfInterruptedContext [
 	"Checks that the interruptedContext of the DebugSession is the thisContext of the code where the DebugSession was created"
 	self assert: ((process suspendedContext readVariableNamed: #debugSession) interruptedContext ) identicalTo: debuggedThisContext
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DebugSessionContextsTest >> testInitialContentOfSuspendedContext [
 	"Checks that the interruptedContext of the DebugSession is the thisContext of the code where the DebugSession was created"
 	self assert: ((process suspendedContext readVariableNamed: #debugSession) interruptedProcess suspendedContext) identicalTo: debuggedThisContext

@@ -1,15 +1,16 @@
 Class {
-	#name : #ClyClassWithTraits,
-	#superclass : #Object,
+	#name : 'ClyClassWithTraits',
+	#superclass : 'Object',
 	#traits : 'ClyTraitChild1 + ClyTraitChild2Child',
 	#classTraits : 'ClyTraitChild1 classTrait + ClyTraitChild2Child classTrait',
-	#category : #'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits'
+	#category : 'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits',
+	#package : 'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits'
 }
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 ClyClassWithTraits class >> localClassSideMethod [
 ]
 
-{ #category : #tag }
+{ #category : 'tag' }
 ClyClassWithTraits >> localMethod [
 ]

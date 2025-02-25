@@ -5,18 +5,20 @@ This is the unit test for the class ProtoObject. Unit tests are a good way to ex
 	- the sunit class category
 "
 Class {
-	#name : #ProtoObjectTest,
-	#superclass : #ClassTestCase,
-	#category : #'Kernel-Tests-Objects'
+	#name : 'ProtoObjectTest',
+	#superclass : 'ClassTestCase',
+	#category : 'Kernel-Tests-Objects',
+	#package : 'Kernel-Tests',
+	#tag : 'Objects'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 ProtoObjectTest >> classToBeTested [
 
 	^ ProtoObject
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 ProtoObjectTest >> testFastPointersTo [
 	| myObject myArray myObject2 allObjects |
 	self timeLimit: 1 minute.
@@ -33,12 +35,12 @@ ProtoObjectTest >> testFastPointersTo [
 		equals: {myArray}
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 ProtoObjectTest >> testFlag [
 	ProtoObject new flag: #hallo
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 ProtoObjectTest >> testIfNil [
 	| object block reachabilityTest |
 	reachabilityTest := false.
@@ -55,7 +57,7 @@ ProtoObjectTest >> testIfNil [
 	self assert: reachabilityTest equals: false
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 ProtoObjectTest >> testIfNilIfNotNil [
 	| object returnValue block notReached1 reached1 notReached2 reached2 reached3 notReached3 reached4 notReached4 |
 	notReached1 := false.
@@ -100,7 +102,7 @@ ProtoObjectTest >> testIfNilIfNotNil [
 	self assert: (object ifNil: [ nil ] ifNotNil: block) equals: returnValue
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 ProtoObjectTest >> testIfNotNil [
 	| object returnValue block reached |
 	object := ProtoObject new.
@@ -130,7 +132,7 @@ ProtoObjectTest >> testIfNotNil [
 	self assert: (object ifNotNil: block) equals: returnValue
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 ProtoObjectTest >> testIfNotNilIfNil [
 	| object returnValue block reached notReached |
 	object := ProtoObject new.
@@ -176,7 +178,7 @@ ProtoObjectTest >> testIfNotNilIfNil [
 	self assert: (object ifNotNil: block ifNil: [ false ]) identicalTo: returnValue
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 ProtoObjectTest >> testIsImmediateObject [
 	self deny: Object new isImmediateObject.
 	self deny: Array new isImmediateObject.
@@ -186,29 +188,29 @@ ProtoObjectTest >> testIsImmediateObject [
 	self assert: $a isImmediateObject equals: $a class isImmediateClass
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 ProtoObjectTest >> testIsNil [
 
 	self deny: ProtoObject new isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ProtoObjectTest >> testNextObject [
 	"In issue 4011 (https://github.com/pharo-project/pharo/issues/4011), "
 	"the image crashed if nextObject was called on a Character, SmallInteger or a SmallFloat64"
 
-	self assert: (nil nextObject notNil).
-	self assert: ('test' nextObject notNil).
+	self assert: (nil nextObject isNotNil).
+	self assert: ('test' nextObject isNotNil).
 
-	self should: [42 nextObject notNil] raise: ShouldNotImplement.
-	self should: [$x nextObject notNil] raise: ShouldNotImplement.
+	self should: [42 nextObject isNotNil] raise: ShouldNotImplement.
+	self should: [$x nextObject isNotNil] raise: ShouldNotImplement.
 
 	"Small Floats are only available in 64 bits VMs"
 	Smalltalk vm hasSmallFloats
-		ifTrue: [self should: [3.14 nextObject notNil] raise: ShouldNotImplement]
+		ifTrue: [self should: [3.14 nextObject isNotNil] raise: ShouldNotImplement]
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 ProtoObjectTest >> testNotTheSame [
 
 	| object1 object2 |
@@ -218,7 +220,7 @@ ProtoObjectTest >> testNotTheSame [
 	self deny: object1 ~~ object1
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 ProtoObjectTest >> testPointersTo [
 	| myObject myArray pointers |
 	myObject := Object new.

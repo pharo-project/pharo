@@ -1,6 +1,6 @@
-Extension { #name : #VirtualMachine }
+Extension { #name : 'VirtualMachine' }
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 VirtualMachine >> metaLinkOptions [
 	^{
 	#isSpur -> #( + optionCompileOnLinkInstallation).

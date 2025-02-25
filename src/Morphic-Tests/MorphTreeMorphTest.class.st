@@ -3,12 +3,14 @@ A MorphTreeMorphTests tests aspects of a MorphTreeMorph
 
 "
 Class {
-	#name : #MorphTreeMorphTest,
-	#superclass : #TestCase,
-	#category : #'Morphic-Tests-Widgets'
+	#name : 'MorphTreeMorphTest',
+	#superclass : 'TestCase',
+	#category : 'Morphic-Tests-Widgets',
+	#package : 'Morphic-Tests',
+	#tag : 'Widgets'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MorphTreeMorphTest >> testLastClickedMorphSetUponUpdateList [
 	"Test that lastClickedMorph isn't set to nil after an update list."
 
@@ -21,16 +23,16 @@ MorphTreeMorphTest >> testLastClickedMorphSetUponUpdateList [
 	c
 		selectItems:
 			{CharacterSet}.
-	self assert: t listManager lastClickedMorph notNil.
+	self assert: t listManager lastClickedMorph isNotNil.
 	c rootClass: Bag.	"We change completely the list. CharacterSet is not anymore in the list after the update."
 	c updateList.
 	self assert: t listManager lastClickedMorph isNil.
 	c selectItems: { Bag }.
-	self assert: t listManager lastClickedMorph notNil ]
+	self assert: t listManager lastClickedMorph isNotNil ]
 		ensure: [ w close ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MorphTreeMorphTest >> testLeakingSelectionsOnUpdate [
 	"Test that selected morphs are forgotten on update."
 
@@ -46,7 +48,7 @@ MorphTreeMorphTest >> testLeakingSelectionsOnUpdate [
 		ensure: [ w close ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MorphTreeMorphTest >> testMaintainingSelectionsOnUpdate [
 	"Test that the selection is well maintained on list update."
 
@@ -76,7 +78,7 @@ MorphTreeMorphTest >> testMaintainingSelectionsOnUpdate [
 		ensure: [ w close ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MorphTreeMorphTest >> testUpdatingSelectionsOnUpdate [
 	"Test that the selection does not refer to non-existing nodes after updates."
 
@@ -97,7 +99,7 @@ MorphTreeMorphTest >> testUpdatingSelectionsOnUpdate [
 		ensure: [ w close ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MorphTreeMorphTest >> testUpdatingSelectionsOnUpdateWithRemoval [
 	"Test that the selection does not refer to non-existing nodes after updates, including if the update removes nodes."
 

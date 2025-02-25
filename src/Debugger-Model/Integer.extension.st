@@ -1,6 +1,6 @@
-Extension { #name : #Integer }
+Extension { #name : 'Integer' }
 
-{ #category : #'*Debugger-Model' }
+{ #category : '*Debugger-Model' }
 Integer class >> canonicalArgumentName [
 
 	^ 'anInteger'

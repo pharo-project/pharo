@@ -1,13 +1,13 @@
-Extension { #name : #SycMoveMethodsToInstanceSideCommand }
+Extension { #name : 'SycMoveMethodsToInstanceSideCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycMoveMethodsToInstanceSideCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 
 	^ SycMethodMenuActivation byRootGroupItemOrder: 50 for: ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycMoveMethodsToInstanceSideCommand class >> methodShortcutActivation [
 	<classAnnotation>
 

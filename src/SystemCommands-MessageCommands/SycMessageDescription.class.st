@@ -2,7 +2,7 @@
 I represent message description which includes selector and argument names.
 
 In addition I keep reference to so named contextUser. It is an object which uses given message, which was used to retrieve message instance.
-The #contextUser is either a method or RBMessageNode.
+The #contextUser is either a method or ASTMessageNode.
 
 To create my instance use following expressions: 
 
@@ -29,78 +29,86 @@ Internal Representation and Key Implementation Points.
 	selector:		<Symbol>
 "
 Class {
-	#name : #SycMessageDescription,
-	#superclass : #Object,
+	#name : 'SycMessageDescription',
+	#superclass : 'Object',
 	#instVars : [
 		'selector',
 		'argumentNames',
 		'contextUser'
 	],
-	#category : #'SystemCommands-MessageCommands'
+	#category : 'SystemCommands-MessageCommands',
+	#package : 'SystemCommands-MessageCommands'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SycMessageDescription class >> fromContextOf: messageUserObject [
 	^self new
 		contextUser: messageUserObject
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SycMessageDescription class >> ofMessageNode: astMessageNode [
-	^(self fromContextOf: astMessageNode)
+
+	^ (self fromContextOf: astMessageNode methodNode)
 		selector: astMessageNode selector;
-		argumentNames: (astMessageNode arguments collect: [:each | each formattedCode])
+		argumentNames: (astMessageNode arguments collect: [:each | each formattedCode ])
+
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SycMessageDescription class >> ofMethod: aMethod [
 	^(self fromContextOf: aMethod)
 		selector: aMethod selector;
 		argumentNames: aMethod argumentNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMessageDescription >> argumentNames [
 	^ argumentNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMessageDescription >> argumentNames: anObject [
 	argumentNames := anObject
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 SycMessageDescription >> computeArgumentPermutationsFor: modifiedMessageDescription [
 	^modifiedMessageDescription argumentNames
 		collect: [ :each | argumentNames indexOf: each ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMessageDescription >> contextUser [
 	^ contextUser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMessageDescription >> contextUser: anObject [
 	contextUser := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycMessageDescription >> describesSelector: someSelector withArguments: someArgumentNames [
 	^selector = someSelector & (argumentNames = someArgumentNames)
 ]
 
-{ #category : #accessing }
+{ #category : 'hacked methods' }
+SycMessageDescription >> directlyDefinesMethod: aSymbol [
+	^ selector == aSymbol
+]
+
+{ #category : 'accessing' }
 SycMessageDescription >> methodClass [
 
 	^ contextUser methodClass
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 SycMessageDescription >> requestNewSignature [
 	| methodName dialog |
 	methodName := RBMethodName selector: selector arguments: argumentNames copy.
-	dialog := SycMethodNameEditorPresenter openOn: methodName.
+	dialog := StMethodNameEditorPresenter openOn: methodName.
 	dialog cancelled ifTrue: [  CmdCommandAborted signal ].
 
 	selector = methodName selector & (argumentNames = methodName arguments)
@@ -111,12 +119,12 @@ SycMessageDescription >> requestNewSignature [
 		argumentNames: methodName arguments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMessageDescription >> selector [
 	^ selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMessageDescription >> selector: anObject [
 	selector := anObject
 ]

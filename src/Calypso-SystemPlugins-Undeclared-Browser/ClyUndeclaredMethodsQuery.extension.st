@@ -1,6 +1,6 @@
-Extension { #name : #ClyUndeclaredMethodsQuery }
+Extension { #name : 'ClyUndeclaredMethodsQuery' }
 
-{ #category : #'*Calypso-SystemPlugins-Undeclared-Browser' }
+{ #category : '*Calypso-SystemPlugins-Undeclared-Browser' }
 ClyUndeclaredMethodsQuery >> decorateMethodGroupTableCell: anItemCellMorph of: groupItem [
 	super decorateMethodGroupTableCell: anItemCellMorph of: groupItem.
 

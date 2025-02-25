@@ -1,6 +1,6 @@
-Extension { #name : #SycMoveMethodsToClassCommand }
+Extension { #name : 'SycMoveMethodsToClassCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycMoveMethodsToClassCommand class >> methodBrowserDragAndDropActivation [
 	<classAnnotation>
 
@@ -8,7 +8,7 @@ SycMoveMethodsToClassCommand class >> methodBrowserDragAndDropActivation [
 		for: ClyMethod asCalypsoItemContext toDropIn: ClyClass asCalypsoItemContext
 ]
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycMoveMethodsToClassCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 

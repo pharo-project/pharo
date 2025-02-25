@@ -2,8 +2,8 @@
 Row of tabs for a TabGroupMorph.
 "
 Class {
-	#name : #TabSelectorMorph,
-	#superclass : #ModelMorph,
+	#name : 'TabSelectorMorph',
+	#superclass : 'ModelMorph',
 	#instVars : [
 		'selectedIndex',
 		'visibleTabRange',
@@ -12,10 +12,11 @@ Class {
 		'controls',
 		'wrapScrolling'
 	],
-	#category : #'Morphic-Widgets-PolyTabs'
+	#category : 'Morphic-Widgets-PolyTabs',
+	#package : 'Morphic-Widgets-PolyTabs'
 }
 
-{ #category : #operations }
+{ #category : 'operations' }
 TabSelectorMorph >> activate [
 	"Update the non visible tabs too."
 
@@ -23,7 +24,7 @@ TabSelectorMorph >> activate [
 	self nonVisibleTabs do: [:t | t activate]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 TabSelectorMorph >> addTab: aStringOrMorph [
 	"Add a new tab with the given text."
 
@@ -31,7 +32,7 @@ TabSelectorMorph >> addTab: aStringOrMorph [
 	self updateTabs
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 TabSelectorMorph >> addTab: aStringOrMorph beforeIndex: index [
 
 	self tabs add: (self newLabelMorph: aStringOrMorph) beforeIndex: index.
@@ -41,7 +42,7 @@ TabSelectorMorph >> addTab: aStringOrMorph beforeIndex: index [
 	self updateTabs
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 TabSelectorMorph >> addTab: aStringOrMorph selected: selectedStringOrMorph [
 	"Add a new tab with the given text or morph and alternate for when selected."
 
@@ -49,7 +50,7 @@ TabSelectorMorph >> addTab: aStringOrMorph selected: selectedStringOrMorph [
 	self updateTabs
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 TabSelectorMorph >> basicMinExtent [
 	"Answer the unadjusted min extent."
 
@@ -64,7 +65,7 @@ TabSelectorMorph >> basicMinExtent [
 	^minTabExtent x + controlsExtent x @ (minTabExtent y max: controlsExtent y)
 ]
 
-{ #category : #tabs }
+{ #category : 'tabs' }
 TabSelectorMorph >> calculateVisibleTabs [
 	"Answer the tabs that should be visible given the space."
 
@@ -101,33 +102,33 @@ TabSelectorMorph >> calculateVisibleTabs [
 			answer ]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TabSelectorMorph >> controlButtonWidth [
 	"Answer the width for a scroll button."
 
 	^self theme scrollbarThickness + (3 * self displayScaleFactor)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabSelectorMorph >> controls [
 
 	^ controls
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabSelectorMorph >> controls: anObject [
 
 	controls := anObject
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TabSelectorMorph >> controlsExtent [
 	"Answer the min extent of the controls."
 
 	^self controls first minExtent + (self controls last minExtent x @ 0)
 ]
 
-{ #category : #rounding }
+{ #category : 'rounding' }
 TabSelectorMorph >> cornerStyle: aSymbol [
 	"Pass to tabs also."
 
@@ -135,7 +136,7 @@ TabSelectorMorph >> cornerStyle: aSymbol [
 	self tabs do: [:t | t cornerStyle: aSymbol]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 TabSelectorMorph >> drawSubmorphsOn: aCanvas [
 	"Display submorphs back to front.
 	Draw the focus here since we are using inset bounds
@@ -143,8 +144,8 @@ TabSelectorMorph >> drawSubmorphsOn: aCanvas [
 
 	|tab|
 	super drawSubmorphsOn: aCanvas.
-	(self hasKeyboardFocus and: [(tab := self selectedTab) notNil
-			and: [tab owner notNil]])
+	(self hasKeyboardFocus and: [(tab := self selectedTab) isNotNil
+			and: [tab owner isNotNil]])
 		ifTrue: [self clipSubmorphs
 				ifTrue: [aCanvas
 							clipBy: (aCanvas clipRect intersect: self clippingBounds ifNone:["done here" ^ self ])
@@ -152,7 +153,7 @@ TabSelectorMorph >> drawSubmorphsOn: aCanvas [
 				ifFalse: [tab drawKeyboardFocusOn: aCanvas]]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TabSelectorMorph >> ensureSelectedTabIsVisible [
 	"Update the tabs if the seleted tab is not in the visible range."
 
@@ -161,7 +162,7 @@ TabSelectorMorph >> ensureSelectedTabIsVisible [
 				self updateTabs]
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 TabSelectorMorph >> extent: aPoint [
 	"Set the extent of the receiver.
 	Update the tabs."
@@ -173,7 +174,7 @@ TabSelectorMorph >> extent: aPoint [
 		ensureSelectedTabIsVisible
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabSelectorMorph >> focusBounds [
 	"Answer the bounds for drawing the focus indication."
 
@@ -182,14 +183,14 @@ TabSelectorMorph >> focusBounds [
 		ifNotNil: [:tab | tab focusBounds]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabSelectorMorph >> font [
 	"Answer the label font"
 
 	^font
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabSelectorMorph >> font: aFont [
 	"Set the label font"
 
@@ -198,14 +199,14 @@ TabSelectorMorph >> font: aFont [
 	self updateFont
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 TabSelectorMorph >> handlesKeyboard: evt [
 	"Yes, we do it here."
 
 	^true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TabSelectorMorph >> initialize [
 	"Initialize the receiver."
 
@@ -223,14 +224,14 @@ TabSelectorMorph >> initialize [
 		cellInset: (self theme tabSelectorCellInsetFor: self)
 ]
 
-{ #category : #keymapping }
+{ #category : 'keymapping' }
 TabSelectorMorph >> initializeShortcuts: aKMDispatcher [
 	super initializeShortcuts: aKMDispatcher.
 	aKMDispatcher attachCategory: #MorphFocusNavigation.
 	aKMDispatcher attachCategory: #TabMorphsNavigation
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 TabSelectorMorph >> keyDown: event [
 	"Process keys navigation and space to toggle."
 
@@ -241,7 +242,7 @@ TabSelectorMorph >> keyDown: event [
 		ifTrue: [self selectNextTab]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 TabSelectorMorph >> keyboardFocusChange: aBoolean [
 	"The message is sent to a morph when its keyboard focus changes.
 	Update for focus feedback."
@@ -249,39 +250,39 @@ TabSelectorMorph >> keyboardFocusChange: aBoolean [
 	self focusChanged
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TabSelectorMorph >> leftButtonEnabled [
 	"Answer whether the button for scrolling left should be enabled."
 
 	^self wrapScrolling or: [self visibleTabRange first > 1]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TabSelectorMorph >> leftButtonLabel [
 	"Answer the label for a button for scrolling left."
 
-	^AlphaImageMorph new image: (
+	^AlphaImageMorph new formSet: (
 		ScrollBarMorph
 			arrowOfDirection: #left
 			size: self controlButtonWidth - (3* self displayScaleFactor)
 			color: self paneColor darker)
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 TabSelectorMorph >> minExtent [
 	"Add a bit for the round corner of the group."
 
 	^self theme tabSelectorMorphMinExtentFor: self
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TabSelectorMorph >> newControls [
 	"Answer the scrolling controls."
 
 	^{self newLeftButton. self newRightButton}
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TabSelectorMorph >> newEndSpacer [
 	"Answer a spacer to pad when rounded."
 
@@ -291,7 +292,7 @@ TabSelectorMorph >> newEndSpacer [
 		extent: 6@0
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TabSelectorMorph >> newLabelMorph: aStringOrMorph [
 	"Answer a new label morph with the given label text."
 
@@ -310,7 +311,7 @@ TabSelectorMorph >> newLabelMorph: aStringOrMorph [
 		tabSelector: self
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TabSelectorMorph >> newLabelMorph: aStringOrMorph selected: selectedStringOrMorph [
 	"Answer a new label morph with the given label text or morph and
 	alternate when selected."
@@ -330,7 +331,7 @@ TabSelectorMorph >> newLabelMorph: aStringOrMorph selected: selectedStringOrMorp
 		tabSelector: self
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TabSelectorMorph >> newLeftButton [
 	"Answer a new button for scrolling left."
 
@@ -346,7 +347,7 @@ TabSelectorMorph >> newLeftButton [
 		extent: self controlButtonWidth asPoint
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TabSelectorMorph >> newRightButton [
 	"Answer a new button for scrolling right."
 
@@ -362,7 +363,7 @@ TabSelectorMorph >> newRightButton [
 		extent: self controlButtonWidth asPoint
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TabSelectorMorph >> newSpacer [
 	"Answer a spacer to place the controls to the right."
 
@@ -374,14 +375,14 @@ TabSelectorMorph >> newSpacer [
 		hResizing: #spaceFill
 ]
 
-{ #category : #tabs }
+{ #category : 'tabs' }
 TabSelectorMorph >> nonVisibleTabs [
 	"Answer the tabs that are not currently visible."
 
 	^self tabs select: [:t | t owner isNil]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TabSelectorMorph >> passivate [
 	"Update the non visible tabs too."
 
@@ -389,7 +390,7 @@ TabSelectorMorph >> passivate [
 	self nonVisibleTabs do: [:t | t passivate]
 ]
 
-{ #category : #tabs }
+{ #category : 'tabs' }
 TabSelectorMorph >> relabelTab: aTab with: aStringOrMorph [
 	"Relabel the tab update tab layout."
 
@@ -400,7 +401,7 @@ TabSelectorMorph >> relabelTab: aTab with: aStringOrMorph [
 			ifTrue: [self ensureSelectedTabIsVisible]]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TabSelectorMorph >> removeTabIndex: anInteger [
 	"Remove the tab at the given index and
 	adjust any selected (next or first if was last)."
@@ -411,25 +412,25 @@ TabSelectorMorph >> removeTabIndex: anInteger [
 		self selectedIndex: self selectedIndex - 1 \\ self tabs size + 1]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TabSelectorMorph >> rightButtonEnabled [
 	"Answer whether the button for scrolling right should be enabled."
 
 	^self wrapScrolling or: [self visibleTabRange last < self tabs size]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TabSelectorMorph >> rightButtonLabel [
 	"Answer the label for a button for scrolling right."
 
-	^AlphaImageMorph new image: (
+	^AlphaImageMorph new formSet: (
 		ScrollBarMorph
 			arrowOfDirection: #right
 			size: self controlButtonWidth - (3 * self displayScaleFactor)
 			color: self paneColor darker)
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TabSelectorMorph >> scrollTabsLeft [
 	"Scroll left through the tabs."
 
@@ -439,7 +440,7 @@ TabSelectorMorph >> scrollTabsLeft [
 	self updateTabs
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TabSelectorMorph >> scrollTabsRight [
 	"Scroll right through the tabs."
 
@@ -447,14 +448,14 @@ TabSelectorMorph >> scrollTabsRight [
 	self updateTabs
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TabSelectorMorph >> selectNextTab [
 	"Select the next tab, or the first if none selected."
 
 	self selectedIndex: self selectedIndex \\ self tabs size + 1
 ]
 
-{ #category : #tabs }
+{ #category : 'tabs' }
 TabSelectorMorph >> selectPreviousTab [
 	"Select the previous tab, or the last if none selected."
 
@@ -463,14 +464,14 @@ TabSelectorMorph >> selectPreviousTab [
 		ifFalse: [self selectedIndex - 1])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabSelectorMorph >> selectedIndex [
 	"Answer the value of selectedIndex"
 
 	^ selectedIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabSelectorMorph >> selectedIndex: index [
 	"Set the value of selectedIndex"
 
@@ -486,7 +487,7 @@ TabSelectorMorph >> selectedIndex: index [
 	self changed: #selectedIndex with: oldIndex
 ]
 
-{ #category : #tabs }
+{ #category : 'tabs' }
 TabSelectorMorph >> selectedTab [
 	"Answer the selected tab."
 
@@ -494,26 +495,26 @@ TabSelectorMorph >> selectedTab [
 		ifFalse: [self tabs at: self selectedIndex ifAbsent: [nil]]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TabSelectorMorph >> tabClicked: evt with: aMorph [
 	"A tab has been clicked."
 
 	self selectedIndex: (self tabs indexOf: aMorph)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabSelectorMorph >> tabs [
 
 	^ tabs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabSelectorMorph >> tabs: anObject [
 
 	tabs := anObject
 ]
 
-{ #category : #tabs }
+{ #category : 'tabs' }
 TabSelectorMorph >> tabsAndControls [
 	"Answer the tabs and scrolling controls that should be visible given the space."
 
@@ -536,14 +537,14 @@ TabSelectorMorph >> tabsAndControls [
 	^visibleTabs
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TabSelectorMorph >> takesKeyboardFocus [
 	"Answer whether the receiver can normally take keyboard focus."
 
 	^true
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 TabSelectorMorph >> updateFont [
 	"Update the label font."
 
@@ -551,7 +552,7 @@ TabSelectorMorph >> updateFont [
 	self updateTabs
 ]
 
-{ #category : #tabs }
+{ #category : 'tabs' }
 TabSelectorMorph >> updateTabs [
 	"Update the submorphs based on visible tabs."
 
@@ -567,13 +568,13 @@ TabSelectorMorph >> updateTabs [
 		adoptPaneColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabSelectorMorph >> visibleTabRange [
 
 	^ visibleTabRange
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabSelectorMorph >> visibleTabRange: anInterval [
 	"Record the range of tabs that are visible.
 	Also used when scrolling to determine starting index."
@@ -584,20 +585,20 @@ TabSelectorMorph >> visibleTabRange: anInterval [
 		changed: #rightButtonEnabled
 ]
 
-{ #category : #tabs }
+{ #category : 'tabs' }
 TabSelectorMorph >> visibleTabs [
 	"Answer the tabs that are currently visible."
 
-	^self tabs select: [:t | t owner notNil]
+	^self tabs select: [:t | t owner isNotNil]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabSelectorMorph >> wrapScrolling [
 
 	^ wrapScrolling
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabSelectorMorph >> wrapScrolling: aBoolean [
 	"Set whether tab scrolling wraps around at each end."
 

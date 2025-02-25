@@ -2,26 +2,28 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TDictionaryPrintingTest,
-	#category : #'Collections-Unordered-Tests-Traits'
+	#name : 'TDictionaryPrintingTest',
+	#category : 'Collections-Unordered-Tests-Traits',
+	#package : 'Collections-Unordered-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryPrintingTest >> emptyDict [
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryPrintingTest >> newEmptyDict [
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryPrintingTest >> nonEmptyDict [
 	self explicitRequirement
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 TDictionaryPrintingTest >> testPrintElementsOn [
 	| str |
 	str := String new writeStream.
@@ -29,7 +31,7 @@ TDictionaryPrintingTest >> testPrintElementsOn [
 	self assert: (str contents = '(#a->1 #b->30 #c->1 #d->-2 )')
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 TDictionaryPrintingTest >> testStoreOn [
 	| str |
 	str := String new writeStream.

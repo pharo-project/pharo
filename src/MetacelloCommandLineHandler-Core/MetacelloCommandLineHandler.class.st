@@ -26,22 +26,23 @@ Examples:
 	
 "
 Class {
-	#name : #MetacelloCommandLineHandler,
-	#superclass : #CommandLineHandler,
-	#category : #'MetacelloCommandLineHandler-Core'
+	#name : 'MetacelloCommandLineHandler',
+	#superclass : 'CommandLineHandler',
+	#category : 'MetacelloCommandLineHandler-Core',
+	#package : 'MetacelloCommandLineHandler-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloCommandLineHandler class >> commandName [
 	^ 'metacello'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloCommandLineHandler class >> description [
 	^ 'Install and inspect Metacello Baselines/Configurations from the command line'
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 MetacelloCommandLineHandler >> activate [
 	self activateHelpWithoutArguments
 		ifTrue: [ ^ self ].
@@ -53,17 +54,17 @@ MetacelloCommandLineHandler >> activate [
 				postInstall ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloCommandLineHandler >> availableSubCommands [
 	^ #('install')
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloCommandLineHandler >> baselineOrConfigurationName [
 	^ self argumentAt: 3
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloCommandLineHandler >> baselineOrConfigurationNameSuffix [
 	self isBaselineName
 		ifTrue: [ ^ self baselineOrConfigurationName copyFrom: 'BaselineOf' size + 1 to: self baselineOrConfigurationName size ].
@@ -72,7 +73,7 @@ MetacelloCommandLineHandler >> baselineOrConfigurationNameSuffix [
 		ifTrue: [ ^ self baselineOrConfigurationName copyFrom: 'ConfigurationOf' size + 1 to: self baselineOrConfigurationName size ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 MetacelloCommandLineHandler >> checkInputForInstallSubcommand [
 	(self isBaselineName and: [ self hasVersion ])
 		ifTrue: [ Exit signalFailure: 'A baseline can not be used with --version option.' ].
@@ -81,29 +82,29 @@ MetacelloCommandLineHandler >> checkInputForInstallSubcommand [
 		ifFalse: [ Exit signalFailure: 'Not a Baseline nor a Configuration.' ]
 ]
 
-{ #category : #'argument validation' }
+{ #category : 'argument validation' }
 MetacelloCommandLineHandler >> checkSubCommand: aString [ 
 	(self availableSubCommands includes: aString)
 		ifFalse: [
 			self exitFailure: ('{1} subcommand does not exists' format: { aString }) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloCommandLineHandler >> groups [
 	^ (self optionAt: 'groups') splitOn: $,
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloCommandLineHandler >> hasGroups [
 	^ self hasOption: 'groups'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloCommandLineHandler >> hasVersion [
 	^ self hasOption: 'version'
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 MetacelloCommandLineHandler >> install [
 	| metacello |
 	metacello := Metacello new.
@@ -119,47 +120,47 @@ MetacelloCommandLineHandler >> install [
 		ifFalse: [ metacello load ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloCommandLineHandler >> isBaselineName [
 	^ self baselineOrConfigurationName matchesRegex: 'BaselineOf.+'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloCommandLineHandler >> isConfigurationName [
 	^ self baselineOrConfigurationName matchesRegex: 'ConfigurationOf.+'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloCommandLineHandler >> noQuit [
 	^ self hasOption: 'no-quit'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloCommandLineHandler >> noSave [
 	^ self hasOption: 'no-save'
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 MetacelloCommandLineHandler >> postInstall [
 	Smalltalk snapshot: self shouldSave andQuit: self shouldQuit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloCommandLineHandler >> repositoryUrl [
 	^ self argumentAt: 2
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloCommandLineHandler >> shouldQuit [
 	^ self noQuit not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MetacelloCommandLineHandler >> shouldSave [
 	^ self noSave not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloCommandLineHandler >> subCommand [
 	| firstArg |
 	firstArg := self argumentAt: 1.
@@ -167,7 +168,7 @@ MetacelloCommandLineHandler >> subCommand [
 	^ firstArg
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloCommandLineHandler >> version [
 	^ self optionAt: 'version'
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #ScaledDecimalTest }
+Extension { #name : 'ScaledDecimalTest' }
 
-{ #category : #'*Kernel-Tests-WithCompiler' }
+{ #category : '*Kernel-Tests-WithCompiler' }
 ScaledDecimalTest >> testStoreOnRoundTrip [
 	"this is http://bugs.squeak.org/view.php?id=4378"
 

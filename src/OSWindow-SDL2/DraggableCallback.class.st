@@ -4,21 +4,23 @@ I represent a callback to make the window draggable from any chosen rectangle. U
 Warning : Only available with SDL 2.0.4 or higher !
 "
 Class {
-	#name : #DraggableCallback,
-	#superclass : #FFICallback,
+	#name : 'DraggableCallback',
+	#superclass : 'FFICallback',
 	#pools : [
 		'SDL2Constants'
 	],
-	#category : #'OSWindow-SDL2-Bindings'
+	#category : 'OSWindow-SDL2-Bindings',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Bindings'
 }
 
-{ #category : #'callback spec' }
+{ #category : 'callback spec' }
 DraggableCallback class >> fnSpec [
 
 	^'int ( SDL_Window aWindow, SDL_Point* pt, void* data )'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DraggableCallback class >> on: aBlock [
 	^ self
 		signature: self fnSpec

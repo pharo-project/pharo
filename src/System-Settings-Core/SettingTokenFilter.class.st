@@ -8,15 +8,17 @@ Instance Variables
 
 "
 Class {
-	#name : #SettingTokenFilter,
-	#superclass : #SettingFilter,
+	#name : 'SettingTokenFilter',
+	#superclass : 'SettingFilter',
 	#instVars : [
 		'token'
 	],
-	#category : #'System-Settings-Core-Filter'
+	#category : 'System-Settings-Core-Filter',
+	#package : 'System-Settings-Core',
+	#tag : 'Filter'
 }
 
-{ #category : #filtering }
+{ #category : 'filtering' }
 SettingTokenFilter >> keepSettingDeclaration: aSettingDeclaration [
 	| selector |
 	selector := (aSettingDeclaration respondsTo: #getSelector)
@@ -29,7 +31,7 @@ SettingTokenFilter >> keepSettingDeclaration: aSettingDeclaration [
 				includesSubstringAnywhere: self token asUppercase)
 ]
 
-{ #category : #filtering }
+{ #category : 'filtering' }
 SettingTokenFilter >> keepSettingTreeNode: aSettingNode [
 	^ (({aSettingNode methodClass name asUppercase. aSettingNode selector asUppercase}
 			collect: [:e | e ifNil: ['']])
@@ -37,14 +39,14 @@ SettingTokenFilter >> keepSettingTreeNode: aSettingNode [
 		or: [self keepSettingDeclaration: aSettingNode settingDeclaration]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingTokenFilter >> token [
 	"Answer the value of token"
 
 	^ token
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingTokenFilter >> token: aString [
 	"Set the value of token"
 

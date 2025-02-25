@@ -1,10 +1,12 @@
 Class {
-	#name : #MetacelloAllowProjectDowngrade,
-	#superclass : #MetacelloResolveProjectUpgrade,
-	#category : #'Metacello-Core-Scripts'
+	#name : 'MetacelloAllowProjectDowngrade',
+	#superclass : 'MetacelloResolveProjectUpgrade',
+	#category : 'Metacello-Core-Scripts',
+	#package : 'Metacello-Core',
+	#tag : 'Scripts'
 }
 
-{ #category : #'exception handling' }
+{ #category : 'exception handling' }
 MetacelloAllowProjectDowngrade >> defaultAction [
   "Default for Downgrade is to disallow, but still should check for locks"
 
@@ -12,17 +14,17 @@ MetacelloAllowProjectDowngrade >> defaultAction [
   ^ super defaultAction
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 MetacelloAllowProjectDowngrade >> handleOnDownGrade: onDownGradeBlock onUpgrade: onUpgradeBlock [
     ^ onDownGradeBlock cull: self cull: self existingProjectRegistration cull: self newProjectRegistration
 ]
 
-{ #category : #handlers }
+{ #category : 'handlers' }
 MetacelloAllowProjectDowngrade >> handleResolutionFor: aScriptEngine [
     ^ aScriptEngine handleDowngrade: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloAllowProjectDowngrade >> operationString [
   ^ 'downgrade to'
 ]

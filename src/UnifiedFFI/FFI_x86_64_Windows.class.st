@@ -9,45 +9,47 @@ Structures are never split into registers with this ABI.
 These ABI details are very important to keep in mind for receiving callbacks.
 "
 Class {
-	#name : #'FFI_x86_64_Windows',
-	#superclass : #'FFI_x86_64',
-	#category : #'UnifiedFFI-Architecture'
+	#name : 'FFI_x86_64_Windows',
+	#superclass : 'FFI_x86_64',
+	#category : 'UnifiedFFI-Architecture',
+	#package : 'UnifiedFFI',
+	#tag : 'Architecture'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFI_x86_64_Windows class >> isActive [
 	^ Smalltalk vm wordSize = 8 and: [ OSPlatform current isWindows ]
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 FFI_x86_64_Windows >> bitTypeAlignment [
 
 	^ OSPlatform current ffiLongAlignment
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 FFI_x86_64_Windows >> externalBitType [
 
 	^ ExternalType long
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 FFI_x86_64_Windows >> externalLongType [
 	^ ExternalType long
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 FFI_x86_64_Windows >> externalUBitType [
 
 	^ ExternalType ulong
 ]
 
-{ #category : #types }
+{ #category : 'types' }
 FFI_x86_64_Windows >> externalULongType [
 	^ ExternalType ulong
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFI_x86_64_Windows >> newCallbackArgumentReaderForCallback: aCallback inContext: aCallbackContext [
 
 	^ FFIWin64CallbackArgumentReader

@@ -9,54 +9,56 @@ Users should use my singleton #instance defined in class side:
 I am used as default query in Calypso-Browser widgets
 "
 Class {
-	#name : #ClyUnknownQuery,
-	#superclass : #ClyQuery,
+	#name : 'ClyUnknownQuery',
+	#superclass : 'ClyQuery',
 	#classInstVars : [
 		'instance'
 	],
-	#category : #'Calypso-NavigationModel-Query'
+	#category : 'Calypso-NavigationModel-Query',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Query'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyUnknownQuery class >> instance [
 	^instance ifNil: [ instance := ClyUnknownQuery new ]
 ]
 
-{ #category : #'merging queries' }
+{ #category : 'merging queries' }
 ClyUnknownQuery class >> mergeOwnInstances: queries [
 	^queries anyOne
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ClyUnknownQuery class >> reset [
 	instance := nil
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyUnknownQuery >> asUnifiedInstance [
 	^self
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyUnknownQuery >> checkEmptyResult [
 	^true
 ]
 
-{ #category : #'item group decoration' }
+{ #category : 'item group decoration' }
 ClyUnknownQuery >> decorateItemGroup: groupItem [
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyUnknownQuery >> defaultResult [
 	^ClyUnknownQueryResult instance
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyUnknownQuery >> executesQuery: aClass [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyUnknownQuery >> retrievesItemsOfType: itemTypeClass [
 	^false
 ]

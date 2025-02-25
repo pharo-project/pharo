@@ -1,16 +1,17 @@
 Class {
-	#name : #RenrakuTest,
-	#superclass : #ReCodeBasedTestCase,
-	#category : #'Renraku-Tests'
+	#name : 'RenrakuTest',
+	#superclass : 'ReCodeBasedTestCase',
+	#category : 'Renraku-Tests',
+	#package : 'Renraku-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RenrakuTest >> testAsClassRuleTransformation [
 	| asClassMethod critique |
 
 	asClassMethod := testClass >> (testClass compile:
 		'aMethodWhichSendsAsClass
-			#', self class name, ' asClass').
+			#', self class name, ' asClassIfAbsent: [ nil ]').
 
 	critique := asClassMethod critiques detect: [ :crit |
 		crit rule class = ReAsClassRule ].
@@ -19,7 +20,7 @@ RenrakuTest >> testAsClassRuleTransformation [
 	self assert: (critique change source includesSubstring: 'self class environment at:')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RenrakuTest >> testBan [
 	| criticToSkip |
 
@@ -32,7 +33,7 @@ RenrakuTest >> testBan [
 		critic rule class = ScreamerRule ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RenrakuTest >> testBan1 [
 	| criticToSkip |
 
@@ -46,7 +47,7 @@ RenrakuTest >> testBan1 [
 		critic rule class = ScreamerRule ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RenrakuTest >> testBan2 [
 	| criticToSkip |
 
@@ -60,7 +61,7 @@ RenrakuTest >> testBan2 [
 		critic rule class = ScreamerRule ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RenrakuTest >> testBanForPackage [
 	| criticToSkip |
 
@@ -73,7 +74,7 @@ RenrakuTest >> testBanForPackage [
 		critic rule class = ScreamerRule ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RenrakuTest >> testNoClassComment [
 
 	self assert: (testClass critiques anySatisfy: [ :critic |
@@ -85,7 +86,7 @@ RenrakuTest >> testNoClassComment [
 		critic rule class = ReNoClassCommentRule ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RenrakuTest >> testUnclassifiedMethod [
 
 	self assert: (testMethod critiques anySatisfy: [ :critic |

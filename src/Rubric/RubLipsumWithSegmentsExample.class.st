@@ -5,17 +5,19 @@
  
 "
 Class {
-	#name : #RubLipsumWithSegmentsExample,
-	#superclass : #RubLipsumBasicExample,
-	#category : #'Rubric-Editing-Widgets-Examples'
+	#name : 'RubLipsumWithSegmentsExample',
+	#superclass : 'RubLipsumBasicExample',
+	#category : 'Rubric-Editing-Widgets-Examples',
+	#package : 'Rubric',
+	#tag : 'Editing-Widgets-Examples'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubLipsumWithSegmentsExample >> loremIpsum [
 	^ String loremIpsum: 2000
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 RubLipsumWithSegmentsExample >> newScrolledText [
 	| st r conf |
 	st := super newScrolledText.

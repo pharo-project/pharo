@@ -2,16 +2,18 @@
 i represent a linear gradient paint in balloon backend.
 "
 Class {
-	#name : #AthensBalloonLinearGradient,
-	#superclass : #AthensBalloonGradientPaint,
+	#name : 'AthensBalloonLinearGradient',
+	#superclass : 'AthensBalloonGradientPaint',
 	#instVars : [
 		'origin',
 		'corner'
 	],
-	#category : #'Athens-Balloon-Paint'
+	#category : 'Athens-Balloon-Paint',
+	#package : 'Athens-Balloon',
+	#tag : 'Paint'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensBalloonLinearGradient >> athensFillPath: aPath on: anAthensCanvas [
 
 	| torigin tcorner |
@@ -28,7 +30,7 @@ AthensBalloonLinearGradient >> athensFillPath: aPath on: anAthensCanvas [
 		fillBezierShape: aPath contoursForFilling
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensBalloonLinearGradient >> athensFillRectangle: aRect on: anAthensCanvas [
 	"This is a terminal method in rendering dispatch scheme
 	canvas->shape->paint. See AthensCanvas>>fillShape: "
@@ -47,31 +49,31 @@ AthensBalloonLinearGradient >> athensFillRectangle: aRect on: anAthensCanvas [
 		fillRectangle: aRect
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBalloonLinearGradient >> corner [
 
 	^ corner
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBalloonLinearGradient >> corner: anObject [
 
 	corner := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBalloonLinearGradient >> origin [
 
 	^ origin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBalloonLinearGradient >> origin: anObject [
 
 	origin := anObject
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensBalloonLinearGradient >> strokeRect: rect on: canvas stroke: strokePaint [
 
 	| torigin tcorner |
@@ -90,7 +92,7 @@ AthensBalloonLinearGradient >> strokeRect: rect on: canvas stroke: strokePaint [
 		strokeRectangle: rect width: strokePaint width
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensBalloonLinearGradient >> strokeRect: rect on: canvas strokeWidth: strokeWidth [
 
 	| torigin tcorner |

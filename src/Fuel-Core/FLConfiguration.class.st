@@ -6,59 +6,61 @@ My subclasses implement configuration options specific to certain aspects of the
 Any object that needs to access the configuration can do so by using the #TFLConfigurable trait and sending #configuration to itself.
 "
 Class {
-	#name : #FLConfiguration,
-	#superclass : #Object,
+	#name : 'FLConfiguration',
+	#superclass : 'Object',
 	#instVars : [
 		'map'
 	],
 	#classInstVars : [
 		'default'
 	],
-	#category : #'Fuel-Core-Public'
+	#category : 'Fuel-Core-Public',
+	#package : 'Fuel-Core',
+	#tag : 'Public'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLConfiguration class >> default [
 	^ default ifNil: [ default := self new ]
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : 'accessing-defaults' }
 FLConfiguration class >> defaultDirectory [
 	^ FileSystem disk workingDirectory
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : 'accessing-defaults' }
 FLConfiguration class >> defaultFileExtension [
 	^ 'fuel'
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : 'accessing-defaults' }
 FLConfiguration class >> defaultFilename [
 	^ 'serialization'
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : 'accessing-defaults' }
 FLConfiguration class >> defaultGlobalEnvironment [
 	^ self environment
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : 'accessing-defaults' }
 FLConfiguration class >> defaultGlobalSymbols [
 
     ^ #(#Smalltalk #SourceFiles #Transcript #Undeclared #Display #TextConstants #ActiveWorld #ActiveHand #ActiveEvent #Sensor #Processor #SystemOrganization #World)
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : 'accessing-defaults' }
 FLConfiguration class >> defaultHasMultipleObjects [
 	^ false
 ]
 
-{ #category : #'accessing-defaults' }
+{ #category : 'accessing-defaults' }
 FLConfiguration class >> defaultSignature [
 	^ 'FUEL'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLConfiguration class >> new [
 	self == FLConfiguration ifTrue: [
 		FLConfigurationError signal: 'Use one of my subclasses' ].
@@ -66,21 +68,21 @@ FLConfiguration class >> new [
 	^ super new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLConfiguration >> additionalObjects [
 	^ map
 		at: #additionalObjects
 		ifAbsentPut: [ IdentityDictionary new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLConfiguration >> classAndVariableMigrations [
 	^ map 
 		at: #classAndVariableMigrations
 		ifAbsent: [ Dictionary new ]
 ]
 
-{ #category : #'configuring-stream' }
+{ #category : 'configuring-stream' }
 FLConfiguration >> decorateStreamFactory: aBlock [
 	aBlock isBlock ifFalse: [
 		FLConfigurationError signal: 'Stream factory must be a block' ].
@@ -99,14 +101,14 @@ FLConfiguration >> decorateStreamFactory: aBlock [
 				'Or did you forget to supply a stream factory first?' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLConfiguration >> environment [
 	^ map
 		at: #environment
 		ifAbsentPut: [ self class defaultGlobalEnvironment ]
 ]
 
-{ #category : #configuring }
+{ #category : 'configuring' }
 FLConfiguration >> environment: anEnvironment [
 	map
 		at: #environment
@@ -120,7 +122,7 @@ FLConfiguration >> environment: anEnvironment [
 		ifAbsentPut: [ self class environment at: #UndefinedObject ]
 ]
 
-{ #category : #'configuring-convenience' }
+{ #category : 'configuring-convenience' }
 FLConfiguration >> filePath: aString [
 	"Takes the path to the file that should be used for serializing or materializing data.
 	The path must be a string and may be relative."
@@ -130,28 +132,28 @@ FLConfiguration >> filePath: aString [
 	self streamFactory: (self streamFactoryForFilePath: aString)
 ]
 
-{ #category : #hooks }
+{ #category : 'hooks' }
 FLConfiguration >> fuelAccept: aGeneralMapper [
 	aGeneralMapper
 		visitSubstitution: self
 		by: nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FLConfiguration >> hasMultipleObjects [
 	^ map
 		at: #hasMultipleObjects
 		ifAbsent: [ self class defaultHasMultipleObjects ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLConfiguration >> initialize [
 	super initialize.
 	
 	map := IdentityDictionary new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLConfiguration >> object [
 	^ map
 		at: #object
@@ -159,7 +161,7 @@ FLConfiguration >> object [
 			FLConfigurationError signal: 'You need to specify the object you want to serialize.' ]
 ]
 
-{ #category : #'configuring-convenience' }
+{ #category : 'configuring-convenience' }
 FLConfiguration >> onStream: aStream [
 	"Takes a stream to use for serialization or materialization.
 	
@@ -179,26 +181,26 @@ FLConfiguration >> onStream: aStream [
 		streamFinalizer: [ :stream | "do not close the stream" ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FLConfiguration >> shouldFinalizeStream [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLConfiguration >> signature [
 	^ map
 		at: #signature
 		ifAbsentPut: [ self class defaultSignature ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLConfiguration >> streamFactory [
 	^ map
 		at: #streamFactory
 		ifAbsent: [ FLConfigurationError signal: 'No stream factory provided' ]
 ]
 
-{ #category : #'configuring-stream' }
+{ #category : 'configuring-stream' }
 FLConfiguration >> streamFactory: aBlock [
 	aBlock isBlock ifFalse: [
 		FLConfigurationError signal: 'Stream factory must be a block' ].
@@ -213,19 +215,19 @@ FLConfiguration >> streamFactory: aBlock [
 		ifAbsentPut: [ aBlock ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FLConfiguration >> streamFactoryForFilePath: aString [
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLConfiguration >> streamFinalizer [
 	^ map
 		at: #streamFinalizer
 		ifAbsent: [ [ :stream | stream close] ]
 ]
 
-{ #category : #'configuring-stream' }
+{ #category : 'configuring-stream' }
 FLConfiguration >> streamFinalizer: aBlock [
 	aBlock isBlock ifFalse: [
 		FLConfigurationError signal: 'Stream finalizer must be a block' ].
@@ -239,7 +241,7 @@ FLConfiguration >> streamFinalizer: aBlock [
 		ifAbsentPut: [ aBlock ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FLConfiguration >> useDuring: aBlock [
 	^ FLCurrentConfiguration
 		value: self
@@ -250,7 +252,7 @@ FLConfiguration >> useDuring: aBlock [
 				context finalizeStream ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLConfiguration >> version [
 	^ map
 		at: #version

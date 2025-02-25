@@ -1,6 +1,6 @@
-Extension { #name : #Screenshot }
+Extension { #name : 'Screenshot' }
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Screenshot >> askRectangleFromUser [
 	"Answer an instance of Rectangle that is determined by having the user
 	designate the top left and bottom right corners. The gridding for user
@@ -9,13 +9,13 @@ Screenshot >> askRectangleFromUser [
 	^ self askRectangleFromUserWithGrid: 1 @ 1
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Screenshot >> askRectangleFromUserWithGrid: gridPoint [
 
 	^ self askRectangleFromUserWithGrid: gridPoint inWorld: self currentWorld
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Screenshot >> askRectangleFromUserWithGrid: gridPoint inWorld: aWorld [
 
 	"Answer a Rectangle that is determined by having the user
@@ -42,12 +42,12 @@ Screenshot >> askRectangleFromUserWithGrid: gridPoint inWorld: aWorld [
 			inWorld: aWorld
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Screenshot >> makeAScreenshot [
 
 	| filePrefix |
 	filePrefix := 'PharoScreenshot'.
-	(UIManager default
+	(MorphicUIManager new
 		 chooseFrom: {
 				 'The entire world' translated.
 				 'A selected area' translated }
@@ -66,7 +66,7 @@ Screenshot >> makeAScreenshot [
 			putForm: form
 			onFileNamed:
 			(FileSystem workingDirectory / filePrefix , 'png') nextVersion.
-		UIManager default
+		MorphicUIManager new
 			inform: (String streamContents: [ :s |
 					 s
 						 nextPutAll: 'Screenshot saved under ';
@@ -76,7 +76,7 @@ Screenshot >> makeAScreenshot [
 			actionOnClick: [ name openInOSFileBrowser ] ]
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 Screenshot >> waitUserSelectionOriginRectangle: originRect transformBlock: newRectBlock inWorld: aWorld [
 
 	| hand buttonNow buttonStart rect selectionMorph newRect |

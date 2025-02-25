@@ -21,8 +21,8 @@ Internal Representation and Key Implementation Points.
 	windowGroup:		<ClyGroupWindowMorph>
 "
 Class {
-	#name : #ClyAccrossWindowNavigationState,
-	#superclass : #Object,
+	#name : 'ClyAccrossWindowNavigationState',
+	#superclass : 'Object',
 	#instVars : [
 		'windowGroup',
 		'window',
@@ -31,16 +31,18 @@ Class {
 		'navigationEnvironment',
 		'navigationHistory'
 	],
-	#category : #'Calypso-Browser-NavigationHistory'
+	#category : 'Calypso-Browser-NavigationHistory',
+	#package : 'Calypso-Browser',
+	#tag : 'NavigationHistory'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyAccrossWindowNavigationState class >> from: aBrowser [
 	^self new
 		retrieveStateFrom: aBrowser
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyAccrossWindowNavigationState >> applyTo: aBrowser byUndo: undoExecuting [
 
 	(window isInWorld and: [(browserState isCurrentStateOf: window model) not])
@@ -53,27 +55,27 @@ ClyAccrossWindowNavigationState >> applyTo: aBrowser byUndo: undoExecuting [
 	window model focusActiveTab
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAccrossWindowNavigationState >> browserPlugins [
 	^ browserPlugins
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAccrossWindowNavigationState >> browserPlugins: anObject [
 	browserPlugins := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAccrossWindowNavigationState >> browserState [
 	^ browserState
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAccrossWindowNavigationState >> browserState: anObject [
 	browserState := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyAccrossWindowNavigationState >> createBrowser [
 	| newBrowser |
 	newBrowser := browserState createBrowser.
@@ -86,32 +88,32 @@ ClyAccrossWindowNavigationState >> createBrowser [
 	^newBrowser
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAccrossWindowNavigationState >> navigationEnvironment [
 	^ navigationEnvironment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAccrossWindowNavigationState >> navigationEnvironment: anObject [
 	navigationEnvironment := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAccrossWindowNavigationState >> navigationHistory [
 	^ navigationHistory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAccrossWindowNavigationState >> navigationHistory: anObject [
 	navigationHistory := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyAccrossWindowNavigationState >> representsConcreteQuery [
 	^true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyAccrossWindowNavigationState >> restoreBrowserWindow [
 	| newBrowser |
 	window isInWorld ifFalse: [
@@ -132,7 +134,7 @@ ClyAccrossWindowNavigationState >> restoreBrowserWindow [
 			windowGroup activateWindow: window]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyAccrossWindowNavigationState >> retrieveStateFrom: aBrowser [
 
 	browserState := aBrowser snapshotState.

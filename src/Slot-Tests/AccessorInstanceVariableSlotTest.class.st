@@ -3,14 +3,17 @@ This class is the place for tests related to the Slot examples.
 (some examples have their own test class, the rest is here)
 "
 Class {
-	#name : #AccessorInstanceVariableSlotTest,
-	#superclass : #SlotSilentTest,
-	#category : #'Slot-Tests-Examples'
+	#name : 'AccessorInstanceVariableSlotTest',
+	#superclass : 'SlotSilentTest',
+	#category : 'Slot-Tests-Examples',
+	#package : 'Slot-Tests',
+	#tag : 'Examples'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 AccessorInstanceVariableSlotTest >> testAccessorInstanceVariableSlot [
 	| slot object |
+	<ignoreNotImplementedSelectors: #(slot1 slot1:)>
 	aClass := self
 		make:
 			[ :builder | builder slots: {(#slot1 => AccessorInstanceVariableSlot)} ].

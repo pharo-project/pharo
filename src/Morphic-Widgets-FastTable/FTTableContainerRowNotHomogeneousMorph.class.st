@@ -2,12 +2,14 @@
 I contain table rows, but opposite to my parent, I calculate my row heights allowing users to display tables with rows of different height.
 "
 Class {
-	#name : #FTTableContainerRowNotHomogeneousMorph,
-	#superclass : #FTTableContainerMorph,
-	#category : #'Morphic-Widgets-FastTable-Base'
+	#name : 'FTTableContainerRowNotHomogeneousMorph',
+	#superclass : 'FTTableContainerMorph',
+	#category : 'Morphic-Widgets-FastTable-Base',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Base'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 FTTableContainerRowNotHomogeneousMorph >> calculateExactVisibleRows [
 	"Answer the rows to show in list - with possible fraction"
 	| rowIndex maxHeight height |
@@ -28,7 +30,7 @@ FTTableContainerRowNotHomogeneousMorph >> calculateExactVisibleRows [
 	^ rowIndex - self table showIndex
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 FTTableContainerRowNotHomogeneousMorph >> rowHeight: rowIndex default: aNumber [
 
 	^ self table dataSource rowHeight: rowIndex

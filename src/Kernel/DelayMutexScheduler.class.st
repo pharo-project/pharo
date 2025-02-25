@@ -2,26 +2,28 @@
 I add shared-resource based synchronization to the basic scheduler.
 "
 Class {
-	#name : #DelayMutexScheduler,
-	#superclass : #DelayBasicScheduler,
+	#name : 'DelayMutexScheduler',
+	#superclass : 'DelayBasicScheduler',
 	#instVars : [
 		'accessProtect'
 	],
-	#category : #'Kernel-Delays'
+	#category : 'Kernel-Delays',
+	#package : 'Kernel',
+	#tag : 'Delays'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DelayMutexScheduler >> initializeTicker: aDelayTicker suspendedDelaysHeap: aHeap [
 	super initializeTicker: aDelayTicker suspendedDelaysHeap: aHeap.
 	accessProtect := Semaphore forMutualExclusion
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DelayMutexScheduler >> schedule: aDelay [
 	accessProtect critical: [ super schedule: aDelay]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DelayMutexScheduler >> unschedule: aDelay [
 	accessProtect critical: [ super unschedule: aDelay]
 ]

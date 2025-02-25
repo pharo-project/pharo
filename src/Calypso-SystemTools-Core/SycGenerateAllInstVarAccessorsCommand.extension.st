@@ -1,6 +1,6 @@
-Extension { #name : #SycGenerateAllInstVarAccessorsCommand }
+Extension { #name : 'SycGenerateAllInstVarAccessorsCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycGenerateAllInstVarAccessorsCommand class >> browserShortcutActivation [
 	<classAnnotation>
 

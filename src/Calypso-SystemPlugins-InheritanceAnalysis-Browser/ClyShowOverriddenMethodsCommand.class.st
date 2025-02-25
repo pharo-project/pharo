@@ -2,12 +2,13 @@
 I am a command to show all methods which are overridden by my selected methods
 "
 Class {
-	#name : #ClyShowOverriddenMethodsCommand,
-	#superclass : #ClyShowLocalImplementorsCommand,
-	#category : #'Calypso-SystemPlugins-InheritanceAnalysis-Browser'
+	#name : 'ClyShowOverriddenMethodsCommand',
+	#superclass : 'ClyShowLocalImplementorsCommand',
+	#category : 'Calypso-SystemPlugins-InheritanceAnalysis-Browser',
+	#package : 'Calypso-SystemPlugins-InheritanceAnalysis-Browser'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyShowOverriddenMethodsCommand >> createInheritanceScopeFrom: classes [
 	| classScope |
 	classScope := ClyClassScope ofAll: classes in: browser navigationEnvironment.
@@ -15,17 +16,17 @@ ClyShowOverriddenMethodsCommand >> createInheritanceScopeFrom: classes [
 	^classScope asInheritedScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyShowOverriddenMethodsCommand >> defaultMenuIconName [
 	^#arrowUp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyShowOverriddenMethodsCommand >> defaultMenuItemName [
 	^'Overridden methods'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyShowOverriddenMethodsCommand >> selectMethodsIn: aQueryBrowser [
 
 	aQueryBrowser selectLastItem

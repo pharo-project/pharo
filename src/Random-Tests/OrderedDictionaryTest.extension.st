@@ -1,6 +1,6 @@
-Extension { #name : #OrderedDictionaryTest }
+Extension { #name : 'OrderedDictionaryTest' }
 
-{ #category : #'*Random-Tests' }
+{ #category : '*Random-Tests' }
 OrderedDictionaryTest >> testAtRandom [
 	| dict random |
 	dict := { #one -> 1 . #two -> 2 . #three -> 3  } asOrderedDictionary.

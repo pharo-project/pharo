@@ -15,8 +15,8 @@ All exported as ByteStrings (and symbols).
 I do not support exporting special slots (yet).
 "
 Class {
-	#name : #HEClass,
-	#superclass : #HEMethodContainer,
+	#name : 'HEClass',
+	#superclass : 'HEMethodContainer',
 	#instVars : [
 		'className',
 		'superclass',
@@ -26,40 +26,42 @@ Class {
 		'sharedPools',
 		'layoutClass'
 	],
-	#category : #'Hermes-Model'
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEClass >> classInstancevariables [
 	^ classInstancevariables
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEClass >> classInstancevariables: anObject [
 	classInstancevariables := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HEClass >> className [
 	^ className
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEClass >> className: anObject [
 	className := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEClass >> classVariables [
 	^ classVariables
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEClass >> classVariables: anObject [
 	classVariables := anObject
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEClass >> doReadHeaderFrom: aReader [
 	className := aReader readByteSymbol.
 	superclass := aReader readByteSymbol.
@@ -70,38 +72,38 @@ HEClass >> doReadHeaderFrom: aReader [
 	layoutClass := aReader readByteSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEClass >> instanceVariables [
 	^ instanceVariables
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEClass >> instanceVariables: anObject [
 	instanceVariables := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEClass >> isTrait [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEClass >> layoutClass [
 	^ layoutClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEClass >> layoutClass: anObject [
 	layoutClass := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEClass >> name [
 
 	^ self className
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 HEClass >> printOn: aStream [
 
 	aStream
@@ -110,22 +112,22 @@ HEClass >> printOn: aStream [
 		nextPutAll: ' )'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEClass >> sharedPools [
 	^ sharedPools
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEClass >> sharedPools: anObject [
 	sharedPools := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEClass >> superclass [
 	^ superclass ifEmpty: [nil]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEClass >> superclass: anObject [
 	superclass := anObject
 ]

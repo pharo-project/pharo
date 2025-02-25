@@ -2,67 +2,69 @@
 A SlotExampleMovie is an example class to demonstrate the workings of relation slots.
 "
 Class {
-	#name : #SlotExampleMovie,
-	#superclass : #Object,
+	#name : 'SlotExampleMovie',
+	#superclass : 'Object',
 	#instVars : [
 		'#name',
 		'#director => ToOneRelationSlot inverse: #directedMovies inClass: #SlotExamplePerson',
 		'#actors => ToManyRelationSlot inverse: #actedInMovies inClass: #SlotExamplePerson'
 	],
-	#category : #'Slot-Tests-Examples - Associations'
+	#category : 'Slot-Tests-Examples - Associations',
+	#package : 'Slot-Tests',
+	#tag : 'Examples - Associations'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SlotExampleMovie class >> named: aString [
 	^ self new
 		name: aString;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SlotExampleMovie >> actors [
 	^ actors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SlotExampleMovie >> actors: anObject [
 	actors := anObject
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 SlotExampleMovie >> addActor: aPerson [
 
 	^actors add: aPerson
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SlotExampleMovie >> director [
 	^ director
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SlotExampleMovie >> director: aPerson [
 
 	director := aPerson
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SlotExampleMovie >> initialize [
 	super initialize.
 	self class initializeSlots: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SlotExampleMovie >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SlotExampleMovie >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #'adding-removing' }
+{ #category : 'adding-removing' }
 SlotExampleMovie >> removeActor: aPerson [
 
 	^actors remove: aPerson

@@ -5,42 +5,49 @@ I use Iceberg if it is repository of package.
 Otherwise I use Komitter.
 "
 Class {
-	#name : #ClyCommitPackageCommand,
-	#superclass : #SycPackageCommand,
-	#category : #'Calypso-SystemPlugins-Monticello-Browser'
+	#name : 'ClyCommitPackageCommand',
+	#superclass : 'SycPackageCommand',
+	#category : 'Calypso-SystemPlugins-Monticello-Browser',
+	#package : 'Calypso-SystemPlugins-Monticello-Browser'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyCommitPackageCommand class >> canBeExecutedInContext: aToolContext [
 	"if no packages are selected then command will commit all changes in image"
 	^true
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyCommitPackageCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byRootGroupItemOrder: 10000 for: ClyFullBrowserPackageContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyCommitPackageCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation by: $s meta for: ClyFullBrowserGlobalContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCommitPackageCommand >> defaultMenuIconName [
 	^#monticelloPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCommitPackageCommand >> defaultMenuItemName [
 	^'Commit'
 ]
 
-{ #category : #execution }
+{ #category : 'accessing' }
+ClyCommitPackageCommand >> description [
+
+^ 'I am a command to commit given packages' 
+]
+
+{ #category : 'execution' }
 ClyCommitPackageCommand >> execute [
 
 	| repoBrowser commitBrowser repos targetRepo |
@@ -54,14 +61,14 @@ ClyCommitPackageCommand >> execute [
 		                 ^ self inform: 'Iceberg 0.7 and higher is required' ].
 	packages ifEmpty: [ ^ repoBrowser new open ].
 	repos := IceRepository registry select: [ :repo |
-		         packages anySatisfy: [ :each |
-			         repo includesPackageNamed: each name ] ].
+		         packages anySatisfy: [ :package |
+			         repo includesPackageNamed: package name ] ].
 	repos ifEmpty: [
 		^ self inform: 'Selected packages are not managed by Iceberg' ].
 	targetRepo := repos size = 1
 		              ifTrue: [ repos first ]
 		              ifFalse: [
-			              UIManager default
+			              self morphicUIManager
 				              chooseFrom: (repos collect: [ :each | each name ])
 				              values: repos
 				              title: 'Choose repository' ].
@@ -71,7 +78,7 @@ ClyCommitPackageCommand >> execute [
 			 targetRepo workingCopy isDetached or: [
 				 targetRepo head isDetached or: [
 					 targetRepo workingCopy project isUnborn ] ] ] ]) ifTrue: [
-		UIManager default
+		self morphicUIManager
 			alert:
 				'The ' , targetRepo name
 				, ' repository is not operational to commit.

@@ -2,32 +2,26 @@
 I am a mock environment. The tests use me to scope the environment to a known one.
 "
 Class {
-	#name : #CoMockSystemNavigation,
-	#superclass : #Object,
+	#name : 'CoMockSystemNavigation',
+	#superclass : 'Object',
 	#instVars : [
 		'globals',
 		'selectors'
 	],
-	#category : #'HeuristicCompletion-Tests-Core'
+	#category : 'HeuristicCompletion-Tests-Mocks',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Mocks'
 }
 
-{ #category : #accessing }
-CoMockSystemNavigation >> allClassNamesStartingWith: aString do: aBlock [
-
-	globals do: [ :e |
-		(e beginsWith: aString)
-			ifTrue: [ aBlock value: e ] ]
-]
-
-{ #category : #query }
-CoMockSystemNavigation >> allClassNamesStartingWith: aString do: aBlock caseSensitive: cs [
+{ #category : 'query' }
+CoMockSystemNavigation >> allGlobalNamesStartingWith: aString do: aBlock caseSensitive: cs [
 
 	globals do: [ :e |
 		(aString isEmpty or: [ e beginsWith: aString caseSensitive: cs ])
 			ifTrue: [ aBlock value: e ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoMockSystemNavigation >> allSelectorsStartingWith: aString do: aBlock [
 
 	selectors do: [ :e |
@@ -35,29 +29,35 @@ CoMockSystemNavigation >> allSelectorsStartingWith: aString do: aBlock [
 			ifTrue: [ aBlock value: e ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoMockSystemNavigation >> environment [
 
 	^ globals
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoMockSystemNavigation >> globals [
 	^ globals
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoMockSystemNavigation >> globals: anObject [
 	globals := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+CoMockSystemNavigation >> keys [ 
+	"because sometimes we have to extract the keys of the global environment so the Mock should expose the same API."
+	^ globals
+]
+
+{ #category : 'accessing' }
 CoMockSystemNavigation >> selectors [
 
 	^ selectors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoMockSystemNavigation >> selectors: anObject [
 
 	selectors := anObject

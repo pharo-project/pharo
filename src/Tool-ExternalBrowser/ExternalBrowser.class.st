@@ -1,20 +1,21 @@
 "
 Browser the current image:
 
-	ExternalBrowser openOn: Smalltalk image.
+`ExternalBrowser openOn: Smalltalk image.`
 
 Browse a FileOut
 
-	| internalStream |
-	internalStream := (String new: 1000) writeStream.
-	SystemOrganization 
-		fileOutCategory: 'Tool-ExternalBrowser'
-		on: internalStream.
-	ExternalBrowser browseStream: internalStream contents readStream.
+```
+| pkgName |
+
+pkgName := 'Tool-ExternalBrowser'.
+pkgName asPackage fileOut.
+ExternalBrowser browseStream: (pkgName , '.st') asFileReference readStream.
+```
 "
 Class {
-	#name : #ExternalBrowser,
-	#superclass : #SpPresenterWithModel,
+	#name : 'ExternalBrowser',
+	#superclass : 'SpPresenterWithModel',
 	#instVars : [
 		'classes',
 		'packages',
@@ -23,16 +24,18 @@ Class {
 		'method',
 		'showClassSide'
 	],
-	#category : #'Tool-ExternalBrowser-Browsers'
+	#category : 'Tool-ExternalBrowser-Browsers',
+	#package : 'Tool-ExternalBrowser',
+	#tag : 'Browsers'
 }
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 ExternalBrowser class >> browseStream: aStream [
 
 	self openOn: (RingChunkImporter fromStream: aStream)
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 ExternalBrowser class >> defaultLayout [
 	<spec: #default>
 
@@ -59,14 +62,20 @@ ExternalBrowser class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #examples }
+{ #category : 'accessing' }
+ExternalBrowser class >> defaultPreferredExtent [
+
+	^ 800@600
+]
+
+{ #category : 'examples' }
 ExternalBrowser class >> example [
 	<example>
 
 	self openOn: Smalltalk image
 ]
 
-{ #category : #'System-FileRegistry' }
+{ #category : 'System-FileRegistry' }
 ExternalBrowser class >> fileReaderServicesForFile: fullName suffix: suffix [
 	<fileService>
 
@@ -75,7 +84,7 @@ ExternalBrowser class >> fileReaderServicesForFile: fullName suffix: suffix [
 		ifFalse: [ #() ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ExternalBrowser class >> openOn: model [
 
 	self basicNew
@@ -84,7 +93,7 @@ ExternalBrowser class >> openOn: model [
 		open
 ]
 
-{ #category : #'System-FileRegistry' }
+{ #category : 'System-FileRegistry' }
 ExternalBrowser class >> serviceBrowseCode [
 	"Answer the service of opening a file-contents browser"
 
@@ -97,26 +106,26 @@ ExternalBrowser class >> serviceBrowseCode [
 		argumentGetter: [ :file| file readStream]
 ]
 
-{ #category : #'System-FileRegistry' }
+{ #category : 'System-FileRegistry' }
 ExternalBrowser class >> services [
 	"Answer potential file services associated with this class"
 
 	^ {self serviceBrowseCode}
 ]
 
-{ #category : #'System-FileRegistry' }
+{ #category : 'System-FileRegistry' }
 ExternalBrowser class >> sourceFileSuffixes [
 
 	^#('st' 'cs')
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalBrowser >> classes [
 
 	^ classes
 ]
 
-{ #category : #'structure accessing' }
+{ #category : 'structure accessing' }
 ExternalBrowser >> classesOfPackage: aPackage [
 	| theClasses |
 	theClasses := aPackage classes.
@@ -125,7 +134,7 @@ ExternalBrowser >> classesOfPackage: aPackage [
 		ifFalse: [ theClasses ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ExternalBrowser >> connectPresenters [
 
 	packages display: [ :m | m name ].
@@ -153,7 +162,7 @@ ExternalBrowser >> connectPresenters [
 		self refreshClasses: self packages selectedItem ]
 ]
 
-{ #category : #'initialization - deprecated' }
+{ #category : 'initialization - deprecated' }
 ExternalBrowser >> initializePresenter [
 
 	packages := self newList.
@@ -174,48 +183,42 @@ ExternalBrowser >> initializePresenter [
 		add: method
 ]
 
-{ #category : #initialization }
-ExternalBrowser >> initializeWindow: aWindow [
-
-	aWindow title: 'External Package Browser'.
-	aWindow initialExtent: 800@600
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalBrowser >> method [
 	^ method
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalBrowser >> method: anObject [
 	method := anObject
 ]
 
-{ #category : #'structure accessing' }
+{ #category : 'structure accessing' }
 ExternalBrowser >> methodFor: aSelector [
 
 	^ (self classes selectedItem methodNamed: aSelector) sourceCode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalBrowser >> packages [
 
 	^ packages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalBrowser >> protocols [
 
 	^ protocols
 ]
 
-{ #category : #'structure accessing' }
+{ #category : 'structure accessing' }
 ExternalBrowser >> protocolsOfClass: aClass [
+	"Answer a <Collection> of <String> with the protocol names of aClass"
 
 	^ aClass protocols
 ]
 
-{ #category : #refresh }
+{ #category : 'refresh' }
 ExternalBrowser >> refreshClasses: pack [
 	self classes resetListSelection .
 	pack
@@ -223,7 +226,7 @@ ExternalBrowser >> refreshClasses: pack [
 		ifNotNil: [ classes items: (self classesOfPackage: pack) asOrderedCollection].
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 ExternalBrowser >> refreshProtocols: selection [
 
 	self protocols resetListSelection.
@@ -234,17 +237,17 @@ ExternalBrowser >> refreshProtocols: selection [
 			  self showClassDefinition ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalBrowser >> selectors [
 	^ selectors
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalBrowser >> selectors: anObject [
 	selectors := anObject
 ]
 
-{ #category : #'structure accessing' }
+{ #category : 'structure accessing' }
 ExternalBrowser >> selectorsOfProtocol: aProtocol [
 
 	| theSelectedClass |
@@ -255,21 +258,29 @@ ExternalBrowser >> selectorsOfProtocol: aProtocol [
 		methodsInProtocol: self protocols selectedItem) asArray collect: [:each | each selector]
 ]
 
-{ #category : #'structure accessing' }
+{ #category : 'structure accessing' }
 ExternalBrowser >> showClassDefinition [
 
-	method text:
-		(self classes selectedItem definition ifNil: [ '' ])
+	| selectedItem |
+	
+	method text: ((selectedItem := self classes selectedItem) hasDefinitionSource
+		ifTrue: [  selectedItem definitionSource ]
+		ifFalse: [ String empty ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ExternalBrowser >> showClassSide [
 
 	^ showClassSide
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 ExternalBrowser >> updatePresenter [
 
 	packages items: self model packages
+]
+
+{ #category : 'initialization' }
+ExternalBrowser >> windowTitle [
+	^  'External Package Browser'
 ]

@@ -4,12 +4,13 @@ I decorate browser tools with critiques information about their subjects.
 This information is shown in bottom pane of the tool as a table of related critiques
 "
 Class {
-	#name : #ClyCriticBrowserPlugin,
-	#superclass : #ClyBrowserPlugin,
-	#category : #'Calypso-SystemPlugins-Critic-Browser'
+	#name : 'ClyCriticBrowserPlugin',
+	#superclass : 'ClyBrowserPlugin',
+	#category : 'Calypso-SystemPlugins-Critic-Browser',
+	#package : 'Calypso-SystemPlugins-Critic-Browser'
 }
 
-{ #category : #'tools installing' }
+{ #category : 'tools installing' }
 ClyCriticBrowserPlugin >> decorateTool: aBrowserTool [
 
 	aBrowserTool supportsCriticDecoration ifFalse: [ ^self ].
@@ -17,12 +18,12 @@ ClyCriticBrowserPlugin >> decorateTool: aBrowserTool [
 	aBrowserTool addDecorator: ClyCriticDecorator new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyCriticBrowserPlugin >> isSlow [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyCriticBrowserPlugin >> priority [
 	^SmallInteger maxVal
 ]

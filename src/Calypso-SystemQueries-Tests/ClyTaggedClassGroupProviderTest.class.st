@@ -1,20 +1,22 @@
 Class {
-	#name : #ClyTaggedClassGroupProviderTest,
-	#superclass : #ClyClassGroupProviderTest,
-	#category : #'Calypso-SystemQueries-Tests-Domain'
+	#name : 'ClyTaggedClassGroupProviderTest',
+	#superclass : 'ClyClassGroupProviderTest',
+	#category : 'Calypso-SystemQueries-Tests-Domain',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Domain'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyTaggedClassGroupProviderTest >> groupProviderClass [
 	^ClyTaggedClassGroupProvider
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyTaggedClassGroupProviderTest >> packageSampleWhichHasGroup [
 	^ClyClass7WithTag1FromP5Mock package "P5WithTags"
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTaggedClassGroupProviderTest >> testCreatesGroupsForEveryTag [
 
 	self buildGroupsFor: ClyClass7WithTag1FromP5Mock package.
@@ -23,7 +25,7 @@ ClyTaggedClassGroupProviderTest >> testCreatesGroupsForEveryTag [
 	self assert: (builtGroups collect: [:each | each tag]) sorted asArray equals: #(Tag1 Tag2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyTaggedClassGroupProviderTest >> testFromTwoSamePackages [
 
 	self buildGroupsForAll: {ClyClass7WithTag1FromP5Mock package. ClyClass7WithTag1FromP5Mock package}.

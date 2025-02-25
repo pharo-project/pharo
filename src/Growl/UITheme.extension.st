@@ -1,18 +1,18 @@
-Extension { #name : #UITheme }
+Extension { #name : 'UITheme' }
 
-{ #category : #'*Growl' }
+{ #category : '*Growl' }
 UITheme >> growlBorderColorFor: aGrowlMorph [
 
 	^ colorPalette growlBorderColorFor: aGrowlMorph
 ]
 
-{ #category : #'*Growl' }
+{ #category : '*Growl' }
 UITheme >> growlContentsColorFor: aGrowlMorph [
 
 	^ colorPalette growlContentsColorFor: aGrowlMorph
 ]
 
-{ #category : #'*Growl' }
+{ #category : '*Growl' }
 UITheme >> growlDismissHandleFor: aGrowlMorph [
 	| form image |
 	form := self windowCloseForm.
@@ -22,13 +22,13 @@ UITheme >> growlDismissHandleFor: aGrowlMorph [
 	^ image
 ]
 
-{ #category : #'*Growl' }
+{ #category : '*Growl' }
 UITheme >> growlFillColorFor: aGrowlMorph [
 
 	^ colorPalette growlFillColorFor: aGrowlMorph
 ]
 
-{ #category : #'*Growl' }
+{ #category : '*Growl' }
 UITheme >> growlLabelColorFor: aGrowlMorph [
 
 	^ colorPalette growlLabelColorFor: aGrowlMorph

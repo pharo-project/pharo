@@ -2,24 +2,26 @@
 SUnit tests for fractions
 "
 Class {
-	#name : #FractionTest,
-	#superclass : #ClassTestCase,
-	#category : #'Kernel-Tests-Numbers'
+	#name : 'FractionTest',
+	#superclass : 'ClassTestCase',
+	#category : 'Kernel-Tests-Numbers',
+	#package : 'Kernel-Tests',
+	#tag : 'Numbers'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 FractionTest >> assert: a classAndValueEquals: b [
 	self assert: a class equals: b class.
 	self assert: a equals: b
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 FractionTest >> classToBeTested [
 
 	^ Fraction
 ]
 
-{ #category : #'tests - arithmetic' }
+{ #category : 'tests - arithmetic' }
 FractionTest >> testAbs [
 
 	self assert: (3 / 4) abs equals: 3 / 4.
@@ -28,7 +30,7 @@ FractionTest >> testAbs [
 	self assert: (-3 / 4) abs equals: 3 / 4
 ]
 
-{ #category : #'tests - conversions' }
+{ #category : 'tests - conversions' }
 FractionTest >> testAsLargerPowerOfTwo [
 
 "SmallIntegers, Fraction value < 1"
@@ -84,7 +86,7 @@ FractionTest >> testAsLargerPowerOfTwo [
 	self should: [(Fraction numerator: (2 raisedTo: 80) denominator: (2 raisedTo: 160) negated) asLargerPowerOfTwo] raise: DomainError
 ]
 
-{ #category : #'tests - conversions' }
+{ #category : 'tests - conversions' }
 FractionTest >> testAsSmallerPowerOfTwo [
 
 "SmallIntegers, Fraction value < 1"
@@ -140,26 +142,26 @@ FractionTest >> testAsSmallerPowerOfTwo [
 	self should: [(Fraction numerator: (2 raisedTo: 80) denominator: (2 raisedTo: 160) negated) asSmallerPowerOfTwo] raise: DomainError
 ]
 
-{ #category : #'tests - conversions' }
+{ #category : 'tests - conversions' }
 FractionTest >> testCeiling [
 	self assert: (3 / 2) ceiling equals: 2.
 	self assert: (-3 / 2) ceiling equals: -1
 ]
 
-{ #category : #'tests - basic' }
+{ #category : 'tests - basic' }
 FractionTest >> testDenominator [
 
 	self assert: (1 / 2) denominator  equals: 2.
 	self assert: 1 denominator  equals: 1
 ]
 
-{ #category : #'tests - conversions' }
+{ #category : 'tests - conversions' }
 FractionTest >> testFloor [
 	self assert: (3 / 2) floor equals: 1.
 	self assert: (-3 / 2) floor equals: -2
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 FractionTest >> testFractionPrinting [
 	self assert: (353 / 359) printString equals: '(353/359)'.
 	self assert: (2 / 3 printStringBase: 2) equals: '(10/11)'.
@@ -239,7 +241,7 @@ FractionTest >> testFractionPrinting [
 	self assert: (5 / -7 storeStringBase: 3) equals: '(-3r12/3r21)'
 ]
 
-{ #category : #'tests - conversions' }
+{ #category : 'tests - conversions' }
 FractionTest >> testIsPowerOfTwo [
 	"Negative fraction"
 	self deny: (1 / (2 raisedTo: 80) negated) isPowerOfTwo.
@@ -254,7 +256,7 @@ FractionTest >> testIsPowerOfTwo [
 	self assert: ((2 raisedTo: 80) / 4) isPowerOfTwo
 ]
 
-{ #category : #'tests - reading' }
+{ #category : 'tests - reading' }
 FractionTest >> testIvalidReadFrom [
 	self should: [Fraction readFromString: '+3'] raise: Error description: 'numerator cannot specify a plus sign'.
 	self should: [Fraction readFromString: '-2/+3'] raise: Error description: 'denominator cannot specify a plus sign'.
@@ -269,14 +271,14 @@ FractionTest >> testIvalidReadFrom [
 	self assert: (Fraction readFromString: '23s0/3') = 23 description: 'scale specification interrupt decoding'
 ]
 
-{ #category : #'tests - basic' }
+{ #category : 'tests - basic' }
 FractionTest >> testNumerator [
 
 	self assert: (1 / 2) numerator equals: 1.
 	self assert: 1 numerator equals: 1
 ]
 
-{ #category : #'tests - mathematical functions' }
+{ #category : 'tests - mathematical functions' }
 FractionTest >> testRaisedToErrorConditions [
 	"
 	FractionTest new testRaisedToErrorConditions
@@ -285,7 +287,7 @@ FractionTest >> testRaisedToErrorConditions [
 	self should: [ ((1 << 1024 + 1) / (1 << 1024 + 3)) negated raisedTo: 1/4 ] raise: ArithmeticError
 ]
 
-{ #category : #'tests - reading' }
+{ #category : 'tests - reading' }
 FractionTest >> testReadFrom [
 	self assert: (Fraction readFromString: '3') = 3 description: 'denominator is optional'.
 	self assert: (Fraction readFromString: '2/3') = (2/3) description: 'fraction and denominator must follow numerator'.
@@ -298,7 +300,7 @@ FractionTest >> testReadFrom [
 	self assert: (Fraction readFromString: '1/3r22') = (1/8) description: 'denominator can specify a radix'
 ]
 
-{ #category : #'tests - sinuses' }
+{ #category : 'tests - sinuses' }
 FractionTest >> testReciprocal [
 	self
 		assert: (1 / 2) reciprocal equals: 2;
@@ -307,7 +309,7 @@ FractionTest >> testReciprocal [
 		assert: (-3 / 5) reciprocal equals: -5 / 3
 ]
 
-{ #category : #'tests - conversions' }
+{ #category : 'tests - conversions' }
 FractionTest >> testRounded [
 	self assert: (4 / 5) rounded equals: 1.
 	self assert: (6 / 5) rounded equals: 1.
@@ -319,13 +321,13 @@ FractionTest >> testRounded [
 	self assert: (-3 / 2) rounded equals: -2
 ]
 
-{ #category : #'tests - rounding' }
+{ #category : 'tests - rounding' }
 FractionTest >> testRounding [
 
 	self assert: ((6/90) round: 2) equals: 7/100
 ]
 
-{ #category : #'tests - conversions' }
+{ #category : 'tests - conversions' }
 FractionTest >> testTruncated [
 	self assert: (3 / 2) truncated equals: 1.
 	self assert: (-3 / 2) truncated equals: -1

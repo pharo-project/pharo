@@ -1,6 +1,6 @@
 Class {
-	#name : #DTDefaultPluginPresenter,
-	#superclass : #SpPresenter,
+	#name : 'DTDefaultPluginPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'packagesList',
 		'resultsList',
@@ -12,10 +12,12 @@ Class {
 		'lastResults',
 		'startButton'
 	],
-	#category : #'DrTests-Spec'
+	#category : 'DrTests-Spec',
+	#package : 'DrTests',
+	#tag : 'Spec'
 }
 
-{ #category : #commands }
+{ #category : 'commands' }
 DTDefaultPluginPresenter class >> buildCommandsGroupWith: presenterInstance forRoot: rootCommandGroup [
 
 	rootCommandGroup
@@ -24,7 +26,7 @@ DTDefaultPluginPresenter class >> buildCommandsGroupWith: presenterInstance forR
 		register: (self buildResultGroupWith: presenterInstance)
 ]
 
-{ #category : #'private - commands' }
+{ #category : 'private - commands' }
 DTDefaultPluginPresenter class >> buildContextualPackageGroupWith: presenterInstance [
 
 	^ (CmCommandGroup named: 'Package menu') asSpecGroup
@@ -32,7 +34,7 @@ DTDefaultPluginPresenter class >> buildContextualPackageGroupWith: presenterInst
 		yourself
 ]
 
-{ #category : #'private - commands' }
+{ #category : 'private - commands' }
 DTDefaultPluginPresenter class >> buildItemsListGroupWith: presenterInstance [
 
 	^ (CmCommandGroup named: 'List items menu') asSpecGroup
@@ -40,7 +42,7 @@ DTDefaultPluginPresenter class >> buildItemsListGroupWith: presenterInstance [
 		yourself
 ]
 
-{ #category : #'private - commands' }
+{ #category : 'private - commands' }
 DTDefaultPluginPresenter class >> buildPackageGroupWith: presenterInstance [
 
 	|group|
@@ -55,25 +57,26 @@ DTDefaultPluginPresenter class >> buildPackageGroupWith: presenterInstance [
 		yourself
 ]
 
-{ #category : #'private - commands' }
+{ #category : 'private - commands' }
 DTDefaultPluginPresenter class >> buildResultGroupWith: presenterInstance [
-	| commandGroup pluginCommands |
+	| commandGroup pluginCommands plugin |
 
 	commandGroup := (CmCommandGroup named: 'Results tools') asSpecGroup
 		description: 'Commands related to result.';
 		register: (DTResultBrowseCommand forSpecContext: presenterInstance) beHiddenWhenCantBeRun;
 		yourself.
 
-	pluginCommands := presenterInstance plugin
-		buildContextualMenuGroupWith: presenterInstance.
-	pluginCommands entries ifEmpty: [ ^ commandGroup ].
+	plugin := presenterInstance plugin.
+	plugin ifNil: [ ^ commandGroup ].
 
+	pluginCommands := plugin buildContextualMenuGroupWith: presenterInstance.
+	pluginCommands entries ifEmpty: [ ^ commandGroup ].
 	^ commandGroup
 		register: pluginCommands beDisplayedAsGroup;
 		yourself
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DTDefaultPluginPresenter >> browseSelectedItem [
 	"Because of DTBrowseSelectedItem>>#canBeExecuted, we know there is a single item in the selection.
 	 Thus, we take the first one and browse it.
@@ -82,13 +85,13 @@ DTDefaultPluginPresenter >> browseSelectedItem [
 	self selectedItems first drTestsBrowse
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DTDefaultPluginPresenter >> browseSelectedResult [
 
 	self resultSelected drTestsBrowse
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DTDefaultPluginPresenter >> buildLabelString: nameOfItems numberOfItemsSelected: aInt [
 
 	^ String streamContents: [ :stream |
@@ -99,7 +102,7 @@ DTDefaultPluginPresenter >> buildLabelString: nameOfItems numberOfItemsSelected:
 			<< ' selected):' ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DTDefaultPluginPresenter >> connectPresenters [
 
 	super connectPresenters.
@@ -111,7 +114,7 @@ DTDefaultPluginPresenter >> connectPresenters [
 						roots: (resultTreeViewOrNil resultTreeFor: drTests pluginResult) subResults ] ]
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 DTDefaultPluginPresenter >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -131,12 +134,12 @@ DTDefaultPluginPresenter >> defaultLayout [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTDefaultPluginPresenter >> drTests [
 	^ drTests
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DTDefaultPluginPresenter >> initializeItemsListAndLabel [
 
 	itemsList := self newFilterableListPresenter.
@@ -151,13 +154,13 @@ DTDefaultPluginPresenter >> initializeItemsListAndLabel [
 		displayBlock: [ :item | item name ];
 		whenSelectionChangedDo: [ self whenItemsSelectionChanged: self selectedItems ];
 		beMultipleSelection;
-		contextMenu: [ (self rootCommandsGroup / 'List items menu') beRoot asMenuPresenter ].
+		actions: (self rootCommandsGroup / 'List items menu') beRoot.
 
 	packagesList
 		whenSelectionChangedDo: [ self whenPackagesSelectionChanged: self packagesSelected ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DTDefaultPluginPresenter >> initializePackagesListAndLabel [
 
 	packagesList := self newFilterableListPresenter.
@@ -166,10 +169,10 @@ DTDefaultPluginPresenter >> initializePackagesListAndLabel [
 		sortingBlock: #name ascending;
 		displayBlock: [ :package | package name ];
 		beMultipleSelection;
-		contextMenu: [ (self rootCommandsGroup / 'Package menu') beRoot asMenuPresenter ]
+		actions: self rootCommandsGroup / 'Package menu'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DTDefaultPluginPresenter >> initializePresenters [
 
 	super initializePresenters.
@@ -184,7 +187,7 @@ DTDefaultPluginPresenter >> initializePresenters [
 	startButton action: [ drTests runPlugin ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DTDefaultPluginPresenter >> initializeResultViewsDropList [
 
 	resultViewsDropList := self newDropList.
@@ -193,7 +196,7 @@ DTDefaultPluginPresenter >> initializeResultViewsDropList [
 		display: [ :resultTreeView | resultTreeView name ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DTDefaultPluginPresenter >> initializeResultsTreeAndLabel [
 
 	resultLabel := self newLabel label: 'Results:'.
@@ -202,107 +205,107 @@ DTDefaultPluginPresenter >> initializeResultsTreeAndLabel [
 		display: [ :node | node drTestsName ];
 		displayColor: [ :node | node displayColor ];
 		children: [ :node | node subResults ];
-		contextMenu: [
-			(self rootCommandsGroup / 'Results tools') beRoot asMenuPresenter ].
+		actions: self rootCommandsGroup / 'Results tools'.
 
 	resultsList outputActivationPort
 		transmitDo: [
 			(DTResultBrowseCommand forSpecContext: self) execute ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTDefaultPluginPresenter >> itemsList [
 	^ itemsList
 ]
 
-{ #category : #widgets }
+{ #category : 'widgets' }
 DTDefaultPluginPresenter >> newFilterableListPresenter [
 
 	^ self instantiate: DTFilterableListPresenter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTDefaultPluginPresenter >> packagesList [
 	^ packagesList
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DTDefaultPluginPresenter >> packagesSelected [
 
 	^ self packagesList ifNil: [ #(  ) ] ifNotNil: #selectedItems
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTDefaultPluginPresenter >> plugin [
 	^ plugin
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTDefaultPluginPresenter >> resultSelected [
 
 	^ self resultsList selectedItem
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTDefaultPluginPresenter >> resultTree: aResultGroup [
-	| roots |
 
+	| roots |
 	aResultGroup ifNil: [ ^ self ].
 	roots := aResultGroup subResults.
 	resultsList roots: roots.
 	roots withIndexDo: [ :each :index |
 		each shouldStartExpanded ifTrue: [
-			each name crTrace.
+			"here there was a each name crTrace. 
+			It does not look like the good way to provide feedback in the transcript"
 			resultsList expandPath: { index } ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTDefaultPluginPresenter >> resultViewsDropList [
 	^ resultViewsDropList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTDefaultPluginPresenter >> resultsList [
 	^ resultsList
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTDefaultPluginPresenter >> selectAllInPackageList [
 
 	packagesList selectAll
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 DTDefaultPluginPresenter >> selectNoneInPackageList [
 
 	packagesList unselectAll
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTDefaultPluginPresenter >> selectedItems [
 
 	^ itemsList selectedItems
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTDefaultPluginPresenter >> setModelBeforeInitialization: aPair [
 
 	plugin := aPair first.
 	drTests := aPair second
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTDefaultPluginPresenter >> startButton [
 	^ startButton
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTDefaultPluginPresenter >> subwidgetsToLock [
 
 	^ { packagesList. itemsList. resultsList. startButton}
 ]
 
-{ #category : #'private - updating' }
+{ #category : 'private - updating' }
 DTDefaultPluginPresenter >> updateItemsListLabel [
 
 	itemsList label: (self
@@ -310,7 +313,7 @@ DTDefaultPluginPresenter >> updateItemsListLabel [
 		 numberOfItemsSelected: self selectedItems size)
 ]
 
-{ #category : #'private - updating' }
+{ #category : 'private - updating' }
 DTDefaultPluginPresenter >> updatePackagesList [
 
 	packagesList unselectAll.
@@ -322,7 +325,7 @@ DTDefaultPluginPresenter >> updatePackagesList [
 	plugin setSelectionModeOfItemsList: itemsList
 ]
 
-{ #category : #'private - updating' }
+{ #category : 'private - updating' }
 DTDefaultPluginPresenter >> updatePackagesListLabel [
 
 	self packagesList label: (self
@@ -330,7 +333,7 @@ DTDefaultPluginPresenter >> updatePackagesListLabel [
 		numberOfItemsSelected: self packagesSelected size)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DTDefaultPluginPresenter >> updatePresenter [
 
 	super updatePresenter.
@@ -342,7 +345,7 @@ DTDefaultPluginPresenter >> updatePresenter [
 	startButton help: plugin startButtonHelp
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 DTDefaultPluginPresenter >> updateResultLabel [
 
 	resultLabel styles copy
@@ -352,7 +355,7 @@ DTDefaultPluginPresenter >> updateResultLabel [
 		addStyle: lastResults backgroundColorStyle
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 DTDefaultPluginPresenter >> updateResultViewsDropList [
 	| newPragmas |
 
@@ -371,7 +374,7 @@ DTDefaultPluginPresenter >> updateResultViewsDropList [
 		ifTrue: [ self resultViewsDropList selectIndex: 1 ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 DTDefaultPluginPresenter >> updateWithResults: someResults [
 
 	lastResults := someResults.
@@ -379,18 +382,17 @@ DTDefaultPluginPresenter >> updateWithResults: someResults [
 	self updateResultViewsDropList.
 	self updateResultLabel.
 	self resultTree: lastResults buildTreeForUI.
-	resultsList contextMenu: [
-		(self rootCommandsGroup / 'Results tools') beRoot asMenuPresenter ]
+	resultsList actions: self rootCommandsGroup / 'Results tools'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DTDefaultPluginPresenter >> whenItemsSelectionChanged: itemsSelected [
 
 	self updateItemsListLabel.
 	drTests updateSwitchButton: itemsSelected
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DTDefaultPluginPresenter >> whenPackagesSelectionChanged: packagesSelected [
 
 	itemsList

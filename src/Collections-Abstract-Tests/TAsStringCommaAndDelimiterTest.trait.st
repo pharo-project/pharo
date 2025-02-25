@@ -2,29 +2,31 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TAsStringCommaAndDelimiterTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TAsStringCommaAndDelimiterTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TAsStringCommaAndDelimiterTest >> empty [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TAsStringCommaAndDelimiterTest >> nonEmpty [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TAsStringCommaAndDelimiterTest >> nonEmpty1Element [
 " return a collection of size 1 including one element"
 	^ self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TAsStringCommaAndDelimiterTest >> test0FixtureAsStringCommaAndDelimiterTest [
 	self nonEmpty.
 	self denyEmpty: self nonEmpty.
@@ -34,14 +36,14 @@ TAsStringCommaAndDelimiterTest >> test0FixtureAsStringCommaAndDelimiterTest [
 	self assert: self nonEmpty1Element size = 1
 ]
 
-{ #category : #'tests - as string comma delimiter sequenceable' }
+{ #category : 'tests - as string comma delimiter sequenceable' }
 TAsStringCommaAndDelimiterTest >> testAsCommaStringEmpty [
 
 	self assert: self empty asCommaString = ''.
 	self assert: self empty asCommaStringAnd = ''
 ]
 
-{ #category : #'tests - as string comma delimiter sequenceable' }
+{ #category : 'tests - as string comma delimiter sequenceable' }
 TAsStringCommaAndDelimiterTest >> testAsCommaStringMore [
 
 	| result resultAnd allElementsAsString tmp |
@@ -68,7 +70,7 @@ TAsStringCommaAndDelimiterTest >> testAsCommaStringMore [
 			]
 ]
 
-{ #category : #'tests - as string comma delimiter sequenceable' }
+{ #category : 'tests - as string comma delimiter sequenceable' }
 TAsStringCommaAndDelimiterTest >> testAsCommaStringOne [
 
 	self nonEmpty1Element do:
@@ -77,17 +79,17 @@ TAsStringCommaAndDelimiterTest >> testAsCommaStringOne [
 		self assert: each asString=self nonEmpty1Element  asCommaStringAnd.]
 ]
 
-{ #category : #'tests - as string comma delimiter sequenceable' }
+{ #category : 'tests - as string comma delimiter sequenceable' }
 TAsStringCommaAndDelimiterTest >> testAsStringOnDelimiterEmpty [
 	self assert: (String streamContents: [ :emptyStream | self empty asStringOn: emptyStream delimiter: ', ' ]) equals: ''
 ]
 
-{ #category : #'tests - as string comma delimiter sequenceable' }
+{ #category : 'tests - as string comma delimiter sequenceable' }
 TAsStringCommaAndDelimiterTest >> testAsStringOnDelimiterLastEmpty [
 	self assert: (String streamContents: [ :emptyStream | self empty asStringOn: emptyStream delimiter: ', ' last: 'and' ]) equals: ''
 ]
 
-{ #category : #'tests - as string comma delimiter sequenceable' }
+{ #category : 'tests - as string comma delimiter sequenceable' }
 TAsStringCommaAndDelimiterTest >> testAsStringOnDelimiterLastMore [
 
 	| delim multiItemStream result last allElementsAsString |
@@ -104,7 +106,7 @@ TAsStringCommaAndDelimiterTest >> testAsStringOnDelimiterLastMore [
 	self assert: ((allElementsAsString at: (allElementsAsString size - 1))=('and'))
 ]
 
-{ #category : #'tests - as string comma delimiter sequenceable' }
+{ #category : 'tests - as string comma delimiter sequenceable' }
 TAsStringCommaAndDelimiterTest >> testAsStringOnDelimiterLastOne [
 
 	| delim oneItemStream result |
@@ -119,7 +121,7 @@ TAsStringCommaAndDelimiterTest >> testAsStringOnDelimiterLastOne [
 		 ]
 ]
 
-{ #category : #'tests - as string comma delimiter sequenceable' }
+{ #category : 'tests - as string comma delimiter sequenceable' }
 TAsStringCommaAndDelimiterTest >> testAsStringOnDelimiterMore [
 
 	| delim multiItemStream result allElementsAsString |
@@ -136,7 +138,7 @@ TAsStringCommaAndDelimiterTest >> testAsStringOnDelimiterMore [
 		]
 ]
 
-{ #category : #'tests - as string comma delimiter sequenceable' }
+{ #category : 'tests - as string comma delimiter sequenceable' }
 TAsStringCommaAndDelimiterTest >> testAsStringOnDelimiterOne [
 
 	| delim oneItemStream result |

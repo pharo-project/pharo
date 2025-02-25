@@ -2,23 +2,25 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TSizeTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TSizeTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TSizeTest >> empty [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TSizeTest >> sizeCollection [
 	"Answers a collection not empty"
 	^ self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TSizeTest >> test0TSizeTest [
 	self empty.
 	self sizeCollection.
@@ -26,7 +28,7 @@ TSizeTest >> test0TSizeTest [
 	self denyEmpty: self sizeCollection
 ]
 
-{ #category : #'tests - size capacity' }
+{ #category : 'tests - size capacity' }
 TSizeTest >> testSize [
 
 	| size |

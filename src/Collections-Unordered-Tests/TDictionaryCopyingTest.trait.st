@@ -2,46 +2,48 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TDictionaryCopyingTest,
+	#name : 'TDictionaryCopyingTest',
 	#traits : 'TCloneTest',
 	#classTraits : 'TCloneTest classTrait',
-	#category : #'Collections-Unordered-Tests-Traits'
+	#category : 'Collections-Unordered-Tests-Traits',
+	#package : 'Collections-Unordered-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #helper }
+{ #category : 'helper' }
 TDictionaryCopyingTest >> empty [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryCopyingTest >> emptyDict [
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryCopyingTest >> newEmptyDict [
 	self explicitRequirement
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 TDictionaryCopyingTest >> nonEmpty [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryCopyingTest >> nonEmptyDict [
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryCopyingTest >> nonEmptyDifferentFromNonEmptyDict [
 " return a dictionary for which all keys are not included in nonEmptyDict"
 self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TDictionaryCopyingTest >> test0FixtureCloneTest [
 	self nonEmpty.
 	self denyEmpty: self nonEmpty.
@@ -49,7 +51,7 @@ TDictionaryCopyingTest >> test0FixtureCloneTest [
 	self assertEmpty: self empty
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TDictionaryCopyingTest >> test0FixtureDictionaryCopyingTest [
 	| duplicateKey |
 	self nonEmptyDict.
@@ -61,7 +63,7 @@ TDictionaryCopyingTest >> test0FixtureDictionaryCopyingTest [
 	self deny: duplicateKey
 ]
 
-{ #category : #'tests - copy - clone' }
+{ #category : 'tests - copy - clone' }
 TDictionaryCopyingTest >> testCopyCreatesNewObject [
 
 	| copy |
@@ -69,12 +71,12 @@ TDictionaryCopyingTest >> testCopyCreatesNewObject [
 	self deny: self nonEmpty == copy
 ]
 
-{ #category : #'tests - copy - clone' }
+{ #category : 'tests - copy - clone' }
 TDictionaryCopyingTest >> testCopyEmpty [
 	self assertEmpty: self empty copy
 ]
 
-{ #category : #'tests - copy - clone' }
+{ #category : 'tests - copy - clone' }
 TDictionaryCopyingTest >> testCopyNonEmpty [
 	| copy |
 	copy := self nonEmpty copy.
@@ -83,7 +85,7 @@ TDictionaryCopyingTest >> testCopyNonEmpty [
 	self nonEmpty do: [ :each | copy includes: each ]
 ]
 
-{ #category : #'tests - copying' }
+{ #category : 'tests - copying' }
 TDictionaryCopyingTest >> testDictionaryConcatenationWithCommonKeys [
 
 	| dictionary1 dictionary2 result |
@@ -95,7 +97,7 @@ TDictionaryCopyingTest >> testDictionaryConcatenationWithCommonKeys [
 	dictionary2 associationsDo: [ :assoc | self assert: (result at: assoc key) = assoc value ]
 ]
 
-{ #category : #'tests - copying' }
+{ #category : 'tests - copying' }
 TDictionaryCopyingTest >> testDictionaryConcatenationWithCommonKeysDifferentValues [
 
 	| dictionary1 dictionary2 result value |
@@ -112,7 +114,7 @@ TDictionaryCopyingTest >> testDictionaryConcatenationWithCommonKeysDifferentValu
 	dictionary2 associationsDo: [ :assoc | self assert: (result at: assoc key) = assoc value ]
 ]
 
-{ #category : #'tests - copying' }
+{ #category : 'tests - copying' }
 TDictionaryCopyingTest >> testDictionaryConcatenationWithoutCommonKeys [
 
 	| dictionary1 dictionary2 result |

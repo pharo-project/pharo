@@ -1,6 +1,21 @@
-Extension { #name : #StartupPreferencesLoader }
+Extension { #name : 'StartupPreferencesLoader' }
 
-{ #category : #'*System-Settings-Browser' }
+{ #category : '*System-Settings-Browser' }
+StartupPreferencesLoader class >> defineStartUpActionMenuOn: aBuilder [
+	<worldMenu>
+	
+	(aBuilder item: #SystemStartupCreator)
+		action: [ self default 
+						addTemplateForStartupInDirectory: self preferencesGeneralFolder named: 'PharoPreferences.st' ];
+		label: 'Define a preference file';
+		parent: #SystemStartup;
+		order: 2;
+		help: 'Propose and define a startup action file for the current version of Pharo.';
+		iconName: #scriptManager.
+	aBuilder withSeparatorAfter
+]
+
+{ #category : '*System-Settings-Browser' }
 StartupPreferencesLoader class >> startupGeneralPrefererencesFolderMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #SystemStartupFolder)
@@ -12,7 +27,7 @@ StartupPreferencesLoader class >> startupGeneralPrefererencesFolderMenuOn: aBuil
 		iconName: #smallOpen
 ]
 
-{ #category : #'*System-Settings-Browser' }
+{ #category : '*System-Settings-Browser' }
 StartupPreferencesLoader class >> startupLoaderMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #SystemStartupLoader)
@@ -22,10 +37,10 @@ StartupPreferencesLoader class >> startupLoaderMenuOn: aBuilder [
 		order: 1;
 		help: 'Run startup scripts.';
 		iconName: #scriptManager.
-	aBuilder withSeparatorAfter
+
 ]
 
-{ #category : #'*System-Settings-Browser' }
+{ #category : '*System-Settings-Browser' }
 StartupPreferencesLoader class >> startupPreferencesVersionFolderMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #SystemStartupFolder)
@@ -39,7 +54,7 @@ StartupPreferencesLoader class >> startupPreferencesVersionFolderMenuOn: aBuilde
 		iconName: #smallOpen
 ]
 
-{ #category : #'*System-Settings-Browser' }
+{ #category : '*System-Settings-Browser' }
 StartupPreferencesLoader class >> systemStartupMenuOn: aBuilder [
 	<worldMenu>
 	(aBuilder item: #SystemStartup)

@@ -32,15 +32,16 @@ Internal Representation and Key Implementation Points.
 	dropContextDefinition:		<CmdContextDefinition>
 "
 Class {
-	#name : #CmdDragAndDropActivation,
-	#superclass : #CmdCommandActivationStrategy,
+	#name : 'CmdDragAndDropActivation',
+	#superclass : 'CmdCommandActivationStrategy',
 	#instVars : [
 		'activeDropContext'
 	],
-	#category : #'Commander-Activators-DragAndDrop'
+	#category : 'Commander-Activators-DragAndDrop',
+	#package : 'Commander-Activators-DragAndDrop'
 }
 
-{ #category : #'passenger creation' }
+{ #category : 'passenger creation' }
 CmdDragAndDropActivation class >> createDragPassengerInContext: aToolContext [
 	| activators |
 	activators := self createActivatorsExecutableInContext: aToolContext.
@@ -48,28 +49,28 @@ CmdDragAndDropActivation class >> createDragPassengerInContext: aToolContext [
 	^CmdDragPassenger draggedFromContext: aToolContext toActivate: activators
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmdDragAndDropActivation class >> for: dragAnnotationContext toDropIn: dropAnnotationContext [
 	^(self for: dragAnnotationContext)
 		activeDropContext: dropAnnotationContext asAnnotationContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdDragAndDropActivation >> activeDropContext [
 	^ activeDropContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdDragAndDropActivation >> activeDropContext: anObject [
 	activeDropContext := anObject
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 CmdDragAndDropActivation >> defaultActivatorClass [
 	^CmdDragAndDropCommandActivator
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdDragAndDropActivation >> isDropActiveInContext: aToolContext [
 	^ activeDropContext describes: aToolContext
 ]

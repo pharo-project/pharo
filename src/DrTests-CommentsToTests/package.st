@@ -1,1 +1,1 @@
-Package { #name : #'DrTests-CommentsToTests' }
+Package { #name : 'DrTests-CommentsToTests' }

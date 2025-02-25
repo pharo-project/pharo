@@ -12,12 +12,14 @@ The slot instead does the nil check as part of the slot read operation.
 #name => LazySlot defaultBlock: [ :object | 'a bloc, parameter is the instance' ].
 "
 Class {
-	#name : #LazySlot,
-	#superclass : #AbstractInitializedSlot,
-	#category : #'VariablesLibrary-Slots'
+	#name : 'LazySlot',
+	#superclass : 'AbstractInitializedSlot',
+	#category : 'VariablesLibrary-Slots',
+	#package : 'VariablesLibrary',
+	#tag : 'Slots'
 }
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 LazySlot >> emitValue: aMethodBuilder [
 	"generate bytecode for '<varname> ifNil: [<varname> := default cull: self]'"
 	aMethodBuilder
@@ -37,9 +39,10 @@ LazySlot >> emitValue: aMethodBuilder [
 		jumpAheadTarget: #target
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 LazySlot >> read: anObject [
 	"if the value is nil, we evaluate the default block with the object as a potential parameter"
+	<reflection: 'Object Inspection - State inspection'>
 	^ (super read: anObject) ifNil: [
 		default isBlock
 			ifTrue: [ self write: (default cull: anObject) to: anObject]

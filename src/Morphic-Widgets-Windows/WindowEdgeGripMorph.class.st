@@ -2,12 +2,14 @@
 Window edge gripper allowing resizing of a window by a particular side.
 "
 Class {
-	#name : #WindowEdgeGripMorph,
-	#superclass : #EdgeGripMorph,
-	#category : #'Morphic-Widgets-Windows-Resizing'
+	#name : 'WindowEdgeGripMorph',
+	#superclass : 'EdgeGripMorph',
+	#category : 'Morphic-Widgets-Windows-Resizing',
+	#package : 'Morphic-Widgets-Windows',
+	#tag : 'Resizing'
 }
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 WindowEdgeGripMorph >> mouseDown: anEvent [
 	"Activate the window if not currently so."
 
@@ -16,7 +18,7 @@ WindowEdgeGripMorph >> mouseDown: anEvent [
 	^super mouseDown: anEvent
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 WindowEdgeGripMorph >> mouseMove: anEvent [
 	"Track the mouse for resizing."
 
@@ -26,14 +28,14 @@ WindowEdgeGripMorph >> mouseMove: anEvent [
 		ifFalse: [super mouseMove: anEvent]
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 WindowEdgeGripMorph >> normalFillStyle [
 	"Return the normal fillStyle of the receiver."
 
 	^self theme windowEdgeNormalFillStyleFor: self
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 WindowEdgeGripMorph >> pressedFillStyle [
 	"Return the pressed fillStyle of the receiver."
 

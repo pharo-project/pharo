@@ -1,20 +1,22 @@
 Class {
-	#name : #MCFileInTest,
-	#superclass : #MCTestCase,
+	#name : 'MCFileInTest',
+	#superclass : 'MCTestCase',
 	#instVars : [
 		'stream',
 		'expected',
 		'diff'
 	],
-	#category : #'Monticello-Tests-IO'
+	#category : 'Monticello-Tests-IO',
+	#package : 'Monticello-Tests',
+	#tag : 'IO'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCFileInTest >> alterInitialState [
 	self mockClassA touchCVar
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCFileInTest >> assertFileOutFrom: writerClass canBeFiledInWith: aBlock [
 	(writerClass on: stream) writeSnapshot: self mockSnapshot.
 	self alterInitialState.
@@ -24,21 +26,21 @@ MCFileInTest >> assertFileOutFrom: writerClass canBeFiledInWith: aBlock [
 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCFileInTest >> assertInitializersCalled [
 	| cvar |
 	cvar := self mockClassA cVar.
 	self assert: cvar equals: #initialized
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCFileInTest >> assertInitializersOrder [
 	| initializationOrder |
 	initializationOrder := self mockClassA initializationOrder.
 	self assert: initializationOrder equals: 2
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCFileInTest >> assertNoChange [
 	| actual |
 	actual := MCSnapshotResource takeSnapshot.
@@ -46,7 +48,7 @@ MCFileInTest >> assertNoChange [
 	self assertEmpty: diff
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCFileInTest >> assertSuccessfulLoadWith: aBlock [
 	stream reset.
 	aBlock value.
@@ -55,14 +57,14 @@ MCFileInTest >> assertSuccessfulLoadWith: aBlock [
 	self assertInitializersOrder
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCFileInTest >> setUp [
 	super setUp.
 	expected := self mockSnapshot.
 	stream := ReadWriteStream on: ''
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCFileInTest >> tearDown [
 	(diff isNil or: [diff isEmpty not])
 		 ifTrue: [expected updatePackage: self mockPackage].
@@ -70,7 +72,7 @@ MCFileInTest >> tearDown [
 	super tearDown
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCFileInTest >> testStWriter [
 	
 	self

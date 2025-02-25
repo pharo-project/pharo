@@ -23,20 +23,22 @@ Internal Representation and Key Implementation Points.
 	field:		I am the field to display at the bottom of the FTTableMorph
 "
 Class {
-	#name : #FTFieldFunction,
-	#superclass : #FTFunction,
+	#name : 'FTFieldFunction',
+	#superclass : 'FTFunction',
 	#instVars : [
 		'field'
 	],
-	#category : #'Morphic-Widgets-FastTable-Functions'
+	#category : 'Morphic-Widgets-FastTable-Functions',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Functions'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 FTFieldFunction class >> isAbstract [
 	^ self = FTFieldFunction
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTFieldFunction >> beExplicit [
 	self initializeMorph.
 	table
@@ -44,24 +46,24 @@ FTFieldFunction >> beExplicit [
 		resizeAllSubviews
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 FTFieldFunction >> disable [
 	field
 		ifNotNil: [ field delete.
 			field := nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTFieldFunction >> fieldHeigh [
 	^ StandardFonts defaultFont pixelSize + 10
 ]
 
-{ #category : #'widget API' }
+{ #category : 'widget API' }
 FTFieldFunction >> ghostText [
 	self subclassResponsibility
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTFieldFunction >> initializeMorph [
 	field := RubScrolledTextModel new newTextField
 		hResizing: #spaceFill;
@@ -71,17 +73,17 @@ FTFieldFunction >> initializeMorph [
 	field model announcer when: RubTextUpdatedInModel send: #textUpdated: to: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FTFieldFunction >> isExplicit [
 	^ field isNotNil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTFieldFunction >> resizeContainerFrom: topLeftPoint to: bottomLeftPoint [
 	^ topLeftPoint corner: bottomLeftPoint x @ (bottomLeftPoint y - self fieldHeigh)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTFieldFunction >> resizeWidget [
 	| topLeft bottomRight |
 	self flag: #pharoTodo.	"Maybe it could be cool to let the user choose if the field need to be at the top or the bottom."
@@ -90,7 +92,7 @@ FTFieldFunction >> resizeWidget [
 	field bounds: (topLeft corner: bottomRight)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTFieldFunction >> showWidget [
 	self initializeMorph.
 	table
@@ -98,7 +100,7 @@ FTFieldFunction >> showWidget [
 		resizeAllSubviews
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 FTFieldFunction >> textUpdated: anAnnouncement [
 
 	"do nothing by default"

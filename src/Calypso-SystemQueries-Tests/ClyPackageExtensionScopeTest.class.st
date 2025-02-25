@@ -1,26 +1,28 @@
 Class {
-	#name : #ClyPackageExtensionScopeTest,
-	#superclass : #ClyTypedScopeTest,
-	#category : #'Calypso-SystemQueries-Tests-Scopes'
+	#name : 'ClyPackageExtensionScopeTest',
+	#superclass : 'ClyTypedScopeTest',
+	#category : 'Calypso-SystemQueries-Tests-Scopes',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Scopes'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyPackageExtensionScopeTest >> extraBasisSample [
 	^ClySubclassMOfClass1FromP2Mock package
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyPackageExtensionScopeTest >> scopeClass [
 
 	^ClyPackageExtensionScope
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyPackageExtensionScopeTest >> singleBasisSample [
 	^ClyClass1FromP1Mock package
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyPackageExtensionScopeTest >> testClassesEnumeration [
 	scope := ClyPackageExtensionScope of: ClyClass1FromP1Mock package.
 
@@ -30,7 +32,7 @@ ClyPackageExtensionScopeTest >> testClassesEnumeration [
 	self assert: (result includesAll: ClyClass1FromP1Mock package extendedClasses)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyPackageExtensionScopeTest >> testMethodsEnumeration [
 	scope := ClyPackageExtensionScope of: ClyClass1FromP1Mock package.
 
@@ -41,7 +43,7 @@ ClyPackageExtensionScopeTest >> testMethodsEnumeration [
 	self assert: (result includesAll: ClySubclassLOfClass0FromPExtendedByP1Mock localMethods)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyPackageExtensionScopeTest >> testPackageEnumeration [
 	scope := ClyPackageExtensionScope ofAll: {Array package. Object package}.
 

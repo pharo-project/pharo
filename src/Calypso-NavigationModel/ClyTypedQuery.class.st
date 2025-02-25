@@ -30,37 +30,39 @@ And I provide union query support. Typed queries can be concatinated using comma
 Look at class side for more options
 "
 Class {
-	#name : #ClyTypedQuery,
-	#superclass : #ClyQuery,
-	#category : #'Calypso-NavigationModel-Query'
+	#name : 'ClyTypedQuery',
+	#superclass : 'ClyQuery',
+	#category : 'Calypso-NavigationModel-Query',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Query'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTypedQuery class >> from: aScope [
 
 	^aScope adoptQuery: self new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTypedQuery class >> from: aScope as: aQueryResult [
 
 	^(self from: aScope)
 		requiredResult: aQueryResult
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTypedQuery class >> from: aScopeClass of: aBasisObject in: aNavigationEnvironment [
 	^ self
 		from: (aScopeClass of: aBasisObject in: aNavigationEnvironment)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTypedQuery class >> from: aScopeClass ofAll: basisObjects in: aNavigationEnvironment [
 	^ self
 		from: (aScopeClass ofAll: basisObjects in: aNavigationEnvironment)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTypedQuery class >> fromAll: scopeClasses of: aBasisObject in: aNavigationEnvironment [
 
 	| subqueries |
@@ -69,7 +71,7 @@ ClyTypedQuery class >> fromAll: scopeClasses of: aBasisObject in: aNavigationEnv
 	^ClyQuery unionFrom: subqueries
 ]
 
-{ #category : #'merging queries' }
+{ #category : 'merging queries' }
 ClyTypedQuery class >> mergeOwnInstances: queries [
 
 	| queryGroups merged |
@@ -82,7 +84,7 @@ ClyTypedQuery class >> mergeOwnInstances: queries [
 	^merged
 ]
 
-{ #category : #'merging queries' }
+{ #category : 'merging queries' }
 ClyTypedQuery class >> mergeOwnInstances: queries unifiedBy: ownUnifiedInstance [
 	| scopeGroups result mergedBasis mergedScope |
 	scopeGroups := queries groupedBy: [ :each | each scope asUnifiedInstance ].
@@ -98,80 +100,80 @@ ClyTypedQuery class >> mergeOwnInstances: queries unifiedBy: ownUnifiedInstance 
 	^result
 ]
 
-{ #category : #'items type' }
+{ #category : 'items type' }
 ClyTypedQuery class >> resultItemsType [
 	self subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTypedQuery class >> sorted [
 	^self sortedBy: self resultItemsType defaultSortFunctionForCalypso
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTypedQuery class >> sortedFrom: aScope [
 
 	^self sorted
 		scope: aScope
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 ClyTypedQuery >> , anotherQuery [
 	^ anotherQuery unionWith: {self} as: requiredResult
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyTypedQuery >> asUnifiedInstance [
 	^self copy
 		resetScope
 ]
 
-{ #category : #'item group decoration' }
+{ #category : 'item group decoration' }
 ClyTypedQuery >> decorateItemGroup: groupItem [
 	groupItem markWithChildrenOf: self resultItemsType
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTypedQuery >> executesQuery: aTypedQueryClass [
 	^self isKindOf: aTypedQueryClass
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyTypedQuery >> restrictedByScope: aScope [
 
 	^self withScope: (scope restrictedBy: aScope)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTypedQuery >> resultItemsType [
 	^self class resultItemsType
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTypedQuery >> retrievesItemsOfType: itemTypeClass [
 	^ self resultItemsType isCalypsoItemType: itemTypeClass
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 ClyTypedQuery >> unionWith: typedQueries as: aQueryResult [
 
 	^ClyQuery unionFrom: (typedQueries copyWith: self) as: aQueryResult
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyTypedQuery >> withScope: aScope [
 	| copy |
 	copy := self copy.
 	^aScope adoptQuery: copy
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyTypedQuery >> withScopeOf: newBasisObjects [
 
 	^self withScope: (scope withNewBasisObjects: newBasisObjects)
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyTypedQuery >> withoutItemsOfType: anItemTypeClass [
 
 	^(self retrievesItemsOfType: anItemTypeClass)

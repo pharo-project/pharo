@@ -4,16 +4,17 @@ I represent a platform specific key combination, one that should only be launche
 I'm a sort of decorator of a key combination.
 "
 Class {
-	#name : #KMPlatformSpecificKeyCombination,
-	#superclass : #Object,
+	#name : 'KMPlatformSpecificKeyCombination',
+	#superclass : 'Object',
 	#instVars : [
 		'shortcut',
 		'platform'
 	],
-	#category : #'Keymapping-KeyCombinations'
+	#category : 'Keymapping-KeyCombinations',
+	#package : 'Keymapping-KeyCombinations'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMPlatformSpecificKeyCombination class >> with: aShortcut onPlatform: aPlatform [
 	^self new
 			shortcut: aShortcut;
@@ -21,48 +22,48 @@ KMPlatformSpecificKeyCombination class >> with: aShortcut onPlatform: aPlatform 
 			yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 KMPlatformSpecificKeyCombination >> = aShortcut [
 	platform = aShortcut platform
 		ifFalse: [ ^ false ].
 	^ shortcut = aShortcut shortcut
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 KMPlatformSpecificKeyCombination >> combinationsDo: aBlock [
 	aBlock value: self
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 KMPlatformSpecificKeyCombination >> hash [
 	^ platform hash bitXor: shortcut hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 KMPlatformSpecificKeyCombination >> matches: aCollection [
 
 	self platform == Smalltalk os platformFamily ifFalse: [ ^ false ].
 	^ self shortcut matches: aCollection
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 KMPlatformSpecificKeyCombination >> matchesCompletely: aCollection [
 
 	self platform == Smalltalk os platformFamily ifFalse: [ ^ false ].
 	^ self shortcut matchesCompletely: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMPlatformSpecificKeyCombination >> platform [
 	^platform
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMPlatformSpecificKeyCombination >> platform: aPlatform [
 	platform := aPlatform
 ]
 
-{ #category : #'accessing - platform' }
+{ #category : 'accessing - platform' }
 KMPlatformSpecificKeyCombination >> platformCharacter [
 
 	^ (self platform = #all or: [ self platform = OSPlatform current platformFamily ])
@@ -70,7 +71,7 @@ KMPlatformSpecificKeyCombination >> platformCharacter [
 		ifFalse: [ nil ]
 ]
 
-{ #category : #'accessing - platform' }
+{ #category : 'accessing - platform' }
 KMPlatformSpecificKeyCombination >> platformModifier [
 
 	^ (self platform = #all or: [ self platform = OSPlatform current platformFamily ])
@@ -78,7 +79,7 @@ KMPlatformSpecificKeyCombination >> platformModifier [
 		ifFalse: [ nil ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMPlatformSpecificKeyCombination >> prettyPrintOn: aStream [
 
 	self platform = #MacOSX
@@ -86,7 +87,7 @@ KMPlatformSpecificKeyCombination >> prettyPrintOn: aStream [
 		ifFalse: [ shortcut printOn: aStream ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMPlatformSpecificKeyCombination >> printOn: aStream [
 
 	super printOn: aStream.
@@ -97,17 +98,17 @@ KMPlatformSpecificKeyCombination >> printOn: aStream [
 	aStream << ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMPlatformSpecificKeyCombination >> shortcut [
 	^shortcut
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMPlatformSpecificKeyCombination >> shortcut: aShortcut [
 	shortcut := aShortcut
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMPlatformSpecificKeyCombination >> | aShortcut [
 	^KMKeyCombinationChoice withShortcuts: { self . aShortcut }
 ]

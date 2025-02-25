@@ -1,6 +1,6 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*ClassAnnotation' }
+{ #category : '*ClassAnnotation' }
 Object >> representsSimpleAnnotationUser: someUserClass [
 
 	^self isKindOf: someUserClass

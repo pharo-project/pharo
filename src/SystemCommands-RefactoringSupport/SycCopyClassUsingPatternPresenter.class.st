@@ -9,8 +9,8 @@ In both cases, a list for each of the selections is updated whenever the text en
 See class side for an example.
 "
 Class {
-	#name : #SycCopyClassUsingPatternPresenter,
-	#superclass : #SpPresenter,
+	#name : 'SycCopyClassUsingPatternPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'sourcePreviewPresenter',
 		'sourceClassLabel',
@@ -21,10 +21,12 @@ Class {
 		'sourcePackage',
 		'newPackageName'
 	],
-	#category : #'SystemCommands-RefactoringSupport-View'
+	#category : 'SystemCommands-RefactoringSupport-View',
+	#package : 'SystemCommands-RefactoringSupport',
+	#tag : 'View'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 SycCopyClassUsingPatternPresenter class >> example [
 
 	| packageName |
@@ -33,7 +35,7 @@ SycCopyClassUsingPatternPresenter class >> example [
 	SycCopyClassUsingPatternPresenter openOn: packageName
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SycCopyClassUsingPatternPresenter class >> openOn: aPackageNameAssociation [
 	"I take a RBMethodName as parameter and open the refactoring UI in a modal to rename it."
 
@@ -42,7 +44,7 @@ SycCopyClassUsingPatternPresenter class >> openOn: aPackageNameAssociation [
 	^ instance openBlockedDialog
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 SycCopyClassUsingPatternPresenter >> defaultLayout [
 
 	^ SpBoxLayout newLeftToRight
@@ -62,19 +64,19 @@ SycCopyClassUsingPatternPresenter >> defaultLayout [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SycCopyClassUsingPatternPresenter >> initializeDialogWindow: aModalPresenter [
 
 	aModalPresenter
-		addButton: 'Ok' do: [ :presenter |
-			self replaceClassPattern: presenter.
-			 presenter close ];
-		addButton: 'Cancel' do: [ :presenter | presenter beCancel; close ];
 		initialExtent: 350 @ 500 ;
-		title: 'Copy classes applying class pattern'
+		title: 'Copy classes applying class pattern';		
+		addButton: 'Cancel' do: [ :presenter | presenter beCancel; close ];		
+		addDefaultButton: 'Ok' do: [ :presenter |
+			self replaceClassPattern: presenter.
+			 presenter close ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SycCopyClassUsingPatternPresenter >> initializePresenters [
 
 	super initializePresenters.
@@ -95,16 +97,20 @@ SycCopyClassUsingPatternPresenter >> initializePresenters [
 	self setFocus
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SycCopyClassUsingPatternPresenter >> replaceClassPattern: presenter [
 	"Instantiate and execute a refactoring environment to perform changes according to receiver's current regex class patterns"
 
-	(RBCopyPackageRefactoring copyPackage: sourcePackage packageName in: newPackageName)
-		classMappings: (Dictionary newFromKeys: sourcePreviewPresenter items andValues: targetPreviewPresenter items);
+	(RBCopyPackageRefactoring
+		 copyPackage: sourcePackage name
+		 in: newPackageName)
+		classMappings: (Dictionary
+				 newFromKeys: sourcePreviewPresenter items
+				 andValues: targetPreviewPresenter items);
 		execute
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SycCopyClassUsingPatternPresenter >> setFocus [
 
 	self focusOrder
@@ -112,7 +118,7 @@ SycCopyClassUsingPatternPresenter >> setFocus [
 		add: targetClassPatternTextInput
 ]
 
-{ #category : #'accessing - model' }
+{ #category : 'accessing - model' }
 SycCopyClassUsingPatternPresenter >> setModelBeforeInitialization: aPackageNameAssociation [
 
 	super setModelBeforeInitialization: aPackageNameAssociation.
@@ -120,7 +126,7 @@ SycCopyClassUsingPatternPresenter >> setModelBeforeInitialization: aPackageNameA
 	newPackageName := aPackageNameAssociation value
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SycCopyClassUsingPatternPresenter >> updateSourcePreview [
 
 	| previewItems |
@@ -135,7 +141,7 @@ SycCopyClassUsingPatternPresenter >> updateSourcePreview [
 	sourcePreviewPresenter items: previewItems asSortedCollection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SycCopyClassUsingPatternPresenter >> updateTargetPreview [
 
 	| previewItems |

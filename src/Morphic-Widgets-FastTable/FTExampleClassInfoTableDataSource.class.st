@@ -3,12 +3,14 @@ I'm an example of fast table, who will use a list of classes as data source elem
 
 "
 Class {
-	#name : #FTExampleClassInfoTableDataSource,
-	#superclass : #FTSimpleDataSource,
-	#category : #'Morphic-Widgets-FastTable-Examples'
+	#name : 'FTExampleClassInfoTableDataSource',
+	#superclass : 'FTSimpleDataSource',
+	#category : 'Morphic-Widgets-FastTable-Examples',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Examples'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTExampleClassInfoTableDataSource >> cellColumn: column row: rowIndex [
 	column id = 'Icon' ifTrue: [ ^ self iconColumn: column row: rowIndex ].
 	column id = 'Name' ifTrue: [ ^ self nameColumn: column row: rowIndex ].
@@ -18,14 +20,14 @@ FTExampleClassInfoTableDataSource >> cellColumn: column row: rowIndex [
 	self error: 'Invalid column'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTExampleClassInfoTableDataSource >> iconColumn: column row: rowIndex [
 	^ FTCellMorph new
 		addMorphBack: (self iconFor: rowIndex) asMorph;
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTExampleClassInfoTableDataSource >> iconFor: index [
 	| class |
 	class := self elementAt: index.
@@ -54,34 +56,34 @@ FTExampleClassInfoTableDataSource >> iconFor: index [
 	^ self iconNamed: class systemIconName
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTExampleClassInfoTableDataSource >> initialize [
 	super initialize.
 	self elements: Smalltalk allClassesAndTraits shuffled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTExampleClassInfoTableDataSource >> nameColumn: column row: rowIndex [
 	^ FTCellMorph new
 		addMorphBack: (self elementAt: rowIndex) name asStringMorph;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTExampleClassInfoTableDataSource >> numberOfInstanceVariablesColumn: column row: rowIndex [
 	^ FTCellMorph new
 		addMorph: (self elementAt: rowIndex) instSize asStringMorph;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTExampleClassInfoTableDataSource >> numberOfMethodsColumn: column row: rowIndex [
 	^ FTCellMorph new
 		addMorph: (self elementAt: rowIndex) numberOfMethods asStringMorph;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTExampleClassInfoTableDataSource >> searchText: aString [
 	aString isEmptyOrNil ifTrue: [ ^ #() ].
 

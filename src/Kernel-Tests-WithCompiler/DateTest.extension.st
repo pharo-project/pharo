@@ -1,6 +1,6 @@
-Extension { #name : #DateTest }
+Extension { #name : 'DateTest' }
 
-{ #category : #'*Kernel-Tests-WithCompiler' }
+{ #category : '*Kernel-Tests-WithCompiler' }
 DateTest >> testStoring [
 
 	| expected actual |

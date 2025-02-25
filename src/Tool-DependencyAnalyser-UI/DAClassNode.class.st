@@ -3,17 +3,19 @@ A DAClassDependencyNode is the superclass node for DAInheritanceDependencyNode a
 
 "
 Class {
-	#name : #DAClassNode,
-	#superclass : #DANode,
-	#category : #'Tool-DependencyAnalyser-UI-Nodes'
+	#name : 'DAClassNode',
+	#superclass : 'DANode',
+	#category : 'Tool-DependencyAnalyser-UI-Nodes',
+	#package : 'Tool-DependencyAnalyser-UI',
+	#tag : 'Nodes'
 }
 
-{ #category : #'browse-nautilus' }
+{ #category : 'browse-nautilus' }
 DAClassNode >> classFromContent [
 	^ self content theClass
 ]
 
-{ #category : #'browse-nautilus' }
+{ #category : 'browse-nautilus' }
 DAClassNode >> selectInBrowser [
 	self selectClass: self classFromContent
 ]

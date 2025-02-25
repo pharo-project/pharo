@@ -5,7 +5,6 @@ StartupPreferencesLoader looks within such locations for a 'pharo' folder. This 
 
 .../some/folders/pharo/Content/Resources/pharo.image.
 .../some/folders/pharo/Content/Resources/startup.st
-.../some/folders/.config/pharo/author.st
 .../some/folders/.config/pharo/useSharedCache.st
 .../some/folders/.config/pharo/1.4/mystartupFor14only.st
 .../some/folders/.config/pharo/2.0/mystartupFor20only.st
@@ -25,6 +24,7 @@ will define a script sample startup.st in your unix root on unix
 
 Its contents is 
 
+```
 StartupPreferencesLoader default executeAtomicItems: {
 	StartupAtomicItem name: 'Open Help' code: 'Workspace openContents: ''Here is just an example of how to use the StartupPreferencesLoader.
 I should only be displayed once.
@@ -33,9 +33,11 @@ You can also see StartupPreferencesLoader class>>#example'' label: ''Help''' isS
 	StartupAtomicItem name: 'Open Workspace' code: 'Workspace openContents: ''I should be displayed each time'''.
 }
 
-EXAMPLE 1
-============
+```
 
+### EXAMPLE 1
+
+```
 	"" an example of script generation ""
 	| item1 item2 |
 	item1 := StartupAction name: 'Open Help' code: 'Smalltalk tools workspace openContents: ''Here is just an example of how to use the StartupPreferencesLoader.
@@ -46,18 +48,16 @@ I should only be displayed once.
 	StartupPreferencesLoader default addAtStartupInGeneralPreferenceFolder: {item1. item2}.
 	
 	StartupPreferencesLoader default loadFromDefaultLocations.
-	StartupPreferencesLoader default loadFromDefaultLocations.
+```
 
-EXAMPLE 2
-============
 
+
+### EXAMPLE 2
+
+```
 	"" it's my personal script provided as example""
 	| items |
 	items := OrderedCollection new.
-	items add: (StartupAction name: 'Set the Author' code: [ Author fullName: Author fullName printString ]). ""replace it by your name""
-	
-	StartupPreferencesLoader default addAtStartupInPreferenceVersionFolder: items named: 'author.st'.
-	items removeAll.
 	
 	items add: (StartupAction name: 'Dragging Option' code: [ UITheme defaultSettings fastDragging: true ]).
 	items add: (StartupAction name: 'Dialog Auto Accept' code: [ TextEditorDialogWindow autoAccept: true ]).
@@ -75,9 +75,13 @@ EXAMPLE 2
 	StartupPreferencesLoader default addAtStartupInImageDirectory: items.
 	
 	StartupPreferencesLoader default loadFromDefaultLocations.
+```
 
-EXAMPLE 3
-============
+
+
+### EXAMPLE 3
+
+```
 
 	| items |
 	items := OrderedCollection new.
@@ -101,10 +105,12 @@ EXAMPLE 3
 		FileStream stdout lf; nextPutAll: 'Finished'; lf.
 		 ]).
 	StartupPreferencesLoader default addAtStartupInImageDirectory: items 
+```	
+
 "
 Class {
-	#name : #StartupPreferencesLoader,
-	#superclass : #Object,
+	#name : 'StartupPreferencesLoader',
+	#superclass : 'Object',
 	#instVars : [
 		'errors',
 		'actions'
@@ -113,39 +119,50 @@ Class {
 		'AllowStartupScript',
 		'UniqueInstance'
 	],
-	#category : #StartupPreferences
+	#category : 'StartupPreferences',
+	#package : 'StartupPreferences'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StartupPreferencesLoader class >> allowStartupScript [
 
 	^ AllowStartupScript ifNil: [ AllowStartupScript := true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StartupPreferencesLoader class >> allowStartupScript: aBoolean [
 
 	AllowStartupScript := aBoolean
 ]
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 StartupPreferencesLoader class >> cleanUp: aggressive [
 	self reset
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 StartupPreferencesLoader class >> default [
 
 	^ UniqueInstance ifNil: [ UniqueInstance := super basicNew initialize ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
+StartupPreferencesLoader class >> fromSton: stonReader [
+	"Create a new instance and delegate decoding to instance side.
+	Override only when new instance should be created directly (see implementors). "
+
+	^ self default
+		fromSton: stonReader;
+		yourself
+]
+
+{ #category : 'instance creation' }
 StartupPreferencesLoader class >> new [
 
 	^ self error: 'use #default instead'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StartupPreferencesLoader class >> preferencesGeneralFolder [
 
 	^ [ FileLocator preferences asFileReference / 'pharo' ]
@@ -155,26 +172,26 @@ StartupPreferencesLoader class >> preferencesGeneralFolder [
 			StartupPreferencesLoadingError signal ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StartupPreferencesLoader class >> preferencesVersionFolder [
 
 	^ self preferencesGeneralFolder
 		ifNotNil: [ :folder | folder / SystemVersion current dottedMajorMinor ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 StartupPreferencesLoader class >> reset [
 
 	UniqueInstance := nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StartupPreferencesLoader class >> startupGeneralPreferencesFolderScriptName [
 
 	^ 'startupPharo.st'
 ]
 
-{ #category : #setting }
+{ #category : 'setting' }
 StartupPreferencesLoader class >> startupPreferencesSettingsOn: aBuilder [
 	<systemsettings>
 
@@ -186,25 +203,25 @@ StartupPreferencesLoader class >> startupPreferencesSettingsOn: aBuilder [
 		description: 'If true, the preferences will be loaded'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StartupPreferencesLoader class >> startupPreferencesVersionFolderScriptName [
 
 	^ 'startupPharo', SystemVersion current dottedMajorMinor,'.st'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StartupPreferencesLoader class >> startupScriptName [
 
 	^ 'startup.st'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StartupPreferencesLoader >> actions [
 
 	^ actions
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StartupPreferencesLoader >> add: anAction [
 	| action |
 	action := actions at: anAction name ifAbsentPut: [ anAction ].
@@ -215,13 +232,13 @@ StartupPreferencesLoader >> add: anAction [
 	^ action
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StartupPreferencesLoader >> addAtStartup: aCollection inDirectory: aFileReference named: fileName [
 	aFileReference ensureCreateDirectory.
 	aFileReference / fileName writeStreamDo: [ :stream | stream nextPutAll: (self buildStreamFor: aCollection) ]
 ]
 
-{ #category : #'script generation' }
+{ #category : 'script generation' }
 StartupPreferencesLoader >> addAtStartupInGeneralPreferenceFolder: aCollection [
 	self
 		addAtStartup: aCollection
@@ -229,7 +246,7 @@ StartupPreferencesLoader >> addAtStartupInGeneralPreferenceFolder: aCollection [
 		named: self class startupGeneralPreferencesFolderScriptName
 ]
 
-{ #category : #'script generation' }
+{ #category : 'script generation' }
 StartupPreferencesLoader >> addAtStartupInGeneralPreferenceFolder: aCollection named: fileName [
 	self
 		addAtStartup: aCollection
@@ -237,7 +254,7 @@ StartupPreferencesLoader >> addAtStartupInGeneralPreferenceFolder: aCollection n
 		named: fileName
 ]
 
-{ #category : #'script generation' }
+{ #category : 'script generation' }
 StartupPreferencesLoader >> addAtStartupInImageDirectory:  aCollection [
 	self
 		addAtStartup: aCollection
@@ -245,7 +262,7 @@ StartupPreferencesLoader >> addAtStartupInImageDirectory:  aCollection [
 		named: self class startupScriptName
 ]
 
-{ #category : #'script generation' }
+{ #category : 'script generation' }
 StartupPreferencesLoader >> addAtStartupInPreferenceVersionFolder: aCollection [
 	self
 		addAtStartup: aCollection
@@ -253,7 +270,7 @@ StartupPreferencesLoader >> addAtStartupInPreferenceVersionFolder: aCollection [
 		named: self class startupPreferencesVersionFolderScriptName
 ]
 
-{ #category : #'script generation' }
+{ #category : 'script generation' }
 StartupPreferencesLoader >> addAtStartupInPreferenceVersionFolder: aCollection named: fileName [
 	self
 		addAtStartup: aCollection
@@ -261,7 +278,15 @@ StartupPreferencesLoader >> addAtStartupInPreferenceVersionFolder: aCollection n
 		named: fileName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
+StartupPreferencesLoader >> addTemplateForStartupInDirectory: aFileReference named: fileName [
+	
+	aFileReference ensureCreateDirectory.
+	aFileReference / fileName writeStreamDo: [ :stream | 
+		stream nextPutAll: self templateString ]
+]
+
+{ #category : 'private' }
 StartupPreferencesLoader >> buildStreamFor: aCollection [
 	^ String
 		streamContents:
@@ -283,19 +308,19 @@ StartupPreferencesLoader >> buildStreamFor: aCollection [
 				crlf ]
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 StartupPreferencesLoader >> cleanSavedActionsAndErrors [
 	actions := Dictionary new.
 	errors := OrderedCollection new.
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StartupPreferencesLoader >> errors [
 
 	^ errors
 ]
 
-{ #category : #'code execution' }
+{ #category : 'code execution' }
 StartupPreferencesLoader >> executeAtomicItems: aCollection [
 	"No sender but send from the generated script"
 
@@ -307,7 +332,7 @@ StartupPreferencesLoader >> executeAtomicItems: aCollection [
 				(self add: item) execute ]]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StartupPreferencesLoader >> initialize [
 
 	super initialize.
@@ -315,13 +340,13 @@ StartupPreferencesLoader >> initialize [
 	errors := OrderedCollection new.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 StartupPreferencesLoader >> load: aCollection [
 	errors removeAll.
 	aCollection do: [:file | file fileIn ]
 ]
 
-{ #category : #'startup loading' }
+{ #category : 'startup loading' }
 StartupPreferencesLoader >> loadFromDefaultLocations [
 	self class allowStartupScript ifFalse: [ ^ self ].
 
@@ -330,53 +355,86 @@ StartupPreferencesLoader >> loadFromDefaultLocations [
 		do: [ :ex | ex return ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 StartupPreferencesLoader >> preferencesGeneralFolder [
 
 	^ self class preferencesGeneralFolder
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 StartupPreferencesLoader >> preferencesVersionFolder [
 
 	^ self class preferencesVersionFolder
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 StartupPreferencesLoader >> removeAllScriptsAndCleanSavedActions [
 	self removeAllScriptsFromAllDirectories.
 	self cleanSavedActionsAndErrors
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 StartupPreferencesLoader >> removeAllScriptsFromAllDirectories [
 	self removeScriptFromImageDirectory.
 	self removeAllScriptsFromPreferencesVersionDirectory.
 	self removeAllScriptsFromGeneralPreferencesDirectory
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 StartupPreferencesLoader >> removeAllScriptsFromDirectory: aDirectory [
 	aDirectory deleteAllChildren
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 StartupPreferencesLoader >> removeAllScriptsFromGeneralPreferencesDirectory [
 	self removeAllScriptsFromDirectory: self preferencesGeneralFolder
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 StartupPreferencesLoader >> removeAllScriptsFromPreferencesVersionDirectory [
 	self removeAllScriptsFromDirectory: self preferencesVersionFolder
 ]
 
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 StartupPreferencesLoader >> removeScriptFromImageDirectory [
 	(FileSystem workingDirectory / self class startupScriptName) delete
 ]
 
-{ #category : #'startup loading' }
+{ #category : 'startup loading' }
 StartupPreferencesLoader >> retrieveFilesStream [
 
 	^ StartupPreferencesHandler new perform
+]
+
+{ #category : 'private' }
+StartupPreferencesLoader >> templateString [
+
+	^ 'StartupPreferencesLoader default executeAtomicItems: {
+	StartupAction 
+		name: ''Logo'' 
+		code: [ PolymorphSystemSettings showDesktopLogo: false] .
+	StartupAction 
+		name: ''Git Settings'' 
+		code: [ 
+			Iceberg enableMetacelloIntegration: true.
+			IceCredentialsProvider sshCredentials
+					username: ''git'';
+					publicKey: ''/Users/XXX/.ssh/id_rsa.pub'';
+					privateKey: ''/Users/XX/.ssh/id_rsa''.
+			IceCredentialStore current
+					storeCredential: (IcePlaintextCredentials new
+					username: ''GHUSER'';
+					password: ''PassWord'';
+					host: ''github.com'';
+					yourself).		
+
+
+			IceCredentialStore current
+				storeCredential: (IceTokenCredentials new
+					username: ''GHUSER'';
+					token: ''YOUR TOKEN'';
+					yourself) 
+				forHostname: ''github.com''.
+			]. 
+}.'
 ]

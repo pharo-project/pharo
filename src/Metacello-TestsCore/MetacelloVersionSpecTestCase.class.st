@@ -1,10 +1,12 @@
 Class {
-	#name : #MetacelloVersionSpecTestCase,
-	#superclass : #MetacelloSpecTestCase,
-	#category : #'Metacello-TestsCore-Specs'
+	#name : 'MetacelloVersionSpecTestCase',
+	#superclass : 'MetacelloSpecTestCase',
+	#category : 'Metacello-TestsCore-Specs',
+	#package : 'Metacello-TestsCore',
+	#tag : 'Specs'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloVersionSpecTestCase >> testVersionMergeSpec [
 	| versionA versionB version |
 	versionA := self versionSpec
@@ -35,7 +37,7 @@ MetacelloVersionSpecTestCase >> testVersionMergeSpec [
 	self assert: version postLoadDoIt value identicalTo: #postLoadDoItB
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloVersionSpecTestCase >> testVersionSpec [
 	| version |
 	version := self versionSpec
@@ -58,7 +60,7 @@ MetacelloVersionSpecTestCase >> testVersionSpec [
 	self should: [ version postLoadDoIt: '' ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloVersionSpecTestCase >> testVersionSpecCreateVersion [
 	| spec version |
 	spec := self versionSpec

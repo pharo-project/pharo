@@ -18,15 +18,17 @@ form destroySurface.
 
 "
 Class {
-	#name : #OSSDL2ExternalForm,
-	#superclass : #Form,
+	#name : 'OSSDL2ExternalForm',
+	#superclass : 'Form',
 	#instVars : [
 		'pointer'
 	],
-	#category : #'OSWindow-SDL2-Base'
+	#category : 'OSWindow-SDL2-Base',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Base'
 }
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 OSSDL2ExternalForm >> allocateSpace [
 	"Convenient way to allocate space for the pixels.  This isn't done by default, because it is common to use a pointer obtained from elsewhere."
 	| addr |
@@ -35,7 +37,7 @@ OSSDL2ExternalForm >> allocateSpace [
 	self setManualSurfacePointer: addr
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 OSSDL2ExternalForm >> destroySurface [
 	"Users must call this explicitly when this object is no longer needed; otherwise, resource-leakage will occur in the SurfacePlugin"
 	bits ifNotNil: [:surfaceID |
@@ -44,53 +46,44 @@ OSSDL2ExternalForm >> destroySurface [
 	]
 ]
 
-{ #category : #'old - ffi backend support' }
-OSSDL2ExternalForm >> oldPrimCreateManualSurfaceWidth: aWidth height: aHeight rowPitch: rowPitch depth: aDepth isMSB: isMSB [
-	<primitive: 'primitiveCreateManualSurface' module: 'SqueakFFIPrims'>
-	self primitiveFailed
+{ #category : 'scaling, rotation' }
+OSSDL2ExternalForm >> magnifyBy: scale smoothing: cellSize [
+
+	| form |
+	
+	form := Form extent: self extent depth: self depth.
+	form getCanvas image: self at: 0@0 sourceRect: self boundingBox rule: 34.
+	^ form magnifyBy: scale smoothing: cellSize
 ]
 
-{ #category : #'old - ffi backend support' }
-OSSDL2ExternalForm >> oldPrimDestroyManualSurface: surfaceID [
-	<primitive: 'primitiveDestroyManualSurface' module: 'SqueakFFIPrims'>
-	self primitiveFailed
-]
-
-{ #category : #'old - ffi backend support' }
-OSSDL2ExternalForm >> oldPrimManualSurface: surfaceID setPointer: aPointer [
-	"The 'surfaceID' is a handle returned by #primitiveCreateManualSurface from SurfacePlugin. The pointer is a 32-bit unsigned integer that SurfacePlugin casts to a void*."
-	<primitive: 'primitiveSetManualSurfacePointer' module: 'SqueakFFIPrims'>
-	self primitiveFailed
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSSDL2ExternalForm >> pointer [
 	^pointer
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 OSSDL2ExternalForm >> primCreateManualSurfaceWidth: aWidth height: aHeight rowPitch: rowPitch depth: aDepth isMSB: isMSB [
 	<primitive: 'primitiveCreateManualSurface' module: 'SurfacePlugin'>
 
-	^ self oldPrimCreateManualSurfaceWidth: aWidth height: aHeight rowPitch: rowPitch depth: aDepth isMSB: isMSB
+	^ self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 OSSDL2ExternalForm >> primDestroyManualSurface: surfaceID [
 	<primitive: 'primitiveDestroyManualSurface' module: 'SurfacePlugin'>
 
-	^ self oldPrimDestroyManualSurface: surfaceID
+	^ self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 OSSDL2ExternalForm >> primManualSurface: surfaceID setPointer: aPointer [
 	"The 'surfaceID' is a handle returned by #primitiveCreateManualSurface from SurfacePlugin. The pointer is a 32-bit unsigned integer that SurfacePlugin casts to a void*."
 	<primitive: 'primitiveSetManualSurfacePointer' module: 'SurfacePlugin'>
 
-	^ self oldPrimManualSurface: surfaceID setPointer: aPointer
+	^ self primitiveFailed
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 OSSDL2ExternalForm >> setExtent: extent depth: bitsPerPixel [
 	bits ifNotNil: [self error: 'bits are already set'].
 	bitsPerPixel == 32 ifFalse: [self error: 'only 32 bits for now'.  "see 'rowPitch' below"].
@@ -107,13 +100,13 @@ OSSDL2ExternalForm >> setExtent: extent depth: bitsPerPixel [
 		isMSB: true
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 OSSDL2ExternalForm >> setExtent: extent depth: bitsPerPixel bits: aPointer [
 	self setExtent: extent depth: bitsPerPixel.
 	self setManualSurfacePointer: aPointer
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 OSSDL2ExternalForm >> setManualSurfacePointer: newPointer [ "ExternalStructure, ExternalAddress, or nil"
 	"Set the memory-location of the image data.  It is OK to set a NULL pointer;
 	 in this case, any attempt to BitBlt to or from the form will result in a primitive-failure."

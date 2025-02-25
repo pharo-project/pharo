@@ -1,6 +1,6 @@
-Extension { #name : #NECDetailMorph }
+Extension { #name : 'NECDetailMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 NECDetailMorph >> drawOnAthensCanvas: anAthensCanvas [
 	self drawOnCanvasWrapperFor: anAthensCanvas
 ]

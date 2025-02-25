@@ -2,8 +2,8 @@
 Common queue worker pool has in common queue. This makes that all the workers wait over the same queue 
 "
 Class {
-	#name : #TKTCommonQueueWorkerPool,
-	#superclass : #Object,
+	#name : 'TKTCommonQueueWorkerPool',
+	#superclass : 'Object',
 	#traits : 'TTaskScheduler - {#scheduleTaskExecution:}',
 	#classTraits : 'TTaskScheduler classTrait',
 	#instVars : [
@@ -14,10 +14,12 @@ Class {
 		'name',
 		'mutex'
 	],
-	#category : #'TaskIt-Worker'
+	#category : 'TaskIt-Worker',
+	#package : 'TaskIt',
+	#tag : 'Worker'
 }
 
-{ #category : #current }
+{ #category : 'current' }
 TKTCommonQueueWorkerPool class >> createDefault [
 	^ self new
 		name: 'CommonPool-' , UUID new asString;
@@ -25,7 +27,7 @@ TKTCommonQueueWorkerPool class >> createDefault [
 		yourself
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : 'public - mutexed' }
 TKTCommonQueueWorkerPool >> cleanUpImageToStart [
 	self stop.
 	taskQueue removeAll.
@@ -33,12 +35,12 @@ TKTCommonQueueWorkerPool >> cleanUpImageToStart [
 	self start
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 TKTCommonQueueWorkerPool >> ensureIsBeingWatched [
 	TKTConfiguration watchDog ensureIsWatching: self
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : 'public - mutexed' }
 TKTCommonQueueWorkerPool >> ensureIsWorking [
 	mutex
 		critical: [ failedTasks
@@ -55,12 +57,12 @@ TKTCommonQueueWorkerPool >> ensureIsWorking [
 			self privateManageWorkersAfter ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 TKTCommonQueueWorkerPool >> failedTasks [
 	^ failedTasks copy
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TKTCommonQueueWorkerPool >> initialize [
 	super initialize.
 	workers := Set new.
@@ -70,27 +72,27 @@ TKTCommonQueueWorkerPool >> initialize [
 	self name: 'Worker' , self identityHash asString
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 TKTCommonQueueWorkerPool >> isDebuggingCompatible [
 	^ true
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 TKTCommonQueueWorkerPool >> name [
 	^ name
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 TKTCommonQueueWorkerPool >> name: aString [
 	name := aString
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : 'public - mutexed' }
 TKTCommonQueueWorkerPool >> poolMaxSize: anInteger [
 	mutex critical: [ poolMaxSize := anInteger ]
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : 'public - mutexed' }
 TKTCommonQueueWorkerPool >> printOn: aStream [
 	| freeWorkers |
 	freeWorkers := self privateFreeWorkers.
@@ -107,12 +109,12 @@ TKTCommonQueueWorkerPool >> printOn: aStream [
 		nextPutAll: ')'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TKTCommonQueueWorkerPool >> privateFreeWorkers [
 	^ workers select: [ :each | each isFree ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TKTCommonQueueWorkerPool >> privateManageWorkersAfter [
 	| free toremove |
 	toremove := workers reject: #isRunning.
@@ -122,7 +124,7 @@ TKTCommonQueueWorkerPool >> privateManageWorkersAfter [
 		ifTrue: [ self privateSpawnWorkerIfNeeded ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TKTCommonQueueWorkerPool >> privateManageWorkersBefore [
 	| free |
 	free := self privateFreeWorkers.
@@ -130,7 +132,7 @@ TKTCommonQueueWorkerPool >> privateManageWorkersBefore [
 		ifTrue: [ self privateRemoveIdleWorkerIfNeeded ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TKTCommonQueueWorkerPool >> privateNewWorker [
 	workers
 		add:
@@ -140,7 +142,7 @@ TKTCommonQueueWorkerPool >> privateNewWorker [
 				start)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TKTCommonQueueWorkerPool >> privateRemoveIdleWorkerIfNeeded [
 	| removing free |
 	free := self privateFreeWorkers.
@@ -151,30 +153,30 @@ TKTCommonQueueWorkerPool >> privateRemoveIdleWorkerIfNeeded [
 	removing stop
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : 'public - mutexed' }
 TKTCommonQueueWorkerPool >> privateScheduleTaskExecutionFromCriticalArea: aTaskExecution [
 	taskQueue nextPut: aTaskExecution
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TKTCommonQueueWorkerPool >> privateSpawnWorkerIfNeeded [
 	workers size < poolMaxSize
 		ifTrue: [ self privateNewWorker ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 TKTCommonQueueWorkerPool >> purge [
 	taskQueue removeAll
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : 'public - mutexed' }
 TKTCommonQueueWorkerPool >> reset [
 	mutex
 		critical: [ self purge.
 			workers do: #restart ]
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : 'public - mutexed' }
 TKTCommonQueueWorkerPool >> scheduleTaskExecution: aTaskExecution [
 	mutex
 		critical: [ self ensureIsBeingWatched.
@@ -183,17 +185,17 @@ TKTCommonQueueWorkerPool >> scheduleTaskExecution: aTaskExecution [
 			self privateManageWorkersAfter ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 TKTCommonQueueWorkerPool >> size [
 	^ workers size
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : 'public - mutexed' }
 TKTCommonQueueWorkerPool >> start [
 	self ensureIsBeingWatched
 ]
 
-{ #category : #'public - mutexed' }
+{ #category : 'public - mutexed' }
 TKTCommonQueueWorkerPool >> stop [
 	TKTConfiguration watchDog stopWatching: self.
 	mutex
@@ -201,12 +203,12 @@ TKTCommonQueueWorkerPool >> stop [
 			workers removeAll ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTCommonQueueWorkerPool >> taskQueueSize [
 	^ taskQueue size
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 TKTCommonQueueWorkerPool >> workers [
 	^ workers copy
 ]

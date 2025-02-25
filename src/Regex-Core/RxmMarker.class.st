@@ -7,15 +7,17 @@ Instance variables:
 	index	<Object> Something that makes sense for the Matcher. Received from the latter during initalization and later passed to it to identify the receiver.
 "
 Class {
-	#name : #RxmMarker,
-	#superclass : #RxmLink,
+	#name : 'RxmMarker',
+	#superclass : 'RxmLink',
 	#instVars : [
 		'index'
 	],
-	#category : #'Regex-Core-Links'
+	#category : 'Regex-Core-Links',
+	#package : 'Regex-Core',
+	#tag : 'Links'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxmMarker >> index: anIndex [
 	"An index is a key that makes sense for the matcher.
 	This key can be passed to marker position getters and
@@ -25,7 +27,7 @@ RxmMarker >> index: anIndex [
 	index := anIndex
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RxmMarker >> matchAgainst: aMatcher [
 	"If the rest of the link chain matches successfully, report the
 	position of the stream *before* the match started to the matcher."

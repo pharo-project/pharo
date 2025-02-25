@@ -1,14 +1,13 @@
-Extension { #name : #RGPackage }
+Extension { #name : 'RGPackage' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGPackage >> asMCSnapshot [
 
 	| definitions |
-
-	definitions := ((((self definedBehaviors reject: [:each | each isMeta]) sorted: [:a :b | a name < b name ]) collect: [:each | each asMCDefinition]), (self extensionMethods collect: [:each | each asMCDefinition])) asOrderedCollection.
-	definitions addAll: ((self definedBehaviors, (self definedBehaviors collect: [:each | each classSide])) flatCollect: [ :behavior |
-		(behavior localMethods reject: [:each | (each  parent instanceSide package = each package) not])
-			collect: [ :method | method asMCDefinition] ]).
-
+	definitions := OrderedCollection new.
+	definitions addAll: ((self definedBehaviors reject: [ :each | each isMeta ]) collect: [ :each | each asMCDefinition ]).
+	definitions addAll: (self extensionMethods collect: [ :each | each asMCDefinition ]).
+	definitions addAll: (self definedBehaviors , (self definedBehaviors collect: [ :each | each classSide ]) flatCollect: [ :behavior |  (behavior localMethods select: [ :each | each parent instanceSide package = each package ]) collect: [ :method | method asMCDefinition ] ]).
+	definitions add: (MCOrganizationDefinition packageName: name).
 	^ MCSnapshot fromDefinitions: definitions
 ]

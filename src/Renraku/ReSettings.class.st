@@ -2,40 +2,36 @@
 i have settings for QA recording functions
 "
 Class {
-	#name : #ReSettings,
-	#superclass : #Object,
+	#name : 'ReSettings',
+	#superclass : 'Object',
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #'Renraku-Utility'
+	#category : 'Renraku-Utility',
+	#package : 'Renraku',
+	#tag : 'Utility'
 }
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 ReSettings class >> cleanUp [
 
 	uniqueInstance := nil
 ]
 
-{ #category : #'settings-definition' }
+{ #category : 'settings-definition' }
 ReSettings class >> resetButtonSettingsOn: aBuilder [
 	<systemsettings>
 
-	(aBuilder group: #'resetRules')
+	(aBuilder button: #resetWithInform)
 		order: 10;
-		target: self;
+		target: ReRuleManager;
 		label: 'Rule cache';
 		parent: #qualityAssistant;
 		description: 'Renraku (the engine behind quality rules) caches the rule objects for performance boost. Here you can reset the cache, this may be useful if you''ve implemented a new rule and want to include it.';
-		dialog: [
-			SimpleButtonMorph new
-				target: ReRuleManager;
-				label: 'Reset rule cache';
-				actionSelector: #resetWithInform;
-				themeChanged;
-				yourself ]
+		buttonLabel: 'Reset'
 ]
 
-{ #category : #'settings-accessing' }
+{ #category : 'settings-accessing' }
 ReSettings class >> showErrors [
 	self flag: 'switch to exception strategy completely'.
 	"Utilize the ReExceptionStrategy to either skip the exception,
@@ -45,7 +41,7 @@ ReSettings class >> showErrors [
 	^ ReExceptionStrategy current = RePassExceptionStrategy
 ]
 
-{ #category : #'settings-accessing' }
+{ #category : 'settings-accessing' }
 ReSettings class >> showErrors: aBoolean [
 
 	ReExceptionStrategy current: (aBoolean
@@ -53,7 +49,7 @@ ReSettings class >> showErrors: aBoolean [
 		ifFalse: [ ReIgnoreExceptionStrategy ])
 ]
 
-{ #category : #'settings-definition' }
+{ #category : 'settings-definition' }
 ReSettings class >> showErrorsSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #showErrors)
@@ -65,7 +61,7 @@ ReSettings class >> showErrorsSettingsOn: aBuilder [
 		parent: #qualityAssistant
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReSettings class >> uniqueInstance [
 
 	^ uniqueInstance ifNil: [ uniqueInstance := self new ]

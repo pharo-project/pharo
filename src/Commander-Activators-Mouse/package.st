@@ -1,1 +1,1 @@
-Package { #name : #'Commander-Activators-Mouse' }
+Package { #name : 'Commander-Activators-Mouse' }

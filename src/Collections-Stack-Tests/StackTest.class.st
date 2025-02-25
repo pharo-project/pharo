@@ -2,30 +2,32 @@
 SUnit tests for stacks
 "
 Class {
-	#name : #StackTest,
-	#superclass : #TestCase,
+	#name : 'StackTest',
+	#superclass : 'TestCase',
 	#traits : 'TEmptyTest - {#testIfNotEmptyifEmpty. #testIfEmpty. #testNotEmpty} + (TCloneTest - {#testCopyNonEmpty})',
 	#classTraits : 'TEmptyTest classTrait + TCloneTest classTrait',
 	#instVars : [
 		'empty',
 		'nonEmpty'
 	],
-	#category : #'Collections-Stack-Tests-Base'
+	#category : 'Collections-Stack-Tests-Base',
+	#package : 'Collections-Stack-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StackTest >> empty [
 
  	^ empty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StackTest >> nonEmpty [
 
  	^ nonEmpty
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 StackTest >> setUp [
 	super setUp.
 	empty := Stack new.
@@ -36,7 +38,7 @@ StackTest >> setUp [
 	nonEmpty push: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StackTest >> testEmptyError [
 	| aStack |
 	aStack := Stack new.
@@ -49,7 +51,7 @@ StackTest >> testEmptyError [
 	self should: [ aStack pop ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StackTest >> testPop [
 	| aStack res elem |
 	elem := 'anElement'.
@@ -67,7 +69,7 @@ StackTest >> testPop [
 	self assertEmpty: aStack
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StackTest >> testPush [
 	| aStack |
 	aStack := Stack new.
@@ -77,7 +79,7 @@ StackTest >> testPush [
 	self assert: aStack size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StackTest >> testSize [
 	| aStack |
 	aStack := Stack new.
@@ -92,7 +94,7 @@ StackTest >> testSize [
 	self assert: aStack size equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StackTest >> testTop [
 	| aStack |
 	aStack := Stack new.

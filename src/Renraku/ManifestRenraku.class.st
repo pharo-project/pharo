@@ -11,7 +11,16 @@ Rules are the objects that describe constraints about entities. A rule can check
 Critique is an object that binds an entity with a rule that is violated by that entity. The critique describes a specific violation, and may provide a solutions to fix it.
 "
 Class {
-	#name : #ManifestRenraku,
-	#superclass : #PackageManifest,
-	#category : #'Renraku-Manifest'
+	#name : 'ManifestRenraku',
+	#superclass : 'PackageManifest',
+	#category : 'Renraku-Manifest',
+	#package : 'Renraku',
+	#tag : 'Manifest'
 }
+
+{ #category : 'code-critics' }
+ManifestRenraku class >> ruleBadMessageRule2V1FalsePositive [
+
+	<ignoreForCoverage>
+	^ #(#(#(#RGMethodDefinition #(#'ReAbstractRule class' #isVisible #true)) #'2023-09-22T10:50:00.890614+02:00') )
+]

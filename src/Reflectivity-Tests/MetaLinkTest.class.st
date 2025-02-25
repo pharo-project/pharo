@@ -2,20 +2,22 @@
 Tests for MetaLink
 "
 Class {
-	#name : #MetaLinkTest,
-	#superclass : #TestCase,
-	#category : #'Reflectivity-Tests-Base'
+	#name : 'MetaLinkTest',
+	#superclass : 'ReflectivityTestCase',
+	#category : 'Reflectivity-Tests-Base',
+	#package : 'Reflectivity-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #'tests - misc' }
+{ #category : 'tests - misc' }
 MetaLinkTest >> testAvailableReifications [
-	self assert: (RBMessageNode new availableReifications includes: #receiver).
-	self assert: (RBMessageNode new availableReifications includes: #value).
+	self assert: (OCMessageNode new availableReifications includes: #receiver).
+	self assert: (OCMessageNode new availableReifications includes: #value).
 	self assert: ((ReflectivityExamples classVariableNamed: #ClassVar) availableReifications includes: #name).
 	self deny: ((ReflectivityExamples classVariableNamed: #ClassVar) availableReifications includes: #selector)
 ]
 
-{ #category : #'tests - simple' }
+{ #category : 'tests - simple' }
 MetaLinkTest >> testBlockLink [
 	| link |
 	link := MetaLink new metaObject: [ 1 + 2 ].
@@ -23,7 +25,7 @@ MetaLinkTest >> testBlockLink [
 	self assert: link selector equals: #value
 ]
 
-{ #category : #'tests - simple' }
+{ #category : 'tests - simple' }
 MetaLinkTest >> testConditionLink [
 	| link |
 	link := MetaLink new
@@ -35,7 +37,7 @@ MetaLinkTest >> testConditionLink [
 	self assert: link hasCondition
 ]
 
-{ #category : #'tests - simple' }
+{ #category : 'tests - simple' }
 MetaLinkTest >> testControlInstead [
 	| link |
 	link := MetaLink new
@@ -47,7 +49,7 @@ MetaLinkTest >> testControlInstead [
 	self deny: (ReflectivityExamples >> #exampleMethod) ast hasMetalinkInstead
 ]
 
-{ #category : #'tests - simple' }
+{ #category : 'tests - simple' }
 MetaLinkTest >> testControlLink [
 	| link |
 	link := MetaLink new
@@ -58,7 +60,7 @@ MetaLinkTest >> testControlLink [
 	self assert: link control equals: #after
 ]
 
-{ #category : #'tests - misc' }
+{ #category : 'tests - misc' }
 MetaLinkTest >> testDefintionString [
 	| metaLink |
 	metaLink := MetaLink new
@@ -68,7 +70,7 @@ MetaLinkTest >> testDefintionString [
 	self assert: (Smalltalk compiler evaluate: metaLink definitionString) definitionString equals: metaLink definitionString
 ]
 
-{ #category : #'tests - options' }
+{ #category : 'tests - options' }
 MetaLinkTest >> testLinkOption [
 	| link |
 	link := MetaLink new
@@ -78,7 +80,7 @@ MetaLinkTest >> testLinkOption [
 	self deny: link option2
 ]
 
-{ #category : #'tests - options' }
+{ #category : 'tests - options' }
 MetaLinkTest >> testLinkOptionsDefault [
 	| link |
 	link := MetaLink new.
@@ -87,14 +89,19 @@ MetaLinkTest >> testLinkOptionsDefault [
 	self deny: link optionCompileOnLinkInstallation
 ]
 
-{ #category : #'tests - options' }
+{ #category : 'tests - options' }
 MetaLinkTest >> testOptionFor [
 
-	self assert: (((ReflectivityExamples>>#exampleMethodWithMetaLinkOptions) ast optionsFor: MetaLink new) includes: #optionCompileOnLinkInstallation).
-	self assert: (((ReflectivityExamples class>>#exampleMethodWithMetaLinkOptionsViaClass) ast optionsFor: MetaLink new) includes: #optionCompileOnLinkInstallation)
+	self assert:
+		(((ReflectivityExamples >> #exampleMethodWithMetaLinkOptions) ast
+			  optionsFor: MetaLink new) includesOption:
+			 #optionCompileOnLinkInstallation).
+	self assert: (((ReflectivityExamples class
+		   >> #exampleMethodWithMetaLinkOptionsViaClass) ast optionsFor:
+			  MetaLink new) includesOption: #optionCompileOnLinkInstallation)
 ]
 
-{ #category : #'tests - simple' }
+{ #category : 'tests - simple' }
 MetaLinkTest >> testReificationError [
 	| link |
 	link := MetaLink new
@@ -103,7 +110,7 @@ MetaLinkTest >> testReificationError [
 	self should: [ (ReflectivityExamples classVariableNamed: #ClassVar) link: link ] raise: Error
 ]
 
-{ #category : #'tests - simple' }
+{ #category : 'tests - simple' }
 MetaLinkTest >> testSimpleHaltLink [
 	| link |
 	link := MetaLink new

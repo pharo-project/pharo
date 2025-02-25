@@ -2,12 +2,14 @@
 This class contains tests for class `FreeTypeFontFamilyMember`
 "
 Class {
-	#name : #FreeTypeFontFamilyMemberTest,
-	#superclass : #TestCase,
-	#category : #'FreeType-Tests-FontManager'
+	#name : 'FreeTypeFontFamilyMemberTest',
+	#superclass : 'TestCase',
+	#category : 'FreeType-Tests-FontManager',
+	#package : 'FreeType-Tests',
+	#tag : 'FontManager'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeFontFamilyMemberTest >> testBeSimulatedStyle [
 
 	| member |
@@ -17,7 +19,7 @@ FreeTypeFontFamilyMemberTest >> testBeSimulatedStyle [
 	self assert: member isSimulatedStyle
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FreeTypeFontFamilyMemberTest >> testIsNotSimulatedStyleByDefault [
 
 	self deny: FreeTypeFontFamilyMember new isSimulatedStyle

@@ -20,8 +20,8 @@ https://en.wikipedia.org/wiki/Lempel%E2%80%93Ziv%E2%80%93Welch
 https://www.w3.org/Graphics/GIF/spec-gif89a.txt
 "
 Class {
-	#name : #LzwGifEncoder,
-	#superclass : #Object,
+	#name : 'LzwGifEncoder',
+	#superclass : 'Object',
 	#instVars : [
 		'suffixTable',
 		'prefixTable',
@@ -40,10 +40,11 @@ Class {
 		'yPos',
 		'dimensions'
 	],
-	#category : #'Graphics-Files'
+	#category : 'Graphics-Files',
+	#package : 'Graphics-Files'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 LzwGifEncoder >> checkCodeSize [
 	"Determine whether or not we need to increment
 	the codeSize"
@@ -53,7 +54,7 @@ LzwGifEncoder >> checkCodeSize [
 			maxCode := (1 bitShift: codeSize) - 1 ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LzwGifEncoder >> checkSettings [
 	"Ensure that the appropriate variables
 	that are needed for proper encoding
@@ -63,19 +64,19 @@ LzwGifEncoder >> checkSettings [
 	rowByteSize ifNil: [ ^ self error: 'You must provide a rowByteSize for the supplied image bits!' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LzwGifEncoder >> codeStream: aByteStream [
 	codeStream := aByteStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LzwGifEncoder >> dimensions: anExtentPoint [
 	"Set the extent (as point) of the
 	image that will be encoded"
 	dimensions := anExtentPoint
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 LzwGifEncoder >> encode: bits [
 	| maxBits maxMaxCode tSize tShift fCode ent pixel index nomatch disp |
 	self checkSettings.
@@ -159,14 +160,14 @@ LzwGifEncoder >> encode: bits [
 	codeStream nextPut: 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LzwGifEncoder >> extent: anExtentPoint [
 	"Set the extent (as point) of the
 	image that will be encoded"
 	dimensions := anExtentPoint
 ]
 
-{ #category : #'private - bits access' }
+{ #category : 'private - bits access' }
 LzwGifEncoder >> flushBits [
 	numLeftoverBits = 0 ifFalse:
 		[ self nextBytePut: bitBuffer.
@@ -174,7 +175,7 @@ LzwGifEncoder >> flushBits [
 	self flushBuffer
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LzwGifEncoder >> flushBuffer [
 	"Write out the current codeStreamBuffer size,
 	followed by its actual contents, to the true
@@ -186,7 +187,7 @@ LzwGifEncoder >> flushBuffer [
 	codeStreamBuffer := (ByteArray new: 256) writeStream
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LzwGifEncoder >> initializeParameters [
 	"The initial code size and mask settings
 	also get reinitialized each time"
@@ -197,12 +198,12 @@ LzwGifEncoder >> initializeParameters [
 	maxCode := (1 bitShift: codeSize) - 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LzwGifEncoder >> minimumCodeSize: anInteger [
 	minimumCodeSize := anInteger
 ]
 
-{ #category : #'private - packing' }
+{ #category : 'private - packing' }
 LzwGifEncoder >> nextBytePut: anInteger [
 	"Write a complete byte to the output byteStream.
 	Be sure to reset one we reach the limit, which is
@@ -213,7 +214,7 @@ LzwGifEncoder >> nextBytePut: anInteger [
 		ifTrue: [ self flushBuffer ]
 ]
 
-{ #category : #'private - bits access' }
+{ #category : 'private - bits access' }
 LzwGifEncoder >> nextCodePut: anInteger [
 	"Attempt to put the bits on the
 	output stream. If we have remaining bits,
@@ -239,7 +240,7 @@ LzwGifEncoder >> nextCodePut: anInteger [
 	^ anInteger
 ]
 
-{ #category : #'private - encoding' }
+{ #category : 'private - encoding' }
 LzwGifEncoder >> readPixelFrom: bits [
 	"Using the current x and y positions and
 	the specified byte size for a row, determine
@@ -251,12 +252,12 @@ LzwGifEncoder >> readPixelFrom: bits [
 	^ pixel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LzwGifEncoder >> rowByteSize: anInteger [
 	rowByteSize := anInteger
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 LzwGifEncoder >> updatePixelPosition [
 	"Increment the xPos. If we are at the width
 	position, set xPos to 0 and increment the yPos"
@@ -266,7 +267,7 @@ LzwGifEncoder >> updatePixelPosition [
 	yPos := yPos + 1
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 LzwGifEncoder >> writeCodeAndCheckCodeSize: aCode [
 	self nextCodePut: aCode.
 	self checkCodeSize

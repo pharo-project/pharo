@@ -4,48 +4,50 @@ I'm a simple datasource and just implement a direct-to-table provision of my ele
 Users might want to subclass me to have better options.
 "
 Class {
-	#name : #FTSimpleDataSource,
-	#superclass : #FTDataSource,
+	#name : 'FTSimpleDataSource',
+	#superclass : 'FTDataSource',
 	#instVars : [
 		'elements',
 		'unsortedElements'
 	],
-	#category : #'Morphic-Widgets-FastTable-DataSource'
+	#category : 'Morphic-Widgets-FastTable-DataSource',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'DataSource'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTSimpleDataSource class >> elements: aCollection [
 	^ self new elements: aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTSimpleDataSource >> cellColumn: column row: rowIndex [
 	^ FTCellMorph new
 		addMorphBack: (self elementAt: rowIndex) asMorph;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTSimpleDataSource >> elementAt: index [
 	^ self elements at: index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTSimpleDataSource >> elements [
 	^ elements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTSimpleDataSource >> elements: anObject [
 	elements := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTSimpleDataSource >> headerColumn: column [
 	^ self basicHeaderCellFor: column
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTSimpleDataSource >> newDataSourceMatching: aFTFilter [
 	| newElements |
 	newElements := Array withAll: (elements select: [ :each |
@@ -53,14 +55,14 @@ FTSimpleDataSource >> newDataSourceMatching: aFTFilter [
 	^ self class new elements: newElements
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTSimpleDataSource >> numberOfRows [
 	^ self elements
 		ifNotNil: [ self elements size ]
 		ifNil: [ 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTSimpleDataSource >> searchText: aString [
 	| result |
 	aString isEmptyOrNil ifTrue: [ ^ #() ].
@@ -71,13 +73,13 @@ FTSimpleDataSource >> searchText: aString [
 	^ result asArray
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 FTSimpleDataSource >> sortElements: aSortFunction [
 	unsortedElements ifNil: [ unsortedElements := self elements ].
 	self elements: (self elements sorted: aSortFunction)
 ]
 
-{ #category : #sorting }
+{ #category : 'sorting' }
 FTSimpleDataSource >> unsortElements [
 	unsortedElements ifNil: [ ^ self ].
 

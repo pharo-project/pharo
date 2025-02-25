@@ -6,24 +6,26 @@ In tests I use following substring:
 which should be found
 "
 Class {
-	#name : #ClyClassCommentsQueryTest,
-	#superclass : #ClyClassQueryTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClyClassCommentsQueryTest',
+	#superclass : 'ClyClassQueryTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyClassCommentsQueryTest >> createQuery [
 	^ ClyClassCommentsQuery
 		withString: self expectedClassCommentSubstring
 		from: (ClyPackageScope of: Object package in: environment)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyClassCommentsQueryTest >> expectedClassCommentSubstring [
 	^'it should be in the comment of this class to test class comment query'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassCommentsQueryTest >> testCheckIfEmpty [
 	query scope: (ClyClassScope of: self class in: environment).
 	self deny: query checkEmptyResult.
@@ -32,7 +34,7 @@ ClyClassCommentsQueryTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassCommentsQueryTest >> testComparison [
 	self assert: (ClyClassCommentsQuery withString: 'test substring') equals: (ClyClassCommentsQuery withString: 'test ' , 'substring').
 
@@ -41,7 +43,7 @@ ClyClassCommentsQueryTest >> testComparison [
 	self deny: (ClyClassCommentsQuery withString: 'test substring') equals: (ClyClassCommentsQuery withString: 'another substring')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassCommentsQueryTest >> testFromClassScope [
 
 	self queryFromScope: ClyClassScope ofAll: { self class. self class superclass }.
@@ -51,7 +53,7 @@ ClyClassCommentsQueryTest >> testFromClassScope [
 	self assert: resultItems first equals: (ClyClassComment of: self class)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassCommentsQueryTest >> testThisClassShouldIncludeExpectedComment [
 
 	self assert: (self class comment

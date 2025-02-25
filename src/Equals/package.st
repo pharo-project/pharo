@@ -1,1 +1,1 @@
-Package { #name : #Equals }
+Package { #name : 'Equals' }

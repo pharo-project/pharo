@@ -3,25 +3,26 @@ I allow to use CmdCommandActivator in cases when command is created manually wit
 In that case activation has no context and command is prepared by user manually.
 "
 Class {
-	#name : #CmdNullToolContext,
-	#superclass : #CmdToolContext,
-	#category : #'Commander-Core'
+	#name : 'CmdNullToolContext',
+	#superclass : 'CmdToolContext',
+	#category : 'Commander-Core',
+	#package : 'Commander-Core'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdNullToolContext >> allowsExecutionOf: aCommandClass [
 
 	^true
 ]
 
-{ #category : #'command execution' }
+{ #category : 'command execution' }
 CmdNullToolContext >> applyResultOf: aCommand [
 ]
 
-{ #category : #'command execution' }
+{ #category : 'command execution' }
 CmdNullToolContext >> prepareFullExecutionOf: aCommand [
 ]
 
-{ #category : #'command execution' }
+{ #category : 'command execution' }
 CmdNullToolContext >> prepareNewCommand: aCommand [
 ]

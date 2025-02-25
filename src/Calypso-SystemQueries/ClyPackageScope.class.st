@@ -6,22 +6,24 @@ So I see all objects which are defined by given packages:
 - methods
 "
 Class {
-	#name : #ClyPackageScope,
-	#superclass : #ClyTypedScope,
-	#category : #'Calypso-SystemQueries-Scopes'
+	#name : 'ClyPackageScope',
+	#superclass : 'ClyTypedScope',
+	#category : 'Calypso-SystemQueries-Scopes',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Scopes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyPackageScope class >> defaultName [
 	^'packages'
 ]
 
-{ #category : #'refactoring support' }
+{ #category : 'refactoring support' }
 ClyPackageScope >> asRBEnvironment [
 	^RBPackageEnvironment packages: basisObjects
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyPackageScope >> classGroupProvidersDo: aBlock [
 
 	| providers |
@@ -30,22 +32,21 @@ ClyPackageScope >> classGroupProvidersDo: aBlock [
 		providers do: aBlock]
 ]
 
-{ #category : #queries }
-ClyPackageScope >> classGroupsDo: aBlock [
-
-	self classGroupProvidersDo: [ :groupProvider |
-		groupProvider classGroupsIn: self do: [:group |
-			aBlock value: group] ]
-]
-
-{ #category : #queries }
+{ #category : 'queries' }
 ClyPackageScope >> classesDo: aBlock [
+
 	self packagesDo: [ :package |
-		package definedClasses do: aBlock]
+		| classes |
+		classes := (environment isNotNil and: [ environment system isNotNil ])
+			           ifTrue: [
+			           environment system definedClassesInPackage: package ]
+			           ifFalse: [ package definedClasses ].
+
+		classes do: aBlock ]
 ]
 
-{ #category : #'system changes' }
-ClyPackageScope >> includesClassGroupsAffectedBy: aSystemAnnouncement [
+{ #category : 'system changes' }
+ClyPackageScope >> includesPackageTagsAffectedBy: aSystemAnnouncement [
 
 	| providers |
 	basisObjects do: [ :eachPackage |
@@ -57,7 +58,7 @@ ClyPackageScope >> includesClassGroupsAffectedBy: aSystemAnnouncement [
 	^false
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyPackageScope >> methodsDo: aBlock [
 	self classesDo: [:class |
 		class localMethods do: aBlock.
@@ -67,12 +68,20 @@ ClyPackageScope >> methodsDo: aBlock [
 		package extensionMethods do: aBlock ]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
+ClyPackageScope >> packageTagsDo: aBlock [
+
+	self classGroupProvidersDo: [ :groupProvider |
+		groupProvider packageTagssIn: self do: [:group |
+			aBlock value: group] ]
+]
+
+{ #category : 'queries' }
 ClyPackageScope >> packagesDo: aBlock [
 	basisObjects do: aBlock
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyPackageScope >> printBasisObject: aPackage on: aStream [
 
 	^aStream nextPutAll: aPackage name

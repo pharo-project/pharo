@@ -1,1 +1,1 @@
-Package { #name : #'Tool-Registry' }
+Package { #name : 'Tool-Registry' }

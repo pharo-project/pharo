@@ -11,8 +11,8 @@ Worse than this, the approach relies on the ability to extract underlying bits f
 But, hey, it's cute.
 "
 Class {
-	#name : #CornerRounder,
-	#superclass : #Object,
+	#name : 'CornerRounder',
+	#superclass : 'Object',
 	#instVars : [
 		'cornerMasks',
 		'cornerOverlays',
@@ -23,10 +23,12 @@ Class {
 		'CR1',
 		'CR2'
 	],
-	#category : #'Graphics-Canvas-Canvases'
+	#category : 'Graphics-Canvas-Canvases',
+	#package : 'Graphics-Canvas',
+	#tag : 'Canvases'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 CornerRounder class >> initialize [  "CornerRounder initialize"
 
 	CR0 := CR1 := self new
@@ -49,7 +51,7 @@ CornerRounder class >> initialize [  "CornerRounder initialize"
 				offset: 0@0)
 ]
 
-{ #category : #all }
+{ #category : 'all' }
 CornerRounder class >> rectWithinCornersOf: aRectangle [
 	"Return a single sub-rectangle that lies entirely inside corners
 	that are made by me.
@@ -58,7 +60,7 @@ CornerRounder class >> rectWithinCornersOf: aRectangle [
 	^ aRectangle insetBy: 0@6
 ]
 
-{ #category : #all }
+{ #category : 'all' }
 CornerRounder class >> roundCornersOf: aMorph on: aCanvas in: bounds displayBlock: displayBlock borderWidth: w corners: aList [
 
 	| rounder |
@@ -71,7 +73,7 @@ CornerRounder class >> roundCornersOf: aMorph on: aCanvas in: bounds displayBloc
 	rounder tweakCornersOf: aMorph on: aCanvas in: bounds borderWidth: w corners: aList
 ]
 
-{ #category : #all }
+{ #category : 'all' }
 CornerRounder class >> roundShadowCornersOf: aMorph on: aCanvas in: bounds displayBlock: displayBlock borderWidth: w corners: aList [
 
 	| rounder |
@@ -84,7 +86,7 @@ CornerRounder class >> roundShadowCornersOf: aMorph on: aCanvas in: bounds displ
 	rounder tweakShadowCornersOf: aMorph on: aCanvas in: bounds borderWidth: w corners: aList
 ]
 
-{ #category : #all }
+{ #category : 'all' }
 CornerRounder >> masterMask: maskForm masterOverlay: overlayForm [
 
 	cornerMasks := #(none left pi right) collect:
@@ -93,7 +95,7 @@ CornerRounder >> masterMask: maskForm masterOverlay: overlayForm [
 		[:dir | (overlayForm rotateBy: dir centerAt: 0@0) offset: 0@0]
 ]
 
-{ #category : #all }
+{ #category : 'all' }
 CornerRounder >> saveBitsUnderCornersOf: aMorph on: aCanvas in: bounds corners: cornerList [
 
 	| corners |
@@ -114,7 +116,7 @@ CornerRounder >> saveBitsUnderCornersOf: aMorph on: aCanvas in: bounds corners: 
 			underBits at: i put: form]]
 ]
 
-{ #category : #all }
+{ #category : 'all' }
 CornerRounder >> tweakCornersOf: aMorph on: aCanvas in: bounds borderWidth: w corners: cornerList [
 	"This variant has a cornerList argument, to allow some corners to be rounded and others not"
 	| fourColors mask corners |
@@ -147,7 +149,7 @@ CornerRounder >> tweakCornersOf: aMorph on: aCanvas in: bounds borderWidth: w co
 						color: (fourColors at: i)]]]
 ]
 
-{ #category : #all }
+{ #category : 'all' }
 CornerRounder >> tweakShadowCornersOf: aMorph on: aCanvas in: bounds borderWidth: w corners: cornerList [
 	"This variant has a cornerList argument, to allow some corners to be rounded and others not"
 	| fourColors mask corners |

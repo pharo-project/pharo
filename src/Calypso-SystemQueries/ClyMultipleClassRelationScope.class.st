@@ -25,27 +25,29 @@ Internal Representation and Key Implementation Points.
 	relationScopeClasses:		<Collection of<ClySingleClassRelationScope class>>
 "
 Class {
-	#name : #ClyMultipleClassRelationScope,
-	#superclass : #ClyClassHierarchyScope,
+	#name : 'ClyMultipleClassRelationScope',
+	#superclass : 'ClyClassHierarchyScope',
 	#instVars : [
 		'relationScopeClasses'
 	],
-	#category : #'Calypso-SystemQueries-Scopes'
+	#category : 'Calypso-SystemQueries-Scopes',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Scopes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMultipleClassRelationScope class >> of: basisObjects in: aNavigationEnvironment merging: singleRelationScopeClasses [
 	^(self ofAll: basisObjects in: aNavigationEnvironment)
 		relationScopeClasses: singleRelationScopeClasses
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMultipleClassRelationScope class >> of: basisObjects merging: singleRelationScopeClasses [
 	^ (self ofAll: basisObjects)
 		relationScopeClasses: singleRelationScopeClasses
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyMultipleClassRelationScope >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -55,36 +57,36 @@ ClyMultipleClassRelationScope >> = anObject [
 	^ relationScopeClasses = anObject relationScopeClasses
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyMultipleClassRelationScope >> asInterestingClassScope [
 	^self copy
 		relationScopeClasses: (relationScopeClasses collect: [:each | each asInterestingClassScope])
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyMultipleClassRelationScope >> classesRelatedTo: aClass do: aBlock [
 	relationScopeClasses do: [ :each |
 		each classesRelatedTo: aClass do: aBlock ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyMultipleClassRelationScope >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^super hash bitXor: relationScopeClasses hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMultipleClassRelationScope >> relationScopeClasses [
 	^ relationScopeClasses
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMultipleClassRelationScope >> relationScopeClasses: anObject [
 	relationScopeClasses := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMultipleClassRelationScope >> representsScope: aScopeClass [
 	^(super representsScope: aScopeClass)
 		or: [ relationScopeClasses anySatisfy: [ :each | each includesBehavior: aScopeClass ] ]

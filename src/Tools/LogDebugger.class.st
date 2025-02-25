@@ -2,17 +2,19 @@
 I am an abstract class defining the behavior of debugger that will log the error.
 "
 Class {
-	#name : #LogDebugger,
-	#superclass : #AbstractDebugger,
-	#category : #'Tools-Debugger'
+	#name : 'LogDebugger',
+	#superclass : 'AbstractDebugger',
+	#category : 'Tools-Debugger',
+	#package : 'Tools',
+	#tag : 'Debugger'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 LogDebugger class >> isAbstract [
 	^ self = LogDebugger
 ]
 
-{ #category : #'opening api' }
+{ #category : 'opening api' }
 LogDebugger class >> messageToPrintFrom: aDebugSession [
 	^ String
 		streamContents: [ :s |

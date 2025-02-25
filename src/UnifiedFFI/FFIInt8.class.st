@@ -2,22 +2,24 @@
 I'm an signed byte.
 "
 Class {
-	#name : #FFIInt8,
-	#superclass : #FFIUInt8,
-	#category : #'UnifiedFFI-Types'
+	#name : 'FFIInt8',
+	#superclass : 'FFIUInt8',
+	#category : 'UnifiedFFI-Types',
+	#package : 'UnifiedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIInt8 class >> externalType [
 	^ ExternalType signedByte
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIInt8 >> basicHandle: aHandle at: index [
 	^ aHandle signedByteAt: index
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIInt8 >> basicHandle: aHandle at: index put: value [
 	^ aHandle signedByteAt: index put: value
 ]

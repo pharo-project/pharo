@@ -2,12 +2,20 @@
 A baseline to test lock/unlock
 "
 Class {
-	#name : #BaselineOfTestToLock1,
-	#superclass : #BaselineOf,
-	#category : #'Metacello-TestsCore-Specs'
+	#name : 'BaselineOfTestToLock1',
+	#superclass : 'BaselineOf',
+	#category : 'Metacello-TestsCore-Specs',
+	#package : 'Metacello-TestsCore',
+	#tag : 'Specs'
 }
 
-{ #category : #baselines }
+{ #category : 'testing' }
+BaselineOfTestToLock1 class >> isProject [
+
+	^ false
+]
+
+{ #category : 'baselines' }
 BaselineOfTestToLock1 >> baseline: spec [
     <baseline>
 

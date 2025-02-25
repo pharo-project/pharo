@@ -26,16 +26,18 @@ aFTTableMorph dataSource elementAt: selectedRowIndex
 
 "
 Class {
-	#name : #FTStrongSelectionChanged,
-	#superclass : #FTAnnouncement,
+	#name : 'FTStrongSelectionChanged',
+	#superclass : 'FTAnnouncement',
 	#instVars : [
 		'event',
 		'selectedIndex'
 	],
-	#category : #'Morphic-Widgets-FastTable-Announcement'
+	#category : 'Morphic-Widgets-FastTable-Announcement',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Announcement'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTStrongSelectionChanged class >> index: aNumber event: anEvent [
 	^ self new
 		selectedIndex: aNumber;
@@ -43,27 +45,27 @@ FTStrongSelectionChanged class >> index: aNumber event: anEvent [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTStrongSelectionChanged >> event [
 	^ event
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTStrongSelectionChanged >> event: anEvent [
 	event := anEvent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTStrongSelectionChanged >> selectedIndex [
 	^ selectedIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTStrongSelectionChanged >> selectedIndex: anObject [
 	selectedIndex := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTStrongSelectionChanged >> selectedRowIndex [
 	self deprecated: 'Use #selectedIndex instead' transformWith: '`@receiver selectedRowIndex' -> '`@receiver selectedIndex'.
 	^ self selectedIndex

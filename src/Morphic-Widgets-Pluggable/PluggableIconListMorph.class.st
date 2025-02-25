@@ -2,15 +2,17 @@
 A type of PluggableListMorph that supports a single icon (Form) for items. Useful for lists with icons.
 "
 Class {
-	#name : #PluggableIconListMorph,
-	#superclass : #PluggableMorphListMorph,
+	#name : 'PluggableIconListMorph',
+	#superclass : 'PluggableMorphListMorph',
 	#instVars : [
 		'getIconSelector'
 	],
-	#category : #'Morphic-Widgets-Pluggable-Lists'
+	#category : 'Morphic-Widgets-Pluggable-Lists',
+	#package : 'Morphic-Widgets-Pluggable',
+	#tag : 'Lists'
 }
 
-{ #category : #event }
+{ #category : 'event' }
 PluggableIconListMorph >> basicKeyPressed: aChar [
 
 	^ aChar == Character space
@@ -18,21 +20,21 @@ PluggableIconListMorph >> basicKeyPressed: aChar [
 		ifFalse: [ super basicKeyPressed: aChar ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableIconListMorph >> getIconSelector [
 	"Answer the value of getIconSelector"
 
 	^ getIconSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableIconListMorph >> getIconSelector: anObject [
 	"Set the value of getIconSelector"
 
 	getIconSelector := anObject
 ]
 
-{ #category : #'model access' }
+{ #category : 'model access' }
 PluggableIconListMorph >> getList [
 
 	"Answer the list to be displayed.  Caches the returned list in the 'list' ivar"
@@ -44,24 +46,24 @@ PluggableIconListMorph >> getList [
 	^ list
 ]
 
-{ #category : #'model access' }
+{ #category : 'model access' }
 PluggableIconListMorph >> getListItem: index [
 	"get the index-th item in the displayed list"
 
 	getListElementSelector ifNotNil: [
 		^self itemMorphFor: (model perform: getListElementSelector with: index) index: index].
-	(list notNil and: [list size >= index]) ifTrue: [ ^list at: index ].
+	(list isNotNil and: [list size >= index]) ifTrue: [ ^list at: index ].
 	^ self wrapItem: (self getList at: index) index: index
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 PluggableIconListMorph >> interactWithSelectedItem [
 
 	self selection
 		ifNotNil: [: sel | sel submorphs do: [:each | each update: #interact ]]
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 PluggableIconListMorph >> itemMorphFor: anObject index: anIndex [
 	"Answer a morph for the object with the appropriate icon."
 

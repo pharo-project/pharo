@@ -29,32 +29,34 @@ From the beginning it was a constraint to have a good object-oriented design and
 
 "
 Class {
-	#name : #ManifestFuelCore,
-	#superclass : #PackageManifest,
-	#category : #'Fuel-Core-Manifest'
+	#name : 'ManifestFuelCore',
+	#superclass : 'PackageManifest',
+	#category : 'Fuel-Core-Manifest',
+	#package : 'Fuel-Core',
+	#tag : 'Manifest'
 }
 
-{ #category : #'code-critics' }
+{ #category : 'code-critics' }
 ManifestFuelCore class >> ruleCollectionMessagesToExternalObjectRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#FLDecoder #initializeMigrations #false)) #'2021-06-20T13:59:18.830224+02:00') )
 ]
 
-{ #category : #'code-critics' }
+{ #category : 'code-critics' }
 ManifestFuelCore class >> ruleCollectionProtocolRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#FLDecoder #initializeMigrations #false)) #'2021-06-20T13:59:15.531635+02:00') )
 ]
 
-{ #category : #'meta data' }
+{ #category : 'meta data' }
 ManifestFuelCore class >> ruleConsistencyCheckRuleV1FalsePositive [
 ^ #(#(#(#RGMethodDefinition #(#Float #serializeOn: #false)) #'2013-02-25T14:50:01.564000001+01:00') )
 ]
 
-{ #category : #'meta data' }
+{ #category : 'meta data' }
 ManifestFuelCore class >> ruleIfTrueBlocksRuleV1FalsePositive [
 ^ #(#(#(#RGMethodDefinition #(#FLLightGeneralMapper #visitSubstitution:by:onRecursionDo: #false)) #'2013-02-25T14:50:01.650000001+01:00') )
 ]
 
-{ #category : #'code-critics' }
+{ #category : 'code-critics' }
 ManifestFuelCore class >> ruleJustSendsSuperRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#FLHeader #fuelAccept: #false)) #'2021-06-12T11:19:05.050307+00:00') )
 ]

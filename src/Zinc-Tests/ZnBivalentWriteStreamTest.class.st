@@ -1,10 +1,11 @@
 Class {
-	#name : #ZnBivalentWriteStreamTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Tests'
+	#name : 'ZnBivalentWriteStreamTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Tests',
+	#package : 'Zinc-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBivalentWriteStreamTest >> testByteWriting [
 	| string |
 	string := String
@@ -17,7 +18,7 @@ ZnBivalentWriteStreamTest >> testByteWriting [
 	self assert: string asByteArray equals: #(97 98 99) asByteArray
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBivalentWriteStreamTest >> testCharacterWriting [
 	| bytes |
 	bytes := ByteArray

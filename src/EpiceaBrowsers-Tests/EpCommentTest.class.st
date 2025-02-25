@@ -1,10 +1,12 @@
 Class {
-	#name : #EpCommentTest,
-	#superclass : #EpLogBrowserOperationFactoryTest,
-	#category : #'EpiceaBrowsers-Tests-Integration'
+	#name : 'EpCommentTest',
+	#superclass : 'EpLogBrowserOperationFactoryTest',
+	#category : 'EpiceaBrowsers-Tests-Integration',
+	#package : 'EpiceaBrowsers-Tests',
+	#tag : 'Integration'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpCommentTest >> testComment [
 
 	| presentComment |

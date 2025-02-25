@@ -24,83 +24,68 @@ Internal Representation and Key Implementation Points.
 	keyCombination:		<KKKeyCombination>
 "
 Class {
-	#name : #CmdShortcutActivation,
-	#superclass : #CmdCommandActivationStrategy,
+	#name : 'CmdShortcutActivation',
+	#superclass : 'CmdCommandActivationStrategy',
 	#instVars : [
 		'keyCombination'
 	],
-	#category : #'Commander-Activators-Shortcut'
+	#category : 'Commander-Activators-Shortcut',
+	#package : 'Commander-Activators-Shortcut'
 }
 
-{ #category : #settings }
-CmdShortcutActivation class >> buildSettingsFor: activations on: aBuilder [
-	| sorted |
-	sorted := activations sorted: [ :a :b | a commandClass name <= b commandClass name ].
-	sorted do: [ :each |	each buildSettingNodeOn: aBuilder]
-]
-
-{ #category : #settings }
-CmdShortcutActivation class >> buildSettingsOn: aBuilder [
-	<systemsettings>
-	(aBuilder group: #shortcuts)
-		label: 'Shortcuts';
-		description: 'All System Command Shortcuts';
-		with: [
-			self buildSettingsFor: self redefiningInstances on: aBuilder.
-			self
-				buildSettingsFor: (self registeredInstances copyWithoutAll: self redefiningInstances)
-				on: aBuilder.
-		]
-]
-
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmdShortcutActivation class >> by: aKeyCombination for: anAnnotationUser [
 	^(self for: anAnnotationUser)
 		keyCombination: aKeyCombination
 ]
 
-{ #category : #'well known shortcuts' }
+{ #category : 'well known shortcuts' }
 CmdShortcutActivation class >> removalFor: anAnnotationUser [
 	<classAnnotationDependency>
 
 	^self by: $x meta for: anAnnotationUser
 ]
 
-{ #category : #'well known shortcuts' }
+{ #category : 'well known shortcuts' }
 CmdShortcutActivation class >> renamingFor: anAnnotationUser [
 	<classAnnotationDependency>
 
 	^self by: $r meta for: anAnnotationUser
 ]
 
-{ #category : #settings }
-CmdShortcutActivation class >> settingInputWidgetForNode: aShortcutSetting [
-	| catcherMorph theme |
-	theme := UITheme builder.
-	catcherMorph := KMCatcherMorph for: aShortcutSetting.
-	^ theme newRow: {catcherMorph}
+{ #category : 'accessing' }
+CmdShortcutActivation >> action [
+	"Answer a <CompiledMethod> defining the receiver's action"
+
+	^ self annotatedClass class lookupSelector: self declarationSelector
 ]
 
-{ #category : #settings }
-CmdShortcutActivation >> buildSettingNodeOn: aBuilder [
-	| nodeBuilder |
-	nodeBuilder := aBuilder
-		nodeClass: CmdShortcutSetting name: self id.
-	nodeBuilder node item shortcutActivation: self.
-	^nodeBuilder
+{ #category : 'printing' }
+CmdShortcutActivation >> description [
+	"Answer a <String> describing the receiver. We use the `action` method comments to retrieve the description"
+
+	^ self action comment
+		ifNil: [ String empty ]
+		ifNotNil: [ : comm | comm ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdShortcutActivation >> keyCombination [
 	^ keyCombination
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdShortcutActivation >> keyCombination: anObject [
 	keyCombination := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
+CmdShortcutActivation >> name [
+
+	^ self declarationSelector asString
+]
+
+{ #category : 'printing' }
 CmdShortcutActivation >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
@@ -108,7 +93,27 @@ CmdShortcutActivation >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #'command execution' }
+{ #category : 'printing' }
+CmdShortcutActivation >> scope [
+	"The receiver's scope is the package name where is installed"
+
+	^ self annotatedClass packageName
+]
+
+{ #category : 'printing' }
+CmdShortcutActivation >> scopeName [
+
+	^ self scope asString
+]
+
+{ #category : 'printing' }
+CmdShortcutActivation >> shortcut [
+	"Answer a <String> representation of the receiver's key combination"
+
+	^ self keyCombination asString
+]
+
+{ #category : 'command execution' }
 CmdShortcutActivation >> tryExecuteCommandInContext: aToolContext byEvents: anEventBuffer [
 
 	| activator |

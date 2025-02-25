@@ -1,27 +1,29 @@
 Class {
-	#name : #RedTest,
-	#superclass : #MockTest,
+	#name : 'RedTest',
+	#superclass : 'MockTest',
 	#classInstVars : [
 		'ignoreTest'
 	],
-	#category : #'TestRunner-Tests-Utilities-Test'
+	#category : 'TestRunner-Tests-Utilities-Test',
+	#package : 'TestRunner-Tests',
+	#tag : 'Utilities-Test'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 RedTest >> testFail [
 
 	self shouldBeIgnored ifTrue: [ ^ self ].
 	self assert: false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RedTest >> testPass [
 
 	self skipOnPharoCITestingEnvironment.
 	self assert: true
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RedTest >> testWithError [
 
 	self shouldBeIgnored ifTrue: [ ^ self ].

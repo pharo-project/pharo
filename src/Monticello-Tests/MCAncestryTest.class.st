@@ -1,10 +1,12 @@
 Class {
-	#name : #MCAncestryTest,
-	#superclass : #MCTestCase,
-	#category : #'Monticello-Tests-Base'
+	#name : 'MCAncestryTest',
+	#superclass : 'MCTestCase',
+	#category : 'Monticello-Tests-Base',
+	#package : 'Monticello-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCAncestryTest >> assertCommonAncestorOf: leftName and: rightName in: options in: tree [
 	| left right ancestor |
 	left := self versionForName: leftName in: tree.
@@ -15,12 +17,12 @@ MCAncestryTest >> assertCommonAncestorOf: leftName and: rightName in: options in
 	self assert: (options includes: ancestor name)
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCAncestryTest >> assertCommonAncestorOf: leftName and: rightName is: ancestorName in: tree [
 	self assertCommonAncestorOf: leftName and: rightName in: (Array with: ancestorName) in: tree
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCAncestryTest >> assertNamesOf: versionInfoCollection are: nameArray [
 
 	| names |
@@ -28,14 +30,7 @@ MCAncestryTest >> assertNamesOf: versionInfoCollection are: nameArray [
 	self assert: names asArray equals: nameArray
 ]
 
-{ #category : #asserting }
-MCAncestryTest >> assertPathTo: aSymbol is: anArray [
-	self
-		assertNamesOf: (self tree allAncestorsOnPathTo: (self treeFrom: {aSymbol}))
-		are: anArray
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 MCAncestryTest >> testCommonAncestors [
 	self assertCommonAncestorOf: #a2 and: #e2 is: #a1 in: self tree.
 	self assertCommonAncestorOf: #e2 and: #b3 is: #a1 in: self tree.
@@ -49,7 +44,7 @@ MCAncestryTest >> testCommonAncestors [
 	self assertCommonAncestorOf: #a1 and: #b2 is: #a1 in: self twoPersonTree.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCAncestryTest >> testDescendants [
 	| c1 a1 b3 q1 q2 c2 |
 	c1 := self tree.
@@ -69,17 +64,7 @@ MCAncestryTest >> testDescendants [
 	self assert: (c2 commonAncestorWith: q2) equals: q1
 ]
 
-{ #category : #tests }
-MCAncestryTest >> testLinearPath [
-	self assertPathTo: #b1 is: #(b3 b2)
-]
-
-{ #category : #tests }
-MCAncestryTest >> testPathToMissingAncestor [
-	self assertEmpty: (self tree allAncestorsOnPathTo: MCVersionInfo new)
-]
-
-{ #category : #building }
+{ #category : 'building' }
 MCAncestryTest >> tree [
 	^ self treeFrom:
 		#(c1
@@ -100,7 +85,7 @@ MCAncestryTest >> tree [
 			(d1)))
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 MCAncestryTest >> twoPersonTree [
 	^ self treeFrom:
 		#(c1
@@ -114,7 +99,7 @@ MCAncestryTest >> twoPersonTree [
 					((a1)))))))
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 MCAncestryTest >> versionForName: name in: tree [
 	(tree name = name) ifTrue: [^ tree].
 	

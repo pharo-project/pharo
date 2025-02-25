@@ -1,6 +1,6 @@
-Extension { #name : #CmdMenuGroup }
+Extension { #name : 'CmdMenuGroup' }
 
-{ #category : #'*Commander-Activators-ContextMenu' }
+{ #category : '*Commander-Activators-ContextMenu' }
 CmdMenuGroup >> buildContextMenu: aMenu [
 
 	self isInlined
@@ -8,20 +8,22 @@ CmdMenuGroup >> buildContextMenu: aMenu [
 		ifFalse: [ self buildContextSubMenuIn: aMenu ]
 ]
 
-{ #category : #'*Commander-Activators-ContextMenu' }
+{ #category : '*Commander-Activators-ContextMenu' }
 CmdMenuGroup >> buildContextSubMenuIn: aMenu [
 
 	| submenu |
-	submenu := UIManager default newMenuIn: aMenu defaultTarget for: aMenu defaultTarget.
+	submenu := MorphicUIManager new
+		           newMenuIn: aMenu defaultTarget
+		           for: aMenu defaultTarget.
 
 	contents do: [ :each | each buildContextMenu: submenu ].
 
 	submenu hasItems ifTrue: [
 		aMenu add: self name icon: self icon subMenu: submenu.
-		self description ifNotNil: [:d | aMenu lastItem setBalloonText: d] ]
+		self description ifNotNil: [ :d | aMenu lastItem setBalloonText: d ] ]
 ]
 
-{ #category : #'*Commander-Activators-ContextMenu' }
+{ #category : '*Commander-Activators-ContextMenu' }
 CmdMenuGroup >> inlineContextMenuItemsInto: aMenu [
 
 	aMenu addLine.
@@ -31,7 +33,7 @@ CmdMenuGroup >> inlineContextMenuItemsInto: aMenu [
 	aMenu addLine
 ]
 
-{ #category : #'*Commander-Activators-ContextMenu' }
+{ #category : '*Commander-Activators-ContextMenu' }
 CmdMenuGroup >> registerContextMenuItemsWithBuilder: aBuilder [
 
 	self isActive ifFalse: [ ^self ].
@@ -47,7 +49,7 @@ CmdMenuGroup >> registerContextMenuItemsWithBuilder: aBuilder [
 		ifTrue: [ aBuilder withSeparatorAfter ]
 ]
 
-{ #category : #'*Commander-Activators-ContextMenu' }
+{ #category : '*Commander-Activators-ContextMenu' }
 CmdMenuGroup >> registerContextSubMenuWithBuilder: aBuilder [
 
 	(aBuilder item: self name)

@@ -1,1 +1,1 @@
-Package { #name : #'STON-Extensions' }
+Package { #name : 'STON-Extensions' }

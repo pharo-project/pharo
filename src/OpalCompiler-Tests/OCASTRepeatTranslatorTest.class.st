@@ -1,17 +1,19 @@
 Class {
-	#name : #OCASTRepeatTranslatorTest,
-	#superclass : #OCASTSingleBlockTranslatorTest,
-	#category : #'OpalCompiler-Tests-AST'
+	#name : 'OCASTRepeatTranslatorTest',
+	#superclass : 'OCASTSingleBlockTranslatorTest',
+	#category : 'OpalCompiler-Tests-AST',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'AST'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 OCASTRepeatTranslatorTest class >> testParameters [
 	^ super testParameters *
 		(ParametrizedTestMatrix new
-			forSelector: #optimization addOptions: { #optionInlineRepeat . #optionInlineNone })
+			forSelector: #optimization addOptions: (self inliningOptionsFor: #optionInlineRepeat))
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTRepeatTranslatorTest >> testRepeatExecutesBlock [
 
 
@@ -28,7 +30,7 @@ OCASTRepeatTranslatorTest >> testRepeatExecutesBlock [
 	self assert: result equals: 6
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTRepeatTranslatorTest >> testRepeatWithTempInBlock [
 
 	| result |
@@ -47,7 +49,7 @@ OCASTRepeatTranslatorTest >> testRepeatWithTempInBlock [
 	self assert: result equals: 6
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTRepeatTranslatorTest >> testTimesRepeatWithTempInBlock [
 
 	| result |

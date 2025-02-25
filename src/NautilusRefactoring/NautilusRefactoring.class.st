@@ -7,15 +7,17 @@ NautilusRefactoring is a facade for refactorings:
 - source code
 "
 Class {
-	#name : #NautilusRefactoring,
-	#superclass : #Object,
+	#name : 'NautilusRefactoring',
+	#superclass : 'Object',
 	#instVars : [
 		'model'
 	],
-	#category : #'NautilusRefactoring-Base'
+	#category : 'NautilusRefactoring-Base',
+	#package : 'NautilusRefactoring',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NautilusRefactoring class >> model: model [
 
 	^ self new
@@ -23,19 +25,19 @@ NautilusRefactoring class >> model: model [
 		yourself
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 NautilusRefactoring >> chooseFrom: anArray title: aString lines: aCollection [
 	anArray isEmpty
 		ifTrue: [ ^ nil ].
 	anArray size = 1
 		ifTrue: [ ^ anArray first ].
-	^ UIManager default chooseOrRequestFrom: anArray lines: aCollection title: aString
+	^ self morphicUIManager chooseOrRequestFrom: anArray lines: aCollection title: aString
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 NautilusRefactoring >> handleMethodNameRequest: aMethodName [
 	|dialog|
-	dialog := SycMethodNameEditorPresenter
+	dialog := StMethodNameEditorPresenter
 		openOn: aMethodName
 		canRenameArgs: false
 		canRemoveArgs: false
@@ -44,23 +46,29 @@ NautilusRefactoring >> handleMethodNameRequest: aMethodName [
 	^ aMethodName
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 NautilusRefactoring >> handleWarning: anException [
 	self inform: anException messageText.
 	anException resume
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NautilusRefactoring >> model [
 	^ model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NautilusRefactoring >> model: aNautilusUI [
 	model := aNautilusUI
 ]
 
-{ #category : #option }
+{ #category : 'display' }
+NautilusRefactoring >> morphicUIManager [
+
+	^ MorphicUIManager new
+]
+
+{ #category : 'option' }
 NautilusRefactoring >> refactoringOptions: aRefactoring [
 	aRefactoring
 		setOption: #implementorToInline
@@ -75,52 +83,53 @@ NautilusRefactoring >> refactoringOptions: aRefactoring [
 		toUse: [ :ref :types :selected | self selectVariableTypesFrom: types selected: selected for: ref ];
 		setOption: #extractAssignment
 		toUse: [ :ref :string | self shouldExtractAssignmentTo: string ];
-		setOption: #inlineExpression
-		toUse: [ :ref :string | self shouldInlineExpression: string ];
+		setOption: #shouldNotCreateExtraBindings
+		toUse: [ :ref :string | self shouldNotCreateExtraBindings: string ];
 		setOption: #alreadyDefined
 		toUse: [ :ref :class :selector | self shouldOverride: selector in: class ];
-		setOption: #useExistingMethod
-		toUse: [ :ref :selector | self shouldUseExistingMethod: selector ];
 		setOption: #searchInWholeHierarchy
 		toUse: [ :ref :class | self shouldSearchInHierarchy: class ]
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 NautilusRefactoring >> request: aString [
 	^ self request: aString initialAnswer: ''
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 NautilusRefactoring >> request: requestString initialAnswer: initialAnswerString [
+
 	| answer |
-	answer := UIManager default request: requestString initialAnswer: initialAnswerString.
-	answer isEmptyOrNil ifTrue:  [ RefactoringAborted signal ].
+	answer := self morphicUIManager
+		          request: requestString
+		          initialAnswer: initialAnswerString.
+	answer isEmptyOrNil ifTrue: [ RefactoringAborted signal ].
 	^ answer
 ]
 
-{ #category : #option }
+{ #category : 'option' }
 NautilusRefactoring >> requestImplementorToInline: imps [
 	^ self chooseFrom: imps title: 'Choose the class that should provide the implementation.' lines:#()
 ]
 
-{ #category : #option }
+{ #category : 'option' }
 NautilusRefactoring >> requestMethodNameFor: aMethodName [
 	^ self handleMethodNameRequest: aMethodName
 ]
 
-{ #category : #option }
+{ #category : 'option' }
 NautilusRefactoring >> requestSelfArgumentName [
 	^ self request: 'Enter name for argument to refer to "self" in extracted method'
 ]
 
-{ #category : #option }
+{ #category : 'option' }
 NautilusRefactoring >> selectVariableToMoveMethodTo: aSelector class: aClass [
 
 	| parseTree nameList |
 
 	parseTree := aClass parseTreeForSelector: aSelector.
 	parseTree
-		ifNil: [ parseTree := RBMethodNode selector: #value body: ( RBSequenceNode statements: #() ) ].
+		ifNil: [ parseTree := OCMethodNode selector: #value body: ( OCSequenceNode statements: #() ) ].
 	nameList := OrderedCollection new.
 	nameList
 		addAll: parseTree argumentNames sorted;
@@ -131,7 +140,7 @@ NautilusRefactoring >> selectVariableToMoveMethodTo: aSelector class: aClass [
 		lines: ( Array with: parseTree argumentNames size )
 ]
 
-{ #category : #option }
+{ #category : 'option' }
 NautilusRefactoring >> selectVariableTypesFrom: aCollectionOfTypes selected: aSelectedCollection for: aRefactoring [
 	| stream result |
 	stream := WriteStream on: String new.
@@ -147,36 +156,32 @@ NautilusRefactoring >> selectVariableTypesFrom: aCollectionOfTypes selected: aSe
 		collect: [ :each | aRefactoring model classFor: (Smalltalk classNamed: each trimBoth) ]
 ]
 
-{ #category : #option }
+{ #category : 'option' }
 NautilusRefactoring >> shouldExtractAssignmentTo: aString [
 	^ self confirm: ('Do you want to extract the assignment of <1s> at the end of selection?' expandMacrosWith: aString)
 ]
 
-{ #category : #option }
-NautilusRefactoring >> shouldInlineExpression: aString [
+{ #category : 'option' }
+NautilusRefactoring >> shouldNotCreateExtraBindings: aString [
 
 	^ (self confirm:
 		   ('Do you want to extract the expression ''<1s>'' into a variable in the current method?'
 			    expandMacrosWith: aString)) not
 ]
 
-{ #category : #option }
+{ #category : 'option' }
 NautilusRefactoring >> shouldOverride: aSelector in: aClass [
 	^ self confirm: ('<1s> is already defined in the <2p> hierarchy. Extracting it to an existing selector may change behavior. Do you wish to use <1s> anyway?' expandMacrosWith: aSelector with: aClass)
 ]
 
-{ #category : #option }
+{ #category : 'option' }
 NautilusRefactoring >> shouldSearchInHierarchy: class [
-	^ class subclasses
-		ifNotEmpty: [
-			UIManager default
-				confirm: 'Do you want to search occurrences in the whole hierarchy?'
-				label: 'Warning'
-		] ifEmpty: [ false ]
-]
 
-{ #category : #option }
-NautilusRefactoring >> shouldUseExistingMethod: aMethodName [
-	"for now we always want to use the existing method."
-	^ true
+	^ class subclasses
+		  ifNotEmpty: [
+			  self morphicUIManager
+				  confirm:
+				  'Do you want to search occurrences in the whole hierarchy?'
+				  label: 'Warning' ]
+		  ifEmpty: [ false ]
 ]

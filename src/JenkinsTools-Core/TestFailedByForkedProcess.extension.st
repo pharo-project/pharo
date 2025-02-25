@@ -1,6 +1,6 @@
-Extension { #name : #TestFailedByForkedProcess }
+Extension { #name : 'TestFailedByForkedProcess' }
 
-{ #category : #'*JenkinsTools-Core' }
+{ #category : '*JenkinsTools-Core' }
 TestFailedByForkedProcess >> recordResultOf: aTestCase inHDTestReport: aHDTestReport [
 	
 	executionEnvironment backgroundFailures do: [ :each | 

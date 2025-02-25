@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfReferenceFinder }
+Package { #name : 'BaselineOfReferenceFinder' }

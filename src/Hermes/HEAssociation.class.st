@@ -5,31 +5,33 @@ The key and the value are transformed as HEExportedLiterals.
 When writing or reading, the key is before of the value.
 "
 Class {
-	#name : #HEAssociation,
-	#superclass : #HEExportedLiteral,
+	#name : 'HEAssociation',
+	#superclass : 'HEExportedLiteral',
 	#instVars : [
 		'key'
 	],
-	#category : #'Hermes-Model'
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEAssociation class >> tag [
 	^ 12
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 HEAssociation >> asLiteralIn: env [
 	^ (key asLiteralIn: env) -> (value asLiteralIn: env)
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEAssociation >> doReadFrom: aReader [
 	key := HEExportedLiteral readFrom: aReader.
 	value := HEExportedLiteral readFrom: aReader
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEAssociation >> value: anAssociation [
 	value := anAssociation value asExportedLiteral.
 	key := anAssociation key asExportedLiteral

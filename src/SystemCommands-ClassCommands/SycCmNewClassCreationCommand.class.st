@@ -8,31 +8,37 @@ Internal Representation and Key Implementation Points.
 	newClassName:		<String>
 "
 Class {
-	#name : #SycCmNewClassCreationCommand,
-	#superclass : #SycClassCmCommand,
+	#name : 'SycCmNewClassCreationCommand',
+	#superclass : 'SycClassCmCommand',
 	#instVars : [
 		'newClassName'
 	],
-	#category : #'SystemCommands-ClassCommands'
+	#category : 'SystemCommands-ClassCommands-Creation',
+	#package : 'SystemCommands-ClassCommands',
+	#tag : 'Creation'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycCmNewClassCreationCommand >> applyCommandResult [
-
+	"Check if user cancelled while viewing changes"
 	| newClass |
+	
+	(self class environment hasClassNamed: newClassName)
+		ifFalse: [ ^ self ].
+		
 	newClass := context system classNamed: newClassName.
-
 	context showClass: newClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycCmNewClassCreationCommand >> isApplicable [
 
 	^ false
 ]
 
-{ #category : #preparation }
+{ #category : 'preparation' }
 SycCmNewClassCreationCommand >> prepareFullExecution [
+
 	super prepareFullExecution.
 	newClassName := UIManager default request: 'Name of new class'.
 	newClassName isEmptyOrNil | (newClassName = targetClass name) ifTrue: [ CmdCommandAborted signal]

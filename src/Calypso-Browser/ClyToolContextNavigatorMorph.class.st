@@ -11,30 +11,32 @@ I simply ask the tool:
 
 "
 Class {
-	#name : #ClyToolContextNavigatorMorph,
-	#superclass : #ClyStatusBarItemMorph,
-	#category : #'Calypso-Browser-UI'
+	#name : 'ClyToolContextNavigatorMorph',
+	#superclass : 'ClyStatusBarItemMorph',
+	#category : 'Calypso-Browser-UI',
+	#package : 'Calypso-Browser',
+	#tag : 'UI'
 }
 
-{ #category : #building }
+{ #category : 'building' }
 ClyToolContextNavigatorMorph >> build [
 	| goButton contextLabel |
 	contextLabel := ownerTool printContext.
 	contextLabel ifEmpty: [ ^self ]. "if ownerTool not defines meaningfull context name we ignore it"
-	self addMorphBack: (self iconNamed: #uncommentedClass) asMorph.
+	self addMorphBack: (self iconFormSetNamed: #uncommentedClass) asMorph.
 	self addMorphBack: contextLabel asMorph.
 	goButton := IconicButtonMorph new
 		target: self;
 		actionSelector: #restoreBrowserState;
 		arguments: {};
-		labelGraphic: (self iconNamed: #forward);
+		labelFormSet: (self iconFormSetNamed: #forward);
 		color: Color transparent;
 		helpText: 'Move browser to ', contextLabel;
 		borderWidth: 0.
 	self addMorphBack: goButton
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyToolContextNavigatorMorph >> restoreBrowserState [
 	ownerTool restoreBrowserState
 ]

@@ -2,42 +2,44 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TIncludesWithIdentityCheckTest,
+	#name : 'TIncludesWithIdentityCheckTest',
 	#traits : 'TIncludesTest',
 	#classTraits : 'TIncludesTest classTrait',
-	#category : #'Collections-Abstract-Tests-Traits'
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TIncludesWithIdentityCheckTest >> anotherElementNotIn [
 " return an element different of 'elementNotIn'  not included in 'nonEmpty' "
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TIncludesWithIdentityCheckTest >> collectionWithCopyNonIdentical [
 	" return a collection that include elements for which 'copy' return a different object (this is not the case of SmallInteger)"
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TIncludesWithIdentityCheckTest >> elementNotIn [
 "return an element not included in 'nonEmpty' "
 
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TIncludesWithIdentityCheckTest >> empty [
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TIncludesWithIdentityCheckTest >> nonEmpty [
 	^ self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TIncludesWithIdentityCheckTest >> test0FixtureIncludeTest [
 	| anElementIn |
 	self nonEmpty.
@@ -54,7 +56,7 @@ TIncludesWithIdentityCheckTest >> test0FixtureIncludeTest [
 	self assertEmpty: self empty
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TIncludesWithIdentityCheckTest >> test0FixtureIncludeWithIdentityTest [
 
 	| anElement |
@@ -63,7 +65,7 @@ TIncludesWithIdentityCheckTest >> test0FixtureIncludeWithIdentityTest [
 	self deny: anElement == anElement copy
 ]
 
-{ #category : #'tests - including with identity' }
+{ #category : 'tests - including with identity' }
 TIncludesWithIdentityCheckTest >> testIdentityIncludes [
 	" test the comportement in presence of elements 'includes' but not 'identityIncludes' "
 	" can not be used by collections that can't include elements for wich copy doesn't return another instance "
@@ -75,7 +77,7 @@ TIncludesWithIdentityCheckTest >> testIdentityIncludes [
 	self deny: (collection identityIncludes: anElement)
 ]
 
-{ #category : #'tests - includes' }
+{ #category : 'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIdentityIncludesNonSpecificComportement [
 	"Test the same comportement than #includes:"
 
@@ -86,14 +88,14 @@ TIncludesWithIdentityCheckTest >> testIdentityIncludesNonSpecificComportement [
 	self assert: (collection identityIncludes: collection anyOne)
 ]
 
-{ #category : #'tests - includes' }
+{ #category : 'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIncludesAllNoneThere [
 
 	self deny: (self empty includesAll: self nonEmpty).
 	self deny: (self nonEmpty includesAll: { self elementNotIn. self anotherElementNotIn })
 ]
 
-{ #category : #'tests - includes' }
+{ #category : 'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIncludesAnyAllThere [
 
 	self deny: (self nonEmpty includesAny: self empty).
@@ -101,14 +103,14 @@ TIncludesWithIdentityCheckTest >> testIncludesAnyAllThere [
 	self assert: (self nonEmpty includesAny: self nonEmpty)
 ]
 
-{ #category : #'tests - includes' }
+{ #category : 'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIncludesAnyNoneThere [
 
 	self deny: (self nonEmpty includesAny: self empty).
 	self deny: (self nonEmpty includesAny: { self elementNotIn. self anotherElementNotIn })
 ]
 
-{ #category : #'tests - includes' }
+{ #category : 'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIncludesElementIsNotThere [
 
 	self deny: (self nonEmpty includes: self elementNotIn).
@@ -116,7 +118,7 @@ TIncludesWithIdentityCheckTest >> testIncludesElementIsNotThere [
 	self deny: (self empty includes: self elementNotIn)
 ]
 
-{ #category : #'tests - includes' }
+{ #category : 'tests - includes' }
 TIncludesWithIdentityCheckTest >> testIncludesElementIsThere [
 
 	self assert: (self nonEmpty includes: self nonEmpty anyOne)

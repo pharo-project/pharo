@@ -2,36 +2,38 @@
 I am a test result reporter in the console
 "
 Class {
-	#name : #StdReporter,
-	#superclass : #AbstractReporter,
+	#name : 'StdReporter',
+	#superclass : 'AbstractReporter',
 	#instVars : [
 		'stdout',
 		'stderr',
 		'maxTest',
 		'currentTest'
 	],
-	#category : #'TestRunner-Core-Reporters'
+	#category : 'TestRunner-Core-Reporters',
+	#package : 'TestRunner-Core',
+	#tag : 'Reporters'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StdReporter >> currentTest [
 
 	^ currentTest ifNil: [ currentTest := 1 ]
 ]
 
-{ #category : #processing }
+{ #category : 'processing' }
 StdReporter >> incrementCurrentTest [
 
 	currentTest := self currentTest + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StdReporter >> maxTest [
 
 	^ maxTest
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 StdReporter >> printProgress [
 	| string |
 	string := '[',self currentTest asString, '/', self maxTest asString,']'.
@@ -39,7 +41,7 @@ StdReporter >> printProgress [
 		startOfLine; right: (80 - string size); nextPutAll: string.
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 StdReporter >> reportCase: aTestCase runBlock: aBlock [
 
 	"run an report the execution's result of a testCase"
@@ -48,7 +50,7 @@ StdReporter >> reportCase: aTestCase runBlock: aBlock [
 	self incrementCurrentTest.
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 StdReporter >> reportError: aTestError of: aTestCase [
 
 	self stderr
@@ -61,7 +63,7 @@ StdReporter >> reportError: aTestError of: aTestCase [
 	self printProgress.
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 StdReporter >> reportFailure: aTestFailure of: aTestCase [
 
 	self stderr
@@ -74,7 +76,7 @@ StdReporter >> reportFailure: aTestFailure of: aTestCase [
 	self printProgress.
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 StdReporter >> reportPass: aTestCase [
 
 	"report the execution's result of a passed test"
@@ -88,7 +90,7 @@ StdReporter >> reportPass: aTestCase [
 	self printProgress
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 StdReporter >> reportResult: aTestResult [
 
 	"report the execution's result of a testSuite"
@@ -103,7 +105,7 @@ StdReporter >> reportResult: aTestResult [
 		print: aTestResult asString
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 StdReporter >> reportSuite: aTestSuite runBlock: aBlock [
 
 	"run an report the execution's result of a testSuite"
@@ -112,13 +114,13 @@ StdReporter >> reportSuite: aTestSuite runBlock: aBlock [
 	aBlock value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StdReporter >> stderr [
 
 	^ stderr ifNil: [ stderr := VTermOutputDriver stderr ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StdReporter >> stdout [
 
 	^ stdout ifNil: [ stdout := VTermOutputDriver stdout ]

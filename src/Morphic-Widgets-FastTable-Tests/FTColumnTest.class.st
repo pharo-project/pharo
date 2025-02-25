@@ -2,38 +2,40 @@
 A FTColumnTest is a test class for testing the behavior of FTColumn
 "
 Class {
-	#name : #FTColumnTest,
-	#superclass : #TestCase,
+	#name : 'FTColumnTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'column'
 	],
-	#category : #'Morphic-Widgets-FastTable-Tests-Model'
+	#category : 'Morphic-Widgets-FastTable-Tests-Model',
+	#package : 'Morphic-Widgets-FastTable-Tests',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTColumnTest >> actualClass [
 	^ FTColumn
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 FTColumnTest >> setUp [
 	super setUp.
 	column := self actualClass new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTColumnTest >> testColumnHasIconWithSorting [
 	column sortableOnProperty: #name.
 	self assert: column sortingIcon isNotNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTColumnTest >> testDisableSort [
 	column disableSort.
 	self deny: column isSortEnabled
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTColumnTest >> testIsSortEnabled [
 	column disableSort.
 	self deny: column isSortEnabled.
@@ -41,7 +43,7 @@ FTColumnTest >> testIsSortEnabled [
 	self assert: column isSortEnabled
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTColumnTest >> testNoIconWithoutSorting [
 	column disableSort.
 	self assert: column sortingIcon isNil

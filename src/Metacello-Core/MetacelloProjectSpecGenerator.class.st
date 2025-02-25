@@ -1,23 +1,25 @@
 Class {
-	#name : #MetacelloProjectSpecGenerator,
-	#superclass : #Object,
+	#name : 'MetacelloProjectSpecGenerator',
+	#superclass : 'Object',
 	#instVars : [
 		'target'
 	],
-	#category : #'Metacello-Core-Scripts'
+	#category : 'Metacello-Core-Scripts',
+	#package : 'Metacello-Core',
+	#tag : 'Scripts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpecGenerator >> projectSpecCreationBlock [
-    ^ [ :projectName | {(MetacelloMCProject new projectSpec name: projectName)} ]
+    ^ [ :projectName | {(MetacelloProject new projectSpec name: projectName)} ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpecGenerator >> projectSpecListBlock [
     ^ [ MetacelloProjectRegistration projectSpecs ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpecGenerator >> projectSpecLookupBlock [
     ^ [ :projectName | 
     {(MetacelloProjectRegistration
@@ -28,12 +30,12 @@ MetacelloProjectSpecGenerator >> projectSpecLookupBlock [
         ifAbsent: [  ])} ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpecGenerator >> target [
 	^ target
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloProjectSpecGenerator >> target: anObject [
 	target := anObject
 ]

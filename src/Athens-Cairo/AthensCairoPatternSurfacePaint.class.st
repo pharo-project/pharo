@@ -2,8 +2,8 @@
 i represent texture/image/form/surface paints in cairo backend.
 "
 Class {
-	#name : #AthensCairoPatternSurfacePaint,
-	#superclass : #AthensCairoPatternPaint,
+	#name : 'AthensCairoPatternSurfacePaint',
+	#superclass : 'AthensCairoPatternPaint',
 	#instVars : [
 		'surface',
 		'origin',
@@ -12,10 +12,12 @@ Class {
 	#pools : [
 		'AthensCairoDefinitions'
 	],
-	#category : #'Athens-Cairo-Paints'
+	#category : 'Athens-Cairo-Paints',
+	#package : 'Athens-Cairo',
+	#tag : 'Paints'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AthensCairoPatternSurfacePaint class >> createForSurface: anAthensCairoSurface [
 	|pat|
 	pat := self primCreateForSurface: anAthensCairoSurface .
@@ -23,7 +25,7 @@ AthensCairoPatternSurfacePaint class >> createForSurface: anAthensCairoSurface [
 	^ pat
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 AthensCairoPatternSurfacePaint class >> primCreateForSurface: anAthensCairoSurface [
 
 "	pattern = cairo_pattern_create_for_surface (image);"
@@ -32,7 +34,7 @@ AthensCairoPatternSurfacePaint class >> primCreateForSurface: anAthensCairoSurfa
 		cairo_surface_t  anAthensCairoSurface ) )
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensCairoPatternSurfacePaint >> athensFillRectangle: aRectangle on: aCanvas [
 	"This is a terminal method in rendering dispatch scheme
 	canvas->shape->paint. See AthensCanvas>>fillShape: "
@@ -46,28 +48,28 @@ AthensCairoPatternSurfacePaint >> athensFillRectangle: aRectangle on: aCanvas [
 	aCanvas fill
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoPatternSurfacePaint >> extent [
 	^ extent ifNil:[surface extent]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoPatternSurfacePaint >> extent: aPatternExtent [
 	extent:= aPatternExtent
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensCairoPatternSurfacePaint >> initializeFor: anAthensCairoSurface [
 	self initialize.
 	surface := anAthensCairoSurface
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoPatternSurfacePaint >> origin: aPoint [
 	origin := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCairoPatternSurfacePaint >> setMatrix: aMatrix [
 
 	aMatrix restoreAfter: [
@@ -76,7 +78,7 @@ AthensCairoPatternSurfacePaint >> setMatrix: aMatrix [
 	]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensCairoPatternSurfacePaint >> setRect: aRectangle forFillOn: aCanvas [
 	aCanvas
 		rectangleX: aRectangle left

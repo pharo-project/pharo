@@ -2,440 +2,324 @@
 I'm useful when classes needs to be created during the execution of the test. This avoid polluting your unit tests with dummy and mock classes.
 A typical usage of it is:
 
-TestCase subclass: #YourTest
-       instanceVariableNames: 'classFactory'
+```
+TestCase << #YourTest
+    slots: { #classFactory};
+	  package: 'YourPackage'
+```
+```
+YourTest >> setUp
+	  super setUp. 
+    classFactory := ClassFactoryForTestCase new
+```
+```
+YourTest >> tearDown
+    classFactory deleteClasses.
+    super tearDown 
+```
 
-YourTest>>setUp
-       classFactory := ClassFactoryForTestCase new
-
-YourTest>>tearDown
-       classFactory deleteClasses.
-
-YourTest>>testIsBehavior
-       | cls |
-       cls := classFactory newClass.
-       self assert: cls isBehavior
-
+```
+YourTest >> testIsBehavior
+    | cls |
+    cls := classFactory newClass.
+    self assert: cls isBehavior
+```
 "
 Class {
-	#name : #ClassFactoryForTestCase,
-	#superclass : #Object,
+	#name : 'ClassFactoryForTestCase',
+	#superclass : 'Object',
 	#instVars : [
-		'createdClasses',
-		'createdTraits',
-		'createdSilently'
+		'createdPackages',
+		'createdBehaviors',
+		'createdSilently',
+		'environment'
 	],
 	#classVars : [
 		'Counter'
 	],
-	#category : #'SUnit-Core-Extensions'
+	#category : 'SUnit-Core-Extensions',
+	#package : 'SUnit-Core',
+	#tag : 'Extensions'
 }
 
-{ #category : #cleaning }
+{ #category : 'instance creation' }
+ClassFactoryForTestCase class >> environment: aSystemEnvironment [
+
+	^ self new
+		  environment: aSystemEnvironment;
+		  yourself
+]
+
+{ #category : 'cleaning' }
 ClassFactoryForTestCase >> cleanUp [
 
-	| createdClassNames createdTraitNames |
-	createdClassNames := self createdClassNames.
-	createdTraitNames := self createdTraitNames.
-
-	self
-		deleteClasses;
-		deleteTraits;
-		deletePackage;
-		cleanUpChangeSetForClassNames: createdClassNames;
-		cleanUpChangeSetForClassNames: createdTraitNames
+	self createdBehaviors copy do: [ :behavior | self delete: behavior ].
+	self deletePackages
 ]
 
-{ #category : #cleaning }
-ClassFactoryForTestCase >> cleanUpChangeSetForClassNames: classeNames [
+{ #category : 'accessing' }
+ClassFactoryForTestCase >> createdBehaviorNames [
 
-	self class environment at: #ChangeSet ifPresent: [ :aChangeSetClass |
-		| changeSet |
-		changeSet := aChangeSetClass current.
-		classeNames do: [:name|
-			changeSet
-				removeClassChanges: name;
-				removeClassChanges: name, ' class']]
+	^ self createdBehaviors collect: [ :class | class name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+ClassFactoryForTestCase >> createdBehaviors [
+
+	^ createdBehaviors
+]
+
+{ #category : 'accessing' }
 ClassFactoryForTestCase >> createdClassNames [
 
 	^ self createdClasses collect: [ :class | class name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassFactoryForTestCase >> createdClasses [
 
-	^ createdClasses
+	^ self createdBehaviors reject: [ :behavior | behavior isTrait ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+ClassFactoryForTestCase >> createdSilently [
+
+	^ createdSilently
+]
+
+{ #category : 'accessing' }
 ClassFactoryForTestCase >> createdTraitNames [
 
 	^ self createdTraits collect: [ :trait | trait name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassFactoryForTestCase >> createdTraits [
 
-	^ createdTraits
+	^ self createdBehaviors select: [ :behavior | behavior isTrait ]
 ]
 
-{ #category : #accessing }
-ClassFactoryForTestCase >> defaultCategory [
-
-	^ (self packageName , '-' , self defaultTagPostfix) asSymbol
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassFactoryForTestCase >> defaultSuperclass [
 
 	^ Object
 ]
 
-{ #category : #accessing }
-ClassFactoryForTestCase >> defaultTagPostfix [
-
-	^ #Default
-]
-
-{ #category : #cleaning }
+{ #category : 'cleaning' }
 ClassFactoryForTestCase >> delete: aBehavior [
 
+	| name |
+	createdBehaviors remove: aBehavior ifAbsent: [  ].
 	aBehavior isObsolete ifTrue: [ ^ self ].
-	self class environment
-		at: #ChangeSet
-		ifPresent: [ aBehavior removeFromChanges ].
+	name := aBehavior name. "save it as it will be obsolete later"
 	(createdSilently includes: aBehavior)
-		ifTrue: [ aBehavior removeFromSystemUnlogged ]
-		ifFalse: [ aBehavior removeFromSystem ]
+		ifTrue: [
+			createdSilently remove: aBehavior.
+			aBehavior removeFromSystemUnlogged ]
+		ifFalse: [ aBehavior removeFromSystem ].
+	"We know that we can remove the key from the undeclared registry, as it was added by #removeFromSystem"
+	self class undeclaredRegistry removeKey: name ifAbsent: [ "might be an anonymous class" ]
 ]
 
-{ #category : #cleaning }
-ClassFactoryForTestCase >> deleteClass: aClass [
+{ #category : 'cleaning' }
+ClassFactoryForTestCase >> deletePackages [
+	"We remove all packages that we created while creating classes in this factory."
 
-	self createdClasses remove: aClass.
-	self delete: aClass
+	createdPackages do: [ :package | self organization removePackage: package ]
 ]
 
-{ #category : #cleaning }
-ClassFactoryForTestCase >> deleteClasses [
+{ #category : 'accessing' }
+ClassFactoryForTestCase >> environment [
 
-	self createdClasses do: [ :class | self delete: class ]
+	^ environment ifNil: [ self class environment ]
 ]
 
-{ #category : #cleaning }
-ClassFactoryForTestCase >> deletePackage [
+{ #category : 'accessing' }
+ClassFactoryForTestCase >> environment: anObject [
 
-	Smalltalk organization removeCategoriesMatching: self packageName , '-*'
+	environment := anObject
 ]
 
-{ #category : #cleaning }
-ClassFactoryForTestCase >> deleteTraits [
-
-	self createdTraits do: [ :trait | self delete: trait ]
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> duplicateClass: aClass withNewName: name [
-
-	| newClass |
-	newClass := aClass duplicateClassWithNewName: name.
-	self createdClasses add: newClass.
-	^ newClass
-]
-
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClassFactoryForTestCase >> initialize [
 
 	super initialize.
-	createdClasses := IdentitySet new.
-	createdTraits := IdentitySet new.
-	createdSilently := IdentitySet new
+	createdBehaviors := IdentitySet new.
+	createdSilently := IdentitySet new.
+	createdPackages := IdentitySet new
 ]
 
-{ #category : #creating }
-ClassFactoryForTestCase >> newClass [
+{ #category : 'creating' }
+ClassFactoryForTestCase >> make: aBlock [
+	"I return a new class or trait in the environment of the factory configured as the user specified in the make block.
+	Once the test is finished, I'll remove the created class or trait."
 
-	^ self
-		  newSubclassOf: self defaultSuperclass
-		  instanceVariableNames: ''
-		  classVariableNames: ''
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> newClassInCategory: category [
-
-	^ self
-		  newSubclassOf: self defaultSuperclass
-		  instanceVariableNames: ''
-		  classVariableNames: ''
-		  category: category
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> newClassName [
-
-	| postFix |
-	postFix := self nextCount printString.
-	^ (#ClassForTestToBeDeleted , postFix) asSymbol
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> newClassUsing: aTraitComposition [
-
-	^ self
-		  newSubclassOf: self defaultSuperclass
-		  uses: aTraitComposition
-		  instanceVariableNames: ''
-		  classVariableNames: ''
-		  category: self defaultTagPostfix
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> newClassWithInstanceVariableNames: aString [
-
-	^ self
-		  newSubclassOf: self defaultSuperclass
-		  instanceVariableNames: aString
-		  classVariableNames: ''
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> newSubclassOf: aClass [
-
-	^ self
-		  newSubclassOf: aClass
-		  instanceVariableNames: ''
-		  classVariableNames: ''
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> newSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString [
-
-	^ self
-		  newSubclassOf: aClass
-		  uses: {  }
-		  instanceVariableNames: ivNamesString
-		  classVariableNames: classVarsString
-		  category: self defaultTagPostfix
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> newSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString category: category [
-
-	^ self
-		  newSubclassOf: aClass
-		  uses: {  }
-		  instanceVariableNames: ivNamesString
-		  classVariableNames: classVarsString
-		  category: category
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString category: category [
-
-	^ self
-		  newSubclassOf: aClass
-		  uses: aTraitComposition
-		  instanceVariableNames: ivNamesString
-		  classVariableNames: classVarsString
-		  poolDictionaries: ''
-		  category: category
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> newSubclassOf: aClass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString poolDictionaries: poolNamesString category: category [
-
-	| newClass |
-	newClass := self class classInstaller make: [ :aBuilder |
+	| newClass numberOfPackages |
+	numberOfPackages := self organization packages size.
+	newClass := self class classInstaller make: [ :aBuilder | "Let's but some default values."
 		            aBuilder
-			            name: self newClassName;
-			            superclass: aClass;
-			            traitComposition: aTraitComposition asTraitComposition;
-			            slots: ivNamesString asSlotCollection;
-			            sharedVariablesFromString: classVarsString;
-			            sharedPools: poolNamesString;
-			            package: (self packageName , '-' , category) asSymbol ].
+			            name: self newBehaviorName;
+			            superclass: self defaultSuperclass;
+			            installingEnvironment: self environment;
+			            package: self packageName.
 
-	self createdClasses add: newClass.
+		            "Now we let the users specify what they want."
+		            aBlock value: aBuilder ].
+
+	self registerBehavior: newClass.
+
+	"If we created a package, we need to register it to be removed."
+	numberOfPackages = self organization packages size ifFalse: [ createdPackages add: newClass package ].
 	^ newClass
 ]
 
-{ #category : #creating }
-ClassFactoryForTestCase >> newSubclassOf: aClass using: aTraitComposition [
-
-	^ self
-		  newSubclassOf: aClass
-		  uses: aTraitComposition
-		  instanceVariableNames: ''
-		  classVariableNames: ''
-		  category: self defaultTagPostfix
+{ #category : 'creating' }
+ClassFactoryForTestCase >> newAnonymousClass [
+	^ self defaultSuperclass newAnonymousSubclass
 ]
 
-{ #category : #creating }
+{ #category : 'creating' }
+ClassFactoryForTestCase >> newAnonymousTrait [
+	^ Smalltalk anonymousClassInstaller make: [ :builder |
+		builder
+			"The name is necessary to not break Pharo"
+			name: self newBehaviorName;
+			beTrait ]
+]
+
+{ #category : 'creating' }
+ClassFactoryForTestCase >> newBehaviorName [
+
+	^ (#BehaviorForTestToBeDeleted , self nextCount printString) asSymbol
+]
+
+{ #category : 'creating' }
+ClassFactoryForTestCase >> newClass [
+
+	^ self make: [ :aBuilder | "We customize nothing on this one" ]
+]
+
+{ #category : 'creating' }
 ClassFactoryForTestCase >> newTrait [
 
-	^ self
-		  newTraitNamed: self newTraitName
-		  uses: Array new
-		  tag: self defaultTagPostfix
+	^ self make: [ :aBuilder | aBuilder beTrait ]
 ]
 
-{ #category : #creating }
-ClassFactoryForTestCase >> newTraitInTag: aTag [
-
-	^ self
-		  newTraitNamed: self newTraitName
-		  uses: Array new
-		  tag: aTag asSymbol
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> newTraitName [
-
-	| postFix |
-	postFix := (self createdTraits size + 1) printString.
-	^ (#TraitForTestToBeDeleted , postFix) asSymbol
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> newTraitNamed: aTraitName uses: aTraitComposition tag: aTag [
-
-	| newTrait |
-	newTrait := self class classInstaller make: [ :aBuilder |
-		            aBuilder
-			            name: aTraitName;
-			            traitComposition: aTraitComposition asTraitComposition;
-			            package: (self packageName , '-' , aTag) asSymbol;
-			            beTrait ].
-
-	self createdTraits add: newTrait.
-	^ newTrait
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> newTraitUsing: aTraitComposition [
-
-	^ self
-		  newTraitNamed: self newTraitName
-		  uses: aTraitComposition
-		  tag: self defaultTagPostfix
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClassFactoryForTestCase >> nextCount [
 	"Global counter to avoid name clash between test runs, in case of some previous failure."
 
 	^ Counter := (Counter ifNil: [ 0 ]) + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+ClassFactoryForTestCase >> organization [
+	^ self environment organization
+]
+
+{ #category : 'accessing' }
 ClassFactoryForTestCase >> packageName [
 
 	^ #CategoryForTestToBeDeleted
 ]
 
-{ #category : #creating }
-ClassFactoryForTestCase >> redefineClass: aClass category: aString [
+{ #category : 'accessing' }
+ClassFactoryForTestCase >> registerBehavior: aBehavior [
 
-	^ self
-		  redefineClass: aClass
-		  subclassOf: aClass superclass
-		  uses: aClass traitComposition
-		  instanceVariableNames: aClass instanceVariablesString
-		  classVariableNames: aClass classVariablesString
-		  poolDictionaries: aClass sharedPoolsString
-		  package: aString
+	createdBehaviors add: aBehavior
 ]
 
-{ #category : #creating }
-ClassFactoryForTestCase >> redefineClass: aClass instanceVariableNames: aString [
+{ #category : 'compiling - silently' }
+ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior [
 
-	^ self
-		  redefineClass: aClass
-		  subclassOf: aClass superclass
-		  uses: aClass traitComposition
-		  instanceVariableNames: aString
-		  classVariableNames: aClass classVariablesString
-		  poolDictionaries: aClass sharedPoolsString
-		  package: aClass category
+	^ self silentlyCompile: aString in: aBehavior storingSource: true
 ]
 
-{ #category : #creating }
-ClassFactoryForTestCase >> redefineClass: aClass subclassOf: aSuperclass uses: aTraitComposition instanceVariableNames: ivNamesString classVariableNames: classVarsString poolDictionaries: poolNamesString package: aPackageName [
+{ #category : 'compiling - silently' }
+ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior protocol: anotherString [
+
+	^ self
+		  silentlyCompile: aString
+		  in: aBehavior
+		  protocol: anotherString
+		  storingSource: true
+]
+
+{ #category : 'compiling - silently' }
+ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior protocol: anotherString storingSource: aBoolean [
+
+	^ self silentlyDo: [
+		  aBehavior
+			  compile: aString
+			  classified: anotherString
+			  withStamp: nil
+			  notifying: nil
+			  logSource: aBoolean ]
+]
+
+{ #category : 'compiling - silently' }
+ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior storingSource: aBoolean [
+
+	^ self
+		  silentlyCompile: aString
+		  in: aBehavior
+		  protocol: 'unclassified'
+		  storingSource: aBoolean
+]
+
+{ #category : 'private' }
+ClassFactoryForTestCase >> silentlyDo: aBlock [
+
+	^ self class codeChangeAnnouncer suspendAllWhile: aBlock
+]
+
+{ #category : 'creating' }
+ClassFactoryForTestCase >> silentlyMake: aBlock [
+
+	| behavior |
+	behavior := self silentlyDo: [ self make: aBlock ].
+
+	createdSilently add: behavior.
+	^ behavior
+]
+
+{ #category : 'creating' }
+ClassFactoryForTestCase >> silentlyNewClass [
+
+	^ self silentlyMake: [ :aBuilder | "Nothing to configure here" ]
+]
+
+{ #category : 'creating' }
+ClassFactoryForTestCase >> silentlyNewTrait [
+
+	^ self silentlyMake: [ :aBuilder | aBuilder beTrait ]
+]
+
+{ #category : 'creating' }
+ClassFactoryForTestCase >> silentlyRename: aClass to: aName [
+	^ self silentlyDo: [ aClass rename: aName asSymbol ]
+]
+
+{ #category : 'accessing' }
+ClassFactoryForTestCase >> tagName [
+
+	^ #Default
+]
+
+{ #category : 'creating' }
+ClassFactoryForTestCase >> update: aClass to: aBlock [
+	"I return an updated class or trait in the environment of the factory configured as the user specified in the make block.
+	Once the test is finished, I'll remove the created class or trait."
 
 	| newClass |
-	newClass := self class classInstaller make: [ :aBuilder |
+	newClass := self class classInstaller update: aClass to: [ :aBuilder | "Let's but some default values."
 		            aBuilder
-			            name: aClass name;
-			            superclass: aSuperclass;
-			            traitComposition: aTraitComposition asTraitComposition;
-			            slots: ivNamesString asSlotCollection;
-			            sharedVariablesFromString: classVarsString;
-			            sharedPools: poolNamesString;
-			            package: aPackageName asSymbol ].
+			            installingEnvironment: self environment;
+			            package: self packageName.
 
-	self createdClasses add: newClass.
+		            "Now we let the users specify what they want."
+		            aBlock value: aBuilder ].
+
+	self registerBehavior: newClass.
 	^ newClass
-]
-
-{ #category : #'creating - silently' }
-ClassFactoryForTestCase >> silentlyNewClassInCategory: category [
-
-	^ self
-		  silentlyNewSubclassOf: self defaultSuperclass
-		  instanceVariableNames: ''
-		  classVariableNames: ''
-		  category: category
-]
-
-{ #category : #'creating - silently' }
-ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString [
-
-	^ self
-		silentlyNewSubclassOf: aClass
-		instanceVariableNames: ivNamesString
-		classVariableNames: classVarsString
-		category: self defaultTagPostfix
-]
-
-{ #category : #'creating - silently' }
-ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString category: category [
-
-	^ self
-		  silentlyNewSubclassOf: aClass
-		  instanceVariableNames: ivNamesString
-		  classVariableNames: classVarsString
-		  package: (self packageName , '-' , category) asSymbol
-]
-
-{ #category : #'creating - silently' }
-ClassFactoryForTestCase >> silentlyNewSubclassOf: aClass instanceVariableNames: ivNamesString classVariableNames: classVarsString package: packageName [
-
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		^ self
-			  newSubclassOf: aClass
-			  uses: #(  )
-			  instanceVariableNames: ivNamesString
-			  classVariableNames: classVarsString
-			  poolDictionaries: ''
-			  category: packageName ]
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> withNotificationsNewClass [
-
-	^ self withNotificationsNewClassWithInstanceVariableNames: ''
-]
-
-{ #category : #creating }
-ClassFactoryForTestCase >> withNotificationsNewClassWithInstanceVariableNames: instanceVariableNames [
-
-	^ self
-		  newSubclassOf: Object
-		  instanceVariableNames: instanceVariableNames
-		  classVariableNames: ''
-		  category: self defaultTagPostfix
 ]

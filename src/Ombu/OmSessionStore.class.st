@@ -2,8 +2,8 @@
 I wrap a file store that is renewed each time either the Smalltalk session changes, among others (check #needsReset).
 "
 Class {
-	#name : #OmSessionStore,
-	#superclass : #OmStore,
+	#name : 'OmSessionStore',
+	#superclass : 'OmStore',
 	#instVars : [
 		'currentSession',
 		'currentImagePathString',
@@ -19,36 +19,38 @@ Class {
 		'defaultBaseLocator',
 		'registry'
 	],
-	#category : #'Ombu-Stores'
+	#category : 'Ombu-Stores',
+	#package : 'Ombu',
+	#tag : 'Stores'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSessionStore class >> defaultBaseLocator [
 
 	^ defaultBaseLocator ifNil: [
 		defaultBaseLocator := FileLocator localDirectory / 'ombu-sessions' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSessionStore class >> defaultBaseLocator: aFileLocator [
 
 	defaultBaseLocator := aFileLocator
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 OmSessionStore class >> initialize [
 
 	registry := WeakSet new: 5.
 	SessionManager default registerUserClassNamed: self name
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OmSessionStore class >> new [
 
 	^ self newWithBaseLocator: self defaultBaseLocator
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OmSessionStore class >> newWithBaseLocator: aBaseDirectory [
 
 	^ self basicNew
@@ -56,58 +58,58 @@ OmSessionStore class >> newWithBaseLocator: aBaseDirectory [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OmSessionStore class >> register: aSessionStore [
 
 	registry add: aSessionStore
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OmSessionStore class >> startUp [
 
 	registry do: [ :each | each store ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSessionStore class >> storeNameStrategy [
 
 	^ storeNameStrategy ifNil: [
 		storeNameStrategy := OmTimeStampSuffixStrategy new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSessionStore class >> storeNameStrategy: aStoreNameStrategy [
 
 	storeNameStrategy := aStoreNameStrategy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSessionStore >> announcer [
 
 	^ announcer ifNil: [
 		announcer := Announcer new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSessionStore >> baseLocator [
 
 	^ baseLocator
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSessionStore >> directory [
 
 	^ baseLocator asFileReference
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 OmSessionStore >> entriesDo: aBlockClosure [
 	"Evaluate aBlockClosure with every entries this store contains"
 
 	^ self store entriesDo: aBlockClosure
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSessionStore >> entryFor: aReference ifPresent: presentBlockClosure ifAbsent: absentBlockClosure [
 	"Look for an entry, evaluating either the first block closure if present or the second if absent."
 
@@ -117,26 +119,26 @@ OmSessionStore >> entryFor: aReference ifPresent: presentBlockClosure ifAbsent: 
 		ifAbsent: absentBlockClosure
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OmSessionStore >> existsStoreNamed: aName [
 
 	^ OmFileStore existsStoreNamed: aName inDirectory: self directory
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 OmSessionStore >> flush [
 	"Flush any buffered state"
 
 	self store flush
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSessionStore >> globalName [
 
 	^ self store globalName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSessionStore >> headReference [
 	"Answer a reference to the last entry added to this store."
 
@@ -144,14 +146,14 @@ OmSessionStore >> headReference [
 		headReference := self store headReference ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OmSessionStore >> imagePathString [
 	"Answer the full path name for the current image."
 
 	^ SmalltalkImage current imagePath
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OmSessionStore >> initializeWithBaseLocator: aDirectoryFileLocator [
 
 	self initialize.
@@ -163,21 +165,21 @@ OmSessionStore >> initializeWithBaseLocator: aDirectoryFileLocator [
 	self class register: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSessionStore >> lowLevelFileStoreIfNone: aBlock [
 	"Needed by EpLostChangesDetector"
 
 	^ currentStore ifNil: aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OmSessionStore >> needsReset [
 
 	^ currentSession ~~ Smalltalk session
 		or: [ currentImagePathString ~= self imagePathString ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 OmSessionStore >> newEntry: anEntry [
 	"Persist a new entry"
 
@@ -185,7 +187,7 @@ OmSessionStore >> newEntry: anEntry [
 	headReference := self store headReference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSessionStore >> nextStoreName [
 
 	| name |
@@ -198,19 +200,19 @@ OmSessionStore >> nextStoreName [
 	^ self storeNameStrategy nextTo: name in: self directory
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 OmSessionStore >> refresh [
 
 	^ self store refresh
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSessionStore >> resetWithNextStoreName [
 
 	self resetWithStoreNamed: self nextStoreName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSessionStore >> resetWithStoreNamed: newName [
 	"First, ensure file is not already used."
 
@@ -229,7 +231,7 @@ OmSessionStore >> resetWithStoreNamed: newName [
 	self announcer announce: OmSessionStoreUpdated new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSessionStore >> store [
 	"Answer the store I wrap"
 
@@ -239,32 +241,32 @@ OmSessionStore >> store [
 	^ currentStore
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSessionStore >> storeNameStrategy [
 
 	^ storeNameStrategy ifNil: [ self class storeNameStrategy ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSessionStore >> storeNameStrategy: anOmStoreNameStrategy [
 
 	storeNameStrategy := anOmStoreNameStrategy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSessionStore >> writingDeferDuration [
 
 	^ writingDeferDuration ifNil: [ OmFileStore defaultWritingDeferDuration ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSessionStore >> writingDeferDuration: aDuration [
 
 	writingDeferDuration := aDuration.
 	self store writingDeferDuration: aDuration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmSessionStore >> writingFileReference [
 
 	^ currentStore writingFileReference

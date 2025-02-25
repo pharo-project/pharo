@@ -1,6 +1,6 @@
-Extension { #name : #MultistateButtonMorph }
+Extension { #name : 'MultistateButtonMorph' }
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 MultistateButtonMorph >> activate [
 	"Make active."
 
@@ -8,7 +8,7 @@ MultistateButtonMorph >> activate [
 	self active: true
 ]
 
-{ #category : #'*Morphic-Widgets-Windows' }
+{ #category : '*Morphic-Widgets-Windows' }
 MultistateButtonMorph >> passivate [
 	"Make passive."
 

@@ -5,12 +5,13 @@ Load type:
 - linear
 "
 Class {
-	#name : #BaselineOfAthens,
-	#superclass : #BaselineOf,
-	#category : #'BaselineOfAthens-Baseline'
+	#name : 'BaselineOfAthens',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfAthens',
+	#package : 'BaselineOfAthens'
 }
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfAthens >> baseline: spec [
 	<baseline>
 	spec
@@ -41,21 +42,19 @@ BaselineOfAthens >> baseline: spec [
 				group: 'Tests' with: #('Athens-Cairo-Tests') ]
 ]
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfAthens >> display: spec [
-	spec baseline: 'Display' with: [ spec repository: self repository ]
+
+	spec
+		baseline: 'Display'
+		with: [ spec repository: (self packageRepositoryURLForSpec: spec) ]
 ]
 
-{ #category : #accessing }
-BaselineOfAthens >> repository [
-	^ self packageRepositoryURL
-]
-
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfAthens >> unifiedFFI: spec [
 	spec
 		baseline: 'UnifiedFFI'
 		with: [ spec
 				loads: 'minimal';
-				repository: self repository ]
+				repository: (self packageRepositoryURLForSpec: spec) ]
 ]

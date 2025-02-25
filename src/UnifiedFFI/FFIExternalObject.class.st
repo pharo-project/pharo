@@ -23,17 +23,19 @@ The main advantage of using ==FFIExternalObject== subclass as a type name for ar
 IMPORTANT: My instances represent a pointer in the C heap. If you need to represent an opaque type (https://en.wikipedia.org/wiki/Opaque_data_type), check ==FFIOpaqueObject==.
 "
 Class {
-	#name : #FFIExternalObject,
-	#superclass : #FFIExternalReference,
-	#category : #'UnifiedFFI-Objects'
+	#name : 'FFIExternalObject',
+	#superclass : 'FFIExternalReference',
+	#category : 'UnifiedFFI-Objects',
+	#package : 'UnifiedFFI',
+	#tag : 'Objects'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFIExternalObject class >> asExternalTypeOn: generator [
 	^ FFIExternalObjectType objectClass: self
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIExternalObject class >> null [
 	^ self new
 ]

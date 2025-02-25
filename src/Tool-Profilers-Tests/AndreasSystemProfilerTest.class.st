@@ -2,15 +2,17 @@
 SUnit tests for AndreasSystemProfiler
 "
 Class {
-	#name : #AndreasSystemProfilerTest,
-	#superclass : #TestCase,
+	#name : 'AndreasSystemProfilerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'tally'
 	],
-	#category : #'Tool-Profilers-Tests-System'
+	#category : 'Tool-Profilers-Tests-System',
+	#package : 'Tool-Profilers-Tests',
+	#tag : 'System'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 AndreasSystemProfilerTest >> setUp [
 	super setUp.
 	tally := QSystemTally new.
@@ -18,7 +20,7 @@ AndreasSystemProfilerTest >> setUp [
 	"tally class: Object method: Object >> #printString."
 ]
 
-{ #category : #'tests tally' }
+{ #category : 'tests tally' }
 AndreasSystemProfilerTest >> testFullPrintOn [
 	| stream |
 	stream := WriteStream on: String new.
@@ -30,7 +32,7 @@ AndreasSystemProfilerTest >> testFullPrintOn [
 '
 ]
 
-{ #category : #'tests tally' }
+{ #category : 'tests tally' }
 AndreasSystemProfilerTest >> testGetNewTab [
 	| tabs |
 
@@ -43,31 +45,31 @@ AndreasSystemProfilerTest >> testGetNewTab [
 	self assert: (tally getNewTabsFor: tabs) asArray equals: #('[' '[')
 ]
 
-{ #category : #'tests tally' }
+{ #category : 'tests tally' }
 AndreasSystemProfilerTest >> testPrintingTally [
 
 	self assert: tally printString equals: 'AndreasSystemProfilerTest>>#testPrintingTally -- 0'
 ]
 
-{ #category : #'tests tally' }
+{ #category : 'tests tally' }
 AndreasSystemProfilerTest >> testPrintingTallyUninitialized [
 
 	self assert: QSystemTally new printString equals: 'nil>>nil -- nil'
 ]
 
-{ #category : #'tests profiler' }
+{ #category : 'tests profiler' }
 AndreasSystemProfilerTest >> testSimple [
 
 	AndreasSystemProfiler new spyOn: [ 200 timesRepeat: [ 1.23 printString ]]
 ]
 
-{ #category : #'tests profiler' }
+{ #category : 'tests profiler' }
 AndreasSystemProfilerTest >> testSimpleReport [
 
 	AndreasSystemProfiler new report
 ]
 
-{ #category : #'tests tally' }
+{ #category : 'tests tally' }
 AndreasSystemProfilerTest >> testTallyTreePrint [
 	| stream |
 	stream := WriteStream on: String new.
@@ -84,7 +86,7 @@ AndreasSystemProfilerTest >> testTallyTreePrint [
 	self assertEmpty: stream contents
 ]
 
-{ #category : #'tests tally' }
+{ #category : 'tests tally' }
 AndreasSystemProfilerTest >> testTallyTreePrintWithTab [
 	| stream |
 	stream := WriteStream on: String new.

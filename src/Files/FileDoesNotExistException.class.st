@@ -14,15 +14,17 @@ Applications that want to offer the user the opportunity to select a different f
 
 "
 Class {
-	#name : #FileDoesNotExistException,
-	#superclass : #FileException,
+	#name : 'FileDoesNotExistException',
+	#superclass : 'FileException',
 	#instVars : [
 		'readOnly'
 	],
-	#category : #'Files-Core'
+	#category : 'Files-Core',
+	#package : 'Files',
+	#tag : 'Core'
 }
 
-{ #category : #signalling }
+{ #category : 'signalling' }
 FileDoesNotExistException class >> signalWithFile: aFile writeMode: writeMode [
 
 	^ (self fileName: aFile basename)
@@ -30,12 +32,12 @@ FileDoesNotExistException class >> signalWithFile: aFile writeMode: writeMode [
 		signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDoesNotExistException >> readOnly [
 	^readOnly == true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FileDoesNotExistException >> readOnly: aBoolean [
 	readOnly := aBoolean
 ]

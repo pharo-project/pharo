@@ -2,8 +2,8 @@
 A name parser
 "
 Class {
-	#name : #FreeTypeNameParser,
-	#superclass : #Object,
+	#name : 'FreeTypeNameParser',
+	#superclass : 'Object',
 	#instVars : [
 		'combinedName',
 		'familyNameIn',
@@ -27,16 +27,18 @@ Class {
 		'normalNames',
 		'italicNames'
 	],
-	#category : #'FreeType-FontManager'
+	#category : 'FreeType-FontManager',
+	#package : 'FreeType',
+	#tag : 'FontManager'
 }
 
-{ #category : #'known names' }
+{ #category : 'known names' }
 FreeTypeNameParser class >> italicAndObliqueNames [
 
 	^ self italicNames , self obliqueNames
 ]
 
-{ #category : #'known names' }
+{ #category : 'known names' }
 FreeTypeNameParser class >> italicNames [
 	"Answer a sequence of String tokens that indicate an italic font
 	within a font family-style name"
@@ -54,7 +56,7 @@ FreeTypeNameParser class >> italicNames [
 		'kursiv')
 ]
 
-{ #category : #'known names' }
+{ #category : 'known names' }
 FreeTypeNameParser class >> normalNames [
 	"Answer a sequence of String tokens that indicate a Regular
 	(i.e. non-oblique, non-italic) font within a font family-style name"
@@ -67,7 +69,7 @@ FreeTypeNameParser class >> normalNames [
 	^ normalNames := #('Book' 'Normal' 'Regular' 'Roman' 'Upright')
 ]
 
-{ #category : #'known names' }
+{ #category : 'known names' }
 FreeTypeNameParser class >> obliqueNames [
 	"Answer a sequence of String tokens that indicate an oblique font
 	within a font family-style name"
@@ -85,7 +87,7 @@ FreeTypeNameParser class >> obliqueNames [
 		'slanted')
 ]
 
-{ #category : #'known names' }
+{ #category : 'known names' }
 FreeTypeNameParser class >> stretchNames [
 	"Answer a sequence of arrays.
 	Each array has an integer stretch value as its first element (1 - 9).
@@ -147,7 +149,7 @@ FreeTypeNameParser class >> stretchNames [
 		}.  "search for them in the order given here"
 ]
 
-{ #category : #'known names' }
+{ #category : 'known names' }
 FreeTypeNameParser class >> weightNames [
 	"Answer a sequence of arrays.
 	Each array has an integer weight value as its first element.
@@ -199,7 +201,7 @@ FreeTypeNameParser class >> weightNames [
 		}
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 FreeTypeNameParser >> addStyleNameToCombinedName: aStyleString [
 	| lcCombined lcStyleName addStyle index |
 	lcCombined := combinedName asLowercase.
@@ -215,12 +217,12 @@ FreeTypeNameParser >> addStyleNameToCombinedName: aStyleString [
 	addStyle ifTrue:[combinedName := combinedName , ' ', aStyleString]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeNameParser >> boldFlag: aBoolean [
 	boldFlag := aBoolean
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 FreeTypeNameParser >> extractSlant [
 
 	|  matches start end |
@@ -230,7 +232,7 @@ FreeTypeNameParser >> extractSlant [
 	extractedSlantValue := LogicalFont slantRegular. "not italic or oblique"
 	(self italicAndObliqueNames
 		detect: [:each |
-			(matches := self lastMatchValueSequence: {each}) notNil]
+			(matches := self lastMatchValueSequence: {each}) isNotNil]
 		ifNone:[]) ifNotNil:[
 			start := matches first second.
 			end :=  matches last third.
@@ -250,7 +252,7 @@ FreeTypeNameParser >> extractSlant [
 			extractedSlantValue := LogicalFont slantItalic]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 FreeTypeNameParser >> extractStretch [
 	"match and remove last stretch tokens"
 	| matches start end |
@@ -260,7 +262,7 @@ FreeTypeNameParser >> extractStretch [
 		detect: [:each |
 			matches := self lastMatchValueSequence: each allButFirst.
 			matches ifNotNil:[extractedStretchValue := each first].
-			matches notNil]
+			matches isNotNil]
 		ifNone:[]) ifNotNil:[
 			start := matches first second.
 			end :=  matches last third.
@@ -274,7 +276,7 @@ FreeTypeNameParser >> extractStretch [
 			"tokens := self tokenize: combinedName delimiters: delimiters"]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 FreeTypeNameParser >> extractUpright [
 	"extract from current combined name.
 	answer new combinedName"
@@ -284,7 +286,7 @@ FreeTypeNameParser >> extractUpright [
 		detect: [:tok |
 			(self normalNames
 				detect: [:str | str asLowercase = tok first asLowercase]
-				ifNone:[]) notNil ]
+				ifNone:[]) isNotNil ]
 		ifNone:[].
 	normalTok ifNotNil:[
 		"remove it from combinedName"
@@ -298,7 +300,7 @@ FreeTypeNameParser >> extractUpright [
 		combinedName := combinedName copyReplaceFrom: start to: end with: ' ']
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 FreeTypeNameParser >> extractWeight [
 	"match and remove last weight tokens"
 	| matches start end |
@@ -308,7 +310,7 @@ FreeTypeNameParser >> extractWeight [
 		detect: [:each |
 			matches := self lastMatchValueSequence: each allButFirst.
 			matches ifNotNil:[extractedWeightValue := each first].
-			matches notNil]
+			matches isNotNil]
 		ifNone:[]) ifNotNil:[
 			start := matches first second.
 			end :=  matches last third.
@@ -324,79 +326,79 @@ FreeTypeNameParser >> extractWeight [
 			extractedWeightValue := LogicalFont weightBold]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeNameParser >> extractedSlant [
 	^extractedSlant
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeNameParser >> extractedSlantValue [
 	^extractedSlantValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeNameParser >> extractedStretch [
 	^extractedStretch
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeNameParser >> extractedStretchValue [
 	^extractedStretchValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeNameParser >> extractedUpright [
 	^extractedUpright
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeNameParser >> extractedWeight [
 	^extractedWeight
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeNameParser >> extractedWeightValue [
 	^extractedWeightValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeNameParser >> familyName [
 	^combinedName trimBoth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeNameParser >> familyName: familyName [
 	familyNameIn := familyName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeNameParser >> familyNameIn: familyName [
 	familyNameIn := familyName
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FreeTypeNameParser >> initialize [
 	super initialize.
 	delimiters := ',.-_'.
 	Character separators do:[:c | delimiters := delimiters , c asString]
 ]
 
-{ #category : #'known names' }
+{ #category : 'known names' }
 FreeTypeNameParser >> italicAndObliqueNames [
 	^self class italicAndObliqueNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeNameParser >> italicFlag: aBoolean [
 	italicFlag := aBoolean
 ]
 
-{ #category : #'known names' }
+{ #category : 'known names' }
 FreeTypeNameParser >> italicNames [
 	^self class italicNames
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 FreeTypeNameParser >> lastMatchValueSequence: values [
 	"answer the last contiguous tokens that match pattern tokens,
 	or nil if not found.
@@ -415,12 +417,12 @@ FreeTypeNameParser >> lastMatchValueSequence: values [
 	^nil
 ]
 
-{ #category : #'known names' }
+{ #category : 'known names' }
 FreeTypeNameParser >> normalNames [
 	^self class normalNames
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 FreeTypeNameParser >> parse [
 
 	| styleName |
@@ -439,7 +441,7 @@ FreeTypeNameParser >> parse [
 	self extractWeight
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 FreeTypeNameParser >> splitBadTokensIn: aString [
 	"split tokens such as BoldOblique, that should be two words"
 	| str |
@@ -452,24 +454,24 @@ FreeTypeNameParser >> splitBadTokensIn: aString [
 	^str
 ]
 
-{ #category : #'known names' }
+{ #category : 'known names' }
 FreeTypeNameParser >> stretchNames [
 	^self class stretchNames
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeNameParser >> styleName: styleName [
 
 	styleNameIn := styleName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeNameParser >> styleNameIn: styleName [
 
 	styleNameIn := styleName
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 FreeTypeNameParser >> tokenize: aString [
 	"answer an OrderedCollection of {string. start. end} tuples.
 	tokens are separated by $- $_ $, $. and whitespace"
@@ -485,7 +487,7 @@ FreeTypeNameParser >> tokenize: aString [
 	^answer
 ]
 
-{ #category : #'known names' }
+{ #category : 'known names' }
 FreeTypeNameParser >> weightNames [
 	^self class weightNames
 ]

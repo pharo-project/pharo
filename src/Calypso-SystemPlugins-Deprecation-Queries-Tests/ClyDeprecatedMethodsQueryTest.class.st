@@ -1,15 +1,16 @@
 Class {
-	#name : #ClyDeprecatedMethodsQueryTest,
-	#superclass : #ClyMethodQueryTest,
-	#category : #'Calypso-SystemPlugins-Deprecation-Queries-Tests'
+	#name : 'ClyDeprecatedMethodsQueryTest',
+	#superclass : 'ClyMethodQueryTest',
+	#category : 'Calypso-SystemPlugins-Deprecation-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-Deprecation-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyDeprecatedMethodsQueryTest >> createQuery [
 	^ ClyDeprecatedMethodsQuery from: ClyClassScope of: Object in: environment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyDeprecatedMethodsQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope
 		of: (ClyClassWithDeprecatedMethods >> #deprecatedMethod1)
@@ -22,7 +23,7 @@ ClyDeprecatedMethodsQueryTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyDeprecatedMethodsQueryTest >> testFromThreeMethods [
 
 	self queryFromScope: ClyMethodScope ofAll: {
@@ -33,13 +34,13 @@ ClyDeprecatedMethodsQueryTest >> testFromThreeMethods [
 	self assert: foundSelectors sorted asArray equals: #(deprecatedMethod1 deprecatedMethod2)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyDeprecatedMethodsQueryTest >> testNotSelectsNotDeprecatedMethod [
 
 	self deny: (query selectsMethod: ClyClassWithDeprecatedMethods >> #notDeprecatedMethod)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyDeprecatedMethodsQueryTest >> testSelectsDeprecatedMethod [
 
 	self assert: (query selectsMethod: ClyClassWithDeprecatedMethods >> #deprecatedMethod1)

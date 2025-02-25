@@ -3,24 +3,26 @@ I represent a package for the refactoring framework.
 
 "
 Class {
-	#name : #RBPackage,
-	#superclass : #RBEntity,
+	#name : 'RBPackage',
+	#superclass : 'RBEntity',
 	#instVars : [
 		'model',
 		'name',
 		'realPackage'
 	],
-	#category : #'Refactoring-Core-Model'
+	#category : 'Refactoring-Core-Model',
+	#package : 'Refactoring-Core',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBPackage class >> existingNamed: aSymbol [
 	^(self named: aSymbol)
 		realPackageFor: aSymbol;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBPackage class >> existingNamed: aSymbol model: aRBNamespace [
 	^ (self named: aSymbol)
 		model: aRBNamespace;
@@ -28,50 +30,51 @@ RBPackage class >> existingNamed: aSymbol model: aRBNamespace [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBPackage class >> named: aSymbol [
 	^(self new)
 		name: aSymbol;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBPackage >> model [
 
 	^ model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBPackage >> model: anObject [
 
 	model := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBPackage >> name [
 
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBPackage >> name: anObject [
 
 	name := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBPackage >> realPackage [
 
 	^ realPackage
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBPackage >> realPackage: anObject [
 
 	realPackage := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBPackage >> realPackageFor: aSymbol [
-	self realPackage: ( self model environment packageAt: aSymbol ifAbsent: [nil] )
+
+	self realPackage: (self model environment packageAt: aSymbol ifAbsent: [nil])
 ]

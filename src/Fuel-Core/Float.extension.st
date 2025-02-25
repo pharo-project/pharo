@@ -1,12 +1,12 @@
-Extension { #name : #Float }
+Extension { #name : 'Float' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 Float >> fuelAccept: aGeneralMapper [
 
 	^aGeneralMapper visitHookPrimitive: self
 ]
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 Float class >> materializeFrom: aDecoder [
 	"The * 1 is here to give a chance to the VM to create a SmallFloat64 if it can (thanks Nicolas Cellier)."
 	
@@ -16,7 +16,7 @@ Float class >> materializeFrom: aDecoder [
 		* 1.
 ]
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 Float >> serializeOn: anEncoder [
 
 	anEncoder 

@@ -1,10 +1,12 @@
 Class {
-	#name : #TextColorTest,
-	#superclass : #TestCase,
-	#category : #'Text-Tests-Base'
+	#name : 'TextColorTest',
+	#superclass : 'TestCase',
+	#category : 'Text-Tests-Base',
+	#package : 'Text-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextColorTest >> testColor [
 	| textColor |
 	textColor := TextColor color: Color red.
@@ -16,7 +18,7 @@ TextColorTest >> testColor [
 	self assert: textColor asColor equals: Color yellow
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TextColorTest >> testDominates [
 	| text |
 	self assert: (TextColor red dominates: TextColor yellow).

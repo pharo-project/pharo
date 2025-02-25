@@ -2,26 +2,27 @@
 I am an abstract class that knows my bounds and if a point is contained in me.
 "
 Class {
-	#name : #Shape,
-	#superclass : #Object,
-	#category : #'Graphics-Shapes'
+	#name : 'Shape',
+	#superclass : 'Object',
+	#category : 'Graphics-Shapes',
+	#package : 'Graphics-Shapes'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 Shape >> basicContainsPoint: aPoint [
 	"Answer whether the receiver contains the given point."
 
 	^self bounds containsPoint: aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Shape >> bounds [
 	"Answer a rectangle that encloses the receiver."
 
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Shape >> containsPoint: aPoint [
 	"Answer whether the receiver contains the given point."
 

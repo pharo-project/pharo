@@ -22,15 +22,16 @@ Internal Representation and Key Implementation Points.
 	dropContext:		<CmdToolContext>
 "
 Class {
-	#name : #CmdDragAndDropCommandActivator,
-	#superclass : #CmdCommandActivator,
+	#name : 'CmdDragAndDropCommandActivator',
+	#superclass : 'CmdCommandActivator',
 	#instVars : [
 		'dropContext'
 	],
-	#category : #'Commander-Activators-DragAndDrop'
+	#category : 'Commander-Activators-DragAndDrop',
+	#package : 'Commander-Activators-DragAndDrop'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmdDragAndDropCommandActivator class >> createCommand: aCommandClass inContext: aToolContext [
 	| command |
 	command := super createCommand: aCommandClass inContext: aToolContext.
@@ -38,33 +39,33 @@ CmdDragAndDropCommandActivator class >> createCommand: aCommandClass inContext: 
 	^command
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 CmdDragAndDropCommandActivator >> applyCommandResult [
 
 	context applyResultOf: command.
 	dropContext applyDropResultOf: command
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdDragAndDropCommandActivator >> canExecuteCommand [
 
 	^super canExecuteCommand and: [ self canExecuteDropInContext: dropContext ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdDragAndDropCommandActivator >> canExecuteDropInContext: aToolContext [
 
 	^(activationStrategy isDropActiveInContext: aToolContext)
 		and: [  aToolContext allowsDropExecutionOf: command ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 CmdDragAndDropCommandActivator >> executeDropInContext: aToolContext [
 	dropContext := aToolContext.
 	self executeCommand
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 CmdDragAndDropCommandActivator >> prepareCommandForExecution [
 	context prepareDragActivationOf: command.
 	dropContext prepareDropExecutionOf: command

@@ -1,6 +1,6 @@
-Extension { #name : #GradientFillStyle }
+Extension { #name : 'GradientFillStyle' }
 
-{ #category : #'*Athens-Balloon' }
+{ #category : '*Athens-Balloon' }
 GradientFillStyle >> asAthensPaintOn: anAthensCanvas [
 
 	^ AthensGradientPaint new gradient: self.

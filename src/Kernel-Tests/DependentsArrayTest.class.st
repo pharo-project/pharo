@@ -2,12 +2,14 @@
 SUnit tests for class  DependentsArray
 "
 Class {
-	#name : #DependentsArrayTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Objects'
+	#name : 'DependentsArrayTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Objects',
+	#package : 'Kernel-Tests',
+	#tag : 'Objects'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 DependentsArrayTest >> testSize [
 	self
 		assert: (DependentsArray with: nil) size equals: 0;

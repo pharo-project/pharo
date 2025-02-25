@@ -2,8 +2,8 @@
 A PDPackageDetectCycleTreeModel shows all cycles among packages from a graph of dependencies.
 "
 Class {
-	#name : #DACycleDetectionTreePresenter,
-	#superclass : #DAPackageTreePresenter,
+	#name : 'DACycleDetectionTreePresenter',
+	#superclass : 'DAPackageTreePresenter',
 	#instVars : [
 		'analysis',
 		'cycles',
@@ -11,46 +11,65 @@ Class {
 		'filter',
 		'buttonSort'
 	],
-	#category : #'Tool-DependencyAnalyser-UI-Core'
+	#category : 'Tool-DependencyAnalyser-UI-Core',
+	#package : 'Tool-DependencyAnalyser-UI',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'specs' }
+DACycleDetectionTreePresenter class >> defaultPreferredExtent [
+
+	^ 1000@600
+]
+
+{ #category : 'instance creation' }
 DACycleDetectionTreePresenter class >> onPackagesMatch: match [
 	^ (self onPackagesNamed:
-			(RPackageOrganizer default packages
+			(self packageOrganizer packages
 				select: [ :package | match match: package packageName asString ]
 				thenCollect: [ :package | package packageName ]) )
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DACycleDetectionTreePresenter class >> onPackagesNamed: aCollection [
-	^ self new
+	self flag: #IncreaseTechnicalDebt.
+	"The flow is BAD AND WRONG! 
+	We should not explicit use StPharoApplication current this is a bad practice. Now I have no idea how to do it otherwise. So let us propagate bad practices.
+	You like debt: here it is"
+
+	^ (self newApplication: StPharoApplication current) 
 		initializeWithPackageName: aCollection;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DACycleDetectionTreePresenter class >> system [
-	^ self onPackagesNamed:
-		(RPackageOrganizer default packages collect: [ :package | package packageName asString ])
+
+	^ self onPackagesNamed: (self packageOrganizer packages collect: [ :package | package name asString ])
 ]
 
-{ #category : #accessing }
+{ #category : 'specs' }
+DACycleDetectionTreePresenter class >> title [
+
+	^ 'Cycles analysis'
+]
+
+{ #category : 'accessing' }
 DACycleDetectionTreePresenter >> analysis [
 	^ analysis
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DACycleDetectionTreePresenter >> analysis: anObject [
 	analysis := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DACycleDetectionTreePresenter >> browser: anObject [
 	browser := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DACycleDetectionTreePresenter >> buildRoots [
 	| roots |
 	roots := cycles collect: [ :cycle |
@@ -65,18 +84,18 @@ DACycleDetectionTreePresenter >> buildRoots [
 		label: 'Analysis of ' , self cycles size asString , ' cycles'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DACycleDetectionTreePresenter >> cycles [
 	^ cycles
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DACycleDetectionTreePresenter >> cycles: aCollectionOfCycles [
 	cycles := aCollectionOfCycles sorted: [ :a :b | a size > b size ].
 	self buildRoots
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 DACycleDetectionTreePresenter >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -90,50 +109,59 @@ DACycleDetectionTreePresenter >> defaultLayout [
 		yourself
 ]
 
-{ #category : #protocol }
+{ #category : 'initialization' }
+DACycleDetectionTreePresenter >> doSelectPackageAsRightDependency [
+	| item method |
+
+	item := tree selectedItem.
+	method := item content.
+	(TheManifestBuilder of: self packageUnderAnalysis packageManifest)
+		addManuallyResolvedDependency: method package name.
+	"TODO: run the analysis again"
+]
+
+{ #category : 'protocol' }
 DACycleDetectionTreePresenter >> extent [
 	^ 1000@600
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DACycleDetectionTreePresenter >> filter [
 	^ filter
 ]
 
-{ #category : #filtering }
+{ #category : 'filtering' }
 DACycleDetectionTreePresenter >> filterWithPackages [
 
 	self cycles: (self analysis cyclesWithAtLeast: filter)
 ]
 
-{ #category : #filtering }
+{ #category : 'filtering' }
 DACycleDetectionTreePresenter >> filterWithPackages: aCollectionOfPDPackage [
 	filter := aCollectionOfPDPackage.
 	self cycles: (self analysis cyclesWithAtLeast: filter)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DACycleDetectionTreePresenter >> initializePresenters [
+
 	super initializePresenters.
 
-	tree whenSelectedItemChangedDo: [ :item | | menu |
-		item ifNotNil: [
-			menu := self newMenu.
-			item addMenuEntriesOn: menu.
-			tree contextMenu: menu. ] ].
+	tree addActionWith: [ :action | action
+		name: 'Select this package as the right dependency';
+		actionEnabled: [ self selectedItemIsMethod  ];
+		action: [ self doSelectPackageAsRightDependency ] ].
 
 	cyclesLabel := self newLabel
 			label: 'Analysis of cycles'.
 
 	buttonSort := self newButton
-			help: 'Sort cycles by the number of packages involved in the cycle';
-			label: 'Sort by length';
-			action: [ self reversedRoots  ].
-
-	self layout: self defaultLayout
+		help: 'Sort cycles by the number of packages involved in the cycle';
+		label: 'Sort by length';
+		action: [ self reversedRoots  ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DACycleDetectionTreePresenter >> initializeWithPackageName: aCollection [
 
 	self analysis:  (DAPackageCycleDetector onPackagesNamed: aCollection) runAlgorithm.
@@ -141,7 +169,7 @@ DACycleDetectionTreePresenter >> initializeWithPackageName: aCollection [
 	self cycles: self analysis cycles
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DACycleDetectionTreePresenter >> refresh [
 	self analysis refresh.
 	self filter ifNil: [ self cycles: self analysis cycles ]
@@ -149,12 +177,23 @@ DACycleDetectionTreePresenter >> refresh [
 	self buildRoots
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DACycleDetectionTreePresenter >> reversedRoots [
 	self tree roots: (self tree roots reversed)
 ]
 
-{ #category : #protocol }
-DACycleDetectionTreePresenter >> title [
+{ #category : 'initialization' }
+DACycleDetectionTreePresenter >> selectedItemIsMethod [
+	| item |
+	
+	item := tree selectedItem.
+	item ifNil: [ ^ false ].
+	
+	^ item content isKindOf: CompiledMethod
+]
+
+{ #category : 'accessing' }
+DACycleDetectionTreePresenter >> windowTitle [
+
 	^ 'Cycles analysis'
 ]

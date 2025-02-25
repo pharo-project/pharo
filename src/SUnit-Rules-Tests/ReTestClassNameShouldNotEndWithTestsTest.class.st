@@ -1,10 +1,12 @@
 Class {
-	#name : #ReTestClassNameShouldNotEndWithTestsTest,
-	#superclass : #ReTestBasedTestCase,
-	#category : #'SUnit-Rules-Tests-Base'
+	#name : 'ReTestClassNameShouldNotEndWithTestsTest',
+	#superclass : 'ReTestBasedTestCase',
+	#category : 'SUnit-Rules-Tests-Base',
+	#package : 'SUnit-Rules-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReTestClassNameShouldNotEndWithTestsTest >> testBasicCheck [
 	self
 		assert:

@@ -2,24 +2,26 @@
 Morph to display a diff join
 "
 Class {
-	#name : #DiffJoinMorph,
-	#superclass : #ProportionalSplitterMorph,
+	#name : 'DiffJoinMorph',
+	#superclass : 'ProportionalSplitterMorph',
 	#instVars : [
 		'srcOffset',
 		'dstOffset',
 		'mappings'
 	],
-	#category : #'Tool-Diff-Morphs'
+	#category : 'Tool-Diff-Morphs',
+	#package : 'Tool-Diff',
+	#tag : 'Morphs'
 }
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 DiffJoinMorph class >> splitterWidth [
 	"Answer the width of splitter to use for dif joins."
 
 	^7
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DiffJoinMorph >> compositeText [
 	"Answer the composite text based on the selection state
 	of the joins."
@@ -31,14 +33,14 @@ DiffJoinMorph >> compositeText [
 	^t
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 DiffJoinMorph >> defaultColor [
 	"Answer the default color for the receiver."
 
 	^Color transparent
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 DiffJoinMorph >> drawOn: aCanvas [
 	"Draw the indicators for the mappings."
 
@@ -47,7 +49,7 @@ DiffJoinMorph >> drawOn: aCanvas [
 		self mappings do: [:j | j drawOn: c]]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 DiffJoinMorph >> drawOnAthensCanvas: anAthensCanvas [
 	"Draw the indicators for the mappings."
 
@@ -56,14 +58,14 @@ DiffJoinMorph >> drawOnAthensCanvas: anAthensCanvas [
 		self mappings do: [:j | j drawOn: c]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffJoinMorph >> dstOffset [
 	"Answer the value of dstOffset"
 
 	^ dstOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffJoinMorph >> dstOffset: anInteger [
 	"Set the dstOffset."
 
@@ -72,7 +74,7 @@ DiffJoinMorph >> dstOffset: anInteger [
 		j dstOffset: anInteger]
 ]
 
-{ #category : #geometry }
+{ #category : 'geometry' }
 DiffJoinMorph >> extent: aPoint [
 	"Update the shapes of the joins."
 
@@ -80,7 +82,7 @@ DiffJoinMorph >> extent: aPoint [
 	self updateMappings
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DiffJoinMorph >> initialize [
 	"Initialize the receiver."
 
@@ -91,7 +93,7 @@ DiffJoinMorph >> initialize [
 		dstOffset: 0@0
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 DiffJoinMorph >> layoutBounds: aRectangle [
 	"Set the bounds for laying out children of the receiver."
 
@@ -99,14 +101,14 @@ DiffJoinMorph >> layoutBounds: aRectangle [
 	self updateMappings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffJoinMorph >> mappings [
 	"Answer the value of mappings"
 
 	^ mappings
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffJoinMorph >> mappings: anObject [
 	"Set the value of mappings"
 
@@ -115,7 +117,7 @@ DiffJoinMorph >> mappings: anObject [
 	self changed
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 DiffJoinMorph >> mouseDown: evt [
 	"Check for a click."
 
@@ -127,14 +129,14 @@ DiffJoinMorph >> mouseDown: evt [
 	super mouseDown: evt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffJoinMorph >> srcOffset [
 	"Answer the value of srcOffset"
 
 	^ srcOffset
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DiffJoinMorph >> srcOffset: anInteger [
 	"Set the srcOffset."
 
@@ -143,7 +145,7 @@ DiffJoinMorph >> srcOffset: anInteger [
 		j srcOffset: anInteger]
 ]
 
-{ #category : #'private - updating' }
+{ #category : 'private - updating' }
 DiffJoinMorph >> updateMappings [
 	"Update the shapes of the joins."
 

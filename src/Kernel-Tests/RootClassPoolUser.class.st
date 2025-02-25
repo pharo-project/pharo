@@ -3,21 +3,23 @@ I'm a class using a single shared pool (which hides a system class). My subclass
 access the class variable defined in the pool I use. 
 "
 Class {
-	#name : #RootClassPoolUser,
-	#superclass : #Object,
+	#name : 'RootClassPoolUser',
+	#superclass : 'Object',
 	#pools : [
 		'PoolDefiner'
 	],
-	#category : #'Kernel-Tests-Classes'
+	#category : 'Kernel-Tests-Classes',
+	#package : 'Kernel-Tests',
+	#tag : 'Classes'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RootClassPoolUser class >> author [
 
 	^  AnAuthor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RootClassPoolUser class >> gloups [
 
 	^  Gloups

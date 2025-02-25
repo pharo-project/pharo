@@ -1,6 +1,6 @@
 Class {
-	#name : #DAPackageTest,
-	#superclass : #TestCase,
+	#name : 'DAPackageTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'aPackage',
 		'aSecondPackage',
@@ -8,21 +8,24 @@ Class {
 		'packageB',
 		'packageC'
 	],
-	#category : #'Tool-DependencyAnalyser-Tests-Packages'
+	#category : 'Tool-DependencyAnalyser-Tests-Packages',
+	#package : 'Tool-DependencyAnalyser-Tests',
+	#tag : 'Packages'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 DAPackageTest >> setUp [
+
 	super setUp.
-	aPackage := DAPackage on: (RPackageSet named: 'Collections-Abstract').
-	aSecondPackage := DAPackage on: (RPackageSet named: 'Collections-Arithmetic').
-	packageA := DAPackage on: (RPackageSet named: 'A').
-	packageB := DAPackage on: (RPackageSet named: 'B').
-	packageC := DAPackage on: (RPackageSet named: 'C').
-	aPackage add: (DAInheritanceDependency from:aPackage to:aSecondPackage)
+	aPackage := DAPackage onPackageNamed: 'Collections-Abstract'.
+	aSecondPackage := DAPackage onPackageNamed: 'Collections-Arithmetic'.
+	packageA := DAPackage onPackageNamed: 'A'.
+	packageB := DAPackage onPackageNamed: 'B'.
+	packageC := DAPackage onPackageNamed: 'C'.
+	aPackage add: (DAInheritanceDependency from: aPackage to: aSecondPackage)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageTest >> testAdd [
 	| aDependency |
 	aDependency := DAPackageDependency from: aPackage to: aSecondPackage.
@@ -32,19 +35,19 @@ DAPackageTest >> testAdd [
 	self assert: (aPackage dependencies includes: aDependency)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageTest >> testBeIncluded [
 	aPackage beIncluded.
 	self assert: (aPackage isIncluded)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageTest >> testCleardependencies [
 	aPackage clearDependencies.
 	self assertEmpty: aPackage dependencies
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageTest >> testDependantPackages [
 	| aCollection |
 	aPackage add: (DAPackageDependency from: aPackage to: packageA).
@@ -55,7 +58,7 @@ DAPackageTest >> testDependantPackages [
 	self assert: aCollection size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageTest >> testDependenciesFrom [
 	| aRelationGraph |
 	aRelationGraph := DAPackageRelationGraph new.
@@ -69,7 +72,7 @@ DAPackageTest >> testDependenciesFrom [
 			((aPackage dependenciesFrom: Collection) allSatisfy: [ :dependency | dependency theClass = Collection ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageTest >> testDependenciesSize [
 	| aCompositeDependency |
 	aCompositeDependency := DACompositeDependency from: packageA to: packageB.
@@ -80,7 +83,7 @@ DAPackageTest >> testDependenciesSize [
 	self assert: aPackage dependenciesSize equals: 3
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 DAPackageTest >> testDependenciesSizeTo [
 	packageA
 		add: (DAInheritanceDependency from: packageA to: packageB);
@@ -88,20 +91,20 @@ DAPackageTest >> testDependenciesSizeTo [
 	self assert: (packageA dependenciesSizeTo: packageB) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageTest >> testDependenciesTo [
 	self assert: (aPackage dependenciesTo: aSecondPackage packageName) size equals: 1.
 	self assertEmpty: (aPackage dependenciesTo: 'Test')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageTest >> testDependentPackages [
 	self assert: aPackage dependentPackages size equals: 1.
 	self assert: (aPackage dependentPackages anySatisfy: [ :package | package = aSecondPackage ]).
 	self assertEmpty: aSecondPackage dependentPackages
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageTest >> testDependentPackagesSize [
 	| dependency |
 	self assert: aPackage dependentPackagesSize equals: 1.
@@ -110,19 +113,19 @@ DAPackageTest >> testDependentPackagesSize [
 	self assert: aPackage dependentPackagesSize equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageTest >> testNumberOfDependentPackage [
 	self assert: aPackage dependentPackagesSize equals: 1.
 	aPackage add: (DAPackageDependency from: aPackage to: packageA).
 	self assert: aPackage dependentPackagesSize equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageTest >> testPackageName [
 	self assert: packageA packageName equals: 'A'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageTest >> testReferenceDependenciesFrom [
 	| aRelationGraph |
 	aRelationGraph := DAPackageRelationGraph new.
@@ -139,7 +142,7 @@ DAPackageTest >> testReferenceDependenciesFrom [
 			((aPackage referenceDependenciesFrom: Collection) allSatisfy: [ :dependency | dependency theClass = Collection ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 DAPackageTest >> testRemoveAllInternal [
 	aPackage clearDependencies.
 	aPackage add: (DAPackageDependency from: aPackage to: aPackage).

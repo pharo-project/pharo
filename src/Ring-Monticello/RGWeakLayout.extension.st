@@ -1,6 +1,6 @@
-Extension { #name : #RGWeakLayout }
+Extension { #name : 'RGWeakLayout' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGWeakLayout >> mcType [
 
 	^ #weak

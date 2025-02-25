@@ -5,7 +5,9 @@ FFITypeArray got renamed in favor of FFIArray during Pharo8.0.
 To see how to use myself, please check FFIArray
 "
 Class {
-	#name : #FFITypeArray,
-	#superclass : #FFIArray,
-	#category : #'UnifiedFFI-Deprecated'
+	#name : 'FFITypeArray',
+	#superclass : 'FFIArray',
+	#category : 'UnifiedFFI-Deprecated',
+	#package : 'UnifiedFFI',
+	#tag : 'Deprecated'
 }

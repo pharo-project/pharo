@@ -2,18 +2,19 @@
 I return all methods which use undeclared variables
 "
 Class {
-	#name : #ClyUndeclaredMethodsQuery,
-	#superclass : #ClyMethodQuery,
-	#category : #'Calypso-SystemPlugins-Undeclared-Queries'
+	#name : 'ClyUndeclaredMethodsQuery',
+	#superclass : 'ClyMethodQuery',
+	#category : 'Calypso-SystemPlugins-Undeclared-Queries',
+	#package : 'Calypso-SystemPlugins-Undeclared-Queries'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyUndeclaredMethodsQuery >> description [
 
 	^'methods with undeclared variables'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyUndeclaredMethodsQuery >> selectsMethod: aMethod [
 	^aMethod usesUndeclareds
 ]

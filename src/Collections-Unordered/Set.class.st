@@ -81,12 +81,14 @@ s1 intersection: s2. ""a Set(2 3)""
 
 "
 Class {
-	#name : #Set,
-	#superclass : #HashedCollection,
-	#category : #'Collections-Unordered-Sets'
+	#name : 'Set',
+	#superclass : 'HashedCollection',
+	#category : 'Collections-Unordered-Sets',
+	#package : 'Collections-Unordered',
+	#tag : 'Sets'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Set class >> newFrom: aCollection [
 	"Answer an instance of me containing the same elements as aCollection."
 	"(Set newFrom: {1. 2. 3}) >>> #( 1 2 3) asSet"
@@ -98,14 +100,14 @@ Set class >> newFrom: aCollection [
 	^ newCollection
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Set class >> sizeFor: nElements [
 	"Large enough size to hold nElements with some slop (see fullCheck)"
 
 	^ HashTableSizes atLeast: nElements * 4 // 3
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Set >> = aSet [
 	self == aSet ifTrue: [^ true].	"stop recursion"
 	(aSet isKindOf: Set) ifFalse: [^ false].
@@ -114,7 +116,7 @@ Set >> = aSet [
 	^ true
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 Set >> add: newObject [
 	"Include newObject as one of the receiver's elements, but only if
 	not already present. Answer newObject."
@@ -125,12 +127,12 @@ Set >> add: newObject [
 	^ newObject
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Set >> asSet [
 	^self
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Set >> collect: aBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument.
 	Collect the resulting values into a collection like the receiver. Answer
@@ -142,7 +144,7 @@ Set >> collect: aBlock [
 	^ newSet
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 Set >> copyWithout: oldElement [
 	"Answer a copy of the receiver that does not contain any
 	elements equal to oldElement."
@@ -152,7 +154,7 @@ Set >> copyWithout: oldElement [
 		yourself
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Set >> difference: aCollection [
 	"Answer the set theoretic difference of two collections. Optimized version for Sets where no intermediate Set is necessary"
 
@@ -169,7 +171,7 @@ Set >> difference: aCollection [
 	^ set
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Set >> do: aBlock [
 	tally = 0 ifTrue: [^ self].
 	1 to: array size do:
@@ -178,7 +180,7 @@ Set >> do: aBlock [
 		(each := array at: index) ifNotNil: [aBlock value: each enclosedElement]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Set >> fixCollisionsFrom: start [
 	"The element at start has been removed and replaced by nil.
 	This method moves forward from there, relocating any entries
@@ -192,7 +194,7 @@ Set >> fixCollisionsFrom: start [
 			array swap: index with: newIndex ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Set >> grow [
 	"Grow the elements array and reinsert the old elements"
 
@@ -200,19 +202,15 @@ Set >> grow [
 	oldElements := array.
 	array := Array new: (HashTableSizes atLeast: oldElements size * 2).
 	tally := 0.
-	oldElements
-		do:
-			[ :each |
-			each == nil
-				ifFalse: [ self noCheckAdd: each enclosedElement] ]
+	oldElements do: [ :element | element ifNotNil: [ self noCheckAdd: element enclosedElement ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Set >> includes: anObject [
 	^ (array at: (self findElementOrNil: anObject)) ~~ nil
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 Set >> intersection: aCollection [
 	"Answer the set theoretic intersection of two collections.
 	Optimized version for Sets where no intermediate Set is necessary"
@@ -229,7 +227,7 @@ Set >> intersection: aCollection [
 	^ outputSet
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Set >> isHealthy [
 	"Test that object hashes match their positions stored in set's array,
 	answer true if everything ok, false otherwise
@@ -244,7 +242,7 @@ Set >> isHealthy [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Set >> like: anObject [
 	"Answer an object in the receiver that is equal to anObject,
 	nil if no such object is found. Relies heavily on hash properties.
@@ -253,7 +251,7 @@ Set >> like: anObject [
 	^ self like: anObject ifAbsent: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Set >> like: anObject ifAbsent: aBlock [
 	"Answer an object in the receiver that is equal to anObject,
 	or evaluate the block if not found. Relies heavily on hash properties"
@@ -262,20 +260,20 @@ Set >> like: anObject ifAbsent: aBlock [
 	^ element ifNil: [ aBlock value ] ifNotNil: [ element enclosedElement ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Set >> max: aBlock [
 	self ifEmpty: [ ^ nil ].
 	^ self inject: 0 into: [ :max :each | (aBlock value: each) max: max ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Set >> noCheckAdd: anObject [
 	"This method should be deprecated"
 	array at: (self findElementOrNil: anObject) put: anObject asCollectionElement.
 	tally := tally + 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Set >> noCheckNoGrowFillFrom: anArray [
 	"Add the elements of anArray except nils to me assuming that I don't contain any of them, they are unique and I have more free space than they require."
 
@@ -286,18 +284,18 @@ Set >> noCheckNoGrowFillFrom: anArray [
 				put: object ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Set >> occurrencesOf: anObject [
 	^ (self includes: anObject) ifTrue: [1] ifFalse: [0]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Set >> postCopy [
 	super postCopy.
 	array := array copy
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Set >> rehash [
 	| newSelf |
 	newSelf := self species new: self size.
@@ -305,19 +303,19 @@ Set >> rehash [
 	array := newSelf array
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 Set >> remove: oldObject ifAbsent: aBlock [
 
 	| index |
 	index := self findElementOrNil: oldObject.
-	(array at: index) == nil ifTrue: [ ^ aBlock value ].
+	(array at: index) ifNil: [ ^ aBlock value ].
 	array at: index put: nil.
 	tally := tally - 1.
 	self fixCollisionsFrom: index.
 	^ oldObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Set >> scanFor: anObject [
 	"Scan the key array for the first slot containing either a nil (indicating an empty slot) or an element that matches anObject. Answer the index of that slot or raise an error if no slot is found. This method will be overridden in various subclasses that have different interpretations for matching elements."
 
@@ -331,7 +329,7 @@ Set >> scanFor: anObject [
 	self errorNoFreeSpace
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Set >> withArray: anArray [
 	"private -- for use only in copy"
 	"I want to get a conflict"

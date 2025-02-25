@@ -1,6 +1,6 @@
-Extension { #name : #StrikeFont }
+Extension { #name : 'StrikeFont' }
 
-{ #category : #'*System-Settings-Browser' }
+{ #category : '*System-Settings-Browser' }
 StrikeFont >> settingStoreOn: aStream [
 	aStream nextPut: $(.
 	aStream nextPutAll: self class name.

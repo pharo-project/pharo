@@ -1,56 +1,58 @@
 Class {
-	#name : #MetacelloSpecTestCase,
-	#superclass : #TestCase,
-	#category : #'Metacello-TestsCore-Specs'
+	#name : 'MetacelloSpecTestCase',
+	#superclass : 'TestCase',
+	#category : 'Metacello-TestsCore-Specs',
+	#package : 'Metacello-TestsCore',
+	#tag : 'Specs'
 }
 
-{ #category : #specs }
+{ #category : 'specs' }
 MetacelloSpecTestCase >> groupSpec [
     ^ self project groupSpec
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 MetacelloSpecTestCase >> packagesSpec [
     ^ self project packagesSpec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloSpecTestCase >> project [
     ^ self projectWith: #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloSpecTestCase >> projectClass [
     ^ MetacelloProject
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 MetacelloSpecTestCase >> projectReferenceSpec [
     ^ self project projectReferenceSpec
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 MetacelloSpecTestCase >> projectSpec [
     ^ self project projectSpec
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloSpecTestCase >> projectWith: projectAttributes [
-    | project |
-    "Construct Metacello project"
-    project := self projectClass new.
-    project projectAttributes: projectAttributes.
-    MetacelloVersionConstructor on: self project: project.
-    project loader: MetacelloNullRecordingMCSpecLoader new.
-    ^ project
+
+	| project |
+	"Construct Metacello project"
+	project := self projectClass new.
+	project projectAttributes: projectAttributes.
+	MetacelloVersionConstructor on: self project: project.
+	^ project
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 MetacelloSpecTestCase >> valueHolderSpec [
     ^ self project valueHolderSpec
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 MetacelloSpecTestCase >> versionSpec [
     ^ self project versionSpec
 ]

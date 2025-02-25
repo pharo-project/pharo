@@ -2,8 +2,8 @@
 I represent the chunk file format.  Right now I know how to parse chunks from a readStream, but not how to write them.
 "
 Class {
-	#name : #ChunkFileFormatParser,
-	#superclass : #Object,
+	#name : 'ChunkFileFormatParser',
+	#superclass : 'Object',
 	#instVars : [
 		'readStream',
 		'parsedDeclarations',
@@ -13,92 +13,94 @@ Class {
 		'methodsForSelector',
 		'reorganizeSelector'
 	],
-	#category : #'CodeImport-Utilities'
+	#category : 'CodeImport-Utilities',
+	#package : 'CodeImport',
+	#tag : 'Utilities'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ChunkFileFormatParser class >> for: aReadStream [
 	^self new
 		readStream: aReadStream;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChunkFileFormatParser >> addDeclaration: aDeclaration [
 	parsedDeclarations	 add: aDeclaration
 ]
 
-{ #category : #'class factory' }
+{ #category : 'class factory' }
 ChunkFileFormatParser >> classCommentChunkClass [
 	^ ClassCommentChunk
 ]
 
-{ #category : #'class factory' }
+{ #category : 'class factory' }
 ChunkFileFormatParser >> classOrganisationChunkClass [
 	^ ClassOrganizationChunk
 ]
 
-{ #category : #'custom points' }
+{ #category : 'custom points' }
 ChunkFileFormatParser >> classSelector [
 	^ classSelector
 ]
 
-{ #category : #'custom points' }
+{ #category : 'custom points' }
 ChunkFileFormatParser >> classSelector: anObject [
 	classSelector := anObject
 ]
 
-{ #category : #'custom points' }
+{ #category : 'custom points' }
 ChunkFileFormatParser >> classTraitSelector [
 	^ classTraitSelector
 ]
 
-{ #category : #'custom points' }
+{ #category : 'custom points' }
 ChunkFileFormatParser >> classTraitSelector: anObject [
 	classTraitSelector := anObject
 ]
 
-{ #category : #'custom points' }
+{ #category : 'custom points' }
 ChunkFileFormatParser >> commentStampSelector [
 	^ commentStampSelector
 ]
 
-{ #category : #'custom points' }
+{ #category : 'custom points' }
 ChunkFileFormatParser >> commentStampSelector: anObject [
 	commentStampSelector := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ChunkFileFormatParser >> defaultClassSelector [
 	^ #class
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ChunkFileFormatParser >> defaultClassTraitSelector [
 	^ #classTrait
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ChunkFileFormatParser >> defaultCommentStampSelector [
 	^ #commentStamp:
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ChunkFileFormatParser >> defaultMethodsForSelector [
 	^ #methodsFor:
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ChunkFileFormatParser >> defaultReorganizeSelector [
 	^ #reorganize
 ]
 
-{ #category : #'class factory' }
+{ #category : 'class factory' }
 ChunkFileFormatParser >> doItChunkClass [
 	^ DoItChunk
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ChunkFileFormatParser >> initialize [
 	super initialize.
 	parsedDeclarations := OrderedCollection new.
@@ -109,28 +111,28 @@ ChunkFileFormatParser >> initialize [
 	reorganizeSelector := self defaultReorganizeSelector
 ]
 
-{ #category : #'class factory' }
+{ #category : 'class factory' }
 ChunkFileFormatParser >> methodChunkClass [
 	^ MethodChunk
 ]
 
-{ #category : #'custom points' }
+{ #category : 'custom points' }
 ChunkFileFormatParser >> methodsForSelector [
 	^ methodsForSelector
 ]
 
-{ #category : #'custom points' }
+{ #category : 'custom points' }
 ChunkFileFormatParser >> methodsForSelector: anObject [
 	methodsForSelector := anObject
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 ChunkFileFormatParser >> parseChunks [
 	[ readStream atEnd ] whileFalse: [ self parseNextDeclaration ].
 	^ parsedDeclarations
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 ChunkFileFormatParser >> parseClassOrganization: classOrganizationPreamble [
 	"The comment preable is an array with the following structure:
 	If instance side method:
@@ -152,7 +154,7 @@ ChunkFileFormatParser >> parseClassOrganization: classOrganizationPreamble [
 				isMeta: isMeta)
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 ChunkFileFormatParser >> parseCommentDeclaration: commentPreamble [
 	"The comment preable is an array with the following structure:
 	If instance side method:
@@ -179,9 +181,10 @@ ChunkFileFormatParser >> parseCommentDeclaration: commentPreamble [
 				stamp: stamp)
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 ChunkFileFormatParser >> parseMethodDeclarations: methodsPreamble [
-	| behaviorName isMeta category stamp methodSource |
+
+	| behaviorName isMeta protocol stamp methodSource |
 	"The method preable is an array with the following structure:
 	If instance side method:
 
@@ -197,74 +200,67 @@ ChunkFileFormatParser >> parseMethodDeclarations: methodsPreamble [
 
 	"
 	behaviorName := methodsPreamble first.
-	isMeta := methodsPreamble second = self classSelector
-		or: [ methodsPreamble second = self classTraitSelector ].
-	category := isMeta
-		ifTrue: [ methodsPreamble at: 4 ]
-		ifFalse: [ methodsPreamble at: 3 ].
+	isMeta := methodsPreamble second = self classSelector or: [ methodsPreamble second = self classTraitSelector ].
+	protocol := isMeta
+		            ifTrue: [ methodsPreamble at: 4 ]
+		            ifFalse: [ methodsPreamble at: 3 ].
 	stamp := ''.
-	methodsPreamble size > 4
-		ifTrue:
-			[
-			stamp := isMeta
-				ifTrue: [ methodsPreamble at: 6 ]
-				ifFalse: [ methodsPreamble at: 5 ] ].
+	methodsPreamble size > 4 ifTrue: [
+		stamp := isMeta
+			         ifTrue: [ methodsPreamble at: 6 ]
+			         ifFalse: [ methodsPreamble at: 5 ] ].
 	[
 	methodSource := readStream next.
-	methodSource notEmpty ]
-		whileTrue:
-			[
-			self
-				addDeclaration:
-					(self methodChunkClass
-						contents: methodSource
-						behaviorName: behaviorName asSymbol
-						isMeta: isMeta
-						category: category
-						stamp: stamp) ]
+	methodSource isNotEmpty ] whileTrue: [
+		self addDeclaration: (self methodChunkClass
+				 contents: methodSource
+				 behaviorName: behaviorName asSymbol
+				 isMeta: isMeta
+				 protocol: protocol
+				 stamp: stamp) ]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 ChunkFileFormatParser >> parseNextDeclaration [
+
 	| isMetadata nextChunk |
 	readStream skipSeparators.
-	readStream isNextStyleChunk
-		ifTrue:
-			[
-			self addDeclaration: (self styleChunkClass contents: readStream readUpToEndOfStyleChunk).
-			^ self ].
+	readStream isNextStyleChunk ifTrue: [
+		self addDeclaration:
+			(self styleChunkClass contents: readStream readUpToEndOfStyleChunk).
+		^ self ].
 	isMetadata := readStream isNextChunkMetaData.
 	nextChunk := readStream next.
 	isMetadata
-		ifFalse: [ self addDeclaration: (self doItChunkClass contents: nextChunk) ]
-		ifTrue:
-			[
+		ifFalse: [
+		self addDeclaration: (self doItChunkClass contents: nextChunk) ]
+		ifTrue: [
 			| substrings |
-			substrings := nextChunk parseLiterals.
-			(substrings includes: self methodsForSelector asString)
-				ifTrue: [ ^ self parseMethodDeclarations: substrings ].
-			(substrings includes: self commentStampSelector asString)
-				ifTrue: [ ^ self parseCommentDeclaration: substrings ].
-			(substrings includes: self reorganizeSelector asString)
-				ifTrue: [ ^ self parseClassOrganization: substrings ] ]
+			substrings := OCParser parseLiterals: nextChunk.
+			(substrings includes: self methodsForSelector asString) ifTrue: [
+				^ self parseMethodDeclarations: substrings ].
+			(substrings includes: self commentStampSelector asString) ifTrue: [
+				^ self parseCommentDeclaration: substrings ].
+			(substrings includes: self reorganizeSelector asString) ifTrue: [
+				^ self parseClassOrganization: substrings ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ChunkFileFormatParser >> readStream: aReadStream [
 	readStream := ChunkReadStream on: aReadStream
 ]
 
-{ #category : #'custom points' }
+{ #category : 'custom points' }
 ChunkFileFormatParser >> reorganizeSelector [
 	^ reorganizeSelector
 ]
 
-{ #category : #'custom points' }
+{ #category : 'custom points' }
 ChunkFileFormatParser >> reorganizeSelector: anObject [
 	reorganizeSelector := anObject
 ]
 
-{ #category : #'class factory' }
+{ #category : 'class factory' }
 ChunkFileFormatParser >> styleChunkClass [
 	^ StyleChunk
 ]

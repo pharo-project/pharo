@@ -1,6 +1,6 @@
-Extension { #name : #UIManager }
+Extension { #name : 'UIManager' }
 
-{ #category : #'*Regex-Core' }
+{ #category : '*Regex-Core' }
 UIManager >> request: aTitleString regex: initialRegexString [
 	"Prompt the user for a valid regex.
 	 Return nil on cancel or a valid RxMatcher"
@@ -8,7 +8,7 @@ UIManager >> request: aTitleString regex: initialRegexString [
 	regex := initialRegexString.
 	"loop until we get a valid regex string back"
 	[
-		regex := UIManager default
+		regex := self
 			multiLineRequest: aTitleString
 			initialAnswer: regex
 			answerHeight: 200.

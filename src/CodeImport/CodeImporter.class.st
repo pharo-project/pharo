@@ -40,81 +40,83 @@ Instances of me can be created through
 `#fileStream:`  
 "
 Class {
-	#name : #CodeImporter,
-	#superclass : #Object,
+	#name : 'CodeImporter',
+	#superclass : 'Object',
 	#instVars : [
 		'readStream',
 		'codeDeclarations',
 		'parserClass',
 		'logSource'
 	],
-	#category : #'CodeImport-Base'
+	#category : 'CodeImport-Base',
+	#package : 'CodeImport',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CodeImporter class >> chunksFromFileNamed: aFileName [
 	^ (self fileNamed: aFileName)
 			parseChunks;
 			codeDeclarations
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CodeImporter class >> chunksFromStream: aStream [
 	^ (self fileStream: aStream)
 			parseChunks;
 			codeDeclarations
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 CodeImporter class >> evaluateFileNamed: aFileName [
 	^(self fileNamed: aFileName) evaluateDeclarations
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 CodeImporter class >> evaluateFileStream: aFileStream [
 	^(self fileStream: aFileStream) evaluateDeclarations
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 CodeImporter class >> evaluateReadStream: aReadStream [
 	^(self readStream: aReadStream) evaluateDeclarations
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 CodeImporter class >> evaluateString: aString [
 	^(self fromString: aString) evaluateDeclarations
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CodeImporter class >> fileNamed: aFileName [
 	^ self new file: (aFileName asFileReference readStream)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CodeImporter class >> fileStream: aFileStream [
 	^self new
 		file: aFileStream;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CodeImporter class >> fromString: aByteString [
 	^self readStream: aByteString readStream
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CodeImporter class >> readStream: aReadStream [
 	^self new
 		readStream: aReadStream;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodeImporter >> codeDeclarations [
 	^codeDeclarations
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 CodeImporter >> evaluate [
 	" stripped down version of evaluateDeclarations"
 	| value |
@@ -125,7 +127,7 @@ CodeImporter >> evaluate [
 	^value
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 CodeImporter >> evaluateDeclarations [
 	"Evaluates the declarations from the text in the file and answers the last result"
 
@@ -133,37 +135,37 @@ CodeImporter >> evaluateDeclarations [
 	^ self evaluate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodeImporter >> file: aFileStream [
 	self readStream: aFileStream
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 CodeImporter >> flushChangesFile [
 	"Yes, we need to do this in order to flush the file, puaj"
 	logSource ifTrue: [
 		ChangesLog default logChange: '----End fileIn----']
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CodeImporter >> initialize [
 	codeDeclarations := OrderedCollection new.
 	parserClass := ChunkFileFormatParser.
 	logSource := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodeImporter >> logSource: aBoolean [
 
 	logSource := aBoolean
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 CodeImporter >> parseChunks [
 	^ codeDeclarations := (parserClass for: readStream) parseChunks
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CodeImporter >> readStream: aReadStream [
 	readStream := aReadStream
 ]

@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfKernelTests,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfKernelTests
+	#name : 'BaselineOfKernelTests',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfKernelTests',
+	#package : 'BaselineOfKernelTests'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfKernelTests >> baseline: spec [
 	<baseline>
 	spec for: #'common' do: [
@@ -13,6 +14,7 @@ BaselineOfKernelTests >> baseline: spec [
 
 			package: 	'Collections-Abstract-Tests';					
 			package: 	'Collections-Atomic-Tests';
+			package: 'Collections-Native-Tests';	
 			package:	'Collections-Sequenceable-Tests';
 			package: 	'Collections-Stack-Tests';	
 			package: 	'Collections-Streams-Tests';		
@@ -20,22 +22,25 @@ BaselineOfKernelTests >> baseline: spec [
 			package: 	'Collections-Support-Tests';								
 			package: 	'Collections-Unordered-Tests';
 			package: 	'Collections-Weak-Tests' with: [ spec requires: #('Collections-Unordered-Tests') ];					
-			package: 	'Collections-Tests' with: [ spec requires: #('Collections-Abstract-Tests' 'Collections-Atomic-Tests' 'Collections-Sequenceable-Tests'  
+			package: 	'Collections-Tests' with: [ spec requires: #('Collections-Abstract-Tests' 'Collections-Atomic-Tests' 'Collections-Native-Tests' 'Collections-Sequenceable-Tests'  
 					   'Collections-Streams-Tests' 'Collections-Strings-Tests' 'Collections-Support-Tests' 'Collections-Stack-Tests' 'Collections-Weak-Tests') ];
 			package: 	'Kernel-Tests'; 
-			package: 	'Kernel-Tests-Extended' ;
-			package: 	'Kernel-Tests-WithCompiler';
+			package: 	'Kernel-Extended-Tests' ;
+			package: 	'System-Time-Tests' ;
+			package: 	'Kernel-Tests-WithCompiler' with: [
+				spec requires: #( 'System-Time-Tests' 'Kernel-Tests' )
+			];
 			package: 	'Announcements-Core-Tests';
 			package: 	'Compression-Tests'; 
-			package: 	'FileSystem-Tests-Core' with: [ spec requires: #('Collections-Tests') ];
-			package: 	'FileSystem-Tests-Disk';
+			package: 	'FileSystem-Core-Tests' with: [ spec requires: #('Collections-Tests') ];
+			package: 	'FileSystem-Disk-Tests';
 			package: 	'FileSystem-Tests-Attributes';
 			package: 	'Files-Tests' ;
 			package: 	'Jobs-Tests' ;
 			package: 	'AST-Core-Tests';
 			package: 	'OpalCompiler-Tests' with: [ spec requires: #('AST-Core-Tests') ];
 			package: 	'Random-Tests';
-			package: 	'Ring-Definitions-Tests-Core';
+			package: 	'Ring-Definitions-Core-Tests';
 			package: 	'Ring-Definitions-Tests-Containers'; 
 			package: 	'System-Object Events-Tests';
 			package: 	'System-OSEnvironments-Tests';

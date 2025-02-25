@@ -10,21 +10,23 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #ClyMoveMethodGroupToClassCommand,
-	#superclass : #ClyMethodGroupCommand,
+	#name : 'ClyMoveMethodGroupToClassCommand',
+	#superclass : 'ClyMethodGroupCommand',
 	#instVars : [
 		'targetClass'
 	],
-	#category : #'Calypso-SystemTools-FullBrowser-Commands-MethodGroups'
+	#category : 'Calypso-SystemTools-FullBrowser-Commands-MethodGroups',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'Commands-MethodGroups'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMoveMethodGroupToClassCommand class >> canBeExecutedInContext: aToolContext [
 
 	^aToolContext isSelectedMethodGroupEditable
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyMoveMethodGroupToClassCommand class >> fullBrowserDragAndDropActivation [
 	<classAnnotation>
 
@@ -33,7 +35,7 @@ ClyMoveMethodGroupToClassCommand class >> fullBrowserDragAndDropActivation [
 		toDropIn: ClyClass asCalypsoItemContext
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyMoveMethodGroupToClassCommand >> execute [
 
 	| moveCommand |
@@ -43,14 +45,14 @@ ClyMoveMethodGroupToClassCommand >> execute [
 		each removeWithMethods]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyMoveMethodGroupToClassCommand >> prepareExecutionInDropContext: aToolContext [
 	super prepareExecutionInDropContext: aToolContext.
 	targetClass := aToolContext lastSelectedClass.
 	targetClass := aToolContext currentMetaLevelOf: targetClass
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyMoveMethodGroupToClassCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 
@@ -58,12 +60,12 @@ ClyMoveMethodGroupToClassCommand >> prepareFullExecutionInContext: aToolContext 
 	targetClass := aToolContext currentMetaLevelOf: targetClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMoveMethodGroupToClassCommand >> targetClass [
 	^ targetClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMoveMethodGroupToClassCommand >> targetClass: anObject [
 	targetClass := anObject
 ]

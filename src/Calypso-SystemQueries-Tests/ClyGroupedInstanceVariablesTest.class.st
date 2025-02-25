@@ -1,15 +1,17 @@
 Class {
-	#name : #ClyGroupedInstanceVariablesTest,
-	#superclass : #ClyGroupedVariablesTest,
-	#category : #'Calypso-SystemQueries-Tests-Results'
+	#name : 'ClyGroupedInstanceVariablesTest',
+	#superclass : 'ClyGroupedVariablesTest',
+	#category : 'Calypso-SystemQueries-Tests-Results',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Results'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyGroupedInstanceVariablesTest >> createQueryResult [
 	^ClyGroupedInstanceVariablesResult withHierarchy: ClySubclassHierarchy new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyGroupedInstanceVariablesTest >> testFillingWithClassAndSuperclassVariables [
 
 	queryResult fillWith: {
@@ -24,7 +26,7 @@ ClyGroupedInstanceVariablesTest >> testFillingWithClassAndSuperclassVariables [
 	self assertVars: #(#instanceSideVar1 #instanceSideVar2 #subclassN1Var #subclassSameVar)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyGroupedInstanceVariablesTest >> testFillingWithEmptyList [
 
 	queryResult fillWith: { }.
@@ -32,7 +34,7 @@ ClyGroupedInstanceVariablesTest >> testFillingWithEmptyList [
 	self assertItems: {ClyAllMethodGroup. 0}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyGroupedInstanceVariablesTest >> testFillingWithOneInstVarAndTwoClassVarsOfSameClass [
 
 	queryResult fillWith: {
@@ -45,7 +47,7 @@ ClyGroupedInstanceVariablesTest >> testFillingWithOneInstVarAndTwoClassVarsOfSam
 	self assertVars: #(#instVar)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyGroupedInstanceVariablesTest >> testFillingWithSingleClassVar [
 
 	| classVarGroup |
@@ -62,7 +64,7 @@ ClyGroupedInstanceVariablesTest >> testFillingWithSingleClassVar [
 		equals: queryResult hierarchy
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyGroupedInstanceVariablesTest >> testFillingWithSingleInstVar [
 
 	| classVarGroup allClassVarGroup |
@@ -80,7 +82,7 @@ ClyGroupedInstanceVariablesTest >> testFillingWithSingleInstVar [
 	self assert: allClassVarGroup methodQuery variableQuery class equals: ClyAllInstanceVariablesQuery
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyGroupedInstanceVariablesTest >> testFillingWithTwoEqualVarsOfDifferentSubclassesAndOneVarOfSuperclass [
 
 	queryResult fillWith: {
@@ -95,7 +97,7 @@ ClyGroupedInstanceVariablesTest >> testFillingWithTwoEqualVarsOfDifferentSubclas
 	self assertVars: #(#instanceSideVar2 #subclassSameVar #subclassSameVar)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyGroupedInstanceVariablesTest >> testFillingWithTwoInstVarsOfSameClass [
 	| variables |
 	variables := {

@@ -44,8 +44,8 @@ Internal Representation and Key Implementation Points.
 	waitingNewState:		<Boolean>
 "
 Class {
-	#name : #ClyNavigationHistory,
-	#superclass : #Object,
+	#name : 'ClyNavigationHistory',
+	#superclass : 'Object',
 	#instVars : [
 		'undoList',
 		'redoList',
@@ -53,35 +53,37 @@ Class {
 		'redoExecuting',
 		'waitingNewState'
 	],
-	#category : #'Calypso-Browser-NavigationHistory'
+	#category : 'Calypso-Browser-NavigationHistory',
+	#package : 'Calypso-Browser',
+	#tag : 'NavigationHistory'
 }
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyNavigationHistory >> clear [
 
 	undoList removeAll.
 	redoList removeAll
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNavigationHistory >> executeRedoBy: aBlock [
 	redoExecuting := true.
 	aBlock ensure: [ redoExecuting := false. waitingNewState := true ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNavigationHistory >> executeUndoBy: aBlock [
 	undoExecuting := true.
 	aBlock ensure: [ undoExecuting := false. waitingNewState := true ]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyNavigationHistory >> ignoreNavigationDuring: aBlock [
 	waitingNewState := false.
 	aBlock ensure: [ waitingNewState := true ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyNavigationHistory >> initialize [
 	super initialize.
 	undoExecuting := false.
@@ -91,12 +93,12 @@ ClyNavigationHistory >> initialize [
 	redoList := OrderedCollection new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyNavigationHistory >> isEmpty [
 	^undoList isEmpty and: [redoList isEmpty]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyNavigationHistory >> recordAcrossWindowNavigationFrom: aBrowser byUndo: isUndoOperation [
 
 	| returnState |
@@ -106,7 +108,7 @@ ClyNavigationHistory >> recordAcrossWindowNavigationFrom: aBrowser byUndo: isUnd
 		ifFalse: [ self executeRedoBy: [ self recordState: returnState ] ]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyNavigationHistory >> recordState: aBrowserState [
 	aBrowserState representsConcreteQuery ifFalse: [ ^self ].
 	waitingNewState ifFalse: [ ^self ].
@@ -123,17 +125,17 @@ ClyNavigationHistory >> recordState: aBrowserState [
 			undoList add: aBrowserState ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNavigationHistory >> redoList [
 	^ redoList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNavigationHistory >> redoList: anObject [
 	redoList := anObject
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyNavigationHistory >> redoNavigationOf: aBrowser [
 	redoList ifEmpty: [ ^self ].
 
@@ -141,23 +143,23 @@ ClyNavigationHistory >> redoNavigationOf: aBrowser [
 		self restoreNavigationState: redoList removeLast of: aBrowser]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNavigationHistory >> restoreNavigationState: aBrowserState of: aBrowser [
 
 	aBrowserState applyTo: aBrowser byUndo: undoExecuting
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNavigationHistory >> undoList [
 	^ undoList
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNavigationHistory >> undoList: anObject [
 	undoList := anObject
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyNavigationHistory >> undoNavigationOf: aBrowser [
 	undoList ifEmpty: [ ^self ].
 

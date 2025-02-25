@@ -1,12 +1,12 @@
-Extension { #name : #CompiledMethod }
+Extension { #name : 'CompiledMethod' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 CompiledMethod >> fuelAccept: aGeneralMapper [
 
 	^aGeneralMapper visitCompiledMethod: self
 ]
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 CompiledMethod >> fuelPrepare [
 	"Prepare for Fuel serialization."
 	

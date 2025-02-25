@@ -1,1 +1,1 @@
-Package { #name : #MonticelloRemoteRepositories }
+Package { #name : 'MonticelloRemoteRepositories' }

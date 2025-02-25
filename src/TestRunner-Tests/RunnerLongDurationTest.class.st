@@ -1,13 +1,15 @@
 Class {
-	#name : #RunnerLongDurationTest,
-	#superclass : #TestCase,
+	#name : 'RunnerLongDurationTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'runner'
 	],
-	#category : #'TestRunner-Tests-Core'
+	#category : 'TestRunner-Tests-Core',
+	#package : 'TestRunner-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 RunnerLongDurationTest >> setUp [
 
 	super setUp.
@@ -15,7 +17,7 @@ RunnerLongDurationTest >> setUp [
 		          ShuffleSuitePreparator
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RunnerLongDurationTest >> testRunningFromACollectionOfPackages [
 
 	"first execution"
@@ -29,7 +31,7 @@ RunnerLongDurationTest >> testRunningFromACollectionOfPackages [
 	self assert: runner passedCount equals: 79 * 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 RunnerLongDurationTest >> testRunningFromAPackage [
 
 	"first execution"

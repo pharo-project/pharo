@@ -2,32 +2,34 @@
 I reify the receiver of a Message or a method
 "
 Class {
-	#name : #RFReceiverReification,
-	#superclass : #RFReification,
-	#category : #'Reflectivity-Reifications'
+	#name : 'RFReceiverReification',
+	#superclass : 'RFReification',
+	#category : 'Reflectivity-Reifications',
+	#package : 'Reflectivity',
+	#tag : 'Reifications'
 }
 
-{ #category : #'plugin interface' }
+{ #category : 'plugin interface' }
 RFReceiverReification class >> entities [
-	^{RBMethodNode. RBMessageNode}
+	^{OCMethodNode. OCMessageNode}
 ]
 
-{ #category : #'plugin interface' }
+{ #category : 'plugin interface' }
 RFReceiverReification class >> key [
 	^#receiver
 ]
 
-{ #category : #generate }
-RFReceiverReification >> genForRBMessageNode [
-	^RBVariableNode named: #RFReceiverReificationVar
+{ #category : 'generate' }
+RFReceiverReification >> genForASTMessageNode [
+	^OCVariableNode named: #RFReceiverReificationVar
 ]
 
-{ #category : #generate }
-RFReceiverReification >> genForRBMethodNode [
-	^RBVariableNode selfNode
+{ #category : 'generate' }
+RFReceiverReification >> genForASTMethodNode [
+	^OCVariableNode selfNode
 ]
 
-{ #category : #preamble }
+{ #category : 'preamble' }
 RFReceiverReification >> preambleForMessage: aNode [
 	| preamble |
 	preamble := OrderedCollection new.
@@ -42,7 +44,7 @@ RFReceiverReification >> preambleForMessage: aNode [
 		(1 to: aNode numArgs) withIndexDo: [:each :index |
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
-			preamble add:  (RBVariableNode named: name).
+			preamble add:  (OCVariableNode named: name).
 	].
 
 	^ preamble

@@ -1,10 +1,12 @@
 Class {
-	#name : #ReTestClassNotInPackageWithTestEndingNameTest,
-	#superclass : #ReTestBasedTestCase,
-	#category : #'SUnit-Rules-Tests-Base'
+	#name : 'ReTestClassNotInPackageWithTestEndingNameTest',
+	#superclass : 'ReTestBasedTestCase',
+	#category : 'SUnit-Rules-Tests-Base',
+	#package : 'SUnit-Rules-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReTestClassNotInPackageWithTestEndingNameTest >> testBasicCheck [
 	
 	"test in wrong package raises critic"
@@ -12,7 +14,7 @@ ReTestClassNotInPackageWithTestEndingNameTest >> testBasicCheck [
 		assert: (testClass critiques anySatisfy: [ :critic | critic rule class = ReTestClassNotInPackageWithTestEndingNameRule ]).
 	
 	"move to correct package"
-	validTestPackage importClass: testClass.
+	validTestPackage addClass: testClass.
 	
 	self
 		assert: (testClass critiques noneSatisfy: [ :critic | critic rule class = ReTestClassNotInPackageWithTestEndingNameRule ])

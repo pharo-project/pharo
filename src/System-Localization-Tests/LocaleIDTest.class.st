@@ -2,31 +2,33 @@
 A unit test class for class LocaleID
 "
 Class {
-	#name : #LocaleIDTest,
-	#superclass : #TestCase,
-	#category : #'System-Localization-Tests-Locales'
+	#name : 'LocaleIDTest',
+	#superclass : 'TestCase',
+	#category : 'System-Localization-Tests-Locales',
+	#package : 'System-Localization-Tests',
+	#tag : 'Locales'
 }
 
-{ #category : #'tests - test data' }
+{ #category : 'tests - test data' }
 LocaleIDTest >> frenchLocaleID [
 
 	^LocaleID isoLanguage: 'fr'
 ]
 
-{ #category : #'tests - test data' }
+{ #category : 'tests - test data' }
 LocaleIDTest >> germanLocaleID [
 
 	^LocaleID isoLanguage: 'de'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LocaleIDTest >> testComparision [
 
 	self deny: self germanLocaleID equals: self frenchLocaleID.
 	self assert: self germanLocaleID equals: self germanLocaleID
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LocaleIDTest >> testFromISOString [
 
 	| locale |
@@ -36,7 +38,7 @@ LocaleIDTest >> testFromISOString [
 		assert: locale isoCountry equals: 'us'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LocaleIDTest >> testFromSingleISOString [
 
 	| locale |
@@ -46,14 +48,14 @@ LocaleIDTest >> testFromSingleISOString [
 		assert: locale isoCountry isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LocaleIDTest >> testHashing [
 
 	self assert: self germanLocaleID hash equals: self germanLocaleID hash.
 	self assert: self frenchLocaleID hash equals: self frenchLocaleID hash
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LocaleIDTest >> testInstanceCreationWithISOLanguage [
 
 	|germanLocale|
@@ -61,7 +63,7 @@ LocaleIDTest >> testInstanceCreationWithISOLanguage [
 	self assert: germanLocale isoLanguage equals: 'de'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LocaleIDTest >> testInstanceCreationWithISOLanguageAndCountry [
 
 	|locale|
@@ -71,7 +73,7 @@ LocaleIDTest >> testInstanceCreationWithISOLanguageAndCountry [
 		assert: locale isoCountry equals: 'CN'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LocaleIDTest >> testPosixNameConversion [
 
 	| locale |
@@ -81,7 +83,7 @@ LocaleIDTest >> testPosixNameConversion [
 		assert: locale isoCountry equals: 'us'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LocaleIDTest >> testPrintString [
 
 	| locale |

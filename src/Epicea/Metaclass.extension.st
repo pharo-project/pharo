@@ -1,6 +1,6 @@
-Extension { #name : #Metaclass }
+Extension { #name : 'Metaclass' }
 
-{ #category : #'*Epicea-Ring' }
+{ #category : '*Epicea-Ring' }
 Metaclass >> asEpiceaRingDefinition [
 
 	| baseClassDefinition |

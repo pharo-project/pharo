@@ -4,13 +4,15 @@ I represent an ArrayedCollection whose elements are integers between 0 and 255.
 For further comments read comments of `WordArray`.
 "
 Class {
-	#name : #ByteArray,
-	#superclass : #ArrayedCollection,
-	#type : #bytes,
-	#category : #'Collections-Native-Base'
+	#name : 'ByteArray',
+	#superclass : 'ArrayedCollection',
+	#type : 'bytes',
+	#category : 'Collections-Native-Base',
+	#package : 'Collections-Native',
+	#tag : 'Base'
 }
 
-{ #category : #'byte based hash' }
+{ #category : 'byte based hash' }
 ByteArray class >> hashBytes: aByteArray startingWith: speciesHash [
 	"Answer the hash of a byte-indexed collection,
 	using speciesHash as the initial value.
@@ -36,24 +38,62 @@ ByteArray class >> hashBytes: aByteArray startingWith: speciesHash [
 	^ hash
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ByteArray class >> readHexFrom: aString [
 	"Create a byte array from a hexadecimal representation"
 	^(self new: aString size // 2) readHexFrom: aString readStream
 ]
 
-{ #category : #converting }
+{ #category : 'comparing' }
+ByteArray >> = anotherByteArray [
+
+	<primitive: 156>
+	^ super = anotherByteArray
+]
+
+{ #category : 'converting' }
 ByteArray >> asByteArray [
 	^ self
 ]
 
-{ #category : #private }
+{ #category : 'converting' }
+ByteArray >> asByteArrayOfSize: size [
+	"
+		'34523' asByteArray asByteArrayOfSize: 100.
+
+	(((
+		| repeats bytes |
+		repeats := 1000000.
+		bytes := '123456789123456789123456789123456789123456789123456789' asByteArray.
+		 [repeats timesRepeat: (bytes asByteArrayOfSize: 1024) ] timeToRun.
+	)))"
+
+	| bytes |
+	size < self size
+		ifTrue: [^ self error: 'bytearray bigger than ', size asString].
+	bytes := self asByteArray.
+	^ (ByteArray new: (size - bytes size)), bytes
+]
+
+{ #category : 'private' }
 ByteArray >> asByteArrayPointer [
 	"Return a ByteArray describing a pointer to the contents of the receiver."
 	^self shouldNotImplement
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
+ByteArray >> asInteger [
+	"Convert me to an Integer, network byte order, most significant byte first, big endian"
+
+	| integer |
+	integer := 0.
+	1 to: self size do: [ :index |
+		"we use inlined to:do: instead of #withIndexDo:"
+		integer := integer + ((self at: index) bitShift: (self size - index) * 8) ].
+	^ integer
+]
+
+{ #category : 'converting' }
 ByteArray >> asString [
 	"Convert to a String with Characters for each byte.
 	Fast code uses primitive that avoids character conversion"
@@ -61,13 +101,13 @@ ByteArray >> asString [
 	^ (String new: self size) replaceFrom: 1 to: self size with: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ByteArray >> asWideString [
 
 	^ WideString fromByteArray: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ByteArray >> atAllPut: value [
 	"Fill the receiver with the given value"
 
@@ -75,30 +115,44 @@ ByteArray >> atAllPut: value [
 	super atAllPut: value
 ]
 
-{ #category : #accessing }
+{ #category : 'bit manipulation' }
+ByteArray >> bitXor: aByteArray [
+	| answer |
+	answer := self copy.
+	1
+		to: (self size min: aByteArray size)
+		do:
+			[ :each |
+			answer
+				at: each
+				put: ((self at: each) bitXor: (aByteArray at: each)) ].
+	^ answer
+]
+
+{ #category : 'accessing' }
 ByteArray >> byteAt: index [
 	<primitive: 60>
 	^self at: index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ByteArray >> byteAt: index put: value [
 	<primitive: 61>
 	^self at: index put: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ByteArray >> byteSize [
 	^self size
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ByteArray >> defaultElement [
 
 	^0
 ]
 
-{ #category : #'platform independent access' }
+{ #category : 'platform independent access' }
 ByteArray >> doubleAt: index bigEndian: bool [
 	"Return a 64 bit float starting from the given byte index"
 	| w1 w2 dbl |
@@ -113,7 +167,7 @@ ByteArray >> doubleAt: index bigEndian: bool [
 	^ dbl
 ]
 
-{ #category : #'platform independent access' }
+{ #category : 'platform independent access' }
 ByteArray >> doubleAt: index put: value bigEndian: bool [
 	"Store a 64 bit float starting from the given byte index"
 	| w1 w2 |
@@ -127,13 +181,13 @@ ByteArray >> doubleAt: index put: value bigEndian: bool [
 	^ value
 ]
 
-{ #category : #'platform independent access' }
+{ #category : 'platform independent access' }
 ByteArray >> floatAt: index bigEndian: boolean [
 	^ Float
 		fromIEEE32Bit: (self unsignedLongAt: index bigEndian: boolean)
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ByteArray >> hash [
 	"#hash is implemented, because #= is implemented"
 
@@ -142,7 +196,7 @@ ByteArray >> hash [
 		startingWith: self species hash
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ByteArray >> hex [
 	"Answer a lowercase hexadecimal String representation of the receiver"
 
@@ -152,7 +206,7 @@ ByteArray >> hex [
 			self do: [ :each | each printLowercaseHexByteOn: out ] ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ByteArray >> hexDumpOn: aStream max: maxBytes [
 	"Print a hex dump of the receiver on the supplied stream, up to maxBytes long"
 
@@ -161,7 +215,7 @@ ByteArray >> hexDumpOn: aStream max: maxBytes [
 	i := 0.
 	self readStreamDo: [ :stream |
 		ch := stream next.
-		[ch notNil and: [ i < maxBytes ]] whileTrue: [
+		[ch isNotNil and: [ i < maxBytes ]] whileTrue: [
 			remainder := i \\ 16.
 			remainder = 0 ifTrue: [
 				i = 0 ifFalse: [ aStream cr ].
@@ -196,21 +250,27 @@ ByteArray >> hexDumpOn: aStream max: maxBytes [
 			[ aStream nextPutAll: '  ... truncated ...'; cr ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ByteArray >> indexOf: anInteger startingAt: start [
 
 	(anInteger isInteger and: [ anInteger between: 0 and: 255 ]) ifFalse: [ ^ 0 ].
 	^ByteString indexOfAscii: anInteger inString: self startingAt: start
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ByteArray >> isLiteral [
 	"so that #(1 #[1 2 3] 5) prints itself"
 	""
 	^ self class == ByteArray
 ]
 
-{ #category : #'platform independent access' }
+{ #category : 'comparing' }
+ByteArray >> literalEqual: other [
+
+	^ self class == other class and: [self = other]
+]
+
+{ #category : 'platform independent access' }
 ByteArray >> longAt: index bigEndian: aBool [
 	"Return a 32bit integer quantity starting from the given byte index"
 	| b0 b1 b2 w h |
@@ -232,7 +292,7 @@ ByteArray >> longAt: index bigEndian: aBool [
 	^w
 ]
 
-{ #category : #'platform independent access' }
+{ #category : 'platform independent access' }
 ByteArray >> longAt: index put: value bigEndian: aBool [
 	"Return a 32bit integer quantity starting from the given byte index"
 	| b0 b1 b2 b3 |
@@ -256,7 +316,7 @@ ByteArray >> longAt: index put: value bigEndian: aBool [
 	^value
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ByteArray >> printHexOn: characterWriteStream [
 	"Print a hexadecimal representation of the receiver on characterWriteStream
 	using exactly 2 characters for each byte"
@@ -264,7 +324,7 @@ ByteArray >> printHexOn: characterWriteStream [
 	self do: [ :each | each printHexByteOn: characterWriteStream ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ByteArray >> printOn: aStream [
 
 	aStream nextPutAll: '#['.
@@ -274,7 +334,7 @@ ByteArray >> printOn: aStream [
 	aStream nextPut: $]
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ByteArray >> putOn: aStream [
 	"Write the receiver onto aStream by iterating over its elements.
 	In general we assume aStream accepts the receiver's elements as element type.
@@ -284,7 +344,7 @@ ByteArray >> putOn: aStream [
 	aStream nextPutAll: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ByteArray >> readHexFrom: characterReadStream [
 	"Initialize the receiver from a hexadecimal representation."
 
@@ -292,7 +352,7 @@ ByteArray >> readHexFrom: characterReadStream [
 		self at: offset put: (Integer readHexByteFrom: characterReadStream) ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ByteArray >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	"Primitive. This destructively replaces elements from start to stop in the receiver starting at index, repStart, in the collection, replacement. Answer the receiver. Range checks are performed in the primitive only. Optional. See Object documentation whatIsAPrimitive."
 	<primitive: 105>
@@ -308,7 +368,7 @@ ByteArray >> replaceFrom: start to: stop with: replacement startingAt: repStart 
 				whileTrue: [self at: index put: (replacement byteAt: repOff + index)]]
 ]
 
-{ #category : #'platform independent access' }
+{ #category : 'platform independent access' }
 ByteArray >> shortAt: index bigEndian: aBool [
 	"Return a 16 bit integer quantity starting from the given byte index"
 	| uShort |
@@ -316,14 +376,14 @@ ByteArray >> shortAt: index bigEndian: aBool [
 	^(uShort bitAnd: 16r7FFF) - (uShort bitAnd: 16r8000)
 ]
 
-{ #category : #'platform independent access' }
+{ #category : 'platform independent access' }
 ByteArray >> shortAt: index put: value bigEndian: aBool [
 	"Store a 16 bit integer quantity starting from the given byte index"
 	self unsignedShortAt: index put: (value bitAnd: 16r7FFF) - (value bitAnd: -16r8000) bigEndian: aBool.
 	^value
 ]
 
-{ #category : #printing }
+{ #category : 'storing' }
 ByteArray >> storeOn: aStream [
 	aStream nextPutAll: '#['.
 	self
@@ -332,7 +392,7 @@ ByteArray >> storeOn: aStream [
 	aStream nextPut: $]
 ]
 
-{ #category : #'platform independent access' }
+{ #category : 'platform independent access' }
 ByteArray >> unsignedLongAt: index bigEndian: aBool [
 	"Return a 32bit unsigned integer quantity starting from the given byte index"
 	| b0 b1 b2 w |
@@ -354,7 +414,7 @@ ByteArray >> unsignedLongAt: index bigEndian: aBool [
 	^w
 ]
 
-{ #category : #'platform independent access' }
+{ #category : 'platform independent access' }
 ByteArray >> unsignedLongAt: index put: value bigEndian: aBool [
 	"Store a 32bit unsigned integer quantity starting from the given byte index"
 	| b0 b1 b2 b3 |
@@ -376,7 +436,7 @@ ByteArray >> unsignedLongAt: index put: value bigEndian: aBool [
 	^value
 ]
 
-{ #category : #'platform independent access' }
+{ #category : 'platform independent access' }
 ByteArray >> unsignedShortAt: index bigEndian: aBool [
 	"Return a 16 bit unsigned integer quantity starting from the given byte index"
 	^aBool
@@ -384,7 +444,7 @@ ByteArray >> unsignedShortAt: index bigEndian: aBool [
 		ifFalse:[((self at: index+1) bitShift: 8) + (self at: index)]
 ]
 
-{ #category : #'platform independent access' }
+{ #category : 'platform independent access' }
 ByteArray >> unsignedShortAt: index put: value bigEndian: aBool [
 	"Store a 16 bit unsigned integer quantity starting from the given byte index"
 	aBool ifTrue:[

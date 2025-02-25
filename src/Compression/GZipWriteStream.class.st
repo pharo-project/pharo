@@ -2,15 +2,17 @@
 gzip is an integral part of the VM. 
 "
 Class {
-	#name : #GZipWriteStream,
-	#superclass : #ZipWriteStream,
+	#name : 'GZipWriteStream',
+	#superclass : 'ZipWriteStream',
 	#pools : [
 		'GZipConstants'
 	],
-	#category : #'Compression-Streams'
+	#category : 'Compression-Streams',
+	#package : 'Compression',
+	#tag : 'Streams'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GZipWriteStream >> writeFooter [
 	"Write some footer information for the crc"
 	super writeFooter.
@@ -18,7 +20,7 @@ GZipWriteStream >> writeFooter [
 	0 to: 3 do:[:i| encoder nextBytePut: (bytesWritten >> (i*8) bitAnd: 255)]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 GZipWriteStream >> writeHeader [
 	"Write the GZip header"
 	encoder nextBits: 16 put: GZipMagic.

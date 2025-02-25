@@ -1,5 +1,7 @@
 Class {
-	#name : #RGNotFoundError,
-	#superclass : #Error,
-	#category : #'Ring-Core-Kernel'
+	#name : 'RGNotFoundError',
+	#superclass : 'Error',
+	#category : 'Ring-Core-Kernel',
+	#package : 'Ring-Core',
+	#tag : 'Kernel'
 }

@@ -1,1 +1,1 @@
-Package { #name : #'Graphics-Display Objects' }
+Package { #name : 'Graphics-Display Objects' }

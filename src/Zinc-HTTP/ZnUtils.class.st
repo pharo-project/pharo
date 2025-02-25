@@ -4,19 +4,21 @@ I am ZnUtils holding various utilities related to HTTP handling.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnUtils,
-	#superclass : #Object,
-	#category : #'Zinc-HTTP-Support'
+	#name : 'ZnUtils',
+	#superclass : 'Object',
+	#category : 'Zinc-HTTP-Support',
+	#package : 'Zinc-HTTP',
+	#tag : 'Support'
 }
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ZnUtils class >> bufferedWriteStreamOn: stream [
 	^ (ZnBufferedWriteStream on: stream)
 		sizeBuffer: self streamingBufferSize;
 		yourself
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnUtils class >> capitalizeString: string [
 	| capitalExpected |
 	capitalExpected := true.
@@ -35,7 +37,7 @@ ZnUtils class >> capitalizeString: string [
 					capitalExpected := true ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUtils class >> currentProcessID [
 	"Return a integer of at most 6 digits that can be used as a description for the current active process.
 	This is a reduced hash that is not necessarily unique (but uniqueness is very probably)"
@@ -43,14 +45,14 @@ ZnUtils class >> currentProcessID [
 	^ Processor activeProcess hash \\ 999999
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnUtils class >> decodeBase64: string [
 	| bytes |
 	bytes := ZnBase64Encoder new decode: string.
 	^ ZnNullEncoder new decodeBytes: bytes
 ]
 
-{ #category : #json }
+{ #category : 'json' }
 ZnUtils class >> defaultJSONReader [
 	"Configure me for JSON REST interaction: I assume that the entities that I read and write are JSON.
 	This requires either NeoJSON or STON to be present."
@@ -65,7 +67,7 @@ ZnUtils class >> defaultJSONReader [
 	^ reader
 ]
 
-{ #category : #json }
+{ #category : 'json' }
 ZnUtils class >> defaultJSONWriter [
 	"Configure me for JSON REST interaction: I assume that the entities that I read and write are JSON.
 	This requires either NeoJSON or STON to be present."
@@ -80,19 +82,19 @@ ZnUtils class >> defaultJSONWriter [
 	^ writer
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnUtils class >> encodeBase64: string [
 	| bytes |
 	bytes := ZnNullEncoder new encodeString: string.
 	^ ZnBase64Encoder new encode: bytes
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnUtils class >> httpDate [
 	^ self httpDate: DateAndTime now
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnUtils class >> httpDate: object [
 	"Answers a string formatting object as time stamp for HTTP1.1 (RFC 1123).
 	Eg. Sun, 06 Nov 1994 08:49:37 GMT"
@@ -109,7 +111,7 @@ ZnUtils class >> httpDate: object [
 		stream nextPutAll: ' GMT' ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnUtils class >> isCapitalizedString: string [
 	| capitalExpected |
 	capitalExpected := true.
@@ -124,7 +126,7 @@ ZnUtils class >> isCapitalizedString: string [
 	^ true
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ZnUtils class >> nextPutAll: collection on: stream [
 	| totalWritten toWrite total |
 	total := collection size.
@@ -139,7 +141,7 @@ ZnUtils class >> nextPutAll: collection on: stream [
 		self signalProgress: totalWritten total: total ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnUtils class >> parseHttpDate: string [
 	"self parseHttpDate: 'Tue, 13 Sep 2011 08:04:49 GMT'."
 	"self parseHttpDate: 'Tue, 13-Sep-2011 08:04:51 GMT'."
@@ -171,7 +173,7 @@ ZnUtils class >> parseHttpDate: string [
 	^ DateAndTime year: year month: month day: day hour: hour minute: minute second: second offset: Duration zero
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ZnUtils class >> readUpToEnd: inputStream limit: limit [
 	| species bufferSize buffer totalRead outputStream |
 	bufferSize := limit ifNil: [ self streamingBufferSize ] ifNotNil: [ self streamingBufferSize min: limit ].
@@ -182,7 +184,7 @@ ZnUtils class >> readUpToEnd: inputStream limit: limit [
 	[ inputStream atEnd ] whileFalse: [ | readCount |
 		readCount := inputStream readInto: buffer startingAt: 1 count: bufferSize.
 		totalRead := totalRead + readCount.
-		(limit notNil and: [ totalRead > limit ])
+		(limit isNotNil and: [ totalRead > limit ])
 			ifTrue: [ ZnEntityTooLarge signal ].
 		outputStream ifNil: [
 			inputStream atEnd
@@ -193,22 +195,15 @@ ZnUtils class >> readUpToEnd: inputStream limit: limit [
 	^ outputStream ifNil: [ species new ] ifNotNil: [ outputStream contents ]
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ZnUtils class >> signalProgress: amount total: total [
-	(ZnCurrentOptions at: #signalProgress)
-		ifTrue: [
-			total
-				ifNil: [
-					HTTPProgress new
-						signal: ('Transferred {1} bytes ...' format: { amount humanReadableSIByteSize }) ]
-				ifNotNil: [
-					HTTPProgress new
-						total: total;
-						amount: amount;
-						signal: 'Transferring...' ] ]
+  (ZnCurrentOptions at: #signalProgress) ifTrue: [ total ifNil: [ HTTPProgress new signal: ('Transferred {1} bytes ...' format: {amount humanReadableSISizeString}) ] ifNotNil: [ HTTPProgress new
+                 total: total;
+                 amount: amount;
+                 signal: 'Transferring...' ] ]
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ZnUtils class >> streamFrom: inputStream to: outputStream [
 	| buffer totalRead |
 	buffer := (inputStream isBinary ifTrue: [ ByteArray ] ifFalse: [ String ]) new: self streamingBufferSize.
@@ -226,32 +221,33 @@ ZnUtils class >> streamFrom: inputStream to: outputStream [
 					outputStream flush ] ]
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ZnUtils class >> streamFrom: inputStream to: outputStream size: totalSize [
 	| bufferSize buffer leftToRead |
 	bufferSize := self streamingBufferSize min: totalSize.
 	buffer := (inputStream isBinary ifTrue: [ ByteArray ] ifFalse: [ String ]) new: bufferSize.
 	leftToRead := totalSize.
-	[ leftToRead > 0 ]
-		whileTrue: [ | readCount |
-			readCount := bufferSize min: leftToRead.
-			inputStream next: readCount into: buffer.
+	[ leftToRead > 0 and: [ inputStream atEnd not ] ]
+		whileTrue: [ | toReadCount readCount |
+			toReadCount := bufferSize min: leftToRead.
+			readCount := inputStream readInto: buffer startingAt: 1 count: toReadCount.
 			leftToRead := leftToRead - readCount.
 			outputStream next: readCount putAll: buffer startingAt: 1.
 			leftToRead > 0
 				ifTrue: [
 					self signalProgress: (totalSize - leftToRead) total: totalSize.
-					outputStream flush ] ]
+					outputStream flush ] ].
+	^ totalSize - leftToRead
 ]
 
-{ #category : #streaming }
+{ #category : 'streaming' }
 ZnUtils class >> streamingBufferSize [
 	"Return the byte count used as buffer size when streaming"
 
 	^ 16384
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ZnUtils class >> trimString: string [
 	"Until String>>#trimBoth is available everywhere"
 

@@ -2,26 +2,28 @@
 I am a scroll bar
 "
 Class {
-	#name : #RubScrollBar,
-	#superclass : #GeneralScrollBarMorph,
-	#category : #'Rubric-Editing-Widgets'
+	#name : 'RubScrollBar',
+	#superclass : 'GeneralScrollBarMorph',
+	#category : 'Rubric-Editing-Widgets',
+	#package : 'Rubric',
+	#tag : 'Editing-Widgets'
 }
 
-{ #category : #style }
+{ #category : 'style' }
 RubScrollBar >> mouseOverThumbButtonFillStyle [
 	"Return the mouse over thumb fillStyle for the receiver."
 
 	^(self theme scrollbarMouseOverThumbButtonFillStyleFor: self) asColor darker
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 RubScrollBar >> normalThumbFillStyle [
 	"Return the normal thumb fillStyle for the receiver."
 
 	^(self theme scrollbarNormalThumbFillStyleFor: self) asColor darker
 ]
 
-{ #category : #style }
+{ #category : 'style' }
 RubScrollBar >> pressedThumbFillStyle [
 	"Return the pressed thumb fillStyle for the receiver."
 

@@ -1,20 +1,17 @@
 Class {
-	#name : #MCDependencySorterTest,
-	#superclass : #TestCase,
-	#category : #'Monticello-Tests-Dependencies'
+	#name : 'MCDependencySorterTest',
+	#superclass : 'TestCase',
+	#category : 'Monticello-Tests-Dependencies',
+	#package : 'Monticello-Tests',
+	#tag : 'Dependencies'
 }
 
-{ #category : #testing }
-MCDependencySorterTest class >> isUnitTest [
-	^false
-]
-
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCDependencySorterTest >> assertItems: anArray orderAs: depOrder withRequired: missingDeps toLoad: unloadableItems [
 	self assertItems: anArray orderAs: depOrder withRequired: missingDeps  toLoad: unloadableItems  extraProvisions: #()
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 MCDependencySorterTest >> assertItems: anArray orderAs: depOrder withRequired: missingDeps toLoad: unloadableItems extraProvisions: provisions [
 
 	| order sorter items missing unloadable |
@@ -29,7 +26,7 @@ MCDependencySorterTest >> assertItems: anArray orderAs: depOrder withRequired: m
 	self assert: unloadable asSet equals: unloadableItems asSet
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 MCDependencySorterTest >> itemWithSpec: anArray [
 	^ MCMockDependentItem new
 		name: anArray first;
@@ -37,7 +34,7 @@ MCDependencySorterTest >> itemWithSpec: anArray [
 		requires: anArray third
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCDependencySorterTest >> testCascadingUnresolved [
 	self assertItems: #(
 		(a (x) (z))
@@ -48,7 +45,7 @@ MCDependencySorterTest >> testCascadingUnresolved [
 	toLoad: #(a b)	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCDependencySorterTest >> testCycle [
 	self assertItems: #(
 		(a (x) (y))
@@ -58,7 +55,7 @@ MCDependencySorterTest >> testCycle [
 	toLoad: #(a b)	
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCDependencySorterTest >> testExtraProvisions [
 	self assertItems:
 		#((a (x) (z))
@@ -69,7 +66,7 @@ MCDependencySorterTest >> testExtraProvisions [
 	extraProvisions: #(x z)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCDependencySorterTest >> testMultiRequirementOrdering [
 	self assertItems: #(
 		(a (x) (z))
@@ -81,7 +78,7 @@ MCDependencySorterTest >> testMultiRequirementOrdering [
 		toLoad: #()
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCDependencySorterTest >> testSimpleOrdering [
 	self assertItems: #((a (x) ())
 								 (c () (y))
@@ -91,7 +88,7 @@ MCDependencySorterTest >> testSimpleOrdering [
 		toLoad: #()
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCDependencySorterTest >> testSimpleUnresolved [
 	self assertItems: #(
 		(a () (z)))
@@ -101,7 +98,7 @@ MCDependencySorterTest >> testSimpleUnresolved [
 		
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCDependencySorterTest >> testUnusedAlternateProvider [
 	self assertItems: #(
 		(a (x) (z))

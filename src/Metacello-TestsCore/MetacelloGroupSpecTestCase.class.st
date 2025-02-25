@@ -1,10 +1,12 @@
 Class {
-	#name : #MetacelloGroupSpecTestCase,
-	#superclass : #MetacelloSpecTestCase,
-	#category : #'Metacello-TestsCore-Specs'
+	#name : 'MetacelloGroupSpecTestCase',
+	#superclass : 'MetacelloSpecTestCase',
+	#category : 'Metacello-TestsCore-Specs',
+	#package : 'Metacello-TestsCore',
+	#tag : 'Specs'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloGroupSpecTestCase >> testGroupMergeSpec [
     | groupA groupB group |
     groupA := self groupSpec
@@ -20,7 +22,7 @@ MetacelloGroupSpecTestCase >> testGroupMergeSpec [
     self assert: (group includes includes: 'Tests')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloGroupSpecTestCase >> testGroupSpec [
 	| group |
 	group := self groupSpec

@@ -35,18 +35,20 @@ a replaceFrom: 1 to: 2 with: b startingAt: 1.
 ```
 "
 Class {
-	#name : #WordArray,
-	#superclass : #ArrayedCollection,
-	#type : #words,
-	#category : #'Collections-Native-Base'
+	#name : 'WordArray',
+	#superclass : 'ArrayedCollection',
+	#type : 'words',
+	#category : 'Collections-Native-Base',
+	#package : 'Collections-Native',
+	#tag : 'Base'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 WordArray >> asWordArray [
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WordArray >> atAllPut: value [
 	"Fill the receiver with the given value"
 
@@ -54,18 +56,18 @@ WordArray >> atAllPut: value [
 	super atAllPut: value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WordArray >> byteSize [
 	^self size * 4
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WordArray >> defaultElement [
 	"Return the default element of the receiver"
 	^0
 ]
 
-{ #category : #'array arithmetic primitives' }
+{ #category : 'array arithmetic primitives' }
 WordArray >> primAddArray: rcvr and: other into: result [
 
 	<primitive: 'primitiveAddArrays' module:'KedamaPlugin'>
@@ -77,7 +79,7 @@ WordArray >> primAddArray: rcvr and: other into: result [
 	^ result
 ]
 
-{ #category : #'array arithmetic primitives' }
+{ #category : 'array arithmetic primitives' }
 WordArray >> primAddScalar: rcvr and: other into: result [
 
 	<primitive: 'primitiveAddScalar' module:'KedamaPlugin'>
@@ -89,7 +91,7 @@ WordArray >> primAddScalar: rcvr and: other into: result [
 	^ result
 ]
 
-{ #category : #'array arithmetic primitives' }
+{ #category : 'array arithmetic primitives' }
 WordArray >> primDivArray: rcvr and: other into: result [
 
 	<primitive: 'primitiveDivArrays' module:'KedamaPlugin'>
@@ -101,7 +103,7 @@ WordArray >> primDivArray: rcvr and: other into: result [
 	^ result
 ]
 
-{ #category : #'array arithmetic primitives' }
+{ #category : 'array arithmetic primitives' }
 WordArray >> primDivScalar: rcvr and: other into: result [
 
 	<primitive: 'primitiveDivScalar' module:'KedamaPlugin'>
@@ -113,7 +115,7 @@ WordArray >> primDivScalar: rcvr and: other into: result [
 	^ result
 ]
 
-{ #category : #'array arithmetic primitives' }
+{ #category : 'array arithmetic primitives' }
 WordArray >> primMulArray: rcvr and: other into: result [
 
 	<primitive: 'primitiveMulArrays' module:'KedamaPlugin'>
@@ -125,7 +127,7 @@ WordArray >> primMulArray: rcvr and: other into: result [
 	^ result
 ]
 
-{ #category : #'array arithmetic primitives' }
+{ #category : 'array arithmetic primitives' }
 WordArray >> primMulScalar: rcvr and: other into: result [
 
 	<primitive: 'primitiveMulScalar' module:'KedamaPlugin'>
@@ -137,7 +139,7 @@ WordArray >> primMulScalar: rcvr and: other into: result [
 	^ result
 ]
 
-{ #category : #'array arithmetic primitives' }
+{ #category : 'array arithmetic primitives' }
 WordArray >> primSubArray: rcvr and: other into: result [
 
 	<primitive: 'primitiveSubArrays' module:'KedamaPlugin'>
@@ -149,7 +151,7 @@ WordArray >> primSubArray: rcvr and: other into: result [
 	^ result
 ]
 
-{ #category : #'array arithmetic primitives' }
+{ #category : 'array arithmetic primitives' }
 WordArray >> primSubScalar: rcvr and: other into: result [
 
 	<primitive: 'primitiveSubScalar' module:'KedamaPlugin'>
@@ -161,7 +163,7 @@ WordArray >> primSubScalar: rcvr and: other into: result [
 	^ result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WordArray >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	<primitive: 105>
 	^super replaceFrom: start to: stop with: replacement startingAt: repStart

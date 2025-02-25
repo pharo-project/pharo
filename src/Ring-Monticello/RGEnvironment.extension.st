@@ -1,6 +1,6 @@
-Extension { #name : #RGEnvironment }
+Extension { #name : 'RGEnvironment' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGEnvironment >> writeIntoFileTree: aMCFileTreeRepository [
 
 	(self ask packages select: #isRingResolved) do: [ :aPackage |
@@ -15,7 +15,7 @@ RGEnvironment >> writeIntoFileTree: aMCFileTreeRepository [
 			on: (aMCFileTreeRepository) ]
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGEnvironment >> writeIntoTonel: aFileReference [
 
 	(self ask packages select: #isRingResolved) do: [ :aPackage |

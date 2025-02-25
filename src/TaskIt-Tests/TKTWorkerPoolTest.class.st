@@ -1,30 +1,34 @@
 Class {
-	#name : #TKTWorkerPoolTest,
-	#superclass : #TKTTestCase,
-	#category : #'TaskIt-Tests-Worker'
+	#name : 'TKTWorkerPoolTest',
+	#superclass : 'TKTTestCase',
+	#category : 'TaskIt-Tests-Worker',
+	#package : 'TaskIt-Tests',
+	#tag : 'Worker'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerPoolTest >> testPriorityAfterStart [
-	| pool workerProcess newPriority doneSemaphore|
+
+	| pool workerProcess newPriority doneSemaphore |
 	newPriority := 32.
 	pool := TKTWorkerPool new.
 	pool name: 'Test pool'.
 	pool poolMaxSize: 4.
 	pool start.
-	pool schedule: (TKTTask valuable: [Semaphore new wait]).
+	pool schedule: (TKTTask valuable: [ Semaphore new wait ]).
 	doneSemaphore := Semaphore new.
-	pool schedule: (TKTTask valuable: [doneSemaphore signal]).
-	doneSemaphore wait: 500 milliSeconds.
+	pool schedule: (TKTTask valuable: [ doneSemaphore signal ]).
+	doneSemaphore waitTimeoutMilliseconds: 500.
 	pool priority: newPriority.
 	self assert: pool priority equals: newPriority.
-	pool workers do: [: each |
-		workerProcess :=  each process process.
-		self assert: workerProcess priority equals: newPriority]
+	pool workers do: [ :each |
+		workerProcess := each process process.
+		self assert: workerProcess priority equals: newPriority ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerPoolTest >> testPrioritySetBeforeStart [
+
 	| pool workerProcess initialPriority doneSemaphore |
 	initialPriority := 32.
 	pool := TKTWorkerPool new.
@@ -33,16 +37,16 @@ TKTWorkerPoolTest >> testPrioritySetBeforeStart [
 	pool priority: initialPriority.
 	self assert: pool priority equals: initialPriority.
 	pool start.
-	pool schedule: (TKTTask valuable: [Semaphore new wait]).
+	pool schedule: (TKTTask valuable: [ Semaphore new wait ]).
 	doneSemaphore := Semaphore new.
-	pool schedule: (TKTTask valuable: [doneSemaphore signal]).
-	doneSemaphore wait: 500 milliSeconds.
-	pool workers do: [: each |
-		workerProcess :=  each process process.
-		self assert: workerProcess priority equals: initialPriority]
+	pool schedule: (TKTTask valuable: [ doneSemaphore signal ]).
+	doneSemaphore waitTimeoutMilliseconds: 500.
+	pool workers do: [ :each |
+		workerProcess := each process process.
+		self assert: workerProcess priority equals: initialPriority ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerPoolTest >> testWorkerPoolCretesWorkersWhenExecutingATask [
 	| pool |
 	pool := TKTWorkerPool new.
@@ -53,7 +57,7 @@ TKTWorkerPoolTest >> testWorkerPoolCretesWorkersWhenExecutingATask [
 	self assert: pool workers notEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerPoolTest >> testWorkerPoolDoesNotExceedPoolSize [
 	| pool |
 	pool := TKTWorkerPool new.
@@ -64,7 +68,7 @@ TKTWorkerPoolTest >> testWorkerPoolDoesNotExceedPoolSize [
 	self assert: pool size <= 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerPoolTest >> testWorkerPoolDoesNotExceedPoolSizeWhenSchedulingTasksInParallel [
 
 	| pool totalTasks futures |
@@ -85,7 +89,7 @@ TKTWorkerPoolTest >> testWorkerPoolDoesNotExceedPoolSizeWhenSchedulingTasksInPar
 	self assert: pool size equals: 10
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerPoolTest >> testWorkerPoolStopStopsWorkers [
 
 	| pool |
@@ -101,7 +105,7 @@ TKTWorkerPoolTest >> testWorkerPoolStopStopsWorkers [
 	pool workers do: [ :worker | self deny: worker isRunning ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerPoolTest >> testWorkerPoolWorkersAreStoppedAfterPoolsCollection [
 
 	| pool workerProcess |
@@ -120,7 +124,7 @@ TKTWorkerPoolTest >> testWorkerPoolWorkersAreStoppedAfterPoolsCollection [
 	self assertWithGarbageCollect: [ workerProcess first isNil ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerPoolTest >> testWorkerPoolWorkersProcessesAreStoppedAfterPoolsCollection [
 
 	| pool workerProcess |
@@ -137,7 +141,7 @@ TKTWorkerPoolTest >> testWorkerPoolWorkersProcessesAreStoppedAfterPoolsCollectio
 	self assertWithGarbageCollect: [ workerProcess first isNil ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTWorkerPoolTest >> testWorkerPoolWorkersProcessesAreTerminatedAfterPoolsCollection [
 
 	| pool workerProcess |

@@ -1,17 +1,19 @@
 Class {
-	#name : #SignalTest,
-	#superclass : #TestCase,
-	#category : #'Beacon-Core-Tests-Tests'
+	#name : 'SignalTest',
+	#superclass : 'TestCase',
+	#category : 'Beacon-Core-Tests-Tests',
+	#package : 'Beacon-Core-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SignalTest >> testPrintOneLineString [
 	| signal |
 	signal := BeaconSignal new.
 	self assert: (' ' split: signal printOneLineString) second equals: 'BeaconSignal'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SignalTest >> testTimestampByDefault [
 	| before signal after |
 	before := DateAndTime now.

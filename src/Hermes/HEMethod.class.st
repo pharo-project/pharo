@@ -19,8 +19,8 @@ I have:
 Check the methods #readFrom: and #writeInto: for details of how it is written in the file.
 "
 Class {
-	#name : #HEMethod,
-	#superclass : #HEAbstractExported,
+	#name : 'HEMethod',
+	#superclass : 'HEAbstractExported',
 	#instVars : [
 		'className',
 		'name',
@@ -32,30 +32,32 @@ Class {
 		'numTemps',
 		'hasPrimitive'
 	],
-	#category : #'Hermes-Model'
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethod >> bytecode [
 	^ bytecode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethod >> bytecode: anObject [
 	bytecode := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethod >> className [
 	^ className
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethod >> className: anObject [
 	className := anObject
 ]
 
-{ #category : #compiling }
+{ #category : 'compiling' }
 HEMethod >> headerFor: anEnvironment [
 	| encoderClass|
 	"When a method is deserialized its header should be recalculated"
@@ -64,27 +66,27 @@ HEMethod >> headerFor: anEnvironment [
 	^ (CompiledMethod headerFlagForEncoder: encoderClass) + (numArgs bitShift: 24) + (numTemps bitShift: 18) + literals size + (hasPrimitive bitShift: 16)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethod >> literals [
 	^ literals
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethod >> literals: anObject [
 	literals := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethod >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethod >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 HEMethod >> printOn: aStream [
 	aStream
 		nextPutAll: 'HEMethod ( ';
@@ -92,17 +94,17 @@ HEMethod >> printOn: aStream [
 		nextPutAll: ' )'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethod >> protocol [
 	^ protocol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethod >> protocol: anObject [
 	protocol := anObject
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEMethod >> readFrom: aReader [
 	| numberOfLiterals |
 
@@ -122,7 +124,7 @@ HEMethod >> readFrom: aReader [
 	1 to: numberOfLiterals do: [ :idx | literals at:idx put: (HEExportedLiteral readFrom: aReader) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEMethod >> selector [
 	^ self name
 ]

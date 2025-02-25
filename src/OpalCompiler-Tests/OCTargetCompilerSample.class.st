@@ -1,15 +1,22 @@
 Class {
-	#name : #OCTargetCompilerSample,
-	#superclass : #Object,
-	#category : #'OpalCompiler-Tests-Semantic'
+	#name : 'OCTargetCompilerSample',
+	#superclass : 'Object',
+	#category : 'OpalCompiler-Tests-Semantic',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'Semantic'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+OCTargetCompilerSample class >> classSideCompilerClass [
+	^ OCTargetCompiler
+]
+
+{ #category : 'accessing' }
 OCTargetCompilerSample class >> compilerClass [
 	^ OCTargetCompiler
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 OCTargetCompilerSample class >> returnExpected [
 	" the target compiler will ignore the code and force this to return #expectedReturn
 		self returnExpected
@@ -18,7 +25,7 @@ OCTargetCompilerSample class >> returnExpected [
 	^ #dontReturnThis
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 OCTargetCompilerSample >> returnExpected [
 	" the target compiler will ignore the code and force this to return #expectedReturn "
 	^ #dontReturnThis

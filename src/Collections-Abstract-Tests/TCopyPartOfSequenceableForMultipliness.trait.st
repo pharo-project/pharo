@@ -2,18 +2,20 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TCopyPartOfSequenceableForMultipliness,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TCopyPartOfSequenceableForMultipliness',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TCopyPartOfSequenceableForMultipliness >> collectionWithSameAtEndAndBegining [
 " return a collection with elements at end and begining equals .
 (others elements of the collection are not equal to those elements)"
 	self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TCopyPartOfSequenceableForMultipliness >> test0FixtureCopyPartOfForMultipliness [
 
 	self collectionWithSameAtEndAndBegining.
@@ -24,7 +26,7 @@ TCopyPartOfSequenceableForMultipliness >> test0FixtureCopyPartOfForMultipliness 
 			ifTrue: [ self deny: (self collectionWithSameAtEndAndBegining at: i) = self collectionWithSameAtEndAndBegining first ] ]
 ]
 
-{ #category : #'tests - copying part of sequenceable for multipliness' }
+{ #category : 'tests - copying part of sequenceable for multipliness' }
 TCopyPartOfSequenceableForMultipliness >> testCopyAfterLastWithDuplicate [
 	| result element collection |
 	collection := self collectionWithSameAtEndAndBegining.
@@ -38,7 +40,7 @@ TCopyPartOfSequenceableForMultipliness >> testCopyAfterLastWithDuplicate [
 	self assertEmpty: result
 ]
 
-{ #category : #'tests - copying part of sequenceable for multipliness' }
+{ #category : 'tests - copying part of sequenceable for multipliness' }
 TCopyPartOfSequenceableForMultipliness >> testCopyAfterWithDuplicate [
 
 	| result element  collection |
@@ -57,7 +59,7 @@ TCopyPartOfSequenceableForMultipliness >> testCopyAfterWithDuplicate [
 	self assert: result size equals: (collection size - 1)
 ]
 
-{ #category : #'tests - copying part of sequenceable for multipliness' }
+{ #category : 'tests - copying part of sequenceable for multipliness' }
 TCopyPartOfSequenceableForMultipliness >> testCopyUpToLastWithDuplicate [
 
 	| result element  collection |
@@ -75,7 +77,7 @@ TCopyPartOfSequenceableForMultipliness >> testCopyUpToLastWithDuplicate [
 	self assert: result size equals: (collection size - 1)
 ]
 
-{ #category : #'tests - copying part of sequenceable for multipliness' }
+{ #category : 'tests - copying part of sequenceable for multipliness' }
 TCopyPartOfSequenceableForMultipliness >> testCopyUpToWithDuplicate [
 	| result element collection |
 	collection := self collectionWithSameAtEndAndBegining.

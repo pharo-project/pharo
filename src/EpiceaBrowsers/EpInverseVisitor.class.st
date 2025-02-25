@@ -2,23 +2,16 @@
 I convert a code change to it's inverse operation. For example, a class addition into a class removal.
 "
 Class {
-	#name : #EpInverseVisitor,
-	#superclass : #EpLogBrowserOperationVisitor,
+	#name : 'EpInverseVisitor',
+	#superclass : 'EpLogBrowserOperationVisitor',
 	#traits : 'EpTCodeChangeVisitor',
 	#classTraits : 'EpTCodeChangeVisitor classTrait',
-	#category : #'EpiceaBrowsers-Visitors'
+	#category : 'EpiceaBrowsers-Visitors',
+	#package : 'EpiceaBrowsers',
+	#tag : 'Visitors'
 }
 
-{ #category : #visitor }
-EpInverseVisitor >> visitBehaviorCategoryChange: aChange [
-
-	^ EpBehaviorCategoryChange
-			oldCategory: aChange newCategory
-			newCategory: aChange oldCategory
-			class: aChange behaviorAffected
-]
-
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpInverseVisitor >> visitBehaviorCommentChange: aChange [
 
 	^ EpBehaviorCommentChange
@@ -29,7 +22,7 @@ EpInverseVisitor >> visitBehaviorCommentChange: aChange [
 			newStamp: aChange oldStamp
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpInverseVisitor >> visitBehaviorNameChange: aChange [
 
 	^ EpBehaviorNameChange
@@ -38,99 +31,113 @@ EpInverseVisitor >> visitBehaviorNameChange: aChange [
 			class: aChange behaviorAffected
 ]
 
-{ #category : #visitor }
-EpInverseVisitor >> visitCategoryAddition: aChange [
+{ #category : 'visitor' }
+EpInverseVisitor >> visitBehaviorRepackagedChange: aBehaviorRepackagedChange [
 
-	^ EpCategoryRemoval
-			named: aChange categoryName
-			packageName: aChange affectedPackageName
+	^ EpBehaviorRepackagedChange
+		  oldPackage: aBehaviorRepackagedChange newPackageName
+		  oldTag: aBehaviorRepackagedChange newTagName
+		  newPackage: aBehaviorRepackagedChange oldPackageName
+		  newTag: aBehaviorRepackagedChange oldTagName
+		  class: aBehaviorRepackagedChange behaviorAffected
 ]
 
-{ #category : #visitor }
-EpInverseVisitor >> visitCategoryRegistration: aChange [
-
-	^ EpCategoryRegistration
-			named: aChange categoryName
-			packageName: aChange affectedPackageName
-]
-
-{ #category : #visitor }
-EpInverseVisitor >> visitCategoryRemoval: aChange [
-
-	^ EpCategoryAddition
-			named: aChange categoryName
-			packageName: aChange affectedPackageName
-]
-
-{ #category : #visitor }
-EpInverseVisitor >> visitCategoryRename: aChange [
-
-	^ EpCategoryRename
-			oldName: aChange newCategoryName
-			newName: aChange oldCategoryName
-			packageName: aChange affectedPackageName
-]
-
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpInverseVisitor >> visitClassAddition: aChange [
 
 	^ EpClassRemoval class: aChange behaviorAffected
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpInverseVisitor >> visitClassModification: aChange [
 
 	^ EpClassModification oldClass: aChange newClass newClass: aChange oldClass
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpInverseVisitor >> visitClassRemoval: aChange [
 
 	^ EpClassAddition class: aChange behaviorAffected
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpInverseVisitor >> visitCodeChange: aChange [
 	^ self error: 'Should not be reached'
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpInverseVisitor >> visitMethodAddition: aChange [
 
 	^ EpMethodRemoval method: aChange methodAffected
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpInverseVisitor >> visitMethodModification: aChange [
 
 	^ EpMethodModification oldMethod: aChange newMethod newMethod: aChange oldMethod
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpInverseVisitor >> visitMethodRemoval: aChange [
 
 	^ EpMethodAddition method: aChange methodAffected
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
+EpInverseVisitor >> visitPackageAddition: aPackageAddition [
+
+	^ EpPackageRemoval packageName: aPackageAddition packageName
+]
+
+{ #category : 'visitor' }
+EpInverseVisitor >> visitPackageRemoval: aPackageRemoval [
+
+	^ EpPackageAddition packageName: aPackageRemoval packageName
+]
+
+{ #category : 'visitor' }
+EpInverseVisitor >> visitPackageRename: aPackageRename [
+
+	^ EpPackageRename oldName: aPackageRename newPackageName newName: aPackageRename oldPackageName
+]
+
+{ #category : 'visitor' }
+EpInverseVisitor >> visitPackageTagAddition: aPackageTagAddition [
+
+	^ EpPackageTagRemoval tagName: aPackageTagAddition tagName packageName: aPackageTagAddition packageName
+]
+
+{ #category : 'visitor' }
+EpInverseVisitor >> visitPackageTagRemoval: aPackageTagRemoval [
+
+	^ EpPackageTagAddition tagName: aPackageTagRemoval tagName packageName: aPackageTagRemoval packageName
+]
+
+{ #category : 'visitor' }
+EpInverseVisitor >> visitPackageTagRename: aPackageTagRename [
+
+	^ EpPackageTagRename oldName: aPackageTagRename newTagName newName: aPackageTagRename oldTagName packageName: aPackageTagRename packageName
+]
+
+{ #category : 'visitor' }
 EpInverseVisitor >> visitProtocolAddition: aChange [
 
 	^ EpProtocolRemoval behavior: aChange behaviorAffected protocol: aChange protocol
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpInverseVisitor >> visitProtocolRemoval: aChange [
 
 	^ EpProtocolAddition behavior: aChange behaviorAffected protocol: aChange protocol
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpInverseVisitor >> visitTraitAddition: aChange [
 
 	^ EpTraitRemoval trait: aChange behaviorAffected
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpInverseVisitor >> visitTraitModification: aTraitModification [
 
   	^ EpTraitModification
@@ -138,7 +145,7 @@ EpInverseVisitor >> visitTraitModification: aTraitModification [
           		  newTrait: aTraitModification oldTrait
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 EpInverseVisitor >> visitTraitRemoval: aChange [
 
 	^ EpTraitAddition trait: aChange behaviorAffected

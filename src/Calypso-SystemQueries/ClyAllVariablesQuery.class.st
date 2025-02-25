@@ -5,12 +5,14 @@ Scope should support #variablesDo:.
 Now only class scopes support it.
 "
 Class {
-	#name : #ClyAllVariablesQuery,
-	#superclass : #ClyVariableQuery,
-	#category : #'Calypso-SystemQueries-Queries'
+	#name : 'ClyAllVariablesQuery',
+	#superclass : 'ClyVariableQuery',
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAllVariablesQuery >> buildResult: aQueryResult [
 
 	| allVars |
@@ -21,7 +23,7 @@ ClyAllVariablesQuery >> buildResult: aQueryResult [
 	aQueryResult fillWith: allVars
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAllVariablesQuery >> checkEmptyResult [
 
 	scope variablesDo: [ :each | ^false ].
@@ -29,18 +31,18 @@ ClyAllVariablesQuery >> checkEmptyResult [
 	^true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyAllVariablesQuery >> description [
 
 	^'all variables'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyAllVariablesQuery >> retrievesItem: aVariable [
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyAllVariablesQuery >> shortName [
 	^'Vars'
 ]

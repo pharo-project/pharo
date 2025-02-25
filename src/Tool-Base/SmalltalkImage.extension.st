@@ -1,6 +1,6 @@
-Extension { #name : #SmalltalkImage }
+Extension { #name : 'SmalltalkImage' }
 
-{ #category : #'*Tool-Base' }
+{ #category : '*Tool-Base' }
 SmalltalkImage >> resetTools [
 
 	Tools := nil

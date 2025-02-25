@@ -18,15 +18,16 @@ Internal Representation and Key Implementation Points.
 	commandProvider:		<Object>
 "
 Class {
-	#name : #CmdKMDispatcher,
-	#superclass : #KMDispatcher,
+	#name : 'CmdKMDispatcher',
+	#superclass : 'KMDispatcher',
 	#instVars : [
 		'commandProvider'
 	],
-	#category : #'Commander-Activators-Shortcut'
+	#category : 'Commander-Activators-Shortcut',
+	#package : 'Commander-Activators-Shortcut'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmdKMDispatcher class >> attachedTo: aMorph [
 
 	| dispatcher |
@@ -38,7 +39,7 @@ CmdKMDispatcher class >> attachedTo: aMorph [
 	^dispatcher
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmdKMDispatcher class >> attachedTo: aMorph withCommandsFrom: someObjectWithCommandContext [
 
 	| dispatcher |
@@ -47,17 +48,17 @@ CmdKMDispatcher class >> attachedTo: aMorph withCommandsFrom: someObjectWithComm
 	^dispatcher
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 CmdKMDispatcher >> commandProvider [
 	^commandProvider ifNil: [target morph]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdKMDispatcher >> commandProvider: someObjectWithCommandContext [
 	commandProvider := someObjectWithCommandContext
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 CmdKMDispatcher >> dispatch: anEventBuffer [
 
 	| context executed |

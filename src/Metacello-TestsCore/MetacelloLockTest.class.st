@@ -1,24 +1,25 @@
 Class {
-	#name : #MetacelloLockTest,
-	#superclass : #TestCase,
-	#category : #'Metacello-TestsCore-Specs'
+	#name : 'MetacelloLockTest',
+	#superclass : 'TestCase',
+	#category : 'Metacello-TestsCore-Specs',
+	#package : 'Metacello-TestsCore',
+	#tag : 'Specs'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloLockTest >> project [
 
 	^ BaselineOfTestToLock1 project
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloLockTest >> testLoadLockedWillNotIncludeLockedPackages [
 	"Using record as a way to determine which packages will be loaded"
 
 	self 
-		assertCollection: (self project version record packages collect: #name)
+		assertCollection: ((self project version recordWithEngine: MetacelloScriptEngine new) packages collect: #name)
 		hasSameElements: #( 
 			'Package1'
-			'BaselineOfTestToLock2' 
 			'TestToLockPackage1' 
 			'TestToLockPackage2').
 		
@@ -27,14 +28,14 @@ MetacelloLockTest >> testLoadLockedWillNotIncludeLockedPackages [
 		Metacello new baseline: 'TestToLock2'; register.
 		Metacello new baseline: 'TestToLock2'; lock.
 		self 
-			assertCollection: (self project version record packages collect: #name)
+			assertCollection: ((self project version recordWithEngine: MetacelloScriptEngine new) packages collect: #name)
 			hasSameElements: #('Package1') ]
 	ensure: [ 
 		Metacello new baseline: 'TestToLock2'; unlock. 
 		Metacello new baseline: 'TestToLock2'; unregister ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloLockTest >> testRegisterProject [
 
 	self 

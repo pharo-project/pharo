@@ -1,1 +1,1 @@
-Package { #name : #'Clap-CommandLine' }
+Package { #name : 'Clap-CommandLine' }

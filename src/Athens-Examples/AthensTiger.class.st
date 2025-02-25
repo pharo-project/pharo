@@ -5,8 +5,8 @@ I know how draw the tiger with the collaboration of AthensParts.
 I also know how to decode such AthensParts from strings in my class-side.
 "
 Class {
-	#name : #AthensTiger,
-	#superclass : #Object,
+	#name : 'AthensTiger',
+	#superclass : 'Object',
 	#instVars : [
 		'surface',
 		'rotation',
@@ -15,17 +15,19 @@ Class {
 		'position',
 		'parts'
 	],
-	#category : #'Athens-Examples-Utilities'
+	#category : 'Athens-Examples-Utilities',
+	#package : 'Athens-Examples',
+	#tag : 'Utilities'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 AthensTiger class >> checkDataSizes [
 	<script>
 	self assert: (self commands size = self tigerCommandCount).
 	self assert: (self tigerPointsCount = self tigerPoints size)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensTiger class >> commands [
 	| pt str |
 
@@ -45,24 +47,24 @@ AthensTiger class >> commands [
 	^ str
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AthensTiger class >> on: anAthensSurface [
 	^ self basicNew
 		initializeWith: anAthensSurface;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTiger class >> tigerCenter [
 	^ self tigerExtent / 2
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensTiger class >> tigerCommandCount [
 	^ 4142
 ]
 
-{ #category : #'huge data' }
+{ #category : 'huge data' }
 AthensTiger class >> tigerCommands [
 
 	^ #(
@@ -276,32 +278,32 @@ AthensTiger class >> tigerCommands [
 'SRMMCNSRMMC' )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTiger class >> tigerExtent [
 	^ self tigerMaxX @ self tigerMaxY
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensTiger class >> tigerMaxX [
 	^ 612.0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensTiger class >> tigerMaxY [
 	^ 792.0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensTiger class >> tigerMinX [
 	^ 0.0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensTiger class >> tigerMinY [
 	^ 0.0
 ]
 
-{ #category : #'huge data' }
+{ #category : 'huge data' }
 AthensTiger class >> tigerPoints [
 
 	^ #(10 0 1
@@ -2007,12 +2009,12 @@ AthensTiger class >> tigerPoints [
 )
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensTiger class >> tigerPointsCount [
 	^ 16988
 ]
 
-{ #category : #run }
+{ #category : 'run' }
 AthensTiger >> draw [
 	surface drawDuring: [ :canvas |
 		canvas pathTransform loadIdentity.
@@ -2033,7 +2035,7 @@ AthensTiger >> draw [
 		parts do: [ :each | each renderOn: canvas ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensTiger >> initializeWith: anAthensSurface [
 
 	self initialize.
@@ -2045,17 +2047,17 @@ AthensTiger >> initializeWith: anAthensSurface [
 	position := 0@0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTiger >> position [
 	^ position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTiger >> position: anObject [
 	position := anObject
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AthensTiger >> readParts [
 
 	| results currentPart commandStream pointStream fillBlocks strokeBlocks capBlocks joinBlocks cmdBlocks |
@@ -2147,32 +2149,32 @@ AthensTiger >> readParts [
 	^ results
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTiger >> rotation [
 	^ rotation
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTiger >> rotation: aNumber [
 	rotation := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTiger >> scale [
 	^ scale
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTiger >> scale: aNumber [
 	scale := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTiger >> zoom [
 	^ zoom
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTiger >> zoom: aNumber [
 	zoom := aNumber
 ]

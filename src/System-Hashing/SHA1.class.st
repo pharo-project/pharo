@@ -10,8 +10,8 @@ The secure hash standard was created with 32-bit hardware in mind. All arithmeti
 
 "
 Class {
-	#name : #SHA1,
-	#superclass : #HashFunction,
+	#name : 'SHA1',
+	#superclass : 'HashFunction',
 	#instVars : [
 		'totalA',
 		'totalB',
@@ -26,20 +26,22 @@ Class {
 		'K3',
 		'K4'
 	],
-	#category : #'System-Hashing-SHA1'
+	#category : 'System-Hashing-SHA1',
+	#package : 'System-Hashing',
+	#tag : 'SHA1'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SHA1 class >> blockSize [
 	^ 64
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SHA1 class >> hashSize [
 	^ 20
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SHA1 class >> initialize [
 	"SecureHashAlgorithm initialize"
 	"For the curious, here's where these constants come from:
@@ -50,7 +52,7 @@ SHA1 class >> initialize [
 	K4 := ThirtyTwoBitRegister new load: 3395469782
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHA1 >> constantForStep: i [
 	"Answer the constant for the i-th step of the block hash loop. We number our steps 1-80, versus the 0-79 of the standard."
 
@@ -60,7 +62,7 @@ SHA1 >> constantForStep: i [
 	^ K4
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHA1 >> expandedBlock: aByteArray [
 	"Convert the given 64 byte buffer into 80 32-bit registers and answer the result."
 	| out src v |
@@ -92,7 +94,7 @@ SHA1 >> expandedBlock: aByteArray [
 	^ out
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHA1 >> finalHash [
 	"Concatenate the final totals to build the 160-bit integer result."
 	"Details: If the primitives are supported, the results are in the totals array. Otherwise, they are in the instance variables totalA through totalE."
@@ -109,7 +111,7 @@ SHA1 >> finalHash [
 	^ r
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHA1 >> hashFunction: i of: x with: y with: z [
 	"Compute the hash function for the i-th step of the block hash loop. We number our steps 1-80, versus the 0-79 of the standard."
 	"Details: There are four functions, one for each 20 iterations. The second and fourth are the same."
@@ -120,7 +122,7 @@ SHA1 >> hashFunction: i of: x with: y with: z [
 	^ x copy bitXor: y; bitXor: z
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SHA1 >> hashInteger: aPositiveInteger [
 	"Hash the given positive integer. The integer to be hashed should have 512 or fewer bits. This entry point is used in key generation."
 	| buffer dstIndex |
@@ -144,7 +146,7 @@ SHA1 >> hashInteger: aPositiveInteger [
 	^ self finalHash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SHA1 >> hashInteger: aPositiveInteger seed: seedInteger [
 	"Hash the given positive integer. The integer to be hashed should have 512 or fewer bits. This entry point is used in the production of random numbers"
 	"Initialize totalA through totalE to their seed values."
@@ -173,7 +175,7 @@ SHA1 >> hashInteger: aPositiveInteger seed: seedInteger [
 	^ self finalHash
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 SHA1 >> hashStream: aPositionableStream [
 	"Hash the contents of the given stream from the current position to the end using the Secure Hash Algorithm. The SHA algorithm is defined in FIPS PUB 180-1. It is also described on p. 442 of 'Applied Cryptography: Protocols, Algorithms, and Source Code in C' by Bruce Schneier, Wiley, 1996."
 	"http://en.wikipedia.org/wiki/Sha1#Example_hashes"
@@ -194,7 +196,7 @@ SHA1 >> hashStream: aPositionableStream [
 	^ self finalHash asByteArrayOfSize: 20
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHA1 >> initializeTotals [
 	"Initialize totalA through totalE to their seed values."
 	"total registers for use when primitives are absent"
@@ -206,7 +208,7 @@ SHA1 >> initializeTotals [
 	self initializeTotalsArray
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHA1 >> initializeTotalsArray [
 	"Initialize the totals array from the registers for use with the primitives."
 	totals := WordArray new: 5.
@@ -227,7 +229,7 @@ SHA1 >> initializeTotalsArray [
 		put: totalE asInteger
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 SHA1 >> primExpandBlock: aByteArray into: wordBitmap [
 	"Expand the given 64-byte buffer into the given Bitmap of length 80."
 
@@ -235,7 +237,7 @@ SHA1 >> primExpandBlock: aByteArray into: wordBitmap [
 	^ self primitiveFailed
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 SHA1 >> primHasSecureHashPrimitive [
 	"Answer true if this platform has primitive support for the Secure Hash Algorithm."
 
@@ -243,7 +245,7 @@ SHA1 >> primHasSecureHashPrimitive [
 	^ false
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 SHA1 >> primHashBlock: blockBitmap using: workingTotalsBitmap [
 	"Hash the given block (a Bitmap) of 80 32-bit words, using the given workingTotals."
 
@@ -251,7 +253,7 @@ SHA1 >> primHashBlock: blockBitmap using: workingTotalsBitmap [
 	^ self primitiveFailed
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHA1 >> processBuffer: aByteArray [
 	"Process given 64-byte buffer, accumulating the results in totalA through totalE."
 	| a b c d e w tmp |
@@ -295,7 +297,7 @@ SHA1 >> processBuffer: aByteArray [
 	totalE += e
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHA1 >> processBufferUsingPrimitives: aByteArray [
 	"Process given 64-byte buffer using the primitives, accumulating the results in totals."
 	"expand and process the buffer"
@@ -309,7 +311,7 @@ SHA1 >> processBufferUsingPrimitives: aByteArray [
 		using: totals
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHA1 >> processFinalBuffer: buffer bitLength: bitLength [
 	"Process given buffer, whose length may be <= 64 bytes, accumulating the results in totalA through totalE. Also process the final padding bits and length."
 	| out |
@@ -350,7 +352,7 @@ SHA1 >> processFinalBuffer: buffer bitLength: bitLength [
 	self processBuffer: out
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SHA1 >> storeLength: bitLength in: aByteArray [
 	"Fill in the final 8 bytes of the given ByteArray with a 64-bit big-endian representation of the original message length in bits."
 	| n i |

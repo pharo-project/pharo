@@ -8,30 +8,32 @@ Instance variables
 	loopback		<Boolean>
 "
 Class {
-	#name : #RxmBranch,
-	#superclass : #RxmLink,
+	#name : 'RxmBranch',
+	#superclass : 'RxmLink',
 	#instVars : [
 		'loopback',
 		'alternative'
 	],
-	#category : #'Regex-Core-Links'
+	#category : 'Regex-Core-Links',
+	#package : 'Regex-Core',
+	#tag : 'Links'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxmBranch >> alternative: aBranch [
 	"See class comment for instance variable description."
 
 	alternative := aBranch
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxmBranch >> beLoopback [
 	"See class comment for instance variable description."
 
 	loopback := true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxmBranch >> initialize [
 	"See class comment for instance variable description."
 
@@ -39,7 +41,7 @@ RxmBranch >> initialize [
 	loopback := false
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RxmBranch >> matchAgainst: aMatcher [
 	"Match the longest match of `next' or `alternative'. Fail the alternative if the alternative is nil."
 
@@ -47,7 +49,7 @@ RxmBranch >> matchAgainst: aMatcher [
 
 	original := aMatcher currentState.
 	(next matchAgainst: aMatcher)
-		ifFalse: [^alternative notNil and: [alternative matchAgainst: aMatcher]].
+		ifFalse: [^alternative isNotNil and: [alternative matchAgainst: aMatcher]].
 	alternative ifNil: [^true].
 	firstMatch := aMatcher currentState.
 	firstMatchPos := aMatcher position.
@@ -63,7 +65,7 @@ RxmBranch >> matchAgainst: aMatcher [
 	^true
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RxmBranch >> pointTailTo: aNode [
 	"See superclass for explanations."
 
@@ -75,7 +77,7 @@ RxmBranch >> pointTailTo: aNode [
 		ifFalse: [super pointTailTo: aNode]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RxmBranch >> terminateWith: aNode [
 	"See superclass for explanations."
 

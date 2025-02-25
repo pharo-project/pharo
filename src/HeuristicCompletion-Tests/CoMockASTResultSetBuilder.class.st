@@ -1,110 +1,117 @@
+"
+I am a mock used to simlify testing.
+	
+A mock is an object that simulates the behavior of a real object or component in a controlled manner. It is used in unit testing to isolate the code being tested from its dependencies, allowing the code to be tested in isolation.
+"
 Class {
-	#name : #CoMockASTResultSetBuilder,
-	#superclass : #CoASTResultSetBuilder,
+	#name : 'CoMockASTResultSetBuilder',
+	#superclass : 'CoASTResultSetBuilder',
 	#instVars : [
 		'heuristic'
 	],
-	#category : #'HeuristicCompletion-Tests-Core'
+	#category : 'HeuristicCompletion-Tests-Mocks',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Mocks'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoMockASTResultSetBuilder >> heuristic [
 
 	^ heuristic
 ]
 
-{ #category : #accessing }
-CoMockASTResultSetBuilder >> visitArrayNode: aRBArrayNode [
+{ #category : 'accessing' }
+CoMockASTResultSetBuilder >> visitArrayNode: anArrayNode [
 
 	heuristic := #array.
-	^ super visitArrayNode: aRBArrayNode
+	^ super visitArrayNode: anArrayNode
 ]
 
-{ #category : #accessing }
-CoMockASTResultSetBuilder >> visitAssignmentNode: aRBAssignmentNode [
+{ #category : 'accessing' }
+CoMockASTResultSetBuilder >> visitAssignmentNode: aAssignmentNode [
 
 	heuristic := #assignment.
-	^ super visitAssignmentNode: aRBAssignmentNode
+	^ super visitAssignmentNode: aAssignmentNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoMockASTResultSetBuilder >> visitBlockNode: aNode [
 
 	heuristic := #block.
 	^ super visitBlockNode: aNode
 ]
 
-{ #category : #accessing }
-CoMockASTResultSetBuilder >> visitCascadeNode: aRBCascadeNode [
+{ #category : 'accessing' }
+CoMockASTResultSetBuilder >> visitCascadeNode: aCascadeNode [
 
 	heuristic := #cascade.
-	^ super visitCascadeNode: aRBCascadeNode
+	^ super visitCascadeNode: aCascadeNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoMockASTResultSetBuilder >> visitLiteralArrayNode: aNode [
 
 	heuristic := #literalArray.
 	^ super visitLiteralArrayNode: aNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoMockASTResultSetBuilder >> visitLiteralValueNode: aNode [
 
 	heuristic := #literal.
 	^ super visitLiteralValueNode: aNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoMockASTResultSetBuilder >> visitMessageNode: aNode [
 
 	heuristic := #message.
 	^ super visitMessageNode: aNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoMockASTResultSetBuilder >> visitMethodNode: aNode [
 
 	heuristic := #method.
 	^ super visitMethodNode: aNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoMockASTResultSetBuilder >> visitParseErrorNode: aNode [
 
 	heuristic := #error.
 	^ super visitParseErrorNode: aNode
 ]
 
-{ #category : #visiting }
-CoMockASTResultSetBuilder >> visitPragmaNode: aRBPragmaNode [
+{ #category : 'visiting' }
+CoMockASTResultSetBuilder >> visitPragmaNode: aPragmaNode [
 
 	heuristic := #pragma.
-	^ super visitPragmaNode: aRBPragmaNode
+	^ super visitPragmaNode: aPragmaNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoMockASTResultSetBuilder >> visitReturnNode: aNode [
 
 	heuristic := #return.
 	^ super visitReturnNode: aNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoMockASTResultSetBuilder >> visitSequenceNode: aNode [
 
 	heuristic := #sequence.
 	^ super visitSequenceNode: aNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoMockASTResultSetBuilder >> visitThisContextNode: aNode [
 
 	heuristic := #thisContext.
 	^ super visitThisContextNode: aNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoMockASTResultSetBuilder >> visitVariableNode: aNode [
 
 	heuristic := #variable.

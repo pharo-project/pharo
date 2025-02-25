@@ -2,25 +2,26 @@
 I am a command to open a critic browser on given set of packages
 "
 Class {
-	#name : #ClyOpenCriticBrowserCommand,
-	#superclass : #SycPackageCommand,
-	#category : #'Calypso-SystemPlugins-Critic-Browser'
+	#name : 'ClyOpenCriticBrowserCommand',
+	#superclass : 'SycPackageCommand',
+	#category : 'Calypso-SystemPlugins-Critic-Browser',
+	#package : 'Calypso-SystemPlugins-Critic-Browser'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyOpenCriticBrowserCommand class >> packageContextMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation
-		byItemOf: ClyQueryMenuGroup for: RPackage asCalypsoItemContext
+		byItemOf: ClyQueryMenuGroup for: Package asCalypsoItemContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyOpenCriticBrowserCommand >> defaultMenuItemName [
 	^'Browse critiques'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyOpenCriticBrowserCommand >> execute [
 	| env |
 

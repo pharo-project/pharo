@@ -4,18 +4,20 @@ A PluggableThreePhaseButtonMorph is an extesion of ThreePhaseButtonMorph to make
 Then a model can be defined, and queried for state, on image, off image and pressed image.
 "
 Class {
-	#name : #PluggableThreePhaseButtonMorph,
-	#superclass : #ThreePhaseButtonMorph,
+	#name : 'PluggableThreePhaseButtonMorph',
+	#superclass : 'ThreePhaseButtonMorph',
 	#instVars : [
 		'offImageSelector',
 		'onImageSelector',
 		'pressedImageSelector',
 		'stateSelector'
 	],
-	#category : #'Morphic-Widgets-Basic-Buttons'
+	#category : 'Morphic-Widgets-Basic-Buttons',
+	#package : 'Morphic-Widgets-Basic',
+	#tag : 'Buttons'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PluggableThreePhaseButtonMorph class >> on: aModel [
 
 	^ self new
@@ -23,55 +25,55 @@ PluggableThreePhaseButtonMorph class >> on: aModel [
 			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableThreePhaseButtonMorph >> offImageSelector [
 
 	^ offImageSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableThreePhaseButtonMorph >> offImageSelector: anObject [
 
 	offImageSelector := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableThreePhaseButtonMorph >> onImageSelector [
 
 	^ onImageSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableThreePhaseButtonMorph >> onImageSelector: anObject [
 
 	onImageSelector := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableThreePhaseButtonMorph >> pressedImageSelector [
 
 	^ pressedImageSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableThreePhaseButtonMorph >> pressedImageSelector: anObject [
 
 	pressedImageSelector := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableThreePhaseButtonMorph >> stateSelector [
 
 	^ stateSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableThreePhaseButtonMorph >> stateSelector: anObject [
 
 	stateSelector := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PluggableThreePhaseButtonMorph >> target: anObject [
 
 	target ifNotNil: [ target removeDependent: self ].
@@ -79,7 +81,7 @@ PluggableThreePhaseButtonMorph >> target: anObject [
 	target := anObject
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PluggableThreePhaseButtonMorph >> update: aSymbol [
 
 	aSymbol == stateSelector
@@ -94,25 +96,25 @@ PluggableThreePhaseButtonMorph >> update: aSymbol [
 	^ super update: aSymbol
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PluggableThreePhaseButtonMorph >> updateOffImage [
 
 	self offImage: ( target perform: offImageSelector )
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PluggableThreePhaseButtonMorph >> updateOnImage [
 
 	self onImage: ( target perform: onImageSelector )
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PluggableThreePhaseButtonMorph >> updatePressedImage [
 
 	self pressedImage: ( target perform: pressedImageSelector )
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 PluggableThreePhaseButtonMorph >> updateState [
 
 	( target perform: stateSelector )

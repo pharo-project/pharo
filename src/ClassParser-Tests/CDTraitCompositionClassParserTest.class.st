@@ -1,33 +1,32 @@
 Class {
-	#name : #CDTraitCompositionClassParserTest,
-	#superclass : #CDClassDefinitionParserTest,
-	#category : #'ClassParser-Tests'
+	#name : 'CDTraitCompositionClassParserTest',
+	#superclass : 'CDClassDefinitionParserTest',
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDTraitCompositionClassParserTest class >> isAbstract [
 	^ self == CDTraitCompositionClassParserTest
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDTraitCompositionClassParserTest >> classDefinitionString [
 
-^ '{superclassName} subclass: #{classname}
-		uses: {traitDefinition}
-		instanceVariableNames: ''{instvar1} {instvar2}''
-		classVariableNames: ''{classvar1} {classvar2}''
+^ '{superclassName} << #{classname}
+		traits: {traitDefinition};
+		slots: {slots};
+		sharedVariables: {sharedVariables};
 		package: #MyPackage'
 			format: {
 				'classname' -> self className.
 				'superclassName' -> self superclassName.
-				'instvar1' -> self firstInstanceVariableName.
-				'instvar2' -> self secondInstanceVariableName.
-				'classvar1' -> self firstClassVariableName.
-				'classvar2' -> self secondClassVariableName.
+				'slots' -> self slotsArray.
+				'sharedVariables' -> self sharedVariablesArray.
 				'traitDefinition' -> self traitDefinition } asDictionary
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDTraitCompositionClassParserTest >> testBestNodeForTraitCompositionSelectionShouldBeTraitComposition [
 
 	| selectedNode start selection |
@@ -38,19 +37,19 @@ CDTraitCompositionClassParserTest >> testBestNodeForTraitCompositionSelectionSho
 	self assert: selectedNode isTraitComposition
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDTraitCompositionClassParserTest >> traitCompositionNode [
 
 	^ self nodeFor: self traitDefinition
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDTraitCompositionClassParserTest >> traitDefinition [
 
 	self subclassResponsibility
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDTraitCompositionClassParserTest >> traitDefinitionIndex [
 
 	^ self classDefinitionString findString: self traitDefinition

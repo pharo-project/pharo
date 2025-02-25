@@ -2,12 +2,14 @@
 I return all packages from the scope
 "
 Class {
-	#name : #ClyAllPackagesQuery,
-	#superclass : #ClyPackageQuery,
-	#category : #'Calypso-SystemQueries-Queries'
+	#name : 'ClyAllPackagesQuery',
+	#superclass : 'ClyPackageQuery',
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAllPackagesQuery >> buildResult: aQueryResult [
 	| packages |
 	packages := OrderedCollection new.
@@ -17,7 +19,7 @@ ClyAllPackagesQuery >> buildResult: aQueryResult [
 	aQueryResult fillWith: packages
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyAllPackagesQuery >> checkEmptyResult [
 
 	scope packagesDo: [ :each | ^false].
@@ -25,13 +27,13 @@ ClyAllPackagesQuery >> checkEmptyResult [
 	^true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyAllPackagesQuery >> description [
 
 	^'all packages'
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyAllPackagesQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 	"Normally system shows dirty state of package after any system change.
 	It means that we think that any system change affects packages.

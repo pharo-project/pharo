@@ -1,11 +1,11 @@
-Extension { #name : #String }
+Extension { #name : 'String' }
 
-{ #category : #'*Network-MIME' }
+{ #category : '*Network-MIME' }
 String >> asMIMEType [
 	^ self asZnMimeType
 ]
 
-{ #category : #'*Network-MIME' }
+{ #category : '*Network-MIME' }
 String >> base64Decoded [
 	"Decode the receiver assuming it was encoded using Base64, returning a ByteArray.
 	Base64 encoding is a technique to represent binary data as ASCII text.
@@ -17,7 +17,7 @@ String >> base64Decoded [
 	^ ZnBase64Encoder new decode: self
 ]
 
-{ #category : #'*Network-MIME' }
+{ #category : '*Network-MIME' }
 String >> decodeMimeHeader [
 	"See RFC 2047, MIME Part Three: Message Header Extension for Non-ASCII
 	Text. Text containing non-ASCII characters is encoded by the sequence
@@ -65,7 +65,7 @@ String >> decodeMimeHeader [
 					nextPut: temp ] ] ]
 ]
 
-{ #category : #'*Network-MIME' }
+{ #category : '*Network-MIME' }
 String >> decodeQuotedPrintable [
 	"Assume receiver is in MIME 'quoted-printable' encoding, and decode it."
 

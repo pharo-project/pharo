@@ -1,17 +1,19 @@
 Class {
-	#name : #WrapperSignalTest,
-	#superclass : #TestCase,
-	#category : #'Beacon-Core-Tests-Tests'
+	#name : 'WrapperSignalTest',
+	#superclass : 'TestCase',
+	#category : 'Beacon-Core-Tests-Tests',
+	#package : 'Beacon-Core-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 WrapperSignalTest >> testAsBeaconSignalDoesNotAffectAnExistingSignal [
 	| signal |
 	signal := StringSignal new.
 	self assert: signal asBeaconSignal equals: signal
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WrapperSignalTest >> testAsBeaconSignalTransformsIntoWrapperSignal [
 	self assert: (42 asBeaconSignal isKindOf: WrapperSignal).
 	self assert: 42 asBeaconSignal target equals: 42

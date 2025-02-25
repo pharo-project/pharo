@@ -1,6 +1,6 @@
-Extension { #name : #Collection }
+Extension { #name : 'Collection' }
 
-{ #category : #'*Polymorph-Widgets-Themes' }
+{ #category : '*Polymorph-Widgets-Themes' }
 Collection class >> systemIconName [
 
 	^ #collection

@@ -2,12 +2,13 @@
 Unit test for sort functions
 "
 Class {
-	#name : #SortFunctionTest,
-	#superclass : #TestCase,
-	#category : #'SortFunctions-Tests'
+	#name : 'SortFunctionTest',
+	#superclass : 'TestCase',
+	#category : 'SortFunctions-Tests',
+	#package : 'SortFunctions-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 SortFunctionTest >> testAsSortFunction [
 
 	| function |
@@ -21,7 +22,7 @@ SortFunctionTest >> testAsSortFunction [
 	self assert: function equals: function asSortFunction
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SortFunctionTest >> testComparisonOfFunctionsDefinedByBlock [
 	| collatorBlock |
 	collatorBlock := [ :a :b | 1 ].
@@ -33,7 +34,7 @@ SortFunctionTest >> testComparisonOfFunctionsDefinedByBlock [
 	self deny: collatorBlock ascending equals: [ :a :b | -1 ] ascending
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SortFunctionTest >> testComparisonOfFunctionsDefinedBySymbol [
 
 	self assert: #name ascending equals: #name ascending.
@@ -44,7 +45,7 @@ SortFunctionTest >> testComparisonOfFunctionsDefinedBySymbol [
 	self deny: #name ascending undefinedFirst equals: #name ascending undefinedLast
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SortFunctionTest >> testInversion [
 
 	| function |
@@ -62,7 +63,7 @@ SortFunctionTest >> testInversion [
 	self deny: (function value: 2 @ 2 value: 1 @ 1)
 ]
 
-{ #category : #'tests - sorting' }
+{ #category : 'tests - sorting' }
 SortFunctionTest >> testPropertyWithOddCollator [
 
 	| oddFirst function data sorted |
@@ -73,7 +74,7 @@ SortFunctionTest >> testPropertyWithOddCollator [
 	self assert: sorted equals: { 1@1. 5@5. 10@4. 3@8. 1@10. 10@10 }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SortFunctionTest >> testSingleArgBlock [
 
 	| function block |
@@ -88,14 +89,14 @@ SortFunctionTest >> testSingleArgBlock [
 	self assert: (function value: 3 @ 2 value: 1 @ 1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SortFunctionTest >> testSortUsingBooleans [
 	| datas |
 	datas := #(1 2 3 4 5).
 	self assert: (datas sorted: #odd ascending) equals: #(2 4 1 3 5)
 ]
 
-{ #category : #'tests - sorting' }
+{ #category : 'tests - sorting' }
 SortFunctionTest >> testSorting [
 	| data sorted |
 	data := { 2@10. 5@5. 10@4. 3@8. 1@1. 11@11 }.
@@ -111,7 +112,7 @@ SortFunctionTest >> testSorting [
 	self assert: sorted equals: { 11@11. 2@10. 3@8. 5@5. 10@4. 1@1 }
 ]
 
-{ #category : #'tests - sorting' }
+{ #category : 'tests - sorting' }
 SortFunctionTest >> testSortingChained [
 	| data sorted |
 	data := { 1@10. 5@5. 10@4. 3@8. 1@1. 10@10 }.
@@ -123,7 +124,7 @@ SortFunctionTest >> testSortingChained [
 	self assert: (sorted isSortedBy: #x ascending , #y descending)
 ]
 
-{ #category : #'tests - sorting' }
+{ #category : 'tests - sorting' }
 SortFunctionTest >> testSortingChainedWithUndefined [
 	| data sorted |
 	data := { 1@10. 5@5. 10@4. 10@nil. 3@8. 1@1. 10@10 }.
@@ -135,7 +136,7 @@ SortFunctionTest >> testSortingChainedWithUndefined [
 	self assert: (sorted isSortedBy: #x ascending , #y descending undefinedLast)
 ]
 
-{ #category : #'tests - sorting' }
+{ #category : 'tests - sorting' }
 SortFunctionTest >> testSortingWithUndefined [
 	| data sorted |
 	data := { 2@10. 5@5. 10@4. Point new. 3@8. 1@1. 11@11 }.
@@ -149,7 +150,7 @@ SortFunctionTest >> testSortingWithUndefined [
 	self assert: sorted equals: { Point new. 11@11. 2@10. 3@8. 5@5. 10@4. 1@1 }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SortFunctionTest >> testTwoArgBlock [
 
 	| function block |
@@ -168,7 +169,7 @@ SortFunctionTest >> testTwoArgBlock [
 	self assert: (function value: -2 value: 1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SortFunctionTest >> testUnarySymbol [
 
 	| function |
@@ -182,7 +183,7 @@ SortFunctionTest >> testUnarySymbol [
 	self assert: (function value: 2 @ 2 value: 1 @ 1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SortFunctionTest >> testUndefinedFirstUnary [
 
 	| function |
@@ -196,7 +197,7 @@ SortFunctionTest >> testUndefinedFirstUnary [
 	self deny: (function value: 2 @ 2 value: 1 @ 3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SortFunctionTest >> testUndefinedLastUnary [
 
 	| function |

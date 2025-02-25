@@ -2,22 +2,24 @@
 Tests for FFIOpaqueObjectType
 "
 Class {
-	#name : #FFIOpaqueObjectTest,
-	#superclass : #TestCase,
-	#category : #'UnifiedFFI-Tests-Tests'
+	#name : 'FFIOpaqueObjectTest',
+	#superclass : 'TestCase',
+	#category : 'UnifiedFFI-Tests-Tests',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 FFIOpaqueObjectTest >> ffiBindingOf: aName [
 	^ self class ffiBindingOf: aName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIOpaqueObjectTest >> ffiInstVarArgument: argName generator: generator [
 	^ argName
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIOpaqueObjectTest >> newParser [
 	^ FFIFunctionParser new
 		requestor: (FFICallout new
@@ -26,7 +28,7 @@ FFIOpaqueObjectTest >> newParser [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIOpaqueObjectTest >> testDereferencedExternalObjectError [
 	| fnSpec |
 	self
@@ -41,7 +43,7 @@ FFIOpaqueObjectTest >> testDereferencedExternalObjectError [
 		raise: FFIDereferencedOpaqueObjectError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIOpaqueObjectTest >> testParseAsBigArityPointer [
 	 | fnSpec arg returnType |
 
@@ -58,7 +60,7 @@ FFIOpaqueObjectTest >> testParseAsBigArityPointer [
 	self assert: returnType resolvedType pointerArity equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIOpaqueObjectTest >> testParseAsPointer [
 	 | fnSpec arg returnType |
 

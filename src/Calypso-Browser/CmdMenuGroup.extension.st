@@ -1,6 +1,6 @@
-Extension { #name : #CmdMenuGroup }
+Extension { #name : 'CmdMenuGroup' }
 
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 CmdMenuGroup >> buildBrowserNotebookActions [
 
 	self isActive ifFalse: [ ^#()] .
@@ -8,15 +8,7 @@ CmdMenuGroup >> buildBrowserNotebookActions [
 	^contents flatCollect: [ :each | each buildBrowserNotebookActions ]
 ]
 
-{ #category : #'*Calypso-Browser' }
-CmdMenuGroup >> buildBrowserTabActions [
-
-	self isActive ifFalse: [ ^#()].
-
-	^contents flatCollect: [ :each | each buildBrowserTabActions ]
-]
-
-{ #category : #'*Calypso-Browser' }
+{ #category : '*Calypso-Browser' }
 CmdMenuGroup >> buildBrowserToolbar: toolbarMorph [
 
 	self isActive ifFalse: [ ^self].

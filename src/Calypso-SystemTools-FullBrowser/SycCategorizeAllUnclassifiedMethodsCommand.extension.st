@@ -1,6 +1,6 @@
-Extension { #name : #SycCategorizeAllUnclassifiedMethodsCommand }
+Extension { #name : 'SycCategorizeAllUnclassifiedMethodsCommand' }
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 SycCategorizeAllUnclassifiedMethodsCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 

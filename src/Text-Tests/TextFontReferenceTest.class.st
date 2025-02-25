@@ -2,12 +2,14 @@
 SUnit tests for TextFontReference
 "
 Class {
-	#name : #TextFontReferenceTest,
-	#superclass : #HashAndEqualsTestCase,
-	#category : #'Text-Tests-Base'
+	#name : 'TextFontReferenceTest',
+	#superclass : 'HashAndEqualsTestCase',
+	#category : 'Text-Tests-Base',
+	#package : 'Text-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TextFontReferenceTest >> setUp [
 	super setUp.
 	prototypes
@@ -15,7 +17,7 @@ TextFontReferenceTest >> setUp [
 				toFont: (StrikeFont familyName: 'NewYork' size: 15))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextFontReferenceTest >> testFont [
 	| font text |
 	font := LogicalFont familyName: 'Source Sans Pro' pointSize: 8.

@@ -3,24 +3,26 @@ I run the callouts and callbacks in the main thread of the process.
 It can be or not the VM thread. It depends how the VM has been started.
 "
 Class {
-	#name : #TFMainThreadRunner,
-	#superclass : #TFRunner,
+	#name : 'TFMainThreadRunner',
+	#superclass : 'TFRunner',
 	#classVars : [
 		'MainThreadHandle'
 	],
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #'ThreadedFFI-Worker'
+	#category : 'ThreadedFFI-Worker',
+	#package : 'ThreadedFFI',
+	#tag : 'Worker'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TFMainThreadRunner class >> uniqueInstance [
 
 	^ uniqueInstance ifNil: [ uniqueInstance := self basicNew initialize ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFMainThreadRunner >> doInitialize [
 
 	super doInitialize.
@@ -28,14 +30,14 @@ TFMainThreadRunner >> doInitialize [
 	handle := MainThreadHandle
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 TFMainThreadRunner >> executeFunction: aTFExternalFunction withArguments: arguments usingSemaphore: anInteger [
 	<primitive: 'primitiveWorkerCallout' error: ec>
 
 	self primitiveFailed
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFMainThreadRunner >> primitivePerformWorkerCall: aTFExternalFunction withArguments: argumentHolder withReturnHolder: aReturnHolder usingSemaphore: anInteger [
 
 	<primitive: 'primitivePerformWorkerCall'>
@@ -43,14 +45,14 @@ TFMainThreadRunner >> primitivePerformWorkerCall: aTFExternalFunction withArgume
 	^ self primitiveFailed
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 TFMainThreadRunner >> readReturnValueFromTask: anExternalAddress [
 	<primitive: 'primitiveWorkerExtractReturnValue' error: ec>
 
 	self primitiveFailed
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFMainThreadRunner >> workerAddress [
 
 	^ (ExternalAddress loadSymbol: 'mainThreadWorker') pointerAt: 1

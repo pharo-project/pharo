@@ -2,132 +2,134 @@
 i am a handle for null window , created using OSNullWindowDriver.
 "
 Class {
-	#name : #OSNullBackendWindow,
-	#superclass : #OSBackendWindow,
+	#name : 'OSNullBackendWindow',
+	#superclass : 'OSBackendWindow',
 	#instVars : [
 		'attributes',
 		'isTextInputActive'
 	],
-	#category : #'OSWindow-Core-Utilities'
+	#category : 'OSWindow-Core-Utilities',
+	#package : 'OSWindow-Core',
+	#tag : 'Utilities'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OSNullBackendWindow class >> fromAttributes: attributes for: anOSWindow [
 	^ self new attributes: attributes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSNullBackendWindow >> attributes: newAttributes [
 	attributes := newAttributes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSNullBackendWindow >> bounds: aRectangle [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSNullBackendWindow >> clipboardText [
 	^ ''
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSNullBackendWindow >> clipboardText: anObject [
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 OSNullBackendWindow >> destroy [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSNullBackendWindow >> extent [
 	^ attributes extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSNullBackendWindow >> extent: newExtent [
 	attributes extent: newExtent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSNullBackendWindow >> hide [
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSNullBackendWindow >> initialize [
 	super initialize.
 
 	isTextInputActive := false
 ]
 
-{ #category : #'text input' }
+{ #category : 'text input' }
 OSNullBackendWindow >> isTextInputActive [
 	^ isTextInputActive
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSNullBackendWindow >> isValid [
 	^ true
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSNullBackendWindow >> newAthensRenderer [
 	self subclassResponsibility
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSNullBackendWindow >> newFormRenderer: form [
 	^ renderer := OSNullFormRenderer new form: form
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSNullBackendWindow >> newGenericRenderer [
 	^ renderer := OSWindowNullGenericRenderer new
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 OSNullBackendWindow >> newOpenGLRenderer [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSNullBackendWindow >> platformSpecificHandle [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSNullBackendWindow >> position [
 	^ attributes position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSNullBackendWindow >> position: position [
 	attributes position: position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSNullBackendWindow >> show [
 ]
 
-{ #category : #'text input' }
+{ #category : 'text input' }
 OSNullBackendWindow >> startTextInput [
 	isTextInputActive := true
 ]
 
-{ #category : #'text input' }
+{ #category : 'text input' }
 OSNullBackendWindow >> startTextInputAtRectangle: anObject [
 	isTextInputActive := true
 ]
 
-{ #category : #'text input' }
+{ #category : 'text input' }
 OSNullBackendWindow >> stopTextInput [
 	isTextInputActive := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSNullBackendWindow >> title [
 	^attributes title
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSNullBackendWindow >> title: anObject [
 ]

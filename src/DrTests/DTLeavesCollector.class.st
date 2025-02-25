@@ -4,38 +4,40 @@ I am a visitor that collect the leaves of the DTTreeNode I visit.
 If there are multiple levels of DTTreeNode, no problem, I traverse them until I find the leaves.
 "
 Class {
-	#name : #DTLeavesCollector,
-	#superclass : #DTResultsTreeVisitor,
+	#name : 'DTLeavesCollector',
+	#superclass : 'DTResultsTreeVisitor',
 	#instVars : [
 		'leaves'
 	],
-	#category : #'DrTests-Visitors'
+	#category : 'DrTests-Visitors',
+	#package : 'DrTests',
+	#tag : 'Visitors'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DTLeavesCollector class >> collectLeavesOf: aDTTreeNode [
 	^ self new
 		visit: aDTTreeNode;
 		leaves
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DTLeavesCollector >> initialize [
 	super initialize.
 	leaves := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTLeavesCollector >> leaves [
 	^ leaves
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTLeavesCollector >> leaves: anObject [
 	leaves := anObject
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DTLeavesCollector >> visitDTTreeLeaf: aDTTreeLeaf [
 	self leaves add: aDTTreeLeaf
 ]

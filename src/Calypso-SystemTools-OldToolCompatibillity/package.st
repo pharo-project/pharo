@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemTools-OldToolCompatibillity' }
+Package { #name : 'Calypso-SystemTools-OldToolCompatibillity' }

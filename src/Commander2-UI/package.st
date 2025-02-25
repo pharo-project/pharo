@@ -1,1 +1,1 @@
-Package { #name : #'Commander2-UI' }
+Package { #name : 'Commander2-UI' }

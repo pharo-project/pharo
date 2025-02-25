@@ -3,12 +3,14 @@ I know how to handle the case when we want to send a Pharo object to the FFI.
 
 "
 Class {
-	#name : #TFOOPType,
-	#superclass : #TFDerivedType,
-	#category : #'ThreadedFFI-Types'
+	#name : 'TFOOPType',
+	#superclass : 'TFDerivedType',
+	#category : 'ThreadedFFI-Types',
+	#package : 'ThreadedFFI',
+	#tag : 'Types'
 }
 
-{ #category : #marshalling }
+{ #category : 'marshalling' }
 TFOOPType >> emitMarshallFromPrimitive: anIRBuilder [
 
 	anIRBuilder addTemp: #__marshall_temp.
@@ -19,7 +21,7 @@ TFOOPType >> emitMarshallFromPrimitive: anIRBuilder [
 	anIRBuilder send: #objectForOop:
 ]
 
-{ #category : #marshalling }
+{ #category : 'marshalling' }
 TFOOPType >> emitMarshallToPrimitive: anIRBuilder [
 
 	anIRBuilder addTemp: #__marshall_temp.
@@ -30,7 +32,7 @@ TFOOPType >> emitMarshallToPrimitive: anIRBuilder [
 	anIRBuilder send: #oopForObjectForcePinInMemory:
 ]
 
-{ #category : #'reading-writing' }
+{ #category : 'reading-writing' }
 TFOOPType >> readValue: anExternalAddress [
 	^ self basicType readValue: anExternalAddress
 ]

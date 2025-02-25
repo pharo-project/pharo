@@ -1,10 +1,12 @@
 Class {
-	#name : #TKTServiceMemoryLeakTest,
-	#superclass : #TKTMemoryLeakTest,
-	#category : #'TaskIt-Tests-Services'
+	#name : 'TKTServiceMemoryLeakTest',
+	#superclass : 'TKTMemoryLeakTest',
+	#category : 'TaskIt-Tests-Services',
+	#package : 'TaskIt-Tests',
+	#tag : 'Services'
 }
 
-{ #category : #'tests - worker' }
+{ #category : 'tests - worker' }
 TKTServiceMemoryLeakTest >> testServiceInstancesAreCollectedAfterStartingAndStoppingService [
 
 	self
@@ -12,7 +14,7 @@ TKTServiceMemoryLeakTest >> testServiceInstancesAreCollectedAfterStartingAndStop
 		during: [ TKTParameterizableService new name: 'test'; start; stop  ]
 ]
 
-{ #category : #'tests - worker' }
+{ #category : 'tests - worker' }
 TKTServiceMemoryLeakTest >> testWorkerInstancesAreCollectedAfterStartingAndStoppingService [
 
 	self
@@ -23,7 +25,7 @@ TKTServiceMemoryLeakTest >> testWorkerInstancesAreCollectedAfterStartingAndStopp
 				stop ]
 ]
 
-{ #category : #'tests - worker' }
+{ #category : 'tests - worker' }
 TKTServiceMemoryLeakTest >> testWorkerPoolInstancesAreCollectedAfterStartingAndStoppingService [
 
 	self
@@ -31,7 +33,7 @@ TKTServiceMemoryLeakTest >> testWorkerPoolInstancesAreCollectedAfterStartingAndS
 		during: [ TKTParameterizableService new name: 'test'; start; stop  ]
 ]
 
-{ #category : #'tests - worker' }
+{ #category : 'tests - worker' }
 TKTServiceMemoryLeakTest >> testWorkerProcessInstancesAreCollectedAfterStartingAndStoppingService [
 
 	self

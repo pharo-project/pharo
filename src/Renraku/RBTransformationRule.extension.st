@@ -1,6 +1,6 @@
-Extension { #name : #RBTransformationRule }
+Extension { #name : 'RBTransformationRule' }
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 RBTransformationRule >> check: aMethod forCritiquesDo: aCriticBlock [
 
 	(self basicCheck: aMethod)
@@ -12,7 +12,7 @@ RBTransformationRule >> check: aMethod forCritiquesDo: aCriticBlock [
 					tree: rewriteRule tree)  ]
 ]
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 RBTransformationRule >> suggestedCode: aCritic [
 
 	^ (self changes detect: [ :ch |

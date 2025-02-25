@@ -1,1 +1,1 @@
-Package { #name : #'Ring-ChunkImporter' }
+Package { #name : 'Ring-ChunkImporter' }

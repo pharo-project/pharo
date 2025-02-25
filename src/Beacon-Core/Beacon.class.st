@@ -6,49 +6,51 @@ It's a singleton class that holds an announcer instance. Its goal is purely to s
 By itself, it does not do anything useful. Other `SignalLogger`s are meant to register to its announcer and link the announcements to something useful.
 "
 Class {
-	#name : #Beacon,
-	#superclass : #Object,
+	#name : 'Beacon',
+	#superclass : 'Object',
 	#instVars : [
 		'announcer'
 	],
 	#classVars : [
 		'Instance'
 	],
-	#category : #'Beacon-Core-Beacon'
+	#category : 'Beacon-Core-Beacon',
+	#package : 'Beacon-Core',
+	#tag : 'Beacon'
 }
 
-{ #category : #logging }
+{ #category : 'logging' }
 Beacon class >> announce: anAnnouncement [
 
 	self instance announce: anAnnouncement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Beacon class >> instance [
 
 	^ Instance ifNil: [ Instance := self new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Beacon class >> loggers [
 
 	^ self instance loggers
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Beacon class >> loggersOf: aClass [
 
 	^ self instance loggersOf: aClass
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 Beacon class >> reset [
 	<script>
 
 	self resetInstance
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 Beacon class >> resetInstance [
 
 	Instance ifNotNil: [
@@ -56,38 +58,38 @@ Beacon class >> resetInstance [
 	Instance := nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Beacon >> announce: anAnnouncement [
 
 	self announcer announce: anAnnouncement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Beacon >> announcer [
 
 	^ announcer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Beacon >> announcer: anObject [
 
 	announcer := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 Beacon >> initialize [
 
 	super initialize.
 	announcer := Announcer new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Beacon >> loggers [
 
 	^ self loggersOf: SignalLogger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Beacon >> loggersOf: aClass [
 	"Returns the loggers of a certain class of loggers."
 
@@ -96,13 +98,13 @@ Beacon >> loggersOf: aClass [
 		   as: Set) select: [ :each | each isKindOf: aClass ]
 ]
 
-{ #category : #announcing }
+{ #category : 'announcing' }
 Beacon >> unsubscribe: aSignalLogger [
 
 	self announcer unsubscribe: aSignalLogger
 ]
 
-{ #category : #announcing }
+{ #category : 'announcing' }
 Beacon >> when: anAnnouncementClass send: aSelector to: anObject [
 
 	self announcer when: anAnnouncementClass send: aSelector to: anObject

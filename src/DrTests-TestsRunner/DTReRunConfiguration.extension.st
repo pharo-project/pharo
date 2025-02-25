@@ -1,6 +1,6 @@
-Extension { #name : #DTReRunConfiguration }
+Extension { #name : 'DTReRunConfiguration' }
 
-{ #category : #'*DrTests-TestsRunner' }
+{ #category : '*DrTests-TestsRunner' }
 DTReRunConfiguration >> handleResults: aPluginResult for: aPlugin [
 	^ aPlugin handleReRunResult: aPluginResult forConfiguration: self
 ]

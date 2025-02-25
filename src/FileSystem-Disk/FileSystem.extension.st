@@ -1,28 +1,28 @@
-Extension { #name : #FileSystem }
+Extension { #name : 'FileSystem' }
 
-{ #category : #'*Filesystem-Disk' }
+{ #category : '*Filesystem-Disk' }
 FileSystem class >> * aFileOrDirectoryName [
 	^ self disk * aFileOrDirectoryName
 ]
 
-{ #category : #'*Filesystem-Disk' }
+{ #category : '*Filesystem-Disk' }
 FileSystem class >> / aFileOrDirectoryName [
 	^ self disk / aFileOrDirectoryName
 ]
 
-{ #category : #'*Filesystem-Disk' }
+{ #category : '*Filesystem-Disk' }
 FileSystem class >> disk [
 	"Answer a filesystem that represents the 'on-disk' filesystem used by the host operating system."
 
 	^ DiskStore currentFileSystem
 ]
 
-{ #category : #'*FileSystem-Disk' }
+{ #category : '*FileSystem-Disk' }
 FileSystem >> isDiskFileSystem [
 	^ store isDiskFileSystem
 ]
 
-{ #category : #'*Filesystem-Disk' }
+{ #category : '*Filesystem-Disk' }
 FileSystem class >> lookInUsualPlaces: fileName [
 	"Check the default directory, the imagePath, and the vmPath (and the vmPath's owner) for this file."
 
@@ -42,12 +42,12 @@ FileSystem class >> lookInUsualPlaces: fileName [
 	^ nil
 ]
 
-{ #category : #'*Filesystem-Disk' }
+{ #category : '*Filesystem-Disk' }
 FileSystem class >> root [
 	^ self disk root
 ]
 
-{ #category : #'*Filesystem-Disk' }
+{ #category : '*Filesystem-Disk' }
 FileSystem class >> workingDirectory [
 	^ self disk workingDirectory
 ]

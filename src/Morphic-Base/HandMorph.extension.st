@@ -1,12 +1,12 @@
-Extension { #name : #HandMorph }
+Extension { #name : 'HandMorph' }
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 HandMorph >> mouseClickStateFor: aMorph event: aMouseEvent [
 	mouseClickState := MouseClickState client: aMorph event: aMouseEvent.
 	^ mouseClickState
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 HandMorph >> waitForClicksOrDrag: aMorph event: evt selectors: clickAndDragSelectors threshold: threshold [
 
 	"Wait for mouse button and movement events, informing aMorph about events interesting to it via callbacks.

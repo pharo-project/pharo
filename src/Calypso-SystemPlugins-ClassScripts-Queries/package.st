@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-ClassScripts-Queries' }
+Package { #name : 'Calypso-SystemPlugins-ClassScripts-Queries' }

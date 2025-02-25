@@ -1,6 +1,6 @@
-Extension { #name : #GenericPaintPatch }
+Extension { #name : 'GenericPaintPatch' }
 
-{ #category : #'*Athens-Cairo' }
+{ #category : '*Athens-Cairo' }
 GenericPaintPatch >> addToCairoMeshGradientPaint: meshGradientPaint [
 	meshGradientPaint beginPatch.
 	[

@@ -2,28 +2,30 @@
 Alpha aware InfiniteForm.
 "
 Class {
-	#name : #AlphaInfiniteForm,
-	#superclass : #InfiniteForm,
+	#name : 'AlphaInfiniteForm',
+	#superclass : 'InfiniteForm',
 	#instVars : [
 		'origin',
 		'extent'
 	],
-	#category : #'Graphics-Display Objects-Forms'
+	#category : 'Graphics-Display Objects-Forms',
+	#package : 'Graphics-Display Objects',
+	#tag : 'Forms'
 }
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 AlphaInfiniteForm >> computeBoundingBox [
 	"Refer to the comment in DisplayObject|computeBoundingBox."
 
 	^self origin extent: self extent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaInfiniteForm >> direction: aPoint [
 	"Ignore"
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 AlphaInfiniteForm >> displayOnPort: aPort offsetBy: offset [
 
 	| targetBox patternBox savedMap top left |
@@ -53,28 +55,28 @@ AlphaInfiniteForm >> displayOnPort: aPort offsetBy: offset [
 	aPort colorMap: savedMap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaInfiniteForm >> extent [
 	"Answer the extent of the repeating area."
 
 	^extent ifNil: [SmallInteger maxVal @ SmallInteger maxVal]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaInfiniteForm >> extent: anObject [
 	"Set the value of extent"
 
 	extent := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaInfiniteForm >> origin [
 	"Answer the origin."
 
 	^origin ifNil: [0@0]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AlphaInfiniteForm >> origin: aPoint [
 	"Set the origin."
 

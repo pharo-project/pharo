@@ -2,12 +2,14 @@
 Tests for FFIExternalArray
 "
 Class {
-	#name : #FFIExternalArrayTest,
-	#superclass : #TestCase,
-	#category : #'UnifiedFFI-Tests-Tests'
+	#name : 'FFIExternalArrayTest',
+	#superclass : 'TestCase',
+	#category : 'UnifiedFFI-Tests-Tests',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIExternalArrayTest >> testAt [
 	| externalArray |
 
@@ -16,7 +18,7 @@ FFIExternalArrayTest >> testAt [
 	1 to: 10 do: [ :index | self assert: (externalArray at: index) equals: 0 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIExternalArrayTest >> testAtPut [
 	| externalArray |
 
@@ -25,7 +27,7 @@ FFIExternalArrayTest >> testAtPut [
 	self assert: (externalArray at: 1) equals: 42
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIExternalArrayTest >> testExternalAt [
 	| externalArray |
 
@@ -40,7 +42,7 @@ FFIExternalArrayTest >> testExternalAt [
 		externalArray free ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIExternalArrayTest >> testExternalAtPut [
 	| externalArray |
 
@@ -52,7 +54,7 @@ FFIExternalArrayTest >> testExternalAtPut [
 		externalArray free ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIExternalArrayTest >> testExternalAtPutFloat [
 	| random array |
 	random := Random new.
@@ -63,7 +65,7 @@ FFIExternalArrayTest >> testExternalAtPutFloat [
 	ensure: [ array free ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIExternalArrayTest >> testReadArrayOfUntil [
 	| n interval externalArray |
 	n := 10.
@@ -77,7 +79,7 @@ FFIExternalArrayTest >> testReadArrayOfUntil [
 		ensure: [ externalArray free ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFIExternalArrayTest >> testResolveType [
 	self assert: (FFIExternalArray resolveType: 'int') class equals: FFIInt32.
 	self assert: (FFIExternalArray resolveType: 'String') class equals: FFIExternalString.

@@ -9,20 +9,22 @@ range
 
 "
 Class {
-	#name : #RangeSettingDeclaration,
-	#superclass : #SettingDeclaration,
+	#name : 'RangeSettingDeclaration',
+	#superclass : 'SettingDeclaration',
 	#instVars : [
 		'range'
 	],
-	#category : #'System-Settings-Core-Base'
+	#category : 'System-Settings-Core-Base',
+	#package : 'System-Settings-Core',
+	#tag : 'Base'
 }
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 RangeSettingDeclaration >> hasEditableList [
 	^ false
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 RangeSettingDeclaration >> inputWidget [
 	^ (self theme
 			newRowIn: self
@@ -53,17 +55,17 @@ RangeSettingDeclaration >> inputWidget [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RangeSettingDeclaration >> range [
 	^ range
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RangeSettingDeclaration >> range: anInterval [
 	range := anInterval
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RangeSettingDeclaration >> realValue: aValue [
 	aValue
 		ifNil: [self settingReceiver perform: self setSelector with: nil]

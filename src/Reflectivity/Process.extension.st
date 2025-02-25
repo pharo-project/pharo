@@ -1,43 +1,20 @@
-Extension { #name : #Process }
+Extension { #name : 'Process' }
 
-{ #category : #'*Reflectivity' }
-Process >> isActive: n [
-	<metaLinkOptions: #( + optionDisabledLink)>
-	^level = n or: [ level == nil ]
-]
+{ #category : '*Reflectivity' }
+Process >> findContextsForMethod: aMethod [
 
-{ #category : #'*Reflectivity' }
-Process >> isMeta [
-	<metaLinkOptions: #( + optionDisabledLink)>
-	level ifNil: [ level := 0 ].
-	^level ~= 0
-]
+	| context priorContext found methodClass methodSelector homeMethod |
+	found := OrderedCollection new.
+	methodClass := aMethod methodClass.
+	methodSelector := aMethod selector.
 
-{ #category : #'*Reflectivity' }
-Process >> level [
-	<metaLinkOptions: #( + optionDisabledLink)>
-	^level ifNil: [ level := 0 ]
-]
-
-{ #category : #'*Reflectivity' }
-Process >> rfeffectiveProcess [
-	"same as #effectiveProcess but for internal use for metalink activation"
-	<metaLinkOptions: #( + optionDisabledLink)>
-	^effectiveProcess ifNil: [self]
-]
-
-{ #category : #'*Reflectivity' }
-Process >> shiftLevelDown [
-	<metaLinkOptions: #( + optionDisabledLink)>
-	level ifNil: [ level := 0 ].
-	(level rfIsEqual: 0) ifTrue: [ ^level ].
-	(level rfIsEqual: 1) ifTrue: [ ^level := 0 ].
-	level := level rfMinus: 1
-]
-
-{ #category : #'*Reflectivity' }
-Process >> shiftLevelUp [
-	<metaLinkOptions: #( + optionDisabledLink)>
-	level ifNil: [ level := 0 ].
-	level := level rfPlus: 1
+	context := suspendedContext.
+	priorContext := nil.
+	[ context isNil ] whileFalse: [
+		homeMethod := context homeMethod.
+		(homeMethod methodClass == methodClass and: [
+			 homeMethod selector == methodSelector ]) ifTrue: [ found add: context ].
+		priorContext := context.
+		context := context sender ].
+	^ found
 ]

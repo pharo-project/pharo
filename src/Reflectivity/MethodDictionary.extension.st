@@ -1,6 +1,6 @@
-Extension { #name : #MethodDictionary }
+Extension { #name : 'MethodDictionary' }
 
-{ #category : #'*Reflectivity' }
+{ #category : '*Reflectivity' }
 MethodDictionary >> metaLinkOptions [
 	^{
 	#scanFor: -> #( + optionCompileOnLinkInstallation).

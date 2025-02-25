@@ -1,35 +1,36 @@
 Class {
-	#name : #CDExistingClassDefinitionTest,
-	#superclass : #CDBehaviorParserTest,
-	#category : #'ClassParser-Tests'
+	#name : 'CDExistingClassDefinitionTest',
+	#superclass : 'CDBehaviorParserTest',
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDExistingClassDefinitionTest >> classDefinitionString [
 
-	^ (ClassDefinitionPrinter oldPharo for: CDClassWithFullDefinitionExample) definitionString
+	^ (ClassDefinitionPrinter fluid for: CDClassWithFullDefinitionExample) definitionString
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDExistingClassDefinitionTest >> className [
 
 	^ CDClassWithFullDefinitionExample name
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDExistingClassDefinitionTest >> firstInstanceVariableName [
 
 	^ 'instVar1'
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDExistingClassDefinitionTest >> secondInstanceVariableName [
 
 	^ 'instVar2'
 ]
 
-{ #category : #helpers }
-CDExistingClassDefinitionTest >> testClassNameNodeIsPolymorphicToRBVariableNode [
+{ #category : 'helpers' }
+CDExistingClassDefinitionTest >> testClassNameNodeIsPolymorphicToASTVariableNode [
 
 	| nameNode |
 	nameNode := classDefinition classNameNode.
@@ -37,7 +38,7 @@ CDExistingClassDefinitionTest >> testClassNameNodeIsPolymorphicToRBVariableNode 
 	self deny: nameNode isTempVariable
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDExistingClassDefinitionTest >> testGettingExistingClass [
 
 	| class |
@@ -45,7 +46,7 @@ CDExistingClassDefinitionTest >> testGettingExistingClass [
 	self assert: class equals: CDClassWithFullDefinitionExample
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDExistingClassDefinitionTest >> testGettingExistingClassNameBinding [
 
 	| binding |
@@ -54,8 +55,8 @@ CDExistingClassDefinitionTest >> testGettingExistingClassNameBinding [
 	self assert: binding identicalTo: CDClassWithFullDefinitionExample binding
 ]
 
-{ #category : #helpers }
-CDExistingClassDefinitionTest >> testSharedSlotNodeArePolymorphicToRBVariableNodes [
+{ #category : 'helpers' }
+CDExistingClassDefinitionTest >> testSharedSlotNodeArePolymorphicToASTVariableNodes [
 
 	| classVarNode |
 	classVarNode := classDefinition sharedVariableNodes first.
@@ -69,8 +70,8 @@ CDExistingClassDefinitionTest >> testSharedSlotNodeArePolymorphicToRBVariableNod
 	self deny: classVarNode isUndeclaredVariable
 ]
 
-{ #category : #helpers }
-CDExistingClassDefinitionTest >> testSlotNodeArePolymorphicToRBVariableNodes [
+{ #category : 'helpers' }
+CDExistingClassDefinitionTest >> testSlotNodeArePolymorphicToASTVariableNodes [
 
 	| slotNode |
 	slotNode := classDefinition slotNodes first.
@@ -83,7 +84,7 @@ CDExistingClassDefinitionTest >> testSlotNodeArePolymorphicToRBVariableNodes [
 	self deny: slotNode isUndeclaredVariable
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDExistingClassDefinitionTest >> testSlotNodeBinding [
 
 	| slotNode |

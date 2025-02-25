@@ -26,15 +26,16 @@ Subclasses must implement the following messages:
 
 "
 Class {
-	#name : #ImageReadWriter,
-	#superclass : #Object,
+	#name : 'ImageReadWriter',
+	#superclass : 'Object',
 	#instVars : [
 		'stream'
 	],
-	#category : #'Graphics-Files'
+	#category : 'Graphics-Files',
+	#package : 'Graphics-Files'
 }
 
-{ #category : #'image reading/writing' }
+{ #category : 'image reading/writing' }
 ImageReadWriter class >> allTypicalFileExtensions [
 	"Answer a collection of file extensions (lowercase) which files that my subclasses can read might commonly have"
 
@@ -46,7 +47,7 @@ ImageReadWriter class >> allTypicalFileExtensions [
 	^ extensions
 ]
 
-{ #category : #'image reading/writing' }
+{ #category : 'image reading/writing' }
 ImageReadWriter class >> formFromFileNamed: fileName [
 	"Answer a Form of the image stored (encoded) on the file with fileName.
 	This will (normally) autodetect the format and delegate to the correct concrete subclass."
@@ -58,7 +59,7 @@ ImageReadWriter class >> formFromFileNamed: fileName [
 		binaryReadStreamDo: [ :in | self formFromStream: in ]
 ]
 
-{ #category : #'image reading/writing' }
+{ #category : 'image reading/writing' }
 ImageReadWriter class >> formFromStream: aBinaryReadStream [
 	"Answer a Form of the image stored on aBinaryReadStream.
 	This will (normally) autodetect the format and delegate to the correct concrete subclass.
@@ -76,7 +77,7 @@ ImageReadWriter class >> formFromStream: aBinaryReadStream [
 	^ form
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ImageReadWriter class >> on: binaryStream [
 	"Answer an instance of the receiver for encoding and/or decoding an image on binaryStream.
 	For reading, you should pass along a read stream, for writing a write stream."
@@ -84,7 +85,7 @@ ImageReadWriter class >> on: binaryStream [
 	^ self new on: binaryStream
 ]
 
-{ #category : #'image reading/writing' }
+{ #category : 'image reading/writing' }
 ImageReadWriter class >> putForm: aForm onFileNamed: fileName [
 	"Store (encode) the image of the Form aForm on a file of with fileName.
 	Use a concrete subclass to select the desired format."
@@ -96,7 +97,7 @@ ImageReadWriter class >> putForm: aForm onFileNamed: fileName [
 		binaryWriteStreamDo: [ :out | (self on: out) nextPutImage: aForm ]
 ]
 
-{ #category : #'image reading/writing' }
+{ #category : 'image reading/writing' }
 ImageReadWriter class >> putForm: aForm onStream: aBinaryWriteStream [
 	"Store (encode) the image of the Form aForm on aBinaryWriteStream.
 	Use a concrete subclass to select the desired format.
@@ -111,7 +112,7 @@ ImageReadWriter class >> putForm: aForm onStream: aBinaryWriteStream [
 	writer close
 ]
 
-{ #category : #'image reading/writing' }
+{ #category : 'image reading/writing' }
 ImageReadWriter class >> readerClassFromStream: positionableReadStream [
 	| readerClass |
 	readerClass := self withAllSubclasses
@@ -123,26 +124,26 @@ ImageReadWriter class >> readerClassFromStream: positionableReadStream [
 	^ readerClass
 ]
 
-{ #category : #'image reading/writing' }
+{ #category : 'image reading/writing' }
 ImageReadWriter class >> typicalFileExtensions [
 	"Answer a collection of file extensions (lowercase) which files that I can read might commonly have"
 
 	^ #()
 ]
 
-{ #category : #'image reading/writing' }
+{ #category : 'image reading/writing' }
 ImageReadWriter class >> understandsImageFormat: aStream [
 	^ [ (self new on: aStream) understandsImageFormat ]
 		on: Error
 		do: [ :ex | ex return: false ]
 ]
 
-{ #category : #'image reading/writing' }
+{ #category : 'image reading/writing' }
 ImageReadWriter class >> unrecognizedImageFormatError: aString [
     UnrecognizedImageFormatError signal: aString
 ]
 
-{ #category : #'image reading/writing' }
+{ #category : 'image reading/writing' }
 ImageReadWriter >> allTypicalFileExtensions [
 	"Answer a collection of file extensions (lowercase) which files that my subclasses can read might commonly have"
 	"ImageReadWriter allTypicalFileExtensions"
@@ -152,13 +153,13 @@ ImageReadWriter >> allTypicalFileExtensions [
 	^ extensions
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> atEnd [
 
 	^stream atEnd
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ImageReadWriter >> changePadOfBits: bits width: width height: height depth: depth from: oldPad to: newPad [
 	"Change padding size of bits."
 	| srcRowByteSize dstRowByteSize newBits srcRowBase rowEndOffset |
@@ -184,25 +185,25 @@ ImageReadWriter >> changePadOfBits: bits width: width height: height depth: dept
 	^ newBits
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> close [
 
 	stream close
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> contents [
 
 	^stream contents
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> cr [
 
 	^stream nextPut: Character cr asInteger
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ImageReadWriter >> hasMagicNumber: aByteArray [
 	| position |
 	position := stream position.
@@ -212,38 +213,38 @@ ImageReadWriter >> hasMagicNumber: aByteArray [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ImageReadWriter >> isAnimated [
 	^ false
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> lf [
 	"PPM and PBM are used LF as CR."
 
 	^stream nextPut: Character lf asInteger
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> next [
 
 	^stream next
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> next: size [
 
 	^stream next: size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ImageReadWriter >> nextImage [
 	"Decode an encoded image from my stream and return it as a Form"
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> nextIntegerOfSize: numberOfBytes signed: signed bigEndian: bigEndian [
 	"Assuming the receiver is a stream of bytes, read the next integer of size numberOfBytes.
 	If bigEndian is true, use network byte order, most significant byte first,
@@ -265,7 +266,7 @@ ImageReadWriter >> nextIntegerOfSize: numberOfBytes signed: signed bigEndian: bi
 		ifFalse: [ value ]
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> nextIntegerOfSize: numberOfBytes signed: signed bigEndian: bigEndian put: value [
 	"Assuming the receiver is a stream of bytes, write value as the next integer of size numberOfBytes.
 	If bigEndian is true, use network byte order, most significant byte first,
@@ -289,17 +290,17 @@ ImageReadWriter >> nextIntegerOfSize: numberOfBytes signed: signed bigEndian: bi
 	^ value
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> nextLittleEndianNumber: numberOfBytes [
 	^ self nextIntegerOfSize: numberOfBytes signed: false bigEndian: false
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> nextLittleEndianNumber: numberOfBytes put: integer [
 	^ self nextIntegerOfSize: numberOfBytes signed: false bigEndian: false put: integer
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> nextLong [
 	"Read a 32-bit quantity from the input stream."
 
@@ -307,7 +308,7 @@ ImageReadWriter >> nextLong [
 		(stream next bitShift: 8) + stream next
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> nextLongPut: a32BitW [
 	"Write out a 32-bit integer as 32 bits."
 
@@ -318,33 +319,33 @@ ImageReadWriter >> nextLongPut: a32BitW [
 	^a32BitW
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> nextPut: aByte [
 
 	^stream nextPut: aByte
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> nextPutAll: aByteArray [
 
 	^stream nextPutAll: aByteArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ImageReadWriter >> nextPutImage: imageForm [
 	"Encoding imageForm onto my stream"
 
 	self subclassResponsibility
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> nextWord [
 	"Read a 16-bit quantity from the input stream."
 
 	^(stream next bitShift: 8) + stream next
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> nextWordPut: a16BitW [
 	"Write out a 16-bit integer as 16 bits."
 
@@ -353,54 +354,54 @@ ImageReadWriter >> nextWordPut: a16BitW [
 	^a16BitW
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ImageReadWriter >> on: binaryStream [
 	stream := binaryStream
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> peekFor: aValue [
 
 	^stream peekFor: aValue
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> position [
 
 	^stream position
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> position: anInteger [
 
 	^stream position: anInteger
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> size [
 
 	^stream size
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> skip: anInteger [
 
 	^stream skip: anInteger
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> space [
 
 	^stream nextPut: Character space asInteger
 ]
 
-{ #category : #'stream access' }
+{ #category : 'stream access' }
 ImageReadWriter >> tab [
 
 	^stream nextPut: Character tab asInteger
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ImageReadWriter >> understandsImageFormat [
 	"Test to see if the image stream format is understood by this decoder.
 	This should be implemented in each subclass of ImageReadWriter so that
@@ -410,7 +411,7 @@ ImageReadWriter >> understandsImageFormat [
 	^ false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ImageReadWriter >> unpackBits: bits depthTo8From: depth with: width height: height pad: pad [
 	"Unpack bits of depth 1, 2, or 4 image to it of depth 8 image."
 	| bitMask pixelInByte bitsWidth upBitsWidth stopWidth trailingSize upBits bitIndex upBitIndex val |

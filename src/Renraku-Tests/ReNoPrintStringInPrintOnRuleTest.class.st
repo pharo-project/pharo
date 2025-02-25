@@ -1,10 +1,11 @@
 Class {
-	#name : #ReNoPrintStringInPrintOnRuleTest,
-	#superclass : #ReCodeBasedTestCase,
-	#category : #'Renraku-Tests'
+	#name : 'ReNoPrintStringInPrintOnRuleTest',
+	#superclass : 'ReCodeBasedTestCase',
+	#category : 'Renraku-Tests',
+	#package : 'Renraku-Tests'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 ReNoPrintStringInPrintOnRuleTest >> printOn: aStream [
 	"I violate my rule on not using pringString inside a printOn:"
 	super printOn: aStream.
@@ -12,7 +13,7 @@ ReNoPrintStringInPrintOnRuleTest >> printOn: aStream [
 	2 even ifFalse: [ 3.14 printString ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReNoPrintStringInPrintOnRuleTest >> testBasicCheck [
 
 	testMethod := testClass >> (testClass compile:
@@ -34,7 +35,7 @@ ReNoPrintStringInPrintOnRuleTest >> testBasicCheck [
 		assert: (testMethod critiques noneSatisfy: [ :critic | critic rule class = ReNoPrintStringInPrintOnRule ])
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReNoPrintStringInPrintOnRuleTest >> testRule [
 	|method critiques|
 	method := self class >> #printOn:.

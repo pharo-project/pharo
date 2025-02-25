@@ -10,17 +10,20 @@ In such a case, some of the results already fetched are still valid, and the fet
 In case the filter is being broadened (e.g., we go from 'abc' to 'ab'), all results we already have are valid, but probably lots of other results were filtered already. So we reset both the results and the fetcher and restart the search.
 "
 Class {
-	#name : #CoResultSet,
-	#superclass : #Object,
+	#name : 'CoResultSet',
+	#superclass : 'Object',
 	#instVars : [
 		'results',
 		'fetcher',
-		'filter'
+		'filter',
+		'sorter'
 	],
-	#category : #'HeuristicCompletion-Model-Core'
+	#category : 'HeuristicCompletion-Model-Core',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CoResultSet class >> fetcher: aFetcher [
 
 	^ self new
@@ -28,7 +31,7 @@ CoResultSet class >> fetcher: aFetcher [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CoResultSet class >> onContext: aCompletionContext fetcher: aFetcher [
 
 	^ self new
@@ -36,65 +39,65 @@ CoResultSet class >> onContext: aCompletionContext fetcher: aFetcher [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoResultSet >> completionToken [
 
 	^ filter completionString
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CoResultSet >> ensureResults: aSize [
 
 	results size >= aSize ifTrue: [ ^ self ].
 	self fetch: aSize - results size
 ]
 
-{ #category : #fetching }
+{ #category : 'fetching' }
 CoResultSet >> fetch: anInteger [
 
 	| newResults |
 	newResults := fetcher next: anInteger.
-	results addAll: newResults
+	results addAll: (sorter sortCompletionList: newResults)
 ]
 
-{ #category : #fetching }
+{ #category : 'fetching' }
 CoResultSet >> fetchAll [
 
 	results addAll: fetcher upToEnd
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoResultSet >> fetcher [
 	^ fetcher
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoResultSet >> fetcher: anObject [
 
 	fetcher := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoResultSet >> filter [
 
 	^ filter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoResultSet >> filter: anObject [
 
 	filter := anObject.
 	fetcher filter: filter
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CoResultSet >> first [
 
 	self ensureResults: 1.
 	^ results first
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoResultSet >> first: anInteger [
 
 	self ensureResults: anInteger.
@@ -104,27 +107,28 @@ CoResultSet >> first: anInteger [
 	^ results
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoResultSet >> hasMoreElements [
 
 	^ fetcher atEnd not
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CoResultSet >> initialize [
 
 	super initialize.
 	results := OrderedCollection new.
-	filter := CoFilter empty
+	filter := CoFilter empty.
+	sorter := CompletionContext sorterClass new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoResultSet >> notEmpty [
 
 	^ results notEmpty or: [ fetcher atEnd not ]
 ]
 
-{ #category : #'api-filtering' }
+{ #category : 'api-filtering' }
 CoResultSet >> replaceFilterWith: newFilter [
 
 	"Narrow results"
@@ -143,7 +147,7 @@ CoResultSet >> replaceFilterWith: newFilter [
 	filter := newFilter
 ]
 
-{ #category : #'api-filtering' }
+{ #category : 'api-filtering' }
 CoResultSet >> resetFilter [
 
 	results removeAll.
@@ -151,12 +155,12 @@ CoResultSet >> resetFilter [
 	fetcher filter: CoFilter empty
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoResultSet >> results [
 	^ results
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoResultSet >> results: anObject [
 	results := anObject
 ]

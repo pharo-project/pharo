@@ -2,30 +2,32 @@
 I implement the push strategy for method arguments who are  instance variables.
 "
 Class {
-	#name : #FFIInstVarArgument,
-	#superclass : #FFIFunctionArgumentLoader,
+	#name : 'FFIInstVarArgument',
+	#superclass : 'FFIFunctionArgumentLoader',
 	#instVars : [
 		'argName'
 	],
-	#category : #'UnifiedFFI-Arguments'
+	#category : 'UnifiedFFI-Arguments',
+	#package : 'UnifiedFFI',
+	#tag : 'Arguments'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIInstVarArgument >> argName [
 	^ argName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIInstVarArgument >> argName: anObject [
 	argName := anObject
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIInstVarArgument >> emitArgument: aBuilder context: aContext [
 	aBuilder pushInstVar: (aContext methodClass instVarIndexFor: self argName)
 ]
 
-{ #category : #'emitting code' }
+{ #category : 'emitting code' }
 FFIInstVarArgument >> emitArgument: aBuilder context: aContext objectClass: objectClass instVarName: aName [
 	"If argument is an object, I need to send value of instVar aName instead it self"
 	aBuilder
@@ -36,7 +38,7 @@ FFIInstVarArgument >> emitArgument: aBuilder context: aContext objectClass: obje
 		send: #instVarAt:
 ]
 
-{ #category : #'private - emitting code' }
+{ #category : 'private - emitting code' }
 FFIInstVarArgument >> emitArgumentVariableAccesingPart: aBuilder context: aContext objectClass: objectClass instVarName: aName [
 	aBuilder
 		pushInstVar: (aContext methodClass instVarIndexFor: self argName);
@@ -45,7 +47,7 @@ FFIInstVarArgument >> emitArgumentVariableAccesingPart: aBuilder context: aConte
 			ifAbsent: [ self error: 'No ', aName, ' instVar' ])
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIInstVarArgument >> rolledPointerTempName [
 	^ self rolledPointerTempNameFor: self argName
 ]

@@ -9,31 +9,33 @@ Internal Representation and Key Implementation Points.
 	classGroup:		<ClyClassGroup>
 "
 Class {
-	#name : #ClyMoveClassToGroupCommand,
-	#superclass : #SycClassCommand,
+	#name : 'ClyMoveClassToGroupCommand',
+	#superclass : 'SycClassCommand',
 	#instVars : [
 		'classGroup'
 	],
-	#category : #'Calypso-SystemTools-FullBrowser-Commands-Classes'
+	#category : 'Calypso-SystemTools-FullBrowser-Commands-Classes',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'Commands-Classes'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyMoveClassToGroupCommand class >> browserContextMenuActivation [
 	<classAnnotation>
 
 	^ SycClassMenuActivation byRootGroupItemOrder: 1000 for: ClyClass asCalypsoItemContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation [
 	<classAnnotation>
 
 	^CmdDragAndDropActivation
 		for: ClyClass asCalypsoItemContext
-		toDropIn: RPackage asCalypsoItemContext
+		toDropIn: Package asCalypsoItemContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation2 [
 	<classAnnotation>
 
@@ -42,7 +44,7 @@ ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation2 [
 		toDropIn: ClyTaggedClassGroup asCalypsoItemContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation3 [
 	<classAnnotation>
 
@@ -51,40 +53,40 @@ ClyMoveClassToGroupCommand class >> fullBrowserDragAndDropActivation3 [
 		toDropIn: ClyNoTagClassGroup asCalypsoItemContext
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyMoveClassToGroupCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation by: $m meta, $c meta for: ClyFullBrowserClassContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMoveClassToGroupCommand >> classGroup [
 	^ classGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMoveClassToGroupCommand >> classGroup: anObject [
 	classGroup := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMoveClassToGroupCommand >> defaultMenuIconName [
 	^ #smallRedo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMoveClassToGroupCommand >> defaultMenuItemName [
 	^'Move to package'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyMoveClassToGroupCommand >> execute [
 
-	classGroup importClasses: classes
+	classes do: [ :class | classGroup addClass: class ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyMoveClassToGroupCommand >> prepareExecutionInDropContext: aToolContext [
 	super prepareExecutionInDropContext: aToolContext.
 	classGroup := aToolContext lastSelectedClassGroup
@@ -92,7 +94,7 @@ ClyMoveClassToGroupCommand >> prepareExecutionInDropContext: aToolContext [
 	If given context is package context then it will return package as class group"
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyMoveClassToGroupCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	"class group could be package. In this activation it is only make sense to request user for package"

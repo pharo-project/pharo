@@ -13,32 +13,34 @@ Internal Representation and Key Implementation Points.
 	pattern:		<String>
 "
 Class {
-	#name : #FTFilter,
-	#superclass : #Object,
+	#name : 'FTFilter',
+	#superclass : 'Object',
 	#instVars : [
 		'pattern'
 	],
-	#category : #'Morphic-Widgets-FastTable-Functions'
+	#category : 'Morphic-Widgets-FastTable-Functions',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Functions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTFilter class >> pattern: aString [
 	^self new
 		pattern: aString
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 FTFilter >> matches: aString [
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTFilter >> pattern [
 	^ pattern
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTFilter >> pattern: anObject [
 	pattern := anObject
 ]

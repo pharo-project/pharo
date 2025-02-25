@@ -1,6 +1,6 @@
-Extension { #name : #TextLink }
+Extension { #name : 'TextLink' }
 
-{ #category : #'*Rubric-Editing-Core' }
+{ #category : '*Rubric-Editing-Core' }
 TextLink >> rubMayActOnEvent: anEvent [
 	^ anEvent isMouseDown and: [ anEvent commandKeyPressed ]
 ]

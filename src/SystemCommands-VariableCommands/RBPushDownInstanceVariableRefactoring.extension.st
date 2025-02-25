@@ -1,6 +1,6 @@
-Extension { #name : #RBPushDownInstanceVariableRefactoring }
+Extension { #name : 'RBPushDownInstanceVariableRefactoring' }
 
-{ #category : #'*SystemCommands-VariableCommands' }
+{ #category : '*SystemCommands-VariableCommands' }
 RBPushDownInstanceVariableRefactoring class >> classVariableAnalog [
 	^RBPushDownClassVariableRefactoring
 ]

@@ -2,26 +2,28 @@
 ZnServerStoppedEvent notes the shutdown of an HTTP server is complete.
 "
 Class {
-	#name : #ZnServerStoppedEvent,
-	#superclass : #ZnServerLogEvent,
+	#name : 'ZnServerStoppedEvent',
+	#superclass : 'ZnServerLogEvent',
 	#instVars : [
 		'description'
 	],
-	#category : #'Zinc-HTTP-Logging'
+	#category : 'Zinc-HTTP-Logging',
+	#package : 'Zinc-HTTP',
+	#tag : 'Logging'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerStoppedEvent >> description [
 	^ description
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerStoppedEvent >> description: anObject [
 	description := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnServerStoppedEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream << ' Stopped '; << description
+	stream << 'Stopped '; << description
 ]

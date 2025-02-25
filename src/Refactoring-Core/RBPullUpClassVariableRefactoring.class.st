@@ -2,31 +2,43 @@
 I am a refactoring for moving a class variable up to the superclass.
 "
 Class {
-	#name : #RBPullUpClassVariableRefactoring,
-	#superclass : #RBVariableRefactoring,
-	#category : #'Refactoring-Core-Refactorings'
+	#name : 'RBPullUpClassVariableRefactoring',
+	#superclass : 'RBVariableRefactoring',
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #preconditions }
-RBPullUpClassVariableRefactoring >> preconditions [
-	^(RBCondition isMetaclass: class) not
+{ #category : 'preconditions' }
+RBPullUpClassVariableRefactoring >> applicabilityPreconditions [
+
+	^ {
+		  (RBCondition isMetaclass: class) not.
+		  (RBCondition withBlock: [
+			   (class hierarchyDefinesClassVariable: variableName) ifFalse: [
+				   self refactoringError: 'No subclass defines ' , variableName ].
+			   true ]) }
 ]
 
-{ #category : #'private - accessing' }
-RBPullUpClassVariableRefactoring >> subclassDefiningVariable [
-	| subclasses |
-	subclasses := class allSubclasses
-		select: [ :each | each isMeta not and: [ each directlyDefinesClassVariable: variableName ] ].
-	subclasses ifEmpty: [ self refactoringFailure: 'Could not find a class defining ' , variableName ].
-	subclasses size > 1
-		ifTrue: [ self refactoringError: 'Multiple subclasses define ' , variableName ].
-	^ subclasses asArray first
+{ #category : 'preconditions' }
+RBPullUpClassVariableRefactoring >> breakingChangePreconditions [
+
+	^ { (RBCondition withBlock: [
+		   (class subclasses anySatisfy: [ :each |
+			    (each directlyDefinesClassVariable: variableName) not ])
+			   ifTrue: [
+				   self refactoringWarning:
+					   'Not all subclasses have an class variable named.<n> Do you want pull up this variable anyway?'
+					   , variableName , '.' ].
+		   true ]) }
 ]
 
-{ #category : #transforming }
-RBPullUpClassVariableRefactoring >> transform [
-	| subclass |
-	subclass := self subclassDefiningVariable.
-	subclass removeClassVariable: variableName.
+{ #category : 'transforming' }
+RBPullUpClassVariableRefactoring >> privateTransform [
+
+	class allSubclasses do:
+		[:each |
+		(each directlyDefinesClassVariable: variableName)
+			ifTrue: [each removeClassVariable: variableName]].
 	class addClassVariable: variableName
 ]

@@ -10,16 +10,17 @@ Internal Representation and Key Implementation Points.
 	dropActivators:		<Collection of<CmdDragAndDropCommandActivator>>
 "
 Class {
-	#name : #CmdDragPassenger,
-	#superclass : #Object,
+	#name : 'CmdDragPassenger',
+	#superclass : 'Object',
 	#instVars : [
 		'dragContext',
 		'dropActivators'
 	],
-	#category : #'Commander-Activators-DragAndDrop'
+	#category : 'Commander-Activators-DragAndDrop',
+	#package : 'Commander-Activators-DragAndDrop'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmdDragPassenger class >> draggedFromContext: aToolContext toActivate: commandActivators [
 
 	^self new
@@ -27,39 +28,39 @@ CmdDragPassenger class >> draggedFromContext: aToolContext toActivate: commandAc
 		dropActivators: commandActivators
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 CmdDragPassenger >> asDraggableMorph [
 	^dragContext asDraggableMorph
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdDragPassenger >> canBeDroppedInContext: aToolContext [
 
 	^dropActivators anySatisfy: [ :each |
 		each canExecuteDropInContext: aToolContext]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdDragPassenger >> dragContext [
 	^ dragContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdDragPassenger >> dragContext: anObject [
 	dragContext := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdDragPassenger >> dropActivators [
 	^ dropActivators
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdDragPassenger >> dropActivators: anObject [
 	dropActivators := anObject
 ]
 
-{ #category : #dropping }
+{ #category : 'dropping' }
 CmdDragPassenger >> dropInContext: aToolContext [
 	| targetActivator |
 	targetActivator := dropActivators detect: [ :each |

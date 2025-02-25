@@ -2,24 +2,26 @@
 SUnit tests for weak value dictionaries
 "
 Class {
-	#name : #WeakValueDictionaryTest,
-	#superclass : #DictionaryTest,
-	#category : #'Collections-Weak-Tests-Dictionaries'
+	#name : 'WeakValueDictionaryTest',
+	#superclass : 'DictionaryTest',
+	#category : 'Collections-Weak-Tests-Dictionaries',
+	#package : 'Collections-Weak-Tests',
+	#tag : 'Dictionaries'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 WeakValueDictionaryTest class >> shouldInheritSelectors [
 
 ^true
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 WeakValueDictionaryTest >> classToBeTested [
 
 	^ WeakValueDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WeakValueDictionaryTest >> dictionaryWithGarbageCollectedValue [
 
 	| dictionary |
@@ -29,18 +31,18 @@ WeakValueDictionaryTest >> dictionaryWithGarbageCollectedValue [
 	^ dictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WeakValueDictionaryTest >> keyWithGarbageCollectedValue [
 
 	^ #a
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakValueDictionaryTest >> testAssociationsWithGarbageCollectedValue [
 	self assertEmpty: self dictionaryWithGarbageCollectedValue associations
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakValueDictionaryTest >> testAtGarbageCollectedValueRaisesNotFound [
 
 	self
@@ -48,7 +50,7 @@ WeakValueDictionaryTest >> testAtGarbageCollectedValueRaisesNotFound [
 		raise: NotFound
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakValueDictionaryTest >> testAtIfAbsentPutWithGarbageCollectedValue [
 
 	| dictionary |
@@ -64,7 +66,7 @@ WeakValueDictionaryTest >> testAtIfAbsentPutWithGarbageCollectedValue [
 	self assert: (dictionary includes: 42)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakValueDictionaryTest >> testAtIfAbsentWithGarbageCollectedValue [
 
 	self
@@ -75,7 +77,7 @@ WeakValueDictionaryTest >> testAtIfAbsentWithGarbageCollectedValue [
 		equals: 42
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakValueDictionaryTest >> testAtIfPresent [
 	"Non regression test. Before we were sending #value on the value while giving it to the block to evaluate."
 
@@ -86,7 +88,7 @@ WeakValueDictionaryTest >> testAtIfPresent [
 	d at: 1 ifPresent: [ :v | self assert: v identicalTo: block ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakValueDictionaryTest >> testAtIfPresentIfAbsentWithGarbageCollectedValue [
 
 	self
@@ -98,7 +100,7 @@ WeakValueDictionaryTest >> testAtIfPresentIfAbsentWithGarbageCollectedValue [
 		equals: 42
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakValueDictionaryTest >> testAtIfPresentWithGarbageCollectedValue [
 
 	| dictionary |
@@ -112,26 +114,26 @@ WeakValueDictionaryTest >> testAtIfPresentWithGarbageCollectedValue [
 		equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakValueDictionaryTest >> testDoesNotIncludeNilAfterGarbageCollection [
 
 	self deny: (self dictionaryWithGarbageCollectedValue includes: nil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakValueDictionaryTest >> testIncludesKeyAnswerFalseForGarbageCollectedValues [
 	"This test should not be called #testIncludesKey to not override that test of the same name in the superclass."
 
 	self deny: (self dictionaryWithGarbageCollectedValue includesKey: self keyWithGarbageCollectedValue)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakValueDictionaryTest >> testKeysAndValuesDoWithGarbageCollectedValue [
 
 	self dictionaryWithGarbageCollectedValue keysAndValuesDo: [:key :value | self fail ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakValueDictionaryTest >> testRehashDoesNotTransformAssociations [
 	| d |
 	d := self classToBeTested new.
@@ -141,7 +143,7 @@ WeakValueDictionaryTest >> testRehashDoesNotTransformAssociations [
 	self assert: (d privateAssociations anyOne isKindOf: WeakValueAssociation)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakValueDictionaryTest >> testReturnedAssociationsAreRight [
 	| dictionary |
 	dictionary := self classToBeTested new.
@@ -151,7 +153,7 @@ WeakValueDictionaryTest >> testReturnedAssociationsAreRight [
 	self assert: (dictionary associationAt: 'test2') value equals: 1
 ]
 
-{ #category : #'tests - size capacity' }
+{ #category : 'tests - size capacity' }
 WeakValueDictionaryTest >> testSize [
 	| d |
 	d := self classToBeTested new.
@@ -161,7 +163,7 @@ WeakValueDictionaryTest >> testSize [
 	self assert: d size equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakValueDictionaryTest >> testSizeWithGarbageCollectedValue [
 
 	self

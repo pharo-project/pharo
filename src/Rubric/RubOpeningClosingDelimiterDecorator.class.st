@@ -2,17 +2,19 @@
 I am the decorator for highliting opposite character in a text area (like parenthese or square bracket)
 "
 Class {
-	#name : #RubOpeningClosingDelimiterDecorator,
-	#superclass : #RubParagraphDecorator,
-	#category : #'Rubric-Editing-Core'
+	#name : 'RubOpeningClosingDelimiterDecorator',
+	#superclass : 'RubParagraphDecorator',
+	#category : 'Rubric-Editing-Core',
+	#package : 'Rubric',
+	#tag : 'Editing-Core'
 }
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubOpeningClosingDelimiterDecorator class >> key [
 	^ #openingClosingDelimitersHighlight
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubOpeningClosingDelimiterDecorator >> drawOn: aCanvas [
 	"Send all visible lines to the displayScanner for display"
 
@@ -35,7 +37,7 @@ RubOpeningClosingDelimiterDecorator >> drawOn: aCanvas [
 	aCanvas frameRectangle: rect color: RubTextSelectionColor oppositeDelimiterSelection textColor
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubOpeningClosingDelimiterDecorator >> drawOnAthensCanvas: anAthensCanvas [
 	"Send all visible lines to the displayScanner for display"
 
@@ -64,7 +66,7 @@ RubOpeningClosingDelimiterDecorator >> drawOnAthensCanvas: anAthensCanvas [
 	anAthensCanvas draw
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubOpeningClosingDelimiterDecorator >> positionOfOppositeDelimiter: aDelimiter startingAt: aPosition in: aRectangle [
 	| string topLineIndex bottomLineIndex topLineFirst bottomLinelast oppositeDelimiter level here hereChar incr |
 	string := self string.

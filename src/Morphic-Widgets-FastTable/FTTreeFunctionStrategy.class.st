@@ -33,16 +33,18 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #FTTreeFunctionStrategy,
-	#superclass : #Object,
+	#name : 'FTTreeFunctionStrategy',
+	#superclass : 'Object',
 	#instVars : [
 		'dataSource',
 		'pattern'
 	],
-	#category : #'Morphic-Widgets-FastTable-Tree'
+	#category : 'Morphic-Widgets-FastTable-Tree',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'Tree'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTTreeFunctionStrategy class >> filterWith: aString dataSource: aDataSource [
 	^ self new
 		pattern: (self patternFromString: aString);
@@ -50,7 +52,7 @@ FTTreeFunctionStrategy class >> filterWith: aString dataSource: aDataSource [
 		filter
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 FTTreeFunctionStrategy class >> patternFromString: aString [
 	" do not throw an error if the pattern is bad - important in case of auto-accepting"
 
@@ -59,53 +61,53 @@ FTTreeFunctionStrategy class >> patternFromString: aString [
 		do: [ :ex | '' asRegexIgnoringCase ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTTreeFunctionStrategy class >> searchWith: aString dataSource: aDataSource [
 	^ self new pattern: aString; dataSource: aDataSource; search
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeFunctionStrategy >> dataSource [
 	^ dataSource
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeFunctionStrategy >> dataSource: anObject [
 	dataSource := anObject
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 FTTreeFunctionStrategy >> filter [
 	"I need to return a new dataSource that filter my dataSource."
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeFunctionStrategy >> isMatching: anItem [
 	^ (dataSource toString: anItem) beginsWith: pattern
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 FTTreeFunctionStrategy >> optionalOperations [
 	^ pattern isEmptyOrNil
 		ifTrue: [ #() ]
 		ifFalse: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTTreeFunctionStrategy >> pattern: aStringOrRegex [
 	pattern := aStringOrRegex
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 FTTreeFunctionStrategy >> realSearch [
 	"I need to return a collection of index that match the elements I find."
 
 	self subclassResponsibility
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 FTTreeFunctionStrategy >> search [
 	^ self optionalOperations
 		ifNotNil: [ :res | res ]

@@ -1,6 +1,6 @@
-Extension { #name : #TabGroupMorph }
+Extension { #name : 'TabGroupMorph' }
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 TabGroupMorph >> themeChanged [
 	"Update the corner style."
 

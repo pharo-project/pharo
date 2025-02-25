@@ -1,15 +1,16 @@
 Class {
-	#name : #ClyInheritedTraitsHierarchyTest,
-	#superclass : #ClyBrowserQueryResultTest,
-	#category : #'Calypso-SystemPlugins-Traits-Queries-Tests'
+	#name : 'ClyInheritedTraitsHierarchyTest',
+	#superclass : 'ClyBrowserQueryResultTest',
+	#category : 'Calypso-SystemPlugins-Traits-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-Traits-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyInheritedTraitsHierarchyTest >> createQueryResult [
 	^ClyTraitUserHierarchy inverse asQueryResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInheritedTraitsHierarchyTest >> testFillingWithClassAndItsDeepTwoTraits [
 
 	queryResult fillWith: {ClyClassWithTraits. ClyTraitChild2. ClyTraitRoot2 }.
@@ -20,7 +21,7 @@ ClyInheritedTraitsHierarchyTest >> testFillingWithClassAndItsDeepTwoTraits [
 			ClyTraitRoot2. 1}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInheritedTraitsHierarchyTest >> testFillingWithClassAndItsTraits [
 
 	queryResult fillWith: {
@@ -32,7 +33,7 @@ ClyInheritedTraitsHierarchyTest >> testFillingWithClassAndItsTraits [
 			ClyTraitChild2Child. 1. ClyTraitChild2. 2. ClyTraitRoot1. 3}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInheritedTraitsHierarchyTest >> testFillingWithClassAndItsTraitsWhenSomeMiddleTraitIsMissing [
 
 	queryResult fillWith: {
@@ -44,7 +45,7 @@ ClyInheritedTraitsHierarchyTest >> testFillingWithClassAndItsTraitsWhenSomeMiddl
 			ClyTraitChild2Child. 1. ClyTraitRoot1. 2}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInheritedTraitsHierarchyTest >> testFillingWithClassWithoutTraits [
 
 	queryResult fillWith: {ClyClassWithoutTraits}.
@@ -52,7 +53,7 @@ ClyInheritedTraitsHierarchyTest >> testFillingWithClassWithoutTraits [
 	self assertItems: {ClyClassWithoutTraits. 0}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInheritedTraitsHierarchyTest >> testFillingWithOnlyClassWhichHasTraits [
 
 	queryResult fillWith: {ClyClassWithTraits}.
@@ -60,7 +61,7 @@ ClyInheritedTraitsHierarchyTest >> testFillingWithOnlyClassWhichHasTraits [
 	self assertItems: {ClyClassWithTraits. 0}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInheritedTraitsHierarchyTest >> testFillingWithTraitsOfClassWhichIsMissingInGivenList [
 
 	queryResult fillWith: {
@@ -71,7 +72,7 @@ ClyInheritedTraitsHierarchyTest >> testFillingWithTraitsOfClassWhichIsMissingInG
 		ClyTraitChild2Child. 0. ClyTraitChild2. 1. ClyTraitRoot1. 2}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyInheritedTraitsHierarchyTest >> testFillingWithTwoClassWhichInheriteSameTraits [
 
 	queryResult fillWith: {ClyClassWithTraits. ClyTraitChild2. ClyTraitRoot2.

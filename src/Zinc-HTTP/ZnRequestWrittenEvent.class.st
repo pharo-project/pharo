@@ -2,37 +2,39 @@
 ZnRequestWrittenEvent signals that a request was written in duration milliseconds.
 "
 Class {
-	#name : #ZnRequestWrittenEvent,
-	#superclass : #ZnClientLogEvent,
+	#name : 'ZnRequestWrittenEvent',
+	#superclass : 'ZnClientLogEvent',
 	#instVars : [
 		'request',
 		'duration'
 	],
-	#category : #'Zinc-HTTP-Logging'
+	#category : 'Zinc-HTTP-Logging',
+	#package : 'Zinc-HTTP',
+	#tag : 'Logging'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequestWrittenEvent >> duration [
 	^ duration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequestWrittenEvent >> duration: anObject [
 	duration := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnRequestWrittenEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream << ' Request Written '; print: request; space; print: duration; << 'ms'
+	stream << 'Request Written '; print: request; space; print: duration; << 'ms'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequestWrittenEvent >> request [
 	^ request
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnRequestWrittenEvent >> request: anObject [
 	request := anObject
 ]

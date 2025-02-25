@@ -1,6 +1,6 @@
-Extension { #name : #ClyVarDefinitionMethodGroup }
+Extension { #name : 'ClyVarDefinitionMethodGroup' }
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 ClyVarDefinitionMethodGroup >> decorateTableCell: anItemCellMorph of: groupItem [
 	| currentFont |
 	super decorateTableCell: anItemCellMorph of: groupItem.

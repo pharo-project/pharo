@@ -1,1 +1,1 @@
-Package { #name : #'SystemCommands-RefactoringSupport-Tests' }
+Package { #name : 'SystemCommands-RefactoringSupport-Tests' }

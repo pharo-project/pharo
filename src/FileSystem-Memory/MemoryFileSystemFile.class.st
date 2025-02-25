@@ -2,17 +2,19 @@
 I represent a memory file system entry for a regular file
 "
 Class {
-	#name : #MemoryFileSystemFile,
-	#superclass : #MemoryFileSystemEntry,
+	#name : 'MemoryFileSystemFile',
+	#superclass : 'MemoryFileSystemEntry',
 	#instVars : [
 		'bytes',
 		'size',
 		'closed'
 	],
-	#category : #'FileSystem-Memory-Base'
+	#category : 'FileSystem-Memory-Base',
+	#package : 'FileSystem-Memory',
+	#tag : 'Base'
 }
 
-{ #category : #'stream-protocol' }
+{ #category : 'stream-protocol' }
 MemoryFileSystemFile >> at: index [
 	index > bytes size
 		ifTrue: [ SubscriptOutOfBounds
@@ -23,7 +25,7 @@ MemoryFileSystemFile >> at: index [
 	^ bytes at: index
 ]
 
-{ #category : #'stream-protocol' }
+{ #category : 'stream-protocol' }
 MemoryFileSystemFile >> at: index put: anObject [
 	index > bytes size
 		ifTrue: [ self grow ].
@@ -37,7 +39,7 @@ MemoryFileSystemFile >> at: index put: anObject [
 	self modified
 ]
 
-{ #category : #'stream-protocol' }
+{ #category : 'stream-protocol' }
 MemoryFileSystemFile >> at: index read: aCollection startingAt: start count: count [
 	| max stop |
 	max := size - index + 1 min: count.
@@ -50,7 +52,7 @@ MemoryFileSystemFile >> at: index read: aCollection startingAt: start count: cou
 	^ stop - start + 1
 ]
 
-{ #category : #'stream-protocol' }
+{ #category : 'stream-protocol' }
 MemoryFileSystemFile >> at: first write: aCollection startingAt: start count: count [
 	| last |
 	last := first + count - 1.
@@ -65,58 +67,58 @@ MemoryFileSystemFile >> at: first write: aCollection startingAt: start count: co
 	self modified
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 MemoryFileSystemFile >> basicOpen [
 	closed := false
 ]
 
-{ #category : #'streams-compatibility' }
+{ #category : 'streams-compatibility' }
 MemoryFileSystemFile >> binaryReadStream [
 	^ ReadStream on: self bytes from: 1 to: size
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 MemoryFileSystemFile >> binaryWriteStream [
 	^ MemoryFileWriteStream on: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryFileSystemFile >> bytes [
 	^ bytes
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 MemoryFileSystemFile >> close [
 	 closed := true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MemoryFileSystemFile >> closed [
 	^ closed
 ]
 
-{ #category : #'stream-protocol' }
+{ #category : 'stream-protocol' }
 MemoryFileSystemFile >> copyFrom: from to: position [
 	^ bytes copyFrom: from to: position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryFileSystemFile >> fileSize [
 	^ size
 ]
 
-{ #category : #'stream-protocol' }
+{ #category : 'stream-protocol' }
 MemoryFileSystemFile >> grow [
 	self grownBy: self sizeIncrement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryFileSystemFile >> grownBy: length [
 	bytes := bytes grownBy: length.
 	self modified
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MemoryFileSystemFile >> initialize [
 	super initialize.
 	bytes := #[].
@@ -124,38 +126,38 @@ MemoryFileSystemFile >> initialize [
 	closed := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryFileSystemFile >> internalSize [
 	^ bytes size
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MemoryFileSystemFile >> isDirectory [
 	^ false
 ]
 
-{ #category : #'stream-protocol' }
+{ #category : 'stream-protocol' }
 MemoryFileSystemFile >> readStream [
 	^ ReadStream on: self bytes asString from: 1 to: size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryFileSystemFile >> size [
 
 	^ size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryFileSystemFile >> sizeIncrement [
 	^ (bytes size min: 20) max: 1024
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryFileSystemFile >> truncate [
 	self truncateTo: size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryFileSystemFile >> truncateTo: aSize [
 	bytes size = aSize
 		ifFalse: [ bytes := bytes size < aSize
@@ -169,19 +171,19 @@ MemoryFileSystemFile >> truncateTo: aSize [
 	self modified
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MemoryFileSystemFile >> updateContents: aCollection [
 	bytes := aCollection.
 	self updateSize: aCollection size
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MemoryFileSystemFile >> updateSize: newSize [
 	size := newSize.
 	self modified
 ]
 
-{ #category : #'stream-protocol' }
+{ #category : 'stream-protocol' }
 MemoryFileSystemFile >> writeStreamDo: aBlock [
 	ByteArray
 		streamContents: [ :aStream |

@@ -1,1 +1,1 @@
-Package { #name : #'Kernel-ExtraUtils' }
+Package { #name : 'Kernel-ExtraUtils' }

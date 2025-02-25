@@ -2,8 +2,8 @@
 I represent all possible ABI Types
 "
 Class {
-	#name : #TFAbiTypes,
-	#superclass : #SharedPool,
+	#name : 'TFAbiTypes',
+	#superclass : 'SharedPool',
 	#classVars : [
 		'DARWIN_X86_64_GNUW64',
 		'DARWIN_X86_64_UNIX64',
@@ -29,10 +29,12 @@ Class {
 		'WIN_X86_64_GNUW64',
 		'WIN_X86_64_WIN64'
 	],
-	#category : #'ThreadedFFI-Base'
+	#category : 'ThreadedFFI-Base',
+	#package : 'ThreadedFFI',
+	#tag : 'Base'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 TFAbiTypes class >> initialize [
 
 	"The default ABI is marked with a nil. The primitive will use the correct ABI depending on the platform"

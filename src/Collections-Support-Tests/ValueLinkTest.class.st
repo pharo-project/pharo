@@ -2,18 +2,20 @@
 A ValueLinkTest is a test class for testing the behavior of ValueLink
 "
 Class {
-	#name : #ValueLinkTest,
-	#superclass : #TestCase,
-	#category : #'Collections-Support-Tests-Links'
+	#name : 'ValueLinkTest',
+	#superclass : 'TestCase',
+	#category : 'Collections-Support-Tests-Links',
+	#package : 'Collections-Support-Tests',
+	#tag : 'Links'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ValueLinkTest >> testNilAsLink [
 
 	self assert: nil asLink equals: (ValueLink value: nil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ValueLinkTest >> testPushingOnObjects [
 
 	| link o |
@@ -27,7 +29,7 @@ ValueLinkTest >> testPushingOnObjects [
 		assert: link nextLink nextLink nextLink equals: nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ValueLinkTest >> testPushingOnValueLinks [
 
 	| link link1 link2 link3 |

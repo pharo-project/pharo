@@ -1,6 +1,6 @@
-Extension { #name : #SycRemoveAllSendersCommand }
+Extension { #name : 'SycRemoveAllSendersCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycRemoveAllSendersCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 

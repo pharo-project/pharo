@@ -15,43 +15,45 @@ I delegate actual refactoring instantiation to the each variable. It allows abst
 Look at #createVariableRefactoring: implementors for details.
 "
 Class {
-	#name : #SycRefactorVariableCommand,
-	#superclass : #SycVariableCommand,
-	#category : #'SystemCommands-VariableCommands'
+	#name : 'SycRefactorVariableCommand',
+	#superclass : 'SycVariableCommand',
+	#category : 'SystemCommands-VariableCommands',
+	#package : 'SystemCommands-VariableCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycRefactorVariableCommand class >> canBeExecutedInContext: aToolContext [
 	^(super canBeExecutedInContext: aToolContext)
 		and: [ aToolContext isGlobalVariableSelected not ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycRefactorVariableCommand class >> isAbstract [
 	^self = SycRefactorVariableCommand
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRefactorVariableCommand >> createRefactorings: variableRefactoringClass [
 	^self createRefactorings: variableRefactoringClass using: [ ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRefactorVariableCommand >> createRefactorings: variableRefactoringClass using: initBlock [
+
 	| refactoring |
-	^variables collect: [ :eachVar |
-		refactoring := eachVar createVariableRefactoring: variableRefactoringClass.
-		initBlock cull: refactoring cull: eachVar.
-		refactoring]
+	^ variables collect: [ :eachVar |
+		  refactoring := eachVar createVariableRefactoring: variableRefactoringClass.
+		  initBlock cull: refactoring cull: eachVar.
+		  refactoring ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRefactorVariableCommand >> execute [
 
 	self executeRefactorings
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycRefactorVariableCommand >> isComplexRefactoring [
 	^true
 ]

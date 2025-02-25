@@ -3,32 +3,34 @@ Example for multi-touch devices.
 
 "
 Class {
-	#name : #SDL2TouchExample,
-	#superclass : #SDL2AthensExample,
+	#name : 'SDL2TouchExample',
+	#superclass : 'SDL2AthensExample',
 	#instVars : [
 		'circle',
 		'moveToDraw'
 	],
-	#category : #'OSWindow-SDL2-Examples-Touch'
+	#category : 'OSWindow-SDL2-Examples-Touch',
+	#package : 'OSWindow-SDL2-Examples',
+	#tag : 'Touch'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 SDL2TouchExample class >> example [
-	<sampleInstance>
+	<script>
 	^ self new open
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL2TouchExample >> backgroundColor [
 	^ Color white
 ]
 
-{ #category : #'manage move' }
+{ #category : 'manage move' }
 SDL2TouchExample >> beginMove: touchId at: position [
 	moveToDraw at: touchId put: (SDL2TouchStateMachine for: position * self defaultExtent)
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SDL2TouchExample >> clearSurface [
 	renderer athensSurface
 		drawDuring:
@@ -37,14 +39,14 @@ SDL2TouchExample >> clearSurface [
 			canvas drawShape: (0 @ 0 extent: self defaultExtent) ]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SDL2TouchExample >> createEventHandler [
 	^OSWindowTouchEventHandler new
 		touchExample: self;
 		yourself
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SDL2TouchExample >> drawCircleAt: point color: color [
 	renderer athensSurface
 		drawDuring: [ :canvas |
@@ -55,7 +57,7 @@ SDL2TouchExample >> drawCircleAt: point color: color [
 				draw ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SDL2TouchExample >> drawMoves [
 	moveToDraw
 		do:
@@ -82,7 +84,7 @@ SDL2TouchExample >> drawMoves [
 			last ifNotNil: [ self drawCircleAt: last color: color ] ]
 ]
 
-{ #category : #'manage move' }
+{ #category : 'manage move' }
 SDL2TouchExample >> endMove: touchId at: position [
 	(moveToDraw at: touchId) finish: position * self defaultExtent.
 	[
@@ -92,13 +94,13 @@ SDL2TouchExample >> endMove: touchId at: position [
 	moveToDraw removeKey: touchId ifAbsent: [  ] ] fork
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SDL2TouchExample >> initialize [
 	super initialize.
 	moveToDraw := Dictionary new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SDL2TouchExample >> initializeFromSurface [
 	circle := renderer athensSurface
 		createPath:
@@ -112,12 +114,12 @@ SDL2TouchExample >> initializeFromSurface [
 				ccwArcTo: -5 @ 0 angle: 90 degreesToRadians ]
 ]
 
-{ #category : #'manage move' }
+{ #category : 'manage move' }
 SDL2TouchExample >> move: touchId at: position [
 	(moveToDraw at: touchId) add: position * self defaultExtent
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SDL2TouchExample >> redraw [
 	self clearSurface.
 	self drawMoves

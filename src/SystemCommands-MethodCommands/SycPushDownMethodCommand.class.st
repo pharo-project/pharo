@@ -2,46 +2,53 @@
 I am a command to push down given methods
 "
 Class {
-	#name : #SycPushDownMethodCommand,
-	#superclass : #SysRefactoringMethodCommand,
+	#name : 'SycPushDownMethodCommand',
+	#superclass : 'SycRefactoringMethodCommand',
 	#instVars : [
 		'refactoringScopes'
 	],
-	#category : #'SystemCommands-MethodCommands'
+	#category : 'SystemCommands-MethodCommands',
+	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycPushDownMethodCommand >> asRefactorings [
 
 	^ self shouldNotImplement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycPushDownMethodCommand >> defaultMenuIconName [
 	^ #down
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycPushDownMethodCommand >> defaultMenuItemName [
 	^'Push down'
 ]
 
-{ #category : #execution }
-SycPushDownMethodCommand >> executeRefactorings [
+{ #category : 'accessing' }
+SycPushDownMethodCommand >> description [
 
-	(RBPushDownMethodDriver
-		model: model
-		scopes: refactoringScopes
-		pushDown: methods) execute
+	^ 'Push down methods.'
 ]
 
-{ #category : #testing }
+{ #category : 'execution' }
+SycPushDownMethodCommand >> executeRefactorings [
+
+	(RePushDownMethodDriver
+		model: model
+		scopes: refactoringScopes
+		pushDownMethods: methods) runRefactoring
+]
+
+{ #category : 'testing' }
 SycPushDownMethodCommand >> isComplexRefactoring [
 
 	^ false
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycPushDownMethodCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	refactoringScopes := aToolContext refactoringScopes

@@ -4,28 +4,33 @@ If the version info has been serialized before I output a compacted version cons
 
 "
 Class {
-	#name : #MCVersionInfoWriter,
-	#superclass : #MCWriter,
+	#name : 'MCVersionInfoWriter',
+	#superclass : 'MCWriter',
 	#instVars : [
 		'written'
 	],
-	#category : #'Monticello-Storing'
+	#category : 'Monticello-Storing',
+	#package : 'Monticello',
+	#tag : 'Storing'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCVersionInfoWriter >> isWritten: aVersionInfo [
 	^ self written includes: aVersionInfo
 ]
 
-{ #category : #serialization }
+{ #category : 'serialization' }
 MCVersionInfoWriter >> writeVersionInfo: aVersionInfo [
 	(self isWritten: aVersionInfo)
 		ifTrue: [^ stream nextPutAll: '(id '; print: aVersionInfo id asString; nextPut: $) ].
 	stream nextPut: $(.
-	#(name message id date time author) do: [:sel | 
+	#(name message id date time author) do: [:sel | | toWrite |
+		toWrite := (aVersionInfo perform: sel) ifNil: [''].
+		sel = #date
+			ifTrue: [ toWrite := toWrite yyyymmdd ].
 		stream 
 			nextPutAll: sel; space;
-			print: (((aVersionInfo perform: sel) ifNil: ['']) asString encodeWith: #utf8  ) asString; space ].
+			print: (toWrite asString encodeWith: #utf8  ) asString; space ].
 	stream nextPutAll: 'ancestors ('.
 	aVersionInfo ancestors do: [:ea | self writeVersionInfo: ea].
 	stream nextPutAll: ') stepChildren ('.
@@ -35,12 +40,12 @@ MCVersionInfoWriter >> writeVersionInfo: aVersionInfo [
 	self wrote: aVersionInfo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCVersionInfoWriter >> written [
 	^ written ifNil: [written := Set new]
 ]
 
-{ #category : #serialization }
+{ #category : 'serialization' }
 MCVersionInfoWriter >> wrote: aVersionInfo [
 	self written add: aVersionInfo
 ]

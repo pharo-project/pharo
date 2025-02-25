@@ -3,63 +3,65 @@ I am a leaf of a Result Tree.
 I have te content and I know the way to browse myself. 
 "
 Class {
-	#name : #DTTreeLeafNode,
-	#superclass : #DTAbstractTreeNode,
+	#name : 'DTTreeLeafNode',
+	#superclass : 'DTAbstractTreeNode',
 	#instVars : [
 		'content'
 	],
-	#category : #'DrTests-Model'
+	#category : 'DrTests-Model',
+	#package : 'DrTests',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DTTreeLeafNode class >> content: aRottenTest [
 	^ self new
 		content: aRottenTest;
 		yourself
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 DTTreeLeafNode >> acceptVisitor: aDTResultsTreeVisitor [
 	^ aDTResultsTreeVisitor visitDTTreeLeaf: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DTTreeLeafNode >> canBeBrowsed [
 
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTreeLeafNode >> content [
 	^ content
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTreeLeafNode >> content: anObject [
 	content := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTreeLeafNode >> contentForReRun [
 	^ { self content }
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 DTTreeLeafNode >> drTestsBrowse [
 	self content drTestsBrowse
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 DTTreeLeafNode >> drTestsBuildContextMenu: menu [
 	self content drTestsBuildContextMenu: menu
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTTreeLeafNode >> drTestsName [
 	^ self content drTestsName
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DTTreeLeafNode >> isLeaf [
 
 	^ true

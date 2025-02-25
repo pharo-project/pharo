@@ -6,18 +6,20 @@ I'm meant to be created by a CoStatisticsHeuristicWrapper for each completion en
 See CoStatisticsHeuristicWrapper for more details
 "
 Class {
-	#name : #CoStatisticsCompletionEntry,
-	#superclass : #Object,
+	#name : 'CoStatisticsCompletionEntry',
+	#superclass : 'Object',
 	#instVars : [
 		'necEntry',
 		'index',
 		'heuristic',
 		'statistics'
 	],
-	#category : #'HeuristicCompletion-Model-Statistics'
+	#category : 'HeuristicCompletion-Model-Statistics',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Statistics'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CoStatisticsCompletionEntry class >> on: aNECEntry [
 
 	^ self new
@@ -25,13 +27,13 @@ CoStatisticsCompletionEntry class >> on: aNECEntry [
 		yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CoStatisticsCompletionEntry >> = anEntry [
 
 	^ self contents = anEntry contents
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 CoStatisticsCompletionEntry >> activateOn: aCoCompletionContext [
 
 	| entry |
@@ -44,62 +46,62 @@ CoStatisticsCompletionEntry >> activateOn: aCoCompletionContext [
 	necEntry activateOn: aCoCompletionContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatisticsCompletionEntry >> contents [
 
 	^ necEntry contents
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 CoStatisticsCompletionEntry >> hash [
 
 	^ self contents hash
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatisticsCompletionEntry >> heuristic [
 	^ heuristic
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatisticsCompletionEntry >> heuristic: anObject [
 	heuristic := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatisticsCompletionEntry >> hightlightSymbol [
 
 	^ necEntry hightlightSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatisticsCompletionEntry >> index [
 	^ index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatisticsCompletionEntry >> index: anInteger [
 
 	index := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatisticsCompletionEntry >> necEntry [
 	^ necEntry
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatisticsCompletionEntry >> necEntry: aNECEntry [
 	"self haltIf: [ aNECEntry isKindOf: self class ]."
 	necEntry := aNECEntry
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatisticsCompletionEntry >> statistics [
 	^ statistics
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoStatisticsCompletionEntry >> statistics: anObject [
 	statistics := anObject
 ]

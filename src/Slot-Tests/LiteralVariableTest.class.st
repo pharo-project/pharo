@@ -1,10 +1,12 @@
 Class {
-	#name : #LiteralVariableTest,
-	#superclass : #TestCase,
-	#category : #'Slot-Tests-VariablesAndSlots'
+	#name : 'LiteralVariableTest',
+	#superclass : 'TestCase',
+	#category : 'Slot-Tests-VariablesAndSlots',
+	#package : 'Slot-Tests',
+	#tag : 'VariablesAndSlots'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 LiteralVariableTest >> testComparison [
 
 	| var1 var2 |
@@ -18,7 +20,7 @@ LiteralVariableTest >> testComparison [
 	self deny: var1 equals: #var1 -> var1 value
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LiteralVariableTest >> testIsVariableBinding [
 
 	| var1 |
@@ -27,7 +29,7 @@ LiteralVariableTest >> testIsVariableBinding [
 	self assert: var1 isVariableBinding
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 LiteralVariableTest >> testLiteralEquality [
 
 	| var1 var2 |

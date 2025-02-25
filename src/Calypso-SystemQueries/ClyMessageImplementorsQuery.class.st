@@ -2,18 +2,20 @@
 I return all implementors of given selectors
 "
 Class {
-	#name : #ClyMessageImplementorsQuery,
-	#superclass : #ClyMessageBasedQuery,
-	#category : #'Calypso-SystemQueries-Queries'
+	#name : 'ClyMessageImplementorsQuery',
+	#superclass : 'ClyMessageBasedQuery',
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyMessageImplementorsQuery >> description [
 
 	^'implementors of ', self printSelectors
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMessageImplementorsQuery >> selectsMethod: aMethod [
 
 	"is implementor if it is implemented in the same class

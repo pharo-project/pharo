@@ -2,34 +2,35 @@
 I am a TFCalloutAPI implementation that overrides the builder to use the one needed to generate TFFI code
 "
 Class {
-	#name : #TFCalloutAPI,
-	#superclass : #FFICalloutAPI,
+	#name : 'TFCalloutAPI',
+	#superclass : 'FFICalloutAPI',
 	#classVars : [
 		'TraceBlock'
 	],
-	#category : #'ThreadedFFI-UFFI'
+	#category : 'ThreadedFFI-UFFI',
+	#package : 'ThreadedFFI-UFFI'
 }
 
-{ #category : #tracing }
+{ #category : 'tracing' }
 TFCalloutAPI class >> activateTrace [
 
 	self activateTraceWith: [ :sender | sender crTrace ]
 ]
 
-{ #category : #tracing }
+{ #category : 'tracing' }
 TFCalloutAPI class >> activateTraceWith: aBlock [
 
 	TraceBlock := aBlock.
 	FFIMethodRegistry resetAll
 ]
 
-{ #category : #tracing }
+{ #category : 'tracing' }
 TFCalloutAPI class >> isTracing [
 
-	^ TraceBlock notNil
+	^ TraceBlock isNotNil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TFCalloutAPI class >> newCallbackBackendFor: aCallback [
 
 	^ (TFCallback
@@ -41,7 +42,7 @@ TFCalloutAPI class >> newCallbackBackendFor: aCallback [
 			yourself
 ]
 
-{ #category : #tracing }
+{ #category : 'tracing' }
 TFCalloutAPI class >> resetTrace [
 	<script>
 
@@ -49,7 +50,7 @@ TFCalloutAPI class >> resetTrace [
 	FFIMethodRegistry resetAll
 ]
 
-{ #category : #tracing }
+{ #category : 'tracing' }
 TFCalloutAPI class >> trace: sender [
 	"This method is not to be used directly, it is called by TFFI when #activateTrace was called."
 
@@ -57,7 +58,7 @@ TFCalloutAPI class >> trace: sender [
 	TraceBlock value: sender
 ]
 
-{ #category : #action }
+{ #category : 'action' }
 TFCalloutAPI >> newBuilder [
 
 	^ TFCalloutMethodBuilder calloutAPI: self

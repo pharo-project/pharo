@@ -1,6 +1,6 @@
-Extension { #name : #Exception }
+Extension { #name : 'Exception' }
 
-{ #category : #'*JenkinsTools-Core' }
+{ #category : '*JenkinsTools-Core' }
 Exception >> recordBackgroundFailureOf: aTestCase inHDTestReport: aHDTestReport [
 	
 	"Here is a hook for specific reporting of background failures 
@@ -11,7 +11,7 @@ Exception >> recordBackgroundFailureOf: aTestCase inHDTestReport: aHDTestReport 
 	self recordResultOf: aTestCase inHDTestReport: aHDTestReport
 ]
 
-{ #category : #'*JenkinsTools-Core' }
+{ #category : '*JenkinsTools-Core' }
 Exception >> recordResultOf: aTestCase inHDTestReport: aHDTestReport [
 	
 	"By default exceptions are not accounted in test result and just propogate the signal further.

@@ -1,6 +1,6 @@
-Extension { #name : #TextDoIt }
+Extension { #name : 'TextDoIt' }
 
-{ #category : #'*Text-Edition' }
+{ #category : '*Text-Edition' }
 TextDoIt >> actOnClick: anEvent for: anObject in: paragraph editor: editor [
 
 	"Note: evalString gets evaluated IN THE CONTEXT OF anObject

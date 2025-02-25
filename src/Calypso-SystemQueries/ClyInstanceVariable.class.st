@@ -7,24 +7,26 @@ You can create my instance using:
 	ClyInstanceVariable on: aSlot definedIn: aClass
 "
 Class {
-	#name : #ClyInstanceVariable,
-	#superclass : #ClyVariable,
-	#category : #'Calypso-SystemQueries-Domain'
+	#name : 'ClyInstanceVariable',
+	#superclass : 'ClyVariable',
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyInstanceVariable class >> named: aSymbol definedIn: aClass [
 	^self
 		on: (aClass slotNamed: aSymbol)
 		definedIn: aClass
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyInstanceVariable class >> queryClass [
 	^ClyAllInstanceVariablesQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyInstanceVariable >> detectDefiningClassFrom: anUserClass [
 
 	(anUserClass slots includes: actualVariable) ifTrue: [
@@ -37,24 +39,24 @@ ClyInstanceVariable >> detectDefiningClassFrom: anUserClass [
 	self detectDefiningClassFrom: anUserClass superclass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyInstanceVariable >> isAccessibleFrom: aClass [
 
 	^aClass = definingClass or: [ aClass inheritsFrom: definingClass ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyInstanceVariable >> isClassVariable [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyInstanceVariable >> isLive [
 
 	^definingClass isClassSide
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyInstanceVariable >> openInspector [
 	definingClass isClassSide ifTrue: [
 		^(actualVariable read: definingClass instanceSide) inspect].

@@ -6,22 +6,31 @@ sign...
 	self flag: #Bob
 "
 Class {
-	#name : #FlagIconStyler,
-	#superclass : #IconStyler,
-	#category : #'Reflectivity-Tools-Breakpoints'
+	#name : 'FlagIconStyler',
+	#superclass : 'IconStyler',
+	#category : 'Reflectivity-Tools-Breakpoints',
+	#package : 'Reflectivity-Tools',
+	#tag : 'Breakpoints'
 }
 
-{ #category : #defaults }
-FlagIconStyler >> highlightColor [
-	^(Color yellow alpha: 0.3)
+{ #category : 'testing' }
+FlagIconStyler class >> isStaticStyler [
+
+	^ true
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
+FlagIconStyler >> highlightColor [
+
+	^ self theme warningBackgroundColor alpha: 0.1
+]
+
+{ #category : 'defaults' }
 FlagIconStyler >> iconFor: aNode [
 	^ self iconNamed: #flag
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FlagIconStyler >> shouldStyleNode: aNode [
 	^aNode isMessage and: [aNode selector = #flag:]
 ]

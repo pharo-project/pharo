@@ -2,26 +2,28 @@
 i am abstract class , representing an arc segment
 "
 Class {
-	#name : #AthensArcSegment,
-	#superclass : #AthensPathSegment,
+	#name : 'AthensArcSegment',
+	#superclass : 'AthensPathSegment',
 	#instVars : [
 		'endPoint',
 		'angle'
 	],
-	#category : #'Athens-Core-Paths'
+	#category : 'Athens-Core-Paths',
+	#package : 'Athens-Core',
+	#tag : 'Paths'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensArcSegment >> angle [
 	^ angle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensArcSegment >> endPoint [
 	^ endPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensArcSegment >> endPoint: pt angle: a [
 
 	endPoint := pt.

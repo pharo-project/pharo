@@ -1,15 +1,17 @@
 Class {
-	#name : #StAbstractSelectionPresenter,
-	#superclass : #StItemsSelectionPresenter,
+	#name : 'StAbstractSelectionPresenter',
+	#superclass : 'StItemsSelectionPresenter',
 	#instVars : [
 		'dropList',
 		'dropLabel',
 		'acceptBlock'
 	],
-	#category : #'Refactoring-UI'
+	#category : 'Refactoring-UI-UI',
+	#package : 'Refactoring-UI',
+	#tag : 'UI'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 StAbstractSelectionPresenter class >> defaultLayout [
 	^ SpBoxLayout newTopToBottom
 		add: #dropLabel withConstraints: [ :c | c height: self labelHeight ];
@@ -25,7 +27,7 @@ StAbstractSelectionPresenter class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #specs }
+{ #category : 'specs' }
 StAbstractSelectionPresenter class >> label: aString dropLabel: aString2 withItems: items selecting: selectedItems dropItems: dropItems acceptBlock: aBlock [
 	^ self new
 		label: aString
@@ -37,17 +39,17 @@ StAbstractSelectionPresenter class >> label: aString dropLabel: aString2 withIte
 		openBlockedDialog
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 StAbstractSelectionPresenter >> accept [
 	acceptBlock value: self selectedItem value: table selectedItems
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StAbstractSelectionPresenter >> components [
 	^ super components , { dropList . dropLabel }
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StAbstractSelectionPresenter >> initializeDropList [
 
 	dropList := self newDropList.
@@ -56,14 +58,14 @@ StAbstractSelectionPresenter >> initializeDropList [
 		displayIcon: [ :each | (self iconNamed: each systemIconName) ]
 ]
 
-{ #category : #'initialization - deprecated' }
+{ #category : 'initialization - deprecated' }
 StAbstractSelectionPresenter >> initializeWidgets [
 	super initializeWidgets .
 	dropLabel := self newLabel.
 	self initializeDropList
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 StAbstractSelectionPresenter >> label: aString dropLabel: dropString withItems: items selecting: selItems dropItems: dropItems acceptBlock: aBlock [
 	self label: aString withItems: items selecting: selItems.
 	dropLabel label: dropString.
@@ -71,7 +73,7 @@ StAbstractSelectionPresenter >> label: aString dropLabel: dropString withItems: 
 	acceptBlock := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StAbstractSelectionPresenter >> selectedItem [
 	^ dropList selectedItem
 ]

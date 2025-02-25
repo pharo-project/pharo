@@ -2,12 +2,14 @@
 A custom exception used in halts
 "
 Class {
-	#name : #MyHalt,
-	#superclass : #Exception,
-	#category : #'Debugger-Model-Tests-Exceptions'
+	#name : 'MyHalt',
+	#superclass : 'Exception',
+	#category : 'Debugger-Model-Tests-Exceptions',
+	#package : 'Debugger-Model-Tests',
+	#tag : 'Exceptions'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MyHalt >> defaultAction [
 	"The default action taken if the exception is signaled."
 	"Mimics the normal way an exception being signaled results in its process being suspended and a DebugSession being created."

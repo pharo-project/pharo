@@ -107,30 +107,32 @@ The FFIEnumeration implements  (instance and class) some more API methods like:
 	#includes: checks the existence of a specific item in the enum --- FFITestEnumeration includes: #AAA
 "
 Class {
-	#name : #FFIEnumeration,
-	#superclass : #SharedPool,
+	#name : 'FFIEnumeration',
+	#superclass : 'SharedPool',
 	#instVars : [
 		'value'
 	],
 	#classInstVars : [
 		'representationType'
 	],
-	#category : #'UnifiedFFI-Objects'
+	#category : 'UnifiedFFI-Objects',
+	#package : 'UnifiedFFI',
+	#tag : 'Objects'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFIEnumeration class >> asExternalTypeOn: generator [
 	^ FFIExternalEnumerationType
 		objectClass: self
 		representationType: self representationType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIEnumeration class >> at: anItem [
 	^ self classPool at: anItem ifAbsent: [ nil ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 FFIEnumeration class >> buildClassVarNamed: aString with: enumerationValue [
 
 		| classBinding |
@@ -141,7 +143,7 @@ FFIEnumeration class >> buildClassVarNamed: aString with: enumerationValue [
 				self addClassVariable: (ClassVariable key: aString asSymbol value: enumerationValue) ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 FFIEnumeration class >> buildClassVariables [
 	self enumerationDictionary keysAndValuesDo: [ :eachName :eachValue |
 		| enumerationValue |
@@ -149,7 +151,7 @@ FFIEnumeration class >> buildClassVariables [
 		self buildClassVarNamed: eachName with: enumerationValue ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 FFIEnumeration class >> buildEnumHierarchy [
 	"This utility method will create a hierarchy based on enumDecl"
 	<script>
@@ -158,7 +160,7 @@ FFIEnumeration class >> buildEnumHierarchy [
 	self rebuildEnumHierarchyAccessors
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIEnumeration class >> defineEnumAccesorFor: enumName [
 	"Define accessors as class methods"
 	| code |
@@ -172,7 +174,7 @@ FFIEnumeration class >> defineEnumAccesorFor: enumName [
 		classified: self generatedEnumProtocolName
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 FFIEnumeration class >> defineEnumHierarchyAccesorFor: enumName [
 	"Define accessors as class methods"
 	| code |
@@ -186,7 +188,7 @@ FFIEnumeration class >> defineEnumHierarchyAccesorFor: enumName [
 		classified: self generatedEnumProtocolName
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 FFIEnumeration class >> enumClassForName: aName [
 	| className |
 
@@ -197,27 +199,27 @@ FFIEnumeration class >> enumClassForName: aName [
 			self class classInstaller make: [ :aBuilder |
 				aBuilder
 					name: className;
-					package: self category ]]
+					package: self package name ]]
 ]
 
-{ #category : #'enum declaration' }
+{ #category : 'enum declaration' }
 FFIEnumeration class >> enumDecl [
 	^ #()
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 FFIEnumeration class >> enumNameSuffix: aName [
 	^ (aName substrings: '_')
 	inject: ''
 	into: [ :all :each | all, (each asLowercase capitalized) ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 FFIEnumeration class >> enumSelectorName: aName [
 	^ (self enumNameSuffix: aName) asValidSelector
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIEnumeration class >> enumerationDictionary [
 	| decl |
 	decl := self enumDecl.
@@ -227,7 +229,7 @@ FFIEnumeration class >> enumerationDictionary [
 	^ decl
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIEnumeration class >> fromInteger: anIntegerValue [
 	| theItem |
 	theItem := self itemAt: anIntegerValue.
@@ -235,22 +237,22 @@ FFIEnumeration class >> fromInteger: anIntegerValue [
 	^ self at: theItem
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIEnumeration class >> generatedEnumProtocolName [
 	^ 'accessing enum'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFIEnumeration class >> includes: aSymbol [
-	^ self classPool includesKey: aSymbol
+	^ self hasClassVarNamed: aSymbol
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 FFIEnumeration class >> initialize [
 	self initializeEnumeration
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 FFIEnumeration class >> initializeEnumeration [
 	| unsigned |
 	unsigned := true.
@@ -268,7 +270,7 @@ FFIEnumeration class >> initializeEnumeration [
 		ifFalse: [ FFIInt32 new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIEnumeration class >> itemAt: aValue [
 
 	^ self
@@ -276,7 +278,7 @@ FFIEnumeration class >> itemAt: aValue [
 		ifAbsent: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIEnumeration class >> itemAt: aValue ifAbsent: exceptionBlock [
 
 	self classPool associationsDo: [ :assoc |
@@ -286,40 +288,40 @@ FFIEnumeration class >> itemAt: aValue ifAbsent: exceptionBlock [
 	^ exceptionBlock value
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIEnumeration class >> new [
 	^ self shouldNotImplement
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIEnumeration class >> rebuildEnumAccessors [
 	self enumerationDictionary keysDo: [ :each |
 		self defineEnumAccesorFor: each ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 FFIEnumeration class >> rebuildEnumHierarchyAccessors [
 	self enumerationDictionary keysDo: [ :each |
 		self defineEnumHierarchyAccesorFor: each ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIEnumeration class >> representationType [
 	^ representationType
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 FFIEnumeration >> = anEnumInst [
 	^ self class == anEnumInst class
 		and: [ self value = anEnumInst value ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIEnumeration >> item [
 	^ self class itemAt: value
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FFIEnumeration >> printOn: stream [
 	super printOn: stream.
 	stream nextPut: $(;
@@ -327,12 +329,12 @@ FFIEnumeration >> printOn: stream [
 		 nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIEnumeration >> value [
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIEnumeration >> value: anObject [
 	value := anObject
 ]

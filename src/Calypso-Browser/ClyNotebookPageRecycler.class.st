@@ -6,17 +6,19 @@ I need a list of current tools and the list of new contexts to compute the list 
 I use `ClyTargetTool` to do the matching.
 "
 Class {
-	#name : #ClyNotebookPageRecycler,
-	#superclass : #Object,
+	#name : 'ClyNotebookPageRecycler',
+	#superclass : 'Object',
 	#instVars : [
 		'tools',
 		'targetedTools',
 		'isMatched'
 	],
-	#category : #'Calypso-Browser-Tabs'
+	#category : 'Calypso-Browser-Tabs',
+	#package : 'Calypso-Browser',
+	#tag : 'Tabs'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyNotebookPageRecycler class >> on: toolList [
 
 	^ self new
@@ -24,7 +26,7 @@ ClyNotebookPageRecycler class >> on: toolList [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyNotebookPageRecycler class >> on: toolList contexts: aListOfClyBrowserContext [
 
 	^ (self on: toolList)
@@ -32,13 +34,13 @@ ClyNotebookPageRecycler class >> on: toolList contexts: aListOfClyBrowserContext
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNotebookPageRecycler >> activationStrategiesFor: aClyBrowserContext [
 
 	^ ClyTabActivationStrategyAnnotation activeInstancesInContext: aClyBrowserContext
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNotebookPageRecycler >> ensureMatched [
 
 	isMatched ifTrue: [ ^ self ].
@@ -46,13 +48,13 @@ ClyNotebookPageRecycler >> ensureMatched [
 	isMatched := true
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNotebookPageRecycler >> matchTools [
 
 	self targetedTools do: [ :targetTool | targetTool match: tools ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyNotebookPageRecycler >> setTargetedToolsForContexts: aListOfClyBrowserContext [
 
 	targetedTools := aListOfClyBrowserContext flatCollect: [ :aClyBrowserContext |
@@ -60,26 +62,26 @@ ClyNotebookPageRecycler >> setTargetedToolsForContexts: aListOfClyBrowserContext
 	isMatched := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookPageRecycler >> targetedTools [
 
 	^ targetedTools
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyNotebookPageRecycler >> targetedToolsFor: aClyBrowserContext [
 
 	^ (self activationStrategiesFor: aClyBrowserContext)
 		collect: [ :strategy | ClyTargetTool forActivation: strategy context: aClyBrowserContext]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookPageRecycler >> tools: toolList [
 
 	tools := toolList
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 ClyNotebookPageRecycler >> toolsToInstall [
 
 	self ensureMatched.
@@ -88,7 +90,7 @@ ClyNotebookPageRecycler >> toolsToInstall [
 		reject: [ :tool | tool isMatched ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyNotebookPageRecycler >> toolsToKeep [
 
 	self ensureMatched.
@@ -98,7 +100,7 @@ ClyNotebookPageRecycler >> toolsToKeep [
 		thenCollect: [ :tool | tool matchedTool ]
 ]
 
-{ #category : #querying }
+{ #category : 'querying' }
 ClyNotebookPageRecycler >> toolsToRemove [
 
 	^ tools difference: self toolsToKeep

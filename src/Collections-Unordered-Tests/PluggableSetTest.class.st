@@ -2,18 +2,20 @@
 SUnit tests for pluggable sets
 "
 Class {
-	#name : #PluggableSetTest,
-	#superclass : #SetTest,
-	#category : #'Collections-Unordered-Tests-Sets'
+	#name : 'PluggableSetTest',
+	#superclass : 'SetTest',
+	#category : 'Collections-Unordered-Tests-Sets',
+	#package : 'Collections-Unordered-Tests',
+	#tag : 'Sets'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 PluggableSetTest class >> classToBeTested [
 
 	^ IdentitySet
 ]
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 PluggableSetTest >> classToBeTested [
 
 	^ PluggableSet

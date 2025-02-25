@@ -2,12 +2,14 @@
 SUnit tests for class Delay
 "
 Class {
-	#name : #DelayTest,
-	#superclass : #TestCase,
-	#category : #'Kernel-Tests-Delays'
+	#name : 'DelayTest',
+	#superclass : 'TestCase',
+	#category : 'Kernel-Tests-Delays',
+	#package : 'Kernel-Tests',
+	#tag : 'Delays'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 DelayTest >> testBounds [
 
 	self should: [ Delay forMilliseconds: -1 ] raise: Error.
@@ -16,7 +18,7 @@ DelayTest >> testBounds [
 	(Delay forMilliseconds: Float pi) wait	"Wait 3ms"
 ]
 
-{ #category : #'tests - limits' }
+{ #category : 'tests - limits' }
 DelayTest >> testMultiProcessWaitOnSameDelay [
 	"Ensure that waiting on the same delay from multiple processes raises an error"
 	| delay p1 p2 wasRun |
@@ -32,7 +34,7 @@ DelayTest >> testMultiProcessWaitOnSameDelay [
 	self assert: wasRun
 ]
 
-{ #category : #'tests - limits' }
+{ #category : 'tests - limits' }
 DelayTest >> testMultiSchedule [
 	"Ensure that scheduling the same delay twice raises an error"
 	| delay |

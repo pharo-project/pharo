@@ -6,7 +6,9 @@ This Menubar can be displayed at the top of the Pharo window. It uses the worldM
 For more informations check the comment of MenubarMorph.
 "
 Class {
-	#name : #ManifestMorphicWidgetsMenubar,
-	#superclass : #PackageManifest,
-	#category : #'Morphic-Widgets-Menubar-Manifest'
+	#name : 'ManifestMorphicWidgetsMenubar',
+	#superclass : 'PackageManifest',
+	#category : 'Morphic-Widgets-Menubar-Manifest',
+	#package : 'Morphic-Widgets-Menubar',
+	#tag : 'Manifest'
 }

@@ -3,45 +3,47 @@ I am an SUnit test for ReadStream.
 I have no test fixtures.
 "
 Class {
-	#name : #ReadStreamTest,
-	#superclass : #TestCase,
-	#category : #'Collections-Streams-Tests-Base'
+	#name : 'ReadStreamTest',
+	#superclass : 'TestCase',
+	#category : 'Collections-Streams-Tests-Base',
+	#package : 'Collections-Streams-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 ReadStreamTest >> emptyStream [
 	^ ReadStream on: String new
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 ReadStreamTest >> streamOn: collection upToAll: subcollection [
 	^ collection readStream upToAll: subcollection
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 ReadStreamTest >> streamOn: collection upToAll: subcollection1 upToAll: subcollection2 [
 	^ collection readStream
 		upToAll: subcollection1;
 		upToAll: subcollection2
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 ReadStreamTest >> streamOnArray [
 	^ ReadStream on: (Array with: 1 with: #(a b c) with: false)
 ]
 
-{ #category : #'accessing - defaults' }
+{ #category : 'accessing - defaults' }
 ReadStreamTest >> streamOnString [
 	^ ReadStream on: 'abcde'
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 ReadStreamTest >> testAtEnd [
 	self assert: self emptyStream atEnd.
 	self deny: self streamOnString atEnd
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReadStreamTest >> testBack [
 	| stream |
 	stream := 'abc' readStream.
@@ -49,7 +51,7 @@ ReadStreamTest >> testBack [
 	self assert: stream back equals: $c
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReadStreamTest >> testBackOnPosition1 [
 	"Test the new implementation of the method back."
 	| stream |
@@ -58,7 +60,7 @@ ReadStreamTest >> testBackOnPosition1 [
 	self assert: stream back equals: $a
 ]
 
-{ #category : #'tests - accessing' }
+{ #category : 'tests - accessing' }
 ReadStreamTest >> testContents [
 	| stream |
 	stream := self streamOnString.
@@ -67,7 +69,7 @@ ReadStreamTest >> testContents [
 	self assert: stream contents equals: 'abcde'
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 ReadStreamTest >> testIsEmpty [
 	| stream |
 	self assert: self emptyStream isEmpty.
@@ -85,7 +87,7 @@ ReadStreamTest >> testIsEmpty [
 	self deny: stream isEmpty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReadStreamTest >> testOldBack [
 	"Test the old behavior of the method back. The method #oldBack is a misconception about what a stream is. A stream contains a pointer *between* elements with past and future elements. The method #oldBack considers that the pointer is *on* an element. (Damien Cassou - 1 August 2007)"
 	| stream |
@@ -94,7 +96,7 @@ ReadStreamTest >> testOldBack [
 	self assert: stream oldBack equals: $b
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReadStreamTest >> testOldBackOnPosition1 [
 	"Test the old behavior of the method back. The method #oldBack is a misconception about what a stream is. A stream contains a pointer *between* elements with past and future elements. The method #oldBack considers that the pointer is *on* an element. (Damien Cassou - 1 August 2007)"
 
@@ -104,7 +106,7 @@ ReadStreamTest >> testOldBackOnPosition1 [
 	self assert: stream oldBack isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReadStreamTest >> testOldPeekBack [
 	"Test the old behavior of the method peekBack. The method #oldBack is a misconception about what a stream is. A stream contains a pointer *between* elements with past and future elements. The method #oldBack considers that the pointer is *on* an element. (Damien Cassou - 1 August 2007)"
 	| stream |
@@ -113,7 +115,7 @@ ReadStreamTest >> testOldPeekBack [
 	self assert: stream oldPeekBack equals: $b
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReadStreamTest >> testPeekBack [
 	"Test the new implementation of the method peekBack due to changing #back."
 	| stream |
@@ -122,7 +124,7 @@ ReadStreamTest >> testPeekBack [
 	self assert: stream peekBack equals: $c
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReadStreamTest >> testPositionOfSubCollection [
 
 	self assert: ('xyz' readStream positionOfSubCollection: 'q' ) equals: 0.
@@ -132,7 +134,7 @@ ReadStreamTest >> testPositionOfSubCollection [
 	self assert: ('xyz' readStream positionOfSubCollection: 'z' ) equals: 3
 ]
 
-{ #category : #'tests - accessing' }
+{ #category : 'tests - accessing' }
 ReadStreamTest >> testUpTo3 [
 	| stream string |
 	string := 'XYZabcdUVW'.
@@ -147,7 +149,7 @@ ReadStreamTest >> testUpTo3 [
 	self assert: stream atEnd
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ReadStreamTest >> testUpToAll [
 	self assert: (self streamOn: 'abcdefgh' upToAll: 'cd') equals: 'ab'.
 	self assert: (self streamOn: 'abcdefgh' upToAll: 'cd' upToAll: 'gh') equals: 'ef'.

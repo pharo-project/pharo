@@ -5,18 +5,29 @@ As the code is now only evaluated once for initializing the variable value, this
 My preconditions verify that the new temporary name is a valid name and isn't already used (neither a temporary, an instance variable or a class variable).
 "
 Class {
-	#name : #RBExtractToTemporaryRefactoring,
-	#superclass : #RBMethodRefactoring,
+	#name : 'RBExtractToTemporaryRefactoring',
+	#superclass : 'RBMethodRefactoring',
 	#instVars : [
 		'sourceInterval',
 		'selector',
 		'newVariableName',
-		'parseTree'
+		'parseTree',
+		'selectedParseTree'
 	],
-	#category : #'Refactoring-Core-Refactorings-Unused'
+	#category : 'Refactoring-Core-Refactorings-Unused',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings-Unused'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
+RBExtractToTemporaryRefactoring class >> extract: anInterval from: aSelector in: aClass [
+	^ self new
+		extract: anInterval
+		from: aSelector
+		in: aClass
+]
+
+{ #category : 'instance creation' }
 RBExtractToTemporaryRefactoring class >> extract: anInterval to: aString from: aSelector in: aClass [
 	^ self new
 		extract: anInterval
@@ -25,7 +36,16 @@ RBExtractToTemporaryRefactoring class >> extract: anInterval to: aString from: a
 		in: aClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
+RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval from: aSelector in: aClass [
+
+	^ self new
+		  model: aRBSmalltalk;
+		  extract: anInterval from: aSelector in: aClass;
+		  yourself
+]
+
+{ #category : 'instance creation' }
 RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval to: aString from: aSelector in: aClass [
 	^ self new
 		model: aRBSmalltalk;
@@ -36,35 +56,42 @@ RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval
 		yourself
 ]
 
-{ #category : #preconditions }
-RBExtractToTemporaryRefactoring >> checkVariableName [
-	(class whoDefinesInstanceVariable: newVariableName) ifNotNil:
-			[self refactoringError: ('<1p> defines an instance variable named <2s>'
-						expandMacrosWith: class
-						with: newVariableName)].
-	(class whoDefinesClassVariable: newVariableName) ifNotNil:
-			[self refactoringError: ('<1p> defines a class variabled named <2s>'
-						expandMacrosWith: class
-						with: newVariableName)].
-	(self parseTree allDefinedVariables includes: newVariableName)
-		ifTrue:
-			[self refactoringError: ('<1s> is already a temporary variable name'
-						expandMacrosWith: newVariableName)]
+{ #category : 'preconditions' }
+RBExtractToTemporaryRefactoring >> applicabilityPreconditions [
+
+	^ {
+			(ReDefinesSelectorsCondition new definesSelectors: (Array with: selector) in: class).
+		  	(ReIsValidInstanceVariableName new name: newVariableName).
+			(ReCheckVariableNameCondition
+				class: class
+				variableName: newVariableName 
+				parseTree: parseTree ).
+		}
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBExtractToTemporaryRefactoring >> compileNewMethod [
-	class compileTree: self parseTree
+	class compileTree: parseTree
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBExtractToTemporaryRefactoring >> constructAssignmentFrom: aNode [
 	| valueNode |
-	valueNode := RBVariableNode named: newVariableName.
-	^RBAssignmentNode variable: valueNode value: aNode
+	valueNode := OCVariableNode named: newVariableName.
+	"Use a copy so aNode retains its original parent.
+	In this case the caller is done making use of the parent backlink,
+	but it seems sensible to keep it intact whenever possible."
+	^OCAssignmentNode variable: valueNode value: aNode copy.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
+RBExtractToTemporaryRefactoring >> extract: anInterval from: aSelector in: aClass [
+	class := self classObjectFor: aClass.
+	selector := aSelector.
+	sourceInterval := anInterval
+]
+
+{ #category : 'initialization' }
 RBExtractToTemporaryRefactoring >> extract: anInterval to: aString from: aSelector in: aClass [
 	class := self classObjectFor: aClass.
 	selector := aSelector.
@@ -72,59 +99,65 @@ RBExtractToTemporaryRefactoring >> extract: anInterval to: aString from: aSelect
 	newVariableName := aString
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBExtractToTemporaryRefactoring >> insertTemporary [
-	| node statementNode nodeReferences children |
-	node := self parseTree whichNodeIsContainedBy: sourceInterval.
-	(node notNil and: [ node isValue ])
-		ifFalse: [ self refactoringFailure: 'Cannot assign to non-value nodes' ].
-	children := self parseTree body allChildren.
-	nodeReferences := children select: [ :each | each = node ] thenCollect: [ :each | each ].
-	statementNode := node statementNode.
-	nodeReferences do: [ :each | each replaceWith: (RBVariableNode named: newVariableName) ].
-	statementNode parent
-		addNode: (self constructAssignmentFrom: node)
-			before:
-				(node == statementNode
-						ifTrue: [ RBVariableNode named: newVariableName ]
-						ifFalse: [ statementNode ]);
-		addTemporaryNamed: newVariableName
+
+	| node statementNode nodeReferences scope |
+	node := parseTree whichNodeIsContainedBy: sourceInterval.
+	(node isNotNil and: [ node isValue ]) ifFalse: [
+		self refactoringError: 'Cannot assign to non-value nodes' ].
+	scope := node methodOrBlockNode.
+	nodeReferences := scope allChildren select: [ :each | each = node ].
+	"Insert the assignment before the first occurrence to be replaced,
+	but in the same scope as the selected expression,
+	even if that first occurrence is in a nested block."
+	statementNode := nodeReferences first statementNodeIn: scope.
+	scope body
+		addNode: (self constructAssignmentFrom: node) before: statementNode;
+		addTemporaryNamed: newVariableName.
+	nodeReferences do: [ :each |
+		each replaceWith: (OCVariableNode named: newVariableName) ]
 ]
 
-{ #category : #'private - accessing' }
-RBExtractToTemporaryRefactoring >> parseTree [
+{ #category : 'transforming' }
+RBExtractToTemporaryRefactoring >> prepareForExecution [
 
-	parseTree
-		ifNil: [ parseTree := class parseTreeForSelector: selector.
-			parseTree ifNil: [ self refactoringFailure: 'Could not parse method' ]
+	| selectedSources |
+	selectedSources := self selectedSource.
+	selectedParseTree := self parserClass
+		parseExpression: selectedSources
+		onError: [ :message :position | self refactoringError: 'Invalid selection' ].
+	selectedParseTree isSequence
+		ifTrue: [ self refactoringError: 'Cannot assign temp to multiple statements' ].	
+	parseTree ifNil: [ 
+			parseTree := class parseTreeForSelector: selector.
+			parseTree ifNil: [ self refactoringError: 'Could not parse method' ]
 			].
-	^ parseTree
+		parseTree doSemanticAnalysis
+
+
 ]
 
-{ #category : #preconditions }
-RBExtractToTemporaryRefactoring >> preconditions [
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition isValidInstanceVariableName: newVariableName for: class)
-			& (RBCondition withBlock:
-						[self verifySelectedInterval.
-						self checkVariableName.
-						true])
+{ #category : 'transforming' }
+RBExtractToTemporaryRefactoring >> privateTransform [
+	self
+		insertTemporary;
+		compileNewMethod
 ]
 
-{ #category : #'private - accessing' }
+{ #category : 'private - accessing' }
 RBExtractToTemporaryRefactoring >> selectedSource [
 
 	| source |
-
 	source := class sourceCodeFor: selector.
-	source ifNil: [ self refactoringFailure: 'Couldn''t find sources' ].
+	source ifNil: [ self refactoringError: 'Couldn''t find sources' ].
 	( ( sourceInterval first between: 1 and: source size )
 		and: [ sourceInterval last between: 1 and: source size ] )
-		ifFalse: [ self refactoringFailure: 'Invalid interval' ].
+		ifFalse: [ self refactoringError: 'Invalid interval' ].
 	^ source copyFrom: sourceInterval first to: sourceInterval last
 ]
 
-{ #category : #printing }
+{ #category : 'storing' }
 RBExtractToTemporaryRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -140,20 +173,8 @@ RBExtractToTemporaryRefactoring >> storeOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #transforming }
-RBExtractToTemporaryRefactoring >> transform [
-	self
-		insertTemporary;
-		compileNewMethod
-]
+{ #category : 'initialization' }
+RBExtractToTemporaryRefactoring >> variableName: aString [
 
-{ #category : #preconditions }
-RBExtractToTemporaryRefactoring >> verifySelectedInterval [
-	| selectedParseTree selectedSources |
-	selectedSources := self selectedSource.
-	selectedParseTree := self parserClass
-		parseExpression: selectedSources
-		onError: [ :message :position | self refactoringFailure: 'Invalid selection' ].
-	selectedParseTree isSequence
-		ifTrue: [ self refactoringFailure: 'Cannot assign temp to multiple statements' ]
+	newVariableName := aString
 ]

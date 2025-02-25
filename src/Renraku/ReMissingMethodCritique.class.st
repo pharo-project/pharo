@@ -2,17 +2,19 @@
 This kind of critiques occur when a method is missing. The critique knows what is the selector of the missing method, and it's perspective class. The critique provides a change which is a creation of the missing method. Also a sourcecode of a method can be specified. For now there are two shortcuts for the source code, that set it to either subclassResponsability or shouldBeImplemented 
 "
 Class {
-	#name : #ReMissingMethodCritique,
-	#superclass : #ReAbstractCritique,
+	#name : 'ReMissingMethodCritique',
+	#superclass : 'ReAbstractCritique',
 	#instVars : [
 		'selector',
 		'class',
 		'source'
 	],
-	#category : #'Renraku-Critiques'
+	#category : 'Renraku-Critiques',
+	#package : 'Renraku',
+	#tag : 'Critiques'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ReMissingMethodCritique class >> for: anEntity by: aRule class: aClass selector: aSymbol [
 
 	^ self basicNew
@@ -20,21 +22,21 @@ ReMissingMethodCritique class >> for: anEntity by: aRule class: aClass selector:
 		yourself
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ReMissingMethodCritique >> beShouldBeImplemented [
 	"set the sorce code of the method-to-be-created to shouldBeImplemented"
 
 	source := '^ self shouldBeImplemented'
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 ReMissingMethodCritique >> beSubclassResponsibility [
 	"set the sorce code of the method-to-be-created to subclassResponsibility"
 
 	source := '^ self subclassResponsibility'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReMissingMethodCritique >> change [
 	"an 'add method' change that create the missing method"
 
@@ -43,13 +45,13 @@ ReMissingMethodCritique >> change [
 		in: class
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReMissingMethodCritique >> initialize [
 	super initialize.
 	source := ''
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ReMissingMethodCritique >> initializeRule: aRule target: anEntity class: aClass selector: aSymbol [
 
 	self initializeRule: aRule target: anEntity.
@@ -61,7 +63,7 @@ ReMissingMethodCritique >> initializeRule: aRule target: anEntity class: aClass 
 		ifFalse: [ class name, '>>#', selector ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReMissingMethodCritique >> methodHeader [
 
 	^ ($: split: selector) allButLast
@@ -76,18 +78,18 @@ ReMissingMethodCritique >> methodHeader [
 				  header , keyword , ': ' , (argumentNames at: index) , ' ' ] ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ReMissingMethodCritique >> providesChange [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReMissingMethodCritique >> source [
 	"source code of the method-to-be-created excluding selector and args"
 	^ source
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReMissingMethodCritique >> source: anObject [
 	"set the source code of the method-to-be-created. This should not include the selector and args"
 

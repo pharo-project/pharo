@@ -2,21 +2,22 @@
 A text command to render a character span containing the range of characters for with same attributes
 "
 Class {
-	#name : #AthensCharacterSpan,
-	#superclass : #AthensTextDisplayCommand,
+	#name : 'AthensCharacterSpan',
+	#superclass : 'AthensTextDisplayCommand',
 	#instVars : [
 		'start',
 		'stop'
 	],
-	#category : #'Athens-Text'
+	#category : 'Athens-Text',
+	#package : 'Athens-Text'
 }
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensCharacterSpan >> renderOn: renderer [
 	renderer renderCharactersFrom: start to: stop
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCharacterSpan >> splitAt: position [
 	| newSpan |
 	"split receiver on two character spans "
@@ -33,25 +34,25 @@ AthensCharacterSpan >> splitAt: position [
 	self insert: newSpan
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCharacterSpan >> start [
 
 	^ start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCharacterSpan >> start: anObject [
 
 	start := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCharacterSpan >> stop [
 
 	^ stop
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensCharacterSpan >> stop: anObject [
 
 	stop := anObject

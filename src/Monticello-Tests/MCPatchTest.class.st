@@ -1,13 +1,15 @@
 Class {
-	#name : #MCPatchTest,
-	#superclass : #MCTestCase,
+	#name : 'MCPatchTest',
+	#superclass : 'MCTestCase',
 	#instVars : [
 		'patch'
 	],
-	#category : #'Monticello-Tests-Base'
+	#category : 'Monticello-Tests-Base',
+	#package : 'Monticello-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 MCPatchTest >> setUp [
 	|rev1 rev2|
 	super setUp.
@@ -18,13 +20,13 @@ MCPatchTest >> setUp [
 	self change: #one toReturn: 1.
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 MCPatchTest >> tearDown [
 	self restoreMocks.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MCPatchTest >> testPatchContents [
 	self assert: patch operations size equals: 1.
 	self assert: patch operations first isModification.

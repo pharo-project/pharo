@@ -1,6 +1,6 @@
-Extension { #name : #WordArray }
+Extension { #name : 'WordArray' }
 
-{ #category : #'*ThreadedFFI' }
+{ #category : '*ThreadedFFI' }
 WordArray >> tfPointerAddress [
 
 	self pinInMemory.

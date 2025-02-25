@@ -1,6 +1,6 @@
-Extension { #name : #ClySuperclassVisibilityLevel }
+Extension { #name : 'ClySuperclassVisibilityLevel' }
 
-{ #category : #'*Calypso-SystemPlugins-Traits-Queries' }
+{ #category : '*Calypso-SystemPlugins-Traits-Queries' }
 ClySuperclassVisibilityLevel >> asTraitVisibility [
 	| traits |
 	traits := extraClassScope basisObjects select: [ :each | each isTrait ].

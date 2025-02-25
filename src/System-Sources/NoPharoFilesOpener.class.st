@@ -14,22 +14,24 @@ To get back to the normal situation, execute
   PharoFilesOpener reset.
 "
 Class {
-	#name : #NoPharoFilesOpener,
-	#superclass : #PharoFilesOpener,
-	#category : #'System-Sources-Utilities'
+	#name : 'NoPharoFilesOpener',
+	#superclass : 'PharoFilesOpener',
+	#category : 'System-Sources-Utilities',
+	#package : 'System-Sources',
+	#tag : 'Utilities'
 }
 
-{ #category : #singleton }
+{ #category : 'singleton' }
 NoPharoFilesOpener class >> install [
 	Default := self new
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 NoPharoFilesOpener >> changesFileOrNil [
 	^ nil
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 NoPharoFilesOpener >> sourcesFileOrNil [
 	^ nil
 ]

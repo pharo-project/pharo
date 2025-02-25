@@ -7,16 +7,18 @@ I re-implement the critical operations dealing with bulk input and output
 more efficiently to work with buffer sized chunks, bypassing #next and #nextPut:
 "
 Class {
-	#name : #ZdcOptimizedSocketStream,
-	#superclass : #ZdcSimpleSocketStream,
-	#category : #'Zodiac-Core'
+	#name : 'ZdcOptimizedSocketStream',
+	#superclass : 'ZdcSimpleSocketStream',
+	#category : 'Zodiac-Core',
+	#package : 'Zodiac-Core'
 }
 
-{ #category : #'stream out' }
+{ #category : 'stream out' }
 ZdcOptimizedSocketStream >> next: count putAll: collection startingAt: offset [
 	"Write count bytes from collection starting at offset. Overwritten, optimized"
 
 	| totalWritten |
+	writeBuffer isFull ifTrue: [ self flushWriteBuffer ].
 	totalWritten := 0.
 	[ | toWrite |
 		toWrite := (count - totalWritten) min: writeBuffer availableForWriting.
@@ -25,7 +27,7 @@ ZdcOptimizedSocketStream >> next: count putAll: collection startingAt: offset [
 		totalWritten = count ] whileFalse: [ self flushWriteBuffer ]
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 ZdcOptimizedSocketStream >> readInto: collection startingAt: offset count: requestedCount [
 	"Read requestedCount elements into collection starting at offset,
 	returning the number of elements read. Overwritten, optimized"
@@ -44,11 +46,12 @@ ZdcOptimizedSocketStream >> readInto: collection startingAt: offset count: reque
 	^ totalRead
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 ZdcOptimizedSocketStream >> skip: count [
 	"Skip over count bytes. Overwritten, optimized"
 
 	| skipCount |
+	count < 0 ifTrue: [ self error: 'cannot skip backwards' ].
 	skipCount := 0.
 	[ | leftToSkip skipping |
 		leftToSkip := count - skipCount.
@@ -57,7 +60,7 @@ ZdcOptimizedSocketStream >> skip: count [
 	     (skipCount := skipCount + skipping) = count ] whileFalse: [ self fillReadBuffer ]
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 ZdcOptimizedSocketStream >> upTo: value [
 	"Read bytes upto but not including value and return them as a ByteArray.
 	If value is not found, return the entire contents of the stream. Overwritten, optimized"
@@ -76,7 +79,7 @@ ZdcOptimizedSocketStream >> upTo: value [
 					readBuffer isEmpty ifTrue: [ self fillReadBuffer ] ] ]
 ]
 
-{ #category : #'stream in' }
+{ #category : 'stream in' }
 ZdcOptimizedSocketStream >> upToEnd [
 	"Read bytes until the stream is atEnd and return them as a ByteArray. Overwritten, optimized"
 

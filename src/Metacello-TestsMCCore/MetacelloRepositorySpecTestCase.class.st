@@ -1,15 +1,11 @@
 Class {
-	#name : #MetacelloRepositorySpecTestCase,
-	#superclass : #MetacelloSpecTestCase,
-	#category : #'Metacello-TestsMCCore'
+	#name : 'MetacelloRepositorySpecTestCase',
+	#superclass : 'MetacelloSpecTestCase',
+	#category : 'Metacello-TestsMCCore',
+	#package : 'Metacello-TestsMCCore'
 }
 
-{ #category : #accessing }
-MetacelloRepositorySpecTestCase >> projectClass [
-    ^ MetacelloMCProject
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloRepositorySpecTestCase >> testRepositoryMergeSpec [
 	| repositoryA repositoryB repository |
 	repositoryA := self repositorySpec
@@ -29,7 +25,7 @@ MetacelloRepositorySpecTestCase >> testRepositoryMergeSpec [
 	self assert: repository type equals: 'http'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloRepositorySpecTestCase >> testRepositorySpec [
 	| repository |
 	repository := self repositorySpec

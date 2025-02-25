@@ -1,10 +1,11 @@
 Class {
-	#name : #CmdDeepChildMenuGroupStub,
-	#superclass : #CmdMenuGroup,
-	#category : #'Commander-Core-Tests'
+	#name : 'CmdDeepChildMenuGroupStub',
+	#superclass : 'CmdMenuGroup',
+	#category : 'Commander-Core-Tests',
+	#package : 'Commander-Core-Tests'
 }
 
-{ #category : #parents }
+{ #category : 'parents' }
 CmdDeepChildMenuGroupStub class >> parentGroup [
 	^CmdMenuGroupExample2
 ]

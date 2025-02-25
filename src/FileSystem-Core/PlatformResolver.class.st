@@ -2,31 +2,33 @@
 I am an abstract superclass for platform-specific resolvers.
 "
 Class {
-	#name : #PlatformResolver,
-	#superclass : #FileSystemResolver,
-	#category : #'FileSystem-Core-Base-Resolver'
+	#name : 'PlatformResolver',
+	#superclass : 'FileSystemResolver',
+	#category : 'FileSystem-Core-Base-Resolver',
+	#package : 'FileSystem-Core',
+	#tag : 'Base-Resolver'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PlatformResolver class >> forCurrentPlatform [
 	| platformName |
 	platformName :=  Smalltalk os platformName.
 	^ (self allSubclasses detect: [:ea | ea platformName = platformName]) new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PlatformResolver class >> platformName [
 	^ nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PlatformResolver class >> primitiveGetUntrustedUserDirectory [
 	<primitive: 'primitiveGetUntrustedUserDirectory' module: 'SecurityPlugin'>
 	self primitiveFailed.
 	self flag: #pharoFixMe. "use a more decent way to get a path in the users home directory"
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 PlatformResolver >> cache [
 	"Operating Systems often define standard locations for a personal cache directory. The cache directory is a user-specific non-essential (cached) place where data should be written."
 
@@ -34,24 +36,24 @@ PlatformResolver >> cache [
 	^ self subclassResponsibility
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PlatformResolver >> cantFindOriginError [
 	^ Error signal: 'Can''t find the requested origin'
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 PlatformResolver >> desktop [
 
 	<origin>
 	^ self home / 'Desktop'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PlatformResolver >> directoryFromEnvVariableNamed: aString [
 	^ self directoryFromEnvVariableNamed: aString or: [ self cantFindOriginError ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 PlatformResolver >> directoryFromEnvVariableNamed: aString or: aBlock [
 	| envValue |
 	envValue := [ Smalltalk os environment at: aString ifAbsent: [ nil ] ]
@@ -62,31 +64,31 @@ PlatformResolver >> directoryFromEnvVariableNamed: aString or: aBlock [
 		ifFalse: [ self resolveString: envValue ]
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 PlatformResolver >> documents [
 	<origin>
 	^ self home / 'Documents'
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 PlatformResolver >> downloads [
 	<origin>
 	^ self home / 'Downloads'
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 PlatformResolver >> home [
 	<origin>
 	^ self subclassResponsibility
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 PlatformResolver >> preferences [
 	<origin>
 	^ self subclassResponsibility
 ]
 
-{ #category : #origins }
+{ #category : 'origins' }
 PlatformResolver >> temp [
 	"Where to put files that are not supposed to last long"
 

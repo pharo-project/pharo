@@ -2,55 +2,57 @@
 I create a copy of the directory tree that I visit. I use the PreorderGuide so that I can create directories before creating their contents. 
 "
 Class {
-	#name : #CopyVisitor,
-	#superclass : #FileSystemVisitor,
+	#name : 'CopyVisitor',
+	#superclass : 'FileSystemVisitor',
 	#instVars : [
 		'source',
 		'dest'
 	],
-	#category : #'FileSystem-Core-Base-Visitors'
+	#category : 'FileSystem-Core-Base-Visitors',
+	#package : 'FileSystem-Core',
+	#tag : 'Base-Visitors'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CopyVisitor class >> copy: source to: dest [
 	(self from: source to: dest) visit
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CopyVisitor class >> from: srcReference to: dstReference [
 	^ self basicNew
 		initializeWithSource: srcReference
 		dest: dstReference
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CopyVisitor >> copyDirectory: aReference [
 	| directory |
 	directory := dest resolve: (aReference relativeTo: source).
 	directory createDirectory
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CopyVisitor >> copyFile: aReference [
 	| copy |
 	copy := dest resolve: (aReference relativeTo: source).
 	aReference copyTo: copy
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CopyVisitor >> initializeWithSource: srcReference dest: dstReference [
 	self initialize.
 	source := srcReference.
 	dest := dstReference
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CopyVisitor >> visit [
 	(PreorderGuide for: self)
 		show: source
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CopyVisitor >> visitDirectory: anEntry [
 	| reference |
 	reference := anEntry reference.
@@ -59,7 +61,7 @@ CopyVisitor >> visitDirectory: anEntry [
 		ifFalse: [self copyDirectory: reference]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CopyVisitor >> visitFile: anEntry [
 	| reference |
 	reference := anEntry reference.

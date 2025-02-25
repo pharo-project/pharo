@@ -4,15 +4,17 @@ An event handler for the emergency debugger, it will just handle a few things:
 - the window close button
 "
 Class {
-	#name : #EDDisplayEventHandler,
-	#superclass : #OSWindowEventVisitor,
+	#name : 'EDDisplayEventHandler',
+	#superclass : 'OSWindowEventVisitor',
 	#instVars : [
 		'interface'
 	],
-	#category : #'EmergencyDebugger-View'
+	#category : 'EmergencyDebugger-View',
+	#package : 'EmergencyDebugger',
+	#tag : 'View'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EDDisplayEventHandler class >> on: anInterface [
 
 	^ self new
@@ -20,26 +22,26 @@ EDDisplayEventHandler class >> on: anInterface [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EDDisplayEventHandler >> interface [
 
 	^ interface
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EDDisplayEventHandler >> interface: anObject [
 
 	interface := anObject
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 EDDisplayEventHandler >> visitKeyDownEvent: event [
 
 	event character ifNil: [ ^ self ].
 	interface pushChar: event character
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 EDDisplayEventHandler >> visitTextInputEvent: anEvent [
 	| char mods |
 
@@ -55,7 +57,7 @@ EDDisplayEventHandler >> visitTextInputEvent: anEvent [
 	interface pushChar: char
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 EDDisplayEventHandler >> visitWindowCloseEvent: anEvent [
 
 	anEvent suppressDefaultAction.

@@ -2,12 +2,14 @@
 I am a specialized cluster for ExternalAddress (FFI).
 "
 Class {
-	#name : #FLExternalAddressCluster,
-	#superclass : #FLByteObjectCluster,
-	#category : #'Fuel-Core-Clusters'
+	#name : 'FLExternalAddressCluster',
+	#superclass : 'FLByteObjectCluster',
+	#category : 'Fuel-Core-Clusters',
+	#package : 'Fuel-Core',
+	#tag : 'Clusters'
 }
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLExternalAddressCluster >> materializeInstanceWith: aDecoder [
 	| size |
 	size := aDecoder nextEncodedUint32.
@@ -16,7 +18,7 @@ FLExternalAddressCluster >> materializeInstanceWith: aDecoder [
 		yourself
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLExternalAddressCluster >> serializeInstance: anExternalAddress with: anEncoder [
 	anEncoder encodeUint32: anExternalAddress basicSize
 ]

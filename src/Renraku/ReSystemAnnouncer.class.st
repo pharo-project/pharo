@@ -10,22 +10,24 @@ ReSystemAnnouncer uniqueInstance weak ...
 ``` 
 "
 Class {
-	#name : #ReSystemAnnouncer,
-	#superclass : #Announcer,
+	#name : 'ReSystemAnnouncer',
+	#superclass : 'Announcer',
 	#classInstVars : [
 		'uniqueInstance'
 	],
-	#category : #'Renraku-Announcements'
+	#category : 'Renraku-Announcements',
+	#package : 'Renraku',
+	#tag : 'Announcements'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ReSystemAnnouncer class >> uniqueInstance [
 	"I'm a singleton…"
 
 	^ uniqueInstance ifNil: [ uniqueInstance := self new ]
 ]
 
-{ #category : #announce }
+{ #category : 'announce' }
 ReSystemAnnouncer >> notifyCritique: aCritique descriptionViewedFor: anEntity [
 
 	self announce: (
@@ -35,7 +37,7 @@ ReSystemAnnouncer >> notifyCritique: aCritique descriptionViewedFor: anEntity [
 			yourself)
 ]
 
-{ #category : #announce }
+{ #category : 'announce' }
 ReSystemAnnouncer >> notifyCritique: aCritique of: anEntity bannedOn: anEntityBanLevel [
 
 	self announce: (
@@ -46,7 +48,7 @@ ReSystemAnnouncer >> notifyCritique: aCritique of: anEntity bannedOn: anEntityBa
 			yourself)
 ]
 
-{ #category : #announce }
+{ #category : 'announce' }
 ReSystemAnnouncer >> notifyEntity: anEntity criticizedWith: critiques [
 
 	self announce: (

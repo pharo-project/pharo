@@ -5,7 +5,9 @@ Instance Variables
 
 "
 Class {
-	#name : #PragmaRemoved,
-	#superclass : #PragmaAnnouncement,
-	#category : #'PragmaCollector-Announcements'
+	#name : 'PragmaRemoved',
+	#superclass : 'PragmaAnnouncement',
+	#category : 'PragmaCollector-Announcements',
+	#package : 'PragmaCollector',
+	#tag : 'Announcements'
 }

@@ -3,28 +3,29 @@ I am a command to open the breakpoint menu after a right click on the source cod
 I show in the menu all commands annotated by SycReflectiveActivation
 "
 Class {
-	#name : #SycOpenReflectivityMenuCommand,
-	#superclass : #SycOpenContextMenuCommand,
-	#category : #'SystemCommands-SourceCodeCommands'
+	#name : 'SycOpenReflectivityMenuCommand',
+	#superclass : 'SycOpenContextMenuCommand',
+	#category : 'SystemCommands-SourceCodeCommands',
+	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycOpenReflectivityMenuCommand >> activationStrategy [
 	^SycReflectivityMenuActivation
 ]
 
-{ #category : #'context menu' }
+{ #category : 'context menu' }
 SycOpenReflectivityMenuCommand >> cmCommandClass [
 
 	^ SycSourceCodeCmCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycOpenReflectivityMenuCommand >> defaultMenuIconName [
 	^ #smallObjects
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycOpenReflectivityMenuCommand >> defaultMenuItemName [
 
 	^ 'Reflectivity'

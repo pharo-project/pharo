@@ -5,8 +5,8 @@ instance of me used in the system, so all changes can be globally added/inspecte
 The size of my undo list is configurable in the settings browser.
 "
 Class {
-	#name : #RBRefactoryChangeManager,
-	#superclass : #Object,
+	#name : 'RBRefactoryChangeManager',
+	#superclass : 'Object',
 	#instVars : [
 		'undo',
 		'redo',
@@ -19,98 +19,125 @@ Class {
 		'Instance',
 		'UndoSize'
 	],
-	#category : #'Refactoring-Changes-Base'
+	#category : 'Refactoring-Changes-Base',
+	#package : 'Refactoring-Changes',
+	#tag : 'Base'
 }
 
-{ #category : #'change - factory' }
+{ #category : 'change - factory' }
 RBRefactoryChangeManager class >> changeFactory [
 
 	^ self instance changeFactory
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RBRefactoryChangeManager class >> counter [
 
 	^ Counter ifNil: [ Counter := 0 ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RBRefactoryChangeManager class >> initialize [
 
 	self nuke.
 	UndoSize := 20
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RBRefactoryChangeManager class >> instance [
 
 	^ Instance ifNil: [ Instance := self basicNew initialize ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'world menu' }
+RBRefactoryChangeManager class >> menuCommandOn: aBuilder [
+	<worldMenu>
+	(aBuilder item: #'Undo last refactoring')
+				action: [self instance undoLastRefactoring];
+				parent: #Refactoring;
+				help: 'Undo last refactoring';
+				order: 10;
+				iconName: #smallUndo
+]
+
+{ #category : 'instance creation' }
 RBRefactoryChangeManager class >> new [
 
 	^ self shouldNotImplement
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RBRefactoryChangeManager class >> nextCounter [
 
 	Counter := self counter + 1.
 	^ self counter
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RBRefactoryChangeManager class >> nuke [
 
-	Instance notNil ifTrue: [ Instance release ].
+	Instance ifNil: [ ^ self ].
+
+	Instance release.
 	Instance := nil
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 RBRefactoryChangeManager class >> resetCounter [
 
 	Counter := nil
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'menu' }
+RBRefactoryChangeManager class >> undoLastRefactoring [
+
+	self deprecated: 'Use instance side method instead'
+		transformWith: '`@rec undoLastRefactoring' -> '`@rec instance undoLastRefactoring'.
+	^ self instance undoLastRefactoring 
+]
+
+{ #category : 'class initialization' }
 RBRefactoryChangeManager class >> undoSize [
 
 	^ UndoSize
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RBRefactoryChangeManager class >> undoSize: anInteger [
 
 	UndoSize := anInteger max: 0
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 RBRefactoryChangeManager class >> unload [
 
 	self nuke
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 RBRefactoryChangeManager >> addUndo: aRefactoringChange [
+	
 	undo push: aRefactoringChange.
 	undo size > UndoSize
-		ifTrue: [ undo removeFirst ].
+		ifTrue: [ 
+			"Remove the element at the bottom of the stack"
+			undo removeLast 
+		].
 	redo := OrderedCollection new
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 RBRefactoryChangeManager >> addUndoPointer: aNumber [
 	undoPointers push: aNumber
 ]
 
-{ #category : #'change-factory' }
+{ #category : 'change-factory' }
 RBRefactoryChangeManager >> changeFactory [
 
 	^ changeFactory
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRefactoryChangeManager >> clearUndoRedoList [
 	undo := Stack new.
 	redo := OrderedCollection new.
@@ -118,43 +145,40 @@ RBRefactoryChangeManager >> clearUndoRedoList [
 	self class resetCounter
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBRefactoryChangeManager >> connectToChanges [
-	SystemAnnouncer uniqueInstance weak
-		when: CategoryAdded,
-			CategoryRemoved,
-			CategoryRenamed,
-			ClassAdded,
-			ClassModifiedClassDefinition,
-			ClassRemoved,
-			ClassRenamed,
-			ClassReorganized,
-			MethodAdded,
-			MethodModified,
-			MethodRemoved,
-			ProtocolAdded,
-			ProtocolRemoved
+
+	self class codeChangeAnnouncer weak
+		when: PackageTagAnnouncement,
+				ClassAdded,
+				ClassModifiedClassDefinition,
+				ClassRemoved,
+				ClassRenamed,
+				MethodAdded,
+				MethodModified,
+				MethodRemoved, 
+				ProtocolAnnouncement
 		send: #update:
 		to: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBRefactoryChangeManager >> disconnectFromChanges [
 
-	SystemAnnouncer uniqueInstance unsubscribe: self
+	self class codeChangeAnnouncer unsubscribe: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBRefactoryChangeManager >> hasRedoableOperations [
 	^ redo isNotEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBRefactoryChangeManager >> hasUndoableOperations [
 	^ undo isNotEmpty
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 RBRefactoryChangeManager >> ignoreChangesWhile: aBlock [
 	isPerformingRefactoring
 		ifTrue: [ ^ aBlock value ].
@@ -162,7 +186,7 @@ RBRefactoryChangeManager >> ignoreChangesWhile: aBlock [
 	aBlock ensure: [ isPerformingRefactoring := false ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBRefactoryChangeManager >> initialize [
 
 	super initialize.
@@ -172,22 +196,47 @@ RBRefactoryChangeManager >> initialize [
 	self connectToChanges
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 RBRefactoryChangeManager >> lastUndoPointer [
 	^ undoPointers pop
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 RBRefactoryChangeManager >> performChange: aRefactoringChange [
-	self ignoreChangesWhile: [ self addUndo: aRefactoringChange execute ]
+
+	self
+		deprecated: 'Use `performCompositeChange:` if you have CompositeChange or use `performChanges:` if you have a list of changes instead of current one'
+		transformWith: '`@rec performChange: `@arg' -> '`@rec performCompositeChange: `@arg'.
+
+	self performCompositeChange: aRefactoringChange.
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
+RBRefactoryChangeManager >> performChanges: aRefactoringChangesList [
+
+	| compositeChange |
+	aRefactoringChangesList ifEmpty: [ ^ self ].
+	compositeChange := RBCompositeRefactoryChange new.
+	compositeChange onSystemEnvironment:
+		aRefactoringChangesList first onSystemEnvironment.
+	compositeChange changes: aRefactoringChangesList.
+	self performCompositeChange: compositeChange
+]
+
+{ #category : 'public access' }
+RBRefactoryChangeManager >> performCompositeChange: aCompositeChange [
+
+	self ignoreChangesWhile: [
+		self addUndo: aCompositeChange execute.
+		self addUndoPointer: self class nextCounter ]
+]
+
+{ #category : 'public access' }
 RBRefactoryChangeManager >> redoChange [
 	^ redo last
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 RBRefactoryChangeManager >> redoOperation [
 	redo ifEmpty: [ ^ self ].
 	self ignoreChangesWhile: [
@@ -196,36 +245,52 @@ RBRefactoryChangeManager >> redoOperation [
 		undo add: change execute ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RBRefactoryChangeManager >> release [
 
-	self disconnectFromChanges.
-	super release
+	self disconnectFromChanges
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 RBRefactoryChangeManager >> undoChange [
 
 	^ undo pop
 ]
 
-{ #category : #'public access' }
+{ #category : 'menu' }
+RBRefactoryChangeManager >> undoLastRefactoring [
+
+	self undoPointers ifNotEmpty: [
+	[ |limit list|
+		list := OrderedCollection new.
+		limit := self lastUndoPointer .
+		1 to: limit do:[ :i | list add: self undoChange ].
+		list do: [ :e | e execute ].
+		^ list
+	 ] asJob
+		title: 'Refactoring';
+		run]
+	ifEmpty: [ self inform: 'There aren''t refactorings to undo.'  ]
+]
+
+{ #category : 'public access' }
 RBRefactoryChangeManager >> undoOperation [
 
 	undo ifEmpty: [ ^ self ].
 	self ignoreChangesWhile: [
 		| change |
-		change := undo removeLast.
+		"Retrieve the element at the top"
+		change := self undoChange.
 		redo add: change execute ]
 ]
 
-{ #category : #'public access' }
+{ #category : 'public access' }
 RBRefactoryChangeManager >> undoPointers [
 
 	^ undoPointers
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 RBRefactoryChangeManager >> update: anEvent [
 
 	isPerformingRefactoring ifFalse: [ self clearUndoRedoList ]

@@ -1,6 +1,6 @@
-Extension { #name : #ColorMappingCanvas }
+Extension { #name : 'ColorMappingCanvas' }
 
-{ #category : #'*Rubric-Editing-Core' }
+{ #category : '*Rubric-Editing-Core' }
 ColorMappingCanvas >> rubParagraph: paragraph bounds: bounds color: c [
 	"Draw the given paragraph"
 	myCanvas

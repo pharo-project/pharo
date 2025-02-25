@@ -1,6 +1,6 @@
-Extension { #name : #ClyUnionQueryTest }
+Extension { #name : 'ClyUnionQueryTest' }
 
-{ #category : #'*Calypso-SystemQueries-Tests' }
+{ #category : '*Calypso-SystemQueries-Tests' }
 ClyUnionQueryTest >> testConvertingToNewMetaLevel [
 	| newQuery scopes |
 	query

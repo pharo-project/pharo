@@ -1,6 +1,6 @@
 Class {
-	#name : #StringLineEndingsTest,
-	#superclass : #ParametrizedTestCase,
+	#name : 'StringLineEndingsTest',
+	#superclass : 'ParametrizedTestCase',
 	#instVars : [
 		'targetLineEnding',
 		'originLineEnding',
@@ -8,10 +8,12 @@ Class {
 		'testingSubjectWithOriginLineEnding',
 		'templateString'
 	],
-	#category : #'Collections-Strings-Tests-Base'
+	#category : 'Collections-Strings-Tests-Base',
+	#package : 'Collections-Strings-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 StringLineEndingsTest class >> testParameters [
 	^ ParametrizedTestMatrix new
 		forSelector: #targetLineEnding
@@ -31,17 +33,17 @@ StringLineEndingsTest class >> testParameters [
 		yourself
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 StringLineEndingsTest >> newTestingSubject [
 	^ templateString format: {originLineEnding}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StringLineEndingsTest >> originLineEnding: aString [
 	originLineEnding := aString
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 StringLineEndingsTest >> setUp [
 
 	super setUp.
@@ -49,17 +51,17 @@ StringLineEndingsTest >> setUp [
 	testingSubjectWithTargetLineEnding := testingSubjectWithOriginLineEnding withLineEndings: targetLineEnding
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StringLineEndingsTest >> targetLineEnding: aString [
 	targetLineEnding := aString
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 StringLineEndingsTest >> templateString: aString [
 	templateString := aString
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StringLineEndingsTest >> testLineEndinglessStringShouldBeEquals [
 	| originWithoutLineEnding targetWithoutLineEnding |
 	originWithoutLineEnding := testingSubjectWithOriginLineEnding
@@ -69,7 +71,7 @@ StringLineEndingsTest >> testLineEndinglessStringShouldBeEquals [
 	self assert: originWithoutLineEnding equals: targetWithoutLineEnding
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StringLineEndingsTest >> testOriginStringCanBeProducedFromTargetStringAndOriginalLineEnding [
 
 	" This test is for testing that we can tranform a string with certain line ending to a another line ending, and then transform it back to the original line ending. "
@@ -79,7 +81,7 @@ StringLineEndingsTest >> testOriginStringCanBeProducedFromTargetStringAndOrigina
 	self assert: testingSubjectWithTargetLineEndingTransformedWithOriginalLineEnding equals: testingSubjectWithOriginLineEnding
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 StringLineEndingsTest >> testTargetLineEndingStringWithoutOriginLineEnding [
 	self
 		assert:

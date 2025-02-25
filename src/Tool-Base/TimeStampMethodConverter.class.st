@@ -2,22 +2,28 @@
 A TimeStampMessageConverter is a wrapper wich display the timestamp of the provided message
 "
 Class {
-	#name : #TimeStampMethodConverter,
-	#superclass : #AbstractMethodConverter,
-	#category : #'Tool-Base-Converter'
+	#name : 'TimeStampMethodConverter',
+	#superclass : 'AbstractMethodConverter',
+	#category : 'Tool-Base-Converter',
+	#package : 'Tool-Base',
+	#tag : 'Converter'
 }
 
-{ #category : #private }
-TimeStampMethodConverter >> formattedModificationTextFor:aUser atStamp:aTimeStampString [
-|stamp|
-stamp:= DateAndTime fromString:aTimeStampString.
-^ String streamContents:[ :s |
-			s << 'Last Modification :' << Character cr.
-			s << Character tab << 'date:' << Character tab << stamp asDate asString << Character space << stamp asTime asString << Character cr.
- 			s << Character tab << 'by:' << Character tab << Character tab << aUser ]
+{ #category : 'private' }
+TimeStampMethodConverter >> formattedModificationTextFor: aUser atStamp: aTimeStampString [
+
+	| stamp |
+	stamp := DateAndTime fromString: aTimeStampString.
+	^ String streamContents: [ :s |
+		  s << 'Last Modification :' << Character cr.
+		  s << Character tab << 'date:' << Character tab
+		  << stamp asDate asString << Character space
+		  << stamp asTime asString << Character cr.
+		  s << Character tab << 'by:' << Character tab << Character tab
+		  << aUser ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TimeStampMethodConverter >> internalGetText [
 	| list |
 	list := method stamp substrings.

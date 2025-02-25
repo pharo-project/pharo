@@ -1,26 +1,28 @@
 Class {
-	#name : #ClyVariableWritersQueryTest,
-	#superclass : #ClyVariableReferencesTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClyVariableWritersQueryTest',
+	#superclass : 'ClyVariableReferencesTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyVariableWritersQueryTest >> queryClass [
 	^ClyVariableWritersQuery
 ]
 
-{ #category : #'methods for tests' }
+{ #category : 'methods for tests' }
 ClyVariableWritersQueryTest >> readerOfVar1 [
 
 	^writtenVar1
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyVariableWritersQueryTest >> targetVarName [
 	^#writtenVar1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyVariableWritersQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope of: self class >> #writer1OfVar1 in: environment).
 	self deny: query checkEmptyResult.
@@ -29,7 +31,7 @@ ClyVariableWritersQueryTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyVariableWritersQueryTest >> testFromClassScope [
 
 	self queryFromScope: ClyBothMetaLevelClassScope of: self class.
@@ -38,7 +40,7 @@ ClyVariableWritersQueryTest >> testFromClassScope [
 	self assert: foundSelectors equals: #(writer1OfVar1 writer2OfVar1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyVariableWritersQueryTest >> testFromMethodScope [
 	self queryFromScope: ClyMethodScope ofAll: {(self class >> #writer1OfVar1) . (self class >> #readerOfVar1)}.
 
@@ -46,7 +48,7 @@ ClyVariableWritersQueryTest >> testFromMethodScope [
 	self assert: resultItems first identicalTo: self class >> #writer1OfVar1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyVariableWritersQueryTest >> testFromPackageScope [
 
 	self queryFromScope: ClyPackageScope of: self class package.
@@ -55,13 +57,13 @@ ClyVariableWritersQueryTest >> testFromPackageScope [
 	self assert: foundSelectors equals: #(supeclassWriterOfVar1 writer1OfVar1 writer2OfVar1)
 ]
 
-{ #category : #'methods for tests' }
+{ #category : 'methods for tests' }
 ClyVariableWritersQueryTest >> writer1OfVar1 [
 
 	writtenVar1 := #value1
 ]
 
-{ #category : #'methods for tests' }
+{ #category : 'methods for tests' }
 ClyVariableWritersQueryTest >> writer2OfVar1 [
 
 	writtenVar1 := #value2

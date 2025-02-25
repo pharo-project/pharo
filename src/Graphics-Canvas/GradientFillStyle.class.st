@@ -11,8 +11,8 @@ Class variables:
 	PixelRampCache <LRUCache>	Recently used pixelRamps. They tend to have high temporal locality and this saves space and time.
 "
 Class {
-	#name : #GradientFillStyle,
-	#superclass : #OrientedFillStyle,
+	#name : 'GradientFillStyle',
+	#superclass : 'OrientedFillStyle',
 	#instVars : [
 		'colorRamp',
 		'pixelRamp',
@@ -22,24 +22,26 @@ Class {
 	#classVars : [
 		'PixelRampCache'
 	],
-	#category : #'Graphics-Canvas-Fills'
+	#category : 'Graphics-Canvas-Fills',
+	#package : 'Graphics-Canvas',
+	#tag : 'Fills'
 }
 
-{ #category : #cleanup }
+{ #category : 'cleanup' }
 GradientFillStyle class >> cleanUp [
 	"Flush caches"
 
 	self initPixelRampCache
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GradientFillStyle class >> colors: colorArray [
 	"Create a gradient fill style from an array of equally spaced colors"
 	^self ramp: (colorArray withIndexCollect:
 		[:color :index| (index-1 asFloat / (colorArray size - 1 max: 1)) -> color])
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 GradientFillStyle class >> initPixelRampCache [
 	"Create an LRUCache to use for accessing pixel ramps.
 	When a new pixel ramp is needed, a temporary GradientFillStyle
@@ -53,25 +55,25 @@ GradientFillStyle class >> initPixelRampCache [
 		yourself
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 GradientFillStyle class >> initialize [
 
 	self initPixelRampCache
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GradientFillStyle class >> pixelRampCache [
 	"Allow access to my cache of pixel ramps."
 
 	^ PixelRampCache ifNil: [ self initPixelRampCache ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 GradientFillStyle class >> ramp: colorRamp [
 	^self new colorRamp: colorRamp
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 GradientFillStyle class >> sample [
 	<sampleInstance>
 
@@ -83,7 +85,7 @@ GradientFillStyle class >> sample [
 	yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 GradientFillStyle >> = anGradientFillStyle [
 	"Answer whether equal."
 
@@ -91,30 +93,30 @@ GradientFillStyle >> = anGradientFillStyle [
 		and: [self pixelRamp == anGradientFillStyle pixelRamp] "LRU should make identity equal"
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GradientFillStyle >> asColor [
 	"Guess..."
 	^colorRamp first value mixed: 0.5 with: colorRamp last value
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GradientFillStyle >> checkTranslucency [
 	^colorRamp anySatisfy: [:any| any value isTranslucent]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GradientFillStyle >> colorRamp [
 	^colorRamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GradientFillStyle >> colorRamp: anArray [
 	colorRamp := anArray.
 	pixelRamp := nil.
 	isTranslucent := nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GradientFillStyle >> computePixelRampOfSize: length [
 	"Compute the pixel ramp in the receiver"
 	| bits lastValue ramp lastColor lastIndex lastWord |
@@ -148,36 +150,36 @@ GradientFillStyle >> computePixelRampOfSize: length [
 	^bits
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 GradientFillStyle >> hash [
 	"Hash is implemented because #= is implemented."
 
 	^super hash bitXor: self pixelRamp hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GradientFillStyle >> isGradientFill [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GradientFillStyle >> isRadialFill [
 	^radial == true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 GradientFillStyle >> isTranslucent [
 
 	^ isTranslucent ifNil: [ isTranslucent := self checkTranslucency ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 GradientFillStyle >> mixed: fraction with: aColor [
 	^self copy colorRamp: (colorRamp collect:[:assoc| assoc key -> (assoc value mixed: fraction with: aColor)])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GradientFillStyle >> pixelRamp [
 	"Compute a pixel ramp, and cache it for future accesses"
 
@@ -186,22 +188,22 @@ GradientFillStyle >> pixelRamp [
 		pixelRamp := self class pixelRampCache at: colorRamp ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GradientFillStyle >> pixelRamp: aBitmap [
 	pixelRamp := aBitmap
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GradientFillStyle >> radial [
 	^radial ifNil:[false]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GradientFillStyle >> radial: aBoolean [
 	radial := aBoolean
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 GradientFillStyle >> scaledAlphaMix: theta of: lastWord with: nextWord [
 	"Open-coded version of alpha mixing two 32bit pixel words and returning the scaled pixel value."
 	| word0 word1 a0 a1 alpha v0 v1 vv value |

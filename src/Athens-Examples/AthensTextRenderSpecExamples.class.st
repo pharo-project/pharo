@@ -2,12 +2,14 @@
 Examples rendering text and displaying the result in a Spec Presenter.
 "
 Class {
-	#name : #AthensTextRenderSpecExamples,
-	#superclass : #AthensTextRenderExamples,
-	#category : #'Athens-Examples-Spec'
+	#name : 'AthensTextRenderSpecExamples',
+	#superclass : 'AthensTextRenderExamples',
+	#category : 'Athens-Examples-Spec',
+	#package : 'Athens-Examples',
+	#tag : 'Spec'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTextRenderSpecExamples class >> testSpecWindow [
 	<example>
 	| presenter window |
@@ -21,7 +23,7 @@ AthensTextRenderSpecExamples class >> testSpecWindow [
 	^ window window
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 AthensTextRenderSpecExamples class >> testWindowRender [
 	<example>
 

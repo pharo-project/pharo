@@ -2,8 +2,8 @@
 Divides an address into tokens, as specified in RFC 822.  Used by MailAddressParser.
 "
 Class {
-	#name : #MailAddressTokenizer,
-	#superclass : #Stream,
+	#name : 'MailAddressTokenizer',
+	#superclass : 'Stream',
 	#instVars : [
 		'cachedToken',
 		'text',
@@ -15,15 +15,16 @@ Class {
 		'CSParens',
 		'CSSpecials'
 	],
-	#category : #'Network-Mail'
+	#category : 'Network-Mail',
+	#package : 'Network-Mail'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MailAddressTokenizer class >> forString: aString [
 	^self basicNew initialize: aString
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 MailAddressTokenizer class >> initialize [
 	"Initalize class variables using   MailAddressTokenizer initialize"
 
@@ -50,23 +51,23 @@ MailAddressTokenizer class >> initialize [
 	CSNonAtom :=  atomChars complement
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MailAddressTokenizer class >> tokensIn: aString [
 	"return a collection of the tokens in aString"
 	^(self forString: aString) upToEnd
 ]
 
-{ #category : #'stream protocol' }
+{ #category : 'stream protocol' }
 MailAddressTokenizer >> atEnd [
 	^ self peek isNil
 ]
 
-{ #category : #tokenizing }
+{ #category : 'tokenizing' }
 MailAddressTokenizer >> atEndOfChars [
 	^pos > text size
 ]
 
-{ #category : #tokenizing }
+{ #category : 'tokenizing' }
 MailAddressTokenizer >> indexOfNextNonAtomIn: aString startingAt: startIndex ifAbsent: absentBlock [
 	"Answer the index of the next non-atom character after startIndex in aString.
 	If not found, answer absentBlock value"
@@ -91,13 +92,13 @@ MailAddressTokenizer >> indexOfNextNonAtomIn: aString startingAt: startIndex ifA
 	^index
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MailAddressTokenizer >> initialize: aString [
 	text := aString.
 	pos := 1
 ]
 
-{ #category : #'stream protocol' }
+{ #category : 'stream protocol' }
 MailAddressTokenizer >> next [
 	| ans |
 	cachedToken ifNil: [ ^self nextToken ].
@@ -106,7 +107,7 @@ MailAddressTokenizer >> next [
 	^ans
 ]
 
-{ #category : #tokenizing }
+{ #category : 'tokenizing' }
 MailAddressTokenizer >> nextAtom [
 	| start end |
 	start := pos.
@@ -117,14 +118,14 @@ MailAddressTokenizer >> nextAtom [
 		text: (text copyFrom: start to: end)
 ]
 
-{ #category : #tokenizing }
+{ #category : 'tokenizing' }
 MailAddressTokenizer >> nextChar [
 	self atEndOfChars ifTrue: [ ^nil ].
 	pos := pos + 1.
 	^text at: (pos-1)
 ]
 
-{ #category : #tokenizing }
+{ #category : 'tokenizing' }
 MailAddressTokenizer >> nextComment [
 	| start nestLevel paren |
 	start := pos.
@@ -142,7 +143,7 @@ MailAddressTokenizer >> nextComment [
 	^ MailAddressToken type: #Comment text: (text copyFrom: start to: pos - 1)
 ]
 
-{ #category : #tokenizing }
+{ #category : 'tokenizing' }
 MailAddressTokenizer >> nextDomainLiteral [
 	| start end |
 	start := pos.
@@ -158,7 +159,7 @@ MailAddressTokenizer >> nextDomainLiteral [
 		text: (text copyFrom: start to: end)
 ]
 
-{ #category : #tokenizing }
+{ #category : 'tokenizing' }
 MailAddressTokenizer >> nextQuotedString [
 	| res c |
 	res := String new writeStream.
@@ -179,14 +180,14 @@ MailAddressTokenizer >> nextQuotedString [
 	^MailAddressToken type: #QuotedString  text: (res contents, '"')
 ]
 
-{ #category : #tokenizing }
+{ #category : 'tokenizing' }
 MailAddressTokenizer >> nextSpecial [
 	| c |
 	c := self nextChar.
 	^MailAddressToken type: c  text: c asString
 ]
 
-{ #category : #tokenizing }
+{ #category : 'tokenizing' }
 MailAddressTokenizer >> nextToken [
 	| c |
 	self skipSeparators.
@@ -199,19 +200,19 @@ MailAddressTokenizer >> nextToken [
 	^self nextAtom
 ]
 
-{ #category : #'stream protocol' }
+{ #category : 'stream protocol' }
 MailAddressTokenizer >> peek [
 	cachedToken ifNil: [ cachedToken := self nextToken. ].
 
 	^cachedToken
 ]
 
-{ #category : #tokenizing }
+{ #category : 'tokenizing' }
 MailAddressTokenizer >> peekChar [
 	^text at: pos ifAbsent: [ nil ]
 ]
 
-{ #category : #tokenizing }
+{ #category : 'tokenizing' }
 MailAddressTokenizer >> skipSeparators [
 	pos := text indexOfAnyOf: CSNonSeparators  startingAt: pos  ifAbsent: [ text size + 1 ]
 ]

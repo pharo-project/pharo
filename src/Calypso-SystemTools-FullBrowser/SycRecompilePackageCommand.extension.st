@@ -1,8 +1,8 @@
-Extension { #name : #SycRecompilePackageCommand }
+Extension { #name : 'SycRecompilePackageCommand' }
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 SycRecompilePackageCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
-	^CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: RPackage asCalypsoItemContext
+	^CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: Package asCalypsoItemContext
 ]

@@ -5,38 +5,40 @@ Instance variables:
 	predicate		<RxmLink>
 "
 Class {
-	#name : #RxmLookahaed,
-	#superclass : #RxmLink,
+	#name : 'RxmLookahaed',
+	#superclass : 'RxmLink',
 	#instVars : [
 		'lookahead',
 		'positive'
 	],
-	#category : #'Regex-Core-Links'
+	#category : 'Regex-Core-Links',
+	#package : 'Regex-Core',
+	#tag : 'Links'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RxmLookahaed class >> with: aPiece [
 
 	^self new lookahead: aPiece
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxmLookahaed >> initialize [
 	super initialize.
 	positive := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxmLookahaed >> lookahead [
 	^ lookahead
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxmLookahaed >> lookahead: anRxmLink [
 	lookahead := anRxmLink
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RxmLookahaed >> matchAgainst: aMatcher [
 	"Match if the predicate block evaluates to true when given the
 	current stream character as the argument."
@@ -49,7 +51,7 @@ RxmLookahaed >> matchAgainst: aMatcher [
 		and: [ next matchAgainst: aMatcher ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 RxmLookahaed >> terminateWith: aNode [
 	lookahead terminateWith: aNode.
 	super terminateWith: aNode

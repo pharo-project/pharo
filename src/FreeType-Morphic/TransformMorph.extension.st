@@ -1,6 +1,6 @@
-Extension { #name : #TransformMorph }
+Extension { #name : 'TransformMorph' }
 
-{ #category : #'*FreeType-Morphic' }
+{ #category : '*FreeType-Morphic' }
 TransformMorph >> drawSubmorphsOn: aCanvas [
 
 	aCanvas transformBy: transform

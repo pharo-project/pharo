@@ -1,6 +1,6 @@
-Extension { #name : #MouseButtonEvent }
+Extension { #name : 'MouseButtonEvent' }
 
-{ #category : #'*Commander-Activators-Mouse' }
+{ #category : '*Commander-Activators-Mouse' }
 MouseButtonEvent >> fixStateForClickAndModifierIssue [
 
 	self isMouseUp ifFalse: [ ^self ].

@@ -1,6 +1,6 @@
-Extension { #name : #SycBrowseVariableCommand }
+Extension { #name : 'SycBrowseVariableCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycBrowseVariableCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 

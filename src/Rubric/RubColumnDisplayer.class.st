@@ -1,21 +1,23 @@
 Class {
-	#name : #RubColumnDisplayer,
-	#superclass : #RubScrolledTextExtraSurface,
+	#name : 'RubColumnDisplayer',
+	#superclass : 'RubScrolledTextExtraSurface',
 	#instVars : [
 		'tabLineDashesColors',
 		'tabLineColor',
 		'tabLineDashes',
 		'tabLineWidth'
 	],
-	#category : #'Rubric-Editing-Widgets'
+	#category : 'Rubric-Editing-Widgets',
+	#package : 'Rubric',
+	#tag : 'Editing-Widgets'
 }
 
-{ #category : #querying }
+{ #category : 'querying' }
 RubColumnDisplayer class >> key [
 	^ #column
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubColumnDisplayer >> drawOn: aCanvas [
 	| cwidth col dsh lw cw dc nb bnds gap |
 	super drawOn: aCanvas.
@@ -40,7 +42,7 @@ RubColumnDisplayer >> drawOn: aCanvas [
 			col := col + cw ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 RubColumnDisplayer >> drawOnAthensCanvas: anAthensCanvas [
 	| cwidth col dsh lw cw dc nb bnds gap |
 	super drawOnAthensCanvas: anAthensCanvas.
@@ -66,54 +68,54 @@ RubColumnDisplayer >> drawOnAthensCanvas: anAthensCanvas [
 			col := col + cw ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubColumnDisplayer >> font [
 	| textStyle |
 	textStyle := self textStyle.
 	^ textStyle fontAt: textStyle defaultFontIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubColumnDisplayer >> tabLineColor [
 	^ tabLineColor ifNil: [ tabLineColor := Color lightGray twiceLighter]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubColumnDisplayer >> tabLineColor: aColor [
 	tabLineColor := aColor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubColumnDisplayer >> tabLineDashes [
 	^ tabLineDashes ifNil: [tabLineDashes := {self tabLineWidth. self tabLineWidth*3}]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubColumnDisplayer >> tabLineDashes: anArray [
 	 tabLineDashes := anArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubColumnDisplayer >> tabLineDashesColors [
 	^ tabLineDashesColors ifNil: [tabLineDashesColors := {(self tabLineColor). (Color transparent)}]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubColumnDisplayer >> tabLineWidth [
 	^ tabLineWidth ifNil: [ tabLineWidth := 1 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubColumnDisplayer >> tabLineWidth: anInteger [
 	tabLineWidth := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubColumnDisplayer >> tabWidth [
 	^ self paragraph tabWidth
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubColumnDisplayer >> tabWidth: anInteger [
 	self paragraph tabWidth: anInteger
 ]

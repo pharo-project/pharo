@@ -2,12 +2,13 @@
 I return all methods which send #flag: message
 "
 Class {
-	#name : #ClyFlaggingMethodsQuery,
-	#superclass : #ClyMethodQuery,
-	#category : #'Calypso-SystemPlugins-Flags-Queries'
+	#name : 'ClyFlaggingMethodsQuery',
+	#superclass : 'ClyMethodQuery',
+	#category : 'Calypso-SystemPlugins-Flags-Queries',
+	#package : 'Calypso-SystemPlugins-Flags-Queries'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyFlaggingMethodsQuery >> selectsMethod: aMethod [
 	^aMethod sendsAnySelectorOf: #(flag:)
 ]

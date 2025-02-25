@@ -2,26 +2,28 @@
 This is a simple test mock
 "
 Class {
-	#name : #AnnouncementMockB,
-	#superclass : #Announcement,
+	#name : 'AnnouncementMockB',
+	#superclass : 'Announcement',
 	#instVars : [
 		'parameter'
 	],
-	#category : #'Announcements-Core-Tests-Mocks'
+	#category : 'Announcements-Core-Tests-Mocks',
+	#package : 'Announcements-Core-Tests',
+	#tag : 'Mocks'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AnnouncementMockB class >> with: anObject [
 	^self new
 		parameter: anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnnouncementMockB >> parameter [
 	^ parameter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AnnouncementMockB >> parameter: anObject [
 	parameter := anObject
 ]

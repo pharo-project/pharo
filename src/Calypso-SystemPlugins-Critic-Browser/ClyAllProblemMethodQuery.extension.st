@@ -1,6 +1,6 @@
-Extension { #name : #ClyAllProblemMethodQuery }
+Extension { #name : 'ClyAllProblemMethodQuery' }
 
-{ #category : #'*Calypso-SystemPlugins-Critic-Browser' }
+{ #category : '*Calypso-SystemPlugins-Critic-Browser' }
 ClyAllProblemMethodQuery >> decorateMethodGroupTableCell: anItemCellMorph of: groupItem [
 	super decorateMethodGroupTableCell: anItemCellMorph of: groupItem.
 

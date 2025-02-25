@@ -1,10 +1,11 @@
 Class {
-	#name : #ZnLimitedReadStreamTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Tests'
+	#name : 'ZnLimitedReadStreamTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Tests',
+	#package : 'Zinc-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnLimitedReadStreamTest >> testBinary [
 	| data limitedReadStream |
 	data := #(0 1 2 3 4 5 6 7 8 9) asByteArray.
@@ -12,7 +13,7 @@ ZnLimitedReadStreamTest >> testBinary [
 	self assert: limitedReadStream upToEnd equals: #(0 1 2 3 4) asByteArray
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnLimitedReadStreamTest >> testBinaryAll [
 	| data limitedReadStream |
 	data := #(0 1 2 3 4 5 6 7 8 9) asByteArray.
@@ -20,7 +21,7 @@ ZnLimitedReadStreamTest >> testBinaryAll [
 	self assert: limitedReadStream upToEnd equals: data
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnLimitedReadStreamTest >> testMatch [
 	| stream |
 	stream := ZnLimitedReadStream on: 'ababcabc' readStream limit: 8.
@@ -36,7 +37,7 @@ ZnLimitedReadStreamTest >> testMatch [
 	self assert: stream atEnd
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnLimitedReadStreamTest >> testNext [
 	| limitedReadStream |
 	limitedReadStream := ZnLimitedReadStream on: String new readStream limit: 10.
@@ -52,7 +53,7 @@ ZnLimitedReadStreamTest >> testNext [
 	self assert: limitedReadStream atEnd
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnLimitedReadStreamTest >> testNextCount [
 	| data stream |
 	data := '0123456789'.
@@ -60,7 +61,7 @@ ZnLimitedReadStreamTest >> testNextCount [
 	self assert: (stream next: 4) equals: '0123'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnLimitedReadStreamTest >> testNextCountInto [
 	| data stream buffer |
 	data := '0123456789'.
@@ -70,7 +71,7 @@ ZnLimitedReadStreamTest >> testNextCountInto [
 	self assert: buffer equals: '0123'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnLimitedReadStreamTest >> testNextCountIntoShort [
 	| data stream buffer |
 	data := '0123456789'.
@@ -79,7 +80,7 @@ ZnLimitedReadStreamTest >> testNextCountIntoShort [
 	self assert: (stream next: 6 into: buffer) equals: '01234'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnLimitedReadStreamTest >> testNextCountShort [
 	| data stream |
 	data := '0123456789'.
@@ -87,7 +88,7 @@ ZnLimitedReadStreamTest >> testNextCountShort [
 	self assert: (stream next: 6) equals: '01234'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnLimitedReadStreamTest >> testSimple [
 	| data limitedReadStream |
 	data := '0123456789'.
@@ -95,7 +96,7 @@ ZnLimitedReadStreamTest >> testSimple [
 	self assert: limitedReadStream upToEnd equals: '01234'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnLimitedReadStreamTest >> testSimpleEof [
 	| data limitedReadStream |
 	data := '0123456789'.

@@ -25,50 +25,52 @@ Internal Representation and Key Implementation Points.
     Implementation Points
 "
 Class {
-	#name : #ClyMethodVisibilityLevel,
-	#superclass : #Object,
+	#name : 'ClyMethodVisibilityLevel',
+	#superclass : 'Object',
 	#instVars : [
 		'visibleClassScope',
 		'extraClassScope',
 		'isActive'
 	],
-	#category : #'Calypso-SystemQueries-Domain'
+	#category : 'Calypso-SystemQueries-Domain',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Domain'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodVisibilityLevel class >> allAvailableFor: items [
 
 	^ self allSubclasses select: [ :each |
 		each isActiveByDefault and: (each canBeAppliedForClasses: items) ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodVisibilityLevel class >> canBeAppliedForClasses: classItems [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodVisibilityLevel class >> isActiveByDefault [
 	^false
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyMethodVisibilityLevel class >> of: aClassScope [
 	^self new
 		visibleClassScope: aClassScope
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyMethodVisibilityLevel >> activateExtraScope [
 	^visibleClassScope increasedByClassesFrom: extraClassScope
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyMethodVisibilityLevel >> deactivateExtraScope [
 	^visibleClassScope reducedByClassesFrom: extraClassScope
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyMethodVisibilityLevel >> detectActiveState [
 
 	extraClassScope classesDo: [:each |
@@ -78,42 +80,42 @@ ClyMethodVisibilityLevel >> detectActiveState [
 	isActive := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodVisibilityLevel >> extraClassScope [
 	^ extraClassScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodVisibilityLevel >> extraClassScope: aScope [
 	extraClassScope := aScope.
 	self detectActiveState
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodVisibilityLevel >> isActive [
 	^isActive
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodVisibilityLevel >> isRedundant [
 	"the level is reduntant if there are no extra classes to show"
 	extraClassScope classesDo: [ :each | ^false ].
 	^true
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyMethodVisibilityLevel >> toggleScope [
 	^self isActive
 		ifTrue: [ self deactivateExtraScope ]
 		ifFalse: [ self activateExtraScope ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodVisibilityLevel >> visibleClassScope [
 	^ visibleClassScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodVisibilityLevel >> visibleClassScope: aClassScope [
 	"We should cut off any inherited scopes here.
 	Visible class scope must be an instance of ClyClassScope"

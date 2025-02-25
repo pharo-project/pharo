@@ -1,15 +1,11 @@
 Class {
-	#name : #MetacelloRepositoriesSpecTestCase,
-	#superclass : #MetacelloSpecTestCase,
-	#category : #'Metacello-TestsMCCore'
+	#name : 'MetacelloRepositoriesSpecTestCase',
+	#superclass : 'MetacelloSpecTestCase',
+	#category : 'Metacello-TestsMCCore',
+	#package : 'Metacello-TestsMCCore'
 }
 
-{ #category : #accessing }
-MetacelloRepositoriesSpecTestCase >> projectClass [
-    ^ MetacelloMCProject
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloRepositoriesSpecTestCase >> testAddA [
 	| repositories repository |
 	repositories := self repositoriesSpec.
@@ -33,7 +29,7 @@ MetacelloRepositoriesSpecTestCase >> testAddA [
 	self assert: repository password equals: 'secret'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloRepositoriesSpecTestCase >> testAddB [
 	| repositories repository |
 	repositories := self repositoriesSpec.
@@ -55,7 +51,7 @@ MetacelloRepositoriesSpecTestCase >> testAddB [
 	self assert: repository type equals: 'directory'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloRepositoriesSpecTestCase >> testAddC [
 	| repositories repository |
 	repositories := self repositoriesSpec.
@@ -68,7 +64,7 @@ MetacelloRepositoriesSpecTestCase >> testAddC [
 	self assert: repository type equals: 'directory'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloRepositoriesSpecTestCase >> testAddE [
 	| repositories repository |
 	repositories := self repositoriesSpec.
@@ -83,7 +79,7 @@ MetacelloRepositoriesSpecTestCase >> testAddE [
 	self assert: repository type equals: 'directory'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloRepositoriesSpecTestCase >> testAddF [
 	| repositories repository |
 	repositories := self repositoriesSpec.
@@ -107,7 +103,7 @@ MetacelloRepositoriesSpecTestCase >> testAddF [
 	self assert: repository password equals: 'secret'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloRepositoriesSpecTestCase >> testCopyTo [
     | repositories |
     repositories := self repositoriesSpec.
@@ -129,7 +125,7 @@ MetacelloRepositoriesSpecTestCase >> testCopyTo [
         raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloRepositoriesSpecTestCase >> testMergeA [
 	| repositories repository |
 	repositories := self repositoriesSpec.
@@ -153,7 +149,7 @@ MetacelloRepositoriesSpecTestCase >> testMergeA [
 	self assert: repository password equals: 'secret'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloRepositoriesSpecTestCase >> testMergeB [
 	| repositories repository |
 	repositories := self repositoriesSpec.
@@ -172,7 +168,7 @@ MetacelloRepositoriesSpecTestCase >> testMergeB [
 	self assert: repository password equals: 'password'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloRepositoriesSpecTestCase >> testMergeC [
 	| repositories repository |
 	repositories := self repositoriesSpec.
@@ -198,7 +194,7 @@ MetacelloRepositoriesSpecTestCase >> testMergeC [
 	self assert: repository password equals: 'secret'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloRepositoriesSpecTestCase >> testRemoveA [
     | repositories removed |
     repositories := self repositoriesSpec.
@@ -219,7 +215,7 @@ MetacelloRepositoriesSpecTestCase >> testRemoveA [
     self assert: removed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloRepositoriesSpecTestCase >> testRemoveB [
     | repositories removed |
     repositories := self repositoriesSpec.
@@ -240,7 +236,7 @@ MetacelloRepositoriesSpecTestCase >> testRemoveB [
     self assert: removed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloRepositoriesSpecTestCase >> testRemoveC [
     | repositories removed |
     repositories := self repositoriesSpec.
@@ -257,7 +253,7 @@ MetacelloRepositoriesSpecTestCase >> testRemoveC [
     self assert: removed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MetacelloRepositoriesSpecTestCase >> testRemoveD [
     | repositories removed |
     repositories := self repositoriesSpec.

@@ -1,6 +1,6 @@
-Extension { #name : #RGComment }
+Extension { #name : 'RGComment' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 RGComment >> stamp [
 
 	"TODO:"

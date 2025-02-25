@@ -1,6 +1,6 @@
-Extension { #name : #String }
+Extension { #name : 'String' }
 
-{ #category : #'*Network-UUID' }
+{ #category : '*Network-UUID' }
 String >> asAlphaNumeric: totalSize extraChars: additionallyAllowed mergeUID: minimalSizeOfRandomPart [
 	"Generates a String with unique identifier ( UID ) qualities, the difference to a
 	 UUID is that its beginning is derived from the receiver, so that it has a meaning
@@ -38,7 +38,7 @@ String >> asAlphaNumeric: totalSize extraChars: additionallyAllowed mergeUID: mi
 	[ stream atEnd or: [ index >= sizeOfFirstPart ] ] whileFalse:
 		[ (((ascii := (ch := stream next) asciiValue) between: 65 and: 90) or:
 			[ (ascii between: 97 and: 122) or:
-				[ ch isDigit or: [ additionallyAllowed notNil and: [ additionallyAllowed includes: ch ] ] ] ])
+				[ ch isDigit or: [ additionallyAllowed isNotNil and: [ additionallyAllowed includes: ch ] ] ] ])
 			ifTrue:
 				[ skip
 					ifTrue: [ out nextPut: ch asUppercase ]

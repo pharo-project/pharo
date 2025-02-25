@@ -18,29 +18,31 @@ expected.
 This class contains an example for this and MustBeBooleanTest tests that endeed we can call #ifTrue: on a non-Boolean.
 "
 Class {
-	#name : #MyBooleanObject,
-	#superclass : #Object,
-	#category : #'OpalCompiler-Tests-Misc'
+	#name : 'MyBooleanObject',
+	#superclass : 'Object',
+	#category : 'OpalCompiler-Tests-Misc',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'Misc'
 }
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 MyBooleanObject >> and: alternativeBlock [
 	"Nonevaluating conjunction -- answer with false since the receiver is false."
 
 	^self
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 MyBooleanObject >> ifTrue: aBlock [
 	^ aBlock value printString , ' sent from my boolean object'
 ]
 
-{ #category : #'logical operations' }
+{ #category : 'logical operations' }
 MyBooleanObject >> not [
 	^true
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 MyBooleanObject >> or: alternativeBlock [
 	^alternativeBlock value
 ]

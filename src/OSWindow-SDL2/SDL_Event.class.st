@@ -2,28 +2,30 @@
 This is a raw SDL2 event
 "
 Class {
-	#name : #'SDL_Event',
-	#superclass : #FFIExternalObject,
+	#name : 'SDL_Event',
+	#superclass : 'FFIExternalObject',
 	#classVars : [
 		'EventTypeMap'
 	],
-	#category : #'OSWindow-SDL2-Bindings'
+	#category : 'OSWindow-SDL2-Bindings',
+	#package : 'OSWindow-SDL2',
+	#tag : 'Bindings'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL_Event class >> eventNameFromType: aType [
 
 	^ EventTypeMap at: aType ifPresent: [ :x | x name ] ifAbsent: [ 'Unknown:' , aType printString ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL_Event class >> initialize [
 
 	SDL2Types initialize.  "make sure its initialized"
 	self initializeEventTypeMap
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SDL_Event class >> initializeEventTypeMap [
 	"self initializeEventTypeMap"
 	EventTypeMap := Dictionary new.
@@ -33,25 +35,25 @@ SDL_Event class >> initializeEventTypeMap [
 		eventType ifNotNil: [ EventTypeMap at: eventType put: cls ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SDL_Event >> initialize [
 	super initialize.
 	self setHandle: (ByteArray new: 56)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL_Event >> mapped [
 	"This method converts a raw event in a mapped event.
 	It should always return an event. Nil is not a valid return object"
 	^ (EventTypeMap at: self type ifAbsent: [ ^ self unknownEvent ]) fromSdlEvent: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL_Event >> type [
 	^self getHandle unsignedLongAt: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SDL_Event >> unknownEvent [
 	^ SDL_CommonEvent fromSdlEvent: self
 ]

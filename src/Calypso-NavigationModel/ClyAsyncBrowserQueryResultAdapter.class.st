@@ -8,17 +8,19 @@ Notice that ClyQueryResultBrowserAdapter can not be used in that case because it
 When async result retrives another basic result then my superclass is used as adapter as in any other cases
 "
 Class {
-	#name : #ClyAsyncBrowserQueryResultAdapter,
-	#superclass : #ClyQueryResultBrowserAdapter,
-	#category : #'Calypso-NavigationModel-Model'
+	#name : 'ClyAsyncBrowserQueryResultAdapter',
+	#superclass : 'ClyQueryResultBrowserAdapter',
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyAsyncBrowserQueryResultAdapter >> allItems [
 	^self prepareItems: actualResult allItems
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyAsyncBrowserQueryResultAdapter >> findItemsSimilarTo: sampleEnvironmentItems [
 	| rest found |
 	actualResult protectItemsWhile: [
@@ -35,7 +37,7 @@ ClyAsyncBrowserQueryResultAdapter >> findItemsSimilarTo: sampleEnvironmentItems 
 		^found]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyAsyncBrowserQueryResultAdapter >> findItemsWith: actualObjects [
 	"it returnes environment items which represent actualObjects.
 	Result will be in same order as given actualObjects array.
@@ -50,25 +52,25 @@ ClyAsyncBrowserQueryResultAdapter >> findItemsWith: actualObjects [
 		self prepareItems: result]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyAsyncBrowserQueryResultAdapter >> itemsStartingAt: startIndex count: size [
 
 	^self prepareItems: (actualResult itemsStartingAt: startIndex count: size)
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyAsyncBrowserQueryResultAdapter >> itemsStartingWhere: conditionBlock count: size [
 
 	^self prepareItems: (actualResult itemsStartingWhere: conditionBlock count: size)
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyAsyncBrowserQueryResultAdapter >> itemsWhere: conditionBlock [
 
 	^self prepareItems: (actualResult itemsWhere: conditionBlock)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyAsyncBrowserQueryResultAdapter >> prepareItems: browserItems [
 
 	browserItems do: [ :each | each ifNotNil: [ each prepareIn: self environment ]].

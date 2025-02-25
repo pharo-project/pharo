@@ -2,8 +2,8 @@
 This comment has a bang! Bang! Bang!
 "
 Class {
-	#name : #MCMockClassB,
-	#superclass : #MCMock,
+	#name : 'MCMockClassB',
+	#superclass : 'MCMock',
 	#instVars : [
 		'ivarb'
 	],
@@ -16,22 +16,23 @@ Class {
 	#classInstVars : [
 		'ciVar'
 	],
-	#category : #MonticelloMocks
+	#category : 'MonticelloMocks',
+	#package : 'MonticelloMocks'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMockClassB class >> cVar [
 
 	^ CVar
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMockClassB class >> ciVar [
 
 	^ ciVar
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMockClassB >> ivarb [
 
 	^ ivarb

@@ -2,12 +2,13 @@
 SUnit tests for HistoryNode
 "
 Class {
-	#name : #HistoryNodeTest,
-	#superclass : #TestCase,
-	#category : #'System-History-Tests'
+	#name : 'HistoryNodeTest',
+	#superclass : 'TestCase',
+	#category : 'System-History-Tests',
+	#package : 'System-History-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 HistoryNodeTest >> testClose [
 	| h i |
 	h := HistoryNode new.
@@ -18,7 +19,7 @@ HistoryNodeTest >> testClose [
 	self assert: h current equals: i
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HistoryNodeTest >> testEmptyHistory [
 	| h |
 	h := HistoryNode new.
@@ -26,7 +27,7 @@ HistoryNodeTest >> testEmptyHistory [
 	self assert: h current isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HistoryNodeTest >> testGroup [
 	| h i |
 	h := HistoryNode new.
@@ -39,7 +40,7 @@ HistoryNodeTest >> testGroup [
 	self assert: (h at: 2) isComposite
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HistoryNodeTest >> testOneGroup [
 	| h i c i2 i3 i4 |
 	h := HistoryNode new.
@@ -64,7 +65,7 @@ HistoryNodeTest >> testOneGroup [
 	self assert: h size equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HistoryNodeTest >> testOneItem [
 	| h i |
 	h := HistoryNode new.
@@ -73,7 +74,7 @@ HistoryNodeTest >> testOneItem [
 	self assert: h current equals: i
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HistoryNodeTest >> testReset [
 	| h i |
 	h := HistoryNode new.
@@ -84,7 +85,7 @@ HistoryNodeTest >> testReset [
 	self assert: h size equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HistoryNodeTest >> testTwoConsecutiveCloseGroup [
 	| h i grp1 grp2 i3 |
 	h := HistoryNode new.
@@ -106,7 +107,7 @@ HistoryNodeTest >> testTwoConsecutiveCloseGroup [
 	self assert: h current equals: i3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 HistoryNodeTest >> testTwoGroups [
 	| h i grp1 grp2  i2 i3 |
 	h := HistoryNode new.

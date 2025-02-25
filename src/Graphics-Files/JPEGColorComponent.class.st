@@ -16,8 +16,8 @@ The following layout is fixed for the JPEG primitives to work:
 
 "
 Class {
-	#name : #JPEGColorComponent,
-	#superclass : #Object,
+	#name : 'JPEGColorComponent',
+	#superclass : 'Object',
 	#instVars : [
 		'currentX',
 		'currentY',
@@ -35,60 +35,61 @@ Class {
 		'dcTableIndex',
 		'acTableIndex'
 	],
-	#category : #'Graphics-Files'
+	#category : 'Graphics-Files',
+	#package : 'Graphics-Files'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGColorComponent >> acTableIndex [
 
 	^acTableIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGColorComponent >> acTableIndex: anInteger [
 	acTableIndex := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGColorComponent >> dcTableIndex [
 
 	^dcTableIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGColorComponent >> dcTableIndex: anInteger [
 	dcTableIndex := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGColorComponent >> heightInBlocks [
 
 	^heightInBlocks
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGColorComponent >> heightInBlocks: anInteger [
 	heightInBlocks := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGColorComponent >> id [
 
 	^id
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGColorComponent >> id: anObject [
 	id := anObject
 ]
 
-{ #category : #'sample streaming' }
+{ #category : 'sample streaming' }
 JPEGColorComponent >> initializeSampleStreamBlocks: aCollection [
 	mcuBlocks := aCollection.
 	self resetSampleStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGColorComponent >> mcuWidth: mw mcuHeight: mh dctSize: ds [
 	mcuWidth := mw.
 	mcuHeight := mh.
@@ -97,7 +98,7 @@ JPEGColorComponent >> mcuWidth: mw mcuHeight: mh dctSize: ds [
 	vSampleFactor := mcuHeight // heightInBlocks
 ]
 
-{ #category : #'sample streaming' }
+{ #category : 'sample streaming' }
 JPEGColorComponent >> nextSample [
 	| dx dy blockIndex sampleIndex sample |
 	dx := currentX // hSampleFactor.
@@ -112,46 +113,46 @@ JPEGColorComponent >> nextSample [
 	^ sample
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGColorComponent >> priorDCValue: aNumber [
 	priorDCValue := aNumber
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGColorComponent >> qTableIndex [
 	^qTableIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGColorComponent >> qTableIndex: anInteger [
 	qTableIndex := anInteger
 ]
 
-{ #category : #'sample streaming' }
+{ #category : 'sample streaming' }
 JPEGColorComponent >> resetSampleStream [
 	currentX := 0.
 	currentY := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGColorComponent >> totalMcuBlocks [
 
 	^ heightInBlocks * widthInBlocks
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGColorComponent >> updateDCValue: aNumber [
 	priorDCValue := priorDCValue + aNumber.
 	^ priorDCValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGColorComponent >> widthInBlocks [
 
 	^widthInBlocks
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JPEGColorComponent >> widthInBlocks: anInteger [
 	widthInBlocks := anInteger
 ]

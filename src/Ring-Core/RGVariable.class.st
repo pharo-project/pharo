@@ -2,25 +2,27 @@
 A variable definition
 "
 Class {
-	#name : #RGVariable,
-	#superclass : #RGElement,
-	#category : #'Ring-Core-Kernel'
+	#name : 'RGVariable',
+	#superclass : 'RGElement',
+	#category : 'Ring-Core-Kernel',
+	#package : 'Ring-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RGVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
 	^ aProgramNodeVisitor visitVariableNode: aNode
 ]
 
-{ #category : #'read/write usage' }
+{ #category : 'read/write usage' }
 RGVariable >> analyzeRead: aVariableNode by: aSemanticAnalyzer [
 ]
 
-{ #category : #'read/write usage' }
+{ #category : 'read/write usage' }
 RGVariable >> analyzeWrite: aVariableNode by: aSemanticAnalyzer [
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGVariable >> definitionString [
 	"non special globals are defined by the symbol"
 	^self needsFullDefinition
@@ -29,86 +31,98 @@ RGVariable >> definitionString [
 		ifFalse: [self name printString]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariable >> isArgumentVariable [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariable >> isClassInstanceVariable [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariable >> isClassVariable [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariable >> isInstanceVariable [
 	"check if the var is an instance variable (a Slot)"
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
+RGVariable >> isInvalidVariable [
+
+	^ false
+]
+
+{ #category : 'testing' }
 RGVariable >> isLocalVariable [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariable >> isPoolVariable [
 
 	^false
 ]
 
-{ #category : #testing }
-RGVariable >> isReservedVariable [
-	"Ring2 does not model self, super, thisContext"
+{ #category : 'testing' }
+RGVariable >> isPseudoVariable [
+	"Ring2 does not model self, super, thisContext, thisProcess"
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariable >> isSuperVariable [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariable >> isTempVariable [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
+RGVariable >> isUndeclaredVariable [
+
+	^ false
+]
+
+{ #category : 'testing' }
 RGVariable >> isUninitialized [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariable >> isVariable [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariable >> isWorkspaceVariable [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariable >> isWritable [
 	"Ring2 variables are all writable, e.g. it does not model Arguments"
 	^true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGVariable >> name: aString [
 
 	self parent announceDefinitionChangeDuring: [
 		super name: aString ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGVariable >> needsFullDefinition [
 	"all but InstanceVariableSlot and ClassVariable need to print the full definition"
 	^true

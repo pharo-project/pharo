@@ -2,17 +2,19 @@
 I represent the execution of a ""rename instance variable"" (RBRenameInstanceVariableRefactoring) refactoring.
 "
 Class {
-	#name : #EpRenameInstanceVariableRefactoring,
-	#superclass : #EpRefactoring,
+	#name : 'EpRenameInstanceVariableRefactoring',
+	#superclass : 'EpRefactoring',
 	#instVars : [
 		'newName',
 		'oldName',
 		'affectedClassName'
 	],
-	#category : #'Epicea-Model'
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpRenameInstanceVariableRefactoring class >> rename: oldName to: newName in: affectedClassName [
 	^ self basicNew
 		initializeIn: affectedClassName
@@ -21,12 +23,12 @@ EpRenameInstanceVariableRefactoring class >> rename: oldName to: newName in: aff
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpRenameInstanceVariableRefactoring >> affectedClassName [
 	^ affectedClassName
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 EpRenameInstanceVariableRefactoring >> asRBRefactoring [
 	^ RBRenameInstanceVariableRefactoring
 		rename: oldName
@@ -34,7 +36,7 @@ EpRenameInstanceVariableRefactoring >> asRBRefactoring [
 		in: affectedClassName
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 EpRenameInstanceVariableRefactoring >> initializeIn: aClassName from:  anOldName to: aNewName [
 	self initialize.
 
@@ -43,12 +45,12 @@ EpRenameInstanceVariableRefactoring >> initializeIn: aClassName from:  anOldName
 	oldName := anOldName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpRenameInstanceVariableRefactoring >> newName [
 	^ newName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpRenameInstanceVariableRefactoring >> oldName [
 	^ oldName
 ]

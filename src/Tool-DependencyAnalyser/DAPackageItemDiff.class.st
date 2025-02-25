@@ -2,17 +2,19 @@
 A PDAbstractItemDiff is a object which represent a package who added/modified/removed from an old analysis.
 "
 Class {
-	#name : #DAPackageItemDiff,
-	#superclass : #DAAbstractItemDiff,
-	#category : #'Tool-DependencyAnalyser-Diff'
+	#name : 'DAPackageItemDiff',
+	#superclass : 'DAAbstractItemDiff',
+	#category : 'Tool-DependencyAnalyser-Diff',
+	#package : 'Tool-DependencyAnalyser',
+	#tag : 'Diff'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAPackageItemDiff >> dependencies [
 	 ^ self content dependentPackages
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAPackageItemDiff >> hasChanged [
 	^ diff dependentPackagesDiff
 		detect: [ :each | each parent = self content and: [ each hasChanged ] ]
@@ -20,7 +22,7 @@ DAPackageItemDiff >> hasChanged [
 		ifNone: [ false ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 DAPackageItemDiff >> printOn: aStream [
 	aStream
 		nextPutAll: content packageName

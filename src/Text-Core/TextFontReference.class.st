@@ -14,50 +14,52 @@ TextMorph new
 	openInWindow
 "
 Class {
-	#name : #TextFontReference,
-	#superclass : #TextFontChange,
+	#name : 'TextFontReference',
+	#superclass : 'TextFontChange',
 	#instVars : [
 		'font'
 	],
-	#category : #'Text-Core-Attributes'
+	#category : 'Text-Core-Attributes',
+	#package : 'Text-Core',
+	#tag : 'Attributes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TextFontReference class >> toFont: aFont [
 	^ self new toFont: aFont
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TextFontReference >> = other [
 	^ (other class == self class)
 		and: [other font = font]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextFontReference >> font [
 
 	^ font
 ]
 
-{ #category : #styling }
+{ #category : 'styling' }
 TextFontReference >> forFontInStyle: aTextStyle do: aBlock [
 	aBlock value: font
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 TextFontReference >> hash [
 	"#hash is re-implemented because #= is re-implemented"
 	^font hash
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 TextFontReference >> printOn: aStream [
 	aStream nextPutAll: 'a TextFontReference(';
 		print: font;
 		nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextFontReference >> toFont: aFont [
 
 	font := aFont

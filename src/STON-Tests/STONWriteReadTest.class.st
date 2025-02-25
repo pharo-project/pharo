@@ -2,29 +2,31 @@
 STONWriteReadTests test serialization followed by materialization, these tests first write then read STON.
 "
 Class {
-	#name : #STONWriteReadTest,
-	#superclass : #TestCase,
-	#category : #'STON-Tests-Write-Read'
+	#name : 'STONWriteReadTest',
+	#superclass : 'TestCase',
+	#category : 'STON-Tests-Write-Read',
+	#package : 'STON-Tests',
+	#tag : 'Write-Read'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 STONWriteReadTest >> environment [
 	^ Smalltalk globals
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONWriteReadTest >> materialize: string [
 	^ STON reader
 		on: string readStream;
 		next
 ]
 
-{ #category : #options }
+{ #category : 'options' }
 STONWriteReadTest >> reader: string [
 	^ STON reader on: string readStream
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONWriteReadTest >> serialize: anObject [
 	^ String streamContents: [ :stream |
 		STON writer
@@ -32,7 +34,7 @@ STONWriteReadTest >> serialize: anObject [
 			nextPut: anObject ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONWriteReadTest >> serializeAndMaterialize: object [
 	| serialization materialization |
 	serialization := self serialize: object.
@@ -40,7 +42,7 @@ STONWriteReadTest >> serializeAndMaterialize: object [
 	self assert: object equals: materialization
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONWriteReadTest >> serializeAndMaterializeJsonMode: object [
 	| serialization materialization |
 	serialization := self serializeJson: object.
@@ -48,7 +50,7 @@ STONWriteReadTest >> serializeAndMaterializeJsonMode: object [
 	self assert: object equals: materialization
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 STONWriteReadTest >> serializeJson: anObject [
 	^ String streamContents: [ :stream |
 		STON jsonWriter
@@ -56,7 +58,7 @@ STONWriteReadTest >> serializeJson: anObject [
 			nextPut: anObject ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testAlternativeRepresentation [
 	| testObject resultObject |
 	testObject := STONAlternativeRepresentationTestObject example.
@@ -71,7 +73,7 @@ STONWriteReadTest >> testAlternativeRepresentation [
 	self assert: (resultObject gridReference y closeTo: testObject gridReference y)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testAssociations [
 	| associations |
 	associations := OrderedCollection new.
@@ -80,14 +82,14 @@ STONWriteReadTest >> testAssociations [
 	self serializeAndMaterialize: associations
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testCharacters [
 	| characters |
 	characters := STON listClass withAll: ($a to: $z), ($A to: $Z).
 	self serializeAndMaterialize: characters
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testClasses [
 	| classes |
 	classes := STON listClass withAll: { Point. Integer. Object }.
@@ -98,7 +100,7 @@ STONWriteReadTest >> testClasses [
 	self serializeAndMaterialize: classes
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testCollections [
 	| collections |
 	collections := STON listClass withAll: {
@@ -113,7 +115,7 @@ STONWriteReadTest >> testCollections [
 	self serializeAndMaterialize: collections
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testCollectionsStructured [
 	| collections one two |
 	one := 1@2.
@@ -126,7 +128,7 @@ STONWriteReadTest >> testCollectionsStructured [
 	self serializeAndMaterialize: collections
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testColors [
 	| colors |
 	colors := STON listClass withAll: {
@@ -136,7 +138,7 @@ STONWriteReadTest >> testColors [
 	self serializeAndMaterialize: colors
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testCustomAssociations [
 	| associations |
 	associations := OrderedCollection new.
@@ -145,7 +147,7 @@ STONWriteReadTest >> testCustomAssociations [
 	self serializeAndMaterialize: associations
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testDatesAndTimes [
 	| datesAndTimes |
 	datesAndTimes := STON listClass withAll: {
@@ -155,7 +157,7 @@ STONWriteReadTest >> testDatesAndTimes [
 	self serializeAndMaterialize: datesAndTimes
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testDiskFiles [
 	| diskFiles |
 	diskFiles := STON listClass withAll: {
@@ -167,7 +169,7 @@ STONWriteReadTest >> testDiskFiles [
 	self serializeAndMaterialize: diskFiles
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testDomainObject [
 	| object objects |
 	object := STONTestDomainObject dummy.
@@ -182,7 +184,7 @@ STONWriteReadTest >> testDomainObject [
 	self serializeAndMaterialize: objects
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testEmpty [
 	| empty |
 	empty := STON listClass new.
@@ -191,7 +193,7 @@ STONWriteReadTest >> testEmpty [
 	self serializeAndMaterialize: empty
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testFileSystemSupport [
 	| fileReferences fileLocators |
 	fileReferences := STON listClass withAll: {
@@ -206,7 +208,7 @@ STONWriteReadTest >> testFileSystemSupport [
 	self serializeAndMaterialize: fileLocators
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testFloats [
 	| check |
 
@@ -230,14 +232,14 @@ STONWriteReadTest >> testFloats [
 	self assert: (STON fromString: (STON toString: Float nan)) isNaN
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testFractions [
 	| fractions |
 	fractions := STON listClass withAll: (-2/3 to: 2/3 by: 1/3).
 	self serializeAndMaterialize: fractions
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testIdentityCollections [
 	| collections |
 	collections := STON listClass withAll: {
@@ -247,7 +249,7 @@ STONWriteReadTest >> testIdentityCollections [
 	self serializeAndMaterialize: collections
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testIntervals [
 	| intervals |
 	intervals := STON listClass withAll: {
@@ -257,7 +259,7 @@ STONWriteReadTest >> testIntervals [
 	self serializeAndMaterialize: intervals
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testJsonMode [
 	| object |
 	object := STON listClass withAll: {
@@ -274,7 +276,7 @@ STONWriteReadTest >> testJsonMode [
 	self serializeAndMaterializeJsonMode: object
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testKnownObjects [
 	| knownObject ston object |
 	knownObject := STONTestKnownObject new.
@@ -293,7 +295,7 @@ STONWriteReadTest >> testKnownObjects [
 	STONTestKnownObject resetKnownObjects
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testMemoryFileReferences [
 	| root dir1 file1 references ston result |
 	root := FileSystem memory root.
@@ -311,7 +313,7 @@ STONWriteReadTest >> testMemoryFileReferences [
 	self assert: result second contents equals: 'ABC'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testMimeTypes [
 	| mimeTypes |
 	mimeTypes := STON listClass withAll: {
@@ -320,7 +322,7 @@ STONWriteReadTest >> testMimeTypes [
 	self serializeAndMaterialize: mimeTypes
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testOrderedDictionary [
 	"OrderedDictionary is special because it does not inherit from Dictionary.
 	It might also not exist in some dialects, where this test could be skipped."
@@ -338,21 +340,21 @@ STONWriteReadTest >> testOrderedDictionary [
 	self serializeAndMaterialize: dictionaries
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testPrimitives [
 	| primitives |
 	primitives := STON listClass withAll: { true. false. nil }.
 	self serializeAndMaterialize: primitives
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testScaledDecimals [
 	| fractions |
 	fractions := STON listClass withAll: (-2/3s2 to: 2/3s2 by: 1/3s2).
 	self serializeAndMaterialize: fractions
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testSharedColors [
 	| color1 color2 colors |
 	color1 := Color r: 0.25 g: 0.5 b: 0.75 alpha: 0.4.
@@ -361,7 +363,7 @@ STONWriteReadTest >> testSharedColors [
 	self serializeAndMaterialize: colors
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testSmallDictionary [
 	"SmallDictionary is special because it does not inherit from Dictionary.
 	It might also not exist in some dialects, where this test could be skipped."
@@ -375,14 +377,14 @@ STONWriteReadTest >> testSmallDictionary [
 	self serializeAndMaterialize: dictionaries
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testSmallIntegers [
 	| integers |
 	integers := STON listClass withAll: (-10 to: 10).
 	self serializeAndMaterialize: integers
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testSortedCollections [
 	| collections |
 	collections := STON listClass withAll: {
@@ -398,7 +400,7 @@ STONWriteReadTest >> testSortedCollections [
 	self serializeAndMaterialize: collections
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testSpecialCharacters [
 	| primitives |
 	primitives := STON listClass withAll: {
@@ -410,7 +412,7 @@ STONWriteReadTest >> testSpecialCharacters [
 	self serializeAndMaterialize: primitives
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testSpecialClassNames [
 	| specialClass key specialInstance ston reader object |
 	specialClass := LookupKey newAnonymousSubclass.
@@ -428,7 +430,7 @@ STONWriteReadTest >> testSpecialClassNames [
 	self assert: object key equals: key
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testStrings [
 	| strings |
 	strings := Collection allSubclasses
@@ -441,7 +443,7 @@ STONWriteReadTest >> testStrings [
 	self serializeAndMaterialize: strings
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testSymbols [
 	| symbols |
 	symbols := #( #bytes #'' #Bytes123 ).
@@ -456,7 +458,7 @@ STONWriteReadTest >> testSymbols [
 	self serializeAndMaterialize: symbols
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testTextAndRunArray [
 	| texts |
 	texts := {
@@ -466,7 +468,7 @@ STONWriteReadTest >> testTextAndRunArray [
 	self serializeAndMaterialize: texts
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testURLs [
 	| urls |
 	urls := STON listClass withAll: {
@@ -477,17 +479,17 @@ STONWriteReadTest >> testURLs [
 	self serializeAndMaterialize: urls
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testUUIDs [
 	| uuids |
 	uuids := STON listClass withAll: {
 		UUID new.
 		UUID new.
-		UUID nilUUID }.
+		UUID nilUUID}.
 	self serializeAndMaterialize: uuids
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testUser [
 	| user users |
 	user := STONTestUser dummy.
@@ -502,7 +504,7 @@ STONWriteReadTest >> testUser [
 	self serializeAndMaterialize: users
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 STONWriteReadTest >> testUser2 [
 	| user users |
 	user := STONTestUser2 dummy.

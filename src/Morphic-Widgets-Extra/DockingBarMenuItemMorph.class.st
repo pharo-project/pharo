@@ -3,17 +3,18 @@ A DockingBarMenuItemMorph is a specialized version of its superclass for Docking
 
 "
 Class {
-	#name : #DockingBarMenuItemMorph,
-	#superclass : #MenuItemMorph,
-	#category : #'Morphic-Widgets-Extra'
+	#name : 'DockingBarMenuItemMorph',
+	#superclass : 'MenuItemMorph',
+	#category : 'Morphic-Widgets-Extra',
+	#package : 'Morphic-Widgets-Extra'
 }
 
-{ #category : #events }
+{ #category : 'events' }
 DockingBarMenuItemMorph >> activateOwnerMenu: evt [
 	^ self owner ifNil: [ false ] ifNotNil: [ :o | o activate: evt. true]
 ]
 
-{ #category : #selecting }
+{ #category : 'selecting' }
 DockingBarMenuItemMorph >> adjacentTo [
 	| verticalMargin |
 	verticalMargin := 4 + owner borderWidth.
@@ -30,7 +31,7 @@ DockingBarMenuItemMorph >> adjacentTo [
 	^ {self bounds bottomLeft + (3 @ verticalMargin)}
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 DockingBarMenuItemMorph >> deselectTimeOut: evt [
 	"Deselect timout. Now really deselect"
 
@@ -40,29 +41,27 @@ DockingBarMenuItemMorph >> deselectTimeOut: evt [
 			owner selectItem: nil event: evt ]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 DockingBarMenuItemMorph >> mouseDown: evt [
 	"Handle a mouse down event. Menu items get activated when the mouse is over them."
 
-	(evt shiftPressed and: [ self isEditable ])
-		ifTrue: [^ super mouseDown: evt].  "enable label editing"
 	isSelected
 		ifTrue: [ owner selectItem: nil event: evt ]
 		ifFalse: [ owner activate: evt.	"Redirect to menu for valid transitions"
 			owner selectItem: self event: evt ]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 DockingBarMenuItemMorph >> mouseEnter: evt [
 	"The mouse entered the receiver"
 
 	owner ifNotNil: [owner stayUp ifFalse: [self mouseEnterDragging: evt]].
-	(owner selectedItem notNil
+	(owner selectedItem isNotNil
 				and: [owner selectedItem ~~ self])
 			ifTrue: [owner selectItem: self event: evt.]
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 DockingBarMenuItemMorph >> mouseUp: evt [
 	"Handle a mouse up event. Menu items get activated when the mouse is over them. Do nothing if we're not in a 'valid menu transition', meaning that the current hand focus must be aimed at the owning menu."
 	evt hand mouseFocus == owner ifFalse: [^self].
@@ -75,7 +74,7 @@ DockingBarMenuItemMorph >> mouseUp: evt [
 	self invokeWithEvent: evt
 ]
 
-{ #category : #'submorphs - accessing' }
+{ #category : 'submorphs - accessing' }
 DockingBarMenuItemMorph >> noteNewOwner: aMorph [
 	"I have just been added as a submorph of aMorph"
 	super noteNewOwner: aMorph.
@@ -83,7 +82,7 @@ DockingBarMenuItemMorph >> noteNewOwner: aMorph [
 	self updateLayoutInDockingBar
 ]
 
-{ #category : #'change reporting' }
+{ #category : 'change reporting' }
 DockingBarMenuItemMorph >> ownerChanged [
 	"The receiver's owner, some kind of a pasteup, has changed its
 	layout."
@@ -91,7 +90,7 @@ DockingBarMenuItemMorph >> ownerChanged [
 	self updateLayoutInDockingBar
 ]
 
-{ #category : #'submorphs - accessing' }
+{ #category : 'submorphs - accessing' }
 DockingBarMenuItemMorph >> roundedCorners [
 	"Return a list of those corners to round"
 	owner isFloating
@@ -107,24 +106,24 @@ DockingBarMenuItemMorph >> roundedCorners [
 	^ #(1 2 3 4 )
 ]
 
-{ #category : #private }
-DockingBarMenuItemMorph >> subMenuMarker [
-	"private - answer the form to be used as submenu marker"
+{ #category : 'private' }
+DockingBarMenuItemMorph >> subMenuMarkerFormSet [
+	"private - answer the form set to be used as submenu marker"
 
 	owner isFloating
-		ifTrue: [ ^ self bottomArrow ].
+		ifTrue: [ ^ self bottomArrowFormSet ].
 	owner isAdheringToTop
-		ifTrue: [ ^ self bottomArrow ].
+		ifTrue: [ ^ self bottomArrowFormSet ].
 	owner isAdheringToBottom
-		ifTrue: [ ^ self upArrow ].
+		ifTrue: [ ^ self upArrowFormSet ].
 	owner isAdheringToLeft
-		ifTrue: [ ^ self rightArrow ].
+		ifTrue: [ ^ self rightArrowFormSet ].
 	owner isAdheringToRight
-		ifTrue: [ ^ self leftArrow ].
-	^ self rightArrow
+		ifTrue: [ ^ self leftArrowFormSet ].
+	^ self rightArrowFormSet
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DockingBarMenuItemMorph >> updateLayoutInDockingBar [
 
 	owner isVertical
@@ -137,7 +136,7 @@ DockingBarMenuItemMorph >> updateLayoutInDockingBar [
 	self extent: self minWidth @ self minHeight
 ]
 
-{ #category : #rounding }
+{ #category : 'rounding' }
 DockingBarMenuItemMorph >> wantsRoundedCorners [
 	^self theme currentSettings preferRoundCorner
 ]

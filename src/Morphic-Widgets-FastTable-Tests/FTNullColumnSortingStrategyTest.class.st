@@ -2,17 +2,19 @@
 A FTNullColumnSortingStrategyTest is a test class for testing the behavior of FTNullColumnSortingStrategy
 "
 Class {
-	#name : #FTNullColumnSortingStrategyTest,
-	#superclass : #FTAbstractColumnSortingStrategyTest,
-	#category : #'Morphic-Widgets-FastTable-Tests-Sorting'
+	#name : 'FTNullColumnSortingStrategyTest',
+	#superclass : 'FTAbstractColumnSortingStrategyTest',
+	#category : 'Morphic-Widgets-FastTable-Tests-Sorting',
+	#package : 'Morphic-Widgets-FastTable-Tests',
+	#tag : 'Sorting'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTNullColumnSortingStrategyTest >> actualClass [
 	^ FTNullColumnSortingStrategy
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FTNullColumnSortingStrategyTest >> testSortDataSource [
 	| dataSource |
 	dataSource := self dataSourceForTesting.

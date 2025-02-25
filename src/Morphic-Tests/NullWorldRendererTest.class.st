@@ -1,10 +1,11 @@
 Class {
-	#name : #NullWorldRendererTest,
-	#superclass : #TestCase,
-	#category : #'Morphic-Tests'
+	#name : 'NullWorldRendererTest',
+	#superclass : 'TestCase',
+	#category : 'Morphic-Tests',
+	#package : 'Morphic-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 NullWorldRendererTest >> testConvertWindowMouseEventPosition [
 	| renderer |
 

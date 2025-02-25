@@ -11,8 +11,8 @@ I have several options:
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnEntityReader,
-	#superclass : #Object,
+	#name : 'ZnEntityReader',
+	#superclass : 'Object',
 	#instVars : [
 		'headers',
 		'stream',
@@ -20,88 +20,90 @@ Class {
 		'binary',
 		'allowReadingUpToEnd'
 	],
-	#category : #'Zinc-HTTP-Streaming'
+	#category : 'Zinc-HTTP-Streaming',
+	#package : 'Zinc-HTTP',
+	#tag : 'Streaming'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEntityReader >> allowReadingUpToEnd [
 	allowReadingUpToEnd := true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntityReader >> allowsReadingUpToEnd [
-	^ allowReadingUpToEnd notNil and: [ allowReadingUpToEnd ]
+	^ allowReadingUpToEnd isNotNil and: [ allowReadingUpToEnd ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEntityReader >> binary [
 	binary := true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntityReader >> canReadContent [
 	^ self hasContentLength or: [ self isChunked or: [ self allowsReadingUpToEnd ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEntityReader >> contentLength [
 	^ (self headers includesKey: 'Content-Length')
 		ifTrue: [ self headers contentLength ]
 		ifFalse: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEntityReader >> contentType [
 	^ (self headers includesKey: 'Content-Type')
 		ifTrue: [ self headers contentType ]
 		ifFalse: [ ZnMimeType default ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntityReader >> hasContentLength [
 	^ self headers hasContentLength and: [ self headers contentLength > 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEntityReader >> headers [
 	^ headers
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEntityReader >> headers: znHeaders [
 	headers := znHeaders
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntityReader >> isBinary [
-	^ binary notNil and: [ binary ]
+	^ binary isNotNil and: [ binary ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntityReader >> isChunked [
 	| transferEncoding |
 	transferEncoding := self headers at: 'Transfer-Encoding' ifAbsent: [ ^ false ].
 	^ transferEncoding = 'chunked' or: [ transferEncoding beginsWith: 'chunked' ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntityReader >> isGzipped [
 	| contentEncoding |
 	contentEncoding := self headers at: 'Content-Encoding' ifAbsent: [ ^ false ].
 	^ contentEncoding = 'gzip'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntityReader >> isIdentityEncoded [
 	^ self isGzipped not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnEntityReader >> isStreaming [
-	^ streaming notNil and: [ streaming ]
+	^ streaming isNotNil and: [ streaming ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnEntityReader >> readEntity [
 	| entity |
 	self canReadContent ifFalse: [ ^ nil ].
@@ -111,7 +113,7 @@ ZnEntityReader >> readEntity [
 		ifFalse: [ entity ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnEntityReader >> readEntityFromStream [
 	| entity decodedEntityLength chunkedStream isChunked |
 	chunkedStream := (isChunked := self isChunked) ifTrue: [ stream := ZnChunkedReadStream on: stream ] ifFalse: [ nil ].
@@ -128,7 +130,7 @@ ZnEntityReader >> readEntityFromStream [
 	^ entity
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnEntityReader >> readFrom: readStream usingType: contentType andLength: length [
 	| entityClass selector |
 	entityClass := self isStreaming
@@ -143,17 +145,17 @@ ZnEntityReader >> readFrom: readStream usingType: contentType andLength: length 
 		with: length
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEntityReader >> stream [
 	^ stream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEntityReader >> stream: readStream [
 	stream := readStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnEntityReader >> streaming [
 	streaming := true
 ]

@@ -2,18 +2,20 @@
 I represent an error happened during materialization.
 "
 Class {
-	#name : #FLMaterializationError,
-	#superclass : #FLError,
-	#category : #'Fuel-Core-Errors'
+	#name : 'FLMaterializationError',
+	#superclass : 'FLError',
+	#category : 'Fuel-Core-Errors',
+	#package : 'Fuel-Core',
+	#tag : 'Errors'
 }
 
-{ #category : #exceptioninstantiator }
+{ #category : 'exceptioninstantiator' }
 FLMaterializationError class >> signal: signalerText [
 
 	^ super signal: 'Materialization error. ', signalerText
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FLMaterializationError >> isResumable [
 	"Allow users to ignore errors if they know what they are doing"
 	^ true

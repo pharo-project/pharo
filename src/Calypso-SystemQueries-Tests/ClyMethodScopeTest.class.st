@@ -1,34 +1,36 @@
 Class {
-	#name : #ClyMethodScopeTest,
-	#superclass : #ClyTypedScopeTest,
-	#category : #'Calypso-SystemQueries-Tests-Scopes'
+	#name : 'ClyMethodScopeTest',
+	#superclass : 'ClyTypedScopeTest',
+	#category : 'Calypso-SystemQueries-Tests-Scopes',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Scopes'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodScopeTest >> extraBasisSample [
 	^self class >> #method2
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyMethodScopeTest >> method1 [
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 ClyMethodScopeTest >> method2 [
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodScopeTest >> scopeClass [
 
 	^ClyMethodScope
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyMethodScopeTest >> singleBasisSample [
 	^self class >> #method1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyMethodScopeTest >> testMethodsEnumeration [
 	scope := ClyMethodScope ofAll: {self class >> #method1. self class >> #method2}.
 

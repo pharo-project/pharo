@@ -1,10 +1,11 @@
 Class {
-	#name : #EFCascadeExpressionTest,
-	#superclass : #EFTest,
-	#category : #'EnlumineurFormatter-Tests'
+	#name : 'EFCascadeExpressionTest',
+	#superclass : 'EFTest',
+	#category : 'EnlumineurFormatter-Tests',
+	#package : 'EnlumineurFormatter-Tests'
 }
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFCascadeExpressionTest >> basicConfiguration [
 
 	^ self contextClass basicNew
@@ -21,143 +22,139 @@ EFCascadeExpressionTest >> basicConfiguration [
 		indentsForKeywords: 1
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFCascadeExpressionTest >> multilineMessageConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		newLineAfterCascade: true;
-		newLineBeforeFirstCascade: true;
-		formatCommentCloseToStatements:false;
-		multiLineMessages:#(#multi:line:);
-		oneLineMessages: Array new;
-		numberOfArgumentsForMultiLine:3;
-		maxLineLength:50;
-		keepBlockInMessage:true;
-		indentStyle: #tabulation;
-		newLineBeforeFirstKeyword:false;
-		numberOfSpacesInsideBlock:1;
-		retainBlankLinesBetweenStatements:false;
-		minimumNewLinesBetweenStatements:1;
-		indentsForKeywords:0;
-		periodAtEndOfBlock:false;
-		periodAtEndOfMethod: false;
-		lineUpBlockBrackets:false;
-		indentExtraSpaces:0
+		  newLineAfterCascade: true;
+		  newLineBeforeFirstCascade: true;
+		  formatCommentCloseToStatements: false;
+		  multiLineMessages: #( #multi:line: );
+		  oneLineMessages: Array new;
+		  numberOfArgumentsForMultiLine: 3;
+		  maxLineLength: 50;
+		  keepBlockInMessage: true;
+		  indentStyle: #tabulation;
+		  newLineBeforeFirstKeyword: false;
+		  numberOfSpacesInsideBlock: 1;
+		  retainBlankLinesBetweenStatements: false;
+		  minimumNewLinesBetweenStatements: 1;
+		  indentsForKeywords: 0;
+		  periodAtEndOfBlock: false;
+		  periodAtEndOfMethod: false;
+		  lineUpBlockBrackets: false;
+		  indentExtraSpaces: 0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFCascadeExpressionTest >> newLineAfterCascadeConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
-
-"	^ self contextClass new
-
-"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		newLineAfterCascade: true;
-		newLineBeforeFirstCascade: false;
-		formatCommentCloseToStatements:false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
-		numberOfArgumentsForMultiLine:3;
-		maxLineLength:50;
-		keepBlockInMessage:false;
-		indentStyle: #tabulation;
-		newLineBeforeFirstKeyword:false;
-		indentExtraSpaces: 0
+		  newLineAfterCascade: true;
+		  newLineBeforeFirstCascade: false;
+		  formatCommentCloseToStatements: false;
+		  multiLineMessages: Array new;
+		  oneLineMessages: Array new;
+		  numberOfArgumentsForMultiLine: 3;
+		  maxLineLength: 50;
+		  keepBlockInMessage: false;
+		  indentStyle: #tabulation;
+		  newLineBeforeFirstKeyword: false;
+		  indentExtraSpaces: 0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFCascadeExpressionTest >> newLineBeforeAndAfterCascadeConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		newLineAfterCascade: true;
-		newLineBeforeFirstCascade: true;
-		formatCommentCloseToStatements:false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
-		numberOfArgumentsForMultiLine:3;
-		maxLineLength:50;
-		keepBlockInMessage:false;
-		indentStyle: #tabulation;
-		newLineBeforeFirstKeyword:false;
-		indentExtraSpaces:0
+		  newLineAfterCascade: true;
+		  newLineBeforeFirstCascade: true;
+		  formatCommentCloseToStatements: false;
+		  multiLineMessages: Array new;
+		  oneLineMessages: Array new;
+		  numberOfArgumentsForMultiLine: 3;
+		  maxLineLength: 50;
+		  keepBlockInMessage: false;
+		  indentStyle: #tabulation;
+		  newLineBeforeFirstKeyword: false;
+		  indentExtraSpaces: 0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFCascadeExpressionTest >> newLineBeforeCascadeConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"		
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		newLineAfterCascade: false;
-		newLineBeforeFirstCascade: true;
-		formatCommentCloseToStatements:false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
-		numberOfArgumentsForMultiLine:3;
-		maxLineLength:50;
-		keepBlockInMessage:false;
-		indentStyle: #tabulation;
-		newLineBeforeFirstKeyword:false;
-		indentExtraSpaces:0
+		  newLineAfterCascade: false;
+		  newLineBeforeFirstCascade: true;
+		  formatCommentCloseToStatements: false;
+		  multiLineMessages: Array new;
+		  oneLineMessages: Array new;
+		  numberOfArgumentsForMultiLine: 3;
+		  maxLineLength: 50;
+		  keepBlockInMessage: false;
+		  indentStyle: #tabulation;
+		  newLineBeforeFirstKeyword: false;
+		  indentExtraSpaces: 0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFCascadeExpressionTest >> noNewLineAfterCascadeConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		newLineAfterCascade: false;
-		newLineBeforeFirstCascade: false;
-		formatCommentCloseToStatements:false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
-		numberOfArgumentsForMultiLine:3;
-		maxLineLength:50;
-		keepBlockInMessage:false;
-		indentStyle: #tabulation;
-		newLineBeforeFirstKeyword:false;
-		indentExtraSpaces: 0
+		  newLineAfterCascade: false;
+		  newLineBeforeFirstCascade: false;
+		  formatCommentCloseToStatements: false;
+		  multiLineMessages: Array new;
+		  oneLineMessages: Array new;
+		  numberOfArgumentsForMultiLine: 3;
+		  maxLineLength: 50;
+		  keepBlockInMessage: false;
+		  indentStyle: #tabulation;
+		  newLineBeforeFirstKeyword: false;
+		  indentExtraSpaces: 0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFCascadeExpressionTest >> noNewLineBeforeCascadeConfiguration [
 	"Here we can control explicitely the configuration we want."
 
 	" String streamContents: [:s |
-			BIPrettyPrinterContext new storeOn: s]"
+			EFContext new storeOn: s]"
 
 	^ self contextClass basicNew
-		newLineAfterCascade: false;
-		newLineBeforeFirstCascade: false;
-		formatCommentCloseToStatements:false;
-		multiLineMessages: Array new;
-		oneLineMessages: Array new;
-		numberOfArgumentsForMultiLine:3;
-		maxLineLength:50;
-		keepBlockInMessage:false;
-		indentStyle: #tabulation;
-		newLineBeforeFirstKeyword:false
+		  newLineAfterCascade: false;
+		  newLineBeforeFirstCascade: false;
+		  formatCommentCloseToStatements: false;
+		  multiLineMessages: Array new;
+		  oneLineMessages: Array new;
+		  numberOfArgumentsForMultiLine: 3;
+		  maxLineLength: 50;
+		  keepBlockInMessage: false;
+		  indentStyle: #tabulation;
+		  newLineBeforeFirstKeyword: false
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFCascadeExpressionTest >> spaceIndentConfiguration [
 
 	^ self contextClass basicNew
@@ -174,7 +171,7 @@ EFCascadeExpressionTest >> spaceIndentConfiguration [
 		indentExtraSpaces:0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFCascadeExpressionTest >> testCommentAfterMessages [
 	| source |
 	self flag: #tocheck. "We do we lose the first comment."
@@ -191,7 +188,7 @@ EFCascadeExpressionTest >> testCommentAfterMessages [
 		cr'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFCascadeExpressionTest >> testCommentBeforeMessage [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -203,7 +200,7 @@ EFCascadeExpressionTest >> testCommentBeforeMessage [
 			'Transcript show: 1; "cr"cr'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFCascadeExpressionTest >> testFormatArgument [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -211,7 +208,7 @@ EFCascadeExpressionTest >> testFormatArgument [
 	self assert: source equals: '1 between: 2 + 2 and: 5 * 5; + 1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFCascadeExpressionTest >> testFormatMessage [
 	| source |
 	configurationSelector := #noNewLineAfterCascadeConfiguration.
@@ -219,7 +216,7 @@ EFCascadeExpressionTest >> testFormatMessage [
 	self assert: source equals: '1 * 4; + 1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFCascadeExpressionTest >> testFormatMultilineMessage [
 	| source |
 	configurationSelector := #multilineMessageConfiguration.
@@ -235,7 +232,7 @@ EFCascadeExpressionTest >> testFormatMultilineMessage [
 		each + 1 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFCascadeExpressionTest >> testFormatMultilineMessage2 [
 	| source |
 	configurationSelector := #multilineMessageConfiguration.
@@ -249,7 +246,7 @@ EFCascadeExpressionTest >> testFormatMultilineMessage2 [
 	line: 2'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFCascadeExpressionTest >> testFormatReceiver [
 	| source |
 	configurationSelector := #noNewLineAfterCascadeConfiguration.
@@ -257,7 +254,7 @@ EFCascadeExpressionTest >> testFormatReceiver [
 	self assert: source equals: 'a := 1 factorial; + 1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFCascadeExpressionTest >> testNewLineAfterCascade [
 	| source |
 	configurationSelector := #newLineAfterCascadeConfiguration.
@@ -270,7 +267,7 @@ EFCascadeExpressionTest >> testNewLineAfterCascade [
 	c'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFCascadeExpressionTest >> testNewLineAfterCascade2 [
 	| source |
 	configurationSelector := #newLineAfterCascadeConfiguration.
@@ -284,7 +281,7 @@ EFCascadeExpressionTest >> testNewLineAfterCascade2 [
 	yourself'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFCascadeExpressionTest >> testNewLineBeforeAndAfterCascade [
 	| source |
 	configurationSelector := #newLineBeforeAndAfterCascadeConfiguration.
@@ -298,7 +295,7 @@ EFCascadeExpressionTest >> testNewLineBeforeAndAfterCascade [
 	cr'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFCascadeExpressionTest >> testNewLineBeforeCascade [
 	| source |
 	configurationSelector := #newLineBeforeCascadeConfiguration.
@@ -310,7 +307,7 @@ EFCascadeExpressionTest >> testNewLineBeforeCascade [
 	a; b; c'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFCascadeExpressionTest >> testNewLineBeforeCascade2 [
 	| source |
 	configurationSelector := #newLineBeforeCascadeConfiguration.
@@ -323,7 +320,7 @@ EFCascadeExpressionTest >> testNewLineBeforeCascade2 [
 	add: #a; add: #b; yourself'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFCascadeExpressionTest >> testNoNewLineAfterCascade [
 	| source |
 	configurationSelector := #noNewLineAfterCascadeConfiguration.
@@ -331,7 +328,7 @@ EFCascadeExpressionTest >> testNoNewLineAfterCascade [
 	self assert: source equals: 'Foo a; b; c'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFCascadeExpressionTest >> testNoNewLineAfterCascade2 [
 	| source |
 	configurationSelector := #noNewLineAfterCascadeConfiguration.
@@ -342,7 +339,7 @@ EFCascadeExpressionTest >> testNoNewLineAfterCascade2 [
 		equals: 'OrderedCollection new add: #a; add: #b; yourself'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFCascadeExpressionTest >> testNoNewLineBeforeCascade [
 	| source |
 	configurationSelector := #noNewLineBeforeCascadeConfiguration.
@@ -350,7 +347,7 @@ EFCascadeExpressionTest >> testNoNewLineBeforeCascade [
 	self assert: source equals: 'Foo a; b; c'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFCascadeExpressionTest >> testNoNewLineBeforeCascade2 [
 	| source |
 	configurationSelector := #noNewLineBeforeCascadeConfiguration.
@@ -361,7 +358,7 @@ EFCascadeExpressionTest >> testNoNewLineBeforeCascade2 [
 		equals: 'OrderedCollection new add: #a; add: #b; yourself'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFCascadeExpressionTest >> testOneSpaceIndent [
 	| source |
 	configurationSelector := #spaceIndentConfiguration.
@@ -377,7 +374,7 @@ EFCascadeExpressionTest >> testOneSpaceIndent [
  cr'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFCascadeExpressionTest >> testTooLongArgument [
 	| source |
 	configurationSelector := #tooLongArgumentConfiguration.
@@ -389,7 +386,7 @@ EFCascadeExpressionTest >> testTooLongArgument [
 		toLongArgument'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFCascadeExpressionTest >> testTooLongArgument2 [
 	| source |
 	configurationSelector := #tooLongArgumentConfigurationWithNewLineAfterCascade.
@@ -402,7 +399,7 @@ EFCascadeExpressionTest >> testTooLongArgument2 [
 		toLongArgument'
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFCascadeExpressionTest >> tooLongArgumentConfiguration [
 
 	^ self contextClass basicNew
@@ -418,7 +415,7 @@ EFCascadeExpressionTest >> tooLongArgumentConfiguration [
 		indentExtraSpaces:0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFCascadeExpressionTest >> tooLongArgumentConfigurationWithNewLineAfterCascade [
 	^ self contextClass basicNew
 		formatCommentCloseToStatements:true;

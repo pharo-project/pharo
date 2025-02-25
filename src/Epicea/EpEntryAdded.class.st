@@ -2,15 +2,17 @@
 I announce that an entry has been added to a log.
 "
 Class {
-	#name : #EpEntryAdded,
-	#superclass : #Announcement,
+	#name : 'EpEntryAdded',
+	#superclass : 'Announcement',
 	#instVars : [
 		'entry'
 	],
-	#category : #'Epicea-Announcements'
+	#category : 'Epicea-Announcements',
+	#package : 'Epicea',
+	#tag : 'Announcements'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpEntryAdded class >> for: anEntry [
 
 	^ self basicNew
@@ -18,12 +20,12 @@ EpEntryAdded class >> for: anEntry [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpEntryAdded >> entry [
 	^ entry
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpEntryAdded >> initializeWith: anEntry [
 
 	self initialize.

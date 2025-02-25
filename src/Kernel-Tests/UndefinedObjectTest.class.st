@@ -5,103 +5,105 @@ This is the unit test for the class UndefinedObject. Unit tests are a good way t
 	- the sunit class category
 "
 Class {
-	#name : #UndefinedObjectTest,
-	#superclass : #ClassTestCase,
-	#category : #'Kernel-Tests-Objects'
+	#name : 'UndefinedObjectTest',
+	#superclass : 'ClassTestCase',
+	#category : 'Kernel-Tests-Objects',
+	#package : 'Kernel-Tests',
+	#tag : 'Objects'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 UndefinedObjectTest >> classToBeTested [
 
 	^ UndefinedObject
 ]
 
-{ #category : #'tests - class methods' }
+{ #category : 'tests - class methods' }
 UndefinedObjectTest >> testAllInstances [
 	self assert: UndefinedObject allInstances size = 1 description: 'There should be a single instance of UndefinedObject'.
 	self assert: (UndefinedObject allInstances includes: nil) description: 'nil should be an instance of UndefinedObject'
 ]
 
-{ #category : #'tests - copying' }
+{ #category : 'tests - copying' }
 UndefinedObjectTest >> testDeepCopy [
 	self assert: nil deepCopy isNil
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 UndefinedObjectTest >> testIfNil [
 	<haltOrBreakpointForTesting>
 	self should: [ nil ifNil: [ self error ] ] raise: Error
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 UndefinedObjectTest >> testIfNilIfNotNil [
 	<haltOrBreakpointForTesting>
 	self should: [ nil ifNil: [ self error ] ifNotNil: [  ] ] raise: Error
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 UndefinedObjectTest >> testIfNotNil [
 
 	nil ifNotNil: [
 		self fail: 'should not get here' ]
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 UndefinedObjectTest >> testIfNotNilDo [
 
 	nil ifNotNil: [
 		self fail: 'should not get here' ]
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 UndefinedObjectTest >> testIfNotNilIfNil [
 	<haltOrBreakpointForTesting>
 	self should: [ nil ifNotNil: [  ] ifNil: [ self error ] ] raise: Error
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 UndefinedObjectTest >> testIsEmptyOrNil [
 
 	self assert: (nil isEmptyOrNil)
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 UndefinedObjectTest >> testIsLiteral [
 
 	self assert: (nil isLiteral)
 ]
 
-{ #category : #'tests - testing' }
+{ #category : 'tests - testing' }
 UndefinedObjectTest >> testIsNil [
 
 	self assert: (nil isNil)
 ]
 
-{ #category : #'tests - class methods' }
+{ #category : 'tests - testing' }
+UndefinedObjectTest >> testIsNotNil [
+
+	self deny: (nil isNotNil)
+]
+
+{ #category : 'tests - class methods' }
 UndefinedObjectTest >> testNew [
 
 	self should: [ UndefinedObject new] raise: Error
 ]
 
-{ #category : #'tests - testing' }
-UndefinedObjectTest >> testNotNil [
-
-	self deny: (nil notNil)
-]
-
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 UndefinedObjectTest >> testPrintOn [
 	| string |
 	string := String streamContents: [ :stream | nil printOn: stream ].
 	self assert: string equals: 'nil'
 ]
 
-{ #category : #'tests - copying' }
+{ #category : 'tests - copying' }
 UndefinedObjectTest >> testShallowCopy [
 	self assert: nil shallowCopy isNil
 ]
 
-{ #category : #'tests - copying' }
+{ #category : 'tests - copying' }
 UndefinedObjectTest >> testVeryDeepCopyWith [
 	self assert: (nil veryDeepCopyWith: nil) isNil
 ]

@@ -1,10 +1,12 @@
 Class {
-	#name : #ClySortByDefiningClassFunctionTest,
-	#superclass : #ClySortFunctionTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClySortByDefiningClassFunctionTest',
+	#superclass : 'ClySortFunctionTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortByDefiningClassFunctionTest >> testAscending [
 
 	function := ClySortByDefiningClassFunction ascending.

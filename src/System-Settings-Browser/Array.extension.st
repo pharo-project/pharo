@@ -1,6 +1,6 @@
-Extension { #name : #Array }
+Extension { #name : 'Array' }
 
-{ #category : #'*System-Settings-Browser' }
+{ #category : '*System-Settings-Browser' }
 Array >> settingStoreOn: aStream [
 	"Use the literal form if possible."
 

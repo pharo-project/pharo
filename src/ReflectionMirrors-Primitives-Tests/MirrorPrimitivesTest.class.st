@@ -2,12 +2,14 @@
 Unit tests for mirror primitives.
 "
 Class {
-	#name : #MirrorPrimitivesTest,
-	#superclass : #TestCase,
-	#category : #'ReflectionMirrors-Primitives-Tests-Base'
+	#name : 'MirrorPrimitivesTest',
+	#superclass : 'TestCase',
+	#category : 'ReflectionMirrors-Primitives-Tests-Base',
+	#package : 'ReflectionMirrors-Primitives-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #'tests - class relationship' }
+{ #category : 'tests - class relationship' }
 MirrorPrimitivesTest >> testChangingClassOfObject [
 
 	| classObject object |
@@ -20,13 +22,13 @@ MirrorPrimitivesTest >> testChangingClassOfObject [
 	self assert: object equals: 0->1
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testChangingFixedFieldOfArray [
 
 	self should: [ MirrorPrimitives fixedFieldOf: #(1 2) at: 1 put: 10 ] raise: PrimitiveFailed
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testChangingFixedFieldOfFixedObject [
 
 	| object |
@@ -41,7 +43,7 @@ MirrorPrimitivesTest >> testChangingFixedFieldOfFixedObject [
 	self should: [MirrorPrimitives fixedFieldOf: object at: 3 put: 500] raise: PrimitiveFailed
 ]
 
-{ #category : #'tests - write barrier' }
+{ #category : 'tests - write barrier' }
 MirrorPrimitivesTest >> testChangingFixedFieldOfReadOnlyObject [
 
 	| object |
@@ -51,7 +53,7 @@ MirrorPrimitivesTest >> testChangingFixedFieldOfReadOnlyObject [
 	self should: [MirrorPrimitives fixedFieldOf: object at: 1 put: 500] raise: ModificationForbidden
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testChangingFixedFieldOfWeakMessageSend [
 
 	| arrayWithInstVars |
@@ -61,15 +63,15 @@ MirrorPrimitivesTest >> testChangingFixedFieldOfWeakMessageSend [
 	MirrorPrimitives fixedFieldOf: arrayWithInstVars at: 1 put: #newSelector.
 	self assert: arrayWithInstVars selector equals: #newSelector.
 
-	MirrorPrimitives fixedFieldOf: arrayWithInstVars at: 3 put: #newArgs.
+	MirrorPrimitives fixedFieldOf: arrayWithInstVars at: 2 put: #newArgs.
 	self assert: arrayWithInstVars arguments equals: #newArgs.
 
 	self
-	 	should: [ MirrorPrimitives fixedFieldOf: arrayWithInstVars at: 5 put: 100 ]
+	 	should: [ MirrorPrimitives fixedFieldOf: arrayWithInstVars at: 6 put: 100 ]
 		raise: PrimitiveFailed
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testChangingGeneralFieldOfArray [
 	| object |
 	object := #(10 20) copy.
@@ -83,7 +85,7 @@ MirrorPrimitivesTest >> testChangingGeneralFieldOfArray [
 	self should: [ MirrorPrimitives fieldOf: object at: 3 put: 500 ] raise: SubscriptOutOfBounds
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testChangingGeneralFieldOfFixedObject [
 
 	| object |
@@ -98,7 +100,7 @@ MirrorPrimitivesTest >> testChangingGeneralFieldOfFixedObject [
 	self should: [ MirrorPrimitives fieldOf: object at: 3 put: 500 ] raise: PrimitiveFailed
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testChangingGeneralFieldOfWeakMessageSend [
 
 	| arrayWithInstVars |
@@ -111,15 +113,15 @@ MirrorPrimitivesTest >> testChangingGeneralFieldOfWeakMessageSend [
 	MirrorPrimitives fieldOf: arrayWithInstVars at: 2 put: #newSelector.
 	self assert: arrayWithInstVars selector equals: #newSelector.
 
-	MirrorPrimitives fieldOf: arrayWithInstVars at: 4 put: #newArgs.
+	MirrorPrimitives fieldOf: arrayWithInstVars at: 3 put: #newArgs.
 	self assert: arrayWithInstVars arguments equals: #newArgs.
 
 	self
-	 	should: [MirrorPrimitives fieldOf: arrayWithInstVars at: 5 put: 100]
+	 	should: [MirrorPrimitives fieldOf: arrayWithInstVars at: 7 put: 100]
 		raise: PrimitiveFailed
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testChangingIndexableFieldOfArray [
 	| object |
 	object := #(10 20) copy.
@@ -133,13 +135,13 @@ MirrorPrimitivesTest >> testChangingIndexableFieldOfArray [
 	self should: [MirrorPrimitives indexableFieldOf: object at: 3 put: 500] raise: SubscriptOutOfBounds
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testChangingIndexableFieldOfFixedObject [
 
 	self should: [MirrorPrimitives indexableFieldOf: 10@20 at: 1 put: 10] raise: Error
 ]
 
-{ #category : #'tests - write barrier' }
+{ #category : 'tests - write barrier' }
 MirrorPrimitivesTest >> testChangingIndexableFieldOfReadOnlyArray [
 
 	| array |
@@ -149,7 +151,7 @@ MirrorPrimitivesTest >> testChangingIndexableFieldOfReadOnlyArray [
 	self should: [ MirrorPrimitives indexableFieldOf: array at: 1 put: 5 ] raise: ModificationForbidden
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testChangingIndexableFieldOfWeakMessageSend [
 
 	| arrayWithInstVars |
@@ -164,7 +166,7 @@ MirrorPrimitivesTest >> testChangingIndexableFieldOfWeakMessageSend [
 		raise: SubscriptOutOfBounds
 ]
 
-{ #category : #'tests - message performing' }
+{ #category : 'tests - message performing' }
 MirrorPrimitivesTest >> testExecutingMethod [
 	| actual |
 
@@ -173,7 +175,7 @@ MirrorPrimitivesTest >> testExecutingMethod [
 	self assert: actual equals: 2
 ]
 
-{ #category : #'tests - message performing' }
+{ #category : 'tests - message performing' }
 MirrorPrimitivesTest >> testExecutingPrimitive [
 	| actual |
 	<expectedFailure> "it will be supported by VM at some point"
@@ -183,7 +185,7 @@ MirrorPrimitivesTest >> testExecutingPrimitive [
 	self assert: actual equals: 102
 ]
 
-{ #category : #'tests - class relationship' }
+{ #category : 'tests - class relationship' }
 MirrorPrimitivesTest >> testGettingClassOfObject [
 
 	| actual |
@@ -192,13 +194,13 @@ MirrorPrimitivesTest >> testGettingClassOfObject [
 	self assert: actual equals: (0@0) class
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testGettingFixedFieldOfArray [
 
 	self should: [ MirrorPrimitives fixedFieldOf: #(1 2) at: 1 ] raise: PrimitiveFailed
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testGettingFixedFieldOfFixedObject [
 
 	| actual  |
@@ -212,7 +214,7 @@ MirrorPrimitivesTest >> testGettingFixedFieldOfFixedObject [
 	self should: [ MirrorPrimitives fixedFieldOf: 10@20 at: 3 ] raise: PrimitiveFailed
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testGettingFixedFieldOfWeakMessageSend [
 
 	| actual  arrayWithInstVars |
@@ -222,13 +224,13 @@ MirrorPrimitivesTest >> testGettingFixedFieldOfWeakMessageSend [
 	actual := MirrorPrimitives fixedFieldOf: arrayWithInstVars at: 1.
 	self assert: actual equals: #selector. "receiver is stored as first array item"
 
-	actual := MirrorPrimitives fixedFieldOf: arrayWithInstVars at: 3.
+	actual := MirrorPrimitives fixedFieldOf: arrayWithInstVars at: 2.
 	self assert: actual first equals: #args.
 
-	self should: [ MirrorPrimitives fixedFieldOf: arrayWithInstVars at: 5 ] raise: PrimitiveFailed
+	self should: [ MirrorPrimitives fixedFieldOf: arrayWithInstVars at: 6 ] raise: PrimitiveFailed
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testGettingFixedSizeOfArray [
 
 	| actual  |
@@ -238,7 +240,7 @@ MirrorPrimitivesTest >> testGettingFixedSizeOfArray [
 	self assert: actual equals: 0
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testGettingFixedSizeOfFixedObject [
 
 	| actual  |
@@ -248,7 +250,7 @@ MirrorPrimitivesTest >> testGettingFixedSizeOfFixedObject [
 	self assert: actual equals: 2
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testGettingFixedSizeOfWeakMessageSend [
 
 	| actual arrayWithInstVars |
@@ -259,7 +261,7 @@ MirrorPrimitivesTest >> testGettingFixedSizeOfWeakMessageSend [
 	self assert: actual equals: WeakMessageSend instSize
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testGettingFullSizeOfArray [
 
 	| actual |
@@ -269,7 +271,7 @@ MirrorPrimitivesTest >> testGettingFullSizeOfArray [
 	self assert: actual equals: 2
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testGettingFullSizeOfFixedObject [
 
 	| actual  |
@@ -279,7 +281,7 @@ MirrorPrimitivesTest >> testGettingFullSizeOfFixedObject [
 	self assert: actual equals: 2
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testGettingFullSizeOfWeakMessageSend [
 
 	| actual arrayWithInstVars |
@@ -290,7 +292,7 @@ MirrorPrimitivesTest >> testGettingFullSizeOfWeakMessageSend [
 	self assert: actual equals: 1 + WeakMessageSend instSize "receiver of weak message send is stored as first array item"
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testGettingGeneralFieldOfArray [
 
 	| actual |
@@ -303,7 +305,7 @@ MirrorPrimitivesTest >> testGettingGeneralFieldOfArray [
 	self should: [ MirrorPrimitives fieldOf: #(10 20) at: 3 ] raise: SubscriptOutOfBounds
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testGettingGeneralFieldOfFixedObject [
 
 	| actual  |
@@ -317,7 +319,7 @@ MirrorPrimitivesTest >> testGettingGeneralFieldOfFixedObject [
 	self should: [MirrorPrimitives fieldOf: 10@20 at: 3] raise: PrimitiveFailed
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testGettingGeneralFieldOfWeakMessageSend [
 
 	| actual  arrayWithInstVars |
@@ -330,13 +332,13 @@ MirrorPrimitivesTest >> testGettingGeneralFieldOfWeakMessageSend [
 	actual := MirrorPrimitives fieldOf: arrayWithInstVars at: 2.
 	self assert: actual equals: #selector.
 
-	actual := MirrorPrimitives fieldOf: arrayWithInstVars at: 4.
+	actual := MirrorPrimitives fieldOf: arrayWithInstVars at: 3.
 	self assert: actual first equals: #args.
 
-	self should: [ MirrorPrimitives fieldOf: arrayWithInstVars at: 5 ] raise: PrimitiveFailed
+	self should: [ MirrorPrimitives fieldOf: arrayWithInstVars at: 7 ] raise: PrimitiveFailed
 ]
 
-{ #category : #'tests - hashes' }
+{ #category : 'tests - hashes' }
 MirrorPrimitivesTest >> testGettingIdentityHashOfObject [
 
 	| actual object |
@@ -347,7 +349,7 @@ MirrorPrimitivesTest >> testGettingIdentityHashOfObject [
 	self assert: actual equals: object basicIdentityHash
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testGettingIndexableFieldOfArray [
 
 	| actual |
@@ -360,13 +362,13 @@ MirrorPrimitivesTest >> testGettingIndexableFieldOfArray [
 	self should: [MirrorPrimitives indexableFieldOf: #(10 20) at: 3] raise: SubscriptOutOfBounds
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testGettingIndexableFieldOfFixedObject [
 
 	self should: [MirrorPrimitives indexableFieldOf: 10@20 at: 1] raise: Error
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testGettingIndexableFieldOfWeakMessageSend [
 
 	| actual  arrayWithInstVars |
@@ -379,7 +381,7 @@ MirrorPrimitivesTest >> testGettingIndexableFieldOfWeakMessageSend [
 	self should: [MirrorPrimitives indexableFieldOf: arrayWithInstVars at: 2] raise: SubscriptOutOfBounds
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testGettingIndexibleSizeOfArray [
 
 	| actual |
@@ -389,7 +391,7 @@ MirrorPrimitivesTest >> testGettingIndexibleSizeOfArray [
 	self assert: actual equals: 2
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testGettingIndexibleSizeOfFixedObject [
 
 	| actual  |
@@ -399,7 +401,7 @@ MirrorPrimitivesTest >> testGettingIndexibleSizeOfFixedObject [
 	self assert: actual equals: 0
 ]
 
-{ #category : #'tests - fields accessing' }
+{ #category : 'tests - fields accessing' }
 MirrorPrimitivesTest >> testGettingIndexibleSizeOfWeakMessageSend [
 
 	| actual arrayWithInstVars |
@@ -410,7 +412,7 @@ MirrorPrimitivesTest >> testGettingIndexibleSizeOfWeakMessageSend [
 	self assert: actual equals: 1 "receiver of weak message send is stored as first array item"
 ]
 
-{ #category : #'tests - comparison' }
+{ #category : 'tests - comparison' }
 MirrorPrimitivesTest >> testIdenticalEquality [
 
 	| object |
@@ -420,7 +422,7 @@ MirrorPrimitivesTest >> testIdenticalEquality [
 	self deny: (MirrorPrimitives check: object identicalTo: 0@0)
 ]
 
-{ #category : #'tests - write barrier' }
+{ #category : 'tests - write barrier' }
 MirrorPrimitivesTest >> testMakingObjectReadOnly [
 	| point |
 	point := 10@20.
@@ -439,7 +441,7 @@ MirrorPrimitivesTest >> testMakingObjectReadOnly [
 	self assert: point equals: 100@20
 ]
 
-{ #category : #'tests - message performing' }
+{ #category : 'tests - message performing' }
 MirrorPrimitivesTest >> testPerformingMessage [
 	| actual |
 
@@ -448,7 +450,7 @@ MirrorPrimitivesTest >> testPerformingMessage [
 	self assert: actual equals: 2
 ]
 
-{ #category : #'tests - message performing' }
+{ #category : 'tests - message performing' }
 MirrorPrimitivesTest >> testPerformingMessageInSuperclass [
 	| actual |
 
@@ -457,7 +459,7 @@ MirrorPrimitivesTest >> testPerformingMessageInSuperclass [
 	self assert: actual equals: '(0@0)'
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 MirrorPrimitivesTest >> testPrintingObject [
 
 	| actual |
@@ -466,7 +468,7 @@ MirrorPrimitivesTest >> testPrintingObject [
 	self assert: actual equals: 'a Point'
 ]
 
-{ #category : #'tests - write barrier' }
+{ #category : 'tests - write barrier' }
 MirrorPrimitivesTest >> testRetryingFixedFieldModificationOfReadOnlyObject [
 
 	| array actual |

@@ -8,21 +8,23 @@ To launch the example:
 self new open
 "
 Class {
-	#name : #SDL2AthensDrawingExample,
-	#superclass : #SDL2AthensExample,
+	#name : 'SDL2AthensDrawingExample',
+	#superclass : 'SDL2AthensExample',
 	#instVars : [
 		'strokes',
 		'currentStroke'
 	],
-	#category : #'OSWindow-SDL2-Examples-Basic'
+	#category : 'OSWindow-SDL2-Examples-Basic',
+	#package : 'OSWindow-SDL2-Examples',
+	#tag : 'Basic'
 }
 
-{ #category : #'managing strokes' }
+{ #category : 'managing strokes' }
 SDL2AthensDrawingExample >> clearStrokes [
 	strokes removeAll
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 SDL2AthensDrawingExample >> clearSurface [
 	renderer athensSurface
 		drawDuring: [ :canvas |
@@ -31,30 +33,30 @@ SDL2AthensDrawingExample >> clearSurface [
 				drawShape: (0 @ 0 extent: window extent) ]
 ]
 
-{ #category : #factory }
+{ #category : 'factory' }
 SDL2AthensDrawingExample >> createEventHandler [
 	^ OSWindowAthensDrawingExampleEventHandler new
 			athensExample: self
 ]
 
-{ #category : #'managing strokes' }
+{ #category : 'managing strokes' }
 SDL2AthensDrawingExample >> endStroke [
 	currentStroke := OrderedCollection new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SDL2AthensDrawingExample >> initialize [
 	super initialize.
 	currentStroke := OrderedCollection new.
 	strokes := OrderedCollection new
 ]
 
-{ #category : #'managing strokes' }
+{ #category : 'managing strokes' }
 SDL2AthensDrawingExample >> moveAt: aPoint [
 	currentStroke add: aPoint
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 SDL2AthensDrawingExample >> redraw [
 	self clearSurface.
 	strokes
@@ -74,7 +76,7 @@ SDL2AthensDrawingExample >> redraw [
 						draw ] ]
 ]
 
-{ #category : #'managing strokes' }
+{ #category : 'managing strokes' }
 SDL2AthensDrawingExample >> startStrokeAt: aPoint [
 	currentStroke := OrderedCollection with: aPoint.
 	strokes add: currentStroke

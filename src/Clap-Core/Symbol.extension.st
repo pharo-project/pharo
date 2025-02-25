@@ -1,11 +1,11 @@
-Extension { #name : #Symbol }
+Extension { #name : 'Symbol' }
 
-{ #category : #'*Clap-Core' }
+{ #category : '*Clap-Core' }
 Symbol >> asClapIdentifier [
 	^ self
 ]
 
-{ #category : #'*Clap-Core' }
+{ #category : '*Clap-Core' }
 Symbol >> identifiesClapParameter: aClapParameter [
 	^ self = aClapParameter identifier
 ]

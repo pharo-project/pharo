@@ -1,20 +1,25 @@
 Class {
-	#name : #OCBytecodeGeneratorTest,
-	#superclass : #TestCase,
-	#category : #'OpalCompiler-Tests-Bytecode'
+	#name : 'OCBytecodeGeneratorTest',
+	#superclass : 'TestCase',
+	#category : 'OpalCompiler-Tests-Bytecode',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'Bytecode'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCBytecodeGeneratorTest class >> packageNamesUnderTest [
 	^ #('OpalCompiler')
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 OCBytecodeGeneratorTest >> bytecodeGenerator [
-	^ IRBytecodeGenerator newWithEncoderClass: EncoderForSistaV1
+
+	^ (OCIRBytecodeGenerator newWithEncoderClass: EncoderForSistaV1)
+		  compilationContext: OCCompilationContext new;
+		  yourself
 ]
 
-{ #category : #'tests - execution' }
+{ #category : 'tests - execution' }
 OCBytecodeGeneratorTest >> testExample [
 	| cm |
 	cm := self bytecodeGenerator
@@ -39,7 +44,7 @@ OCBytecodeGeneratorTest >> testExample [
 	^ cm
 ]
 
-{ #category : #'tests - execution' }
+{ #category : 'tests - execution' }
 OCBytecodeGeneratorTest >> testExample2 [
 	| cm |
 	cm := self bytecodeGenerator
@@ -60,12 +65,4 @@ OCBytecodeGeneratorTest >> testExample2 [
 	self assert: (cm valueWithReceiver: 2 @ 2 arguments: #(1)) equals: 'no'.
 	self assert: (cm valueWithReceiver: 2 @ 2 arguments: #(3)) equals: 'yes'.
 	^ cm
-]
-
-{ #category : #helper }
-OCBytecodeGeneratorTest >> testMethod: cm against: string [
-	| symbolic |
-	self assert: cm isCompiledMethod.
-	symbolic := String streamContents: [ :str | cm longPrintOn: str ].
-	self assert: symbolic equals: string
 ]

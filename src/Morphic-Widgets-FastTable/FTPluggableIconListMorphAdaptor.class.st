@@ -3,8 +3,8 @@ I'm an adaptor to adapt a PluggableIconListMorph into a FastTable.
 I implement all required methods, but transform them to serve a table through a FTDataSource.
 "
 Class {
-	#name : #FTPluggableIconListMorphAdaptor,
-	#superclass : #FTTableMorph,
+	#name : 'FTPluggableIconListMorphAdaptor',
+	#superclass : 'FTTableMorph',
 	#instVars : [
 		'setSelectionListSelector',
 		'getSelectionListSelector',
@@ -15,10 +15,12 @@ Class {
 		'doubleClickSelector',
 		'keystrokeActionSelector'
 	],
-	#category : #'Morphic-Widgets-FastTable-PluggableAdaptor'
+	#category : 'Morphic-Widgets-FastTable-PluggableAdaptor',
+	#package : 'Morphic-Widgets-FastTable',
+	#tag : 'PluggableAdaptor'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTPluggableIconListMorphAdaptor class >> on: anObject list: listSel primarySelection: getSelectionSel changePrimarySelection: setSelectionSel listSelection: getListSel changeListSelection: setListSel menu: getMenuSel [
 	^ self new
 		on: anObject
@@ -31,7 +33,7 @@ FTPluggableIconListMorphAdaptor class >> on: anObject list: listSel primarySelec
 		keystroke: #arrowKey:from:		"default"
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTPluggableIconListMorphAdaptor class >> on: anObject list: listSel primarySelection: getSelectionSel changePrimarySelection: setSelectionSel listSelection: getListSel changeListSelection: setListSel menu: getMenuSel keystroke: keyActionSel [
 	^ self new
 		on: anObject
@@ -44,7 +46,7 @@ FTPluggableIconListMorphAdaptor class >> on: anObject list: listSel primarySelec
 		keystroke: keyActionSel
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTPluggableIconListMorphAdaptor class >> on: anObject list: getListSel selected: getSelectionSel changeSelected: setSelectionSel [
 	"Create a 'pluggable' list view on the given model parameterized by the given message selectors."
 
@@ -57,7 +59,7 @@ FTPluggableIconListMorphAdaptor class >> on: anObject list: getListSel selected:
 		keystroke: #arrowKey:from:		"default"
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTPluggableIconListMorphAdaptor class >> on: anObject list: getListSel selected: getSelectionSel changeSelected: setSelectionSel menu: getMenuSel [
 	"Create a 'pluggable' list view on the given model parameterized by the given message selectors."
 
@@ -70,7 +72,7 @@ FTPluggableIconListMorphAdaptor class >> on: anObject list: getListSel selected:
 		keystroke: #arrowKey:from:		"default"
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTPluggableIconListMorphAdaptor class >> on: anObject list: getListSel selected: getSelectionSel changeSelected: setSelectionSel menu: getMenuSel keystroke: keyActionSel [
 	"Create a 'pluggable' list view on the given model parameterized by the given message selectors."
 
@@ -83,7 +85,7 @@ FTPluggableIconListMorphAdaptor class >> on: anObject list: getListSel selected:
 		keystroke: keyActionSel
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTPluggableIconListMorphAdaptor class >> on: anObject list: getListSel selected: getSelectionSel changeSelected: setSelectionSel menu: getMenuSel keystroke: keyActionSel wrapSelector: wrapSel [
 	"Create a 'pluggable' list view on the given model parameterized by the given message selectors."
 
@@ -97,7 +99,7 @@ FTPluggableIconListMorphAdaptor class >> on: anObject list: getListSel selected:
 		wrapSelector: wrapSel
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FTPluggableIconListMorphAdaptor class >> on: anObject list: getListSel selected: getSelectionSel changeSelected: setSelectionSel menu: getMenuSel wrapSelector: wrapSel [
 	"Create a 'pluggable' list view on the given model parameterized by the given message selectors."
 
@@ -111,7 +113,7 @@ FTPluggableIconListMorphAdaptor class >> on: anObject list: getListSel selected:
 		wrapSelector: wrapSel
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 FTPluggableIconListMorphAdaptor >> acceptDroppingMorph: aMorph event: event [
 	"I need to more or less copy this from old pluggable list because there
 	 is much bad code around :("
@@ -126,24 +128,24 @@ FTPluggableIconListMorphAdaptor >> acceptDroppingMorph: aMorph event: event [
 	self refresh
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTPluggableIconListMorphAdaptor >> autoDeselect [
 	^ self resetListSelector
 		ifNotNil: [ true ]
 		ifNil: [ self allowsDeselection ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTPluggableIconListMorphAdaptor >> autoDeselect: aBoolean [
 	self allowsDeselection: aBoolean
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> basicGetListElementSelector: aSelector [
 	self getListElementSelector: aSelector
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 FTPluggableIconListMorphAdaptor >> basicUpdateSelectionIndex [
 	| rowIndex |
 	self getIndexSelector ifNil: [ ^ self ].
@@ -155,89 +157,89 @@ FTPluggableIconListMorphAdaptor >> basicUpdateSelectionIndex [
 		ifFalse: [ self basicSelectIndexes: { rowIndex } ]
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> basicWrapSelector: aSelector [
 	self dataSource wrapSelector: aSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> doubleClickSelector [
 	^ doubleClickSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> doubleClickSelector: aSelector [
 	doubleClickSelector := aSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> dropItemSelector: aSelector [
 	self dataSource dropItemSelector: aSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTPluggableIconListMorphAdaptor >> getCurrentSelectionIndex [
 	"Answer the index of the current selection."
 	self getIndexSelector ifNil: [ ^0 ].
 	^self model perform: self getIndexSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> getIconSelector: aSelector [
 	self dataSource getIconSelector: aSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> getIndexSelector [
 	^ getIndexSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> getIndexSelector: aSelector [
 	getIndexSelector := aSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> getListElementSelector [
 	^ self dataSource getListElementSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> getListElementSelector: aSelector [
 	self dataSource getListElementSelector: aSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> getListSelector [
 	^ self dataSource getListSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> getListSelector: aSelector [
 	self dataSource getListSelector: aSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> getListSizeSelector: aSelector [
 	self dataSource getListSizeSelector: aSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> getMenuSelector: aSelector [
 	self dataSource getMenuSelector: aSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> getSelectionListSelector [
 	^ getSelectionListSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> getSelectionListSelector: aSelector [
 	getSelectionListSelector := aSelector
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTPluggableIconListMorphAdaptor >> initialize [
 	super initialize.
 	self initializeSelections.
@@ -245,7 +247,7 @@ FTPluggableIconListMorphAdaptor >> initialize [
 	self dataSource: FTPluggableIconListMorphAdaptorDataSource new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTPluggableIconListMorphAdaptor >> initializeKeyBindings [
 	super initializeKeyBindings.
 	self
@@ -253,7 +255,7 @@ FTPluggableIconListMorphAdaptor >> initializeKeyBindings [
 		toAction: [ self interactWithSelection ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTPluggableIconListMorphAdaptor >> initializeSelections [
 	self
 		onAnnouncement: FTSelectionChanged
@@ -265,7 +267,7 @@ FTPluggableIconListMorphAdaptor >> initializeSelections [
 		to: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTPluggableIconListMorphAdaptor >> interactWithSelection [
 	| cell |
 
@@ -275,19 +277,19 @@ FTPluggableIconListMorphAdaptor >> interactWithSelection [
 	cell submorphsDo: [ :each | each update: #interact ]
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FTPluggableIconListMorphAdaptor >> keyStroke: event [
 	(super keyStroke: event) ifTrue: [ ^ true ].
 	self keystrokeSelector
 		ifNotNil: [ (self keyStrokeAction: event) ifTrue: [ ^ true ] ].
-	(self keystrokeActionSelector notNil
+	(self keystrokeActionSelector isNotNil
 		and: [ event anyModifierKeyPressed ])
 		ifTrue: [ (self keyStrokeModifierAction: event) ifTrue: [ ^ true ] ].
 
 	^ false
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FTPluggableIconListMorphAdaptor >> keyStrokeAction: event [
 	| result |
 
@@ -298,7 +300,7 @@ FTPluggableIconListMorphAdaptor >> keyStrokeAction: event [
 	^ result = true
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 FTPluggableIconListMorphAdaptor >> keyStrokeModifierAction: event [
 	| args character |
 	character := event keyCharacter.
@@ -314,32 +316,32 @@ FTPluggableIconListMorphAdaptor >> keyStrokeModifierAction: event [
 	^self error: 'keystrokeActionSelector must be a 1- or 2-keyword symbol'
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> keystrokeActionSelector [
 	^ keystrokeActionSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> keystrokeActionSelector: aSelector [
 	keystrokeActionSelector := aSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> keystrokeSelector [
 	^ keystrokeSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> keystrokeSelector: aSelector [
 	keystrokeSelector := aSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTPluggableIconListMorphAdaptor >> model [
 	^ self dataSource model
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTPluggableIconListMorphAdaptor >> model: anObject [
 	| oldModel |
 	oldModel := self dataSource model.
@@ -348,7 +350,7 @@ FTPluggableIconListMorphAdaptor >> model: anObject [
 	self dataSource model: anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTPluggableIconListMorphAdaptor >> on: anObject list: listSel primarySelection: getSelectionSel changePrimarySelection: setSelectionSel listSelection: getListSel changeListSelection: setListSel menu: getMenuSel keystroke: keyActionSel [
 	"setup a whole load of pluggability options"
 
@@ -364,7 +366,7 @@ FTPluggableIconListMorphAdaptor >> on: anObject list: listSel primarySelection: 
 	self beMultipleSelection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTPluggableIconListMorphAdaptor >> on: anObject list: getListSel selected: getSelectionSel changeSelected: setSelectionSel menu: getMenuSel keystroke: keyActionSel [
 	self model: anObject.
 	self getListSelector: getListSel.
@@ -374,7 +376,7 @@ FTPluggableIconListMorphAdaptor >> on: anObject list: getListSel selected: getSe
 	self keystrokeActionSelector: keyActionSel
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FTPluggableIconListMorphAdaptor >> on: anObject list: getListSel selected: getSelectionSel changeSelected: setSelectionSel menu: getMenuSel keystroke: keyActionSel wrapSelector: wrapSel [
 	self model: anObject.
 	self getListSelector: getListSel.
@@ -385,36 +387,36 @@ FTPluggableIconListMorphAdaptor >> on: anObject list: getListSel selected: getSe
 	self basicWrapSelector: wrapSel
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> resetListSelector [
 	^ resetListSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> resetListSelector: aSelector [
 	resetListSelector := aSelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTPluggableIconListMorphAdaptor >> scrollValue [
 	"x is always zero because horizontal scroll bar is not yet implemented"
 
 	^ 0 @ self verticalScrollBar value
 ]
 
-{ #category : #ignored }
+{ #category : 'ignored' }
 FTPluggableIconListMorphAdaptor >> searchedElement: index [
 	self highlightIndex: index
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTPluggableIconListMorphAdaptor >> selectionChanged: ann [
 	self selectionChangedUpdateStatus: ann.
 	self selectionChangedUpdateIndex: ann.
 	self selectionChangedResetIfEmpty: ann
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTPluggableIconListMorphAdaptor >> selectionChangedResetIfEmpty: ann [
 	self resetListSelector ifNil: [ ^ self ].
 	ann newSelectedIndexes ifNotEmpty: [ ^ self ].
@@ -422,14 +424,14 @@ FTPluggableIconListMorphAdaptor >> selectionChangedResetIfEmpty: ann [
 	self model perform: self resetListSelector
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTPluggableIconListMorphAdaptor >> selectionChangedUpdateIndex: ann [
 	self setIndexSelector ifNil: [ ^ self ].
 
 	self model perform: self setIndexSelector with: (ann newSelectedIndexes ifNotEmpty: [ :indexes | indexes first ] ifEmpty: [ 0 ])
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTPluggableIconListMorphAdaptor >> selectionChangedUpdateStatus: ann [
 	"Updates the status of selection (informs new selections and deselections)"
 
@@ -440,34 +442,34 @@ FTPluggableIconListMorphAdaptor >> selectionChangedUpdateStatus: ann [
 	ann newSelectedIndexes do: [ :each | self model perform: self setSelectionListSelector with: each with: true ]
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> setIndexSelector [
 	^ setIndexSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> setIndexSelector: aSelector [
 	setIndexSelector := aSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> setSelectionListSelector [
 	^ setSelectionListSelector
 ]
 
-{ #category : #'accessing - selectors' }
+{ #category : 'accessing - selectors' }
 FTPluggableIconListMorphAdaptor >> setSelectionListSelector: aSelector [
 	setSelectionListSelector := aSelector
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FTPluggableIconListMorphAdaptor >> strongSelectionChanged: ann [
 	self doubleClickSelector ifNil: [ ^ self ].
 
 	self model perform: self doubleClickSelector withEnoughArguments: { ann }
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 FTPluggableIconListMorphAdaptor >> update: symbol [
 	(symbol == self getListSelector or: [ symbol == self getListElementSelector ])
 		ifTrue: [ ^ self updateList ].
@@ -476,7 +478,7 @@ FTPluggableIconListMorphAdaptor >> update: symbol [
 		ifTrue: [ ^ self updateSelectionIndex ]
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 FTPluggableIconListMorphAdaptor >> updateList [
 	(showIndex < self dataSource numberOfRows and: [ self isIndexVisible: showIndex ])
 		ifFalse: [ self resetPosition ].
@@ -487,18 +489,18 @@ FTPluggableIconListMorphAdaptor >> updateList [
 	self refresh
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 FTPluggableIconListMorphAdaptor >> updateSelectionIndex [
 	self basicUpdateSelectionIndex.
 	self refresh
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FTPluggableIconListMorphAdaptor >> vScrollValue: aNumber [
 	self verticalScrollBar setValue: aNumber
 ]
 
-{ #category : #'drag and drop' }
+{ #category : 'drag and drop' }
 FTPluggableIconListMorphAdaptor >> wantsDroppedMorph: aMorph event: anEvent [
 	"I need to more or less copy this from old pluggable list because there
 	 is much bad code around :("

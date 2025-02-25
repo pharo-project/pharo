@@ -2,23 +2,25 @@
 I add multi-producer/single-consumer semaphore based syncronization to the basic scheduler.
 "
 Class {
-	#name : #DelaySemaphoreScheduler,
-	#superclass : #DelayBasicScheduler,
+	#name : 'DelaySemaphoreScheduler',
+	#superclass : 'DelayBasicScheduler',
 	#instVars : [
 		'readyToSchedule',
 		'readyToUnschedule'
 	],
-	#category : #'Kernel-Delays'
+	#category : 'Kernel-Delays',
+	#package : 'Kernel',
+	#tag : 'Delays'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DelaySemaphoreScheduler >> initializeTicker: aDelayTicker suspendedDelaysHeap: aHeap [
 	super initializeTicker: aDelayTicker suspendedDelaysHeap: aHeap.
 	readyToSchedule := Semaphore new signal.
 	readyToUnschedule := Semaphore new signal
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DelaySemaphoreScheduler >> schedule: aDelay [
 	"This is the front-half of scheduling a delay. For back-half see #timingPrioritySchedule:"
 
@@ -30,7 +32,7 @@ DelaySemaphoreScheduler >> schedule: aDelay [
 	timingSemaphore signal. "Transfer execution to back-end #scheduleAtTimingPriority"
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DelaySemaphoreScheduler >> scheduleAtTimingPriority [
 	"Private! Invoke only from the timing-priority process.
 	 This is the back-half of scheduling a delay. For front-half see #schedule:"
@@ -39,14 +41,14 @@ DelaySemaphoreScheduler >> scheduleAtTimingPriority [
 	super 	scheduleAtTimingPriority
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DelaySemaphoreScheduler >> unschedule: aDelay [
 	readyToUnschedule  wait.  "Starts signalled. Resignalled from back-end #unscheduleAtTimingPriority"
 	delayToStop := aDelay.
 	timingSemaphore signal. "Transfer execution to back-end #unscheduleAtTimingPriority"
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 DelaySemaphoreScheduler >> unscheduleAtTimingPriority [
 	"Private! Invoke only from the timing-priority process.
 	 This is the back-half of scheduling a delay. For front-half see #schedule:"

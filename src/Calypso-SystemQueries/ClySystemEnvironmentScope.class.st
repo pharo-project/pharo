@@ -9,40 +9,42 @@ You can access default instance from current image environment:
 	ClyNavigationEnvironment currentImageScope
 "
 Class {
-	#name : #ClySystemEnvironmentScope,
-	#superclass : #ClySystemScope,
-	#category : #'Calypso-SystemQueries-Scopes'
+	#name : 'ClySystemEnvironmentScope',
+	#superclass : 'ClySystemScope',
+	#category : 'Calypso-SystemQueries-Scopes',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Scopes'
 }
 
-{ #category : #'refactoring support' }
+{ #category : 'refactoring support' }
 ClySystemEnvironmentScope >> asRBEnvironment [
 
 	^self environment asRBEnvironment
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClySystemEnvironmentScope >> classesDo: aBlock [
 
 	self system classes do: aBlock
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClySystemEnvironmentScope >> includesClassesAffectedBy: aSystemAnnouncement [
 	^aSystemAnnouncement affectsClasses
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClySystemEnvironmentScope >> includesMethodsAffectedBy: aSystemAnnouncement [
 	^aSystemAnnouncement affectsMethods
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySystemEnvironmentScope >> isCurrentImage [
 
 	^self system == ClySystemEnvironment currentImage
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClySystemEnvironmentScope >> methodsDo: aBlock [
 
 	self classesDo: [:class |
@@ -50,25 +52,19 @@ ClySystemEnvironmentScope >> methodsDo: aBlock [
 		class classSide localMethods do: aBlock]
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClySystemEnvironmentScope >> packagesDo: aBlock [
 
 	self system packages do: aBlock
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClySystemEnvironmentScope >> processesDo: aBlock [
 
 	self system allProcesses do: aBlock
 ]
 
-{ #category : #'accessing - projects' }
-ClySystemEnvironmentScope >> projectQueryFor: aScope [
-
-	^ environment system projectManager projectQueryFor: aScope
-]
-
-{ #category : #queries }
+{ #category : 'queries' }
 ClySystemEnvironmentScope >> projectsDo: aBlock [
 
 	self system projects do: aBlock

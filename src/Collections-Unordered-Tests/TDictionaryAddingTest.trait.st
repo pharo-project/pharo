@@ -2,28 +2,30 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TDictionaryAddingTest,
-	#category : #'Collections-Unordered-Tests-Traits'
+	#name : 'TDictionaryAddingTest',
+	#category : 'Collections-Unordered-Tests-Traits',
+	#package : 'Collections-Unordered-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryAddingTest >> associationWithKeyAlreadyInToAdd [
 	" return an association that will be used to add to nonEmptyDict (the key of this association is already included in nonEmptyDict)"
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryAddingTest >> associationWithKeyNotInToAdd [
 	" return an association that will be used to add to nonEmptyDict (the key of this association is not included in nonEmptyDict)"
 	self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TDictionaryAddingTest >> nonEmptyDict [
 	self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TDictionaryAddingTest >> test0FixtureDictionaryAddingTest [
 	self nonEmptyDict.
 	self denyEmpty: self nonEmptyDict.
@@ -33,7 +35,7 @@ TDictionaryAddingTest >> test0FixtureDictionaryAddingTest [
 	self assert: (self nonEmptyDict keys includes: self associationWithKeyAlreadyInToAdd key)
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 TDictionaryAddingTest >> testAddAll [
 
 	| collectionToAdd collection result oldSize |
@@ -53,7 +55,7 @@ TDictionaryAddingTest >> testAddAll [
 	result associationsDo: [:assoc | self assert: (collection at:  (assoc key) ) = assoc value]
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 TDictionaryAddingTest >> testAddWithKeyAlreadyIn [
 	| dictionary result association oldSize |
 	dictionary := self nonEmptyDict.
@@ -66,7 +68,7 @@ TDictionaryAddingTest >> testAddWithKeyAlreadyIn [
 	self assert: dictionary size equals: oldSize
 ]
 
-{ #category : #'tests - adding' }
+{ #category : 'tests - adding' }
 TDictionaryAddingTest >> testAddWithKeyNotIn [
 	| dictionary result association oldSize |
 	dictionary := self nonEmptyDict.
@@ -77,25 +79,4 @@ TDictionaryAddingTest >> testAddWithKeyNotIn [
 	self assert: result equals: association.
 	self assert: (dictionary at: association key) equals: association value.
 	self assert: dictionary size equals: oldSize + 1
-]
-
-{ #category : #'tests - adding' }
-TDictionaryAddingTest >> testDeclareFrom [
-	| newDict v dictionary keyIn associationKeyNotIn |
-	dictionary := self nonEmptyDict.
-	keyIn := dictionary keys anyOne.
-	associationKeyNotIn := self associationWithKeyNotInToAdd.
-	newDict := self collectionClass new
-		add: associationKeyNotIn;
-		yourself.
-
-	"if the key already exist, nothing changes"
-	v := dictionary at: keyIn.
-	dictionary declare: keyIn from: newDict.
-	self assert: (dictionary at: keyIn) equals: v.
-
-	"if the key does not exist, then it gets removed from newDict and is added to the receiver"
-	self nonEmptyDict declare: associationKeyNotIn key from: newDict.
-	self assert: (dictionary at: associationKeyNotIn key) equals: associationKeyNotIn value.
-	self assert: newDict size equals: 0
 ]

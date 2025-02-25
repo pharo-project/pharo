@@ -2,27 +2,29 @@
 I am a utility for replacing the normal Stdio during tests and maybe for activating Clap commands from a workspace.
 "
 Class {
-	#name : #ClapPluggableStdio,
-	#superclass : #Object,
+	#name : 'ClapPluggableStdio',
+	#superclass : 'Object',
 	#instVars : [
 		'in',
 		'out',
 		'err'
 	],
-	#category : #'Clap-Core-Activation'
+	#category : 'Clap-Core-Activation',
+	#package : 'Clap-Core',
+	#tag : 'Activation'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClapPluggableStdio class >> onByteArrays [
 	^ self onByteArraysWithInputBytes: #[]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClapPluggableStdio class >> onByteArraysWithInput: aString [
 	^ self onByteArraysWithInputBytes: aString utf8Encoded
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClapPluggableStdio class >> onByteArraysWithInputBytes: aByteArray [
 	^ self new
 		initializeInput: aByteArray readStream
@@ -30,24 +32,24 @@ ClapPluggableStdio class >> onByteArraysWithInputBytes: aByteArray [
 		error: #[] writeStream
 ]
 
-{ #category : #initializing }
+{ #category : 'initialization' }
 ClapPluggableStdio >> initializeInput: inputStream output: outputStream error: errorStream [
 	in := inputStream.
 	out := outputStream.
 	err := errorStream
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapPluggableStdio >> stderr [
 	^ err
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapPluggableStdio >> stdin [
 	^ in
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapPluggableStdio >> stdout [
 	^ out
 ]

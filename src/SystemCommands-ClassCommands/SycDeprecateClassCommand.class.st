@@ -7,54 +7,53 @@ Internal Representation and Key Implementation Points.
 	newName:		<String>
 "
 Class {
-	#name : #SycDeprecateClassCommand,
-	#superclass : #SycSingleClassCommand,
+	#name : 'SycDeprecateClassCommand',
+	#superclass : 'SycSingleClassCommand',
 	#instVars : [
 		'newName'
 	],
-	#category : #'SystemCommands-ClassCommands'
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycDeprecateClassCommand class >> canBeExecutedInContext: aToolContext [
 
 	^ (super canBeExecutedInContext: aToolContext) and: [
-		  aToolContext lastSelectedClass isDeprecated not ]
+		  aToolContext lastSelectedClass realClass isDeprecated not ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 SycDeprecateClassCommand >> asRefactorings [
 	| refactoring |
-	refactoring := RBDeprecateClassRefactoring deprecate: targetClass in: newName name.
+	refactoring := RBDeprecateClassRefactoring deprecate: targetClass name in: newName name.
 	^ { refactoring }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycDeprecateClassCommand >> defaultMenuIconName [
 	^ #bug
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycDeprecateClassCommand >> defaultMenuItemName [
 	^'Deprecate'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycDeprecateClassCommand >> execute [
 
 	self asRefactorings do: [ :ref | ref execute ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycDeprecateClassCommand >> isComplexRefactoring [
 	^ true
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycDeprecateClassCommand >> prepareFullExecutionInContext: aToolContext [
+
 	super prepareFullExecutionInContext: aToolContext.
-	newName := aToolContext browser searchDialog
-		requestSingleObject: 'Choose new class'
-		from: ClyAllClassesQuery sorted.
-	newName ifNil: [ CmdCommandAborted signal]
+	newName := aToolContext requestSingleClass: 'Choose new class'
 ]

@@ -1,6 +1,6 @@
-Extension { #name : #SycMigrateReferencesOfClassCommand }
+Extension { #name : 'SycMigrateReferencesOfClassCommand' }
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 SycMigrateReferencesOfClassCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 

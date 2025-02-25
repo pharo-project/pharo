@@ -1,10 +1,12 @@
 Class {
-	#name : #OCCompiledMethodIntegrityTest,
-	#superclass : #TestCase,
-	#category : #'OpalCompiler-Tests-Misc'
+	#name : 'OCCompiledMethodIntegrityTest',
+	#superclass : 'TestCase',
+	#category : 'OpalCompiler-Tests-Misc',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'Misc'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCompiledMethodIntegrityTest >> testBlockTemps [
 	| newCompiledMethod |
 	newCompiledMethod := OpalCompiler new
@@ -20,7 +22,7 @@ OCCompiledMethodIntegrityTest >> testBlockTemps [
 	self assert: newCompiledMethod primitive equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCompiledMethodIntegrityTest >> testNotUsedArgument [
 	| newCompiledMethod |
 	newCompiledMethod := OpalCompiler new
@@ -36,7 +38,7 @@ OCCompiledMethodIntegrityTest >> testNotUsedArgument [
 	self assert: newCompiledMethod primitive equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCompiledMethodIntegrityTest >> testPragmas [
 	| newCompiledMethod |
 	newCompiledMethod := OpalCompiler new
@@ -57,7 +59,7 @@ OCCompiledMethodIntegrityTest >> testPragmas [
 	self assert: newCompiledMethod primitive equals: 256
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCompiledMethodIntegrityTest >> testPrimitive [
 	| newCompiledMethod |
 	newCompiledMethod := OpalCompiler new
@@ -74,7 +76,7 @@ OCCompiledMethodIntegrityTest >> testPrimitive [
 	self assert: newCompiledMethod primitive equals: 62
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCompiledMethodIntegrityTest >> testRemoteTempInVector [
 	| newCompiledMethod |
 	newCompiledMethod := OpalCompiler new
@@ -94,7 +96,7 @@ OCCompiledMethodIntegrityTest >> testRemoteTempInVector [
 	self assert: newCompiledMethod primitive equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCompiledMethodIntegrityTest >> testUndeclaredVariable [
 	| newCompiledMethod undeclaredBinding |
 	newCompiledMethod := OpalCompiler new
@@ -108,10 +110,13 @@ OCCompiledMethodIntegrityTest >> testUndeclaredVariable [
 	undeclaredBinding := newCompiledMethod literals detect: [ :each | each name = #undeclaredTestVar ].
 	self assert: undeclaredBinding class equals: UndeclaredVariable.
 	self assert: undeclaredBinding identicalTo: (Undeclared associationAt: #undeclaredTestVar).
+	self assert: (undeclaredBinding registeredMethods includes: newCompiledMethod).
+	"but as the method is not installed, it is not a usingMethod"
+	self deny: (undeclaredBinding usingMethods includes: newCompiledMethod).
 	undeclaredBinding unregister
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCompiledMethodIntegrityTest >> testUndeclaredVariableWhenItIsAlreadyRegistered [
 	| newCompiledMethod undeclaredBinding var |
 	var := UndeclaredVariable registeredWithName: #undeclaredTestVar.
@@ -128,7 +133,7 @@ OCCompiledMethodIntegrityTest >> testUndeclaredVariableWhenItIsAlreadyRegistered
 	undeclaredBinding unregister
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCCompiledMethodIntegrityTest >> testUndeclaredVariableWhenItIsAlreadyRegisteredAsAssociation [
 	"Test describes current state of bootstrap where undeclared vars are encoded using associations.
 	It breaks introduced logic which explicitly return existing variable from Undeclared registry.
@@ -136,7 +141,7 @@ OCCompiledMethodIntegrityTest >> testUndeclaredVariableWhenItIsAlreadyRegistered
 	The bootstrap will be updated at some point. But now this case needs to be supported:
 		- declaring undefined var should update registered variable when its type is not undeclared var"
 	| newCompiledMethod undeclaredBinding |
-	Undeclared add: #undeclaredTestVar -> nil.
+	(UndeclaredVariable named: #undeclaredTestVar) register.
 	newCompiledMethod := OpalCompiler new
 		source:
 			'methodWithUndeclaredVar

@@ -9,8 +9,8 @@ FreeTypeFontSelectorDialogWindow new open.
 
 "
 Class {
-	#name : #LogicalFontManager,
-	#superclass : #Object,
+	#name : 'LogicalFontManager',
+	#superclass : 'Object',
 	#instVars : [
 		'fontProviders'
 	],
@@ -20,39 +20,41 @@ Class {
 	#classInstVars : [
 		'current'
 	],
-	#category : #'Fonts-Infrastructure-Logical'
+	#category : 'Fonts-Infrastructure-Logical',
+	#package : 'Fonts-Infrastructure',
+	#tag : 'Logical'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LogicalFontManager class >> current [
 
 	^current ifNil: [current := self defaultCurrent ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LogicalFontManager class >> defaultCurrent [
 	^self new
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 LogicalFontManager class >> reset [
 
 	current := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LogicalFontManager class >> unload [
 	current ifNotNil: [current initialize].
 	current := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 LogicalFontManager >> addFontProvider: aFontProvider [
 
 	fontProviders addLast: aFontProvider
 ]
 
-{ #category : #'font families' }
+{ #category : 'font families' }
 LogicalFontManager >> allFamilies [
 	"answer an Array containing all the font families from the receiver's fontProviders,
 	together with any TextStyle font families, sorted by family name"
@@ -75,14 +77,14 @@ LogicalFontManager >> allFamilies [
 	^ (answer asSortedCollection: [ :a :b | a familyName <= b familyName ]) asArray
 ]
 
-{ #category : #'font lookup' }
+{ #category : 'font lookup' }
 LogicalFontManager >> bestFontFor: aLogicalFont [
 	"look up best font from the receivers fontProviders"
 
 	^self bestFontFor: aLogicalFont whenFindingAlternativeIgnoreAll: Set new
 ]
 
-{ #category : #'font lookup' }
+{ #category : 'font lookup' }
 LogicalFontManager >> bestFontFor: aLogicalFont whenFindingAlternativeIgnoreAll: ignoreSet [
 	"look up best real font from the receivers fontProviders.
 	If we can't find a font, then answer an alternative real font.
@@ -120,7 +122,7 @@ LogicalFontManager >> bestFontFor: aLogicalFont whenFindingAlternativeIgnoreAll:
 	^nil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 LogicalFontManager >> initialize [
 	super initialize.
 	fontProviders := OrderedCollection new: 10

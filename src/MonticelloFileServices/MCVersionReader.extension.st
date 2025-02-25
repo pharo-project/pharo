@@ -1,6 +1,6 @@
-Extension { #name : #MCVersionReader }
+Extension { #name : 'MCVersionReader' }
 
-{ #category : #'*MonticelloFileServices' }
+{ #category : '*MonticelloFileServices' }
 MCVersionReader class >> fileReaderServicesForFile: fullName suffix: suffix [
 	<fileService>
 	self subclassesDo:[:class |
@@ -10,7 +10,7 @@ MCVersionReader class >> fileReaderServicesForFile: fullName suffix: suffix [
 		
 ]
 
-{ #category : #'*MonticelloFileServices' }
+{ #category : '*MonticelloFileServices' }
 MCVersionReader class >> loadVersionStream: stream fromDirectory: directory [
 	| version repository |
 	repository := MCDirectoryRepository new directory: directory.
@@ -20,17 +20,17 @@ MCVersionReader class >> loadVersionStream: stream fromDirectory: directory [
 
 ]
 
-{ #category : #'*MonticelloFileServices' }
+{ #category : '*MonticelloFileServices' }
 MCVersionReader class >> mergeVersionStream: stream [
 	(self versionFromStream: stream) merge
 ]
 
-{ #category : #'*MonticelloFileServices' }
+{ #category : '*MonticelloFileServices' }
 MCVersionReader class >> openVersionFromStream: stream [
 	(self versionFromStream: stream) open
 ]
 
-{ #category : #'*MonticelloFileServices' }
+{ #category : '*MonticelloFileServices' }
 MCVersionReader class >> serviceLoadVersion [
 	^ (SimpleServiceEntry
 		provider: self
@@ -41,7 +41,7 @@ MCVersionReader class >> serviceLoadVersion [
 		argumentGetter: [ :fileList | { fileList binaryReadStream . fileList parent } ]
 ]
 
-{ #category : #'*MonticelloFileServices' }
+{ #category : '*MonticelloFileServices' }
 MCVersionReader class >> serviceMergeVersion [
 	^ (SimpleServiceEntry
 		provider: self
@@ -52,7 +52,7 @@ MCVersionReader class >> serviceMergeVersion [
 		argumentGetter: [ :fileList | fileList binaryReadStream ]
 ]
 
-{ #category : #'*MonticelloFileServices' }
+{ #category : '*MonticelloFileServices' }
 MCVersionReader class >> serviceOpenVersion [
 	^ (SimpleServiceEntry
 		provider: self
@@ -63,7 +63,7 @@ MCVersionReader class >> serviceOpenVersion [
 		argumentGetter: [ :fileList | fileList binaryReadStream ]
 ]
 
-{ #category : #'*MonticelloFileServices' }
+{ #category : '*MonticelloFileServices' }
 MCVersionReader class >> services [
 	^ Array 
 		with: self serviceLoadVersion

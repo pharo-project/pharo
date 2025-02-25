@@ -1,16 +1,17 @@
 Class {
-	#name : #CDClassWithTraitCompositionSequenceParserTest,
-	#superclass : #CDTraitCompositionClassParserTest,
-	#category : #'ClassParser-Tests'
+	#name : 'CDClassWithTraitCompositionSequenceParserTest',
+	#superclass : 'CDTraitCompositionClassParserTest',
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDClassWithTraitCompositionSequenceParserTest >> testTraitDefinitionNodeIsTraitSequenceNode [
 
 	self assert: self traitCompositionNode isTraitSequenceNode
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDClassWithTraitCompositionSequenceParserTest >> traitDefinition [
 
 	^ 'MyTrait + (AnotherTrait - {#selector} @ {#selector1 -> #selector})'

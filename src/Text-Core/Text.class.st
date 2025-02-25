@@ -4,8 +4,8 @@ I represent a character string that has been marked with abstract changes in cha
 	runs		a RunArray
 "
 Class {
-	#name : #Text,
-	#superclass : #ArrayedCollection,
+	#name : 'Text',
+	#superclass : 'ArrayedCollection',
 	#instVars : [
 		'string',
 		'runs'
@@ -13,10 +13,12 @@ Class {
 	#pools : [
 		'TextConstants'
 	],
-	#category : #'Text-Core-Base'
+	#category : 'Text-Core-Base',
+	#package : 'Text-Core',
+	#tag : 'Base'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 Text class >> addAttribute: att toArray: others [
 	"Add a new text attribute to an existing set"
 	"NOTE: The use of reset and set in this code is a specific
@@ -28,7 +30,7 @@ Text class >> addAttribute: att toArray: others [
 		att set ifTrue: [strm nextPut: att]]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Text class >> fromString: aString [
   "Answer an instance of me whose characters are those of the argument, aString."
 
@@ -37,29 +39,20 @@ Text class >> fromString: aString [
     attributes:{ "No default attributes" }
 ]
 
-{ #category : #'instance creation' }
-Text class >> fromUser [
-	"Answer an instance of me obtained by requesting the user to type a string."
-	"Text fromUser"
-
-	^ self fromString:
-		(UIManager default request: 'Enter text followed by carriage return')
-]
-
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Text class >> initialFont: aStrikeFont stringOrText: aStringOrText [
 	"Answer an instance of me whose characters are aString."
 
 	^Text string: aStringOrText asString attribute: (TextFontReference toFont: aStrikeFont)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Text class >> new: stringSize [
 
 	^self fromString: (String new: stringSize)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Text class >> streamContents: blockWithArg [
 	| stream |
 	stream := TextStream on: (self new: 400).
@@ -67,7 +60,7 @@ Text class >> streamContents: blockWithArg [
 	^ stream contents
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Text class >> string: aString attribute: att [
 	"Answer an instance of me whose characters are aString.
 	att is a TextAttribute."
@@ -75,7 +68,7 @@ Text class >> string: aString attribute: att [
 	^self string: aString attributes: (Array with: att)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Text class >> string: aString attributes: atts [
 	"Answer an instance of me whose characters are those of aString.
 	atts is an array of TextAttributes."
@@ -83,13 +76,13 @@ Text class >> string: aString attributes: atts [
 	^self string: aString runs: (RunArray new: aString size withAll: atts)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Text class >> string: aString runs: anArray [
 
 	^self basicNew setString: aString setRuns: anArray
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Text >> = other [
 	"Am I equal to the other Text or String?
 	***** Warning ***** Two Texts are considered equal if they have the same characters in them.  They might have completely different emphasis, fonts, sizes, text actions, or embedded morphs.  If you need to find out if one is a true copy of the other, you must do (text1 = text2 and: [text1 runs = text2 runs])."
@@ -100,12 +93,12 @@ Text >> = other [
 	^ false
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 Text >> addAttribute: att [
 	^ self addAttribute: att from: 1 to: self size
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 Text >> addAttribute: att from: start to: stop [
 	"Set the attribute for characters in the interval start to stop."
 	self runs: (runs copyReplaceFrom: start to: stop
@@ -114,7 +107,7 @@ Text >> addAttribute: att from: start to: stop [
 				[:attributes | Text addAttribute: att toArray: attributes]))
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 Text >> alignmentAt: characterIndex ifAbsent: aBlock [
 	| attributes emph |
 	self size = 0 ifTrue: [^aBlock value].
@@ -124,21 +117,21 @@ Text >> alignmentAt: characterIndex ifAbsent: aBlock [
 	^ emph ifNil: aBlock ifNotNil: [emph alignment]
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 Text >> allBold [
 	"Force this whole text to be bold."
 	string size = 0 ifTrue: [^self].
 	self makeBoldFrom: 1 to: string size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Text >> append: stringOrText [
 
 	self replaceFrom: string size + 1
 				to: string size with: stringOrText
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Text >> asNumber [
 	"Answer the number created by interpreting the receiver as the textual
 	representation of a number."
@@ -146,7 +139,7 @@ Text >> asNumber [
 	^string asNumber
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Text >> asOctetStringText [
 
 	string class == WideString ifTrue: [
@@ -155,40 +148,40 @@ Text >> asOctetStringText [
 	^self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Text >> asString [
 	"Answer a String representation of the textual receiver."
 
 	^string
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Text >> asStringOrText [
 	"Answer the receiver itself."
 
 	^self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Text >> asText [
 	"Answer the receiver itself."
 
 	^self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Text >> at: index [
 
 	^string at: index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Text >> at: index put: character [
 
 	^string at: index put: character
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 Text >> attributesAt: characterIndex [
 	"Answer the code for characters in the run beginning at characterIndex."
 	"NB: no senders any more (supplanted by #attributesAt:forStyle: but retained for the moment in order not to break user code that may exist somewhere that still calls this"
@@ -200,7 +193,7 @@ Text >> attributesAt: characterIndex [
 	^ attributes
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 Text >> attributesAt: characterIndex do: aBlock [
 	"Answer the code for characters in the run beginning at characterIndex."
 	"NB: no senders any more (supplanted by #attributesAt:forStyle: but retained for the moment in order not to break user code that may exist somewhere that still calls this"
@@ -208,17 +201,15 @@ Text >> attributesAt: characterIndex do: aBlock [
 	(runs at: characterIndex) do: aBlock
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 Text >> attributesAt: characterIndex forStyle: aTextStyle [
 	"Answer the code for characters in the run beginning at characterIndex."
-	| attributes |
 	self size = 0
-		ifTrue: [^ Array with: (TextFontChange new fontNumber: aTextStyle defaultFontIndex)].  "null text tolerates access"
-	attributes := runs at: characterIndex.
-	^ attributes
+		ifTrue: [^ {TextFontChange new fontNumber: aTextStyle defaultFontIndex}].  "null text tolerates access"
+	^ runs at: characterIndex
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Text >> copyFrom: start to: stop [
 	"Answer a copied subrange of the receiver."
 
@@ -234,7 +225,7 @@ Text >> copyFrom: start to: stop [
 		runs: (runs copyFrom: realStart to: realStop)
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Text >> copyReplaceFrom: start to: stop with: aTextOrString [
 
 	| txt |
@@ -244,7 +235,7 @@ Text >> copyReplaceFrom: start to: stop with: aTextOrString [
              runs: (runs copyReplaceFrom: start to: stop with: txt runs)
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Text >> copyReplaceTokens: oldSubstring with: newSubstring [
 	"Replace all occurrences of oldSubstring that are surrounded
 	by non-alphanumeric characters"
@@ -252,7 +243,7 @@ Text >> copyReplaceTokens: oldSubstring with: newSubstring [
 	"'File asFile Files File''s File' copyReplaceTokens: 'File' with: 'Snick'"
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Text >> copyWithoutExternalReferences [
 
 	^ self copy
@@ -260,18 +251,18 @@ Text >> copyWithoutExternalReferences [
 		yourself
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Text >> deepCopy [
 
 	^ self copy "Both string and runs are assumed to be read-only"
 ]
 
-{ #category : #printing }
+{ #category : 'displaying' }
 Text >> displayStringOn: aStream [
 	self printOn: aStream
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 Text >> emphasisAt: characterIndex [
 	"Answer the fontfor characters in the run beginning at characterIndex."
 	| attributes |
@@ -281,18 +272,18 @@ Text >> emphasisAt: characterIndex [
 		[:emph :att | emph bitOr: att emphasisCode]
 ]
 
-{ #category : #'paragraph support' }
+{ #category : 'paragraph support' }
 Text >> encompassLine: anInterval [
 	^string encompassLine: anInterval
 ]
 
-{ #category : #'paragraph support' }
+{ #category : 'paragraph support' }
 Text >> encompassParagraph: anInterval [
 
 	^string encompassParagraph: anInterval
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 Text >> find: attribute [
 	"Return the first interval over which this attribute applies"
 	| begin end |
@@ -307,7 +298,7 @@ Text >> find: attribute [
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Text >> findString: aString startingAt: start [
 	"Answer the index of substring within the receiver, starting at index
 	start. If the receiver does not contain substring, answer 0."
@@ -315,7 +306,7 @@ Text >> findString: aString startingAt: start [
 	^string findString: aString asString startingAt: start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Text >> findString: aString startingAt: start caseSensitive: caseSensitive [
 	"Answer the index of substring within the receiver, starting at index
 	start. If the receiver does not contain substring, answer 0."
@@ -323,12 +314,12 @@ Text >> findString: aString startingAt: start caseSensitive: caseSensitive [
 	^string findString: aString asString startingAt: start caseSensitive: caseSensitive
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 Text >> fontAt: characterIndex [
 	^self fontAt: characterIndex withStyle: TextStyle default
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 Text >> fontAt: characterIndex withStyle: aTextStyle [
 	"Answer the fontfor characters in the run beginning at characterIndex."
 	| attributes font |
@@ -340,7 +331,7 @@ Text >> fontAt: characterIndex withStyle: aTextStyle [
 	^ font
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 Text >> fontNumberAt: characterIndex [
 	"Answer the fontNumber for characters in the run beginning at characterIndex."
 	| attributes fontNumber |
@@ -351,52 +342,52 @@ Text >> fontNumberAt: characterIndex [
 	^ fontNumber
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Text >> hasWideCharacterFrom: start to: stop [
 	^string hasWideCharacterFrom: start to: stop
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Text >> hash [
 	"#hash is implemented, because #= is implemented.  We are now equal to a string with the same characters.  Hash must reflect that."
 
 	^ string hash
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Text >> howManyMatch: aString [
 
 	^ self string howManyMatch: aString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Text >> includesSubstring: substring [
 	^ substring isEmpty or: [ (self findString: substring startingAt: 1) > 0 ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Text >> includesSubstring: aString caseSensitive: caseSensitive [
 
 	^ (self findString: aString startingAt: 1 caseSensitive: caseSensitive) > 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Text >> initialStyle [
 	^TextStyle default
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 Text >> isText [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Text >> lineCount [
 
 	^ string lineCount
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 Text >> makeAllColor: color [
 	| attribute |
 	attribute := TextColor color: color.
@@ -404,13 +395,13 @@ Text >> makeAllColor: color [
 	^ self addAttribute: attribute from: 1 to: self size
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 Text >> makeBoldFrom: start to: stop [
 
 	^ self addAttribute: TextEmphasis bold from: start to: stop
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 Text >> makeColor: color from: start to: stop [
 	| attribute |
 	attribute := TextColor color: color.
@@ -418,26 +409,26 @@ Text >> makeColor: color from: start to: stop [
 	^ self addAttribute: attribute from: start to: stop
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 Text >> postCopy [
 	super postCopy.
 	string := string copy.
 	runs := runs copy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Text >> prepend: stringOrText [
 
 	self replaceFrom: 1 to: 0 with: stringOrText
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Text >> printOn: aStream [
 	self printNameOn: aStream.
 	aStream nextPutAll: ' for '; print: string
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Text >> rangeOf: attribute startingAt: index [
 "Answer an interval that gives the range of attribute at index position  index. An empty interval with start value index is returned when the attribute is not present at position index.  "
    ^string size = 0
@@ -445,12 +436,12 @@ Text >> rangeOf: attribute startingAt: index [
 	 ifFalse: [runs rangeOf: attribute startingAt: index]
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 Text >> removeAttribute: att [
 	^ self removeAttribute: att from: 1 to: self size
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 Text >> removeAttribute: att from: start to: stop [
 	"Remove the attribute over the interval start to stop."
 	self runs: (runs copyReplaceFrom: start to: stop
@@ -459,7 +450,7 @@ Text >> removeAttribute: att from: start to: stop [
 				[:attributes | attributes copyWithout: att]))
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Text >> removeAttributesThat: removalBlock replaceAttributesThat: replaceBlock by: convertBlock [
 	"Enumerate all attributes in the receiver. Remove those passing removalBlock and replace those passing replaceBlock after converting it through convertBlock"
 	| added removed |
@@ -489,7 +480,7 @@ Text >> removeAttributesThat: removalBlock replaceAttributesThat: replaceBlock b
 		self addAttribute: spec last from: spec first to: spec second]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Text >> replaceFrom: start to: stop with: aText [
 
 	| txt |
@@ -498,7 +489,7 @@ Text >> replaceFrom: start to: stop with: aText [
 	runs := runs copyReplaceFrom: start to: stop with: txt runs
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Text >> replaceFrom: start to: stop with: replacement startingAt: repStart [
  	"This destructively replaces elements from start to stop in the receiver starting at index, repStart, in replacementCollection. Do it to both the string and the runs."
 
@@ -509,7 +500,7 @@ Text >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	runs := runs copyReplaceFrom: start to: stop with: newRepRuns
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Text >> reversed [
 
  	"Answer a copy of the receiver with element order reversed."
@@ -519,7 +510,7 @@ Text >> reversed [
    "  It is assumed that  self size = runs size  holds. "
 ]
 
-{ #category : #emphasis }
+{ #category : 'emphasis' }
 Text >> runLengthFor: characterIndex [
 	"Answer the count of characters remaining in run beginning with
 	characterIndex."
@@ -527,13 +518,13 @@ Text >> runLengthFor: characterIndex [
 	^runs runLengthAt: characterIndex
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Text >> runs [
 
 	^runs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Text >> runs: anArray [
 	anArray size = string size
 		ifFalse:
@@ -541,20 +532,20 @@ Text >> runs: anArray [
 	runs := anArray
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 Text >> setString: aString setRuns: anArray [
 
 	string := aString.
 	runs := anArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Text >> size [
 
 	^string size
 ]
 
-{ #category : #printing }
+{ #category : 'storing' }
 Text >> storeOn: aStream [
 
 	aStream nextPutAll: '(Text string: ';
@@ -564,14 +555,30 @@ Text >> storeOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Text >> string [
 	"Answer the string representation of the receiver."
 
 	^string
 ]
 
-{ #category : #testing }
+{ #category : 'trimming' }
+Text >> trim [
+	
+	| left right |
+	left := 1.
+	right := self size.
+	
+	[ left <= right and: [ (self at: left) isSeparator  ] ]
+		whileTrue: [ left := left + 1 ].
+		
+	[ left <= right and: [ (self at: right) isSeparator ] ]
+		whileTrue: [ right := right - 1 ].
+		
+	^ self copyFrom: left to: right
+]
+
+{ #category : 'testing' }
 Text >> unembellished [
 	"Return true if the only emphases are the default font and bold"
 	| font1 bold |
@@ -584,7 +591,7 @@ Text >> unembellished [
 	^ true
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Text >> withInternalLineEndings [
 	"Answer a copy of myself in which all sequences of <CR><LF> or <LF> have been changed to <CR>"
 	| newText |
@@ -592,4 +599,34 @@ Text >> withInternalLineEndings [
 	newText := self copyReplaceAll: String crlf with: String cr.
 	(newText asString includes: Character lf) ifFalse: [ ^newText ].
 	^newText copyReplaceAll: String lf with: String cr
+]
+
+{ #category : 'converting' }
+Text >> withNoLineLongerThan: aNumber [
+
+	"Answer a string with the same content as receiver, but rewrapped so that no line has more characters than the given number"
+
+	(aNumber isNumber not or: [ aNumber < 1 ]) ifTrue: [self error: 'too narrow'].
+	^self species
+		new: self size * (aNumber + 1) // aNumber "provision for supplementary line breaks"
+		streamContents: [ :stream |
+			self string lineIndicesDo: [ :start :endWithoutDelimiters :end |
+				| pastEnd lineStart |
+				pastEnd := endWithoutDelimiters + 1.
+				"eliminate spaces at beginning of line"
+				lineStart := (self indexOfAnyOf: CharacterSet separators complement startingAt: start ifAbsent: [pastEnd]) min: pastEnd.
+				[| lineStop lineEnd spacePosition |
+				lineEnd := lineStop  := lineStart + aNumber min: pastEnd.
+				spacePosition := lineStart.
+				[spacePosition < lineStop] whileTrue: [
+					spacePosition := self indexOfAnyOf: CharacterSet separators startingAt: spacePosition + 1 ifAbsent: [pastEnd].
+					spacePosition <= lineStop ifTrue: [lineEnd := spacePosition].
+				].
+				"split before space or before lineStop if no space"
+				stream nextPutAll: (self copyFrom: lineStart to: lineEnd - 1).
+				"eliminate spaces at beginning of next line"
+				lineStart := self indexOfAnyOf: CharacterSet separators complement startingAt: lineEnd ifAbsent: [pastEnd].
+				lineStart <= endWithoutDelimiters ]
+					whileTrue: [stream cr].
+				stream nextPutAll: (self copyFrom: pastEnd to: end) ] ].
 ]

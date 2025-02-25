@@ -3,27 +3,29 @@ I am a command to install metalinks on the selected method or one of its ast nod
 I open a small browser to choose which metalink to install among existing metalink instances.
 "
 Class {
-	#name : #ClyInstallMetaLinkCommand,
-	#superclass : #ClyReflectivityCommand,
-	#category : #'Calypso-SystemPlugins-Reflectivity-Browser-Metalinks'
+	#name : 'ClyInstallMetaLinkCommand',
+	#superclass : 'ClyReflectivityCommand',
+	#category : 'Calypso-SystemPlugins-Reflectivity-Browser-Metalinks',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Browser',
+	#tag : 'Metalinks'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyInstallMetaLinkCommand class >> contextMenuOrder [
 	^100
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyInstallMetaLinkCommand >> defaultMenuIconName [
 	^#smallObjects
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyInstallMetaLinkCommand >> defaultMenuItemName [
 	^'    Install    MetaLink in  ',  sourceNode displaySourceCode , '  ...'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyInstallMetaLinkCommand >> execute [
 	ClyMetaLinkInstallationPresenter openInstallerOnNode: sourceNode
 ]

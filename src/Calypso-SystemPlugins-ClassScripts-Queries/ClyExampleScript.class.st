@@ -17,24 +17,25 @@ will open both a new morph in the world.
 Note that if you add in addition the pragma <sampleInstance> you will get an inspector on the result. 
 "
 Class {
-	#name : #ClyExampleScript,
-	#superclass : #ClyClassScript,
-	#category : #'Calypso-SystemPlugins-ClassScripts-Queries'
+	#name : 'ClyExampleScript',
+	#superclass : 'ClyClassScript',
+	#category : 'Calypso-SystemPlugins-ClassScripts-Queries',
+	#package : 'Calypso-SystemPlugins-ClassScripts-Queries'
 }
 
-{ #category : #'script detection' }
+{ #category : 'script detection' }
 ClyExampleScript class >> isImplementedByMethod: aMethod [
 	(aMethod hasPragmaNamed: #sampleInstance) ifTrue: [ ^ false ].
 	^ (aMethod selector beginsWith: 'example')
 		 or: [ aMethod hasPragmaNamed: #example ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyExampleScript >> description [
 	^ 'Run the example'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyExampleScript >> iconName [
 	^#smallDoIt
 ]

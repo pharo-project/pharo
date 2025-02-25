@@ -10,7 +10,8 @@ to execute refactoring operations.
 This enables you to execute refactorings that aren't provided by the System Browser, or combining a set of operations for a more complex refactoring. It also gives a hint on how to add refactoring support for your own tools.
 
 
-These are the steps used for all of the examples:
+These are the steps used for all the examples:
+
 - create a RBNamespace
 - instantiate the refactoring operation
 - execute it (primitiveExecute)
@@ -48,13 +49,14 @@ There is a global change manager - `RBRefactoryChangeManager`, we can use it to 
 ```st
 RBRefactoryChangeManager instance undoOperation.
 ```
+
 and again redo
 
 ```st
 RBRefactoryChangeManager instance redoOperation.
 ```
-and undo, and .... :)
 
+and undo, and .... :)
 
 ### Combining operations - Add class with instance variables
 
@@ -84,8 +86,7 @@ addInstVarsRB primitiveExecute.
     browser open
 ```
 
-It is important to actually execute the first operation before creating the second one. The instantiation of the RBAddInstanceVariableRefactoring will query the environment the class #SomeClass and
-init the reference to nil if it doesn't yet exists.
+It is important to actually execute the first operation before creating the second one. The instantiation of the RBAddInstanceVariableRefactoring will query the environment the class #SomeClass and init the reference to nil if it doesn't yet exists.
 
 The changes browser now includes two refactorings, you can select only the second one but this won't work.
 If you applied both, and want to undo that changes, you'll need to call two times:
@@ -116,9 +117,9 @@ After applying this refactoring, all methods in all classes of the package 'Test
 
 ### Refactoring Options
 
-Some refactoring operations may require additional informations for performing the transformation. For example a 'move method ' refactoring, moving a method from one class to another may add an additional argument if the prior method had some 'self sends'. Some of the information are given by instantiating the refactoring and some information can be computed by the
+Some refactoring operations may require additional information for performing the transformation. For example a 'move method ' refactoring, moving a method from one class to another may add an additional argument if the prior method had some 'self sends'. Some of the information are given by instantiating the refactoring and some information can be computed by the
 operation itself. For other cases the refactoring may actually break code or create broken code. To make this operation still work the programmer or user of the refactoring engine
-could provide the needed information. 
+could provide the needed information.
 
 For this, the engine contains a set of 'options' that can be set by the tool using the framework, to register callback functions used to aquire the information from the user.
 
@@ -131,7 +132,7 @@ The options that can be used are:
 - #variableTypes - select or provide a class
 - #extractAssignment - should the code extraction include the variable assignment
 - #inlineExpression - I don't know
-- #alreadyDefined - Should it override  methods defined in the hierarchy.
+- #alreadyDefined - Should it override methods defined in the hierarchy.
 - #useExistingMethod - Should it use existing (equivalent) method
 - #openBrowser - call to open system browser
 
@@ -153,7 +154,7 @@ In the following example we show how to set the needed options manually. The RBM
 - variableTypes
 - methodName
 
-for all of this options we set a simple block that just returns the information needed for this example task. In a real world tool, we
+for all of these options we set a simple block that just returns the information needed for this example task. In a real world tool, we
 would need some interactive tool to let the user make a choice.
 This `RBMoveMethodRefactoring` will move the implementation from `TestResult class>>#historyFor:` to its argument of type `TestCase`.
 

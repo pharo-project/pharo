@@ -3,12 +3,14 @@ I'm an extension of FFIExternalStructure.
 I am packing tightly all of my fields.
 "
 Class {
-	#name : #FFIPackedStructure,
-	#superclass : #FFIStructure,
-	#category : #'UnifiedFFI-Objects'
+	#name : 'FFIPackedStructure',
+	#superclass : 'FFIStructure',
+	#category : 'UnifiedFFI-Objects',
+	#package : 'UnifiedFFI',
+	#tag : 'Objects'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 FFIPackedStructure class >> compileFields: specArray withAccessors: aSymbol [
 	| offset fieldSpec defineBoolean|
 	defineBoolean := aSymbol = #always.
@@ -34,12 +36,12 @@ FFIPackedStructure class >> compileFields: specArray withAccessors: aSymbol [
 	^ compiledSpec
 ]
 
-{ #category : #'register marshalling' }
+{ #category : 'register marshalling' }
 FFIPackedStructure class >> emitFlatStructureLayoutInto: flatStructureLayout [
 	flatStructureLayout addMemoryFieldSize: self structureSize alignment: self structureAlignment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIPackedStructure class >> packedStructureAlignment [
 	^ 1
 ]

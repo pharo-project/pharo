@@ -12,23 +12,25 @@ This allows us to export any kind of array, if it is limited to a size of 32 bit
 The reading is perform in the inverse order
 "
 Class {
-	#name : #HEArray,
-	#superclass : #HEExportedLiteral,
-	#category : #'Hermes-Model'
+	#name : 'HEArray',
+	#superclass : 'HEExportedLiteral',
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEArray class >> tag [
 	^ 2
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 HEArray >> asLiteralIn: env [
 	"A new array is returned with all its elements as target literals in the environment"
 	^ value collect: [ :e | e asLiteralIn: env ]
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEArray >> doReadFrom: aReader [
 	| size |
 	"The size of the array is stored as a 32bits integer. Before any of the elements"
@@ -38,7 +40,7 @@ HEArray >> doReadFrom: aReader [
 	1 to:size do:[:idx | value at:idx put: (HEExportedLiteral readFrom: aReader)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEArray >> value: anArray [
 	value := anArray collect: [:each | each asExportedLiteral]
 ]

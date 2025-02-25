@@ -9,23 +9,25 @@
 
 "
 Class {
-	#name : #AthensBalloonEngine,
-	#superclass : #BalloonEngine,
+	#name : 'AthensBalloonEngine',
+	#superclass : 'BalloonEngine',
 	#instVars : [
 		'currentFill'
 	],
-	#category : #'Athens-Balloon-Engine'
+	#category : 'Athens-Balloon-Engine',
+	#package : 'Athens-Balloon',
+	#tag : 'Engine'
 }
 
-{ #category : #copying }
+{ #category : 'copying' }
 AthensBalloonEngine >> copyBits [
 
-	(bitBlt notNil and: [ bitBlt destForm notNil ]) ifTrue: [
+	(bitBlt isNotNil and: [ bitBlt destForm isNotNil ]) ifTrue: [
 		bitBlt destForm unhibernate ].
 	self copyLoopFastest
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensBalloonEngine >> drawImage: aForm transform: m [
 	| orig dir normal tr rect |
 
@@ -47,7 +49,7 @@ AthensBalloonEngine >> drawImage: aForm transform: m [
 	edgeTransform := tr
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensBalloonEngine >> fastReset [
 
 	workBuffer ifNil: [ ^ self reset ].
@@ -100,7 +102,7 @@ AthensBalloonEngine >> fastReset [
 "
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensBalloonEngine >> fillBezierShape: contours [
 
 	contours do:[ :points |
@@ -117,7 +119,7 @@ AthensBalloonEngine >> fillBezierShape: contours [
 	self copyBits
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensBalloonEngine >> fillRectangle: rect [
 
 	currentFill = 0 ifTrue: [ ^ self ]. "no fill "
@@ -130,19 +132,19 @@ AthensBalloonEngine >> fillRectangle: rect [
 	self copyBits
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensBalloonEngine >> prepareForRendering [
 
 	self fastReset
 ]
 
-{ #category : #'registering fills' }
+{ #category : 'registering fills' }
 AthensBalloonEngine >> registerColorFill: aColor [
 
 	currentFill := aColor scaledPixelValue32
 ]
 
-{ #category : #'registering fills' }
+{ #category : 'registering fills' }
 AthensBalloonEngine >> registerFormFill: form origin: orig direction: dir normal: norm [
 
 	self
@@ -153,7 +155,7 @@ AthensBalloonEngine >> registerFormFill: form origin: orig direction: dir normal
 		tileFlag: true
 ]
 
-{ #category : #'registering fills' }
+{ #category : 'registering fills' }
 AthensBalloonEngine >> registerFormFill: form origin: orig direction: dir normal: norm tileFlag: tileFlag [
 
 	forms := forms copyWith: form.
@@ -167,7 +169,7 @@ AthensBalloonEngine >> registerFormFill: form origin: orig direction: dir normal
 			xIndex: forms size
 ]
 
-{ #category : #paints }
+{ #category : 'paints' }
 AthensBalloonEngine >> registerLinearGradient: colorRamp origin: origin corner: corner [
 
 	| pixelRamp direction normal |
@@ -183,7 +185,7 @@ AthensBalloonEngine >> registerLinearGradient: colorRamp origin: origin corner: 
 		               radial: false
 ]
 
-{ #category : #paints }
+{ #category : 'paints' }
 AthensBalloonEngine >> registerRadialGradient: colorRamp center: aCenter direction: dir normal: n [
 
 	| pixelRamp |
@@ -197,7 +199,7 @@ AthensBalloonEngine >> registerRadialGradient: colorRamp center: aCenter directi
 		               radial: true
 ]
 
-{ #category : #paints }
+{ #category : 'paints' }
 AthensBalloonEngine >> registerRadialGradient: colorRamp center: aCenter radius: r [
 
 	| pixelRamp |
@@ -211,7 +213,7 @@ AthensBalloonEngine >> registerRadialGradient: colorRamp center: aCenter radius:
 		               radial: true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensBalloonEngine >> reset [
 
 	workBuffer ifNil:[workBuffer := self class allocateOrRecycleBuffer: 10000].
@@ -227,13 +229,13 @@ AthensBalloonEngine >> reset [
 	forms := #()
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBalloonEngine >> setFill: aFill [
 
 	currentFill := aFill
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensBalloonEngine >> strokeBezierShape: contours width: aWidth [
 
 	contours do:[ :points |
@@ -250,7 +252,7 @@ AthensBalloonEngine >> strokeBezierShape: contours width: aWidth [
 	self copyBits
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensBalloonEngine >> strokeRectangle: rect borderWidth: width [
 
 	currentFill = 0 ifTrue: [ ^ self ]. "no fill "
@@ -263,7 +265,7 @@ AthensBalloonEngine >> strokeRectangle: rect borderWidth: width [
 	self copyBits
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensBalloonEngine >> strokeRectangle: rect width: aWidth [
 
 	currentFill = 0 ifTrue: [ ^ self ]. "no fill "

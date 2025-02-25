@@ -1,10 +1,12 @@
 Class {
-	#name : #CoASTResultSetBuilderTest,
-	#superclass : #CoBasicCompletionTest,
-	#category : #'HeuristicCompletion-Tests-Core'
+	#name : 'CoASTResultSetBuilderTest',
+	#superclass : 'CoBasicCompletionTest',
+	#category : 'HeuristicCompletion-Tests-Core',
+	#package : 'HeuristicCompletion-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> newCompletionContext [
 
 	^ CoCompletionContext new
@@ -12,248 +14,248 @@ CoASTResultSetBuilderTest >> newCompletionContext [
 		yourself
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildArrayHeuristic [
 
 	| builder |
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBArrayNode new;
+		node: OCArrayNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #array
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildAssignmentHeuristic [
 
 	| builder |
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBAssignmentNode new;
+		node: OCAssignmentNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #assignment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildBlockHeuristic [
 
 	| builder |
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBBlockNode new;
+		node: OCBlockNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #block
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildCascadeHeuristic [
 
 	| builder |
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBCascadeNode new;
+		node: OCCascadeNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #cascade
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildLiteralArrayHeuristic [
 
 	| builder |
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBLiteralArrayNode new;
+		node: OCLiteralArrayNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #literalArray
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildLiteralHeuristic [
 
 	| builder |
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBLiteralValueNode new;
+		node: OCLiteralValueNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #literal
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildMessageHeuristic [
 
 	| builder |
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBMessageNode new;
+		node: OCMessageNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #message
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildMethodHeuristic [
 
 	| builder |
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBMethodNode new;
+		node: OCMethodNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #method
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildParseErrorHeuristic [
 
 	| builder |
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBParseErrorNode new;
+		node: OCParseErrorNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildPragmaHeuristic [
 
 	| builder |
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBPragmaNode new;
+		node: OCPragmaNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #pragma
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildReturnHeuristic [
 
 	| builder |
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBReturnNode new;
+		node: OCReturnNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #return
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildSequenceHeuristic [
 
 	| builder |
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBSequenceNode new;
+		node: OCSequenceNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #sequence
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildThisContextHeuristic [
 
 	| builder |
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBVariableNode thisContextNode;
+		node: (OCVariableNode thisContextNode variable: ThisContextVariable new);
 		buildCompletion.
 
 	self assert: builder heuristic equals: #thisContext
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildVariableClassVariableHeuristic [
 
 	| builder |
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: ((RBVariableNode named: 'ClassVar') variable: (ClassVariable named: 'ClassVar'));
+		node: ((OCVariableNode named: 'ClassVar') variable: (ClassVariable named: 'ClassVar'));
 		buildCompletion.
 
 	self assert: builder heuristic equals: #variable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildVariableGlobalHeuristic [
 
 	| builder |
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: ((RBVariableNode named: 'Object') variable: Object binding);
+		node: ((OCVariableNode named: 'Object') variable: Object binding);
 		buildCompletion.
 
 	self assert: builder heuristic equals: #variable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildVariableHeuristic [
 
 	| builder |
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: RBVariableNode new;
+		node: OCVariableNode new;
 		buildCompletion.
 
 	self assert: builder heuristic equals: #variable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildVariableInstanceVariableHeuristic [
 
 	| builder |
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: ((RBVariableNode named: 'ivar') variable: (Slot named: 'ivar'));
+		node: ((OCVariableNode named: 'ivar') variable: (Slot named: 'ivar'));
 		buildCompletion.
 
 	self assert: builder heuristic equals: #variable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildVariableTempVariableHeuristic [
 
 	| builder |
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: ((RBVariableNode named: 'temp') variable: (TemporaryVariable named: 'temp'));
+		node: ((OCVariableNode named: 'temp') variable: (TemporaryVariable named: 'temp'));
 		buildCompletion.
 
 	self assert: builder heuristic equals: #variable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CoASTResultSetBuilderTest >> testBuildVariableUndeclaredHeuristic [
 
 	| builder |
 	builder := CoMockASTResultSetBuilder new.
 	builder
 		completionContext: self newCompletionContext;
-		node: ((RBVariableNode named: 'ClassVar') variable: (UndeclaredVariable named: 'ClassVar'));
+		node: ((OCVariableNode named: 'ClassVar') variable: (UndeclaredVariable named: 'ClassVar'));
 		buildCompletion.
 
 	self assert: builder heuristic equals: #variable

@@ -8,17 +8,18 @@ These require that the ZnZodiacNetworkingUtils socket stream factory is enabled:
 Part of Zinc HTTP Components
 "
 Class {
-	#name : #ZnHTTPSTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Zodiac-Tests'
+	#name : 'ZnHTTPSTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Zodiac-Tests',
+	#package : 'Zinc-Zodiac-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnHTTPSTest class >> defaultTimeLimit [
 	^10 seconds
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnHTTPSTest class >> generateTestData: size [
 	"self generateTestData: 1111"
 	
@@ -30,7 +31,7 @@ ZnHTTPSTest class >> generateTestData: size [
 		limitedTo: size 
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnHTTPSTest class >> generateTestFiles [
 	"self generateTestFiles"
 	
@@ -40,14 +41,14 @@ ZnHTTPSTest class >> generateTestFiles [
 			stream nextPutAll: (self generateTestData: size) ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnHTTPSTest >> ensureSocketStreamFactory [
 	self 
-		assert: ZnNetworkingUtils default secureSocketStreamClass notNil
+		assert: ZnNetworkingUtils default secureSocketStreamClass isNotNil
 		description: 'Please set a secure socket stream class in ZnNetworkingUtils default or switch to the ZnZodiacNetworkingUtils socket stream factory'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnHTTPSTest >> isNativeSSLPluginPresent [
 	"Return whether the SSL VM plugin can be instanciated and intialized."
 	
@@ -56,7 +57,7 @@ ZnHTTPSTest >> isNativeSSLPluginPresent [
 			do: [ false ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnHTTPSTest >> testAmazonAWS [
 	| client |
 	self ensureSocketStreamFactory.
@@ -68,18 +69,18 @@ ZnHTTPSTest >> testAmazonAWS [
 	client close
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnHTTPSTest >> testGForceInria [
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnHTTPSTest >> testGetPharoVersion [
 	"Make sure to overwrite on older test"
 
 	self skip
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnHTTPSTest >> testGmailEncrypted [
 
 	| client |
@@ -94,7 +95,7 @@ ZnHTTPSTest >> testGmailEncrypted [
 	client close
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnHTTPSTest >> testGoogleEncrypted [
 	| client |
 	self ensureSocketStreamFactory.
@@ -107,7 +108,7 @@ ZnHTTPSTest >> testGoogleEncrypted [
 	client close
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnHTTPSTest >> testRequestResponse [
 	| query stream request response |
 	self ensureSocketStreamFactory.
@@ -127,7 +128,7 @@ ZnHTTPSTest >> testRequestResponse [
 	self assert: (response contents includesSubstring: query).
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnHTTPSTest >> testSNIPage [
 	"| client |
 	self ensureSocketStreamFactory.
@@ -144,7 +145,7 @@ ZnHTTPSTest >> testSNIPage [
 	client close"
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnHTTPSTest >> testTransfers [
 	self timeLimit: 300 seconds.
 	self ensureSocketStreamFactory.
@@ -167,7 +168,7 @@ ZnHTTPSTest >> testTransfers [
 			equals: (self class generateTestData: size)	]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnHTTPSTest >> testTransfersSingleClient [
 	| client |
 	self ensureSocketStreamFactory.
@@ -189,7 +190,7 @@ ZnHTTPSTest >> testTransfersSingleClient [
 	client close
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnHTTPSTest >> testWikimedia [
 	| client |
 	self ensureSocketStreamFactory.
@@ -201,7 +202,7 @@ ZnHTTPSTest >> testWikimedia [
 	client close
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnHTTPSTest >> timeLimit: seconds [
 	(TestCase canUnderstand: #timeLimit:)
 		ifTrue: [ super timeLimit: seconds ]

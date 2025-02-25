@@ -2,31 +2,32 @@
 I'm a tree node representing a method implementation
 "
 Class {
-	#name : #DAMethodImplementationNode,
-	#superclass : #DAMethodDependencyNode,
-	#category : #'Tool-DependencyAnalyser-UI-Nodes'
+	#name : 'DAMethodImplementationNode',
+	#superclass : 'DAMethodDependencyNode',
+	#category : 'Tool-DependencyAnalyser-UI-Nodes',
+	#package : 'Tool-DependencyAnalyser-UI',
+	#tag : 'Nodes'
 }
 
-{ #category : #'building-menu' }
-DAMethodImplementationNode >> addMenuEntriesOn: aMenuGroup [
+{ #category : 'building-menu' }
+DAMethodImplementationNode >> addMenuActionsOn: anActionGroup [
 	| method |
+	
 	method := self content.
-	aMenuGroup
-		addMenuItem:
-			(SpMenuItemPresenter new
-				name: 'Select this package as the right dependency';
-				action:
-					[(TheManifestBuilder of: self packageUnderAnalysis packageManifest)
-						addManuallyResolvedDependency: method package name.
-					"TODO: run the analysis again" ])
+	anActionGroup addActionWith: [ :action | action
+		name: 'Select this package as the right dependency';
+		action: [
+			(TheManifestBuilder of: self packageUnderAnalysis packageManifest)
+				addManuallyResolvedDependency: method package name.
+				"TODO: run the analysis again" ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAMethodImplementationNode >> icon [
 	^ self iconNamed: #package
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 DAMethodImplementationNode >> label [
 	^ String streamContents: [ :stream |
 		stream

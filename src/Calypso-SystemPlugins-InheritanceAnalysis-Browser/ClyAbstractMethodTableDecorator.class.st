@@ -3,24 +3,25 @@ I decorate table with special italic font and icon for abstract classes (with #s
 I am activated only in browser with installed ClyInheritanceAnalysisBrowserPlugin
 "
 Class {
-	#name : #ClyAbstractMethodTableDecorator,
-	#superclass : #ClyMethodTableDecorator,
-	#category : #'Calypso-SystemPlugins-InheritanceAnalysis-Browser'
+	#name : 'ClyAbstractMethodTableDecorator',
+	#superclass : 'ClyMethodTableDecorator',
+	#category : 'Calypso-SystemPlugins-InheritanceAnalysis-Browser',
+	#package : 'Calypso-SystemPlugins-InheritanceAnalysis-Browser'
 }
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyAbstractMethodTableDecorator class >> browserPluginClass [
 	^ClyInheritanceAnalysisBrowserPlugin
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyAbstractMethodTableDecorator class >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
 	super decorateMainTableCell: anItemCellMorph of: aDataSourceItem.
 
-	anItemCellMorph definitionIcon: #abstractIcon
+	anItemCellMorph definitionIcon: #abstract
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyAbstractMethodTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 	| nameMorph |
 
@@ -29,12 +30,12 @@ ClyAbstractMethodTableDecorator class >> decorateTableCell: anItemCellMorph of: 
 	nameMorph color: (nameMorph color contrastingColorAdjustment) contrastingColorAdjustment
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyAbstractMethodTableDecorator class >> priority [
 	^700
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyAbstractMethodTableDecorator class >> wantsDecorateTableCellOf: aDataSourceItem [
 	^aDataSourceItem isMarkedWith: ClyAbstractItemTag
 ]

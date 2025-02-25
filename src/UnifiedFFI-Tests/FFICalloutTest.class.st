@@ -2,16 +2,18 @@
 Tests for FFICallout
 "
 Class {
-	#name : #FFICalloutTest,
-	#superclass : #TestCase,
+	#name : 'FFICalloutTest',
+	#superclass : 'TestCase',
 	#classVars : [
 		'CLASSVAR',
 		'TYPEVAR'
 	],
-	#category : #'UnifiedFFI-Tests-Tests'
+	#category : 'UnifiedFFI-Tests-Tests',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 FFICalloutTest >> checkType: type class: typeClass arity: ptrArity argument: arg [
 
 	self assert: type resolvedType class equals: typeClass.
@@ -20,7 +22,7 @@ FFICalloutTest >> checkType: type class: typeClass arity: ptrArity argument: arg
 	self assert: type loader argName equals: arg
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICalloutTest >> checkType: type class: typeClass arity: ptrArity value: anObject [
 
 	self assert: type resolvedType class equals: typeClass.
@@ -29,13 +31,13 @@ FFICalloutTest >> checkType: type class: typeClass arity: ptrArity value: anObje
 	self assert: type loader value equals: anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICalloutTest >> checkType: type class: typeClass value: const [
 	self assert: type resolvedType class equals: typeClass.
 	self assert: type value equals: const
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICalloutTest >> checkTypeSelf: type class: typeClass arity: ptrArity [
 
 	self assert: type resolvedType class equals: typeClass.
@@ -43,14 +45,14 @@ FFICalloutTest >> checkTypeSelf: type class: typeClass arity: ptrArity [
 	self assert: type loader class equals: FFISelfArgument
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICalloutTest >> checkUntypedClassVariable: aFFIConstantArgument class: aTypeClass value: aValue [
 
 	self assert: aFFIConstantArgument resolvedType class equals: aTypeClass.
 	self assert: aFFIConstantArgument resolvedType value equals: aValue
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICalloutTest >> checkUntypedConstantType: aFFIConstantArgument class: aTypeClass arity: anInteger value: aValue [
 
 	self assert: aFFIConstantArgument resolvedType class equals: aTypeClass.
@@ -58,18 +60,18 @@ FFICalloutTest >> checkUntypedConstantType: aFFIConstantArgument class: aTypeCla
 	self assert: aFFIConstantArgument loader value equals: aValue
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFICalloutTest >> checkUntypedConstantType: aFFIConstantArgument class: aTypeClass value: aValue [
 
 	self checkUntypedConstantType: aFFIConstantArgument class: aTypeClass arity: 0 value: aValue
 ]
 
-{ #category : #binding }
+{ #category : 'binding' }
 FFICalloutTest >> ffiBindingOf: aName [
 	^ self class ffiBindingOf: aName
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutTest >> testBeNonStrictTurnsOptionOff [
 	|generator|
 	generator := FFICallout new.
@@ -78,7 +80,7 @@ FFICalloutTest >> testBeNonStrictTurnsOptionOff [
 	self deny: generator isStrict
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutTest >> testBeStrictTurnsOptionOn [
 	|generator|
 	generator := FFICallout new.
@@ -87,7 +89,7 @@ FFICalloutTest >> testBeStrictTurnsOptionOn [
 	self assert: generator isStrict
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutTest >> testBuildingFnSpec [
 	| generator type s |
 
@@ -125,7 +127,7 @@ FFICalloutTest >> testBuildingFnSpec [
 "ByteArray" 			self checkType: s next class: FFIOop arity: 0 argument: 'arg12'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutTest >> testParseOptions [
 	|generator|
 	generator := FFICallout new.
@@ -145,7 +147,7 @@ FFICalloutTest >> testParseOptions [
 	self deny: (generator optionAt: #optEncoding)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutTest >> testStrictModeOptionOff [
 	|generator|
 	generator := FFICallout new.
@@ -154,7 +156,7 @@ FFICalloutTest >> testStrictModeOptionOff [
 	self deny: generator isStrict
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFICalloutTest >> testStrictModeOptionOn [
 	|generator|
 	generator := FFICallout new.

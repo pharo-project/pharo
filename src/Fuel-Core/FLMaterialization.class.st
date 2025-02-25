@@ -2,8 +2,8 @@
 I implement the algorithm for materializing an object graph on a stream. FLMaterializer known how to build instances of me.
 "
 Class {
-	#name : #FLMaterialization,
-	#superclass : #Object,
+	#name : 'FLMaterialization',
+	#superclass : 'Object',
 	#traits : 'TFLConfigurable',
 	#classTraits : 'TFLConfigurable classTrait',
 	#instVars : [
@@ -13,37 +13,39 @@ Class {
 		'header',
 		'stopBlock'
 	],
-	#category : #'Fuel-Core-Base'
+	#category : 'Fuel-Core-Base',
+	#package : 'Fuel-Core',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLMaterialization class >> basicRun [
 	^ self new run
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLMaterialization class >> detectResponsibleMaterialization [
 	^ self allSubclasses
 		detect: [ :class | class isResponsible ]
 		ifNone: [ self ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLMaterialization class >> isResponsible [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FLMaterialization class >> run [
 	^ self detectResponsibleMaterialization basicRun
 ]
 
-{ #category : #header }
+{ #category : 'header' }
 FLMaterialization >> additionalObjectAt: aKey [
 	^ header additionalObjectAt: aKey
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FLMaterialization >> basicRun [
 	| stream |
 	self configuration hasMultipleObjects
@@ -54,7 +56,7 @@ FLMaterialization >> basicRun [
 				self runSteps ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FLMaterialization >> clusterInstancesStep [
 
 	| aCluster |
@@ -66,13 +68,13 @@ FLMaterialization >> clusterInstancesStep [
 	clusters add: aCluster
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FLMaterialization >> clusterPostMaterializationStep [
 
 	clusters do: [ :aCluster | aCluster afterMaterializationStepWith: decoder ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FLMaterialization >> decoderHeaderStep [
 	decoder decodeYourself.
 	clusterCount := decoder nextEncodedUint32.
@@ -80,55 +82,55 @@ FLMaterialization >> decoderHeaderStep [
 	clusters resetTo: 1. "Hack that avoids OrderedCollection>>makeRoomAtLast"
 ]
 
-{ #category : #protected }
+{ #category : 'protected' }
 FLMaterialization >> fileHeaderStep [
 	self
 		verifySignature;
 		verifyVersion
 ]
 
-{ #category : #protected }
+{ #category : 'protected' }
 FLMaterialization >> headerStep [
 	header := FLHeaderMaterializer new materialize root.
 	self context materializedObjects addHeader: header
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLMaterialization >> initialize [
 	super initialize.
 	
 	decoder := FLDecoder new
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FLMaterialization >> instancesStep [
 
 	clusterCount timesRepeat: [ self clusterInstancesStep ]
 ]
 
-{ #category : #materializing }
+{ #category : 'materializing' }
 FLMaterialization >> postMaterializationStep [
 	header executePostMaterializationActions
 ]
 
-{ #category : #materializing }
+{ #category : 'materializing' }
 FLMaterialization >> preMaterializationStep [
 	header executePreMaterializationActions
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FLMaterialization >> referencesStep [
 
 	clusters do: [ :aCluster | aCluster materializeReferencesStepWith: decoder ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FLMaterialization >> registerAll: materializedObjects [
 	
 	decoder registerAll: materializedObjects
 ]
 
-{ #category : #materializing }
+{ #category : 'materializing' }
 FLMaterialization >> run [
 	"Enables early escape, e.g. when only materializing the header"
 	stopBlock := [ ^ self context materializedObjects ].
@@ -138,7 +140,7 @@ FLMaterialization >> run [
 		stop
 ]
 
-{ #category : #materializing }
+{ #category : 'materializing' }
 FLMaterialization >> runHeaderSteps [
 	self
 		fileHeaderStep;
@@ -150,7 +152,7 @@ FLMaterialization >> runHeaderSteps [
 	self stop
 ]
 
-{ #category : #materializing }
+{ #category : 'materializing' }
 FLMaterialization >> runSteps [
 	self
 		runHeaderSteps;
@@ -162,19 +164,19 @@ FLMaterialization >> runSteps [
 		postMaterializationStep
 ]
 
-{ #category : #materializing }
+{ #category : 'materializing' }
 FLMaterialization >> stop [
 	stopBlock value
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FLMaterialization >> trailerStep [
 	self context materializedObjects
 		addRoot: decoder nextEncodedReference;
 		addObjects: decoder objects
 ]
 
-{ #category : #materializing }
+{ #category : 'materializing' }
 FLMaterialization >> verifySignature [
 	| decodedSignature |
 	decodedSignature := decoder decodeSignature.
@@ -184,7 +186,7 @@ FLMaterialization >> verifySignature [
 			streamSignature: decodedSignature ]
 ]
 
-{ #category : #materializing }
+{ #category : 'materializing' }
 FLMaterialization >> verifyVersion [
 	| decodedVersion |
 	decodedVersion := decoder decodeVersion.

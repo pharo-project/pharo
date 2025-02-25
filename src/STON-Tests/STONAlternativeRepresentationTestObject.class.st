@@ -18,8 +18,8 @@ Upon materialization, the convertions UTC to local tie and miles to kilometers a
  
 "
 Class {
-	#name : #STONAlternativeRepresentationTestObject,
-	#superclass : #Object,
+	#name : 'STONAlternativeRepresentationTestObject',
+	#superclass : 'Object',
 	#instVars : [
 		'id',
 		'time',
@@ -28,10 +28,12 @@ Class {
 	#classVars : [
 		'KnownObjects'
 	],
-	#category : #'STON-Tests-Support'
+	#category : 'STON-Tests-Support',
+	#package : 'STON-Tests',
+	#tag : 'Support'
 }
 
-{ #category : #example }
+{ #category : 'example' }
 STONAlternativeRepresentationTestObject class >> example [
 	^ self new
 		id: 1e9 atRandom;
@@ -40,7 +42,7 @@ STONAlternativeRepresentationTestObject class >> example [
 		yourself
 ]
 
-{ #category : #'ston persistence' }
+{ #category : 'ston persistence' }
 STONAlternativeRepresentationTestObject >> fromSton: stonReader [
 	stonReader parseMapDo: [ :key :value |
 		key = #id ifTrue: [ self id: value ].
@@ -48,37 +50,43 @@ STONAlternativeRepresentationTestObject >> fromSton: stonReader [
 		key = #grid_reference ifTrue: [ self gridReferenceImperial: value ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONAlternativeRepresentationTestObject >> gridReference [
 	^ gridReference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONAlternativeRepresentationTestObject >> gridReference: value [
 	gridReference := value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONAlternativeRepresentationTestObject >> gridReferenceImperial [
 	^ gridReference / 1.609344
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONAlternativeRepresentationTestObject >> gridReferenceImperial: value [
 	gridReference := value * 1.609344
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONAlternativeRepresentationTestObject >> id [
 	^ id
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONAlternativeRepresentationTestObject >> id: anObject [
 	id := anObject
 ]
 
-{ #category : #'ston persistence' }
+{ #category : 'initialization' }
+STONAlternativeRepresentationTestObject >> initialize [
+		<ignoreUnusedClassVariables: #( KnownObjects )>
+		super initialize.
+]
+
+{ #category : 'ston persistence' }
 STONAlternativeRepresentationTestObject >> stonOn: stonWriter [
 	stonWriter writeObject: self streamMap: [ :dictionary |
 		dictionary
@@ -87,22 +95,22 @@ STONAlternativeRepresentationTestObject >> stonOn: stonWriter [
 			at: #grid_reference put: self gridReferenceImperial ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONAlternativeRepresentationTestObject >> time [
 	^ time
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONAlternativeRepresentationTestObject >> time: anObject [
 	time := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONAlternativeRepresentationTestObject >> timeUTC [
 	^ time asUTC
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 STONAlternativeRepresentationTestObject >> timeUTC: value [
 	time := value offset: TimeZone local offset
 ]

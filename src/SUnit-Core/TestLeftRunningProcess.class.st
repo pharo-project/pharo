@@ -4,7 +4,9 @@ The process left running after the test could affect the execution of other test
 
 "
 Class {
-	#name : #TestLeftRunningProcess,
-	#superclass : #DirtyTestError,
-	#category : #'SUnit-Core-Kernel'
+	#name : 'TestLeftRunningProcess',
+	#superclass : 'DirtyTestError',
+	#category : 'SUnit-Core-Kernel',
+	#package : 'SUnit-Core',
+	#tag : 'Kernel'
 }

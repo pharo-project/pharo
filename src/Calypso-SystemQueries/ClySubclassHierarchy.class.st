@@ -14,75 +14,77 @@ You can invert it using settings or just by method call:
 	ClySubclassHierarchy invertMethodVisibilityHierarchy
 "
 Class {
-	#name : #ClySubclassHierarchy,
-	#superclass : #ClyClassHierarchy,
+	#name : 'ClySubclassHierarchy',
+	#superclass : 'ClyClassHierarchy',
 	#classInstVars : [
 		'hierarchyForVariables',
 		'hierarchyForMethodVisibility'
 	],
-	#category : #'Calypso-SystemQueries-Results'
+	#category : 'Calypso-SystemQueries-Results',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Results'
 }
 
-{ #category : #'method visibility' }
+{ #category : 'method visibility' }
 ClySubclassHierarchy class >> hierarchyForMethodVisibility [
 	^hierarchyForMethodVisibility ifNil: [
 		hierarchyForMethodVisibility := self inverse]
 ]
 
-{ #category : #'variable hierarchy' }
+{ #category : 'variable hierarchy' }
 ClySubclassHierarchy class >> hierarchyForVariables [
 	^hierarchyForVariables ifNil: [
 		hierarchyForVariables := self new]
 ]
 
-{ #category : #'method visibility' }
+{ #category : 'method visibility' }
 ClySubclassHierarchy class >> invertMethodVisibilityHierarchy [
 	<script>
 	^hierarchyForMethodVisibility := self hierarchyForMethodVisibility inverted
 ]
 
-{ #category : #'variable hierarchy' }
+{ #category : 'variable hierarchy' }
 ClySubclassHierarchy class >> invertVariableHierarchy [
 	<script>
 	^hierarchyForVariables := self hierarchyForVariables inverted
 ]
 
-{ #category : #'method visibility' }
+{ #category : 'method visibility' }
 ClySubclassHierarchy class >> isDefaultHierarchyForMethodVisibility [
 	^self hierarchyForMethodVisibility isInverse not
 ]
 
-{ #category : #'method visibility' }
+{ #category : 'method visibility' }
 ClySubclassHierarchy class >> isDefaultHierarchyForMethodVisibility: aBool [
 	self isDefaultHierarchyForMethodVisibility = aBool
 		ifFalse: [ self invertMethodVisibilityHierarchy ]
 ]
 
-{ #category : #'variable hierarchy' }
+{ #category : 'variable hierarchy' }
 ClySubclassHierarchy class >> isDefaultHierarchyForVariables [
 	^self hierarchyForVariables isInverse not
 ]
 
-{ #category : #'variable hierarchy' }
+{ #category : 'variable hierarchy' }
 ClySubclassHierarchy class >> isDefaultHierarchyForVariables: aBool [
 	self isDefaultHierarchyForVariables = aBool
 		ifFalse: [ self invertVariableHierarchy ]
 ]
 
-{ #category : #'method visibility' }
+{ #category : 'method visibility' }
 ClySubclassHierarchy class >> methodVisibilityProvider [
 	<classAnnotation>
 	^ClyMethodVisibilityProviderAnnotation new
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ClySubclassHierarchy class >> reset [
 	<script>
 	hierarchyForMethodVisibility := nil.
 	hierarchyForVariables := nil
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 ClySubclassHierarchy class >> settingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #isDefaultHierarchyForVariables)
@@ -99,7 +101,7 @@ ClySubclassHierarchy class >> settingsOn: aBuilder [
 		target: self
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClySubclassHierarchy >> buildParentMap: aHierarchyMap for: aClass [
 
 	| eachClass superclass |

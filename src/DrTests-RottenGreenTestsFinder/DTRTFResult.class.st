@@ -1,25 +1,27 @@
 Class {
-	#name : #DTRTFResult,
-	#superclass : #DTPluginResult,
+	#name : 'DTRTFResult',
+	#superclass : 'DTPluginResult',
 	#instVars : [
 		'result'
 	],
-	#category : #'DrTests-RottenGreenTestsFinder-Base'
+	#category : 'DrTests-RottenGreenTestsFinder-Base',
+	#package : 'DrTests-RottenGreenTestsFinder',
+	#tag : 'Base'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 DTRTFResult >> add: aRottenTestsSet [
 
 	self result mergeWith: aRottenTestsSet
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTRTFResult >> addRottenTest: aRottenTest [
 
 	self rottenTests add: aRottenTest
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTRTFResult >> buildTreeForUI [
 	"build the UI for presenting result"
 	<dtTestRTFResultTreeNamed: 'List of rotten green tests' order: 1>
@@ -30,13 +32,13 @@ DTRTFResult >> buildTreeForUI [
 			   yourself) }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTRTFResult >> result [
 
 	^ result ifNil: [ result := RottenTestsSet new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTRTFResult >> rottenTests [
 
 	^ (self result rottenTests ifNil: [ result := RottenTestsSet ])

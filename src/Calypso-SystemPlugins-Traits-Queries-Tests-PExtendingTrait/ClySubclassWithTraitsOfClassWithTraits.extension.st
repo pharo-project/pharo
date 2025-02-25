@@ -1,5 +1,5 @@
-Extension { #name : #ClySubclassWithTraitsOfClassWithTraits }
+Extension { #name : 'ClySubclassWithTraitsOfClassWithTraits' }
 
-{ #category : #'*Calypso-SystemPlugins-Traits-Queries-Tests-PExtendingTrait' }
+{ #category : '*Calypso-SystemPlugins-Traits-Queries-Tests-PExtendingTrait' }
 ClySubclassWithTraitsOfClassWithTraits >> extensionMethodFromClassItself [
 ]

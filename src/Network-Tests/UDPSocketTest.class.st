@@ -1,10 +1,12 @@
 Class {
-	#name : #UDPSocketTest,
-	#superclass : #TestCase,
-	#category : #'Network-Tests-Kernel'
+	#name : 'UDPSocketTest',
+	#superclass : 'TestCase',
+	#category : 'Network-Tests-Kernel',
+	#package : 'Network-Tests',
+	#tag : 'Kernel'
 }
 
-{ #category : #support }
+{ #category : 'support' }
 UDPSocketTest >> faultyUDPSocket [
 
 	| cls |
@@ -20,7 +22,7 @@ UDPSocketTest >> faultyUDPSocket [
 	^ cls newUDP
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UDPSocketTest >> testUDPBroadcastError [
 	"Test that we get a specific error when failure is due to sending to a broadcast address without SO_BROADCAST set"
 	"Use 255.255.255.255 for testing, which in RFC 919 is defined as 'denoting a broadcast on a local hardware network, which must not be forwarded.
@@ -40,32 +42,31 @@ UDPSocketTest >> testUDPBroadcastError [
 		raise: NoBroadcastAllowed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 UDPSocketTest >> testUDPFaultySend [
 
 	| socket host |
-
 	socket := self faultyUDPSocket.
-	host := #[1 2 3 4].
+	host := #[ 1 2 3 4 ].
 
 	"Check that sending is not caught in a infinite loop"
-	self should: [
+	self
+		deny: (socket isBroadcastAddress: host);
+		should: [ socket sendUDPData: #[ 123 ] toHost: host port: 1 ]
+		raise: NetworkError.
 
-		self
-			deny: (socket isBroadcastAddress: host);
-			should: [socket sendUDPData: #[123] toHost: host port: 1 ] raise: NetworkError.
+	host := #[ 255 255 255 255 ].
 
-		host := #[ 255 255 255 255].
+	self
+		assert: (socket isBroadcastAddress: host);
+		should: [ socket sendUDPData: #[ 123 ] toHost: host port: 1 ]
+		raise: NoBroadcastAllowed.
 
-		self
-			assert: (socket isBroadcastAddress: host);
-			should: [ socket sendUDPData: #[123] toHost: host port: 1 ] raise: NoBroadcastAllowed.
+	socket setOption: 'SO_BROADCAST' value: true.
 
-		socket setOption: 'SO_BROADCAST' value: true.
-
-		self should: [ socket sendUDPData: #[123] toHost: host port: 1 ] raise: NetworkError.
-
-	] notTakeMoreThanMilliseconds: 20.
+	self
+		should: [ socket sendUDPData: #[ 123 ] toHost: host port: 1 ]
+		raise: NetworkError.
 
 	socket destroy
 ]

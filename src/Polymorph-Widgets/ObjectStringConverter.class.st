@@ -4,18 +4,20 @@ Optional regex matching for validation.
 Optional transform blocks for each conversion direction.
 "
 Class {
-	#name : #ObjectStringConverter,
-	#superclass : #Object,
+	#name : 'ObjectStringConverter',
+	#superclass : 'Object',
 	#instVars : [
 		'objectClass',
 		'regex',
 		'stringTransformBlock',
 		'objectTransformBlock'
 	],
-	#category : #'Polymorph-Widgets-Utilities'
+	#category : 'Polymorph-Widgets-Utilities',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Utilities'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ObjectStringConverter class >> forClass: aClass [
 	"Answer a new instance of the receiver that converts to and from
 	the given class of object and a string."
@@ -23,7 +25,7 @@ ObjectStringConverter class >> forClass: aClass [
 	^self new objectClass: aClass
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ObjectStringConverter >> configureForIntegers [
 	"Configure the receiver to match/convert positive or negative integers only."
 
@@ -36,7 +38,7 @@ ObjectStringConverter >> configureForIntegers [
 				ifFalse: [s select: [:c | c isDigit]]]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ObjectStringConverter >> configureForPositiveIntegers [
 	"Configure the receiver to match/convert positive integers only."
 
@@ -47,7 +49,7 @@ ObjectStringConverter >> configureForPositiveIntegers [
 			s select: [:c | c isDigit]]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ObjectStringConverter >> initialize [
 	"Initialize the receiver."
 
@@ -57,7 +59,7 @@ ObjectStringConverter >> initialize [
 		stringTransformBlock: [:string | string]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ObjectStringConverter >> isStringValid: aString [
 	"Answer whether the given string is valid for conversion."
 
@@ -65,14 +67,14 @@ ObjectStringConverter >> isStringValid: aString [
 		[self stringAsObject: aString. true] on: Error do: [false]]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ObjectStringConverter >> needsConversion [
 	"Answer whether conversion is required for the receiver's object class."
 
-	^self objectClass notNil and: [(self objectClass includesBehavior: String) not]
+	^self objectClass isNotNil and: [(self objectClass includesBehavior: String) not]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ObjectStringConverter >> objectAsString: anObject [
 	"Answer the given object in string form."
 
@@ -80,69 +82,69 @@ ObjectStringConverter >> objectAsString: anObject [
 		ifNotNil: [:o | o asString]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectStringConverter >> objectClass [
 	"Answer the class of object we are dealing with."
 
 	^objectClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectStringConverter >> objectClass: aClass [
 	"Set the class of object we are dealing with."
 
 	objectClass := aClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectStringConverter >> objectTransformBlock [
 
 	^ objectTransformBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectStringConverter >> objectTransformBlock: anObject [
 
 	objectTransformBlock := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectStringConverter >> regex [
 
 	^ regex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectStringConverter >> regex: anObject [
 
 	regex := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectStringConverter >> regexString: aString [
 	"Setup the regex based on the given string."
 
 	self regex: aString asRegex
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ObjectStringConverter >> stringAsObject: aString [
 	"Answer the given string in object form."
 
 	|transformed|
 	transformed := self stringTransformBlock value: aString asString.
-	^(transformed notNil and: [self needsConversion])
+	^(transformed isNotNil and: [self needsConversion])
 		ifTrue: [self objectClass readFromString: transformed]
 		ifFalse: [transformed]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectStringConverter >> stringTransformBlock [
 
 	^ stringTransformBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObjectStringConverter >> stringTransformBlock: anObject [
 
 	stringTransformBlock := anObject

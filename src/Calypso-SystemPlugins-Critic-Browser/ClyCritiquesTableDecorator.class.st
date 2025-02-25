@@ -2,24 +2,25 @@
 I decorate table of critiques with severity level icon
 "
 Class {
-	#name : #ClyCritiquesTableDecorator,
-	#superclass : #ClyTableDecorator,
-	#category : #'Calypso-SystemPlugins-Critic-Browser'
+	#name : 'ClyCritiquesTableDecorator',
+	#superclass : 'ClyTableDecorator',
+	#category : 'Calypso-SystemPlugins-Critic-Browser',
+	#package : 'Calypso-SystemPlugins-Critic-Browser'
 }
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyCritiquesTableDecorator class >> browserPluginClass [
 	^ClyCriticBrowserPlugin
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyCritiquesTableDecorator class >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
 	super decorateMainTableCell: anItemCellMorph of: aDataSourceItem.
 
 	anItemCellMorph definitionIcon: (aDataSourceItem getProperty: ClyCritiqueSeverityProperty) iconName
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyCritiquesTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 
 	anItemCellMorph color: (aDataSourceItem position odd
@@ -27,7 +28,7 @@ ClyCritiquesTableDecorator class >> decorateTableCell: anItemCellMorph of: aData
 		ifFalse: [ Smalltalk ui theme lightBackgroundColor ])
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyCritiquesTableDecorator class >> decorationStrategy [
 	<classAnnotation>
 

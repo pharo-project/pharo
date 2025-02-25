@@ -2,12 +2,13 @@
 Write for the version info
 "
 Class {
-	#name : #MCFileTreeVersionInfoWriter,
-	#superclass : #MCVersionInfoWriter,
-	#category : #'MonticelloFileTree-Core'
+	#name : 'MCFileTreeVersionInfoWriter',
+	#superclass : 'MCVersionInfoWriter',
+	#category : 'MonticelloFileTree-Core',
+	#package : 'MonticelloFileTree-Core'
 }
 
-{ #category : #serialization }
+{ #category : 'serialization' }
 MCFileTreeVersionInfoWriter >> writeVersionInfo: aVersionInfo [
 	(self isWritten: aVersionInfo)
 		ifTrue: [^ stream nextPutAll: '(id '; print: aVersionInfo id asString; nextPut: $) ].

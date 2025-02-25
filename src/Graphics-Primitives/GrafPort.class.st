@@ -2,8 +2,8 @@
 Provides extended Graphic support like translucency
 "
 Class {
-	#name : #GrafPort,
-	#superclass : #BitBlt,
+	#name : 'GrafPort',
+	#superclass : 'BitBlt',
 	#instVars : [
 		'alpha',
 		'fillPattern',
@@ -11,20 +11,22 @@ Class {
 		'lastFontForegroundColor',
 		'lastFontBackgroundColor'
 	],
-	#category : #'Graphics-Primitives-BitBlt'
+	#category : 'Graphics-Primitives-BitBlt',
+	#package : 'Graphics-Primitives',
+	#tag : 'BitBlt'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GrafPort >> alphaBits: a [
 	alpha := a
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 GrafPort >> clippedBy: aRectangle [
 	^ self copy clipBy: aRectangle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GrafPort >> contentsOfArea: aRectangle into: aForm [
 	destForm
 		displayOn: aForm
@@ -33,7 +35,7 @@ GrafPort >> contentsOfArea: aRectangle into: aForm [
 	^aForm
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 GrafPort >> copyBits [
 	"Override copybits to do translucency if desired"
 
@@ -42,7 +44,7 @@ GrafPort >> copyBits [
 		ifFalse: [ super copyBits ]
 ]
 
-{ #category : #'drawing support' }
+{ #category : 'drawing support' }
 GrafPort >> fillOval: rect [
 	| centerX centerY nextY yBias xBias outer nextOuterX |
 	rect area <= 0 ifTrue: [^ self].
@@ -70,13 +72,13 @@ GrafPort >> fillOval: rect [
 	self copyBits
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GrafPort >> fillPattern: anObject [
 	fillPattern := anObject.
 	self fillColor: anObject
 ]
 
-{ #category : #'drawing support' }
+{ #category : 'drawing support' }
 GrafPort >> fillRect: rect offset: aPoint [
 	"The offset is really just for stupid InfiniteForms."
 	| fc |
@@ -96,7 +98,7 @@ GrafPort >> fillRect: rect offset: aPoint [
 	self copyBits
 ]
 
-{ #category : #'drawing support' }
+{ #category : 'drawing support' }
 GrafPort >> frameOval: rect borderWidth: borderWidth [
 	| centerX centerY nextY yBias xBias wp outer inner nextOuterX nextInnerX |
 	rect area <= 0 ifTrue: [^ self].
@@ -144,7 +146,7 @@ GrafPort >> frameOval: rect borderWidth: borderWidth [
 	self copyBits
 ]
 
-{ #category : #'drawing support' }
+{ #category : 'drawing support' }
 GrafPort >> frameRect: rect borderWidth: borderWidth [
 	sourceX := 0.
 	sourceY := 0.
@@ -152,7 +154,7 @@ GrafPort >> frameRect: rect borderWidth: borderWidth [
 		[:edgeStrip | self destRect: edgeStrip; copyBits]
 ]
 
-{ #category : #'drawing support' }
+{ #category : 'drawing support' }
 GrafPort >> frameRectBottom: rect height: h [
 
 	destX := rect left + 1.
@@ -166,7 +168,7 @@ GrafPort >> frameRectBottom: rect height: h [
 		width := width - 2]
 ]
 
-{ #category : #'drawing support' }
+{ #category : 'drawing support' }
 GrafPort >> frameRectRight: rect width: w [
 
 	width := 1.
@@ -180,7 +182,7 @@ GrafPort >> frameRectRight: rect width: w [
 		height := height - 2]
 ]
 
-{ #category : #'drawing support' }
+{ #category : 'drawing support' }
 GrafPort >> image: aForm at: aPoint sourceRect: sourceRect rule: rule [
 	"Draw the portion of the given Form defined by sourceRect at the given point using the given BitBlt combination rule."
 
@@ -191,7 +193,7 @@ GrafPort >> image: aForm at: aPoint sourceRect: sourceRect rule: rule [
 	self copyBits
 ]
 
-{ #category : #'drawing support' }
+{ #category : 'drawing support' }
 GrafPort >> image: aForm at: aPoint sourceRect: sourceRect rule: rule alpha: sourceAlpha [
 	"Draw the portion of the given Form defined by sourceRect at the given point using the given BitBlt combination rule."
 
@@ -202,12 +204,12 @@ GrafPort >> image: aForm at: aPoint sourceRect: sourceRect rule: rule alpha: sou
 	self copyBitsTranslucent: (alpha := (sourceAlpha * 255) truncated min: 255 max: 0)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GrafPort >> lastFontForegroundColor [
 	^lastFontForegroundColor
 ]
 
-{ #category : #'drawing support' }
+{ #category : 'drawing support' }
 GrafPort >> stencil: stencilForm at: aPoint sourceRect: aRect [
 	"Paint using aColor wherever stencilForm has non-zero pixels"
 	self sourceForm: stencilForm;

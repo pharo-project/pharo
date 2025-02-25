@@ -6,44 +6,45 @@ You can use it to download email from the mail server to your personal mail prog
 To see an example of it's use, see POPSocket class>>example.
 "
 Class {
-	#name : #POP3Client,
-	#superclass : #ProtocolClient,
-	#category : #'Network-Protocols-Protocols'
+	#name : 'POP3Client',
+	#superclass : 'ProtocolClient',
+	#category : 'Network-Protocols-Protocols',
+	#package : 'Network-Protocols',
+	#tag : 'Protocols'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 POP3Client class >> defaultPortNumber [
 	^110
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 POP3Client class >> example [
-
 	"POP3Client example"
-	"download a user's messages into an OrderedCollection and inspect the OrderedCollection"
+
+	"download a user's messages into an OrderedCollection"
 
 	| ps messages userName password |
-	userName := (UIManager default request: 'POP username').
-	password := (UIManager default request: 'POP password').
-	ps := POP3Client openOnHostNamed: (UIManager default request: 'POP server').
+	userName := 'exampleUsername'.
+	password := 'examplePassword'.
+	ps := POP3Client openOnHostNamed: 'pop3.host'.
 	[
 	ps loginUser: userName password: password.
 	ps logProgressToTranscript.
 
 	messages := OrderedCollection new.
 	1 to: ps messageCount do: [ :messageNr |
-		messages add: (ps retrieveMessage: messageNr) ]]
-		ensure: [ps close].
+	messages add: (ps retrieveMessage: messageNr) ] ] ensure: [ ps close ].
 
-	messages inspect
+	^ messages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 POP3Client class >> logFlag [
 	^#pop
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 POP3Client >> apopLogin [
 	"Attempt to authenticate ourselves to the server without sending the password as cleartext."
 
@@ -74,13 +75,13 @@ and then send only the MD5 hash of that to the server.  Thus the password never 
 			(LoginFailedException protocolInstance: self) signal: 'Login failed.' ]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 POP3Client >> apopLoginUser: userName password: password [
 
 	self loginUser: userName password: password loginMethod: #APOP
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 POP3Client >> clearTextLogin [
 
 	[self sendCommand: 'USER ', self user.
@@ -97,7 +98,7 @@ POP3Client >> clearTextLogin [
 			ex resignalAs: ((LoginFailedException protocolInstance: self) signal: 'Login failed.')]
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 POP3Client >> deleteMessage: num [
 	"delete the numbered message"
 
@@ -107,7 +108,7 @@ POP3Client >> deleteMessage: num [
 	self logProgress: self lastResponse
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 POP3Client >> getMultilineResponse [
 	"Get a multiple line response to the last command, filtering out LF characters. A multiple line response ends with a line containing only a single period (.) character."
 
@@ -124,7 +125,7 @@ POP3Client >> getMultilineResponse [
 	^ response contents
 ]
 
-{ #category : #'private - protocol' }
+{ #category : 'private - protocol' }
 POP3Client >> login [
 	self loginMethod
 		ifNil: [^self].
@@ -135,23 +136,23 @@ POP3Client >> login [
 	(POP3LoginError protocolInstance: self) signal: 'Unsupported login procedure.'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 POP3Client >> loginMethod [
 	^self connectionInfo at: #loginMethod ifAbsent: [nil]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 POP3Client >> loginMethod: aSymbol [
 	^self connectionInfo at: #loginMethod put: aSymbol
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 POP3Client >> loginUser: userName password: password [
 
 	self loginUser: userName password: password loginMethod: #clearText
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 POP3Client >> loginUser: userName password: password loginMethod: aLoginMethod [
 
 	self user: userName.
@@ -160,7 +161,7 @@ POP3Client >> loginUser: userName password: password loginMethod: aLoginMethod [
 	self login
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 POP3Client >> messageCount [
 	"Query the server and answer the number of messages that are in the user's mailbox."
 
@@ -177,7 +178,7 @@ POP3Client >> messageCount [
 	^numMessages
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 POP3Client >> quit [
 	"QUIT <CRLF>"
 
@@ -185,17 +186,17 @@ POP3Client >> quit [
 	self checkResponse
 ]
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 POP3Client >> responseIsError [
 	^self lastResponse beginsWith: '-'
 ]
 
-{ #category : #'private - testing' }
+{ #category : 'private - testing' }
 POP3Client >> responseIsWarning [
 	^self lastResponse beginsWith: '-'
 ]
 
-{ #category : #protocol }
+{ #category : 'protocol' }
 POP3Client >> retrieveMessage: number [
 	"retrieve the numbered message"
 

@@ -6,18 +6,20 @@ A resolver (FFICallout) has two main resolution strategies:
 - non strict is a backwards compatibility mode that tries to infer the type if possible (but can go wrong and should be used with care)
 "
 Class {
-	#name : #FFIUndefinedTypeDeclaration,
-	#superclass : #Object,
-	#category : #'UnifiedFFI-Arguments'
+	#name : 'FFIUndefinedTypeDeclaration',
+	#superclass : 'Object',
+	#category : 'UnifiedFFI-Arguments',
+	#package : 'UnifiedFFI',
+	#tag : 'Arguments'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFIUndefinedTypeDeclaration >> isUndefined [
 
 	^ true
 ]
 
-{ #category : #resolution }
+{ #category : 'resolution' }
 FFIUndefinedTypeDeclaration >> resolveUsing: aResolver forArgument: aFFIFunctionArgument [
 
 	^ aResolver resolveUntypedArgument: aFFIFunctionArgument

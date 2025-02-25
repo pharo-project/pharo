@@ -14,8 +14,8 @@ converter forCrLf.
 converter forPlatformLineEnding.
 "
 Class {
-	#name : #ZnNewLineWriterStream,
-	#superclass : #WriteStream,
+	#name : 'ZnNewLineWriterStream',
+	#superclass : 'WriteStream',
 	#instVars : [
 		'stream',
 		'cr',
@@ -23,10 +23,11 @@ Class {
 		'previous',
 		'lineEnding'
 	],
-	#category : #'Zinc-Character-Encoding-Core'
+	#category : 'Zinc-Character-Encoding-Core',
+	#package : 'Zinc-Character-Encoding-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnNewLineWriterStream class >> on: aStream [
 
 	^ self basicNew
@@ -35,41 +36,41 @@ ZnNewLineWriterStream class >> on: aStream [
 		yourself
 ]
 
-{ #category : #'open/close' }
+{ #category : 'open/close' }
 ZnNewLineWriterStream >> close [
 	stream close
 ]
 
-{ #category : #flushing }
+{ #category : 'flushing' }
 ZnNewLineWriterStream >> flush [
 	^ stream flush
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnNewLineWriterStream >> forCr [
 
 	lineEnding := String cr
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnNewLineWriterStream >> forCrLf [
 
 	lineEnding := String crlf
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnNewLineWriterStream >> forLf [
 
 	lineEnding := String lf
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnNewLineWriterStream >> forPlatformLineEnding [
 
 	lineEnding := OSPlatform current lineEnding
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnNewLineWriterStream >> initialize [
 
 	super initialize.
@@ -78,13 +79,13 @@ ZnNewLineWriterStream >> initialize [
 	self forPlatformLineEnding
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnNewLineWriterStream >> newLine [
 	previous := nil.
 	stream nextPutAll: lineEnding
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnNewLineWriterStream >> nextPut: aCharacter [
 	"Write aCharacter to the receivers stream.
 	Convert all line end combinations, i.e cr, lf, crlf, to the platform convention"
@@ -97,7 +98,7 @@ ZnNewLineWriterStream >> nextPut: aCharacter [
 	previous := aCharacter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnNewLineWriterStream >> stream: aWriteStream [
 	stream := aWriteStream
 ]

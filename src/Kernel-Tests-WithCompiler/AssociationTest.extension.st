@@ -1,6 +1,6 @@
-Extension { #name : #AssociationTest }
+Extension { #name : 'AssociationTest' }
 
-{ #category : #'*Kernel-Tests-WithCompiler' }
+{ #category : '*Kernel-Tests-WithCompiler' }
 AssociationTest >> testStoreOnNegativeIntegerRoundtrip [
 	| association storeString evaluated |
 	association := 'a'-> -1.
@@ -12,7 +12,7 @@ AssociationTest >> testStoreOnNegativeIntegerRoundtrip [
 	self assert: association equals: evaluated
 ]
 
-{ #category : #'*Kernel-Tests-WithCompiler' }
+{ #category : '*Kernel-Tests-WithCompiler' }
 AssociationTest >> testStoreOnPositiveIntegerRoundtrip [
 	| association storeString evaluated |
 	association := 'a'-> 1.

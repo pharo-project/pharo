@@ -1,17 +1,19 @@
 Class {
-	#name : #BaselineOfMisc,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfMisc
+	#name : 'BaselineOfMisc',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfMisc',
+	#package : 'BaselineOfMisc'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfMisc >> baseline: spec [
+
 	<baseline>
-	spec for: #'common' do: [
-		spec 
+	spec for: #common do: [
+		spec
 			package: 'PharoDocComment';
 			package: 'STON-Text support';
 			package: 'System-CommandLine-TextSupport';
-			package: 'PerformMessageCommandLineHandler';
-			package: 'Files-Prompt'. ]
+			package: 'Files-Prompt';
+			package: 'System-SourcesCondenser' ]
 ]

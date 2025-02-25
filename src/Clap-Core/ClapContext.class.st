@@ -8,8 +8,8 @@ For example, the command invocation ""eval '1 + 2' "" is represented by this:
 
 "
 Class {
-	#name : #ClapContext,
-	#superclass : #ClapExpression,
+	#name : 'ClapContext',
+	#superclass : 'ClapExpression',
 	#instVars : [
 		'arguments',
 		'obeyingExits',
@@ -19,10 +19,12 @@ Class {
 		'session',
 		'exitException'
 	],
-	#category : #'Clap-Core-Activation'
+	#category : 'Clap-Core-Activation',
+	#package : 'Clap-Core',
+	#tag : 'Activation'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapContext class >> defaultRoot [
 	^ (ClapRoot id: #clap)
 		description: 'Entry point for commands implemented with Clap';
@@ -47,7 +49,7 @@ ClapContext class >> defaultRoot [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapContext class >> pragmaCommands [
 	^ (Pragma allNamed: #commandline) collect: [ :pragma |
 			| theClass theSelector |
@@ -59,62 +61,62 @@ ClapContext class >> pragmaCommands [
 				perform: theSelector ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClapContext class >> withAll: commandCandidates [
 	^ self specification: (self defaultRoot addAll: commandCandidates; yourself)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClapContext class >> withPragmaCommands [
 	^ self withAll: self pragmaCommands
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 ClapContext >> allValidations [
 	^ self validateOn: ClapValidationReport success
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapContext >> arguments [
 	^ arguments
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClapContext >> arguments: aCollection [
 	arguments := aCollection
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClapContext >> beObeyingExits [
 	obeyingExits := true
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ClapContext >> binaryStderr [
 	^ self stdio stderr
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ClapContext >> binaryStdin [
 	^ self stdio stdin
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ClapContext >> binaryStdout [
 	^ self stdio stdout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapContext >> context [
 	^ self
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ClapContext >> defaultStdio [
 	^ ClapPluggableStdio onByteArrays
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 ClapContext >> doMatch [
 	| args |
 	args := self arguments readStream.
@@ -124,17 +126,17 @@ ClapContext >> doMatch [
 	^ match
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapContext >> documenter [
 	^ ClapDocumenter on: self stdout
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClapContext >> execute [
 	^ self executeToExit: [ :exc | self handleExit: exc ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClapContext >> executeToExit: exitBlock [
 	^ [
 		self rememberSession;
@@ -149,52 +151,52 @@ ClapContext >> executeToExit: exitBlock [
 			exitBlock value: self exitException ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapContext >> exit [
 	^ self exitSuccess
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClapContext >> exit: status [
 	^ (Exit status: status) signal
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClapContext >> exit: status message: message [
 	^ (Exit status: status) signal: message
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapContext >> exitException [
 	^ exitException
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClapContext >> exitFailure [
 	^ Exit signalFailure
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClapContext >> exitFailure: message [
 	^ Exit signalFailure: message
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapContext >> exitStatus [
 	^ exitException status
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClapContext >> exitSuccess [
 	^ Exit signalSuccess
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClapContext >> exitSuccess: message [
 	^ Exit signalSuccess: message
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClapContext >> handleExit: exit [
 	self hasSessionChanged ifTrue: [ ^ self ].
 
@@ -202,40 +204,40 @@ ClapContext >> handleExit: exit [
 		ifTrue: [ exit pass ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClapContext >> hasSessionChanged [
 	^ session ~~ Smalltalk session
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClapContext >> ifMatch: matchBlock ifMismatch: failBlock [
 	^ self match
 		ifMatch: matchBlock
 		ifMismatch: failBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClapContext >> initialize [
 	arguments := #().
 	obeyingExits := false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapContext >> leftovers [
 	^ leftovers
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClapContext >> match [
 	^ match ifNil: [ self doMatch ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClapContext >> noneMatched [
 	^ self exitFailure: 'Unknown command'
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClapContext >> printOn: aStream [
 	super printOn: aStream.
 	aStream
@@ -244,61 +246,61 @@ ClapContext >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClapContext >> rememberSession [
 	session := Smalltalk session
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClapContext >> setStdio: anStdio [
 	stdio := anStdio
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClapContext >> shouldObeyExit [
 	^ obeyingExits and: [ Smalltalk isInteractive not ]
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ClapContext >> stderr [
 	^ self stderrEncoded: 'utf8'
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ClapContext >> stderrEncoded: anEncoding [
 	^ ZnNewLineWriterStream on:
 		(ZnCharacterWriteStream on: self binaryStderr encoding: anEncoding)
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ClapContext >> stdin [
 	^ self stdinEncoded: 'utf8'
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ClapContext >> stdinEncoded: anEncoding [
 	^ ZnCharacterReadStream
 		on: self binaryStdin
 		encoding: anEncoding
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ClapContext >> stdio [
 	^ stdio ifNil: [ stdio := self defaultStdio ]
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ClapContext >> stdout [
 	^ self stdoutEncoded: 'utf8'
 ]
 
-{ #category : #streams }
+{ #category : 'streams' }
 ClapContext >> stdoutEncoded: anEncoding [
 	^ ZnNewLineWriterStream on:
 		(ZnCharacterWriteStream on: self binaryStdout encoding: anEncoding)
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 ClapContext >> validateAll [
 	| report |
 	report := self allValidations.
@@ -308,7 +310,7 @@ ClapContext >> validateAll [
 	self exitFailure
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 ClapContext >> validateOn: aReport [
 	match validateOn: aReport.
 	aReport add: (ClapLeftoversValidation new validate: self).

@@ -1,1 +1,1 @@
-Package { #name : #'HeuristicCompletion-Morphic' }
+Package { #name : 'HeuristicCompletion-Morphic' }

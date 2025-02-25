@@ -1,6 +1,6 @@
-Extension { #name : #ClyMethodWatchQuery }
+Extension { #name : 'ClyMethodWatchQuery' }
 
-{ #category : #'*Calypso-SystemPlugins-Reflectivity-Browser' }
+{ #category : '*Calypso-SystemPlugins-Reflectivity-Browser' }
 ClyMethodWatchQuery >> decorateMethodGroupTableCell: anItemCellMorph of: groupItem [
 	super decorateMethodGroupTableCell: anItemCellMorph of: groupItem.
 

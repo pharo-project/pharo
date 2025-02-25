@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-SystemPlugins-Monticello-Browser' }
+Package { #name : 'Calypso-SystemPlugins-Monticello-Browser' }

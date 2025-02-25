@@ -1,17 +1,19 @@
 Class {
-	#name : #ClyPackageExtensionMethodsQueryTest,
-	#superclass : #ClyMethodQueryTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClyPackageExtensionMethodsQueryTest',
+	#superclass : 'ClyMethodQueryTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyPackageExtensionMethodsQueryTest >> createQuery [
 	^ ClyPackageExtensionMethodsQuery
 		of: ClyClass1FromP1Mock package
 		from: (ClyClassScope of: ClyClass1FromP1Mock in: environment)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyPackageExtensionMethodsQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope
 		of: ClySubclassLOfClass0FromPExtendedByP1Mock >> #extensionMethodFromSubclassL
@@ -23,7 +25,7 @@ ClyPackageExtensionMethodsQueryTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyPackageExtensionMethodsQueryTest >> testComparisonToSimilarQueryButWithDifferentPackage [
 	| query2 |
 	query package: Object package.
@@ -33,7 +35,7 @@ ClyPackageExtensionMethodsQueryTest >> testComparisonToSimilarQueryButWithDiffer
 	self deny: query equals: query2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyPackageExtensionMethodsQueryTest >> testFromThreeMethods [
 
 	self queryFromScope: ClyMethodScope ofAll: {

@@ -1,13 +1,15 @@
 Class {
-	#name : #MetacelloVersionDefinitionError,
-	#superclass : #MetacelloVersionDoesNotExistError,
+	#name : 'MetacelloVersionDefinitionError',
+	#superclass : 'MetacelloVersionDoesNotExistError',
 	#instVars : [
 		'exception'
 	],
-	#category : #'Metacello-Core-Exceptions-Errors'
+	#category : 'Metacello-Core-Exceptions-Errors',
+	#package : 'Metacello-Core',
+	#tag : 'Exceptions-Errors'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 MetacelloVersionDefinitionError >> description [
     "Return a textual description of the exception."
 
@@ -24,12 +26,12 @@ MetacelloVersionDefinitionError >> description [
 Possible versions include: ' , self possibleVersions printString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionDefinitionError >> exception [
 	^ exception
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloVersionDefinitionError >> exception: anObject [
 	exception := anObject
 ]

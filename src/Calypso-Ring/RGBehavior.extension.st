@@ -1,11 +1,11 @@
-Extension { #name : #RGBehavior }
+Extension { #name : 'RGBehavior' }
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGBehavior >> calypsoEnvironmentType [
 	^ClyClass
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGBehavior >> canUnderstand: selector [
 	"Answer whether the receiver can respond to the message whose selector
 	is the argument."
@@ -17,18 +17,7 @@ RGBehavior >> canUnderstand: selector [
 	^ self methods anySatisfy: [ :method | method name = selector ]
 ]
 
-{ #category : #'*Calypso-Ring' }
-RGBehavior >> categoryOfElement: aSymbol ifAbsent: aBlockClosure [
-
-	| aMethod |
-
-	aMethod := (self localMethodNamed: aSymbol ifAbsent: nil).
-	^ aMethod
-		ifNotNil: [ aMethod protocol ]
-		ifNil: aBlockClosure
-]
-
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGBehavior >> hasAbstractMethods [
 	"Tells whether the receiver locally defines an abstract method, i.e., a method sending subclassResponsibility"
 
@@ -37,17 +26,17 @@ RGBehavior >> hasAbstractMethods [
 "	^ (self methods anySatisfy: [:cm | cm sendsSelector: #subclassResponsibility ])"
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGBehavior >> includesLocalSelector: aSymbol [
 	^self localMethods anySatisfy: [ :each | each name = aSymbol ]
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGBehavior >> includesMethodsAffectedBy: aSystemAnnouncement [
 	^aSystemAnnouncement affectsMethodsDefinedInClass: self
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGBehavior >> includesVariablesAffectedByModificationOf: modifiedClass [
 	"Any class has ClassVariables which are visible from instance side and class side. That's why here we must check both class and metaclass"
 
@@ -59,13 +48,13 @@ RGBehavior >> includesVariablesAffectedByModificationOf: modifiedClass [
 	^self superclass includesVariablesAffectedByModificationOf: modifiedClass
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGBehavior >> isObsolete [
 
 	^ false
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGBehavior >> lookupSelector: selector [
 	"Look up the given selector in my methodDictionary.
 	Return the corresponding method if found.
@@ -82,36 +71,36 @@ RGBehavior >> lookupSelector: selector [
 	^ nil
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGBehavior >> metaLevelScope [
 	^self isInstanceSide ifTrue: [ ClyInstanceSideScope ] ifFalse: [ ClyClassSideScope ]
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGBehavior >> methodDict [
 
 	^ Dictionary newFrom: (self methods collect: [ :each | each name asSymbol -> each ])
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGBehavior >> organization [
 
 	^ self
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGBehavior >> protocolNamed: aString [
 
 	^ self protocols detect: [ :each | each name = aString ]
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGBehavior >> removeFromSystem [
 
 	self parent removeBehavior: self
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGBehavior >> sourceCodeAt: aSymbol [
 
 	| method |
@@ -120,7 +109,7 @@ RGBehavior >> sourceCodeAt: aSymbol [
 	^ method sourceCode
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGBehavior >> sourceCodeTemplate [
 	"Answer an expression to be edited and evaluated in order to define
 	methods in this class or trait."
@@ -132,19 +121,35 @@ RGBehavior >> sourceCodeTemplate [
 	statements'
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
 RGBehavior >> subclassDefinerClass [
 	^RGClassDefinitionCompiler on: self environment
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
+RGBehavior >> syntaxHighlighter [
+	"Answer a compiler appropriate for source methods of this class."
+
+	^ SHRBTextStyler new
+		  classOrMetaClass: self;
+		  yourself
+]
+
+{ #category : '*Calypso-Ring' }
 RGBehavior >> traitCompositionIncludes: aTrait [
 	^self == aTrait or:
 		[self hasTraitComposition and:
 			[self traitComposition allTraits includes: aTrait]]
 ]
 
-{ #category : #'*Calypso-Ring' }
+{ #category : '*Calypso-Ring' }
+RGBehavior >> visibleMethods [
+	"Answer a <Collection> of <RGMethod> in the receiver"
+
+	^ self methods
+]
+
+{ #category : '*Calypso-Ring' }
 RGBehavior >> withAllSubclasses [
 
 	^ self subclasses asOrderedCollection

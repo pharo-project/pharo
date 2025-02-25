@@ -14,8 +14,8 @@ from within the ProcessBrowser.
 
 "
 Class {
-	#name : #CPUWatcher,
-	#superclass : #Model,
+	#name : 'CPUWatcher',
+	#superclass : 'Model',
 	#instVars : [
 		'tally',
 		'watcher',
@@ -26,32 +26,33 @@ Class {
 		'CurrentCPUWatcher',
 		'PigFinding'
 	],
-	#category : #'Tool-ProcessBrowser'
+	#category : 'Tool-ProcessBrowser',
+	#package : 'Tool-ProcessBrowser'
 }
 
-{ #category : #setting }
+{ #category : 'setting' }
 CPUWatcher class >> cpuWatcherEnabled [
 	^ CpuWatcherEnabled ifNil: [CpuWatcherEnabled := false]
 ]
 
-{ #category : #setting }
+{ #category : 'setting' }
 CPUWatcher class >> cpuWatcherEnabled: aBoolean [
 	CpuWatcherEnabled = aBoolean ifTrue: [^ self].
 	CpuWatcherEnabled := aBoolean.
 	self monitorPreferenceChanged
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CPUWatcher class >> current [
 	^CurrentCPUWatcher
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CPUWatcher class >> currentWatcherProcess [
 	^CurrentCPUWatcher ifNotNil: [ CurrentCPUWatcher watcherProcess ]
 ]
 
-{ #category : #monitoring }
+{ #category : 'monitoring' }
 CPUWatcher class >> dumpTallyOnTranscript [
 	<script>
 	self current ifNotNil: [
@@ -59,53 +60,53 @@ CPUWatcher class >> dumpTallyOnTranscript [
 	]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 CPUWatcher class >> initialize [
 	SessionManager default
 		registerToolClassNamed: self name
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CPUWatcher class >> isMonitoring [
 
-	^CurrentCPUWatcher notNil and: [ CurrentCPUWatcher isMonitoring ]
+	^CurrentCPUWatcher isNotNil and: [ CurrentCPUWatcher isMonitoring ]
 ]
 
-{ #category : #setting }
+{ #category : 'setting' }
 CPUWatcher class >> monitorPreferenceChanged [
 	self cpuWatcherEnabled
 		ifTrue: [ self startMonitoring ]
 		ifFalse: [ self stopMonitoring ]
 ]
 
-{ #category : #setting }
+{ #category : 'setting' }
 CPUWatcher class >> pigFinding [
 	^ PigFinding ifNil: [PigFinding := false]
 ]
 
-{ #category : #setting }
+{ #category : 'setting' }
 CPUWatcher class >> pigFinding: aBoolean [
 	PigFinding := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CPUWatcher class >> processBrowser [
-	^ Smalltalk tools processBrowser
+	^ Smalltalk tools toolNamed: #processBrowser
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 CPUWatcher class >> shutDown [
 	self stopMonitoring
 ]
 
-{ #category : #'startup - shutdown' }
+{ #category : 'startup - shutdown' }
 CPUWatcher class >> startMonitoring [
 	"CPUWatcher startMonitoring"
 
 	^self startMonitoringPeriod: 20 rate: 100 threshold: 0.8
 ]
 
-{ #category : #monitoring }
+{ #category : 'monitoring' }
 CPUWatcher class >> startMonitoringPeriod: pd rate: rt threshold: th [
 	"CPUWatcher startMonitoring"
 
@@ -117,12 +118,12 @@ CPUWatcher class >> startMonitoringPeriod: pd rate: rt threshold: th [
 	^CurrentCPUWatcher
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 CPUWatcher class >> startUp [
 	self monitorPreferenceChanged
 ]
 
-{ #category : #monitoring }
+{ #category : 'monitoring' }
 CPUWatcher class >> stopMonitoring [
 	"CPUWatcher stopMonitoring"
 
@@ -130,7 +131,7 @@ CPUWatcher class >> stopMonitoring [
 	CurrentCPUWatcher := nil
 ]
 
-{ #category : #'porcine capture' }
+{ #category : 'porcine capture' }
 CPUWatcher >> catchThePig: aProcess [
 	| rules  |
 	"nickname, allow-stop, allow-debug"
@@ -144,7 +145,7 @@ CPUWatcher >> catchThePig: aProcess [
 			self openWindowForSuspendedProcess: aProcess ]
 ]
 
-{ #category : #'process operations' }
+{ #category : 'process operations' }
 CPUWatcher >> debugProcess: aProcess [
 	| uiPriority  |
 	uiPriority := Processor activeProcess priority.
@@ -154,13 +155,13 @@ CPUWatcher >> debugProcess: aProcess [
 	self processBrowser debugProcess: aProcess
 ]
 
-{ #category : #'process operations' }
+{ #category : 'process operations' }
 CPUWatcher >> debugProcess: aProcess fromMenu: aMenuMorph [
 	aMenuMorph delete.
 	self debugProcess: aProcess
 ]
 
-{ #category : #'porcine capture' }
+{ #category : 'porcine capture' }
 CPUWatcher >> findThePig [
 	"tally has been updated. Look at it to see if there is a bad process.
 	This runs at a very high priority, so make it fast"
@@ -175,12 +176,12 @@ CPUWatcher >> findThePig [
 	self catchThePig: process
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CPUWatcher >> isMonitoring [
-	^watcher notNil
+	^watcher isNotNil
 ]
 
-{ #category : #'startup - shutdown' }
+{ #category : 'startup - shutdown' }
 CPUWatcher >> monitorProcessPeriod: secs sampleRate: msecs [
 	self stopMonitoring.
 
@@ -194,65 +195,74 @@ CPUWatcher >> monitorProcessPeriod: secs sampleRate: msecs [
 	Processor yield
 ]
 
-{ #category : #'porcine capture' }
+{ #category : 'porcine capture' }
 CPUWatcher >> openMorphicWindowForSuspendedProcess: aProcess [
+
 	| menu rules |
-	menu := UIManager default newMenuIn: self for: self.
+	menu := MorphicUIManager new newMenuIn: self for: self.
 	"nickname  allow-stop  allow-debug"
-	rules := self  processBrowser nameAndRulesFor: aProcess.
-	menu add: 'Dismiss this menu'
-		target: menu
-		selector: #delete;
+	rules := self processBrowser nameAndRulesFor: aProcess.
+	menu
+		add: 'Dismiss this menu' target: menu selector: #delete;
 		addLine.
-	menu add: 'Open Process Browser'
+	menu
+		add: 'Open Process Browser'
 		target: self processBrowser
 		selector: #open.
-	menu add: 'Resume'
+	menu
+		add: 'Resume'
 		target: self
 		selector: #resumeProcess:fromMenu:
-		argumentList: { aProcess . menu }.
-	menu add: 'Terminate'
+		argumentList: {
+				aProcess.
+				menu }.
+	menu
+		add: 'Terminate'
 		target: self
 		selector: #terminateProcess:fromMenu:
-		argumentList: { aProcess . menu }.
+		argumentList: {
+				aProcess.
+				menu }.
 	rules third ifTrue: [
-		menu add: 'Debug at a lower priority'
+		menu
+			add: 'Debug at a lower priority'
 			target: self
 			selector: #debugProcess:fromMenu:
-			argumentList: { aProcess . menu }.
-	].
-	menu addTitle: aProcess identityHash asString,
-		' ', rules first,
-		' is taking too much time and has been suspended.
+			argumentList: {
+					aProcess.
+					menu } ].
+	menu addTitle: aProcess identityHash asString , ' ' , rules first
+		, ' is taking too much time and has been suspended.
 What do you want to do with it?'.
 	menu stayUp: true.
 	menu popUpInWorld
 ]
 
-{ #category : #'porcine capture' }
+{ #category : 'porcine capture' }
 CPUWatcher >> openWindowForSuspendedProcess: aProcess [
 
-	 UIManager default defer: [ self openMorphicWindowForSuspendedProcess: aProcess ]
+	MorphicUIManager new defer: [
+		self openMorphicWindowForSuspendedProcess: aProcess ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CPUWatcher >> processBrowser [
 	^ self class processBrowser
 ]
 
-{ #category : #'process operations' }
+{ #category : 'process operations' }
 CPUWatcher >> resumeProcess: aProcess fromMenu: aMenuMorph [
 	aMenuMorph delete.
 	self processBrowser resumeProcess: aProcess
 ]
 
-{ #category : #'startup - shutdown' }
+{ #category : 'startup - shutdown' }
 CPUWatcher >> startMonitoring [
 	self
 		monitorProcessPeriod: 20 sampleRate: 100
 ]
 
-{ #category : #'startup - shutdown' }
+{ #category : 'startup - shutdown' }
 CPUWatcher >> stopMonitoring [
 	watcher ifNotNil: [
 		self processBrowser terminateProcess: watcher.
@@ -260,30 +270,30 @@ CPUWatcher >> stopMonitoring [
 	]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CPUWatcher >> tally [
 	^tally copy
 ]
 
-{ #category : #'process operations' }
+{ #category : 'process operations' }
 CPUWatcher >> terminateProcess: aProcess fromMenu: aMenuMorph [
 	aMenuMorph delete.
 	self processBrowser terminateProcess: aProcess
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CPUWatcher >> threshold [
 	"What fraction of the time can a process be the active process before we stop it?"
 	^threshold
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CPUWatcher >> threshold: thresh [
 	"What fraction of the time can a process be the active process before we stop it?"
 	threshold := (thresh max: 0.02) min: 1.0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CPUWatcher >> watcherProcess [
 	^watcher
 ]

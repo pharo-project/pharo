@@ -1,6 +1,6 @@
-Extension { #name : #ClyMethodCodeEditorToolMorph }
+Extension { #name : 'ClyMethodCodeEditorToolMorph' }
 
-{ #category : #'*Calypso-SystemTools-OldToolCompatibillity' }
+{ #category : '*Calypso-SystemTools-OldToolCompatibillity' }
 ClyMethodCodeEditorToolMorph >> findFirstOccurrenceOf: searchedString in: textToSearchIn [
 	"Return the first index of aString in textToSearchIn "
 	| firstIndex |
@@ -12,7 +12,7 @@ ClyMethodCodeEditorToolMorph >> findFirstOccurrenceOf: searchedString in: textTo
 	^ firstIndex
 ]
 
-{ #category : #'*Calypso-SystemTools-OldToolCompatibillity' }
+{ #category : '*Calypso-SystemTools-OldToolCompatibillity' }
 ClyMethodCodeEditorToolMorph >> findString: searchedString asSelectorIn: aString [
 	"Return the interval that corresponds to the portion of aString "
 	"This method takes care of finding complete match to searchedString. "
@@ -46,7 +46,7 @@ ClyMethodCodeEditorToolMorph >> findString: searchedString asSelectorIn: aString
 	^ interval
 ]
 
-{ #category : #'*Calypso-SystemTools-OldToolCompatibillity' }
+{ #category : '*Calypso-SystemTools-OldToolCompatibillity' }
 ClyMethodCodeEditorToolMorph >> selectStringAsInMessageBrowser: criteriaString [
 
 	| interval |

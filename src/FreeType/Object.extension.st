@@ -1,6 +1,6 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*FreeType' }
+{ #category : '*FreeType' }
 Object >> ftSize [
 
 	^ 4

@@ -2,17 +2,19 @@
 SUnit tests for class Generator
 "
 Class {
-	#name : #GeneratorTest,
-	#superclass : #TestCase,
-	#category : #'Collections-Streams-Tests-Base'
+	#name : 'GeneratorTest',
+	#superclass : 'TestCase',
+	#category : 'Collections-Streams-Tests-Base',
+	#package : 'Collections-Streams-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GeneratorTest class >> packageNamesUnderTest [
 	^ #('Generator')
 ]
 
-{ #category : #generators }
+{ #category : 'generators' }
 GeneratorTest >> fibonacciSequence [
 	"Yields an infinite sequence of fibonacci numbers."
 
@@ -24,7 +26,7 @@ GeneratorTest >> fibonacciSequence [
 			repeat ]
 ]
 
-{ #category : #generators }
+{ #category : 'generators' }
 GeneratorTest >> numbersBetween: aStartInteger and: aStopInteger [
 	"Yields the nubmers between aStartInteger and aStopInteger."
 
@@ -33,7 +35,7 @@ GeneratorTest >> numbersBetween: aStartInteger and: aStopInteger [
 			do: [ :value | generator yield: value ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GeneratorTest >> testAtEnd [
 	| generator |
 	generator := self numbersBetween: 1 and: 3.
@@ -46,7 +48,7 @@ GeneratorTest >> testAtEnd [
 	self assert: generator atEnd
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GeneratorTest >> testClose [
 	| generator doEnsure notEnsure |
 	doEnsure := notEnsure := 0.
@@ -73,14 +75,14 @@ GeneratorTest >> testClose [
 		assert: notEnsure equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GeneratorTest >> testContents [
 	| generator |
 	generator := self numbersBetween: 1 and: 3.
 	self assert: generator contents equals: #(1 2 3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GeneratorTest >> testEmpty [
 	| generator |
 	generator := Generator on: [ :g | ].
@@ -89,7 +91,7 @@ GeneratorTest >> testEmpty [
 	self assert: generator next isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GeneratorTest >> testEnsure [
 	| generator |
 	generator := Generator
@@ -101,7 +103,7 @@ GeneratorTest >> testEnsure [
 	self assert: generator upToEnd asArray equals: #(1 2 3)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GeneratorTest >> testErrorPropagation [
 	"Ensure that errors in the generator block are properly propagated"
 
@@ -113,14 +115,14 @@ GeneratorTest >> testErrorPropagation [
 	self should: [ generator next ] raise: Error
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GeneratorTest >> testFibonacci [
 	| generator |
 	generator := self fibonacciSequence.
 	self assert: (generator next: 10) asArray equals: #(1 1 2 3 5 8 13 21 34 55)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GeneratorTest >> testNext [
 	| generator |
 	generator := self numbersBetween: 1 and: 3.
@@ -130,7 +132,7 @@ GeneratorTest >> testNext [
 	self assert: generator next isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GeneratorTest >> testOnDo [
 
 	| generator |
@@ -141,7 +143,7 @@ GeneratorTest >> testOnDo [
 	self assert: generator next equals: 5.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GeneratorTest >> testPeek [
 	| generator |
 	generator := self numbersBetween: 1 and: 3.
@@ -151,7 +153,7 @@ GeneratorTest >> testPeek [
 	self assert: generator peek equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GeneratorTest >> testReset [
 	| generator |
 	generator := self numbersBetween: 1 and: 3.
@@ -166,7 +168,7 @@ GeneratorTest >> testReset [
 	self assert: generator next equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GeneratorTest >> testResetUnwind [
 	"Just like close, just using reset"
 
@@ -195,7 +197,7 @@ GeneratorTest >> testResetUnwind [
 		assert: notEnsure equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 GeneratorTest >> testSimple [
 	| generator |
 	generator := Generator

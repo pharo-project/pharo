@@ -1,6 +1,6 @@
-Extension { #name : #AthensCairoSurface }
+Extension { #name : 'AthensCairoSurface' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 AthensCairoSurface >> displayOnMorphicCanvas: canvas at: aPoint [
 
 	canvas

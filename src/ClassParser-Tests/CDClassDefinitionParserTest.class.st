@@ -1,44 +1,27 @@
 Class {
-	#name : #CDClassDefinitionParserTest,
-	#superclass : #CDBehaviorParserTest,
-	#category : #'ClassParser-Tests'
+	#name : 'CDClassDefinitionParserTest',
+	#superclass : 'CDBehaviorParserTest',
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDClassDefinitionParserTest class >> isAbstract [
 	^ self == CDClassDefinitionParserTest
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDClassDefinitionParserTest >> firstClassVariableIndex [
 
 	^ self classDefinitionString findString: self firstClassVariableName
 ]
 
-{ #category : #helpers }
-CDClassDefinitionParserTest >> firstClassVariableName [
-
-	^ 'firstClass'
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 CDClassDefinitionParserTest >> packageName [
 	^  #MyPackage
 ]
 
-{ #category : #helpers }
-CDClassDefinitionParserTest >> secondClassVariableName [
-
-	^ 'secondClass'
-]
-
-{ #category : #helpers }
-CDClassDefinitionParserTest >> superclassName [
-
-	^ 'TheSuperClass'
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 CDClassDefinitionParserTest >> testBestNodeForClassVariableSelectionShouldBeClassSlotNode [
 
 	| selectedNode selection |
@@ -48,7 +31,7 @@ CDClassDefinitionParserTest >> testBestNodeForClassVariableSelectionShouldBeClas
 	self assert: selectedNode equals: classDefinition sharedVariables first
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDClassDefinitionParserTest >> testBestNodeForSuperclassSelectionShouldBeSuperclassNameNode [
 
 	| selectedNode selection |
@@ -58,25 +41,25 @@ CDClassDefinitionParserTest >> testBestNodeForSuperclassSelectionShouldBeSupercl
 	self assert: selectedNode equals: classDefinition superclassNameNode
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDClassDefinitionParserTest >> testClassDefFromLegacyStringHasClassNameNode [
 
 	self assert: classDefinition classNameNode value equals: self className
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDClassDefinitionParserTest >> testClassDefFromLegacyStringHasPackageName [
 
 	self assert: classDefinition packageName equals: self packageName
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDClassDefinitionParserTest >> testClassDefFromLegacyStringHasPackageNameNode [
 
 	self assert: classDefinition packageNameNode value equals: self packageName
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDClassDefinitionParserTest >> testClassDefFromLegacyStringHasSharedSlots [
 
 	self assert: classDefinition sharedVariables first name equals: self firstClassVariableName.
@@ -85,13 +68,13 @@ CDClassDefinitionParserTest >> testClassDefFromLegacyStringHasSharedSlots [
 	self assert: classDefinition sharedVariables second isLiteralVariable
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDClassDefinitionParserTest >> testClassDefFromLegacyStringHasSuperclassName [
 
 	self assert: classDefinition superclassName equals: self superclassName
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 CDClassDefinitionParserTest >> testClassDefFromLegacyStringHasSuperclassNameNode [
 
 	self assert: classDefinition superclassNameNode name equals: self superclassName

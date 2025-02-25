@@ -1,1 +1,1 @@
-Package { #name : #'Tool-Profilers-Tests' }
+Package { #name : 'Tool-Profilers-Tests' }

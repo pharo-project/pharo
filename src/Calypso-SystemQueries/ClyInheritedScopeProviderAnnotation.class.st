@@ -22,12 +22,14 @@ I expect that annotated classes will implement following class side method
 Look at ClyInheritedScopeProvider references for examples
 "
 Class {
-	#name : #ClyInheritedScopeProviderAnnotation,
-	#superclass : #ClassAnnotation,
-	#category : #'Calypso-SystemQueries-Scopes'
+	#name : 'ClyInheritedScopeProviderAnnotation',
+	#superclass : 'ClassAnnotation',
+	#category : 'Calypso-SystemQueries-Scopes',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Scopes'
 }
 
-{ #category : #'scope creation' }
+{ #category : 'scope creation' }
 ClyInheritedScopeProviderAnnotation class >> createInheritedScopeFrom: aClassScope [
 	"We just search first most priority annotation
 	which class defines inherited scope.
@@ -39,7 +41,7 @@ ClyInheritedScopeProviderAnnotation class >> createInheritedScopeFrom: aClassSco
 	self error: 'No scope is found which defines inherited class scope'
 ]
 
-{ #category : #'scope creation' }
+{ #category : 'scope creation' }
 ClyInheritedScopeProviderAnnotation class >> createInheritingScopeFrom: aClassScope [
 	"We just search first most priority annotation
 	which class defines inherited scope. Such classes must also define inverse inheriting scope.
@@ -51,7 +53,7 @@ ClyInheritedScopeProviderAnnotation class >> createInheritingScopeFrom: aClassSc
 	self error: 'No scope is found which defines inheriting class scope'
 ]
 
-{ #category : #'scope creation' }
+{ #category : 'scope creation' }
 ClyInheritedScopeProviderAnnotation >> createInheritedScopeFrom: aClassScope [
 
 	| scope |
@@ -60,7 +62,7 @@ ClyInheritedScopeProviderAnnotation >> createInheritedScopeFrom: aClassScope [
 	^scope
 ]
 
-{ #category : #'scope creation' }
+{ #category : 'scope creation' }
 ClyInheritedScopeProviderAnnotation >> createInheritingScopeFrom: aClassScope [
 
 	| scope |

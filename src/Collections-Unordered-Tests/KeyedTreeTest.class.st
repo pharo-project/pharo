@@ -2,12 +2,14 @@
 SUnit tests for keyed trees
 "
 Class {
-	#name : #KeyedTreeTest,
-	#superclass : #TestCase,
-	#category : #'Collections-Unordered-Tests-Dictionaries'
+	#name : 'KeyedTreeTest',
+	#superclass : 'TestCase',
+	#category : 'Collections-Unordered-Tests-Dictionaries',
+	#package : 'Collections-Unordered-Tests',
+	#tag : 'Dictionaries'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 KeyedTreeTest >> testAtPath [
 	"Test the at path method for success and failure modes."
 
@@ -28,7 +30,7 @@ KeyedTreeTest >> testAtPath [
 	self should: [tree atPath: #(3)] raise: self defaultTestError
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KeyedTreeTest >> testAtPathIfAbsent [
 	"Test the at path if absent method for success and failure modes."
 
@@ -49,7 +51,7 @@ KeyedTreeTest >> testAtPathIfAbsent [
 	self should: [(tree atPath: #(3) ifAbsent: [#missing]) = #missing]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KeyedTreeTest >> testAtPathIfAbsentPut [
 	"Test the at path if absent put method for success and failure modes."
 
@@ -73,7 +75,7 @@ KeyedTreeTest >> testAtPathIfAbsentPut [
 	self should: [(tree atPath: #(3)) = #yetAnotherNew]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KeyedTreeTest >> testAtPathPut [
 	"Test the at path put method for success and failure modes."
 
@@ -95,7 +97,7 @@ KeyedTreeTest >> testAtPathPut [
 	self should: [(tree atPath: #(1 four one)) = #anotherNew]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KeyedTreeTest >> testCopy [
 	"Test the copy method for success and failure modes."
 
@@ -117,7 +119,7 @@ KeyedTreeTest >> testCopy [
 	self shouldnt: [(c atPath: #(1 four)) == t3]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KeyedTreeTest >> testMerge [
 	"Test the merge method for success and failure modes."
 
@@ -153,7 +155,7 @@ KeyedTreeTest >> testMerge [
 	self should: [(m atPath: #(1 3 2)) = '1-3-2']
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KeyedTreeTest >> testRemovePath [
 	"Test the remove path method for success and failure modes."
 
@@ -173,7 +175,7 @@ KeyedTreeTest >> testRemovePath [
 	self should: [(tree atPath: #(2) ifAbsent: []) = nil]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KeyedTreeTest >> testRemovePathIfAbsent [
 	"Test the remove path if absent method for success and failure modes."
 
@@ -193,7 +195,7 @@ KeyedTreeTest >> testRemovePathIfAbsent [
 	self should: [(tree atPath: #(2) ifAbsent: []) = nil]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KeyedTreeTest >> testSubtrees [
 	"Test the subtrees method for success and failure modes."
 

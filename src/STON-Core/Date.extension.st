@@ -1,6 +1,6 @@
-Extension { #name : #Date }
+Extension { #name : 'Date' }
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 Date class >> fromSton: stonReader [
 	"Read a ISO YYYY-MM-DD format.
 	Since my current implementation is time zone offset sensitive, the offset has to be taken into account.
@@ -8,21 +8,23 @@ Date class >> fromSton: stonReader [
 
 	| readStream date |
 	readStream := stonReader parseListSingleton readStream.
-	date := self readFrom: readStream.
-	readStream atEnd
-		ifFalse: [ | offset |
-			offset := DateAndTime readTimezoneOffsetFrom: readStream.
-			offset = date offset
-				ifFalse: [ date start: (date start translateTo: offset) ] ].
+	date := (DateParser readingFrom: readStream pattern: 'yyyy-mm-dd')
+		        continueAfterParsing;
+		        parse.
+	readStream atEnd ifFalse: [
+		| offset |
+		offset := DateAndTime readTimezoneOffsetFrom: readStream.
+		offset = date offset ifFalse: [
+			date start: (date start translateTo: offset) ] ].
 	^ date
 ]
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 Date >> stonContainSubObjects [
 	^ false
 ]
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 Date >> stonOn: stonWriter [
 	"Use an ISO style YYYY-MM-DD representation.
 	Since my current implementation is time zone offset sensitive, the offset has to be included."

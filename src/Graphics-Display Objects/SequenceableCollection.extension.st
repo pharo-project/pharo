@@ -1,6 +1,6 @@
-Extension { #name : #SequenceableCollection }
+Extension { #name : 'SequenceableCollection' }
 
-{ #category : #'*Graphics-Display Objects' }
+{ #category : '*Graphics-Display Objects' }
 SequenceableCollection >> asColorArray [
 	^ColorArray withAll: self
 ]

@@ -2,8 +2,8 @@
 A singleton class, holds the list of repositories. Can look for a requested VersionInfo among its repositories.
 "
 Class {
-	#name : #MCRepositoryGroup,
-	#superclass : #Object,
+	#name : 'MCRepositoryGroup',
+	#superclass : 'Object',
 	#instVars : [
 		'repositories',
 		'useCache'
@@ -11,15 +11,17 @@ Class {
 	#classInstVars : [
 		'default'
 	],
-	#category : #'Monticello-Versioning'
+	#category : 'Monticello-Versioning',
+	#package : 'Monticello',
+	#tag : 'Versioning'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRepositoryGroup class >> default [
 	^ default ifNil: [default := self new]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCRepositoryGroup class >> withRepositories: aCollection [ 
 	| group |
 	group  := self new.
@@ -28,63 +30,43 @@ MCRepositoryGroup class >> withRepositories: aCollection [
 		
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MCRepositoryGroup >> addBasicRepository: aRepository [
-	((repositories includes: aRepository) 
-	or: [ aRepository == MCCacheRepository uniqueInstance ])
-		ifFalse: [
-			repositories add: aRepository.
-			self announceRepositoryAdded: aRepository.
-			self class default addRepository: aRepository ].
+
+	((repositories includes: aRepository) or: [ aRepository == MCCacheRepository uniqueInstance ]) ifFalse: [
+		repositories add: aRepository.
+		self class default addRepository: aRepository ].
 	^ aRepository
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MCRepositoryGroup >> addRepository: aRepository [
 	aRepository addTo: self.
 	^ aRepository
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MCRepositoryGroup >> addRepositoryGroup: aRepositoryGroup [
 	aRepositoryGroup repositoriesDo: [ :each | 
 		each addTo: self ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MCRepositoryGroup >> addTo: aRepository [
 	^ aRepository addRepositoryGroup: self
 ]
 
-{ #category : #private }
-MCRepositoryGroup >> announceRepositoryAdded: aRepository [
-	SystemAnnouncer uniqueInstance
-		announce:
-			(MCRepositoryAdded new
-				repository: aRepository;
-				yourself)
-]
-
-{ #category : #private }
-MCRepositoryGroup >> announceRepositoryRemoved: aRepository [
-	SystemAnnouncer uniqueInstance
-		announce:
-			(MCRepositoryRemoved new
-				repository: aRepository;
-				yourself)
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRepositoryGroup >> disableCache [
 	useCache := false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCRepositoryGroup >> includes: aRepository [
 	^ self repositories includes: aRepository
 ]
 
-{ #category : #interface }
+{ #category : 'interface' }
 MCRepositoryGroup >> includesVersionNamed: aString [
 	" check for existing version name in parallel over all repositories "
 	| results |
@@ -101,43 +83,43 @@ MCRepositoryGroup >> includesVersionNamed: aString [
 	^ results anySatisfy: [:result| result = true ]	
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCRepositoryGroup >> initialize [
 	super initialize.
 	repositories := OrderedCollection new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRepositoryGroup >> removeRepository: aRepository [
-	repositories remove: aRepository ifAbsent: [ ^ self ].
-	self announceRepositoryRemoved: aRepository
+
+	repositories remove: aRepository ifAbsent: [  ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRepositoryGroup >> repositories [
 	^ (self useCache 
 		ifTrue: [Array with: MCCacheRepository uniqueInstance] 
 		ifFalse: [Array new]) , repositories select: #isValid
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 MCRepositoryGroup >> repositoriesDo: aBlock [
 	self repositories do: [:ea | [aBlock value: ea] on: Error do: []]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRepositoryGroup >> useCache [
 	^ useCache ifNil: [
 		useCache := true
 	]
 ]
 
-{ #category : #interface }
+{ #category : 'interface' }
 MCRepositoryGroup >> versionWithInfo: aVersionInfo [
 	^self versionWithInfo: aVersionInfo ifNone: [ self error: 'Could not find version ', aVersionInfo name printString,'. Maybe you need to add a repository?' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCRepositoryGroup >> versionWithInfo: aVersionInfo ifNone: aBlock [
 	self repositoriesDo: [:ea | (ea versionWithInfo: aVersionInfo) ifNotNil: [:v | ^ v]].
 	^aBlock value

@@ -2,33 +2,35 @@
 I am a render operation, used to send commands (which can be asynchronous or synchronous) to the render thread. 
 "
 Class {
-	#name : #OSWindowRenderThreadOperation,
-	#superclass : #Object,
+	#name : 'OSWindowRenderThreadOperation',
+	#superclass : 'Object',
 	#instVars : [
 		'operation',
 		'semaphore',
 		'blocking',
 		'failed'
 	],
-	#category : #'OSWindow-Core-Extras'
+	#category : 'OSWindow-Core-Extras',
+	#package : 'OSWindow-Core',
+	#tag : 'Extras'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OSWindowRenderThreadOperation class >> new: anOperation [
 	^ self new: anOperation blocking: false
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OSWindowRenderThreadOperation class >> new: anOperation blocking: isBlocking [
 	^ self basicNew initWithOperation: anOperation blocking: isBlocking; yourself
 ]
 
-{ #category : #waiting }
+{ #category : 'waiting' }
 OSWindowRenderThreadOperation >> blocking [
 	^ blocking
 ]
 
-{ #category : #execute }
+{ #category : 'execute' }
 OSWindowRenderThreadOperation >> execute [
 	[
 		[
@@ -42,25 +44,25 @@ OSWindowRenderThreadOperation >> execute [
 	] ensure: [ semaphore signal ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowRenderThreadOperation >> failed [
 	^ failed
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 OSWindowRenderThreadOperation >> initWithOperation: anOperation [
 	semaphore := Semaphore new.
 	operation := anOperation
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 OSWindowRenderThreadOperation >> initWithOperation: anOperation blocking: isBlocking [
 	semaphore := Semaphore new.
 	operation := anOperation.
 	blocking := isBlocking
 ]
 
-{ #category : #waiting }
+{ #category : 'waiting' }
 OSWindowRenderThreadOperation >> wait [
 	semaphore wait
 ]

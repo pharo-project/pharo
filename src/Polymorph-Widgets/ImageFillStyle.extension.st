@@ -1,15 +1,15 @@
-Extension { #name : #ImageFillStyle }
+Extension { #name : 'ImageFillStyle' }
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 ImageFillStyle >> fillRectangle: aRectangle on: aCanvas [
 	"Fill the given rectangle on the given canvas with the receiver."
 
 	self extent
 		ifNil: [aCanvas
-				translucentImage: self form
+				translucentFormSet: self formSet
 				at: self origin]
 		ifNotNil: [aCanvas clipBy: (self origin + self offset extent: self extent) during: [:c |
 					c
-						translucentImage: self form
+						translucentFormSet: self formSet
 						at: self origin]]
 ]

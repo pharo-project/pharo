@@ -8,33 +8,35 @@ world open.
 
 "
 Class {
-	#name : #OSWindowWorldMorph,
-	#superclass : #WorldMorph,
+	#name : 'OSWindowWorldMorph',
+	#superclass : 'WorldMorph',
 	#instVars : [
 		'closeCallback',
 		'isResizeable'
 	],
-	#category : #'OSWindow-Core-Morphic'
+	#category : 'OSWindow-Core-Morphic',
+	#package : 'OSWindow-Core',
+	#tag : 'Morphic'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 OSWindowWorldMorph >> addMorph: aMorph frame: rectangle [
 	"For compatibility with SystemWindow."
 	^ self addMorph: aMorph fullFrame: rectangle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowWorldMorph >> closeCallback [
 	^ closeCallback
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowWorldMorph >> closeCallback: anObject [
 	self flag: 'Do something better than just storing a closure.'.
 	closeCallback := anObject
 ]
 
-{ #category : #'submorphs - add/remove' }
+{ #category : 'submorphs - add/remove' }
 OSWindowWorldMorph >> delete [
 	closeCallback value.
 	self class removeExtraWorld: self.
@@ -42,7 +44,7 @@ OSWindowWorldMorph >> delete [
 	super delete
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSWindowWorldMorph >> initialize [
 	super initialize.
 	self color: Color veryLightGray.
@@ -51,17 +53,17 @@ OSWindowWorldMorph >> initialize [
 	self addHand: HandMorph new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowWorldMorph >> isResizeable [
 	^ isResizeable
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowWorldMorph >> isResizeable: anObject [
 	isResizeable := anObject
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 OSWindowWorldMorph >> open [
 	self worldState worldRenderer: ((OSWorldRenderer forWorld: self)
 		windowCloseAction: [self osWindowCloseButtonPressed]).
@@ -69,17 +71,17 @@ OSWindowWorldMorph >> open [
 	self class addExtraWorld: self
 ]
 
-{ #category : #display }
+{ #category : 'display' }
 OSWindowWorldMorph >> openInWorld [
 	^ self open
 ]
 
-{ #category : #events }
+{ #category : 'events' }
 OSWindowWorldMorph >> osWindowCloseButtonPressed [
 	self delete
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSWindowWorldMorph >> title: aTitle [
 	"self flag: 'ToDo'"
 ]

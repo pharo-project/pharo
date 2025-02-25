@@ -4,36 +4,47 @@ My header only includes the name of the trait.
 Mostly of my behavior is from HEMethodContainer.
 "
 Class {
-	#name : #HETrait,
-	#superclass : #HEMethodContainer,
+	#name : 'HETrait',
+	#superclass : 'HEMethodContainer',
 	#instVars : [
 		'traitName'
 	],
-	#category : #'Hermes-Model'
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #reading }
+{ #category : 'reading' }
 HETrait >> doReadHeaderFrom: aReader [
 	traitName := aReader readByteSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HETrait >> isTrait [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HETrait >> name [
 
 	^ self traitName
 ]
 
-{ #category : #accessing }
+{ #category : 'printing' }
+HETrait >> printOn: aStream [
+
+	aStream
+		nextPutAll: 'HETrait ( ';
+		print: traitName;
+		nextPutAll: ' )'
+]
+
+{ #category : 'accessing' }
 HETrait >> traitName [
 	^ traitName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HETrait >> traitName: anObject [
 	traitName := anObject
 ]

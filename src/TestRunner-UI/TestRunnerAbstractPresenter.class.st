@@ -2,8 +2,8 @@
 I am an abstract mini ui runner for tests. 
 "
 Class {
-	#name : #TestRunnerAbstractPresenter,
-	#superclass : #SpPresenter,
+	#name : 'TestRunnerAbstractPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'packagesPresenter',
 		'classesPresenter',
@@ -15,17 +15,18 @@ Class {
 		'suitePreparationModesPresenter',
 		'suitePreparationMode'
 	],
-	#category : #'TestRunner-UI'
+	#category : 'TestRunner-UI',
+	#package : 'TestRunner-UI'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TestRunnerAbstractPresenter class >> open [
 
 	<script>
 	self subclassResponsibility
 ]
 
-{ #category : #'presenters-connection' }
+{ #category : 'presenters-connection' }
 TestRunnerAbstractPresenter >> allDefinedTestCases: aCollectionOfPackage [
 
 	"return all the defined test cases from the giving pavkage"
@@ -34,13 +35,13 @@ TestRunnerAbstractPresenter >> allDefinedTestCases: aCollectionOfPackage [
 		  self definedTestCases: package ]
 ]
 
-{ #category : #getter }
+{ #category : 'getter' }
 TestRunnerAbstractPresenter >> classesPresenter [
 
 	^ classesPresenter
 ]
 
-{ #category : #'presenters-connection' }
+{ #category : 'presenters-connection' }
 TestRunnerAbstractPresenter >> connectPackagesPresenter [
 
 	packagesPresenter
@@ -51,25 +52,25 @@ TestRunnerAbstractPresenter >> connectPackagesPresenter [
 				ifNil: [ #(  ) ] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TestRunnerAbstractPresenter >> connectPresenters [
 	super connectPresenters.
 	self connectPackagesPresenter
 ]
 
-{ #category : #'presenters-initialization' }
+{ #category : 'presenters-initialization' }
 TestRunnerAbstractPresenter >> containsTestCase: aPackage [
 
 	^ aPackage definedClasses anySatisfy: [ :class | class isTestCase ]
 ]
 
-{ #category : #'presenters-initialization' }
+{ #category : 'presenters-initialization' }
 TestRunnerAbstractPresenter >> debugSelectedTest [
 
 	self rerunSelectedTestAs: [ :test | runner debugFailure: test ]
 ]
 
-{ #category : #'buttons-presenters-initialization' }
+{ #category : 'buttons-presenters-initialization' }
 TestRunnerAbstractPresenter >> debugerOn1stFailureButtonPresenters [
 
 	^ self newButton
@@ -79,7 +80,7 @@ TestRunnerAbstractPresenter >> debugerOn1stFailureButtonPresenters [
 		  yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TestRunnerAbstractPresenter >> defaultLayout [
 
 	| packagesLayout classesLayout resultLayout |
@@ -113,13 +114,13 @@ TestRunnerAbstractPresenter >> defaultLayout [
 		  yourself
 ]
 
-{ #category : #'buttons-presenters-initialization' }
+{ #category : 'buttons-presenters-initialization' }
 TestRunnerAbstractPresenter >> defaultRunnerClass [
 
 	^ NewTestRunner
 ]
 
-{ #category : #'presenters-connection' }
+{ #category : 'presenters-connection' }
 TestRunnerAbstractPresenter >> definedClasses: aPackage [
 
 	"return all the defined classes from the package either 
@@ -128,20 +129,20 @@ TestRunnerAbstractPresenter >> definedClasses: aPackage [
 	^ aPackage definedClasses
 ]
 
-{ #category : #'presenters-connection' }
+{ #category : 'presenters-connection' }
 TestRunnerAbstractPresenter >> definedTestCases: aPackage [
 
 	^ aPackage definedClasses asOrderedCollection select: [ :class | 
 		  class isTestCase and: class isAbstract not ]
 ]
 
-{ #category : #'buttons-presenters-initialization' }
+{ #category : 'buttons-presenters-initialization' }
 TestRunnerAbstractPresenter >> displayTestCases [
 
 	self shouldBeImplemented
 ]
 
-{ #category : #'buttons-presenters-initialization' }
+{ #category : 'buttons-presenters-initialization' }
 TestRunnerAbstractPresenter >> execute: aCollectionOfClasses [
 
 	self initializeRunner.
@@ -152,7 +153,7 @@ TestRunnerAbstractPresenter >> execute: aCollectionOfClasses [
 		displayingProgress: 'Running Tests'
 ]
 
-{ #category : #'buttons-presenters-initialization' }
+{ #category : 'buttons-presenters-initialization' }
 TestRunnerAbstractPresenter >> executeSelectedClasses [
 
 	self initializeRunner.
@@ -163,19 +164,19 @@ TestRunnerAbstractPresenter >> executeSelectedClasses [
 		displayingProgress: 'Running Tests'
 ]
 
-{ #category : #'buttons-presenters-initialization' }
+{ #category : 'buttons-presenters-initialization' }
 TestRunnerAbstractPresenter >> informInProgress [
 
 	resultDescriptionPresenter  text: 'In progress ...'
 ]
 
-{ #category : #'buttons-presenters-initialization' }
+{ #category : 'buttons-presenters-initialization' }
 TestRunnerAbstractPresenter >> initialize [
 	self initializeRunner.
 	super initialize
 ]
 
-{ #category : #'buttons-presenters-initialization' }
+{ #category : 'buttons-presenters-initialization' }
 TestRunnerAbstractPresenter >> initializeActionBarPresenter [
 
 	actionBarPresenter := SpBoxLayout newLeftToRight
@@ -190,7 +191,7 @@ TestRunnerAbstractPresenter >> initializeActionBarPresenter [
 		                      yourself
 ]
 
-{ #category : #'presenters-initialization' }
+{ #category : 'presenters-initialization' }
 TestRunnerAbstractPresenter >> initializeClassesPresenter [
 
 	classesPresenter := self instantiate: SpFilteringListPresenter.
@@ -206,7 +207,7 @@ TestRunnerAbstractPresenter >> initializeClassesPresenter [
 					self selectedClasses: selectionItemMode selectedItems ] ]
 ]
 
-{ #category : #'presenters-initialization' }
+{ #category : 'presenters-initialization' }
 TestRunnerAbstractPresenter >> initializePackagesPresenter [
 
 	packagesPresenter := self instantiate: SpFilteringListPresenter.
@@ -221,7 +222,7 @@ TestRunnerAbstractPresenter >> initializePackagesPresenter [
 		items: self packagesWithTests
 ]
 
-{ #category : #'presenters-initialization' }
+{ #category : 'presenters-initialization' }
 TestRunnerAbstractPresenter >> initializePresenters [
 
 	self initializePackagesPresenter.
@@ -230,23 +231,23 @@ TestRunnerAbstractPresenter >> initializePresenters [
 	self initializeActionBarPresenter
 ]
 
-{ #category : #'presenters-initialization' }
+{ #category : 'presenters-initialization' }
 TestRunnerAbstractPresenter >> initializeResultDescriptionPresenter [
 	resultDescriptionPresenter := self newText beNotEditable
 ]
 
-{ #category : #'presenters-initialization' }
+{ #category : 'presenters-initialization' }
 TestRunnerAbstractPresenter >> initializeResultItemsPresenter [
 	self subclassResponsibility
 ]
 
-{ #category : #'presenters-initialization' }
+{ #category : 'presenters-initialization' }
 TestRunnerAbstractPresenter >> initializeResultPresenter [
 	self initializeResultDescriptionPresenter.
 	self initializeResultItemsPresenter.
 ]
 
-{ #category : #'buttons-presenters-initialization' }
+{ #category : 'buttons-presenters-initialization' }
 TestRunnerAbstractPresenter >> initializeRunner [
 
 	self runner:
@@ -254,7 +255,7 @@ TestRunnerAbstractPresenter >> initializeRunner [
 			 self suitePreparator)
 ]
 
-{ #category : #'presenters-initialization' }
+{ #category : 'presenters-initialization' }
 TestRunnerAbstractPresenter >> initializeWindow: aWindowPresenter [
 
 	aWindowPresenter
@@ -262,20 +263,20 @@ TestRunnerAbstractPresenter >> initializeWindow: aWindowPresenter [
 		initialExtent: 800 @ 600
 ]
 
-{ #category : #getter }
+{ #category : 'getter' }
 TestRunnerAbstractPresenter >> packagesPresenter [
 
 	^ packagesPresenter
 ]
 
-{ #category : #'presenters-initialization' }
+{ #category : 'presenters-initialization' }
 TestRunnerAbstractPresenter >> packagesWithTests [
 
-	^ RPackageOrganizer default packages select: [ :package | 
+	^ PackageOrganizer default packages select: [ :package | 
 		  self containsTestCase: package ]
 ]
 
-{ #category : #'buttons-presenters-initialization' }
+{ #category : 'buttons-presenters-initialization' }
 TestRunnerAbstractPresenter >> rerunFailedTests [
 
 	self inform: 'rerunning failures'.
@@ -283,7 +284,7 @@ TestRunnerAbstractPresenter >> rerunFailedTests [
 	self updateResultPresenter
 ]
 
-{ #category : #'buttons-presenters-initialization' }
+{ #category : 'buttons-presenters-initialization' }
 TestRunnerAbstractPresenter >> rerunFailuresButtonPresenter [
 
 	^ self newButton
@@ -293,32 +294,32 @@ TestRunnerAbstractPresenter >> rerunFailuresButtonPresenter [
 		  yourself
 ]
 
-{ #category : #'presenters-initialization' }
+{ #category : 'presenters-initialization' }
 TestRunnerAbstractPresenter >> rerunSelectedTestAs: aBlock [
 	
 	aBlock value: resultItemsPresenter selection selectedItem.
 	self updateResultPresenter
 ]
 
-{ #category : #getter }
+{ #category : 'getter' }
 TestRunnerAbstractPresenter >> resultDescriptionPresenter [
 
 	^ resultDescriptionPresenter
 ]
 
-{ #category : #getter }
+{ #category : 'getter' }
 TestRunnerAbstractPresenter >> resultItemsPresenter [
 
 	^ resultItemsPresenter
 ]
 
-{ #category : #'presenters-initialization' }
+{ #category : 'presenters-initialization' }
 TestRunnerAbstractPresenter >> runSelectedTest [
 
 	self rerunSelectedTestAs: [ :test | runner runFailure: test ]
 ]
 
-{ #category : #'buttons-presenters-initialization' }
+{ #category : 'buttons-presenters-initialization' }
 TestRunnerAbstractPresenter >> runSelectedTestsWithDebugFirstRunner [
 
 	self runner switchToDebugMode.
@@ -330,7 +331,7 @@ TestRunnerAbstractPresenter >> runSelectedTestsWithDebugFirstRunner [
 	self runner switchToRunMode
 ]
 
-{ #category : #'buttons-presenters-initialization' }
+{ #category : 'buttons-presenters-initialization' }
 TestRunnerAbstractPresenter >> runTestsButtonPresenter [
 
 	^ self newButton
@@ -340,31 +341,31 @@ TestRunnerAbstractPresenter >> runTestsButtonPresenter [
 		  yourself
 ]
 
-{ #category : #'buttons-presenters-initialization' }
+{ #category : 'buttons-presenters-initialization' }
 TestRunnerAbstractPresenter >> runner [
 
 	^ runner
 ]
 
-{ #category : #'buttons-presenters-initialization' }
+{ #category : 'buttons-presenters-initialization' }
 TestRunnerAbstractPresenter >> runner: aRunner [
 
 	runner := aRunner
 ]
 
-{ #category : #'buttons-presenters-initialization' }
+{ #category : 'buttons-presenters-initialization' }
 TestRunnerAbstractPresenter >> selectedClasses [
 
 	^ selectedClasses ifNil: [ selectedClasses := OrderedCollection new ]
 ]
 
-{ #category : #'presenters-initialization' }
+{ #category : 'presenters-initialization' }
 TestRunnerAbstractPresenter >> selectedClasses: aCollectionOfClasses [
 
 	selectedClasses := aCollectionOfClasses
 ]
 
-{ #category : #'buttons-presenters-initialization' }
+{ #category : 'buttons-presenters-initialization' }
 TestRunnerAbstractPresenter >> suitePreparationModesPresenter [
 
 	^ SpDropListPresenter new
@@ -375,19 +376,19 @@ TestRunnerAbstractPresenter >> suitePreparationModesPresenter [
 			  self inform: self runner suitePreparator name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestRunnerAbstractPresenter >> suitePreparator [
 
 	^ suitePreparationMode ifNil: [ AnyEffectSuitePreparator ]
 ]
 
-{ #category : #'buttons-presenters-initialization' }
+{ #category : 'buttons-presenters-initialization' }
 TestRunnerAbstractPresenter >> suitePreparator: aSuitePreparatorClass [
 
 	suitePreparationMode := aSuitePreparatorClass
 ]
 
-{ #category : #'presenters-initialization' }
+{ #category : 'presenters-initialization' }
 TestRunnerAbstractPresenter >> updateClassPresenter: aCollectionOfPackages [
 
 	classesPresenter items:
@@ -395,26 +396,26 @@ TestRunnerAbstractPresenter >> updateClassPresenter: aCollectionOfPackages [
 			 self definedTestCases: package ])
 ]
 
-{ #category : #'buttons-presenters-initialization' }
+{ #category : 'buttons-presenters-initialization' }
 TestRunnerAbstractPresenter >> updateResultDescription [
 
 	resultDescriptionPresenter text: runner resultDescription
 ]
 
-{ #category : #'buttons-presenters-initialization' }
+{ #category : 'buttons-presenters-initialization' }
 TestRunnerAbstractPresenter >> updateResultPresenter [
 
 	self updateResultDescription.
 	self displayTestCases.
 ]
 
-{ #category : #'buttons-presenters-initialization' }
+{ #category : 'buttons-presenters-initialization' }
 TestRunnerAbstractPresenter >> updateTestRunnerSuiePreparatorWith: aSuitePreparatorClass [
 
 	self suitePreparator: aSuitePreparatorClass
 ]
 
-{ #category : #'presenters-initialization' }
+{ #category : 'presenters-initialization' }
 TestRunnerAbstractPresenter >> windowName [
 	self subclassResponsibility
 ]

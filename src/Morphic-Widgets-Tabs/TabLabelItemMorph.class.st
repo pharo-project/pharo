@@ -4,16 +4,18 @@ I am a special label morph for tabs.
 This way I can control which of my submorphs to show according to the tab size
 "
 Class {
-	#name : #TabLabelItemMorph,
-	#superclass : #IconicListItemMorph,
+	#name : 'TabLabelItemMorph',
+	#superclass : 'IconicListItemMorph',
 	#instVars : [
 		'tab',
 		'storedIcon'
 	],
-	#category : #'Morphic-Widgets-Tabs-Support'
+	#category : 'Morphic-Widgets-Tabs-Support',
+	#package : 'Morphic-Widgets-Tabs',
+	#tag : 'Support'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TabLabelItemMorph class >> tab: tab [
 
 	^ self new
@@ -21,24 +23,24 @@ TabLabelItemMorph class >> tab: tab [
 		yourself
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 TabLabelItemMorph >> clipSubmorphs [
 
 	^ true
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 TabLabelItemMorph >> clippingBounds [
 	"Return the bounds to which any submorphs should be clipped if the property is set"
 	^ tab modifyClippingBounds: super clippingBounds
 ]
 
-{ #category : #'private - drawing' }
+{ #category : 'private - drawing' }
 TabLabelItemMorph >> computeSubmorphsToDraw [
 
 	owner width < tab showIconTreshold
 		ifTrue: [
-			(storedIcon isNil and: [ icon notNil ]) ifTrue: [
+			(storedIcon isNil and: [ icon isNotNil ]) ifTrue: [
 				storedIcon := icon.
 				self removeMorph: icon ].
 			^ { morph } ].
@@ -51,7 +53,7 @@ TabLabelItemMorph >> computeSubmorphsToDraw [
 	^ self submorphs
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 TabLabelItemMorph >> drawSubmorphsOn: aCanvas [
 	"Display submorphs back to front"
 
@@ -68,7 +70,7 @@ TabLabelItemMorph >> drawSubmorphsOn: aCanvas [
 		ifFalse: [ drawBlock value: aCanvas ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabLabelItemMorph >> icon: anObject [
 
 	icon ifNotNil: [ self removeMorph: icon ].
@@ -77,13 +79,13 @@ TabLabelItemMorph >> icon: anObject [
 	icon ifNotNil: [ 	self addMorphFront: icon ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabLabelItemMorph >> tab: anObject [
 
 	tab := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabLabelItemMorph >> themeChanged [
 	super themeChanged.
 	morph color: morph defaultColor.

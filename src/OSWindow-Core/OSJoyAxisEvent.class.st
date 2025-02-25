@@ -10,8 +10,8 @@ The mapped parameter tells if the axis index has been mapped into the index of a
 The hasMapping parameters tells if this joystick is generating a mapped version of the event.
 "
 Class {
-	#name : #OSJoyAxisEvent,
-	#superclass : #OSEvent,
+	#name : 'OSJoyAxisEvent',
+	#superclass : 'OSEvent',
 	#instVars : [
 		'which',
 		'axis',
@@ -19,99 +19,101 @@ Class {
 		'mapped',
 		'hasMapping'
 	],
-	#category : #'OSWindow-Core-Events'
+	#category : 'OSWindow-Core-Events',
+	#package : 'OSWindow-Core',
+	#tag : 'Events'
 }
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 OSJoyAxisEvent >> accept: aVisitor [
 	^ aVisitor visitJoyAxisEvent: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSJoyAxisEvent >> axis [
 
 	^ axis
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSJoyAxisEvent >> axis: anObject [
 
 	axis := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSJoyAxisEvent >> hasMapping [
 	^ hasMapping
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSJoyAxisEvent >> hasMapping: anObject [
 	hasMapping := anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSJoyAxisEvent >> isLeftX [
 	^ axis == 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSJoyAxisEvent >> isLeftY [
 	^ axis == 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSJoyAxisEvent >> isPreferredEvent [
 	^ mapped or: hasMapping not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSJoyAxisEvent >> isRightX [
 	^ axis == 2
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSJoyAxisEvent >> isRightY [
 	^ axis == 3
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSJoyAxisEvent >> isTriggerLeft [
 	^ axis == 4
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OSJoyAxisEvent >> isTriggerRight [
 	^ axis == 5
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSJoyAxisEvent >> mapped [
 	^ mapped
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSJoyAxisEvent >> mapped: anObject [
 	mapped := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSJoyAxisEvent >> value [
 	^ value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSJoyAxisEvent >> value: anObject [
 
 	value := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSJoyAxisEvent >> which [
 
 	^ which
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSJoyAxisEvent >> which: anObject [
 
 	which := anObject

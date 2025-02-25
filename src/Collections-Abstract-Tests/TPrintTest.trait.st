@@ -2,11 +2,13 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TPrintTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TPrintTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 TPrintTest >> elements [
 
 	^ self nonEmpty isDictionary
@@ -14,12 +16,12 @@ TPrintTest >> elements [
 		  ifFalse: [ self nonEmpty asOrderedCollection ]
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TPrintTest >> nonEmpty [
  self explicitRequirement
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 TPrintTest >> prefix [
 
 	^ self nonEmpty class name first isVowel
@@ -27,13 +29,13 @@ TPrintTest >> prefix [
 		  ifFalse: [ 'a' ]
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TPrintTest >> test0FixturePrintTest [
 
 	self denyEmpty: self nonEmpty
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 TPrintTest >> testPrintElementsOn [
 
 	| printed printedElements allPrintedElementsAsString allElementsAsString |
@@ -51,7 +53,7 @@ TPrintTest >> testPrintElementsOn [
 		hasSameElements: allPrintedElementsAsString
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 TPrintTest >> testPrintNameOn [
 
 	| printed prefix expected |
@@ -63,7 +65,7 @@ TPrintTest >> testPrintNameOn [
 	self assert: printed equals: expected
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 TPrintTest >> testPrintOn [
 
 	| printed allElementsAsString splittedString |
@@ -80,7 +82,7 @@ TPrintTest >> testPrintOn [
 			self nonEmpty class name } , allElementsAsString
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 TPrintTest >> testPrintOnDelimiter [
 
 	| result allElementsAsString expectedelements |
@@ -97,7 +99,7 @@ TPrintTest >> testPrintOnDelimiter [
 	self assert: allElementsAsString equals: expectedelements
 ]
 
-{ #category : #'tests - printing' }
+{ #category : 'tests - printing' }
 TPrintTest >> testPrintOnDelimiterLast [
 
 	| result |

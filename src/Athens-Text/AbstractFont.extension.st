@@ -1,12 +1,12 @@
-Extension { #name : #AbstractFont }
+Extension { #name : 'AbstractFont' }
 
-{ #category : #'*Athens-Text' }
+{ #category : '*Athens-Text' }
 AbstractFont >> getPreciseDescent [
 
 	^ self descent
 ]
 
-{ #category : #'*Athens-Text' }
+{ #category : '*Athens-Text' }
 AbstractFont >> getPreciseHeight [
 
 	^ self height

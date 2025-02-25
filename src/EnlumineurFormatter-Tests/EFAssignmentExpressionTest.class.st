@@ -1,10 +1,11 @@
 Class {
-	#name : #EFAssignmentExpressionTest,
-	#superclass : #EFTest,
-	#category : #'EnlumineurFormatter-Tests'
+	#name : 'EFAssignmentExpressionTest',
+	#superclass : 'EFTest',
+	#category : 'EnlumineurFormatter-Tests',
+	#package : 'EnlumineurFormatter-Tests'
 }
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFAssignmentExpressionTest >> basicConfiguration [
 
 	^ self contextClass basicNew
@@ -13,7 +14,7 @@ EFAssignmentExpressionTest >> basicConfiguration [
 		indentExtraSpaces: 0
 ]
 
-{ #category : #configurations }
+{ #category : 'configurations' }
 EFAssignmentExpressionTest >> multilineConfiguration [
 	^ self contextClass basicNew
 		formatCommentCloseToStatements: false;
@@ -35,7 +36,7 @@ EFAssignmentExpressionTest >> multilineConfiguration [
 		indentExtraSpaces: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFAssignmentExpressionTest >> testAssignment [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -43,7 +44,7 @@ EFAssignmentExpressionTest >> testAssignment [
 	self assert: source equals: 'a := 1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFAssignmentExpressionTest >> testAssignmentFormatValue [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -51,7 +52,7 @@ EFAssignmentExpressionTest >> testAssignmentFormatValue [
 	self assert: source equals: 'a := b := 1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFAssignmentExpressionTest >> testAssignmentFormatVariable [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -59,7 +60,7 @@ EFAssignmentExpressionTest >> testAssignmentFormatVariable [
 	self assert: source equals: 'a := 1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFAssignmentExpressionTest >> testAssignmentHasNoExtraSpace [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -67,7 +68,7 @@ EFAssignmentExpressionTest >> testAssignmentHasNoExtraSpace [
 	self assert: source equals: 'a := 1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFAssignmentExpressionTest >> testAssignmentHasNoExtraSpaceInside [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -75,7 +76,7 @@ EFAssignmentExpressionTest >> testAssignmentHasNoExtraSpaceInside [
 	self assert: source equals: 'a := 1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFAssignmentExpressionTest >> testExtraIndentationWhenKeywordMessageIsMultiline [
 	| source |
 	configurationSelector := #multilineConfiguration.
@@ -92,7 +93,7 @@ EFAssignmentExpressionTest >> testExtraIndentationWhenKeywordMessageIsMultiline 
 	                    ifFalse: [ 0 ]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFAssignmentExpressionTest >> testExtraIndentationWhenMultiline [
 	| source |
 	configurationSelector := #multilineConfiguration.
@@ -106,7 +107,7 @@ EFAssignmentExpressionTest >> testExtraIndentationWhenMultiline [
                     - ( p3 - x - p0 - x * ( p2 - y - p0 - y ) ) * b0'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFAssignmentExpressionTest >> testExtraIndentationWhenMultiline2 [
 	| source |
 	configurationSelector := #multilineConfiguration.
@@ -123,7 +124,7 @@ EFAssignmentExpressionTest >> testExtraIndentationWhenMultiline2 [
 	]'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFAssignmentExpressionTest >> testExtraIndentationWhenMultiline3 [
 	| source |
 	configurationSelector := #multilineConfiguration.
@@ -138,7 +139,7 @@ EFAssignmentExpressionTest >> testExtraIndentationWhenMultiline3 [
           - ( p3 - x - p0 - x * ( p2 - y - p0 - y ) ) * b0'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFAssignmentExpressionTest >> testExtraIndentationWhenMultilineResetTheIndentWhenFinish [
 	| source |
 	configurationSelector := #multilineConfiguration.
@@ -149,7 +150,7 @@ EFAssignmentExpressionTest >> testExtraIndentationWhenMultilineResetTheIndentWhe
 a := 1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFAssignmentExpressionTest >> testMultipleAssignmentHasNoExtraSpaceInside [
 	| source |
 	configurationSelector := #basicConfiguration.

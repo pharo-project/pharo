@@ -1,5 +1,7 @@
 # How to contribute
 
+Look at the short talk [Contributing to Pharo](https://www.youtube.com/watch?v=AtjEgK3lBPE&list=PLJ5nSnWzQXi_7LGwiSa-8VwYXELwFQLBt&index=33) from ESUG 2022 where Stéphane Ducasse shares some tips how anyone can help to improve Pharo!
+
 ## Reporting issues
 If you found a bug or issue with Pharo please let us know. You can report bugs on the [issue tracker](https://github.com/pharo-project/pharo/issues).
 

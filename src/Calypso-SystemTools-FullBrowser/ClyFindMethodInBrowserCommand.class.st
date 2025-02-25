@@ -6,41 +6,53 @@ So dialog shows all methods from method view panel.
 By default I am activated by cmd+f.
 "
 Class {
-	#name : #ClyFindMethodInBrowserCommand,
-	#superclass : #ClyBrowserCommand,
-	#category : #'Calypso-SystemTools-FullBrowser-Commands-Methods'
+	#name : 'ClyFindMethodInBrowserCommand',
+	#superclass : 'ClyBrowserCommand',
+	#instVars : [
+		'method'
+	],
+	#category : 'Calypso-SystemTools-FullBrowser-Commands-Methods',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'Commands-Methods'
 }
 
-{ #category : #menu }
+{ #category : 'menu' }
 ClyFindMethodInBrowserCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byItemOf: ClyQueryMenuGroup for: ClyFullBrowserMethodContext
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 ClyFindMethodInBrowserCommand class >> fullBrowserShortcutActivation [
 	<classAnnotation>
 
 	^CmdShortcutActivation by: $f meta for: ClyFullBrowserMethodContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFindMethodInBrowserCommand >> defaultMenuIconName [
 	^#smallFind
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyFindMethodInBrowserCommand >> defaultMenuItemName [
 	^'Find method'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyFindMethodInBrowserCommand >> execute [
-	| method |
-
-	method := browser searchDialog
-		requestSingleObject: 'Choose method' from: browser methodView query.
 
 	browser selectMethod: method
+]
+
+{ #category : 'execution' }
+ClyFindMethodInBrowserCommand >> prepareFullExecutionInContext: aToolContext [
+
+	super prepareFullExecutionInContext: aToolContext.
+
+	method := StBrowserSearchPresenter searchConfiguring: [ :presenter :dialog |
+		          dialog title: 'Choose method'.
+		          presenter items: (aToolContext browser itemsForQuery: browser methodView query).
+		          presenter itemsList display: [ :aMethod | aMethod selector ] ]
 ]

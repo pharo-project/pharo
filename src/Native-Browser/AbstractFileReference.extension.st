@@ -1,6 +1,6 @@
-Extension { #name : #AbstractFileReference }
+Extension { #name : 'AbstractFileReference' }
 
-{ #category : #'*Native-Browser' }
+{ #category : '*Native-Browser' }
 AbstractFileReference >> openInOSFileBrowser [
 	^ NativeBrowserOpenVisitor openOn: self
 ]

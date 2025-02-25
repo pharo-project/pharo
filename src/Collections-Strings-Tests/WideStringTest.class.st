@@ -5,18 +5,20 @@ This is the unit test for the class String. Unit tests are a good way to exercis
 	- the sunit class category
 "
 Class {
-	#name : #WideStringTest,
-	#superclass : #ClassTestCase,
-	#category : #'Collections-Strings-Tests-Base'
+	#name : 'WideStringTest',
+	#superclass : 'ClassTestCase',
+	#category : 'Collections-Strings-Tests-Base',
+	#package : 'Collections-Strings-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 WideStringTest >> classToBeTested [
 
 	^  WideString
 ]
 
-{ #category : #'tests - converting' }
+{ #category : 'tests - converting' }
 WideStringTest >> testAsInteger [
 	self assert: '1796exportFixes-tkMX' asWideString asInteger equals: 1796.
 	self assert: 'donald' asWideString asInteger isNil.
@@ -37,7 +39,7 @@ WideStringTest >> testAsInteger [
 	self assert: 'foo-bar-92' asWideString asUnsignedInteger equals: 92
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WideStringTest >> testAtPut [
 	"Non regression test for http://bugs.squeak.org/view.php?id=6998"
 
@@ -46,7 +48,7 @@ WideStringTest >> testAtPut [
 	self assert: (w1 at: 2 put: $b) = $b description: 'at:put: should return the put-object'
 ]
 
-{ #category : #'tests - beginswith' }
+{ #category : 'tests - beginswith' }
 WideStringTest >> testBeginsWith [
 	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
 
@@ -64,7 +66,7 @@ WideStringTest >> testBeginsWith [
 	w1 beginsWith: w2
 ]
 
-{ #category : #'tests - match' }
+{ #category : 'tests - match' }
 WideStringTest >> testCharactersExactlyMatching [
 	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
 
@@ -79,7 +81,7 @@ WideStringTest >> testCharactersExactlyMatching [
 	self assert: ('abc' charactersExactlyMatching: 'ABC') equals: 0
 ]
 
-{ #category : #'tests - compare' }
+{ #category : 'tests - compare' }
 WideStringTest >> testCompare [
 	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
 
@@ -134,7 +136,7 @@ WideStringTest >> testCompare [
 	self assert: ('abc' asWideString compare: 'abC' asWideString caseSensitive: false) equals: 2
 ]
 
-{ #category : #'tests - endswith' }
+{ #category : 'tests - endswith' }
 WideStringTest >> testEndsWith [
 	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
 
@@ -147,7 +149,7 @@ WideStringTest >> testEndsWith [
 	self assert: ('ABC' asWideString endsWith: 'bc') not
 ]
 
-{ #category : #'tests - compare' }
+{ #category : 'tests - compare' }
 WideStringTest >> testEqual [
 	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
 
@@ -163,7 +165,7 @@ WideStringTest >> testEqual [
 	self assert: 'a000' asWideString ~= #[97 0 0 0] asString
 ]
 
-{ #category : #'tests - substrings' }
+{ #category : 'tests - substrings' }
 WideStringTest >> testFindSubstring [
 	"This is related to http://bugs.squeak.org/view.php?id=6366
 	finding substring in a WideString was broken because matchTable are byte-wise"
@@ -186,7 +188,7 @@ WideStringTest >> testFindSubstring [
 	self assert: ('abc' findString: ws2 startingAt: 1 caseSensitive: false) equals: 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WideStringTest >> testIsAsciiString [
 	"Non-regression for https://pharo.manuscript.com/f/cases/15232 "
 
@@ -196,7 +198,7 @@ WideStringTest >> testIsAsciiString [
 	self assert: 'éÀ' asWideString isAsciiString equals: false
 ]
 
-{ #category : #'tests - match' }
+{ #category : 'tests - match' }
 WideStringTest >> testMatch [
 	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
 
@@ -221,7 +223,7 @@ WideStringTest >> testMatch [
 	self assert: ('*foo#zort' asWideString match: 'afoo3zortthenfoo3zort' asWideString)
 ]
 
-{ #category : #'tests - relation order' }
+{ #category : 'tests - relation order' }
 WideStringTest >> testRelationOrder [
 	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
 
@@ -254,7 +256,7 @@ WideStringTest >> testRelationOrder [
 	self assert: ('aa' asWideString>= 'aa' asWideString)
 ]
 
-{ #category : #'tests - relation order' }
+{ #category : 'tests - relation order' }
 WideStringTest >> testRelationOrderWithCase [
 	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
 
@@ -284,7 +286,7 @@ WideStringTest >> testRelationOrderWithCase [
 	self assert: ('abc' caseSensitiveLessOrEqual: 'ABC') not
 ]
 
-{ #category : #'tests - compare' }
+{ #category : 'tests - compare' }
 WideStringTest >> testSameAs [
 	"from johnmci at http://bugs.squeak.org/view.php?id=5331"
 
@@ -294,7 +296,7 @@ WideStringTest >> testSameAs [
 	self assert: ('a000' asWideString sameAs:  #[97 0 0 0] asString) not
 ]
 
-{ #category : #'tests - substrings' }
+{ #category : 'tests - substrings' }
 WideStringTest >> testSubstrings [
 	"this is related to http://bugs.squeak.org/view.php?id=6367"
 

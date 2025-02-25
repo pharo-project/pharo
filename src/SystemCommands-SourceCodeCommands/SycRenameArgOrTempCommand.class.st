@@ -7,54 +7,66 @@ Internal Representation and Key Implementation Points.
 	newName:		<String>
 "
 Class {
-	#name : #SycRenameArgOrTempCommand,
-	#superclass : #SycSourceCodeRefactoringCommand,
+	#name : 'SycRenameArgOrTempCommand',
+	#superclass : 'SycSourceCodeRefactoringCommand',
 	#instVars : [
-		'newName'
+		'newName',
+		'toolContext'
 	],
-	#category : #'SystemCommands-SourceCodeCommands'
+	#category : 'SystemCommands-SourceCodeCommands',
+	#package : 'SystemCommands-SourceCodeCommands'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycRenameArgOrTempCommand class >> canBeExecutedInContext: aSourceCodeContext [
 
 	^ (super canBeExecutedInContext: aSourceCodeContext) and: [
 		  aSourceCodeContext isArgOrTempVariableSelected ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRenameArgOrTempCommand >> applyResultInContext: aSourceCodeContext [
 	super applyResultInContext: aSourceCodeContext.
 
 	aSourceCodeContext showVariableNamed: newName
 ]
 
-{ #category : #execution }
-SycRenameArgOrTempCommand >> asRefactorings [
-	^ {RBRenameArgumentOrTemporaryRefactoring
-		renameTemporaryFrom: sourceNode sourceInterval
-		to: newName
-		in: method origin
-		selector: method selector}
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameArgOrTempCommand >> defaultMenuIconName [
 	^ #edit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameArgOrTempCommand >> defaultMenuItemName [
 	^'Rename temp'
 ]
 
-{ #category : #execution }
-SycRenameArgOrTempCommand >> prepareFullExecutionInContext: aSourceCodeContext [
-	super prepareFullExecutionInContext: aSourceCodeContext.
+{ #category : 'accessing' }
+SycRenameArgOrTempCommand >> description [
 
-	newName := UIManager default
-		request: 'New name of the variable'
-		initialAnswer: sourceNode name
-		title: 'Rename a temp variable'.
-	newName isEmptyOrNil | (newName = sourceNode name) ifTrue: [ CmdCommandAborted signal ]
+	^ 'Renames temp variable in given method.'
+]
+
+{ #category : 'execution' }
+SycRenameArgOrTempCommand >> execute [
+
+	^ (ReRenameArgumentOrTemporaryDriver new
+		   sourceNode: sourceNode;
+		   method: method;
+		   scopes: toolContext refactoringScopes;
+		   yourself) runRefactoring
+]
+
+{ #category : 'testing' }
+SycRenameArgOrTempCommand >> isComplexRefactoring [
+
+	^ false
+]
+
+{ #category : 'execution' }
+SycRenameArgOrTempCommand >> prepareFullExecutionInContext: aToolContext [
+
+	super prepareFullExecutionInContext: aToolContext.
+
+	toolContext := aToolContext
 ]

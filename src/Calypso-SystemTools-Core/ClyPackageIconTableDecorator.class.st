@@ -2,18 +2,20 @@
 I decorate table with simple constant icon for packages
 "
 Class {
-	#name : #ClyPackageIconTableDecorator,
-	#superclass : #ClyPackageTableDecorator,
-	#category : #'Calypso-SystemTools-Core-TableDecorators'
+	#name : 'ClyPackageIconTableDecorator',
+	#superclass : 'ClyPackageTableDecorator',
+	#category : 'Calypso-SystemTools-Core-TableDecorators',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'TableDecorators'
 }
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyPackageIconTableDecorator class >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
 	super decorateMainTableCell: anItemCellMorph of: aDataSourceItem.
 
 	anItemCellMorph definitionIcon: #package
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyPackageIconTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 ]

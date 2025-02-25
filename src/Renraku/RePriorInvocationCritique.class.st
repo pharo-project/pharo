@@ -2,18 +2,20 @@
 The critic tells that a required message is missing prior to the one in question
 "
 Class {
-	#name : #RePriorInvocationCritique,
-	#superclass : #ReInvocationOrderCritique,
-	#category : #'Renraku-Critiques'
+	#name : 'RePriorInvocationCritique',
+	#superclass : 'ReInvocationOrderCritique',
+	#category : 'Renraku-Critiques',
+	#package : 'Renraku',
+	#tag : 'Critiques'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RePriorInvocationCritique >> description [
 
 	^ 'In order for #', targetMethodName, ' to work you have to call ', condition beforeDescriptionString, ' before'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RePriorInvocationCritique >> title [
 
 	^ 'Message #', targetMethodName, ' not preceded by ',

@@ -4,15 +4,25 @@ This exception is raised when mutating a read-only object using mirror primitive
 I am signaled from MirrorPrimitive methods.
 "
 Class {
-	#name : #MirrorModificationForbidden,
-	#superclass : #ModificationForbidden,
-	#category : #'ReflectionMirrors-Primitives-Errors'
+	#name : 'MirrorModificationForbidden',
+	#superclass : 'ModificationForbidden',
+	#category : 'ReflectionMirrors-Primitives-Errors',
+	#package : 'ReflectionMirrors-Primitives',
+	#tag : 'Errors'
 }
 
-{ #category : #retrying }
+{ #category : 'retrying' }
 MirrorModificationForbidden >> retryModification [
-	fieldIndex notNil
-		ifTrue: [ MirrorPrimitives perform: retrySelector withArguments: {object. fieldIndex. newValue}]
-		ifFalse: [MirrorPrimitives perform: retrySelector withArguments: {object. newValue}].
+
+	fieldIndex
+		ifNotNil: [
+			MirrorPrimitives perform: retrySelector withArguments: {
+					object.
+					fieldIndex.
+					newValue } ]
+		ifNil: [
+			MirrorPrimitives perform: retrySelector withArguments: {
+					object.
+					newValue } ].
 	self resumeUnchecked: newValue
 ]

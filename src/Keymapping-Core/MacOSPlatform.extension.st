@@ -1,6 +1,6 @@
-Extension { #name : #MacOSPlatform }
+Extension { #name : 'MacOSPlatform' }
 
-{ #category : #'*Keymapping-Core' }
+{ #category : '*Keymapping-Core' }
 MacOSPlatform >> shortcutPrinter [
 
 	^ KMOSXShortcutPrinter new

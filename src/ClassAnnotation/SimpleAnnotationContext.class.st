@@ -24,27 +24,28 @@ Internal Representation and Key Implementation Points.
 	annotationUserClass:		<Class>
 "
 Class {
-	#name : #SimpleAnnotationContext,
-	#superclass : #AnnotationContext,
+	#name : 'SimpleAnnotationContext',
+	#superclass : 'AnnotationContext',
 	#instVars : [
 		'annotationUserClass'
 	],
-	#category : #ClassAnnotation
+	#category : 'ClassAnnotation',
+	#package : 'ClassAnnotation'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SimpleAnnotationContext class >> annotationUserClass: aClass [
 	^self new
 		annotationUserClass: aClass
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SimpleAnnotationContext class >> of: anAnnotationUserClass [
 	^self new
 		annotationUserClass: anAnnotationUserClass
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SimpleAnnotationContext >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -55,17 +56,17 @@ SimpleAnnotationContext >> = anObject [
 	^ annotationUserClass = anObject annotationUserClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleAnnotationContext >> annotationUserClass [
 	^ annotationUserClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SimpleAnnotationContext >> annotationUserClass: aClass [
 	annotationUserClass := aClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SimpleAnnotationContext >> describes: anAnnotationUser [
 	"Following indirection provides extra flexibility for the users
 	to define special kind of simple application contexts
@@ -75,14 +76,14 @@ SimpleAnnotationContext >> describes: anAnnotationUser [
 	^anAnnotationUser representsSimpleAnnotationUser: annotationUserClass
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SimpleAnnotationContext >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^ annotationUserClass hash
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 SimpleAnnotationContext >> printOn: aStream [
 	super printOn: aStream.
 

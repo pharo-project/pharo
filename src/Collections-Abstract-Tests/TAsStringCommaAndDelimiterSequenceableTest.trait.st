@@ -2,31 +2,33 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TAsStringCommaAndDelimiterSequenceableTest,
+	#name : 'TAsStringCommaAndDelimiterSequenceableTest',
 	#traits : 'TAsStringCommaAndDelimiterTest',
 	#classTraits : 'TAsStringCommaAndDelimiterTest classTrait',
-	#category : #'Collections-Abstract-Tests-Traits'
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TAsStringCommaAndDelimiterSequenceableTest >> empty [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TAsStringCommaAndDelimiterSequenceableTest >> nonEmpty [
 
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TAsStringCommaAndDelimiterSequenceableTest >> nonEmpty1Element [
 " return a collection of size 1 including one element"
 	^ self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TAsStringCommaAndDelimiterSequenceableTest >> test0FixtureAsStringCommaAndDelimiterTest [
 	self nonEmpty.
 	self denyEmpty: self nonEmpty.
@@ -36,14 +38,14 @@ TAsStringCommaAndDelimiterSequenceableTest >> test0FixtureAsStringCommaAndDelimi
 	self assert: self nonEmpty1Element size = 1
 ]
 
-{ #category : #'tests - as string comma delimiter sequenceable' }
+{ #category : 'tests - as string comma delimiter sequenceable' }
 TAsStringCommaAndDelimiterSequenceableTest >> testAsCommaStringEmpty [
 
 	self assert: self empty asCommaString = ''.
 	self assert: self empty asCommaStringAnd = ''
 ]
 
-{ #category : #'tests - comma and delimiter' }
+{ #category : 'tests - comma and delimiter' }
 TAsStringCommaAndDelimiterSequenceableTest >> testAsCommaStringMore [
 
 	"self assert: self oneTwoThreeItemCol asCommaString = '1, 2, 3'.
@@ -83,7 +85,7 @@ TAsStringCommaAndDelimiterSequenceableTest >> testAsCommaStringMore [
 			]
 ]
 
-{ #category : #'tests - comma and delimiter' }
+{ #category : 'tests - comma and delimiter' }
 TAsStringCommaAndDelimiterSequenceableTest >> testAsCommaStringOne [
 
 	"self assert: self oneItemCol asCommaString = '1'.
@@ -93,19 +95,19 @@ TAsStringCommaAndDelimiterSequenceableTest >> testAsCommaStringOne [
 	self assert: self nonEmpty1Element asCommaStringAnd = (self nonEmpty1Element first asString)
 ]
 
-{ #category : #'tests - as string comma delimiter sequenceable' }
+{ #category : 'tests - as string comma delimiter sequenceable' }
 TAsStringCommaAndDelimiterSequenceableTest >> testAsStringOnDelimiterEmpty [
 
 	self assert: (String streamContents: [ :emptyStream | self empty asStringOn: emptyStream delimiter: ', ' ]) equals: ''
 ]
 
-{ #category : #'tests - as string comma delimiter sequenceable' }
+{ #category : 'tests - as string comma delimiter sequenceable' }
 TAsStringCommaAndDelimiterSequenceableTest >> testAsStringOnDelimiterLastEmpty [
 
 	self assert: (String streamContents: [ :emptyStream | self empty asStringOn: emptyStream delimiter: ', ' last: 'and' ]) equals: ''
 ]
 
-{ #category : #'tests - comma and delimiter' }
+{ #category : 'tests - comma and delimiter' }
 TAsStringCommaAndDelimiterSequenceableTest >> testAsStringOnDelimiterLastMore [
 
 	| delim multiItemStream result last allElementsAsString |
@@ -127,7 +129,7 @@ TAsStringCommaAndDelimiterSequenceableTest >> testAsStringOnDelimiterLastMore [
 			ifTrue: [self assert: (allElementsAsString at:i)=((self nonEmpty at:(i-1))asString)]]
 ]
 
-{ #category : #'tests - comma and delimiter' }
+{ #category : 'tests - comma and delimiter' }
 TAsStringCommaAndDelimiterSequenceableTest >> testAsStringOnDelimiterLastOne [
 
 	| delim oneItemStream result |
@@ -138,7 +140,7 @@ TAsStringCommaAndDelimiterSequenceableTest >> testAsStringOnDelimiterLastOne [
 	oneItemStream do:[:each | self assert: each = (self nonEmpty1Element first asString)]
 ]
 
-{ #category : #'tests - comma and delimiter' }
+{ #category : 'tests - comma and delimiter' }
 TAsStringCommaAndDelimiterSequenceableTest >> testAsStringOnDelimiterMore [
 
 	| delim multiItemStream result index |
@@ -154,7 +156,7 @@ TAsStringCommaAndDelimiterSequenceableTest >> testAsStringOnDelimiterMore [
 			index:=index+1 ]
 ]
 
-{ #category : #'tests - comma and delimiter' }
+{ #category : 'tests - comma and delimiter' }
 TAsStringCommaAndDelimiterSequenceableTest >> testAsStringOnDelimiterOne [
 
 	| delim oneItemStream result |

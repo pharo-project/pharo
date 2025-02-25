@@ -31,96 +31,74 @@ Internal Representation and Key Implementation Points.
 	tool:		<Object>
 "
 Class {
-	#name : #CmdToolContext,
-	#superclass : #Object,
+	#name : 'CmdToolContext',
+	#superclass : 'Object',
 	#instVars : [
 		'tool'
 	],
-	#category : #'Commander-Core'
+	#category : 'Commander-Core',
+	#package : 'Commander-Core'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CmdToolContext class >> for: aTool [
 	^self new
 		tool: aTool
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdToolContext >> allowsExecutionOf: aCommandClass [
 
 	^aCommandClass canBeExecutedInContext: self
 ]
 
-{ #category : #'command execution' }
+{ #category : 'command execution' }
 CmdToolContext >> applyResultOf: aCommand [
 	aCommand applyResultInContext: self
 ]
 
-{ #category : #'command execution' }
+{ #category : 'command execution' }
 CmdToolContext >> executeCommand: aCommand by: aCommandActivator [
 	aCommand execute
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
+CmdToolContext >> hasUnacceptedEdits [ 
+	^ false 
+]
+
+{ #category : 'testing' }
 CmdToolContext >> isSimilarTo: anotherToolContext [
 	^self = anotherToolContext
 ]
 
-{ #category : #'ui requests' }
+{ #category : 'ui requests' }
 CmdToolContext >> openContextMenu: aMenu [
 
 	tool openContextMenu: aMenu
 ]
 
-{ #category : #'command execution' }
+{ #category : 'command execution' }
 CmdToolContext >> prepareFullExecutionOf: aCommand [
 	aCommand prepareFullExecutionInContext: self
 ]
 
-{ #category : #'command execution' }
+{ #category : 'command execution' }
 CmdToolContext >> prepareNewCommand: aCommand [
 	aCommand readParametersFromContext: self
 ]
 
-{ #category : #'command execution' }
+{ #category : 'command execution' }
 CmdToolContext >> processFailure: anException of: aCommand [
 	anException notifyUserOfCommand: aCommand
 ]
 
-{ #category : #'user requests' }
-CmdToolContext >> requestSingleMethodTag: queryTitle [
-	^self requestSingleMethodTag: queryTitle suggesting: ''
-]
-
-{ #category : #'user requests' }
-CmdToolContext >> requestSingleMethodTag: queryTitle suggesting: suggestedTag [
-	| knownTags ui selectedTag |
-	knownTags := (SystemNavigation default allExistingProtocolsFor: true)
-		reject: [ :each | each beginsWith: '*' ].
-	knownTags := knownTags asSortedCollection: [ :a :b | a asLowercase < b asLowercase ].
-	ui := ListDialogWindow new
-		getList: [ :r | knownTags select: [ :e | r search: e ] ];
-		displayBlock: [ :e | e ];
-		initialAnswer: suggestedTag;
-		acceptNewEntry: true;
-		title: queryTitle;
-		yourself.
-	ui defaultFocusMorph contentMorph selectAll.
-	selectedTag := ui chooseFromOwner: tool.
-	selectedTag isEmptyOrNil ifTrue: [ CmdCommandAborted signal].
-	(selectedTag beginsWith: '*') ifTrue: [
-		self inform: 'Star is forbidden for protocol name. You can specify package in method editor using status bar checkbox'.
-		^CmdCommandAborted signal].
-
-	^selectedTag asSymbol
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdToolContext >> tool [
 	^ tool
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdToolContext >> tool: anObject [
 	tool := anObject
 ]

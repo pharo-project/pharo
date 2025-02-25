@@ -1,6 +1,6 @@
-Extension { #name : #MCFileTreeRepository }
+Extension { #name : 'MCFileTreeRepository' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCFileTreeRepository >> asRingEnvironment [
 
 	| anRGEnvironment |
@@ -25,7 +25,7 @@ MCFileTreeRepository >> asRingEnvironment [
 	^ anRGEnvironment
 ]
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCFileTreeRepository >> asRingEnvironmentWith: packageNames [
 
 	| anRGEnvironment |

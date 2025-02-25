@@ -17,26 +17,27 @@ Internal Representation and Key Implementation Points.
 	contents:		<OrderedCollection of<CmdMenuItem>>
 "
 Class {
-	#name : #CmdMenuGroup,
-	#superclass : #CmdMenuItem,
+	#name : 'CmdMenuGroup',
+	#superclass : 'CmdMenuItem',
 	#instVars : [
 		'contents'
 	],
-	#category : #'Commander-Core'
+	#category : 'Commander-Core',
+	#package : 'Commander-Core'
 }
 
-{ #category : #parents }
+{ #category : 'parents' }
 CmdMenuGroup class >> parentGroup [
 	^CmdRootMenuGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenuGroup >> addItem: aMenuItem [
 	aMenuItem parentGroup: self.
 	contents add: aMenuItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenuGroup >> allGroupsWhich: aBlock [
 	| result |
 	result := OrderedCollection new.
@@ -50,7 +51,7 @@ CmdMenuGroup >> allGroupsWhich: aBlock [
 	^result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenuGroup >> allItemsWhich: aBlock [
 	| result |
 	result := OrderedCollection new.
@@ -63,38 +64,38 @@ CmdMenuGroup >> allItemsWhich: aBlock [
 	^result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenuGroup >> commandItemLike: aCommandClass [
 
 	^contents detect: [ :each |
 		each isCommandItem and: [ each includesCommand: aCommandClass ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenuGroup >> commands [
 	^contents
 		select: [ :each | each isCommandItem ]
 		thenCollect: [ :each | each command ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenuGroup >> contents [
 	^ contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenuGroup >> contents: anObject [
 	contents := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenuGroup >> description [
 	"By default the result is nil which is not really nice
 	but it is already expected by many tools. So it is easy to allow nil"
 	^nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenuGroup >> findGroupLike: menuGroupClass ifExists: foundBlock [
 
 	contents detect: [ :each | each isKindOf: menuGroupClass] ifFound: foundBlock.
@@ -102,7 +103,7 @@ CmdMenuGroup >> findGroupLike: menuGroupClass ifExists: foundBlock [
 	contents do: [ :each | each findGroupLike: menuGroupClass ifExists: foundBlock ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenuGroup >> findItemSimilarTo: aMenuItem ifPresent: presentBlock ifAbsent: absentBlock [
 
 	contents
@@ -111,7 +112,7 @@ CmdMenuGroup >> findItemSimilarTo: aMenuItem ifPresent: presentBlock ifAbsent: a
 		ifNone: absentBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenuGroup >> icon [
 	"By default the result is nil which is not really nice
 	but it is already expected by many tools.	So it is easy to allow nil.
@@ -120,7 +121,7 @@ CmdMenuGroup >> icon [
 		ifNotNil: [:iconName | Smalltalk ui iconNamed: iconName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenuGroup >> iconName [
 	"Not really nice to return nil. But it is already expected by many tools.
 	So it is easy to allow nil.
@@ -129,19 +130,19 @@ CmdMenuGroup >> iconName [
 	^nil
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdMenuGroup >> includes: aMenuItem [
 	^contents anySatisfy: [ :each | each isSimilarTo: aMenuItem ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdMenuGroup >> includesCommand: aClass [
 	"It answers only about itself without looking recursively into child groups"
 	^contents anySatisfy: [:each |
 		each isCommandItem and: [each includesCommand: aClass] ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CmdMenuGroup >> initialize [
 	super initialize.
 	contents := SortedCollection sortBlock: [ :a :b |
@@ -150,27 +151,27 @@ CmdMenuGroup >> initialize [
 			ifFalse: [ a order <= b order ]]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdMenuGroup >> isActive [
 	^contents anySatisfy: [ :each | each isActive ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdMenuGroup >> isCommandItem [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdMenuGroup >> isEmpty [
 	^contents isEmpty
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdMenuGroup >> isInlined [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdMenuGroup >> isLastActiveMenuItem: childMenuItem [
 
 	contents reverseDo: [ :each |
@@ -179,43 +180,43 @@ CmdMenuGroup >> isLastActiveMenuItem: childMenuItem [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdMenuGroup >> isLastMenuItem: childMenuItem [
 
 	^contents last == childMenuItem and: [ self isLastInMenu ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdMenuGroup >> isRoot [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdMenuGroup >> isSimilarTo: aMenuItem [
 	^self class == aMenuItem class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenuGroup >> name [
 	^self class name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenuGroup >> order [
 	^500
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenuGroup >> removeItem: aGroupOrCommand [
 	contents remove: aGroupOrCommand
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CmdMenuGroup >> size [
 	^contents size
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 CmdMenuGroup >> synchronizeContentWith: anotherGroup [
 
 	contents removeAllSuchThat: [ :each | (anotherGroup includes: each) not].

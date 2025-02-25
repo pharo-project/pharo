@@ -24,8 +24,8 @@ future3 := worker future: [ 1 + 1 ].
 Workers can be combined into worker pools.
 "
 Class {
-	#name : #TKTWorker,
-	#superclass : #TKTQueueTaskScheduler,
+	#name : 'TKTWorker',
+	#superclass : 'TKTQueueTaskScheduler',
 	#traits : 'TFinalizable',
 	#classTraits : 'TFinalizable classTrait',
 	#instVars : [
@@ -34,45 +34,47 @@ Class {
 		'exceptionHandler',
 		'priority'
 	],
-	#category : #'TaskIt-Worker'
+	#category : 'TaskIt-Worker',
+	#package : 'TaskIt',
+	#tag : 'Worker'
 }
 
-{ #category : #current }
+{ #category : 'current' }
 TKTWorker class >> createDefault [
 	^ self new
 		queue: AtomicSharedQueue new;
 		yourself
 ]
 
-{ #category : #'start-stop' }
+{ #category : 'start-stop' }
 TKTWorker >> currentTaskExecution [
 	^ process ifNotNil: [ process currentTaskExecution ] ifNil: [ nil ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TKTWorker >> ensureIsBeingWatched [
 	TKTConfiguration watchDog ensureIsWatching: self
 ]
 
-{ #category : #starting }
+{ #category : 'starting' }
 TKTWorker >> ensureIsWorking [
 	self isRunning
 		ifFalse: [ self restart ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTWorker >> exceptionHandler [
 
 	^ process exceptionHandler
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTWorker >> exceptionHandler: aHandler [
 	exceptionHandler := aHandler.
 	process ifNotNil: [ process exceptionHandler: aHandler ]
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 TKTWorker >> executor [
 
 	"The finalization scheme runs in another object (the executor) that does not have
@@ -83,7 +85,7 @@ TKTWorker >> executor [
 		yourself
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 TKTWorker >> finalizer [
 
 	"The finalization scheme runs in another object (the executor) that does not have
@@ -94,56 +96,56 @@ TKTWorker >> finalizer [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TKTWorker >> initialize [
 	super initialize.
 	self name: ('Worker-{ID}' format: {(#ID -> UUID new)} asDictionary).
 	self ensureIsBeingWatched
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TKTWorker >> isBusy [
 	^ self isFree not
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TKTWorker >> isFree [
 	^ process ifNil: [ true ] ifNotNil: [ process isFree ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TKTWorker >> isRunning [
 	^ process isNotNil and: [ process isRunning ]
 ]
 
-{ #category : #schedulling }
+{ #category : 'schedulling' }
 TKTWorker >> isWorker [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTWorker >> name [
 	^ process ifNil: [ name ] ifNotNil: [ process name ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTWorker >> name: aString [
 	name := aString.
 	process ifNotNil: [ process name: aString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTWorker >> priority [
 	^ priority
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTWorker >> priority: anInteger [
 	priority := anInteger.
 	self isRunning ifTrue: [self process priority: anInteger]
 ]
 
-{ #category : #starting }
+{ #category : 'starting' }
 TKTWorker >> privatePrepareProcess: aWorkerProcess [
 	process := aWorkerProcess.
 	process
@@ -155,36 +157,36 @@ TKTWorker >> privatePrepareProcess: aWorkerProcess [
 	self noteNeedsToBeFinalized
 ]
 
-{ #category : #starting }
+{ #category : 'starting' }
 TKTWorker >> privateStart [
 	process start
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTWorker >> process [
 
 	^ process
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTWorker >> queue [
 	^ queue
 ]
 
-{ #category : #starting }
+{ #category : 'starting' }
 TKTWorker >> restart [
 	self stop.
 	self start
 ]
 
-{ #category : #starting }
+{ #category : 'starting' }
 TKTWorker >> start [
 	self privatePrepareProcess: TKTConfiguration poolWorkerProcess new.
 	self privateStart.
 	self priority ifNotNil: [self process priority: self priority]
 ]
 
-{ #category : #starting }
+{ #category : 'starting' }
 TKTWorker >> stop [
 	process
 		ifNotNil: [ process stop.
@@ -193,7 +195,7 @@ TKTWorker >> stop [
 	self noteDoesNotNeedToBeFinalized
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTWorker >> taskQueue: anAtomicSharedQueue [
 	queue := anAtomicSharedQueue.
 	process ifNotNil: [ process taskQueue: queue ]

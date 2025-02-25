@@ -22,18 +22,20 @@ This is a TitleMorph used by MenuMorph.
 
 "
 Class {
-	#name : #MenuTitleMorph,
-	#superclass : #AlignmentMorph,
+	#name : 'MenuTitleMorph',
+	#superclass : 'AlignmentMorph',
 	#instVars : [
 		'titleContainer',
 		'icon',
 		'closeBox',
 		'pinBox'
 	],
-	#category : #'Morphic-Base-Menus'
+	#category : 'Morphic-Base-Menus',
+	#package : 'Morphic-Base',
+	#tag : 'Menus'
 }
 
-{ #category : #'construction-defined' }
+{ #category : 'construction-defined' }
 MenuTitleMorph >> bigTitle: aTitle [
 
 	self
@@ -43,32 +45,32 @@ MenuTitleMorph >> bigTitle: aTitle [
 	withPinBox
 ]
 
-{ #category : #'private - creation' }
+{ #category : 'private - creation' }
 MenuTitleMorph >> boxExtent [
 
 	^ (18 @ 18) * self displayScaleFactor
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 MenuTitleMorph >> closeBoxClicked [
 
 	owner ifNotNil: [ :o | o delete ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MenuTitleMorph >> defaultBorderColor [
 	^ self theme settings flatMenu
 		ifFalse: [#inset]
 		ifTrue: [self theme settings derivedMenuColor muchDarker]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MenuTitleMorph >> defaultColor [
 
 	^self theme menuTitleColorFor: nil
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MenuTitleMorph >> font: aFont [
 
 	titleContainer ifNil: [ ^self ]. "should really not happen!"
@@ -76,7 +78,7 @@ MenuTitleMorph >> font: aFont [
 	titleContainer submorphsDo: [ :stringMorph | stringMorph font: aFont ]
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MenuTitleMorph >> icon: aForm [
 
 	icon ifNotNil: [ icon delete ].
@@ -87,12 +89,12 @@ MenuTitleMorph >> icon: aForm [
 	self addMorphFront: icon
 ]
 
-{ #category : #'private - creation' }
-MenuTitleMorph >> iconButtonCalling: aSelector withForm: aForm helpText: aText [
+{ #category : 'private - creation' }
+MenuTitleMorph >> iconButtonCalling: aSelector withFormSet: aFormSet helpText: aText [
 
 	^IconicButtonMorph new target: self;
 		actionSelector: aSelector;
-		labelGraphic: aForm;
+		labelFormSet: aFormSet;
 		color: Color transparent;
 		extent: self boxExtent;
 		borderWidth: 0;
@@ -100,7 +102,7 @@ MenuTitleMorph >> iconButtonCalling: aSelector withForm: aForm helpText: aText [
 		yourself
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MenuTitleMorph >> initialize [
 	super initialize.
 
@@ -114,7 +116,7 @@ MenuTitleMorph >> initialize [
 	clipSubmorphs: true
 ]
 
-{ #category : #'construction-defined' }
+{ #category : 'construction-defined' }
 MenuTitleMorph >> onlyCloseAndPinable [
 
 	self
@@ -123,7 +125,7 @@ MenuTitleMorph >> onlyCloseAndPinable [
 	withPinBox
 ]
 
-{ #category : #'event handling' }
+{ #category : 'event handling' }
 MenuTitleMorph >> pinBoxClicked [
 
 	owner toggleStayUp.
@@ -131,29 +133,30 @@ MenuTitleMorph >> pinBoxClicked [
 	self updatePinForm
 ]
 
-{ #category : #pinning }
+{ #category : 'pinning' }
 MenuTitleMorph >> pinColor [
 
 	^owner stayUp ifTrue: [ Color gray lighter ] ifFalse: [ Color black ]
 ]
 
-{ #category : #pinning }
-MenuTitleMorph >> pinForm [
+{ #category : 'pinning' }
+MenuTitleMorph >> pinFormSet [
 
-	^CircleMorph new
-		extent: 8@8;
-		borderWidth: 2;
-		color: self pinColor;
-		imageForm
+	^ FormSet forms: ((1 to: 2) collect: [ :scale |
+		(CircleMorph new
+			extent: (8@8) scaledByDisplayScaleFactor truncated * scale;
+			borderWidth: 2 scaledByDisplayScaleFactor truncated * scale;
+			color: self pinColor;
+			imageForm) ])
 ]
 
-{ #category : #rounding }
+{ #category : 'rounding' }
 MenuTitleMorph >> roundedCorners [
 
 	^#(1 4)
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MenuTitleMorph >> title: aString [
 
 	titleContainer ifNotNil: [ titleContainer delete ].
@@ -176,38 +179,38 @@ MenuTitleMorph >> title: aString [
 	self addMorphBack: titleContainer
 ]
 
-{ #category : #pinning }
+{ #category : 'pinning' }
 MenuTitleMorph >> updatePinForm [
 
-	pinBox ifNotNil: [ pinBox labelGraphic: self pinForm; extent: self boxExtent ]
+	pinBox ifNotNil: [ pinBox labelFormSet: self pinFormSet; extent: self boxExtent ]
 ]
 
-{ #category : #rounding }
+{ #category : 'rounding' }
 MenuTitleMorph >> wantsRoundedCorners [
 	^ color isTransparent not and: [ owner wantsRoundedCorners ]
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MenuTitleMorph >> withCloseBox [
 
 	closeBox ifNotNil: [ closeBox delete ].
 
 	closeBox := self
 		iconButtonCalling: #closeBoxClicked
-		withForm: self theme menuCloseForm
+		withFormSet: self theme menuCloseFormSet
 		helpText: 'Close this menu'.
 
 	self addMorph: closeBox asElementNumber: 1
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MenuTitleMorph >> withPinBox [
 
 	pinBox ifNotNil: [ pinBox delete ].
 
 	pinBox := self
 		iconButtonCalling: #pinBoxClicked
-		withForm: self pinForm scaledByDisplayScaleFactor
+		withFormSet: self pinFormSet
 		helpText: 'Keep this menu up'.
 
 	self addMorph: pinBox asElementNumber: 4

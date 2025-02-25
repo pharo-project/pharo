@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfEquals,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfEquals
+	#name : 'BaselineOfEquals',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfEquals',
+	#package : 'BaselineOfEquals'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfEquals >> baseline: spec [
 	<baseline>
 

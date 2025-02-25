@@ -1,10 +1,11 @@
 Class {
-	#name : #EDEmergencyDebuggerTest,
-	#superclass : #EDTest,
-	#category : #'EmergencyDebugger-Tests'
+	#name : 'EDEmergencyDebuggerTest',
+	#superclass : 'EDTest',
+	#category : 'EmergencyDebugger-Tests',
+	#package : 'EmergencyDebugger-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 EDEmergencyDebuggerTest >> errorText: error [
 	| errStream |
 	errStream := WriteStream on: Text new.
@@ -14,7 +15,7 @@ EDEmergencyDebuggerTest >> errorText: error [
 	^errStream contents
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 EDEmergencyDebuggerTest >> methodDisplayTextStringExample [
 	| method expectedTextStream |
 	method := debugAPI methodAt: ed stackSelectionIndex.
@@ -27,7 +28,7 @@ EDEmergencyDebuggerTest >> methodDisplayTextStringExample [
 	^expectedTextStream contents asString
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 EDEmergencyDebuggerTest >> resultTextStringExample [
 	| expectedTextStream |
 	expectedTextStream := WriteStream on: Text new.
@@ -37,7 +38,7 @@ EDEmergencyDebuggerTest >> resultTextStringExample [
 	^ expectedTextStream contents asString
 ]
 
-{ #category : #'debug API' }
+{ #category : 'debug API' }
 EDEmergencyDebuggerTest >> testBasicDebug [
 	ed := EDEmergencyDebugger new.
 	ed basicDebug: session.
@@ -45,7 +46,7 @@ EDEmergencyDebuggerTest >> testBasicDebug [
 	self assert: ed isRunning
 ]
 
-{ #category : #'text - composition' }
+{ #category : 'text - composition' }
 EDEmergencyDebuggerTest >> testComposeDisplayText [
 	| displayText |
 	displayText := ed titleText , ed composeSessionTitle, ed stackText , ed methodText , ed input
@@ -53,7 +54,7 @@ EDEmergencyDebuggerTest >> testComposeDisplayText [
 	self assert: ed composeDisplayText equals: displayText
 ]
 
-{ #category : #'text - composition' }
+{ #category : 'text - composition' }
 EDEmergencyDebuggerTest >> testComposeErrorTextFrom [
 	|error rs|
 	error := self zeroDivideErrorInstance.
@@ -66,7 +67,7 @@ EDEmergencyDebuggerTest >> testComposeErrorTextFrom [
 	self assert: rs atEnd
 ]
 
-{ #category : #'text - composition' }
+{ #category : 'text - composition' }
 EDEmergencyDebuggerTest >> testComposeMethodText [
 	ed composeMethodText.
 	self
@@ -74,7 +75,7 @@ EDEmergencyDebuggerTest >> testComposeMethodText [
 		equals: self methodDisplayTextStringExample
 ]
 
-{ #category : #'text - composition' }
+{ #category : 'text - composition' }
 EDEmergencyDebuggerTest >> testComposePromptWith [
 	| rs |
 	ed composePromptWith: 'prompt'.
@@ -86,13 +87,13 @@ EDEmergencyDebuggerTest >> testComposePromptWith [
 	self assert: rs upToEnd equals: 'prompt'
 ]
 
-{ #category : #'text - composition' }
+{ #category : 'text - composition' }
 EDEmergencyDebuggerTest >> testComposeResultTitle [
 	ed composeResult: 'result' title: 'RES'.
 	self assert: ed result asString equals: self resultTextStringExample
 ]
 
-{ #category : #'text - composition' }
+{ #category : 'text - composition' }
 EDEmergencyDebuggerTest >> testComposeStackTest [
 	| rs ws stack |
 	ed composeStackText.
@@ -133,7 +134,7 @@ EDEmergencyDebuggerTest >> testComposeStackTest [
 	self assert: rs atEnd
 ]
 
-{ #category : #'text - composition' }
+{ #category : 'text - composition' }
 EDEmergencyDebuggerTest >> testComposeStackText [
 	| rs ws stack |
 	ed composeStackText.
@@ -174,7 +175,7 @@ EDEmergencyDebuggerTest >> testComposeStackText [
 	self assert: rs atEnd
 ]
 
-{ #category : #'text - composition' }
+{ #category : 'text - composition' }
 EDEmergencyDebuggerTest >> testComposeTitleText [
 	ed composeMethodText.
 	self
@@ -182,7 +183,7 @@ EDEmergencyDebuggerTest >> testComposeTitleText [
 		equals: self titleDisplayTextStringExample
 ]
 
-{ #category : #'debug API' }
+{ #category : 'debug API' }
 EDEmergencyDebuggerTest >> testDebugAPI [
 	|api|
 	api := EDMockObjectForTests new.
@@ -190,19 +191,19 @@ EDEmergencyDebuggerTest >> testDebugAPI [
 	self assert: EDEmergencyDebugger debugAPI identicalTo: api
 ]
 
-{ #category : #'debug API' }
+{ #category : 'debug API' }
 EDEmergencyDebuggerTest >> testDefaultDebugAPI [
 
 	self assert: EDEmergencyDebugger debugAPI identicalTo: EDDebuggingAPI
 ]
 
-{ #category : #'text - helpers' }
+{ #category : 'text - helpers' }
 EDEmergencyDebuggerTest >> testDefaultResultText [
 
 	self assert: ed defaultResultText equals: 'TYPE h FOR HELP'
 ]
 
-{ #category : #setup }
+{ #category : 'setup' }
 EDEmergencyDebuggerTest >> testFromError [
 	|error|
 	error := self zeroDivideErrorInstance.
@@ -213,12 +214,12 @@ EDEmergencyDebuggerTest >> testFromError [
 	self assert: ed errorText equals: (self errorText: error)
 ]
 
-{ #category : #'methods version' }
+{ #category : 'methods version' }
 EDEmergencyDebuggerTest >> testInitialMethodVersion [
 	self assert: ed methodVersionSelectionIndex equals: 0
 ]
 
-{ #category : #setup }
+{ #category : 'setup' }
 EDEmergencyDebuggerTest >> testIsRunning [
 
 	"This is a new Ed, we did not call #debug: so it is not running"
@@ -227,7 +228,7 @@ EDEmergencyDebuggerTest >> testIsRunning [
 	self assert: ed isRunning
 ]
 
-{ #category : #'api - stack' }
+{ #category : 'api - stack' }
 EDEmergencyDebuggerTest >> testMoveDownInStack [
 	|selectionIndexBefore shortStackIndexBefore|
 	selectionIndexBefore := ed stackSelectionIndex.
@@ -239,7 +240,7 @@ EDEmergencyDebuggerTest >> testMoveDownInStack [
 	self assert: ed methodVersionSelectionIndex equals: 0
 ]
 
-{ #category : #'api - stack' }
+{ #category : 'api - stack' }
 EDEmergencyDebuggerTest >> testMoveDownInStackFromLastElement [
 	|selectionIndexBefore shortStackIndexBefore|
 	ed stackSelectionIndex: debugAPI stackSize.
@@ -250,7 +251,7 @@ EDEmergencyDebuggerTest >> testMoveDownInStackFromLastElement [
 	self assert: ed shortStackIndex equals: shortStackIndexBefore
 ]
 
-{ #category : #'api - stack' }
+{ #category : 'api - stack' }
 EDEmergencyDebuggerTest >> testMoveUpInStack [
 	ed stackSelectionIndex: debugAPI stackSize.
 	ed shortStackIndex: debugAPI stackSize.
@@ -260,7 +261,7 @@ EDEmergencyDebuggerTest >> testMoveUpInStack [
 	self assert: ed methodVersionSelectionIndex equals: 0
 ]
 
-{ #category : #'api - stack' }
+{ #category : 'api - stack' }
 EDEmergencyDebuggerTest >> testMoveUpInStackFromFirstElement [
 	|selectionIndexBefore shortStackIndexBefore|
 	selectionIndexBefore := ed stackSelectionIndex.
@@ -271,7 +272,7 @@ EDEmergencyDebuggerTest >> testMoveUpInStackFromFirstElement [
 	self assert: ed methodVersionSelectionIndex equals: 0
 ]
 
-{ #category : #'text - helpers' }
+{ #category : 'text - helpers' }
 EDEmergencyDebuggerTest >> testNewTextStream [
 	|str|
 	str := ed newTextStream.
@@ -279,7 +280,7 @@ EDEmergencyDebuggerTest >> testNewTextStream [
 	self assert: str contents equals: Text new
 ]
 
-{ #category : #'methods version' }
+{ #category : 'methods version' }
 EDEmergencyDebuggerTest >> testRevertCurrentMethodToSelectedVersion [
 	|secondContext originalPC newContext|
 	secondContext := ed shortStack second.
@@ -305,23 +306,23 @@ EDEmergencyDebuggerTest >> testRevertCurrentMethodToSelectedVersion [
 	     equals: ed shortStack first method initialPC + 2
 ]
 
-{ #category : #'methods version' }
+{ #category : 'methods version' }
 EDEmergencyDebuggerTest >> testSelectedMethodVersion [
 ]
 
-{ #category : #'methods version' }
+{ #category : 'methods version' }
 EDEmergencyDebuggerTest >> testSelectedMethodVersionsSize [
 	self prepareMethodVersionTest.
 	self assert: ed selectedMethodVersionsSize equals: 2
 ]
 
-{ #category : #'text - helpers' }
+{ #category : 'text - helpers' }
 EDEmergencyDebuggerTest >> testSeparator [
 
 	self assert: ed separator asString equals: '--------------------'
 ]
 
-{ #category : #'api - stack' }
+{ #category : 'api - stack' }
 EDEmergencyDebuggerTest >> testShiftDownShortStack [
 	ed stackSelectionIndex: debugAPI displayStackSize.
 	ed shortStackIndex: debugAPI displayStackSize.
@@ -335,7 +336,7 @@ EDEmergencyDebuggerTest >> testShiftDownShortStack [
 				to: debugAPI displayStackSize * 2)
 ]
 
-{ #category : #'api - stack' }
+{ #category : 'api - stack' }
 EDEmergencyDebuggerTest >> testShiftUpShortStack [
 	ed stackSelectionIndex: debugAPI displayStackSize + 1.
 	ed shortStackIndex: 1.
@@ -346,13 +347,13 @@ EDEmergencyDebuggerTest >> testShiftUpShortStack [
 		hasSameElements: (session stack copyFrom: 1 to: debugAPI displayStackSize)
 ]
 
-{ #category : #'api - stack' }
+{ #category : 'api - stack' }
 EDEmergencyDebuggerTest >> testShortStack [
 	self assert: ed shortStack size equals: 5.
 	self assertCollection: (session stackOfSize: 5) hasSameElements: ed shortStack
 ]
 
-{ #category : #'methods version' }
+{ #category : 'methods version' }
 EDEmergencyDebuggerTest >> testShowMoreRecentMethodVersion [
 	self prepareMethodVersionTest.
 	ed showMoreRecentMethodVersion.
@@ -362,7 +363,7 @@ EDEmergencyDebuggerTest >> testShowMoreRecentMethodVersion [
 	self assert: ed methodVersionSelectionIndex equals: 1
 ]
 
-{ #category : #'methods version' }
+{ #category : 'methods version' }
 EDEmergencyDebuggerTest >> testShowOlderMethodVersion [
 	self prepareMethodVersionTest.
 	ed showOlderMethodVersion.
@@ -371,25 +372,25 @@ EDEmergencyDebuggerTest >> testShowOlderMethodVersion [
 	self assert: ed methodVersionSelectionIndex equals: 2
 ]
 
-{ #category : #'methods version' }
+{ #category : 'methods version' }
 EDEmergencyDebuggerTest >> testShowSelectedMethodVersion [
 ]
 
-{ #category : #setup }
+{ #category : 'setup' }
 EDEmergencyDebuggerTest >> testTerminate [
 
 	ed terminate.
 	self deny: ed isRunning
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 EDEmergencyDebuggerTest >> testUpdateDisplay [
 	ed updateDisplay.
 	self assert: mockDisplayAPI isCleared.
 	self assert: mockDisplayAPI displayData equals: ed composeDisplayText
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 EDEmergencyDebuggerTest >> testUpdatePrompt [
 	| promptUpdate rs |
 	promptUpdate := 'PROMPT UPDATE'.
@@ -400,11 +401,11 @@ EDEmergencyDebuggerTest >> testUpdatePrompt [
 	self assert: (rs upTo: Character cr) equals: promptUpdate
 ]
 
-{ #category : #'api - stack' }
+{ #category : 'api - stack' }
 EDEmergencyDebuggerTest >> testUpdateShortStackForDisplay [
 ]
 
-{ #category : #'text - helpers' }
+{ #category : 'text - helpers' }
 EDEmergencyDebuggerTest >> testWriteSectionTitleOn [
 	| expectedTextStream actualTextStream |
 
@@ -421,7 +422,7 @@ EDEmergencyDebuggerTest >> testWriteSectionTitleOn [
 		  equals: expectedTextStream contents asString
 ]
 
-{ #category : #'text - helpers' }
+{ #category : 'text - helpers' }
 EDEmergencyDebuggerTest >> testWriteSeparatorOn [
 	| expectedTextStream actualTextStream |
 
@@ -436,12 +437,12 @@ EDEmergencyDebuggerTest >> testWriteSeparatorOn [
 		  equals: expectedTextStream contents asString
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 EDEmergencyDebuggerTest >> titleDisplayTextStringExample [
 	^ 'Hi, I''m ED - What is the nature of your debugging emergency?'
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 EDEmergencyDebuggerTest >> zeroDivideErrorInstance [
 	[ 1 / 0 ]
 		on: Error

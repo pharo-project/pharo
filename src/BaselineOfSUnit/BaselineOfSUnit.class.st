@@ -11,28 +11,28 @@ Installs:
 - SUnit without GUI
 "
 Class {
-	#name : #BaselineOfSUnit,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfSUnit
+	#name : 'BaselineOfSUnit',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfSUnit',
+	#package : 'BaselineOfSUnit'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfSUnit class >> defaultPackageNames [
 
 	^ self packagesOfGroupNamed: #default
 ]
 
-{ #category : #baseline }
+{ #category : 'baselines' }
 BaselineOfSUnit >> baseline: spec [
 	<baseline>
 	spec for: #common
 		do: [ 
-	
 			spec baseline: 'Traits' with: [
 				spec loads: 'core'. 
-				spec repository: self repository
-			].
-			
+				spec repository: (self packageRepositoryURLForSpec: spec) ].
+
+			"Package definitions"							
 			spec
 				package: 'SUnit-Core';
 				package: 'SUnit-Core-Traits' with: [ spec requires: 'Traits' ];
@@ -40,22 +40,25 @@ BaselineOfSUnit >> baseline: spec [
 				package: 'SUnit-Visitor' with: [ spec requires: #('SUnit-Core') ];
 				package: 'SUnit-Visitor-Tests' with: [ spec requires: #('SUnit-Visitor') ];
 				package: 'SUnit-MockObjects' with: [ spec requires: #('SUnit-Core') ];
+				package: 'SUnit-MockObjects-Tests' with: [ spec requires: #('SUnit-MockObjects') ];
 				package: 'SUnit-UI' with: [ spec requires: #('Coverage') ];
 				package: 'SUnit-Support-UITesting-Tests';
 				package: 'SUnit-Support-UITesting';
 				package: 'Coverage';
+				package: 'Coverage-Tests' with: [ spec requires: #('Coverage') ];				
 				package: 'JenkinsTools-Core';
 				package: 'JenkinsTools-ExtraReports'.
+
+			"Custom groups"				
 			spec
 				group: 'Core' with: #('SUnit-Core' 'SUnit-Core-Traits' 'SUnit-Visitor');
 				group: 'MockObjects' with: #('SUnit-MockObjects');
 				group: 'UI' with: #('SUnit-UI' 'SUnit-Support-UITesting' 'Coverage');
-				group: 'Tests' with: #('SUnit-Tests' 'SUnit-Support-UITesting-Tests' 'SUnit-Visitor-Tests');
-				group: 'JenkinsSupport' with: #('JenkinsTools-Core' 'JenkinsTools-ExtraReports');
-				group: 'default' with: #('SUnit-Core' 'SUnit-Core-Traits' 'SUnit-Tests' 'JenkinsTools-Core' 'JenkinsTools-ExtraReports' 'SUnit-MockObjects') ]
-]
+				group: 'Tests' with: #('SUnit-Tests' 'SUnit-Support-UITesting-Tests' 'SUnit-Visitor-Tests' 'SUnit-MockObjects-Tests' 'Coverage-Tests');
+				group: 'JenkinsSupport' with: #('JenkinsTools-Core' 'JenkinsTools-ExtraReports').
 
-{ #category : #accessing }
-BaselineOfSUnit >> repository [
-	^ self packageRepositoryURL
+			"Virtual groups"	
+			spec
+				group: 'all' with: #('Core' 'MockObjects' 'UI' 'Tests' 'JenkinsSupport');
+				group: 'default' with: #('SUnit-Core' 'SUnit-Core-Traits' 'SUnit-Tests' 'JenkinsTools-Core' 'JenkinsTools-ExtraReports' 'SUnit-MockObjects') ]
 ]

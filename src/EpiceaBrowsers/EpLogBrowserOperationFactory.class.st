@@ -4,17 +4,19 @@ I implement behavior to apply and revert code changes.
 Important Note: My #entries are expected to be ordered as ""the oldest first"" (as in EpLog>>entries).
 "
 Class {
-	#name : #EpLogBrowserOperationFactory,
-	#superclass : #Object,
+	#name : 'EpLogBrowserOperationFactory',
+	#superclass : 'Object',
 	#instVars : [
 		'entries',
 		'errorHandlerBlock',
 		'logBrowserModel'
 	],
-	#category : #'EpiceaBrowsers-Integration'
+	#category : 'EpiceaBrowsers-Integration',
+	#package : 'EpiceaBrowsers',
+	#tag : 'Integration'
 }
 
-{ #category : #public }
+{ #category : 'public' }
 EpLogBrowserOperationFactory >> applyCodeChanges [
 	"Note: This method is intended to be used from EpLogBrowser's preview mode, where the code changes were previously transformed at #newApplyPreviewLog."
 
@@ -26,7 +28,7 @@ EpLogBrowserOperationFactory >> applyCodeChanges [
 		with: self newApplyEvent
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 EpLogBrowserOperationFactory >> applyCompleteRefactoring [
 
 	| refactoringEntry refactoring |
@@ -36,7 +38,7 @@ EpLogBrowserOperationFactory >> applyCompleteRefactoring [
 	self applyRBRefactoring: refactoring
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 EpLogBrowserOperationFactory >> applyPropagateRefactoring [
 
 	| refactoringEntry refactoring |
@@ -46,52 +48,55 @@ EpLogBrowserOperationFactory >> applyPropagateRefactoring [
 	self applyRBRefactoring: refactoring
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpLogBrowserOperationFactory >> applyRBRefactoring: aRBRefactoring [
 
 	self error: 'This function is currently not supported'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserOperationFactory >> entries [
 	^ entries
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserOperationFactory >> entries: aCollection [
 	"Important Note: My #entries must be sorted the oldest first."
 
 	entries := aCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserOperationFactory >> errorHandlerBlock [
 	^ errorHandlerBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserOperationFactory >> errorHandlerBlock: aBlock [
 	errorHandlerBlock := aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserOperationFactory >> events [
 
 	^ self entries collect: [:each | each content ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpLogBrowserOperationFactory >> handleErrorDuring: aBlock [
 	"TODO: do not catch *all* Errors.
 	This error handler exists as a workaround to skip any unexpected error when applying or reverting a code change from GUI.
-	For example, when user reverts the protocol addition of a protocol that is already not present, and such action signals an unexpected error. The error in such case should be avoided via testing API."
+	For example, when user reverts the protocol addition of a protocol that is already not present, and such action signals an unexpected error. The error in such case should be avoided via testing API.
+	
+	Rebutal: If you silent all errors, you will never fix the one you can fix, and you will silently ignore the ones that the user need to catch.
+	"
 
-	aBlock
-		on: Error
-		do: self errorHandlerBlock
+	aBlock value
+"		on: Error
+		do: self errorHandlerBlock"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpLogBrowserOperationFactory >> latestEventsFrom: previewEventsTheOldestFirst [
 	"TODO: move method"
 
@@ -106,23 +111,23 @@ EpLogBrowserOperationFactory >> latestEventsFrom: previewEventsTheOldestFirst [
 		thenCollect: [ :each | each content ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserOperationFactory >> logBrowserModel [
 	^ logBrowserModel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserOperationFactory >> logBrowserModel: aBrowser [
 	logBrowserModel := aBrowser
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpLogBrowserOperationFactory >> newApplyEvent [
 
 	^ EpRedo forAll: (self theLog referencesToAll: self entries)
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 EpLogBrowserOperationFactory >> newApplyPreviewLog [
 
 	| events |
@@ -134,13 +139,13 @@ EpLogBrowserOperationFactory >> newApplyPreviewLog [
 	^ EpLog newWithEvents: events
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpLogBrowserOperationFactory >> newRevertEvent [
 
 	^ EpUndo forAll: (self theLog referencesToAll: self entries)
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 EpLogBrowserOperationFactory >> newRevertPreviewLog [
 
 	| events |
@@ -152,7 +157,7 @@ EpLogBrowserOperationFactory >> newRevertPreviewLog [
 	^ EpLog newWithEvents: events
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 EpLogBrowserOperationFactory >> revertCodeChanges [
 
 	self
@@ -163,7 +168,7 @@ EpLogBrowserOperationFactory >> revertCodeChanges [
 		with: self newRevertEvent
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 EpLogBrowserOperationFactory >> revertCodeChangesInPreviewMode [
 	"Note: This method is intended to be used from EpLogBrowser's preview mode, where the code changes were previously transformed at #newRevertPreviewLog. That's why here the transformed code changes are simply applied as if was a redo (apply) operation and not as an undo (revert)."
 
@@ -175,13 +180,13 @@ EpLogBrowserOperationFactory >> revertCodeChangesInPreviewMode [
 		with: self newRevertEvent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserOperationFactory >> theLog [
 
 	^ logBrowserModel theLog
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpLogBrowserOperationFactory >> trigger: aBlock with: anEpLogBrowserOperation [
 
 	^ anEpLogBrowserOperation doInJob: aBlock

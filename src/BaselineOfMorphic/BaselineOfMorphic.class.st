@@ -16,61 +16,64 @@ Installs:
 - some other packages
 "
 Class {
-	#name : #BaselineOfMorphic,
-	#superclass : #BaselineOf,
+	#name : 'BaselineOfMorphic',
+	#superclass : 'BaselineOf',
 	#instVars : [
 		'initializersEnabled'
 	],
 	#classVars : [
 		'Initialized'
 	],
-	#category : #BaselineOfMorphic
+	#category : 'BaselineOfMorphic',
+	#package : 'BaselineOfMorphic'
 }
 
-{ #category : #baseline }
-BaselineOfMorphic >> baseline: spec [ 
-    
+{ #category : 'baseline' }
+BaselineOfMorphic >> baseline: spec [
+
 	<baseline>
-        
-	| repository | 
-	
-	repository := self packageRepositoryURL.
+	| repository |
+	repository := self packageRepositoryURLForSpec: spec.
 
 	spec for: #common do: [
-		spec preLoadDoIt: #'preload:package:'.
-		spec postLoadDoIt: #'postload:package:'.
+		spec preLoadDoIt: #preload:package:.
+		spec postLoadDoIt: #postload:package:.
 
-		spec 
-			baseline: 'MorphicCore' with: [spec repository: repository];
-			baseline: 'MenuRegistration' with: [spec repository: repository].
+		spec
+			baseline: 'MorphicCore' with: [ spec repository: repository ];
+			baseline: 'MenuRegistration' with: [ spec repository: repository ].
 
-		spec baseline: 'Fuel' with: [ 
-			spec repository: repository; loads: #('Core') ].
+		spec baseline: 'Fuel' with: [
+			spec
+				repository: repository;
+				loads: #( 'Core' ) ].
 
 		spec package: 'System-Localization'.
-		
-		spec package: 'EmbeddedFreeType'.
+
+		spec baseline: 'FreeType' with: [
+			spec
+				repository: repository;
+				loads: 'ui' ].
+		spec package: 'EmbeddedFreeType' with: [ spec requires: 'FreeType' ].
 		spec package: 'FileSystem-Zip'.
 		spec package: 'Fonts-Infrastructure'.
-		spec baseline: 'FreeType' with: [ 
-			spec 
-				repository: repository; 
-				loads: 'ui' ].
 
 		spec package: 'Graphics-Files'.
 		spec package: 'Graphics-Fonts'.
 		spec package: 'Graphics-Shapes'.
 		spec package: 'Growl'.
 
-		spec baseline: 'Keymapping' with: [ 
-			spec 
+		spec baseline: 'Keymapping' with: [
+			spec
 				repository: repository;
 				loads: 'core' ].
 
 		spec package: 'Transcript-Core'.
 
 		spec package: 'Native-Browser'.
-		
+
+		spec package: 'Regex-Core'.
+
 		spec package: 'Morphic-Base'.
 		spec package: 'Morphic-Examples'.
 		spec package: 'Morphic-Widgets-Basic'.
@@ -86,16 +89,20 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets-Tree'.
 		spec package: 'Morphic-Widgets-Windows'.
 		spec package: 'Morphic-Widgets-FastTable'.
-		
+
 		spec package: 'Morphic-Widgets-Taskbar-Tests'.
-		
+
 		"Several packages depend on Rubric as a basic Morphic component"
 		spec package: 'Rubric'.
-		
-		spec baseline: 'NewValueHolder' with: [ spec repository: repository; loads: 'core' ].
+
+		spec baseline: 'NewValueHolder' with: [
+			spec
+				repository: repository;
+				loads: 'core' ].
 
 		spec package: 'Polymorph-Widgets'.
-		
+		spec package: 'DarkBlueTheme'.
+
 		spec package: 'Images-Animated'.
 
 		spec package: 'Settings-Graphics'.
@@ -109,59 +116,36 @@ BaselineOfMorphic >> baseline: spec [
 		"the following package is listed here to be after Setting core 
 		however conceptually it could be placed somewhere else."
 		spec package: 'Formatter-Settings'.
-		spec package: 'System-Sound'.
-		
+
 		spec package: 'Text-Diff'.
 		spec package: 'Text-Edition'.
 		spec package: 'Text-Scanning'.
 
 		spec package: 'Morphic-Widgets-TickList'.
-		
-		spec package: 'System-Changes-FileServices'.
 
-		spec package: 'StartupPreferences'.
 		spec package: 'System-Identification'.
-		
-		"Tool-Base extends and uses morphic, so it depends on it"
-		spec package: 'Tool-Base'.
 
-	].
+		"Tool-Base extends and uses morphic, so it depends on it"
+		spec package: 'Tool-Base' ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 
-	Author fullName: self class name.
 	MCDataStream initialize.
 	GradientFillStyle initPixelRampCache.
 	FreeTypeCache clearCurrent.
-	ImageMorph classPool at: #DefaultForm put: (Form extent: 1 @ 1 depth: 1).
-	Behavior flushObsoleteSubclasses.
+	ImageMorph
+		writeClassVariableNamed: #DefaultForm
+		value: (Form extent: 1 @ 1 depth: 1).
 	World cleanseOtherworldlySteppers.
 	MCFileBasedRepository flushAllCaches.
 	MCMethodDefinition shutDown.
 	ExternalDropHandler resetRegisteredHandlers.
-	Undeclared removeUnreferencedKeys.
-	Smalltalk globals flushClassNameCache.
-	ScrollBarMorph initializeImagesCache.
-
-	Smalltalk garbageCollect.
-	HashedCollection rehashAll.
-	Symbol rehash.
-
-	"Remove empty packages and protocols"
-	Smalltalk organization removeEmptyPackages.
-	Smalltalk allClassesAndTraitsDo: [ :class |
-		class organization removeEmptyProtocols.
-    class class organization removeEmptyProtocols  ].
-  
-	ChangeSet removeChangeSetsNamedSuchThat: [ :each | true ].
-	ChangeSet resetCurrentToNewUnnamedChangeSet.
-	Smalltalk garbageCollect.
-	Author reset
+	ScrollBarMorph initializeImagesCache
 ]
 
-{ #category : #fonts }
+{ #category : 'fonts' }
 BaselineOfMorphic >> exportBitmapDejaVuSans [
 
 	| familyName styleNames pointSizes family font fileName fontCopy style |
@@ -191,7 +175,7 @@ BaselineOfMorphic >> exportBitmapDejaVuSans [
 			STON put: fontCopy onStream: (fileName, '.ston') asFileReference writeStream ]].
 ]
 
-{ #category : #fonts }
+{ #category : 'fonts' }
 BaselineOfMorphic >> loadBitmapDejaVuSans [
 
 	| dejaVu |
@@ -204,7 +188,7 @@ BaselineOfMorphic >> loadBitmapDejaVuSans [
 	TextConstants TextSharedInformation at: #'DefaultFixedTextStyle' put: dejaVu.
 ]
 
-{ #category : #fonts }
+{ #category : 'fonts' }
 BaselineOfMorphic >> loadBitmapFontFamily: familyName sizes: pointSizes [
 	| fonts fileName directoryReference |
 	directoryReference := (Smalltalk os environment
@@ -251,7 +235,7 @@ BaselineOfMorphic >> loadBitmapFontFamily: familyName sizes: pointSizes [
 	^ TextStyle fontArray: fonts
 ]
 
-{ #category : #fonts }
+{ #category : 'fonts' }
 BaselineOfMorphic >> loadBitmapSourcePro [
 
 	| sansPro codePro |
@@ -263,100 +247,99 @@ BaselineOfMorphic >> loadBitmapSourcePro [
 	TextConstants TextSharedInformation at: #'Bitmap Source Code Pro' put: codePro.
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	| array |
-	
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
 
 	SystemNotification signal: 'Starting postload action'.
 
-	Smalltalk cleanOutUndeclared.
-	Author fullName: self class name.
-
 	TextConstants initialize.
-		
-	"Initialize Fuel"
-	FLLargeIdentityHashedCollection initialize.
-	FLPlatform reset.
 
-	Stdio stdout nextPutAll: 'starting...'; lf.
+	Stdio stdout
+		nextPutAll: 'starting...';
+		lf.
 
-	Stdio stdout nextPutAll: Smalltalk ui asString; lf.
+	Stdio stdout
+		nextPutAll: Smalltalk ui asString;
+		lf.
 
-	SparseLargeTable recompile. 
-	
 	PNGReadWriter initialize.
 	self loadBitmapDejaVuSans.
 	self loadBitmapSourcePro.
-	
-	#(TextStyle) do: [:each | (Smalltalk globals at: each) initialize. ].
-	
-	Stdio stdout nextPutAll: 'bitmap fonts loaded' asString; lf.
 
-	#(ProgressBarMorph BalloonEngineConstants BalloonEngine 
-	CornerRounder  DigitalSignatureAlgorithm DummySoundSystem
-	FT2Types FT2FFILibrary
-	FreeTypeCacheConstants FreeTypeCache FreeTypeSettings 
-	FreeTypeSubPixelAntiAliasedGlyphRenderer FT2Constants FT2Handle 
-	GIFReadWriter GlobalIdentifier
-	HaloMorph CharacterScanner ImageMorph JPEGHuffmanTable
-	JPEGReadStream JPEGReadWriter Locale
-	MczInstaller MD5NonPrimitive MenuItemMorph MenuMorph  
-	RxMatcher RxParser RxsPredicate
-	SHA1 ShortIntegerArray
-	SystemProgressMorph SystemWindow TestCase TextContainer TextDiffBuilder
-	ThemeIcons ThumbnailMorph TransferMorph UITheme ZnByteEncoder
-	ZnConstants ZnMimeType ZnNetworkingUtils ZnServer ZnSingleThreadedServer
-	) do: [:each | (Smalltalk globals at: each) initialize. ].
+	(Smalltalk globals at: #TextStyle) initialize.
+
+	Stdio stdout
+		nextPutAll: 'bitmap fonts loaded' asString;
+		lf.
+
+	#( #ProgressBarMorph #BalloonEngineConstants #BalloonEngine
+	   #CornerRounder #DigitalSignatureAlgorithm
+	   #FT2Types #FT2FFILibrary #FreeTypeCacheConstants
+	   #FreeTypeCache #FreeTypeSettings #FreeTypeSubPixelAntiAliasedGlyphRenderer
+	   #FT2Constants #GIFReadWriter #GlobalIdentifier #HaloMorph
+	   #CharacterScanner #ImageMorph #JPEGHuffmanTable #JPEGReadStream
+	   #Locale #MczInstaller #MD5NonPrimitive #MenuItemMorph
+	   #MenuMorph #RxMatcher #RxParser #RxsPredicate #SHA1 #ShortIntegerArray
+	   #SystemProgressMorph #SystemWindow #TestCase #TextContainer
+	   #TextDiffBuilder #ThumbnailMorph #TransferMorph #UITheme #ZnByteEncoder
+	   #ZnConstants #ZnMimeType #ZnNetworkingUtils #ZnServer #ZnSingleThreadedServer )
+		do: [ :each | (Smalltalk globals at: each) initialize ].
 
 	BalloonMorph setBalloonColorTo: Color yellow.
 
 	UIManager default terminateUIProcess.
 	MorphicUIManager new spawnNewProcess.
-	Display newDepth: 32.
-	
+
 	UIManager default: MorphicUIManager new.
-	UIManager default uiProcess resume.
+	MorphicUIManager uiProcess resume.
+
+	ErrorHandler defaultErrorHandler: UIManager default.
+
 	PharoLightTheme beCurrent.
+	ScalingCanvas initialize.
 	self cleanUpAfterMorphicInitialization.
 
 	GraphicFontSettings setFontsToStyleNamed: #small.
 
 	"Install the right UIManager"
 	UIManager default: UIManager forCurrentSystemConfiguration.
-	Stdio stdout nextPutAll: 'UIManager changed:' ; nextPutAll: UIManager default class name ; lf.
+	ErrorHandler defaultErrorHandler: UIManager default.
+	Stdio stdout
+		nextPutAll: 'UIManager changed:';
+		nextPutAll: UIManager default class name;
+		lf.
 
-	TextEditor initialize.
-
-	MenubarMorph initialize.	
+	MenubarMorph initialize.
 
 	PolymorphSystemSettings showDesktopLogo: false.
 	PolymorphSystemSettings showDesktopLogo: true.
 	PolymorphSystemSettings desktopColor: Color white.
 
-	Smalltalk cleanOutUndeclared.
+	#( #AbstractFont #BalloonMorph #Clipboard #EmbeddedFreeTypeFontInstaller
+	   #FLCompiledMethodCluster #FreeTypeFontProvider
+	   #GradientFillStyle #IconicButtonMorph #KMLog #LogicalFont
+	   #LucidaGrandeRegular #OSEnvironment #ScrollBarMorph
+	   #StrikeFont #SystemSettingsPersistence #TabMorph #TaskbarMorph
+	   #TextAction #TextConstants #TextStyle ) do: [ :each |
+		(Smalltalk globals at: each) initialize ].
 
-	#(#AbstractFont #BalloonMorph #Clipboard #EditorFindReplaceDialogWindow #EmbeddedFreeTypeFontInstaller #FLCompiledMethodCluster #FLLargeIdentityHashedCollection #FLPlatform #FreeTypeFontProvider #GradientFillStyle #IconicButtonMorph #KMLog #LogicalFont #LucidaGrandeRegular #OSEnvironment #ScrollBarMorph #StrikeFont #SystemSettingsPersistence #TabMorph #TaskbarMorph #Text #TextAction #TextConstants #TextEditor #TextStyle) do: [:each |
-		 (Smalltalk globals at: each) initialize. ].
-
-	LogicalFontManager current addFontProvider: FreeTypeFontProvider current.
+	LogicalFontManager current addFontProvider:
+		FreeTypeFontProvider current.
 
 	array := Smalltalk specialObjectsArray copy.
 	array at: 5 put: Bitmap.
 	Smalltalk specialObjectsArray becomeForward: array.
 
-	Author reset.
 	MCMethodDefinition initializersEnabled: initializersEnabled.
 
-	UIManager default restoreDisplay.
-	
-	Initialized := true.
+	Initialized := true
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfMorphic >> preload: loader package: packageSpec [
 
 	"Ignore pre and post loads if already executed"
@@ -370,11 +353,9 @@ BaselineOfMorphic >> preload: loader package: packageSpec [
 	
 	initializersEnabled := MCMethodDefinition initializersEnabled.
 	MCMethodDefinition initializersEnabled: false.
-	
-	Author fullName: self class name
 ]
 
-{ #category : #baseline }
+{ #category : 'baseline' }
 BaselineOfMorphic >> project [
 	
 	| aProject |

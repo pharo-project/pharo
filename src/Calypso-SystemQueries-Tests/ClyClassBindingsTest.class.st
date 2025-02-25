@@ -1,15 +1,17 @@
 Class {
-	#name : #ClyClassBindingsTest,
-	#superclass : #ClyQueryNavigationResultTest,
-	#category : #'Calypso-SystemQueries-Tests-Results'
+	#name : 'ClyClassBindingsTest',
+	#superclass : 'ClyQueryNavigationResultTest',
+	#category : 'Calypso-SystemQueries-Tests-Results',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Results'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyClassBindingsTest >> createQueryResult [
 	^ClyClassBindingsResult new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassBindingsTest >> testFillingWithMetaclass [
 
 	queryResult fillWith: {Array class}.
@@ -17,7 +19,7 @@ ClyClassBindingsTest >> testFillingWithMetaclass [
 	self assert: queryResult items equals: {Array binding}
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyClassBindingsTest >> testFillingWithTwoClasses [
 
 	queryResult fillWith: {Array. String}.

@@ -10,24 +10,26 @@ It is possible to disable the icon to prevent the user from stopping the task vi
 		JobProgressBarMorph isInterruptible: false
 "
 Class {
-	#name : #JobProgressBarMorph,
-	#superclass : #Morph,
+	#name : 'JobProgressBarMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'progressBar'
 	],
 	#classVars : [
 		'IsInterruptible'
 	],
-	#category : #'Morphic-Base-ProgressBar'
+	#category : 'Morphic-Base-ProgressBar',
+	#package : 'Morphic-Base',
+	#tag : 'ProgressBar'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 JobProgressBarMorph class >> example [
 
 	self new openInWorld
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 JobProgressBarMorph class >> interruptionSetting: aBuilder [
 	<systemsettings>
 
@@ -40,19 +42,19 @@ JobProgressBarMorph class >> interruptionSetting: aBuilder [
 		order: 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 JobProgressBarMorph class >> isInterruptible [
 
 	^ IsInterruptible ifNil: [ IsInterruptible := true ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 JobProgressBarMorph class >> isInterruptible: aBoolean [
 
 	IsInterruptible := aBoolean
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 JobProgressBarMorph >> addInterruptionButton [
 
 	self isInterruptible ifFalse: [ ^ self ].
@@ -60,19 +62,19 @@ JobProgressBarMorph >> addInterruptionButton [
 	self addMorphBack: (self iconNamed: #stop) asMorph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JobProgressBarMorph >> decrement [
 
 	^ progressBar decrement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JobProgressBarMorph >> increment [
 
 	^ progressBar increment
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 JobProgressBarMorph >> initialize [
 
 	super initialize.
@@ -94,31 +96,31 @@ JobProgressBarMorph >> initialize [
 		addInterruptionButton
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 JobProgressBarMorph >> isInterruptible [
 
 	^ self class isInterruptible
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JobProgressBarMorph >> progress [
 
 	^ progressBar value / 100
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JobProgressBarMorph >> progress: aNormalizedNumber [
 
 	^ progressBar value: aNormalizedNumber * 100
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 JobProgressBarMorph >> value [
 
 	^ progressBar value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 JobProgressBarMorph >> value: aNumber [
 
 	^ progressBar value: aNumber

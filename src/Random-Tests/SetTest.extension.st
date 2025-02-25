@@ -1,6 +1,6 @@
-Extension { #name : #SetTest }
+Extension { #name : 'SetTest' }
 
-{ #category : #'*Random-Tests' }
+{ #category : '*Random-Tests' }
 SetTest >> testAtRandom [
 	| rand |
 	rand := Random new.

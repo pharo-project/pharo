@@ -11,31 +11,33 @@ Developpement version Todo Work in progress
 
 "
 Class {
-	#name : #OSTouchEvent,
-	#superclass : #OSEvent,
+	#name : 'OSTouchEvent',
+	#superclass : 'OSEvent',
 	#instVars : [
 		'deviceId',
 		'timestamp'
 	],
-	#category : #'OSWindow-Core-Events-Touch'
+	#category : 'OSWindow-Core-Events-Touch',
+	#package : 'OSWindow-Core',
+	#tag : 'Events-Touch'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchEvent >> deviceId [
 	^ deviceId
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchEvent >> deviceId: anObject [
 	deviceId := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchEvent >> timestamp [
 	^timestamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTouchEvent >> timestamp: anObject [
 	timestamp := anObject
 ]

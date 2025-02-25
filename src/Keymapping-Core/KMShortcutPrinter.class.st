@@ -3,15 +3,17 @@ I'm an util to convert a shortcut into the representation used in a platform (th
 
 "
 Class {
-	#name : #KMShortcutPrinter,
-	#superclass : #OSPlatformVisitor,
+	#name : 'KMShortcutPrinter',
+	#superclass : 'OSPlatformVisitor',
 	#classVars : [
 		'SymbolTable'
 	],
-	#category : #'Keymapping-Core-Base'
+	#category : 'Keymapping-Core-Base',
+	#package : 'Keymapping-Core',
+	#tag : 'Base'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 KMShortcutPrinter class >> createSymbolTable [
 
 	^ Dictionary newFromPairs: {
@@ -23,13 +25,13 @@ KMShortcutPrinter class >> createSymbolTable [
 		#Enter. 	(Character value: 16r23ce) asString }
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 KMShortcutPrinter class >> symbolTable [
 
 	^ SymbolTable ifNil: [ SymbolTable := self createSymbolTable ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 KMShortcutPrinter class >> symbolTableAt: anObject ifAbsent: aBlock [
 
 	^ self symbolTable
@@ -37,19 +39,19 @@ KMShortcutPrinter class >> symbolTableAt: anObject ifAbsent: aBlock [
 		ifAbsent: aBlock
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMShortcutPrinter class >> toString: aShortcut [
 
 	^ aShortcut acceptVisitor: OSPlatform current shortcutPrinter
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 KMShortcutPrinter >> basicModifierStringsOf: aShortcut [
 
 	^ (aShortcut platformModifier asString substrings: '+') collect: [:each | each trimBoth]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 KMShortcutPrinter >> mapSpecialCharacter: char [
 
 	char = KeyboardKey enter ifTrue: [ ^ 'Enter' ].
@@ -57,7 +59,7 @@ KMShortcutPrinter >> mapSpecialCharacter: char [
 	^ char	 name
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 KMShortcutPrinter >> shortcutModifiersOf: aShortcut [
 	| modifiers |
 
@@ -72,13 +74,13 @@ KMShortcutPrinter >> shortcutModifiersOf: aShortcut [
 	^ modifiers
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 KMShortcutPrinter >> visitCombinationShortcut: aShortcut [
 
 	^ (aShortcut sequence collect: [ :e | self visitSingleShortcut: e ]) joinUsing: ','
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 KMShortcutPrinter >> visitSingleShortcut: aShortcut [
 
 	| char |

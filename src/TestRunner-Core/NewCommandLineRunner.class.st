@@ -9,46 +9,48 @@ I extend NewTestRunner so i share it public API. In addition:
 - reporter:
 "
 Class {
-	#name : #NewCommandLineRunner,
-	#superclass : #NewTestRunner,
+	#name : 'NewCommandLineRunner',
+	#superclass : 'NewTestRunner',
 	#instVars : [
 		'reporter'
 	],
-	#category : #'TestRunner-Core-Extensions'
+	#category : 'TestRunner-Core-Extensions',
+	#package : 'TestRunner-Core',
+	#tag : 'Extensions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 NewCommandLineRunner class >> with: aReporterClass [
 
 	^ self new reporter: aReporterClass new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NewCommandLineRunner >> classForReporter [
 
 	^ AbstractReporter
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NewCommandLineRunner >> classForTestFailure [
 
 	^ TestFailure
 ]
 
-{ #category : #test }
+{ #category : 'test' }
 NewCommandLineRunner >> hasDefaultReporter [
 	"check if the Runner has a default reporter"
 
 	^ self reporter isNotNil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 NewCommandLineRunner >> initialize [
 	super initialize.
 	self reporter: self classForReporter stdReporter.
 ]
 
-{ #category : #recording }
+{ #category : 'recording' }
 NewCommandLineRunner >> recordError: aTestFailure duringTest: aTestCase [
 	"store the test case then report it as error"
 
@@ -57,7 +59,7 @@ NewCommandLineRunner >> recordError: aTestFailure duringTest: aTestCase [
 	self reportError: aTestFailure of: aTestCase
 ]
 
-{ #category : #recording }
+{ #category : 'recording' }
 NewCommandLineRunner >> recordFailure: aTestFailure duringTest: aTestCase [
 	"store the test case then report it as failure"
 
@@ -66,7 +68,7 @@ NewCommandLineRunner >> recordFailure: aTestFailure duringTest: aTestCase [
 	self reportFailure: aTestFailure of: aTestCase
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NewCommandLineRunner >> recordPassOf: aTestCase [
 	"store the test case then report it as passed test"
 
@@ -74,7 +76,7 @@ NewCommandLineRunner >> recordPassOf: aTestCase [
 	self reporter reportPass: aTestCase
 ]
 
-{ #category : #internal }
+{ #category : 'internal' }
 NewCommandLineRunner >> recordSkip: aTestSkipped duringTest: aTestCase [
 	"store the test case then report it as skipped test"
 
@@ -83,7 +85,7 @@ NewCommandLineRunner >> recordSkip: aTestSkipped duringTest: aTestCase [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NewCommandLineRunner >> recordUnexpectedPassOf: aTestCase [
 	"store the testcase as failure. A test which is excpected to fail should not pass"
 
@@ -93,14 +95,14 @@ NewCommandLineRunner >> recordUnexpectedPassOf: aTestCase [
 	self recordFailure: exception duringTest: aTestCase
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 NewCommandLineRunner >> reportError: aTestError of: aTestCase [
 	"store the test case then report it as error"
 
 	self reporter reportError: aTestError of: aTestCase
 ]
 
-{ #category : #reporting }
+{ #category : 'reporting' }
 NewCommandLineRunner >> reportFailure: aTestFailure of: aTestCase [
 	"store the test case then report it as failure"
 
@@ -108,25 +110,25 @@ NewCommandLineRunner >> reportFailure: aTestFailure of: aTestCase [
 
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NewCommandLineRunner >> reporter [
 
 	^ reporter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 NewCommandLineRunner >> reporter: aReporter [
 
 	reporter := aReporter
 ]
 
-{ #category : #processing }
+{ #category : 'processing' }
 NewCommandLineRunner >> resetReporter [
 
 	self reporter: self reporter class new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 NewCommandLineRunner >> runCase: aTestCase [
 	"run and report a testCase"
 
@@ -135,7 +137,7 @@ NewCommandLineRunner >> runCase: aTestCase [
 		runBlock: [self runCaseManaged: aTestCase ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 NewCommandLineRunner >> runCaseManaged: aTestCase [
 	"run then report the test according to its state (passed, error, failure) during the execution"
 
@@ -148,7 +150,7 @@ NewCommandLineRunner >> runCaseManaged: aTestCase [
 		do: [ :error | error recordResultOf: aTestCase inHDTestReport: self ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 NewCommandLineRunner >> runSuite [
 	"report a testsuite while running it"
 	
@@ -157,7 +159,7 @@ NewCommandLineRunner >> runSuite [
 	 runBlock: [ super runSuite ]
 ]
 
-{ #category : #processing }
+{ #category : 'processing' }
 NewCommandLineRunner >> tearDown [
 
 	super tearDown.
@@ -165,7 +167,7 @@ NewCommandLineRunner >> tearDown [
 	self resetReporter.
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NewCommandLineRunner >> timeToRun: aTestCase [
 	"run a testcase and compute the duration"
 	

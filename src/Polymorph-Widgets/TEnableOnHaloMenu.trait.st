@@ -2,11 +2,13 @@
 Trait providing an ""enabled"" option on the halo menu.
 "
 Trait {
-	#name : #TEnableOnHaloMenu,
-	#category : #'Polymorph-Widgets-Traits'
+	#name : 'TEnableOnHaloMenu',
+	#category : 'Polymorph-Widgets-Traits',
+	#package : 'Polymorph-Widgets',
+	#tag : 'Traits'
 }
 
-{ #category : #'menu & halo' }
+{ #category : 'menu & halo' }
 TEnableOnHaloMenu >> addToggleItemsToHaloMenu: aCustomMenu [
 	"Add toggle-items to the halo menu"
 
@@ -17,28 +19,28 @@ TEnableOnHaloMenu >> addToggleItemsToHaloMenu: aCustomMenu [
 		selector: #toggleEnabled
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TEnableOnHaloMenu >> enabled [
 	"Answer the enabled state of the receiver."
 
 	self explicitRequirement
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TEnableOnHaloMenu >> enabled: aBoolean [
 	"Set the enabled state of the receiver."
 
 	self explicitRequirement
 ]
 
-{ #category : #enablement }
+{ #category : 'enablement' }
 TEnableOnHaloMenu >> enabledString [
 	"Answer the string to be shown in a menu to represent the 'enabled' status"
 
 	^ (self enabled) -> 'enabled' translated
 ]
 
-{ #category : #enablement }
+{ #category : 'enablement' }
 TEnableOnHaloMenu >> toggleEnabled [
 	"Toggle the enabled state."
 

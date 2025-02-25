@@ -1,6 +1,6 @@
-Extension { #name : #MorphTreeNodeMorph }
+Extension { #name : 'MorphTreeNodeMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 MorphTreeNodeMorph >> drawOnAthensCanvas: anAthensCanvas [
 	self drawOnCanvasWrapperFor: anAthensCanvas
 ]

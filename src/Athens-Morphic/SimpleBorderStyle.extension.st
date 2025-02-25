@@ -1,13 +1,13 @@
-Extension { #name : #SimpleBorderStyle }
+Extension { #name : 'SimpleBorderStyle' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 SimpleBorderStyle >> asAthensPaintOn: anAthensCanvas [
 	^ self topLeftColor = self bottomRightColor
 		ifTrue: [ super asAthensPaintOn: anAthensCanvas ]
 		ifFalse: [ self asTwoColorStrokePaintOn: anAthensCanvas ]
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 SimpleBorderStyle >> asTwoColorStrokePaintOn: anAthensCanvas [
 	^ AthensBorderStrokePaint
 		topLeftColor: self topLeftColor

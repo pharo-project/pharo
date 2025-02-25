@@ -26,36 +26,38 @@ Internal Representation and Key Implementation Points.
     Implementation Points
 "
 Class {
-	#name : #StdioStreamTestResource,
-	#superclass : #TestResource,
+	#name : 'StdioStreamTestResource',
+	#superclass : 'TestResource',
 	#instVars : [
 		'fileReference',
 		'contents',
 		'fileStream',
 		'stdioStream'
 	],
-	#category : #'Files-Tests-Streams'
+	#category : 'Files-Tests-Streams',
+	#package : 'Files-Tests',
+	#tag : 'Streams'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StdioStreamTestResource >> contents [
 
 	^ contents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StdioStreamTestResource >> fileReference [
 
 	^ fileReference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StdioStreamTestResource >> fileStream [
 
 	^ fileStream
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 StdioStreamTestResource >> setUp [
 	"Create the temporary file and StdioStream"
 
@@ -74,12 +76,12 @@ StdioStreamTestResource >> setUp [
 	stdioStream := StdioStream handle: handle file: (File named: #stdio) forWrite: true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 StdioStreamTestResource >> stdioStream [
 	^ stdioStream
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 StdioStreamTestResource >> tearDown [
 	"Close the receiver's resources"
 

@@ -11,8 +11,8 @@ Instance Variables
 ZnSimplifiedClientTransactionEvent is ideal for classic HTTP logging with little overhead through its default string representation.
 "
 Class {
-	#name : #ZnSimplifiedClientTransactionEvent,
-	#superclass : #ZnClientLogEvent,
+	#name : 'ZnSimplifiedClientTransactionEvent',
+	#superclass : 'ZnClientLogEvent',
 	#instVars : [
 		'method',
 		'url',
@@ -20,30 +20,31 @@ Class {
 		'size',
 		'duration'
 	],
-	#category : #'Zinc-HTTP-Logging'
+	#category : 'Zinc-HTTP-Logging',
+	#package : 'Zinc-HTTP',
+	#tag : 'Logging'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnSimplifiedClientTransactionEvent >> duration [
 	^ duration
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnSimplifiedClientTransactionEvent >> initialize [
 	super initialize.
 	duration := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnSimplifiedClientTransactionEvent >> method [
 	^ method
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnSimplifiedClientTransactionEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream space; nextPutAll: method.
-	stream space.
+	stream nextPutAll: method; space.
 	url printPathQueryFragmentOn: stream.
 	stream space; print: response.
 	size ifNotNil: [
@@ -51,40 +52,40 @@ ZnSimplifiedClientTransactionEvent >> printContentsOn: stream [
 	stream space; print: duration; nextPutAll: 'ms'
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 ZnSimplifiedClientTransactionEvent >> request: aZnRequest [
 	method := aZnRequest method.
 	url := aZnRequest url
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 ZnSimplifiedClientTransactionEvent >> requestDuration: requestDuration [
 	duration := duration + requestDuration
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 ZnSimplifiedClientTransactionEvent >> response: aZnResponse [
 	response := aZnResponse code.
 	aZnResponse hasEntity
 		ifTrue: [ size := aZnResponse entity contentLength ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnSimplifiedClientTransactionEvent >> responseCode [
 	^ response
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 ZnSimplifiedClientTransactionEvent >> responseDuration: responseDuration [
 	duration := duration + responseDuration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnSimplifiedClientTransactionEvent >> size [
 	^ size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnSimplifiedClientTransactionEvent >> url [
 	^ url
 ]

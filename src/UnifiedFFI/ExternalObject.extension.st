@@ -1,12 +1,13 @@
-Extension { #name : #ExternalObject }
+Extension { #name : 'ExternalObject' }
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ExternalObject >> autoRelease [
-	self isExternalAddress ifFalse: [ ^ self ].
-	^ self getHandle autoRelease
+	self getHandle isExternalAddress ifFalse: [ ^ self ].
+	self getHandle autoRelease.
+	^ self
 ]
 
-{ #category : #'*UnifiedFFI' }
+{ #category : '*UnifiedFFI' }
 ExternalObject >> pointer [
 	^ self getHandle pointer
 ]

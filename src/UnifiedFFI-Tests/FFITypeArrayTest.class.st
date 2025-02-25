@@ -2,12 +2,14 @@
 Tests for FFITypeArray
 "
 Class {
-	#name : #FFITypeArrayTest,
-	#superclass : #TestCase,
-	#category : #'UnifiedFFI-Tests-Tests'
+	#name : 'FFITypeArrayTest',
+	#superclass : 'TestCase',
+	#category : 'UnifiedFFI-Tests-Tests',
+	#package : 'UnifiedFFI-Tests',
+	#tag : 'Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFITypeArrayTest >> testAt [
 	| externalArray |
 
@@ -16,7 +18,7 @@ FFITypeArrayTest >> testAt [
 	1 to: 10 do: [ :index | self assert: (externalArray at: index) equals: 0 ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFITypeArrayTest >> testAtPut [
 	| externalArray |
 
@@ -25,7 +27,7 @@ FFITypeArrayTest >> testAtPut [
 	self assert: (externalArray at: 1) equals: 42
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFITypeArrayTest >> testExternalAt [
 	| externalArray |
 
@@ -40,7 +42,7 @@ FFITypeArrayTest >> testExternalAt [
 		externalArray free ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFITypeArrayTest >> testExternalAtPut [
 	| externalArray |
 
@@ -52,7 +54,7 @@ FFITypeArrayTest >> testExternalAtPut [
 		externalArray free ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FFITypeArrayTest >> testExternalAtPutFloat [
 	| random array |
 	random := Random new.

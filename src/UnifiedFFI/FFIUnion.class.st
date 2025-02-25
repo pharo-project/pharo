@@ -105,12 +105,14 @@ I'm implemented as an extension of FFIStructure.
 I put all of my fields at the same offset, which is zero.
 "
 Class {
-	#name : #FFIUnion,
-	#superclass : #FFIStructure,
-	#category : #'UnifiedFFI-Objects'
+	#name : 'FFIUnion',
+	#superclass : 'FFIStructure',
+	#category : 'UnifiedFFI-Objects',
+	#package : 'UnifiedFFI',
+	#tag : 'Objects'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 FFIUnion class >> compileFields: specArray withAccessors: aSymbol [
 	| fieldSpec defineBoolean totalSize|
 	defineBoolean := aSymbol = #always.
@@ -135,7 +137,7 @@ FFIUnion class >> compileFields: specArray withAccessors: aSymbol [
 	^ compiledSpec
 ]
 
-{ #category : #'register marshalling' }
+{ #category : 'register marshalling' }
 FFIUnion class >> emitFlatStructureLayoutInto: flatStructureLayout [
 	flatStructureLayout addMemoryFieldSize: self structureSize alignment: self structureAlignment
 ]

@@ -3,28 +3,30 @@ I am a queue item, used by atomic queues.
 All my new instances are circular i.e. next = self
 "
 Class {
-	#name : #AtomicQueueItem,
-	#superclass : #Object,
+	#name : 'AtomicQueueItem',
+	#superclass : 'Object',
 	#instVars : [
 		'next',
 		'object'
 	],
-	#category : #'Collections-Atomic-Elements'
+	#category : 'Collections-Atomic-Elements',
+	#package : 'Collections-Atomic',
+	#tag : 'Elements'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AtomicQueueItem >> initialize [
 	"make circular"
 	super initialize.
 	next := self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AtomicQueueItem >> isCircular [
 	^ next == self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AtomicQueueItem >> isZombie [
 	"Answer a boolean indicating that the receiver doesn't have a real object.
 	This should really check that the object is the queue's dummy, but since the item doesn't know which queue it is part of, use the object class instead."
@@ -32,7 +34,7 @@ AtomicQueueItem >> isZombie [
 	^object class = self class
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AtomicQueueItem >> makeCircular [
 	"Make a receiver circular, i.e. point to itself,
 	answer the old value of next variable.
@@ -47,35 +49,35 @@ AtomicQueueItem >> makeCircular [
 	^ temp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AtomicQueueItem >> next [
 	"Answer the value of next"
 
 	^ next
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AtomicQueueItem >> next: anObject [
 	"Set the value of next"
 
 	next := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AtomicQueueItem >> object [
 	"Answer the value of object"
 
 	^ object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AtomicQueueItem >> object: anObject [
 	"Set the value of object"
 
 	object := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 AtomicQueueItem >> printOn: aStream [
 
 	super printOn: aStream.

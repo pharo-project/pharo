@@ -1,19 +1,21 @@
 Class {
-	#name : #OCASTDoubleBlockTranslatorTest,
-	#superclass : #OCASTSingleBlockTranslatorTest,
+	#name : 'OCASTDoubleBlockTranslatorTest',
+	#superclass : 'OCASTSingleBlockTranslatorTest',
 	#instVars : [
 		'extractBlock2InTemp'
 	],
-	#category : #'OpalCompiler-Tests-AST'
+	#category : 'OpalCompiler-Tests-AST',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'AST'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 OCASTDoubleBlockTranslatorTest class >> isAbstract [
 
 	^ self == OCASTDoubleBlockTranslatorTest
 ]
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 OCASTDoubleBlockTranslatorTest class >> testParameters [
 
 	^ super testParameters *
@@ -22,17 +24,17 @@ OCASTDoubleBlockTranslatorTest class >> testParameters [
 			yourself)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCASTDoubleBlockTranslatorTest >> extractBlock2InTemp [
 	^ extractBlock2InTemp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCASTDoubleBlockTranslatorTest >> extractBlock2InTemp: anObject [
 	extractBlock2InTemp := anObject
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCASTDoubleBlockTranslatorTest >> testComposedExample: template withFirstBlock: firstBlockCode withSecondBlock: secondBlockCode [
 
 	^ self
@@ -42,7 +44,7 @@ OCASTDoubleBlockTranslatorTest >> testComposedExample: template withFirstBlock: 
 		withSecondBlock: secondBlockCode
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OCASTDoubleBlockTranslatorTest >> testComposedExample: template withTemps: predefinedTemps withFirstBlock: firstBlockCode withSecondBlock: secondBlockCode [
 	| temps declaration argument1 argument2 source |
 	temps := OrderedCollection new.

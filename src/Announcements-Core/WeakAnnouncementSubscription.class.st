@@ -9,60 +9,29 @@ To switch between subscription types, use makeStrong/makeWeak on the subscriptio
 Note, that list and next must be first instance variables.
 "
 Class {
-	#name : #WeakAnnouncementSubscription,
-	#superclass : #AbstractAnnouncementSubscription,
-	#type : #weak,
+	#name : 'WeakAnnouncementSubscription',
+	#superclass : 'AbstractAnnouncementSubscription',
+	#type : 'weak',
 	#instVars : [
-		'list',
 		'next'
 	],
-	#classVars : [
-		'FinalizationList'
-	],
-	#category : #'Announcements-Core-Subscription'
+	#category : 'Announcements-Core-Subscription',
+	#package : 'Announcements-Core',
+	#tag : 'Subscription'
 }
 
-{ #category : #finalization }
-WeakAnnouncementSubscription class >> finalizationList [
-
-	^ FinalizationList ifNil: [ FinalizationList := WeakFinalizationList new ]
-]
-
-{ #category : #finalization }
-WeakAnnouncementSubscription class >> finalizeValues [
-
-	| head |
-
-	head := self finalizationList swapWithNil.
-
-	[ head notNil ] whileTrue: [
-		head finalize.
-		head := head next
-	]
-]
-
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WeakAnnouncementSubscription class >> new [
 	^ (self basicNew: 1) initialize
 ]
 
-{ #category : #finalization }
-WeakAnnouncementSubscription >> finalizationRegistry [
-	^ FinalizationRegistry default
-]
-
-{ #category : #finalization }
+{ #category : 'finalization' }
 WeakAnnouncementSubscription >> finalize [
 
 	announcer removeSubscription: self
 ]
 
-{ #category : #initialization }
-WeakAnnouncementSubscription >> initialize [
-	list := self class finalizationList
-]
-
-{ #category : #converting }
+{ #category : 'converting' }
 WeakAnnouncementSubscription >> makeStrong [
 
 	| sub |
@@ -78,38 +47,43 @@ WeakAnnouncementSubscription >> makeStrong [
 		announcementClass: announcementClass)
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 WeakAnnouncementSubscription >> makeWeak [
+
 	^ self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WeakAnnouncementSubscription >> next [
+
 	^ next
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 WeakAnnouncementSubscription >> register [
 
 	self finalizationRegistry add: self subscriber finalizer: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WeakAnnouncementSubscription >> subscriber [
 
 	^ self basicAt: 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WeakAnnouncementSubscription >> subscriber: anObject [
 
-	self subscriber ifNotNil: [ self error: 'subscriber already set' ].
+	self subscriber ifNotNil: [ self error: 'subscriber is already set' ].
 	self basicAt: 1 put: anObject.
 	self register
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 WeakAnnouncementSubscription >> unregister [
 
-	self subscriber ifNotNil: [:sub |  self finalizationRegistry remove: sub ]
+	self subscriber ifNotNil: [:sub | 
+		self finalizationRegistry 
+			remove: sub 
+			ifAbsent: ["I will ignore if the subscription has been already removed"]]
 ]

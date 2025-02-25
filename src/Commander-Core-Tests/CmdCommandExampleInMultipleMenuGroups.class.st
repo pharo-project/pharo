@@ -1,24 +1,25 @@
 Class {
-	#name : #CmdCommandExampleInMultipleMenuGroups,
-	#superclass : #CmdRootOfCommandExamples,
-	#category : #'Commander-Core-Tests'
+	#name : 'CmdCommandExampleInMultipleMenuGroups',
+	#superclass : 'CmdRootOfCommandExamples',
+	#category : 'Commander-Core-Tests',
+	#package : 'Commander-Core-Tests'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 CmdCommandExampleInMultipleMenuGroups class >> childMenuGroupActivationExample1 [
 	<classAnnotation>
 
 	^CmdMenuCommandActivationExample byItemOf: CmdMenuGroupExample1 for: CmdToolContextStub1
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 CmdCommandExampleInMultipleMenuGroups class >> childMenuGroupActivationExample2 [
 	<classAnnotation>
 
 	^CmdMenuCommandActivationExample byItemOf: CmdMenuGroupExample2 for: CmdToolContextStub1
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 CmdCommandExampleInMultipleMenuGroups class >> rootMenuActivationExample [
 	<classAnnotation>
 

@@ -8,18 +8,21 @@ It is just like that. Newer versions of the frameworks may want to introduce a m
 
 "
 Class {
-	#name : #TestSuite,
-	#superclass : #Object,
+	#name : 'TestSuite',
+	#superclass : 'Object',
 	#instVars : [
 		'tests',
 		'resources',
 		'name',
-		'announcer'
+		'announcer',
+		'randomGenerator'
 	],
-	#category : #'SUnit-Core-Kernel'
+	#category : 'SUnit-Core-Kernel',
+	#package : 'SUnit-Core',
+	#tag : 'Kernel'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TestSuite class >> named: aString [
 
 	^self new
@@ -27,7 +30,7 @@ TestSuite class >> named: aString [
 		yourself
 ]
 
-{ #category : #composing }
+{ #category : 'composing' }
 TestSuite >> , aTestSuite [
 
 		^ TestSuite new
@@ -36,42 +39,28 @@ TestSuite >> , aTestSuite [
 			yourself
 ]
 
-{ #category : #dependencies }
-TestSuite >> addDependentToHierachy: anObject [
-	self addDependent: anObject.
-	self tests do: [ :each | each addDependentToHierachy: anObject]
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestSuite >> addTest: aTest [
 	self tests add: aTest
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestSuite >> addTests: aCollection [
 	aCollection do: [:eachTest | self addTest: eachTest]
 ]
 
-{ #category : #announcements }
+{ #category : 'announcements' }
 TestSuite >> announceTest: aTest [
 	^ self testSuiteAnnouncer announce: (TestAnnouncement with: aTest)
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TestSuite >> debug [
-	self setUp.
-	[
-		self tests do: [:each |
-					each debug.
-					self announceTest: each.
-					self changed: each.
-		]
-	] ensure:[
-		self tearDown.
-	]
+
+	self runWith: [ :test | test debug ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestSuite >> defaultResources [
 	^self tests
 		inject: OrderedCollection new
@@ -83,50 +72,51 @@ TestSuite >> defaultResources [
 			coll]
 ]
 
-{ #category : #accessing }
+{ #category : 'initialization' }
+TestSuite >> initialize [
+
+	super initialize.
+	randomGenerator := Random new
+]
+
+{ #category : 'accessing' }
 TestSuite >> name [
 
 	^name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestSuite >> name: aString [
 
 	name := aString
 ]
 
-{ #category : #dependencies }
-TestSuite >> removeDependentFromHierachy: anObject [
-	self removeDependent: anObject.
-	self tests do: [ :each | each removeDependentFromHierachy: anObject]
-]
-
-{ #category : #running }
+{ #category : 'running' }
 TestSuite >> resourceClass [
 
 	^ TestResource
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestSuite >> resources [
 
 	^ resources ifNil: [ resources := self defaultResources ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestSuite >> resources: someOrderedTestResourceClasses [
 	"The parameter should understand reverseDo: and should not contain duplicates."
 
 	resources := someOrderedTestResourceClasses
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TestSuite >> resultClass [
 
 	^ TestAsserter classForTestResult
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TestSuite >> run [
 	| result |
 	result := self resultClass new.
@@ -134,51 +124,71 @@ TestSuite >> run [
 	^result
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TestSuite >> run: aResult [
+
 	CurrentExecutionEnvironment runTestsBy: [
-		self runUnmanaged: aResult ]
+		self runWith: [ :test | test run: aResult ] ]
 ]
 
-{ #category : #running }
-TestSuite >> runUnmanaged: aResult [
+{ #category : 'running' }
+TestSuite >> runWith: aBlock [
 	self setUp.
-	[ self tests
+	[ self shuffledTests
 		do: [ :each |
-			each run: aResult.
+			aBlock value: each.
 			self announceTest: each.
 			self changed: each ] ]
 		ensure: [ self tearDown ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 TestSuite >> setUp [
 	self resources do: [:each |
 			each isAvailable ifFalse: [ each signalInitializationError ]]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
+TestSuite >> shuffleSeed [
+
+	^ randomGenerator seed
+]
+
+{ #category : 'running' }
+TestSuite >> shuffleSeed: aSeed [
+
+	randomGenerator := Random seed: aSeed
+]
+
+{ #category : 'running' }
+TestSuite >> shuffledTests [
+
+	^ self tests shuffledBy: randomGenerator
+]
+
+{ #category : 'running' }
 TestSuite >> tearDown [
 	self resourceClass resetResources: self resources
 ]
 
-{ #category : #announcements }
+{ #category : 'announcements' }
 TestSuite >> testSuiteAnnouncer [
 	^ announcer ifNil: [ announcer := Announcer new. ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestSuite >> tests [
 
 	^ tests ifNil: [ tests := OrderedCollection new ]
 ]
 
-{ #category : #announcements }
+{ #category : 'announcements' }
 TestSuite >> unsubscribe: anAnnouncementClass [
 	self testSuiteAnnouncer unsubscribe: anAnnouncementClass
 ]
 
-{ #category : #announcements }
-TestSuite >> when: aAnnouncement do: aBlock [
-	self testSuiteAnnouncer when: aAnnouncement do: aBlock
+{ #category : 'announcements' }
+TestSuite >> when: aAnnouncement do: aBlock for: aSubscriber [
+
+	self testSuiteAnnouncer when: aAnnouncement do: aBlock for: aSubscriber
 ]

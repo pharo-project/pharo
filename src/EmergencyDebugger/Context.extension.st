@@ -1,6 +1,6 @@
-Extension { #name : #Context }
+Extension { #name : 'Context' }
 
-{ #category : #'*EmergencyDebugger' }
+{ #category : '*EmergencyDebugger' }
 Context >> printWithArgsValueOn: aStream [
 	| keywords |
 	aStream << self method methodClass name.

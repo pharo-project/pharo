@@ -2,8 +2,8 @@
 Note that when shadowDrawing is true, shadowStipple may be either a color, for a solid shadow of the given color, or it may be a stipple used to simulate gray shading when the display cannot support alpha blending.
 "
 Class {
-	#name : #FormCanvas,
-	#superclass : #Canvas,
+	#name : 'FormCanvas',
+	#superclass : 'Canvas',
 	#instVars : [
 		'origin',
 		'clipRect',
@@ -16,10 +16,12 @@ Class {
 	#classVars : [
 		'TranslucentPatterns'
 	],
-	#category : #'FormCanvas-Core-Canvas'
+	#category : 'FormCanvas-Core-Canvas',
+	#package : 'FormCanvas-Core',
+	#tag : 'Canvas'
 }
 
-{ #category : #caching }
+{ #category : 'caching' }
 FormCanvas class >> defaultTranslucentPatterns [
 	| patterns |
 	patterns := Array new: 8.
@@ -57,19 +59,19 @@ FormCanvas class >> defaultTranslucentPatterns [
 	^ patterns
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FormCanvas class >> extent: aPoint [
 
-	^ self extent: aPoint depth: Display depth
+	^ self extent: aPoint depth: 32
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FormCanvas class >> extent: extent depth: depth [
 
 	^ self new setForm: (Form extent: extent depth: depth)
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FormCanvas class >> extent: extent depth: depth origin: aPoint clipRect: aRectangle [
 
 	^ self new
@@ -78,38 +80,38 @@ FormCanvas class >> extent: extent depth: depth origin: aPoint clipRect: aRectan
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FormCanvas class >> on: aForm [
 
 	^ self new setForm: aForm
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 FormCanvas class >> translucentPatterns [
 
 	^ TranslucentPatterns ifNil: [ TranslucentPatterns := self defaultTranslucentPatterns ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FormCanvas >> allocateForm: extentPoint [
 	"Allocate a new form which is similar to the receiver"
 	^form allocateForm: extentPoint
 ]
 
-{ #category : #'drawing - support' }
+{ #category : 'drawing - support' }
 FormCanvas >> clipBy: aRectangle during: aBlock [
 	"Set a clipping rectangle active only during the execution of aBlock.
 	Note: In the future we may want to have more general clip shapes - not just rectangles"
 	^aBlock value: (self copyClipRect: aRectangle)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FormCanvas >> clipRect [
 	"Return the currently active clipping rectangle"
 	^ clipRect translateBy: origin negated
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FormCanvas >> contentsOfArea: aRectangle into: aForm [
 	| bb |
 	self flush.
@@ -121,17 +123,17 @@ FormCanvas >> contentsOfArea: aRectangle into: aForm [
 	^aForm
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 FormCanvas >> copyClipRect: aRectangle [
 	^ self copyOrigin: origin clipRect: (aRectangle translateBy: origin)
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 FormCanvas >> copyOffset: aPoint [
 	^ self copyOrigin: origin + aPoint clipRect: clipRect
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 FormCanvas >> copyOffset: aPoint clipRect: sourceClip [
 	"Make a copy of me offset by aPoint, and further clipped
 	by sourceClip, a rectangle in the un-offset coordinates"
@@ -139,7 +141,7 @@ FormCanvas >> copyOffset: aPoint clipRect: sourceClip [
 		clipRect: ((sourceClip translateBy: origin) intersect: clipRect ifNone: [ 0@0 corner: 0@0 ])
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 FormCanvas >> copyOrigin: aPoint clipRect: aRectangle [
 	"Return a copy of this canvas with the given origin. The clipping rectangle of this canvas is the intersection of the given rectangle and the receiver's current clipping rectangle. This allows the clipping rectangles of nested clipping morphs to be composed."
 	^ self copy
@@ -147,13 +149,13 @@ FormCanvas >> copyOrigin: aPoint clipRect: aRectangle [
 		clipRect: (clipRect intersect: aRectangle ifNone: ["well, now we will clip everything" 0@0 corner: 0@0])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FormCanvas >> depth [
 
 	^ form depth
 ]
 
-{ #category : #'private - balloon engine' }
+{ #category : 'private - balloon engine' }
 FormCanvas >> drawOval: r color: c borderWidth: borderWidth borderColor: borderColor [
 	"Draw the oval defined by the given rectangle"
 
@@ -165,13 +167,13 @@ FormCanvas >> drawOval: r color: c borderWidth: borderWidth borderColor: borderC
 		transform: self transform
 ]
 
-{ #category : #'drawing - polygons' }
+{ #category : 'drawing - polygons' }
 FormCanvas >> drawPolygon: vertices color: aColor borderWidth: bw borderColor: bc [
 	"Generalize for the BalloonCanvas"
 	^self drawPolygon: vertices fillStyle: aColor borderWidth: bw borderColor: bc
 ]
 
-{ #category : #'drawing - polygons' }
+{ #category : 'drawing - polygons' }
 FormCanvas >> drawPolygon: vertices fillStyle: aFillStyle borderWidth: borderWidth borderColor: borderColor [
 
 	| canvasCopy |
@@ -184,7 +186,7 @@ FormCanvas >> drawPolygon: vertices fillStyle: aFillStyle borderWidth: borderWid
 		transform: self transform
 ]
 
-{ #category : #'private - balloon engine' }
+{ #category : 'private - balloon engine' }
 FormCanvas >> drawRectangle: r color: c borderWidth: borderWidth borderColor: borderColor [
 	"Draw a rectangle"
 
@@ -196,7 +198,7 @@ FormCanvas >> drawRectangle: r color: c borderWidth: borderWidth borderColor: bo
 		transform: self transform
 ]
 
-{ #category : #'drawing - text' }
+{ #category : 'drawing - text' }
 FormCanvas >> drawString: aString from: firstIndex to: lastIndex at: aPoint font: fontOrNil color: c [
 	| font |
 	port colorMap: nil.
@@ -209,9 +211,15 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex at: aPoint font
 		from: firstIndex to: lastIndex at: (origin + aPoint) kern: 0
 ]
 
-{ #category : #'drawing - text' }
+{ #category : 'drawing - text' }
 FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c [
-	| font portRect |
+
+	^ self drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c scale: 1
+]
+
+{ #category : 'scaled drawing' }
+FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c scale: scale [
+	| font portRect point |
 	port colorMap: nil.
 	portRect := port clipRect.
 	port clipByX1: bounds left + origin x
@@ -222,15 +230,24 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font
 	port combinationRule: Form paint.
 	font installOn: port
 		foregroundColor: c
-		backgroundColor: Color transparent.
+		backgroundColor: Color transparent
+		scale: scale.
+	point := bounds topLeft + origin.
 	font displayString: aString asString on: port
-		from: firstIndex to: lastIndex at: (bounds topLeft + origin) kern: 0.
+		from: firstIndex to: lastIndex at: point kern: 0
+		baselineY: point y + (font ascent * scale) scale: scale.
 	port clipRect: portRect
 ]
 
-{ #category : #'drawing - text' }
+{ #category : 'drawing - text' }
 FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc [
-	| font portRect endPoint |
+
+	^ self drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc scale: 1
+]
+
+{ #category : 'scaled drawing' }
+FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font: fontOrNil color: c underline: underline underlineColor: uc strikethrough: strikethrough strikethroughColor: sc scale: scale [
+	| font portRect endPoint point |
 	port colorMap: nil.
 	portRect := port clipRect.
 	port clipByX1: bounds left + origin x
@@ -241,26 +258,31 @@ FormCanvas >> drawString: aString from: firstIndex to: lastIndex in: bounds font
 	port combinationRule: Form paint.
 	font installOn: port
 		foregroundColor: c
-		backgroundColor: Color transparent.
+		backgroundColor: Color transparent
+		scale: scale.
+	point := bounds topLeft + origin.
 	endPoint := font displayString: aString asString on: port
-		from: firstIndex to: lastIndex at: (bounds topLeft + origin) kern: 0.
+		from: firstIndex to: lastIndex at: point kern: 0
+		baselineY: point y + (font ascent * scale) scale: scale.
 	underline ifTrue:[
 		font installOn: port
 			foregroundColor: uc
-			backgroundColor: Color transparent;
-			displayUnderlineOn: port from: (bounds topLeft + origin + (0@font ascent)) to: endPoint.
+			backgroundColor: Color transparent
+			scale: scale;
+			displayUnderlineOn: port from: (bounds topLeft + origin + (0@(font ascent * scale))) to: endPoint scale: scale.
 		].
 	strikethrough ifTrue: [
 		font installOn: port
-			foregroundColor: uc
-			backgroundColor: Color transparent;
-			displayStrikeoutOn: port from: (bounds topLeft + origin + (0@font ascent)) to: endPoint.
+			foregroundColor: sc
+			backgroundColor: Color transparent
+			scale: scale;
+			displayStrikeoutOn: port from: (bounds topLeft + origin + (0@(font ascent * scale))) to: endPoint scale: scale.
 	].
 
 	port clipRect: portRect
 ]
 
-{ #category : #'private - balloon engine' }
+{ #category : 'private - balloon engine' }
 FormCanvas >> ensuredEngine [
 	engine := BalloonEngine new.
 	engine aaLevel: 1.
@@ -274,20 +296,20 @@ FormCanvas >> ensuredEngine [
 	^engine
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FormCanvas >> extent [
 
 	^ form extent
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 FormCanvas >> fillColor: c [
 	"Note: This always fills, even if the color is transparent."
 	self setClearColor: c.
 	port fillRect: form boundingBox offset: origin
 ]
 
-{ #category : #'drawing - ovals' }
+{ #category : 'drawing - ovals' }
 FormCanvas >> fillOval: r color: fillColor borderWidth: borderWidth borderColor: borderColor [
 	| rect |
 	"draw the border of the oval"
@@ -303,7 +325,7 @@ FormCanvas >> fillOval: r color: fillColor borderWidth: borderWidth borderColor:
 		port fillOval: (rect insetBy: borderWidth)]
 ]
 
-{ #category : #'drawing - ovals' }
+{ #category : 'drawing - ovals' }
 FormCanvas >> fillOval: aRectangle fillStyle: aFillStyle borderWidth: bw borderColor: bc [
 	"Fill the given oval."
 
@@ -323,7 +345,7 @@ FormCanvas >> fillOval: aRectangle fillStyle: aFillStyle borderWidth: bw borderC
 			borderColor: bc
 ]
 
-{ #category : #'drawing - rectangles' }
+{ #category : 'drawing - rectangles' }
 FormCanvas >> fillRectangle: aRectangle basicFillStyle: aFillStyle [
 	"Fill the given rectangle with the given, non-composite, fill style."
 
@@ -350,31 +372,25 @@ FormCanvas >> fillRectangle: aRectangle basicFillStyle: aFillStyle [
 			borderColor: nil
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FormCanvas >> finish [
 	"If there are any pending operations on the receiver complete them. Do not return before all modifications have taken effect."
 	form finish
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 FormCanvas >> flush [
 	"Force all pending primitives onscreen"
 	engine ifNotNil:[engine flush]
 ]
 
-{ #category : #other }
-FormCanvas >> flushDisplay [
-
-	Display deferUpdates: false
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 FormCanvas >> form [
 
 	^ form
 ]
 
-{ #category : #'drawing - rectangles' }
+{ #category : 'drawing - rectangles' }
 FormCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth borderColor: borderColor [
 	| rect |
 	rect := r translateBy: origin.
@@ -393,7 +409,7 @@ FormCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderW
 		port fillRect: (rect insetBy: borderWidth) offset: origin]
 ]
 
-{ #category : #'drawing - rectangles' }
+{ #category : 'drawing - rectangles' }
 FormCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderWidth topLeftColor: topLeftColor bottomRightColor: bottomRightColor [
 
 	| w h rect |
@@ -415,21 +431,21 @@ FormCanvas >> frameAndFillRectangle: r fillColor: fillColor borderWidth: borderW
 			 frameRectBottom: rect height: h]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FormCanvas >> image: aForm at: aPoint sourceRect: sourceRect rule: rule [
 	"Draw the portion of the given Form defined by sourceRect at the given point using the given BitBlt combination rule."
 	port colorMap: (aForm colormapIfNeededFor: form); fillColor: nil.
 	port image: aForm at: aPoint + origin sourceRect: sourceRect rule: rule
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FormCanvas >> image: aForm at: aPoint sourceRect: sourceRect rule: rule alpha: sourceAlpha [
 	"Draw the portion of the given Form defined by sourceRect at the given point using the given BitBlt combination rule."
 	port colorMap: (aForm colormapIfNeededFor: form); fillColor: nil.
 	port image: aForm at: aPoint + origin sourceRect: sourceRect rule: rule alpha: sourceAlpha
 ]
 
-{ #category : #'drawing - rectangles' }
+{ #category : 'drawing - rectangles' }
 FormCanvas >> infiniteFillRectangle: aRectangle fillStyle: aFillStyle [
 
 	| additionalOffset rInPortTerms clippedPort targetTopLeft clipOffset ex |
@@ -449,7 +465,7 @@ FormCanvas >> infiniteFillRectangle: aRectangle fillStyle: aFillStyle [
 		offsetBy: additionalOffset
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 FormCanvas >> isVisible: aRectangle [
 	"Optimization"
 	(aRectangle right + origin x) < clipRect left	ifTrue: [^ false].
@@ -459,7 +475,7 @@ FormCanvas >> isVisible: aRectangle [
 	^ true
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 FormCanvas >> line: pt1 to: pt2 width: w color: c [
 	| offset |
 	offset := origin - (w // 2) asPoint.
@@ -468,24 +484,30 @@ FormCanvas >> line: pt1 to: pt2 width: w color: c [
 		drawFrom: (pt1 + offset) to: (pt2 + offset)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FormCanvas >> origin [
 	"Return the current origin for drawing operations"
 	^ origin
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 FormCanvas >> paragraph: para bounds: bounds color: c [
+
+	^ self paragraph: para bounds: bounds color: c scale: 1
+]
+
+{ #category : 'scaled drawing' }
+FormCanvas >> paragraph: para bounds: bounds color: c scale: scale [
 
 	| scanner |
 	self setPaintColor: c.
 	scanner := (port clippedBy: (bounds translateBy: origin)) displayScannerFor: para
-		foreground: c background: Color transparent
-		ignoreColorChanges: false.
+		foreground: c.
+	scanner scale: scale.
 	para displayOn: (self copyClipRect: bounds) using: scanner at: origin+ bounds topLeft
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 FormCanvas >> postCopy [
 	"The copy share same underlying Form but with its own grafPort."
 
@@ -495,42 +517,25 @@ FormCanvas >> postCopy [
 	self resetEngine
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FormCanvas >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPutAll:' on: '; print: form
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FormCanvas >> privateClipRect [
 
 	^clipRect
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FormCanvas >> privatePort [
 
 	^port
 ]
 
-{ #category : #private }
-FormCanvas >> privateWarp: aForm transform: aTransform at: extraOffset sourceRect: sourceRect cellSize: cellSize [
-	"Warp the given using the appropriate transform and offset."
-	| globalRect sourceQuad warp tfm |
-	tfm := aTransform.
-	globalRect := tfm localBoundsToGlobal: sourceRect.
-	sourceQuad := (tfm sourceQuadFor: globalRect) collect: [:p| p - sourceRect topLeft].
-	extraOffset ifNotNil:[globalRect := globalRect translateBy: extraOffset].
-     warp := (WarpBlt toForm: port destForm)
-                combinationRule: Form paint;
-                sourceQuad: sourceQuad destRect: (globalRect origin corner: globalRect corner+(1@1));
-                clipRect: port clipRect.
-	warp cellSize: cellSize.
-	warp sourceForm: aForm.
-	warp warpBits
-]
-
-{ #category : #initialization }
+{ #category : 'initialization' }
 FormCanvas >> reset [
 
 	origin := 0@0.							"origin of the top-left corner of this cavas"
@@ -538,12 +543,12 @@ FormCanvas >> reset [
 	self shadowColor: nil
 ]
 
-{ #category : #'private - balloon engine' }
+{ #category : 'private - balloon engine' }
 FormCanvas >> resetEngine [
 	engine := nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FormCanvas >> resetGrafPort [
 	"Private! Create a new grafPort for a new copy."
 
@@ -551,7 +556,13 @@ FormCanvas >> resetGrafPort [
 	port clipRect: clipRect
 ]
 
-{ #category : #private }
+{ #category : 'accessing' }
+FormCanvas >> scale [
+
+	^ 1
+]
+
+{ #category : 'private' }
 FormCanvas >> setClearColor: aColor [
 	"Install a new clear color - e.g., a color is used for clearing the background"
 	| clearColor |
@@ -568,7 +579,7 @@ FormCanvas >> setClearColor: aColor [
 		port fillColor: (form balancedPatternFor: clearColor)]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FormCanvas >> setFillColor: aColor [
 	"Install a new color used for filling."
 	| screen patternWord fillColor |
@@ -602,7 +613,7 @@ FormCanvas >> setFillColor: aColor [
 	port combinationRule: Form paint
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FormCanvas >> setForm: aForm [
 
 	self reset.
@@ -610,7 +621,7 @@ FormCanvas >> setForm: aForm [
 	port := GrafPort toForm: form
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FormCanvas >> setOrigin: aPoint clipRect: aRectangle [
 
 	origin := aPoint.
@@ -618,7 +629,7 @@ FormCanvas >> setOrigin: aPoint clipRect: aRectangle [
 	port clipRect: aRectangle
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FormCanvas >> setPaintColor: aColor [
 	"Install a new color used for filling."
 
@@ -654,26 +665,7 @@ FormCanvas >> setPaintColor: aColor [
 	port combinationRule: Form paint
 ]
 
-{ #category : #other }
-FormCanvas >> showAt: pt [
-
-	^ form displayAt: pt
-]
-
-{ #category : #other }
-FormCanvas >> showAt: pt invalidRects: updateRects [
-	| blt |
-	blt := (BitBlt toForm: Display)
-			sourceForm: form;
-			combinationRule: Form over.
-	updateRects do:
-		[:rect |
-		blt sourceRect: rect;
-			destOrigin: rect topLeft + pt;
-			copyBits]
-]
-
-{ #category : #'drawing - images' }
+{ #category : 'drawing - images' }
 FormCanvas >> stencil: stencilForm at: aPoint sourceRect: sourceRect color: aColor [
 	"Flood this canvas with aColor wherever stencilForm has non-zero pixels"
 	self setPaintColor: aColor.
@@ -683,13 +675,13 @@ FormCanvas >> stencil: stencilForm at: aPoint sourceRect: sourceRect color: aCol
 		sourceRect: sourceRect
 ]
 
-{ #category : #'private - balloon engine' }
+{ #category : 'private - balloon engine' }
 FormCanvas >> transform [
 
 	^ (transform ifNil: [MatrixTransform2x3 identity])
 ]
 
-{ #category : #'drawing - support' }
+{ #category : 'drawing - support' }
 FormCanvas >> transformBy: aDisplayTransform clippingTo: aClipRect during: aBlock	 smoothing: cellSize [
 
 	"Note: This method has been originally copied from TransformationMorph."
@@ -711,7 +703,7 @@ FormCanvas >> transformBy: aDisplayTransform clippingTo: aClipRect during: aBloc
 		"If this is true B&W, then we need a first pass for erasure."
 		ifTrue: [1] ifFalse: [2].
 	"If my depth has alpha, do blending rather than paint"
-	rule := self depth = 32 ifTrue: [Form blend] ifFalse: [Form paint].
+	rule := self depth = 32 ifTrue: [Form blendAlphaScaled] ifFalse: [Form paint].
 	start to: 2 do:
 		[:i | "If i=1 we first make a shadow and erase it for opaque whites in B&W"
 		subCanvas := self class extent: patchRect extent depth: self depth.
@@ -723,41 +715,33 @@ FormCanvas >> transformBy: aDisplayTransform clippingTo: aClipRect during: aBloc
 		warp sourceForm: nil.  subCanvas := nil "release space for next loop"]
 ]
 
-{ #category : #'drawing - support' }
+{ #category : 'drawing - support' }
 FormCanvas >> translateBy: delta during: aBlock [
 	"Set a translation only during the execution of aBlock."
 	^aBlock value: (self copyOffset: delta)
 ]
 
-{ #category : #'drawing - support' }
+{ #category : 'drawing - support' }
 FormCanvas >> translateTo: newOrigin clippingTo: aRectangle during: aBlock [
 	"Set a new origin and clipping rectangle only during the execution of aBlock."
 	aBlock value: (self copyOrigin: newOrigin clipRect: aRectangle)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FormCanvas >> translucentMaskFor: alphaValue depth: d [
 	"Return a pattern representing a mask usable for stipple transparency"
 	^(self translucentPatterns at: d) at: ((alphaValue min: 1.0 max: 0.0) * 4) rounded + 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FormCanvas >> translucentPatterns [
 	^ self class translucentPatterns
 ]
 
-{ #category : #other }
+{ #category : 'other' }
 FormCanvas >> warpFrom: sourceQuad toRect: destRect [
 	^ (WarpBlt toForm: port destForm)
 		combinationRule: Form paint;
 		sourceQuad: sourceQuad destRect: (destRect translateBy: origin);
 		clipRect: clipRect
-]
-
-{ #category : #'drawing - images' }
-FormCanvas >> warpImage: aForm transform: aTransform at: extraOffset sourceRect: sourceRect cellSize: cellSize [
-	"Warp the given using the appropriate transform and offset."
-	| tfm |
-	tfm := (MatrixTransform2x3 withOffset: origin) composedWithLocal: aTransform.
-	^self privateWarp: aForm transform: tfm at: extraOffset sourceRect: sourceRect cellSize: cellSize
 ]

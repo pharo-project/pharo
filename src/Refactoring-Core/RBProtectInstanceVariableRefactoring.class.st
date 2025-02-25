@@ -5,12 +5,20 @@ If a class defines methods for reading and writing instance variables, they are 
 Omit method that are redefined in subclasses.
 "
 Class {
-	#name : #RBProtectInstanceVariableRefactoring,
-	#superclass : #RBVariableRefactoring,
-	#category : #'Refactoring-Core-Refactorings'
+	#name : 'RBProtectInstanceVariableRefactoring',
+	#superclass : 'RBVariableRefactoring',
+	#category : 'Refactoring-Core-Refactorings',
+	#package : 'Refactoring-Core',
+	#tag : 'Refactorings'
 }
 
-{ #category : #'private - accessing' }
+{ #category : 'preconditions' }
+RBProtectInstanceVariableRefactoring >> applicabilityPreconditions [
+
+	^ { (RBCondition definesInstanceVariable: variableName in: class) }
+]
+
+{ #category : 'private - accessing' }
 RBProtectInstanceVariableRefactoring >> getterSetterMethods [
 	| matcher |
 	matcher := self parseTreeSearcher.
@@ -31,23 +39,18 @@ RBProtectInstanceVariableRefactoring >> getterSetterMethods [
 	^ matcher answer
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 RBProtectInstanceVariableRefactoring >> inline: aSelector [
 	self onError:
-			[self performCompositeRefactoring: (RBInlineAllSendersRefactoring
+			[self generateChangesFor: (RBInlineAllSendersRefactoring
 						model: self model
 						sendersOf: aSelector
 						in: class)]
 		do: []
 ]
 
-{ #category : #preconditions }
-RBProtectInstanceVariableRefactoring >> preconditions [
-	^RBCondition definesInstanceVariable: variableName in: class
-]
-
-{ #category : #transforming }
-RBProtectInstanceVariableRefactoring >> transform [
-	self setOption: #inlineExpression toUse: [:ref :string | true].
+{ #category : 'transforming' }
+RBProtectInstanceVariableRefactoring >> privateTransform [
+	self setOption: #shouldNotCreateExtraBindings toUse: [:ref :string | true].
 	self getterSetterMethods do: [:each | self inline: each]
 ]

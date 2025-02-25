@@ -1,15 +1,16 @@
 Class {
-	#name : #ClyExpectedFailureMethodGroupProviderTest,
-	#superclass : #ClyMethodGroupProviderTest,
-	#category : #'Calypso-SystemPlugins-SUnit-Queries-Tests'
+	#name : 'ClyExpectedFailureMethodGroupProviderTest',
+	#superclass : 'ClyMethodGroupProviderTest',
+	#category : 'Calypso-SystemPlugins-SUnit-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-SUnit-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyExpectedFailureMethodGroupProviderTest >> classSampleWhichHasGroup [
 	^ClyTestedClassMockTest
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyExpectedFailureMethodGroupProviderTest >> groupProviderClass [
 	^ClyExpectedFailureMethodGroupProvider
 ]

@@ -1,24 +1,25 @@
 Class {
-	#name : #ClyItemGroupProviderTest,
-	#superclass : #ClyAbstractNavigationEnvironmentTest,
+	#name : 'ClyItemGroupProviderTest',
+	#superclass : 'ClyAbstractNavigationEnvironmentTest',
 	#instVars : [
 		'groupProvider',
 		'builtGroups'
 	],
-	#category : #'Calypso-NavigationModel-Tests'
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyItemGroupProviderTest class >> isAbstract [
 	^self == ClyItemGroupProviderTest
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyItemGroupProviderTest >> groupProviderClass [
 	self subclassResponsibility
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyItemGroupProviderTest >> setUp [
 	super setUp.
 	groupProvider := self groupProviderClass new.

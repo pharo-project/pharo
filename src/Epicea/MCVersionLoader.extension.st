@@ -1,12 +1,12 @@
-Extension { #name : #MCVersionLoader }
+Extension { #name : 'MCVersionLoader' }
 
-{ #category : #'*Epicea-Triggering' }
+{ #category : '*Epicea-Triggering' }
 MCVersionLoader >> asEpiceaEvent [
 
 	^ EpMonticelloVersionsLoad versions: versions
 ]
 
-{ #category : #'*Epicea-Triggering' }
+{ #category : '*Epicea-Triggering' }
 MCVersionLoader >> isEpiceaInterestingJobOwner [
 
 	^ true

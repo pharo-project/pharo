@@ -1,27 +1,29 @@
 Class {
-	#name : #BaselineOfRefactoring,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfRefactoring
+	#name : 'BaselineOfRefactoring',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfRefactoring',
+	#package : 'BaselineOfRefactoring'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfRefactoring >> baseline: spec [
-	<baseline>
-	spec for: #'common' do: [
-		spec 
-			package: 'SUnit-Rules';
-			package: 'Kernel-Tests-Rules';
-			package: 'Polymorph-Widgets-Rules';
-			package: 'System-Settings-Rules';
-			package: 'GeneralRules';
-			package: 'Rubric-Rules';
 
-			package: 'Refactoring-Tests-Core';
-			package: 'Refactoring-Tests-Changes';
-			package: 'Refactoring-Tests-Critics';
-			package: 'Refactoring-Tests-Environment'.
-		spec 
-			group: 'Rules' with: #('SUnit-Rules' 'Kernel-Tests-Rules' 'Polymorph-Widgets-Rules' 'System-Settings-Rules' 'GeneralRules' 'Rubric-Rules');
-			group: 'Tests' with: #('Refactoring-Tests-Core' 'Refactoring-Tests-Changes' 'Refactoring-Tests-Critics' 'Refactoring-Tests-Environment');
-			group: 'default' with: #('Rules' 'Tests') ]
+	<baseline>
+	spec
+		package: 'Refactoring-Environment';
+		package: 'Refactoring-Changes' with: [ spec requires: #( 'Refactoring-Environment' ) ];
+		package: 'Refactoring-Core' with: [ spec requires: #( 'Refactoring-Changes' ) ];
+		package: 'Refactoring-Transformations' with: [ spec requires: #( 'Refactoring-Core' ) ];
+		package: 'Refactoring-UI' with: [ spec requires: #( 'Refactoring-Transformations' ) ];
+		package: 'Refactoring-DataForTesting';
+		package: 'Refactoring-UI-Tests' with: [ spec requires: #( 'Refactoring-DataForTesting' ) ];
+		package: 'Refactoring-Core-Tests' with: [ spec requires: #( 'Refactoring-Core' ) ];
+		package: 'Refactoring-Changes-Tests' with: [ spec requires: #( 'Refactoring-Changes' ) ];
+		package: 'Refactoring-Critics-Tests';
+		package: 'Refactoring-Environment-Tests' with: [ spec requires: #( 'Refactoring-Environment' ) ];
+		package: 'Refactoring-Transformations-Tests' with: [ spec requires: #( 'Refactoring-Transformations' ) ];
+		group: 'Core' with: #( 'Refactoring-Changes' 'Refactoring-Core' 'Refactoring-UI' 'Refactoring-Environment' 'Refactoring-Transformations' );
+		group: 'Tests'
+		with: #( 'Refactoring-Core-Tests' 'Refactoring-Changes-Tests' 'Refactoring-Critics-Tests' 'Refactoring-Environment-Tests' 'Refactoring-UI-Tests'
+			   'Refactoring-Transformations-Tests' )
 ]

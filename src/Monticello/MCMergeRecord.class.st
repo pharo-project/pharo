@@ -2,8 +2,8 @@
 A record for merging
 "
 Class {
-	#name : #MCMergeRecord,
-	#superclass : #Object,
+	#name : 'MCMergeRecord',
+	#superclass : 'Object',
 	#instVars : [
 		'version',
 		'packageSnapshot',
@@ -12,25 +12,27 @@ Class {
 		'imagePatch',
 		'mergePatch'
 	],
-	#category : #'Monticello-Versioning'
+	#category : 'Monticello-Versioning',
+	#package : 'Monticello',
+	#tag : 'Versioning'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MCMergeRecord class >> version: aVersion [
 	^ self basicNew initializeWithVersion: aVersion
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMergeRecord >> ancestorInfo [
 	^ ancestorInfo ifNil: [ancestorInfo := version info commonAncestorWith: version workingCopy ancestry]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMergeRecord >> ancestorSnapshot [
 	^ ancestorSnapshot ifNil: [ancestorSnapshot := version workingCopy findSnapshotWithVersionInfo: self ancestorInfo]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCMergeRecord >> imageIsClean [
 	| ancestors |
 	ancestors := version workingCopy ancestors.
@@ -39,32 +41,32 @@ MCMergeRecord >> imageIsClean [
 				and: [self imagePatch isEmpty]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMergeRecord >> imagePatch [
 	^ imagePatch ifNil: [imagePatch := self packageSnapshot patchRelativeToBase: self ancestorSnapshot]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MCMergeRecord >> initializeWithVersion: aVersion [
 	version := aVersion
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MCMergeRecord >> isAncestorMerge [
 	^ version workingCopy ancestry hasAncestor: version info
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMergeRecord >> mergePatch [
 	^ mergePatch ifNil: [mergePatch := version snapshot patchRelativeToBase: self ancestorSnapshot]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMergeRecord >> packageSnapshot [
 	^ packageSnapshot ifNil: [packageSnapshot := version package snapshot]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 MCMergeRecord >> updateWorkingCopy [
 	self isAncestorMerge ifFalse:
 		[self imageIsClean
@@ -72,7 +74,7 @@ MCMergeRecord >> updateWorkingCopy [
 			ifFalse: [version workingCopy merged: version]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCMergeRecord >> version [
 	^ version
 ]

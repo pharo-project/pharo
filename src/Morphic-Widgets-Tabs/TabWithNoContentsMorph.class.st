@@ -2,15 +2,17 @@
 Error raised when a tab is asked its contents but have no morph and no retrieving block, or the retrieving block is returning nil.
 "
 Class {
-	#name : #TabWithNoContentsMorph,
-	#superclass : #Error,
+	#name : 'TabWithNoContentsMorph',
+	#superclass : 'Error',
 	#instVars : [
 		'tab'
 	],
-	#category : #'Morphic-Widgets-Tabs-Support'
+	#category : 'Morphic-Widgets-Tabs-Support',
+	#package : 'Morphic-Widgets-Tabs',
+	#tag : 'Support'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TabWithNoContentsMorph class >> signalTab: aTab [
 
 	^ self new
@@ -18,12 +20,12 @@ TabWithNoContentsMorph class >> signalTab: aTab [
 		signal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabWithNoContentsMorph >> tab [
 	^tab
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TabWithNoContentsMorph >> tab: aTab [
 
 	tab := aTab

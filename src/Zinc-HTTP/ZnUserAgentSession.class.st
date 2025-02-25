@@ -8,72 +8,74 @@ Obviously, care should be taken when sharing or reusing my contents.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnUserAgentSession,
-	#superclass : #Object,
+	#name : 'ZnUserAgentSession',
+	#superclass : 'Object',
 	#instVars : [
 		'cookiejar',
 		'credentials',
 		'currentRealm'
 	],
-	#category : #'Zinc-HTTP-Support'
+	#category : 'Zinc-HTTP-Support',
+	#package : 'Zinc-HTTP',
+	#tag : 'Support'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ZnUserAgentSession class >> withCookieJar: aCookieJar [
 	^ self new cookiejar: aCookieJar; yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUserAgentSession >> addCredential: aCredential [
 	self credentials at: aCredential domain, '@', aCredential realm put: aCredential
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUserAgentSession >> cookieJar [
 	^ cookiejar ifNil: [ cookiejar := ZnCookieJar new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUserAgentSession >> cookiejar: anObject [
 	cookiejar := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUserAgentSession >> credentialAt: aRealm forUrl: urlObject [
 	^ self credentials at: urlObject authority, '@', aRealm ifAbsent: [ nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUserAgentSession >> credentials [
 	^ credentials ifNil: [ credentials := Dictionary new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUserAgentSession >> credentials: anObject [
 	credentials := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUserAgentSession >> credentialsForUrl: urlObject [
 	^ self credentials values select: [ :cred | urlObject authority includesSubstring: (cred domain) ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUserAgentSession >> currentRealm [
 	^ currentRealm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnUserAgentSession >> currentRealm: anObject [
 	currentRealm := anObject
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnUserAgentSession >> resetCookies [
 	cookiejar ifNotNil: [ cookiejar removeAll ]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnUserAgentSession >> resetCredentials [
 	credentials ifNotNil: [ credentials removeAll ]
 ]

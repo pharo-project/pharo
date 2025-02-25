@@ -1,40 +1,41 @@
 Class {
-	#name : #ClyUnknownQueryTest,
-	#superclass : #ClyQueryTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClyUnknownQueryTest',
+	#superclass : 'ClyQueryTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyUnknownQueryTest >> createQuery [
 	^ClyUnknownQuery new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyUnknownQueryTest >> setUp [
 	super setUp.
 	"Unknown query is always bound to unknown scope which have no environment"
 	environment := nil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnknownQueryTest >> testCheckIfEmpty [
 
 	self assert: query hasEmptyResult.
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnknownQueryTest >> testCreationUnifiedInstance [
 	self assert: query asUnifiedInstance identicalTo: query
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnknownQueryTest >> testDoesNotExecuteAnyQuery [
 
 	self deny: (query executesQuery: #any)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnknownQueryTest >> testExecution [
 	self executeQuery.
 
@@ -42,19 +43,19 @@ ClyUnknownQueryTest >> testExecution [
 	self assert: resultItems equals: #()
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnknownQueryTest >> testGettingSingletonInstanceFromScratch [
 	ClyUnknownQuery reset.
 
 	self assert: ClyUnknownQuery instance identicalTo: ClyUnknownQuery instance
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnknownQueryTest >> testHasUnknownResultInstance [
 	self assert: query requiredResult identicalTo: ClyUnknownQueryResult instance
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnknownQueryTest >> testIsBoundToEnvironmentWhenScopeIs [
 	<expectedFailure>
 	"Unknown query is never bound to the environment"

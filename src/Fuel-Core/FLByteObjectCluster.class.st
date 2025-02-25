@@ -2,12 +2,14 @@
 I am the generic cluster for storing and loading variable byte objects.
 "
 Class {
-	#name : #FLByteObjectCluster,
-	#superclass : #FLBitsObjectCluster,
-	#category : #'Fuel-Core-Clusters'
+	#name : 'FLByteObjectCluster',
+	#superclass : 'FLBitsObjectCluster',
+	#category : 'Fuel-Core-Clusters',
+	#package : 'Fuel-Core',
+	#tag : 'Clusters'
 }
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLByteObjectCluster >> materializeInstanceWith: aDecoder [
 	| instance size |
 	size := aDecoder nextEncodedUint32.
@@ -16,7 +18,7 @@ FLByteObjectCluster >> materializeInstanceWith: aDecoder [
 	^ instance
 ]
 
-{ #category : #'serialize/materialize' }
+{ #category : 'serialize/materialize' }
 FLByteObjectCluster >> serializeInstance: anObject with: anEncoder [
 	anEncoder
 		encodeUint32: anObject basicSize;

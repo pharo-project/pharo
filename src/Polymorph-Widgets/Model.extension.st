@@ -1,6 +1,6 @@
-Extension { #name : #Model }
+Extension { #name : 'Model' }
 
-{ #category : #'*Polymorph-Widgets' }
+{ #category : '*Polymorph-Widgets' }
 Model >> theme [
 	^ self class theme
 ]

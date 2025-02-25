@@ -5,53 +5,61 @@ I hold timing information related to the handling of an HTTP transaction by a se
 
 "
 Class {
-	#name : #ZnServerTransactionTiming,
-	#superclass : #Object,
+	#name : 'ZnServerTransactionTiming',
+	#superclass : 'Object',
 	#instVars : [
 		'requestDuration',
 		'handlerDuration',
 		'responseDuration'
 	],
-	#category : #'Zinc-HTTP-Logging'
+	#category : 'Zinc-HTTP-Logging',
+	#package : 'Zinc-HTTP',
+	#tag : 'Logging'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerTransactionTiming >> handlerDuration [
 	^ handlerDuration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerTransactionTiming >> handlerDuration: anObject [
 	handlerDuration := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ZnServerTransactionTiming >> initialize [
 	super initialize.
 	requestDuration := handlerDuration := responseDuration := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'printing' }
+ZnServerTransactionTiming >> printOn: stream [
+	super printOn: stream.
+	stream nextPut: $(; print: self totalDuration; nextPut: $)
+]
+
+{ #category : 'accessing' }
 ZnServerTransactionTiming >> requestDuration [
 	^ requestDuration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerTransactionTiming >> requestDuration: anObject [
 	requestDuration := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerTransactionTiming >> responseDuration [
 	^ responseDuration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerTransactionTiming >> responseDuration: anObject [
 	responseDuration := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnServerTransactionTiming >> totalDuration [
 	"requestDuration is unreliable because it contains idle wait time"
 

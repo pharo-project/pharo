@@ -2,12 +2,14 @@
 Same as the superclass but also saves the banned rule with a setting
 "
 Class {
-	#name : #RePersistentImageRuleBaner,
-	#superclass : #ReImageRuleBaner,
-	#category : #'Renraku-Utility'
+	#name : 'RePersistentImageRuleBaner',
+	#superclass : 'ReImageRuleBaner',
+	#category : 'Renraku-Utility',
+	#package : 'Renraku',
+	#tag : 'Utility'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 RePersistentImageRuleBaner class >> ban: aCritique [
 
 	super ban: aCritique.
@@ -18,7 +20,7 @@ RePersistentImageRuleBaner class >> ban: aCritique [
 		"printString to ensure symbol hash"
 ]
 
-{ #category : #properties }
+{ #category : 'properties' }
 RePersistentImageRuleBaner class >> reBanName [
 
 	^ super reBanName, ' and future images'

@@ -1,6 +1,6 @@
-Extension { #name : #ParagraphSelectionBlock }
+Extension { #name : 'ParagraphSelectionBlock' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 ParagraphSelectionBlock >> displayInLine: line onAthensCanvas: anAthensCanvas [
 	"Display myself in the passed line."
 

@@ -3,22 +3,24 @@ I am class which provides a convenient interface to work with arrays which eleme
 This class uses double dispatch to solve #at: and #at:put: methods, if you need to achieve speed, is recommendable to subclass me and override this methods to avoid the indirection.
 "
 Class {
-	#name : #FFIExternalArray,
-	#superclass : #ArrayedCollection,
+	#name : 'FFIExternalArray',
+	#superclass : 'ArrayedCollection',
 	#instVars : [
 		'handle',
 		'type',
 		'size'
 	],
-	#category : #'UnifiedFFI-Deprecated'
+	#category : 'UnifiedFFI-Deprecated',
+	#package : 'UnifiedFFI',
+	#tag : 'Deprecated'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFIExternalArray class >> asExternalTypeOn: generator [
 	^ FFIExternalArrayType objectClass: self
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIExternalArray class >> externalNewType: aType size: aNumber [
 	"Create a new array in the C heap.
 	 This array needs to be disposed (using #free method)"
@@ -27,7 +29,7 @@ FFIExternalArray class >> externalNewType: aType size: aNumber [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIExternalArray class >> fromHandle: aHandle type: aType [
 	"Instantiating a handle as an array.
 	 USE THIS WITH EXTREMELY CAUTION: You could have an overflow very easily, because you are
@@ -36,7 +38,7 @@ FFIExternalArray class >> fromHandle: aHandle type: aType [
 	^ self fromHandle: aHandle type: aType size: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIExternalArray class >> fromHandle: aHandle type: aType size: aNumber [
 	"aHandle is the address to an array already existing.
 	 For example, C:
@@ -49,7 +51,7 @@ FFIExternalArray class >> fromHandle: aHandle type: aType size: aNumber [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIExternalArray class >> fromPointer: aHandle type: aType [
 	"Instantiating a pointer as an array is usefull, but then you do not have the size.
 	 USE THIS WITH EXTREMELY CAUTION: You could have an overflow very easily.
@@ -57,7 +59,7 @@ FFIExternalArray class >> fromPointer: aHandle type: aType [
 	^ self fromPointer: aHandle type: aType size: nil
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIExternalArray class >> fromPointer: aHandle type: aType size: aNumber [
 	"Creates an array of type aType and size aNumber.
 	 aHandle is A REFERENCE an array already existing.
@@ -70,12 +72,12 @@ FFIExternalArray class >> fromPointer: aHandle type: aType size: aNumber [
 	^ self fromHandle: (aHandle pointerAt: 1) type: aType size: aNumber
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIExternalArray class >> new [
 	self error: 'should not create external arrays like this'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIExternalArray class >> newType: aType size: aNumber [
 	"Create a new array using internal memory."
 	^ self basicNew
@@ -83,14 +85,14 @@ FFIExternalArray class >> newType: aType size: aNumber [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIExternalArray class >> resolveType: aType [
 	 ^ FFICallout new
 		requestor: self;
 		resolveType: aType
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFIExternalArray >> asArray [
 	| array |
 
@@ -100,14 +102,14 @@ FFIExternalArray >> asArray [
 	^ array
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalArray >> at: index [
 	^ type
 		handle: handle
 		at: ((index - 1) * type typeSize) + 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalArray >> at: index put: anObject [
 	^ type
 		handle: handle
@@ -115,13 +117,13 @@ FFIExternalArray >> at: index put: anObject [
 		put: anObject
 ]
 
-{ #category : #'external resource management' }
+{ #category : 'external resource management' }
 FFIExternalArray >> autoRelease [
 	(handle isNil or: [ handle isExternalAddress not ]) ifFalse: [ ^ self ].
 	handle autoRelease
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 FFIExternalArray >> free [
 	handle ifNil: [ ^ self ].
 	handle isExternalAddress
@@ -129,14 +131,14 @@ FFIExternalArray >> free [
 		ifFalse: [ handle := nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalArray >> getHandle [
 	self flag: #pharoTodo. "I do not like the name 'getHandle' but I'm looking to unify the
 	API with FFI"
 	^ handle
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIExternalArray >> initializeExternalType: aType size: aNumber [
 	self
 		initializeType: aType
@@ -144,7 +146,7 @@ FFIExternalArray >> initializeExternalType: aType size: aNumber [
 		handleProducer: [ :totalSize | ExternalAddress allocate: (type typeSize * size) ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIExternalArray >> initializeHandle: aHandle type: aType size: aNumber [
 	self
 		initializeType: aType
@@ -152,7 +154,7 @@ FFIExternalArray >> initializeHandle: aHandle type: aType size: aNumber [
 		handleProducer: [ :totalSize | aHandle ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIExternalArray >> initializeType: aType size: aNumber [
 	self
 		initializeType: aType
@@ -160,7 +162,7 @@ FFIExternalArray >> initializeType: aType size: aNumber [
 		handleProducer: [ :totalSize | ByteArray new: totalSize ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIExternalArray >> initializeType: aType size: aNumber handleProducer: aBlock [
 	type := aType.
 	size := aNumber.
@@ -171,7 +173,7 @@ FFIExternalArray >> initializeType: aType size: aNumber handleProducer: aBlock [
 	self initialize
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFIExternalArray >> pointer [
 	"Answers a pointer to this array.
 	 This is useful when translating an array pointer to a function (FFI requires to be passed as a
@@ -186,34 +188,34 @@ FFIExternalArray >> pointer [
 	^ self getHandle pointer
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFIExternalArray >> pointerAutoRelease [
 	"Same as #pointer (see its comment for detals), but contents are garbage collected automatically"
 	^ self pointer autoRelease
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FFIExternalArray >> size [
 	^ size
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFIExternalArray >> tfPointerAddress [
 
 	^ handle tfPointerAddress
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalArray >> type [
 	^ type
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalArray >> typeAlignment [
 	^ self type typeAlignment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FFIExternalArray >> typeSize [
 	^ self type typeSize
 ]

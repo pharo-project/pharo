@@ -6,162 +6,164 @@ Instance variables:
 	source	<Hand | nil>	If non-nil the hand that generated the event.
 "
 Class {
-	#name : #MorphicEvent,
-	#superclass : #Object,
+	#name : 'MorphicEvent',
+	#superclass : 'Object',
 	#instVars : [
 		'timeStamp',
 		'source',
 		'windowIndex'
 	],
-	#category : #'Morphic-Core-Events'
+	#category : 'Morphic-Core-Events',
+	#package : 'Morphic-Core',
+	#tag : 'Events'
 }
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MorphicEvent >> = anEvent [
 	anEvent isMorphicEvent ifFalse:[^false].
 	^self type = anEvent type
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 MorphicEvent >> copyHandlerState: anEvent [
 	"Copy the handler state from anEvent. Used for quickly transferring handler information between transformed events."
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphicEvent >> cursorPoint [
 	"Backward compatibility. Use #position instead"
 	^ self position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphicEvent >> hand [
 	"Return the source that generated the event"
 	^source
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 MorphicEvent >> hash [
 	^self type hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MorphicEvent >> isDraggingEvent [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MorphicEvent >> isDropEvent [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MorphicEvent >> isKeyboard [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MorphicEvent >> isKeystroke [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MorphicEvent >> isMorphicEvent [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MorphicEvent >> isMouse [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MorphicEvent >> isMouseOver [
 	^self type == #mouseOver
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MorphicEvent >> isMove [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MorphicEvent >> isTextEditionEvent [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MorphicEvent >> isTextInputEvent [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MorphicEvent >> isWindowEvent [
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphicEvent >> position [
 	"Since cursorPoint is defined and refers to position it should be defined
 	here as well"
 	^ self subclassResponsibility
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 MorphicEvent >> resetHandlerFields [
 	"Reset anything that is used to cross-communicate between two eventual handlers during event dispatch"
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 MorphicEvent >> sentTo: anObject [
 	"Dispatch the receiver into anObject"
 	^anObject handleUnknownEvent: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MorphicEvent >> setHand: aHand [
 	source := aHand
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MorphicEvent >> setTimeStamp: stamp [
 	timeStamp := stamp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphicEvent >> timeStamp [
 	"Return the millisecond clock value at which the event was generated"
 	^timeStamp ifNil:[timeStamp := Time millisecondClockValue]
 ]
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 MorphicEvent >> transformedBy: aMorphicTransform [
 	"Return the receiver transformed by the given transform into a local coordinate system."
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphicEvent >> type [
 	"Return a symbol indicating the type this event."
 	^self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphicEvent >> wasHandled [
 	"Return true if this event was handled. May be ignored for some types of events."
 	^false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphicEvent >> wasHandled: aBool [
 	"Determine if this event was handled. May be ignored for some types of events."
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphicEvent >> windowIndex [
 	^windowIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MorphicEvent >> windowIndex: aValue [
 	windowIndex := aValue
 ]

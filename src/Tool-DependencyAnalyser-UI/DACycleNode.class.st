@@ -2,41 +2,29 @@
 A PDCycleNode is used to display a cycle in a tree.
 "
 Class {
-	#name : #DACycleNode,
-	#superclass : #DANode,
-	#category : #'Tool-DependencyAnalyser-UI-Nodes'
+	#name : 'DACycleNode',
+	#superclass : 'DANode',
+	#category : 'Tool-DependencyAnalyser-UI-Nodes',
+	#package : 'Tool-DependencyAnalyser-UI',
+	#tag : 'Nodes'
 }
 
-{ #category : #'building-menu' }
-DACycleNode >> addMenuEntriesOn: aMenu [
-	| graphvizGenerator |
-
-	aMenu defaultGroup
-		addMenuItem: (SpMenuItemPresenter new
-						name: 'Generate GraphViz file';
-						action: [ treeModelParent ifGraphVizAbsent: [ self error: 'Please install Graphviz Support' ].
-									graphvizGenerator := DAPackageCycleGenerator
-										newWith: cycle
-										named: 'CycleGraph' , cycle size asString , 'nodes'.
-									treeModelParent saveGraphAndOpenWith: graphvizGenerator ])
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 DACycleNode >> childNodeClassFor: anItem [
 	^ DAPackageUnderAnalysisNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DACycleNode >> icon [
-	^ self iconNamed: #refreshIcon
+	^ self iconNamed: #refresh
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DACycleNode >> isCycleNode [
 	^ true
 ]
 
-{ #category : #'browse-nautilus' }
+{ #category : 'browse-nautilus' }
 DACycleNode >> selectInBrowser [
 	"we cannot browse a cycle in browser"
 	^ self

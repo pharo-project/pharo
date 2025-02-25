@@ -9,61 +9,63 @@ Internal Representation and Key Implementation Points.
 	methodEditor:		<ClyMethodEditor>
 "
 Class {
-	#name : #ClyMethodEditorCommand,
-	#superclass : #CmdCommand,
+	#name : 'ClyMethodEditorCommand',
+	#superclass : 'CmdCommand',
 	#instVars : [
 		'methodEditor'
 	],
-	#category : #'Calypso-SystemTools-Core-Editors-Methods'
+	#category : 'Calypso-SystemTools-Core-Editors-Methods',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'Editors-Methods'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodEditorCommand class >> canBeExecutedInClassEditor: aTool [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodEditorCommand class >> canBeExecutedInCodeMethodEditor: aTool [
 
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodEditorCommand class >> canBeExecutedInContext: aToolContext [
 
 	^ aToolContext tool isCommandAvailable: self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodEditorCommand class >> canBeExecutedInMethodEditor: aTool [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyMethodEditorCommand class >> isAbstract [
 	^self = ClyMethodEditorCommand
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyMethodEditorCommand class >> sourceCodeMenuActivation [
 	<classAnnotation>
 
 	^SycSourceCodeMenuActivation for: ClyTextEditorContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodEditorCommand >> methodEditor [
 	^ methodEditor
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyMethodEditorCommand >> methodEditor: anObject [
 	methodEditor := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyMethodEditorCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 

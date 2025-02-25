@@ -1,6 +1,6 @@
-Extension { #name : #FFIExternalStructureFieldSpec }
+Extension { #name : 'FFIExternalStructureFieldSpec' }
 
-{ #category : #'*ThreadedFFI' }
+{ #category : '*ThreadedFFI' }
 FFIExternalStructureFieldSpec >> fields [
 	^ fields
 ]

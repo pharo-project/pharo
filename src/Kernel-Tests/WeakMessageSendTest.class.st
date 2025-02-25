@@ -2,18 +2,20 @@
 SUnit tests for WeakMessageSend
 "
 Class {
-	#name : #WeakMessageSendTest,
-	#superclass : #ClassTestCase,
-	#category : #'Kernel-Tests-Objects'
+	#name : 'WeakMessageSendTest',
+	#superclass : 'ClassTestCase',
+	#category : 'Kernel-Tests-Objects',
+	#package : 'Kernel-Tests',
+	#tag : 'Objects'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 WeakMessageSendTest >> classToBeTested [
 
 	^ WeakMessageSend
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakMessageSendTest >> testCollectArguments [
 
 	"Fogbugz issue 18127"
@@ -22,23 +24,23 @@ WeakMessageSendTest >> testCollectArguments [
 	| msg rcvr c|
 
 	rcvr := OrderedCollection new.
-	c := Color green.
-	msg := WeakMessageSend receiver: rcvr selector: #add: arguments: { Color black }.
+	c := 0@0.
+	msg := WeakMessageSend receiver: rcvr selector: #add: arguments: { 1@1 }.
 
 	msg valueWithArguments: {}.
 
-	self assertCollection: rcvr asArray equals: { Color black }.
+	self assertCollection: rcvr asArray equals: { 1@1 }.
 
 	msg valueWithArguments: { #a . WeakArray with: c }.
 
-	self assertCollection: rcvr asArray equals: { Color black . #a }.
+	self assertCollection: rcvr asArray equals: { 1@1 . #a }.
 
 	msg valueWithArguments: (WeakArray with: c).
 
-	self assertCollection: rcvr asArray equals: { Color black . #a  . Color green }
+	self assertCollection: rcvr asArray equals: { 1@1 . #a  . 0@0 }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakMessageSendTest >> testNoArguments [
 
 	| m |
@@ -48,7 +50,7 @@ WeakMessageSendTest >> testNoArguments [
 	self assert: (m value)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakMessageSendTest >> testOneArgument [
 
 	| m |
@@ -60,7 +62,7 @@ WeakMessageSendTest >> testOneArgument [
 	self assert: m value equals: { 1 }
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakMessageSendTest >> testOneArgumentWithGC [
 
 	| m |
@@ -72,7 +74,7 @@ WeakMessageSendTest >> testOneArgumentWithGC [
 	self assert: (m value isNil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakMessageSendTest >> testReceiverWithGC [
 
 	| m |
@@ -83,7 +85,7 @@ WeakMessageSendTest >> testReceiverWithGC [
 	self assert: (m value isNil)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 WeakMessageSendTest >> testTwoArguments [
 	| m |
 	m := WeakMessageSend receiver: Array selector: #with:with: arguments: {1 . 2}.

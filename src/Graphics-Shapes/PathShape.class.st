@@ -14,16 +14,17 @@ self assert: (ps containsPoint: 40@30) not.
 Transcript show: ps calculatedBounds asString; cr.
 "
 Class {
-	#name : #PathShape,
-	#superclass : #Shape,
+	#name : 'PathShape',
+	#superclass : 'Shape',
 	#instVars : [
 		'bounds',
 		'vertices'
 	],
-	#category : #'Graphics-Shapes'
+	#category : 'Graphics-Shapes',
+	#package : 'Graphics-Shapes'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 PathShape class >> vertices: aCollection [
 	"Answer a new instance of the receiver with the
 	given vertices."
@@ -32,7 +33,7 @@ PathShape class >> vertices: aCollection [
 		vertices: aCollection
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 PathShape >> addVertex: aPoint [
 	"Add a vertex to the path."
 
@@ -41,28 +42,28 @@ PathShape >> addVertex: aPoint [
 		self bounds: (self bounds quickMergePoint: aPoint)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PathShape >> basicBounds [
 	"Answer the bounds of the receiver without lazy calculation."
 
 	^bounds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PathShape >> bounds [
 	"Answer the bounds of the receiver."
 
 	^bounds ifNil: [bounds := self calculatedBounds]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PathShape >> bounds: anObject [
 	"Set the value of bounds"
 
 	bounds := anObject
 ]
 
-{ #category : #compute }
+{ #category : 'compute' }
 PathShape >> calculatedBounds [
 	"Answer the bounds of the receiver calculated from the
 	receiver's vertices."
@@ -76,7 +77,7 @@ PathShape >> calculatedBounds [
 	^tl corner: br + 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 PathShape >> containsPoint: aPoint [
 	"Answer whether the receiver contains the given point."
 
@@ -86,7 +87,7 @@ PathShape >> containsPoint: aPoint [
 	^false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 PathShape >> initialize [
 	"Initialize the receiver."
 
@@ -95,7 +96,7 @@ PathShape >> initialize [
 		vertices: OrderedCollection new
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 PathShape >> segmentsDo: aBlock [
 	"Evaluate the two-argument block with each vertex and its successor."
 
@@ -106,14 +107,14 @@ PathShape >> segmentsDo: aBlock [
 			value: (self vertices at: i + 1)]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PathShape >> vertices [
 	"Answer the value of vertices"
 
 	^ vertices
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 PathShape >> vertices: aCollection [
 	"Set the value of vertices."
 

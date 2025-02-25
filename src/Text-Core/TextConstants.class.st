@@ -2,8 +2,8 @@
 A pool for Text constants for space, tab, espace, ...
 "
 Class {
-	#name : #TextConstants,
-	#superclass : #SharedPool,
+	#name : 'TextConstants',
+	#superclass : 'SharedPool',
 	#classVars : [
 		'BS',
 		'BS2',
@@ -89,431 +89,433 @@ Class {
 		'Tab',
 		'TextSharedInformation'
 	],
-	#category : #'Text-Core-Base'
+	#category : 'Text-Core-Base',
+	#package : 'Text-Core',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> BS [
 	^BS
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> BS2 [
 	^BS2
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Basal [
 	^Basal
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Bold [
 	^Bold
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CR [
 	^CR
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Centered [
 	^Centered
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Clear [
 	^Clear
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CrossedX [
 	^CrossedX
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlA [
 	^CtrlA
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlB [
 	^CtrlB
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlC [
 	^CtrlC
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlD [
 	^CtrlD
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlDigits [
 	^CtrlDigits
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlE [
 	^CtrlE
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlF [
 	^CtrlF
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlG [
 	^CtrlG
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlH [
 	^CtrlH
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlI [
 	^CtrlI
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlJ [
 	^CtrlJ
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlK [
 	^CtrlK
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlL [
 	^CtrlL
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlM [
 	^CtrlM
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlN [
 	^CtrlN
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlO [
 	^CtrlO
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlOpenBrackets [
 	^CtrlOpenBrackets
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlP [
 	^CtrlP
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlQ [
 	^CtrlQ
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlR [
 	^CtrlR
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlS [
 	^CtrlS
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlT [
 	^CtrlT
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlU [
 	^CtrlU
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlV [
 	^CtrlV
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlW [
 	^CtrlW
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlX [
 	^CtrlX
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlY [
 	^CtrlY
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> CtrlZ [
 	^CtrlZ
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrla [
 	^Ctrla
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrlb [
 	^Ctrlb
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrlc [
 	^Ctrlc
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrld [
 	^Ctrld
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrle [
 	^Ctrle
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrlf [
 	^Ctrlf
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrlg [
 	^Ctrlg
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrlh [
 	^Ctrlh
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrli [
 	^Ctrli
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrlj [
 	^Ctrlj
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrlk [
 	^Ctrlk
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrll [
 	^Ctrll
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrlm [
 	^Ctrlm
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrln [
 	^Ctrln
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrlo [
 	^Ctrlo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrlp [
 	^Ctrlp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrlq [
 	^Ctrlq
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrlr [
 	^Ctrlr
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrls [
 	^Ctrls
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrlt [
 	^Ctrlt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrlu [
 	^Ctrlu
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrlv [
 	^Ctrlv
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrlw [
 	^Ctrlw
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrlx [
 	^Ctrlx
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrly [
 	^Ctrly
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Ctrlz [
 	^Ctrlz
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> DefaultBaseline [
 	^DefaultBaseline
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> DefaultFontFamilySize [
 	^DefaultFontFamilySize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> DefaultLineGrid [
 	^DefaultLineGrid
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> DefaultMarginTabsArray [
 	^DefaultMarginTabsArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> DefaultMask [
 	^DefaultMask
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> DefaultRule [
 	^DefaultRule
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> DefaultSpace [
 	^DefaultSpace
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> DefaultTab [
 	^DefaultTab
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> DefaultTabsArray [
 	^DefaultTabsArray
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> ESC [
 	^ESC
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> EndOfRun [
 	^EndOfRun
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Enter [
 	^Enter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Italic [
 	^Italic
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Justified [
 	^Justified
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> LeftFlush [
 	^LeftFlush
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> LeftMarginTab [
 	^LeftMarginTab
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> RightFlush [
 	^RightFlush
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> RightMarginTab [
 	^RightMarginTab
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Space [
 	^Space
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> Tab [
 	^Tab
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TextConstants class >> TextSharedInformation [
 	^TextSharedInformation
 ]
 
-{ #category : #'backward compatibility' }
+{ #category : 'backward compatibility' }
 TextConstants class >> at: aSymbol [
 
 	^ self classPool at: aSymbol ifAbsent: [self TextSharedInformation at: aSymbol]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 TextConstants class >> initialize [
 
 	TextSharedInformation ifNil: [ TextSharedInformation := Dictionary new].

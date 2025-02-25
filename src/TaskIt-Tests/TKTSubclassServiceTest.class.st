@@ -1,21 +1,23 @@
 Class {
-	#name : #TKTSubclassServiceTest,
-	#superclass : #TKTTestCase,
+	#name : 'TKTSubclassServiceTest',
+	#superclass : 'TKTTestCase',
 	#instVars : [
 		'service'
 	],
-	#category : #'TaskIt-Tests-Services'
+	#category : 'TaskIt-Tests-Services',
+	#package : 'TaskIt-Tests',
+	#tag : 'Services'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 TKTSubclassServiceTest >> tearDown [
 
-	(service notNil and: [service isRunning]) ifTrue: [
+	(service isNotNil and: [service isRunning]) ifTrue: [
 		(service stop) waitForCompletion: 1 second ].
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTSubclassServiceTest >> testServiceExecutesStartUpOnStart [
 
 	service := TKTMockService new.
@@ -26,7 +28,7 @@ TKTSubclassServiceTest >> testServiceExecutesStartUpOnStart [
 	self assert: service isStarted
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTSubclassServiceTest >> testServiceExecutesTearDownOnStop [
 
 	service := TKTMockService new.
@@ -36,7 +38,7 @@ TKTSubclassServiceTest >> testServiceExecutesTearDownOnStop [
 	self assert: service isShutDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 TKTSubclassServiceTest >> testServiceRunsAfterStart [
 
 	service := TKTMockService new.

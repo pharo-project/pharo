@@ -3,18 +3,20 @@ I am a refactory change for a class variable renaming. The RBRefactory api is im
 the concrete ""classvariable"" renaming.
 "
 Class {
-	#name : #RBRenameClassVariableChange,
-	#superclass : #RBRenameVariableChange,
-	#category : #'Refactoring-Changes-Changes-Variables'
+	#name : 'RBRenameClassVariableChange',
+	#superclass : 'RBRenameVariableChange',
+	#category : 'Refactoring-Changes-Changes-Variables',
+	#package : 'Refactoring-Changes',
+	#tag : 'Changes-Variables'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 RBRenameClassVariableChange >> addNewVariable [
 	(changeFactory addClassVariable: newName to: self changeClass)
 		execute
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRenameClassVariableChange >> copyOldValuesToNewVariable [
 
 	| oldValue |
@@ -22,23 +24,21 @@ RBRenameClassVariableChange >> copyOldValuesToNewVariable [
 	self changeClass classPool at: newName asSymbol put: oldValue
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBRenameClassVariableChange >> printOn: aStream [
 
 	aStream
 		nextPutAll: self displayClassName;
 		nextPutAll: ' removeClassVarName: ';
 		print: self oldName;
-		nextPut: $!;
 		cr.
 	aStream
 		nextPutAll: self displayClassName;
 		nextPutAll: ' addClassVarName: ';
-		print: self newName;
-		nextPut: $!
+		print: self newName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBRenameClassVariableChange >> removeOldVariable [
 	(changeFactory removeClassVariable: oldName from: self changeClass)
 		execute

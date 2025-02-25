@@ -15,17 +15,18 @@ ZnServer default delegate: ((ZnStaticFileServerDelegate new)
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnStaticFileServerDelegate,
-	#superclass : #Object,
+	#name : 'ZnStaticFileServerDelegate',
+	#superclass : 'Object',
 	#instVars : [
 		'prefix',
 		'directory',
 		'mimeTypeExpirations'
 	],
-	#category : #'Zinc-HTTP-Examples'
+	#category : 'Zinc-HTTP-Examples',
+	#package : 'Zinc-HTTP-Examples'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnStaticFileServerDelegate class >> defaultMimeTypeExpirations [
 	"Return a default dictionary mapping ZnMimeTypes to their expiration time in seconds.
 	Missing entries will have no expiration time."
@@ -43,7 +44,7 @@ ZnStaticFileServerDelegate class >> defaultMimeTypeExpirations [
 	^ dict
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnStaticFileServerDelegate >> actualFilenameFor: uri [
 	| subElements subDir entry |
 	(uri isEmpty and: [ self prefix isEmpty ]) ifTrue: [ ^ self indexFileIn: self directory ].
@@ -64,51 +65,54 @@ ZnStaticFileServerDelegate >> actualFilenameFor: uri [
 		ifFalse: [ entry reference fullName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnStaticFileServerDelegate >> directory [
 	"The directory whose files I am serving"
 
 	^ directory
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnStaticFileServerDelegate >> directory: fileDirectory [
 	"Set the directory whose files I should be serving"
 
 	directory := fileDirectory
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnStaticFileServerDelegate >> directoryRedirectFor: uri [
 	| directoryUri |
 	directoryUri := uri copy addPathSegment: $/.
 	^ ZnResponse redirect: directoryUri
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnStaticFileServerDelegate >> expirationDateFor: aMimeType [
 	| expiration |
 	expiration := self mimeTypeExpirations at: aMimeType ifAbsent: [ ^ nil ].
 	^ ZnUtils httpDate: (DateAndTime now asUTC + expiration seconds)
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnStaticFileServerDelegate >> handleRequest: request [
 	"Server delegate entry point"
 
 	| actualFilename |
-	(#(#GET #HEAD) includes: request method)
-		ifFalse: [ ^ ZnResponse methodNotAllowed: request ].
+	(#( #GET #HEAD ) includes: request method) ifFalse: [
+		^ ZnResponse methodNotAllowed: request ].
 	actualFilename := self actualFilenameFor: request uri.
-	^ actualFilename notNil
-		ifTrue: [
-			(self redirectNeededFor: request uri actualFilename: actualFilename)
-				ifTrue: [ self directoryRedirectFor: request uri ]
-				ifFalse: [ self responseForFile: actualFilename fromRequest: request ] ]
-		ifFalse: [ ZnResponse notFound: request uri ]
+	^ actualFilename
+		  ifNotNil: [
+			  (self
+				   redirectNeededFor: request uri
+				   actualFilename: actualFilename)
+				  ifTrue: [ self directoryRedirectFor: request uri ]
+				  ifFalse: [
+				  self responseForFile: actualFilename fromRequest: request ] ]
+		  ifNil: [ ZnResponse notFound: request uri ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnStaticFileServerDelegate >> indexFileIn: fileDirectory [
 	#( 'index.html' 'index.htm' ) do: [ :each | | file |
 			(file := fileDirectory / each) exists
@@ -117,14 +121,14 @@ ZnStaticFileServerDelegate >> indexFileIn: fileDirectory [
 	^ nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnStaticFileServerDelegate >> maxAgeFor: aMimeType [
 	| expiration |
 	expiration := self mimeTypeExpirations at: aMimeType ifAbsent: [ ^ nil ].
 	^ 'max-age=', expiration asString
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnStaticFileServerDelegate >> mimeTypeExpirations [
 	"Return a dictionary mapping ZnMimeTypes to their expiration time in seconds.
 	Missing entries will have no expiration time."
@@ -132,7 +136,7 @@ ZnStaticFileServerDelegate >> mimeTypeExpirations [
 	^ mimeTypeExpirations ifNil: [ mimeTypeExpirations := Dictionary new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnStaticFileServerDelegate >> mimeTypeExpirations: aDictionary [
 	"Set the mapping of ZnMimeTypes to their expiration time in seconds to aDictionary.
 	Missing entries will have no expiration time."
@@ -140,21 +144,21 @@ ZnStaticFileServerDelegate >> mimeTypeExpirations: aDictionary [
 	mimeTypeExpirations := aDictionary
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnStaticFileServerDelegate >> prefix [
 	"The path prefix collection under which I am serving files"
 
 	^ prefix ifNil: [ prefix := #() ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnStaticFileServerDelegate >> prefix: orderedCollection [
 	"Set the path prefix under which I should be serving files to orderedCollection containing path elements"
 
 	prefix := orderedCollection
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnStaticFileServerDelegate >> prefixFromString: string [
 	"Set the path prefix under which I should be serving files to string,
 	interpreting each /-separated token as a path element"
@@ -162,13 +166,13 @@ ZnStaticFileServerDelegate >> prefixFromString: string [
 	self prefix: (string findTokens: '/')
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnStaticFileServerDelegate >> redirectNeededFor: uri actualFilename: actualFilename [
 	uri isDirectoryPath ifTrue: [ ^ false ].
 	^ (actualFilename endsWith: uri lastPathSegment) not
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnStaticFileServerDelegate >> responseForFile: filename fromRequest: aRequest [
 	| file entry size time mimeType fileStream entity response modified |
 	file := directory fileSystem referenceTo: filename.
@@ -195,7 +199,7 @@ ZnStaticFileServerDelegate >> responseForFile: filename fromRequest: aRequest [
 	^ response
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnStaticFileServerDelegate >> value: request [
 	"I implement the generic #value: message as equivalent to #handleRequest:"
 

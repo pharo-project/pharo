@@ -1,6 +1,6 @@
-Extension { #name : #ZnUrl }
+Extension { #name : 'ZnUrl' }
 
-{ #category : #'*Zinc-HTTP' }
+{ #category : '*Zinc-HTTP' }
 ZnUrl >> retrieveContents [
 	"Download and return the resource that I refer to.
 	This will typically return a String or a ByteArray.
@@ -11,7 +11,7 @@ ZnUrl >> retrieveContents [
 	^ self performOperation: #retrieveContents
 ]
 
-{ #category : #'*Zinc-HTTP' }
+{ #category : '*Zinc-HTTP' }
 ZnUrl >> saveContentsToFile: aFilename [
 	"Download and return a fileReference to the resource that I refer to.
 

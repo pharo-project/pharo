@@ -1,15 +1,16 @@
 Class {
-	#name : #KMShortcutPrinterTest,
-	#superclass : #ParametrizedTestCase,
+	#name : 'KMShortcutPrinterTest',
+	#superclass : 'ParametrizedTestCase',
 	#instVars : [
 		'platform',
 		'shortcut',
 		'result'
 	],
-	#category : #'Keymapping-Tests'
+	#category : 'Keymapping-Tests',
+	#package : 'Keymapping-Tests'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 KMShortcutPrinterTest class >> testParameters [
 	| cmd ctrl alt shift enter |
 
@@ -69,37 +70,37 @@ KMShortcutPrinterTest class >> testParameters [
 		addCase: { #platform -> WinPlatform new. #shortcut -> ($n control , $m control). #result -> 'Ctrl+N,Ctrl+M' }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMShortcutPrinterTest >> platform [
 	^ platform
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMShortcutPrinterTest >> platform: anObject [
 	platform := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMShortcutPrinterTest >> result [
 	^ result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMShortcutPrinterTest >> result: anObject [
 	result := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMShortcutPrinterTest >> shortcut [
 	^ shortcut
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMShortcutPrinterTest >> shortcut: anObject [
 	shortcut := anObject
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMShortcutPrinterTest >> testPrintShortcut [
 	| printed |
 
@@ -107,7 +108,7 @@ KMShortcutPrinterTest >> testPrintShortcut [
 	self assert: printed equals: result
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 KMShortcutPrinterTest >> testSingleKeyCombinationIsPrintedWithoutSeparators [
 	| printed |
 

@@ -1,6 +1,6 @@
-Extension { #name : #FFIExternalReferenceType }
+Extension { #name : 'FFIExternalReferenceType' }
 
-{ #category : #'*ThreadedFFI-UFFI' }
+{ #category : '*ThreadedFFI-UFFI' }
 FFIExternalReferenceType >> tfExternalType [
 
 	^ TFBasicType pointer

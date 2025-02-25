@@ -16,17 +16,19 @@ To get a first impression, try this with 'inspect it':
          
 "
 Class {
-	#name : #CollectionCombinator,
-	#superclass : #Object,
+	#name : 'CollectionCombinator',
+	#superclass : 'Object',
 	#instVars : [
 		'resultProcessingBlock',
 		'collectionOfArrays',
 		'buffer'
 	],
-	#category : #'Kernel-Tests-Methods'
+	#category : 'Kernel-Tests-Methods',
+	#package : 'Kernel-Tests',
+	#tag : 'Methods'
 }
 
-{ #category : #operating }
+{ #category : 'operating' }
 CollectionCombinator >> combineFromIdx: myIdx [
 
    "  this method is recursive. Recursion runs from values 1 to  collectionOfArrays size  of parameter myIdx. Each time it is called, this method has the responsiblity to provide all possible values for one index position of the result tuples. That index position is given by the value of  myIdx."
@@ -42,7 +44,7 @@ CollectionCombinator >> combineFromIdx: myIdx [
   " The buffer is a shared object and its contents are later changed. It is therefore necessary to make a copy. "
 ]
 
-{ #category : #operating }
+{ #category : 'operating' }
 CollectionCombinator >> forArrays: anArray processWith: aBlock [
 
  "  anArray is a kind of a sequenceable collection of arrays.

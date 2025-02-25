@@ -3,17 +3,18 @@ i am used to convert
 ComplexBorder (raised/inset) into paint, used in Morphic.
 "
 Class {
-	#name : #AthensBorderStrokePaint,
-	#superclass : #AthensPaint,
+	#name : 'AthensBorderStrokePaint',
+	#superclass : 'AthensPaint',
 	#instVars : [
 		'topLeftPaint',
 		'bottomRightPaint',
 		'width'
 	],
-	#category : #'Athens-Morphic'
+	#category : 'Athens-Morphic',
+	#package : 'Athens-Morphic'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AthensBorderStrokePaint class >> topLeftColor: aColor1 bottomRightColor: aColor2 width: aNumber on: anAthensCanvas [
 	^ self new
 		topLeftPaint: (aColor1 asAthensPaintOn: anAthensCanvas);
@@ -22,13 +23,13 @@ AthensBorderStrokePaint class >> topLeftColor: aColor1 bottomRightColor: aColor2
 		yourself
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensBorderStrokePaint >> asStrokePaintOn: aCanvas [
 	"receiver is stroke paint already"
 	^ self
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensBorderStrokePaint >> athensFillRectangle: aRect on: anAthensCanvas [
 	"This is a terminal method in rendering dispatch scheme
 	canvas->shape->paint. See AthensCanvas>>fillShape: "
@@ -41,12 +42,12 @@ AthensBorderStrokePaint >> athensFillRectangle: aRect on: anAthensCanvas [
 		on: anAthensCanvas
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBorderStrokePaint >> bottomRightPaint: anAthensPaint [
 	bottomRightPaint := anAthensPaint
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensBorderStrokePaint >> pathForBottomRightBorderOf: aRectangle on: anAthensCanvas [
 	^ anAthensCanvas
 		createPath: [ :builder |
@@ -61,7 +62,7 @@ AthensBorderStrokePaint >> pathForBottomRightBorderOf: aRectangle on: anAthensCa
 				close ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensBorderStrokePaint >> pathForTopLeftBorderOf: aRectangle on: anAthensCanvas [
 	^ anAthensCanvas
 		createPath: [ :builder |
@@ -76,17 +77,17 @@ AthensBorderStrokePaint >> pathForTopLeftBorderOf: aRectangle on: anAthensCanvas
 				close ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBorderStrokePaint >> topLeftPaint: anAthensPaint [
 	topLeftPaint := anAthensPaint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBorderStrokePaint >> width [
 	^ width
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensBorderStrokePaint >> width: aWidth [
 	width:= aWidth
 ]

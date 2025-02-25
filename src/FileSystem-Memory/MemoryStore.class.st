@@ -2,96 +2,98 @@
 I'm a specific store for memory file system
 "
 Class {
-	#name : #MemoryStore,
-	#superclass : #FileSystemStore,
+	#name : 'MemoryStore',
+	#superclass : 'FileSystemStore',
 	#instVars : [
 		'root'
 	],
 	#classVars : [
 		'CurrentFS'
 	],
-	#category : #'FileSystem-Memory-Store'
+	#category : 'FileSystem-Memory-Store',
+	#package : 'FileSystem-Memory',
+	#tag : 'Store'
 }
 
-{ #category : #current }
+{ #category : 'current' }
 MemoryStore class >> currentFileSystem [
 	^ CurrentFS ifNil: [ CurrentFS := FileSystem store: MemoryStore new ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MemoryStore class >> delimiter [
 	^ $/
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 MemoryStore class >> initialize [
 
 	SessionManager default registerSystemClassNamed: self name
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MemoryStore class >> isCaseSensitive [
 	^ true
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 MemoryStore class >> reset [
 	CurrentFS := nil
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MemoryStore class >> separator [
 	^ $:
 ]
 
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 MemoryStore class >> startUp [
 	self reset
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MemoryStore >> basenameFromEntry: aMemoryFileSystemEntry [
 	^ aMemoryFileSystemEntry basename
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MemoryStore >> basicCreationTimeOf: aMemoryFileSystemEntry [
 	"Returns the creation date of aMemoryFileSystemEntry"
 	^ aMemoryFileSystemEntry creationTime
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MemoryStore >> basicEntry: entry nodesDo: aBlock [
 	entry fileEntriesDo: aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MemoryStore >> basicEntry: directoryEntry path: aPath nodesDo: aBlock [
 	directoryEntry fileEntriesDo: aBlock
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MemoryStore >> basicIsDirectory: aMemoryFileSystemEntry [
 	^ aMemoryFileSystemEntry isDirectory
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MemoryStore >> basicIsFile: aMemoryFileSystemEntry [
 	^ aMemoryFileSystemEntry isFile
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MemoryStore >> basicIsSymlink: aNode [
 	^false
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MemoryStore >> basicModificationTimeOf: aMemoryFileSystemEntry [
 	"Return the basic modification time of aMemoryFileSystemEntry"
 	^ aMemoryFileSystemEntry modificationTime
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MemoryStore >> basicOpen: path writable: aBoolean [
 	^ self
 		nodeAt: path
@@ -104,24 +106,24 @@ MemoryStore >> basicOpen: path writable: aBoolean [
 				ifTrue: [ self createFile: path ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MemoryStore >> basicPosixPermissions: anEntry [
 	^ 8r777
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MemoryStore >> basicSizeOf: aMemoryFileSystemEntry [
 	"Return the basic size of aMemoryFileSystemEntry"
 	^ aMemoryFileSystemEntry fileSize
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MemoryStore >> checkName: aString fixErrors: fixErrors [
 	aString ifEmpty: [ self error: 'zero length file name' ].
 	^ aString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MemoryStore >> copy: sourcePath ifAbsent: absentBlock to: destinationPath ifPresent: presentBlock fileSystem: aFilesystem [
         | sourceNode destinationNode |
 
@@ -151,7 +153,7 @@ MemoryStore >> copy: sourcePath ifAbsent: absentBlock to: destinationPath ifPres
                                         yourself)
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MemoryStore >> createDirectory: path [
 	| parent |
 	parent := path parent.
@@ -168,7 +170,7 @@ MemoryStore >> createDirectory: path [
 		ifAbsent: [ self signalDirectoryDoesNotExist: parent ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MemoryStore >> createFile: aPath [
 	^ self
 		nodeAt: aPath parent
@@ -178,7 +180,7 @@ MemoryStore >> createFile: aPath [
 		ifAbsent: [ self signalDirectoryDoesNotExist: aPath parent ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MemoryStore >> delete: path [
 	self
 		nodeAt: path parent
@@ -187,7 +189,7 @@ MemoryStore >> delete: path [
 		ifAbsent: [ DirectoryDoesNotExist signalWith: path parent ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MemoryStore >> entryFromNode: node path: path for: aFileSystem [
 
 	| entryPath |
@@ -195,27 +197,35 @@ MemoryStore >> entryFromNode: node path: path for: aFileSystem [
 	^MemoryDirectoryEntry reference: (FileReference fileSystem: aFileSystem path: entryPath)
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 MemoryStore >> forReferencePrintOn: aStream [
 	aStream nextPutAll: 'memory://'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryStore >> handleClass [
 	^ MemoryHandle
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MemoryStore >> initialize [
 	root := MemoryFileSystemDirectory new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
+MemoryStore >> isHidden: aResolvable attributes: statAttributesArray [
+	"Answer a boolean indicating whether the file is hidden or not.
+	We follow Unix here, using the file naming convention that file names beginning with a dot are not displayed"
+
+	^ aResolvable basename first = $.
+]
+
+{ #category : 'testing' }
 MemoryStore >> isMemoryFileSystem [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MemoryStore >> isReadable: aPath [
 	"Answer a boolean indicating whether the supplied path is a readable entry (directory or file).
 	MemoryStore doesn't implement access controls, always true if the file exists."
@@ -223,7 +233,7 @@ MemoryStore >> isReadable: aPath [
 	^self exists: aPath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryStore >> isRegular: aPath [
 	"Answer a boolean indicating whether the entry at aPath is writable.
 	Memory store only supports regular files."
@@ -231,7 +241,7 @@ MemoryStore >> isRegular: aPath [
 	^self isFile: aPath
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MemoryStore >> isWritable: aPath [
 	"Answer a boolean indicating whether the supplied path is a writable entry (directory or file).
 	MemoryStore doesn't implement access controls, always true if the file exists."
@@ -239,7 +249,7 @@ MemoryStore >> isWritable: aPath [
 	^self exists: aPath
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MemoryStore >> nodeAt: aPath [
 	| current |
 	current := self root.
@@ -250,7 +260,7 @@ MemoryStore >> nodeAt: aPath [
 	^ current
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MemoryStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
 	| current |
 	aPath isRoot
@@ -264,7 +274,7 @@ MemoryStore >> nodeAt: aPath ifPresent: presentBlock ifAbsent: absentBlock [
 	^ presentBlock value: current
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 MemoryStore >> rename: sourcePath to: destinationPath [
 	| sourceEntry destinationParentEntry newName |
 
@@ -289,7 +299,7 @@ MemoryStore >> rename: sourcePath to: destinationPath [
 		fileEntryRemove: sourcePath basename
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 MemoryStore >> replaceFile: path in: aBlock [
 	^ self
 		nodeAt: path parent
@@ -302,7 +312,14 @@ MemoryStore >> replaceFile: path in: aBlock [
 		ifAbsent: [ self signalFileDoesNotExist: path ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MemoryStore >> root [
 	^ root
+]
+
+{ #category : 'private' }
+MemoryStore >> symlinkEntryAt: aPath fileSystem: aFilesystem [
+	"MemoryStore doesn't support symbolic links, so a standard entry can be used"
+
+	^ MemoryDirectoryEntry reference: (aFilesystem referenceTo: aPath)
 ]

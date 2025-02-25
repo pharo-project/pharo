@@ -3,15 +3,17 @@ I am an announcement to force the UI to refresh the status bar.
 This is useful when the results are handled in a asynchronous way
 "
 Class {
-	#name : #DTStatusUpdate,
-	#superclass : #Announcement,
+	#name : 'DTStatusUpdate',
+	#superclass : 'Announcement',
 	#instVars : [
 		'message'
 	],
-	#category : #'DrTests-Announcements'
+	#category : 'DrTests-Announcements',
+	#package : 'DrTests',
+	#tag : 'Announcements'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 DTStatusUpdate class >> message: aString [
 
 	^ self new
@@ -19,13 +21,13 @@ DTStatusUpdate class >> message: aString [
 		  yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTStatusUpdate >> message [
 
 	^ message
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DTStatusUpdate >> message: anObject [
 	message := anObject
 ]

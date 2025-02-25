@@ -3,17 +3,18 @@ I represent class scope of all users of my basis traits.
 I see methods of all classes and traits which use my basis traits 
 "
 Class {
-	#name : #ClyTraitUserScope,
-	#superclass : #ClySingleClassRelationScope,
-	#category : #'Calypso-SystemPlugins-Traits-Queries'
+	#name : 'ClyTraitUserScope',
+	#superclass : 'ClySingleClassRelationScope',
+	#category : 'Calypso-SystemPlugins-Traits-Queries',
+	#package : 'Calypso-SystemPlugins-Traits-Queries'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTraitUserScope class >> classesRelatedTo: aTrait do: aBlock [
 	aTrait users do: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTraitUserScope class >> defaultName [
 	^'trait users'
 ]

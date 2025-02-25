@@ -20,22 +20,24 @@ or it can read directly from stdin:
 Important: don't manually save the image at the end of the expression by calling something like 'Smalltalk snapshot: true andSave: true'! Instead, use the safer --save option.
 "
 Class {
-	#name : #EvaluateCommandLineHandler,
-	#superclass : #STCommandLineHandler,
-	#category : #'CodeImportCommandLineHandlers-Base'
+	#name : 'EvaluateCommandLineHandler',
+	#superclass : 'STCommandLineHandler',
+	#category : 'CodeImportCommandLineHandlers-Base',
+	#package : 'CodeImportCommandLineHandlers',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EvaluateCommandLineHandler class >> commandName [
 	^ 'eval'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EvaluateCommandLineHandler class >> description [
 	^ 'Directly evaluates passed in one line scripts'
 ]
 
-{ #category : #'handler selection' }
+{ #category : 'handler selection' }
 EvaluateCommandLineHandler class >> isResponsibleFor: commandLineArguments [
 	"directly handle top-level -e and --evaluate options"
 	commandLineArguments withFirstArgument: [ :arg|
@@ -45,7 +47,7 @@ EvaluateCommandLineHandler class >> isResponsibleFor: commandLineArguments [
 	^ commandLineArguments includesSubCommand: self commandName
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 EvaluateCommandLineHandler >> activate [
 	self activateHelp
 		ifTrue: [  ^ self ].
@@ -65,7 +67,7 @@ EvaluateCommandLineHandler >> activate [
 		ifFalse: [ self quit ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 EvaluateCommandLineHandler >> argumentString [
 	| arguments skipArguments |
 
@@ -82,7 +84,7 @@ EvaluateCommandLineHandler >> argumentString [
 	^ arguments joinUsing: Character space
 ]
 
-{ #category : #commands }
+{ #category : 'commands' }
 EvaluateCommandLineHandler >> evaluate: aStream [
 	| result |
 	[
@@ -96,7 +98,7 @@ EvaluateCommandLineHandler >> evaluate: aStream [
 		do: [ :error | self handleError: error ]
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 EvaluateCommandLineHandler >> evaluateArguments [
 	| argumentString |
 	argumentString :=  self argumentString.
@@ -104,7 +106,7 @@ EvaluateCommandLineHandler >> evaluateArguments [
 	self evaluate: argumentString
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 EvaluateCommandLineHandler >> evaluateStdIn [
 	| stdin |
 	stdin := Stdio stdin ifNil: [ ^ self ].

@@ -1,6 +1,6 @@
-Extension { #name : #NonInteractiveTranscript }
+Extension { #name : 'NonInteractiveTranscript' }
 
-{ #category : #'*BaselineOfPharoBootstrapProcess' }
+{ #category : '*BaselineOfPharoBootstrapProcess' }
 NonInteractiveTranscript >> ensureCr [
 	self stream cr
 ]

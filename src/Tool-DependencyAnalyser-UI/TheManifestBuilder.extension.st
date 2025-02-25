@@ -1,6 +1,6 @@
-Extension { #name : #TheManifestBuilder }
+Extension { #name : 'TheManifestBuilder' }
 
-{ #category : #'*Tool-DependencyAnalyser-UI' }
+{ #category : '*Tool-DependencyAnalyser-UI' }
 TheManifestBuilder >> addManuallyResolvedDependency: aPackageName [
 	| packageNames |
 

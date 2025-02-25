@@ -1,6 +1,6 @@
-Extension { #name : #ClyMethodGroup }
+Extension { #name : 'ClyMethodGroup' }
 
-{ #category : #'*Calypso-SystemPlugins-FileOut-Queries' }
+{ #category : '*Calypso-SystemPlugins-FileOut-Queries' }
 ClyMethodGroup >> fileOut [
 	| internalStream class |
 	internalStream := (String new: 1000) writeStream.

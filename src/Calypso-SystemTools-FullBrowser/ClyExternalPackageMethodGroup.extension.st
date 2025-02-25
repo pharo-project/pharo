@@ -1,6 +1,6 @@
-Extension { #name : #ClyExternalPackageMethodGroup }
+Extension { #name : 'ClyExternalPackageMethodGroup' }
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 ClyExternalPackageMethodGroup >> decorateTableCell: anItemCellMorph of: groupItem [
 	super decorateTableCell: anItemCellMorph of: groupItem.
 

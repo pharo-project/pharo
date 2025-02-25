@@ -2,52 +2,60 @@
 I represent a change in a class or a trait.
 "
 Class {
-	#name : #EpBehaviorChange,
-	#superclass : #EpCodeChange,
-	#category : #'Epicea-Model'
+	#name : 'EpBehaviorChange',
+	#superclass : 'EpCodeChange',
+	#category : 'Epicea-Model',
+	#package : 'Epicea',
+	#tag : 'Model'
 }
 
-{ #category : #comparing }
+{ #category : 'testing' }
+EpBehaviorChange class >> isAbstract [
+
+	^ self == EpBehaviorChange
+]
+
+{ #category : 'comparing' }
 EpBehaviorChange >> = other [
 
 	^ self class = other class and: [ self behaviorAffected = other behaviorAffected ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpBehaviorChange >> affectedPackageName [
 
 	^  self behaviorAffected package
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpBehaviorChange >> behaviorAffected [
 	^ self shouldBeImplemented
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpBehaviorChange >> behaviorAffectedName [
 	^ self shouldBeImplemented
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpBehaviorChange >> doesOverride: aCodeChange [
 
 	^ aCodeChange class = self class and: [
 		aCodeChange behaviorAffectedName = self behaviorAffectedName ]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 EpBehaviorChange >> hash [
 
 	^ self class hash bitXor: self behaviorAffected hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 EpBehaviorChange >> isEpBehaviorChange [
 	^true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 EpBehaviorChange >> printOn: aStream [
 
 	super printOn: aStream.

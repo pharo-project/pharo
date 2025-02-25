@@ -17,18 +17,20 @@ Between all the responsible handlers the one with the highest #priority is chose
 
 "
 Class {
-	#name : #CommandLineHandler,
-	#superclass : #Object,
+	#name : 'CommandLineHandler',
+	#superclass : 'Object',
 	#instVars : [
 		'commandLine',
 		'session',
 		'stdout',
 		'stderr'
 	],
-	#category : #'System-BasicCommandLineHandler-Base'
+	#category : 'System-BasicCommandLineHandler-Base',
+	#package : 'System-BasicCommandLineHandler',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CommandLineHandler class >> activateWith: aCommandLine [
 
 	^ self new
@@ -36,12 +38,12 @@ CommandLineHandler class >> activateWith: aCommandLine [
 		activate
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLineHandler class >> allHandlers [
 	^ self allSubclasses reject: [ :handler| handler isAbstract ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CommandLineHandler class >> commandLine: aCommandLine [
 
 	^ self new
@@ -49,30 +51,30 @@ CommandLineHandler class >> commandLine: aCommandLine [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLineHandler class >> commandName [
 	" Overwrite this method to provide a short name for this command handler.
 	You may pass the commandName as first argument to the image to select this handler"
 	^ self name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLineHandler class >> description [
 	"This method should return a short one-line description of the command"
 	^ nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLineHandler class >> isAbstract [
 	^ self = CommandLineHandler
 ]
 
-{ #category : #'handler selection' }
+{ #category : 'handler selection' }
 CommandLineHandler class >> isResponsibleFor: aCommandLineArguments [
 	^ aCommandLineArguments includesSubCommand: self commandName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CommandLineHandler class >> prepareSubcommand: commandLineArguments [
 
 	"strip the subcommand name from the arguments"
@@ -84,12 +86,12 @@ CommandLineHandler class >> prepareSubcommand: commandLineArguments [
 	^ commandLineArguments
 ]
 
-{ #category : #'handler selection' }
+{ #category : 'handler selection' }
 CommandLineHandler class >> priority [
 	^ 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CommandLineHandler class >> requireDeploymentPassword [
 	"Here so that we can distinguish user application services command line handlers from usual pharo command line handlers.
 	The objective is to be able to filter command line accessible by the user.
@@ -98,26 +100,26 @@ CommandLineHandler class >> requireDeploymentPassword [
 	^ true
 ]
 
-{ #category : #'handler selection' }
+{ #category : 'handler selection' }
 CommandLineHandler class >> selectHandlersFor: aCommandLine [
 
 	^ self allHandlers select: [ :handlerClass|
 		handlerClass isResponsibleFor: aCommandLine ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 CommandLineHandler >> << aString [
 	^ self stdout
 		nextPutAll: aString;
 		yourself
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 CommandLineHandler >> activate [
 	 self subclassResponsibility
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 CommandLineHandler >> activateHelp [
 	"Default help implementation, running #help if the only argument is --help "
 	((self hasOption: 'help') and: [ self arguments size = 1 ])
@@ -127,7 +129,7 @@ CommandLineHandler >> activateHelp [
 	^ false
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 CommandLineHandler >> activateHelpWithoutArguments [
 	"Default help implementation, running #help if the there is no argument or a single one which is --help "
 	((self hasOption: 'help') or: [ self arguments isEmpty ])
@@ -137,78 +139,78 @@ CommandLineHandler >> activateHelpWithoutArguments [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLineHandler >> allHandlers [
 	^ CommandLineHandler allHandlers
 ]
 
-{ #category : #'accessing - arguments' }
+{ #category : 'accessing - arguments' }
 CommandLineHandler >> argumentAt: anInteger [
 	^ self commandLine argumentAt: anInteger
 ]
 
-{ #category : #'accessing - arguments' }
+{ #category : 'accessing - arguments' }
 CommandLineHandler >> arguments [
 	^ self commandLine arguments
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLineHandler >> commandLine [
 	^ commandLine
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLineHandler >> commandLine: aCommandLine [
 	commandLine := aCommandLine
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLineHandler >> commandName [
 	^ self class commandName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLineHandler >> description [
 	^ self class description
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 CommandLineHandler >> exitFailure [
 	 ^ self exitFailure: 'Command line handler failed'
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 CommandLineHandler >> exitFailure: aMessage [
 	self hasSessionChanged
 		ifTrue: [ ^ self ].
 	Exit signalFailure: aMessage
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 CommandLineHandler >> exitSuccess [
 	self hasSessionChanged
 		ifTrue: [ ^ self ].
 	Exit signalSuccess
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CommandLineHandler >> hasArguments [
 	^ self commandLine hasArguments
 ]
 
-{ #category : #'accessing - arguments' }
+{ #category : 'accessing - arguments' }
 CommandLineHandler >> hasOption: aString [
 	^ self commandLine hasOption: aString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CommandLineHandler >> hasSessionChanged [
 	"check whether the session has changed since the commandline handler as been created"
 
 	^ session ~~ Smalltalk session
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 CommandLineHandler >> help [
 	"This is a crude default help implementation."
 	self printHelp.
@@ -216,7 +218,7 @@ CommandLineHandler >> help [
 		ifFalse: [ self exitSuccess ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CommandLineHandler >> initialize [
 	super initialize.
 	session := Smalltalk session.
@@ -225,63 +227,63 @@ CommandLineHandler >> initialize [
 		initializeStderr
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CommandLineHandler >> initializeStderr [
 	"install the line end conversion and initialize the converter"
 	stderr := VTermOutputDriver stderr
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CommandLineHandler >> initializeStdout [
 	"install the line end conversion and initialize the converter"
 	stdout := VTermOutputDriver stdout
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLineHandler >> name [
 	^ self printString
 ]
 
-{ #category : #'accessing - arguments' }
+{ #category : 'accessing - arguments' }
 CommandLineHandler >> optionAt: aString [
 	^ self commandLine optionAt: aString
 ]
 
-{ #category : #'accessing - arguments' }
+{ #category : 'accessing - arguments' }
 CommandLineHandler >> optionAt: aString ifAbsent: absentBlock [
 	^ self commandLine
 		optionAt: aString ifAbsent: absentBlock
 ]
 
-{ #category : #'accessing - arguments' }
+{ #category : 'accessing - arguments' }
 CommandLineHandler >> optionAt: aString ifPresent: absentBlock [
 	^ self commandLine
 		optionAt: aString ifPresent: absentBlock
 ]
 
-{ #category : #'accessing - arguments' }
+{ #category : 'accessing - arguments' }
 CommandLineHandler >> optionAt: aString ifPresent: presentBlock ifAbsent: absentBlock [
 	^ self commandLine
 		optionAt: aString ifPresent: presentBlock ifAbsent: absentBlock
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CommandLineHandler >> printHelp [
 	self stderr
 		nextPutAll: self class comment; lf
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 CommandLineHandler >> quit [
 	self exitSuccess
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLineHandler >> stderr [
 	^ stderr
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CommandLineHandler >> stdout [
 	^ stdout
 ]

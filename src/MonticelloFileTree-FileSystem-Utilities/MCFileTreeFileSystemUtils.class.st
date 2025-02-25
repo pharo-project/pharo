@@ -1,81 +1,82 @@
 Class {
-	#name : #MCFileTreeFileSystemUtils,
-	#superclass : #MCFileTreeFileUtils,
-	#category : #'MonticelloFileTree-FileSystem-Utilities'
+	#name : 'MCFileTreeFileSystemUtils',
+	#superclass : 'MCFileTreeFileUtils',
+	#category : 'MonticelloFileTree-FileSystem-Utilities',
+	#package : 'MonticelloFileTree-FileSystem-Utilities'
 }
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeFileSystemUtils class >> default [
     ^ DiskStore activeClass createDefault defaultWorkingDirectory asFileReference
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeFileSystemUtils class >> deleteAll: aDirectory [
     ^ aDirectory deleteAll
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeFileSystemUtils class >> directoryExists: aDirectory [
     ^ aDirectory isDirectory
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeFileSystemUtils class >> directoryFromEntry: directoryEntry [
     ^ directoryEntry asFileReference
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeFileSystemUtils class >> directoryFromPath: directoryPath [
     ^ (AbsolutePath from: directoryPath delimiter: self pathNameDelimiter) asFileReference
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeFileSystemUtils class >> directoryFromPath: directoryPath relativeTo: aDirectory [
     ^ aDirectory resolveString: directoryPath
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeFileSystemUtils class >> directoryName: aDirectory [
     ^ aDirectory basename
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeFileSystemUtils class >> directoryPathString: aDirectory [
     ^ aDirectory pathString
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeFileSystemUtils class >> ensureDirectoryExists: aDirectory [
     aDirectory ensureCreateDirectory
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeFileSystemUtils class >> ensureFilePathExists: fileNameOrPath relativeTo: aDirectory [
     (aDirectory resolveString: fileNameOrPath) parent ensureCreateDirectory
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeFileSystemUtils class >> filePathExists: filePath relativeTo: aDirectory [
     ^ (aDirectory resolveString: filePath) isFile
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 MCFileTreeFileSystemUtils class >> initialize [
 
     self install
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeFileSystemUtils class >> parentDirectoryOf: aDirectory [
     ^ aDirectory parent
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeFileSystemUtils class >> pathNameDelimiter [
     ^ DiskStore activeClass delimiter
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeFileSystemUtils class >> readStreamFor: filePath in: aDirectory do: aBlock [
     "temporary hack for Pharo-1.4"
 
@@ -87,12 +88,12 @@ MCFileTreeFileSystemUtils class >> readStreamFor: filePath in: aDirectory do: aB
             aBlock value: stream ]
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeFileSystemUtils class >> resolvePath: path in: aDirectory [
     ^ aDirectory resolveString: path
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 MCFileTreeFileSystemUtils class >> writeStreamFor: filePath in: aDirectory do: aBlock [
     (aDirectory resolveString: filePath) 
 		ensureDelete;

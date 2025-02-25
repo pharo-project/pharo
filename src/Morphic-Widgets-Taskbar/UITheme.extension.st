@@ -1,6 +1,6 @@
-Extension { #name : #UITheme }
+Extension { #name : 'UITheme' }
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 UITheme >> newBasicTaskbarButtonIn: aTaskbar for: aMorph [
 	"Answer a taskbar button morph for the given window."
 
@@ -16,7 +16,7 @@ UITheme >> newBasicTaskbarButtonIn: aTaskbar for: aMorph [
 		newRowIn: aTaskbar
 		for: {((self iconNamed: aMorph taskbarIconName) ifNil: [^nil]) asMorph. lab}.
 
-	lm cellInset: 2.
+	lm cellInset: 2 scaledByDisplayScaleFactor.
 
 	button := self
 		newButtonIn: aTaskbar
@@ -37,7 +37,7 @@ UITheme >> newBasicTaskbarButtonIn: aTaskbar for: aMorph [
 	^button
 ]
 
-{ #category : #'*Morphic-Widgets-Taskbar' }
+{ #category : '*Morphic-Widgets-Taskbar' }
 UITheme >> openTaskListIn: world from: aKeyboardEvent [
 
 	| tasklistMorph |

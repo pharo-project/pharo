@@ -2,28 +2,30 @@
 My role is to open the .sources and .changes files. My only public methods are in the 'public' protocol. The most important method is #checkAndOpenSourcesAndChanges.
 "
 Class {
-	#name : #PharoFilesOpener,
-	#superclass : #Object,
+	#name : 'PharoFilesOpener',
+	#superclass : 'Object',
 	#instVars : [
 		'shouldInformAboutReadOnlyChanges'
 	],
 	#classVars : [
 		'Default'
 	],
-	#category : #'System-Sources-Utilities'
+	#category : 'System-Sources-Utilities',
+	#package : 'System-Sources',
+	#tag : 'Utilities'
 }
 
-{ #category : #singleton }
+{ #category : 'singleton' }
 PharoFilesOpener class >> default [
 	^ Default ifNil: [ Default := self new ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 PharoFilesOpener class >> reset [
 	Default := nil
 ]
 
-{ #category : #messages }
+{ #category : 'messages' }
 PharoFilesOpener >> badContentMsg [
 	^ '&fileRef
 has been injured by an unpacking utility.  Crs were changed to CrLfs.
@@ -31,7 +33,7 @@ Please set the preferences in your decompressing program to
 "do not convert text files" and unpack the system again.'
 ]
 
-{ #category : #messages }
+{ #category : 'messages' }
 PharoFilesOpener >> cannotLocateMsg [
 	^ 'Pharo cannot locate &fileRef.
 
@@ -39,7 +41,7 @@ Please check that the file is named properly and is in the
 same directory as this image.'
 ]
 
-{ #category : #messages }
+{ #category : 'messages' }
 PharoFilesOpener >> cannotWriteMsg [
 	^ 'Pharo cannot write to &fileRef.
 
@@ -48,19 +50,19 @@ Please check that you have write permission for this file.
 You won''t be able to save this image correctly until you fix this.'
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 PharoFilesOpener >> changesFileOrNil [
 
 	^ self changesFileOrNilReadOnly: false
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 PharoFilesOpener >> changesFileOrNilReadOnly: readOnly [
 
 	^ self changesFileOrNilReadOnly: readOnly silent: false
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 PharoFilesOpener >> changesFileOrNilReadOnly: readOnly silent: silent [
 	| changesFile |
 	changesFile := self openChanges: self changesName readOnly: readOnly.
@@ -81,32 +83,32 @@ PharoFilesOpener >> changesFileOrNilReadOnly: readOnly silent: silent [
 	^ changesFile
 ]
 
-{ #category : #delegated }
+{ #category : 'delegated' }
 PharoFilesOpener >> changesName [
 	^ Smalltalk changesName
 ]
 
-{ #category : #helper }
+{ #category : 'helper' }
 PharoFilesOpener >> ignoreIfFail: aBlock [
 	^ [ aBlock value ] onErrorDo: [  ]
 ]
 
-{ #category : #'user interaction' }
+{ #category : 'user interaction' }
 PharoFilesOpener >> inform: msg withChangesRef: fileRef [
 	self inform: msg withRef: 'the changes file named ' , fileRef
 ]
 
-{ #category : #'user interaction' }
+{ #category : 'user interaction' }
 PharoFilesOpener >> inform: msg withRef: fileRef [
 	self inform: (msg copyReplaceAll: '&fileRef' with: fileRef)
 ]
 
-{ #category : #'user interaction' }
+{ #category : 'user interaction' }
 PharoFilesOpener >> inform: msg withSourceRef: fileRef [
 	self inform: msg withRef: 'the sources file named ' , fileRef
 ]
 
-{ #category : #'open sources' }
+{ #category : 'open sources' }
 PharoFilesOpener >> informCannotLocateSources [
 	| msg |
 	msg := self cannotLocateMsg.
@@ -119,17 +121,17 @@ Make sure the sources file is not an Alias.' ].
 	self inform: msg withSourceRef: self sourcesName
 ]
 
-{ #category : #'user interaction' }
+{ #category : 'user interaction' }
 PharoFilesOpener >> informProblemInChanges: msg [
 	self inform: msg withChangesRef: self changesName
 ]
 
-{ #category : #delegated }
+{ #category : 'delegated' }
 PharoFilesOpener >> lastImagePath [
 	^ Smalltalk lastImagePath
 ]
 
-{ #category : #'open changes' }
+{ #category : 'open changes' }
 PharoFilesOpener >> openChanges: changesPath readOnly: readOnly [
 
 	^ (SourceFile on: changesPath potentialLocations: {
@@ -139,12 +141,12 @@ PharoFilesOpener >> openChanges: changesPath readOnly: readOnly [
 			yourself
 ]
 
-{ #category : #'open sources' }
+{ #category : 'open sources' }
 PharoFilesOpener >> openSources [
 	^ self openSources: self sourcesName forImage: self lastImagePath
 ]
 
-{ #category : #'open sources' }
+{ #category : 'open sources' }
 PharoFilesOpener >> openSources: fullSourcesName forImage: imagePath [
 	"Look in various places for a sources file, return an open stream to it."
 
@@ -159,19 +161,19 @@ PharoFilesOpener >> openSources: fullSourcesName forImage: imagePath [
 		yourself
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 PharoFilesOpener >> setInformAboutReadOnlyChanges [
 	"Make sure the user is informed when the .changes file can not be written to."
 	shouldInformAboutReadOnlyChanges := true
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 PharoFilesOpener >> shouldInformAboutReadOnlyChanges [
 	"Answer true if and only if the user must be informed when the .changes file can not be written to."
 	^ shouldInformAboutReadOnlyChanges ifNil: [ shouldInformAboutReadOnlyChanges := true ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 PharoFilesOpener >> sourcesFileOrNil [
 	| sources |
 	sources := self openSources.
@@ -182,12 +184,12 @@ PharoFilesOpener >> sourcesFileOrNil [
 		ifFalse: [ sources ]
 ]
 
-{ #category : #delegated }
+{ #category : 'delegated' }
 PharoFilesOpener >> sourcesName [
 	^ Smalltalk sourcesName
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 PharoFilesOpener >> unsetInformAboutReadOnlyChanges [
 	"Make sure the user is *not* informed when the .changes file can not be written to."
 	shouldInformAboutReadOnlyChanges := false

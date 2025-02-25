@@ -2,34 +2,36 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TIncludesTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TIncludesTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TIncludesTest >> anotherElementNotIn [
 " return an element different of 'elementNotIn'  not included in 'nonEmpty' "
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TIncludesTest >> elementNotIn [
 "return an element not included in 'nonEmpty' "
 
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TIncludesTest >> empty [
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TIncludesTest >> nonEmpty [
 	^ self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TIncludesTest >> test0FixtureIncludeTest [
 	| anElementIn |
 	self nonEmpty.
@@ -46,7 +48,7 @@ TIncludesTest >> test0FixtureIncludeTest [
 	self assertEmpty: self empty
 ]
 
-{ #category : #'tests - includes' }
+{ #category : 'tests - includes' }
 TIncludesTest >> testIdentityIncludesNonSpecificComportement [
 	"Test the same comportement than #includes:"
 
@@ -57,14 +59,14 @@ TIncludesTest >> testIdentityIncludesNonSpecificComportement [
 	self assert: (collection identityIncludes: collection anyOne)
 ]
 
-{ #category : #'tests - includes' }
+{ #category : 'tests - includes' }
 TIncludesTest >> testIncludesAllNoneThere [
 
 	self deny: (self empty includesAll: self nonEmpty ).
 	self deny: (self nonEmpty includesAll: { self elementNotIn. self anotherElementNotIn })
 ]
 
-{ #category : #'tests - includes' }
+{ #category : 'tests - includes' }
 TIncludesTest >> testIncludesAnyAllThere [
 
 	self deny: (self nonEmpty includesAny: self empty).
@@ -72,14 +74,14 @@ TIncludesTest >> testIncludesAnyAllThere [
 	self assert: (self nonEmpty includesAny: self nonEmpty)
 ]
 
-{ #category : #'tests - includes' }
+{ #category : 'tests - includes' }
 TIncludesTest >> testIncludesAnyNoneThere [
 
 	self deny: (self nonEmpty includesAny: self empty).
 	self deny: (self nonEmpty includesAny: { self elementNotIn. self anotherElementNotIn })
 ]
 
-{ #category : #'tests - includes' }
+{ #category : 'tests - includes' }
 TIncludesTest >> testIncludesElementIsNotThere [
 
 	self deny: (self nonEmpty includes: self elementNotIn).
@@ -87,7 +89,7 @@ TIncludesTest >> testIncludesElementIsNotThere [
 	self deny: (self empty includes: self elementNotIn)
 ]
 
-{ #category : #'tests - includes' }
+{ #category : 'tests - includes' }
 TIncludesTest >> testIncludesElementIsThere [
 
 	self assert: (self nonEmpty includes: self nonEmpty anyOne)

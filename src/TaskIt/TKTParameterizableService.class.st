@@ -14,72 +14,66 @@ service start.
 ```
 "
 Class {
-	#name : #TKTParameterizableService,
-	#superclass : #TKTService,
+	#name : 'TKTParameterizableService',
+	#superclass : 'TKTService',
 	#instVars : [
 		'name',
 		'task',
 		'startUpTask',
 		'tearDownTask'
 	],
-	#category : #'TaskIt-Services'
+	#category : 'TaskIt-Services',
+	#package : 'TaskIt',
+	#tag : 'Services'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 TKTParameterizableService >> initialize [
 	super initialize.
 	self step: [ 100 milliSeconds wait ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTParameterizableService >> name [
 
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTParameterizableService >> name: aString [
 	name := aString
 ]
 
-{ #category : #parameterization }
+{ #category : 'parameterization' }
 TKTParameterizableService >> onSetUpDo: aBlockClosure [
 
 	startUpTask := aBlockClosure
 ]
 
-{ #category : #parameterization }
+{ #category : 'parameterization' }
 TKTParameterizableService >> onTearDownDo: aBlockClosure [
 
 	tearDownTask := aBlockClosure
 ]
 
-{ #category : #starting }
-TKTParameterizableService >> restart [
-	self stop.
-	stopRequested := false.
-	stopCallbacks := Set new.
-	self start
-]
-
-{ #category : #stepping }
+{ #category : 'stepping' }
 TKTParameterizableService >> setUp [
 
 	super setUp.
 	startUpTask value
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TKTParameterizableService >> step: aBlockClosure [
 	task := aBlockClosure
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 TKTParameterizableService >> stepService [
 	task value
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 TKTParameterizableService >> tearDown [
 
 	super tearDown.

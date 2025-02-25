@@ -1,28 +1,29 @@
 Class {
-	#name : #CDExistingClassSideDefinitionTest,
-	#superclass : #CDExistingClassDefinitionTest,
-	#category : #'ClassParser-Tests'
+	#name : 'CDExistingClassSideDefinitionTest',
+	#superclass : 'CDExistingClassDefinitionTest',
+	#category : 'ClassParser-Tests',
+	#package : 'ClassParser-Tests'
 }
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDExistingClassSideDefinitionTest >> classDefinitionString [
 
-	^ (ClassDefinitionPrinter oldPharo for: CDClassWithFullDefinitionExample class) definitionString
+	^ (ClassDefinitionPrinter fluid for: CDClassWithFullDefinitionExample class) definitionString
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDExistingClassSideDefinitionTest >> firstInstanceVariableName [
 
 	^ 'classSideVar1'
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDExistingClassSideDefinitionTest >> secondInstanceVariableName [
 
 	^ 'classSideVar2'
 ]
 
-{ #category : #helpers }
+{ #category : 'helpers' }
 CDExistingClassSideDefinitionTest >> testGettingExistingClass [
 
 	| class |

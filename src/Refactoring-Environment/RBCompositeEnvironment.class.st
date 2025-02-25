@@ -1,35 +1,43 @@
 Class {
-	#name : #RBCompositeEnvironment,
-	#superclass : #RBBrowserEnvironmentWrapper,
+	#name : 'RBCompositeEnvironment',
+	#superclass : 'RBBrowserEnvironmentWrapper',
 	#instVars : [
 		'otherEnvironment'
 	],
-	#category : #'Refactoring-Environment'
+	#category : 'Refactoring-Environment',
+	#package : 'Refactoring-Environment'
 }
 
-{ #category : #accessing }
+{ #category : 'description' }
 RBCompositeEnvironment >> description [
-	^ (environment descriptionUntil: 15),
-		self operator,
-		(otherEnvironment  descriptionUntil: 15)
+
+	^ label ifNil: [
+		  (environment descriptionUntil: 15) , self operator
+		  , (otherEnvironment descriptionUntil: 15) ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RBCompositeEnvironment >> isCompositeEnvironment [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCompositeEnvironment >> operator [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RBCompositeEnvironment >> otherEnvironment [
 	^ otherEnvironment
 ]
 
-{ #category : #accessing }
+{ #category : 'removing' }
+RBCompositeEnvironment >> removeAll [
+	environment removeAll.
+	otherEnvironment removeAll
+]
+
+{ #category : 'accessing' }
 RBCompositeEnvironment >> shortDescription [
 	^ self description
 ]

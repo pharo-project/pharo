@@ -8,7 +8,7 @@ FreeType is a font processing library present in many systems ([http://www.freet
 
 It allows us to load and use a variety of font formats, also it is integrated with the host OS to use the installed files in the system. 
 
-It support fonts of the following formats:
+It supports fonts of the following formats:
 
 - TrueType fonts (TTF) and TrueType collections (TTC)
 - CFF fonts
@@ -22,8 +22,6 @@ It support fonts of the following formats:
 - BDF fonts (including anti-aliased ones)
 - PFR fonts
 - Type 42 fonts (limited support)
-
-
 
 ## Loading Fonts
 
@@ -43,12 +41,11 @@ aFont := FreeTypeFont fromFile: './Purisa-Bold.ttf' pointSize: 15 index: 0.
 
 To see the content, you should only inspect the file.
 
-
 ## Loading Fonts from ByteArray
 
 We can also load a font from a ByteArray, this allows us to load a font from the internet (using Zinc) or other sources. 
 
-For embedding fonts in an image there is an special engine. You should use it. Please refer to the section in this help.
+For embedding fonts in an image there is a special engine. You should use it. Please refer to the section in this help.
 
 ### For creating a font you should use:
 
@@ -58,7 +55,7 @@ FreeTypeFont
 	pointSize: aSize.
 ```
 
-or if there is different fonts in the byteArray you should use the index option.
+or if there are different fonts in the ByteArray you should use the index option.
 
 ```st
 FreeTypeFont 
@@ -82,11 +79,11 @@ This custom fonts need to be loaded during the startup of the image
  
 The best way to include the fonts is to embed them in the image, as there is already all the problem solve. The image includes two ways of loading fonts during the startup of the image:
 
-- Loading from the filesystem (from the System font directory)
-- Loading from a byteArray containing the whole font.
+- Loading from the file system (from the System font directory)
+- Loading from a ByteArray containing the whole font.
 
 To load a font during startup, you should create a subclass of `EmbeddedFreeTypeFontDescription`.
-This subclasses should implement three messages in the class side. 
+These subclasses should implement three messages in the class side.
 
 - `canBeInstalled` returns true if the font can be installed (if the contents is a byteArray, it can always be installed, but if it is get from the filesystem, this message should check if the file exists and can be read.)
 
@@ -97,4 +94,3 @@ This subclasses should implement three messages in the class side.
 For an example of implementing the loading of fonts, you can check the existing subclasses of `EmbeddedFreeTypeFontDescription` that implements this behavior.
 
 Once the fonts are automatically loaded, they can be referenced by its name.
-

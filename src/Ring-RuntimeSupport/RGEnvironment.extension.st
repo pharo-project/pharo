@@ -1,13 +1,13 @@
-Extension { #name : #RGEnvironment }
+Extension { #name : 'RGEnvironment' }
 
-{ #category : #'*Ring-RuntimeSupport' }
+{ #category : '*Ring-RuntimeSupport' }
 RGEnvironment >> addGlobalsNamed: anArrayOfSymbols [
 
 	anArrayOfSymbols do: [ :each |
 		self addGlobalVariable: (RGGlobalVariable named: each parent: self)]
 ]
 
-{ #category : #'*Ring-RuntimeSupport' }
+{ #category : '*Ring-RuntimeSupport' }
 RGEnvironment >> hasBindingThatBeginsWith: aString [
 	"Use the cached class and non-class names for better performance."
 
@@ -26,5 +26,5 @@ RGEnvironment >> hasBindingThatBeginsWith: aString [
 	aName := self nonClassNames
 		findBinary: searchBlock
 		ifNone: [nil].
-	^aName notNil
+	^aName isNotNil
 ]

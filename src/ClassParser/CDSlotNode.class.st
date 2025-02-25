@@ -2,12 +2,14 @@
 This class models definiton of instance Variables (Slots)
 "
 Class {
-	#name : #CDSlotNode,
-	#superclass : #CDVariableNode,
-	#category : #'ClassParser-Model'
+	#name : 'CDSlotNode',
+	#superclass : 'CDVariableNode',
+	#category : 'ClassParser-Model',
+	#package : 'ClassParser',
+	#tag : 'Model'
 }
 
-{ #category : #transforming }
+{ #category : 'transforming' }
 CDSlotNode >> asSlot [
 
 	"when parsing old style definitions, the node is just the string of all ivars"
@@ -19,19 +21,19 @@ CDSlotNode >> asSlot [
 	^ [ node evaluate ] on: Error do: [ UndefinedSlot named: self name ast: node ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDSlotNode >> isClassVariable [
 	"To be polymorphic to RB method nodes"
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDSlotNode >> isInstanceVariable [
 	"To be polymorphic to RB method nodes"
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDSlotNode >> isLiteralVariable [
 	"To be polymorphic to RB method nodes"
 	^false

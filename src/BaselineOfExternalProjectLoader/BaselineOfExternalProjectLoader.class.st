@@ -1,19 +1,20 @@
 Class {
-	#name : #BaselineOfExternalProjectLoader,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfExternalProjectLoader
+	#name : 'BaselineOfExternalProjectLoader',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfExternalProjectLoader',
+	#package : 'BaselineOfExternalProjectLoader'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfExternalProjectLoader >> baseline: spec [
+
 	<baseline>
 	| repository |
+	repository := self packageRepositoryURLForSpec: spec.
 
-	repository := self packageRepositoryURL.
-
-	spec for: #common do: [ 
+	spec for: #common do: [
 		spec package: 'ExternalProjectLoader'.
-		
-		spec group: 'Core' with: #('ExternalProjectLoader').
-		spec group: 'default' with: #('Core') ]
+
+		spec group: 'Core' with: #( 'ExternalProjectLoader' ).
+		spec group: 'default' with: #( 'Core' ) ]
 ]

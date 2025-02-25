@@ -33,12 +33,20 @@ A possible implementation would be:
 We prefer evaluating cosd(90-x) thus providing a branch free implementation.
 "
 Class {
-	#name : #Number,
-	#superclass : #Magnitude,
-	#category : #'Kernel-Numbers'
+	#name : 'Number',
+	#superclass : 'Magnitude',
+	#category : 'Kernel-Numbers',
+	#package : 'Kernel',
+	#tag : 'Numbers'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'testing' }
+Number class >> isAbstract [
+
+	^ self == Number
+]
+
+{ #category : 'instance creation' }
 Number class >> new [
 
 	self == Number ifTrue: [
@@ -46,41 +54,41 @@ Number class >> new [
 	^ super new
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Number class >> one [
 
 	^1
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 Number >> * aNumber [
 	"Answer the result of multiplying the receiver by aNumber."
 
 	self subclassResponsibility
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 Number >> + aNumber [
 	"Answer the sum of the receiver and aNumber."
 
 	self subclassResponsibility
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 Number >> - aNumber [
 	"Answer the difference between the receiver and aNumber."
 
 	self subclassResponsibility
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 Number >> / aNumber [
 	"Answer the result of dividing the receiver by aNumber."
 
 	self subclassResponsibility
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 Number >> // aNumber [
 	"Integer quotient defined by division with truncation toward negative
 	infinity. \\ answers the remainder from this division."
@@ -92,7 +100,7 @@ Number >> // aNumber [
 	^(self / aNumber) floor
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 Number >> @ y [
 	"Primitive. Answer a Point whose x value is the receiver and whose y
 	value is the argument. Optional. No Lookup. See Object documentation
@@ -102,7 +110,7 @@ Number >> @ y [
 	^Point x: self y: y
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 Number >> \\ aNumber [
 	"modulo. Remainder defined in terms of //. Answer a Number with the
 	same sign as aNumber."
@@ -114,7 +122,7 @@ Number >> \\ aNumber [
 	^self - (self // aNumber * aNumber)
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 Number >> abs [
 	"Answer a Number that is the absolute value (positive magnitude) of the
 	receiver."
@@ -124,7 +132,7 @@ Number >> abs [
 		ifFalse: [self]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Number >> adaptToFloat: rcvr andCompare: selector [
 	"If I am involved in comparison with a Float, convert rcvr to a
 	Fraction. This way, no bit is lost and comparison is exact."
@@ -143,43 +151,42 @@ Number >> adaptToFloat: rcvr andCompare: selector [
 	^ rcvr asTrueFraction perform: selector with: self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Number >> adaptToFloat: rcvr andSend: selector [
 	"If I am involved in arithmetic with a Float, convert me to a Float."
 	^ rcvr perform: selector with: self asFloat
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Number >> adaptToFraction: rcvr andSend: selector [
 	"If I am involved in arithmetic with a Fraction, convert us and evaluate exprBlock."
 	^ self subclassResponsibility
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Number >> adaptToInteger: rcvr andSend: selector [
 	"If I am involved in arithmetic with a Integer, convert us and evaluate exprBlock."
 	^ self subclassResponsibility
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 Number >> addAssignToFloatArray: aFloatArray [
 	^ aFloatArray primAddScalar: self asFloat
 ]
 
-{ #category : #'*Kernel-Chronology' }
-Number >> asDuration [
-
- 	^ Duration seconds: self asInteger
-]
-
-{ #category : #converting }
+{ #category : 'converting' }
 Number >> asFloat [
 	"Answer a floating-point number approximating the receiver."
 
 	self subclassResponsibility
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
+Number >> asFraction [
+	^ self subclassResponsibility
+]
+
+{ #category : 'converting' }
 Number >> asInteger [
 	"Round me towards nearest integer closer to zero."
 	"This violates the ANSI standard, but the system depends on this"
@@ -187,17 +194,12 @@ Number >> asInteger [
 	^self truncated
 ]
 
-{ #category : #converting }
-Number >> asMargin [
-	^ Margin fromNumber: self
-]
-
-{ #category : #converting }
+{ #category : 'converting' }
 Number >> asNumber [
 	^ self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Number >> asPoint [
 	"Answer a Point with the receiver as both coordinates; often used to
 	supply the same value in two dimensions, as with symmetrical gridding
@@ -206,26 +208,21 @@ Number >> asPoint [
 	^self @ self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Number >> asScaledDecimal [
 	"Answer a scaled decimal number approximating the receiver."
 
 	^ self asScaledDecimal: 8
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Number >> asScaledDecimal: scale [
 	"Answer the receiver converted to a ScaledDecimal."
 
 	^ ScaledDecimal newFromNumber: self scale: scale
 ]
 
-{ #category : #'*Kernel-Chronology' }
-Number >> asSeconds [
-	^ Duration milliSeconds: self * 1000
-]
-
-{ #category : #converting }
+{ #category : 'converting' }
 Number >> asSmallAngleDegrees [
 	"Return the receiver normalized to lie within the range (-180, 180)"
 
@@ -237,14 +234,14 @@ Number >> asSmallAngleDegrees [
 "#(-500 -300 -150 -5 0 5 150 300 500 1200) collect: [:n | n asSmallAngleDegrees]"
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Number >> asSmallPositiveDegrees [
 	"Return the receiver normalized to lie within the range (0, 360)"
 
 	^self \\ 360
 ]
 
-{ #category : #'truncation and round off' }
+{ #category : 'truncation and round off' }
 Number >> ceiling [
        "Answer the integer nearest the receiver toward  infinity."
 
@@ -256,7 +253,7 @@ Number >> ceiling [
                ifFalse: [ truncation + 1 ]
 ]
 
-{ #category : #calculating }
+{ #category : 'calculating' }
 Number >> clampBetween: min and: max [
 
 	 (self between: min and: max ) ifTrue: [ ^ self  ]
@@ -264,7 +261,7 @@ Number >> clampBetween: min and: max [
 	^ max
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Number >> copySignTo: aNumber [
 	"Return a number with same magnitude as aNumber and same sign as self."
 
@@ -273,19 +270,7 @@ Number >> copySignTo: aNumber [
 		ifFalse: [aNumber abs negated]
 ]
 
-{ #category : #'*Kernel-Chronology' }
-Number >> day [
-
- 	^ self days
-]
-
-{ #category : #'*Kernel-Chronology' }
-Number >> days [
-
- 	^ Duration days: self
-]
-
-{ #category : #'truncation and round off' }
+{ #category : 'truncation and round off' }
 Number >> detentBy: detent atMultiplesOf: grid snap: snap [
 	"Map all values that are within detent/2 of any multiple of grid to that multiple.  Otherwise, if snap is true, return self, meaning that the values in the dead zone will never be returned.  If snap is false, then expand the range between dead zones so that it covers the range between multiples of the grid, and scale the value by that factor."
 	| r1 r2 |
@@ -304,14 +289,14 @@ Number >> detentBy: detent atMultiplesOf: grid snap: snap [
 "
 ]
 
-{ #category : #'mathematical functions' }
+{ #category : 'mathematical functions' }
 Number >> exp [
 	"Answer the exponential of the receiver as a floating point number."
 
 	^self asFloat exp
 ]
 
-{ #category : #'truncation and round off' }
+{ #category : 'truncation and round off' }
 Number >> floor [
 	"Answer the integer nearest the receiver toward negative infinity."
 
@@ -323,115 +308,65 @@ Number >> floor [
 		  ifFalse: [ truncation - 1 ]
 ]
 
-{ #category : #'truncation and round off' }
+{ #category : 'truncation and round off' }
 Number >> fractionPart [
 	"Added for ANSI compatibility"
 	^self - self integerPart
 ]
 
-{ #category : #'*Kernel-Chronology' }
-Number >> hour [
-
- 	^ self hours
-]
-
-{ #category : #'*Kernel-Chronology' }
-Number >> hours [
-
- 	^ Duration hours: self
-]
-
-{ #category : #'truncation and round off' }
+{ #category : 'truncation and round off' }
 Number >> integerPart [
 	"Added for ANSI compatibility"
 	^self truncated
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Number >> isInfinite [
 
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Number >> isNaN [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Number >> isNumber [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
+Number >> isPowerOfTwo [
+	^ self subclassResponsibility
+]
+
+{ #category : 'testing' }
 Number >> isZero [
 	^self = 0
 ]
 
-{ #category : #'*Kernel-Chronology' }
-Number >> milliSecond [
-	"1 milliSecond printString >>> '0:00:00:00.001'"
-	"(1 second + 1 milliSecond) printString >>> '0:00:00:01.001'"
+{ #category : 'comparing' }
+Number >> literalEqual: other [
 
- 	^ self milliSeconds
+	^ self class == other class and: [self = other]
 ]
 
-{ #category : #'*Kernel-Chronology' }
-Number >> milliSeconds [
-
-	"2 milliSeconds printString >>> '0:00:00:00.002'"
-	"(1 second + 2 milliSeconds) printString >>> '0:00:00:01.002'"
-
- 	^ Duration milliSeconds: self
-]
-
-{ #category : #'*Kernel-Chronology' }
-Number >> minute [
-	"1 minute printString >>> '0:00:01:00'"
-	"(1 hour + 1 minute) printString >>> '0:01:01:00'"
-
- 	^ self minutes
-]
-
-{ #category : #'*Kernel-Chronology' }
-Number >> minutes [
-	"2 minutes printString >>> '0:00:02:00'"
-	"(1 hour + 2 minutes) printString >>> '0:01:02:00'"
-
- 	^ Duration minutes: self
-]
-
-{ #category : #'*Kernel-Chronology' }
-Number >> nanoSecond [
-	"1 nanoSecond printString >>> '0:00:00:00.000000001'"
-	"(1 milliSecond + 1 nanoSecond) printString >>> '0:00:00:00.001000001'"
-
- 	^ self nanoSeconds
-]
-
-{ #category : #'*Kernel-Chronology' }
-Number >> nanoSeconds [
-	"2 nanoSeconds printString >>> '0:00:00:00.000000002'"
-	"(1 milliSecond + 2 nanoSeconds) printString >>> '0:00:00:00.001000002'"
-
- 	^ Duration nanoSeconds: self
-]
-
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 Number >> negated [
 	"Answer a Number that is the negation of the receiver."
 
 	^0 - self
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Number >> negative [
 	"Answer whether the receiver is mathematically negative."
 
 	^ self < 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Number >> positive [
 	"Answer whether the receiver is positive or equal to 0. (ST-80 protocol).
 	See also strictlyPositive"
@@ -439,61 +374,18 @@ Number >> positive [
 	^ self >= 0
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Number >> printOn: aStream [
 	self printOn: aStream base: 10
 ]
 
-{ #category : #printing }
-Number >> printOn: aStream base: base [
-	"This method should print a representation of the number for the given base,
-	excluding the base prefix (and the letter r for radix)"
-
-	self subclassResponsibility
-]
-
-{ #category : #printing }
-Number >> printOn: aStream showingDecimalPlaces: placesDesired [
-	"Print a representation of the receiver on aStream in decimal notation with prescribed number of places after decimal separator."
-
-	| rounder rounded roundedFractionPart |
-	placesDesired <= 0 ifTrue: [^ self rounded printOn: aStream].
-	rounder := 10 raisedToInteger: placesDesired.
-	rounded := self roundTo: rounder reciprocal.
-	rounded negative ifTrue: [aStream nextPut: $-].
-	rounded := rounded abs.
-	rounded integerPart truncated printOn: aStream.
-	aStream nextPut: $..
-	roundedFractionPart := (rounded fractionPart * rounder) truncated.
-	roundedFractionPart printOn: aStream base: 10 length: placesDesired padded: true
-]
-
-{ #category : #printing }
-Number >> printShowingDecimalPlaces: placesDesired [
-	"Print the receiver showing precisely the given number of places desired.  If placesDesired is positive, a decimal point and that many digits after the decimal point will always be shown.  If placesDesired is zero, a whole number will be shown, without a decimal point. Here are some examples:"
-
-	"(23 printShowingDecimalPlaces: 2) >>> '23.00'"
-	"(23.5698 printShowingDecimalPlaces: 2) >>> '23.57'"
-	"(-234.567 printShowingDecimalPlaces: 5) >>> '-234.56700'"
-	"(23.4567 printShowingDecimalPlaces: 0) >>> '23'"
-	"(-23.4567 printShowingDecimalPlaces: 0) >>> '-23'"
-	"(100000000 printShowingDecimalPlaces: 1) >>> '100000000.0'"
-	"(0.98 printShowingDecimalPlaces: 5) >>> '0.98000'"
-	"(-0.98 printShowingDecimalPlaces: 2) >>> '-0.98'"
-	"(2.567 printShowingDecimalPlaces: 2) >>> '2.57'"
-	"(-2.567 printShowingDecimalPlaces: 2) >>> '-2.57'"
-	"(0 printShowingDecimalPlaces: 2) >>> '0.00'"
-
-	^String new: placesDesired + 10 streamContents: [:aStream |
-		self printOn: aStream showingDecimalPlaces: placesDesired]
-]
-
-{ #category : #printing }
+{ #category : 'printing' }
 Number >> printString [
-	^self printStringBase: 10
+
+	^ self printStringBase: 10
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Number >> printStringBase: base [
 	"Return a String representation of this number in base b."
 	"(10 printStringBase: 10) >>> '10'"
@@ -504,7 +396,7 @@ Number >> printStringBase: base [
 	^ String streamContents: [:strm | self printOn: strm base: base]
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 Number >> quo: aNumber [
 	"Integer quotient defined by division with truncation toward zero.
 
@@ -516,7 +408,7 @@ Number >> quo: aNumber [
 	^(self / aNumber) truncated
 ]
 
-{ #category : #'mathematical functions' }
+{ #category : 'mathematical functions' }
 Number >> raisedTo: aNumber [
 	"Answer the receiver raised to aNumber."
 
@@ -536,13 +428,13 @@ Number >> raisedTo: aNumber [
 	0 = aNumber ifTrue: [^ self class one].	"Special case of exponent=0"
 	1 = aNumber ifTrue: [^ self].	"Special case of exponent=1"
 	0 = self ifTrue: [				"Special case of self = 0"
-		aNumber < 0
-			ifTrue: [^ (ZeroDivide dividend: 1) signal]
-			ifFalse: [^ self]].
+		^ aNumber < 0
+			ifTrue: [ (ZeroDivide dividend: 1) signal]
+			ifFalse: [ self]].
 	^ (aNumber * self ln) exp		"Otherwise use logarithms"
 ]
 
-{ #category : #'mathematical functions' }
+{ #category : 'mathematical functions' }
 Number >> raisedToFraction: aFraction [
 	self isZero
 		ifTrue:
@@ -554,7 +446,7 @@ Number >> raisedToFraction: aFraction [
 	^(self negated ln * aFraction) exp negated
 ]
 
-{ #category : #'mathematical functions' }
+{ #category : 'mathematical functions' }
 Number >> raisedToInteger: anInteger [
 
 	"The 0 raisedToInteger: 0 is an special case. In some contexts must be 1 and in others must
@@ -576,7 +468,7 @@ Number >> raisedToInteger: anInteger [
 	^result
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 Number >> reciprocal [
 	"Returns the reciprocal of self.
 	In case self is 0 the / signals ZeroDivide"
@@ -589,13 +481,13 @@ Number >> reciprocal [
 	^1 / self
 ]
 
-{ #category : #'truncation and round off' }
+{ #category : 'truncation and round off' }
 Number >> reduce [
     "If self is close to an integer, return that integer"
     ^ self
 ]
 
-{ #category : #arithmetic }
+{ #category : 'arithmetic' }
 Number >> rem: aNumber [
 	"Remainder defined in terms of quo:. Answer a Number with the same
 	sign as self. e.g. 9 rem: 4 = 1, -9 rem: 4 = -1. 0.9 rem: 0.4 = 0.1."
@@ -603,7 +495,7 @@ Number >> rem: aNumber [
 	^self - ((self quo: aNumber) * aNumber)
 ]
 
-{ #category : #'truncation and round off' }
+{ #category : 'truncation and round off' }
 Number >> round: numberOfWishedDecimal [
 	"Round the decimal part of the receiver to be limited to the number of wished decimal. Only leave a fixed amount of decimal"
    "(10.12345 round: 2) >>> 10.12"
@@ -612,7 +504,7 @@ Number >> round: numberOfWishedDecimal [
 	^ self subclassResponsibility
 ]
 
-{ #category : #'truncation and round off' }
+{ #category : 'truncation and round off' }
 Number >> roundDownTo: aNumber [
 	"Answer the next multiple of aNumber toward negative infinity that is nearest the receiver.
 	Examples:"
@@ -625,14 +517,14 @@ Number >> roundDownTo: aNumber [
 	^(self / aNumber) floor * aNumber
 ]
 
-{ #category : #'truncation and round off' }
+{ #category : 'truncation and round off' }
 Number >> roundTo: quantum [
 	"Answer the nearest number that is a multiple of quantum."
 
 	^(self / quantum) rounded * quantum
 ]
 
-{ #category : #'truncation and round off' }
+{ #category : 'truncation and round off' }
 Number >> roundUpTo: aNumber [
 	"Answer the next multiple of aNumber toward infinity that is nearest the receiver."
 	"(3.1479 roundUpTo: 0.01) >>> 3.15"
@@ -644,7 +536,7 @@ Number >> roundUpTo: aNumber [
 	^(self / aNumber) ceiling * aNumber
 ]
 
-{ #category : #'truncation and round off' }
+{ #category : 'truncation and round off' }
 Number >> rounded [
 	"Answer the integer nearest the receiver."
 
@@ -656,24 +548,7 @@ Number >> rounded [
 	^(self + (self sign / 2)) truncated
 ]
 
-{ #category : #'*Kernel-Chronology' }
-Number >> second [
-	"1 second printString >>> '0:00:00:01'"
-	"(1 minute + 1 second) printString >>> '0:00:01:01'"
-
- 	^ self seconds
-]
-
-{ #category : #'*Kernel-Chronology' }
-Number >> seconds [
-
-	"2 seconds printString >>> '0:00:00:02'"
-	"(1 minute + 2 seconds) printString >>> '0:00:01:02'"
-
- 	^ Duration seconds: self
-]
-
-{ #category : #converting }
+{ #category : 'converting' }
 Number >> sign [
 	"Answer 1 if the receiver is greater than 0, -1 if less than 0, else 0."
 
@@ -682,14 +557,14 @@ Number >> sign [
 	^0
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Number >> sign: aNumber [
  	"Return a Number with the same sign as aNumber"
 
  	^ aNumber copySignTo: self
 ]
 
-{ #category : #'mathematical functions' }
+{ #category : 'mathematical functions' }
 Number >> signBit [
 	"Answer 1 if the receiver is negative, zero otherwise."
 
@@ -697,34 +572,12 @@ Number >> signBit [
 	^0
 ]
 
-{ #category : #printing }
-Number >> storeOn: aStream [
-	self printOn: aStream
+{ #category : 'testing' }
+Number >> strictlyPositive [
+	^ self > 0
 ]
 
-{ #category : #printing }
-Number >> storeOn: aStream base: base [
-	"This method should print a representation of the number for the given base,
-	including the base prefix (with letter r for radix)"
-
-	^self subclassResponsibility
-]
-
-{ #category : #printing }
-Number >> storeStringBase: base [
-	"Returns a string representation of the receiver in base 16 in a way that executing it will return the receiver."
-	"(10 storeStringBase: 16) >>> '16rA'"
-	"(10 storeStringBase: 10) >>> '10'"
-
-	^ String streamContents: [:strm | self storeOn: strm base: base]
-]
-
-{ #category : #printing }
-Number >> stringForReadout [
-	^ self rounded printString
-]
-
-{ #category : #'truncation and round off' }
+{ #category : 'truncation and round off' }
 Number >> truncateTo: aNumber [
 	"Answer the next multiple of aNumber toward zero that is nearest the receiver."
 	"(3.1479 truncateTo: 0.01) >>>  3.14"
@@ -738,33 +591,9 @@ Number >> truncateTo: aNumber [
 	^(self quo: aNumber) * aNumber
 ]
 
-{ #category : #'truncation and round off' }
+{ #category : 'truncation and round off' }
 Number >> truncated [
 	"Answer an integer nearest the receiver toward zero."
 
 	^self quo: 1
-]
-
-{ #category : #'*Kernel-Chronology' }
-Number >> week [
-
- 	^ self weeks
-]
-
-{ #category : #'*Kernel-Chronology' }
-Number >> weeks [
-
- 	^ Duration weeks: self
-]
-
-{ #category : #'*Kernel-Chronology' }
-Number >> year [
-
- 	^self years
-]
-
-{ #category : #'*Kernel-Chronology' }
-Number >> years [
-
- 	^ Duration years: self
 ]

@@ -2,8 +2,8 @@
 I represent datas of the current text area to manage undo operations etc
 "
 Class {
-	#name : #RubEditingState,
-	#superclass : #Object,
+	#name : 'RubEditingState',
+	#superclass : 'Object',
 	#instVars : [
 		'hasFocus',
 		'undoManager',
@@ -15,166 +15,168 @@ Class {
 		'scrollPivot',
 		'textArea'
 	],
-	#category : #'Rubric-Editing-Core'
+	#category : 'Rubric-Editing-Core',
+	#package : 'Rubric',
+	#tag : 'Editing-Core'
 }
 
-{ #category : #'undo - redo' }
+{ #category : 'undo - redo' }
 RubEditingState >> clearUndoManager: aKeyboardEvent [
 	self undoManager reset.
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> emphasisHere [
 	^ emphasisHere
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> emphasisHere: aListOfTextAttribute [
 	emphasisHere := aListOfTextAttribute ifNotNil: [ :l | l reject: [ :a | RubTextSelectionColor = a class ] ]
 ]
 
-{ #category : #'private - debugging' }
+{ #category : 'private - debugging' }
 RubEditingState >> exploreUndoManager: aKeyboardEvent [
 	self undoManager inspect.
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> hasFocus [
 	^ hasFocus ifNil: [ hasFocus := false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> hasFocus: aBoolean [
 	hasFocus := aBoolean
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> markBlock [
 	^ markBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> markBlock: aCharacterBlock [
 	markBlock := aCharacterBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> markBlock: markCharacterBlock pointBlock: pointCharacterBlock [
 	markBlock := markCharacterBlock.
 	pointBlock := pointCharacterBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> markIndex [
 	^ self markBlock ifNotNil: [:m | m stringIndex] ifNil: [ 1 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> markIndex: markIndex pointIndex: pointIndex [
 	markBlock := self paragraph characterBlockForIndex: markIndex.
 	pointBlock := self paragraph characterBlockForIndex: pointIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> paragraph [
 	^ textArea paragraph
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> pointBlock [
 	^ pointBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> pointBlock: aCharacterBlock [
 	pointBlock := aCharacterBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> pointIndex [
 	^ self pointBlock ifNotNil: [:p | p stringIndex ] ifNil: [ 0 ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> previousInterval [
 
 	^ previousInterval ifNil: [previousInterval := 1 to: 0]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> previousInterval: anInterval [
 
 	previousInterval := anInterval
 ]
 
-{ #category : #'undo - redo' }
+{ #category : 'undo - redo' }
 RubEditingState >> redo [
 	^ self undoManager redo
 ]
 
-{ #category : #'undo - redo' }
+{ #category : 'undo - redo' }
 RubEditingState >> redoArray: doArray undoArray: undoArray [
 	self undoManager isPlugged
 		ifTrue: [self undoManager redoArray: doArray undoArray: undoArray]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> scrollPivot [
 	^ scrollPivot
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> scrollPivot: aPoint [
 	scrollPivot := aPoint
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> selectionStart [
 
 	^ self pointBlock ifNotNil: [ :pb | pb min: self markBlock ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> selectionStop [
 
 	^ self pointBlock ifNotNil: [ :pb | pb max: self markBlock ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> startOfTyping [
 	^ startOfTyping
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> startOfTyping: anIntegerIndex [
 	startOfTyping := anIntegerIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> textArea: aTextArea [
 	textArea := aTextArea
 ]
 
-{ #category : #'undo - redo' }
+{ #category : 'undo - redo' }
 RubEditingState >> undo [
 	^ self undoManager undo
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> undoManager [
 
 	^ undoManager ifNil: [ undoManager := HistoryIterator new]
 ]
 
-{ #category : #'undo - redo' }
+{ #category : 'undo - redo' }
 RubEditingState >> undoRedoTransaction: aBlock [
 	self undoManager openRecordGroup.
 	aBlock ensure: [  self undoManager closeRecordGroup ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RubEditingState >> unplug [
 	super unplug.
 	undoManager
@@ -184,7 +186,7 @@ RubEditingState >> unplug [
 	 pointBlock := markBlock := startOfTyping := previousInterval := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubEditingState >> unselect [
 	self markBlock: self pointBlock copy
 ]

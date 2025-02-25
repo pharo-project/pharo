@@ -8,17 +8,19 @@ My instances are used by various types of queries. For example ClyFilterQuery se
 So as part of query I am participate in the environment query cache. And therefore my subclasses should correctly implement comparison methods (equality and hash) when they are pluggable by any parameter
 "
 Class {
-	#name : #ClyItemFilter,
-	#superclass : #Object,
-	#category : #'Calypso-NavigationModel-Model'
+	#name : 'ClyItemFilter',
+	#superclass : 'Object',
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyItemFilter >> matches: anEnvironmentItem [
 	self subclassResponsibility
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyItemFilter >> printCriteria [
 
 	^self printString

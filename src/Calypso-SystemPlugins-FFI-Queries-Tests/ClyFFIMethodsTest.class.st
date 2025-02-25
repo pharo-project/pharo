@@ -1,15 +1,16 @@
 Class {
-	#name : #ClyFFIMethodsTest,
-	#superclass : #ClyMethodQueryTest,
-	#category : #'Calypso-SystemPlugins-FFI-Queries-Tests'
+	#name : 'ClyFFIMethodsTest',
+	#superclass : 'ClyMethodQueryTest',
+	#category : 'Calypso-SystemPlugins-FFI-Queries-Tests',
+	#package : 'Calypso-SystemPlugins-FFI-Queries-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyFFIMethodsTest >> createQuery [
 	^ClyFFIMethodQuery from: ClyClassScope of: Object in: environment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyFFIMethodsTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope
 		of: (ClyClassWithFFIMethods >> #ffiMethod)
@@ -22,7 +23,7 @@ ClyFFIMethodsTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyFFIMethodsTest >> testFromTwoMethods [
 
 	self queryFromScope: ClyMethodScope ofAll: {
@@ -32,13 +33,13 @@ ClyFFIMethodsTest >> testFromTwoMethods [
 	self assert: foundSelectors sorted asArray equals: #(ffiMethod)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyFFIMethodsTest >> testNotSelectsNotFFIMethod [
 
 	self deny: (query selectsMethod: ClyClassWithFFIMethods >> #notFFIMethod)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyFFIMethodsTest >> testSelectsFFIMethod [
 
 	self assert: (query selectsMethod: ClyClassWithFFIMethods >> #ffiMethod)

@@ -2,12 +2,14 @@
 Test for PropertySlot
 "
 Class {
-	#name : #PropertySlotTest,
-	#superclass : #SlotSilentTest,
-	#category : #'Slot-Tests-Examples'
+	#name : 'PropertySlotTest',
+	#superclass : 'SlotSilentTest',
+	#category : 'Slot-Tests-Examples',
+	#package : 'Slot-Tests',
+	#tag : 'Examples'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 PropertySlotTest >> testCreateClassWithPropertySlot [
 	"Add instance variables using the builder interface"
 
@@ -24,7 +26,7 @@ PropertySlotTest >> testCreateClassWithPropertySlot [
 	self assert: (aClass classLayout hasSlot: (propertySlot instVarNamed: 'baseSlot'))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PropertySlotTest >> testCreateClassWithPropertySlotAddSecond [
 	"Add instance variables using the builder interface"
 
@@ -48,7 +50,7 @@ PropertySlotTest >> testCreateClassWithPropertySlotAddSecond [
 	self assert: (aClass classLayout hasSlot: (propertySlot2 instVarNamed: 'baseSlot'))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PropertySlotTest >> testCreateClassWithTwoPropertySlots [
 	"Add instance variables using the builder interface"
 
@@ -69,7 +71,7 @@ PropertySlotTest >> testCreateClassWithTwoPropertySlots [
 	self assert: (aClass classLayout  hasSlot: (propertySlot2 instVarNamed: 'baseSlot'))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PropertySlotTest >> testRemovePropertySlot [
 
 	| propertySlot |
@@ -87,7 +89,7 @@ PropertySlotTest >> testRemovePropertySlot [
 	self deny: (aClass classLayout hasSlotNamed: #'_propertyBaseSlot')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PropertySlotTest >> testRemovePropertySlot2 [
 	"add two property slots, remove one"
 
@@ -126,7 +128,7 @@ PropertySlotTest >> testRemovePropertySlot2 [
 	self deny:	(aClass classLayout hasSlotNamed:  #'_propertyBaseSlot')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PropertySlotTest >> testRemovePropertySlotWithInstance [
 	"add two property slots, remove one"
 
@@ -154,7 +156,7 @@ PropertySlotTest >> testRemovePropertySlotWithInstance [
 	self deny: 	(aClass hasSlot: propertySlot1)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PropertySlotTest >> testRemovePropertySlotWithTwoInstances [
 	"add two property slots, remove one"
 
@@ -182,7 +184,7 @@ PropertySlotTest >> testRemovePropertySlotWithTwoInstances [
 	self assert: (propertySlot1 read: instance2) equals: 5
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 PropertySlotTest >> testWhichSelectorsAccessFindSlots [
 	| cls |
 	cls := Object newAnonymousSubclass.

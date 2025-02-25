@@ -1,6 +1,6 @@
-Extension { #name : #SycAddPackagesScopeCommand }
+Extension { #name : 'SycAddPackagesScopeCommand' }
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 SycAddPackagesScopeCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 

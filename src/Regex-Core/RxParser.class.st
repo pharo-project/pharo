@@ -8,8 +8,8 @@ Instance variables:
 	lookahead	<Character>
 "
 Class {
-	#name : #RxParser,
-	#superclass : #Object,
+	#name : 'RxParser',
+	#superclass : 'Object',
 	#instVars : [
 		'input',
 		'lookahead'
@@ -18,10 +18,12 @@ Class {
 		'BackslashConstants',
 		'BackslashSpecials'
 	],
-	#category : #'Regex-Core-Base'
+	#category : 'Regex-Core-Base',
+	#package : 'Regex-Core',
+	#tag : 'Base'
 }
 
-{ #category : #'exception signaling' }
+{ #category : 'exception signaling' }
 RxParser class >> doHandlingMessageNotUnderstood: aBlock [
 	"MNU should be trapped and resignaled as a match error in a few places in the matcher.
 	This method factors out this dialect-dependent code to make porting easier."
@@ -30,7 +32,7 @@ RxParser class >> doHandlingMessageNotUnderstood: aBlock [
 		do: [:ex | RxParser signalMatchException: 'invalid predicate selector']
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RxParser class >> initialize [
 
 	self
@@ -38,7 +40,7 @@ RxParser class >> initialize [
 		initializeBackslashSpecials
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RxParser class >> initializeBackslashConstants [
 	"self initializeBackslashConstants"
 
@@ -50,7 +52,7 @@ RxParser class >> initializeBackslashConstants [
 		at: $t put: Character tab
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 RxParser class >> initializeBackslashSpecials [
 	"Keys are characters that normally follow a \, the values are
 	associations of classes and initialization selectors on the instance side
@@ -70,7 +72,7 @@ RxParser class >> initializeBackslashSpecials [
 		at: $> put: (Association key: RxsContextCondition value: #beEndOfWord)
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RxParser class >> parse: aString [
 	"Parse the argument and return the result (the parse tree).
 	In case of a syntax error, the corresponding exception is signaled."
@@ -78,7 +80,7 @@ RxParser class >> parse: aString [
 	^self new parse: aString
 ]
 
-{ #category : #preferences }
+{ #category : 'preferences' }
 RxParser class >> preferredMatcherClass [
 	"The matcher to use. For now just one is available, but in
 	principle this determines the matchers built implicitly,
@@ -89,7 +91,7 @@ RxParser class >> preferredMatcherClass [
 	^RxMatcher
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 RxParser class >> safelyParse: aString [
 	"Parse the argument and return the result (the parse tree).
 	In case of a syntax error, return nil.
@@ -97,27 +99,27 @@ RxParser class >> safelyParse: aString [
 	^ [self new parse: aString] on: RegexSyntaxError do: [:ex | nil]
 ]
 
-{ #category : #'exception signaling' }
+{ #category : 'exception signaling' }
 RxParser class >> signalCompilationException: errorString [
 	RegexCompilationError new signal: errorString
 ]
 
-{ #category : #'exception signaling' }
+{ #category : 'exception signaling' }
 RxParser class >> signalMatchException: errorString [
 	RegexMatchingError new signal: errorString
 ]
 
-{ #category : #'exception signaling' }
+{ #category : 'exception signaling' }
 RxParser class >> signalSyntaxException: errorString [
 	RegexSyntaxError new signal: errorString
 ]
 
-{ #category : #'exception signaling' }
+{ #category : 'exception signaling' }
 RxParser class >> signalSyntaxException: errorString at: errorPosition [
 	RegexSyntaxError signal: errorString at: errorPosition
 ]
 
-{ #category : #'recursive descent' }
+{ #category : 'recursive descent' }
 RxParser >> atom [
 	"An atom is one of a lot of possibilities, see below."
 
@@ -192,7 +194,7 @@ RxParser >> atom [
 	^atom
 ]
 
-{ #category : #'recursive descent' }
+{ #category : 'recursive descent' }
 RxParser >> branch [
 	"<branch> ::= e | <piece> <branch>"
 
@@ -208,7 +210,7 @@ RxParser >> branch [
 		branch: branch
 ]
 
-{ #category : #'recursive descent' }
+{ #category : 'recursive descent' }
 RxParser >> characterSet [
 	"Match a range of characters: something between `[' and `]'.
 	Opening bracked has already been seen, and closing should
@@ -227,7 +229,7 @@ RxParser >> characterSet [
 	^self characterSetFrom: spec
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxParser >> characterSetFrom: setSpec [
 	"<setSpec> is what goes between the brackets in a charset regex
 	(a String). Make a string containing all characters the spec specifies.
@@ -244,7 +246,7 @@ RxParser >> characterSetFrom: setSpec [
 		negated: negated
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxParser >> ifSpecial: aCharacter then: aBlock [
 	"If the character is such that it defines a special node when follows a $\,
 	then create that node and evaluate aBlock with the node as the parameter.
@@ -255,7 +257,7 @@ RxParser >> ifSpecial: aCharacter then: aBlock [
 	^aBlock value: (classAndSelector key new perform: classAndSelector value)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxParser >> inputUpTo: aCharacter errorMessage: aString [
 	"Accumulate input stream until <aCharacter> is encountered
 	and answer the accumulated chars as String, not including
@@ -273,7 +275,7 @@ RxParser >> inputUpTo: aCharacter errorMessage: aString [
 	^accumulator contents
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxParser >> inputUpTo: aCharacter nestedOn: anotherCharacter errorMessage: aString [
 	"Accumulate input stream until <aCharacter> is encountered
 	and answer the accumulated chars as String, not including
@@ -292,7 +294,7 @@ RxParser >> inputUpTo: aCharacter nestedOn: anotherCharacter errorMessage: aStri
 	^accumulator contents
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxParser >> inputUpToAny: aDelimiterString errorMessage: aString [
 	"Accumulate input stream until any character from <aDelimiterString> is encountered
 	and answer the accumulated chars as String, not including the matched characters from the
@@ -310,7 +312,7 @@ RxParser >> inputUpToAny: aDelimiterString errorMessage: aString [
 	^accumulator contents
 ]
 
-{ #category : #'recursive descent' }
+{ #category : 'recursive descent' }
 RxParser >> lookAround [
 	"Parse a lookaround expression after: (?<lookround>)
 	<lookround> ::= !<regex> | =<regex>"
@@ -325,7 +327,7 @@ RxParser >> lookAround [
 	^ lookaround
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxParser >> match: aCharacter [
 	"<aCharacter> MUST match the current lookeahead.
 	If this is the case, advance the input. Otherwise, blow up."
@@ -335,7 +337,7 @@ RxParser >> match: aCharacter [
 	self next
 ]
 
-{ #category : #'recursive descent' }
+{ #category : 'recursive descent' }
 RxParser >> messagePredicate [
 	"Match a message predicate specification: a selector (presumably
 	understood by a Character) enclosed in :'s ."
@@ -352,7 +354,7 @@ RxParser >> messagePredicate [
 		negated: negated
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxParser >> next [
 	"Advance the input storing the just read character
 	as the lookahead."
@@ -362,7 +364,7 @@ RxParser >> next [
 		ifFalse: [lookahead := input next]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxParser >> parse: aString [
 	"Parse input from a string <aString>.
 	On success, answers an RxsRegex -- parse tree root.
@@ -372,7 +374,7 @@ RxParser >> parse: aString [
 	^self parseStream: (ReadStream on: aString)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RxParser >> parseStream: aStream [
 	"Parse an input from a character stream <aStream>.
 	On success, answers an RxsRegex -- parse tree root.
@@ -388,7 +390,7 @@ RxParser >> parseStream: aStream [
 	^tree
 ]
 
-{ #category : #'recursive descent' }
+{ #category : 'recursive descent' }
 RxParser >> piece [
 	"<piece> ::= <atom> | <atom>* | <atom>+ | <atom>? | <atom>{<number>,<number>}"
 
@@ -424,7 +426,7 @@ RxParser >> piece [
 	^ RxsPiece new initializeAtom: atom
 ]
 
-{ #category : #'recursive descent' }
+{ #category : 'recursive descent' }
 RxParser >> quantifiedAtom: atom [
 	"Parse a quanitifer expression which can have one of the following forms
 		{<min>,<max>}    match <min> to <max> occurrences
@@ -452,7 +454,7 @@ RxParser >> quantifiedAtom: atom [
 		max: max
 ]
 
-{ #category : #'recursive descent' }
+{ #category : 'recursive descent' }
 RxParser >> regex [
 	"<regex> ::= e | <branch> `|' <regex>"
 
@@ -469,19 +471,19 @@ RxParser >> regex [
 	^RxsRegex new initializeBranch: branch regex: regex
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxParser >> signalNullableClosureParserError [
 	self signalParseError: ' nullable closure'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxParser >> signalParseError [
 
 	self class
 		signalSyntaxException: 'Regex syntax error' at: input position
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RxParser >> signalParseError: aString [
 
 	self class signalSyntaxException: aString at: input position

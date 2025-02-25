@@ -2,33 +2,35 @@
 I keep some examples on how to use a PluggableToggleButtonMorph
 "
 Class {
-	#name : #PluggableToggleButtonMorphExample,
-	#superclass : #PluggableButtonMorphExample,
-	#category : #'Morphic-Examples-Widgets'
+	#name : 'PluggableToggleButtonMorphExample',
+	#superclass : 'PluggableButtonMorphExample',
+	#category : 'Morphic-Examples-Widgets',
+	#package : 'Morphic-Examples',
+	#tag : 'Widgets'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 PluggableToggleButtonMorphExample class >> exampleToggleButton [
 	<sampleInstance>
 	<example>
 	^ self new buildToggleButton openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 PluggableToggleButtonMorphExample class >> exampleToggleButtonNoLabel [
 	<sampleInstance>
 	<example>
 	^ self new buildToggleButtonNoLabel openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 PluggableToggleButtonMorphExample class >> exampleToggleButtonWithIcon [
 	<sampleInstance>
 	<example>
 	^ self new buildToggleButtonWithIcon openInWindow
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 PluggableToggleButtonMorphExample >> buildToggleButton [
 	^ PluggableToggleButtonMorph
 		on: self
@@ -38,7 +40,7 @@ PluggableToggleButtonMorphExample >> buildToggleButton [
 		menu: nil
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 PluggableToggleButtonMorphExample >> buildToggleButtonNoLabel [
 	^ PluggableToggleButtonMorph
 		on: self
@@ -49,7 +51,7 @@ PluggableToggleButtonMorphExample >> buildToggleButtonNoLabel [
 		menu: nil
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 PluggableToggleButtonMorphExample >> buildToggleButtonWithIcon [
 	^ PluggableToggleButtonMorph
 		on: self
@@ -60,7 +62,7 @@ PluggableToggleButtonMorphExample >> buildToggleButtonWithIcon [
 		menu: nil
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 PluggableToggleButtonMorphExample >> toggleAction: aBoolean [
 	self inform: (aBoolean
 		ifTrue: [ 'Button pressed' ]

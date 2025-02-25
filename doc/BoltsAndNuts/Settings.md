@@ -1,5 +1,7 @@
 # The setting browser
+
 ## The User interface
+
 A SettingBrowser allows the browsing as well as the editing of setting values.
 For each setting, a label and an input widget allowing the change of the setting value are shown.
 
@@ -27,7 +29,7 @@ For specific applications, other pragma keywords can be used. These keywords can
 (SettingBrowser forKeywords: #('blob')) open.
 ```
 
-Then, only settings which are declared with the keyword 'blob' are viewed. 
+Then, only settings which are declared with the keyword 'blob' are viewed.
 Here is an example of such a setting declared in the class side of a class BlobSettings 
 
 ```st
@@ -45,15 +47,17 @@ The expression `SettingBrowser open` is then equivalent to the `(SettingBrowser 
 
 ### Filtering
 
-The `SettingBrowser` has a filtering functionality to limitate the number of settings. You can enter a token in the input field of the toolbar to show only settings that are matching the token.
-Two filtering modes are allowed:  with a substring or with a regular expression.
+The `SettingBrowser` has a filtering functionality to limit the number of settings. You can enter a token in the input field of the toolbar to show only settings that are matching the token.
+Two filtering modes are allowed: with a substring or with a regular expression.
 - with a substring: only settings which name, description, pragma class or method selector includes this substring are viewed; 
 - with a regular expression: the same as with a substring except that the input is used as a regular expression. This filtering is applied if the Regexp checkbox is checked.
 
 ## How to declare a setting
+
 A setting is declared with a method class side. This kind of method takes a builder as argument and a standard setting is tagged with the <systemsettings> pragma. The builder argument serves as a facade for the declaration.
 
 ### A simple boolean setting example
+
 Let's start with a setting declaration example:
 
 ```st
@@ -76,7 +80,7 @@ To declare a setting, just send `setting:` to the builder with its identifier, a
 
 Because all settings are organized in trees we need a way to indicate what is the position of the setting node in the overall setting trees list. In fact it can be done two ways. The first way is to use the `parent:` message (A second possibility is to declare a subtree in one method, it is explained later in this documentation). The `parent:` message is send for non root settings. `parent` takes the identifier of the parent setting as argument.
 
-You may notice that in this example,  if we don't take into account the $: at the end of the setting accessor, the getting and the setting accessors are the same. This is often the case. You can simply set the setter and the getter by sending the `selector:` message to the setting node. Thus the declaration is simplified as follow:
+You may notice that in this example, if we don't take into account the $: at the end of the setting accessor, the getting and the setting accessors are the same. This is often the case. You can simply set the setter and the getter by sending the `selector:` message to the setting node. Thus the declaration is simplified as follow:
 
 ```st
 CodeHolderSystemSettings class>>caseSensitiveFindsSettingsOn: aBuilder
@@ -113,7 +117,8 @@ TextEditor class>>caseSensitiveFindsSettingsOn: aBuilder
 ```
 
 ### Declaring a subtree in one single method
-Directly declaring a sub-tree of settings in one method is also possible. Then, typically, a root group is declared for the application settings and the children settings themselves are also declared within the same method as in the example below in which `formatCommentWithStatements` and `indentString` are directly declared as children of the #configurableFormatter setting:
+
+Directly declaring a subtree of settings in one method is also possible. Then, typically, a root group is declared for the application settings and the children settings themselves are also declared within the same method as in the example below in which `formatCommentWithStatements` and `indentString` are directly declared as children of the #configurableFormatter setting:
 
 ```st
 RBConfigurableFormatter class>>settingsOn: aBuilder
@@ -131,9 +136,11 @@ RBConfigurableFormatter class>>settingsOn: aBuilder
 ```
 
 ### Optional setting
+
 Any setting can have children. In the case where a boolean setting is used as a parent, then, its children are chown only if the parent preference value is true.
 
 ### Range setting
+
 You send the #range: message to the builder instead of the #setting: message. In addition, you send the #range: message to the setting with an interval as argument in order to indicate the valid range.
 
 ```st

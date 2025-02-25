@@ -3,24 +3,26 @@ I am a command to invert hierarhcy in the method visibility class list.
 (it is shown when user expands first item in the method groups pane)
 "
 Class {
-	#name : #ClyInvertMethodVisibilityHierarchyCommand,
-	#superclass : #ClyBrowserCommand,
-	#category : #'Calypso-SystemTools-FullBrowser-Commands-MethodGroups'
+	#name : 'ClyInvertMethodVisibilityHierarchyCommand',
+	#superclass : 'ClyBrowserCommand',
+	#category : 'Calypso-SystemTools-FullBrowser-Commands-MethodGroups',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'Commands-MethodGroups'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyInvertMethodVisibilityHierarchyCommand class >> browserContextMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byItemOf: CmdExtraMenuGroup for: ClyInheritedMethodGroup asCalypsoItemContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyInvertMethodVisibilityHierarchyCommand >> defaultMenuItemName [
 	^'Invert hierarchy'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyInvertMethodVisibilityHierarchyCommand >> execute [
 	ClySubclassHierarchy invertMethodVisibilityHierarchy.
 	browser switchToMethodGroups

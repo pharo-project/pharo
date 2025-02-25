@@ -1,13 +1,14 @@
-Extension { #name : #Object }
+Extension { #name : 'Object' }
 
-{ #category : #'*Morphic-Core' }
+{ #category : '*Morphic-Core' }
 Object >> complexContents [
 
 	^ self
 ]
 
-{ #category : #'*Morphic-Core' }
+{ #category : '*Morphic-Core' }
 Object >> currentWorld [
 	"Answer a morphic world that is the current UI focus."
-	^ UIManager default currentWorld
+	ActiveWorld ifNotNil: [ ^ ActiveWorld ].
+	^ World
 ]

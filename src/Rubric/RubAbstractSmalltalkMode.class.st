@@ -2,33 +2,35 @@
 I am an abstract class to set a mode of editing for smalltalk
 "
 Class {
-	#name : #RubAbstractSmalltalkMode,
-	#superclass : #RubEditingMode,
-	#category : #'Rubric-Editing-Code'
+	#name : 'RubAbstractSmalltalkMode',
+	#superclass : 'RubEditingMode',
+	#category : 'Rubric-Editing-Code',
+	#package : 'Rubric',
+	#tag : 'Editing-Code'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubAbstractSmalltalkMode >> editorClass [
 	^ RubSmalltalkEditor
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RubAbstractSmalltalkMode >> isCompletionEnabled [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RubAbstractSmalltalkMode >> isScripting [
 	^ false
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RubAbstractSmalltalkMode >> parseExpression: aString [
 
 	self subclassResponsibility
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RubAbstractSmalltalkMode >> parseSource: aString [
 
 	self subclassResponsibility

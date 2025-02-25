@@ -2,56 +2,64 @@
 I represent query browser context
 "
 Class {
-	#name : #ClyQueryBrowserContext,
-	#superclass : #ClySystemBrowserContext,
-	#category : #'Calypso-SystemTools-QueryBrowser-UI'
+	#name : 'ClyQueryBrowserContext',
+	#superclass : 'ClySystemBrowserContext',
+	#category : 'Calypso-SystemTools-QueryBrowser-UI',
+	#package : 'Calypso-SystemTools-QueryBrowser',
+	#tag : 'UI'
 }
 
-{ #category : #'selection strategy' }
+{ #category : 'selection strategy' }
 ClyQueryBrowserContext class >> selectionStrategy [
 	<classAnnotation>
 
 	^ClyContextSelectionStrategyAnnotation for: ClyQueryBrowserMorph
 ]
 
-{ #category : #'selection-classes' }
+{ #category : 'selection-classes' }
 ClyQueryBrowserContext >> isClassSelected [
 	"here we extract selected classes from selected items"
 	^self hasSelectedItems
 ]
 
-{ #category : #'selection-methods' }
+{ #category : 'selection-methods' }
 ClyQueryBrowserContext >> isMethodSelected [
 	"optimized version without extra collection copy"
 
 	^selectedItems anySatisfy: [ :each | each isBasedOnItemType: ClyMethod  ]
 ]
 
-{ #category : #'selection-packages' }
+{ #category : 'selection-packages' }
 ClyQueryBrowserContext >> isPackageSelected [
 	"here we extract selected packages from selected items"
 	^self hasSelectedItems
 ]
 
-{ #category : #'selection-classes' }
+{ #category : 'testing' }
+ClyQueryBrowserContext >> isQueryBrowserContext [
+
+	^ true.
+]
+
+{ #category : 'selection-classes' }
 ClyQueryBrowserContext >> lastSelectedClass [
 
 	^self lastSelectedItem systemDefinition definingClass
 ]
 
-{ #category : #'selection-packages' }
+{ #category : 'selection-packages' }
 ClyQueryBrowserContext >> lastSelectedPackage [
 
 	^self lastSelectedItem systemDefinition definingPackage
 ]
 
-{ #category : #'browser state' }
+{ #category : 'browser state' }
 ClyQueryBrowserContext >> restoreBrowserState [
 
 	self browser selectObject: self lastSelectedObject
 ]
 
-{ #category : #'selection-classes' }
+{ #category : 'selection-classes' }
 ClyQueryBrowserContext >> selectedClassItems [
 
 	| unique classItem |
@@ -64,17 +72,17 @@ ClyQueryBrowserContext >> selectedClassItems [
 	^unique
 ]
 
-{ #category : #'selection-classes' }
+{ #category : 'selection-classes' }
 ClyQueryBrowserContext >> selectedClassSide [
 	^self lastSelectedClass
 ]
 
-{ #category : #'selection-methods' }
+{ #category : 'selection-methods' }
 ClyQueryBrowserContext >> selectedMethodItems [
 	^selectedItems select: [ :each | each isBasedOnItemType: ClyMethod ]
 ]
 
-{ #category : #'selection-packages' }
+{ #category : 'selection-packages' }
 ClyQueryBrowserContext >> selectedPackageItems [
 
 	| unique packageItem |

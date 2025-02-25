@@ -1,13 +1,6 @@
-Extension { #name : #SortedCollection }
+Extension { #name : 'SortedCollection' }
 
-{ #category : #'*STON-Core' }
-SortedCollection >> fromSton: stonReader [
-	"Overwritten to get back the standard object behavior"
-
-	stonReader parseNamedInstVarsFor: self
-]
-
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 SortedCollection class >> fromSton: stonReader [
 	"Overwritten to get back the standard object behavior"
 
@@ -16,7 +9,14 @@ SortedCollection class >> fromSton: stonReader [
 		yourself
 ]
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
+SortedCollection >> fromSton: stonReader [
+	"Overwritten to get back the standard object behavior"
+
+	stonReader parseNamedInstVarsFor: self
+]
+
+{ #category : '*STON-Core' }
 SortedCollection >> stonOn: stonWriter [
 	"Overwritten to get back the standard object behavior"
 

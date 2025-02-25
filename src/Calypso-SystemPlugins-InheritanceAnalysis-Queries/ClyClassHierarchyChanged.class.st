@@ -7,24 +7,25 @@ For example Object methods status should be updated when you remove some subclas
 And otherwise when you change superclass of another class. Subclasses of another class should update their methods status because they could override methods from original removed deep superclass.
 "
 Class {
-	#name : #ClyClassHierarchyChanged,
-	#superclass : #ClassAnnouncement,
-	#category : #'Calypso-SystemPlugins-InheritanceAnalysis-Queries'
+	#name : 'ClyClassHierarchyChanged',
+	#superclass : 'ClassAnnouncement',
+	#category : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries',
+	#package : 'Calypso-SystemPlugins-InheritanceAnalysis-Queries'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassHierarchyChanged >> affectsMethod: aMethod [
 	^self affectsMethodsDefinedInClass: aMethod origin
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassHierarchyChanged >> affectsMethods [
 	"When class hierarchy is changed dur to modified superclass of subclass
 	it always affect override status of methods in hierarchy"
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassHierarchyChanged >> canAffectResultOfMethodQuery: aMethodQuery [
 	^true
 ]

@@ -3,23 +3,25 @@ I decorate table with simple constant icon for class comments.
 For example query browser can show ClyClassComment instances in the table
 "
 Class {
-	#name : #ClyClassCommentTableDecorator,
-	#superclass : #ClyTableDecorator,
-	#category : #'Calypso-SystemTools-Core-TableDecorators'
+	#name : 'ClyClassCommentTableDecorator',
+	#superclass : 'ClyTableDecorator',
+	#category : 'Calypso-SystemTools-Core-TableDecorators',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'TableDecorators'
 }
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyClassCommentTableDecorator class >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
 	super decorateMainTableCell: anItemCellMorph of: aDataSourceItem.
 
 	anItemCellMorph definitionIcon: #comments
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyClassCommentTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyClassCommentTableDecorator class >> decorationStrategy [
 	<classAnnotation>
 

@@ -4,20 +4,21 @@ I provide a way to not use the default session manager.
 
 "
 Class {
-	#name : #TestStartupUIManager,
-	#superclass : #StartupUIManager,
+	#name : 'TestStartupUIManager',
+	#superclass : 'StartupUIManager',
 	#instVars : [
 		'sessionManager'
 	],
-	#category : #'System-SessionManager-Tests'
+	#category : 'System-SessionManager-Tests',
+	#package : 'System-SessionManager-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestStartupUIManager >> sessionManager [
 	^ sessionManager
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 TestStartupUIManager >> sessionManager: aSessionManager [
 	sessionManager := aSessionManager
 ]

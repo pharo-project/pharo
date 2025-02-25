@@ -2,27 +2,30 @@
 I represent a potential Dependency on a Package because it implements a method called by the package under analysis but the method is not implemented in the package, neither in the static dependencies of this package (inheritence, reference, trait, extension).
 "
 Class {
-	#name : #DAMessageSendDependency,
-	#superclass : #DADependencyFromClass,
+	#name : 'DAMessageSendDependency',
+	#superclass : 'DADependencyFromClass',
 	#instVars : [
 		'implementedMethods'
 	],
-	#category : #'Tool-DependencyAnalyser-Core'
+	#category : 'Tool-DependencyAnalyser-Core',
+	#package : 'Tool-DependencyAnalyser',
+	#tag : 'Core'
 }
 
-{ #category : #setting }
+{ #category : 'setting' }
 DAMessageSendDependency >> implementedMethods: aListOfSelectors [
 	implementedMethods := aListOfSelectors
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 DAMessageSendDependency >> isMessageSendDependency [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DAMessageSendDependency >> users [
-	^  (source rPackage methods
-		select: [ :method | method messages includesAny: implementedMethods ]
-		thenCollect: [ :method | method -> (method messages intersection: implementedMethods) ])
+
+	^ source systemPackage methods
+		  select: [ :method | method messages includesAny: implementedMethods ]
+		  thenCollect: [ :method | method -> (method messages intersection: implementedMethods) ]
 ]

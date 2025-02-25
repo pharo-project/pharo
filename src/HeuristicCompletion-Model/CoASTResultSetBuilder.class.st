@@ -2,28 +2,30 @@
 I'm an abstract superclass for defining AST Based Complishons
 "
 Class {
-	#name : #CoASTResultSetBuilder,
-	#superclass : #CoResultSetBuilder,
+	#name : 'CoASTResultSetBuilder',
+	#superclass : 'CoResultSetBuilder',
 	#instVars : [
 		'astNode',
 		'node'
 	],
-	#category : #'HeuristicCompletion-Model-SystemIntegration'
+	#category : 'HeuristicCompletion-Model-SystemIntegration',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'SystemIntegration'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoASTResultSetBuilder class >> isAbstract [
 
 	^ self == CoASTResultSetBuilder
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoASTResultSetBuilder >> astNode [
 
 	^ astNode
 ]
 
-{ #category : #'API - building' }
+{ #category : 'API - building' }
 CoASTResultSetBuilder >> buildCompletion [
 
 	"Visiting the node configures the completion for that node"
@@ -31,7 +33,7 @@ CoASTResultSetBuilder >> buildCompletion [
 	^ astNode acceptVisitor: self
 ]
 
-{ #category : #'API - building' }
+{ #category : 'API - building' }
 CoASTResultSetBuilder >> configureEmptyFetcherForNode: aNode [
 
 	^ self
@@ -39,7 +41,7 @@ CoASTResultSetBuilder >> configureEmptyFetcherForNode: aNode [
 		forNode: aNode
 ]
 
-{ #category : #'private - building' }
+{ #category : 'private - building' }
 CoASTResultSetBuilder >> configureFetcher: aFetcher forNode: aNode [
 
 	| completion |
@@ -49,7 +51,7 @@ CoASTResultSetBuilder >> configureFetcher: aFetcher forNode: aNode [
 	^ completion
 ]
 
-{ #category : #'private - building' }
+{ #category : 'private - building' }
 CoASTResultSetBuilder >> configureFetcherForNode: aNode usingHeuristicAvoidingRepetitions: heuristic [
 
 	| fetcher |
@@ -59,159 +61,180 @@ CoASTResultSetBuilder >> configureFetcherForNode: aNode usingHeuristicAvoidingRe
 		forNode: aNode
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoASTResultSetBuilder >> node: aNode [
 
 	node := aNode
 ]
 
-{ #category : #'API - building' }
+{ #category : 'API - building' }
 CoASTResultSetBuilder >> parseNode [
 
+	| n |
 	^ node ifNil: [
-		(completionContext completionClass compiler
+		n := completionContext completionClass compiler
 			source: completionContext source;
-			noPattern: completionContext isScripting;
-			parse) nodeForOffset: completionContext position ]
+			isScripting: completionContext isScripting;
+			parse.
+		OCTypingVisitor new visit: n.
+		(n nodeBeforeOffset: completionContext position) ifNil: [ n ] ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitAnnotationMarkNode: aAnnotationMarkNode [
+
+	^ self visitValueNode: aAnnotationMarkNode
+]
+
+{ #category : 'visiting' }
 CoASTResultSetBuilder >> visitArgumentVariableNode: anArgumentNode [
 
 	^ self visitVariableNode: anArgumentNode
 ]
 
-{ #category : #visiting }
-CoASTResultSetBuilder >> visitArrayNode: aRBArrayNode [
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitArrayNode: anArrayNode [
 
-	^ self visitNode: aRBArrayNode
+	^ self visitValueNode: anArrayNode
 ]
 
-{ #category : #visiting }
-CoASTResultSetBuilder >> visitAssignmentNode: aRBAssignmentNode [
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitAssignmentNode: aAssignmentNode [
 
-	^ self visitNode: aRBAssignmentNode
+	^ self visitValueNode: aAssignmentNode
 ]
 
-{ #category : #visiting }
-CoASTResultSetBuilder >> visitBlockNode: aRBBlockNode [
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitBlockNode: aBlockNode [
 
-	^ self visitNode: aRBBlockNode
+	^ self visitValueNode: aBlockNode
 ]
 
-{ #category : #visiting }
-CoASTResultSetBuilder >> visitCascadeNode: aRBCascadeNode [
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitCascadeNode: aCascadeNode [
 
-	^ self visitNode: aRBCascadeNode
+	^ self visitValueNode: aCascadeNode
 ]
 
-{ #category : #visiting }
-CoASTResultSetBuilder >> visitClassVariableNode: aRBVariableNode [
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitClassVariableNode: aVariableNode [
 
-	^ self visitVariableNode: aRBVariableNode
+	^ self visitVariableNode: aVariableNode
 ]
 
-{ #category : #visiting }
-CoASTResultSetBuilder >> visitEnglobingErrorNode: aRBVariableNode [
-	^ self visitNode: aRBVariableNode
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitCommentNode: aComment [ 
+
+	^ self visitNode: aComment
 ]
 
-{ #category : #visiting }
-CoASTResultSetBuilder >> visitGlobalVariableNode: aRBVariableNode [
-
-	^ self visitVariableNode: aRBVariableNode
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitEnglobingErrorNode: aVariableNode [
+	^ self visitNode: aVariableNode
 ]
 
-{ #category : #visiting }
-CoASTResultSetBuilder >> visitInstanceVariableNode: aRBVariableNode [
-	^ self visitVariableNode: aRBVariableNode
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitGlobalVariableNode: aVariableNode [
+
+	^ self visitVariableNode: aVariableNode
 ]
 
-{ #category : #visiting }
-CoASTResultSetBuilder >> visitLiteralArrayNode: aRBLiteralArrayNode [
-
-	^ self visitNode: aRBLiteralArrayNode
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitInstanceVariableNode: aVariableNode [
+	^ self visitVariableNode: aVariableNode
 ]
 
-{ #category : #visiting }
-CoASTResultSetBuilder >> visitLiteralValueNode: aRBLiteralValueNode [
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitLiteralArrayNode: aLiteralArrayNode [
 
-	^ self visitNode: aRBLiteralValueNode
+	^ self visitValueNode: aLiteralArrayNode
 ]
 
-{ #category : #visiting }
-CoASTResultSetBuilder >> visitLiteralVariableNode: aRBVariableNode [
-	^ self visitVariableNode: aRBVariableNode
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitLiteralValueNode: aLiteralValueNode [
+
+	^ self visitValueNode: aLiteralValueNode
 ]
 
-{ #category : #visiting }
-CoASTResultSetBuilder >> visitMessageNode: aRBMessageNode [
-
-	^ self visitNode: aRBMessageNode
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitLiteralVariableNode: aVariableNode [
+	^ self visitVariableNode: aVariableNode
 ]
 
-{ #category : #visiting }
-CoASTResultSetBuilder >> visitMethodNode: aRBMethodNode [
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitMessageNode: aMessageNode [
 
-	^ self visitNode: aRBMethodNode
+	^ self visitValueNode: aMessageNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitMethodNode: aMethodNode [
+
+	^ self visitNode: aMethodNode
+]
+
+{ #category : 'visiting' }
 CoASTResultSetBuilder >> visitNode: aNode [
 
 	^ self configureEmptyFetcherForNode: aNode
 ]
 
-{ #category : #visiting }
-CoASTResultSetBuilder >> visitParseErrorNode: aRBParseErrorNode [
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitParseErrorNode: aParseErrorNode [
 
-	^ self visitNode: aRBParseErrorNode
+	^ self visitNode: aParseErrorNode
 ]
 
-{ #category : #visiting }
-CoASTResultSetBuilder >> visitPragmaNode: aRBPragmaNode [
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitPragmaNode: aPragmaNode [
 
-	^ self visitNode: aRBPragmaNode
+	^ self visitNode: aPragmaNode
 ]
 
-{ #category : #visiting }
-CoASTResultSetBuilder >> visitReturnNode: aRBReturnNode [
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitReturnNode: aReturnNode [
 
-	^ self visitNode: aRBReturnNode
+	^ self visitNode: aReturnNode
 ]
 
-{ #category : #visiting }
-CoASTResultSetBuilder >> visitSelfNode: aRBSelfNode [
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitSelfNode: aSelfNode [
 
-	^ self visitNode: aRBSelfNode
+	^ self visitValueNode: aSelfNode
 ]
 
-{ #category : #visiting }
-CoASTResultSetBuilder >> visitSequenceNode: aRBSequenceNode [
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitSequenceNode: aSequenceNode [
 
-	^ self visitNode: aRBSequenceNode
+	^ self visitNode: aSequenceNode
 ]
 
-{ #category : #visiting }
-CoASTResultSetBuilder >> visitSuperNode: aRBSuperNode [
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitSuperNode: aSuperNode [
 
-	^ self visitNode: aRBSuperNode
+	^ self visitValueNode: aSuperNode
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 CoASTResultSetBuilder >> visitTemporaryVariableNode: anArgumentNode [
 
 	^ self visitVariableNode: anArgumentNode
 ]
 
-{ #category : #visiting }
-CoASTResultSetBuilder >> visitThisContextNode: aRBThisContextNode [
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitThisContextNode: aThisContextNode [
 
-	^ self visitNode: aRBThisContextNode
+	^ self visitValueNode: aThisContextNode
 ]
 
-{ #category : #visiting }
-CoASTResultSetBuilder >> visitVariableNode: aRBVariableNode [
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitValueNode: aVariableNode [
 
-	^ self visitNode: aRBVariableNode
+	^ self visitNode: aVariableNode
+]
+
+{ #category : 'visiting' }
+CoASTResultSetBuilder >> visitVariableNode: aVariableNode [
+
+	^ self visitValueNode: aVariableNode
 ]

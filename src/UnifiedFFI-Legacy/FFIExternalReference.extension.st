@@ -1,12 +1,12 @@
-Extension { #name : #FFIExternalReference }
+Extension { #name : 'FFIExternalReference' }
 
-{ #category : #'*UnifiedFFI-Legacy' }
+{ #category : '*UnifiedFFI-Legacy' }
 FFIExternalReference >> handle [
 	self deprecated: 'Use #getHandle instead' transformWith: '`@receiver handle' -> '`@receiver getHandle'.
 	^ self getHandle
 ]
 
-{ #category : #'*UnifiedFFI-Legacy' }
+{ #category : '*UnifiedFFI-Legacy' }
 FFIExternalReference >> handle: anObject [
 
 	self

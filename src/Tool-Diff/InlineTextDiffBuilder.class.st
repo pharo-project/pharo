@@ -2,12 +2,14 @@
 Line based Text diff builder
 "
 Class {
-	#name : #InlineTextDiffBuilder,
-	#superclass : #TextDiffBuilder,
-	#category : #'Tool-Diff-Base'
+	#name : 'InlineTextDiffBuilder',
+	#superclass : 'TextDiffBuilder',
+	#category : 'Tool-Diff-Base',
+	#package : 'Tool-Diff',
+	#tag : 'Base'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 InlineTextDiffBuilder >> split: aString [
 	"Answer the split 'lines' by splitting on whitespace."
 

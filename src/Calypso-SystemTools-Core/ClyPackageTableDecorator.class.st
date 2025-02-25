@@ -5,19 +5,21 @@ I am annotated by decoration strategy in context of selected package.
 So my subclasses should just implement decoration logic
 "
 Class {
-	#name : #ClyPackageTableDecorator,
-	#superclass : #ClyTableDecorator,
-	#category : #'Calypso-SystemTools-Core-TableDecorators'
+	#name : 'ClyPackageTableDecorator',
+	#superclass : 'ClyTableDecorator',
+	#category : 'Calypso-SystemTools-Core-TableDecorators',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'TableDecorators'
 }
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyPackageTableDecorator class >> decorationStrategy [
 	<classAnnotation>
 
-	^ClyTableDecorationStrategyAnnotation for: RPackage asCalypsoItemContext
+	^ClyTableDecorationStrategyAnnotation for: Package asCalypsoItemContext
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyPackageTableDecorator class >> isAbstract [
 	^self = ClyPackageTableDecorator
 ]

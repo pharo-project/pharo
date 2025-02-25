@@ -8,44 +8,52 @@ Internal Representation and Key Implementation Points.
 	runTestCases:		<Collection of<TestCase class>>
 "
 Class {
-	#name : #ClyRunTestsFromMethodsCommand,
-	#superclass : #ClyRunTestsFromSelectedItemsCommand,
+	#name : 'ClyRunTestsFromMethodsCommand',
+	#superclass : 'ClyRunTestsFromSelectedItemsCommand',
 	#instVars : [
 		'runTestCases'
 	],
-	#category : #'Calypso-SystemPlugins-SUnit-Browser-Commands'
+	#category : 'Calypso-SystemPlugins-SUnit-Browser-Commands',
+	#package : 'Calypso-SystemPlugins-SUnit-Browser',
+	#tag : 'Commands'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClyRunTestsFromMethodsCommand class >> contextClass [
 	^ClyMethod asCalypsoItemContext
 ]
 
-{ #category : #execution }
-ClyRunTestsFromMethodsCommand >> defaultMenuIcon [
+{ #category : 'execution' }
+ClyRunTestsFromMethodsCommand >> defaultMenuIconName [
 
 	| fullResult |
 	fullResult := self testResult.
 	runTestCases do: [ :each |
 		fullResult concreteResultOf: runTestCases first ifPresent: [:testResult |
-			^testResult createIcon ]].
+			^testResult iconName ]].
 
-	^fullResult createIcon
+	^fullResult iconName
 ]
 
-{ #category : #execution }
+{ #category : 'accessing' }
+ClyRunTestsFromMethodsCommand >> description [
+
+	^ 'Runs all selected test methods using selected test cases (runTestCases)'
+]
+
+{ #category : 'execution' }
 ClyRunTestsFromMethodsCommand >> execute [
 	testItems do: [:each | self runTestItem: each ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRunTestsFromMethodsCommand >> readParametersFromContext: aToolContext [
 	super readParametersFromContext: aToolContext.
 
 	runTestCases := aToolContext selectedClasses
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRunTestsFromMethodsCommand >> runTest: testSelector of: testClass [
 
 	| testResult |
@@ -56,7 +64,7 @@ ClyRunTestsFromMethodsCommand >> runTest: testSelector of: testClass [
 		with: 'Method: ' , testClass asString , '>>#' , testSelector asString
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRunTestsFromMethodsCommand >> runTestItem: testItem [
 
 	| testSelector |
@@ -66,7 +74,7 @@ ClyRunTestsFromMethodsCommand >> runTestItem: testItem [
 		self runTest: testSelector of: each ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRunTestsFromMethodsCommand >> targetTestCasesFor: testItem [
 	| fullResult itemTestCases |
 	itemTestCases := IdentitySet new.
@@ -79,7 +87,7 @@ ClyRunTestsFromMethodsCommand >> targetTestCasesFor: testItem [
 	^itemTestCases ifEmpty: [fullResult testCases ]
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRunTestsFromMethodsCommand >> testSelectorOf: testMethodItem [
 
 	^testMethodItem name asSymbol

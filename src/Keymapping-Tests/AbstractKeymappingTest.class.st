@@ -9,21 +9,22 @@ When tests are run this class will ensure that the current Keymap global reposit
 
 "
 Class {
-	#name : #AbstractKeymappingTest,
-	#superclass : #TestCase,
+	#name : 'AbstractKeymappingTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'default'
 	],
-	#category : #'Keymapping-Tests'
+	#category : 'Keymapping-Tests',
+	#package : 'Keymapping-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 AbstractKeymappingTest class >> isAbstract [
 
 	^self name = #AbstractKeymappingTest
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 AbstractKeymappingTest >> eventKey: character [
 	^ self eventKey: character
 		alt: false
@@ -32,7 +33,7 @@ AbstractKeymappingTest >> eventKey: character [
 		shift: false
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 AbstractKeymappingTest >> eventKey: character alt: aBoolean [
 	^ self eventKey: character
 		alt: aBoolean
@@ -41,7 +42,7 @@ AbstractKeymappingTest >> eventKey: character alt: aBoolean [
 		shift: false
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 AbstractKeymappingTest >> eventKey: character alt: useAlt ctrl: useCtrl command: useCommand shift: useShift [
 	| event modifier code |
 	event := KeyboardEvent new.
@@ -69,7 +70,7 @@ AbstractKeymappingTest >> eventKey: character alt: useAlt ctrl: useCtrl command:
 	^ event
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 AbstractKeymappingTest >> eventKey: character command: aBoolean [
 	^ self eventKey: character
 		alt: false
@@ -78,7 +79,7 @@ AbstractKeymappingTest >> eventKey: character command: aBoolean [
 		shift: false
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 AbstractKeymappingTest >> eventKey: character ctrl: aBoolean [
 	^ self eventKey: character
 		alt: false
@@ -87,7 +88,7 @@ AbstractKeymappingTest >> eventKey: character ctrl: aBoolean [
 		shift: false
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 AbstractKeymappingTest >> eventKey: character shift: aBoolean [
 	^ self eventKey: character
 		alt: false
@@ -96,14 +97,14 @@ AbstractKeymappingTest >> eventKey: character shift: aBoolean [
 		shift: aBoolean
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AbstractKeymappingTest >> setUp [
 	super setUp.
 	default := KMRepository default.
 	KMRepository default: KMRepository new
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 AbstractKeymappingTest >> tearDown [
 	KMRepository default: default.
 	default := nil.

@@ -4,44 +4,46 @@ I am a mock point used to test observable properties. I have an observable prope
 I use TObservable that has methods to ease the usage of my observable properties.
 "
 Class {
-	#name : #ObservablePoint,
-	#superclass : #Object,
+	#name : 'ObservablePoint',
+	#superclass : 'Object',
 	#traits : 'TObservable',
 	#classTraits : 'TObservable classTrait',
 	#instVars : [
 		'#x => ObservableSlot',
 		'#y'
 	],
-	#category : #'VariablesLibrary-Tests-Observable'
+	#category : 'VariablesLibrary-Tests-Observable',
+	#package : 'VariablesLibrary-Tests',
+	#tag : 'Observable'
 }
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ObservablePoint >> initialize [
 	super initialize.
 	self class initializeSlots: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObservablePoint >> x [
 	^ x
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObservablePoint >> x: anInteger [
 	x := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObservablePoint >> xReturn: anInteger [
 	^x := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObservablePoint >> y [
 	^ y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ObservablePoint >> y: anInteger [
 	y := anInteger
 ]

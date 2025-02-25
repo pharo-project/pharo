@@ -1,21 +1,23 @@
 Class {
-	#name : #HEConstantBlock,
-	#superclass : #HEExportedLiteral,
+	#name : 'HEConstantBlock',
+	#superclass : 'HEExportedLiteral',
 	#instVars : [
 		'literal',
 		'numArgs',
 		'compiledBlock'
 	],
-	#category : #'Hermes-Model'
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEConstantBlock class >> tag [
 
 	^ 29
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEConstantBlock >> asLiteralIn: anEnvironment [
 
 	^ (ConstantBlockClosure
@@ -25,7 +27,7 @@ HEConstantBlock >> asLiteralIn: anEnvironment [
 		  yourself
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEConstantBlock >> doReadFrom: aReader [
 
 	numArgs := aReader readUInt32.
@@ -33,7 +35,7 @@ HEConstantBlock >> doReadFrom: aReader [
 	compiledBlock := HEExportedLiteral readFrom: aReader
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 HEConstantBlock >> instVarNamesForEqualityComparison [
 
 	"Ignoring the value, as it is an object of the source environment"

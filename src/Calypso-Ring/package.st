@@ -1,1 +1,1 @@
-Package { #name : #'Calypso-Ring' }
+Package { #name : 'Calypso-Ring' }

@@ -10,26 +10,27 @@ Instance Variables
 Note that this can be quite large since it includes the entities transferred. See ZnSimplifiedClientTransactionEvent for a more compact representation.
 "
 Class {
-	#name : #ZnClientTransactionEvent,
-	#superclass : #ZnClientLogEvent,
+	#name : 'ZnClientTransactionEvent',
+	#superclass : 'ZnClientLogEvent',
 	#instVars : [
 		'request',
 		'response',
 		'requestDuration',
 		'responseDuration'
 	],
-	#category : #'Zinc-HTTP-Logging'
+	#category : 'Zinc-HTTP-Logging',
+	#package : 'Zinc-HTTP',
+	#tag : 'Logging'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnClientTransactionEvent >> duration [
 	^ requestDuration + responseDuration
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnClientTransactionEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream space.
 	request requestLine printMethodAndUriOn: stream.
 	stream space; print: response code.
 	response hasEntity
@@ -38,42 +39,42 @@ ZnClientTransactionEvent >> printContentsOn: stream [
 	stream space; print: self duration; nextPutAll: 'ms'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnClientTransactionEvent >> request [
 	^ request
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnClientTransactionEvent >> request: anObject [
 	request := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnClientTransactionEvent >> requestDuration [
 	^ requestDuration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnClientTransactionEvent >> requestDuration: anObject [
 	requestDuration := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnClientTransactionEvent >> response [
 	^ response
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnClientTransactionEvent >> response: anObject [
 	response := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnClientTransactionEvent >> responseDuration [
 	^ responseDuration
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnClientTransactionEvent >> responseDuration: anObject [
 	responseDuration := anObject
 ]

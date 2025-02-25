@@ -1,6 +1,6 @@
-Extension { #name : #Character }
+Extension { #name : 'Character' }
 
-{ #category : #'*SUnit-Core' }
+{ #category : '*SUnit-Core' }
 Character class >> specialCharacterNames [
 	^ Dictionary newFrom: {
 		$+ -> 'plus'.

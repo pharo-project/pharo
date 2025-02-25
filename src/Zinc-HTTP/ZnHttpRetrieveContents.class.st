@@ -10,22 +10,24 @@ Part of Zinc HTTP Components.
 
 "
 Class {
-	#name : #ZnHttpRetrieveContents,
-	#superclass : #ZnUrlOperation,
-	#category : #'Zinc-HTTP-Client-Server'
+	#name : 'ZnHttpRetrieveContents',
+	#superclass : 'ZnUrlOperation',
+	#category : 'Zinc-HTTP-Client-Server',
+	#package : 'Zinc-HTTP',
+	#tag : 'Client-Server'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnHttpRetrieveContents class >> operation [
 	^ #retrieveContents
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnHttpRetrieveContents class >> schemes [
 	^ #( #http #https )
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ZnHttpRetrieveContents >> performOperation [
 	"Download and return the HTTP(S) resource that url refers to.
 	This will typically return a String or a ByteArray (see ZnClient>>#get:).

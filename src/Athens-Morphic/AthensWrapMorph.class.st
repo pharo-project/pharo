@@ -2,23 +2,24 @@
 I make sure that all my submorphs will be drawn using Athens, not Balloon. For that I use a separate surface.
 "
 Class {
-	#name : #AthensWrapMorph,
-	#superclass : #Morph,
+	#name : 'AthensWrapMorph',
+	#superclass : 'Morph',
 	#instVars : [
 		'surface',
 		'session'
 	],
-	#category : #'Athens-Morphic'
+	#category : 'Athens-Morphic',
+	#package : 'Athens-Morphic'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensWrapMorph >> athensSurface [
 	self checkSurface.
 
 	^ surface
 ]
 
-{ #category : #'surface management' }
+{ #category : 'surface management' }
 AthensWrapMorph >> checkSurface [
 
 	session == Smalltalk session ifFalse: [
@@ -31,26 +32,26 @@ AthensWrapMorph >> checkSurface [
 	 ]
 ]
 
-{ #category : #'surface management' }
+{ #category : 'surface management' }
 AthensWrapMorph >> createSurface [
 	| extent |
 	extent := bounds extent asIntegerPoint.
 	surface := AthensCairoSurface extent: extent
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensWrapMorph >> drawOn: aCanvas [
 
 	"do nothing"
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensWrapMorph >> drawOnAthensCanvas: aCanvas [
 
 	"do nothing"
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensWrapMorph >> fullDrawOn: aCanvas [
 
 	"Draw the full Morphic structure on the given Canvas"
@@ -72,7 +73,7 @@ AthensWrapMorph >> fullDrawOn: aCanvas [
 	]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensWrapMorph >> fullDrawOnAthensCanvas: anAthensCanvas [
 	"Draw the full Morphic structure on the given Canvas"
 
@@ -85,18 +86,18 @@ AthensWrapMorph >> fullDrawOnAthensCanvas: anAthensCanvas [
 	submorphs reverseDo: [:m | anAthensCanvas fullDrawMorph: m ]
 ]
 
-{ #category : #'events handling' }
+{ #category : 'events handling' }
 AthensWrapMorph >> handlesMouseDown: evt [
 	^ true
 ]
 
-{ #category : #'surface management' }
+{ #category : 'surface management' }
 AthensWrapMorph >> initializeForNewSession [
 	self createSurface.
 	session := Smalltalk session
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 AthensWrapMorph >> render [
 	surface drawDuring: [ :canvas |
 		surface clear.

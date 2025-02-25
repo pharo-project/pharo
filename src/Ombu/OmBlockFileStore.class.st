@@ -2,15 +2,17 @@
 I am a single-file store of entries. Each new entry is appended at the end. Entries are lazily read in blocks (represented by OmBlock) from file on demand.
 "
 Class {
-	#name : #OmBlockFileStore,
-	#superclass : #OmFileStore,
+	#name : 'OmBlockFileStore',
+	#superclass : 'OmFileStore',
 	#instVars : [
 		'blocks'
 	],
-	#category : #'Ombu-Stores'
+	#category : 'Ombu-Stores',
+	#package : 'Ombu',
+	#tag : 'Stores'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 OmBlockFileStore >> blockForLocalNameAsInteger: anIndex [
 
 	self checkIfMustRefresh.
@@ -18,13 +20,13 @@ OmBlockFileStore >> blockForLocalNameAsInteger: anIndex [
 	^ self error: 'block not found'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmBlockFileStore >> blockSize [
 
 	^  131072 "2 ** 17"
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmBlockFileStore >> entryPositionsStartingAt: startPosition upTo: endPosition [
 
 	self readEntriesWith: [:readStream |
@@ -34,7 +36,7 @@ OmBlockFileStore >> entryPositionsStartingAt: startPosition upTo: endPosition [
 			entryPositionsUpTo: endPosition ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OmBlockFileStore >> initialize [
 
 	super initialize.
@@ -47,7 +49,7 @@ OmBlockFileStore >> initialize [
 			firstEntryReference: (self referenceToLocalName: '1'))
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmBlockFileStore >> readEntryForLocalName: aString ifPresent: presentBlockClosure ifAbsent: absentBlockClosure [
 
 	^ (self blockForLocalNameAsInteger: aString asInteger)
@@ -57,7 +59,7 @@ OmBlockFileStore >> readEntryForLocalName: aString ifPresent: presentBlockClosur
 			ifAbsent: absentBlockClosure
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 OmBlockFileStore >> refresh [
 	self flush.
 
@@ -71,7 +73,7 @@ OmBlockFileStore >> refresh [
 					self refreshHeadReferenceAndEntryCountFrom: readStream ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OmBlockFileStore >> refreshEntryPositionsByLocalNameStartingAt: firstStreamPosition since: initialLocalName [
 	"AKA: Refresh blocks after new entries were written."
 
@@ -87,14 +89,14 @@ OmBlockFileStore >> refreshEntryPositionsByLocalNameStartingAt: firstStreamPosit
 		self readEntriesWith: [:readStream | self refreshNewBlocksFrom: readStream ] ]
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 OmBlockFileStore >> refreshHeadReferenceAndEntryCountFrom: readStream [
 
 	entryCount := blocks last lastLocalNameAsInteger.
 	headReference := self referenceToLocalName: entryCount asString
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 OmBlockFileStore >> refreshNewBlocksFrom: readStream [
 
 	| reader blockPosition |

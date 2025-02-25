@@ -2,17 +2,19 @@
 Same as search string source anchor but uses specific heuristics for finding a better string based on the fact that we are looking in a class definition
 "
 Class {
-	#name : #ReVarSearchSourceAnchor,
-	#superclass : #ReSearchStringSourceAnchor,
-	#category : #'Renraku-SourceAnchors'
+	#name : 'ReVarSearchSourceAnchor',
+	#superclass : 'ReSearchStringSourceAnchor',
+	#category : 'Renraku-SourceAnchors',
+	#package : 'Renraku',
+	#tag : 'SourceAnchors'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReVarSearchSourceAnchor >> interval [
 	^ super interval allButLast
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ReVarSearchSourceAnchor >> modify: aString for: aStringCollection [
 
 	aStringCollection size = 1 ifTrue: [
@@ -24,7 +26,7 @@ ReVarSearchSourceAnchor >> modify: aString for: aStringCollection [
 	^ aString surroundedBy: String space
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ReVarSearchSourceAnchor >> searchString [
 	| origString |
 

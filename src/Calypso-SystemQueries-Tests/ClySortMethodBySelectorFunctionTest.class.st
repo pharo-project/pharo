@@ -1,10 +1,12 @@
 Class {
-	#name : #ClySortMethodBySelectorFunctionTest,
-	#superclass : #ClySortFunctionTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClySortMethodBySelectorFunctionTest',
+	#superclass : 'ClySortFunctionTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortMethodBySelectorFunctionTest >> testAscending [
 
 	function := ClySortMethodBySelectorFunction ascending.
@@ -14,7 +16,7 @@ ClySortMethodBySelectorFunctionTest >> testAscending [
 	self assert: (function value: Object >> #printString value: Object >> #printString )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortMethodBySelectorFunctionTest >> testAscendingForBinaryAndUnarySelectors [
 	"binary selector is always on top when ascending and on botton when descending"
 	function := ClySortMethodBySelectorFunction ascending.
@@ -28,7 +30,7 @@ ClySortMethodBySelectorFunctionTest >> testAscendingForBinaryAndUnarySelectors [
 	self deny: (function value: Number >> #abs value: Number >> #+ )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortMethodBySelectorFunctionTest >> testAscendingMethodsWithSameSelectorButDifferentClass [
 
 	function := ClySortMethodBySelectorFunction ascending.
@@ -37,7 +39,7 @@ ClySortMethodBySelectorFunctionTest >> testAscendingMethodsWithSameSelectorButDi
 	self assert: (function value: Number >> #printString value: Object >> #printString )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortMethodBySelectorFunctionTest >> testDescending [
 
 	function := ClySortMethodBySelectorFunction descending.
@@ -47,7 +49,7 @@ ClySortMethodBySelectorFunctionTest >> testDescending [
 	self assert: (function value: Object >> #printString value: Object >> #printString )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortMethodBySelectorFunctionTest >> testDescendingForBinaryAndUnarySelectors [
 	"binary selector is always on top when ascending and on botton when descending"
 	function := ClySortMethodBySelectorFunction descending.
@@ -61,7 +63,7 @@ ClySortMethodBySelectorFunctionTest >> testDescendingForBinaryAndUnarySelectors 
 	self assert: (function value: Number >> #abs value: Number >> #+ )
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClySortMethodBySelectorFunctionTest >> testDescendingMethodsWithSameSelectorButDifferentClass [
 
 	function := ClySortMethodBySelectorFunction descending.

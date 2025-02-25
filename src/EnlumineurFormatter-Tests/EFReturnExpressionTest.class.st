@@ -1,10 +1,11 @@
 Class {
-	#name : #EFReturnExpressionTest,
-	#superclass : #EFTest,
-	#category : #'EnlumineurFormatter-Tests'
+	#name : 'EFReturnExpressionTest',
+	#superclass : 'EFTest',
+	#category : 'EnlumineurFormatter-Tests',
+	#package : 'EnlumineurFormatter-Tests'
 }
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 EFReturnExpressionTest >> basicConfiguration [
 	^ self contextClass basicNew
 		formatCommentCloseToStatements: false;
@@ -13,7 +14,7 @@ EFReturnExpressionTest >> basicConfiguration [
 		indentExtraSpaces: 0
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 EFReturnExpressionTest >> multilineConfiguration [
 	^ self contextClass basicNew
 		formatCommentCloseToStatements: false;
@@ -29,7 +30,7 @@ EFReturnExpressionTest >> multilineConfiguration [
 		indentExtraSpaces: 0
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 EFReturnExpressionTest >> multilineWithThreeSpacesAfterCaretSymbolConfiguration [
 	^ self contextClass basicNew
 		formatCommentCloseToStatements: false;
@@ -45,7 +46,7 @@ EFReturnExpressionTest >> multilineWithThreeSpacesAfterCaretSymbolConfiguration 
 		indentExtraSpaces: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFReturnExpressionTest >> testReturnExtraSpacesInIndentWhenMultilne [
 	| source |
 	configurationSelector := #multilineConfiguration.
@@ -58,7 +59,7 @@ EFReturnExpressionTest >> testReturnExtraSpacesInIndentWhenMultilne [
 	  with: self'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFReturnExpressionTest >> testReturnExtraSpacesInIndentWhenMultilneWithThreeSpacesAfterCaretSymbol [
 	| source |
 	configurationSelector := #multilineWithThreeSpacesAfterCaretSymbolConfiguration.
@@ -71,7 +72,7 @@ EFReturnExpressionTest >> testReturnExtraSpacesInIndentWhenMultilneWithThreeSpac
 	    with: self'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFReturnExpressionTest >> testReturnFormatValue [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -79,7 +80,7 @@ EFReturnExpressionTest >> testReturnFormatValue [
 	self assert: source equals: '^ a := 1'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFReturnExpressionTest >> testReturnHasNoExtraSpace [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -87,7 +88,7 @@ EFReturnExpressionTest >> testReturnHasNoExtraSpace [
 	self assert: source equals: '^ a'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFReturnExpressionTest >> testReturnHasNoExtraSpaceInside [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -95,7 +96,7 @@ EFReturnExpressionTest >> testReturnHasNoExtraSpaceInside [
 	self assert: source equals: '^ a'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFReturnExpressionTest >> testReturnHasNoPeriod [
 	| source |
 	configurationSelector := #basicConfiguration.
@@ -103,7 +104,7 @@ EFReturnExpressionTest >> testReturnHasNoPeriod [
 	self assert: source equals: '^ a'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFReturnExpressionTest >> testReturnHasSpaceBetween [
 	| source |
 	configurationSelector := #basicConfiguration.

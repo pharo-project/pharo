@@ -1,10 +1,11 @@
 Class {
-	#name : #ZnChunkedStreamTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Tests'
+	#name : 'ZnChunkedStreamTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Tests',
+	#package : 'Zinc-Tests'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ZnChunkedStreamTest >> nextPutAll: collection on: stream chunked: size [
 	| written |
 	written := 0.
@@ -17,7 +18,7 @@ ZnChunkedStreamTest >> nextPutAll: collection on: stream chunked: size [
 	stream print: 0; nextPutAll: String crlf; nextPutAll: String crlf
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnChunkedStreamTest >> testBinaryWriteRead [
 	| data written read |
 	data := ByteArray new: 1024 streamContents: [ :out |
@@ -33,7 +34,7 @@ ZnChunkedStreamTest >> testBinaryWriteRead [
 	self assert: read equals: data
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnChunkedStreamTest >> testGzipWriteRead [
 	| data written read |
 	data := String streamContents: [ :out |
@@ -50,7 +51,7 @@ ZnChunkedStreamTest >> testGzipWriteRead [
 	self assert: read equals: data
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnChunkedStreamTest >> testReading [
 	| data chunked plain |
 	data := String withAll: ($a to: $z), ($A to: $Z).
@@ -60,7 +61,7 @@ ZnChunkedStreamTest >> testReading [
 	self assert: plain equals: data
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnChunkedStreamTest >> testReadingBuffered [
 	| data chunked plain buffer readStream |
 	data := String withAll: ($a to: $z), ($A to: $Z).
@@ -75,7 +76,7 @@ ZnChunkedStreamTest >> testReadingBuffered [
 	self assert: plain equals: data
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnChunkedStreamTest >> testReadingGzip [
 	| data gzipped chunked plain |
 	data := String withAll: ($a to: $z), ($A to: $Z).
@@ -87,7 +88,7 @@ ZnChunkedStreamTest >> testReadingGzip [
 	self assert: data equals: plain
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnChunkedStreamTest >> testReadingGzipStepped [
 	| data gzipped chunked unchunked ungzipped |
 	data := String withAll: ($a to: $z), ($A to: $Z).
@@ -101,7 +102,7 @@ ZnChunkedStreamTest >> testReadingGzipStepped [
 	self assert: data equals: ungzipped
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnChunkedStreamTest >> testReadingNext [
 	| data chunked plain |
 	data := String withAll: ($a to: $z), ($A to: $Z).
@@ -111,7 +112,7 @@ ZnChunkedStreamTest >> testReadingNext [
 	self assert: plain equals: data
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnChunkedStreamTest >> testReadingNextInto [
 	| data chunked plain |
 	data := String withAll: ($a to: $z), ($A to: $Z).
@@ -122,7 +123,7 @@ ZnChunkedStreamTest >> testReadingNextInto [
 	self assert: plain equals: data
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnChunkedStreamTest >> testWriting [
 	| chunks result reference |
 	chunks := #( 'ABC' 'DEF' 'GHI' 'JKL' ).
@@ -136,7 +137,7 @@ ZnChunkedStreamTest >> testWriting [
 	self assert: result equals: reference
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnChunkedStreamTest >> testWritingBuffered [
 	| data written read |
 	data := String withAll: ($a to: $z), ($A to: $Z).

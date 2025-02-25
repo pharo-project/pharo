@@ -5,8 +5,8 @@ but in addition I store a plain 2x3 matrix with state accessible at any moment.
 This is different to AthensTransform because it does not expose its internal storage, because it can be backend specific.
 "
 Class {
-	#name : #AthensAffineTransform,
-	#superclass : #AthensTransform,
+	#name : 'AthensAffineTransform',
+	#superclass : 'AthensTransform',
 	#instVars : [
 		'sx',
 		'shx',
@@ -15,22 +15,24 @@ Class {
 		'sy',
 		'y'
 	],
-	#category : #'Athens-Core-Matrices'
+	#category : 'Athens-Core-Matrices',
+	#package : 'Athens-Core',
+	#tag : 'Matrices'
 }
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensAffineTransform >> clearTranslation [
 	"Reset a translation from matrix, leaving only scale and rotation"
 
 	x := y := 0.0
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensAffineTransform >> initialize [
 	self loadIdentity
 ]
 
-{ #category : #'vector - transform' }
+{ #category : 'vector - transform' }
 AthensAffineTransform >> inverseTransform: aPoint [
 	"We assume matrix is never degenerated"
 	| px py y0 x0 |
@@ -75,7 +77,7 @@ AthensAffineTransform >> inverseTransform: aPoint [
 	^ x0@y0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensAffineTransform >> inverseTransformHalfPi: aPoint [
 	"Assume sx,sy = 0
 
@@ -94,7 +96,7 @@ AthensAffineTransform >> inverseTransformHalfPi: aPoint [
 	^ x0@y0
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 AthensAffineTransform >> inverseTransformPiOrZero: aPoint [
 	"Assume shx,shy = 0
 
@@ -113,7 +115,7 @@ AthensAffineTransform >> inverseTransformPiOrZero: aPoint [
 	^ x0@y0
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensAffineTransform >> invert [
 	"
 	Affine matrix can be seen as TM X -> (TM)^-1 = M^1 T^-1
@@ -138,7 +140,7 @@ AthensAffineTransform >> invert [
 	shy := ishy. sy := isy. y := iy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensAffineTransform >> inverted [
 	"Answer an inverse transformation of receiver"
 	| det |
@@ -153,18 +155,18 @@ AthensAffineTransform >> inverted [
 		yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensAffineTransform >> isAffineTransform [
 	^ true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 AthensAffineTransform >> isIdentity [
 	^ sx = 1 and: [ shx = 0 and: [ x = 0 and: [
 	shy = 0 and: [ sy = 1 and: [ y = 0]]]]]
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensAffineTransform >> loadAffineTransform: m [
 
 	x := m x.
@@ -175,14 +177,14 @@ AthensAffineTransform >> loadAffineTransform: m [
 	shy := m shy
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensAffineTransform >> loadIdentity [
 	"Initialize with identity transform"
 	sx := sy := 1.0.
 	shx := shy := x := y := 0.0
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensAffineTransform >> multiplyBy: m [
 	"Multiply receiver by given affine matrix"
 "
@@ -210,20 +212,20 @@ AthensAffineTransform >> multiplyBy: m [
 	y := ny
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensAffineTransform >> restoreAfter: aBlock [
 	|previous|
 	previous := self copy.
 	aBlock ensure: [ 	self loadAffineTransform: previous ]
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensAffineTransform >> rotateByDegrees: angle [
 
 	^ self rotateByRadians: angle degreesToRadians
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensAffineTransform >> rotateByRadians: angle [
 
 	"Multiply receiver by rotation matrix
@@ -249,12 +251,12 @@ AthensAffineTransform >> rotateByRadians: angle [
 	sy := newSy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensAffineTransform >> scale [
 	^ sx@sy
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensAffineTransform >> scaleBy: factor [
 
 	"multiply receiver by uniform scale matrix
@@ -277,7 +279,7 @@ AthensAffineTransform >> scaleBy: factor [
 			shy := shy*factor ]
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensAffineTransform >> scaleX: fx Y: fy [
 
 	"multiply receiver by scale matrix
@@ -293,47 +295,47 @@ AthensAffineTransform >> scaleX: fx Y: fy [
 	shy := shy*fx
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensAffineTransform >> shx [
 	^ shx
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensAffineTransform >> shx: number [
 	shx := number
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensAffineTransform >> shy [
 	^ shy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensAffineTransform >> shy: number [
 	shy := number
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensAffineTransform >> sx [
 	^ sx
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensAffineTransform >> sx: number [
 	sx := number
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensAffineTransform >> sy [
 	^ sy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensAffineTransform >> sy: number [
 	sy := number
 ]
 
-{ #category : #'vector - transform' }
+{ #category : 'vector - transform' }
 AthensAffineTransform >> transform: aPoint [
 	| px py |
 
@@ -344,7 +346,7 @@ AthensAffineTransform >> transform: aPoint [
 		y: (shy*px + (sy*py) + y)
 ]
 
-{ #category : #'vector - transform' }
+{ #category : 'vector - transform' }
 AthensAffineTransform >> transformX: px Y: py [
 	"Transform x and y coordinates by receiver. Answer a Point"
 	^ Point
@@ -352,13 +354,13 @@ AthensAffineTransform >> transformX: px Y: py [
 		y: (shy*px + (sy*py) + y)
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensAffineTransform >> translateBy: aPoint [
 
 	^ self translateX: aPoint x Y: aPoint y
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensAffineTransform >> translateX: px Y: py [
 	"Multiply receiver by translation matrix :
 
@@ -371,7 +373,7 @@ AthensAffineTransform >> translateX: px Y: py [
 	y := (shy*px) + (sy*py) + y
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensAffineTransform >> translateX: px y: py [
 	"Multiply receiver by translation matrix :
 
@@ -384,18 +386,18 @@ AthensAffineTransform >> translateX: px y: py [
 	y := (shy*px) + (sy*py) + y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensAffineTransform >> translation [
 	^ x@y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensAffineTransform >> translation: aPoint [
 	x := aPoint x.
 	y := aPoint y
 ]
 
-{ #category : #transformations }
+{ #category : 'transformations' }
 AthensAffineTransform >> transposed [
 
 	| s |
@@ -404,22 +406,22 @@ AthensAffineTransform >> transposed [
 	shy := s
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensAffineTransform >> x [
 	^ x
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensAffineTransform >> x: number [
 	x := number
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensAffineTransform >> y [
 	^ y
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensAffineTransform >> y: number [
 	y := number
 ]

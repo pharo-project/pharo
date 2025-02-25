@@ -1,14 +1,16 @@
 Class {
-	#name : #RGEnvironmentQueryInterface,
-	#superclass : #Object,
+	#name : 'RGEnvironmentQueryInterface',
+	#superclass : 'Object',
 	#instVars : [
 		'environment',
 		'behaviorsDictionary'
 	],
-	#category : #'Ring-Core-Environment'
+	#category : 'Ring-Core-Environment',
+	#package : 'Ring-Core',
+	#tag : 'Environment'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RGEnvironmentQueryInterface class >> for: anRGEnvironment [
 
 	^ self new
@@ -16,25 +18,25 @@ RGEnvironmentQueryInterface class >> for: anRGEnvironment [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGEnvironmentQueryInterface >> allClasses [
 
 	^ self behaviors select: [ :each | each isClass ]
 ]
 
-{ #category : #classes }
+{ #category : 'classes' }
 RGEnvironmentQueryInterface >> allClassesAndTraits [
 
 	^ self behaviors select: [ :each | each isClass or: [ each isTrait and: [ each isMetaclassTrait not ] ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGEnvironmentQueryInterface >> behaviorNamed: aSymbol [
 
 	^ self behaviorNamed: aSymbol ifAbsent: [ nil]
 ]
 
-{ #category : #classes }
+{ #category : 'classes' }
 RGEnvironmentQueryInterface >> behaviorNamed: aSymbol ifAbsent: aBlock [
 
 	| found siblingName |
@@ -67,13 +69,13 @@ RGEnvironmentQueryInterface >> behaviorNamed: aSymbol ifAbsent: aBlock [
 	^ aBlock value
 ]
 
-{ #category : #classes }
+{ #category : 'classes' }
 RGEnvironmentQueryInterface >> behaviorNamedExactlyAs: aSymbol [
 
 	^ self behaviorNamedExactlyAs: aSymbol ifAbsent: [nil]
 ]
 
-{ #category : #classes }
+{ #category : 'classes' }
 RGEnvironmentQueryInterface >> behaviorNamedExactlyAs: aSymbol ifAbsent: aBlock [
 
 	^ self behaviorsDictionary at: aSymbol asSymbol ifAbsent: aBlock
@@ -85,7 +87,7 @@ RGEnvironmentQueryInterface >> behaviorNamedExactlyAs: aSymbol ifAbsent: aBlock 
 	"
 ]
 
-{ #category : #classes }
+{ #category : 'classes' }
 RGEnvironmentQueryInterface >> behaviors [
 	"Retrieves the traits defined in the receiver"
 
@@ -95,7 +97,7 @@ RGEnvironmentQueryInterface >> behaviors [
 	^ allBehaviors asArray
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 RGEnvironmentQueryInterface >> behaviorsDictionary [
 
 	^ behaviorsDictionary ifNil: [
@@ -106,35 +108,35 @@ RGEnvironmentQueryInterface >> behaviorsDictionary [
 		]
 ]
 
-{ #category : #classes }
+{ #category : 'classes' }
 RGEnvironmentQueryInterface >> behaviorsDo: aBlock [
 
 	self environment behaviorsDo: aBlock
 ]
 
-{ #category : #classes }
+{ #category : 'classes' }
 RGEnvironmentQueryInterface >> classNamed: aSymbol [
 
 	^ self behaviorNamed: aSymbol
 ]
 
-{ #category : #classes }
+{ #category : 'classes' }
 RGEnvironmentQueryInterface >> classOrTraitNamed: aSymbol [
 
 	^ self behaviorNamed: aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGEnvironmentQueryInterface >> environment [
 	^ environment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGEnvironmentQueryInterface >> environment: anObject [
 	environment := anObject
 ]
 
-{ #category : #globals }
+{ #category : 'globals' }
 RGEnvironmentQueryInterface >> globalVariables [
 	"Retrieves the traits defined in the receiver"
 
@@ -144,13 +146,13 @@ RGEnvironmentQueryInterface >> globalVariables [
 	^ allGlobalVariables asArray
 ]
 
-{ #category : #globals }
+{ #category : 'globals' }
 RGEnvironmentQueryInterface >> globalVariablesDo: aBlock [
 
 	self environment globalVariablesDo: aBlock
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 RGEnvironmentQueryInterface >> includesClassNamed: aSymbol [
 
 	self globalVariablesDo: [ :var |
@@ -168,13 +170,20 @@ RGEnvironmentQueryInterface >> includesClassNamed: aSymbol [
 	"
 ]
 
-{ #category : #caching }
+{ #category : 'testing' }
+RGEnvironmentQueryInterface >> includesPackageNamed: aString [
+
+	self packagesDo: [ :each | each name = aString ifTrue: [ ^ true ] ].
+	^ false
+]
+
+{ #category : 'caching' }
 RGEnvironmentQueryInterface >> invalidateName: aSymbol [
 
 	behaviorsDictionary removeKey: aSymbol
 ]
 
-{ #category : #packages }
+{ #category : 'packages' }
 RGEnvironmentQueryInterface >> packageNamed: aString [
 
 	self packagesDo: [:each |
@@ -183,7 +192,7 @@ RGEnvironmentQueryInterface >> packageNamed: aString [
 	^ nil
 ]
 
-{ #category : #packages }
+{ #category : 'packages' }
 RGEnvironmentQueryInterface >> packages [
 	"Retrieves the traits defined in the receiver"
 
@@ -193,13 +202,13 @@ RGEnvironmentQueryInterface >> packages [
 	^ allPackages asArray
 ]
 
-{ #category : #packages }
+{ #category : 'packages' }
 RGEnvironmentQueryInterface >> packagesDo: aBlock [
 
 	self environment packagesDo: aBlock
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 RGEnvironmentQueryInterface >> replaceName: aSymbol with: aNewSymbol [
 
 	| anRGBehavior |
@@ -210,13 +219,13 @@ RGEnvironmentQueryInterface >> replaceName: aSymbol with: aNewSymbol [
 		 ]
 ]
 
-{ #category : #caching }
+{ #category : 'caching' }
 RGEnvironmentQueryInterface >> resetBehaviorsDictionary [
 
 	behaviorsDictionary := IdentityDictionary new
 ]
 
-{ #category : #classes }
+{ #category : 'classes' }
 RGEnvironmentQueryInterface >> traitNamed: traitName [
 	"Retrieves an RGTrait object. The traitName could be classSide name"
 	| trait |

@@ -9,51 +9,53 @@ My subclasses should redefine:
  - #buildFetcherFor:inContext: returning the effective heuristic built
 "
 Class {
-	#name : #CoASTNodeFetcherHeuristic,
-	#superclass : #Object,
+	#name : 'CoASTNodeFetcherHeuristic',
+	#superclass : 'Object',
 	#instVars : [
 		'next'
 	],
-	#category : #'HeuristicCompletion-Model-Heuristics'
+	#category : 'HeuristicCompletion-Model-Heuristics',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Heuristics'
 }
 
-{ #category : #requests }
-CoASTNodeFetcherHeuristic >> appliesForNode: aRBMessageNode inContext: aContext [
+{ #category : 'requests' }
+CoASTNodeFetcherHeuristic >> appliesForNode: aMessageNode inContext: aContext [
 
 	^ false
 ]
 
-{ #category : #requests }
-CoASTNodeFetcherHeuristic >> buildFetcherFor: aRBMessageNode inContext: aContext [
+{ #category : 'requests' }
+CoASTNodeFetcherHeuristic >> buildFetcherFor: aMessageNode inContext: aContext [
 
 	^ CoEmptyFetcher new
 ]
 
-{ #category : #requests }
-CoASTNodeFetcherHeuristic >> fetcherFor: aRBMessageNode inContext: aContext [
+{ #category : 'requests' }
+CoASTNodeFetcherHeuristic >> fetcherFor: aMessageNode inContext: aContext [
 
 	| nextFetcher |
-	nextFetcher := self next fetcherFor: aRBMessageNode inContext: aContext.
-	^ (self appliesForNode: aRBMessageNode inContext: aContext)
+	nextFetcher := self next fetcherFor: aMessageNode inContext: aContext.
+	^ (self appliesForNode: aMessageNode inContext: aContext)
 		ifTrue: [
-			(self buildFetcherFor: aRBMessageNode inContext: aContext),
+			(self buildFetcherFor: aMessageNode inContext: aContext),
 				nextFetcher ]
 		ifFalse: [ nextFetcher ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CoASTNodeFetcherHeuristic >> initialize [
 	super initialize.
 	next := CoNullFetcherHeuristic new
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CoASTNodeFetcherHeuristic >> isStatisticsHeuristicWrapper [
 
 	^ false
 ]
 
-{ #category : #'fetcher-creation' }
+{ #category : 'fetcher-creation' }
 CoASTNodeFetcherHeuristic >> newMessageInHierarchyFetcherForClass: aClass inASTNode: astNode [
 
 	^ CoClassImplementedMessagesFetcher new
@@ -62,12 +64,12 @@ CoASTNodeFetcherHeuristic >> newMessageInHierarchyFetcherForClass: aClass inASTN
 		forHierarchy
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoASTNodeFetcherHeuristic >> next [
 	^ next
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoASTNodeFetcherHeuristic >> next: nextHeuristic [
 	next := nextHeuristic
 ]

@@ -2,12 +2,13 @@
 I know the items to create a testSuite that will be analysed by a DrTestsPlugin.
 "
 Class {
-	#name : #DTTestCoverageConfiguration,
-	#superclass : #DTPluginConfiguration,
-	#category : #'DrTests-TestCoverage'
+	#name : 'DTTestCoverageConfiguration',
+	#superclass : 'DTPluginConfiguration',
+	#category : 'DrTests-TestCoverage',
+	#package : 'DrTests-TestCoverage'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 DTTestCoverageConfiguration >> testMethods [
 	^ (packagesSelected
 		flatCollect:

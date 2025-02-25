@@ -2,12 +2,13 @@
 I decorate methods with flag in the table with special icon
 "
 Class {
-	#name : #ClyFlagMethodTableDecorator,
-	#superclass : #ClyMethodTableDecorator,
-	#category : #'Calypso-SystemPlugins-Flags-Browser'
+	#name : 'ClyFlagMethodTableDecorator',
+	#superclass : 'ClyMethodTableDecorator',
+	#category : 'Calypso-SystemPlugins-Flags-Browser',
+	#package : 'Calypso-SystemPlugins-Flags-Browser'
 }
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyFlagMethodTableDecorator class >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
 
 	| icon |
@@ -17,16 +18,16 @@ ClyFlagMethodTableDecorator class >> decorateMainTableCell: anItemCellMorph of: 
 	icon setBalloonText: 'Method has a flag'
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyFlagMethodTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyFlagMethodTableDecorator class >> priority [
 	^900
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyFlagMethodTableDecorator class >> wantsDecorateTableCellOf: aDataSourceItem [
 
 	^aDataSourceItem isMarkedWith: ClyMethodFlag

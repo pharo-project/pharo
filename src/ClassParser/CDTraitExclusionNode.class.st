@@ -2,26 +2,28 @@
 MyTrait - {#aliasName}
 "
 Class {
-	#name : #CDTraitExclusionNode,
-	#superclass : #CDTraitCompositionNode,
+	#name : 'CDTraitExclusionNode',
+	#superclass : 'CDTraitCompositionNode',
 	#instVars : [
 		'exclusions'
 	],
-	#category : #'ClassParser-Model'
+	#category : 'ClassParser-Model',
+	#package : 'ClassParser',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CDTraitExclusionNode >> exclusions: aCollection [
 	exclusions := aCollection
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CDTraitExclusionNode >> isTraitExclusionNode [
 
 	^ true
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 CDTraitExclusionNode >> toString [
 	"should replace Exclusions"
 	^ subject name ,' - ', exclusions asString

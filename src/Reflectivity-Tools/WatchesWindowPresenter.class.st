@@ -3,8 +3,8 @@ I present the values captured in a Watch.
 To open me, click on the left icon next to a watch in the code browser.
 "
 Class {
-	#name : #WatchesWindowPresenter,
-	#superclass : #SpPresenter,
+	#name : 'WatchesWindowPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'numItems',
 		'menu',
@@ -13,10 +13,12 @@ Class {
 		'watch',
 		'service'
 	],
-	#category : #'Reflectivity-Tools-Watches'
+	#category : 'Reflectivity-Tools-Watches',
+	#package : 'Reflectivity-Tools',
+	#tag : 'Watches'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 WatchesWindowPresenter class >> defaultLayout [
 
 	^ SpBoxLayout newTopToBottom
@@ -26,7 +28,13 @@ WatchesWindowPresenter class >> defaultLayout [
 			yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'accessing' }
+WatchesWindowPresenter class >> defaultPreferredExtent [
+
+	^ 270@240
+]
+
+{ #category : 'instance creation' }
 WatchesWindowPresenter class >> on: aWatchpoint [
 	| inst |
 	inst := self basicNew.
@@ -35,12 +43,12 @@ WatchesWindowPresenter class >> on: aWatchpoint [
 	^inst
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 WatchesWindowPresenter class >> openOn: aWatchpoint [
 	^(self on: aWatchpoint) open
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WatchesWindowPresenter >> connectPresenters [
 
 	list whenSelectionChangedDo: [ :selection |
@@ -49,7 +57,7 @@ WatchesWindowPresenter >> connectPresenters [
 	inspectIt action: [ list selectedItem inspect ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WatchesWindowPresenter >> initializePresenters [
 
 	list := self newList.
@@ -65,56 +73,55 @@ WatchesWindowPresenter >> initializePresenters [
 	inspectIt enabled: false
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WatchesWindowPresenter >> initializeWindow: aWindowPresenter [
 
-	aWindowPresenter initialExtent: 270@240.
-	aWindowPresenter title: self title.
+	super initializeWindow: aWindowPresenter. 
 	aWindowPresenter whenOpenedDo: [ self startService ].
 	aWindowPresenter whenClosedDo: [ self stopService ].
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WatchesWindowPresenter >> inspectIt [
 	^ inspectIt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WatchesWindowPresenter >> inspectIt: anObject [
 	inspectIt := anObject
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 WatchesWindowPresenter >> lessItems [
 	numItems := 0 max: (numItems - 1)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WatchesWindowPresenter >> list [
 	^ list
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WatchesWindowPresenter >> list: anObject [
 	list := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WatchesWindowPresenter >> menu [
 	^ menu
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WatchesWindowPresenter >> menu: anObject [
 	menu := anObject
 ]
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 WatchesWindowPresenter >> moreItems [
 	numItems := numItems + 1
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 WatchesWindowPresenter >> refreshItems [
 	| max values |
 	values := self watch values.
@@ -122,7 +129,7 @@ WatchesWindowPresenter >> refreshItems [
 	list items: (values copyFrom: (1 max: max - numItems) to: max) reversed.
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WatchesWindowPresenter >> setupMenu [
 
 	menu := self newToolbar.
@@ -181,7 +188,7 @@ WatchesWindowPresenter >> setupMenu [
 						label: nil;
 						help: 'Browse ...';
 						icon: (self iconNamed: #nautilus);
-						action: [ self application tools browser openOnMethod: self watch compiledMethod ];
+						action: [ (self application toolNamed: #browser) openOnMethod: self watch compiledMethod ];
 						yourself).
 
 	menu
@@ -193,7 +200,7 @@ WatchesWindowPresenter >> setupMenu [
 						yourself)
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 WatchesWindowPresenter >> startService [
 
 	service := TKTParameterizableService new.
@@ -202,25 +209,25 @@ WatchesWindowPresenter >> startService [
 	service start
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 WatchesWindowPresenter >> stopService [
 
 	service stop
 ]
 
-{ #category : #api }
+{ #category : 'api' }
 WatchesWindowPresenter >> title [
 	| wpName |
 	wpName := self watch tagname.
 	^'WP: ',(wpName isAllSeparators ifTrue: [ 'Unnamed' ] ifFalse: [ wpName ])
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WatchesWindowPresenter >> watch [
 	^ watch
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WatchesWindowPresenter >> watch: anObject [
 	watch := anObject
 ]

@@ -2,30 +2,32 @@
 I am a simple strategy to run the callbacks always in the same process.
 "
 Class {
-	#name : #TFCallbackSameProcessRunStrategy,
-	#superclass : #TFCallbackForkRunStrategy,
+	#name : 'TFCallbackSameProcessRunStrategy',
+	#superclass : 'TFCallbackForkRunStrategy',
 	#instVars : [
 		'callbackProcess'
 	],
 	#classVars : [
 		'Instance'
 	],
-	#category : #'ThreadedFFI-Callbacks'
+	#category : 'ThreadedFFI-Callbacks',
+	#package : 'ThreadedFFI',
+	#tag : 'Callbacks'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TFCallbackSameProcessRunStrategy class >> new [
 
 	self error: 'Use uniqueInstance'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TFCallbackSameProcessRunStrategy class >> uniqueInstance [
 
 	^ Instance ifNil: [ Instance := self basicNew initialize; yourself]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFCallbackSameProcessRunStrategy >> callbackProcess [
 
 	(callbackProcess isNotNil and: [ callbackProcess isTerminated not ])
@@ -37,13 +39,13 @@ TFCallbackSameProcessRunStrategy >> callbackProcess [
 	^ callbackProcess
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFCallbackSameProcessRunStrategy >> doExecuteCallback: aCallbackInvocation on: aTFRunner [
 
 	aTFRunner handleExceptionDuring: [ aCallbackInvocation execute ]
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 TFCallbackSameProcessRunStrategy >> executeCallback: aCallbackInvocation on: aTFRunner [
 
 	| process newContext methodToUse |
@@ -65,7 +67,7 @@ TFCallbackSameProcessRunStrategy >> executeCallback: aCallbackInvocation on: aTF
 	process resume
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TFCallbackSameProcessRunStrategy >> waitForever [
 
 	[ true ] whileTrue: [ Processor activeProcess suspend ]

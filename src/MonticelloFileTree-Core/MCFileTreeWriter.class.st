@@ -2,24 +2,25 @@
 Writer for the file tree
 "
 Class {
-	#name : #MCFileTreeWriter,
-	#superclass : #MCMczWriter,
+	#name : 'MCFileTreeWriter',
+	#superclass : 'MCMczWriter',
 	#instVars : [
 		'directory',
 		'packageFileDirectory',
 		'cachedPackageFileDirectoryEntries'
 	],
-	#category : #'MonticelloFileTree-Core'
+	#category : 'MonticelloFileTree-Core',
+	#package : 'MonticelloFileTree-Core'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeWriter class >> readerClass [
     "don't expect this message to be sent"
 
     self shouldNotImplement
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreeWriter >> addString: string at: fileNameOrPath [
     "fileNameOrPath may have one or two elements"
 
@@ -38,7 +39,7 @@ MCFileTreeWriter >> addString: string at: fileNameOrPath [
         ifFalse: [ utils writeStreamFor: path in: self packageFileDirectory do: [ :file | file nextPutAll: string ] ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreeWriter >> addString: string at: fileNameOrPath encodedTo: ignored [
     "fileNameOrPath may have one or two elements"
     "encodeTo: arg, because FileTree uses UTF8 by default"
@@ -58,7 +59,7 @@ MCFileTreeWriter >> addString: string at: fileNameOrPath encodedTo: ignored [
         ifFalse: [ utils writeStreamFor: path in: self packageFileDirectory do: [ :file | file nextPutAll: string ] ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCFileTreeWriter >> deleteExistingPackageStructureFor: members [
     "destroy .tree and .pkg directory structure .. otherwise it won't be pretty"
 
@@ -81,17 +82,17 @@ MCFileTreeWriter >> deleteExistingPackageStructureFor: members [
                 ifTrue: [ self fileUtils deleteAll: alternateDir ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeWriter >> fileUtils [
     ^ MCFileTreeFileUtils current
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreeWriter >> flush [
 	
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCFileTreeWriter >> initializePackageFileDirectoryCache [
     cachedPackageFileDirectoryEntries := Dictionary new.
     self packageFileDirectory entries
@@ -100,19 +101,19 @@ MCFileTreeWriter >> initializePackageFileDirectoryCache [
                 ifTrue: [ cachedPackageFileDirectoryEntries at: entry name put: (self fileUtils directoryFromEntry: entry) ] ]
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreeWriter >> packageFileDirectory [
     packageFileDirectory
         ifNil: [ packageFileDirectory := self fileUtils directoryFromPath: directory relativeTo: stream directory ].
     ^ packageFileDirectory
 ]
 
-{ #category : #writing }
+{ #category : 'writing' }
 MCFileTreeWriter >> repository [
   ^ stream
 ]
 
-{ #category : #serializing }
+{ #category : 'serializing' }
 MCFileTreeWriter >> serializeVersionInfo: aVersionInfo [
 	infoWriter ifNil: [infoWriter := MCFileTreeVersionInfoWriter new].
 	^ String streamContents: [:s |
@@ -120,12 +121,12 @@ MCFileTreeWriter >> serializeVersionInfo: aVersionInfo [
 		infoWriter writeVersionInfo: aVersionInfo]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MCFileTreeWriter >> snapshotWriterClass [
 	^ MCFileTreeAbstractStWriter
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCFileTreeWriter >> subPackageFileDirectoryFor: directoryNameOrPath [
     ^ cachedPackageFileDirectoryEntries
         at: directoryNameOrPath
@@ -136,12 +137,12 @@ MCFileTreeWriter >> subPackageFileDirectoryFor: directoryNameOrPath [
             dir ]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCFileTreeWriter >> writeSnapshot: aSnapshot [
 	(self snapshotWriterClass on: self) writeDefinitions: aSnapshot definitions
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 MCFileTreeWriter >> writeVersion: aVersion [
     | members |
     directory := (members := MCFileTreeRepository parseName: aVersion info name) last.

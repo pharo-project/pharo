@@ -7,78 +7,80 @@ My subclasses implement the specific window announcements and may provide furthe
 
 "
 Class {
-	#name : #WindowAnnouncement,
-	#superclass : #Announcement,
+	#name : 'WindowAnnouncement',
+	#superclass : 'Announcement',
 	#instVars : [
 		'window'
 	],
-	#category : #'Morphic-Widgets-Windows-Announcements'
+	#category : 'Morphic-Widgets-Windows-Announcements',
+	#package : 'Morphic-Widgets-Windows',
+	#tag : 'Announcements'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowAnnouncement >> isActivated [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowAnnouncement >> isClosed [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowAnnouncement >> isCollapsed [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowAnnouncement >> isDeActivated [
 
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowAnnouncement >> isExpanded [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowAnnouncement >> isLabelled [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowAnnouncement >> isMoved [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowAnnouncement >> isMovedOrResized [
 
 	^ self isMoved or: [ self isResized ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowAnnouncement >> isOpened [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowAnnouncement >> isResized [
 	^ false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WindowAnnouncement >> isScrolled [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowAnnouncement >> window [
 	^ window
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WindowAnnouncement >> window: anObject [
 	window := anObject
 ]

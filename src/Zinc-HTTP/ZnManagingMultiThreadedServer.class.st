@@ -8,16 +8,18 @@ I keep track of all the connections that I spawn so that I can close them when I
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnManagingMultiThreadedServer,
-	#superclass : #ZnMultiThreadedServer,
+	#name : 'ZnManagingMultiThreadedServer',
+	#superclass : 'ZnMultiThreadedServer',
 	#instVars : [
 		'lock',
 		'connections'
 	],
-	#category : #'Zinc-HTTP-Client-Server'
+	#category : 'Zinc-HTTP-Client-Server',
+	#package : 'Zinc-HTTP',
+	#tag : 'Client-Server'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ZnManagingMultiThreadedServer >> closeConnections [
 	self connections isEmpty ifTrue: [ ^ self ].
 	self lock critical: [
@@ -29,24 +31,24 @@ ZnManagingMultiThreadedServer >> closeConnections [
 		self connections removeAll ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnManagingMultiThreadedServer >> closeSocketStream: socketStream [
 	super closeSocketStream: socketStream.
 	self lock critical: [
 		self connections remove: socketStream ifAbsent: [ ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnManagingMultiThreadedServer >> connections [
 	^ connections ifNil: [ connections := OrderedCollection new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnManagingMultiThreadedServer >> lock [
 	^ lock ifNil: [ lock := Mutex new ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnManagingMultiThreadedServer >> rejectConnection: socketStream [
 	| response |
 	response := ZnResponse serviceUnavailable: 'Too many concurrent connections'.
@@ -57,7 +59,7 @@ ZnManagingMultiThreadedServer >> rejectConnection: socketStream [
 	ZnTooManyConcurrentConnections signal
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ZnManagingMultiThreadedServer >> socketStreamOn: socket [
 	| socketStream |
 	socketStream := super socketStreamOn: socket.
@@ -68,7 +70,7 @@ ZnManagingMultiThreadedServer >> socketStreamOn: socket [
 	^ socketStream
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 ZnManagingMultiThreadedServer >> stop: unregister [
 	super stop: unregister.
 	self closeConnections

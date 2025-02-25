@@ -1,5 +1,6 @@
 "
-I am UUIDGenerator, I generate UUIDs.
+I am generator that is used by the class `UUID` to generate the identifiers.
+Normally, one should not use me directly for creating a UUID, one should use the class `UUID` instead.
 
 An RFC4122 Universally Unique Identifier (UUID) is an opaque 128-bit number that can be used for identification purposes. Concretely, a UUID is a 16 element byte array.
 
@@ -31,9 +32,10 @@ Some bits are set to some predefined value, to indicate the variant and version 
 
 Usage:
 
-  UUIDGenerator next.
-  UUIDGenerator current next.
-  UUIDGenerator new next.
+```
+	UUIDGenerator default nextCounter16.
+	UUIDGenerator default nextRandom16.
+```
 
 Sharing an instance is more efficient and correct.
 Instances should be reset whenever the image comes up.
@@ -45,8 +47,8 @@ See also:
 
 "
 Class {
-	#name : #UUIDGenerator,
-	#superclass : #Object,
+	#name : 'UUIDGenerator',
+	#superclass : 'Object',
 	#instVars : [
 		'node',
 		'random',
@@ -56,10 +58,12 @@ Class {
 	#classVars : [
 		'Default'
 	],
-	#category : #'Network-UUID-Base'
+	#category : 'Network-UUID-Base',
+	#package : 'Network-UUID',
+	#tag : 'Base'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UUIDGenerator class >> default [
 	"Return the default UUID generator.
 	Sharing an instance is more efficient and correct."
@@ -67,31 +71,20 @@ UUIDGenerator class >> default [
 	^ Default ifNil: [ Default := self new ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 UUIDGenerator class >> initialize [
 	SessionManager default
 		registerNetworkClassNamed: self name
 ]
 
-{ #category : #accessing }
-UUIDGenerator class >> next [
-	"Return a UUID using the shared generator"
-
-	"self next"
-
-	"[ UUIDGenerator next ] bench"
-
-	^ self default next
-]
-
-{ #category : #'system startup' }
+{ #category : 'system startup' }
 UUIDGenerator class >> startUp [
 	"Whenever the image comes up, reset so that a new node ID is computed."
 
 	Default := nil
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UUIDGenerator >> clockOn: stream [
 	"Write 8 bytes from the microsecond clock to stream"
 
@@ -101,7 +94,7 @@ UUIDGenerator >> clockOn: stream [
 		stream nextPut: (microseconds byteAt: each) ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UUIDGenerator >> computeNodeIdentifier [
 	"Compute and return a 'node identifier', a 16 element byte array that should be unique to this image, vm, invocation, network, machine combination"
 
@@ -118,7 +111,7 @@ UUIDGenerator >> computeNodeIdentifier [
 	^ (MD5 hashMessage: nodeData) hash asByteArrayOfSize: 4
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 UUIDGenerator >> initialize [
 	super initialize.
 	random := Random new.
@@ -130,17 +123,7 @@ UUIDGenerator >> initialize [
 	counter := self nextRandom16
 ]
 
-{ #category : #accessing }
-UUIDGenerator >> next [
-	"Return the next UUID, see my class comment"
-
-	| uuid |
-	uuid := UUID nilUUID.
-	self placeFields: uuid.
-	^ uuid
-]
-
-{ #category : #private }
+{ #category : 'private' }
 UUIDGenerator >> nextCounter16 [
 	"Return the next 16-bit counter value with safe overflow"
 
@@ -148,14 +131,14 @@ UUIDGenerator >> nextCounter16 [
 	^ counter
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UUIDGenerator >> nextRandom16 [
 	"Return the next 16-bit random value from my random generator"
 
 	^ (random nextInteger: 16r10000) - 1
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UUIDGenerator >> placeFields: uuid [
 	"Fill the fields of uuid, effectively generating a new UUID in place, see my class comment"
 
@@ -170,14 +153,14 @@ UUIDGenerator >> placeFields: uuid [
 		self setVariantAndVersion: uuid ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 UUIDGenerator >> randomGenerator [
 	"Return the random generator that I use"
 
 	^ random
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 UUIDGenerator >> setVariantAndVersion: uuid [
 	"Set the version (top four most significant bits) to 0, an undefined version in RFC 4122"
 

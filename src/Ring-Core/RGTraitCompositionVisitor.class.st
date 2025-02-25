@@ -17,19 +17,21 @@ ast acceptVisitor: visitor.
 
 "
 Class {
-	#name : #RGTraitCompositionVisitor,
-	#superclass : #RBProgramNodeVisitor,
+	#name : 'RGTraitCompositionVisitor',
+	#superclass : 'OCProgramNodeVisitor',
 	#instVars : [
 		'traitComposition'
 	],
-	#category : #'Ring-Core-Parsing'
+	#category : 'Ring-Core-Parsing',
+	#package : 'Ring-Core',
+	#tag : 'Parsing'
 }
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 RGTraitCompositionVisitor >> parse: anExpressionString for: anRGTraitCompositionDefinition [
 
 	| ast result |
-	ast := (RBParser parseExpression: anExpressionString).
+	ast := (OCParser parseExpression: anExpressionString).
 	self traitComposition: anRGTraitCompositionDefinition.
 	result := ast acceptVisitor: self.
 
@@ -39,36 +41,36 @@ RGTraitCompositionVisitor >> parse: anExpressionString for: anRGTraitComposition
 	^ result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitCompositionVisitor >> traitComposition [
 	^ traitComposition
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RGTraitCompositionVisitor >> traitComposition: anObject [
 	traitComposition := anObject.
 	traitComposition pvtCleanTransformations
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RGTraitCompositionVisitor >> visitArrayNode: anArrayNode [
 
 	^ anArrayNode children collect: [:each | self visitNode: each]
 ]
 
-{ #category : #visiting }
-RGTraitCompositionVisitor >> visitLiteralArrayNode: aRBLiteralArrayNode [
+{ #category : 'visiting' }
+RGTraitCompositionVisitor >> visitLiteralArrayNode: aLiteralArrayNode [
 
-	^ aRBLiteralArrayNode contents collect: [:each | self visitNode: each]
+	^ aLiteralArrayNode contents collect: [:each | self visitNode: each]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RGTraitCompositionVisitor >> visitLiteralNode: aLiteralNode [
 
 	^ aLiteralNode value
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RGTraitCompositionVisitor >> visitMessageNode: aMessageNode [
 
 	| rec args |
@@ -113,13 +115,13 @@ RGTraitCompositionVisitor >> visitMessageNode: aMessageNode [
 	self error: 'Unknown trait composition message'
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RGTraitCompositionVisitor >> visitSequenceNode: aSequenceNode [
 
 	^ aSequenceNode statements collect: [:each | self visitNode: each]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RGTraitCompositionVisitor >> visitVariableNode: aVariableNode [
 
 	^ self traitComposition environment ensureTraitNamed: aVariableNode name

@@ -2,17 +2,19 @@
 I am a node in a tree of Epicea logs that represents a log file. Read more in my superclass comment.
 "
 Class {
-	#name : #EpFileLogNode,
-	#superclass : #EpLogNode,
+	#name : 'EpFileLogNode',
+	#superclass : 'EpLogNode',
 	#instVars : [
 		'globalName',
 		'directoryEntry',
 		'log'
 	],
-	#category : #'EpiceaBrowsers-UI-Graph'
+	#category : 'EpiceaBrowsers-UI-Graph',
+	#package : 'EpiceaBrowsers',
+	#tag : 'UI-Graph'
 }
 
-{ #category : #convenience }
+{ #category : 'convenience' }
 EpFileLogNode class >> fromAllLogsIn: directory [
 
 	| nodes |
@@ -23,7 +25,7 @@ EpFileLogNode class >> fromAllLogsIn: directory [
 	^ nodes
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpFileLogNode class >> withEntry: aDirectoryEntry [
 
 	^ self basicNew
@@ -31,20 +33,20 @@ EpFileLogNode class >> withEntry: aDirectoryEntry [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpFileLogNode >> fileReference [
 
 	^ directoryEntry asFileReference
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpFileLogNode >> globalName [
 
 	^ globalName ifNil: [
 		globalName := OmFileStore globalNameFrom: directoryEntry ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpFileLogNode >> initializeWithEntry: aDirectoryEntry [
 
 	directoryEntry := aDirectoryEntry.
@@ -52,26 +54,26 @@ EpFileLogNode >> initializeWithEntry: aDirectoryEntry [
 	self initialize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpFileLogNode >> log [
 
 	^ log ifNil: [
 		log := EpLog newWithStore: self ombuStore ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpFileLogNode >> modificationTime [
 
 	^ directoryEntry modificationTime
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpFileLogNode >> modificationTimeString [
 
 	^ self modificationTime asDate epiceaBrowsersAsString
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpFileLogNode >> ombuStore [
 
 	^ OmStoreFactory current fromFile: self fileReference

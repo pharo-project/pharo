@@ -1,48 +1,51 @@
 Class {
-	#name : #ClySwitchToScopedModeCommand,
-	#superclass : #ClyBrowserCommand,
+	#name : 'ClySwitchToScopedModeCommand',
+	#superclass : 'ClyBrowserCommand',
 	#instVars : [
 		'packages'
 	],
-	#category : #'Calypso-SystemTools-FullBrowser-Commands-Packages'
+	#category : 'Calypso-SystemTools-FullBrowser-Commands-Packages',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'Commands-Packages'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClySwitchToScopedModeCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 
 	^CmdContextMenuActivation byRootGroupItemFor: ClyFullBrowserPackageContext
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySwitchToScopedModeCommand >> defaultMenuItemName [
 	^'Set up scope'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClySwitchToScopedModeCommand >> execute [
 
 	browser switchToPackageScopeOf: packages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySwitchToScopedModeCommand >> packages [
 	^ packages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySwitchToScopedModeCommand >> packages: anObject [
 	packages := anObject
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClySwitchToScopedModeCommand >> prepareFullExecutionInContext: aBrowserContext [
-	|items|
+
+	| items |
 	super prepareFullExecutionInContext: aBrowserContext.
-	items := aBrowserContext selectedPackageItems collect: [:e | e actualObject ].
-	packages := browser searchDialog
-		requestMultipleObjects: 'Select package scope'
-		from: ClyAllPackagesQuery sorted
-		selecting: items.
-	packages ifEmpty: [ CmdCommandAborted signal ]
+	items := aBrowserContext selectedPackageItems collect: [ :e | e actualObject ].
+	packages := StBrowserSearchPresenter searchConfiguring: [ :presenter :dialog |
+		            dialog title: 'Select package scope'.
+		            presenter
+			            items: (self browser itemsForQuery: ClyAllPackagesQuery sorted);
+			            multipleSelection ]
 ]

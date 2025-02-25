@@ -2,16 +2,17 @@
 An abstract announcement class for tool registry announcements
 "
 Class {
-	#name : #ToolRegistryAnnouncement,
-	#superclass : #Announcement,
+	#name : 'ToolRegistryAnnouncement',
+	#superclass : 'Announcement',
 	#instVars : [
 		'tool',
 		'name'
 	],
-	#category : #'Tool-Registry'
+	#category : 'Tool-Registry',
+	#package : 'Tool-Registry'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ToolRegistryAnnouncement class >> tool: aTool name: aSymbol [
 
 	^ self new
@@ -20,22 +21,22 @@ ToolRegistryAnnouncement class >> tool: aTool name: aSymbol [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ToolRegistryAnnouncement >> name [
 	^ name
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ToolRegistryAnnouncement >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ToolRegistryAnnouncement >> tool [
 	^ tool
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ToolRegistryAnnouncement >> tool: anObject [
 	tool := anObject
 ]

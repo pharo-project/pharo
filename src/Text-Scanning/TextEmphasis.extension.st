@@ -1,6 +1,6 @@
-Extension { #name : #TextEmphasis }
+Extension { #name : 'TextEmphasis' }
 
-{ #category : #'*Text-Scanning' }
+{ #category : '*Text-Scanning' }
 TextEmphasis >> emphasizeScanner: scanner [
 	"Set the emphasis for text scanning"
 	scanner addEmphasis: emphasisCode

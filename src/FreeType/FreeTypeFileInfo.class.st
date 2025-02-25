@@ -2,8 +2,8 @@
 File infos for a FreeType font
 "
 Class {
-	#name : #FreeTypeFileInfo,
-	#superclass : #AbstractFreeTypeFileInfo,
+	#name : 'FreeTypeFileInfo',
+	#superclass : 'AbstractFreeTypeFileInfo',
 	#instVars : [
 		'absoluteOrRelativePath',
 		'absolutePath',
@@ -11,85 +11,87 @@ Class {
 		'modificationTime',
 		'fileSize'
 	],
-	#category : #'FreeType-FontManager'
+	#category : 'FreeType-FontManager',
+	#package : 'FreeType',
+	#tag : 'FontManager'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFileInfo >> absoluteOrRelativePath [
 	"Answer the value of absoluteOrRelativePath"
 
 	^ absoluteOrRelativePath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFileInfo >> absoluteOrRelativePath: anObject [
 	"Set the value of absoluteOrRelativePath"
 
 	absoluteOrRelativePath := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFileInfo >> absolutePath [
 	"Answer the value of absolutePath"
 
 	^ absolutePath
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFileInfo >> absolutePath: anObject [
 	"Set the value of absolutePath"
 
 	absolutePath := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFileInfo >> baseName [
 	^ absolutePath asFileReference basename
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFileInfo >> fileSize [
 	"Answer the value of fileSize"
 
 	^ fileSize
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFileInfo >> fileSize: anObject [
 	"Set the value of fileSize"
 
 	fileSize := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFileInfo >> locationType [
 	"Answer the value of locationType"
 
 	^ locationType
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFileInfo >> locationType: anObject [
 	"Set the value of locationType"
 
 	locationType := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFileInfo >> modificationTime [
 	"Answer the value of modificationTime"
 
 	^ modificationTime
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeFileInfo >> modificationTime: anObject [
 	"Set the value of modificationTime"
 
 	modificationTime := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 FreeTypeFileInfo >> printOn: aStream [
 	"super printOn: aStream."
 	aStream

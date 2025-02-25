@@ -2,17 +2,21 @@
 I am a toolbar to be used in the EpLogBrowserModel.
 "
 Class {
-	#name : #EpLogBrowserToolbarPresenter,
-	#superclass : #SpPresenter,
+	#name : 'EpLogBrowserToolbarPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'logBrowserPresenter',
 		'filtersButton',
-		'statusLabel'
+		'statusLabel',
+		'filteredEntriesCount',
+		'searchedEntriesCount'
 	],
-	#category : #'EpiceaBrowsers-UI-Log'
+	#category : 'EpiceaBrowsers-UI-Log',
+	#package : 'EpiceaBrowsers',
+	#tag : 'UI-Log'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 EpLogBrowserToolbarPresenter class >> defaultLayout [
 	^ SpBoxLayout newLeftToRight
 		add: #statusLabel;
@@ -20,12 +24,12 @@ EpLogBrowserToolbarPresenter class >> defaultLayout [
 		yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpLogBrowserToolbarPresenter >> activeFiltersString [
 	^ 'Filters (' , logBrowserPresenter filters size asString , ')'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserToolbarPresenter >> beApplyMode [
 	filtersButton
 		icon: (self iconNamed: #smallRedo);
@@ -33,7 +37,7 @@ EpLogBrowserToolbarPresenter >> beApplyMode [
 		action: [ logBrowserPresenter applyAllChangesAndCloseWindow ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserToolbarPresenter >> beHistoryMode [
 	filtersButton
 		icon: (self iconNamed: #smallFind);
@@ -42,7 +46,7 @@ EpLogBrowserToolbarPresenter >> beHistoryMode [
 				openWithSpecAt: self currentWorld activeHand position ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserToolbarPresenter >> beRevertMode [
 	filtersButton
 		icon: (self iconNamed: #smallUndo);
@@ -50,38 +54,59 @@ EpLogBrowserToolbarPresenter >> beRevertMode [
 		action: [ logBrowserPresenter revertAllChangesAndCloseWindow ]
 ]
 
-{ #category : #initialization }
+{ #category : 'accessing' }
+EpLogBrowserToolbarPresenter >> filteredEntriesCount [
+	^ filteredEntriesCount
+]
+
+{ #category : 'accessing' }
+EpLogBrowserToolbarPresenter >> filteredEntriesCount: anInteger [ 
+
+	filteredEntriesCount := anInteger
+]
+
+{ #category : 'initialization' }
+EpLogBrowserToolbarPresenter >> initialize [ 
+
+	super initialize.
+	searchedEntriesCount := 0.
+]
+
+{ #category : 'initialization' }
 EpLogBrowserToolbarPresenter >> initializePresenters [
+
 	filtersButton := self newButton.
 	statusLabel := self newLabel
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserToolbarPresenter >> logBrowserPresenter: anObject [
 	logBrowserPresenter := anObject
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 EpLogBrowserToolbarPresenter >> refresh [
 	filtersButton label: self activeFiltersString.
 	statusLabel label: self statusString
 ]
 
-{ #category : #refreshing }
+{ #category : 'accessing' }
+EpLogBrowserToolbarPresenter >> searchedEntriesCount: anInteger [ 
+
+	searchedEntriesCount := anInteger
+]
+
+{ #category : 'refreshing' }
 EpLogBrowserToolbarPresenter >> statusString [
 	^ String
 		streamContents: [ :stream |
-			| filtered total |
-			filtered := logBrowserPresenter filteredEntriesCount.
+			| total |
 			total := logBrowserPresenter totalEntriesCount.
-
 			stream
-				print: filtered;
-				nextPutAll: ' events'.
-
-			filtered = total
-				ifFalse: [ stream
-						nextPutAll: ' (';
-						print: total;
-						nextPutAll: ' total)' ] ]
+				print: total;
+				nextPutAll: ' events | ';
+				print: searchedEntriesCount;
+				nextPutAll: ' found | ';
+				print: filteredEntriesCount;
+				nextPutAll: ' filtered' ]
 ]

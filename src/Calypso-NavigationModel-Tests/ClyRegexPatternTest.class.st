@@ -1,10 +1,11 @@
 Class {
-	#name : #ClyRegexPatternTest,
-	#superclass : #ClyStringPatternTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClyRegexPatternTest',
+	#superclass : 'ClyStringPatternTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyRegexPatternTest >> testMatchesAnyStringWhenItIsBadRegex [
 
 	| pattern |
@@ -13,7 +14,7 @@ ClyRegexPatternTest >> testMatchesAnyStringWhenItIsBadRegex [
 	self assert: (pattern matches: 'any string')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyRegexPatternTest >> testMatchesAnyStringWhenItIsEmpty [
 
 	| pattern |
@@ -22,7 +23,7 @@ ClyRegexPatternTest >> testMatchesAnyStringWhenItIsEmpty [
 	self assert: (pattern matches: 'any string')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyRegexPatternTest >> testMatchesAnyStringWhenItIsOnlySpaces [
 
 	| pattern |
@@ -31,7 +32,7 @@ ClyRegexPatternTest >> testMatchesAnyStringWhenItIsOnlySpaces [
 	self assert: (pattern matches: 'any string')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyRegexPatternTest >> testMatchesStringWhichMatchesCorrectRegex [
 
 	| pattern |
@@ -41,7 +42,7 @@ ClyRegexPatternTest >> testMatchesStringWhichMatchesCorrectRegex [
 	self deny: (pattern matches: 'abs')
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyRegexPatternTest >> testTriesFixWronglyUsedStarInRegex [
 
 	| pattern |

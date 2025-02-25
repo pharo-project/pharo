@@ -1,10 +1,11 @@
 Class {
-	#name : #ZnStatusLineTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Tests'
+	#name : 'ZnStatusLineTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Tests',
+	#package : 'Zinc-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnStatusLineTest >> testInitialization [
 	"Make sure everything is properly initialized"
 
@@ -15,7 +16,7 @@ ZnStatusLineTest >> testInitialization [
 		self assert: statusLine reason equals: reason ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnStatusLineTest >> testReading [
 	| statusLine string |
 	string := 'HTTP/1.1 200 OK' , String crlf.
@@ -25,7 +26,7 @@ ZnStatusLineTest >> testReading [
 	self assert: statusLine version equals: ZnConstants defaultHTTPVersion
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnStatusLineTest >> testReadingNonStandardCode [
 	| string statusLine |
 	"There exist non-standard codes out there, like those from cloudflare"
@@ -35,28 +36,28 @@ ZnStatusLineTest >> testReadingNonStandardCode [
 	self assert: statusLine reason equals: 'SSL Handshake Failed'
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnStatusLineTest >> testReadingWrongCode [
 	| string |
 	string := 'HTTP/1.0 1000 OK', String crlf.
 	self should: [ ZnStatusLine readFrom: string readStream ] raise: ZnUnknownHttpStatusCode
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnStatusLineTest >> testReadingWrongVersion [
 	| string |
 	string := 'HTTP/0.9 200 OK', String crlf.
 	self should: [ ZnStatusLine readFrom: string readStream ] raise: ZnUnknownHttpVersion
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnStatusLineTest >> testReadingWrongVersion2 [
 	| string |
 	string := 'HTTP/0.9 Foo OK', String crlf.
 	self should: [ ZnStatusLine readFrom: string readStream ] raise: ZnUnknownHttpVersion
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnStatusLineTest >> testWriting [
 	| statusLine string |
 	statusLine := ZnStatusLine ok.

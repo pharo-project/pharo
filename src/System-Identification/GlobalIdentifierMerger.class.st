@@ -26,16 +26,17 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #GlobalIdentifierMerger,
-	#superclass : #Object,
+	#name : 'GlobalIdentifierMerger',
+	#superclass : 'Object',
 	#instVars : [
 		'existing',
 		'stored'
 	],
-	#category : #'System-Identification'
+	#category : 'System-Identification',
+	#package : 'System-Identification'
 }
 
-{ #category : #actions }
+{ #category : 'actions' }
 GlobalIdentifierMerger >> convertValues [
 	existing
 		at: #computerUUID
@@ -47,17 +48,17 @@ GlobalIdentifierMerger >> convertValues [
 		ifAbsent: [ "ignore" ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlobalIdentifierMerger >> existing [
 	^ existing
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlobalIdentifierMerger >> existing: anObject [
 	existing := anObject
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 GlobalIdentifierMerger >> merge [
 	"If UUIDs are different, it is likely different user and we should use
 	localy stored settings. If the UUIDs are same, we keep settings of the image.
@@ -69,7 +70,7 @@ GlobalIdentifierMerger >> merge [
 			ifFalse: [ self mergeDifferentComputer ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 GlobalIdentifierMerger >> mergeDifferentComputer [
 	"It puts all stored values into existing dictionary."
 	stored keysAndValuesDo: [ :eachKey :eachValue |
@@ -78,7 +79,7 @@ GlobalIdentifierMerger >> mergeDifferentComputer [
 	^ true
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 GlobalIdentifierMerger >> mergeSameComputer [
 	"It add into existing dictionary keys that are included in the stored dictionary,
 	but are missing in the existing dictionary. Useful when a new version
@@ -94,12 +95,12 @@ GlobalIdentifierMerger >> mergeSameComputer [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlobalIdentifierMerger >> stored [
 	^ stored
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 GlobalIdentifierMerger >> stored: anObject [
 	stored := anObject
 ]

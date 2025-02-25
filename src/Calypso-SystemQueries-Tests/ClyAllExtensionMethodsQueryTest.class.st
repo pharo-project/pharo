@@ -1,15 +1,17 @@
 Class {
-	#name : #ClyAllExtensionMethodsQueryTest,
-	#superclass : #ClyMethodQueryTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClyAllExtensionMethodsQueryTest',
+	#superclass : 'ClyMethodQueryTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyAllExtensionMethodsQueryTest >> createQuery [
 	^ClyAllExtensionMethodsQuery from: ClyClassScope of: Object in: environment
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAllExtensionMethodsQueryTest >> testCheckIfEmpty [
 	query scope: (ClyMethodScope
 		of: (ClySubclassLOfClass0FromPExtendedByP1Mock>>#extensionMethodFromSubclassL)
@@ -20,7 +22,7 @@ ClyAllExtensionMethodsQueryTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAllExtensionMethodsQueryTest >> testFromThreeMethods [
 
 	self queryFromScope: ClyMethodScope ofAll: {

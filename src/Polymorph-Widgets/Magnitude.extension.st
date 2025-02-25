@@ -1,6 +1,6 @@
-Extension { #name : #Magnitude }
+Extension { #name : 'Magnitude' }
 
-{ #category : #'*Polymorph-Widgets-Themes' }
+{ #category : '*Polymorph-Widgets-Themes' }
 Magnitude class >> systemIconName [
 
 	^ #magnitude

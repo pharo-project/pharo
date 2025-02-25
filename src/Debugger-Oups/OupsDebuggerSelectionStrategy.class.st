@@ -5,8 +5,8 @@ I am the abstract super class of **Oups**' debugger selection strategies. My sub
 The debugger infrastructure implements a default strategy `OupsDebuggerSelector` which is interchangeable with user-defined strategies.
 "
 Class {
-	#name : #OupsDebuggerSelectionStrategy,
-	#superclass : #Object,
+	#name : 'OupsDebuggerSelectionStrategy',
+	#superclass : 'Object',
 	#instVars : [
 		'debuggers',
 		'handled',
@@ -15,22 +15,24 @@ Class {
 	#classInstVars : [
 		'debuggerSelectionStrategy'
 	],
-	#category : #'Debugger-Oups-Strategies'
+	#category : 'Debugger-Oups-Strategies',
+	#package : 'Debugger-Oups',
+	#tag : 'Strategies'
 }
 
-{ #category : #settings }
+{ #category : 'settings' }
 OupsDebuggerSelectionStrategy class >> debuggerSelectionStrategy [
 
 	^ debuggerSelectionStrategy ifNil: [
 		  debuggerSelectionStrategy := self defaultDebuggerSelectionStrategy ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OupsDebuggerSelectionStrategy class >> debuggerSelectionStrategy: aClass [
 	debuggerSelectionStrategy := aClass
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OupsDebuggerSelectionStrategy class >> debuggerSelectionStrategySettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder pickOne: #debuggerSelectionStrategy)
@@ -42,57 +44,64 @@ OupsDebuggerSelectionStrategy class >> debuggerSelectionStrategySettingsOn: aBui
 		description: 'Sets the strategy to open a debugger.'
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 OupsDebuggerSelectionStrategy class >> defaultDebuggerSelectionStrategy [
 	^OupsDebuggerSelector
 ]
 
-{ #category : #instance }
+{ #category : 'instance' }
 OupsDebuggerSelectionStrategy class >> with: aCollection [
 	^ self new
 		debuggers: aCollection;
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDebuggerSelectionStrategy >> debuggers [
 	^ debuggers
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDebuggerSelectionStrategy >> debuggers: aCollection [
 	debuggers := aCollection
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 OupsDebuggerSelectionStrategy >> error [
 	^error
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDebuggerSelectionStrategy >> handled [
 	^handled ifNil:[handled := false]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OupsDebuggerSelectionStrategy >> hasErrors [
-	^error notNil
+
+	^ error isNotNil
 ]
 
-{ #category : #iterating }
+{ #category : 'error handling' }
+OupsDebuggerSelectionStrategy >> logErrorsForSession: aDebugSession [
+
+	error ifNotNil: [ "There was an error while opening the debugger, we log that error"
+		DebuggerEmmergencyLogger new
+			logError: error
+			forSession: aDebugSession ].
+
+	"We log the original error."
+	DebuggerEmmergencyLogger new
+		logError: aDebugSession exception
+		forSession: aDebugSession
+]
+
+{ #category : 'iterating' }
 OupsDebuggerSelectionStrategy >> nextDebugger [
 	^ self subclassResponsibility
 ]
 
-{ #category : #debuggers }
+{ #category : 'debuggers' }
 OupsDebuggerSelectionStrategy >> openDebuggerForSession: aDebugSession [
 	self subclassResponsibility
-]
-
-{ #category : #'error handling' }
-OupsDebuggerSelectionStrategy >> signalErrorHandlingErrorForSession: aDebugSession [
-
-	DebuggerEmmergencyLogger new
-		logError: error
-		forSession: aDebugSession crTrace
 ]

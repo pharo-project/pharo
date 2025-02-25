@@ -76,7 +76,9 @@ Example:
 
 "
 Class {
-	#name : #RGElement,
-	#superclass : #RGObject,
-	#category : #'Ring-Core-Kernel'
+	#name : 'RGElement',
+	#superclass : 'RGObject',
+	#category : 'Ring-Core-Kernel',
+	#package : 'Ring-Core',
+	#tag : 'Kernel'
 }

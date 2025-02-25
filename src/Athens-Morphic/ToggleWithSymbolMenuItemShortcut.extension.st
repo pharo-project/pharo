@@ -1,6 +1,6 @@
-Extension { #name : #ToggleWithSymbolMenuItemShortcut }
+Extension { #name : 'ToggleWithSymbolMenuItemShortcut' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 ToggleWithSymbolMenuItemShortcut >> drawOnAthensCanvas: aCanvas [
 	| keyParts text paragraph keyBounds keyFont |
 

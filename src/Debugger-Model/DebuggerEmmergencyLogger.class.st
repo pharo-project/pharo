@@ -7,39 +7,40 @@ I log this error by:
 
 "
 Class {
-	#name : #DebuggerEmmergencyLogger,
-	#superclass : #Object,
-	#category : #'Debugger-Model-Core'
+	#name : 'DebuggerEmmergencyLogger',
+	#superclass : 'Object',
+	#category : 'Debugger-Model-Core',
+	#package : 'Debugger-Model',
+	#tag : 'Core'
 }
 
-{ #category : #API }
+{ #category : 'API' }
 DebuggerEmmergencyLogger >> debugError: anError fromSession: aDebugSession [
 
 	self logError: anError forSession: aDebugSession
 ]
 
-{ #category : #API }
+{ #category : 'API' }
 DebuggerEmmergencyLogger >> logError: anError forSession: aDebugSession [
 
-	| errDescription errStream |
+	| errDescription |
 	errDescription := [ anError description ]
 		                  on: Error
 		                  do: [ 'a ' , anError class printString ].
-	errStream := WriteStream on: String new.
-	errStream cr.
-	errStream << ('Original error: ' , aDebugSession name asString , '.').
-	errStream cr.
-	errStream << ('Debugger error: ' , errDescription).
-	errStream cr.
 
-	self inform: '**Debugger opening error** ' , errStream contents.
+	self inform: errDescription.
 	[
 	Smalltalk
-		logError: errStream contents
+		logError: errDescription contents
 		inContext: aDebugSession interruptedContext ]
 		on: Error
 		do: [ :err |
-			self inform:
-				'Cannot log error: ' , anError printString , 'due to error: '
-				, err printString ]
+			self inform: (String streamContents: [ :str |
+					 str << 'Cannot log error:'.
+					 str space.
+					 str << anError description.
+					 str space.
+					 str << 'due to error:'.
+					 str space.
+					 str << err description ]) ]
 ]

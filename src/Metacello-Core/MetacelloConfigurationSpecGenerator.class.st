@@ -1,20 +1,22 @@
 Class {
-	#name : #MetacelloConfigurationSpecGenerator,
-	#superclass : #MetacelloProjectSpecGenerator,
-	#category : #'Metacello-Core-Scripts'
+	#name : 'MetacelloConfigurationSpecGenerator',
+	#superclass : 'MetacelloProjectSpecGenerator',
+	#category : 'Metacello-Core-Scripts',
+	#package : 'Metacello-Core',
+	#tag : 'Scripts'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloConfigurationSpecGenerator >> projectSpecCreationBlock [
-    ^ [ :projectName | {(MetacelloMCProject new configurationOfProjectSpec name: projectName)} ]
+    ^ [ :projectName | {(MetacelloProject new configurationOfProjectSpec name: projectName)} ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloConfigurationSpecGenerator >> projectSpecListBlock [
     ^ [ MetacelloProjectRegistration configurationProjectSpecs ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MetacelloConfigurationSpecGenerator >> projectSpecLookupBlock [
     ^ [ :projectName | 
     {(MetacelloProjectRegistration

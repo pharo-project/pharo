@@ -2,32 +2,58 @@
 A trait for test purposes
 "
 Trait {
-	#name : #TCreationWithTest,
-	#category : #'Collections-Abstract-Tests-Traits'
+	#name : 'TCreationWithTest',
+	#category : 'Collections-Abstract-Tests-Traits',
+	#package : 'Collections-Abstract-Tests',
+	#tag : 'Traits'
 }
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TCreationWithTest >> collectionClass [
 	"Return the class to be used to create instances of the class tested"
 
 	^ self explicitRequirement
 ]
 
-{ #category : #requirements }
+{ #category : 'requirements' }
 TCreationWithTest >> collectionMoreThan5Elements [
 " return a collection including at least 5 elements"
 
 	^ self explicitRequirement
 ]
 
-{ #category : #'tests - fixture' }
+{ #category : 'tests - fixture' }
 TCreationWithTest >> test0FixtureCreationWithTest [
 
 	self collectionMoreThan5Elements.
 	self assert: self collectionMoreThan5Elements size >= 5
 ]
 
-{ #category : #'tests - creation' }
+{ #category : 'tests - creation' }
+TCreationWithTest >> testLessThanMinus [
+
+	| aCol collection |
+	collection := self collectionMoreThan5Elements asArray.
+	aCol := self collectionClass <- collection.
+
+	collection do: [ :each | self assert: (aCol occurrencesOf: each ) equals: ( collection occurrencesOf: each ) ].
+
+	self assert: aCol size equals: collection size
+]
+
+{ #category : 'tests - creation' }
+TCreationWithTest >> testNewFromArray [
+
+	| aCol collection |
+	collection := self collectionMoreThan5Elements asArray.
+	aCol := self collectionClass newFromArray: collection.
+
+	collection do: [ :each | self assert: (aCol occurrencesOf: each ) equals: ( collection occurrencesOf: each ) ].
+
+	self assert: aCol size equals: collection size
+]
+
+{ #category : 'tests - creation' }
 TCreationWithTest >> testOfSize [
 
 	| aCol |
@@ -35,7 +61,7 @@ TCreationWithTest >> testOfSize [
 	self assert: aCol size equals: 3
 ]
 
-{ #category : #'tests - creation' }
+{ #category : 'tests - creation' }
 TCreationWithTest >> testWith [
 
 	| aCol anElement |
@@ -44,7 +70,7 @@ TCreationWithTest >> testWith [
 	self assert: (aCol includes: anElement)
 ]
 
-{ #category : #'tests - creation' }
+{ #category : 'tests - creation' }
 TCreationWithTest >> testWithAll [
 
 	| aCol collection |
@@ -56,7 +82,7 @@ TCreationWithTest >> testWithAll [
 	self assert: aCol size equals: collection size
 ]
 
-{ #category : #'tests - creation' }
+{ #category : 'tests - creation' }
 TCreationWithTest >> testWithWith [
 
 	| aCol collection element1 element2 |
@@ -69,7 +95,7 @@ TCreationWithTest >> testWithWith [
 	self assert: (aCol occurrencesOf: element2 ) equals: (collection occurrencesOf: element2)
 ]
 
-{ #category : #'tests - creation' }
+{ #category : 'tests - creation' }
 TCreationWithTest >> testWithWithWith [
 
 	| aCol collection |
@@ -83,7 +109,7 @@ TCreationWithTest >> testWithWithWith [
 		self assert: (aCol occurrencesOf: (collection at: i)) equals: (collection occurrencesOf: (collection at: i)) ]
 ]
 
-{ #category : #'tests - creation' }
+{ #category : 'tests - creation' }
 TCreationWithTest >> testWithWithWithWith [
 
 	| aCol collection |
@@ -93,7 +119,7 @@ TCreationWithTest >> testWithWithWithWith [
 	1 to: 3 do: [ :i | self assert: (aCol occurrencesOf: (collection at: i)) equals: (collection occurrencesOf: (collection at: i)) ]
 ]
 
-{ #category : #'tests - creation' }
+{ #category : 'tests - creation' }
 TCreationWithTest >> testWithWithWithWithWith [
 
 	| aCol collection |

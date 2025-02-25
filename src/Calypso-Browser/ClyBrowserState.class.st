@@ -36,23 +36,25 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #ClyBrowserState,
-	#superclass : #Object,
+	#name : 'ClyBrowserState',
+	#superclass : 'Object',
 	#instVars : [
 		'viewStates',
 		'selectedTabs',
 		'systemScope'
 	],
-	#category : #'Calypso-Browser-NavigationHistory'
+	#category : 'Calypso-Browser-NavigationHistory',
+	#package : 'Calypso-Browser',
+	#tag : 'NavigationHistory'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyBrowserState class >> of: aBrowser [
 	^self new
 		retrieveStateFrom: aBrowser
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyBrowserState >> applyTo: aBrowser [
 
 	aBrowser changeStateBy: [
@@ -61,17 +63,17 @@ ClyBrowserState >> applyTo: aBrowser [
 		aBrowser tabManager restoreBrowserState: self ]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyBrowserState >> applyTo: aBrowser byUndo: undoExecuting [
 	self applyTo: aBrowser
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyBrowserState >> createBrowser [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserState >> isCurrentStateOf: aBrowser [
 
 	aBrowser navigationViews with: viewStates do: [:view :state |
@@ -80,14 +82,14 @@ ClyBrowserState >> isCurrentStateOf: aBrowser [
 	^aBrowser tabManager selectsTools: selectedTabs
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyBrowserState >> representsConcreteQuery [
 	"this method allows to detect that browser is in state when it not shows any concrete content at any of panels. It is happens when browser was not requested to show anything yet"
 
 	^(viewStates allSatisfy: [ :each | each representsConcreteQuery not ]) not
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyBrowserState >> restoreNavigationStateOf: aBrowser [
 
 	aBrowser navigationViews with: viewStates do: [:view :state |
@@ -95,13 +97,13 @@ ClyBrowserState >> restoreNavigationStateOf: aBrowser [
 			state applyTo: view]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 ClyBrowserState >> restoreStateOf: aBrowser [
 
 	aBrowser systemScope: systemScope
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 ClyBrowserState >> retrieveStateFrom: aBrowser [
 
 	systemScope :=  aBrowser systemScope.
@@ -110,32 +112,32 @@ ClyBrowserState >> retrieveStateFrom: aBrowser [
 		collect: [ :each | each copyForBrowserStateSnapshot ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserState >> selectedTabs [
 	^ selectedTabs
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserState >> selectedTabs: anObject [
 	selectedTabs := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserState >> systemScope [
 	^ systemScope
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserState >> systemScope: anObject [
 	systemScope := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserState >> viewStates [
 	^ viewStates
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyBrowserState >> viewStates: anObject [
 	viewStates := anObject
 ]

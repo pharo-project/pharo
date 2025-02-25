@@ -1,6 +1,6 @@
-Extension { #name : #InflateStream }
+Extension { #name : 'InflateStream' }
 
-{ #category : #'*Fuel-Core' }
+{ #category : '*Fuel-Core' }
 InflateStream >> fuelNextWordsInto: aWordObject [ 
 	"We can't copy bits directly from encoded streams. There is no way around copying
 	to a buffer first."

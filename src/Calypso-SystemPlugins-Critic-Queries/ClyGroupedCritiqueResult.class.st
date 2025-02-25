@@ -3,12 +3,13 @@ I am critique query result which group given critiques by group name.
 I represent these groups with ClyConcreteCritiqueMethodGroup instances
 "
 Class {
-	#name : #ClyGroupedCritiqueResult,
-	#superclass : #ClyQueryResult,
-	#category : #'Calypso-SystemPlugins-Critic-Queries'
+	#name : 'ClyGroupedCritiqueResult',
+	#superclass : 'ClyQueryResult',
+	#category : 'Calypso-SystemPlugins-Critic-Queries',
+	#package : 'Calypso-SystemPlugins-Critic-Queries'
 }
 
-{ #category : #building }
+{ #category : 'building' }
 ClyGroupedCritiqueResult >> buildMethodGroupWithCritique: aCritique on: resultDictionary [
 	| critiqueGroupName group |
 
@@ -19,12 +20,12 @@ ClyGroupedCritiqueResult >> buildMethodGroupWithCritique: aCritique on: resultDi
 	group addCritique: aCritique
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyGroupedCritiqueResult >> defaultItems [
 	^SortedCollection sortBlock: ClySortByNameFunction ascending
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 ClyGroupedCritiqueResult >> fillWith: critiques [
 	| groups |
 	groups := Dictionary new.

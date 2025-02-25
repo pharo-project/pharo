@@ -14,12 +14,14 @@ Provides path based access to elements contained in the receiver and any subtree
 ```
 "
 Class {
-	#name : #KeyedTree,
-	#superclass : #Dictionary,
-	#category : #'Collections-Unordered-Dictionaries'
+	#name : 'KeyedTree',
+	#superclass : 'Dictionary',
+	#category : 'Collections-Unordered-Dictionaries',
+	#package : 'Collections-Unordered',
+	#tag : 'Dictionaries'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KeyedTree >> allKeys [
 	"Answer an ordered collection of the keys of the receiver and any subtrees.
 		Please no circular references!"
@@ -32,7 +34,7 @@ KeyedTree >> allKeys [
 	^answer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KeyedTree >> atPath: anArray [
 	"Answer the element referenced by the give key path.
 	Signal an error if not found."
@@ -40,7 +42,7 @@ KeyedTree >> atPath: anArray [
 	^self atPath: anArray ifAbsent: [self errorKeyNotFound: anArray]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KeyedTree >> atPath: anArray ifAbsent: aBlock [
 	"Answer the element referenced by the given key path.
 	Answer the value of aBlock if not found."
@@ -52,7 +54,7 @@ KeyedTree >> atPath: anArray ifAbsent: aBlock [
 	^element
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KeyedTree >> atPath: anArray ifAbsentPut: aBlock [
 	"Answer the element referenced by the given key path.
 	Answer the value of aBlock if not found after creating its path."
@@ -62,11 +64,11 @@ KeyedTree >> atPath: anArray ifAbsentPut: aBlock [
 		ifTrue: [^self].
 	element := self.
 	anArray allButLastDo: [:key |
-		element := element at: key ifAbsentPut: [self species new]].
+		element := element at: key ifAbsentPut: [ self copyEmpty ]].
 	^element at: anArray last ifAbsentPut: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KeyedTree >> atPath: anArray put: aBlock [
 	"Answer the value of aBlock after creating its path."
 
@@ -75,11 +77,11 @@ KeyedTree >> atPath: anArray put: aBlock [
 		ifTrue: [^self].
 	element := self.
 	anArray allButLastDo: [:key |
-		element := element at: key ifAbsentPut: [self species new]].
+		element := element at: key ifAbsentPut: [self copyEmpty]].
 	^element at: anArray last put: aBlock
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KeyedTree >> formattedText [
 	"Answer a string or text representing the receiver with indentation and, possibly, markup."
 
@@ -89,7 +91,7 @@ KeyedTree >> formattedText [
 	^str contents
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KeyedTree >> formattedTextWithDescriptions: aKeyedTree [
 	"Answer a string or text representing the receiver with indentation and, possibly, markup.
 	Descriptions of each item are taken from the given tree with
@@ -101,7 +103,7 @@ KeyedTree >> formattedTextWithDescriptions: aKeyedTree [
 	^str contents
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 KeyedTree >> merge: aKeyedTree [
 	"Merge the given tree into the receiver, overwriting or extending elements as needed."
 
@@ -109,14 +111,14 @@ KeyedTree >> merge: aKeyedTree [
 			| subtree |
 			(v isKindOf: KeyedTree)
 				ifTrue: [
-					subtree := self at: k ifAbsentPut: [ v species new ].
+					subtree := self at: k ifAbsentPut: [ v copyEmpty ].
 					(subtree isKindOf: KeyedTree)
 						ifFalse: [ subtree := self at: k put: v species new ].
 					subtree merge: v ]
 				ifFalse: [ self at: k put: v ] ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 KeyedTree >> postCopy [
 	"Must copy the associations, or later store will affect both the
 		original and the copy.
@@ -133,7 +135,7 @@ KeyedTree >> postCopy [
 								ifFalse: [ assoc value ]) ] ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KeyedTree >> putFormattedTextOn: aStream level: indentLevel indentString: aString [
 	"Place a description of the receiver on the given stream with the given indentation level."
 
@@ -151,7 +153,7 @@ KeyedTree >> putFormattedTextOn: aStream level: indentLevel indentString: aStrin
 					aStream cr]]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KeyedTree >> putFormattedTextOn: aStream withDescriptions: aKeyedTree level: indentLevel indentString: aString [
 	"Place a print of the receiver and associated description on the given stream with the given indentation level."
 
@@ -175,7 +177,7 @@ KeyedTree >> putFormattedTextOn: aStream withDescriptions: aKeyedTree level: ind
 					aStream cr]]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 KeyedTree >> removePath: anArray [
 	"Remove and answer the element referenced by the given path.
 	Signal an error if not found."
@@ -183,7 +185,7 @@ KeyedTree >> removePath: anArray [
 	^self removePath: anArray ifAbsent: [self errorKeyNotFound: anArray]
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 KeyedTree >> removePath: anArray ifAbsent: aBlock [
 	"Remove and answer the element referenced by the given path.
 	Answer the value of aBlock if not found."
@@ -197,14 +199,14 @@ KeyedTree >> removePath: anArray ifAbsent: aBlock [
 	^element removeKey: anArray last ifAbsent: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KeyedTree >> sortBlock [
 	"Answer the block to sort tree keys with."
 
 	^[:a :b | [a <= b] on: Error do: [a class name <= b class name]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KeyedTree >> subtrees [
 	"Answer the subtrees of the receiver."
 

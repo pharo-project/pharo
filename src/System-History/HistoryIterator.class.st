@@ -22,18 +22,20 @@ recorder
 
 "
 Class {
-	#name : #HistoryIterator,
-	#superclass : #Object,
+	#name : 'HistoryIterator',
+	#superclass : 'Object',
 	#instVars : [
 		'index',
 		'plugged',
 		'recorder',
 		'maxSize'
 	],
-	#category : #'System-History-Iterators'
+	#category : 'System-History-Iterators',
+	#package : 'System-History',
+	#tag : 'Iterators'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 HistoryIterator >> addItem: anHistoryItem [
 	| result |
 	self isPlugged ifFalse: [^ false].
@@ -43,49 +45,49 @@ HistoryIterator >> addItem: anHistoryItem [
 	^ result
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 HistoryIterator >> addRecord: anItem [
 	^ self addItem: anItem
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistoryIterator >> at: anInteger [
 	^ self recorder at: anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistoryIterator >> at: anInteger put: anItem [
 	self recorder at: anInteger put: anItem
 ]
 
-{ #category : #grouping }
+{ #category : 'grouping' }
 HistoryIterator >> closeGroup [
 	self recorder closeGroup
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 HistoryIterator >> closeRecordGroup [
 	^ self closeGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistoryIterator >> current [
 	^ (self index <= self size and: [self index > 0])
 		ifTrue: [self recorder at: self index]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistoryIterator >> defaultMaximumSize [
 	"unlimited by default"
 	^ 999999999
 ]
 
-{ #category : #'undo - undo' }
+{ #category : 'undo - undo' }
 HistoryIterator >> do [
 	^ self redo
 ]
 
-{ #category : #'undo - undo' }
+{ #category : 'undo - undo' }
 HistoryIterator >> doAndAddRecord: anUndoRedoRecord [
 	| result |
 	result := anUndoRedoRecord do.
@@ -93,12 +95,12 @@ HistoryIterator >> doAndAddRecord: anUndoRedoRecord [
 	^ result
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistoryIterator >> first [
 	^ self recorder first
 ]
 
-{ #category : #grouping }
+{ #category : 'grouping' }
 HistoryIterator >> groupFrom: firstIdx to: secondIdx [
 	| group |
 	group := UndoRedoGroup new.
@@ -111,44 +113,44 @@ HistoryIterator >> groupFrom: firstIdx to: secondIdx [
 	index := index - group size + 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HistoryIterator >> hasNext [
 	"is there an item after current index"
 	^ self recorder size - self index > 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HistoryIterator >> hasPrevious [
 	"is there an item before current index"
 	^ self index > 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistoryIterator >> index [
 	^ index ifNil: [index := self size]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 HistoryIterator >> isPlugged [
 	^ plugged ifNil: [plugged := true]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistoryIterator >> last [
 	^ self recorder last
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistoryIterator >> maxSize [
 	^ maxSize ifNil: [maxSize := self defaultMaximumSize]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistoryIterator >> maxSize: anInteger [
 	maxSize := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistoryIterator >> next [
 	"next item in history"
 	^ self hasNext
@@ -156,24 +158,24 @@ HistoryIterator >> next [
 			self current]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistoryIterator >> nextList [
 	"return 'next' items sublist "
 	^ self recorder copyFrom: self index + 1 to: self size
 ]
 
-{ #category : #grouping }
+{ #category : 'grouping' }
 HistoryIterator >> openGroup [
 	self recorder openGroup.
 	self updateIndex
 ]
 
-{ #category : #compatibility }
+{ #category : 'compatibility' }
 HistoryIterator >> openRecordGroup [
 	^ self openGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistoryIterator >> previous [
 	"previous item in history"
 	^ self hasPrevious
@@ -181,18 +183,18 @@ HistoryIterator >> previous [
 			self current]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistoryIterator >> previousList [
 	"return 'prev' items sublist"
 	^ self recorder copyFrom: 1 to: self index - 1
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistoryIterator >> recorder [
 	^ recorder ifNil: [recorder := UndoRedoGroup new]
 ]
 
-{ #category : #'undo - undo' }
+{ #category : 'undo - undo' }
 HistoryIterator >> redo [
 	self unplugWhile: [
 		self hasNext ifFalse: [^false].
@@ -200,38 +202,38 @@ HistoryIterator >> redo [
 	^ true
 ]
 
-{ #category : #'undo - undo' }
+{ #category : 'undo - undo' }
 HistoryIterator >> redo: doMessageSend undo: undoMessageSend [
 	self addItem: (UndoRedoRecord redo: doMessageSend undo: undoMessageSend)
 ]
 
-{ #category : #'undo - undo' }
+{ #category : 'undo - undo' }
 HistoryIterator >> redoArray: doArray undoArray: undoArray [
 	self addItem: (UndoRedoRecord redoArray: doArray undoArray: undoArray)
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 HistoryIterator >> removeAt: anIndex [
 	self recorder removeAt: anIndex
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 HistoryIterator >> removeFirst [
 	self recorder removeFirst
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 HistoryIterator >> reset [
 	self recorder reset.
 	index := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HistoryIterator >> size [
 	^ self recorder size
 ]
 
-{ #category : #'undo - undo' }
+{ #category : 'undo - undo' }
 HistoryIterator >> undo [
 	self unplugWhile: [
 		self current ifNotNil: [:curr | curr undo].
@@ -239,7 +241,7 @@ HistoryIterator >> undo [
 	^ true
 ]
 
-{ #category : #'undo - undo' }
+{ #category : 'undo - undo' }
 HistoryIterator >> unplugWhile: aBlock [
 	| wasPlugged |
 	wasPlugged := self isPlugged.
@@ -247,7 +249,7 @@ HistoryIterator >> unplugWhile: aBlock [
 	aBlock ensure: [ plugged := wasPlugged ]
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 HistoryIterator >> updateIndex [
 	self size <= self maxSize
 		ifFalse: [self removeFirst].

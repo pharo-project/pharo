@@ -1,6 +1,6 @@
-Extension { #name : #TransformMorph }
+Extension { #name : 'TransformMorph' }
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 TransformMorph >> clipDuring: aBlock canvas: aCanvas [
 
 	self clipSubmorphs
@@ -11,7 +11,7 @@ TransformMorph >> clipDuring: aBlock canvas: aCanvas [
 		ifFalse: [ ^ aBlock value ]
 ]
 
-{ #category : #'*Athens-Morphic' }
+{ #category : '*Athens-Morphic' }
 TransformMorph >> drawSubmorphsOnAthensCanvas: anAthensCanvas [
 	| clip |
 	clip := self clippingBounds intersect: anAthensCanvas clipRect.

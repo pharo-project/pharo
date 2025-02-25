@@ -2,20 +2,22 @@
 I am raised when enter is pressed
 "
 Class {
-	#name : #RubReturnEntered,
-	#superclass : #RubMorphAnnouncement,
+	#name : 'RubReturnEntered',
+	#superclass : 'RubMorphAnnouncement',
 	#instVars : [
 		'accepted'
 	],
-	#category : #'Rubric-Editing-Announcements'
+	#category : 'Rubric-Editing-Announcements',
+	#package : 'Rubric',
+	#tag : 'Editing-Announcements'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubReturnEntered >> accepted [
 	^ accepted ifNil: [ accepted := false ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RubReturnEntered >> accepted: aBoolean [
 	accepted := aBoolean
 ]

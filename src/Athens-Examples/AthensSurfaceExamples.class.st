@@ -2,15 +2,17 @@
 See examples on the class side and on class side of subclasses
 "
 Class {
-	#name : #AthensSurfaceExamples,
-	#superclass : #Model,
+	#name : 'AthensSurfaceExamples',
+	#superclass : 'Model',
 	#instVars : [
 		'renderBlock'
 	],
-	#category : #'Athens-Examples-Base'
+	#category : 'Athens-Examples-Base',
+	#package : 'Athens-Examples',
+	#tag : 'Base'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> draw2Strings [
  	<example>
 	| surf font1 font2 ascent advance |
@@ -48,7 +50,7 @@ AthensSurfaceExamples class >> draw2Strings [
 	surf asMorph openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> drawFontMetrics [
  	<example>
 	| font |
@@ -94,7 +96,7 @@ AthensSurfaceExamples class >> drawFontMetrics [
 		]]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> drawSetFillRule [
  	<example>
 	self openViewOn: [ :canvas |
@@ -137,7 +139,7 @@ AthensSurfaceExamples class >> drawSetFillRule [
 	]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> example1 [
 
 	self openViewOn: [ :can |
@@ -153,7 +155,7 @@ AthensSurfaceExamples class >> example1 [
 	]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> example10 [
 	"Draw a rounded rectangle, using the arc segments"
 
@@ -189,7 +191,7 @@ AthensSurfaceExamples class >> example10 [
 	surf asMorph openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> example2 [
 	"Draw a path on surface."
 
@@ -207,7 +209,7 @@ AthensSurfaceExamples class >> example2 [
 	]
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> example3 [
 	"Draw simple filled path, changing the transformation and colors to get some animated effects."
 
@@ -241,7 +243,7 @@ AthensSurfaceExamples class >> example3 [
 	surf asMorph openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> example3stroke [
 	"Draw simple stroke  path, changing the transformation and colors to get some animated effects."
 
@@ -274,7 +276,7 @@ AthensSurfaceExamples class >> example3stroke [
 	surf asMorph openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> example4 [
 	"
 	This example demostrates that same path could be reused multiple times when drawing.
@@ -300,7 +302,7 @@ AthensSurfaceExamples class >> example4 [
 	surf asMorph openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> example5 [
 	"Draw a hollow rectangle (frame) using lineTo/moveTo commands,
  	 with path, consisting of two contours: outer and inner one.
@@ -333,7 +335,7 @@ AthensSurfaceExamples class >> example5 [
 	surf asMorph openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> example6 [
 	"Draw two rectangles, filled by linear gradient.
 
@@ -361,7 +363,7 @@ AthensSurfaceExamples class >> example6 [
 		surf asMorph openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> example6point1 [
 	"Draw two rectangles, filled by linear gradient.
 
@@ -386,7 +388,7 @@ AthensSurfaceExamples class >> example6point1 [
 	surf asMorph openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> example6stroke [
 	"Draw two rectangles, stoked by linear gradient.
 
@@ -414,7 +416,7 @@ AthensSurfaceExamples class >> example6stroke [
 	surf asMorph openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> example7 [
 	"Draw two rectangles, filled by linear gradient.
 	 Rotate the gradient in a loop.
@@ -449,7 +451,7 @@ AthensSurfaceExamples class >> example7 [
 	surf asMorph openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> example8 [
 	"Draw a rectangle filled by radial gradient."
 	| surf paint |
@@ -471,7 +473,7 @@ AthensSurfaceExamples class >> example8 [
 	surf asMorph openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> example9 [
 	"Fill the rectangle using image paint."
 
@@ -493,7 +495,7 @@ AthensSurfaceExamples class >> example9 [
 	surf asMorph openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> exampleClip [
 
 	| surf |
@@ -516,7 +518,7 @@ AthensSurfaceExamples class >> exampleClip [
 	surf asMorph openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> exampleConicalGradient [
 	| surface meshGradient center radius sliceCount sliceSize colorAngleOffset |
 	surface := AthensCairoSurface extent: 512@512.
@@ -555,7 +557,7 @@ AthensSurfaceExamples class >> exampleConicalGradient [
 	surface asForm asMorph openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> exampleCoonsPatch [
 	| surface meshPaint |
 	surface := AthensCairoSurface extent: 300@300.
@@ -581,7 +583,7 @@ AthensSurfaceExamples class >> exampleCoonsPatch [
 	surface asForm asMorph openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> exampleCoonsPatch2 [
 	| surface meshPaint |
 	surface := AthensCairoSurface extent: 300@300.
@@ -609,7 +611,7 @@ AthensSurfaceExamples class >> exampleCoonsPatch2 [
 	surface asForm asMorph openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> exampleDrawForm [
 
 	| surf surf2   |
@@ -638,7 +640,7 @@ AthensSurfaceExamples class >> exampleDrawForm [
 	surf asMorph openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> exampleDrawForm2 [
 
 	| surf  |
@@ -653,14 +655,14 @@ AthensSurfaceExamples class >> exampleDrawForm2 [
 		can draw.
 		can pathTransform scaleBy: 0.5;
 		 translateX: 60 Y: 60.
-		(can setPaint: (self iconNamed: #helpIcon)) repeat.
+		(can setPaint: (self iconNamed: #help)) repeat.
 		can paintTransform scaleBy: 3; rotateByDegrees: 30.
 		can draw ].
 
 	surf asMorph openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> exampleDrawText [
 
 	| surf  font |
@@ -684,7 +686,7 @@ AthensSurfaceExamples class >> exampleDrawText [
 	surf asMorph openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> exampleGouraudTriangle [
 	| surface meshPaint |
 	surface := AthensCairoSurface extent: 512@512.
@@ -704,7 +706,7 @@ AthensSurfaceExamples class >> exampleGouraudTriangle [
 	surface asForm asMorph openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> exampleGouraudTriangle2 [
 	| surface meshPaint |
 	surface := AthensCairoSurface extent: 512@512.
@@ -729,7 +731,7 @@ AthensSurfaceExamples class >> exampleGouraudTriangle2 [
 	surface asForm asMorph openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> exampleNestedClip [
 
 	| surf |
@@ -760,7 +762,7 @@ AthensSurfaceExamples class >> exampleNestedClip [
 	surf asMorph openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> exampleStrokeRect [
 	"Draw a frame rectangle, rotate & transform it in a loop"
 
@@ -782,7 +784,7 @@ AthensSurfaceExamples class >> exampleStrokeRect [
 	surf asMorph openInWindow
 ]
 
-{ #category : #examples }
+{ #category : 'examples' }
 AthensSurfaceExamples class >> exampleUseForm [
 
 	| surf  form |
@@ -795,19 +797,19 @@ AthensSurfaceExamples class >> exampleUseForm [
 	surf asMorph openInWindow
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 AthensSurfaceExamples class >> newAsSceneFrom: aBlock [
 	^ self new
 		renderBlock: aBlock;
 		yourself
 ]
 
-{ #category : #utilities }
+{ #category : 'utilities' }
 AthensSurfaceExamples class >> newSurface:  extent [
 	^ AthensCairoSurfaceExamples newSurface: extent
 ]
 
-{ #category : #'opening view' }
+{ #category : 'opening view' }
 AthensSurfaceExamples class >> openViewOn: aBlock [
 
 	^ AthensSceneView new
@@ -815,24 +817,24 @@ AthensSurfaceExamples class >> openViewOn: aBlock [
 		openInWindow
 ]
 
-{ #category : #'surface management' }
+{ #category : 'surface management' }
 AthensSurfaceExamples >> createSurface: anExtent [
 	^ self class newSurface: anExtent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensSurfaceExamples >> renderBlock [
 
 	^ renderBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensSurfaceExamples >> renderBlock: anObject [
 
 	renderBlock := anObject
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensSurfaceExamples >> renderOn: aCanvas [
 	renderBlock value: aCanvas
 ]

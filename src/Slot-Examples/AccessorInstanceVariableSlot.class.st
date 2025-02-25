@@ -6,12 +6,14 @@ I am a slot that compiles accessor methods in the Class that it is installed in.
 This example shows how Slots can change the class that they are part of.
 "
 Class {
-	#name : #AccessorInstanceVariableSlot,
-	#superclass : #InstanceVariableSlot,
-	#category : #'Slot-Examples-Base'
+	#name : 'AccessorInstanceVariableSlot',
+	#superclass : 'InstanceVariableSlot',
+	#category : 'Slot-Examples-Base',
+	#package : 'Slot-Examples',
+	#tag : 'Base'
 }
 
-{ #category : #'class building' }
+{ #category : 'class building' }
 AccessorInstanceVariableSlot >> installingIn: aClass [
 	| reader writer |
 

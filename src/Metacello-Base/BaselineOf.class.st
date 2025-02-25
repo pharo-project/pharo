@@ -66,29 +66,70 @@ reference](MetacelloScriptingAPI.md). There more information on [working with Gi
 
 "
 Class {
-	#name : #BaselineOf,
-	#superclass : #ConfigurationOf,
-	#category : #'Metacello-Base'
+	#name : 'BaselineOf',
+	#superclass : 'ConfigurationOf',
+	#category : 'Metacello-Base',
+	#package : 'Metacello-Base'
 }
 
-{ #category : #accessing }
-BaselineOf class >> validate [
-  "Check the configuration for Errors, Critical Warnings, and Warnings (see class comment for MetacelloMCVersionValidator for more information). 
-	Errors identify specification issues that will result in unexpected behaviour when you load the configuration. 
-	Critical Warnings identify specification issues that may result in unexpected behavior when you load the configuration.
-	Warnings identify specification issues that are technically correct, but are worth take a look at."
-
-  "self validate"
-
-  <apiDocumentation>
-  self ensureMetacello.
-  ^ ((self environment at: #'MetacelloToolBox')
-    validateBaseline: self
-    debug: #()
-    recurse: false) inspect
+{ #category : 'accessing' }
+BaselineOf class >> allPackageNames [
+	
+	^ self version packages collect: [:each | each name]
 ]
 
-{ #category : #baselines }
+{ #category : 'accessing' }
+BaselineOf class >> deepPackagesOfGroupNamed: aName [
+	"Traverses the group tree to collect packages"
+	| allGroups projects group |
+
+	allGroups := self version groups.
+	projects := Array streamContents: [ :stream |
+		self version spec
+			specListProjectDo: [ :each | stream nextPut: each ] 
+			packageDo: [ :each | ] 
+			groupDo: [  :each | ] ].
+	group := allGroups detect: [ :eachGroup | eachGroup name = aName ].
+	^ (group includes
+		collect: [ :each | 
+			(allGroups anySatisfy: [ :eachGroup | eachGroup name = each ])
+				ifTrue: [ self deepPackagesOfGroupNamed: each ]
+				ifFalse: [
+					(projects noneSatisfy: [ :eachProject | eachProject name = each ]) 
+						ifTrue: [ { each } ]
+						ifFalse: [ #() ] ] ])
+		flattened
+]
+
+{ #category : 'testing' }
+BaselineOf class >> isProject [
+	"This method can be overriden if we have baselines in the image for tests so that we do not consider it is a project of the image."
+
+	^ true
+]
+
+{ #category : 'accessing' }
+BaselineOf class >> packagesOfGroupNamed: aName [
+
+	^ (self version groups detect: [ :g | g name = aName ]) includes
+]
+
+{ #category : 'accessing' }
+BaselineOf class >> version [
+	
+	^ self project version
+]
+
+{ #category : 'accessing' }
+BaselineOf class >> withAllPackageNames [
+	"Return the name of all packages I includes and the name of my package "
+
+	^ self allPackageNames
+		  add: self class package name;
+		  yourself
+]
+
+{ #category : 'baselines' }
 BaselineOf >> baseline: spec [
 	<baseline>
 	"subclasses should redefine me"
@@ -106,18 +147,72 @@ BaselineOf >> baseline: spec [
 	"
 ]
 
-{ #category : #baselines }
+{ #category : 'queries' }
+BaselineOf >> classNamed: aSymbol [
+
+	^ self class environment at: aSymbol asSymbol
+]
+
+{ #category : 'queries' }
+BaselineOf >> classNamed: aSymbol ifPresent: aBlock [
+
+	^ self class environment at: aSymbol asSymbol ifPresent: aBlock
+]
+
+{ #category : 'queries' }
+BaselineOf >> classNamed: aSymbol ifPresent: aBlock ifAbsent: absentBlock [
+
+	^ self class environment at: aSymbol asSymbol ifPresent: aBlock ifAbsent: absentBlock
+]
+
+{ #category : 'accessing' }
+BaselineOf >> newProjectWithRepositoryDescription: aListOrRepositoryDescriptions [
+
+	| newProject |
+	newProject := super newProjectWithRepositoryDescription:
+		           aListOrRepositoryDescriptions.
+	aListOrRepositoryDescriptions do: [ :desc |
+		newProject version spec repository: desc ].
+	^ newProject
+]
+
+{ #category : 'queries' }
+BaselineOf >> os [
+
+	^ OSPlatform current
+]
+
+{ #category : 'accessing' }
+BaselineOf >> packageRepositoryURLForSpec: spec [
+	" Tries to determine a repository URL from which the baseline is being loaded. Useful for 
+	refering other baselines in the same repository. "
+
+	^ spec repositoryDescriptions
+		  detect: [ :each | each beginsWith: 'tonel://' ]
+		  ifNone: [
+			  spec repositoryDescriptions
+				  ifEmpty: [ '' ]
+				  ifNotEmpty: [ :collection | collection anyOne ] ]
+]
+
+{ #category : 'baselines' }
 BaselineOf >> pharoVersionsFrom: aVersion [
 
 	^ (aVersion to: SystemVersion current major) collect: [ :v | ('pharo' , v asString , '.x') asSymbol ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOf >> projectClass [
     ^ MetacelloMCBaselineProject
 ]
 
-{ #category : #accessing }
+{ #category : 'queries' }
+BaselineOf >> tools [
+
+	^ Smalltalk tools
+]
+
+{ #category : 'accessing' }
 BaselineOf >> versionNumberClass [
     ^ MetacelloVersionNumber
 ]

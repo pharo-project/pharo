@@ -1,6 +1,6 @@
-Extension { #name : #FileReference }
+Extension { #name : 'FileReference' }
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 FileReference >> stonOn: stonWriter [
 	self fileSystem isDiskFileSystem
 		ifTrue: [ | diskFilePath |

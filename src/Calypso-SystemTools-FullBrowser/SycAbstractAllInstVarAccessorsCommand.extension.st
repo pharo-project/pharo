@@ -1,6 +1,6 @@
-Extension { #name : #SycAbstractAllInstVarAccessorsCommand }
+Extension { #name : 'SycAbstractAllInstVarAccessorsCommand' }
 
-{ #category : #'*Calypso-SystemTools-FullBrowser' }
+{ #category : '*Calypso-SystemTools-FullBrowser' }
 SycAbstractAllInstVarAccessorsCommand class >> fullBrowserMenuActivation [
 	<classAnnotation>
 

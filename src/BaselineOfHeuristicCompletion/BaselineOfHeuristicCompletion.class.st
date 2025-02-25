@@ -1,10 +1,11 @@
 Class {
-	#name : #BaselineOfHeuristicCompletion,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfHeuristicCompletion
+	#name : 'BaselineOfHeuristicCompletion',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfHeuristicCompletion',
+	#package : 'BaselineOfHeuristicCompletion'
 }
 
-{ #category : #baselines }
+{ #category : 'baselines' }
 BaselineOfHeuristicCompletion >> baseline: spec [
 	<baseline>
 	
@@ -13,5 +14,10 @@ BaselineOfHeuristicCompletion >> baseline: spec [
 		spec package: 'HeuristicCompletion-Morphic' with: [ 
 			spec requires: 'HeuristicCompletion-Model' ].
 		spec package: 'HeuristicCompletion-Tests' with: [ 
-			spec requires: 'HeuristicCompletion-Model' ] ]
+			spec requires: 'HeuristicCompletion-Model' ].
+		spec package: 'HeuristicCompletion-Benchmarks' with:[
+			spec requires: 'HeuristicCompletion-Model']
+		].
+	
+
 ]

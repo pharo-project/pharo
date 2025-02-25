@@ -1,6 +1,6 @@
-Extension { #name : #MetalinkChanged }
+Extension { #name : 'MetalinkChanged' }
 
-{ #category : #'*Calypso-SystemPlugins-Reflectivity-Queries' }
+{ #category : '*Calypso-SystemPlugins-Reflectivity-Queries' }
 MetalinkChanged >> canAffectResultOfMethodQuery: aMethodQuery [
 
 	^link methods anySatisfy: [:each |

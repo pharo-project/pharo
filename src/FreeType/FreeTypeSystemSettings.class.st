@@ -2,55 +2,61 @@
 Settings for the FreeType system
 "
 Class {
-	#name : #FreeTypeSystemSettings,
-	#superclass : #Model,
+	#name : 'FreeTypeSystemSettings',
+	#superclass : 'Model',
 	#classVars : [
 		'LoadFT2Library'
 	],
-	#category : #'FreeType-Settings'
+	#category : 'FreeType-Settings',
+	#package : 'FreeType',
+	#tag : 'Settings'
 }
 
-{ #category : #settings }
+{ #category : 'settings' }
 FreeTypeSystemSettings class >> freeTypeSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #noFt2Library)
 		target: self;
 		iconName: #smallConfiguration;
 		type: #Label;
-		label: 'Free type';
+		label: 'Free Type';
 		default: 'Free type fonts are not available';
 		precondition: [ FT2Library current isAvailable not ];
 		parent: #appearance;
 		order: 3;
-		description:
-			'Free type fonts are not available probably because the FT2 plugin is not installed. Check your VM installation'.
-	(aBuilder setting: #loadFt2Library)
-		target: self;
-		default: true;
-		dialog: [ self ft2LibraryVersion ];
+		description: 'Free type fonts are not available probably because the FT2 plugin is not installed. Check your VM installation'.
+
+	(aBuilder group: #FT2Library)
 		iconName: #smallConfiguration;
-		label: 'Use Free type';
-		description:
-			'If checked, it allows the usage of Freetype fonts and updates available fonts by scanning the current system';
-		precondition: [ FT2Library current notNil ];
+		label: 'Free Type';
+		description: '';
 		parent: #appearance;
 		order: 3;
-		with: [ (aBuilder pickOne: #monitorType)
+		with: [ 
+			(aBuilder setting: #loadFt2Library)
+				order: 1;
+				target: self;
+				default: true;
+				label: 'Use FreeType';
+				precondition: [ FT2Library current isNotNil ];
+				description: 'If checked, it allows the usage of Freetype fonts and updates available fonts by scanning the current system'.				
+			
+			(aBuilder pickOne: #monitorType)
 				label: 'Monitor type';
 				description: 'LCD is generally better for flat screens';
 				target: FreeTypeSettings;
 				targetSelector: #current;
-				order: 0;
+				order: 2;
 				default: #LCD;
 				domainValues: {#LCD . #CRT}.
 			(aBuilder setting: #updateFontsAtImageStartup)
-				order: 1;
+				order: 3;
 				target: FreeTypeSettings;
 				default: false;
 				label: 'Update fonts at startup';
 				description: 'If true, then the available font list is recomputed at each startup'.
 			(aBuilder group: #advancedSettings)
-				order: 10;
+				order: 4;
 				label: 'Advanced features';
 				description: 'Some very specific parameters as the hinting or the cache size';
 				with: [ (aBuilder range: #cacheSize)
@@ -62,20 +68,7 @@ FreeTypeSystemSettings class >> freeTypeSettingsOn: aBuilder [
 						range: (0 to: 50000 by: 10).
 					(aBuilder pickOne: #hintingSymbol)
 						label: 'Hinting';
-						description:
-							'Changes the glyph shapes:'
-								,
-									'
-o FULL: glyph shapes features are snapped to pixel boundaries. Glyphs are monochrome, with no anti-aliasing. This option changes the shapes the most.'
-								,
-									'
-o LIGHT: glyph shapes features are partially snapped to pixel boundaries. This option changes the shapes less than with Full, resulting in better shapes, but less contrast.'
-								,
-									'
-o NORMAL: glyph shapes features are snapped to pixel boundaries. Glyphs are anti-aliased.'
-								,
-									'
-o NONE: use the original glyph shapes without snapping their features to pixel boundaries. This gives the best shapes, but with less contrast and more fuzziness.';
+						description: self glyphShapesHelpText;
 						target: FreeTypeSettings;
 						targetSelector: #current;
 						default: #Light;
@@ -94,7 +87,7 @@ o NONE: use the original glyph shapes without snapping their features to pixel b
 						range: (0 to: 100 by: 10) ] ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 FreeTypeSystemSettings class >> ft2LibraryVersion [
 	^ Smalltalk ui theme
 		newLabelIn: self
@@ -103,17 +96,35 @@ FreeTypeSystemSettings class >> ft2LibraryVersion [
 		getEnabled: nil
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
+FreeTypeSystemSettings class >> glyphShapesHelpText [
+
+	^ 'Changes the glyph shapes:'
+								,
+									'
+o FULL: glyph shapes features are snapped to pixel boundaries. Glyphs are monochrome, with no anti-aliasing. This option changes the shapes the most.'
+								,
+									'
+o LIGHT: glyph shapes features are partially snapped to pixel boundaries. This option changes the shapes less than with Full, resulting in better shapes, but less contrast.'
+								,
+									'
+o NORMAL: glyph shapes features are snapped to pixel boundaries. Glyphs are anti-aliased.'
+								,
+									'
+o NONE: use the original glyph shapes without snapping their features to pixel boundaries. This gives the best shapes, but with less contrast and more fuzziness.'
+]
+
+{ #category : 'settings' }
 FreeTypeSystemSettings class >> loadFt2Library [
 	^ LoadFT2Library ifNil: [LoadFT2Library := false]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 FreeTypeSystemSettings class >> noFt2Library [
 	^ 'Free type fonts are not available'
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 FreeTypeSystemSettings class >> noFt2Library: aBoolean [
 
 	"ignore it for now"

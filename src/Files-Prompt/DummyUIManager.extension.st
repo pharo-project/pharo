@@ -1,9 +1,5 @@
-Extension { #name : #DummyUIManager }
+Extension { #name : 'DummyUIManager' }
 
-{ #category : #'*Files-Prompt' }
+{ #category : '*Files-Prompt' }
 DummyUIManager >> fileDoesNotExistsDefaultAction: anException [
-]
-
-{ #category : #'*Files-Prompt' }
-DummyUIManager >> fileExistsDefaultAction: anException [
 ]

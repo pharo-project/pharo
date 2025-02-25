@@ -1,10 +1,12 @@
 Class {
-	#name : #ClyClassExternalReferencesQuery,
-	#superclass : #ClyClassReferencesQuery,
-	#category : #'Calypso-SystemQueries-Queries'
+	#name : 'ClyClassExternalReferencesQuery',
+	#superclass : 'ClyClassReferencesQuery',
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyClassExternalReferencesQuery >> buildResult: aQueryResult [
 	| toExclude |
 

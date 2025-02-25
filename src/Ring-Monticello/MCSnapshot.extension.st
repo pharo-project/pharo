@@ -1,6 +1,6 @@
-Extension { #name : #MCSnapshot }
+Extension { #name : 'MCSnapshot' }
 
-{ #category : #'*Ring-Monticello' }
+{ #category : '*Ring-Monticello' }
 MCSnapshot >> importInto: anRGEnvironment asPackageNamed: aPackageName [
 
 	| anRGPacakgeDefinition |

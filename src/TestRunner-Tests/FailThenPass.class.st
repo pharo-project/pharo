@@ -4,15 +4,17 @@ I am a Test who faild at the first execution.
 I will be use to tests some rerunFailed Tests features.
 "
 Class {
-	#name : #FailThenPass,
-	#superclass : #MockTest,
+	#name : 'FailThenPass',
+	#superclass : 'MockTest',
 	#classInstVars : [
 		'counter'
 	],
-	#category : #'TestRunner-Tests-Utilities-Test'
+	#category : 'TestRunner-Tests-Utilities-Test',
+	#package : 'TestRunner-Tests',
+	#tag : 'Utilities-Test'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FailThenPass class >> counter [
 
 	counter
@@ -21,20 +23,20 @@ FailThenPass class >> counter [
 	^ counter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FailThenPass class >> reset [
 	<script>
 	counter := nil.
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FailThenPass >> testFailAtFirstRunning [
 
 	self shouldBeIgnored ifTrue: [ ^ self ].
 	self assert: self class counter equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FailThenPass >> testPass [
 
 	self shouldBeIgnored ifTrue: [ ^ self ].

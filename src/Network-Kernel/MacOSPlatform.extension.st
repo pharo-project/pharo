@@ -1,6 +1,6 @@
-Extension { #name : #MacOSPlatform }
+Extension { #name : 'MacOSPlatform' }
 
-{ #category : #'*Network-Kernel' }
+{ #category : '*Network-Kernel' }
 MacOSPlatform >> configureHttpProxy [
 
 	InternetConfiguration configureHttpProxy

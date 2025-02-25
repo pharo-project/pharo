@@ -4,55 +4,56 @@ I representing a choice between key combinations.
 A keyboard event will match with me when any of my key combinations matches with it.
 "
 Class {
-	#name : #KMKeyCombinationChoice,
-	#superclass : #KMKeyCombination,
+	#name : 'KMKeyCombinationChoice',
+	#superclass : 'KMKeyCombination',
 	#instVars : [
 		'shortcuts'
 	],
-	#category : #'Keymapping-KeyCombinations'
+	#category : 'Keymapping-KeyCombinations',
+	#package : 'Keymapping-KeyCombinations'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMKeyCombinationChoice class >> withShortcuts: someShortcuts [
 	^self new
 			shortcuts: someShortcuts;
 			yourself
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 KMKeyCombinationChoice >> = another [
 
 	^ shortcuts anySatisfy: [ :each | another = each ]
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 KMKeyCombinationChoice >> collect: aBlock [
 	^shortcuts collect: aBlock
 ]
 
-{ #category : #iterating }
+{ #category : 'iterating' }
 KMKeyCombinationChoice >> combinationsDo: aBlock [
 	^shortcuts do: aBlock
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMKeyCombinationChoice >> includes: aShortcut [
 	^shortcuts includes: aShortcut
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMKeyCombinationChoice >> matches: anEventBuffer [
 
 	^ shortcuts anySatisfy: [ :each | each matches: anEventBuffer ]
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMKeyCombinationChoice >> matchesCompletely: anEventBuffer [
 
 	^ shortcuts anySatisfy: [ :each | each matchesCompletely: anEventBuffer ]
 ]
 
-{ #category : #'accessing - platform' }
+{ #category : 'accessing - platform' }
 KMKeyCombinationChoice >> platformCharacter [
 
 	shortcuts do: [ :each |
@@ -60,7 +61,7 @@ KMKeyCombinationChoice >> platformCharacter [
 	^ nil
 ]
 
-{ #category : #'accessing - platform' }
+{ #category : 'accessing - platform' }
 KMKeyCombinationChoice >> platformModifier [
 
 	shortcuts do: [ :each |
@@ -68,7 +69,7 @@ KMKeyCombinationChoice >> platformModifier [
 	^ nil
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMKeyCombinationChoice >> prettyPrintOn: aStream [
 
 	(shortcuts select:[ :e | e platform = Smalltalk os platformFamily or: [ e platform = #all ] ])
@@ -76,12 +77,12 @@ KMKeyCombinationChoice >> prettyPrintOn: aStream [
 		separatedBy: [ aStream << ' | ' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMKeyCombinationChoice >> shortcuts: someShortcuts [
 	shortcuts := someShortcuts
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMKeyCombinationChoice >> | aShortcut [
 	^KMKeyCombinationChoice withShortcuts: (shortcuts copyWith: aShortcut)
 ]

@@ -2,17 +2,19 @@
 I am the scope for a Method
 "
 Class {
-	#name : #OCMethodScope,
-	#superclass : #OCAbstractMethodScope,
-	#category : #'OpalCompiler-Core-Semantics'
+	#name : 'OCMethodScope',
+	#superclass : 'OCAbstractMethodScope',
+	#category : 'OpalCompiler-Core-Semantics',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Semantics'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OCMethodScope >> isMethodScope [
 	^true
 ]
 
-{ #category : #scope }
+{ #category : 'scope' }
 OCMethodScope >> methodScope [
 
 	^ self

@@ -6,46 +6,48 @@ I hold a username and password.
 Part of Zinc HTTP Components.
 "
 Class {
-	#name : #ZnBasicCredential,
-	#superclass : #ZnCredential,
+	#name : 'ZnBasicCredential',
+	#superclass : 'ZnCredential',
 	#instVars : [
 		'username',
 		'password'
 	],
-	#category : #'Zinc-HTTP-Support'
+	#category : 'Zinc-HTTP-Support',
+	#package : 'Zinc-HTTP',
+	#tag : 'Support'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBasicCredential class >> authName [
 	^ 'Basic'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBasicCredential >> authTokenForUrl: urlObject method: method [
 	^ 'Basic ', (ZnUtils encodeBase64: (username, ':', password))
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnBasicCredential >> isComplete [
-	^ username notNil & password notNil
+	^ username isNotNil & password isNotNil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBasicCredential >> password [
 	^ password
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBasicCredential >> password: anObject [
 	password := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBasicCredential >> username [
 	^ username
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnBasicCredential >> username: anObject [
 	username := anObject
 ]

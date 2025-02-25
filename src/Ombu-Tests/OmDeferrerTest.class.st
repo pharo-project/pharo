@@ -2,34 +2,35 @@
 An EpDeferrerTest is a test class for testing the behavior of OmDeferrer
 "
 Class {
-	#name : #OmDeferrerTest,
-	#superclass : #TestCase,
+	#name : 'OmDeferrerTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'count',
 		'deferrer'
 	],
-	#category : #'Ombu-Tests'
+	#category : 'Ombu-Tests',
+	#package : 'Ombu-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmDeferrerTest >> count [
 
 	^ count
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmDeferrerTest >> count: anInteger [
 
 	count := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OmDeferrerTest >> increase [
 
 	count := count + 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmDeferrerTest >> testExecuteOnceAfterScheduling [
 
 	self skipOnPharoCITestingEnvironment.
@@ -46,7 +47,7 @@ OmDeferrerTest >> testExecuteOnceAfterScheduling [
 	self assert: self count equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmDeferrerTest >> testExecuteWithoutDelay [
 
 	self skipOnPharoCITestingEnvironment.

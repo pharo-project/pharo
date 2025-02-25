@@ -1,6 +1,6 @@
-Extension { #name : #TheManifestBuilder }
+Extension { #name : 'TheManifestBuilder' }
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 TheManifestBuilder >> banRule: aRule for: anEntity [
 	| ruleId number |
 	ruleId := aRule class uniqueIdentifierName.
@@ -15,7 +15,7 @@ TheManifestBuilder >> banRule: aRule for: anEntity [
 		version: number
 ]
 
-{ #category : #'*Renraku' }
+{ #category : '*Renraku' }
 TheManifestBuilder >> bansRule: aRule for: anEntity [
 	| ruleId number |
 	ruleId := aRule class uniqueIdentifierName.

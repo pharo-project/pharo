@@ -5,18 +5,19 @@ So...seems a work half done. Adrian Kuhn introduce it. Check
 http://forum.world.st/template/NamlServlet.jtp?macro=search_page&node=1294837&query=TAssertable
 "
 Trait {
-	#name : #TAssertable,
-	#category : #'SUnit-Core-Traits'
+	#name : 'TAssertable',
+	#category : 'SUnit-Core-Traits',
+	#package : 'SUnit-Core-Traits'
 }
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> assert: actualNumber closeTo: expectedNumber [
 	^ self
 		assert: (actualNumber closeTo: expectedNumber)
 		description: [self comparingStringBetween: actualNumber and: expectedNumber]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> assert: aBooleanOrBlock description: aStringOrBlock [
 	aBooleanOrBlock value ifFalse: [
 		| message |
@@ -24,7 +25,7 @@ TAssertable >> assert: aBooleanOrBlock description: aStringOrBlock [
 		self classForTestResult failure signal: message]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> assert: aBooleanOrBlock description: aStringOrBlock resumable: resumableBoolean [
 	| exception |
 	aBooleanOrBlock value
@@ -37,21 +38,21 @@ TAssertable >> assert: aBooleanOrBlock description: aStringOrBlock resumable: re
 			exception signal: aString]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> assert: actual equals: expected [
 	^ self
 		assert: actual = expected
 		description: [self comparingStringBetween: actual and: expected]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> assert: actual identicalTo: expected [
 	^ self
 		assert: expected == actual
 		description: [self comparingIdentityStringBetween: actual and: expected]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> assertCollection: actual equals: expected [
 	"Specialized test method that generates a proper error message for collection"
 	^ self
@@ -59,7 +60,7 @@ TAssertable >> assertCollection: actual equals: expected [
 		description: [ self comparingCollectionBetween: actual and: expected ]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> assertCollection: actual hasSameElements: expected [
 	"Assert that a collection contains the same elements as the given collection. Order is not checked, only the presence/absence of elements. Occurences of elements mater."
 
@@ -86,18 +87,18 @@ TAssertable >> assertCollection: actual hasSameElements: expected [
 				 lf ])
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> assertEmpty: aCollection [
 	^ self assert: aCollection isEmpty description: aCollection asString , ' should have been empty'
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> classForTestResult [
 	"Returns the class of the test result"
 	^ TestResult
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TAssertable >> comparingCollectionBetween: left and: right [
 	| additionalLeft additionalRight sortBlock|
 
@@ -135,41 +136,41 @@ TAssertable >> comparingCollectionBetween: left and: right [
 					tab; print: additionalRight  ]]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TAssertable >> comparingIdentityStringBetween: actual and: expected [
 
-	^ String streamContents: [:stream |
-			stream
-				nextPutAll: actual fullPrintString;
-				nextPutAll: ' is not identical to ';
-				nextPutAll: expected fullPrintString;
-				nextPutAll: '.']
+	^ String streamContents: [ :stream |
+		  stream
+			  print: actual;
+			  nextPutAll: ' is not identical to ';
+			  print: expected;
+			  nextPut: $. ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TAssertable >> comparingStringBetween: actual and: expected [
 
-	^ String streamContents: [:stream |
-			stream
-				nextPutAll: 'Got ';
-				nextPutAll: actual fullPrintString;
-				nextPutAll: ' instead of ';
-				nextPutAll: expected fullPrintString;
-				nextPutAll: '.']
+	^ String streamContents: [ :stream |
+		  stream
+			  nextPutAll: 'Got ';
+			  print: actual;
+			  nextPutAll: ' instead of ';
+			  print: expected;
+			  nextPut: $. ]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> deny: aBooleanOrBlock [
 
 	self assert: aBooleanOrBlock value not
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> deny: aBooleanOrBlock description: aString [
 	self assert: aBooleanOrBlock value not description: aString
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> deny: aBooleanOrBlock description: aString resumable: resumableBoolean [
 	self
 		assert: aBooleanOrBlock value not
@@ -177,21 +178,21 @@ TAssertable >> deny: aBooleanOrBlock description: aString resumable: resumableBo
 		resumable: resumableBoolean
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> deny: actual equals: expected [
 	^ self
 		deny: expected = actual
 		description: [self unexpectedEqualityStringBetween: actual and: expected]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> deny: actual identicalTo: expected [
 	^ self
 		deny: expected == actual
 		description: [self unexpectedIdentityEqualityStringBetween: actual and: expected]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> denyCollection: actual equals: expected [
 	"Specialized test method that generates a proper error message for collection"
 	^ self
@@ -199,7 +200,7 @@ TAssertable >> denyCollection: actual equals: expected [
 		description: [ self unexpectedEqualityStringBetween: actual and: expected ]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> denyCollection: actual hasSameElements: expected [
 	"Deny that a collection contains the same elements as the given collection. Order is not checked, only the presence/absence of elements."
 
@@ -208,33 +209,35 @@ TAssertable >> denyCollection: actual hasSameElements: expected [
 		description: 'Given collections match!'
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> denyEmpty: aCollection [
-	^ self assert: aCollection isNotEmpty description: aCollection asString , ' should not have been empty'
+	"Not using #isNotEmpty like this objects as parameter can only implement #isEmpty and not both messages."
+
+	^ self assert: aCollection isEmpty not description: aCollection asString , ' should not have been empty'
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> executeShould: aBlock inScopeOf: anExceptionalEvent [
 	^[aBlock value.
  	false] on: anExceptionalEvent
 		do: [:ex | ex return: true]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionContaining: aString [
 	^[aBlock value.
  	false] on: anExceptionalEvent
 		do: [:ex | ex return: (ex description includesSubstring: aString) ]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionNotContaining: aString [
 	^[aBlock value.
  	false] on: anExceptionalEvent
 		do: [:ex | ex return: (ex description includesSubstring: aString) not ]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> executeShould: aBlock inScopeOf: anException withExceptionDo: anotherBlock [
 
 	^[aBlock value.
@@ -245,99 +248,106 @@ TAssertable >> executeShould: aBlock inScopeOf: anException withExceptionDo: ano
 			exception return: true]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> fail [
 
 	^self assert: false
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> fail: aDescriptionString [
 
 	^self assert: false description: aDescriptionString
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> should: aBlock [
 	self assert: aBlock value
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> should: aBlock description: aString [
 	self assert: aBlock value description: aString
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> should: aBlock notTakeMoreThan: aDuration [
     "Evaluate aBlock and if it takes more than given duration
     to run we report a test failure. "
 
-	^ aBlock valueWithin: aDuration onTimeout: [
-		self
-			assert: false
-			description: ['Block evaluation took more than the expected <1p>' expandMacrosWith: aDuration]
+	^ aBlock 
+		valueWithinMilliseconds: aDuration asMilliSeconds 
+		onTimeout: [
+			self
+				assert: false
+				description: ['Block evaluation took more than the expected <1p>' expandMacrosWith: aDuration ]
 	]
 ]
 
-{ #category : #asserting }
-TAssertable >> should: aBlock notTakeMoreThanMilliseconds: anInteger [
-    "For compatibility with other Smalltalks"
+{ #category : 'asserting' }
+TAssertable >> should: aBlock notTakeMoreThanMilliseconds: milli [
+    "Evaluate aBlock and if it takes more than given milli of milliseconds
+    to run we report a test failure. "
 
-   self should: aBlock notTakeMoreThan: (Duration milliSeconds: anInteger)
+	^ aBlock valueWithinMilliseconds: milli onTimeout: [
+		self
+			assert: false
+			description: ['Block evaluation took more than the expected <1p>' expandMacrosWith: milli]
+	]
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> should: aBlock raise: anExceptionalEvent [
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent)
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> should: aBlock raise: anExceptionalEvent description: aString [
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent)
 		description: aString
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> should: aBlock raise: anExceptionalEvent whoseDescriptionDoesNotInclude: substring description: aString [
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionNotContaining: substring)
 		description: aString
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> should: aBlock raise: anExceptionalEvent whoseDescriptionIncludes: substring description: aString [
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent withDescriptionContaining: substring)
 		description: aString
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> should: aBlock raise: anException withExceptionDo: anotherBlock [
 
 	^self assert: (self executeShould: aBlock inScopeOf: anException withExceptionDo: anotherBlock)
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> shouldFix: aBlock [
 	"Run the block expecting an Exception. Throw an assertion failure if the block does NOT throw an exception."
 	^self should: aBlock raise: Exception
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> shouldnt: aBlock [
 	self deny: aBlock value
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> shouldnt: aBlock description: aString [
 	self deny: aBlock value description: aString
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> shouldnt: aBlock raise: anExceptionalEvent [
 
 	^self assert: (self executeShould: aBlock inScopeOf: anExceptionalEvent) not
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> shouldnt: aBlock raise: anExceptionalEvent description: aString [
 
 	^self
@@ -345,7 +355,7 @@ TAssertable >> shouldnt: aBlock raise: anExceptionalEvent description: aString [
 		description: aString
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> shouldnt: aBlock raise: anExceptionalEvent whoseDescriptionDoesNotInclude: substring description: aString [
 
 	^self
@@ -353,7 +363,7 @@ TAssertable >> shouldnt: aBlock raise: anExceptionalEvent whoseDescriptionDoesNo
 		description: aString
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> shouldnt: aBlock raise: anExceptionalEvent whoseDescriptionIncludes: substring description: aString [
 
 	^self
@@ -361,24 +371,24 @@ TAssertable >> shouldnt: aBlock raise: anExceptionalEvent whoseDescriptionInclud
 		description: aString
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> signalFailure: aString [
 	self classForTestResult failure signal: aString
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> skip [
 	"Don't run this test, and don't mark it as failure"
 	TestSkipped signal
 ]
 
-{ #category : #extensions }
+{ #category : 'extensions' }
 TAssertable >> skip: aComment [
 	"Don't run this test, and don't mark it as failure"
 	TestSkipped signal: aComment
 ]
 
-{ #category : #asserting }
+{ #category : 'asserting' }
 TAssertable >> skipUnless: aBooleanOrBlock [
 	" If the assumption in aBooleanOrBlock is not true, abandon the running test
 	and mark it as passed. "
@@ -386,26 +396,26 @@ TAssertable >> skipUnless: aBooleanOrBlock [
 			[ TestSkipped signal: 'Assumption in #skipUnless: failed' ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TAssertable >> unexpectedEqualityStringBetween: actual and: expected [
 
-	^ String streamContents: [:stream |
-			stream
-				nextPutAll: 'Unexpected equality of ';
-				nextPutAll: actual fullPrintString;
-				nextPutAll: ' and ';
-				nextPutAll: expected fullPrintString;
-				nextPutAll: '.']
+	^ String streamContents: [ :stream |
+		  stream
+			  nextPutAll: 'Unexpected equality of ';
+			  print: actual;
+			  nextPutAll: ' and ';
+			  print: expected;
+			  nextPut: $. ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 TAssertable >> unexpectedIdentityEqualityStringBetween: actual and: expected [
 
-	^ String streamContents: [:stream |
-			stream
-				nextPutAll: 'Unexpected identity equality of ';
-				nextPutAll: actual fullPrintString;
-				nextPutAll: ' and ';
-				nextPutAll: expected fullPrintString;
-				nextPutAll: '.']
+	^ String streamContents: [ :stream |
+		  stream
+			  nextPutAll: 'Unexpected identity equality of ';
+			  print: actual;
+			  nextPutAll: ' and ';
+			  print: expected;
+			  nextPut: $. ]
 ]

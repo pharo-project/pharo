@@ -1,6 +1,6 @@
-Extension { #name : #DoubleWordArray }
+Extension { #name : 'DoubleWordArray' }
 
-{ #category : #'*ThreadedFFI' }
+{ #category : '*ThreadedFFI' }
 DoubleWordArray >> tfPointerAddress [
 
 	self pinInMemory.

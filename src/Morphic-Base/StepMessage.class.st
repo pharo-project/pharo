@@ -15,22 +15,24 @@ MorphicUIManager currentWorld
         stepTime: 500.
 "
 Class {
-	#name : #StepMessage,
-	#superclass : #MorphicAlarm,
+	#name : 'StepMessage',
+	#superclass : 'MorphicAlarm',
 	#instVars : [
 		'stepTime'
 	],
-	#category : #'Morphic-Base-Events'
+	#category : 'Morphic-Base-Events',
+	#package : 'Morphic-Base',
+	#tag : 'Events'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 StepMessage class >> scheduledAt: scheduledTime stepTime: stepTime receiver: aTarget selector: aSelector arguments: argArray [
 	^(self receiver: aTarget selector: aSelector arguments: argArray)
 		scheduledTime: scheduledTime;
 		stepTime: stepTime
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 StepMessage >> printOn: aStream [
 	super printOn: aStream.
 	aStream
@@ -43,13 +45,13 @@ StepMessage >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 StepMessage >> stepTime [
 	"Return the step time for this message. If nil, the receiver of the message will be asked for its #stepTime."
 	^stepTime
 ]
 
-{ #category : #stepping }
+{ #category : 'stepping' }
 StepMessage >> stepTime: aNumber [
 	"Set the step time for this message. If nil, the receiver of the message will be asked for its #stepTime."
 	stepTime := aNumber

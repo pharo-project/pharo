@@ -1,6 +1,6 @@
-Extension { #name : #ScaledDecimal }
+Extension { #name : 'ScaledDecimal' }
 
-{ #category : #'*AST-Core-Parser' }
+{ #category : '*AST-Core-Parser' }
 ScaledDecimal class >> readFrom: stringOrStream [ 
 	"Answer a decimal number as described on stringOrStream.
 	The number may not include a leading radix specification, as in 16rFADE,

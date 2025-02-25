@@ -1,6 +1,6 @@
-Extension { #name : #Behavior }
+Extension { #name : 'Behavior' }
 
-{ #category : #'*Shout' }
+{ #category : '*Shout' }
 Behavior >> syntaxHighlighter [
 	"Answer a compiler appropriate for source methods of this class."
 

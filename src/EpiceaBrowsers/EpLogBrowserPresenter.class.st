@@ -7,8 +7,8 @@ self open
 
 "
 Class {
-	#name : #EpLogBrowserPresenter,
-	#superclass : #SpPresenter,
+	#name : 'EpLogBrowserPresenter',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'log',
 		'andFilter',
@@ -19,37 +19,53 @@ Class {
 		'showEntryItemMenu',
 		'entryContentPresenter',
 		'itemsPresenter',
-		'toolbarPresenter'
+		'toolbarPresenter',
+		'searchPresenter',
+		'searchButtonPresenter'
 	],
-	#category : #'EpiceaBrowsers-UI-Log'
+	#category : 'EpiceaBrowsers-UI-Log',
+	#package : 'EpiceaBrowsers',
+	#tag : 'UI-Log'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 EpLogBrowserPresenter class >> defaultLayout [
 
-	^ SpPanedLayout newTopToBottom
-		  positionOfSlider: 0.6;
-		  add: #itemsPresenter;
-		  add: (SpBoxLayout newTopToBottom
-				   add: #toolbarPresenter
-				   expand: false
-				   fill: false
-				   padding: 2;
-				   add: #entryContentPresenter
-				   expand: true
-				   fill: true
-				   padding: 2;
-				   yourself);
-		  yourself
+	^ SpBoxLayout newTopToBottom 
+			add: (SpBoxLayout newLeftToRight 
+				add: #searchPresenter expand: true fill: true padding: 3;
+				add: #searchButtonPresenter expand: false;
+				yourself) expand: false fill: false padding: 3;
+			add: (SpPanedLayout newTopToBottom
+					positionOfSlider: 0.6;
+					add: #itemsPresenter;
+					add: (SpBoxLayout newTopToBottom
+					   add: #toolbarPresenter
+						   expand: false
+						   fill: false
+						   padding: 2;
+					   add: #entryContentPresenter
+						   expand: true
+						   fill: true
+						   padding: 2;
+						   yourself);
+			yourself);
+			yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserPresenter class >> defaultLog [
 
 	^ EpMonitor current log
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'accessing' }
+EpLogBrowserPresenter class >> defaultPreferredExtent [
+
+	^ 550@700
+]
+
+{ #category : 'instance creation' }
 EpLogBrowserPresenter class >> newWithLog: aLog [
 
 	^ self new
@@ -57,13 +73,13 @@ EpLogBrowserPresenter class >> newWithLog: aLog [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpLogBrowserPresenter class >> open [
 	<script>
 	^ self openWithLog: self defaultLog
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 EpLogBrowserPresenter class >> openWithLog: aLog [
 
 	^ (self newWithLog: aLog)
@@ -72,7 +88,7 @@ EpLogBrowserPresenter class >> openWithLog: aLog [
 		  yourself
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpLogBrowserPresenter >> addFilter: aFilter [
 
 	(andFilter subFilters includes: aFilter) ifTrue: [ ^self ].
@@ -81,42 +97,14 @@ EpLogBrowserPresenter >> addFilter: aFilter [
 	self refresh
 ]
 
-{ #category : #menu }
-EpLogBrowserPresenter >> addMenuItemsForSelectedItemsIn: aMenu [
-
-	aMenu addGroup: [ :aGroup |
-		self menuActionsForSelectedItems do: [ :oldStyleMenuItemArray |
-			aGroup addItem: [ :anItem |
-				anItem
-					name: oldStyleMenuItemArray first;
-					description: oldStyleMenuItemArray third;
-					icon: (self iconNamed: oldStyleMenuItemArray fourth);
-					action: [ self perform: oldStyleMenuItemArray second ] ] ] ].
-
-	aMenu addGroup: [ :aGroup |
-		aGroup addItem: [ :anItem |
-			anItem
-				name: 'Filters';
-				icon: (self iconNamed: #smallFind);
-				subMenu: self filtersSubMenu ] ].
-
-	aMenu addGroup: [ :aGroup |
-		aGroup addItem: [ :anItem |
-			anItem
-				name: 'Write Ombu file';
-				description: 'Write selected entries to an Ombu file';
-				icon: (self iconNamed: #smallSaveAs);
-				action: [ self ombuFileSaveSelection ] ] ]
-]
-
-{ #category : #'menu - operations' }
+{ #category : 'menu - operations' }
 EpLogBrowserPresenter >> applyAllChangesAndCloseWindow [
 
 	self applyChangesIn: self entriesWithCodeChanges.
 	self window close
 ]
 
-{ #category : #'menu - operations' }
+{ #category : 'menu - operations' }
 EpLogBrowserPresenter >> applyChangesIn: entries [
 
 	entries ifEmpty: [ ^ self inform: 'No code changes to apply' ].
@@ -128,7 +116,7 @@ EpLogBrowserPresenter >> applyChangesIn: entries [
 		applyCodeChanges
 ]
 
-{ #category : #'menu - operations' }
+{ #category : 'menu - operations' }
 EpLogBrowserPresenter >> applyCompleteRefactoringInSelection [
 
 	| entries |
@@ -143,7 +131,7 @@ EpLogBrowserPresenter >> applyCompleteRefactoringInSelection [
 		applyCompleteRefactoring
 ]
 
-{ #category : #'menu - operations' }
+{ #category : 'menu - operations' }
 EpLogBrowserPresenter >> applyPropagateRefactoringInSelection [
 
 	| entries |
@@ -158,34 +146,34 @@ EpLogBrowserPresenter >> applyPropagateRefactoringInSelection [
 		applyPropagateRefactoring
 ]
 
-{ #category : #'menu - operations' }
+{ #category : 'menu - operations' }
 EpLogBrowserPresenter >> applySelectedChanges [
 
 	self applyChangesIn: self selectedCodeChanges
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 EpLogBrowserPresenter >> beApplyMode [
 	self withWindowDo: [ :window | window title: 'Epicea - Apply Changes' ].
 	toolbarPresenter beApplyMode.
 	showEntryItemMenu := false
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 EpLogBrowserPresenter >> beHistoryMode [
 	self withWindowDo: [ :window | window title: 'Epicea - Log Browser' ].
 	toolbarPresenter beHistoryMode.
 	showEntryItemMenu := true
 ]
 
-{ #category : #modes }
+{ #category : 'modes' }
 EpLogBrowserPresenter >> beRevertMode [
 	self withWindowDo: [ :window | window title: 'Epicea - Revert Changes' ].
 	toolbarPresenter beRevertMode.
 	showEntryItemMenu := false
 ]
 
-{ #category : #'menu - operations' }
+{ #category : 'menu - operations' }
 EpLogBrowserPresenter >> browseSelection [
 
 	| selectionSize |
@@ -196,16 +184,16 @@ EpLogBrowserPresenter >> browseSelection [
 
 	self selectedEntryItems
 		select: [ :each | each entry content isCodeChange ]
-		thenDo: [ :each | each browseItem ]
+		thenDo: [ :each | each eventAccept: (EpBrowseVisitor new application: self application; yourself) ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpLogBrowserPresenter >> cachedItems [
 
 	^ cachedItems ifNil: [ cachedItems := WeakValueDictionary new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserPresenter >> cachedLogEntries [
 	"Answer log entries.
 	Check size since the log might be current Monitor's, so it can grow."
@@ -213,105 +201,131 @@ EpLogBrowserPresenter >> cachedLogEntries [
 	^ (cachedLogEntries isNotNil and: [ cachedLogEntries size = log entriesCount ])
 		ifTrue: [ cachedLogEntries ]
 		ifFalse: [
-			'Reading log'
-				displayProgressFrom: 0 to: 1
-				during: [ cachedLogEntries := log entries ]
-			]
+			[ : job | 
+				job title: 'Reading log'.
+				cachedLogEntries := log entries
+			] asJob run ].
+
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 EpLogBrowserPresenter >> cleanEntryContent [
 	self refreshEntryContentWith: #()
 ]
 
-{ #category : #menu }
-EpLogBrowserPresenter >> codeChangesMenuActions [
-
-	^ {
-		{ 'Apply...'.
-		#openPreviewToApplySelectedChanges.
-		'Preview the application of selected code changes (open a new window to show the effect of re-applying the changes in current image)'.
-		#smallRedo.
-		$p command }.
-		{ 'Revert...'.
-		#openPreviewToRevertSelectedChanges.
-		'Preview the reversion of selected code changes (open a new window to show the effect of reverting the changes in current image)'.
-		#smallUndo.
-		$r command }.
-		{ 'Browse current'.
-		#browseSelection.
-		'Browse working copy of entity affected in the selected event(s)'.
-		#nautilusIcon.
-		$b command }.
-	}
-]
-
-{ #category : #'menu - operations' }
-EpLogBrowserPresenter >> commentSelection [
-
-	| items newCommentOrNil oldComment entryReferences |
-	items := self selectedEntryItems.
-	entryReferences := items collect: [:each | each reference].
-	oldComment := items anyOne oldComment.
-
-	newCommentOrNil := UIManager default
-		multiLineRequest: 'Enter a comment for the selection'
-		initialAnswer: oldComment
-		answerHeight: 250.
-
-	newCommentOrNil ifNil: [ ^ self ].
-
-	self logOffEvent:
-		(EpLogEntriesComment
-			entryReferences: entryReferences
-			oldComment: oldComment
-			newComment: newCommentOrNil)
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserPresenter >> commentsLog [
 
 	^ commentsLog ifNil: [ self monitor log ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserPresenter >> commentsLog: anEpLog [
 
 	commentsLog := anEpLog
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserPresenter >> entries [
 
 	^ log entryReferences collect: [:each | log entryFor: each ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserPresenter >> entriesWithCodeChanges [
 
 	^ self entries select: [:each | each content isCodeChange ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserPresenter >> entryItems [
 
 	^ log entryReferences collect: [:each |
 		self itemForEntryReference: each ]
 ]
 
-{ #category : #menu }
-EpLogBrowserPresenter >> eventsMenuActions [
+{ #category : 'menu - operations' }
+EpLogBrowserPresenter >> fileOutSelection [
+	"Write the selected entries to a file"
 
-	^ {
-		{ 'Comment'.
-		#commentSelection.
-		'Edit comment of selected entries'.
-		#announcementIcon.
-		$c command }.
-	}
+	| entries |
+	entries := self selectedCodeChanges collect: [ :each | each content ].
+
+	EpChunkExporter fileOut: entries.
+
 ]
 
-{ #category : #'menu - filters' }
+{ #category : 'menu' }
+EpLogBrowserPresenter >> filterActions [
+
+	^ SpActionGroup new
+		beDisplayedAsSubMenu;
+		name: 'Filters';
+		addActionWith: [ :anItem | anItem
+			name: 'Clean action filters';
+			iconName: #smallDelete;
+			action: [ self removeAllFilters ];
+			actionEnabled: [ self filters isEmptyOrNil not ] ];
+		addGroupWith: [ :aGroup | aGroup 
+			beDisplayedAsGroup;
+			addActionWith: [ :anItem | anItem
+				name: EpLatestCodeChangeFilter title;
+				description: EpLatestCodeChangeFilter comment;
+				iconName: #smallFind;
+				action: [ self filterLatestCodeChanges ] ];
+			 addActionWith: [ :anItem | anItem
+				name: EpImpactCodeChangeFilter title;
+				description: EpImpactCodeChangeFilter comment;
+				iconName: #smallFind;
+				action: [ self filterImpactCodeChanges ] ] ];
+		addGroupWith: [ :aGroup | aGroup
+			beDisplayedAsGroup; 
+			addActionWith: [ :anItem | anItem
+				name: EpEntryReferencesFilter title;
+				iconName: #smallFind;
+				action: [ self filterSelection ] ];
+			addActionWith: [ :anItem | anItem
+				name: 'Show only changes to this method';
+				description: 'Show only additions, modifications or removals of this method.';
+				iconName: #smallFind;
+				action: [ self filterAllChangesToSelection ] ] ;
+			addActionWith: [ :anItem | anItem
+				name: 'Show only changes to this class or trait';
+				description: 'Show only changes in the scope of this class or trait.';
+				iconName: #smallFind;
+				action: [ self filterAllChangesToSelectionBehavior ] ];
+			 addActionWith: [ :anItem | anItem
+				name: 'Show only changes in this package';
+				description: 'Show only additions, modifications or removals of this package.';
+				iconName: #smallFind;
+				action: [ self filterAllChangesToSelectionPackage ] ] ];
+		addGroupWith: [ :aGroup | aGroup
+			beDisplayedAsGroup; 
+			addActionWith: [ :anItem | anItem
+				name: 'Show only if done today';
+				iconName: #calendar;
+				action: [ self filterToday ] ];
+			addActionWith: [ :anItem | anItem
+				name: 'Hide events done after';
+				iconName: #calendar;
+				action: [ self filterBefore ] ]; 
+			addActionWith: [ :anItem | anItem
+				name: 'Hide events done before';
+				iconName: #calendar;
+				action: [ self filterAfter ] ] ];
+		addGroupWith: [ :aGroup | 
+			aGroup beDisplayedAsGroup.
+			EpPluggableFilter allFilters do: [ :aFilter |
+				aGroup addActionWith: [ :anItem | anItem
+					name: aFilter title;
+					iconName: #smallFind;
+					description: aFilter title;
+					action: [ self addFilter: aFilter ] ] ] ];
+		yourself
+
+]
+
+{ #category : 'menu - filters' }
 EpLogBrowserPresenter >> filterAfter [
 
 	self selectedEntryItems ifNotEmpty: [ :items |
@@ -320,7 +334,7 @@ EpLogBrowserPresenter >> filterAfter [
 		self addFilter: (EpPluggableFilter after: time) ]
 ]
 
-{ #category : #'menu - filters' }
+{ #category : 'menu - filters' }
 EpLogBrowserPresenter >> filterAllChangesToSelection [
 
 	| changes |
@@ -332,7 +346,7 @@ EpLogBrowserPresenter >> filterAllChangesToSelection [
 	self addFilter: (EpPluggableFilter isMethod: changes anyOne methodAffected)
 ]
 
-{ #category : #'menu - filters' }
+{ #category : 'menu - filters' }
 EpLogBrowserPresenter >> filterAllChangesToSelectionBehavior [
 
 	| changes |
@@ -344,7 +358,7 @@ EpLogBrowserPresenter >> filterAllChangesToSelectionBehavior [
 	self addFilter: (EpPluggableFilter isBehaviorNamed: changes anyOne behaviorAffectedName)
 ]
 
-{ #category : #'menu - filters' }
+{ #category : 'menu - filters' }
 EpLogBrowserPresenter >> filterAllChangesToSelectionPackage [
 
 	| changes |
@@ -355,7 +369,7 @@ EpLogBrowserPresenter >> filterAllChangesToSelectionPackage [
 	self addFilter: (EpPluggableFilter isPackageNamed: changes anyOne affectedPackageName)
 ]
 
-{ #category : #'menu - filters' }
+{ #category : 'menu - filters' }
 EpLogBrowserPresenter >> filterBefore [
 
 	self selectedEntryItems ifNotEmpty: [ :items |
@@ -364,19 +378,19 @@ EpLogBrowserPresenter >> filterBefore [
 		self addFilter: (EpPluggableFilter before: time) ]
 ]
 
-{ #category : #'menu - filters' }
+{ #category : 'menu - filters' }
 EpLogBrowserPresenter >> filterImpactCodeChanges [
 
 	self addFilter: (EpImpactCodeChangeFilter new environment: self class environment; yourself)
 ]
 
-{ #category : #'menu - filters' }
+{ #category : 'menu - filters' }
 EpLogBrowserPresenter >> filterLatestCodeChanges [
 
 	self addFilter: (EpLatestCodeChangeFilter new logBrowserModel: self; yourself)
 ]
 
-{ #category : #'menu - filters' }
+{ #category : 'menu - filters' }
 EpLogBrowserPresenter >> filterSelection [
 
 	| references |
@@ -390,42 +404,45 @@ EpLogBrowserPresenter >> filterSelection [
 		yourself)
 ]
 
-{ #category : #'menu - filters' }
+{ #category : 'menu - filters' }
 EpLogBrowserPresenter >> filterToday [
 
 	self addFilter: EpPluggableFilter todayFilter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserPresenter >> filteredEntries [
 
 	^ self filteredEntryReferences collect: [:each | log entryFor: each ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserPresenter >> filteredEntriesCount [
 
 	^ self filteredEntryReferences size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserPresenter >> filteredEntryReferences [
 
-	^ andFilter subFilters
+	| filteredEntries |
+	filteredEntries := andFilter subFilters
 		ifEmpty: [ log entryReferences ]
 		ifNotEmpty: [
 			self cachedLogEntries
 				select: [:each | andFilter accepts: each ]
-				thenCollect: [:each | log referenceTo: each ] ]
+				thenCollect: [:each | log referenceTo: each ] ].
+	toolbarPresenter filteredEntriesCount: filteredEntries size.
+	^ filteredEntries
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserPresenter >> filters [
 
 	^ andFilter subFilters
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 EpLogBrowserPresenter >> filtersSubMenu [
 
 	| aMenu |
@@ -524,14 +541,14 @@ EpLogBrowserPresenter >> filtersSubMenu [
 	^ aMenu
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpLogBrowserPresenter >> initialize [
 	super initialize.
 
 	andFilter := EpAndFilter withAll: #()
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 EpLogBrowserPresenter >> initializePresenters [
 
 	itemsPresenter := self newList.
@@ -539,7 +556,9 @@ EpLogBrowserPresenter >> initializePresenters [
 		beMultipleSelection;
 		display: [ :entryReference | self morphForItemAt: entryReference ];
 		whenSelectionChangedDo: [ self refreshEntryContentDeferrer schedule ];
-		contextMenu: [ self menuMorphForSelectedItems ].
+		actions: self menuActions.
+		
+	self initializeSearchPresenters.
 
 	toolbarPresenter := self instantiate: EpLogBrowserToolbarPresenter.
 	toolbarPresenter logBrowserPresenter: self.
@@ -550,18 +569,32 @@ EpLogBrowserPresenter >> initializePresenters [
 	self beHistoryMode
 ]
 
-{ #category : #initialization }
-EpLogBrowserPresenter >> initializeWindow: aWindowPresenter [
-	aWindowPresenter initialExtent: 550 @ 700
+{ #category : 'initialization' }
+EpLogBrowserPresenter >> initializeSearchPresenters [
+
+	searchPresenter := self newTextInput
+		placeholder: 'Filter...';
+		whenTextChangedDo: [ : text | 
+			text 
+				ifNotEmpty: [ searchButtonPresenter enable ]
+				ifEmpty: [ searchButtonPresenter disable ].
+			self searchList: text ];
+		yourself.
+	searchButtonPresenter := self newButton
+		iconName: #smallFind;
+		label: 'Find';
+		disable;
+		action: [ self searchList: searchPresenter text ];
+		yourself.
 ]
 
-{ #category : #'menu - operations' }
+{ #category : 'menu - operations' }
 EpLogBrowserPresenter >> inspectSelection [
 
 	self selectedEntryItems do: #inspect
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpLogBrowserPresenter >> itemForEntryReference: entryReference [
 
 	^ self cachedItems
@@ -574,67 +607,73 @@ EpLogBrowserPresenter >> itemForEntryReference: entryReference [
 			newItem ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserPresenter >> itemsPresenter [
 	^ itemsPresenter
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserPresenter >> log [
 	^ log
 ]
 
-{ #category : #'menu - operations' }
+{ #category : 'menu - operations' }
 EpLogBrowserPresenter >> logOffEvent: anEvent [
 
-	self commentsLog
-		addEntryWith: anEvent
-		tags: [ :tags |
-			tags at: EpLog authorKey put: self monitor author.
-			tags at: EpLog timeKey put: self monitor time ]
+	self commentsLog addEntryWith: anEvent tags: [ :tags |  ]
 ]
 
-{ #category : #menu }
-EpLogBrowserPresenter >> menuActionsForSelectedItems [
+{ #category : 'menu' }
+EpLogBrowserPresenter >> menuActions [
 
-	| selectedReferences |
-	selectedReferences := self selectedEntryReferences.
-
-	selectedReferences isEmpty ifTrue: [ ^#() ].
-
-	selectedReferences size = 1 ifTrue: [
-		| event |
-		event := (self itemForEntryReference: selectedReferences anyOne) event.
-		(event isEpRefactoring and: [ event canBuildRBRefactoring ])
-			ifTrue: [ ^ self refactoringMenuActions, self eventsMenuActions ]].
-
-	^ self codeChangesMenuActions, self eventsMenuActions
+	^ SpActionGroup new
+		addActionWith: [ :action | action 
+			name: 'Apply';
+			description: 'Preview the application of selected code changes (open a new window to show the effect of re-applying the changes in current image)';
+			iconName: #smallRedo;
+			shortcutKey: $p actionModifier;
+			action: [ self openPreviewToApplySelectedChanges ];
+			actionEnabled: [ self itemsPresenter selectedItem isNotNil ] ];
+		addActionWith: [ :action | action 
+			name: 'Revert';
+			description: 'Preview the reversion of selected code changes (open a new window to show the effect of reverting the changes in current image)';
+			iconName: #smallUndo;
+			shortcutKey: $r actionModifier;
+			action: [ self openPreviewToRevertSelectedChanges ];
+			actionEnabled: [ self itemsPresenter selectedItem isNotNil ] ];
+		addActionWith: [ :action | action 
+			name: 'Browse current';
+			description: 'Browse working copy of entity affected in the selected event(s)';
+			iconName: #nautilusIcon;
+			shortcutKey: $b actionModifier;
+			action: [ self browseSelection ];
+			actionEnabled: [ self itemsPresenter selectedItem isNotNil ] ];
+		addActionWith: [ :action | action 
+			name: 'File out';
+			description: 'File out the selected code changes';
+			iconName: #smallSave;
+			shortcutKey: $s actionModifier;
+			action: [ self fileOutSelection ];
+			actionEnabled: [ self itemsPresenter selectedItem isNotNil ] ];
+		add: self filterActions;
+		yourself
+		
 ]
 
-{ #category : #menu }
-EpLogBrowserPresenter >> menuMorphForSelectedItems [
-	| aMenu |
-	aMenu := self newMenu.
-
-	showEntryItemMenu ifTrue: [ self addMenuItemsForSelectedItemsIn: aMenu ].
-
-	^ aMenu
-]
-
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserPresenter >> monitor [
 
 	^ EpMonitor current
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpLogBrowserPresenter >> morphForItemAt: entryReference [
 
 	^ [ (self itemForEntryReference: entryReference) asMorph ]
 			on: NotFound do: [:error | error asString asMorph ] "Enforce... remove it?"
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpLogBrowserPresenter >> newItemForEntryReference: entryReference [
 
 	| entry triggers|
@@ -647,20 +686,12 @@ EpLogBrowserPresenter >> newItemForEntryReference: entryReference [
 	^ EpEntryItem new
 		browser: self;
 		entry: entry;
+		application: self application;
 		triggerItems: triggers;
 		yourself
 ]
 
-{ #category : #'menu - operations' }
-EpLogBrowserPresenter >> ombuFileSaveSelection [
-
-	| entries |
-	entries := self selectedEntryItems collect: [ :each | each entry ].
-
-	EpOmbuExporter askFileNameAndFileOut: entries in: FileLocator workingDirectory
-]
-
-{ #category : #'menu - operations' }
+{ #category : 'menu - operations' }
 EpLogBrowserPresenter >> openPreviewToApplySelectedChanges [
 
 	| entries previewLog |
@@ -678,7 +709,7 @@ EpLogBrowserPresenter >> openPreviewToApplySelectedChanges [
 		ifFalse: [ previewLog browseEvents beApplyMode ]
 ]
 
-{ #category : #'menu - operations' }
+{ #category : 'menu - operations' }
 EpLogBrowserPresenter >> openPreviewToRevertSelectedChanges [
 
 	| entries previewLog |
@@ -696,7 +727,7 @@ EpLogBrowserPresenter >> openPreviewToRevertSelectedChanges [
 		ifFalse: [ previewLog browseEvents beRevertMode ]
 ]
 
-{ #category : #'menu - operations' }
+{ #category : 'menu - operations' }
 EpLogBrowserPresenter >> operationsErrorHandlerBlock [
 
 	^ [ :error | | message |
@@ -705,7 +736,7 @@ EpLogBrowserPresenter >> operationsErrorHandlerBlock [
 		self inform: message. ]
 ]
 
-{ #category : #menu }
+{ #category : 'menu' }
 EpLogBrowserPresenter >> refactoringMenuActions [
 
 	^ {
@@ -722,7 +753,7 @@ EpLogBrowserPresenter >> refactoringMenuActions [
 	}
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 EpLogBrowserPresenter >> refresh [
 	"Refresh log"
 
@@ -730,12 +761,14 @@ EpLogBrowserPresenter >> refresh [
 	toolbarPresenter refresh
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 EpLogBrowserPresenter >> refreshEntryContent [
-	self refreshEntryContentWith: self selectedEntryItems
+	"Refresh the change list. I defer this action, so I'm prepated to be called from a non-UI process, such as the one of `OmDeferrer`. See: https://github.com/pharo-project/pharo/issues/9638"
+
+	self defer: [ self refreshEntryContentWith: self selectedEntryItems ]
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 EpLogBrowserPresenter >> refreshEntryContentDeferrer [
 
 	^ selectionDeferrer ifNil: [
@@ -745,7 +778,7 @@ EpLogBrowserPresenter >> refreshEntryContentDeferrer [
 			after: 150 milliSeconds ]
 ]
 
-{ #category : #refreshing }
+{ #category : 'refreshing' }
 EpLogBrowserPresenter >> refreshEntryContentWith: selectedItems [
 	selectedItems size = 1
 		ifTrue: [ | item |
@@ -761,28 +794,28 @@ EpLogBrowserPresenter >> refreshEntryContentWith: selectedItems [
 				showOnlyDestination: true ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserPresenter >> removeAllFilters [
 
 	andFilter := EpAndFilter withAll: #().
 	self refresh
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserPresenter >> removeFilter: aFilter [
 
 	andFilter := EpAndFilter withAll: (andFilter subFilters copyWithout: aFilter).
 	self refresh
 ]
 
-{ #category : #'menu - operations' }
+{ #category : 'menu - operations' }
 EpLogBrowserPresenter >> revertAllChangesAndCloseWindow [
 
 	self revertChangesIn: self entriesWithCodeChanges.
 	self window close
 ]
 
-{ #category : #'menu - operations' }
+{ #category : 'menu - operations' }
 EpLogBrowserPresenter >> revertChangesIn: entries [
 
 	entries ifEmpty: [ ^ self inform: 'No code changes to revert' ].
@@ -794,13 +827,49 @@ EpLogBrowserPresenter >> revertChangesIn: entries [
 		revertCodeChangesInPreviewMode
 ]
 
-{ #category : #'menu - operations' }
+{ #category : 'menu - operations' }
 EpLogBrowserPresenter >> revertSelectedChanges [
 
 	self revertChangesIn: self selectedCodeChanges
 ]
 
-{ #category : #'menu - accessing' }
+{ #category : 'accessing - searching' }
+EpLogBrowserPresenter >> searchEntries: entriesCollection for: aString [
+	"Answer a <Collection> where each entry from entriesCollection matches aString"
+
+	^ entriesCollection
+		select: [ : omEntry | omEntry matches: aString ]
+		thenCollect: [:each | log referenceTo: each ]
+]
+
+{ #category : 'accessing - searching' }
+EpLogBrowserPresenter >> searchList: aString [
+	"Update the receiver's log entries with entries matching aString"
+
+	itemsPresenter items: (self searchedEntryMatches: aString) reversed.
+	toolbarPresenter refresh.
+]
+
+{ #category : 'accessing - searching' }
+EpLogBrowserPresenter >> searchedEntryMatches: aString [
+	"If there are filters applied, then search aString in the subset of the filtered entries, otherwise search in the cached log entries"
+
+	| searchedEntries |
+	
+	aString 
+		ifNotEmpty: [ 
+			searchedEntries := andFilter subFilters
+				ifEmpty: [ self searchEntries: self cachedLogEntries for: aString ]
+				ifNotEmpty: [ self searchEntries: self filteredEntries for: aString ].
+			toolbarPresenter searchedEntriesCount: searchedEntries size.
+			^ searchedEntries ]
+		ifEmpty: [ toolbarPresenter searchedEntriesCount: 0 ].
+	^ self filteredEntryReferences.
+
+
+]
+
+{ #category : 'menu - accessing' }
 EpLogBrowserPresenter >> selectedCodeChanges [
 
 	^ self selectedEntryItems
@@ -808,32 +877,32 @@ EpLogBrowserPresenter >> selectedCodeChanges [
 		thenCollect: [ :each | each entry ]
 ]
 
-{ #category : #'menu - accessing' }
+{ #category : 'menu - accessing' }
 EpLogBrowserPresenter >> selectedEntries [
 
 	^ self selectedEntryItems collect: [:each | each entry]
 ]
 
-{ #category : #'menu - accessing' }
+{ #category : 'menu - accessing' }
 EpLogBrowserPresenter >> selectedEntryItems [
 
 	^ self selectedEntryReferences collect: [:each |
 		self itemForEntryReference: each ]
 ]
 
-{ #category : #'menu - accessing' }
+{ #category : 'menu - accessing' }
 EpLogBrowserPresenter >> selectedEntryReferences [
 	"Before there was a workaround here to reject nils because it used a FastTablePresenter instead of a list presenter. I have the impression that the workaround is not needed with ListPresenter and I removed the workaround. In case you find a bug were we get nils here, just report it and we will add back the workaround to reject nils with a better comment."
 
 	^ self itemsPresenter selectedItemsSorted reversed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserPresenter >> theLog [
 	^ log
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserPresenter >> theLog: aLog [
 
 	cachedItems := nil.
@@ -841,13 +910,13 @@ EpLogBrowserPresenter >> theLog: aLog [
 	log := aLog
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 EpLogBrowserPresenter >> totalEntriesCount [
 
 	^ self theLog entriesCount
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 EpLogBrowserPresenter >> triggerItemsFor: anEntry [
 
 	^ self log

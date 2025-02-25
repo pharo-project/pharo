@@ -2,7 +2,9 @@
 I am an abstract class related to morph announcements
 "
 Class {
-	#name : #RubMorphAnnouncement,
-	#superclass : #MorphAnnouncement,
-	#category : #'Rubric-Editing-Announcements'
+	#name : 'RubMorphAnnouncement',
+	#superclass : 'MorphAnnouncement',
+	#category : 'Rubric-Editing-Announcements',
+	#package : 'Rubric',
+	#tag : 'Editing-Announcements'
 }

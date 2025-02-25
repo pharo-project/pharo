@@ -3,12 +3,14 @@ A MenuLineMorph is a item separator in menu.
 
 "
 Class {
-	#name : #MenuLineMorph,
-	#superclass : #Morph,
-	#category : #'Morphic-Base-Menus'
+	#name : 'MenuLineMorph',
+	#superclass : 'Morph',
+	#category : 'Morphic-Base-Menus',
+	#package : 'Morphic-Base',
+	#tag : 'Menus'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 MenuLineMorph >> baseColor [
 	^ self theme autoMenuColor
 		ifTrue: [ owner color twiceDarker ]
@@ -18,7 +20,7 @@ MenuLineMorph >> baseColor [
 				ifTrue: [ owner color twiceDarker ] ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 MenuLineMorph >> drawOn: aCanvas [
 	self theme flatMenu
 		ifFalse: [
@@ -34,7 +36,7 @@ MenuLineMorph >> drawOn: aCanvas [
 				color: self baseColor ]
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 MenuLineMorph >> drawOnAthensCanvas: anAthensCanvas [
 	self theme flatMenu
 		ifFalse: [
@@ -47,24 +49,24 @@ MenuLineMorph >> drawOnAthensCanvas: anAthensCanvas [
 			anAthensCanvas drawShape: (bounds topLeft corner: bounds bottomRight) ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MenuLineMorph >> initialize [
 	super initialize.
 	self hResizing: #spaceFill; vResizing: #spaceFill
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MenuLineMorph >> isMenuLineMorph [
 	^ true
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 MenuLineMorph >> minHeight [
 	"Answer the receiver's minHeight"
 	^ self theme menuBorderWidth
 ]
 
-{ #category : #layout }
+{ #category : 'layout' }
 MenuLineMorph >> minWidth [
 	"Answer the receiver's minWidth"
 	^  10 * self displayScaleFactor

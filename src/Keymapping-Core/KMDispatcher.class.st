@@ -4,8 +4,8 @@ I am the one that dispatches the single and multiple shortcuts.
 If the morph has a keymap that matches the keyboard event, I tell the keymap event to execute with the morph I'm attached.
 "
 Class {
-	#name : #KMDispatcher,
-	#superclass : #Object,
+	#name : 'KMDispatcher',
+	#superclass : 'Object',
 	#instVars : [
 		'target',
 		'currentEvent',
@@ -13,33 +13,35 @@ Class {
 		'morph',
 		'directKeymaps'
 	],
-	#category : #'Keymapping-Core-Dispatching'
+	#category : 'Keymapping-Core-Dispatching',
+	#package : 'Keymapping-Core',
+	#tag : 'Dispatching'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMDispatcher class >> target: aTarget [
 	^ self target: #yourself morph: aTarget
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMDispatcher class >> target: aTargetSelector morph: aMorph [
 	^ (self new)
 		target: (KMTarget for: aTargetSelector in: aMorph);
 		yourself
 ]
 
-{ #category : #match }
+{ #category : 'match' }
 KMDispatcher >> announcer [
 
 	^ self target announcer
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 KMDispatcher >> attachCategory: aCategory [
 	self attachCategory: aCategory targetting: morph
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 KMDispatcher >> attachCategory: aCategoryName onProperty: aProperty [
 	self targets add: (KMCategoryBinding
 						target: [ morph perform: aProperty ]
@@ -47,7 +49,7 @@ KMDispatcher >> attachCategory: aCategoryName onProperty: aProperty [
 						category: (KMRepository default categoryForName: aCategoryName) )
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 KMDispatcher >> attachCategory: aCategory targetting: anObject [
 
 	|  category categoryTarget |
@@ -56,7 +58,7 @@ KMDispatcher >> attachCategory: aCategory targetting: anObject [
 	self targets add: categoryTarget
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 KMDispatcher >> bindKeyCombination: aShortcut toAction: anAction [
 	self directKeymaps
 		addKeymapEntry: (KMKeymap
@@ -64,31 +66,31 @@ KMDispatcher >> bindKeyCombination: aShortcut toAction: anAction [
 			action: anAction)
 ]
 
-{ #category : #match }
+{ #category : 'match' }
 KMDispatcher >> buffer [
 	^ KMBuffer uniqueInstance buffer
 ]
 
-{ #category : #match }
+{ #category : 'match' }
 KMDispatcher >> completeMatch: aKeymapEntry buffer: aBuffer [
 	KMLog logCompleteMatchBetween: morph and: aKeymapEntry.
 	KMBuffer uniqueInstance completeMatch.
 	self announcer announce: (KMCompleteMatch event: currentEvent from: self)
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 KMDispatcher >> detachAllKeymapCategories [
 
 	self targets removeAll
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 KMDispatcher >> detachKeymapCategory: aCategoryName [
 
 	self detachKeymapCategory: aCategoryName targetting: morph
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 KMDispatcher >> detachKeymapCategory: aCategoryName targetting: anObject [
 	self targets
 		detect: [ :tgt | tgt target = anObject and: [ tgt category name = aCategoryName ] ]
@@ -96,12 +98,12 @@ KMDispatcher >> detachKeymapCategory: aCategoryName targetting: anObject [
 		ifNone: [ self error: 'Category ' , aCategoryName , ' is not attached to ' , morph asString ]
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 KMDispatcher >> directKeymaps [
 	^directKeymaps ifNil: [ directKeymaps := KMCategory new ]
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 KMDispatcher >> dispatch: anEventBuffer [
 
 	self keymapObservers do: [ :aTarget |
@@ -113,7 +115,7 @@ KMDispatcher >> dispatch: anEventBuffer [
 	self noMatch
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 KMDispatcher >> dispatch: anEventBuffer inCategories: categories [
 
 	(self keymapObserversForCategories: categories) do: [ :aTarget |
@@ -125,7 +127,7 @@ KMDispatcher >> dispatch: anEventBuffer inCategories: categories [
 	self noMatch
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 KMDispatcher >> dispatchKeystroke: aKeyEvent [
 
 	| chain |
@@ -137,26 +139,26 @@ KMDispatcher >> dispatchKeystroke: aKeyEvent [
 	chain dispatch: aKeyEvent
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 KMDispatcher >> includesKeymapCategory: aCategoryName [
 
 	^self includesKeymapCategory: aCategoryName targetting: morph
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 KMDispatcher >> includesKeymapCategory: aCategoryName targetting: anObject [
 
 	^self targets anySatisfy: [ :tgt |
 		tgt target = anObject and: [ tgt category name = aCategoryName ] ]
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 KMDispatcher >> keymapForShortcut: aShortcut [
 
 	^ self directKeymaps keymapForShortcut: aShortcut
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 KMDispatcher >> keymapObservers [
 	| o |
 	o := OrderedCollection with: self perInstanceTarget.
@@ -164,7 +166,7 @@ KMDispatcher >> keymapObservers [
 	^ o
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 KMDispatcher >> keymapObserversForCategories: categories [
 
 	^categories collect: [ :cat | KMCategoryBinding
@@ -173,11 +175,11 @@ KMDispatcher >> keymapObserversForCategories: categories [
 									category: cat ]
 ]
 
-{ #category : #match }
+{ #category : 'match' }
 KMDispatcher >> noMatch [
 ]
 
-{ #category : #match }
+{ #category : 'match' }
 KMDispatcher >> partialMatch [
 	| event |
 	KMBuffer uniqueInstance partialMatch.
@@ -186,12 +188,12 @@ KMDispatcher >> partialMatch [
 	self announcer announce: (KMPartialMatch event: event from: self)
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 KMDispatcher >> perInstanceTarget [
 	^KMCategoryBinding target: morph morph: morph category: self directKeymaps
 ]
 
-{ #category : #building }
+{ #category : 'building' }
 KMDispatcher >> removeKeyCombination: aShortcut [
 	| keymap removalTarget |
 
@@ -208,28 +210,28 @@ KMDispatcher >> removeKeyCombination: aShortcut [
 	removalTarget removeKeymapEntry: keymap
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 KMDispatcher >> reset [
 	self resetTargets.
 	self resetPerInstanceTarget
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 KMDispatcher >> resetPerInstanceTarget [
 	directKeymaps := nil
 ]
 
-{ #category : #initialize }
+{ #category : 'initialize' }
 KMDispatcher >> resetTargets [
     targets := nil
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMDispatcher >> target [
 	^ target
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMDispatcher >> target: aTarget [
 	target := aTarget.
 	morph := target morph.
@@ -237,7 +239,7 @@ KMDispatcher >> target: aTarget [
 		on: MorphLostFocus send: #clearBuffer to: KMBuffer uniqueInstance."
 ]
 
-{ #category : #dispatching }
+{ #category : 'dispatching' }
 KMDispatcher >> targets [
 	^targets ifNil: [ targets := Set new ]
 ]

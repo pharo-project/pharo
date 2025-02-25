@@ -6,12 +6,26 @@ Keep in mind:
 - there is the overhead of the Dictionary. Only if there are multiple ones of me in the class hierarchy you will save memory
 "
 Class {
-	#name : #PropertySlot,
-	#superclass : #DerivedSlot,
-	#category : #'Slot-Examples-Base'
+	#name : 'PropertySlot',
+	#superclass : 'DerivedSlot',
+	#category : 'Slot-Examples-Base',
+	#package : 'Slot-Examples',
+	#tag : 'Base'
 }
 
-{ #category : #'code generation' }
+{ #category : 'private' }
+PropertySlot >> addAdditionalSlotsTo: slots [
+	"we reuse a baseSlot if it is already there, if not, we add it"
+
+	"TODO: this does not take into account adding BooleanSlots higher up in the Hierarchy"
+
+	slots
+		detect: [ :slot | slot name = #_propertyBaseSlot ]
+		ifFound: [ :slot | baseSlot := slot ]
+		ifNone: [ slots add: (baseSlot := #_propertyBaseSlot => BaseSlot default: Dictionary new) ]
+]
+
+{ #category : 'code generation' }
 PropertySlot >> emitStore: methodBuilder [
 	"generate bytecode for 'baseSlot at: 1 put: <stackTop>'"
 	| tempName |
@@ -26,7 +40,7 @@ PropertySlot >> emitStore: methodBuilder [
 		send: #at:put:
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 PropertySlot >> emitValue: methodBuilder [
 	"generate bytecode for '<baseSlot> at: name ifAbsent: nil'"
 	methodBuilder
@@ -36,24 +50,12 @@ PropertySlot >> emitValue: methodBuilder [
 		send: #at:ifAbsent:
 ]
 
-{ #category : #'class building' }
-PropertySlot >> installingIn: aClass [
-	super installingIn: aClass.
-
-	"we reuse a baselot if it is already there, if not, we add it"
-	"TODO: this does not take into account adding PropertySlot higher up in the Hierarchy"
-	aClass classLayout
-		resolveSlot: #'_propertyBaseSlot'
-		ifFound:  [: slot |  baseSlot := slot ]
-		ifNone: [aClass addSlot: (baseSlot := #'_propertyBaseSlot' => BaseSlot default: Dictionary new)]
-]
-
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 PropertySlot >> read: anObject [
 	^ (baseSlot read: anObject) at: self name ifAbsent: nil
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 PropertySlot >> write: aValue to: anObject [
 	^ (baseSlot read: anObject) at: self name put: aValue
 ]

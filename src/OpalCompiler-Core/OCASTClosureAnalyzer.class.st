@@ -1,16 +1,19 @@
 "
 I visit the AST of method a second time (after OCASTSemanticAnalyzer) to analyze temps related to closures.
+I annotate the AST to generate temp vector. 
 "
 Class {
-	#name : #OCASTClosureAnalyzer,
-	#superclass : #RBProgramNodeVisitor,
+	#name : 'OCASTClosureAnalyzer',
+	#superclass : 'OCProgramNodeVisitor',
 	#instVars : [
 		'scope'
 	],
-	#category : #'OpalCompiler-Core-Semantics'
+	#category : 'OpalCompiler-Core-Semantics',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Semantics'
 }
 
-{ #category : #variables }
+{ #category : 'variables' }
 OCASTClosureAnalyzer >> lookupAndFixBinding: aVariableNode [
 	| var |
 	var := scope lookupVar: aVariableNode name.
@@ -18,12 +21,12 @@ OCASTClosureAnalyzer >> lookupAndFixBinding: aVariableNode [
 	^var
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OCASTClosureAnalyzer >> visitArgumentNode: aVariableNode [
 	"nothing to do for arguments"
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OCASTClosureAnalyzer >> visitBlockNode: aBlockNode [
 	"here look at the temps and make copying vars / tempVector out of them"
 	self visitArgumentNodes: aBlockNode arguments.
@@ -35,7 +38,7 @@ OCASTClosureAnalyzer >> visitBlockNode: aBlockNode [
 	scope := scope popScope
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OCASTClosureAnalyzer >> visitLocalVariableNode: aVariableNode [
 	"re-lookup local variables..."
 	| var |
@@ -46,7 +49,7 @@ OCASTClosureAnalyzer >> visitLocalVariableNode: aVariableNode [
 	var isCopying ifTrue: [scope addCopyingTempToAllScopesUpToDefTemp: var]
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OCASTClosureAnalyzer >> visitMethodNode: aMethodNode [
 	"here look at the temps and make copying vars / tempVector out of them"
 	self visitArgumentNodes: aMethodNode arguments.

@@ -1,6 +1,6 @@
-Extension { #name : #WorldMorph }
+Extension { #name : 'WorldMorph' }
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 WorldMorph >> acceptDroppingMorph: dropped event: evt [
 	"The supplied morph, known to be acceptable to the receiver, is now to be assimilated; the precipitating event is supplied"
 
@@ -18,7 +18,7 @@ WorldMorph >> acceptDroppingMorph: dropped event: evt [
 	self bringTopmostsToFront
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 WorldMorph >> dispatchKeystroke: anEvent [
 	"A keystroke was hit when no keyboard focus was set, so it is sent here to the world instead."
 
@@ -29,16 +29,13 @@ WorldMorph >> dispatchKeystroke: anEvent [
 
 	(self navigationKey: anEvent) ifTrue: [^self].
 
-	(anEvent commandKeyPressed and: [TextEditor cmdKeysInText])
-		ifTrue: [^ self dispatchCommandKeyInWorld: aChar event: anEvent].
-
 	"It was unhandled. Remember the keystroke."
 	self lastKeystroke: anEvent keyString.
 	self triggerEvent: #keyStroke.
 	super dispatchKeystroke: anEvent
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 WorldMorph >> install [
 
 	"This method should not be used. This is for backward compatibility and will be replaced
@@ -63,7 +60,7 @@ WorldMorph >> install [
 	self viewBox: self worldState worldRenderer viewBox
 ]
 
-{ #category : #'*Morphic-Base' }
+{ #category : '*Morphic-Base' }
 WorldMorph >> mouseDown: evt [
 	super mouseDown: evt.
 	self currentWindow ifNotNil: [ :topWindow | SystemWindow passivateTopWindow ]

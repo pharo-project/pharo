@@ -2,17 +2,19 @@
 Package manifest for package metadata
 "
 Class {
-	#name : #ManifestCollectionsAbstract,
-	#superclass : #PackageManifest,
-	#category : #'Collections-Abstract-Manifest'
+	#name : 'ManifestCollectionsAbstract',
+	#superclass : 'PackageManifest',
+	#category : 'Collections-Abstract-Manifest',
+	#package : 'Collections-Abstract',
+	#tag : 'Manifest'
 }
 
-{ #category : #'meta-data' }
+{ #category : 'meta-data' }
 ManifestCollectionsAbstract class >> dependencies [
 	^ #(#'Regex-Core' #'Collections-Strings' #'Collections-Streams' #'Collections-Support' #'Collections-Unordered' #Kernel #'Collections-Sequenceable' #'Collections-Native')
 ]
 
-{ #category : #'meta-data' }
+{ #category : 'meta-data' }
 ManifestCollectionsAbstract class >> packageName [
 	^ #'Collections-Abstract'
 ]

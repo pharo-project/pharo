@@ -1,6 +1,6 @@
-Extension { #name : #ProtoObject }
+Extension { #name : 'ProtoObject' }
 
-{ #category : #'*Equals' }
+{ #category : '*Equals' }
 ProtoObject class >> allInstVarNamesForEqualityComparison [
 	^#()
 ]

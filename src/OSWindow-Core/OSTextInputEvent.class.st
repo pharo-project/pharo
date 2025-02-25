@@ -2,58 +2,60 @@
 i am delivered when user enters some text
 "
 Class {
-	#name : #OSTextInputEvent,
-	#superclass : #OSEvent,
+	#name : 'OSTextInputEvent',
+	#superclass : 'OSEvent',
 	#instVars : [
 		'text',
 		'modifiers',
 		'position'
 	],
-	#category : #'OSWindow-Core-Events'
+	#category : 'OSWindow-Core-Events',
+	#package : 'OSWindow-Core',
+	#tag : 'Events'
 }
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 OSTextInputEvent >> accept: aVisitor [
 	^ aVisitor visitTextInputEvent: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OSTextInputEvent >> initialize [
 	super initialize.
 	modifiers := OSStateModifiers new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTextInputEvent >> modifiers [
 
 	^ modifiers
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTextInputEvent >> modifiers: anObject [
 
 	modifiers := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTextInputEvent >> position [
 
 	^ position
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTextInputEvent >> position: anObject [
 
 	position := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTextInputEvent >> text [
 
 	^ text
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OSTextInputEvent >> text: anObject [
 
 	text := anObject

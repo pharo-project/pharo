@@ -10,17 +10,19 @@ typedef struct {
 ```
 "
 Class {
-	#name : #CairoGlyph,
-	#superclass : #FFIExternalStructure,
+	#name : 'CairoGlyph',
+	#superclass : 'FFIExternalStructure',
 	#classVars : [
 		'OFFSET_INDEX',
 		'OFFSET_X',
 		'OFFSET_Y'
 	],
-	#category : #'Athens-Cairo-Text'
+	#category : 'Athens-Cairo-Text',
+	#package : 'Athens-Cairo',
+	#tag : 'Text'
 }
 
-{ #category : #'fields description' }
+{ #category : 'fields description' }
 CairoGlyph class >> fieldsDesc [
 	"self rebuildFieldAccessors"
 	^ #(
@@ -30,37 +32,37 @@ CairoGlyph class >> fieldsDesc [
 	)
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoGlyph >> index [
 	"This method was automatically generated"
 	^handle platformUnsignedLongAt: OFFSET_INDEX
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoGlyph >> index: anObject [
 	"This method was automatically generated"
 	^handle platformUnsignedLongAt: OFFSET_INDEX put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoGlyph >> x [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_X
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoGlyph >> x: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_X put: anObject
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoGlyph >> y [
 	"This method was automatically generated"
 	^handle doubleAt: OFFSET_Y
 ]
 
-{ #category : #'accessing - structure variables' }
+{ #category : 'accessing - structure variables' }
 CairoGlyph >> y: anObject [
 	"This method was automatically generated"
 	handle doubleAt: OFFSET_Y put: anObject

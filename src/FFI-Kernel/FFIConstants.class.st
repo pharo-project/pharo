@@ -2,8 +2,8 @@
 Constants definitions for FFI
 "
 Class {
-	#name : #FFIConstants,
-	#superclass : #SharedPool,
+	#name : 'FFIConstants',
+	#superclass : 'SharedPool',
 	#classVars : [
 		'FFIAtomicTypeMask',
 		'FFIAtomicTypeShift',
@@ -51,10 +51,11 @@ Class {
 		'FFITypeUnsignedShort',
 		'FFITypeVoid'
 	],
-	#category : #'FFI-Kernel'
+	#category : 'FFI-Kernel',
+	#package : 'FFI-Kernel'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 FFIConstants class >> initialize [
 	"FFIConstants initialize"
 
@@ -64,7 +65,7 @@ FFIConstants class >> initialize [
 		initializeCallingConventions
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 FFIConstants class >> initializeCallingConventions [
 	"These constants map onto the flags inst var of an ExternalFunction.
 	 The first eight bits define the calling convention.  Attribute flags
@@ -76,7 +77,7 @@ FFIConstants class >> initializeCallingConventions [
 	FFICallFlagThreaded := 256
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 FFIConstants class >> initializeErrorConstants [
 	"FFIConstants initializeErrorConstants"
 
@@ -125,7 +126,7 @@ FFIConstants class >> initializeErrorConstants [
 	FFIErrorCallFrameTooBig := 19
 ]
 
-{ #category : #'private - initialization' }
+{ #category : 'private - initialization' }
 FFIConstants class >> initializeTypeConstants [
 	"type void"
 	FFITypeVoid := 0.

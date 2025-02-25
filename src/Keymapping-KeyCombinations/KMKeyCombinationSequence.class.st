@@ -10,15 +10,16 @@ $a command , $b shift
 ```
 "
 Class {
-	#name : #KMKeyCombinationSequence,
-	#superclass : #KMKeyCombination,
+	#name : 'KMKeyCombinationSequence',
+	#superclass : 'KMKeyCombination',
 	#instVars : [
 		'shortcuts'
 	],
-	#category : #'Keymapping-KeyCombinations'
+	#category : 'Keymapping-KeyCombinations',
+	#package : 'Keymapping-KeyCombinations'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 KMKeyCombinationSequence class >> first: aShortcut next: anotherShortcut [
 	^ (self new)
 		first: aShortcut;
@@ -26,7 +27,7 @@ KMKeyCombinationSequence class >> first: aShortcut next: anotherShortcut [
 		yourself
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMKeyCombinationSequence >> + aCharacter [
 	| last |
 	last := self sequence last.
@@ -34,50 +35,50 @@ KMKeyCombinationSequence >> + aCharacter [
 	self addShortcut: last + aCharacter
 ]
 
-{ #category : #combining }
+{ #category : 'combining' }
 KMKeyCombinationSequence >> , aShortcut [
 	self addShortcut: aShortcut asKeyCombination
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 KMKeyCombinationSequence >> = aShortcut [
 	^ super = aShortcut and: [ shortcuts = aShortcut sequence ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMKeyCombinationSequence >> acceptVisitor: aKMShortcutPrinter [
 
 	^ aKMShortcutPrinter visitCombinationShortcut: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMKeyCombinationSequence >> addShortcut: aShortcut [
 	self sequence add: aShortcut
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMKeyCombinationSequence >> beginsWith: aShortcut [
 
 	^ self sequence first = aShortcut
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMKeyCombinationSequence >> first: aShortcut [
 	self addShortcut: aShortcut
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 KMKeyCombinationSequence >> hash [
 	^ shortcuts hash
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 KMKeyCombinationSequence >> haveShortcutsSameModifier [
 
-	^ (shortcuts collect: [ :s | s modifier ] as: Set) size = 1
+	^ self shortcutModifiers size = 1
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 KMKeyCombinationSequence >> matches: anEventBuffer [
 	|maxIndex|
 	maxIndex := anEventBuffer size min: shortcuts size.
@@ -87,12 +88,12 @@ KMKeyCombinationSequence >> matches: anEventBuffer [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMKeyCombinationSequence >> next: aShortcut [
 	self addShortcut: aShortcut
 ]
 
-{ #category : #printing }
+{ #category : 'accessing - platform' }
 KMKeyCombinationSequence >> platformModifier [
 
 	self sequence do: [ :each | ^ each platformModifier ].
@@ -100,7 +101,7 @@ KMKeyCombinationSequence >> platformModifier [
 	^ nil
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMKeyCombinationSequence >> prettyPrintOn: aStream [
 
 	shortcuts
@@ -108,7 +109,7 @@ KMKeyCombinationSequence >> prettyPrintOn: aStream [
 		separatedBy: [ aStream << ' + ' ]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 KMKeyCombinationSequence >> printOn: aStream [
 
 	self haveShortcutsSameModifier
@@ -119,19 +120,30 @@ KMKeyCombinationSequence >> printOn: aStream [
 				separatedBy: [ aStream nextPutAll: ' + ' ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 KMKeyCombinationSequence >> printSequenceWithSameModifierOn: aStream [
 
-	aStream
-		nextPutAll: shortcuts first modifier name;
-		nextPutAll: ' + ('.
+	| modifier |
+	
+	modifier := self shortcutModifiers anyOne.
+	modifier name
+		ifNil: [ aStream nextPutAll: 'Composed' ]
+		ifNotNil: [ : modifierName | aStream nextPutAll: modifierName  ].
+	aStream nextPutAll: ' + ('.
 	shortcuts
 		do: [ :s | aStream nextPutAll: s key name ]
 		separatedBy: [ aStream nextPutAll: ' , ' ].
 	aStream nextPut: $)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 KMKeyCombinationSequence >> sequence [
 	^ shortcuts ifNil: [ shortcuts := OrderedCollection new ]
+]
+
+{ #category : 'private' }
+KMKeyCombinationSequence >> shortcutModifiers [
+	"Answer a <Set> of the receiver's modifiers, i.e. keys pressed to modify the value of a following key"
+
+	^ shortcuts collect: [ :s | s modifier ] as: Set
 ]

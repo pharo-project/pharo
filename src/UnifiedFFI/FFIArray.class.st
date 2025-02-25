@@ -56,21 +56,26 @@ TheStruct class>>fieldsDesc
 Of course this is not the best way to do it (parser needs to be adapted to do this automatically), but is a good and fast way to provide the functionality. 
 "
 Class {
-	#name : #FFIArray,
-	#superclass : #FFIExternalArray,
+	#name : 'FFIArray',
+	#superclass : 'FFIExternalArray',
+	#classVars : [
+		'DefinedTypes'
+	],
 	#classInstVars : [
 		'type',
 		'numberOfElements'
 	],
-	#category : #'UnifiedFFI-Objects'
+	#category : 'UnifiedFFI-Objects',
+	#package : 'UnifiedFFI',
+	#tag : 'Objects'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 FFIArray class >> asExternalTypeOn: generator [
 	^ FFITypeArrayType objectClass: self
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIArray class >> externalNew [
 	"Create a new array in the C heap.
 	 This array needs to be disposed (using #free method)... or you can declare it #autoRelease"
@@ -79,45 +84,56 @@ FFIArray class >> externalNew [
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'private' }
+FFIArray class >> findOrCreateType: aTypeName size: aSize [
+
+	DefinedTypes ifNil: [ DefinedTypes := SmallDictionary new ].
+	^ (DefinedTypes 
+		at: aTypeName ifAbsentPut: [ SmallDictionary new ])
+		at: aSize ifAbsentPut: [ self newArrayTypeOf: aTypeName size: aSize ]
+]
+
+{ #category : 'instance creation' }
 FFIArray class >> fromHandle: aHandle [
 	^ self basicNew
 		initializeHandle: aHandle type: self type size: self numberOfElements;
 		yourself
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FFIArray class >> new [
 	^ self basicNew
 		initializeType: self type size: self numberOfElements;
 		yourself
 ]
 
-{ #category : #'class factory' }
-FFIArray class >> newArrayTypeOf: aTypeName size: elements [
+{ #category : 'private' }
+FFIArray class >> newArrayTypeOf: aTypeName size: aSize [
+
 	^ FFIArray newAnonymousSubclass
 		type: (FFIExternalType resolveType: aTypeName)
-		size: elements
+		size: aSize
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIArray class >> numberOfElements [
 	^ numberOfElements
 ]
 
-{ #category : #'class factory' }
-FFIArray class >> ofType: aTypeName size: elements [
-	^ FFIArray newAnonymousSubclass
-		type: (FFIExternalType resolveType: aTypeName)
-		size: elements
+{ #category : 'class factory' }
+FFIArray class >> ofType: aTypeName size: aSize [
+
+	^ self 
+		findOrCreateType: aTypeName 
+		size: aSize
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIArray class >> type [
 	^ type
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 FFIArray class >> type: aType 	size: elements [
 	type := aType.
 	numberOfElements := elements

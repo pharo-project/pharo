@@ -5,7 +5,8 @@ Currently this bar is known as #textSegmentIcons ruler in the Rubric editor. It 
 I provide the way how activate commands by clicking on this Rubric area: most priority activation strategy is used to execute single command
 "
 Class {
-	#name : #CmdTextLeftBarClickActivation,
-	#superclass : #CmdClickActivation,
-	#category : #'Commander-Activators-TextView'
+	#name : 'CmdTextLeftBarClickActivation',
+	#superclass : 'CmdClickActivation',
+	#category : 'Commander-Activators-TextView',
+	#package : 'Commander-Activators-TextView'
 }

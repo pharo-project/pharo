@@ -12,12 +12,14 @@ weakArray at: 1 .
 This slot inherits from IndexedSlot to guarantee that this slot has a real field inside an object.
 "
 Class {
-	#name : #WeakSlot,
-	#superclass : #IndexedSlot,
-	#category : #'VariablesLibrary-Slots'
+	#name : 'WeakSlot',
+	#superclass : 'IndexedSlot',
+	#category : 'VariablesLibrary-Slots',
+	#package : 'VariablesLibrary',
+	#tag : 'Slots'
 }
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 WeakSlot >> emitStore: aMethodBuilder [
 	"generate bytecode for 'varname at: 1 put: <stackTop>'"
 	| temp |
@@ -34,7 +36,7 @@ WeakSlot >> emitStore: aMethodBuilder [
 	aMethodBuilder send: #at:put:
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 WeakSlot >> emitValue: aMethodBuilder [
 	"Push the weak array at: 1 on the stack"
 	aMethodBuilder pushInstVar: index.
@@ -42,26 +44,26 @@ WeakSlot >> emitValue: aMethodBuilder [
 	aMethodBuilder send: #at:
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WeakSlot >> initialize: anObject [
 
 	super write: (WeakArray new: 1) to: anObject
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 WeakSlot >> read: anObject [
-
+	<reflection: 'Object Inspection - State inspection'>
 	^ (super read: anObject) at: 1
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 WeakSlot >> wantsInitialization [
 
 	^ true
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 WeakSlot >> write: aValue to: anObject [
-
+	<reflection: 'Object Modification - State modification'>
 	^(super read: anObject) at: 1 put: aValue
 ]

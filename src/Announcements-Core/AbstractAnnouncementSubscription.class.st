@@ -5,54 +5,57 @@ My subsclasses are a single entry in a SubscriptionRegistry. Several subscriptio
 I know how to make myself weak or strong, only use this capability if it can't be determined at subscribe time though, as it uses become: (for thread-safety), which is quite slow.
 "
 Class {
-	#name : #AbstractAnnouncementSubscription,
-	#superclass : #Object,
+	#name : 'AbstractAnnouncementSubscription',
+	#superclass : 'Object',
 	#instVars : [
 		'announcer',
 		'announcementClass',
 		'action'
 	],
-	#category : #'Announcements-Core-Subscription'
+	#category : 'Announcements-Core-Subscription',
+	#package : 'Announcements-Core',
+	#tag : 'Subscription'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractAnnouncementSubscription >> action [
 
 	^ action
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractAnnouncementSubscription >> action: anObject [
 
 	action := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractAnnouncementSubscription >> announcementClass [
 
 	^ announcementClass
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractAnnouncementSubscription >> announcementClass: anObject [
 
 	announcementClass := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractAnnouncementSubscription >> announcer [
 
 	^ announcer
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractAnnouncementSubscription >> announcer: anAnnouncer [
+
 	announcer := anAnnouncer
 ]
 
-{ #category : #announcing }
+{ #category : 'announcing' }
 AbstractAnnouncementSubscription >> deliver: anAnnouncement [
-	" deliver an announcement to receiver. In case of failure, it will be handled in separate process"
+	"Deliver an announcement to receiver. In case of failure, it will be handled in separate process"
 
 	(self handlesAnnouncement: anAnnouncement) ifTrue: [
 		[ action cull: anAnnouncement cull: announcer ]
@@ -60,23 +63,25 @@ AbstractAnnouncementSubscription >> deliver: anAnnouncement [
 			fork: [ :ex | ex pass ] ]
 ]
 
-{ #category : #'error handling' }
+{ #category : 'error handling' }
 AbstractAnnouncementSubscription >> handlesAnnouncement: anAnnouncement [
 
 	^ announcementClass handlesAnnouncement: anAnnouncement
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AbstractAnnouncementSubscription >> makeStrong [
+
 	^ self subclassResponsibility
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 AbstractAnnouncementSubscription >> makeWeak [
+
 	^ self subclassResponsibility
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 AbstractAnnouncementSubscription >> printOn: aStream [
 
 	super printOn: aStream.
@@ -89,19 +94,22 @@ AbstractAnnouncementSubscription >> printOn: aStream [
 		nextPut: $)
 ]
 
-{ #category : #converting }
+{ #category : 'accessing' }
 AbstractAnnouncementSubscription >> subscriber [
+
 	^ self subclassResponsibility
 ]
 
-{ #category : #converting }
-AbstractAnnouncementSubscription >> subscriber: aSubscriber [ 
+{ #category : 'accessing' }
+AbstractAnnouncementSubscription >> subscriber: aSubscriber [
+
 	^ self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AbstractAnnouncementSubscription >> valuable: aValuable [
 	"Used when subscriber should be extracted from valuable object"
-	self action:  aValuable.
+
+	self action: aValuable.
 	self subscriber: aValuable receiver
 ]

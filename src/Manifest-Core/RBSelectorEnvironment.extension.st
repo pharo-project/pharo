@@ -1,6 +1,6 @@
-Extension { #name : #RBSelectorEnvironment }
+Extension { #name : 'RBSelectorEnvironment' }
 
-{ #category : #'*Manifest-Core' }
+{ #category : '*Manifest-Core' }
 RBSelectorEnvironment >> smallLintCritics [
 
 	| array |

@@ -16,18 +16,20 @@ Internal Representation and Key Implementation Points.
 
 "
 Class {
-	#name : #MenubarMorph,
-	#superclass : #DockingBarMorph,
+	#name : 'MenubarMorph',
+	#superclass : 'DockingBarMorph',
 	#instVars : [
 		'menuBarItems'
 	],
 	#classVars : [
 		'ShowMenubar'
 	],
-	#category : #'Morphic-Widgets-Menubar-View'
+	#category : 'Morphic-Widgets-Menubar-View',
+	#package : 'Morphic-Widgets-Menubar',
+	#tag : 'View'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MenubarMorph class >> closeAll [
 
 	self currentWorld submorphs
@@ -35,7 +37,7 @@ MenubarMorph class >> closeAll [
 		thenDo: [ :e | e delete ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 MenubarMorph class >> initialize [
 
 	self showMenubar: true.
@@ -43,16 +45,15 @@ MenubarMorph class >> initialize [
 	self reset
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MenubarMorph class >> install [
 	"Unsubscribe to subscribe only once"
-	SystemAnnouncer uniqueInstance unsubscribe: self.
-	SystemAnnouncer uniqueInstance weak
-		when: MethodAnnouncement
-		send: #methodAnnouncementReceived: to: self
+
+	self codeChangeAnnouncer unsubscribe: self.
+	self codeChangeAnnouncer weak when: MethodAnnouncement send: #methodAnnouncementReceived: to: self
 ]
 
-{ #category : #setting }
+{ #category : 'setting' }
 MenubarMorph class >> menubarSettingOn: aBuilder [
 	<systemsettings>
 	(aBuilder setting: #showMenubar)
@@ -63,14 +64,14 @@ MenubarMorph class >> menubarSettingOn: aBuilder [
 		description: 'Whether the world''s menubar should be shown or not.'
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MenubarMorph class >> methodAnnouncementReceived: anAnnouncement [
 
 	(anAnnouncement methodAffected hasPragmaNamed: #worldMenu)
 		ifTrue: [ self reset ]
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 MenubarMorph class >> open [
 	<script>
 
@@ -81,7 +82,7 @@ MenubarMorph class >> open [
 		open
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 MenubarMorph class >> reset [
 
 	<script>
@@ -89,66 +90,66 @@ MenubarMorph class >> reset [
 	self open
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenubarMorph class >> showMenubar [
 	^ ShowMenubar
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenubarMorph class >> showMenubar: aBoolean [
 	ShowMenubar := aBoolean.
 	self reset
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MenubarMorph >> addSeparator [
 	self addMorphBack: MenubarSeparatorMorph new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MenubarMorph >> defaultBorderWidth [
 	^ self theme menubarBorderWidthFor: self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MenubarMorph >> defaultColor [
 	^ self theme menubarFillStyleFor: self
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 MenubarMorph >> drawSubmenuMarkerOn: aCanvas [
 
 	"Nothing"
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MenubarMorph >> initialize [
 	super initialize.
 	self cellInset: 7
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 MenubarMorph >> isMenubar [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenubarMorph >> menuBarItems [
 	^ menuBarItems
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenubarMorph >> menuBarItems: anObject [
 	menuBarItems := anObject
 ]
 
-{ #category : #construction }
+{ #category : 'construction' }
 MenubarMorph >> newMenuItem [
 
 	^ MenubarItemMorph new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenubarMorph >> open [
 	self menuBarItems
 		do: [ :each |
@@ -166,24 +167,24 @@ MenubarMorph >> open [
 		openInWorld
 ]
 
-{ #category : #recategorized }
+{ #category : 'recategorized' }
 MenubarMorph >> rejectsEvent: anEvent [
 	(anEvent isMouse and: [ anEvent isMouseDown ]) ifTrue: [ ^ (self submorphs anySatisfy: [ :each | each containsPoint: anEvent cursorPoint ]) not ].
 
 	^ super rejectsEvent: anEvent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenubarMorph >> repelsMorph: aMorph event: ev [
 	^ true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MenubarMorph >> wantsGradientByDefault [
 	^ false
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 MenubarMorph >> wantsYellowButtonMenu [
 	"Answer true if the receiver wants a yellow button menu."
 

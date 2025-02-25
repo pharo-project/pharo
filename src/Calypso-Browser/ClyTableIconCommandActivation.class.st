@@ -36,12 +36,14 @@ The command with most priority will decorate table at last order which means tha
 To implement correct order of my instances in registry I provide special sorted container for this. It manages instances in opposite order then default one
 "
 Class {
-	#name : #ClyTableIconCommandActivation,
-	#superclass : #CmdCommandActivationStrategy,
-	#category : #'Calypso-Browser-Table'
+	#name : 'ClyTableIconCommandActivation',
+	#superclass : 'CmdCommandActivationStrategy',
+	#category : 'Calypso-Browser-Table',
+	#package : 'Calypso-Browser',
+	#tag : 'Table'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 ClyTableIconCommandActivation class >> createContainerForRegistry [
 	"This strategy decorates table rows with UI element which execute the command.
 	Decoration with more priority should override applied changes of table row
@@ -53,7 +55,7 @@ ClyTableIconCommandActivation class >> createContainerForRegistry [
 	^SortedCollection sortBlock: #priority ascending
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyTableIconCommandActivation class >> priority: aNumber for: aBrowserContext [
 	"More priority value will allow command to override decorations from less priority commands"
 

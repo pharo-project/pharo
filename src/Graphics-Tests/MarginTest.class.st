@@ -2,12 +2,14 @@
 SUnit tests for class Margin
 "
 Class {
-	#name : #MarginTest,
-	#superclass : #TestCase,
-	#category : #'Graphics-Tests-Primitives'
+	#name : 'MarginTest',
+	#superclass : 'TestCase',
+	#category : 'Graphics-Tests-Primitives',
+	#package : 'Graphics-Tests',
+	#tag : 'Primitives'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 MarginTest >> testConstruction [
 	| margin |
 	margin := Margin
@@ -27,7 +29,7 @@ MarginTest >> testConstruction [
 		assert: margin height equals: 4
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MarginTest >> testExpandRectangle [
 
 	| rect |
@@ -41,7 +43,7 @@ MarginTest >> testExpandRectangle [
 	self assert: rect equals: ((2@1) negated extent: 16@14)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MarginTest >> testExtendRectangle [
 
 	| rect |
@@ -55,7 +57,7 @@ MarginTest >> testExtendRectangle [
 	self assert: rect equals: (0@0 extent: 16@14)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MarginTest >> testFromPoint [
 
 	| margin |
@@ -71,7 +73,7 @@ MarginTest >> testFromPoint [
 		assert: margin height 	equals: 2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MarginTest >> testHeight [
 	"Height represents the height of the rubber of the margin this is why we add them."
 	| margin |
@@ -79,7 +81,7 @@ MarginTest >> testHeight [
 	self assert: margin height equals: 40
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MarginTest >> testInitialization [
 	| margin |
 	margin := Margin new.
@@ -96,7 +98,7 @@ MarginTest >> testInitialization [
 		assert: margin isZero equals: true
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MarginTest >> testInsetRectangle [
 
 	| rect |
@@ -110,7 +112,7 @@ MarginTest >> testInsetRectangle [
 	self assert: rect equals: (2@1 extent: 4@6)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 MarginTest >> testWidth [
 	"Width represents the height of the rubber of the margin this is why we add them."
 	| margin |

@@ -2,35 +2,43 @@
 I test EpMonitor integration (either enabled or disabled).
 "
 Class {
-	#name : #EpMonitorIntegrationTest,
-	#superclass : #TestCase,
+	#name : 'EpMonitorIntegrationTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'monitor',
 		'classFactory',
 		'logBuilder'
 	],
-	#category : #'Epicea-Tests-Integration'
+	#category : 'Epicea-Tests-Integration',
+	#package : 'Epicea-Tests',
+	#tag : 'Integration'
 }
 
-{ #category : #running }
+{ #category : 'asserting' }
+EpMonitorIntegrationTest class >> shouldLogWithEpicea [
+
+	^ true
+]
+
+{ #category : 'running' }
 EpMonitorIntegrationTest >> allLogEntriesWith: aClass [
 
 	^ monitor log entries select: [ :each | each content class = aClass ]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 EpMonitorIntegrationTest >> allLogEventsWith: aClass [
 
 	^ (self allLogEntriesWith: aClass) collect: [:each | each content]
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 EpMonitorIntegrationTest >> countLogEventsWith: aClass [
 
 	^ (self allLogEntriesWith: aClass) size
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 EpMonitorIntegrationTest >> setUp [
 	super setUp.
 
@@ -41,7 +49,7 @@ EpMonitorIntegrationTest >> setUp [
 	monitor := EpMonitor newWithLog: logBuilder log
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 EpMonitorIntegrationTest >> tearDown [
 
 	monitor disable.

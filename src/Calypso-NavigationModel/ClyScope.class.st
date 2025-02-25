@@ -73,27 +73,29 @@ Internal Representation and Key Implementation Points.
 	name:		String
 "
 Class {
-	#name : #ClyScope,
-	#superclass : #Object,
+	#name : 'ClyScope',
+	#superclass : 'Object',
 	#instVars : [
 		'environment',
 		'basisObjects',
 		'name'
 	],
-	#category : #'Calypso-NavigationModel-Model'
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyScope class >> defaultName [
 	^self name
 ]
 
-{ #category : #composition }
+{ #category : 'composition' }
 ClyScope >> , anotherTypedScope [
 	self subclassResponsibility
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyScope >> = anObject [
 	"Answer whether the receiver and anObject represent the same object."
 
@@ -104,7 +106,7 @@ ClyScope >> = anObject [
 	^ basisObjects = anObject basisObjects
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyScope >> adoptQuery: aQuery [
 	"Not all kind of scopes support any kind of query.
 	Idea is to be able adopt given query instance by target scope.
@@ -115,43 +117,43 @@ ClyScope >> adoptQuery: aQuery [
 	self subclassResponsibility
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyScope >> asScope: anotherTypedScopeClass [
 	"It will create new scope instance of given class but in same environment and with same basis"
 
 	^ anotherTypedScopeClass ofAll: basisObjects in: environment named: name
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyScope >> asScope: anotherTypedScopeClass of: singleBasisObject [
 	"It will create completely new scope instance but in same environment"
 
 	^ anotherTypedScopeClass of: singleBasisObject in: environment
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyScope >> asScope: anotherTypedScopeClass ofAll: newBasisObjects [
 	"It will create completely new scope instance but in same environment"
 
 	^ anotherTypedScopeClass ofAll: newBasisObjects in: environment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyScope >> basisObjects [
 	^ basisObjects
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyScope >> basisObjects: aCollection [
 	basisObjects := aCollection asSet
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyScope >> basisSize [
 	^ basisObjects size
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyScope >> bindTo: aNavigationEnvironment [
 	environment ifNil: [ environment := aNavigationEnvironment ].
 
@@ -159,56 +161,57 @@ ClyScope >> bindTo: aNavigationEnvironment [
 		ifFalse: [ self error: 'Scope should never be rebound to new environment' ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyScope >> defaultName [
 	^self class defaultName
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyScope >> description [
 
 	^String streamContents: [ :s | self printDescriptionOn: s]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyScope >> environment [
 	^ environment
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 ClyScope >> hash [
 	"Answer an integer value that is related to the identity of the receiver."
 
 	^basisObjects hash
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyScope >> isBasedOn: someBasisObject [
 	^basisObjects includes: someBasisObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyScope >> isBasedOnEmptyBasis [
 
 	^self basisSize = 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyScope >> isBasedOnMultipleBasis [
 	^self basisSize > 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyScope >> isBasedOnSingleBasis [
 	^self basisSize = 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyScope >> isBoundToEnvironment [
-	^environment notNil
+
+	^ environment isNotNil
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyScope >> isQueryEmpty: aQuery [
 	self isBasedOnEmptyBasis ifTrue: [
 		"It is optimization to prevent real query execution in remote scenario.
@@ -220,23 +223,23 @@ ClyScope >> isQueryEmpty: aQuery [
 	^environment isQueryEmpty: aQuery
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyScope >> name [
 	^ name ifNil: [ self defaultName ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyScope >> name: anObject [
 	name := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyScope >> printBasisObject: anObject on: aStream [
 
 	^anObject printOn: aStream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyScope >> printBasisOn: aStream [
 	basisObjects ifEmpty: [ ^self ].
 
@@ -246,7 +249,7 @@ ClyScope >> printBasisOn: aStream [
 	aStream skip: -2
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyScope >> printDescriptionOn: aStream [
 
 	aStream nextPutAll: self name.
@@ -254,7 +257,7 @@ ClyScope >> printDescriptionOn: aStream [
 	self printBasisOn: aStream
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ClyScope >> printOn: aStream [
 	super printOn: aStream.
 	aStream nextPut: $(.
@@ -262,7 +265,7 @@ ClyScope >> printOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyScope >> query: aQuery [
 	self isBasedOnEmptyBasis ifTrue: [
 		"It is optimization to prevent real query execution in remote scenario.
@@ -274,17 +277,17 @@ ClyScope >> query: aQuery [
 	^environment query: aQuery
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyScope >> representsScope: aScopeClass [
 	self subclassResponsibility
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyScope >> supportsQuery: aQuery [
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyScope >> system [
 	^environment system
 ]

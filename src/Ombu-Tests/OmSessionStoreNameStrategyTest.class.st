@@ -2,22 +2,23 @@
 An OmSessionStoreNameStrategyTest is a test class for testing the behavior of OmSessionStoreNameStrategy
 "
 Class {
-	#name : #OmSessionStoreNameStrategyTest,
-	#superclass : #TestCase,
+	#name : 'OmSessionStoreNameStrategyTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'strategy',
 		'name'
 	],
-	#category : #'Ombu-Tests'
+	#category : 'Ombu-Tests',
+	#package : 'Ombu-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 OmSessionStoreNameStrategyTest class >> isAbstract [
 
 	^ self name = #OmSessionStoreNameStrategyTest
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OmSessionStoreNameStrategyTest >> createFileWith: aName [
 
 	self directory ensureCreateDirectory.
@@ -25,13 +26,13 @@ OmSessionStoreNameStrategyTest >> createFileWith: aName [
 		writeStreamDo: [ :stream | stream print: 'stub contents' ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OmSessionStoreNameStrategyTest >> directory [
 
 	^ FileLocator temp asFileReference / 'ombu-strategy-tests'
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 OmSessionStoreNameStrategyTest >> fileReferenceWith: aName [
 
 	^ OmFileStore
@@ -39,28 +40,28 @@ OmSessionStoreNameStrategyTest >> fileReferenceWith: aName [
 		inDirectory: self directory
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OmSessionStoreNameStrategyTest >> setUp [
 
 	super setUp.
 	strategy := self strategyClass new
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 OmSessionStoreNameStrategyTest >> strategyClass [
 
 	^ self class environment classNamed:
 		(self class name allButLast: 4) "corresponding to the word Test"
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 OmSessionStoreNameStrategyTest >> tearDown [
 
 	self directory ensureDeleteAll.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmSessionStoreNameStrategyTest >> testWithExistingFile [
 	self createFileWith: 'existing'.
 
@@ -71,7 +72,7 @@ OmSessionStoreNameStrategyTest >> testWithExistingFile [
 	self deny: (self fileReferenceWith: name) exists
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 OmSessionStoreNameStrategyTest >> testWithNotExistingFile [
 
 	name := strategy nextTo: 'inexistent' in: self directory.

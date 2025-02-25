@@ -1,17 +1,18 @@
 Class {
-	#name : #CmdAbstractCommandExample,
-	#superclass : #CmdRootOfCommandExamples,
-	#category : #'Commander-Core-Tests'
+	#name : 'CmdAbstractCommandExample',
+	#superclass : 'CmdRootOfCommandExamples',
+	#category : 'Commander-Core-Tests',
+	#package : 'Commander-Core-Tests'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 CmdAbstractCommandExample class >> activationExample1 [
 	<classAnnotation>
 
 	^CmdCommandActivationExample for: CmdToolContextStub1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 CmdAbstractCommandExample class >> isAbstract [
 	^self = CmdAbstractCommandExample
 ]

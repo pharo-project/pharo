@@ -1,20 +1,21 @@
 Class {
-	#name : #ZnMagicCookieJarTest,
-	#superclass : #TestCase,
-	#category : #'Zinc-Tests'
+	#name : 'ZnMagicCookieJarTest',
+	#superclass : 'TestCase',
+	#category : 'Zinc-Tests',
+	#package : 'Zinc-Tests'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMagicCookieJarTest >> cookieString [
 	^ 'PREF=ID=18ae67ce302b6317:TM=1285696140:LM=1285696140:S=hqroFGlRQR1j4Yhy; expires={1}; path=/; domain=.google.com' format: { ZnUtils httpDate: DateAndTime now + 60 days }
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnMagicCookieJarTest >> cookieStringAlt [
 	^'PREFS=ID=18ae67ce302b6317:TM=1285696140:LM=1285696140:S=hqroFGlRQR1j4Yhy; expires={1}; path=/; domain=.pharo-project.org' format: { ZnUtils httpDate: DateAndTime now + 60 days }
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMagicCookieJarTest >> testAdd [
 	| jar count |
 	jar := ZnCookieJar new.
@@ -23,18 +24,18 @@ ZnMagicCookieJarTest >> testAdd [
 	self assert: jar cookies size equals: count + 1
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMagicCookieJarTest >> testCookieAtForUrl [
 	| jar c1 c2 |
 	jar := ZnCookieJar new.
 	c1 := ZnCookie fromString: self cookieString for: 'http://www.google.com' asZnUrl.
 	c2 := ZnCookie fromString: self cookieStringAlt for: 'http://www.pharo-project.org' asZnUrl.
 	jar add: c1; add: c2.
-	self assert: ((jar cookieAt: 'PREF' forUrl: 'http://www.google.com' asZnUrl) notNil).
+	self assert: ((jar cookieAt: 'PREF' forUrl: 'http://www.google.com' asZnUrl) isNotNil).
 	self assert: ((jar cookieAt: 'foobar' forUrl: 'http://www.google.com' asZnUrl) isNil)
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ZnMagicCookieJarTest >> testCookiesForUrl [
 	| jar c1 c2 |
 	jar := ZnCookieJar new.

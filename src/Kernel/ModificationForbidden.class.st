@@ -9,18 +9,20 @@ value <Object> value that was attempted to be stored into the read-only object
 selector <Symbol> selector that can be used to reproduce the mutation (typically, #at:put:, #instVarAt:put:, etc.)
 "
 Class {
-	#name : #ModificationForbidden,
-	#superclass : #Error,
+	#name : 'ModificationForbidden',
+	#superclass : 'Error',
 	#instVars : [
 		'object',
 		'fieldIndex',
 		'newValue',
 		'retrySelector'
 	],
-	#category : #'Kernel-Exceptions'
+	#category : 'Kernel-Exceptions',
+	#package : 'Kernel',
+	#tag : 'Exceptions'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ModificationForbidden class >> for: anObject at: fieldIndex with: newValue retrySelector: selector [
 
 	^self new
@@ -30,17 +32,17 @@ ModificationForbidden class >> for: anObject at: fieldIndex with: newValue retry
 		retrySelector: selector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ModificationForbidden >> fieldIndex [
 	^ fieldIndex
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ModificationForbidden >> fieldIndex: anObject [
 	fieldIndex := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ModificationForbidden >> indexedMessageText [
 	^ String streamContents: [ :s |
 		s << ' '.
@@ -51,24 +53,24 @@ ModificationForbidden >> indexedMessageText [
 		self printObject: newValue on: s]
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ModificationForbidden >> messageText [
 	"Overwritten to initialiaze the message text to a standard text if it has not yet been set"
 
 	^ messageText ifNil: [ messageText := self standardMessageText ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ModificationForbidden >> newValue [
 	^ newValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ModificationForbidden >> newValue: anObject [
 	newValue := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ModificationForbidden >> nonIndexedMessageText [
 	^ String streamContents: [ :s |
 		s << ' '.
@@ -79,40 +81,41 @@ ModificationForbidden >> nonIndexedMessageText [
 		self printObject: newValue on: s]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ModificationForbidden >> object [
 	^ object
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ModificationForbidden >> object: anObject [
 	object := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ModificationForbidden >> printObject: obj on: s [
 	[obj printOn: s] on: Exception do: [ :ex | s << '<cannot print object>' ]
 ]
 
-{ #category : #retrying }
+{ #category : 'retrying' }
 ModificationForbidden >> retryModification [
-	fieldIndex notNil
-		ifTrue: [ object perform: retrySelector with: fieldIndex with: newValue ]
-		ifFalse: [object perform: retrySelector with: newValue ].
+
+	fieldIndex
+		ifNotNil: [ object perform: retrySelector with: fieldIndex with: newValue ]
+		ifNil: [ object perform: retrySelector with: newValue ].
 	self resumeUnchecked: newValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ModificationForbidden >> retrySelector [
 	^ retrySelector
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ModificationForbidden >> retrySelector: anObject [
 	retrySelector := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ModificationForbidden >> standardMessageText [
 
 	^ fieldIndex ifNil: [ self nonIndexedMessageText ] ifNotNil: [ self indexedMessageText ]

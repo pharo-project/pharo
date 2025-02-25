@@ -21,6 +21,10 @@ When an ephemeron's key is hold strongly just by the ephemeron itself, the Ephem
 
 On the image side, the finalization process will send the message #mourn to an Ephemeron.  #mourn will #finalize the Ephemeron's key, and remove the Ephemeron from it's container to allow its collection during a subsequent garbage collection.
 
+# Implementation details
+
+I am implemented to be inside a double linked list and know the link I belong to, to make removals O(1)
+
 !! More Documentation
 
 You can read the associated paper to understand better the semantics of ephemerons:
@@ -28,16 +32,19 @@ You can read the associated paper to understand better the semantics of ephemero
 Ephemerons: A New Finalization Mechanism. Barry Hayes. OOPSLA '97
 "
 Class {
-	#name : #FinalizationRegistryEntry,
-	#superclass : #Association,
-	#type : #ephemeron,
+	#name : 'FinalizationRegistryEntry',
+	#superclass : 'Association',
+	#type : 'ephemeron',
 	#instVars : [
-		'container'
+		'container',
+		'link'
 	],
-	#category : #'System-Finalization-Registry'
+	#category : 'System-Finalization-Registry',
+	#package : 'System-Finalization',
+	#tag : 'Registry'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FinalizationRegistryEntry class >> key: key value: value container: aContainer [
 
 	^ self new
@@ -47,13 +54,31 @@ FinalizationRegistryEntry class >> key: key value: value container: aContainer [
 		yourself
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
+FinalizationRegistryEntry >> container [
+
+	^ container
+]
+
+{ #category : 'accessing' }
 FinalizationRegistryEntry >> container: anEphemeronContainer [
 
 	container := anEphemeronContainer
 ]
 
-{ #category : #mourning }
+{ #category : 'accessing' }
+FinalizationRegistryEntry >> link [
+
+	^ link
+]
+
+{ #category : 'accessing' }
+FinalizationRegistryEntry >> link: anObject [
+
+	link := anObject
+]
+
+{ #category : 'mourning' }
 FinalizationRegistryEntry >> mourn [
 	"The key is only referenced by myself.
 	This Ephemeron instance is not ephemeric anymore: it cannot be reused.

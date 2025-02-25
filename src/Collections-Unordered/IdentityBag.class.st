@@ -5,17 +5,19 @@ See the comment of IdentitySet for more information.
 
 "
 Class {
-	#name : #IdentityBag,
-	#superclass : #Bag,
-	#category : #'Collections-Unordered-Bags'
+	#name : 'IdentityBag',
+	#superclass : 'Bag',
+	#category : 'Collections-Unordered-Bags',
+	#package : 'Collections-Unordered',
+	#tag : 'Bags'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 IdentityBag class >> contentsClass [
 	^IdentityDictionary
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 IdentityBag >> asSet [
 	^contents keys asIdentitySet
 ]

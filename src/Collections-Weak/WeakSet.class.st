@@ -6,15 +6,17 @@ Implementation.
 	flag is a special object that indicates that at a given slot the set has a free entry.
 "
 Class {
-	#name : #WeakSet,
-	#superclass : #Set,
+	#name : 'WeakSet',
+	#superclass : 'Set',
 	#instVars : [
 		'flag'
 	],
-	#category : #'Collections-Weak-Base'
+	#category : 'Collections-Weak-Base',
+	#package : 'Collections-Weak',
+	#tag : 'Base'
 }
 
-{ #category : #adding }
+{ #category : 'adding' }
 WeakSet >> add: newObject [
 	"Include newObject as one of the receiver's elements, but only if
 	not already present. Answer newObject"
@@ -26,7 +28,7 @@ WeakSet >> add: newObject [
 	^newObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WeakSet >> anyOne [
 	"First we will try to return any real object which is not garbage collected. It will skip all slots with flag. In case when everything is garbage collected we will return nil. WeakSet is not empty in this case (isEmpty will return false). So we should not signal any error"
 	| result |
@@ -36,7 +38,7 @@ WeakSet >> anyOne [
 		ifFalse: [ result ]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 WeakSet >> asArray [
 
 	| newArray |
@@ -48,7 +50,7 @@ WeakSet >> asArray [
 	^ newArray asArray
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 WeakSet >> collect: aBlock [
 
 	| newSet |
@@ -61,7 +63,7 @@ WeakSet >> collect: aBlock [
 	^newSet
 ]
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 WeakSet >> do: aBlock [
 
 	tally = 0 ifTrue: [ ^self ].
@@ -71,7 +73,7 @@ WeakSet >> do: aBlock [
 				aBlock value: object enclosedElement] ] ]
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 WeakSet >> do: aBlock after: anElement [
 
 	| startIndex |
@@ -85,7 +87,7 @@ WeakSet >> do: aBlock after: anElement [
 				aBlock value: object enclosedElement] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WeakSet >> fixCollisionsFrom: start [
 	"The element at start has been removed and replaced by flag.
 	This method moves forward from there, relocating any entries
@@ -106,7 +108,7 @@ WeakSet >> fixCollisionsFrom: start [
 						at: index put: flag ] ] ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WeakSet >> grow [
 	"Grow the elements array if needed.
 	Since WeakSets just nil their slots, alot of the occupied (in the eyes of the set) slots are usually 	empty. Doubling size if unneeded can lead to BAD performance, therefore we see if reassigning 	the <live> elements to a Set of similiar size leads to a sufficiently (50% used here) empty set first.
@@ -119,7 +121,7 @@ WeakSet >> grow [
 		ifTrue: [ self growTo: (HashTableSizes atLeast: 2 * array size) ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WeakSet >> growTo: anInteger [
 	"Grow the elements array and reinsert the old elements"
 
@@ -129,7 +131,7 @@ WeakSet >> growTo: anInteger [
 	self noCheckNoGrowFillFrom: oldElements
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WeakSet >> includes: anObject [
 
 	^(array at: (self scanFor: anObject))
@@ -137,7 +139,7 @@ WeakSet >> includes: anObject [
 		ifNotNil: [ :object | object ~~ flag ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 WeakSet >> initialize: n [
 	"Initialize array to an array size of n"
 
@@ -147,7 +149,7 @@ WeakSet >> initialize: n [
 	tally := 0
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 WeakSet >> isHealthy [
 	"Test that object hashes match their positions stored in set's array,
 	answer true if everything ok, false otherwise
@@ -162,7 +164,7 @@ WeakSet >> isHealthy [
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WeakSet >> like: anObject [
 	"Answer an object in the receiver that is equal to anObject,
 	nil if no such object is found. Relies heavily on hash properties"
@@ -172,7 +174,7 @@ WeakSet >> like: anObject [
 		ifFalse: [ element enclosedElement]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 WeakSet >> like: anObject ifAbsent: aBlock [
 	"Answer an object in the receiver that is equal to anObject,
 	or evaluate the block if not found. Relies heavily on hash properties"
@@ -183,7 +185,7 @@ WeakSet >> like: anObject ifAbsent: aBlock [
 		ifFalse: [ element enclosedElement ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WeakSet >> noCheckNoGrowFillFrom: anArray [
 	"Add the elements of anArray except nils and flag to me assuming that I don't contain any of them, they are unique and I have more free space than they require."
 
@@ -197,7 +199,7 @@ WeakSet >> noCheckNoGrowFillFrom: anArray [
 				tally := tally + 1 ] ] ]
 ]
 
-{ #category : #copying }
+{ #category : 'copying' }
 WeakSet >> postCopy [
 	| oldFlag |
 	super postCopy.
@@ -206,7 +208,7 @@ WeakSet >> postCopy [
 	array replaceAll: oldFlag with: flag
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 WeakSet >> printElementsOn: aStream [
 	| oldPos |
 	aStream nextPut: $(.
@@ -216,12 +218,12 @@ WeakSet >> printElementsOn: aStream [
 	aStream nextPut: $)
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WeakSet >> rehash [
 	self growTo: array size
 ]
 
-{ #category : #removing }
+{ #category : 'removing' }
 WeakSet >> remove: oldObject ifAbsent: aBlock [
 
 	| index |
@@ -233,7 +235,7 @@ WeakSet >> remove: oldObject ifAbsent: aBlock [
 	^oldObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WeakSet >> scanFor: anObject [
 	"Scan the key array for the first slot containing either flag (indicating an empty slot) or an element that matches anObject. Answer the index of that slot or raise an error if no slot is found. This method will be overridden in various subclasses that have different interpretations for matching elements."
 
@@ -247,7 +249,7 @@ WeakSet >> scanFor: anObject [
 	self errorNoFreeSpace
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WeakSet >> scanForEmptySlotFor: aKey [
 	"Scan the key array for the first slot containing an empty slot (indicated by flag or a nil). Answer the index of that slot. This method will be overridden in various subclasses that have different interpretations for matching elements."
 
@@ -260,7 +262,7 @@ WeakSet >> scanForEmptySlotFor: aKey [
 	self errorNoFreeSpace
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WeakSet >> scanForLoadedSymbol: anObject [
 	"Scan the key array for the first slot containing either a nil (indicating an empty slot) or an element that matches anObject. Answer the index of that slot or zero if no slot is found. This method will be overridden in various subclasses that have different interpretations for matching elements"
 
@@ -282,7 +284,7 @@ WeakSet >> scanForLoadedSymbol: anObject [
 	^ 0  "No match AND no empty slot"
 ]
 
-{ #category : #public }
+{ #category : 'public' }
 WeakSet >> slowSize [
 	"Careful! Answer the maximum amount
 	of elements in the receiver, not the

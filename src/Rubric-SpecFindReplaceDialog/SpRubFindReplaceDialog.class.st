@@ -2,8 +2,8 @@
 I am a Spec dialog used for find & replace service. I am currently partly dependent on Morphic backend because of more user friendly keyboard manipulation.
 "
 Class {
-	#name : #SpRubFindReplaceDialog,
-	#superclass : #SpPresenter,
+	#name : 'SpRubFindReplaceDialog',
+	#superclass : 'SpPresenter',
 	#instVars : [
 		'service',
 		'findInput',
@@ -19,84 +19,86 @@ Class {
 		'replaceTextInput',
 		'replaceLabel'
 	],
-	#category : #'Rubric-SpecFindReplaceDialog'
+	#category : 'Rubric-SpecFindReplaceDialog',
+	#package : 'Rubric-SpecFindReplaceDialog'
 }
 
-{ #category : #layout }
+{ #category : 'layout' }
 SpRubFindReplaceDialog class >> defaultLayout [
+
 	<spec>
 	^ SpBoxLayout newVertical
-		add: #findInput expand: false;
-		add: (SpGridLayout new
-			beColumnHomogeneous;
-			beRowHomogeneous;
-			add: #regExpCheckBox at: 1@1;
-			add: #backwardsCheckBox at: 2@1;
-			add: #caseCheckBox at: 1@2;
-			add: #wrapCheckBox at: 2@2;
-			add: #entireCheckBox at: 1@3;
-			yourself);
-		addLast: (SpBoxLayout newHorizontal
-			borderWidth: 5;
-			spacing: 5;
-			add: #replaceLabel  expand: false fill: false padding: 0;
-			add: #replaceTextInput;
-			yourself);
-		"addLast: (SpBoxLayout newHorizontal
+		  add: #findInput expand: false;
+		  add: (SpGridLayout new
+				   beColumnHomogeneous;
+				   beRowHomogeneous;
+				   add: #regExpCheckBox atPoint: 1 @ 1;
+				   add: #backwardsCheckBox atPoint: 2 @ 1;
+				   add: #caseCheckBox atPoint: 1 @ 2;
+				   add: #wrapCheckBox atPoint: 2 @ 2;
+				   add: #entireCheckBox at: 1 @ 3;
+				   yourself);
+		  addLast: (SpBoxLayout newHorizontal
+				   borderWidth: 5;
+				   spacing: 5;
+				   add: #replaceLabel
+				   expand: false
+				   fill: false
+				   padding: 0;
+				   add: #replaceTextInput;
+				   yourself);
+		  "addLast: (SpBoxLayout newHorizontal
 			borderWidth: 3;
 			spacing: 5;
 			add: #findButton;
 			add: #replaceButton;
 			add: #replaceAllButton;
 			add: #cancelButton);"
-		yourself
+			  yourself
 ]
 
-{ #category : #'morphic dependencies' }
+{ #category : 'morphic dependencies' }
 SpRubFindReplaceDialog >> assignEnterKeystrokeEventFor: aPresenter [
-
 	"Morphic dependent!"
 
-	aPresenter whenBuiltDo: [ :this | this widget announcer when: RubReturnEntered do: [ :ann |
-		self find ] ]
+	aPresenter whenBuiltDo: [ :this | this widget announcer when: RubReturnEntered do: [ :ann | self find ] for: self ]
 ]
 
-{ #category : #'morphic dependencies' }
+{ #category : 'morphic dependencies' }
 SpRubFindReplaceDialog >> closeWindowOnEscIn: aPresenter [
-
 	"Morphic dependent!"
 
-	aPresenter whenBuiltDo: [ :this | this widget announcer when: RubKeystroke do: [ :ann |
-		ann event keyCharacter = Character escape ifTrue: [ self window triggerCancelAction ] ] ]
+	aPresenter whenBuiltDo: [ :this |
+		this widget announcer when: RubKeystroke do: [ :ann | ann event keyCharacter = Character escape ifTrue: [ self window triggerCancelAction ] ] for: self ]
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 SpRubFindReplaceDialog >> find [
 	self updateService.
 	service find
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpRubFindReplaceDialog >> findButton [
 	^ findButton
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpRubFindReplaceDialog >> findButton: anObject [
 	findButton := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpRubFindReplaceDialog >> findInput [
 	^ findInput
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpRubFindReplaceDialog >> findInput: anObject [
 	findInput := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpRubFindReplaceDialog >> initializeDialogWindow: aDialogWindowPresenter [
 
 	findButton := aDialogWindowPresenter addButton: 'Find' do: [ :presenter |
@@ -122,7 +124,7 @@ SpRubFindReplaceDialog >> initializeDialogWindow: aDialogWindowPresenter [
 	aDialogWindowPresenter whenClosedDo: [ service findText: ''. service discardDialog ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpRubFindReplaceDialog >> initializePresenters [
 	findInput := self newTextInput autoAccept: true; placeholder: 'Text to find'.
 
@@ -152,15 +154,12 @@ SpRubFindReplaceDialog >> initializePresenters [
 		add: entireCheckBox
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpRubFindReplaceDialog >> newReplacement [
-	| t |
-	(t := replaceTextInput text asString) ifEmpty: [^ self ].
-
 	service replaceText: replaceTextInput text asString
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 SpRubFindReplaceDialog >> replace [
 	self updateService.
 	self newReplacement.
@@ -168,42 +167,42 @@ SpRubFindReplaceDialog >> replace [
 	service find
 ]
 
-{ #category : #operations }
+{ #category : 'operations' }
 SpRubFindReplaceDialog >> replaceAll [
 	self updateService.
 	self newReplacement.
 	service replaceAll
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpRubFindReplaceDialog >> service [
 	^ service
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpRubFindReplaceDialog >> service: anObject [
 	service := anObject
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpRubFindReplaceDialog >> setModelBeforeInitialization: aService [
 
 	service := aService
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SpRubFindReplaceDialog >> title [
 
 	^ 'Find & Replace'
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpRubFindReplaceDialog >> updateFindText [
 
 	service findText: self findInput text asString
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SpRubFindReplaceDialog >> updateFromModel [
 
 	findInput text: (self service findText
@@ -211,7 +210,7 @@ SpRubFindReplaceDialog >> updateFromModel [
 		ifNotEmpty: [ :aText | aText asString lines first ])
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SpRubFindReplaceDialog >> updateService [
 
 	service caseSensitive: caseCheckBox state.

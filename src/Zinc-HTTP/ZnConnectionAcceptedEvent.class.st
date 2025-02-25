@@ -2,28 +2,31 @@
 ZnConnectionAcceptedEvent is signalled when an HTTP server accepts an incoming connection from a client at address.
 "
 Class {
-	#name : #ZnConnectionAcceptedEvent,
-	#superclass : #ZnServerLogEvent,
+	#name : 'ZnConnectionAcceptedEvent',
+	#superclass : 'ZnServerLogEvent',
 	#instVars : [
 		'address'
 	],
-	#category : #'Zinc-HTTP-Logging'
+	#category : 'Zinc-HTTP-Logging',
+	#package : 'Zinc-HTTP',
+	#tag : 'Logging'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConnectionAcceptedEvent >> address [
 	^ address
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ZnConnectionAcceptedEvent >> address: anObject [
 	address := anObject
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnConnectionAcceptedEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream << ' Connection Accepted '.
+	stream << 'Connection Accepted'.
 	address ifNotNil: [
+		stream space.
 		address do: [ :each | stream print: each ] separatedBy: [ stream nextPut: $. ] ]
 ]

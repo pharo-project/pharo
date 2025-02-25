@@ -35,8 +35,8 @@ type
 
 "
 Class {
-	#name : #SettingDeclaration,
-	#superclass : #PragmaSetting,
+	#name : 'SettingDeclaration',
+	#superclass : 'PragmaSetting',
 	#instVars : [
 		'getSelector',
 		'setSelector',
@@ -48,16 +48,18 @@ Class {
 		'UniqueObject',
 		'ValueListCache'
 	],
-	#category : #'System-Settings-Core-Base'
+	#category : 'System-Settings-Core-Base',
+	#package : 'System-Settings-Core',
+	#tag : 'Base'
 }
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 SettingDeclaration class >> initialize [
 
 	UniqueObject := Object new
 ]
 
-{ #category : #'icon accessing' }
+{ #category : 'icon accessing' }
 SettingDeclaration class >> nullifyForm [
 	^ (Form
 	extent: 16@16
@@ -66,7 +68,7 @@ SettingDeclaration class >> nullifyForm [
 	offset: 0@0)
 ]
 
-{ #category : #'icon accessing' }
+{ #category : 'icon accessing' }
 SettingDeclaration class >> smallCautionForm [
 	^ (Form
 	extent: 16@16
@@ -75,19 +77,19 @@ SettingDeclaration class >> smallCautionForm [
 	offset: 0@0)
 ]
 
-{ #category : #'cache accessing' }
+{ #category : 'cache accessing' }
 SettingDeclaration class >> valueListCache [
 	^ ValueListCache ifNil: [ValueListCache := WeakKeyDictionary new]
 ]
 
-{ #category : #'cache accessing' }
+{ #category : 'cache accessing' }
 SettingDeclaration class >> valueListFor: aSettingValue [
 	| targetEntry |
 	targetEntry := self valueListCache at: aSettingValue settingReceiver ifAbsentPut: [IdentityDictionary new].
 	^ targetEntry at: aSettingValue getSelector ifAbsentPut: [OrderedCollection new]
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SettingDeclaration >> = other [
 	self class = other class
 		ifFalse: [^ false].
@@ -98,12 +100,12 @@ SettingDeclaration >> = other [
 	^ true
 ]
 
-{ #category : #visitor }
+{ #category : 'visitor' }
 SettingDeclaration >> acceptSettings: aVisitor [
 	^ aVisitor visitSettingDeclaration: self
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> addToList: anItem [
 	(self list includes: anItem)
 		ifFalse: [self list size > self maxKept
@@ -112,18 +114,20 @@ SettingDeclaration >> addToList: anItem [
 			self changed: #list]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingDeclaration >> default [
+
 	^ default
+		ifNil: [ default := self findDeclarationDefault ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingDeclaration >> default: anObject [
 	"initialize the default value"
 	default := anObject
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> defaultIcon [
 	^ (self type = #LogicalFont
 		or: [ self realValue isKindOf: AbstractFont ])
@@ -131,81 +135,94 @@ SettingDeclaration >> defaultIcon [
 		ifFalse: [ self iconNamed: #smallPaint ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingDeclaration >> defaultValue [
 	^ default value
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> emptyList [
 	self list removeAll.
 	self value ifNotNil: [self addToList: self realValue]
 ]
 
-{ #category : #export }
+{ #category : 'export' }
 SettingDeclaration >> exportSettingAction [
-	| targetSymbol currentValue |
+	"Export settings for those configured with a target <Symbol>. Otherwise we ignore the export for now"
 
-	targetSymbol := self target isSymbol
-						ifTrue: [ self target ]
-						ifFalse: [ self target name asSymbol ].
-
-	currentValue := self targetSelector
-						ifNil: [ (Smalltalk at: targetSymbol) perform: self getSelector ]
-						ifNotNil: [:s | ((Smalltalk at: targetSymbol) perform: s) perform: self getSelector].
-
-	^ (self hasDefault not or: [ (self default = currentValue) not ])
-		ifTrue: [ self startupAction ]
-		ifFalse: [ "We do nothing" nil ]
+	^ (self targetSymbolOrObject isSymbol and: [
+		   self hasDefault not or: [
+			   self default ~= self findCurrentSettingValue ] ])
+		  ifTrue: [ self startupAction ]
+		  ifFalse: [ "We do nothing" nil ]
 ]
 
-{ #category : #accessing }
+{ #category : 'export' }
+SettingDeclaration >> findCurrentSettingValue [
+
+	| targetSymbolOrObject |
+	targetSymbolOrObject := self targetSymbolOrObject.
+	^ self targetSelector
+		ifNil: [ (Smalltalk at: targetSymbolOrObject) perform: self getSelector ]
+		ifNotNil: [ : s | ((Smalltalk at: targetSymbolOrObject) perform: s) perform: self getSelector].
+]
+
+{ #category : 'accessing' }
+SettingDeclaration >> findDeclarationDefault [
+	"Answer a default object according to the receiver's type"
+	
+	^ self typeClass 
+		ifNotNil: [ : tClass | tClass settingDeclarationDefault ]
+		ifNil: [ String empty ]
+]
+
+{ #category : 'accessing' }
 SettingDeclaration >> getSelector [
 	^ getSelector ifNil: [self name]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingDeclaration >> getSelector: aSymbol [
 	getSelector := aSymbol
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingDeclaration >> ghostHelp [
 	^ ghostHelp
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingDeclaration >> ghostHelp: aString [
 	ghostHelp := aString
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SettingDeclaration >> hasDefault [
 	^ default ~~ UniqueObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SettingDeclaration >> hasDefaultValue [
 
 	^ self preferenceValue = self defaultValue
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> hasEditableList [
 	^ (self realValue isKindOf: Boolean) not
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> hasPrivateListener [
 	^ self hasActionForEvent: self privateChangeEvent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingDeclaration >> hasValue [
 	^ true
 ]
 
-{ #category : #comparing }
+{ #category : 'comparing' }
 SettingDeclaration >> hash [
 	"hash is re-implemented because #= is re-implemented"
 	^ self target hash
@@ -213,7 +230,7 @@ SettingDeclaration >> hash [
 				bitXor: (self getSelector hash bitXor: self setSelector hash))
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> index [
 	^ self list
 		indexOf: self realValue
@@ -223,12 +240,12 @@ SettingDeclaration >> index [
 					self list size]]
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> index: anInteger [
 	self realValue: (self list at: anInteger)
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 SettingDeclaration >> initialize [
 
 	super initialize.
@@ -236,7 +253,7 @@ SettingDeclaration >> initialize [
 	default := UniqueObject
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> inputMorphFor: aContainer [
 	^ (super inputMorphFor: aContainer)
 		ifNotNil: [:im |
@@ -245,25 +262,26 @@ SettingDeclaration >> inputMorphFor: aContainer [
 				im]
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> inputWidget [
 	"return the default widget for the input a the setting"
 	| inputWidget xtraDialogWidget |
 	xtraDialogWidget := super inputWidget.
 	inputWidget :=  self localInputWidgetSelector ifNotNil: [:localSel | self perform: localSel].
-	(inputWidget isNil and: [self typeClass notNil])
-		ifTrue: [inputWidget := (self inputWidgetSelectorInClass: self typeClass)
-			ifNotNil: [:selector | self typeClass perform: selector with: self]].
-	inputWidget
-		ifNotNil: [(inputWidget respondsTo: #model:)
-		  ifTrue: [inputWidget model ifNil: [inputWidget model: self]]].
+	
+	(inputWidget isNil and: [self typeClass isNotNil])
+		ifTrue: [ inputWidget := self typeClass settingInputWidgetForNode: self ].
+
+	(inputWidget notNil and: [ inputWidget respondsTo: #model: ])
+		ifTrue: [ inputWidget model ifNil: [ inputWidget model: self ] ].
+
 	xtraDialogWidget
 		ifNotNil: [inputWidget := inputWidget ifNil: [xtraDialogWidget]
 			ifNotNil: [ self theme  newRowIn: self for: {inputWidget. xtraDialogWidget}]].
 	^ inputWidget
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> inputWidgetForBoolean [
 	^  self theme
 			newCheckboxIn: self
@@ -275,7 +293,7 @@ SettingDeclaration >> inputWidgetForBoolean [
 			help: nil
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> inputWidgetForColor [
 	^ (
 	 self theme
@@ -287,13 +305,13 @@ SettingDeclaration >> inputWidgetForColor [
 		help: 'Choose a color') minWidth: 150; width: 150; yourself
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> inputWidgetForDirectory [
 
 	^ self inputWidgetForFileOrDirectoryWithAction: #chooseFileDirectory
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> inputWidgetForFileOrDirectoryWithAction: aSymbol [
 	| list button |
 	list := EditableDropListMorph
@@ -329,7 +347,7 @@ SettingDeclaration >> inputWidgetForFileOrDirectoryWithAction: aSymbol [
 			button}
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> inputWidgetForFont [
 	^ (self theme
 		newButtonIn: self
@@ -342,7 +360,7 @@ SettingDeclaration >> inputWidgetForFont [
 		help: 'Choose a font ...' translated) cornerStyle: #square
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> inputWidgetForLabel [
 	| widget |
 	widget := self theme newLabelIn: self for: self label: '' getEnabled: nil.
@@ -351,12 +369,12 @@ SettingDeclaration >> inputWidgetForLabel [
 	^ widget
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> inputWidgetForNumber [
 	^ self inputWidgetForString width: 200
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> inputWidgetForPassword [
 	| widget |
 	widget :=  self theme
@@ -375,12 +393,12 @@ SettingDeclaration >> inputWidgetForPassword [
 	^ widget
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> inputWidgetForPoint [
 	^ self inputWidgetForString width: 200
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> inputWidgetForString [
 	| widget |
 	widget := EditableDropListMorph
@@ -400,25 +418,25 @@ SettingDeclaration >> inputWidgetForString [
 	^ widget
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> inputWidgetSelectorInClass: aClass [
 	| selector |
 	^ (aClass respondsTo: (selector := #settingInputWidgetForNode:))
 		ifTrue: [selector]
 ]
 
-{ #category : #export }
+{ #category : 'export' }
 SettingDeclaration >> isExportable [
 
 	^ true
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> list [
 	^ self class valueListFor: self
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> listenersForEvent: anEvent [
 	| listeners actionSequence |
 	listeners := Set new.
@@ -431,20 +449,20 @@ SettingDeclaration >> listenersForEvent: anEvent [
 	^ listeners
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> localInputWidgetSelector [
 	| imSel |
 	^ (self respondsTo: (imSel := ('inputWidgetFor' , self type) asSymbol)) ifTrue: [imSel]
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> maxKept [
 	"maximum number of old values which are kept in
 	list instance variable"
 	^ 5
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> maxNameWidthForFont: aFont [
 	| max |
 	max := 0.
@@ -453,23 +471,23 @@ SettingDeclaration >> maxNameWidthForFont: aFont [
 	^ max
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> preferenceValue [
 	^ self realValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingDeclaration >> privateChangeEvent [
 	^ #privateSettingValueChanged
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> privateForget: aReceiver [
 	"do not notify aReceiver anymore"
 	self removeActionsWithReceiver: aReceiver forEvent: self privateChangeEvent
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> privateForget: aReceiver selector: aSelector [
 	"Private"
 	self
@@ -478,12 +496,12 @@ SettingDeclaration >> privateForget: aReceiver selector: aSelector [
 		forEvent: self privateChangeEvent
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> privateListeners [
 	^ self listenersForEvent: self privateChangeEvent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingDeclaration >> realValue [
 	"Answer the value of realValue"
 
@@ -492,36 +510,37 @@ SettingDeclaration >> realValue [
 			self settingReceiver perform: self getSelector]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingDeclaration >> realValue: anObject [
 	"Set the value of realValue"
 	self settingReceiver perform: self setSelector with: anObject.
 	self triggerEvent: self privateChangeEvent with: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingDeclaration >> selector: aSymbol [
+
 	self getSelector: aSymbol.
-	self setSelector: (aSymbol, ':') asSymbol
+	self setSelector: aSymbol asMutator
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingDeclaration >> setSelector [
 	^ setSelector ifNil: [self getSelector ifNotNil: [:gs | (gs, ':') asSymbol]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingDeclaration >> setSelector: aSymbol [
 	setSelector := aSymbol
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> setToDefault [
 
 	self realValue: self defaultValue
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> settingStoreOn: aStream [
 	aStream tab;
 		nextPutAll: (self target isSymbol
@@ -536,54 +555,63 @@ SettingDeclaration >> settingStoreOn: aStream [
 		 cr
 ]
 
-{ #category : #export }
+{ #category : 'export' }
 SettingDeclaration >> startupAction [
-	"I assume here that the receiver is always a class"
+	"Assume that the receiver is always a class"
 
-	 | targetSymbol currentValue |
-
-	targetSymbol := self target isSymbol
-						ifTrue: [ self target ]
-						ifFalse: [ self target name asSymbol ].
-
-	currentValue := self targetSelector
-						ifNil: [ (Smalltalk at: targetSymbol) perform: self getSelector ]
-						ifNotNil: [:s | ((Smalltalk at: targetSymbol) perform: s) perform: self getSelector].
 	^ StartupAction
 		name: self label
-		code: (String streamContents: [:s |
-					self targetSelector ifNotNil: [ s << '(' ].
-					s << '(Smalltalk at: '.
-					targetSymbol asSymbol printOn: s.
-					self targetSelector ifNotNil: [:ts | s << ') perform: '. ts printOn: s ].
-					s << ') perform: '.
-					self setSelector asSymbol printOn: s.
-					s << ' with: ('.
-					currentValue settingStoreOn: s.
-					s <<')' ])
+		code: self startupActionCode
 		runOnce: true
 ]
 
-{ #category : #accessing }
+{ #category : 'export' }
+SettingDeclaration >> startupActionCode [
+
+	| currentValue |
+	currentValue := self findCurrentSettingValue.
+	^ String streamContents: [ :s |
+		  self targetSelector ifNotNil: [ s << '(' ].
+		  s << '(Smalltalk at: '.
+		  self targetSymbolOrObject asSymbol printOn: s.
+		  self targetSelector ifNotNil: [ :ts |
+			  s << ') perform: '.
+			  ts printOn: s ].
+		  s << ') perform: '.
+		  self setSelector asSymbol printOn: s.
+		  s << ' with: ('.
+		  currentValue settingStoreOn: s.
+		  s << ')' ]
+]
+
+{ #category : 'export' }
+SettingDeclaration >> targetSymbolOrObject [
+
+	^ self target isSymbol
+		  ifTrue: [ self target ]
+		  ifFalse: [ self target exportSettingAction ]
+]
+
+{ #category : 'accessing' }
 SettingDeclaration >> type [
 	"Answer the value of type"
 
 	^ type ifNil: [type := self realValue class name]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingDeclaration >> type: anObject [
 	"Set the value of type"
 
 	type := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SettingDeclaration >> typeClass [
 	^ Smalltalk globals at: self type ifAbsent: [  ]
 ]
 
-{ #category : #'user interface' }
+{ #category : 'user interface' }
 SettingDeclaration >> whenPrivateChangedSend: zeroOrOneArgSelector to: aSubscriber [
 	"private, use #whenChangedSend:to: instead"
 	self

@@ -1,1 +1,1 @@
-Package { #name : #'Ombu-Tests' }
+Package { #name : 'Ombu-Tests' }

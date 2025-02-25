@@ -1,10 +1,11 @@
 Class {
-	#name : #EqFruitComparisonTest,
-	#superclass : #TestCase,
-	#category : #'Equals-Tests'
+	#name : 'EqFruitComparisonTest',
+	#superclass : 'TestCase',
+	#category : 'Equals-Tests',
+	#package : 'Equals-Tests'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 EqFruitComparisonTest >> testComparisonfOfApplesOfDifferentColorsShouldNotBeEquals [
 	| apple1 apple2 |
 	
@@ -14,7 +15,7 @@ EqFruitComparisonTest >> testComparisonfOfApplesOfDifferentColorsShouldNotBeEqua
 	self deny: apple1 equals: apple2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EqFruitComparisonTest >> testComparisonfOfApplesOfSameColorAtDifferentStagesShouldNotBeEquals [
 	| apple1 apple2 |
 	
@@ -26,7 +27,7 @@ EqFruitComparisonTest >> testComparisonfOfApplesOfSameColorAtDifferentStagesShou
 	self deny: apple1 equals: apple2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EqFruitComparisonTest >> testComparisonfOfApplesOfSameColorShouldBeEquals [
 	| apple1 apple2 |
 	
@@ -36,7 +37,7 @@ EqFruitComparisonTest >> testComparisonfOfApplesOfSameColorShouldBeEquals [
 	self assert: apple1 equals: apple2
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EqFruitComparisonTest >> testComparisonfOfYellowAppleAndBananaShouldNotBeEquals [
 	| apple banana |
 	

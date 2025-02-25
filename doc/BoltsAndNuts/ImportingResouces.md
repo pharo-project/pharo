@@ -4,9 +4,9 @@
 
 Non trivial applications often rely on resources that may be externally provided such as icons, pictures, sounds. Such resources are typically defined as external files. Naturally, you can make your application depends on external files, however, importing resource files within the Pharo image and make it integrally part of you code has a number of advantages:
 
-- you can simply deploy your application by downloading it from git. 
-- having less dependencies on external files is always good to avoid technical subtilities such as file path containing weird characters.
- 
+- you can simply deploy your application by downloading it from git.
+- having less dependencies on external files is always good to avoid technical subtleties such as file path containing weird characters.
+
 ## Encoding and Decoding
 
 The basic mechanism to encode and decode data is provided by the class `Base64MimeConverter`. 
@@ -22,13 +22,13 @@ mimeEncoded := 'Hello World' asByteArray base64Encoded.
 
 The variable `mimeEncoded` contains an encoding of the Hello World string using the mime64 encoding. 
 The method `mimeDecodeToBytes:` reads mime64 strings from a stream. The example uses a string, but it could refers to any objects. You essentially need a `ReadStream`.
- 
+
 ## Encoding and Decoding Image
 
 Embedding pictures in plain source code is often the reason why one need to encode resources. The following script loads an image located in the filesystem, create a string-friendly representation, and store it in a method. 
 
-
 #### Reading a PNG
+
 You probably want to keep the image in a variable or a hash table.
 
 ```st
@@ -43,7 +43,8 @@ PNGReadWriter putForm: form onStream: w.
 w contents.
 ```
 
-#### Convert the byteArray into mime 64. 
+#### Convert the byteArray into mime 64
+
 It takes less space in the image
 
 ```st
@@ -73,4 +74,3 @@ The following expression returns the image initially encoded.
 ```st
 Object new image 
 ```
-

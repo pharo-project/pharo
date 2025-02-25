@@ -1,15 +1,17 @@
 Class {
-	#name : #ClyGroupedExtendingPackagesTest,
-	#superclass : #ClyQueryNavigationResultTest,
-	#category : #'Calypso-SystemQueries-Tests-Results'
+	#name : 'ClyGroupedExtendingPackagesTest',
+	#superclass : 'ClyQueryNavigationResultTest',
+	#category : 'Calypso-SystemQueries-Tests-Results',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Results'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyGroupedExtendingPackagesTest >> createQueryResult [
 	^ClyGroupedExtendingPackagesResult new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyGroupedExtendingPackagesTest >> testFillingWithEmptyList [
 
 	queryResult fillWith: #().
@@ -17,7 +19,7 @@ ClyGroupedExtendingPackagesTest >> testFillingWithEmptyList [
 	self assert: queryResult size equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyGroupedExtendingPackagesTest >> testFillingWithOnePackage [
 
 	| group |
@@ -31,7 +33,7 @@ ClyGroupedExtendingPackagesTest >> testFillingWithOnePackage [
 		equals: (ClyPackageExtensionMethodsQuery of: ClyClass1FromP1Mock package from: query scope)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyGroupedExtendingPackagesTest >> testFillingWithThreePackages [
 
 	| groups |

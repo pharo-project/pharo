@@ -4,32 +4,40 @@ I decorate table with special icon for classes which has no comment.
 I add this icon as an extra tool of table cell. So it do not override and do not overridden by other decorators.
 "
 Class {
-	#name : #ClyUncommentedItemTableDecorator,
-	#superclass : #ClyTableDecorator,
-	#category : #'Calypso-SystemTools-Core-TableDecorators'
+	#name : 'ClyUncommentedItemTableDecorator',
+	#superclass : 'ClyTableDecorator',
+	#category : 'Calypso-SystemTools-Core-TableDecorators',
+	#package : 'Calypso-SystemTools-Core',
+	#tag : 'TableDecorators'
 }
 
-{ #category : #decoration }
+{ #category : 'decoration' }
+ClyUncommentedItemTableDecorator class >> balloonText [
+
+	^ 'There is no comment!'
+]
+
+{ #category : 'decoration' }
 ClyUncommentedItemTableDecorator class >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
 	| noCommentWarn |
 	super decorateMainTableCell: anItemCellMorph of: aDataSourceItem.
 
 	noCommentWarn := anItemCellMorph addExtraIcon: #uncommentedClass.
-	noCommentWarn setBalloonText: 'There is no comment!'
+	noCommentWarn setBalloonText: self balloonText
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyUncommentedItemTableDecorator class >> decorateTableCell: anItemCellMorph of: aDataSourceItem [
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyUncommentedItemTableDecorator class >> decorationStrategy [
 	<classAnnotation>
 
 	^ClyTableDecorationStrategyAnnotation for: ClyClass asCalypsoItemContext
 ]
 
-{ #category : #decoration }
+{ #category : 'decoration' }
 ClyUncommentedItemTableDecorator class >> wantsDecorateTableCellOf: aDataSourceItem [
 	^aDataSourceItem isMarkedWith: ClyNoCommentTag
 ]

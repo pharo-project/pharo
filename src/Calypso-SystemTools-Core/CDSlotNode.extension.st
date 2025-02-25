@@ -1,6 +1,6 @@
-Extension { #name : #CDSlotNode }
+Extension { #name : 'CDSlotNode' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 CDSlotNode >> asCalypsoVariableOf: aClass [
 
 	| actualClass |

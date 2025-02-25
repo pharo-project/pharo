@@ -2,15 +2,17 @@
 FreeType externalMemory 
 "
 Class {
-	#name : #FreeTypeExternalMemory,
-	#superclass : #FT2Handle,
+	#name : 'FreeTypeExternalMemory',
+	#superclass : 'FT2Handle',
 	#instVars : [
 		'bytes'
 	],
-	#category : #'FreeType-Base'
+	#category : 'FreeType-Base',
+	#package : 'FreeType',
+	#tag : 'Base'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FreeTypeExternalMemory class >> bytes: aByteArray [
 	^ self basicNew
 		bytes: aByteArray;
@@ -18,7 +20,7 @@ FreeTypeExternalMemory class >> bytes: aByteArray [
 		yourself
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 FreeTypeExternalMemory class >> finalizeResourceData: handle [
 
 	handle ifNil: [ ^ self ].
@@ -28,24 +30,24 @@ FreeTypeExternalMemory class >> finalizeResourceData: handle [
 	handle beNull
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 FreeTypeExternalMemory class >> new [
 	self error: 'Use #bytes:'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeExternalMemory >> bytes [
 
 	^ bytes
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FreeTypeExternalMemory >> bytes: aByteArray [
 
 	bytes := aByteArray
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 FreeTypeExternalMemory >> primCopyToExternalMemory: aByteArray [
 	"Copy aByteArray into newly allocated, external memory, and store the
 	address of that memory in the receiver's handle"
@@ -55,7 +57,7 @@ FreeTypeExternalMemory >> primCopyToExternalMemory: aByteArray [
 	aByteArray unpinInMemory
 ]
 
-{ #category : #validation }
+{ #category : 'validation' }
 FreeTypeExternalMemory >> validate [
 
 	self isValid ifTrue: [ ^ self ].

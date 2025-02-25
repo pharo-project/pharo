@@ -2,35 +2,37 @@
 I am the basic event handler for the example
 "
 Class {
-	#name : #OSWindowTouchEventHandler,
-	#superclass : #OSWindowEventVisitor,
+	#name : 'OSWindowTouchEventHandler',
+	#superclass : 'OSWindowEventVisitor',
 	#instVars : [
 		'touchExample'
 	],
-	#category : #'OSWindow-SDL2-Examples-Touch'
+	#category : 'OSWindow-SDL2-Examples-Touch',
+	#package : 'OSWindow-SDL2-Examples',
+	#tag : 'Touch'
 }
 
-{ #category : #api }
+{ #category : 'api' }
 OSWindowTouchEventHandler >> touchExample:	renderer [
 		touchExample := renderer
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowTouchEventHandler >> visitTouchPointerDownEvent: anEvent [
 	touchExample beginMove: anEvent fingerId at: anEvent position
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowTouchEventHandler >> visitTouchPointerMoveEvent: anEvent [
 	touchExample move: anEvent fingerId at: anEvent position
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowTouchEventHandler >> visitTouchPointerUpEvent: anEvent [
 	touchExample endMove: anEvent fingerId at: anEvent position
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 OSWindowTouchEventHandler >> visitWindowCloseEvent: anEvent [
 	touchExample destroy
 ]

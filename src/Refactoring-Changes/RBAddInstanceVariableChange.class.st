@@ -2,12 +2,14 @@
 I am a refactoring for a instance  variable addition. My changes are executed on the instance or class side.
 "
 Class {
-	#name : #RBAddInstanceVariableChange,
-	#superclass : #RBRefactoryVariableChange,
-	#category : #'Refactoring-Changes-Changes-Variables'
+	#name : 'RBAddInstanceVariableChange',
+	#superclass : 'RBRefactoryVariableChange',
+	#category : 'Refactoring-Changes-Changes-Variables',
+	#package : 'Refactoring-Changes',
+	#tag : 'Changes-Variables'
 }
 
-{ #category : #converting }
+{ #category : 'converting' }
 RBAddInstanceVariableChange >> asUndoOperation [
 
 	^ changeFactory
@@ -15,7 +17,7 @@ RBAddInstanceVariableChange >> asUndoOperation [
 		  from: self changeClass
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 RBAddInstanceVariableChange >> changeString [
 
 	^ 'Add instance variable <1s> to <2s>'
@@ -23,7 +25,7 @@ RBAddInstanceVariableChange >> changeString [
 		  with: self displayClassName
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RBAddInstanceVariableChange >> changeSymbol [
 
 	^ #addInstVarNamed:

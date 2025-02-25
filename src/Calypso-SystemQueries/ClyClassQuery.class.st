@@ -13,29 +13,31 @@ I provide several convenient methods to instantiate queries with hierarchical re
 In that cases instances will be created with ClyHierarchicallySortedClasses required result
 "
 Class {
-	#name : #ClyClassQuery,
-	#superclass : #ClyTypedQuery,
-	#category : #'Calypso-SystemQueries-Queries'
+	#name : 'ClyClassQuery',
+	#superclass : 'ClyTypedQuery',
+	#category : 'Calypso-SystemQueries-Queries',
+	#package : 'Calypso-SystemQueries',
+	#tag : 'Queries'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassQuery class >> hierarchical [
 
 	^self as: ClyHierarchicallySortedClassesResult new
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 ClyClassQuery class >> hierarchicalFrom: aScope [
 
 	^self from: aScope as: ClyHierarchicallySortedClassesResult new
 ]
 
-{ #category : #'items type' }
+{ #category : 'items type' }
 ClyClassQuery class >> resultItemsType [
 	^ClyClass
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyClassQuery >> buildResult: aQueryResult [
 	| filteredClasses |
 	filteredClasses := Set new.
@@ -46,7 +48,7 @@ ClyClassQuery >> buildResult: aQueryResult [
 	aQueryResult fillWith: filteredClasses
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyClassQuery >> checkEmptyResult [
 
 	scope classesDo: [ :each |
@@ -55,12 +57,12 @@ ClyClassQuery >> checkEmptyResult [
 	^true
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyClassQuery >> collectMetadataOf: aQueryResult by: anEnvironmentPlugin [
 	anEnvironmentPlugin collectMetadataOfClasses: aQueryResult
 ]
 
-{ #category : #'system changes' }
+{ #category : 'system changes' }
 ClyClassQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 
 	(scope includesClassesAffectedBy: aSystemAnnouncement) ifTrue: [ ^true ].
@@ -74,12 +76,12 @@ ClyClassQuery >> isResult: aQueryResult affectedBy: aSystemAnnouncement [
 	^false
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassQuery >> retrievesItem: aClass [
 	^self selectsClass: aClass
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyClassQuery >> selectsClass: aClass [
 	self subclassResponsibility
 ]

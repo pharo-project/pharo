@@ -53,9 +53,9 @@ If you print the result then the following will appear:
 1 run, 0 passes, 0 skipped, 0 expected failures, 0 failures, 1 errors, 0 unexpected passes
 ```
 
-This tells us that one test has been run and one error occured while testing. Currently we dont have all messages implemented - so the test has to fail. 
+This tells us that one test has been run, and one error occurred while testing. Currently, we dont have all messages implemented - so the test has to fail. 
 
-If you want to debug the test to see whats happened you can evaluate:
+If you want to debug the test to see what happened you can evaluate:
 
 ```st
 PersonTest debug: #testInstanceCreation
@@ -63,7 +63,7 @@ PersonTest debug: #testInstanceCreation
 
 ## Step 4 - Using the Testrunner
 
-Testing by evaluating an expression as we is not very convenient - so it is better to open the TestRunner - a user interface tool displaying all the tests in the system. You can start it either using the world menu or by evaluating 
+Testing by evaluating an expression is not very convenient - so it is better to open the TestRunner - a user interface tool displaying all the tests in the system. You can start it either using the world menu or by evaluating 
 
 ```st
 TestRunner open
@@ -85,9 +85,9 @@ If you click on the failed method in the lower right pane the debugger will open
 
 To get our test green we have to implement the missing methods. First the debugger tells us that the `Person` class does not understand the message `named:`. 
 
-We dont have to go back into a standard browser to implement it, we just select 'Create' in the walkback window. The system now asks us where `named:` should be defined in the inheritance hierarchy. We select the Person class and categorize the method in a new method category 'instance creation'.
+We don't have to go back into a standard browser to implement it, we just select 'Create' in the walkback window. The system now asks us where `named:` should be defined in the inheritance hierarchy. We select the Person class and categorize the method in a new method category 'instance creation'.
 
-Finally we have a debugger open where we can implement the code like this:
+Finally, we have a debugger open where we can implement the code like this:
 
 ```st
 Person class >> named: aString
@@ -110,7 +110,7 @@ Person >> firstName: aString
 	firstName := aString
 ```
 	
-At any point in time we can control if the test is already green in the TestRunner. Finally when we implement
+At any point in time we can control if the test is already green in the TestRunner. Finally, when we implement
 the missing `fullName` method by concatenating first name and surname:
 
 ```st

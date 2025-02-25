@@ -1,16 +1,18 @@
 Class {
-	#name : #ClyUnclassifiedMethodsQueryTest,
-	#superclass : #ClyMethodQueryTest,
-	#category : #'Calypso-SystemQueries-Tests-Queries'
+	#name : 'ClyUnclassifiedMethodsQueryTest',
+	#superclass : 'ClyMethodQueryTest',
+	#category : 'Calypso-SystemQueries-Tests-Queries',
+	#package : 'Calypso-SystemQueries-Tests',
+	#tag : 'Queries'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyUnclassifiedMethodsQueryTest >> createQuery [
 	^ ClyUnclassifiedMethodsQuery
 		from: (ClyClassScope of: ClyClass1FromP1Mock in: environment)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnclassifiedMethodsQueryTest >> testCheckIfEmpty [
 	query scope:(ClyMethodScope
 		of: ClyClass2FromP1Mock >> #instanceSideClassVar1Reader in: environment).
@@ -20,7 +22,7 @@ ClyUnclassifiedMethodsQueryTest >> testCheckIfEmpty [
 	self assert: query checkEmptyResult
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyUnclassifiedMethodsQueryTest >> testFromThreeMethods [
 
 	self queryFromScope: ClyMethodScope ofAll: {

@@ -1,16 +1,18 @@
 Class {
-	#name : #TextMorphTest,
-	#superclass : #ClassTestCase,
-	#category : #'Morphic-Tests-Basic'
+	#name : 'TextMorphTest',
+	#superclass : 'ClassTestCase',
+	#category : 'Morphic-Tests-Basic',
+	#package : 'Morphic-Tests',
+	#tag : 'Basic'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 TextMorphTest >> classToBeTested [
 
 	^ TextMorph
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 TextMorphTest >> testInitialize [
 	"For now, just make sure initialization doesn't throw exception"
 

@@ -1,13 +1,14 @@
 Class {
-	#name : #ClyItemFilterTest,
-	#superclass : #TestCase,
+	#name : 'ClyItemFilterTest',
+	#superclass : 'TestCase',
 	#instVars : [
 		'filter'
 	],
-	#category : #'Calypso-NavigationModel-Tests'
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyItemFilterTest class >> isAbstract [
 	^self = ClyItemFilterTest
 ]

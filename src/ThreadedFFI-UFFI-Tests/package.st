@@ -1,1 +1,1 @@
-Package { #name : #'ThreadedFFI-UFFI-Tests' }
+Package { #name : 'ThreadedFFI-UFFI-Tests' }

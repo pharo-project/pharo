@@ -1,10 +1,12 @@
 Class {
-	#name : #ClassWithAnnotationDefinedForUserSuperclass,
-	#superclass : #Object,
-	#category : #'ClassAnnotation-Tests-Examples-Annotated classes'
+	#name : 'ClassWithAnnotationDefinedForUserSuperclass',
+	#superclass : 'Object',
+	#category : 'ClassAnnotation-Tests-Examples-Annotated classes',
+	#package : 'ClassAnnotation-Tests',
+	#tag : 'Examples-Annotated classes'
 }
 
-{ #category : #annotations }
+{ #category : 'annotations' }
 ClassWithAnnotationDefinedForUserSuperclass class >> annotationExample [
 	<classAnnotation>
 

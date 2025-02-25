@@ -1,1 +1,1 @@
-Package { #name : #'Math-Operations-Extensions' }
+Package { #name : 'Math-Operations-Extensions' }

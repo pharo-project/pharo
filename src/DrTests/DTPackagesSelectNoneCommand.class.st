@@ -2,18 +2,20 @@
 I deselect all packages in the package list of DrTests.
 "
 Class {
-	#name : #DTPackagesSelectNoneCommand,
-	#superclass : #DTPackagesCommand,
-	#category : #'DrTests-Commands'
+	#name : 'DTPackagesSelectNoneCommand',
+	#superclass : 'DTPackagesCommand',
+	#category : 'DrTests-Commands',
+	#package : 'DrTests',
+	#tag : 'Commands'
 }
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 DTPackagesSelectNoneCommand class >> defaultName [
 
 	^ 'Select none'
 ]
 
-{ #category : #executing }
+{ #category : 'executing' }
 DTPackagesSelectNoneCommand >> execute [
 
 	self context selectNoneInPackageList

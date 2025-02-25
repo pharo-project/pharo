@@ -6,8 +6,8 @@ It is using a glyph renderer instance(s) to draw separate font glyphs on a surfa
 
 "
 Class {
-	#name : #AthensTextRenderer,
-	#superclass : #Object,
+	#name : 'AthensTextRenderer',
+	#superclass : 'Object',
 	#instVars : [
 		'text',
 		'font',
@@ -18,10 +18,11 @@ Class {
 		'maxAscent',
 		'currentLine'
 	],
-	#category : #'Athens-Text'
+	#category : 'Athens-Text',
+	#package : 'Athens-Text'
 }
 
-{ #category : #documentation }
+{ #category : 'documentation' }
 AthensTextRenderer class >> textGoryDetails [
 
 "
@@ -70,12 +71,12 @@ When displaying or rendering underlined text, this value corresponds to the vert
 "
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 AthensTextRenderer >> initialize [
 	color := Color black
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensTextRenderer >> render: aText lines: lines on: aCanvas [
 	text := aText.
 	canvas := aCanvas.
@@ -92,21 +93,21 @@ AthensTextRenderer >> render: aText lines: lines on: aCanvas [
 			canvas pathTransform translateX: 0 Y: line height * 1.2 - maxAscent ] ]
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensTextRenderer >> renderBackground: bkObj [
 "self halt."
 	canvas setPaint: bkObj color.
 	canvas drawShape: ( bkObj start@0 corner: bkObj start + bkObj width @ currentLine heightAndDescent)
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensTextRenderer >> renderBackground: aColor width: w [
 "self halt."
 	canvas setPaint: aColor.
 	canvas drawShape: ( advance x@0 corner: advance x + w +1@ currentLine heightAndDescent)
 ]
 
-{ #category : #rendering }
+{ #category : 'rendering' }
 AthensTextRenderer >> renderCharactersFrom: start to: stop [
 
 	" accumulate advance while rendering spans"
@@ -115,7 +116,7 @@ AthensTextRenderer >> renderCharactersFrom: start to: stop [
 	advance := advance + (glyphRenderer renderCharacters: text asString from: start to: stop)
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextRenderer >> setCurrentColor: aColor [
 	color = aColor ifTrue: [ ^ self ].
 	color := aColor.
@@ -123,7 +124,7 @@ AthensTextRenderer >> setCurrentColor: aColor [
 	glyphRenderer ifNotNil:  [ glyphRenderer setColor: aColor ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 AthensTextRenderer >> setCurrentFont: aFont [
 	font := aFont.
 	glyphRenderer := font glyphRendererOn: canvas surface.

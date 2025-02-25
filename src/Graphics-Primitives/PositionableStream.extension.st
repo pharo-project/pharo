@@ -1,6 +1,6 @@
-Extension { #name : #PositionableStream }
+Extension { #name : 'PositionableStream' }
 
-{ #category : #'*Graphics-Primitives' }
+{ #category : '*Graphics-Primitives' }
 PositionableStream >> nextWordsInto: aBitmap [
 	"Fill the word based buffer from my collection.
 	Stored on stream as Big Endian. Optimized for speed.

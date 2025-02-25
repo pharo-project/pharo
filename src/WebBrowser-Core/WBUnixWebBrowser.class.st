@@ -2,18 +2,20 @@
 Provides native access to the web browser on Unix. Do not use directly, use class WebBrowser instead.
 "
 Class {
-	#name : #WBUnixWebBrowser,
-	#superclass : #WebBrowser,
-	#category : #'WebBrowser-Core-OS-Unix'
+	#name : 'WBUnixWebBrowser',
+	#superclass : 'WebBrowser',
+	#category : 'WebBrowser-Core-OS-Unix',
+	#package : 'WebBrowser-Core',
+	#tag : 'OS-Unix'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 WBUnixWebBrowser class >> isForCurrentSystem [
 
 	^ Smalltalk os isUnix
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 WBUnixWebBrowser class >> openNativeWebBrowserOn: anURLString [
 
 	| openCommand |
@@ -21,7 +23,7 @@ WBUnixWebBrowser class >> openNativeWebBrowserOn: anURLString [
 	self system: openCommand
 ]
 
-{ #category : #'private - uffi' }
+{ #category : 'private - uffi' }
 WBUnixWebBrowser class >> system: command [
 
 	^ LibC system: command

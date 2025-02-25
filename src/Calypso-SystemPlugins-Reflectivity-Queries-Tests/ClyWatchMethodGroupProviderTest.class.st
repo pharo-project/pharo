@@ -1,30 +1,32 @@
 Class {
-	#name : #ClyWatchMethodGroupProviderTest,
-	#superclass : #ClyMethodGroupProviderTest,
+	#name : 'ClyWatchMethodGroupProviderTest',
+	#superclass : 'ClyMethodGroupProviderTest',
 	#instVars : [
 		'installedWatchpoint'
 	],
-	#category : #'Calypso-SystemPlugins-Reflectivity-Queries-Tests-Watchpoints'
+	#category : 'Calypso-SystemPlugins-Reflectivity-Queries-Tests-Watchpoints',
+	#package : 'Calypso-SystemPlugins-Reflectivity-Queries-Tests',
+	#tag : 'Watchpoints'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyWatchMethodGroupProviderTest >> classSampleWhichHasGroup [
 	^ClyMethodWatchQueryTest
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyWatchMethodGroupProviderTest >> groupProviderClass [
 	^ClyWatchMethodGroupProvider
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyWatchMethodGroupProviderTest >> setUp [
 	super setUp.
 
 	installedWatchpoint := ClyMethodWatchQueryTest new setUp; installWatchInto: #methodWithWatch
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyWatchMethodGroupProviderTest >> tearDown [
 
 	installedWatchpoint uninstall.

@@ -16,12 +16,13 @@ and DockingBarToggleMenuItemMorph is created by
 
 "
 Class {
-	#name : #DockingBarToggleMenuItemMorph,
-	#superclass : #ToggleMenuItemMorph,
-	#category : #'Morphic-Widgets-Extra'
+	#name : 'DockingBarToggleMenuItemMorph',
+	#superclass : 'ToggleMenuItemMorph',
+	#category : 'Morphic-Widgets-Extra',
+	#package : 'Morphic-Widgets-Extra'
 }
 
-{ #category : #selecting }
+{ #category : 'selecting' }
 DockingBarToggleMenuItemMorph >> adjacentTo [
 	"Adjusted to line up more nicely."
 	self owner isFloating
@@ -37,7 +38,7 @@ DockingBarToggleMenuItemMorph >> adjacentTo [
 	^ {self bounds bottomLeft + (3 @ 5)}
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DockingBarToggleMenuItemMorph >> deselectTimeOut: evt [
 	"Deselect timout. Now really deselect"
 
@@ -47,7 +48,7 @@ DockingBarToggleMenuItemMorph >> deselectTimeOut: evt [
 			owner selectItem: nil event: evt ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DockingBarToggleMenuItemMorph >> drawOn: aCanvas [
 	| stringColor stringBounds |
 	stringColor := (isSelected and: [ isEnabled ])
@@ -57,10 +58,10 @@ DockingBarToggleMenuItemMorph >> drawOn: aCanvas [
 	stringBounds := bounds.
 	stringBounds := stringBounds left: stringBounds left + 4.
 	self hasIcon
-		ifTrue: [ | iconForm |
-			iconForm := self iconForm.
-			aCanvas translucentImage: iconForm at: stringBounds left @ (self top + ((self height - iconForm height) // 2)).
-			stringBounds := stringBounds left: stringBounds left + iconForm width + 2 ].
+		ifTrue: [ | toggledIconFormSet |
+			toggledIconFormSet := self toggledIconFormSet.
+			aCanvas translucentFormSet: toggledIconFormSet at: stringBounds left @ (self top + ((self height - toggledIconFormSet height) // 2)).
+			stringBounds := stringBounds left: stringBounds left + toggledIconFormSet width + 2 ].
 	self hasMarker ifTrue: [ stringBounds := stringBounds left: stringBounds left + self submorphBounds width + 8 ].
 	stringBounds := stringBounds top: (stringBounds top + stringBounds bottom - self fontToUse height) // 2.
 	aCanvas
@@ -76,22 +77,19 @@ DockingBarToggleMenuItemMorph >> drawOn: aCanvas [
 			aCanvas paintImage: subMenuMarker at: subMenuMarkerPosition ]
 ]
 
-{ #category : #'private - drawing' }
-DockingBarToggleMenuItemMorph >> drawSubMenuMarker: aForm on: aCanvas in: aRectangle [
+{ #category : 'private - drawing' }
+DockingBarToggleMenuItemMorph >> drawSubMenuMarker: aFormSet on: aCanvas in: aRectangle [
 	"Draw the submenu marker on the canvas within the given bounds."
 
 	|markerRect|
-	markerRect := aRectangle topRight + (aForm width negated @ (aRectangle height - aForm height // 2)) extent: aForm extent.
+	markerRect := aRectangle topRight + (aFormSet width negated @ (aRectangle height - aFormSet height // 2)) extent: aFormSet extent.
 	markerRect translateBy: -4@1.
-	self drawIcon: aForm on: aCanvas in: markerRect
+	self drawIcon: aFormSet on: aCanvas in: markerRect
 ]
 
-{ #category : #accessing }
+{ #category : 'events' }
 DockingBarToggleMenuItemMorph >> mouseDown: evt [
 	"Handle a mouse down event. Menu items get activated when the mouse is over them."
-
-	(evt shiftPressed and: [self isEditable ])
-		ifTrue: [ ^ super mouseDown: evt ].  "enable label editing"
 
 	isSelected
 		ifTrue: [
@@ -102,17 +100,17 @@ DockingBarToggleMenuItemMorph >> mouseDown: evt [
 			owner selectItem: self event: evt. ]
 ]
 
-{ #category : #accessing }
+{ #category : 'events' }
 DockingBarToggleMenuItemMorph >> mouseEnter: evt [
 	"The mouse entered the receiver"
 
 	owner ifNotNil: [owner stayUp ifFalse: [self mouseEnterDragging: evt]].
-	(owner selectedItem notNil
+	(owner selectedItem isNotNil
 				and: [owner selectedItem ~~ self])
 			ifTrue: [owner selectItem: self event: evt.]
 ]
 
-{ #category : #accessing }
+{ #category : 'events' }
 DockingBarToggleMenuItemMorph >> mouseUp: evt [
 	"Handle a mouse up event. Menu items get activated when the mouse is over them. Do nothing if we're not in a 'valid menu transition', meaning that the current hand focus must be aimed at the owning menu."
 	evt hand mouseFocus == owner ifFalse: [^self].
@@ -125,7 +123,7 @@ DockingBarToggleMenuItemMorph >> mouseUp: evt [
 	self invokeWithEvent: evt
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DockingBarToggleMenuItemMorph >> noteNewOwner: aMorph [
 	"I have just been added as a submorph of aMorph"
 	super noteNewOwner: aMorph.
@@ -133,7 +131,7 @@ DockingBarToggleMenuItemMorph >> noteNewOwner: aMorph [
 	self updateLayoutInDockingBar
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DockingBarToggleMenuItemMorph >> ownerChanged [
 	"The receiver's owner, some kind of a pasteup, has changed its
 	layout."
@@ -141,7 +139,7 @@ DockingBarToggleMenuItemMorph >> ownerChanged [
 	self updateLayoutInDockingBar
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DockingBarToggleMenuItemMorph >> roundedCorners [
 	"Return a list of those corners to round"
 	owner isFloating
@@ -157,45 +155,45 @@ DockingBarToggleMenuItemMorph >> roundedCorners [
 	^ #(1 2 3 4 )
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DockingBarToggleMenuItemMorph >> selectionBorderStyle [
 	"Answer the border style to use with the receiver is the selected element."
 
 	^ self theme menuItemInDockingBarSelectedBorderStyleFor: self
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 DockingBarToggleMenuItemMorph >> selectionFillStyle [
 	"Answer the fill style to use with the receiver is the selected element."
 
 	^self theme menuItemInDockingBarSelectedFillStyleFor: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DockingBarToggleMenuItemMorph >> stringBoundsToUse [
 	"Answer the bounds to use when drawing the item text."
 
 	^self bounds left: self left + 4
 ]
 
-{ #category : #accessing }
-DockingBarToggleMenuItemMorph >> subMenuMarker [
-	"private - answer the form to be used as submenu marker"
+{ #category : 'accessing' }
+DockingBarToggleMenuItemMorph >> subMenuMarkerFormSet [
+	"private - answer the form set to be used as submenu marker"
 
 	owner isFloating
-		ifTrue: [ ^ self bottomArrow ].
+		ifTrue: [ ^ self bottomArrowFormSet ].
 	owner isAdheringToTop
-		ifTrue: [ ^ self bottomArrow ].
+		ifTrue: [ ^ self bottomArrowFormSet ].
 	owner isAdheringToBottom
-		ifTrue: [ ^ self upArrow ].
+		ifTrue: [ ^ self upArrowFormSet ].
 	owner isAdheringToLeft
-		ifTrue: [ ^ self rightArrow ].
+		ifTrue: [ ^ self rightArrowFormSet ].
 	owner isAdheringToRight
-		ifTrue: [ ^ self leftArrow ].
-	^ self rightArrow
+		ifTrue: [ ^ self leftArrowFormSet ].
+	^ self rightArrowFormSet
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DockingBarToggleMenuItemMorph >> updateLayoutInDockingBar [
 
 	owner isVertical
@@ -208,7 +206,7 @@ DockingBarToggleMenuItemMorph >> updateLayoutInDockingBar [
 	self extent: self minWidth @ self minHeight
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 DockingBarToggleMenuItemMorph >> wantsRoundedCorners [
 	^self theme currentSettings preferRoundCorner
 ]

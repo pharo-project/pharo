@@ -2,13 +2,15 @@
 This class contains tests for class `AbstractFontFamilyMember`
 "
 Class {
-	#name : #AbstractFontFamilyMemberTest,
-	#superclass : #TestCase,
-	#category : #'Fonts-Infrastructure-Tests-Base'
+	#name : 'AbstractFontFamilyMemberTest',
+	#superclass : 'TestCase',
+	#category : 'Fonts-Infrastructure-Tests-Base',
+	#package : 'Fonts-Infrastructure-Tests',
+	#tag : 'Base'
 }
 
-{ #category : #tests }
-AbstractFontFamilyMemberTest >> testIsAbstractClass [
+{ #category : 'tests' }
+AbstractFontFamilyMemberTest >> testIsAbstract [
 
 	self
 		assert: AbstractFontFamilyMember isAbstract;

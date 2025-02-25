@@ -2,15 +2,16 @@
 I am a mock to emulate a RBEnvironment
 "
 Class {
-	#name : #SycMockEnvironment,
-	#superclass : #Object,
+	#name : 'SycMockEnvironment',
+	#superclass : 'Object',
 	#instVars : [
 		'content'
 	],
-	#category : #'SystemCommands-RefactoringSupport-Tests'
+	#category : 'SystemCommands-RefactoringSupport-Tests',
+	#package : 'SystemCommands-RefactoringSupport-Tests'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 SycMockEnvironment class >> with: aCollection [
 
 	^ self new
@@ -18,12 +19,12 @@ SycMockEnvironment class >> with: aCollection [
 		  yourself
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycMockEnvironment >> includesClass: aString [
 	^ content anySatisfy: [ :aMockObject | aMockObject changeClass = aString ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycMockEnvironment >> with: aCollection [
 	content := aCollection
 ]

@@ -24,8 +24,8 @@ Examples
 
 "
 Class {
-	#name : #Cursor,
-	#superclass : #Form,
+	#name : 'Cursor',
+	#superclass : 'Form',
 	#classVars : [
 		'BlankCursor',
 		'BottomLeftCursor',
@@ -55,29 +55,31 @@ Class {
 		'WriteCursor',
 		'XeqCursor'
 	],
-	#category : #'Graphics-Display Objects-Cursors'
+	#category : 'Graphics-Display Objects-Cursors',
+	#package : 'Graphics-Display Objects',
+	#tag : 'Cursors'
 }
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> blank [
 	"Answer the instance of me that is all white."
 
 	^BlankCursor
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> bottomLeft [
 	"Cursor bottomLeft showWhile: [Sensor waitButton]"
 	^BottomLeftCursor
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> bottomRight [
 	"Cursor bottomRight showWhile: [Sensor waitButton]"
 	^BottomRightCursor
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> corner [
 	"Answer the instance of me that is the shape of the bottom right corner
 	of a rectangle."
@@ -85,7 +87,7 @@ Cursor class >> corner [
 	^CornerCursor
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 Cursor class >> createStandardCursors [
 	self
 		initOrigin;
@@ -118,14 +120,14 @@ Cursor class >> createStandardCursors [
 		makeCursorsWithMask
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> crossHair [
 	"Answer the instance of me that is the shape of a cross."
 
 	^CrossHairCursor
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> down [
 	"Answer the instance of me that is the shape of an arrow facing
 	downward."
@@ -133,7 +135,7 @@ Cursor class >> down [
 	^DownCursor
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> execute [
 	"Answer the instance of me that is the shape of an arrow slanted left
 	with a star next to it."
@@ -141,7 +143,7 @@ Cursor class >> execute [
 	^XeqCursor
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Cursor class >> extent: extentPoint fromArray: anArray offset: offsetPoint [
 	"Answer a new instance of me with width and height specified by
 	extentPoint, offset by offsetPoint, and bits from anArray.
@@ -157,7 +159,7 @@ Cursor class >> extent: extentPoint fromArray: anArray offset: offsetPoint [
 		ifFalse: [self error: 'cursors must be 16@16']
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initBottomLeft [
 
 	BottomLeftCursor :=
@@ -182,7 +184,7 @@ Cursor class >> initBottomLeft [
 			offset: 0 @ -16)
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initBottomRight [
 
 	BottomRightCursor :=
@@ -207,7 +209,7 @@ Cursor class >> initBottomRight [
 			offset: -16 @ -16)
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initCorner [
 
 	CornerCursor :=
@@ -233,7 +235,7 @@ Cursor class >> initCorner [
 			offset: -16 @ -16)
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initCrossHair [
 
 	CrossHairCursor :=
@@ -259,7 +261,7 @@ Cursor class >> initCrossHair [
 			offset: -7 @ -7)
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initDown [
 
 	DownCursor  :=
@@ -285,7 +287,7 @@ Cursor class >> initDown [
 	offset: 0@0)
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initMarker [
 
 	MarkerCursor :=
@@ -311,7 +313,7 @@ Cursor class >> initMarker [
 			offset: 0@0
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initMenu [
 
 	MenuCursor  :=
@@ -336,7 +338,7 @@ Cursor class >> initMenu [
 	offset: 0@0)
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initMove [
 
 	MoveCursor :=
@@ -361,7 +363,7 @@ Cursor class >> initMove [
 			offset: 0@0
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initNormal [
 
 	NormalCursor :=
@@ -387,7 +389,7 @@ Cursor class >> initNormal [
 	offset: 0@0)
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initNormalWithMask [    "Cursor initNormalWithMask.  Cursor normal show"
 	"Next two lines work simply for any cursor..."
 	self initNormal.
@@ -408,7 +410,7 @@ Cursor class >> initNormalWithMask [    "Cursor initNormalWithMask.  Cursor norm
 			offset: 0 @ 0)
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initOrigin [
 
 	OriginCursor :=
@@ -434,7 +436,7 @@ Cursor class >> initOrigin [
 			offset: 0@0)
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initOverEditableText [
 	OverEditableText := (Cursor extent: 16@16 fromArray: #(
 				2r0
@@ -456,7 +458,7 @@ Cursor class >> initOverEditableText [
 	       offset: (-7@ -8))
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initRead [
 
 	ReadCursor :=
@@ -482,7 +484,7 @@ Cursor class >> initRead [
 	offset: 0@0)
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initResizeLeft [
 
        ResizeLeftCursor :=
@@ -506,7 +508,7 @@ Cursor class >> initResizeLeft [
        offset: -7 @ -7 ) withMask
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initResizeTop [
     "Cursor initResizeTop"
        ResizeTopCursor :=
@@ -529,7 +531,7 @@ Cursor class >> initResizeTop [
        offset: -7 @ -7) withMask
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initResizeTopLeft [
 
        ResizeTopLeftCursor :=
@@ -553,7 +555,7 @@ Cursor class >> initResizeTopLeft [
        offset: -7 @ -7) withMask
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initResizeTopRight [
 
        ResizeTopRightCursor :=
@@ -577,7 +579,7 @@ Cursor class >> initResizeTopRight [
        offset: -7 @ -7) withMask
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initRightArrow [
 
 	RightArrowCursor  :=
@@ -605,7 +607,7 @@ Cursor class >> initRightArrow [
 	"Cursor initRightArrow"
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initSquare [
 
 	SquareCursor :=
@@ -631,7 +633,7 @@ Cursor class >> initSquare [
 	offset: -8 @ -8)
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initTarget [
 	^TargetCursor := Cursor
 				extent: 16 @ 16
@@ -639,7 +641,7 @@ Cursor class >> initTarget [
 				offset: -7 @ -7
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initTopLeft [
 	TopLeftCursor :=
 		(Cursor extent: 16@16
@@ -663,7 +665,7 @@ Cursor class >> initTopLeft [
 			offset: 0@0)
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initTopRight [
 	TopRightCursor :=
 		(Cursor extent: 16@16
@@ -687,7 +689,7 @@ Cursor class >> initTopRight [
 			offset: -16@0)
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initUp [
 
 	UpCursor :=
@@ -713,7 +715,7 @@ Cursor class >> initUp [
 	offset: 0@0)
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initWait [
 
 	WaitCursor :=
@@ -738,7 +740,7 @@ Cursor class >> initWait [
 			offset: 0@0)
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initWrite [
 
 	WriteCursor := (Cursor
@@ -763,7 +765,7 @@ Cursor class >> initWrite [
 	offset: 0@0)
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> initXeq [
 
 	XeqCursor :=
@@ -789,44 +791,44 @@ Cursor class >> initXeq [
 	offset: 0@0)
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 Cursor class >> initialize [
 
 	self createStandardCursors.
 	SessionManager default registerGuiClassNamed: self name
 ]
 
-{ #category : #'initialization - private' }
+{ #category : 'initialization - private' }
 Cursor class >> makeCursorsWithMask [
 	"Cursor initialize;makeCursorsWithMask"
 
-	self classPool associationsDo: [:var |
-		var value hasMask
-			ifFalse: [var value: var value withMask]]
+	self classVariables do: [:variable |
+		variable value hasMask
+			ifFalse: [variable value: variable value withMask]]
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> marker [
 	"Answer the instance of me that is the shape of a small ball."
 
 	^MarkerCursor
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> menu [
 	"Answer the instance of me that is the shape of a menu."
 
 	^MenuCursor
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> move [
 	"Answer the instance of me that is the shape of a cross inside a square."
 
 	^MoveCursor
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Cursor class >> new [
 
 	^ self extent: 16 @ 16
@@ -834,14 +836,14 @@ Cursor class >> new [
 		offset: 0 @ 0
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> normal [
 	"Answer the instance of me that is the shape of an arrow slanted left."
 
 	^NormalCursor
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> origin [
 	"Answer the instance of me that is the shape of the top left corner of a
 	rectangle."
@@ -849,37 +851,37 @@ Cursor class >> origin [
 	^OriginCursor
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> overEditableText [
 	^ OverEditableText
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> read [
 	"Answer the instance of me that is the shape of eyeglasses."
 
 	^ReadCursor
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> resizeBottom [
 	"Cursor resizeBottom showWhile: [Sensor waitButton]"
 	^self resizeTop
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> resizeBottomLeft [
 	"Cursor resizeBottomLeft showWhile: [Sensor waitButton]"
 	^self resizeTopRight
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> resizeBottomRight [
 	"Cursor resizeBottomRight showWhile: [Sensor waitButton]"
 	^self resizeTopLeft
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 Cursor class >> resizeForEdge: aSymbol [
 	"Most common cases hard coded to avoid perform: and asSymbol. It is 55 times faster."
 
@@ -894,77 +896,77 @@ Cursor class >> resizeForEdge: aSymbol [
 	^self perform: ('resize', aSymbol asString capitalized) asSymbol
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> resizeLeft [
 	"Cursor resizeLeft showWhile: [Sensor waitButton]"
 	^ResizeLeftCursor
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> resizeRight [
 	"Cursor resizeRight showWhile: [Sensor waitButton]"
 	^self resizeLeft
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> resizeTop [
 	"Cursor resizeTop showWhile: [Sensor waitButton]"
 	^ResizeTopCursor
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> resizeTopLeft [
 	"Cursor resizeTopLeft showWhile: [Sensor waitButton]"
 	^ ResizeTopLeftCursor
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> resizeTopRight [
 	"Cursor resizeTopRight showWhile: [Sensor waitButton]"
 	^ResizeTopRightCursor
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> rightArrow [
 	"Answer the instance of me that is the shape of an arrow pointing to the right."
 
 	^RightArrowCursor
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> square [
 	"Answer the instance of me that is the shape of a square."
 
 	^SquareCursor
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> target [
 	"Answer the instance of me that is the shape of a gunsight."
 	"Cursor target show"
 	^TargetCursor ifNil:[self initTarget]
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> topLeft [
 	"Cursor topLeft showWhile: [Sensor waitButton]"
 	^ TopLeftCursor
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> topRight [
 	"Cursor topRight showWhile: [Sensor waitButton]"
 	^ TopRightCursor
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> up [
 	"Answer the instance of me that is the shape of an arrow facing upward."
 
 	^UpCursor
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> wait [
 	"Answer the instance of me that is the shape of an Hourglass (was in the
 	shape of three small balls)."
@@ -972,7 +974,7 @@ Cursor class >> wait [
 	^WaitCursor
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> webLink [
 	"Return a cursor that can be used for emphasizing web links"
 	"Cursor webLink showWhile: [Sensor waitButton]"
@@ -985,20 +987,20 @@ Cursor class >> webLink [
 			offset: 0@0)]
 ]
 
-{ #category : #constants }
+{ #category : 'constants' }
 Cursor class >> write [
 	"Answer the instance of me that is the shape of a pen writing."
 
 	^WriteCursor
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
 Cursor >> activateInCursorOwner: aCursorOwner [
 
 	^ self subclassResponsibility
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Cursor >> asCursorForm [
 	| form |
 	form := Form extent: self extent depth: 8.
@@ -1006,7 +1008,7 @@ Cursor >> asCursorForm [
 	^ form offset: offset
 ]
 
-{ #category : #updating }
+{ #category : 'updating' }
 Cursor >> changed: aParameter [
 	"overriden to reinstall the cursor if it is the active cursor, in case the appearance has changed.  (Is this used anywhere?  Do cursors really change in place these days?)"
 	self flag: 'FIXME: Please, check on whether is this really needed'.
@@ -1016,18 +1018,29 @@ Cursor >> changed: aParameter [
 	super changed: aParameter
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 Cursor >> hasMask [
 	^false
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 Cursor >> printOn: aStream [
 
 	self storeOn: aStream base: 2
 ]
 
-{ #category : #primitives }
+{ #category : 'primitives' }
+Cursor >> scaledToExactSize: newExtent [
+
+	"We need to override, so we can scale also the offset."
+
+	| newOne |
+	newOne := super scaledToExactSize: newExtent.
+	newOne offset: offset * (newExtent / self extent).
+	^ newOne
+]
+
+{ #category : 'primitives' }
 Cursor >> scaledToSize: newExtent [
 
 	"We need to override, so we can scale also the offset."
@@ -1038,13 +1051,13 @@ Cursor >> scaledToSize: newExtent [
 	^ newOne
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 Cursor >> show [
 	"Make the hardware's mouse cursor look like the receiver"
 	self currentWorld activeHand ifNotNil: [:aHand | aHand currentCursor: self ]
 ]
 
-{ #category : #displaying }
+{ #category : 'displaying' }
 Cursor >> showWhile: aBlock [
 	"While evaluating the argument, aBlock, make the receiver be the cursor shape."
 	| oldcursor |
@@ -1053,7 +1066,7 @@ Cursor >> showWhile: aBlock [
 	^aBlock ensure: [oldcursor show]
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 Cursor >> withMask [
 	^CursorWithMask derivedFrom: self
 ]

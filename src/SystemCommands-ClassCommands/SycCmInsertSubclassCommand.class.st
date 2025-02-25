@@ -3,40 +3,41 @@ I am a command to insert new subclass into my target class hierarchy.
 All current subclasses of targetClass will become subclasses of new created class
 "
 Class {
-	#name : #SycCmInsertSubclassCommand,
-	#superclass : #SycCmNewClassCreationCommand,
-	#category : #'SystemCommands-ClassCommands'
+	#name : 'SycCmInsertSubclassCommand',
+	#superclass : 'SycCmNewClassCreationCommand',
+	#category : 'SystemCommands-ClassCommands-Creation',
+	#package : 'SystemCommands-ClassCommands',
+	#tag : 'Creation'
 }
 
-{ #category : #executing }
+{ #category : 'executing' }
 SycCmInsertSubclassCommand >> executeRefactoring [
 
-	| refactoring |
-	refactoring := RBInsertClassTransformation
-		addClass: newClassName
-		superclass: targetClass asString
-		subclasses: targetClass subclasses
-		category: targetClass category.
-	refactoring asRefactoring execute
+	(RBInsertNewClassRefactoring className: newClassName)
+		superclass: targetClass asString;
+		subclasses: targetClass subclasses;
+		packageName: targetClass package name;
+		tagName: targetClass packageTag name;
+		execute
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCmInsertSubclassCommand >> icon [
 	^ self iconNamed: #smallLoadProject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 SycCmInsertSubclassCommand >> isApplicable [
 
-	^ true
+	^ context lastSelectedClass isTrait not
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCmInsertSubclassCommand >> name [
 	^'Insert subclass'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycCmInsertSubclassCommand >> order [
 	^ 20
 ]

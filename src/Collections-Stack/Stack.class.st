@@ -2,19 +2,21 @@
 I implement a simple Stack. #push: adds a new object of any kind on top of the stack. #pop returns the first element and remove it from the stack. #top answer the first element of the stack without removing it.
 "
 Class {
-	#name : #Stack,
-	#superclass : #LinkedList,
-	#category : #'Collections-Stack-Base'
+	#name : 'Stack',
+	#superclass : 'LinkedList',
+	#category : 'Collections-Stack-Base',
+	#package : 'Collections-Stack',
+	#tag : 'Base'
 }
 
-{ #category : #removing }
+{ #category : 'removing' }
 Stack >> pop [
 	"Returns the first element and remove it from the stack."
 
 	^self removeFirst
 ]
 
-{ #category : #adding }
+{ #category : 'adding' }
 Stack >> push: anObject [
 	"Adds a new object of any kind on top of the stack."
 
@@ -22,7 +24,7 @@ Stack >> push: anObject [
 	^ anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 Stack >> top [
 	"Answer the first element of the stack without removing it."
 

@@ -1,10 +1,11 @@
 Class {
-	#name : #EFParseErrorExpressionTest,
-	#superclass : #EFTest,
-	#category : #'EnlumineurFormatter-Tests'
+	#name : 'EFParseErrorExpressionTest',
+	#superclass : 'EFTest',
+	#category : 'EnlumineurFormatter-Tests',
+	#package : 'EnlumineurFormatter-Tests'
 }
 
-{ #category : #configuration }
+{ #category : 'configuration' }
 EFParseErrorExpressionTest >> basicConfiguration [
 
 	^ self contextClass basicNew
@@ -15,22 +16,22 @@ EFParseErrorExpressionTest >> basicConfiguration [
 		periodAtEndOfMethod:false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFParseErrorExpressionTest >> testParseError [
 
 	| expr source |
-	expr := RBParser parseFaultyExpression: '#(1 3 4'.
+	expr := OCParser parseFaultyExpression: '#(1 3 4'.
 	configurationSelector := #basicConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals: '#( 1 3 4'
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EFParseErrorExpressionTest >> testParseError2 [
 
 	| expr source |
-	expr := RBParser parseFaultyExpression: '1 := '.
+	expr := OCParser parseFaultyExpression: '1 := '.
 	configurationSelector := #basicConfiguration.
-	source := self formatter format: expr.
+	source := self newFormatter format: expr.
 	self assert: source equals: '1. := '
 ]

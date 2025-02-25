@@ -11,44 +11,42 @@ Installs:
 - minimal working Morphic subset without fonts support
 "
 Class {
-	#name : #BaselineOfMorphicCore,
-	#superclass : #BaselineOf,
+	#name : 'BaselineOfMorphicCore',
+	#superclass : 'BaselineOf',
 	#classVars : [
 		'Initialized'
 	],
-	#category : #BaselineOfMorphicCore
+	#category : 'BaselineOfMorphicCore',
+	#package : 'BaselineOfMorphicCore'
 }
 
-{ #category : #baseline }
-BaselineOfMorphicCore >> baseline: spec [ 
-    
-	<baseline>
+{ #category : 'baseline' }
+BaselineOfMorphicCore >> baseline: spec [
 
-	| repository | 
-	
-	repository := self packageRepositoryURL.
+	<baseline>
+	| repository |
+	repository := self packageRepositoryURLForSpec: spec.
 
 	spec for: #common do: [
-		spec postLoadDoIt: #'postload:package:'.
+		spec postLoadDoIt: #postload:package:.
 
-		spec baseline: 'Traits' with: [spec repository: repository].
-		spec baseline: 'SUnit' with: [spec repository: repository].
-		spec baseline: 'Display' with: [spec repository: repository].
-		spec baseline: 'UnifiedFFI' with: [spec repository: repository].
+		spec baseline: 'Traits' with: [ spec repository: repository ].
+		spec baseline: 'SUnit' with: [ spec repository: repository ].
+		spec baseline: 'Display' with: [ spec repository: repository ].
+		spec baseline: 'UnifiedFFI' with: [ spec repository: repository ].
 
 		spec package: 'System-Object Events'.
-		spec package: 'Collections-DoubleLinkedList'.
 		spec package: 'System-Caching'.
+		spec package: 'System-Utilities'.
 		spec package: 'Graphics-Canvas'.
 		spec package: 'FormCanvas-Core'.
 		spec package: 'Tool-Registry'.
 		spec package: 'Fonts-Abstract'.
 		spec package: 'Text-Core'.
-		spec package: 'Morphic-Core'.
-	].
+		spec package: 'Morphic-Core' ]
 ]
 
-{ #category : #actions }
+{ #category : 'actions' }
 BaselineOfMorphicCore >> postload: loader package: packageSpec [
 
 	| world hand |
@@ -78,19 +76,16 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	Smalltalk at: #World put: world.
 	Smalltalk at: #ActiveWorld put: world.
 
-	world viewBox: Display boundingBox.
+	world viewBox: world bounds.
 	
 	world handsDo: [:h | h initForEvents].
 	world borderWidth: 0.
 	
-	Display newDepth: 32.
 	world displayWorldSafely.
 	MorphicCoreUIManager new spawnNewProcess.
 	
 	world cleanseOtherworldlySteppers.
 	ExternalDropHandler resetRegisteredHandlers.
-
-	Display newDepth: 32.
 
 	(world instVarNamed: #worldState) invalidate.
 
@@ -100,8 +95,6 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	ExternalDropHandler initialize.
 	PasteUpMorph initialize.
 	DefaultExternalDropHandler initialize.
-	
-	WorldMorph recompile.
 
 	Initialized := true.
 ]

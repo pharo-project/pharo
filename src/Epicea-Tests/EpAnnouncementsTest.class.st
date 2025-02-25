@@ -1,45 +1,44 @@
 Class {
-	#name : #EpAnnouncementsTest,
-	#superclass : #EpMonitorIntegrationTest,
-	#category : #'Epicea-Tests-Integration'
+	#name : 'EpAnnouncementsTest',
+	#superclass : 'EpMonitorIntegrationTest',
+	#category : 'Epicea-Tests-Integration',
+	#package : 'Epicea-Tests',
+	#tag : 'Integration'
 }
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpAnnouncementsTest >> assertMonitorAnnouncesUpdateWhen: aBlock [
 
 	| wasAnnounced |
 	wasAnnounced := false.
 
-	monitor announcer
-		when: EpMonitorStateUpdated
-		do: [ :announcement | wasAnnounced := true ].
+	monitor announcer when: EpMonitorStateUpdated do: [ :announcement | wasAnnounced := true ] for: self.
 
-	aBlock
-		ensure: [ monitor announcer unsubscribe: self ].
+	aBlock ensure: [ monitor announcer unsubscribe: self ].
 
 	self assert: wasAnnounced
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpAnnouncementsTest >> testMonitorAnnouncesUpdateWhenDisabled [
 
 	self assertMonitorAnnouncesUpdateWhen: [ monitor disable ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpAnnouncementsTest >> testMonitorAnnouncesUpdateWhenEnabled [
 
 	self assertMonitorAnnouncesUpdateWhen: [ monitor enable ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpAnnouncementsTest >> testMonitorAnnouncesUpdateWhenRedundantlyDisabled [
 
 	monitor disable.
 	self assertMonitorAnnouncesUpdateWhen: [ monitor disable ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 EpAnnouncementsTest >> testMonitorAnnouncesUpdateWhenRedundantlyEnabled [
 
 	monitor enable.

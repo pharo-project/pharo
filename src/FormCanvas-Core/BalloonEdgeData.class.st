@@ -9,8 +9,8 @@ Instance Variables:
 	source	<Object>		The object from the external objects array
 "
 Class {
-	#name : #BalloonEdgeData,
-	#superclass : #Object,
+	#name : 'BalloonEdgeData',
+	#superclass : 'Object',
 	#instVars : [
 		'index',
 		'xValue',
@@ -19,75 +19,77 @@ Class {
 		'lines',
 		'source'
 	],
-	#category : #'FormCanvas-Core-BalloonEngine'
+	#category : 'FormCanvas-Core-BalloonEngine',
+	#package : 'FormCanvas-Core',
+	#tag : 'BalloonEngine'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEdgeData >> index [
 	^index
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEdgeData >> index: anInteger [
 	index := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEdgeData >> lines [
 	^lines
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEdgeData >> lines: anInteger [
 	^lines := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEdgeData >> source [
 	^source
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEdgeData >> source: anObject [
 	source := anObject
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 BalloonEdgeData >> stepToFirstScanLine [
 	source stepToFirstScanLineAt: yValue in: self
 ]
 
-{ #category : #computing }
+{ #category : 'computing' }
 BalloonEdgeData >> stepToNextScanLine [
 	source stepToNextScanLineAt: yValue in: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEdgeData >> xValue [
 	^xValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEdgeData >> xValue: anInteger [
 	xValue := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEdgeData >> yValue [
 	^yValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEdgeData >> yValue: anInteger [
 	yValue := anInteger
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEdgeData >> zValue [
 	^zValue
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BalloonEdgeData >> zValue: anInteger [
 	zValue := anInteger
 ]

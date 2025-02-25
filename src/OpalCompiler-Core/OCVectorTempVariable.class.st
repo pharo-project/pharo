@@ -13,37 +13,39 @@ reading and writing thus is a multi step process:
 4) use the index to access this array
 "
 Class {
-	#name : #OCVectorTempVariable,
-	#superclass : #TemporaryVariable,
+	#name : 'OCVectorTempVariable',
+	#superclass : 'TemporaryVariable',
 	#instVars : [
 		'vectorName'
 	],
-	#category : #'OpalCompiler-Core-Semantics'
+	#category : 'OpalCompiler-Core-Semantics',
+	#package : 'OpalCompiler-Core',
+	#tag : 'Semantics'
 }
 
-{ #category : #emitting }
+{ #category : 'emitting' }
 OCVectorTempVariable >> emitStore: methodBuilder [
 
 	methodBuilder storeRemoteTemp: name inVector: vectorName
 ]
 
-{ #category : #emitting }
+{ #category : 'emitting' }
 OCVectorTempVariable >> emitValue: methodBuilder [
 
 	methodBuilder pushRemoteTemp: name inVector: vectorName
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OCVectorTempVariable >> isRemote [
 	^true
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 OCVectorTempVariable >> isTempVectorTemp [
 	^true
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 OCVectorTempVariable >> readFromContext: aContext scope: contextScope [
 
 	| theVector |
@@ -51,7 +53,7 @@ OCVectorTempVariable >> readFromContext: aContext scope: contextScope [
 	^theVector at: self index
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 OCVectorTempVariable >> readVectorFromContext: aContext scope: contextScope [
 	| tempVectorVar theVector |
 	"We need to first read the temp vector. We use the closest copied var up the stack possible as
@@ -68,17 +70,17 @@ OCVectorTempVariable >> readVectorFromContext: aContext scope: contextScope [
 			ifNotNil: [: ctxt | self readVectorFromContext: ctxt scope: contextScope outerScope ]]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCVectorTempVariable >> vectorName [
 	^ vectorName
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 OCVectorTempVariable >> vectorName: anObject [
 	vectorName := anObject
 ]
 
-{ #category : #debugging }
+{ #category : 'debugging' }
 OCVectorTempVariable >> writeFromContext: aContext scope: contextScope value: aValue [
 
 	| theVector |

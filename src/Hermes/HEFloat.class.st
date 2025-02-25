@@ -7,22 +7,24 @@ Then this instance is operated to generate the correct immediate instance if req
 This hack allows us to load the same hermes file in 32bits or 64 bits
 "
 Class {
-	#name : #HEFloat,
-	#superclass : #HEExportedLiteral,
-	#category : #'Hermes-Model'
+	#name : 'HEFloat',
+	#superclass : 'HEExportedLiteral',
+	#category : 'Hermes-Model',
+	#package : 'Hermes',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HEFloat class >> tag [
 	^ 3
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 HEFloat >> asLiteralIn: env [
 	^ value
 ]
 
-{ #category : #reading }
+{ #category : 'reading' }
 HEFloat >> doReadFrom: aReader [
 	| originalValue |
 	originalValue := BoxedFloat64 new.

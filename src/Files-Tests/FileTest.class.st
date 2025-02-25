@@ -2,19 +2,21 @@
 Unit tests for file operations
 "
 Class {
-	#name : #FileTest,
-	#superclass : #TestCase,
-	#category : #'Files-Tests-Core'
+	#name : 'FileTest',
+	#superclass : 'TestCase',
+	#category : 'Files-Tests-Core',
+	#package : 'Files-Tests',
+	#tag : 'Core'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 FileTest >> tearDown [
 
 	'asd.txt' asFileReference ensureDelete.
 	super tearDown
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileTest >> testCheckExistenceOfExistingFileThrowsException [
 
 	| file |
@@ -23,7 +25,7 @@ FileTest >> testCheckExistenceOfExistingFileThrowsException [
 	self should: [file checkDoesNotExist] raise: FileAlreadyExistsException
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileTest >> testCheckExistenceOfNonExistingFileDoesNotThrowException [
 
 	| file |
@@ -33,7 +35,7 @@ FileTest >> testCheckExistenceOfNonExistingFileDoesNotThrowException [
 		do: [ :ex | self assert: false description: 'File should not exist!' ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileTest >> testFileDelete [
 
 	| file |
@@ -43,7 +45,7 @@ FileTest >> testFileDelete [
 	self deny: file exists
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileTest >> testFileExists [
 
 	| file |
@@ -53,7 +55,7 @@ FileTest >> testFileExists [
 	file delete
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileTest >> testOpenFileForReadDoesNotDeleteExistingFile [
 
 	| size |
@@ -63,7 +65,7 @@ FileTest >> testOpenFileForReadDoesNotDeleteExistingFile [
 	self assert: size equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileTest >> testOpeningFileNormallyDoesNotDeleteExistingFile [
 
 	| size |
@@ -73,7 +75,7 @@ FileTest >> testOpeningFileNormallyDoesNotDeleteExistingFile [
 	self assert: size equals: 3
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileTest >> testOpeningFileObjectCreatesFile [
 
 	(File named: 'asd.txt') writeStream close.
@@ -82,7 +84,7 @@ FileTest >> testOpeningFileObjectCreatesFile [
 	self assert: (File named: 'asd.txt') exists
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileTest >> testOpeningFileSetsPositionAtBeginning [
 
 	| file |
@@ -92,7 +94,7 @@ FileTest >> testOpeningFileSetsPositionAtBeginning [
 		] ensure: [ file ifNotNil: [ file close ] ]
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 FileTest >> testOpeningForAppendSetsPositionAtEnd [
 
 	| file |

@@ -14,15 +14,17 @@ Internal Representation and Key Implementation Points.
 	isSameAsCurrent:		<Boolean>
 "
 Class {
-	#name : #ClyDesiredSelection,
-	#superclass : #ClyDataSourceSelection,
+	#name : 'ClyDesiredSelection',
+	#superclass : 'ClyDataSourceSelection',
 	#instVars : [
 		'isSameAsCurrent'
 	],
-	#category : #'Calypso-Browser-DataSource'
+	#category : 'Calypso-Browser-DataSource',
+	#package : 'Calypso-Browser',
+	#tag : 'DataSource'
 }
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDesiredSelection >> checkItemsOfCurrentSelection: currentSelection [
 	| newItems |
 	isSameAsCurrent := false.
@@ -35,23 +37,23 @@ ClyDesiredSelection >> checkItemsOfCurrentSelection: currentSelection [
 	isSameAsCurrent := true
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyDesiredSelection >> initialize [
 	super initialize.
 	isSameAsCurrent := true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDesiredSelection >> isSameAsCurrent [
 	^ isSameAsCurrent
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyDesiredSelection >> isSameAsCurrent: anObject [
 	isSameAsCurrent := anObject
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDesiredSelection >> restoreCurrentSelection: currentSelection [
 	"We should signal selection change only when previous selection was different
 	and new given data source has no same items.
@@ -70,7 +72,7 @@ ClyDesiredSelection >> restoreCurrentSelection: currentSelection [
 	^currentSelectionIsChanged
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDesiredSelection >> restoreCurrentSelectionAfterUpdate: currentSelection [
 	"We should signal selection change only when previous selection was different
 	and new given data source has no same items.
@@ -94,7 +96,7 @@ ClyDesiredSelection >> restoreCurrentSelectionAfterUpdate: currentSelection [
 	^currentSelectionIsChanged
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyDesiredSelection >> updateItemsWhichBelongsTo: aDataSource [
 	"We override this method by two reasons:
 	- desired selection should always keep all items even if some of them was removed from current data source

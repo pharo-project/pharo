@@ -8,26 +8,27 @@ Internal Representation and Key Implementation Points.
 	coveringTestCase:		<TestCase>
 "
 Class {
-	#name : #ClyTestedClassProperty,
-	#superclass : #ClyProperty,
+	#name : 'ClyTestedClassProperty',
+	#superclass : 'ClyProperty',
 	#instVars : [
 		'coveringTestCase'
 	],
-	#category : #'Calypso-SystemPlugins-SUnit-Queries'
+	#category : 'Calypso-SystemPlugins-SUnit-Queries',
+	#package : 'Calypso-SystemPlugins-SUnit-Queries'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTestedClassProperty class >> coveringTestCase: aTestCase [
 	^self new
 		coveringTestCase: aTestCase
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTestedClassProperty >> coveringTestCase [
 	^ coveringTestCase
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyTestedClassProperty >> coveringTestCase: anObject [
 	coveringTestCase := anObject
 ]

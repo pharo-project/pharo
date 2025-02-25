@@ -7,63 +7,65 @@ Also I prevent real execution of query by returning ClyUnknownResult instance fr
 So environment is not requested to evaluate given query when query is bound to me.
 "
 Class {
-	#name : #ClyUnknownScope,
-	#superclass : #ClyScope,
+	#name : 'ClyUnknownScope',
+	#superclass : 'ClyScope',
 	#classInstVars : [
 		'instance'
 	],
-	#category : #'Calypso-NavigationModel-Model'
+	#category : 'Calypso-NavigationModel-Model',
+	#package : 'Calypso-NavigationModel',
+	#tag : 'Model'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyUnknownScope class >> instance [
 	^instance ifNil: [ instance := ClyUnknownScope new ]
 ]
 
-{ #category : #'class initialization' }
+{ #category : 'class initialization' }
 ClyUnknownScope class >> reset [
 	instance := nil
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyUnknownScope >> adoptQuery: aQuery [
 	^aQuery
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyUnknownScope >> asScope: anotherEnvironmentScopeClass [
 
 	^self
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyUnknownScope >> asUnifiedInstance [
 	^self
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ClyUnknownScope >> initialize [
 	super initialize.
 
 	basisObjects := #()
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyUnknownScope >> isQueryEmpty: aQuery [
 	^true
 ]
 
-{ #category : #queries }
+{ #category : 'queries' }
 ClyUnknownScope >> query: aQuery [
 	^ClyUnknownQueryResult instance
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyUnknownScope >> supportsQuery: aQuery [
 	^true
 ]
 
-{ #category : #converting }
+{ #category : 'converting' }
 ClyUnknownScope >> withNewBasisObjects: aCollection [
 	^self
 ]

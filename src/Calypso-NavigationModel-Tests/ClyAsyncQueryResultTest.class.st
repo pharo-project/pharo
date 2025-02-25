@@ -1,21 +1,22 @@
 Class {
-	#name : #ClyAsyncQueryResultTest,
-	#superclass : #ClyQueryNavigationResultTest,
-	#category : #'Calypso-NavigationModel-Tests'
+	#name : 'ClyAsyncQueryResultTest',
+	#superclass : 'ClyQueryNavigationResultTest',
+	#category : 'Calypso-NavigationModel-Tests',
+	#package : 'Calypso-NavigationModel-Tests'
 }
 
-{ #category : #running }
+{ #category : 'running' }
 ClyAsyncQueryResultTest >> createQuery [
 
 	^ClyLongExampleQuery from: ClyExampleScope of: String in: environment
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyAsyncQueryResultTest >> createQueryResult [
 	^ClyAsyncQueryResult new
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAsyncQueryResultTest >> testBuildCompletionShouldNotifyItemObservers [
 	| observer |
 	observer := ClyItemObserverExample new.
@@ -28,7 +29,7 @@ ClyAsyncQueryResultTest >> testBuildCompletionShouldNotifyItemObservers [
 	self assert: observer wasNotified
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAsyncQueryResultTest >> testBuildCompletionShouldResetProcess [
 
 	queryResult rebuild.
@@ -38,7 +39,7 @@ ClyAsyncQueryResultTest >> testBuildCompletionShouldResetProcess [
 	self assert: queryResult buildProcess isNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAsyncQueryResultTest >> testBuildShouldSetUpItemsFromActualResultWhenTheyReady [
 	queryResult rebuild.
 	query passExecution.
@@ -49,7 +50,7 @@ ClyAsyncQueryResultTest >> testBuildShouldSetUpItemsFromActualResultWhenTheyRead
 	self assert: queryResult items asSet equals: query scope basisObjects
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAsyncQueryResultTest >> testBuildShouldStartBackgroundProcessing [
 
 	queryResult rebuild.
@@ -58,19 +59,19 @@ ClyAsyncQueryResultTest >> testBuildShouldStartBackgroundProcessing [
 	self deny: queryResult buildProcess isTerminated
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAsyncQueryResultTest >> testForceLazyRebuildShouldNotResetExistingItems [
 
-	self assert: queryResult items notNil.
+	self assert: queryResult items isNotNil.
 
 	queryResult forceLazyRebuild.
 
 	self assert: queryResult needsRebuild.
 	self assert: queryResult isBuilt.
-	self assert: queryResult items notNil
+	self assert: queryResult items isNotNil
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAsyncQueryResultTest >> testIsBuiltWhenBuildComplete [
 
 	queryResult rebuild.
@@ -80,7 +81,7 @@ ClyAsyncQueryResultTest >> testIsBuiltWhenBuildComplete [
 	self assert: queryResult isBuilt
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAsyncQueryResultTest >> testItemsChangedNotificationShouldNotResetExistingItems [
 
 	queryResult items: #(items).
@@ -91,7 +92,7 @@ ClyAsyncQueryResultTest >> testItemsChangedNotificationShouldNotResetExistingIte
 	self assert: queryResult needsRebuild
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAsyncQueryResultTest >> testItemsChangedNotificationShouldResetItems [
 	<expectedFailure>
 	"Async query should not reset own items which was already built.
@@ -100,7 +101,7 @@ ClyAsyncQueryResultTest >> testItemsChangedNotificationShouldResetItems [
 	super testItemsChangedNotificationShouldResetItems
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAsyncQueryResultTest >> testItemsInitializationShouldNotResetExistingItems [
 
 	queryResult items: #(items).
@@ -109,7 +110,7 @@ ClyAsyncQueryResultTest >> testItemsInitializationShouldNotResetExistingItems [
 	self assert: queryResult items equals: #(items)
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAsyncQueryResultTest >> testNotBuiltByDefault [
 
 	queryResult := queryResult class new.
@@ -117,7 +118,7 @@ ClyAsyncQueryResultTest >> testNotBuiltByDefault [
 	self deny: queryResult isBuilt
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 ClyAsyncQueryResultTest >> testNotBuiltWhenBuildIsJustStarted [
 
 	queryResult rebuild.
@@ -125,7 +126,7 @@ ClyAsyncQueryResultTest >> testNotBuiltWhenBuildIsJustStarted [
 	self deny: queryResult isBuilt
 ]
 
-{ #category : #running }
+{ #category : 'running' }
 ClyAsyncQueryResultTest >> waitBuildComplete [
 	[queryResult buildProcess isNil or: [queryResult buildProcess isTerminated]]
 		whileFalse: [ 20 milliSeconds wait ]

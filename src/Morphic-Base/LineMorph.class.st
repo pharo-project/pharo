@@ -2,19 +2,21 @@
 This is really only a shell for creating single-segment straight-line Shapes.
 "
 Class {
-	#name : #LineMorph,
-	#superclass : #PolygonMorph,
-	#category : #'Morphic-Base-Basic'
+	#name : 'LineMorph',
+	#superclass : 'PolygonMorph',
+	#category : 'Morphic-Base-Basic',
+	#package : 'Morphic-Base',
+	#tag : 'Basic'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LineMorph class >> from: startPoint to: endPoint color: lineColor width: lineWidth [
 
 	^ self vertices: {startPoint. endPoint}
 			color: Color black borderWidth: lineWidth borderColor: lineColor
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 LineMorph class >> new [
 	^ self from: 0@0 to: 50@50 color: Color black width: 2
 ]

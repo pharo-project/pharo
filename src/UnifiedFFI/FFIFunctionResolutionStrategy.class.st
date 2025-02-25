@@ -9,23 +9,25 @@ isApplicableFor:  ""answers true if function should be resolved using this strat
 resolveFunctionAddress: ""answers the solved function address (an ExternalAddress)""
 "
 Class {
-	#name : #FFIFunctionResolutionStrategy,
-	#superclass : #Object,
-	#category : #'UnifiedFFI-Callouts'
+	#name : 'FFIFunctionResolutionStrategy',
+	#superclass : 'Object',
+	#category : 'UnifiedFFI-Callouts',
+	#package : 'UnifiedFFI',
+	#tag : 'Callouts'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 FFIFunctionResolutionStrategy >> isApplicableFor: aRequestor [
 	"answers true if function should be resolved using this strategy"
 	self subclassResponsibility
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 FFIFunctionResolutionStrategy >> resolve: anExternalFunction [
 	anExternalFunction setHandle: (self resolveFunction: anExternalFunction)
 ]
 
-{ #category : #resolving }
+{ #category : 'resolving' }
 FFIFunctionResolutionStrategy >> resolveFunction: anExternalFunction [
 	"answers the solved function address (an ExternalAddress)"
 	self subclassResponsibility

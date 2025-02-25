@@ -1,6 +1,6 @@
-Extension { #name : #Float }
+Extension { #name : 'Float' }
 
-{ #category : #'*STON-Core' }
+{ #category : '*STON-Core' }
 Float class >> fromSton: stonReader [
 	| argument |
 	argument := stonReader parseListSingleton.

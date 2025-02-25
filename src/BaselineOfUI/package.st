@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfUI }
+Package { #name : 'BaselineOfUI' }

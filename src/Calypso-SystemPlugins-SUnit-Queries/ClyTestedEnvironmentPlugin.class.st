@@ -9,24 +9,25 @@ To find covering test I use simple hueristics:
 Look at ""tests lookup"" methods for details.
 "
 Class {
-	#name : #ClyTestedEnvironmentPlugin,
-	#superclass : #ClySystemEnvironmentPlugin,
-	#category : #'Calypso-SystemPlugins-SUnit-Queries'
+	#name : 'ClyTestedEnvironmentPlugin',
+	#superclass : 'ClySystemEnvironmentPlugin',
+	#category : 'Calypso-SystemPlugins-SUnit-Queries',
+	#package : 'Calypso-SystemPlugins-SUnit-Queries'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClyTestedEnvironmentPlugin class >> isSlow [
 	^true
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyTestedEnvironmentPlugin >> attachToSystem [
 
 	TestCase historyAnnouncer
 		weak when: TestSuiteEnded send: #testRan: to: self
 ]
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClyTestedEnvironmentPlugin >> decorateBrowserItem: anItem ofClass: aClass [
 
 	| testCase |
@@ -37,7 +38,7 @@ ClyTestedEnvironmentPlugin >> decorateBrowserItem: anItem ofClass: aClass [
 	anItem addProperty: (ClyTestedClassProperty coveringTestCase: testCase)
 ]
 
-{ #category : #'item decoration' }
+{ #category : 'item decoration' }
 ClyTestedEnvironmentPlugin >> decorateBrowserItem: anItem ofMethod: aMethod [
 
 	| testMethod testResult |
@@ -49,13 +50,13 @@ ClyTestedEnvironmentPlugin >> decorateBrowserItem: anItem ofMethod: aMethod [
 	anItem addProperty: (ClyTestedMethodProperty coveringTest: testMethod result: testResult)
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyTestedEnvironmentPlugin >> detachFromSystem [
 
 	TestCase historyAnnouncer unsubscribe: self
 ]
 
-{ #category : #'tests lookup' }
+{ #category : 'tests lookup' }
 ClyTestedEnvironmentPlugin >> findTestCaseCovering: aClass ifAbsent: absentBlock [
 
 	| className |
@@ -65,7 +66,7 @@ ClyTestedEnvironmentPlugin >> findTestCaseCovering: aClass ifAbsent: absentBlock
 		environment system classNamed: (className , 'Tests') asSymbol ifAbsent: absentBlock ]
 ]
 
-{ #category : #'tests lookup' }
+{ #category : 'tests lookup' }
 ClyTestedEnvironmentPlugin >> findTestMethodCovering: aMethod ifAbsent: aBlock [
 	| selectorString testCase |
 	aMethod isTestMethod ifTrue: [ ^ aBlock value ].
@@ -78,7 +79,7 @@ ClyTestedEnvironmentPlugin >> findTestMethodCovering: aMethod ifAbsent: aBlock [
 		ifNone: aBlock
 ]
 
-{ #category : #'tests lookup' }
+{ #category : 'tests lookup' }
 ClyTestedEnvironmentPlugin >> findTestedClassCoveredBy: aTestClass ifAbsent: absentBlock [
 
 	| className |
@@ -90,7 +91,7 @@ ClyTestedEnvironmentPlugin >> findTestedClassCoveredBy: aTestClass ifAbsent: abs
 	^absentBlock value
 ]
 
-{ #category : #'tests lookup' }
+{ #category : 'tests lookup' }
 ClyTestedEnvironmentPlugin >> normalizeSelectorForComparison: aString [
 	"Returns a normalized version of given string without colons and in all lowercase"
 	| selectorString selectorStringSize normalizedSelectorString normalizedSelectorStringSize |
@@ -115,7 +116,7 @@ ClyTestedEnvironmentPlugin >> normalizeSelectorForComparison: aString [
 		ifFalse: [ selectorString ]) asLowercase
 ]
 
-{ #category : #controlling }
+{ #category : 'controlling' }
 ClyTestedEnvironmentPlugin >> testRan: aTestSuiteEnded [
 	| event runTestCase testedClass |
 

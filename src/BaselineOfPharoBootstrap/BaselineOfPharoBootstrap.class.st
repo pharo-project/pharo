@@ -6,42 +6,43 @@ It is not supposed to be part of bootstrapped image because it is dependent on M
 This baseline includes several utility methods required to prepare data for the bootstrapping and initial image initialization.
 "
 Class {
-	#name : #BaselineOfPharoBootstrap,
-	#superclass : #BaselineOf,
-	#category : #BaselineOfPharoBootstrap
+	#name : 'BaselineOfPharoBootstrap',
+	#superclass : 'BaselineOf',
+	#category : 'BaselineOfPharoBootstrap',
+	#package : 'BaselineOfPharoBootstrap'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfPharoBootstrap class >> compilerPackageNames [
 
 	^ self packagesOfGroupNamed: #CompilerGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfPharoBootstrap class >> fileSystemPackageNames [
 
 	^ self packagesOfGroupNamed: #FileSystemGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfPharoBootstrap class >> kernelAdditionalPackagesNames [
 
 	^ self packagesOfGroupNamed: #AdditionalPackages
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfPharoBootstrap class >> kernelPackageNames [
 
 	^ self packagesOfGroupNamed: #KernelGroup
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfPharoBootstrap class >> multilingualPackageNames [
 
 	^ self packagesOfGroupNamed: #MultilingualGroup
 ]
 
-{ #category : #traversing }
+{ #category : 'traversing' }
 BaselineOfPharoBootstrap class >> packagesRecursiveIn: aGroupName [
 
 	| allMembers allPackagesInBaseline packages groups |
@@ -52,29 +53,29 @@ BaselineOfPharoBootstrap class >> packagesRecursiveIn: aGroupName [
 	^ packages , (groups flatCollect: [ :aInnerGroupName | self packagesRecursiveIn: aInnerGroupName ]).
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfPharoBootstrap class >> packagesToExportWithHermes [
 
 	^ self packagesRecursiveIn: 'ToLoadByHermes'
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 BaselineOfPharoBootstrap class >> sUnitPackageNames [
 
 	^ self packagesOfGroupNamed: #SUnitGroup
 ]
 
-{ #category : #baseline }
+{ #category : 'baselines' }
 BaselineOfPharoBootstrap >> baseline: spec [
 	<baseline>
 
 	spec for: #common do: [
 		spec package: 'AST-Core'.
 		spec package: 'Announcements-Core'.
-		spec package: 'Colors'.
 		spec package: 'Collections-Abstract'.
 		spec package: 'Collections-Arithmetic'.
 		spec package: 'Collections-Atomic'.
+		spec package: 'Collections-DoubleLinkedList'.
 		spec package: 'Collections-Native'.
 		spec package: 'Collections-Sequenceable'.
 		spec package: 'Collections-Stack'.
@@ -89,10 +90,10 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Hermes'.
 		spec package: 'Hermes-Extensions'.
 
-		spec package: 'Jobs'.
 		spec package: 'Kernel'.
+		spec package: 'Kernel-CodeModel'.
 		spec package: 'Kernel-BytecodeEncoders'.
-		spec package: 'Kernel-Chronology-Extras'.
+		spec package: 'System-Time'.
 		spec package: 'NumberParser'.
 
 		spec package: 'Math-Operations-Extensions'.
@@ -103,13 +104,9 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		
 		spec package: 'Transcript-NonInteractive'.
 		spec package: 'PharoBootstrap-Initialization'.
-		spec package: 'RPackage-Core'.
 		spec package: 'Random-Core'.
 		spec package: 'ReflectionMirrors-Primitives'.
-		spec package: 'Shift-Changes'.
 		spec package: 'Shift-ClassBuilder'.
-		spec package: 'Shift-ClassInstaller'.
-		spec package: 'Slot-Core'.
 		spec package: 'System-Announcements'.
 		spec package: 'System-BasicCommandLineHandler'.
 		spec package: 'System-CommandLine'.
@@ -119,36 +116,41 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'System-Platforms'.
 		spec package: 'System-SessionManager'.
 		spec package: 'System-Sources'.
-		spec package: 'System-SourcesCondenser'.
 		spec package: 'System-Support'.
 
 		spec package: 'UIManager'.
 		spec package: 'Zinc-Character-Encoding-Core'.
 		
 		spec package: 'FFI-Kernel'.
-				
-		spec package: 'CodeExport'.
+		
+		"Minimal command line handler for bootstrap.
+		Only using perform and environment #at:"
+		spec package: 'PerformMessageCommandLineHandler'.
+		
 		spec package: 'CodeImport'.
 		
 		spec package: 'CodeImportCommandLineHandlers'.
 		
+		spec package: 'Debugging-Utils'.
 		spec package: 'OpalCompiler-Core'.
 		
 		spec package: 'FileSystem-Core'.
 		spec package: 'FileSystem-Disk'.
 
+		spec package: 'System-NumberPrinting'.
 		spec package: 'SUnit-Core'.
 		spec package: 'SUnit-Tests'.
 		spec package: 'Kernel-Tests'.
 		spec package: 'JenkinsTools-Core'.
+		spec package: 'System-Model'.
 		spec package: 'InitializePackagesCommandLineHandler'.
 		
 
 		spec group: 'KernelGroup' with: {
 			'FFI-Kernel'.
 			'Announcements-Core'.
-			'Colors'.
 			'Collections-Abstract'.
+			'Collections-DoubleLinkedList'.
 			'Collections-Native'.
 			'Collections-Sequenceable'.
 			'Collections-Stack'.
@@ -161,25 +163,21 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'FileSystem-Path'.
 			'Hermes'.
 			'Kernel'.
+			'Kernel-CodeModel'.
 			'Kernel-BytecodeEncoders'.
-			'Network-UUID'.
 			'Transcript-NonInteractive'.
 			'PharoBootstrap-Initialization'.
-			'RPackage-Core'.
-			'Random-Core'.
-			'Shift-Changes'.
 			'Shift-ClassBuilder'.
-			'Shift-ClassInstaller'.
-			'Slot-Core'.
 			'System-Announcements'.
 			'System-BasicCommandLineHandler'.
 			'System-CommandLine'.
 			'System-CommandLineHandler'.
 			'System-Finalization'.
-			'System-Hashing'.
 			'System-Platforms'.
 			'System-SessionManager'.
 			'System-Sources'.
+			
+			'PerformMessageCommandLineHandler'.
 			'System-Support'.
 			'NumberParser'.
 
@@ -191,9 +189,10 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec group: 'AdditionalPackages' with: {
 			'ReflectionMirrors-Primitives'.
 			'InitializePackagesCommandLineHandler'.
-			'Kernel-Chronology-Extras'.
+			'System-Time'.
 			'Math-Operations-Extensions'.
 			'Debugging-Core'.
+			'System-NumberPrinting'.
 		}.
 
 		spec group: 'MultilingualGroup' with: {
@@ -203,14 +202,15 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'AST-Core'.
 			'Collections-Arithmetic'.
 			'Collections-Atomic'.
-			'CodeExport'.
 			'CodeImport'.
 			'CodeImportCommandLineHandlers'.
-			'Jobs'.
-			'System-SourcesCondenser'.
+			'Debugging-Utils'.
 			'OpalCompiler-Core'}.
 		
 		spec group: 'FileSystemGroup' with: {
+			'Random-Core'.
+			'System-Hashing'.
+			'Network-UUID'.
 			'FileSystem-Core'.
 			'FileSystem-Disk'}.
 
@@ -224,6 +224,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		}.
 
 		spec group: 'SUnitGroup' with: {
+			'System-Model'.
 			'SUnit-Core'.
 			'SUnit-Tests'.
 			'Kernel-Tests'.

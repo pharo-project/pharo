@@ -11,10 +11,10 @@ set_version_variables
 
 #Load VMMaker, used to convert images from 32 to 64 bits
 mkdir -p vmmaker && cd vmmaker
-wget https://github.com/pharo-project/pharo-32to64-converter/releases/download/v1.0.0/vmmaker-image.zip
+wget --progress=dot:giga https://github.com/pharo-project/pharo-32to64-converter/releases/download/v1.0.0/vmmaker-image.zip
 unzip vmmaker-image.zip
 ../../bootstrap/scripts/getPharoVM.sh 60
-wget http://files.pharo.org/sources/PharoV50.sources
+wget --progress=dot:giga http://files.pharo.org/sources/PharoV50.sources
 cd ..
 
 #We convert all files that are not full image (Pharo7.0-${IMAGE_KIND}-32bit-${HASH}.*)

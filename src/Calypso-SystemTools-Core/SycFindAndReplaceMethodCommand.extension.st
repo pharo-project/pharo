@@ -1,6 +1,6 @@
-Extension { #name : #SycFindAndReplaceMethodCommand }
+Extension { #name : 'SycFindAndReplaceMethodCommand' }
 
-{ #category : #'*Calypso-SystemTools-Core' }
+{ #category : '*Calypso-SystemTools-Core' }
 SycFindAndReplaceMethodCommand class >> methodContextMenuActivation [
 	<classAnnotation>
 

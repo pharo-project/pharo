@@ -1,17 +1,19 @@
 Class {
-	#name : #OCASTToDoTranslatorTest,
-	#superclass : #OCASTSingleBlockTranslatorTest,
-	#category : #'OpalCompiler-Tests-AST'
+	#name : 'OCASTToDoTranslatorTest',
+	#superclass : 'OCASTSingleBlockTranslatorTest',
+	#category : 'OpalCompiler-Tests-AST',
+	#package : 'OpalCompiler-Tests',
+	#tag : 'AST'
 }
 
-{ #category : #'building suites' }
+{ #category : 'building suites' }
 OCASTToDoTranslatorTest class >> testParameters [
 	^ super testParameters *
 		(ParametrizedTestMatrix new
-			forSelector: #optimization addOptions: { #optionInlineToDo . #optionInlineNone })
+			forSelector: #optimization addOptions: (self inliningOptionsFor: #optionInlineToDo))
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTToDoTranslatorTest >> testToDoExecutesBlock [
 
 
@@ -28,7 +30,7 @@ OCASTToDoTranslatorTest >> testToDoExecutesBlock [
 	self assert: result equals: 15
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTToDoTranslatorTest >> testToDoReturnsReceiver [
 
 
@@ -42,7 +44,7 @@ OCASTToDoTranslatorTest >> testToDoReturnsReceiver [
 	self assert: result equals: 1
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTToDoTranslatorTest >> testToDoWithCalculatedArguments [
 
 
@@ -61,7 +63,7 @@ OCASTToDoTranslatorTest >> testToDoWithCalculatedArguments [
 	self assert: result equals: 15
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTToDoTranslatorTest >> testToDoWithTempInBlock [
 
 	| result |
@@ -81,7 +83,7 @@ OCASTToDoTranslatorTest >> testToDoWithTempInBlock [
 	self assert: result equals: 15
 ]
 
-{ #category : #'tests - blocks - optimized' }
+{ #category : 'tests - blocks - optimized' }
 OCASTToDoTranslatorTest >> testToDoWithTempOutsideBlock [
 
 	| result |

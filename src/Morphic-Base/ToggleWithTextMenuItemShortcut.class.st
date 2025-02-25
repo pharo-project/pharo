@@ -3,24 +3,26 @@ I show a menu as a text.
 I'm the simplest mechanism and then, the default.
 "
 Class {
-	#name : #ToggleWithTextMenuItemShortcut,
-	#superclass : #ToggleMenuItemShortcut,
-	#category : #'Morphic-Base-Menus'
+	#name : 'ToggleWithTextMenuItemShortcut',
+	#superclass : 'ToggleMenuItemShortcut',
+	#category : 'Morphic-Base-Menus',
+	#package : 'Morphic-Base',
+	#tag : 'Menus'
 }
 
-{ #category : #testing }
+{ #category : 'testing' }
 ToggleWithTextMenuItemShortcut class >> canBeUsed [
 	"this is the default and is available as default to all platforms"
 	^ true
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ToggleWithTextMenuItemShortcut class >> priority [
 	"Lowest priority... last to be choosen"
 	^ 999
 ]
 
-{ #category : #drawing }
+{ #category : 'drawing' }
 ToggleWithTextMenuItemShortcut >> drawOn: aCanvas [
 	| keyBounds |
 
@@ -32,7 +34,7 @@ ToggleWithTextMenuItemShortcut >> drawOn: aCanvas [
 		color: self color
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ToggleWithTextMenuItemShortcut >> text [
 
 	^ keyText

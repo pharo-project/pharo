@@ -7,21 +7,23 @@ Instance variables:
 	predicate		<BlockClosure>
 "
 Class {
-	#name : #RxmPredicate,
-	#superclass : #RxmLink,
+	#name : 'RxmPredicate',
+	#superclass : 'RxmLink',
 	#instVars : [
 		'predicate'
 	],
-	#category : #'Regex-Core-Links'
+	#category : 'Regex-Core-Links',
+	#package : 'Regex-Core',
+	#tag : 'Links'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 RxmPredicate class >> with: unaryBlock [
 
 	^self new predicate: unaryBlock
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxmPredicate >> bePerform: aSelector [
 	"Match any single character that answers true  to this message."
 
@@ -30,7 +32,7 @@ RxmPredicate >> bePerform: aSelector [
 		RxParser doHandlingMessageNotUnderstood: [char perform: aSelector]]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxmPredicate >> bePerformNot: aSelector [
 	"Match any single character that answers false to this message."
 
@@ -39,7 +41,7 @@ RxmPredicate >> bePerformNot: aSelector [
 		RxParser doHandlingMessageNotUnderstood: [(char perform: aSelector) not]]
 ]
 
-{ #category : #matching }
+{ #category : 'matching' }
 RxmPredicate >> matchAgainst: aMatcher [
 	"Match if the predicate block evaluates to true when given the
 	current stream character as the argument."
@@ -52,7 +54,7 @@ RxmPredicate >> matchAgainst: aMatcher [
 			false ]
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RxmPredicate >> predicate: aBlock [
 	"This link will match any single character for which <aBlock>
 	evaluates to true."

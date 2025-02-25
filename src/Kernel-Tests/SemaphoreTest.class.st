@@ -5,23 +5,25 @@ Instance Variables none; does not have common test fixture accross all tests (be
 
 "
 Class {
-	#name : #SemaphoreTest,
-	#superclass : #ClassTestCase,
-	#category : #'Kernel-Tests-Processes'
+	#name : 'SemaphoreTest',
+	#superclass : 'ClassTestCase',
+	#category : 'Kernel-Tests-Processes',
+	#package : 'Kernel-Tests',
+	#tag : 'Processes'
 }
 
-{ #category : #coverage }
+{ #category : 'coverage' }
 SemaphoreTest >> classToBeTested [
 
 	^ Semaphore
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 SemaphoreTest >> criticalError [
 	Processor activeProcess terminate
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SemaphoreTest >> testAfterCriticalWait [
 	"This tests whether a semaphore that has just left the wait in Semaphore>>critical: leaves it with signaling the associated semaphore."
 
@@ -38,7 +40,7 @@ SemaphoreTest >> testAfterCriticalWait [
 	self assert: (s instVarNamed: #excessSignals) equals: 1
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SemaphoreTest >> testCritical [
 	| lock |
 	lock := Semaphore forMutualExclusion.
@@ -46,7 +48,7 @@ SemaphoreTest >> testCritical [
 	self assert: lock isSignaled
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SemaphoreTest >> testCriticalIfError [
 	| lock |
 	lock := Semaphore forMutualExclusion.
@@ -54,7 +56,7 @@ SemaphoreTest >> testCriticalIfError [
 	self assert: lock isSignaled
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SemaphoreTest >> testInCriticalWait [
 	"This tests whether a semaphore that has entered the wait in Semaphore>>critical:
 	leaves it without signaling the associated semaphore."
@@ -68,7 +70,7 @@ SemaphoreTest >> testInCriticalWait [
 	self assert: (s instVarNamed: #excessSignals) equals: 0
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SemaphoreTest >> testMutualExclusion [
 
 	| lock steps |
@@ -96,7 +98,7 @@ SemaphoreTest >> testMutualExclusion [
 	self assert: (steps hasEqualElements: #(startProcess1 startCritical1 startProcess2 endCritical1 startCritical2 endCritical2))
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SemaphoreTest >> testReturnsAsManyWaitsAsSignalsReceived [
 
 	| semaphore semaphoreReturnedOnce semaphoreReturnedTwice |
@@ -122,7 +124,7 @@ SemaphoreTest >> testReturnsAsManyWaitsAsSignalsReceived [
 	self assert: semaphoreReturnedTwice
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SemaphoreTest >> testSchedulesFIFO [
 	"Based only on wait time, independent of process priority"
 
@@ -147,7 +149,7 @@ SemaphoreTest >> testSchedulesFIFO [
 	self assert: higherPriorityResumed
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SemaphoreTest >> testSimpleCommunication [
 	"A process waiting on a signal will not proceed until one is sent"
 
@@ -171,43 +173,41 @@ SemaphoreTest >> testSimpleCommunication [
 	self assert: wasBlockFinished
 ]
 
-{ #category : #tests }
-SemaphoreTest >> testWaitTimeDuration [
-	"Ensure that wait: aDuration behaves properly"
+{ #category : 'tests' }
+SemaphoreTest >> testWaitAndWaitTimeoutTogether [
+	| semaphore value waitProcess waitTimeoutProcess |
+	semaphore := Semaphore new.
 
-	"Ensure that a timed out wait: aDuration returns true from the wait"
+	waitProcess := [ semaphore wait.
+	value := #wait ] fork.
 
-	self assert: (Semaphore new wait: 50 milliSeconds) identicalTo: true.
+	waitTimeoutProcess := [ semaphore waitTimeoutMilliseconds: 50.
+	value := #waitTimeout ] fork.
 
-	"Ensure that a signaled wait: aDuration returns false from the wait"
-	self assert: (Semaphore new signal wait: 50 milliSeconds) identicalTo: false
+	"Wait for the timeout to happen"
+	(Delay forMilliseconds: 100) wait.
+
+	"The waitTimeoutProcess should already have timed out.  This should release the waitProcess"
+	semaphore signal.
+
+	[ waitProcess isTerminated and: [ waitTimeoutProcess isTerminated ] ] whileFalse: [ (Delay forMilliseconds: 100) wait ].
+
+	self assert: value equals: #wait
 ]
 
-{ #category : #tests }
-SemaphoreTest >> testWaitTimeDurationWithCompletionAndTimeoutBlocks [
-	"Ensure that wait:onCompletion:onTimeout: behaves properly"
-
-	"Ensure that a timed out wait:onCompletion:onTimeout: returns the value of the timeout block"
-
-	self assert: (Semaphore new wait: 50 milliSeconds onCompletion: [ #completed ] onTimeout: [ #timeout ]) identicalTo: #timeout.
-
-	"Ensure that a signaled wait:onCompletion:onTimeout: returns the value of the completed block"
-	self assert: (Semaphore new signal wait: 50 milliSeconds onCompletion: [ #completed ] onTimeout: [ #timeout ]) identicalTo: #completed
-]
-
-{ #category : #tests }
+{ #category : 'tests' }
 SemaphoreTest >> testWaitTimeoutMSecs [
 	"Ensure that waitTimeoutMSecs behaves properly"
 
 	"Ensure that a timed out waitTimeoutMSecs: returns true from the wait"
 
-	self assert: (Semaphore new waitTimeoutMSecs: 50) identicalTo: true.
+	self assert: (Semaphore new waitTimeoutMilliseconds: 50) identicalTo: true.
 
 	"Ensure that a signaled waitTimeoutMSecs: returns false from the wait"
-	self assert: (Semaphore new signal waitTimeoutMSecs: 50) identicalTo: false
+	self assert: (Semaphore new signal waitTimeoutMilliseconds: 50) identicalTo: false
 ]
 
-{ #category : #tests }
+{ #category : 'tests' }
 SemaphoreTest >> testWaitTimeoutSecondsOnCompletionOnTimeout [
 	"Ensure that waitTimeoutSeconds:onCompletion:onTimeout: behaves properly"
 

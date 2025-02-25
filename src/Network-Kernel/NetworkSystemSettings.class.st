@@ -2,10 +2,9 @@
 I am NetworkSystemSettings, a class side API to manage various system network settings, mostly related to HTTP proxying.
 "
 Class {
-	#name : #NetworkSystemSettings,
-	#superclass : #Object,
+	#name : 'NetworkSystemSettings',
+	#superclass : 'Object',
 	#classVars : [
-		'BlabEmail',
 		'HTTPProxyExceptions',
 		'HTTPProxyPort',
 		'HTTPProxyServer',
@@ -17,10 +16,12 @@ Class {
 		'UseHTTPProxy',
 		'UseNetworkAuthentification'
 	],
-	#category : #'Network-Kernel-Base'
+	#category : 'Network-Kernel-Base',
+	#package : 'Network-Kernel',
+	#tag : 'Base'
 }
 
-{ #category : #settings }
+{ #category : 'settings' }
 NetworkSystemSettings class >> addHttpProxyException: domainName [
 	"Add a (partial, wildcard) domain name to the list of proxy exceptions"
 	"HTTPSocket addProxyException: '*.pharo.org'."
@@ -28,31 +29,21 @@ NetworkSystemSettings class >> addHttpProxyException: domainName [
 	self httpProxyExceptions add: domainName
 ]
 
-{ #category : #settings }
-NetworkSystemSettings class >> blabEmail [
-	^ BlabEmail ifNil: [ BlabEmail := '' ]
-]
-
-{ #category : #settings }
-NetworkSystemSettings class >> blabEmail: aBlabEmailString [
-	BlabEmail := aBlabEmailString
-]
-
-{ #category : #settings }
+{ #category : 'settings' }
 NetworkSystemSettings class >> httpProxyExceptions [
 	"Return a list of partial, wildcard domain name strings that define which servers should not be proxied"
 
 	^ HTTPProxyExceptions ifNil: [ HTTPProxyExceptions := OrderedCollection new ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 NetworkSystemSettings class >> httpProxyPort [
 	"Return the HTTP proxy port to use, an Integer"
 
 	^ HTTPProxyPort ifNil: [ HTTPProxyPort := 80 ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 NetworkSystemSettings class >> httpProxyPort: aPortNumber [
 	"Set the HTTP Proxy port to use to aPortNumber, use nil to reset"
 
@@ -61,7 +52,7 @@ NetworkSystemSettings class >> httpProxyPort: aPortNumber [
 	HTTPProxyPort := aPortNumber
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 NetworkSystemSettings class >> httpProxyServer [
 	"Return the hostname of the HTTP proxy server to use, a String.
 	Can be empty, when no HTTP proxy should be used."
@@ -69,7 +60,7 @@ NetworkSystemSettings class >> httpProxyServer [
 	^ HTTPProxyServer ifNil: [ '' ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 NetworkSystemSettings class >> httpProxyServer: aServerName [
 	"Set the hostname of the HTTP proxy server to use to aServerName.
 	Can be nil or empty, when no HTTP proxy should be used."
@@ -79,36 +70,36 @@ NetworkSystemSettings class >> httpProxyServer: aServerName [
 	HTTPProxyServer := aServerName ifNotNil: [ aServerName trimBoth ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 NetworkSystemSettings class >> isAnExceptionFor: url [
 	"Return true when the host of url matches any of our HTTP proxy exceptions, else return false"
 
 	 ^ self isHttpProxyException: url host
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 NetworkSystemSettings class >> isHttpProxyException: serverName [
 	"Return true when serverName matches any of our HTTP proxy exceptions, else return false"
 
 	^ self httpProxyExceptions anySatisfy: [ :domainName | domainName match: serverName ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NetworkSystemSettings class >> lastHTTPProxyPort [
 	^ LastHTTPProxyPort ifNil: [ LastHTTPProxyPort := HTTPProxyPort ]
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 NetworkSystemSettings class >> lastHTTPProxyServer [
 	^ LastHTTPProxyServer ifNil: [ LastHTTPProxyServer := HTTPProxyServer ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 NetworkSystemSettings class >> manageHttpProxyExceptions [
 	^ LastHTTPProxyExceptions ifNil:[ LastHTTPProxyExceptions := '']
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 NetworkSystemSettings class >> manageHttpProxyExceptions: aStringWithExceptions [
 
 	self removeAllHttpProxyExceptions.
@@ -122,8 +113,9 @@ NetworkSystemSettings class >> manageHttpProxyExceptions: aStringWithExceptions 
 	]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 NetworkSystemSettings class >> networkSettingsOn: aBuilder [
+
 	<systemsettings>
 	(aBuilder group: #network)
 		label: 'Network';
@@ -131,48 +123,44 @@ NetworkSystemSettings class >> networkSettingsOn: aBuilder [
 		noOrdering;
 		with: [
 			(aBuilder setting: #useHTTPProxy)
-				label: 'Use HTTP proxy' ;
+				label: 'Use HTTP proxy';
 				noOrdering;
 				default: false;
-		 		description: 'If checked then the you will be able to set a port number and a server name. If unchecked, then no http proxy is used.';
+				description:
+					'If checked then the you will be able to set a port number and a server name. If unchecked, then no http proxy is used.';
 				with: [
 					(aBuilder setting: #httpProxyPort)
-						label: 'Port' ;
+						label: 'Port';
 						default: 80;
 						description: 'The HTTP proxy port'.
 					(aBuilder setting: #httpProxyServer)
-						label: 'Server' ;
+						label: 'Server';
 						default: '';
 						description: 'The HTTP proxy server (i.e. proxy.univ-brest.fr)'.
 					(aBuilder setting: #manageHttpProxyExceptions)
-						label: 'Exceptions' ;
+						label: 'Exceptions';
 						target: NetworkSystemSettings;
 						default: '';
-						description: 'Domains to avoid to proxy (separated by ;)'
-				].
+						description: 'Domains to avoid to proxy (separated by ;)' ].
 			(aBuilder setting: #useNetworkAuthentification)
-				label: 'Proxy authentication' ;
+				label: 'Proxy authentication';
 				noOrdering;
 				default: false;
-		 		description: 'If checked then you will be able to enter a user name and a password for network authentification. Store  HTTP 1.0 basic authentication credentials. Note: this is an ugly hack that stores your password in your image.  It''s just enought to get you going if you use a firewall that requires authentication';
+				description:
+					'If checked then you will be able to enter a user name and a password for network authentification. Store  HTTP 1.0 basic authentication credentials. Note: this is an ugly hack that stores your password in your image.  It''s just enought to get you going if you use a firewall that requires authentication';
 				with: [
 					(aBuilder setting: #proxyUser)
-						label: 'User name' ;
+						label: 'User name';
 						default: '';
 						description: 'The proxy user name'.
 					(aBuilder setting: #proxyPassword)
 						type: #Password;
 						default: '';
-						label: 'Password' ;
-						description: 'The user password'].
-			(aBuilder setting: #blabEmail)
-				label: 'Blab email' ;
-				ghostHelp: 'somebody@some.where';
-				default: '';
-				description: 'Enter blab email of the form ''somebody@some.where''. It can be empty']
+						label: 'Password';
+						description: 'The user password' ] ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 NetworkSystemSettings class >> proxyPassword [
 	"Return the HTTP proxy password to use, if any. Can be empty."
 
@@ -181,14 +169,14 @@ NetworkSystemSettings class >> proxyPassword [
 		ifNotNil: [ ProxyPassword base64Decoded utf8Decoded ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 NetworkSystemSettings class >> proxyPassword: aPassword [
 	"Set the HTTP proxy password. Can be empty or nil to reset"
 
 	ProxyPassword := aPassword ifNotNil: [ aPassword utf8Encoded base64Encoded ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 NetworkSystemSettings class >> proxyUser [
 	"Return the HTTP proxy user to use, if any. Can be empty."
 
@@ -197,33 +185,33 @@ NetworkSystemSettings class >> proxyUser [
 		ifNotNil: [ ProxyUser base64Decoded utf8Decoded ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 NetworkSystemSettings class >> proxyUser: aUser [
 	"Set the HTTP proxy user. Can be empty or nil to reset"
 
 	ProxyUser := aUser ifNotNil: [ aUser utf8Encoded base64Encoded ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 NetworkSystemSettings class >> removeAllHttpProxyExceptions [
 	self httpProxyExceptions removeAll
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 NetworkSystemSettings class >> removeHttpProxyException: domainName [
 	"Remove a (partial, wildcard) domain name from the list of proxy exceptions"
 
 	self httpProxyExceptions remove: domainName ifAbsent: []
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 NetworkSystemSettings class >> useHTTPProxy [
 	"Should an HTTP proxy be used ? This is a global switch."
 
 	^ UseHTTPProxy ifNil: [ UseHTTPProxy := false ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 NetworkSystemSettings class >> useHTTPProxy: aBoolean [
 	"Set whether an HTTP proxy should be used. This is a global switch."
 
@@ -238,7 +226,7 @@ NetworkSystemSettings class >> useHTTPProxy: aBoolean [
 			self httpProxyServer: nil ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 NetworkSystemSettings class >> useNetworkAuthentification [
 	"Should authentication be used when accessing the HTTP proxy ?
 	This is a switch over username/password."
@@ -246,7 +234,7 @@ NetworkSystemSettings class >> useNetworkAuthentification [
 	^ UseNetworkAuthentification ifNil: [ UseNetworkAuthentification := false ]
 ]
 
-{ #category : #settings }
+{ #category : 'settings' }
 NetworkSystemSettings class >> useNetworkAuthentification: aBoolean [
 	"Set whether authentication should be used when accessing the HTTP proxy.
 	This is a switch over username/password."

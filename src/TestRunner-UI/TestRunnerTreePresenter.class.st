@@ -2,19 +2,20 @@
 I am a mini UI TestRunner and i present the result as a Tree.
 "
 Class {
-	#name : #TestRunnerTreePresenter,
-	#superclass : #TestRunnerAbstractPresenter,
-	#category : #'TestRunner-UI'
+	#name : 'TestRunnerTreePresenter',
+	#superclass : 'TestRunnerAbstractPresenter',
+	#category : 'TestRunner-UI',
+	#package : 'TestRunner-UI'
 }
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 TestRunnerTreePresenter class >> open [ 
 	<script>
 	
 	^ self new open
 ]
 
-{ #category : #'presenters-initialization' }
+{ #category : 'presenters-initialization' }
 TestRunnerTreePresenter >> childreenFor: aParent [
 
 	aParent = #failures ifTrue: [ ^ runner result failures ].
@@ -23,13 +24,13 @@ TestRunnerTreePresenter >> childreenFor: aParent [
 	^ {  }
 ]
 
-{ #category : #'buttons-presenters-initialization' }
+{ #category : 'buttons-presenters-initialization' }
 TestRunnerTreePresenter >> displayTestCases [
 
 	self generateTree
 ]
 
-{ #category : #'presenters-initialization' }
+{ #category : 'presenters-initialization' }
 TestRunnerTreePresenter >> generateTree [
 
 	resultItemsPresenter
@@ -39,7 +40,7 @@ TestRunnerTreePresenter >> generateTree [
 		expandPath: #( 1 )
 ]
 
-{ #category : #'presenters-initialization' }
+{ #category : 'presenters-initialization' }
 TestRunnerTreePresenter >> initializeResultItemsPresenter [
 
 	resultItemsPresenter := self newTreeTable.
@@ -56,7 +57,7 @@ TestRunnerTreePresenter >> initializeResultItemsPresenter [
 	self generateTree
 ]
 
-{ #category : #'presenters-initialization' }
+{ #category : 'presenters-initialization' }
 TestRunnerTreePresenter >> menu [
 
 	^ self newMenu
@@ -75,7 +76,7 @@ TestRunnerTreePresenter >> menu [
 						  action: [ self debugSelectedTest ] ] ]
 ]
 
-{ #category : #'presenters-initialization' }
+{ #category : 'presenters-initialization' }
 TestRunnerTreePresenter >> rootCandidates [
 
 	| rootCandidats |
@@ -85,7 +86,7 @@ TestRunnerTreePresenter >> rootCandidates [
 	^ rootCandidats
 ]
 
-{ #category : #'presenters-initialization' }
+{ #category : 'presenters-initialization' }
 TestRunnerTreePresenter >> windowName [
 	^ 'UIRunner (Tree)'
 ]

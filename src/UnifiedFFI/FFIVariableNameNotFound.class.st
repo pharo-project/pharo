@@ -2,12 +2,14 @@
 I am FFIVariableNameNotFound, an exception to indicate that a variable is not correctly used inside an ffi function
 "
 Class {
-	#name : #FFIVariableNameNotFound,
-	#superclass : #NotFound,
-	#category : #'UnifiedFFI-Exceptions'
+	#name : 'FFIVariableNameNotFound',
+	#superclass : 'NotFound',
+	#category : 'UnifiedFFI-Exceptions',
+	#package : 'UnifiedFFI',
+	#tag : 'Exceptions'
 }
 
-{ #category : #private }
+{ #category : 'private' }
 FFIVariableNameNotFound >> standardMessageText [
 	"Generate a standard textual description"
 

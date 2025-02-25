@@ -12,12 +12,14 @@ And they should implement #toolbarOrder method
 
 "
 Class {
-	#name : #ClySwitchClassMetaLevelCommand,
-	#superclass : #ClySwitchBrowserModeCommand,
-	#category : #'Calypso-SystemTools-FullBrowser-Commands-MetaLevel'
+	#name : 'ClySwitchClassMetaLevelCommand',
+	#superclass : 'ClySwitchBrowserModeCommand',
+	#category : 'Calypso-SystemTools-FullBrowser-Commands-MetaLevel',
+	#package : 'Calypso-SystemTools-FullBrowser',
+	#tag : 'Commands-MetaLevel'
 }
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClySwitchClassMetaLevelCommand class >> fullBrowserToolbarActivation [
 	<classAnnotation>
 
@@ -27,34 +29,34 @@ ClySwitchClassMetaLevelCommand class >> fullBrowserToolbarActivation [
 		for: ClyFullBrowserClassContext
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySwitchClassMetaLevelCommand class >> isAbstract [
 	^self = ClySwitchClassMetaLevelCommand
 ]
 
-{ #category : #activation }
+{ #category : 'activation' }
 ClySwitchClassMetaLevelCommand class >> toolbarOrder [
 	<classAnnotationDependency>
 
 	self subclassResponsibility
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClySwitchClassMetaLevelCommand >> defaultMenuItemName [
 	^self metaLevelScope defaultName capitalized
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClySwitchClassMetaLevelCommand >> execute [
 	browser switchToMetaLevelScope: self metaLevelScope
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ClySwitchClassMetaLevelCommand >> isAppliedToBrowser [
 	^browser metaLevelScope = self metaLevelScope
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClySwitchClassMetaLevelCommand >> metaLevelScope [
 	self subclassResponsibility
 ]

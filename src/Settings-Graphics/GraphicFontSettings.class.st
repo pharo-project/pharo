@@ -2,12 +2,22 @@
 Settings for the fonts
 "
 Class {
-	#name : #GraphicFontSettings,
-	#superclass : #Model,
-	#category : #'Settings-Graphics'
+	#name : 'GraphicFontSettings',
+	#superclass : 'Model',
+	#classVars : [
+		'FontSize'
+	],
+	#category : 'Settings-Graphics',
+	#package : 'Settings-Graphics'
 }
 
-{ #category : #fonts }
+{ #category : 'fonts' }
+GraphicFontSettings class >> defaulFontSize [
+
+	^ #medium
+]
+
+{ #category : 'fonts' }
 GraphicFontSettings class >> displayScaleFactorForStyleNamed: aSymbol [
 
 	^ (#(#(#superTiny 0.6) #(#tiny 0.8) #(#small 1) #(#medium 1.4) #(#large 1.6) #(veryLarge 2) #(huge 2.7))
@@ -15,45 +25,48 @@ GraphicFontSettings class >> displayScaleFactorForStyleNamed: aSymbol [
 			ifNotNil: [:info | info second]
 ]
 
-{ #category : #fonts }
-GraphicFontSettings class >> fontChoiceButtonForStyle: aSymbol label: aLabel [
-	| label |
-	label := StringMorph
-				contents: aLabel asString
-				font: (TextStyle default fontOfPointSize: (StandardFonts pointSizeForStyleNamed: aSymbol)).
-	^ (self theme
-		newButtonIn: self
-		for: self
-		getState: nil
-		action: #setFontsToStyleNamed:
-		arguments: { aSymbol }
-		getEnabled: nil
-		getLabel: nil
-		help: ('Change font style to ', aLabel) translated)
-			label: label;
-			yourself
+{ #category : 'fonts' }
+GraphicFontSettings class >> fontSize [
+
+	^ FontSize
+		ifNil: [ FontSize := self defaulFontSize ]
 ]
 
-{ #category : #fonts }
-GraphicFontSettings class >> fontSizeRow [
-	^ self theme newRowIn: self for: {
-			self theme buttonLabelForText: 'Predefined styles: ' translated.
-			self fontChoiceButtonForStyle: #small label: 'Small' translated.
-			self fontChoiceButtonForStyle: #medium label: 'Medium' translated.
-			self fontChoiceButtonForStyle: #large label: 'Large' translated.
-			self fontChoiceButtonForStyle: #veryLarge label: 'Very large' translated.
-			self fontChoiceButtonForStyle: #huge label: 'Huge' translated.
-	}
+{ #category : 'fonts' }
+GraphicFontSettings class >> fontSize: aSymbol [
+
+	FontSize := aSymbol.
+	self setFontsToStyleNamed: aSymbol.
 ]
 
-{ #category : #fonts }
+{ #category : 'fonts' }
+GraphicFontSettings class >> fontSizeRowSettingsOn: aBuilder [
+	<systemsettings>
+
+	(aBuilder pickOne: #fontSize)
+		parent: #standardFonts;
+		label: 'Predefined Styles';
+		description: '';
+		target: GraphicFontSettings;		
+		selector: #fontSize;
+		default: self fontSize;
+		domainValues: {
+				('Small' -> #small).
+				('Medium' -> #medium).
+				('Large' -> #large).
+				('Very large' -> #veryLarge).
+				('Huge' -> #huge) }
+]
+
+{ #category : 'fonts' }
 GraphicFontSettings class >> resetAllFontToDefault [
+
 	StandardFonts setAllStandardFontsTo: StandardFonts defaultFont.
 	SettingBrowser refreshAllSettingBrowsers.
-	EditorFindReplaceDialogWindow cleanUp
+
 ]
 
-{ #category : #fonts }
+{ #category : 'fonts' }
 GraphicFontSettings class >> resetAllFontToDefaultButton [
 	^ (self theme
 		newButtonIn: self
@@ -74,7 +87,7 @@ GraphicFontSettings class >> resetAllFontToDefaultButton [
 		yourself
 ]
 
-{ #category : #fonts }
+{ #category : 'fonts' }
 GraphicFontSettings class >> setFontsToStyleNamed: aSymbol [
 
 	(self class environment includesKey: #SourceCodeFonts)
@@ -84,16 +97,15 @@ GraphicFontSettings class >> setFontsToStyleNamed: aSymbol [
 	WorldMorph displayScaleFactor: (self displayScaleFactorForStyleNamed: aSymbol).
 
 	SettingBrowser refreshAllSettingBrowsers.
-	EditorFindReplaceDialogWindow cleanUp
+
 ]
 
-{ #category : #fonts }
+{ #category : 'fonts' }
 GraphicFontSettings class >> standardFontsSettingsOn: aBuilder [
 	<systemsettings>
 	(aBuilder group: #standardFonts)
 		label: 'Standard fonts';
 		target: StandardFonts;
-		dialog: [self fontSizeRow];
 		parent: #appearance;
 		order: 4;
 		with: [

@@ -9,15 +9,17 @@ I can be easily created by sending the #withoutRepetition message to another fet
 (GenericComplishonFetcher onCollection: aCollection) withoutRepetition.
 "
 Class {
-	#name : #CoAvoidRepeatedFetcher,
-	#superclass : #CoFetcherDecorator,
+	#name : 'CoAvoidRepeatedFetcher',
+	#superclass : 'CoFetcherDecorator',
 	#instVars : [
 		'elements'
 	],
-	#category : #'HeuristicCompletion-Model-Core'
+	#category : 'HeuristicCompletion-Model-Core',
+	#package : 'HeuristicCompletion-Model',
+	#tag : 'Core'
 }
 
-{ #category : #enumerating }
+{ #category : 'enumerating' }
 CoAvoidRepeatedFetcher >> entriesDo: aBlock [
 	decoree
 		entriesDo: [ :elem |
@@ -28,20 +30,20 @@ CoAvoidRepeatedFetcher >> entriesDo: aBlock [
 					aBlock value: elem ] ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 CoAvoidRepeatedFetcher >> hasAlreadyReturned: anEntry [
 
 	^ elements includes: anEntry contents asSymbol
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CoAvoidRepeatedFetcher >> initialize [
 
 	super initialize.
 	elements := Set new
 ]
 
-{ #category : #resetting }
+{ #category : 'resetting' }
 CoAvoidRepeatedFetcher >> reset [
 
 	super reset.

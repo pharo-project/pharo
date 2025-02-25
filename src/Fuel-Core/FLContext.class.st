@@ -6,49 +6,51 @@ I make information available to any objects participating in the serialization o
 Users should use the TFLConfigurable trait and send #context to themselves to obtain my current instance.
 "
 Class {
-	#name : #FLContext,
-	#superclass : #Object,
+	#name : 'FLContext',
+	#superclass : 'Object',
 	#traits : 'TFLConfigurable',
 	#classTraits : 'TFLConfigurable classTrait',
 	#instVars : [
 		'map'
 	],
-	#category : #'Fuel-Core-Configuration'
+	#category : 'Fuel-Core-Configuration',
+	#package : 'Fuel-Core',
+	#tag : 'Configuration'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLContext >> analysis [
 	^ map at: #analysis
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLContext >> analysis: anAnalysis [
 	map
 		at: #analysis
 		put: anAnalysis
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 FLContext >> finalizeOperations [
 	self finalizers do: [ :finalizer |
 		finalizer value ]
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 FLContext >> finalizeStream [
 	self configuration shouldFinalizeStream ifFalse: [ ^ self ].
 	
 	self configuration streamFinalizer value: self stream
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 FLContext >> finalizers [
 	^ map
 		at: #finalizers
 		ifAbsent: [ #() ]
 ]
 
-{ #category : #'exception-handling' }
+{ #category : 'exception-handling' }
 FLContext >> handleObjectLimitExceeded [
 	map
 		at: #objectLimitExceededWarningRaised
@@ -60,35 +62,35 @@ FLContext >> handleObjectLimitExceeded [
 	FLObjectLimitExceededWarning signal
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 FLContext >> initialize [
 	super initialize.
 	
 	map := IdentityDictionary new
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLContext >> materializedObjects [
 	^ map
 		at: #materializedObjects
 		ifAbsentPut: [ FLMaterializedObjects new ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLContext >> object [
 	^ map
 		at: #object
 		ifAbsentPut: [ self configuration object ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLContext >> object: anObject [
 	map
 		at: #object
 		put: anObject
 ]
 
-{ #category : #finalization }
+{ #category : 'finalization' }
 FLContext >> registerFinalizer: aBlock [
 	(map
 		at: #finalizers
@@ -96,21 +98,21 @@ FLContext >> registerFinalizer: aBlock [
 			add: aBlock
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLContext >> stream [
 	^ map
 		at: #stream
 		ifAbsentPut: [ self configuration streamFactory value ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 FLContext >> stream: aStream [
 	^ map
 		at: #stream
 		put: aStream
 ]
 
-{ #category : #evaluating }
+{ #category : 'evaluating' }
 FLContext >> useDuring: aBlock [
 	^ FLCurrentContext
 		value: self

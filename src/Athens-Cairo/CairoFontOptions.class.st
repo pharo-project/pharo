@@ -2,29 +2,31 @@
 i represent various font options exposed by cairo library
 "
 Class {
-	#name : #CairoFontOptions,
-	#superclass : #FFIExternalObject,
+	#name : 'CairoFontOptions',
+	#superclass : 'FFIExternalObject',
 	#traits : 'TCairoLibrary',
 	#classTraits : 'TCairoLibrary classTrait',
 	#pools : [
 		'AthensCairoDefinitions'
 	],
-	#category : #'Athens-Cairo-Text'
+	#category : 'Athens-Cairo-Text',
+	#package : 'Athens-Cairo',
+	#tag : 'Text'
 }
 
-{ #category : #finalizing }
+{ #category : 'finalizing' }
 CairoFontOptions class >> finalizeResourceData: aData [
 	"finalize the external resource data, returned by #resourceData on instance side"
 
 	self primDestroy: aData
 ]
 
-{ #category : #'instance creation' }
+{ #category : 'instance creation' }
 CairoFontOptions class >> new [
 	^ self primCreate initialize
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CairoFontOptions class >> primCreate [
 "cairo_font_options_t * cairo_font_options_create        (void);
 
@@ -37,7 +39,7 @@ Returns :
 	^ self ffiCall: #(CairoFontOptions cairo_font_options_create ())
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 CairoFontOptions class >> primDestroy: anOptions [
 "void                cairo_font_options_destroy          (cairo_font_options_t *options);
 
@@ -48,101 +50,101 @@ options :
 	^ self ffiCall: #(void cairo_font_options_destroy (size_t anOptions))
 ]
 
-{ #category : #antialiasing }
+{ #category : 'antialiasing' }
 CairoFontOptions >> aaBest [
 
 	^ self setAA: CAIRO_ANTIALIAS_BEST
 ]
 
-{ #category : #antialiasing }
+{ #category : 'antialiasing' }
 CairoFontOptions >> aaDefault [
 
 	^ self setAA: CAIRO_ANTIALIAS_DEFAULT
 ]
 
-{ #category : #antialiasing }
+{ #category : 'antialiasing' }
 CairoFontOptions >> aaFast [
 
 	^ self setAA: CAIRO_ANTIALIAS_FAST
 ]
 
-{ #category : #antialiasing }
+{ #category : 'antialiasing' }
 CairoFontOptions >> aaGood [
 
 	^ self setAA: CAIRO_ANTIALIAS_GOOD
 ]
 
-{ #category : #antialiasing }
+{ #category : 'antialiasing' }
 CairoFontOptions >> aaGray [
 
 	^ self setAA: CAIRO_ANTIALIAS_GRAY
 ]
 
-{ #category : #antialiasing }
+{ #category : 'antialiasing' }
 CairoFontOptions >> aaNone [
 
 	^ self setAA: CAIRO_ANTIALIAS_NONE
 ]
 
-{ #category : #antialiasing }
+{ #category : 'antialiasing' }
 CairoFontOptions >> aaSubpixel [
 
 	^ self setAA: CAIRO_ANTIALIAS_SUBPIXEL
 ]
 
-{ #category : #'hint options' }
+{ #category : 'hint options' }
 CairoFontOptions >> hintMetricsDefault [
 	^ self setHintMetrics: CAIRO_HINT_METRICS_DEFAULT
 ]
 
-{ #category : #'hint options' }
+{ #category : 'hint options' }
 CairoFontOptions >> hintMetricsOff [
 	^ self setHintMetrics: CAIRO_HINT_METRICS_OFF
 ]
 
-{ #category : #'hint options' }
+{ #category : 'hint options' }
 CairoFontOptions >> hintMetricsOn [
 	^ self setHintMetrics: CAIRO_HINT_METRICS_ON
 ]
 
-{ #category : #'hint options' }
+{ #category : 'hint options' }
 CairoFontOptions >> hintStyleDefault [
 	^ self setHintStyle: CAIRO_HINT_STYLE_DEFAULT
 ]
 
-{ #category : #'hint options' }
+{ #category : 'hint options' }
 CairoFontOptions >> hintStyleFull [
 	^ self setHintStyle: CAIRO_HINT_STYLE_FULL
 ]
 
-{ #category : #'hint options' }
+{ #category : 'hint options' }
 CairoFontOptions >> hintStyleMedium [
 	^ self setHintStyle: CAIRO_HINT_STYLE_MEDIUM
 ]
 
-{ #category : #'hint options' }
+{ #category : 'hint options' }
 CairoFontOptions >> hintStyleNone [
 	^ self setHintStyle: CAIRO_HINT_STYLE_NONE
 ]
 
-{ #category : #'hint options' }
+{ #category : 'hint options' }
 CairoFontOptions >> hintStyleSlight [
 	^ self setHintStyle: CAIRO_HINT_STYLE_SLIGHT
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CairoFontOptions >> initialize [
 	self autoRelease.
 	self setDefaults
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 CairoFontOptions >> resourceData [
 
 	^ handle value
 ]
 
-{ #category : #antialiasing }
+{ #category : 'antialiasing' }
 CairoFontOptions >> setAA: antialias [
 
 "cairo_font_options_set_antialias ()
@@ -161,13 +163,13 @@ antialias :
 	void cairo_font_options_set_antialias (self, uint antialias))
 ]
 
-{ #category : #defaults }
+{ #category : 'defaults' }
 CairoFontOptions >> setDefaults [
 
 	self hintStyleSlight; hintMetricsOff; subpixelOrderRGB; aaSubpixel
 ]
 
-{ #category : #'hint options' }
+{ #category : 'hint options' }
 CairoFontOptions >> setHintMetrics: hintMetrics [
 "
 	void	cairo_font_options_set_hint_metrics (cairo_font_options_t *options,
@@ -179,7 +181,7 @@ CairoFontOptions >> setHintMetrics: hintMetrics [
 	^ self ffiCall: #(void cairo_font_options_set_hint_metrics (self,  uint hintMetrics))
 ]
 
-{ #category : #'hint options' }
+{ #category : 'hint options' }
 CairoFontOptions >> setHintStyle: aStyle [
 	"cairo_font_options_set_hint_style ()
 
@@ -191,7 +193,7 @@ Sets the hint style for font outlines for the font options object. This controls
 		void cairo_font_options_set_hint_style (self, uint aStyle))
 ]
 
-{ #category : #'subpixel order' }
+{ #category : 'subpixel order' }
 CairoFontOptions >> setSubpixelOrder: order [
 	"void cairo_font_options_set_subpixel_order
 		(cairo_font_options_t *options,
@@ -200,27 +202,27 @@ CairoFontOptions >> setSubpixelOrder: order [
 		void cairo_font_options_set_subpixel_order (self, uint order))
 ]
 
-{ #category : #'subpixel order' }
+{ #category : 'subpixel order' }
 CairoFontOptions >> subpixelOrderBGR [
 	^ self setSubpixelOrder: CAIRO_SUBPIXEL_ORDER_BGR
 ]
 
-{ #category : #'subpixel order' }
+{ #category : 'subpixel order' }
 CairoFontOptions >> subpixelOrderDefault [
 	^ self setSubpixelOrder: CAIRO_SUBPIXEL_ORDER_DEFAULT
 ]
 
-{ #category : #'subpixel order' }
+{ #category : 'subpixel order' }
 CairoFontOptions >> subpixelOrderRGB [
 	^ self setSubpixelOrder: CAIRO_SUBPIXEL_ORDER_RGB
 ]
 
-{ #category : #'subpixel order' }
+{ #category : 'subpixel order' }
 CairoFontOptions >> subpixelOrderVBGR [
 	^ self setSubpixelOrder: CAIRO_SUBPIXEL_ORDER_VBGR
 ]
 
-{ #category : #'subpixel order' }
+{ #category : 'subpixel order' }
 CairoFontOptions >> subpixelOrderVRGB [
 	^ self setSubpixelOrder: CAIRO_SUBPIXEL_ORDER_VRGB
 ]

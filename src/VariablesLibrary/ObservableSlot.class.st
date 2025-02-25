@@ -26,12 +26,14 @@ Internal Representation and Key Implementation Points.
 	I am wrapping a ObservableValueHolder in order to store the content of the variable and to register the actions to execute when it changes.
 "
 Class {
-	#name : #ObservableSlot,
-	#superclass : #IndexedSlot,
-	#category : #'VariablesLibrary-Observable'
+	#name : 'ObservableSlot',
+	#superclass : 'IndexedSlot',
+	#category : 'VariablesLibrary-Observable',
+	#package : 'VariablesLibrary',
+	#tag : 'Observable'
 }
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 ObservableSlot >> emitStore: aMethodBuilder [
 	"generate bytecode for 'varName value: <stackTop>', make sure to preserve the stackTop"
 
@@ -49,41 +51,44 @@ ObservableSlot >> emitStore: aMethodBuilder [
 	aMethodBuilder popTop
 ]
 
-{ #category : #'code generation' }
+{ #category : 'code generation' }
 ObservableSlot >> emitValue: aMethodBuilder [
 	"Push the value holder into the stack"
 	aMethodBuilder pushInstVar: index.
 	aMethodBuilder send: #value
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 ObservableSlot >> initialize: anObject [
 	super write: ObservableValueHolder new to: anObject
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
 ObservableSlot >> isObservableSlot [
 
 	^ true
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 ObservableSlot >> rawRead: anObject [
+	<reflection: 'Object Inspection - State inspection'>
 	^ super read: anObject
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 ObservableSlot >> read: anObject [
+	<reflection: 'Object Inspection - State inspection'>
 	^ (self rawRead: anObject) value
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 ObservableSlot >> wantsInitialization [
 	^ true
 ]
 
-{ #category : #'meta-object-protocol' }
+{ #category : 'meta-object-protocol' }
 ObservableSlot >> write: aValue to: anObject [
+	<reflection: 'Object Modification - State modification'>
 	(self rawRead: anObject) ifNotNil: [ :v | v value: aValue ].
 	^ aValue
 ]

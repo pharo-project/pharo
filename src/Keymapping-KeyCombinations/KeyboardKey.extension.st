@@ -1,12 +1,12 @@
-Extension { #name : #KeyboardKey }
+Extension { #name : 'KeyboardKey' }
 
-{ #category : #'*Keymapping-KeyCombinations' }
+{ #category : '*Keymapping-KeyCombinations' }
 KeyboardKey >> alt [
 
 	^ KMModifier alt + self
 ]
 
-{ #category : #'*Keymapping-KeyCombinations' }
+{ #category : '*Keymapping-KeyCombinations' }
 KeyboardKey >> asKeyCombination [
 
 	^ KMSingleKeyCombination new
@@ -14,31 +14,31 @@ KeyboardKey >> asKeyCombination [
 		  yourself
 ]
 
-{ #category : #'*Keymapping-KeyCombinations' }
+{ #category : '*Keymapping-KeyCombinations' }
 KeyboardKey >> command [
 
 	^ KMModifier command + self
 ]
 
-{ #category : #'*Keymapping-KeyCombinations' }
+{ #category : '*Keymapping-KeyCombinations' }
 KeyboardKey >> control [
 
 	^ KMModifier control + self
 ]
 
-{ #category : #'*Keymapping-KeyCombinations' }
+{ #category : '*Keymapping-KeyCombinations' }
 KeyboardKey >> ctrl [
 
 	^ KMModifier ctrl + self
 ]
 
-{ #category : #'*Keymapping-KeyCombinations' }
+{ #category : '*Keymapping-KeyCombinations' }
 KeyboardKey >> meta [
 
 	^ KMModifier meta + self
 ]
 
-{ #category : #'*Keymapping-KeyCombinations' }
+{ #category : '*Keymapping-KeyCombinations' }
 KeyboardKey >> shift [
 
 	^ KMModifier shift + self

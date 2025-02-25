@@ -4,18 +4,20 @@ I am responsible of finding rotten tests in a TestCase,
 A rotten test is a test referencing an assertion method in its source code but does not call it at runtime.
 "
 Class {
-	#name : #RottenTestsFinder,
-	#superclass : #SUnitVisitor,
+	#name : 'RottenTestsFinder',
+	#superclass : 'SUnitVisitor',
 	#instVars : [
 		'rottenTests',
 		'visitableObject',
 		'testsVisitedCount',
 		'testsRunCount'
 	],
-	#category : #'RottenTestsFinder-Core'
+	#category : 'RottenTestsFinder-Core',
+	#package : 'RottenTestsFinder',
+	#tag : 'Core'
 }
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 RottenTestsFinder class >> analyze: aVisitableObject [
 	^ self new
 		visitableObject: aVisitableObject;
@@ -23,7 +25,7 @@ RottenTestsFinder class >> analyze: aVisitableObject [
 		rottenTests
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RottenTestsFinder class >> assertionCompiledMethods [
 	"Returns the list of CompiledMethods used to assert things during tests."
 	^ ((Object methodsInProtocol: 'asserting') , (TestAsserter methodsInProtocol: 'asserting')
@@ -35,13 +37,13 @@ RottenTestsFinder class >> assertionCompiledMethods [
 				#(#fail: #fail #signalFailure: #skip #skip:) includes: compiledMethod selector ]
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RottenTestsFinder class >> assertionSelectors [
 	"Returns the list of selectors corresponding to methods used to assert things during tests."
 	^ self assertionCompiledMethods collect: #selector
 ]
 
-{ #category : #analyzing }
+{ #category : 'analyzing' }
 RottenTestsFinder >> analyze [
 	self runTests.
 
@@ -50,51 +52,51 @@ RottenTestsFinder >> analyze [
 		testsRunCount: testsRunCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RottenTestsFinder >> assertionCompiledMethods [
 	^ self class assertionCompiledMethods
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RottenTestsFinder >> assertionSelectors [
 	^ self class assertionSelectors
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 RottenTestsFinder >> initialize [
 	super initialize.
 	testsVisitedCount := 0.
 	testsRunCount := 0
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RottenTestsFinder >> rottenTests [
 	^ rottenTests
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RottenTestsFinder >> rottenTests: anObject [
 	rottenTests := anObject
 ]
 
-{ #category : #private }
+{ #category : 'private' }
 RottenTestsFinder >> runTests [
 	rottenTests := RottenTestsSet new.
 	self visitableObject
 		acceptSUnitVisitor: self
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RottenTestsFinder >> testsRunCount [
 	^ testsRunCount
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RottenTestsFinder >> testsVisitedCount [
 	^ testsVisitedCount
 ]
 
-{ #category : #visiting }
+{ #category : 'visiting' }
 RottenTestsFinder >> visitTestCase: aTestCase [
 	| compiledMethod rootCallNode callSites |
 	testsVisitedCount := testsVisitedCount + 1.
@@ -142,12 +144,12 @@ RottenTestsFinder >> visitTestCase: aTestCase [
 	RTFTestAnalysed signalTest: compiledMethod
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RottenTestsFinder >> visitableObject [
 	^ visitableObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 RottenTestsFinder >> visitableObject: anObject [
 	visitableObject := anObject
 ]

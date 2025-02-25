@@ -24,17 +24,19 @@ To capture each one, the following code was inserted into IceTipCommitsDataSourc
 
 "
 Class {
-	#name : #HiExampleCommit,
-	#superclass : #Object,
+	#name : 'HiExampleCommit',
+	#superclass : 'Object',
 	#instVars : [
 		'id',
 		'comment',
 		'parentIds'
 	],
-	#category : #'Hiedra-Examples-Model'
+	#category : 'Hiedra-Examples-Model',
+	#package : 'Hiedra-Examples',
+	#tag : 'Model'
 }
 
-{ #category : #examples }
+{ #category : 'examples' }
 HiExampleCommit class >> randomlyGenerated [
 
 	| values random |
@@ -49,37 +51,37 @@ HiExampleCommit class >> randomlyGenerated [
 		]) reversed
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiExampleCommit >> comment [
 	^ comment
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiExampleCommit >> comment: anObject [
 	comment := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiExampleCommit >> id [
 	^ id
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiExampleCommit >> id: anObject [
 	id := anObject
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiExampleCommit >> parentIds [
 	^ parentIds
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 HiExampleCommit >> parentIds: aCollection [
 	parentIds := aCollection
 ]
 
-{ #category : #printing }
+{ #category : 'printing' }
 HiExampleCommit >> printOn: aStream [
 	"Append a sequence of characters to aStream that identify the receiver."
 

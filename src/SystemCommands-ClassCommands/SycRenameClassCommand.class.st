@@ -1,60 +1,55 @@
 "
-I am a command to rename given class.
+Rename Class Refactoring: Change the name of a selected class, update all references, and preview changes before applying.
 
-Internal Representation and Key Implementation Points.
-
-    Instance Variables
-	newName:		<String>
 "
 Class {
-	#name : #SycRenameClassCommand,
-	#superclass : #SycSingleClassCommand,
+	#name : 'SycRenameClassCommand',
+	#superclass : 'SycSingleClassCommand',
 	#instVars : [
-		'newName'
+		'toolContext'
 	],
-	#category : #'SystemCommands-ClassCommands'
+	#category : 'SystemCommands-ClassCommands',
+	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameClassCommand >> defaultMenuIconName [
 	^ #edit
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 SycRenameClassCommand >> defaultMenuItemName [
-	^'Rename'
+	^'(R) Rename'
 ]
 
-{ #category : #execution }
+{ #category : 'execution' }
 SycRenameClassCommand >> execute [
 
-	| refactoring |
-	refactoring := RBRenameClassTransformation
-		rename: targetClass name
-		to: newName.
-	refactoring execute
+	toolContext class = ClyFullBrowserClassContext
+		ifTrue: [
+			(ReRenameClassDriver rename: targetClass name)
+				model: RBBrowserEnvironment new;
+				scopes: toolContext refactoringScopes;
+				runRefactoring ]
+		ifFalse: [
+			toolContext class = ClyClassDefinitionContext
+				ifTrue: [
+					(ReRenameClassDriver rename: toolContext selectedSourceNode value)
+						model: RBBrowserEnvironment new;
+						scopes: toolContext refactoringScopes;
+						runRefactoring ]
+				ifFalse: [ "we are in selection in a method "
+					(ReRenameClassDriver rename:
+							 toolContext selectedSourceNode value name)
+						model: RBBrowserEnvironment new;
+						scopes: toolContext refactoringScopes;
+						runRefactoring ] ]
 ]
 
-{ #category : #accessing }
-SycRenameClassCommand >> newName [
-	^ newName
-]
-
-{ #category : #accessing }
-SycRenameClassCommand >> newName: anObject [
-	newName := anObject
-]
-
-{ #category : #execution }
+{ #category : 'execution' }
 SycRenameClassCommand >> prepareFullExecutionInContext: aToolContext [
-
+	
 	super prepareFullExecutionInContext: aToolContext.
+	toolContext := aToolContext
 
-	newName := UIManager default
-		           request: 'New name of the class'
-		           initialAnswer: targetClass name
-		           title: 'Rename a class'.
-
-	newName isEmptyOrNil | (newName = targetClass name) ifTrue: [
-		CmdCommandAborted signal ]
 ]

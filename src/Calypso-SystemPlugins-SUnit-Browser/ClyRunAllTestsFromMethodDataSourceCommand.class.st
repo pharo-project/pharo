@@ -2,12 +2,14 @@
 I am a command to run all tests available in given data source
 "
 Class {
-	#name : #ClyRunAllTestsFromMethodDataSourceCommand,
-	#superclass : #ClyRunTestsFromMethodDataSourceCommand,
-	#category : #'Calypso-SystemPlugins-SUnit-Browser-Commands'
+	#name : 'ClyRunAllTestsFromMethodDataSourceCommand',
+	#superclass : 'ClyRunTestsFromMethodDataSourceCommand',
+	#category : 'Calypso-SystemPlugins-SUnit-Browser-Commands',
+	#package : 'Calypso-SystemPlugins-SUnit-Browser',
+	#tag : 'Commands'
 }
 
-{ #category : #execution }
+{ #category : 'execution' }
 ClyRunAllTestsFromMethodDataSourceCommand >> buildTestSuite [
 
 	| suite |
@@ -19,7 +21,7 @@ ClyRunAllTestsFromMethodDataSourceCommand >> buildTestSuite [
 	^suite
 ]
 
-{ #category : #accessing }
+{ #category : 'accessing' }
 ClyRunAllTestsFromMethodDataSourceCommand >> defaultMenuItemName [
 	self hasTestResult ifFalse: [ ^'Run all' ].
 

@@ -6,18 +6,19 @@ Parse mail addresses.  The basic syntax is:
 This currently only returns the bare addresses, but it could also return a list of the address ""source codes"".  For example, if you give it ""Joe <joe@foo>, <jane>"", it will currently return a list ('joe@foo' 'jane').  It would be nice to also get a list ('Joe <joe@foo>'  '<jane>').
 "
 Class {
-	#name : #MailAddressParser,
-	#superclass : #Object,
+	#name : 'MailAddressParser',
+	#superclass : 'Object',
 	#instVars : [
 		'tokens',
 		'addresses',
 		'curAddrTokens',
 		'storeNames'
 	],
-	#category : #'Network-Mail'
+	#category : 'Network-Mail',
+	#package : 'Network-Mail'
 }
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 MailAddressParser class >> addressesAndNamePairsIn: aString [
 	"return a collection of the addresses and the corresponding names listed in aString"
 	| tokens |
@@ -25,7 +26,7 @@ MailAddressParser class >> addressesAndNamePairsIn: aString [
 	^(self new initialize: tokens) grabAddressesAndNames
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 MailAddressParser class >> addressesIn: aString [
 	"return a collection of the bare addresses listed in aString"
 	| tokens |
@@ -33,13 +34,13 @@ MailAddressParser class >> addressesIn: aString [
 	^(self new initialize: tokens) grabAddresses
 ]
 
-{ #category : #'building address list' }
+{ #category : 'building address list' }
 MailAddressParser >> addToAddress [
 	"add the last token to the address.  removes the token from the collection"
 	curAddrTokens addFirst: (tokens removeLast)
 ]
 
-{ #category : #'building address list' }
+{ #category : 'building address list' }
 MailAddressParser >> finishAddress [
 	"we've finished one address.  Bundle it up and add it to the list of addresses"
 	| address |
@@ -52,7 +53,7 @@ MailAddressParser >> finishAddress [
 	curAddrTokens := nil
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 MailAddressParser >> grabAddressWithRoute [
 	"grab an address of the form 'Descriptive Text <real.address@c.d.e>"
 
@@ -75,7 +76,7 @@ MailAddressParser >> grabAddressWithRoute [
 	storeNames ifTrue: [addresses addFirst: {name . addresses removeFirst}]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 MailAddressParser >> grabAddresses [
 	"grab all the addresses in the string"
 	| token |
@@ -111,7 +112,7 @@ MailAddressParser >> grabAddresses [
 	^addresses
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 MailAddressParser >> grabAddressesAndNames [
 
 	storeNames := true.
@@ -123,7 +124,7 @@ MailAddressParser >> grabAddressesAndNames [
 	^ addresses
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 MailAddressParser >> grabBasicAddress [
 	"grad an address of the form a.b@c.d.e"
 	self startNewAddress.
@@ -157,7 +158,7 @@ MailAddressParser >> grabBasicAddress [
 			self finishAddress]
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 MailAddressParser >> grabGroupAddress [
 	"grab an address of the form 'phrase : address, address, ..., address;'"
 	"I'm not 100% sure what this format means, so I'm just returningthe list of addresses between the : and ;   -ls  (if this sounds right to someone, feel free to remove this comment :)"
@@ -194,7 +195,7 @@ MailAddressParser >> grabGroupAddress [
 	self removePhrase
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 MailAddressParser >> grabName [
 
 	| name |
@@ -204,14 +205,14 @@ MailAddressParser >> grabName [
 	^ name trimBoth
 ]
 
-{ #category : #initialization }
+{ #category : 'initialization' }
 MailAddressParser >> initialize: tokenList [
 	tokens := tokenList asOrderedCollection copy.
 	addresses := OrderedCollection new.
 	storeNames := false
 ]
 
-{ #category : #parsing }
+{ #category : 'parsing' }
 MailAddressParser >> removePhrase [
 	"skip most characters to the left of this"
 
@@ -221,11 +222,10 @@ MailAddressParser >> removePhrase [
 	] whileTrue: [ tokens removeLast ]
 ]
 
-{ #category : #'building address list' }
+{ #category : 'building address list' }
 MailAddressParser >> startNewAddress [
 	"set up data structures to begin a new address"
 
-	curAddrTokens notNil
-		ifTrue: [ self error: 'starting new address before finishing the last one!' ].
+	curAddrTokens ifNotNil: [ self error: 'starting new address before finishing the last one!' ].
 	curAddrTokens := OrderedCollection new
 ]

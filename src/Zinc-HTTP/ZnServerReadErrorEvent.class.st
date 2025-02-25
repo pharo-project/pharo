@@ -3,13 +3,15 @@ ZnServerReadErrorEvent signals an error during the reading of a request. These e
 
 "
 Class {
-	#name : #ZnServerReadErrorEvent,
-	#superclass : #ZnServerErrorEvent,
-	#category : #'Zinc-HTTP-Logging'
+	#name : 'ZnServerReadErrorEvent',
+	#superclass : 'ZnServerErrorEvent',
+	#category : 'Zinc-HTTP-Logging',
+	#package : 'Zinc-HTTP',
+	#tag : 'Logging'
 }
 
-{ #category : #printing }
+{ #category : 'printing' }
 ZnServerReadErrorEvent >> printContentsOn: stream [
 	super printContentsOn: stream.
-	stream << ' Server Read Error ';  print: exception
+	stream << 'Server Read Error ';  print: exception
 ]

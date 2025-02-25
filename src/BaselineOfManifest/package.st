@@ -1,1 +1,1 @@
-Package { #name : #BaselineOfManifest }
+Package { #name : 'BaselineOfManifest' }
