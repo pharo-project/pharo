@@ -2171,23 +2171,16 @@ RubAbstractTextArea >> updateTextWith: aStringOrText [
 			s := self validateTextFrom: aStringOrText.
 			"Text can = String, but String never = Text"
 			s = self text asString ifFalse: [
-				| markIndex pointIndex wasAtEnd |
-				markIndex := self markIndex.
-				pointIndex := self pointIndex.
-				wasAtEnd := pointIndex > self text size.
-
+				| wasAtEnd |
+				wasAtEnd := self hasSelection not and: [
+					            self markIndex > self text size ].
 				self selectAll.
 				self editor replaceSelectionWith: s.
 				self deselect.
-
-				"Restore selections only, otherwise the cursor could be anywhere
-				after formatting, so keep it at the beginning. Unless it was
-				already at the end, then we can at least keep it there."
-				markIndex = pointIndex
-					ifFalse: [ self markIndex: markIndex pointIndex: pointIndex ]
-					ifTrue: [
-						wasAtEnd ifTrue: [
-							self markIndex: pointIndex pointIndex: pointIndex ] ] ] ] ]
+				wasAtEnd ifTrue: [ "Keep cursor at end if it was already there"
+					| atEnd |
+					atEnd := self text size + 1.
+					self markIndex: atEnd pointIndex: atEnd ] ] ] ]
 ]
 
 { #category : 'accessing - text' }
