@@ -105,6 +105,16 @@ OCScannerTest >> testMultipleCommentTokensAreWellSeparated [
 	self assert: token value equals: ' second comment'
 ]
 
+{ #category : 'tests - Hashes' }
+OCScannerTest >> testMultipleNextLiteralStartAtFirstLetter [
+
+	| scanner token |
+	scanner := self buildScannerForText: '########literal'.
+	token := scanner next.
+	self deny: token isLiteralToken.
+	self assert: token start equals: 1
+]
+
 { #category : 'tests - Literal' }
 OCScannerTest >> testNextAcceptAllAlphabeticAsLiteral [
 	| scanner token |
@@ -746,11 +756,11 @@ OCScannerTest >> testNextLiteralArrayHasRightValue [
 	self assert: token value equals: '#['
 ]
 
-{ #category : 'tests - Start' }
+{ #category : 'tests - Hashes' }
 OCScannerTest >> testNextLiteralArrayWithBracketStartAtHashtag [
-	"Note: RBScanner only spots the beginning of the array."
+	"Note: the scanner only spots the beginning of the array."
+	
 	| scanner token |
-
 	scanner := self buildScannerForText: '#['.
 	token := scanner next.
 	self assert: token start equals: 1
@@ -766,6 +776,17 @@ OCScannerTest >> testNextLiteralArrayWithBracketStopAtBracket [
 	self assert: token stop equals: 2
 ]
 
+{ #category : 'tests - Hashes' }
+OCScannerTest >> testNextLiteralArrayWithParenthesisDoNotAllowMultipleTag [
+	"Note: the scanner only spots the beginning of the array."
+	
+	| scanner token |
+	scanner := self buildScannerForText: '#########('.
+	token := scanner next.
+	"This is an error but I do not want to hard code the class of error"
+	self assert: token value equals: '##'
+]
+
 { #category : 'tests - SpecialCharacters' }
 OCScannerTest >> testNextLiteralArrayWithParenthesisHasRigthValue [
 	"Note: RBScanner only spots the beginning of the array."
@@ -775,9 +796,10 @@ OCScannerTest >> testNextLiteralArrayWithParenthesisHasRigthValue [
 	self assert: token value equals: '#('
 ]
 
-{ #category : 'tests - Start' }
+{ #category : 'tests - Hashes' }
 OCScannerTest >> testNextLiteralArrayWithParenthesisStartAtHashTag [
-	"Note: RBScanner only spots the beginning of the array."
+	"Note: the scanner only spots the beginning of the array."
+	
 	| scanner token |
 	scanner := self buildScannerForText: '#('.
 	token := scanner next.
@@ -833,6 +855,17 @@ OCScannerTest >> testNextLiteralBeginningWithUnknownThrowsError [
 	self assert: token cause equals: 'Literal expected'
 ]
 
+{ #category : 'tests - Hashes' }
+OCScannerTest >> testNextLiteralByteArrayWithBracketIsNotAllowedToHaveMultipleTag [
+	"Note: the scanner only spots the beginning of the array."
+	
+	| scanner token |
+	scanner := self buildScannerForText: '####['.
+	token := scanner next.
+	"this is an error but I do not want to hardcode the class name!"
+	self assert: token value equals: '##'
+]
+
 { #category : 'tests - Literal' }
 OCScannerTest >> testNextLiteralCanBeBinary [
 	| scanner token |
@@ -862,14 +895,6 @@ OCScannerTest >> testNextLiteralCanContainDigits [
 ]
 
 { #category : 'tests - Literal' }
-OCScannerTest >> testNextLiteralCanHaveMultipleHashtag [
-	| scanner token |
-	scanner := self buildScannerForText: '########literal'.
-	token := scanner next.
-	self assert: token isLiteralToken
-]
-
-{ #category : 'tests - Literal' }
 OCScannerTest >> testNextLiteralCanNotContainBinaryAndAlphabetic [
 	| scanner token |
 	scanner := self buildScannerForText: '#+alpha'.
@@ -883,6 +908,14 @@ OCScannerTest >> testNextLiteralCanNotContainBinaryAndAlphabetic [
 	scanner := self buildScannerForText: '#alpha-'.
 	token := scanner next.
 	self assert: token value equals: #alpha
+]
+
+{ #category : 'tests - Literal' }
+OCScannerTest >> testNextLiteralCannotHaveMultipleHashtag [
+	| scanner token |
+	scanner := self buildScannerForText: '########literal'.
+	token := scanner next.
+	self deny: token isLiteralToken
 ]
 
 { #category : 'tests - Literal' }
@@ -966,30 +999,13 @@ OCScannerTest >> testNextLiteralCharacterWithAMissingCharacter [
 	self verifyErrorToken: scannedToken message: 'Character expected' translated valueExpected: '$'
 ]
 
-{ #category : 'tests - Start' }
-OCScannerTest >> testNextLiteralStartAtFirstLetter [
-	| scanner token |
-	scanner := self buildScannerForText: '########literal'.
-	token := scanner next.
-	self assert: token isLiteralToken.
-	self assert: token start equals: 1
-]
-
 { #category : 'tests - Stop' }
 OCScannerTest >> testNextLiteralStopAtLastLetter [
 	| scanner token |
 	scanner := self buildScannerForText: '########literal'.
 	token := scanner next.
-	self assert: token isLiteralToken.
-	self assert: token stop equals: 15
-]
-
-{ #category : 'tests - Literal' }
-OCScannerTest >> testNextLiteralWithMultipleHashtagTrimThem [
-	| scanner token |
-	scanner := self buildScannerForText: '########literal'.
-	token := scanner next.
-	self assert: token value equals: 'literal'
+	self deny: token isLiteralToken.
+	self assert: token stop equals: 2
 ]
 
 { #category : 'tests - Keyword' }
@@ -1680,6 +1696,16 @@ OCScannerTest >> testScanTokensHandleParentheses [
 	self assert: tokens second value equals: 'end'.
 	self assert: tokens fifth value equals: $).
 	
+]
+
+{ #category : 'tests - Hashes' }
+OCScannerTest >> testSingleHashNextLiteralStartAtFirstLetter [
+
+	| scanner token |
+	scanner := self buildScannerForText: '#literal'.
+	token := scanner next.
+	self assert: token isLiteralToken.
+	self assert: token start equals: 1
 ]
 
 { #category : 'utilities' }

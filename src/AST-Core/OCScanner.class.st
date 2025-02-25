@@ -36,7 +36,8 @@ Class {
 		'classificationTable',
 		'comments',
 		'nextToken',
-		'state'
+		'state',
+		'alreadySeenHash'
 	],
 	#classVars : [
 		'CascadePatternCharacter',
@@ -307,7 +308,8 @@ OCScanner >> on: aStream [
 	buffer := (String new: 60) writeStream.
 	stream := aStream.
 	classificationTable := self class classificationTable.
-	comments := OrderedCollection new
+	comments := OrderedCollection new.
+	alreadySeenHash := false
 ]
 
 { #category : 'private' }
@@ -434,8 +436,12 @@ OCScanner >> scanLiteral [
 	(currentCharacter = $( or: [ currentCharacter = $[ ])
 		ifTrue: [ ^ self scanLiteralArrayToken ].
 	"Accept multiple #."
+	(currentCharacter = $# and: [ alreadySeenHash ])
+		ifTrue: [ ^ self scanError: 'Multiple # sequence is forbidden' ].
 	currentCharacter = $#
-		ifTrue: [ ^ self scanLiteral ].
+		ifTrue: [ 
+			alreadySeenHash := true.
+			^ self scanLiteral ].
 	^ self scanError: 'Literal expected'
 ]
 
