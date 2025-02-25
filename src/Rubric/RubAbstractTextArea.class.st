@@ -2164,15 +2164,30 @@ RubAbstractTextArea >> updateMarginsWith: aMargin [
 
 { #category : 'accessing - text' }
 RubAbstractTextArea >> updateTextWith: aStringOrText [
-	self
-		handleEdit: [ self
-				beEditableWhile: [
-					| s |
-					s := self validateTextFrom: aStringOrText.
-					s = self text
-						ifFalse: [ self selectAll.
-							self editor replaceSelectionWith: s.
-							self deselect ] ] ]
+
+	self handleEdit: [
+		self beEditableWhile: [
+			| s |
+			s := self validateTextFrom: aStringOrText.
+			"Text can = String, but String never = Text"
+			s = self text asString ifFalse: [
+				| markIndex pointIndex wasAtEnd |
+				markIndex := self markIndex.
+				pointIndex := self pointIndex.
+				wasAtEnd := pointIndex > self text size.
+
+				self selectAll.
+				self editor replaceSelectionWith: s.
+				self deselect.
+
+				"Restore selections only, otherwise the cursor could be anywhere
+				after formatting, so keep it at the beginning. Unless it was
+				already at the end, then we can at least keep it there."
+				markIndex = pointIndex
+					ifFalse: [ self markIndex: markIndex pointIndex: pointIndex ]
+					ifTrue: [
+						wasAtEnd ifTrue: [
+							self markIndex: pointIndex pointIndex: pointIndex ] ] ] ] ]
 ]
 
 { #category : 'accessing - text' }
