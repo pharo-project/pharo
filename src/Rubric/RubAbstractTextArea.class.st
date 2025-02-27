@@ -2164,15 +2164,23 @@ RubAbstractTextArea >> updateMarginsWith: aMargin [
 
 { #category : 'accessing - text' }
 RubAbstractTextArea >> updateTextWith: aStringOrText [
-	self
-		handleEdit: [ self
-				beEditableWhile: [
-					| s |
-					s := self validateTextFrom: aStringOrText.
-					s = self text
-						ifFalse: [ self selectAll.
-							self editor replaceSelectionWith: s.
-							self deselect ] ] ]
+
+	self handleEdit: [
+		self beEditableWhile: [
+			| s |
+			s := self validateTextFrom: aStringOrText.
+			"Text can = String, but String never = Text"
+			s = self text asString ifFalse: [
+				| wasAtEnd |
+				wasAtEnd := self hasSelection not and: [
+					            self markIndex > self text size ].
+				self selectAll.
+				self editor replaceSelectionWith: s.
+				self deselect.
+				wasAtEnd ifTrue: [ "Keep cursor at end if it was already there"
+					| atEnd |
+					atEnd := self text size + 1.
+					self markIndex: atEnd pointIndex: atEnd ] ] ] ]
 ]
 
 { #category : 'accessing - text' }
