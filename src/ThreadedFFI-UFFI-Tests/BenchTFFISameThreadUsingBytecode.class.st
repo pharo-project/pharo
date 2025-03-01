@@ -105,6 +105,8 @@ BenchTFFISameThreadUsingBytecode >> doPointerVoid: aPointer [
 		        name: #id_int  
 				  moduleName: TFTestLibraryUsingSameThreadRunner uniqueInstance libraryName
 		        definition: definition.
+	
+	function flags: TFExternalFunctionFlags useOptimizedVersion | TFExternalFunctionFlags pointersMightBeExternalAddresses.
 		
 	^ OCIRBuilder buildIR: [ :builder |
 		  builder
@@ -113,6 +115,37 @@ BenchTFFISameThreadUsingBytecode >> doPointerVoid: aPointer [
 			  pushTemp: #aPointer;
 "			  send: #tfPointerAddress;
 "			  sameThreadCallout: function;
+			  pushReceiver; 
+			  returnTop ]
+]
+
+{ #category : 'private' }
+BenchTFFISameThreadUsingBytecode >> doPointerVoidForByteArray: aPointer [
+
+	| definition function |
+
+	<opalBytecodeMethod>
+	
+	definition := TFFunctionDefinition
+		        parameterTypes: { TFBasicType pointer }
+		        returnType: TFBasicType void.
+
+	function := TFExternalFunction
+		        name: #id_int  
+				  moduleName: TFTestLibraryUsingSameThreadRunner uniqueInstance libraryName
+		        definition: definition.
+	
+	function flags: TFExternalFunctionFlags useOptimizedVersion | TFExternalFunctionFlags pointersMightBeObjects
+| TFExternalFunctionFlags pointersMightBeExternalAddresses.
+		
+	^ OCIRBuilder buildIR: [ :builder |
+		  builder
+			  numArgs: 1;
+			  addTemps: #( #aPointer );
+			  pushTemp: #aPointer;
+"			  send: #tfPointerAddress;
+"			  sameThreadCallout: function;
+			  pushReceiver; 
 			  returnTop ]
 ]
 
@@ -152,6 +185,6 @@ BenchTFFISameThreadUsingBytecode >> runCallWithPointerVoid [
 BenchTFFISameThreadUsingBytecode >> runCallWithPointerVoidWithByteArray [
 	<script: 'self new runCallWithPointerVoidWithByteArray traceCr'>
 
-	(self class>> #doPointerVoid: ) literals select: [:e | e class = TFExternalFunction] thenDo: [:e | e validate].
+	(self class>> #doPointerVoidForByteArray: ) literals select: [:e | e class = TFExternalFunction] thenDo: [:e | e validate].
 	^ super runCallWithPointerVoidWithByteArray
 ]

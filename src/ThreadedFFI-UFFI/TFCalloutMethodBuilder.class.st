@@ -188,7 +188,8 @@ TFCalloutMethodBuilder >> generateFFICallout: builder spec: functionSpec ffiLibr
 TFCalloutMethodBuilder >> generateFFICalloutUsingBytecode: builder spec: functionSpec ffiLibrary: ffiLibrary [ 
 
 
-	| functionDefinition |
+	| functionDefinition flags |
+
 	TFCalloutAPI isTracing ifTrue: [
 		TFCalloutAPI trace: sender.
 		builder
@@ -196,8 +197,17 @@ TFCalloutMethodBuilder >> generateFFICalloutUsingBytecode: builder spec: functio
 			pushLiteral: sender;
 			send: #trace: ].
 
+	flags := 0.
+
+	(requestor options includesKey: #optUseOptimizedVersion) 
+		ifTrue: [flags := flags | TFExternalFunctionFlags useOptimizedVersion ].
+
+	(requestor options includesKey: #optPointersMightBeExternalAddresses) 
+		ifTrue: [flags := flags | TFExternalFunctionFlags pointersMightBeExternalAddresses ].
+
 	functionDefinition := self createFFICalloutLiteralFromSpec: functionSpec.
 	functionDefinition validate.
+	functionDefinition flags: flags.
 
 	"iterate arguments in order (in the function) to create the function call"
 	functionSpec arguments

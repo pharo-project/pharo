@@ -50,5 +50,5 @@ BenchTFFI >> runCallWithPointerVoid [
 { #category : 'running' }
 BenchTFFI >> runCallWithPointerVoidWithByteArray [
 
-	^ [ self doPointerVoid: (ByteArray new: 17)  ] bench
+	^ [ self doPointerVoidForByteArray: (ByteArray new: 17)  ] bench
 ]

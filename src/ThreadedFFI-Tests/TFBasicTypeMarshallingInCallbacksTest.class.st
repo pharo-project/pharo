@@ -51,7 +51,7 @@ TFBasicTypeMarshallingInCallbacksTest >> call: typeName type: type value: aValue
 			parameterTypes: { TFBasicType pointer. type }
 			returnType: TFBasicType void).
 
-	runner invokeFunction: fun withArguments: { callback getHandle . aValue}.
+	self invokeFunction: fun withArguments: { callback getHandle . aValue}.
 	^ received
 ]
 

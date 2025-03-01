@@ -21,12 +21,6 @@ TFCallbacksTest >> callCallback: aCallback [
 	self invokeFunction: function withArguments: {}
 ]
 
-{ #category : 'executing' }
-TFCallbacksTest >> invokeFunction: fun withArguments: arguments [
-
-	^ runner invokeFunction: fun withArguments: arguments
-]
-
 { #category : 'instance creation' }
 TFCallbacksTest >> newTestCallbackDoing: aBlock [
 
@@ -140,7 +134,7 @@ TFCallbacksTest >> testReentrantCalloutsDuringCallback [
 		returnType: TFBasicType sint32
 		runner: runner.
 
-	returnValue := runner invokeFunction: fun withArguments: {callback getHandle. 0}.
+	returnValue := self invokeFunction: fun withArguments: {callback getHandle. 0}.
 	self assert: returnValue equals: 7
 ]
 
@@ -171,7 +165,7 @@ TFCallbacksTest >> testReentrantCalloutsDuringCallbackUsingSameProcessForCallbac
 	[
 	callback runStrategy: TFCallbackSameProcessRunStrategy uniqueInstance.
 
-	returnValue := runner invokeFunction: fun withArguments: {
+	returnValue := self invokeFunction: fun withArguments: {
 			               callback getHandle.
 			               0 }.
 	self assert: returnValue equals: 7 ] ensure: [ callback runStrategy callbackProcess terminate ]

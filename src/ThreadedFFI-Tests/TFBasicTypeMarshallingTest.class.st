@@ -9,7 +9,7 @@ Class {
 TFBasicTypeMarshallingTest >> assertSignedIntsWithFunction: function [
 
 	| return |
-	return := runner invokeFunction: function withArguments: { -3 . 2 }.
+	return := self invokeFunction: function withArguments: { -3 . 2 }.
 	self assert: return equals: -1
 ]
 
@@ -17,7 +17,7 @@ TFBasicTypeMarshallingTest >> assertSignedIntsWithFunction: function [
 TFBasicTypeMarshallingTest >> assertUnsignedIntsWithFunction: function [
 
 	| return |
-	return := runner invokeFunction: function withArguments: { 3 . 2 }.
+	return := self invokeFunction: function withArguments: { 3 . 2 }.
 	self assert: return equals: 5
 ]
 
@@ -46,7 +46,7 @@ TFBasicTypeMarshallingTest >> testSumDouble [
 	| function return |
 	function := self externalFunction: 'sum_double' ofType: TFBasicType double.
 
-	return := runner invokeFunction: function withArguments: { 3.1 . 2.7 }.
+	return := self invokeFunction: function withArguments: { 3.1 . 2.7 }.
 	self assert: (return between: 5.79999999 and: 5.80001)
 ]
 
@@ -56,7 +56,7 @@ TFBasicTypeMarshallingTest >> testSumFloat [
 	| function return |
 	function := self externalFunction: 'sum_float' ofType: TFBasicType float.
 
-	return := runner invokeFunction: function withArguments: { 3.1 . 2.7 }.
+	return := self invokeFunction: function withArguments: { 3.1 . 2.7 }.
 	self assert: (return between: 5.79999999 and: 5.80001)
 ]
 
@@ -221,7 +221,7 @@ TFBasicTypeMarshallingTest >> testUnrefPointer [
 	pointerToHolder := ExternalAddress allocate: TFBasicType pointer byteSize.
 	TFBasicType pointer write: holder into: pointerToHolder.
 
-	return := runner invokeFunction: function withArguments: { pointerToHolder }.
+	return := self invokeFunction: function withArguments: { pointerToHolder }.
 	self assert: return equals: holder.
 	self assert: (TFBasicType sshort readValue: return) equals: 17
 ]

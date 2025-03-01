@@ -27,8 +27,12 @@ Class {
 	#instVars : [
 		'handle',
 		'definition',
+		'flags',
 		'functionName',
 		'moduleName'
+	],
+	#pools : [
+		'TFExternalFunctionFlags'
 	],
 	#category : 'ThreadedFFI-Base',
 	#package : 'ThreadedFFI',
@@ -120,6 +124,18 @@ TFExternalFunction >> definition: anObject [
 ]
 
 { #category : 'accessing' }
+TFExternalFunction >> flags [
+
+	^ flags
+]
+
+{ #category : 'accessing' }
+TFExternalFunction >> flags: anObject [
+
+	flags := anObject
+]
+
+{ #category : 'accessing' }
 TFExternalFunction >> functionName [
 	^ functionName
 ]
@@ -127,6 +143,13 @@ TFExternalFunction >> functionName [
 { #category : 'accessing' }
 TFExternalFunction >> functionName: anObject [
 	functionName := anObject
+]
+
+{ #category : 'initialization' }
+TFExternalFunction >> initialize [
+
+	super initialize.
+	flags := 0.
 ]
 
 { #category : 'accessing' }

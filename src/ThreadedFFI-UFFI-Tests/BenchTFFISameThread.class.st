@@ -34,6 +34,12 @@ BenchTFFISameThread >> doPointerVoid: aPointer [
 ]
 
 { #category : 'private' }
+BenchTFFISameThread >> doPointerVoidForByteArray: aPointer [
+
+	self ffiCall: #(void id_int(void* aPointer))
+]
+
+{ #category : 'private' }
 BenchTFFISameThread >> doSumWithConstants [
 
 	^ self ffiCall: #(int64 sum_int64_t(int 1, int 2))
