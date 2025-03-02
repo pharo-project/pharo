@@ -702,7 +702,7 @@ String >> asInteger [
 	"'10' asInteger >>> 10"
 	"'a' asInteger >>> nil"
 	"'1.234' asInteger >>> 1"
-	^self asSignedInteger
+	^ NumberParser parse: self onError: [ nil ]
 ]
 
 { #category : 'converting' }
