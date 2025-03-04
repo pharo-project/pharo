@@ -34,7 +34,35 @@ TFTestCase >> invokeFunction: fun withArguments: arguments [
 { #category : 'executing' }
 TFTestCase >> invokeFunctionUsingBytecode: fun withArguments: arguments [
 
-	| argumentNames builder method |
+	| method |
+	method := self prepareMethodUsingBytecodeFor: fun withArguments: arguments.
+	^ method valueWithReceiver: nil arguments: arguments.
+]
+
+{ #category : 'accessing' }
+TFTestCase >> libraryPath [
+
+	Smalltalk os isUnix ifTrue: [ ^ 'libTestLibrary.so' ].
+	Smalltalk os isMacOS ifTrue: [ ^ 'libTestLibrary.dylib' ].
+	Smalltalk os isWindows ifTrue: [ ^ 'TestLibrary.dll' ].
+
+	self error: 'Unsupported Platform'
+]
+
+{ #category : 'instance creation' }
+TFTestCase >> newTestCallbackDoing: aBlock [
+
+	^ TFCallback
+		forCallback: aBlock
+		parameters: {}
+		returnType: TFBasicType void
+		runner: runner
+]
+
+{ #category : 'executing' }
+TFTestCase >> prepareMethodUsingBytecodeFor: fun withArguments: arguments [
+	
+	| argumentNames builder |
 
 	runner class = TFSameThreadRunner ifFalse: [ ^ self skip ].
 
@@ -53,18 +81,8 @@ TFTestCase >> invokeFunctionUsingBytecode: fun withArguments: arguments [
 		ifTrue: [ builder pushReceiver; returnTop ]
 		ifFalse: [ builder returnTop ].
 		
-	method := builder ir compiledMethod.
-	^ method valueWithReceiver: nil arguments: arguments.
-]
+	^ builder ir compiledMethod.
 
-{ #category : 'accessing' }
-TFTestCase >> libraryPath [
-
-	Smalltalk os isUnix ifTrue: [ ^ 'libTestLibrary.so' ].
-	Smalltalk os isMacOS ifTrue: [ ^ 'libTestLibrary.dylib' ].
-	Smalltalk os isWindows ifTrue: [ ^ 'TestLibrary.dll' ].
-
-	self error: 'Unsupported Platform'
 ]
 
 { #category : 'running' }
