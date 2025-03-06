@@ -240,6 +240,17 @@ RBCondition class >> isClass: anObject [
 ]
 
 { #category : 'testing' }
+RBCondition class >> isClass: className alreadyExistIn: aModel [
+
+	^ self new 
+		  block: [
+			  | aClassOrTrait |
+			  aClassOrTrait := aModel classNamed: className.
+			  aClassOrTrait isNil ]
+		  errorString: 'Class ' , className , ' already exists'
+]
+
+{ #category : 'testing' }
 RBCondition class >> isClass: aRBClass definedIn: aRBNamespace [ 
 	^ self isClassNamed: aRBClass name definedIn: aRBNamespace 
 ]
@@ -247,11 +258,12 @@ RBCondition class >> isClass: aRBClass definedIn: aRBNamespace [
 { #category : 'instance creation' }
 RBCondition class >> isClassNamed: className definedIn: aModel [
 
-	^ self new 
-		block: [ | aClassOrTrait |
-				aClassOrTrait := aModel classNamed: className.
-				aClassOrTrait isNotNil ]
-		errorString: [ className , ' is <1?:not > defined' ]
+	^ self new
+		  block: [
+			  | aClassOrTrait |
+			  aClassOrTrait := aModel classNamed: className.
+			  aClassOrTrait isNotNil ]
+		  errorString: className , ' is <1?:not >defined'
 ]
 
 { #category : 'instance creation' }
