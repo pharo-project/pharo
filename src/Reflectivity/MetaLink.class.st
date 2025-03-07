@@ -254,7 +254,8 @@ MetaLink >> hasNodes [
 
 { #category : 'options' }
 MetaLink >> hasOption: aSymbol [
-	^options includes: aSymbol
+
+	^ options options includes: aSymbol
 ]
 
 { #category : 'testing' }

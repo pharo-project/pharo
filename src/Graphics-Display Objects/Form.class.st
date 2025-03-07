@@ -346,13 +346,6 @@ Form >> asSourceForm [
 	^self
 ]
 
-{ #category : 'converting' }
-Form >> asText [
-	"I return a text with myself embedded - Similar to Morph>>asText"
-	
-	^ (String value: 1) asText addAttribute: (TextAnchor new anchoredMorph: self)
-]
-
 { #category : 'color mapping' }
 Form >> balancedPatternFor: aColor [
 	"Return the pixel word for representing the given color on the receiver"

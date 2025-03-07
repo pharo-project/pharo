@@ -51,7 +51,7 @@ SycMessageDescription class >> ofMessageNode: astMessageNode [
 
 	^ (self fromContextOf: astMessageNode methodNode)
 		selector: astMessageNode selector;
-		argumentNames: (astMessageNode arguments collect: [:each | each formattedCode ])
+		argumentNames: (astMessageNode arguments collect: [:each | each sourceCode ])
 
 ]
 

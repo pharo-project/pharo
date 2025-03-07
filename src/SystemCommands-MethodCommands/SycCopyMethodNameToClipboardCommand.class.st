@@ -8,20 +8,19 @@ Class {
 	#package : 'SystemCommands-MethodCommands'
 }
 
+{ #category : 'executing' }
+SycCopyMethodNameToClipboardCommand >> applyCommandResult [
+
+	| text |
+	text := (self methods collect: #displayString) joinUsing: String cr.
+	Clipboard clipboardText: text.
+	self inform: 'Copied methods:' , String cr , text
+]
+
 { #category : 'accessing' }
 SycCopyMethodNameToClipboardCommand >> description [
 
 	^ 'Copy selected methods into Clipboard as class>>selector'
-]
-
-{ #category : 'executing' }
-SycCopyMethodNameToClipboardCommand >> execute [
-
-	| text |
-
-	text := (self methods collect: #displayString) joinUsing: String cr.
-	Clipboard clipboardText: text.
-	self inform: 'Copied methods:' , String cr , text
 ]
 
 { #category : 'accessing' }

@@ -19,11 +19,6 @@ ReThemeAccessRule class >> group [
 	^ self apiHintsGroup
 ]
 
-{ #category : 'class initialization' }
-ReThemeAccessRule class >> initialize [
-   " ReRuleManager cleanUp "
-]
-
 { #category : 'accessing' }
 ReThemeAccessRule class >> ruleName [
 	^ 'Access to UI theme.'

@@ -1,6 +1,6 @@
 Class {
 	#name : 'OCParseTreeTest',
-	#superclass : 'AbstractEnvironmentTestCase',
+	#superclass : 'TestCase',
 	#category : 'AST-Core-Tests-Parser',
 	#package : 'AST-Core-Tests',
 	#tag : 'Parser'

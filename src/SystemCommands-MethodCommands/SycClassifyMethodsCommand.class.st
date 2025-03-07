@@ -2,7 +2,7 @@
 Classify the selected methods
 "
 Class {
-	#name : 'SycClassifyMthCommand',
+	#name : 'SycClassifyMethodsCommand',
 	#superclass : 'SycMethodExtraCmCommand',
 	#instVars : [
 		'protocol'
@@ -12,45 +12,39 @@ Class {
 }
 
 { #category : 'execution' }
-SycClassifyMthCommand >> applyCommandResult [
-
-	context showProtocol: protocol
-]
-
-{ #category : 'executing' }
-SycClassifyMthCommand >> execute [
+SycClassifyMethodsCommand >> applyCommandResult [
 
 	self methods do: [ :aMethod | aMethod protocol: self protocol ].
-
+	context showProtocol: self protocol
 ]
 
 { #category : 'accessing' }
-SycClassifyMthCommand >> icon [
+SycClassifyMethodsCommand >> icon [
 
 	^ self iconNamed: #browse
 ]
 
 { #category : 'accessing' }
-SycClassifyMthCommand >> name [
+SycClassifyMethodsCommand >> name [
 
 	^ 'Classify methods'
 ]
 
 { #category : 'preparation' }
-SycClassifyMthCommand >> prepareFullExecution [
+SycClassifyMethodsCommand >> prepareFullExecution [
 
 	super prepareFullExecution.
 	protocol := StProtocolNameChooserPresenter requestProtocolNameConfiguring: [ :presenter | presenter concernedClass: context lastSelectedClass ]
 ]
 
 { #category : 'accessing' }
-SycClassifyMthCommand >> protocol [
+SycClassifyMethodsCommand >> protocol [
 
 	^ protocol
 ]
 
 { #category : 'accessing' }
-SycClassifyMthCommand >> protocol: anObject [
+SycClassifyMethodsCommand >> protocol: anObject [
 
 	protocol := anObject
 ]

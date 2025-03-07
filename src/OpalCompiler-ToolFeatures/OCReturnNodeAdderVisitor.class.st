@@ -4,9 +4,8 @@ I am a visitor that wraps a node in a return node. If the node is sequence it wi
 Class {
 	#name : 'OCReturnNodeAdderVisitor',
 	#superclass : 'OCProgramNodeVisitor',
-	#category : 'AST-Core-Visitors',
-	#package : 'AST-Core',
-	#tag : 'Visitors'
+	#category : 'OpalCompiler-ToolFeatures',
+	#package : 'OpalCompiler-ToolFeatures'
 }
 
 { #category : 'visiting' }

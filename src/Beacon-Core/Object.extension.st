@@ -2,6 +2,7 @@ Extension { #name : 'Object' }
 
 { #category : '*Beacon-Core' }
 Object >> asBeaconSignal [
+	"Wraps the receiver into a signal so that it can manipulated by a logger."
 
 	^ WrapperSignal on: self
 ]

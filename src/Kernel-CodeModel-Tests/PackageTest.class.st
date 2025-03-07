@@ -472,6 +472,28 @@ PackageTest >> testPropertyAtPut [
 	self assert: package properties isNil
 ]
 
+{ #category : 'tests - extensions' }
+PackageTest >> testRecompilingClassWithExtensionMethods [
+	"This is a regression test. In the past recompiling a class with extension methods was duplicating the entries in the extension map of the packages."
+
+	| class1 class2 |
+	class1 := self newClassNamed: #X in: self xPackageName.
+	class2 := self newClassNamed: #Y in: self yPackageName.
+
+	self createMethodNamed: 'extension' inClass: class1 asExtensionOf: self yPackageName.
+
+	class1 classInstaller update: class1 to: [ :builder | builder slots: { #slot } ].
+
+	"With the bug, we had 2 entries for the class1."
+	self assert: class2 package extendedClasses size equals: 1.
+	self assert: (class2 package instVarNamed: #extensionSelectors) size equals: 1.
+
+	class1 package removeFromSystem.
+
+	self assertEmpty: (class2 package instVarNamed: #extensionSelectors).
+	self assertEmpty: class2 package extendedClasses
+]
+
 { #category : 'tests' }
 PackageTest >> testRemoveClassRemovesExtensions [
 

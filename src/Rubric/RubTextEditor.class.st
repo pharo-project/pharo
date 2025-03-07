@@ -288,11 +288,6 @@ RubTextEditor >> backspace: aKeyboardEvent [
 ]
 
 { #category : 'obsolete - parenblinking' }
-RubTextEditor >> blinkParenAt: parenLocation [
-	"kept because NECController is sending it to me"
-]
-
-{ #category : 'obsolete - parenblinking' }
 RubTextEditor >> blinkPrevParen: aCharacter [
 	"kept because NECController is sending it to me"
 ]

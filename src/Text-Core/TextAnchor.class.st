@@ -17,9 +17,9 @@ Class {
 	#instVars : [
 		'anchoredMorph'
 	],
-	#category : 'Morphic-Base-Text Support',
-	#package : 'Morphic-Base',
-	#tag : 'Text Support'
+	#category : 'Text-Core-Attributes',
+	#package : 'Text-Core',
+	#tag : 'Attributes'
 }
 
 { #category : 'comparing' }
@@ -31,6 +31,7 @@ TextAnchor >> = other [
 
 { #category : 'accessing' }
 TextAnchor >> anchoredMorph [
+	"I should probably be renamed #anchoredImage since I can take forms also. And I guess I'll also be used with Bloc. But it is not so easy since I'm subclassed by microdown."
 
 	^ anchoredMorph
 ]

@@ -706,7 +706,7 @@ OCASTTranslator >> visitPragmaNode: aPragmaNode [
 
 	"if the pragma is a primitive that defines an error variable, we need to store error value
 	which is on the stack"
-	aPragmaNode isPrimitiveError ifFalse: [ ^ self ].
+	aPragmaNode isPrimitiveErrorPragma ifFalse: [ ^ self ].
 	var := aPragmaNode methodNode scope lookupVar: aPragmaNode primitiveErrorVariableName.
 	var emitStore: methodBuilder
 ]

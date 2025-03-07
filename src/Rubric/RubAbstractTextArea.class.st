@@ -826,7 +826,7 @@ RubAbstractTextArea >> editPrimarySelectionSeparately [
 { #category : 'accessing - im text input' }
 RubAbstractTextArea >> editing [
 
-	^ editing = true
+	^ editing
 ]
 
 { #category : 'accessing - editing mode' }
@@ -1057,7 +1057,7 @@ RubAbstractTextArea >> handleEdit: editBlock [
 { #category : 'event handling' }
 RubAbstractTextArea >> handleKeyDown: anEvent [
 
-	editing = true ifTrue: [ ^ self ].
+	editing ifTrue: [ ^ self ].
 	^ super handleKeyDown: anEvent
 ]
 
@@ -1240,12 +1240,11 @@ RubAbstractTextArea >> keyDown: anEvent [
 
 { #category : 'event handling' }
 RubAbstractTextArea >> keyStroke: anEvent [
-
 	"Handle a keystroke event."
 
 	anEvent hand anyButtonPressed ifTrue: [ ^ self ].
 	self handleEdit: [
-		editing = true
+		editing
 			ifTrue: [
 				editing := false.
 				self editor unselect ]
@@ -1266,7 +1265,7 @@ RubAbstractTextArea >> keyboardFocusChange: aBoolean [
 			self showOverEditableTextCursor ]
 		ifFalse: [
 			self hasFocus: false.
-			editing = true ifTrue: [ editing := false ].
+			editing ifTrue: [ editing := false ].
 			self hideOverEditableTextCursor ].
 	super keyboardFocusChange: aBoolean
 ]
@@ -2052,7 +2051,7 @@ RubAbstractTextArea >> textEdition: aTextEditionEvent [
 			self editor zapSelectionWith: editText.
 			editing := true ]
 		ifEmpty: [
-			editing = true ifTrue: [
+			editing ifTrue: [
 				self editor zapSelectionWith: ''.
 				editing := false ] ]
 ]
@@ -2164,15 +2163,23 @@ RubAbstractTextArea >> updateMarginsWith: aMargin [
 
 { #category : 'accessing - text' }
 RubAbstractTextArea >> updateTextWith: aStringOrText [
-	self
-		handleEdit: [ self
-				beEditableWhile: [
-					| s |
-					s := self validateTextFrom: aStringOrText.
-					s = self text
-						ifFalse: [ self selectAll.
-							self editor replaceSelectionWith: s.
-							self deselect ] ] ]
+
+	self handleEdit: [
+		self beEditableWhile: [
+			| s |
+			s := self validateTextFrom: aStringOrText.
+			"Text can = String, but String never = Text"
+			s = self text asString ifFalse: [
+				| wasAtEnd |
+				wasAtEnd := self hasSelection not and: [
+					            self markIndex > self text size ].
+				self selectAll.
+				self editor replaceSelectionWith: s.
+				self deselect.
+				wasAtEnd ifTrue: [ "Keep cursor at end if it was already there"
+					| atEnd |
+					atEnd := self text size + 1.
+					self markIndex: atEnd pointIndex: atEnd ] ] ] ]
 ]
 
 { #category : 'accessing - text' }

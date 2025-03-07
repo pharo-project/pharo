@@ -63,16 +63,19 @@ ReRenameMethodRefactoring class >> renameMethod: aSelector in: aClass to: newSel
 { #category : 'preconditions' }
 ReRenameMethodRefactoring >> applicabilityPreconditions [
 
-	^ {
-		  self validSelectorCondition.
-		  self newNameDoesNotRequireRefactoringPrecondition not.
-		  self selectorsHaveSameArity }
+	^ { self validSelectorCondition . self selectorsHaveSameArity }
 ]
 
 { #category : 'torevisit' }
 ReRenameMethodRefactoring >> areArgumentsPermuted [
 
 	^ permutation asArray ~= (1 to: oldSelector numArgs) asArray
+]
+
+{ #category : 'torevisit' }
+ReRenameMethodRefactoring >> areArgumentsRenamed [
+
+	^ renameMap isNotEmpty 
 ]
 
 { #category : 'testing' }
@@ -110,6 +113,13 @@ ReRenameMethodRefactoring >> implementorsCanBePrimitives [
 ]
 
 { #category : 'preconditions' }
+ReRenameMethodRefactoring >> isMethodDefinitionUnchanged [
+
+	^ self areNamesTheSame & self areArgumentsPermuted not & self areArgumentsRenamed not
+		   
+]
+
+{ #category : 'preconditions' }
 ReRenameMethodRefactoring >> methodDefinedInClassCondition [
 
 	^ (ReDefinesSelectorsCondition new definesSelectors: {oldSelector} in: class)
@@ -124,16 +134,6 @@ ReRenameMethodRefactoring >> modifyImplementorParseTree: parseTree in: aClass [
 { #category : 'instance creation' }
 ReRenameMethodRefactoring >> newName: aString [ 
 	newSelector := aString.
-]
-
-{ #category : 'preconditions' }
-ReRenameMethodRefactoring >> newNameDoesNotRequireRefactoringPrecondition [
-
-	^ ReBlockCondition new
-		   block: [ self areNamesTheSame & self areArgumentsPermuted not ];
-		   violatorErrorString:
-		   'The selector ', newSelector, ' is unchanged and its arguments are not permuted'
-		   
 ]
 
 { #category : 'private' }

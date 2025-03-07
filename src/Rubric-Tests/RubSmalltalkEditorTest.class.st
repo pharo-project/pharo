@@ -550,6 +550,27 @@ RubSmalltalkEditorTest >> testCompileForIn [
 	self should: [ nil executeMethod: method ] raise: OCRuntimeSyntaxError
 ]
 
+{ #category : 'tests' }
+RubSmalltalkEditorTest >> testCompletionEngineInstanceIsNotUsedIfNil [
+	
+	| current |
+	[ current := RubSmalltalkEditor completionEngineInstance.
+	RubSmalltalkEditor completionEngineInstance: nil.
+	RubSmalltalkEditor completionEngineClass: CoStatisticsCompletionEngine.
+	self assert: RubSmalltalkEditor new completionEngine class equals: CoStatisticsCompletionEngine ]
+		ensure: [ RubSmalltalkEditor completionEngineInstance: current ]
+]
+
+{ #category : 'tests' }
+RubSmalltalkEditorTest >> testCompletionEngineInstanceIsUsedIfSpecified [
+	
+	| current |
+	[ current := RubSmalltalkEditor completionEngineInstance.
+	RubSmalltalkEditor completionEngineInstance: CoStatisticsCompletionEngine new.
+	self assert: RubSmalltalkEditor new completionEngine class equals: CoStatisticsCompletionEngine ]
+		ensure: [ RubSmalltalkEditor completionEngineInstance: current ]
+]
+
 { #category : 'tests - copy' }
 RubSmalltalkEditorTest >> testCopySelection [
 

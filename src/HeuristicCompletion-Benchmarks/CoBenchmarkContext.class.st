@@ -21,6 +21,7 @@ CoBenchmarkContext >> callsite [
 
 { #category : 'accessing' }
 CoBenchmarkContext >> callsite: anObject [
+
 	callsite := anObject
 ]
 

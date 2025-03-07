@@ -740,6 +740,19 @@ Context >> exceptionsToCaptureWhenStepping [
 	^ exceptionsSet
 ]
 
+{ #category : 'accessing' }
+Context >> executedPC [
+	"Deeper in the stack the pc was already advanced one bytecode, so we need to go back
+	this one bytecode, which can consist of multiple bytes. But on IR, we record the *last*
+	bytecode offset as the offset of the IR instruction, which means we can just go back one"
+
+	"if we are at the start, return the startpc"
+	(pc == self startpc) ifTrue: [ ^self startpc ].
+
+	"we need to guard for dead contexts (pc is nil)"
+	^self isDead ifTrue: [ self endPC - 1] ifFalse: [ pc - 1]
+]
+
 { #category : 'system simulation' }
 Context >> failPrimitiveWith: maybePrimFailToken [
 	"The receiver is a freshly-created context on a primitive method.  Skip the callPrimitive:

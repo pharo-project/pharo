@@ -72,5 +72,5 @@ ThreadSafeTranscript >> openLabel: aString [
 { #category : '*Transcript-Tool' }
 ThreadSafeTranscript class >> registerToolsOn: aRegistry [
 
-	aRegistry register: self as: #transcript
+	aRegistry register: Transcript as: #transcript
 ]

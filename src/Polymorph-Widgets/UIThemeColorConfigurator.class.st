@@ -465,7 +465,7 @@ UIThemeColorConfigurator >> scrollbarNormalFillStyleFor: aScrollbar [
 { #category : 'colors' }
 UIThemeColorConfigurator >> secondarySelectionColor [
 
-	^ Color r: 0.927 g: 0.962 b: 0.995 alpha: 1.0
+	^ self selectionColor lighter lighter lighter lighter
 ]
 
 { #category : 'colors' }

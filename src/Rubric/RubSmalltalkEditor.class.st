@@ -9,7 +9,8 @@ Class {
 		'completionEngine'
 	],
 	#classVars : [
-		'CompletionEngineClass'
+		'CompletionEngineClass',
+		'CompletionEngineInstance'
 	],
 	#category : 'Rubric-Editing-Code',
 	#package : 'Rubric',
@@ -124,9 +125,21 @@ RubSmalltalkEditor class >> completionEngineClass [
 ]
 
 { #category : 'completion engine' }
-RubSmalltalkEditor class >> completionEngineClass: anEngine [
+RubSmalltalkEditor class >> completionEngineClass: aClass [
 
-	CompletionEngineClass := anEngine
+	CompletionEngineClass := aClass
+]
+
+{ #category : 'completion engine' }
+RubSmalltalkEditor class >> completionEngineInstance [
+
+	^ CompletionEngineInstance 
+]
+
+{ #category : 'completion engine' }
+RubSmalltalkEditor class >> completionEngineInstance: anEngine [
+
+	CompletionEngineInstance := anEngine 
 ]
 
 { #category : 'completion engine' }
@@ -349,9 +362,9 @@ RubSmalltalkEditor >> completionAround: aBlock keyDown: anEvent [
 RubSmalltalkEditor >> completionAround: aBlock keyStroke: anEvent [
 	"I'm a editor for Smalltalk, so, do completion around"
 
-	self isCompletionEnabled ifFalse: [  ^aBlock value ].
+	self isCompletionEnabled ifFalse: [ ^ aBlock value ].
 
-	(completionEngine handleKeystrokeBefore: anEvent editor: self) ifTrue:  [^ self ].
+	(completionEngine handleKeystrokeBefore: anEvent editor: self) ifTrue: [ ^ self ].
 
 	aBlock value.
 	completionEngine handleKeystrokeAfter: anEvent editor: self
@@ -359,11 +372,13 @@ RubSmalltalkEditor >> completionAround: aBlock keyStroke: anEvent [
 
 { #category : 'completion engine' }
 RubSmalltalkEditor >> completionEngine [
-
+	
 	^ completionEngine ifNil: [
-		CompletionEngineClass ifNotNil: [
-			self completionEngine: CompletionEngineClass new.
-			completionEngine ] ]
+		CompletionEngineInstance 
+				ifNotNil: [ completionEngine := CompletionEngineInstance ]
+				ifNil: [ 	CompletionEngineClass ifNotNil: [
+								self completionEngine: CompletionEngineClass new.
+								completionEngine ] ] ]
 ]
 
 { #category : 'completion engine' }

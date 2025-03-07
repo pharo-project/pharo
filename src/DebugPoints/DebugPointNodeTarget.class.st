@@ -15,12 +15,6 @@ DebugPointNodeTarget class >> hitAnnouncementClass [
 	^ DebugPointHit
 ]
 
-{ #category : 'actions' }
-DebugPointNodeTarget >> browse [
-
-	^ self method browse
-]
-
 { #category : 'private' }
 DebugPointNodeTarget >> install: aLink on: aClassOrObject [
 
@@ -73,5 +67,5 @@ DebugPointNodeTarget >> targetClass [
 { #category : 'description' }
 DebugPointNodeTarget >> targetString [
 
-	^ self method printString
+	^ [self method printString] on: Error do:['ERROR PARSING DEBUG POINT TARGET']
 ]

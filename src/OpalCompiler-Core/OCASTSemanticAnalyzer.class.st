@@ -270,7 +270,7 @@ OCASTSemanticAnalyzer >> visitPragmaNode: aPragmaNode [
 
 	"if the pragma is a primitive that defines an error variable, we need to declare a temp
 	for it"
-	aPragmaNode isPrimitiveError ifFalse: [ ^ self ].
+	aPragmaNode isPrimitiveErrorPragma ifFalse: [ ^ self ].
 	varNode := OCVariableNode named: aPragmaNode primitiveErrorVariableName.
 	self declareVariableNode: varNode as: (PrimitiveErrorVariable node: varNode)
 ]

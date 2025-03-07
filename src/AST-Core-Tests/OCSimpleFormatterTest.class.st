@@ -2,7 +2,7 @@
 SUnit tests for BISimpleFormatter
 "
 Class {
-	#name : 'OCFormatterTest',
+	#name : 'OCSimpleFormatterTest',
 	#superclass : 'OCParseTreeTest',
 	#category : 'AST-Core-Tests-Formatter',
 	#package : 'AST-Core-Tests',
@@ -10,13 +10,13 @@ Class {
 }
 
 { #category : 'private' }
-OCFormatterTest >> formatClass: aClass [
+OCSimpleFormatterTest >> formatClass: aClass [
 	aClass selectors
 		do: [ :each | self formatClass: aClass selector: each ]
 ]
 
 { #category : 'private' }
-OCFormatterTest >> formatClass: aClass selector: aSymbol [
+OCSimpleFormatterTest >> formatClass: aClass selector: aSymbol [
 	| source tree1 tree2 |
 	source := aClass sourceCodeAt: aSymbol.
 	tree1 := self parserClass parseMethod: source.
@@ -27,62 +27,67 @@ OCFormatterTest >> formatClass: aClass selector: aSymbol [
 ]
 
 { #category : 'private' }
-OCFormatterTest >> formatterClass [
+OCSimpleFormatterTest >> formatNode: aNode [ 
+
+	^ (self formatterClass new format: aNode)
+		
+]
+
+{ #category : 'private' }
+OCSimpleFormatterTest >> formatterClass [
   ^OCSimpleFormatter
 ]
 
 { #category : 'tests' }
-OCFormatterTest >> testCoreSystem [
-	#(#Object #Behavior #Boolean #True #False #Integer #SmallInteger #Collection #String)
+OCSimpleFormatterTest >> testCoreSystem [
+	{ Object . Behavior . Boolean . True  . False . Integer . SmallInteger  . Collection . String}
 		do: [ :each |
-			| class |
-			class := testingEnvironment classNamed: each.
 			self
-				formatClass: class;
-				formatClass: class class ]
+				formatClass: each;
+				formatClass: each class ]
 ]
 
 { #category : 'tests' }
-OCFormatterTest >> testFormatPragmaWithLastIsSymbolArgument [
+OCSimpleFormatterTest >> testFormatPragmaWithLastIsSymbolArgument [
 	| inputSource tree outputSource |
 	"formatter should not create invalid code by removing whitespace between #= and >"
 	inputSource := 'foo  <selector: #= > ^ self'.
 	tree := self parseMethod: inputSource.
-	outputSource := self formatterClass new format: tree.
+	outputSource := self formatNode: tree.
 	self shouldnt: [self parseMethod: outputSource] raise: OCCodeError.
 
 	"already worked and still should for non-symbol arguments"
 	inputSource := 'foo  <selector: 0 > ^ self'.
 	tree := self parseMethod: inputSource.
-	outputSource := self formatterClass new format: tree.
+	outputSource := self formatNode: tree.
 	self shouldnt: [self parseMethod: outputSource] raise: OCCodeError.
 
 	"already worked and should still work for pragmas without arguments"
 	inputSource := 'foo  <selector> ^ self'.
 	tree := self parseMethod: inputSource.
-	outputSource := self formatterClass new format: tree.
+	outputSource := self formatNode: tree.
 	self shouldnt: [self parseMethod: outputSource] raise: OCCodeError
 ]
 
 { #category : 'tests' }
-OCFormatterTest >> testLiteralDynamicArray [
+OCSimpleFormatterTest >> testLiteralDynamicArray [
 	| source tree1 |
 	source := 'foo ^ { ''film'' . ''FILM''} '.
 	tree1 := self parseMethod: source.
-	self assert: ((self formatterClass new format: tree1) occurrencesOf: $.) equals: 1
+	self assert: ((self formatNode: tree1) occurrencesOf: $.) equals: 1
 ]
 
 { #category : 'tests' }
-OCFormatterTest >> testParseError [
+OCSimpleFormatterTest >> testParseError [
 
 	| source node |
-	source := ' +  foo:  )'.
+	source := ' +  foo: )'.
 	node := self parseFaultyExpression: source.
-	self assert: node formattedCode equals: source
+	self assert: (self formatNode: node) equals: source
 ]
 
 { #category : 'tests' }
-OCFormatterTest >> testPreserveLiteralArrayFormat [
+OCSimpleFormatterTest >> testPreserveLiteralArrayFormat [
 	| inputSource literalArrayNode |
 	"symbols within a literal array can omit the # character, if it is used that way,
 	the formatter should not add a # character but just use the source form."
@@ -92,7 +97,7 @@ OCFormatterTest >> testPreserveLiteralArrayFormat [
 ]
 
 { #category : 'tests' }
-OCFormatterTest >> testPreserveLiteralNumberFormat [
+OCSimpleFormatterTest >> testPreserveLiteralNumberFormat [
 	| inputSource numbersNode |
 	"Literal numbers can be written in different ways, integer, integer with
 	radix float, fractional constants. The formatter should not change the

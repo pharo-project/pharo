@@ -265,6 +265,11 @@ RBBrowserEnvironment >> defaultPlugins [
 	^ OrderedCollection new
 ]
 
+{ #category : 'accessing' }
+RBBrowserEnvironment >> definedClasses [
+	^ self allClasses
+]
+
 { #category : 'testing' }
 RBBrowserEnvironment >> definesClass: aClass [
 	^ true

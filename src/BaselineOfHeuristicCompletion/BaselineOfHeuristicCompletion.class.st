@@ -18,6 +18,9 @@ BaselineOfHeuristicCompletion >> baseline: spec [
 		spec package: 'HeuristicCompletion-Benchmarks' with:[
 			spec requires: 'HeuristicCompletion-Model']
 		].
+		spec package: 'HeuristicCompletion-Benchmarks-Tests' with: [ 
+			spec requires: 'HeuristicCompletion-Benchmarks' 
+		].
 	
 
 ]

@@ -16,9 +16,8 @@ Class {
 		'checkNewTemps',
 		'scopeStack'
 	],
-	#category : 'AST-Core-Visitors',
-	#package : 'AST-Core',
-	#tag : 'Visitors'
+	#category : 'OpalCompiler-ToolFeatures',
+	#package : 'OpalCompiler-ToolFeatures'
 }
 
 { #category : 'accessing' }

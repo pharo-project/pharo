@@ -1,9 +1,8 @@
 Class {
 	#name : 'OCReturnNodeAdderVisitorTest',
 	#superclass : 'OCParseTreeTest',
-	#category : 'AST-Core-Tests-Visitors',
-	#package : 'AST-Core-Tests',
-	#tag : 'Visitors'
+	#category : 'OpalCompiler-ToolFeatures-Tests',
+	#package : 'OpalCompiler-ToolFeatures-Tests'
 }
 
 { #category : 'tests' }
@@ -111,4 +110,19 @@ OCReturnNodeAdderVisitorTest >> testAddReturnWhenVariableExpectReturnAdded [
 	
 	expect := OCParser parseExpression: '^ x'.
 	self assert: result equals: expect
+]
+
+{ #category : 'tests - add self return' }
+OCReturnNodeAdderVisitorTest >> testAddSelfReturn [
+
+	| tree return |
+	tree := OCParser parseExpression: '1. 2'.
+	return := tree addSelfReturn.
+	self assert: tree statements last equals: return.
+	self assert: (self parseExpression: '1. 2. ^ self') equals: tree.
+
+	tree := self parseExpression: '3. ^ 4'.
+	return := tree addSelfReturn.
+	self assert: tree statements last equals: return.
+	self assert: (self parseExpression: '3. ^ 4') equals: tree
 ]

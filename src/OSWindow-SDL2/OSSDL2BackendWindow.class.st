@@ -416,7 +416,7 @@ OSSDL2BackendWindow >> isTextInputActive [
 
 { #category : 'testing' }
 OSSDL2BackendWindow >> isValid [
-	^ true
+	^ sdl2Window isValid
 ]
 
 { #category : 'testing' }

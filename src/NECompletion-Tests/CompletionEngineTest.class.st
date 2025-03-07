@@ -889,27 +889,112 @@ CompletionEngineTest >> testSmartCharacterWithEventAndSelection [
 ]
 
 { #category : 'tests - keyboard' }
-CompletionEngineTest >> testSmartCharacterWithEventSelfClosing [
-	self
-		setEditorText: ' ';
-		selectAt: 2.
+CompletionEngineTest >> testSmartCharacterWithEventDontWritePairAfterDifferentCharacter [
+	"Triggering a smart character inside the same smart character pair still works."
 
+	self setEditorTextWithCaret: '$|'.
+	editor keystroke: (self keyboardPressFor: $().
+	self assert: editor text equals: '$('.
+
+	self setEditorTextWithCaret: '(|'.
+	editor keystroke: (self keyboardPressFor: $").
+	self assert: editor text equals: '("'.
+
+	self setEditorTextWithCaret: 'foo:|'.
+	editor keystroke: (self keyboardPressFor: $[).
+	self assert: editor text equals: 'foo:['
+]
+
+{ #category : 'tests' }
+CompletionEngineTest >> testSmartCharacterWithEventNoPairWhenCharLiteral [
+
+	self setEditorTextWithCaret: '[$|]'.
+	editor keystroke: (self keyboardEventFor: $[).
+	self assert: editor text equals: '[$[]'.
+
+	self setEditorTextWithCaret: '(1 > $|)'.
+	editor keystroke: (self keyboardEventFor: $().
+	self assert: editor text equals: '(1 > $()'
+]
+
+{ #category : 'tests - keyboard' }
+CompletionEngineTest >> testSmartCharacterWithEventSelfClosing [
+
+	self setEditorTextWithCaret: ' |'.
 	controller smartCharacterWithEvent: (self keyboardEventFor: $().
 	self assert: editor text equals: ' ()'.
 
-	self
-		setEditorText: ' ';
-		selectAt: 2.
-
+	self setEditorTextWithCaret: ' |'.
 	controller smartCharacterWithEvent: (self keyboardEventFor: $)).
 	self assert: editor text equals: ' '.
 
-	self
-		setEditorText: ' ';
-		selectAt: 2.
-
+	self setEditorTextWithCaret: ' |'.
 	controller smartCharacterWithEvent: (self keyboardEventFor: $<).
 	self assert: editor text equals: ' '
+]
+
+{ #category : 'tests - keyboard' }
+CompletionEngineTest >> testSmartCharacterWithEventWriteClosingBeforeSameCharacter [
+	"Triggering a smart character inside the same smart character pair still works."
+
+	self setEditorTextWithCaret: '|)'.
+	editor keystroke: (self keyboardPressFor: $)).
+	self assert: editor text equals: '))'.
+
+	self setEditorTextWithCaret: '|]'.
+	editor keystroke: (self keyboardPressFor: $]).
+	self assert: editor text equals: ']]'.
+
+	self setEditorTextWithCaret: '|}'.
+	editor keystroke: (self keyboardPressFor: $}).
+	self assert: editor text equals: '}}'.
+
+	self setEditorTextWithCaret: '|"'.
+	editor keystroke: (self keyboardPressFor: $").
+	self assert: editor text equals: '"""'.
+
+	self setEditorTextWithCaret: '|'''.
+	editor keystroke: (self keyboardPressFor: $').
+	self assert: editor text equals: ''''''''
+]
+
+{ #category : 'tests - keyboard' }
+CompletionEngineTest >> testSmartCharacterWithEventWritePairAfterSameCharacter [
+	"Triggering a smart character inside the same smart character pair still works."
+
+	self setEditorTextWithCaret: '"|'.
+	editor keystroke: (self keyboardPressFor: $").
+	self assert: editor text equals: '"""'.
+
+	self setEditorTextWithCaret: '''|'.
+	editor keystroke: (self keyboardPressFor: $').
+	self assert: editor text equals: ''''''''
+]
+
+{ #category : 'tests - keyboard' }
+CompletionEngineTest >> testSmartCharacterWithEventWritePairInsideExistingPair [
+	"Triggering a smart character inside the same smart character pair still works."
+
+	self setEditorTextWithCaret: '(|)'.
+	controller smartCharacterWithEvent: (self keyboardPressFor: $().
+	self assert: editor text equals: '(())'.
+
+	self setEditorTextWithCaret: '[|]'.
+	controller smartCharacterWithEvent: (self keyboardPressFor: $[).
+	self assert: editor text equals: '[[  ]]'.
+
+	self setEditorTextWithCaret: '{|}'.
+	editor keystroke: (self keyboardPressFor: ${).
+	self assert: editor text equals: '{{  }}'.
+
+	self setEditorTextWithCaret: '"|"'.
+	controller smartCharacterWithEvent: (self keyboardPressFor: $").
+	self assert: editor text equals: '""""'.
+
+	"initial string: '' (two quotes) ; typing $' ; final string: ''' (three quotes, and the inserted quote is escaped)"
+	self setEditorTextWithCaret: '''|'''.
+	controller smartCharacterWithEvent: (self keyboardPressFor: $').
+	self assert: editor text equals: ''''''''''
 ]
 
 { #category : 'tests - keyboard' }
@@ -964,14 +1049,54 @@ CompletionEngineTest >> testSmartDoubleQuoteSurroundsSelection [
 
 { #category : 'tests - keyboard' }
 CompletionEngineTest >> testSmartNeedExtraRemoveInForOppositeAt [
+	"index of cursor = 1 + index of character to remove"
 
-	self assert: (controller smartNeedExtraRemoveIn: '()' for: $( opposite:$) at:1).
-	self deny: (controller smartNeedExtraRemoveIn: '(()' for: $( opposite:$) at:2).
-	self assert: (controller smartNeedExtraRemoveIn: '(1()' for: $( opposite:$) at:3).
-	self assert: (controller smartNeedExtraRemoveIn: '(1(1())' for: $( opposite:$) at:5).
-	self assert: (controller smartNeedExtraRemoveIn: '((1)1())))' for: $( opposite:$) at:6).
-	self deny: (controller smartNeedExtraRemoveIn: '()(()' for: $( opposite:$) at:3).
-	self assert: (controller smartNeedExtraRemoveIn: '(foobar()' for: $( opposite:$) at:8)
+	self setEditorTextWithCaret: '(|)'.
+	self assert: controller smartBackspace. "result: ''"
+
+	self setEditorTextWithCaret: '(()|'.
+	self deny: controller smartBackspace. "result: '(('"
+
+	self setEditorTextWithCaret: '(1(|)'.
+	self assert: controller smartBackspace. "result: '(1'"
+
+	self setEditorTextWithCaret: '(1(1(|))'.
+	self assert: controller smartBackspace. "result: '(1(1)'"
+
+	self setEditorTextWithCaret: '((1)1(|)))'.
+	self assert: controller smartBackspace. "result: '((1)1))'"
+
+	self setEditorTextWithCaret: '()((|)'.
+	self deny: controller smartBackspace. "result: '()()'"
+
+	self setEditorTextWithCaret: '(foobar(|)'.
+	self assert: controller smartBackspace. "result: '(foobar'"
+
+	self setEditorTextWithCaret: '[|]'.
+	self assert: controller smartBackspace. "result: ''"
+
+	self setEditorTextWithCaret: '{|}'.
+	self assert: controller smartBackspace. "result: ''"
+
+	self setEditorTextWithCaret: '"|"'.
+	self assert: controller smartBackspace. "result: ''"
+
+	self setEditorTextWithCaret: '''|'''.
+	self assert: controller smartBackspace "result: ''"
+]
+
+{ #category : 'tests - keyboard' }
+CompletionEngineTest >> testSmartNeedExtraRemoveInForOppositeAtNoRemoveForLiterals [
+	"index of cursor = 1 + index of character to remove"
+
+	self setEditorTextWithCaret: '($(|)'.
+	self deny: controller smartBackspace. "result: '($)'"
+
+	self setEditorTextWithCaret: '$[|]'.
+	self deny: controller smartBackspace. "result: '$]'"
+
+	self setEditorTextWithCaret: '$"|"'.
+	self deny: controller smartBackspace
 ]
 
 { #category : 'tests - keyboard' }
@@ -1049,4 +1174,17 @@ nextLine'.
 	editor undo.
 	
 	self assert: editor text asString equals: text
+]
+
+{ #category : 'tests - keyboard' }
+CompletionEngineTest >> testWriteSmartCharacterPairInsideExistingPair [
+	"Triggering a smart character inside the same smart character pair still works."
+
+	self setEditorTextWithCaret: '(|)'.
+	controller smartCharacterWithEvent: (self keyboardPressFor: $().
+	self assert: editor text equals: '(())'.
+
+	self setEditorTextWithCaret: '[|]'.
+	controller smartCharacterWithEvent: (self keyboardPressFor: $[).
+	self assert: editor text equals: '[[  ]]'
 ]

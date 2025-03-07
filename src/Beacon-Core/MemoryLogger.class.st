@@ -137,6 +137,7 @@ MemoryLogger >> initialize [
 
 { #category : 'utilities' }
 MemoryLogger >> nextPut: aSignal [
+
 	mutex critical: [
 		recordings add: aSignal ].
 	"the announcement is passed forward so that potential viewers

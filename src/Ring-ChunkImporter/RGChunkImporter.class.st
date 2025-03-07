@@ -295,7 +295,7 @@ RGChunkImporter >> isNilSuperclassDefinition: ast [
 		and: [(self allowedSelectors includes: ast statements first selector)
 		and: [(ast statements second selector = #superclass:)
 		and: [(ast statements second arguments first value isNil)
-		and: [((ast statements first arguments first value withoutPrefix: '#') = ast statements second receiver formattedCode)]]]]]]
+		and: [((ast statements first arguments first value withoutPrefix: '#') = ast statements second receiver sourceCode)]]]]]]
 ]
 
 { #category : 'private' }
@@ -406,7 +406,7 @@ RGChunkImporter >> visitDoItChunk: aChunk [
 		ifTrue: [ ast := ast statements first ].
 
 	(ast isMessage and: [self allowedSelectors includes: ast selector]) ifTrue: [
-		superclassName := ast receiver formattedCode.
+		superclassName := ast receiver sourceCode.
 		self assert: ast arguments isNotEmpty.
 		selectorParts := ast selector findBetweenSubstrings: {$:}.
 
@@ -464,17 +464,17 @@ RGChunkImporter >> visitDoItChunk: aChunk [
 			poolDictionariesNames := argument value. ].
 
 		self if: selectorParts in: ast includes: #layout do: [:argument |
-			layoutDefinition := argument formattedCode. ].
+			layoutDefinition := argument sourceCode. ].
 
 		self if: selectorParts in: ast includes: #slots do: [:argument |
 			slotsDefinition := argument "use AST directly". ].
 
 		self if: selectorParts in: ast includes: #uses do: [:argument |
-			traitsDefinition := argument formattedCode. ].
+			traitsDefinition := argument sourceCode. ].
 
 		hasNilSuperclass ifTrue: [superclassName := nil].
 
-		(#(#instanceVariableNames: uses: uses:instanceVariableNames:) includes: ast selector) ifTrue: [ 			subclassName := ast receiver formattedCode asSymbol.
+		(#(#instanceVariableNames: uses: uses:instanceVariableNames:) includes: ast selector) ifTrue: [ 			subclassName := ast receiver sourceCode asSymbol.
 			superclassName := nil ].
 
 		(#(CompiledBlock CompiledCode CompiledMethod) includes: subclassName) ifTrue: [

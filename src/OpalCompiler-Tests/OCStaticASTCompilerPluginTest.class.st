@@ -21,7 +21,7 @@ OCStaticASTCompilerPluginTest >> testCreateAndUseStaticCompilerPlugin [
 	plugin := OCPluginMeaningOfLife new.
 
 	"Use plugin with compiler"
-	result := Object compiler
+	result := OpalCompiler new
 		          addPlugin: plugin;
 		          evaluate: '42'.
 
@@ -38,7 +38,8 @@ OCStaticASTCompilerPluginTest >> testIsAbstract [
 OCStaticASTCompilerPluginTest >> testTransform [
 
 	| ast |
-	ast := (OCOpalExamples >> #exampleReturn42) ast copy.
+	ast := OCParser parseMethod: (OCOpalExamples >> #exampleReturn42) sourceCode.
+		
 	self assert: ast body statements first value value equals: 42.
 	ast := OCPluginMeaningOfLife transform: ast.
 	self

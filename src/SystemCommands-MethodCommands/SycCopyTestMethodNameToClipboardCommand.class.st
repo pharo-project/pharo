@@ -8,18 +8,18 @@ Class {
 	#package : 'SystemCommands-MethodCommands'
 }
 
-{ #category : 'accessing' }
-SycCopyTestMethodNameToClipboardCommand >> description [
-	^ 'Copy selected methods selector into Clipboard as testXXX'
-]
-
 { #category : 'executing' }
-SycCopyTestMethodNameToClipboardCommand >> execute [
-	| text |
+SycCopyTestMethodNameToClipboardCommand >> applyCommandResult [
 
+	| text |
 	text := (self methods collect: [ :each | each selector asTestSelector ]) joinUsing: String cr.
 	Clipboard clipboardText: text.
 	self inform: 'Copied methods:' , String cr , text
+]
+
+{ #category : 'accessing' }
+SycCopyTestMethodNameToClipboardCommand >> description [
+	^ 'Copy selected methods selector into Clipboard as testXXX'
 ]
 
 { #category : 'accessing' }

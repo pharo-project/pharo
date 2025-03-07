@@ -20,12 +20,6 @@ DebugPointObjectTarget >> beForObject: anObject [
 		  yourself
 ]
 
-{ #category : 'description' }
-DebugPointObjectTarget >> browse [
-
-	^ self subTarget browse
-]
-
 { #category : 'announcements' }
 DebugPointObjectTarget >> hitAnnouncementOn: aDebugPoint inContext: aContext [
 

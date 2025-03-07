@@ -1170,6 +1170,12 @@ OCProgramNode >> removeDeadCode [
 	self children do: [:each | each removeDeadCode]
 ]
 
+{ #category : 'removing' }
+OCProgramNode >> removeFromTree [
+
+	self parent removeNode: self
+]
+
 { #category : 'properties' }
 OCProgramNode >> removeProperty: aKey [
 	"Remove the property with aKey. Answer the property or raise an error if aKey isn't found."

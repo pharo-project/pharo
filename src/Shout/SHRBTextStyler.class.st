@@ -10,11 +10,8 @@ Class {
 		'bracketLevel',
 		'classOrMetaClass',
 		'workspace',
-		'plugins',
 		'braceLevel',
 		'view',
-		'stylingEnabled',
-		'text',
 		'isScripting'
 	],
 	#classInstVars : [
@@ -723,12 +720,6 @@ SHRBTextStyler class >> vintageStyleTable [
 			(pragma 						(cyan muchDarker)))
 ]
 
-{ #category : 'private' }
-SHRBTextStyler >> addASTTransformationPlugin: aPlugin [
-
-	self plugins add: aPlugin
-]
-
 { #category : 'formatting' }
 SHRBTextStyler >> addAttributes: attributes forNode: aNode [
 
@@ -754,12 +745,6 @@ SHRBTextStyler >> addAttributesFrom: attributeRuns satisfying: aTestBlock to: aT
 					to: stop ]].
 
 	^ aText
-]
-
-{ #category : 'accessing' }
-SHRBTextStyler >> addPlugin: aPlugin [
-
-	self plugins add: aPlugin
 ]
 
 { #category : 'formatting' }
@@ -835,7 +820,6 @@ SHRBTextStyler >> hasSymbolStartingBy: aSymbol [
 SHRBTextStyler >> initialize [
 
 	super initialize.
-	stylingEnabled := true.
 	isScripting := false
 ]
 
@@ -905,28 +889,18 @@ SHRBTextStyler >> parenthesisStyleName [
 ]
 
 { #category : 'private' }
-SHRBTextStyler >> plugins [
-
-	^ plugins ifNil: [ plugins := OrderedCollection new ]
-]
-
-{ #category : 'private' }
 SHRBTextStyler >> privateStyle: aText [
-	| compiler |
 
+	| compiler |
 	aText ifEmpty: [ ^ self ].
 
 	compiler := classOrMetaClass compiler
-		source: aText asString;
-		receiver: (self isScripting ifTrue: [workspace ifNotNil: [:w | w doItReceiver]]);
-		isScripting: self isScripting;
-		requestor: workspace.
+		            source: aText asString;
+		            receiver: (self isScripting ifTrue: [ workspace ifNotNil: [ :w | w doItReceiver ] ]);
+		            isScripting: self isScripting;
+		            requestor: workspace.
 
-	self plugins do: [ :each | compiler addParsePlugin: each ].
-	
-	^ self
-		style: aText
-		ast: compiler parse
+	^ self style: aText ast: compiler parse
 ]
 
 { #category : 'testing' }
@@ -965,8 +939,8 @@ SHRBTextStyler >> resolveVariableAttributesFor: aVariableNode [
 { #category : 'styling' }
 SHRBTextStyler >> style: aText [
 
+	| text |
 	aText ifEmpty: [ ^ self ].
-	stylingEnabled ifFalse: [ ^ self ].
 	text := aText copy.
 	self privateStyle: text.
 	view ifNotNil: [ :view2 | view2 stylerStyled: text ]
@@ -976,16 +950,13 @@ SHRBTextStyler >> style: aText [
 SHRBTextStyler >> style: aText ast: ast [
 
 	aText ifEmpty: [ ^ self ].
-	text := aText.
 	charAttr := Array new: aText size withAll: (self attributesFor: #default).
 	bracketLevel := 0.
 	parentheseLevel := 0.
 	braceLevel := 0.
 	self visitNode: ast.
 	"Second pass to ensure that all syntax errors are visible"
-	ast allErrorNotices do: [ :notice | 
-		notice isSyntaxError ifTrue: [
-			self addStyle: #invalid from: notice position to: notice position ] ].
+	ast allErrorNotices do: [ :notice | notice isSyntaxError ifTrue: [ self addStyle: #invalid from: notice position to: notice position ] ].
 	^ aText runs: (RunArray newFrom: charAttr)
 ]
 
@@ -1071,24 +1042,6 @@ SHRBTextStyler >> styleTempBars: aSequenceNode [
 SHRBTextStyler >> styledTextFor: aText [
 
 	^ self privateStyle: aText
-]
-
-{ #category : 'private' }
-SHRBTextStyler >> stylingEnabled [
-
-	^ stylingEnabled
-]
-
-{ #category : 'private' }
-SHRBTextStyler >> stylingEnabled: aBoolean [
-
-	stylingEnabled := aBoolean
-]
-
-{ #category : 'private' }
-SHRBTextStyler >> text [
-
-	^ text
 ]
 
 { #category : 'styling' }

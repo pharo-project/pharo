@@ -44,8 +44,9 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 
 	"The old protocol should never be nil. But we are not in an ideal world sadly :( We got reported some cases where some code was loaded but had an error during the loading preventing a method that got added to the method dictionary to have an associated protocol. If this happens, we consider that we categorize it for the first time to avoid announcing a MethodRecategorized with an old protocol that is nil."
 	(priorMethod isNil or: [ priorOrigin ~= compiledMethod origin or: [ oldProtocol isNil ] ])
-		ifTrue: [
-			(self packageOrganizer packageForProtocol: newProtocol from: self) addMethod: compiledMethod.
+		ifTrue: [ "If we end up in this branch, it means the method is compiled for the first time in this class. BUT we have an edge case that is that during a class recompilation, we create a new instance of the class and add the methods from the old one to the new one. In that case, we should not add the new method to the package of the newProtocol because it is already present.
+			In order to know if we are in this edge case we can check if we have an old protocol already because we copy the protocols before the methods."
+			oldProtocol ifNil: [ (self packageOrganizer packageForProtocol: newProtocol from: self) addMethod: compiledMethod ].
 			self codeChangeAnnouncer announce: (MethodAdded method: compiledMethod) ]
 		ifFalse: [ "If protocol changed and someone is from different package, I need to throw a method recategorized"
 			newProtocol = oldProtocol ifFalse: [ self announceRecategorizationOf: compiledMethod oldProtocol: oldProtocol ].
@@ -215,6 +216,15 @@ Internal Representation and Key Implementation Points.'.
 		cr;
 		nextPutAll: '    Implementation Points'.
 	^ stream contents
+]
+
+{ #category : 'subclass creation' }
+ClassDescription >> classInstaller [
+	"Answer the class responsible of creating subclasses of myself in the system."
+
+	^ self isAnonymous
+		  ifTrue: [ Smalltalk anonymousClassInstaller ]
+		  ifFalse: [ Smalltalk classInstaller ]
 ]
 
 { #category : 'accessing - parallel hierarchy' }

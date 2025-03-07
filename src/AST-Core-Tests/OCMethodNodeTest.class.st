@@ -28,7 +28,7 @@ OCMethodNodeTest >> sampleBytecodeMethod [
 OCMethodNodeTest >> sampleBytecodeMethodWithArg: anArg [
 
 	<opalBytecodeMethod>
-	^ IRBuilder buildIR: [ :builder |
+	^ OCIRBuilder buildIR: [ :builder |
 		builder
 				numArgs: 1;
 				addTemps: { #arg };
@@ -183,17 +183,12 @@ OCMethodNodeTest >> testHasComments [
 
 { #category : 'tests - primitives' }
 OCMethodNodeTest >> testIsPrimitive [
-	"see other testPrimitive... tests"
-	"This test brings the test button in the browser and test negatively
-	The others are for each specific kind of primitive:..."
+
 	| ast |
-	ast := (SmallInteger >> #+) ast.
-	self assert: ast isPrimitive.
-	ast := (Bitmap >> #primFill:) ast.
+	ast := self parseMethod: 'primitive <primitive: 1>'.
 	self assert: ast isPrimitive.
 
-	ast := (Integer >> #+) ast.
-	self deny: ast isPrimitive
+
 ]
 
 { #category : 'tests' }
@@ -281,6 +276,14 @@ OCMethodNodeTest >> testNodeForOffsetVar [
 	self assert: foundNode class identicalTo: OCVariableNode
 ]
 
+{ #category : 'tests - primitives' }
+OCMethodNodeTest >> testNormalMethodIsNotPrimitive [
+	| ast |
+
+	ast := self parseMethod: 'foo <thisPragmaIsNotAPrimitive>'.
+	self deny: ast isPrimitive
+]
+
 { #category : 'tests' }
 OCMethodNodeTest >> testOffsetIsComment [
 	self deny: ((OrderedCollection>>#do:) ast offsetIsComment: 3).
@@ -295,61 +298,26 @@ OCMethodNodeTest >> testOffsetIsComment [
 { #category : 'tests - primitives' }
 OCMethodNodeTest >> testPrimitiveErrorIsPrimitive [
 
-	"isPinnedInMemory
-		<primitive: 183 error: ec>
-		^self primitiveFailed
-	"
-
 	| ast |
-	ast := (Object >> #isPinnedInMemory) ast.
+	ast := self parseMethod: 'primitive <primitive: 1 error: 1>'.
 	self assert: ast isPrimitive.
-
-	ast := (MirrorPrimitives class >> #makeObject:readOnly:) ast.
-	self assert: ast isPrimitive
-]
-
-{ #category : 'tests - primitives' }
-OCMethodNodeTest >> testPrimitiveIsPrimitive [
-	"primFill: aPositiveInteger
-		<primitive: 145>
-		self errorImproperStore."
-
-	| ast |
-	ast := (SmallInteger >> #+) ast.
-	self assert: ast isPrimitive.
-	ast := (Bitmap >> #primFill:) ast.
-	self assert: ast isPrimitive
 ]
 
 { #category : 'tests - primitives' }
 OCMethodNodeTest >> testPrimitiveModuleErrorIsPrimitive [
-	"
-	primClosedir: directoryPointerBytes
-		<primitive: 'primitiveClosedir' module: 'FileAttributesPlugin' error: error>
-		...
-	"
+
 	| ast |
-	ast := (File class >> #primClosedir:) ast.
+	ast := self parseMethod: 'methodWithPrimitiveModuleError
+	<primitive: ''primitiveClosedir'' module: ''FileAttributesPlugin'' error: error>'.
 	self assert: ast isPrimitive
 ]
 
 { #category : 'tests - primitives' }
 OCMethodNodeTest >> testPrimitiveModuleIsPrimitive [
-	"
-	stringHash: aString initialHash: speciesHash
-
-		| stringSize hash low |
-		<primitive: 'primitiveStringHash' module: 'MiscPrimitivePlugin'>
-
-		<var: #aHash declareC: 'int speciesHash'>
-		<var: #aString declareC: 'unsigned char *aString'>
-
-	"
+	
 	| ast |
-	ast := (ByteString class >> #stringHash:initialHash:) ast.
-	self assert: ast isPrimitive.
-
-	ast := (Integer >> #digitSubtract:) ast.
+	ast := self parseMethod: 'primitiveMethodWithPrimitiveModule
+	<primitive: ''primitiveStringHash'' module: ''MiscPrimitivePlugin''>'.
 	self assert: ast isPrimitive
 ]
 

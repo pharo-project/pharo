@@ -338,7 +338,11 @@ OSWorldRenderer >> osWindowRenderer [
 { #category : 'private' }
 OSWorldRenderer >> pickMostSuitableWindowDriver [
 
-	driver := OSWindowDriver current.
+	driver := OSEnvironment current 
+		at: 'PHARO_WINDOW_DRIVER' 
+		ifPresent: [ :driverName | (self class environment classNamed: driverName) new ]
+		ifAbsent: [ 	OSWindowDriver current ].
+
 	^ driver
 ]
 

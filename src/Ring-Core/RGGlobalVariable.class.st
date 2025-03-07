@@ -3,7 +3,7 @@ A global variable definition
 "
 Class {
 	#name : 'RGGlobalVariable',
-	#superclass : 'RGObject',
+	#superclass : 'RGVariable',
 	#category : 'Ring-Core-Kernel',
 	#package : 'Ring-Core',
 	#tag : 'Kernel'

@@ -191,32 +191,29 @@ ReRenameMethodDriver >> requestNewMessage [
 ReRenameMethodDriver >> runRefactoring [
 
 	| failedConditions |
+		
 	self configureRefactoring.
-	[ newMessage := self requestNewMessage.
-	"note that it would be better to pass a method name to the refactoring instead of splitting the arguments this way"
-	refactoring newSelector: newMessage selector; permutation: newMessage permutation.
-	"If the name is the same then there is no need to perform the refactoring 
-	and in such case we can just escape."
-	refactoring newNameDoesNotRequireRefactoringPrecondition check
-		ifTrue: [ ^ self ].
-	shouldEscape ifTrue: [ ^ self ].
-	failedConditions := refactoring failedApplicabilityPreconditions.
-	failedConditions isEmpty ]
-		whileFalse: [
-			failedConditions do: [ :cond |
-				"We need to mockify it"
-				self informDialog
-					label: cond errorString;
-					title: 'Invalid method name';
-					openModal ] ].
-	
-	refactoring areNamesTheSame ifTrue: [ ^ self ].
 
-	"names are different so we should check because this is not a permutation" 
+	failedConditions := OrderedCollection empty.	
+	[ 
+		newMessage := self requestNewMessage.
+		self configureMessage.
+		
+		refactoring isMethodDefinitionUnchanged ifTrue: [ ^ self ].
+		shouldEscape ifTrue: [ ^ self ]. "What is the use of this variable: shouldEscape?"
+		
+		failedConditions := refactoring failedApplicabilityPreconditions.
+		failedConditions do: [ :cond |
+			self informDialog
+				label: cond errorString;
+				title: 'Invalid method name';
+				openModal 
+		].
+	
+	] doWhileFalse: [	failedConditions isEmpty ].
+
 	refactoring failedBreakingChangePreconditions 
-		ifEmpty: [ 	
-			self configureMessage.
-			self applyChanges ]
+		ifEmpty: [ self applyChanges ]
 		ifNotEmpty: [ self handleBreakingChanges ]
 
 ]

@@ -340,12 +340,6 @@ RGObject >> isMethod [
 ]
 
 { #category : 'testing - types' }
-RGObject >> isPackage [
-
-	^false
-]
-
-{ #category : 'testing - types' }
 RGObject >> isProtocol [
 
 	^false

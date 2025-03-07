@@ -111,12 +111,6 @@ DebugPoint >> behaviors [
 	^ checkBehaviors , sideEffectBehaviors
 ]
 
-{ #category : 'actions' }
-DebugPoint >> browse [
-
-	^ self target browse
-]
-
 { #category : 'accessing' }
 DebugPoint >> checkBehaviors [
 

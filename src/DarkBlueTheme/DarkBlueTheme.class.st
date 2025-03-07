@@ -42,6 +42,12 @@ DarkBlueTheme >> defaultSettings [
 		  yourself
 ]
 
+{ #category : 'fill-styles' }
+DarkBlueTheme >> progressBarProgressFillColor [
+
+	^ self lightSelectionColor twiceLighter 
+]
+
 { #category : 'accessing' }
 DarkBlueTheme >> shStyleTableName [
 

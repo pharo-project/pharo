@@ -208,7 +208,7 @@ CompletionEngine >> handleKeystrokeBefore: aKeyboardEvent editor: anEditor [
 	keyCharacter := aKeyboardEvent keyCharacter.
 	controlKeyPressed := aKeyboardEvent controlKeyPressed.
 
-	(self smartInputWithEvent: aKeyboardEvent )
+	(self smartInputWithEvent: aKeyboardEvent)
 		ifNotNil: [ ^ true ].
 
 	self isMenuOpen
@@ -438,7 +438,7 @@ CompletionEngine >> smartBackspace [
 	currentText := currentEditor text.
 	smartCharacter := currentText at: currentEditor startIndex - 1 ifAbsent: [ ^ false ].	"take the opposite"
 
-	opposite := self smartCharacterOppositeOf: smartCharacter ifAbsent: [ ^false ].	"test if the next char is opposite"
+	opposite := self smartCharacterOppositeOf: smartCharacter ifAbsent: [ ^ false ].	"test if the next char is opposite"
 
 	opposite = (currentText at: currentEditor stopIndex ifAbsent: [ ^ false ])
 		ifFalse: [ ^ false ].	"test if there is an extra opposite to remove"
@@ -448,7 +448,7 @@ CompletionEngine >> smartBackspace [
 		for: smartCharacter
 		opposite: opposite
 		at: currentEditor startIndex)
-			ifFalse: [  ^ false ].
+			ifFalse: [ ^ false ].
 
 	currentEditor closeTypeIn.
 
@@ -493,35 +493,28 @@ CompletionEngine >> smartCharacterWithEvent: anEvent [
 	char := anEvent keyCharacter.
 	editor hasSelection
 		ifTrue: [
-			"we selected a piece of text and we type the same character that previously, so
-		we unwrap it"
-			"we selected a piece of text if the character is not a special one we do nothing."
-			matchingPair := self smartCharacterPairFor: char ifAbsent: [  ^nil ].	"else we wrap the selection"	"editor replaceSelectionWith: (String with: char) , (editor selection) , (String with: opposite)."	"ugly logic it should be encapsulated in the editor "
+			"We selected a piece of text and we type the same character that previously, so we unwrap it"
+			"We selected a piece of text if the character is not a special one we do nothing."
+			matchingPair := self smartCharacterPairFor: char ifAbsent: [ ^ nil ].	"else we wrap the selection"	"editor replaceSelectionWith: (String with: char) , (editor selection) , (String with: opposite)."	"ugly logic it should be encapsulated in the editor "
 
 			editor encloseWith: matchingPair.
 			self invalidateEditorMorph.
-			^ true ].	"we are not in a selection"
+			^ true ].	
+	"We are not in a selection"
 
 	(self smartCharacterShouldClose: char)
-		ifFalse: [
-			"if the character is not a special character"
-			self smartInverseMapping at: char ifAbsent: [ ^ nil ].	"if the character is not a closing special character do nothing"	"The character is special"
-			editor blinkPrevParen: char.
-			(editor nextCharacterIfAbsent: [ ^ nil ]) = char
-				ifFalse: [ ^ nil ].	"do not get this test but if we comment it out we cannot type closing ) anymore"
-			editor selectFrom: editor startIndex + 1 to: editor startIndex.
-			self invalidateEditorMorph.
-			^ true ].
+		ifFalse: [ "It is a closing smart character. Do not ignore it: if the user typed it, then assume the user wants it."
+			^ nil ].
 
-	opposite := self smartCharacterOppositeOf: char ifAbsent: [ ^nil ].
+	"Check if we are typing an opening smart character, and if so, add the matching closing string."
+	opposite := self smartCharacterOppositeOf: char ifAbsent: [ ^ nil ].
 	previous := editor previousCharacterIfAbsent: [ Character space ].
 	next := editor nextCharacterIfAbsent: [ Character space ].
-	insertion := next isSeparator
-				ifFalse: [ char asString ]
-				ifTrue: [
-					previous isSeparator
-						ifFalse: [ char asString ]
-						ifTrue: [ self newSmartCharacterInsertionStringForLeft: char right: opposite ]].
+	(previous ~= $$ and: [ "char literals are not smart"
+		 (next isSeparator and: [ previous isSeparator ]) or: [
+			 char = previous or: [ next = opposite ] ] ]) ifFalse: [ ^ nil ].
+
+	insertion := self newSmartCharacterInsertionStringForLeft: char right: opposite.
 	editor replaceSelectionWith: insertion.
 	insertionCenter := insertion size // 2 max: 1.
 	editor selectFrom: editor startIndex + insertionCenter to: editor startIndex + (insertionCenter - 1).
@@ -566,34 +559,31 @@ CompletionEngine >> smartNeedExtraRemoveIn: currentText for: opposite [
 
 	(currentText select: [ :char | char = opposite ]) size odd
 		ifTrue: [ ^ false ].
-	^true
-]
-
-{ #category : 'private' }
-CompletionEngine >> smartNeedExtraRemoveIn: currentText for: smartCharacter opposite: opposite at: position [
-	"Test if we need to remove an extra character when removing a smart character (any kind of smart character)"
-
-	smartCharacter = opposite
-		ifTrue: [
-			(self smartNeedExtraRemoveIn: currentText for: opposite)
-				ifFalse: [ ^ false ] ]
-		ifFalse: [
-			(self
-				smartNeedExtraRemovePairedIn: currentText
-				for: smartCharacter
-				opposite: opposite
-				at: position)
-					ifFalse: [ ^false ] ].
 	^ true
 ]
 
 { #category : 'private' }
+CompletionEngine >> smartNeedExtraRemoveIn: currentText for: smartCharacter opposite: opposite at: position [
+	"Test if we need to remove an extra character when removing a smart character (any kind of smart character)
+	 Do not consider literal characters to be smart characters"
+
+	^ (position <= 2 or: [ (currentText at: position - 2) ~= $$ ]) and: [
+		  smartCharacter = opposite
+			  ifTrue: [ self smartNeedExtraRemoveIn: currentText for: opposite ]
+			  ifFalse: [
+				  self
+					  smartNeedExtraRemovePairedIn: currentText
+					  for: smartCharacter
+					  opposite: opposite
+					  at: position ] ]
+]
+
+{ #category : 'private' }
 CompletionEngine >> smartNeedExtraRemovePairedIn: currentText for: smartCharacter opposite: opposite at: position [
-	"Test if we need to remove an extra character when removed a paired smart character.
+	"Test if we need to remove an extra character when removing a paired smart character.
 	 A paired smart character is any smart character who has an opposite who is diferent to itself: [], ()"
 
 	| startIndex countSmart countOpposite |
-
 	countSmart := 0.
 	countOpposite := 0.
 	startIndex := self
@@ -609,21 +599,17 @@ CompletionEngine >> smartNeedExtraRemovePairedIn: currentText for: smartCharacte
 			char = opposite
 				ifTrue: [ countOpposite := countOpposite + 1 ] ].
 
-	(countSmart > countOpposite and: [ (countOpposite - countSmart) odd ])
-		ifTrue: [ ^ false ].
-
-	^true
+	^ (countSmart > countOpposite and: [ (countOpposite - countSmart) odd ]) not
 ]
 
 { #category : 'private' }
-CompletionEngine >> smartStartIndexIn: currentText for: smartCharacter  opposite: opposite  at: position [
+CompletionEngine >> smartStartIndexIn: currentText for: smartCharacter opposite: opposite at: position [
 
 	(position - 1) to: 1 by: -1 do: [ :index | | char |
 		char := currentText at: index.
-		(char = smartCharacter or: [ char = opposite])
-			 ifFalse: [ ^index ] ].
-
-	^0
+		(char = smartCharacter or: [ char = opposite ])
+			 ifFalse: [ ^ index ] ].
+	^ 0
 ]
 
 { #category : 'private' }

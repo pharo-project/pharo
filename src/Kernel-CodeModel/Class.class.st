@@ -275,15 +275,6 @@ Class >> classBuilder [
 		^ self classInstaller new builder
 ]
 
-{ #category : 'subclass creation' }
-Class >> classInstaller [
-	"Answer the class responsible of creating subclasses of myself in the system."
-
-	^ self isAnonymous
-		  ifTrue: [ Smalltalk anonymousClassInstaller ]
-		  ifFalse: [ Smalltalk classInstaller ]
-]
-
 { #category : 'accessing' }
 Class >> classPool [
 	"Answer the dictionary of class variables.

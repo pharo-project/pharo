@@ -127,14 +127,6 @@ OCSequenceNode >> addNodeFirst: aNode [
 ]
 
 { #category : 'adding nodes' }
-OCSequenceNode >> addNodeLast: aNode [
-
-	self lastIsReturn
-		ifTrue: [ self addNode: aNode before: self statements last ]
-		ifFalse: [ self addNode: aNode ]
-]
-
-{ #category : 'adding nodes' }
 OCSequenceNode >> addNodes: aCollection [
 	aCollection do: [ :each | each parent: self ].
 	(statements notEmpty and: [ statements last isReturn ])

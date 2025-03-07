@@ -7,78 +7,103 @@ Class {
 }
 
 { #category : 'running' }
-OCArrayLiteralTest >> runCase [
+OCArrayLiteralTest >> compile: methodSourceCode [
 
-	self class codeChangeAnnouncer suspendAllWhile: [ super runCase ]
-]
-
-{ #category : 'running' }
-OCArrayLiteralTest >> tearDown [
-
-	self class removeSelector: #array.
-	super tearDown
+	^ OpalCompiler new
+		source: methodSourceCode;
+		compile	
 ]
 
 { #category : 'tests' }
 OCArrayLiteralTest >> testByteArrayBase [
-	self class compile: 'array ^ #[2r1010 8r333 16rFF]'.
-	self assert: (self array isKindOf: ByteArray).
-	self assert: self array size equals: 3.
-	self assert: self array first equals: 10.
-	self assert: self array second equals: 219.
-	self assert: self array last equals: 255
+	
+	| array method | 
+	method := self compile: 'array ^ #[2r1010 8r333 16rFF]'.
+	array := method valueWithReceiver: nil.
+	self assert: (array isKindOf: ByteArray).
+	self assert: array size equals: 3.
+	self assert: array first equals: 10.
+	self assert: array second equals: 219.
+	self assert: array last equals: 255
 ]
 
 { #category : 'tests' }
 OCArrayLiteralTest >> testByteArrayEmpty [
-	self class compile: 'array ^ #[]'.
-	self assert: (self array isKindOf: ByteArray).
-	self assertEmpty: self array
+
+	| array method |
+	method := self compile: 'array ^ #[]'.
+	array := method valueWithReceiver: nil.
+	self assert: (array isKindOf: ByteArray).
+	self assertEmpty: array
 ]
 
 { #category : 'tests' }
 OCArrayLiteralTest >> testByteArrayLiteral [
-	self class compile: 'array ^ #[ 1 2 3 4 ]'.
-	self assert: self array equals: self array.
-	self assert: self array identicalTo: self array
+
+	| array method |
+	method := self compile: 'array ^ #[ 1 2 3 4 ]'.
+	array := method valueWithReceiver: #().
+	self assert: array equals: array.
+	self assert: array identicalTo: array
 ]
 
 { #category : 'tests' }
 OCArrayLiteralTest >> testByteArrayLong [
-	self class compile: 'array ^ #[ ' , ((0 to: 255) inject: ' ' into: [ :r :e | r , ' ' , e asString ]) , ' ]'.
-	self assert: (self array isKindOf: ByteArray).
-	self assert: self array size equals: 256.
-	0 to: 255 do: [ :index | self assert: (self array at: index + 1) equals: index ]
+	
+	| method array |
+	method := self compile: 'array ^ #[ ' , ((0 to: 255) inject: ' ' into: [ :r :e | r , ' ' , e asString ]) , ' ]'.
+	array := method valueWithReceiver: #().
+	
+	self assert: ( array isKindOf: ByteArray).
+	self assert: array size equals: 256.
+	0 to: 255 do: [ :index | self assert: (array at: index + 1) equals: index ]
 ]
 
 { #category : 'tests' }
 OCArrayLiteralTest >> testByteArrayRange [
-	self class compile: 'array ^ #[ 0 255 ]'.
-	self assert: (self array isKindOf: ByteArray).
-	self assert: self array size equals: 2.
-	self assert: self array first equals: 0.
-	self assert: self array last equals: 255
+	
+	| array method |
+	method := self compile: 'array ^ #[ 0 255 ]'.
+	array := method valueWithReceiver: #().
+	self assert: ( array isKindOf: ByteArray).
+	self assert:  array size equals: 2.
+	self assert:  array first equals: 0.
+	self assert:  array last equals: 255
 ]
 
 { #category : 'tests' }
 OCArrayLiteralTest >> testByteArrayWithinArray [
-	self class compile: 'array ^ #( #[1] #[2] )'.
-	self assert: (self array isKindOf: Array).
-	self assert: self array size equals: 2.
-	self assert: (self array first isKindOf: ByteArray).
-	self assert: self array first first equals: 1.
-	self assert: (self array last isKindOf: ByteArray).
-	self assert: self array last first equals: 2
+
+	| array method |
+	method := self compile: 'array ^ #( #[1] #[2] )'.
+	array := method valueWithReceiver: #().
+	self assert: (array isKindOf: Array).
+	self assert: array size equals: 2.
+	self assert: (array first isKindOf: ByteArray).
+	self assert: array first first equals: 1.
+	self assert: (array last isKindOf: ByteArray).
+	self assert:  array last first equals: 2
 ]
 
 { #category : 'tests' }
 OCArrayLiteralTest >> testReservedIdentifiers [
-	self class compile: 'array ^ #(nil true false)'.
-	self assert: self array equals: {nil . true . false}
+
+	| method array |
+	method := self compile: 'array ^ #(nil true false)'.
+	array := method valueWithReceiver: #(). 
+	self 
+		assert: array 
+		equals: {nil . true . false}
 ]
 
 { #category : 'tests' }
 OCArrayLiteralTest >> testSymbols [
-	self class compile: 'array ^ #(#nil #true #false #''nil'' #''true'' #''false'')'.
-	self assert: self array equals: {#nil . #true . #false . #nil . #true . #false}
+	
+	| array method |
+	method := self compile: 'array  ^ #(#nil #true #false #''nil'' #''true'' #''false'')'.
+	array := method valueWithReceiver: #().
+	
+	self 
+		assert: array 
+		equals: { #nil . #true . #false . #nil . #true . #false }
 ]

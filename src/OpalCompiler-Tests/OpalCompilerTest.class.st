@@ -147,7 +147,7 @@ OpalCompilerTest >> testCompilerUsingCleanBlockClosureHasBlockAsLiteral [
 { #category : 'tests - bindings' }
 OpalCompilerTest >> testEvaluateWithBindings [
 	| result |
-	result := Smalltalk compiler
+	result := OpalCompiler new 
 		bindings: {(#a -> 3)} asDictionary;
 		evaluate: '1+a'.
 	self assert: result equals: 4
