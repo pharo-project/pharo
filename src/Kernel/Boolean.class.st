@@ -13,7 +13,7 @@ Class {
 
 { #category : 'testing' }
 Boolean class >> isAbstract [
-    ^ self == Boolean
+    ^ self name = #Boolean
 ]
 
 { #category : 'instance creation' }
