@@ -157,6 +157,11 @@ Boolean >> ifTrue: trueAlternativeBlock ifFalse: falseAlternativeBlock [
 ]
 
 { #category : 'testing' }
+Boolean class >> isAbstract [
+    ^ true
+]
+
+{ #category : 'testing' }
 Boolean >> isLiteral [
 	^ true
 ]
