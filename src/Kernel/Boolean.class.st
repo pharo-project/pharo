@@ -11,6 +11,11 @@ Class {
 	#tag : 'Objects'
 }
 
+{ #category : 'testing' }
+Boolean class >> isAbstract [
+    ^ self name = #Boolean
+]
+
 { #category : 'instance creation' }
 Boolean class >> new [
 	self error: 'You may not create any more Booleans - this is two-valued logic'
