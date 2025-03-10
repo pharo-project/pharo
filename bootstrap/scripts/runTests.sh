@@ -49,4 +49,8 @@ mv $CHANGES_FILE Pharo.changes
 
 export PHARO_CI_TESTING_ENVIRONMENT=1
 
-./pharo Pharo.image test --junit-xml-output --stage-name=${2} '.*'
+# Running tests
+if ! ./pharo bootstrap.image test --junit-xml-output --stage-name=${2} '.*'; then
+    echo "Tests failed for architecture: ${1} at stage: ${2}" >&2
+    exit 1
+fi
