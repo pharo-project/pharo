@@ -11,6 +11,11 @@ Class {
 	#tag : 'Objects'
 }
 
+{ #category : 'testing' }
+Boolean class >> isAbstract [
+    ^ self == Boolean
+]
+
 { #category : 'instance creation' }
 Boolean class >> new [
 	self error: 'You may not create any more Booleans - this is two-valued logic'
@@ -154,11 +159,6 @@ Boolean >> ifTrue: trueAlternativeBlock ifFalse: falseAlternativeBlock [
 	"(false ifTrue: [ 'That is true!' ] ifFalse: [ 'That is false!' ])  >>> 'That is false!'"
 
 	self subclassResponsibility
-]
-
-{ #category : 'testing' }
-Boolean class >> isAbstract [
-    ^ true
 ]
 
 { #category : 'testing' }
