@@ -8,7 +8,7 @@ Class {
 	#package : 'Morphic-Widgets-Taskbar-Tests'
 }
 
-{ #category : 'tests' }
+{ #category : 'running' }
 TaskListMorphTest >> setUp [
 
 	super setUp.
