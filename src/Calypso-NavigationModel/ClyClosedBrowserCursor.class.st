@@ -10,7 +10,7 @@ Class {
 	#name : #ClyClosedBrowserCursor,
 	#superclass : #Object,
 	#classInstVars : [
-		'instance'
+		#instance
 	],
 	#category : #'Calypso-NavigationModel-Model'
 }

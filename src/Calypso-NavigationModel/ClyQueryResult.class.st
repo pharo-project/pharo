@@ -156,13 +156,13 @@ Class {
 	#name : #ClyQueryResult,
 	#superclass : #Object,
 	#instVars : [
-		'environment',
-		'buildingQuery',
-		'metadata',
-		'items',
-		'accessGuard',
-		'announcer',
-		'needsRebuild'
+		#environment,
+		#buildingQuery,
+		#metadata,
+		#items,
+		#accessGuard,
+		#announcer,
+		#needsRebuild
 	],
 	#category : #'Calypso-NavigationModel-Result'
 }

@@ -15,9 +15,9 @@ Class {
 	#superclass : #Object,
 	#type : #weak,
 	#instVars : [
-		'selector',
-		'shouldBeNil',
-		'arguments'
+		#selector,
+		#shouldBeNil,
+		#arguments
 	],
 	#category : #'Kernel-Messaging'
 }

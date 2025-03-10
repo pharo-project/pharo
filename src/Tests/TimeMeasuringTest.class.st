@@ -2,8 +2,8 @@ Class {
 	#name : #TimeMeasuringTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'realTime',
-		'shouldProfile'
+		#realTime,
+		#shouldProfile
 	],
 	#category : #'Tests-Traits'
 }

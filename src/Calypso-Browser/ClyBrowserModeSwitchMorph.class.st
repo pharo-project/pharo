@@ -15,7 +15,7 @@ Class {
 	#name : #ClyBrowserModeSwitchMorph,
 	#superclass : #ClyBrowserToolbarItemMorph,
 	#instVars : [
-		'radioButton'
+		#radioButton
 	],
 	#category : #'Calypso-Browser-Toolbar'
 }

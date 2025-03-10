@@ -32,7 +32,7 @@ Class {
 	#name : #DeepCopier,
 	#superclass : #Object,
 	#instVars : [
-		'references'
+		#references
 	],
 	#category : #'Kernel-Copying'
 }

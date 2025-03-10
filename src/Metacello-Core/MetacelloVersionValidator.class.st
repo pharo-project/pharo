@@ -2,15 +2,15 @@ Class {
 	#name : #MetacelloVersionValidator,
 	#superclass : #MetacelloAbstractConstructor,
 	#instVars : [
-		'configurationClass',
-		'exludededValidations',
-		'validationReport',
-		'recurse',
-		'debug',
-		'visited'
+		#configurationClass,
+		#exludededValidations,
+		#validationReport,
+		#recurse,
+		#debug,
+		#visited
 	],
 	#classInstVars : [
-		'reasonCodeDescriptions'
+		#reasonCodeDescriptions
 	],
 	#category : #'Metacello-Core-Validation'
 }

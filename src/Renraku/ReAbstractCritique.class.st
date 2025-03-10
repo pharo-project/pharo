@@ -21,8 +21,8 @@ Class {
 	#name : #ReAbstractCritique,
 	#superclass : #ReProperty,
 	#instVars : [
-		'rule',
-		'tinyHint'
+		#rule,
+		#tinyHint
 	],
 	#category : #'Renraku-Critiques'
 }

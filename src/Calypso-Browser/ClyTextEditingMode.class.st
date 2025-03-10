@@ -12,8 +12,8 @@ Class {
 	#name : #ClyTextEditingMode,
 	#superclass : #RubSmalltalkCodeMode,
 	#instVars : [
-		'isForScripting',
-		'browserTool'
+		#isForScripting,
+		#browserTool
 	],
 	#category : #'Calypso-Browser-TextEditors'
 }

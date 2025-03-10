@@ -11,8 +11,8 @@ Class {
 	#name : #IRPrimitive,
 	#superclass : #Object,
 	#instVars : [
-		'primitiveNum',
-		'spec'
+		#primitiveNum,
+		#spec
 	],
 	#category : #'OpalCompiler-Core-Bytecode'
 }

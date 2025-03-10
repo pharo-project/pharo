@@ -6,8 +6,8 @@ Class {
 	#name : #CategoryRenamed,
 	#superclass : #SystemAnnouncement,
 	#instVars : [
-		'newCategoryName',
-		'oldCategoryName'
+		#newCategoryName,
+		#oldCategoryName
 	],
 	#category : #'System-Announcements-System-Categories'
 }

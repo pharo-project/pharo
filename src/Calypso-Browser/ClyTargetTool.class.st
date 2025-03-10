@@ -6,9 +6,9 @@ Class {
 	#name : #ClyTargetTool,
 	#superclass : #Object,
 	#instVars : [
-		'context',
-		'activation',
-		'matchedTool'
+		#context,
+		#activation,
+		#matchedTool
 	],
 	#category : #'Calypso-Browser-Tabs'
 }

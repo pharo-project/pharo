@@ -2,9 +2,9 @@ Class {
 	#name : #RBPullUpMethodTransformation,
 	#superclass : #RBCompositeMethodTransformation,
 	#instVars : [
-		'removeDuplicates',
-		'selectors',
-		'targetSuperclass'
+		#removeDuplicates,
+		#selectors,
+		#targetSuperclass
 	],
 	#category : #'Refactoring2-Transformations-Model-Migrated-Unused'
 }

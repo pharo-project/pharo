@@ -23,8 +23,8 @@ Class {
 	#name : #RBReplaceMessageSendTransformation,
 	#superclass : #RBChangeMethodNameRefactoring,
 	#instVars : [
-		'replaceInAllClasses',
-		'initializers'
+		#replaceInAllClasses,
+		#initializers
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

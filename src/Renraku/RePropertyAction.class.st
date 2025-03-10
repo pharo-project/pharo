@@ -13,9 +13,9 @@ Class {
 	#name : #RePropertyAction,
 	#superclass : #Object,
 	#instVars : [
-		'action',
-		'icon',
-		'description'
+		#action,
+		#icon,
+		#description
 	],
 	#category : #'Renraku-Critiques'
 }

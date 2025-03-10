@@ -9,7 +9,7 @@ Class {
 	#name : #RBRenameClassVariableRefactoring,
 	#superclass : #RBVariableRefactoring,
 	#instVars : [
-		'newName'
+		#newName
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -54,7 +54,7 @@ RBRenameClassVariableRefactoring >> preconditions [
 { #category : #initialization }
 RBRenameClassVariableRefactoring >> rename: aVarName to: aName in: aClass [
 	self variable: aVarName class: aClass.
-	newName := aName
+	newName := aName asSymbol
 ]
 
 { #category : #transforming }

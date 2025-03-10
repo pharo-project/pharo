@@ -2,7 +2,7 @@ Class {
 	#name : #MetacelloSymbolicVersionSpec,
 	#superclass : #MetacelloMethodSection,
 	#instVars : [
-		'versionString'
+		#versionString
 	],
 	#category : #'Metacello-Core-Constructors'
 }

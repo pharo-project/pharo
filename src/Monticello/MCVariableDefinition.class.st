@@ -68,8 +68,9 @@ MCVariableDefinition >> name [
 ]
 
 { #category : #accessing }
-MCVariableDefinition >> name: aString [
-	name := aString
+MCVariableDefinition >> name: aStringOrSymbol [
+
+	name := aStringOrSymbol
 ]
 
 { #category : #printing }

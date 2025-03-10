@@ -37,10 +37,10 @@ Class {
 	#name : #ClyBrowserPlugin,
 	#superclass : #Object,
 	#instVars : [
-		'browser'
+		#browser
 	],
 	#classInstVars : [
-		'isAutoActivated'
+		#isAutoActivated
 	],
 	#category : #'Calypso-Browser-UI'
 }

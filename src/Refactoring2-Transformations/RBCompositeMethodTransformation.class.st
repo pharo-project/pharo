@@ -2,8 +2,8 @@ Class {
 	#name : #RBCompositeMethodTransformation,
 	#superclass : #RBCompositeTransformation,
 	#instVars : [
-		'class',
-		'selector'
+		#class,
+		#selector
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

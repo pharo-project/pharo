@@ -7,8 +7,8 @@ Class {
 	#name : #RBExtractMethodAndOccurrences,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'extractionInterval',
-		'selector'
+		#extractionInterval,
+		#selector
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

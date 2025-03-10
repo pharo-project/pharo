@@ -10,9 +10,9 @@ Class {
 	#name : #IRFix,
 	#superclass : #IRVisitor,
 	#instVars : [
-		'prevInstr',
-		'storePopToFix',
-		'retToFix'
+		#prevInstr,
+		#storePopToFix,
+		#retToFix
 	],
 	#category : #'OpalCompiler-Core-IR-Manipulation'
 }

@@ -29,13 +29,13 @@ Class {
 	#name : #OpalCompiler,
 	#superclass : #Object,
 	#instVars : [
-		'ast',
-		'source',
-		'compilationContext',
-		'compilationContextClass'
+		#ast,
+		#source,
+		#compilationContext,
+		#compilationContextClass
 	],
 	#classInstVars : [
-		'overlayEnvironment'
+		#overlayEnvironment
 	],
 	#category : #'OpalCompiler-Core-FrontEnd'
 }

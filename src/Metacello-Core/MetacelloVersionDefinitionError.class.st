@@ -2,7 +2,7 @@ Class {
 	#name : #MetacelloVersionDefinitionError,
 	#superclass : #MetacelloVersionDoesNotExistError,
 	#instVars : [
-		'exception'
+		#exception
 	],
 	#category : #'Metacello-Core-Exceptions-Errors'
 }

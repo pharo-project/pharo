@@ -367,7 +367,7 @@ RBParseTreeSearcher >> recusivelySearchInContext [
 { #category : #'accessing - context' }
 RBParseTreeSearcher >> variableNamed: aString [
 
-	^ (context associations detect: [ :assoc | assoc key name = aString  ]) value
+	^ (context associations detect: [ :assoc | assoc key name asString = aString  ]) value
 ]
 
 { #category : #visiting }

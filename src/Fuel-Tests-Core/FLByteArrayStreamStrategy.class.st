@@ -5,7 +5,7 @@ Class {
 	#name : #FLByteArrayStreamStrategy,
 	#superclass : #FLStreamStrategy,
 	#instVars : [
-		'inMemoryStream'
+		#inMemoryStream
 	],
 	#category : #'Fuel-Tests-Core-Support-StreamStrategies'
 }

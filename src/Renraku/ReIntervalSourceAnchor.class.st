@@ -5,7 +5,7 @@ Class {
 	#name : #ReIntervalSourceAnchor,
 	#superclass : #ReSourceAnchor,
 	#instVars : [
-		'interval'
+		#interval
 	],
 	#category : #'Renraku-SourceAnchors'
 }

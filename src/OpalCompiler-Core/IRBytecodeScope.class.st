@@ -5,10 +5,10 @@ Class {
 	#name : #IRBytecodeScope,
 	#superclass : #Object,
 	#instVars : [
-		'temps',
-		'numArgs',
-		'ownTempVectors',
-		'copiedValues'
+		#temps,
+		#numArgs,
+		#ownTempVectors,
+		#copiedValues
 	],
 	#category : #'OpalCompiler-Core-Bytecode'
 }

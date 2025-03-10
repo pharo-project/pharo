@@ -111,13 +111,13 @@ Class {
 	#name : #ClyBrowserItem,
 	#superclass : #Object,
 	#instVars : [
-		'position',
-		'name',
-		'depth',
-		'properties',
-		'actualObject',
-		'type',
-		'isPrepared'
+		#position,
+		#name,
+		#depth,
+		#properties,
+		#actualObject,
+		#type,
+		#isPrepared
 	],
 	#category : #'Calypso-NavigationModel-Model'
 }
@@ -280,7 +280,7 @@ ClyBrowserItem >> isSimilarTo: anotherBrowserItem [
 
 	type = anotherBrowserItem type ifFalse: [ ^false ].
 
-	^name = anotherBrowserItem name or: [ self isEqualTo: anotherBrowserItem ]
+	^(name sameContents: anotherBrowserItem name) or: [ self isEqualTo: anotherBrowserItem ]
 ]
 
 { #category : #accessing }

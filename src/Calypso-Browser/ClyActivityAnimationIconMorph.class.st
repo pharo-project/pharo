@@ -12,8 +12,8 @@ Class {
 	#name : #ClyActivityAnimationIconMorph,
 	#superclass : #Morph,
 	#instVars : [
-		'progressIconMorph',
-		'progress'
+		#progressIconMorph,
+		#progress
 	],
 	#category : #'Calypso-Browser-UI'
 }

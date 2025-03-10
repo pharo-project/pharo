@@ -8,10 +8,10 @@ Class {
 	#name : #ClassRenamed,
 	#superclass : #ClassAnnouncement,
 	#instVars : [
-		'category',
-		'classRenamed',
-		'newName',
-		'oldName'
+		#category,
+		#classRenamed,
+		#newName,
+		#oldName
 	],
 	#category : #'System-Announcements-System-Classes'
 }

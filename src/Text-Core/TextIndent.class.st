@@ -16,7 +16,7 @@ Class {
 	#name : #TextIndent,
 	#superclass : #TextAttribute,
 	#instVars : [
-		'amount'
+		#amount
 	],
 	#category : #'Text-Core-Attributes'
 }

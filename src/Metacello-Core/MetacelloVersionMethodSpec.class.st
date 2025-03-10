@@ -2,7 +2,7 @@ Class {
 	#name : #MetacelloVersionMethodSpec,
 	#superclass : #MetacelloMethodSpec,
 	#instVars : [
-		'imports'
+		#imports
 	],
 	#category : #'Metacello-Core-Constructors'
 }

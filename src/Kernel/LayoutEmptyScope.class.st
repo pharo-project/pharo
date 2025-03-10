@@ -5,7 +5,7 @@ Class {
 	#name : #LayoutEmptyScope,
 	#superclass : #AbstractLayoutScope,
 	#classInstVars : [
-		'instance'
+		#instance
 	],
 	#category : #'Kernel-Layout'
 }

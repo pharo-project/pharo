@@ -5,7 +5,7 @@ Class {
 	#name : #VariableNotDeclared,
 	#superclass : #MessageNotUnderstood,
 	#instVars : [
-		'variableNode'
+		#variableNode
 	],
 	#category : #'Kernel-Exceptions'
 }

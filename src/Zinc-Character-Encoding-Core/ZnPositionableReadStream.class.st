@@ -30,11 +30,11 @@ Class {
 	#name : #ZnPositionableReadStream,
 	#superclass : #Object,
 	#instVars : [
-		'stream',
-		'buffer',
-		'count',
-		'index',
-		'delta'
+		#stream,
+		#buffer,
+		#count,
+		#index,
+		#delta
 	],
 	#category : #'Zinc-Character-Encoding-Core'
 }

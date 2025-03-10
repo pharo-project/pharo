@@ -2,8 +2,8 @@ Class {
 	#name : #MetacelloResolveProjectUpgrade,
 	#superclass : #MetacelloScriptNotification,
 	#instVars : [
-		'existingProjectRegistration',
-		'newProjectRegistration'
+		#existingProjectRegistration,
+		#newProjectRegistration
 	],
 	#category : #'Metacello-Core-Scripts'
 }

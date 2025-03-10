@@ -39,9 +39,9 @@ Class {
 	#name : #ClyBrowserState,
 	#superclass : #Object,
 	#instVars : [
-		'viewStates',
-		'selectedTabs',
-		'systemScope'
+		#viewStates,
+		#selectedTabs,
+		#systemScope
 	],
 	#category : #'Calypso-Browser-NavigationHistory'
 }

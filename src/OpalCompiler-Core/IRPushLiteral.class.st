@@ -5,7 +5,7 @@ Class {
 	#name : #IRPushLiteral,
 	#superclass : #IRInstruction,
 	#instVars : [
-		'literal'
+		#literal
 	],
 	#category : #'OpalCompiler-Core-IR-Nodes'
 }

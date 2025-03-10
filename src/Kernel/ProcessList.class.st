@@ -10,8 +10,8 @@ Class {
 	#name : #ProcessList,
 	#superclass : #SequenceableCollection,
 	#instVars : [
-		'firstLink',
-		'lastLink'
+		#firstLink,
+		#lastLink
 	],
 	#category : #'Kernel-Processes'
 }

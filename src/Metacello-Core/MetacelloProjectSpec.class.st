@@ -2,13 +2,13 @@ Class {
 	#name : #MetacelloProjectSpec,
 	#superclass : #MetacelloSpec,
 	#instVars : [
-		'name',
-		'className',
-		'versionString',
-		'operator',
-		'loads',
-		'preLoadDoIt',
-		'postLoadDoIt'
+		#name,
+		#className,
+		#versionString,
+		#operator,
+		#loads,
+		#preLoadDoIt,
+		#postLoadDoIt
 	],
 	#category : #'Metacello-Core-Specs'
 }

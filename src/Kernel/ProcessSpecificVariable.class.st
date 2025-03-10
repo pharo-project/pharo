@@ -13,10 +13,10 @@ Class {
 	#name : #ProcessSpecificVariable,
 	#superclass : #Object,
 	#instVars : [
-		'index'
+		#index
 	],
 	#classInstVars : [
-		'soleInstance'
+		#soleInstance
 	],
 	#category : #'Kernel-Processes'
 }

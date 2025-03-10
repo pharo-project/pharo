@@ -42,8 +42,8 @@ Class {
 	#name : #RBDeprecateMethodRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'oldSelector',
-		'newSelector'
+		#oldSelector,
+		#newSelector
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

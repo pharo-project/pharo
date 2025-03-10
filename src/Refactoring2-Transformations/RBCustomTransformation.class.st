@@ -17,7 +17,7 @@ Class {
 	#name : #RBCustomTransformation,
 	#superclass : #RBTransformation,
 	#instVars : [
-		'transformationBlock'
+		#transformationBlock
 	],
 	#category : #'Refactoring2-Transformations-Model'
 }

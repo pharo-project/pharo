@@ -25,10 +25,10 @@ Class {
 	#name : #Variable,
 	#superclass : #Object,
 	#instVars : [
-		'name'
+		#name
 	],
 	#classVars : [
-		'Properties'
+		#Properties
 	],
 	#category : #'Kernel-Variables'
 }
@@ -50,7 +50,9 @@ Variable class >> isAbstract [
 ]
 
 { #category : #'instance creation' }
-Variable class >> named: aSymbol [
+Variable class >> named: aString [
+	| aSymbol |
+	aSymbol := aString asSymbol.
 	self checkValidName: aSymbol.
 	^ self new
 		name: aSymbol;
@@ -266,6 +268,7 @@ Variable >> name [
 
 { #category : #accessing }
 Variable >> name: aSymbol [
+	self assert: aSymbol isSymbol.
 	name := aSymbol
 ]
 

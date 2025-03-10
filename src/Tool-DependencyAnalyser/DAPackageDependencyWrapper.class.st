@@ -5,7 +5,7 @@ Class {
 	#name : #DAPackageDependencyWrapper,
 	#superclass : #Object,
 	#instVars : [
-		'daPackage'
+		#daPackage
 	],
 	#category : #'Tool-DependencyAnalyser-Core'
 }

@@ -70,7 +70,7 @@ ZnRequestLine >> method [
 { #category : #accessing }
 ZnRequestLine >> method: string [
 	method := ZnConstants knownHTTPMethods
-		detect: [ :each | each = string ]
+		detect: [ :each | each sameContents: string ]
 		ifNone: [ (ZnUnknownHttpMethod method: string) signal ]
 ]
 
@@ -148,7 +148,7 @@ ZnRequestLine >> writeOn: stream [
 			self uri hasSecureScheme
 				ifTrue: [
 					"See also ZnClient>>#setupTLSTo:"
-					method = #CONNECT
+					(method sameContents: #CONNECT)
 						ifTrue: [ writeStream nextPutAll: uri authorityWithPort ]
 						ifFalse: [ self uri printPathQueryFragmentOn: writeStream ] ]
 				ifFalse: [ self uri printOn: writeStream ] ]

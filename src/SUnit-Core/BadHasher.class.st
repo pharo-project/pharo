@@ -5,7 +5,7 @@ Class {
 	#name : #BadHasher,
 	#superclass : #Object,
 	#classInstVars : [
-		'lastRandomIndex'
+		#lastRandomIndex
 	],
 	#category : #'SUnit-Core-Utilities'
 }

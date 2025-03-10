@@ -11,10 +11,10 @@ Class {
 	#name : #RBExpandReferencedPoolsRefactoring,
 	#superclass : #RBRefactoring,
 	#instVars : [
-		'pools',
-		'fromClass',
-		'parseTree',
-		'toClasses'
+		#pools,
+		#fromClass,
+		#parseTree,
+		#toClasses
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

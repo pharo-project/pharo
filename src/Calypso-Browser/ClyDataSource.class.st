@@ -60,16 +60,16 @@ Class {
 	#name : #ClyDataSource,
 	#superclass : #FTDataSource,
 	#instVars : [
-		'query',
-		'itemCursor',
-		'depth',
-		'parentItem',
-		'lastFilteredDataSource',
-		'queryView',
-		'dirty'
+		#query,
+		#itemCursor,
+		#depth,
+		#parentItem,
+		#lastFilteredDataSource,
+		#queryView,
+		#dirty
 	],
 	#classVars : [
-		'UpdateScheduler'
+		#UpdateScheduler
 	],
 	#category : #'Calypso-Browser-DataSource'
 }

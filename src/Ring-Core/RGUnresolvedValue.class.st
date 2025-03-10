@@ -2,7 +2,7 @@ Class {
 	#name : #RGUnresolvedValue,
 	#superclass : #Object,
 	#instVars : [
-		'default'
+		#default
 	],
 	#category : #'Ring-Core-Kernel'
 }

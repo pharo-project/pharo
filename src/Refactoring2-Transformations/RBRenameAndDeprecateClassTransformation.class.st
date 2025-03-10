@@ -20,8 +20,8 @@ Class {
 	#name : #RBRenameAndDeprecateClassTransformation,
 	#superclass : #RBCompositeTransformation,
 	#instVars : [
-		'className',
-		'newClassName'
+		#className,
+		#newClassName
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

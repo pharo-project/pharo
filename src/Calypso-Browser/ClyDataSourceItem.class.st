@@ -45,9 +45,9 @@ Class {
 	#name : #ClyDataSourceItem,
 	#superclass : #Object,
 	#instVars : [
-		'ownerDataSource',
-		'childrenDataSource',
-		'browserItem'
+		#ownerDataSource,
+		#childrenDataSource,
+		#browserItem
 	],
 	#category : #'Calypso-Browser-DataSource'
 }

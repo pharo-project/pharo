@@ -5,9 +5,9 @@ Class {
 	#name : #IRStackCount,
 	#superclass : #Object,
 	#instVars : [
-		'start',
-		'position',
-		'length'
+		#start,
+		#position,
+		#length
 	],
 	#category : #'OpalCompiler-Core-Bytecode'
 }

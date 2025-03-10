@@ -298,7 +298,7 @@ RBMethodNode >> decompileString [
 
 { #category : #testing }
 RBMethodNode >> defines: aName [
-	^ (arguments anySatisfy: [ :each | each name = aName ])
+	^ (arguments anySatisfy: [ :each | each name sameContents: aName ])
 		or: [ self pragmas anySatisfy: [ :pragma | pragma defines: aName ] ]
 ]
 
@@ -464,7 +464,7 @@ RBMethodNode >> match: aNode inContext: aDictionary [
 { #category : #matching }
 RBMethodNode >> matchPragmas: matchNodes against: pragmaNodes inContext: aDictionary [
 	matchNodes isEmpty ifTrue: [
-		aDictionary at: '-pragmas-' put: pragmaNodes.
+		aDictionary at: #'-pragmas-' put: pragmaNodes.
 		^ true ].
 	^ matchNodes allSatisfy: [ :matchNode |
 		pragmaNodes anySatisfy: [ :pragmaNode |

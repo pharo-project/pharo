@@ -15,7 +15,7 @@ Class {
 	#name : #ClyStatusBarItemMorph,
 	#superclass : #Morph,
 	#instVars : [
-		'ownerTool'
+		#ownerTool
 	],
 	#category : #'Calypso-Browser-UI'
 }

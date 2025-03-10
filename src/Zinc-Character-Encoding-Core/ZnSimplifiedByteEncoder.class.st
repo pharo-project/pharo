@@ -8,13 +8,13 @@ Class {
 	#name : #ZnSimplifiedByteEncoder,
 	#superclass : #ZnCharacterEncoder,
 	#instVars : [
-		'identifier',
-		'byteToUnicode',
-		'unicodeToByte',
-		'strict'
+		#identifier,
+		#byteToUnicode,
+		#unicodeToByte,
+		#strict
 	],
 	#classInstVars : [
-		'byteTextConverters'
+		#byteTextConverters
 	],
 	#category : #'Zinc-Character-Encoding-Core'
 }

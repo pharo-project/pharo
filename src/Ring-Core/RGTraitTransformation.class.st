@@ -2,7 +2,7 @@ Class {
 	#name : #RGTraitTransformation,
 	#superclass : #RGObject,
 	#instVars : [
-		'subject'
+		#subject
 	],
 	#category : #'Ring-Core-Kernel'
 }

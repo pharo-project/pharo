@@ -2,7 +2,7 @@ Class {
 	#name : #MetacelloVersionConstructor,
 	#superclass : #MetacelloAbstractVersionConstructor,
 	#instVars : [
-		'errorMap'
+		#errorMap
 	],
 	#category : #'Metacello-Core-Constructors'
 }

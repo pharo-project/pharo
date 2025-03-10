@@ -5,7 +5,7 @@ Class {
 	#name : #RBRefactoringError,
 	#superclass : #Error,
 	#instVars : [
-		'actionBlock'
+		#actionBlock
 	],
 	#category : #'Refactoring-Core-Support'
 }

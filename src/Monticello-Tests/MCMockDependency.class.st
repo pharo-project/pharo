@@ -5,9 +5,9 @@ Class {
 	#name : #MCMockDependency,
 	#superclass : #Object,
 	#instVars : [
-		'name',
-		'children',
-		'hasResolution'
+		#name,
+		#children,
+		#hasResolution
 	],
 	#category : #'Monticello-Tests-Dependencies'
 }

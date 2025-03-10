@@ -2,7 +2,7 @@ Class {
 	#name : #MCChangeNotificationTest,
 	#superclass : #MCTestCase,
 	#instVars : [
-		'workingCopy'
+		#workingCopy
 	],
 	#category : #'Monticello-Tests-Base'
 }

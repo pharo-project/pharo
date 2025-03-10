@@ -6,9 +6,9 @@ Class {
 	#name : #OCASTSemanticAnalyzer,
 	#superclass : #RBProgramNodeVisitor,
 	#instVars : [
-		'scope',
-		'compilationContext',
-		'blockCounter'
+		#scope,
+		#compilationContext,
+		#blockCounter
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }

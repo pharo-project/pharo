@@ -5,7 +5,7 @@ Class {
 	#name : #DAPackageRelationGraphGenerator,
 	#superclass : #DAGraphVizGenerator,
 	#instVars : [
-		'relationGraph'
+		#relationGraph
 	],
 	#category : #'Tool-DependencyAnalyser-Core'
 }

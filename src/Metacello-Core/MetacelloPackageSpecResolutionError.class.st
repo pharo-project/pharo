@@ -2,9 +2,9 @@ Class {
 	#name : #MetacelloPackageSpecResolutionError,
 	#superclass : #Error,
 	#instVars : [
-		'packageSpec',
-		'repositories',
-		'repositoryError'
+		#packageSpec,
+		#repositories,
+		#repositoryError
 	],
 	#category : #'Metacello-Core-Exceptions-Errors'
 }

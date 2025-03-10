@@ -15,7 +15,7 @@ Class {
 	#name : #ClySubstringPattern,
 	#superclass : #ClyStringPattern,
 	#instVars : [
-		'isCaseSensitive'
+		#isCaseSensitive
 	],
 	#category : #'Calypso-NavigationModel-Model'
 }

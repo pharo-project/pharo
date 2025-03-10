@@ -2,10 +2,10 @@ Class {
 	#name : #MetacelloVersionMethodSection,
 	#superclass : #MetacelloMethodSection,
 	#instVars : [
-		'block',
-		'versionSpec',
-		'parent',
-		'methodSections'
+		#block,
+		#versionSpec,
+		#parent,
+		#methodSections
 	],
 	#category : #'Metacello-Core-Constructors'
 }

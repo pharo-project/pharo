@@ -17,7 +17,7 @@ Class {
 	#name : #ClyDesiredSelection,
 	#superclass : #ClyDataSourceSelection,
 	#instVars : [
-		'isSameAsCurrent'
+		#isSameAsCurrent
 	],
 	#category : #'Calypso-Browser-DataSource'
 }

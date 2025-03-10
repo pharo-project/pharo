@@ -5,9 +5,9 @@ Class {
 	#name : #IRSequence,
 	#superclass : #Object,
 	#instVars : [
-		'sequence',
-		'orderNumber',
-		'method'
+		#sequence,
+		#orderNumber,
+		#method
 	],
 	#category : #'OpalCompiler-Core-IR-Nodes'
 }

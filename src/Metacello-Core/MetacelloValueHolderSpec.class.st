@@ -2,7 +2,7 @@ Class {
 	#name : #MetacelloValueHolderSpec,
 	#superclass : #MetacelloSpec,
 	#instVars : [
-		'value'
+		#value
 	],
 	#category : #'Metacello-Core-Specs'
 }

@@ -16,7 +16,7 @@ Class {
 	#name : #LiteralVariable,
 	#superclass : #Variable,
 	#instVars : [
-		'value'
+		#value
 	],
 	#category : #'Kernel-Variables'
 }

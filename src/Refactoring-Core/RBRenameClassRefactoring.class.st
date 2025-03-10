@@ -14,8 +14,8 @@ Class {
 	#name : #RBRenameClassRefactoring,
 	#superclass : #RBClassRefactoring,
 	#instVars : [
-		'newName',
-		'class'
+		#newName,
+		#class
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

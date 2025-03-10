@@ -17,8 +17,8 @@ Class {
 	#name : #RBMoveClassTransformation,
 	#superclass : #RBClassTransformation,
 	#instVars : [
-		'oldCategory',
-		'category'
+		#oldCategory,
+		#category
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

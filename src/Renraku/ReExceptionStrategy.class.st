@@ -5,7 +5,7 @@ Class {
 	#name : #ReExceptionStrategy,
 	#superclass : #Object,
 	#classInstVars : [
-		'current'
+		#current
 	],
 	#category : #'Renraku-Utility'
 }

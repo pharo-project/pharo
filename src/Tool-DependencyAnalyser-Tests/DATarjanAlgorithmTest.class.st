@@ -2,16 +2,16 @@ Class {
 	#name : #DATarjanAlgorithmTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'tarjanPackage',
-		'packageA',
-		'packageB',
-		'packageC',
-		'packageD',
-		'packageE',
-		'packageF',
-		'packageG',
-		'packageH',
-		'anArray'
+		#tarjanPackage,
+		#packageA,
+		#packageB,
+		#packageC,
+		#packageD,
+		#packageE,
+		#packageF,
+		#packageG,
+		#packageH,
+		#anArray
 	],
 	#category : #'Tool-DependencyAnalyser-Tests-Algorithm'
 }

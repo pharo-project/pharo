@@ -11,7 +11,7 @@ Class {
 	#traits : 'CmTWithBasicNameAndDescription + CmTDecorable',
 	#classTraits : 'CmTWithBasicNameAndDescription classTrait + CmTDecorable classTrait',
 	#instVars : [
-		'entries'
+		#entries
 	],
 	#category : #'Commander2-Groups'
 }

@@ -18,10 +18,10 @@ Class {
 	#name : #NonBooleanReceiver,
 	#superclass : #Error,
 	#instVars : [
-		'object'
+		#object
 	],
 	#classVars : [
-		'MustBeBooleanHandler'
+		#MustBeBooleanHandler
 	],
 	#category : #'Kernel-Exceptions'
 }

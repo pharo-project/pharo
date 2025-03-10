@@ -16,7 +16,7 @@ Class {
 	#name : #RBRemoveClassKeepingSubclassesRefactoring,
 	#superclass : #RBRemoveClassRefactoring,
 	#instVars : [
-		'refactorings'
+		#refactorings
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

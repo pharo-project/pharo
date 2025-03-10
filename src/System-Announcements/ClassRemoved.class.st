@@ -6,9 +6,9 @@ Class {
 	#name : #ClassRemoved,
 	#superclass : #ClassAnnouncement,
 	#instVars : [
-		'categoryName',
-		'classRemoved',
-		'ownerPackage'
+		#categoryName,
+		#classRemoved,
+		#ownerPackage
 	],
 	#category : #'System-Announcements-System-Classes'
 }

@@ -1764,7 +1764,7 @@ SystemWindow >> setLabel: aString [
 	self announce: announcement.
 	self currentWorld announcer announce: announcement.
 	label ifNil: [^ self].
-	label contents: aString.
+	label contents: aString asString.
 	self labelWidgetAllowance.  "Sets it if not already"
 	self isCollapsed
 		ifTrue: [self extent: (label width + labelWidgetAllowance) @ (self labelHeight + 2)]

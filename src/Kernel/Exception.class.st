@@ -20,12 +20,12 @@ Class {
 	#name : #Exception,
 	#superclass : #Object,
 	#instVars : [
-		'messageText',
-		'tag',
-		'signaler',
-		'signalContext',
-		'handlerContext',
-		'outerContext'
+		#messageText,
+		#tag,
+		#signaler,
+		#signalContext,
+		#handlerContext,
+		#outerContext
 	],
 	#category : #'Kernel-Exceptions'
 }

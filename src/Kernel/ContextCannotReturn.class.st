@@ -5,7 +5,7 @@ Class {
 	#name : #ContextCannotReturn,
 	#superclass : #CannotReturn,
 	#instVars : [
-		'target'
+		#target
 	],
 	#category : #'Kernel-Exceptions'
 }

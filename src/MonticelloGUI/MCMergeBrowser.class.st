@@ -5,8 +5,8 @@ Class {
 	#name : #MCMergeBrowser,
 	#superclass : #MCPatchBrowser,
 	#instVars : [
-		'conflicts',
-		'merger'
+		#conflicts,
+		#merger
 	],
 	#category : #'MonticelloGUI-Tools'
 }

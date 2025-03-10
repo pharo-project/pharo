@@ -23,7 +23,7 @@ Class {
 	#name : #ClyBrowserContext,
 	#superclass : #CmdToolContext,
 	#instVars : [
-		'selectedItems'
+		#selectedItems
 	],
 	#category : #'Calypso-Browser-Contexts'
 }

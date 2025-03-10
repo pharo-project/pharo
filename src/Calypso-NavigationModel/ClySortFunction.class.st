@@ -15,7 +15,7 @@ Class {
 	#name : #ClySortFunction,
 	#superclass : #Object,
 	#instVars : [
-		'direction'
+		#direction
 	],
 	#category : #'Calypso-NavigationModel-Model'
 }

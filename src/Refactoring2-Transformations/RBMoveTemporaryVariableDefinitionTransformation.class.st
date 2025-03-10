@@ -21,8 +21,8 @@ Class {
 	#name : #RBMoveTemporaryVariableDefinitionTransformation,
 	#superclass : #RBCompositeMethodTransformation,
 	#instVars : [
-		'variableName',
-		'blockNodes'
+		#variableName,
+		#blockNodes
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }
@@ -189,6 +189,6 @@ RBMoveTemporaryVariableDefinitionTransformation >> storeOn: aStream [
 RBMoveTemporaryVariableDefinitionTransformation >> variable: aVariableName inMethod: aSelector inClass: aClass [
 
 	class := aClass.
-	selector := aSelector.
-	variableName := aVariableName
+	selector := aSelector asSymbol.
+	variableName := aVariableName asSymbol
 ]

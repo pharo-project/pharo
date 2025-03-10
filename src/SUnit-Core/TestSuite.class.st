@@ -11,10 +11,10 @@ Class {
 	#name : #TestSuite,
 	#superclass : #Object,
 	#instVars : [
-		'tests',
-		'resources',
-		'name',
-		'announcer'
+		#tests,
+		#resources,
+		#name,
+		#announcer
 	],
 	#category : #'SUnit-Core-Kernel'
 }
@@ -92,7 +92,7 @@ TestSuite >> name [
 { #category : #accessing }
 TestSuite >> name: aString [
 
-	name := aString
+	name := aString asSymbol
 ]
 
 { #category : #dependencies }

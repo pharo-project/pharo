@@ -19,7 +19,7 @@ Class {
 	#name : #RBAddPragmaTransformation,
 	#superclass : #RBMethodTransformation,
 	#instVars : [
-		'pragma'
+		#pragma
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

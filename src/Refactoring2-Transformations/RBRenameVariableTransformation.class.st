@@ -16,7 +16,7 @@ Class {
 	#name : #RBRenameVariableTransformation,
 	#superclass : #RBVariableTransformation,
 	#instVars : [
-		'newVariableName'
+		#newVariableName
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

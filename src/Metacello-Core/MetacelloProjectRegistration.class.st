@@ -2,16 +2,16 @@ Class {
 	#name : #MetacelloProjectRegistration,
 	#superclass : #Object,
 	#instVars : [
-		'projectName',
-		'configurationProjectSpec',
-		'baselineProjectSpec',
-		'loadedInImage',
-		'locked',
-		'mutable',
-		'versionInfo'
+		#projectName,
+		#configurationProjectSpec,
+		#baselineProjectSpec,
+		#loadedInImage,
+		#locked,
+		#mutable,
+		#versionInfo
 	],
 	#classVars : [
-		'Registry'
+		#Registry
 	],
 	#category : #'Metacello-Core-Scripts'
 }

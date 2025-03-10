@@ -9,7 +9,7 @@ Class {
 	#name : #RBRemoveClassRefactoring,
 	#superclass : #RBRefactoring,
 	#instVars : [
-		'classNames'
+		#classNames
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

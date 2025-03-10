@@ -460,7 +460,7 @@ SequenceableCollection >> beginsWith: aSequenceableCollection [
 
 	aSequenceableCollection ifEmpty: [ ^true ].
 	self size < aSequenceableCollection size ifTrue: [^false].
-	aSequenceableCollection withIndexDo: [:each :index | (self at: index) ~= each ifTrue: [^false]].
+	aSequenceableCollection withIndexDo: [:each :index | ((self at: index) sameContents: each) ifFalse: [^false]].
 	^true
 ]
 
@@ -1332,7 +1332,7 @@ SequenceableCollection >> indexOf: anElement startingAt: start ifAbsent: excepti
 
 	start to: self size do:
 		[:index |
-		(self at: index) = anElement ifTrue: [^ index]].
+		((self at: index) sameContents: anElement) ifTrue: [^ index]].
 	^ exceptionBlock value
 ]
 

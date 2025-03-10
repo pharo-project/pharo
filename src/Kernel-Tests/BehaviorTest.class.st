@@ -213,7 +213,7 @@ BehaviorTest >> testMethodsWritingSlot [
 		ifFalse: [ ^ self ].
 	numberViaSlot := (Point methodsWritingSlot: (Point slotNamed: #x))
 		size.
-	numberViaIVar := (Point whichSelectorsWrite: 'x') size.
+	numberViaIVar := (Point whichSelectorsWrite: #'x') size.
 	self assert: numberViaSlot equals: numberViaIVar
 ]
 

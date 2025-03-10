@@ -2,7 +2,7 @@ Class {
 	#name : #MetaLinkObjectAPITest,
 	#superclass : #TestCase,
 	#instVars : [
-		'tag'
+		#tag
 	],
 	#category : #'Reflectivity-Tests-Base'
 }

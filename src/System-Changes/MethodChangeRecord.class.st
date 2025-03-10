@@ -28,8 +28,8 @@ Class {
 	#name : #MethodChangeRecord,
 	#superclass : #Object,
 	#instVars : [
-		'changeType',
-		'infoFromRemoval'
+		#changeType,
+		#infoFromRemoval
 	],
 	#category : #'System-Changes-Records'
 }

@@ -9,7 +9,7 @@ Class {
 	#name : #ClassReorganized,
 	#superclass : #ClassAnnouncement,
 	#instVars : [
-		'classReorganized'
+		#classReorganized
 	],
 	#category : #'System-Announcements-System-Classes'
 }

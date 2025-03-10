@@ -5,7 +5,7 @@ Class {
 	#name : #RGBehaviorStrategyUser,
 	#superclass : #RGObject,
 	#instVars : [
-		'behaviorStrategy'
+		#behaviorStrategy
 	],
 	#category : #'Ring-Core-Kernel'
 }

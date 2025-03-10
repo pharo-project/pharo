@@ -7,7 +7,7 @@ Class {
 	#name : #MCCodeTool,
 	#superclass : #MCTool,
 	#instVars : [
-		'items'
+		#items
 	],
 	#category : #'MonticelloGUI-Tools'
 }

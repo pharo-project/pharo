@@ -41,11 +41,11 @@ Class {
 	#name : #RBMoveMethodTransformation,
 	#superclass : #RBMethodTransformation,
 	#instVars : [
-		'variable',
-		'moveToClasses',
-		'parseTree',
-		'hasOnlySelfReturns',
-		'selfVariableName'
+		#variable,
+		#moveToClasses,
+		#parseTree,
+		#hasOnlySelfReturns,
+		#selfVariableName
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

@@ -58,7 +58,7 @@ ToggleWithSymbolMenuItemShortcut class >> symbolTable [
 
 { #category : #accessing }
 ToggleWithSymbolMenuItemShortcut class >> symbolTableAt: anObject ifAbsent: aBlock [
-	^ self symbolTable at: anObject ifAbsent: aBlock
+	^ self symbolTable at: anObject asSymbol ifAbsent: aBlock
 ]
 
 { #category : #drawing }

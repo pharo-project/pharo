@@ -17,7 +17,7 @@ Class {
 	#name : #CmCommandError,
 	#superclass : #Error,
 	#instVars : [
-		'command'
+		#command
 	],
 	#category : #'Commander2-Errors'
 }

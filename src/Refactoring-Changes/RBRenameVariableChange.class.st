@@ -18,8 +18,8 @@ Class {
 { #category : #'instance creation' }
 RBRenameVariableChange class >> rename: oldName to: newName in: aClass [
 	^ self new
-		oldName: oldName;
-		newName: newName;
+		oldName: oldName asSymbol;
+		newName: newName asSymbol;
 		changeClass: aClass;
 		yourself
 ]

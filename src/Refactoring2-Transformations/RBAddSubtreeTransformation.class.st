@@ -19,8 +19,8 @@ Class {
 	#name : #RBAddSubtreeTransformation,
 	#superclass : #RBMethodTransformation,
 	#instVars : [
-		'interval',
-		'sourceCode'
+		#interval,
+		#sourceCode
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

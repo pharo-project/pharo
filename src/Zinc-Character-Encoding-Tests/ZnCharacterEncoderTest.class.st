@@ -182,7 +182,7 @@ ZnCharacterEncoderTest >> testDetectEncoding [
 ZnCharacterEncoderTest >> testKnownEncodingIdentifiers [
 	| all minimal asciiString |
 	all := ZnCharacterEncoder knownEncodingIdentifiers asSet.
-	minimal := #(utf8 latin1 null ascii iso88591) asSet.
+	minimal := #(#utf8 'latin1' #null 'ascii' 'iso88591') asSet.
 	"make sure at least a minimal set is present"
 	self assert: (all intersection: minimal) equals: minimal.
 	asciiString := String withAll: ($a to: $z) , ($A to: $Z) , ($0 to: $9).

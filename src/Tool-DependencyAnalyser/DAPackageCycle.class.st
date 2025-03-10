@@ -8,7 +8,7 @@ Class {
 	#name : #DAPackageCycle,
 	#superclass : #Object,
 	#instVars : [
-		'packages'
+		#packages
 	],
 	#category : #'Tool-DependencyAnalyser-Core'
 }

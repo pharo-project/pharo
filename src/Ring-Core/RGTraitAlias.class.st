@@ -2,7 +2,7 @@ Class {
 	#name : #RGTraitAlias,
 	#superclass : #RGTraitTransformation,
 	#instVars : [
-		'aliases'
+		#aliases
 	],
 	#category : #'Ring-Core-Kernel'
 }

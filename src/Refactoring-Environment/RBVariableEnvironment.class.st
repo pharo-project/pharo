@@ -11,11 +11,11 @@ Class {
 	#name : #RBVariableEnvironment,
 	#superclass : #RBBrowserEnvironmentWrapper,
 	#instVars : [
-		'instanceVariables',
-		'instanceVariableReaders',
-		'instanceVariableWriters',
-		'classVariables',
-		'selectorCache'
+		#instanceVariables,
+		#instanceVariableReaders,
+		#instanceVariableWriters,
+		#classVariables,
+		#selectorCache
 	],
 	#category : #'Refactoring-Environment'
 }
@@ -127,9 +127,9 @@ RBVariableEnvironment >> addClass: aClass classVariable: aSymbol [
 
 { #category : #accessing }
 RBVariableEnvironment >> addClass: aClass instanceVariable: aString [
-	(instanceVariables at: aClass name ifAbsentPut: [Set new]) add: aString.
+	(instanceVariables at: aClass name ifAbsentPut: [Set new]) add: aString asSymbol.
 	self flushCachesFor: aClass.
-	self addSearchString: aString
+	self addSearchString: aString asString
 ]
 
 { #category : #accessing }

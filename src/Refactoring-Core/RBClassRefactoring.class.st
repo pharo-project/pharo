@@ -12,7 +12,7 @@ Class {
 	#name : #RBClassRefactoring,
 	#superclass : #RBRefactoring,
 	#instVars : [
-		'className'
+		#className
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

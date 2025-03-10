@@ -7,8 +7,8 @@ Class {
 	#name : #RBPackageRefactoring,
 	#superclass : #RBRefactoring,
 	#instVars : [
-		'packageName',
-		'newName'
+		#packageName,
+		#newName
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

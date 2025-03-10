@@ -2,7 +2,7 @@ Class {
 	#name : #MCPatchTest,
 	#superclass : #MCTestCase,
 	#instVars : [
-		'patch'
+		#patch
 	],
 	#category : #'Monticello-Tests-Base'
 }

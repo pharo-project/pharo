@@ -10,14 +10,14 @@ Class {
 	#name : #RBClass,
 	#superclass : #RBAbstractClass,
 	#instVars : [
-		'classVariableNames',
-		'poolDictionaryNames',
-		'category',
-		'comment',
-		'classPool'
+		#classVariableNames,
+		#poolDictionaryNames,
+		#category,
+		#comment,
+		#classPool
 	],
 	#classVars : [
-		'LookupComment'
+		#LookupComment
 	],
 	#category : #'Refactoring-Core-Model'
 }

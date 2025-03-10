@@ -24,8 +24,8 @@ Class {
 	#name : #ClyDataSourceUpdateScheduler,
 	#superclass : #Object,
 	#instVars : [
-		'updateQueue',
-		'process'
+		#updateQueue,
+		#process
 	],
 	#category : #'Calypso-Browser-DataSource'
 }

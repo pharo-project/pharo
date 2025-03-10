@@ -17,8 +17,8 @@ Class {
 	#name : #RBCondition,
 	#superclass : #RBAbstractCondition,
 	#instVars : [
-		'block',
-		'errorBlock'
+		#block,
+		#errorBlock
 	],
 	#category : #'Refactoring-Core-Conditions'
 }

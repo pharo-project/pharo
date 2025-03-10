@@ -5,8 +5,8 @@ Class {
 	#name : #BehaviorOwnedChunk,
 	#superclass : #CodeChunk,
 	#instVars : [
-		'behaviorName',
-		'isMeta'
+		#behaviorName,
+		#isMeta
 	],
 	#category : #'CodeImport-Chunks'
 }

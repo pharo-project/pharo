@@ -10,9 +10,9 @@ Class {
 	#name : #ZnUTF8Encoder,
 	#superclass : #ZnUTFEncoder,
 	#classVars : [
-		'ByteASCIISet',
-		'ByteUTF8Encoding',
-		'Default'
+		#ByteASCIISet,
+		#ByteUTF8Encoding,
+		#Default
 	],
 	#category : #'Zinc-Character-Encoding-Core'
 }

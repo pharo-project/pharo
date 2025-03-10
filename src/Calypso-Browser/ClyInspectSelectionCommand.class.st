@@ -12,7 +12,7 @@ Class {
 	#name : #ClyInspectSelectionCommand,
 	#superclass : #CmdCommand,
 	#instVars : [
-		'selectedItems'
+		#selectedItems
 	],
 	#category : #'Calypso-Browser-Commands'
 }

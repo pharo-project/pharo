@@ -28,10 +28,10 @@ Class {
 	#name : #TextAction,
 	#superclass : #TextAttribute,
 	#instVars : [
-		'actOnClickBlock'
+		#actOnClickBlock
 	],
 	#classVars : [
-		'ActOnClickBlock'
+		#ActOnClickBlock
 	],
 	#category : #'Text-Core-Attributes'
 }

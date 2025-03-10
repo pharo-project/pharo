@@ -2,12 +2,12 @@ Class {
 	#name : #MetacelloVersionDiffReport,
 	#superclass : #Object,
 	#instVars : [
-		'additions',
-		'configuration',
-		'modifications',
-		'removals',
-		'from',
-		'to'
+		#additions,
+		#configuration,
+		#modifications,
+		#removals,
+		#from,
+		#to
 	],
 	#category : #'Metacello-Core-Model'
 }

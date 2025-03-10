@@ -12,8 +12,8 @@ Class {
 	#name : #DADependencyChecker,
 	#superclass : #Object,
 	#instVars : [
-		'report',
-		'shouldComputeMessageSendDependencies'
+		#report,
+		#shouldComputeMessageSendDependencies
 	],
 	#category : #'Tool-DependencyAnalyser-Report'
 }

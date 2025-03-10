@@ -7,7 +7,7 @@ Class {
 	#name : #ClassCommentChunk,
 	#superclass : #BehaviorOwnedChunk,
 	#instVars : [
-		'stamp'
+		#stamp
 	],
 	#category : #'CodeImport-Chunks'
 }

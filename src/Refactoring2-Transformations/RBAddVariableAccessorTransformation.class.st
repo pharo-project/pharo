@@ -17,8 +17,8 @@ Class {
 	#name : #RBAddVariableAccessorTransformation,
 	#superclass : #RBVariableTransformation,
 	#instVars : [
-		'getterMethod',
-		'setterMethod'
+		#getterMethod,
+		#setterMethod
 	],
 	#category : #'Refactoring2-Transformations-Model'
 }

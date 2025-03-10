@@ -68,8 +68,8 @@ Class {
 	#name : #RBTemporaryToInstanceVariableRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'selector',
-		'temporaryVariableName'
+		#selector,
+		#temporaryVariableName
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

@@ -2,8 +2,8 @@ Class {
 	#name : #RGEnvironmentBackend,
 	#superclass : #Object,
 	#instVars : [
-		'environment',
-		'providedDefinitions'
+		#environment,
+		#providedDefinitions
 	],
 	#category : #'Ring-Core-Environment'
 }

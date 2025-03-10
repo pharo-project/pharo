@@ -194,7 +194,7 @@ ZnStatusLine >> version [
 { #category : #accessing }
 ZnStatusLine >> version: string [
 	version := ZnConstants knownHTTPVersions
-		detect: [ :each | each = string ]
+		detect: [ :each | each sameContents: string ]
 		ifNone: [ (ZnUnknownHttpVersion version: string) signal ]
 ]
 

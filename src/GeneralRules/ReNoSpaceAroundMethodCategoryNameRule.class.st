@@ -5,7 +5,7 @@ Class {
 	#name : #ReNoSpaceAroundMethodCategoryNameRule,
 	#superclass : #ReAbstractRule,
 	#instVars : [
-		'protocolName'
+		#protocolName
 	],
 	#category : #'GeneralRules-Migrated'
 }

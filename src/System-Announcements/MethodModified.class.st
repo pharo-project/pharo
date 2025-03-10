@@ -7,8 +7,8 @@ Class {
 	#name : #MethodModified,
 	#superclass : #MethodAnnouncement,
 	#instVars : [
-		'oldMethod',
-		'oldProtocol'
+		#oldMethod,
+		#oldProtocol
 	],
 	#category : #'System-Announcements-System-Methods'
 }

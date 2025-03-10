@@ -15,7 +15,7 @@ RBParseTreeSearcherTest >> assertCodeForSymbolAt: aSymbol in: myContextDictionar
 
 	^self
 		assert: (myContextDictionary at: aSymbol asSymbol)
-		equals: expectedCode
+		equals: expectedCode asSymbol
 ]
 
 { #category : #asserting }

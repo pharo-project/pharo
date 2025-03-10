@@ -9,7 +9,7 @@ Class {
 	#traits : 'CmTDecorator',
 	#classTraits : 'CmTDecorator classTrait',
 	#instVars : [
-		'decoratedGroup'
+		#decoratedGroup
 	],
 	#category : #'Commander2-Groups'
 }

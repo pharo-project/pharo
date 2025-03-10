@@ -2,7 +2,7 @@ Class {
 	#name : #AbstractEnvironmentTestCase,
 	#superclass : #TestCase,
 	#instVars : [
-		'testingEnvironment'
+		#testingEnvironment
 	],
 	#category : #'SUnit-Core-Kernel'
 }

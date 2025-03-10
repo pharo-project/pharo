@@ -2,7 +2,7 @@ Class {
 	#name : #MetacelloProjectReferenceSpec,
 	#superclass : #MetacelloAbstractPackageSpec,
 	#instVars : [
-		'projectReference'
+		#projectReference
 	],
 	#category : #'Metacello-Core-Specs'
 }

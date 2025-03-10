@@ -10,20 +10,20 @@ Class {
 	#name : #ProcessorScheduler,
 	#superclass : #Object,
 	#instVars : [
-		'quiescentProcessLists',
-		'activeProcess'
+		#quiescentProcessLists,
+		#activeProcess
 	],
 	#classVars : [
-		'BackgroundProcess',
-		'HighIOPriority',
-		'IdleTime',
-		'LowIOPriority',
-		'SystemBackgroundPriority',
-		'SystemRockBottomPriority',
-		'TimingPriority',
-		'UserBackgroundPriority',
-		'UserInterruptPriority',
-		'UserSchedulingPriority'
+		#BackgroundProcess,
+		#HighIOPriority,
+		#IdleTime,
+		#LowIOPriority,
+		#SystemBackgroundPriority,
+		#SystemRockBottomPriority,
+		#TimingPriority,
+		#UserBackgroundPriority,
+		#UserInterruptPriority,
+		#UserSchedulingPriority
 	],
 	#category : #'Kernel-Processes'
 }

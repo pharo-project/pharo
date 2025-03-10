@@ -5,10 +5,10 @@ Class {
 	#name : #FLSerializationTest,
 	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
-		'streamStrategy',
-		'classFactory',
-		'materializer',
-		'serializer'
+		#streamStrategy,
+		#classFactory,
+		#materializer,
+		#serializer
 	],
 	#category : #'Fuel-Tests-Core-Base'
 }

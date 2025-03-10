@@ -2,7 +2,7 @@ Class {
 	#name : #MetacelloClearStackCacheNotification,
 	#superclass : #Notification,
 	#instVars : [
-		'cacheNames'
+		#cacheNames
 	],
 	#category : #'Metacello-Core-Exceptions-Notifications'
 }

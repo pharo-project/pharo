@@ -10,8 +10,8 @@ Class {
 	#name : #TextEmphasis,
 	#superclass : #TextAttribute,
 	#instVars : [
-		'emphasisCode',
-		'setMode'
+		#emphasisCode,
+		#setMode
 	],
 	#category : #'Text-Core-Attributes'
 }

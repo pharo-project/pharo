@@ -23,7 +23,7 @@ Class {
 	#name : #InstanceVariableNotFound,
 	#superclass : #Error,
 	#instVars : [
-		'instVarName'
+		#instVarName
 	],
 	#category : #'Kernel-Exceptions'
 }

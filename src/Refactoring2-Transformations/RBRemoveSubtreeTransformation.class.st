@@ -18,7 +18,7 @@ Class {
 	#name : #RBRemoveSubtreeTransformation,
 	#superclass : #RBMethodTransformation,
 	#instVars : [
-		'sourceCode'
+		#sourceCode
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

@@ -5,7 +5,7 @@ Class {
 	#name : #SimulationExceptionWrapper,
 	#superclass : #Exception,
 	#instVars : [
-		'exception'
+		#exception
 	],
 	#category : #'Kernel-Exceptions'
 }

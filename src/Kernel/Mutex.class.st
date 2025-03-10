@@ -16,8 +16,8 @@ Class {
 	#name : #Mutex,
 	#superclass : #Object,
 	#instVars : [
-		'semaphore',
-		'owner'
+		#semaphore,
+		#owner
 	],
 	#category : #'Kernel-Processes'
 }

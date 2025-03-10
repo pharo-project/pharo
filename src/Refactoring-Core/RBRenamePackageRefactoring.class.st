@@ -17,7 +17,7 @@ Class {
 	#name : #RBRenamePackageRefactoring,
 	#superclass : #RBPackageRefactoring,
 	#instVars : [
-		'package'
+		#package
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

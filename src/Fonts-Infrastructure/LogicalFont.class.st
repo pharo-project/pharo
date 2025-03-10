@@ -50,17 +50,18 @@ LogicalFont class >> familyName: familyName fallbackFamilyNames: fallbackFamilyN
 	"^self all asArray"
 
 	"^(self all collect:[:each | each]) asArray"
-
+	| familyNameAsString |
+	familyNameAsString := familyName asString.
 	^ self all
 		  detect: [ :each |
-			  each familyName = familyName and: [
+			  each familyName = familyNameAsString and: [
 				  each fallbackFamilyNames = fallbackFamilyNames and: [
 					  each pointSize = pointSize and: [
 						  each weightValue = weight and: [
 							  each stretchValue = stretch and: [ each slantValue = slant ] ] ] ] ] ]
 		  ifNone: [
 			  self new
-				  familyName: familyName;
+				  familyName: familyNameAsString;
 				  fallbackFamilyNames: fallbackFamilyNames;
 				  pointSize: pointSize;
 				  weightValue: weight;

@@ -6,9 +6,9 @@ Class {
 	#name : #ChangeSetClassChangesTest,
 	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
-		'factory',
-		'oldChangeSet',
-		'newChangeSetName'
+		#factory,
+		#oldChangeSet,
+		#newChangeSetName
 	],
 	#category : #'Tests-System'
 }
@@ -53,7 +53,7 @@ ChangeSetClassChangesTest >> setUp [
 ChangeSetClassChangesTest >> tearDown [
 	factory cleanUp.
 	ChangeSet newChanges: oldChangeSet.
-	ChangeSet removeChangeSetsNamedSuchThat: [ :each | each = newChangeSetName ].
+	ChangeSet removeChangeSetsNamedSuchThat: [ :each | each sameContents: newChangeSetName ].
 	super tearDown
 ]
 

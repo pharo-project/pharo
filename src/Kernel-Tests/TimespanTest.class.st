@@ -69,7 +69,7 @@ TimespanTest >> testAccessing [
 				second: 0);
 		assert: timespan duration equals: (Duration hours: 100);
 		assert: timespan month equals: 3;
-		assert: timespan monthName equals: 'March';
+		assert: timespan monthName equals: #'March';
 		assert: timespan monthAbbreviation equals: 'Mar'
 ]
 
@@ -177,7 +177,7 @@ TimespanTest >> testDayOfMonth [
 { #category : #tests }
 TimespanTest >> testDayOfWeek [
 	self assert: aTimespan dayOfWeek equals: 7.
-	self assert: aTimespan dayOfWeekName equals: 'Saturday'
+	self assert: aTimespan dayOfWeekName equals: #'Saturday'
 ]
 
 { #category : #tests }
@@ -386,7 +386,7 @@ TimespanTest >> testMinusADuration [
 { #category : #tests }
 TimespanTest >> testMonth [
 	self assert: aTimespan month equals: 1.
-	self assert: aTimespan monthName equals: 'January'.
+	self assert: aTimespan monthName equals: #January.
 	self assert: aTimespan monthIndex equals: 1
 ]
 

@@ -5,7 +5,7 @@ Class {
 	#name : #ExceptionSetWithExclusions,
 	#superclass : #ExceptionSet,
 	#instVars : [
-		'exclusions'
+		#exclusions
 	],
 	#category : #'Kernel-Exceptions'
 }

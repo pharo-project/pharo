@@ -19,14 +19,14 @@ Class {
 	#name : #Delay,
 	#superclass : #Object,
 	#instVars : [
-		'delaySemaphore',
-		'beingWaitedOn',
-		'millisecondDelayDuration',
-		'ticker',
-		'resumptionTick'
+		#delaySemaphore,
+		#beingWaitedOn,
+		#millisecondDelayDuration,
+		#ticker,
+		#resumptionTick
 	],
 	#classVars : [
-		'Scheduler'
+		#Scheduler
 	],
 	#category : #'Kernel-Delays'
 }

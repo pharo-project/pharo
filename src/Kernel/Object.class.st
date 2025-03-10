@@ -54,7 +54,7 @@ Class {
 	#name : #Object,
 	#superclass : #ProtoObject,
 	#classVars : [
-		'DependentsFields'
+		#DependentsFields
 	],
 	#category : #'Kernel-Objects'
 }
@@ -365,6 +365,13 @@ Object >> asString [
 	^ self printString
 ]
 
+{ #category : #converting }
+Object >> asSymbol [
+	"Answer a symbol that represents the receiver."
+	^ self
+]
+
+
 { #category : #asserting }
 Object >> assert: aBlock [
 	"Throw an assertion error if aBlock does not evaluates to true.
@@ -616,7 +623,7 @@ Object >> changed: anAspect with: anObject [
 Object >> className [
 	"Answer a string characterizing the receiver's class, for use in list views for example"
 
-	^ self class name asString
+	^ self class name
 ]
 
 { #category : #copying }
@@ -1092,9 +1099,9 @@ Object >> instVarNamed: aStringOrSymbol [
 	We support here all slots (even non indexed) but raise a backward compatible exception"
 
 	^ self class
-		slotNamed: aStringOrSymbol
+		slotNamed: aStringOrSymbol asSymbol
 		ifFound: [ :slot | slot read: self ]
-		ifNone: [ InstanceVariableNotFound signalFor: aStringOrSymbol asString ]
+		ifNone: [ InstanceVariableNotFound signalFor: aStringOrSymbol asSymbol ]
 ]
 
 { #category : #introspection }
@@ -1103,7 +1110,7 @@ Object >> instVarNamed: aString put: aValue [
 	We support here all slots (even non indexed) but raise a backward compatible exception"
 
 	^ self class
-		slotNamed: aString
+		slotNamed: aString asSymbol
 		ifFound: [ :slot | slot write: aValue to: self ]
 		ifNone: [ InstanceVariableNotFound signalFor: aString asString ]
 ]
@@ -1838,6 +1845,11 @@ Object >> retryWithGC: execBlock until: testBlock [
 	(testBlock value: blockValue) ifTrue:[^blockValue].
 	Smalltalk garbageCollect.
 	^execBlock value
+]
+
+{ #category : #comparing }
+Object >> sameContents: anObject [
+	^ self = anObject
 ]
 
 { #category : #'write barrier' }

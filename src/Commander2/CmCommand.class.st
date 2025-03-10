@@ -12,7 +12,7 @@ Class {
 	#traits : 'CmTWithBasicNameAndDescription + CmTDecorable',
 	#classTraits : 'CmTWithBasicNameAndDescription classTrait + CmTDecorable classTrait',
 	#instVars : [
-		'context'
+		#context
 	],
 	#category : #'Commander2-Commands'
 }
@@ -25,7 +25,7 @@ CmCommand class >> defaultDescription [
 { #category : #default }
 CmCommand class >> defaultName [
 
-	^ 'Unnamed'
+	^ #'Unnamed'
 ]
 
 { #category : #testing }

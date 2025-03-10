@@ -21,8 +21,8 @@ Class {
 	#name : #RBAddMethodRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'protocols',
-		'source'
+		#protocols,
+		#source
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

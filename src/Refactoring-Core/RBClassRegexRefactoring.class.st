@@ -10,8 +10,8 @@ Class {
 	#name : #RBClassRegexRefactoring,
 	#superclass : #RBRegexRefactoring,
 	#instVars : [
-		'rootClass',
-		'mode'
+		#rootClass,
+		#mode
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

@@ -2,8 +2,8 @@ Class {
 	#name : #MetacelloScriptGitBasedDownloadNotification,
 	#superclass : #Notification,
 	#instVars : [
-		'projectPath',
-		'versionString'
+		#projectPath,
+		#versionString
 	],
 	#category : #'Metacello-Core-Scripts'
 }

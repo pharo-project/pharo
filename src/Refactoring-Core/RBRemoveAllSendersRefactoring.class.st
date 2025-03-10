@@ -40,7 +40,7 @@ Class {
 	#name : #RBRemoveAllSendersRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'selector'
+		#selector
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

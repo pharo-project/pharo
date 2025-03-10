@@ -86,15 +86,15 @@ Class {
 	#name : #ProcessMonitorTestService,
 	#superclass : #TestExecutionService,
 	#instVars : [
-		'forkedProcesses',
-		'testFailures',
-		'shouldSuspendBackgroundFailures',
-		'shouldFailTestLeavingProcesses',
-		'shouldTerminateProcesses'
+		#forkedProcesses,
+		#testFailures,
+		#shouldSuspendBackgroundFailures,
+		#shouldFailTestLeavingProcesses,
+		#shouldTerminateProcesses
 	],
 	#classInstVars : [
-		'shouldFailTestLeavingProcesses',
-		'shouldTerminateProcesses'
+		#shouldFailTestLeavingProcesses,
+		#shouldTerminateProcesses
 	],
 	#category : #'SUnit-Core-Kernel'
 }

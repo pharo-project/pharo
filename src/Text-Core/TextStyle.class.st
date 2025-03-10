@@ -20,23 +20,23 @@ Class {
 	#name : #TextStyle,
 	#superclass : #Object,
 	#instVars : [
-		'fontArray',
-		'lineGrid',
-		'baseline',
-		'alignment',
-		'firstIndent',
-		'restIndent',
-		'rightIndent',
-		'tabsArray',
-		'marginTabsArray',
-		'leading',
-		'defaultFontIndex'
+		#fontArray,
+		#lineGrid,
+		#baseline,
+		#alignment,
+		#firstIndent,
+		#restIndent,
+		#rightIndent,
+		#tabsArray,
+		#marginTabsArray,
+		#leading,
+		#defaultFontIndex
 	],
 	#pools : [
-		'TextConstants'
+		#TextConstants
 	],
 	#classInstVars : [
-		'notifier'
+		#notifier
 	],
 	#category : #'Text-Core-Base'
 }

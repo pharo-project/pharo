@@ -6,7 +6,7 @@ Class {
 	#name : #AbstractLayout,
 	#superclass : #Object,
 	#instVars : [
-		'host'
+		#host
 	],
 	#category : #'Kernel-Layout'
 }

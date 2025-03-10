@@ -2,8 +2,8 @@ Class {
 	#name : #SystemAnnouncerTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'oldSystemAnnouncer',
-		'factory'
+		#oldSystemAnnouncer,
+		#factory
 	],
 	#category : #'Tests-SystemChangeNotification'
 }

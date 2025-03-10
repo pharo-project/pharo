@@ -17,8 +17,8 @@ Class {
 	#name : #RBAddMethodTransformation,
 	#superclass : #RBMethodTransformation,
 	#instVars : [
-		'sourceCode',
-		'protocols'
+		#sourceCode,
+		#protocols
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

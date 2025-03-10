@@ -28,10 +28,10 @@ Class {
 	#name : #TextAlignment,
 	#superclass : #TextAttribute,
 	#instVars : [
-		'alignment'
+		#alignment
 	],
 	#pools : [
-		'TextConstants'
+		#TextConstants
 	],
 	#category : #'Text-Core-Attributes'
 }

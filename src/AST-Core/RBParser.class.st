@@ -816,7 +816,7 @@ RBParser >> parsePragma [
 	startToken := currentToken.
 	self step.
 	pragma := self basicParsePragma.
-	(currentToken isBinary and: [ currentToken value == #> ]) ifFalse: [
+	(currentToken isBinary and: [ currentToken value sameContents: #> ]) ifFalse: [
 		pragma := self
 			          parseEnglobingError: (OrderedCollection with: pragma)
 			          with: startToken
@@ -846,8 +846,8 @@ RBParser >> parsePragmaLiteral [
 
 { #category : #'private - parsing' }
 RBParser >> parsePragmas [
-
-	[ currentToken isBinary and: [ currentToken value = #< ] ]
+	
+	[ currentToken isBinary and: [ currentToken value sameContents: #< ] ]
 		whileTrue: [ self parsePragma ]
 ]
 

@@ -7,8 +7,8 @@ Class {
 	#name : #RBPackageTransformation,
 	#superclass : #RBCompositeTransformation,
 	#instVars : [
-		'packageName',
-		'newName'
+		#packageName,
+		#newName
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }
