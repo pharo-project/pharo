@@ -18,9 +18,7 @@ MetacelloScriptApiExecutor >> execute [
 { #category : 'execution callback' }
 MetacelloScriptApiExecutor >> executeString: aString do: projectSpecBlock [
 
-  singleRoot ifNil: [ self singleRoot: true ].
-  (projectSpecGenerator projectSpecCreationBlock value: aString)
-    do: [ :projectSpec | 
-      projectSpec
-        ifNotNil: [ projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ] ]
+	singleRoot ifNil: [ self singleRoot: true ].
+	(projectSpecGenerator projectSpecCreationBlock value: aString) do: [ :projectSpec |
+		projectSpec ifNotNil: [ projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ] ]
 ]
