@@ -3,7 +3,8 @@ Class {
 	#superclass : 'DebuggerTest',
 	#instVars : [
 		'aBlock',
-		'failed'
+		'failed',
+		'currentFastStepThrough'
 	],
 	#category : 'Debugger-Model-Tests-Core',
 	#package : 'Debugger-Model-Tests',
@@ -23,6 +24,14 @@ StepThroughTest >> evalBlock: aBlockClosure afterLoop: remainingCount [
 StepThroughTest >> evalBlockThenReturnOne: aBlock [
 	aBlock value.
 	^1
+]
+
+{ #category : 'utilities' }
+StepThroughTest >> settingUpSessionAndProcessAndContextForBlock: block [
+	currentFastStepThrough := DebugSession fastStepThroughMode.	
+	DebugSession fastStepThroughMode: false.
+	super settingUpSessionAndProcessAndContextForBlock: block
+
 ]
 
 { #category : 'helper' }
@@ -120,6 +129,14 @@ StepThroughTest >> stepG2: aTmp sem: sem [
 	
 	[ failed isNil ] whileTrue: [ Processor yield ].
 
+]
+
+{ #category : 'running' }
+StepThroughTest >> tearDown [
+
+	currentFastStepThrough ifNotNil: [
+		DebugSession fastStepThroughMode: currentFastStepThrough ].
+	super tearDown
 ]
 
 { #category : 'tests' }
