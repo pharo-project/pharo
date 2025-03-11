@@ -61,12 +61,8 @@ MetacelloScriptExecutor >> configurationArg: anObject [
 ]
 
 { #category : 'execution' }
-MetacelloScriptExecutor >> execute: statements [
+MetacelloScriptExecutor >> execute [
 
-	statements do: [ :assoc |
-		assoc value
-			ifNil: [ self perform: assoc key ]
-			ifNotNil: [ self perform: assoc key withArguments: assoc value ] ].
 	projectSpecGenerator := self projectSpecGenerator.
 	self executeString: projectSpecGenerator target do: [ :projectReferenceSpec |
 		| engine |
@@ -161,6 +157,13 @@ MetacelloScriptExecutor >> onWarning: aBlock [
 MetacelloScriptExecutor >> options [
     options ifNil: [ options := Dictionary new ].
     ^ options
+]
+
+{ #category : 'copying' }
+MetacelloScriptExecutor >> postCopy [
+
+	super postCopy.
+	options := options copy
 ]
 
 { #category : 'args' }

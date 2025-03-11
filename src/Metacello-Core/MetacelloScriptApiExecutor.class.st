@@ -10,6 +10,12 @@ Class {
 }
 
 { #category : 'execution callback' }
+MetacelloScriptApiExecutor >> execute [
+
+	MetacelloPlatform current withMetacelloLoadSessionDo: [ ^ super execute ]
+]
+
+{ #category : 'execution callback' }
 MetacelloScriptApiExecutor >> executeString: aString do: projectSpecBlock [
 
   singleRoot ifNil: [ self singleRoot: true ].
