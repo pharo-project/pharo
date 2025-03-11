@@ -12,8 +12,8 @@ Class {
 
 { #category : 'exceptions' }
 HaltingBlock >> haltIfStepping [
-	
-	DebuggerSteppingState value ifTrue: [ self halt ]
+	<debuggerCompleteToSender>
+	DebuggerSteppingState value ifTrue: [ Break break ]
 ]
 
 { #category : 'accessing' }

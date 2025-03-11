@@ -29,6 +29,7 @@ Class {
 		'exception'
 	],
 	#classVars : [
+		'EnhancedStepThroughMode',
 		'LogDebuggerStackToFile'
 	],
 	#classInstVars : [
@@ -55,6 +56,31 @@ DebugSession class >> contextModelClass: anObject [
 DebugSession class >> defaultContextModelClass [
 
 	^ DebugContext
+]
+
+{ #category : 'settings' }
+DebugSession class >> enhancedStepThroughMode [
+
+	^ EnhancedStepThroughMode ifNil: [ EnhancedStepThroughMode := false ]
+]
+
+{ #category : 'settings' }
+DebugSession class >> enhancedStepThroughMode: aBoolean [
+
+	^ EnhancedStepThroughMode := aBoolean
+]
+
+{ #category : 'settings' }
+DebugSession class >> enhancedStepThroughModeSettingOn: aBuilder [
+
+	<systemsettings>
+	(aBuilder setting: #enhancedStepThroughMode)
+		label: 'Enable the enhanced step through mode';
+		target: self;
+		parent: #debugging;
+		default: false;
+		description:
+			'If enabled, the debugger will perform step through operations using halting blocks. This implementation is more efficient than the original one based on interpreter steps'
 ]
 
 { #category : 'settings' }
