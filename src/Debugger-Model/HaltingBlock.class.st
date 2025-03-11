@@ -1,3 +1,6 @@
+"
+I am a special kind of block used by the EnhancedDebugSessionWithHaltingBlock
+"
 Class {
 	#name : 'HaltingBlock',
 	#superclass : 'FullBlockClosure',
