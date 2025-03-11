@@ -88,19 +88,11 @@ MetacelloScriptExecutor >> executeBlock: selectBlock do: projectSpecBlock [
 ]
 
 { #category : 'execution callback' }
-MetacelloScriptExecutor >> executeCollection: aCollection do: projectSpecBlock [
-    aCollection
-        do: [ :projectName | 
-            ((projectSpecGenerator projectSpecLookupBlock value: projectName) select: self projectSpecSelectBlock)
-                do: [ :projectSpec | projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ] ]
-]
-
-{ #category : 'execution callback' }
 MetacelloScriptExecutor >> executeString: aString do: projectSpecBlock [
-  singleRoot ifNil: [ self singleRoot: true ].
-  ((projectSpecGenerator projectSpecLookupBlock value: aString)
-    select: self projectSpecSelectBlock)
-    do: [ :projectSpec | projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ]
+
+	singleRoot ifNil: [ self singleRoot: true ].
+	((projectSpecGenerator projectSpecLookupBlock value: aString) select: self projectSpecSelectBlock) do: [ :projectSpec |
+		projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ]
 ]
 
 { #category : 'actions api' }

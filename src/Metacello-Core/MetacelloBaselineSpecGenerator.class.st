@@ -29,8 +29,6 @@ MetacelloBaselineSpecGenerator >> projectSpecListBlock [
 
 { #category : 'accessing' }
 MetacelloBaselineSpecGenerator >> projectSpecLookupBlock [
-    ^ [ :projectName | 
-    {(MetacelloProjectRegistration
-        projectSpecForClassNamed: (MetacelloScriptEngine baselineNameFrom: projectName)
-        ifAbsent: [  ])} ]
+
+	^ [ :projectName | { (MetacelloProjectRegistration projectSpecForClassNamed: (MetacelloScriptEngine baselineNameFrom: projectName) ifAbsent: [  ]) } ]
 ]

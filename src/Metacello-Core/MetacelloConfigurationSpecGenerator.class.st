@@ -18,8 +18,6 @@ MetacelloConfigurationSpecGenerator >> projectSpecListBlock [
 
 { #category : 'accessing' }
 MetacelloConfigurationSpecGenerator >> projectSpecLookupBlock [
-    ^ [ :projectName | 
-    {(MetacelloProjectRegistration
-        projectSpecForClassNamed: (MetacelloScriptEngine configurationNameFrom: projectName)
-        ifAbsent: [  ])} ]
+
+	^ [ :projectName | { (MetacelloProjectRegistration projectSpecForClassNamed: (MetacelloScriptEngine configurationNameFrom: projectName) ifAbsent: [  ]) } ]
 ]
