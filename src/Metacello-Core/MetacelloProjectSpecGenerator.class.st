@@ -1,9 +1,6 @@
 Class {
 	#name : 'MetacelloProjectSpecGenerator',
-	#superclass : 'Object',
-	#instVars : [
-		'target'
-	],
+	#superclass : 'MetacelloAbstractSpecGenerator',
 	#category : 'Metacello-Core-Scripts',
 	#package : 'Metacello-Core',
 	#tag : 'Scripts'
@@ -26,14 +23,4 @@ MetacelloProjectSpecGenerator >> projectSpecLookupBlock [
 	  {
 		  (MetacelloProjectRegistration projectSpecForClassNamed: (MetacelloScriptEngine baselineNameFrom: projectName) ifAbsent: [  ]).
 		  (MetacelloProjectRegistration projectSpecForClassNamed: (MetacelloScriptEngine configurationNameFrom: projectName) ifAbsent: [  ]) } ]
-]
-
-{ #category : 'accessing' }
-MetacelloProjectSpecGenerator >> target [
-	^ target
-]
-
-{ #category : 'accessing' }
-MetacelloProjectSpecGenerator >> target: anObject [
-	target := anObject
 ]

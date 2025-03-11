@@ -1,6 +1,6 @@
 Class {
 	#name : 'MetacelloConfigurationSpecGenerator',
-	#superclass : 'MetacelloProjectSpecGenerator',
+	#superclass : 'MetacelloAbstractSpecGenerator',
 	#category : 'Metacello-Core-Scripts',
 	#package : 'Metacello-Core',
 	#tag : 'Scripts'
