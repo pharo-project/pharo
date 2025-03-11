@@ -222,7 +222,7 @@ Halt class >> resetOnce [
 
 { #category : 'private' }
 Halt >> completeProcess: aProcess with: aContext [
-	^ aContext methodNode
+	^ aContext homeMethod ast
 		pragmaNamed: #debuggerCompleteToSender
 		ifPresent: [ aProcess completeTo: aContext sender ]
 		ifAbsent: [ super completeProcess: aProcess with: aContext ]
