@@ -188,7 +188,7 @@ MetacelloVersionSpec >> configPackagesSpecMethodOn: aStream indent: indent [
 			projectDo: [ :proj | member spec name ifNotNil: [ projectSpecs add: member ] ]
 			packageDo: [ :package | member spec name ifNotNil: [ packageSpecs add: member ] ]
 			groupDo: [ :group | member spec name ifNotNil: [ groupSpecs add: member ] ] ].
-	projectSpecs isEmpty not ifTrue: [
+	projectSpecs ifNotEmpty: [
 		aStream
 			tab: indent;
 			nextPutAll: 'spec '.
@@ -199,8 +199,8 @@ MetacelloVersionSpec >> configPackagesSpecMethodOn: aStream indent: indent [
 		1 to: projectSpecs size do: [ :index |
 			(projectSpecs at: index) configMethodCascadeOn: aStream last: index == projectSpecs size indent: indent + 1.
 			index ~= projectSpecs size ifTrue: [ aStream tab: indent + 1 ] ] ].
-	packageSpecs isEmpty not ifTrue: [
-		projectSpecs isEmpty not ifTrue: [ aStream cr ].
+	packageSpecs ifNotEmpty: [
+		projectSpecs ifNotEmpty: [ aStream cr ].
 		aStream
 			tab: indent;
 			nextPutAll: 'spec '.
@@ -211,8 +211,8 @@ MetacelloVersionSpec >> configPackagesSpecMethodOn: aStream indent: indent [
 		1 to: packageSpecs size do: [ :index |
 			(packageSpecs at: index) configMethodCascadeOn: aStream last: index == packageSpecs size indent: indent + 1.
 			index ~= packageSpecs size ifTrue: [ aStream tab: indent + 1 ] ] ].
-	groupSpecs isEmpty not ifTrue: [
-		projectSpecs isEmpty not | packageSpecs isEmpty not ifTrue: [ aStream cr ].
+	groupSpecs ifNotEmpty: [
+		(projectSpecs isNotEmpty or: [ packageSpecs isNotEmpty ]) ifTrue: [ aStream cr ].
 		aStream
 			tab: indent;
 			nextPutAll: 'spec '.
@@ -231,23 +231,6 @@ MetacelloVersionSpec >> createVersion [
 	^ self versionClass fromSpec: self
 ]
 
-{ #category : 'enumerating' }
-MetacelloVersionSpec >> currentlyLoadedClassesInVersion [
-
-	| classes |
-	classes := Set new.
-	self
-		projectDo: [ :ignored |  ]
-		packageDo: [ :packageSpec |
-			([ packageSpec workingCopy ]
-				 on: Error
-				 do: [ :ex | ex return: nil ]) ifNotNil: [ :workingCopy |
-				workingCopy systemPackage ifNotNil: [ :package |
-					classes addAll: package classes ] ] ]
-		groupDo: [ :ignored |  ].
-	^ classes
-]
-
 { #category : 'loading' }
 MetacelloVersionSpec >> defaultPackageNames [
 	"if there is a package named 'default' (a group) then it defines the default package names,
@@ -255,13 +238,6 @@ MetacelloVersionSpec >> defaultPackageNames [
 
 	self packages packageNamed: 'default' ifAbsent: [ ^self packageNames ].
 	^#('default')
-]
-
-{ #category : 'toolbox support' }
-MetacelloVersionSpec >> deleteSpec: aSpec [
-    "remove the spec from packages"
-
-    self packages deleteSpec: aSpec
 ]
 
 { #category : 'accessing' }
@@ -366,14 +342,10 @@ MetacelloVersionSpec >> mergeSpec: anotherSpec [
 	| newSpec map anotherPackages anotherRepositories |
 	newSpec := super mergeSpec: anotherSpec.
 	map := anotherSpec mergeMap.
-	(anotherPackages := map at: #packageList) isEmpty not ifTrue: [
-		newSpec packages: (self packages isEmpty
-				 ifTrue: [ anotherPackages ]
-				 ifFalse: [ self packages mergeSpec: anotherPackages ]) ].
-	(anotherRepositories := map at: #repositories) isEmpty not ifTrue: [
-		newSpec repositories: (self repositories isEmpty
-				 ifTrue: [ anotherRepositories ]
-				 ifFalse: [ self repositories mergeSpec: anotherRepositories ]) ].
+	(anotherPackages := map at: #packageList) ifNotEmpty: [
+		newSpec packages: (self packages ifEmpty: [ anotherPackages ] ifNotEmpty: [ self packages mergeSpec: anotherPackages ]) ].
+	(anotherRepositories := map at: #repositories) ifNotEmpty: [
+		newSpec repositories: (self repositories ifEmpty: [ anotherRepositories ] ifNotEmpty: [ self repositories mergeSpec: anotherRepositories ]) ].
 	^ newSpec
 ]
 
@@ -476,11 +448,6 @@ MetacelloVersionSpec >> packageSpecsInLoadOrderForMap: packageMap [
 							               yourself).
 					importSpec projectReference name: importedName ] ] ].
 	^ pkgs
-]
-
-{ #category : 'querying' }
-MetacelloVersionSpec >> packageSpecsInLoadOrderWithEngine: anObject [
-  ^ self packages packageSpecsInLoadOrderFor: self
 ]
 
 { #category : 'accessing' }
@@ -634,15 +601,6 @@ MetacelloVersionSpec >> specListProjectDo: projectBlock packageDo: packageBlock 
 
 	self packages specListDo: [:pkgSpec |
 		pkgSpec projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock ]
-]
-
-{ #category : 'enumerating' }
-MetacelloVersionSpec >> specsNamed: packageAndProjectNames projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
-
-	| map |
-	map := self packages map.
-	packageAndProjectNames do: [ :name |
-		(map at: name ifAbsent: [  ]) ifNotNil: [ :pkgSpec | pkgSpec projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock ] ]
 ]
 
 { #category : 'accessing' }
