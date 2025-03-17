@@ -204,7 +204,7 @@ MCFileTreeAbstractReader >> packageProperties [
                                 on: Error
                                 do: [ :ex | 
                                     SystemNotification signal:
-                                                'Error reading package properties (.filetree): ' , packageDirectory pathName , ' :: ' , ex description ] ] ] ].
+                                                'Error reading package properties (.filetree): ' , packageDirectory asString , ' :: ' , ex description ] ] ] ].
     ^ packageProperties
 ]
 
