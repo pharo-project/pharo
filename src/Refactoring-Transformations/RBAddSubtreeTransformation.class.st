@@ -90,25 +90,34 @@ RBAddSubtreeTransformation >> interval: anInterval with: aString from: aSelector
 
 { #category : 'executing' }
 RBAddSubtreeTransformation >> privateTransform [
+
 	| parseTree newNode |
 	parseTree := self definingClass parseTreeForSelector: selector.
 	parseTree ifNil: [ ^ self ].
 	newNode := self parserClass
-		parseExpression: sourceCode
-		onError: [ :string :pos | ^ self ].
+		           parseExpression: sourceCode
+		           onError: [ :string :pos | ^ self ].
 
 	"The method is empty, then just add the new code"
-	parseTree body statements
-		ifEmpty: [ parseTree addNode: newNode.
-			^ self ].
+	parseTree body statements ifEmpty: [
+		parseTree addNode: newNode.
+		^ self ].
 
 	"It tries to find the block to insert new code.
 	 If not found, e.g., the interval is invalid, it adds the code at the end."
 	parseTree := parseTree allSequenceNodes
-		detect: [ :sequence | sequence intersectsInterval: interval ]
-		ifFound: [ :sequence | self addNode: newNode toSequence: sequence ]
-		ifNone: [ parseTree body addNodeLast: newNode.
-			parseTree ].
+		             detect: [ :sequence |
+		             sequence intersectsInterval: interval ]
+		             ifFound: [ :sequence |
+		             self addNode: newNode toSequence: sequence ]
+		             ifNone: [
+			             parseTree body lastIsReturn
+				             ifTrue: [
+					             parseTree body
+						             addNode: newNode
+						             before: parseTree body statements last ]
+				             ifFalse: [ parseTree body addNode: newNode ].
+			             parseTree ].
 	self definingClass compileTree: parseTree
 ]
 
