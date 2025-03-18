@@ -164,7 +164,8 @@ StepThroughTest >> testStepThrough [
 	node := expectedMethod sourceNodeForPC: session interruptedContext pc.
 	self assert: node isMessage.
 	self assert: node receiver isSelfVariable.
-	self assert: node selector equals: #stepA2
+	self assert: node selector equals: #stepA2.
+	self deny: (session isContextPostMortem: session interruptedContext)
 ]
 
 { #category : 'tests' }
@@ -198,7 +199,8 @@ StepThroughTest >> testStepThroughDoesTheSameThingAsStepOverWhenNoBlockIsInvolve
 	node := (self class lookupSelector:#stepB1) sourceNodeForPC: session interruptedContext pc.
 	self assert: node isMessage.
 	self assert: node receiver isSelfVariable.
-	self assert: node selector equals: #stepB3
+	self assert: node selector equals: #stepB3.
+	self deny: (session isContextPostMortem: session interruptedContext)
 ]
 
 { #category : 'tests' }
@@ -228,7 +230,8 @@ StepThroughTest >> testStepThroughInABlockInAInstanceVariable [
 	node := expectedMethod sourceNodeForPC: session interruptedContext pc.
 	self assert: node isMessage.
 	self assert: node receiver value equals: 2.
-	self assert: node selector equals: #+
+	self assert: node selector equals: #+.
+	self deny: (session isContextPostMortem: session interruptedContext)
 ]
 
 { #category : 'tests' }
@@ -255,7 +258,8 @@ StepThroughTest >> testStepThroughInABlockInATemporary [
 	node := expectedMethod sourceNodeForPC: session interruptedContext pc.
 	self assert: node isMessage.
 	self assert: node receiver value equals: 2.
-	self assert: node selector equals: #-
+	self assert: node selector equals: #-.
+	self deny: (session isContextPostMortem: session interruptedContext)
 ]
 
 { #category : 'tests' }
@@ -282,7 +286,8 @@ StepThroughTest >> testStepThroughInABlockInATemporaryDirectly [
 	node := expectedMethod sourceNodeForPC: session interruptedContext pc.
 	self assert: node isMessage.
 	self assert: node receiver value equals: 2.
-	self assert: node selector equals: #-
+	self assert: node selector equals: #-.
+	self deny: (session isContextPostMortem: session interruptedContext)
 ]
 
 { #category : 'tests' }
@@ -298,6 +303,7 @@ StepThroughTest >> testStepThroughInOtherProcess [
 	session stepThrough.
 		
 	self deny: failed.
+	self deny: (session isContextPostMortem: session interruptedContext)
 ]
 
 { #category : 'tests' }
@@ -324,7 +330,8 @@ StepThroughTest >> testStepThroughLonger [
 	node := expectedMethod sourceNodeForPC: session interruptedContext pc.
 	self assert: node isMessage.
 	self assert: node receiver isSelfVariable.
-	self assert: node selector equals: #stepC2
+	self assert: node selector equals: #stepC2.
+	self deny: (session isContextPostMortem: session interruptedContext)
 ]
 
 { #category : 'tests' }
@@ -334,5 +341,6 @@ StepThroughTest >> testStepThroughUntilTermination [
 
 	[ session interruptedProcess isTerminated ] whileFalse: [ session stepThrough ].
 
-	self assert: session interruptedProcess isTerminated
+	self assert: session interruptedProcess isTerminated.
+	self deny: (session isContextPostMortem: session interruptedContext)
 ]
