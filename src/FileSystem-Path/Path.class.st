@@ -266,6 +266,11 @@ Path >> = other [
 ]
 
 { #category : 'converting' }
+Path >> asAbsolute [
+	self subclassResponsibility
+]
+
+{ #category : 'converting' }
 Path >> asPath [
 	^ self
 ]

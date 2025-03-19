@@ -15,6 +15,11 @@ Class {
 	#tag : 'Base'
 }
 
+{ #category : 'converting' }
+UNCNetworkPath >> asAbsolute [
+	self shouldNotImplement 
+]
+
 { #category : 'testing' }
 UNCNetworkPath >> isAbsolute [
 

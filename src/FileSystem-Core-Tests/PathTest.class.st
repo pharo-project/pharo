@@ -4,6 +4,7 @@ SUnit tests for file system paths
 Class {
 	#name : 'PathTest',
 	#superclass : 'TestCase',
+	#type : 'variable',
 	#category : 'FileSystem-Core-Tests-Base',
 	#package : 'FileSystem-Core-Tests',
 	#tag : 'Base'
@@ -654,11 +655,40 @@ PathTest >> testRelativeToBranch [
 ]
 
 { #category : 'tests' }
+PathTest >> testRelativeWithExpandedParent [
+	| path allExpandedPaths directParent absolutePathWithoutDirectParent|
+	
+	path := Path * '..' / 'library' / 'great' / 'repository'.
+	allExpandedPaths := path withExpandedParent.
+	directParent := path expandedParent basename.
+	
+	absolutePathWithoutDirectParent := (path parentPath: (FileSystem workingDirectory) pathString numberOfDirectoriesUp: 1).
+
+	"Parent's parent becomes direct parent"
+	self assert: (absolutePathWithoutDirectParent occurrencesOf: directParent) equals: 0.
+	self assert: path asAbsolute isAbsolute.
+	"Parent's parent must not be equal to the relative path parent"
+	self deny: (allExpandedPaths at: 5) equals: path expandedParent. 
+
+	self assert: allExpandedPaths size equals: 8.
+	self assert: (allExpandedPaths at: 8) basename equals: 'repository'.
+	self assert: (allExpandedPaths at: 8) size equals: 7. "root is part of the home in the path"
+
+	self assert: (allExpandedPaths at: 7) basename equals: 'great'.
+	self assert: (allExpandedPaths at: 7) size equals: 6.
+	self assert: ((allExpandedPaths at: 8) isChildOf: (allExpandedPaths at:7)).
+	
+	self assert: (allExpandedPaths at: 6) basename equals: 'library'.
+	self assert: (allExpandedPaths at: 6) size equals: 5.
+	self assert: ((allExpandedPaths at:7) isChildOf: (allExpandedPaths at: 6))
+]
+
+{ #category : 'tests' }
 PathTest >> testRelativeWithParents [
 	| path allPaths |
 	path := Path * 'plonk' / 'griffle' / 'nurb'.
 	allPaths := path withParents.
-
+	
 	self assert: allPaths size equals: 3.
 	self assert: allPaths first basename equals: 'plonk'.
 	self assert: allPaths first size equals: 1.

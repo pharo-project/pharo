@@ -52,6 +52,11 @@ AbsolutePath class >> removeRedundantSegments: segments [
 		[ :segment | segment notEmpty and: [ segment ~= '.' ] ]
 ]
 
+{ #category : 'converting' }
+AbsolutePath >> asAbsolute [
+	^ self
+]
+
 { #category : 'testing' }
 AbsolutePath >> isAbsolute [
 	^ true
