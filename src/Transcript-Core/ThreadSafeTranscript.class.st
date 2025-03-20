@@ -35,19 +35,6 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'declare' }
-ThreadSafeTranscript class >> install [
-
-	self installThreadSafeAsTranscript
-]
-
-{ #category : 'declare' }
-ThreadSafeTranscript class >> installThreadSafeAsTranscript [
-	<script>
-
-	Smalltalk globals at: #Transcript put: (self new)
-]
-
 { #category : 'icons' }
 ThreadSafeTranscript class >> taskbarIconName [
 	"Answer the icon for the receiver in a task bar."

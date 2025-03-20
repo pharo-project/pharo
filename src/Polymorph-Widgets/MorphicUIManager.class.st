@@ -57,12 +57,6 @@ MorphicUIManager >> activate [
 	self currentWorld ifNotNil: [:world | world restoreMorphicDisplay].
 	WorldMorph extraWorldList do: [:each | each restoreMorphicDisplay].
 
-	activeTranscript
-		ifNotNil: [ 
-			Transcript := activeTranscript ]
-		ifNil: [
-			Transcript class == ThreadSafeTranscript 
-				ifFalse: [ ThreadSafeTranscript install ] ].
 			
 	SystemProgressMorph enable
 ]

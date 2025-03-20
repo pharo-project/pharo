@@ -113,6 +113,8 @@ MenuRegistrationExample class >> toolsOn: aBuilder [
 		with: [
 			(aBuilder item: #Transcript)
 				action: [ (Smalltalk tools toolNamed: #transcript) open] ;
+				keyText: 'o, t';
+				help: 'Window on the new Transcript output stream, which is useful for writing log messages.';
 				icon: (aBuilder iconNamed: #smallDebug).
 			(aBuilder item: #'File Browser')
 				action: [ (Smalltalk tools toolNamed: #fileList) open] ;
