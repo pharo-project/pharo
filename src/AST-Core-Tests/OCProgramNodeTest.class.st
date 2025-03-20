@@ -40,12 +40,14 @@ OCProgramNodeTest >> getMethodString [
 		"First comment"
 		| temp variables |
 		"Second comment"
-		assignement := " Third comment " #node.
+		assignment := " Third comment " #node.
 		"Fourth comment"
-		message "Fifth comment", ''node''.
-		"Sixth comment" cascade node; nodeux "Seventh comment"; notrois.
+		message := ''node''.
+		"Fifth comment"
+		message cascade: node; cascadeMethod2: nodeux; cascadeMethod3: notrois.
+		"Sixth comment"
 		^ "return" nil
-		'
+	'
 ]
 
 { #category : 'accessing' }
