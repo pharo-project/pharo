@@ -4,22 +4,13 @@
 
 ## Typical Usage:
 
-
-
-
-### First way (We recommand to use this one :):
+### First way (We recommand to use this one):
 
 
 ```smalltalk
-global := CoStaticBenchmarksMessage runAllOnClass: CompletionSorter package.
+global := CoStaticBenchmarksMessage runAllSortersOnPackage: CompletionSorter package.
 
-global := CoStaticBenchmarksMessage runAllOnPackage: 'NECompletion'.
-
-""To add the which templates of heurisitcs you want to use""
-
-global := CoStaticBenchmarksMessage runAllOnPackage: 'NECompletion' heuristics: [ :b | CoStaticBenchmarksMessage defaultHeuristics: b ].
-
-global := CoStaticBenchmarksMessage runAllOnPackage: 'NECompletion' heuristics: [ :b | CoStaticBenchmarksMessage customHeuristics: b ].
+global := CoStaticBenchmarksMessage runAllSortersOnPackage: 'NECompletion'
 
 ```
 
@@ -155,8 +146,7 @@ CoStaticBenchmarksMessage >> fetchTopCandidatesFrom: completion usingPrefix: pre
 { #category : 'benchmarks' }
 CoStaticBenchmarksMessage >> findCompletionIndexFor: originalSelector inCandidates: candidates [
 
-	^ (candidates collect: [ :each | each contents ]) indexOf:
-		  originalSelector
+	^ (candidates collect: [ :each | each contents ]) indexOf: originalSelector
 ]
 
 { #category : 'benchmarks' }
