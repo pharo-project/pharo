@@ -203,9 +203,7 @@ SpRubFindReplaceDialog >> initializePresenters [
 		add: caseCheckBox;
 		add: wrapCheckBox;
 		add: entireCheckBox.
-	Transcript
-		show: replaceTextInput text;
-		cr
+	
 ]
 
 { #category : 'private' }

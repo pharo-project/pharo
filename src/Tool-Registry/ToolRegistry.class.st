@@ -213,20 +213,6 @@ ToolRegistry >> toolNamed: aName [
 	^ tools at: aName ifAbsent: [ self error: 'No tool named: ', aName, ' available' ]
 ]
 
-{ #category : 'tools' }
-ToolRegistry >> transcript [
-	"We should rewrite the transcript as a spec UI. 
-	In addition we should implement the Transcript as a circular structure
-	so that we do not have to register to stepGlobal to flush it and avoid memory leak."
-	
-	"check 
-		ThreadSafeTranscript>>#stepGlobal.
-		WorldState >> #runStepMethodsIn: 
-	"
-
-	^ Transcript
-]
-
 { #category : 'registration' }
 ToolRegistry >> unregisterToolWithRole: aName [
 
