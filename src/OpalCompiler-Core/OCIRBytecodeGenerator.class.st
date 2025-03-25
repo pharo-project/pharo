@@ -166,7 +166,8 @@ OCIRBytecodeGenerator >> compiledBlock [
 
 	"Compiled blocks never call primitives"
 	header := self spurVMHeader: lits size hasPrimitive: false.
-	cb := CompiledBlock basicNew: self bytecodes size header: header.
+	cb := self compilationContext compiledBlockClass
+		basicNew: self bytecodes size header: header.
 	(WriteStream with: cb)
 		position: cb initialPC - 1;
 		nextPutAll: self bytecodes.
