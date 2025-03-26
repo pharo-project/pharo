@@ -33,6 +33,11 @@ HaltingBlock >> originalBlock: aBlock [
 	originalBlock := aBlock
 ]
 
+{ #category : 'accessing' }
+HaltingBlock >> sender [
+	^ originalBlock sender
+]
+
 { #category : 'evaluating' }
 HaltingBlock >> value [
 
