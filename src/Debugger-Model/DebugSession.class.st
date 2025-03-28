@@ -26,9 +26,11 @@ Class {
 		'name',
 		'interruptedContext',
 		'interruptedProcess',
-		'exception'
+		'exception',
+		'stepThroughController'
 	],
 	#classVars : [
+		'FastStepThroughMode',
 		'LogDebuggerStackToFile'
 	],
 	#classInstVars : [
@@ -55,6 +57,31 @@ DebugSession class >> contextModelClass: anObject [
 DebugSession class >> defaultContextModelClass [
 
 	^ DebugContext
+]
+
+{ #category : 'settings' }
+DebugSession class >> fastStepThroughMode [
+
+	^ FastStepThroughMode ifNil: [ FastStepThroughMode := false ]
+]
+
+{ #category : 'settings' }
+DebugSession class >> fastStepThroughMode: aBoolean [
+
+	^ FastStepThroughMode := aBoolean
+]
+
+{ #category : 'settings' }
+DebugSession class >> fastStepThroughModeSettingOn: aBuilder [
+
+	<systemsettings>
+	(aBuilder setting: #fastStepThroughMode)
+		label: 'Enable the fast step through mode';
+		target: self;
+		parent: #debugging;
+		default: false;
+		description:
+			'If enabled, the debugger will perform step through operations using halting blocks. This implementation is more efficient than the original one based on interpreter steps'
 ]
 
 { #category : 'settings' }
@@ -116,6 +143,34 @@ DebugSession >> exception [
 { #category : 'accessing' }
 DebugSession >> exception: anObject [
 	exception := anObject
+]
+
+{ #category : 'debugging actions' }
+DebugSession >> fastStepThrough: aContext [
+	"Send messages until you return to selectedContext.
+	 Used to step into a block in the method."
+
+	| newContext |
+
+	aContext stepIntoQuickMethod: false.
+	(self isContextPostMortem: aContext) ifTrue: [^ self].
+	
+	self stepThroughController prepareContextForStepThrough: aContext.
+	
+	interruptedProcess psValueAt: (DebuggerSteppingState soleInstance index) put: true.
+	newContext := interruptedProcess completeStep: aContext.
+	interruptedProcess psValueAt: (DebuggerSteppingState soleInstance index) put: false.
+
+	newContext := self stepThroughController findNextContext: newContext.
+
+	self stepThroughController revertBlocks.
+
+	self updateContextTo:
+		(newContext == aContext
+			ifTrue: [ (self stepToFirstInterestingBytecodeIn: interruptedProcess) ]
+			ifFalse: [ newContext ]).
+
+	self triggerEvent: #stepThrough
 ]
 
 { #category : 'evaluating' }
@@ -509,6 +564,7 @@ DebugSession >> stepThrough [
 DebugSession >> stepThrough: aContext [
 	"Send messages until you return to selectedContext.
 	 Used to step into a block in the method."
+	self class fastStepThroughMode ifTrue: [ ^ self fastStepThrough: aContext ]. 
 	aContext stepIntoQuickMethod: false.
 	(self isContextPostMortem: aContext) ifTrue: [^ self].
 
@@ -516,6 +572,13 @@ DebugSession >> stepThrough: aContext [
 	self updateContextTo: (self stepToFirstInterestingBytecodeIn: interruptedProcess).
 
 	self triggerEvent: #stepThrough
+]
+
+{ #category : 'accessing' }
+DebugSession >> stepThroughController [
+
+	^ stepThroughController ifNil: [
+		  stepThroughController := FastStepThroughController new ]
 ]
 
 { #category : 'private' }
