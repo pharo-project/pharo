@@ -4,8 +4,8 @@ I am a simple test case to check that HashTester works correctly
 Class {
 	#name : 'HashTesterTest',
 	#superclass : 'TestCase',
-	#category : 'SUnit-Core-Utilities',
-	#package : 'SUnit-Core',
+	#category : 'SUnit-Tests-Utilities',
+	#package : 'SUnit-Tests',
 	#tag : 'Utilities'
 }
 

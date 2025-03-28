@@ -38,113 +38,180 @@ WidgetExample class >> closeExampleDialogs [
 ]
 
 { #category : 'examples' }
-WidgetExample class >> colorControls [
-	"Open a window with examples of each of the color controls."
-	"self exampleColorControls"
-	<script>
-	|dialog builder|
-	builder := self builder.
-	dialog := (builder newPluggableDialogWindow: 'Example color controls') useDefaultOKButton.
-	dialog contentMorph: (dialog newRow: {
-		dialog newLabelGroup: {
-			'Alpha Selector'->(dialog newAlphaSelector: (NewValueHolder new value: 0)
-							getAlpha: #value setAlpha: #value: help: 'This is an alpha channel selector').
-			'Hue Selector'->(dialog newHueSelector: (NewValueHolder new value: 0)
-							getHue: #value setHue: #value: help: 'This is a hue selector').
-			'SV Color Selector'->((dialog newSVSelector: Color yellow
-									help: 'This is a saturation-volume selector') minHeight: 80).
-			'HSV Color Selector'->((dialog newHSVSelector: Color green
-									help: 'This is a hue-saturation-volume selector') minHeight: 80; minWidth: 120)}.
-		dialog newVerticalSeparator.
-		dialog newTitle: 'HSVA Color Selector' for:
-			((dialog newHSVASelector: Color cyan
-					help: 'This is a hue-saturation-volume-alpha selector')
-					minHeight: 184; minWidth: 184)});
-		model: nil.
-	dialog openModal
-]
-
-{ #category : 'examples' }
 WidgetExample class >> exampleBasicControls [
 	"Open a window with examples of each of the basic controls."
+
 	"self exampleBasicControls"
+
 	<script>
-	|dialog builder radioModel treeModel|
+	| dialog builder radioModel treeModel |
 	builder := self builder.
 	dialog := (builder newPluggableDialogWindow: 'Example basic controls') useDefaultOKButton.
 	radioModel := RadioButtonModelExample new.
-	treeModel := Array with:(MorphWithSubmorphsWrapper with: self currentWorld).
-	dialog contentMorph: ((dialog newRow: {
-		dialog newLabelGroup: {
-			'Normal Label'->(dialog newLabel: 'A Label').
-			'Disabled Label'->(dialog newLabel: 'A Disabled Label') disable.
-			'Normal Button'->(dialog newButtonFor: nil action: nil label: 'A Button' help: 'This is a button').
-			'Default Button'->((dialog newButtonFor: nil action: nil label: 'Default Button' help: 'This is a default button') isDefault: true).
-			'Disabled Button'->(dialog newButtonFor: nil action: nil label: 'Disabled Button'
-							help: 'This is a disabled button') disable.
-			'Selected Button'->(dialog newButtonFor: (NewValueHolder new value: true) getState: #value
-							action: nil arguments: #() getEnabled: nil label: 'A Button' help: 'This is a selected button').
-			'Selected Disabled Button'->(dialog newButtonFor: (NewValueHolder new value: true) getState: #value
-							action: nil arguments: #() getEnabled: nil label: 'Disabled Button'
-							help: 'This is a selected disabled button') disable.
-			'Checkbox'->(dialog newCheckboxFor: (NewValueHolder new value: true)
-							getSelected: #value setSelected: #value: label: 'A Checkbox' help: 'This is a checkbox').
-			'Disabled Checkbox'->(dialog newCheckboxFor: (NewValueHolder new value: true)
-							getSelected: #value setSelected: #value:
-							label: 'A Disabled Checkbox' help: 'This is a disabled checkbox') disable.
-			'Radio Buttons'->((dialog newColumn: {
-								(dialog newRadioButtonFor: radioModel
-									getSelected: #isLeft setSelected: #beLeft label: 'Left' help: 'This is a radio buton').
-								(dialog newRadioButtonFor: radioModel
-									getSelected: #isCenter setSelected: #beCenter label: 'Center' help: 'This is a radio buton').
-								(dialog newRadioButtonFor: radioModel
-									getSelected: #isRight setSelected: #beRight label: 'Right' help: 'This is a radio buton')})
-								vResizing: #shrinkWrap).
-			'Disabled Radio Button'->(dialog newRadioButtonFor: radioModel
-									getSelected: #isRight setSelected: #beRight label: 'Right'
-									help: 'This is a disabled radio buton') disable.
-			'Text Entry'->(dialog newTextEntryFor: (NewValueHolder new value: 'Hello')
-							getText: #value setText: #value: help: 'This is a text entry').
-			'Disabled Text Entry'->(dialog newTextEntryFor: (NewValueHolder new value: 'Hello')
-							getText: #value setText: #value: help: 'This is a disabled text entry') disable.
-			'Slider'->(dialog newSliderFor: (NewValueHolder new value: 0.5)
-							getValue: #value setValue: #value: help: 'This is a slider').
-			'Disabled Slider'->(dialog newSliderFor: (NewValueHolder new value: 0.75)
-							getValue: #value setValue: #value: help: 'This is a disabled slider') disable}.
-			dialog newVerticalSeparator.
-			dialog newLabelGroup: {
-			'Drop List'->(dialog newDropListFor: (SpListPresenter new items: #('One' 'Two' 'Three' 'Four'))
-							list: #items getSelected: nil setSelected: #selectIndex: help: 'This is a drop list').
-			'Disabled Drop List'->(dialog newDropListFor: (SpListPresenter new items: #('One' 'Two' 'Three' 'Four'); selectIndex: 3)
-							list: #items getSelected: nil setSelected: #selectIndex:
-							help: 'This is a disabled drop list') disable.
-			'Editable Drop List'->(dialog newEditableDropListFor: (SpListPresenter new items: SortedCollection new)
-							list: #items getSelected: nil setSelected: #selectIndex:
-							addToList: #add: ghostText: 'Enter new items' getEnabled: nil help: 'This is an editable drop list').
-			'Morph Drop List'->(dialog newMorphDropListFor: (SpListPresenter new items: ((Color red wheel: 20)
-									collect: [:c | Morph new extent: 120@12; color: c]))
-							list: #items getSelected: nil setSelected: #selectIndex:
-							help: 'This is a morph drop list').
-			'Normal List'->((dialog newListFor: (SpListPresenter new items: #('One' 'Two' 'Three' 'Four'); selectIndex: 3)
-							list: #items selected: nil changeSelected: #selectIndex:
-							help: 'This is a list') minWidth: 120).
-			'Disabled List'->(dialog newListFor: (SpListPresenter new items: #('One' 'Two' 'Three' 'Four'); selectIndex: 3)
-							list: #items selected: nil changeSelected: #selectIndex:
-							help: 'This is a disabled list') disable.
-			'Morph List'->(dialog newMorphListFor: (SpListPresenter new items: ((Color red wheel: 20)
-									collect: [:c | Morph new extent: 80@12; color: c]))
-							list: #items getSelected: nil setSelected: #selectIndex:
-							help: 'This is a morph list').
-			'Tree'->((dialog newTreeFor: treeModel list: #value selected: nil changeSelected: nil) minHeight: 100)}.
-			dialog newVerticalSeparator.
-			dialog newColumn: {
-				dialog newTitle: 'Text Editor' for: (
-					(dialog newTextEditorFor: (NewValueHolder new value: 'Hello')
-						getText: #value setText: #value:) minWidth: 100).
-				dialog newTitle: 'Disabled Text Editor' for: (
-					(dialog newTextEditorFor: (NewValueHolder new value: 'Hello')
-						getText: #value setText: #value:) disable)}})
-			vResizing: #spaceFill);
+	treeModel := Array with: (MorphWithSubmorphsWrapper with: self currentWorld).
+	dialog
+		contentMorph: ((dialog newRow: {
+						  (dialog newLabelGroup: {
+									   ('Normal Label' -> (dialog newLabel: 'A Label')).
+									   ('Disabled Label' -> (dialog newLabel: 'A Disabled Label') disable).
+									   ('Normal Button' -> (dialog
+											     newButtonFor: nil
+											     action: nil
+											     label: 'A Button'
+											     help: 'This is a button')).
+									   ('Default Button' -> ((dialog
+											      newButtonFor: nil
+											      action: nil
+											      label: 'Default Button'
+											      help: 'This is a default button') isDefault: true)).
+									   ('Disabled Button' -> (dialog
+											     newButtonFor: nil
+											     action: nil
+											     label: 'Disabled Button'
+											     help: 'This is a disabled button') disable).
+									   ('Selected Button' -> (dialog
+											     newButtonFor: (NewValueHolder new value: true)
+											     getState: #value
+											     action: nil
+											     arguments: #(  )
+											     getEnabled: nil
+											     label: 'A Button'
+											     help: 'This is a selected button')).
+									   ('Selected Disabled Button' -> (dialog
+											     newButtonFor: (NewValueHolder new value: true)
+											     getState: #value
+											     action: nil
+											     arguments: #(  )
+											     getEnabled: nil
+											     label: 'Disabled Button'
+											     help: 'This is a selected disabled button') disable).
+									   ('Checkbox' -> (dialog
+											     newCheckboxFor: (NewValueHolder new value: true)
+											     getSelected: #value
+											     setSelected: #value:
+											     label: 'A Checkbox'
+											     help: 'This is a checkbox')).
+									   ('Disabled Checkbox' -> (dialog
+											     newCheckboxFor: (NewValueHolder new value: true)
+											     getSelected: #value
+											     setSelected: #value:
+											     label: 'A Disabled Checkbox'
+											     help: 'This is a disabled checkbox') disable).
+									   ('Radio Buttons' -> ((dialog newColumn: {
+													      (dialog
+														       newRadioButtonFor: radioModel
+														       getSelected: #isLeft
+														       setSelected: #beLeft
+														       label: 'Left'
+														       help: 'This is a radio buton').
+													      (dialog
+														       newRadioButtonFor: radioModel
+														       getSelected: #isCenter
+														       setSelected: #beCenter
+														       label: 'Center'
+														       help: 'This is a radio buton').
+													      (dialog
+														       newRadioButtonFor: radioModel
+														       getSelected: #isRight
+														       setSelected: #beRight
+														       label: 'Right'
+														       help: 'This is a radio buton') }) vResizing: #shrinkWrap)).
+									   ('Disabled Radio Button' -> (dialog
+											     newRadioButtonFor: radioModel
+											     getSelected: #isRight
+											     setSelected: #beRight
+											     label: 'Right'
+											     help: 'This is a disabled radio buton') disable).
+									   ('Text Entry' -> (dialog
+											     newTextEntryFor: (NewValueHolder new value: 'Hello')
+											     getText: #value
+											     setText: #value:
+											     help: 'This is a text entry')).
+									   ('Disabled Text Entry' -> (dialog
+											     newTextEntryFor: (NewValueHolder new value: 'Hello')
+											     getText: #value
+											     setText: #value:
+											     help: 'This is a disabled text entry') disable).
+									   ('Slider' -> ((PluggableSliderMorph on: (NewValueHolder new value: 0.5) getValue: #value setValue: #value:)
+											     hResizing: #spaceFill;
+											     vResizing: #shrinkWrap;
+											     setBalloonText: 'This is a slider';
+											     minHeight: 16 scaledByDisplayScaleFactor)).
+									   ('Disabled Slider' -> ((PluggableSliderMorph on: (NewValueHolder new value: 0.75) getValue: #value setValue: #value:)
+										     hResizing: #spaceFill;
+										     vResizing: #shrinkWrap;
+										     setBalloonText: 'This is a disabled slider';
+										     disable;
+										     minHeight: 16 scaledByDisplayScaleFactor)) }).
+						  dialog newVerticalSeparator.
+						  (dialog newLabelGroup: {
+								   ('Drop List' -> (dialog
+									     newDropListFor: (SpListPresenter new items: #( 'One' 'Two' 'Three' 'Four' ))
+									     list: #items
+									     getSelected: nil
+									     setSelected: #selectIndex:
+									     help: 'This is a drop list')).
+								   ('Disabled Drop List' -> (dialog
+									     newDropListFor: (SpListPresenter new
+											      items: #( 'One' 'Two' 'Three' 'Four' );
+											      selectIndex: 3)
+									     list: #items
+									     getSelected: nil
+									     setSelected: #selectIndex:
+									     help: 'This is a disabled drop list') disable).
+								   ('Editable Drop List' -> (dialog
+									     newEditableDropListFor: (SpListPresenter new items: SortedCollection new)
+									     list: #items
+									     getSelected: nil
+									     setSelected: #selectIndex:
+									     addToList: #add:
+									     ghostText: 'Enter new items'
+									     getEnabled: nil
+									     help: 'This is an editable drop list')).
+								   ('Morph Drop List' -> (dialog
+									     newMorphDropListFor: (SpListPresenter new items: ((Color red wheel: 20) collect: [ :c |
+												       Morph new
+													       extent: 120 @ 12;
+													       color: c ]))
+									     list: #items
+									     getSelected: nil
+									     setSelected: #selectIndex:
+									     help: 'This is a morph drop list')).
+								   ('Normal List' -> ((dialog
+									      newListFor: (SpListPresenter new
+											       items: #( 'One' 'Two' 'Three' 'Four' );
+											       selectIndex: 3)
+									      list: #items
+									      selected: nil
+									      changeSelected: #selectIndex:
+									      help: 'This is a list') minWidth: 120)).
+								   ('Disabled List' -> (dialog
+									     newListFor: (SpListPresenter new
+											      items: #( 'One' 'Two' 'Three' 'Four' );
+											      selectIndex: 3)
+									     list: #items
+									     selected: nil
+									     changeSelected: #selectIndex:
+									     help: 'This is a disabled list') disable).
+								   ('Morph List' -> (dialog
+									     newMorphListFor: (SpListPresenter new items: ((Color red wheel: 20) collect: [ :c |
+												       Morph new
+													       extent: 80 @ 12;
+													       color: c ]))
+									     list: #items
+									     getSelected: nil
+									     setSelected: #selectIndex:
+									     help: 'This is a morph list')).
+								   ('Tree' -> ((dialog
+									      newTreeFor: treeModel
+									      list: #value
+									      selected: nil
+									      changeSelected: nil) minHeight: 100)) }).
+						  dialog newVerticalSeparator.
+						  (dialog newColumn: {
+								   (dialog newTitle: 'Text Editor' for: ((dialog newTextEditorFor: (NewValueHolder new value: 'Hello') getText: #value setText: #value:) minWidth: 100)).
+								   (dialog newTitle: 'Disabled Text Editor' for: (dialog newTextEditorFor: (NewValueHolder new value: 'Hello') getText: #value setText: #value:) disable) }) })
+				 vResizing: #spaceFill);
 		model: nil.
 	dialog openModal
 ]
@@ -281,68 +348,117 @@ WidgetExample class >> exampleGroups [
 { #category : 'examples' }
 WidgetExample class >> exampleOtherControls [
 	"Open a window with examples of each of the other controls."
+
 	"self exampleOtherControls"
+
 	<script>
 	| dialog builder image emboss fuzzy |
 	builder := self builder.
 	dialog := (builder newPluggableDialogWindow: 'Example other controls') useDefaultOKButton.
 	emboss := (dialog newString: 'Hello there') trackPaneColor: false.
-	fuzzy := (dialog newFuzzyLabel: 'A Fuzzy Label') minHeight: 40; minWidth: 160.
-	dialog contentMorph: (dialog newRow: {
-		dialog newTitle: 'Alpha Image' for: (
-			dialog newColumn: {
-				((image := dialog newAlphaImage: nil help: 'This is an alpha image')
-					borderWidth: 1;
-					extent: 160@160).
-				dialog newLabelGroup: {
-				'Scale'->(dialog newSliderFor: image getValue: #scale setValue: #scale:
-					min: 0 max: 4 quantum: nil
-					getEnabled: nil help: 'The image scale 0..1').
-				'Alpha'->((dialog newAlphaSelector: image getAlpha: #alpha setAlpha: #alpha: help: 'The image alpha')
-					vResizing: #shrinkWrap;
-					minHeight: 16).
-				'Layout'->(dialog newDropListFor: image list: #layoutSymbols
-					getSelected: #layout setSelected: #layout:
-					getEnabled: nil useIndex: false help: 'The image layout')}}).
-		dialog newVerticalSeparator.
-		dialog newLabelGroup: {
-			'Color presenter'->((dialog newColorPresenterFor: (NewValueHolder new value: (Color blue alpha: 0.6))
-					getColor: #value help: 'This is a color presenter')
-					vResizing: #shrinkWrap).
-			'Color chooser'->(dialog newColorChooserFor: emboss
-					getColor: #color setColor: #color: help: 'This is a color chooser').
-			'Row with dashed border'->((dialog newRow: {dialog newLabel: 'I have a dashed border!'})
-					borderStyle: (DashedBorderStyle width: 3
-							dashColors: {Color red. Color green. Color blue} dashLengths: #(1 2 3))).
-			'Embossed string'->emboss.
-			'Style'->(dialog newDropListFor: emboss list: #styleSymbols
-					getSelected: #style setSelected: #style:
-					getEnabled: nil useIndex: false help: 'The embossed string style').
-			'Fuzzy label'->fuzzy.
-			'Offset'->(dialog newSliderFor: fuzzy getValue: #offset setValue: #offset:
-					min: 0 max: 5 quantum: 1
-					getEnabled: nil help: 'The fuzzy label offset').
-			'Alpha'->((dialog newAlphaSelector: fuzzy getAlpha: #alpha setAlpha: #alpha:
-					help: 'The fuzzy label alpha')
-					vResizing: #shrinkWrap;
-					minHeight: 16)}.
-		dialog newVerticalSeparator.
-		dialog newTitle: 'Expanders' for: (
-			(dialog newColumn: {
-				(dialog newExpander: 'An Expander' forAll: {
-					dialog newLabel: 'Expanded!'.
-					builder newMorphListFor: (SpListPresenter new items: ((Color red wheel: 15)
-									collect: [:c | Morph new extent: 80@12; color: c]))
-							list: #items getSelected: nil setSelected: #selectIndex:
-							help: 'This is a morph drop list'}) minWidth: 100.
-				dialog newExpander: 'Another' forAll: {
-					dialog newLabel: 'Expanded!'.
-					builder newMorphDropListFor: (SpListPresenter new items: ((Color red wheel: 8)
-									collect: [:c | Morph new extent: 80@12; color: c]))
-							list: #items getSelected: nil setSelected: #selectIndex:
-							help: 'This is a morph drop list'}})
-				cellInset: 0;
-				borderStyle: (BorderStyle inset baseColor: dialog paneColor; width: 1))});
+	fuzzy := (dialog newFuzzyLabel: 'A Fuzzy Label')
+		         minHeight: 40;
+		         minWidth: 160.
+	dialog
+		contentMorph: (dialog newRow: {
+						 (dialog newTitle: 'Alpha Image' for: (dialog newColumn: {
+											   ((image := dialog newAlphaImage: nil help: 'This is an alpha image')
+												    borderWidth: 1;
+												    extent: 160 @ 160).
+											   (dialog newLabelGroup: {
+													    ('Scale' -> ((PluggableSliderMorph
+														       on: image
+														       getValue: #scale
+														       setValue: #scale:
+														       min: 0
+														       max: 4
+														       quantum: nil)
+														      hResizing: #spaceFill;
+														      vResizing: #shrinkWrap;
+														      setBalloonText: 'The image scale 0..1';
+														      minHeight: 16 scaledByDisplayScaleFactor)).
+													    ('Alpha' -> ((dialog
+														       newAlphaSelector: image
+														       getAlpha: #alpha
+														       setAlpha: #alpha:
+														       help: 'The image alpha')
+														      vResizing: #shrinkWrap;
+														      minHeight: 16)).
+													    ('Layout' -> (dialog
+														      newDropListFor: image
+														      list: #layoutSymbols
+														      getSelected: #layout
+														      setSelected: #layout:
+														      getEnabled: nil
+														      useIndex: false
+														      help: 'The image layout')) }) })).
+						 dialog newVerticalSeparator.
+						 (dialog newLabelGroup: {
+								  ('Color presenter'
+								   ->
+								   ((dialog newColorPresenterFor: (NewValueHolder new value: (Color blue alpha: 0.6)) getColor: #value help: 'This is a color presenter') vResizing:
+									    #shrinkWrap)).
+								  ('Color chooser' -> (dialog
+									    newColorChooserFor: emboss
+									    getColor: #color
+									    setColor: #color:
+									    help: 'This is a color chooser')).
+								  ('Row with dashed border' -> ((dialog newRow: { (dialog newLabel: 'I have a dashed border!') }) borderStyle: (DashedBorderStyle
+										     width: 3
+										     dashColors: {
+												     Color red.
+												     Color green.
+												     Color blue }
+										     dashLengths: #( 1 2 3 )))).
+								  ('Embossed string' -> emboss).
+								  ('Style' -> (dialog
+									    newDropListFor: emboss
+									    list: #styleSymbols
+									    getSelected: #style
+									    setSelected: #style:
+									    getEnabled: nil
+									    useIndex: false
+									    help: 'The embossed string style')).
+								  ('Fuzzy label' -> fuzzy).
+								  ('Offset' -> ((PluggableSliderMorph
+									     on: fuzzy
+									     getValue: #offset
+									     setValue: #offset:
+									     min: 0
+									     max: 5
+									     quantum: 1)
+									    hResizing: #spaceFill;
+									    vResizing: #shrinkWrap;
+									    setBalloonText: 'The fuzzy label alpha';
+									    minHeight: 16 scaledByDisplayScaleFactor)) }).
+						 dialog newVerticalSeparator.
+						 (dialog newTitle: 'Expanders' for: ((dialog newColumn: {
+										    ((dialog newExpander: 'An Expander' forAll: {
+													      (dialog newLabel: 'Expanded!').
+													      (builder
+														       newMorphListFor: (SpListPresenter new items: ((Color red wheel: 15) collect: [ :c |
+																			         Morph new
+																				         extent: 80 @ 12;
+																				         color: c ]))
+														       list: #items
+														       getSelected: nil
+														       setSelected: #selectIndex:
+														       help: 'This is a morph drop list') }) minWidth: 100).
+										    (dialog newExpander: 'Another' forAll: {
+												     (dialog newLabel: 'Expanded!').
+												     (builder
+													      newMorphDropListFor: (SpListPresenter new items: ((Color red wheel: 8) collect: [ :c |
+																        Morph new
+																	        extent: 80 @ 12;
+																	        color: c ]))
+													      list: #items
+													      getSelected: nil
+													      setSelected: #selectIndex:
+													      help: 'This is a morph drop list') }) })
+								   cellInset: 0;
+								   borderStyle: (BorderStyle inset
+										    baseColor: dialog paneColor;
+										    width: 1))) });
 		model: nil.
 	dialog openModal
 ]
