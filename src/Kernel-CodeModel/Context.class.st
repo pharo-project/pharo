@@ -1941,6 +1941,11 @@ Context >> sender [
 	^sender
 ]
 
+{ #category : 'as yet unclassified' }
+Context >> sender: aContext [ 
+	sender := aContext
+]
+
 { #category : 'private' }
 Context >> setNamedPrimitiveInformationFrom: fromMethod toMethod: toMethod [
 	"For named primitives, the first literal contains a special object that has information of the primitive. In this method we cope such information from one to another one."

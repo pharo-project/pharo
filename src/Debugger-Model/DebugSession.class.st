@@ -150,7 +150,7 @@ DebugSession >> fastStepThrough: aContext [
 	"Send messages until you return to selectedContext.
 	 Used to step into a block in the method."
 
-	| newContext |
+	| newContext blockContext callingContext|
 
 	aContext stepIntoQuickMethod: false.
 	(self isContextPostMortem: aContext) ifTrue: [^ self].
@@ -160,15 +160,22 @@ DebugSession >> fastStepThrough: aContext [
 	interruptedProcess psValueAt: (DebuggerSteppingState soleInstance index) put: true.
 	newContext := interruptedProcess completeStep: aContext.
 	interruptedProcess psValueAt: (DebuggerSteppingState soleInstance index) put: false.
+	
+	blockContext := self stepThroughController findNextContext: newContext.
+	
+	callingContext := interruptedProcess suspendedContext.
+	[ callingContext method = (HaltingBlock >> #value)  ] whileFalse: [ callingContext := callingContext sender ].
 
-	newContext := self stepThroughController findNextContext: newContext.
+	callingContext sender: blockContext.
+	interruptedProcess completeStep: callingContext.
+"	(interruptedProcess suspendedContext) hasSender: blockContext."
 
 	self stepThroughController revertBlocks.
-
+	
 	self updateContextTo:
-		(newContext == aContext
+		(blockContext == aContext
 			ifTrue: [ (self stepToFirstInterestingBytecodeIn: interruptedProcess) ]
-			ifFalse: [ newContext ]).
+			ifFalse: [ blockContext ]).
 
 	self triggerEvent: #stepThrough
 ]
