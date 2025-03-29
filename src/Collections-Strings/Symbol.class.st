@@ -362,8 +362,7 @@ Symbol >> asMethodSignature [
 { #category : 'converting' }
 Symbol >> asMutator [
 	"Return a setter message from a getter message.
-	Return self if it is already a setter.
-	Pay attention the implementation should be improved to return valid selector."
+	Return self if it is already a setter."
 
 	"#name asMutator >>> #name:"
 	"#name: asMutator >>> #name:"
@@ -371,6 +370,7 @@ Symbol >> asMutator [
 	"#_ asMutator >>> #_:"
 	"#foo:: asMutator >>> #'foo::'"
 
+	(self isSelector & self isBinary not) ifFalse: [ ^ self ].
 	self endsWithAColon ifTrue:[ ^ self ].
 	^ (self copyWith: $:) asSymbol
 ]
