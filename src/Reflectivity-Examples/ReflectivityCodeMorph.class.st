@@ -98,6 +98,11 @@ ReflectivityCodeMorph >> newScrolledText [
 	^ scrolledText
 ]
 
+{ #category : 'accessing' }
+ReflectivityCodeMorph >> selectedClassOrMetaClass [ 
+	^ compiledMethod methodClass
+]
+
 { #category : 'shout' }
 ReflectivityCodeMorph >> shoutAboutToStyle: aTextView [
 
