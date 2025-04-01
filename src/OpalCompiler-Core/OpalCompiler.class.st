@@ -388,6 +388,12 @@ OpalCompiler >> compile: textOrString [
 ]
 
 { #category : 'accessing' }
+OpalCompiler >> compiledBlockClass: aClass [
+
+	self compilationContext compiledBlockClass: aClass
+]
+
+{ #category : 'accessing' }
 OpalCompiler >> compiledMethodClass: aClass [
 
 	self compilationContext compiledMethodClass: aClass

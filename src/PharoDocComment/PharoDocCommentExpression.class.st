@@ -16,9 +16,10 @@ Class {
 
 { #category : 'operation' }
 PharoDocCommentExpression >> evaluate [
-
 	"Note: it seems there is no easy way here to reuse in Opal the parsed AST and just compile&evaluate it."
-	self isWellFormed ifFalse: [ self error: 'Doc comment is not well formed' ].
+
+	self isWellFormed ifFalse: [
+		self error: self methodClass name , '>>#' , self methodSelector , ': Doc comment is not well formed. Content: ' , node sourceNode contents ].
 	"we do not check for isFaulty here, as in the case of syntax errors, we want the evaluate to give us better error messages"
 
 	^ self methodClass compiler
@@ -84,6 +85,12 @@ PharoDocCommentExpression >> isWellFormed [
 { #category : 'operation' }
 PharoDocCommentExpression >> methodClass [
 	^ node sourceNode methodNode methodClass
+]
+
+{ #category : 'operation' }
+PharoDocCommentExpression >> methodSelector [
+
+	^ node sourceNode methodNode selector
 ]
 
 { #category : 'accessing' }

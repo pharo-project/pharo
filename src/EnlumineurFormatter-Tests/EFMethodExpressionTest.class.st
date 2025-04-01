@@ -337,11 +337,11 @@ EFMethodExpressionTest >> testBigMethod [
 	| tmp |
 	tmp := 1.
 	tmp to: 10 do: [:i |
-		Transcript
-			show: i;
-			cr;
-			cr
-		]'
+			Transcript
+				show: i;
+				cr;
+				cr
+			]'
 ]
 
 { #category : 'tests' }
@@ -409,11 +409,11 @@ EFMethodExpressionTest >> testMethodWithMessageArgument [
 	self assert: source equals:
 'aMethod
 	1 to: 10 do: [:i |
-		Transcript
-			show: i;
-			cr;
-			cr
-		]'
+			Transcript
+				show: i;
+				cr;
+				cr
+			]'
 ]
 
 { #category : 'tests' }

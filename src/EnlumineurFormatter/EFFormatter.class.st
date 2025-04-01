@@ -1082,6 +1082,12 @@ EFFormatter >> currentLineLength [
 ]
 
 { #category : 'private - formatting' }
+EFFormatter >> decrementIdentation [
+
+	 indent := indent - 1
+]
+
+{ #category : 'private - formatting' }
 EFFormatter >> firstSeparatorShouldNotPassLine: aMessageNode [
 	"predicate that tells if the keyword should be forced to be on the same line."
 
@@ -1181,14 +1187,16 @@ EFFormatter >> formatBlock2: aBlockNode [
 { #category : 'private - formatting' }
 EFFormatter >> formatBlock: aBlockNode [
 	" see formatBlock2: for a possible alternate and faster definition."
-
 	| isMultiline |
+	
 	isMultiline := self willBeMultiline: aBlockNode body.
+	isMultiline ifTrue: [ self incrementIdentation ].
 
-	codeStream nextPutAll: self spacesInsideBlocksString.
+	(self isEmptyBlock: aBlockNode) ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ].
 
 	self formatBlockArgumentsFor: aBlockNode.
 	self formatBlockCommentFor: aBlockNode.
+
 	((isMultiline or: [ self isLineTooLongWithNode: aBlockNode body ])
 		 and: [ self shouldPassNewLineAfterHeadOfBlock: aBlockNode ])
 		ifTrue: [ self newLine ].
@@ -1197,7 +1205,8 @@ EFFormatter >> formatBlock: aBlockNode [
 
 	(self lineUpBlockBrackets and: [ isMultiline ])
 		ifTrue: [ self newLine ]
-		ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ]
+		ifFalse: [ codeStream nextPutAll: self spacesInsideBlocksString ].
+	isMultiline ifTrue: [ self decrementIdentation ].
 ]
 
 { #category : 'private - formatting' }
@@ -1441,6 +1450,12 @@ EFFormatter >> headOfBlockNotEmpty: aBlockNode [
 	^ aBlockNode arguments isNotEmpty or: [aBlockNode comments isNotEmpty]
 ]
 
+{ #category : 'private - formatting' }
+EFFormatter >> incrementIdentation [
+
+	 indent := indent + 1
+]
+
 { #category : 'accessing' }
 EFFormatter >> indent [
 	^ indent
@@ -1556,6 +1571,14 @@ EFFormatter >> initializeTemporaryLookAheadCode [
 EFFormatter >> installNewContext: aContext [
 	
 	context := aContext
+]
+
+{ #category : 'private - formatting' }
+EFFormatter >> isEmptyBlock: aBlockNode [
+
+	^ (aBlockNode arguments isEmpty and: [
+		   aBlockNode body statements isEmpty ]) and: [
+		  aBlockNode comments isEmpty ]
 ]
 
 { #category : 'accessing' }

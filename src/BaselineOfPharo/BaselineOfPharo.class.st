@@ -213,7 +213,9 @@ BaselineOfPharo >> baseline: spec [
 				repository: repository;
 				loads: #( 'IcebergSupport' ) ].
 
-		spec package: 'Deprecated13' ]
+		spec
+			package: 'Morphic-Deprecated';
+			package: 'Deprecated13' ]
 ]
 
 { #category : 'actions' }
