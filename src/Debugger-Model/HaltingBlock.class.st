@@ -41,7 +41,7 @@ HaltingBlock >> sender [
 { #category : 'evaluating' }
 HaltingBlock >> value [
 
-	self valueWithArguments: #()
+	^self valueWithArguments: #()
 ]
 
 { #category : 'evaluating' }
