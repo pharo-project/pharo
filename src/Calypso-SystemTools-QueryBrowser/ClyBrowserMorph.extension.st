@@ -18,7 +18,9 @@ ClyBrowserMorph >> browseImplementorsOf: aSymbol inNameResolver: aNameResolver [
 				browser selectClass: classToBrowse].
 			^ #NormalBrowseClass ] ] ].
 
-	self spawnQueryBrowserOn: (ClyMessageImplementorsQuery of: aSymbol).
+	((Smalltalk tools toolNamed: #messageList)
+		browseImplementorsOf: aSymbol
+		inScope: self defaultNavigationScope asRBEnvironment ).
 	^ #NormalImplementorBrowse
 ]
 
@@ -41,9 +43,15 @@ ClyBrowserMorph >> browseReferencesTo: aSymbol [
 ClyBrowserMorph >> browseReferencesTo: aSymbol inNameResolver: anEnvironment [
 
 	aSymbol isSymbol and: [
-		^ aSymbol first isUppercase
-			ifTrue: [ self browseUppercasedReferencesTo: aSymbol inNameRespolver: anEnvironment ]
-			ifFalse: [ self browseLowercasedReferencesTo: aSymbol inNameResolver: anEnvironment ] ]
+			^ aSymbol first isUppercase
+				  ifTrue: [
+						  self
+							  browseUppercasedReferencesTo: aSymbol
+							  inNameRespolver: anEnvironment ]
+				  ifFalse: [
+						  (Smalltalk tools toolNamed: #messageList)
+							  browseSendersOf: aSymbol
+							  inScope: self defaultNavigationScope asRBEnvironment ] ]
 ]
 
 { #category : '*Calypso-SystemTools-QueryBrowser' }
@@ -55,31 +63,18 @@ ClyBrowserMorph >> browseSendersOf: aSymbol [
 { #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyBrowserMorph >> browseUppercasedReferencesTo: aSymbol inNameRespolver: anEnvironment [
 
-	anEnvironment 
-		ifNil: [
-			^ {
-				  (self spawnQueryBrowserOn: (ClyClassReferencesQuery of: (self class environment at: aSymbol))) .
-				  #SendersWithouEnvironment 
-				} ].
+	| aClassOrTrait returnedSymbol |
+	
+	aClassOrTrait := anEnvironment 
+		ifNil: [ returnedSymbol := #SendersWithouEnvironment. self class environment at: aSymbol ] 
+		ifNotNil: [ returnedSymbol := #SendersWithEnvironment. (anEnvironment bindingOf: aSymbol) value ].
 
-	(anEnvironment bindingOf: aSymbol) 
-		ifNotNil: [ : envBinding |
-			^ (envBinding value isClass and: [envBinding value isPool])
-				ifTrue: [ 
-					{ 
-						(self spawnQueryBrowserOn: (ClySharedPoolReferencesQuery of: envBinding)) .
-						#SendersWithEnvironment 
-					} ]
-				ifFalse: [ 
-					{
-					  (self spawnQueryBrowserOn: (ClyClassReferencesQuery of: envBinding)).
-					  #SendersWithEnvironment 
-					} ] ].
+	^ { SystemNavigation default browseAllUsersOfClassOrTrait: aClassOrTrait. returnedSymbol }
 ]
 
 { #category : '*Calypso-SystemTools-QueryBrowser' }
 ClyBrowserMorph >> spawnQueryBrowserOn: aQuery [
-
+	
 	self spawnQueryBrowserOn: aQuery withState: []
 ]
 

@@ -93,7 +93,7 @@ ClyOldMessageBrowserAdapter class >> on: aNavigationEnvironment systemScope: aSy
 { #category : 'tools registration' }
 ClyOldMessageBrowserAdapter class >> registerToolsOn: registry [
 	
-	registry register: self as: #messageList
+	"registry register: self as: #messageList"
 ]
 
 { #category : 'accessing' }

@@ -82,6 +82,17 @@ RBClassHierarchyEnvironment >> includesClass: aClass [
 ]
 
 { #category : 'printing' }
+RBClassHierarchyEnvironment >> printOn: aStream [
+	
+	aStream 
+		nextPutAll: self class name;
+		nextPutAll: ' for: ';
+		print: class;
+		nextPutAll: ' in: ';
+		print: environment 
+]
+
+{ #category : 'printing' }
 RBClassHierarchyEnvironment >> storeOn: aStream [
 	aStream nextPut: $(.
 	super storeOn: aStream.

@@ -49,17 +49,6 @@ ClyShowLocalImplementorsCommand >> createQueryScope [
 ]
 
 { #category : 'execution' }
-ClyShowLocalImplementorsCommand >> execute [
-
-	| selectors query |
-	selectors := methods collect: [ :each | each selector].
-
-	query := 	ClyMessageImplementorsQuery ofAny: selectors from: self createQueryScope.
-	browser spawnQueryBrowserOn: query withState: [:queryBrowser |
-		self selectMethodsIn: queryBrowser ]
-]
-
-{ #category : 'execution' }
 ClyShowLocalImplementorsCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 

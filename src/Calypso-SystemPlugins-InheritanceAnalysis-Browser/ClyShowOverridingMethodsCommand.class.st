@@ -25,3 +25,12 @@ ClyShowOverridingMethodsCommand >> defaultMenuIconName [
 ClyShowOverridingMethodsCommand >> defaultMenuItemName [
 	^'Overriding methods'
 ]
+
+{ #category : 'execution' }
+ClyShowOverridingMethodsCommand >> execute [
+
+	(Smalltalk tools toolNamed: #messageList)
+		browseOverridingMethodsFrom: methods first 
+		inScope: browser defaultNavigationScope asRBEnvironment 
+
+]

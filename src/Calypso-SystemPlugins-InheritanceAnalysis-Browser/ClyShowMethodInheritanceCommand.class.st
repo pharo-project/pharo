@@ -44,6 +44,15 @@ ClyShowMethodInheritanceCommand >> description [
 ]
 
 { #category : 'execution' }
+ClyShowMethodInheritanceCommand >> execute [
+
+	(Smalltalk tools toolNamed: #messageList)
+		browseOverridenAndOverridingMethodsFrom: methods first 
+		inScope: browser defaultNavigationScope asRBEnvironment 
+
+]
+
+{ #category : 'execution' }
 ClyShowMethodInheritanceCommand >> selectMethodsIn: aQueryBrowser [
 
 	aQueryBrowser selectObject: methods last

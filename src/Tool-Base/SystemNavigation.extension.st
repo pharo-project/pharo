@@ -264,7 +264,7 @@ SystemNavigation >> browseMessageList: messageList name: labelString autoSelect:
 	^ (self tools toolNamed: #messageList) new
 		  messages: methods;
 		  title: labelString;
-		  autoSelect: autoSelectString;
+		  highlight: autoSelectString;
 		  refreshingBlock: aBlock;
 		  open
 ]

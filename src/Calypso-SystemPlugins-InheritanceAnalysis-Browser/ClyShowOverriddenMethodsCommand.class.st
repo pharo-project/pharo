@@ -27,6 +27,15 @@ ClyShowOverriddenMethodsCommand >> defaultMenuItemName [
 ]
 
 { #category : 'execution' }
+ClyShowOverriddenMethodsCommand >> execute [
+
+	(Smalltalk tools toolNamed: #messageList)
+		browseOverridenMethodsFrom: methods first 
+		inScope: browser defaultNavigationScope asRBEnvironment 
+
+]
+
+{ #category : 'execution' }
 ClyShowOverriddenMethodsCommand >> selectMethodsIn: aQueryBrowser [
 
 	aQueryBrowser selectLastItem
