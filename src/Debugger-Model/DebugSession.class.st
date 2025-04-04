@@ -165,21 +165,11 @@ DebugSession >> fastStepThrough: aContext [
 	
 	callingContext := interruptedProcess suspendedContext.
 	[ callingContext method = (HaltingBlock >> #value)  ] whileFalse: [ callingContext := callingContext sender ].
+	
+	blockContext sender: callingContext sender.
 
-	callingContext sender: blockContext.
-
-	self stepOver: callingContext.
-	"self stepOver: callingContext."
-	
-	"interruptedProcess completeStep: callingContext."
-"	(interruptedProcess suspendedContext) hasSender: blockContext."
-	
-	self stepThroughController revertBlocks.
-	
-	self updateContextTo: callingContext.
-"		(blockContext == aContext
-			ifTrue: [ (self stepToFirstInterestingBytecodeIn: interruptedProcess) ]
-			ifFalse: [ blockContext ])."
+	self updateContextTo: blockContext.
+	interruptedProcess suspendedContext: blockContext.
 
 	self triggerEvent: #stepThrough
 ]
