@@ -162,11 +162,18 @@ DebugSession >> fastStepThrough: aContext [
 	interruptedProcess psValueAt: (DebuggerSteppingState soleInstance index) put: false.
 	
 	blockContext := self stepThroughController findNextContext: newContext.
+	blockContext == newContext ifTrue:[
+		interruptedProcess suspendedContext: newContext.
+		interruptedProcess isTerminated ifFalse:[
+		self updateContextTo: (self stepToFirstInterestingBytecodeIn: interruptedProcess)].
+		self triggerEvent: #stepThrough.
+		^self].
 	
 	callingContext := interruptedProcess suspendedContext.
-	[ callingContext method = (HaltingBlock >> #value)  ] whileFalse: [ callingContext := callingContext sender ].
+	[ callingContext isNil or: [callingContext method = (HaltingBlock >> #value)]  ] 
+		whileFalse: [ callingContext := callingContext sender ].
 	
-	blockContext sender: callingContext sender.
+	blockContext sender: (callingContext ifNotNil: [callingContext sender]).
 
 	self updateContextTo: blockContext.
 	interruptedProcess suspendedContext: blockContext.
