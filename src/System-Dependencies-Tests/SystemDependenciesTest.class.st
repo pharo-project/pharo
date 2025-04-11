@@ -45,12 +45,8 @@ SystemDependenciesTest >> externalDependendiesOf: packagesCollection [
 SystemDependenciesTest >> knownBasicToolsDependencies [
 	"ideally this list should be empty"
 
-	^ #( 'Athens-Cairo' 'Athens-Core' #'Athens-Morphic'
-	     #'Refactoring-Critics' #'Commander-Core' #Reflectivity
-	     #'Reflectivity-Tools' #Shout 'HeuristicCompletion-Model'
-	     #VariablesLibrary #'Spec2-CommonWidgets' #'NewTools-Scopes'
-		  #'Traits-Tests' 'NewTools-Scopes' 'NewTools-Transcript'
-		  #'NewTools-FileBrowser')
+	^ #( 'Athens-Cairo' 'Athens-Core' #'Refactoring-Critics' #'Commander-Core' #Reflectivity #'Reflectivity-Tools' #Shout 'HeuristicCompletion-Model'
+	     #VariablesLibrary #'Spec2-CommonWidgets' #'NewTools-Scopes' #'Traits-Tests' 'NewTools-Scopes' 'NewTools-Transcript' #'NewTools-FileBrowser' )
 ]
 
 { #category : 'known dependencies' }
@@ -89,7 +85,7 @@ SystemDependenciesTest >> knownMorphicDependencies [
 	"ideally this list should be empty"
 
 	^ #( #'Refactoring-Critics' #'Refactoring-Environment'
-	     #'Spec2-Core' #'NewTools-FileBrowser' #'Athens-Morphic'
+	     #'Spec2-Core' #'NewTools-FileBrowser'
 	     #'Tools-CodeNavigation' 'Debugger-Oups' ) "Rubric has a dependency on It"
 ]
 
@@ -119,11 +115,8 @@ SystemDependenciesTest >> knownUFFIDependencies [
 SystemDependenciesTest >> knownUIDependencies [
 	"ideally this list should be empty"
 
-	^ #('Athens-Cairo' 'Athens-Core'
-	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' 
-	#Shout #'Tool-Diff' #'HeuristicCompletion-Model' 'NECompletion-Morphic' 
-	#VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets' 
-	#'NewTools-Scopes' #'NewTools-FileBrowser')
+	^ #( 'Athens-Cairo' 'Athens-Core' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'HeuristicCompletion-Model'
+	     'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets' #'NewTools-Scopes' #'NewTools-FileBrowser' )
 ]
 
 { #category : 'accessing' }

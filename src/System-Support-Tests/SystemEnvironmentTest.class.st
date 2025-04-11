@@ -68,6 +68,16 @@ SystemEnvironmentTest >> supportsNilKey [
 	^ false
 ]
 
+{ #category : 'tests' }
+SystemEnvironmentTest >> testAddFlushesCaches [
+	"we add to the environemnt with #add:"
+	testingEnvironment add: (GlobalVariable key: #Object value: Object).
+	"we can find it with at:"
+	self assert: (testingEnvironment at: #Object) equals: Object.
+	"and via #allBehavior, which uses the cache"
+	self assert: (testingEnvironment allBehaviors includes: Object).
+]
+
 { #category : 'tests - DictionaryIndexAccessing' }
 SystemEnvironmentTest >> testAtPutNil [
 

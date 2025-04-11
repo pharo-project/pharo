@@ -718,11 +718,6 @@ RubSmalltalkEditor >> findValidKeywordIn: sourceCode at: locationIndex ifFound: 
 ]
 
 { #category : 'do-its' }
-RubSmalltalkEditor >> format [
-	self model formatSourceCodeInView
-]
-
-{ #category : 'do-its' }
 RubSmalltalkEditor >> highlightEvaluateAndDo: aBlock [
 	"Treat the current selection as an expression; evaluate it and invoke aBlock with the result."
 

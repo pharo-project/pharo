@@ -85,7 +85,7 @@ ReRenameMethodDriver >> configureRefactoring [
 { #category : 'configuration' }
 ReRenameMethodDriver >> defaultSelectDialog [ 
 
-	^ SpSelectDialog new
+	^ self class defaultSelectDialog
 		    title: 'There are potential breaking changes!';
 		          label: 'Watchout potential override detected!';
 		          items: self breakingChoices;

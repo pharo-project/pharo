@@ -126,7 +126,16 @@ Array >> atWrap: index [
 
 { #category : 'accessing' }
 Array >> atWrap: index put: anObject [
+	
 	"Optimized to go through the primitive if possible"
+
+	"Answer the index'th element of the receiver. If index is out of bounds,
+	let it wrap around from the end to the beginning until it is in bounds."
+
+	"(#(11 22 33) copy atWrap: 4 put: 44; yourself) >>> #(44 22 33)"
+
+	"(#(11 22 33) copy atWrap: 0 put: 55; yourself) >>> #(11 22 55)"
+
 	<primitive: 61>
 	^ self at: index - 1 \\ self size + 1 put: anObject
 ]
