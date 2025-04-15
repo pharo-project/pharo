@@ -157,10 +157,10 @@ MemoryLogger >> initialize [
 ]
 
 { #category : 'inspector' }
-MemoryLogger >> inspectionEntries [
+MemoryLogger >> inspectionEntries: aBuilder [
 	<inspectorPresentationOrder: 10 title: 'Entries'>
-	
-	^ SpListPresenter new 
+
+	^ aBuilder newList 
 		items: entries;
 		yourself
 ]
