@@ -107,11 +107,35 @@ Monitor >> critical: aBlock [
 	in a critical section.
 	NOTE: All the following synchronization operations are only valid inside the critical section
 	of the monitor!"
+	| requestingProcess blockValue caught |
 
-	^[
-	self enter.
-	aBlock value]
-		ensure: [self exit]
+	requestingProcess := Processor activeProcess.
+	caught := false.
+	[ 
+	"See Semaphore>>critical: for a description of the structure of the code below."
+	requestingProcess == ownerProcess ifTrue: [
+		"Don't move the caught assignment outside the ifTrue:ifFalse, see below"
+		caught := true.
+		nestingLevel := nestingLevel + 1.
+	] ifFalse: [
+		"Set caught immediately before the mutex wait to ensure the process isn't interrupted"
+		caught := true.
+		mutex wait.
+		ownerProcess := requestingProcess.
+		nestingLevel := 1.
+	].
+
+	"The critical section is only exited if:
+	1. the ensured block was entered (caught), and
+	2. the process exiting was the owning process
+	If the process being terminted was waiting on the monitor and there is no
+	current owner, the mutex needs to be signalled to reestablish the excess signal."
+	blockValue := aBlock value ] ensure:
+		[ caught ifTrue: [ requestingProcess == ownerProcess
+			ifTrue: [ self exit ]
+			ifFalse: [ (ownerProcess == nil and: [ nestingLevel = 0 ])
+				ifTrue: [ mutex signal ] ] ] ].
+	^ blockValue
 ]
 
 { #category : 'private' }
