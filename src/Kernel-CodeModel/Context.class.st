@@ -1933,7 +1933,7 @@ Context >> sender [
 	^sender
 ]
 
-{ #category : 'as yet unclassified' }
+{ #category : 'accessing' }
 Context >> sender: aContext [ 
 	sender := aContext
 ]
