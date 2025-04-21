@@ -212,6 +212,16 @@ UITheme >> backgroundColor [
 	^ colorPalette backgroundColor
 ]
 
+{ #category : 'basic-colors' }
+UITheme >> badgeColor [
+	^ Color red
+]
+
+{ #category : 'basic-colors' }
+UITheme >> badgeTextColor [
+	^ Color white
+]
+
 { #category : 'accessing - colors' }
 UITheme >> balloonBackgroundColor [
 
@@ -1390,16 +1400,6 @@ UITheme >> defaultSettings [
 		fadedBackgroundWindows: false;
 		flatMenu: true;
 		yourself
-]
-
-{ #category : 'services' }
-UITheme >> denyIn: aThemedMorph text: aStringOrText title: aString [
-	"Answer the result of an deny dialog (true) with the given label and title."
-
-	^ ((DenyDialogWindow newWithTheme: aThemedMorph theme)
-		   textFont: self textFont;
-		   title: aString;
-		   text: aStringOrText) openModal cancelled not
 ]
 
 { #category : 'fill-styles' }
@@ -2781,22 +2781,6 @@ UITheme >> newEmbeddedMenuIn: aThemedMorph for: aModel [
 ]
 
 { #category : 'morph creation' }
-UITheme >> newExpanderIn: aThemedMorph label: aString forAll: controls [
-	"Answer an expander with the given label and controls."
-
-	|answer|
-	answer := ExpanderMorph basicNew
-		basicTheme: self;
-		initialize;
-		font: self menuFont;
-		titleText: aString;
-		basicTheme: nil.
-	controls do: [:m |
-		answer addMorphBack: m].
-	^answer
-]
-
-{ #category : 'morph creation' }
 UITheme >> newFocusIndicatorMorphFor: aMorph [
 	"Answer a new focus indicator for the given morph."
 
@@ -3118,24 +3102,6 @@ UITheme >> newMenuIn: aThemedMorph for: aModel [
 ]
 
 { #category : 'morph creation' }
-UITheme >> newMorphDropListIn: aThemedMorph for: aModel list: listSel getSelected: getSel setSelected: setSel getEnabled: enabledSel useIndex: useIndex help: helpText [
-	"Answer a morph drop list for the given model."
-
-	^(MorphDropListMorph
-			on: aModel
-			list: listSel
-			selected: getSel
-			changeSelected: setSel
-			useIndex: useIndex)
-		selectionColor: self selectionColor;
-		getEnabledSelector: enabledSel;
-		cornerStyle: aThemedMorph preferredCornerStyle;
-		hResizing: #spaceFill;
-		vResizing: #shrinkWrap;
-		setBalloonText: helpText
-]
-
-{ #category : 'morph creation' }
 UITheme >> newMorphListIn: aThemedMorph for: aModel list: listSelector getSelected: getSelector setSelected: setSelector getEnabled: enabledSel help: helpText [
 	"Answer a morph list for the given model."
 
@@ -3194,15 +3160,6 @@ UITheme >> newOKButtonIn: aThemedMorph for: aModel getEnabled: enabledSel [
 		getEnabled: enabledSel
 		label: 'OK' translated
 		help: 'Apply changes and close the window' translated
-]
-
-{ #category : 'morph creation' }
-UITheme >> newOverflowRowIn: aThemedMorph forAll: aCollectionOfMorphs [
-	"Answer a new overflow row morph with the given contents."
-
-	^OverflowRowMorph new
-		baseMorphs: aCollectionOfMorphs;
-		yourself
 ]
 
 { #category : 'morph creation' }
@@ -3498,17 +3455,6 @@ UITheme >> newTitleIn: aThemedMorph label: aString for: control [
 		control})
 		cellPositioning: #leftCenter;
 		cellInset: 2 scaledByDisplayScaleFactor
-]
-
-{ #category : 'morph creation' }
-UITheme >> newToolDockingBarIn: aThemedMorph [
-	"Answer a new tool docking bar."
-
-	^ToolDockingBarMorph new
-		borderWidth: 0;
-		hResizing: #spaceFill;
-		vResizing: #shrinkWrap;
-		clipSubmorphs: true
 ]
 
 { #category : 'morph creation' }

@@ -7,9 +7,8 @@ Class {
 	#instVars : [
 		'expanderMorph'
 	],
-	#category : 'Polymorph-Widgets-Announcements',
-	#package : 'Polymorph-Widgets',
-	#tag : 'Announcements'
+	#category : 'Morphic-Deprecated',
+	#package : 'Morphic-Deprecated'
 }
 
 { #category : 'testing' }

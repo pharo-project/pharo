@@ -203,23 +203,6 @@ TEasilyThemed >> chooseForSaveFileReference: title extensions: exts path: path p
 ]
 
 { #category : 'services' }
-TEasilyThemed >> deny: aStringOrText [
-	"Open a denial dialog."
-
-	^self deny: aStringOrText title: 'Access Denied' translated
-]
-
-{ #category : 'services' }
-TEasilyThemed >> deny: aStringOrText title: aString [
-	"Open a denial dialog."
-
-	^self theme
-		denyIn: self
-		text: aStringOrText
-		title: aString
-]
-
-{ #category : 'services' }
 TEasilyThemed >> longMessage: aStringOrText title: aString [
 	"Open a (long) message dialog."
 
@@ -735,36 +718,6 @@ TEasilyThemed >> newEmbeddedMenu [
 ]
 
 { #category : 'controls' }
-TEasilyThemed >> newExpander: aString [
-	"Answer an expander with the given label."
-
-	^self theme
-		newExpanderIn: self
-		label: aString
-		forAll: #()
-]
-
-{ #category : 'controls' }
-TEasilyThemed >> newExpander: aString for: aControl [
-	"Answer an expander with the given label and control."
-
-	^self theme
-		newExpanderIn: self
-		label: aString
-		forAll: {aControl}
-]
-
-{ #category : 'controls' }
-TEasilyThemed >> newExpander: aString forAll: controls [
-	"Answer an expander with the given label and controls."
-
-	^self theme
-		newExpanderIn: self
-		label: aString
-		forAll: controls
-]
-
-{ #category : 'controls' }
 TEasilyThemed >> newFuzzyLabel: aString [
 	"Answer a new fuzzy label."
 
@@ -1053,49 +1006,6 @@ TEasilyThemed >> newMenuFor: aModel [
 ]
 
 { #category : 'controls' }
-TEasilyThemed >> newMorphDropListFor: aModel list: listSel getSelected: getSel setSelected: setSel getEnabled: enabledSel help: helpText [
-	"Answer a morph drop list for the given model."
-
-	^self
-		newMorphDropListFor: aModel
-		list: listSel
-		getSelected: getSel
-		setSelected: setSel
-		getEnabled: enabledSel
-		useIndex: true
-		help: helpText
-]
-
-{ #category : 'controls' }
-TEasilyThemed >> newMorphDropListFor: aModel list: listSel getSelected: getSel setSelected: setSel getEnabled: enabledSel useIndex: useIndex help: helpText [
-	"Answer a morph drop list for the given model."
-
-	^self theme
-		newMorphDropListIn: self
-		for: aModel
-		list: listSel
-		getSelected: getSel
-		setSelected: setSel
-		getEnabled: enabledSel
-		useIndex: useIndex
-		help: helpText
-]
-
-{ #category : 'controls' }
-TEasilyThemed >> newMorphDropListFor: aModel list: listSel getSelected: getSel setSelected: setSel help: helpText [
-	"Answer a morph drop list for the given model."
-
-	^self
-		newMorphDropListFor: aModel
-		list: listSel
-		getSelected: getSel
-		setSelected: setSel
-		getEnabled: nil
-		useIndex: true
-		help: helpText
-]
-
-{ #category : 'controls' }
 TEasilyThemed >> newMorphListFor: aModel list: listSelector getSelected: getSelector setSelected: setSelector getEnabled: enabledSel help: helpText [
 	"Answer a morph list for the given model."
 
@@ -1172,16 +1082,6 @@ TEasilyThemed >> newOKButtonFor: aModel getEnabled: enabledSel [
 		newOKButtonIn: self
 		for: aModel
 		getEnabled: enabledSel
-]
-
-{ #category : 'controls' }
-TEasilyThemed >> newOverflowRowForAll: aCollectionOfMorphs [
-	"Answer a new overflow row morph that provides a drop down for
-	the given contents that are unable to fit the bounds."
-
-	^self theme
-		newOverflowRowIn: self
-		forAll: aCollectionOfMorphs
 ]
 
 { #category : 'controls' }
@@ -1461,14 +1361,6 @@ TEasilyThemed >> newTitle: aString for: control [
 		newTitleIn: self
 		label: aString
 		for: control
-]
-
-{ #category : 'controls' }
-TEasilyThemed >> newToolDockingBar [
-	"Answer a tool docking bar."
-
-	^self theme
-		newToolDockingBarIn: self
 ]
 
 { #category : 'controls' }

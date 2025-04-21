@@ -28,9 +28,8 @@ Class {
 		'moreButton',
 		'moreMorph'
 	],
-	#category : 'Polymorph-Widgets-Base',
-	#package : 'Polymorph-Widgets',
-	#tag : 'Base'
+	#category : 'Morphic-Deprecated',
+	#package : 'Morphic-Deprecated'
 }
 
 { #category : 'accessing' }

@@ -9,9 +9,8 @@ Class {
 		'buttonMorph',
 		'expanded'
 	],
-	#category : 'Polymorph-Widgets-Base',
-	#package : 'Polymorph-Widgets',
-	#tag : 'Base'
+	#category : 'Morphic-Deprecated',
+	#package : 'Morphic-Deprecated'
 }
 
 { #category : 'accessing' }
