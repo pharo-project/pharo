@@ -8,9 +8,8 @@ It is recommended to reuse #basicCheck: functionality in #checkClass: and #check
 Class {
 	#name : 'ReDefineBasicCheckRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Coding Idiom Violation',
-	#package : 'General-Rules',
-	#tag : 'Coding Idiom Violation'
+	#category : 'Refactoring-Critics',
+	#package : 'Refactoring-Critics'
 }
 
 { #category : 'testing' }

@@ -4,9 +4,8 @@ The rule checks if the class rule in question specifies which entities it can ch
 Class {
 	#name : 'ReDefineEntityComplianceCheckRule',
 	#superclass : 'ReAbstractRule',
-	#category : 'General-Rules-Coding Idiom Violation',
-	#package : 'General-Rules',
-	#tag : 'Coding Idiom Violation'
+	#category : 'Refactoring-Critics',
+	#package : 'Refactoring-Critics'
 }
 
 { #category : 'testing' }
