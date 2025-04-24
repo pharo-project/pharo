@@ -21,9 +21,8 @@ Class {
 	#classInstVars : [
 		'searchList'
 	],
-	#category : 'Polymorph-Widgets-Windows',
-	#package : 'Polymorph-Widgets',
-	#tag : 'Windows'
+	#category : 'Morphic-Deprecated',
+	#package : 'Morphic-Deprecated'
 }
 
 { #category : 'instance creation' }

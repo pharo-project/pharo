@@ -13,9 +13,8 @@ Class {
 		'borderSides',
 		'fillWidth'
 	],
-	#category : 'Polymorph-Widgets-Utilities',
-	#package : 'Polymorph-Widgets',
-	#tag : 'Utilities'
+	#category : 'Tool-Diff',
+	#package : 'Tool-Diff'
 }
 
 { #category : 'accessing' }

@@ -12,9 +12,8 @@ Class {
 		'stringTransformBlock',
 		'objectTransformBlock'
 	],
-	#category : 'Polymorph-Widgets-Utilities',
-	#package : 'Polymorph-Widgets',
-	#tag : 'Utilities'
+	#category : 'Rubric',
+	#package : 'Rubric'
 }
 
 { #category : 'instance creation' }

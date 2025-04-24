@@ -791,7 +791,7 @@ RubSmalltalkEditor >> internalCallToBrowse: aSelector [
 		          classFromPattern: aSelector
 		          withCaption: 'choose a class to browse...'.
 	aClass ifNil: [ ^ self ].
-	(self tools toolNamed: #rowser) openOnClass: aClass
+	(self tools toolNamed: #browser) openOnClass: aClass
 ]
 
 { #category : 'menu messages' }

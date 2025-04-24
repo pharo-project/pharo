@@ -273,12 +273,14 @@ RubTextScrollPane >> scrollBy: delta [
 			self updateScrollbars ]
 ]
 
-{ #category : 'scrollbar managing' }
+{ #category : 'event handling' }
 RubTextScrollPane >> scrollByKeyboard: event [
-	"If event is ctrl+up/down then scroll and answer true"
+	"If event is ctrl+up/down then scroll and answer true
+	
+	change: if its shift+ctrl+up/down then do nothing (leave space for antoher shortcut)"
 
 	| ret sb |
-	(event controlKeyPressed or: [ event commandKeyPressed ])
+	((event controlKeyPressed or: [ event commandKeyPressed ]) & ((event shiftPressed) not))
 		ifFalse: [ ^ false ].
 	sb := event commandKeyPressed
 		ifTrue: [ self hScrollbar ]
