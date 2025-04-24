@@ -26,7 +26,7 @@ LoadableProject class >> allProjects [
 				name: 'Microdown';
 				baselineName: 'Microdown';
 				repository: 'pillar-markup/Microdown';
-				version: 'dev';
+				version: 'Pharo11';
 				group: #default;
 				yourself.
 			self new
