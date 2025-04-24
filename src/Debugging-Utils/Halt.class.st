@@ -108,8 +108,9 @@ Class {
 		'OnCountDictionary',
 		'OnceDictionary'
 	],
-	#category : 'Debugging-Utils',
-	#package : 'Debugging-Utils'
+	#category : 'Debugging-Utils-Breakpoints',
+	#package : 'Debugging-Utils',
+	#tag : 'Breakpoints'
 }
 
 { #category : 'testing' }
