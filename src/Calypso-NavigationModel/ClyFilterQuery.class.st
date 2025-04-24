@@ -22,7 +22,7 @@ Class {
 	#name : #ClyFilterQuery,
 	#superclass : #ClyWrapperQuery,
 	#instVars : [
-		'itemFilter'
+		#itemFilter
 	],
 	#category : #'Calypso-NavigationModel-Query'
 }

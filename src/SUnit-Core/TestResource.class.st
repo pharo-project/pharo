@@ -27,11 +27,11 @@ Class {
 	#name : #TestResource,
 	#superclass : #TestAsserter,
 	#instVars : [
-		'name',
-		'description'
+		#name,
+		#description
 	],
 	#classInstVars : [
-		'current'
+		#current
 	],
 	#category : #'SUnit-Core-Kernel'
 }

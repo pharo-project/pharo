@@ -15,11 +15,11 @@ Class {
 	#name : #RunArray,
 	#superclass : #SequenceableCollection,
 	#instVars : [
-		'runs',
-		'values',
-		'lastIndex',
-		'lastRun',
-		'lastOffset'
+		#runs,
+		#values,
+		#lastIndex,
+		#lastRun,
+		#lastOffset
 	],
 	#category : #'Text-Core-Utilities'
 }

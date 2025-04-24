@@ -2,8 +2,8 @@ Class {
 	#name : #RBPushDownMethodTransformation,
 	#superclass : #RBCompositeMethodTransformation,
 	#instVars : [
-		'selectors',
-		'classes'
+		#selectors,
+		#classes
 	],
 	#category : #'Refactoring2-Transformations-Model-Migrated-Unused'
 }

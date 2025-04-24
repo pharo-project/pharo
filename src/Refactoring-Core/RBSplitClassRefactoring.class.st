@@ -33,11 +33,11 @@ Class {
 	#name : #RBSplitClassRefactoring,
 	#superclass : #RBRefactoring,
 	#instVars : [
-		'class',
-		'instanceVariables',
-		'newClassName',
-		'referenceVariableName',
-		'newClass'
+		#class,
+		#instanceVariables,
+		#newClassName,
+		#referenceVariableName,
+		#newClass
 	],
 	#category : #'Refactoring-Core-Refactorings-Unused'
 }

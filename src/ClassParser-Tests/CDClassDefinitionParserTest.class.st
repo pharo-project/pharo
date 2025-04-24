@@ -18,7 +18,7 @@ CDClassDefinitionParserTest >> firstClassVariableIndex [
 { #category : #helpers }
 CDClassDefinitionParserTest >> firstClassVariableName [
 
-	^ 'firstClass'
+	^ #'firstClass'
 ]
 
 { #category : #tests }
@@ -29,13 +29,13 @@ CDClassDefinitionParserTest >> packageName [
 { #category : #helpers }
 CDClassDefinitionParserTest >> secondClassVariableName [
 
-	^ 'secondClass'
+	^ #'secondClass'
 ]
 
 { #category : #helpers }
 CDClassDefinitionParserTest >> superclassName [
 
-	^ 'TheSuperClass'
+	^ #'TheSuperClass'
 ]
 
 { #category : #tests }

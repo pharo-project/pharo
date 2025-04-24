@@ -247,10 +247,10 @@ ObjectTest >> testInstVarNamed [
 	self should: [ obj instVarNamed: 'timoleon' ] raise: InstanceVariableNotFound.
 	self
 		assert:
-			([ obj instVarNamed: 'timoleon' ]
+			([ obj instVarNamed: #'timoleon' ]
 				on: InstanceVariableNotFound
 				do: [ :ex | ex instVarName ])
-		equals: 'timoleon'
+		equals: #'timoleon'
 ]
 
 { #category : #tests }

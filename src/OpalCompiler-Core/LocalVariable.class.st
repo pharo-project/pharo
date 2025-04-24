@@ -5,10 +5,10 @@ Class {
 	#name : #LocalVariable,
 	#superclass : #Variable,
 	#instVars : [
-		'escaping',
-		'index',
-		'scope',
-		'usage'
+		#escaping,
+		#index,
+		#scope,
+		#usage
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }

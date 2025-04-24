@@ -5,7 +5,7 @@ Class {
 	#name : #ProtocolRenamed,
 	#superclass : #ProtocolAnnouncement,
 	#instVars : [
-		'newProtocolName'
+		#newProtocolName
 	],
 	#category : #'System-Announcements-System-Protocols'
 }

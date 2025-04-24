@@ -2,7 +2,7 @@ Class {
 	#name : #MetacelloValidationNotification,
 	#superclass : #Notification,
 	#instVars : [
-		'issue'
+		#issue
 	],
 	#category : #'Metacello-Core-Exceptions-Notifications'
 }

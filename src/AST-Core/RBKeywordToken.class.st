@@ -19,5 +19,5 @@ RBKeywordToken >> isPatternVariable [
 
 { #category : #testing }
 RBKeywordToken >> isPrimitiveKeyword [
-	^ self value = #primitive:
+	^ self value sameContents: #'primitive:'
 ]

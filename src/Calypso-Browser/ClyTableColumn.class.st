@@ -15,7 +15,7 @@ Class {
 	#name : #ClyTableColumn,
 	#superclass : #FTColumn,
 	#instVars : [
-		'displayBlock'
+		#displayBlock
 	],
 	#category : #'Calypso-Browser-Table'
 }

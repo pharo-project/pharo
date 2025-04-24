@@ -5,19 +5,19 @@ Class {
 	#name : #ChronologyConstants,
 	#superclass : #SharedPool,
 	#classVars : [
-		'DayNames',
-		'DaysInMonth',
-		'HoursInDay',
-		'MicrosecondsInDay',
-		'MinutesInHour',
-		'MonthNames',
-		'NanosInMicroSecond',
-		'NanosInMillisecond',
-		'NanosInSecond',
-		'SecondsInDay',
-		'SecondsInHour',
-		'SecondsInMinute',
-		'SqueakEpoch'
+		#DayNames,
+		#DaysInMonth,
+		#HoursInDay,
+		#MicrosecondsInDay,
+		#MinutesInHour,
+		#MonthNames,
+		#NanosInMicroSecond,
+		#NanosInMillisecond,
+		#NanosInSecond,
+		#SecondsInDay,
+		#SecondsInHour,
+		#SecondsInMinute,
+		#SqueakEpoch
 	],
 	#category : #'Kernel-Chronology'
 }

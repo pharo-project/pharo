@@ -12,7 +12,7 @@ Class {
 	#name : #DAPoolDictionaryDependency,
 	#superclass : #DADependencyFromClass,
 	#instVars : [
-		'poolDictionary'
+		#poolDictionary
 	],
 	#category : #'Tool-DependencyAnalyser-Core'
 }

@@ -2,7 +2,7 @@ Class {
 	#name : #RBAbstractEnvTestCase,
 	#superclass : #ParametrizedTestCase,
 	#instVars : [
-		'testingEnvironment'
+		#testingEnvironment
 	],
 	#category : #'Refactoring2-Transformations-Tests-Parametrized'
 }

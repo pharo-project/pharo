@@ -5,8 +5,8 @@ Class {
 	#name : #IRJump,
 	#superclass : #IRInstruction,
 	#instVars : [
-		'destination',
-		'successor'
+		#destination,
+		#successor
 	],
 	#category : #'OpalCompiler-Core-IR-Nodes'
 }

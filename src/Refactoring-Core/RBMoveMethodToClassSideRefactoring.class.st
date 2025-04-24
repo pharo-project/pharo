@@ -36,7 +36,7 @@ Class {
 	#name : #RBMoveMethodToClassSideRefactoring,
 	#superclass : #RBMoveMethodToClassRefactoring,
 	#instVars : [
-		'parseTree'
+		#parseTree
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

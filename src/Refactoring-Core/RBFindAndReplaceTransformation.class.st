@@ -45,11 +45,11 @@ Class {
 	#name : #RBFindAndReplaceTransformation,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'method',
-		'selector',
-		'replacesAllHierarchy',
-		'matchNodes',
-		'occurrences'
+		#method,
+		#selector,
+		#replacesAllHierarchy,
+		#matchNodes,
+		#occurrences
 	],
 	#category : #'Refactoring-Core-Transformation-Simple'
 }

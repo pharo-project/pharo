@@ -21,7 +21,7 @@ Class {
 	#name : #RBRemoveReturnStatementTransformation,
 	#superclass : #RBMethodTransformation,
 	#instVars : [
-		'returnValue'
+		#returnValue
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

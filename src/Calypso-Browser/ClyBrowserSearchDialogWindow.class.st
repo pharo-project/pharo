@@ -28,8 +28,8 @@ Class {
 	#name : #ClyBrowserSearchDialogWindow,
 	#superclass : #DialogWindowMorph,
 	#instVars : [
-		'browser',
-		'itemsView'
+		#browser,
+		#itemsView
 	],
 	#category : #'Calypso-Browser-UI'
 }

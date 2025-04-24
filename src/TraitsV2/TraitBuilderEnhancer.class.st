@@ -11,7 +11,7 @@ Class {
 	#name : #TraitBuilderEnhancer,
 	#superclass : #ShDefaultBuilderEnhancer,
 	#instVars : [
-		'builder'
+		#builder
 	],
 	#category : #'TraitsV2-Class-Builder'
 }

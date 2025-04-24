@@ -91,7 +91,7 @@ RBPragmaNode >> copyInContext: aDictionary [
 
 { #category : #testing }
 RBPragmaNode >> defines: aName [
-	^ self isPrimitive and: [ arguments anySatisfy: [ :each | each value = aName ] ]
+	^ self isPrimitive and: [ arguments anySatisfy: [ :each | each value sameContents: aName ] ]
 ]
 
 { #category : #comparing }

@@ -16,7 +16,7 @@ Class {
 	#name : #RBMoveMethodToClassSideTransformation,
 	#superclass : #RBMoveMethodToClassTransformation,
 	#instVars : [
-		'parseTree'
+		#parseTree
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

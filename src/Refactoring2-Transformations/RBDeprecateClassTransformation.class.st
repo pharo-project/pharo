@@ -11,7 +11,7 @@ Class {
 	#name : #RBDeprecateClassTransformation,
 	#superclass : #RBCompositeTransformation,
 	#instVars : [
-		'className'
+		#className
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

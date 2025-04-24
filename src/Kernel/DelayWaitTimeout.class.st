@@ -5,8 +5,8 @@ Class {
 	#name : #DelayWaitTimeout,
 	#superclass : #Delay,
 	#instVars : [
-		'process',
-		'expired'
+		#process,
+		#expired
 	],
 	#category : #'Kernel-Delays'
 }

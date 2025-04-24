@@ -71,7 +71,7 @@ RBRenameClassParametrizedTest >> testRefactoring [
 
 	class := model classNamed: #Foo.
 	class compile: 'foo	^Object' classified: #(#accessing);
-			compile: 'objectName ^#(Object)' classified: #(#accessing).
+			compile: 'objectName ^#(#Object)' classified: #(#accessing).
 
 	refactoring := self createRefactoringWithModel: model andArguments: { #Object . #Thing }.
 

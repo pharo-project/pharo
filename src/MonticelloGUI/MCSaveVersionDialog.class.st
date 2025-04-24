@@ -5,11 +5,11 @@ Class {
 	#name : #MCSaveVersionDialog,
 	#superclass : #MCTool,
 	#instVars : [
-		'name',
-		'message'
+		#name,
+		#message
 	],
 	#classVars : [
-		'PreviousMessages'
+		#PreviousMessages
 	],
 	#category : #'MonticelloGUI-Tools'
 }

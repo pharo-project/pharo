@@ -16,7 +16,7 @@ Class {
 	#name : #OCReceiverDoItSemanticScope,
 	#superclass : #OCDoItSemanticScope,
 	#instVars : [
-		'targetReceiver'
+		#targetReceiver
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }

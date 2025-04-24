@@ -280,7 +280,7 @@ MCMethodDefinition >> overridenMethodOrNil [
 		
 	^ SourceFiles
 		changeRecordsFor: realMethod asRingDefinition
-		detect: [ :protocol | protocol ~= category ]
+		detect: [ :protocol | (protocol sameContents: category) not ]
 ]
 
 { #category : #installing }

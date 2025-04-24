@@ -5,8 +5,8 @@ Class {
 	#name : #ReInvocationOrderCritique,
 	#superclass : #ReAbstractCritique,
 	#instVars : [
-		'targetMethodName',
-		'condition'
+		#targetMethodName,
+		#condition
 	],
 	#category : #'Renraku-Critiques'
 }

@@ -24,12 +24,12 @@ Class {
 	#name : #ClyAccrossWindowNavigationState,
 	#superclass : #Object,
 	#instVars : [
-		'windowGroup',
-		'window',
-		'browserState',
-		'browserPlugins',
-		'navigationEnvironment',
-		'navigationHistory'
+		#windowGroup,
+		#window,
+		#browserState,
+		#browserPlugins,
+		#navigationEnvironment,
+		#navigationHistory
 	],
 	#category : #'Calypso-Browser-NavigationHistory'
 }

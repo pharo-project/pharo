@@ -5,9 +5,9 @@ Class {
 	#name : #MessageNotUnderstood,
 	#superclass : #Error,
 	#instVars : [
-		'message',
-		'receiver',
-		'reachedDefaultHandler'
+		#message,
+		#receiver,
+		#reachedDefaultHandler
 	],
 	#category : #'Kernel-Exceptions'
 }

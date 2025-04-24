@@ -2,7 +2,7 @@ Class {
 	#name : #RBDummyRefactoryTestDataApp,
 	#superclass : #Object,
 	#instVars : [
-		'temporaryVariable'
+		#temporaryVariable
 	],
 	#category : #'Refactoring2-Transformations-Tests-Data'
 }

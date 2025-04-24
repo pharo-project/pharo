@@ -19,28 +19,28 @@ Class {
 	#name : #MCFileRepositoryInspector,
 	#superclass : #MCVersionInspector,
 	#instVars : [
-		'repository',
-		'versions',
-		'loaded',
-		'loadedPackages',
-		'newer',
-		'packageList',
-		'selectedPackage',
-		'selectedVersion',
-		'order',
-		'versionInfo',
-		'packagePattern',
-		'versionPattern',
-		'packageListUpdateProcess',
-		'versionProcess',
-		'selectedPackageAncestors'
+		#repository,
+		#versions,
+		#loaded,
+		#loadedPackages,
+		#newer,
+		#packageList,
+		#selectedPackage,
+		#selectedVersion,
+		#order,
+		#versionInfo,
+		#packagePattern,
+		#versionPattern,
+		#packageListUpdateProcess,
+		#versionProcess,
+		#selectedPackageAncestors
 	],
 	#classVars : [
-		'Order'
+		#Order
 	],
 	#classInstVars : [
-		'packageSearchList',
-		'versionSearchList'
+		#packageSearchList,
+		#versionSearchList
 	],
 	#category : #'MonticelloGUI-Tools'
 }

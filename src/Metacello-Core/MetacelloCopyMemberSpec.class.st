@@ -2,7 +2,7 @@ Class {
 	#name : #MetacelloCopyMemberSpec,
 	#superclass : #MetacelloMemberSpec,
 	#instVars : [
-		'sourceName'
+		#sourceName
 	],
 	#category : #'Metacello-Core-Members'
 }

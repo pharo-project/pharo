@@ -20,7 +20,7 @@ Class {
 	#name : #ClySortedQueryResult,
 	#superclass : #ClyQueryResult,
 	#instVars : [
-		'sortFunction'
+		#sortFunction
 	],
 	#category : #'Calypso-NavigationModel-Result'
 }
