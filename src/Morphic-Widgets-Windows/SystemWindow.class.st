@@ -950,6 +950,9 @@ SystemWindow >> deleteDiscardingChanges [
 	self useHideForClose ifFalse: [
 		self currentWorld announcer announce: announcement ].
 	
+	"Always that a window is deleted, it must be removed from the taskbar"
+	thisWorld taskbars do: [ :taskbar | taskbar updateTasks ].
+
 ]
 
 { #category : 'menu building' }
