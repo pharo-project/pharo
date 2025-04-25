@@ -100,12 +100,6 @@ SpRubFindReplaceDialog >> closeWindowOnEscIn: aPresenter [
 		this widget announcer when: RubKeystroke do: [ :ann | ann event keyCharacter = Character escape ifTrue: [ self window triggerCancelAction ] ] for: self ]
 ]
 
-{ #category : 'initialization' }
-SpRubFindReplaceDialog >> connectPresenters [
-
-	replaceTextInput whenTextChangedDo: [ :aText | self replacingText: aText ]
-]
-
 { #category : 'operations' }
 SpRubFindReplaceDialog >> find [
 	self updateService.
