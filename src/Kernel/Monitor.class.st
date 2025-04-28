@@ -107,35 +107,34 @@ Monitor >> critical: aBlock [
 	in a critical section.
 	NOTE: All the following synchronization operations are only valid inside the critical section
 	of the monitor!"
-	| requestingProcess blockValue caught |
+	| requestingProcess caught |
 
 	requestingProcess := Processor activeProcess.
 	caught := false.
-	[ 
-	"See Semaphore>>critical: for a description of the structure of the code below."
+	^ [ "See Semaphore>>critical: for a description of the structure of the code below."
 	requestingProcess == ownerProcess ifTrue: [
 		"Don't move the caught assignment outside the ifTrue:ifFalse, see below"
 		caught := true.
 		nestingLevel := nestingLevel + 1.
 	] ifFalse: [
-		"Set caught immediately before the mutex wait to ensure the process isn't interrupted"
+		"Only one process should be able to enter the critical: section at a time,
+		however there is obviously a window where terminating a process can allow two
+		processes in at the same time.
+		Protect against this by rewaiting if someone else owns the monitor."
+		[ "Set caught immediately before the mutex wait to ensure both are executed as an atomic operation"
 		caught := true.
-		mutex wait.
+		mutex wait] doWhileFalse: [ ownerProcess isNil ].
 		ownerProcess := requestingProcess.
-		nestingLevel := 1.
-	].
-
-	"The critical section is only exited if:
-	1. the ensured block was entered (caught), and
-	2. the process exiting was the owning process
-	If the process being terminted was waiting on the monitor and there is no
-	current owner, the mutex needs to be signalled to reestablish the excess signal."
-	blockValue := aBlock value ] ensure:
+		nestingLevel := 1. ].
+	aBlock value ] ensure:
+		"The critical section is only exited if:
+		1. the ensured block was entered (caught), and
+		2. the process exiting was the owning process
+		If the process being terminted was waiting on the monitor (caught) and there is no
+		current owner, the mutex needs to be signalled to reestablish the excess signal."
 		[ caught ifTrue: [ requestingProcess == ownerProcess
 			ifTrue: [ self exit ]
-			ifFalse: [ (ownerProcess == nil and: [ nestingLevel = 0 ])
-				ifTrue: [ mutex signal ] ] ] ].
-	^ blockValue
+			ifFalse: [ ownerProcess ifNil: [ mutex signal ] ] ] ].
 ]
 
 { #category : 'private' }
