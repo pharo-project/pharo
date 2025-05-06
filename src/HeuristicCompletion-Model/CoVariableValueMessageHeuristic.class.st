@@ -42,7 +42,9 @@ CoVariableValueMessageHeuristic >> valueOfVariable: aName inContext: completionC
 	If we find in the requestor a binding with the given name, use it, otherwise ignore it."
 
 	"We check using hasBindingOf: to not create bindings that are not there"
-	(completionContext doItRequestor hasBindingOf: aName) ifFalse:  [ ^ self ].
+	completionContext doItRequestor 
+		ifNotNil: [ :re | (re hasBindingOf: aName) ifFalse:  [ ^ self ]]
+		ifNil: [ ^ self ].
 
 	binding := completionContext doItRequestor bindingOf: aName.
 	^ aBlock value: binding value

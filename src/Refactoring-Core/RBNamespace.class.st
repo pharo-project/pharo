@@ -267,13 +267,13 @@ RBNamespace >> classNamed: aSymbol [
 ]
 
 { #category : 'converting' }
-RBNamespace >> classObjectFor: anObject [
+RBNamespace >> classObjectFor: aClassOrAString [
 
-	(anObject isBehavior or: [anObject isTrait])
-		ifTrue: [ ^ self classFor: anObject ].
-	anObject isString
-		ifTrue: [ ^ self classNamed: anObject ].
-	^ anObject
+	(aClassOrAString isBehavior or: [aClassOrAString isTrait])
+		ifTrue: [ ^ self classFor: aClassOrAString ].
+	aClassOrAString isString
+		ifTrue: [ ^ self classNamed: aClassOrAString ].
+	^ aClassOrAString
 ]
 
 { #category : 'accessing - classes' }

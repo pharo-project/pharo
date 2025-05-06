@@ -440,6 +440,8 @@ Dictionary >> at: key ifPresent: aPresentBlock ifAbsentPut: anAbsentBlock [
 Dictionary >> at: key put: anObject [
 	"Set the value at key to be anObject.  If key is not found, create a
 	new entry for key and set is value to anObject. Answer anObject."
+	"(Dictionary new at: #color put: #blue; yourself) >>> (Dictionary new add: #color->#blue; yourself)"
+	"(Dictionary new at: #color put: #blue; at: #color put: #red; yourself) >>> (Dictionary new add: #color->#red; yourself)"
 
 	| index assoc |
 	index := self findElementOrNil: key.
@@ -461,7 +463,7 @@ Dictionary >> at: key update: updateBlock initial: initBlocktOrValue [
 	"I am used to update the value at a given key. The updateBlock is passed
 	the existing value, and the result of the block is stored back.
 	If the key does not exist, store the value of the initBlocktOrValue.
-	initBlocktOrValue can be a block in case the initial value is expencive to compute.
+	initBlocktOrValue can be a block in case the initial value is expensive to compute.
 	I use findElementOrNil: to avoid looking up the key twice."
 	| index |
 	index := self findElementOrNil: key.

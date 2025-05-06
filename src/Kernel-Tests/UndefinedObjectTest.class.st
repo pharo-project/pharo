@@ -68,12 +68,6 @@ UndefinedObjectTest >> testIsEmptyOrNil [
 ]
 
 { #category : 'tests - testing' }
-UndefinedObjectTest >> testIsLiteral [
-
-	self assert: (nil isLiteral)
-]
-
-{ #category : 'tests - testing' }
 UndefinedObjectTest >> testIsNil [
 
 	self assert: (nil isNil)

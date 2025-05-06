@@ -24,9 +24,9 @@ Class {
 	#name : 'MemoryLogger',
 	#superclass : 'SignalLogger',
 	#instVars : [
-		'recordings',
 		'announcer',
-		'mutex'
+		'mutex',
+		'entries'
 	],
 	#classVars : [
 		'WriteFilename',
@@ -127,6 +127,27 @@ MemoryLogger >> announcer [
 	^ announcer
 ]
 
+{ #category : 'accessing' }
+MemoryLogger >> entries [
+	"It answers a copy of the recorded collection to not grant
+	access to the users to a shared resource that should only be
+	modified via the mutex"
+
+	^ entries copy
+]
+
+{ #category : 'accessing' }
+MemoryLogger >> entryCount [
+
+	^ entries size
+]
+
+{ #category : 'testing' }
+MemoryLogger >> hasEntries [
+
+	^ entries isNotEmpty 
+]
+
 { #category : 'initialization' }
 MemoryLogger >> initialize [
 	super initialize.
@@ -135,11 +156,20 @@ MemoryLogger >> initialize [
 	announcer := Announcer new
 ]
 
-{ #category : 'utilities' }
+{ #category : 'inspector' }
+MemoryLogger >> inspectionEntries: aBuilder [
+	<inspectorPresentationOrder: 10 title: 'Entries'>
+
+	^ aBuilder newList 
+		items: entries;
+		yourself
+]
+
+{ #category : 'logging' }
 MemoryLogger >> nextPut: aSignal [
 
 	mutex critical: [
-		recordings add: aSignal ].
+		entries add: aSignal ].
 	"the announcement is passed forward so that potential viewers
 	can refresh when something changes. we do not create another announcement
 	because it is not needed given that the only thing that can happen is
@@ -149,18 +179,22 @@ MemoryLogger >> nextPut: aSignal [
 
 { #category : 'accessing' }
 MemoryLogger >> recordings [
-	"It answers a copy of the recorded collection to not grant
-	access to the users to a shared resource that should only be
-	modified via the mutex"
-	^ recordings copy
+
+	self
+		deprecated: 'Use entries'
+		on: '28/03/2025'
+		in: 'pharo13'
+		transformWith: '`@receiver recordings'
+						-> '`@receiver entries'.
+	^ self entries 
 ]
 
-{ #category : 'initialize' }
+{ #category : 'initialization' }
 MemoryLogger >> reset [
-	"it simply removes all recordings without
+	"it simply removes all entries without
 	affecting the running status of the logger"
 	mutex critical: [
-		recordings := OrderedCollection new ]
+		entries := OrderedCollection new ]
 ]
 
 { #category : 'ston persistence' }

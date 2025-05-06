@@ -86,18 +86,6 @@ RubTextScrollPane >> drawSubmorphsOn: aCanvas [
 		ifTrue: [self drawKeyboardFocusOn: aCanvas]
 ]
 
-{ #category : 'drawing' }
-RubTextScrollPane >> drawSubmorphsOnAthensCanvas: anAthensCanvas [
-	"Draw the focus here since we are using inset bounds
-	for the focus rectangle."
-
-	super drawSubmorphsOnAthensCanvas: anAthensCanvas.
-	self textArea readOnly ifTrue: [ ^self ].
-	self drawFocusBorder ifFalse: [ ^self ].
-	(self hasKeyboardFocus or: [ self textArea hasFindReplaceFocus ])
-		ifTrue: [self drawKeyboardFocusOnAthensCanvas: anAthensCanvas]
-]
-
 { #category : 'geometry' }
 RubTextScrollPane >> extent: newExtent [
 	"Update the receiver's extent. Hide/show the scrollbars and resize the scroller
@@ -285,12 +273,14 @@ RubTextScrollPane >> scrollBy: delta [
 			self updateScrollbars ]
 ]
 
-{ #category : 'scrollbar managing' }
+{ #category : 'event handling' }
 RubTextScrollPane >> scrollByKeyboard: event [
-	"If event is ctrl+up/down then scroll and answer true"
+	"If event is ctrl+up/down then scroll and answer true
+	
+	change: if its shift+ctrl+up/down then do nothing (leave space for antoher shortcut)"
 
 	| ret sb |
-	(event controlKeyPressed or: [ event commandKeyPressed ])
+	((event controlKeyPressed or: [ event commandKeyPressed ]) & ((event shiftPressed) not))
 		ifFalse: [ ^ false ].
 	sb := event commandKeyPressed
 		ifTrue: [ self hScrollbar ]

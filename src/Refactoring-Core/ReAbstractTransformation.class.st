@@ -60,10 +60,8 @@ ReAbstractTransformation class >> initializeRefactoringOptions [
 		put: [ :ref :cls :selector |  self error: #alreadyDefined ];
 
 		at: #openBrowser
-		put: [ :ref :env |  self error: #openBrowser ];
+		put: [ :ref :env |  self error: #openBrowser ]
 
-		at: #searchInWholeHierarchy
-		put: [ self error: #searchInWholeHierarchy ]
 ]
 
 { #category : 'testing' }

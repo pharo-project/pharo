@@ -112,7 +112,8 @@ OCIRPrinterTest >> testLiteralArray [
 		equals:
 			'
 label: 1
-returnLiteral: #(#test 4 #you)
+pushLiteral: #(#test 4 #you)
+returnTop
 '
 ]
 

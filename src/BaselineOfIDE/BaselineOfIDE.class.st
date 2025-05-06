@@ -122,10 +122,9 @@ BaselineOfIDE >> baseline: spec [
 		spec
 			baseline: 'HeuristicCompletion'
 			with: [ spec repository: repository ].
-		self
-			load: 'DependencyAnalyzer'
-			group: 'Tool-DependencyAnalyser-UI-Tab'
-			spec: spec.
+		spec package: 'Tool-DependencyAnalyser-UI-Tab' with: [
+			"Depends also on the dependency analyser in newtools"
+			spec requires: #('Calypso') ].
 		self specCode: spec.
 		self roassal: spec.
 		self microdown: spec.
@@ -270,7 +269,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 		register: ExternalChangesBrowser as: #changeList;
 		register: StFileSystemPresenter as: #fileList;
 		register: StFinderPresenter as: #finder;
-		register: ProcessBrowser as: #processBrowser.
+		register: StProcessBrowser as: #processBrowser.
 
 	(MorphicCoreUIManager readClassVariableNamed: #UIProcess) ifNotNil: [ :proc | proc terminate ].
 	MorphicCoreUIManager writeClassVariableNamed: #UIProcess value: nil.

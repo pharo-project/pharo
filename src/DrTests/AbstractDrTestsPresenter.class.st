@@ -51,7 +51,7 @@ AbstractDrTestsPresenter >> currentPlugin: anObject [
 		send: #handlePluginResultUpdate:
 		to: self.
 
-	self withWindowDo: [ :aWindow | aWindow title: self windowTitle ]
+	titleHolder := self windowTitle.
 ]
 
 { #category : 'events' }

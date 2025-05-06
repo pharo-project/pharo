@@ -24,7 +24,7 @@ DATabPackageDependenciesPresenter class >> defaultPreferredExtent [
 DATabPackageDependenciesPresenter class >> example [
 
 	| analyzedPackage |
-	analyzedPackage := DADependencyChecker new daPackageFor: 'Tool-Diff'.
+	analyzedPackage := StDependencyChecker new daPackageFor: 'Tool-Diff'.
 	(self on: analyzedPackage) open
 ]
 
@@ -109,7 +109,7 @@ DATabPackageDependenciesPresenter >> modelChanged [
 { #category : 'actions' }
 DATabPackageDependenciesPresenter >> openDependencyAnalyzer [
 
-	(DAPackageDependenciesPresenter
+	(StPackageDependenciesPresenter
 			onPackagesNamed: {self analyzedPackage packageName}) open
 ]
 

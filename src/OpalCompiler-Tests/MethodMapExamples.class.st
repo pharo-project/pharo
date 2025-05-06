@@ -25,6 +25,12 @@ MethodMapExamples >> exampleAccessOuterFromCleanBlock [
 ]
 
 { #category : 'examples' }
+MethodMapExamples >> exampleConstantBlock [
+	
+	^ [ nil ]
+]
+
+{ #category : 'examples' }
 MethodMapExamples >> exampleCopiedVarFromDeadContext [
 	^ self defineCopiedVarBecomeDeadContext value
 ]

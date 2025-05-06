@@ -38,7 +38,7 @@ ReRenameSharedVariableRefactoring class >> rename: aVarName to: aName in: aClass
 ReRenameSharedVariableRefactoring >> applicabilityPreconditions [
 
 	^ {
-		  (ReIsNotAMetaclass class: class).
+		  (ReClassesAreNotMetaClassCondition new classes: { class }).
 		  (ReIsValidSharedVariableName name: newName).
 		  (ReIsVariableNotDefinedInHierarchy name: newName class: class).
 		  (ReNameIsGlobalCondition new model: model className: newName) not.

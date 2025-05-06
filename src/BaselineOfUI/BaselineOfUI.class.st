@@ -44,7 +44,6 @@ BaselineOfUI >> baseline: spec [
 		self specBase: spec.
 
 		spec package: 'StartupPreferences'.
-		spec package: 'Transcript-Tool'.
 		spec package: 'Morphic-Widgets-Tree'.
 
 		spec baseline: 'Keymapping' with: [

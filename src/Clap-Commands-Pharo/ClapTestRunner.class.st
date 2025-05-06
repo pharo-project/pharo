@@ -14,12 +14,11 @@ Class {
 { #category : 'command line' }
 ClapTestRunner class >> test [
 	<commandline>
-	^ (ClapCommand id: #test)
+	^ (ClapCommandSpec id: #test)
+		commandClass: self;
 		add: ClapFlag forHelp;
-		add: ((ClapFlag id: #xml)
-			description: 'Output results in JUnit-compatible XML format');
-		add: ((ClapFlag id: #tap)
-			description: 'Output results in Test-Anything Protocol format');
+		addFlag: #xml description: 'Output results in JUnit-compatible XML format';
+		addFlag: #tap description: 'Output results in Test-Anything Protocol format';
 		add: ((ClapPositional id: #PKG)
 			description: 'Run tests from packages matching this pattern';
 			multiple: true;
@@ -28,7 +27,7 @@ ClapTestRunner class >> test [
 			args at: #helpFlag ifPresent: [ :help |
 				help value; exitSuccess ].
 			args validateAll.
-
+			
 			(self with: args) execute ]
 ]
 
@@ -48,30 +47,31 @@ ClapTestRunner >> execute [
 	self outputStreamDo: [ :out |
 		self suite
 			when: TestAnnouncement
-			do: [ :ann | out nextPutAll: ann test name; lf ]
-			for: self;
+				do: [ :ann | out nextPutAll: ann test name; lf ]
+				for: self;
 			when: TestCaseAnnouncement
-			do: [ :ann | out space; space; nextPutAll: ann testSelector; lf ]
-			for: self.
+				do: [ :ann | out space; space; nextPutAll: ann testSelector; lf ]
+				for: self.
 		result := [ self suite run ]
 			ensure: [ self suite unsubscribe: TestAnnouncement ].
 		out print: result; lf
 	].
-
+	
 	self context exitSuccess
 ]
 
 { #category : 'accessing' }
 ClapTestRunner >> packagePatterns [
-	^ arguments
-		occurrencesOf: #PKG
-		collect: #value
+	^ self positional: #PKG
 ]
 
 { #category : 'accessing' }
 ClapTestRunner >> packages [
-
-	^ self packagePatterns flatCollect: [ :regex | self packageOrganizer packages select: [ :package | regex matches: package name ] ] as: Set
+	^ self packagePatterns
+		flatCollect: [ :regex |
+			self packageOrganizer packages
+				select: [ :package | regex matches: package name ]]
+		as: Set
 ]
 
 { #category : 'accessing' }

@@ -101,7 +101,21 @@ RBExtractMethodAndOccurrences >> privateTransform [
 
 { #category : 'asserting' }
 RBExtractMethodAndOccurrences >> shouldSearchInHierarchy [
-	^(self options at: #searchInWholeHierarchy) value: self value: class
+	"This logic was in nautilus configuration. 
+	Now it should be moved to the driver. 
+	Notice that the version with the driver is already there but we should improve it and remove this class.
+	
+	class subclasses
+		  ifNotEmpty: [
+			  self morphicUIManager
+				  confirm:
+				  'Do you want to search occurrences in the whole hierarchy?'
+				  label: 'Warning' ]
+		  ifEmpty: [ false ]
+	
+	"
+
+	^ true
 ]
 
 { #category : 'storing' }

@@ -66,13 +66,14 @@ RBMoveMethodToClassSideRefactoring >> addMethod: rbMethod to: aClass toProtocol:
 { #category : 'preconditions' }
 RBMoveMethodToClassSideRefactoring >> applicabilityPreconditions [
 
-	^ { (RBCondition isMetaclass: class) not }
+	^ { ReClassesAreNotMetaClassCondition new classes: { class } }.
+
 ]
 
 { #category : 'preconditions' }
 RBMoveMethodToClassSideRefactoring >> breakingChangePreconditions [
-
-	^ { (RBCondition definesSelector: method selector in: class classSide) not }
+	
+	^ { (ReDefinesSelectorsCondition new definesSelectors: { method selector } in: class classSide) not }
 ]
 
 { #category : 'checking' }
@@ -144,19 +145,20 @@ RBMoveMethodToClassSideRefactoring >> preconditions [
 { #category : 'transforming' }
 RBMoveMethodToClassSideRefactoring >> privateTransform [
 
-| oldClass newClass rbMethod rbMethod2 newSource originalProtocol newSource2 |
+	| sourceClass targetClass rbMethod rbMethod2 newSource originalProtocol newSource2 |
 	newSource := self getNewInstSideSource.
 	originalProtocol := method protocolName.
-	oldClass := class.
+	sourceClass := class.
 	self removeInstVariableReferences.
 	method := class methodFor: method selector.
-	newClass := self model classNamed: class name, ' class'.
+	targetClass := self model classNamed: class name, ' class'.
 	newSource2 := self getNewSource.
-	rbMethod := self model rbMethodClass for: newClass source: newSource2 selector: method selector.
-	rbMethod2 := self model rbMethodClass for: oldClass source: newSource selector: method selector.
-	self removeMethod: method selector from: oldClass.
-	self addMethod: rbMethod to: newClass toProtocol: originalProtocol.
-	self addMethod: rbMethod2 to: oldClass toProtocol: originalProtocol
+	rbMethod := self model rbMethodClass for: targetClass source: newSource2 selector: method selector.
+	rbMethod2 := self model rbMethodClass for: sourceClass source: newSource selector: method selector.
+	
+	self removeMethod: method selector from: sourceClass.
+	self addMethod: rbMethod to: targetClass toProtocol: originalProtocol.
+	self addMethod: rbMethod2 to: sourceClass toProtocol: originalProtocol
 ]
 
 { #category : 'transforming' }

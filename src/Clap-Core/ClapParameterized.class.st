@@ -29,8 +29,8 @@ ClapParameterized >> add: aParameter [
 ]
 
 { #category : 'adding' }
-ClapParameterized >> addAll: parametersToAdd [
-	parametersToAdd do: [ :each | each addTo: self ]
+ClapParameterized >> addAll: someParameters [
+	someParameters do: [ :each | self add: each ]
 ]
 
 { #category : 'adding' }
@@ -77,6 +77,13 @@ ClapParameterized >> at: identifierOrSpec ifPresent: presentBlock ifAbsent: abse
 { #category : 'testing' }
 ClapParameterized >> hasAlias: aString [
 	^ aString = self canonicalName or: [ self aliases includes: aString ]
+	
+]
+
+{ #category : 'testing' }
+ClapParameterized >> hasPositional [
+
+	^ self positionals notEmpty
 ]
 
 { #category : 'initialization' }
@@ -95,6 +102,14 @@ ClapParameterized >> matchClass [
 { #category : 'enumerating' }
 ClapParameterized >> parametersDo: aBlock [
 	positionals do: aBlock
+]
+
+{ #category : 'enumerating' }
+ClapParameterized >> parametersSelect: selectBlock thenDo: doBlock [
+	self parametersDo: [ :each |
+		(selectBlock value: each)
+			ifTrue: [ doBlock value: each ]
+	]
 ]
 
 { #category : 'accessing' }

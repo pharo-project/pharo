@@ -110,6 +110,12 @@ Protocol >> methodSelectors: anObject [
 	methodSelectors := anObject
 ]
 
+{ #category : 'adding-removing' }
+Protocol >> methods [
+
+	^ self methodSelectors collect: [ :selector | self owningClass >> selector ]
+]
+
 { #category : 'accessing' }
 Protocol >> name [
 

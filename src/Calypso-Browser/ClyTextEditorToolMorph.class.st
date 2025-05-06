@@ -199,7 +199,8 @@ ClyTextEditorToolMorph >> editingText [
 
 { #category : 'accessing' }
 ClyTextEditorToolMorph >> editionTimestamp [
-  ^ Date today yyyymmdd, ' ', (Time now print24 first: 5)
+
+  ^ DateAndTime now printString
 ]
 
 { #category : 'selecting text' }

@@ -28,19 +28,15 @@ Class {
 ClapContext class >> defaultRoot [
 	^ (ClapRoot id: #clap)
 		description: 'Entry point for commands implemented with Clap';
-		add: ClapFlag forHelp;
-		add: ClapCommand forHelp;
+		addHelp;
+		add: ClapCommandSpec forHelp;
 
-		add: ((ClapFlag id: #save)
-			description: 'Save the image after the command terminates');
-		add: ((ClapFlag id: #noSave)
-			description: 'Do not save the image even if the command is stateful');
-		add: ((ClapFlag id: #rename)
-			description: 'Rename the image as <NAME> before running the command';
-			add: (ClapPositional id: #NAME));
-
-		add: ((ClapFlag id: #keepAlive)
-			description: 'Keep the image running after the command terminates');
+		addFlag: #save description: 'Save the image after the command terminates';
+		addFlag: #noSave description: 'Do not save the image even if the command is stateful';
+		addFlag: #rename 
+			description: 'Rename the image as <NAME> before running the command' 
+			positionalSpec: [ :spec | spec identifier: #NAME];
+		addFlag: #keepAlive description: 'Keep the image running after the command terminates';
 
 		meaning: [ :args |
 			args at: #helpFlag ifPresent: [ :help |
@@ -56,7 +52,7 @@ ClapContext class >> pragmaCommands [
 			theClass := pragma method methodClass.
 			theSelector := pragma method selector.
 			self assert: [ theSelector isUnary ].
-
+			
 			theClass instanceSide
 				perform: theSelector ]
 ]
@@ -67,13 +63,13 @@ ClapContext class >> withAll: commandCandidates [
 ]
 
 { #category : 'instance creation' }
-ClapContext class >> withPragmaCommands [
+ClapContext class >> withPragmaCommands [ 
 	^ self withAll: self pragmaCommands
 ]
 
 { #category : 'validation' }
 ClapContext >> allValidations [
-	^ self validateOn: ClapValidationReport success
+	^ self validateOn: (ClapValidationReport on: self).
 ]
 
 { #category : 'accessing' }
@@ -107,6 +103,22 @@ ClapContext >> binaryStdout [
 ]
 
 { #category : 'accessing' }
+ClapContext >> command [
+	| commandClass |
+	self match. "ensure command is matched"
+	
+	commandClass := self lastSubcommand specification commandClass ifNil: [ ClapApplication ].
+	^ commandClass with: self
+]
+
+{ #category : 'accessing' }
+ClapContext >> commandMatches [
+	"Returns the list of matches having a command specification"
+ 
+	^ self match subcommands
+]
+
+{ #category : 'accessing' }
 ClapContext >> context [
 	^ self
 ]
@@ -116,12 +128,20 @@ ClapContext >> defaultStdio [
 	^ ClapPluggableStdio onByteArrays
 ]
 
+{ #category : 'accessing' }
+ClapContext >> defaultValueFor: anIdentifier in: application noneBlock: noDefaultValueBlock [
+	^ (self lastSubcommand at: anIdentifier) specification implicitMeaning 
+		ifNil: [ noDefaultValueBlock value ]
+		ifNotNil: [ :block | block cull: self match cull: application ]
+]
+
 { #category : 'matching' }
 ClapContext >> doMatch [
 	| args |
 	args := self arguments readStream.
-	match := self specification matchOn: args.
-	match parent: self.
+	match := self specification
+		matchOn: args
+		in: self.
 	leftovers := args upToEnd.
 	^ match
 ]
@@ -139,14 +159,13 @@ ClapContext >> execute [
 { #category : 'activation' }
 ClapContext >> executeToExit: exitBlock [
 	^ [
-		self rememberSession;
-			ifMatch: [ :m |
-				m value: self.
-				self exitSuccess ]
-			ifMismatch: [ self noneMatched ]
-	]
-		on: Exit
-		do: [ :exception |
+		self rememberSession.
+		self ifMismatch: [ self command printHelp. self exitFailure ].
+		self validateAll.
+		self command executeOrPrintHelp.
+		self exitSuccess ]
+	on: Exit
+	do: [ :exception |
 			exitException := exception.
 			exitBlock value: self exitException ]
 ]
@@ -196,12 +215,30 @@ ClapContext >> exitSuccess: message [
 	^ Exit signalSuccess: message
 ]
 
+{ #category : 'accessing - structure variables' }
+ClapContext >> flags [
+	^ self lastSubcommand flags
+]
+
 { #category : 'activation' }
 ClapContext >> handleExit: exit [
 	self hasSessionChanged ifTrue: [ ^ self ].
 
 	self shouldObeyExit
 		ifTrue: [ exit pass ]
+]
+
+{ #category : 'testing' }
+ClapContext >> hasFlag: anIdentifier [
+
+		^ (self lastSubcommand occurrencesOf: anIdentifier) isNotEmpty
+]
+
+{ #category : 'private' }
+ClapContext >> hasPositional: aFlagMatch [
+		
+	^ aFlagMatch hasChild 
+		and: [ aFlagMatch child specification isPositional ]
 ]
 
 { #category : 'activation' }
@@ -222,6 +259,20 @@ ClapContext >> initialize [
 	obeyingExits := false
 ]
 
+{ #category : 'validation' }
+ClapContext >> isValid: aValidation [
+
+	^ aValidation isValidContext: self
+]
+
+{ #category : 'accessing' }
+ClapContext >> lastSubcommand [
+
+	^ self
+		ifMatch: [ :aMatch | aMatch subcommands last ]
+		ifMismatch: [ self ]
+]
+
 { #category : 'accessing' }
 ClapContext >> leftovers [
 	^ leftovers
@@ -235,6 +286,19 @@ ClapContext >> match [
 { #category : 'activation' }
 ClapContext >> noneMatched [
 	^ self exitFailure: 'Unknown command'
+]
+
+{ #category : 'accessing' }
+ClapContext >> positional: anIdentifier [ 
+		
+	| identifierMatches |
+	
+	identifierMatches := (self lastSubcommand occurrencesOf: anIdentifier)
+		select: [ :identifierMatch | 
+			identifierMatch specification isPositional
+				or: [ identifierMatch specification isFlag and: [ self hasPositional: identifierMatch ] ] ].
+	^ identifierMatches
+		ifEmpty: [ NotFound signal: 'No positional found with id: ', anIdentifier  ] 
 ]
 
 { #category : 'printing' }
@@ -305,15 +369,17 @@ ClapContext >> validateAll [
 	| report |
 	report := self allValidations.
 	report isSuccess ifTrue: [ ^ self ].
-
-	self stderr print: report; flush.
+	
+	(ClapValidationErrorPrinter on: report) printOn: self stderr.
+	self stderr flush.
 	self exitFailure
 ]
 
 { #category : 'validation' }
 ClapContext >> validateOn: aReport [
 	match validateOn: aReport.
-	aReport add: (ClapLeftoversValidation new validate: self).
-
+	match validate: ClapLeftoversValidation on: aReport.
+	match validate: ClapMatchedValidation on: aReport.
+	match validate: ClapNestedPositionalValidation on: aReport.
 	^ aReport
 ]

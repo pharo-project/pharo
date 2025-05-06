@@ -99,7 +99,9 @@ ReleaseTest >> knownProcesses [
 		Delay schedulingProcess.
 		TKTWatchDog onDuty pharoProcess.
 		OSSDL2Driver eventLoopProcess.
-		TFCallbackQueue uniqueInstance callbackProcess } asSet
+		TFCallbackQueue uniqueInstance callbackProcess.
+		(Smalltalk classNamed: #StThreadSafeTranscript) ifNotNil: [ :aClass | aClass uniqueInstance workerProcess ] 
+	} asSet
 ]
 
 { #category : 'tests - variables' }

@@ -28,26 +28,28 @@ Class {
 ClapCommandLineExamples class >> git [
 	"A dummy command (no behavior besides help) to demonstrate nested subcommand and as a test subject for the documenter.
 	<commandline> pragma omitted, because doesn't really make sense to make it available outside the image."
-	^ (ClapCommand id: 'git')
+	^ (ClapCommandSpec id: 'git')
 		description: 'The stupid content tracker';
-		add: ClapCommand forHelp;
-		add: ((ClapCommand id: 'add')
-			description: 'Add file contents to the index');
-		add: ((ClapCommand id: 'branch')
+		commandClass: self;
+		add: ClapCommandSpec forHelp;
+		add: ((ClapCommandSpec id: 'add')
+			description: 'Add file contents to the index';
+			commandClass: ClapGitAddCommandExample);
+		add: ((ClapCommandSpec id: 'branch')
 			description: 'List, create, or delete branches');
-		add: ((ClapCommand id: 'clone')
+		add: ((ClapCommandSpec id: 'clone')
 			description: 'Clone a repository into a new directory');
-		add: ((ClapCommand id: 'commit')
+		add: ((ClapCommandSpec id: 'commit')
 			description: 'Record changes to the repository');
-		add: ((ClapCommand id: 'init')
+		add: ((ClapCommandSpec id: 'init')
 			description: 'Create an empty Git repository or reinitialize an existing one');
-		add: ((ClapCommand id: 'remote')
+		add: ((ClapCommandSpec id: 'remote')
 			description: 'Manage set of tracked repositories';
-			add: (ClapCommand id: 'add');
-			add: (ClapCommand id: 'remove');
-			add: (ClapCommand id: 'set-url');
+			add: (ClapCommandSpec id: 'add');
+			add: (ClapCommandSpec id: 'remove');
+			add: (ClapCommandSpec id: 'set-url');
 			yourself);
-		add: ((ClapCommand id: 'status')
+		add: ((ClapCommandSpec id: 'status')
 			description: 'Show the working tree status');
 		yourself
 ]
@@ -55,34 +57,26 @@ ClapCommandLineExamples class >> git [
 { #category : 'command line' }
 ClapCommandLineExamples class >> hello [
 	"The usual Hello-World example, demonstrating a Clap command with a couple features."
-
+	<script>
 	<commandline>
-	^ (ClapCommand id: #hello)
+	^ (ClapCommandSpec id: #hello)
 		description: 'Provides greetings';
-		add: ClapFlag forHelp;
-		add: ((ClapFlag id: #whisper) description: 'Greet discretely');
-		add: ((ClapFlag id: #shout) description: 'Greet loudly');
-		add:
-			((ClapFlag id: #language)
-				description: 'Select language of greeting';
-				add: ((ClapPositional id: #langCode)
-					meaning: [ :pos | pos word asSymbol ];
-					implicitMeaning: [ :arg :app | app defaultLanguage ]);
-				meaning: [ :flag :app | (flag at: #langCode) value: app ]);
-		add:
-			((ClapPositional id: #who)
+		commandClass: self;
+		addHelp;
+		addFlag: #whisper description: 'Greet discretely';
+		addFlag: #shout description: 'Greet loudly';
+		addFlag: #language 
+			description: 'Select language of greeting' 
+			positionalSpec: [ :positional |
+				positional
+					symbol;
+					defaultValue: [ :arg :app | app defaultLanguage ] ];
+		addPositional: #who spec: [ :positional |
+			positional
 				description: 'Recipient of the greetings';
 				multiple: true;
-				implicitMeaning: [ :arg :app | app defaultRecipient ]);
-		meaning: [ :args |
-			args at: #helpFlag ifPresent: [ :help |
-				help value; exitSuccess ].
-			(self with: args) execute ]
-]
-
-{ #category : 'accessing - private' }
-ClapCommandLineExamples >> argumentAt: identifier [
-	^ (arguments at: identifier) value: self
+				defaultValue: [ :arg :app | { app defaultRecipient } ] ];
+		yourself
 ]
 
 { #category : 'accessing' }
@@ -111,17 +105,17 @@ ClapCommandLineExamples >> greeting [
 
 { #category : 'accessing' }
 ClapCommandLineExamples >> language [
-	^ self argumentAt: #language
+	^ self positional: #language
 ]
 
 { #category : 'accessing - private' }
 ClapCommandLineExamples >> outStream [
-	^ outStream ifNil: [ outStream := VTermOutputDriver on: arguments context stdout ]
+	^ outStream ifNil: [ outStream := VTermOutputDriver on: self context stdout ]
 ]
 
 { #category : 'accessing' }
 ClapCommandLineExamples >> recipients [
-	^ (arguments at: #who) allOccurrencesCollect: [ :arg | arg value: self ]
+	^ self positional: #who
 ]
 
 { #category : 'running' }
@@ -140,7 +134,7 @@ ClapCommandLineExamples >> sayHelloOn: aStream [
 
 { #category : 'accessing' }
 ClapCommandLineExamples >> shouting [
-	^ self argumentAt: #shout
+	^ self hasFlag: #shout
 ]
 
 { #category : 'running' }
@@ -184,5 +178,5 @@ ClapCommandLineExamples >> voice: aString [
 
 { #category : 'accessing' }
 ClapCommandLineExamples >> whispering [
-	^ self argumentAt: #whisper
+	^ self hasFlag: #whisper
 ]

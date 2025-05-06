@@ -30,9 +30,7 @@ FTMultipleSelectionStrategy >> selectAppendingIndex: index [
 { #category : 'accessing' }
 FTMultipleSelectionStrategy >> selectIndex: index event: event [
 	event shiftPressed ifTrue: [ ^ self selectIndexesUpTo: index ].
-	OSPlatform current isMacOS
-		ifTrue: [ event commandKeyPressed ifTrue: [ ^ self selectAppendingIndex: index ] ]
-		ifFalse: [ event controlKeyPressed ifTrue: [ ^ self selectAppendingIndex: index ] ].
+	event metaKeyPressed ifTrue: [ ^ self selectAppendingIndex: index ].
 	self toggleIndex: index
 ]
 

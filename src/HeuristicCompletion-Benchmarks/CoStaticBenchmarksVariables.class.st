@@ -88,83 +88,57 @@ Class {
 	#package : 'HeuristicCompletion-Benchmarks'
 }
 
-{ #category : 'running' }
-CoStaticBenchmarksVariables class >> customHeuristics: aBuilder [
-
-" For now `CoPackageScopedGlobalVariableFetcher` is NOT implemented, there will be another PR where `CoPackageScopedGlobalVariableFetcher` is implement, then you can use this template.
-	aBuilder variablesHeuristic: (aBuilder newHeuristicBuilder
-			 add: CoLocalScopeVariablesHeuristic new;
-			 add: CoWorkspaceVariablesHeuristic new;
-			 add: CoInstanceAccessibleVariablesHeuristic new;
-			 add: (CoGlobalVariablesHeuristic new globalVariableFetcherClass:
-						  CoPackageScopedGlobalVariableFetcher);
-			 build)
-"
-]
-
-{ #category : 'running' }
-CoStaticBenchmarksVariables class >> defaultHeuristics: aBuilder [
-
-	aBuilder variablesHeuristic: (aBuilder newHeuristicBuilder
-			 add: CoLocalScopeVariablesHeuristic new;
-			 add: CoWorkspaceVariablesHeuristic new;
-			 add: CoInstanceAccessibleVariablesHeuristic new;
-			 add: CoGlobalVariablesHeuristic new;
-			 build)
-]
-
 { #category : 'benchmarks' }
-CoStaticBenchmarksVariables >> benchCallsite: aMessageNode atPosition: aPosition [
+CoStaticBenchmarksVariables >> benchCallsite: aVariable atPosition: aPosition [
 
-	| receiver |
-	receiver := aMessageNode receiver.
-
-	2 to: (self maxPrefixSizeFor: receiver) do: [ :index |
+	| oldName |
+	oldName := aVariable name.
+	2 to: (self maxPrefixSizeFor: aVariable) do: [ :index |
 		| prefix startTime startMemory completion candidates completionIndex |
 		startTime := self startTimeMeasurement.
 		startMemory := self startMemoryMeasurement.
-
-		prefix := self extractPrefixFrom: receiver at: index.
-		aMessageNode receiver: (OCVariableNode named: prefix).
+		prefix := self extractPrefixFrom: oldName at: index.
+		aVariable name: prefix.
 
 		completion := self
-			              buildCompletionFor: aMessageNode
+			              buildCompletionFor: aVariable
 			              atPosition: aPosition.
 
 		candidates := self
 			              fetchTopCandidatesFrom: completion
 			              usingPrefix: prefix.
 		completionIndex := self
-			                   findCompletionIndexFor: receiver
+			                   findCompletionIndexFor: oldName
 			                   inCandidates: candidates.
 
 		self
-			trackCompletionResultsFor: receiver
+			trackCompletionResultsFor: oldName
 			atIndex: completionIndex
 			withPrefix: prefix.
 
 		self logMemoryUsageSince: startMemory forPrefixSize: prefix size.
 		self logExecutionTimeSince: startTime forPrefixSize: prefix size ].
+	
+		aVariable name: oldName 
 
-	aMessageNode receiver: receiver
 ]
 
 { #category : 'benchmarks' }
-CoStaticBenchmarksVariables >> buildCompletionFor: aMessageNode atPosition: aPosition [
+CoStaticBenchmarksVariables >> buildCompletionFor: variable atPosition: aPosition [
 
 	^ builder
-		  node: aMessageNode receiver;
-		  completionContext: (CoBenchmarkContext new
-				   callsite: aMessageNode;
+		  node: variable ;
+		  completionContext: (CoBenchmarkVariableContext new
+				   callsite: variable;
 				   position: aPosition;
 				   yourself);
 		  buildCompletion
 ]
 
 { #category : 'benchmarks' }
-CoStaticBenchmarksVariables >> extractPrefixFrom: receiver at: index [
+CoStaticBenchmarksVariables >> extractPrefixFrom: name at: index [
 
-	^ receiver name copyFrom: 1 to: index
+	^ name copyFrom: 1 to: index
 ]
 
 { #category : 'benchmarks' }
@@ -176,10 +150,10 @@ CoStaticBenchmarksVariables >> fetchTopCandidatesFrom: completion usingPrefix: p
 ]
 
 { #category : 'benchmarks' }
-CoStaticBenchmarksVariables >> findCompletionIndexFor: receiver inCandidates: candidates [
+CoStaticBenchmarksVariables >> findCompletionIndexFor: variableName inCandidates: candidates [
 
 	^ (candidates collect: [ :each | each contents ]) indexOf:
-		  receiver name
+		  variableName
 ]
 
 { #category : 'benchmarks' }
@@ -199,9 +173,9 @@ CoStaticBenchmarksVariables >> logMemoryUsageSince: startMemory forPrefixSize: p
 ]
 
 { #category : 'benchmarks' }
-CoStaticBenchmarksVariables >> maxPrefixSizeFor: receiver [
+CoStaticBenchmarksVariables >> maxPrefixSizeFor: variable [
 
-	^ receiver name size min: 8
+	^ variable name size min: 8
 ]
 
 { #category : 'running' }
@@ -209,10 +183,8 @@ CoStaticBenchmarksVariables >> run [
 
 	scope methodsDo: [ :method |
 		method parseTree nodesDo: [ :node |
-			(node isMessage and: [
-				 node receiver isVariable and: [
-					 node receiver name first isUppercase ] ]) ifTrue: [
-				self benchCallsite: node atPosition: node keywordsIntervals first ] ] ]
+			(node isVariable and: [ node name first isUppercase ]) 
+					ifTrue: [ self benchCallsite: node atPosition: node start ] ] ]
 ]
 
 { #category : 'benchmarks' }

@@ -16,6 +16,11 @@ Class {
 	#tag : 'Base'
 }
 
+{ #category : 'visiting' }
+RBRefactoryChange >> accept: aText notifying: aController [
+	^ false
+]
+
 { #category : 'accessing' }
 RBRefactoryChange >> changeForClass: aClassName selector: aSelector [
 
@@ -130,4 +135,10 @@ RBRefactoryChange >> renameChangesForClass: oldClassName to: newClassName [
 RBRefactoryChange >> textToDisplay [
 
 	^ self name
+]
+
+{ #category : 'printing' }
+RBRefactoryChange >> whatToDisplayIn: aChangeBrowser [
+
+	^ { self }
 ]

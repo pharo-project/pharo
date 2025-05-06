@@ -119,9 +119,9 @@ EFAssignmentExpressionTest >> testExtraIndentationWhenMultiline2 [
 		assert: source
 		equals:
 '1 to: 4 do: [
-	a := p2 - x - p0 - x * ( p3 - y - p0 - y )
-	     - ( p3 - x - p0 - x * ( p2 - y - p0 - y ) ) * b0
-	]'
+		a := p2 - x - p0 - x * ( p3 - y - p0 - y )
+		     - ( p3 - x - p0 - x * ( p2 - y - p0 - y ) ) * b0
+		]'
 ]
 
 { #category : 'tests' }

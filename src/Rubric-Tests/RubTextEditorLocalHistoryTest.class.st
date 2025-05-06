@@ -61,6 +61,46 @@ RubTextEditorLocalHistoryTest >> testRedoLeavesCursorInOriginalPosition [
 ]
 
 { #category : 'tests - undo' }
+RubTextEditorLocalHistoryTest >> testUndoAfterFormatShouldRestoreOriginalCode [
+
+	editor textArea beForSmalltalkCode.
+
+	"Insert the start of the text and commit the transaction"
+	editor addString: 'method (to be formatted; but) maybe not nice'.
+	editor closeTypeIn.
+
+	"let's replace the to be formatted by a shorter sequence.
+	Do not commit the transaction here, simulating a text edition by a user.
+	When the transaction is committed, two entries will get created:
+	 - an entry with the removal of the selection
+	 - an entry with the addition of the new text in that place"
+	editor selectFrom: 'method (to ' size + 1 to: 'method (to be formatted' size.
+	editor addString: 'format'.
+	
+	"Unselect and format. This should not break the undo buffer"
+	editor unselect.
+	editor textArea formatMethodCode.
+
+	self expectText: 'method
+
+	(to
+		 format;
+		 but) maybe not nice'.
+
+	"Undo the format"	
+	editor undo.
+	self expectText: 'method (to format; but) maybe not nice'.	
+	
+	"Undo the addition of new text"
+	editor undo.
+	self expectText: 'method (to ; but) maybe not nice'.
+	
+	"Undo the removal"
+	editor undo.
+	self expectText: 'method (to be formatted; but) maybe not nice'
+]
+
+{ #category : 'tests - undo' }
 RubTextEditorLocalHistoryTest >> testUndoAfterTypeThenTabUndoesOnlyTheTab [
 
 	editor addString: 'self'.

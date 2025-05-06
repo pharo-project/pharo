@@ -114,6 +114,17 @@ RBVariableEnvironment class >> writersOfInstanceVariable: aString in: aClass [
 		in: aClass
 ]
 
+{ #category : 'comparing' }
+RBVariableEnvironment >> = anObject [
+	"Answer whether the receiver and anObject represent the same object."
+
+	self == anObject ifTrue: [ ^ true ].
+	self class = anObject class ifFalse: [ ^ false ].
+	^ environment = anObject environment and: [
+			  instanceVariables = anObject instanceVariables and: [
+				  classVariables = anObject classVariables ] ]
+]
+
 { #category : 'private' }
 RBVariableEnvironment >> accessorMethods [
 	^#(#instanceVariables #instanceVariableReaders #instanceVariableWriters #classVariables)
@@ -304,6 +315,13 @@ RBVariableEnvironment >> flushCachesFor: aClass [
 				removeKey: each name ifAbsent: [  ];
 				removeKey: each classSide name ifAbsent: [  ]
 			]
+]
+
+{ #category : 'comparing' }
+RBVariableEnvironment >> hash [
+	"Answer an integer value that is related to the identity of the receiver."
+
+	^ instanceVariables hash bitXor: classVariables hash
 ]
 
 { #category : 'testing' }

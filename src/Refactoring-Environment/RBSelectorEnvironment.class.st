@@ -142,6 +142,17 @@ RBSelectorEnvironment class >> referencesTo: aLiteral in: anEnvironment [
 		yourself
 ]
 
+{ #category : 'comparing' }
+RBSelectorEnvironment >> = anObject [
+	"Answer whether the receiver and anObject represent the same object."
+
+	self == anObject ifTrue: [ ^ true ].
+	self class = anObject class ifFalse: [ ^ false ].
+	^ environment = anObject environment and: [
+			  classSelectors = anObject classSelectors and: [
+				  metaClassSelectors = anObject metaClassSelectors ] ]
+]
+
 { #category : 'adding' }
 RBSelectorEnvironment >> addClass: aClass [
 	aClass isMeta
@@ -175,6 +186,12 @@ RBSelectorEnvironment >> classNames [
 		addAll: classSelectors keys;
 		addAll: metaClassSelectors keys;
 		yourself
+]
+
+{ #category : 'accessing' }
+RBSelectorEnvironment >> classSelectors [
+
+	^ classSelectors
 ]
 
 { #category : 'initialization' }
@@ -214,6 +231,13 @@ RBSelectorEnvironment >> defaultLabel [
 	^'some methods'
 ]
 
+{ #category : 'comparing' }
+RBSelectorEnvironment >> hash [
+	"Answer an integer value that is related to the identity of the receiver."
+
+	^ classSelectors hash bitXor: metaClassSelectors hash
+]
+
 { #category : 'testing' }
 RBSelectorEnvironment >> includesClass: aClass [
 	^(self privateSelectorsForClass: aClass) isNotEmpty
@@ -248,6 +272,12 @@ RBSelectorEnvironment >> isEmpty [
 { #category : 'testing' }
 RBSelectorEnvironment >> isSelectorEnvironment [
 	^ true
+]
+
+{ #category : 'accessing' }
+RBSelectorEnvironment >> metaClassSelectors [
+
+	^ metaClassSelectors
 ]
 
 { #category : 'initialization' }

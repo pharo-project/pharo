@@ -1,6 +1,4 @@
-"
-asdasd
-"
+
 Class {
 	#name : 'SourceFile',
 	#superclass : 'Object',

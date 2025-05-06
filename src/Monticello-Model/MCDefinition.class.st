@@ -15,7 +15,8 @@ MCDefinition >> <= other [
 
 { #category : 'comparing' }
 MCDefinition >> = aDefinition [
-	^(aDefinition isKindOf: MCDefinition) and: [self isRevisionOf: aDefinition]
+
+	^ self class = aDefinition class and: [ self isRevisionOf: aDefinition ]
 ]
 
 { #category : 'accessing' }

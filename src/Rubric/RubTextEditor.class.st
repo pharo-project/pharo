@@ -651,7 +651,10 @@ RubTextEditor >> cursorDown: aKeyboardEvent [
 				newLine:[:line | line + 1]
 				forward: true]
 		forward: true
-		specialBlock:[:dummy | dummy]
+		specialBlock:[:position | self
+				sameColumn: position
+				newLine:[:line | line + 1]
+				forward: true]
 		event: aKeyboardEvent.
 	^true
 ]
@@ -778,7 +781,10 @@ prior line. If prior line too short, put at end"
 				newLine:[:line | line - 1]
 				forward: false]
 		forward: false
-		specialBlock:[:dummy | dummy]
+		specialBlock:[:position | self
+				sameColumn: position
+				newLine:[:line | line - 1]
+				forward: false]
 		event: aKeyboardEvent.
 	^true
 ]

@@ -29,6 +29,15 @@ ClapExplicit >> isExplicit [
 	^ true
 ]
 
+{ #category : 'printing' }
+ClapExplicit >> printOn: aStream [
+	super printOn: aStream.
+	aStream
+		nextPut: $(;
+		nextPutAll: (String space join: self words);
+		nextPut: $)
+]
+
 { #category : 'adding' }
 ClapExplicit >> recordIn: parentMatch [
 	self parent: parentMatch.
@@ -52,10 +61,14 @@ ClapExplicit >> stop [
 
 { #category : 'evaluating' }
 ClapExplicit >> words [
+	
 	^ self context arguments
-		collect: [ :str | str asByteArray utf8Decoded ]
-		from: self start
-		to: self stop
+		ifEmpty: [ #() ]
+		ifNotEmpty:[ :args |
+			args 
+				collect: [ :str | str asByteArray utf8Decoded ]
+				from: self start
+				to: self stop ]
 ]
 
 { #category : 'evaluating' }

@@ -134,15 +134,6 @@ RBAbstractRefactoringTest >> setupMethodNameFor: aRefactoring toReturn: aSelecto
 ]
 
 { #category : 'set up' }
-RBAbstractRefactoringTest >> setupSearchInAllHierarchyFor: aRefactoring toReturn: aBoolean [
-
-	| options |
-	options := aRefactoring options copy.
-	options at: #searchInWholeHierarchy put: [ :ref :cls | aBoolean ].
-	aRefactoring options: options
-]
-
-{ #category : 'set up' }
 RBAbstractRefactoringTest >> setupSelfArgumentNameFor: aRefactoring toReturn: aString [
 
 	| options |
