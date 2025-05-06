@@ -98,13 +98,6 @@ InstructionStream >> scanFor: scanBlock [
 ]
 
 { #category : '*Debugging-Core' }
-InstructionStream >> secondByte [
-	"Answer the second byte of the current bytecode."
-
-	^self method at: pc + 1
-]
-
-{ #category : '*Debugging-Core' }
 InstructionStream >> selectorToSendOrSelf [
 	"If this instruction is a send, answer the selector, otherwise answer self."
  
