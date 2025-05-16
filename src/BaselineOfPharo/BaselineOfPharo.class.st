@@ -78,7 +78,7 @@ BaselineOfPharo class >> microdown [
 		newName: 'Microdown' 
 		owner: 'pillar-markup' 
 		project: 'Microdown' 
-		version: 'Pharo13'
+		version: 'v2.8.0'
 ]
 
 { #category : 'repository urls' }
