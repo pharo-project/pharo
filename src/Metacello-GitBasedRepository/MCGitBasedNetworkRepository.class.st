@@ -356,12 +356,14 @@ MCGitBasedNetworkRepository >> canUpgradeTo: anMCGitBasedRepository [
 
 { #category : 'descriptions' }
 MCGitBasedNetworkRepository >> description [
-  | desc |
-  desc := self class description , self projectPath , ':'
-    , self projectVersionEscaped.
-  self repoPath isEmpty
-    ifTrue: [ ^ desc ].
-  ^ desc , '/' , self repoPath
+
+	| desc |
+	desc := self class description , self projectPath.
+	self projectVersionEscaped ifNotNil: [ :projectVersionEscaped |
+		desc := desc , ':' , projectVersionEscaped ].
+
+	self repoPath isEmpty ifTrue: [ ^ desc ].
+	^ desc , '/' , self repoPath
 ]
 
 { #category : 'accessing' }
@@ -540,11 +542,14 @@ MCGitBasedNetworkRepository >> projectVersion: aString [
 
 { #category : 'accessing' }
 MCGitBasedNetworkRepository >> projectVersionEscaped [
-  | pv |
-  pv := self projectVersion.
-  (projectVersion includes: $/)
-    ifTrue: [ ^ pv copyReplaceAll: '/' with: '\/' ].
-  ^ pv
+
+	| pv |
+	pv := self projectVersion.
+	pv ifNil: [ ^ nil ].
+
+	(projectVersion includes: $/) ifTrue: [
+		^ pv copyReplaceAll: '/' with: '\/' ].
+	^ pv
 ]
 
 { #category : 'accessing' }
