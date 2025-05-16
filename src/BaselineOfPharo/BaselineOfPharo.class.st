@@ -104,23 +104,6 @@ BaselineOfPharo class >> newToolsRepository [
 	^ (self externalProjectNamed: 'NewTools') repository
 ]
 
-{ #category : 'accessing - external projects' }
-BaselineOfPharo class >> processBrowser [
-	<externalProject>
-
-	^ PharoExternalProject 
-		newName: 'ProcessBrowser' 
-		owner: 'pharo-spec' 
-		project: 'NewTools-ProcessBrowser' 
-		version: 'Pharo13'
-]
-
-{ #category : 'repository urls' }
-BaselineOfPharo class >> processBrowserRepository [
-
-	^ (self externalProjectNamed: 'ProcessBrowser') repository
-]
-
 { #category : 'class initialization' }
 BaselineOfPharo class >> reset [
 	<script>
@@ -136,7 +119,7 @@ BaselineOfPharo class >> roassal [
 		  newName: 'Roassal'
 		  owner: 'pharo-graphics'
 		  project: 'Roassal'
-		  version: 'Pharo13'
+		  version: 'v1.7.0'
 ]
 
 { #category : 'repository urls' }
@@ -170,7 +153,7 @@ BaselineOfPharo class >> spec [
 		newName: 'Spec2' 
 		owner: 'pharo-spec' 
 		project:'Spec' 
-		version: 'Pharo13'
+		version: 'v2.0.1'
 ]
 
 { #category : 'repository urls' }

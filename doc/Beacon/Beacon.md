@@ -15,9 +15,7 @@ The advantage of Beacon is that it is minimalist and reuses the existing announc
 
 The architecture of Beacon is illustrated in Figure *@archi@*.
 
-
-
-![Beacon architecture. %anchor=archi](figures/beacon.png)
+![Beacon architecture. %anchor=archi](figures/Architecture.png)
 
 In Beacon, objects emit `BeaconSignal`s (announcement) that are handled by an announcer and loggers that registered to such announcer.
 Beacon architectural elements are:
@@ -28,7 +26,19 @@ anything by itself. From that perspective users are not exposed to it.
 - Logger objects are objects that register for local or global sessions of signal reception.
 
 
-Let us illustrate this in more detail and examples. 
+### Core Design 
+
+Figure *@core@* presents the Pharo classes corresponding to the architectural elements described above. 
+
+![Beacon core classes. %anchor=core](figures/Core.png)
+
+- Any object inheriting from `Object` can emit a beacon signal.  
+- Beacon signals are instances of the class `BeaconSignal`.
+- Emitted signals are announced the `Beacon` main class.
+- Signal loggers, instances of the subclasses of `SignalLogger`, react to the announced signals.
+  
+
+Let us illustrate this with examples. 
 
 ### Basic signals
 
@@ -106,7 +116,7 @@ l runDuring: [
 l
 ```
 
-![Inspector. %anchor=inspector](figures/inspector)
+![Inspector. %anchor=inspector](figures/inspector.png)
 
 You can then define your own signal objects and specific inspector extensions.
 
@@ -189,6 +199,11 @@ We could also discard the object once the information is extracted. We could als
 information at the creation of the signal.
 
 
+### Conclusion
+
+Beacon provides a nice way to log objects instead of mere strings. 
+In addition, you can filter and control the scope of the logged signals. 
+Take the opportunity to understand how powerful it is.
 
 
 
