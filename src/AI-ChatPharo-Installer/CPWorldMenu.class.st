@@ -75,7 +75,13 @@ CPWorldMenu class >> menu00ChatPharoOn: aBuilder [
 		label: 'Load...';
 		icon: (self iconNamed: #smallLoadProject);
 		help: 'Load ChatPharo projects';
-		order: 2
+		order: 2.
+			(aBuilder item: #ChatPharoLoadFullVersion)
+		parent: #ChatPharo;
+		order: 3;
+		label: 'Open ChatPharo';
+		help: 'Open ChatPharo';
+		action: [ ChatPharo new presenter open ]
 ]
 
 { #category : 'accessing' }
