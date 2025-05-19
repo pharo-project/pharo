@@ -56,6 +56,12 @@ MCGitBasedNetworkRepository class >> cacheDirectoryPath: aString [
 	self cacheDirectory: (aString ifNotEmpty: [ aString asFileReference ])
 ]
 
+{ #category : 'accessing' }
+MCGitBasedNetworkRepository class >> defaultBranchCacheKey [
+
+	^ '-default-branch-'
+]
+
 { #category : 'private' }
 MCGitBasedNetworkRepository class >> defaultCacheDirectory [
 
@@ -77,7 +83,7 @@ MCGitBasedNetworkRepository class >> downloadCache [
 
 { #category : 'accessing' }
 MCGitBasedNetworkRepository class >> downloadCacheKey: projectPath version: versionString [
-  ^ projectPath , ':::' , versionString
+  ^ projectPath , ':::' , (versionString ifNil: [ self defaultBranchCacheKey ])
 ]
 
 { #category : 'utilities' }
