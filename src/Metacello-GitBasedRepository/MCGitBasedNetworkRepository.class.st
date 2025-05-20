@@ -345,7 +345,7 @@ MCGitBasedNetworkRepository >> asRepositorySpecFor: aMetacelloMCProject [
 MCGitBasedNetworkRepository >> calculateRepositoryDirectory [
 
 	| directory |
-	directory := self class projectDirectoryFrom: self projectPath version: self projectVersion.
+	directory := self class projectDirectoryFrom: self projectPath version: self projectVersionPath.
 	self repoPath ifNotEmpty: [ directory := directory resolveString: self repoPath ].
 	^ directory
 ]
@@ -556,6 +556,12 @@ MCGitBasedNetworkRepository >> projectVersionEscaped [
 	(projectVersion includes: $/) ifTrue: [
 		^ pv copyReplaceAll: '/' with: '\/' ].
 	^ pv
+]
+
+{ #category : 'accessing' }
+MCGitBasedNetworkRepository >> projectVersionPath [
+
+	^ projectVersion ifNil: [ self class defaultBranchCacheKey ]
 ]
 
 { #category : 'accessing' }
