@@ -2787,10 +2787,11 @@ Morph >> handleDropMorph: anEvent [
 	"Handle a dropping morph."
 
 	| aMorph localPt |
-	CavroisWindowManager current removeVisualPlaceholders .
-	CavroisWindowManager current
-		handleWindowDrop: anEvent contents
-		at: anEvent contents position.
+	CavroisWindowManager current currentProfile cellSize ifNotNil: [
+			CavroisWindowManager current removeVisualPlaceholders.
+			CavroisWindowManager current
+				handleWindowDrop: anEvent contents
+				at: anEvent contents position ].
 	aMorph := anEvent contents.
 	"Do a symmetric check if both morphs like each other"
 	((self wantsDroppedMorph: aMorph event: anEvent) and: [
