@@ -100,6 +100,13 @@ SpRubFindReplaceDialog >> closeWindowOnEscIn: aPresenter [
 		this widget announcer when: RubKeystroke do: [ :ann | ann event keyCharacter = Character escape ifTrue: [ self window triggerCancelAction ] ] for: self ]
 ]
 
+{ #category : 'initialization' }
+SpRubFindReplaceDialog >> connectPresenters [
+
+	findInput whenTextChangedDo: [ self updateFindText ].
+	replaceTextInput whenTextChangedDo: [ :aText | self replacingText: aText ]
+]
+
 { #category : 'operations' }
 SpRubFindReplaceDialog >> find [
 	self updateService.
@@ -175,8 +182,6 @@ SpRubFindReplaceDialog >> initializePresenters [
 		findInput text: self textToFind.
 		self updateFindText ].
 
-	findInput whenTextChangedDo: [ self updateFindText ].
-
 	self closeWindowOnEscIn: findInput.
 	self assignEnterKeystrokeEventFor: findInput.
 
@@ -191,7 +196,6 @@ SpRubFindReplaceDialog >> initializePresenters [
 	self replacingText ifNotNil: [
 		replaceTextInput text: self replacingText.
 		service replaceText: replaceTextInput text ].
-
 
 	replaceLabel := self newLabel label: 'Replace with:'.
 

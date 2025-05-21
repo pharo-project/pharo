@@ -5730,27 +5730,6 @@ Morph >> simulateClickWith: buttons position: position [
 ]
 
 { #category : 'event testing' }
-Morph >> simulateKeyStroke: aCharacter [
-	| event |
-
-	event := KeyboardEvent new
-				setType: #keystroke
-				buttons: 0
-				position: 0@0
-				keyValue: aCharacter charCode
-				charCode: aCharacter charCode
-				hand: self activeHand
-				stamp: 0.
-	self keyStroke: event
-]
-
-{ #category : 'event testing' }
-Morph >> simulateKeyStrokes: aString [
-
-	aString do: [:c | self simulateKeyStroke: c ]
-]
-
-{ #category : 'event testing' }
 Morph >> simulateMiddleClick [
 
 	self simulateClickWith: MouseEvent blueButton
