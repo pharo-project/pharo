@@ -671,7 +671,9 @@ WorldState >> realWindowExtent [
 { #category : 'hands' }
 WorldState >> realWindowExtent: aValue [
 
-	realWindowExtent := aValue
+
+	realWindowExtent := aValue.
+
 ]
 
 { #category : 'canvas' }

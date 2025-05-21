@@ -174,7 +174,13 @@ MouseClickState >> doubleClickTimeoutSelector: anObject [
 { #category : 'event handling' }
 MouseClickState >> drag: event [
 
-	dragSelector ifNotNil: [clickClient perform: dragSelector with: event]
+	((clickClient isKindOf: SystemWindow) or:
+		 (clickClient isKindOf: SpWindow)) ifTrue: [
+			CavroisWindowManager current currentProfile ifNotNil: [
+					CavroisWindowManager current currentProfile placeHolders do: [
+						:ph | ph display ] ] ].
+	dragSelector ifNotNil: [
+		clickClient perform: dragSelector with: event ]
 ]
 
 { #category : 'event handling' }

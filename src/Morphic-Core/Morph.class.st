@@ -2716,7 +2716,8 @@ Morph >> goHome [
 { #category : 'meta-actions' }
 Morph >> grabMorph: evt [
 
-	evt hand grabMorph: self
+	evt hand grabMorph: self.
+	
 ]
 
 { #category : 'dropping/grabbing' }
@@ -2784,16 +2785,21 @@ Morph >> handleDropFiles: anEvent [
 { #category : 'events - processing' }
 Morph >> handleDropMorph: anEvent [
 	"Handle a dropping morph."
+
 	| aMorph localPt |
+	CavroisWindowManager current removeVisualPlaceholders .
+	CavroisWindowManager current
+		handleWindowDrop: anEvent contents
+		at: anEvent contents position.
 	aMorph := anEvent contents.
 	"Do a symmetric check if both morphs like each other"
-	((self wantsDroppedMorph: aMorph event: anEvent)	"I want her"
-		and: [aMorph wantsToBeDroppedInto: self])		"she wants me"
-		ifFalse: [^ self].
+	((self wantsDroppedMorph: aMorph event: anEvent) and: [
+		 aMorph wantsToBeDroppedInto: self ]) ifFalse: [ ^ self ]. "I want her" "she wants me"
 	anEvent wasHandled: true.
+
 	"Transform the morph into the receiver's coordinate frame. This is currently incomplete since it only takes the offset into account where it really should take the entire transform."
-	localPt := (self transformedFrom: anEvent hand world) "full transform down"
-				globalPointToLocal: aMorph referencePosition.
+	localPt := (self transformedFrom: anEvent hand world)
+		           globalPointToLocal: aMorph referencePosition. "full transform down"
 	aMorph referencePosition: localPt.
 	self acceptDroppingMorph: aMorph event: anEvent.
 	aMorph justDroppedInto: self event: anEvent
@@ -2954,15 +2960,18 @@ Morph >> handleMouseMove: anEvent [
 { #category : 'events - processing' }
 Morph >> handleMouseOver: anEvent [
 	"System level event handling."
-	anEvent hand mouseFocus == self ifTrue:[
+
+	anEvent hand mouseFocus == self ifTrue: [ 
 		"Got this directly through #handleFocusEvent: so check explicitly"
-		(self containsPoint: anEvent position event: anEvent) ifFalse:[^self]].
+			(self containsPoint: anEvent position event: anEvent) ifFalse: [
+				^ self ] ].
 	anEvent hand noticeMouseOver: self event: anEvent
 ]
 
 { #category : 'events - processing' }
 Morph >> handleMouseStillDown: anEvent [
 	"Called from the stepping mechanism for morphs wanting continuously repeated 'yes the mouse is still down, yes it is still down, yes it has not changed yet, no the mouse is still not up, yes the button is down' etc messages"
+
 	(anEvent hand mouseFocus == self)
 		ifFalse:[^self stopSteppingSelector: #handleMouseStillDown:].
 	self mouseStillDown: anEvent.
@@ -2972,18 +2981,20 @@ Morph >> handleMouseStillDown: anEvent [
 { #category : 'events - processing' }
 Morph >> handleMouseUp: anEvent [
 	"System level event handling."
-	anEvent wasHandled ifTrue: [^self]. "not interested"
-	anEvent hand mouseFocus == self ifFalse: [^self]. "Not interested in other parties"
+
+	anEvent wasHandled ifTrue: [ ^ self ]. "not interested"
+	anEvent hand mouseFocus == self ifFalse: [ ^ self ]. "Not interested in other parties"
 	anEvent hand releaseMouseFocus: self.
 	anEvent wasHandled: true.
 	anEvent blueButtonChanged
-		ifTrue: [
-			self blueButtonUp: anEvent ]
-		ifFalse: [ | result |
-			result := self mouseUp: anEvent.
-			self stopSteppingSelector: #handleMouseStillDown:.
-			result ].
-	^ self eventHandler ifNotNil: [:handler | handler mouseUp: anEvent fromMorph: self]
+		ifTrue: [ self blueButtonUp: anEvent ]
+		ifFalse: [
+				| result |
+				result := self mouseUp: anEvent.
+				self stopSteppingSelector: #handleMouseStillDown:.
+				result ].
+	^ self eventHandler ifNotNil: [ :handler |
+		  handler mouseUp: anEvent fromMorph: self ]
 ]
 
 { #category : 'events - processing' }
