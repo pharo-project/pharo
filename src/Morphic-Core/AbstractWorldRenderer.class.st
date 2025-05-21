@@ -334,9 +334,10 @@ AbstractWorldRenderer >> restoreMorphicDisplay [
 	world defer: [ Cursor normal show ].
 
 	world layoutChanged.
-
-	CavroisWindowManager reset.
-	CavroisWindowManager current createPlaceHolderGrid
+	CavroisWindowManager current currentProfile ifNotNil: [
+			CavroisWindowManager current currentProfile reset.
+			CavroisWindowManager current createPlaceHolderGrid:
+				CavroisWindowManager current currentProfile cellSize ]
 ]
 
 { #category : 'system startup' }
