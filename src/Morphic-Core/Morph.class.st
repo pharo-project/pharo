@@ -2787,12 +2787,6 @@ Morph >> handleDropMorph: anEvent [
 	"Handle a dropping morph."
 
 	| aMorph localPt |
-	CavroisWindowManager current currentProfile ifNotNil: [
-			CavroisWindowManager current currentProfile cellSize ifNotNil: [
-					CavroisWindowManager current removeVisualPlaceholders.
-					CavroisWindowManager current
-						handleWindowDrop: anEvent contents
-						at: anEvent contents position ] ].
 	aMorph := anEvent contents.
 	"Do a symmetric check if both morphs like each other"
 	((self wantsDroppedMorph: aMorph event: anEvent) and: [
@@ -2804,7 +2798,13 @@ Morph >> handleDropMorph: anEvent [
 		           globalPointToLocal: aMorph referencePosition. "full transform down"
 	aMorph referencePosition: localPt.
 	self acceptDroppingMorph: aMorph event: anEvent.
-	aMorph justDroppedInto: self event: anEvent
+	aMorph justDroppedInto: self event: anEvent.
+	CavroisWindowManager current currentProfile ifNotNil: [
+			CavroisWindowManager current currentProfile cellSize ifNotNil: [
+					CavroisWindowManager current removeVisualPlaceholders.
+					CavroisWindowManager current
+						handleWindowDrop: anEvent contents
+						at: anEvent contents position ] ]
 ]
 
 { #category : 'events - processing' }
