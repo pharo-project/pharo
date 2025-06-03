@@ -82,8 +82,6 @@ RBInlineMethodRefactoring >> applicabilityPreconditions [
 	^ {
 		  (RBCondition definesSelector: sourceSelector in: class).
 		  (RBCondition withBlock: [
-			   self checkSelectedMessage.
-			   self parseInlineMethod.
 			   inlineParseTree isPrimitive ifTrue: [
 				   self refactoringError: 'Cannot inline primitives' ].
 			   self checkSuperMessages.
@@ -348,6 +346,13 @@ RBInlineMethodRefactoring >> parseInlineMethod [
 RBInlineMethodRefactoring >> preconditions [ 
 
 	^ self applicabilityPreconditions & self breakingChangePreconditions 
+]
+
+{ #category : 'transforming' }
+RBInlineMethodRefactoring >> prepareForExecution [
+
+	self checkSelectedMessage.
+	self parseInlineMethod
 ]
 
 { #category : 'transforming' }
