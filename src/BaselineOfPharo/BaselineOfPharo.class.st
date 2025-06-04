@@ -198,7 +198,6 @@ BaselineOfPharo >> baseline: spec [
 
 		spec
 			package: 'Morphic-Deprecated';
-			package: 'Deprecated13';
 			package: 'Deprecated14' ]
 ]
 
