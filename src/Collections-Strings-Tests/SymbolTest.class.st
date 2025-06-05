@@ -304,6 +304,12 @@ SymbolTest >> testAsMutator [
 ]
 
 { #category : 'tests' }
+SymbolTest >> testAsMutatorOnBinarySymbolRaisesAnError [
+
+	self should: [ #+ asMutator ] raise: Error
+]
+
+{ #category : 'tests' }
 SymbolTest >> testCapitalized [
 	| uc lc |
 	uc := #MElViN.

@@ -28,9 +28,8 @@ ClapCommandLineHandler >> activate [
 
 { #category : 'activation' }
 ClapCommandLineHandler >> handleExit: exit [
-	Smalltalk isInteractive
-		ifFalse: [ ^ exit pass ].
 
-	exit isSuccess
-		ifFalse: [ ^ exit resignalAs: (Error new messageText: exit messageText) ]
+	Smalltalk isInteractive ifFalse: [ ^ exit pass ].
+
+	exit isSuccess ifFalse: [ ^ exit resignalAs: (Error new messageText: exit messageText) ]
 ]

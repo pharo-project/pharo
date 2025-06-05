@@ -68,11 +68,6 @@ Variable >> = other [
 			and: [ name = other name ]
 ]
 
-{ #category : 'visiting' }
-Variable >> acceptVisitor: aProgramNodeVisitor node: aNode [
-	^ aProgramNodeVisitor visitVariableNode: aNode
-]
-
 { #category : 'testing' }
 Variable >> allowsShadowing [
 	^false

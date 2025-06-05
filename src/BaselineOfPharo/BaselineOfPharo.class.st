@@ -28,7 +28,7 @@ BaselineOfPharo class >> documentBrowser [
 		newName: 'DocumentBrowser' 
 		owner: 'pharo-spec' 
 		project: 'NewTools-DocumentBrowser' 
-		version: 'Pharo13'
+		version: 'Pharo14'
 ]
 
 { #category : 'repository urls' }
@@ -60,7 +60,7 @@ BaselineOfPharo class >> iceberg [
 		newName: 'Iceberg' 
 		owner: 'pharo-vcs' 
 		project: 'iceberg' 
-		version: 'Pharo13'
+		version: 'Pharo14'
 		sourceDir: nil
 ]
 
@@ -78,7 +78,7 @@ BaselineOfPharo class >> microdown [
 		newName: 'Microdown' 
 		owner: 'pillar-markup' 
 		project: 'Microdown' 
-		version: 'Pharo13'
+		version: 'Pharo14' 
 ]
 
 { #category : 'repository urls' }
@@ -95,30 +95,13 @@ BaselineOfPharo class >> newTools [
 		newName: 'NewTools' 
 		owner: 'pharo-spec' 
 		project: 'NewTools' 
-		version: 'Pharo13'
+		version: 'Pharo14'
 ]
 
 { #category : 'repository urls' }
 BaselineOfPharo class >> newToolsRepository [
 
 	^ (self externalProjectNamed: 'NewTools') repository
-]
-
-{ #category : 'accessing - external projects' }
-BaselineOfPharo class >> processBrowser [
-	<externalProject>
-
-	^ PharoExternalProject 
-		newName: 'ProcessBrowser' 
-		owner: 'pharo-spec' 
-		project: 'NewTools-ProcessBrowser' 
-		version: 'Pharo13'
-]
-
-{ #category : 'repository urls' }
-BaselineOfPharo class >> processBrowserRepository [
-
-	^ (self externalProjectNamed: 'ProcessBrowser') repository
 ]
 
 { #category : 'class initialization' }
@@ -136,7 +119,7 @@ BaselineOfPharo class >> roassal [
 		  newName: 'Roassal'
 		  owner: 'pharo-graphics'
 		  project: 'Roassal'
-		  version: 'Pharo13'
+		  version: 'Pharo14'
 ]
 
 { #category : 'repository urls' }
@@ -153,7 +136,7 @@ BaselineOfPharo class >> scriptableDebugger [
 		newName: 'ScriptableDebugger' 
 		owner: 'pharo-spec' 
 		project: 'ScriptableDebugger' 
-		version: 'Pharo13'
+		version: 'Pharo14'
 ]
 
 { #category : 'repository urls' }
@@ -170,7 +153,7 @@ BaselineOfPharo class >> spec [
 		newName: 'Spec2' 
 		owner: 'pharo-spec' 
 		project:'Spec' 
-		version: 'Pharo13'
+		version: 'Pharo14'
 ]
 
 { #category : 'repository urls' }
@@ -187,7 +170,7 @@ BaselineOfPharo class >> toplo [
 		newName: 'Toplo' 
 		owner: 'pharo-graphics' 
 		project: 'Toplo' 
-		version: 'Pharo12'
+		version: 'dev'
 ]
 
 { #category : 'repository urls' }
@@ -215,7 +198,8 @@ BaselineOfPharo >> baseline: spec [
 
 		spec
 			package: 'Morphic-Deprecated';
-			package: 'Deprecated13' ]
+			package: 'Deprecated13';
+			package: 'Deprecated14' ]
 ]
 
 { #category : 'actions' }

@@ -1,5 +1,5 @@
 "
-SUnit tests for RPackage classes synchronisation
+SUnit tests for Package classes synchronisation
 "
 Class {
 	#name : 'PackageAndClassesTest',

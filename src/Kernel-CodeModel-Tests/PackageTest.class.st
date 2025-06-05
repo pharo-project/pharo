@@ -98,6 +98,22 @@ PackageTest >> testAddTraitSettingPackage [
 ]
 
 { #category : 'tests' }
+PackageTest >> testAddingAnExtensionMethodCrushingAMethodFromATrait [
+	"This is a regression test. In the past adding an extension methods that was crushing a method from a used trait was not marking the method as an extension."
+
+	| class trait |
+	class := self newClassNamed: #X in: self xPackageName.
+	trait := self newTraitNamed: #XT in: self xPackageName.
+
+	class classInstaller update: class to: [ :builder | builder traits: trait ].
+	trait compile: 'extension ^2'.
+
+	self createMethodNamed: 'extension' inClass: class asExtensionOf: self yPackageName.
+
+	self assert: (class >> #extension) isExtension
+]
+
+{ #category : 'tests' }
 PackageTest >> testAllUnsentMessages [
 
 	| package class1 class2 |
@@ -492,6 +508,25 @@ PackageTest >> testRecompilingClassWithExtensionMethods [
 
 	self assertEmpty: (class2 package instVarNamed: #extensionSelectors).
 	self assertEmpty: class2 package extendedClasses
+]
+
+{ #category : 'tests' }
+PackageTest >> testRecompilingClassWithExtensionMethodsCrushingMethodsFromATrait [
+	"This is a regression test. In the past recompiling a class  with extension methods that was crushing a method from a used trait was not marking the method as an extension."
+
+	| class1 class2 trait |
+	class1 := self newClassNamed: #X in: self xPackageName.
+	trait := self newTraitNamed: #XT in: self xPackageName.
+	class2 := self newClassNamed: #Y in: self yPackageName.
+
+	class1 classInstaller update: class1 to: [ :builder | builder traits: trait ].
+	trait compile: 'extension ^2'.
+
+	self createMethodNamed: 'extension' inClass: class1 asExtensionOf: self yPackageName.
+
+	class1 classInstaller update: class1 to: [ :builder | builder slots: { #slot } ].
+
+	self assert: (class1 >> #extension) isExtension
 ]
 
 { #category : 'tests' }

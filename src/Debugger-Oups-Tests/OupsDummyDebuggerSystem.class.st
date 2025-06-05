@@ -46,12 +46,6 @@ OupsDummyDebuggerSystem >> defaultUIManager [
 ]
 
 { #category : 'open debugger' }
-OupsDummyDebuggerSystem >> logDebugRequest: aDebugRequest withUIManager: aCommandLineUIManager [
-
-	self openDebuggerOnRequest: aDebugRequest
-]
-
-{ #category : 'open debugger' }
 OupsDummyDebuggerSystem >> openDebuggerOnRequest: aDebugRequest [
 	self callsToHandleDebugRequest: self callsToHandleDebugRequest + 1.
 	debugRequestSentToHandleDebugRequest := aDebugRequest.

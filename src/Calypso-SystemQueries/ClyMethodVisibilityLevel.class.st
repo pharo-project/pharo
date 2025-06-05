@@ -37,27 +37,10 @@ Class {
 	#tag : 'Domain'
 }
 
-{ #category : 'accessing' }
-ClyMethodVisibilityLevel class >> allAvailableFor: items [
-
-	^ self allSubclasses select: [ :each |
-		each isActiveByDefault and: (each canBeAppliedForClasses: items) ]
-]
-
-{ #category : 'testing' }
-ClyMethodVisibilityLevel class >> canBeAppliedForClasses: classItems [
-	^true
-]
-
-{ #category : 'testing' }
-ClyMethodVisibilityLevel class >> isActiveByDefault [
-	^false
-]
-
 { #category : 'instance creation' }
 ClyMethodVisibilityLevel class >> of: aClassScope [
-	^self new
-		visibleClassScope: aClassScope
+
+	^ self new visibleClassScope: aClassScope
 ]
 
 { #category : 'controlling' }

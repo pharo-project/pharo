@@ -2989,10 +2989,10 @@ OCCodeSnippet >> ifSkip: aTestName then: aBlock [
 ]
 
 { #category : 'inspecting' }
-OCCodeSnippet >> inspectionSource [
+OCCodeSnippet >> inspectionSource: aBuilder [
 	<inspectorPresentationOrder: 35 title: 'Source'>
 
-	^ self searchDefinition inspectionSource
+	^ self searchDefinition inspectionSource: aBuilder
 ]
 
 { #category : 'accessing' }

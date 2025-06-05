@@ -37,7 +37,7 @@ RePushDownMethodDriver >> breakingChoices [
 
 	| choices |
 	choices := OrderedCollection new.
-	choices add: (RePushDownMethodChoice new driver: self).
+	choices add: (RePushDownMethodTransformationChoice new driver: self).
 	subclassesSendSuper isFalse ifTrue: [
 		choices add: (ReBrowseSubclassSuperSendsChoice new driver: self) ].
 	^ choices 

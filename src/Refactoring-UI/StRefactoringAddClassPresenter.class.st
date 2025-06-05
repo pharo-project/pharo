@@ -30,7 +30,7 @@ StRefactoringAddClassPresenter >> commentPresenterText [
 StRefactoringAddClassPresenter >> defaultLayout [
 
 	^ SpGridLayout new
-		  add: 'New class name' at: 1 @ 1;
+		  add: 'New class name' atPoint: 1 @ 1;
 		  add: textInput at: 2 @ 1 span: 2 @ 1;
 		  add: 'Package' at: 1 @ 2;
 		  add: packagePresenter at: 2 @ 2 span: 2 @ 1;
@@ -38,9 +38,10 @@ StRefactoringAddClassPresenter >> defaultLayout [
 		  add: tagPresenter at: 2 @ 3 span: 2 @ 1;
 		  add: 'Comment' at: 1 @ 4;
 		  add: (SpBoxLayout newTopToBottom
-				add: useTemplateCheckPresenter expand: false;
-				add: commentPresenter withConstraints: [ : c | c height: 500 ];
-				yourself) at: 2 @ 4 span: 2 @ 1;
+				   add: useTemplateCheckPresenter expand: false;
+				   add: commentPresenter withConstraints: [ :c | c height: 500 ];
+				   yourself)
+		  at: 2 @ 4 span: 2 @ 1;
 		  beColumnNotHomogeneous;
 		  yourself
 ]

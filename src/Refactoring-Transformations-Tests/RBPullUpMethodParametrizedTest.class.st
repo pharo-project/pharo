@@ -15,33 +15,6 @@ RBPullUpMethodParametrizedTest class >> testParameters [
 ]
 
 { #category : 'tests' }
-RBPullUpMethodParametrizedTest >> addClassHierarchy [
-
-	model
-		defineClass: [ :aBuilder |
-			aBuilder
-				superclass: Object;
-				name: #SomeClass;
-				sharedVariables: { #Foo };
-				package: #'Refactory-Test data' ];
-		defineClass: [ :aBuilder |
-			aBuilder
-				superclassName: #SomeClass;
-				name: #Subclass;
-				package: #'Refactory-Test data' ];
-		defineClass: [ :aBuilder |
-			aBuilder
-				superclassName: #Subclass;
-				name: #Foo1;
-				package: #'Refactory-Test data' ];
-		defineClass: [ :aBuilder |
-			aBuilder
-				superclassName: #Subclass;
-				name: #Foo2;
-				package: #'Refactory-Test data' ]
-]
-
-{ #category : 'tests' }
 RBPullUpMethodParametrizedTest >> addClassHierarchyForPools [
 
 	model
@@ -112,23 +85,6 @@ RBPullUpMethodParametrizedTest >> testFailurePullUpWhenSuperClassDoesNotDirectly
 ]
 
 { #category : 'failure tests' }
-RBPullUpMethodParametrizedTest >> testFailurePullUpWithInvalidSuperSend [
-
-	| class |
-	self addClassHierarchy.
-	(model classNamed: #Foo2)
-		compile: 'yourself ^super yourself + 1'
-		classified: #( #accessing ).
-	class := model classNamed: #Foo1.
-	class compile: 'yourself ^1' classified: #( #accessing ).
-
-	self shouldFail:
-		(self createRefactoringWithModel: model andArguments: {
-				 #( #yourself ).
-				 class })
-]
-
-{ #category : 'failure tests' }
 RBPullUpMethodParametrizedTest >> testFailurePullUpWithSuperSendThatCannotBeCopiedDown [
 
 	| class |
@@ -147,19 +103,6 @@ RBPullUpMethodParametrizedTest >> testFailurePullUpWithSuperSendThatCannotBeCopi
 		(self createRefactoringWithModel: model andArguments: {
 				 #( #foo ).
 				 class })
-]
-
-{ #category : 'failure tests' }
-RBPullUpMethodParametrizedTest >> testFailureWhenPulledMethodRefersToLocalSharedVar [
-
-	| class |
-	class := model classNamed: #Object.
-	class addClassVariable: #Foo.
-	class classSide compile: 'foo ^Foo' classified: #( #accessing ).
-	self shouldFail:
-		(self createRefactoringWithModel: model andArguments: {
-				 #( #foo ).
-				 class classSide })
 ]
 
 { #category : 'tests' }
