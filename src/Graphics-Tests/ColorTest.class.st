@@ -99,6 +99,20 @@ ColorTest >> testColorFrom [
 ]
 
 { #category : 'tests' }
+ColorTest >> testContrast [
+
+	self assert: (Color white contrast: Color black) identicalTo: 21.0.
+
+	"Commutativity"
+	self
+		assert: (Color blue contrast: Color red)
+		identicalTo: (Color red contrast: Color blue).
+
+	"Identity"
+	self assert: (Color green contrast: Color green) identicalTo: 1.0
+]
+
+{ #category : 'tests' }
 ColorTest >> testFromHexString [
 
 	| color |
@@ -133,6 +147,54 @@ ColorTest >> testFromString [
 	self
 		assert: (Color fromString: 'DARKGRAY') = Color darkGray description: 'Color can be specified with a case insensitive color name';
 		assert: (Color fromString: '#blue') = Color blue description: 'Color can be specified with a leading literal sharp'
+]
+
+{ #category : 'tests' }
+ColorTest >> testIsContrastCompliantForISO92413 [
+
+	| darkColor edgeColor |
+	darkColor := Color black.
+	edgeColor := Color r: 0.7155 g: 0.01 b: 0.022. "Relative luminance around 0.1"
+
+	self
+		assert: (darkColor contrast: edgeColor)
+		closeTo: 3.0
+		precision: 0.001.
+	self assert: (darkColor isContrastCompliantForISO92413: edgeColor).
+	self deny: (darkColor isContrastCompliantForISO92413:
+			 (edgeColor adjustBrightness: -0.01))
+]
+
+{ #category : 'tests' }
+ColorTest >> testIsContrastCompliantForWCAG2AA [
+
+	| darkColor edgeColor |
+	darkColor := Color black.
+	edgeColor := Color r: 0.918 g: 0.0 b: 0.02. "Relative luminance around 0.175"
+
+	self
+		assert: (darkColor contrast: edgeColor)
+		closeTo: 4.5
+		precision: 0.001.
+	self assert: (darkColor isContrastCompliantForWCAG2AA: edgeColor).
+	self deny: (darkColor isContrastCompliantForWCAG2AA:
+			 (edgeColor adjustBrightness: -0.01))
+]
+
+{ #category : 'tests' }
+ColorTest >> testIsContrastCompliantForWCAG2AAA [
+
+	| darkColor edgeColor |
+	darkColor := Color black.
+	edgeColor := Color r: 0.05 g: 0.68 b: 0.05. "Relative luminance around 0.3"
+
+	self
+		assert: (darkColor contrast: edgeColor)
+		closeTo: 7.0
+		precision: 0.001.
+	self assert: (darkColor isContrastCompliantForWCAG2AAA: edgeColor).
+	self deny: (darkColor isContrastCompliantForWCAG2AAA:
+			 (edgeColor adjustBrightness: -0.01))
 ]
 
 { #category : 'tests - multiply' }
@@ -172,4 +234,15 @@ ColorTest >> testMultiplyByNumber [
 	self assert: (1 - newColor red) abs < tolerance.
 	self assert: (1 - newColor green) abs < tolerance.
 	self assert: (0.5 - newColor blue) abs < tolerance
+]
+
+{ #category : 'tests' }
+ColorTest >> testRelativeLuminance [
+	"Reference values from the WCAG definition: https://www.w3.org/TR/WCAG21/#dfn-relative-luminance"
+
+	self assert: Color black relativeLuminance equals: 0.0.
+	self assert: Color white relativeLuminance equals: 1.0.
+	self assert: Color red relativeLuminance equals: 0.2126.
+	self assert: Color green relativeLuminance equals: 0.7152.
+	self assert: Color blue relativeLuminance equals: 0.0722
 ]

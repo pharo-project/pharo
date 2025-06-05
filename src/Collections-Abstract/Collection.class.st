@@ -708,7 +708,7 @@ Collection >> displayStringOn: stream [
 	stream
 		space;
 		nextPut: $[;
-		print: self size;
+		nextPutAll: self size asStringWithCommas;
 		nextPutAll: (' item' asPluralBasedOn: self size);
 		nextPut: $];
 		space.
