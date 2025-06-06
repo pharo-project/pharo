@@ -47,17 +47,19 @@ LessonView >> bindings [
 { #category : 'gui' }
 LessonView >> buildText [
 	| scrolledText |
-	scrolledText := self sourceTextModel newScrolledText
+	"scrolledText := self sourceTextModel newScrolledText
 		beForSmalltalkScripting;
 		beWrapped;
 		yourself.
-	scrolledText textArea font: StandardFonts codeFont.
+	scrolledText textArea font: StandardFonts codeFont."
+	scrolledText := StPlaygroundPage new.
 	^ scrolledText
 ]
 
 { #category : 'gui' }
 LessonView >> buildWindow [
-	^ SystemWindow labelled: 'PrStef lesson'
+	"^ SystemWindow labelled: 'PrStef lesson'"
+	^ StProfStefPlayground new.
 ]
 
 { #category : 'gui' }
@@ -87,13 +89,17 @@ LessonView >> initialize [
 	super initialize.
 	window := self buildWindow.
 	shoutMorph := self buildText.
-	window addMorph: shoutMorph frame: (0 @ 0 corner: 1 @ 1).
-	window extent: 600 @ 450
+	window loadPage: shoutMorph.
+	
+	"window addMorph: shoutMorph frame: (0 @ 0 corner: 1 @ 1).
+	window extent: 600 @ 450"
 ]
 
 { #category : 'testing' }
 LessonView >> isOpenInWindow [
-	^ self currentWorld systemWindows includes: window
+	"^ self currentWorld systemWindows includes: window"
+	^ self window isDisplayed.
+	"^ self currentWorld currentWindow label == window windowTitle."
 ]
 
 { #category : 'testing' }
@@ -109,7 +115,9 @@ LessonView >> menu [
 { #category : 'gui' }
 LessonView >> open [
 	"menu: #shoutMorphFillMenu:."
-	window openInWorld
+	"window openInWorld."
+	window open
+
 ]
 
 { #category : 'accessing' }
@@ -134,8 +142,13 @@ LessonView >> shoutMorphFillMenu: aMenu [
 
 { #category : 'gui' }
 LessonView >> showLesson: aLesson withTitle: aString [
-	self window setLabel: aString.
+	"self window setLabel: aString.
 	self sourceTextModel setText: aLesson lesson.
+	self buildWindow."
+	"|page|
+	page := (self buildText contents: aLesson lesson) flush."
+	self window firstPage windowTitle: aString.
+	self window firstPage contents: aLesson lesson.
 	self isOpenInWindow ifFalse: [ self open ]
 ]
 
@@ -146,7 +159,7 @@ LessonView >> sourceTextModel [
 
 { #category : 'accessing' }
 LessonView >> text [
-	^ self sourceTextModel getText asString
+	^ window firstPage contents.
 ]
 
 { #category : 'accessing' }

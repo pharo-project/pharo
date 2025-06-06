@@ -221,8 +221,8 @@ ProfStef >> first [
 
 { #category : 'navigating' }
 ProfStef >> go [
+	self goOn: PharoSyntaxTutorial.
 
-	^ self goOn: PharoSyntaxTutorial
 ]
 
 { #category : 'navigating' }
@@ -243,7 +243,7 @@ ProfStef >> last [
 ProfStef >> lessonView [
 
 	^ lessonView
-			ifNil: [ lessonView := LessonView new ]
+			ifNil: [ lessonView := LessonView new]
 ]
 
 { #category : 'accessing' }
@@ -255,10 +255,11 @@ ProfStef >> lessonView: aLessonView [
 { #category : 'navigating' }
 ProfStef >> next [
 
-	self lessonView isOpenInWindow
-		ifTrue: [
+	"self lessonView isOpenInWindow
+		ifTrue: ["
 			self player next.
-			self showCurrentLesson ]
+			self showCurrentLesson .
+			
 ]
 
 { #category : 'instance creation' }
@@ -295,9 +296,10 @@ ProfStef >> showCurrentLesson [
 	| progressInfo lesson |
 	lesson := self player currentLesson.
 	progressInfo := '(', self tutorialPositionString, '/', self tutorialSizeString, ')'.
-	^ self lessonView
+	self lessonView
 		showLesson: lesson
-		withTitle: lesson title, ' ', progressInfo
+		withTitle: lesson title, ' ', progressInfo.
+		
 ]
 
 { #category : 'navigating' }
