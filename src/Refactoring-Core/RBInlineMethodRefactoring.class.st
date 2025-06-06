@@ -6,7 +6,10 @@ Any temporary variable used in the original message send is added  into this met
 
 My preconditions verify that the inlined method is not a primitive call, the method does not have multiple returns. I'll show a warning if the method is overriden in subclasses.
 
-
+Since I need to canonicalization of the method to be inlined (e.g. rewrite it to avoid side effects from guard clauses, move comments, etc. see rewriteInlinedTree) we have two parse trees for preconditions checking.
+- `originalInlineParseTree` - this is the original method without any modifications
+- `inlinedParseTree` - this one is canonicalized parse tree
+In the transformation step, only `inlinedParseTree` is used. `orignialInlineParseTree` is used only during precondition checking.
 "
 Class {
 	#name : 'RBInlineMethodRefactoring',
@@ -18,7 +21,8 @@ Class {
 		'sourceSelector',
 		'sourceMessage',
 		'checkOverridden',
-		'classOfTheMethodToInline'
+		'classOfTheMethodToInline',
+		'originalInlineParseTree'
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
@@ -82,10 +86,9 @@ RBInlineMethodRefactoring >> applicabilityPreconditions [
 	^ {
 		  (RBCondition definesSelector: sourceSelector in: class).
 		  (RBCondition withBlock: [
-			   inlineParseTree isPrimitive ifTrue: [
+			   originalInlineParseTree isPrimitive ifTrue: [
 				   self refactoringError: 'Cannot inline primitives' ].
 			   self checkSuperMessages.
-			   self rewriteInlinedTree.
 			   (sourceMessage parent isReturn or: [
 				    self hasMultipleReturns not ]) ifFalse: [
 				   self refactoringError:
@@ -143,7 +146,7 @@ RBInlineMethodRefactoring >> checkSuperMessages [
 
 	self classOfTheMethodToInline = class ifTrue: [ ^ self ].
 	self classOfTheMethodToInline superclass ifNil: [ ^ self ].
-	inlineParseTree superMessages do: [ :each |
+	originalInlineParseTree superMessages do: [ :each |
 		(self classOfTheMethodToInline superclass
 			 whichClassIncludesSelector: each)
 		= (class superclass whichClassIncludesSelector: each) ifFalse: [
@@ -339,7 +342,8 @@ RBInlineMethodRefactoring >> parseInlineMethod [
 	inlineParseTree := self classOfTheMethodToInline parseTreeForSelector: self inlineSelector.
 	inlineParseTree ifNil: [ self refactoringError: 'Could not parse sources' ].
 	inlineParseTree lastIsReturn
-		ifFalse: [ inlineParseTree addSelfReturn ]
+		ifFalse: [ inlineParseTree addSelfReturn ].
+	originalInlineParseTree := self classOfTheMethodToInline parseTreeForSelector: self inlineSelector.
 ]
 
 { #category : 'preconditions' }
@@ -352,7 +356,8 @@ RBInlineMethodRefactoring >> preconditions [
 RBInlineMethodRefactoring >> prepareForExecution [
 
 	self checkSelectedMessage.
-	self parseInlineMethod
+	self parseInlineMethod.
+	self rewriteInlinedTree
 ]
 
 { #category : 'transforming' }
