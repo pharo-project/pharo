@@ -7,7 +7,7 @@ Class {
 	#name : 'LessonView',
 	#superclass : 'Object',
 	#instVars : [
-		'shoutMorph',
+		'page',
 		'window',
 		'sourceTextModel'
 	],
@@ -45,13 +45,9 @@ LessonView >> bindings [
 ]
 
 { #category : 'gui' }
-LessonView >> buildText [
+LessonView >> buildPage [
 	| scrolledText |
-	"scrolledText := self sourceTextModel newScrolledText
-		beForSmalltalkScripting;
-		beWrapped;
-		yourself.
-	scrolledText textArea font: StandardFonts codeFont."
+
 	scrolledText := StPlaygroundPage new.
 	^ scrolledText
 ]
@@ -67,16 +63,6 @@ LessonView >> close [
 	window delete
 ]
 
-{ #category : 'accessing' }
-LessonView >> doItContext [
-	^ nil
-]
-
-{ #category : 'accessing' }
-LessonView >> doItReceiver [
-	^ nil
-]
-
 { #category : 'testing' }
 LessonView >> hasBindingOf: aString [
 
@@ -88,11 +74,10 @@ LessonView >> initialize [
 
 	super initialize.
 	window := self buildWindow.
-	shoutMorph := self buildText.
-	window loadPage: shoutMorph.
+	page := self buildPage.
+	window loadPage: page.
 	
-	"window addMorph: shoutMorph frame: (0 @ 0 corner: 1 @ 1).
-	window extent: 600 @ 450"
+
 ]
 
 { #category : 'testing' }
@@ -102,42 +87,12 @@ LessonView >> isOpenInWindow [
 	"^ self currentWorld currentWindow label == window windowTitle."
 ]
 
-{ #category : 'testing' }
-LessonView >> isScripting [
- ^ true
-]
-
-{ #category : 'gui' }
-LessonView >> menu [
-	^ (PragmaMenuBuilder pragmaKeyword: #LessonViewContextMenu model: self) menu
-]
-
 { #category : 'gui' }
 LessonView >> open [
 	"menu: #shoutMorphFillMenu:."
 	"window openInWorld."
 	window open
 
-]
-
-{ #category : 'accessing' }
-LessonView >> selectedClassOrMetaClass [
-	^ nil
-]
-
-{ #category : 'accessing' }
-LessonView >> shoutAboutToStyle: aPluggableShoutMorphOrView [
-	^ true
-]
-
-{ #category : 'accessing' }
-LessonView >> shoutMorph [
-	^ shoutMorph
-]
-
-{ #category : 'gui' }
-LessonView >> shoutMorphFillMenu: aMenu [
-	^ aMenu addAllFrom: self menu
 ]
 
 { #category : 'gui' }
@@ -151,11 +106,6 @@ LessonView >> showLesson: aLesson withTitle: aString [
 	self window firstPage contents: aLesson lesson.
 	self window firstPage text unselectAll.
 	self isOpenInWindow ifFalse: [ self open ]
-]
-
-{ #category : 'accessing' }
-LessonView >> sourceTextModel [
-	^ sourceTextModel ifNil: [ sourceTextModel := RubScrolledTextModel new interactionModel: self ]
 ]
 
 { #category : 'accessing' }
