@@ -2799,11 +2799,11 @@ Morph >> handleDropMorph: anEvent [
 	aMorph referencePosition: localPt.
 	self acceptDroppingMorph: aMorph event: anEvent.
 	aMorph justDroppedInto: self event: anEvent.
-	CavroisWindowManager current currentProfile ifNotNil: [
-			CavroisWindowManager current currentProfile cellSize ifNotNil: [
+	CavroisWindowManager current currentProfile ifNotNil: [ :profile |
+			profile cellSize ifNotNil: [
 					CavroisWindowManager current removeVisualPlaceholders.
 					CavroisWindowManager current
-						handleWindowDrop: anEvent contents
+						handleWindowDrop2: anEvent contents
 						at: anEvent contents position ] ]
 ]
 

@@ -176,10 +176,9 @@ MouseClickState >> drag: event [
 
 	((clickClient isKindOf: SystemWindow) or:
 		 (clickClient isKindOf: SpWindow)) ifTrue: [
-			CavroisWindowManager current currentProfile ifNotNil: [
-					CavroisWindowManager current currentProfile cellSize ifNotNil: [
-							CavroisWindowManager current currentProfile placeHolders do: [
-								:ph | ph display ] ] ] ].
+			CavroisWindowManager current currentProfile ifNotNil: [ :profile |
+					profile cellSize ifNotNil: [
+						profile placeHolders do: [ :ph | ph lightDisplay ] ] ] ].
 	dragSelector ifNotNil: [
 		clickClient perform: dragSelector with: event ]
 ]
