@@ -337,13 +337,10 @@ AbstractWorldRenderer >> restoreMorphicDisplay [
 	CavroisWindowManager current currentProfile ifNotNil: [ :profile |
 			profile placeHolders do: [ :ph |
 					ph
-						position:
-							self currentWorld bounds width * (ph xPercentage / 100)
-							@ (self currentWorld bounds height * (ph yPercentage / 100));
-						extent:
-							self currentWorld bounds width * (ph widthPercentage / 100)
-							@
-								(self currentWorld bounds height * (ph heightPercentage / 100)) ] ]
+						position: world bounds width * (ph xPercentage / 100)
+							@ (world bounds height * (ph yPercentage / 100));
+						extent: world bounds width * (ph widthPercentage / 100)
+							@ (world bounds height * (ph heightPercentage / 100)) ] ]
 ]
 
 { #category : 'system startup' }
