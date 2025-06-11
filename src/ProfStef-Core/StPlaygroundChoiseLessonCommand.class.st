@@ -6,7 +6,23 @@ Class {
 	#tag : 'Command'
 }
 
+{ #category : 'default' }
+StPlaygroundChoiseLessonCommand class >> defaultDescription [ 
+	^ 'hello world'.
+]
+
+{ #category : 'accessing' }
+StPlaygroundChoiseLessonCommand class >> defaultIconName [
+
+	^ #glamorousTable
+]
+
+{ #category : 'default' }
+StPlaygroundChoiseLessonCommand class >> defaultName [
+	^ 'go to a lessons'.
+]
+
 { #category : 'executing' }
 StPlaygroundChoiseLessonCommand >> execute [
-	^ nil.
+	(StProfStefChoiseLesson profInst: (ProfStef default) model: context) open.
 ]

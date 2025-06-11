@@ -12,13 +12,8 @@ StProfStefPlaygroundPage class >> baseToolbarCommands [
 	^ { 
 		StPlaygroundNextProfStefCommand.
 		StPlaygroundPreviousProfStefCommand.
+		StPlaygroundChoiseLessonCommand
 	}
-]
-
-{ #category : 'accessing' }
-StProfStefPlaygroundPage >> windowTitle [
-
-	^ 'Prof Stef'
 ]
 
 { #category : 'accessing' }

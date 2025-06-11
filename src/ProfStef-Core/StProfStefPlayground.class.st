@@ -11,3 +11,8 @@ StProfStefPlayground >> newDefaultPlaygroundPage [
 
 	^ StProfStefPlaygroundPageModel new
 ]
+
+{ #category : 'initialization' }
+StProfStefPlayground >> windowTitle [
+	^ 'Prof Stef'
+]

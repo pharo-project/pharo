@@ -1,6 +1,6 @@
 Class {
 	#name : 'StPlaygroundNextProfStefCommand',
-	#superclass : 'StPlaygroundDoItCommand',
+	#superclass : 'StPlaygroundCommand',
 	#category : 'ProfStef-Core-Command',
 	#package : 'ProfStef-Core',
 	#tag : 'Command'
@@ -10,6 +10,12 @@ Class {
 StPlaygroundNextProfStefCommand class >> defaultDescription [
 
 	^ 'go to the next lessons'
+]
+
+{ #category : 'accessing' }
+StPlaygroundNextProfStefCommand class >> defaultIconName [
+
+	^ #glamorousRight 
 ]
 
 { #category : 'default' }
