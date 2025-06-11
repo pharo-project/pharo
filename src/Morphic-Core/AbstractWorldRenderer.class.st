@@ -334,8 +334,8 @@ AbstractWorldRenderer >> restoreMorphicDisplay [
 	world defer: [ Cursor normal show ].
 
 	world layoutChanged.
-	CavroisWindowManager current currentProfile ifNotNil: [
-			CavroisWindowManager current currentProfile placeHolders do: [ :ph |
+	CavroisWindowManager current currentProfile ifNotNil: [ :profile |
+			profile placeHolders do: [ :ph |
 					ph
 						position:
 							self currentWorld bounds width * (ph xPercentage / 100)
