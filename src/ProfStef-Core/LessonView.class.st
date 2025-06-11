@@ -149,6 +149,7 @@ LessonView >> showLesson: aLesson withTitle: aString [
 	page := (self buildText contents: aLesson lesson) flush."
 	self window firstPage windowTitle: aString.
 	self window firstPage contents: aLesson lesson.
+	self window firstPage text unselectAll.
 	self isOpenInWindow ifFalse: [ self open ]
 ]
 

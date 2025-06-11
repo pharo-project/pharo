@@ -28,10 +28,10 @@ StProfStefChoiseLesson >> defaultLayout [
 	^ (SpBoxLayout newTopToBottom 
 		add: listLesson;
 		add: (SpBoxLayout newLeftToRight hAlignEnd;
-					add: cancelButton withConstraints: [ :constaint | constaint width: 60; height: 10] ;
-					add: okButton withConstraints: [ :constaint | constaint width: 60; height: 10];
-					
-					yourself);
+					add: cancelButton;
+					add: okButton;
+				
+					yourself) withConstraints: [ :constraint | constraint width: 90 ; height: 30 ] ;
 				
 	
 	yourself).
