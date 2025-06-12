@@ -136,6 +136,16 @@ OSSDL2Driver >> dispatchEvent: mappedEvent [
 ]
 
 { #category : 'events-processing' }
+OSSDL2Driver >> ensureEventLoop [
+
+	"Make sure an event loop is running.
+	If there is already an event loop, do nothing"
+	EventLoopProcess ifNotNil: [ ^ self ].
+
+	self setupEventLoop
+]
+
+{ #category : 'events-processing' }
 OSSDL2Driver >> evaluateUserInterrupt: anSDLEvent [
 
 	anSDLEvent isUserInterrupt
@@ -166,6 +176,17 @@ OSSDL2Driver >> eventLoop [
 OSSDL2Driver >> eventLoopProcess [
 
 	^ self class eventLoopProcess
+]
+
+{ #category : 'events-processing' }
+OSSDL2Driver >> forceNewEventLoop [
+
+	"Force the (re)creation of an event loop.
+	If one was available, shut it down first.
+	Start a new event loop afterwards"
+
+	self shutdownEventLoop.
+	self setupEventLoop
 ]
 
 { #category : 'initialization' }
@@ -291,14 +312,13 @@ OSSDL2Driver >> setGLAttributes: glAttributes [
 { #category : 'events-processing' }
 OSSDL2Driver >> setupEventLoop [
 
-	EventLoopProcess ifNotNil: [
-		EventLoopProcess isTerminating ifFalse: [
-			EventLoopProcess terminate.
-			EventLoopProcess := nil ] ].
+	"Create a new event loop.
+	Precondition: there is no pre-existing event loop"
+	
+	EventLoopProcess ifNotNil: [ self error: 'Cannot launch new event loop. One event loop is in progress' ].
 
 	EventLoopProcess := [ self eventLoop ] forkAt:
 		                    Processor lowIOPriority.
-
 	EventLoopProcess name: 'SDL2 Event loop'
 ]
 
@@ -317,6 +337,8 @@ OSSDL2Driver >> shutDown: quitting [
 { #category : 'events-processing' }
 OSSDL2Driver >> shutdownEventLoop [
 
+	"Kills the current event loop if any"
+
 	EventLoopProcess ifNil: [ ^ self ].
 	EventLoopProcess terminate.
 	EventLoopProcess := nil
@@ -325,7 +347,7 @@ OSSDL2Driver >> shutdownEventLoop [
 { #category : 'system startup' }
 OSSDL2Driver >> startUp: resuming [
 
-	self setupEventLoop
+	self ensureEventLoop
 ]
 
 { #category : 'global events' }

@@ -95,8 +95,8 @@ PharoCommandLineHandler >> changePreferences [
 
 { #category : 'commands' }
 PharoCommandLineHandler >> default [
-	Smalltalk isHeadless
-		ifFalse: [ ^ self noQuit ].
+
+	Smalltalk isInteractive ifTrue: [ ^ self noQuit ].
 
 	^ super default
 ]

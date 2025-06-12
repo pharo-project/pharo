@@ -914,6 +914,11 @@ Class >> removeSubclass: aSubclass [
 { #category : 'class name' }
 Class >> rename: aString [
 	"The new name of the receiver is the argument, aString."
+	
+	"Take care: this renames the *references* to the class only on the bytecode level.
+	It rewrites the key of the bindings (instance of GlobalVariable). 
+	The source is *not* changed and thus can not be compiled anymore after the rename.
+	In most cases, the refactoring engine should be used instead, as it changes the source, too."
 
 	| oldName newName |
 	(newName := aString asSymbol) = (oldName := self name)

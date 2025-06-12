@@ -419,14 +419,6 @@ UIManager >> handleWarningDebugRequest: aWarningDebugRequest fromDebuggerSystem:
 	self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
-UIManager >> headlessManager [
-	"Answer an instance of headless manager, which will be used when image runs headless
-	 and non-interactive. We put it here, so subclasses can override it."
-
-	^CommandLineUIManager replacing: self
-]
-
 { #category : 'ui requests' }
 UIManager >> inform: aString [
 	"Display a message for the user to read and then dismiss."
@@ -509,7 +501,7 @@ UIManager >> nonInteractiveManager [
 	"Answer an instance of non-interactive manager, which will be used when image runs headless.
 	 We put it here, so subclasses can override it."
 
-	^NonInteractiveUIManager replacing: self
+	^NonInteractiveUIManager beDefault
 ]
 
 { #category : 'default actions' }

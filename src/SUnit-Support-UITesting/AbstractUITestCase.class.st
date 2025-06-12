@@ -20,7 +20,7 @@ AbstractUITestCase >> runCase [
 
 	| result |
 	"Skip the test if we're in headless mode"
-	Smalltalk isHeadless ifTrue: [ ^ self skip ].
+	Smalltalk isInteractive ifFalse: [ ^ self skip ].
 	SystemProgressMorph allInstances do: [ :spm | spm hide ].
 	self currentWorld activeHand resetClickState.
 	result := super runCase.

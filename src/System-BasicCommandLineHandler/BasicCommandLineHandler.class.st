@@ -175,7 +175,7 @@ BasicCommandLineHandler >> handleArgument: aString [
 		ifFalse: [ ^ self ].
 
 	"check for default options"
-	(aString isEmpty and: [ Smalltalk isInteractiveGraphic not])
+	(aString isEmpty and: [ Smalltalk isInteractive not])
 			ifTrue: [ ^ self default ].
 
 	aString = '--version'
@@ -202,7 +202,7 @@ BasicCommandLineHandler >> handleArgument: aString [
 	aString = '--disabledAccessMode'
 		ifTrue: [ ^ self disabledAccessMode ].
 
-	Smalltalk isInteractiveGraphic
+	Smalltalk isInteractive
 		ifTrue: [ ^ self noQuit ].
 
 	"none of the previous options matched hence we output an error message"
@@ -211,8 +211,8 @@ BasicCommandLineHandler >> handleArgument: aString [
 
 { #category : 'activation' }
 BasicCommandLineHandler >> handleEmptyArguments [
-	Smalltalk isHeadless
-		ifFalse: [ ^ self ].
+
+	Smalltalk isInteractive ifTrue: [ ^ self ].
 
 	self help
 ]
@@ -225,8 +225,7 @@ BasicCommandLineHandler >> handleExit: exit [
 { #category : 'activation' }
 BasicCommandLineHandler >> handleExit: exit for: aCommandLinehandler [
 
-	(Smalltalk isInteractive or: [ Smalltalk isInteractiveGraphic ])
-		ifFalse: [ ^ exit pass ].
+	Smalltalk isInteractive ifFalse: [ ^ exit pass ].
 
 	exit isSuccess
 		ifFalse: [ ^ Error signal: exit messageText ].
