@@ -71,6 +71,12 @@ MetacelloMemberListSpec >> do: aBlock [
 ]
 
 { #category : 'testing' }
+MetacelloMemberListSpec >> ifNotEmpty: aBlock [
+
+	^ self isEmpty not ifTrue: aBlock
+]
+
+{ #category : 'testing' }
 MetacelloMemberListSpec >> isEmpty [
 
 	^self list isEmpty
