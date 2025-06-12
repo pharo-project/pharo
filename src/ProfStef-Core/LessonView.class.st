@@ -11,8 +11,9 @@ Class {
 		'window',
 		'sourceTextModel'
 	],
-	#category : 'ProfStef-Core',
-	#package : 'ProfStef-Core'
+	#category : 'ProfStef-Core-core',
+	#package : 'ProfStef-Core',
+	#tag : 'core'
 }
 
 { #category : 'gui' }
@@ -46,15 +47,11 @@ LessonView >> bindings [
 
 { #category : 'gui' }
 LessonView >> buildPage [
-	| scrolledText |
-
-	scrolledText := StPlaygroundPage new.
-	^ scrolledText
+	^ StPlaygroundPage new.
 ]
 
 { #category : 'gui' }
 LessonView >> buildWindow [
-	"^ SystemWindow labelled: 'PrStef lesson'"
 	^ StProfStefPlayground new.
 ]
 
@@ -82,28 +79,18 @@ LessonView >> initialize [
 
 { #category : 'testing' }
 LessonView >> isOpenInWindow [
-	"^ self currentWorld systemWindows includes: window"
 	^ self window isDisplayed.
-	"^ self currentWorld currentWindow label == window windowTitle."
 ]
 
 { #category : 'gui' }
 LessonView >> open [
-	"menu: #shoutMorphFillMenu:."
-	"window openInWorld."
 	window open
 
 ]
 
 { #category : 'gui' }
 LessonView >> showLesson: aLesson withTitle: aString [
-	"self window setLabel: aString.
-	self sourceTextModel setText: aLesson lesson.
-	self buildWindow."
-	"|page|
-	page := (self buildText contents: aLesson lesson) flush."
-	self window firstPage windowTitle: aString.
-	self window firstPage contents: aLesson lesson.
+	self window firstPage windowTitle: aString; contents: (aLesson lesson).
 	self window firstPage text unselectAll.
 	self isOpenInWindow ifFalse: [ self open ]
 ]

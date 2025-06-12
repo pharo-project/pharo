@@ -54,8 +54,9 @@ Class {
 	#classVars : [
 		'Instance'
 	],
-	#category : 'ProfStef-Core',
-	#package : 'ProfStef-Core'
+	#category : 'ProfStef-Core-core',
+	#package : 'ProfStef-Core',
+	#tag : 'core'
 }
 
 { #category : 'zen' }
@@ -254,11 +255,8 @@ ProfStef >> lessonView: aLessonView [
 
 { #category : 'navigating' }
 ProfStef >> next [
-
-	"self lessonView isOpenInWindow
-		ifTrue: ["
-			self player next.
-			self showCurrentLesson .
+	self player next.
+	self showCurrentLesson .
 			
 ]
 

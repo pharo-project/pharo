@@ -1,9 +1,9 @@
 Class {
 	#name : 'StPlaygroundNextProfStefCommand',
 	#superclass : 'StPlaygroundCommand',
-	#category : 'ProfStef-Core-Command',
+	#category : 'ProfStef-Core-command',
 	#package : 'ProfStef-Core',
-	#tag : 'Command'
+	#tag : 'command'
 }
 
 { #category : 'default' }

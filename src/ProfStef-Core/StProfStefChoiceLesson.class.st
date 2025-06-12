@@ -1,5 +1,5 @@
 Class {
-	#name : 'StProfStefChoiseLesson',
+	#name : 'StProfStefChoiceLesson',
 	#superclass : 'SpPresenter',
 	#instVars : [
 		'listLesson',
@@ -15,7 +15,7 @@ Class {
 }
 
 { #category : 'as yet unclassified' }
-StProfStefChoiseLesson class >> profInst: aProfStefInst model: anModelPresenter [ 
+StProfStefChoiceLesson class >> profInst: aProfStefInst model: anModelPresenter [ 
 	^ self basicNew 
 	profStefInst: ProfStef default;
 	setModelBeforeInitialization: anModelPresenter;
@@ -24,7 +24,7 @@ StProfStefChoiseLesson class >> profInst: aProfStefInst model: anModelPresenter 
 ]
 
 { #category : 'layout' }
-StProfStefChoiseLesson >> defaultLayout [ 
+StProfStefChoiceLesson >> defaultLayout [ 
 	^ (SpBoxLayout newTopToBottom 
 		add: listLesson;
 		add: (SpBoxLayout newLeftToRight hAlignEnd;
@@ -38,12 +38,23 @@ StProfStefChoiseLesson >> defaultLayout [
 ]
 
 { #category : 'initialization' }
-StProfStefChoiseLesson >> initialize [
+StProfStefChoiceLesson >> initialize [
 	super initialize.
 ]
 
-{ #category : 'initialization - deprecated' }
-StProfStefChoiseLesson >> initializePresenter [ 
+{ #category : 'initialization' }
+StProfStefChoiceLesson >> initializeButtons [ 
+	okButton := self newButton.
+	okButton label: 'go to' .
+	okButton action: [ self okAction ].
+	
+	cancelButton := self newButton.
+	cancelButton label: 'cancel'.
+	cancelButton action: [ self delete ].
+]
+
+{ #category : 'initialization' }
+StProfStefChoiceLesson >> initializeListLesson [
 	listLesson := self newColumnView.
 	selectedLesson := profInstance player tutorial tutorial first.
 	
@@ -54,42 +65,40 @@ StProfStefChoiseLesson >> initializePresenter [
 				selectedLesson := selection.
 		];
 		items: profInstance player tutorial tutorial.
+]
 
-	okButton := self newButton.
-	okButton label: 'go to' .
-	okButton extent: 100@10.
-	okButton action: [ self okAction ].
+{ #category : 'initialization' }
+StProfStefChoiceLesson >> initializePresenter [ 
+	self initializeListLesson.
+	self initializeButtons.
+
 	
-	cancelButton := self newButton.
-	cancelButton label: 'cancel'.
-	cancelButton extent: 60@10.
-	cancelButton action: [ self delete ]
 	
 ]
 
 { #category : 'layout' }
-StProfStefChoiseLesson >> initializeWindow: aWindowPresenter [
+StProfStefChoiceLesson >> initializeWindow: aWindowPresenter [
 	aWindowPresenter initialExtent: 500@200;
 	title: self windowTitle.
 ]
 
 { #category : 'api' }
-StProfStefChoiseLesson >> okAction [ 
+StProfStefChoiceLesson >> okAction [ 
 	profInstance tutorial: profInstance player tutorial class lesson: selectedLesson.
 	self delete.
 ]
 
-{ #category : 'as yet unclassified' }
-StProfStefChoiseLesson >> profStefInst: aProfStef [
+{ #category : 'initialization' }
+StProfStefChoiceLesson >> profStefInst: aProfStef [
 	profInstance := aProfStef 
 ]
 
 { #category : 'layout' }
-StProfStefChoiseLesson >> setModelBeforeInitialization: aModel [
+StProfStefChoiceLesson >> setModelBeforeInitialization: aModel [
 	parent := aModel.
 ]
 
 { #category : 'layout' }
-StProfStefChoiseLesson >> windowTitle [ 
+StProfStefChoiceLesson >> windowTitle [ 
 	^ 'lesson choise'
 ]

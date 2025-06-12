@@ -12,7 +12,7 @@ StProfStefPlaygroundPage class >> baseToolbarCommands [
 	^ { 
 		StPlaygroundNextProfStefCommand.
 		StPlaygroundPreviousProfStefCommand.
-		StPlaygroundChoiseLessonCommand
+		StPlaygroundChoiceLessonCommand
 	}
 ]
 
