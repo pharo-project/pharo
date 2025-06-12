@@ -18,9 +18,21 @@ ClapWordMatch >> completeMatchOn: aStream [
 	startIndex := aStream position
 ]
 
+{ #category : 'testing' }
+ClapWordMatch >> isValid: aValidation [
+
+	^ aValidation isValidWordMatch: self
+]
+
 { #category : 'accessing' }
 ClapWordMatch >> stop [
 	^ self start
+]
+
+{ #category : 'accessing' }
+ClapWordMatch >> value [
+	^ self word
+	"^ self value: nil"
 ]
 
 { #category : 'accessing' }

@@ -1,5 +1,5 @@
 "
-A RPackage is a new implementation of package.
+I am an implementation of package.
 
 
 Instance Variables
@@ -99,9 +99,9 @@ Package class >> rootTagName [
 ]
 
 { #category : 'comparing' }
-Package >> <= aRPackage [
+Package >> <= aPackage [
 
-	^ self name <= aRPackage name
+	^ self name <= aPackage name
 ]
 
 { #category : 'add class' }

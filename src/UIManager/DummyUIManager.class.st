@@ -55,11 +55,6 @@ DummyUIManager >> confirm: aString orCancel: cancelBlock [
 	self error: 'No user response possible'
 ]
 
-{ #category : 'debug' }
-DummyUIManager >> debugProcess: process context: context label: title fullView: bool notification: notificationString [
-	Warning signal: 'Trying to debug the process ', title
-]
-
 { #category : 'ui requests' }
 DummyUIManager >> edit: aText label: labelString accept: aBlockOrNil [
 
@@ -152,15 +147,4 @@ DummyUIManager >> traceCr: aString [
 	Smalltalk logStdOutDuring: [:logger |
 		logger nextPutAll: aString;
 				 cr ]
-]
-
-{ #category : 'default actions' }
-DummyUIManager >> unhandledErrorDefaultAction: anException [
-	self traceCr: '*** EXCEPTION ***'.
-	self traceCr: anException.
-	self
-		trace:
-			(String
-				streamContents: [ :stream | anException signalerContext errorReportOn: stream ]).
-	Smalltalk exitFailure
 ]

@@ -14,11 +14,6 @@ Class {
 	#tag : 'Conditions'
 }
 
-{ #category : 'choices' }
-ReMethodsDontReferToLocalSharedVarsCondition class >> strategyChoiceClass [
-	^ RePushUpSharedVariableChoice
-]
-
 { #category : 'initialization' }
 ReMethodsDontReferToLocalSharedVarsCondition >> class: aRBClass selectors: aCollection [ 
 

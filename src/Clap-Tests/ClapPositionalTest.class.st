@@ -13,16 +13,16 @@ ClapPositionalTest >> classToTest [
 
 { #category : 'tests' }
 ClapPositionalTest >> testMatches [
-	| subject argv match |
+	| subject argv ctx match |
 	subject := self namedSubject.
 	argv := { 'bar'. #remainder } readStream.
-
-	match := subject matchOn: argv.
-
+	ctx := ClapContext new.
+	
+	match := subject matchOn: argv in: ctx.
+	
 	self deny: match isMismatch.
-	self
-		assert: match specification
-		identicalTo: subject.
+	self assert: match specification identicalTo: subject.
+	self assert: match parent identicalTo: ctx.
 	self assert: match word equals: 'bar'.
 	self assert: argv next equals: #remainder
 ]

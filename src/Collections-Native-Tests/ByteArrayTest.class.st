@@ -119,12 +119,6 @@ ByteArrayTest >> testHexDumponmax [
 ]
 
 { #category : 'tests' }
-ByteArrayTest >> testIsLiteral [
-	self assert: #[122 43 213 7] isLiteral description: 'ByteArray instances are literal'.
-	self deny: thisContext method isLiteral description: 'ByteArray sub instances are not literal'
-]
-
-{ #category : 'tests' }
 ByteArrayTest >> testindexOfStartingAt [
 	|array|
 	array := #[1 2 3 4 5 6 7 8 9 10 11 1 2 3 4 5 6 7 8 0 0].

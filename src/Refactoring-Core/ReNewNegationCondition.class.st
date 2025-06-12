@@ -41,5 +41,5 @@ ReNewNegationCondition >> violationMessageOn: aWriteStream [
 { #category : 'accessing' }
 ReNewNegationCondition >> violators [
 	"This is probably wrong because of the negation"
-	^ condition violators
+	^ condition nonViolators
 ]

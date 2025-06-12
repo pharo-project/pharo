@@ -40,7 +40,7 @@ RBMoveMethodToClassRefactoring class >> model: aRBSmalltalk method: aMethod clas
 RBMoveMethodToClassRefactoring >> applicabilityPreconditions [
 	"we only move if there is no method in the class. 
 	This is clearly wrong for a refactoring. but for now let us keep it. "
-	^ { (ReDefinesSelectorsCondition definesSelectors: {method selector} in: class) not }
+	^ { (ReDefinesSelectorsCondition new definesSelectors: {method selector} in: class) not }
 ]
 
 { #category : 'transforming' }

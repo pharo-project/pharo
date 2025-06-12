@@ -19,14 +19,15 @@ ClapFlag class >> basicMeaning [
 
 { #category : 'predefined flags' }
 ClapFlag class >> forHelp [
-	^ (self id: #helpFlag)
+	^ (self id: #help)
 		description: 'Prints this documentation';
-		canonicalName: 'help';
+		canonicalName: 'help'
+]
 
-		meaning: [ :match |
-			(ClapDocumenter on: (ZnCharacterWriteStream on: match context stdout))
-				explain: match parent specification.
-			true ]
+{ #category : 'adding' }
+ClapFlag >> addPositional: aPositional [
+	super addPositional: aPositional.
+	implicitMeaningBlock := aPositional implicitMeaning.
 ]
 
 { #category : 'adding' }
@@ -38,6 +39,12 @@ ClapFlag >> addTo: parentParameter [
 ClapFlag >> canMatchWith: word [
 	^ word = self shortForm
 		or: [ word = self longForm ]
+]
+
+{ #category : 'testing' }
+ClapFlag >> isFlag [
+
+	^ true
 ]
 
 { #category : 'accessing' }
@@ -57,6 +64,11 @@ ClapFlag >> meaningScalar [
 ]
 
 { #category : 'accessing' }
+ClapFlag >> positionalIdentifier [
+	^ ClapPositional idFrom: self identifier
+]
+
+{ #category : 'accessing' }
 ClapFlag >> shortForm [
 	^ '-' , self shortName
 ]
@@ -70,5 +82,12 @@ ClapFlag >> shortName [
 ClapFlag >> synopsisOn: aStream [
 	aStream
 		nextPutAll: '--';
-		nextPutAll: self canonicalName
+		nextPutAll: self canonicalName.
+		
+	self positionals 
+		ifNotEmpty: [ 
+			aStream
+				nextPutAll: ' <';
+				nextPutAll: (Character space join: (self positionals collect: #canonicalName));
+				nextPut: $> ]
 ]

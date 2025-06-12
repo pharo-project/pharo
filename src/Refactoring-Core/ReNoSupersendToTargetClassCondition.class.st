@@ -7,6 +7,7 @@ A >> foo ^ 12
 
    B >> xxx ^ super foo + 23 
 ```
+`B new xxx` now is returning 35, if we would allow it would error or return something else
 
 Here the condition does not hold when class is B because B >> xxx is doing a supercall and moving it up would change the behavior of xxx.
 "

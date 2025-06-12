@@ -70,17 +70,6 @@ OupsDebuggerSystem >> handleWarningDebugRequest: aWarningDebugRequest [
 ]
 
 { #category : 'open debugger' }
-OupsDebuggerSystem >> logDebugRequest: aDebugRequest withUIManager: aCommandLineUIManager [
-
-	aCommandLineUIManager
-		debugProcess: aDebugRequest process
-		context: aDebugRequest exception signalerContext
-		label: aDebugRequest exception description
-		fullView: false
-		notification: aDebugRequest exception description
-]
-
-{ #category : 'open debugger' }
 OupsDebuggerSystem >> openDebuggerOnRequest: aDebugRequest [
 	"Prepare the opening of a debugger, and delegate the debugger selection and opening to a strategy"
 

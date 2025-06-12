@@ -16,17 +16,9 @@ SUnitSuiteBuilder >> suiteNamed: aString withTests: tests [
 ]
 
 { #category : 'visiting' }
-SUnitSuiteBuilder >> visitRPackage: aPackage [
-	^ self
-		suiteNamed: aPackage name
-		withTests: (super visitRPackage: aPackage)
-]
+SUnitSuiteBuilder >> visitPackage: aPackage [
 
-{ #category : 'visiting' }
-SUnitSuiteBuilder >> visitRPackageSet: aRPackageSet [
-	^ self
-		suiteNamed: aRPackageSet packageName
-		withTests: (super visitRPackageSet: aRPackageSet)
+	^ self suiteNamed: aPackage name withTests: (super visitPackage: aPackage)
 ]
 
 { #category : 'visiting' }

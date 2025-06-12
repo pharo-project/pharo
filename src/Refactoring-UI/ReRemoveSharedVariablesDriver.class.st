@@ -41,16 +41,15 @@ ReRemoveSharedVariablesDriver >> configureRefactoring [
 	refactoring prepareForInteractiveMode
 ]
 
-{ #category : 'execution' }
+{ #category : 'configuration' }
 ReRemoveSharedVariablesDriver >> defaultSelectDialog [
 
-	^ SpSelectDialog new
-		          title: 'There are references to variables!';
-		          items: self breakingChoices;
-		          display: [ :each | each description ];
-		          displayIcon: [ :each |  self iconNamed: each systemIconName ];
-		          openModal.
-
+	^ self class defaultSelectDialog
+		  title: 'There are references to variables!';
+		  items: self breakingChoices;
+		  display: [ :each | each description ];
+		  displayIcon: [ :each | self iconNamed: each systemIconName ];
+		  openModal
 ]
 
 { #category : 'execution' }

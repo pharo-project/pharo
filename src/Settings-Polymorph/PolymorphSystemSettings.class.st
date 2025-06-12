@@ -284,6 +284,11 @@ PolymorphSystemSettings class >> morphicHaloSettingsOn: aBuilder [
 		description: 'All halo settings';
 		noOrdering;
 		with: [
+			(aBuilder setting: #cmdGesturesEnabled)
+				label: 'Enable Gesture to Open Halo';
+				target: Morph;
+				default: true;
+				description: 'Enables or Disables the gestures to open the Halo or the meta menu. The Halo is open with Alt+Shift+Click and the Menu with Ctrl+Alt+Shift+Click'.
 			(aBuilder setting: #cycleHalosBothDirections)
 				label: 'Cycle both directions';
 				target: Morph;

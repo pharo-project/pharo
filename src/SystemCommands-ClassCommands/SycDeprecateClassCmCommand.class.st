@@ -5,14 +5,6 @@ Class {
 	#package : 'SystemCommands-ClassCommands'
 }
 
-{ #category : 'execution' }
-SycDeprecateClassCmCommand >> executeRefactoring [
-
-	(RBDeprecateClassDriver
-		 className: targetClass name
-		 scopes: refactoringScopes) runRefactoring
-]
-
 { #category : 'testing' }
 SycDeprecateClassCmCommand >> isApplicable [
 

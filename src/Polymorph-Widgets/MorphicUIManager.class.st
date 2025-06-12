@@ -27,10 +27,7 @@ MorphicUIManager class >> isActiveManager [
 { #category : 'testing' }
 MorphicUIManager class >> isValidForCurrentSystemConfiguration [
 
-	^ Smalltalk isHeadless not
-		or: [
-			Smalltalk isHeadless
-			and: [ Smalltalk isInteractiveGraphic ] ]
+	^ Smalltalk isInteractive
 ]
 
 { #category : 'cleanup' }
@@ -51,20 +48,21 @@ MorphicUIManager class >> uiProcess [
 { #category : 'private' }
 MorphicUIManager >> activate [
 
-	self currentWorld worldState worldRenderer: (AbstractWorldRenderer detectCorrectOneForWorld: self currentWorld).
+	self currentWorld worldState worldRenderer:
+		(AbstractWorldRenderer detectCorrectOneForWorld: self currentWorld).
 	self currentWorld currentCursor: self currentWorld currentCursor.
 
-	self currentWorld ifNotNil: [:world | world restoreMorphicDisplay].
-	WorldMorph extraWorldList do: [:each | each restoreMorphicDisplay].
+	self currentWorld ifNotNil: [ :world | world restoreMorphicDisplay ].
+	WorldMorph extraWorldList do: [ :each | each restoreMorphicDisplay ].
+
+
+	SystemProgressMorph enable.
 
 	activeTranscript
-		ifNotNil: [ 
-			Transcript := activeTranscript ]
+		ifNotNil: [ Transcript := activeTranscript ]
 		ifNil: [
-			Transcript class == ThreadSafeTranscript 
-				ifFalse: [ ThreadSafeTranscript install ] ].
-			
-	SystemProgressMorph enable
+			Transcript class name == 'StThreadSafeTranscript' ifFalse: [
+				Smalltalk globals at: #StThreadSafeTranscript ifPresent: [ :c | c installThreadSafeAsTranscript ] ] ]
 ]
 
 { #category : 'ui requests' }
@@ -283,15 +281,6 @@ MorphicUIManager >> deactivate [
 	self currentWorld worldState worldRenderer: (NullWorldRenderer forWorld: self currentWorld)
 ]
 
-{ #category : 'debug' }
-MorphicUIManager >> debugProcess: process context: context label: title fullView: bool notification: notificationString [
-
-	(OupsDebugRequest newForContext: context)
-		process: process;
-		label: title;
-		submit
-]
-
 { #category : 'ui process' }
 MorphicUIManager >> defer: aValuable [
 	"aValuable will be executed in the next UI rendering cycle"
@@ -342,12 +331,6 @@ MorphicUIManager >> enterOrRequestFrom: labelList values: valueList lines: lines
 		labels: labelList
 		values: valueList
 		lines: linesArray
-]
-
-{ #category : 'handle debug requests' }
-MorphicUIManager >> handleDebugRequest: aDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
-	<debuggerCompleteToSender>
-	anOupsDebuggerSystem openDebuggerOnRequest: aDebugRequest
 ]
 
 { #category : 'error handling' }
@@ -623,13 +606,6 @@ MorphicUIManager >> uiProcess [
 	Client should check explicitly if #uiProcess answers nil or not (see other implementations)"
 
 	^ UIProcess
-]
-
-{ #category : 'ui requests' }
-MorphicUIManager >> unhandledErrorDefaultAction: anException [
-
-	"The current computation is terminated. The cause of the error should be logged or reported to the user. If the program is operating in an interactive debugging environment the computation should be suspended and the debugger activated."
-	anException debug
 ]
 
 { #category : 'global state' }

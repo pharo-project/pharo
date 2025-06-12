@@ -16,7 +16,7 @@ Class {
 	#tag : 'Loggers'
 }
 
-{ #category : 'utilities' }
+{ #category : 'logging' }
 TranscriptLogger >> nextPut: anAnnouncement [
 
 	anAnnouncement crTrace

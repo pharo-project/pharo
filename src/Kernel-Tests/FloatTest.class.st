@@ -410,12 +410,6 @@ FloatTest >> testNaNCompare [
 		self assert: (comp2 ~= theNaN) description: warningMessage]
 ]
 
-{ #category : 'tests - NaN behavior' }
-FloatTest >> testNaNisLiteral [
-
-	self deny: Float nan isLiteral description: 'there is no literal representation of NaN'
-]
-
 { #category : 'tests - zero behavior' }
 FloatTest >> testNegativeZeroAbs [
 

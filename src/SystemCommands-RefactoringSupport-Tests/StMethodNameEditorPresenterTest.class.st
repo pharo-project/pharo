@@ -16,10 +16,14 @@ StMethodNameEditorPresenterTest >> a [
 StMethodNameEditorPresenterTest >> a: a b: b c: c [
 ]
 
+{ #category : 'accessing' }
+StMethodNameEditorPresenterTest >> aWithAnObject: anObject [
+]
+
 { #category : 'running' }
 StMethodNameEditorPresenterTest >> methodNamedFor: aSymbol [
 	^ RBMethodName
-		selector: (self class >> aSymbol) selector
+		selector: aSymbol
 		arguments: ((self class >> aSymbol) ast arguments collect: [:each | each name])
 ]
 
@@ -48,6 +52,96 @@ StMethodNameEditorPresenterTest >> testAddArgument [
 	methodNameEditor canAddArgs: true.
 	(methodNameEditor argumentsList actions allCommands do: [ :e |
 		(e name = 'Add') ifTrue: [ self assert: e isEnabled ] ])
+]
+
+{ #category : 'tests - argument validation' }
+StMethodNameEditorPresenterTest >> testAddArgumentToKeywordSelector [
+	| dialog |
+	dialog := StMethodNameEditorPresenterAnswerForTest new.
+	dialog label: 'arg'.
+	
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
+	methodNameEditor invalidArgNames: ((self class >> #a:b:c:) ast arguments collect: [:each | each name]).
+	methodNameEditor requestor: dialog.
+	methodNameEditor addArgumentToKeywordSelector: (RBArgumentName name: 'arg' value: nil).
+	self assert: methodNameEditor previewResult label equals: 'a: a b: b c: c with: arg'
+	
+	
+]
+
+{ #category : 'tests - argument validation' }
+StMethodNameEditorPresenterTest >> testAddArgumentToKeywordSelectorBogusEmptyAfterCleaning [
+	| dialog |
+	dialog := StMethodNameEditorPresenterAnswerForTest new.
+	dialog label: '%%%%'.
+	
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
+	methodNameEditor invalidArgNames: ((self class >> #a:b:c:) ast arguments collect: [:each | each name]).
+	methodNameEditor requestor: dialog.
+	methodNameEditor addArgumentToKeywordSelector: (RBArgumentName name: '%%%%' value: nil).
+	self assert: methodNameEditor previewResult label equals: 'a: a b: b c: c with: anObject'
+	
+	
+]
+
+{ #category : 'tests - argument validation' }
+StMethodNameEditorPresenterTest >> testAddArgumentToKeywordSelectorBogusEmptyInForbiddenListAfterCleaning [
+	| dialog |
+	dialog := StMethodNameEditorPresenterAnswerForTest new.
+	dialog label: '%%%%self'.
+	
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
+	methodNameEditor invalidArgNames: ((self class >> #a:b:c:) ast arguments collect: [:each | each name]).
+	methodNameEditor requestor: dialog.
+	methodNameEditor addArgumentToKeywordSelector: (RBArgumentName name: '%%%%' value: nil).
+	self assert: methodNameEditor previewResult label equals: 'a: a b: b c: c with: anObject'
+	
+	
+]
+
+{ #category : 'tests - argument validation' }
+StMethodNameEditorPresenterTest >> testAddArgumentToKeywordSelectorBogusNotEmptyAfterCleaning [
+	| dialog |
+	dialog := StMethodNameEditorPresenterAnswerForTest new.
+	dialog label: '%arg'.
+	
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
+	methodNameEditor invalidArgNames: ((self class >> #a:b:c:) ast arguments collect: [:each | each name]).
+	methodNameEditor requestor: dialog.
+	methodNameEditor addArgumentToKeywordSelector: (RBArgumentName name: '%arg' value: nil).
+	self assert: methodNameEditor previewResult label equals: 'a: a b: b c: c with: arg'
+	
+	
+]
+
+{ #category : 'tests - argument validation' }
+StMethodNameEditorPresenterTest >> testAddArgumentToUnarySelector [
+	
+	| dialog |
+	dialog := StMethodNameEditorPresenterAnswerForTest new.
+	dialog label: 'point'.
+	
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a).
+	methodNameEditor requestor: dialog.
+	methodNameEditor addArgumentToUnarySelector.
+	self assert: methodNameEditor previewResult label equals: 'a: point'
+	
+	
+]
+
+{ #category : 'tests - argument validation' }
+StMethodNameEditorPresenterTest >> testAddArgumentToUnarySelectorWithBogusEmptyAfterCleaningInput [
+	
+	| dialog |
+	dialog := StMethodNameEditorPresenterAnswerForTest new.
+	dialog label: ':'.
+	
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a).
+	methodNameEditor requestor: dialog.
+	methodNameEditor addArgumentToUnarySelector.
+	self assert: methodNameEditor previewResult label equals: 'a: anObject'
+	
+	
 ]
 
 { #category : 'tests - up/down buttons' }
@@ -142,6 +236,34 @@ StMethodNameEditorPresenterTest >> testChangeInInputSelectorWithToMuchAccessorTh
 	self assert: methodNameEditor previewResult label equals: '(invalid)'
 ]
 
+{ #category : 'tests - argument selection' }
+StMethodNameEditorPresenterTest >> testGetNewKeywordName [
+	
+	| dialog |
+	dialog := StMethodNameEditorPresenterAnswerForTest new.
+	dialog label: 'point'.
+	
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
+	methodNameEditor requestor: dialog.
+	self assert: methodNameEditor getNewKeywordPartBodyName equals: 'point'
+	
+	
+]
+
+{ #category : 'tests - argument selection' }
+StMethodNameEditorPresenterTest >> testGetNewKeywordNameMockReturnsTheValue [
+	
+	| dialog |
+	dialog := StMethodNameEditorPresenterAnswerForTest new.
+	dialog label: ':'.
+	
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
+	methodNameEditor requestor: dialog.
+	self assert: methodNameEditor getNewKeywordPartBodyName equals: ':'
+	
+	
+]
+
 { #category : 'tests - initial state' }
 StMethodNameEditorPresenterTest >> testInitialArgumentListAutoSelection [
 
@@ -158,6 +280,82 @@ StMethodNameEditorPresenterTest >> testInitialButtonDownIsDisable [
 StMethodNameEditorPresenterTest >> testInitialButtonUpIsDisable [
 	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a).
 	self deny: methodNameEditor upButton isEnabled
+]
+
+{ #category : 'tests - argument validation' }
+StMethodNameEditorPresenterTest >> testNewArgNameWithConflictingArgumentName [
+	
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
+	methodNameEditor invalidArgNames: ((self class >> #a:b:c:) ast arguments collect: [:each | each name]).
+	self assert: (methodNameEditor newArgName: 'a') equals: 'a1'.
+	self assert: (methodNameEditor newArgName: 'b') equals: 'b1'
+	
+	
+]
+
+{ #category : 'tests - argument validation' }
+StMethodNameEditorPresenterTest >> testNewArgNameWithGarbage [
+	
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
+	methodNameEditor invalidArgNames: ((self class >> #a:b:c:) ast arguments collect: [:each | each name]).
+	self assert: (methodNameEditor newArgName: '!!@%%$$##!!') equals: 'anObject'
+	
+]
+
+{ #category : 'tests - argument validation' }
+StMethodNameEditorPresenterTest >> testNewArgNameWithGarbageWithLetters [
+	
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
+	methodNameEditor invalidArgNames: ((self class >> #a:b:c:) ast arguments collect: [:each | each name]).
+	self assert: (methodNameEditor newArgName: '!!@ab!!') equals: 'ab'
+	
+]
+
+{ #category : 'tests - argument validation' }
+StMethodNameEditorPresenterTest >> testNewArgNameWithGarbageWithNumber [
+	
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
+	methodNameEditor invalidArgNames: ((self class >> #a:b:c:) ast arguments collect: [:each | each name]).
+	self assert: (methodNameEditor newArgName: '!!@122!!') equals: 'a122'
+	
+]
+
+{ #category : 'tests - argument validation' }
+StMethodNameEditorPresenterTest >> testNewArgNameWithSelf [
+	
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
+	methodNameEditor invalidArgNames: ((self class >> #a:b:c:) ast arguments collect: [:each | each name]).
+	self assert: (methodNameEditor newArgName: 'self') equals: 'anObject'
+	
+]
+
+{ #category : 'tests - argument validation' }
+StMethodNameEditorPresenterTest >> testNewArgNameWithanObjectGiveSelfOne [
+	
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
+	methodNameEditor invalidArgNames: ((self class >> #aWithAnObject:) ast arguments collect: [:each | each name]).
+	self assert: (methodNameEditor newArgName: 'self') equals: 'anObject1'
+	
+]
+
+{ #category : 'tests - argument validation' }
+StMethodNameEditorPresenterTest >> testNewArgNameWithanObjectWithCleanedVersionEndingUpInForbiddenList [
+	
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #aWithAnObject:).
+	methodNameEditor invalidArgNames: ((self class >> #aWithAnObject:) ast arguments collect: [:each | each name]).
+	"we cannot propose anObject for the new argument as replacement of %%self because the method second argument is already anObject
+		%%self -> self -> '' -> anObject -> anObject1'"
+	self assert: (methodNameEditor newArgName: '%%self') equals: 'anObject1'
+	
+]
+
+{ #category : 'tests - argument validation' }
+StMethodNameEditorPresenterTest >> testNewArgNameWithoutConflictingArgumentName [
+	
+	methodNameEditor := StMethodNameEditorPresenter on: (self methodNamedFor: #a:b:c:).
+	methodNameEditor invalidArgNames: ((self class >> #a:b:c:) ast arguments collect: [:each | each name]).
+	self assert: (methodNameEditor newArgName: 'point') equals: 'point'
+	
 ]
 
 { #category : 'tests - argument selection' }

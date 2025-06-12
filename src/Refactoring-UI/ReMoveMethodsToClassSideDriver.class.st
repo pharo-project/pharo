@@ -4,13 +4,6 @@ I'm a model for user interaction for the rename method refactoring.
 Class {
 	#name : 'ReMoveMethodsToClassSideDriver',
 	#superclass : 'ReInteractionDriver',
-	#instVars : [
-		'class',
-		'originalMessage',
-		'newMessage',
-		'shouldEscape',
-		'methodNameEditorPresenterClass'
-	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers'
@@ -57,15 +50,16 @@ ReMoveMethodsToClassSideDriver >> changes [
 ]
 
 { #category : 'configuration' }
-ReMoveMethodsToClassSideDriver >> defaultSelectDialog [ 
+ReMoveMethodsToClassSideDriver >> defaultSelectDialog [
 
-	^ SpSelectDialog new
-		    title: 'Warning you may break your code';
-		          label: 'One or more methods are already defined on the class side!';
-		          items: self breakingChoices;
-		          display: [ :each | each description ];
-		          displayIcon: [ :each | self iconNamed: each systemIconName ];
-		          openModal
+	^ self class defaultSelectDialog
+		  title: 'Warning you may break your code';
+		  label:
+			  'One or more methods are already defined on the class side!';
+		  items: self breakingChoices;
+		  display: [ :each | each description ];
+		  displayIcon: [ :each | self iconNamed: each systemIconName ];
+		  openModal
 ]
 
 { #category : 'execution' }

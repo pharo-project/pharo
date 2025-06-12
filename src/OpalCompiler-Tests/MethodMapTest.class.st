@@ -8,10 +8,18 @@ Class {
 
 { #category : 'utilities' }
 MethodMapTest >> compileAndRunExample: aSelector [
-	| oldMethod recompiledMethod |
-	oldMethod := MethodMapExamples>>aSelector.
-	recompiledMethod := oldMethod methodClass compiler compile: oldMethod sourceCode.
-	^recompiledMethod valueWithReceiver: MethodMapExamples new
+
+	| recompiledMethod |
+	recompiledMethod := self compileExample: aSelector.
+	^ recompiledMethod valueWithReceiver: MethodMapExamples new
+]
+
+{ #category : 'utilities' }
+MethodMapTest >> compileExample: aSelector [
+
+	| oldMethod |
+	oldMethod := MethodMapExamples >> aSelector.
+	^ oldMethod methodClass compiler compile: oldMethod sourceCode
 ]
 
 { #category : 'tests - ast mapping' }
@@ -77,6 +85,17 @@ MethodMapTest >> testCompiledBlockSourceNode [
 	method := OpalCompiler new compile: 'foo Object. [ self ]. ^ #bar'.
 	block := method literals detect: #isCompiledBlock.
 	self assert: block sourceNode equals: (self parseExpression: '[ self ]')
+]
+
+{ #category : 'tests - ast mapping' }
+MethodMapTest >> testConstantBlockIsMappedToBlockNode [
+
+	| method block |
+	method := self compileExample: #exampleConstantBlock.
+	block := method literalAt: 1.
+	self assert: block isBlock.
+	
+	self assert: block compiledBlock ast isBlock
 ]
 
 { #category : 'tests - temp access' }

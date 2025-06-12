@@ -60,10 +60,10 @@ OCNotice >> errorLevel [
 ]
 
 { #category : 'inspecting' }
-OCNotice >> inspectionSource [
-
+OCNotice >> inspectionSource: aBuilder [
 	<inspectorPresentationOrder: 30 title: 'Source'>
-	^ node inspectionSource
+	
+	^ node inspectionSource: aBuilder
 ]
 
 { #category : 'testing' }

@@ -1,3 +1,6 @@
+"
+I allow to load code with Metacello from command line.
+"
 Class {
 	#name : 'ClapMetacello',
 	#superclass : 'ClapPharoApplication',
@@ -8,35 +11,26 @@ Class {
 { #category : 'command line' }
 ClapMetacello class >> metacello [
 	<commandline>
-	^ (ClapCommand id: #metacello)
+	^ (ClapCommandSpec id: #metacello)
 		description: 'Load code using Metacello';
-		add: ClapFlag forHelp;
-		add: ClapCommand forHelp;
-		add: ((ClapPositional id: #REPOSITORY)
-			description: 'URL of the repository to load code from');
-		add: ((ClapPositional id: #NAME)
-			description: 'Name of the project to load');
-		add: ((ClapFlag id: #groups)
-			description: 'Names of groups to load, comma-separated';
-			add: ((ClapPositional id: #GROUPS)
-				meaning: [ :pos | pos word splitOn: $, ];
-				implicitMeaning: [ #() ]));
-		add: ((ClapFlag id: #version)
-			description: 'Version to load (only valid for configurations)';
-			add: (ClapPositional id: #VERSION));
-		meaning: [ :args |
-			args	at: #helpFlag ifPresent: [ :help | help value; exitSuccess ].
-			(self with: args) execute ]
+		commandClass: self;
+		addHelp;
+		add: ClapCommandSpec forHelp;
+		addPositional: #REPOSITORY description: 'URL of the repository to load code from';
+		addPositional: #NAME description: 'Name of the project to load';
+		addFlagWithPositional: #groups description: 'Names of groups to load, comma-separated';
+		addFlagWithPositional: #version description: 'Version to load (only valid for configurations)';
+		yourself
 ]
 
 { #category : 'baselines' }
 ClapMetacello >> baselineName [
-	^ arguments at: #NAME
+	^ self positional: #NAME
 ]
 
 { #category : 'execution' }
 ClapMetacello >> execute [
-	self outputStreamDo: [ :out |
+	self outputStreamDo: [ :out | 
 		out
 			print: self repositoryUrl;
 			print: self baselineName;
@@ -45,15 +39,15 @@ ClapMetacello >> execute [
 
 { #category : 'accessing' }
 ClapMetacello >> groups [
-	^ arguments at: #version
+	^ $, split: (self positional: #version)
 ]
 
 { #category : 'accessing' }
 ClapMetacello >> repositoryUrl [
-	^ arguments at: #REPOSITORY
+	^ self positional: #REPOSITORY
 ]
 
 { #category : 'accessing' }
 ClapMetacello >> version [
-	^ arguments at: #groups
+	^ self positional: #groups
 ]

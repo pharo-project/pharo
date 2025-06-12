@@ -9,7 +9,7 @@ Class {
 	#tag : 'Conditions'
 }
 
-{ #category : 'accessing' }
+{ #category : 'initialization' }
 ReClassesAreNotMetaClassCondition >> initialize [ 
 
 	super initialize.

@@ -64,7 +64,7 @@ CoBenchmarkContext >> isScripting [
 { #category : 'accessing' }
 CoBenchmarkContext >> position [
 
-	^ position first + 1
+	^ position + 1
 ]
 
 { #category : 'accessing' }

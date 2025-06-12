@@ -718,11 +718,6 @@ RubSmalltalkEditor >> findValidKeywordIn: sourceCode at: locationIndex ifFound: 
 ]
 
 { #category : 'do-its' }
-RubSmalltalkEditor >> format [
-	self model formatSourceCodeInView
-]
-
-{ #category : 'do-its' }
 RubSmalltalkEditor >> highlightEvaluateAndDo: aBlock [
 	"Treat the current selection as an expression; evaluate it and invoke aBlock with the result."
 
@@ -796,7 +791,7 @@ RubSmalltalkEditor >> internalCallToBrowse: aSelector [
 		          classFromPattern: aSelector
 		          withCaption: 'choose a class to browse...'.
 	aClass ifNil: [ ^ self ].
-	(self tools toolNamed: #rowser) openOnClass: aClass
+	(self tools toolNamed: #browser) openOnClass: aClass
 ]
 
 { #category : 'menu messages' }

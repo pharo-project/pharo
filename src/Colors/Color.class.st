@@ -1314,9 +1314,9 @@ Color >> colorForInsets [
 
 { #category : 'accessing' }
 Color >> contrast: aColor [
-	"Get a constrast ratio between to colors. 
-	Constrast is computed from luminance value of these colors.
-	Formula L1/L2 is based on ISO-9241-3 and ANSI-HFES-100-1988.
+	"Get the contrast ratio between the given color and me. 
+	Contrast is computed from the luminance values of these colors.
+	The L1/L2 formula is based on ISO 9241-3 and ANSI/HFES 100-1988.
 	https://www.w3.org/TR/WCAG20-TECHS/G17.html#G17-tests"
 
 	| l1 l2 a |
@@ -1333,10 +1333,10 @@ Color >> contrast: aColor [
 Color >> contrastingBlackAndWhiteColor [
 	"Answer black or white depending on the luminance."
 
-	self isTransparent ifTrue: [ ^ self class black].
-	^self luminance > 0.5
-		ifTrue: [self class black]
-		ifFalse: [self class white]
+	self isTransparent ifTrue: [ ^ self class black ].
+	^ self relativeLuminance > 0.5
+		ifTrue: [ self class black ]
+		ifFalse: [ self class white ]
 ]
 
 { #category : 'converting' }
@@ -1344,10 +1344,9 @@ Color >> contrastingColorAdjustment [
 	"Answer darker or lighter color depending on the luminance."
 
 	self isTransparent ifTrue: [ ^ self ].
-
-	^ self luminance > 0.5
+	^ self relativeLuminance > 0.5
 		ifTrue: [ self darker ]
-		ifFalse:  [ self lighter ]
+		ifFalse: [ self lighter ]
 ]
 
 { #category : 'transformations' }
@@ -1700,25 +1699,26 @@ Color >> isColor [
 
 { #category : 'testing' }
 Color >> isContrastCompliantForISO92413: aColor [
-	"Return true if the ISO92413 stardard consider myself and the given color with enough contrast to be used in an UI."
+	"Return true if the ISO 9241-3 standard considers the given color and myself to have sufficient contrast to be used in a UI.
+	Failing to achieve this level of contrast can result in reduced readability and poor visual clarity."
 
-	^ (self contrast: aColor) > 3
+	^ (self contrast: aColor) >= 3
 ]
 
 { #category : 'testing' }
 Color >> isContrastCompliantForWCAG2AA: aColor [
-	"Return true if the WCAG2AA stardard consider myself and the given color with enough contrast to be used in an UI.
-	With this standard respecrted, your UI is considered good for the majority of population"
+	"Return true if the WCAG 2 AA standard considers the given color and myself to have sufficient contrast to be used in a UI.
+	With this standard respected, your UI is considered suitable for the majority of the population."
 
-	^ (self contrast: aColor) > 4.5
+	^ (self contrast: aColor) >= 4.5
 ]
 
 { #category : 'testing' }
 Color >> isContrastCompliantForWCAG2AAA: aColor [
-	"Return true if the WCAG2AA stardard consider myself and the given color with enough contrast to be used in an UI.
-	With this standard respecrted, your UI is considered good for people of 80yo"
+	"Return true if the WCAG 2 AAA standard considers the given color and myself to have sufficient contrast to be used in a UI.
+	With this standard respected, your UI is considered suitable for people aged 80 and older."
 
-	^ (self contrast: aColor) > 7
+	^ (self contrast: aColor) >= 7
 ]
 
 { #category : 'testing' }
@@ -2014,7 +2014,9 @@ Color >> red [
 
 { #category : 'accessing' }
 Color >> relativeLuminance [
-	"Return the relative luminance Y of this color, a derivation of luminance signal from ITU-R BT.709-6 to considere human eye colors different sensitivity.
+	"Return the relative luminance (Y) of this color.
+	Unlike absolute luminance, Y is based on the luminance signal defined in ITU-R BT.709-6
+	that accounts for the varying sensitivity of the human eye to colors.
 	https://www.w3.org/WAI/GL/wiki/Relative_luminance"
 
 	| r g b a |

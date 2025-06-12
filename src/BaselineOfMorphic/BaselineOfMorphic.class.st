@@ -68,18 +68,14 @@ BaselineOfMorphic >> baseline: spec [
 				repository: repository;
 				loads: 'core' ].
 
-		spec package: 'Transcript-Core'.
-
 		spec package: 'Native-Browser'.
 
 		spec package: 'Regex-Core'.
 
 		spec package: 'Morphic-Base'.
-		spec package: 'Morphic-Examples'.
 		spec package: 'Morphic-Widgets-Basic'.
 		spec package: 'Morphic-Widgets-ColorPicker'.
 		spec package: 'Morphic-Widgets-Extra'.
-		spec package: 'Morphic-Widgets-List'.
 		spec package: 'Morphic-Widgets-Pluggable'.
 		spec package: 'Morphic-Widgets-PolyTabs'.
 		spec package: 'Morphic-Widgets-Scrolling'.
@@ -120,8 +116,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Text-Diff'.
 		spec package: 'Text-Edition'.
 		spec package: 'Text-Scanning'.
-
-		spec package: 'Morphic-Widgets-TickList'.
 
 		spec package: 'System-Identification'.
 

@@ -9,7 +9,8 @@ Class {
 		'renderer',
 		'characterReceivedAction',
 		'windowClosedAction',
-		'extent'
+		'extent',
+		'lastShownText'
 	],
 	#category : 'EmergencyDebugger-View',
 	#package : 'EmergencyDebugger',
@@ -85,7 +86,7 @@ EDDisplayInterface >> ensureWindowOpen [
 	attrs
 		title: 'Emergency Debugger';
 		extent: self extent;
-		resizable: false.
+		resizable: true.
 
 	window := OSWindow
 		createWithAttributes: attrs
@@ -97,6 +98,13 @@ EDDisplayInterface >> ensureWindowOpen [
 EDDisplayInterface >> extent [
 
 	^ extent ifNil: [ extent := 650 @ 700 ]
+]
+
+{ #category : 'private - display' }
+EDDisplayInterface >> extent: aValue [
+ 
+	extent := aValue.
+	renderer ifNotNil: [ renderer newExtent: aValue ]
 ]
 
 { #category : 'private - display' }
@@ -125,11 +133,21 @@ EDDisplayInterface >> red [
 { #category : 'accessing' }
 EDDisplayInterface >> show: aText [
 
+	lastShownText := aText.
+
 	self
 		display: (self
 			composeParagraphWith: aText
 			inFrame: self frame)
 		in: self frame
+]
+
+{ #category : 'accessing' }
+EDDisplayInterface >> showLastShownText [
+
+	lastShownText ifNil: [ lastShownText := '' asText ].
+	self clear.
+	^ self show: lastShownText
 ]
 
 { #category : 'accessing' }

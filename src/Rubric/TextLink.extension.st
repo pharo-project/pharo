@@ -2,5 +2,5 @@ Extension { #name : 'TextLink' }
 
 { #category : '*Rubric-Editing-Core' }
 TextLink >> rubMayActOnEvent: anEvent [
-	^ anEvent isMouseDown and: [ anEvent commandKeyPressed ]
+	^ anEvent isMouseDown and: [ anEvent metaKeyPressed ]
 ]

@@ -53,7 +53,7 @@ OSWorldRenderer class >> defaultExtent [
 { #category : 'accessing' }
 OSWorldRenderer class >> isApplicableFor: aWorld [
 
-	^ Smalltalk isHeadless and: [ CommandLineArguments new hasOption: 'interactive' ]
+	^ CommandLineArguments new hasOption: 'interactive'
 ]
 
 { #category : 'accessing' }

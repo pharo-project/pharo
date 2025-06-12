@@ -224,7 +224,7 @@ ProcessorScheduler >> nextReadyProcess [
 
 	quiescentProcessLists reverseDo: [ :list |
 		list ifNotEmpty: [
-			list first suspendedContext ifNotNil: [:proc | ^ proc ] ] ].
+			list first ifNotNil: [:proc | ^ proc ] ] ].
 	^ nil
 ]
 

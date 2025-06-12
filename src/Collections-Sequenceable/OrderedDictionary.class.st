@@ -263,7 +263,7 @@ OrderedDictionary >> at: key update: updateBlock initial: initBlocktOrValue [
 	"I am used to update the value at a given key. The updateBlock is passed
 	the existing value, and the result of the block is stored back.
 	If the key does not exist, store the value of the initBlocktOrValue.
-	initBlocktOrValue can be a block in case the initial value is expencive to compute."
+	initBlocktOrValue can be a block in case the initial value is expensive to compute."
 	| val |
 	val := self at: key ifAbsent: [ nil ].
 	val

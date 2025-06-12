@@ -1,9 +1,15 @@
 "
 Checks for repeated literal equality tests that should rather be implemented as a search in a literal collection.
+
+For example, the code:
+    value = 1 or: [value = 2 or: [value = 3]]
+    
+Can be improved to:
+    #(1 2 3) includes: value
 "
 Class {
 	#name : 'ReSearchingLiteralRule',
-	#superclass : 'ReNodeMatchRule',
+	#superclass : 'ReNodeRewriteRule',
 	#category : 'General-Rules-Optimization',
 	#package : 'General-Rules',
 	#tag : 'Optimization'
@@ -12,6 +18,12 @@ Class {
 { #category : 'accessing' }
 ReSearchingLiteralRule class >> group [
 	^ self optimizationGroup
+]
+
+{ #category : 'accessing' }
+ReSearchingLiteralRule class >> rationale [
+
+	^ 'Using the includes: method on a literal array is more readable and efficient than chaining multiple equality tests with or:'
 ]
 
 { #category : 'accessing' }
@@ -26,50 +38,64 @@ ReSearchingLiteralRule class >> uniqueIdentifierName [
 	^'SearchingLiteralRule'
 ]
 
-{ #category : 'hooks' }
-ReSearchingLiteralRule >> afterCheck: aNode mappings: mappingDict [
-	^ self
-		isSearchingLiteralExpression: aNode
-		for: (mappingDict at: '``@object')
-]
-
 { #category : 'initialization' }
 ReSearchingLiteralRule >> initialize [
-	super initialize.
-	self matchesAny: #(
-			'``@object = `#literal or: [``@expression]'
-			'``@object == `#literal or: [``@expression]'
-			'`#literal = ``@object or: [``@expression]'
-			'`#literal == ``@object or: [``@expression]'
-			'``@expression | (``@object = `#literal)'
-			'``@expression | (``@object == `#literal)'
-			'``@expression | (`#literal = ``@object)'
-			'``@expression | (`#literal == ``@object)')
-]
 
-{ #category : 'private' }
-ReSearchingLiteralRule >> isSearchingLiteralExpression: aSearchingNode for: anObjectNode [
-	| argument arguments |
-	aSearchingNode isMessage ifFalse: [^false].
-	arguments := aSearchingNode arguments.
-	arguments size = 1 ifFalse: [^false].
-	argument := arguments first.
-	(#(#= #==) includes: aSearchingNode selector)
-		ifTrue:
-			[^(aSearchingNode receiver = anObjectNode
-				and: [aSearchingNode arguments first isLiteralNode]) or:
-						[aSearchingNode arguments first = anObjectNode
-							and: [aSearchingNode receiver isLiteralNode]]].
-	aSearchingNode selector = #|
-		ifTrue:
-			[^(self isSearchingLiteralExpression: aSearchingNode receiver
-				for: anObjectNode)
-					and: [self isSearchingLiteralExpression: argument for: anObjectNode]].
-	aSearchingNode selector = #or: ifFalse: [^false].
-	argument isBlock ifFalse: [^false].
-	argument body statements size = 1 ifFalse: [^false].
-	^(self isSearchingLiteralExpression: aSearchingNode receiver
-		for: anObjectNode) and:
-				[self isSearchingLiteralExpression: argument body statements first
-					for: anObjectNode]
+	super initialize.
+	
+	self
+		replace: '``@object = `#literal1 or: [``@object = `#literal2]'
+		with: '#(`#literal1 `#literal2) includes: ``@object'.
+
+	self
+		replace: '``@object == `#literal1 or: [``@object == `#literal2]'
+		with: '#(`#literal1 `#literal2) includes: ``@object'.
+
+	self
+		replace: '`#literal1 = ``@object or: [`#literal2 = ``@object]'
+		with: '#(`#literal1 `#literal2) includes: ``@object'.
+
+	self
+		replace: '`#literal1 == ``@object or: [`#literal2 == ``@object]'
+		with: '#(`#literal1 `#literal2) includes: ``@object'.
+
+	self
+		replace: '(``@object = `#literal1) | (``@object = `#literal2)'
+		with: '#(`#literal1 `#literal2) includes: ``@object'.
+
+	self
+		replace: '(``@object == `#literal1) | (``@object == `#literal2)'
+		with: '#(`#literal1 `#literal2) includes: ``@object'.
+
+	self
+		replace: '(`#literal1 = ``@object) | (`#literal2 = ``@object)'
+		with: '#(`#literal1 `#literal2) includes: ``@object'.
+
+	self
+		replace: '(`#literal1 == ``@object) | (`#literal2 == ``@object)'
+		with: '#(`#literal1 `#literal2) includes: ``@object'.
+
+	self
+		replace:
+		'``@object = `#literal1 or: [``@object = `#literal2 or: [``@object = `#literal3]]'
+		with: '#(`#literal1 `#literal2 `#literal3) includes: ``@object'.
+
+	self
+		replace:
+		'``@object == `#literal1 or: [``@object == `#literal2 or: [``@object == `#literal3]]'
+		with: '#(`#literal1 `#literal2 `#literal3) includes: ``@object'.
+
+	self
+		replace:
+		'`#literal1 = ``@object or: [`#literal2 = ``@object or: [`#literal3 = ``@object]]'
+		with: '#(`#literal1 `#literal2 `#literal3) includes: ``@object'.
+
+	self
+		replace:
+		'`#literal1 == ``@object or: [`#literal2 == ``@object or: [`#literal3 == ``@object]]'
+		with: '#(`#literal1 `#literal2 `#literal3) includes: ``@object'.
+		
+	self
+		replace: '``@object = `#literal1 or: [#() = ``@object | (#() == ``@object)]'
+		with: '#(`#literal1 #()) includes: ``@object'.
 ]

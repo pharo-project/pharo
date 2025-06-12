@@ -56,59 +56,37 @@ Class {
 	#package : 'HeuristicCompletion-Benchmarks'
 }
 
-{ #category : 'running' }
-CoStaticBenchmarks class >> customHeuristics: aBuilder [
+{ #category : 'examples' }
+CoStaticBenchmarks class >> messageBenchmarksOnNECompletion [
+	<script>
+	
+	(CoStaticBenchmarksMessage new
+    	scope: (CoBenchmarkPackage on: CompletionSorter package);
+    	builder: CoASTHeuristicsResultSetBuilder new;
+    	run) inspect
 
-	self subclassResponsibility
+
+
 ]
 
 { #category : 'running' }
-CoStaticBenchmarks class >> defaultHeuristics: aBuilder [
+CoStaticBenchmarks class >> onPackage: aPackage heuristics: aHeuristicsBlock [
 
-	self subclassResponsibility
+	| benchmark builder |
+	builder := CoASTHeuristicsResultSetBuilder new.
+	aHeuristicsBlock value: builder.
+
+	benchmark := self new
+		             scope: (CoBenchmarkPackage on: aPackage);
+		             builder: builder;
+		             yourself.
+
+	benchmark run.
+	^ benchmark
 ]
 
-{ #category : 'running' }
-CoStaticBenchmarks class >> runAllOnClass: aPackage [
-    "Runs the CoStaticBenchmarks for every sorter class in sorterClasses,
-    all using the given package as the scope. 
-    Answers a Dictionary from sorter class symbols to the resulting CoStaticBenchmarks instance 
-    so you can inspect or retrieve results later."
-    
-    | results |
-    results := Dictionary new.
-    
-    self sorterClasses do: [ :sorterSymbol |
-        | sorterClass benchmark |
-        
-        "Retrieve the actual class object for the symbol"
-        sorterClass := Smalltalk at: sorterSymbol ifAbsent: [ 
-            self error: (String streamContents: [ :s | 
-    				s nextPutAll: 'Sorter class '.
-    				s nextPutAll: sorterSymbol asString.
-    				s nextPutAll: ' not found in Smalltalk image.'
-			])
-        ].
-
-        "Create and run a new benchmark for that sorter"
-        benchmark := self new
-            scope: (CoBenchmarkPackage on: aPackage);
-            builder: (CoGlobalSorterResultSetBuilder new
-                sorterClass: sorterClass;
-                yourself);
-            yourself.
-
-        benchmark run.
-
-        "Store the instance so we can retrieve/inspect it later"
-        results at: sorterSymbol put: benchmark
-    ].
-
-    ^ results
-]
-
-{ #category : 'running' }
-CoStaticBenchmarks class >> runAllOnPackage: aPackageIdentifier [
+{ #category : 'running sorters' }
+CoStaticBenchmarks class >> runAllSortersOnPackage: aPackageIdentifier [
     "Runs the CoStaticBenchmarks for every sorter class in sorterClasses using the given package as the scope.
     Returns a Dictionary mapping sorter class symbols to their benchmark instances."
 
@@ -122,10 +100,7 @@ CoStaticBenchmarks class >> runAllOnPackage: aPackageIdentifier [
     self sorterClasses do: [ :sorterSymbol |
         | sorterClass benchmark |
         
-        sorterClass := Smalltalk at: sorterSymbol ifAbsent: [
-            self error: 'Sorter class ', sorterSymbol asString, ' not found in Smalltalk image.'
-        ].
-    
+        sorterClass := Smalltalk at: sorterSymbol.
         benchmark := self new
             scope: (CoBenchmarkPackage on: pkg);
             builder: (CoGlobalSorterResultSetBuilder new
@@ -141,40 +116,48 @@ CoStaticBenchmarks class >> runAllOnPackage: aPackageIdentifier [
     ^ results
 ]
 
+{ #category : 'examples' }
+CoStaticBenchmarks class >> runMessageAllSortersOnNeCompletionPackage [
+	<script>
+	
+	^ (CoStaticBenchmarksMessage runAllSortersOnPackage: (PackageOrganizer default packageNamed: 'NECompletion')) inspect. 
+]
+
+{ #category : 'examples' }
+CoStaticBenchmarks class >> runMessageOnNeCompletionPackage [
+	<script>
+	
+	^ (CoStaticBenchmarksMessage 
+			runOnPackage: (PackageOrganizer default packageNamed: 'NECompletion')
+			heuristics: [:b | b]) inspect. 
+]
+
 { #category : 'running' }
-CoStaticBenchmarks class >> runAllOnPackage: aPackageOrName heuristics: aHeuristicsBlock [
+CoStaticBenchmarks class >> runOnPackage: aPackage heuristics: aHeuristicsBlock [
 
-	| benchmark builder package |
-	package := aPackageOrName isString
-		           ifTrue: [
-		           PackageOrganizer default packageNamed: aPackageOrName ]
-		           ifFalse: [ aPackageOrName ].
-
-	package ifNil: [
-		^ self error: 'Package not found: ' , aPackageOrName printString ].
-
-	builder := CoASTHeuristicsResultSetBuilder new.
-	aHeuristicsBlock value: builder.
-
-	"Create and run the benchmark"
-	benchmark := self new
-		             scope: (CoBenchmarkPackage on: package);
-		             builder: builder;
-		             yourself.
-
+	| benchmark |
+	benchmark := self onPackage: aPackage heuristics: aHeuristicsBlock.
 	benchmark run.
 	^ benchmark
 ]
 
-{ #category : 'running' }
-CoStaticBenchmarks class >> runFor: aClass [
-
-	^ self new
-		scope: aClass;
-		run
+{ #category : 'examples' }
+CoStaticBenchmarks class >> runVariableAllSortersOnNeCompletionPackage [
+	<script>
+	
+	^ (CoStaticBenchmarksVariables runAllSortersOnPackage: (PackageOrganizer default packageNamed: 'NECompletion')) inspect. 
 ]
 
-{ #category : 'running' }
+{ #category : 'examples' }
+CoStaticBenchmarks class >> runVariableOnNeCompletionPackage [
+	<script>
+	
+	^ (CoStaticBenchmarksVariables 
+			runOnPackage: (PackageOrganizer default packageNamed: 'NECompletion')
+			heuristics: [:b | b]) inspect. 
+]
+
+{ #category : 'running sorters' }
 CoStaticBenchmarks class >> sorterClasses [
 
     "Answers an array of the symbols of all sorter classes to be run."
@@ -194,39 +177,40 @@ CoStaticBenchmarks >> accuracyForCompletionIndex: completionIndexRange withPrefi
 ]
 
 { #category : 'inspector' }
-CoStaticBenchmarks >> accuracyInspectionResults [
+CoStaticBenchmarks >> accuracyInspectionResults: aBuilder [
 	"Generates a table displaying completion accuracy."
-
 	<inspectorPresentationOrder: 0 title: 'Accuracy'>
 	| table |
-	table := SpTablePresenter new
-		         items: self completionIndexes;
-		         addColumn: (SpCompositeTableColumn new
-				          title: 'Prefix';
-				          addColumn:
-					          (SpStringTableColumn evaluated: [ :completionIndexRange |
-							           | label |
-							           label := '% '.
-							           label := label , (completionIndexRange size = 1
-									                     ifTrue: [
-										                     { 'fail'. '1st'. '2nd'. '3rd' } at:
-												                     completionIndexRange first + 1 ]
-									                     ifFalse: [
-										                     completionIndexRange first asString
-										                     , '-'
-										                     , completionIndexRange last asString ]).
-							           label ]);
-				          yourself).
+	
+	table := aBuilder newTable
+		addStyle: 'stList';
+		items: self completionIndexes;
+		addColumn: (SpCompositeTableColumn new
+		title: 'Prefix';
+		addColumn: (SpStringTableColumn evaluated: [ :completionIndexRange |
+			| label |
+			label := '% '.
+			label := label, (completionIndexRange size = 1
+				 ifTrue: [
+					 { 'fail'. '1st'. '2nd'. '3rd' } at:
+							 completionIndexRange first + 1 ]
+				 ifFalse: [
+					 completionIndexRange first asString
+					 , '-'
+					 , completionIndexRange last asString ]).
+		   label ]);
+		yourself).
 
 	self prefixSizes do: [ :prefixSize |
 		table addColumn: (SpStringTableColumn
-				 title: prefixSize asString
-				 evaluated: [ :completionIndexRange |
-					 | float |
-					 float := self
-						          accuracyForCompletionIndex: completionIndexRange
-						          withPrefixSize: prefixSize.
-					 float * 100 asFloat round: 2 ]) ].
+			 title: prefixSize asString
+			 evaluated: [ :completionIndexRange |
+				 | float |
+				 float := self
+					accuracyForCompletionIndex: completionIndexRange
+					withPrefixSize: prefixSize.
+				 float * 100 asFloat round: 2 ]) ].
+	
 	^ table
 ]
 
@@ -832,29 +816,27 @@ CoStaticBenchmarks >> maxPrefixSizeFor: receiver [
 ]
 
 { #category : 'inspector' }
-CoStaticBenchmarks >> memoryInspectionResults [
+CoStaticBenchmarks >> memoryInspectionResults: aBuilder [
 	"Displays memory usage statistics."
-	
 	<inspectorPresentationOrder: 3 title: 'Memory Usage'>
 	| table |
-	table := SpTablePresenter new
-		         items: self prefixSizes;
-		         addColumn: (SpStringTableColumn
-				          title: 'Prefix'
-				          evaluated: [ :prefixSize | prefixSize asString ]);
-		         addColumn: (SpStringTableColumn
-				          title: 'Total (bytes)'
-				          evaluated: [ :prefixSize |
-					          (self totalMemoryForPrefix: prefixSize) asString ]);
-		         addColumn:
-			         (SpStringTableColumn
-				          title: 'Total (MB)'
-				          evaluated: [ :prefixSize |
-					          ((self totalMemoryForPrefix: prefixSize) / 1024 / 1024)
-						          asFloat
-						          round: 2;
-						          asString ]);
-		         yourself.
+	table := aBuilder newTable
+		addStyle: 'stList';
+		items: self prefixSizes;
+		addColumn: (SpStringTableColumn
+			title: 'Prefix'
+			evaluated: [ :prefixSize | prefixSize asString ]);
+		addColumn: (SpStringTableColumn
+			title: 'Total (bytes)'
+			evaluated: [ :prefixSize | (self totalMemoryForPrefix: prefixSize) asString ]);
+		addColumn: (SpStringTableColumn
+			title: 'Total (MB)'
+			evaluated: [ :prefixSize |
+			  ((self totalMemoryForPrefix: prefixSize) / 1024 / 1024)
+				  asFloat
+				  round: 2;
+				  asString ]);
+		yourself.
 	^ table
 ]
 
@@ -911,24 +893,24 @@ CoStaticBenchmarks >> mmrForPrefixSize: prefixSize [
 ]
 
 { #category : 'inspector' }
-CoStaticBenchmarks >> mmrInspectionResults [
+CoStaticBenchmarks >> mmrInspectionResults: aBuilder [
 	"Displays Mean Reciprocal Rank results."
-
 	<inspectorPresentationOrder: 4 title: 'MMR Results'>
 	| table |
-	table := SpTablePresenter new
-		         items: self prefixSizes;
-		         addColumn: (SpStringTableColumn
-				          title: 'Prefix'
-				          evaluated: [ :prefixSize | prefixSize asString ]);
-		         addColumn: (SpStringTableColumn
-				          title: 'Mean Reciprocal Rank'
-				          evaluated: [ :prefixSize |
-					          | valueAsString |
-					          valueAsString := (self mmrForPrefixSize: prefixSize)
-						                           asFloat round: 2.
-					          valueAsString ]);
-		         yourself.
+	
+	table := aBuilder newTable
+		addStyle: 'stList';
+		items: self prefixSizes;
+		addColumn: (SpStringTableColumn
+			title: 'Prefix'
+			evaluated: [ :prefixSize | prefixSize asString ]);
+		addColumn: (SpStringTableColumn
+			title: 'Mean Reciprocal Rank'
+			evaluated: [ :prefixSize |
+			  | valueAsString |
+			  valueAsString := (self mmrForPrefixSize: prefixSize) asFloat round: 2.
+			  valueAsString ]);
+		yourself.
 
 	^ table
 ]
@@ -975,22 +957,20 @@ CoStaticBenchmarks >> ndcgForPrefixSize: prefixSize [
 ]
 
 { #category : 'inspector' }
-CoStaticBenchmarks >> ndcgInspectionResults [
+CoStaticBenchmarks >> ndcgInspectionResults: aBuilder [
 	"Displays NDCG (ranking effectiveness) results."
-	
 	<inspectorPresentationOrder: 5 title: 'NDCG Results'>
-	| table |
-	table := SpTablePresenter new
-		         items: self prefixSizes;
-		         addColumn: (SpStringTableColumn
-				          title: 'Prefix'
-				          evaluated: [ :prefixSize | prefixSize asString ]);
-		         addColumn: (SpStringTableColumn
-				          title: 'NDCG'
-				          evaluated: [ :prefixSize |
-					          (self ndcgForPrefixSize: prefixSize) asFloat round: 2 ]);
-		         yourself.
-	^ table
+	
+	^ aBuilder newTable
+		addStyle: 'stList';
+		items: self prefixSizes;
+		addColumn: (SpStringTableColumn
+			title: 'Prefix'
+			evaluated: [ :prefixSize | prefixSize asString ]);
+		addColumn: (SpStringTableColumn
+			title: 'NDCG'
+			evaluated: [ :prefixSize | (self ndcgForPrefixSize: prefixSize) asFloat round: 2 ]);
+		yourself
 ]
 
 { #category : 'benchmarks' }
@@ -1023,15 +1003,16 @@ CoStaticBenchmarks >> rankDistributionForPrefixSize: prefixSize [
 ]
 
 { #category : 'inspector' }
-CoStaticBenchmarks >> rankDistributionInspectionResults [
-
+CoStaticBenchmarks >> rankDistributionInspectionResults: aBuilder [
 	<inspectorPresentationOrder: 6 title: 'Rank Distribution'>
 	| table |
-	table := SpTablePresenter new
-		         items: self prefixSizes;
-		         addColumn: (SpStringTableColumn
-				          title: 'Prefix'
-				          evaluated: [ :prefixSize | prefixSize asString ]).
+	
+	table := aBuilder newTable
+		addStyle: 'stList';
+		items: self prefixSizes;
+		addColumn: (SpStringTableColumn
+			  title: 'Prefix'
+			  evaluated: [ :prefixSize | prefixSize asString ]).
 	1 to: 10 do: [ :rank |
 		table addColumn: (SpStringTableColumn
 				 title: 'Rank ' , rank asString
@@ -1054,25 +1035,28 @@ CoStaticBenchmarks >> recallAtK: k withPrefixSize: prefixSize [
 ]
 
 { #category : 'inspector' }
-CoStaticBenchmarks >> recallInspectionResults [
+CoStaticBenchmarks >> recallInspectionResults: aBuilder [
 	"Displays recall@K metrics."
-	
 	<inspectorPresentationOrder: 7 title: 'Recall@K Results'>
 	| table kValues |
 	kValues := #( 1 3 5 10 ).
-	table := SpTablePresenter new
-		         addColumn:
-			         (SpStringTableColumn
-				          title: 'K'
-				          evaluated: [ :k | k asString ]);
-		         yourself.
+	
+	table := aBuilder newTable
+		addList: 'stList';
+		addColumn: (SpStringTableColumn
+			title: 'K'
+			evaluated: [ :k | k asString ]);
+		yourself.
+	
 	self prefixSizes do: [ :prefixSize |
 		table addColumn: (SpStringTableColumn
 				 title: 'Prefix ' , prefixSize asString
 				 evaluated: [ :k |
 					 ((self recallAtK: k withPrefixSize: prefixSize) * 100 asFloat
 						  round: 2) asString ]) ].
+	
 	table items: kValues.
+	
 	^ table
 ]
 
@@ -1113,33 +1097,30 @@ CoStaticBenchmarks >> startTimeMeasurement [
 ]
 
 { #category : 'inspector' }
-CoStaticBenchmarks >> timeInspectionResults [
+CoStaticBenchmarks >> timeInspectionResults: aBuilder [
 	"Generates a table displaying time-based benchmark results."
-
 	<inspectorPresentationOrder: 1 title: 'Time Results'>
 	| table |
-	table := SpTablePresenter new
-		         items: self prefixSizes;
-		         addColumn: (SpStringTableColumn
-				          title: 'Prefix'
-				          evaluated: [ :prefixSize | prefixSize asString ]);
-		         addColumn: (SpStringTableColumn
-				          title: 'Total (ms)'
-				          evaluated: [ :prefixSize |
-					          (self totalTimeForPrefix: prefixSize) asString ]);
-		         addColumn:
-			         (SpStringTableColumn
-				          title: 'Count'
-				          evaluated: [ :prefixSize |
-					          (completionTimes at: prefixSize ifAbsent: [ #( 0 0 ) ])
-						          second asString ]);
-		         addColumn:
-			         (SpStringTableColumn
-				          title: 'Average (ms)'
-				          evaluated: [ :prefixSize |
-					          (self averageTimeForPrefix: prefixSize) asFloat round:
-							          2 ]);
-		         yourself.
+	
+	table := aBuilder newTable
+		addStyle: 'stList';
+		items: self prefixSizes;
+			addColumn: (SpStringTableColumn
+			title: 'Prefix'
+		evaluated: [ :prefixSize | prefixSize asString ]);
+			addColumn: (SpStringTableColumn
+			title: 'Total (ms)'
+		evaluated: [ :prefixSize | (self totalTimeForPrefix: prefixSize) asString ]);
+		addColumn:(SpStringTableColumn
+			title: 'Count'
+			evaluated: [ :prefixSize |
+			  (completionTimes at: prefixSize ifAbsent: [ #( 0 0 ) ])
+				  second asString ]);
+		addColumn: (SpStringTableColumn
+			title: 'Average (ms)'
+			evaluated: [ :prefixSize |
+			  (self averageTimeForPrefix: prefixSize) asFloat round: 2 ]);
+		yourself.
 
 	^ table
 ]
@@ -1177,10 +1158,12 @@ CoStaticBenchmarks >> totalTimeForPrefix: prefixSize [
 ]
 
 { #category : 'inspector' }
-CoStaticBenchmarks >> totalTimeInspectionResults [
-
+CoStaticBenchmarks >> totalTimeInspectionResults: aBuilder [
 	<inspectorPresentationOrder: 2 title: 'Total Time'>
-	^ self totalTime asPresenter
+	
+	^ aBuilder newLabel
+		label: self totalTime;
+		yourself
 ]
 
 { #category : 'benchmarks' }

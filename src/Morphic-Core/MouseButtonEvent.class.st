@@ -38,6 +38,13 @@ MouseButtonEvent >> isSpecialGesture [
 ]
 
 { #category : 'accessing' }
+MouseButtonEvent >> isSpecialMetaMenuGesture [
+	"This is the gesture to open the Halos"
+	^ (self blueButtonPressed & self controlKeyPressed) 
+	or: [self redButtonPressed & self altKeyPressed & self shiftPressed & self controlKeyPressed]
+]
+
+{ #category : 'accessing' }
 MouseButtonEvent >> redButtonChanged [
 	"Answer true if the red mouse button has changed. This is the first mouse button."
 

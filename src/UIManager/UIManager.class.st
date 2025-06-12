@@ -337,12 +337,6 @@ UIManager >> confirm: queryString trueChoice: trueChoice falseChoice: falseChoic
 UIManager >> deactivate [
 ]
 
-{ #category : 'debug' }
-UIManager >> debugProcess: process context: context label: title fullView: bool notification: notificationString [
-
-	self subclassResponsibility
-]
-
 { #category : 'ui process' }
 UIManager >> defer: aBlock [
 	"Evaluate the given Block in the UI thread as soon as there is nothing scheduled.
@@ -386,17 +380,6 @@ UIManager >> edit: aText label: labelString accept: aBlockOrNil [
 	^self subclassResponsibility
 ]
 
-{ #category : 'debug requests' }
-UIManager >> handleDebugRequest: aDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
-	"Provide a default handling for unhandled error.
-	 We should never reach this code, because it should be overridden by subclasses.
-	 (but we can't put 'self subclassResponsibility' , because it will cause infinite loop,
-	 in case if current ui manager having no override of this method).
-	 This method is only for documentation purposes."
-	self flag: 'Code smell: can someone explain why we have this code if we should never reach it? And if we do, why quitting without any information? Finally, why the self subclassResponsibility produces an infinite loop?'.
-	Smalltalk snapshot: false andQuit: true
-]
-
 { #category : 'error handling' }
 UIManager >> handleError: anError [
 
@@ -434,14 +417,6 @@ UIManager >> handleWarningDebugRequest: aWarningDebugRequest fromDebuggerSystem:
 	"Handle warning notification. Should be overidden by subclass."
 
 	self subclassResponsibility
-]
-
-{ #category : 'accessing' }
-UIManager >> headlessManager [
-	"Answer an instance of headless manager, which will be used when image runs headless
-	 and non-interactive. We put it here, so subclasses can override it."
-
-	^CommandLineUIManager replacing: self
 ]
 
 { #category : 'ui requests' }
@@ -526,7 +501,7 @@ UIManager >> nonInteractiveManager [
 	"Answer an instance of non-interactive manager, which will be used when image runs headless.
 	 We put it here, so subclasses can override it."
 
-	^NonInteractiveUIManager replacing: self
+	^NonInteractiveUIManager beDefault
 ]
 
 { #category : 'default actions' }
@@ -535,12 +510,6 @@ UIManager >> onFontsChanged [
 
 { #category : 'events' }
 UIManager >> onPrimitiveError: aString [
-]
-
-{ #category : 'ui requests' }
-UIManager >> openComparisionFrom: targetMethodSource to: originalMethodSource belongingTo: aClass from: aChange [
-
-	^self subclassResponsibility
 ]
 
 { #category : 'ui TEasilyThemed' }

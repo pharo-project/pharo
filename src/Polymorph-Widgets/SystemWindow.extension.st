@@ -383,6 +383,7 @@ SystemWindow >> collapseBoxHit [
 SystemWindow >> configureForEmbedding [
 	"Set up the window so it can be embedded into another morph."
 
+	self detachKeymapCategory: #WindowShortcuts.
 	labelArea owner ifNotNil: [
 		self
 			hasDropShadow: false;
@@ -394,16 +395,15 @@ SystemWindow >> configureForEmbedding [
 
 { #category : '*Polymorph-Widgets' }
 SystemWindow >> configureForUnembedding [
-
 	"Set up the window so it can be unembedded and placed in the world."
 
-	labelArea owner
-		ifNil: [ self
+	labelArea owner ifNil: [
+			self
 				makeBordered;
 				initializeLabelArea;
 				themeChanged;
-				addGrips
-			]
+				addGrips ].
+	self attachKeymapCategory: #WindowShortcuts.
 ]
 
 { #category : '*Polymorph-Widgets' }
@@ -474,24 +474,25 @@ SystemWindow >> drawDropShadowOn: aCanvas [
 SystemWindow >> expandBoxHit [
 	"The fullscreen expand box has been hit"
 
+	self canBeMaximized ifFalse: [ ^ self ].
 	self isCollapsed ifTrue: [
-		self
-			hide;
-			collapseOrExpand.
-		self unexpandedFrame ifNil: [ self unexpandedFrame: fullFrame ].
-		self
-			fullscreen;
-			setExpandBoxBalloonText.
-		^ self show ].
+			self
+				hide;
+				collapseOrExpand.
+			self unexpandedFrame ifNil: [ self unexpandedFrame: fullFrame ].
+			self
+				fullscreen;
+				setExpandBoxBalloonText.
+			^ self show ].
 	self unexpandedFrame
 		ifNil: [
-			self
-				unexpandedFrame: fullFrame;
-				fullscreen ]
+				self
+					unexpandedFrame: fullFrame;
+					fullscreen ]
 		ifNotNil: [
-			self
-				bounds: self unexpandedFrame;
-				unexpandedFrame: nil ].
+				self
+					bounds: self unexpandedFrame;
+					unexpandedFrame: nil ].
 	self setExpandBoxBalloonText
 ]
 

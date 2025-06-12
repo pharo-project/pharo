@@ -235,9 +235,58 @@ PharoDarkTheme >> taskbarItemSelectedPressedFillStyleFor: aButton [
 ]
 
 { #category : 'label-styles - windows' }
+PharoDarkTheme >> windowCloseFormSet [
+	"Answer the form set to use for the close button of a window."
+
+	^ self iconFormSetNamed: #windowCloseInverted
+]
+
+{ #category : 'label-styles - windows' }
+PharoDarkTheme >> windowCloseOverFormSet [
+	"Answer the form set to use for mouse over window close buttons"
+
+	^ self iconFormSetNamed: #windowCloseInverted
+]
+
+{ #category : 'label-styles - windows' }
 PharoDarkTheme >> windowLabelForText: aTextOrString [
 
 	^ (super windowLabelForText: aTextOrString)
 		  color: self textColor;
 		  yourself
+]
+
+{ #category : 'label-styles - windows' }
+PharoDarkTheme >> windowMaximizeFormSet [
+	"Answer the form set to use for the maximize button of a window."
+
+	^ self iconFormSetNamed: #windowMaximizeInverted
+]
+
+{ #category : 'label-styles - windows' }
+PharoDarkTheme >> windowMaximizeOverFormSet [
+	"Answer the form set to use for mouse over window maximize buttons"
+
+	^ self iconFormSetNamed: #windowMaximizeInverted
+]
+
+{ #category : 'label-styles - windows' }
+PharoDarkTheme >> windowMenuFormSet [
+	"Answer the form set to use for the menu button of a window."
+
+	^ self iconFormSetNamed: #windowMenuInverted
+]
+
+{ #category : 'label-styles - windows' }
+PharoDarkTheme >> windowMinimizeFormSet [
+	"Answer the form set to use for the minimize button of a window."
+
+	^ self iconFormSetNamed: #windowMinimizeInverted
+]
+
+{ #category : 'label-styles - windows' }
+PharoDarkTheme >> windowMinimizeOverFormSet [
+	"Answer the form set to use for mouse over window minimize buttons"
+
+	^ self iconFormSetNamed: #windowMinimizeInverted
 ]

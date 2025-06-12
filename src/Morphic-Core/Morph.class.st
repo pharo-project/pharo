@@ -2871,8 +2871,7 @@ Morph >> handleMouseDown: anEvent [
 	anEvent hand removePendingBalloonFor: self.
 	anEvent wasHandled: true.
 
-	(anEvent controlKeyPressed and: [
-		 self cmdGesturesEnabled and: [ anEvent shiftPressed ] ]) ifTrue: [
+	(anEvent isSpecialMetaMenuGesture and: [ self cmdGesturesEnabled ]) ifTrue: [
 		self invokeMetaMenu: anEvent.
 		^ self eventHandler ifNotNil: [ :handler |
 			  handler mouseDown: anEvent fromMorph: self ] ].
@@ -2881,7 +2880,7 @@ Morph >> handleMouseDown: anEvent [
 	anEvent hand newMouseFocus: self event: anEvent.
 
 	"Check to open halo"
-	anEvent isSpecialGesture
+	(anEvent isSpecialGesture and: [self cmdGesturesEnabled])
 		ifTrue: [
 			^ self handleSpecialGesture: anEvent ].
 
@@ -5728,27 +5727,6 @@ Morph >> simulateClickWith: buttons position: position [
 			buttons: type value
 			hand: hand
 			stamp: Time millisecondClockValue) ]
-]
-
-{ #category : 'event testing' }
-Morph >> simulateKeyStroke: aCharacter [
-	| event |
-
-	event := KeyboardEvent new
-				setType: #keystroke
-				buttons: 0
-				position: 0@0
-				keyValue: aCharacter charCode
-				charCode: aCharacter charCode
-				hand: self activeHand
-				stamp: 0.
-	self keyStroke: event
-]
-
-{ #category : 'event testing' }
-Morph >> simulateKeyStrokes: aString [
-
-	aString do: [:c | self simulateKeyStroke: c ]
 ]
 
 { #category : 'event testing' }
