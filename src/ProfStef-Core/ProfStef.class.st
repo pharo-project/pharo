@@ -244,7 +244,7 @@ ProfStef >> last [
 ProfStef >> lessonView [
 
 	^ lessonView
-			ifNil: [ lessonView := LessonView new]
+			ifNil: [ lessonView := LessonView new ]
 ]
 
 { #category : 'accessing' }
@@ -256,7 +256,7 @@ ProfStef >> lessonView: aLessonView [
 { #category : 'navigating' }
 ProfStef >> next [
 	self player next.
-	self showCurrentLesson .
+	self showCurrentLesson
 			
 ]
 

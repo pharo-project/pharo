@@ -5,7 +5,6 @@ Class {
 		'listLesson',
 		'parent',
 		'okButton',
-		'profInstance',
 		'selectedLesson',
 		'cancelButton',
 		'profStef'
@@ -16,10 +15,10 @@ Class {
 }
 
 { #category : 'private - accessing' }
-StProfStefLessonChooser class >> model: anModelPresenter [ 
+StProfStefLessonChooser class >> model: anModel [
 	^ self basicNew 
 	profStef: ProfStef default;
-	setModelBeforeInitialization: anModelPresenter;
+	setModelBeforeInitialization: anModel;
 	initialize;
 	yourself.
 ]
@@ -96,5 +95,5 @@ StProfStefLessonChooser >> setModelBeforeInitialization: aModel [
 
 { #category : 'layout' }
 StProfStefLessonChooser >> windowTitle [ 
-	^ 'lesson choise'
+	^ 'lesson chooser'
 ]

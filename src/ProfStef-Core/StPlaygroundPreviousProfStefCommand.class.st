@@ -9,7 +9,7 @@ Class {
 { #category : 'default' }
 StPlaygroundPreviousProfStefCommand class >> defaultDescription [
 
-	^ 'go to the previous lessons'
+	^ 'go to the previous lesson'
 ]
 
 { #category : 'accessing' }
