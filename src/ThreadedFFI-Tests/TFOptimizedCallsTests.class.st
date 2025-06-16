@@ -5,6 +5,17 @@ Class {
 	#package : 'ThreadedFFI-Tests'
 }
 
+{ #category : 'running' }
+TFOptimizedCallsTests class >> run [
+	
+	1000 timesCollect: [ :index | 
+		Stdio stdout 
+			<< index printString;
+			<< ' ';
+			<< (self buildSuite run) printString;
+			crlf; flush ]
+]
+
 { #category : 'building suites' }
 TFOptimizedCallsTests class >> testParameters [
 
@@ -123,6 +134,39 @@ TFOptimizedCallsTests >> testPointerDoubleDoubleToVoid [
 				self assert: arg0 equals: args first.
 				self assert: arg1 equals: args second.
 				self assert: arg2 equals: args third]
+]
+
+{ #category : 'tests' }
+TFOptimizedCallsTests >> testPointerPointerPointerPointerToVoid [
+
+	| arg0 arg1 arg2 arg3 |
+	self
+		performTestOn: [ :ptr :dbl0 :dbl1 :dbl2 |
+			arg0 := ptr.
+			arg1 := dbl0.
+			arg2 := dbl1.
+			arg3 := dbl2 ]
+		argumentTypes: {
+				TFBasicType pointer.
+				TFBasicType pointer.
+				TFBasicType pointer.
+				TFBasicType pointer }
+		returnType: TFBasicType void
+		arguments: {
+				16r20340 tfPointerAddress.
+				16r20341 tfPointerAddress.
+				16r20342 tfPointerAddress.
+				16r20343 tfPointerAddress }
+		validationBlock: [ :method :args |
+			arg0 := nil.
+			arg1 := nil.
+			arg2 := nil.
+			arg3 := nil.
+			method valueWithReceiver: nil arguments: args.
+			self assert: arg0 equals: args first.
+			self assert: arg1 equals: args second.
+			self assert: arg2 equals: args third.
+			self assert: arg3 equals: args fourth ]
 ]
 
 { #category : 'tests' }
