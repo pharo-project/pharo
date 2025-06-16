@@ -1,5 +1,5 @@
 Class {
-	#name : 'StProfStefChoiceLesson',
+	#name : 'StProfStefLessonChooser',
 	#superclass : 'SpPresenter',
 	#instVars : [
 		'listLesson',
@@ -7,24 +7,25 @@ Class {
 		'okButton',
 		'profInstance',
 		'selectedLesson',
-		'cancelButton'
+		'cancelButton',
+		'profStef'
 	],
-	#category : 'ProfStef-Core-presenter',
+	#category : 'ProfStef-Core-Presenter',
 	#package : 'ProfStef-Core',
-	#tag : 'presenter'
+	#tag : 'Presenter'
 }
 
-{ #category : 'as yet unclassified' }
-StProfStefChoiceLesson class >> profInst: aProfStefInst model: anModelPresenter [ 
+{ #category : 'private - accessing' }
+StProfStefLessonChooser class >> model: anModelPresenter [ 
 	^ self basicNew 
-	profStefInst: ProfStef default;
+	profStef: ProfStef default;
 	setModelBeforeInitialization: anModelPresenter;
 	initialize;
 	yourself.
 ]
 
 { #category : 'layout' }
-StProfStefChoiceLesson >> defaultLayout [ 
+StProfStefLessonChooser >> defaultLayout [ 
 	^ (SpBoxLayout newTopToBottom 
 		add: listLesson;
 		add: (SpBoxLayout newLeftToRight hAlignEnd;
@@ -38,12 +39,7 @@ StProfStefChoiceLesson >> defaultLayout [
 ]
 
 { #category : 'initialization' }
-StProfStefChoiceLesson >> initialize [
-	super initialize.
-]
-
-{ #category : 'initialization' }
-StProfStefChoiceLesson >> initializeButtons [ 
+StProfStefLessonChooser >> initializeButtons [ 
 	okButton := self newButton.
 	okButton label: 'go to' .
 	okButton action: [ self okAction ].
@@ -54,9 +50,9 @@ StProfStefChoiceLesson >> initializeButtons [
 ]
 
 { #category : 'initialization' }
-StProfStefChoiceLesson >> initializeListLesson [
+StProfStefLessonChooser >> initializeListLesson [
 	listLesson := self newColumnView.
-	selectedLesson := profInstance player tutorial tutorial first.
+	selectedLesson := profStef player tutorial tutorial first.
 	
 	listLesson addColumnTitle: 'list of lesson'
 		setup: [ :aPresenter | aPresenter newLabel ]
@@ -64,11 +60,11 @@ StProfStefChoiceLesson >> initializeListLesson [
 		whenSelectedDo: [ :selection |
 				selectedLesson := selection.
 		];
-		items: profInstance player tutorial tutorial.
+		items: profStef player tutorial tutorial.
 ]
 
 { #category : 'initialization' }
-StProfStefChoiceLesson >> initializePresenter [ 
+StProfStefLessonChooser >> initializePresenter [ 
 	self initializeListLesson.
 	self initializeButtons.
 
@@ -77,28 +73,28 @@ StProfStefChoiceLesson >> initializePresenter [
 ]
 
 { #category : 'layout' }
-StProfStefChoiceLesson >> initializeWindow: aWindowPresenter [
+StProfStefLessonChooser >> initializeWindow: aWindowPresenter [
 	aWindowPresenter initialExtent: 500@200;
 	title: self windowTitle.
 ]
 
 { #category : 'api' }
-StProfStefChoiceLesson >> okAction [ 
-	profInstance tutorial: profInstance player tutorial class lesson: selectedLesson.
+StProfStefLessonChooser >> okAction [ 
+	profStef tutorial: profStef player tutorial class lesson: selectedLesson.
 	self delete.
 ]
 
 { #category : 'initialization' }
-StProfStefChoiceLesson >> profStefInst: aProfStef [
-	profInstance := aProfStef 
+StProfStefLessonChooser >> profStef: aProfStef [
+	profStef := aProfStef 
 ]
 
 { #category : 'layout' }
-StProfStefChoiceLesson >> setModelBeforeInitialization: aModel [
+StProfStefLessonChooser >> setModelBeforeInitialization: aModel [
 	parent := aModel.
 ]
 
 { #category : 'layout' }
-StProfStefChoiceLesson >> windowTitle [ 
+StProfStefLessonChooser >> windowTitle [ 
 	^ 'lesson choise'
 ]

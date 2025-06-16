@@ -1,9 +1,9 @@
 Class {
 	#name : 'StProfStefPlaygroundPageModel',
 	#superclass : 'StPlaygroundPage',
-	#category : 'ProfStef-Core-presenter',
+	#category : 'ProfStef-Core-Presenter',
 	#package : 'ProfStef-Core',
-	#tag : 'presenter'
+	#tag : 'Presenter'
 }
 
 { #category : 'inspector compatibility' }

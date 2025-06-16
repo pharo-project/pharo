@@ -10,9 +10,9 @@ Class {
 		'title',
 		'lesson'
 	],
-	#category : 'ProfStef-Core-core',
+	#category : 'ProfStef-Core-Base',
 	#package : 'ProfStef-Core',
-	#tag : 'core'
+	#tag : 'Base'
 }
 
 { #category : 'instance creation' }

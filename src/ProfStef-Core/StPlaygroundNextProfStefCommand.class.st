@@ -1,21 +1,21 @@
 Class {
 	#name : 'StPlaygroundNextProfStefCommand',
 	#superclass : 'StPlaygroundCommand',
-	#category : 'ProfStef-Core-command',
+	#category : 'ProfStef-Core-Command',
 	#package : 'ProfStef-Core',
-	#tag : 'command'
+	#tag : 'Command'
 }
 
 { #category : 'default' }
 StPlaygroundNextProfStefCommand class >> defaultDescription [
 
-	^ 'go to the next lessons'
+	^ 'go to the next lesson'
 ]
 
 { #category : 'accessing' }
 StPlaygroundNextProfStefCommand class >> defaultIconName [
 
-	^ #glamorousRight 
+	^ #right 
 ]
 
 { #category : 'default' }

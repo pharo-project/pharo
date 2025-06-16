@@ -13,9 +13,9 @@ See the `PharoTutorial` class comment to execute your own tutorial.
 Class {
 	#name : 'AbstractTutorial',
 	#superclass : 'Object',
-	#category : 'ProfStef-Core-core',
+	#category : 'ProfStef-Core-Base',
 	#package : 'ProfStef-Core',
-	#tag : 'core'
+	#tag : 'Base'
 }
 
 { #category : 'tutorial metainfo' }

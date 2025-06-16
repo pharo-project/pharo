@@ -1,9 +1,9 @@
 Class {
 	#name : 'StProfStefPlayground',
 	#superclass : 'StPlaygroundPresenter',
-	#category : 'ProfStef-Core-presenter',
+	#category : 'ProfStef-Core-Presenter',
 	#package : 'ProfStef-Core',
-	#tag : 'presenter'
+	#tag : 'Presenter'
 }
 
 { #category : 'private - factory' }

@@ -4,9 +4,9 @@ The default Pharo tutorial to learn the Pharo syntax
 Class {
 	#name : 'PharoSyntaxTutorial',
 	#superclass : 'AbstractTutorial',
-	#category : 'ProfStef-Core-core',
+	#category : 'ProfStef-Core-Base',
 	#package : 'ProfStef-Core',
-	#tag : 'core'
+	#tag : 'Base'
 }
 
 { #category : 'lessons' }

@@ -54,9 +54,9 @@ Class {
 	#classVars : [
 		'Instance'
 	],
-	#category : 'ProfStef-Core-core',
+	#category : 'ProfStef-Core-Base',
 	#package : 'ProfStef-Core',
-	#tag : 'core'
+	#tag : 'Base'
 }
 
 { #category : 'zen' }

@@ -11,9 +11,9 @@ Class {
 		'window',
 		'sourceTextModel'
 	],
-	#category : 'ProfStef-Core-core',
+	#category : 'ProfStef-Core-Base',
 	#package : 'ProfStef-Core',
-	#tag : 'core'
+	#tag : 'Base'
 }
 
 { #category : 'gui' }
@@ -90,7 +90,7 @@ LessonView >> open [
 
 { #category : 'gui' }
 LessonView >> showLesson: aLesson withTitle: aString [
-	self window firstPage windowTitle: aString; contents: (aLesson lesson).
+	self window firstPage windowTitle: aString; contents: aLesson lesson.
 	self window firstPage text unselectAll.
 	self isOpenInWindow ifFalse: [ self open ]
 ]
