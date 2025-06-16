@@ -9,8 +9,8 @@ Class {
 	#instVars : [
 		'font'
 	],
-	#category : 'Morphic-Widgets-List',
-	#package : 'Morphic-Widgets-List'
+	#category : 'Morphic-Deprecated',
+	#package : 'Morphic-Deprecated'
 }
 
 { #category : 'private' }

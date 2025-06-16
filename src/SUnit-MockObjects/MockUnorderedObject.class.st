@@ -15,6 +15,7 @@ Class {
 { #category : 'examples' }
 MockUnorderedObject class >> example [
 	<script>
+	<ignoreNotImplementedSelectors: #(doit negate:)>
 	| teachable |
 	teachable := self new.
 	teachable
@@ -39,7 +40,7 @@ MockUnorderedObject >> doesNotUnderstand: aMessage [
 		ifFalse: [voca valueWithArguments: aMessage arguments]
 ]
 
-{ #category : 'reflective operations' }
+{ #category : 'initialization' }
 MockUnorderedObject >> initialize [ 
 	
 	super initialize.

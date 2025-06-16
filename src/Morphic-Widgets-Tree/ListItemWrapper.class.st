@@ -9,8 +9,8 @@ Class {
 		'item',
 		'model'
 	],
-	#category : 'Morphic-Widgets-List',
-	#package : 'Morphic-Widgets-List'
+	#category : 'Morphic-Widgets-Tree',
+	#package : 'Morphic-Widgets-Tree'
 }
 
 { #category : 'instance creation' }

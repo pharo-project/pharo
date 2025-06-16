@@ -55,7 +55,7 @@ TDebugger classSide >> defaultDebuggerRank [
 { #category : 'debugging' }
 TDebugger classSide >> handlesDebugSession: aDebugSession [
 
-	^ SmalltalkImage current isInteractiveGraphic
+	^ SmalltalkImage current isInteractive
 ]
 
 { #category : 'accessing' }

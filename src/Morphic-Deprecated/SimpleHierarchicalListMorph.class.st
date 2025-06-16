@@ -22,8 +22,8 @@ Class {
 		'searchedElement',
 		'keystrokeActionSelector'
 	],
-	#category : 'Morphic-Widgets-List',
-	#package : 'Morphic-Widgets-List'
+	#category : 'Morphic-Deprecated',
+	#package : 'Morphic-Deprecated'
 }
 
 { #category : 'shortcuts' }
@@ -90,7 +90,7 @@ SimpleHierarchicalListMorph class >> exampleSubmorphs [
 	"[SimpleHierarchicalListMorph exampleSubmorphs]"
 	| morph |
 	morph :=
-		SimpleHierarchicalListMorph
+		self
 			on: [ Array with:  (MorphWithSubmorphsWrapper with: self currentWorld)  ]
 			list: #value
 			selected: nil
@@ -1066,6 +1066,15 @@ SimpleHierarchicalListMorph >> takesKeyboardFocus [
 	"Answer whether the receiver can normally take keyboard focus."
 
 	^true
+]
+
+{ #category : 'private' }
+SimpleHierarchicalListMorph >> themeChanged [
+	"Update the selection colour."
+
+	self selectionColor: self theme selectionColor.
+	self color: self defaultColor.
+	super themeChanged
 ]
 
 { #category : 'keyboard navigation' }

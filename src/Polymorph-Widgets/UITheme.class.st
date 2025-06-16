@@ -3475,28 +3475,6 @@ UITheme >> newTreeFormSet: expanded size: size color: color [
 ]
 
 { #category : 'morph creation' }
-UITheme >> newTreeIn: aThemedMorph for: aModel list: listSelector selected: getSelector changeSelected: setSelector [
-	"Answer a new tree morph."
-
-	^TreeListMorph new
-		selectionColor: self selectionColor;
-		font: self listFont;
-		on: aModel
-		list: listSelector
-		selected: getSelector
-		changeSelected: setSelector
-		menu: nil
-		keystroke: nil;
-		cornerStyle: aThemedMorph preferredCornerStyle;
-		"color: Color white;"
-		borderStyle: (BorderStyle inset width: 1 scaledByDisplayScaleFactor);
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
-		autoDeselect: false;
-		yourself
-]
-
-{ #category : 'morph creation' }
 UITheme >> newVerticalSeparatorIn: aThemedMorph [
 	"Answer a new vertical separator."
 

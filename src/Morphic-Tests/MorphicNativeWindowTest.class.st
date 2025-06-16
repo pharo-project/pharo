@@ -21,7 +21,7 @@ MorphicNativeWindowTest >> testMaximizeWindow [
 	 morphic behaves weird. PropagateNaturalHeight/Width is weak on Morphic because of 
 	 this (if not, see the algoritm I was forced to do), but for now passes (just, not on CI :)"
 
-	Smalltalk isInteractiveGraphic ifFalse: [ ^ self skip ].
+	Smalltalk isInteractive ifFalse: [ ^ self skip ].
 
 	window open.
 	window maximize.
@@ -35,7 +35,7 @@ MorphicNativeWindowTest >> testMinimizeWindow [
 	 morphic behaves weird. PropagateNaturalHeight/Width is weak on Morphic because of 
 	 this (if not, see the algoritm I was forced to do), but for now passes (just, not on CI :)"
 
-	Smalltalk isInteractiveGraphic ifFalse: [ ^ self skip ].
+	Smalltalk isInteractive ifFalse: [ ^ self skip ].
 	window open.
 
 	window minimize.
@@ -51,7 +51,7 @@ MorphicNativeWindowTest >> testNewWindowDefaultsIsNotMaximize [
 	 morphic behaves weird. PropagateNaturalHeight/Width is weak on Morphic because of 
 	 this (if not, see the algoritm I was forced to do), but for now passes (just, not on CI :)"
 
-	Smalltalk isInteractiveGraphic ifFalse: [ ^ self skip ].
+	Smalltalk isInteractive ifFalse: [ ^ self skip ].
 	window open.
 
 	self assert: window isMaximized equals: false
@@ -63,7 +63,7 @@ MorphicNativeWindowTest >> testNewWindowDefaultsIsNotMinimized [
 	 morphic behaves weird. PropagateNaturalHeight/Width is weak on Morphic because of 
 	 this (if not, see the algoritm I was forced to do), but for now passes (just, not on CI :)"
 
-	Smalltalk isInteractiveGraphic ifFalse: [ ^ self skip ].
+	Smalltalk isInteractive ifFalse: [ ^ self skip ].
 	window open.
 
 	self assert: window isNotMinimized
@@ -75,7 +75,7 @@ MorphicNativeWindowTest >> testRestoreWindow [
 	 morphic behaves weird. PropagateNaturalHeight/Width is weak on Morphic because of 
 	 this (if not, see the algoritm I was forced to do), but for now passes (just, not on CI :)"
 
-	Smalltalk isInteractiveGraphic ifFalse: [ ^ self skip ].
+	Smalltalk isInteractive ifFalse: [ ^ self skip ].
 	window open.
 	window restore.
 
