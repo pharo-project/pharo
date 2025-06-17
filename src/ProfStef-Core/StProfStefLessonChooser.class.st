@@ -15,10 +15,10 @@ Class {
 }
 
 { #category : 'private - accessing' }
-StProfStefLessonChooser class >> model: anModel [
+StProfStefLessonChooser class >> model: aModel [
 	^ self basicNew 
 	profStef: ProfStef default;
-	setModelBeforeInitialization: anModel;
+	setModelBeforeInitialization: aModel;
 	initialize;
 	yourself.
 ]
