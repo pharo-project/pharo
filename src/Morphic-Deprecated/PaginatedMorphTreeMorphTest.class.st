@@ -1,9 +1,8 @@
 Class {
 	#name : 'PaginatedMorphTreeMorphTest',
 	#superclass : 'TestCase',
-	#category : 'Morphic-Tests-Widgets',
-	#package : 'Morphic-Tests',
-	#tag : 'Widgets'
+	#category : 'Morphic-Deprecated',
+	#package : 'Morphic-Deprecated'
 }
 
 { #category : 'tests' }

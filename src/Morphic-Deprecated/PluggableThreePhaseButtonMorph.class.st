@@ -12,9 +12,8 @@ Class {
 		'pressedImageSelector',
 		'stateSelector'
 	],
-	#category : 'Morphic-Widgets-Basic-Buttons',
-	#package : 'Morphic-Widgets-Basic',
-	#tag : 'Buttons'
+	#category : 'Morphic-Deprecated',
+	#package : 'Morphic-Deprecated'
 }
 
 { #category : 'instance creation' }

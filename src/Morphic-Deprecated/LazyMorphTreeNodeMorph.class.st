@@ -7,8 +7,8 @@ Class {
 	#instVars : [
 		'drawable'
 	],
-	#category : 'Morphic-Widgets-Tree',
-	#package : 'Morphic-Widgets-Tree'
+	#category : 'Morphic-Deprecated',
+	#package : 'Morphic-Deprecated'
 }
 
 { #category : 'accessing' }

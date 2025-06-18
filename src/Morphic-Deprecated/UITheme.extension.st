@@ -27,30 +27,14 @@ UITheme >> newExpanderIn: aThemedMorph label: aString forAll: controls [
 ]
 
 { #category : '*Morphic-Deprecated' }
-UITheme >> newMorphDropListIn: aThemedMorph for: aModel list: listSel getSelected: getSel setSelected: setSel getEnabled: enabledSel useIndex: useIndex help: helpText [
-	"Answer a morph drop list for the given model."
+UITheme >> newFuzzyLabelIn: aThemedMorph for: aModel label: aString offset: offset alpha: alpha getEnabled: enabledSel [
+	"Answer a new fuzzy label."
 
-	^(MorphDropListMorph
-			on: aModel
-			list: listSel
-			selected: getSel
-			changeSelected: setSel
-			useIndex: useIndex)
-		selectionColor: self selectionColor;
-		getEnabledSelector: enabledSel;
-		cornerStyle: aThemedMorph preferredCornerStyle;
-		hResizing: #spaceFill;
-		vResizing: #shrinkWrap;
-		setBalloonText: helpText
-]
-
-{ #category : '*Morphic-Deprecated' }
-UITheme >> newOverflowRowIn: aThemedMorph forAll: aCollectionOfMorphs [
-	"Answer a new overflow row morph with the given contents."
-
-	^OverflowRowMorph new
-		baseMorphs: aCollectionOfMorphs;
-		yourself
+	^(FuzzyLabelMorph contents: aString font: self labelFont)
+		offset: offset;
+		alpha: alpha;
+		model: aModel;
+		getEnabledSelector: enabledSel
 ]
 
 { #category : '*Morphic-Deprecated' }
@@ -79,6 +63,24 @@ UITheme >> newListIn: aThemedMorph for: aModel list: listSelector selected: getS
 ]
 
 { #category : '*Morphic-Deprecated' }
+UITheme >> newMorphDropListIn: aThemedMorph for: aModel list: listSel getSelected: getSel setSelected: setSel getEnabled: enabledSel useIndex: useIndex help: helpText [
+	"Answer a morph drop list for the given model."
+
+	^(MorphDropListMorph
+			on: aModel
+			list: listSel
+			selected: getSel
+			changeSelected: setSel
+			useIndex: useIndex)
+		selectionColor: self selectionColor;
+		getEnabledSelector: enabledSel;
+		cornerStyle: aThemedMorph preferredCornerStyle;
+		hResizing: #spaceFill;
+		vResizing: #shrinkWrap;
+		setBalloonText: helpText
+]
+
+{ #category : '*Morphic-Deprecated' }
 UITheme >> newMorphListIn: aThemedMorph for: aModel list: listSelector getSelected: getSelector setSelected: setSelector getEnabled: enabledSel help: helpText [
 	"Answer a morph list for the given model."
 
@@ -98,6 +100,15 @@ UITheme >> newMorphListIn: aThemedMorph for: aModel list: listSelector getSelect
 		vResizing: #spaceFill;
 		getEnabledSelector: enabledSel;
 		setBalloonText: helpText
+]
+
+{ #category : '*Morphic-Deprecated' }
+UITheme >> newOverflowRowIn: aThemedMorph forAll: aCollectionOfMorphs [
+	"Answer a new overflow row morph with the given contents."
+
+	^OverflowRowMorph new
+		baseMorphs: aCollectionOfMorphs;
+		yourself
 ]
 
 { #category : '*Morphic-Deprecated' }

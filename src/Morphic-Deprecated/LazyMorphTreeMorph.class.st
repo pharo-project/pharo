@@ -9,8 +9,8 @@ Class {
 	#instVars : [
 		'lazyIncrement'
 	],
-	#category : 'Morphic-Widgets-Tree',
-	#package : 'Morphic-Widgets-Tree'
+	#category : 'Morphic-Deprecated',
+	#package : 'Morphic-Deprecated'
 }
 
 { #category : 'initialization' }

@@ -10,9 +10,8 @@ Class {
 		'pageSizeEditor',
 		'nextPageAllowed'
 	],
-	#category : 'Morphic-Widgets-Tree-Pagination',
-	#package : 'Morphic-Widgets-Tree',
-	#tag : 'Pagination'
+	#category : 'Morphic-Deprecated',
+	#package : 'Morphic-Deprecated'
 }
 
 { #category : 'accessing' }

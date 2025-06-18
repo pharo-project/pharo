@@ -13,7 +13,7 @@ Class {
 ReRenameInstanceVariableDriver >> configureRefactoring [
 
 	super configureRefactoring.
-	refactoring renameAccessors: true
+	refactoring renameAccessors: false
 ]
 
 { #category : 'factory method' }

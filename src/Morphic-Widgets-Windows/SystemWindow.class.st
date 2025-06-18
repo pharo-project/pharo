@@ -56,7 +56,7 @@ SystemWindow class >> buildShortcutsOn: aBuilder [
 	(aBuilder shortcut: #close)
 		category: #WindowShortcuts
 		default: PharoShortcuts current closeWindowShortcut
-		do: [ :target | SystemWindow closeTopWindow ]
+		do: [ :target | target delete ]
 		description: 'Close this window'
 ]
 
@@ -281,15 +281,15 @@ SystemWindow class >> closeTopWindow [
 	| announcement |
 	"Try to close the top window.  It may of course decline"
 	TopWindow ifNotNil: [ :window |
-		TopWindow := nil.
-		self useHideForClose
-			ifTrue: [
-				window hide.
-				announcement := WindowClosed new
-					                window: window;
-					                yourself.
-				self currentWorld announcer announce: announcement ]
-			ifFalse: [ window delete ] ]
+			TopWindow := nil.
+			self useHideForClose
+				ifTrue: [
+						window hide.
+						announcement := WindowClosed new
+							                window: window;
+							                yourself.
+						self currentWorld announcer announce: announcement ]
+				ifFalse: [ window delete ] ]
 ]
 
 { #category : 'accessing' }
@@ -908,7 +908,7 @@ SystemWindow >> defaultIsResizeable [
 	^ true
 ]
 
-{ #category : 'open/close' }
+{ #category : 'submorphs - add/remove' }
 SystemWindow >> delete [
 	"Should activate window before asking model if okToChange
 	since likely that a confirmation dialog will be requested.
@@ -1643,12 +1643,12 @@ SystemWindow >> preOpenInWorld: aWorld [
 { #category : 'activation' }
 SystemWindow >> privateBePassive [
 	"private"
-	self isInWorld ifFalse: [ ^self ].
+	self isInWorld ifFalse: [ ^ self ].
 
 	self
-	rememberKeyboardFocus: self activeHand keyboardFocus;
-	passivate;
-	announceDeActivated
+		rememberKeyboardFocus: self activeHand keyboardFocus;
+		passivate;
+		announceDeActivated
 ]
 
 { #category : 'layout' }
@@ -2019,6 +2019,12 @@ SystemWindow >> wantsExpandBox [
 
 { #category : 'events' }
 SystemWindow >> wantsHalo [
+	^ false
+]
+
+{ #category : 'resize/collapse' }
+SystemWindow >> wantsKeyboardFocus [
+
 	^ false
 ]
 

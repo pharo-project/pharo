@@ -569,11 +569,7 @@ OpalCompiler >> install [
 	self priorMethod ifNotNil: [
 		priorMethod migratePersistingPropertiesIn: method ].
 
-	changeStamp ifNil: [
-		changeStamp := Date today mmddyyyy , ' '
-		               ,
-			               ((String streamContents: [ :s |
-				                 Time now print24: true on: s ]) copyFrom: 1 to: 5) ].
+	changeStamp ifNil: [ changeStamp := DateAndTime now printString ].
 	logSource := self logged ifNil: [ true ].
 	protocol := protocol ifNil: [
 		            self priorMethod ifNotNil: [ self priorMethod protocol ] ].

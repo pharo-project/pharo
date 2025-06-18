@@ -68,7 +68,7 @@ RGCommentDefinitionTest >> testNewComment [
 	| newComment |
 	newComment := RGCommentDefinition new
 		content: 'This is a comment for test';
-		stamp: 'VeronicaUquillas 2011-03-22T14:51';
+		stamp: '2011-03-22T14:51';
 		yourself.
 
 	self assert: newComment isComment.
@@ -78,7 +78,6 @@ RGCommentDefinitionTest >> testNewComment [
 	self assert: newComment hasAuthor.
 	self assert: newComment timeStamp isNotNil.
 
-	self assert: newComment author equals: 'VeronicaUquillas'.
 	self assert: newComment timeStamp equals: '2011-03-22T14:51' asDateAndTime.
 	self assert: newComment parent equals: nil.
 	self assert: newComment environment equals: Smalltalk globals

@@ -63,7 +63,6 @@ BaselineOfBasicTools >> baseline: spec [
 				repository: repository ].
 		
 		spec package: 'ClassDefinitionPrinters'.
-		spec package: 'Tool-ProcessBrowser'.
 		spec package: 'Tool-Profilers'.
 		spec package: 'NECompletion'.
 		spec package: 'NECompletion-Morphic'.

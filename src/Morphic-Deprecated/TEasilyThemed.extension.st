@@ -63,56 +63,42 @@ TEasilyThemed >> newExpander: aString forAll: controls [
 ]
 
 { #category : '*Morphic-Deprecated' }
-TEasilyThemed >> newMorphDropListFor: aModel list: listSel getSelected: getSel setSelected: setSel getEnabled: enabledSel help: helpText [
-	"Answer a morph drop list for the given model."
-
-	^self
-		newMorphDropListFor: aModel
-		list: listSel
-		getSelected: getSel
-		setSelected: setSel
-		getEnabled: enabledSel
-		useIndex: true
-		help: helpText
-]
-
-{ #category : '*Morphic-Deprecated' }
-TEasilyThemed >> newMorphDropListFor: aModel list: listSel getSelected: getSel setSelected: setSel getEnabled: enabledSel useIndex: useIndex help: helpText [
-	"Answer a morph drop list for the given model."
+TEasilyThemed >> newFuzzyLabel: aString [
+	"Answer a new fuzzy label."
 
 	^self theme
-		newMorphDropListIn: self
-		for: aModel
-		list: listSel
-		getSelected: getSel
-		setSelected: setSel
-		getEnabled: enabledSel
-		useIndex: useIndex
-		help: helpText
-]
-
-{ #category : '*Morphic-Deprecated' }
-TEasilyThemed >> newMorphDropListFor: aModel list: listSel getSelected: getSel setSelected: setSel help: helpText [
-	"Answer a morph drop list for the given model."
-
-	^self
-		newMorphDropListFor: aModel
-		list: listSel
-		getSelected: getSel
-		setSelected: setSel
+		newFuzzyLabelIn: self
+		for: nil
+		label: aString
+		offset: 1
+		alpha: 0.5
 		getEnabled: nil
-		useIndex: true
-		help: helpText
 ]
 
 { #category : '*Morphic-Deprecated' }
-TEasilyThemed >> newOverflowRowForAll: aCollectionOfMorphs [
-	"Answer a new overflow row morph that provides a drop down for
-	the given contents that are unable to fit the bounds."
+TEasilyThemed >> newFuzzyLabelFor: aModel label: aString getEnabled: enabledSel [
+	"Answer a new fuzzy label."
 
 	^self theme
-		newOverflowRowIn: self
-		forAll: aCollectionOfMorphs
+		newFuzzyLabelIn: self
+		for: aModel
+		label: aString
+		offset: 1
+		alpha: 0.5
+		getEnabled: enabledSel
+]
+
+{ #category : '*Morphic-Deprecated' }
+TEasilyThemed >> newFuzzyLabelFor: aModel label: aString offset: offset alpha: alpha getEnabled: enabledSel [
+	"Answer a new fuzzy label."
+
+	^self theme
+		newFuzzyLabelIn: self
+		for: aModel
+		label: aString
+		offset: offset
+		alpha: alpha
+		getEnabled: enabledSel
 ]
 
 { #category : '*Morphic-Deprecated' }
@@ -158,6 +144,49 @@ TEasilyThemed >> newListFor: aModel list: listSelector selected: getSelector cha
 ]
 
 { #category : '*Morphic-Deprecated' }
+TEasilyThemed >> newMorphDropListFor: aModel list: listSel getSelected: getSel setSelected: setSel getEnabled: enabledSel help: helpText [
+	"Answer a morph drop list for the given model."
+
+	^self
+		newMorphDropListFor: aModel
+		list: listSel
+		getSelected: getSel
+		setSelected: setSel
+		getEnabled: enabledSel
+		useIndex: true
+		help: helpText
+]
+
+{ #category : '*Morphic-Deprecated' }
+TEasilyThemed >> newMorphDropListFor: aModel list: listSel getSelected: getSel setSelected: setSel getEnabled: enabledSel useIndex: useIndex help: helpText [
+	"Answer a morph drop list for the given model."
+
+	^self theme
+		newMorphDropListIn: self
+		for: aModel
+		list: listSel
+		getSelected: getSel
+		setSelected: setSel
+		getEnabled: enabledSel
+		useIndex: useIndex
+		help: helpText
+]
+
+{ #category : '*Morphic-Deprecated' }
+TEasilyThemed >> newMorphDropListFor: aModel list: listSel getSelected: getSel setSelected: setSel help: helpText [
+	"Answer a morph drop list for the given model."
+
+	^self
+		newMorphDropListFor: aModel
+		list: listSel
+		getSelected: getSel
+		setSelected: setSel
+		getEnabled: nil
+		useIndex: true
+		help: helpText
+]
+
+{ #category : '*Morphic-Deprecated' }
 TEasilyThemed >> newMorphListFor: aModel list: listSelector getSelected: getSelector setSelected: setSelector getEnabled: enabledSel help: helpText [
 	"Answer a morph list for the given model."
 
@@ -182,6 +211,16 @@ TEasilyThemed >> newMorphListFor: aModel list: listSelector getSelected: getSele
 		setSelected: setSelector
 		getEnabled: nil
 		help: helpText
+]
+
+{ #category : '*Morphic-Deprecated' }
+TEasilyThemed >> newOverflowRowForAll: aCollectionOfMorphs [
+	"Answer a new overflow row morph that provides a drop down for
+	the given contents that are unable to fit the bounds."
+
+	^self theme
+		newOverflowRowIn: self
+		forAll: aCollectionOfMorphs
 ]
 
 { #category : '*Morphic-Deprecated' }

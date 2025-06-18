@@ -718,45 +718,6 @@ TEasilyThemed >> newEmbeddedMenu [
 ]
 
 { #category : 'controls' }
-TEasilyThemed >> newFuzzyLabel: aString [
-	"Answer a new fuzzy label."
-
-	^self theme
-		newFuzzyLabelIn: self
-		for: nil
-		label: aString
-		offset: 1
-		alpha: 0.5
-		getEnabled: nil
-]
-
-{ #category : 'controls' }
-TEasilyThemed >> newFuzzyLabelFor: aModel label: aString getEnabled: enabledSel [
-	"Answer a new fuzzy label."
-
-	^self theme
-		newFuzzyLabelIn: self
-		for: aModel
-		label: aString
-		offset: 1
-		alpha: 0.5
-		getEnabled: enabledSel
-]
-
-{ #category : 'controls' }
-TEasilyThemed >> newFuzzyLabelFor: aModel label: aString offset: offset alpha: alpha getEnabled: enabledSel [
-	"Answer a new fuzzy label."
-
-	^self theme
-		newFuzzyLabelIn: self
-		for: aModel
-		label: aString
-		offset: offset
-		alpha: alpha
-		getEnabled: enabledSel
-]
-
-{ #category : 'controls' }
 TEasilyThemed >> newGroupbox [
 	"Answer a plain groupbox."
 

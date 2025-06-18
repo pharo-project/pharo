@@ -8,8 +8,8 @@ Class {
 		'offset',
 		'alpha'
 	],
-	#category : 'Morphic-Widgets-Basic',
-	#package : 'Morphic-Widgets-Basic'
+	#category : 'Morphic-Deprecated',
+	#package : 'Morphic-Deprecated'
 }
 
 { #category : 'accessing' }

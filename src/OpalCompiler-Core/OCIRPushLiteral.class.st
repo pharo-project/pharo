@@ -21,7 +21,10 @@ OCIRPushLiteral >> accept: aVisitor [
 
 { #category : 'testing' }
 OCIRPushLiteral >> canBeQuickReturn [
-	^ true
+
+	"Put here whatever can be optimized as a ret literal or as a quick method.
+	Same contents as quickPrimSpecialConstants, but this should require passing the encoder as argument all the way down"
+	^ #( nil true false -1 0 1 2 ) includes: literal
 ]
 
 { #category : 'testing' }
