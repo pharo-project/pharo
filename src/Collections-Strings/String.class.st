@@ -709,6 +709,7 @@ String >> asInteger [
 String >> asLowercase [
 	"Answer a String made up from the receiver whose characters are all lowercase."
 	"'PhaRo' asLowercase >>> 'pharo'"
+	"'pharo' asLowercase >>> 'pharo'"
 	"'' asLowercase >>> ''"
 	"' ' asLowercase >>> ' '"
 	^ self copy asString translateToLowercase
