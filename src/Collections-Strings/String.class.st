@@ -1380,6 +1380,10 @@ String >> expandMacrosWithArguments: anArray [
 { #category : 'finding/searching' }
 String >> findAnySubstring: aCollection startingAt: start [
 	"Answer the index where an element of aCollection begins. If none are found, answer size + 1. aCollection is an Array of Strings or Characters."
+	"'abcdef' findAnySubstring: 'cde' startingAt: 1 >>> 3"
+	"'Ana voli Milovana' findAnySubstring: #('Ana' 'ana') startingAt: 2 >>> 15"
+	"'Ana voli Milovana' findAnySubstring: #('Ana' 'ana') startingAt: 1 >>> 1"
+	"'Marcus' findAnySubstring: 'o' startingAt: 1 >>> 7"
 
 	^aCollection inject: 1 + self size into: [:min :searchTerm |
 		| ind |
