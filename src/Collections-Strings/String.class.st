@@ -1080,6 +1080,12 @@ String >> copyReplaceTokens: oldSubstring with: newSubstring [
 { #category : 'copying' }
 String >> copyUpToSubstring: aSubstring [
 
+	"'abcdef' copyUpToSubstring: 'de' >>> 'abc'"
+	"'abcdef' copyUpToSubstring: 'f' >>> 'abcde'"
+	"'' copyUpToSubstring: 'abc' >>> ''"
+	"'abcdef' copyUpToSubstring: 'gh' >>> 'abcdef'"
+	"'abcdef' copyUpToSubstring: 'ab' >>> ''"
+
 	| index |
 	aSubstring ifEmpty: [
 		"preserve compatiblity with `readStream upToAll:`"
