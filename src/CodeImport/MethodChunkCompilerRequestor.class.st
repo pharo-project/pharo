@@ -5,9 +5,9 @@ Class {
 	#name : #MethodChunkCompilerRequestor,
 	#superclass : #Object,
 	#instVars : [
-		'methodChunk',
-		'fileCompileRequestor',
-		'interactive'
+		#methodChunk,
+		#fileCompileRequestor,
+		#interactive
 	],
 	#category : #'CodeImport-Utilities'
 }

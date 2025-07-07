@@ -12,18 +12,18 @@ Class {
 	#name : #ChangeSet,
 	#superclass : #Object,
 	#instVars : [
-		'name',
-		'preamble',
-		'postscript',
-		'changeRecords'
+		#name,
+		#preamble,
+		#postscript,
+		#changeRecords
 	],
 	#classVars : [
-		'AllChangeSets',
-		'DefaultChangeSetDirectoryName',
-		'MustCheckForSlips'
+		#AllChangeSets,
+		#DefaultChangeSetDirectoryName,
+		#MustCheckForSlips
 	],
 	#classInstVars : [
-		'current'
+		#current
 	],
 	#category : #'System-Changes-Base'
 }
@@ -109,7 +109,7 @@ ChangeSet class >> current [
 
 	(current isNil or: [ current isMoribund ]) ifTrue: [
 		self
-			newChanges: (self assuredChangeSetNamed: 'Unnamed')
+			newChanges: (self assuredChangeSetNamed: #'Unnamed')
 			withOld: current ].
 	^ current
 ]
@@ -167,7 +167,7 @@ ChangeSet class >> defaultChangeSetDirectoryName: aName [
 { #category : #defaults }
 ChangeSet class >> defaultName [
 
-	^ self uniqueNameLike: 'Unnamed'
+	^ self uniqueNameLike: #'Unnamed'
 ]
 
 { #category : #services }
@@ -273,7 +273,7 @@ ChangeSet class >> named: aName [
 	"Return the change set of the given name, or nil if none found."
 
 	^ AllChangeSets
-		  detect: [ :aChangeSet | aChangeSet name = aName ]
+		  detect: [ :aChangeSet | aChangeSet name sameContents: aName ]
 		  ifNone: [ nil ]
 ]
 

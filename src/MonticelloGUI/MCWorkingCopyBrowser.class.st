@@ -5,25 +5,25 @@ Class {
 	#name : #MCWorkingCopyBrowser,
 	#superclass : #MCTool,
 	#instVars : [
-		'workingCopy',
-		'workingCopyWrapper',
-		'repository',
-		'defaults',
-		'order',
-		'repositoryPattern',
-		'workingCopyPattern',
-		'repositoryProcess',
-		'packageProcess',
-		'showOnlyRepositoriesFromWorkingCopy'
+		#workingCopy,
+		#workingCopyWrapper,
+		#repository,
+		#defaults,
+		#order,
+		#repositoryPattern,
+		#workingCopyPattern,
+		#repositoryProcess,
+		#packageProcess,
+		#showOnlyRepositoriesFromWorkingCopy
 	],
 	#classVars : [
-		'Order'
+		#Order
 	],
 	#classInstVars : [
-		'repositorySearchMaxSize',
-		'workingCopySearchMaxSize',
-		'workingCopySearchList',
-		'repositorySearchList'
+		#repositorySearchMaxSize,
+		#workingCopySearchMaxSize,
+		#workingCopySearchList,
+		#repositorySearchList
 	],
 	#category : #'MonticelloGUI-Tools'
 }

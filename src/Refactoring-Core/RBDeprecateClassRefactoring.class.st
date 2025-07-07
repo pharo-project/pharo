@@ -13,11 +13,11 @@ Class {
 	#name : #RBDeprecateClassRefactoring,
 	#superclass : #RBClassRefactoring,
 	#instVars : [
-		'newName',
-		'deprecatedClass',
-		'shouldCopyExtensions',
-		'shouldRemoveExtensions',
-		'shouldFixSubclasses'
+		#newName,
+		#deprecatedClass,
+		#shouldCopyExtensions,
+		#shouldRemoveExtensions,
+		#shouldFixSubclasses
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

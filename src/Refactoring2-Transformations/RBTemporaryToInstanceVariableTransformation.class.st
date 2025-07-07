@@ -77,7 +77,7 @@ Class {
 	#name : #RBTemporaryToInstanceVariableTransformation,
 	#superclass : #RBMethodTransformation,
 	#instVars : [
-		'temporaryVariableName'
+		#temporaryVariableName
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

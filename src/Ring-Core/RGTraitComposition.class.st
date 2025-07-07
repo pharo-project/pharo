@@ -2,7 +2,7 @@ Class {
 	#name : #RGTraitComposition,
 	#superclass : #RGObject,
 	#instVars : [
-		'transformations'
+		#transformations
 	],
 	#category : #'Ring-Core-Kernel'
 }

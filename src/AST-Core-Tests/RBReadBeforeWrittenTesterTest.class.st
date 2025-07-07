@@ -30,7 +30,7 @@ RBReadBeforeWrittenTesterTest >> testReadBeforeWritten [
 		do: [ :each |
 			| read |
 			read := RBReadBeforeWrittenTester variablesReadBeforeWrittenIn: (self parseExpression: each).
-			self assert: (read size = 1 and: [ read includes: 'read' ]) ]
+			self assert: (read size = 1 and: [ read includes: #read ]) ]
 ]
 
 { #category : #tests }

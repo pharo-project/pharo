@@ -154,13 +154,13 @@ RGMethodDefinitionTest >> testAsMethodDefinition [
 RGMethodDefinitionTest >> testAsMethodDefinition2 [
 	| newMethod |
 	newMethod := (Object >> #printOn:) asRingDefinition.
-	self assert: newMethod protocol equals: 'printing'.
+	self assert: newMethod protocol equals: #'printing'.
 
 	newMethod := (TCloneTest >> #testCopyEmpty) asRingDefinition.
-	self assert: newMethod protocol equals: 'tests - copy - clone'.
+	self assert: newMethod protocol equals: #'tests - copy - clone'.
 
 	newMethod := (ArrayTest >> #testCopyEmpty) asRingDefinition.
-	self assert: newMethod protocol equals: 'tests - copy - clone'
+	self assert: newMethod protocol equals: #'tests - copy - clone'
 ]
 
 { #category : #testing }
@@ -179,8 +179,8 @@ RGMethodDefinitionTest >> testAsPassive [
 { #category : #testing }
 RGMethodDefinitionTest >> testClassNameSelectorIsMetaSide [
 	| rg |
-	rg := RGMethodDefinition className: 'Point' selector: #x isMetaSide: false.
-	self assert: rg parentName equals: 'Point'.
+	rg := RGMethodDefinition className: #'Point' selector: #x isMetaSide: false.
+	self assert: rg parentName equals: #'Point'.
 	self assert: (rg parent isKindOf: RGClassDefinition).
 	self assert: rg selector equals: #x.
 	self assert: rg isMetaSide not
@@ -281,7 +281,7 @@ RGMethodDefinitionTest >> testExistingMethodWithoutClass [
 	self assert: newMethod selector identicalTo: #add:.
 	self assert: newMethod isMetaSide not.
 	self assert: newMethod protocol equals: #adding.
-	self assert: newMethod fullName equals: 'OrderedCollection>>add:'.
+	self assert: newMethod fullName equals: #'OrderedCollection>>add:'.
 	self
 		assert: newMethod sourceCode
 		equals:
@@ -307,7 +307,7 @@ RGMethodDefinitionTest >> testExtensionMethod [
 
 	newMethod:= (Collection >> #+) asRingDefinition.
 	self assert: (newMethod isMethod).
-	self assert: newMethod protocol equals: '*Collections-arithmetic'.
+	self assert: newMethod protocol equals: #'*Collections-arithmetic'.
 	self assert: (newMethod isExtension).
 
 	newPackage := RGPackageDefinition named: #Package.

@@ -72,13 +72,13 @@ Class {
 	#name : #TestExecutionEnvironment,
 	#superclass : #ExecutionEnvironment,
 	#instVars : [
-		'watchDogProcess',
-		'watchDogSemaphore',
-		'testCase',
-		'maxTimeForTest',
-		'testCompleted',
-		'services',
-		'mainTestProcess'
+		#watchDogProcess,
+		#watchDogSemaphore,
+		#testCase,
+		#maxTimeForTest,
+		#testCompleted,
+		#services,
+		#mainTestProcess
 	],
 	#category : #'SUnit-Core-Kernel'
 }

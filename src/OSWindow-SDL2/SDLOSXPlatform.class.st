@@ -27,6 +27,13 @@ SDLOSXPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
 	self release: aParam
 ]
 
+{ #category : #configuration }
+SDLOSXPlatform >> defaultRendererFlags [ 
+
+	"SDL_RENDERER_PRESENTVSYNC is required on MacOS for certain screens to avoid rendering issues"
+	^ super defaultRendererFlags | SDL_RENDERER_PRESENTVSYNC
+]
+
 { #category : #'ffi-calls' }
 SDLOSXPlatform >> ffiLibraryName [
 

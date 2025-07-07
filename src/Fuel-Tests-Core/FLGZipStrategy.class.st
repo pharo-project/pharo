@@ -5,7 +5,7 @@ Class {
 	#name : #FLGZipStrategy,
 	#superclass : #FLStreamStrategy,
 	#instVars : [
-		'targetStrategy'
+		#targetStrategy
 	],
 	#category : #'Fuel-Tests-Core-Support-StreamStrategies'
 }

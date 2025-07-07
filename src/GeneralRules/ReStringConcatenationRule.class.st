@@ -32,11 +32,11 @@ ReStringConcatenationRule class >> uniqueIdentifierName [
 
 { #category : #hooks }
 ReStringConcatenationRule >> afterCheck: aNode mappings: mappingDict [
-	(self performsConcatenation: (mappingDict at: '``@argument'))
+	(self performsConcatenation: (mappingDict at: #'``@argument'))
 		ifTrue: [ ^ true ].
 
 	(mappingDict
-		at: '``@argument2'
+		at: #'``@argument2'
 		ifPresent: [ :arg2 |
 			^ self performsConcatenation: arg2 ]).
 

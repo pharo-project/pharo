@@ -50,11 +50,11 @@ Class {
 	#name : #ClassChangeRecord,
 	#superclass : #Object,
 	#instVars : [
-		'changeTypes',
-		'priorDefinition',
-		'thisName',
-		'priorName',
-		'methodChanges'
+		#changeTypes,
+		#priorDefinition,
+		#thisName,
+		#priorName,
+		#methodChanges
 	],
 	#category : #'System-Changes-Records'
 }

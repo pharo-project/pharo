@@ -15,14 +15,14 @@ Class {
 	#name : #DAPackage,
 	#superclass : #Object,
 	#instVars : [
-		'dependencies',
-		'included',
-		'inStack',
-		'tarjanIndex',
-		'tarjanLowLink',
-		'bfsParent',
-		'seen',
-		'rPackageSet'
+		#dependencies,
+		#included,
+		#inStack,
+		#tarjanIndex,
+		#tarjanLowLink,
+		#bfsParent,
+		#seen,
+		#rPackageSet
 	],
 	#category : #'Tool-DependencyAnalyser-Core'
 }
@@ -138,7 +138,7 @@ DAPackage >> dependenciesSizeTo: aPackage [
 
 { #category : #dependencies }
 DAPackage >> dependenciesTo: aPackage [
-	^ dependencies select: [ :each | each target packageName = aPackage ]
+	^ dependencies select: [ :each | each target packageName sameContents: aPackage ]
 ]
 
 { #category : #dependencies }

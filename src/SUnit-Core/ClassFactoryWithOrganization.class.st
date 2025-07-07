@@ -7,7 +7,7 @@ Class {
 	#name : #ClassFactoryWithOrganization,
 	#superclass : #ClassFactoryForTestCase,
 	#instVars : [
-		'organization'
+		#organization
 	],
 	#category : #'SUnit-Core-Extensions'
 }

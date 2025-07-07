@@ -15,7 +15,7 @@ Class {
 	#name : #ClyAsyncQueryIsDone,
 	#superclass : #Announcement,
 	#instVars : [
-		'queryResult'
+		#queryResult
 	],
 	#category : #'Calypso-NavigationModel-Model'
 }

@@ -5,10 +5,10 @@ Class {
 	#name : #ReservedVariable,
 	#superclass : #Variable,
 	#instVars : [
-		'environment'
+		#environment
 	],
 	#classInstVars : [
-		'instance'
+		#instance
 	],
 	#category : #'Kernel-Variables'
 }

@@ -94,12 +94,12 @@ ZnImageExampleDelegate >> handlePostRequest: request [
 ZnImageExampleDelegate >> handleRequest: request [
 	"Dispatch between GET and POST on /image"
 
-	request uri path = #image
+	(request uri path sameContents: #image)
 		ifTrue: [
-			request method = #GET
+			(request method sameContents: #GET)
 				ifTrue: [
 					^ self handleGetRequest: request ].
-			request method = #POST
+			(request method sameContents: #POST)
 				ifTrue: [
 					^ self handlePostRequest: request ] ].
 	^ ZnResponse notFound: request uri

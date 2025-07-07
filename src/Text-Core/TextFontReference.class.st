@@ -17,7 +17,7 @@ Class {
 	#name : #TextFontReference,
 	#superclass : #TextFontChange,
 	#instVars : [
-		'font'
+		#font
 	],
 	#category : #'Text-Core-Attributes'
 }

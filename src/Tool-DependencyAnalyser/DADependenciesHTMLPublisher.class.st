@@ -12,8 +12,8 @@ Class {
 	#name : #DADependenciesHTMLPublisher,
 	#superclass : #Object,
 	#instVars : [
-		'stream',
-		'report'
+		#stream,
+		#report
 	],
 	#category : #'Tool-DependencyAnalyser-HTMLReport'
 }

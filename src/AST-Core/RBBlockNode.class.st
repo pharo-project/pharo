@@ -185,7 +185,7 @@ RBBlockNode >> copyInContext: aDictionary [
 
 { #category : #testing }
 RBBlockNode >> defines: aName [
-	^arguments anySatisfy: [:each | each name = aName]
+	^arguments anySatisfy: [:each | each name sameContents: aName]
 ]
 
 { #category : #testing }

@@ -9,9 +9,9 @@ Class {
 	#name : #ClassParentRenamed,
 	#superclass : #ClassAnnouncement,
 	#instVars : [
-		'classAffected',
-		'parentOldName',
-		'parentNewName'
+		#classAffected,
+		#parentOldName,
+		#parentNewName
 	],
 	#category : #'System-Announcements-System-Classes'
 }

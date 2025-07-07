@@ -5,8 +5,8 @@ Class {
 	#name : #ReExceptionProperty,
 	#superclass : #ReProperty,
 	#instVars : [
-		'stack',
-		'message'
+		#stack,
+		#message
 	],
 	#category : #'Renraku-Critiques'
 }

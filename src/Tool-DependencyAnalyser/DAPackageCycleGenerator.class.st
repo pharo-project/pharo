@@ -5,7 +5,7 @@ Class {
 	#name : #DAPackageCycleGenerator,
 	#superclass : #DAGraphVizGenerator,
 	#instVars : [
-		'packageCycle'
+		#packageCycle
 	],
 	#category : #'Tool-DependencyAnalyser-Core'
 }

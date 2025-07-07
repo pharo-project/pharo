@@ -6,9 +6,9 @@ Class {
 	#name : #RGObject,
 	#superclass : #Object,
 	#instVars : [
-		'properties',
-		'name',
-		'parent'
+		#properties,
+		#name,
+		#parent
 	],
 	#category : #'Ring-Core-Kernel'
 }

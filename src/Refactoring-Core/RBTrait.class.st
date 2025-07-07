@@ -8,7 +8,7 @@ Class {
 	#name : #RBTrait,
 	#superclass : #RBClass,
 	#instVars : [
-		'users'
+		#users
 	],
 	#category : #'Refactoring-Core-Model'
 }

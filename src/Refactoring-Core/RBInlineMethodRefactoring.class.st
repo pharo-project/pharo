@@ -12,13 +12,13 @@ Class {
 	#name : #RBInlineMethodRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'sourceInterval',
-		'inlineParseTree',
-		'sourceParseTree',
-		'sourceSelector',
-		'sourceMessage',
-		'checkOverridden',
-		'classOfTheMethodToInline'
+		#sourceInterval,
+		#inlineParseTree,
+		#sourceParseTree,
+		#sourceSelector,
+		#sourceMessage,
+		#checkOverridden,
+		#classOfTheMethodToInline
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }
@@ -87,7 +87,7 @@ RBInlineMethodRefactoring >> checkSuperMessages [
 RBInlineMethodRefactoring >> classOfTheMethodToInline [
 
 	^ classOfTheMethodToInline
-		ifNil: [ classOfTheMethodToInline := ( sourceMessage receiver name = 'super'
+		ifNil: [ classOfTheMethodToInline := ( sourceMessage receiver name = #'super'
 				ifTrue: [ class superclass ]
 				ifFalse: [ class ] ) whoDefinesMethod: self inlineSelector
 			]

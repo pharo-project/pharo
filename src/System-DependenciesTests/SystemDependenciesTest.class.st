@@ -57,10 +57,10 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 
 	"ideally this list should be empty"
 
-	^ #( 'AST-Core-Tests' 'Athens-Cairo' 'Athens-Core' #'Athens-Morphic'
+	^ #( #'AST-Core-Tests' #'Athens-Cairo' #'Athens-Core' #'Athens-Morphic'
 	     #'Refactoring-Critics' #'Refactoring2-Transformations'
-	     #Reflectivity #'Reflectivity-Tools' #Shout 'ParametrizedTests'
-	     'HeuristicCompletion-Model' #VariablesLibrary #'Spec2-CommonWidgets' )
+	     #'Reflectivity' #'Reflectivity-Tools' #'Shout' #'ParametrizedTests'
+	     #'HeuristicCompletion-Model' #'VariablesLibrary' #'Spec2-CommonWidgets' )
 ]
 
 { #category : #'known dependencies' }
@@ -84,7 +84,7 @@ SystemDependenciesTest >> knownIDEDependencies [
 
 	"ideally this list should be empty"
 
-	^ #('Spec2-CommonWidgets' #'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits' #'AI-Algorithms-Graph')
+	^ #(#'Spec2-CommonWidgets' #'Calypso-SystemPlugins-Traits-Queries-Tests-PWithTraits' #'AI-Algorithms-Graph')
 ]
 
 { #category : #'known dependencies' }
@@ -108,7 +108,7 @@ SystemDependenciesTest >> knownMorphicDependencies [
 	"ideally this list should be empty"
 
 	^ #(#'Refactoring-Critics' #'Refactoring-Environment' #'Spec2-Core' #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers'
-	#'Athens-Morphic' #'Tools-CodeNavigation' "Rubric has a dependency on It" 'Debugger-Oups')
+	#'Athens-Morphic' #'Tools-CodeNavigation' "Rubric has a dependency on It" #'Debugger-Oups')
 ]
 
 { #category : #'known dependencies' }
@@ -131,7 +131,7 @@ SystemDependenciesTest >> knownSUnitKernelDependencies [
 SystemDependenciesTest >> knownSpec2Dependencies [
 
 	^ #(
-		'WebBrowser-Core' "Spec's Link adapter"
+		#'WebBrowser-Core' "Spec's Link adapter"
 		)
 ]
 
@@ -148,8 +148,8 @@ SystemDependenciesTest >> knownUIDependencies [
 
 	"ideally this list should be empty"
 
-	^ #('AST-Core-Tests'  'Athens-Cairo' 'Athens-Core'
-	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers' #'HeuristicCompletion-Model' 'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets')
+	^ #(#'AST-Core-Tests'  #'Athens-Cairo' #'Athens-Core'
+	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers' #'HeuristicCompletion-Model' #'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets')
 ]
 
 { #category : #accessing }
@@ -170,7 +170,7 @@ SystemDependenciesTest >> packagesOfGroupNamed: aGroupName on: aBaseline [
 	| allMembers allPackagesInBaseline packages groups |
 
 	allMembers := aBaseline version groups
-		detect: [ :g | g name = aGroupName ]
+		detect: [ :g | g name sameContents: aGroupName ]
 		ifNone: [ ^#() ].
 	allPackagesInBaseline := aBaseline version packages collect: [:each | each name].
 	packages := allMembers includes select: [ :aName | allPackagesInBaseline includes: aName ].
@@ -334,7 +334,7 @@ SystemDependenciesTest >> testExternalIDEDependencies [
 	packages := packages , {BaselineOfFuelPlatform name } , BaselineOfFuelPlatform allPackageNames.
 	packages := packages ,  { BaselineOfNewTools name }, (self packagesOfGroupNamed: 'CritiqueBrowser' on: BaselineOfNewTools ).
 
-	dependencies := self externalDependendiesOf: packages.
+	dependencies := self externalDependendiesOf: (packages collect: [:p | p asSymbol ]).
 	self assertCollection: dependencies hasSameElements: self knownIDEDependencies
 ]
 

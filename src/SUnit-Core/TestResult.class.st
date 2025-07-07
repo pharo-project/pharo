@@ -8,11 +8,11 @@ Class {
 	#name : #TestResult,
 	#superclass : #Object,
 	#instVars : [
-		'timeStamp',
-		'failures',
-		'errors',
-		'passed',
-		'skipped'
+		#timeStamp,
+		#failures,
+		#errors,
+		#passed,
+		#skipped
 	],
 	#category : #'SUnit-Core-Kernel'
 }

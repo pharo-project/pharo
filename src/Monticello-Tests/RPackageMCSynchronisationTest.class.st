@@ -11,8 +11,8 @@ Class {
 	#name : #RPackageMCSynchronisationTest,
 	#superclass : #RPackageTestCase,
 	#instVars : [
-		'emptyOrganizer',
-		'oldAnnouncer'
+		#emptyOrganizer,
+		#oldAnnouncer
 	],
 	#category : #'Monticello-Tests-RPackage'
 }
@@ -82,33 +82,33 @@ RPackageMCSynchronisationTest >> cleanClassesPackagesAndCategories [
 		Smalltalk organization removeCategory: 'OriginalCategory'.
 		Smalltalk organization removeCategory: 'NewCategoryName'.
 		Smalltalk organization removeCategory: 'Y'.
-		mCPackage := (self allManagers detect: [:each | each packageName = 'OriginalCategory'] ifNone: [nil]) .
+		mCPackage := (self allManagers detect: [:each | each packageName = #'OriginalCategory'] ifNone: [nil]) .
 		mCPackage ifNotNil: [mCPackage unregister].
-		mCPackage := (self allManagers detect: [:each | each packageName = 'XXXXX'] ifNone: [nil]) .
+		mCPackage := (self allManagers detect: [:each | each packageName = #'XXXXX'] ifNone: [nil]) .
 		mCPackage ifNotNil: [mCPackage unregister].
-		mCPackage := (self allManagers detect: [:each | each packageName = 'XXXX'] ifNone: [nil]) .
+		mCPackage := (self allManagers detect: [:each | each packageName = #'XXXX'] ifNone: [nil]) .
 		mCPackage ifNotNil: [mCPackage unregister].
-		mCPackage := (self allManagers detect: [:each | each packageName = 'YYYYY'] ifNone: [nil]) .
+		mCPackage := (self allManagers detect: [:each | each packageName = #'YYYYY'] ifNone: [nil]) .
 		mCPackage ifNotNil: [mCPackage unregister].
-		mCPackage := (self allManagers detect: [:each | each packageName = 'YYYY'] ifNone: [nil]) .
+		mCPackage := (self allManagers detect: [:each | each packageName = #'YYYY'] ifNone: [nil]) .
 		mCPackage ifNotNil: [mCPackage unregister].
-		mCPackage := (self allManagers detect: [:each | each packageName = 'Yyyyy'] ifNone: [nil]) .
+		mCPackage := (self allManagers detect: [:each | each packageName = #'Yyyyy'] ifNone: [nil]) .
 		mCPackage ifNotNil: [mCPackage unregister].	
-		mCPackage := (self allManagers detect: [:each | each packageName = 'YyYyY'] ifNone: [nil]) .
+		mCPackage := (self allManagers detect: [:each | each packageName = #'YyYyY'] ifNone: [nil]) .
 		mCPackage ifNotNil: [mCPackage unregister].
-		mCPackage := (self allManagers detect: [:each | each packageName = 'Y'] ifNone: [nil]) .
+		mCPackage := (self allManagers detect: [:each | each packageName = #'Y'] ifNone: [nil]) .
 		mCPackage ifNotNil: [mCPackage unregister].
-		mCPackage := (self allManagers detect: [:each | each packageName = 'ZZZZZ'] ifNone: [nil]) .
+		mCPackage := (self allManagers detect: [:each | each packageName = #'ZZZZZ'] ifNone: [nil]) .
 		mCPackage ifNotNil: [mCPackage unregister].	
-		mCPackage := (self allManagers detect: [:each | each packageName = 'Zzzzz'] ifNone: [nil]) .
+		mCPackage := (self allManagers detect: [:each | each packageName = #'Zzzzz'] ifNone: [nil]) .
 		mCPackage ifNotNil: [mCPackage unregister].
-		mCPackage := (self allManagers detect: [:each | each packageName = 'FooPackage-Core'] ifNone: [nil]) .
+		mCPackage := (self allManagers detect: [:each | each packageName = #'FooPackage-Core'] ifNone: [nil]) .
 		mCPackage ifNotNil: [mCPackage unregister].
-		mCPackage := (self allManagers detect: [:each | each packageName = 'FooPackage-Other'] ifNone: [nil]) .
+		mCPackage := (self allManagers detect: [:each | each packageName = #'FooPackage-Other'] ifNone: [nil]) .
 		mCPackage ifNotNil: [mCPackage unregister].
-		mCPackage := (self allManagers detect: [:each | each packageName = 'FooPackage'] ifNone: [nil]) .
+		mCPackage := (self allManagers detect: [:each | each packageName = #'FooPackage'] ifNone: [nil]) .
 		mCPackage ifNotNil: [mCPackage unregister].
-		mCPackage := (self allManagers detect: [:each | each packageName = 'Zork'] ifNone: [nil]) .
+		mCPackage := (self allManagers detect: [:each | each packageName = #'Zork'] ifNone: [nil]) .
 		mCPackage ifNotNil: [mCPackage unregister].
 			
 ]

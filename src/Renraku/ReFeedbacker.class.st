@@ -5,7 +5,7 @@ Class {
 	#name : #ReFeedbacker,
 	#superclass : #Object,
 	#classInstVars : [
-		'uuid'
+		#uuid
 	],
 	#category : #'Renraku-Utility'
 }
