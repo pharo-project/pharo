@@ -43,6 +43,17 @@ RBClassHierarchiesEnvironment class >> onEnvironment: anEnvironment classes: aCo
 		classes: aCollection; yourself
 ]
 
+{ #category : 'comparing' }
+RBClassHierarchiesEnvironment >> = anotherEnvironment [
+
+	self == anotherEnvironment 
+		ifTrue: [ ^ true ].
+	
+	anotherEnvironment class = self class ifFalse: [ ^ false ].
+	
+	^ environment = anotherEnvironment environment and: [ classes = anotherEnvironment classesOnEnvironment and: [ metaClasses = anotherEnvironment metaClasses ] ]
+]
+
 { #category : 'adding' }
 RBClassHierarchiesEnvironment >> addClass: aClass [
 	aClass isMeta
@@ -112,6 +123,12 @@ RBClassHierarchiesEnvironment >> classesDo: aBlock [
 			ifTrue: [ aBlock value: class classSide ] ]
 ]
 
+{ #category : 'accessing' }
+RBClassHierarchiesEnvironment >> classesOnEnvironment [
+
+	^ classes
+]
+
 { #category : 'private' }
 RBClassHierarchiesEnvironment >> defaultLabel [
 	| stream |
@@ -127,6 +144,12 @@ RBClassHierarchiesEnvironment >> defaultLabel [
 RBClassHierarchiesEnvironment >> definesClass: aClass [
 
 	^ self includesClass: aClass
+]
+
+{ #category : 'comparing' }
+RBClassHierarchiesEnvironment >> hash [ 
+	
+	^ super hash bitXor: (classes hash bitXor: metaClasses hash)
 ]
 
 { #category : 'testing' }
@@ -162,6 +185,12 @@ RBClassHierarchiesEnvironment >> metaClassSelectorDictionary [
 			answer
 				at: class put: (self systemDictionary at: class) class selectors;
 				yourself ]
+]
+
+{ #category : 'accessing' }
+RBClassHierarchiesEnvironment >> metaClasses [ 
+
+	^ metaClasses 
 ]
 
 { #category : 'copying' }

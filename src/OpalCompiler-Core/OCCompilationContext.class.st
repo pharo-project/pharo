@@ -28,7 +28,8 @@ Class {
 		'requestorScopeClass',
 		'bindings',
 		'compiledMethodClass',
-		'semanticScope'
+		'semanticScope',
+		'compiledBlockClass'
 	],
 	#classVars : [
 		'DefaultOptions',
@@ -422,6 +423,22 @@ OCCompilationContext >> bytecodeGeneratorClass: anObject [
 { #category : 'accessing' }
 OCCompilationContext >> class: aClass [
 	self semanticScope: (OCMethodSemanticScope targetingClass: aClass)
+]
+
+{ #category : 'accessing' }
+OCCompilationContext >> compiledBlockClass [
+	"Return the class used to instantiate the compiled method created by the compiler"
+	^ compiledBlockClass ifNil: [
+		self productionEnvironment
+			at: #CompiledBlock
+			ifAbsent: [ CompiledBlock ] ]
+]
+
+{ #category : 'accessing' }
+OCCompilationContext >> compiledBlockClass: aCompiledMethodClass [
+	"Return the class used to instantiate the compiled blocks created by the compiler"
+
+	compiledBlockClass := aCompiledMethodClass
 ]
 
 { #category : 'accessing' }

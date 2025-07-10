@@ -27,9 +27,9 @@ Otherwise, if the array is allocated in the C heap, array accesses may run into 
 
 ## Reusable Array types
 
-I can be used to create array types with the ==newArrayType:size:== method, which yields a new array type knowing the element types and the array size. An array type created this way can be then be allocated using the new or externalNew messages.
+I can be used to create array types with the ==newArrayTypeOf:size:== method, which yields a new array type knowing the element types and the array size. An array type created this way can be then be allocated using the new or externalNew messages.
 
-char128Type := FFIArray newArrayType: #char size: 128.
+char128Type := FFIArray newArrayTypeOf: #char size: 128.
 
 ""In Pharo heap""
 newArrayOf128Chars := char128Type new.
@@ -46,7 +46,7 @@ struct {
 can be modeled like this: 
 
 TheStruct class>>initialize
-	Int4 := FFIArray newArrayType: #int size: 4.
+	Int4 := FFIArray newArrayTypeOf: #int size: 4.
 
 TheStruct class>>fieldsDesc 
 	^ #(

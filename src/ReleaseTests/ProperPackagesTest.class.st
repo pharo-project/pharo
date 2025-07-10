@@ -20,7 +20,7 @@ ProperPackagesTest >> testPackageExtensionsStartsWithProperPackageName [
 	"Method categories that represent extensions should start with a * followed by a package name that starts with an uppercase letter - ensure that"
 
 	self assertEmpty:
-		(SystemNavigation default allMethods select: [ :method | method isExtension and: [ method protocolName second isLowercase ] ])
+		((self class environment allBehaviors flatCollect: [ :class | class extensionProtocols ]) select: [ :protocol | protocol name second isLowercase ])
 ]
 
 { #category : 'tests' }

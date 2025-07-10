@@ -327,6 +327,14 @@ RubTextEditorTest >> testNextWordManyUppercases [
 ]
 
 { #category : 'tests' }
+RubTextEditorTest >> testNextWordOnlySeparators [
+
+	self setString: '   '.
+
+	self assertNextWordFrom: '¶   ' to: '   ¶' equals: '   ¶'
+]
+
+{ #category : 'tests' }
 RubTextEditorTest >> testNextWordSkipsCurrentSpacesAndGoesToEndOfCurrentWord [
 
 	self setString: 'abc d'.
@@ -631,6 +639,14 @@ RubTextEditorTest >> testPreviousWordManyUppercases [
 		assertPreviousWordFrom:	'ABCdEFG¶'
 		to: 							'¶ABCdEFG'
 		equals: 						'¶ABCdEFG'
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testPreviousWordOnlySeparators [
+
+	self setString: '   '.
+
+	self assertPreviousWordFrom: '   ¶' to: '¶   ' equals: '¶   '
 ]
 
 { #category : 'tests' }

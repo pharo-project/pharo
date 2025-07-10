@@ -828,6 +828,20 @@ CompletionEngineTest >> testSmartBackspaceOutsideSmartCharacters [
 		description: 'smartbackspace ignored if after smart character'
 ]
 
+{ #category : 'tests' }
+CompletionEngineTest >> testSmartBackspaceRemoveBothCharactersWithSpaces [
+	"Test that smart backspace removes both characters even with spaces between them"
+
+	self setEditorText: '(  )'.
+	self selectAt: 2.
+
+	self
+		assert: controller smartBackspace
+		description: 'Smart backspace should return true'.
+
+	self assert: editor text equals: ''
+]
+
 { #category : 'tests - keyboard' }
 CompletionEngineTest >> testSmartBackspaceWithSelection [
 

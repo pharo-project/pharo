@@ -1,7 +1,3 @@
-ClassTestCase removeSelector: #testClassComment.
-HashTesterTest removeSelector: #testBasicBehaviour.
-
-
 (Package organizer packages collect: #name) logCr.
 
 HDTestReport runPackages: (Package organizer packages collect: #name).

@@ -193,14 +193,14 @@ SignalLogger >> name: aString [
 	name := aString
 ]
 
-{ #category : 'utilities' }
+{ #category : 'logging' }
 SignalLogger >> nextPut: aSignal [
 	"Gets a BeaconSignal into the logger"
 
 	self subclassResponsibility
 ]
 
-{ #category : 'utilities' }
+{ #category : 'logging' }
 SignalLogger >> nextPutAll: aCollection [
 
 	aCollection do: [ :each | self nextPut: each ]

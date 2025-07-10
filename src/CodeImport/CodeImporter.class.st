@@ -162,7 +162,10 @@ CodeImporter >> logSource: aBoolean [
 
 { #category : 'evaluating' }
 CodeImporter >> parseChunks [
-	^ codeDeclarations := (parserClass for: readStream) parseChunks
+
+	codeDeclarations := (parserClass for: readStream) parseChunks.
+	readStream close. "On windows we cannot manipulate a file if it is open, and this caused random failures in our CI depending on how things are garbage collected. So now I'm closing explicitly the stream after reading it."
+	^ codeDeclarations
 ]
 
 { #category : 'accessing' }

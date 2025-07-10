@@ -14,17 +14,17 @@ ZdcReferenceSocketStreamTest class >> isAbstract [
 ]
 
 { #category : 'private' }
-ZdcReferenceSocketStreamTest >> openConnectionToHost: host port: port [
+ZdcReferenceSocketStreamTest >> openConnectionToHost: host port: aPort [
 	| stream |
-	stream := super openConnectionToHost: host port: port.
+	stream := super openConnectionToHost: host port: aPort.
 	self setReferenceSocketStreamOptions: stream.
 	^ stream
 ]
 
 { #category : 'private' }
-ZdcReferenceSocketStreamTest >> openConnectionToHostNamed: host port: port [
+ZdcReferenceSocketStreamTest >> openConnectionToHostNamed: host port: aPort [
 	| stream |
-	stream := super openConnectionToHostNamed: host port: port.
+	stream := super openConnectionToHostNamed: host port: aPort.
 	self setReferenceSocketStreamOptions: stream.
 	^ stream
 ]

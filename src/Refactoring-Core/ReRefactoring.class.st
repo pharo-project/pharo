@@ -89,13 +89,13 @@ ReRefactoring >> checkPreconditions [
 ]
 
 { #category : 'private' }
-ReRefactoring >> classObjectFor: anObject [
+ReRefactoring >> classObjectFor: aClassOrAString [
 
-	(anObject isBehavior or: [ anObject isTrait ]) ifTrue: [
-		^ self model classFor: anObject ].
-	anObject isString ifTrue: [
-		^ self model classNamed: anObject ].
-	^ anObject
+	(aClassOrAString isBehavior or: [ aClassOrAString isTrait ]) ifTrue: [
+		^ self model classFor: aClassOrAString ].
+	aClassOrAString isString ifTrue: [
+		^ self model classNamed: aClassOrAString ].
+	^ aClassOrAString
 ]
 
 { #category : 'private' }
@@ -123,7 +123,7 @@ ReRefactoring >> convertClasses: classSet select: aBlock using: searchReplacer [
 
 { #category : 'preconditions' }
 ReRefactoring >> failedBreakingChangePreconditions [
-	"Returne the failed preconditions without raising error. It should only be called by drivers."
+	"Return the failed preconditions without raising error. It should only be called by drivers."
 	
 	^ self breakingChangePreconditions reject: [ :cond | cond check ]
 ]
@@ -163,6 +163,12 @@ ReRefactoring >> safeVariableNameFor: aClass temporaries: allTempAndArgs basedOn
 ReRefactoring >> transform [ 
 
 	self deprecated: 'Use privateTransform instead' transformWith: '`@rec transform' -> '`@rec privateTransform'
+]
+
+{ #category : 'printing' }
+ReRefactoring >> whatToDisplayIn: aBrowser [
+
+	^ (self changes changes collect: [:change | change onSystemEnvironment: self model environment systemDictionary]) flatCollect: [:e | e whatToDisplayIn: aBrowser ]
 ]
 
 { #category : 'utilities' }

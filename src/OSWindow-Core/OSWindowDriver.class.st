@@ -34,14 +34,40 @@ OSWindowDriver class >> current [
 	^ Current := self driverClass new
 ]
 
-{ #category : 'settings' }
+{ #category : 'driver selection' }
 OSWindowDriver class >> driverClass [
+
+	^ self driverClassFromEnvironment
+		 ifNil: [ self driverClassFromSystem ]
+]
+
+{ #category : 'driver selection' }
+OSWindowDriver class >> driverClass: aClass [
+
+	self driverClassFromSystem: aClass
+]
+
+{ #category : 'driver selection' }
+OSWindowDriver class >> driverClassFromEnvironment [
+	
+	OSEnvironment current 
+		at: 'PHARO_WINDOW_DRIVER'
+		ifPresent: [ :driverName | 
+			(self class environment classNamed: driverName) 
+				ifNotNil: [ :aClass | ^ aClass ]
+				ifNil: [ OSWindowDriverNotFoundWarning signal: driverName ] ].
+
+	^ nil
+]
+
+{ #category : 'private' }
+OSWindowDriver class >> driverClassFromSystem [
 
 	^ DriverClass ifNil: [ DriverClass := self pickDriverClass ]
 ]
 
-{ #category : 'settings' }
-OSWindowDriver class >> driverClass: aClass [
+{ #category : 'private' }
+OSWindowDriver class >> driverClassFromSystem: aClass [
 
 	self driverClass = aClass ifTrue: [ ^ self ].
 
@@ -70,7 +96,7 @@ OSWindowDriver class >> isSupported [
 { #category : 'driver selection' }
 OSWindowDriver class >> pickDriverClass [
 
-	self subclassesDo: [ :s | s isSuitable ifTrue: [ ^ s ] ].
+	self subclassesDo: [ :aClass | aClass isSuitable ifTrue: [ ^ aClass ] ].
 	^ OSNullWindowDriver
 ]
 
@@ -83,7 +109,7 @@ OSWindowDriver class >> settingsOn: aBuilder [
 		parent: #pharoSystem;
 		description: 'OSWindow subsystem';
 		with: [
-			(aBuilder pickOne: #driverClass)
+			(aBuilder pickOne: #driverClassFromSystem)
 				label: 'Driver to use';
 				description: 'Select the driver to use for OSWindow.
 WARNING: Changing the driver will change the world rendering itself.

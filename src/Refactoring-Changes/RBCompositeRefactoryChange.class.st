@@ -300,3 +300,9 @@ RBCompositeRefactoryChange >> selector: aSelector in: aClass classified: aProtoc
 							in: aClass
 							classified: aProtocol)
 ]
+
+{ #category : 'printing' }
+RBCompositeRefactoryChange >> whatToDisplayIn: aBrowser [
+
+	^ self changes flatCollect: [:each | each whatToDisplayIn: aBrowser ]
+]

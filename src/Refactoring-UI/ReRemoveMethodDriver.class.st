@@ -50,6 +50,19 @@ ReRemoveMethodDriver >> configureRefactoring [
 			            classSelectorMapping: classSelectorMapping
 ]
 
+{ #category : 'configuration' }
+ReRemoveMethodDriver >> defaultSelectDialog [
+
+	^ self class defaultSelectDialog
+		  title: 'There are ' , haveNoSenders violators size asString
+			  , ' methods calling method(s) you want to delete';
+		  label: 'Select a strategy';
+		  items: self breakingChoices;
+		  display: [ :each | each description ];
+		  displayIcon: [ :each | self iconNamed: each systemIconName ];
+		  openModal
+]
+
 { #category : 'execution' }
 ReRemoveMethodDriver >> handleBreakingChanges [
 
@@ -86,17 +99,4 @@ ReRemoveMethodDriver >> scopes: refactoringScopes methods: aMethods [
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes first.
 	methods := aMethods
-]
-
-{ #category : 'execution' }
-ReRemoveMethodDriver >> selectDialog [
-
-	^ SpSelectDialog new
-		  title: 'There are ' , haveNoSenders violators size asString
-			  , ' methods calling method(s) you want to delete';
-		  label: 'Select a strategy';
-		  items: self breakingChoices;
-		  display: [ :each | each description ];
-		  displayIcon: [ :each | self iconNamed: each systemIconName ];
-		  openModal
 ]

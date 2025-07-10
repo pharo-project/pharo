@@ -236,6 +236,6 @@ rm -f *.bak
 # delete Pharo60 sources files
 rm PharoV60.sources*
 
-PHARO_SOURCES_PREFIX=$(echo "${PHARO_NAME_PREFIX}" | cut -d'-' -f 1 | cut -d'.' -f 1-2)
+PHARO_SOURCES_PREFIX=$(echo "Pharo${PHARO_MAJOR}.${PHARO_MINOR}-${PHARO_SUFFIX}" | cut -d'-' -f 1 | cut -d'.' -f 1-2)
 zip "${PHARO_IMAGE_NAME}.zip" ${PHARO_IMAGE_NAME}.* ${PHARO_SOURCES_PREFIX}*.sources pharo.version
 

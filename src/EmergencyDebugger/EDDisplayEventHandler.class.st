@@ -63,3 +63,13 @@ EDDisplayEventHandler >> visitWindowCloseEvent: anEvent [
 	anEvent suppressDefaultAction.
 	interface closeWindow
 ]
+
+{ #category : 'visiting' }
+EDDisplayEventHandler >> visitWindowResizeEvent: anEvent [
+
+	| scaleFactor |
+	scaleFactor := OSWorldRenderer canvasScaleFactor.
+
+	interface extent: (anEvent width * scaleFactor) @ (anEvent height * scaleFactor).
+	interface showLastShownText
+]

@@ -164,6 +164,7 @@ RubSmalltalkCodeMode >> classOrMetaClass: aBehavior [
 RubSmalltalkCodeMode >> formatMethodCode [
 
 	| source tree formatted |
+	self editor closeTypeIn.
 	self textArea hasSelection
 		ifTrue: [
 			source := self textArea selection.

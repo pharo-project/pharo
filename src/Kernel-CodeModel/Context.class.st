@@ -1249,14 +1249,6 @@ Context >> outerContext [
 ]
 
 { #category : 'accessing' }
-Context >> outerMostContext [
-	<reflection: 'Stack Manipulation - Context'>
-	^ self outerContext
-		ifNil: [ self ]
-		ifNotNil: [ self outerContext ]
-]
-
-{ #category : 'accessing' }
 Context >> pc [
 	^ pc
 ]

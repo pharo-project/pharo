@@ -171,7 +171,7 @@ EpMorphVisitor >> visitMonticelloVersionSave: aChange [
 EpMorphVisitor >> visitMonticelloVersionsLoad: aMonticelloVersionLoaded [
 
 	^	(self displayOperation: 'MC load'),
-		(self displayString: aMonticelloVersionLoaded versionNames asCommaStringAnd)
+		(self displayString: (aMonticelloVersionLoaded versionNames joinUsing: ', '))
 ]
 
 { #category : 'visitor' }

@@ -324,3 +324,11 @@ ReCreateAccessorsForVariableTransformation >> usesAssignmentOf: aString in: aCla
 				anySatisfy:
 					[ :sel | self checkClass: each selector: sel using: matcher ]) ])
 ]
+
+{ #category : 'printing' }
+ReCreateAccessorsForVariableTransformation >> whatToDisplayIn: aBrowser [
+
+	^ (self changes changes
+		select: [:change | {getterMethodName. setterMethodName} includes: change selector ])
+		flatCollect: [:change | change whatToDisplayIn: aBrowser ]
+]

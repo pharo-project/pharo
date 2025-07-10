@@ -76,7 +76,7 @@ This comment has a bang!! Bang!! Bang!!!
 { #category : 'data' }
 MCStWriterTest >> expectedClassMethodDefinition [
 
-	^ '\s*!MCMockClassA class methodsFor\: ''as yet unclassified'' stamp\: ''[/:\s\w]*''!\s*one\s*\^ 1! !\s*'.
+	^ '\s*!MCMockClassA class methodsFor\: ''as yet unclassified'' stamp\: ''\d\d\d\d-\d\d-\d\dT\d\d\:\d\d\:\d\d\.\d\d\d\d\d\d[+-]\d\d\:\d\d''!\s*one\s*\^ 1! !\s*'.
 ]
 
 { #category : 'testing' }
@@ -91,7 +91,7 @@ MCStWriterTest >> expectedInitializerASubclass [
 
 { #category : 'data' }
 MCStWriterTest >> expectedMethodDefinition [
-	^ '\s*!MCMockClassA methodsFor\: ''numeric'' stamp\: ''[/:\s\w]*''!\s*one\s*\^ 1! !\s*'
+	^ '\s*!MCMockClassA methodsFor\: ''numeric'' stamp\: ''\d\d\d\d-\d\d-\d\dT\d\d\:\d\d\:\d\d\.\d\d\d\d\d\d[+-]\d\d\:\d\d''!\s*one\s*\^ 1! !\s*'
 ]
 
 { #category : 'data' }
@@ -113,7 +113,7 @@ MCClassDeclaration
   instVarNames: #()
   comment: ''''''''!!!!
 
-MCMethodDeclaration className: #MCMockClassD selector: #one category: #''''as yet unclassified'''' timeStamp: ''''cwp 7/8/2003 21:21'''' source: 
+MCMethodDeclaration className: #MCMockClassD selector: #one category: #''''as yet unclassified'''' timeStamp: ''''2025-04-25T17:47:11.690218+02:00'''' source: 
 ''''one
 	^ 1''''!!!!
 ''''
@@ -138,7 +138,7 @@ MCClassDeclaration
   instVarNames: #()
   comment: ''''!!
 
-MCMethodDeclaration className: #MCMockClassD selector: #one category: #''as yet unclassified'' timeStamp: ''cwp 7/8/2003 21:21'' source: 
+MCMethodDeclaration className: #MCMockClassD selector: #one category: #''as yet unclassified'' timeStamp: ''2025-04-25T17:47:11.690218+02:00'' source: 
 ''one
 	^ 1''!!
 ''

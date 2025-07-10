@@ -454,7 +454,7 @@ OCMessageNode >> selectorAndArgumentNames [
 							st
 								<< sel asString;
 								<< ' ';
-								<< arg formattedCode;
+								<< arg sourceCode;
 								<< ' ']]) allButLast ]
 ]
 

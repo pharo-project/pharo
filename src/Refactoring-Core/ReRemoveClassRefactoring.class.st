@@ -82,7 +82,9 @@ ReRemoveClassRefactoring >> environmentWithUsersOf: aClassable [
 { #category : 'preconditions' }
 ReRemoveClassRefactoring >> preconditionAreNotMeta [
 
-	^ ReClassesAreNotMetaClassCondition new classes: classesDictionary
+	^ ReClassesAreNotMetaClassCondition new 
+			classes: classesDictionary ; 
+			message: 'Metaclasses can be removed. Remove their class.'
 ]
 
 { #category : 'preconditions' }

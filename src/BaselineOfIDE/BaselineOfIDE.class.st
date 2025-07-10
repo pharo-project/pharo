@@ -269,7 +269,7 @@ BaselineOfIDE >> postload: loader package: packageSpec [
 		register: ExternalChangesBrowser as: #changeList;
 		register: StFileSystemPresenter as: #fileList;
 		register: StFinderPresenter as: #finder;
-		register: ProcessBrowser as: #processBrowser.
+		register: StProcessBrowser as: #processBrowser.
 
 	(MorphicCoreUIManager readClassVariableNamed: #UIProcess) ifNotNil: [ :proc | proc terminate ].
 	MorphicCoreUIManager writeClassVariableNamed: #UIProcess value: nil.

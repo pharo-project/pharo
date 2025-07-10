@@ -286,41 +286,35 @@ DictionaryTest >> setUp [
 	emptyDict := self classToBeTested new.
 	nonEmptyDict := self classToBeTested new.
 	nonEmptyDict
-		at: #a
-			put: self elementTwiceIn;
-		at: #b
-			put: 30;
-		at: #c
-			put: self elementTwiceIn;
-		at: #d
-			put: -2.
+		at: #a put: self elementTwiceIn;
+		at: #b put: 30;
+		at: #c put: self elementTwiceIn;
+		at: #d put: -2.
 	nonEmpty5ElementsNoDuplicates := self classToBeTested new
-		at: #a
-			put: 5;
-		at: #b
-			put: 4;
-		at: #c
-			put: 7;
-		at: #d
-			put: 6;
-		at: #e
-			put: 9;
+		at: #a put: 5;
+		at: #b put: 4;
+		at: #c put: 7;
+		at: #d put: 6;
+		at: #e put: 9;
 		yourself.
 	valueNotIn := 666.
-	keyNotIn := #z .
-	associationNotIn := keyNotIn->valueNotIn.
-	dictionaryNotIncluded := Dictionary new add: associationNotIn ;yourself.
-	collectionNotIncluded := {  valueNotIn. valueNotIn  }.
-	collectionIncluded := {  (self elementTwiceIn)  }.
-	indexArray := #(2 3 1 ).
-	valueArray := #(5 5 5 ).
+	keyNotIn := #z.
+	associationNotIn := keyNotIn -> valueNotIn.
+	dictionaryNotIncluded := Dictionary new add: associationNotIn; yourself.
+	collectionNotIncluded := { valueNotIn. valueNotIn }.
+	collectionIncluded := { self elementTwiceIn }.
+	indexArray := #( 2 3 1 ).
+	valueArray := #( 5 5 5 ).
 	nonEmpty1Element := self classToBeTested new
-		at: #a
-			put: 5;
+		at: #a put: 5;
 		yourself.
-	nonEmptyWithString := Dictionary new add: #A->'foo'; add: #b->'bar' ; yourself.
+	nonEmptyWithString := Dictionary new add: #A->'foo'; add: #b->'bar'; yourself.
 	duplicateValue := 2.5.
-	dictionaryWithDuplicateValues := 	Dictionary new add: #A->duplicateValue ; add: #b->3.5 ; add: #C->duplicateValue  ; yourself
+	dictionaryWithDuplicateValues := Dictionary new
+		add: #A -> duplicateValue;
+		add: #b -> 3.5;
+		add: #C -> duplicateValue;
+		yourself
 ]
 
 { #category : 'requirements' }
@@ -372,7 +366,7 @@ DictionaryTest >> testAddWithKeyNotIn [
 DictionaryTest >> testAsSet [
 
 	| aDictionary aSet assoc0 assoc1 |
-	aDictionary := Dictionary new.
+	aDictionary := self classToBeTested new.
 	aSet := aDictionary asSet.
 	"Add two associations to it"
 	assoc0 := #first -> 0.
@@ -388,19 +382,21 @@ DictionaryTest >> testAsSet [
 
 { #category : 'tests' }
 DictionaryTest >> testAtUpdate [
+
 	| dict |
-	dict := {2->10. 100->5} asDictionary.
-	dict at: 2 update: [ :v | v+10 ].
+	dict := { 2 -> 10. 100 -> 5 } as: self classToBeTested.
+	dict at: 2 update: [ :v | v + 10 ].
 	self assert: (dict at: 2) equals: 20.
-	self should: [ dict at: 5 update: [ :v | v+1 ] ] raise: KeyNotFound
+	self should: [ dict at: 5 update: [ :v | v + 1 ] ] raise: KeyNotFound
 ]
 
 { #category : 'tests' }
 DictionaryTest >> testAtUpdateInitial [
+
 	| dict |
-	dict := {2->10. 100->5} asDictionary.
-	dict at: 5 update: [ :v | v+1 ] initial: [17].
-	dict at: 2 update: [ :v | v+10 ] initial: [0].
+	dict := { 2 -> 10. 100 -> 5 } as: self classToBeTested.
+	dict at: 5 update: [ :v | v + 1 ] initial: [ 17 ].
+	dict at: 2 update: [ :v | v + 10 ] initial: [ 0 ].
 	self assert: (dict at: 5) equals: 17.
 	self assert: (dict at: 2) equals: 20
 ]
@@ -411,11 +407,11 @@ DictionaryTest >> testCollectAsWithParenthesis [
 	| array dict |
 	array := { 1. 2. 3 }.
 	dict := (array collect: [ :each | each -> each asString ]) as:
-		        Dictionary.
-	self assert: dict equals: {
-			(1 -> '1').
-			(2 -> '2').
-			(3 -> '3') } asDictionary
+		        self classToBeTested.
+	self assert: dict equals: ({
+			 (1 -> '1').
+			 (2 -> '2').
+			 (3 -> '3') } as: self classToBeTested)
 ]
 
 { #category : 'tests' }
@@ -425,11 +421,11 @@ DictionaryTest >> testCollectAsWithoutParenthesis [
 	array := { 1. 2. 3 }.
 	dict := array
 		        collect: [ :each | each -> each asString ]
-		        as: Dictionary.
-	self assert: dict equals: {
-			(1 -> '1').
-			(2 -> '2').
-			(3 -> '3') } asDictionary
+		        as: self classToBeTested.
+	self assert: dict equals: ({
+			 (1 -> '1').
+			 (2 -> '2').
+			 (3 -> '3') } as: self classToBeTested)
 ]
 
 { #category : 'tests' }
@@ -458,7 +454,8 @@ DictionaryTest >> testDictionaryPublicProtocolCompatibility [
 DictionaryTest >> testFlatCollect [
 
 	| res |
- 	res := {#first -> -1. #second -> 5 . #three -> -33} asDictionary flatCollect: [:e | { e abs } ].
+ 	res := {#first -> -1. #second -> 5 . #three -> -33} as: self classToBeTested.
+	res := res flatCollect: [ :e | { e abs } ].
  	self assert: res asSet equals: #(1 5 33) asSet
 ]
 
@@ -466,7 +463,8 @@ DictionaryTest >> testFlatCollect [
 DictionaryTest >> testFlatCollect2 [
 
 	| res |
- 	res := {#first -> #(-2 3). #second -> #(-4 5)} asDictionary flatCollect: [:e | e collect: [:each | each abs]].
+ 	res := {#first -> #(-2 3). #second -> #(-4 5)} as: self classToBeTested.
+	res := res flatCollect: [ :e | e collect: [ :each | each abs ] ].
  	self assert: res asSet equals: #(2 3 4 5) asSet
 ]
 
@@ -474,7 +472,8 @@ DictionaryTest >> testFlatCollect2 [
 DictionaryTest >> testFlatCollect3 [
 
 	| res |
- 	res := {#first -> #(-2 3). #second -> #(-4 5)} asDictionary flatCollect: [:e | {e collect: [:each | each abs]}].
+ 	res := {#first -> #(-2 3). #second -> #(-4 5)} as: self classToBeTested.
+	res := res flatCollect: [ :e | { (e collect: [ :each | each abs ]) } ].
  	self assert: res asSet equals: #(#(2 3) #(4 5)) asSet
 ]
 

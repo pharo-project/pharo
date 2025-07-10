@@ -53,7 +53,7 @@ PharoBootstrapRule >> critiqueFor: aPackage [
 
 { #category : 'private' }
 PharoBootstrapRule >> dependencyChecker [
-	^ (DependencyChecker ifNil: [ DADependencyChecker ]) new
+	^ (DependencyChecker ifNil: [ StDependencyChecker ]) new
 ]
 
 { #category : 'instance creation' }

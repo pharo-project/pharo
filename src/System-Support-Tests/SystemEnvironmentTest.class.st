@@ -4,6 +4,9 @@ SUnit tests for SystemEnvironment
 Class {
 	#name : 'SystemEnvironmentTest',
 	#superclass : 'DictionaryTest',
+	#instVars : [
+		'testingEnvironment'
+	],
 	#category : 'System-Support-Tests-Utilities',
 	#package : 'System-Support-Tests',
 	#tag : 'Utilities'
@@ -46,6 +49,15 @@ SystemEnvironmentTest >> elementToAdd [
 SystemEnvironmentTest >> setUp [
 
 	super setUp.
+	
+	testingEnvironment := SystemEnvironment new.
+
+	ShiftClassBuilder new
+		name: #TestObject;
+		superclass: nil;
+		installingEnvironment: testingEnvironment;
+		package: 'System-Support-Tests';
+		install.
 
 	associationNotIn := GlobalVariable key: keyNotIn value: valueNotIn
 ]
@@ -56,6 +68,16 @@ SystemEnvironmentTest >> supportsNilKey [
 	^ false
 ]
 
+{ #category : 'tests' }
+SystemEnvironmentTest >> testAddFlushesCaches [
+	"we add to the environemnt with #add:"
+	testingEnvironment add: (GlobalVariable key: #Object value: Object).
+	"we can find it with at:"
+	self assert: (testingEnvironment at: #Object) equals: Object.
+	"and via #allBehavior, which uses the cache"
+	self assert: (testingEnvironment allBehaviors includes: Object).
+]
+
 { #category : 'tests - DictionaryIndexAccessing' }
 SystemEnvironmentTest >> testAtPutNil [
 
@@ -63,10 +85,36 @@ SystemEnvironmentTest >> testAtPutNil [
 ]
 
 { #category : 'tests' }
+SystemEnvironmentTest >> testAtUpdate [
+
+	| dict |
+	dict := { (GlobalVariable key: #a value: 10) } as:
+		        self classToBeTested.
+	self
+		should: [ dict at: #a update: [ :v | v + 10 ] ]
+		raise: ShouldNotImplement
+]
+
+{ #category : 'tests' }
+SystemEnvironmentTest >> testAtUpdateInitial [
+
+	| dict |
+	dict := { (GlobalVariable key: #a value: 10) } as:
+		        self classToBeTested.
+	self
+		should: [ dict at: #c update: [ :v | v + 1 ] initial: [ 17 ] ]
+		raise: ShouldNotImplement
+]
+
+{ #category : 'tests' }
 SystemEnvironmentTest >> testClassOrTraitNamedReturnsClassForClasses [
 
-	self assert: Object identicalTo: (testingEnvironment classOrTraitNamed: 'Object').
-	self assert: Object identicalTo: (testingEnvironment classOrTraitNamed: #Object)
+	self
+		assert: (testingEnvironment at: #TestObject)
+		identicalTo: (testingEnvironment classOrTraitNamed: 'TestObject').
+	self
+		assert: (testingEnvironment at: #TestObject)
+		identicalTo: (testingEnvironment classOrTraitNamed: #TestObject)
 ]
 
 { #category : 'tests' }
@@ -77,11 +125,76 @@ SystemEnvironmentTest >> testClassOrTraitNamedReturnsNilForGlobals [
 ]
 
 { #category : 'tests' }
+SystemEnvironmentTest >> testCollectAsWithParenthesis [
+
+	| array dict |
+	array := #( a b c ).
+	dict := (array collect: [ :each |
+		         GlobalVariable key: each value: each asString ]) as:
+		        self classToBeTested.
+	self assert: dict equals: ({
+			 (GlobalVariable key: #a value: 'a').
+			 (GlobalVariable key: #b value: 'b').
+			 (GlobalVariable key: #c value: 'c') } as: self classToBeTested)
+]
+
+{ #category : 'tests' }
+SystemEnvironmentTest >> testCollectAsWithoutParenthesis [
+
+	| array dict |
+	array := #( a b c ).
+	dict := array
+		        collect: [ :each | GlobalVariable key: each value: each asString ]
+		        as: self classToBeTested.
+	self assert: dict equals: ({
+			 (GlobalVariable key: #a value: 'a').
+			 (GlobalVariable key: #b value: 'b').
+			 (GlobalVariable key: #c value: 'c') } as: self classToBeTested)
+]
+
+{ #category : 'tests' }
 SystemEnvironmentTest >> testEnvironmentOfOrganization [
 
 	| aDictionary |
 	aDictionary := SystemEnvironment new.
 	self assert: aDictionary organization environment equals: aDictionary
+]
+
+{ #category : 'tests - flatCollect' }
+SystemEnvironmentTest >> testFlatCollect [
+
+	| res |
+	res := {
+		       (GlobalVariable key: #first value: -1).
+		       (GlobalVariable key: #second value: 5).
+		       (GlobalVariable key: #three value: -33) } as:
+		       self classToBeTested.
+	res := res flatCollect: [ :e | { e abs } ].
+	self assert: res asSet equals: #( 1 5 33 ) asSet
+]
+
+{ #category : 'tests - flatCollect' }
+SystemEnvironmentTest >> testFlatCollect2 [
+
+	| res |
+	res := {
+		       (GlobalVariable key: #first value: #( -2 3 )).
+		       (GlobalVariable key: #second value: #( -4 5 )) } as:
+		       self classToBeTested.
+	res := res flatCollect: [ :e | e collect: [ :each | each abs ] ].
+	self assert: res asSet equals: #( 2 3 4 5 ) asSet
+]
+
+{ #category : 'tests - flatCollect' }
+SystemEnvironmentTest >> testFlatCollect3 [
+
+	| res |
+	res := {
+		       (GlobalVariable key: #first value: #( -2 3 )).
+		       (GlobalVariable key: #second value: #( -4 5 )) } as:
+		       self classToBeTested.
+	res := res flatCollect: [ :e | { (e collect: [ :each | each abs ]) } ].
+	self assert: res asSet equals: #( #( 2 3 ) #( 4 5 ) ) asSet
 ]
 
 { #category : 'tests' }

@@ -17,8 +17,8 @@ ClapMismatch >> at: identifierOrSpec [
 
 { #category : 'matching' }
 ClapMismatch >> completeMatchOn: aStream [
-	word:= aStream peek.
-	startIndex := aStream position + 1
+	word := aStream peek.
+	startIndex := aStream position + 1.
 ]
 
 { #category : 'testing' }
@@ -29,6 +29,12 @@ ClapMismatch >> ifMatch: matchingBlock ifMismatch: mismatchBlock [
 { #category : 'testing' }
 ClapMismatch >> isValid [
 	^ false
+]
+
+{ #category : 'testing' }
+ClapMismatch >> isValid: aValidation [
+
+	^ aValidation isValidMismatch: self
 ]
 
 { #category : 'printing' }
@@ -46,6 +52,17 @@ ClapMismatch >> printDetailsOn: aStream [
 ]
 
 { #category : 'adding' }
-ClapMismatch >> recordIn: parentMatch [
+ClapMismatch >> recordIn: parentMatch [ 
 	"this match failed, so do nothing"
+]
+
+{ #category : 'accessing' }
+ClapMismatch >> subcommands [
+
+	^ #()
+]
+
+{ #category : 'accessing' }
+ClapMismatch >> value [
+	^ self
 ]

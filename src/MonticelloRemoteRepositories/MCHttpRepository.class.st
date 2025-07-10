@@ -72,16 +72,6 @@ MCHttpRepository class >> location: aUrl user: user password: password [
 ]
 
 { #category : 'instance creation' }
-MCHttpRepository class >> pharoInboxRepository [
-	^ self location: 'http://smalltalkhub.com/mc/Pharo/Pharo60Inbox/main'.
-]
-
-{ #category : 'instance creation' }
-MCHttpRepository class >> pharoRepository [
-	^ self location: 'http://smalltalkhub.com/mc/Pharo/Pharo60/main'.
-]
-
-{ #category : 'instance creation' }
 MCHttpRepository class >> project: aProjectIdentifier [
 	^ self location: self baseURL, aProjectIdentifier
 ]

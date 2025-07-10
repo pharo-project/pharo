@@ -108,9 +108,9 @@ OCMessageNode >> isInlineToDo [
 	block isBlock ifFalse: [^ false].
 	block arguments size = 1 ifFalse: [^ false].
 	self arguments first isVariable ifTrue: [
-		(OCParseTreeSearcher new
-			matches: self arguments first name , ' := `@object' do: [:n :a | true];
-			executeTree: block initialAnswer: false) ifTrue: [^ false].
+		(block allChildren anySatisfy: [:child |
+			child isAssignment and: [
+				child variable = self arguments first ]]) ifTrue: [ ^false ].
 	].
 	self arguments size = 3 "to:by:do:" ifTrue: [
 		step := self arguments second.

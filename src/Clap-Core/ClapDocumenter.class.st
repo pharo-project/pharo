@@ -19,10 +19,10 @@ ClapDocumenter class >> explain: aClapParameter [
 	^ self stringFrom: [ :doc | doc explain: aClapParameter ]
 ]
 
-{ #category : 'instance creation' }
+{ #category : 'private' }
 ClapDocumenter class >> new [
-
-	^ self error: 'A ClapDocumenter should be created with on:'
+	"use #on: instead"
+	^ self shouldNotImplement
 ]
 
 { #category : 'instance creation' }
@@ -43,6 +43,16 @@ ClapDocumenter class >> stringFrom: documenterBlock [
 	]
 ]
 
+{ #category : 'documenting' }
+ClapDocumenter >> commandStringFrom: aClapContext [
+	| commands |
+	commands := (aClapContext commandMatches
+		ifEmpty: [ { aClapContext } ])
+		collect: [ :command | command specification canonicalName ].
+		
+	^ String space join: commands
+]
+
 { #category : 'accessing' }
 ClapDocumenter >> contents [
 	^ formatter contents
@@ -57,19 +67,32 @@ ClapDocumenter >> descriptionSummary: aCommand [
 
 { #category : 'documenting' }
 ClapDocumenter >> explain: aCommand [
+
+	self explain: aCommand canonicalName: aCommand canonicalName
+]
+
+{ #category : 'documenting' }
+ClapDocumenter >> explain: aCommand canonicalName: aCanonicalName [
 	self descriptionSummary: aCommand.
 	formatter newLine.
-	self usage: aCommand.
+	self usage: aCommand canonicalName: aCanonicalName.
 	self parameterDescriptions: aCommand.
 	formatter flush
 ]
 
 { #category : 'documenting' }
-ClapDocumenter >> flagSynopsis: each [
+ClapDocumenter >> explainContext: aClapContext [
+
+	self 
+		explain: aClapContext lastSubcommand specification
+		canonicalName: (self commandStringFrom: aClapContext)
+]
+
+{ #category : 'documenting' }
+ClapDocumenter >> flagSynopsis: aFlag [
 	^ formatter
 		text: '[';
-		text: '--';
-		text: each canonicalName;
+		text: aFlag synopsis;
 		text: ']'
 ]
 
@@ -107,16 +130,16 @@ ClapDocumenter >> section: titleString listing: parameters [
 ]
 
 { #category : 'documenting' }
-ClapDocumenter >> usage: aCommand [
+ClapDocumenter >> usage: aCommand canonicalName: aString [
 	formatter
 		text: 'Usage: ';
-		text: aCommand canonicalName.
-	aCommand flags ifNotEmpty: [ :flags |
+		text: aString.
+	aCommand flags ifNotEmpty: [ :flags | 
 		formatter space.
 		flags
 			do: [ :each | self flagSynopsis: each ]
 			separatedBy: [ formatter space ] ].
-	aCommand positionals ifNotEmpty: [ :positionals |
+	aCommand positionals ifNotEmpty: [ :positionals | 
 		formatter space.
 		positionals
 			do: [ :each | self positional: each ]

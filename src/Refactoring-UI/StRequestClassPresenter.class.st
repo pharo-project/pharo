@@ -123,20 +123,22 @@ StRequestClassPresenter >> validateAnswer [
 { #category : 'private' }
 StRequestClassPresenter >> validateAnswerBlock [
 
-	^ [ : newClassName : packageName : tagName |
+	^ [ :newClassName :packageName :tagName |
 		  | isValid |
-		  isValid := (self validateNameBlock value: newClassName) and: [ (self validateNameBlock value: packageName) and: [ self validateNameBlock value: tagName ] ].
-		  isValid 
-			ifFalse: [ self inform: 'Name can''t be empty or contain spaces' ].
+		  isValid := (self validateClassNameBlock value: newClassName) and: [
+			             (self validatePackageNameBlock value: packageName) and: [ self validatePackageNameBlock value: tagName ] ].
+		  isValid ifFalse: [ self inform: 'Name can''t be empty or contain spaces' ].
 		  isValid ]
 ]
 
 { #category : 'private' }
-StRequestClassPresenter >> validateNameBlock [
+StRequestClassPresenter >> validateClassNameBlock [
 
-	^ [ :txt |
-	  | isValid |
-	  isValid := txt isNotNil and: [
-		             txt isNotEmpty and: [ (txt includesSubstring: ' ') not ] ].
-	  isValid ]
+	^ [ :txt | txt isNotNil and: [ txt isNotEmpty and: [ (txt includesSubstring: ' ') not ] ] ]
+]
+
+{ #category : 'private' }
+StRequestClassPresenter >> validatePackageNameBlock [
+
+	^ [ :txt | txt isNotNil and: [ txt isNotEmpty ] ]
 ]
