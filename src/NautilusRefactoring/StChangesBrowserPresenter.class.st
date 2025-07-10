@@ -25,7 +25,7 @@ StChangesBrowserPresenter >> accept [
 
 	self okToChange ifFalse: [ ^ self ].
 
-	[ RBRefactoryChangeManager instance performChanges: self pickedChanges ] asJob
+	[ ReChangeManager instance performChanges: self pickedChanges ] asJob
 		title: 'Refactoring';
 		run
 ]
@@ -126,7 +126,7 @@ StChangesBrowserPresenter >> textArea [
 { #category : 'private' }
 StChangesBrowserPresenter >> updateChanges [
 	| aCompositeChange |
-	aCompositeChange := RBRefactoryChangeManager changeFactory
+	aCompositeChange := ReChangeManager changeFactory
 		compositeRefactoryChange.
 	self changes do: [ :each | aCompositeChange addChange: each ].
 

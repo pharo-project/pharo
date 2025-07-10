@@ -126,7 +126,7 @@ RBTransformationRule >> problemCount [
 
 { #category : 'running' }
 RBTransformationRule >> resetResult [
-	builder := RBRefactoryChangeManager changeFactory compositeRefactoryChangeNamed: self name
+	builder := ReChangeManager changeFactory compositeRefactoryChangeNamed: self name
 ]
 
 { #category : 'accessing' }
@@ -136,7 +136,7 @@ RBTransformationRule >> result [
 	environment matcher: self rewriteRule.
 	environment label: self name.
 	self changes do: [ :change |
-		(change isKindOf: RBAddMethodChange)
+		(change isKindOf: ReAddMethodChange)
 			ifTrue: [ environment addClass: change changeClass selector: change selector ] ].
 	^ environment
 ]

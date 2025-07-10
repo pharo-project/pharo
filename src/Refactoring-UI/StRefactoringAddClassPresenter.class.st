@@ -31,9 +31,9 @@ StRefactoringAddClassPresenter >> defaultLayout [
 
 	^ SpGridLayout new
 		  add: 'New class name' atPoint: 1 @ 1;
-		  add: textInput at: 2 @ 1 span: 2 @ 1;
-		  add: 'Package' at: 1 @ 2;
-		  add: packagePresenter at: 2 @ 2 span: 2 @ 1;
+		  add: textInput atPoint: 2 @ 1 span: 2 @ 1;
+		  add: 'Package' atPoint: 1 @ 2;
+		  add: packagePresenter atPoint: 2 @ 2 span: 2 @ 1;
 		  add: 'Tag' at: 1 @ 3;
 		  add: tagPresenter at: 2 @ 3 span: 2 @ 1;
 		  add: 'Comment' at: 1 @ 4;
@@ -102,6 +102,34 @@ StRefactoringAddClassPresenter >> open [
 	super
 		open;
 		centered
+]
+
+{ #category : 'callbacks' }
+StRefactoringAddClassPresenter >> updateTagItems: item [
+	"Note that as it seems there is no Spec drop list with editable text, we provide a 'Core' tag by default if the package has no tags"
+
+	| pkg superclassTag |
+	superclassTag := driver superclass packageTag name.
+	item
+		ifNil: [
+				superclassTag
+					ifNotNil: [ tagPresenter items: { superclassTag } ]
+					ifNil: [ tagPresenter items: { 'Core' } ] ]
+		ifNotNil: [
+				(pkg := PackageOrganizer default packageNamed: item) tagNames
+					ifEmpty: [
+							superclassTag
+								ifNotNil: [ tagPresenter items: { superclassTag } ]
+								ifNil: [ tagPresenter items: { 'Core' } ] ]
+					ifNotEmpty: [ :tagNames |
+							| orderedTags |
+							orderedTags := tagNames asOrderedCollection.
+							superclassTag ifNotNil: [
+									(orderedTags includes: superclassTag) ifTrue: [
+											orderedTags remove: superclassTag.
+											orderedTags addFirst: superclassTag ] ].
+							tagPresenter items: orderedTags ] ].
+	tagPresenter selectIndex: 1
 ]
 
 { #category : 'accessing' }

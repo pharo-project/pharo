@@ -26,7 +26,7 @@ ChangesBrowserTest >> testBuildDiffFor [
 { #category : 'tests' }
 ChangesBrowserTest >> testChanges [
 	| aCollection |
-	aCollection := {RBRefactoryChange new}.
+	aCollection := {ReChange new}.
 	browser changes: aCollection.
 	self assert: browser changes equals: aCollection
 ]

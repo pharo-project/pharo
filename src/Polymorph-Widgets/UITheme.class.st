@@ -814,18 +814,22 @@ UITheme >> chooseForSaveFileReferenceIn: aThemedMorph title: title extensions: e
 
 	| dialog directory |
 	dialog := self fileSaveDialogWindowClass new.
-	exts ifNotNil: [
-		dialog filter: (StCustomExtensionsFilter extensions: exts) ].
-	path ifNotNil: [
-		dialog nameText: path asFileReference nextVersion basename ].
+	exts ifNotNil: [ dialog filter: (StCustomExtensionsFilter extensions: exts) ].
+	path ifNotNil: [ dialog nameText: path asFileReference nextVersion basename ].
 	directory := path
 		             ifNil: [ StFileSystemModel defaultDirectory ]
 		             ifNotNil: [ path parent ].
-	^ dialog
-		  defaultFolder: directory;
-		  title: (title ifNil: [ 'Save as' translated ] ifNotNil: [ title ]);
-		  openModal;
-		  selectedEntry
+
+	dialog
+		defaultFolder: directory;
+		title: (title
+				 ifNil: [ 'Save as' translated ]
+				 ifNotNil: [ title ]);
+		openModal.
+
+	^ dialog cancelled
+		  ifTrue: [ nil ]
+		  ifFalse: [ dialog selectedEntry ]
 ]
 
 { #category : 'services' }
@@ -3472,28 +3476,6 @@ UITheme >> newTreeFormSet: expanded size: size color: color [
 	^ FormSet forms: {
 		self newTreeForm: expanded size: size color: color.
 		self newTreeForm: expanded size: size * 2 color: color }
-]
-
-{ #category : 'morph creation' }
-UITheme >> newTreeIn: aThemedMorph for: aModel list: listSelector selected: getSelector changeSelected: setSelector [
-	"Answer a new tree morph."
-
-	^TreeListMorph new
-		selectionColor: self selectionColor;
-		font: self listFont;
-		on: aModel
-		list: listSelector
-		selected: getSelector
-		changeSelected: setSelector
-		menu: nil
-		keystroke: nil;
-		cornerStyle: aThemedMorph preferredCornerStyle;
-		"color: Color white;"
-		borderStyle: (BorderStyle inset width: 1 scaledByDisplayScaleFactor);
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
-		autoDeselect: false;
-		yourself
 ]
 
 { #category : 'morph creation' }

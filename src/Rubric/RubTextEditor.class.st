@@ -437,6 +437,11 @@ RubTextEditor >> changeLfToCr: aKeyboardEvent [
 ]
 
 { #category : 'accessing' }
+RubTextEditor >> characterAt: anOffset [ 
+	^ self paragraph text asString at: anOffset.
+]
+
+{ #category : 'accessing' }
 RubTextEditor >> characterGroupAt: index in: aString [
 
 	| character |
@@ -1782,6 +1787,17 @@ RubTextEditor >> offerFontMenu: aKeyboardEvent [
 	^ true
 ]
 
+{ #category : 'cursor' }
+RubTextEditor >> offsetToVisualColumn: line ofColumn: columnIndex [
+
+	^ (line first to: line first + columnIndex - 1)
+		  inject: 0
+		  into: [ :visualColumn :index |
+				  visualColumn + (self
+					   visualCharacterSize: (self characterAt: index)
+					   atOffset: visualColumn) ]
+]
+
 { #category : 'typing support' }
 RubTextEditor >> openTypeIn [
 	"Set up startOfTyping to keep track of the leftmost backspace.
@@ -2093,7 +2109,7 @@ RubTextEditor >> sameColumn: start newLine: lineBlock forward: isForward [
 	The position inside the line will be preserved as good as possible"
 	"The boolean isForward is used in the border case to determine if
 	we should move to the beginning or the end of the line."
-	| column currentLine offsetAtTargetLine targetEOL lines numberOfLines currentLineNumber targetLineNumber |
+	| offset currentLine offsetAtTargetLine targetEOL lines numberOfLines currentLineNumber targetLineNumber targetLine column |
 	self walkAlongDisplayedLine
 		ifTrue: [lines := self paragraph lines.
 			numberOfLines := self paragraph numberOfLines.
@@ -2105,16 +2121,18 @@ RubTextEditor >> sameColumn: start newLine: lineBlock forward: isForward [
 				detect:[:lineInterval | lineInterval last >= start]
 				ifNone:[lines last].
 			currentLineNumber := currentLine second].
-	column := start - currentLine first.
+	offset := start - currentLine first.
+	column := self offsetToVisualColumn: currentLine ofColumn: offset.
 	targetLineNumber := ((lineBlock value: currentLineNumber) max: 1) min: numberOfLines.
-	offsetAtTargetLine := (lines at: targetLineNumber) first.
-	targetEOL := (lines at: targetLineNumber) last + (targetLineNumber = numberOfLines ifTrue:[1]ifFalse:[0]).
+	targetLine := lines at: targetLineNumber.
+	offsetAtTargetLine := targetLine first.
+	targetEOL := targetLine last + (targetLineNumber = numberOfLines ifTrue:[1]ifFalse:[0]).
 	targetLineNumber = currentLineNumber
 	"No movement or movement failed. Move to beginning or end of line."
 		ifTrue:[^isForward
 			ifTrue:[targetEOL]
 			ifFalse:[offsetAtTargetLine]].
-	^offsetAtTargetLine + column min: targetEOL
+	^ offsetAtTargetLine + (self visualToOffsetColumn: targetLine ofColumn: column) min: targetEOL
 ]
 
 { #category : 'menu messages' }
@@ -2757,6 +2775,42 @@ RubTextEditor >> unselect [
 RubTextEditor >> visibleHeight [
 
 	^textArea owner bounds height
+]
+
+{ #category : 'cursor' }
+RubTextEditor >> visualCharacterSize: aCharacter atOffset: anOffset [ 
+	
+	| tabSize |
+	aCharacter = Character tab ifFalse: [ ^1 ].
+	
+	tabSize := EFFormatter numberOfSpacesInIndent.
+	
+	^ tabSize - (anOffset rem: tabSize)
+]
+
+{ #category : 'cursor' }
+RubTextEditor >> visualToOffsetColumn: line ofColumn: columnIndex [
+
+	| visualIndex offset |
+	offset := 0.
+	visualIndex := 0.
+
+	[
+	visualIndex < columnIndex and: [ offset < (line last - line first) ] ]
+		whileTrue: [
+				| currentChar |
+				currentChar := self characterAt: line first + offset.
+				visualIndex := visualIndex
+				               +
+				               (self
+					                visualCharacterSize: currentChar
+					                atOffset: visualIndex).
+				offset := offset + 1 ].
+
+
+	^ visualIndex > columnIndex
+		  ifTrue: [ offset - 1 ]
+		  ifFalse: [ offset ]
 ]
 
 { #category : 'settings' }

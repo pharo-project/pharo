@@ -39,7 +39,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Morphic-Tests';
 			package: 'Morphic-Widgets-FastTable-Tests';
 			package: 'NECompletion-Tests';
-			package: 'ProfStef-Tests';
+
 			package: 'Regex-Core-Tests';
 			package: 'Ring-Definitions-Monticello-Tests';
 			package: 'Rubric-Tests';

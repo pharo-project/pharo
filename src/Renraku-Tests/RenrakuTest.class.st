@@ -16,7 +16,7 @@ RenrakuTest >> testAsClassRuleTransformation [
 	critique := asClassMethod critiques detect: [ :crit |
 		crit rule class = ReAsClassRule ].
 
-	self assert: critique change class equals: RBAddMethodChange.
+	self assert: critique change class equals: ReAddMethodChange.
 	self assert: (critique change source includesSubstring: 'self class environment at:')
 ]
 

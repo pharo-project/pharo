@@ -161,6 +161,14 @@ ReAbstractTransformation >> changes [
 	^ self model changes
 ]
 
+{ #category : 'printing' }
+ReAbstractTransformation >> changesToDisplayIn: aBrowser [
+
+	^ (self changes changes collect: [:change | 
+			change onSystemEnvironment: self model environment systemDictionary])
+				flatCollect: [:e | e changesToDisplayIn: aBrowser ]
+]
+
 { #category : 'scripting api - conditions' }
 ReAbstractTransformation >> checkApplicabilityPreconditions [
 	"Check a preconditions and raise an error on violations. This method is part of the scripting API since it raises an error."
@@ -363,7 +371,7 @@ ReAbstractTransformation >> performChanges [
 ReAbstractTransformation >> performChanges: aCompositeChange [
 	"Perform the changes contained in a composite change"
 	
-	RBRefactoryChangeManager instance
+	ReChangeManager instance
 		performCompositeChange: aCompositeChange
 ]
 
@@ -542,4 +550,10 @@ ReAbstractTransformation >> uniqueMethodNameFor: anInteger [
 	(Symbol findInterned: name) isNotNil]
 			whileTrue: [index := index + 1].
 	^name asSymbol
+]
+
+{ #category : 'printing' }
+ReAbstractTransformation >> whatToDisplayIn: aBrowser [
+
+	^ self changesToDisplayIn: aBrowser
 ]

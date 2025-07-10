@@ -109,7 +109,7 @@ ReRenameClassRefactoring >> newName: aNewName [
 	newName := aNewName asSymbol
 ]
 
-{ #category : 'preconditions' }
+{ #category : 'transforming' }
 ReRenameClassRefactoring >> prepareForExecution [
 
 	class := self model classNamed: className

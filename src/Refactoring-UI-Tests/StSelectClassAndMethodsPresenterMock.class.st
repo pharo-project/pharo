@@ -2,6 +2,7 @@ Class {
 	#name : 'StSelectClassAndMethodsPresenterMock',
 	#superclass : 'Object',
 	#instVars : [
+		'title',
 		'label',
 		'dropLabel',
 		'items',
@@ -37,6 +38,19 @@ StSelectClassAndMethodsPresenterMock class >> selectedClass [
 	^ nil
 ]
 
+{ #category : 'initialization' }
+StSelectClassAndMethodsPresenterMock class >> title: aTitle label: aString dropLabel: aString2 withItems: aCollection selecting: aCollection4 dropItems: aCollection5 acceptBlock: aFullBlockClosure [
+
+	^ self new
+		  title: aTitle
+		  label: aString
+		  dropLabel: aString2
+		  withItems: aCollection5
+		  selecting: aCollection4
+		  dropItems: aCollection
+		  acceptBlock: aFullBlockClosure
+]
+
 { #category : 'testing' }
 StSelectClassAndMethodsPresenterMock >> cancelled [
 	^ false
@@ -61,4 +75,17 @@ StSelectClassAndMethodsPresenterMock >> selectedClass [
 { #category : 'initialization' }
 StSelectClassAndMethodsPresenterMock >> selectedMethods [
 	^ selecting
+]
+
+{ #category : 'initialization' }
+StSelectClassAndMethodsPresenterMock >> title: aTitle label: aString dropLabel: aString2 withItems: aCollection selecting: aCollection4 dropItems: aCollection5 acceptBlock: aFullBlockClosure [
+
+	title := aTitle.
+	label := aString. 
+	dropLabel := aString2.
+	items := aCollection.
+	selecting := aCollection4.
+	dropItems := aCollection4.
+	acceptBlock := aFullBlockClosure.
+	acceptBlock value: self selectedClass value: self selectedMethods
 ]

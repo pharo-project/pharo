@@ -113,6 +113,38 @@ ColorTest >> testContrast [
 ]
 
 { #category : 'tests' }
+ColorTest >> testContrastingBlackAndWhiteColor [
+
+	self
+		assert: Color transparent contrastingBlackAndWhiteColor
+		identicalTo: Color black.
+
+	self
+		assert: (Color gray: 0.7) contrastingBlackAndWhiteColor
+		identicalTo: Color white.
+
+	self
+		assert: (Color gray: 0.8) contrastingBlackAndWhiteColor
+		identicalTo: Color black
+]
+
+{ #category : 'tests' }
+ColorTest >> testContrastingColorAdjustment [
+
+	self
+		assert: Color transparent contrastingColorAdjustment
+		identicalTo: Color transparent.
+
+	self
+		assert: (Color gray: 0.7) contrastingColorAdjustment
+		equals: (Color gray: 0.7) lighter.
+
+	self
+		assert: (Color gray: 0.8) contrastingColorAdjustment
+		equals: (Color gray: 0.8) darker
+]
+
+{ #category : 'tests' }
 ColorTest >> testFromHexString [
 
 	| color |

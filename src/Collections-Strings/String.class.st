@@ -1079,6 +1079,13 @@ String >> copyReplaceTokens: oldSubstring with: newSubstring [
 
 { #category : 'copying' }
 String >> copyUpToSubstring: aSubstring [
+   "Answer a copy of the receiver up to the given substring"
+
+	"('abcdef' copyUpToSubstring: 'de') >>> 'abc'"
+	"('abcdef' copyUpToSubstring: 'f') >>> 'abcde'"
+	"('' copyUpToSubstring: 'abc') >>> ''"
+	"('abcdef' copyUpToSubstring: 'gh') >>> 'abcdef'"
+	"('abcdef' copyUpToSubstring: 'ab') >>> ''"
 
 	| index |
 	aSubstring ifEmpty: [
@@ -2951,7 +2958,13 @@ String >> withoutPeriodSuffix [
 String >> withoutPrefix: prefix [
 	"Remove the given prefix, if present."
 
-	^(self beginsWith: prefix) ifTrue: [ self copyFrom: 1 + prefix size to: self size ] ifFalse: [ self ]
+	"('UMLClass' withoutPrefix: 'UML') >>> 'Class'"
+
+	"('UMLClass' withoutPrefix: 'ML') >>> 'UMLClass'"
+
+	^ (self beginsWith: prefix)
+		  ifTrue: [ self copyFrom: 1 + prefix size to: self size ]
+		  ifFalse: [ self ]
 ]
 
 { #category : 'platform conventions' }
@@ -2974,7 +2987,13 @@ String >> withoutQuoting [
 String >> withoutSuffix: suffix [
 	"Remove the given suffix, if present."
 
-	^(self endsWith: suffix) ifTrue: [ self copyFrom: 1 to: self size - suffix size ] ifFalse: [ self ]
+	"('UMLClass' withoutSuffix: 'Class') >>> 'UML'"
+
+	"('UMLClass' withoutSuffix: 'Cass') >>> 'UMLClass'"
+
+	^ (self endsWith: suffix)
+		  ifTrue: [ self copyFrom: 1 to: self size - suffix size ]
+		  ifFalse: [ self ]
 ]
 
 { #category : 'converting' }

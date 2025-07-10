@@ -26,6 +26,12 @@ GroupWindowMorph >> acceptDroppingMorph: aSystemWindow event: evt [
 ]
 
 { #category : 'windows' }
+GroupWindowMorph >> activeWindow [
+
+	^ self tabGroup page activate
+]
+
+{ #category : 'windows' }
 GroupWindowMorph >> addWindow: aSystemWindow [
   "Add an existing window to the pages."
 
@@ -58,6 +64,16 @@ GroupWindowMorph >> changePropotionalLayout [
 		ifTrue:[^self]. "already proportional layout"
 	self layoutPolicy: ProportionalLayout new.
 	self layoutChanged
+]
+
+{ #category : 'initialization' }
+GroupWindowMorph >> closeTopWindow [
+
+	self okToChange ifTrue: [
+			[ self removeWindow: self activeWindow ]
+				on: ProvideAnswerNotification
+				do: [ :notification | "We already got answer from okToChange check above"
+					notification resume: true ] ]
 ]
 
 { #category : 'initialize' }
@@ -114,7 +130,9 @@ GroupWindowMorph >> initialize [
 	self
 		dropEnabled: true;
 		addMorph: self tabGroup fullFrame: LayoutFrame identity.
-	self tabGroup color: Color transparent
+	self tabGroup color: Color transparent.
+	
+	self bindKeyCombination: $w meta toAction: [ self closeTopWindow ]
 ]
 
 { #category : 'testing' }
@@ -169,14 +187,15 @@ GroupWindowMorph >> onWindowLabelChanged: ann [
 GroupWindowMorph >> removeWindow: aSystemWindow [
 	"Remove a window from the pages."
 
-	aSystemWindow isCloseable
-		ifFalse: [ ^ self ].
+	aSystemWindow isCloseable ifFalse: [ ^ self ].
 	aSystemWindow announcer unsubscribe: self.
 	self tabGroup removePage: aSystemWindow.
 	aSystemWindow configureForUnembedding.
 	"self world addMorph: aSystemWindow"
 	aSystemWindow deleteDiscardingChanges.
-	self tabGroup pages ifEmpty: [ self owner delete ]
+	self tabGroup pages
+		ifNotEmpty: [ self tabGroup page activate ]
+		ifEmpty: [ self owner delete ]
 ]
 
 { #category : 'accessing' }
@@ -237,4 +256,10 @@ GroupWindowMorph >> wantsDroppedMorph: aMorph event: evt [
   (self tabGroup tabSelectorMorph bounds containsPoint: evt position) ifFalse: [^ false].
 
   ^aMorph isSystemWindow
+]
+
+{ #category : 'initialize' }
+GroupWindowMorph >> wantsKeyboardFocus [
+
+	^ false
 ]

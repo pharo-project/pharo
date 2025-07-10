@@ -78,7 +78,7 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'MonticelloMocks'.
 		spec package: 'Network-Mail'.
 		spec package: 'Network-Mail-Tests'.
-		spec package: 'ProfStef-Core'.
+		
 		spec package: 'StartupPreferences'.
 
 

@@ -60,6 +60,7 @@ RBInlineMethodFromComponentRefactoring >> addSelfReferenceToSourceMessage [
 { #category : 'transforming' }
 RBInlineMethodFromComponentRefactoring >> checkSelectedMessage [
 
+	class ifNil: [ self refactoringError: 'Class could not be found.' ].
 	sourceParseTree := class parseTreeForSelector: sourceSelector.
 	sourceParseTree ifNil: [ self refactoringError: 'Could not parse sources' ].
 	sourceMessage := sourceParseTree whichNodeIsContainedBy: sourceInterval.

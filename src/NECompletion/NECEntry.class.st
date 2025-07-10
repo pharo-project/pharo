@@ -9,7 +9,8 @@ Class {
 	#instVars : [
 		'contents',
 		'node',
-		'description'
+		'description',
+		'fetcher'
 	],
 	#classVars : [
 		'SpaceAfterCompletion'
@@ -76,7 +77,20 @@ NECEntry >> createDescription [
 
 { #category : 'operations' }
 NECEntry >> description [
-	^description ifNil: [ description := self createDescription ]
+
+	^ description ifNil: [ description := self createDescription ]
+]
+
+{ #category : 'accessing' }
+NECEntry >> fetcher [
+
+	^ fetcher
+]
+
+{ #category : 'accessing' }
+NECEntry >> fetcher: anObject [
+
+	fetcher := anObject
 ]
 
 { #category : 'accessing' }

@@ -59,7 +59,7 @@ SycRefactoringPreviewPresenter class >> title [
 SycRefactoringPreviewPresenter >> accept [
 	self okToChange ifFalse: [ ^ self ].
 	
-	[ RBRefactoryChangeManager instance
+	[ ReChangeManager instance
 			performChanges: self pickedChanges ] asJob
 		title: 'Refactoring';
 		run
@@ -291,7 +291,7 @@ SycRefactoringPreviewPresenter >> updateTablePresenter [
 	| aCompositeChange anEnvironment |
 	"We get the environment to apply the changes from any element in the changes instance variable"
 	anEnvironment := self activeRBEnvironment.
-	aCompositeChange := RBCompositeRefactoryChange new
+	aCompositeChange := ReCompositeChange new
 		onSystemEnvironment: anEnvironment.
 	changes do: [ :each | aCompositeChange addChange: each ].
 

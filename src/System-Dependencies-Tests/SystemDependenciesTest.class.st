@@ -46,7 +46,7 @@ SystemDependenciesTest >> knownBasicToolsDependencies [
 	"ideally this list should be empty"
 
 	^ #( 'Athens-Cairo' 'Athens-Core' #'Refactoring-Critics' #'Commander-Core' #Reflectivity #'Reflectivity-Tools' #Shout 'HeuristicCompletion-Model'
-	     #VariablesLibrary #'Spec2-CommonWidgets' #'NewTools-Scopes' #'Traits-Tests' 'NewTools-Scopes' 'NewTools-Transcript' #'NewTools-FileBrowser' )
+	     #VariablesLibrary #'Spec2-CommonWidgets' #'NewTools-Scopes' #'Traits-Tests' 'NewTools-Scopes' 'NewTools-Transcript' #'NewTools-FileBrowser' #EnlumineurFormatter )
 ]
 
 { #category : 'known dependencies' }
@@ -64,15 +64,6 @@ SystemDependenciesTest >> knownKernelDependencies [
 ]
 
 { #category : 'known dependencies' }
-SystemDependenciesTest >> knownLocalMonticelloDependencies [
-	"ideally this list should be empty"
-
-	"Remove Zinc-HTTP next line once Zinc-Resource-Meta-Core does not depend anymore on Zinc-HTTP."
-
-	^ #( #'Zinc-HTTP' )
-]
-
-{ #category : 'known dependencies' }
 SystemDependenciesTest >> knownMorphicCoreDependencies [
 	"ideally this list should be empty"
 
@@ -84,7 +75,7 @@ SystemDependenciesTest >> knownMorphicCoreDependencies [
 SystemDependenciesTest >> knownMorphicDependencies [
 	"ideally this list should be empty"
 
-	^ #( #'Refactoring-Critics' #'Refactoring-Environment' #'NewTools-FileBrowser' #'Tools-CodeNavigation' 'Debugger-Oups' ) "Rubric has a dependency on It"
+	^ #( #'Refactoring-Critics' #'Refactoring-Environment' #'NewTools-FileBrowser' #'Tools-CodeNavigation' 'Debugger-Oups' #EnlumineurFormatter ) "Rubric has a dependency on It"
 
 ]
 
@@ -115,7 +106,7 @@ SystemDependenciesTest >> knownUIDependencies [
 	"ideally this list should be empty"
 
 	^ #( 'Athens-Cairo' 'Athens-Core' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'HeuristicCompletion-Model'
-	     'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets' #'NewTools-Scopes' #'NewTools-FileBrowser' )
+	     'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets' #'NewTools-Scopes' #'NewTools-FileBrowser' #EnlumineurFormatter )
 ]
 
 { #category : 'accessing' }
@@ -254,7 +245,7 @@ SystemDependenciesTest >> testExternalLocalMonticelloDependencies [
 		                , BaselineOfPharoBootstrap multilingualPackageNames , BaselineOfPharoBootstrap fileSystemPackageNames
 		                , BaselineOfPharoBootstrap kernelAdditionalPackagesNames , BaselineOfMonticello corePackageNames.
 
-	self assertCollection: dependencies hasSameElements: self knownLocalMonticelloDependencies
+	self assertEmpty: dependencies
 ]
 
 { #category : 'tests' }

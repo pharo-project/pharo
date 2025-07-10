@@ -76,7 +76,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Morphic-Widgets-Basic'.
 		spec package: 'Morphic-Widgets-ColorPicker'.
 		spec package: 'Morphic-Widgets-Extra'.
-		spec package: 'Morphic-Widgets-List'.
 		spec package: 'Morphic-Widgets-Pluggable'.
 		spec package: 'Morphic-Widgets-PolyTabs'.
 		spec package: 'Morphic-Widgets-Scrolling'.

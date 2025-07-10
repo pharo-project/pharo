@@ -110,6 +110,7 @@ Morph class >> initialize [
 	"Morph initialize"
 
 	"this empty array object is shared by all morphs with no submorphs:"
+
 	EmptyArray := Array new
 ]
 
@@ -2784,19 +2785,20 @@ Morph >> handleDropFiles: anEvent [
 { #category : 'events - processing' }
 Morph >> handleDropMorph: anEvent [
 	"Handle a dropping morph."
+
 	| aMorph localPt |
 	aMorph := anEvent contents.
 	"Do a symmetric check if both morphs like each other"
-	((self wantsDroppedMorph: aMorph event: anEvent)	"I want her"
-		and: [aMorph wantsToBeDroppedInto: self])		"she wants me"
-		ifFalse: [^ self].
+	((self wantsDroppedMorph: aMorph event: anEvent) and: [
+		 aMorph wantsToBeDroppedInto: self ]) ifFalse: [ ^ self ]. "I want her" "she wants me"
 	anEvent wasHandled: true.
 	"Transform the morph into the receiver's coordinate frame. This is currently incomplete since it only takes the offset into account where it really should take the entire transform."
-	localPt := (self transformedFrom: anEvent hand world) "full transform down"
-				globalPointToLocal: aMorph referencePosition.
+	localPt := (self transformedFrom: anEvent hand world)
+		           globalPointToLocal: aMorph referencePosition. "full transform down"
 	aMorph referencePosition: localPt.
 	self acceptDroppingMorph: aMorph event: anEvent.
-	aMorph justDroppedInto: self event: anEvent
+	aMorph justDroppedInto: self event: anEvent.
+	WorldMorph executeDropBlockWith: anEvent
 ]
 
 { #category : 'events - processing' }
@@ -3209,7 +3211,9 @@ Morph >> handlesMouseOverDragging: evt [
 { #category : 'event handling' }
 Morph >> handlesMouseStillDown: evt [
 	"Return true if the receiver wants to get repeated #mouseStillDown: messages between #mouseDown: and #mouseUp"
-	self eventHandler ifNotNil: [^ self eventHandler handlesMouseStillDown: evt].
+
+	self eventHandler ifNotNil: [
+		^ self eventHandler handlesMouseStillDown: evt ].
 	^ false
 ]
 

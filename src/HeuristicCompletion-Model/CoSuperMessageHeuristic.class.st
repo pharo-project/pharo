@@ -38,8 +38,11 @@ CoSuperMessageHeuristic >> buildFetcherFor: aNode inContext: completionContext [
 
 	"Inject a synthetic fetcher with the expected full message send at first option because it is was is needed in most (>99%) situations"
 	aNode methodNode ifNotNil: [ :methodNode |
-		(completionClass superclass canUnderstand: methodNode selector) ifTrue: [ 
-			entry := (NECSelectorEntry contents: methodNode selectorAndArgumentNames node: aNode) selector: methodNode selector.
+		(completionClass superclass canUnderstand: methodNode selector) 
+			ifTrue: [ 
+			entry := (NECSelectorEntry contents: methodNode selectorAndArgumentNames node: aNode) 
+								fetcher: fetcher; 
+								selector: methodNode selector.
 			fetcher := (CoCollectionFetcher new collection: { entry }) , fetcher ] ].
 	^ fetcher
 ]

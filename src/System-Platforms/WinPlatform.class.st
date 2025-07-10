@@ -123,12 +123,6 @@ WinPlatform >> multiByteToWideCharacterCodepage: codepage flags: flags input: in
 	^self ffiCall: #(int MultiByteToWideChar(uint codepage, ulong flags, void* input, int inputLen, Win32WideString output, int outputLen ))
 ]
 
-{ #category : 'environment-variables' }
-WinPlatform >> setEnvironmentVariable: nameString value: valueString [
-
-	 ^ self ffiCall: #( int SetEnvironmentVariableW ( Win32WideString nameString, Win32WideString valueString ) )
-]
-
 { #category : 'accessing' }
 WinPlatform >> setLastError: aValue [
 

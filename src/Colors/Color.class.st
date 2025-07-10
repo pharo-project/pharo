@@ -1334,7 +1334,7 @@ Color >> contrastingBlackAndWhiteColor [
 	"Answer black or white depending on the luminance."
 
 	self isTransparent ifTrue: [ ^ self class black ].
-	^ self luminance > 0.5
+	^ self relativeLuminance > 0.5
 		ifTrue: [ self class black ]
 		ifFalse: [ self class white ]
 ]
@@ -1344,7 +1344,7 @@ Color >> contrastingColorAdjustment [
 	"Answer darker or lighter color depending on the luminance."
 
 	self isTransparent ifTrue: [ ^ self ].
-	^ self luminance > 0.5
+	^ self relativeLuminance > 0.5
 		ifTrue: [ self darker ]
 		ifFalse: [ self lighter ]
 ]
