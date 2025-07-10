@@ -44,9 +44,27 @@ SDL_SysWMmsg_Windows >> hwnd: anObject [
 ]
 
 { #category : 'testing' }
+SDL_SysWMmsg_Windows >> isDeviceChange [
+
+	^ self msg = WM_DEVICECHANGE
+]
+
+{ #category : 'testing' }
 SDL_SysWMmsg_Windows >> isDisplayChanged [
 
 	^ self msg = WM_DISPLAYCHANGE
+]
+
+{ #category : 'testing' }
+SDL_SysWMmsg_Windows >> isSysCommand [
+
+	^ self msg = WM_SYSCOMMAND
+]
+
+{ #category : 'testing' }
+SDL_SysWMmsg_Windows >> isWTSessionChange [
+
+	^ self msg = WM_WTSSESSION_CHANGE
 ]
 
 { #category : 'accessing - structure variables' }

@@ -649,15 +649,6 @@ UIManager >> requestPassword: queryString [
 	^self subclassResponsibility
 ]
 
-{ #category : 'start' }
-UIManager >> restart [
-
-	self
-		deactivate;
-		activate.
-	self inform: self class name , ' restarted'
-]
-
 { #category : 'display' }
 UIManager >> showWaitCursorWhile: aBlock [
 	| process |

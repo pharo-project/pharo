@@ -230,7 +230,7 @@ SDLOSXPharoMenu >> doQuit [
 { #category : 'menu options' }
 SDLOSXPharoMenu >> doRestartWorld [
 
-	UIManager default defer: [ UIManager default restart ]
+	UIManager default defer: [ OSWorldRenderer restart ]
 ]
 
 { #category : 'api' }
