@@ -11,7 +11,8 @@ Class {
 		'doAboutCallback',
 		'pharoTargetObject',
 		'doQuitCallback',
-		'doPreferencesCallback'
+		'doPreferencesCallback',
+		'doRestartWorldCallback'
 	],
 	#classVars : [
 		'UniqueInstance'
@@ -76,18 +77,36 @@ SDLOSXPharoMenu >> addMenuItemTo: menu title: aTitle withSubMenu: aNSMenu [
 { #category : 'private' }
 SDLOSXPharoMenu >> addPharoMenuOptions [
 
-	| selDoAbout selDoQuit selRemoveAllItems selDoPreferences |
+	| selDoAbout selDoQuit selRemoveAllItems selDoPreferences selDoRestartWorld |
+
 	selDoAbout := ObjCLibrary uniqueInstance lookupSelector: 'doAbout'.
 	selDoQuit := ObjCLibrary uniqueInstance lookupSelector: 'doQuit'.
 	selDoPreferences := ObjCLibrary uniqueInstance lookupSelector: 'doPreferences'.
+	selDoRestartWorld := ObjCLibrary uniqueInstance lookupSelector: 'doRestartWorld'.
 
 	selRemoveAllItems := ObjCLibrary uniqueInstance lookupSelector: 'removeAllItems'.
 	ObjCLibrary uniqueInstance sendMessage: selRemoveAllItems to: self pharoMenu.
 
-	self addMenuItemTo: self pharoMenu title: 'About Pharo' shortcut: '' selector: selDoAbout.
+	self
+		addMenuItemTo: self pharoMenu
+		title: 'About Pharo'
+		shortcut: ''
+		selector: selDoAbout.
+
 	self addSeparatorTo: self pharoMenu.
 
-	self addMenuItemTo: self pharoMenu title: 'Preferences' shortcut: ',' selector: selDoPreferences.
+	self
+		addMenuItemTo: self pharoMenu
+		title: 'Preferences'
+		shortcut: ','
+		selector: selDoPreferences.
+	
+	self
+		addMenuItemTo: self pharoMenu
+		title: 'Restart World Window'
+		shortcut: ''
+		selector: selDoRestartWorld.
+		
 	self addSeparatorTo: self pharoMenu.
 	
 	self addServicesMenuTo: self pharoMenu.
@@ -144,14 +163,31 @@ SDLOSXPharoMenu >> allocatePharoMenuTarget [
 		name: 'PharoMenuTargetClass' 
 		extraBytes: 0.
 	
-	doAboutCallback := self addCallbackForSelector: 'doAbout' withBlock: [ self doAbout ] toTargetClass: pharoMenuTargetClass.
-	doPreferencesCallback := self addCallbackForSelector: 'doPreferences' withBlock: [ self doPreferences ] toTargetClass: pharoMenuTargetClass.
-	doQuitCallback := self addCallbackForSelector: 'doQuit' withBlock: [ self doQuit ] toTargetClass: pharoMenuTargetClass.
-			
-	ObjCLibrary uniqueInstance objc_registerClassPair: pharoMenuTargetClass.
-	
-	pharoTargetObject := ObjCLibrary uniqueInstance sendMessage: selAlloc to: pharoMenuTargetClass.
+	doAboutCallback := self
+		                   addCallbackForSelector: 'doAbout'
+		                   withBlock: [ self doAbout ]
+		                   toTargetClass: pharoMenuTargetClass.
 
+	doPreferencesCallback := self
+		                         addCallbackForSelector: 'doPreferences'
+		                         withBlock: [ self doPreferences ]
+		                         toTargetClass: pharoMenuTargetClass.
+
+	doQuitCallback := self
+		                  addCallbackForSelector: 'doQuit'
+		                  withBlock: [ self doQuit ]
+		                  toTargetClass: pharoMenuTargetClass.
+	
+	doRestartWorldCallback := self
+		                  addCallbackForSelector: 'doRestartWorld'
+		                  withBlock: [ self doRestartWorld ]
+		                  toTargetClass: pharoMenuTargetClass.
+
+	ObjCLibrary uniqueInstance objc_registerClassPair: pharoMenuTargetClass.
+
+	pharoTargetObject := ObjCLibrary uniqueInstance
+		                     sendMessage: selAlloc
+		                     to: pharoMenuTargetClass
 ]
 
 { #category : 'menu options' }
@@ -189,6 +225,12 @@ SDLOSXPharoMenu >> doPreferences [
 SDLOSXPharoMenu >> doQuit [
 
 	UIManager default defer: [WorldState quitSession] 
+]
+
+{ #category : 'menu options' }
+SDLOSXPharoMenu >> doRestartWorld [
+
+	UIManager default defer: [ OSWorldRenderer restart ]
 ]
 
 { #category : 'api' }

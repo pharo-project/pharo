@@ -750,6 +750,10 @@ OSSDL2BackendWindow >> visitMouseWheelEvent: sdlEvent [
 { #category : 'event handling' }
 OSSDL2BackendWindow >> visitSystemWindowEvent: systemWindowEvent [
 
+	systemWindowEvent isWindows ifFalse: [ ^ nil ].
+	
+	systemWindowEvent windowsMessage isDisplayChanged ifFalse: [ ^ nil ].
+
 	self fetchDPI.
 	(OSWindowResolutionChangeEvent for: osWindow)
 		horizontalDPI: horizontalDPI;

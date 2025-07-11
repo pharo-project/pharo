@@ -56,6 +56,10 @@ SDLOSXPlatform >> allowTouchpadInertia [
 	ObjCLibrary uniqueInstance release: key.
 ]
 
+{ #category : 'operations' }
+SDLOSXPlatform >> beforeMainPharoWindowClosed: aOSSDLWindow [
+]
+
 { #category : 'configuration' }
 SDLOSXPlatform >> defaultRendererFlags [ 
 
