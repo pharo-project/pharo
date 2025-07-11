@@ -13,7 +13,7 @@ LiteralVariableTest >> testComparison [
 	self assert: var1 equals: var2.
 	self assert: var1 hash equals: var2 hash.
 
-	var2 value: #value2.
+	var2 value: 'value2'.
 	self deny: var1 equals: var2.
 	self deny: var1 equals: #var1 -> var1 value
 ]

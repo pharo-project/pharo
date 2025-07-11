@@ -159,7 +159,7 @@ def bootstrapImage(architectures){
             stage("Upload to files.pharo.org-${architecture}") {
               dir("build/bootstrap-cache") {
                   shell "BUILD_NUMBER=${env.BUILD_ID} bash ../../bootstrap/scripts/prepare_for_upload.sh ${architecture}"
-                sshagent (credentials: ['b5248b59-a193-4457-8459-e28e9eb29ed7']) {
+                sshagent (credentials: ['files-pharo-org-inria']) {
                   shell "bash ../../bootstrap/scripts/upload_to_files.pharo.org.sh"
                 }
               }

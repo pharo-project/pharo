@@ -5,7 +5,7 @@ Class {
 	#name : #BlockCannotReturn,
 	#superclass : #CannotReturn,
 	#instVars : [
-		'home'
+		#home
 	],
 	#category : #'Kernel-Exceptions'
 }

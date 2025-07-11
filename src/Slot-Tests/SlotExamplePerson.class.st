@@ -5,9 +5,9 @@ Class {
 	#name : #SlotExamplePerson,
 	#superclass : #Object,
 	#instVars : [
-		'#name',
-		'#directedMovies => ToManyRelationSlot inverse: #director inClass: #SlotExampleMovie',
-		'#actedInMovies => ToManyRelationSlot inverse: #actors inClass: #SlotExampleMovie'
+		#'#name',
+		#'#directedMovies => ToManyRelationSlot inverse: #director inClass: #SlotExampleMovie',
+		#'#actedInMovies => ToManyRelationSlot inverse: #actors inClass: #SlotExampleMovie'
 	],
 	#category : #'Slot-Tests-Examples - Associations'
 }

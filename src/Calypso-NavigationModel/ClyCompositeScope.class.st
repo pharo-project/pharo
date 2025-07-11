@@ -29,7 +29,7 @@ Class {
 	#name : #ClyCompositeScope,
 	#superclass : #ClyScope,
 	#instVars : [
-		'subscopes'
+		#subscopes
 	],
 	#category : #'Calypso-NavigationModel-Model'
 }

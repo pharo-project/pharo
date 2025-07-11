@@ -17,7 +17,7 @@ Class {
 	#name : #RBMethodProtocolTransformation,
 	#superclass : #RBMethodTransformation,
 	#instVars : [
-		'protocol'
+		#protocol
 	],
 	#category : #'Refactoring2-Transformations-Model'
 }

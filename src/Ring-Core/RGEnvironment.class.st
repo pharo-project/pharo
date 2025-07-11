@@ -10,13 +10,13 @@ Class {
 	#name : #RGEnvironment,
 	#superclass : #RGObject,
 	#instVars : [
-		'announcer',
-		'behaviors',
-		'packages',
-		'globalVariables',
-		'backend',
-		'queryInterface',
-		'version'
+		#announcer,
+		#behaviors,
+		#packages,
+		#globalVariables,
+		#backend,
+		#queryInterface,
+		#version
 	],
 	#category : #'Ring-Core-Environment'
 }

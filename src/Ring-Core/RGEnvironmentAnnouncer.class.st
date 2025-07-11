@@ -7,9 +7,9 @@ Class {
 	#name : #RGEnvironmentAnnouncer,
 	#superclass : #Announcer,
 	#instVars : [
-		'suspended',
-		'private',
-		'storedAnnouncements'
+		#suspended,
+		#private,
+		#storedAnnouncements
 	],
 	#category : #'Ring-Core-Announcements'
 }

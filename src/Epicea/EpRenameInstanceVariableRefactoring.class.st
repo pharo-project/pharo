@@ -16,8 +16,8 @@ Class {
 EpRenameInstanceVariableRefactoring class >> rename: oldName to: newName in: affectedClassName [
 	^ self basicNew
 		initializeIn: affectedClassName
-		from: oldName
-		to: newName;
+		from: oldName asSymbol
+		to: newName asSymbol;
 		yourself
 ]
 

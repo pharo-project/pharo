@@ -18,8 +18,8 @@ Class {
 	#name : #ClyStatusBarMorph,
 	#superclass : #PanelMorph,
 	#instVars : [
-		'contextBar',
-		'commandBar'
+		#contextBar,
+		#commandBar
 	],
 	#category : #'Calypso-Browser-UI'
 }

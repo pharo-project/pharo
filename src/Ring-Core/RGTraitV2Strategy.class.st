@@ -2,11 +2,11 @@ Class {
 	#name : #RGTraitV2Strategy,
 	#superclass : #RGTraitV2DescriptionStrategy,
 	#instVars : [
-		'comment',
-		'classVariables',
-		'package',
-		'sharedPools',
-		'classTrait'
+		#comment,
+		#classVariables,
+		#package,
+		#sharedPools,
+		#classTrait
 	],
 	#category : #'Ring-Core-Kernel'
 }

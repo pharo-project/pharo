@@ -2,9 +2,9 @@ Class {
 	#name : #SlotClassBuilderTest,
 	#superclass : #AbstractEnvironmentTestCase,
 	#instVars : [
-		'aClass',
-		'anotherClass',
-		'yetAnotherClass'
+		#aClass,
+		#anotherClass,
+		#yetAnotherClass
 	],
 	#category : #'Slot-Tests-ClassBuilder'
 }

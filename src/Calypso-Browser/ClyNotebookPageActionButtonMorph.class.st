@@ -6,7 +6,7 @@ Class {
 	#name : #ClyNotebookPageActionButtonMorph,
 	#superclass : #MultistateButtonMorph,
 	#instVars : [
-		'icon'
+		#icon
 	],
 	#category : #'Calypso-Browser-Tabs'
 }

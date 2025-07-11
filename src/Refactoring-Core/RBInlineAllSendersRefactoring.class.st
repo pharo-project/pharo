@@ -31,11 +31,11 @@ Class {
 	#name : #RBInlineAllSendersRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'selector',
-		'numberReplaced',
-		'numberNotReplaced',
-		'pattern',
-		'selectorString'
+		#selector,
+		#numberReplaced,
+		#numberNotReplaced,
+		#pattern,
+		#selectorString
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

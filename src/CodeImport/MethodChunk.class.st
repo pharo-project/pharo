@@ -7,8 +7,8 @@ Class {
 	#name : #MethodChunk,
 	#superclass : #BehaviorOwnedChunk,
 	#instVars : [
-		'categoryName',
-		'stamp'
+		#categoryName,
+		#stamp
 	],
 	#category : #'CodeImport-Chunks'
 }

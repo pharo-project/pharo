@@ -5,8 +5,8 @@ Class {
 	#name : #ZnCharacterReadWriteStream,
 	#superclass : #Object,
 	#instVars : [
-		'readStream',
-		'writeStream'
+		#readStream,
+		#writeStream
 	],
 	#category : #'Zinc-Character-Encoding-Core'
 }

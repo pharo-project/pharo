@@ -82,16 +82,16 @@ Class {
 	#name : #TestCase,
 	#superclass : #TestAsserter,
 	#instVars : [
-		'testSelector',
-		'expectedFails'
+		#testSelector,
+		#expectedFails
 	],
 	#classVars : [
-		'Announcers',
-		'DefaultTimeLimit',
-		'HistoryAnnouncer'
+		#Announcers,
+		#DefaultTimeLimit,
+		#HistoryAnnouncer
 	],
 	#classInstVars : [
-		'history'
+		#history
 	],
 	#category : #'SUnit-Core-Kernel'
 }
@@ -393,7 +393,7 @@ TestCase class >> isUnitTest [
 { #category : #testing }
 TestCase class >> isUsed [
 	"all my subclasses are used by me"
-	^self name = 'TestCase'
+	^self name = #'TestCase'
 		ifTrue: [ super isUsed ]
 		ifFalse: [ true ]
 ]

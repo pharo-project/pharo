@@ -14,8 +14,8 @@ Class {
 	#name : #Fraction,
 	#superclass : #Number,
 	#instVars : [
-		'numerator',
-		'denominator'
+		#numerator,
+		#denominator
 	],
 	#category : #'Kernel-Numbers'
 }

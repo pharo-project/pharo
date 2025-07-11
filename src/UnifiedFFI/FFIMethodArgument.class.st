@@ -18,7 +18,7 @@ FFIMethodArgument >> argName [
 
 { #category : #accessing }
 FFIMethodArgument >> argName: anObject [
-	argName := anObject
+	argName := anObject asSymbol
 ]
 
 { #category : #'emitting code' }

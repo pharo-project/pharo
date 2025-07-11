@@ -2,15 +2,15 @@ Class {
 	#name : #MetacelloProject,
 	#superclass : #Object,
 	#instVars : [
-		'versionMap',
-		'symbolicVersionMap',
-		'errorMap',
-		'loader',
-		'loaderClass',
-		'loadType',
-		'configuration',
-		'projectAttributes',
-		'versionNumberClass'
+		#versionMap,
+		#symbolicVersionMap,
+		#errorMap,
+		#loader,
+		#loaderClass,
+		#loadType,
+		#configuration,
+		#projectAttributes,
+		#versionNumberClass
 	],
 	#category : #'Metacello-Core-Model'
 }

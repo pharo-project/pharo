@@ -2,7 +2,7 @@ Class {
 	#name : #RGBehaviorStrategy,
 	#superclass : #Object,
 	#instVars : [
-		'owner'
+		#owner
 	],
 	#category : #'Ring-Core-Kernel'
 }

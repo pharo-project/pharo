@@ -2,11 +2,11 @@ Class {
 	#name : #DAPackageRelationGraphDiffTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'oldRelationGraph',
-		'newRelationGraph',
-		'packageRelationGraphDiff',
-		'packageA',
-		'packageB'
+		#oldRelationGraph,
+		#newRelationGraph,
+		#packageRelationGraphDiff,
+		#packageA,
+		#packageB
 	],
 	#category : #'Tool-DependencyAnalyser-Tests-Packages'
 }

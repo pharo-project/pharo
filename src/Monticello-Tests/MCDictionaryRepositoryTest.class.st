@@ -2,7 +2,7 @@ Class {
 	#name : #MCDictionaryRepositoryTest,
 	#superclass : #MCRepositoryTest,
 	#instVars : [
-		'dict'
+		#dict
 	],
 	#category : #'Monticello-Tests-Repository'
 }

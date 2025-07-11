@@ -2,10 +2,10 @@ Class {
 	#name : #ASTCacheResetTest,
 	#superclass : #TestCase,
 	#instVars : [
-		'cache',
-		'counter',
-		'link',
-		'node'
+		#cache,
+		#counter,
+		#link,
+		#node
 	],
 	#category : #'Reflectivity-Tests-Base'
 }

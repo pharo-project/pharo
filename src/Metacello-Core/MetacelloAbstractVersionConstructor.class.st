@@ -2,13 +2,13 @@ Class {
 	#name : #MetacelloAbstractVersionConstructor,
 	#superclass : #MetacelloAbstractConstructor,
 	#instVars : [
-		'root',
-		'configuration',
-		'project',
-		'attributeMap',
-		'attributeOrder',
-		'symbolicVersion',
-		'currentContext'
+		#root,
+		#configuration,
+		#project,
+		#attributeMap,
+		#attributeOrder,
+		#symbolicVersion,
+		#currentContext
 	],
 	#category : #'Metacello-Core-Constructors'
 }

@@ -28,7 +28,7 @@ Class {
 	#name : #RBCreateLazyAccessorsForVariableTransformation,
 	#superclass : #RBCreateAccessorsForVariableTransformation,
 	#instVars : [
-		'defaultValue'
+		#defaultValue
 	],
 	#category : #'Refactoring-Core-Transformation'
 }

@@ -27,7 +27,7 @@ Class {
 	#name : #RBAddVariableAccessorWithLazyInitializationTransformation,
 	#superclass : #RBAddVariableAccessorTransformation,
 	#instVars : [
-		'defaultValue'
+		#defaultValue
 	],
 	#category : #'Refactoring2-Transformations-Model-Unused'
 }

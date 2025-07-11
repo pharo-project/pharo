@@ -5,7 +5,7 @@ Class {
 	#name : #DAUnknownManuallyResolvedPackage,
 	#superclass : #Warning,
 	#instVars : [
-		'package'
+		#package
 	],
 	#category : #'Tool-DependencyAnalyser-Core'
 }
