@@ -52,7 +52,7 @@ RGMCTraitCompositionVisitorTest >> testClassTrait [
 	self assert: result isCollection.
 	self assert: (result allSatisfy: [:each | each isTrait]).
 	self assert: (result allSatisfy: [:each | each isRGObject]).
-	self assert: (result collect: [:each | each name]) equals: #('Trait1 classTrait' 'Trait2 classTrait') asOrderedCollection
+	self assert: (result collect: [:each | each name]) equals: #(#'Trait1 classTrait' #'Trait2 classTrait') asOrderedCollection
 ]
 
 { #category : #tests }

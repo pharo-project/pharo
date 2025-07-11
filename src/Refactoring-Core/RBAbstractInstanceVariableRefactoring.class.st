@@ -9,7 +9,7 @@ Class {
 	#name : #RBAbstractInstanceVariableRefactoring,
 	#superclass : #RBVariableRefactoring,
 	#instVars : [
-		'accessorsRefactoring'
+		#accessorsRefactoring
 	],
 	#category : #'Refactoring-Core-Refactorings'
 }

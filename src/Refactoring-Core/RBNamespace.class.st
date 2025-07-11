@@ -38,17 +38,17 @@ Class {
 	#name : #RBNamespace,
 	#superclass : #RBEntity,
 	#instVars : [
-		'changes',
-		'environment',
-		'newClasses',
-		'removedClasses',
-		'changedClasses',
-		'rootClasses',
-		'implementorsCache',
-		'sendersCache',
-		'newPackages',
-		'changedPackages',
-		'removedPackages'
+		#changes,
+		#environment,
+		#newClasses,
+		#removedClasses,
+		#changedClasses,
+		#rootClasses,
+		#implementorsCache,
+		#sendersCache,
+		#newPackages,
+		#changedPackages,
+		#removedPackages
 	],
 	#category : #'Refactoring-Core-Model'
 }

@@ -122,7 +122,7 @@ AbstractLayoutScope >> ownFieldSize [
 { #category : #accessing }
 AbstractLayoutScope >> resolveSlot: aName [
 	^ self
-		resolveSlot: aName
+		resolveSlot: aName asSymbol
 		ifFound: [:slot | slot ]
 		ifNone: [ SlotNotFound signalForName: aName ]
 ]
@@ -130,7 +130,7 @@ AbstractLayoutScope >> resolveSlot: aName [
 { #category : #accessing }
 AbstractLayoutScope >> resolveSlot: aName ifFound: foundBlock ifNone: exceptionBlock [
 	self allSlotsDo: [ :slot |
-		slot name = aName ifTrue: [ ^ foundBlock cull: slot ]].
+		slot name = aName asSymbol ifTrue: [ ^ foundBlock cull: slot ]].
 	^ exceptionBlock value
 ]
 

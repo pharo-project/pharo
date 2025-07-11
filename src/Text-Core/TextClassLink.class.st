@@ -5,7 +5,7 @@ Class {
 	#name : #TextClassLink,
 	#superclass : #TextLink,
 	#instVars : [
-		'className'
+		#className
 	],
 	#category : #'Text-Core-Attributes'
 }

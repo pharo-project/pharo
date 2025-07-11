@@ -2,7 +2,7 @@ Class {
 	#name : #MetacelloValidationFailure,
 	#superclass : #Error,
 	#instVars : [
-		'issues'
+		#issues
 	],
 	#category : #'Metacello-Core-Exceptions-Errors'
 }

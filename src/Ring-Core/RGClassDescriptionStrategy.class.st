@@ -2,7 +2,7 @@ Class {
 	#name : #RGClassDescriptionStrategy,
 	#superclass : #RGBehaviorStrategy,
 	#instVars : [
-		'layout'
+		#layout
 	],
 	#category : #'Ring-Core-Kernel'
 }

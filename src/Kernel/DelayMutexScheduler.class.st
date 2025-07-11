@@ -5,7 +5,7 @@ Class {
 	#name : #DelayMutexScheduler,
 	#superclass : #DelayBasicScheduler,
 	#instVars : [
-		'accessProtect'
+		#accessProtect
 	],
 	#category : #'Kernel-Delays'
 }

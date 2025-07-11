@@ -17,8 +17,8 @@ Class {
 	#name : #TextKern,
 	#superclass : #TextAttribute,
 	#instVars : [
-		'kern',
-		'active'
+		#kern,
+		#active
 	],
 	#category : #'Text-Core-Attributes'
 }

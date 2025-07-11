@@ -7,8 +7,8 @@ Class {
 	#name : #ZnEncodedStream,
 	#superclass : #Object,
 	#instVars : [
-		'stream',
-		'encoder'
+		#stream,
+		#encoder
 	],
 	#category : #'Zinc-Character-Encoding-Core'
 }

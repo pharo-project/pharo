@@ -67,10 +67,10 @@ Class {
 	#name : #ClyEnvironmentPlugin,
 	#superclass : #Object,
 	#instVars : [
-		'environment'
+		#environment
 	],
 	#classInstVars : [
-		'isAutoActivated'
+		#isAutoActivated
 	],
 	#category : #'Calypso-NavigationModel-Model'
 }

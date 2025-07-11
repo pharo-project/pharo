@@ -5,7 +5,7 @@ Class {
 	#name : #IRPrinter,
 	#superclass : #IRVisitor,
 	#instVars : [
-		'stream'
+		#stream
 	],
 	#category : #'OpalCompiler-Core-IR-Manipulation'
 }

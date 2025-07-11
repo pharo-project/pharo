@@ -5,8 +5,8 @@ Class {
 	#name : #DADependentPackageWrapper,
 	#superclass : #Object,
 	#instVars : [
-		'pdPackage',
-		'relationGraph'
+		#pdPackage,
+		#relationGraph
 	],
 	#category : #'Tool-DependencyAnalyser-Core'
 }

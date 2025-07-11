@@ -19,9 +19,9 @@ Class {
 	#name : #TestCaseAnnouncement,
 	#superclass : #Announcement,
 	#instVars : [
-		'testCase',
-		'testSelector',
-		'testResult'
+		#testCase,
+		#testSelector,
+		#testResult
 	],
 	#category : #'SUnit-Core-Announcements'
 }

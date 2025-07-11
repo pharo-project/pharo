@@ -15,11 +15,11 @@ Class {
 	#name : #RBMethodName,
 	#superclass : #Model,
 	#instVars : [
-		'selector',
-		'arguments',
-		'newArgs',
-		'permutation',
-		'renameMap'
+		#selector,
+		#arguments,
+		#newArgs,
+		#permutation,
+		#renameMap
 	],
 	#category : #'Refactoring-Core-Support'
 }

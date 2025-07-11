@@ -7,7 +7,7 @@ Class {
 	#name : #TextBackgroundColor,
 	#superclass : #TextAttribute,
 	#instVars : [
-		'color'
+		#color
 	],
 	#category : #'Text-Core-Attributes'
 }

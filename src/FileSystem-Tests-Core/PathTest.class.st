@@ -174,7 +174,7 @@ PathTest >> testDotDotParent [
 	path := (Path * 'plonk') / 'griffle' / '..'.
 	parent := path parent.
 	self assert: parent isRelative.
-	self assert: parent segments equals: #(plonk griffle '..' '..')
+	self assert: parent segments equals: #('plonk' 'griffle' '..' '..')
 ]
 
 { #category : #tests }
@@ -183,7 +183,7 @@ PathTest >> testDotParent [
 	path := (Path * 'plonk') / 'griffle' / '.'.
 	parent := path parent.
 	self assert: parent isRelative.
-	self assert: parent segments equals: #(plonk)
+	self assert: parent segments equals: #('plonk')
 ]
 
 { #category : #tests }

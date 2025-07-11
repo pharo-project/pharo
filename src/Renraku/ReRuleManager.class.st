@@ -10,14 +10,14 @@ Class {
 	#name : #ReRuleManager,
 	#superclass : #Object,
 	#instVars : [
-		'rules'
+		#rules
 	],
 	#classVars : [
-		'RulesProfile'
+		#RulesProfile
 	],
 	#classInstVars : [
-		'default',
-		'managers'
+		#default,
+		#managers
 	],
 	#category : #'Renraku-Utility'
 }

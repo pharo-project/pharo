@@ -5,7 +5,7 @@ Class {
 	#name : #PrimitiveErrorVariable,
 	#superclass : #LocalVariable,
 	#instVars : [
-		'node'
+		#node
 	],
 	#category : #'OpalCompiler-Core-Semantics'
 }

@@ -8,14 +8,14 @@ Class {
 	#name : #RBAbstractVariablesRefactoring,
 	#superclass : #RBRefactoring,
 	#instVars : [
-		'tree',
-		'fromClass',
-		'instVarReaders',
-		'instVarWriters',
-		'classVarReaders',
-		'classVarWriters',
-		'toClasses',
-		'ignore'
+		#tree,
+		#fromClass,
+		#instVarReaders,
+		#instVarWriters,
+		#classVarReaders,
+		#classVarWriters,
+		#toClasses,
+		#ignore
 	],
 	#category : #'Refactoring-Core-Refactorings-Unused'
 }

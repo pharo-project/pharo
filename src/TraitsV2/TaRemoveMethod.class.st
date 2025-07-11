@@ -6,7 +6,7 @@ Class {
 	#name : #TaRemoveMethod,
 	#superclass : #TaSingleComposition,
 	#instVars : [
-		'removedSelectors'
+		#removedSelectors
 	],
 	#category : #'TraitsV2-Compositions'
 }

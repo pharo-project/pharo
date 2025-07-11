@@ -19,7 +19,7 @@ Class {
 	#name : #ClyConstantQuery,
 	#superclass : #ClyTypedQuery,
 	#instVars : [
-		'resultItems'
+		#resultItems
 	],
 	#category : #'Calypso-NavigationModel-Query'
 }

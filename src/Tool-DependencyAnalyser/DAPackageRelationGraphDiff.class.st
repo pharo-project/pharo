@@ -9,10 +9,10 @@ Class {
 	#name : #DAPackageRelationGraphDiff,
 	#superclass : #Object,
 	#instVars : [
-		'oldRelationGraph',
-		'newRelationGraph',
-		'packagesDiff',
-		'dependentPackagesDiff'
+		#oldRelationGraph,
+		#newRelationGraph,
+		#packagesDiff,
+		#dependentPackagesDiff
 	],
 	#category : #'Tool-DependencyAnalyser-Diff'
 }

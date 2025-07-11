@@ -5,7 +5,7 @@ Class {
 	#name : #ReparseAfterSourceEditing,
 	#superclass : #Notification,
 	#instVars : [
-		'newSource'
+		#newSource
 	],
 	#category : #'OpalCompiler-Core-Exception'
 }

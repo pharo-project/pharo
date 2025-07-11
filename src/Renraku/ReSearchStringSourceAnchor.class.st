@@ -5,7 +5,7 @@ Class {
 	#name : #ReSearchStringSourceAnchor,
 	#superclass : #ReSourceAnchor,
 	#instVars : [
-		'searchString'
+		#searchString
 	],
 	#category : #'Renraku-SourceAnchors'
 }

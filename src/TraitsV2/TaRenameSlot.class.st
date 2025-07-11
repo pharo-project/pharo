@@ -7,7 +7,7 @@ Class {
 	#name : #TaRenameSlot,
 	#superclass : #TaSingleComposition,
 	#instVars : [
-		'renames'
+		#renames
 	],
 	#category : #'TraitsV2-Compositions'
 }

@@ -19,7 +19,7 @@ Class {
 	#name : #ReNodeRewriteRule,
 	#superclass : #RePatternCodeRule,
 	#instVars : [
-		'matches'
+		#matches
 	],
 	#category : #'Renraku-Rules-Rewrite'
 }

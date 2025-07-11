@@ -7,8 +7,8 @@ Class {
 	#name : #RBSwapMethodRefactoring,
 	#superclass : #RBMethodRefactoring,
 	#instVars : [
-		'target',
-		'selector'
+		#target,
+		#selector
 	],
 	#category : #'Refactoring-Core-Refactorings-Unused'
 }

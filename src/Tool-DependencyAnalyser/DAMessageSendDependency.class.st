@@ -5,7 +5,7 @@ Class {
 	#name : #DAMessageSendDependency,
 	#superclass : #DADependencyFromClass,
 	#instVars : [
-		'implementedMethods'
+		#implementedMethods
 	],
 	#category : #'Tool-DependencyAnalyser-Core'
 }

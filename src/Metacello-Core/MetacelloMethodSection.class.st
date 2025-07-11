@@ -2,7 +2,7 @@ Class {
 	#name : #MetacelloMethodSection,
 	#superclass : #Object,
 	#instVars : [
-		'attributes'
+		#attributes
 	],
 	#category : #'Metacello-Core-Constructors'
 }

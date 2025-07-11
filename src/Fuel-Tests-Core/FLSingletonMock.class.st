@@ -5,10 +5,10 @@ Class {
 	#name : #FLSingletonMock,
 	#superclass : #Object,
 	#instVars : [
-		'reference'
+		#reference
 	],
 	#classVars : [
-		'Instance'
+		#Instance
 	],
 	#category : #'Fuel-Tests-Core-Support-Mocks'
 }

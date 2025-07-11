@@ -2,8 +2,8 @@ Class {
 	#name : #MetacelloMemberListSpec,
 	#superclass : #MetacelloSpec,
 	#instVars : [
-		'list',
-		'memberMap'
+		#list,
+		#memberMap
 	],
 	#category : #'Metacello-Core-Members'
 }

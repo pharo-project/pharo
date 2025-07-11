@@ -5,10 +5,10 @@ Class {
 	#name : #VariableBreakpointMockClass,
 	#superclass : #Object,
 	#instVars : [
-		'v1'
+		#v1
 	],
 	#classVars : [
-		'ClassVar'
+		#ClassVar
 	],
 	#category : #'Reflectivity-Tests-Breakpoints'
 }
@@ -36,8 +36,7 @@ VariableBreakpointMockClass >> methodWithTempsAndArg: arg [
 ]
 
 { #category : #accessing }
-VariableBreakpointMockClass >> v1 [
-	^ v1
+VariableBreakpointMockClass >> v1 [ ^v1
 ]
 
 { #category : #accessing }

@@ -2,12 +2,12 @@ Class {
 	#name : #ClyNotebookPageHeaderPresenter,
 	#superclass : #SpPresenter,
 	#instVars : [
-		'pageMorph',
-		'iconImage',
-		'titleLabel',
-		'closeImage',
-		'closeAction',
-		'doubleClickAction'
+		#pageMorph,
+		#iconImage,
+		#titleLabel,
+		#closeImage,
+		#closeAction,
+		#doubleClickAction
 	],
 	#category : #'Calypso-Browser-Tabs'
 }

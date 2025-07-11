@@ -10,12 +10,12 @@ Class {
 	#name : #RGBehavior,
 	#superclass : #RGBehaviorStrategyUser,
 	#instVars : [
-		'superclass',
-		'localMethods',
-		'traitComposition',
-		'metaclass',
-		'tagsForMethods',
-		'tags'
+		#superclass,
+		#localMethods,
+		#traitComposition,
+		#metaclass,
+		#tagsForMethods,
+		#tags
 	],
 	#category : #'Ring-Core-Kernel'
 }
