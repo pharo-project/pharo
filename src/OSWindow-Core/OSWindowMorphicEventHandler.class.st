@@ -126,7 +126,7 @@ OSWindowMorphicEventHandler >> convertPosition: aPosition [
 	^ morphicWorld worldState worldRenderer convertWindowMouseEventPosition: aPosition
 ]
 
-{ #category : #'as yet unclassified' }
+{ #category : #converting }
 OSWindowMorphicEventHandler >> convertText: aString [ 
 
 	"I convert the string if some well-known problematic characters are found.
