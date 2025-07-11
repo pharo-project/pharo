@@ -37,9 +37,6 @@ SDL_SysWMEvent class >> fieldsDesc [
 { #category : #visitor }
 SDL_SysWMEvent >> accept: aVisitor [
 
-	self isWindows ifFalse: [ ^ nil ].
-	self windowsMessage isDisplayChanged ifFalse: [ ^ nil ].
-
 	^ aVisitor visitSystemWindowEvent: self
 ]
 

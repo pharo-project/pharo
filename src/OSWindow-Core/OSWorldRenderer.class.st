@@ -32,6 +32,19 @@ OSWorldRenderer class >> priority [
 	^ 2
 ]
 
+{ #category : #starting }
+OSWorldRenderer class >> restart [
+
+	UIManager default deactivate.
+	self shutDown: true.
+	OSSDL2Driver shutDown: true.
+
+	self startUp: true.
+	UIManager default activate.
+
+	self inform: self class name , ' restarted'
+]
+
 { #category : #accessing }
 OSWorldRenderer >> activateCursor: aCursor withMask: maskForm [
 
