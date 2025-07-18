@@ -230,8 +230,8 @@ DrTests >> reloadConfiguration: aDTPluginConfiguration withResults: aDTPluginRes
 
 { #category : 'accessing' }
 DrTests >> selectedItems [
-
-	^ pluginPresenter selectedItems
+	"selectedItems is sometimes an Array"
+	^ pluginPresenter selectedItems asOrderedCollection
 ]
 
 { #category : 'accessing - model' }
