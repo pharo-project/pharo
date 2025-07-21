@@ -285,7 +285,7 @@ ExternalChangesBrowser >> loadFileOut [
 						self
 							changeSetName: file;
 							open ]
-				ifFalse: [ self inform: 'Please select a .st or .cs file' ] ].
+				ifFalse: [ self inform: 'Please select a .st or .changes file' ] ].
 	presenter openDialog
 ]
 
