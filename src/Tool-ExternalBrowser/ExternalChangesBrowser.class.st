@@ -18,7 +18,8 @@ Class {
 		'changeSet',
 		'selectAllButton',
 		'deselectAllButton',
-		'fileInSelectedButton'
+		'fileInSelectedButton',
+		'loadFileOutButton'
 	],
 	#category : 'Tool-ExternalBrowser-Browsers',
 	#package : 'Tool-ExternalBrowser',
@@ -34,18 +35,20 @@ ExternalChangesBrowser class >> browseRecentLog [
 
 { #category : 'layout' }
 ExternalChangesBrowser class >> defaultLayout [
-	<spec: #default>
 
+	<spec: #default>
 	^ SpPanedLayout newTopToBottom
-		add: (SpBoxLayout newTopToBottom
-					add: #changes;
-					add: (SpBoxLayout newLeftToRight
-							add: #selectAllButton;
-							add: #deselectAllButton;
-							add: #fileInSelectedButton;
-							yourself ) height: self buttonHeight );
-		add: #codePane;
-		yourself
+		  add: (SpBoxLayout newTopToBottom
+				   add: #changes;
+				   add: (SpBoxLayout newLeftToRight
+						    add: #selectAllButton;
+						    add: #deselectAllButton;
+						    add: #fileInSelectedButton;
+						    add: #loadFileOutButton;
+						    yourself)
+				   height: self buttonHeight);
+		  add: #codePane;
+		  yourself
 ]
 
 { #category : 'accessing' }
@@ -224,6 +227,7 @@ ExternalChangesBrowser >> connectPresenters [
 	selectAllButton action: [ changes selectAll ].
 	deselectAllButton action: [ changes resetListSelection ].
 	fileInSelectedButton action: [ self fileIn: changes selectedItemsSorted ].
+	loadFileOutButton action: [ self loadFileOut ].
 
 	changes contextMenu: self buildMenu
 ]
@@ -249,23 +253,46 @@ ExternalChangesBrowser >> fileInSelectedButton [
 { #category : 'initialization' }
 ExternalChangesBrowser >> initializePresenters [
 
-
 	changes := self newList.
 	changes beMultipleSelection.
 
 	selectAllButton := self newButton.
-	selectAllButton
-		label: 'select all'.
+	selectAllButton label: 'select all'.
 
 	deselectAllButton := self newButton.
-	deselectAllButton
-		label: 'deselect all'.
+	deselectAllButton label: 'deselect all'.
 
 	fileInSelectedButton := self newButton.
-	fileInSelectedButton
-		label: 'file in selected'.
+	fileInSelectedButton label: 'file in selected'.
+
+	loadFileOutButton := self newButton.
+	loadFileOutButton label: 'load a file out'.
 
 	codePane := self newCode
+]
+
+{ #category : 'menu' }
+ExternalChangesBrowser >> loadFileOut [
+
+	| presenter file |
+	presenter := StOpenFilePresenter new
+		             openFolder: FileLocator image parent;
+		             title: 'Select the file to load'.
+	presenter okAction: [ :fileReference |
+			(#( 'st' 'changes' ) includes: fileReference extension)
+				ifTrue: [
+						file := fileReference.
+						self
+							changeSetName: file;
+							open ]
+				ifFalse: [ self inform: 'Please select a .st or .cs file' ] ].
+	presenter openDialog
+]
+
+{ #category : 'accessing' }
+ExternalChangesBrowser >> loadFileOutButton [
+
+	^ loadFileOutButton
 ]
 
 { #category : 'private' }
