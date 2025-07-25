@@ -83,15 +83,22 @@ TFCalloutMethodBuilder >> abiConstantFor: aSelector [
 
 { #category : 'private' }
 TFCalloutMethodBuilder >> createFFICalloutLiteralFromSpec: functionSpec [
+	| externalFunction |
 
-	^ TFExternalFunction
+	externalFunction := TFExternalFunction
 		  name: functionSpec functionName
 		  moduleName: self libraryName
 		  parameterTypes:
 		  (functionSpec arguments collect: #tfExternalTypeWithArity)
 		  returnType: functionSpec returnType tfExternalTypeWithArity
 		  fixedArgumentCount: fixedArgumentCount
-		  abi: (self abiConstantFor: calloutAPI callingConvention)
+		  abi: (self abiConstantFor: calloutAPI callingConvention).
+		  
+	functionResolutionStrategies
+		detect: [ :each | each isApplicableFor: self requestor ]
+		ifFound: [ :each | each resolve: externalFunction ].
+		
+	^ externalFunction
 ]
 
 { #category : 'private' }

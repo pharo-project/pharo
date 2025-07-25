@@ -426,6 +426,12 @@ OCASTTranslator >> ir [
 	^ methodBuilder ir
 ]
 
+{ #category : 'visitor - double dispatching' }
+OCASTTranslator >> newNameForInlinedVariable: aVariableName from: aBlockNode [
+
+	^ (aVariableName , '_' , aBlockNode identityHash asString) asSymbol
+]
+
 { #category : 'inline messages' }
 OCASTTranslator >> nextUniqueInlineID [
 
@@ -433,9 +439,80 @@ OCASTTranslator >> nextUniqueInlineID [
 	^ '0', nextUniqueInlineID asString asSymbol
 ]
 
+{ #category : 'visitor - double dispatching' }
+OCASTTranslator >> prepareForInlining: aMessageNode [
+
+	| currentTemps |
+	"Searching for senders will work"
+	methodBuilder addLiteral: aMessageNode selector.
+
+	"Rename shadowing arguments before inline"
+	"Temp vars are renamed in OCASTTranslator >> visitInlinedBlockNode:"
+	currentTemps := methodBuilder currentScope tempKeys asOrderedCollection.
+	aMessageNode arguments
+		select: [ :arg | arg isBlock ]
+		thenDo: [ :blockNode |
+				blockNode arguments do: [ :arg |
+						(currentTemps includes: arg name) ifTrue: [
+							self renameInlinedTemp: arg variable from: blockNode ] ].
+				currentTemps addAll: blockNode scope localTempNames ]
+]
+
 { #category : 'private' }
 OCASTTranslator >> privateMethodBuilder [
 	^ methodBuilder
+]
+
+{ #category : 'visitor - double dispatching' }
+OCASTTranslator >> renameInlinedTemp: aVariable from: aBlockNode [
+
+	aVariable name: (self newNameForInlinedVariable: aVariable name from: aBlockNode)
+]
+
+{ #category : 'visitor - double dispatching' }
+OCASTTranslator >> replaceVariables: temporaries using: replacements [
+
+	replacements keysAndValuesDo: [ :oldName :newName |
+		temporaries replaceAll: oldName with: newName ]
+]
+
+{ #category : 'visitor - double dispatching' }
+OCASTTranslator >> replaceVariablesInBlock: anOptimizedBlockNode using: replacements [
+
+	| copiedBody |
+	replacements ifEmpty: [ "Avoid crazy stuff with the AST"
+		^ anOptimizedBlockNode body ].
+
+	"Use a copy -> leave the original AST as the original code"
+	copiedBody := anOptimizedBlockNode body copy.
+	replacements keysAndValuesDo: [ :k :v |
+			copiedBody allChildren
+				select: [ :node | node isVariable and: [ node name = k asString ] ]
+				thenDo: [ :node |
+						node name: v asString.
+						node variable ifNotNil: [ :var |
+								var name: v asString.
+								"Rename the temp/arg for copied variables on inner blocks"
+								var originalVar name: v asString ]  ] ].
+
+	^ copiedBody
+]
+
+{ #category : 'visitor - double dispatching' }
+OCASTTranslator >> replacementsForInlinedShadowVariables: anOptimizedBlockNode [
+
+	| blockTempVariables blockArguments temporaries |
+	blockTempVariables := anOptimizedBlockNode scope
+		                      tempVarNamesWithoutArguments.
+	blockArguments := anOptimizedBlockNode argumentNames.
+	temporaries := blockTempVariables , blockArguments.
+
+	^ (methodBuilder currentScope tempKeys intersection: temporaries)
+		  collect: [ :collisionTemp |
+				  | newName |
+				  newName := self newNameForInlinedVariable: collisionTemp from: anOptimizedBlockNode.
+				  collisionTemp -> newName ]
+			as: Dictionary 
 ]
 
 { #category : 'private' }
@@ -593,23 +670,37 @@ OCASTTranslator >> visitInlinedBlockNode: anOptimizedBlockNode [
 			- we call IRBuilder to add temps
 	"
 
+	|  blockTempVariables blockArguments copiedBody replacements |
+
 	methodBuilder mapToNode: anOptimizedBlockNode.
 	anOptimizedBlockNode scope tempVector ifNotEmpty: [
 		methodBuilder
 			createTempVectorNamed: anOptimizedBlockNode scope tempVectorName
 			withVars: anOptimizedBlockNode scope tempVectorVarNames.
 	].
-	methodBuilder addTemps: anOptimizedBlockNode scope tempVarNamesWithoutArguments.
+
+
+	replacements := self replacementsForInlinedShadowVariables: anOptimizedBlockNode.
+
+	blockTempVariables := anOptimizedBlockNode scope tempVarNamesWithoutArguments. 
+	blockArguments :=	anOptimizedBlockNode argumentNames.
+	
+	self replaceVariables: blockTempVariables using: replacements.
+	self replaceVariables: blockArguments using: replacements.
+
 	methodBuilder addTemps: anOptimizedBlockNode scope inComingCopiedVarNames.
-	methodBuilder addTemps: anOptimizedBlockNode argumentNames.
+	methodBuilder addTemps: blockTempVariables.
+	methodBuilder addTemps: blockArguments.
 	anOptimizedBlockNode isInlinedLoop ifTrue: [
-		anOptimizedBlockNode scope tempVarNamesWithoutArguments do: [ :tempName |
+		blockTempVariables do: [ :tempName |
 			methodBuilder pushLiteral: nil.
 			methodBuilder storeTemp: tempName.
 			methodBuilder popTop.
 		]].
 
-	self visitNode: anOptimizedBlockNode body.
+	copiedBody := self replaceVariablesInBlock: anOptimizedBlockNode using: replacements.
+
+	self visitNode: copiedBody.
 	methodBuilder popMap
 ]
 
@@ -647,10 +738,11 @@ OCASTTranslator >> visitMessageNode: aMessageNode [
 		^ aMessageNode receiver emitValue: methodBuilder ].
 
 	aMessageNode isInlined ifTrue: [
-		methodBuilder addLiteral: aMessageNode selector. "so searching for senders will work"
+		self prepareForInlining: aMessageNode.
 		^self
 			perform: (OptimizedMessages at: aMessageNode selector)
 			with: aMessageNode].
+		
 	^ self emitMessageNode: aMessageNode
 ]
 

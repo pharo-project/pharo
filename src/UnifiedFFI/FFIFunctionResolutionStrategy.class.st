@@ -24,7 +24,8 @@ FFIFunctionResolutionStrategy >> isApplicableFor: aRequestor [
 
 { #category : 'resolving' }
 FFIFunctionResolutionStrategy >> resolve: anExternalFunction [
-	anExternalFunction setHandle: (self resolveFunction: anExternalFunction)
+
+	anExternalFunction address: (self resolveFunction: anExternalFunction)
 ]
 
 { #category : 'resolving' }

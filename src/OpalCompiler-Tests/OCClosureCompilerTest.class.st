@@ -375,7 +375,7 @@ OCClosureCompilerTest >> testInlineBlockCollectionEM1 [
 OCClosureCompilerTest >> testInlineBlockCollectionLR1 [
 	"Test case from Lukas Renggli"
 
-	| col |
+	| col | 
 	col := OrderedCollection new.
 	1 to: 11 do: [ :each | col add: [ each ] ].
 	self assert: (col collect: [ :each | each value ]) asArray equals: (1 to: 11) asArray
@@ -418,6 +418,120 @@ OCClosureCompilerTest >> testInlineBlockCollectionSD1 [
 		b2 add: [ a2 ] ] yourself.	"defeat optimization"
 	b2 := b2 asArray collect: [ :b | b value ].
 	self assert: b1 equals: b2
+]
+
+{ #category : 'tests' }
+OCClosureCompilerTest >> testInlineBlockShadowVariableAssignedInside [
+	| a |
+	a := 23.
+	1 to: 17 do: [ :i | | a |
+		a := 7 ].
+	self assert: a equals: 23
+]
+
+{ #category : 'tests' }
+OCClosureCompilerTest >> testInlineBlockShadowVariableInnerBlocks [
+
+	| n |
+	n := 1.
+	n > 0 ifTrue: [ | n | 
+		n := 2.
+		n > 0 ifTrue: [ | n | 
+			n := 3. ]. 
+		self assert: n equals: 2 ].
+	self assert: n equals: 1
+]
+
+{ #category : 'tests' }
+OCClosureCompilerTest >> testInlineBlockShadowVariableParameter [
+	| a |
+	a := 23.
+	1 to: 17 do: [ :a | ].
+	self assert: a equals: 23
+]
+
+{ #category : 'tests' }
+OCClosureCompilerTest >> testInlineBlockShadowVariableParameterAndVariable [
+
+	| result |
+	result := 1 ifNil: [ | res | ] ifNotNil: [ :res | res ].
+	self assert: result equals: 1 
+]
+
+{ #category : 'tests' }
+OCClosureCompilerTest >> testInlineBlockShadowVariableParameterUsedInInnerBlock [
+	| a result |
+	a := 23.
+	1 to: 17 do: [ :i |
+		[result := i] value ].
+	self assert: a equals: 23.
+	self assert: result equals: 17  
+]
+
+{ #category : 'tests' }
+OCClosureCompilerTest >> testInlineBlockShadowVariableTemporary [
+	| a |
+	a := 23.
+	1 to: 17 do: [ :i | | a | ].
+	self assert: a equals: 23 
+]
+
+{ #category : 'tests' }
+OCClosureCompilerTest >> testInlineBlockShadowVariableTwoBlocksParameter [
+
+	| first second |
+	1 ifNotNil: [ :n | first := n ].
+	2 ifNotNil: [ :n | second := n ].
+	self assert: first equals: 1.
+	self assert: second equals: 2 
+]
+
+{ #category : 'tests' }
+OCClosureCompilerTest >> testInlineBlockShadowVariableTwoBlocksTemporary [
+	| a |
+	a := 23.
+	1 to: 17 do: [ :i | | a | 
+		self assert: a isNil ].
+	1 to: 17 do: [ :i | | a | 
+		a := 7.
+		self assert: a equals: 7 ].
+	self assert: a equals: 23 
+]
+
+{ #category : 'tests' }
+OCClosureCompilerTest >> testInlineBlockShadowVariableUsedInBlock [
+	| a result |
+	a := 23.
+	1 to: 17 do: [ :i | | a | 
+		result := a ].
+	self assert: a equals: 23.
+	self assert: result isNil
+	
+
+]
+
+{ #category : 'tests' }
+OCClosureCompilerTest >> testInlineBlockShadowVariableUsedInInnerBlock [
+	| a result |
+	a := 23.
+	1 to: 17 do: [ :i | | a | 
+		[result := a] value ].
+	self assert: a equals: 23.
+	self assert: result isNil 
+]
+
+{ #category : 'tests' }
+OCClosureCompilerTest >> testInlineBlockShadowVariableUsedInInnerInnerBlock [
+
+	| a result |
+	a := 23.
+	1 to: 7 do: [ :a |
+		7 to: 17 do: [ :j | 
+			a.
+			[ result := a ] value ] ].
+
+	self assert: a equals: 23.
+	self assert: result equals: 7
 ]
 
 { #category : 'tests' }

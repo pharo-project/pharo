@@ -20,6 +20,13 @@ StChangesBrowserPresenter class >> changes: aCollection [
 	^ self on: aCollection
 ]
 
+{ #category : 'tools registry' }
+StChangesBrowserPresenter class >> registerToolsOn: registry [
+	"Add ourselves to registry. See [Smalltalk tools]"
+
+	registry register: self as: #changesBrowser 
+]
+
 { #category : 'visiting' }
 StChangesBrowserPresenter >> accept [
 

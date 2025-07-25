@@ -391,7 +391,7 @@ ReleaseTest >> testNoShadowedVariablesInMethods [
 	"No other exceptions beside the ones mentioned here should be allowed"
 	validExceptions := {
 		RBSmalllintTestObject>>#tempVarOverridesInstVar.
-		ReTempVarOverridesInstVarRuleTest>>#sampleMethod:}.
+		ReTempVarOverridesInstVarRuleTest>>#sampleMethod: . OCClosureCompilerTest>>#testInlineBlockShadowVariableTwoBlocksTemporary .  OCClosureCompilerTest>>#testInlineBlockShadowVariableUsedInBlock . OCClosureCompilerTest>>#testInlineBlockShadowVariableAssignedInside . OCClosureCompilerTest>>#testInlineBlockShadowVariableTemporary . OCClosureCompilerTest>>#testInlineBlockShadowVariableUsedInInnerBlock . OCClosureCompilerTest>>#testInlineBlockShadowVariableUsedInInnerInnerBlock . OCClosureCompilerTest>>#testInlineBlockShadowVariableInnerBlocks . OCClosureCompilerTest>>#testInlineBlockShadowVariableParameter}.
 
 	remaining := found asOrderedCollection
 								removeAll: validExceptions;

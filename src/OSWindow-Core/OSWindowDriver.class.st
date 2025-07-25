@@ -146,6 +146,10 @@ OSWindowDriver >> afterMainPharoWindowCreated: aWindow [
 OSWindowDriver >> afterSetWindowTitle: windowTitle onWindow: osWindow [
 ]
 
+{ #category : 'events' }
+OSWindowDriver >> beforeMainPharoWindowClosed: aWindow [
+]
+
 { #category : 'window creation' }
 OSWindowDriver >> createWindowWithAttributes: anOSWindowAttributes osWindow: osWindow [
 	self subclassResponsibility
