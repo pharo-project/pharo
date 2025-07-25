@@ -988,8 +988,11 @@ ClassDescription >> removeSelector: selector [
 	self removeFromProtocols: selector.
 
 	super removeSelector: selector.
-
-	self codeChangeAnnouncer methodRemoved: method origin: origin
+	self codeChangeAnnouncer methodRemoved: method origin: origin.
+	
+	method isExtension ifTrue: [ 
+		(method propertyAt: #extendedMethod) ifNotNil: [ :originalMethod |
+			self addSelector: selector withMethod: originalMethod ] ]
 ]
 
 { #category : 'instance variables' }

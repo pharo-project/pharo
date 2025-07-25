@@ -961,6 +961,25 @@ CompiledMethodTest >> testRecompilingDoesNotRemoveExtensions [
 		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
 ]
 
+{ #category : 'tests - testing' }
+CompiledMethodTest >> testRemoveExtensionRecoverOriginalMethod [
+
+	[
+	| original extension |
+	self class compile: 'isExtensionTestMethod ^ 1' classified: 'protocol'.
+	original := self class >> #isExtensionTestMethod.
+
+	self class compile: 'isExtensionTestMethod ^ 2' classified: '*Kernel-Tests-Generated-Package'.
+	extension := self class >> #isExtensionTestMethod.
+
+	self class removeSelector: #isExtensionTestMethod.
+
+	self assert: (self class >> #isExtensionTestMethod) equals: original 
+	] ensure: [
+		self packageOrganizer removePackage: 'Kernel-Tests-Generated-Package'.
+		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
+]
+
 { #category : 'tests - accessing' }
 CompiledMethodTest >> testSelector [
 
