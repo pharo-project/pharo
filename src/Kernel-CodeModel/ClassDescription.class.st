@@ -34,11 +34,19 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 			priorMethod := method.
 			priorOrigin := method origin ].
 
+
+	priorMethod ifNotNil: [  
+		(protocol asString beginsWith: '*') ifTrue: [ 
+			compiledMethod propertyAt: #extendedMethod put: priorMethod.
+			"See Package >> #addMethod:"
+		]
+	].
+
+	self addSelectorSilently: selector withMethod: compiledMethod.
+
 	oldProtocol := self protocolOfSelector: selector.
 	self codeChangeAnnouncer prevent: MethodRecategorized during: [ self classify: selector under: protocol ].
 	newProtocol := self protocolOfSelector: selector.
-
-	self addSelectorSilently: selector withMethod: compiledMethod.
 
 	self isAnonymous ifTrue: [ ^ self ].
 

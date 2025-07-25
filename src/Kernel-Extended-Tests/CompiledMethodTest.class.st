@@ -437,6 +437,26 @@ CompiledMethodTest >> testEqualityInstanceSideMethod [
 ]
 
 { #category : 'tests - testing' }
+CompiledMethodTest >> testExtensionReplaceOriginalMethod [
+
+	[
+	| original extension |
+	self class compile: 'isExtensionTestMethod ^ 1' classified: 'protocol'.
+	original := self class >> #isExtensionTestMethod.
+	self deny: original isExtension.
+
+	self class compile: 'isExtensionTestMethod ^ 2' classified: '*Kernel-Tests-Generated-Package'.
+	extension := self class >> #isExtensionTestMethod.
+	self assert: extension isExtension.
+	self assert: (extension propertyAt: #extendedMethod) equals: original.
+	
+	"The old method is not extension!"
+	self deny: original isExtension ] ensure: [
+		self packageOrganizer removePackage: 'Kernel-Tests-Generated-Package'.
+		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
+]
+
+{ #category : 'tests - testing' }
 CompiledMethodTest >> testHasComment [
 	self assert: (CompiledMethod>>#hasComment) hasComment
 ]
@@ -503,10 +523,7 @@ CompiledMethodTest >> testIsExtension [
 
 	[
 	| method |
-	self class compile: 'isExtensionTestMethod ^ 1' classified: 'protocol'.
-	self deny: (self class >> #isExtensionTestMethod) isExtension.
-
-	self class compile: 'isExtensionTestMethod ^ 1' classified: '*Kernel-Tests-Generated-Package'.
+	self class compile: 'isExtensionTestMethod ^ 2' classified: '*Kernel-Tests-Generated-Package'.
 	method := self class >> #isExtensionTestMethod.
 	self assert: method isExtension.
 
