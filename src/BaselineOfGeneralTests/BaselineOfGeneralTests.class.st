@@ -49,7 +49,6 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'System-Utilities-Tests';
 			package: 'System-Hashing-Tests';
 			package: 'System-History-Tests';
-			package: 'System-Localization-Tests';
 			package: 'System-SessionManager-Tests';
 			package: 'System-Settings-Tests';
 			package: 'System-Support-Tests';

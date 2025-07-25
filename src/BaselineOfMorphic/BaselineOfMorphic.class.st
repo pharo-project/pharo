@@ -48,8 +48,6 @@ BaselineOfMorphic >> baseline: spec [
 				repository: repository;
 				loads: #( 'Core' ) ].
 
-		spec package: 'System-Localization'.
-
 		spec baseline: 'FreeType' with: [
 			spec
 				repository: repository;
