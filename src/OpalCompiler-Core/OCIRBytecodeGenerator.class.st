@@ -531,6 +531,13 @@ OCIRBytecodeGenerator >> pushLiteral: object [
 	encoder genPushLiteral: (self literalIndexOf: object)
 ]
 
+{ #category : 'accessing' }
+OCIRBytecodeGenerator >> pushLiteralAt: index [ 
+
+	stack push.
+	encoder genPushLiteral: index
+]
+
 { #category : 'instructions' }
 OCIRBytecodeGenerator >> pushLiteralVariable: object [
 	stack push.

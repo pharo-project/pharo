@@ -217,6 +217,12 @@ OCIRTranslatorVisitor >> visitPushLiteral: lit [
 ]
 
 { #category : 'visiting' }
+OCIRTranslatorVisitor >> visitPushLiteralAt: literalVariableAt [
+
+	gen pushLiteralAt: literalVariableAt index
+]
+
+{ #category : 'visiting' }
 OCIRTranslatorVisitor >> visitPushLiteralVariable: var [
 
 	gen pushLiteralVariable: var association
