@@ -100,6 +100,14 @@ more; go get coffee.
 						stream space ] ])
 ]
 
+{ #category : 'instance creation' }
+Random class >> new [
+
+	^ super new
+		  useClockBasedSeed;
+		  yourself
+]
+
 { #category : 'private' }
 Random class >> primitiveRandomNumber: stateArray [
 	"Answer a random Float in the interval [0 to 1)."
@@ -124,13 +132,18 @@ Random class >> primitiveRandomNumber: stateArray [
 
 { #category : 'instance creation' }
 Random class >> seed: anInteger [
-	^self new seed: anInteger
+	"We use the super to avoid a double initialization of the seed that would slow down the random instantiation."
+
+	^ super new
+		  seed: anInteger;
+		  yourself
 ]
 
 { #category : 'initialization' }
 Random >> initialize [
-	state := DoubleWordArray new: 1.
-	self useClockBasedSeed.
+
+	super initialize.
+	state := DoubleWordArray new: 1
 ]
 
 { #category : 'accessing' }
@@ -142,7 +155,7 @@ Random >> maxValue [
 Random >> next [
 	"Answer a random Float in the interval [0 to 1)."
 
-	^ (self privateNextValue / (self maxValue + 1) ) asFloat 
+	^ (self privateNextValue asFloat / (self maxValue + 1) ) 
 ]
 
 { #category : 'accessing' }

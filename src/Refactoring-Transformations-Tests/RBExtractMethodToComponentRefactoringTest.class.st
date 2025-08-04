@@ -66,11 +66,11 @@ RBExtractMethodToComponentRefactoringTest >> testFailureNonExistantSelector [
 { #category : 'tests' }
 RBExtractMethodToComponentRefactoringTest >> testMoveWithoutSelfReference [
 	| refactoring class selectorsSize |
-	refactoring := RBExtractMethodToComponentRefactoring extract: (118 to: 285) from: #copyDictionary: in: ASTReadBeforeWrittenTester.
+	refactoring := RBExtractMethodToComponentRefactoring extract: (118 to: 285) from: #copyDictionary: in: OCReadBeforeWrittenTester.
 	self setupMethodNameFor: refactoring toReturn: #copyWithAssociations.
 	self setupVariableToMoveToFor: refactoring toReturn: 'aDictionary'.
 	self setupVariableTypesFor: refactoring toReturn: (Array with: (refactoring model classNamed: #Dictionary)).
-	class := refactoring model classNamed: #ASTReadBeforeWrittenTester.
+	class := refactoring model classNamed: #OCReadBeforeWrittenTester.
 	selectorsSize := class selectors size.
 	self executeRefactoring: refactoring.
 

@@ -25,23 +25,23 @@ ReTestCaseShouldNotUseInitializeRuleTest >> tearDown [
 
 { #category : 'tests' }
 ReTestCaseShouldNotUseInitializeRuleTest >> testRule [
-	| critiques |
-	self class compile: 'initialize
+
+	self class
+		compile: 'initialize
 		super initialize.
-		aDummyVar := 2 ' classified: 'test-help'.
+		aDummyVar := 2 '
+		classified: 'test-help'.
 
-	critiques := self myCritiquesOnClass: self class.
-
-	self assert: critiques size equals: 1
+	self assert: (self myCritiquesOnClass: self class) size equals: 1
 ]
 
 { #category : 'tests' }
 ReTestCaseShouldNotUseInitializeRuleTest >> testRuleDoesNotAppear [
-	| critiques |
-	self class compile: 'initialize
-		super initialize. ' classified: 'test-help'.
 
-	critiques := self myCritiquesOnClass: self class.
+	self class
+		compile: 'initialize
+		super initialize. '
+		classified: 'test-help'.
 
-	self assert: critiques size equals: 0
+	self assertEmpty: (self myCritiquesOnClass: self class)
 ]

@@ -10,6 +10,12 @@ Class {
 }
 
 { #category : 'enumerating' }
+CoGlobalVariableFetcher >> completionClass: aClass [
+	"we do not use this information but other alternatives such as the CoPackageGlobalVariable needs the completion class to start with."
+	
+]
+
+{ #category : 'enumerating' }
 CoGlobalVariableFetcher >> entriesDo: aBlock [
 
 	self systemNavigation

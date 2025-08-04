@@ -273,6 +273,16 @@ OSSDL2BackendWindow >> diagonalDPI [
 	^ diagonalDPI
 ]
 
+{ #category : 'cursor' }
+OSSDL2BackendWindow >> ensureSetCurrentCursor [
+	"Ensure current cursor is set."
+
+	currentCursor ifNil: [ ^ self ].
+	currentCursor isValid ifFalse: [ ^ self ].
+
+	currentCursor setCursor
+]
+
 { #category : 'accessing' }
 OSSDL2BackendWindow >> extent [
 
@@ -363,6 +373,13 @@ OSSDL2BackendWindow >> handleNewSDLEvent: sdlEvent [
 	^ sdlEvent accept: self
 ]
 
+{ #category : 'testing' }
+OSSDL2BackendWindow >> hasInputFocus [
+	"See: https://wiki.libsdl.org/SDL2/SDL_WindowFlags"
+
+	^ (self getFlags bitAnd: SDL_WINDOW_INPUT_FOCUS) = SDL_WINDOW_INPUT_FOCUS
+]
+
 { #category : 'accessing' }
 OSSDL2BackendWindow >> hide [
 	sdl2Window hide
@@ -416,7 +433,7 @@ OSSDL2BackendWindow >> isTextInputActive [
 
 { #category : 'testing' }
 OSSDL2BackendWindow >> isValid [
-	^ true
+	^ sdl2Window isValid
 ]
 
 { #category : 'testing' }
@@ -586,10 +603,12 @@ OSSDL2BackendWindow >> setMouseCursor: cursor mask: mask andScale: scale [
 
 	| sdlCursor |
 	sdlCursor := self convertCursor: cursor withMask: mask andScale: scale.
-
-	sdlCursor ifNotNil: [ sdlCursor setCursor ].
 	currentCursor ifNotNil: [ currentCursor freeCursor ].
-	currentCursor := sdlCursor
+	currentCursor := sdlCursor.
+	
+	"See: https://github.com/pharo-project/pharo/issues/18234"
+	self hasInputFocus ifFalse: [ ^ self ].
+	self ensureSetCurrentCursor
 ]
 
 { #category : 'accessing' }
@@ -750,6 +769,10 @@ OSSDL2BackendWindow >> visitMouseWheelEvent: sdlEvent [
 { #category : 'event handling' }
 OSSDL2BackendWindow >> visitSystemWindowEvent: systemWindowEvent [
 
+	systemWindowEvent isWindows ifFalse: [ ^ nil ].
+	
+	systemWindowEvent windowsMessage isDisplayChanged ifFalse: [ ^ nil ].
+
 	self fetchDPI.
 	(OSWindowResolutionChangeEvent for: osWindow)
 		horizontalDPI: horizontalDPI;
@@ -808,6 +831,7 @@ OSSDL2BackendWindow >> visitWindowEvent: windowEvent [
 	windowEvent event = SDL_WINDOWEVENT_LEAVE ifTrue: [
 		^ (OSWindowMouseLeaveEvent for: osWindow) deliver ].
 	windowEvent event = SDL_WINDOWEVENT_FOCUS_GAINED ifTrue: [
+		self ensureSetCurrentCursor.
 		^ (OSWindowFocusInEvent for: osWindow) deliver ].
 	windowEvent event = SDL_WINDOWEVENT_FOCUS_LOST ifTrue: [
 		^ (OSWindowFocusOutEvent for: osWindow) deliver ].

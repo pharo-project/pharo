@@ -13,7 +13,7 @@ You can create my instance and execute the refactoring by running:
 "
 Class {
 	#name : 'RePushDownMethodDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'methods',
 		'class',
@@ -85,13 +85,13 @@ RePushDownMethodDriver >> configureRefactoring [
 { #category : 'configuration' }
 RePushDownMethodDriver >> defaultSelectDialog [
 
-	^ SpSelectDialog new
-		    title: 'There are potential breaking changes!';
-		          label: self labelBasedOnBreakingChanges;
-		          items: self breakingChoices;
-		          display: [ :each | each description ];
-		          displayIcon: [ :each | self iconNamed: each systemIconName ];
-		          openModal
+	^ self class defaultSelectDialog
+		  title: 'There are potential breaking changes!';
+		  label: self labelBasedOnBreakingChanges;
+		  items: self breakingChoices;
+		  display: [ :each | each description ];
+		  displayIcon: [ :each | self iconNamed: each systemIconName ];
+		  openModal
 ]
 
 { #category : 'execution' }
@@ -155,7 +155,6 @@ RePushDownMethodDriver >> runRefactoring [
 	"the user can still select if needed. Nil = cancel refactoring"
 	self gatherUserInput.
 	methods ifNil: [ ^ self ].
-	
 	self configureAndRunRefactoring
 ]
 

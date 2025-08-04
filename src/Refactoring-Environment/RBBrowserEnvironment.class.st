@@ -57,6 +57,16 @@ RBBrowserEnvironment >> & anEnvironment [
 	^RBAndEnvironment onEnvironment: self and: anEnvironment
 ]
 
+{ #category : 'comparing' }
+RBBrowserEnvironment >> = anotherObject [
+
+	self == anotherObject ifTrue: [ ^ true ].
+
+	"The default browser environment is always equals to other default"
+
+	^ self class = anotherObject class
+]
+
 { #category : 'accessing' }
 RBBrowserEnvironment >> accessGuard [
 	^ accessGuard ifNil: [ accessGuard := Mutex new ]
@@ -265,6 +275,11 @@ RBBrowserEnvironment >> defaultPlugins [
 	^ OrderedCollection new
 ]
 
+{ #category : 'accessing' }
+RBBrowserEnvironment >> definedClasses [
+	^ self allClasses
+]
+
 { #category : 'testing' }
 RBBrowserEnvironment >> definesClass: aClass [
 	^ true
@@ -350,6 +365,12 @@ RBBrowserEnvironment >> handleSystemChange: aSystemAnnouncement [
 		anyResult := todoList anyOne.
 		anyResult handleSystemChange: aSystemAnnouncement.
 		todoList remove: anyResult]
+]
+
+{ #category : 'comparing' }
+RBBrowserEnvironment >> hash [ 
+	
+	^ self class hash
 ]
 
 { #category : 'environments' }
@@ -679,20 +700,20 @@ RBBrowserEnvironment >> selectionIntervalFor: aString [
 { #category : 'accessing' }
 RBBrowserEnvironment >> selectionParseTreeIntervalFor: aString [
 	| parseTree answerBlock |
-	parseTree := RBParser
+	parseTree := OCParser
 		parseMethod: aString
 		onError: [ :str :pos | ^ nil ].
 	answerBlock := [ :aNode :answer | ^ aNode sourceInterval ].
 	self searchStrings do: [ :each |
 		| matcher tree |
-		matcher := ASTParseTreeSearcher new.
-		matcher matchesTree: (ASTLiteralNode value: each) do: answerBlock.
+		matcher := OCParseTreeSearcher new.
+		matcher matchesTree: (OCLiteralNode value: each) do: answerBlock.
 		each isSymbol
 			ifTrue: [
-				tree := ASTParseTreeSearcher buildSelectorTree: each.
+				tree := OCParseTreeSearcher buildSelectorTree: each.
 				tree ifNotNil: [ matcher matchesTree: tree do: answerBlock ] ]
 			ifFalse: [
-				tree := ASTVariableNode named: each.
+				tree := OCVariableNode named: each.
 				matcher
 					matchesTree: tree do: answerBlock;
 					matchesArgumentTree: tree do: answerBlock ].

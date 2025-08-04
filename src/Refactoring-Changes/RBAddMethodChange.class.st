@@ -39,6 +39,30 @@ RBAddMethodChange >> = anAddMethodChange [
 	^ self parseTree = anAddMethodChange parseTree
 ]
 
+{ #category : 'visiting' }
+RBAddMethodChange >> accept: aText notifying: aController [
+	"Just to make sure that it compiles, try with the standard compiler."
+
+	| compiler |
+	compiler := self changeClass
+		ifNil: [ Object compiler ]
+		ifNotNil: [:changeClass | changeClass compiler ].
+
+	compiler
+		source: aText asString;
+		class:  self changeClass;
+		requestor: aController;
+		failBlock: [ ^ false ];
+		compile.
+
+	self
+		class: self changeClass
+		protocol: self protocol
+		source: aText asString.
+
+	^ true
+]
+
 { #category : 'converting' }
 RBAddMethodChange >> asUndoOperation [
 
@@ -164,7 +188,7 @@ RBAddMethodChange >> protocols [
 	^ protocols
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RBAddMethodChange >> protocols: aCollectionOrProtocol [
 
 	protocols := (aCollectionOrProtocol isCollection and: [ aCollectionOrProtocol isString not])

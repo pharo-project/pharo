@@ -9,32 +9,20 @@ Class {
 { #category : 'tests' }
 ReNotEliminationRuleTest >> testRuleWithEvaluator [
 
-	| critiques | 
-	
-	self class compile: 'method (1 < 3) not' classified: 'test-helper'.
-	
-	[ critiques := self myCritiquesOnMethod: self class >> #method.
-	self assert: critiques size equals: 1 ] ensure: [ (self class >> #method) removeFromSystem ]
+	self generateMethod: 'method (1 < 3) not'.
+	self assert: (self myCritiquesOnMethod: self class >> #method) size equals: 1
 ]
 
 { #category : 'tests' }
 ReNotEliminationRuleTest >> testRuleWithIfTrue [
 
-	| critiques | 
-	
-	self class compile: 'method true not ifTrue: [ true ] ' classified: 'test-helper'.
-	
-	[ critiques := self myCritiquesOnMethod: self class >> #method.
-	self assert: critiques size equals: 1 ] ensure: [ (self class >> #method) removeFromSystem ]
+	self generateMethod: 'method true not ifTrue: [ true ] '.
+	self assert: (self myCritiquesOnMethod: self class >> #method) size equals: 1
 ]
 
 { #category : 'tests' }
 ReNotEliminationRuleTest >> testRuleWithSelect [
 
-	| critiques | 
-	
-	self class compile: 'method: aCol aCol select: [ :elem | elem not] ' classified: 'test-helper'.
-	
-	[ critiques := self myCritiquesOnMethod: self class >> #method:.
-	self assert: critiques size equals: 1 ] ensure: [ (self class >> #method:) removeFromSystem ]
+	self generateMethod: 'method: aCol aCol select: [ :elem | elem not] '.
+	self assert: (self myCritiquesOnMethod: self class >> #method:) size equals: 1
 ]

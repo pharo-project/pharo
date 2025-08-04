@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFArgumentsReification class >> entities [
-	^{ASTMessageNode. ASTMethodNode. ASTSequenceNode}
+	^{OCMessageNode. OCMethodNode. OCSequenceNode}
 ]
 
 { #category : 'plugin interface' }
@@ -21,17 +21,17 @@ RFArgumentsReification class >> key [
 
 { #category : 'generate' }
 RFArgumentsReification >> genForASTMessageNode [
-	^ASTVariableNode named: self varName
+	^OCVariableNode named: self varName
 ]
 
 { #category : 'generate' }
 RFArgumentsReification >> genForASTMethodNode [
-	^ASTVariableNode named: self varName
+	^OCVariableNode named: self varName
 ]
 
 { #category : 'generate' }
 RFArgumentsReification >> genForASTSequenceNode [
-	^ASTVariableNode named: self varName
+	^OCVariableNode named: self varName
 ]
 
 { #category : 'preamble' }
@@ -49,9 +49,9 @@ RFArgumentsReification >> preambleForMessage: aNode [
 	(1 to: aNode numArgs) withIndexDo: [:each :index |
 			| name |
 			name := 'RFArg', index asString, 'RFReification'.
-			arguments add:  (ASTVariableNode named: name).
+			arguments add:  (OCVariableNode named: name).
 	].
-	preamble addAll: (ASTArrayNode statements: arguments).
+	preamble addAll: (OCArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: self varName).
 	preamble addAll: arguments.
 	^ preamble
@@ -61,8 +61,8 @@ RFArgumentsReification >> preambleForMessage: aNode [
 RFArgumentsReification >> preambleForMethod: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
-	arguments := aNode argumentNames collect: [ :name | ASTVariableNode named: name].
-	preamble addAll: (ASTArrayNode statements: arguments).
+	arguments := aNode argumentNames collect: [ :name | OCVariableNode named: name].
+	preamble addAll: (OCArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: self varName).
 	^ preamble
 ]
@@ -71,8 +71,8 @@ RFArgumentsReification >> preambleForMethod: aNode [
 RFArgumentsReification >> preambleSequence: aNode [
 	| preamble arguments |
 	preamble := OrderedCollection new.
-	arguments := aNode parent argumentNames collect: [ :name | ASTVariableNode named: name].
-	preamble addAll: (ASTArrayNode statements: arguments).
+	arguments := aNode parent argumentNames collect: [ :name | OCVariableNode named: name].
+	preamble addAll: (OCArrayNode statements: arguments).
 	preamble add: (RFStorePopIntoTempNode named: self varName).
 	^ preamble
 ]

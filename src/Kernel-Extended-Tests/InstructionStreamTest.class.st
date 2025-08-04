@@ -99,15 +99,14 @@ InstructionStreamTest >> testBlockWithASuperWithoutArgumentsSendHasCorrectNumber
 { #category : 'tests' }
 InstructionStreamTest >> testNextPcAnswerNextBytecodePcInCaseOfExtension [
 
-	| stream methodToTest ir startingPc |
+	| stream methodToTest startingPc |
 	methodToTest := ClassUsedInInstructionStreamTest
 	                >> #newMethodWithALotOfLiteralsToTestExtensions.
-	ir := (methodToTest ast allChildren select: [ :e | e isMessage ])
-		      anyOne irInstruction.
-	startingPc := ir bytecodeOffset.
-	stream := InstructionStream new
-		          method: methodToTest
-		          pc: startingPc.
+
+	startingPc := methodToTest ast firstPcForNode:
+		              (methodToTest ast allChildren select: [ :e |
+			               e isMessage ]) anyOne.
+	stream := InstructionStream new method: methodToTest pc: startingPc.
 
 	"16rE0 16rE1 are extensions that help handling lot of literals.
 	When such an extension is encoutered the next pc shoudl skip them.

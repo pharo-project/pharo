@@ -154,6 +154,28 @@ MCClassDefinitionTest >> testEqualsSensitivity [
 ]
 
 { #category : 'tests' }
+MCClassDefinitionTest >> testEqualsWithTraitDefinition [
+
+	| classDefinition traitDefinition |
+	classDefinition := (MCClassDefinition named: 'Test')
+		                   superclassName: 'SuperTest';
+		                   packageName: self packageForTestName;
+		                   comment: 'Comment';
+		                   commentStamp: (self commentStampForClass: 'Test');
+		                   yourself.
+
+	traitDefinition := (MCTraitDefinition named: 'Test')
+		                   superclassName: 'SuperTest';
+		                   packageName: self packageForTestName;
+		                   comment: 'Comment';
+		                   commentStamp: (self commentStampForClass: 'Test');
+		                   yourself.
+
+	self deny: classDefinition equals: traitDefinition.
+	self deny: traitDefinition equals: classDefinition
+]
+
+{ #category : 'tests' }
 MCClassDefinitionTest >> testKindOfSubclass [
 	| classes |
 	classes := {self mockClassA. String. Context. WeakArray. Float. CompiledMethod. DoubleByteArray . DoubleWordArray }.

@@ -219,7 +219,7 @@ SlotAnnouncementsTest >> testCreateAndChangeWithCommentDoesAnnounceBoth [
 	self assert: classCommented classCommented equals: aClass.
 	self assert: classCommented oldComment equals: 'A class Comment'.
 	self assert: classCommented newComment equals: 'Another class Comment'.
-	self assert: classCommented oldStamp equals: nil. "why nil?"
+	self assert: classCommented oldStamp equals: ''.
 	self assert: classCommented newStamp equals: nil "why nil?"
 ]
 

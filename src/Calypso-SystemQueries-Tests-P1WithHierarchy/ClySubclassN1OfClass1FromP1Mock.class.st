@@ -36,6 +36,13 @@ ClySubclassN1OfClass1FromP1Mock >> subclassSameVar [
 
 { #category : 'tag1' }
 ClySubclassN1OfClass1FromP1Mock >> tag1Method1 [
+
+	"This method is different that its superclass it does nothing because like that 
+	it does not get into the method is duplicated from the superclass."
+	
+	self printOn: ''
+
+
 ]
 
 { #category : 'tag1' }

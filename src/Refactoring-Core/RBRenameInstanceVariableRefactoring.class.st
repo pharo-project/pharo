@@ -59,7 +59,7 @@ RBRenameInstanceVariableRefactoring class >> rename: aVarName to: aName in: aCla
 { #category : 'transforming' }
 RBRenameInstanceVariableRefactoring >> addNewAccessors [
 	| refactoring |
-	refactoring := RBCreateAccessorsForVariableTransformation
+	refactoring := ReCreateAccessorsForVariableTransformation
 		model: self
 		variable: newName asString
 		class: class
@@ -110,7 +110,7 @@ RBRenameInstanceVariableRefactoring >> newName: anObject [
 { #category : 'preconditions' }
 RBRenameInstanceVariableRefactoring >> preconditionDirectlyDefinesVariable [
 
-	^ ReDefinesInstanceVariableCondition
+	^ ReDirectlyDefinesInstanceVariableCondition
 			   classNamed: class name
 			   inModel: self model
 			   instanceVariables: { variableName }

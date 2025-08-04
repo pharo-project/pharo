@@ -25,7 +25,7 @@ ClapCompositeMatch >> at: identifierOrSpec [
 		ifAbsent: [
 			specification at: identifierOrSpec
 				ifPresent: [ :spec | ClapImplicit of: spec in: self ]
-				ifAbsent: [ self notYetImplemented ] ]
+				ifAbsent: [ NotFound signal: 'Cannot find ' , identifierOrSpec asSymbol, '!' ] ] 	
 ]
 
 { #category : 'accessing - children' }
@@ -58,18 +58,25 @@ ClapCompositeMatch >> completeMatchOn: aStream [
 
 { #category : 'matching' }
 ClapCompositeMatch >> detectMatchOn: aStream ifFound: foundBlock ifNone: noneBlock [
-	self specification parametersDo: [ :param |
-		(param isMultiple or: (self includesMatchOf: param) not)
-			ifTrue: [ | sub |
-				sub := param matchOn: aStream.
-				sub isMismatch
-					ifFalse: [ ^ foundBlock cull: sub ] ] ].
+	self specification
+		parametersSelect: [ :each | each isMatchableIn: self ]
+		thenDo: [ :param | 
+			| sub |
+			sub := param matchOn: aStream in: self context.
+			sub isMismatch
+				ifFalse: [ ^ foundBlock cull: sub ] ].
 	^ noneBlock value
 ]
 
 { #category : 'accessing - children' }
 ClapCompositeMatch >> flags [
 	^ children select: [ :each | specification flags includes: each specification ]
+]
+
+{ #category : 'testing' }
+ClapCompositeMatch >> hasChild [
+
+	^ children isNotEmpty
 ]
 
 { #category : 'testing' }
@@ -80,6 +87,12 @@ ClapCompositeMatch >> includesMatchOf: identifierOrSpec [
 { #category : 'initialization' }
 ClapCompositeMatch >> initialize [
 	children := OrderedCollection new
+]
+
+{ #category : 'validation' }
+ClapCompositeMatch >> isValid: aValidation [
+
+	^ aValidation isValidCompositeMatch: self
 ]
 
 { #category : 'matching' }
@@ -129,6 +142,35 @@ ClapCompositeMatch >> stop [
 	^ children
 		ifEmpty: [ self start - 1 ]
 		ifNotEmpty: [ children last stop ]
+]
+
+{ #category : 'accessing - children' }
+ClapCompositeMatch >> subcommand [
+	"answer the direct subcommand if any"
+	
+	^ children 
+		detect: [ :each | each specification isCommand ]
+]
+
+{ #category : 'accessing - children' }
+ClapCompositeMatch >> subcommands [
+	| commands |
+	
+	commands := OrderedCollection new.
+	commands add: self.
+	[ [ commands add: commands last subcommand ] repeat ]
+	on: NotFound, SubscriptOutOfBounds
+	do: [ "we stop the recursion" ].
+	
+	^ commands first specification isCommand
+		ifTrue: [ commands ]
+		ifFalse: [ commands copyWithoutFirst ]
+]
+
+{ #category : 'validation' }
+ClapCompositeMatch >> validate: aClapValidationClass on: aReport [
+	super validate: aClapValidationClass on: aReport.
+	children do: [ :each | each validate: aClapValidationClass on: aReport ]
 ]
 
 { #category : 'validation' }

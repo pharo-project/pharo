@@ -48,7 +48,7 @@ SimulateMouseTest >> testSimulateMiddleClick [
 SimulateMouseTest >> testSimulateRightClick [
 
 	| menu |
-	morph := Smalltalk tools workspace open.
+	morph := (Smalltalk tools toolNamed: #workspace) open.
 	menu := self menuOpenedDuring: [ morph simulateRightClick ].
 	self assert: menu isNil not
 ]

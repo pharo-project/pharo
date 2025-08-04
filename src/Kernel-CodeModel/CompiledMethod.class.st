@@ -244,6 +244,14 @@ CompiledMethod >> hasComment [
 ]
 
 { #category : 'testing' }
+CompiledMethod >> hasEquivalentMethodInSuperclass [
+
+	^ self overriddenMethod
+		  ifNil: [ false ]
+		  ifNotNil: [ :method | self equivalentTo: method ]
+]
+
+{ #category : 'testing' }
 CompiledMethod >> hasNonLocalReturn [
 	"Answer whether any block has a method-return ('^') in its code."
 	self allBlocksDo: [ :each | each hasMethodReturn ifTrue: [ ^true ] ].
@@ -329,13 +337,9 @@ CompiledMethod >> isConflict [
 { #category : 'testing' }
 CompiledMethod >> isDeprecated [
 
-	^ self sendsAnySelectorOf: #(
-			#deprecated:
-			#deprecated:transformWith:
-			#deprecated:transformWith:when:
-			#deprecated:on:in:
-			#deprecated:on:in:transformWith:
-			#deprecated:on:in:transformWith:when:)
+	^ (self sendsAnySelectorOf:
+		   #( #deprecated: #deprecated:transformWith: #deprecated:transformWith:when: #deprecated:on:in: #deprecated:on:in:transformWith:
+		      #deprecated:on:in:transformWith:when: )) or: [ self methodClass isDeprecated or: [ self package ifNotNil: [ :package | package isDeprecated ] ] ]
 ]
 
 { #category : 'testing' }

@@ -32,6 +32,12 @@ ClyDebugTestCommand >> defaultMenuItemName [
 	^'Debug tests'
 ]
 
+{ #category : 'accessing' }
+ClyDebugTestCommand >> description [
+
+^ 'Debug selected test method' 
+]
+
 { #category : 'execution' }
 ClyDebugTestCommand >> runTest: testSelector of: testClass [
 

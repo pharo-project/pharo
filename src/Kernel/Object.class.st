@@ -390,6 +390,19 @@ Object >> attemptToAssign: value withIndex: index [
 	"CAN'T REACH"
 ]
 
+{ #category : 'deprecation' }
+Object >> backwardCompatible: anExplanationString on: date in: version transformWith: aRule [
+	"Automatically transform the backward compatible calls to this method"
+
+	BackwardCompatibility new
+		context: thisContext sender;
+		explanation: anExplanationString;
+		date: date;
+		version: version;
+		rule: aRule;
+		signal
+]
+
 { #category : 'accessing' }
 Object >> basicAt: index [
 	"Primitive. Assumes receiver is indexable. Answer the value of an
@@ -453,8 +466,10 @@ Object >> beReadOnlyObject [
 	 cause the VM to send attemptToAssign:withIndex: to the read-only object.
 	 An attempt to modify a read-only object in a primitive will cause the
 	 primitive to fail with a #'no modification' error code.
-	 Set the read-only flag of the receiver to true and answer the previous vaue of the flag."
-	^self setIsReadOnlyObject: true
+	 Set the read-only flag of the receiver to true and answer the object itself."
+
+	self setIsReadOnlyObject: true.
+	^ self
 ]
 
 { #category : 'write barrier' }
@@ -638,7 +653,7 @@ It doesn't handle cycles, #veryDeepCopy does. In the future we will make it hand
 
 { #category : 'deprecation' }
 Object >> deprecated: anExplanationString [
-	"Warn that the sending method has been deprecated"
+	"Warn that the sending method has been deprecated."
 
 	Deprecation new
 		context: thisContext sender;
@@ -648,7 +663,7 @@ Object >> deprecated: anExplanationString [
 
 { #category : 'deprecation' }
 Object >> deprecated: anExplanationString on: date in: version [
-	"Warn that the sending method has been deprecated"
+	"Warn that the sending method has been deprecated."
 
 	Deprecation new
 		context: thisContext sender;
@@ -659,8 +674,11 @@ Object >> deprecated: anExplanationString on: date in: version [
 ]
 
 { #category : 'deprecation' }
-Object >> deprecated: anExplanationString on: date in: version transformWith: aRule [
-	"Automatically tranform the deprecated call"
+Object >> deprecated: anExplanationString 
+	on: date 
+	in: version 
+	transformWith: aRule [
+	"Automatically transform the deprecated calls."
 
 	Deprecation new
 		context: thisContext sender;
@@ -672,8 +690,12 @@ Object >> deprecated: anExplanationString on: date in: version transformWith: aR
 ]
 
 { #category : 'deprecation' }
-Object >> deprecated: anExplanationString on: date in: version transformWith: aRule when: conditionBlock [
-	"Automatically tranform the deprecated call if it matches the condition"
+Object >> deprecated: anExplanationString 
+	on: date 
+	in: version 
+	transformWith: aRule 
+	when: conditionBlock [
+	"Automatically transform the deprecated call if it matches the condition."
 
 	Deprecation new
 		context: thisContext sender;
@@ -687,7 +709,7 @@ Object >> deprecated: anExplanationString on: date in: version transformWith: aR
 
 { #category : 'deprecation' }
 Object >> deprecated: anExplanationString transformWith: aRule [
-	"Automatically tranform the deprecated call"
+	"Automatically transform the deprecated call."
 
 	Deprecation new
 		context: thisContext sender;
@@ -698,7 +720,7 @@ Object >> deprecated: anExplanationString transformWith: aRule [
 
 { #category : 'deprecation' }
 Object >> deprecated: anExplanationString transformWith: aRule when: conditionBlock [
-	"Automatically tranform the deprecated call if it matches the condition"
+	"Automatically transform the deprecated call if it matches the condition."
 
 	Deprecation new
 		context: thisContext sender;
@@ -798,18 +820,6 @@ Object >> errorSubscriptBounds: index [
 	"Create an error notification that an improper integer was used as an index."
 
 	SubscriptOutOfBounds signalFor: index
-]
-
-{ #category : 'error handling' }
-Object >> explicitRequirement [
-	"If one of the superclasses can perform the selector, we execute the method of that class, otherwise, the explicit requirement error is thrown"
-
-	<debuggerCompleteToSender>
-	| sender |
-	sender := thisContext sender.
-	[ sender return: (self perform: sender selector withArguments: sender arguments inSuperclass: sender methodClass superclass) ]
-		on: MessageNotUnderstood
-		do: [ self error: 'Explicitly required method' ]
 ]
 
 { #category : 'finalization' }
@@ -1276,7 +1286,7 @@ Object >> isVariableBinding [
 { #category : 'comparing' }
 Object >> literalEqual: other [
 
-	^ self class == other class and: [self = other]
+	^ self == other
 ]
 
 { #category : 'printing' }

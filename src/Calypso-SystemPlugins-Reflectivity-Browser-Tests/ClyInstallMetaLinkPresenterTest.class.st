@@ -38,7 +38,7 @@ ClyInstallMetaLinkPresenterTest >> presenterForMetalinkUninstallation [
 ClyInstallMetaLinkPresenterTest >> setUp [
 	super setUp.
 	MetaLink uninstallAll.
-	node := ASTVariableNode named: 'test'.
+	node := OCVariableNode named: 'test'.
 	metalink := MetaLink new.
 	metalink2 := MetaLink new.
 	breakpoint := MetaLink new metaObject: Break; yourself.

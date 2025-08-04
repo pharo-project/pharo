@@ -9,7 +9,8 @@ Class {
 		'completionEngine'
 	],
 	#classVars : [
-		'CompletionEngineClass'
+		'CompletionEngineClass',
+		'CompletionEngineInstance'
 	],
 	#category : 'Rubric-Editing-Code',
 	#package : 'Rubric',
@@ -124,9 +125,21 @@ RubSmalltalkEditor class >> completionEngineClass [
 ]
 
 { #category : 'completion engine' }
-RubSmalltalkEditor class >> completionEngineClass: anEngine [
+RubSmalltalkEditor class >> completionEngineClass: aClass [
 
-	CompletionEngineClass := anEngine
+	CompletionEngineClass := aClass
+]
+
+{ #category : 'completion engine' }
+RubSmalltalkEditor class >> completionEngineInstance [
+
+	^ CompletionEngineInstance 
+]
+
+{ #category : 'completion engine' }
+RubSmalltalkEditor class >> completionEngineInstance: anEngine [
+
+	CompletionEngineInstance := anEngine 
 ]
 
 { #category : 'completion engine' }
@@ -172,7 +185,7 @@ RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval editingMode
 		node := ast bestNodeFor: (start to: stop).
 
 		node ifNil: [
-			node := ASTParseErrorNodeVisitor
+			node := OCParseErrorNodeVisitor
 				visit: ast
 				detect: [ :n | n intersectsInterval: (start to: start)]
 				ifNone: [ ^aBlock value ]].
@@ -186,7 +199,7 @@ RubSmalltalkEditor >> bestNodeInString: source at: selectionInterval editingMode
 						node := newNode ].
 				].
 
-			node := ASTGenericNodeVisitor
+			node := OCGenericNodeVisitor
 				visit: node
 				detect: [ :n | n intersectsInterval: (start to: start) ]
 				ifNone: [ node ] ] ].
@@ -201,8 +214,8 @@ RubSmalltalkEditor >> bestNodeInTextArea [
 
 	"We build the AST (which can be faulty when we are scripting) then ask the best node for the interval."
 	^ (self isScripting
-		   ifTrue: [ RBParser parseFaultyExpression: self textArea string ]
-		   ifFalse: [ RBParser parseFaultyMethod: self textArea string ]) bestNodeFor: (self textArea startIndex to: self textArea stopIndex)
+		   ifTrue: [ OCParser parseFaultyExpression: self textArea string ]
+		   ifFalse: [ OCParser parseFaultyMethod: self textArea string ]) bestNodeFor: (self textArea startIndex to: self textArea stopIndex)
 ]
 
 { #category : 'source navigation' }
@@ -240,8 +253,8 @@ RubSmalltalkEditor >> bestNodeInTextAreaWithoutSelection [
 					 ifTrue: [ self textArea string ].
 
 	node := self isScripting
-		ifTrue: [ RBParser parseFaultyExpression: intervalTrimmedText ]
-		ifFalse: [ RBParser parseFaultyMethod: intervalTrimmedText ].
+		ifTrue: [ OCParser parseFaultyExpression: intervalTrimmedText ]
+		ifFalse: [ OCParser parseFaultyMethod: intervalTrimmedText ].
 
 	^node bestNodeFor: (start to: start)
 ]
@@ -267,7 +280,7 @@ RubSmalltalkEditor >> browseClassFrom: aClassString [
 		                 withCaption: 'choose a class to browse...'.
 	selectedClass ifNil: [
 		^ self internalCallToImplementorsOf: aClassString ].
-	self tools browser openOnClass: selectedClass
+	(self tools toolNamed: #browser) openOnClass: selectedClass
 ]
 
 { #category : 'menu messages' }
@@ -286,6 +299,12 @@ RubSmalltalkEditor >> browseIt: aKeyboardEvent [
 
  	self browseFullClass.
 	^true
+]
+
+{ #category : 'accessing' }
+RubSmalltalkEditor >> characterAt: anInteger [ 
+	
+	^ self text at: anInteger
 ]
 
 { #category : 'menu messages' }
@@ -343,9 +362,9 @@ RubSmalltalkEditor >> completionAround: aBlock keyDown: anEvent [
 RubSmalltalkEditor >> completionAround: aBlock keyStroke: anEvent [
 	"I'm a editor for Smalltalk, so, do completion around"
 
-	self isCompletionEnabled ifFalse: [  ^aBlock value ].
+	self isCompletionEnabled ifFalse: [ ^ aBlock value ].
 
-	(completionEngine handleKeystrokeBefore: anEvent editor: self) ifTrue:  [^ self ].
+	(completionEngine handleKeystrokeBefore: anEvent editor: self) ifTrue: [ ^ self ].
 
 	aBlock value.
 	completionEngine handleKeystrokeAfter: anEvent editor: self
@@ -353,11 +372,13 @@ RubSmalltalkEditor >> completionAround: aBlock keyStroke: anEvent [
 
 { #category : 'completion engine' }
 RubSmalltalkEditor >> completionEngine [
-
+	
 	^ completionEngine ifNil: [
-		CompletionEngineClass ifNotNil: [
-			self completionEngine: CompletionEngineClass new.
-			completionEngine ] ]
+		CompletionEngineInstance 
+				ifNotNil: [ completionEngine := CompletionEngineInstance ]
+				ifNil: [ 	CompletionEngineClass ifNotNil: [
+								self completionEngine: CompletionEngineClass new.
+								completionEngine ] ] ]
 ]
 
 { #category : 'completion engine' }
@@ -396,7 +417,7 @@ RubSmalltalkEditor >> computeSelectionIntervalForCurrentLine [
 { #category : 'private' }
 RubSmalltalkEditor >> computeSelectionIntervalFromCommentIn: aString at: anInterval [
 	| comment commentInterval |
-	comment := (RBScanner on: (aString copyFrom: anInterval first to: anInterval last) readStream) getComments.
+	comment := (OCScanner on: (aString copyFrom: anInterval first to: anInterval last) readStream) getComments.
 	comment ifNil: [ ^ 0 to: -1 ].
 	commentInterval := comment first.
 	^ commentInterval first + 1 to: commentInterval last - 1
@@ -697,11 +718,6 @@ RubSmalltalkEditor >> findValidKeywordIn: sourceCode at: locationIndex ifFound: 
 ]
 
 { #category : 'do-its' }
-RubSmalltalkEditor >> format [
-	self model formatSourceCodeInView
-]
-
-{ #category : 'do-its' }
 RubSmalltalkEditor >> highlightEvaluateAndDo: aBlock [
 	"Treat the current selection as an expression; evaluate it and invoke aBlock with the result."
 
@@ -775,7 +791,7 @@ RubSmalltalkEditor >> internalCallToBrowse: aSelector [
 		          classFromPattern: aSelector
 		          withCaption: 'choose a class to browse...'.
 	aClass ifNil: [ ^ self ].
-	self tools browser openOnClass: aClass
+	(self tools toolNamed: #browser) openOnClass: aClass
 ]
 
 { #category : 'menu messages' }
@@ -804,19 +820,20 @@ RubSmalltalkEditor >> isSmalltalkEditor [
 ]
 
 { #category : 'private' }
-RubSmalltalkEditor >> isWordCharacterAt: index in: aString [
+RubSmalltalkEditor >> isWordCharacterAt: index in: aString except: aBlock [
 	"By default, group alphanumeric and non-alphanumeric separately"
+
 	| character |
 	character := aString at: index.
+	(aBlock value: character) ifTrue: [ ^ false ].
 	"In smalltalk code, colons make part of selectors too and are part of a word"
-	^ character isAlphaNumeric or: [
-		"Check that it is a keyword selector.
+	^ character isAlphaNumeric or: [ 
+		"Check that it is a keyword selector:
 		 - followed by a colon
 		 - but not by an assignment "
-		(character = $_) or: [
-			(character = $:) and: [
-				aString size = index
-					or: [  (aString at: index + 1) ~= $= ] ] ] ]
+		  character = $_ or: [
+			  character = $: and: [
+				  aString size = index or: [ (aString at: index + 1) ~= $= ] ] ] ]
 ]
 
 { #category : 'menu messages' }
@@ -1175,7 +1192,7 @@ RubSmalltalkEditor >> widenSelectionIn: sourceCode selection: selectionInterval 
 	stop := node stop max: cursorIndex - 1.
 
 	comments := OrderedCollection new.
-	ASTCommentNodeVisitor visit: node do: [ :cmnts | comments add: cmnts ].
+	OCCommentNodeVisitor visit: node do: [ :cmnts | comments add: cmnts ].
 
 	comments
 		detect: [ :c | c start < cursorIndex and: [ c stop >= cursorIndex ] ]

@@ -59,8 +59,8 @@ EFBlockExpressionOnlyTest >> testDontFormatCommentWithStatement2 [
 	configurationSelector := #dontFormatCommentWithStatementConfiguration.
 	source := self formatExpression: '[ "aComment" 1 factorial.  2 factorial]'.
 	self assert: source equals: '[ "aComment"
-1 factorial.
-2 factorial ]'
+	1 factorial.
+	2 factorial ]'
 ]
 
 { #category : 'tests' }
@@ -70,8 +70,8 @@ EFBlockExpressionOnlyTest >> testNewLineAfterComment [
 	configurationSelector := #dontFormatCommentWithStatementConfiguration.
 	source := self formatExpression: '["aComment"1. 2]'.
 	self assert: source equals: '[ "aComment"
-1.
-2 ]'
+	1.
+	2 ]'
 ]
 
 { #category : 'tests' }

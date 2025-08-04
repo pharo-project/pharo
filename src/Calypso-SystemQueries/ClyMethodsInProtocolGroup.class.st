@@ -46,3 +46,9 @@ ClyMethodsInProtocolGroup >> protocol [
 
 	^ methodQuery protocol
 ]
+
+{ #category : 'operations' }
+ClyMethodsInProtocolGroup >> removeProtocolFrom: aCollectionOfClasses [
+
+	aCollectionOfClasses do: [ :class | class removeProtocol: self protocol ]
+]

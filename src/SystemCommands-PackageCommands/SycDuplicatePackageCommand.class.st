@@ -31,6 +31,12 @@ SycDuplicatePackageCommand >> defaultMenuItemName [
 	^'Duplicate package'
 ]
 
+{ #category : 'accessing' }
+SycDuplicatePackageCommand >> description [
+
+	^ 'Copy a given package.'
+]
+
 { #category : 'execution' }
 SycDuplicatePackageCommand >> prepareFullExecutionInContext: aToolContext [
 

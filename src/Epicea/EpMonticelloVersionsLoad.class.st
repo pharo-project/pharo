@@ -52,7 +52,7 @@ EpMonticelloVersionsLoad >> hash [
 		bitXor: self versionNames hash
 ]
 
-{ #category : 'initializing' }
+{ #category : 'initialization' }
 EpMonticelloVersionsLoad >> initializeWith: aCollectionOfVersionNames [
 	self initialize.
 	versionNames := aCollectionOfVersionNames

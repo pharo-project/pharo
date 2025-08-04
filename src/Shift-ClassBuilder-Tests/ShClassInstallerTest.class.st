@@ -202,7 +202,7 @@ ShClassInstallerTest >> testClassWithSlotHasInitializeMethodWithInitializeSlots 
 	className := #ShClassWithNormalSlots.
 	newClass := self newClass: className slots: { (#someSlot => ShTestSlot) }.
 
-	self assert: ((newClass >> #initialize) ast statements includes: (RBParser parseExpression: 'self class initializeSlots: self'))
+	self assert: ((newClass >> #initialize) ast statements includes: (OCParser parseExpression: 'self class initializeSlots: self'))
 ]
 
 { #category : 'tests' }

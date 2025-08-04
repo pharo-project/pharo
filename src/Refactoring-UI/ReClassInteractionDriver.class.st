@@ -1,6 +1,6 @@
 Class {
 	#name : 'ReClassInteractionDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'packageNames',
 		'packageName',
@@ -10,14 +10,6 @@ Class {
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers'
 }
-
-{ #category : 'execution' }
-ReClassInteractionDriver >> changes [
-	"Remember should not call generateChanges"
-
-	refactoring privateTransform.
-	^ refactoring changes
-]
 
 { #category : 'accessing' }
 ReClassInteractionDriver >> configureRefactoring [

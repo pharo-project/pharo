@@ -281,7 +281,9 @@ NECMenuMorph >> detailMessage [
 
 	^ self itemsCount isZero
 		  ifTrue: [ 'no entries' ]
-		  ifFalse: [ 'cmd+B browse entry' ]
+		  ifFalse: [
+			  (OSPlatform current defaultModifier + $b) asString
+			  , ' browse entry' ]
 ]
 
 { #category : 'accessing' }
@@ -485,9 +487,13 @@ NECMenuMorph >> initialize [
 
 { #category : 'actions' }
 NECMenuMorph >> insertSelected [
+	
+	| item selectionIndex |
 	self delete.
 	context hasEntries ifFalse: [^ false].
-	context activateEntryAt: self selected.
+	selectionIndex := self selected.
+	item := context activateEntryAt: selectionIndex.
+	self class environment codeChangeAnnouncer announce: (CompletionItemSelected new selectedItem: item; index: selectionIndex).
 	^ true
 ]
 

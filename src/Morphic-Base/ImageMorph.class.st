@@ -88,15 +88,6 @@ ImageMorph >> addCustomMenuItems: aMenu hand: aHand [
 	aMenu addUpdating: #opacityString selector: #changeOpacity
 ]
 
-{ #category : 'geometry' }
-ImageMorph >> adoptPaneColor: paneColor [
-	"Change our border color too."
-
-	super adoptPaneColor: paneColor.
-	paneColor ifNil: [^self].
-	self borderStyle baseColor: paneColor twiceDarker
-]
-
 { #category : 'testing' }
 ImageMorph >> areasRemainingToFill: aRectangle [
 

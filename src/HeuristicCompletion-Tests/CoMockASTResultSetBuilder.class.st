@@ -9,9 +9,9 @@ Class {
 	#instVars : [
 		'heuristic'
 	],
-	#category : 'HeuristicCompletion-Tests-Core',
+	#category : 'HeuristicCompletion-Tests-Mocks',
 	#package : 'HeuristicCompletion-Tests',
-	#tag : 'Core'
+	#tag : 'Mocks'
 }
 
 { #category : 'accessing' }

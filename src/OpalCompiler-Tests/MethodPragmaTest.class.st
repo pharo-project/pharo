@@ -358,47 +358,6 @@ MethodPragmaTest >> testPragmaUnarayMessage [
 	self assert: aCompiledMethod pragmas first selector equals: #hello
 ]
 
-{ #category : 'tests - primitives' }
-MethodPragmaTest >> testPrimitiveIndexed1 [
-	"This test useses the #instVarAt: primitive."
-	<ignoreNotImplementedSelectors: #(inst)>
-
-	self compile: '<primitive: 74> ^ #inst' selector: #inst.
-	self assert: self inst equals: #inst
-]
-
-{ #category : 'tests - primitives' }
-MethodPragmaTest >> testPrimitiveIndexed2 [
-	"This test useses the #identityHash primitive."
-	<ignoreNotImplementedSelectors: #(idHash)>
-	self compile: '<primitive: 75> ^ #idHash' selector: #idHash.
-	self assert: self idHash equals: self basicIdentityHash
-]
-
-{ #category : 'tests - primitives' }
-MethodPragmaTest >> testPrimitiveNamed1 [
-	"This test useses the #primitiveDirectoryLookup primitive."
-
-	self compile: '<primitive: ''primitiveDirectoryLookup'' module: ''FilePlugin''> ^ #lookup' selector: #lookup.
-	self assert: self lookup equals: #lookup
-]
-
-{ #category : 'tests - primitives' }
-MethodPragmaTest >> testPrimitiveNamed2 [
-	"This test useses the #primPathNameDelimiter primitive."
-	<ignoreNotImplementedSelectors: #(delim)>
-	self compile: '<primitive: ''primitiveDirectoryDelimitor'' module: ''FilePlugin''> ^ #delim' selector: #delim.
-	self assert: self delim equals: File delimiter
-]
-
-{ #category : 'tests - primitives' }
-MethodPragmaTest >> testPrimitiveNamedErrorCode2 [
-	"This test useses the #primitiveDirectoryLookup primitive."
-
-	self compile: '<primitive: ''primitiveDirectoryLookup'' module: ''FilePlugin'' error: errorCode> ^ errorCode' selector: #lookup.
-	self assert: self lookup equals: nil
-]
-
 { #category : 'tests - compiled' }
 MethodPragmaTest >> testPrimitiveNumber [
 	| aCompiledMethod |

@@ -57,6 +57,12 @@ ClySpawnFullBrowserCommand >> defaultMenuItemName [
 	^'Browse'
 ]
 
+{ #category : 'accessing' }
+ClySpawnFullBrowserCommand >> description [
+
+	^ 'Spawn full browser from current browser state.'
+]
+
 { #category : 'execution' }
 ClySpawnFullBrowserCommand >> execute [
 

@@ -177,7 +177,7 @@ ZdcSecureSMTPClient >> setupStreamForStartTLS [
 	self startTLS
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZdcSecureSMTPClient >> skipRequireStartSSL [
 	"Normally, the server advertises is capabilities before the upgrade from plain to TLS.
 	It should list STARTTLS as one of its capabilities. If not, we signal an error.
@@ -205,12 +205,12 @@ ZdcSecureSMTPClient >> stream: aStream [
 	lineReader := ZnLineReader on: self stream
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZdcSecureSMTPClient >> useSSL [
 	variant := #ssl
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZdcSecureSMTPClient >> useStartTLS [
 	variant := #startTLS
 ]

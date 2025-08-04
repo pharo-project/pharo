@@ -115,7 +115,15 @@ MCMethodDefinition >> accept: aVisitor [
 { #category : 'accessing' }
 MCMethodDefinition >> actualClass [
 
-	^ self class environment at: className ifPresent: [ :class |
+	^ self actualClassIn: self class environment
+]
+
+{ #category : 'accessing' }
+MCMethodDefinition >> actualClassIn: anEnvironment [
+
+	anEnvironment ifNil: [ ^ self actualClass ].
+	
+	^ anEnvironment at: className ifPresent: [ :class |
 		  classIsMeta
 			  ifTrue: [ class classSide ]
 			  ifFalse: [ class ] ]
@@ -225,8 +233,14 @@ MCMethodDefinition >> isOverrideMethod [
 { #category : 'installing' }
 MCMethodDefinition >> load [
 
+	self loadInEnvironment: self class environment
+]
+
+{ #category : 'installing' }
+MCMethodDefinition >> loadInEnvironment: anEnvironment [
+
 	| method |
-	method := self actualClass compiler
+	method := (self actualClassIn: anEnvironment) compiler
 		          protocol: category;
 		          changeStamp: timeStamp;
 		          permitUndeclared: true;

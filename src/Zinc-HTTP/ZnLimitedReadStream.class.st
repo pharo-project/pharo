@@ -33,7 +33,7 @@ ZnLimitedReadStream >> atEnd [
 	^ position >= limit or: [ stream atEnd ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnLimitedReadStream >> close [
 	stream ifNotNil: [ stream close. stream := nil ]
 ]
@@ -156,7 +156,7 @@ ZnLimitedReadStream >> nextInto: collection [
 		into: collection
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnLimitedReadStream >> on: readStream limit: integer [
 	stream := readStream.
 	limit := integer.

@@ -511,14 +511,14 @@ CDFluidClassParserTest >> testWeakSubclass [
 CDFluidClassParserTest >> testWithRB [
 
 	| dict searcher |
-	searcher := ASTParseTreeSearcher new.
+	searcher := OCParseTreeSearcher new.
 	searcher
 		matches: '`superklass << `#ClassName
 		slots: {};
 		sharedVariables: {};
 		package: '''''
 	 	do: [ :aNode :answer |  dict:= searcher context ].
-	dict := searcher executeTree: (RBParser parseExpression: 'Object << #MyClass
+	dict := searcher executeTree: (OCParser parseExpression: 'Object << #MyClass
 		slots: {};
 		sharedVariables: {};
 		package: ''''')
@@ -528,13 +528,13 @@ CDFluidClassParserTest >> testWithRB [
 CDFluidClassParserTest >> testWithRB10 [
 
 	| searcher kind |
-	searcher := ASTParseTreeSearcher new.
+	searcher := OCParseTreeSearcher new.
 	searcher
 		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | kind := #traitInstance ];
 		matches: 'Trait << `@symb classTrait' do: [:aNode :answer | kind := #traitClass ];
 		matches: '`@tm << `#symb' do: [:aNode :answer | kind := #instance ];
 		matches: '`@tm class << `@symb class' do: [:aNode :answer | kind := #class ].
-	searcher executeTree: (RBParser parseExpression: '
+	searcher executeTree: (OCParser parseExpression: '
 		Trait << TViewModelMock3 classTrait
 	') .
 	self assert: kind equals: #traitClass.
@@ -547,14 +547,14 @@ CDFluidClassParserTest >> testWithRB10 [
 CDFluidClassParserTest >> testWithRB10WithError [
 
 	| searcher kind |
-	searcher := ASTParseTreeSearcher new.
+	searcher := OCParseTreeSearcher new.
 
 	searcher
 		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | kind := #traitInstance ];
 		matches: 'Trait << `@symb classTrait' do: [:aNode :answer | kind := #traitClass ];
 		matches: '`@tm << `#symb' do: [:aNode :answer | kind := #instance ];
 		matches: '`@tm class << `@symb class' do: [:aNode :answer | kind := #class ].
-	searcher executeTree: (RBParser parseExpression: '
+	searcher executeTree: (OCParser parseExpression: '
 		Trait << TViewModelMock3 class
 	') .
 	self assert: kind isNil.
@@ -567,12 +567,12 @@ CDFluidClassParserTest >> testWithRB10WithError [
 CDFluidClassParserTest >> testWithRB3 [
 
 	| searcher coll|
-	searcher := ASTParseTreeSearcher new.
+	searcher := OCParseTreeSearcher new.
 	coll := OrderedCollection new.
 	searcher
 		matches: '^self' do: [:aNode :answer | coll add: aNode ];
 		matches: '^`@anything' do: [:aNode :answer |  coll add: aNode].
-	searcher executeTree: (RBParser parseMethod: 'foo
+	searcher executeTree: (OCParser parseMethod: 'foo
 	|tmp|
 	tmp := 22.
 	^ 42').
@@ -583,12 +583,12 @@ CDFluidClassParserTest >> testWithRB3 [
 CDFluidClassParserTest >> testWithRB4 [
 
 	| searcher coll|
-	searcher := ASTParseTreeSearcher new.
+	searcher := OCParseTreeSearcher new.
 	coll := OrderedCollection new.
 	searcher
 		matches: '`@tm := `@val' do: [:aNode :answer | coll add: aNode ];
 		matches: '^`@anything' do: [:aNode :answer | coll add: aNode].
-	searcher executeTree: (RBParser parseMethod: 'foo
+	searcher executeTree: (OCParser parseMethod: 'foo
 	| tmp |
 	tmp := 22.
 	tmp := 55.
@@ -600,14 +600,14 @@ CDFluidClassParserTest >> testWithRB4 [
 CDFluidClassParserTest >> testWithRB5 [
 
 	| searcher coll|
-	searcher := ASTParseTreeSearcher new.
+	searcher := OCParseTreeSearcher new.
 	coll := OrderedCollection new.
 	searcher
 		matches: '`@tm << `#symb' do: [:aNode :answer | coll add: #instance ];
 		matches: '`@tm class << `@symb class' do: [:aNode :answer | coll add: #class ];
 		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | coll add: #traitInstance ];
 		matches: 'Trait << `@symb classTrait' do: [:aNode :answer | coll add: #traitClass ].
-	searcher executeTree: (RBParser parseExpression: '
+	searcher executeTree: (OCParser parseExpression: '
 		Object << #Point
 		  slots: { #x . #y };
 			package: ''Foo''
@@ -620,14 +620,14 @@ CDFluidClassParserTest >> testWithRB5 [
 CDFluidClassParserTest >> testWithRB6 [
 
 	| searcher coll|
-	searcher := ASTParseTreeSearcher new.
+	searcher := OCParseTreeSearcher new.
 	coll := OrderedCollection new.
 	searcher
 		matches: '`@tm << `#symb' do: [:aNode :answer | coll add: #instance ];
 		matches: '`@tm class << `@symb class' do: [:aNode :answer | coll add: #class ];
 		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | coll add: #traitInstance ];
 		matches: 'Trait << `@symb classTrait' do: [:aNode :answer | coll add: #traitClass ].
-	searcher executeTree: (RBParser parseExpression: '
+	searcher executeTree: (OCParser parseExpression: '
 		Object class << #Point class
 		  slots: { #x . #y };
 			package: ''Foo''
@@ -640,14 +640,14 @@ CDFluidClassParserTest >> testWithRB6 [
 CDFluidClassParserTest >> testWithRB7 [
 
 	| searcher coll|
-	searcher := ASTParseTreeSearcher new.
+	searcher := OCParseTreeSearcher new.
 	coll := OrderedCollection new.
 	searcher
 		matches: '`@tm << `#symb' do: [:aNode :answer | coll add: #instance ];
 		matches: '`@tm class << `@symb class' do: [:aNode :answer | coll add: #class ];
 		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | coll add: #traitInstance ];
 		matches: 'Trait << `@symb classTrait' do: [:aNode :answer | coll add: #traitClass ].
-	searcher executeTree: (RBParser parseExpression: '
+	searcher executeTree: (OCParser parseExpression: '
 		Trait << #TPoint classTrait
 		  slots: { #x . #y };
 			package: ''Foo''
@@ -660,14 +660,14 @@ CDFluidClassParserTest >> testWithRB7 [
 CDFluidClassParserTest >> testWithRB8 [
 
 	| searcher coll|
-	searcher := ASTParseTreeSearcher new.
+	searcher := OCParseTreeSearcher new.
 	coll := OrderedCollection new.
 	searcher
 		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | coll add: #traitInstance ];
 		matches: '`@tm << `#symb' do: [:aNode :answer | coll add: #instance ];
 		matches: '`@tm class << `@symb class' do: [:aNode :answer | coll add: #class ];
 		matches: 'Trait << `@symb classTrait' do: [:aNode :answer | coll add: #traitClass ].
-	searcher executeTree: (RBParser parseExpression: '
+	searcher executeTree: (OCParser parseExpression: '
 		Trait << #Point
 		  slots: { #x . #y };
 			package: ''Foo''
@@ -680,14 +680,14 @@ CDFluidClassParserTest >> testWithRB8 [
 CDFluidClassParserTest >> testWithRB9 [
 
 	| searcher coll|
-	searcher := ASTParseTreeSearcher new.
+	searcher := OCParseTreeSearcher new.
 	coll := OrderedCollection new.
 	searcher
 		matches: 'Trait << `#traitSymbol' do: [:aNode :answer | coll add: #traitInstance ];
 		matches: '`@tm << `#symb' do: [:aNode :answer | coll add: #instance ];
 		matches: '`@tm class << `@symb class' do: [:aNode :answer | coll add: #class ];
 		matches: 'Trait << `@symb classTrait' do: [:aNode :answer | coll add: #traitClass ].
-	searcher executeTree: (RBParser parseExpression: '
+	searcher executeTree: (OCParser parseExpression: '
 		Object << #MyObject
 		sharedVariables: { #A . #B };
 		package: ''MyPackage''

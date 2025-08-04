@@ -19,7 +19,7 @@ MCClassTraitParser class >> pattern [
 MCClassTraitParser >> addDefinitionsTo: aCollection [
 
 	| tokens definition traitCompositionString |
-	tokens := source parseLiterals.
+	tokens := OCParser parseLiterals: source.
 	traitCompositionString := (source readStream
 		                           match: 'uses:';
 		                           upToEnd) trimBoth.

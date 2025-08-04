@@ -51,20 +51,21 @@ MorphicUIManager class >> uiProcess [
 { #category : 'private' }
 MorphicUIManager >> activate [
 
-	self currentWorld worldState worldRenderer: (AbstractWorldRenderer detectCorrectOneForWorld: self currentWorld).
+	self currentWorld worldState worldRenderer:
+		(AbstractWorldRenderer detectCorrectOneForWorld: self currentWorld).
 	self currentWorld currentCursor: self currentWorld currentCursor.
 
-	self currentWorld ifNotNil: [:world | world restoreMorphicDisplay].
-	WorldMorph extraWorldList do: [:each | each restoreMorphicDisplay].
+	self currentWorld ifNotNil: [ :world | world restoreMorphicDisplay ].
+	WorldMorph extraWorldList do: [ :each | each restoreMorphicDisplay ].
+
+
+	SystemProgressMorph enable.
 
 	activeTranscript
-		ifNotNil: [ 
-			Transcript := activeTranscript ]
+		ifNotNil: [ Transcript := activeTranscript ]
 		ifNil: [
-			Transcript class == ThreadSafeTranscript 
-				ifFalse: [ ThreadSafeTranscript install ] ].
-			
-	SystemProgressMorph enable
+			Transcript class name == 'StThreadSafeTranscript' ifFalse: [
+				Smalltalk globals at: #StThreadSafeTranscript ifPresent: [ :c | c installThreadSafeAsTranscript ] ] ]
 ]
 
 { #category : 'ui requests' }
@@ -274,7 +275,7 @@ MorphicUIManager >> confirm: queryString trueChoice: trueChoice falseChoice: fal
 { #category : 'private' }
 MorphicUIManager >> deactivate [
 
-	activeTranscript := Smalltalk tools transcript.
+	activeTranscript := Transcript.
 	SystemProgressMorph disable.
 
 	self triggerEvent: #aboutToLeaveWorld.

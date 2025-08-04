@@ -41,7 +41,7 @@ StClassAndMethodsSelectionPresenter class >> buildStMethodsSelectionContextualGr
 ]
 
 { #category : 'accessing' }
-StClassAndMethodsSelectionPresenter class >> defaultExtent [
+StClassAndMethodsSelectionPresenter class >> defaultPreferredExtent [
 
 	^ 500 @ 700
 ]
@@ -326,16 +326,16 @@ StClassAndMethodsSelectionPresenter >> selectedSuperclassName [
 	^ self selectedSuperclass name
 ]
 
-{ #category : 'initialization' }
-StClassAndMethodsSelectionPresenter >> setTitleTo: aSpWindowPresenter [
+{ #category : 'accessing' }
+StClassAndMethodsSelectionPresenter >> windowIcon [
 
-	aSpWindowPresenter title: 'Copy class ' , driver className
+	^ self iconNamed: #smallCopy
 ]
 
-{ #category : 'initialization' }
-StClassAndMethodsSelectionPresenter >> setWindowIconTo: aSpWindowPresenter [
+{ #category : 'accessing' }
+StClassAndMethodsSelectionPresenter >> windowTitle [
 
-	aSpWindowPresenter windowIcon: (self iconNamed: #smallCopy)
+	^ 'Copy class ' , driver className
 ]
 
 { #category : 'initialization' }

@@ -21,25 +21,17 @@ ReAsClassRuleTest >> methodWithAsClassIfPresent [
 { #category : 'tests' }
 ReAsClassRuleTest >> testRuleNotViolated [
 
-	| critiques |
-	critiques := self myCritiquesOnMethod:
-		             self class >> #testRuleNotViolated.
-	self assertEmpty: critiques 
+	self assertEmpty: (self myCritiquesOnMethod: self class >> #testRuleNotViolated)
 ]
 
 { #category : 'tests' }
 ReAsClassRuleTest >> testRuleWithAsClassIfAbsent [
 
-	| critiques |
-	critiques := self myCritiquesOnMethod: 
-		             self class >> #methodWithAsClassIfPresent.
-	self assert: critiques size equals: 1
+	self assert: (self myCritiquesOnMethod: self class >> #methodWithAsClassIfPresent) size equals: 1
 ]
 
 { #category : 'tests' }
 ReAsClassRuleTest >> testRuleWithAsClassIfPresent [
 
-	| critiques |
-	critiques := self myCritiquesOnMethod: self class >> #methodWithAsClassIfAbsent.
-	self assert: critiques size equals: 1
+	self assert: (self myCritiquesOnMethod: self class >> #methodWithAsClassIfAbsent) size equals: 1
 ]

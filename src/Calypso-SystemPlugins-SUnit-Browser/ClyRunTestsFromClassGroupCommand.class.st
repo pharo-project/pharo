@@ -13,3 +13,9 @@ Class {
 ClyRunTestsFromClassGroupCommand class >> contextClass [
 	^ ClyClassGroup asCalypsoItemContext
 ]
+
+{ #category : 'accessing' }
+ClyRunTestsFromClassGroupCommand >> description [
+
+	^ 'Run all tests from selected classGroup.'
+]

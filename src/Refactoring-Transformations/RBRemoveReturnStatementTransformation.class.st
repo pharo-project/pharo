@@ -2,13 +2,15 @@
 I am responsible for removing a return statement inside a method.
 
 Usage:
+```
 | transformation |
 transformation := (RBRemoveReturnStatementTransformation
 			return: '^ variable'
 			inMethod: #methodBefore
 			inClass: #RBRemoveReturnStatementTransformationTest)
-			transform.
-(ChangesBrowser changes: transformation model changes changes) open
+			generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 - Checks whether the method has a return.

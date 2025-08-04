@@ -30,11 +30,6 @@ DTReRunConfiguration >> configurationToRun: anObject [
 ]
 
 { #category : 'accessing' }
-DTReRunConfiguration >> items [
-	^ { self testToReRun }
-]
-
-{ #category : 'accessing' }
 DTReRunConfiguration >> originalConfiguration [
 	^ originalConfiguration
 ]

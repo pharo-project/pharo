@@ -432,7 +432,18 @@ WriteBarrierTest >> testReadOnlyImmediate [
 	"immediate objects like SmallIntegers are read only"
 	self assert: 1 isReadOnlyObject.
 	"we can call beReadOnlyObject on an immediate object"
-	self assert: 1 beReadOnlyObject
+	self assert: 1 beReadOnlyObject isReadOnlyObject 
+]
+
+{ #category : 'tests - object' }
+WriteBarrierTest >> testReadOnlyObject [
+
+	| anObject |
+	anObject := Object new.
+	"objects are not read only"
+	self deny: anObject isReadOnlyObject.
+	"we can call beReadOnlyObject on the object then it should be read only"
+	self assert: 1 beReadOnlyObject isReadOnlyObject
 ]
 
 { #category : 'tests - object' }

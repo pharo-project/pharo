@@ -26,7 +26,7 @@ ReOverridesSpecialMessageRule class >> group [
 
 { #category : 'private' }
 ReOverridesSpecialMessageRule class >> metaclassShouldNotOverride [
-	^ #( #basicNew #basicNew #class #comment #name )
+	^ #( #basicNew #basicNew #class #comment #name #preferredExtent )
 ]
 
 { #category : 'accessing' }

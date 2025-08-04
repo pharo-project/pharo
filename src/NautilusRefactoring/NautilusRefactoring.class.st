@@ -86,9 +86,8 @@ NautilusRefactoring >> refactoringOptions: aRefactoring [
 		setOption: #shouldNotCreateExtraBindings
 		toUse: [ :ref :string | self shouldNotCreateExtraBindings: string ];
 		setOption: #alreadyDefined
-		toUse: [ :ref :class :selector | self shouldOverride: selector in: class ];
-		setOption: #searchInWholeHierarchy
-		toUse: [ :ref :class | self shouldSearchInHierarchy: class ]
+		toUse: [ :ref :class :selector | self shouldOverride: selector in: class ]
+		
 ]
 
 { #category : 'display' }
@@ -114,7 +113,15 @@ NautilusRefactoring >> requestImplementorToInline: imps [
 
 { #category : 'option' }
 NautilusRefactoring >> requestMethodNameFor: aMethodName [
-	^ self handleMethodNameRequest: aMethodName
+	
+	|dialog|
+	dialog := StMethodNameEditorPresenter
+		openOn: aMethodName
+		canRenameArgs: false
+		canRemoveArgs: false
+		canAddArgs: false.
+	dialog cancelled ifTrue: [  CmdCommandAborted signal ].
+	^ aMethodName
 ]
 
 { #category : 'option' }
@@ -129,7 +136,7 @@ NautilusRefactoring >> selectVariableToMoveMethodTo: aSelector class: aClass [
 
 	parseTree := aClass parseTreeForSelector: aSelector.
 	parseTree
-		ifNil: [ parseTree := ASTMethodNode selector: #value body: ( ASTSequenceNode statements: #() ) ].
+		ifNil: [ parseTree := OCMethodNode selector: #value body: ( OCSequenceNode statements: #() ) ].
 	nameList := OrderedCollection new.
 	nameList
 		addAll: parseTree argumentNames sorted;

@@ -13,8 +13,8 @@ Here is a sample of a script that will change of the YK* classes of package Pref
 pkgPrefix := 'PrefixOfPackageNames'.
 newClassPrefix := 'ZG'.
 env := RBBrowserEnvironment new 
-			forPackageNames: (Package organizer packageNames select: [ : pkgName | (pkgName beginsWith: pkgPrefix) ]).
-model := (RBClassModelFactory rbNamespace onEnvironment: env) name: 'MyModel'; yourself.
+			forPackageNames: (PackageOrganizer default packageNames select: [ : pkgName | (pkgName beginsWith: pkgPrefix) ]).
+model := (RBNamespace onEnvironment: env) name: 'MyModel'; yourself.
 RBClassRegexRefactoring new
 	model: model;
 	renameClasses; 					""Here I just want a rename no copy""
@@ -22,12 +22,12 @@ RBClassRegexRefactoring new
   execute.
 ```
 
-- ==renameClasses== renames the classes in place
-- ==copyclasses== copies the classes (pay attention we are not sure that it is fully working)
+- `renameClasses` renames the classes in place
+- `copyclasses` copies the classes (pay attention we are not sure that it is fully working)
 "
 Class {
 	#name : 'RBRegexRefactoring',
-	#superclass : 'RBRefactoring',
+	#superclass : 'ReRefactoring',
 	#instVars : [
 		'matchers'
 	],
@@ -53,6 +53,7 @@ RBRegexRefactoring >> execute: aString [
 
 { #category : 'private' }
 RBRegexRefactoring >> execute: aString replace: aRegex with: aReadStream [
+	
 	| stream |
 	^ aRegex copy: aString translatingMatchesUsing: [ :match |
 		stream := WriteStream on: (String new: 2 * aString size).
@@ -61,7 +62,14 @@ RBRegexRefactoring >> execute: aString replace: aRegex with: aReadStream [
 			aReadStream atEnd ifFalse: [
 				aReadStream peek isDigit
 					ifFalse: [ stream nextPut: aReadStream next ]
-					ifTrue: [ stream nextPutAll: (aRegex subexpression: aReadStream next asInteger - $0 asInteger + 1) ] ] ].
+					ifTrue: [
+						aRegex subexpressionCount = 2
+							ifTrue: [ stream nextPutAll: (aRegex subexpression: aReadStream next asInteger - $0 asInteger + 1) ] 
+							ifFalse: [ stream nextPutAll: (aRegex subexpression: aReadStream next asInteger - $0 asInteger) ]
+						
+						
+						
+						 ] ] ].
 		aReadStream reset.
 		stream contents ]
 ]

@@ -9,11 +9,6 @@ Class {
 	#tag : 'Extra'
 }
 
-{ #category : 'execution' }
-SycCmCopyClassNameCommand class >> activationStrategy [
-	^ SycExtraMenuActivation
-]
-
 { #category : 'testing' }
 SycCmCopyClassNameCommand >> canBeExecuted [ 
 

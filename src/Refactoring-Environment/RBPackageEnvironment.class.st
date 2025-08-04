@@ -60,6 +60,16 @@ RBPackageEnvironment class >> packages: aCollection [
 		packages: aCollection
 ]
 
+{ #category : 'comparing' }
+RBPackageEnvironment >> = anObject [
+	"Answer whether the receiver and anObject represent the same object."
+
+	self == anObject ifTrue: [ ^ true ].
+	self class = anObject class ifFalse: [ ^ false ].
+	^ environment = anObject environment and: [
+		  packages = anObject packages ]
+]
+
 { #category : 'adding' }
 RBPackageEnvironment >> addPackage: aSymbol [
 	packages add: aSymbol
@@ -103,6 +113,13 @@ RBPackageEnvironment >> classesDo: aBlock [
 { #category : 'testing' }
 RBPackageEnvironment >> definesClass: aClass [
 	^ (super definesClass: aClass) and: [ self packages anySatisfy: [ :package | package includesClass: aClass ] ]
+]
+
+{ #category : 'comparing' }
+RBPackageEnvironment >> hash [
+	"Answer an integer value that is related to the identity of the receiver."
+
+	^ packages hash
 ]
 
 { #category : 'testing' }

@@ -24,6 +24,12 @@ SycMoveMethodsToInstanceSideCommand >> defaultMenuItemName [
 	^'Move to instance side'
 ]
 
+{ #category : 'accessing' }
+SycMoveMethodsToInstanceSideCommand >> description [
+
+	^ 'Move method to the instance side.'
+]
+
 { #category : 'execution' }
 SycMoveMethodsToInstanceSideCommand >> execute [
 

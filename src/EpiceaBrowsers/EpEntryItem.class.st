@@ -7,7 +7,8 @@ Class {
 	#instVars : [
 		'browser',
 		'entry',
-		'triggerItems'
+		'triggerItems',
+		'application'
 	],
 	#category : 'EpiceaBrowsers-UI-Log',
 	#package : 'EpiceaBrowsers',
@@ -17,6 +18,18 @@ Class {
 { #category : 'comparing' }
 EpEntryItem >> = other [
 	^ self species = other species and: [ self entry = other entry ]
+]
+
+{ #category : 'accessing' }
+EpEntryItem >> application [ 
+	^ application
+	
+]
+
+{ #category : 'accessing' }
+EpEntryItem >> application: anApplication [
+
+	application := anApplication
 ]
 
 { #category : 'converting' }
@@ -32,11 +45,6 @@ EpEntryItem >> asMorph [
 	morphs addAll: self commentMorphs.
 
 	^ self morphFactory rowWithAll: morphs
-]
-
-{ #category : 'operations' }
-EpEntryItem >> browseItem [
-	self eventAccept: EpBrowseVisitor new
 ]
 
 { #category : 'accessing' }

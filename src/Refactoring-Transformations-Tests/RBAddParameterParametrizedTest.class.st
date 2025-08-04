@@ -25,7 +25,7 @@ RBAddParameterParametrizedTest >> rbModelForVariableTest [
 
 	| newModel classEnvironment |
 	
-	classEnvironment := RBClassEnvironment classes: { RBClassDataForRefactoringTest . OrderedCollection . RBLintRuleTestData . RBRefactoring . Object}.
+	classEnvironment := RBClassEnvironment classes: { RBClassDataForRefactoringTest . OrderedCollection . RBLintRuleTestData . ReRefactoring . Object}.
 	newModel := self defaultNamespaceClass onEnvironment: classEnvironment.
 	newModel name: 'Test'.
 	
@@ -269,7 +269,7 @@ RBAddParameterParametrizedTest >> testFailureModelBadInitializationCode [
 	newArg := RBArgumentName
 		          name: 'anObject'
 		          value: 'AddParameterRefactoring new'.
-	model removeClassNamed: #RBRefactoring.
+	model removeClassNamed: #ReRefactoring.
 	refactoring := self
 		               createRefactoringWithModel: model
 		               andArguments: {

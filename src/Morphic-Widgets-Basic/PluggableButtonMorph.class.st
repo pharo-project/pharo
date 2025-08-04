@@ -326,7 +326,7 @@ PluggableButtonMorph >> browseAction [
 
 	| classDefiningAction |
 	classDefiningAction := self model class whichClassIncludesSelector: self actionSelector.
-	Smalltalk tools browser openOnClass: classDefiningAction selector: self actionSelector
+	(Smalltalk tools toolNamed: #browser) openOnClass: classDefiningAction selector: self actionSelector
 ]
 
 { #category : 'updating' }

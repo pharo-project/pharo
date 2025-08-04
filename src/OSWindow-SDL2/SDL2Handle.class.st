@@ -26,3 +26,9 @@ SDL2Handle >> ffiLibrary [
 	^ SDL2Library 
 
 ]
+
+{ #category : 'testing' }
+SDL2Handle >> isValid [
+
+	^ handle isNotNil and: [ handle isNull not ]
+]

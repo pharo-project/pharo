@@ -126,3 +126,43 @@ KMDispatcherTest >> testNoStaggeredTrigger [
 	self deny: flag1.
 	self assert: flag2
 ]
+
+{ #category : 'tests' }
+KMDispatcherTest >> testRepeatEvents [
+	| morph flag category pressA repeatPressA pressB repeatPressB pressC |
+	category := KMCategory named: #TestBlah.
+	KMRepository default addCategory: category.
+
+	morph := BorderedMorph new.
+	morph kmDispatcher reset.
+	flag := false.
+
+	category addKeymapEntry: (KMKeymap named: #Foo shortcut: $a asKeyCombination, $b asKeyCombination, $c asKeyCombination action: [flag := true]).
+	morph attachKeymapCategory: #TestBlah.
+
+	pressA := self eventKey: $a.
+	morph kmDispatcher dispatchKeystroke: pressA.
+	self assert: morph kmDispatcher buffer asArray equals: {pressA}.
+	
+	repeatPressA := (self eventKey: $a) isRepeat: true; yourself.
+	morph kmDispatcher dispatchKeystroke: repeatPressA.
+	self assert: morph kmDispatcher buffer asArray equals: {pressA. repeatPressA}.
+	self assert: (morph kmDispatcher buffer asArray collect: [ :v | v isRepeat ]) equals: {false. true}.
+
+	pressB := self eventKey: $b.
+	morph kmDispatcher dispatchKeystroke: pressB.
+	self assert: morph kmDispatcher buffer asArray equals: {pressA. repeatPressA. pressB}.
+	self assert: (morph kmDispatcher buffer asArray collect: [ :v | v isRepeat ]) equals: {false. true. false}.
+
+	repeatPressB := (self eventKey: $b) isRepeat: true; yourself.
+	morph kmDispatcher dispatchKeystroke: repeatPressB.
+	self assert: morph kmDispatcher buffer asArray equals: {pressA. repeatPressA. pressB. repeatPressB}.
+	self assert: (morph kmDispatcher buffer asArray collect: [ :v | v isRepeat ]) equals: {false. true. false. true}.
+
+	pressC := self eventKey: $c.
+	morph kmDispatcher
+		dispatchKeystroke: pressC.
+	self assert: morph kmDispatcher buffer isEmpty.
+
+	self assert: flag
+]

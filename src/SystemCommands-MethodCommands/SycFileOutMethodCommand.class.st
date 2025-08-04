@@ -8,16 +8,16 @@ Class {
 	#package : 'SystemCommands-MethodCommands'
 }
 
+{ #category : 'executing' }
+SycFileOutMethodCommand >> applyCommandResult [
+
+	self methods do: [ :each | each fileOut ]
+]
+
 { #category : 'accessing' }
 SycFileOutMethodCommand >> description [
 
 	^ 'Requests to save a textual version of the selected class to a new file in chunk format and .st extension. Instance and class side methods are both saved'
-]
-
-{ #category : 'executing' }
-SycFileOutMethodCommand >> execute [
-
-	self methods do: [ :each | each fileOut ]
 ]
 
 { #category : 'accessing' }

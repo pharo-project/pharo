@@ -165,14 +165,6 @@ Symbol class >> rawIntern: aStringOrSymbol [
 		  NewSymbols add: aStringOrSymbol createSymbol ]
 ]
 
-{ #category : 'instance creation' }
-Symbol class >> readFrom: strm [
-	"Symbol readFromString: '#abc'"
-
-	strm peek = $# ifFalse: [self error: 'Symbols must be introduced by #'].
-    	^ strm contents parseLiterals first
-]
-
 { #category : 'selector table' }
 Symbol class >> rebuildSelectorTable [
 
@@ -194,6 +186,12 @@ Symbol class >> rehash [
 	SymbolTable := WeakSet withAll: self allSubInstances.
 	NewSymbols := WeakSet new.
 	self resetSelectorTable
+]
+
+{ #category : 'accessing' }
+Symbol class >> reservedLiterals [
+
+	^ PseudoVariable lookupDictionary keys union: #( #nil #true #false )
 ]
 
 { #category : 'cleanup' }
@@ -343,6 +341,25 @@ Symbol >> asAccessor [
 ]
 
 { #category : 'converting' }
+Symbol >> asMethodSignature [
+	"Returns the method signature method name with parameters based on the receiving selector."
+	
+	self numArgs = 0
+		ifTrue: [ ^ self asString ].
+	^ String
+		streamContents: [ :str |
+			| keywords |
+			keywords := self keywords.
+			keywords
+				doWithIndex: [ :each :index |
+					str
+						nextPutAll: each;
+						nextPutAll: ' var';
+						nextPutAll: index asString.
+					index = keywords size ifFalse: [ str space ] ] ]
+]
+
+{ #category : 'converting' }
 Symbol >> asMutator [
 	"Return a setter message from a getter message.
 	Return self if it is already a setter.
@@ -466,7 +483,14 @@ Symbol >> isOrientedFill [
 
 { #category : 'testing' }
 Symbol >> isSelectorSymbol [
-	^ self class selectorTable includes: self
+
+	self deprecated:  'Use isUsedAsSelectorSymbol'
+		on: '02/02/2025' 
+		in:  'pharo13'
+		transformWith: 
+			'`@rec isSelectorSymbol' -> '`@rec isUsedAsSelectorSymbol'.
+
+	^ self isUsedAsSelectorSymbol
 ]
 
 { #category : 'testing' }
@@ -483,6 +507,14 @@ Symbol >> isUnary [
 	"#between:and: isUnary >>> false"
 
 	^ self precedence = 1
+]
+
+{ #category : 'testing' }
+Symbol >> isUsedAsSelectorSymbol [
+	"Returns whether the receiver is currently used as a method selector.
+	Notice that a symbol representing a valid method selector could return false if there are no method installed with such selector."
+	
+	^ self class selectorTable includes: self
 ]
 
 { #category : 'sorting' }

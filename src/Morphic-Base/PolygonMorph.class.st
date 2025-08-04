@@ -1920,6 +1920,12 @@ PolygonMorph >> scale: scaleFactor [
 	super scale: scaleFactor
 ]
 
+{ #category : 'geometry' }
+PolygonMorph >> scaleFactor [
+
+	^ 1.0
+]
+
 { #category : 'cubic support' }
 PolygonMorph >> segmentedSlopesOf: knots [
 	"For a collection of floats. Returns the slopes for straight

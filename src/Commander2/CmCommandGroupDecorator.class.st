@@ -27,6 +27,12 @@ CmCommandGroupDecorator >> commandOrGroupNamed: aString [
 ]
 
 { #category : 'public-api' }
+CmCommandGroupDecorator >> commandOrGroupNamed: aString ifFound: aBlock [
+
+	^ self decoratedGroup commandOrGroupNamed: aString ifFound: aBlock
+]
+
+{ #category : 'public-api' }
 CmCommandGroupDecorator >> commands [
 	^ self decoratedGroup commands
 ]

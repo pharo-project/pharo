@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFClassReification class >> entities [
-	^{ASTProgramNode. Variable}
+	^{OCProgramNode. Variable}
 ]
 
 { #category : 'plugin interface' }
@@ -36,7 +36,7 @@ RFClassReification >> genForLiteralVariable [
 
 { #category : 'generate' }
 RFClassReification >> generate [
-	^ASTMessageNode
-		receiver: ASTVariableNode selfNode
+	^OCMessageNode
+		receiver: OCVariableNode selfNode
 		selector: #class
 ]

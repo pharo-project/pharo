@@ -31,7 +31,7 @@ MockLessonView >> showLesson: aLesson withTitle: aString [
 
 { #category : 'gui' }
 MockLessonView >> showTutorialNode: aTutorialNode [
-	lesson:= aTutorialNode lessonInstance.
+	lesson:= aTutorialNode lessons first.
 	title := aTutorialNode title
 ]
 

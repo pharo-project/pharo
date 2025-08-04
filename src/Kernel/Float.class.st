@@ -199,11 +199,13 @@ Float class >> initialize [
 	E := 2.718281828459045235360287471353.
 
 	"Defines precision of approximated mathematical functions such as trigonometric functions.
-	Use a small enough epsilon value to make approximations as good as possible."
+	Use a small enough epsilon value to make approximations as good as possible.
+	This one should probably be removed and we should use DefaultComparisionValue but I'm not sure it's that simple to remove a class var of Float."
 	MathApproximationEpsilon := 0.000000000001.
-	
-	"Default precision used for comparing two float numbers"
-	DefaultComparisonPrecision := 0.0001.
+
+	"Default precision used for comparing two float numbers.
+	Using value described in Numerical Recipes, 3rd edition, Section 5.7, which is pages 229-230 corresponding to the square root of the machine epsilon"
+	DefaultComparisonPrecision :=  1.4901161193847656e-8. "This is the result of `self machineEpsilon sqrt ` but the bootstrap does not work if we do not put the constant directly. This is due to the fact that #sqrt is loaded after this value is initialized."
 
 	MaxVal := 1.7976931348623157e308.
 	MaxValLn := 709.782712893384.

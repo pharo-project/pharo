@@ -42,6 +42,12 @@ SycAddNewPackageCommand >> defaultMenuItemName [
 	^'New package'
 ]
 
+{ #category : 'accessing' }
+SycAddNewPackageCommand >> description [
+
+	^ 'Adds a new package into the system.'
+]
+
 { #category : 'execution' }
 SycAddNewPackageCommand >> execute [
 

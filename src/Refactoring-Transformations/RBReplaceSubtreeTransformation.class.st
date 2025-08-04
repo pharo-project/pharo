@@ -2,14 +2,16 @@
 Replaces a piece of code by another in a method. Internally, this transformation replaces the corresponding subtrees, so they have to be syntactically correct.
 
 Usage:
+```
 | transformation |
 transformation := (RBReplaceSubtreeTransformation
 		replace: 'selector := aSelector'
 		to: '^ selector'
 		inMethod: #selector:from:
 		inClass: #RBRemoveMethodTransformation)
-		transform.
-(ChangesBrowser changes: transformation model changes changes) open
+		generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 "
 Class {
 	#name : 'RBReplaceSubtreeTransformation',

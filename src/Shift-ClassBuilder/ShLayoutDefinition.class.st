@@ -104,13 +104,21 @@ ShLayoutDefinition >> slots: anObject [
 { #category : 'validating' }
 ShLayoutDefinition >> validate [
 
-	| slotNames classSlotNames |
+	| slotNames classSlotNames superclassSlots superclassClassSlots |
 	builder oldClass ifNil: [ ^ self ].
+	
+	superclassSlots := #(). 
+	superclassClassSlots := #().
+	
+	builder superclass 
+		ifNotNil: [:aSuperclass| 
+			superclassSlots := aSuperclass allSlots.
+			superclassClassSlots := aSuperclass class allSlots].
 
-	slotNames := slots collect: [ :e | e name ].
-	classSlotNames := classSlots collect: [ :e | e name ].
+	slotNames := (superclassSlots , slots) collect: [ :e | e name ].
+	classSlotNames := (superclassClassSlots , classSlots) collect: [ :e | e name ].
 
-	builder oldClass subclassesDo: [ :aSubclass |
+	builder oldClass allSubclassesDo: [ :aSubclass |
 		aSubclass slots do: [ :anotherSlot |
 			(slotNames includes: anotherSlot name) ifTrue: [
 				DuplicatedSlotName new
@@ -120,7 +128,7 @@ ShLayoutDefinition >> validate [
 						signal
 			] ]	 ].
 
-	builder oldClass subclassesDo: [ :aSubclass |
+	builder oldClass allSubclassesDo: [ :aSubclass |
 		aSubclass class slots do: [ :anotherSlot |
 			(classSlotNames includes: anotherSlot name) ifTrue: [
 				DuplicatedSlotName new

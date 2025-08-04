@@ -71,7 +71,7 @@ RBInlineMethodRefactoring >> addTemporary: sourceNode assignedTo: replacementNod
 	newName := self renameConflictingTemporary: sourceNode name.
 	(inlineParseTree body)
 		addTemporaryNamed: newName;
-		addNodeFirst: (ASTAssignmentNode variable: (ASTVariableNode named: newName)
+		addNodeFirst: (OCAssignmentNode variable: (OCVariableNode named: newName)
 					value: replacementNode)
 ]
 
@@ -244,7 +244,7 @@ RBInlineMethodRefactoring >> inlineSourceReplacing: aParseTree [
 		addNodes: (statements copyFrom: 1 to: (statements size - 1 max: 0)) before: nodeUnderSequence;
 		addTemporariesNamed: inlineParseTree body temporaryNames.
 	aParseTree parent replaceNode: aParseTree withNode: (statements isEmpty
-			 ifTrue: [ ASTVariableNode selfNode ]
+			 ifTrue: [ OCVariableNode selfNode ]
 			 ifFalse: [ statements last ])
 ]
 
@@ -287,7 +287,7 @@ RBInlineMethodRefactoring >> moveComments [
 							source := source
 										, (inlineParseTree source copyFrom: aComment start to: aComment stop).
 							sourceParseTree source: source.
-							ASTCommentNode with: aComment contents at: start])]
+							OCCommentNode with: aComment contents at: start])]
 ]
 
 { #category : 'transforming' }

@@ -9,39 +9,27 @@ Class {
 { #category : 'tests' }
 ReKeysDoRuleTest >> testRuleNotViolatedWithKeys [
 
-	| critiques | 
-	self class compile: 'method: aDictionnary aDictionnary keysDo: [ :key | key ] ' classified: 'test-helper'.
-	
-	[ critiques := self myCritiquesOnMethod: self class >> #method:.
-	self assertEmpty: critiques ] ensure: [ (self class >> #method:) removeFromSystem ]
+	self generateMethod: 'method: aDictionnary aDictionnary keysDo: [ :key | key ] '.
+	self assertEmpty: (self myCritiquesOnMethod: self class >> #method:)
 ]
 
 { #category : 'tests' }
 ReKeysDoRuleTest >> testRuleNotViolatedWithValues [
 
-	| critiques | 
-	self class compile: 'method: aDictionnary aDictionnary valuesDo: [ :key | key ] ' classified: 'test-helper'.
-	
-	[ critiques := self myCritiquesOnMethod: self class >> #method:.
-	self assertEmpty: critiques ] ensure: [ (self class >> #method:) removeFromSystem ]
+	self generateMethod: 'method: aDictionnary aDictionnary valuesDo: [ :key | key ] '.
+	self assertEmpty: (self myCritiquesOnMethod: self class >> #method:)
 ]
 
 { #category : 'tests' }
 ReKeysDoRuleTest >> testRuleWithKeys [
 
-	| critiques | 
-	self class compile: 'method: aDictionnary aDictionnary keys do: [ :key | key ] ' classified: 'test-helper'.
-	
-	[ critiques := self myCritiquesOnMethod: self class >> #method:.
-	self assert: critiques size equals: 1 ] ensure: [ (self class >> #method:) removeFromSystem ]
+	self generateMethod: 'method: aDictionnary aDictionnary keys do: [ :key | key ] '.
+	self assert: (self myCritiquesOnMethod: self class >> #method:) size equals: 1
 ]
 
 { #category : 'tests' }
 ReKeysDoRuleTest >> testRuleWithValues [
 
-	| critiques | 
-	self class compile: 'method: aDictionnary aDictionnary values do: [ :key | key ] ' classified: 'test-helper'.
-	
-	[ critiques := self myCritiquesOnMethod: self class >> #method:.
-	self assert: critiques size equals: 1 ] ensure: [ (self class >> #method:) removeFromSystem ]
+	self generateMethod: 'method: aDictionnary aDictionnary values do: [ :key | key ] '.
+	self assert: (self myCritiquesOnMethod: self class >> #method:) size equals: 1
 ]

@@ -209,21 +209,6 @@ SequenceableCollection >> asDigitsToPower: anInteger do: aBlock [
 	self asDigitsAt: 1 in: aCollection do: aBlock
 ]
 
-{ #category : 'converting' }
-SequenceableCollection >> asStringWithCr [
-	"Convert to a string with returns between items.  Elements are
-usually strings.
-	 Useful for labels for PopUpMenus."
-	| labelStream |
-	labelStream := (String new: 200) writeStream.
-	self do: [:each |
-		each isString
-			ifTrue: [labelStream nextPutAll: each; cr]
-			ifFalse: [each printOn: labelStream. labelStream cr]].
-	self size > 0 ifTrue: [labelStream skip: -1].
-	^ labelStream contents
-]
-
 { #category : 'accessing' }
 SequenceableCollection >> at: index ifAbsent: exceptionBlock [
 	"Answer the element at my position index. If I do not contain an element
@@ -398,17 +383,6 @@ SequenceableCollection >> beginsWith: aSequenceableCollection [
 SequenceableCollection >> beginsWithAnyOf: aCollection [
 	"Return true if the receiver starts with any of the elements in aCollection."
 	^aCollection anySatisfy:[:prefix| self beginsWith: prefix]
-]
-
-{ #category : 'enumerating' }
-SequenceableCollection >> bind: aBlock [
-
-	"Extract items from the receiver and use them as arguments of aBlock. Signal an error
-	(ArgumentsCountMismatch) when the arguments count of aBlock does not match the receiver size."
-
-	"(#(1 2 3) bind: [ :first :second :third | first + second + third ]) >>> 6"
-
-	^ aBlock valueWithArguments: self
 ]
 
 { #category : 'enumerating' }

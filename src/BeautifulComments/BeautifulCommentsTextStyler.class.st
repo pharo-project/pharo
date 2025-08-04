@@ -16,10 +16,3 @@ Class {
 BeautifulCommentsTextStyler >> headerFontSizes [
 	^ #(18 16 14 12 11 10)
 ]
-
-{ #category : 'composer styles' }
-BeautifulCommentsTextStyler >> postTextTreatment: aText [
-	"See comment in superclass - keep newlines in paragraphs"
-	^ aText
-	 
-]

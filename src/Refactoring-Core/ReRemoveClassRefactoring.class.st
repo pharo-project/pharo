@@ -7,7 +7,7 @@ If this class is ""empty"" (has no methods and no variables), any subclass is re
 "
 Class {
 	#name : 'ReRemoveClassRefactoring',
-	#superclass : 'RBRefactoring',
+	#superclass : 'ReRefactoring',
 	#instVars : [
 		'classNames',
 		'classesDictionary'
@@ -82,7 +82,9 @@ ReRemoveClassRefactoring >> environmentWithUsersOf: aClassable [
 { #category : 'preconditions' }
 ReRemoveClassRefactoring >> preconditionAreNotMeta [
 
-	^ ReClassesAreNotMetaClassCondition new classes: classesDictionary
+	^ ReClassesAreNotMetaClassCondition new 
+			classes: classesDictionary ; 
+			message: 'Metaclasses can be removed. Remove their class.'
 ]
 
 { #category : 'preconditions' }

@@ -3,7 +3,7 @@ I'm a model for user interaction for the rename method refactoring.
 "
 Class {
 	#name : 'ReRenameMethodDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'class',
 		'originalMessage',
@@ -33,7 +33,7 @@ ReRenameMethodDriver >> browseOverrides [
 	| overrides |
 	overrides := refactoring violations.
 	StMessageBrowser
-		browse: (overrides collect: [ :ref | ref realClass methodNamed: newMessage selector ])
+		browse: (overrides collect: [ :ref | ref realClass lookupSelector: newMessage selector ])
 		asImplementorsOf: newMessage selector
 ]
 
@@ -85,7 +85,7 @@ ReRenameMethodDriver >> configureRefactoring [
 { #category : 'configuration' }
 ReRenameMethodDriver >> defaultSelectDialog [ 
 
-	^ SpSelectDialog new
+	^ self class defaultSelectDialog
 		    title: 'There are potential breaking changes!';
 		          label: 'Watchout potential override detected!';
 		          items: self breakingChoices;
@@ -123,6 +123,7 @@ ReRenameMethodDriver >> methodNameEditorPresenterClass: aClass [
 
 { #category : 'initialization' }
 ReRenameMethodDriver >> model: aModel renameMethodSignature: aMessage in: aClass [ 
+
 	model := aModel.
 	originalMessage := aMessage.
 	"while we could think that the class is not needed, it is because a rename should not override existing methods."
@@ -155,11 +156,30 @@ ReRenameMethodDriver >> requestDialogWith: methodName [
 { #category : 'interaction' }
 ReRenameMethodDriver >> requestNewMessage [
 
-	| methodName dialog  |
+	| methodName dialog parameters |
 	
+	"when we rename from a method list or clicking on the method signature in the method body
+	the parameters passed to the refactoring are ok. 
+	Now when the user selected a call site the arguments make no sense.
+	"
+	parameters := originalMessage argumentNames.
+	
+	
+	"We need a nice way to know whether a piece of code is an identifier
+	parametersAreWrong := parameters anySatisfy: [ :each | (RBScanner on: each readStream) scanToken isIdentifier not ].
+	parametersAreWrong .... Like that we could make the difference 
+	bewteeen rename from call site and rename from method signature. "
+							
+	"For now always use the one of an implementor that is not necessarily 
+	the one of method - this can happen that we rename a method clicking clickin on its signature
+	and in this case we may have different parameters. "										
+	parameters := originalMessage selector implementors 
+							ifNotEmpty: [:m | m first  argumentNames ]
+							ifEmpty: [ refactoring buildParamtersForSelector: originalMessage selector ].										
+											
 	methodName := RBMethodName
 		              selector: originalMessage selector
-		              arguments: originalMessage argumentNames.
+		              arguments: parameters.
 	dialog := self requestDialogWith: methodName.
 	
 	dialog ifNil: [ shouldEscape := true. ^ self ].
@@ -171,32 +191,29 @@ ReRenameMethodDriver >> requestNewMessage [
 ReRenameMethodDriver >> runRefactoring [
 
 	| failedConditions |
+		
 	self configureRefactoring.
-	[ newMessage := self requestNewMessage.
-	"note that it would be better to pass a method name to the refactoring instead of splitting the arguments this way"
-	refactoring newSelector: newMessage selector; permutation: newMessage permutation.
-	"If the name is the same then there is no need to perform the refactoring 
-	and in such case we can just escape."
-	refactoring newNameDoesNotRequireRefactoringPrecondition check
-		ifTrue: [ ^ self ].
-	shouldEscape ifTrue: [ ^ self ].
-	failedConditions := refactoring failedApplicabilityPreconditions.
-	failedConditions isEmpty ]
-		whileFalse: [
-			failedConditions do: [ :cond |
-				"We need to mockify it"
-				self informDialog
-					label: cond errorString;
-					title: 'Invalid method name';
-					openModal ] ].
-	
-	refactoring areNamesTheSame ifTrue: [ ^ self ].
 
-	"names are different so we should check because this is not a permutation" 
+	failedConditions := OrderedCollection empty.	
+	[ 
+		newMessage := self requestNewMessage.
+		self configureMessage.
+		
+		refactoring isMethodDefinitionUnchanged ifTrue: [ ^ self ].
+		shouldEscape ifTrue: [ ^ self ]. "What is the use of this variable: shouldEscape?"
+		
+		failedConditions := refactoring failedApplicabilityPreconditions.
+		failedConditions do: [ :cond |
+			self informDialog
+				label: cond errorString;
+				title: 'Invalid method name';
+				openModal 
+		].
+	
+	] doWhileFalse: [	failedConditions isEmpty ].
+
 	refactoring failedBreakingChangePreconditions 
-		ifEmpty: [ 	
-			self configureMessage.
-			self applyChanges ]
+		ifEmpty: [ self applyChanges ]
 		ifNotEmpty: [ self handleBreakingChanges ]
 
 ]

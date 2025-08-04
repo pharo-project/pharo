@@ -45,6 +45,12 @@ ClyShowVariableWriterCommand >> defaultMenuItemName [
 	^'Writers'
 ]
 
+{ #category : 'accessing' }
+ClyShowVariableWriterCommand >> description [
+
+	^ 'Show all variable writers.'
+]
+
 { #category : 'execution' }
 ClyShowVariableWriterCommand >> execute [
 

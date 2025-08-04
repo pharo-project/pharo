@@ -45,10 +45,25 @@ And I implement simplified search requests:
 Class {
 	#name : 'ClySystemBrowserContext',
 	#superclass : 'ClyBrowserContext',
+	#classVars : [
+		'RememberedPackage'
+	],
 	#category : 'Calypso-SystemTools-Core-Contexts',
 	#package : 'Calypso-SystemTools-Core',
 	#tag : 'Contexts'
 }
+
+{ #category : 'accessing - packages' }
+ClySystemBrowserContext class >> rememberedPackage [
+
+	^ RememberedPackage ifNil: [ RememberedPackage := nil ]
+]
+
+{ #category : 'accessing - packages' }
+ClySystemBrowserContext class >> rememberedPackage: aPackage [
+
+	RememberedPackage := aPackage
+]
 
 { #category : 'user requests' }
 ClySystemBrowserContext >> confirmUnusedVariablesInDefiningClass: variables [
@@ -184,9 +199,14 @@ ClySystemBrowserContext >> requestSingleClass: queryTitle from: classCollection 
 { #category : 'user requests' }
 ClySystemBrowserContext >> requestSinglePackage: queryTitle [
 
-	^ StBrowserSearchPresenter searchConfiguring: [ :presenter :dialog |
-		  dialog title: queryTitle.
-		  presenter items: (self browser itemsForQuery: ClyAllPackagesQuery sorted) ]
+	| selectedPackage |
+	selectedPackage := StBrowserSearchPresenter searchConfiguring: [ :presenter :dialog |
+		                   dialog title: queryTitle.
+		                   presenter items: (self browser itemsForQuery: ClyAllPackagesQuery sorted).
+		                   self class rememberedPackage ifNotNil: [ presenter searchWithItem: self class rememberedPackage ] ].
+
+	self class rememberedPackage: selectedPackage.
+	^ selectedPackage
 ]
 
 { #category : 'selection-classes' }

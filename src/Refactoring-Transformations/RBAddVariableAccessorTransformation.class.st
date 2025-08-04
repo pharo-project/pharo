@@ -2,13 +2,15 @@
 Adds accessors (getter and setter) for a variable in a class, if they do not exist.
 
 Usage:
+```
 | transformation |
 transformation := (RBAddVariableAccessorTransformation
 	variable: 'variableName'
 	class: #RBVariableTransformation
 	classVariable: false)
-	transform.
-(ChangesBrowser changes: transformation model changes changes) open
+		generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 - the variable with which the accessors will be created shall exist. The parameter isClassVariable indicates whether to look in the instance or class variables.
@@ -99,25 +101,6 @@ RBAddVariableAccessorTransformation >> privateTransform [
 	self
 		createGetterAccessor;
 		createSetterAccessor
-]
-
-{ #category : 'private' }
-RBAddVariableAccessorTransformation >> safeMethodNameFor: aClass basedOn: aString [
-	"Creates an unused method name containing aString"
-
-	| baseString newString hasParam i |
-	baseString := aString copy.
-	baseString at: 1 put: baseString first asLowercase.
-	newString := baseString.
-	hasParam := newString last = $:.
-	hasParam
-		ifTrue: [baseString := newString copyFrom: 1 to: newString size - 1].
-	i := 0.
-	[aClass hierarchyDefinesMethod: newString asSymbol] whileTrue:
-			[i := i + 1.
-			newString := baseString , i printString
-						, (hasParam ifTrue: [':'] ifFalse: [''])].
-	^newString asSymbol
 ]
 
 { #category : 'private' }

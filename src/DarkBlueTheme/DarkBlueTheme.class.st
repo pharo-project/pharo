@@ -34,6 +34,20 @@ DarkBlueTheme >> buttonNormalBorderStyleFor: aButton [
 		baseColor: self buttonColor darker
 ]
 
+{ #category : 'initialization' }
+DarkBlueTheme >> defaultSettings [
+
+	^ super defaultSettings
+		  menuSelectionTextColor: Color white twiceDarker;
+		  yourself
+]
+
+{ #category : 'fill-styles' }
+DarkBlueTheme >> progressBarProgressFillColor [
+
+	^ self lightSelectionColor twiceLighter 
+]
+
 { #category : 'accessing' }
 DarkBlueTheme >> shStyleTableName [
 

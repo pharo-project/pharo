@@ -13,7 +13,7 @@ Class {
 SimulateKeystrokesTest >> testSimulateCmdKeystroke [
 
 	| ws |
-	ws := Smalltalk tools workspace open.
+	ws := (Smalltalk tools toolNamed: #workspace) open.
 	self simulateKeyStrokes: 'var := 3.' inWorld: ws world.
 	self simulateKeyStroke: $s meta inWorld: ws world.
 	self assert: ws hasUnacceptedEdits equals:false.

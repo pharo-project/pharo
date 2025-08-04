@@ -60,10 +60,3 @@ MetacelloVersionLoadDirective >> printOn: aStream indent: indent [
 		aStream cr.
 		each printOn: aStream indent: indent + 1 ]
 ]
-
-{ #category : 'accessing' }
-MetacelloVersionLoadDirective >> spec [
-	"Expected to be a MetacelloVersionSpec"
-
-	^ spec
-]

@@ -178,9 +178,10 @@ MczInstaller >> installMember: member [
 
 { #category : 'utilities' }
 MczInstaller >> parseMember: memberOrName [
+
 	| member tokens |
 	member := self zip member: memberOrName.
-	tokens := (self contentsForMember: member) parseLiterals first.
+	tokens := (OCParser parseLiterals: (self contentsForMember: member)) first.
 	^ self associate: tokens
 ]
 

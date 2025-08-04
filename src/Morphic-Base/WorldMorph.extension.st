@@ -29,9 +29,6 @@ WorldMorph >> dispatchKeystroke: anEvent [
 
 	(self navigationKey: anEvent) ifTrue: [^self].
 
-	anEvent commandKeyPressed
-		ifTrue: [^ self dispatchCommandKeyInWorld: aChar event: anEvent].
-
 	"It was unhandled. Remember the keystroke."
 	self lastKeystroke: anEvent keyString.
 	self triggerEvent: #keyStroke.

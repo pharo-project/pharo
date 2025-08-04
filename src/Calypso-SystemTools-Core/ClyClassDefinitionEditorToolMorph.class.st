@@ -19,13 +19,13 @@ ClyClassDefinitionEditorToolMorph >> applyChanges [
 	code := self pendingText.
 
 	"The next line are here for the compatibility with the old class definition."
-	ast := RBParser parseFaultyExpression: code.
+	ast := OCParser parseFaultyExpression: code.
 	(OldClassDefinitionBuilder isOldClassCreation: ast) ifTrue: [
 		Warning signal:
 			'The class definition used is the old Pharo class definition. Now the Fluid class definition should be used. Check the comment of ShiftClassBuilder to know the syntax.'.
 		^ self applyChangesAsOldClassDefinition: ast ].
 
-	^ (code asString lines first includesSubstring: '<<')
+	^ (self codeLooksLikeAClassDefinition: code)
 		  ifTrue: [ self applyChangesAsClassDefinition ]
 		  ifFalse: [
 			  self pendingText: code copy. "no idea why we have to copy"
@@ -77,6 +77,12 @@ ClyClassDefinitionEditorToolMorph >> applyChangesAsOldClassDefinition: ast [
 	^ true
 ]
 
+{ #category : 'operations' }
+ClyClassDefinitionEditorToolMorph >> codeLooksLikeAClassDefinition: code [
+
+	^ code isEmpty or: [ code asString lines first includesSubstring: '<<' ]
+]
+
 { #category : 'to sort' }
 ClyClassDefinitionEditorToolMorph >> createTextContext [
 	^self selectedSourceNode
@@ -114,6 +120,11 @@ ClyClassDefinitionEditorToolMorph >> editingText [
 ClyClassDefinitionEditorToolMorph >> isCommandAvailable: aCommand [
 
 	^ aCommand canBeExecutedInClassEditor: self
+]
+
+{ #category : 'rubric interaction model' }
+ClyClassDefinitionEditorToolMorph >> isScripting [
+	^ self codeLooksLikeAClassDefinition: self pendingText.
 ]
 
 { #category : 'to sort' }

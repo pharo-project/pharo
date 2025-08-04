@@ -33,6 +33,12 @@ FFIFunctionArgument >> emitArgument: anIRBuilder context: aContext inCallout: aC
 	self resolvedType emitArgument: anIRBuilder context: aContext inCallout: aCallout
 ]
 
+{ #category : 'emitting code' }
+FFIFunctionArgument >> emitResolvedTypeArgument: anIRBuilder context: aContext inCallout: aCallout [
+
+	self resolvedType emitArgument: anIRBuilder context: aContext inCallout: aCallout
+]
+
 { #category : 'resolution' }
 FFIFunctionArgument >> emitReturnArgument: anIRBuilder context: aContext [
 

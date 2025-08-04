@@ -173,7 +173,7 @@ FFIFunctionResolutionTest >> testResolveConstantFalseShouldSetConstantZeroLoader
 		yourself.
 
 	argument resolveUsing: FFICallout new.
-	argument loader emitArgument: self context: nil inCallout: nil.
+	argument emitArgument: self context: nil inCallout: nil.
 
 	self assert: stack pop equals: { #literal . 0 }
 ]
@@ -200,7 +200,7 @@ FFIFunctionResolutionTest >> testResolveConstantIntegerShouldSetConstantLoader [
 		yourself.
 
 	argument resolveUsing: FFICallout new.
-	argument loader emitArgument: self context: nil inCallout: nil.
+	argument  emitResolvedTypeArgument: self context: nil inCallout: nil.
 
 	self assert: stack pop equals: { #literal . 1}
 ]
@@ -228,7 +228,7 @@ FFIFunctionResolutionTest >> testResolveConstantNULLShouldSetConstantNullLoader 
 		yourself.
 
 	argument resolveUsing: FFICallout new.
-	argument loader emitArgument: self context: nil inCallout: nil.
+	argument emitArgument: self context: nil inCallout: nil.
 
 	self assert: stack pop equals: { #literal . ExternalAddress null}
 ]
@@ -256,7 +256,7 @@ FFIFunctionResolutionTest >> testResolveConstantNilShouldSetConstantNullLoader [
 		yourself.
 
 	argument resolveUsing: FFICallout new.
-	argument loader emitArgument: self context: nil inCallout: nil.
+	argument emitArgument: self context: nil inCallout: nil.
 
 	self assert: stack pop equals: { #literal . ExternalAddress null }
 ]
@@ -326,14 +326,16 @@ FFIFunctionResolutionTest >> testResolveConstantSelfStringInStrictResolverFails 
 { #category : 'tests' }
 FFIFunctionResolutionTest >> testResolveConstantSelfStringShouldSetConstantLoader [
 
-	| argument |
+	| argument callout |
 	argument := FFIConstantArgument new
 		value: 'self';
 		type: (FFITypeDeclaration typeName: 'char' arity: 1);
 		yourself.
 
-	argument resolveUsing: FFICallout new.
-	argument loader emitArgument: self context: nil inCallout: nil.
+	callout := FFICallout new.
+
+	argument resolveUsing: callout.
+	argument emitArgument: self context: nil inCallout: callout.
 
 	self assert: stack pop equals: { #literal . 'self' }
 ]
@@ -364,7 +366,7 @@ FFIFunctionResolutionTest >> testResolveConstantTrueShouldSetConstantOneLoader [
 		yourself.
 
 	argument resolveUsing: FFICallout new.
-	argument loader emitArgument: self context: nil inCallout: nil.
+	argument emitArgument: self context: nil inCallout: nil.
 
 	self assert: stack pop equals: { #literal . 1 }
 ]

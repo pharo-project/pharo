@@ -31,7 +31,7 @@ ReRemoveSharedVariableRefactoring class >> remove: variable from: class [
 ReRemoveSharedVariableRefactoring >> applicabilityPreconditions [
 
 	^ {
-		  (ReIsNotAMetaclass class: class).
+		  (ReClassesAreNotMetaClassCondition new classes: { class }).
 		  (ReDirectlyDefinesSharedVariableCondition
 			   class: class
 			   sharedVariables: { variableName }) }

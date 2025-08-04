@@ -43,9 +43,7 @@ ReEquivalentSuperclassMethodsRule >> basicCheck: aMethod [
 
 	(self ignoredSelectors includes: aMethod selector) ifTrue: [ ^ false ].
 
-	^ aMethod overriddenMethod
-		  ifNotNil: [ :overridenMethod | aMethod equivalentTo: overridenMethod ]
-		  ifNil: [ false ]
+	^ aMethod hasEquivalentMethodInSuperclass
 ]
 
 { #category : 'accessing' }

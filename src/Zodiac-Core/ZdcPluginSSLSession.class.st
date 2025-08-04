@@ -86,7 +86,8 @@ ZdcPluginSSLSession >> destroy [
 
 	handle ifNil: [ ^ self ].
 	self primitiveSSLDestroy: handle.
-	handle := nil
+	handle := nil.
+	FinalizationRegistry default remove: self ifAbsent: [ ]
 ]
 
 { #category : 'initialization' }
@@ -103,15 +104,26 @@ ZdcPluginSSLSession >> encrypt: srcBuf from: start to: stop into: dstBuf [
 	^ self primitiveSSL: handle encrypt: srcBuf startingAt: start count: stop - start + 1 into: dstBuf
 ]
 
+{ #category : 'finalization' }
+ZdcPluginSSLSession >> finalize [ 
+	
+	self destroy
+]
+
 { #category : 'initialization' }
 ZdcPluginSSLSession >> initialize [
 	"Initialize the receiver"
+
+	super initialize.
 
 	[ handle := self primitiveSSLCreate ]
 		on: PrimitiveFailed
 		do: [ :exception |
 			"Give a more human friendly error message"
 			ZdcPluginMissing signal ].
+	
+	FinalizationRegistry default add: self.
+	
 	self logging: false
 ]
 

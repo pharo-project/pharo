@@ -13,13 +13,13 @@ MCTraitDefinition >> = aDefinition [
 
 	self flag: #traits. "Ugly we harcoded the super superclass method.  We will have to refactor the definition hierarchy"
 
-	^ (aDefinition isKindOf: MCDefinition) and: [
-		  (self isRevisionOf: aDefinition) and: [
-			  self traitCompositionString = aDefinition traitCompositionString and: [
-				  self classTraitCompositionString = aDefinition classTraitCompositionString and: [
-					  self category = aDefinition category and: [
-						  self slotDefinitionString = aDefinition slotDefinitionString and: [
-							  self classInstVarNames = aDefinition classInstVarNames and: [ comment = aDefinition comment ] ] ] ] ] ] ]
+	^ self class = aDefinition class and: [
+			  (self isRevisionOf: aDefinition) and: [
+					  self traitCompositionString = aDefinition traitCompositionString and: [
+							  self classTraitCompositionString = aDefinition classTraitCompositionString and: [
+									  self category = aDefinition category and: [
+											  self slotDefinitionString = aDefinition slotDefinitionString and: [
+												  self classInstVarNames = aDefinition classInstVarNames and: [ comment = aDefinition comment ] ] ] ] ] ] ]
 ]
 
 { #category : 'visiting' }
@@ -43,7 +43,7 @@ MCTraitDefinition >> classSlotDefinitionString [
 ]
 
 { #category : 'installing' }
-MCTraitDefinition >> createClass [
+MCTraitDefinition >> createClassInEnvironment: anEnvironent [
 
 	^ [
 	  self class classInstaller make: [ :aBuilder |
@@ -56,7 +56,8 @@ MCTraitDefinition >> createClass [
 			  package: self packageName;
 			  tag: self tagName;
 			  comment: comment stamp: commentStamp;
-			  beTrait ] ]
+			  beTrait.
+			anEnvironent ifNotNil: [ aBuilder environment: anEnvironent ] ] ]
 		  on: Warning , DuplicatedVariableError
 		  do: [ :ex | ex resume ]
 ]
@@ -119,7 +120,7 @@ MCTraitDefinition >> requirements [
 	self hasTraitComposition
 		ifFalse: [ ^ #() ].
 
-	^ (((RBParser parseExpression: self traitCompositionString)
+	^ (((OCParser parseExpression: self traitCompositionString)
 		allChildren select: [ :e | e isVariable ])
 		collect: [ :e | e name ]
 		as: Set) asArray

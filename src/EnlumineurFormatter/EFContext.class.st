@@ -142,6 +142,7 @@ EFContext >> initialize [
   newLineBeforeFirstCascade := true.
   newLineBeforeFirstKeyword := true.
   numberOfNewLinesAfterMethodComment := 2.
+  newLinesAfterMethodSignatureWithMethodComment := 1.
   newLinesAfterMethodSignature := 2.
   newLinesAfterTemporaries := 1.
   numberOfArgumentsForMultiLine := 4.

@@ -33,11 +33,6 @@ PseudoVariable class >> variableName [
 ]
 
 { #category : 'converting' }
-PseudoVariable >> asDoItVariableFrom: aContext [
-	^ DoItVariable fromContext: aContext variable: self
-]
-
-{ #category : 'converting' }
 PseudoVariable >> asString [
 
 	^ self name

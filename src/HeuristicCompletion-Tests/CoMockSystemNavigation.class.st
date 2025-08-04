@@ -8,9 +8,9 @@ Class {
 		'globals',
 		'selectors'
 	],
-	#category : 'HeuristicCompletion-Tests-Core',
+	#category : 'HeuristicCompletion-Tests-Mocks',
 	#package : 'HeuristicCompletion-Tests',
-	#tag : 'Core'
+	#tag : 'Mocks'
 }
 
 { #category : 'query' }
@@ -43,6 +43,12 @@ CoMockSystemNavigation >> globals [
 { #category : 'accessing' }
 CoMockSystemNavigation >> globals: anObject [
 	globals := anObject
+]
+
+{ #category : 'accessing' }
+CoMockSystemNavigation >> keys [ 
+	"because sometimes we have to extract the keys of the global environment so the Mock should expose the same API."
+	^ globals
 ]
 
 { #category : 'accessing' }

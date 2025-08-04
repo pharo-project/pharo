@@ -224,7 +224,7 @@ RBTransformationRuleTestData class >> nuke [
 { #category : 'instance creation' }
 RBTransformationRuleTestData class >> rewrite: stringArrays methods: aBoolean name: aName [
 	| rewriteRule |
-	rewriteRule := ASTParseTreeRewriter new.
+	rewriteRule := OCParseTreeRewriter new.
 	stringArrays do:
 			[:each |
 			aBoolean
@@ -322,7 +322,7 @@ RBTransformationRuleTestData >> rewriteUsing: searchReplacer [
 { #category : 'rules' }
 RBTransformationRuleTestData >> superSends [
 	| rule |
-	rule := ASTParseTreeRewriter new.
+	rule := OCParseTreeRewriter new.
 	rule addSearch: 'super `@message: ``@args'
 				-> (
 					[:aNode |

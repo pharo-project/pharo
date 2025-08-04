@@ -85,28 +85,22 @@ Behavior >> recompile: selector [
 Behavior >> recompile: selector from: oldClass [
 	"Compile the method associated with selector in the receiver's method dictionary."
 
-	| newMethod |
-	newMethod := self recompileBasic: selector from: oldClass.
-	self addSelectorSilently: selector withMethod: newMethod
-]
-
-{ #category : '*OpalCompiler-Core' }
-Behavior >> recompileBasic: selector from: oldClass [
-	"Compile the method associated with selector in the receiver's context.
-	The resulting compiled method is not installed.
-	If the original method is faulty, the result will be also faulty (silently)."
-
 	| method newMethod |
-	method := oldClass compiledMethodAt: selector.
-	newMethod := oldClass compiler
-				source: (oldClass sourceCodeAt: selector);
-				priorMethod: method;
-				class: self;
-				permitFaulty: true;
-				logged: false; "No need to log recompilation in the sources."
-				compile.   "Assume OK after proceed from SyntaxError"
-	newMethod sourcePointer: method sourcePointer.
 
-	selector == newMethod selector ifFalse: [self error: 'selector changed!'].
-	^ newMethod
+	"Recompilation should be done silently, to avoid putting noise in the system"
+	self codeChangeAnnouncer suspendAllWhile: [
+		method := oldClass compiledMethodAt: selector.
+		newMethod := oldClass compiler
+			             source: (oldClass sourceCodeAt: selector);
+			             priorMethod: method;
+			             class: self;
+			             permitFaulty: true;
+			             "No need to log recompilation in the sources,
+						 	 We are going to reuse the original source pointer."
+			             logged: false;
+			             install ].
+
+	newMethod sourcePointer: method sourcePointer.
+	selector == newMethod selector ifFalse: [
+		self error: 'selector changed!' ]
 ]

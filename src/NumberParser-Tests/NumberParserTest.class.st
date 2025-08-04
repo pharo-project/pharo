@@ -314,6 +314,25 @@ NumberParserTest >> testFloatmin [
 	self assert: moreThanHalfmin = Float fmin description: 'nearest Float of a Fraction > 0.5*Float fmin is Float fmin'
 ]
 
+{ #category : 'tests - Float' }
+NumberParserTest >> testIntegerParseUnderscore [
+
+	self assert: (NumberParser parse: '1234') equals: 1234.
+	self assert: (NumberParser parse: '1_234') equals: 1234.
+	self assert: (NumberParser parse: '1_1.1_1') equals: 11.11.
+	self assert: (NumberParser parse: '1_1r1_1.1_1e1_1') equals: 11r11.11e11.
+
+	self should: [NumberParser parse: '__'] raise: Error.
+	self should: [NumberParser parse: '_1'] raise: Error.
+	self should: [NumberParser parse: '1__1'] raise: Error.
+	self should: [NumberParser parse: '1_.1'] raise: Error.
+	self should: [NumberParser parse: '1._1'] raise: Error.
+	self should: [NumberParser parse: '1_e1'] raise: Error.
+	self should: [NumberParser parse: '1e_1'] raise: Error.
+	
+	self should: [NumberParser parse: '11_a' ] raise: Error.
+]
+
 { #category : 'tests - Integer' }
 NumberParserTest >> testIntegerReadFrom [
 	"Ensure remaining characters in a stream are not lost when parsing an integer."

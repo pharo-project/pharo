@@ -160,7 +160,7 @@ RFReification >> postamble: aNode [
 
 { #category : 'preamble' }
 RFReification >> preamble: aNode [
-	(aNode isKindOf: ASTProgramNode) ifFalse: [ ^#() ]. "variables not yet suported"
+	(aNode isKindOf: OCProgramNode) ifFalse: [ ^#() ]. "variables not yet suported"
 	aNode isMessage ifTrue: [ ^self preambleForMessage: aNode ].
 	aNode isMethod	ifTrue: [ ^self preambleForMethod: aNode ].
 	aNode isSequence ifTrue: [ ^self preambleSequence: aNode ].

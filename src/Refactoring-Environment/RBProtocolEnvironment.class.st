@@ -34,6 +34,17 @@ RBProtocolEnvironment class >> onEnvironment: anEnvironment class: aClass protoc
 		class: aClass protocols: aCollection; yourself
 ]
 
+{ #category : 'comparing' }
+RBProtocolEnvironment >> = anObject [
+	"Answer whether the receiver and anObject represent the same object."
+
+	self == anObject ifTrue: [ ^ true ].
+	self class = anObject class ifFalse: [ ^ false ].
+	^ environment = anObject environment and: [
+		  class = anObject definedClass and: [
+			  protocols = anObject protocols ] ]
+]
+
 { #category : 'adding' }
 RBProtocolEnvironment >> addProtocol: aSymbol [
 	protocols add: aSymbol
@@ -77,6 +88,13 @@ RBProtocolEnvironment >> definesClass: aClass [
 RBProtocolEnvironment >> description [
 
 	^ label ifNil: [self defaultName , ' of ', self class name, self descriptionBasis]
+]
+
+{ #category : 'comparing' }
+RBProtocolEnvironment >> hash [
+	"Answer an integer value that is related to the identity of the receiver."
+
+	^ class hash bitXor: protocols hash
 ]
 
 { #category : 'testing' }

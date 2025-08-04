@@ -39,3 +39,8 @@ ActionSettingDeclaration >> realValue [
 
 	^ false
 ]
+
+{ #category : 'accessing' }
+ActionSettingDeclaration >> realValue: anObject [
+	"Private - Do nothing, to prevent raising an Error in updateSettingNode:"
+]

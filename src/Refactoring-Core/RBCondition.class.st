@@ -38,36 +38,22 @@ RBCondition class >> checkClassVarName: aName in: aClass [
 	| string |
 	aName isString ifFalse: [^false].
 	string := aName asString.
-	(self reservedNames includes: string) ifTrue: [^false].
+	(Symbol reservedLiterals includes: string) ifTrue: [^false].
 	string isEmpty ifTrue: [^false].
 	string first isUppercase ifFalse: [^false].
-	^RBScanner isVariable: string
+	^OCScanner isVariable: string
 ]
 
 { #category : 'utilities' }
 RBCondition class >> checkInstanceVariableName: aName in: aClass [
+
 	| string |
-	aName isString ifFalse: [^false].
-	string := aName asString.
-	string isEmpty ifTrue: [^false].
-	(self reservedNames includes: string) ifTrue: [^false].
-	string first isUppercase ifTrue: [^false].
-	^RBScanner isVariable: string
-]
-
-{ #category : 'utilities' }
-RBCondition class >> checkMethodName: aString [
-	"Return whether the argument aName is can represent a selector"
-
-	^ aString isString and: [ aString isValidSelector ]
-]
-
-{ #category : 'utilities' }
-RBCondition class >> checkMethodName: aString in: aClass [
-	"Return whether the argument aName is can represent a selector"
-	"You probably look for checkMethodName: since the second argument is ignored"
-
-	^aString isString and: [ aString isValidSelector ]
+	aName isString ifFalse: [ ^ false ].
+	string := aName.
+	string ifEmpty: [ ^ false ].
+	(Symbol reservedLiterals includes: string) ifTrue: [ ^ false ].
+	string first isUppercase ifTrue: [ ^ false ].
+	^ OCScanner isVariable: string
 ]
 
 { #category : 'instance creation' }
@@ -334,11 +320,16 @@ RBCondition class >> isValidInstanceVariableName: aString for: aClass [
 		  aString , ' is <1?:not >a valid instance variable name'
 ]
 
-{ #category : 'instance creation' }
-RBCondition class >> isValidMethodName: aString for: aClass [
-
+{ #category : 'testing' }
+RBCondition class >> isValidSelector: aString [
+	"Returns a Condition that checks that aString is a valid selector (name of method)."
+	
+	"Pay attention this class side method returns an RBCondition object,
+	while Refactoring>> isValidSelector: retuns a boolean. 
+	In the future we may want to have two different names for this two methods."
+	
 	^ self new
-		  block: [ self checkMethodName: aString in: aClass ]
+		  block: [ OCScanner isSelector: aString ]
 		  errorString:
 		  aString printString , ' is <1?:not >a valid method name'
 ]
@@ -347,7 +338,7 @@ RBCondition class >> isValidMethodName: aString for: aClass [
 RBCondition class >> methodDefiningTemporary: aString in: aClass ignore: aBlock [
 
 	| searcher method |
-	searcher := ASTParseTreeSearcher new.
+	searcher := OCParseTreeSearcher new.
 	method := nil. "Shut-up the warning"
 	searcher matches: aString do: [ :aNode :answer | ^ method ].
 	aClass withAllSubclasses do: [ :class |
@@ -380,11 +371,6 @@ RBCondition class >> referencesInstanceVariable: aString in: aClass [
 		  (aClass whichSelectorsReferToInstanceVariable: aString) isNotEmpty ]
 		  errorString: aClass printString
 			  , ' <1?:does not >reference<1?s:> instance variable ' , aString
-]
-
-{ #category : 'utilities' }
-RBCondition class >> reservedNames [
-	^#('self' 'true' 'false' 'nil' 'thisContext' 'super')
 ]
 
 { #category : 'instance creation' }

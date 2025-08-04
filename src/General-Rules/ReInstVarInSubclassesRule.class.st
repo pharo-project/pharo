@@ -59,7 +59,7 @@ ReInstVarInSubclassesRule >> check: aClass forCritiquesDo: aCritiqueBlock [
 			(self critiqueFor: aClass)
 				tinyHint: sel;
 				refactoring: (
-					RBPullUpInstanceVariableRefactoring
+					RePullUpInstanceVariableRefactoring
 						variable: sel
 						class: aClass);
 				yourself) ]

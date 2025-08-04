@@ -49,5 +49,6 @@ FFITestEnumeration class >> enumDecl [
 
 { #category : 'class initialization' }
 FFITestEnumeration class >> initialize [
+	"Duplicate to ensure being called at load time"
 	self initializeEnumeration
 ]

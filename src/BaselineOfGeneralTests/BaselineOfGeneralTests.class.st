@@ -55,8 +55,6 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'System-Support-Tests';
 			package: 'Text-Diff-Tests';
 			package: 'Tool-ExternalBrowser-Tests';
-			package: 'Tool-FileList-Tests';
-			package: 'Tool-Finder-Tests';
 			package: 'Tool-Profilers-Tests';
 			package: 'Tool-ImageCleaner-Tests';
 			package: 'Tools-CodeNavigation-Tests';

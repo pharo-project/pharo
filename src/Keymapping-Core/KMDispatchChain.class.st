@@ -26,8 +26,16 @@ KMDispatchChain class >> from: anInitialTarget andDispatcher: aDispatcher [
 { #category : 'dispatching' }
 KMDispatchChain >> dispatch: aKeyboardEvent [
 	self do: [ :targetToDispatch |
-		targetToDispatch dispatch: KMBuffer uniqueInstance buffer copy.
+		| sequence |
+		sequence := KMBuffer uniqueInstance buffer copy.
+		targetToDispatch dispatch: sequence.
 		aKeyboardEvent wasHandled ifTrue: [ ^self ].
+		"Let's try to match this sequence of events again.
+		This time ignoring any repeated events."
+		sequence removeAllSuchThat: [ :ev | ev isRepeat ].
+		sequence isNotEmpty ifTrue: [
+			targetToDispatch dispatch: sequence.
+			aKeyboardEvent wasHandled ifTrue: [ ^self ] ]
 	].
 	"This should be a noMatch event"
 	aKeyboardEvent wasHandled ifFalse: [ KMBuffer uniqueInstance clearBuffer ]

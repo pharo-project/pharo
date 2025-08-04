@@ -9,35 +9,27 @@ Class {
 { #category : 'tests' }
 ReTemporaryVariableCapitalizationRuleTest >> testRuleForArgument [
 
-	| critiques | 
-	self class compile: 'methodWith: Arg ^ Arg' classified: 'test-helper'.
-	[ critiques := self myCritiquesOnMethod: self class >> #methodWith:.
-	self assert: critiques size equals: 1 ] ensure: [ (self class >> #methodWith: )removeFromSystem ]
+	self generateMethod: 'methodWith: Arg ^ Arg'.
+	self assert: (self myCritiquesOnMethod: self class >> #methodWith:) size equals: 1
 ]
 
 { #category : 'tests' }
 ReTemporaryVariableCapitalizationRuleTest >> testRuleForTemporary [
 
-	| critiques | 
-	self class compile: 'methodWithTemp | Tp | Tp := 1. ^ Tp' classified: 'test-helper'.
-	[ critiques := self myCritiquesOnMethod: self class >> #methodWithTemp.
-	self assert: critiques size equals: 1 ] ensure: [ (self class >> #methodWithTemp )removeFromSystem ]
+	self generateMethod: 'methodWithTemp | Tp | Tp := 1. ^ Tp'.
+	self assert: (self myCritiquesOnMethod: self class >> #methodWithTemp) size equals: 1
 ]
 
 { #category : 'tests' }
 ReTemporaryVariableCapitalizationRuleTest >> testRuleNotViolatedForArgument [
 
-	| critiques | 
-	self class compile: 'methodWith: arg ^ arg' classified: 'test-helper'.
-	[ critiques := self myCritiquesOnMethod: self class >> #methodWith:.
-	self assertEmpty: critiques ] ensure: [ (self class >> #methodWith: )removeFromSystem ]
+	self generateMethod: 'methodWith: arg ^ arg'.
+	self assertEmpty: (self myCritiquesOnMethod: self class >> #methodWith:)
 ]
 
 { #category : 'tests' }
 ReTemporaryVariableCapitalizationRuleTest >> testRuleNotViolatedForTemporary [
 
-	| critiques | 
-	self class compile: 'methodWithTemp | tp | tp := 1. ^ tp' classified: 'test-helper'.
-	[ critiques := self myCritiquesOnMethod: self class >> #methodWithTemp.
-	self assertEmpty: critiques ] ensure: [ (self class >> #methodWithTemp )removeFromSystem ]
+	self generateMethod: 'methodWithTemp | tp | tp := 1. ^ tp'.
+	self assertEmpty: (self myCritiquesOnMethod: self class >> #methodWithTemp)
 ]

@@ -2,13 +2,15 @@
 I am responsible for adding a message send inside a method. In this implementation, all the message send, e.g., 'variable message: (arg)' shall be described as a string. It was implemented this way to avoid having another transformation just to add the receiver as a literal node.
 
 Usage:
+```
 | transformation |
 transformation := (RBAddMessageSendTransformation
 				messageSend: 'variable byteAt: 1'
 				inMethod: #methodBefore
 				inClass: #RBAddMessageSendTransformationTest)
-				transform.
-(ChangesBrowser changes: transformation model changes changes) open
+				generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 - the method exists.

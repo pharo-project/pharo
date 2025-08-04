@@ -175,7 +175,7 @@ SocketAddressInformation >> connect [
 	^sock
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 SocketAddressInformation >> initSocketAddress: aSocketAddress family: familyInteger type: typeInteger protocol: protocolInteger [
 
 	socketAddress := aSocketAddress.

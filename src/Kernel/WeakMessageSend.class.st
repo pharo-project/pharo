@@ -281,21 +281,21 @@ WeakMessageSend >> valueWithArguments: anArray [
 WeakMessageSend >> valueWithEnoughArguments: anArray [
 	"call the selector with enough arguments from arguments and anArray"
 	<reflection: 'Message sending and code execution - Runtime and Evaluation'>
-	| args strongReceiver |
+	| newArgs strongReceiver |
 
 	strongReceiver := self receiver.
 
 	(self ensureReceiverAndArguments: strongReceiver) ifFalse: [ ^nil ].
-	args := Array new: selector numArgs.
-	args replaceFrom: 1
-		to: ( arguments size min: args size)
+	newArgs := Array new: selector numArgs.
+	newArgs replaceFrom: 1
+		to: ( arguments size min: newArgs size)
 		with: arguments
 		startingAt: 1.
-	args size > arguments size ifTrue: [
-		args replaceFrom: arguments size + 1
-			to: (arguments size + anArray size min: args size)
+	newArgs size > arguments size ifTrue: [
+		newArgs replaceFrom: arguments size + 1
+			to: (arguments size + anArray size min: newArgs size)
 			with: anArray
 			startingAt: 1.
 	].
-	^ strongReceiver perform: selector withArguments: args
+	^ strongReceiver perform: selector withArguments: newArgs
 ]

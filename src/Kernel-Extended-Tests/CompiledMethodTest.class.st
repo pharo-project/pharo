@@ -73,7 +73,7 @@ CompiledMethodTest >> deprecatedMethod4 [
 
 		deprecated: 'Example of a deprecated method with transform'
 		on: '01/01/1970'
-		in: #Pharo6
+		in: 'pharoX'
 		transformWith: '`@receiver deprecatedMethod4'
 						-> '`@receiver deprecatedMethod4'
 ]
@@ -714,6 +714,38 @@ CompiledMethodTest >> testMethodClass [
 	method := class >> #foo.
 	class removeFromSystem.
 	self assert: method methodClass equals: class
+]
+
+{ #category : 'tests - testing' }
+CompiledMethodTest >> testMethodInDeprecatedClassIsDeprecated [
+
+	class := self class classInstaller make: [ :aBuilder |
+		         aBuilder
+			         name: #Derg;
+			         package: self packageNameForTests ].
+	class compile: 'method ^ 1'.
+
+	self deny: class isDeprecated.
+	self deny: (class >> #method) isDeprecated.
+
+	class class compile: 'isDeprecated ^ true'.
+	self assert: class isDeprecated.
+	self assert: (class >> #method) isDeprecated
+]
+
+{ #category : 'tests - testing' }
+CompiledMethodTest >> testMethodInDeprecatedPackageIsDeprecated [
+
+	self class compile: 'method ^1' classified: '*' , self packageNameForTests.
+
+	self deny: self packageNameForTests asPackage isDeprecated.
+	self deny: (self class >> #method) isDeprecated.
+
+	class := self packageNameForTests asPackage packageManifest.
+	class class compile: 'isDeprecated ^ true'.
+
+	self assert: self packageNameForTests asPackage isDeprecated.
+	self assert: (self class >> #method) isDeprecated
 ]
 
 { #category : 'tests - comparing' }

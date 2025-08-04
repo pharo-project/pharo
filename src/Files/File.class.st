@@ -499,15 +499,11 @@ File class >> deleteFile: fullPathString [
 	"Delete the supplied UTF8 encoded path.  Answer nil on failure."
 
 	| utf8Path |
-
 	utf8Path := fullPathString utf8Encoded.
-	self
-		retryWithGC: [ self primDeleteFile: utf8Path ]
-		until: [ :result | result isNotNil ]
-		forFileNamed: fullPathString.
-	(self primExists: utf8Path) ifTrue:
-		[ (CannotDeleteFileException new messageText: 'Could not delete file ' , name,
-			'. Check the file is not open.') signal ]
+	self retryWithGC: [ self primDeleteFile: utf8Path ] until: [ :result | result isNotNil ] forFileNamed: fullPathString.
+
+	(self primExists: utf8Path) ifTrue: [
+		(CannotDeleteFileException new messageText: 'Could not delete file "' , fullPathString , '". Check the file is not open.') signal ]
 ]
 
 { #category : 'primitives - path' }

@@ -112,7 +112,7 @@ TestResult class >> updateTestHistoryFor: aTestCase status: aSymbol [
 { #category : 'exceptions' }
 TestResult class >> warning [
 	"Warning that should be treated as test failure"
-	^Deprecation
+	^{ Deprecation . BackwardCompatibility }
 ]
 
 { #category : 'adding' }

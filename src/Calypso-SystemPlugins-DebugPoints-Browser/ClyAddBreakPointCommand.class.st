@@ -8,12 +8,6 @@ Class {
 	#package : 'Calypso-SystemPlugins-DebugPoints-Browser'
 }
 
-{ #category : 'testing' }
-ClyAddBreakPointCommand class >> canBeExecutedInContext: aBrowserContext [
-
-	^ (super canBeExecutedInContext: aBrowserContext)
-]
-
 { #category : 'activation' }
 ClyAddBreakPointCommand class >> contextMenuOrder [
 	^1

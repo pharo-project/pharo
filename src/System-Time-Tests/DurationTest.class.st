@@ -55,9 +55,10 @@ DurationTest >> testAsDay [
 
 { #category : 'tests' }
 DurationTest >> testAsDays [
+
 	self assert: (Duration days: 2) asDays equals: 2.
 	self assert: (Duration weeks: 1) asDays equals: 7.
-	self assert: (aDuration asDays closeTo: 1.08546)
+	self assert: aDuration asDays closeTo: 1.08546296296
 ]
 
 { #category : 'tests' }
@@ -87,9 +88,10 @@ DurationTest >> testAsHour [
 
 { #category : 'tests' }
 DurationTest >> testAsHours [
+
 	self assert: (Duration hours: 2) asHours equals: 2.
 	self assert: (Duration days: 1) asHours equals: 24.
-	self assert: (aDuration asHours closeTo: 26.0511)
+	self assert: aDuration asHours closeTo: 26.051111111
 ]
 
 { #category : 'tests' }
@@ -149,10 +151,11 @@ DurationTest >> testAsMinute [
 
 { #category : 'tests' }
 DurationTest >> testAsMinutes [
+
 	self assert: (Duration seconds: 60) asMinutes equals: 1.
 	self assert: (Duration hours: 1) asMinutes equals: 60.
-	self assert: (aDuration asMinutes closeTo: 1563.0666).
-	self assert: ((Duration milliSeconds: 100) asMinutes closeTo: 1 / 600)
+	self assert: aDuration asMinutes closeTo: 1563.06666666.
+	self assert: (Duration milliSeconds: 100) asMinutes closeTo: 1 / 600
 ]
 
 { #category : 'tests' }

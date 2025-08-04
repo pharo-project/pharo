@@ -2,12 +2,14 @@
 I am responsible for moving a method from one class to another existing class
 
 Usage:
+```
 | transformation |
 transformation := (RBMoveMethodToClassTransformation
-				method: #method
-				class: #RBMoveMethodTransformationTest)
-				transform.
-(ChangesBrowser changes: transformation model changes changes) open
+				method: RBMoveMethodToClassTransformation>>#storeOn:
+				class: #RBMoveMethodParametrizedTest)
+				generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 "
 Class {

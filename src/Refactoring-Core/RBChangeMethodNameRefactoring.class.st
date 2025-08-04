@@ -78,7 +78,7 @@ RBChangeMethodNameRefactoring >> implementorsCanBePrimitives [
 
 { #category : 'preconditions' }
 RBChangeMethodNameRefactoring >> isValidMethodNamePrecondition [
-	^ (RBCondition isValidMethodName: newSelector for: class)
+	^ RBCondition isValidSelector: newSelector
 
 	
 ]

@@ -72,7 +72,7 @@ ClyMethodCodeEditorToolMorph >> applyDecorations [
 ClyMethodCodeEditorToolMorph >> attachToSystem [
 
 	browser system when: (ClyMethodChange of: self editingMethod) send: #triggerUpdate to: self.
-	self class codeSupportAnnouncer weak when: ASTCacheReset send: #resetASTCache to: self
+	self class codeSupportAnnouncer weak when: OCASTCacheReset send: #resetASTCache to: self
 ]
 
 { #category : 'testing' }
@@ -287,7 +287,7 @@ ClyMethodCodeEditorToolMorph >> resetASTCache [
 	| cm |
 	cm := ast compiledMethod.
 	cm ifNil: [  ^ self ].
-	ASTCache default at: cm ifAbsentPut: ast
+	OCASTCache default at: cm ifAbsentPut: ast
 ]
 
 { #category : 'selecting text' }

@@ -1,14 +1,16 @@
 "
 RBRemoveTemporaryVariableRefactoring is responsible for removing temporary variables inside a method. In Pharo, temporary variables can be declared inside blocks as well.
 
-Example: 
+Example:
+```
 | transformation |
 transformation := (RBRemoveTemporaryVariableTransformation
-	variable: 'transformation'
-	inMethod: #testTransform
-	inClass: #RBAddTemporaryVariableTransformationTest)
-	transform.
-(ChangesBrowser changes: transformation model changes changes) open
+	variable: 'methodTree'
+	inMethod: #privateTransform
+	inClass: #RBRemoveTemporaryVariableTransformation)
+			generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 	
 Preconditions:
 - Check whether this method has a temporary variable with the given name.

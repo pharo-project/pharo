@@ -267,13 +267,13 @@ RBNamespace >> classNamed: aSymbol [
 ]
 
 { #category : 'converting' }
-RBNamespace >> classObjectFor: anObject [
+RBNamespace >> classObjectFor: aClassOrAString [
 
-	(anObject isBehavior or: [anObject isTrait])
-		ifTrue: [ ^ self classFor: anObject ].
-	anObject isString
-		ifTrue: [ ^ self classNamed: anObject ].
-	^ anObject
+	(aClassOrAString isBehavior or: [aClassOrAString isTrait])
+		ifTrue: [ ^ self classFor: aClassOrAString ].
+	aClassOrAString isString
+		ifTrue: [ ^ self classNamed: aClassOrAString ].
+	^ aClassOrAString
 ]
 
 { #category : 'accessing - classes' }
@@ -323,6 +323,7 @@ RBNamespace >> createNewClassFor: aBehavior [
 			rbMetaType := self rbMetaclassClass ].
 	nonMeta := rbType existingNamed: className model: self.
 	meta := rbMetaType existingNamed: className model: self.
+	nonMeta traitComposition: aBehavior traitComposition.
 	nonMeta packageName: aBehavior package name.
 	aBehavior packageTag isRoot ifFalse: [ nonMeta tagName: aBehavior packageTag name ].
 	^ changedClasses at: className put: (Array with: nonMeta with: meta)

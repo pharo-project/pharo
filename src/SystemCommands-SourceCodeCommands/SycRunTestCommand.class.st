@@ -25,6 +25,12 @@ SycRunTestCommand >> defaultMenuItemName [
 	^ 'Run test'
 ]
 
+{ #category : 'accessing' }
+SycRunTestCommand >> description [
+
+	^ 'Runs test.'
+]
+
 { #category : 'converting' }
 SycRunTestCommand >> execute [
 

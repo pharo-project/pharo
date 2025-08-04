@@ -24,12 +24,9 @@ ReNoUnusedInstanceVariableRuleTest >> tearDown [
 ]
 
 { #category : 'tests' }
-ReNoUnusedInstanceVariableRuleTest >> testRule [ 
+ReNoUnusedInstanceVariableRuleTest >> testRule [
 
-	| critiques class | 
-	
+	| class |
 	class := classFactory make: [ :builder | builder slots: { #inst } ].
-	
-	critiques := self myCritiquesOnClass: class.
-	self assert: critiques size equals: 1
+	self assert: (self myCritiquesOnClass: class) size equals: 1
 ]

@@ -2,11 +2,14 @@
 Creates accessors for a variable in a class, then replaces all the direct accesses to this variable by invocation to the accessors.
 
 Usage:
+```
+| transformation |
 transformation := (RBProtectVariableTransformation
 	instanceVariable: 'class'
-	class: #RBTransformationRuleTest)
-	transform.
-(ChangesBrowser changes: transformation model changes changes) open
+	class: #RBTransformationDummyRuleTest)
+	generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 overriden from RBAddAccessorsForClassTransformation and RBRemoveDirectAccessToVariableTransformation

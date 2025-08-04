@@ -22,7 +22,7 @@ SystemDependenciesReportResource >> dependenciesReport [
 { #category : 'accessing' }
 SystemDependenciesReportResource >> rebuildDependenciesReport [
 
-	^ dependenciesReport := DADependencyChecker new computeImageDependencies
+	^ dependenciesReport := StDependencyChecker new computeImageDependencies
 ]
 
 { #category : 'running' }

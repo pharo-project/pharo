@@ -37,12 +37,6 @@ ClyBrowserCommand >> description [
 	^ self class comment.
 ]
 
-{ #category : 'private' }
-ClyBrowserCommand >> morphicUIManager [
-
-	^ MorphicUIManager new
-]
-
 { #category : 'execution' }
 ClyBrowserCommand >> readParametersFromContext: aToolContext [
 	super readParametersFromContext: aToolContext.

@@ -127,7 +127,7 @@ SystemEnvironment >> at: aKey put: anObject [
  	index := self findElementOrNil: aKey.
  	assoc := array at: index.
  	assoc
- 		ifNil: [self atNewIndex: index put: (GlobalVariable key: aKey value: anObject). self flushClassNameCache]
+ 		ifNil: [self atNewIndex: index put: (GlobalVariable key: aKey value: anObject).]
  		ifNotNil: [assoc value: anObject].
 		
 	registeredMethods do: [ :aMethod | aMethod isInstalled ifTrue: [aMethod recompile] ].		
@@ -135,10 +135,19 @@ SystemEnvironment >> at: aKey put: anObject [
  	^ anObject
 ]
 
-{ #category : 'adding' }
+{ #category : 'accessing' }
+SystemEnvironment >> at: key update: updateBlock initial: initBlocktOrValue [
+	"Unsupported API: SystemEnvironment is not intended to be used as a dictionary."
+
+	self shouldNotImplement
+]
+
+{ #category : 'private' }
 SystemEnvironment >> atNewIndex: index put: aGlobalVariable [
 
 	aGlobalVariable isAssociation ifTrue: [ self error: 'Only global variables should be added to the SystemEnvironment and not associations.' ].
+	"make sure to fludh the caches"
+	self flushClassNameCache.
 	^ super atNewIndex: index put: aGlobalVariable
 ]
 

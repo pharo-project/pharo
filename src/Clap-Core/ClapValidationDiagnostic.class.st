@@ -42,6 +42,11 @@ ClapValidationDiagnostic >> printOn: aStream [
 	aStream nextPutAll: self description
 ]
 
+{ #category : 'accessing' }
+ClapValidationDiagnostic >> validation [
+	^ validation
+]
+
 { #category : 'initialization' }
 ClapValidationDiagnostic >> validation: aValidation subject: anExpression [
 	validation := aValidation.

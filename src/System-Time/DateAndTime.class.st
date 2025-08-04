@@ -133,13 +133,10 @@ DateAndTime class >> fromInternalTime: anInteger [
 ]
 
 { #category : 'instance creation' }
-DateAndTime class >> fromMethodTimeStamp: aString [
-	| stream |
-	stream := aString readStream.
-	stream
-		skipSeparators;
-		skipTo: Character space.
-	^ self readSeparateDateAndTimeFrom: stream
+DateAndTime class >> fromMethodTimestamp: aString [
+	"Answer a DateAndTime for the given timestamp read from the changes file."
+
+	^ [ self readFromString: aString ] on: Error do: [ nil ]
 ]
 
 { #category : 'instance creation' }

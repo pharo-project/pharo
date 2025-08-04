@@ -66,8 +66,8 @@ RBRealizeClassTransformation >> transform: aClass [
 				parseTree body
 					temporaries: OrderedCollection new;
 					statements: OrderedCollection new;
-					addNode: (ASTMessageNode
-							 receiver: ASTVariableNode selfNode
+					addNode: (OCMessageNode
+							 receiver: OCVariableNode selfNode
 							 selector: #shouldBeImplemented).
 				"Note that we compile in the class (a subclass compared to superclass having abstract methods) 
 				so we are doing a kind of copy-down but transforming a self subclassResp into shouldBe"

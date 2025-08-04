@@ -76,7 +76,7 @@ CoASTResultSetBuilder >> parseNode [
 			source: completionContext source;
 			isScripting: completionContext isScripting;
 			parse.
-		ASTTypingVisitor new visit: n.
+		OCTypingVisitor new visit: n.
 		(n nodeBeforeOffset: completionContext position) ifNil: [ n ] ]
 ]
 

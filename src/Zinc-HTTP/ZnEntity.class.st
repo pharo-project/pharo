@@ -165,7 +165,7 @@ ZnEntity >> asByteArray [
 	^ ByteArray streamContents: [ :stream | self writeOn: stream ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnEntity >> close [
 ]
 
@@ -245,12 +245,12 @@ ZnEntity >> printOn: stream [
 	stream nextPut: $)
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnEntity >> readBinaryFrom: stream [
 	self readFrom: stream
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnEntity >> readFrom: stream [
 	self subclassResponsibility
 ]

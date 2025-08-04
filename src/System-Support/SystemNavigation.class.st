@@ -233,7 +233,8 @@ SystemNavigation >> allSentButNotImplementedSelectors [
 		  ignored := method allIgnoredNotImplementedSelectors.
 
 		  method messages anySatisfy: [ :m |
-			  m isSelectorSymbol not and: [ (ignored includes: m) not ] ] ]
+			  m isUsedAsSelectorSymbol not 
+					and: [ (ignored includes: m) not ] ] ]
 ]
 
 { #category : 'query' }

@@ -4,7 +4,7 @@ I visit each node in the abstract syntax tree while growing and shrinking a scop
 "
 Class {
 	#name : 'OCASTSemanticAnalyzer',
-	#superclass : 'ASTProgramNodeVisitor',
+	#superclass : 'OCProgramNodeVisitor',
 	#instVars : [
 		'scope',
 		'outerScope',
@@ -270,8 +270,8 @@ OCASTSemanticAnalyzer >> visitPragmaNode: aPragmaNode [
 
 	"if the pragma is a primitive that defines an error variable, we need to declare a temp
 	for it"
-	aPragmaNode isPrimitiveError ifFalse: [ ^ self ].
-	varNode := ASTVariableNode named: aPragmaNode primitiveErrorVariableName.
+	aPragmaNode isPrimitiveErrorPragma ifFalse: [ ^ self ].
+	varNode := OCVariableNode named: aPragmaNode primitiveErrorVariableName.
 	self declareVariableNode: varNode as: (PrimitiveErrorVariable node: varNode)
 ]
 

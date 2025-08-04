@@ -130,9 +130,6 @@ DrTestsUITest >> testSelectingPluginWillUpdateCurrentPluginInstanceVariable [
 { #category : 'tests' }
 DrTestsUITest >> testSelectingPluginWillUpdatePackagesList [
 
-	"this test do not has sense anymore (since we do not change package list all the time)"
-	self skip.
-
 	drTestsUI pluginsDropList selectItem: plugin2.
 	self
 		assertCollection: drTestsUI pluginPresenter packagesList items
@@ -142,6 +139,7 @@ DrTestsUITest >> testSelectingPluginWillUpdatePackagesList [
 
 { #category : 'tests' }
 DrTestsUITest >> testSelectingPluginWillUpdateWindowTitle [
+	
 	drTestsUI pluginsDropList selectItem: plugin2.
 	self
 		assert: drTestsUI title

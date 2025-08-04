@@ -56,6 +56,17 @@ SDLOSXPlatform >> allowTouchpadInertia [
 	ObjCLibrary uniqueInstance release: key.
 ]
 
+{ #category : 'operations' }
+SDLOSXPlatform >> beforeMainPharoWindowClosed: aOSSDLWindow [
+]
+
+{ #category : 'configuration' }
+SDLOSXPlatform >> defaultRendererFlags [ 
+
+	"SDL_RENDERER_PRESENTVSYNC is required on MacOS for certain screens to avoid rendering issues"
+	^ super defaultRendererFlags | SDL_RENDERER_PRESENTVSYNC
+]
+
 { #category : 'initialization' }
 SDLOSXPlatform >> initPlatformSpecific [
 

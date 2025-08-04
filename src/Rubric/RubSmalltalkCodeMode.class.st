@@ -164,6 +164,7 @@ RubSmalltalkCodeMode >> classOrMetaClass: aBehavior [
 RubSmalltalkCodeMode >> formatMethodCode [
 
 	| source tree formatted |
+	self editor closeTypeIn.
 	self textArea hasSelection
 		ifTrue: [
 			source := self textArea selection.
@@ -174,7 +175,8 @@ RubSmalltalkCodeMode >> formatMethodCode [
 	tree checkFaulty: [ :msg :pos |
 		^ self editor notify: msg at: pos + 1 in: source ].
 	formatted := tree formattedCodeIn: classOrMetaclass.
-	formatted = source ifTrue: [ ^ self ].
+	"Text can = String, but String never = Text"
+	formatted = source asString ifTrue: [ ^ self ].
 	self textArea hasSelection
 		ifTrue: [ self textArea replaceSelectionWith: formatted ]
 		ifFalse: [ self textArea updateTextWith: formatted ]
@@ -189,13 +191,13 @@ RubSmalltalkCodeMode >> hasBindingOf: aString [
 { #category : 'parsing' }
 RubSmalltalkCodeMode >> parseExpression: aString [
 
-	^RBParser parseFaultyExpression: aString
+	^OCParser parseFaultyExpression: aString
 ]
 
 { #category : 'parsing' }
 RubSmalltalkCodeMode >> parseSource: aString [
 
-	^RBParser parseFaultyMethod: aString
+	^OCParser parseFaultyMethod: aString
 ]
 
 { #category : 'shout' }

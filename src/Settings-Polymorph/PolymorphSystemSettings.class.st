@@ -238,7 +238,6 @@ PolymorphSystemSettings class >> desktopSettingsOn: aBuilder [
 				with: [
 					(aBuilder setting: #desktopLogoFileName)
 						type: #FilePathEncoder;
-						default: '';
 						description: 'The path of an image file for your own logo, the default pharo logo is used if empty.' ;
 						label: 'Logo image file name'].
 			self desktopColorSettingsOn: aBuilder.
@@ -285,6 +284,11 @@ PolymorphSystemSettings class >> morphicHaloSettingsOn: aBuilder [
 		description: 'All halo settings';
 		noOrdering;
 		with: [
+			(aBuilder setting: #cmdGesturesEnabled)
+				label: 'Enable Gesture to Open Halo';
+				target: Morph;
+				default: true;
+				description: 'Enables or Disables the gestures to open the Halo or the meta menu. The Halo is open with Alt+Shift+Click and the Menu with Ctrl+Alt+Shift+Click'.
 			(aBuilder setting: #cycleHalosBothDirections)
 				label: 'Cycle both directions';
 				target: Morph;

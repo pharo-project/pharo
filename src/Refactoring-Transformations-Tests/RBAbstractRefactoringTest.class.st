@@ -72,7 +72,7 @@ RBAbstractRefactoringTest >> parseMethod: aString [
 
 { #category : 'parsing' }
 RBAbstractRefactoringTest >> parserClass [
-	^ RBParser
+	^ OCParser
 ]
 
 { #category : 'accessing' }
@@ -130,15 +130,6 @@ RBAbstractRefactoringTest >> setupMethodNameFor: aRefactoring toReturn: aSelecto
 				selector: aSelector;
 				arguments: stringCollection;
 				yourself].
-	aRefactoring options: options
-]
-
-{ #category : 'set up' }
-RBAbstractRefactoringTest >> setupSearchInAllHierarchyFor: aRefactoring toReturn: aBoolean [
-
-	| options |
-	options := aRefactoring options copy.
-	options at: #searchInWholeHierarchy put: [ :ref :cls | aBoolean ].
 	aRefactoring options: options
 ]
 

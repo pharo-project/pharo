@@ -14,8 +14,8 @@ OCBytecodeGeneratorTest class >> packageNamesUnderTest [
 { #category : 'helper' }
 OCBytecodeGeneratorTest >> bytecodeGenerator [
 
-	^ (IRBytecodeGenerator newWithEncoderClass: EncoderForSistaV1)
-		  compilationContext: CompilationContext new;
+	^ (OCIRBytecodeGenerator newWithEncoderClass: EncoderForSistaV1)
+		  compilationContext: OCCompilationContext new;
 		  yourself
 ]
 

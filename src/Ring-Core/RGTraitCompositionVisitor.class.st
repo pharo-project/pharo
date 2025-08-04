@@ -18,7 +18,7 @@ ast acceptVisitor: visitor.
 "
 Class {
 	#name : 'RGTraitCompositionVisitor',
-	#superclass : 'ASTProgramNodeVisitor',
+	#superclass : 'OCProgramNodeVisitor',
 	#instVars : [
 		'traitComposition'
 	],
@@ -31,7 +31,7 @@ Class {
 RGTraitCompositionVisitor >> parse: anExpressionString for: anRGTraitCompositionDefinition [
 
 	| ast result |
-	ast := (RBParser parseExpression: anExpressionString).
+	ast := (OCParser parseExpression: anExpressionString).
 	self traitComposition: anRGTraitCompositionDefinition.
 	result := ast acceptVisitor: self.
 

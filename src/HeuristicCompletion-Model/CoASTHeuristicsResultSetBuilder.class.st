@@ -37,12 +37,24 @@ CoASTHeuristicsResultSetBuilder >> messageHeuristic [
 ]
 
 { #category : 'heuristics' }
+CoASTHeuristicsResultSetBuilder >> messageHeuristic: aHeuristic [
+
+	messageHeuristic := aHeuristic
+]
+
+{ #category : 'heuristics' }
 CoASTHeuristicsResultSetBuilder >> methodNodeHeuristic [
 	^ methodNodeHeuristic ifNil: [
 		methodNodeHeuristic := self newHeuristicBuilder
 		add: CoSuperMessageHeuristic new;
 		add: CoUnknownMessageHeuristic new;
 		build ]
+]
+
+{ #category : 'heuristics' }
+CoASTHeuristicsResultSetBuilder >> methodNodeHeuristic: aHeuristic [
+
+	methodNodeHeuristic := aHeuristic
 ]
 
 { #category : 'heuristics' }
@@ -58,6 +70,12 @@ CoASTHeuristicsResultSetBuilder >> symbolsHeuristic [
 ]
 
 { #category : 'heuristics' }
+CoASTHeuristicsResultSetBuilder >> symbolsHeuristic: aHeuristics [
+
+	 symbolsHeuristic := aHeuristics
+]
+
+{ #category : 'heuristics' }
 CoASTHeuristicsResultSetBuilder >> variablesHeuristic [
 	^ variablesHeuristic ifNil: [ variablesHeuristic := self newHeuristicBuilder
 		add: CoLocalScopeVariablesHeuristic new;
@@ -65,6 +83,12 @@ CoASTHeuristicsResultSetBuilder >> variablesHeuristic [
 		add: CoInstanceAccessibleVariablesHeuristic new;
 		add: CoGlobalVariablesHeuristic new;
 		build ]
+]
+
+{ #category : 'heuristics' }
+CoASTHeuristicsResultSetBuilder >> variablesHeuristic: aHeuristic [
+
+	variablesHeuristic := aHeuristic
 ]
 
 { #category : 'visiting' }
@@ -111,7 +135,7 @@ CoASTHeuristicsResultSetBuilder >> visitValueNode: aNode [
 			we just inject a synthetic message node in the AST with an empty selector.
 			This empty selector will then be completed according to the existing rules and heuristics.
 			It is a little hackish but we believe in magic."
-			aMessageNode := ASTMessageNode new.
+			aMessageNode := OCMessageNode new.
 			aNode replaceWith: aMessageNode.
 			aMessageNode receiver: aNode.
 			aMessageNode selector: #''.

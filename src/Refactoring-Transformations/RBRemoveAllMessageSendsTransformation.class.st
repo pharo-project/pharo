@@ -8,11 +8,11 @@ Usage:
 ```
 | transformation |
 transformation := (RBRemoveAllMessageSendsTransformation
-				messageSend: #byteAt:
-				inMethod: #methodBefore
-				inClass: #RBRemoveMessageSendTransformationTest)
-				transform.
-(ChangesBrowser changes: transformation model changes changes) open
+				messageSend: #isMessage
+				inMethod: #privateTransform
+				inClass: #RBRemoveAllMessageSendsTransformation)
+				generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
 ```
 
 Preconditions:

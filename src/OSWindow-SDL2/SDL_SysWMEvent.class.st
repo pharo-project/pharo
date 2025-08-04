@@ -39,9 +39,6 @@ SDL_SysWMEvent class >> fieldsDesc [
 { #category : 'visitor' }
 SDL_SysWMEvent >> accept: aVisitor [
 
-	self isWindows ifFalse: [ ^ nil ].
-	self windowsMessage isDisplayChanged ifFalse: [ ^ nil ].
-
 	^ aVisitor visitSystemWindowEvent: self
 ]
 
@@ -66,7 +63,7 @@ SDL_SysWMEvent >> msg [
 { #category : 'accessing - structure variables' }
 SDL_SysWMEvent >> msg: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_MSG put: anObject getHandle
+	handle pointerAt: OFFSET_MSG put: anObject getHandle.
 ]
 
 { #category : 'printing' }

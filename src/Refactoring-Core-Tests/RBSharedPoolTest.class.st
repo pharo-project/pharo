@@ -8,8 +8,9 @@ Class {
 		'userOf',
 		'defineOf'
 	],
-	#category : 'Refactoring-Core-Tests',
-	#package : 'Refactoring-Core-Tests'
+	#category : 'Refactoring-Core-Tests-Model',
+	#package : 'Refactoring-Core-Tests',
+	#tag : 'Model'
 }
 
 { #category : 'running' }
@@ -18,7 +19,7 @@ RBSharedPoolTest >> setUp [
 	super setUp.
 	rbNamespace := RBNamespace new.
 	objectClass := rbNamespace classNamed: #Object.
-	messageNodeClass := rbNamespace classNamed: #ASTMessageNode.
+	messageNodeClass := rbNamespace classNamed: #OCMessageNode.
 
 	rbNamespace defineClass: [ :aBuilder |
 		aBuilder

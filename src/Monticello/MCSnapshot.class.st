@@ -50,7 +50,7 @@ MCSnapshot >> hash [
 	^ definitions asArray hash
 ]
 
-{ #category : 'initializing' }
+{ #category : 'initialization' }
 MCSnapshot >> initializeWithDefinitions: aCollection [
 	
 	definitions := aCollection.

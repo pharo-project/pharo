@@ -314,7 +314,7 @@ MCFileTreeStCypressWriter >> writeMethodDefinition: methodDefinition to: methodP
     visit: [ self writeMethodDefinition: methodDefinition ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 MCFileTreeStCypressWriter >> writeMethodProperties: classMethodDefinitions [
     "Issue 33: https://github.com/dalehenrich/filetree/issues/33"
 

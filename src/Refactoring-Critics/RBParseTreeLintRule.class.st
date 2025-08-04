@@ -43,7 +43,7 @@ RBParseTreeLintRule >> checkMethod: aMethod [
 { #category : 'initialization' }
 RBParseTreeLintRule >> initialize [
 	super initialize.
-	matcher := ASTParseTreeSearcher new
+	matcher := OCParseTreeSearcher new
 ]
 
 { #category : 'accessing' }

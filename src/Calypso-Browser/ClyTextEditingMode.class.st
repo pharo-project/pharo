@@ -12,7 +12,6 @@ Class {
 	#name : 'ClyTextEditingMode',
 	#superclass : 'RubSmalltalkCodeMode',
 	#instVars : [
-		'isForScripting',
 		'browserTool'
 	],
 	#category : 'Calypso-Browser-TextEditors',
@@ -41,30 +40,18 @@ ClyTextEditingMode >> browserTool: aTextEditorTool [
 	browserTool := aTextEditorTool
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ClyTextEditingMode >> editorClass [
 	^ClyTextEditor
 ]
 
-{ #category : 'initialization' }
-ClyTextEditingMode >> initialize [
-	super initialize.
-
-	isForScripting := false
-]
-
 { #category : 'testing' }
 ClyTextEditingMode >> isScripting [
-	^ isForScripting
+	^ browserTool isScripting
 ]
 
-{ #category : 'accessing' }
-ClyTextEditingMode >> isScripting: anObject [
-	isForScripting := anObject
-]
-
-{ #category : 'initialize-release' }
+{ #category : 'update' }
 ClyTextEditingMode >> updateTextAreaWhenPlugged [
 	super updateTextAreaWhenPlugged.
-	isForScripting ifTrue: [ self textArea shoutStyler beForSmalltalkScripting]
+	self isScripting ifTrue: [ self textArea shoutStyler beForSmalltalkScripting ]
 ]

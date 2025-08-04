@@ -221,7 +221,7 @@ ZnNetworkingUtils >> secureSocketStreamClass [
 		secureSocketStreamClass := Smalltalk globals at: #ZdcSecureSocketStream ifAbsent: [ nil ] ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnNetworkingUtils >> secureSocketStreamClass: anObject [
 	secureSocketStreamClass := anObject
 ]
@@ -296,7 +296,7 @@ ZnNetworkingUtils >> socketStreamClass [
 	^ socketStreamClass ifNil: [ socketStreamClass := SocketStream ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnNetworkingUtils >> socketStreamClass: anObject [
 	socketStreamClass := anObject
 ]
@@ -343,7 +343,7 @@ ZnNetworkingUtils >> sslSessionClass [
 		sslSessionClass := Smalltalk globals at: #ZdcPluginSSLSession ifAbsent: [ nil ] ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnNetworkingUtils >> sslSessionClass: anObject [
 	sslSessionClass := anObject
 ]

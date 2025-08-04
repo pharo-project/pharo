@@ -29,6 +29,7 @@ Class {
 	#name : 'ClassFactoryForTestCase',
 	#superclass : 'Object',
 	#instVars : [
+		'createdPackages',
 		'createdBehaviors',
 		'createdSilently',
 		'environment'
@@ -53,7 +54,7 @@ ClassFactoryForTestCase class >> environment: aSystemEnvironment [
 ClassFactoryForTestCase >> cleanUp [
 
 	self createdBehaviors copy do: [ :behavior | self delete: behavior ].
-	self deletePackage
+	self deletePackages
 ]
 
 { #category : 'accessing' }
@@ -121,9 +122,10 @@ ClassFactoryForTestCase >> delete: aBehavior [
 ]
 
 { #category : 'cleaning' }
-ClassFactoryForTestCase >> deletePackage [
+ClassFactoryForTestCase >> deletePackages [
+	"We remove all packages that we created while creating classes in this factory."
 
-	(self organization packages select: [ :package | package name beginsWith: self packageName ]) do: [ :package | package removeFromSystem ]
+	createdPackages do: [ :package | self organization removePackage: package ]
 ]
 
 { #category : 'accessing' }
@@ -143,7 +145,8 @@ ClassFactoryForTestCase >> initialize [
 
 	super initialize.
 	createdBehaviors := IdentitySet new.
-	createdSilently := IdentitySet new
+	createdSilently := IdentitySet new.
+	createdPackages := IdentitySet new
 ]
 
 { #category : 'creating' }
@@ -151,7 +154,8 @@ ClassFactoryForTestCase >> make: aBlock [
 	"I return a new class or trait in the environment of the factory configured as the user specified in the make block.
 	Once the test is finished, I'll remove the created class or trait."
 
-	| newClass |
+	| newClass numberOfPackages |
+	numberOfPackages := self organization packages size.
 	newClass := self class classInstaller make: [ :aBuilder | "Let's but some default values."
 		            aBuilder
 			            name: self newBehaviorName;
@@ -163,6 +167,9 @@ ClassFactoryForTestCase >> make: aBlock [
 		            aBlock value: aBuilder ].
 
 	self registerBehavior: newClass.
+
+	"If we created a package, we need to register it to be removed."
+	numberOfPackages = self organization packages size ifFalse: [ createdPackages add: newClass package ].
 	^ newClass
 ]
 

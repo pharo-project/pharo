@@ -11,7 +11,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFNameReification class >> entities [
-	^{ASTVariableNode. ASTAssignmentNode. Variable}
+	^{OCVariableNode. OCAssignmentNode. Variable}
 ]
 
 { #category : 'plugin interface' }

@@ -231,7 +231,7 @@ RePullUpMethodRefactoring >> pullUpSharedVariable: aVariable [
 { #category : 'transforming' }
 RePullUpMethodRefactoring >> pullUpVariable: aVariable [
 	| refactoring |
-	refactoring :=  RBPullUpInstanceVariableRefactoring
+	refactoring :=  RePullUpInstanceVariableRefactoring
 			model: self model
 			variable: aVariable
 			class: targetSuperclass.

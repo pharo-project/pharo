@@ -40,16 +40,6 @@ TextEntryDialogWindow >> minimumWidth [
 		  self currentWorld width
 ]
 
-{ #category : 'accessing' }
-TextEntryDialogWindow >> newButtons [
-	"Answer new buttons as appropriate."
-
-	^ {
-		self newCancelButton.
-		self newOKButton isDefault: true
-	}
-]
-
 { #category : 'creation' }
 TextEntryDialogWindow >> newTextEditorMorph [
 	"Answer a new text entry morph."

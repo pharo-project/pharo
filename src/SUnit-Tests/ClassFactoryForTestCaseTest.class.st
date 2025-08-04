@@ -79,6 +79,20 @@ ClassFactoryForTestCaseTest >> testPackageCleanUp [
 ]
 
 { #category : 'testing' }
+ClassFactoryForTestCaseTest >> testPackageOfCreatedClassIsCleanedUp [
+
+	| class |
+	class := factory make: [ :aBuilder |
+		         aBuilder
+			         superclass: Object;
+			         package: 'ClassFactoryForTestCaseGeneratedPackage' ].
+	self assert: class package name equals: 'ClassFactoryForTestCaseGeneratedPackage'.
+	self assert: (self organization packages anySatisfy: [ :package | package name = 'ClassFactoryForTestCaseGeneratedPackage' ]).
+	factory cleanUp.
+	self deny: (self organization packages anySatisfy: [ :package | package name = 'ClassFactoryForTestCaseGeneratedPackage' ])
+]
+
+{ #category : 'testing' }
 ClassFactoryForTestCaseTest >> testSingleClassCreation [
 
 	| class |

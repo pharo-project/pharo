@@ -75,7 +75,7 @@ OCASTClosureAnalyzerTest >> testExampleSimpleBlockLocalIf [
 	| ast  assignment var |
 	ast := (OCOpalExamples>>#exampleSimpleBlockLocalIf) parseTree.
 
-	assignment := ASTParseTreeSearcher treeMatching: '`var := ``@anything' in: ast.
+	assignment := OCParseTreeSearcher treeMatching: '`var := ``@anything' in: ast.
 	var := assignment variable variable.
 	self assert: var isWrite.
 	self deny: var isEscaping

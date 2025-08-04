@@ -31,12 +31,6 @@ ClyScopedSystemEnvironment >> asRBEnvironment [
 ]
 
 { #category : 'class management' }
-ClyScopedSystemEnvironment >> classNamed: aString [
-	
-	^globals classNamed: aString
-]
-
-{ #category : 'class management' }
 ClyScopedSystemEnvironment >> classNamed: aString ifAbsent: aBlockClosure [
 
 	^ globals
@@ -49,15 +43,6 @@ ClyScopedSystemEnvironment >> classNamed: aString ifAbsent: aBlockClosure [
 						  ifFalse: aBlockClosure ]
 				  ifFalse: aBlockClosure ]
 		  ifAbsent: aBlockClosure
-]
-
-{ #category : 'class management' }
-ClyScopedSystemEnvironment >> classNamed: aString ifPresent: aBlockClosure ifAbsent: anotherBlockClosure [
-
-	^ globals
-		  at: aString
-		  ifPresent: aBlockClosure
-		  ifAbsent: anotherBlockClosure
 ]
 
 { #category : 'compiling' }
@@ -77,23 +62,10 @@ ClyScopedSystemEnvironment >> compileANewClassFrom: newClassDefinitionString not
 	^ super compileANewClassFrom: newClassDefinitionString notifying: aController startingFrom: oldClass
 ]
 
-{ #category : 'package management' }
-ClyScopedSystemEnvironment >> createPackageNamed: packageName [
-	"ToDo: Should we allow new packages creation in calypso while displaying a scope?"
-	^ packageOrganizer addPackage: packageName
-]
-
 { #category : 'accessing' }
 ClyScopedSystemEnvironment >> definedClassesInPackage: aPackage [
 
 	^ scope definedClasses select: [ :class | class package = aPackage ]
-]
-
-{ #category : 'accessing' }
-ClyScopedSystemEnvironment >> ensurePackage: packageName [
-	"Should we allow creating new packages while calypso is displaying a scope?".
-	
-	^ packageOrganizer ensurePackage: packageName
 ]
 
 { #category : 'accessing' }
@@ -114,12 +86,6 @@ ClyScopedSystemEnvironment >> includesClassNamed: aSymbol [
 	
 	class := globals at: aSymbol ifAbsent: [^ false].
 	^ scope includesClass: class
-]
-
-{ #category : 'accessing' }
-ClyScopedSystemEnvironment >> packageNamed: aString [
-	
-	^packageOrganizer packageNamed: aString
 ]
 
 { #category : 'accessing' }

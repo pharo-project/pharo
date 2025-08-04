@@ -232,9 +232,15 @@ Slot >> isWrittenIn: aCompiledCode [
 ]
 
 { #category : 'accessing' }
+Slot >> name: aSymbol [
+
+	super name: aSymbol asSymbol
+]
+
+{ #category : 'accessing' }
 Slot >> named: aSymbol [
 	"to be polymorhic with slot class"
-	self name: aSymbol
+	self name: aSymbol asSymbol
 ]
 
 { #category : 'accessing' }

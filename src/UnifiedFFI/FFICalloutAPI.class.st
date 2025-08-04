@@ -52,7 +52,7 @@ FFICalloutAPI class >> inUFFIContext: aContext [
 
 { #category : 'instance creation' }
 FFICalloutAPI class >> new [
-	self error: 'use #inFFIContext:'
+	self error: 'use #inUFFIContext:'
 ]
 
 { #category : 'private' }

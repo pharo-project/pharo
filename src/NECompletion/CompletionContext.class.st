@@ -64,7 +64,7 @@ CompletionContext >> engine [
 	^ engine
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 CompletionContext >> engine: aCompletionEngine class: aClass source: aString position: anInteger [
 	class := aClass.
 	source := aString.

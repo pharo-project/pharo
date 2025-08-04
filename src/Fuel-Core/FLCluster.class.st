@@ -61,13 +61,13 @@ FLCluster >> fuelAccept: aGeneralMapper [
 	^ aGeneralMapper visitSubstitution: self by: nil
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 FLCluster >> initializeAnalyzing [
 
 	self initialize.
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 FLCluster >> initializeMaterializing [
 
 	self initialize.

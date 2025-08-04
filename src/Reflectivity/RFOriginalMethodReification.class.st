@@ -13,7 +13,7 @@ Class {
 
 { #category : 'plugin interface' }
 RFOriginalMethodReification class >> entities [
-	^{ASTProgramNode}
+	^{OCProgramNode}
 ]
 
 { #category : 'plugin interface' }
@@ -24,5 +24,5 @@ RFOriginalMethodReification class >> key [
 { #category : 'generate' }
 RFOriginalMethodReification >> genForASTProgramNode [
 
-	^ ASTLiteralNode value: entity methodNode compiledMethod
+	^ OCLiteralNode value: entity methodNode compiledMethod
 ]

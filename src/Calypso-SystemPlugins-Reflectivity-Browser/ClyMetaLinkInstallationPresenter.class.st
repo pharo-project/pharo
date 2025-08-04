@@ -80,6 +80,7 @@ ClyMetaLinkInstallationPresenter >> initializePresenter [
 
 { #category : 'initialization' }
 ClyMetaLinkInstallationPresenter >> initializeWindow: aWindowPresenter [
+	
 	super initializeWindow: aWindowPresenter.
 	aWindowPresenter title: sourceNode printString
 ]

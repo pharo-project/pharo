@@ -431,26 +431,27 @@ TaskbarMorph >> updateTasks [
 	| wm deadTasks newTasks taskbarTasksFromWorldMorph |
 	wm := self windows.
 	taskbarTasksFromWorldMorph := (wm collect: [ :m | m taskbarTask ])
-		reject: [ :m | m isNil ].
+		                              reject: [ :task |
+			                              task isNil or: [
+				                              task morph hasProperty: #isClosed] ] .
+
 	self tasks: taskbarTasksFromWorldMorph.
 	deadTasks := self orderedTasks difference: self tasks.
 	newTasks := self tasks difference: self orderedTasks.
-	(newTasks isEmpty and: [ deadTasks isEmpty ])
-		ifTrue: [ ^ self ].	"no changes"
-	newTasks copy
-		do: [ :t | 
-			self orderedTasks
-				detect: [ :ot | ot morph = t morph ]
-				ifFound: [ :ot | 
-					self orderedTasks replaceAll: ot with: t.
-					deadTasks remove: ot.
-					newTasks remove: t ] ].	"replace in order any changed tasks."
+	(newTasks isEmpty and: [ deadTasks isEmpty ]) ifTrue: [ ^ self ]. "no changes"
+	newTasks copy do: [ :t |
+		self orderedTasks
+			detect: [ :ot | ot morph = t morph ]
+			ifFound: [ :ot |
+				self orderedTasks replaceAll: ot with: t.
+				deadTasks remove: ot.
+				newTasks remove: t ] ]. "replace in order any changed tasks."
 	self orderedTasks
 		removeAll: deadTasks;
 		addAll: newTasks reversed.
 	self updateTaskButtons.
-	self
-		defer: [ "may have a different number of rows" self layoutChanged ]
+	self defer: [ "may have a different number of rows"
+		self layoutChanged ]
 ]
 
 { #category : 'accessing' }

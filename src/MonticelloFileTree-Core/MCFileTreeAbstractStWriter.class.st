@@ -121,7 +121,7 @@ MCFileTreeAbstractStWriter >> visitTraitDefinition: definition [
     self subclassResponsibility
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 MCFileTreeAbstractStWriter >> writeBasicDefinitions: aCollection [
     "the correct initialization order is unknown if some classes are missing in the image"
 

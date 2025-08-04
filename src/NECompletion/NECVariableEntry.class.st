@@ -14,7 +14,7 @@ NECVariableEntry >> browse [
 	| class |
 	class := Smalltalk globals at: contents ifAbsent: [ nil ].
 	class
-		ifNotNil: [ Smalltalk tools browser openOnClass: class].
+		ifNotNil: [ (Smalltalk tools toolNamed: #browser) openOnClass: class].
 	^ true
 ]
 

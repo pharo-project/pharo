@@ -41,6 +41,12 @@ ClyCommitPackageCommand >> defaultMenuItemName [
 	^'Commit'
 ]
 
+{ #category : 'accessing' }
+ClyCommitPackageCommand >> description [
+
+^ 'I am a command to commit given packages' 
+]
+
 { #category : 'execution' }
 ClyCommitPackageCommand >> execute [
 

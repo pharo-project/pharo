@@ -1,5 +1,5 @@
 "
-I modelt the scope of a block
+I model the scope of a block in particular if it has escaping variables (variables that can outlives the block execution).
 "
 Class {
 	#name : 'OCBlockScope',

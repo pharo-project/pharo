@@ -6,13 +6,15 @@ For a temporary variable defined in a method but only initialized and used withi
 The transformation automatically searches for the block(s) where the definition could be moved to.
 
 Usage:
+```
 | transformation |
 transformation := (RBMoveTemporaryVariableDefinitionTransformation
 				variable: #temp
 				inMethod: #moveDefinition
-				inClass: #RBDummyRefactoryTestDataApp)
-				transform.
-(ChangesBrowser changes: transformation model changes changes) open
+				inClass: #RBClassDataForRefactoringTest)
+				generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 - there is a block where the variable definition can be moved to.
@@ -135,7 +137,7 @@ RBMoveTemporaryVariableDefinitionTransformation >> checkLocationsIn: candidateBl
 
 	(candidateBlocks
 		 detect: [ :each |
-			 ASTReadBeforeWrittenTester
+			 OCReadBeforeWrittenTester
 				 isVariable: variableName
 				 readBeforeWrittenIn: each ]
 		 ifNone: [ nil ]) ifNotNil: [ ^ false ].

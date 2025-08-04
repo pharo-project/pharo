@@ -22,7 +22,8 @@ Class {
 		'focusIndicator',
 		'windowActiveDropShadowStyle',
 		'useScrollbarThumbShadow',
-		'colorPalette'
+		'colorPalette',
+		'tasklistMorph'
 	],
 	#classVars : [
 		'Builder',
@@ -149,7 +150,7 @@ UITheme class >> newDefault [
 	^self new
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'class initialization' }
 UITheme class >> resetBuilder [
 	<script>
 
@@ -211,6 +212,16 @@ UITheme >> backgroundColor [
 	^ colorPalette backgroundColor
 ]
 
+{ #category : 'basic-colors' }
+UITheme >> badgeColor [
+	^ Color red
+]
+
+{ #category : 'basic-colors' }
+UITheme >> badgeTextColor [
+	^ Color white
+]
+
 { #category : 'accessing - colors' }
 UITheme >> balloonBackgroundColor [
 
@@ -236,7 +247,7 @@ UITheme >> baseColorFor: aWidget [
 ]
 
 { #category : 'private' }
-UITheme >> basePassiveBackgroundColorFor: aButton [
+UITheme >> basePassiveBackgroundColor [
 
 	^ colorPalette basePassiveBackgroundColor
 ]
@@ -501,7 +512,7 @@ UITheme >> buttonSelectedDisabledFillStyleFor: aButton [
 UITheme >> buttonSelectedFillStyleFor: aButton [
 	"Return the normal button fillStyle for the given button."
 
-	^ SolidFillStyle color: (self lightSelectionColorFor: aButton)
+	^ SolidFillStyle color: self lightSelectionColor
 ]
 
 { #category : 'border-styles - buttons' }
@@ -736,12 +747,11 @@ UITheme >> chooseColorIn: aThemedMorph title: aString color: aColor for: aBlock 
 UITheme >> chooseDirectoryIn: aThemedMorph title: title path: path [
 	"Answer the result of a file dialog with the given title, choosing directories only."
 
-	| dialog |
-	dialog := (FileDialogWindow newWithTheme: aThemedMorph theme)
-		title: title;
-		answerDirectory.
-	path ifNotNil: [ dialog selectPath: path ].
-	^ dialog openModal answer
+	^ self directoryDialogWindowClass new
+		  defaultFolder: (path ifNil: [ StFileSystemModel defaultDirectory ]);
+		  title: (title ifNil: [ 'Choose Directory' translated ]);
+		  openModal;
+		  selectedEntry
 ]
 
 { #category : 'services' }
@@ -761,18 +771,19 @@ UITheme >> chooseExistingFileReferenceIn: aThemedMorph title: title extensions: 
 	path and preview type.
 	Answer nil or a filename."
 
-	| dialog pathFileReference |
-	pathFileReference := path asFileReference.
-	dialog := FileDialogWindow basicNew
-		basicTheme: aThemedMorph theme;
-		previewType: preview;
-		fileNameText: pathFileReference basename;
-		initialize;
-		title: title;
-		answerPathName.
-	exts ifNotNil: [ dialog validExtensions: exts ].
-	path ifNotNil: [ dialog selectPath: pathFileReference pathString ].
-	^ dialog openModal answer ifNotNil: #asFileReference
+	| dialog |
+	
+	dialog := self fileDialogWindowClass new.
+	exts 
+		ifNotNil: [ dialog filter: (StCustomExtensionsFilter extensions: exts) ].
+	path 
+		ifNotNil: [ dialog nameText: path basename ].
+	^ dialog
+		defaultFolder: (path ifNil: [ StFileSystemModel defaultDirectory ]);
+		title: (title ifNil: [ 'Choose File' translated ]);
+		openModal;
+		selectedEntry
+
 ]
 
 { #category : 'services' }
@@ -781,15 +792,18 @@ UITheme >> chooseFileIn: aThemedMorph title: title extensions: exts path: path p
 	Answer nil or a filename."
 
 	| dialog |
-	dialog := FileDialogWindow basicNew
-		basicTheme: aThemedMorph theme;
-		previewType: preview;
-		initialize;
-		title: title;
-		answerFileEntry.
-	exts ifNotNil: [ dialog validExtensions: exts ].
-	path ifNotNil: [ dialog selectPath: path ].
-	^ dialog openModal answer
+	
+	dialog := self fileDialogWindowClass new.
+	exts 
+		ifNotNil: [ dialog filter: (StCustomExtensionsFilter extensions: exts) ].
+	path 
+		ifNotNil: [ dialog nameText: path basename ].
+	^ dialog
+		defaultFolder: (path ifNil: [ StFileSystemModel defaultDirectory ]);
+		title: (title ifNil: [ 'Choose File' translated ] ifNotNil: [ title ]);
+		openModal;
+		selectedEntry
+
 ]
 
 { #category : 'services' }
@@ -798,15 +812,20 @@ UITheme >> chooseForSaveFileReferenceIn: aThemedMorph title: title extensions: e
 	path and preview type.
 	Answer nil or a filename."
 
-	| dialog pathFileReference |
-	pathFileReference := path asFileReference.
-	dialog := (FileDialogWindow newWithTheme: aThemedMorph theme)
-		title: title;
-		fileNameText: pathFileReference basename;
-		answerSaveFile.
-	exts ifNotNil: [ dialog validExtensions: exts ].
-	path ifNotNil: [ dialog selectPath: path ].
-	^ dialog openModal answer
+	| dialog directory |
+	dialog := self fileSaveDialogWindowClass new.
+	exts ifNotNil: [
+		dialog filter: (StCustomExtensionsFilter extensions: exts) ].
+	path ifNotNil: [
+		dialog nameText: path asFileReference nextVersion basename ].
+	directory := path
+		             ifNil: [ StFileSystemModel defaultDirectory ]
+		             ifNotNil: [ path parent ].
+	^ dialog
+		  defaultFolder: directory;
+		  title: (title ifNil: [ 'Save as' translated ] ifNotNil: [ title ]);
+		  openModal;
+		  selectedEntry
 ]
 
 { #category : 'services' }
@@ -816,19 +835,17 @@ UITheme >> chooseFullFileNameIn: aThemedMorph title: title patterns: patterns pa
 	Answer nil or a filename."
 
 	| dialog |
-	dialog := FileDialogWindow basicNew
-		basicTheme: aThemedMorph theme;
-		previewType: preview;
-		initialize;
-		title: title;
-		answerPathName.
-	patterns
-		ifNotNil: [ dialog
-				fileSelectionBlock: [ :de |
-					(dialog defaultFileSelectionBlock value: de)
-						and: [ de isDirectory or: [ patterns anySatisfy: [ :pat | pat match: de name ] ] ] ] ].
-	path ifNotNil: [ dialog selectPath: path ].
-	^ dialog openModal answer
+	
+	dialog := self fileDialogWindowClass new.
+	path 
+		ifNotNil: [ dialog nameText: path basename ].
+	^ dialog
+		defaultFolder: (path ifNil: [ StFileSystemModel defaultDirectory ]);
+		title: (title ifNil: [ 'Choose File' translated ]);
+		openModal;
+		selectedEntry.
+	
+
 ]
 
 { #category : 'services' }
@@ -1190,12 +1207,21 @@ UITheme >> createBoxOfSize: finalSizeInteger color: aColor [
 UITheme >> createCloseBoxFor: aSystemWindow [
 	"Answer a button for closing the window."
 
-	^(self
-		newCloseControlIn: aSystemWindow
-		for: aSystemWindow
-		action: [aSystemWindow closeBoxHit]
-		help: 'Close this window' translated)
-		extent: aSystemWindow boxExtent
+	| announcement |
+	^ (self
+		   newCloseControlIn: aSystemWindow
+		   for: aSystemWindow
+		   action: [
+			   SystemWindow useHideForClose
+				   ifTrue: [
+					   aSystemWindow hide.
+					   announcement := WindowClosed new
+						                   window: aSystemWindow;
+						                   yourself.
+					   self currentWorld announcer announce: announcement ]
+				   ifFalse: [ aSystemWindow closeBoxHit ] ]
+		   help: 'Close this window' translated) extent:
+		  aSystemWindow boxExtent
 ]
 
 { #category : 'label-styles' }
@@ -1376,16 +1402,6 @@ UITheme >> defaultSettings [
 		yourself
 ]
 
-{ #category : 'services' }
-UITheme >> denyIn: aThemedMorph text: aStringOrText title: aString [
-	"Answer the result of an deny dialog (true) with the given label and title."
-
-	^ ((DenyDialogWindow newWithTheme: aThemedMorph theme)
-		   textFont: self textFont;
-		   title: aString;
-		   text: aStringOrText) openModal cancelled not
-]
-
 { #category : 'fill-styles' }
 UITheme >> desktopColor [
 
@@ -1416,7 +1432,7 @@ UITheme >> desktopImageLayout [
 UITheme >> dialogWindowActiveFillStyleFor: aWindow [
 	"Return the window active fillStyle for the given window."
 
-	^self windowActiveFillStyleFor: aWindow
+	^ self windowActiveFillStyle
 ]
 
 { #category : 'fill-styles' }
@@ -1495,6 +1511,14 @@ UITheme >> diffRemovedLinesBackgroundColor [
 	"Answer the color used to show removals in a diff view."
 
 	^ colorPalette diffRemovedLinesBackgroundColor
+]
+
+{ #category : 'services' }
+UITheme >> directoryDialogWindowClass [
+
+	^ self class environment 
+		at: #StOpenDirectoryPresenter
+		ifAbsent: [  self error: 'Directory dialog support is missing in the image' ]
 ]
 
 { #category : 'accessing - colors' }
@@ -1833,6 +1857,22 @@ UITheme >> fadedBackgroundWindows [
 	^ self settings fadedBackgroundWindows
 ]
 
+{ #category : 'services' }
+UITheme >> fileDialogWindowClass [
+
+	^ self class environment 
+		at: #StOpenFilePresenter
+		ifAbsent: [  self error: 'File dialog support is missing in the image' ]
+]
+
+{ #category : 'services' }
+UITheme >> fileSaveDialogWindowClass [
+
+	^ self class environment 
+		at: #StSaveFilePresenter
+		ifAbsent: [  self error: 'File dialog support is missing in the image' ]
+]
+
 { #category : 'accessing' }
 UITheme >> flatMenu [
 	^ self settings flatMenu
@@ -2006,12 +2046,6 @@ UITheme >> lightColorFor: aButton [
 UITheme >> lightSelectionColor [
 
 	^ colorPalette lightSelectionColor
-]
-
-{ #category : 'private' }
-UITheme >> lightSelectionColorFor: aMorph [
-
-	^ self lightSelectionColor
 ]
 
 { #category : 'accessing - colors' }
@@ -2747,22 +2781,6 @@ UITheme >> newEmbeddedMenuIn: aThemedMorph for: aModel [
 ]
 
 { #category : 'morph creation' }
-UITheme >> newExpanderIn: aThemedMorph label: aString forAll: controls [
-	"Answer an expander with the given label and controls."
-
-	|answer|
-	answer := ExpanderMorph basicNew
-		basicTheme: self;
-		initialize;
-		font: self menuFont;
-		titleText: aString;
-		basicTheme: nil.
-	controls do: [:m |
-		answer addMorphBack: m].
-	^answer
-]
-
-{ #category : 'morph creation' }
 UITheme >> newFocusIndicatorMorphFor: aMorph [
 	"Answer a new focus indicator for the given morph."
 
@@ -2787,17 +2805,6 @@ UITheme >> newFormSetsForScale: scale [
 		at: #whiteTreeExpanded put: (self newTreeFormSet: true size: size color: Color white);
 		at: #whiteTreeUnexpanded put: (self newTreeFormSet: false size: size color: Color white);
 		yourself
-]
-
-{ #category : 'morph creation' }
-UITheme >> newFuzzyLabelIn: aThemedMorph for: aModel label: aString offset: offset alpha: alpha getEnabled: enabledSel [
-	"Answer a new fuzzy label."
-
-	^(FuzzyLabelMorph contents: aString font: self labelFont)
-		offset: offset;
-		alpha: alpha;
-		model: aModel;
-		getEnabledSelector: enabledSel
 ]
 
 { #category : 'morph creation' }
@@ -3050,77 +3057,12 @@ UITheme >> newListIn: aThemedMorph for: aModel list: listSelector selected: getS
 ]
 
 { #category : 'morph creation' }
-UITheme >> newListIn: aThemedMorph for: aModel list: listSelector selected: getSelector changeSelected: setSelector icon: iconSelector getEnabled: enabledSel help: helpText [
-	"Answer an icon list for the given model."
-
-	^PluggableIconListMorph new
-		selectionColor: self selectionColor;
-		textColor: self listTextColor;
-		font: self listFont;
-		on: aModel
-		list: listSelector
-		selected: getSelector
-		changeSelected: setSelector
-		menu: nil
-		keystroke: nil;
-		autoDeselect: false;
-		cornerStyle: aThemedMorph preferredCornerStyle;
-		color: Color white;
-		borderStyle: (BorderStyle inset width: 1 scaledByDisplayScaleFactor);
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
-		getIconSelector: iconSelector;
-		getEnabledSelector: enabledSel;
-		setBalloonText: helpText
-]
-
-{ #category : 'morph creation' }
 UITheme >> newMenuIn: aThemedMorph for: aModel [
 	"Answer a new menu."
 
 	^MenuMorph new
 		defaultTarget: aModel;
 		color: (self menuColorFor: aThemedMorph)
-]
-
-{ #category : 'morph creation' }
-UITheme >> newMorphDropListIn: aThemedMorph for: aModel list: listSel getSelected: getSel setSelected: setSel getEnabled: enabledSel useIndex: useIndex help: helpText [
-	"Answer a morph drop list for the given model."
-
-	^(MorphDropListMorph
-			on: aModel
-			list: listSel
-			selected: getSel
-			changeSelected: setSel
-			useIndex: useIndex)
-		selectionColor: self selectionColor;
-		getEnabledSelector: enabledSel;
-		cornerStyle: aThemedMorph preferredCornerStyle;
-		hResizing: #spaceFill;
-		vResizing: #shrinkWrap;
-		setBalloonText: helpText
-]
-
-{ #category : 'morph creation' }
-UITheme >> newMorphListIn: aThemedMorph for: aModel list: listSelector getSelected: getSelector setSelected: setSelector getEnabled: enabledSel help: helpText [
-	"Answer a morph list for the given model."
-
-	^(PluggableMorphListMorph
-			on: aModel
-			list: listSelector
-			selected: getSelector
-			changeSelected: setSelector
-			menu: nil
-			keystroke: nil)
-		selectionColor: self selectionColor;
-		autoDeselect: false;
-		cornerStyle: aThemedMorph preferredCornerStyle;
-		color: Color white;
-		borderStyle: (BorderStyle inset width: 1 scaledByDisplayScaleFactor);
-		hResizing: #spaceFill;
-		vResizing: #spaceFill;
-		getEnabledSelector: enabledSel;
-		setBalloonText: helpText
 ]
 
 { #category : 'morph creation' }
@@ -3160,15 +3102,6 @@ UITheme >> newOKButtonIn: aThemedMorph for: aModel getEnabled: enabledSel [
 		getEnabled: enabledSel
 		label: 'OK' translated
 		help: 'Apply changes and close the window' translated
-]
-
-{ #category : 'morph creation' }
-UITheme >> newOverflowRowIn: aThemedMorph forAll: aCollectionOfMorphs [
-	"Answer a new overflow row morph with the given contents."
-
-	^OverflowRowMorph new
-		baseMorphs: aCollectionOfMorphs;
-		yourself
 ]
 
 { #category : 'morph creation' }
@@ -3272,24 +3205,6 @@ UITheme >> newSeparatorIn: aThemedMorph [
 		borderStyle: (BorderStyle inset baseColor: Color blue; width: 1 scaledByDisplayScaleFactor);
 		extent: (2@2) scaledByDisplayScaleFactor;
 		hResizing: #spaceFill
-]
-
-{ #category : 'morph creation' }
-UITheme >> newSliderIn: aThemedMorph for: aModel getValue: getSel setValue: setSel min: min max: max quantum: quantum getEnabled: enabledSel help: helpText [
-	"Answer a slider. Resizing set for horizontal usage by default."
-
-	^(PluggableSliderMorph
-			on: aModel
-			getValue: getSel
-			setValue: setSel
-			min: min
-			max: max
-			quantum: quantum)
-		getEnabledSelector: enabledSel;
-		hResizing: #spaceFill;
-		vResizing: #shrinkWrap;
-		setBalloonText: helpText;
-		minHeight: 16 scaledByDisplayScaleFactor
 ]
 
 { #category : 'morph creation' }
@@ -3485,17 +3400,6 @@ UITheme >> newTitleIn: aThemedMorph label: aString for: control [
 ]
 
 { #category : 'morph creation' }
-UITheme >> newToolDockingBarIn: aThemedMorph [
-	"Answer a new tool docking bar."
-
-	^ToolDockingBarMorph new
-		borderWidth: 0;
-		hResizing: #spaceFill;
-		vResizing: #shrinkWrap;
-		clipSubmorphs: true
-]
-
-{ #category : 'morph creation' }
 UITheme >> newToolSpacerIn: aThemedMorph [
 	"Answer a new tool spacer."
 
@@ -3676,8 +3580,8 @@ UITheme >> paneColorFor: aWindow [
 	"Answer the pane color that should be used."
 
 	^ (self fadedBackgroundWindows
-		ifTrue: [ aWindow fillStyleToUse ]
-		ifFalse: [ self windowActiveFillStyleFor: aWindow ]) asColor
+		   ifTrue: [ aWindow fillStyleToUse ]
+		   ifFalse: [ self windowActiveFillStyle ]) asColor
 ]
 
 { #category : 'services' }
@@ -3733,46 +3637,40 @@ UITheme >> proceedIn: aThemedMorph text: aStringOrText title: aString [
 ]
 
 { #category : 'border-styles' }
-UITheme >> progressBarBorderStyleFor: aProgressBar [
-	"Return the progress bar borderStyle for the given progress bar."
+UITheme >> progressBarBorderStyle [
+	"Return the progress bar borderStyle for a progress bar."
 
-	|c|
-	c := self progressBarColorFor: aProgressBar.
-	^BorderStyle simple
-		width: 1 scaledByDisplayScaleFactor;
-		baseColor: c
+	| c |
+	c := self progressBarColor.
+	^ BorderStyle simple
+		  width: 1 scaledByDisplayScaleFactor;
+		  baseColor: c
 ]
 
 { #category : 'basic-colors' }
-UITheme >> progressBarColorFor: aProgressBar [
-
+UITheme >> progressBarColor [
 	"Answer the colour for the given progress bar."
 
-	^ colorPalette progressBarColorFor: aProgressBar
+	^ colorPalette progressBarColor
 ]
 
 { #category : 'fill-styles' }
-UITheme >> progressBarFillStyleFor: aProgressBar [
-	^ self basePassiveBackgroundColorFor: aProgressBar
-]
+UITheme >> progressBarFillColor [
 
-{ #category : 'basic-colors' }
-UITheme >> progressBarProgressColorFor: aProgressBar [
-
-	"Answer the colour for the progress part of the given progress bar."
-
-	^ colorPalette progressBarProgressColorFor: aProgressBar
+	^ self basePassiveBackgroundColor
 ]
 
 { #category : 'fill-styles' }
-UITheme >> progressBarProgressFillStyleFor: aProgressBar [
-	^ (self lightSelectionColorFor: aProgressBar)
+UITheme >> progressBarProgressFillColor [
+
+	^ self lightSelectionColor
 ]
 
 { #category : 'fill-styles' }
-UITheme >> progressFillStyleFor: aProgress [
-	"Return the progress fillStyle for the given progress morph."
-	^ self windowActiveFillStyleFor: aProgress
+UITheme >> progressFillStyle [
+	"Return the progress fillStyle for progress morph."
+
+	^ self windowActiveFillStyle
 ]
 
 { #category : 'services' }
@@ -4186,8 +4084,7 @@ UITheme >> secondarySelectionColor [
 { #category : 'private' }
 UITheme >> selectedFillStyleFor: aMorph height: anInteger [
 
-
-	^ SolidFillStyle color: (self lightSelectionColorFor:  aMorph)
+	^ SolidFillStyle color: self lightSelectionColor
 ]
 
 { #category : 'accessing - colors' }
@@ -4631,7 +4528,7 @@ UITheme >> textEditorDisabledBorderStyleFor: aTextEditor [
 UITheme >> textEditorDisabledFillStyleFor: aTextEditor [
 	"Return the disabled fillStyle for the given text editor."
 
-	^self basePassiveBackgroundColorFor: aTextEditor
+	^ self basePassiveBackgroundColor
 ]
 
 { #category : 'services' }
@@ -4902,9 +4799,10 @@ UITheme >> windowActiveDropShadowStyle: anObject [
 ]
 
 { #category : 'fill-styles' }
-UITheme >> windowActiveFillStyleFor: aWindow [
+UITheme >> windowActiveFillStyle [
 	"We do not want the lighting effect when the window goes inactive"
-	^SolidFillStyle color: self baseColor
+
+	^ SolidFillStyle color: self baseColor
 ]
 
 { #category : 'fill-styles' }
@@ -5025,7 +4923,8 @@ UITheme >> windowExtentChangedFor: aWindow [
 { #category : 'fill-styles' }
 UITheme >> windowInactiveFillStyleFor: aWindow [
 	"We do not want the lighting effect when the window goes inactive"
-	^self windowActiveFillStyleFor: aWindow
+
+	^ self windowActiveFillStyle
 ]
 
 { #category : 'fill-styles' }

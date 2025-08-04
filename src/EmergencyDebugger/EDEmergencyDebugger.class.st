@@ -535,7 +535,6 @@ EDEmergencyDebugger >> repl: aREPLInterface [
 { #category : 'accessing' }
 EDEmergencyDebugger >> resetDisplay [
 
-	rawDisplay destroyWindow
 ]
 
 { #category : 'accessing' }

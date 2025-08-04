@@ -26,6 +26,12 @@ SycFormatSourceCodeCommand >> defaultMenuItemName [
 	^ 'Format code'
 ]
 
+{ #category : 'accessing' }
+SycFormatSourceCodeCommand >> description [
+
+	^ 'Formats source code in given code editor'.
+]
+
 { #category : 'execution' }
 SycFormatSourceCodeCommand >> execute [
 

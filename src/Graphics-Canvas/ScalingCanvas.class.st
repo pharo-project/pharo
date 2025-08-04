@@ -230,7 +230,9 @@ ScalingCanvas class >> exampleLine2 [
 			{ 1. { (23.9@22.0) -> (24.0@22.0). (25.1@22.0) -> (26.0@22.0). (28.0@22.0) -> (28.0@22.0) } }.
 			{ 1.5. { (23.0@24.0) -> (23.0@24.0). (25.1@24.0) -> (26.9@24.0) } }.
 		} do: [ :arguments |
-			arguments bind: [ :width :pointAssociations |
+			| width pointAssociations |
+			width := arguments first.
+			pointAssociations := arguments second.
 				pointAssociations do: [ :pointAssociation |
 					canvas
 						line: pointAssociation key
@@ -244,7 +246,7 @@ ScalingCanvas class >> exampleLine2 [
 							width: width color: Color blue translucent;
 						line: pointAssociation key transposed + (30@9)
 							to: pointAssociation value transposed + (30@9)
-							width: width color: Color blue translucent ] ] ] ]
+							width: width color: Color blue translucent ] ] ]
 ]
 
 { #category : 'examples' }

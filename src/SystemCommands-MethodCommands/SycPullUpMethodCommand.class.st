@@ -27,6 +27,12 @@ SycPullUpMethodCommand >> defaultMenuItemName [
 	^'(R) Pull up'
 ]
 
+{ #category : 'accessing' }
+SycPullUpMethodCommand >> description [
+
+	^ 'Pull up methods.'
+]
+
 { #category : 'execution' }
 SycPullUpMethodCommand >> executeRefactorings [
 

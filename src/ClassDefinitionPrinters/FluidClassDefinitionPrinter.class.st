@@ -118,8 +118,6 @@ FluidClassDefinitionPrinter >> compactClassDefinitionTemplateInPackage: aPackage
 			  nextPutAll: 'Object << #MyClass';
 			  crtab;
 			  nextPutAll: 'slots: {};';
-			  crtab;
-			  nextPutAll: 'sharedVariables: {};';
 			  crtab.
 		  aTagName ifNotNil: [
 			  s

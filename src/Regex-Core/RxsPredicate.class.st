@@ -82,14 +82,14 @@ RxsPredicate class >> initializeNamedClassSelectors [
 		at: 'xdigit' put: #beHexDigit
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RxsPredicate >> beAlphaNumeric [
 
 	predicate := [:char | char isAlphaNumeric].
 	negation := [:char | char isAlphaNumeric not]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RxsPredicate >> beAlphabetic [
 
 	predicate := [:char | char isLetter].
@@ -141,7 +141,7 @@ RxsPredicate >> beLowercase [
 	negation := [:char | char isLowercase not]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RxsPredicate >> beNotDigit [
 
 	self
@@ -182,7 +182,7 @@ RxsPredicate >> bePunctuation [
 	negation := [:char | (punctuationChars includes: char) not]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RxsPredicate >> beSpace [
 
 	predicate := [:char | char isSeparator].
@@ -196,7 +196,7 @@ RxsPredicate >> beUppercase [
 	negation := [:char | char isUppercase not]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 RxsPredicate >> beWordConstituent [
 
 	predicate := [:char | char isAlphaNumeric or: [char == $_]].

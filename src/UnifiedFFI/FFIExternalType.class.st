@@ -242,6 +242,12 @@ FFIExternalType >> isFloatType [
 ]
 
 { #category : 'testing' }
+FFIExternalType >> isLiteralArgument [
+
+	^ false
+]
+
+{ #category : 'testing' }
 FFIExternalType >> isPointer [
 	^ self pointerArity > 0
 ]

@@ -155,6 +155,27 @@ FFICalloutMethodBuilderTest >> testCallWithConstant [
 ]
 
 { #category : 'tests' }
+FFICalloutMethodBuilderTest >> testCallWithIntegerConstantAsPointerIsOptimized [
+
+	| result pushInstruction |
+	result := self builder build: [ :builder |
+		builder requestor requestor: FFICalloutObjectForTest.
+		builder
+			signature: #( void method1 ( void* 0 ) );
+			sender: (FFICalloutMethodBuilderTestContext new
+				selector: #method1:value:;
+				argumentNames: #();
+				methodClass: FFICalloutObjectForTest;
+				yourself )].
+
+	pushInstruction := result decompileIR startSequence at: 3.
+	
+	self assert: pushInstruction isPushLiteral.
+	self assert: pushInstruction literal equals: 0 tfPointerAddress 
+	
+]
+
+{ #category : 'tests' }
 FFICalloutMethodBuilderTest >> testCallWithObject [
 	| result tfFunction |
 

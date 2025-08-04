@@ -35,6 +35,12 @@ ClyRunTestsFromMethodsCommand >> defaultMenuIconName [
 	^fullResult iconName
 ]
 
+{ #category : 'accessing' }
+ClyRunTestsFromMethodsCommand >> description [
+
+	^ 'Runs all selected test methods using selected test cases (runTestCases)'
+]
+
 { #category : 'execution' }
 ClyRunTestsFromMethodsCommand >> execute [
 	testItems do: [:each | self runTestItem: each ]

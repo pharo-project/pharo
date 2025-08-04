@@ -46,7 +46,7 @@ EpProtocolChange >> doesOverride: aCodeChange [
 		aCodeChange protocol = self protocol ] ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 EpProtocolChange >> initializeWithBehavior: aBehavior protocol: aProtocol [
 	self initialize.
 	behavior := aBehavior asEpiceaRingDefinition.

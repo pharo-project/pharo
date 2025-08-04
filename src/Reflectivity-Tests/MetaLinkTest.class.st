@@ -11,8 +11,8 @@ Class {
 
 { #category : 'tests - misc' }
 MetaLinkTest >> testAvailableReifications [
-	self assert: (ASTMessageNode new availableReifications includes: #receiver).
-	self assert: (ASTMessageNode new availableReifications includes: #value).
+	self assert: (OCMessageNode new availableReifications includes: #receiver).
+	self assert: (OCMessageNode new availableReifications includes: #value).
 	self assert: ((ReflectivityExamples classVariableNamed: #ClassVar) availableReifications includes: #name).
 	self deny: ((ReflectivityExamples classVariableNamed: #ClassVar) availableReifications includes: #selector)
 ]
@@ -92,8 +92,13 @@ MetaLinkTest >> testLinkOptionsDefault [
 { #category : 'tests - options' }
 MetaLinkTest >> testOptionFor [
 
-	self assert: (((ReflectivityExamples>>#exampleMethodWithMetaLinkOptions) ast optionsFor: MetaLink new) includes: #optionCompileOnLinkInstallation).
-	self assert: (((ReflectivityExamples class>>#exampleMethodWithMetaLinkOptionsViaClass) ast optionsFor: MetaLink new) includes: #optionCompileOnLinkInstallation)
+	self assert:
+		(((ReflectivityExamples >> #exampleMethodWithMetaLinkOptions) ast
+			  optionsFor: MetaLink new) includesOption:
+			 #optionCompileOnLinkInstallation).
+	self assert: (((ReflectivityExamples class
+		   >> #exampleMethodWithMetaLinkOptionsViaClass) ast optionsFor:
+			  MetaLink new) includesOption: #optionCompileOnLinkInstallation)
 ]
 
 { #category : 'tests - simple' }

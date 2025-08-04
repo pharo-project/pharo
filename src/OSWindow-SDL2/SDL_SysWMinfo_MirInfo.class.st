@@ -42,7 +42,7 @@ SDL_SysWMinfo_MirInfo >> connection [
 { #category : 'accessing - structure variables' }
 SDL_SysWMinfo_MirInfo >> connection: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_CONNECTION put: anObject getHandle
+	handle pointerAt: OFFSET_CONNECTION put: anObject getHandle.
 ]
 
 { #category : 'accessing - structure variables' }
@@ -54,5 +54,5 @@ SDL_SysWMinfo_MirInfo >> surface [
 { #category : 'accessing - structure variables' }
 SDL_SysWMinfo_MirInfo >> surface: anObject [
 	"This method was automatically generated"
-	handle pointerAt: OFFSET_SURFACE put: anObject getHandle
+	handle pointerAt: OFFSET_SURFACE put: anObject getHandle.
 ]

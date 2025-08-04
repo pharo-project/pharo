@@ -21,7 +21,7 @@ MetaLinkObjectAPITest >> link [
 { #category : 'initialization' }
 MetaLinkObjectAPITest >> linkForTemp [
 	| okNode |
-	okNode := ASTLiteralValueNode value: 'ok'.
+	okNode := OCLiteralValueNode value: 'ok'.
 	^ MetaLink new
 		metaObject: self;
 		selector: #tagExec:;

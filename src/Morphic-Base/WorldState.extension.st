@@ -188,35 +188,34 @@ WorldState class >> systemStartupFolderMenuOn: aBuilder [
 
 { #category : '*Morphic-Base' }
 WorldState class >> windowsOn: aBuilder [
+
 	<worldMenu>
 	(aBuilder item: #Windows)
 		order: 90;
-		with: [ (aBuilder item: #'Collapse all windows')
+		with: [
+			(aBuilder item: #'Collapse all windows')
 				action: [ self currentWorld collapseAll ];
-				help: 'Reduce all open windows to collapsed forms that only show titles' translated.
+				help: 'Reduce all open windows to collapsed forms that only show titles'.
 			(aBuilder item: #'Expand all windows')
 				iconName: #expandBox;
 				action: [ self currentWorld expandAll ];
-				help: 'Expand all collapsed windows back to their expanded forms' translated.
+				help: 'Expand all collapsed windows back to their expanded forms'.
 			(aBuilder item: #'Fit all windows')
 				action: [ self currentWorld fitAllVisibleWindows ];
-				help: 'Fit all open windows as visible in World' translated.
+				help: 'Fit all open windows as visible in World'.
 			(aBuilder item: #'Close all debuggers')
 				help: 'Close all opened debugger in the image.';
 				action: [ OupsDebuggerSystem closeAllDebuggers ].
 			(aBuilder item: #'Send top window to back (\)')
 				action: [ SystemWindow sendTopWindowToBack ];
-				help: 'Make the topmost window become the backmost one, and activate the window just beneath it.' translated.
-			(aBuilder item: #'Move windows onscreen')
-				action: [ self currentWorld bringWindowsFullOnscreen ];
-				help: 'Make all windows fully visible on the screen' translated.
+				help: 'Make the topmost window become the backmost one, and activate the window just beneath it.'.
 			(aBuilder item: #'Delete unchanged windows')
 				action: [ self currentWorld closeUnchangedWindows ];
-				help: 'Deletes all windows that do not have unsaved text edits.' translated.
+				help: 'Deletes all windows that do not have unsaved text edits.'.
 			(aBuilder item: #'Delete all windows discarding edits')
 				action: [ self currentWorld closeAllWindowsDiscardingChanges ];
-				help: 'Deletes all windows even if they have unsaved text edits.' translated.
+				help: 'Deletes all windows even if they have unsaved text edits.'.
 			(aBuilder item: #'Toggle full screen mode')
 				action: [ WorldMorph toggleFullscreen ];
-				help: 'Turn full screen mode on when it is off, off when it is on.' translated ]
+				help: 'Turn full screen mode on when it is off, off when it is on.' ]
 ]

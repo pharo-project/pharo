@@ -19,6 +19,14 @@ VariableLayout class >> extending: superLayout scope: aScope host: aClass [
 		yourself
 ]
 
+{ #category : 'description' }
+VariableLayout class >> subclassDefiningSymbol [
+	"Answer a keyword that describes the receiver's kind of subclass
+	Note: this is for printing the ST80 style class definiton, usage makes no sense for anything
+	else!"
+	^#variableSubclass:
+]
+
 { #category : 'format' }
 VariableLayout >> instanceSpecification [
 	^ self hasFields

@@ -922,21 +922,3 @@ MailMessage >> to [
 MailMessage >> to: aStringOrCollection [
 	self setField: 'to' toString: aStringOrCollection asEmailHeaderString
 ]
-
-{ #category : 'printing/formatting' }
-MailMessage >> viewBody [
-	"open a viewer on the body of this message"
-	self containsViewableImage
-		ifTrue: [^ self viewImageInBody].
-	MorphicUIManager new
-		longMessage: self bodyTextFormatted
-		title: (self name ifNil: ['(a message part)'])
-]
-
-{ #category : 'printing/formatting' }
-MailMessage >> viewImageInBody [
-	| stream image |
-	stream := self body contentStream.
-	image := Form fromBinaryStream: stream.
-	(ImageMorph withForm: image) openInWorld
-]

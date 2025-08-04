@@ -31,6 +31,12 @@ CompletionEngineTest >> editorTextWithCaret [
 	^ (source copyFrom: 1 to: editor caret-1), '|', (source copyFrom: editor caret to: source size)
 ]
 
+{ #category : 'helpers' }
+CompletionEngineTest >> expectText: aString [ 
+
+	self assert: editor text asString equals: aString
+]
+
 { #category : 'accessing' }
 CompletionEngineTest >> interactionModel [
 
@@ -153,6 +159,7 @@ CompletionEngineTest >> testCompletionAfterKeyword [
 
 	self setEditorTextWithCaret: 'self"x"foo:|"x"baz'.
 	self assert: controller completionToken equals: 'foo:'.
+	self assert: controller tokenToReplace equals: 'foo:'.
 	controller context replaceTokenInEditorWith: 'bar'.
 	self assert: self editorTextWithCaret equals: 'self"x"bar|"x"baz'.
 
@@ -192,6 +199,7 @@ CompletionEngineTest >> testCompletionAfterWord [
 
 	self setEditorTextWithCaret: 'self:=foo|:=baz'.
 	self assert: controller completionToken equals: 'foo'.
+	self assert: controller tokenToReplace equals: 'foo'.
 	controller context replaceTokenInEditorWith: 'bar'.
 	self assert: self editorTextWithCaret equals: 'self:=bar|:=baz'.
 
@@ -289,6 +297,7 @@ CompletionEngineTest >> testCompletionOnFirstLetter [
 
 	self setEditorTextWithCaret: 'self:=f|oo:=baz'.
 	self assert: controller completionToken equals: 'f'.
+	self assert: controller tokenToReplace equals: 'foo'.
 	controller context replaceTokenInEditorWith: 'bar'.
 	self assert: self editorTextWithCaret equals: 'self:=bar|:=baz'.
 
@@ -318,6 +327,7 @@ CompletionEngineTest >> testCompletionOnNoWord [
 
 	self setEditorTextWithCaret: 'self:=|:=baz'.
 	self assert: controller completionToken equals: ''.
+	self assert: controller tokenToReplace equals: ''.
 	controller context replaceTokenInEditorWith: 'bar'.
 	self assert: self editorTextWithCaret equals: 'self:=bar|:=baz'.
 
@@ -651,6 +661,7 @@ CompletionEngineTest >> testReplaceWithSpaces [
 
 	self setEditorTextWithCaret: 'self fo|o baz'.
 	self assert: controller completionToken equals: 'fo'.
+	self assert: controller tokenToReplace equals: 'foo'.
 	controller context replaceTokenInEditorWith: 'bar '.
 	self assert: self editorTextWithCaret equals: 'self bar| baz'.
 
@@ -817,6 +828,20 @@ CompletionEngineTest >> testSmartBackspaceOutsideSmartCharacters [
 		description: 'smartbackspace ignored if after smart character'
 ]
 
+{ #category : 'tests' }
+CompletionEngineTest >> testSmartBackspaceRemoveBothCharactersWithSpaces [
+	"Test that smart backspace removes both characters even with spaces between them"
+
+	self setEditorText: '(  )'.
+	self selectAt: 2.
+
+	self
+		assert: controller smartBackspace
+		description: 'Smart backspace should return true'.
+
+	self assert: editor text equals: ''
+]
+
 { #category : 'tests - keyboard' }
 CompletionEngineTest >> testSmartBackspaceWithSelection [
 
@@ -878,27 +903,112 @@ CompletionEngineTest >> testSmartCharacterWithEventAndSelection [
 ]
 
 { #category : 'tests - keyboard' }
-CompletionEngineTest >> testSmartCharacterWithEventSelfClosing [
-	self
-		setEditorText: ' ';
-		selectAt: 2.
+CompletionEngineTest >> testSmartCharacterWithEventDontWritePairAfterDifferentCharacter [
+	"Triggering a smart character inside the same smart character pair still works."
 
+	self setEditorTextWithCaret: '$|'.
+	editor keystroke: (self keyboardPressFor: $().
+	self assert: editor text equals: '$('.
+
+	self setEditorTextWithCaret: '(|'.
+	editor keystroke: (self keyboardPressFor: $").
+	self assert: editor text equals: '("'.
+
+	self setEditorTextWithCaret: 'foo:|'.
+	editor keystroke: (self keyboardPressFor: $[).
+	self assert: editor text equals: 'foo:['
+]
+
+{ #category : 'tests' }
+CompletionEngineTest >> testSmartCharacterWithEventNoPairWhenCharLiteral [
+
+	self setEditorTextWithCaret: '[$|]'.
+	editor keystroke: (self keyboardEventFor: $[).
+	self assert: editor text equals: '[$[]'.
+
+	self setEditorTextWithCaret: '(1 > $|)'.
+	editor keystroke: (self keyboardEventFor: $().
+	self assert: editor text equals: '(1 > $()'
+]
+
+{ #category : 'tests - keyboard' }
+CompletionEngineTest >> testSmartCharacterWithEventSelfClosing [
+
+	self setEditorTextWithCaret: ' |'.
 	controller smartCharacterWithEvent: (self keyboardEventFor: $().
 	self assert: editor text equals: ' ()'.
 
-	self
-		setEditorText: ' ';
-		selectAt: 2.
-
+	self setEditorTextWithCaret: ' |'.
 	controller smartCharacterWithEvent: (self keyboardEventFor: $)).
 	self assert: editor text equals: ' '.
 
-	self
-		setEditorText: ' ';
-		selectAt: 2.
-
+	self setEditorTextWithCaret: ' |'.
 	controller smartCharacterWithEvent: (self keyboardEventFor: $<).
 	self assert: editor text equals: ' '
+]
+
+{ #category : 'tests - keyboard' }
+CompletionEngineTest >> testSmartCharacterWithEventWriteClosingBeforeSameCharacter [
+	"Triggering a smart character inside the same smart character pair still works."
+
+	self setEditorTextWithCaret: '|)'.
+	editor keystroke: (self keyboardPressFor: $)).
+	self assert: editor text equals: '))'.
+
+	self setEditorTextWithCaret: '|]'.
+	editor keystroke: (self keyboardPressFor: $]).
+	self assert: editor text equals: ']]'.
+
+	self setEditorTextWithCaret: '|}'.
+	editor keystroke: (self keyboardPressFor: $}).
+	self assert: editor text equals: '}}'.
+
+	self setEditorTextWithCaret: '|"'.
+	editor keystroke: (self keyboardPressFor: $").
+	self assert: editor text equals: '"""'.
+
+	self setEditorTextWithCaret: '|'''.
+	editor keystroke: (self keyboardPressFor: $').
+	self assert: editor text equals: ''''''''
+]
+
+{ #category : 'tests - keyboard' }
+CompletionEngineTest >> testSmartCharacterWithEventWritePairAfterSameCharacter [
+	"Triggering a smart character inside the same smart character pair still works."
+
+	self setEditorTextWithCaret: '"|'.
+	editor keystroke: (self keyboardPressFor: $").
+	self assert: editor text equals: '"""'.
+
+	self setEditorTextWithCaret: '''|'.
+	editor keystroke: (self keyboardPressFor: $').
+	self assert: editor text equals: ''''''''
+]
+
+{ #category : 'tests - keyboard' }
+CompletionEngineTest >> testSmartCharacterWithEventWritePairInsideExistingPair [
+	"Triggering a smart character inside the same smart character pair still works."
+
+	self setEditorTextWithCaret: '(|)'.
+	controller smartCharacterWithEvent: (self keyboardPressFor: $().
+	self assert: editor text equals: '(())'.
+
+	self setEditorTextWithCaret: '[|]'.
+	controller smartCharacterWithEvent: (self keyboardPressFor: $[).
+	self assert: editor text equals: '[[  ]]'.
+
+	self setEditorTextWithCaret: '{|}'.
+	editor keystroke: (self keyboardPressFor: ${).
+	self assert: editor text equals: '{{  }}'.
+
+	self setEditorTextWithCaret: '"|"'.
+	controller smartCharacterWithEvent: (self keyboardPressFor: $").
+	self assert: editor text equals: '""""'.
+
+	"initial string: '' (two quotes) ; typing $' ; final string: ''' (three quotes, and the inserted quote is escaped)"
+	self setEditorTextWithCaret: '''|'''.
+	controller smartCharacterWithEvent: (self keyboardPressFor: $').
+	self assert: editor text equals: ''''''''''
 ]
 
 { #category : 'tests - keyboard' }
@@ -953,14 +1063,54 @@ CompletionEngineTest >> testSmartDoubleQuoteSurroundsSelection [
 
 { #category : 'tests - keyboard' }
 CompletionEngineTest >> testSmartNeedExtraRemoveInForOppositeAt [
+	"index of cursor = 1 + index of character to remove"
 
-	self assert: (controller smartNeedExtraRemoveIn: '()' for: $( opposite:$) at:1).
-	self deny: (controller smartNeedExtraRemoveIn: '(()' for: $( opposite:$) at:2).
-	self assert: (controller smartNeedExtraRemoveIn: '(1()' for: $( opposite:$) at:3).
-	self assert: (controller smartNeedExtraRemoveIn: '(1(1())' for: $( opposite:$) at:5).
-	self assert: (controller smartNeedExtraRemoveIn: '((1)1())))' for: $( opposite:$) at:6).
-	self deny: (controller smartNeedExtraRemoveIn: '()(()' for: $( opposite:$) at:3).
-	self assert: (controller smartNeedExtraRemoveIn: '(foobar()' for: $( opposite:$) at:8)
+	self setEditorTextWithCaret: '(|)'.
+	self assert: controller smartBackspace. "result: ''"
+
+	self setEditorTextWithCaret: '(()|'.
+	self deny: controller smartBackspace. "result: '(('"
+
+	self setEditorTextWithCaret: '(1(|)'.
+	self assert: controller smartBackspace. "result: '(1'"
+
+	self setEditorTextWithCaret: '(1(1(|))'.
+	self assert: controller smartBackspace. "result: '(1(1)'"
+
+	self setEditorTextWithCaret: '((1)1(|)))'.
+	self assert: controller smartBackspace. "result: '((1)1))'"
+
+	self setEditorTextWithCaret: '()((|)'.
+	self deny: controller smartBackspace. "result: '()()'"
+
+	self setEditorTextWithCaret: '(foobar(|)'.
+	self assert: controller smartBackspace. "result: '(foobar'"
+
+	self setEditorTextWithCaret: '[|]'.
+	self assert: controller smartBackspace. "result: ''"
+
+	self setEditorTextWithCaret: '{|}'.
+	self assert: controller smartBackspace. "result: ''"
+
+	self setEditorTextWithCaret: '"|"'.
+	self assert: controller smartBackspace. "result: ''"
+
+	self setEditorTextWithCaret: '''|'''.
+	self assert: controller smartBackspace "result: ''"
+]
+
+{ #category : 'tests - keyboard' }
+CompletionEngineTest >> testSmartNeedExtraRemoveInForOppositeAtNoRemoveForLiterals [
+	"index of cursor = 1 + index of character to remove"
+
+	self setEditorTextWithCaret: '($(|)'.
+	self deny: controller smartBackspace. "result: '($)'"
+
+	self setEditorTextWithCaret: '$[|]'.
+	self deny: controller smartBackspace. "result: '$]'"
+
+	self setEditorTextWithCaret: '$"|"'.
+	self deny: controller smartBackspace
 ]
 
 { #category : 'tests - keyboard' }
@@ -994,4 +1144,61 @@ CompletionEngineTest >> testSmartQuoteSurroundsSelection [
 
 	controller smartCharacterWithEvent: (self keyboardPressFor: $').
 	self assert: editor text equals: ' ''text'' '
+]
+
+{ #category : 'tests - undo' }
+CompletionEngineTest >> testUndoAutocompleteLeavesCursorInOriginalPosition [
+
+	"If the caret is at the end of a word, replace the entire word"
+	editor addString: 'self'.
+	editor closeTypeIn.
+	editor unselect.
+	
+	"Put the cursor after the `sel` token, and then we will simulate code completion"
+	self selectAt: 'self' size - 1.
+
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'selection'.
+	
+	editor undo.
+	self expectText: 'self'.
+	self assert: editor selectionInterval equals: (3 to: 2)
+]
+
+{ #category : 'tests - undo' }
+CompletionEngineTest >> testUndoCompletionEntryKeepsFollowingLine [
+
+	"If the caret is at the end of a word, replace the entire word"
+
+	| text |
+	text := 'self mEthOdThatDoes
+nextLine'.
+
+	self
+		setEditorText: text;
+		selectAt: text lines first size.
+
+	editor textArea openInWorld.
+	controller openMenu.
+
+	controller context replaceTokenInEditorWith: 'mEthOdThatDoesNotExist'.
+
+	editor undo.
+	
+	self assert: editor text asString equals: text
+]
+
+{ #category : 'tests - keyboard' }
+CompletionEngineTest >> testWriteSmartCharacterPairInsideExistingPair [
+	"Triggering a smart character inside the same smart character pair still works."
+
+	self setEditorTextWithCaret: '(|)'.
+	controller smartCharacterWithEvent: (self keyboardPressFor: $().
+	self assert: editor text equals: '(())'.
+
+	self setEditorTextWithCaret: '[|]'.
+	controller smartCharacterWithEvent: (self keyboardPressFor: $[).
+	self assert: editor text equals: '[[  ]]'
 ]

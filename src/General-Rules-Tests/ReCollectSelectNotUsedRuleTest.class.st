@@ -7,31 +7,22 @@ Class {
 }
 
 { #category : 'tests' }
-ReCollectSelectNotUsedRuleTest >> testRuleForCollect [ 
+ReCollectSelectNotUsedRuleTest >> testRuleForCollect [
 
-	| critiques | 
-	
-	self class compile: 'method #(1 2 3 4) collect: [ :number | number > 0 ] ' classified: 'test-helper'.
-	[ critiques := self myCritiquesOnMethod: self class >> #method.
-	self assert: critiques size equals: 1 ] ensure: [ (self class >> #method) removeFromSystem ]
+	self generateMethod: 'method #(1 2 3 4) collect: [ :number | number > 0 ] '.
+	self assert: (self myCritiquesOnMethod: self class >> #method) size equals: 1
 ]
 
 { #category : 'tests' }
 ReCollectSelectNotUsedRuleTest >> testRuleForselect [
 
-	| critiques | 
-	
-	self class compile: 'method #(1 2 3 4) select: [ :number | number > 0 ] ' classified: 'test-helper'.
-	[ critiques := self myCritiquesOnMethod: self class >> #method.
-	self assert: critiques size equals: 1 ] ensure: [ (self class >> #method) removeFromSystem ]
+	self generateMethod: 'method #(1 2 3 4) select: [ :number | number > 0 ] '.
+	self assert: (self myCritiquesOnMethod: self class >> #method) size equals: 1
 ]
 
 { #category : 'tests' }
 ReCollectSelectNotUsedRuleTest >> testRuleNotViolated [
 
-	| critiques | 
-	
-	self class compile: 'method ^ #(1 2 3 4) select: [ :number | number > 0 ] ' classified: 'test-helper'.
-	[ critiques := self myCritiquesOnMethod: self class >> #method.
-	self assertEmpty: critiques ] ensure: [ (self class >> #method) removeFromSystem ]
+	self generateMethod: 'method ^ #(1 2 3 4) select: [ :number | number > 0 ] '.
+	self assertEmpty: (self myCritiquesOnMethod: self class >> #method)
 ]

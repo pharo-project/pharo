@@ -177,7 +177,7 @@ ZnMessage >> postCopy [
 	"Note that we don't copy the entity, see also #resetEntity: and ZnClient>>#resetEntity"
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMessage >> readBinaryFrom: stream [
 	| entityReader |
 	self readHeaderFrom: stream.
@@ -186,23 +186,23 @@ ZnMessage >> readBinaryFrom: stream [
 	self entity: entityReader readEntity
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMessage >> readEntityFrom: stream [
 	self entity: (self entityReaderOn: stream) readEntity
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMessage >> readFrom: stream [
 	self readHeaderFrom: stream.
 	self readEntityFrom: stream
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMessage >> readHeaderFrom: stream [
 	self headers: (ZnHeaders readFrom: stream)
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnMessage >> readStreamingFrom: stream [
 	| entityReader |
 	self readHeaderFrom: stream.

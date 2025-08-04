@@ -35,5 +35,7 @@ SemanticMessageIconStyler >> segmentMorphClass [
 
 { #category : 'testing' }
 SemanticMessageIconStyler >> shouldStyleNode: aNode [
-	^ aNode isMessage and: [ aNode selector value isSelectorSymbol not ]
+
+	^ aNode isMessage and: [
+		  aNode selector value isUsedAsSelectorSymbol not ]
 ]

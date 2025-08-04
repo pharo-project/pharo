@@ -17,9 +17,9 @@ ClapFlagTest >> testMatchesLongForm [
 	subject := self namedSubject.
 	flagName := '--' , self subjectName.
 	argv := { flagName. #remainder } readStream.
-
-	match := subject matchOn: argv.
-
+	
+	match := subject matchOn: argv in: ClapContext new.
+	
 	self deny: match isMismatch.
 	self
 		assert: match specification
@@ -34,9 +34,9 @@ ClapFlagTest >> testMatchesShortForm [
 	subject := self namedSubject.
 	flagName := '-' , (self subjectName first: 1).
 	argv := { flagName. #remainder } readStream.
-
-	match := subject matchOn: argv.
-
+	
+	match := subject matchOn: argv in: ClapContext new.
+	
 	self deny: match isMismatch.
 	self
 		assert: match specification
@@ -51,9 +51,9 @@ ClapFlagTest >> testMismatchesWrongLongForm [
 	subject := self namedSubject.
 	badFlag := '--' , self subjectName , 'NOT'.
 	argv := { badFlag } readStream.
-
-	match := subject matchOn: argv.
-
+	
+	match := subject matchOn: argv in: Object new.
+	
 	self assert: match isMismatch.
 	self
 		assert: match specification
@@ -68,9 +68,9 @@ ClapFlagTest >> testMismatchesWrongShortForm [
 	subject := self namedSubject.
 	badFlag := '-' , (self subjectName first: 1) asUppercase.
 	argv := { badFlag } readStream.
-
-	match := subject matchOn: argv.
-
+	
+	match := subject matchOn: argv in: Object new.
+	
 	self assert: match isMismatch.
 	self
 		assert: match specification

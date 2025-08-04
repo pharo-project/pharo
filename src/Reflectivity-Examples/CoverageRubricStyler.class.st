@@ -12,7 +12,7 @@ Class {
 CoverageRubricStyler >> addIconStyle: aNode from: start to: stop [
 	|rejectClass|
 
-	rejectClass := { ASTMethodNode . ASTSequenceNode }.
+	rejectClass := { OCMethodNode . OCSequenceNode }.
 	(rejectClass includes: aNode class) ifTrue: [ ^self ]. "do nothing"
 	aNode hasBeenExecuted ifTrue: [  super addIconStyle: aNode from: start to: stop]
 ]

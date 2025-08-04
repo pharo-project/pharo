@@ -37,3 +37,8 @@ RBRefactoryPackageChange >> initialize [
 	super initialize.
 	browserEnvironment := RBBrowserEnvironment default
 ]
+
+{ #category : 'testing' }
+RBRefactoryPackageChange >> isInScope: aRBBrowserEnvironment [ 
+	^ aRBBrowserEnvironment includesPackage: self
+]

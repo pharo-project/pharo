@@ -9,7 +9,7 @@ this refactoring will add the pool definition to class B.
 "
 Class {
 	#name : 'RBExpandReferencedPoolsRefactoring',
-	#superclass : 'RBRefactoring',
+	#superclass : 'ReRefactoring',
 	#instVars : [
 		'pools',
 		'fromClass',

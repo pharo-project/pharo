@@ -3,7 +3,7 @@ I am a small transformation that adds super call to given method as a first stat
 
 You can use me like this:
 ```
-ReAddSuperSendAsFirstStatementTransformation 
+(ReAddSuperSendAsFirstStatementTransformation 
 	model: self model
 	methodTree: method
 	inClass: class) execute
@@ -39,7 +39,7 @@ ReAddSuperSendAsFirstStatementTransformation >> methodTree: aMethodNode inClass:
 ReAddSuperSendAsFirstStatementTransformation >> privateTransform [ 
 
 	| superSend |
-	superSend := ASTMessageNode receiver: ASTVariableNode superNode selector: selector.
+	superSend := OCMessageNode receiver: OCVariableNode superNode selector: selector.
 	method body addNodeFirst: superSend.
 	class compileTree: method
 ]

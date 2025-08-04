@@ -11,7 +11,7 @@ I only rewrite nodes with ""reconstructed"" property to ensure that I reoptimize
 "
 Class {
 	#name : 'FBDOptimizedMessagesRewriter',
-	#superclass : 'ASTProgramNodeVisitor',
+	#superclass : 'OCProgramNodeVisitor',
 	#category : 'Flashback-Decompiler-Utilities',
 	#package : 'Flashback-Decompiler',
 	#tag : 'Utilities'
@@ -307,7 +307,7 @@ FBDOptimizedMessagesRewriter >> rewriteStatements: statements in: seq [
 RemoveNode first uses == to detect the node , then =
 So if you don't remove the first statement of the collection (which has been replaced by the cascade and no longer exists), then this will remove all nodes = to first node (and not ==).
 So if you have the same node twice in the sequence, and this node is the first message of a cascade, then all occurrences of this node would be removed"
-	seq replaceNode: statements first withNode: (ASTCascadeNode messages: statements copy).
+	seq replaceNode: statements first withNode: (OCCascadeNode messages: statements copy).
 	(statements
 		removeFirst;
 		yourself) do: [ :each | seq removeNode: each ]

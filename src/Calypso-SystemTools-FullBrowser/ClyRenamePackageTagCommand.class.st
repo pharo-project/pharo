@@ -52,6 +52,12 @@ ClyRenamePackageTagCommand >> defaultMenuItemName [
 	^'Rename'
 ]
 
+{ #category : 'accessing' }
+ClyRenamePackageTagCommand >> description [ 
+
+^'Renames class tag of the package'
+]
+
 { #category : 'execution' }
 ClyRenamePackageTagCommand >> execute [
 

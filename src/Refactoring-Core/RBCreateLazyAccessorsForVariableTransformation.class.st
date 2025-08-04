@@ -26,7 +26,7 @@ RBLintRuleTestData >> foo1: anObject
 "
 Class {
 	#name : 'RBCreateLazyAccessorsForVariableTransformation',
-	#superclass : 'RBCreateAccessorsForVariableTransformation',
+	#superclass : 'ReCreateAccessorsForVariableTransformation',
 	#instVars : [
 		'defaultValue'
 	],

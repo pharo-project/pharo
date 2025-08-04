@@ -168,6 +168,11 @@ RBCompositeRefactoryChange >> initialize [
 	changes := OrderedCollection new
 ]
 
+{ #category : 'testing' }
+RBCompositeRefactoryChange >> isInScope: aRBBrowserEnvironment [ 
+	^ aRBBrowserEnvironment includesClass: self changeClass.
+]
+
 { #category : 'accessing' }
 RBCompositeRefactoryChange >> newName [
 
@@ -294,4 +299,10 @@ RBCompositeRefactoryChange >> selector: aSelector in: aClass classified: aProtoc
 							selector: aSelector
 							in: aClass
 							classified: aProtocol)
+]
+
+{ #category : 'printing' }
+RBCompositeRefactoryChange >> whatToDisplayIn: aBrowser [
+
+	^ self changes flatCollect: [:each | each whatToDisplayIn: aBrowser ]
 ]

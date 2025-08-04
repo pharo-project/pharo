@@ -184,6 +184,12 @@ LRUCache >> isEmpty [
 	^ keyIndex isEmpty
 ]
 
+{ #category : 'accessing' }
+LRUCache >> keys [ 
+
+	^ keyIndex keys
+]
+
 { #category : 'enumerating' }
 LRUCache >> keysAndValuesDo: block [
 	"Execute block with each key and value present in me.

@@ -192,13 +192,6 @@ STONReader >> on: aReadStream [
 	readStream := aReadStream
 ]
 
-{ #category : 'initialization' }
-STONReader >> optimizeForLargeStructures [
-	self class environment
-		at: #FLLargeIdentityDictionary
-		ifPresent: [ :identityDictionaryClass | objects := identityDictionaryClass new ]
-]
-
 { #category : 'parsing-internal' }
 STONReader >> parseCharacter [
 	| char |

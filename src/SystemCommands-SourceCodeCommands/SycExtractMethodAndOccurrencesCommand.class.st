@@ -46,7 +46,13 @@ SycExtractMethodAndOccurrencesCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 SycExtractMethodAndOccurrencesCommand >> defaultMenuItemName [
-	^ '(R) Extract method'
+	^ '(Old refactor) Extract method with occurrences'
+]
+
+{ #category : 'accessing' }
+SycExtractMethodAndOccurrencesCommand >> description [
+
+	^ 'Extracts selected ast node into separate method.'
 ]
 
 { #category : 'execution' }

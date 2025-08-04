@@ -46,7 +46,7 @@ STONCStyleCommentsSkipStream >> atEnd [
 	^ self peek isNil
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 STONCStyleCommentsSkipStream >> close [
 	stream close
 ]
@@ -199,7 +199,7 @@ STONCStyleCommentsSkipStream >> nextNonCommentChar [
 		ifFalse: [ char ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 STONCStyleCommentsSkipStream >> on: readStream [
 	stream := readStream
 ]

@@ -37,7 +37,7 @@ MCAddition >> fromSource [
 	^ ''
 ]
 
-{ #category : 'initializing' }
+{ #category : 'initialization' }
 MCAddition >> intializeWithDefinition: aDefinition [
 	definition := aDefinition
 ]

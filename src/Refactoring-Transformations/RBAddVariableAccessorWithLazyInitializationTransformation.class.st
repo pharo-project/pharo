@@ -7,11 +7,13 @@ Example
 --------
 Script
 ```
-(RBAddVariableAccessorWithLazyInitialization 
+| transformation |
+transformation := (RBAddVariableAccessorWithLazyInitializationTransformation 
 	variable: 'foo1' 
 	class: RBLintRuleTestData 
 	classVariable: false 
-	defaultValue: '123') execute
+	defaultValue: '123') generateChanges.
+(StRefactoringPreviewPresenter for: transformation) open
 ```
 
 After refactoring we get:

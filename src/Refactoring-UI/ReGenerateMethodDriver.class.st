@@ -3,7 +3,7 @@ Abstract class that groups behavior related to method generation.
 "
 Class {
 	#name : 'ReGenerateMethodDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'targetClass',
 		'selectedVariables'
@@ -13,13 +13,10 @@ Class {
 	#tag : 'Drivers'
 }
 
-{ #category : 'execution' }
-ReGenerateMethodDriver >> changes [
-	"Remember should not call generateChanges"
+{ #category : 'configuration' }
+ReGenerateMethodDriver class >> defaultSelectDialog [
 
-	^ refactoring privateTransform; changes
-
-
+	^ DefaultSelectDialog ifNil: [ SpSelectMultipleDialog new ]
 ]
 
 { #category : 'execution' }
@@ -34,7 +31,7 @@ ReGenerateMethodDriver >> configureRefactoring [
 ReGenerateMethodDriver >> defaultSelectDialog [
 
 	| dialog |
-	dialog := SpSelectMultipleDialog new.
+	dialog := self class defaultSelectDialog.
 	dialog
 	  	title: self dialogTitle;
 	  	label: 'Please select the variable(s)';
@@ -60,18 +57,12 @@ ReGenerateMethodDriver >> refactoringClass [
 { #category : 'execution' }
 ReGenerateMethodDriver >> runRefactoring [
 
-	| changes |
-	
 	self selectDialog
 		ifNil: [ ^ self ]
 		ifNotNil: [ selectedVariables := self selectDialog selectedItems ].
 	selectedVariables ifEmpty: [ ^ self ].
-
 	self configureRefactoring.
-	changes := refactoring generateChanges.
-	self openPreviewWithChanges: changes 
-
-
+	self applyChanges.
 ]
 
 { #category : 'accessing' }

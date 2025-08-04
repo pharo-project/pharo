@@ -40,7 +40,7 @@ FLGlobalSendCluster >> add: anObject name: globalName selector: selector traceWi
 		ifAbsentPut: [ Association key: globalName value: selector ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 FLGlobalSendCluster >> initializeAnalyzing [
 	super initializeAnalyzing.
 	globalSends := IdentityDictionary new.

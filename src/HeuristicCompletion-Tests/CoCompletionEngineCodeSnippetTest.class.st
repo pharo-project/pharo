@@ -1,6 +1,6 @@
 Class {
 	#name : 'CoCompletionEngineCodeSnippetTest',
-	#superclass : 'ASTCodeSnippetTest',
+	#superclass : 'OCCodeSnippetTest',
 	#category : 'HeuristicCompletion-Tests-Core',
 	#package : 'HeuristicCompletion-Tests',
 	#tag : 'Core'

@@ -13,6 +13,10 @@ Class {
 }
 
 { #category : 'dummy methods' }
+MyClassAlpha >> fooAccessor [
+]
+
+{ #category : 'dummy methods' }
 MyClassAlpha >> methodForSupersend [
 	^ 42
 ]

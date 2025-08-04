@@ -2,10 +2,13 @@
 Marks a class as deprecated and suggests the use of the superclass.
 
 Usage:
+```
+| transformation |
 transformation := (RBDeprecateClassTransformation 
-		class: #RBRemoveClassTransformation)
-		transform. 
-(ChangesBrowser changes: transformation model changes changes) open
+		className: #RBRemoveClassTransformation)
+		generateChanges. 
+(StRefactoringPreviewPresenter for: transformation) open
+```
 "
 Class {
 	#name : 'RBDeprecateClassTransformation',

@@ -189,12 +189,6 @@ Class >> allSharedPools [
 			aSet addAll: self sharedPools; yourself]
 ]
 
-{ #category : 'deprecation' }
-Class >> applyDeprecation [
-
-	self deprecationRefactorings do: #execute
-]
-
 { #category : 'class variables' }
 Class >> basicDeclareClassVariable: aClassVariable [
 	"Add aClassVariable to the receiver. Two cases are handled here:
@@ -279,15 +273,6 @@ Class >> classBuilder [
 		"Answer the object responsible of creating subclasses of myself in the system."
 
 		^ self classInstaller new builder
-]
-
-{ #category : 'subclass creation' }
-Class >> classInstaller [
-	"Answer the class responsible of creating subclasses of myself in the system."
-
-	^ self isAnonymous
-		  ifTrue: [ Smalltalk anonymousClassInstaller ]
-		  ifFalse: [ Smalltalk classInstaller ]
 ]
 
 { #category : 'accessing' }
@@ -534,17 +519,6 @@ Class >> definesClassVariableNamed: aString [
 	"Return whether the receiver has a class variables (shared variables among its class and subclasses) named: aString"
 	<reflection: 'Class structural inspection - Class variable inspection'>
 	^ self classVarNames includes: aString
-]
-
-{ #category : 'deprecation' }
-Class >> deprecationRefactorings [
-
-	"Return a list of refactorings that will apply class deprecation in the system. E.g. to
-	move installed extension methods to a proper class to which the deprecated class was renamed.
-	For default deprecation use the following refactoring:
-	^ { RBApplyClassDeprecationRefactoring rename: self to: #NewName } "
-
-	^ #()
 ]
 
 { #category : 'copying' }

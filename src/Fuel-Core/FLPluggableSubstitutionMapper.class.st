@@ -25,7 +25,7 @@ FLPluggableSubstitutionMapper class >> when: aCondition substituteBy: aFactory [
 		yourself
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 FLPluggableSubstitutionMapper >> initializeWith: aCondition substitutionFactory: aBlock [
 
 	self initialize.

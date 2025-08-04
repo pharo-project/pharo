@@ -20,12 +20,29 @@ Class {
 }
 
 { #category : 'instance creation' }
+RBExtractToTemporaryRefactoring class >> extract: anInterval from: aSelector in: aClass [
+	^ self new
+		extract: anInterval
+		from: aSelector
+		in: aClass
+]
+
+{ #category : 'instance creation' }
 RBExtractToTemporaryRefactoring class >> extract: anInterval to: aString from: aSelector in: aClass [
 	^ self new
 		extract: anInterval
 		to: aString
 		from: aSelector
 		in: aClass
+]
+
+{ #category : 'instance creation' }
+RBExtractToTemporaryRefactoring class >> model: aRBSmalltalk extract: anInterval from: aSelector in: aClass [
+
+	^ self new
+		  model: aRBSmalltalk;
+		  extract: anInterval from: aSelector in: aClass;
+		  yourself
 ]
 
 { #category : 'instance creation' }
@@ -60,11 +77,18 @@ RBExtractToTemporaryRefactoring >> compileNewMethod [
 { #category : 'transforming' }
 RBExtractToTemporaryRefactoring >> constructAssignmentFrom: aNode [
 	| valueNode |
-	valueNode := ASTVariableNode named: newVariableName.
+	valueNode := OCVariableNode named: newVariableName.
 	"Use a copy so aNode retains its original parent.
 	In this case the caller is done making use of the parent backlink,
 	but it seems sensible to keep it intact whenever possible."
-	^ASTAssignmentNode variable: valueNode value: aNode copy.
+	^OCAssignmentNode variable: valueNode value: aNode copy.
+]
+
+{ #category : 'initialization' }
+RBExtractToTemporaryRefactoring >> extract: anInterval from: aSelector in: aClass [
+	class := self classObjectFor: aClass.
+	selector := aSelector.
+	sourceInterval := anInterval
 ]
 
 { #category : 'initialization' }
@@ -92,7 +116,7 @@ RBExtractToTemporaryRefactoring >> insertTemporary [
 		addNode: (self constructAssignmentFrom: node) before: statementNode;
 		addTemporaryNamed: newVariableName.
 	nodeReferences do: [ :each |
-		each replaceWith: (ASTVariableNode named: newVariableName) ]
+		each replaceWith: (OCVariableNode named: newVariableName) ]
 ]
 
 { #category : 'transforming' }
@@ -147,4 +171,10 @@ RBExtractToTemporaryRefactoring >> storeOn: aStream [
 		nextPutAll: ' in: '.
 	class storeOn: aStream.
 	aStream nextPut: $)
+]
+
+{ #category : 'initialization' }
+RBExtractToTemporaryRefactoring >> variableName: aString [
+
+	newVariableName := aString
 ]

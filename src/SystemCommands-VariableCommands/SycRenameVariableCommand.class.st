@@ -27,6 +27,12 @@ SycRenameVariableCommand >> defaultMenuItemName [
 	^ 'Rename'
 ]
 
+{ #category : 'accessing' }
+SycRenameVariableCommand >> description [
+
+	^ 'Rename variable.'
+]
+
 { #category : 'execution' }
 SycRenameVariableCommand >> execute [
 

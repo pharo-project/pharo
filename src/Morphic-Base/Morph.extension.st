@@ -317,7 +317,7 @@ Morph >> hasKeymapCategoryNamed: aString [
 Morph >> initializeShortcuts: aKMDispatcher [
 	"Where we may attach keymaps or even on:do: local shortcuts if needed."
 
-	aKMDispatcher attachCategory: #MorphFocusCtrlNavigation
+	aKMDispatcher attachCategory: #MorphCtrlNavigation
 ]
 
 { #category : '*Morphic-Base' }
@@ -371,12 +371,6 @@ Morph >> kmDispatcher [
 { #category : '*Morphic-Base' }
 Morph >> newTransformationMorph [
 	^TransformationMorph new
-]
-
-{ #category : '*Morphic-Base-keymapping' }
-Morph >> on: aShortcut do: anAction [
-
-	^ self bindKeyCombination: aShortcut toAction: anAction
 ]
 
 { #category : '*Morphic-Base' }

@@ -32,6 +32,12 @@ ClyDebugTestSetupCommand >> defaultMenuItemName [
 	^'Debug test setup'
 ]
 
+{ #category : 'accessing' }
+ClyDebugTestSetupCommand >> description [
+
+^ 'Debug the setup method of the selected test, then executes the selected test method.' 
+]
+
 { #category : 'execution' }
 ClyDebugTestSetupCommand >> runTest: testSelector of: testClass [
 

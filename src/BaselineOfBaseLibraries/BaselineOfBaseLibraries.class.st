@@ -51,9 +51,5 @@ BaselineOfBaseLibraries >> baseline: spec [
 		spec baseline: 'TaskIt' with: [
 			spec
 				loads: #( 'coreTests' );
-				repository: repository ].
-
-		spec
-			baseline: 'ExternalProjectLoader'
-			with: [ spec repository: repository ] ]
+				repository: repository ] ]
 ]

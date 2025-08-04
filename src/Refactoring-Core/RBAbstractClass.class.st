@@ -510,7 +510,8 @@ RBAbstractClass >> instanceVariableNames: aCollectionOfStrings [
 
 { #category : 'testing' }
 RBAbstractClass >> isAbstract [
-	(self whichSelectorsReferToSymbol: #subclassResponsibility) ifNotEmpty: [^true].
+	(self whichSelectorsReferToSymbol: #subclassResponsibility) 
+		ifNotEmpty: [ ^true ].
 	model allReferencesToClass: self do: [:each | ^ false].
 	^ true
 ]
@@ -523,6 +524,14 @@ RBAbstractClass >> isDefined [
 { #category : 'testing' }
 RBAbstractClass >> isMeta [
 	self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+RBAbstractClass >> localMethods [
+
+	^ self localSelectors
+		  collect: [ :selector | self methodFor: selector ]
+		  thenSelect: [ :each | each isNotNil ]
 ]
 
 { #category : 'method accessing' }
@@ -600,7 +609,7 @@ RBAbstractClass >> parseTreeForSelector: aSelector [
 
 { #category : 'accessing' }
 RBAbstractClass >> parseTreeSearcherClass [
-	^ ASTParseTreeSearcher
+	^ OCParseTreeSearcher
 ]
 
 { #category : 'printing' }

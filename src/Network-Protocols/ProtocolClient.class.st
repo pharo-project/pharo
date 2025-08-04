@@ -184,7 +184,7 @@ ProtocolClient >> logProgress: aString [
 
 { #category : 'accessing' }
 ProtocolClient >> logProgressToTranscript [
-	self progressObservers add: Smalltalk tools transcript
+	self progressObservers add: (Smalltalk tools toolNamed: #transcript)
 ]
 
 { #category : 'accessing' }

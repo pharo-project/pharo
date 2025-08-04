@@ -460,6 +460,7 @@ WorldMorph >> initialize [
 
 	worldState := WorldState new.
 	super initialize.
+	zoomFactor := 1.
 
 	self class codeSupportAnnouncer weak when: FullscreenAnnouncement send: #fullscreenChanged: to: self
 ]
@@ -578,8 +579,15 @@ WorldMorph >> runStepMethods [
 ]
 
 { #category : 'accessing' }
-WorldMorph >> scaleFactor: newScaleFactor [
-	self setProperty: #scaleFactor toValue: newScaleFactor
+WorldMorph >> scaleFactor: newZoomFactor [
+
+	self
+		deprecated: 'Use #zoomFactor: instead'
+		on: '20/12/2024'
+		in: 'pharo13'
+		transformWith:
+		'`@receiver scaleFactor: `@arg' -> '`@receiver zoomFactor: `@arg'.
+	self zoomFactor: newZoomFactor
 ]
 
 { #category : 'stepping' }
@@ -625,6 +633,14 @@ WorldMorph >> stopStepping: aMorph selector: aSelector [
 	"Remove the given morph from the step list."
 
 	worldState stopStepping: aMorph selector: aSelector
+]
+
+{ #category : 'accessing' }
+WorldMorph >> taskbarTasks [
+
+	^ self submorphs
+		  collect: [ :m | m taskbarTask ]
+		  thenSelect: [ :m | m isNotNil ]
 ]
 
 { #category : 'menu & halo' }

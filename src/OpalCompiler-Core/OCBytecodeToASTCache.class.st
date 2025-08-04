@@ -1,14 +1,13 @@
 "
-I cache a mapping between possible bytecode offsets and the AST nodes they correspond to for a given compiled method.
+I cache a mapping between possible bytecode offsets and the AST nodes that correspond to for a given compiled method.
 
-Instanciate me using my class method generateForCompiledMethod: and give me as parameter a compiled method.
-
-Use me through the node access API method nodeForPC: and give me a program counter as parameter.
+- Instanciate me using my class method `generateForCompiledMethod:` and give me as parameter a compiled method.
+- Use me through the node access API method `nodeForPC:` and give me a program counter as parameter.
 
 I store: 
-- firstBcOffset: The first bytecode pc. If you try to access a pc below that first pc, I return the method node.
-- lastBcOffset: The last bytecode pc. If you try to access a pc after this last pc, I return the node associated with the last pc.
-- bcToASTMap: A map associating each possible pc between firstBcOffset and lastBcOffset and the corresponding ast node.
+- `firstBcOffset:` The first bytecode pc. If you try to access a pc below that first pc, I return the method node.
+- `lastBcOffset:` The last bytecode pc. If you try to access a pc after this last pc, I return the node associated with the last pc.
+- `bcToASTMap:` A map associating each possible pc between firstBcOffset and lastBcOffset and the corresponding ast node.
 - the methode node.
 "
 Class {

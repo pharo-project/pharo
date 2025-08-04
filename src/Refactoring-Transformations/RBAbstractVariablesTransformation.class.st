@@ -3,7 +3,7 @@ My responsibility is to add accessors to all variables both on instance and clas
 "
 Class {
 	#name : 'RBAbstractVariablesTransformation',
-	#superclass : 'RBTransformation',
+	#superclass : 'ReTransformation',
 	#instVars : [
 		'tree',
 		'fromClass',

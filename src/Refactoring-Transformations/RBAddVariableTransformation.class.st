@@ -2,13 +2,15 @@
 Adds a variable in a class. It is necessary to indicate whether the variable is an instance or class variable.
 
 Usage:
+```
 | transformation |
 transformation := (RBAddVariableTransformation 
 	variable: 'asdf'
 	class: #RBVariableTransformation
 	classVariable: false)
-	transform. 
-(ChangesBrowser changes: transformation model changes changes) open
+	generateChanges. 
+(StRefactoringPreviewPresenter for: transformation) open
+```
 
 Preconditions:
 - the variable name should not be a class name

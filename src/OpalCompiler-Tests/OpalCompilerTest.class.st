@@ -147,7 +147,7 @@ OpalCompilerTest >> testCompilerUsingCleanBlockClosureHasBlockAsLiteral [
 { #category : 'tests - bindings' }
 OpalCompilerTest >> testEvaluateWithBindings [
 	| result |
-	result := Smalltalk compiler
+	result := OpalCompiler new 
 		bindings: {(#a -> 3)} asDictionary;
 		evaluate: '1+a'.
 	self assert: result equals: 4
@@ -200,7 +200,7 @@ OpalCompilerTest >> testInstall [
 
 	method := MockForCompilation compiler
 		          source: 'foo ^42';
-		          changeStamp: 'JP 4/01/2023 01:23';
+		          changeStamp: '2025-04-25T14:42:06.014486+02:00';
 		          protocol: 'hitching';
 		          install.
 
@@ -220,7 +220,7 @@ OpalCompilerTest >> testInstallException [
 	self deny: (MockForCompilation includesSelector: #foo).
 
 	[ method := MockForCompilation compiler install: 'foo ^¿' ]
-		on: CodeError
+		on: OCCodeError
 		do: [ :error | message := error messageText , ' :(' ].
 
 	self deny: (MockForCompilation includesSelector: #foo).
@@ -242,10 +242,10 @@ OpalCompilerTest >> testInstallRequestor [
 		          source: 'foo ^¿';
 		          requestor: requestor;
 		          failBlock: [  ];
-		          changeStamp: 'JP 3/24/2023 18:39';
+		          changeStamp: '2025-04-25T14:42:06.014486+02:00';
 		          protocol: 'hitching';
 		          install ]
-		on: CodeError
+		on: OCCodeError
 		do: [  ].
 
 	self deny: (MockForCompilation includesSelector: #foo).

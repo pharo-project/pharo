@@ -676,9 +676,7 @@ FTTableMorph >> isYellowButtonReallyPressed: anEvent [
 	then you will got right mouse button event.
 	Interesting that it is not a problem in case of external SDL2 window.
 	Try check it from OSWindowWorldMorph new open"
-	^ (Smalltalk os isMacOS)
-		ifTrue: [ anEvent commandKeyPressed not]
-		ifFalse: [ anEvent controlKeyPressed not]
+	^ anEvent metaKeyPressed not
 ]
 
 { #category : 'event handling' }

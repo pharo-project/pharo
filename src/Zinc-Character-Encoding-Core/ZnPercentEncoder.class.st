@@ -41,7 +41,7 @@ ZnPercentEncoder >> characterEncoder [
 	^ characterEncoder ifNil: [ characterEncoder := ZnDefaultCharacterEncoder value ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnPercentEncoder >> characterEncoder: object [
 	"Set the character encoding to use to object."
 
@@ -86,7 +86,7 @@ ZnPercentEncoder >> decodePlusAsSpace [
 	^ decodePlusAsSpace ifNil: [ decodePlusAsSpace := true ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnPercentEncoder >> decodePlusAsSpace: boolean [
 	"When boolean is true, $+ on input will be decoded as Character space.
 	Else $+ is treated as a normal character, filtered by the safe set.
@@ -151,7 +151,7 @@ ZnPercentEncoder >> safeSet [
 	^ safeSet ifNil: [ safeSet := self class rfc3986UnreservedCharacters asByteArray ]
 ]
 
-{ #category : 'initialize-release' }
+{ #category : 'initialization' }
 ZnPercentEncoder >> safeSet: string [
 	"Set my safe set to be the characters in string, which I will convert to bytes"
 

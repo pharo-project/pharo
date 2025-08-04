@@ -136,7 +136,8 @@ SystemSettingsPersistence class >> updateSettingNodes: aSettingNode [
 { #category : 'accessing' }
 SystemSettingsPersistence >> allStoredSettings [
 	"Load all stored settings from the file preference."
-	(self fileReference exists)
+	
+	self fileReference exists
 		ifFalse: [ ^ #() ].
 	^ SettingsStonReader new stream: self readStream; secureLoad
 ]

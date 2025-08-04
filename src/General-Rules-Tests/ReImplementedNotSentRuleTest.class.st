@@ -26,26 +26,17 @@ ReImplementedNotSentRuleTest >> methodWithReallySpecificNameInTheSystemCallingIt
 { #category : 'tests' }
 ReImplementedNotSentRuleTest >> testRule [
 
-	| critiques |
-	critiques := self myCritiquesOnMethod: self class >> #methodWithReallySpecificNameInTheSystem.
-
-	self assert: critiques size equals: 1
+	self assert: (self myCritiquesOnMethod: self class >> #methodWithReallySpecificNameInTheSystem) size equals: 1
 ]
 
 { #category : 'tests' }
 ReImplementedNotSentRuleTest >> testRuleDoesNotMatchCalledMethod [
 
-	| critiques |
-	critiques := self myCritiquesOnMethod: self class >> #calledMethod.
-
-	self assertEmpty: critiques
+	self assertEmpty: (self myCritiquesOnMethod: self class >> #calledMethod)
 ]
 
 { #category : 'tests' }
 ReImplementedNotSentRuleTest >> testRuleOnSelfCall [
 
-	| critiques |
-	critiques := self myCritiquesOnMethod: self class >> #methodWithReallySpecificNameInTheSystemCallingItself.
-
-	self assert: critiques size equals: 1
+	self assert: (self myCritiquesOnMethod: self class >> #methodWithReallySpecificNameInTheSystemCallingItself) size equals: 1
 ]

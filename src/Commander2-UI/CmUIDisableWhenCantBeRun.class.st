@@ -8,3 +8,10 @@ Class {
 	#package : 'Commander2-UI',
 	#tag : 'Strategies'
 }
+
+{ #category : 'controlling' }
+CmUIDisableWhenCantBeRun >> ifVisible: aCmSpecCommand do: aBlock [
+	"Always visible"
+
+	aBlock value
+]

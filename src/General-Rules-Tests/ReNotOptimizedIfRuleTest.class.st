@@ -7,23 +7,15 @@ Class {
 }
 
 { #category : 'tests' }
-ReNotOptimizedIfRuleTest >> testRule [ 
+ReNotOptimizedIfRuleTest >> testRule [
 
-	| critiques | 
-	
-	self class compile: 'method: anObject anObject ifTrue: 1 ' classified: 'test-helper'.
-	
-	[ critiques := self myCritiquesOnMethod: self class >> #method:. 
-	self assert: critiques size equals: 1] ensure: [ (self class >> #method:) removeFromSystem ]
+	self generateMethod: 'method: anObject anObject ifTrue: 1 '.
+	self assert: (self myCritiquesOnMethod: self class >> #method:) size equals: 1
 ]
 
 { #category : 'tests' }
 ReNotOptimizedIfRuleTest >> testRuleNotViolated [
 
-	| critiques | 
-	
-	self class compile: 'method: anObject anObject ifTrue: [ ^ 1 ] ' classified: 'test-helper'.
-	
-	[ critiques := self myCritiquesOnMethod: self class >> #method:. 
-	self assertEmpty: critiques] ensure: [ (self class >> #method:) removeFromSystem ]
+	self generateMethod: 'method: anObject anObject ifTrue: [ ^ 1 ] '.
+	self assertEmpty: (self myCritiquesOnMethod: self class >> #method:)
 ]

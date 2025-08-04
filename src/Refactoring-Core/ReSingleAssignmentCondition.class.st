@@ -14,7 +14,7 @@ Class {
 ReSingleAssignmentCondition >> check [
 
 	| searcher |
-	searcher := RBAbstractTransformation new parseTreeSearcher.
+	searcher := ReAbstractTransformation new parseTreeSearcher.
 	searcher
 		matches: variableName , ' := ``@object'
 		do: [ :aNode :answer | answer + 1 ].

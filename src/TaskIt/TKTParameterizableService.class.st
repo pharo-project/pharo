@@ -56,14 +56,6 @@ TKTParameterizableService >> onTearDownDo: aBlockClosure [
 	tearDownTask := aBlockClosure
 ]
 
-{ #category : 'starting' }
-TKTParameterizableService >> restart [
-	self stop.
-	stopRequested := false.
-	stopCallbacks := Set new.
-	self start
-]
-
 { #category : 'stepping' }
 TKTParameterizableService >> setUp [
 

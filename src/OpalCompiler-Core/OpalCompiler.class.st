@@ -72,7 +72,7 @@ OpalCompiler class >> compilerSettingsOn: aBuilder [
 						target: self;
 						default: false;
 						description: 'Create a overlay environment for the OpalCompiler package and sets this copy as the global compiler. After this all classes in the package OpalCompiler are not used anymore outside of tests.  Simplifies changing the compiler'.
-				CompilationContext compilerSettingsOn: aBuilder]
+				OCCompilationContext compilerSettingsOn: aBuilder]
 ]
 
 { #category : 'overlay' }
@@ -144,7 +144,7 @@ OpalCompiler class >> overlayStep3FixSuperclassPointers [
 OpalCompiler class >> overlayStep4SetImageCompiler [
 	"make the copy the default compiler for the image"
 	SmalltalkImage compilerClass: (self overlayEnvironment at: #OpalCompiler).
-	ASTCache reset
+	OCASTCache reset
 ]
 
 { #category : 'overlay' }
@@ -190,7 +190,7 @@ OpalCompiler class >> stopUsingOverlayForDevelopment [
 	<script>
 	SmalltalkImage compilerClass: nil.
 	overlayEnvironment := nil.
-	ASTCache reset
+	OCASTCache reset
 ]
 
 { #category : 'plugins' }
@@ -355,7 +355,7 @@ OpalCompiler >> compilationContext: anObject [
 
 { #category : 'plugins' }
 OpalCompiler >> compilationContextClass [
-	^compilationContextClass ifNil: [ CompilationContext  ]
+	^compilationContextClass ifNil: [ OCCompilationContext  ]
 ]
 
 { #category : 'plugins' }
@@ -385,6 +385,12 @@ OpalCompiler >> compile: textOrString [
 	^self
 		source: textOrString;
 		compile
+]
+
+{ #category : 'accessing' }
+OpalCompiler >> compiledBlockClass: aClass [
+
+	self compilationContext compiledBlockClass: aClass
 ]
 
 { #category : 'accessing' }
@@ -420,8 +426,8 @@ OpalCompiler >> decompileMethod: aCompiledMethod [
 		at: #FBDDecompiler
 		ifPresent: [ :decompilerClass | [ decompilerClass new decompile: aCompiledMethod ]
 			on: Error
-			do: [ ASTMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'Decompilation failed'.  ] ]
-		ifAbsent: [ ASTMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'No decompiler available'. ]
+			do: [ OCMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'Decompilation failed'.  ] ]
+		ifAbsent: [ OCMethodNode errorMethodNode: aCompiledMethod selector errorMessage: 'No decompiler available'. ]
 ]
 
 { #category : 'private' }
@@ -467,7 +473,7 @@ OpalCompiler >> evaluate [
 	ast ifNil: [ ^ doItMethod ].
 	value := self semanticScope evaluateDoIt: doItMethod.
 
-	self logged == true ifTrue: [ self semanticScope announceDoItEvaluation: source by: SystemAnnouncer uniqueInstance ].
+	self logged == true ifTrue: [ self semanticScope announceDoItEvaluation: source by: self class codeSupportAnnouncer ].
 	^ value
 ]
 
@@ -541,13 +547,6 @@ OpalCompiler >> generateMethod [
 	method propertyAt: #source put: source.
 	self isScripting ifTrue: [ method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
 
-	"If the prior method was not set explicitly, we set it because we will need it if we are not in the first compilation"
-	self priorMethod ifNil: [
-		self methodClass ifNotNil: [ :class | "In case the method comes from a trait, we ignore it because it means we are overriding the trait method in the class"
-			class compiledMethodAt: method selector ifPresent: [ :aMethod | aMethod isFromTrait ifFalse: [ self priorMethod: aMethod ] ] ] ].
-
-	"In case we are not compiling the method for the first time, we want to ensure that some properties are kept."
-	self priorMethod ifNotNil: [ priorMethod migratePersistingPropertiesIn: method ].
 	^ method
 ]
 
@@ -561,11 +560,16 @@ OpalCompiler >> install [
 
 	method := self compile ifNil: [ ^ nil ].
 
-	changeStamp ifNil: [
-		changeStamp := Date today mmddyyyy , ' '
-		               ,
-			               ((String streamContents: [ :s |
-				                 Time now print24: true on: s ]) copyFrom: 1 to: 5) ].
+	"If the prior method was not set explicitly, we set it because we will need it if we are not in the first compilation"
+	self priorMethod ifNil: [ "In case the method comes from a trait, we ignore it because it means we are overriding the trait method in the class"
+		class compiledMethodAt: method selector ifPresent: [ :aMethod |
+			aMethod isFromTrait ifFalse: [ self priorMethod: aMethod ] ] ].
+
+	"In case we are not compiling the method for the first time, we want to ensure that some properties are kept."
+	self priorMethod ifNotNil: [
+		priorMethod migratePersistingPropertiesIn: method ].
+
+	changeStamp ifNil: [ changeStamp := DateAndTime now printString ].
 	logSource := self logged ifNil: [ true ].
 	protocol := protocol ifNil: [
 		            self priorMethod ifNotNil: [ self priorMethod protocol ] ].

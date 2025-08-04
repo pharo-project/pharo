@@ -10,8 +10,8 @@ Class {
 }
 
 { #category : 'instance creation' }
-StRefactoringPreviewPresenterMock class >> changes: aRBUpFrontPreconditionCheckingCompositeRefactoring scopes: aCollection [ 
-	^ self new changes: aRBUpFrontPreconditionCheckingCompositeRefactoring scopes: aCollection 
+StRefactoringPreviewPresenterMock class >> for: aRBUpFrontPreconditionCheckingCompositeRefactoring scopes: aCollection [ 
+	^ self new for: aRBUpFrontPreconditionCheckingCompositeRefactoring scopes: aCollection 
 ]
 
 { #category : 'accessing' }
@@ -20,7 +20,7 @@ StRefactoringPreviewPresenterMock >> application: aStPharoApplication [
 ]
 
 { #category : 'instance creation' }
-StRefactoringPreviewPresenterMock >> changes: aRBUpFrontPreconditionCheckingCompositeRefactoring scopes: aCollection [ 
+StRefactoringPreviewPresenterMock >> for: aRBUpFrontPreconditionCheckingCompositeRefactoring scopes: aCollection [ 
 	changes := aRBUpFrontPreconditionCheckingCompositeRefactoring
 ]
 

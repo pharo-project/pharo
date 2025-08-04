@@ -1,6 +1,6 @@
 Class {
 	#name : 'ReRenameClassDriver',
-	#superclass : 'RBInteractionDriver',
+	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'oldName',
 		'newName',
@@ -17,12 +17,6 @@ ReRenameClassDriver class >> rename: oldName [
 	^ self new 
 		oldName: oldName;
 		yourself
-]
-
-{ #category : 'execution' }
-ReRenameClassDriver >> changes [
-
-	^ refactoring privateTransform; changes
 ]
 
 { #category : 'resources' }
@@ -99,12 +93,6 @@ ReRenameClassDriver >> runRefactoring [
 			shouldEscape ifTrue: [ ^ self ] ].
 	self applyChanges
 	
-]
-
-{ #category : 'accessing' }
-ReRenameClassDriver >> scopes: aScope [
-
-	scopes := aScope
 ]
 
 { #category : 'validation' }

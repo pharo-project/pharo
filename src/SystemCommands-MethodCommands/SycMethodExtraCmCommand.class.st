@@ -14,9 +14,9 @@ SycMethodExtraCmCommand class >> activationStrategy [
 ]
 
 { #category : 'testing' }
-SycMethodExtraCmCommand >> canBeExecuted [ 
+SycMethodExtraCmCommand >> canBeExecuted [
 
-	^ self methods notNil and: [ self methods notEmpty ]
+	^ self methods isNotNil and: [ self methods isNotEmpty ]
 ]
 
 { #category : 'accessing' }
@@ -28,6 +28,7 @@ SycMethodExtraCmCommand >> methods [
 
 { #category : 'preparation' }
 SycMethodExtraCmCommand >> prepareFullExecution [
+
 	super prepareFullExecution.
 	self setUpModelFromContext: context
 ]
