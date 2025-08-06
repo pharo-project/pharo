@@ -99,10 +99,12 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Polymorph-Widgets'.
 		"Custom themes"
 		spec package: 'DarkBlueTheme'.
-		spec baseline: 'Pastels' with: [
+		spec project: 'Pastels' with: [
 		spec
+			baseline: 'Pastels';
 			repository: (self classNamed: #BaselineOfPharo) pastelsRepository;
-			loads: 'default' ].
+			loads: 'default';
+			requires: #('Polymorph-Widgets') ].
 
 		spec package: 'Images-Animated'.
 
