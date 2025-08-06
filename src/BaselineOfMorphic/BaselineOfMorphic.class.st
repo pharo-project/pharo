@@ -248,6 +248,7 @@ BaselineOfMorphic >> loadThemes: spec [
 	spec package: 'DarkBlueTheme'.
 	spec baseline: 'Pastels' with: [
 			spec
+				requires: 'Polymorph-Widgets';
 				repository: (self classNamed: #BaselineOfPharo) pastelsRepository;
 				loads: 'default' ]
 ]
