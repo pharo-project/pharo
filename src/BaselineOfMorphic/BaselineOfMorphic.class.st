@@ -97,7 +97,8 @@ BaselineOfMorphic >> baseline: spec [
 				loads: 'core' ].
 
 		spec package: 'Polymorph-Widgets'.
-		spec package: 'DarkBlueTheme'.
+		"Custom themes"
+		self loadThemes: spec.
 
 		spec package: 'Images-Animated'.
 
@@ -239,6 +240,16 @@ BaselineOfMorphic >> loadBitmapSourcePro [
 
 	codePro := self loadBitmapFontFamily: 'Bitmap Source Code Pro' sizes: #(9 10 11 12 14 18 24).
 	TextConstants TextSharedInformation at: #'Bitmap Source Code Pro' put: codePro.
+]
+
+{ #category : 'baseline' }
+BaselineOfMorphic >> loadThemes: spec [
+
+	spec package: 'DarkBlueTheme'.
+	spec baseline: 'Pastels' with: [
+			spec
+				repository: (self classNamed: #BaselineOfPharo) pastelsRepository;
+				loads: 'default' ]
 ]
 
 { #category : 'actions' }
