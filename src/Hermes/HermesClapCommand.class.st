@@ -35,17 +35,18 @@ Examples
 pharo Pharo.image loadHermes --save --no-fail-on-undeclared Test-Package.hermes
 
 #Load the package Test-Package replacing the image version with the ones in the hermes file.
-pharo Pharo.image loadHermes --save --on-duplication=replace Test-Package.hermes
+pharo Pharo.image loadHermes --save --on-duplication replace Test-Package.hermes
 "
 Class {
-	#name : 'ClapHermesCommand',
+	#name : 'HermesClapCommand',
 	#superclass : 'ClapPharoApplication',
-	#category : 'Clap-Commands-Pharo',
-	#package : 'Clap-Commands-Pharo'
+	#category : 'Hermes-CommandLineHandler',
+	#package : 'Hermes',
+	#tag : 'CommandLineHandler'
 }
 
 { #category : 'command line' }
-ClapHermesCommand class >> commandSpecification [
+HermesClapCommand class >> commandSpecification [
 
 	<commandline>
 	| spec |
@@ -69,14 +70,14 @@ ClapHermesCommand class >> commandSpecification [
 ]
 
 { #category : 'accessing' }
-ClapHermesCommand >> allHermesFiles [
+HermesClapCommand >> allHermesFiles [
 
 	^ (self positional: #FILE ifAbsent: [ #() ]) 
 		select: [ :arg | arg endsWith: '.hermes' ]
 ]
 
 { #category : 'execution' }
-ClapHermesCommand >> createInstaller [
+HermesClapCommand >> createInstaller [
 	"In the basic installation, the bootstraped version of Hermes,
 	there is only one Installer, the HEInstaller.
 	When the extensions are installed the new installer to use is the HEExtendedInstaller."
@@ -91,7 +92,7 @@ ClapHermesCommand >> createInstaller [
 ]
 
 { #category : 'accessing' }
-ClapHermesCommand >> duplicationMode [
+HermesClapCommand >> duplicationMode [
 
 	^ self
 		  positional: #'on-duplication'
@@ -103,7 +104,7 @@ ClapHermesCommand >> duplicationMode [
 ]
 
 { #category : 'execution' }
-ClapHermesCommand >> execute [ 
+HermesClapCommand >> execute [ 
 
 	self validateParameters.
 	self processFiles.
@@ -111,7 +112,7 @@ ClapHermesCommand >> execute [
 ]
 
 { #category : 'execution' }
-ClapHermesCommand >> processFile: aFileName [
+HermesClapCommand >> processFile: aFileName [
 
 	"It loads the package and installs it in the image"
 	| installer reader readPackage |
@@ -129,18 +130,18 @@ ClapHermesCommand >> processFile: aFileName [
 ]
 
 { #category : 'execution' }
-ClapHermesCommand >> processFiles [
+HermesClapCommand >> processFiles [
 
 	self allHermesFiles do: [ :name | self processFile: name ]
 ]
 
 { #category : 'testing' }
-ClapHermesCommand >> shouldFailOnUndeclared [
+HermesClapCommand >> shouldFailOnUndeclared [
 
 	^ (self hasFlag: #'no-fail-on-undeclared') not
 ]
 
 { #category : 'validating' }
-ClapHermesCommand >> validateParameters [
+HermesClapCommand >> validateParameters [
 	self allHermesFiles ifEmpty: [ ^ self context exitFailure: 'Missing Hermes file as argument' ]
 ]

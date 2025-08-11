@@ -4,8 +4,8 @@ I am an abstract class providing some support to Pharo commands available from c
 Class {
 	#name : 'ClapPharoApplication',
 	#superclass : 'ClapApplication',
-	#category : 'Clap-Commands-Pharo',
-	#package : 'Clap-Commands-Pharo'
+	#category : 'Clap-CommandLine',
+	#package : 'Clap-CommandLine'
 }
 
 { #category : 'adding' }
