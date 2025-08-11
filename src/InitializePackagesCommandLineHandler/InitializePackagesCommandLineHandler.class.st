@@ -80,7 +80,7 @@ InitializePackagesCommandLineHandler >> initializeProtocolsFrom: aFileName [
 
 					(class selectors includes: selector) ifTrue: [
 							(class protocolNameOfSelector: selector) = items fourth ifFalse: [
-									('Method named: ' , selector , ' of ' , class printString , ' was found in ' , (class protocolNameOfSelector: selector) , ' instead of ' , items fourth)
-										traceCr.
+									('Method named: ' , selector , ' of ' , class printString , ' was found in ' , ((class protocolNameOfSelector: selector) ifNil: [ 'nil' ])
+									 , ' instead of ' , items fourth) traceCr.
 									class classify: selector under: items fourth ] ] ] ]
 ]
