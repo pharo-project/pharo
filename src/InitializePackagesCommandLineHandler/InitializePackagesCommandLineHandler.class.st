@@ -63,19 +63,24 @@ InitializePackagesCommandLineHandler >> initializePackages [
 { #category : 'activation' }
 InitializePackagesCommandLineHandler >> initializeProtocolsFrom: aFileName [
 
+	'Fixing protocols' traceCr.
 	(File named: aFileName) readStreamDo: [ :binaryStream |
-		| stream |
-		stream := ZnCharacterReadStream on: binaryStream encoding: 'utf8'.
-		[ stream atEnd ] whileFalse: [
-			| line items selector class |
-			line := stream upTo: Character cr.
-			items := line findTokens: String tab.
-			class := items second = 'true'
-				         ifTrue: [ (Smalltalk classOrTraitNamed: items first) classSide ]
-				         ifFalse: [ Smalltalk classOrTraitNamed: items first ].
-			selector := items third asSymbol.
+			| stream |
+			stream := ZnCharacterReadStream on: binaryStream encoding: 'utf8'.
+			[ stream atEnd ] whileFalse: [
+					| line items selector class |
+					line := stream upTo: Character cr.
+					items := line findTokens: String tab.
+					class := items second = 'true'
+						         ifTrue: [ (Smalltalk classOrTraitNamed: items first) classSide ]
+						         ifFalse: [ Smalltalk classOrTraitNamed: items first ].
+					selector := items third asSymbol.
 
-			class ifNil: [ self error: 'Could not found class: ' , items first printString , ' for selector: ' , selector printString ].
+					class ifNil: [ self error: 'Could not found class: ' , items first printString , ' for selector: ' , selector printString ].
 
-			(class selectors includes: selector) ifTrue: [ class classify: selector under: items fourth ] ] ]
+					(class selectors includes: selector) ifTrue: [
+							(class protocolNameOfSelector: selector) = items fourth ifFalse: [
+									('Method named: ' , selector , ' of ' , class printString , ' was found in ' , (class protocolNameOfSelector: selector) , ' instead of ' , items fourth)
+										traceCr.
+									class classify: selector under: items fourth ] ] ] ]
 ]
