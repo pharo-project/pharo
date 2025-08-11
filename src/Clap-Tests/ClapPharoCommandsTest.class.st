@@ -20,8 +20,18 @@ ClapPharoCommandsTest class >> shouldInheritSelectors [
 ]
 
 { #category : 'asserting' }
+ClapPharoCommandsTest >> assertFailure [
+	self deny: context exitStatus equals: 0
+]
+
+{ #category : 'asserting' }
 ClapPharoCommandsTest >> assertSuccess [
 	self assert: context exitStatus equals: 0
+]
+
+{ #category : 'accessing' }
+ClapPharoCommandsTest >> errorString [
+	^ context stdio stderr contents utf8Decoded
 ]
 
 { #category : 'tests - fixture' }
