@@ -153,6 +153,14 @@ OCIRInstruction class >> returnTop [
 ]
 
 { #category : 'instance creation' }
+OCIRInstruction class >> sameThreadCallout: aTFExternalFunction [ 
+	
+	^ OCIRSameThreadCallout new
+		functionDefinition: aTFExternalFunction;
+		yourself
+]
+
+{ #category : 'instance creation' }
 OCIRInstruction class >> send: selector [
 
 	^ OCIRSend new

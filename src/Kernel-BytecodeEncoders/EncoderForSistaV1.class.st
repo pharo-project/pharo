@@ -1276,6 +1276,14 @@ EncoderForSistaV1 >> genReturnTopToCaller [
 ]
 
 { #category : 'bytecode generation' }
+EncoderForSistaV1 >> genSameThreadCallout: aLiteralIndex [ 
+	
+	stream
+		nextPut: 230;
+		nextPut: aLiteralIndex
+]
+
+{ #category : 'bytecode generation' }
 EncoderForSistaV1 >> genSend: selectorLiteralIndex numArgs: nArgs [
 	| extendedIndex extendedNArgs |
 	(selectorLiteralIndex < 0 or: [selectorLiteralIndex > 65535]) ifTrue:

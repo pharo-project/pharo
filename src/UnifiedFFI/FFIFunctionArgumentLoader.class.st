@@ -130,3 +130,9 @@ FFIFunctionArgumentLoader >> rolledPointerTempName [
 FFIFunctionArgumentLoader >> rolledPointerTempNameFor: aString [
 	^ ('_ptr_', aString) asSymbol
 ]
+
+{ #category : 'as yet unclassified' }
+FFIFunctionArgumentLoader >> tempName [
+
+	^ self subclassResponsibility 
+]

@@ -51,3 +51,9 @@ FFIInstVarArgument >> emitArgumentVariableAccesingPart: aBuilder context: aConte
 FFIInstVarArgument >> rolledPointerTempName [
 	^ self rolledPointerTempNameFor: self argName
 ]
+
+{ #category : 'as yet unclassified' }
+FFIInstVarArgument >> tempName [
+
+	^ #'_tmp_' , argName
+]

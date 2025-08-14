@@ -28,3 +28,27 @@ BenchTFFI >> runCall [
 	^ [ return := self doCallWith: 1.0 another: 2.0.
 		 self assert: return = 3.0 ] bench
 ]
+
+{ #category : 'running' }
+BenchTFFI >> runCallWithByteArray [ 
+
+	^ [ self doCallWithByteArray: (ByteArray new: 17)  ] bench
+]
+
+{ #category : 'running' }
+BenchTFFI >> runCallWithExternalAddress [ 
+
+	^ [ self doCallWithExternalAddress: ExternalAddress null  ] bench
+]
+
+{ #category : 'running' }
+BenchTFFI >> runCallWithPointerVoid [
+
+	^ [ self doPointerVoid: (ExternalAddress null)  ] bench
+]
+
+{ #category : 'running' }
+BenchTFFI >> runCallWithPointerVoidWithByteArray [
+
+	^ [ self doPointerVoidForByteArray: (ByteArray new: 17)  ] bench
+]

@@ -27,7 +27,7 @@ TFFunctionCallTest >> testCallbackAsFunction [
 		fromAddress: callback getHandle
 		definition: definition.
 
-	returnValue := runner invokeFunction: fun withArguments: {1. 2.0}.
+	returnValue := self invokeFunction: fun withArguments: {1. 2.0}.
 
 	self assert: returnValue equals: 3.0
 ]
@@ -50,7 +50,7 @@ TFFunctionCallTest >> testCallbackInLoop [
 			parameterTypes: {TFBasicType pointer}
 			returnType: TFBasicType sint).
 
-	returnValue := runner invokeFunction: fun withArguments: {callback getHandle}.
+	returnValue := self invokeFunction: fun withArguments: {callback getHandle}.
 
 	self assert: returnValue equals: 42
 ]
@@ -73,7 +73,7 @@ TFFunctionCallTest >> testCallbackInSingleFunction [
 			parameterTypes: {TFBasicType pointer. TFBasicType sint}
 			returnType: TFBasicType sint).
 
-	returnValue := runner invokeFunction: fun withArguments: {callback getHandle. 3}.
+	returnValue := self invokeFunction: fun withArguments: {callback getHandle. 3}.
 
 	self assert: returnValue equals: 5
 ]
@@ -95,7 +95,7 @@ TFFunctionCallTest >> testCallingFunctionWithW64CallingConvention [
 			returnType: TFBasicType sint
 			abi: DARWIN_X86_64_WIN64).
 
-	returnValue := runner invokeFunction: fun withArguments: (1 to: 10) asArray.
+	returnValue := self invokeFunction: fun withArguments: (1 to: 10) asArray.
 
 	self assert: returnValue equals: 55
 ]
@@ -119,7 +119,7 @@ TFFunctionCallTest >> testVariadicFunctionWithOneFixedAndTwoOptional [
 	aString := '%d %d' utf8Encoded.
 	aString pinInMemory.
 
-	return := runner invokeFunction: fun withArguments: {PointerUtils oopForObject: buffer. PointerUtils oopForObject: aString . 5 . 5}.
+	return := self invokeFunction: fun withArguments: {PointerUtils oopForObject: buffer. PointerUtils oopForObject: aString . 5 . 5}.
 
 	self assert: return equals: 3
 ]
@@ -135,7 +135,7 @@ TFFunctionCallTest >> testWithFloatAndDouble [
 			parameterTypes: { TFBasicType float. TFBasicType double }
 			returnType: TFBasicType float).
 
-	return := runner invokeFunction: fun withArguments: #(1.0 2.5).
+	return := self invokeFunction: fun withArguments: #(1.0 2.5).
 
 	self assert: return equals: 3.5
 ]
@@ -152,7 +152,7 @@ TFFunctionCallTest >> testWithTwoInts [
 			parameterTypes: { TFBasicType sint. TFBasicType sint }
 			returnType: TFBasicType sint).
 
-	return := runner invokeFunction: fun withArguments: {3. 2}.
+	return := self invokeFunction: fun withArguments: {3. 2}.
 
 	self assert: return equals: 5
 ]

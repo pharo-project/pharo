@@ -190,13 +190,6 @@ SymbolicBytecodeBuilder >> pushActiveProcess [
 ]
 
 { #category : 'instruction decoding' }
-SymbolicBytecodeBuilder >> pushClosureTemps: numTemps [
-	"Push on stack nil numTemps times for the closure temps."
-	
-	self addBytecode: 'pushClosureTemps:' , numTemps printString
-]
-
-{ #category : 'instruction decoding' }
 SymbolicBytecodeBuilder >> pushConsArrayWithElements: numElements [
 
 	self addBytecode: 'pop ', numElements printString, ' into (Array new: ', numElements printString, ')'
@@ -264,6 +257,12 @@ SymbolicBytecodeBuilder >> pushTemporaryVariable: offset [
 	argument, offset, On Top Of Stack bytecode."
 
 	self addBytecode: 'pushTemp: ', offset printString
+]
+
+{ #category : 'instruction decoding' }
+SymbolicBytecodeBuilder >> sameThreadCallout: literalIndex [
+
+	self addBytecode: 'sameThreadCallout: literalIndex'
 ]
 
 { #category : 'instruction decoding' }

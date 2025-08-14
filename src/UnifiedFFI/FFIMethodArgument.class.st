@@ -64,3 +64,9 @@ FFIMethodArgument >> index: anObject [
 FFIMethodArgument >> rolledPointerTempName [
 	^ self rolledPointerTempNameFor: self argName
 ]
+
+{ #category : 'as yet unclassified' }
+FFIMethodArgument >> tempName [
+
+	^ #'_tmp_' , argName
+]

@@ -281,6 +281,12 @@ FBIRBytecodeDecompiler >> quickMethod [
 	self error: 'quick method inconsistency'
 ]
 
+{ #category : 'instruction decoding' }
+FBIRBytecodeDecompiler >> sameThreadCallout: literalIndex [
+
+	irBuilder sameThreadCallout: (instructionStream compiledCode literalAt: literalIndex + 1 )
+]
+
 { #category : 'scope' }
 FBIRBytecodeDecompiler >> scope [
 	^ scopeStack top

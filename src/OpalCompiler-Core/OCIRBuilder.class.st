@@ -401,6 +401,13 @@ OCIRBuilder >> returnTop [
 ]
 
 { #category : 'instructions' }
+OCIRBuilder >> sameThreadCallout: aTFExternalFunction [ 
+
+	^ self add: (OCIRInstruction sameThreadCallout: aTFExternalFunction) 
+
+]
+
+{ #category : 'instructions' }
 OCIRBuilder >> send: selector [
 
 	^self add: (OCIRInstruction send: selector)

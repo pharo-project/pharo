@@ -4,6 +4,9 @@ I am the FFI backend implemented by using TFFI
 Class {
 	#name : 'TFFIBackend',
 	#superclass : 'FFIBackend',
+	#instVars : [
+		'symbolCache'
+	],
 	#category : 'ThreadedFFI-Base',
 	#package : 'ThreadedFFI',
 	#tag : 'Base'
@@ -71,11 +74,14 @@ TFFIBackend >> isAvailable [
 { #category : 'instance creation' }
 TFFIBackend >> loadSymbol: moduleSymbol module: module [
 
-	| encodedString |
-	encodedString := module ifNotNil: [ module utf8Encoded asString ].
+	| encodedModule key |
+	encodedModule := module ifNotNil: [ module utf8Encoded asString ].
+	key := module ifNil: [ moduleSymbol ] ifNotNil: [ module , '.' , moduleSymbol ].
 
-	"The primitive is expected the module to be a utf8Encoded String."
-	^ self primLoadSymbol: moduleSymbol module: encodedString
+	^ self symbolCache 
+		at: key
+		ifAbsentPut: [ self primLoadSymbol: moduleSymbol module: encodedModule. ].  
+
 ]
 
 { #category : 'callbacks' }
@@ -136,4 +142,10 @@ TFFIBackend >> primLoadSymbol: moduleSymbol module: module [
 	^ SymbolNotFoundError
 		  symbolName: moduleSymbol
 		  module: (module ifNotNil: [ :m | m asByteArray utf8Decoded ])
+]
+
+{ #category : 'accessing' }
+TFFIBackend >> symbolCache [
+
+	^ symbolCache ifNil: [ symbolCache := LRUCache new maximumWeight: 100; yourself ].
 ]

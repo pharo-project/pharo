@@ -214,6 +214,13 @@ OCIRPrinterVisitor >> visitReturnReceiver: receiver [
 ]
 
 { #category : 'visiting' }
+OCIRPrinterVisitor >> visitSameThreadCallout: anOCIRSameThreadCallout [ 
+
+	stream nextPutAll: 'sameThreadCallout: '.
+	anOCIRSameThreadCallout functionDefinition printOn: stream
+]
+
+{ #category : 'visiting' }
 OCIRPrinterVisitor >> visitSend: send [
 
 	send superOf

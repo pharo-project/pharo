@@ -2,7 +2,8 @@ Class {
 	#name : 'TFTestCase',
 	#superclass : 'ParametrizedTestCase',
 	#instVars : [
-		'runner'
+		'runner',
+		'useBytecode'
 	],
 	#category : 'ThreadedFFI-Tests',
 	#package : 'ThreadedFFI-Tests'
@@ -12,7 +13,30 @@ Class {
 TFTestCase class >> testParameters [
 
 	^ ParametrizedTestMatrix new
-		forSelector: #runner addOptions: { [ TFSameThreadRunner uniqueInstance ]. [ TFWorker named: 'fortest' ]. }
+		addCase: { #runner -> [ TFSameThreadRunner uniqueInstance ]. #useBytecode -> true};
+		addCase: { #runner -> [ TFSameThreadRunner uniqueInstance ]. #useBytecode -> false};
+		addCase: { #runner -> [ TFWorker named: 'fortest' ]. #useBytecode -> false };
+		yourself
+
+
+]
+
+{ #category : 'executing' }
+TFTestCase >> invokeFunction: fun withArguments: arguments [
+
+	^ useBytecode 
+		ifTrue: [ self invokeFunctionUsingBytecode: fun withArguments: arguments ]
+		ifFalse: [ runner invokeFunction: fun withArguments: arguments ]
+	
+	
+]
+
+{ #category : 'executing' }
+TFTestCase >> invokeFunctionUsingBytecode: fun withArguments: arguments [
+
+	| method |
+	method := self prepareMethodUsingBytecodeFor: fun withArguments: arguments.
+	^ method valueWithReceiver: nil arguments: arguments.
 ]
 
 { #category : 'accessing' }
@@ -23,6 +47,42 @@ TFTestCase >> libraryPath [
 	Smalltalk os isWindows ifTrue: [ ^ 'TestLibrary.dll' ].
 
 	self error: 'Unsupported Platform'
+]
+
+{ #category : 'instance creation' }
+TFTestCase >> newTestCallbackDoing: aBlock [
+
+	^ TFCallback
+		forCallback: aBlock
+		parameters: {}
+		returnType: TFBasicType void
+		runner: runner
+]
+
+{ #category : 'executing' }
+TFTestCase >> prepareMethodUsingBytecodeFor: fun withArguments: arguments [
+	
+	| argumentNames builder |
+
+	runner class = TFSameThreadRunner ifFalse: [ ^ self skip ].
+
+	argumentNames := arguments collectWithIndex: [ :e :i | #_arg_ , i printString ].
+
+	fun validate.
+
+	builder := OCIRBuilder new
+		numArgs: arguments size;
+		addTemps: argumentNames.
+
+	argumentNames do: [ :aName | builder pushTemp: aName ].
+	builder sameThreadCallout: fun.
+	
+	fun definition returnType isVoid 
+		ifTrue: [ builder pushReceiver; returnTop ]
+		ifFalse: [ builder returnTop ].
+		
+	^ builder ir compiledMethod.
+
 ]
 
 { #category : 'running' }
@@ -55,5 +115,17 @@ TFTestCase >> shortCallout [
 				parameterTypes: {}
 				returnType: TFBasicType sint32).
 
-	^ runner invokeFunction: fun
+	^ self invokeFunction: fun withArguments: #().
+]
+
+{ #category : 'accessing' }
+TFTestCase >> useBytecode [
+
+	^ useBytecode
+]
+
+{ #category : 'accessing' }
+TFTestCase >> useBytecode: anObject [
+
+	useBytecode := anObject
 ]

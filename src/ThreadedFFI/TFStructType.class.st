@@ -70,7 +70,7 @@ TFStructType >> copyFrom: from to: to size: size [
 ]
 
 { #category : 'marshalling' }
-TFStructType >> emitFreeIfNeededOfIndex: anInteger argumentsArrayTempName: aString withBuilder: anIRBuilder [
+TFStructType >> emitFreeIfNeededOfIndex: argIndex argument: argument withBuilder: anIRBuilder [
 ]
 
 { #category : 'marshalling' }

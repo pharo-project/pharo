@@ -1182,7 +1182,7 @@ SmalltalkImage >> newSpecialObjectsArray [
 	"External objects for callout.
 	 Note: Written so that one can actually completely remove the FFI."
 	newArray at: 44 put: (self at: #ExternalAddress ifAbsent: []).
-	newArray at: 45 put: nil. "was ExternalStructure"
+	newArray at: 45 put: #invalidFFICall.
 	newArray at: 46 put: nil. "was ExternalData"
 	newArray at: 47 put: nil.
 	newArray at: 48 put: nil.

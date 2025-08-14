@@ -626,6 +626,18 @@ OCIRBytecodeGenerator >> returnTop [
 	encoder genReturnTop
 ]
 
+{ #category : 'instructions' }
+OCIRBytecodeGenerator >> sameThreadCallout: aTFExternalFunction [
+
+	| literalIndex |
+	literalIndex := self literalIndexOf: aTFExternalFunction.
+
+	stack pop: aTFExternalFunction definition parameterTypes size.
+	aTFExternalFunction definition returnType isVoid ifFalse: [ stack push ].
+
+	^ encoder genSameThreadCallout: literalIndex
+]
+
 { #category : 'private' }
 OCIRBytecodeGenerator >> saveLastJump: message [
 	jumps at: currentSeqId put: {bytes size. message}

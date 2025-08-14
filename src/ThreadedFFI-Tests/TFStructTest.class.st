@@ -8,7 +8,7 @@ Class {
 { #category : 'tests' }
 TFStructTest >> longStructSize [
 
-	^ TFWorker default
+	^ self
 		invokeFunction:
 			(TFExternalFunction
 				name: 'sizeOfLongStruct'
@@ -21,7 +21,7 @@ TFStructTest >> longStructSize [
 { #category : 'tests' }
 TFStructTest >> pointSize [
 
-	^ self runner
+	^ self
 		invokeFunction:
 			(TFExternalFunction
 				name: 'sizeOfPoint'
@@ -72,7 +72,7 @@ TFStructTest >> testReturnsAnStruct [
 		parameterTypes:	{TFBasicType sint. TFBasicType sint}
 		returnType: pointType.
 
-	aPoint := TFPointTestStruct fromHandle: (runner invokeFunction: fun withArguments: #(1 5)).
+	aPoint := TFPointTestStruct fromHandle: (self invokeFunction: fun withArguments: #(1 5)).
 
 	self assert: aPoint x equals: 1.
 	self assert: aPoint y equals: 5.

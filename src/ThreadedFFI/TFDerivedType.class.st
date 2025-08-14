@@ -64,7 +64,14 @@ TFDerivedType >> callbackWrite: anObject into: anExternalAddress [
 ]
 
 { #category : 'marshalling' }
-TFDerivedType >> emitFreeIfNeededOfIndex: argIndex argumentsArrayTempName: argumentsArrayTempName withBuilder: anIRBuilder [
+TFDerivedType >> emitFreeIfNeededOfIndex: argIndex argument: argument withBuilder: anIRBuilder [
+]
+
+{ #category : 'marshalling' }
+TFDerivedType >> emitMarshallToPrimitive: builder argument: anArg [
+
+	"Nothing to do in this case"
+	^ self emitMarshallToPrimitive: builder
 ]
 
 { #category : 'freeing' }

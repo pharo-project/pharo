@@ -44,3 +44,9 @@ FFISelfArgument >> emitArgumentVariableAccesingPart: aBuilder context: aContext 
 FFISelfArgument >> rolledPointerTempName [
 	^ self rolledPointerTempNameFor: #self
 ]
+
+{ #category : 'private' }
+FFISelfArgument >> tempName [
+
+	^ #'_tmp_self' 
+]
