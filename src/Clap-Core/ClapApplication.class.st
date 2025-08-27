@@ -99,12 +99,26 @@ ClapApplication >> positional: aFlagIdentifier [
 ]
 
 { #category : 'accessing' }
+ClapApplication >> positional: anIdentifier ifAbsent: aBlock [
+
+	^ self
+		  positional: anIdentifier
+		  ifPresent: [ :positional | positional ]
+		  ifAbsent: aBlock
+]
+
+{ #category : 'accessing' }
 ClapApplication >> positional: anIdentifier ifPresent: aBlock [
-	"Execute aBlock if a positional with the identifier is found. The positional valu will be passed as first argument of the block"
 	
-	[ aBlock value: (self positional: anIdentifier) ]
+	^ self positional: anIdentifier ifPresent: aBlock ifAbsent: [ "ignore" ]
+]
+
+{ #category : 'accessing' }
+ClapApplication >> positional: anIdentifier ifPresent: presentBlock ifAbsent: absentBlock [
+	
+	^ [ presentBlock value: (self positional: anIdentifier) ]
 		on: NotFound 
-		do: [ "ignore" ]
+		do: absentBlock
 ]
 
 { #category : 'execution' }

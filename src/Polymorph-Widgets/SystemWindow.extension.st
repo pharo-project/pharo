@@ -474,7 +474,6 @@ SystemWindow >> drawDropShadowOn: aCanvas [
 SystemWindow >> expandBoxHit [
 	"The fullscreen expand box has been hit"
 
-	self canBeMaximized ifFalse: [ ^ self ].
 	self isCollapsed ifTrue: [
 			self
 				hide;
@@ -486,6 +485,8 @@ SystemWindow >> expandBoxHit [
 			^ self show ].
 	self unexpandedFrame
 		ifNil: [
+				"Some window should not be able to be maximized so we check it there."
+				self canBeMaximized ifFalse: [ ^ self ].
 				self
 					unexpandedFrame: fullFrame;
 					fullscreen ]

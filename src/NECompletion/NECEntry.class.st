@@ -46,6 +46,9 @@ NECEntry >> <= aECEntry [
 NECEntry >> activateOn: aCompletionContext [
 
 	| entryContents |
+	"Log the usage"
+	NECUsageTracker incrementUsageFor: self contents.
+	
 	"By default insert the contents of the entry instead of the token in the text editor"
 	entryContents := self contents asSymbol separateKeywords.
 	entryContents := (self class spaceAfterCompletion

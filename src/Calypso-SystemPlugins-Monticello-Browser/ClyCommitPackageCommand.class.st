@@ -59,7 +59,7 @@ ClyCommitPackageCommand >> execute [
 		                 at: #IceTipCommitBrowser
 		                 ifAbsent: [
 		                 ^ self inform: 'Iceberg 0.7 and higher is required' ].
-	packages ifEmpty: [ ^ repoBrowser new open ].
+	packages ifEmpty: [ ^ repoBrowser ensureIsOpen ].
 	repos := IceRepository registry select: [ :repo |
 		         packages anySatisfy: [ :package |
 			         repo includesPackageNamed: package name ] ].

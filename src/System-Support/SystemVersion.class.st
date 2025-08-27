@@ -109,6 +109,16 @@ SystemVersion class >> setMajor: major minor: minor patch: patch suffix: aString
 		             commitHash: hashString
 ]
 
+{ #category : 'accessing' }
+SystemVersion class >> useCurrent: aSystemVersion during: aBlock [
+
+	| backup |
+	backup := Current.
+	[
+		Current := aSystemVersion.
+		aBlock value ] ensure: [ Current := backup ]
+]
+
 { #category : 'accessing - properties' }
 SystemVersion >> build [
 

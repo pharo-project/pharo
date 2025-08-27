@@ -63,7 +63,6 @@ PharoCommonTools class >> tools [
 PharoCommonTools class >> worldMenuOn: aBuilder [
 
 	<worldMenu>
-	
 	(aBuilder item: #'System Browser')
 		parent: #Browsing;
 		action: [ (self tools toolNamed: #browser) open ];
@@ -71,16 +70,20 @@ PharoCommonTools class >> worldMenuOn: aBuilder [
 		keyText: 'o, b';
 		help: 'System browser to browse and edit code.';
 		iconName: #smallSystemBrowser.
-		
+
 	(aBuilder item: 'Git Repositories Browser')
 		order: 1;
 		iconName: #komitterSmalltalkhubRemote;
 		parent: #Browsing;
 		keyText: 'o, i';
-		help:
-			'Iceberg is a set of tools that allow one to handle git repositories directly from a Pharo image.';
-		action: [ 
-			"Pay attention using newApplication: ... will break IceTipRepositoriesBrowser because it initializes
+		help: 'Iceberg is a set of tools that allow one to handle git repositories directly from a Pharo image.';
+		action: [ "Pay attention using newApplication: ... will break IceTipRepositoriesBrowser because it initializes
 			a model."
-			((Smalltalk at: #IceTipRepositoriesBrowser) new) open ]
+			(Smalltalk at: #IceTipRepositoriesBrowser) ensureIsOpen ]
+]
+
+{ #category : 'accessing' }
+PharoCommonTools >> tools [
+
+	^ tools
 ]

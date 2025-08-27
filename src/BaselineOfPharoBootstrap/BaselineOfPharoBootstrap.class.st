@@ -109,6 +109,8 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Shift-ClassBuilder'.
 		spec package: 'System-Announcements'.
 		spec package: 'System-BasicCommandLineHandler'.
+		spec package: 'Clap-Core'.
+		spec package: 'Clap-CommandLine'.
 		spec package: 'System-CommandLine'.
 		spec package: 'System-CommandLineHandler'.
 		spec package: 'System-Finalization'.
@@ -149,6 +151,8 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec group: 'KernelGroup' with: {
 			'FFI-Kernel'.
 			'Announcements-Core'.
+			'Clap-Core'.
+			'Clap-CommandLine'.
 			'Collections-Abstract'.
 			'Collections-DoubleLinkedList'.
 			'Collections-Native'.

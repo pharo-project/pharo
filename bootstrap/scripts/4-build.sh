@@ -141,16 +141,16 @@ ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Hermes-Extensio
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Math-Operations-Extensions.hermes Debugging-Core.hermes System-Time.hermes Multilingual-Encodings.hermes ReflectionMirrors-Primitives.hermes --save --no-fail-on-undeclared
 
 # Now that System-Time is loaded, we can initialize the version
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" perform  --save ChronologyConstants initialize
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" perform  --save DateAndTime initialize
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" perform  --save SystemVersion setMajor:minor:patch:suffix:build:commitHash: ${PHARO_MAJOR} ${PHARO_MINOR} ${PHARO_PATCH} ${PHARO_SUFFIX} ${BUILD_NUMBER} ${PHARO_COMMIT_HASH}
+${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" bootstrap perform  --save ChronologyConstants initialize
+${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" bootstrap perform  --save DateAndTime initialize
+${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" bootstrap perform  --save SystemVersion setMajor:minor:patch:suffix:build:commitHash: ${PHARO_MAJOR} ${PHARO_MINOR} ${PHARO_PATCH} ${PHARO_SUFFIX} ${BUILD_NUMBER} ${PHARO_COMMIT_HASH}
 
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes InitializePackagesCommandLineHandler.hermes --save
 
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Collections-Atomic.hermes AST-Core.hermes Collections-Arithmetic.hermes  System-NumberPrinting.hermes --save --no-fail-on-undeclared
 
 echo $(date -u) "[Compiler] Initializing the packages in the Kernel"
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" initializePackages --protocols=protocolsKernel.txt --packages --save
+${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" bootstrap fixMethods --protocols protocolsKernel.txt --packages --save
 
 # Installing compiler through Hermes 
 echo $(date -u) "[Compiler] Installing compiler through Hermes"
