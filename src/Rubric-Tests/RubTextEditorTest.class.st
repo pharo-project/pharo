@@ -4,10 +4,43 @@ A RubTextEditorTest is a test class for testing the behavior of RubTextEditor
 Class {
 	#name : 'RubTextEditorTest',
 	#superclass : 'RubAbstractTest',
+	#instVars : [
+		'indentSpaces'
+	],
 	#category : 'Rubric-Tests-Editing-Core',
 	#package : 'Rubric-Tests',
 	#tag : 'Editing-Core'
 }
+
+{ #category : 'asserting' }
+RubTextEditorTest >> assertMoveCursorDown: fromString equals: expected [
+
+	| fromIndex expectedIndex actualIndex |
+	
+	fromIndex := fromString indexOf: $¶.
+	expectedIndex := expected indexOf: $¶.
+
+	actualIndex := editor sameColumn:
+		fromIndex newLine: [:line | line + 1] forward: true.
+
+	self assert: actualIndex = expectedIndex
+		description: [ self describe: actualIndex from: fromIndex comparedTo: expected ]
+]
+
+{ #category : 'asserting' }
+RubTextEditorTest >> assertMoveCursorUp: fromString equals: expected [
+
+	| fromIndex expectedIndex actualIndex |
+	
+	fromIndex := fromString indexOf: $¶.
+	expectedIndex := expected indexOf: $¶.
+
+	actualIndex := editor sameColumn:
+		fromIndex newLine: [:line | line - 1] forward: false.
+
+	self assert: actualIndex = expectedIndex
+		description: [ self describe: actualIndex from: fromIndex comparedTo: expected ]
+]
 
 { #category : 'asserting' }
 RubTextEditorTest >> assertNextCharGroupFrom: fromString to: toString equals: expected [
@@ -170,7 +203,88 @@ RubTextEditorTest >> setString: aString [
 RubTextEditorTest >> setUp [
 
 	super setUp.
-	editor := RubTextEditor forTextArea: RubEditingArea new
+	editor := RubTextEditor forTextArea: RubEditingArea new.
+	indentSpaces := EFFormatter numberOfSpacesInIndent. 
+	EFFormatter numberOfSpacesInIndent: 3
+]
+
+{ #category : 'running' }
+RubTextEditorTest >> tearDown [ 
+ 
+	EFFormatter numberOfSpacesInIndent: indentSpaces.
+	super tearDown.
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testCursorDownNoTabInOriginLineOneTabInDstLine [
+
+	self setString: 'self aaaasaasaa<r>test<r><t>anotherTest' expandMacros.
+
+	self assertMoveCursorDown:	'self aaaasaasaa<r>te¶st<r><t>anotherTest' expandMacros
+		equals: 'self aaaasaasaa<r>test<r>¶<t>anotherTest' expandMacros
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testCursorDownOneTabInOriginLineTwoTabsInDstLine [
+	
+	self setString: 'self aaaasaasaa<r><t>testa<r><t><t>anotherTest' expandMacros.
+
+	self assertMoveCursorDown: 'self aaaasaasaa<r><t>test¶a<r><t><t>anotherTest' expandMacros
+		equals: 'self aaaasaasaa<r><t>testa<r><t><t>a¶notherTest' expandMacros
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testCursorDownTwoTabInOriginLineOneTabsInDstLine [
+		
+	self setString: 'self aaaasaasaa<r><t><t>test<r><t>anotherTest' expandMacros.
+
+	self assertMoveCursorDown: 'self aaaasaasaa<r><t><t>tes¶t<r><t>anotherTest' expandMacros
+		equals: 'self aaaasaasaa<r><t><t>test<r><t>anothe¶rTest' expandMacros
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testCursorDownWithTabInOriginLine [
+
+	self setString: 'self aaaasaasaa<r><t>test<r><t><t>anotherTest' expandMacros.
+
+	self assertMoveCursorDown:	'self aaaasaasaa<r><t>tes¶t<r>anotherTest' expandMacros
+		equals: 'self aaaasaasaa<r><t>test<r><t><t>¶anotherTest' expandMacros
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testCursorUpNoTabInOriginLineOneTabInDstLine [
+
+	self setString: 'self aaaasaasaa<r><t>test<r>anotherTest' expandMacros.
+
+	self assertMoveCursorUp:	'self aaaasaasaa<r><t>test<r>an¶otherTest' expandMacros
+		equals: 'self aaaasaasaa<r>¶<t>test<r>anotherTest' expandMacros
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testCursorUpOneTabInOriginLineTwoTabsInDstLine [
+
+	self setString: 'self aaaasaasaa<r><t><t>test<r><t>anotherTest' expandMacros.
+
+	self assertMoveCursorUp:	'self aaaasaasaa<r><t><t>test<r><t>anothe¶rTest' expandMacros
+		equals: 'self aaaasaasaa<r><t><t>tes¶t<r><t>anotherTest' expandMacros
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testCursorUpTwoTabInOriginLineOneTabsInDstLine [
+
+	self setString: 'self aaaasaasaa<r><t>testa<r><t><t>anotherTest' expandMacros.
+
+	self assertMoveCursorUp:	'self aaaasaasaa<r><t>testa<r><t><t>a¶notherTest' expandMacros
+		equals: 'self aaaasaasaa<r><t>test¶a<r><t><t>anotherTest' expandMacros
+]
+
+{ #category : 'tests' }
+RubTextEditorTest >> testCursorUpWithTabInOriginLine [
+
+	self setString: 'self aaaasaasaa<r><t>test<r><t><t>anotherTest' expandMacros.
+
+	self assertMoveCursorUp:	'self aaaasaasaa<r><t>test<r><t><t>¶anotherTest' expandMacros
+		equals: 'self aaaasaasaa<r><t>tes¶t<r>anotherTest' expandMacros
 ]
 
 { #category : 'tests' }

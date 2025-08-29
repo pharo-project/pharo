@@ -25,7 +25,8 @@ ZdcPluginSSLSessionFinalizationTest >> tearDown [
 { #category : 'tests' }
 ZdcPluginSSLSessionFinalizationTest >> testPluginSSLSessionIsCorrectlyFinalized [
 
-	| previousState afterState |
+| previousState afterState |
+
 	client := ZnClient new.
 	client url: 'https://www.google.com'.
 	client method: #GET.
@@ -41,5 +42,5 @@ ZdcPluginSSLSessionFinalizationTest >> testPluginSSLSessionIsCorrectlyFinalized 
 	
 	afterState := clone serverName.
 	
-	self deny: previousState equals: afterState. 
+	self deny: previousState equals: afterState.
 ]

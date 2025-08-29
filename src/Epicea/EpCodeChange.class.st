@@ -39,8 +39,8 @@ EpCodeChange >> isCodeChange [
 ]
 
 { #category : 'testing' }
-EpCodeChange >> matches: aString [ 
+EpCodeChange >> matches: aString [
 	"Answer <true> if the receiver affected name matches aString"
-	
-	^ self affectedName asLowercase beginsWith: aString asLowercase
+
+	^ self affectedName asLowercase includesSubstring: aString asLowercase
 ]

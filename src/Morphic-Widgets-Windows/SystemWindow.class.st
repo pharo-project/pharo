@@ -1203,7 +1203,8 @@ SystemWindow >> initialize [
 	mustNotClose := false.
 	updatablePanes := Array new.
 	self bindKeyCombination: ($k meta shift alt ) toAction: [self taskbarMoveLeft ].
-	self bindKeyCombination: ($l meta shift alt) toAction: [self taskbarMoveRight ]
+	self bindKeyCombination: ($l meta shift alt) toAction: [self taskbarMoveRight ].
+	self bindKeyCombination: $w meta toAction: [ self class closeTopWindow ]
 ]
 
 { #category : 'keymapping' }

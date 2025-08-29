@@ -10,8 +10,8 @@ Class {
 }
 
 { #category : 'instance creation' }
-StRefactoringPreviewPresenterMock class >> for: aRBUpFrontPreconditionCheckingCompositeRefactoring scopes: aCollection [ 
-	^ self new for: aRBUpFrontPreconditionCheckingCompositeRefactoring scopes: aCollection 
+StRefactoringPreviewPresenterMock class >> withChanges: changes scopes: aCollection [ 
+	^ self new withChanges: changes scopes: aCollection 
 ]
 
 { #category : 'accessing' }
@@ -32,4 +32,9 @@ StRefactoringPreviewPresenterMock >> openModal [
 { #category : 'accessing' }
 StRefactoringPreviewPresenterMock >> refactoring: aRBUpFrontPreconditionCheckingCompositeRefactoring [ 
 	"don't touch me this is for the mock"
+]
+
+{ #category : 'instance creation' }
+StRefactoringPreviewPresenterMock >> withChanges: changeCol scopes: aCollection [ 
+	changes := changeCol
 ]

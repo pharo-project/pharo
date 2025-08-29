@@ -690,7 +690,7 @@ RBNamespace >> renamePackage: aRBPackage to: aSymbol [
 { #category : 'accessing' }
 RBNamespace >> repackage: aClass in: aPackage tag: aTag [
 
-	^ changes addChange: (RBClassRepackagingChange repackage: aClass in: aPackage tag: aTag)
+	^ changes addChange: (ReClassRepackagingChange repackage: aClass in: aPackage tag: aTag)
 ]
 
 { #category : 'changes' }

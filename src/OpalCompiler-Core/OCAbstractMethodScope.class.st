@@ -76,7 +76,8 @@ OCAbstractMethodScope >> allTemps [
 
 { #category : 'temp vars - copying' }
 OCAbstractMethodScope >> copiedVarNames [
-	^ copiedVars keys
+
+	^ copiedVars values collect: [ :var | var originalVar name ]
 ]
 
 { #category : 'temp vars - copying' }

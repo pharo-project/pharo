@@ -92,14 +92,13 @@ StRequestClassPresenter >> tagName [
 { #category : 'callbacks' }
 StRequestClassPresenter >> updateTagItems: item [
 	"Note that as it seems there is no Spec drop list with editable text, we provide a 'Core' tag by default if the package has no tags"
+
 	| pkg |
-	
-	item 
-		ifNil: [ tagPresenter items: { 'Core' } ]
-		ifNotNil: [ 
-			(pkg := PackageOrganizer default packageNamed: item)  tagNames
-				ifEmpty: [ tagPresenter items: { 'Core' }  ]
-				ifNotEmpty: [ : tagNames | tagPresenter items: tagNames asOrderedCollection ] ].
+	item ifNil: [ tagPresenter items: { 'Core' } ] ifNotNil: [
+			(pkg := PackageOrganizer default packageNamed: item) tagNames
+				ifEmpty: [ tagPresenter items: { 'Core' } ]
+				ifNotEmpty: [ :tagNames |
+				tagPresenter items: tagNames asOrderedCollection ] ].
 	tagPresenter selectIndex: 1
 ]
 

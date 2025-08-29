@@ -70,7 +70,6 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'Metacello-FileTree'.
 		spec package: 'Metacello-Cypress'.
 		spec package: 'CodeExport'.
-		spec package: 'MonticelloGUI' with: [ spec requires: #( 'Tool-Diff' ) ].
 		spec package: 'System-Sources-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."
 
 		spec package: 'ClassDefinitionPrinters-Tests'.
@@ -79,7 +78,7 @@ BaselineOfBasicTools >> baseline: spec [
 		spec package: 'MonticelloMocks'.
 		spec package: 'Network-Mail'.
 		spec package: 'Network-Mail-Tests'.
-		spec package: 'ProfStef-Core'.
+		
 		spec package: 'StartupPreferences'.
 
 

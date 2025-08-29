@@ -45,24 +45,6 @@ Stream >> basicNext [
 	^ self next
 ]
 
-{ #category : 'private' }
-Stream >> basicNext: anAmount putAll: aCollection startingAt: startIndex [
-
-	^ self next: anAmount putAll: aCollection startingAt: startIndex
-]
-
-{ #category : 'private' }
-Stream >> basicNextPut: anObject [
-
-	^ self nextPut: anObject
-]
-
-{ #category : 'private' }
-Stream >> basicNextPutAll: aCollection [
-
-	^ self nextPutAll: aCollection
-]
-
 { #category : 'modes' }
 Stream >> binary [
 	"do nothing"

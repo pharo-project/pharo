@@ -43,3 +43,35 @@ Class {
 FFIOpaqueObject class >> asExternalTypeOn: generator [
 	^ FFIOpaqueObjectType objectClass: self
 ]
+
+{ #category : 'instance creation' }
+FFIOpaqueObject class >> newBuffer [
+
+	^ FFIOop newBuffer
+]
+
+{ #category : 'instance creation' }
+FFIOpaqueObject class >> newValueHolder [
+
+	^ FFIReferenceValueHolder newType: self new
+]
+
+{ #category : 'private' }
+FFIOpaqueObject >> handle: aHandle at: aNumber [
+	"used for boxing/unboxing, as part of the FFIValueHolder mechanism"
+
+	^ self class basicNew setHandle: (aHandle pointerAt: aNumber)
+]
+
+{ #category : 'accessing - array' }
+FFIOpaqueObject >> handle: aHandle at: aNumber put: anExternalAddress [
+	"used for boxing/unboxing, as part of the FFIValueHolder mechanism"
+	
+	aHandle pointerAt: aNumber put: anExternalAddress
+]
+
+{ #category : 'instance creation' }
+FFIOpaqueObject >> newBuffer [
+
+	^ self class newBuffer
+]

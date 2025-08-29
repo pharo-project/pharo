@@ -1,6 +1,6 @@
 Extension { #name : 'Package' }
 
-{ #category : '*Monticello-RPackage' }
+{ #category : '*Monticello' }
 Package >> isDirty [
 	
 	| mcp |
@@ -13,7 +13,7 @@ Package >> isDirty [
 		ifAbsent: [ false ])
 ]
 
-{ #category : '*Monticello-RPackage' }
+{ #category : '*Monticello' }
 Package >> mcPackage [
 	"Normally the corresponding MCPackage should exist, but in certain cases it could happen that it does not"
 	
@@ -21,7 +21,7 @@ Package >> mcPackage [
 	
 ]
 
-{ #category : '*Monticello-RPackage' }
+{ #category : '*Monticello' }
 Package >> mcWorkingCopy [
 
 	^ (MCWorkingCopy hasPackageNamed: self name)

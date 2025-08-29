@@ -186,32 +186,6 @@ PasteUpMorph >> bringTopmostsToFront [
 		thenDo:[:m| self addMorphInLayer: m]
 ]
 
-{ #category : 'Morphic-Base-Windows' }
-PasteUpMorph >> bringWindowsFullOnscreen [
-
-	"Make ever SystemWindow on the desktop be totally on-screen, whenever possible."
-
-	| r |
-
-	bounds
-		allAreasOutsideList: ( self taskbars collect: [ :t | t bounds ] )
-		do: [ :e |
-			r
-				ifNil: [ r := e ]
-				ifNotNil: [ r area > e area
-						ifTrue: [ r ]
-						ifFalse: [ e ]
-					]
-			].
-	( self windowsSatisfying: [ :w | true ] )
-		do: [ :aWindow |
-			aWindow right: ( aWindow right min: r right ).
-			aWindow bottom: ( aWindow bottom min: r bottom ).
-			aWindow left: ( aWindow left max: r left ).
-			aWindow top: ( aWindow top max: r top )
-			]
-]
-
 { #category : 'session management' }
 PasteUpMorph >> checkSession [
 
@@ -712,12 +686,12 @@ PasteUpMorph >> mouseDown: evt [
 	handHadHalos := evt hand halo isNotNil.
 	evt hand removeHalo.	"shake off halos"
 	evt hand releaseKeyboardFocus.	"shake of keyboard foci"
-	(evt shiftPressed not and: [ self isWorldMorph not and: [ self wantsEasySelection not ] ])
+	(evt shiftPressed not and: [ self isWorldMorph not and: [ self isEasySelecting not ] ])
 		ifTrue: [
 			evt wasHandled: false.
 			^ self ].	"explicitly ignore the event if we're not the world and we'll not select,
 		so that we could be picked up if need be"
-	(evt shiftPressed or: [ self wantsEasySelection ])
+	(evt shiftPressed or: [ self isEasySelecting ])
 		ifTrue: [
 			| clickSelector |
 			evt shiftPressed
@@ -772,12 +746,6 @@ PasteUpMorph >> positionNear: aPoint forExtent: anExtent adjustmentSuggestion: a
 	^ adjustedPosition
 ]
 
-{ #category : 'private' }
-PasteUpMorph >> privateRemoveMorph: aMorph [
-	backgroundMorph == aMorph ifTrue: [ backgroundMorph := nil ].
-	^super privateRemoveMorph: aMorph
-]
-
 { #category : 'caching' }
 PasteUpMorph >> releaseCachedState [
 	super releaseCachedState.
@@ -803,29 +771,6 @@ PasteUpMorph >> resizeBackgroundMorph [
 	"Resize the background morph to fit the world."
 
 	self backgroundMorph ifNotNil: [ self backgroundMorph extent: self extent ]
-]
-
-{ #category : 'options' }
-PasteUpMorph >> resizeToFit [
-	^self vResizing == #shrinkWrap
-]
-
-{ #category : 'options' }
-PasteUpMorph >> resizeToFitString [
-	"Answer a string, to be used in a self-updating menu, to
-	represent whether the receiver is currently using resize-to-fit
-	or not"
-	^ (self resizeToFit
-		ifTrue: ['<yes>']
-		ifFalse: ['<no>'])
-		, 'resize to fit' translated
-]
-
-{ #category : 'world state' }
-PasteUpMorph >> restoreMainDockingBarDisplay [
-	"Restore the display of docking bars"
-	self dockingBars
-		do: [:each | each updateBounds]
 ]
 
 { #category : 'gridding' }
@@ -859,13 +804,6 @@ PasteUpMorph >> shouldGetStepsFrom: aWorld [
 	^ super shouldGetStepsFrom: aWorld
 ]
 
-{ #category : 'options' }
-PasteUpMorph >> toggleResizeToFit [
-	"Toggle whether the receiver is set to resize-to-fit"
-
-	self vResizeToFit: self resizeToFit not
-]
-
 { #category : 'project state' }
 PasteUpMorph >> viewBox: newViewBox [
 	"I am now displayed within newViewBox; react."
@@ -880,12 +818,6 @@ PasteUpMorph >> wantsDroppedMorph: aMorph event: evt [
 	self visible ifFalse: [^ false].  "will be a call to #hidden again very soon"
 	self dropEnabled ifFalse: [^ false].
 	^ true
-]
-
-{ #category : 'event handling' }
-PasteUpMorph >> wantsEasySelection [
-	"Answer if the receiver want easy selection mode"
-	^ self isEasySelecting
 ]
 
 { #category : 'halos and balloon help' }

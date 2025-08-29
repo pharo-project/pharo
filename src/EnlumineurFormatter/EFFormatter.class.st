@@ -130,7 +130,7 @@ EFFormatter class >> indentsForKeywords: anInteger [
 
 { #category : 'class initialization' }
 EFFormatter class >> initialize [
-
+	"self initialize"
 	FormatAsYouReadPolicy := false.
 	DefaultPrettyPrintContext := EFContext new
 ]

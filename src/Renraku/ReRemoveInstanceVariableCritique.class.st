@@ -20,7 +20,7 @@ ReRemoveInstanceVariableCritique class >> for: anEntity instanceVariable: anInst
 { #category : 'accessing' }
 ReRemoveInstanceVariableCritique >> change [
 
-	^ (RBRefactoryChangeFactory instance)
+	^ (ReChangeFactory instance)
 		removeInstanceVariable: self tinyHint from: self entity
 ]
 

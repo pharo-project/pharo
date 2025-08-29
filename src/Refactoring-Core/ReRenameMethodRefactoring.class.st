@@ -196,7 +196,8 @@ ReRenameMethodRefactoring >> validSelectorCondition [
 ]
 
 { #category : 'accessing' }
-ReRenameMethodRefactoring >> violations [ 
+ReRenameMethodRefactoring >> violations [
 
-	^ self breakingChangePreconditions flatCollect: [ :each | each violators ]
+	^ self breakingChangePreconditions flatCollect: [ :each |
+		  each violators ]
 ]

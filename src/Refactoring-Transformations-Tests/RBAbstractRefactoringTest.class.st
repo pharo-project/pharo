@@ -9,6 +9,33 @@ Class {
 	#tag : 'Parametrized'
 }
 
+{ #category : 'tests' }
+RBAbstractRefactoringTest >> addClassHierarchy [
+
+	model
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclass: Object;
+				name: #SomeClass;
+				sharedVariables: { #Foo };
+				package: #'Refactory-Test data' ];
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclassName: #SomeClass;
+				name: #Subclass;
+				package: #'Refactory-Test data' ];
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclassName: #Subclass;
+				name: #Foo1;
+				package: #'Refactory-Test data' ];
+		defineClass: [ :aBuilder |
+			aBuilder
+				superclassName: #Subclass;
+				name: #Foo2;
+				package: #'Refactory-Test data' ]
+]
+
 { #category : 'accessing' }
 RBAbstractRefactoringTest >> constructor [
 ]

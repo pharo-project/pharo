@@ -475,23 +475,25 @@ SystemWindow >> expandBoxHit [
 	"The fullscreen expand box has been hit"
 
 	self isCollapsed ifTrue: [
-		self
-			hide;
-			collapseOrExpand.
-		self unexpandedFrame ifNil: [ self unexpandedFrame: fullFrame ].
-		self
-			fullscreen;
-			setExpandBoxBalloonText.
-		^ self show ].
+			self
+				hide;
+				collapseOrExpand.
+			self unexpandedFrame ifNil: [ self unexpandedFrame: fullFrame ].
+			self
+				fullscreen;
+				setExpandBoxBalloonText.
+			^ self show ].
 	self unexpandedFrame
 		ifNil: [
-			self
-				unexpandedFrame: fullFrame;
-				fullscreen ]
+				"Some window should not be able to be maximized so we check it there."
+				self canBeMaximized ifFalse: [ ^ self ].
+				self
+					unexpandedFrame: fullFrame;
+					fullscreen ]
 		ifNotNil: [
-			self
-				bounds: self unexpandedFrame;
-				unexpandedFrame: nil ].
+				self
+					bounds: self unexpandedFrame;
+					unexpandedFrame: nil ].
 	self setExpandBoxBalloonText
 ]
 

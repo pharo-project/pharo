@@ -184,6 +184,17 @@ SmallIntegerTest >> testNew [
 	self should: [SmallInteger new] raise: self defaultTestError
 ]
 
+{ #category : 'tests' }
+SmallIntegerTest >> testOdd [
+
+	self deny: 0 odd.
+	self deny: 2 odd.
+	self deny: -2 odd.
+	self assert: 3 odd.
+	self assert: -3 odd
+	
+]
+
 { #category : 'tests - printing' }
 SmallIntegerTest >> testPrintPaddedWith [
 	self assert: (123 printPaddedWith: $0 to: 10 base: 2) equals: '0001111011'.

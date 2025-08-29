@@ -14,11 +14,6 @@ SuperVariable class >> variableName [
 	^#super
 ]
 
-{ #category : 'visiting' }
-SuperVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
-	^ aProgramNodeVisitor visitSuperNode: aNode
-]
-
 { #category : 'code generation' }
 SuperVariable >> emitValue: methodBuilder [
 	"super references the receiver, send that follows is a super send (the message lookup starts in the superclass, see OCASTTranslator>>#emitMessageNode:)"

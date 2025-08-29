@@ -11,3 +11,17 @@ Class {
 	#package : 'UnifiedFFI',
 	#tag : 'Deprecated'
 }
+
+{ #category : 'private' }
+FFIExternalStructure >> handle: aHandle at: aNumber [
+	"used for boxing/unboxing, as part of the FFIValueHolder mechanism"
+
+	^ self class basicNew setHandle: (aHandle pointerAt: aNumber)
+]
+
+{ #category : 'private' }
+FFIExternalStructure >> handle: aHandle at: aNumber put: anExternalAddress [
+	"used for boxing/unboxing, as part of the FFIValueHolder mechanism"
+	
+	aHandle pointerAt: aNumber put: anExternalAddress
+]

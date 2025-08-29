@@ -170,7 +170,7 @@ OCCodeReparator >> openMenu [
 	labels add: 'Cancel'.
 	caption := 'Unknown variable: ' , name
 	           , ' please correct, or cancel:'.
-	choice := MorphicUIManager new
+	choice := UIManager default
 		          chooseFrom: labels
 		          lines: lines
 		          title: caption.

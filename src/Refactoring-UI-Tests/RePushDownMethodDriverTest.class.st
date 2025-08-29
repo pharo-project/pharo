@@ -75,7 +75,7 @@ RePushDownMethodDriverTest >> testPushDownMethodDriverWhenHappyPathExpectChanges
 	self setUpDriver: driver.
 	
 	driver runRefactoring.
-	self assert: driver refactoring model changes changes size equals: 4
+	self assert: driver refactoring model changes changes size equals: 5
 ]
 
 { #category : 'tests' }

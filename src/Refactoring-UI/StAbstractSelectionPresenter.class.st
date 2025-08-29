@@ -39,6 +39,20 @@ StAbstractSelectionPresenter class >> label: aString dropLabel: aString2 withIte
 		openBlockedDialog
 ]
 
+{ #category : 'specs' }
+StAbstractSelectionPresenter class >> title: aTitle label: aString dropLabel: aString2 withItems: items selecting: selectedItems dropItems: dropItems acceptBlock: aBlock [
+
+	^ self new
+		  title: aTitle
+		  label: aString
+		  dropLabel: aString2
+		  withItems: items
+		  selecting: selectedItems
+		  dropItems: dropItems
+		  acceptBlock: aBlock;
+		  openBlockedDialog
+]
+
 { #category : 'actions' }
 StAbstractSelectionPresenter >> accept [
 	acceptBlock value: self selectedItem value: table selectedItems
@@ -76,4 +90,14 @@ StAbstractSelectionPresenter >> label: aString dropLabel: dropString withItems: 
 { #category : 'accessing' }
 StAbstractSelectionPresenter >> selectedItem [
 	^ dropList selectedItem
+]
+
+{ #category : 'initialization' }
+StAbstractSelectionPresenter >> title: aTitle label: aString dropLabel: dropString withItems: items selecting: selItems dropItems: dropItems acceptBlock: aBlock [
+
+	titleHolder := aTitle.
+	self label: aString withItems: items selecting: selItems.
+	dropLabel label: dropString.
+	dropList items: dropItems.
+	acceptBlock := aBlock
 ]

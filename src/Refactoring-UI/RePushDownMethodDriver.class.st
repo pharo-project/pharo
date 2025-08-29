@@ -37,7 +37,7 @@ RePushDownMethodDriver >> breakingChoices [
 
 	| choices |
 	choices := OrderedCollection new.
-	choices add: (RePushDownMethodChoice new driver: self).
+	choices add: (RePushDownMethodTransformationChoice new driver: self).
 	subclassesSendSuper isFalse ifTrue: [
 		choices add: (ReBrowseSubclassSuperSendsChoice new driver: self) ].
 	^ choices 
@@ -163,6 +163,7 @@ RePushDownMethodDriver >> selectMethods [
 
 	| dialog |
 	dialog := self methodsSelectionPresenterClass 
+		          title: 'There are potential breaking changes!'
 		          label: 'Push down methods from ' , class name
 		          withItems:
 			          (class methods sort: [ :a :b | a asString < b asString ])

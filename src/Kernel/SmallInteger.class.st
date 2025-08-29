@@ -544,6 +544,7 @@ SmallInteger >> odd [
 	"-2 odd >>> false"
 	" 3 odd >>> true"
 	"-3 odd >>> true"
+	
 	^(self bitAnd: 1) = 1
 ]
 

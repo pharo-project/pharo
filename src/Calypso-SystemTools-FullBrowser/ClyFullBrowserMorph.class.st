@@ -272,10 +272,8 @@ ClyFullBrowserMorph >> classGroupSelection [
 
 { #category : 'accessing' }
 ClyFullBrowserMorph >> classScopeForMethods [
-	| currentClassScope |
-	currentClassScope := methodGroupQuery scope asScope: metaLevelScope.
 
-	^self extendClassScopeForMethods: currentClassScope
+	^ methodGroupQuery scope asScope: metaLevelScope
 ]
 
 { #category : 'accessing - selection' }
@@ -328,10 +326,7 @@ ClyFullBrowserMorph >> decorateMethodEditor: aMethodEditor [
 { #category : 'accessing' }
 ClyFullBrowserMorph >> defaultClassScopeForMethods [
 
-	| selectedClassScope |
-	selectedClassScope := self classSelection asItemsScope: metaLevelScope.
-
-	^self extendClassScopeForMethods: selectedClassScope
+	^ self classSelection asItemsScope: metaLevelScope
 ]
 
 { #category : 'navigation' }
@@ -346,19 +341,6 @@ ClyFullBrowserMorph >> defaultNavigationScope [
 ClyFullBrowserMorph >> defaultPackageFilter [
 	^DefaultPackageFilter ifNil: [
 		DefaultPackageFilter := ClyTableFilterFactory of: ClyItemNameFilter using: ClyRegexPattern new]
-]
-
-{ #category : 'accessing' }
-ClyFullBrowserMorph >> extendClassScopeForMethods: aClassScope [
-	| resultScope |
-
-	resultScope := aClassScope.
-	(ClyMethodVisibilityLevel allAvailableFor: self classSelection items)
-		ifNotEmpty: [ :levels |
-			"It will be likely one, but who knows"
-			resultScope := levels anyOne extendClassScope: resultScope ].
-
-	^resultScope
 ]
 
 { #category : 'initialization' }

@@ -10,11 +10,6 @@ Class {
 	#tag : 'Conditions'
 }
 
-{ #category : 'choices' }
-ReMethodsDontReferToInstVarsCondition class >> strategyChoiceClass [
-	^ RePushUpInstanceVariableChoice
-]
-
 { #category : 'initialization' }
 ReMethodsDontReferToInstVarsCondition >> class: aRBClass selectors: aCollection [ 
 

@@ -578,6 +578,80 @@ Text >> trim [
 	^ self copyFrom: left to: right
 ]
 
+{ #category : 'trimming' }
+Text >> trimBoth [
+	"Trim separators from both sides of the receiving string."
+
+	"'  hello  ' asText trimBoth >>> 'hello' asText"
+
+	"'hello' asText trimBoth >>> 'hello' asText"
+
+	"'' asText trimBoth >>> '' asText"
+
+	^ self trimBoth: [ :char | char isSeparator ]
+]
+
+{ #category : 'trimming' }
+Text >> trimBoth: aBlock [
+	"Trim characters satisfying the condition given in aBlock from both sides of the receiving string."
+
+	^ self trimLeft: aBlock right: aBlock
+]
+
+{ #category : 'trimming' }
+Text >> trimLeft [
+	"Trim separators from the left side of the receiving string."
+
+	"'  hello  ' asText trimLeft >>> 'hello  ' asText"
+
+	"'hello' asText trimLeft >>> 'hello' asText"
+
+	"'' asText trimLeft >>> '' asText"
+
+	^ self trimLeft: [ :char | char isSeparator ]
+]
+
+{ #category : 'trimming' }
+Text >> trimLeft: aBlock [
+	"Trim characters satisfying the condition given in aBlock from the left side of the receiving string."
+
+	^ self trimLeft: aBlock right: [ :char | false ]
+]
+
+{ #category : 'trimming' }
+Text >> trimLeft: aLeftBlock right: aRightBlock [
+	"Trim characters satisfying the condition given in aLeftBlock from the left side and aRightBlock from the right sides of the receiving string."
+
+	| left right |
+	left := 1.
+	right := self size.
+
+	[ left <= right and: [ aLeftBlock value: (self at: left) ] ]
+		whileTrue: [ left := left + 1 ].
+
+	[ left <= right and: [ aRightBlock value: (self at: right) ] ]
+		whileTrue: [ right := right - 1 ].
+
+	^ self copyFrom: left to: right
+]
+
+{ #category : 'trimming' }
+Text >> trimRight [
+	"Trim separators from the right side of the receiving string."
+	"'  hello  ' asText trimRight >>> '  hello' asText"
+	"'hello' asText trimRight >>> 'hello' asText"
+
+
+	^ self trimRight: [ :char | char isSeparator ]
+]
+
+{ #category : 'trimming' }
+Text >> trimRight: aBlock [
+	"Trim characters satisfying the condition given in aBlock from the right side of the receiving string."
+
+	^ self trimLeft: [ :char | false ] right: aBlock
+]
+
 { #category : 'testing' }
 Text >> unembellished [
 	"Return true if the only emphases are the default font and bold"

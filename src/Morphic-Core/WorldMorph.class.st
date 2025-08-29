@@ -18,7 +18,10 @@ Class {
 		'LastScreenModeSelected'
 	],
 	#classInstVars : [
-		'displayScaleFactor'
+		'displayScaleFactor',
+		'dropActionBlock',
+		'dragActionBlock',
+		'resizeActionBlock'
 	],
 	#category : 'Morphic-Core-Worlds',
 	#package : 'Morphic-Core',
@@ -105,6 +108,48 @@ WorldMorph class >> doOneCycle [
 			self currentWorld doOneCycle ] ]
 ]
 
+{ #category : 'accessing' }
+WorldMorph class >> dragActionBlock [
+
+	^ dragActionBlock
+]
+
+{ #category : 'accessing' }
+WorldMorph class >> dragActionBlock: aBlock [
+
+	dragActionBlock := aBlock
+]
+
+{ #category : 'accessing' }
+WorldMorph class >> dropActionBlock [
+
+	^ dropActionBlock 
+]
+
+{ #category : 'accessing' }
+WorldMorph class >> dropActionBlock: aBlock [
+
+	dropActionBlock := aBlock
+]
+
+{ #category : 'execution' }
+WorldMorph class >> executeDragBlockWith: aValue [
+
+	self dragActionBlock ifNotNil: [ self dragActionBlock value: aValue ]
+]
+
+{ #category : 'execution' }
+WorldMorph class >> executeDropBlockWith: aValue [
+
+	self dropActionBlock ifNotNil: [ self dropActionBlock value: aValue ]
+]
+
+{ #category : 'execution' }
+WorldMorph class >> executeResizeBlock [
+
+	self resizeActionBlock ifNotNil: [ self resizeActionBlock value ]
+]
+
 { #category : 'extra worlds' }
 WorldMorph class >> extraWorldList [
 	ExtraWorldList ifNil: [ ExtraWorldList := #() ].
@@ -121,7 +166,11 @@ WorldMorph class >> fullscreen: aBoolean [
 
 { #category : 'class initialization' }
 WorldMorph class >> initialize [
-	ExtraWorldListMutex := Semaphore forMutualExclusion
+
+	ExtraWorldListMutex := Semaphore forMutualExclusion.
+	dropActionBlock := nil.
+	dragActionBlock := nil.
+	resizeActionBlock := nil
 ]
 
 { #category : 'settings' }
@@ -136,6 +185,18 @@ WorldMorph class >> removeExtraWorld: aWorld [
 		ExtraWorldList := self extraWorldList copyWithout: aWorld.
 	].
 	CursorOwnerWorld == aWorld ifTrue: [ CursorOwnerWorld := nil ]
+]
+
+{ #category : 'accessing' }
+WorldMorph class >> resizeActionBlock [
+
+	^ resizeActionBlock 
+]
+
+{ #category : 'accessing' }
+WorldMorph class >> resizeActionBlock: aBlock [
+
+	resizeActionBlock := aBlock
 ]
 
 { #category : 'setting' }

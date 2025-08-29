@@ -21,15 +21,3 @@ ReClassesCondition >> classes: aRBClassCollection [
 
 	classes := aRBClassCollection 
 ]
-
-{ #category : 'checking' }
-ReClassesCondition >> isFalse [
-
-	^ self isTrue not
-]
-
-{ #category : 'checking' }
-ReClassesCondition >> isTrue [ 
-
-	^ self check
-]

@@ -12,7 +12,7 @@ Class {
 { #category : 'tests' }
 ReAddSubclassDriverTest >> newSubclassName [
 
-	^ #RBRefactoringChangeMock
+	^ #ReChangeMock
 ]
 
 { #category : 'running' }

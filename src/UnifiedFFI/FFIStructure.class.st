@@ -303,6 +303,18 @@ FFIStructure class >> nestedStructures [
 		thenCollect: [ :each | each objectClass ]
 ]
 
+{ #category : 'instance creation' }
+FFIStructure class >> newBuffer [
+
+	^ FFIOop newBuffer
+]
+
+{ #category : 'instance creation' }
+FFIStructure class >> newValueHolder [
+
+	^ FFIReferenceValueHolder newType: self new 
+]
+
 { #category : 'private' }
 FFIStructure class >> offsetFieldPrefix [
 	^ 'OFFSET'
@@ -374,6 +386,12 @@ FFIStructure class >> structureAlignment [
 { #category : 'accessing' }
 FFIStructure class >> structureSize [
 	^ self byteSize
+]
+
+{ #category : 'instance creation' }
+FFIStructure >> newBuffer [
+
+	^ self class newBuffer
 ]
 
 { #category : 'converting' }

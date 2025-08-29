@@ -22,6 +22,18 @@ RBNewAbstractCondition >> errorString [
 	^ String streamContents: [ :stream | self violationMessageOn: stream ] 
 ]
 
+{ #category : 'testing' }
+RBNewAbstractCondition >> isFalse [
+
+	^ self isTrue not
+]
+
+{ #category : 'testing' }
+RBNewAbstractCondition >> isTrue [
+
+	^ self check
+]
+
 { #category : 'logical operations' }
 RBNewAbstractCondition >> not [
 	^ReNewNegationCondition on: self

@@ -9,6 +9,12 @@ Class {
 	#tag : 'Mocks'
 }
 
+{ #category : 'adding' }
+CoMockPackageOrganizer >> add: aPackage [ 
+
+	packages add: aPackage 
+]
+
 { #category : 'initialization' }
 CoMockPackageOrganizer >> initialize [
 

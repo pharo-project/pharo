@@ -44,11 +44,6 @@ LiteralVariable >> = anAssociation [
 	^ super = anAssociation and: [value = anAssociation value]
 ]
 
-{ #category : 'visiting' }
-LiteralVariable >> acceptVisitor: aProgramNodeVisitor node: aNode [
-	^ aProgramNodeVisitor visitLiteralVariableNode: aNode
-]
-
 { #category : 'testing' }
 LiteralVariable >> analogousCodeTo: anAssociation [
 	^ self = anAssociation

@@ -20,7 +20,7 @@ ClapCommandLineHandler >> activate [
 			beObeyingExits;
 			setStdio: Stdio;
 			arguments: self arguments;
-			executeToExit: [ :exit | self handleExit: exit ]
+			execute
 	]
 	forkAt: Processor userSchedulingPriority
 	named: 'Clap commandline handler process'
@@ -28,9 +28,9 @@ ClapCommandLineHandler >> activate [
 
 { #category : 'activation' }
 ClapCommandLineHandler >> handleExit: exit [
-	Smalltalk isInteractive
-		ifFalse: [ ^ exit pass ].
 
-	exit isSuccess
-		ifFalse: [ ^ exit resignalAs: (Error new messageText: exit messageText) ]
+	self flag: 'TOREMOVE ance clap is used as default command handler'.
+	Smalltalk isInteractive ifFalse: [ ^ exit pass ].
+
+	exit isSuccess ifFalse: [ ^ exit resignalAs: (Error new messageText: exit messageText) ]
 ]

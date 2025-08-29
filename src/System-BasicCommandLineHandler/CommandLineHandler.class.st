@@ -213,9 +213,9 @@ CommandLineHandler >> hasSessionChanged [
 { #category : 'actions' }
 CommandLineHandler >> help [
 	"This is a crude default help implementation."
+
 	self printHelp.
-	Smalltalk isInteractive
-		ifFalse: [ self exitSuccess ]
+	Smalltalk isInteractive ifFalse: [ self exitSuccess ]
 ]
 
 { #category : 'initialization' }

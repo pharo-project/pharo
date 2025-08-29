@@ -109,6 +109,14 @@ CompiledMethod class >> new [
 	^self basicNew: 2 header: 1024
 ]
 
+{ #category : 'initialization' }
+CompiledMethod class >> resetPragmaCache [
+	<script>
+
+	"Useful in bootstrap process"
+	self allInstancesDo: [ :method | method cachePragmas ]
+]
+
 { #category : 'class initialization' }
 CompiledMethod class >> smallFrameSize [
 

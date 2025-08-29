@@ -35,10 +35,14 @@ CoGlobalSorterResultSetBuilder >> sorterClass: anObject [
 { #category : 'visiting' }
 CoGlobalSorterResultSetBuilder >> visitNode: aNode [
 
-	| fetcher entries sorter |
+	| fetcher entries |
 	entries := aNode completionEntries: completionContext position.
+	"
+	""Under investigation: 
+		- for now the class does not define a class side sorterClass method. 
+		
 	sorter := self sorterClass new context: completionContext.
-	entries := sorter sortCompletionList: entries.
+	entries := sorter sortCompletionList: entries."
 
 	fetcher := CoCollectionFetcher onCollection: entries.
 

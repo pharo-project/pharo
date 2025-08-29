@@ -370,6 +370,8 @@ Symbol >> asMutator [
 
 	"#_ asMutator >>> #_:"
 	"#foo:: asMutator >>> #'foo::'"
+	
+	self isBinary ifTrue: [ self error: 'Binary selectors cannot be transformed into mutators' ].
 
 	self endsWithAColon ifTrue:[ ^ self ].
 	^ (self copyWith: $:) asSymbol

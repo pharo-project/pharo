@@ -10,14 +10,16 @@ Class {
 RBNotInCascadedMessageConditionTest >> testInCascadedMessageExpectFalse [
 
 	| precondition model class parseTree subtree |
+	"Pay attention the test is using the body of this method."
+	
 	model := self modelOnClasses: { self class }.
 	class := model classObjectFor: self class.
 	parseTree := class parseTreeForSelector: self selector.
-	subtree := parseTree extractSubtreeWith: '(precondition not) errorBlock'.
+	subtree := parseTree extractSubtreeWith: '(precondition not) errorString'.
 	
 	precondition := ReNotInCascadedMessageCondition new subtree: subtree.
 	
-	(precondition not) errorBlock; errorBlock.
+	(precondition not) errorString; errorString.
 	
 	self deny: precondition check
 ]
@@ -26,6 +28,7 @@ RBNotInCascadedMessageConditionTest >> testInCascadedMessageExpectFalse [
 RBNotInCascadedMessageConditionTest >> testNotInCascadedMessageExpectTrue [
 
 	| precondition model class parseTree subtree |
+	"Pay attention the test is using the method itself as input."
 	model := self modelOnClasses: { self class }.
 	class := model classObjectFor: self class.
 	parseTree := class parseTreeForSelector: self selector.
@@ -33,7 +36,7 @@ RBNotInCascadedMessageConditionTest >> testNotInCascadedMessageExpectTrue [
 
 	precondition := ReNotInCascadedMessageCondition new subtree: subtree.
 	
-	(precondition not) errorBlock; errorBlock.
+	(precondition not) errorString; errorString.
 	
 	self assert: precondition check
 ]

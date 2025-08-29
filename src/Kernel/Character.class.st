@@ -872,7 +872,7 @@ Character >> shouldBePrintedAsLiteral [
 { #category : 'printing' }
 Character >> storeBinaryOn: aStream [
 	self asInteger < 256
-		ifTrue: [ aStream basicNextPut: self asInteger ]
+		ifTrue: [ aStream nextPut: self asInteger ]
 		ifFalse: [ aStream nextInt32Put: self asInteger ]
 ]
 
