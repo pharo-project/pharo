@@ -21,7 +21,7 @@ PharoDarkTheme class >> colorConfiguratorClass [
 
 { #category : 'testing' }
 PharoDarkTheme class >> isAbstract [
-	"Answer whether the receiver is considered to be abstract."
+	"Answer whether the receiver is considered to be abstract"
 
 	^false
 ]
