@@ -4,6 +4,9 @@ Class {
 	#instVars : [
 		'context'
 	],
+	#classVars : [
+		'TestValue'
+	],
 	#category : 'Clap-Tests-Commands',
 	#package : 'Clap-Tests',
 	#tag : 'Commands'
@@ -17,6 +20,18 @@ ClapPharoCommandsTest class >> isAbstract [
 { #category : 'testing' }
 ClapPharoCommandsTest class >> shouldInheritSelectors [
 	^ true
+]
+
+{ #category : 'accessing' }
+ClapPharoCommandsTest class >> testValue [
+
+	^ TestValue
+]
+
+{ #category : 'accessing' }
+ClapPharoCommandsTest class >> testValue: aValue [
+
+	TestValue := aValue 
 ]
 
 { #category : 'asserting' }

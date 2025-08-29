@@ -819,17 +819,18 @@ UITheme >> chooseForSaveFileReferenceIn: aThemedMorph title: title extensions: e
 
 	| dialog directory |
 	dialog := self fileSaveDialogWindowClass new.
-	exts ifNotNil: [ dialog filter: (StCustomExtensionsFilter extensions: exts) ].
-	path ifNotNil: [ dialog nameText: path asFileReference nextVersion basename ].
+	exts ifNotNil: [
+		dialog filter: (StCustomExtensionsFilter extensions: exts) ].
+	path ifNotNil: [
+		dialog nameText: path asFileReference nextVersion basename ].
 	directory := path
 		             ifNil: [ StFileSystemModel defaultDirectory ]
-		             ifNotNil: [ path parent ].
+		             ifNotNil: [
+				           path asFileReference parent ].
 
 	dialog
 		defaultFolder: directory;
-		title: (title
-				 ifNil: [ 'Save as' translated ]
-				 ifNotNil: [ title ]);
+		title: (title ifNil: [ 'Save as' ] ifNotNil: [ title ]);
 		openModal.
 
 	^ dialog cancelled

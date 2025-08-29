@@ -71,7 +71,7 @@ ClapContext class >> withAll: commandCandidates [
 
 { #category : 'instance creation' }
 ClapContext class >> withPragmaCommands [ 
-	('pragmaCommands: ', self pragmaCommands printString) traceCr.	
+
 	^ self withAll: (self pragmaCommands ifEmpty: [ self boostrapCommands ])
 ]
 
