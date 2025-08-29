@@ -367,7 +367,7 @@ MorphicUIManager >> inform: aStringOrText [
 	(ProvideAnswerNotification signal: aStringOrText) ifNotNil: [:answer |
 		^true].
 	GrowlMorph
-		openWithLabel: 'Information' translated
+		openWithLabel: 'Information'
 		contents: aStringOrText
 ]
 
