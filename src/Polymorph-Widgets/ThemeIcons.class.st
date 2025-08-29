@@ -82,7 +82,7 @@ ThemeIcons class >> destinationPath [
 
 { #category : 'private' }
 ThemeIcons class >> loadDefault [
-
+	<script>
 	^ self new
 		  name: self defaultIconsPack;
 		  loadIconsFromUrl;
@@ -254,7 +254,7 @@ ThemeIcons >> iconNamed: aSymbol ifNone: aBlock [
 { #category : 'accessing' }
 ThemeIcons >> icons [
 
-	^ self iconsPerScale at: scale ifAbsentPut: [ IdentityDictionary new ]
+	^ self iconsPerScale at: self scale ifAbsentPut: [ IdentityDictionary new ]
 ]
 
 { #category : 'accessing' }
