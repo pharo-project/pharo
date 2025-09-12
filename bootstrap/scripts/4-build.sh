@@ -150,7 +150,8 @@ ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes InitializePacka
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Collections-Atomic.hermes AST-Core.hermes Collections-Arithmetic.hermes  System-NumberPrinting.hermes --save --no-fail-on-undeclared
 
 echo $(date -u) "[Compiler] Initializing the packages in the Kernel"
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" bootstrap fixMethods --protocols protocolsKernel.txt --packages --save
+${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" perform --save PharoBootstrapFixMethodsTool fixExtensionMethods
+${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" perform --save PharoBootstrapFixMethodsTool fixMethodsIn: protocolsKernel.txt
 
 # Installing compiler through Hermes 
 echo $(date -u) "[Compiler] Installing compiler through Hermes"

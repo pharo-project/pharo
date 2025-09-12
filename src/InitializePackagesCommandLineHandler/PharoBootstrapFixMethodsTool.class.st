@@ -25,50 +25,35 @@ pharo Pharo.image initializePackages --protocols=protocols.txt --packages --save
 ```
 "
 Class {
-	#name : 'ClapPharoFixMethodsCommand',
-	#superclass : 'ClapPharoBootstrapCommand',
+	#name : 'PharoBootstrapFixMethodsTool',
+	#superclass : 'Object',
 	#category : 'InitializePackagesCommandLineHandler',
 	#package : 'InitializePackagesCommandLineHandler'
 }
 
-{ #category : 'command line' }
-ClapPharoFixMethodsCommand class >> commandSpecification [ 
-
-	| command |
-	command := (ClapCommandSpec id: #fixMethods)
-		  description: 'Fix methods created by espell by setting their protocol or package if extension.';
-		  commandClass: self;
-		  addHelp;
-		  addFlagWithPositional: #protocols description: 'Fixes protocols of methods provided in the file given as argument';
-		  addFlag: #packages description: 'Fixes packages of extension methods';
-			yourself.
-		
-	self addSaveFlagTo: command.
-	^ command 
-]
-
-{ #category : 'execution' }
-ClapPharoFixMethodsCommand >> execute [
-
-	super execute.
-
-	self
-		positional: #protocols
-		ifPresent: [ :fileName | self fixMethodsIn: fileName ].
-
-	(self hasFlag: #packages) ifTrue: [ self fixExtensionMethods ].
-
-	self saveSessionIfAsked
-]
-
 { #category : 'fixing' }
-ClapPharoFixMethodsCommand >> fixExtensionMethods [
+PharoBootstrapFixMethodsTool class >> fixExtensionMethods [
 
-	PackageOrganizer default basicBootstrapInitialize
+	| allBehaviors |
+	allBehaviors := Smalltalk allClassesAndTraits.
+
+	"This is a hack because of a weird behavior produced by the bootstrap were the package or tags end up containing classes that are not the same instances than we have in the system dictionary..To be investigated..."
+	PackageOrganizer default packages do: [ :package |
+		package tags do: [ :tag |
+			tag instVarNamed: #classes put: (tag classes collect: [ :class | allBehaviors detect: [ :aClass | aClass name = class name ] ]) ] ].
+
+	self flag: #todo. "This next step should not be needed when we will not use announcements to manage method addition"
+	allBehaviors
+		do: [ :behavior |
+			{
+				behavior.
+				behavior classSide } do: [ :aBehavior |
+				aBehavior extensionProtocols do: [ :protocol |
+					(PackageOrganizer default ensurePackageMatching: protocol name allButFirst trimBoth) importProtocol: protocol forClass: aBehavior ] ] ]
 ]
 
-{ #category : 'fixing' }
-ClapPharoFixMethodsCommand >> fixMethod: methodSpecItems [
+{ #category : 'private' }
+PharoBootstrapFixMethodsTool class >> fixMethod: methodSpecItems [
 
 	| class selector |
 	class := Smalltalk classOrTraitNamed: methodSpecItems first.
@@ -85,7 +70,7 @@ ClapPharoFixMethodsCommand >> fixMethod: methodSpecItems [
 ]
 
 { #category : 'fixing' }
-ClapPharoFixMethodsCommand >> fixMethodsIn: aFileName [
+PharoBootstrapFixMethodsTool class >> fixMethodsIn: aFileName [
 
 	(File named: aFileName) readStreamDo: [ :binaryStream |
 			| stream |
@@ -95,4 +80,8 @@ ClapPharoFixMethodsCommand >> fixMethodsIn: aFileName [
 					line := stream upTo: Character cr.
 					items := line findTokens: String tab.
 					self fixMethod: items ] ]
+]
+
+{ #category : 'see class side' }
+PharoBootstrapFixMethodsTool >> seeClassSide [ 
 ]
