@@ -54,45 +54,9 @@ ClapPharoFixMethodsCommand >> execute [
 
 	self
 		positional: #protocols
-		ifPresent: [ :fileName | self fixMethodsIn: fileName ].
+		ifPresent: [ :fileName | PharoBootstrapFixMethodsTool fixMethodsIn: fileName ].
 
-	(self hasFlag: #packages) ifTrue: [ self fixExtensionMethods ].
+	(self hasFlag: #packages) ifTrue: [ PharoBootstrapFixMethodsTool fixExtensionMethods ].
 
 	self saveSessionIfAsked
-]
-
-{ #category : 'fixing' }
-ClapPharoFixMethodsCommand >> fixExtensionMethods [
-
-	PackageOrganizer default basicBootstrapInitialize
-]
-
-{ #category : 'fixing' }
-ClapPharoFixMethodsCommand >> fixMethod: methodSpecItems [
-
-	| class selector |
-	class := Smalltalk classOrTraitNamed: methodSpecItems first.
-	methodSpecItems second = 'true' ifTrue: [ class := class classSide ].
-	selector := methodSpecItems third asSymbol.
-
-	class ifNil: [
-			self error:
-				'Could not found class: ' , methodSpecItems first printString
-				, ' for selector: ' , selector printString ].
-
-	(class selectors includes: selector) ifTrue: [
-		class classify: selector under: methodSpecItems fourth ]
-]
-
-{ #category : 'fixing' }
-ClapPharoFixMethodsCommand >> fixMethodsIn: aFileName [
-
-	(File named: aFileName) readStreamDo: [ :binaryStream |
-			| stream |
-			stream := ZnCharacterReadStream on: binaryStream encoding: 'utf8'.
-			[ stream atEnd ] whileFalse: [
-					| line items |
-					line := stream upTo: Character cr.
-					items := line findTokens: String tab.
-					self fixMethod: items ] ]
 ]
