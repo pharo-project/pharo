@@ -151,7 +151,7 @@ ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Collections-Ato
 
 echo $(date -u) "[Compiler] Initializing the packages in the Kernel"
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" bootstrap fixMethods --protocols protocolsKernel.txt --save
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" bootstrap fixMethods --packages --save
+${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" bootstrap perform --save PharoBootstrapFixMethodsTool fixExtensionMethods
 
 # Installing compiler through Hermes 
 echo $(date -u) "[Compiler] Installing compiler through Hermes"

@@ -61,7 +61,7 @@ export PHARO_CI_TESTING_ENVIRONMENT=1
 ./pharo bootstrap.image bootstrap perform --save DateAndTime initialize
 
 #Initializing the package manager
-./pharo bootstrap.image bootstrap fixMethods --packages --save
+./pharo bootstrap.image bootstrap perform --save PharoBootstrapFixMethodsTool fixExtensionMethods
 ./pharo bootstrap.image bootstrap fixMethods --protocols protocolsKernel.txt --save
 
 #Load traits
