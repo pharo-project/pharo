@@ -62,7 +62,7 @@ export PHARO_CI_TESTING_ENVIRONMENT=1
 
 #Initializing the package manager
 ./pharo bootstrap.image bootstrap perform --save PharoBootstrapFixMethodsTool fixExtensionMethods
-./pharo bootstrap.image bootstrap fixMethods --protocols protocolsKernel.txt --save
+./pharo bootstrap.image bootstrap perform --save PharoBootstrapFixMethodsTool fixMethodsIn: protocolsKernel.txt
 
 #Load traits
 ./pharo bootstrap.image loadHermes Traits.hermes --save
