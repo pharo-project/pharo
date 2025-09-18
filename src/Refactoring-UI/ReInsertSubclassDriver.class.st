@@ -110,10 +110,10 @@ ReInsertSubclassDriver >> runRefactoring [
 { #category : 'accessing' }
 ReInsertSubclassDriver >> scopes: refactoringScopes [
 
-	scopes := refactoringScopes.
+	"Exclude custom scopes created in the ScopesEditor"
+	scopes := refactoringScopes select: [ :scp | scp representsScope: ClyScope ].
 	model := self refactoringScopeOn: scopes last.
 	superclass := model classObjectFor: superclass
-
 ]
 
 { #category : 'accessing' }

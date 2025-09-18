@@ -653,6 +653,13 @@ RBBrowserEnvironment >> referencesTo: aLiteral in: aClass [
 	^(self forClasses: classes) referencesTo: aLiteral
 ]
 
+{ #category : 'testing' }
+RBBrowserEnvironment >> representsScope: aClass [
+	"For compatibility with ClyScope"
+
+	^ false
+]
+
 { #category : 'private' }
 RBBrowserEnvironment >> rootEnvironment [
 	"The root environment representing everything."
