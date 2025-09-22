@@ -128,38 +128,39 @@ EFContext >> indentsForKeywords: anInteger [
 
 { #category : 'initialization' }
 EFContext >> initialize [
-  super initialize.
-  self useBasicCommentFormat: true.
-  self formatCommentCloseToStatements: true.
-  indentsForKeywords := 1.
-  keepBlockInMessage := true.
-  lineUpBlockBrackets := false.
-  maxLineLength := 70.
-  methodSignatureOnMultipleLines := false.
-  minimumNewLinesBetweenStatements := 1.
-  self configureMultiLineMessages.
-  newLineAfterCascade := true.
-  newLineBeforeFirstCascade := true.
-  newLineBeforeFirstKeyword := true.
-  numberOfNewLinesAfterMethodComment := 2.
-  newLinesAfterMethodSignatureWithMethodComment := 1.
-  newLinesAfterMethodSignature := 2.
-  newLinesAfterTemporaries := 1.
-  numberOfArgumentsForMultiLine := 4.
-  self configureOneLineMessages.
-  self periodAtEndOfBlock: false.
-  self periodAtEndOfMethod: false.
-  self retainBlankLinesBetweenStatements: true.
-  self retainBlankLinesBeforeComments: true.
-  self selectorAndArgumentCombinedMaxSize: 40.
-  self numberOfSpacesInsideBlock: 1.
-  self numberOfSpacesInsideParentheses: 0.
-  self numberOfSpacesAfterCaretSymbolInReturn: 1.
-  self indentStyle: #tabulation.
-  self numberOfSpacesInIndent: 3.
-  self numberOfSpacesBeforeDotInDynamicArray: 0.
-  self indentExtraSpaces: 0.
-  self numberOfSpacesInsideArray: 1
+
+	super initialize.
+	self useBasicCommentFormat: true.
+	self formatCommentCloseToStatements: true.
+	indentsForKeywords := 1.
+	keepBlockInMessage := true.
+	lineUpBlockBrackets := false.
+	maxLineLength := 130.
+	methodSignatureOnMultipleLines := false.
+	minimumNewLinesBetweenStatements := 1.
+	self configureMultiLineMessages.
+	newLineAfterCascade := true.
+	newLineBeforeFirstCascade := true.
+	newLineBeforeFirstKeyword := true.
+	numberOfNewLinesAfterMethodComment := 2.
+	newLinesAfterMethodSignatureWithMethodComment := 1.
+	newLinesAfterMethodSignature := 2.
+	newLinesAfterTemporaries := 1.
+	numberOfArgumentsForMultiLine := 4.
+	self configureOneLineMessages.
+	self periodAtEndOfBlock: false.
+	self periodAtEndOfMethod: false.
+	self retainBlankLinesBetweenStatements: true.
+	self retainBlankLinesBeforeComments: false.
+	self selectorAndArgumentCombinedMaxSize: 40.
+	self numberOfSpacesInsideBlock: 1.
+	self numberOfSpacesInsideParentheses: 0.
+	self numberOfSpacesAfterCaretSymbolInReturn: 1.
+	self indentStyle: #tabulation.
+	self numberOfSpacesInIndent: 3.
+	self numberOfSpacesBeforeDotInDynamicArray: 0.
+	self indentExtraSpaces: 0.
+	self numberOfSpacesInsideArray: 1
 ]
 
 { #category : 'accessing' }

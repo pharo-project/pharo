@@ -33,7 +33,7 @@ ReRenameMethodDriver >> browseOverrides [
 	| overrides |
 	overrides := refactoring violations.
 	StMessageBrowser
-		browse: (overrides collect: [ :ref | ref realClass methodNamed: newMessage selector ])
+		browse: (overrides collect: [ :ref | ref realClass lookupSelector: newMessage selector ])
 		asImplementorsOf: newMessage selector
 ]
 

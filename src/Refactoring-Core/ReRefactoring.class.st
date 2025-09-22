@@ -165,12 +165,6 @@ ReRefactoring >> transform [
 	self deprecated: 'Use privateTransform instead' transformWith: '`@rec transform' -> '`@rec privateTransform'
 ]
 
-{ #category : 'printing' }
-ReRefactoring >> whatToDisplayIn: aBrowser [
-
-	^ (self changes changes collect: [:change | change onSystemEnvironment: self model environment systemDictionary]) flatCollect: [:e | e whatToDisplayIn: aBrowser ]
-]
-
 { #category : 'utilities' }
 ReRefactoring >> whichVariableNode: aParseTree inInterval: anInterval name: aName [
 	| matcher block |

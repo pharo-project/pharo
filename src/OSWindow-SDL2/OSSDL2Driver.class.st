@@ -55,6 +55,13 @@ OSSDL2Driver >> afterSetWindowTitle: windowTitle onWindow: osWindow [
 		afterSetWindowTitle: windowTitle onWindow: osWindow
 ]
 
+{ #category : 'events' }
+OSSDL2Driver >> beforeMainPharoWindowClosed: osWindow [
+
+	OSPlatform current sdlPlatform
+		beforeMainPharoWindowClosed: osWindow
+]
+
 { #category : 'private' }
 OSSDL2Driver >> closeRemovedController: index [
 	"TODO: What should I do here?"
@@ -537,5 +544,23 @@ OSSDL2Driver >> visitJoyDeviceRemovedEvent: joyEvent [
 
 { #category : 'global events' }
 OSSDL2Driver >> visitQuitEvent: quitEvent [
+	^ nil
+]
+
+{ #category : 'global events' }
+OSSDL2Driver >> visitSystemWindowEvent: systemWindowEvent [
+
+	systemWindowEvent isWindows ifFalse: [ ^ nil ].	
+
+	systemWindowEvent windowsMessage isWTSessionChange 
+		ifTrue: [ 
+			^ OSPlatform current sdlPlatform handleWTSessionChange: 
+				systemWindowEvent windowsMessage].
+
+
+	systemWindowEvent windowsMessage isSysCommand ifTrue: [
+			^ OSPlatform current sdlPlatform handleSystemCommand:
+				systemWindowEvent windowsMessage ].
+
 	^ nil
 ]

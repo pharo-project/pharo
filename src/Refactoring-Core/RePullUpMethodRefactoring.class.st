@@ -222,7 +222,7 @@ RePullUpMethodRefactoring >> pullUpMethods [
 RePullUpMethodRefactoring >> pullUpSharedVariable: aVariable [
 
 	| refactoring |
-	refactoring := RBPullUpClassVariableRefactoring
+	refactoring := RePullUpSharedVariableRefactoring
 		               model: self model
 		               variable: aVariable
 		               class: targetSuperclass.

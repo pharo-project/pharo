@@ -22,10 +22,14 @@ MCHttpRepository class >> baseURL [
 
 { #category : 'instance creation' }
 MCHttpRepository class >> basicFromUrl: aZnUrl [
+
+	| locationFromZnUrl |
+	locationFromZnUrl := self locationFromZnUrl: aZnUrl.
+
 	^ aZnUrl hasUsername
-		ifFalse: [ self location: aZnUrl location ]
-		ifTrue: [ (self repositoryClassFor: aZnUrl location) new
-				location: aZnUrl location;
+		ifFalse: [ self location: locationFromZnUrl ]
+		ifTrue: [ (self repositoryClassFor: locationFromZnUrl) new
+				location: locationFromZnUrl;
 				user: aZnUrl username;
 				password: aZnUrl password;
 				yourself  ]
@@ -69,6 +73,19 @@ MCHttpRepository class >> location: aUrl user: user password: password [
 			user: user;
 			password: password ].
 	^ result.
+]
+
+{ #category : 'instance creation' }
+MCHttpRepository class >> locationFromZnUrl: aZnUrl [
+
+	"Returns the URL location string without username and password"
+	^ String streamContents: [ :stream |
+		aZnUrl hasScheme ifTrue: [ 
+			stream nextPutAll: aZnUrl scheme; nextPut: $:.
+		aZnUrl isSchemeUsingDoubleSlash ifTrue: [ stream nextPut: $/; nextPut: $/ ] ].
+		aZnUrl hasHost ifTrue: [ aZnUrl encode: aZnUrl host on: stream ].
+		aZnUrl hasPort ifTrue: [ stream nextPut: $:; print: aZnUrl port ].
+		aZnUrl printPathQueryFragmentOn: stream ]
 ]
 
 { #category : 'instance creation' }

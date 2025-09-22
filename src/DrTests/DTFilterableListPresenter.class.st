@@ -213,6 +213,12 @@ DTFilterableListPresenter >> selectItems: aBlock [
 ]
 
 { #category : 'accessing' }
+DTFilterableListPresenter >> selectedItem [
+
+	^ listPresenter selectedItem
+]
+
+{ #category : 'accessing' }
 DTFilterableListPresenter >> selectedItems [
 
 	^ self listPresenter selectedItems

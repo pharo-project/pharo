@@ -114,12 +114,14 @@ RBInsertNewClassRefactoring >> storeOn: aStream [
 
 { #category : 'accessing' }
 RBInsertNewClassRefactoring >> subclasses: aCollection [
+	"Set class objects for a list of class names"
 
 	subclasses := aCollection collect: [ :each | self classObjectFor: each ].
 ]
 
 { #category : 'accessing' }
 RBInsertNewClassRefactoring >> superclass: aClass [
+	"set the superclass object"
 
 	superclass := self classObjectFor: aClass
 ]

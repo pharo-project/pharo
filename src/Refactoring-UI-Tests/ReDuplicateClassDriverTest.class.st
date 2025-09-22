@@ -30,7 +30,7 @@ ReDuplicateClassDriverTest >> setUpMocksOn: driver [
 	
 	requestClass := MockObject new.
 	requestClass
-		on: #for:scopes: respond: dialog;
+		on: #withChanges:scopes: respond: dialog;
 		on: #application: respond: dialog;
 		on: #refactoring: respond: dialog;
 		on: #openModal respond: dialog.		
@@ -65,7 +65,7 @@ ReDuplicateClassDriverTest >> testDuplicateClass [
 	self assert: driverChanges changes size equals: 5.
 
 	methodChanges := driverChanges changes select: [ :amc |
-		                 amc isKindOf: RBAddMethodChange ].
+		                 amc isKindOf: ReAddMethodChange ].
 	self
 		assert: (methodChanges select: [ :mc |
 				 mc selector = #hash or: [ mc selector = #= ] ]) size
@@ -92,14 +92,14 @@ ReDuplicateClassDriverTest >> testDuplicateClassWithTrait [
 	self assert: driverChanges changes size equals: 5.
 
 	methodChanges := driverChanges changes select: [ :amc |
-		                 amc isKindOf: RBAddMethodChange ].
+		                 amc isKindOf: ReAddMethodChange ].
 	self
 		assert: (methodChanges select: [ :mc |
 				 mc selector = #hash or: [ mc selector = #= ] ]) size
 		equals: 2.
 
 	classAddition := driverChanges changes detect: [ :c |
-		                 c isKindOf: RBAddClassChange ].
+		                 c isKindOf: ReAddClassChange ].
 	self
 		assert: classAddition traitComposition asString
 		equals: ReClassToBeDuplicatedWithTraits traitCompositionString

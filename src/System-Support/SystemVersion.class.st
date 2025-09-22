@@ -33,7 +33,9 @@ Class {
 
 { #category : 'accessing' }
 SystemVersion class >> current [
-	^Current ifNil: [Current := self new]
+	"In the past we had a defensive strategy while it is not the case anymore. This is because the current version should be explicitly set during the bootstrap and not initialized by a defensive strategy. It can crash it this happens during the bootstrap."
+
+	^ Current
 ]
 
 { #category : 'private - accessing' }
@@ -107,6 +109,16 @@ SystemVersion class >> setMajor: major minor: minor patch: patch suffix: aString
 		             suffix: aString
 		             build: build
 		             commitHash: hashString
+]
+
+{ #category : 'accessing' }
+SystemVersion class >> useCurrent: aSystemVersion during: aBlock [
+
+	| backup |
+	backup := Current.
+	[
+		Current := aSystemVersion.
+		aBlock value ] ensure: [ Current := backup ]
 ]
 
 { #category : 'accessing - properties' }

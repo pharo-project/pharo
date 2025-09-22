@@ -788,6 +788,7 @@ RBAbstractClass >> subclassesDo: aBlock [
 
 { #category : 'accessing' }
 RBAbstractClass >> superclass [
+	
 	^superclass == LookupSuperclass
 		ifTrue: [model classFor: self realClass superclass]
 		ifFalse: [superclass]

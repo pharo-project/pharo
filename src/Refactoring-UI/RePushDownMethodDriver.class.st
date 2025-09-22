@@ -163,6 +163,7 @@ RePushDownMethodDriver >> selectMethods [
 
 	| dialog |
 	dialog := self methodsSelectionPresenterClass 
+		          title: 'There are potential breaking changes!'
 		          label: 'Push down methods from ' , class name
 		          withItems:
 			          (class methods sort: [ :a :b | a asString < b asString ])

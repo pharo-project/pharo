@@ -1079,6 +1079,13 @@ String >> copyReplaceTokens: oldSubstring with: newSubstring [
 
 { #category : 'copying' }
 String >> copyUpToSubstring: aSubstring [
+   "Answer a copy of the receiver up to the given substring"
+
+	"('abcdef' copyUpToSubstring: 'de') >>> 'abc'"
+	"('abcdef' copyUpToSubstring: 'f') >>> 'abcde'"
+	"('' copyUpToSubstring: 'abc') >>> ''"
+	"('abcdef' copyUpToSubstring: 'gh') >>> 'abcdef'"
+	"('abcdef' copyUpToSubstring: 'ab') >>> ''"
 
 	| index |
 	aSubstring ifEmpty: [
@@ -2725,7 +2732,14 @@ String >> trimmed [
 	"'hello' trimmed >>> 'hello'"
 
 	"'' trimmed >>> ''"
-	
+
+	self
+		backwardCompatible: 'Use trimBoth instead -> https://github.com/pharo-project/pharo/issues/18307'
+		on: '28 June 2025'
+		in: 'pharo14'
+		transformWith: '`@receiver trimmed' -> '`@receiver trimBoth'.
+
+
 	^ self trimBoth
 ]
 
@@ -2940,18 +2954,30 @@ String >> withoutLeadingDigits [
 String >> withoutPeriodSuffix [
 	"Return a copy of the receiver up to, but not including, the first period.  If the receiver's *first* character is a period, then just return the entire receiver. "
 
+	"'foo.' withoutPeriodSuffix >>> 'foo'"
+
+	"'foo.bar' withoutPeriodSuffix >>> 'foo'"
+
+	"'foo.bar.txt' withoutPeriodSuffix >>> 'foo'"
+
 	| likely |
 	likely := self copyUpTo: $..
 	^ likely size = 0
-		ifTrue: [ self ]
-		ifFalse: [ likely ]
+		  ifTrue: [ self ]
+		  ifFalse: [ likely ]
 ]
 
 { #category : 'converting' }
 String >> withoutPrefix: prefix [
 	"Remove the given prefix, if present."
 
-	^(self beginsWith: prefix) ifTrue: [ self copyFrom: 1 + prefix size to: self size ] ifFalse: [ self ]
+	"('UMLClass' withoutPrefix: 'UML') >>> 'Class'"
+
+	"('UMLClass' withoutPrefix: 'ML') >>> 'UMLClass'"
+
+	^ (self beginsWith: prefix)
+		  ifTrue: [ self copyFrom: 1 + prefix size to: self size ]
+		  ifFalse: [ self ]
 ]
 
 { #category : 'platform conventions' }
@@ -2974,7 +3000,13 @@ String >> withoutQuoting [
 String >> withoutSuffix: suffix [
 	"Remove the given suffix, if present."
 
-	^(self endsWith: suffix) ifTrue: [ self copyFrom: 1 to: self size - suffix size ] ifFalse: [ self ]
+	"('UMLClass' withoutSuffix: 'Class') >>> 'UML'"
+
+	"('UMLClass' withoutSuffix: 'Cass') >>> 'UMLClass'"
+
+	^ (self endsWith: suffix)
+		  ifTrue: [ self copyFrom: 1 to: self size - suffix size ]
+		  ifFalse: [ self ]
 ]
 
 { #category : 'converting' }

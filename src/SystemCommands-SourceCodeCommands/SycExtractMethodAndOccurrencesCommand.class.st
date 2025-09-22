@@ -29,7 +29,7 @@ SycExtractMethodAndOccurrencesCommand class >> methodEditorShortcutActivation [
 SycExtractMethodAndOccurrencesCommand >> asRefactorings [
 
 	| selectedInterval refactoring |
-	selectedInterval := selectedTextInterval ifEmpty: [
+	selectedInterval := (selectedTextInterval ifNil: [ (1 to: 0) ]) ifEmpty: [
 		                    sourceNode sourceInterval ].
 	refactoring := RBExtractMethodAndOccurrences
 		               extract: selectedInterval
@@ -106,8 +106,7 @@ SycExtractMethodAndOccurrencesCommand >> setUpOptionToOverrideExistingMethodDuri
 { #category : 'execution' }
 SycExtractMethodAndOccurrencesCommand >> setUpOptionsOf: refactoring [
 
-	self initializeDefaultOptionsOf: refactoring.
 	self setUpOptionToChangeExtractionClass: refactoring.
 	self setUpOptionToOverrideExistingMethodDuring: refactoring.
-	self setUpOptionToChangeMethodNameDuring: refactoring
+	self setUpOptionToChangeMethodNameDuring: refactoring.
 ]

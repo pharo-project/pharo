@@ -53,6 +53,12 @@ ReDuplicateClassDriver >> configureRefactoring [
 ]
 
 { #category : 'accessing' }
+ReDuplicateClassDriver >> dialogTitleForClassSelection [
+
+	^ 'Duplicate class ' , className
+]
+
+{ #category : 'accessing' }
 ReDuplicateClassDriver >> newClass [
 	"Answer the new created <Class>"
 

@@ -47,14 +47,15 @@ BaselineOfSUnit >> baseline: spec [
 				package: 'Coverage';
 				package: 'Coverage-Tests' with: [ spec requires: #('Coverage') ];				
 				package: 'JenkinsTools-Core';
-				package: 'JenkinsTools-ExtraReports'.
+				package: 'JenkinsTools-ExtraReports';
+				package: 'JenkinsTools-Tests' with: [ spec requires: #('JenkinsTools-Core') ].
 
 			"Custom groups"				
 			spec
 				group: 'Core' with: #('SUnit-Core' 'SUnit-Core-Traits' 'SUnit-Visitor');
 				group: 'MockObjects' with: #('SUnit-MockObjects');
 				group: 'UI' with: #('SUnit-UI' 'SUnit-Support-UITesting' 'Coverage');
-				group: 'Tests' with: #('SUnit-Tests' 'SUnit-Support-UITesting-Tests' 'SUnit-Visitor-Tests' 'SUnit-MockObjects-Tests' 'Coverage-Tests');
+				group: 'Tests' with: #('SUnit-Tests' 'SUnit-Support-UITesting-Tests' 'SUnit-Visitor-Tests' 'SUnit-MockObjects-Tests' 'Coverage-Tests' 'JenkinsTools-Tests');
 				group: 'JenkinsSupport' with: #('JenkinsTools-Core' 'JenkinsTools-ExtraReports').
 
 			"Virtual groups"	

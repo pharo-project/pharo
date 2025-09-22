@@ -104,6 +104,8 @@ EDTest >> newEd [
 
 { #category : 'methods version' }
 EDTest >> prepareMethodVersionTest [
+	<compilerOptions: #(- #optionCleanBlockClosure)>
+
 	| context process |
 	EDMockObjectForTests compile: self sampleMethodSourceCodeVersion1.
 	EDMockObjectForTests compile: self sampleMethodSourceCodeVersion2.

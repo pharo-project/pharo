@@ -88,6 +88,12 @@ ExternalDropHandler class >> lookupServiceBasedHandler: aFileReference [
 ]
 
 { #category : 'accessing' }
+ExternalDropHandler class >> morphicUIManager [
+
+	^ MorphicUIManager new
+]
+
+{ #category : 'accessing' }
 ExternalDropHandler class >> registerHandler: aHandler [
 	self registeredHandlers add: aHandler
 ]

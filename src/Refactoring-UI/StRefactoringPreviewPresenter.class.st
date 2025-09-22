@@ -28,35 +28,10 @@ Class {
 }
 
 { #category : 'instance creation' }
-StRefactoringPreviewPresenter class >> changes: aCompositeRefactoring [
-	self deprecated: 'Use `for:` instead.' 
-		on: '2024/01/20' 
-		in: 'pharo13' 
-		transformWith: '`@receiver changes: `@arg' -> '`@receiver for: `@arg'.
+StRefactoringPreviewPresenter class >> withChanges: changes scopes: scopes [
 	
 	^ self new
-		  changesFrom: aCompositeRefactoring scopes: { RBBrowserEnvironment new };
-		  yourself
-]
-
-{ #category : 'instance creation' }
-StRefactoringPreviewPresenter class >> for: aCompositeRefactoring [
-	
-	^ self new
-		  changesFrom: aCompositeRefactoring scopes: { RBBrowserEnvironment new };
-		  yourself
-]
-
-{ #category : 'instance creation' }
-StRefactoringPreviewPresenter class >> for: aCompositeRefactoring scopes: scopes [
-	self deprecated: 'Use `for:scopes:` instead.' 
-		on: '2024-01-20' 
-		in: 'pharo13' 
-		transformWith: '`@receiver changes: `@arg1 scopes: `@arg2' 
-			-> '`@receiver for: `@arg1 scopes: `@arg2'.
-
-	^ self new
-		  changesFrom: aCompositeRefactoring scopes: scopes;
+		  changesFrom: changes scopes: scopes;
 		  yourself
 ]
 
@@ -89,7 +64,7 @@ StRefactoringPreviewPresenter >> changesFrom: aCompositeChange [
 	compositeChange := aCompositeChange.
 	"we keep the composite because we want to use it for performing changes later on."
 	
-	changes := aCompositeChange whatToDisplayIn: self.
+	changes := aCompositeChange changesToDisplayIn: self.
 	self updateScopeList.
 	self updateChanges.
 	self updateTablePresenter
@@ -208,7 +183,7 @@ StRefactoringPreviewPresenter >> performChanges [
 	It should be moved to the driver or the refactoring itself because the driver is a model of interaction.
 	May be this should be in the refactoring."
 
-	[ RBRefactoryChangeManager instance
+	[ ReChangeManager instance
 			performChanges: selectedChanges ]
 		asJob
 		title: 'Refactoring';

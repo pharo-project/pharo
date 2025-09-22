@@ -699,6 +699,12 @@ MetacelloProjectSpec >> projectPackage: aProjectPackage [
     projectPackage := aProjectPackage
 ]
 
+{ #category : 'querying' }
+MetacelloProjectSpec >> projectReference [
+	
+	^ self
+]
+
 { #category : 'scripting' }
 MetacelloProjectSpec >> registration [
     ^ MetacelloProjectRegistration

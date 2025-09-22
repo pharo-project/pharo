@@ -20,9 +20,9 @@ ReCompactSourceCodeCritic class >> for: anEntity selector: aSelector by: aRule [
 ReCompactSourceCodeCritic >> change [
 	| cm |
 	cm := self sourceAnchor sourceEntity.
-
-	^ (RBRefactoryChangeFactory instance)
-		addMethodSource: (ReMethodSourceCleaner clean: cm sourceCode) in: cm origin
+	^ ReChangeFactory instance
+		addMethodSource: (ReMethodSourceCleaner clean: cm sourceCode) 
+		in: cm origin
 ]
 
 { #category : 'testing' }

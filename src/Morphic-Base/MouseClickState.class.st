@@ -174,7 +174,9 @@ MouseClickState >> doubleClickTimeoutSelector: anObject [
 { #category : 'event handling' }
 MouseClickState >> drag: event [
 
-	dragSelector ifNotNil: [clickClient perform: dragSelector with: event]
+	dragSelector ifNotNil: [
+		clickClient perform: dragSelector with: event ].
+	WorldMorph executeDragBlockWith: clickClient
 ]
 
 { #category : 'event handling' }

@@ -20,8 +20,7 @@ Class {
 		'entryContentPresenter',
 		'itemsPresenter',
 		'toolbarPresenter',
-		'searchPresenter',
-		'searchButtonPresenter'
+		'searchPresenter'
 	],
 	#category : 'EpiceaBrowsers-UI-Log',
 	#package : 'EpiceaBrowsers',
@@ -31,26 +30,26 @@ Class {
 { #category : 'layout' }
 EpLogBrowserPresenter class >> defaultLayout [
 
-	^ SpBoxLayout newTopToBottom 
-			add: (SpBoxLayout newLeftToRight 
-				add: #searchPresenter expand: true fill: true padding: 3;
-				add: #searchButtonPresenter expand: false;
-				yourself) expand: false fill: false padding: 3;
-			add: (SpPanedLayout newTopToBottom
-					positionOfSlider: 0.6;
-					add: #itemsPresenter;
-					add: (SpBoxLayout newTopToBottom
-					   add: #toolbarPresenter
-						   expand: false
-						   fill: false
-						   padding: 2;
-					   add: #entryContentPresenter
-						   expand: true
-						   fill: true
-						   padding: 2;
-						   yourself);
-			yourself);
-			yourself
+	^ SpBoxLayout newTopToBottom
+		  add: #searchPresenter
+		  expand: false
+		  fill: false
+		  padding: 3;
+		  add: (SpPanedLayout newTopToBottom
+				   positionOfSlider: 0.6;
+				   add: #itemsPresenter;
+				   add: (SpBoxLayout newTopToBottom
+						    add: #toolbarPresenter
+						    expand: false
+						    fill: false
+						    padding: 2;
+						    add: #entryContentPresenter
+						    expand: true
+						    fill: true
+						    padding: 2;
+						    yourself);
+				   yourself);
+		  yourself
 ]
 
 { #category : 'accessing' }
@@ -573,19 +572,9 @@ EpLogBrowserPresenter >> initializePresenters [
 EpLogBrowserPresenter >> initializeSearchPresenters [
 
 	searchPresenter := self newTextInput
-		placeholder: 'Filter...';
-		whenTextChangedDo: [ : text | 
-			text 
-				ifNotEmpty: [ searchButtonPresenter enable ]
-				ifEmpty: [ searchButtonPresenter disable ].
-			self searchList: text ];
-		yourself.
-	searchButtonPresenter := self newButton
-		iconName: #smallFind;
-		label: 'Find';
-		disable;
-		action: [ self searchList: searchPresenter text ];
-		yourself.
+		                   placeholder: 'Filter...';
+		                   whenTextChangedDo: [ :text | self searchList: text ];
+		                   yourself
 ]
 
 { #category : 'menu - operations' }

@@ -21,7 +21,7 @@ readOnlyStream (returns an open read-only stream)
 "
 Class {
 	#name : 'SimpleServiceEntry',
-	#superclass : 'Model',
+	#superclass : 'Object',
 	#instVars : [
 		'provider',
 		'label',

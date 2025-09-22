@@ -9,20 +9,20 @@ Class {
 }
 
 { #category : 'command line' }
-ClapPharoVersion class >> version [
+ClapPharoVersion class >> commandSpecification [
+
 	<commandline>
-	
-	^ (ClapCommandSpec id: #version)
-		description: 'Displays version information, in various formats';
-		commandClass: self;
-		addHelp;
-		addFlag: #full description: 'Full image version (default format)';
-		addFlag: #release description: 'Major.minor alpha/stable';
-		addFlag: #numeric description: '5-digit sequential integration number';
-		addFlag: #hash description: 'Integration commit hash';
-		addFlag: #vm description: 'VM build and version';
-		addFlag: #license description: 'Licensing and copyright';
-		yourself
+	^ (ClapCommandSpec id: #printVersion)
+		  description: 'Displays version information, in various formats';
+		  commandClass: self;
+		  addHelp;
+		  addFlag: #full description: 'Full image version (default format)';
+		  addFlag: #release description: 'Major.minor alpha/stable';
+		  addFlag: #numeric description: '5-digit sequential integration number';
+		  addFlag: #hash description: 'Integration commit hash';
+		  addFlag: #vm description: 'VM build and version';
+		  addFlag: #license description: 'Licensing and copyright';
+		  yourself
 ]
 
 { #category : 'execution' }
@@ -47,7 +47,13 @@ ClapPharoVersion >> formats [
 
 { #category : 'version strings' }
 ClapPharoVersion >> fullVersionString [
-	^ SystemVersion current imageVersionString
+
+	^ String streamContents: [ :stream |
+			  stream
+				  nextPutAll: '[version] ';
+				  print: SystemVersion current majorMinorVersion;
+				  nextPutAll: ' ';
+				  print: SystemVersion current asString ]
 ]
 
 { #category : 'version strings' }
@@ -67,7 +73,11 @@ ClapPharoVersion >> numericVersionString [
 
 { #category : 'version strings' }
 ClapPharoVersion >> releaseVersionString [
-	^ SystemVersion current shortVersionString
+	^ 	String streamContents: [ :stream |
+			stream
+				print: SystemVersion current major;
+				nextPutAll: '.';
+				print: SystemVersion current minor ]
 ]
 
 { #category : 'printing' }

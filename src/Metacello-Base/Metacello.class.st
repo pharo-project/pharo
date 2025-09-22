@@ -3,23 +3,11 @@
 
 In this guide we'll take a walk through a couple of common development scenarios and highlight some of the features of the *Metacello Scripting API*.
 
-*For installatation and more detailed documentation on the Metacello Scripting API, see the [Metcello Scripting API Documentation][1].*
+*For installatation and more detailed documentation on the Metacello Scripting API, see the [Metacello Scripting API Documentation][1].*
 
 ## Introduction
 
-The number one job of the *Metacello Scripting API* is to simplify the job of loading projects into your image. In the past it's was a two step process where you first load the configuration into your image using [Gofer][2] and then load your project using Metacello:
-
-```Smalltalk
-Gofer new
-  package: 'ConfigurationOfSeaside30';
-  squeaksource: 'MetacelloRepository';
-  load.
-((Smalltalk at: #ConfigurationOfSeaside30) version: #stable) load.
-```
-
-In the early days of Metacello (and Gofer) this was a great improvement over the alternatives, but today, years after the introduction of Metacello, there is a better way.
-Using the *Metacello Scripting API* the above expression reduces to the
-following:
+The number one job of the *Metacello Scripting API* is to simplify the job of loading projects into your image.
 
 ```Smalltalk
 Metacello new

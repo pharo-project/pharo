@@ -9,7 +9,8 @@ Class {
 	#instVars : [
 		'contents',
 		'node',
-		'description'
+		'description',
+		'fetcher'
 	],
 	#classVars : [
 		'SpaceAfterCompletion'
@@ -45,6 +46,9 @@ NECEntry >> <= aECEntry [
 NECEntry >> activateOn: aCompletionContext [
 
 	| entryContents |
+	"Log the usage"
+	NECUsageTracker incrementUsageFor: self contents.
+	
 	"By default insert the contents of the entry instead of the token in the text editor"
 	entryContents := self contents asSymbol separateKeywords.
 	entryContents := (self class spaceAfterCompletion
@@ -76,7 +80,20 @@ NECEntry >> createDescription [
 
 { #category : 'operations' }
 NECEntry >> description [
-	^description ifNil: [ description := self createDescription ]
+
+	^ description ifNil: [ description := self createDescription ]
+]
+
+{ #category : 'accessing' }
+NECEntry >> fetcher [
+
+	^ fetcher
+]
+
+{ #category : 'accessing' }
+NECEntry >> fetcher: anObject [
+
+	fetcher := anObject
 ]
 
 { #category : 'accessing' }

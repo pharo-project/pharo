@@ -21,7 +21,7 @@ EpCompositeRefactoring class >> withAll: someRefactorings [
 
 { #category : 'converting' }
 EpCompositeRefactoring >> asRBRefactoring [
-	^ RBCompositeRefactoryChange new
+	^ ReCompositeChange new
 		changes: (childrenRefactorings collect: [:each | each asRBRefactoring]);
 		yourself
 ]

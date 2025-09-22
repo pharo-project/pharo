@@ -13,6 +13,25 @@ ClapCommandLineHandler class >> commandName [
 	^ 'clap'
 ]
 
+{ #category : 'handler selection' }
+ClapCommandLineHandler class >> isResponsibleFor: aCommandLineArguments [
+
+	| subcommand |
+	aCommandLineArguments arguments ifEmpty: [ ^ false ].
+	
+	subcommand := aCommandLineArguments arguments first.
+	^ ClapContext pragmaCommandsAndBootstrapCommands 
+		detect: [ :commandSpec | commandSpec hasAlias: subcommand ]
+		ifFound: [ true ] 
+		ifNone: [ false ]
+]
+
+{ #category : 'handler selection' }
+ClapCommandLineHandler class >> priority [ 
+	"Take priority on basic command line handlers"
+	^ 10
+]
+
 { #category : 'activation' }
 ClapCommandLineHandler >> activate [
 	[
@@ -20,7 +39,7 @@ ClapCommandLineHandler >> activate [
 			beObeyingExits;
 			setStdio: Stdio;
 			arguments: self arguments;
-			executeToExit: [ :exit | self handleExit: exit ]
+			execute
 	]
 	forkAt: Processor userSchedulingPriority
 	named: 'Clap commandline handler process'
@@ -29,6 +48,7 @@ ClapCommandLineHandler >> activate [
 { #category : 'activation' }
 ClapCommandLineHandler >> handleExit: exit [
 
+	self flag: 'TOREMOVE once clap is used as default command handler'.
 	Smalltalk isInteractive ifFalse: [ ^ exit pass ].
 
 	exit isSuccess ifFalse: [ ^ exit resignalAs: (Error new messageText: exit messageText) ]

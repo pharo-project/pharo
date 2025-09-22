@@ -1,18 +1,6 @@
 Extension { #name : 'BlockClosureTest' }
 
 { #category : '*Kernel-Extended-Tests' }
-BlockClosureTest >> testCannotReturn [
-
-	| block p |
-	p := [ block := self blockWithNonLocalReturn: #result ] fork.
-	[ p isTerminated ] whileFalse: [ (Delay forMilliseconds: 10) wait ].
-
-	self should: [ block value ] raise: BlockCannotReturn withExceptionDo: [ :err |
-		self assert: err result equals: #result.
-		self assert: err home equals: block home ]
-]
-
-{ #category : '*Kernel-Extended-Tests' }
 BlockClosureTest >> testRunSimulated [
 	self assert: (Context runSimulated: aBlock) class equals: Rectangle
 ]

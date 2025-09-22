@@ -48,6 +48,18 @@ StItemsSelectionPresenter class >> label: aString withItems: items selecting: se
 		yourself 
 ]
 
+{ #category : 'specs' }
+StItemsSelectionPresenter class >> title: aTitle label: aString withItems: items selecting: selectedItems [
+
+	^ self new
+		  title: aTitle
+		  label: aString
+		  withItems: items
+		  selecting: selectedItems; 
+		  openBlockedDialog;
+		  yourself
+]
+
 { #category : 'actions' }
 StItemsSelectionPresenter >> accept [
 
@@ -123,4 +135,14 @@ StItemsSelectionPresenter >> label: aString withItems: coll1 selecting: coll2 [
 { #category : 'accessing' }
 StItemsSelectionPresenter >> selectedItems [
 	^ selectedItems
+]
+
+{ #category : 'initialization' }
+StItemsSelectionPresenter >> title: aTitle label: aString withItems: coll1 selecting: coll2 [
+
+	titleHolder := aTitle.
+	label label: aString.
+	table
+		items: coll1;
+		selectItems: coll2
 ]

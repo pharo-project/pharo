@@ -8,16 +8,6 @@ It is usually to store the source string of a method for example.
 max: aNumber
 	^ self > aNumber ifTrue: [self] ifFalse: [aNumber]!
  
-Some chunks are styled (they have parts in bold, or font color...).
-When a chunk is styled, it is followed by a second chunk (prefixed with something like ]style[), and specifying the style.
-The encoding is as follows:
-
-max: aNumber
-	^ self > aNumber ifTrue: [self] ifFalse: [aNumber]!
-]style[(14 50 312)f1,f1b,f1LInteger +;i!
-
-Allowed TextAttributes are TextFontChange, TextEmphasis, TextColor, TextDoIt, TextKern, TextLink, TextURL. 
-TextFontReference and TextAnchor are not supported.
 
 See PositionableStream nextChunkText and RunArray class scanFrom:.
 "

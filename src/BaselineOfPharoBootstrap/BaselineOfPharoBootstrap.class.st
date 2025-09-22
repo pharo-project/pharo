@@ -109,6 +109,8 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Shift-ClassBuilder'.
 		spec package: 'System-Announcements'.
 		spec package: 'System-BasicCommandLineHandler'.
+		spec package: 'Clap-Core'.
+		spec package: 'Clap-CommandLine'.
 		spec package: 'System-CommandLine'.
 		spec package: 'System-CommandLineHandler'.
 		spec package: 'System-Finalization'.
@@ -129,7 +131,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		
 		spec package: 'CodeImport'.
 		
-		spec package: 'CodeImportCommandLineHandlers'.
+		spec package: 'CodeImport-Commands'.
 		
 		spec package: 'Debugging-Utils'.
 		spec package: 'OpalCompiler-Core'.
@@ -142,13 +144,14 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'SUnit-Tests'.
 		spec package: 'Kernel-Tests'.
 		spec package: 'JenkinsTools-Core'.
-		spec package: 'System-Model'.
 		spec package: 'InitializePackagesCommandLineHandler'.
 		
 
 		spec group: 'KernelGroup' with: {
 			'FFI-Kernel'.
 			'Announcements-Core'.
+			'Clap-Core'.
+			'Clap-CommandLine'.
 			'Collections-Abstract'.
 			'Collections-DoubleLinkedList'.
 			'Collections-Native'.
@@ -203,7 +206,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Collections-Arithmetic'.
 			'Collections-Atomic'.
 			'CodeImport'.
-			'CodeImportCommandLineHandlers'.
+			'CodeImport-Commands'.
 			'Debugging-Utils'.
 			'OpalCompiler-Core'}.
 		
@@ -224,7 +227,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		}.
 
 		spec group: 'SUnitGroup' with: {
-			'System-Model'.
 			'SUnit-Core'.
 			'SUnit-Tests'.
 			'Kernel-Tests'.

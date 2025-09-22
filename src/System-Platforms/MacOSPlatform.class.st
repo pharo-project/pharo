@@ -4,7 +4,7 @@ I am a an object representing a Mac OS (pre OSX) platform. Use myself to access 
 "
 Class {
 	#name : 'MacOSPlatform',
-	#superclass : 'OSPlatform',
+	#superclass : 'AbstractUnixPlatform',
 	#category : 'System-Platforms-Mac',
 	#package : 'System-Platforms',
 	#tag : 'Mac'

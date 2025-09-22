@@ -9,7 +9,7 @@ Class {
 { #category : 'mocking' }
 RBAbstractTransformationTest >> changeMockClass [
 
-	^ RBRefactoringChangeMock
+	^ ReChangeMock
 ]
 
 { #category : 'mocking' }

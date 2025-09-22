@@ -25,7 +25,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'FormCanvas-Tests';
 			package: 'Collections-DoubleLinkedList-Tests';
 			package: 'Collections-Arithmetic-Tests';
-			package: 'MetacelloCommandLineHandler-Tests';
+			package: 'Metacello-CommandLine-Tests';
 			package: 'Debugger-Model-Tests';
 			package: 'Debugger-Oups-Tests';
 			package: 'EmbeddedFreeType-Tests';
@@ -39,7 +39,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Morphic-Tests';
 			package: 'Morphic-Widgets-FastTable-Tests';
 			package: 'NECompletion-Tests';
-			package: 'ProfStef-Tests';
+
 			package: 'Regex-Core-Tests';
 			package: 'Ring-Definitions-Monticello-Tests';
 			package: 'Rubric-Tests';

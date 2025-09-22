@@ -38,12 +38,9 @@ ProperPackagesTest >> testProperManifestCategorization [
 	"If a package provides a PackageManifest subclass then this manifest class should be packaged
 	 with 'Manifest' tag similar to all other manifests."
 
-	|violations|
+	| violations |
 	violations := OrderedCollection new.
-	PackageManifest allSubclassesDo: [:each |
- 	   ((each package classesTaggedWith: 'Manifest') includes: each)
-  	      ifFalse: [ violations add: each ]
-	].
+	PackageManifest allSubclassesDo: [ :each | ((each package classesTaggedWith: 'Manifest') includes: each) ifFalse: [ violations add: each ] ].
 
-	self assert: violations isEmpty
+	self assertEmpty: violations
 ]

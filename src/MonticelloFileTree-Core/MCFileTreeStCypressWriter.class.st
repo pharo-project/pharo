@@ -44,13 +44,6 @@ MCFileTreeStCypressWriter class >> fileNameForSelector: selector [
 
 ]
 
-{ #category : 'class initialization' }
-MCFileTreeStCypressWriter class >> initialize [
-    "Force initialization of specials ..."
-
-    specials := nil
-]
-
 { #category : 'private' }
 MCFileTreeStCypressWriter class >> initializeSpecials [
     | map |
@@ -79,6 +72,13 @@ MCFileTreeStCypressWriter class >> initializeSpecials [
 { #category : 'accessing' }
 MCFileTreeStCypressWriter class >> monticelloMetaDirName [
     ^ 'monticello.meta'
+]
+
+{ #category : 'class initialization' }
+MCFileTreeStCypressWriter class >> resetSpecials [
+    "Force initialization of specials ..."
+
+    specials := nil
 ]
 
 { #category : 'accessing' }

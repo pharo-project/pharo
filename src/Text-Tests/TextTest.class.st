@@ -555,6 +555,64 @@ TextTest >> testTextReplacement3 [
 	self should: [ self replacementExample3 ] raise: Error
 ]
 
+{ #category : 'tests - trim' }
+TextTest >> testTrimBoth [
+
+	self assert: '' asText trimBoth equals: '' asText.
+	self assert: ' ' asText trimBoth equals: '' asText.
+	self assert: '	'  asText trimBoth equals: '' asText.
+	self assert: 'foo' asText trimBoth equals: 'foo' asText.
+	self assert: ' fo o ' asText trimBoth equals: 'fo o' asText.
+	self assert: '  foo  ' asText trimBoth equals: 'foo' asText.
+	self assert: ((String with: Character cr), '   foo  ') asText trimBoth equals: 'foo' asText.
+
+
+]
+
+{ #category : 'tests - trim' }
+TextTest >> testTrimBothColon [
+
+	self assert: ('aab baa' asText trimBoth: [ :each | each = $a ]) equals: 'b b' asText.
+	self assert: ('aababaa' asText trimBoth: [ :each | each = $a ]) equals: 'bab' asText.
+	self assert: ('bbaabb'  asText trimBoth: [ :each | each = $a ]) equals: 'bbaabb' asText
+]
+
+{ #category : 'tests - trim' }
+TextTest >> testTrimLeft [
+	self assert: '' asText trimLeft equals: '' asText.
+	self assert: ' ' asText trimLeft equals: '' asText.
+	self assert: '	' asText trimLeft equals: '' asText.
+	self assert: 'foo' asText trimLeft equals: 'foo' asText.
+	self assert: ' fo o ' asText trimLeft equals: 'fo o ' asText.
+	self assert: '  foo  ' asText trimLeft equals: 'foo  ' asText.
+
+]
+
+{ #category : 'tests - trim' }
+TextTest >> testTrimLeftColon [
+
+	self assert: ('aabbaa' trimLeft: [ :each | each = $a ]) equals: 'bbaa'.
+	self assert: ('bbaabb' trimLeft: [ :each | each = $a ]) equals: 'bbaabb'
+]
+
+{ #category : 'tests - trim' }
+TextTest >> testTrimRight [
+	self assert: '' asText trimRight equals: '' asText.
+	self assert: ' ' asText trimRight equals: '' asText.
+	self assert: '	' asText trimRight equals: '' asText.
+	self assert: 'foo' asText trimRight equals: 'foo' asText.
+	self assert: ' foo ' asText trimRight equals: ' foo' asText.
+	self assert: '  foo  ' asText trimRight equals: '  foo' asText.
+
+
+]
+
+{ #category : 'tests - trim' }
+TextTest >> testTrimRightColon [
+	self assert: ('aabbaa' asText trimRight: [ :each | each = $a ]) equals: 'aabb' asText.
+	self assert: ('bbaabb' asText trimRight: [ :each | each = $a ]) equals: 'bbaabb' asText
+]
+
 { #category : 'tests' }
 TextTest >> testUnembellished [
 	| anotherText |

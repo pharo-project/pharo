@@ -2,6 +2,7 @@ Class {
 	#name : 'StMethodsSelectionPresenterMock',
 	#superclass : 'Object',
 	#instVars : [
+		'title',
 		'label',
 		'items',
 		'selecting'
@@ -18,6 +19,16 @@ StMethodsSelectionPresenterMock class >> label: aString withItems: aCollection s
 		label: aString
 		withItems: aCollection
 		selecting: aCollection3
+]
+
+{ #category : 'initialization' }
+StMethodsSelectionPresenterMock class >> title: aTitle label: aString withItems: aCollection selecting: aCollection3 [
+
+	^ self new
+		  title: aTitle
+		  label: aString
+		  withItems: aCollection
+		  selecting: aCollection3
 ]
 
 { #category : 'testing' }
@@ -38,4 +49,13 @@ StMethodsSelectionPresenterMock >> label: aString withItems: aOrderedCollection 
 StMethodsSelectionPresenterMock >> selectedItems [
 
 	^ selecting 
+]
+
+{ #category : 'initialization' }
+StMethodsSelectionPresenterMock >> title: aTitle label: aString withItems: aOrderedCollection selecting: aOrderedCollectionToo [
+
+	title := aTitle.
+	label := 'Push down methods from a class'.
+	items := aOrderedCollection.
+	selecting := aOrderedCollectionToo
 ]

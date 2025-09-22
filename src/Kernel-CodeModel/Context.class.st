@@ -253,17 +253,6 @@ Context >> activateMethod: newMethod withArgs: args receiver: rcvr class: class 
 		arguments: args
 ]
 
-{ #category : 'private' }
-Context >> activateReturn: aContext value: value [
-	"Activate 'aContext return: value' in place of self, so execution will return to aContext's sender"
-
-	^ self
-		activateMethod: Context theReturnMethod
-		withArgs: {value}
-		receiver: aContext
-		class: aContext class
-]
-
 { #category : 'accessing' }
 Context >> activeHome [
 	"If executing closure, search senders for the activation of the original
@@ -631,8 +620,9 @@ Context >> doPrimitive: primitiveIndex method: meth receiver: aReceiver args: ar
 			ifFalse: [ ^self send: (arguments at: 2) to: (arguments at: 1) with: (arguments at: 3) lookupIn: (arguments at: 4) ]
 		].
 
-	primitiveIndex = 88 ifTrue: ["Process>>suspend"
-		"Simulation of suspend primitive should do nothing (with receiver return) by two reasons:
+	(primitiveIndex = 88 and: [ aReceiver == Processor activeProcess ])
+		ifTrue: ["Process>>suspend"
+			"Simulation of suspend primitive should do nothing (with receiver return) by two reasons:
 			- if by mistake the receiver is a simulating process itself
 				the suspend would stop it and the simulation would hang.
 				For example the debugger can hang during stepping over #suspend of real active process.

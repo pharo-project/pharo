@@ -9,9 +9,7 @@ Class {
 BaselineOfKernelTests >> baseline: spec [
 	<baseline>
 	spec for: #'common' do: [
-		spec 
-			package: 	'CodeImport-Tests'	; 
-
+		spec
 			package: 	'Collections-Abstract-Tests';					
 			package: 	'Collections-Atomic-Tests';
 			package: 'Collections-Native-Tests';	
@@ -39,6 +37,7 @@ BaselineOfKernelTests >> baseline: spec [
 			package: 	'Jobs-Tests' ;
 			package: 	'AST-Core-Tests';
 			package: 	'OpalCompiler-Tests' with: [ spec requires: #('AST-Core-Tests') ];
+			package: 	'CodeImport-Tests'	 with: [ spec requires: #('AST-Core-Tests') ];
 			package: 	'Random-Tests';
 			package: 	'Ring-Definitions-Core-Tests';
 			package: 	'Ring-Definitions-Tests-Containers'; 

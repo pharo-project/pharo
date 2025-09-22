@@ -332,12 +332,6 @@ StClassAndMethodsSelectionPresenter >> windowIcon [
 	^ self iconNamed: #smallCopy
 ]
 
-{ #category : 'accessing' }
-StClassAndMethodsSelectionPresenter >> windowTitle [
-
-	^ 'Copy class ' , driver className
-]
-
 { #category : 'initialization' }
 StClassAndMethodsSelectionPresenter >> withInstanceMethods: instMethods withClassMethods: clsMethods [
 

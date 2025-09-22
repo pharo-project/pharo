@@ -49,4 +49,4 @@ mv $CHANGES_FILE Pharo.changes
 
 export PHARO_CI_TESTING_ENVIRONMENT=1
 
-./pharo Pharo.image test --junit-xml-output --stage-name=${2} '.*'
+./pharo Pharo.image test --junit-xml-output --stage-name ${2} '.*'

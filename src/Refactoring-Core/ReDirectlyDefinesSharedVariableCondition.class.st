@@ -40,7 +40,7 @@ ReDirectlyDefinesSharedVariableCondition >> violationMessageOn: aStream [
 	^ violators do: [ :violator |
 		  aStream
 			nextPutAll: 
-				('The variable {1} is not directly defined in the class {2}' 
+				('The shared variable {1} is not directly defined in the class {2}' 
 					format: { violator. className });
 			nextPut: Character cr ]
 ]

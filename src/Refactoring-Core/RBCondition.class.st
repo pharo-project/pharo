@@ -29,7 +29,7 @@ Class {
 RBCondition class >> canUnderstand: aSelector in: aClass [
 
 	^self new
-		block: [aClass definesMethod: aSelector]
+		block: [ aClass definesMethod: aSelector]
 		errorString: aClass printString , ' <1?:does not >understand<1?s:> ' , aSelector printString
 ]
 

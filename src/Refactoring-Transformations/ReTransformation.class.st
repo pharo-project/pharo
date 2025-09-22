@@ -58,6 +58,13 @@ ReTransformation >> asRefactoring [
 	^ self yourself
 ]
 
+{ #category : 'displaying' }
+ReTransformation >> changesToDisplayIn: aBrowser [
+
+	^ self changes changes
+		flatCollect: [ :e | e changesToDisplayIn: aBrowser ]
+]
+
 { #category : 'transforming' }
 ReTransformation >> transform [
 
@@ -71,11 +78,4 @@ ReTransformation >> transform [
 
 	"below executes the refactoring without prompt"
 	"RBRefactoringManager instance addRefactoring: self"
-]
-
-{ #category : 'displaying' }
-ReTransformation >> whatToDisplayIn: aBrowser [
-
-	^ self changes changes
-		flatCollect: [ :e | e whatToDisplayIn: aBrowser ]
 ]

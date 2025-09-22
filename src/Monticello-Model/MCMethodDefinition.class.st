@@ -25,18 +25,11 @@ Class {
 		'sortKey'
 	],
 	#classVars : [
-		'Definitions',
 		'InitializersEnabled'
 	],
 	#category : 'Monticello-Model',
 	#package : 'Monticello-Model'
 }
-
-{ #category : 'initialization' }
-MCMethodDefinition class >> cachedDefinitions [
-
-	^ Definitions ifNil: [ Definitions := WeakIdentityKeyDictionary new ]
-]
 
 { #category : 'instance creation' }
 MCMethodDefinition class >> className: classString classIsMeta: metaBoolean selector: selectorString category: catString timeStamp: timeString source: sourceString [
@@ -63,25 +56,6 @@ source: sourceString [
 			source: sourceString
 ]
 
-{ #category : 'cleanup' }
-MCMethodDefinition class >> cleanUp [
-	"Flush caches"
-
-	self shutDown.
-]
-
-{ #category : 'initialization' }
-MCMethodDefinition class >> flushMethodCache [
-	"We do not named this method flushCache because it would override an important class methods."
-	Definitions := nil.
-]
-
-{ #category : 'class initialization' }
-MCMethodDefinition class >> initialize [
-
-	SessionManager default registerSystemClassNamed: self name
-]
-
 { #category : 'settings' }
 MCMethodDefinition class >> initializersEnabled [
 
@@ -92,12 +66,6 @@ MCMethodDefinition class >> initializersEnabled [
 MCMethodDefinition class >> initializersEnabled: aBoolean [
 
 	InitializersEnabled := aBoolean
-]
-
-{ #category : 'system startup' }
-MCMethodDefinition class >> shutDown [
-	"Free up all cached monticello method definitions"
-	self flushMethodCache 
 ]
 
 { #category : 'comparing' }
@@ -253,24 +221,6 @@ MCMethodDefinition >> loadInEnvironment: anEnvironment [
 ]
 
 { #category : 'installing' }
-MCMethodDefinition >> overridenMethodOrNil [
-	"Answer the method that I've overriden on load. 
-
-	Preconditions: 
-	  - self actualClass is installed in the System Dictionary.
-	  - self isOverrideMethod is true."
-	
-	| realMethod |
-	realMethod := self actualClass
-		compiledMethodAt: self selector
-		ifAbsent: [ ^ nil ].
-		
-	^ SourceFiles
-		changeRecordsFor: realMethod
-		detect: [ :protocol | protocol ~= category ]
-]
-
-{ #category : 'installing' }
 MCMethodDefinition >> postloadOver: aDefinition [
 	super postloadOver: aDefinition.
 	self class initializersEnabled ifTrue: [
@@ -344,14 +294,6 @@ MCMethodDefinition >> timeStamp [
 
 { #category : 'installing' }
 MCMethodDefinition >> unload [
-	"Unload me. If I represent an override method, then restore the overriden version. If not, just remove the selector from the class."
 
-	| previousVersion |
-	self isOverrideMethod ifTrue: [ previousVersion := self overridenMethodOrNil ].
-
-	previousVersion
-		ifNil: [ 
-			self actualClass ifNotNil: [ :class | 
-				self removeSelector: selector fromClass: class ] ]
-		ifNotNil: [ previousVersion fileIn ]
+	self actualClass ifNotNil: [ :class | self removeSelector: selector fromClass: class ]
 ]

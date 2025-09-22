@@ -17,6 +17,12 @@ ReClassInteractionDriver >> configureRefactoring [
 ]
 
 { #category : 'accessing' }
+ReClassInteractionDriver >> dialogTitleForClassSelection [
+
+	^ self subclassResponsibility 
+]
+
+{ #category : 'accessing' }
 ReClassInteractionDriver >> packageName [
 
 	^ packageName

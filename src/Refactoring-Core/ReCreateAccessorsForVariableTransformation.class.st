@@ -105,6 +105,14 @@ ReCreateAccessorsForVariableTransformation >> applicabilityPreconditions [
 				RBCondition definesInstanceVariable: variableName in: class ]) }
 ]
 
+{ #category : 'printing' }
+ReCreateAccessorsForVariableTransformation >> changesToDisplayIn: aBrowser [
+
+	^ (self changes changes
+		select: [:change | {getterMethodName. setterMethodName} includes: change selector ])
+		flatCollect: [:change | change changesToDisplayIn: aBrowser ]
+]
+
 { #category : 'initialization' }
 ReCreateAccessorsForVariableTransformation >> classVariable: aBoolean [
 	classVariable := aBoolean
@@ -323,12 +331,4 @@ ReCreateAccessorsForVariableTransformation >> usesAssignmentOf: aString in: aCla
 				ifFalse: [ each whichSelectorsReferToInstanceVariable: aString ])
 				anySatisfy:
 					[ :sel | self checkClass: each selector: sel using: matcher ]) ])
-]
-
-{ #category : 'printing' }
-ReCreateAccessorsForVariableTransformation >> whatToDisplayIn: aBrowser [
-
-	^ (self changes changes
-		select: [:change | {getterMethodName. setterMethodName} includes: change selector ])
-		flatCollect: [:change | change whatToDisplayIn: aBrowser ]
 ]

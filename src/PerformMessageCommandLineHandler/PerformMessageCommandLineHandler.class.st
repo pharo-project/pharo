@@ -12,6 +12,11 @@ Examples:
 Class {
 	#name : 'PerformMessageCommandLineHandler',
 	#superclass : 'CommandLineHandler',
+	#instVars : [
+		'targetClass',
+		'messageArguments',
+		'message'
+	],
 	#category : 'PerformMessageCommandLineHandler',
 	#package : 'PerformMessageCommandLineHandler'
 }
@@ -21,33 +26,80 @@ PerformMessageCommandLineHandler class >> commandName [
 	^ 'perform'
 ]
 
-{ #category : 'accessing' }
-PerformMessageCommandLineHandler class >> description [
-	^ 'Perform given message on a specified class or global'
-]
-
 { #category : 'activation' }
 PerformMessageCommandLineHandler >> activate [
-	| aClass aMessage arguments messageArguments result |
-	self activateHelp
-		ifTrue: [ ^ self ].
 
-	arguments := self commandLine arguments reject: [ :argument | argument beginsWith: '-']. "ignore options"
+	self shouldActivateHelp ifTrue: [
+			self printHelp.
+			self exitSuccess ].
+
+	self execute.
+
+	self shouldSave ifTrue: [ Smalltalk saveSession ].
+	self exitSuccess
+]
+
+{ #category : 'actions' }
+PerformMessageCommandLineHandler >> execute [
+	| result |
+
+	self parseArguments.
+
+	result := targetClass perform: message withArguments: messageArguments.
+	
+	self stdout
+		print: result;
+		lf
+]
+
+{ #category : 'accessing' }
+PerformMessageCommandLineHandler >> message [
+
+	^ message
+]
+
+{ #category : 'accessing' }
+PerformMessageCommandLineHandler >> messageArguments [
+
+	^ messageArguments
+]
+
+{ #category : 'parsing' }
+PerformMessageCommandLineHandler >> parseArguments [
+	| arguments |
+
+	arguments := self arguments reject: [ :argument | argument beginsWith: '-']. "ignore options"
 
 	(arguments size < 2)
 		ifTrue: [ ^ self exitFailure: 'Not enough arguments' ].
 
-	aClass := Smalltalk globals at: arguments first asSymbol ifAbsent: [
+	targetClass := Smalltalk globals at: arguments first asSymbol ifAbsent: [
 		  ^ self exitFailure: 'Unknown class' ].
-	aMessage := arguments second asSymbol.
-	messageArguments := (arguments allButFirst: 2) asArray.
+	
+	message := arguments second asSymbol.
+	messageArguments := (arguments allButFirst: 2) asArray
+]
 
-	result := aClass perform: aMessage withArguments: messageArguments.
-	self stdout
-		print: result;
-		lf.
+{ #category : 'actions' }
+PerformMessageCommandLineHandler >> printHelp [
+	
+	self stderr
+		nextPutAll: self class comment; lf
+]
 
-	(self hasOption: 'save')
-		ifTrue: [ Smalltalk snapshot: true andQuit: false ].
-	self exitSuccess
+{ #category : 'testing' }
+PerformMessageCommandLineHandler >> shouldActivateHelp [
+	
+	^ self arguments includes: ('--help')
+]
+
+{ #category : 'testing' }
+PerformMessageCommandLineHandler >> shouldSave [
+	
+	^ self arguments includes: ('--save')
+]
+
+{ #category : 'accessing' }
+PerformMessageCommandLineHandler >> targetClass [
+	^ targetClass
 ]

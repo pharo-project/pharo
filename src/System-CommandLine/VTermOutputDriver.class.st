@@ -434,9 +434,9 @@ VTermOutputDriver >> termcap [
 
 { #category : 'private' }
 VTermOutputDriver >> termcap: termcapCapabilityIdentifier [
-	"Output the termcap command sequence for the identifier.
-	Use #basicNextPutAll: to avoid possible conversions applied by the stream"
-	outStream basicNextPutAll: (termcap getstr: termcapCapabilityIdentifier)
+	"Output the termcap command sequence for the identifier."
+
+	outStream nextPutAll: (termcap getstr: termcapCapabilityIdentifier)
 ]
 
 { #category : 'navigating' }
