@@ -188,7 +188,7 @@ MetacelloVersionSpec >> configPackagesSpecMethodOn: aStream indent: indent [
 			projectDo: [ :proj | member spec name ifNotNil: [ projectSpecs add: member ] ]
 			packageDo: [ :package | member spec name ifNotNil: [ packageSpecs add: member ] ]
 			groupDo: [ :group | member spec name ifNotNil: [ groupSpecs add: member ] ] ].
-	projectSpecs ifNotEmpty: [
+	projectSpecs isEmpty not ifTrue: [
 		aStream
 			tab: indent;
 			nextPutAll: 'spec '.
@@ -199,8 +199,8 @@ MetacelloVersionSpec >> configPackagesSpecMethodOn: aStream indent: indent [
 		1 to: projectSpecs size do: [ :index |
 			(projectSpecs at: index) configMethodCascadeOn: aStream last: index == projectSpecs size indent: indent + 1.
 			index ~= projectSpecs size ifTrue: [ aStream tab: indent + 1 ] ] ].
-	packageSpecs ifNotEmpty: [
-		projectSpecs ifNotEmpty: [ aStream cr ].
+	packageSpecs isEmpty not ifTrue: [
+		projectSpecs isEmpty not ifTrue: [ aStream cr ].
 		aStream
 			tab: indent;
 			nextPutAll: 'spec '.
@@ -211,8 +211,8 @@ MetacelloVersionSpec >> configPackagesSpecMethodOn: aStream indent: indent [
 		1 to: packageSpecs size do: [ :index |
 			(packageSpecs at: index) configMethodCascadeOn: aStream last: index == packageSpecs size indent: indent + 1.
 			index ~= packageSpecs size ifTrue: [ aStream tab: indent + 1 ] ] ].
-	groupSpecs ifNotEmpty: [
-		(projectSpecs isNotEmpty or: [ packageSpecs isNotEmpty ]) ifTrue: [ aStream cr ].
+	groupSpecs isEmpty not ifTrue: [
+		projectSpecs isEmpty not | packageSpecs isEmpty not ifTrue: [ aStream cr ].
 		aStream
 			tab: indent;
 			nextPutAll: 'spec '.
@@ -342,10 +342,10 @@ MetacelloVersionSpec >> mergeSpec: anotherSpec [
 	| newSpec map anotherPackages anotherRepositories |
 	newSpec := super mergeSpec: anotherSpec.
 	map := anotherSpec mergeMap.
-	(anotherPackages := map at: #packageList) ifNotEmpty: [
-		newSpec packages: (self packages ifEmpty: [ anotherPackages ] ifNotEmpty: [ self packages mergeSpec: anotherPackages ]) ].
-	(anotherRepositories := map at: #repositories) ifNotEmpty: [
-		newSpec repositories: (self repositories ifEmpty: [ anotherRepositories ] ifNotEmpty: [ self repositories mergeSpec: anotherRepositories ]) ].
+	(anotherPackages := map at: #packageList) isEmpty not ifTrue: [
+		newSpec packages: (self packages isEmpty
+				 ifTrue: [ anotherPackages ]
+				 ifFalse: [ self packages mergeSpec: anotherPackages ]) ].
 	^ newSpec
 ]
 
