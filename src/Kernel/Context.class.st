@@ -20,17 +20,17 @@ Class {
 	#superclass : #Object,
 	#type : #variable,
 	#instVars : [
-		#sender,
-		#pc,
-		#stackp,
-		#method,
-		#closureOrNil,
-		#receiver
+		'sender',
+		'pc',
+		'stackp',
+		'method',
+		'closureOrNil',
+		'receiver'
 	],
 	#classVars : [
-		#PrimitiveFailToken,
-		#SpecialPrimitiveSimulators,
-		#TryNamedPrimitiveTemplateMethod
+		'PrimitiveFailToken',
+		'SpecialPrimitiveSimulators',
+		'TryNamedPrimitiveTemplateMethod'
 	],
 	#category : #'Kernel-Methods'
 }
@@ -1931,6 +1931,11 @@ Context >> sender [
 	"Answer the context that sent the message that created the receiver."
 
 	^sender
+]
+
+{ #category : #accessing }
+Context >> sender: aContext [ 
+	sender := aContext
 ]
 
 { #category : #private }
