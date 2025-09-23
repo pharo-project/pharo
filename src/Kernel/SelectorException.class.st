@@ -5,7 +5,7 @@ Class {
 	#name : #SelectorException,
 	#superclass : #Error,
 	#instVars : [
-		'selector'
+		#selector
 	],
 	#category : #'Kernel-Exceptions'
 }

@@ -7,8 +7,8 @@ Class {
 	#name : #ProtocolOrganizer,
 	#superclass : #Object,
 	#instVars : [
-		'allProtocol',
-		'protocols'
+		#allProtocol,
+		#protocols
 	],
 	#category : #'Kernel-Protocols'
 }

@@ -12,8 +12,8 @@ Class {
 	#name : #ClassVariable,
 	#superclass : #LiteralVariable,
 	#instVars : [
-		'owningClass',
-		'definingClass'
+		#owningClass,
+		#definingClass
 	],
 	#category : #'Kernel-Variables'
 }

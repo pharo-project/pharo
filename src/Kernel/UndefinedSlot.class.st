@@ -9,8 +9,8 @@ Class {
 	#name : #UndefinedSlot,
 	#superclass : #Slot,
 	#instVars : [
-		'ast',
-		'classIsRebuild'
+		#ast,
+		#classIsRebuild
 	],
 	#category : #'Kernel-Variables'
 }

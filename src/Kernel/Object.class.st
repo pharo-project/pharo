@@ -54,7 +54,7 @@ Class {
 	#name : #Object,
 	#superclass : #ProtoObject,
 	#classVars : [
-		'DependentsFields'
+		#DependentsFields
 	],
 	#category : #'Kernel-Objects'
 }
@@ -370,6 +370,7 @@ Object >> asSymbol [
 	"Answer a symbol that represents the receiver."
 	^ self
 ]
+
 
 { #category : #asserting }
 Object >> assert: aBlock [

@@ -12,7 +12,7 @@ Class {
 	#superclass : #BlockClosure,
 	#type : #variable,
 	#instVars : [
-		'receiver'
+		#receiver
 	],
 	#category : #'Kernel-Methods'
 }

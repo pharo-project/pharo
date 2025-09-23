@@ -220,6 +220,14 @@ Halt class >> resetOnce [
 ]
 
 { #category : #private }
+Halt >> completeProcess: aProcess with: aContext [
+	^ aContext methodNode
+		pragmaNamed: #debuggerCompleteToSender
+		ifPresent: [ aProcess completeTo: aContext sender ]
+		ifAbsent: [ super completeProcess: aProcess with: aContext ]
+]
+
+{ #category : #private }
 Halt >> exception [
 	"In the context management, it might happen that we get an Halt instead of an UnhandledError. The context will ask the exception. In case we have an halt, we should return self."
 

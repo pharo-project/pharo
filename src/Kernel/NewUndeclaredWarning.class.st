@@ -5,8 +5,8 @@ Class {
 	#name : #NewUndeclaredWarning,
 	#superclass : #SystemNotification,
 	#instVars : [
-		'undeclaredName',
-		'originName'
+		#undeclaredName,
+		#originName
 	],
 	#category : #'Kernel-Exceptions'
 }
