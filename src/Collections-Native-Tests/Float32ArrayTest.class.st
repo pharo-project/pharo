@@ -4,15 +4,14 @@ These tests are used to assert that FloatArrayPlugin has same results as Float a
 Class {
 	#name : 'Float32ArrayTest',
 	#superclass : 'CollectionRootTest',
-	#traits : 'TCreationWithTest + TSequencedStructuralEqualityTest + TSequencedConcatenationTest + TSetArithmetic + TAsStringOnDelimiterSequenceableTest + TPrintOnSequencedTest + TBeginsEndsWith + TCloneTest + (TConvertTest - {#testAsByteArray. #integerCollectionWithoutEqualElements}) + TConvertAsSortedTest + (TConvertAsSetForMultiplinessIdentityTest - {#testAsIdentitySetWithEqualsElements. #testAsIdentitySetWithIdentityEqualsElements. #testAsIdentitySetWithoutIdentityEqualsElements. #test0FixtureAsSetForIdentityMultiplinessTest}) + TCopyPartOfSequenceable + TCopyPartOfSequenceableForMultipliness + TCopySequenceableSameContents + TCopySequenceableWithOrWithoutSpecificElements + TCopySequenceableWithReplacement + TCopyTest + (TIncludesWithIdentityCheckTest - {#testIdentityIncludesNonSpecificComportement. #testIdentityIncludes. #test0FixtureIncludeWithIdentityTest}) + (TIndexAccess - {#testIdentityIndexOf. #testIdentityIndexOfIAbsent}) + (TIndexAccessForMultipliness - {#testIdentityIndexOfIAbsentDuplicate. #testIdentityIndexOfDuplicate}) + TIterateSequencedReadableTest + TPutTest + TPutBasicTest + TReplacementSequencedTest + TSequencedElementAccessTest + TSortTest + TSubCollectionAccess',
-	#classTraits : 'TCreationWithTest classTrait + TSequencedStructuralEqualityTest classTrait + TSequencedConcatenationTest classTrait + TSetArithmetic classTrait + TAsStringOnDelimiterSequenceableTest classTrait + TPrintOnSequencedTest classTrait + TBeginsEndsWith classTrait + TCloneTest classTrait + TConvertTest classTrait + TConvertAsSortedTest classTrait + TConvertAsSetForMultiplinessIdentityTest classTrait + TCopyPartOfSequenceable classTrait + TCopyPartOfSequenceableForMultipliness classTrait + TCopySequenceableSameContents classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopySequenceableWithReplacement classTrait + TCopyTest classTrait + TIncludesWithIdentityCheckTest classTrait + TIndexAccess classTrait + TIndexAccessForMultipliness classTrait + TIterateSequencedReadableTest classTrait + TPutTest classTrait + TPutBasicTest classTrait + TReplacementSequencedTest classTrait + TSequencedElementAccessTest classTrait + TSortTest classTrait + TSubCollectionAccess classTrait',
+	#traits : 'TCreationWithTest + TSequencedStructuralEqualityTest + TSequencedConcatenationTest + TSetArithmetic + TPrintOnSequencedTest + TBeginsEndsWith + TCloneTest + (TConvertTest - {#testAsByteArray. #integerCollectionWithoutEqualElements}) + TConvertAsSortedTest + (TConvertAsSetForMultiplinessIdentityTest - {#testAsIdentitySetWithEqualsElements. #testAsIdentitySetWithIdentityEqualsElements. #testAsIdentitySetWithoutIdentityEqualsElements. #test0FixtureAsSetForIdentityMultiplinessTest}) + TCopyPartOfSequenceable + TCopyPartOfSequenceableForMultipliness + TCopySequenceableSameContents + TCopySequenceableWithOrWithoutSpecificElements + TCopySequenceableWithReplacement + TCopyTest + (TIncludesWithIdentityCheckTest - {#testIdentityIncludesNonSpecificComportement. #testIdentityIncludes. #test0FixtureIncludeWithIdentityTest}) + (TIndexAccess - {#testIdentityIndexOf. #testIdentityIndexOfIAbsent}) + (TIndexAccessForMultipliness - {#testIdentityIndexOfIAbsentDuplicate. #testIdentityIndexOfDuplicate}) + TIterateSequencedReadableTest + TPutTest + TPutBasicTest + TReplacementSequencedTest + TSequencedElementAccessTest + TSortTest + TSubCollectionAccess',
+	#classTraits : 'TCreationWithTest classTrait + TSequencedStructuralEqualityTest classTrait + TSequencedConcatenationTest classTrait + TSetArithmetic classTrait + TPrintOnSequencedTest classTrait + TBeginsEndsWith classTrait + TCloneTest classTrait + TConvertTest classTrait + TConvertAsSortedTest classTrait + TConvertAsSetForMultiplinessIdentityTest classTrait + TCopyPartOfSequenceable classTrait + TCopyPartOfSequenceableForMultipliness classTrait + TCopySequenceableSameContents classTrait + TCopySequenceableWithOrWithoutSpecificElements classTrait + TCopySequenceableWithReplacement classTrait + TCopyTest classTrait + TIncludesWithIdentityCheckTest classTrait + TIndexAccess classTrait + TIndexAccessForMultipliness classTrait + TIterateSequencedReadableTest classTrait + TPutTest classTrait + TPutBasicTest classTrait + TReplacementSequencedTest classTrait + TSequencedElementAccessTest classTrait + TSortTest classTrait + TSubCollectionAccess classTrait',
 	#instVars : [
 		'nonEmpty5ElementsNoDuplicate',
 		'empty',
 		'elementNotIn',
 		'elementTwiceIn',
 		'collectionWithEqualElements',
-		'nonEmpty1Element',
 		'collectionWithSameAtEndAndBegining',
 		'collectionWith1TimeSubcollection',
 		'collectionWith2TimeSubcollection',
@@ -267,12 +266,6 @@ Float32ArrayTest >> nonEmpty [
 ]
 
 { #category : 'requirements' }
-Float32ArrayTest >> nonEmpty1Element [
-" return a collection of size 1 including one element"
-	^ nonEmpty1Element
-]
-
-{ #category : 'requirements' }
 Float32ArrayTest >> nonEmptyMoreThan1Element [
 " return a collection that doesn't includes equal elements' and doesn't include nil elements'"
 	^nonEmpty5ElementsNoDuplicate
@@ -332,9 +325,6 @@ Float32ArrayTest >> setUp [
 		at: 1 put: 2.0;
 		at: 2 put: 2.0;
 		at: 3 put: 3.5;
-		yourself.
-	nonEmpty1Element := (Float32Array new: 1)
-		at: 1 put: 1.2;
 		yourself.
 	collectionWithSameAtEndAndBegining := (Float32Array new: 3)
 		at: 1 put: 2.0;

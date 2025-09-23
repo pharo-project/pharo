@@ -22,7 +22,6 @@ Class {
 		'collectionNotIncluded',
 		'nonEmpty5ElementsWithoutDuplicate',
 		'sameAtEndAndBegining',
-		'nonEmpty1Element',
 		'indexArray',
 		'subCollection',
 		'duplicateElement',
@@ -318,12 +317,6 @@ HeapTest >> nonEmpty [
 ]
 
 { #category : 'requirements' }
-HeapTest >> nonEmpty1Element [
-	" return a collection of size 1 including one element"
-	^ nonEmpty1Element
-]
-
-{ #category : 'requirements' }
 HeapTest >> nonEmptyMoreThan1Element [
 	" return a collection that don't includes equal elements'"
 	^nonEmpty5ElementsWithoutDuplicate
@@ -415,7 +408,6 @@ HeapTest >> setUp [
 	collectResult := collectionWith4Elements collect: [ :each | each + 1 ].
 	speciesClass := Heap.
 	sameAtEndAndBegining := Heap new add: 1.5 ;  add: 1.5 copy ; yourself.
-	nonEmpty1Element := Heap new add: 5 ; yourself.
 	stringCollection := Heap new add: 'a' ; add: 'b' ; add: 'c' ; yourself.
 	indexArray := #( 1 3).
 	subCollection := Heap new.

@@ -116,7 +116,7 @@ OCCompilerTest >> testErrorOrders [
 	self
 		assertCollection: notices
 		equals: #( '17:Unknown character' '27:Unmatched " in comment.'
-			   '13:Undeclared variable' '7:Unused variable' '20:Unreachable statement' )
+			   '13:Undeclared variable named a in foo' '7:Unused variable' '20:Unreachable statement' )
 ]
 
 { #category : 'tests - shadowing' }
