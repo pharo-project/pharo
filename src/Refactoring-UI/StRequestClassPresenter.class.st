@@ -18,6 +18,13 @@ StRequestClassPresenter >> initializeClassNamePresenter [
 ]
 
 { #category : 'initialization' }
+StRequestClassPresenter >> initializeDialogWindow: aDialogPresenter [
+
+	super initializeDialogWindow: aDialogPresenter.
+	aDialogPresenter title: self windowTitle
+]
+
+{ #category : 'initialization' }
 StRequestClassPresenter >> initializeFocus [
 	^ self subclassResponsibility
 ]
@@ -60,8 +67,8 @@ StRequestClassPresenter >> initializeTagsPresenter [
 { #category : 'accessing' }
 StRequestClassPresenter >> newClassName [
 	"Answer a <String> containing the current contents of the new class name presenter"
-	
-	^ textInput text trimmed
+
+	^ textInput text trimBoth
 ]
 
 { #category : 'api - showing' }
@@ -140,4 +147,10 @@ StRequestClassPresenter >> validateClassNameBlock [
 StRequestClassPresenter >> validatePackageNameBlock [
 
 	^ [ :txt | txt isNotNil and: [ txt isNotEmpty ] ]
+]
+
+{ #category : 'accessing' }
+StRequestClassPresenter >> windowTitle [
+
+	^  driver dialogTitleForClassSelection
 ]

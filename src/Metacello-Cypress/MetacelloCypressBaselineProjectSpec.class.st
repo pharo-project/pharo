@@ -3,7 +3,7 @@ I am a project spec specific to metadataless projects (filetree/tonel).
 "
 Class {
 	#name : 'MetacelloCypressBaselineProjectSpec',
-	#superclass : 'MetacelloMCBaselineOfProjectSpec',
+	#superclass : 'MetacelloBaselineOfProjectSpec',
 	#category : 'Metacello-Cypress-Specs',
 	#package : 'Metacello-Cypress',
 	#tag : 'Specs'

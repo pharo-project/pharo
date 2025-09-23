@@ -81,17 +81,38 @@ FFIValueHolder >> adoptAddress: anExternalAddress [
 ]
 
 { #category : 'accessing' }
-FFIValueHolder >> arrayOf: aTypeOrClass size: aNumber [ 
-	| first arrayType |
-	
-	arrayType := FFIExternalType resolveType: aTypeOrClass.
-	first := self getHandle pointerAt: 1.
+FFIValueHolder >> arrayOf: aTypeOrClass size: aNumber [
+
+	^ self 
+		basicArrayOfType: (FFIExternalType resolveType: aTypeOrClass)
+		size: aNumber
+]
+
+{ #category : 'accessing' }
+FFIValueHolder >> arrayOfSize: aNumber [
+
+	^ self 
+		basicArrayOfType: self type
+		size: aNumber
+]
+
+{ #category : 'private' }
+FFIValueHolder >> basicArrayOfType: aType size: aNumber [
+	| next |
+
+	next := self firstHandle.
 	^ Array streamContents: [ :stream |
 		0 to: aNumber - 1 do: [ :index |
-			| next value |
-			next := first + (index * arrayType externalTypeSize).
-			value := arrayType handle: next at: 1.
-			stream nextPut: value ] ]
+			| value |
+			value := aType handle: next at: 1.
+			stream nextPut: value.
+			next := next + aType externalTypeSize ] ]
+]
+
+{ #category : 'private' }
+FFIValueHolder >> firstHandle [
+
+	^ self getHandle pointerAt: 1
 ]
 
 { #category : 'accessing' }
@@ -117,7 +138,7 @@ FFIValueHolder >> initializeType: aType handle: aHandle [
 
 { #category : 'converting' }
 FFIValueHolder >> packToArity: aNumber [
-	"holders do not packarity"
+	"holders do not pack arity"
 
 	^ self
 ]

@@ -27,12 +27,6 @@ ReHierarchyDefinesInstanceVariableCondition >> check [
 	^ violators isEmpty
 ]
 
-{ #category : 'private' }
-ReHierarchyDefinesInstanceVariableCondition >> errorBlock [
-	^ [ class printString
-				, ' <1?: > define <1?s:> instance variable ' , instanceVariables ]
-]
-
 { #category : 'accessing' }
 ReHierarchyDefinesInstanceVariableCondition >> instanceVariables: aColOfStrings [
 

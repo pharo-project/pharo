@@ -4,8 +4,8 @@ SUnit tests for bags
 Class {
 	#name : 'BagTest',
 	#superclass : 'CollectionRootTest',
-	#traits : 'TAddTest + TIncludesWithIdentityCheckTest + TCloneTest + TCopyTest + TSetArithmetic + TConvertTest + TAsStringOnDelimiterTest + TRemoveForMultiplenessTest + TPrintTest + TConvertAsSortedTest + TConvertAsSetForMultiplinessTest + TConcatenationTest + TStructuralEqualityTest + (TCreationWithTest - {#testOfSize}) + TOccurrencesForMultiplinessTest',
-	#classTraits : 'TAddTest classTrait + TIncludesWithIdentityCheckTest classTrait + TCloneTest classTrait + TCopyTest classTrait + TSetArithmetic classTrait + TConvertTest classTrait + TAsStringOnDelimiterTest classTrait + TRemoveForMultiplenessTest classTrait + TPrintTest classTrait + TConvertAsSortedTest classTrait + TConvertAsSetForMultiplinessTest classTrait + TConcatenationTest classTrait + TStructuralEqualityTest classTrait + TCreationWithTest classTrait + TOccurrencesForMultiplinessTest classTrait',
+	#traits : 'TAddTest + TIncludesWithIdentityCheckTest + TCloneTest + TCopyTest + TSetArithmetic + TConvertTest + TRemoveForMultiplenessTest + TPrintTest + TConvertAsSortedTest + TConvertAsSetForMultiplinessTest + TConcatenationTest + TStructuralEqualityTest + (TCreationWithTest - {#testOfSize}) + TOccurrencesForMultiplinessTest',
+	#classTraits : 'TAddTest classTrait + TIncludesWithIdentityCheckTest classTrait + TCloneTest classTrait + TCopyTest classTrait + TSetArithmetic classTrait + TConvertTest classTrait + TRemoveForMultiplenessTest classTrait + TPrintTest classTrait + TConvertAsSortedTest classTrait + TConvertAsSetForMultiplinessTest classTrait + TConcatenationTest classTrait + TStructuralEqualityTest classTrait + TCreationWithTest classTrait + TOccurrencesForMultiplinessTest classTrait',
 	#instVars : [
 		'empty',
 		'nonEmpty',
@@ -216,12 +216,6 @@ BagTest >> integerCollectionWithoutEqualElements [
 BagTest >> nonEmpty [
 
 	^ nonEmpty
-]
-
-{ #category : 'requirements' }
-BagTest >> nonEmpty1Element [
-
-	^ self speciesClass  new add: self element ;yourself
 ]
 
 { #category : 'requirements' }

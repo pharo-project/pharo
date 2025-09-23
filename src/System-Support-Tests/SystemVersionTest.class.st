@@ -28,14 +28,14 @@ SystemVersionTest >> checkIsCompatibleWithResultOfVersionMessage: aString [
 { #category : 'tests' }
 SystemVersionTest >> testCalculationOfHighestUpdate [
 
-	self assert: (SystemVersion fromVersionString: 'Pharo-6.0+alpha.build.510') highestUpdate equals: 60510
+	self assert: (self versionFromString: 'Pharo-6.0+alpha.build.510') highestUpdate equals: 60510
 ]
 
 { #category : 'tests' }
 SystemVersionTest >> testCommitHashShort [
 
 	| version |
-	version := SystemVersion fromVersionString: 'Pharo-7.0+alpha.build.2.sha.368dcda1b1ba81215fb7355cfc1e901d45395bd8'.
+	version := self versionFromString: 'Pharo-7.0+alpha.build.2.sha.368dcda1b1ba81215fb7355cfc1e901d45395bd8'.
 	self assert: version commitHashShort equals: '368dcda'
 ]
 
@@ -49,9 +49,9 @@ SystemVersionTest >> testDoNotBreakSmalltalkVersion [
 { #category : 'tests' }
 SystemVersionTest >> testDottedMajorMinorPatch [
 
-	self assert: (SystemVersion fromVersionString: 'RPharo3.7+alpha') dottedMajorMinorPatch equals: '3.7.0'.
-	self assert: (SystemVersion fromVersionString: 'Pharo1.0+ALPHA') dottedMajorMinorPatch equals: '1.0.0'.
-	self assert: (SystemVersion fromVersionString: 'Pharo1.1') dottedMajorMinorPatch equals: '1.1.0'
+	self assert: (self versionFromString: 'RPharo3.7+alpha') dottedMajorMinorPatch equals: '3.7.0'.
+	self assert: (self versionFromString: 'Pharo1.0+ALPHA') dottedMajorMinorPatch equals: '1.0.0'.
+	self assert: (self versionFromString: 'Pharo1.1') dottedMajorMinorPatch equals: '1.1.0'
 ]
 
 { #category : 'tests - instance creation' }
@@ -179,44 +179,44 @@ SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuildWithoutSuffix [
 { #category : 'tests' }
 SystemVersionTest >> testMajorMinorVersion [
 
-	self assert: (SystemVersion fromVersionString: 'RPharo3.7+alpha') majorMinorVersion equals: 'RPharo3.7.0'.
-	self assert: (SystemVersion fromVersionString: 'Pharo1.0+ALPHA') majorMinorVersion equals: 'Pharo1.0.0'.
-	self assert: (SystemVersion fromVersionString: 'Pharo1.1') majorMinorVersion equals: 'Pharo1.1.0'.
-	self assert: (SystemVersion fromVersionString: 'Pharo1.1.7') majorMinorVersion equals: 'Pharo1.1.7'
+	self assert: (self versionFromString: 'RPharo3.7+alpha') majorMinorVersion equals: 'RPharo3.7.0'.
+	self assert: (self versionFromString: 'Pharo1.0+ALPHA') majorMinorVersion equals: 'Pharo1.0.0'.
+	self assert: (self versionFromString: 'Pharo1.1') majorMinorVersion equals: 'Pharo1.1.0'.
+	self assert: (self versionFromString: 'Pharo1.1.7') majorMinorVersion equals: 'Pharo1.1.7'
 ]
 
 { #category : 'tests' }
 SystemVersionTest >> testMajorMinorWithSeparatingString [
 
-	self assert: ((SystemVersion fromVersionString: 'RPharo3.7+alpha') majorMinorPatch: '-') equals: '3-7-0'.
-	self assert: ((SystemVersion fromVersionString: 'Pharo1.0+ALPHA') majorMinorPatch: '') equals: '100'.
-	self assert: ((SystemVersion fromVersionString: 'Pharo1.1') majorMinorPatch: '.') equals: '1.1.0'.
-	self assert: ((SystemVersion fromVersionString: 'Pharo1.1.7') majorMinorPatch: '.') equals: '1.1.7'
+	self assert: ((self versionFromString: 'RPharo3.7+alpha') majorMinorPatch: '-') equals: '3-7-0'.
+	self assert: ((self versionFromString: 'Pharo1.0+ALPHA') majorMinorPatch: '') equals: '100'.
+	self assert: ((self versionFromString: 'Pharo1.1') majorMinorPatch: '.') equals: '1.1.0'.
+	self assert: ((self versionFromString: 'Pharo1.1.7') majorMinorPatch: '.') equals: '1.1.7'
 ]
 
 { #category : 'tests - parsing' }
-SystemVersionTest >> testParsingFromVersionString [
+SystemVersionTest >> testPrintString [
 	"Test that each of the keys are parsable and return a printString giving as value of the associations"
 
-	{'RPharo3.7+alpha' 		  -> 'RPharo-3.7.0+alpha'.
-	 'Pharo1.0+ALPHA'  		  -> 'Pharo-1.0.0+ALPHA'.
-	 'MyKillerApp-4.0+beta'    -> 'MyKillerApp-4.0.0+beta'.
-	 'Pharo0'           		  -> 'Pharo-0.0.0'.
-	 'Pharo5'           		  -> 'Pharo-5.0.0'.
-	 'Pharo6.0'         		  -> 'Pharo-6.0.0'.
-	 'Pharo6.0.78'         		  -> 'Pharo-6.0.78'.
-	 'Pharo-7'          		  -> 'Pharo-7.0.0'.
-	 'Pharo-7.0'        		  -> 'Pharo-7.0.0'.
-	 'Pharo-7.0.89'        		  -> 'Pharo-7.0.89'.
-	 'Pharo-7.0+alpha'  		  -> 'Pharo-7.0.0+alpha'.
-	 'Pharo-7.0.89+alpha'  		  -> 'Pharo-7.0.89+alpha'.
-	 'Pharo-7.0+alpha.build.0' -> 'Pharo-7.0.0+alpha.build.0'.
-	 'Pharo-7.0+alpha.build.2' -> 'Pharo-7.0.0+alpha.build.2'.
-	 'Pharo-7.0.89+alpha.build.2' -> 'Pharo-7.0.89+alpha.build.2'.
-	 'Pharo-7.0+alpha.build.2.sha.368dcda1b1ba81215fb7355cfc1e901d45395bd8' -> 'Pharo-7.0.0+alpha.build.2.sha.368dcda1b1ba81215fb7355cfc1e901d45395bd8'.
-	 'Pharo-7.0.89+alpha.build.2.sha.368dcda1b1ba81215fb7355cfc1e901d45395bd8' -> 'Pharo-7.0.89+alpha.build.2.sha.368dcda1b1ba81215fb7355cfc1e901d45395bd8'.
-	  }
-	do: [:each | self assert: ((SystemVersion fromVersionString: each key) printString beginsWith: each value) ]
+	{
+		('RPharo3.7+alpha' -> 'RPharo-3.7.0+alpha').
+		('Pharo1.0+ALPHA' -> 'Pharo-1.0.0+ALPHA').
+		('MyKillerApp-4.0+beta' -> 'MyKillerApp-4.0.0+beta').
+		('Pharo0' -> 'Pharo-0.0.0').
+		('Pharo5' -> 'Pharo-5.0.0').
+		('Pharo6.0' -> 'Pharo-6.0.0').
+		('Pharo6.0.78' -> 'Pharo-6.0.78').
+		('Pharo-7' -> 'Pharo-7.0.0').
+		('Pharo-7.0' -> 'Pharo-7.0.0').
+		('Pharo-7.0.89' -> 'Pharo-7.0.89').
+		('Pharo-7.0+alpha' -> 'Pharo-7.0.0+alpha').
+		('Pharo-7.0.89+alpha' -> 'Pharo-7.0.89+alpha').
+		('Pharo-7.0+alpha.build.0' -> 'Pharo-7.0.0+alpha.build.0').
+		('Pharo-7.0+alpha.build.2' -> 'Pharo-7.0.0+alpha.build.2').
+		('Pharo-7.0.89+alpha.build.2' -> 'Pharo-7.0.89+alpha.build.2').
+		('Pharo-7.0+alpha.build.2.sha.368dcda1b1ba81215fb7355cfc1e901d45395bd8' -> 'Pharo-7.0.0+alpha.build.2.sha.368dcda1b1ba81215fb7355cfc1e901d45395bd8').
+		('Pharo-7.0.89+alpha.build.2.sha.368dcda1b1ba81215fb7355cfc1e901d45395bd8' -> 'Pharo-7.0.89+alpha.build.2.sha.368dcda1b1ba81215fb7355cfc1e901d45395bd8') }
+		do: [ :each | self assert: ((self versionFromString: each key) printString beginsWith: each value) ]
 ]
 
 { #category : 'tests - compatibility' }
@@ -237,7 +237,7 @@ SystemVersionTest >> testVersion [
 	"Check that the #version method returns without a $- between Pharo and the major number."
 
 	| version |
-	version := SystemVersion fromVersionString: 'Pharo-7.0+alpha.build.2.sha.368dcda1b1ba81215fb7355cfc1e901d45395bd8'.
+	version := self versionFromString: 'Pharo-7.0+alpha.build.2.sha.368dcda1b1ba81215fb7355cfc1e901d45395bd8'.
 	self assert: version version equals: 'Pharo7.0.0alpha'
 ]
 
@@ -247,4 +247,26 @@ SystemVersionTest >> testVersionIsCompatible [
 	 and is not broken"
 
 	self checkIsCompatibleWithResultOfVersionMessage: (SystemVersion major: 7 minor: 0 patch: 199 suffix: 'alpha' build: 148) version
+]
+
+{ #category : 'utilities' }
+SystemVersionTest >> versionFromString: aString [
+
+	| matcher instance minor major patch |
+	matcher := '(([A-Z][a-zA-Z]*)[-]*([0-9]+)(\.([0-9]+))?(\.([0-9]+))?)(([+](([a-zA-Z]*)([.]*build.([0-9]+)(.sha.([0-9a-z]+))*)*))*)' asRegex.
+	(matcher matches: aString) ifFalse: [ ^ self error: 'Not a version string' ].
+
+	major := (matcher subexpression: 4) asNumber.
+	minor := (matcher subexpression: 6) isString
+		         ifTrue: [ (matcher subexpression: 6) asNumber ]
+		         ifFalse: [ 0 ].
+	patch := (matcher subexpression: 8) isString
+		         ifTrue: [ (matcher subexpression: 8) asNumber ]
+		         ifFalse: [ 0 ].
+	instance := SystemVersion major: major minor: minor patch: patch.
+	instance type: (matcher subexpression: 3).
+	(matcher subexpression: 12) isString ifTrue: [ instance suffix: (matcher subexpression: 12) ].
+	(matcher subexpression: 14) isString ifTrue: [ instance build: (matcher subexpression: 14) asNumber ].
+	(matcher subexpression: 16) isString ifTrue: [ instance commitHash: (matcher subexpression: 16) ].
+	^ instance
 ]

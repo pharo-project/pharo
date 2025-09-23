@@ -28,3 +28,5 @@ github--*.zip
 
 tests/vendor/
 tests/report.xml
+
+report.xml

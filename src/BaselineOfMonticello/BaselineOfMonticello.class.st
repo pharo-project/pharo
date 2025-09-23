@@ -35,7 +35,6 @@ BaselineOfMonticello >> baseline: spec [
 			package: 'Monticello-Model';
 			package: 'Monticello';
 			package: 'Ring-Definitions-Monticello';
-			package: 'System-Model';
 			
 			package: 'Network-Kernel';
 			package: 'Network-MIME';
@@ -44,7 +43,7 @@ BaselineOfMonticello >> baseline: spec [
 			package: 'Zinc-HTTP';
 			package: 'Zodiac-Core'.
 		spec 
-			group: 'Core' with: #('Ring-OldChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Definitions-Core' 'Jobs' 'Compression' 'Monticello-Model' 'Monticello' 'Ring-Definitions-Monticello' 'System-Model');
+			group: 'Core' with: #('Ring-OldChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Definitions-Core' 'Jobs' 'Compression' 'Monticello-Model' 'Monticello' 'Ring-Definitions-Monticello');
 			group: 'RemoteRepositories' with: #( 'Network-Kernel' 'Network-MIME' 'Network-Protocols' 'MonticelloRemoteRepositories' 'Zinc-HTTP' 'Zodiac-Core' );
 
 			group: 'default' with: #('Core' 'RemoteRepositories' ). ].

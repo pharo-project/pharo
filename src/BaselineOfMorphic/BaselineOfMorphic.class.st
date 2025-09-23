@@ -96,7 +96,6 @@ BaselineOfMorphic >> baseline: spec [
 				repository: repository;
 				loads: 'core' ].
 
-		spec package: 'Polymorph-Widgets'.
 		spec package: 'DarkBlueTheme'.
 
 		spec package: 'Images-Animated'.
@@ -108,7 +107,9 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'System-History'.
 		spec package: 'System-Installers'.
 		spec package: 'System-Settings-Core'.
-		spec package: 'System-Settings-Browser'.
+		spec package: 'PragmaCollector'.
+		spec package: 'System-Settings-Browser'
+			with: [ spec requires: #( 'PragmaCollector' ) ].
 		"the following package is listed here to be after Setting core 
 		however conceptually it could be placed somewhere else."
 		spec package: 'Formatter-Settings'.

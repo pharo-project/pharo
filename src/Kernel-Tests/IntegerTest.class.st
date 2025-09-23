@@ -171,6 +171,13 @@ IntegerTest >> testBitMask [
 ]
 
 { #category : 'tests - bitLogic' }
+IntegerTest >> testBitOr [
+
+	self assert: (2r0101 | 2r1010) equals: 2r1111.
+	self assert: (2r0101 bitOr: 2r1010) equals: 2r1111
+]
+
+{ #category : 'tests - bitLogic' }
 IntegerTest >> testBitShift [
 
 	self assert: 2r11 << 2 equals: 2r1100.
@@ -381,11 +388,84 @@ IntegerTest >> testDigitSumOnNegative [
 	self assert: -1234 digitSum equals: 10
 ]
 
+{ #category : 'tests - other' }
+IntegerTest >> testDigitsAccess [
+
+	self assert: (42 digitAt: 2 base: 10) equals: 4.
+	self assert: (42 digitAt: 1 base: 10) equals: 2.
+	self assert: (1 digitAt: 2 base: 10) equals: 0.
+	self assert: (16rFF digitAt: 1 base: 16) equals: 15.
+
+	self assert: (42 decimalDigitAt: 2) equals: 4.
+	self assert: (42 decimalDigitAt: 1) equals: 2.
+
+	self assert: (42 decimalDigitLength) equals: 2.
+	self assert: (0 decimalDigitLength) equals: 1.
+	self assert: (100000000000 decimalDigitLength) equals: 12. "large integer"
+
+	"last digit of the integer base 256"
+	self assert: (255 lastDigit) equals: 255.
+	self assert: (256 lastDigit) equals: 1.
+	self assert: ((256*256-1) lastDigit) equals: 255.
+	self assert: ((256*256) lastDigit) equals: 1
+]
+
 { #category : 'tests - basic' }
 IntegerTest >> testEven [
 
 	self deny: (1073741825 even).
 	self assert: (1073741824  even)
+]
+
+{ #category : 'tests - mathematical functions' }
+IntegerTest >> testExactRaisedTo [
+	"
+	IntegerTest new testExactRaisedTo
+	"
+	self assert: (4 raisedTo: 1/2) classAndValueEquals: 2.
+	self assert: (9 raisedTo: 1/2) classAndValueEquals: 3.
+	self assert: (9 raisedTo: -1/2) classAndValueEquals: 1/3.
+	self assert: (-1 raisedTo: 1/3) classAndValueEquals: -1.
+	#( 1 5 29 135 1234 567890 123123123 456456456456 98765432109876543210987654321 987123987123987123987123987123987123987123987123) do: [ :i |
+		self assert: (i squared raisedTo: 1/2) classAndValueEquals: i.
+		self assert: (i negated squared raisedTo: 1/2) classAndValueEquals: i ].
+
+	self assert: (8 raisedTo: 1/3) classAndValueEquals: 2.
+	self assert: (27 raisedTo: 1/3) classAndValueEquals: 3.
+	#( 1 5 29 135 1234 567890 123123123 456456456456 98765432109876543210987654321 987123987123987123987123987123987123987123987123) do: [ :i |
+		self assert: ((i raisedTo: 3) raisedTo: 1/3) classAndValueEquals: i.
+		self assert: ((i negated raisedTo: 3) raisedTo: 1/3) classAndValueEquals: i negated ].
+
+	self assert: (4 raisedTo: 3/2) classAndValueEquals: 8.
+	self assert: (8 raisedTo: 2/3) classAndValueEquals: 4.
+	self assert: (8 raisedTo: -2/3) classAndValueEquals: 1/4.
+	#( 1 5 29 135 1234 567890 123123123 456456456456 98765432109876543210987654321 987123987123987123987123987123987123987123987123) do: [ :i |
+		self assert: ((i raisedTo: 3) raisedTo: 2/3) classAndValueEquals: i*i.
+		self assert: ((i raisedTo: 2) raisedTo: 3/2) classAndValueEquals: i*i*i.
+		self assert: ((i negated raisedTo: 3) raisedTo: 2/3) classAndValueEquals: i*i.
+		self assert: ((i negated raisedTo: 2) raisedTo: 3/2) classAndValueEquals: i*i*i ].
+
+	self assert: (32 raisedTo: 3/5) classAndValueEquals: 8.
+	self assert: (8 raisedTo: 5/3) classAndValueEquals: 32.
+	#( 1 5 29 135 1234 567890 123123123 456456456456 98765432109876543210987654321 987123987123987123987123987123987123987123987123) do: [ :i |
+		self assert: ((i raisedTo: 5) raisedTo: 3/5) classAndValueEquals: i*i*i.
+		self assert: ((i raisedTo: 3) raisedTo: 5/3) classAndValueEquals: i*i*i*i*i.
+		self assert: ((i negated raisedTo: 5) raisedTo: 3/5) classAndValueEquals: (i*i*i) negated.
+		self assert: ((i negated raisedTo: 3) raisedTo: 5/3) classAndValueEquals: (i*i*i*i*i) negated.
+
+		self assert: ((i raisedTo: -5) raisedTo: 3/5) classAndValueEquals: 1/(i*i*i).
+		self assert: ((i raisedTo: -3) raisedTo: 5/3) classAndValueEquals: 1/(i*i*i*i*i).
+		self assert: ((i negated raisedTo: -5) raisedTo: 3/5) classAndValueEquals: -1/(i*i*i).
+		self assert: ((i negated raisedTo: -3) raisedTo: 5/3) classAndValueEquals: -1/(i*i*i*i*i).
+
+		self assert: ((i raisedTo: 5) raisedTo: -3/5) classAndValueEquals: 1/(i*i*i).
+		self assert: ((i raisedTo: 3) raisedTo: -5/3) classAndValueEquals: 1/(i*i*i*i*i).
+		self assert: ((i negated raisedTo: 5) raisedTo: -3/5) classAndValueEquals: -1/(i*i*i).
+		self assert: ((i negated raisedTo: 3) raisedTo: -5/3) classAndValueEquals: -1/(i*i*i*i*i).
+
+		"No exact result => Float result"
+		self assert: ((i raisedTo: 3) +1 raisedTo: 5/3) isFloat.
+		self assert: ((i negated raisedTo: 3) -1 raisedTo: 5/3) isFloat ]
 ]
 
 { #category : 'tests - bitLogic' }

@@ -47,9 +47,9 @@ MethodChunk >> displayStringOn: stream [
 MethodChunk >> handleMissingBehavior [
 	"self error: ('Cannot install method in unexistent behavior {1}' format: {(behaviorName asString)})"
 
-	(MissingClassError
-		className: behaviorName asString)
-		signal: 'Cannot install method in non-existent behavior ', behaviorName asString
+	(MissingClassError className: behaviorName asString) signal:
+		'Cannot install method from "' , protocol asString , '" in non-existent behavior ' , behaviorName asString , ':' , String crlf
+		, contents
 ]
 
 { #category : 'importing' }

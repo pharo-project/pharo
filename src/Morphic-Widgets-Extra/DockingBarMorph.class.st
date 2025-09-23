@@ -715,6 +715,15 @@ DockingBarMorph >> stayUp [
 	^ false
 ]
 
+{ #category : 'event handling' }
+DockingBarMorph >> themeChanged [
+	self
+		color: self defaultColor;
+		borderColor: self defaultBorderColor;
+		borderWidth: self defaultBorderWidth.
+	super themeChanged
+]
+
 { #category : 'menu' }
 DockingBarMorph >> toggleAutoGradient [
 	self autoGradient: self autoGradient not

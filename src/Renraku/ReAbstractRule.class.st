@@ -110,7 +110,7 @@ ReAbstractRule class >> designFlawGroup [
 { #category : 'accessing' }
 ReAbstractRule class >> enabled [
 
-	^ enabled ifNil: [ enabled := true ]
+	^ enabled ifNil: [ enabled := self enabledByDefault ]
 ]
 
 { #category : 'accessing' }
@@ -118,6 +118,12 @@ ReAbstractRule class >> enabled: aBoolean [
 
 	enabled := aBoolean.
 	ReRuleManager reset
+]
+
+{ #category : 'manifest' }
+ReAbstractRule class >> enabledByDefault [
+
+	^ true
 ]
 
 { #category : 'accessing' }

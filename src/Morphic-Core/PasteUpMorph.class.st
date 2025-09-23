@@ -159,6 +159,19 @@ PasteUpMorph >> addWorldToggleItemsToHaloMenu: aMenu [
 ]
 
 { #category : 'accessing' }
+PasteUpMorph >> backgroundImage: aForm layout: aSymbol [
+	"Set a background image, replacing the current background morph, if any,
+	with the given layout (see AlphaImageMorph layoutSymbols). "
+
+	self backgroundMorph: (
+		(self theme builder
+			newAlphaImage: aForm help: nil)
+			autoSize: false;
+			layout: aSymbol;
+			lock)
+]
+
+{ #category : 'accessing' }
 PasteUpMorph >> backgroundMorph [
 	"Answer the background morph if any."
 
@@ -709,6 +722,12 @@ PasteUpMorph >> mouseDown: evt [
 		ifFalse: [ self invokeWorldMenu: evt ]	"We'll select on drag, let's decide what to do on click"	"We wont select, just bring world menu if I'm the world"
 ]
 
+{ #category : 'navigation' }
+PasteUpMorph >> navigationKey: aKeyboardEvent [
+
+	^ self taskList handleEvent: aKeyboardEvent
+]
+
 { #category : 'world menu' }
 PasteUpMorph >> nonWindows [
 	^ (self submorphs select: [:m | (m isSystemWindow) not and: [m wantsToBeTopmost not]])
@@ -802,6 +821,17 @@ PasteUpMorph >> shouldGetStepsFrom: aWorld [
 	(self isWorldMorph and: [ owner isNotNil ]) ifTrue: [
 		^ self outermostWorldMorph == aWorld ].
 	^ super shouldGetStepsFrom: aWorld
+]
+
+{ #category : 'theme' }
+PasteUpMorph >> themeChanged [
+	"The theme has changed.
+	Update the desktop wallpaper if appropriate."
+
+	(self theme desktopImageFor: self) ifNotNil: [:aForm |
+		self color: Color white.
+		self backgroundImage: aForm layout: self theme desktopImageLayout].
+	super themeChanged
 ]
 
 { #category : 'project state' }

@@ -11,11 +11,11 @@ MetacelloBaselineSpecGenerator >> projectSpecCreationBlock [
 
 	^ [ :projectName |
 	  | projectSpec spec |
-	  projectSpec := MetacelloMCBaselineProject new baselineOfProjectSpec
+	  projectSpec := MetacelloBaselineProject new baselineOfProjectSpec
 		                 name: projectName;
 		                 className: 'BaselineOf' , projectName;
 		                 yourself.
-	  spec := MetacelloMCBaselineProject new projectReferenceSpec
+	  spec := MetacelloBaselineProject new projectReferenceSpec
 		          name: projectName;
 		          projectReference: projectSpec;
 		          yourself.

@@ -48,7 +48,7 @@ MetacelloBaselineConstructor >> extractBaselinePragmaFor: aClass [
 
 { #category : 'accessing' }
 MetacelloBaselineConstructor >> projectClass [
-    ^ MetacelloMCBaselineProject
+    ^ MetacelloBaselineProject
 ]
 
 { #category : 'loading' }

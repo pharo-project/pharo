@@ -477,21 +477,6 @@ PluggableButtonMorph >> focusBounds [
 ]
 
 { #category : 'accessing' }
-PluggableButtonMorph >> focusColor [
-	"Answer the keyboard focus indication color."
-
-	^self color contrastingBlackAndWhiteColor
-]
-
-{ #category : 'accessing' }
-PluggableButtonMorph >> focusIndicatorCornerRadius [
-	"Answer the corner radius preferred for the focus indicator
-	for the receiver for themes that support this."
-
-	^self theme buttonFocusIndicatorCornerRadiusFor: self
-]
-
-{ #category : 'accessing' }
 PluggableButtonMorph >> font [
 	^ font
 ]

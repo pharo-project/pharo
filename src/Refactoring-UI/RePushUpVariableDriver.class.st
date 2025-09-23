@@ -6,7 +6,8 @@ Class {
 	#superclass : 'ReInteractionDriver',
 	#instVars : [
 		'class',
-		'variable'
+		'variable',
+		'isSharedVariable'
 	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
@@ -26,7 +27,10 @@ RePushUpVariableDriver >> configureRefactoring [
 
 { #category : 'factory method' }
 RePushUpVariableDriver >> refactoringClass [
-	^ RePullUpInstanceVariableRefactoring
+
+	^ isSharedVariable
+		  ifTrue: [ RePullUpSharedVariableRefactoring ]
+		  ifFalse: [ RePullUpInstanceVariableRefactoring ]
 ]
 
 { #category : 'execution' }
@@ -36,12 +40,14 @@ RePushUpVariableDriver >> runRefactoring [
 	self applyChanges
 ]
 
-{ #category : 'initialization' }
-RePushUpVariableDriver >> scopes: aCollection variable: aString to: aClass [ 
+{ #category : 'factory method' }
+RePushUpVariableDriver >> scopes: aCollection variable: varName shared: isSharedVar to: aClass [ 
+
 	"The driver is initialized in interactive mode (i.e. we will ask for the newName to the user while running the refactoring"
 	
 	scopes := aCollection.
 	model :=  self refactoringScopeOn: scopes first.
 	class := aClass.
-	variable := aString
+	variable := varName.
+	isSharedVariable := isSharedVar
 ]

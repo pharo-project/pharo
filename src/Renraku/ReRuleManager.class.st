@@ -231,15 +231,15 @@ ReRuleManager class >> setDefaultProfile [
 ]
 
 { #category : 'settings' }
-ReRuleManager class >> subSettingsOn: aBuilder with: rules [ 
+ReRuleManager class >> subSettingsOn: aBuilder with: rules [
 
-	 ^ (rules sorted: [ :a :b | a name < b name ]) do: [ :rule |
-		  (aBuilder setting: rule enabledSettingID)
-			  selector: #enabled;
-			  target: rule;
-			  default: rule enabled;
-			  label: rule ruleName;
-			  description: rule rationale ]
+	^ (rules sorted: [ :a :b | a name < b name ]) do: [ :rule |
+			  (aBuilder setting: rule enabledSettingID)
+				  selector: #enabled;
+				  target: rule;
+				  default: rule enabledByDefault;
+				  label: rule ruleName;
+				  description: rule rationale ]
 ]
 
 { #category : 'event subscriptions' }

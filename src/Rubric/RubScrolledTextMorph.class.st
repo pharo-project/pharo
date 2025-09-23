@@ -897,6 +897,11 @@ RubScrolledTextMorph >> position: aPoint [
 	self manageLayout
 ]
 
+{ #category : 'accessing - scrollbars' }
+RubScrolledTextMorph >> registerScrollChanges: aSelector [
+	self scrollPane announcer when: PaneScrolling send: aSelector to: self model
+]
+
 { #category : 'rulers handling' }
 RubScrolledTextMorph >> removeAllRulers [
 	[ self rulers notEmpty ] whileTrue: [ self withoutRuler: self rulers first ]
@@ -1013,6 +1018,11 @@ RubScrolledTextMorph >> setSelection: aSelectionInterval [
 	aSelectionInterval ifNil: [ ^ self ].
 	self setTextAreaSelection: aSelectionInterval.
 	self selectionChanged
+]
+
+{ #category : 'accessing' }
+RubScrolledTextMorph >> setSelectionSelector: aSelector [
+	setSelectionSelector := aSelector
 ]
 
 { #category : 'mock for spec' }

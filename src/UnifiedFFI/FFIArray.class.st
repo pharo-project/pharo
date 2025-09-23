@@ -93,6 +93,15 @@ FFIArray class >> findOrCreateType: aTypeName size: aSize [
 		at: aSize ifAbsentPut: [ self newArrayTypeOf: aTypeName size: aSize ]
 ]
 
+{ #category : 'private' }
+FFIArray class >> findOrCreateType: aTypeName size: aSize requestor: aRequestor [
+
+	DefinedTypes ifNil: [ DefinedTypes := SmallDictionary new ].
+	^ (DefinedTypes 
+		at: aTypeName ifAbsentPut: [ SmallDictionary new ])
+		at: aSize ifAbsentPut: [ self newArrayTypeOf: aTypeName size: aSize requestor: aRequestor ]
+]
+
 { #category : 'instance creation' }
 FFIArray class >> fromHandle: aHandle [
 	^ self basicNew
@@ -116,6 +125,16 @@ FFIArray class >> newArrayTypeOf: aTypeName size: aSize [
 ]
 
 { #category : 'private' }
+FFIArray class >> newArrayTypeOf: aTypeName size: aSize requestor: aRequestor [
+
+	^ FFIArray newAnonymousSubclass
+		type: (FFICallout new 
+			requestor: aRequestor;
+			resolveType: aTypeName)
+		size: aSize
+]
+
+{ #category : 'private' }
 FFIArray class >> numberOfElements [
 	^ numberOfElements
 ]
@@ -126,6 +145,22 @@ FFIArray class >> ofType: aTypeName size: aSize [
 	^ self 
 		findOrCreateType: aTypeName 
 		size: aSize
+]
+
+{ #category : 'class factory' }
+FFIArray class >> ofType: aTypeName size: aSize requestor: aRequestor [
+
+	^ self 
+		findOrCreateType: aTypeName 
+		size: aSize
+		requestor: aRequestor
+]
+
+{ #category : 'initialization' }
+FFIArray class >> reset [
+	<script>
+	
+	DefinedTypes removeAll
 ]
 
 { #category : 'private' }

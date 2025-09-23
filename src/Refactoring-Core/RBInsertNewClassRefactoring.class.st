@@ -40,7 +40,7 @@ RBInsertNewClassRefactoring >> applicabilityPreconditions [
 				 	((RBCondition isMetaclass: sub) errorMacro:
 				         'Subclass must <1?not :>be a metaclass') not.
 			        (RBCondition isImmediateSubclass: sub of: superclass) } ].
-	^ cond , {
+	^ cond , { 
 			(RBCondition isValidClassName: className).
 			(RBCondition isGlobal: className in: self model) not.
 			(RBCondition isSymbol: packageName).
@@ -114,12 +114,14 @@ RBInsertNewClassRefactoring >> storeOn: aStream [
 
 { #category : 'accessing' }
 RBInsertNewClassRefactoring >> subclasses: aCollection [
+	"Set class objects for a list of class names"
 
 	subclasses := aCollection collect: [ :each | self classObjectFor: each ].
 ]
 
 { #category : 'accessing' }
 RBInsertNewClassRefactoring >> superclass: aClass [
+	"set the superclass object"
 
 	superclass := self classObjectFor: aClass
 ]

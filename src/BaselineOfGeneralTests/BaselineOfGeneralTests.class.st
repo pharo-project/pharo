@@ -25,7 +25,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'FormCanvas-Tests';
 			package: 'Collections-DoubleLinkedList-Tests';
 			package: 'Collections-Arithmetic-Tests';
-			package: 'MetacelloCommandLineHandler-Tests';
+			package: 'Metacello-CommandLine-Tests';
 			package: 'Debugger-Model-Tests';
 			package: 'Debugger-Oups-Tests';
 			package: 'EmbeddedFreeType-Tests';

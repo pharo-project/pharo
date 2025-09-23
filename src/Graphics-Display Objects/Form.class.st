@@ -1576,6 +1576,30 @@ Form >> maskingMap [
 	^Color maskingMap: self depth
 ]
 
+{ #category : 'merging' }
+Form >> mergeBottomRightWith: aForm [
+	^ self
+		mergeWith: aForm
+		at: self extent - aForm extent
+]
+
+{ #category : 'merging' }
+Form >> mergeWith: aForm [
+	^ self mergeWith: aForm at: 0@0
+]
+
+{ #category : 'merging' }
+Form >> mergeWith: aForm at: aPoint [
+	| mergedForm |
+
+	mergedForm := self deepCopy.
+	mergedForm getCanvas
+		translucentImage: aForm
+		at: aPoint.
+
+	^ mergedForm
+]
+
 { #category : 'testing' }
 Form >> mightBeTranslucent [
 	"Answer whether this form may be translucent"
@@ -2089,6 +2113,16 @@ Form >> scaledToSize: newExtent [
 	newExtent = self extent ifTrue: [^self].
 	scale := newExtent x / self width min: newExtent y / self height.
 	^self magnifyBy: scale smoothing: 2
+]
+
+{ #category : 'accessing' }
+Form >> setAsBackground [
+	"Set this form as a background image."
+	| world |
+	world := self currentWorld.
+	world backgroundMorph: ((Smalltalk ui theme builder newAlphaImage: self help: nil) autoSize: false;
+			 layout: #scaled;
+			 lock)
 ]
 
 { #category : 'private' }

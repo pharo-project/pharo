@@ -11,6 +11,12 @@ MetacelloSpecTestCase >> groupSpec [
     ^ self project groupSpec
 ]
 
+{ #category : 'accessing' }
+MetacelloSpecTestCase >> packageSpec [
+
+	^ self project packageSpec
+]
+
 { #category : 'specs' }
 MetacelloSpecTestCase >> packagesSpec [
     ^ self project packagesSpec
@@ -45,6 +51,18 @@ MetacelloSpecTestCase >> projectWith: projectAttributes [
 	project projectAttributes: projectAttributes.
 	MetacelloVersionConstructor on: self project: project.
 	^ project
+]
+
+{ #category : 'accessing' }
+MetacelloSpecTestCase >> repositoriesSpec [
+
+	^ self project repositoriesSpec
+]
+
+{ #category : 'accessing' }
+MetacelloSpecTestCase >> repositorySpec [
+
+	^ self project repositorySpec
 ]
 
 { #category : 'specs' }

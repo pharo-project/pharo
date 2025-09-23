@@ -871,7 +871,9 @@ SmalltalkImage >> lastQuitLogPosition: aNumber [
 SmalltalkImage >> lastUpdateString [
 	"SmalltalkImage current lastUpdateString"
 
-	^'Build information: ', SystemVersion current asString
+	^ 'Build information: ' , (SystemVersion current
+		   ifNil: [ 'No version set yet' ]
+		   ifNotNil: [ :version | version asString ])
 ]
 
 { #category : 'sources, change log' }
@@ -1839,7 +1841,9 @@ SmalltalkImage >> unregisterExternalObject: anObject [
 SmalltalkImage >> version [
 	"Answer the version of this release."
 
-	^SystemVersion current version
+	^ SystemVersion current
+		  ifNil: [ 'No version set yet' ]
+		  ifNotNil: [ :version | version version ]
 ]
 
 { #category : 'copying' }

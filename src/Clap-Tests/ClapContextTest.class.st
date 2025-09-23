@@ -64,7 +64,7 @@ ClapContextTest >> testClapCommandDoesNotThrowError [
 { #category : 'tests' }
 ClapContextTest >> testCommandMatchesWhenInvokedFromClapRoot [
 	context := ClapContext withPragmaCommands
-		arguments: #('image' 'cleanup');
+		arguments: #('hello');
 		match;
 		yourself.
 	
@@ -72,7 +72,7 @@ ClapContextTest >> testCommandMatchesWhenInvokedFromClapRoot [
 	self assert: context isValid.
 	self 
 		assertCollection: context command commandSpecIdentifiers 
-		hasSameElements: #('image' 'cleanup').
+		hasSameElements: #('hello').
 ]
 
 { #category : 'tests' }

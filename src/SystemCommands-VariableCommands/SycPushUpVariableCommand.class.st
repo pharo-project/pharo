@@ -42,6 +42,7 @@ SycPushUpVariableCommand >> executeRefactorings [
 	(RePushUpVariableDriver new
 		 scopes: refactoringScopes
 		 variable: variable actualVariable name
+		 shared: variable isClassVariable
 		 to: variable definingClass superclass) runRefactoring
 ]
 

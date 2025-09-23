@@ -1,0 +1,137 @@
+"
+Given a class I insert a superclass between its superclass and the class.
+Note that the class is given with the superclass for now.
+"
+Class {
+	#name : 'ReInsertSuperclassDriver',
+	#superclass : 'ReClassInteractionDriver',
+	#instVars : [
+		'superclass',
+		'subclass',
+		'comment'
+	],
+	#category : 'Refactoring-UI-Drivers',
+	#package : 'Refactoring-UI',
+	#tag : 'Drivers'
+}
+
+{ #category : 'accessing - class hierarchy' }
+ReInsertSuperclassDriver class >> superclass: aClass [
+	"superclass is the class that acts as a reference. A new subclass will be inserted above"
+
+	^ self basicNew
+		superclass: aClass;
+		initialize;
+		yourself
+]
+
+{ #category : 'instance creation' }
+ReInsertSuperclassDriver class >> superclass: aClass packageNames: packages [
+	"Answer a new instance using aClass as the superclass of the receiver's subclass, and packages as a <Collection> of <String> specifying the package names where the new subclass will be created"
+
+	^ self basicNew
+		superclass: aClass;
+		packageNames: packages;
+		initialize;
+		yourself
+]
+
+{ #category : 'accessing' }
+ReInsertSuperclassDriver >> comment [
+
+	^ comment
+]
+
+{ #category : 'accessing' }
+ReInsertSuperclassDriver >> comment: anObject [
+
+	comment := anObject
+]
+
+{ #category : 'accessing' }
+ReInsertSuperclassDriver >> configureRefactoring [
+	
+	
+	refactoring := (RBInsertNewClassRefactoring className: self subclass asString)
+		model: model;
+		superclass: self superclass superclass name;
+		subclasses: (self superclass superclass subclasses collect: [ :each | each name ]);
+		packageName: self packageName;
+		tagName: self tagName;
+		comment: self comment;
+		yourself
+]
+
+{ #category : 'accessing' }
+ReInsertSuperclassDriver >> dialogTitleForClassSelection [
+
+	^ 'Insert new superclass of ' , superclass name
+]
+
+{ #category : 'accessing' }
+ReInsertSuperclassDriver >> packageName [
+	"Answer a <Symbol> representing the receiver's package name where the new class will be add"
+
+	^ packageName
+		ifNil: [ self superclass packageName ] 
+
+]
+
+{ #category : 'initialization' }
+ReInsertSuperclassDriver >> requestClass [
+
+	(StRefactoringAddClassPresenter on: self)
+		onCancel: [ : dialog | dialog close ];
+		onAccept: [ :dialog |
+			self
+				packageName: dialog presenter packageName;
+				tagName: dialog presenter tagName;
+				comment: dialog presenter commentPresenterText.
+			dialog close ];
+		openModal
+]
+
+{ #category : 'execution' }
+ReInsertSuperclassDriver >> runRefactoring [
+
+	subclass ifNil: [ self requestClass ].
+	subclass ifNil: [ ^ false ].
+	self configureRefactoring.
+	refactoring failedApplicabilityPreconditions
+		ifNotEmpty: [ : conditions | self informConditions: conditions. ^ false ].
+	self applyChanges.
+	^ true
+]
+
+{ #category : 'accessing' }
+ReInsertSuperclassDriver >> scopes: refactoringScopes [
+
+	scopes := refactoringScopes.
+	model := self refactoringScopeOn: scopes last.
+	superclass := model classObjectFor: superclass
+	
+]
+
+{ #category : 'accessing' }
+ReInsertSuperclassDriver >> subclass [
+
+	^ subclass
+]
+
+{ #category : 'accessing' }
+ReInsertSuperclassDriver >> subclass: anObject [
+
+	subclass := anObject
+]
+
+{ #category : 'accessing' }
+ReInsertSuperclassDriver >> superclass [
+
+	^ superclass
+]
+
+{ #category : 'accessing' }
+ReInsertSuperclassDriver >> superclass: anObject [
+
+	superclass := anObject
+]

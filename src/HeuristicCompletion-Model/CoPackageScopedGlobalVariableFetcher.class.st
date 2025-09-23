@@ -30,6 +30,14 @@ CoPackageScopedGlobalVariableFetcher >> completionClass: anObject [
 ]
 
 { #category : 'enumerating' }
+CoPackageScopedGlobalVariableFetcher >> entriesDo: aBlock [
+
+	completionClass isNil ifTrue: [ ^ self ].
+
+	self packageLocalClasses: aBlock.
+]
+
+{ #category : 'enumerating' }
 CoPackageScopedGlobalVariableFetcher >> packageLocalClasses: aBlock [
 
 	| homePackageClassNames |

@@ -567,7 +567,7 @@ ClassTest >> testSuperclassOrder [
 ClassTest >> testSuperclassOrderPreservingOrder [
 	| noHierarchicalRelationship ordered |
 	"a shuffled collection of direct subclasses of Collection"
-	noHierarchicalRelationship := {CharacterSet. WideCharacterSet. OrderedDictionary. DependentsArray. Bag. SmallDictionary. SequenceableCollection. HashedCollection. Heap}.
+	noHierarchicalRelationship := {CharacterSet. WideCharacterSet. OrderedDictionary. Bag. SmallDictionary. SequenceableCollection. HashedCollection. Heap}.
 
 	ordered := Class superclassOrder: noHierarchicalRelationship.
 

@@ -38,6 +38,18 @@ RottenTestsSet >> addCompiledMethod: aCompiledMethod [
 		ifTrue: [ self add: (RottenTestImplementedInTrait compiledMethod: aCompiledMethod) ]
 ]
 
+{ #category : 'adding' }
+RottenTestsSet >> addToTestRunCount: anInteger [
+
+	testsRunCount := self testsRunCount + anInteger
+]
+
+{ #category : 'adding' }
+RottenTestsSet >> addToTestsVisitedCount: anInteger [
+
+	testsVisitedCount := self testsVisitedCount + anInteger
+]
+
 { #category : 'accessing-computed' }
 RottenTestsSet >> allRottenCompiledMethods [
 	"Returns all tests (compiled methods) found to be rotten. That is to say, if the test is implemented in a Trait, the method of each user in which the test is found to be rotten is reported."
@@ -57,6 +69,15 @@ RottenTestsSet >> isCompiledMethodRotten: aCompiledMethod [
 		rottenTest compiledMethod = aCompiledMethod ]
 ]
 
+{ #category : 'adding' }
+RottenTestsSet >> mergeWith: aRottenTestsSet [
+
+	self
+		addAll: aRottenTestsSet rottenTests;
+		addToTestsVisitedCount: aRottenTestsSet testsVisitedCount;
+		addToTestRunCount: aRottenTestsSet testsRunCount
+]
+
 { #category : 'accessing-computed' }
 RottenTestsSet >> rottenCompiledMethods [
 	"Returns tests (compiled methods) found to be rotten."
@@ -74,6 +95,12 @@ RottenTestsSet >> rottenTestForCompiledMethod: aCompiledMethod ifPresent: ifPres
 { #category : 'accessing' }
 RottenTestsSet >> rottenTests [
 	^ rottenTests
+]
+
+{ #category : 'accessing' }
+RottenTestsSet >> testsRunCount [
+
+	^ testsRunCount ifNil: [ testsRunCount := 0 ]
 ]
 
 { #category : 'accessing' }

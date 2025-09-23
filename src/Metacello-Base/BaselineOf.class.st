@@ -203,7 +203,7 @@ BaselineOf >> pharoVersionsFrom: aVersion [
 
 { #category : 'accessing' }
 BaselineOf >> projectClass [
-    ^ MetacelloMCBaselineProject
+    ^ MetacelloBaselineProject
 ]
 
 { #category : 'queries' }

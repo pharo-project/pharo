@@ -158,7 +158,7 @@ OCASTSemanticAnalyzer >> undeclaredVariable: variableNode [
 	"If a invalid variable exists, we use it witout warning"
 	self invalidVariables at: varName ifPresent: [ :v | ^ v ].
 
-	notice := OCUndeclaredVariableNotice new messageText: 'Undeclared variable'.
+	notice := OCUndeclaredVariableNotice new messageText: 'Undeclared variable named ' , (variableNode name ifNil: [ 'unnamed' ]) , ' in ' , variableNode methodNode selector.
 	variableNode addNotice: notice.
 	"If a registered undeclared variable exists, use it. Otherwise create an unregistered one."
 	"It will be registered only at backend when a CompiledMethod is produced.

@@ -25,13 +25,6 @@ Class {
 }
 
 { #category : 'accessing' }
-ClapContext class >> boostrapCommands [
-	"In early stages of the bootsrap, pragmas cannot be used.
-	We cannot fetch available commands. We provide commands we need."
-	^ { HermesClapCommand commandSpecification . ClapPharoBootstrapCommand commandSpecification }
-]
-
-{ #category : 'accessing' }
 ClapContext class >> defaultRoot [
 	^ (ClapRoot id: #clap)
 		description: 'Entry point for commands implemented with Clap';
@@ -72,7 +65,7 @@ ClapContext class >> withAll: commandCandidates [
 { #category : 'instance creation' }
 ClapContext class >> withPragmaCommands [ 
 
-	^ self withAll: (self pragmaCommands ifEmpty: [ self boostrapCommands ])
+	^ self withAll: self pragmaCommands
 ]
 
 { #category : 'validation' }

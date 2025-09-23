@@ -100,6 +100,7 @@ BasicCommandLineHandler >> activate [
 
 { #category : 'activation' }
 BasicCommandLineHandler >> activateSubCommand: aCommandLinehandler [
+
 	[ aCommandLinehandler activateWith: commandLine ] on: Exit do: [ :exit |
 		^ self handleExit: exit for: aCommandLinehandler ].
 	"the return value of this method is used to check if the subcommand was successful"
@@ -169,8 +170,6 @@ BasicCommandLineHandler >> firstArgument [
 
 { #category : 'activation' }
 BasicCommandLineHandler >> handleArgument: aString [
-	self handleCommandWithClap ifTrue: [ ^ self ].
-
 	"give priority to subcommands"
 	self handleSubcommand == self
 		ifFalse: [ ^ self ].
@@ -208,17 +207,6 @@ BasicCommandLineHandler >> handleArgument: aString [
 
 	"none of the previous options matched hence we output an error message"
 	self error
-]
-
-{ #category : 'activation' }
-BasicCommandLineHandler >> handleCommandWithClap [
-	
-	| arguments |
-	(#('bootstrap' 'loadHermes' 'printVersion') includes: self firstArgument) ifFalse: [ ^ false ].
-	
-	arguments := commandLine arguments copyWithFirst: 'clap'.
-	ClapCommandLineHandler activateWith:( commandLine class withArguments: arguments).
-	^ true
 ]
 
 { #category : 'activation' }

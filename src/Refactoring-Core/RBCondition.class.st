@@ -257,7 +257,11 @@ RBCondition class >> isClassNamed: className definedIn: aModel [
 { #category : 'instance creation' }
 RBCondition class >> isGlobal: aString in: aRBSmalltalk [
 
-	^ self new block: [ aRBSmalltalk includesGlobal: aString asSymbol ] errorString: aString , ' is <1?:not >a class or global variable'
+	^ self new
+		  block: [ aRBSmalltalk includesGlobal: aString asSymbol ]
+		  errorString:
+			  'A class or global variable with the name: ' , aString
+			  , ' already exists'
 ]
 
 { #category : 'instance creation' }

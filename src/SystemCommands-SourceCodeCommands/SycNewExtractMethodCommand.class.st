@@ -26,18 +26,6 @@ SycNewExtractMethodCommand class >> methodEditorShortcutActivation [
 	^CmdShortcutActivation by: $e meta, $m meta, $t meta for: ClySourceCodeContext
 ]
 
-{ #category : 'converting' }
-SycNewExtractMethodCommand >> asRefactorings [
-
-	^{self createRefactoring}
-]
-
-{ #category : 'converting' }
-SycNewExtractMethodCommand >> createRefactoring [
-	"not used"
-	^ self
-]
-
 { #category : 'accessing' }
 SycNewExtractMethodCommand >> defaultMenuIconName [
 	^ #restart
@@ -116,7 +104,7 @@ SycNewExtractMethodCommand >> setUpModelFromContext: aContext [
 
 { #category : 'execution' }
 SycNewExtractMethodCommand >> setUpOptionToChangeExtractionClass: refactoring [
-
+	
 	refactoring setOption: #extractionClass toUse: [ :ref | | cls superclasses |
 		cls := ref methodClass realClass.
 		superclasses := cls allSuperclasses reversed copyWithoutAll: { Object . ProtoObject }.
@@ -133,7 +121,7 @@ SycNewExtractMethodCommand >> setUpOptionToChangeExtractionClass: refactoring [
 ]
 
 { #category : 'execution' }
-SycNewExtractMethodCommand >> setUpOptionToChangeMethodNameDuring: refactoring [
+SycNewExtractMethodCommand >> setUpOptionToChangeMethodNameDuring: refactoring [ 
 
 	| dialog |
 	refactoring setOption: #methodName toUse: [ :methodName :ref | | invalidArgs |
@@ -156,11 +144,9 @@ SycNewExtractMethodCommand >> setUpOptionToOverrideExistingMethodDuring: aRefact
 ]
 
 { #category : 'execution' }
-SycNewExtractMethodCommand >> setUpOptionsOf: refactoring [
+SycNewExtractMethodCommand >> setUpOptionsOf: refactoring [ 
 
-	self initializeDefaultOptionsOf: refactoring.
 	self setUpOptionToChangeExtractionClass: refactoring.
-
 	self setUpOptionToOverrideExistingMethodDuring: refactoring.
 	self setUpOptionToChangeMethodNameDuring: refactoring
 ]

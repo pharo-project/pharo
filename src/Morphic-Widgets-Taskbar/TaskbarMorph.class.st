@@ -305,14 +305,6 @@ TaskbarMorph >> ownerChanged [
 	super ownerChanged
 ]
 
-{ #category : 'theme' }
-TaskbarMorph >> preferredButtonCornerStyle [
-	"Answer the preferred button corner style
-	for submorphs."
-
-	^#square
-]
-
 { #category : 'recategorized' }
 TaskbarMorph >> rejectsEvent: anEvent [
 	(anEvent isMouse and: [ anEvent isMouseDown ]) ifTrue: [ ^ (self submorphs anySatisfy: [ :each | each containsPoint: anEvent cursorPoint ]) not ].
@@ -326,14 +318,14 @@ TaskbarMorph >> removeFromWorld [
 	Collapse those that were minimized after removal.
 	Turn window animation off for the duration."
 
-	|mins animation|
-	mins := self tasks select: [:t | t isMinimized].
-	animation := self theme shouldUseAnimations.
-	animation ifTrue: [self theme useAnimation: false].
-	[mins do: [:t | t morph restore; resetCollapsedFrame].
+	| mins |
+	mins := self tasks select: [ :t | t isMinimized ].
+	mins do: [ :t |
+			t morph
+				restore;
+				resetCollapsedFrame ].
 	self delete.
-	mins do: [:t | t morph minimize]]
-		ensure: [animation ifTrue: [self theme useAnimation: true]]
+	mins do: [ :t | t morph minimize ]
 ]
 
 { #category : 'setting' }
