@@ -159,10 +159,10 @@ DebugSession >> fastStepThrough: aContext [
 	 Used to step into a block in the method."
 
 	| newContext blockContext callingContext home currentContext haltingBlockSeen |
-
 	aContext stepIntoQuickMethod: false.
 	(self isContextPostMortem: aContext) ifTrue: [ ^ self ].
 	self stepThroughController prepareContextForStepThrough: aContext.
+
 	interruptedProcess
 		psValueAt: DebuggerSteppingState soleInstance index
 		put: true.
@@ -174,8 +174,9 @@ DebugSession >> fastStepThrough: aContext [
 	blockContext := self stepThroughController findNextContext:
 		                newContext.
 	blockContext == newContext ifTrue: [
-		(blockContext isNotNil and: [[ newContext home ~= aContext home ]
-			 and: [ newContext hasSender: aContext home ]]) ifTrue: [
+		(blockContext isNotNil and: [
+			 newContext home ~= aContext home and: [
+				 newContext hasSender: aContext home ] ]) ifTrue: [
 			home := aContext home.
 			currentContext := newContext.
 			[ currentContext = home sender ] whileFalse: [
@@ -184,6 +185,7 @@ DebugSession >> fastStepThrough: aContext [
 			self updateContextTo: currentContext.
 			self triggerEvent: #stepThrough.
 			^ self ].
+
 		interruptedProcess suspendedContext: newContext.
 		interruptedProcess isTerminated
 			ifTrue: [ aContext terminateTo: nil ]
@@ -192,7 +194,7 @@ DebugSession >> fastStepThrough: aContext [
 					(self stepToFirstInterestingBytecodeIn: interruptedProcess) ].
 		self triggerEvent: #stepThrough.
 		^ self ].
-	
+
 	callingContext := interruptedProcess suspendedContext.
 	haltingBlockSeen := false.
 	[
@@ -202,10 +204,19 @@ DebugSession >> fastStepThrough: aContext [
 			haltingBlockSeen and: [
 				callingContext receiver class = HaltingBlock ] ] ] ] whileTrue: [
 		callingContext := callingContext sender.
-		haltingBlockSeen ifFalse: [ haltingBlockSeen := callingContext receiver class = HaltingBlock ].
-		 ].
-	blockContext sender:
-		(callingContext ifNotNil: [ callingContext sender ]).
+		haltingBlockSeen ifFalse: [
+			haltingBlockSeen := callingContext receiver class = HaltingBlock ] ].
+
+	"(callingContext isNotNil and: [callingContext == blockContext sender]) 
+		ifFalse: [
+			self halt
+			]."
+	"callingContext ifNotNil: [
+		blockContext sender: callingContext sender.
+		blockContext stackp: callingContext method numArgs.
+		1 to: callingContext arguments size do: [ :i |
+		blockContext at: i put: (callingContext arguments at: i) ] ]."
+
 	self updateContextTo: blockContext.
 	interruptedProcess suspendedContext: blockContext.
 	self triggerEvent: #stepThrough

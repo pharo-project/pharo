@@ -12,22 +12,32 @@ Class {
 }
 
 { #category : #'menu - operations' }
-FastStepThroughController >> findNextContext: aContext [ 
-	
-	| callingContext haltingBlock newContext |
+FastStepThroughController >> findNextContext: aContext [
 
+	| callingContext haltingBlock newContext args stackp |
 	originalBlocks ifEmpty: [ ^ aContext ].
-	
+
 	(aContext receiver isKindOf: Halt) ifFalse: [ ^ aContext ].
 
 	callingContext := aContext.
-	[ callingContext method = (HaltingBlock >> #haltIfStepping) ] whileFalse: [ callingContext := callingContext sender ].
+	[ callingContext method = (HaltingBlock >> #haltIfStepping) ]
+		whileFalse: [ callingContext := callingContext sender ].
 
 	haltingBlock := callingContext receiver.
-	
-	[ callingContext receiver class = HaltingBlock  ] whileTrue: [ callingContext := callingContext sender ].
-	
-	newContext := haltingBlock originalBlock asContextWithSender: callingContext.
+
+	[ callingContext receiver class = HaltingBlock ] whileTrue: [
+		callingContext := callingContext sender ].
+
+	newContext := haltingBlock originalBlock asContextWithSender:
+		              callingContext.
+	((stackp := newContext sender stackPtr) > 0 and: [ haltingBlock originalBlock numArgs > 0 ]) ifTrue: [
+		args := newContext sender at: stackp.
+		args isArray
+			ifTrue: [
+				1 to: haltingBlock originalBlock numArgs do: [ :i |
+				newContext tempAt: i put: (args at: i) ] ]
+			ifFalse: [ newContext tempAt: 1 put: args ] ].
+
 	newContext stepToSendOrReturn.
 
 	^ newContext

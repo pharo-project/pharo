@@ -18,6 +18,11 @@ HaltingBlock >> haltIfStepping [
 ]
 
 { #category : #accessing }
+HaltingBlock >> home [
+	^ originalBlock home
+]
+
+{ #category : #accessing }
 HaltingBlock >> originalBlock [
 	^ originalBlock
 ]
@@ -28,6 +33,7 @@ HaltingBlock >> originalBlock: aBlock [
 	outerContext := aBlock outerContext.
 	numArgs := aBlock numArgs.
 	receiver := aBlock receiver.
+	compiledBlock := aBlock compiledBlock.
 	originalBlock := aBlock
 ]
 
