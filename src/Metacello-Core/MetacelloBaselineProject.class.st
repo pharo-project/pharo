@@ -22,7 +22,7 @@ baseline: spec
 The `<baseline>` pragma marks the method containing the baseline specification.
 "
 Class {
-	#name : 'MetacelloMCBaselineProject',
+	#name : 'MetacelloBaselineProject',
 	#superclass : 'MetacelloProject',
 	#instVars : [
 		'repositoryDescription'
@@ -33,89 +33,89 @@ Class {
 }
 
 { #category : 'accessing' }
-MetacelloMCBaselineProject class >> singletonVersionName [
+MetacelloBaselineProject class >> singletonVersionName [
     ^ 'baseline'
 ]
 
 { #category : 'scripting' }
-MetacelloMCBaselineProject >> asBaselineProject [
+MetacelloBaselineProject >> asBaselineProject [
     ^ self
 ]
 
 { #category : 'scripting' }
-MetacelloMCBaselineProject >> asConfigurationProject [
+MetacelloBaselineProject >> asConfigurationProject [
     ^ MetacelloProject new
 ]
 
 { #category : 'versions' }
-MetacelloMCBaselineProject >> bleedingEdge [
+MetacelloBaselineProject >> bleedingEdge [
     ^ nil
 ]
 
 { #category : 'versions' }
-MetacelloMCBaselineProject >> currentVersionAgainst: resolvedPackageAndProjectNames [
+MetacelloBaselineProject >> currentVersionAgainst: resolvedPackageAndProjectNames [
     ^ nil
 ]
 
 { #category : 'versions' }
-MetacelloMCBaselineProject >> development [
+MetacelloBaselineProject >> development [
     ^ nil
 ]
 
 { #category : 'versions' }
-MetacelloMCBaselineProject >> hasVersion: versionString [
+MetacelloBaselineProject >> hasVersion: versionString [
     ^ versionString = 'baseline'
 ]
 
 { #category : 'versions' }
-MetacelloMCBaselineProject >> lastVersion [
+MetacelloBaselineProject >> lastVersion [
     ^ self version
 ]
 
 { #category : 'versions' }
-MetacelloMCBaselineProject >> latestVersion [
+MetacelloBaselineProject >> latestVersion [
     ^ self version
 ]
 
 { #category : 'versions' }
-MetacelloMCBaselineProject >> latestVersion: blessing [
+MetacelloBaselineProject >> latestVersion: blessing [
     ^ nil
 ]
 
 { #category : 'accessing' }
-MetacelloMCBaselineProject >> repositoryDescription [
+MetacelloBaselineProject >> repositoryDescription [
 	^ repositoryDescription
 ]
 
 { #category : 'development support' }
-MetacelloMCBaselineProject >> setBaselineRepositoryDescription: aListOrRepositoryDescriptions [
+MetacelloBaselineProject >> setBaselineRepositoryDescription: aListOrRepositoryDescriptions [
 	"set #version repositories to < aListOrRepositoryDescriptions>. Should be the directory where the BaselineOf is located."
 
 	repositoryDescription := aListOrRepositoryDescriptions
 ]
 
 { #category : 'versions' }
-MetacelloMCBaselineProject >> singletonVersionName [
+MetacelloBaselineProject >> singletonVersionName [
     ^ self class singletonVersionName
 ]
 
 { #category : 'versions' }
-MetacelloMCBaselineProject >> stableVersion [
+MetacelloBaselineProject >> stableVersion [
     ^ nil
 ]
 
 { #category : 'versions' }
-MetacelloMCBaselineProject >> symbolicVersionSymbols [
+MetacelloBaselineProject >> symbolicVersionSymbols [
     ^ nil
 ]
 
 { #category : 'versions' }
-MetacelloMCBaselineProject >> version [
+MetacelloBaselineProject >> version [
     ^ self version: self singletonVersionName
 ]
 
 { #category : 'versions' }
-MetacelloMCBaselineProject >> versions [
+MetacelloBaselineProject >> versions [
   ^ [ {(self version)} ]
     on: MetacelloVersionDoesNotExistError
     do: [ :ex | ^ #() ]

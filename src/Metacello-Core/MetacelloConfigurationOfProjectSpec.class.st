@@ -1,5 +1,5 @@
 Class {
-	#name : 'MetacelloMCConfigurationOfProjectSpec',
+	#name : 'MetacelloConfigurationOfProjectSpec',
 	#superclass : 'MetacelloProjectSpec',
 	#category : 'Metacello-Core-Specs',
 	#package : 'Metacello-Core',
@@ -7,22 +7,22 @@ Class {
 }
 
 { #category : 'scripting' }
-MetacelloMCConfigurationOfProjectSpec >> asConfigurationProjectSpec [
+MetacelloConfigurationOfProjectSpec >> asConfigurationProjectSpec [
     ^ self
 ]
 
 { #category : 'scripting' }
-MetacelloMCConfigurationOfProjectSpec >> asProjectRegistration [
+MetacelloConfigurationOfProjectSpec >> asProjectRegistration [
     ^ MetacelloProjectRegistration fromMCConfigurationProjectSpec: self
 ]
 
 { #category : 'private' }
-MetacelloMCConfigurationOfProjectSpec >> constructClassName [
+MetacelloConfigurationOfProjectSpec >> constructClassName [
     ^ 'ConfigurationOf' , self name
 ]
 
 { #category : 'mutability' }
-MetacelloMCConfigurationOfProjectSpec >> copyForRegistration: aMetacelloProjectRegistration onWrite: aBlock [
+MetacelloConfigurationOfProjectSpec >> copyForRegistration: aMetacelloProjectRegistration onWrite: aBlock [
   | copy |
 
   aMetacelloProjectRegistration
@@ -40,13 +40,13 @@ MetacelloMCConfigurationOfProjectSpec >> copyForRegistration: aMetacelloProjectR
 ]
 
 { #category : 'printing' }
-MetacelloMCConfigurationOfProjectSpec >> hasClassName [
+MetacelloConfigurationOfProjectSpec >> hasClassName [
 
 	^ className isNotNil and: [ className ~= self constructClassName ]
 ]
 
 { #category : 'testing' }
-MetacelloMCConfigurationOfProjectSpec >> hasConflictWithBaselineSpec: projectSpec [
+MetacelloConfigurationOfProjectSpec >> hasConflictWithBaselineSpec: projectSpec [
 	projectSpec name = self name
 		ifFalse: [ ^ true ].
 	projectSpec project configuration className = self project configuration className
@@ -56,21 +56,21 @@ MetacelloMCConfigurationOfProjectSpec >> hasConflictWithBaselineSpec: projectSpe
 ]
 
 { #category : 'testing' }
-MetacelloMCConfigurationOfProjectSpec >> hasConflictWithProjectSpec: projectSpec [
+MetacelloConfigurationOfProjectSpec >> hasConflictWithProjectSpec: projectSpec [
 	^ projectSpec hasConflictWithConfigurationSpec: self
 ]
 
 { #category : 'testing' }
-MetacelloMCConfigurationOfProjectSpec >> isConfigurationOfProjectSpec [
+MetacelloConfigurationOfProjectSpec >> isConfigurationOfProjectSpec [
 	^ true
 ]
 
 { #category : 'merging' }
-MetacelloMCConfigurationOfProjectSpec >> mergeSpec: anotherSpec [
+MetacelloConfigurationOfProjectSpec >> mergeSpec: anotherSpec [
     ^ super mergeSpec: anotherSpec asConfigurationProjectSpec
 ]
 
 { #category : 'printing' }
-MetacelloMCConfigurationOfProjectSpec >> projectLabel [
+MetacelloConfigurationOfProjectSpec >> projectLabel [
     ^ 'configuration'
 ]

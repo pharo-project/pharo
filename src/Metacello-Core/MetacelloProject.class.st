@@ -36,7 +36,7 @@ MetacelloProject class >> versionConstructorClass [
 
 { #category : 'scripting' }
 MetacelloProject >> asBaselineProject [
-    ^ MetacelloMCBaselineProject new
+    ^ MetacelloBaselineProject new
 ]
 
 { #category : 'scripting' }
@@ -59,7 +59,7 @@ MetacelloProject >> baselineOfProjectSpec [
 
 { #category : 'spec classes' }
 MetacelloProject >> baselineOfProjectSpecClass [
-    ^ MetacelloMCBaselineOfProjectSpec
+    ^ MetacelloBaselineOfProjectSpec
 ]
 
 { #category : 'versions' }
@@ -80,7 +80,7 @@ MetacelloProject >> configuration: anObject [
 
 { #category : 'spec classes' }
 MetacelloProject >> configurationOfProjectSpec [
-    ^ MetacelloMCConfigurationOfProjectSpec for: self
+    ^ MetacelloConfigurationOfProjectSpec for: self
 ]
 
 { #category : 'accessing' }
@@ -300,7 +300,7 @@ MetacelloProject >> projectReferenceSpec [
 { #category : 'spec classes' }
 MetacelloProject >> projectSpec [
 
-	^ MetacelloMCNamelessProjectSpec for: self
+	^ MetacelloNamelessProjectSpec for: self
 ]
 
 { #category : 'spec classes' }

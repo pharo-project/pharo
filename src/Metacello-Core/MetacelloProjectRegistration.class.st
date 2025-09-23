@@ -487,7 +487,7 @@ MetacelloProjectRegistration >> validate [
 
 { #category : 'accessing' }
 MetacelloProjectRegistration >> version [
-    ^ (self configurationProjectSpecIfAbsent: [ ^ MetacelloMCBaselineProject singletonVersionName ]) versionString
+    ^ (self configurationProjectSpecIfAbsent: [ ^ MetacelloBaselineProject singletonVersionName ]) versionString
 ]
 
 { #category : 'accessing' }

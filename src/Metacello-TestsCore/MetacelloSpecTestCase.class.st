@@ -13,7 +13,8 @@ MetacelloSpecTestCase >> groupSpec [
 
 { #category : 'accessing' }
 MetacelloSpecTestCase >> packageSpec [
-    ^ self project packageSpec
+
+	^ self project packageSpec
 ]
 
 { #category : 'specs' }
@@ -54,12 +55,14 @@ MetacelloSpecTestCase >> projectWith: projectAttributes [
 
 { #category : 'accessing' }
 MetacelloSpecTestCase >> repositoriesSpec [
-    ^ self project repositoriesSpec
+
+	^ self project repositoriesSpec
 ]
 
 { #category : 'accessing' }
 MetacelloSpecTestCase >> repositorySpec [
-    ^ self project repositorySpec
+
+	^ self project repositorySpec
 ]
 
 { #category : 'specs' }

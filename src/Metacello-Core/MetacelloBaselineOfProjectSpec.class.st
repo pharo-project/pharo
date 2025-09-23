@@ -1,5 +1,5 @@
 Class {
-	#name : 'MetacelloMCBaselineOfProjectSpec',
+	#name : 'MetacelloBaselineOfProjectSpec',
 	#superclass : 'MetacelloProjectSpec',
 	#category : 'Metacello-Core-Specs',
 	#package : 'Metacello-Core',
@@ -7,30 +7,30 @@ Class {
 }
 
 { #category : 'visiting' }
-MetacelloMCBaselineOfProjectSpec >> acceptVisitor: aVisitor [
+MetacelloBaselineOfProjectSpec >> acceptVisitor: aVisitor [
 	
 	^ aVisitor visitProjectSpec: self
 ]
 
 { #category : 'scripting' }
-MetacelloMCBaselineOfProjectSpec >> asBaselineProjectSpec [
+MetacelloBaselineOfProjectSpec >> asBaselineProjectSpec [
     ^ self
 ]
 
 { #category : 'scripting' }
-MetacelloMCBaselineOfProjectSpec >> asProjectRegistration [
+MetacelloBaselineOfProjectSpec >> asProjectRegistration [
     ^ MetacelloProjectRegistration fromMCBaselineProjectSpec: self
 ]
 
 { #category : 'scripting' }
-MetacelloMCBaselineOfProjectSpec >> canDowngradeTo: aProjectSpec [
+MetacelloBaselineOfProjectSpec >> canDowngradeTo: aProjectSpec [
     "cannot upgrade between baselines"
 
     ^ false
 ]
 
 { #category : 'scripting' }
-MetacelloMCBaselineOfProjectSpec >> canUpgradeTo: aProjectSpec [
+MetacelloBaselineOfProjectSpec >> canUpgradeTo: aProjectSpec [
   "cannot upgrade between baselines unless repositories can be upgraded"
 
   (self repositories canUpgradeTo: aProjectSpec repositories)
@@ -39,17 +39,17 @@ MetacelloMCBaselineOfProjectSpec >> canUpgradeTo: aProjectSpec [
 ]
 
 { #category : 'printing' }
-MetacelloMCBaselineOfProjectSpec >> configHasVersionString [
+MetacelloBaselineOfProjectSpec >> configHasVersionString [
   ^ false
 ]
 
 { #category : 'private' }
-MetacelloMCBaselineOfProjectSpec >> constructClassName [
+MetacelloBaselineOfProjectSpec >> constructClassName [
     ^ 'BaselineOf' , self name
 ]
 
 { #category : 'mutability' }
-MetacelloMCBaselineOfProjectSpec >> copyForRegistration: aMetacelloProjectRegistration onWrite: aBlock [
+MetacelloBaselineOfProjectSpec >> copyForRegistration: aMetacelloProjectRegistration onWrite: aBlock [
   | copy |
   aMetacelloProjectRegistration
     baselineProjectSpecIfPresent: [ :spec | 
@@ -66,36 +66,36 @@ MetacelloMCBaselineOfProjectSpec >> copyForRegistration: aMetacelloProjectRegist
 ]
 
 { #category : 'printing' }
-MetacelloMCBaselineOfProjectSpec >> hasClassName [
+MetacelloBaselineOfProjectSpec >> hasClassName [
 
 	^ className isNotNil and: [ className ~= self constructClassName ]
 ]
 
 { #category : 'testing' }
-MetacelloMCBaselineOfProjectSpec >> hasConflictWithConfigurationSpec: projectSpec [
+MetacelloBaselineOfProjectSpec >> hasConflictWithConfigurationSpec: projectSpec [
   "baseline can be loaded on top of a configuration without a conflict"
 
   ^ false
 ]
 
 { #category : 'testing' }
-MetacelloMCBaselineOfProjectSpec >> hasConflictWithProjectSpec: projectSpec [
+MetacelloBaselineOfProjectSpec >> hasConflictWithProjectSpec: projectSpec [
 	^ projectSpec hasConflictWithBaselineSpec: self
 ]
 
 { #category : 'testing' }
-MetacelloMCBaselineOfProjectSpec >> isBaselineOfProjectSpec [
+MetacelloBaselineOfProjectSpec >> isBaselineOfProjectSpec [
 	^ true
 ]
 
 { #category : 'importing' }
-MetacelloMCBaselineOfProjectSpec >> mergeImportLoads: aLoadList [
+MetacelloBaselineOfProjectSpec >> mergeImportLoads: aLoadList [
     aLoadList
         ifNotNil: [ :otherLoads | self loads ifNil: [ loads := otherLoads ] ifNotNil: [ loads := loads , otherLoads ] ]
 ]
 
 { #category : 'merging' }
-MetacelloMCBaselineOfProjectSpec >> mergeRepositoriesSpec: anotherRepositories [
+MetacelloBaselineOfProjectSpec >> mergeRepositoriesSpec: anotherRepositories [
   "anotherRepositories wins ... there can ever only be one repository for the 
    baseline to load from"
 
@@ -105,17 +105,17 @@ MetacelloMCBaselineOfProjectSpec >> mergeRepositoriesSpec: anotherRepositories [
 ]
 
 { #category : 'merging' }
-MetacelloMCBaselineOfProjectSpec >> mergeSpec: anotherSpec [
+MetacelloBaselineOfProjectSpec >> mergeSpec: anotherSpec [
     ^ super mergeSpec: anotherSpec asBaselineProjectSpec
 ]
 
 { #category : 'printing' }
-MetacelloMCBaselineOfProjectSpec >> projectLabel [
+MetacelloBaselineOfProjectSpec >> projectLabel [
     ^ 'baseline'
 ]
 
 { #category : 'querying' }
-MetacelloMCBaselineOfProjectSpec >> repositoryBranchName [
+MetacelloBaselineOfProjectSpec >> repositoryBranchName [
 	"extract a branch name from the repository ... if possible"
 
 	"must parallel implementation of MetacelloMCBaselineProject>>setBaselineRepositoryDescription: we want the same repoSpec"
@@ -126,7 +126,7 @@ MetacelloMCBaselineOfProjectSpec >> repositoryBranchName [
 ]
 
 { #category : 'querying' }
-MetacelloMCBaselineOfProjectSpec >> repositoryVersionString [
+MetacelloBaselineOfProjectSpec >> repositoryVersionString [
   "extract a version string from the repository ... if possible"
 
   "must parallel implementation of MetacelloMCBaselineProject>>setBaselineRepositoryDescription: we want the same repoSpec"
@@ -140,7 +140,7 @@ MetacelloMCBaselineOfProjectSpec >> repositoryVersionString [
 ]
 
 { #category : 'scripting' }
-MetacelloMCBaselineOfProjectSpec >> validateVersionString: issues withDefaultVersionString: ignored [
+MetacelloBaselineOfProjectSpec >> validateVersionString: issues withDefaultVersionString: ignored [
 
 	self versionString ifNotNil: [ :vs |
 		| prj |
@@ -155,14 +155,14 @@ MetacelloMCBaselineOfProjectSpec >> validateVersionString: issues withDefaultVer
 ]
 
 { #category : 'querying' }
-MetacelloMCBaselineOfProjectSpec >> version [
+MetacelloBaselineOfProjectSpec >> version [
 
 	projectInitialized ifFalse: [ ^ nil ].
 	^ self project version
 ]
 
 { #category : 'querying' }
-MetacelloMCBaselineOfProjectSpec >> versionString [
+MetacelloBaselineOfProjectSpec >> versionString [
 
 	^ versionString ifNil: [
 		  self version ifNotNil: [ :v | v versionString ] ]
