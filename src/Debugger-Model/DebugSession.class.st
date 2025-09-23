@@ -207,16 +207,7 @@ DebugSession >> fastStepThrough: aContext [
 		haltingBlockSeen ifFalse: [
 			haltingBlockSeen := callingContext receiver class = HaltingBlock ] ].
 
-	"(callingContext isNotNil and: [callingContext == blockContext sender]) 
-		ifFalse: [
-			self halt
-			]."
-	"callingContext ifNotNil: [
-		blockContext sender: callingContext sender.
-		blockContext stackp: callingContext method numArgs.
-		1 to: callingContext arguments size do: [ :i |
-		blockContext at: i put: (callingContext arguments at: i) ] ]."
-
+	blockContext sender: (callingContext ifNotNil: [callingContext sender]).
 	self updateContextTo: blockContext.
 	interruptedProcess suspendedContext: blockContext.
 	self triggerEvent: #stepThrough
