@@ -323,13 +323,18 @@ SystemSettingsPersistence >> updateSettingNodes [
 
 { #category : 'loading' }
 SystemSettingsPersistence >> updateSettingNodes: aCollectionOfSettingNodes [
+
 	| storedSettings |
 	storedSettings := self allStoredSettings.
 	aCollectionOfSettingNodes do: [ :eachSettingNode |
-		storedSettings
-			detect: [ :eachStoredSetting | eachStoredSetting isForSettingNode: eachSettingNode ]
-			ifFound: [ :storedSetting | storedSetting updateSettingNode: eachSettingNode ]
-			ifNone: [ "ignore it" ] ]
+			storedSettings
+				detect: [ :eachStoredSetting | eachStoredSetting isForSettingNode: eachSettingNode ]
+				ifFound: [ :storedSetting | storedSetting updateSettingNode: eachSettingNode ]
+				ifNone: [ "Reset setting value to default if possible"
+						| declaration |
+						declaration := eachSettingNode settingDeclaration.
+						(declaration hasDefault and: [ declaration hasDefaultValue not ]) ifTrue: [
+								declaration setToDefault ] ] ]
 ]
 
 { #category : 'streams' }
