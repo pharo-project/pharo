@@ -21,3 +21,9 @@ ReClassesCondition >> classes: aRBClassCollection [
 
 	classes := aRBClassCollection 
 ]
+
+{ #category : 'accessing' }
+ReClassesCondition >> nonViolators [
+
+	^ classes reject: [ :aClass | violators anySatisfy: [:each | each == aClass] ]
+]

@@ -9,7 +9,7 @@ Class {
 { #category : 'displaying' }
 ReClassesAreAbstractCondition >> violationMessageOn: aStream [
 
-	aStream nextPutAll: (', ' join: (classes collect: #name)).
+	aStream nextPutAll: (', ' join: (self wrapper violators collect: #name)).
 	aStream nextPutAll: ' is not an abstract class.'
 ]
 
