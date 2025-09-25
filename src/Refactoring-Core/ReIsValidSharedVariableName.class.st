@@ -13,21 +13,21 @@ Class {
 ReIsValidSharedVariableName >> check [
 
 	| string |
-	name isString ifFalse: [
-		violator := name.
+	variable isString ifFalse: [
+		violator := variable.
 		^ false ].
-	string := name asString.
+	string := variable asString.
 	(Symbol reservedLiterals includes: string) ifTrue: [
-		violator := name.
+		violator := variable.
 		^ false ].
 	string isEmpty ifTrue: [
-		violator := name.
+		violator := variable.
 		^ false ].
 	string first isUppercase ifFalse: [
-		violator := name.
+		violator := variable.
 		^ false ].
 	(OCScanner isVariable: string) ifFalse: [
-		violator := name.
+		violator := variable.
 		^ false ].
 	^ true
 ]

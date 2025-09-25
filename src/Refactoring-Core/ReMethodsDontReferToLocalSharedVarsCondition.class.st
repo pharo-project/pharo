@@ -7,7 +7,8 @@ Class {
 	#superclass : 'ReMethodsCondition',
 	#instVars : [
 		'class',
-		'selectors'
+		'selectors',
+		'variables'
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
@@ -18,13 +19,27 @@ Class {
 ReMethodsDontReferToLocalSharedVarsCondition >> class: aRBClass selectors: aCollection [ 
 
 	class := aRBClass.
-	selectors := aCollection 
+	selectors := aCollection.
+	variables := nil
+]
+
+{ #category : 'initialization' }
+ReMethodsDontReferToLocalSharedVarsCondition >> class: aRBClass selectors: aCollection variables: aCollection2 [
+
+	class := aRBClass.
+	selectors := aCollection.
+	variables := aCollection2 
 ]
 
 { #category : 'accessing' }
 ReMethodsDontReferToLocalSharedVarsCondition >> referencedSharedVariables [
 
 	^ self violators collect: [ :violator | violator at: 2 ]
+]
+
+{ #category : 'accessing' }
+ReMethodsDontReferToLocalSharedVarsCondition >> variables [
+	^ variables ifNil: [ variables := class classVariableNames ]
 ]
 
 { #category : 'displaying' }
@@ -48,7 +63,7 @@ ReMethodsDontReferToLocalSharedVarsCondition >> violators [
 
 	violators := Set new.
 	selectors do: [ :selector |
-		class classVariableNames do: [ :classVar |
+		self variables do: [ :classVar |
 			((class methodFor: selector) refersToVariable: classVar)
 				ifTrue: [ violators add: { selector . classVar } ] ] ].
 	^ violators asOrderedCollection

@@ -13,7 +13,7 @@ ReBrowseReferencedSharedVariableChoice >> action [
 ]
 
 { #category : 'accessing' }
-ReBrowseReferencedSharedVariableChoice >> description [ 
+ReBrowseReferencedSharedVariableChoice >> description [
 
-	^ 'Browse referenced shared variable (s)'
+	^ description ifNil: [ description := 'Browse referenced shared variable (s)' ]
 ]

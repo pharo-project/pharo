@@ -153,6 +153,14 @@ ReInteractionDriver >> furtherActionFor: aReport [
 	aReport browse
 ]
 
+{ #category : 'execution' }
+ReInteractionDriver >> handleBreakingChanges [
+
+	| select |
+	select := self selectDialog.
+	select ifNotNil: [ select action ]
+]
+
 { #category : 'private' }
 ReInteractionDriver >> informConditions: conditions [ 
 	"The receiver has multiple failed applicability conditions and more than one could fail, inform all failures"

@@ -4,12 +4,24 @@ Class {
 	#instVars : [
 		'refactoring',
 		'driver',
-		'description'
+		'description',
+		'actionBlock'
 	],
 	#category : 'Refactoring-UI-Choices',
 	#package : 'Refactoring-UI',
 	#tag : 'Choices'
 }
+
+{ #category : 'accessing' }
+ReChoice >> action [
+	"The action is dynamically set as a block. Some subclasses may override this method to hardcode their own actions"
+	^ actionBlock value
+]
+
+{ #category : 'accessing' }
+ReChoice >> actionBlock: aBlockClosure [
+	actionBlock := aBlockClosure 
+]
 
 { #category : 'accessing' }
 ReChoice >> description [

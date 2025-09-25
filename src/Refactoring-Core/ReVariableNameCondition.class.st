@@ -3,9 +3,8 @@ I am an abstract class whose subclasses define checks for valid variables (insta
 "
 Class {
 	#name : 'ReVariableNameCondition',
-	#superclass : 'RBNewAbstractCondition',
+	#superclass : 'ReVariableCondition',
 	#instVars : [
-		'name',
 		'violator'
 	],
 	#category : 'Refactoring-Core-Conditions',
@@ -21,7 +20,7 @@ ReVariableNameCondition class >> name: aString [
 
 { #category : 'accessing' }
 ReVariableNameCondition >> name: aString [
-	name := aString
+	variable := aString
 ]
 
 { #category : 'displaying' }
@@ -32,4 +31,10 @@ ReVariableNameCondition >> violationMessageOn: stream [
 { #category : 'accessing' }
 ReVariableNameCondition >> violator [
 	^ violator
+]
+
+{ #category : 'accessing' }
+ReVariableNameCondition >> violatorCandidates [
+
+	^ variable
 ]
