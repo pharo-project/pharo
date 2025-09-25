@@ -24,22 +24,25 @@ FastStepThroughController >> findNextContext: aContext [
 		whileFalse: [ callingContext := callingContext sender ].
 
 	haltingBlock := callingContext receiver.
-
+	args := stackp := nil.
 	[ callingContext receiver class = HaltingBlock ] whileTrue: [
+		(callingContext method selector == #valueWithArguments: and: [
+			 (stackp := callingContext stackPtr) > 0 ]) ifTrue: [
+			args := callingContext at: stackp ].
 		callingContext := callingContext sender ].
 
 	newContext := haltingBlock originalBlock asContextWithSender:
 		              callingContext.
-	((stackp := newContext sender stackPtr) > 0 and: [ haltingBlock originalBlock numArgs > 0 ]) ifTrue: [
-		args := newContext sender at: stackp.
-		args isArray
-			ifTrue: [
-				1 to: haltingBlock originalBlock numArgs do: [ :i |
-				newContext tempAt: i put: (args at: i) ] ]
-			ifFalse: [ newContext tempAt: 1 put: args ] ].
+
+	(args isNotNil and: [ haltingBlock originalBlock numArgs > 0 ])
+		ifTrue: [
+			args isArray
+				ifTrue: [
+					1 to: haltingBlock originalBlock numArgs do: [ :i |
+					newContext tempAt: i put: (args at: i) ] ]
+				ifFalse: [ newContext tempAt: 1 put: args ] ].
 
 	newContext stepToSendOrReturn.
-
 	^ newContext
 ]
 

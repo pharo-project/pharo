@@ -138,12 +138,60 @@ StepThroughTest >> stepH1 [
 	tmpBlock value: 1
 ]
 
+{ #category : #helper }
+StepThroughTest >> stepI1 [
+
+	^ self stepI2: [ :i | i + 1 ]
+]
+
+{ #category : #helper }
+StepThroughTest >> stepI2: someBlock [
+	
+	^ someBlock value: 24
+]
+
 { #category : #running }
 StepThroughTest >> tearDown [
 
 	currentFastStepThrough ifNotNil: [
 		DebugSession fastStepThroughMode: currentFastStepThrough ].
 	super tearDown
+]
+
+{ #category : #tests }
+StepThroughTest >> testStepIntoBlockArgumentInMessageSend [
+	| node expectedMethod |
+	self settingUpSessionAndProcessAndContextForBlock: [ self stepI1 ].
+	session stepInto.
+	session stepInto.
+	"Reached node 'self stepI2: [ :i | i + 1 ]' of method stepI1"
+	"Checking that the execution is indeed at this node"
+	self assert: (session interruptedContext method) equals: (self class lookupSelector: #stepI1).
+	node := (self class lookupSelector: #stepI1) sourceNodeForPC: session interruptedContext pc.
+	self assert: node isMessage.
+	self assert: node selector equals: #stepI2:.
+	session stepThrough.
+	
+	"Reached message node in the blocks body '+ 1'"
+	expectedMethod := (self class lookupSelector: #stepI1) literalAt: 1.
+	node := expectedMethod sourceNodeForPC: session interruptedContext pc.
+	self assert: node isMessage.
+	self assert: node selector equals: #+.
+	session stepThrough.
+	
+	"Reached sequence node in the blocks body 'i + 1'"
+	expectedMethod := (self class lookupSelector: #stepI1) literalAt: 1.
+	self assert: (session interruptedContext method) equals: expectedMethod.
+	node := expectedMethod sourceNodeForPC: session interruptedContext pc.
+	self assert: node isSequence.
+	session stepThrough.
+	
+	"Reached ^ self stepI2: [:i | i + 1 ] in stepI1"
+	self assert: session interruptedContext method equals: (self class lookupSelector: #stepI1).
+	node := (self class lookupSelector: #stepI1) sourceNodeForPC: session interruptedContext pc.
+	self assert: node isReturn.
+	
+	self assert: session interruptedContext sender isNotNil.
 ]
 
 { #category : #tests }
