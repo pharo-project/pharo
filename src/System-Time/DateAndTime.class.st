@@ -69,13 +69,6 @@ DateAndTime class >> basicYear: year month: month day: day hour: hour minute: mi
 		yourself
 ]
 
-{ #category : 'clock provider' }
-DateAndTime class >> clock [
-	 "the provider of real time seconds/milliseconds."
-
-	^ ClockProvider
-]
-
 { #category : 'system queries' }
 DateAndTime class >> clockPrecision [
 	"One nanosecond precision"
@@ -274,12 +267,6 @@ DateAndTime class >> midnight [
 	^ self now midnight
 ]
 
-{ #category : 'primitives' }
-DateAndTime class >> millisecondClockValue [
-
-	^ self clock millisecondClockValue
-]
-
 { #category : 'instance creation' }
 DateAndTime class >> new [
 	"Answer a DateAndTime representing the epoch: 1 January 1901"
@@ -299,12 +286,12 @@ DateAndTime class >> now [
 	[ 10000 timesRepeat: [ self now. ] ] timeToRun / 10000.0 . "
 
 	| nanoTicks |
-	nanoTicks := self clock microsecondClockValue * 1000.
+	nanoTicks := Time microsecondClockValue * 1000.
 	^ self basicNew
-		setJdn: Epoch
-		seconds: 0
-		nano: nanoTicks
-		offset: self localOffset
+		  setJdn: Epoch
+		  seconds: 0
+		  nano: nanoTicks
+		  offset: self localOffset
 ]
 
 { #category : 'instance creation' }
@@ -434,13 +421,6 @@ DateAndTime class >> today [
 DateAndTime class >> tomorrow [
 
 	^ self today asDate next asDateAndTime
-]
-
-{ #category : 'instance creation' }
-DateAndTime class >> totalSeconds [
-	"Answer the total seconds ellapsed since the epoch: 1 January 1901"
-
-	^ self clock totalSeconds
 ]
 
 { #category : 'instance creation queries' }

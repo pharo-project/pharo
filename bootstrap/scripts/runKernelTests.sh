@@ -64,7 +64,6 @@ export PHARO_CI_TESTING_ENVIRONMENT=1
 ./pharo bootstrap.image perform --save Pragma buildCache
 ./pharo bootstrap.image loadHermes System-Time.hermes AST-Core.hermes Random-Core.hermes System-NumberPrinting.hermes --save --no-fail-on-undeclared --on-duplication ignore
 ./pharo bootstrap.image perform --save ChronologyConstants initialize
-./pharo bootstrap.image perform --save DateAndTime initialize
 
 #Initializing the package manager
 ./pharo bootstrap.image perform --save PharoBootstrapFixMethodsTool fixExtensionMethods
