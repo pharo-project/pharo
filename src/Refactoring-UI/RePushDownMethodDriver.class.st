@@ -100,14 +100,6 @@ RePushDownMethodDriver >> gatherUserInput [
 	methods := self selectMethods
 ]
 
-{ #category : 'execution' }
-RePushDownMethodDriver >> handleBreakingChanges [
-
-	| select |
-	select := self selectDialog.
-	select ifNotNil: [ select action ]
-]
-
 { #category : 'ui - dialogs' }
 RePushDownMethodDriver >> labelBasedOnBreakingChanges [
 

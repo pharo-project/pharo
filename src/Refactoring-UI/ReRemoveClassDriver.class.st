@@ -74,14 +74,6 @@ ReRemoveClassDriver >> defaultSelectDialog [
 		  openModal
 ]
 
-{ #category : 'execution' }
-ReRemoveClassDriver >> handleBreakingChanges [
-
-	| select |
-	select := self selectDialog.
-	select ifNotNil: [ select action ]
-]
-
 { #category : 'ui - dialogs' }
 ReRemoveClassDriver >> labelBasedOnBreakingChanges [
 

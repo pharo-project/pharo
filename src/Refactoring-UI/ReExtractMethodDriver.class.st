@@ -64,14 +64,6 @@ ReExtractMethodDriver >> extract: aString from: compiledMethod in: aClass [
 	body := aString
 ]
 
-{ #category : 'execution' }
-ReExtractMethodDriver >> handleBreakingChanges [
-
-	| select |
-	select := self selectDialog.
-	select ifNotNil: [ select action ]
-]
-
 { #category : 'initialization' }
 ReExtractMethodDriver >> initialize [ 
 	

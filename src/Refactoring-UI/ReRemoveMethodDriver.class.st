@@ -64,14 +64,6 @@ ReRemoveMethodDriver >> defaultSelectDialog [
 ]
 
 { #category : 'execution' }
-ReRemoveMethodDriver >> handleBreakingChanges [
-
-	| select |
-	select := self selectDialog.
-	select ifNotNil: [ select action ]
-]
-
-{ #category : 'execution' }
 ReRemoveMethodDriver >> runRefactoring [
 
 	self configureRefactoring.

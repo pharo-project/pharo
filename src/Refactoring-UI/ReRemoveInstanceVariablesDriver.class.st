@@ -55,14 +55,6 @@ ReRemoveInstanceVariablesDriver >> defaultSelectDialog [
 ]
 
 { #category : 'execution' }
-ReRemoveInstanceVariablesDriver >> handleBreakingChanges [
-
-	| select |
-	select := self selectDialog.
-	select ifNotNil: [ select action ]
-]
-
-{ #category : 'execution' }
 ReRemoveInstanceVariablesDriver >> runRefactoring [
 
 	self configureRefactoring.

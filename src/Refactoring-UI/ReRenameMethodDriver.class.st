@@ -94,14 +94,6 @@ ReRenameMethodDriver >> defaultSelectDialog [
 		          openModal
 ]
 
-{ #category : 'execution' }
-ReRenameMethodDriver >> handleBreakingChanges [
-
-	| select |
-	select := self selectDialog.
-	select ifNotNil: [ select action ]
-]
-
 { #category : 'initialization' }
 ReRenameMethodDriver >> initialize [ 
 	

@@ -63,14 +63,6 @@ ReMoveMethodsToClassSideDriver >> defaultSelectDialog [
 ]
 
 { #category : 'execution' }
-ReMoveMethodsToClassSideDriver >> handleBreakingChanges [
-
-	| select |
-	select := self selectDialog.
-	select ifNotNil: [ select action ]
-]
-
-{ #category : 'execution' }
 ReMoveMethodsToClassSideDriver >> runRefactoring [
 	
 	refactoring failedBreakingChangePreconditions
