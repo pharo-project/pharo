@@ -30,6 +30,12 @@ ReNewNegationCondition >> errorString [
 	^ condition errorString
 ]
 
+{ #category : 'logical operations' }
+ReNewNegationCondition >> not [ 
+	
+	^ condition
+]
+
 { #category : 'displaying' }
 ReNewNegationCondition >> violationMessageOn: aWriteStream [
 
