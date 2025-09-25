@@ -210,17 +210,6 @@ BasicCommandLineHandler >> handleArgument: aString [
 ]
 
 { #category : 'activation' }
-BasicCommandLineHandler >> handleCommandWithClap [
-	
-	| arguments |
-	(#('bootstrap' 'loadHermes' 'printVersion' 'st' 'eval' 'metacello' 'test' 'clean' 'save' 'fuel' 'run') includes: self firstArgument) ifFalse: [ ^ false ].
-	
-	arguments := commandLine arguments copyWithFirst: 'clap'.
-	ClapCommandLineHandler activateWith:( commandLine class withArguments: arguments).
-	^ true
-]
-
-{ #category : 'activation' }
 BasicCommandLineHandler >> handleEmptyArguments [
 
 	Smalltalk isInteractive ifTrue: [ ^ self ].

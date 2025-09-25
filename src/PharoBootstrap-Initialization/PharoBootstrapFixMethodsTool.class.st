@@ -27,8 +27,8 @@ pharo Pharo.image initializePackages --protocols=protocols.txt --packages --save
 Class {
 	#name : 'PharoBootstrapFixMethodsTool',
 	#superclass : 'Object',
-	#category : 'InitializePackagesCommandLineHandler',
-	#package : 'InitializePackagesCommandLineHandler'
+	#category : 'PharoBootstrap-Initialization',
+	#package : 'PharoBootstrap-Initialization'
 }
 
 { #category : 'fixing' }

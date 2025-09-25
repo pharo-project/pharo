@@ -129,7 +129,7 @@ MCOrganizationDefinition >> tagNames: aCollection [
 	"ensure the tags are sorted alphabetically, so the merge don't take it as a conflict"
 
 	| tags |
-	tags := aCollection.
+	tags := aCollection collect: [ :element | element asSymbol ].
 	tags := tags \ { Package rootTagName }.
 	tagNames := tags sorted asArray
 ]

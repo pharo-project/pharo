@@ -316,11 +316,11 @@ RBNamespace >> createNewClassFor: aBehavior [
 	className := aBehavior instanceSide name.
 	aBehavior isTrait
 		ifTrue: [
-			rbType := self rbTraitClass.
-			rbMetaType := self rbTraitedMetaclassClass ]
+			rbType := RBTrait.
+			rbMetaType := RBTraitedMetaclass ]
 		ifFalse: [
-			rbType := self rbClassClass.
-			rbMetaType := self rbMetaclassClass ].
+			rbType := RBClass.
+			rbMetaType := RBMetaclass ].
 	nonMeta := rbType existingNamed: className model: self.
 	meta := rbMetaType existingNamed: className model: self.
 	nonMeta traitComposition: aBehavior traitComposition.
@@ -332,7 +332,7 @@ RBNamespace >> createNewClassFor: aBehavior [
 { #category : 'accessing - classes' }
 RBNamespace >> createNewPackageFor: aPackage [
 	| package |
-	package := self rbPackageClass existingNamed: aPackage model: self.
+	package := RBPackage existingNamed: aPackage model: self.
 	^changedPackages at: aPackage put: (Array with: package)
 ]
 
@@ -346,8 +346,8 @@ RBNamespace >> defineClass: aBlock [
 	newClass ifNil: [
 		| newMetaclass |
 		self unmarkAsRemoved: newClassName.
-		newClass := self rbClassClass named: newClassName.
-		newMetaclass := self rbMetaclassClass named: newClassName.
+		newClass := RBClass named: newClassName.
+		newMetaclass := RBMetaclass named: newClassName.
 		newClass model: self.
 		newMetaclass model: self.
 		newClasses at: newClassName put: (Array with: newClass with: newMetaclass) ].

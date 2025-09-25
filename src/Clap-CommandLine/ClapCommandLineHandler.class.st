@@ -20,7 +20,7 @@ ClapCommandLineHandler class >> isResponsibleFor: aCommandLineArguments [
 	aCommandLineArguments arguments ifEmpty: [ ^ false ].
 	
 	subcommand := aCommandLineArguments arguments first.
-	^ ClapContext pragmaCommandsAndBootstrapCommands 
+	^ ClapContext pragmaCommands
 		detect: [ :commandSpec | commandSpec hasAlias: subcommand ]
 		ifFound: [ true ] 
 		ifNone: [ false ]
@@ -34,8 +34,14 @@ ClapCommandLineHandler class >> priority [
 
 { #category : 'activation' }
 ClapCommandLineHandler >> activate [
+	
+	self activateWith: ClapContext pragmaCommands
+]
+
+{ #category : 'activation' }
+ClapCommandLineHandler >> activateWith: clapCommandSpecifications [
 	[
-		ClapContext withPragmaCommands
+		(ClapContext withAll: clapCommandSpecifications)
 			beObeyingExits;
 			setStdio: Stdio;
 			arguments: self arguments;

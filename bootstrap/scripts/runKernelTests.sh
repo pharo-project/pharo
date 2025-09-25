@@ -1,6 +1,10 @@
 #!/usr/bin/env bash
 # Bash3 Boilerplate. Copyright (c) 2014, kvz.io
 
+#
+# This script loads packages for a minimal image and run tests on it to ensure it is working fine!
+#
+
 set -o errexit
 set -o pipefail
 set -o nounset
@@ -55,8 +59,10 @@ export PHARO_CI_TESTING_ENVIRONMENT=1
 #Initializing the Image
 ./pharo bootstrap.image
 #Adding packages removed from the bootstrap
+./pharo bootstrap.image loadHermes Clap-Core.hermes Clap-CommandLine.hermes --save
 ./pharo bootstrap.image loadHermes Hermes-Extensions.hermes --save
-./pharo bootstrap.image loadHermes System-Time.hermes AST-Core.hermes InitializePackagesCommandLineHandler.hermes Random-Core.hermes System-NumberPrinting.hermes --save --no-fail-on-undeclared --on-duplication ignore
+./pharo bootstrap.image perform --save Pragma buildCache
+./pharo bootstrap.image loadHermes System-Time.hermes AST-Core.hermes Random-Core.hermes System-NumberPrinting.hermes --save --no-fail-on-undeclared --on-duplication ignore
 ./pharo bootstrap.image perform --save ChronologyConstants initialize
 ./pharo bootstrap.image perform --save DateAndTime initialize
 
@@ -69,6 +75,7 @@ export PHARO_CI_TESTING_ENVIRONMENT=1
 
 #Loading Tests
 ./pharo bootstrap.image loadHermes Debugging-Utils.hermes SUnit-Core.hermes JenkinsTools-Core.hermes JenkinsTools-Core.hermes SUnit-Tests.hermes --save --no-fail-on-undeclared --on-duplication ignore
+./pharo bootstrap.image perform --save Pragma buildCache
 
 #Running tests
 ./pharo bootstrap.image test --junit-xml-output --stage-name ${2} SUnit-Core SUnit-Tests

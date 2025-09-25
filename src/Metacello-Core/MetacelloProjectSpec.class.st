@@ -342,6 +342,13 @@ MetacelloProjectSpec >> copyForScriptingInto: aProjectSpec [
         file: file
 ]
 
+{ #category : 'accessing' }
+MetacelloProjectSpec >> currentlyLoadedClassesInVersion [
+
+	self versionOrNil ifNotNil: [ :vrsn | ^ vrsn spec currentlyLoadedClassesInVersion ].
+	^ #(  )
+]
+
 { #category : 'loading' }
 MetacelloProjectSpec >> ensureProjectLoadedWithEngine: anEngine [
 	"Ensure that the MetacelloProject is loaded in image. 

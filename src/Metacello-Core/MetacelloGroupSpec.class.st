@@ -60,14 +60,6 @@ MetacelloGroupSpec >> packageSpecsInLoadOrder [
 		  e packageSpecsInLoadOrder ]
 ]
 
-{ #category : 'loading' }
-MetacelloGroupSpec >> packageSpecsInLoadOrderWithEngine: anEngine [
-
-	^ (self project version spec packageSpecsInLoadOrder select: [ :each |
-		   self includes includes: each name ]) flatCollect: [ :e |
-		  e packageSpecsInLoadOrder ]
-]
-
 { #category : 'visiting' }
 MetacelloGroupSpec >> projectDo: projectBlock packageDo: packageBlock groupDo: groupBlock [
 

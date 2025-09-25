@@ -111,6 +111,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'System-BasicCommandLineHandler'.
 		spec package: 'Clap-Core'.
 		spec package: 'Clap-CommandLine'.
+		spec package: 'Clap-Commands-Pharo' .
 		spec package: 'System-CommandLine'.
 		spec package: 'System-CommandLineHandler'.
 		spec package: 'System-Finalization'.
@@ -143,15 +144,11 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'SUnit-Core'.
 		spec package: 'SUnit-Tests'.
 		spec package: 'Kernel-Tests'.
-		spec package: 'JenkinsTools-Core'.
-		spec package: 'InitializePackagesCommandLineHandler'.
-		
+		spec package: 'JenkinsTools-Core'.		
 
 		spec group: 'KernelGroup' with: {
 			'FFI-Kernel'.
 			'Announcements-Core'.
-			'Clap-Core'.
-			'Clap-CommandLine'.
 			'Collections-Abstract'.
 			'Collections-DoubleLinkedList'.
 			'Collections-Native'.
@@ -190,8 +187,10 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		"These packages are added using hermes after bootstrap"
 
 		spec group: 'AdditionalPackages' with: {
+			'Clap-Core'.
+			'Clap-CommandLine'.
+			'Clap-Commands-Pharo'.
 			'ReflectionMirrors-Primitives'.
-			'InitializePackagesCommandLineHandler'.
 			'System-Time'.
 			'Math-Operations-Extensions'.
 			'Debugging-Core'.
