@@ -9,7 +9,7 @@ Class {
 	#name : #ScaledDecimal,
 	#superclass : #Fraction,
 	#instVars : [
-		'scale'
+		#scale
 	],
 	#category : #'Kernel-Numbers'
 }

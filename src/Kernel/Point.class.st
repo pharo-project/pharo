@@ -36,8 +36,8 @@ Class {
 	#name : #Point,
 	#superclass : #Object,
 	#instVars : [
-		'x',
-		'y'
+		#x,
+		#y
 	],
 	#category : #'Kernel-BasicObjects'
 }

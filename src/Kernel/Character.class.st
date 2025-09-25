@@ -12,9 +12,9 @@ Class {
 	#superclass : #Magnitude,
 	#type : #immediate,
 	#classVars : [
-		'CharSet',
-		'CharacterTable',
-		'DigitValues'
+		#CharSet,
+		#CharacterTable,
+		#DigitValues
 	],
 	#category : #'Kernel-BasicObjects'
 }

@@ -13,12 +13,12 @@ Class {
 	#name : #Class,
 	#superclass : #ClassDescription,
 	#instVars : [
-		'subclasses',
-		'name',
-		'classPool',
-		'sharedPools',
-		'environment',
-		'category'
+		#subclasses,
+		#name,
+		#classPool,
+		#sharedPools,
+		#environment,
+		#category
 	],
 	#category : #'Kernel-Classes'
 }
