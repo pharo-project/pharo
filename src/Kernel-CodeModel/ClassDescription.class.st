@@ -37,7 +37,8 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 
 	priorMethod ifNotNil: [  
 		(protocol asString beginsWith: '*') ifTrue: [ 
-			compiledMethod propertyAt: #extendedMethod put: priorMethod.
+			protocol asString = priorMethod protocol name ifFalse: [ 
+				compiledMethod propertyAt: #extendedMethod put: priorMethod ].
 			"See Package >> #addMethod:"
 		]
 	].
