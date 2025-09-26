@@ -170,6 +170,12 @@ RubEditingState >> undoManager [
 	^ undoManager ifNil: [ undoManager := HistoryIterator new]
 ]
 
+{ #category : 'accessing' }
+RubEditingState >> undoManager: aHistoryIterator [
+
+	undoManager := aHistoryIterator
+]
+
 { #category : 'undo - redo' }
 RubEditingState >> undoRedoTransaction: aBlock [
 	self undoManager openRecordGroup.

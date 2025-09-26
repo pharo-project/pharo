@@ -53,7 +53,9 @@ FFIOpaqueObject class >> newBuffer [
 { #category : 'instance creation' }
 FFIOpaqueObject class >> newValueHolder [
 
-	^ FFIReferenceValueHolder newType: self new
+	^ FFIReferenceValueHolder
+		newType: self new
+		size: FFIExternalType pointerSize
 ]
 
 { #category : 'private' }

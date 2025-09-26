@@ -137,8 +137,7 @@ TestSuite >> runWith: aBlock [
 	[ self shuffledTests
 		do: [ :each |
 			aBlock value: each.
-			self announceTest: each.
-			self changed: each ] ]
+			self announceTest: each ] ]
 		ensure: [ self tearDown ]
 ]
 

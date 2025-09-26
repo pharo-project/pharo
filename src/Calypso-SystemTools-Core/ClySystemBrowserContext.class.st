@@ -79,6 +79,13 @@ ClySystemBrowserContext >> executeCommand: aCommand by: aCommandActivator [
 	aCommand execute
 ]
 
+{ #category : 'refactoring support' }
+ClySystemBrowserContext >> firstNavigationScopes [
+
+	^ { tool allNavigationScopes first }
+
+]
+
 { #category : 'selection-methods' }
 ClySystemBrowserContext >> firstSelectedMethod [
 	^self firstSelectedObjectIn: self selectedMethods

@@ -830,7 +830,7 @@ Character >> nextObject [
 { #category : 'printing' }
 Character >> printOn: aStream [
 	| name |
-	(self asInteger > 32 and: [ self asInteger ~= 127])
+	(self asInteger > 32 and: [ self asInteger ~= 127 and: [ (self asInteger between: 16rD800 and: 16rDFFF) not "¹" ] ])
 		ifTrue: [ aStream nextPut: $$; nextPut: self ]
 		ifFalse: [
 			name := self class constantNameFor: self.
@@ -838,6 +838,11 @@ Character >> printOn: aStream [
 			name isNotNil
 				ifTrue: [ aStream space; nextPutAll: name ]
 				ifFalse: [ aStream nextPutAll: ' value: '; print: self asInteger ] ]
+
+	"¹ Covers the surrogate code points which should not be printed as a literal as they “cannot be assigned
+	to [an] abstract character” and “cannot be conformantly interchanged using Unicode encoding forms” per
+	section ‘2.4.1 Types of Code Points’ in ‘The Unicode Standard, Version 17.0 – Core Specification’
+	available at: https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-2/#G14527"
 ]
 
 { #category : 'printing' }

@@ -9,6 +9,7 @@ Class {
 { #category : 'checking' }
 ReNotInCascadedMessageCondition >> check [
 
+	subtree ifNil: [ ^ false ].
 	^ subtree parent isCascade not
 ]
 

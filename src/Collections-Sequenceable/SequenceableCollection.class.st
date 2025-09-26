@@ -1534,6 +1534,11 @@ SequenceableCollection >> lastIndexOfAnyOf: aCollection startingAt: lastIndex if
 	^ exceptionBlock value
 ]
 
+{ #category : 'comparing' }
+SequenceableCollection >> max: aSelectorOrOneArgBlock [
+	^ (self collect: aSelectorOrOneArgBlock) max
+]
+
 { #category : 'sorting' }
 SequenceableCollection >> mergeFirst: first middle: middle last: last into: dst by: aBlock [
 	"Private. Merge the sorted ranges [first..middle] and [middle+1..last]
@@ -1607,6 +1612,11 @@ SequenceableCollection >> middle [
 	"#(a b c d) middle >>> #c"
 
 	^ self at: self size // 2 + 1
+]
+
+{ #category : 'comparing' }
+SequenceableCollection >> min: aSelectorOrOneArgBlock [
+	^ (self collect: aSelectorOrOneArgBlock) min
 ]
 
 { #category : 'accessing' }

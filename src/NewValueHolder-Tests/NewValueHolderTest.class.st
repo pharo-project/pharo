@@ -11,7 +11,7 @@ Class {
 { #category : 'tests' }
 NewValueHolderTest >> testChange [
 	| valueHolder fired |
-	valueHolder := 'word' asValueHolder.
+	valueHolder := CollectionValueHolder value: 'word'.
 	self assert: valueHolder value equals: 'word'.
 	fired := false.
 	valueHolder whenChangedDo: [ fired := true ].
@@ -23,7 +23,7 @@ NewValueHolderTest >> testChange [
 { #category : 'tests' }
 NewValueHolderTest >> testValuesInBlock [
 	| valueHolder old new ann |
-	valueHolder := 'old' asValueHolder.
+	valueHolder := CollectionValueHolder value: 'old'.
 	valueHolder
 		whenChangedDo: [ :newValue :oldValue :a |
 			new := newValue.

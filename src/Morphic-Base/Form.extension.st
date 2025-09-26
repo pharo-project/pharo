@@ -28,6 +28,17 @@ Form >> iconOrThumbnailOfSize: aNumberOrPoint [
 ]
 
 { #category : '*Morphic-Base' }
+Form >> listRenderOn: aCanvas atRow: index bounds: aRectangle color: aColor backgroundColor: backgroundColor from: aList [
+	self asMorph
+		listRenderOn: aCanvas
+		atRow: index
+		bounds: aRectangle
+		color: aColor
+		backgroundColor: backgroundColor
+		from: aList
+]
+
+{ #category : '*Morphic-Base' }
 Form >> scaledByDisplayScaleFactor [
 
 	^ self scaledToSize: self extent * self currentWorld displayScaleFactor

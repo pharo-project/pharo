@@ -15,5 +15,5 @@ ReRenameMethodChoice >> action [
 { #category : 'accessing' }
 ReRenameMethodChoice >> description [
 
-	^ 'Rename method'
+	^ description ifNil: [ description := 'Rename method' ]
 ]

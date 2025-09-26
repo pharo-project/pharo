@@ -33,7 +33,9 @@ Class {
 
 { #category : 'accessing' }
 SystemVersion class >> current [
-	^Current ifNil: [Current := self new]
+	"In the past we had a defensive strategy while it is not the case anymore. This is because the current version should be explicitly set during the bootstrap and not initialized by a defensive strategy. It can crash it this happens during the bootstrap."
+
+	^ Current
 ]
 
 { #category : 'private - accessing' }

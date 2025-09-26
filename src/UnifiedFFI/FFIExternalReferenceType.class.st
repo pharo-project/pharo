@@ -105,6 +105,7 @@ FFIExternalReferenceType >> emitReturn: aBuilder resultTempVar: resultVar contex
 
 { #category : 'emitting code' }
 FFIExternalReferenceType >> emitReturnArgument: builder context: aContext [
+
 	self loader
 		emitPointerArityUnpack: builder
 		type: self

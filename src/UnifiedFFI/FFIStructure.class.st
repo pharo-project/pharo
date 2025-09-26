@@ -239,6 +239,12 @@ FFIStructure class >> externalNew [
 	^self fromHandle: (ExternalAddress allocate: self structureSize)
 ]
 
+{ #category : 'accessing' }
+FFIStructure class >> externalTypeSize [
+
+	^ self structureSize
+]
+
 { #category : 'private' }
 FFIStructure class >> fieldSpec [
 	^ FFIExternalStructureFieldParser new
@@ -312,7 +318,9 @@ FFIStructure class >> newBuffer [
 { #category : 'instance creation' }
 FFIStructure class >> newValueHolder [
 
-	^ FFIReferenceValueHolder newType: self new 
+	^ FFIReferenceValueHolder 
+		newType: self new 
+		size: self structureSize
 ]
 
 { #category : 'private' }
@@ -386,6 +394,36 @@ FFIStructure class >> structureAlignment [
 { #category : 'accessing' }
 FFIStructure class >> structureSize [
 	^ self byteSize
+]
+
+{ #category : 'copying' }
+FFIStructure >> copyInMemory [
+	| bytes size |
+	
+	size := self class structureSize.
+	bytes := ByteArray new: size.
+	(LibC memCopy: self getHandle to: bytes size: size).
+	^ self class fromHandle: bytes
+]
+
+{ #category : 'accessing' }
+FFIStructure >> externalTypeSize [
+
+	^ self class externalTypeSize
+]
+
+{ #category : 'private' }
+FFIStructure >> handle: aHandle at: aNumber [
+	"used for boxing/unboxing, as part of the FFIValueHolder mechanism"
+
+	^ self class basicNew setHandle: (aHandle pointerAt: aNumber)
+]
+
+{ #category : 'private' }
+FFIStructure >> handle: aHandle at: aNumber put: anExternalAddress [
+	"used for boxing/unboxing, as part of the FFIValueHolder mechanism"
+	
+	aHandle pointerAt: aNumber put: anExternalAddress
 ]
 
 { #category : 'instance creation' }

@@ -17,6 +17,11 @@ FTUnsortedSortingState >> executeSortingOn: aDataSource [
 	aDataSource unsort
 ]
 
+{ #category : 'testing' }
+FTUnsortedSortingState >> isSorted [ 
+	^ false
+]
+
 { #category : 'accessing' }
 FTUnsortedSortingState >> nextState [
 	^ FTAscendingSortingState context: self context

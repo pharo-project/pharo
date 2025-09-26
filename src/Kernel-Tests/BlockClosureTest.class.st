@@ -27,6 +27,21 @@ BlockClosureTest >> setUp [
 	contextOfaBlock := thisContext
 ]
 
+{ #category : 'tests' }
+BlockClosureTest >> testCannotReturn [
+
+	| block p semaphore |
+	semaphore := Semaphore new.
+	p := [ 
+		block := self blockWithNonLocalReturn: #result.
+		semaphore signal ] fork.
+	semaphore wait.
+
+	self should: [ block value ] raise: BlockCannotReturn withExceptionDo: [ :err |
+		self assert: err result equals: #result.
+		self assert: err home equals: block home ]
+]
+
 { #category : 'tests - evaluating' }
 BlockClosureTest >> testCull [
 	[  ] cull: 1.

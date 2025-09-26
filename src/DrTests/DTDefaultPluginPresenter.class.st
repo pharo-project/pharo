@@ -433,16 +433,17 @@ DTDefaultPluginPresenter >> whenItemsSelectionChanged: itemsSelected [
 { #category : 'private' }
 DTDefaultPluginPresenter >> whenPackagesSelectionChanged: packagesSelected [
 
+	| allClasses |
+	allClasses := packagesSelected flatCollect: [ :package | package classes ].
 	itemsList
-		roots: ((plugin itemsToBeAnalysedFor: packagesSelected) sorted:
+		roots: (((plugin itemsToBeAnalysedFor: packagesSelected) reject: [ :aClass | allClasses includes: aClass superclass ]) sorted:
 					 #name ascending);
-		children: [ :aClass |
-				aClass subclasses
-				& (packagesSelected flatCollect: [ :package | package classes ])
-					sorted: #name ascending ];
+		children: [ :aClass | aClass subclasses & allClasses sorted: #name ascending ];
 		expandAll.
 	itemsList roots: itemsList items.
-
 	itemsList selectAll.
-	self updatePackagesListLabel
+	self updatePackagesListLabel.
+
+
+
 ]

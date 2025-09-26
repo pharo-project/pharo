@@ -276,9 +276,11 @@ MCStWriterTest >> testNotLoadedClassMethod [
 { #category : 'testing' }
 MCStWriterTest >> testOrganizationDefinition [
 
-	| definition |
-	definition := self mockPackage systemPackage asMCOrganizationDefinition.
+	| definition systemPackage |
+	systemPackage := self mockPackage systemPackage.
+	definition := MCOrganizationDefinition packageName: systemPackage name tagNames: systemPackage tagNames.
 	writer visitOrganizationDefinition: definition.
+
 	self assertContentsOf: stream match: 'self packageOrganizer ensurePackage: #MonticelloMocks withTags: #()!
 '.
 	self assertAllChunksAreWellFormed

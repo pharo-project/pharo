@@ -64,6 +64,12 @@ String >> listRenderOn: aCanvas atRow: aRow bounds: bounds color: color backgrou
 		color: color
 ]
 
+{ #category : '*Morphic-Base' }
+String class >> systemIconName [
+
+	^ #string
+]
+
 { #category : '*Morphic-Base-Widgets' }
 String >> widthToDisplayInList: aList [
 

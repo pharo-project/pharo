@@ -75,12 +75,6 @@ ChunkReadStream >> isNextChunkMetaData [
 	^ isMetaData
 ]
 
-{ #category : 'testing' }
-ChunkReadStream >> isNextStyleChunk [
-	"Style chunks are between $] and $["
-	^ decoratedStream peek == $]
-]
-
 { #category : 'decorated' }
 ChunkReadStream >> next [
 
@@ -110,12 +104,6 @@ ChunkReadStream >> parseLangTagFor: aString [
 ChunkReadStream >> position [
 
 	^ decoratedStream position - (nextChar ifNil: [0] ifNotNil: [1])
-]
-
-{ #category : 'public' }
-ChunkReadStream >> readUpToEndOfStyleChunk [
-	"Style chunks are between $] and $["
-	^decoratedStream upTo: $[
 ]
 
 { #category : 'initialization' }

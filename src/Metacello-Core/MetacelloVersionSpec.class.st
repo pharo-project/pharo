@@ -239,11 +239,9 @@ MetacelloVersionSpec >> currentlyLoadedClassesInVersion [
 	self
 		projectDo: [ :ignored |  ]
 		packageDo: [ :packageSpec |
-			([ packageSpec workingCopy ]
-				 on: Error
-				 do: [ :ex | ex return: nil ]) ifNotNil: [ :workingCopy |
-				workingCopy systemPackage ifNotNil: [ :package |
-					classes addAll: package classes ] ] ]
+				([ packageSpec workingCopy ]
+					 on: Error
+					 do: [ :ex | ex return: nil ]) ifNotNil: [ :workingCopy | workingCopy systemPackage ifNotNil: [ :package | classes addAll: package classes ] ] ]
 		groupDo: [ :ignored |  ].
 	^ classes
 ]
@@ -255,13 +253,6 @@ MetacelloVersionSpec >> defaultPackageNames [
 
 	self packages packageNamed: 'default' ifAbsent: [ ^self packageNames ].
 	^#('default')
-]
-
-{ #category : 'toolbox support' }
-MetacelloVersionSpec >> deleteSpec: aSpec [
-    "remove the spec from packages"
-
-    self packages deleteSpec: aSpec
 ]
 
 { #category : 'accessing' }
@@ -476,11 +467,6 @@ MetacelloVersionSpec >> packageSpecsInLoadOrderForMap: packageMap [
 							               yourself).
 					importSpec projectReference name: importedName ] ] ].
 	^ pkgs
-]
-
-{ #category : 'querying' }
-MetacelloVersionSpec >> packageSpecsInLoadOrderWithEngine: anObject [
-  ^ self packages packageSpecsInLoadOrderFor: self
 ]
 
 { #category : 'accessing' }

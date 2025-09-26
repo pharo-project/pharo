@@ -27,12 +27,6 @@ ReDefinesInstanceVariableCondition >> check [
 	^ violators isEmpty
 ]
 
-{ #category : 'private' }
-ReDefinesInstanceVariableCondition >> errorBlock [
-	^ [ class printString
-				, ' <1?: > define <1?s:> instance variable ' , instanceVariables ]
-]
-
 { #category : 'accessing' }
 ReDefinesInstanceVariableCondition >> instanceVariables: aColOfStrings [
 

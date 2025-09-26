@@ -187,12 +187,6 @@ MetacelloScriptEngine >> handleLock: exception [
 ]
 
 { #category : 'handlers' }
-MetacelloScriptEngine >> handleLookupProjectSpec: aProjectSpec [
-
-	^ (self lookupProjectSpecFor: aProjectSpec) ifNil: [ ^ aProjectSpec ]
-]
-
-{ #category : 'handlers' }
 MetacelloScriptEngine >> handleNotificationsForAction: actionBlock [
 
 	[

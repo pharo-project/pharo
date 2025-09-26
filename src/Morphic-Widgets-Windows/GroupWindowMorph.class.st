@@ -223,6 +223,12 @@ GroupWindowMorph >> tabLabelFor: aSystemWindow [
 			help: 'Close this tab and free the window'}
 ]
 
+{ #category : 'event handling' }
+GroupWindowMorph >> themeChanged [
+	self color: self defaultColor.
+	super themeChanged
+]
+
 { #category : 'updating' }
 GroupWindowMorph >> update: aSymbol [
 	"Handle tab changes."

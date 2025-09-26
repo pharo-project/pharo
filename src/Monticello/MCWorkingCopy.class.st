@@ -18,7 +18,7 @@ Class Instance Variables:
 "
 Class {
 	#name : 'MCWorkingCopy',
-	#superclass : 'Model',
+	#superclass : 'Object',
 	#instVars : [
 		'ancestry',
 		'counter',
@@ -205,8 +205,8 @@ MCWorkingCopy class >> unregisterForNotifications [
 
 { #category : 'operations' }
 MCWorkingCopy >> adopt: aVersion [
-	ancestry addAncestor: aVersion info.
-	self changed.
+
+	ancestry addAncestor: aVersion info
 ]
 
 { #category : 'accessing' }
@@ -309,17 +309,17 @@ MCWorkingCopy >> initializeWithPackage: aPackage [
 
 { #category : 'operations' }
 MCWorkingCopy >> loaded: aVersion [
+
 	ancestry := MCWorkingAncestry new addAncestor: aVersion info.
-	requiredPackages := OrderedCollection withAll: (aVersion dependencies collect: [:ea | ea package]).
-	self modified: false.
-	self changed
+	requiredPackages := OrderedCollection withAll: (aVersion dependencies collect: [ :ea | ea package ]).
+	self modified: false
 ]
 
 { #category : 'operations' }
 MCWorkingCopy >> merged: aVersion [
+
 	ancestry addAncestor: aVersion info.
-	aVersion dependencies do: [:ea | self requirePackage: ea package].
-	self changed
+	aVersion dependencies do: [ :ea | self requirePackage: ea package ]
 ]
 
 { #category : 'accessing' }
@@ -332,7 +332,6 @@ MCWorkingCopy >> modified: aBoolean [
 
 	modified = aBoolean ifTrue: [ ^ self ].
 	modified := aBoolean.
-	self changed: #modified.
 	modified ifFalse: [ ChangesLog default logChange: '"' , self packageName , '"' ]
 ]
 
@@ -491,8 +490,7 @@ MCWorkingCopy >> unload [
 { #category : 'operations' }
 MCWorkingCopy >> unregister [
 
-	self class registry removeKey: package ifAbsent: [ ^ self ].
-	self class changed: { #unregistered . package }
+	self class registry removeKey: package ifAbsent: [ ^ self ]
 ]
 
 { #category : 'accessing' }

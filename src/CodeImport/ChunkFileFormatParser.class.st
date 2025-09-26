@@ -225,10 +225,6 @@ ChunkFileFormatParser >> parseNextDeclaration [
 
 	| isMetadata nextChunk |
 	readStream skipSeparators.
-	readStream isNextStyleChunk ifTrue: [
-		self addDeclaration:
-			(self styleChunkClass contents: readStream readUpToEndOfStyleChunk).
-		^ self ].
 	isMetadata := readStream isNextChunkMetaData.
 	nextChunk := readStream next.
 	isMetadata
@@ -258,9 +254,4 @@ ChunkFileFormatParser >> reorganizeSelector [
 { #category : 'custom points' }
 ChunkFileFormatParser >> reorganizeSelector: anObject [
 	reorganizeSelector := anObject
-]
-
-{ #category : 'class factory' }
-ChunkFileFormatParser >> styleChunkClass [
-	^ StyleChunk
 ]

@@ -1,4 +1,3 @@
-
 Class {
 	#name : 'SourceFile',
 	#superclass : 'Object',
@@ -32,8 +31,8 @@ SourceFile >> close [
 
 	stream ifNil: [ ^ self ].
 	stream closed ifTrue: [
-		stream := nil.
-		^ self ].
+			stream := nil.
+			^ self ].
 	stream close.
 	stream := nil
 ]

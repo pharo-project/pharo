@@ -225,6 +225,16 @@ FTTableMorph >> click: event [
 		ifTrue: [ self showMenuForPosition: event cursorPoint ]
 ]
 
+{ #category : 'event handling' }
+FTTableMorph >> clickOnColumnHeaderAt: anIndex [
+	| header |
+	header := self container headerRow submorphs at: anIndex.
+	header click: (MouseButtonEvent basicNew 
+							setType: #mouseDown;
+							yourself).
+		
+]
+
 { #category : 'accessing - colors' }
 FTTableMorph >> colorForSelection: primarySelection [
 
@@ -434,6 +444,13 @@ FTTableMorph >> handlesMouseWheel: event [
 FTTableMorph >> hasDataSource [
 
 	^ self dataSource isNotNil
+]
+
+{ #category : 'testing' }
+FTTableMorph >> hasFilter [
+
+	function ifNil: [ ^ false ].
+	^ function isKindOf: FTFilterFunction
 ]
 
 { #category : 'testing' }

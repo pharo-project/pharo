@@ -113,11 +113,9 @@ MCGitBasedNetworkRepository class >> flushProjectEntry: projectPath version: ver
 { #category : 'class initialization' }
 MCGitBasedNetworkRepository class >> initialize [
 
-	(Smalltalk classNamed: #SessionManager)
-		ifNotNil: [ :c | c default perform: #registerNetworkClassNamed: with: self name ]
-		ifNil:[ Smalltalk addToStartUpList: self ].
-  self flushDownloadCache.
-  self resetCacheDirectoryIfInvalid
+	SessionManager default registerNetworkClassNamed: self name.
+	self flushDownloadCache.
+	self resetCacheDirectoryIfInvalid
 ]
 
 { #category : 'accessing' }
@@ -473,7 +471,7 @@ MCGitBasedNetworkRepository >> localRepository [
 
 { #category : 'accessing' }
 MCGitBasedNetworkRepository >> metacelloProjectClassFor: aScriptEngine [
-    ^ MetacelloMCBaselineProject
+    ^ MetacelloBaselineProject
 ]
 
 { #category : 'private' }

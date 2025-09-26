@@ -504,11 +504,6 @@ Bitmap >> replaceFrom: start to: stop with: replacement startingAt: repStart [
 	super replaceFrom: start to: stop with: replacement startingAt: repStart
 ]
 
-{ #category : 'converting' }
-Bitmap >> restoreEndianness [
-	"nothing to do here?"
-]
-
 { #category : 'filing' }
 Bitmap >> storeBits: startBit to: stopBit on: aStream [
 	"Store my bits as a hex string, breaking the lines every 100 bytes or

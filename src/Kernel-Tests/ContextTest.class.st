@@ -18,25 +18,16 @@ Class {
 		'aReceiver',
 		'aMethodContext',
 		'aSender',
-		'instVarForTestLookupSymbol',
 		'nonActiveBlockContext',
 		'anArgument'
 	],
 	#classVars : [
-		'Block',
-		'classVarForTestLookupSymbol'
+		'Block'
 	],
 	#category : 'Kernel-Tests-Methods',
 	#package : 'Kernel-Tests',
 	#tag : 'Methods'
 }
-
-{ #category : 'closures for testing' }
-ContextTest class >> contextWithTempForTesting [
-	| string |
-	string := 'test'.
-	^ [self class. string asUppercase] asContext
-]
 
 { #category : 'helper' }
 ContextTest class >> createBlock [
@@ -48,67 +39,6 @@ ContextTest class >> createBlock [
 ContextTest class >> returnNonActiveContextOfBlock [
 	Block := self createBlock.
 	^ Block value
-]
-
-{ #category : 'private' }
-ContextTest >> privRestartArgBlockTest [
-	"This tests may loop endlessly if incorrect, so call it from another method testing it does not time out"
-
-	| firstTimeThrough |
-	firstTimeThrough := true.
-
-	self
-		assert: 30
-		equals:
-			([ :a |
-			| b |
-			self assert: 10 equals: a.
-			self assert: nil identicalTo: b.
-			b := a + 20.
-			firstTimeThrough
-				ifTrue: [ firstTimeThrough := false.
-					thisContext restart ].
-			b ] value: 10)
-]
-
-{ #category : 'private' }
-ContextTest >> privRestartBlockArgsNoRemoteTempsTest [
-	"This tests may loop endlessly if incorrect, so call it from another method testing it does not time out"
-
-	self
-		assert: 30
-		equals:
-			([ :a :first |
-			| b |
-			self assert: 10 equals: a.
-			self assert: nil identicalTo: b.
-			b := a + 20.
-			first
-				ifTrue: [ "Cheat and modify one of the args so we will not loop endlessly"
-					thisContext tempAt: 2 put: false.
-					thisContext restart ].
-			b ] value: 10 value: true)
-]
-
-{ #category : 'private' }
-ContextTest >> privRestartBlockTest [
-	"This tests may loop endlessly if incorrect, so call it from another method testing it does not time out"
-
-	| a firstTimeThrough |
-	firstTimeThrough := true.
-	a := 10.
-
-	self
-		assert: 30
-		equals:
-			[ | b |
-			self assert: 10 equals: a.
-			self assert: nil identicalTo: b.
-			b := a + 20.
-			firstTimeThrough
-				ifTrue: [ firstTimeThrough := false.
-					thisContext restart ].
-			b ] value
 ]
 
 { #category : 'running' }
@@ -167,6 +97,36 @@ ContextTest >> testAstScope [
 ]
 
 { #category : 'tests' }
+ContextTest >> testBlockCannotReturn [
+
+	| p |
+	p := [ thisContext pc: nil ] newProcess.
+	[
+	p suspendedContext method selector = #pc: and: [
+		p suspendedContext sender isDead ] ] whileFalse: [ p step ].
+	self assert: p suspendedContext method selector equals: #pc:.
+	self assert: p suspendedContext sender isDead.
+	self assert: p suspendedContext pc equals: p suspendedContext method endPC.
+
+	p step. "step into a return to a dead sender"
+
+	self assert: p suspendedContext method selector equals: #cannotReturn:
+]
+
+{ #category : 'tests' }
+ContextTest >> testCannotReturn [
+	| context p |
+	p := [context := thisContext] fork.
+	[p isTerminated] whileFalse: [ (Delay forMilliseconds: 10) wait ].
+
+	[ context resume: #result.
+	self assert: false description: 'ContextCannotReturn should be signaled' ]
+		 on: ContextCannotReturn do: [ :err |
+			self assert: err result equals: #result.
+			self assert: err target equals: context]
+]
+
+{ #category : 'tests' }
 ContextTest >> testFindContextSuchThat [
 	self assert: (aMethodContext findContextSuchThat: [ :each | true ]) printString equals: aMethodContext printString.
 	self assert: (aMethodContext hasContext: aMethodContext)
@@ -199,6 +159,12 @@ ContextTest >> testHomeMethod [
 
 	self assert: aMethodContext homeMethod identicalTo: aMethodContext home method.
 	[ self assert: thisContext homeMethod identicalTo:  thisContext home method] value
+]
+
+{ #category : 'tests' }
+ContextTest >> testJump [
+	#(exampleClosure exampleSend exampleStore) do: [ :selector |
+		self verifyJumpWithSelector: selector ]
 ]
 
 { #category : 'tests' }

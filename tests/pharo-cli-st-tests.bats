@@ -14,8 +14,8 @@ teardown() {
 @test "st --help prints help" {
   run_pharo st --help
   assert_success
-  assert_line --index 0 "Usage: st [--help] [ --quit ] <FILE>"
-  assert_line --index 1 --partial "--help    list this help message"
+  assert_output --partial "Usage: st [--help] [--no-source] [--quit] [--save] [--rename] [<FILE>]"
+  assert_line --partial  "--help      Prints this documentation"
 }
 
 # @test "st without st file exits with error" {
@@ -32,12 +32,21 @@ teardown() {
   assert_output "8"
 }
 
-@test "st outputs error if any when loading st file" {
+@test "st outputs error if any when evaluating st file" {
   echo '1 / 0' > "$WORKDIR/test-code.st"
   run_pharo st "$WORKDIR/test-code.st" --quit
   assert_failure
   assert_line --index 0 --regexp "[[:blank:]]*ZeroDivide"
   assert_line --index 1 --regexp "[[:blank:]]*SmallInteger>>/"
+}
+
+@test "st outputs error if any when loading st file" {
+  echo '1 := .' > "$WORKDIR/test-code.st"
+  run_pharo st "$WORKDIR/test-code.st" --quit
+  assert_failure
+  assert_line --index 0 --regexp "[[:blank:]]*Syntax Error on line 1: 'End of statement expected'"
+  assert_line --index 2 --regexp "[[:blank:]]*1: 1 := ."
+  assert_line --index 3 --partial "_^_"
 }
 
 @test "st without --quit keeps the image alive" {

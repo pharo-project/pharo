@@ -66,6 +66,15 @@ Morph >> isWindowActive: aSystemWindow [
 ]
 
 { #category : '*Morphic-Widgets-Windows' }
+Morph >> lastSubmorphRecursive [
+	"Answer recursive last submorph of the receiver."
+
+	^self hasSubmorphs
+		ifTrue: [self lastSubmorph lastSubmorphRecursive]
+		ifFalse: [self]
+]
+
+{ #category : '*Morphic-Widgets-Windows' }
 Morph >> nextMorphAcrossInWindow [
 	"Answer the next morph in the window. Traverse
 	from the receiver to its next sibling or owner's next sibling etc."

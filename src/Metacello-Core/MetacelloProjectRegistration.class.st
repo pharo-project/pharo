@@ -299,8 +299,9 @@ MetacelloProjectRegistration >> currentVersionString [
 		  ifNil: [ baselineProjectSpec repositoryVersionString ]
 ]
 
-{ #category : 'testing' }
+{ #category : 'accessing' }
 MetacelloProjectRegistration >> currentlyLoadedClassesInProject [
+	"Used by SmalltalkCI."
 
 	^ self projectSpec currentlyLoadedClassesInVersion asSet
 ]
@@ -493,7 +494,7 @@ MetacelloProjectRegistration >> validate [
 
 { #category : 'accessing' }
 MetacelloProjectRegistration >> version [
-    ^ (self configurationProjectSpecIfAbsent: [ ^ MetacelloMCBaselineProject singletonVersionName ]) versionString
+    ^ (self configurationProjectSpecIfAbsent: [ ^ MetacelloBaselineProject singletonVersionName ]) versionString
 ]
 
 { #category : 'accessing' }

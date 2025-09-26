@@ -80,20 +80,20 @@ DrTestsUITest >> testInitialWindowTitleIsInitialPluginWindowTitle [
 
 { #category : 'tests' }
 DrTestsUITest >> testMultipleSelectingPackagesWillUpdateTheClassesList [
-	| currentPluginSelected randomPackage newPackagesSelected classesList packageSelected |
+
+	| currentPluginSelected randomPackage newPackagesSelected classesList packageSelected allTreeItems |
 	currentPluginSelected := drTestsUI pluginsDropList selectedItem.
 	newPackagesSelected := OrderedCollection new.
 	packageSelected := drTestsUI pluginPresenter packagesList items anyOne.
-	randomPackage := (drTestsUI pluginPresenter packagesList items
-		\ {packageSelected}) anyOne.
+	randomPackage := (drTestsUI pluginPresenter packagesList items \ { packageSelected }) anyOne.
 	newPackagesSelected add: packageSelected.
 	newPackagesSelected add: randomPackage.
 	drTestsUI pluginPresenter whenPackagesSelectionChanged: newPackagesSelected.
-	classesList := currentPluginSelected new
-		itemsToBeAnalysedFor: newPackagesSelected.
-	self
-		assertCollection: drTestsUI pluginPresenter itemsList items
-		hasSameElements: classesList flattened
+	classesList := currentPluginSelected new itemsToBeAnalysedFor: newPackagesSelected.
+	allTreeItems := drTestsUI pluginPresenter itemsList items , (drTestsUI pluginPresenter itemsList items flatCollect: [ :root |
+		                 root allSubclasses & (newPackagesSelected flatCollect: [ :package | package classes ]) ]).
+
+	self assertCollection: allTreeItems hasSameElements: classesList flattened
 ]
 
 { #category : 'tests' }

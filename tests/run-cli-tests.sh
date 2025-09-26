@@ -90,5 +90,5 @@ export PHARO
 export IMAGE
 export OS_TYPE
 echo ">> Running tests with bats-core"
-"$BATS_DIR/bin/bats" --show-output-of-passing-tests --report-formatter junit "$ROOT_DIR"
-
+# To enable debug information, you can add these options: --show-output-of-passing-tests --verbose-run
+"$BATS_DIR/bin/bats" --print-output-on-failure --report-formatter junit "$ROOT_DIR"

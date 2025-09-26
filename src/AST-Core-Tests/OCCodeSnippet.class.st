@@ -89,7 +89,7 @@ OCCodeSnippet class >> badAnnotations [
 			         isParseFaulty: false;
 			         notices:
 				         #( #( 6 6 6 'Unexpected token' )
-				            #( 1 1 1 'Undeclared variable' ) )).
+				            #( 1 1 1 'Undeclared variable named a in DoIt' ) )).
 		        (self new
 			         source: '^ @';
 			         nodeAt: '001';
@@ -695,7 +695,7 @@ OCCodeSnippet class >> badExpressions [
 			         styled: 'u s ';
 			         raise: UndeclaredVariableRead;
 			         notices:
-				         #( #( 1 1 1 'Undeclared variable' )
+				         #( #( 1 1 1 'Undeclared variable named a in DoIt' )
 				            #( 5 4 5 'Variable or expression expected' ) )).
 		        (self new
 			         source: 'a || ';
@@ -703,7 +703,7 @@ OCCodeSnippet class >> badExpressions [
 			         styled: 'u uu ';
 			         raise: UndeclaredVariableRead;
 			         notices:
-				         #( #( 1 1 1 'Undeclared variable' )
+				         #( #( 1 1 1 'Undeclared variable named a in DoIt' )
 				            #( 6 5 6 'Variable or expression expected' ) )).
 		        (self new
 			         source: '| | a';
@@ -713,7 +713,7 @@ OCCodeSnippet class >> badExpressions [
 			         isParseFaulty: false;
 			         isFaultyMinusUndeclared: false;
 			         raise: UndeclaredVariableRead;
-			         notices: #( #( 5 5 5 'Undeclared variable' ) )). "This one is legal, it is an empty list of temporaries, the | are dismissed"
+			         notices: #( #( 5 5 5 'Undeclared variable named a in DoIt' ) )). "This one is legal, it is an empty list of temporaries, the | are dismissed"
 		        (self new
 			         source: '|| a';
 			         nodeAt: '   0';
@@ -722,21 +722,21 @@ OCCodeSnippet class >> badExpressions [
 			         isParseFaulty: false;
 			         isFaultyMinusUndeclared: false;
 			         raise: UndeclaredVariableRead;
-			         notices: #( #( 4 4 4 'Undeclared variable' ) )). "Same, but are messing with the Scanner"
+			         notices: #( #( 4 4 4 'Undeclared variable named a in DoIt' ) )). "Same, but are messing with the Scanner"
 		        (self new
 			         source: ' ||| a';
 			         nodeAt: '   002';
 			         styled: ' ||X u';
 			         formattedCode: ' | a';
 			         notices: #( #( 4 3 4 'Variable or expression expected' )
-				            #( 6 6 6 'Undeclared variable' ) )). "this one is a empty temps and a binary operator | with a mising receiver"
+				            #( 6 6 6 'Undeclared variable named a in DoIt' ) )). "this one is a empty temps and a binary operator | with a mising receiver"
 		        (self new
 			         source: ' |||| a';
 			         nodeAt: '   0002';
 			         styled: ' ||Xu u';
 			         formattedCode: ' || a';
 			         notices: #( #( 4 3 4 'Variable or expression expected' )
-				            #( 7 7 7 'Undeclared variable' ) )). "this one is a empty temps and a binary operator || with a mising receiver"
+				            #( 7 7 7 'Undeclared variable named a in DoIt' ) )). "this one is a empty temps and a binary operator || with a mising receiver"
 		        (self new
 			         source: '| a | | a';
 			         nodeAt: '001000224';
@@ -795,7 +795,7 @@ OCCodeSnippet class >> badExpressions [
 			         styled: 'u XXXX';
 			         formattedCode: 'a. :foo';
 			         notices:
-				         #( #( 1 1 1 'Undeclared variable' )
+				         #( #( 1 1 1 'Undeclared variable named a in DoIt' )
 				            #( 1 2 3 'End of statement expected' )
 				            #( 3 6 3 'Unexpected block parameter' ) )).
 		        (self new
@@ -804,7 +804,7 @@ OCCodeSnippet class >> badExpressions [
 			         styled: 'u XXXXX';
 			         formattedCode: 'a. :foo';
 			         notices:
-				         #( #( 1 1 1 'Undeclared variable' )
+				         #( #( 1 1 1 'Undeclared variable named a in DoIt' )
 				            #( 1 2 3 'End of statement expected' )
 				            #( 3 7 3 'Unexpected block parameter' ) )).
 		        (self new
@@ -829,7 +829,7 @@ OCCodeSnippet class >> badExpressions [
 			         styled: 'Xsuuu';
 			         formattedCode: ' a: foo';
 			         notices: #( #( 1 0 1 'Variable or expression expected' )
-				            #( 3 5 3 'Undeclared variable' ) )). "keyword message with a missing receiver"
+				            #( 3 5 3 'Undeclared variable named foo in DoIt' ) )). "keyword message with a missing receiver"
 		        (self new
 			         source: 'a::foo';
 			         nodeAt: '002222';
@@ -845,7 +845,7 @@ OCCodeSnippet class >> badExpressions [
 			         notices:
 				         #( #( 1 1 1 'Unexpected token' )
 				            #( 2 1 2 'Variable or expression expected' )
-				            #( 4 6 4 'Undeclared variable' ) )).
+				            #( 4 6 4 'Undeclared variable named foo in DoIt' ) )).
 		        (self new
 			         source: '|:a|';
 			         nodeAt: '1332';
@@ -897,7 +897,7 @@ OCCodeSnippet class >> badExpressions [
 			         formattedCode: '[ :a | b ]';
 			         raise: UndeclaredVariableRead;
 			         notices: #( #( 5 4 5 '''|'' or parameter expected' )
-				            #( 5 5 5 'Undeclared variable' ) )). "FIXME"
+				            #( 5 5 5 'Undeclared variable named b in DoIt' ) )). "FIXME"
 		        (self new
 			         source: '[:a 1]';
 			         nodeAt: '001040';
@@ -940,7 +940,7 @@ OCCodeSnippet class >> badExpressions [
 				            #( 3 2 3 '''|'' or parameter expected' )
 				            #( 3 2 3 'Name already defined' )
 				            #( 3 2 3 'Variable or expression expected' )
-				            #( 5 5 5 'Undeclared variable' ) )). "FIXME?"
+				            #( 5 5 5 'Undeclared variable named b in DoIt' ) )). "FIXME?"
 		        (self new
 			         source: '[ a: ]';
 			         nodeAt: '002220';
@@ -979,7 +979,7 @@ OCCodeSnippet class >> badExpressions [
 			         isParseFaulty: false;
 			         isFaultyMinusUndeclared: false;
 			         raise: UndeclaredVariableRead;
-			         notices: #( #( 9 9 9 'Undeclared variable' ) )). "Explicit empty list of temporaries"
+			         notices: #( #( 9 9 9 'Undeclared variable named b in DoIt' ) )). "Explicit empty list of temporaries"
 		        (self new
 			         source: '[:a| ||a]';
 			         nodeAt: '001002230';
@@ -1043,7 +1043,7 @@ OCCodeSnippet class >> badExpressions [
 			         styled: 'X    u';
 			         formattedCode: '[ :a | b';
 			         notices:
-				         #( #( 6 6 6 'Undeclared variable' )
+				         #( #( 6 6 6 'Undeclared variable named b in DoIt' )
 				            #( 1 6 7 ''']'' expected' ) )).
 		        (self new
 			         source: '[ :a | ';
@@ -1060,7 +1060,7 @@ OCCodeSnippet class >> badExpressions [
 			         nodeAt: '00000002';
 			         styled: 'X      u';
 			         notices:
-				         #( #( 8 8 8 'Undeclared variable' )
+				         #( #( 8 8 8 'Undeclared variable named b in DoIt' )
 				            #( 1 8 9 ''']'' expected' ) )).
 		        (self new
 			         source: '[ | ';
@@ -1294,7 +1294,7 @@ OCCodeSnippet class >> badMethods [
 			         raise: UndeclaredVariableRead;
 			         notices: #( #( 12 11 12 'Literal constant expected' )
 				            #( 5 11 12 '''>'' expected' )
-				            #( 12 14 12 'Undeclared variable' )
+				            #( 12 14 12 'Undeclared variable named baz in foo' )
 				            #( 18 17 18 'Variable or expression expected' ) )).
 		        (self new
 			         source: 'foo < bar: 1 + 1 > ';
@@ -1455,7 +1455,7 @@ OCCodeSnippet class >> badScanner [
 			         isFaulty: true;
 			         notices: #( #( 1 0 1 'Variable or expression expected' )
 				            #( 5 4 5 'Variable or expression expected' )
-				            #( 6 6 6 'Undeclared variable' )
+				            #( 6 6 6 'Undeclared variable named a in DoIt' )
 				            #( 9 8 9 'Variable or expression expected' )
 				            #( 14 13 14 'Variable or expression expected' ) )). "prefix - is limited to raw integer tokens"
 
@@ -1570,8 +1570,8 @@ OCCodeSnippet class >> badSemantic [
 			         isFaultyMinusUndeclared: false;
 			         raise: UndeclaredVariableWrite;
 			         notices:
-				         #( #( 1 1 1 'Undeclared variable' )
-				            #( 12 12 12 'Undeclared variable' ) )).
+				         #( #( 1 1 1 'Undeclared variable named a in DoIt' )
+				            #( 12 12 12 'Undeclared variable named a in DoIt' ) )).
 		        (self new
 			         source: '^ a';
 			         nodeAt: '001';
@@ -1579,7 +1579,7 @@ OCCodeSnippet class >> badSemantic [
 			         isFaulty: true;
 			         isFaultyMinusUndeclared: false;
 			         raise: UndeclaredVariableRead;
-			         notices: #( #( 3 3 3 'Undeclared variable' ) )).
+			         notices: #( #( 3 3 3 'Undeclared variable named a in DoIt' ) )).
 
 		        "Uninitialized variable"
 		        (self new
@@ -2028,7 +2028,7 @@ OCCodeSnippet class >> badSimpleExpressions [
 			         nodeAt: '20000';
 			         styled: 'u    ';
 			         notices: #( #( 6 5 6 'Variable or expression expected' )
-				            #( 1 1 1 'Undeclared variable' ) )).
+				            #( 1 1 1 'Undeclared variable named a in DoIt' ) )).
 		        (self new
 			         source: ':= ';
 			         nodeAt: '000';
@@ -2491,7 +2491,7 @@ OCCodeSnippet class >> badTokens [
 			         isParseFaulty: false;
 			         isFaultyMinusUndeclared: false;
 			         raise: UndeclaredVariableRead;
-			         notices: #( #( 1 2 1 'Undeclared variable' ) )). "valid identifier"
+			         notices: #( #( 1 2 1 'Undeclared variable named Δə in DoIt' ) )). "valid identifier"
 		        (self new
 			         source: '| Δə | Δə := 1. Δə + 1';
 			         nodeAt: '0011000442222300665557';
@@ -2602,8 +2602,8 @@ OCCodeSnippet class >> badVariableAndScopes [
 			         formattedCode: 'a := a. { [ :a | }. a := a';
 			         raise: UndeclaredVariableRead;
 			         notices:
-				         #( #( 6 6 6 'Undeclared variable' )
-				            #( 1 1 1 'Undeclared variable' )
+				         #( #( 6 6 6 'Undeclared variable named a in DoIt' )
+				            #( 1 1 1 'Undeclared variable named a in DoIt' )
 				            #( 16 16 16 'Missing opener for closer: }' )
 				            #( 11 24 25 ''']'' expected' )
 				            #( 9 24 25 '''}'' expected' ) )). "OK, but maybe the `}` could close the `{` and consider the `[` unfinished?"
@@ -2614,8 +2614,8 @@ OCCodeSnippet class >> badVariableAndScopes [
 			         formattedCode: 'a := a. [ :a | [ :a | a := a';
 			         raise: UndeclaredVariableRead;
 			         notices:
-				         #( #( 6 6 6 'Undeclared variable' )
-				            #( 1 1 1 'Undeclared variable' )
+				         #( #( 6 6 6 'Undeclared variable named a in DoIt' )
+				            #( 1 1 1 'Undeclared variable named a in DoIt' )
 				            #( 14 25 26 ''']'' expected' )
 				            #( 9 25 26 ''']'' expected' ) )).
 		        (self new
@@ -2625,8 +2625,8 @@ OCCodeSnippet class >> badVariableAndScopes [
 			         formattedCode: 'a := a. [ :a | [ :a | ]. a := a';
 			         raise: UndeclaredVariableRead;
 			         notices:
-				         #( #( 6 6 6 'Undeclared variable' )
-				            #( 1 1 1 'Undeclared variable' )
+				         #( #( 6 6 6 'Undeclared variable named a in DoIt' )
+				            #( 1 1 1 'Undeclared variable named a in DoIt' )
 				            #( 9 27 28 ''']'' expected' ) )).
 		        (self new
 			         source: 'a := a. { [ :a | }. a := a';
@@ -2634,8 +2634,8 @@ OCCodeSnippet class >> badVariableAndScopes [
 			         styled: 'u    u. X X      X. X    X';
 			         raise: UndeclaredVariableRead;
 			         notices:
-				         #( #( 6 6 6 'Undeclared variable' )
-				            #( 1 1 1 'Undeclared variable' )
+				         #( #( 6 6 6 'Undeclared variable named a in DoIt' )
+				            #( 1 1 1 'Undeclared variable named a in DoIt' )
 				            #( 18 18 18 'Missing opener for closer: }' )
 				            #( 11 26 27 ''']'' expected' )
 				            #( 9 26 27 '''}'' expected' ) )).
@@ -2645,8 +2645,8 @@ OCCodeSnippet class >> badVariableAndScopes [
 			         styled: 'u    u. X X      X    X X. X    X';
 			         raise: UndeclaredVariableRead;
 			         notices:
-				         #( #( 6 6 6 'Undeclared variable' )
-				            #( 1 1 1 'Undeclared variable' )
+				         #( #( 6 6 6 'Undeclared variable named a in DoIt' )
+				            #( 1 1 1 'Undeclared variable named a in DoIt' )
 				            #( 18 25 25 'Missing opener for closer: }' )
 				            #( 11 33 34 ''']'' expected' )
 				            #( 9 33 34 '''}'' expected' ) )).
@@ -2657,8 +2657,8 @@ OCCodeSnippet class >> badVariableAndScopes [
 			         formattedCode: 'a := a. [ | a a | . := a ]. a := a';
 			         raise: UndeclaredVariableRead;
 			         notices:
-				         #( #( 6 6 6 'Undeclared variable' )
-				            #( 1 1 1 'Undeclared variable' )
+				         #( #( 6 6 6 'Undeclared variable named a in DoIt' )
+				            #( 1 1 1 'Undeclared variable named a in DoIt' )
 				            #( 11 15 17 '''|'' or variable expected' )
 				            #( 17 20 17 'variable expected in assigment' ) )).
 		        (self new
@@ -2668,11 +2668,11 @@ OCCodeSnippet class >> badVariableAndScopes [
 			         formattedCode: 'a := a. [ :a | a ]. a := a';
 			         raise: UndeclaredVariableRead;
 			         notices:
-				         #( #( 6 6 6 'Undeclared variable' )
-				            #( 1 1 1 'Undeclared variable' )
+				         #( #( 6 6 6 'Undeclared variable named a in DoIt' )
+				            #( 1 1 1 'Undeclared variable named a in DoIt' )
 				            #( 14 13 14 '''|'' or parameter expected' )
-				            #( 24 24 24 'Undeclared variable' )
-				            #( 19 19 19 'Undeclared variable' ) )).
+				            #( 24 24 24 'Undeclared variable named a in DoIt' )
+				            #( 19 19 19 'Undeclared variable named a in DoIt' ) )).
 		        (self new
 			         source: 'a := a. [ :a | | a a := a ]. a := a';
 			         nodeAt: '311112004445444778796AAAB4400ECCCCD';
@@ -2680,8 +2680,8 @@ OCCodeSnippet class >> badVariableAndScopes [
 			         formattedCode: 'a := a. [ :a | | a a | . := a ]. a := a';
 			         raise: UndeclaredVariableRead;
 			         notices:
-				         #( #( 6 6 6 'Undeclared variable' )
-				            #( 1 1 1 'Undeclared variable' )
+				         #( #( 6 6 6 'Undeclared variable named a in DoIt' )
+				            #( 1 1 1 'Undeclared variable named a in DoIt' )
 				            #( 16 20 22 '''|'' or variable expected' )
 				            #( 22 25 22 'variable expected in assigment' ) )).
 
@@ -2965,7 +2965,7 @@ OCCodeSnippet >> hasNotice: aString at: anInteger [
 OCCodeSnippet >> hasUndeclared [
 
 	self notices ifNil: [ ^ false ].
-	^ self notices anySatisfy: [ :n | n fourth = 'Undeclared variable' ]
+	^ self notices anySatisfy: [ :n | n fourth beginsWith: 'Undeclared variable' ]
 ]
 
 { #category : 'accessing' }

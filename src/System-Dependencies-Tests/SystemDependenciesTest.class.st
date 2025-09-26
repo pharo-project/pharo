@@ -172,7 +172,7 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		{ BaselineOfSpec2 name }, (BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
 		BaselineOfBasicTools withAllPackageNames,
 		{ BaselineOfNewTools name }, (BaselineOfNewTools deepPackagesOfGroupNamed: 'Methods'),
-		{ BaselineOfFuel name }, (BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
+		(BaselineOfFuel deepPackagesOfGroupNamed: #Core),
 		BaselineOfThreadedFFI corePackageNames ).
 
 	self assertCollection: dependencies hasSameElements: self knownBasicToolsDependencies
@@ -310,7 +310,7 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
-		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
+		(BaselineOfFuel deepPackagesOfGroupNamed: #Core),
 		(BaselineOfNewValueHolder packagesOfGroupNamed: #core),
 		BaselineOfThreadedFFI corePackageNames ).
 
@@ -367,7 +367,7 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
-		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
+		(BaselineOfFuel deepPackagesOfGroupNamed: #Core),
 
 		(BaselineOfCommander2 deepPackagesOfGroupNamed: #default),
 
@@ -422,7 +422,7 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		(BaselineOfNewTools deepPackagesOfGroupNamed: 'Methods'),
 		BaselineOfUI allPackageNames,
 		BaselineOfMenuRegistration allPackageNames,
-		(BaselineOfFuel deepPackagesOfGroupNamed: #Tests),
+		(BaselineOfFuel deepPackagesOfGroupNamed: #Core),
 		BaselineOfThreadedFFI corePackageNames )).
 
 	self assertCollection: dependencies hasSameElements: self knownUIDependencies

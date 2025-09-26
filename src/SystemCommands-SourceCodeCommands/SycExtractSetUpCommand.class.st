@@ -20,8 +20,7 @@ SycExtractSetUpCommand >> asRefactorings [
 		extract: selectedInterval
 		from: method selector
 		in: method origin.
-	self initializeDefaultOptionsOf: refactoring.
-
+	
 	^ { refactoring }
 ]
 

@@ -29,7 +29,10 @@ ColorTest >> classToBeTested [
 ColorTest >> test32BitBlackColorTranformation [
 	"Solve bug: https://pharo.manuscript.com/f/cases/14619"
 
-	self assert: ((Color black pixelWordForDepth: 32) asColorOfDepth: 32) equals: Color black
+	| colorInteger newColor |
+	colorInteger := (Color black pixelWordForDepth: 32).
+	newColor := Color colorFromPixelValue: colorInteger depth: 32.
+	self assert: newColor equals: Color black
 ]
 
 { #category : 'tests - 32 bit' }
@@ -148,7 +151,6 @@ ColorTest >> testContrastingColorAdjustment [
 ColorTest >> testFromHexString [
 
 	| color |
-
 	color := Color fromHexString: 'FFFFFF'.
 	self assert: color equals: Color white.
 
@@ -162,7 +164,13 @@ ColorTest >> testFromHexString [
 	self assert: color equals: Color magenta.
 
 	color := Color fromHexString: '#FF00FF55'.
-	self assert: (color alpha > 0.3 and: [color alpha < 0.4])
+	self assert: (color alpha > 0.3 and: [ color alpha < 0.4 ]).
+
+	color := Color fromHexString: '#000'.
+	self assert: color equals: Color black.
+
+	color := Color fromHexString: '#f0f5'.
+	self assert: (color alpha > 0.3 and: [ color alpha < 0.4 ])
 ]
 
 { #category : 'tests' }
@@ -174,7 +182,7 @@ ColorTest >> testFromString [
 		assert: ((Color fromString: nil) asHexString sameAs: 'ffffff');
 		assert: ((Color fromString: 'inexistent color') asHexString sameAs: 'ffffff'); "should return white"
 		assert: ((Color fromString: 'XXXXXX') asHexString sameAs: 'ffffff'); "not alphanumeric"
-		assert: ((Color fromString: '00000000') asHexString sameAs: 'ffffff'). "too many digits"
+		assert: ((Color fromString: '000000000') asHexString sameAs: 'ffffff'). "too many digits"
 
 	self
 		assert: (Color fromString: 'DARKGRAY') = Color darkGray description: 'Color can be specified with a case insensitive color name';

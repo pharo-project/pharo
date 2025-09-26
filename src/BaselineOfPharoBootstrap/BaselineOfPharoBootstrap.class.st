@@ -111,6 +111,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'System-BasicCommandLineHandler'.
 		spec package: 'Clap-Core'.
 		spec package: 'Clap-CommandLine'.
+		spec package: 'Clap-Commands-Pharo' .
 		spec package: 'System-CommandLine'.
 		spec package: 'System-CommandLineHandler'.
 		spec package: 'System-Finalization'.
@@ -131,7 +132,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		
 		spec package: 'CodeImport'.
 		
-		spec package: 'CodeImportCommandLineHandlers'.
+		spec package: 'CodeImport-Commands'.
 		
 		spec package: 'Debugging-Utils'.
 		spec package: 'OpalCompiler-Core'.
@@ -143,16 +144,11 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'SUnit-Core'.
 		spec package: 'SUnit-Tests'.
 		spec package: 'Kernel-Tests'.
-		spec package: 'JenkinsTools-Core'.
-		spec package: 'System-Model'.
-		spec package: 'InitializePackagesCommandLineHandler'.
-		
+		spec package: 'JenkinsTools-Core'.		
 
 		spec group: 'KernelGroup' with: {
 			'FFI-Kernel'.
 			'Announcements-Core'.
-			'Clap-Core'.
-			'Clap-CommandLine'.
 			'Collections-Abstract'.
 			'Collections-DoubleLinkedList'.
 			'Collections-Native'.
@@ -191,8 +187,10 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		"These packages are added using hermes after bootstrap"
 
 		spec group: 'AdditionalPackages' with: {
+			'Clap-Core'.
+			'Clap-CommandLine'.
+			'Clap-Commands-Pharo'.
 			'ReflectionMirrors-Primitives'.
-			'InitializePackagesCommandLineHandler'.
 			'System-Time'.
 			'Math-Operations-Extensions'.
 			'Debugging-Core'.
@@ -207,7 +205,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Collections-Arithmetic'.
 			'Collections-Atomic'.
 			'CodeImport'.
-			'CodeImportCommandLineHandlers'.
+			'CodeImport-Commands'.
 			'Debugging-Utils'.
 			'OpalCompiler-Core'}.
 		
@@ -228,7 +226,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		}.
 
 		spec group: 'SUnitGroup' with: {
-			'System-Model'.
 			'SUnit-Core'.
 			'SUnit-Tests'.
 			'Kernel-Tests'.

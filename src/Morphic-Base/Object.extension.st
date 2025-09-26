@@ -75,6 +75,18 @@ Object >> hasModelYellowButtonMenuItems [
 ]
 
 { #category : '*Morphic-Base' }
+Object >> iconFormSetNamed: aSymbol [
+
+	^ Smalltalk ui icons iconFormSetNamed: aSymbol
+]
+
+{ #category : '*Morphic-Base' }
+Object >> iconNamed: aSymbol [
+
+	^ Smalltalk ui icons iconNamed: aSymbol
+]
+
+{ #category : '*Morphic-Base' }
 Object >> iconOrThumbnailOfSize: aNumberOrPoint [
 	"Answer an appropiate form to represent the receiver"
 
@@ -85,6 +97,20 @@ Object >> iconOrThumbnailOfSize: aNumberOrPoint [
 Object >> isTransferable [
 
 	^ false
+]
+
+{ #category : '*Morphic-Base' }
+Object >> okToClose [
+	"Sent to models when a window closing.
+	Allows this check to be independent of okToChange."
+
+	^true
+]
+
+{ #category : '*Morphic-Base' }
+Object >> systemIconName [
+
+	^ #class
 ]
 
 { #category : '*Morphic-Base' }
@@ -115,6 +141,22 @@ Object >> taskbarIconName [
 	or nil for the default."
 
 	^self class taskbarIconName
+]
+
+{ #category : '*Morphic-Base' }
+Object class >> taskbarLabel [
+	"Answer the label string for the receiver in a task bar
+	or nil for the default."
+
+	^nil
+]
+
+{ #category : '*Morphic-Base' }
+Object >> taskbarLabel [
+	"Answer the label string for the receiver in a task bar
+	or nil for the default."
+
+	^self class taskbarLabel
 ]
 
 { #category : '*Morphic-Base' }

@@ -34,6 +34,14 @@ BoundedGradientFillStyle >> extent: anObject [
 	extent := anObject
 ]
 
+{ #category : 'drawing - rectangles' }
+BoundedGradientFillStyle >> fillRectangle: aRectangle on: aCanvas [
+	"Fill the given rectangle on the given canvas with the receiver."
+
+	self extent ifNil: [^super fillRectangle: aRectangle on: aCanvas].
+	aCanvas fillRectangle: ((self origin extent: self extent) intersect: aRectangle ifNone: [^ self ]) basicFillStyle: self
+]
+
 { #category : 'comparing' }
 BoundedGradientFillStyle >> hash [
 	"Hash is implemented because #= is implemented."

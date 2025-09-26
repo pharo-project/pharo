@@ -19,7 +19,7 @@ Class {
 
 { #category : 'accessing - class hierarchy' }
 ReAddSubclassDriver class >> superclass: aClass [
-	"Answer a new instance using aClass as the superclass of the receiver's subclass"
+	"superclass is the class that acts as a reference. A new subclass will be inserted below"
 
 	^ self basicNew
 		superclass: aClass;
@@ -53,6 +53,7 @@ ReAddSubclassDriver >> comment: aString [
 { #category : 'accessing' }
 ReAddSubclassDriver >> configureRefactoring [
 
+
 	refactoring := (RBInsertNewClassRefactoring className: self subclass)
 		model: model;
 		superclass: self superclass;
@@ -62,11 +63,10 @@ ReAddSubclassDriver >> configureRefactoring [
 		yourself
 ]
 
-{ #category : 'initialization' }
-ReAddSubclassDriver >> initialize [
+{ #category : 'accessing' }
+ReAddSubclassDriver >> dialogTitleForClassSelection [
 
-	super initialize.
-	self requestSingleSubclass.
+	^ 'Add new subclass of ' , superclass name
 ]
 
 { #category : 'accessing' }
@@ -94,11 +94,18 @@ ReAddSubclassDriver >> requestSingleSubclass [
 
 { #category : 'execution' }
 ReAddSubclassDriver >> runRefactoring [
-
+	
+	subclass ifNil: [ 
+		self requestSingleSubclass ].
+	"the refactoring was cancelled."
+	subclass ifNil: [ ^ false ].
+	
 	self configureRefactoring.
+	
 	refactoring failedApplicabilityPreconditions
-		ifNotEmpty: [ : conditions | ^ self informConditions: conditions ].
-	self applyChanges
+		ifNotEmpty: [ : conditions | self informConditions: conditions. ^ false ].
+	self applyChanges.
+	^ true
 ]
 
 { #category : 'accessing' }
@@ -106,7 +113,8 @@ ReAddSubclassDriver >> scopes: refactoringScopes [
 
 	scopes := refactoringScopes.
 	model := self refactoringScopeOn: scopes last.
-	superclass := model classFor: model environment classes anyOne.
+	superclass := model classObjectFor: superclass
+
 ]
 
 { #category : 'accessing' }

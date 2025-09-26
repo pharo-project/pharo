@@ -15,6 +15,12 @@ ClapPharoApplication class >> addKeepAliveOptionTo: aCommandSpec [
 ]
 
 { #category : 'adding' }
+ClapPharoApplication class >> addNoQuitOptionTo: aCommandSpec [
+
+	aCommandSpec addFlag: #'no-quit' description: '[deprecated] keep the image running without activating any other command line handler'
+]
+
+{ #category : 'adding' }
 ClapPharoApplication class >> addRenameOptionTo: aCommandSpec [
 
 	aCommandSpec addFlag: #rename description: 'Rename the image as <NAME> before running the command'
@@ -26,10 +32,16 @@ ClapPharoApplication class >> addSaveFlagTo: aCommandSpec [
 ]
 
 { #category : 'execution' }
+ClapPharoApplication >> doNotQuitImage [ 
+
+	self context doNotObeyExits
+]
+
+{ #category : 'execution' }
 ClapPharoApplication >> execute [
 
 	self prepareImage.
-	self shouldQuit ifFalse: [ self context doNotObeyExits ]
+	self shouldQuit ifFalse: [ self doNotQuitImage ]
 ]
 
 { #category : 'execution' }
@@ -52,7 +64,7 @@ ClapPharoApplication >> saveSessionIfAsked [
 
 { #category : 'testing' }
 ClapPharoApplication >> shouldQuit [
-	^ (self hasFlag: #keepAlive) not
+	^ ((self hasFlag: #keepAlive) or: [ self hasFlag: #'no-quit' ]) not
 ]
 
 { #category : 'testing' }

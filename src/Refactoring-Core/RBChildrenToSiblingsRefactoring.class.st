@@ -156,7 +156,7 @@ RBChildrenToSiblingsRefactoring >> pullUpClassVariables [
 	newSuperclass := self abstractSuperclass.
 	parent classVariableNames do:
 			[:each |
-			self generateChangesFor: (RBPullUpClassVariableRefactoring
+			self generateChangesFor: (RePullUpSharedVariableRefactoring
 						model: self model
 						variable: each
 						class: newSuperclass)]

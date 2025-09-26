@@ -118,6 +118,40 @@ AndreasSystemProfiler >> doReport [
 	UIManager default edit: self report label: 'Spy Results'
 ]
 
+{ #category : 'profiling' }
+AndreasSystemProfiler >> profilePrimitive [
+	"Primitive. Answer the primitive sample by the profiler, or nil if the profiler isn't active.
+	See also primitiveProfileStart."
+	<primitive: 'primitiveProfilePrimitive'>
+	^self primitiveFailed
+]
+
+{ #category : 'profiling' }
+AndreasSystemProfiler >> profileSample [
+	"Primitive. Answer the last sample taken by the profiler, or nil if the profiler isn't active.
+	See also primitiveProfileStart."
+	<primitive: 'primitiveProfileSample'>
+	^self primitiveFailed
+]
+
+{ #category : 'profiling' }
+AndreasSystemProfiler >> profileSemaphore: aSemaphore [
+	"Primitive. Install the semaphore to be used for profiling,
+	or nil if no semaphore should be used.
+	See also primitiveProfileStart."
+	<primitive: 'primitiveProfileSemaphore'>
+	^self primitiveFailed
+]
+
+{ #category : 'profiling' }
+AndreasSystemProfiler >> profileStart: counter [
+	"Primitive. Begin profiling execution every by using the interrupt check-counter instead of a time-based process (which is limited to timing resolution and triggers off the same signal that many of the processes being profiled trigger off leading to consistently wrong results).
+	The argument is the number of interrupt checks (method activations) to let go by before taking a sample. The sample is being stored in the profileSample iVar which can be retrieved by executing primitiveProfileSample. When a sample is taken, it signals the semaphore specified in primitiveProfileSemaphore.
+	If the argument is less or equal to zero, it disables profiling."
+	<primitive: 'primitiveProfileStart'>
+	^self primitiveFailed
+]
+
 { #category : 'reporting' }
 AndreasSystemProfiler >> report [
 	"Answer a report, with cutoff percentage of each element of the tree"
@@ -224,19 +258,19 @@ AndreasSystemProfiler >> runProfilerProcess [
 	| process tallyStart tallyTicks tallyStop method leaf |
 	tallyRoot := QSystemTally new class: nil method: nil.
 	totalTally := 0.
-	Smalltalk profileSemaphore: semaphore.
+	self profileSemaphore: semaphore.
 	totalTicks := 0.
 	tallyStart := tallyStop := Smalltalk highResClock.
 	[ true ] whileTrue: [
 		tallyStart := tallyStop.
 		tallyStart := Smalltalk highResClock.
-		Smalltalk profileStart: ticks. "run for n ticks"
+		self profileStart: ticks. "run for n ticks"
 		semaphore wait.
 		tallyStop := Smalltalk highResClock.
 		tallyTicks := tallyStop - tallyStart.
 		totalTicks := totalTicks + tallyTicks.
-		process := Smalltalk profileSample.
-		method := Smalltalk profilePrimitive.
+		process := self profileSample.
+		method := self profilePrimitive.
 		totalTally := totalTally + 1.
 		process ifNotNil:[
 			leaf := tallyRoot tally: (process suspendedContext ifNil: [ thisContext ] ) by: tallyTicks.
@@ -276,8 +310,8 @@ AndreasSystemProfiler >> startProfiling [
 { #category : 'profiling' }
 AndreasSystemProfiler >> stopProfiling [
 	"Stop the profiler process"
-	Smalltalk profileSemaphore: nil.
-	Smalltalk profileStart: 0. "<- profile stops now"
+	self profileSemaphore: nil.
+	self profileStart: 0. "<- profile stops now"
 	totalTime := Time millisecondClockValue - startTime.
 	Smalltalk vm getParameters keysAndValuesDo: [ :idx :value |
 		value isInteger ifTrue: [ vmStats at: idx put: (value - ((vmStats at: idx) ifNil: [ 0 ])) ].
