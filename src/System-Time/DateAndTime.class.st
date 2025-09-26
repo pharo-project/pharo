@@ -31,7 +31,6 @@ Class {
 		'nanos'
 	],
 	#classVars : [
-		'ClockProvider',
 		'LocalTimeZoneCache'
 	],
 	#pools : [
@@ -207,11 +206,6 @@ DateAndTime class >> fuzzyReadFrom: aStream [
 		nanoSecond:  nanos
 
 		offset: offset
-]
-
-{ #category : 'class initialization' }
-DateAndTime class >> initialize [
-	ClockProvider := Time
 ]
 
 { #category : 'instance creation' }
