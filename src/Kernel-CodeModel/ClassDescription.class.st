@@ -38,7 +38,7 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 	priorMethod ifNotNil: [  
 		(protocol asString beginsWith: '*') ifTrue: [ 
 			protocol asString = priorMethod protocol name ifFalse: [ 
-				compiledMethod propertyAt: #extendedMethod put: priorMethod ].
+				compiledMethod propertyAt: #beforeExtensionMethod put: priorMethod ].
 			"See Package >> #addMethod:"
 		]
 	].
@@ -992,7 +992,7 @@ ClassDescription >> removeSelector: selector [
 	self codeChangeAnnouncer methodRemoved: method origin: origin.
 	
 	method isExtension ifTrue: [ 
-		(method propertyAt: #extendedMethod) ifNotNil: [ :originalMethod |
+		(method propertyAt: #beforeExtensionMethod) ifNotNil: [ :originalMethod |
 			self addSelector: selector withMethod: originalMethod ] ]
 ]
 
