@@ -40,14 +40,6 @@ OCContextualDoItSemanticScope >> announceDoItEvaluation: aSourceString by: aSyst
 	aSystemAnnouncer evaluated: aSourceString context: targetContext
 ]
 
-{ #category : 'testing' }
-OCContextualDoItSemanticScope >> hasBindingThatBeginsWith: aString [
-
-	(targetContext astScope hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
-
-	^super hasBindingThatBeginsWith: aString
-]
-
 { #category : 'lookup' }
 OCContextualDoItSemanticScope >> importVariable: aVariable [
 

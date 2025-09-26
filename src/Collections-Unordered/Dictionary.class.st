@@ -553,16 +553,6 @@ Dictionary >> flatCollect: aBlock [
 ]
 
 { #category : 'testing' }
-Dictionary >> hasBindingThatBeginsWith: aString [
-	"Answer true if the receiver has a key that begins with aString, false otherwise"
-
-	self keysDo:[:each |
-		(each beginsWith: aString)
-			ifTrue:[^true]].
-	^false
-]
-
-{ #category : 'testing' }
 Dictionary >> includes: anObject [
 
 	"Check if anObject is one of the values in the dictionary"

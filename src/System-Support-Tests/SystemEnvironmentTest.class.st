@@ -197,14 +197,6 @@ SystemEnvironmentTest >> testFlatCollect3 [
 	self assert: res asSet equals: #( #( 2 3 ) #( 4 5 ) ) asSet
 ]
 
-{ #category : 'tests' }
-SystemEnvironmentTest >> testHasBindingThatBeginsWith [
-
-	super testHasBindingThatBeginsWith.
-	self assert: (Smalltalk globals hasBindingThatBeginsWith: 'Obje').
-	self deny: (Smalltalk globals hasBindingThatBeginsWith: 'NOTHEREIope')
-]
-
 { #category : 'tests - testing' }
 SystemEnvironmentTest >> testIncludesAssociationNoValue [
 

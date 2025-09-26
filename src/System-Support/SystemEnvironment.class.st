@@ -293,26 +293,6 @@ SystemEnvironment >> forgetClass: aClass [
 	self removeKey: aClass name ifAbsent: [  ]
 ]
 
-{ #category : 'testing' }
-SystemEnvironment >> hasBindingThatBeginsWith: aString [
-	"Use the cached class and non-class names for better performance."
-
-	| name searchBlock |
-	(self pseudoVariables hasBindingThatBeginsWith: aString) ifTrue: [
-		^ true ].
-	searchBlock := [ :element |
-	               (element beginsWith: aString)
-		               ifTrue: [ 0 ]
-		               ifFalse: [
-			               aString < element
-				               ifTrue: [ -1 ]
-				               ifFalse: [ 1 ] ] ].
-	name := self classNames findBinary: searchBlock ifNone: [ nil ].
-	name ifNotNil: [ ^ true ].
-	name := self nonClassNames findBinary: searchBlock ifNone: [ nil ].
-	^ name isNotNil
-]
-
 { #category : 'accessing - classes and traits' }
 SystemEnvironment >> hasClassNamed: aString [
 	"Answer whether there is a class of the given name, but don't intern aString if it's not already interned."
