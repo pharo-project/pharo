@@ -313,11 +313,6 @@ OrderedDictionary >> growOrderedKeys [
 			startingAt: 1
 ]
 
-{ #category : 'testing' }
-OrderedDictionary >> hasBindingThatBeginsWith: aString [
-	^ dictionary hasBindingThatBeginsWith: aString
-]
-
 { #category : 'comparing' }
 OrderedDictionary >> hash [
 	^ dictionary hash

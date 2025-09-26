@@ -64,7 +64,7 @@ SpRubFindReplaceDialog class >> defaultLayout [
 { #category : 'accessing' }
 SpRubFindReplaceDialog class >> replacingText [
 
-	^ replacingText ifNil: [ replacingText := nil ]
+    ^ replacingText ifNil: [ replacingText := '' ]
 ]
 
 { #category : 'accessing' }
@@ -76,7 +76,7 @@ SpRubFindReplaceDialog class >> replacingText: aText [
 { #category : 'accessing' }
 SpRubFindReplaceDialog class >> textToFind [
 
-	^ textToFind ifNil: [ textToFind := nil ]
+    ^ textToFind ifNil: [ textToFind := '' ]
 ]
 
 { #category : 'accessing' }
@@ -103,8 +103,8 @@ SpRubFindReplaceDialog >> closeWindowOnEscIn: aPresenter [
 { #category : 'initialization' }
 SpRubFindReplaceDialog >> connectPresenters [
 
-	findInput whenTextChangedDo: [ self updateFindText ].
-	replaceTextInput whenTextChangedDo: [ :aText | self replacingText: aText ]
+    findInput whenTextChangedDo: [ :aText | self updateFindText: aText ].
+    replaceTextInput whenTextChangedDo: [ :aText | self replacingText: aText ]
 ]
 
 { #category : 'operations' }
@@ -178,9 +178,9 @@ SpRubFindReplaceDialog >> initializePresenters [
 	findInput := self newTextInput
 		             autoAccept: true;
 		             placeholder: 'Text to find'.
-	self textToFind ifNotNil: [
-		findInput text: self textToFind.
-		self updateFindText ].
+
+	findInput text: self textToFind.
+	self updateFindText: self textToFind.
 
 	self closeWindowOnEscIn: findInput.
 	self assignEnterKeystrokeEventFor: findInput.
@@ -193,9 +193,9 @@ SpRubFindReplaceDialog >> initializePresenters [
 
 	replaceTextInput := self newTextInput autoAccept: true.
 	self closeWindowOnEscIn: replaceTextInput.
-	self replacingText ifNotNil: [
-		replaceTextInput text: self replacingText.
-		service replaceText: replaceTextInput text ].
+
+	replaceTextInput text: self replacingText.
+	service replaceText: replaceTextInput text .
 
 	replaceLabel := self newLabel label: 'Replace with:'.
 
@@ -236,7 +236,7 @@ SpRubFindReplaceDialog >> replacingText [
 	^ self class replacingText
 ]
 
-{ #category : 'accessing' }
+{ #category : 'operations' }
 SpRubFindReplaceDialog >> replacingText: aText [
 
 	^ self class replacingText: aText
@@ -276,10 +276,11 @@ SpRubFindReplaceDialog >> title [
 	^ 'Find & Replace'
 ]
 
-{ #category : 'initialization' }
-SpRubFindReplaceDialog >> updateFindText [
+{ #category : 'operations' }
+SpRubFindReplaceDialog >> updateFindText: aText [
 
-	service findText: self findInput text asString
+    service findText: aText.
+    self class textToFind: aText
 ]
 
 { #category : 'initialization' }

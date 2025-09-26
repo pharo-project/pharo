@@ -473,16 +473,6 @@ SmallDictionary >> growTo: aSize [
 ]
 
 { #category : 'testing' }
-SmallDictionary >> hasBindingThatBeginsWith: aString [
-	"Answer true if the receiver has a key that begins with aString, false otherwise"
-
-	self keysDo:[:each |
-		(each beginsWith: aString)
-			ifTrue:[^true]].
-	^false
-]
-
-{ #category : 'testing' }
 SmallDictionary >> includes: aValue [
 	self do: [:each | aValue = each ifTrue: [^true]].
 	^false
