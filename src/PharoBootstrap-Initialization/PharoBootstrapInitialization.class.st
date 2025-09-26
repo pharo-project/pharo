@@ -112,3 +112,16 @@ PharoBootstrapInitialization class >> initializeFileSystem [
 	"Now that the file system is setup, we can register SourceFileArray to the session manager."
 	SessionManager default registerSystemClassNamed: #SourceFileArray
 ]
+
+{ #category : 'initialization' }
+PharoBootstrapInitialization class >> initializeIcebergRepositories [
+
+	| specs repos |
+	specs := MetacelloProjectRegistration registry baselineProjectSpecs select: [ :spec | spec repositories printString includesSubstring: 'github://' ].
+	repos := specs collect: [ :spec | spec repositories map anyOne ] as: Set.
+
+	repos do: [ :repo |
+			| monticelloRepo |
+			monticelloRepo := MCRepository newRepositoryFromSpec: repo.
+			monticelloRepo getOrCreateIcebergRepository ]
+]
