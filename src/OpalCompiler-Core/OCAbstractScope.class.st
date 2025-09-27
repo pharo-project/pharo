@@ -22,14 +22,6 @@ OCAbstractScope >> environment [
 	^self targetClass environment
 ]
 
-{ #category : 'lookup' }
-OCAbstractScope >> hasBindingThatBeginsWith: aString [
-	"check weather there are any variables defined that start with aString"
-	^ outerScope
-		ifNil: [ false ]
-		ifNotNil: [ outerScope hasBindingThatBeginsWith: aString ]
-]
-
 { #category : 'testing' }
 OCAbstractScope >> hasTempVector [
 	^ false
