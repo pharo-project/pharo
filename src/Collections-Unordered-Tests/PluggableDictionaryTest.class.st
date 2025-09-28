@@ -45,7 +45,7 @@ PluggableDictionaryTest >> testCopyEmpty [
 PluggableDictionaryTest >> testEqualBlock [
 	| pluggableDict assoc |
 	pluggableDict := self emptyDict.
-	self assert: pluggableDict equalBlock isNil.
+	self deny: pluggableDict equalBlock isNil.
 	self assert: (pluggableDict equalBlock: [ :a :b | a = b ]) identicalTo: pluggableDict.
 
 	assoc := 'newKey' -> 'newValue'.
@@ -84,7 +84,7 @@ PluggableDictionaryTest >> testHashBlock [
 	| pluggableDict keys |
 	pluggableDict := self nonEmptyDict.
 	keys := pluggableDict keys.
-	self assert: pluggableDict hashBlock isNil.
+	self deny: pluggableDict hashBlock isNil.
 	self assert: (pluggableDict hashBlock: [ :a | a hash ]) identicalTo: pluggableDict.
 
 	keys do: [ :each | self assert: (pluggableDict includesKey: each) ].

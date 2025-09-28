@@ -80,6 +80,14 @@ PluggableDictionary >> hashBlock: aBlock [
 	hashBlock := aBlock
 ]
 
+{ #category : 'initialization' }
+PluggableDictionary >> initialize: n [
+
+	super initialize: n.
+	hashBlock := [ :anObject | anObject hash ].
+	equalBlock := [ :a :b | a = b ]
+]
+
 { #category : 'private' }
 PluggableDictionary >> scanFor: anObject [
 	"Scan the key array for the first slot containing either a nil
@@ -92,19 +100,15 @@ overridden
 
 	elements."
 	| element start finish |
-	start := (hashBlock ifNil: [anObject hash]
-				ifNotNil: [hashBlock value: anObject])
-				\\ array size + 1.
+	start := (hashBlock value: anObject)	\\ array size + 1.
 	finish := array size.
 	"Search from (hash mod size) to the end."
 	start to: finish do: [:index | ((element := array at: index) == nil or:
-[equalBlock ifNil: [element key = anObject]
-				ifNotNil: [equalBlock value: element key value: anObject]])
+[equalBlock value: element key value: anObject])
 			ifTrue: [^ index]].
 	"Search from 1 to where we started."
 	1 to: start - 1 do: [:index | ((element := array at: index) == nil or:
-[equalBlock ifNil: [element key = anObject]
-				ifNotNil: [equalBlock value: element key value: anObject]])
+[equalBlock value: element key value: anObject])
 			ifTrue: [^ index]].
 	^ 0"No match AND no empty slot"
 ]
@@ -114,9 +118,7 @@ PluggableDictionary >> scanForEmptySlotFor: aKey [
 	"Scan the key array for the first slot containing an empty slot (indicated by a nil). Answer the index of that slot. This method will be overridden in various subclasses that have different interpretations for matching elements."
 
 	| index start |
-	index := start := (hashBlock
-		ifNil: [ aKey hash ]
-		ifNotNil: [ hashBlock value: aKey ]) \\ array size + 1.
+	index := start := (hashBlock value: aKey) \\ array size + 1.
 	[
 		(array at: index) ifNil: [ ^index ].
 		(index := index \\ array size + 1) = start ] whileFalse.
