@@ -45,6 +45,20 @@ ClapContext class >> defaultRoot [
 		yourself
 ]
 
+{ #category : 'instance creation' }
+ClapContext class >> executeWithPragmaCommandsAndArguments: arguments [
+
+	[
+		(self withPragmaCommands)
+			beObeyingExits;
+			setStdio: Stdio;
+			arguments: arguments;
+			execute
+	]
+	forkAt: Processor userSchedulingPriority
+	named: 'Clap commandline handler process'
+]
+
 { #category : 'accessing' }
 ClapContext class >> pragmaCommands [
 	^ (Pragma allNamed: #commandline) collect: [ :pragma |
