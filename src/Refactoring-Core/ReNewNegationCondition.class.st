@@ -25,6 +25,13 @@ ReNewNegationCondition >> condition: aCondition [
 ]
 
 { #category : 'accessing' }
+ReNewNegationCondition >> errorMacro [
+	"TODO: This was introduced for compatibility with RBAbstractCondition
+	and it should be removed"
+	^ self errorString
+]
+
+{ #category : 'accessing' }
 ReNewNegationCondition >> errorString [ 
 
 	^ condition errorString
