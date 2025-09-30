@@ -50,14 +50,6 @@ OCSemanticScope >> announceDoItEvaluation: aSourceString by: aSystemAnnouncer [
 ]
 
 { #category : 'testing' }
-OCSemanticScope >> hasBindingThatBeginsWith: aString [
-
-	(self targetClass hasBindingThatBeginsWith: aString) ifTrue: [ ^true ].
-
-	^super hasBindingThatBeginsWith: aString
-]
-
-{ #category : 'testing' }
 OCSemanticScope >> isDoItScope [
 	^false
 ]

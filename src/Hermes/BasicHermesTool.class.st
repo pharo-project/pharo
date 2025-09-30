@@ -10,45 +10,32 @@ Usage: loadHermes [--save] [<hermesFiles> ...]
 
 "
 Class {
-	#name : 'BasicHermesCommandLineHandler',
-	#superclass : 'CommandLineHandler',
+	#name : 'BasicHermesTool',
+	#superclass : 'Object',
+	#instVars : [
+		'hermesFiles'
+	],
 	#category : 'Hermes-CommandLineHandler',
 	#package : 'Hermes',
 	#tag : 'CommandLineHandler'
 }
 
-{ #category : 'accessing' }
-BasicHermesCommandLineHandler class >> commandName [
-	^ 'loadHermes'
+{ #category : 'loading' }
+BasicHermesTool class >> load: aListOfFileName [
+
+	self new 
+		fileNames: aListOfFileName;
+		processFiles
 ]
 
-{ #category : 'handler selection' }
-BasicHermesCommandLineHandler class >> isResponsibleFor: aCommandLineArguments [
+{ #category : 'initialization' }
+BasicHermesTool >> fileNames: aListOfFileName [
 
-	aCommandLineArguments arguments ifEmpty: [ ^ false ].
-	
-	"If HermesClapCommand is available, do not use this basic command line handler"
-	^ (aCommandLineArguments arguments first = self commandName) 
-		and: [ (Smalltalk globals hasClassNamed: #HermesClapCommand) not ]
+	hermesFiles := aListOfFileName select: [ :name | name endsWith: '.hermes' ]
 ]
 
-{ #category : 'activation' }
-BasicHermesCommandLineHandler >> activate [
-
-	self allHermesFiles do: [ :name | self processFile: name ].
-	Smalltalk saveSession.
-	self exitSuccess
-]
-
-{ #category : 'accessing' }
-BasicHermesCommandLineHandler >> allHermesFiles [
-
-	^ self arguments
-		select: [ :arg | arg endsWith: '.hermes' ]
-]
-
-{ #category : 'execution' }
-BasicHermesCommandLineHandler >> processFile: aFileName [
+{ #category : 'processing' }
+BasicHermesTool >> processFile: aFileName [
 
 	"It loads the package and installs it in the image"
 	| reader readPackage |
@@ -62,4 +49,10 @@ BasicHermesCommandLineHandler >> processFile: aFileName [
 
 	SystemNotification signal: ('[Basic Hermes] Installing ' , aFileName).
 	HEInstaller new installPackage: readPackage
+]
+
+{ #category : 'processing' }
+BasicHermesTool >> processFiles [
+
+	hermesFiles do: [ :name | self processFile: name ]
 ]

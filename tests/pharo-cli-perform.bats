@@ -23,7 +23,7 @@ teardown() {
 }
 
 @test "perform can perform selector on class with arguments and quit" {
-  run_pharo  perform Array with:with: 1 2
+  run_pharo perform Array with:with: 1 2
   assert_success
   assert_output "#('1' '2')"
 }
@@ -42,7 +42,7 @@ teardown() {
 
 @test "perform does not save if flag --save absent" {
   copy_image "test-save.image"
-  run_pharo perform ClapPharoCommandsTest testValue: Wednesday.
+  run_pharo perform ClapPharoCommandsTest testValue: Wednesday
   assert_success
 
   run_pharo perform ClapPharoCommandsTest testValue
@@ -52,7 +52,7 @@ teardown() {
 
 @test "perform --save preserves changes in the image" {
   copy_image "test-save.image"
-  run_pharo perform --save ClapPharoCommandsTest testValue: Wednesday.
+  run_pharo perform --save ClapPharoCommandsTest testValue: Wednesday
   assert_success
 
   # Check that the evaluation of the previous script has been persisted

@@ -981,8 +981,8 @@ FTTableMorph >> resizeAllSubviews [
 { #category : 'private' }
 FTTableMorph >> resizeContainer [
 	| topLeft bottomRight |
-	topLeft := (self bounds left - self borderWidth) @ self bounds top - self borderWidth.
-	bottomRight := (self bounds right  - self verticalScrollBarWidth    - self borderWidth)
+	topLeft := (self bounds left + self borderWidth) @ (self bounds top + self borderWidth).
+	bottomRight := (self bounds right - self verticalScrollBarWidth - self borderWidth)
 					 @ (self bounds bottom - self horizontalScrollBarHeight - self borderWidth).
 	self container
 		bounds:
