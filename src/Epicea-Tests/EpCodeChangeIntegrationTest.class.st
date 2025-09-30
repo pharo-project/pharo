@@ -203,6 +203,21 @@ EpCodeChangeIntegrationTest >> testMethodAddition [
 ]
 
 { #category : 'tests' }
+EpCodeChangeIntegrationTest >> testMethodAdditionFromExistingClass [
+
+	| anotherClass |
+	aClass := classFactory newClass.
+	aClass compile: 'fortyTwo ^42'.
+
+	self assert: (self countLogEventsWith: EpMethodAddition) equals: 1.
+	
+	anotherClass := classFactory newClass.
+	anotherClass compileAllFrom: aClass.
+	
+	self assert: (self countLogEventsWith: EpMethodAddition) equals: 2
+]
+
+{ #category : 'tests' }
 EpCodeChangeIntegrationTest >> testMethodModificationOfProtocol [
 
 	| events event |
