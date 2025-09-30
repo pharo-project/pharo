@@ -27,6 +27,25 @@ MethodAnnouncementsTest >> testCompileMethodAnnounceAddition [
 ]
 
 { #category : 'tests' }
+MethodAnnouncementsTest >> testCompileMethodByDuplicatingAClassAnnounceAddition [
+	
+	class compiler
+		protocol: #titan;
+		install: 'king ^ 1'.
+	
+	self when: MethodAdded do: [ :ann |
+		self assert: ann method selector equals: #king.
+		self assert: ann method protocol name equals: #titan.
+		self assert: ann methodClass name equals: self classNameForTests, '2'.
+		self assert: ann methodPackage name equals: self packageNameForTests.
+		self assert: ann packagesAffected equals: { self packageNameForTests asPackage } ].
+
+	class duplicateClassWithNewName: self classNameForTests, '2'.
+
+	self assert: numberOfAnnouncements equals: 1
+]
+
+{ #category : 'tests' }
 MethodAnnouncementsTest >> testRemoveMethodAnnounceRemoval [
 
 	class compiler

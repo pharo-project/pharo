@@ -118,6 +118,7 @@ ShiftClassBuilder >> build [
 	self createClass.
 
 	self oldClass ifNotNil: [
+		self copyPackage.
 		self copyProtocols.
 		self newClass commentSourcePointer: self oldClass commentSourcePointer ].
 
@@ -125,8 +126,8 @@ ShiftClassBuilder >> build [
 
 	self installSlotsAndVariables.
 
-	self oldClass ifNotNil: [ self builderEnhancer compileMethodsFor: self ].
-
+	self oldClass ifNotNil: [ 
+		self builderEnhancer compileMethodsFor: self ].
 	self builderEnhancer afterMethodsCompiled: self.
 	^ newClass
 ]
@@ -220,6 +221,14 @@ ShiftClassBuilder >> compileMethods [
 	newClass
 		compileAllFrom: self oldClass;
 		removeNonexistentSelectorsFromProtocols
+]
+
+{ #category : 'copying' }
+ShiftClassBuilder >> copyPackage [
+
+	self environment codeChangeAnnouncer suspendAllWhile: [
+		newClass package: package tag: self tag 
+	]
 ]
 
 { #category : 'building' }
