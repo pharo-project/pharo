@@ -192,7 +192,7 @@ ShiftClassInstaller >> make [
 		newClass := self oldClass.
 	].
 
-	self updatePackage: newClass.
+	self oldClass ifNil: [ self updatePackage: newClass ].
 	self comment: newClass.
 
 	self notifyChanges.

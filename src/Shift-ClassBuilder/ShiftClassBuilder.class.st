@@ -229,8 +229,12 @@ ShiftClassBuilder >> compileMethods [
 { #category : 'copying' }
 ShiftClassBuilder >> copyPackage [
 
+	| newPackage newTag |
 	self environment codeChangeAnnouncer suspendAllWhile: [
-		newClass package: package tag: self tag 
+		newPackage := oldClass package.
+		newTag := oldClass packageTag.
+		oldClass packageTag removeClass: oldClass.
+		newClass package: newPackage tag: newTag
 	]
 ]
 
