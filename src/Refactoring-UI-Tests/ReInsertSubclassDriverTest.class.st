@@ -2,7 +2,8 @@ Class {
 	#name : 'ReInsertSubclassDriverTest',
 	#superclass : 'ReDriverTest',
 	#instVars : [
-		'testingEnvironment'
+		'testingEnvironment',
+		'systemEnvironment'
 	],
 	#category : 'Refactoring-UI-Tests-Driver',
 	#package : 'Refactoring-UI-Tests',
@@ -19,7 +20,8 @@ ReInsertSubclassDriverTest >> newSubclassName [
 ReInsertSubclassDriverTest >> setUp [
 
 	super setUp.
-	testingEnvironment := RBClassEnvironment classes: self superclassToAddSubclass withAllSubclasses 
+	testingEnvironment := RBClassEnvironment classes: self superclassToAddSubclass withAllSubclasses.
+	systemEnvironment := RBBrowserEnvironment default
 ]
 
 { #category : 'tests' }
@@ -60,6 +62,20 @@ ReInsertSubclassDriverTest >> testInsertSubclass [
 ]
 
 { #category : 'tests' }
+ReInsertSubclassDriverTest >> testInsertSubclassChoosesASmallScopeIfAvailable [
+
+	| driver aClass |
+
+	driver := ReInsertSubclassDriver new.
+	aClass := self superclassToAddSubclass.
+	self setUpDriver: driver.
+	driver superclass: aClass.
+	driver scopes: { systemEnvironment . testingEnvironment }.
+	
+	self deny: driver model environment isSystem
+]
+
+{ #category : 'tests' }
 ReInsertSubclassDriverTest >> testInsertSubclassInADifferentPackage [
 
 	| driver rbClass |
@@ -93,4 +109,19 @@ ReInsertSubclassDriverTest >> testInsertSubclassInADifferentPackage [
 	self
 		assert: driver refactoring changes changes first package
 		equals: ReAddSubclassDriver packageName
+]
+
+{ #category : 'tests' }
+ReInsertSubclassDriverTest >> testInsertSubclasssMissingAValidScopeFails [
+
+	| driver aClass invalidEnvironment |
+
+	driver := ReInsertSuperclassDriver new.
+	aClass := self superclassToAddSubclass.
+	self setUpDriver: driver.
+	driver superclass: aClass.
+	invalidEnvironment := RBClassEnvironment classes: { aClass subclasses first }.
+	
+	"The environment does not include aClass, the driver should fail."
+	self should: [ driver scopes: { invalidEnvironment } ] raise: RefactoringDriverError .
 ]

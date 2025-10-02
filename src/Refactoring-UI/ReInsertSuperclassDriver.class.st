@@ -103,13 +103,30 @@ ReInsertSuperclassDriver >> runRefactoring [
 	^ true
 ]
 
+{ #category : 'private' }
+ReInsertSuperclassDriver >> scopeForModel [
+
+	| sorted selected |
+	"Place the system scope first"
+	sorted := scopes sorted: [ :each | each isCurrentImage ] descending. "Select the first scope that includes the classes I need to work"
+	selected := sorted reversed
+		              detect: [ :each |
+				              each collectAllClasses includesAll: {
+						              superclass.
+						              superclass superclass } ]
+		              ifNone: [
+				              RefactoringDriverError signal:
+					              'No scope contains both: the class for inserting a new superclass, and also its original superclass.' ].
+
+	^ selected
+]
+
 { #category : 'accessing' }
 ReInsertSuperclassDriver >> scopes: refactoringScopes [
 
 	scopes := refactoringScopes.
-	model := self refactoringScopeOn: scopes last.
+	model := self refactoringScopeOn: self scopeForModel.
 	superclass := model classObjectFor: superclass
-	
 ]
 
 { #category : 'accessing' }

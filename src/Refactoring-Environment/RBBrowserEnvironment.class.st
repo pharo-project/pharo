@@ -253,6 +253,12 @@ RBBrowserEnvironment >> cleanGarbageInCache [
 	self accessGuard critical: [ self queryCache clyCleanGarbage ]
 ]
 
+{ #category : 'accessing - classes' }
+RBBrowserEnvironment >> collectAllClasses [
+	
+	^ self classes
+]
+
 { #category : 'copying' }
 RBBrowserEnvironment >> copyEmpty [
 	^ self class new
@@ -460,6 +466,11 @@ RBBrowserEnvironment >> isClassEnvironment [
 RBBrowserEnvironment >> isCompositeEnvironment [
 
 	^ false
+]
+
+{ #category : 'testing' }
+RBBrowserEnvironment >> isCurrentImage [
+	^ self isSystem
 ]
 
 { #category : 'testing' }
