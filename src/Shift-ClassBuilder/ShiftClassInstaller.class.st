@@ -170,8 +170,8 @@ ShiftClassInstaller >> installingEnvironment: anEnvironment [
 
 { #category : 'building' }
 ShiftClassInstaller >> make [
-	| newClass |
 
+	| newClass |
 	[
 		newClass := builder build.
 
@@ -185,14 +185,14 @@ ShiftClassInstaller >> make [
 
 		builder builderEnhancer afterMigratingClass: builder installer: self.
 
-		builder builderEnhancer propagateChangesToRelatedClasses: newClass builder: builder.
+		builder builderEnhancer propagateChangesToRelatedClasses: newClass builder: builder 
 		
-	] on: ShNoChangesInClass do:[
+	] on: ShNoChangesInClass do: [ 
 		"If there are no changes in the building, I am not building or replacing nothing"
-		newClass := self oldClass.
+		newClass := self oldClass 
 	].
 
-	self oldClass ifNil: [ self updatePackage: newClass ].
+	builder movedToPackage ifFalse: [ self updatePackage: newClass ].
 	self comment: newClass.
 
 	self notifyChanges.

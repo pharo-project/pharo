@@ -56,7 +56,8 @@ Class {
 		'superclassResolver',
 		'inRemake',
 		'package',
-		'tag'
+		'tag',
+		'movedToPackage'
 	],
 	#classVars : [
 		'BuilderEnhancer'
@@ -226,16 +227,32 @@ ShiftClassBuilder >> compileMethods [
 		removeNonexistentSelectorsFromProtocols
 ]
 
-{ #category : 'copying' }
+{ #category : 'building' }
 ShiftClassBuilder >> copyPackage [
 
-	| newPackage newTag |
-	self environment codeChangeAnnouncer suspendAllWhile: [
-		newPackage := oldClass package.
-		newTag := oldClass packageTag.
-		oldClass packageTag removeClass: oldClass.
-		newClass package: newPackage tag: newTag
+	| oldPackage oldTag |
+
+	self isRebuild ifTrue: [
+		oldPackage := oldClass package name.
+		oldTag := oldClass packageTag name.
+
+		{ oldClass instanceSide . oldClass classSide } 
+			do: [:cls | cls package removeClass: cls ] .
+		
+		self package ifNil: [ 
+			self environment codeChangeAnnouncer suspendAllWhile: [
+				newClass package: oldPackage tag: oldTag.
+				movedToPackage := true
+			]
+		]
+	].
+	self movedToPackage ifFalse: [ 
+		self environment codeChangeAnnouncer suspendAllWhile: [
+			newClass package: self package tag: self tag.
+			movedToPackage := true
+		].
 	]
+
 ]
 
 { #category : 'building' }
@@ -496,6 +513,11 @@ ShiftClassBuilder >> metaclassClass [
 	"The metaclass class is determined by the builder enhancer. In case you want to play with your own metaclass class, you can implement a subclass of the buildre enhancer and use this one overriding the method #metaclassClassFor:."
 
 	^ self builderEnhancer metaclassClassFor: self
+]
+
+{ #category : 'accessing' }
+ShiftClassBuilder >> movedToPackage [
+	^ movedToPackage ifNil: [ movedToPackage := false ]
 ]
 
 { #category : 'accessing' }
