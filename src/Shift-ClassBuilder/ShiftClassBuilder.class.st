@@ -101,7 +101,6 @@ ShiftClassBuilder >> allSlots [
 { #category : 'building' }
 ShiftClassBuilder >> build [
 
-	| originalTag originalPkg |
 	self tryToFillOldClass.
 	self detectBuilderEnhancer.
 	self builderEnhancer validateRedefinition: self oldClass.
@@ -119,9 +118,7 @@ ShiftClassBuilder >> build [
 	self createClass.
 
 	self oldClass ifNotNil: [
-		originalTag := newClass packageTag.
-		originalPkg := newClass package.
-		"self copyPackage."
+		self copyPackage.
 		self copyProtocols.
 		self newClass commentSourcePointer: self oldClass commentSourcePointer ].
 
@@ -131,9 +128,9 @@ ShiftClassBuilder >> build [
 
 	self oldClass ifNotNil: [ 
 		self builderEnhancer compileMethodsFor: self.
-		"self environment codeChangeAnnouncer suspendAllWhile: [ 
-			newClass package: originalPkg tag: originalTag.
-			 ]" ].
+		self environment codeChangeAnnouncer  announce: (ClassAdded class: newClass).
+		
+		 ].
 	self builderEnhancer afterMethodsCompiled: self.
 	^ newClass
 ]
