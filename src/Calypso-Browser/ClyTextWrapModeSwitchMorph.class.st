@@ -10,7 +10,7 @@ Class {
 	#name : 'ClyTextWrapModeSwitchMorph',
 	#superclass : 'ClyTextMorphToolMorph',
 	#instVars : [
-		'wrapModeLabel'
+		'wrapModeCheckBox'
 	],
 	#category : 'Calypso-Browser-TextEditors',
 	#package : 'Calypso-Browser',
@@ -19,28 +19,36 @@ Class {
 
 { #category : 'controlling' }
 ClyTextWrapModeSwitchMorph >> attachToTextMorph [
+
 	super attachToTextMorph.
 
-	wrapModeLabel := StringMorph new.
-	wrapModeLabel setBalloonText:
-			'Let you decide if the code pane should automaticaly wrap lines if a line reach the end of the line. W: Wrap / NW: Add a scrollbar.'.
-	wrapModeLabel on: #mouseDown send: #toggle to: self.
-	self updateLabel.
-	self addMorph: wrapModeLabel
+	wrapModeCheckBox := self theme
+		                    newCheckboxIn: self
+		                    for: self
+		                    getSelected: #isWrapped
+		                    setSelected: #toggle
+		                    getEnabled: nil
+		                    label: 'Word Wrap'
+		                    help:
+		                    'Let you decide if the code pane should automaticaly wrap lines if a line reach the end of the line. W: Wrap / NW: Add a scrollbar.'.
+
+	wrapModeCheckBox
+		changeTableLayout;
+		vResizing: #shrinkWrap;
+		hResizing: #shrinkWrap.
+	self addMorph: wrapModeCheckBox
+]
+
+{ #category : 'testing' }
+ClyTextWrapModeSwitchMorph >> isWrapped [
+
+	^ textMorph wrapped
 ]
 
 { #category : 'operations' }
 ClyTextWrapModeSwitchMorph >> toggle [
-	textMorph wrapped
-		ifTrue: [ textMorph beNotWrapped  ]
-		ifFalse: [ textMorph beWrapped ].
-	self updateLabel
-]
 
-{ #category : 'updating' }
-ClyTextWrapModeSwitchMorph >> updateLabel [
-
-	| newValue |
-	newValue := textMorph wrapped ifTrue: [ 'W' ] ifFalse: [ 'NW' ].
-	wrapModeLabel contents: newValue
+	self isWrapped
+		ifTrue: [ textMorph beNotWrapped ]
+		ifFalse: [ textMorph beWrapped ]
 ]

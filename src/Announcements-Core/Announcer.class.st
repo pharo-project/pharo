@@ -132,6 +132,8 @@ Announcer >> subscriptionsForClass: subscriberClass [
 
 { #category : 'announce' }
 Announcer >> suspendAllWhile: aBlock [
+	"Returns the result of the block execution."
+	
 	| oldSuspended |
 	oldSuspended := self isSuspended.
 	suspended := true.

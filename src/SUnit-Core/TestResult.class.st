@@ -383,27 +383,37 @@ TestResult >> printOn: aStream [
 
 { #category : 'running' }
 TestResult >> runCase: aTestCase [
-	[
-	aTestCase announce: TestCaseStarted withResult: self.
-	aTestCase runCaseManaged.
-	aTestCase announce: TestCaseEnded  withResult: self.
-	self addPass: aTestCase]
+
+	[  	
+		[
+			aTestCase announce: TestCaseStarted withResult: self.
+			aTestCase runCaseManaged.
+		self addPass: aTestCase ]
 		on: self class failure , self class skip, self class warning, self class error
-		do: [:ex | ex sunitAnnounce: aTestCase toResult: self]
+		do: [:ex | 
+			ex sunitAnnounce: aTestCase toResult: self ] ]
+	ensure: [
+		aTestCase announce: TestCaseEnded withResult: self ]
 ]
 
 { #category : 'running' }
 TestResult >> runCaseForDebug: aTestCase [
+
 	[
-	aTestCase announce: TestCaseStarted withResult: self.
-	aTestCase runCaseManaged.
-	aTestCase announce: TestCaseEnded  withResult: self.
-	"To not affect performance of big test suites following logic is not inside addPass: method"
-	errors remove: aTestCase ifAbsent: [].
-	failures remove: aTestCase ifAbsent: [].
-	self addPass: aTestCase]
-		on: self class failure , self class skip, self class warning, self class error
-		do: [:ex | ex sunitAnnounce: aTestCase toResult: self. ex pass]
+		aTestCase announce: TestCaseStarted withResult: self.
+		[ 
+			aTestCase runCaseManaged. 
+			"To not affect performance of big test suites following logic 
+			 is not inside addPass: method"
+			errors remove: aTestCase ifAbsent: [].
+			failures remove: aTestCase ifAbsent: [].
+			self addPass: aTestCase ]
+		on: self class failure, self class skip, self class warning, self class error
+		do: [:ex | 
+			ex sunitAnnounce: aTestCase toResult: self. 
+			ex pass ] ]
+	ensure: [ 
+		aTestCase announce: TestCaseEnded withResult: self ]
 ]
 
 { #category : 'accessing' }
@@ -438,6 +448,15 @@ TestResult >> skipped [
 TestResult >> skippedCount [
 
 	^ self skipped size
+]
+
+{ #category : 'accessing' }
+TestResult >> status [
+	"Answer a general status code. Util for tooling and that."
+
+	self hasErrors ifTrue: [ ^ #error ].
+	self hasFailures ifTrue: [ ^ #failure ].
+	^ #passed
 ]
 
 { #category : 'accessing' }

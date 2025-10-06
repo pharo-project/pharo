@@ -16,6 +16,7 @@ Class {
 
 { #category : 'converting' }
 DTReRunConfiguration >> asTestSuite [
+
 	^ self configurationToRun asTestSuite
 ]
 

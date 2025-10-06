@@ -25,7 +25,7 @@ ClyFormatAsReadSwitchMorph >> formatAsYouRead [
 
 { #category : 'formatting' }
 ClyFormatAsReadSwitchMorph >> formatAsYouReadLabel [
-	^ 'F'
+	^ 'Format'
 ]
 
 { #category : 'initialization' }

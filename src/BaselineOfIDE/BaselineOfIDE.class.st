@@ -73,15 +73,14 @@ BaselineOfIDE >> baseline: spec [
 
 		self load: 'Metacello' group: 'Tests' spec: spec.
 
+		spec baseline: 'ReflectionMirrors' with: [ spec repository: repository ].
+		spec baseline: 'FuzzyMatcher' with: [ spec repository: repository ].
+		spec baseline: 'QA' with: [ spec repository: repository ].
+		spec baseline: 'GeneralTests' with: [ spec repository: repository ].
+
 		"Later we will load the UI of enlumineur probably here
 		"
 		spec baseline: 'Shout' with: [ spec repository: repository ].
-
-		spec
-			baseline: 'ReflectionMirrors'
-			with: [ spec repository: repository ].
-		spec baseline: 'FuzzyMatcher' with: [ spec repository: repository ].
-		spec baseline: 'QA' with: [ spec repository: repository ].
 		spec baseline: 'OSWindow' with: [ spec repository: repository ].
 		spec
 			baseline: 'EmergencyDebugger'
@@ -92,8 +91,6 @@ BaselineOfIDE >> baseline: spec [
 		spec baseline: 'Misc' with: [ spec repository: repository ].
 
 		self load: 'Fuel' group: 'Tests' spec: spec.
-
-		spec baseline: 'GeneralTests' with: [ spec repository: repository ].
 
 		self load: 'FreeType' group: 'tests' spec: spec.
 		self load: 'Keymapping' group: 'tests' spec: spec.
@@ -108,9 +105,7 @@ BaselineOfIDE >> baseline: spec [
 		spec package: 'BaselineOfPharoBootstrap'.
 		spec package: 'BaselineOfMonticello'.
 		spec package: 'BaselineOfMetacello'.
-		spec
-			baseline: 'ReferenceFinder'
-			with: [ spec repository: repository ].
+		spec baseline: 'ReferenceFinder' with: [ spec repository: repository ].
 		spec baseline: 'ClassParser' with: [ spec repository: repository ].
 
 
@@ -119,9 +114,7 @@ BaselineOfIDE >> baseline: spec [
 			group: #( 'FullEnvironment' 'SystemBrowser' 'Tests' )
 			spec: spec.
 		spec baseline: 'Ring' with: [ spec repository: repository ].
-		spec
-			baseline: 'HeuristicCompletion'
-			with: [ spec repository: repository ].
+		spec baseline: 'HeuristicCompletion' with: [ spec repository: repository ].
 		spec package: 'Tool-DependencyAnalyser-UI-Tab' with: [
 			"Depends also on the dependency analyser in newtools"
 			spec requires: #('Calypso') ].

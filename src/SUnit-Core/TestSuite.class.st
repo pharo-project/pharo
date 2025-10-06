@@ -49,15 +49,21 @@ TestSuite >> addTests: aCollection [
 	aCollection do: [:eachTest | self addTest: eachTest]
 ]
 
-{ #category : 'announcements' }
+{ #category : 'announcing' }
 TestSuite >> announceTest: aTest [
 	^ self testSuiteAnnouncer announce: (TestAnnouncement with: aTest)
 ]
 
 { #category : 'running' }
 TestSuite >> debug [
-
-	self runWith: [ :test | test debug ]
+	| result |
+	
+	result := TestResult new.
+	self runWith: [ :test | 
+		[ test debug: result ]
+		ensure: [
+			result dispatchResultsIntoHistory.
+			self testSuiteAnnouncer announce: (TestSuiteEnded result: result) ] ]
 ]
 
 { #category : 'accessing' }
@@ -91,7 +97,7 @@ TestSuite >> name: aString [
 	name := aString
 ]
 
-{ #category : 'running' }
+{ #category : 'accessing' }
 TestSuite >> resourceClass [
 
 	^ TestResource
@@ -110,7 +116,7 @@ TestSuite >> resources: someOrderedTestResourceClasses [
 	resources := someOrderedTestResourceClasses
 ]
 
-{ #category : 'running' }
+{ #category : 'accessing' }
 TestSuite >> resultClass [
 
 	^ TestAsserter classForTestResult
@@ -128,38 +134,48 @@ TestSuite >> run [
 TestSuite >> run: aResult [
 
 	CurrentExecutionEnvironment runTestsBy: [
-		self runWith: [ :test | test run: aResult ] ]
+		[ self runWith: [ :test | test run: aResult ] ]
+		ensure: [
+			aResult dispatchResultsIntoHistory.
+			self testSuiteAnnouncer announce: (TestSuiteEnded result: aResult) ] ]
 ]
 
-{ #category : 'running' }
+{ #category : 'private' }
 TestSuite >> runWith: aBlock [
+
 	self setUp.
-	[ self shuffledTests
-		do: [ :each |
+	[ 
+		self shuffledTests do: [ :each |
+			each class announcer
+				when: TestCaseAnnouncement 
+				send: #announce: 
+				to: self testSuiteAnnouncer.
 			aBlock value: each.
+			each class removeSubscription: self testSuiteAnnouncer.
 			self announceTest: each ] ]
-		ensure: [ self tearDown ]
+	ensure: [ 
+		self tearDown ]
 ]
 
 { #category : 'running' }
 TestSuite >> setUp [
 	self resources do: [:each |
-			each isAvailable ifFalse: [ each signalInitializationError ]]
+		each isAvailable ifFalse: [ each signalInitializationError ]]
 ]
 
-{ #category : 'running' }
+{ #category : 'accessing' }
 TestSuite >> shuffleSeed [
 
 	^ randomGenerator seed
 ]
 
-{ #category : 'running' }
+{ #category : 'accessing' }
 TestSuite >> shuffleSeed: aSeed [
 
 	randomGenerator := Random seed: aSeed
 ]
 
-{ #category : 'running' }
+{ #category : 'accessing' }
 TestSuite >> shuffledTests [
 
 	^ self tests shuffledBy: randomGenerator
@@ -170,7 +186,7 @@ TestSuite >> tearDown [
 	self resourceClass resetResources: self resources
 ]
 
-{ #category : 'announcements' }
+{ #category : 'announcing' }
 TestSuite >> testSuiteAnnouncer [
 	^ announcer ifNil: [ announcer := Announcer new. ]
 ]
@@ -181,12 +197,12 @@ TestSuite >> tests [
 	^ tests ifNil: [ tests := OrderedCollection new ]
 ]
 
-{ #category : 'announcements' }
+{ #category : 'announcing' }
 TestSuite >> unsubscribe: anAnnouncementClass [
 	self testSuiteAnnouncer unsubscribe: anAnnouncementClass
 ]
 
-{ #category : 'announcements' }
+{ #category : 'announcing' }
 TestSuite >> when: aAnnouncement do: aBlock for: aSubscriber [
 
 	self testSuiteAnnouncer when: aAnnouncement do: aBlock for: aSubscriber

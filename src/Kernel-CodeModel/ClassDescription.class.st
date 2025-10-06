@@ -291,6 +291,7 @@ ClassDescription >> classify: selector under: aProtocol [
 { #category : 'compiling' }
 ClassDescription >> compile: sourceCode classified: protocol [
 	"Compile the source code in the context of the receiver and install the result in the receiver's method dictionary under the given protocol (this can be a protocol or a protocol name).
+	Return the selector of the compiled method. 
 	
 	The argument sourceCode is either a string or an object that converts to a string or a PositionableStream on an object that converts to a string."
 
@@ -299,7 +300,8 @@ ClassDescription >> compile: sourceCode classified: protocol [
 
 { #category : 'compiling' }
 ClassDescription >> compile: sourceCode classified: protcol notifying: requestor [
-
+	"Return the selector of the compiled method"
+	
 	^ self
 		  compile: sourceCode
 		  classified: protcol
@@ -309,7 +311,8 @@ ClassDescription >> compile: sourceCode classified: protcol notifying: requestor
 
 { #category : 'compiling' }
 ClassDescription >> compile: sourceCode classified: protocol withStamp: changeStamp notifying: requestor [
-
+	"Return the selector of the compiled method."
+	
 	^ self
 		  compile: sourceCode
 		  classified: protocol
@@ -319,10 +322,13 @@ ClassDescription >> compile: sourceCode classified: protocol withStamp: changeSt
 ]
 
 { #category : 'compiling' }
-ClassDescription >> compile: sourceCode classified: protocol withStamp: changeStamp notifying: requestor logSource: logSource [
-
+ClassDescription >> compile: sourceCode classified: protocol 
+	withStamp: changeStamp notifying: requestor 
+	logSource: logSource [
+	
+	"Return the selector of the compiled method."
+	
 	| method |
-
 	method := self compiler
 		source: sourceCode;
 		requestor: requestor;
@@ -332,7 +338,6 @@ ClassDescription >> compile: sourceCode classified: protocol withStamp: changeSt
 		changeStamp: changeStamp;
 		logged: logSource;
 		install.
-
 	^ method selector
 ]
 
