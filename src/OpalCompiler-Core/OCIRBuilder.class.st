@@ -345,6 +345,12 @@ OCIRBuilder >> pushLiteral: object [
 	self add: (OCIRInstruction pushLiteral: object)
 ]
 
+{ #category : 'accessing' }
+OCIRBuilder >> pushLiteralAt: index [
+
+	self add: (OCIRInstruction pushLiteralAt: index)
+]
+
 { #category : 'instructions' }
 OCIRBuilder >> pushLiteralVariable: object [
 

@@ -98,6 +98,14 @@ OCIRInstruction class >> pushLiteral: object [
 		literal: object
 ]
 
+{ #category : 'accessing' }
+OCIRInstruction class >> pushLiteralAt: index [ 
+
+	^ OCIRPushLiteralAt new
+		index: index;
+		yourself
+]
+
 { #category : 'instance creation' }
 OCIRInstruction class >> pushLiteralVariable: object [
 

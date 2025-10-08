@@ -26,7 +26,7 @@ MCPackageTest >> testUnload [
 
 	self mockPackage unload.
 	self deny: (testingEnvironment hasClassNamed: #MCMockClassA).
-	self deny: (MCSnapshotTest includesSelector: #mockClassExtension).
+	self deny: (MCSnapshotTest lookupSelector: #mockClassExtension) isExtension.
 	self deny: (MCSnapshotTest hasProtocol: self mockExtensionProtocol).
 	testingEnvironment at: #MCMockClassA ifPresent: [ self fail ].
 	self assert: (Object subclasses
@@ -45,7 +45,7 @@ MCPackageTest >> testUnloadWithAdditionalTracking [
 	self assert: (announcer hasSubscriber: self).
 	self mockPackage unload.
 	self deny: (testingEnvironment hasClassNamed: #MCMockClassA).
-	self deny: (MCSnapshotTest includesSelector: #mockClassExtension).
+	self deny: (MCSnapshotTest lookupSelector: #mockClassExtension) isExtension.
 	self deny: (MCSnapshotTest hasProtocol: self mockExtensionProtocol).
 	testingEnvironment at: #MCMockClassA ifPresent: [ self fail ].
 	self assert: (Object subclasses

@@ -34,11 +34,20 @@ ClassDescription >> addAndClassifySelector: selector withMethod: compiledMethod 
 			priorMethod := method.
 			priorOrigin := method origin ].
 
+
+	priorMethod ifNotNil: [  
+		(protocol asString beginsWith: '*') ifTrue: [ 
+			protocol asString = priorMethod protocol name ifFalse: [ 
+				compiledMethod propertyAt: #beforeExtensionMethod put: priorMethod ].
+			"See Package >> #addMethod:"
+		]
+	].
+
+	self addSelectorSilently: selector withMethod: compiledMethod.
+
 	oldProtocol := self protocolOfSelector: selector.
 	self codeChangeAnnouncer prevent: MethodRecategorized during: [ self classify: selector under: protocol ].
 	newProtocol := self protocolOfSelector: selector.
-
-	self addSelectorSilently: selector withMethod: compiledMethod.
 
 	self isAnonymous ifTrue: [ ^ self ].
 
@@ -985,8 +994,11 @@ ClassDescription >> removeSelector: selector [
 	self removeFromProtocols: selector.
 
 	super removeSelector: selector.
-
-	self codeChangeAnnouncer methodRemoved: method origin: origin
+	self codeChangeAnnouncer methodRemoved: method origin: origin.
+	
+	method isExtension ifTrue: [ 
+		(method propertyAt: #beforeExtensionMethod) ifNotNil: [ :originalMethod |
+			self addSelector: selector withMethod: originalMethod ] ]
 ]
 
 { #category : 'instance variables' }

@@ -437,6 +437,83 @@ CompiledMethodTest >> testEqualityInstanceSideMethod [
 ]
 
 { #category : 'tests - testing' }
+CompiledMethodTest >> testExtensionEditedPresistOriginalMethod [
+
+	[
+	| original extension |
+	self class compile: 'isExtensionTestMethod ^ 1' classified: 'protocol'.
+	original := self class >> #isExtensionTestMethod.
+	self deny: original isExtension.
+
+	self class compile: 'isExtensionTestMethod ^ 2' classified: '*Kernel-Tests-Generated-Package'.
+	extension := self class >> #isExtensionTestMethod.
+	self assert: extension isExtension.
+	self assert: (extension propertyAt: #beforeExtensionMethod) equals: original.
+
+	self class compile: 'isExtensionTestMethod ^ 3' classified: '*Kernel-Tests-Generated-Package'.
+	extension := self class >> #isExtensionTestMethod.
+	self assert: extension isExtension.
+	self assert: (extension propertyAt: #beforeExtensionMethod) equals: original.
+	
+	"The old method is not extension!"
+	self deny: original isExtension ] ensure: [
+		self packageOrganizer removePackage: 'Kernel-Tests-Generated-Package'.
+		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | 
+			method propertyAt: #beforeExtensionMethod put: nil.
+			method removeFromSystem ] ]
+]
+
+{ #category : 'tests - testing' }
+CompiledMethodTest >> testExtensionReplaceExtensionMethod [
+
+	[
+	| original extension  extension2 |
+	self class compile: 'isExtensionTestMethod ^ 1' classified: 'protocol'.
+	original := self class >> #isExtensionTestMethod.
+	self deny: original isExtension.
+
+	self class compile: 'isExtensionTestMethod ^ 2' classified: '*Kernel-Tests-Generated-Package'.
+	extension := self class >> #isExtensionTestMethod.
+	self assert: extension isExtension.
+	self assert: (extension propertyAt: #beforeExtensionMethod) equals: original.
+
+	self class compile: 'isExtensionTestMethod ^ 3' classified: '*Kernel-Tests-Generated-Package-2'.
+	extension2 := self class >> #isExtensionTestMethod.
+	self assert: extension2 isExtension.
+	self assert: (extension2 propertyAt: #beforeExtensionMethod) equals: extension.
+	
+	"The old method is not extension!"
+	self deny: original isExtension ] ensure: [
+		self packageOrganizer removePackage: 'Kernel-Tests-Generated-Package'.
+		self packageOrganizer removePackage: 'Kernel-Tests-Generated-Package-2'.
+		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | 
+			method propertyAt: #beforeExtensionMethod put: nil.
+			method removeFromSystem ] ]
+]
+
+{ #category : 'tests - testing' }
+CompiledMethodTest >> testExtensionReplaceOriginalMethod [
+
+	[
+	| original extension |
+	self class compile: 'isExtensionTestMethod ^ 1' classified: 'protocol'.
+	original := self class >> #isExtensionTestMethod.
+	self deny: original isExtension.
+
+	self class compile: 'isExtensionTestMethod ^ 2' classified: '*Kernel-Tests-Generated-Package'.
+	extension := self class >> #isExtensionTestMethod.
+	self assert: extension isExtension.
+	self assert: (extension propertyAt: #beforeExtensionMethod) equals: original.
+	
+	"The old method is not extension!"
+	self deny: original isExtension ] ensure: [
+		self packageOrganizer removePackage: 'Kernel-Tests-Generated-Package'.
+		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | 
+			method propertyAt: #beforeExtensionMethod put: nil.
+			method removeFromSystem ] ]
+]
+
+{ #category : 'tests - testing' }
 CompiledMethodTest >> testHasComment [
 	self assert: (CompiledMethod>>#hasComment) hasComment
 ]
@@ -503,10 +580,7 @@ CompiledMethodTest >> testIsExtension [
 
 	[
 	| method |
-	self class compile: 'isExtensionTestMethod ^ 1' classified: 'protocol'.
-	self deny: (self class >> #isExtensionTestMethod) isExtension.
-
-	self class compile: 'isExtensionTestMethod ^ 1' classified: '*Kernel-Tests-Generated-Package'.
+	self class compile: 'isExtensionTestMethod ^ 2' classified: '*Kernel-Tests-Generated-Package'.
 	method := self class >> #isExtensionTestMethod.
 	self assert: method isExtension.
 
@@ -941,6 +1015,25 @@ CompiledMethodTest >> testRecompilingDoesNotRemoveExtensions [
 
 	self assert: method isExtension ] ensure: [
 		self packageOrganizer removePackage: 'GeneratedPackageForTest'.
+		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
+]
+
+{ #category : 'tests - testing' }
+CompiledMethodTest >> testRemoveExtensionRecoverOriginalMethod [
+
+	[
+	| original extension |
+	self class compile: 'isExtensionTestMethod ^ 1' classified: 'protocol'.
+	original := self class >> #isExtensionTestMethod.
+
+	self class compile: 'isExtensionTestMethod ^ 2' classified: '*Kernel-Tests-Generated-Package'.
+	extension := self class >> #isExtensionTestMethod.
+
+	self class removeSelector: #isExtensionTestMethod.
+
+	self assert: (self class >> #isExtensionTestMethod) equals: original 
+	] ensure: [
+		self packageOrganizer removePackage: 'Kernel-Tests-Generated-Package'.
 		self class compiledMethodAt: #isExtensionTestMethod ifPresent: [ :method | method removeFromSystem ] ]
 ]
 

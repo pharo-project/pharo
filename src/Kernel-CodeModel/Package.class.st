@@ -120,7 +120,7 @@ Package >> addMethod: aCompiledMethod [
 	(self includesClass: methodClass)
 		ifTrue: [ "We want to make sure the method is not considered an extension." aCompiledMethod removeProperty: #extensionPackage ]
 		ifFalse: [
-			aCompiledMethod propertyAt: #extensionPackage put: self. "We tag the method as an extension method."
+			aCompiledMethod propertyAt: #extensionPackage put: self.
 			(extensionSelectors at: methodClass ifAbsentPut: [ IdentitySet new ]) add: aCompiledMethod selector ].
 
 	^ aCompiledMethod

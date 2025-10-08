@@ -80,6 +80,10 @@ OCIRVisitor >> visitPushInstVar: pushInstVar [
 OCIRVisitor >> visitPushLiteral: pushLiteral [
 ]
 
+{ #category : 'accessing' }
+OCIRVisitor >> visitPushLiteralAt: pushLiteralVariableAt [ 
+]
+
 { #category : 'visiting' }
 OCIRVisitor >> visitPushLiteralVariable: pushLiteralVariable [
 ]
