@@ -44,6 +44,12 @@ MySubAccessingSuperclassState >> accessingSharedVariable2 [
 	^ Shared2
 ]
 
+{ #category : 'accessing' }
+MySubAccessingSuperclassState >> accessingSuperclass [
+	^ MyClassARoot 
+	
+]
+
 { #category : 'actions' }
 MySubAccessingSuperclassState >> writing [
 

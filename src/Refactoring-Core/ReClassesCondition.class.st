@@ -21,3 +21,9 @@ ReClassesCondition >> classes: aRBClassCollection [
 
 	classes := aRBClassCollection 
 ]
+
+{ #category : 'accessing' }
+ReClassesCondition >> subjects [
+
+	^ classes
+]

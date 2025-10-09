@@ -37,5 +37,5 @@ ReClassesAreNotMetaClassCondition >> violationMessageOn: aStream [
 ReClassesAreNotMetaClassCondition >> violators [
 
 	^ violators ifNil: [
-		  violators := classes select: [ :class | class isMeta ] ]
+		  violators := self subjects select: [ :class | class isMeta ] ]
 ]
