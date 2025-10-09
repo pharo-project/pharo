@@ -63,11 +63,12 @@ EpFileOutModificationsTest >> testFileOutMultipleClassAddition [
 	chunks := chunkImporter chunksFromFileNamed: outputFileReference fullName.
 
 	self assert: outputFileReference exists.
-	self assert: chunks size equals: 3.
-	self assert: ((chunks last: 2) allSatisfy: #isDoItDeclaration).
+	self assert: chunks size equals: 5.
+	self assert: (chunks first isDoItDeclaration).
+	self assert: (chunks third isDoItDeclaration).
 
-	literalNode1 := (OCParser parseExpression: (chunks at: chunks size - 1) contents) allChildren select: [ :each | each isLiteralNode ].
-	literalNode2 := (OCParser parseExpression: chunks last contents) allChildren select: [ :each | each isLiteralNode ].
+	literalNode1 := (OCParser parseExpression: chunks first contents) allChildren select: [ :each | each isLiteralNode ].
+	literalNode2 := (OCParser parseExpression: chunks third contents) allChildren select: [ :each | each isLiteralNode ].
 
 	self assert: (literalNode1 anySatisfy: [ :node | node value = aClass1 name ]).
 	self assert: (literalNode2 anySatisfy: [ :node | node value = aClass2 name ]).
@@ -88,8 +89,8 @@ EpFileOutModificationsTest >> testFileOutMultipleMethodAddition [
 	chunks := chunkImporter chunksFromFileNamed: outputFileReference fullName.
 
 	self assert: outputFileReference exists.
-	self assert: chunks size equals: 3.
-	self assert: ((chunks last: 2) allSatisfy: #isMethodDeclaration).
+	self assert: chunks size equals: 2.
+	self assert: (chunks allSatisfy: #isMethodDeclaration).
 
 	methodNode1 := OCParser parseMethod: (chunks at: chunks size - 1) contents.
 	methodNode2 := OCParser parseMethod: chunks last contents.
@@ -120,7 +121,7 @@ EpFileOutModificationsTest >> testFileOutMultipleMethodModification [
 	chunks := chunkImporter chunksFromFileNamed: outputFileReference fullName.
 
 	self assert: outputFileReference exists.
-	self assert: chunks size equals: 3.
+	self assert: chunks size equals: 2.
 	self assert: chunks last isMethodDeclaration.
 
 	methodNode := OCParser parseMethod: chunks last contents.
@@ -150,10 +151,10 @@ EpFileOutModificationsTest >> testFileOutMultipleMethodRemoval [
 
 	self assert: outputFileReference exists.
 	self assert: chunks size equals: 3.
-	self assert: ((chunks last: 2) allSatisfy: #isDoItDeclaration).
+	self assert: (chunks allSatisfy: #isDoItDeclaration).
 
-	methodNode1 := OCParser parseExpression: (chunks at: chunks size - 1) contents.
-	methodNode2 := OCParser parseExpression: chunks last contents.
+	methodNode1 := OCParser parseExpression: chunks first contents.
+	methodNode2 := OCParser parseExpression: chunks second contents.
 
 	self assert: methodNode1 selector equals: #removeSelector:.
 	self 
@@ -178,10 +179,10 @@ EpFileOutModificationsTest >> testFileOutSingleClassAddition [
 	chunks := chunkImporter chunksFromFileNamed: outputFileReference fullName.
 
 	self assert: outputFileReference exists.
-	self assert: chunks size equals: 2.
-	self assert: chunks last isDoItDeclaration.
+	self assert: chunks size equals: 3.
+	self assert: chunks first isDoItDeclaration.
 
-	literalNodes := (OCParser parseExpression: chunks last contents)
+	literalNodes := (OCParser parseExpression: chunks first contents)
 		                allChildren select: [ :each | each isLiteralNode ].
 
 	self assert: (literalNodes anySatisfy: [ :node | node value = aClass name ]).
@@ -203,7 +204,7 @@ EpFileOutModificationsTest >> testFileOutSingleClassModification [
 	self assert: chunks size equals: 2.
 	self assert: chunks last isDoItDeclaration.
 
-	rbNode := (OCParser parseExpression: chunks last contents) allChildren select: #isLiteralNode.
+	rbNode := (OCParser parseExpression: chunks first contents) allChildren select: #isLiteralNode.
 	self assert: (rbNode anySatisfy: [ :node | node value = #x ]).
 ]
 
@@ -220,7 +221,7 @@ EpFileOutModificationsTest >> testFileOutSingleClassRemoval [
 	chunks := chunkImporter chunksFromFileNamed: outputFileReference fullName.
 
 	self assert: outputFileReference exists.
-	self assert: chunks size equals: 2.
+	self assert: chunks size equals: 1.
 	self assert: chunks last isDoItDeclaration.
 
 	messageNode := OCParser parseExpression: chunks last contents.
@@ -240,7 +241,7 @@ EpFileOutModificationsTest >> testFileOutSingleMethodAddition [
 	chunks := chunkImporter chunksFromFileNamed: outputFileReference fullName.
 
 	self assert: outputFileReference exists.
-	self assert: chunks size equals: 2.
+	self assert: chunks size equals: 1.
 	self assert: chunks last isMethodDeclaration.
 
 	methodNode := OCParser parseMethod: chunks last contents.
@@ -264,7 +265,7 @@ EpFileOutModificationsTest >> testFileOutSingleMethodModificationOfProtocol [
 		          outputFileReference fullName.
 
 	self assert: outputFileReference exists.
-	self assert: chunks size equals: 2.
+	self assert: chunks size equals: 1.
 
 	methodChunk := chunks last.
 	self assert: methodChunk isMethodDeclaration.
@@ -285,7 +286,7 @@ EpFileOutModificationsTest >> testFileOutSingleMethodModificationOfSourceCode [
 	chunks := chunkImporter chunksFromFileNamed: outputFileReference fullName.
 
 	self assert: outputFileReference exists.
-	self assert: chunks size equals: 2.
+	self assert: chunks size equals: 1.
 	self assert: chunks last isMethodDeclaration.
 
 	methodNode := OCParser parseMethod: chunks last contents.
@@ -314,33 +315,11 @@ EpFileOutModificationsTest >> testFileOutSingleMethodRemoval [
 	self assert: chunks size equals: 2.
 	self assert: chunks last isDoItDeclaration.
 
-	methodNode := OCParser parseExpression: chunks last contents.
+	methodNode := OCParser parseExpression: chunks first contents.
 	self assert: methodNode selector equals: #removeSelector:.
 	self 
 		assertCollection: methodNode arguments 
 		hasSameElements: { OCVariableNode named: #fortyTwo }
-]
-
-{ #category : 'tests' }
-EpFileOutModificationsTest >> testFileOutSingleProtocolAddition [
-
-	| aClass outputFileReference chunks literalValueNode |
-
-	aClass := classFactory newClass.
-	aClass addProtocol: 'protocol'.
-
-	chunkExporter fileOut: (self allLogEntriesWith: EpProtocolAddition).
-	outputFileReference := chunkExporter outputFileReference.
-
-	chunks := chunkImporter chunksFromFileNamed: outputFileReference fullName.
-
-	self assert: outputFileReference exists.
-	self assert: chunks size equals: 2.
-	self assert: chunks last isClassOrganizationDeclaration.
-
-	literalValueNode := OCParser parseExpression: chunks last contents.
-	self assert: literalValueNode value equals: #protocol.
-
 ]
 
 { #category : 'tests' }
@@ -358,7 +337,7 @@ EpFileOutModificationsTest >> testFileOutSingleProtocolRemoval [
 	chunks := chunkImporter chunksFromFileNamed: outputFileReference fullName.
 
 	self assert: outputFileReference exists.
-	self assert: chunks size equals: 2.
+	self assert: chunks size equals: 1.
 	self assert: chunks last isDoItDeclaration.
 
 	methodNode := OCParser parseExpression: chunks last contents.
@@ -378,10 +357,10 @@ EpFileOutModificationsTest >> testFileOutSingleTraitAddition [
 	chunks := chunkImporter chunksFromFileNamed: outputFileReference fullName.
 
 	self assert: outputFileReference exists.
-	self assert: chunks size equals: 2.
-	self assert: chunks last isDoItDeclaration.
+	self assert: chunks size equals: 3.
+	self assert: chunks first isDoItDeclaration.
 
-	literalNodes := (OCParser parseExpression: chunks last contents)
+	literalNodes := (OCParser parseExpression: chunks first contents)
 		                allChildren select: [ :each | each isLiteralNode ].
 
 	self assert: (literalNodes anySatisfy: [ :node | node value = aTrait name ]).
@@ -400,10 +379,10 @@ EpFileOutModificationsTest >> testFileOutSingleTraitModification [
 	chunks := chunkImporter chunksFromFileNamed: outputFileReference fullName.
 
 	self assert: outputFileReference exists.
-	self assert: chunks size equals: 2.
-	self assert: chunks last isDoItDeclaration.
+	self assert: chunks size equals: 3.
+	self assert: chunks first isDoItDeclaration.
 
-	rbNode := (OCParser parseExpression: chunks last contents) allChildren select: #isLiteralNode.
+	rbNode := (OCParser parseExpression: chunks first contents) allChildren select: #isLiteralNode.
 	self assert: (rbNode anySatisfy: [ :node | node value = #x ]).
 ]
 
@@ -420,7 +399,7 @@ EpFileOutModificationsTest >> testFileOutSingleTraitRemoval [
 	chunks := chunkImporter chunksFromFileNamed: outputFileReference fullName.
 
 	self assert: outputFileReference exists.
-	self assert: chunks size equals: 2.
+	self assert: chunks size equals: 1.
 	self assert: chunks last isDoItDeclaration.
 
 	messageNode := OCParser parseExpression: chunks last contents.
@@ -442,7 +421,7 @@ EpFileOutModificationsTest >> testMethodModificationWithWideString [
 	chunks := chunkImporter chunksFromFileNamed: outputFileReference fullName.
 
 	self assert: outputFileReference exists.
-	self assert: chunks size equals: 2.
+	self assert: chunks size equals: 1.
 	self assert: chunks last isMethodDeclaration.
 
 	methodNode := OCParser parseMethod: chunks last contents.

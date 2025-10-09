@@ -130,8 +130,6 @@ SnapshotOperation >> performSnapshot [
 	"If both false... nothing to do"
 	(save or: [quit]) ifFalse: [ ^ self ].
 
-	ChangesLog default logSnapshot: save andQuit: quit.
-
 	"Image not usable from here until the session is restarted!"
 	self executeStoringError: [sessionManager currentSession stop: quit].
 	

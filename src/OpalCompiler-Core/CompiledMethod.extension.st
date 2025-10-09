@@ -10,11 +10,6 @@ CompiledMethod >> decompile [
 ]
 
 { #category : '*OpalCompiler-Core' }
-CompiledMethod >> hasTemporaryVariableNamed: aName [
-	^ self tempNames includes: aName
-]
-
-{ #category : '*OpalCompiler-Core' }
 CompiledMethod >> lookupVar: aString [
 	^self ast scope lookupVar: aString
 ]
@@ -67,12 +62,6 @@ CompiledMethod >> sourceNodeForPC: aPC [
 	self propertyAt: #bcToASTCache ifPresent: [ :bcToASTCache |
 		^ bcToASTCache nodeForPC: aPC ].
 	^ sourceNode sourceNodeForPC: aPC
-]
-
-{ #category : '*OpalCompiler-Core' }
-CompiledMethod >> temporaryVariableNamed: aName [
-	(self hasTemporaryVariableNamed: aName) ifFalse: [ ^nil ].
-	^self sourceNode scope lookupVar: aName
 ]
 
 { #category : '*OpalCompiler-Core' }

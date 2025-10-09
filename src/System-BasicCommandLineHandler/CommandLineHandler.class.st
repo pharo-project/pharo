@@ -64,11 +64,6 @@ CommandLineHandler class >> description [
 	^ nil
 ]
 
-{ #category : 'accessing' }
-CommandLineHandler class >> isAbstract [
-	^ self = CommandLineHandler
-]
-
 { #category : 'handler selection' }
 CommandLineHandler class >> isResponsibleFor: aCommandLineArguments [
 	^ aCommandLineArguments includesSubCommand: self commandName

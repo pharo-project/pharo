@@ -53,13 +53,6 @@ OCProgramNode >> clearReflectivityAnnotations [
 ]
 
 { #category : '*Reflectivity' }
-OCProgramNode >> counter [
-
-	self hasExecutionCounter ifFalse:[^nil].
-	^(self beforeLinks detect: [ :link | link metaObject class = ExecutionCounter]) metaObject
-]
-
-{ #category : '*Reflectivity' }
 OCProgramNode >> hasBeenExecuted [
 	^self propertyAt: #tagExecuted ifAbsent: false
 ]
@@ -67,13 +60,6 @@ OCProgramNode >> hasBeenExecuted [
 { #category : '*Reflectivity' }
 OCProgramNode >> hasBreakpoint [
 	^ (self hasProperty: #breakpoints) and: [ self breakpoints notEmpty ]
-]
-
-{ #category : '*Reflectivity' }
-OCProgramNode >> hasExecutionCounter [
-
-	self hasMetalinkBefore ifFalse: [ ^false ].
-	^self beforeLinks anySatisfy: [ :link | link metaObject class = ExecutionCounter ]
 ]
 
 { #category : '*Reflectivity' }
@@ -115,13 +101,6 @@ OCProgramNode >> hasMetalinkBefore [
 OCProgramNode >> hasMetalinkInstead [
 		self hasMetalink ifFalse: [^false].
 		^self insteadLinks isNotEmpty
-]
-
-{ #category : '*Reflectivity' }
-OCProgramNode >> hasWatch [
-
-	self hasMetalinkAfter ifFalse: [ ^false ].
-	^self afterLinks anySatisfy: [ :link | link metaObject class = Watch ]
 ]
 
 { #category : '*Reflectivity' }
@@ -231,11 +210,4 @@ OCProgramNode >> tagExecuted [
 { #category : '*Reflectivity' }
 OCProgramNode >> variableValueInContext: aContext [
 	^nil
-]
-
-{ #category : '*Reflectivity' }
-OCProgramNode >> watch [
-
-	self hasWatch ifFalse:[^nil].
-	^(self afterLinks detect: [ :link | link metaObject class = Watch ]) metaObject
 ]

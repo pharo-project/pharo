@@ -899,6 +899,7 @@ RubScrolledTextMorph >> position: aPoint [
 
 { #category : 'accessing - scrollbars' }
 RubScrolledTextMorph >> registerScrollChanges: aSelector [
+
 	self scrollPane announcer when: PaneScrolling send: aSelector to: self model
 ]
 
@@ -1020,7 +1021,7 @@ RubScrolledTextMorph >> setSelection: aSelectionInterval [
 	self selectionChanged
 ]
 
-{ #category : 'accessing' }
+{ #category : 'model protocol' }
 RubScrolledTextMorph >> setSelectionSelector: aSelector [
 	setSelectionSelector := aSelector
 ]

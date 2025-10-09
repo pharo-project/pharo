@@ -30,18 +30,6 @@ ReNewNegationCondition >> errorString [
 	^ condition errorString
 ]
 
-{ #category : 'accessing' }
-ReNewNegationCondition >> nonViolators [
-
-	^ self subjects difference: self violators
-]
-
-{ #category : 'accessing' }
-ReNewNegationCondition >> subjects [
-
-	^ condition subjects
-]
-
 { #category : 'displaying' }
 ReNewNegationCondition >> violationMessageOn: aWriteStream [
 

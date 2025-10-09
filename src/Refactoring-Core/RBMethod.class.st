@@ -249,7 +249,7 @@ RBMethod >> selector: aSymbol [
 RBMethod >> source [
 	"Returns the source code of the method receiver."
 	
-	^ source ifNil: [ source := (class realClass sourceCodeAt: selector) asString ]
+	^ source ifNil: [ source := (class realClass >> selector) sourceCode ]
 ]
 
 { #category : 'accessing' }

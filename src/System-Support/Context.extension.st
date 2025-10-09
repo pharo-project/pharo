@@ -29,13 +29,9 @@ Context >> errorReportOn: stream [
 		cr.
 	stream
 		nextPutAll: 'Image: ';
-		nextPutAll: SystemVersion current version asString;
-		nextPutAll: ' [';
-		nextPutAll: Smalltalk lastUpdateString asString;
-		nextPutAll: ']';
+		nextPutAll: SystemVersion current asString;
 		cr.
-	stream cr.
-	"Note: The following is an open-coded version of  Context>>stackOfSize: since this method may be called during a  low space condition and we might run out of space for allocating the  full stack."
+	stream cr. "Note: The following is an open-coded version of  Context>>stackOfSize: since this method may be called during a  low space condition and we might run out of space for allocating the  full stack."
 	stackDepth := 0.
 	aContext := self.
 	[ aContext isNotNil and: [ (stackDepth := stackDepth + 1) < 40 ] ] whileTrue: [ "variable values"
@@ -54,8 +50,7 @@ Context >> errorReportOn: stream [
 					stream
 						nextPutAll: ' - - - - - - - - - - - - - - -
 			- - - - - - - - - - - - - - - - - -';
-						cr ].
-			"just class>>selector"
+						cr ]. "just class>>selector"
 			stream
 				print: aContext;
 				cr.

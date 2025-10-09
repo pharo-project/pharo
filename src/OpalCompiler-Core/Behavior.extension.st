@@ -23,17 +23,7 @@ Behavior >> compile: code notifying: requestor [
 	argument code is either a string or an object that converts to a string or
 	a PositionableStream. This method also saves the source code."
 
-	| method |
-	method  := self compiler
-		source: code;
-		requestor: requestor;
-		failBlock: (requestor ifNotNil: [ [ ^ nil ] ]); "no failblock if no requestor"
-		compile.
-
-	method putSource: code
-			withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Behavior method'; cr].
-	self addSelector: method selector withMethod: method.
-	^ method selector
+	^ self compile: code classified: nil notifying: requestor
 ]
 
 { #category : '*OpalCompiler-Core' }
@@ -91,7 +81,7 @@ Behavior >> recompile: selector from: oldClass [
 	self codeChangeAnnouncer suspendAllWhile: [
 		method := oldClass compiledMethodAt: selector.
 		newMethod := oldClass compiler
-			             source: (oldClass sourceCodeAt: selector);
+			             source: (oldClass >> selector) sourceCode;
 			             priorMethod: method;
 			             class: self;
 			             permitFaulty: true;

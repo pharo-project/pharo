@@ -24,22 +24,10 @@ ReReifiedCondition >> isTrue [
 	^ self check
 ]
 
-{ #category : 'accessing' }
-ReReifiedCondition >> nonViolators [
-
-	^ self subjects difference: self violators
-]
-
 { #category : 'logical operations' }
 ReReifiedCondition >> not [ 
 
 	^ ReNewNegationCondition on: self
-]
-
-{ #category : 'accessing' }
-ReReifiedCondition >> subjects [
-	
-	self subclassResponsibility 
 ]
 
 { #category : 'displaying' }

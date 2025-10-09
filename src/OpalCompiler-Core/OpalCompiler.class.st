@@ -558,39 +558,31 @@ OpalCompiler >> install [
 	class := self methodClass.
 	self assert: class isNotNil.
 
-	method := self compile ifNil: [ ^ nil ].
-
-	"If the prior method was not set explicitly, we set it because we will need it if we are not in the first compilation"
+	method := self compile ifNil: [ ^ nil ]. "If the prior method was not set explicitly, we set it because we will need it if we are not in the first compilation"
 	self priorMethod ifNil: [ "In case the method comes from a trait, we ignore it because it means we are overriding the trait method in the class"
-		class compiledMethodAt: method selector ifPresent: [ :aMethod |
-			aMethod isFromTrait ifFalse: [ self priorMethod: aMethod ] ] ].
-
-	"In case we are not compiling the method for the first time, we want to ensure that some properties are kept."
-	self priorMethod ifNotNil: [
-		priorMethod migratePersistingPropertiesIn: method ].
+		class compiledMethodAt: method selector ifPresent: [ :aMethod | aMethod isFromTrait ifFalse: [ self priorMethod: aMethod ] ] ]. "In case we are not compiling the method for the first time, we want to ensure that some properties are kept."
+	self priorMethod ifNotNil: [ priorMethod migratePersistingPropertiesIn: method ].
 
 	changeStamp ifNil: [ changeStamp := DateAndTime now printString ].
 	logSource := self logged ifNil: [ true ].
-	protocol := protocol ifNil: [
-		            self priorMethod ifNotNil: [ self priorMethod protocol ] ].
+	protocol := protocol ifNil: [ self priorMethod ifNotNil: [ self priorMethod protocol name ] ].
 
 	logSource ifTrue: [
-		method
-			putSource: source
-			withPreamble: [ :file | "It is possible the protocol might be wrong, fro example if the protocol is nil or and extension to the package of the class containing the method. But to fix this problem it would require to find the right protocol before classification and this is some work to do... And this logged protocol is not really used."
-				class
-					printProtocolChunk: protocol
-					on: file
-					withStamp: changeStamp
-					priorMethod: self priorMethod.
-				file cr ] ].
+			method
+				putSource: source
+				withFooter: ''
+				protocol: protocol asString
+				timestamp: changeStamp asString
+				priorSourcePointer: (self priorMethod ifNil: [ 0 ] ifNotNil: [ self priorMethod sourcePointer ]) ].
 
-	class
-		addAndClassifySelector: method selector
-		withMethod: method
-		inProtocol: protocol.
+	"Install the method and classify AFTER setting the source pointer.
+	If the method is a trait method, trait installation is hooked down here.
+	And it depends on having set the source pointer before.
+	
+	This is not the ideal order, because this means that a failure in writing the source code may prevent method installation in the system (and thus preventing further work/updates to code)."			
+	class addAndClassifySelector: method selector withMethod: method inProtocol: protocol.
 
-	class instanceSide noteCompilationOf: method meta: class isClassSide.
+	class noteCompilationOf: method.
 
 	^ method
 ]

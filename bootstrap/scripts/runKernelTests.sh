@@ -59,9 +59,10 @@ export PHARO_CI_TESTING_ENVIRONMENT=1
 #Initializing the Image
 ./pharo bootstrap.image
 #Adding packages removed from the bootstrap
-./pharo bootstrap.image perform --save BasicHermesTool load: -- Clap-Core.hermes Clap-CommandLine.hermes Hermes-Extensions.hermes
+./pharo bootstrap.image perform --save BasicHermesTool load: --as-array Clap-Core.hermes Clap-CommandLine.hermes Clap-Commands-Pharo.hermes Hermes-Extensions.hermes
 ./pharo bootstrap.image perform --save Pragma buildCache
-./pharo bootstrap.image perform --no-quit ClapContext executeWithPragmaCommandsAndArguments: -- loadHermes System-Time.hermes AST-Core.hermes Random-Core.hermes System-NumberPrinting.hermes --save --no-fail-on-undeclared --on-duplication ignore
+./pharo bootstrap.image perform --save ClapCommandLineHandler initialize
+./pharo bootstrap.image loadHermes System-Time.hermes AST-Core.hermes Random-Core.hermes System-NumberPrinting.hermes --save --no-fail-on-undeclared --on-duplication ignore
 ./pharo bootstrap.image perform --save ChronologyConstants initialize
 
 #Initializing the package manager

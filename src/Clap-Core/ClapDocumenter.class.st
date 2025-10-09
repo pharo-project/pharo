@@ -83,8 +83,11 @@ ClapDocumenter >> explain: aCommand canonicalName: aCanonicalName [
 { #category : 'documenting' }
 ClapDocumenter >> explainContext: aClapContext [
 
+	| command |
+	command := [ aClapContext lastSubcommand ] on: ClapUnmatchCommand do: [ aClapContext ].
+
 	self 
-		explain: aClapContext lastSubcommand specification
+		explain: command specification
 		canonicalName: (self commandStringFrom: aClapContext)
 ]
 

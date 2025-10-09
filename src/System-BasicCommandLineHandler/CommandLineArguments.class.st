@@ -25,19 +25,18 @@ CommandLineArguments class >> withArguments: aCollection [
 ]
 
 { #category : 'accessing' }
-CommandLineArguments >> allFilesWithExtension: anExtension [
-	^ self arguments select: [ :arg|
-		arg endsWith: anExtension ]
-]
-
-{ #category : 'accessing' }
 CommandLineArguments >> argumentAt: index [
 	^ arguments at: index
 ]
 
 { #category : 'accessing' }
 CommandLineArguments >> arguments [
-	^ arguments
+	^ arguments asArray
+]
+
+{ #category : 'accessing' }
+CommandLineArguments >> arguments: anArray [
+	arguments := anArray
 ]
 
 { #category : 'testing' }
@@ -153,6 +152,12 @@ CommandLineArguments >> optionAt: aString ifPresent: presentBlock ifAbsent: abse
 	| option |
 	option := self optionAt: aString ifAbsent: [ ^ absentBlock value ].
 	^ presentBlock value: option
+]
+
+{ #category : 'testing' }
+CommandLineArguments >> removeFirst [
+
+	arguments := arguments copyWithoutFirst
 ]
 
 { #category : 'testing' }

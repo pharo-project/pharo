@@ -38,5 +38,5 @@ ReClassHasSubclassesCondition >> violators [
 		  violators := ((self theClass allSubclasses collect: [ :each |
 			                 each name ]) includesAll: subclasses)
 			               ifTrue: [ {  } ]
-			               ifFalse: [ self subjects ] ]
+			               ifFalse: [ { self class } ] ]
 ]

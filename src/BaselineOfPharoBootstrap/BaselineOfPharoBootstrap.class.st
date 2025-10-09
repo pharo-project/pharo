@@ -118,6 +118,8 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'System-Hashing'.
 		spec package: 'System-Platforms'.
 		spec package: 'System-SessionManager'.
+		
+		spec package: 'CodeExport'.
 		spec package: 'System-Sources'.
 		spec package: 'System-Support'.
 
@@ -175,6 +177,8 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'System-Finalization'.
 			'System-Platforms'.
 			'System-SessionManager'.
+
+			'CodeExport'.
 			'System-Sources'.
 			
 			'PerformMessageCommandLineHandler'.

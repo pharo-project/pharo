@@ -43,13 +43,6 @@ Class >> link: aMetaLink toVariableNamed: vName option: accessStrategy [
 ]
 
 { #category : '*Reflectivity' }
-Class >> newBreakpointForVariable: aVariableName [
-	^ VariableBreakpoint
-		newBreakpointForVariable: aVariableName
-		inClass: self
-]
-
-{ #category : '*Reflectivity' }
 Class >> nonAnonymousClass [
 	^ self
 ]

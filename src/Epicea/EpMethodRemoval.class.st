@@ -38,8 +38,9 @@ EpMethodRemoval >> fileOutEntryOn: aWriteStream [
 
 	aWriteStream 
 		nextPutAll: self behaviorAffectedName;
-		nextPutAll: ' removeSelector: ';
-		nextChunkPut: self selector asSymbol;
+		nextPutAll: ' removeSelector: '.
+	(ChunkWriteStream on: aWriteStream)
+		nextPut:  self selector asSymbol;
 		cr
 ]
 

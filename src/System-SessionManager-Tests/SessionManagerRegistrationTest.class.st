@@ -35,6 +35,28 @@ SessionManagerRegistrationTest >> testGivenARegisteredClassRenamedThenItsHandler
 ]
 
 { #category : 'tests' }
+SessionManagerRegistrationTest >> testGivenARegisteredNamedHandlerWhenIRegisterTheSameNameThenRegisteredHandlerIsUpdated [
+	| registeredClassName |
+	
+	manager
+		register: (NamedSessionHandler forClassNamed: #Foo id: #someId)
+		inCategory: manager systemCategory.
+	registeredClassName := (manager startupList detect: [:each | each handledId = #someId]) registeredClassName.
+	self
+		assert: registeredClassName
+		equals: #Foo.
+		
+	manager
+		register: (NamedSessionHandler forClassNamed: #Bar id: #someId)
+		inCategory: manager systemCategory.
+	registeredClassName := (manager startupList detect: [:each | each handledId = #someId]) registeredClassName.
+			
+	self
+		assert: registeredClassName
+		equals: #Bar
+]
+
+{ #category : 'tests' }
 SessionManagerRegistrationTest >> testGivenManyRegistrationsInDifferentCategoriesShoudlLastClassRegistrationBeTheOnlyOccurrenceInStartupList [
 
 	manager registerSystemClassNamed: #Foo.

@@ -1,6 +1,3 @@
-"
-I check that classes have no instance variables, no shared variables and no selectors
-"
 Class {
 	#name : 'ReClassesEmptyCondition',
 	#superclass : 'ReClassesCondition',

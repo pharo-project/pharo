@@ -28,9 +28,7 @@ Class {
 		'receiver'
 	],
 	#classVars : [
-		'PrimitiveFailToken',
-		'SpecialPrimitiveSimulators',
-		'TryNamedPrimitiveTemplateMethod'
+		'PrimitiveFailToken'
 	],
 	#category : 'Kernel-CodeModel-Methods',
 	#package : 'Kernel-CodeModel',
@@ -139,35 +137,7 @@ Context class >> contextOn: exceptionClass do: block [
 Context class >> initialize [
 
 	"A unique object to be returned when a primitive fails during simulation"
-	PrimitiveFailToken := Object new.
-	self initializeTryNamedPrimitiveTemplateMethod.
-	SpecialPrimitiveSimulators := nil
-]
-
-{ #category : 'simulation' }
-Context class >> initializePrimitiveSimulators [
-	"extra primitive simulators can be registered by implementing
-	#registerPrimitiveSimulators method in class side of your class."
-	<ignoreNotImplementedSelectors: #(#registerPrimitiveSimulators)>
-
-	SpecialPrimitiveSimulators := Dictionary new.
-
-	Class allSubclassesDo: [:metaclass |
-		(metaclass includesSelector: #registerPrimitiveSimulators) ifTrue: [
-			metaclass instanceSide registerPrimitiveSimulators.
-			]
-		]
-]
-
-{ #category : 'simulation' }
-Context class >> initializeTryNamedPrimitiveTemplateMethod [
-	| source |
-	source := 'tryNamedPrimitive
-	"This method is a template that the Smalltalk simulator uses to
-	execute primitives. See Object documentation whatIsAPrimitive."
-	<primitive:'' module:'' error: errorCode>
-	^ Context primitiveFailTokenFor: errorCode'.
-	TryNamedPrimitiveTemplateMethod := Smalltalk compiler compile: source
+	PrimitiveFailToken := Object new
 ]
 
 { #category : 'instance creation' }
@@ -213,12 +183,6 @@ Context class >> sender: s receiver: r method: m arguments: args [
 	^(self newForMethod: m) setSender: s receiver: r method: m arguments: args
 ]
 
-{ #category : 'accessing' }
-Context class >> specialPrimitiveSimulators [
-	SpecialPrimitiveSimulators ifNil: [ self initializePrimitiveSimulators ].
-	^ SpecialPrimitiveSimulators
-]
-
 { #category : 'special context creation' }
 Context class >> theReturnMethod [
 
@@ -226,11 +190,6 @@ Context class >> theReturnMethod [
 	meth := self lookupSelector: #return:.
 	meth isPrimitive ifTrue: [^ self error: 'expected #return: to not be a primitive'].
 	^ meth
-]
-
-{ #category : 'accessing' }
-Context class >> tryNamedPrimitiveTemplateMethod [
-	^ TryNamedPrimitiveTemplateMethod
 ]
 
 { #category : 'private' }
@@ -2227,13 +2186,9 @@ Context >> tryNamedPrimitiveIn: aCompiledMethod for: aReceiver withArgs: argumen
 					ifTrue: [ errorCode := nil ]
 					ifFalse: [ self primitiveFailed ]].
 				^  self class primitiveFailTokenFor: errorCode ].
-	"Assume a nil error code implies the primitive is not implemented and fall back on the old code."
-
-	"The primitive doesn't exist or there was an error. Hence, we follow another solution without the primitive"
-	^ self
-		withoutPrimitiveTryNamedPrimitiveIn: aCompiledMethod
-		for: aReceiver
-		withArgs: arguments
+	
+	"Nil error code implies the primitive is not implemented"
+	^ self error: 'Cannot execute primitive'
 ]
 
 { #category : 'private' }
@@ -2339,31 +2294,4 @@ Context >> willFailReturn [
 	"Answer whether self step will cause an illegal return."
 
 	^(self method encoderClass isReturnAt: pc in: self method) and: [self sender isNil or: [self sender isDead]]
-]
-
-{ #category : 'private' }
-Context >> withoutPrimitiveTryNamedPrimitiveIn: aCompiledMethod for: aReceiver withArgs: arguments [
-	"When using the debugger we want to run a method step by step. What what happens when we do a step into a CompiledMethod which has a primitive? If such a method is executed from outside the Debugger (normal scenario) the VM knows that such CompiledMethod has a primitive declaration and hence executes it. If it fails then it continues executing all the bytecodes of the method. Otherwise, it just returns.
-
-Now, what is the problem with the Debugger? The problem is that if the primitive fail, we don't want that the VM directly executes all the remaining bytecodes of the method. Instead, we would like to go step by step witht he Debugger, just as happens with normal methods.
-
-To solve the mentioned problem, we use the following trick: We have the orignal compiled method (the one that has a primitive invocation), the receiver and the arguments. So the idea is to use a template compiled method that ONLY contains the primitive declaration (it doesn't include all the smalltalk code after the primitive). #tryNamedPrimitiveTemplateMethod answers such a template method which looks like:
-
-tryNamedPrimitive
-	<primitive:'' module:''>
-	^ Context primitiveFailToken'
-
-Since this method does not change its bytecodes for every invocation, we can reuse it for all methods with primitives. There are only 2 things we have to change in the template: the number of arguments and the primitive declaration (to use the correct primitive name and module name).
-
-Then what we do is to run that compiled method with the receiver and arguments we have. The result is that we will be invoking almost the same original method but a slighly different version that does not have the smalltalk part after the primitive and that in contrast sends #primitiveFailToken. If this method invocation does not fail, then the Debugger continues debugging the sender of the primitive method. In this case, the step in is the same as step over. If the primitive fails, then the debugger continues executing the smalltalk part after the primitive method. In this case, step in is a real step in."
-
-	| theMethod |
-	arguments size > 8 ifTrue: [ ^ self class primitiveFailToken ].
-	theMethod := self class tryNamedPrimitiveTemplateMethod.
-	theMethod prepareForSimulationWith: arguments size.
-	theMethod ifNil: [ ^ self class primitiveFailToken ].
-	self setNamedPrimitiveInformationFrom: aCompiledMethod toMethod: theMethod.
-	theMethod flushCache.
-
-	^ theMethod valueWithReceiver: aReceiver arguments: arguments
 ]

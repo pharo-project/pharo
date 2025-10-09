@@ -144,7 +144,7 @@ Bag >> counts [
 Bag >> cumulativeCounts [
 	"Answer with a collection of cumulative percents covered by elements so far."
 
-	self cumulativePercents 
+	^ self cumulativePercents 
 ]
 
 { #category : 'accessing' }
