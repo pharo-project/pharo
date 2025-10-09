@@ -36,13 +36,29 @@ ReNewNegationCondition >> nonViolators [
 	^ condition violators
 ]
 
+{ #category : 'logical operations' }
+ReNewNegationCondition >> not [
+	^ condition
+]
+
 { #category : 'displaying' }
 ReNewNegationCondition >> violationMessageOn: aWriteStream [
-	condition wrapper: self.
-	aWriteStream
-		nextPutAll: 'NOT ';
-		nextPutAll: condition errorString.
-	condition wrapper: nil
+	| method re message |
+	"If my condition is a negation, return its condition violation message"
+	condition class == self class 
+		ifTrue: [ ^ condition condition violationMessageOn: aWriteStream ].
+
+	"Otherwise, send the method defined in the condition to self.
+	In this way, violators return nonViolators"
+	method := condition class lookupSelector: #violationMessageOn:.
+	message := String streamContents: [:s | 
+		method valueWithReceiver: self arguments: { s }].
+
+	"Remove 'not' apparitions from the message"
+	re := '[ ]+not[ ]*' asRegex.
+	message := re copy: message contents replacingMatchesWith: ' '.
+	aWriteStream nextPutAll: message
+
 ]
 
 { #category : 'accessing' }

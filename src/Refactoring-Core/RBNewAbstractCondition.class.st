@@ -1,9 +1,6 @@
 Class {
 	#name : 'RBNewAbstractCondition',
 	#superclass : 'Object',
-	#instVars : [
-		'wrapper'
-	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
@@ -55,20 +52,6 @@ RBNewAbstractCondition >> violationMessageOn: aStream [
 { #category : 'accessing' }
 RBNewAbstractCondition >> violators [
 	self subclassResponsibility 
-]
-
-{ #category : 'accessing' }
-RBNewAbstractCondition >> wrapper [
-	^ wrapper ifNil: [ self ]
-]
-
-{ #category : 'accessing' }
-RBNewAbstractCondition >> wrapper: aCondition [ 
-	"A wrapper is a NegationCondition I am part of.
-	Wrappers are always nil, except during the execution of `violationMessageOn:`.
-	Without wrappers, violation messages are empty for negated conditions (because violators are empty too!)"
-
-	wrapper := aCondition 
 ]
 
 { #category : 'logical operations' }
