@@ -43,7 +43,7 @@ ReNewNegationCondition >> not [
 
 { #category : 'displaying' }
 ReNewNegationCondition >> violationMessageOn: aWriteStream [
-	| method re message |
+	| method re message message2 |
 	"If my condition is a negation, return its condition violation message"
 	condition class == self class 
 		ifTrue: [ ^ condition condition violationMessageOn: aWriteStream ].
@@ -56,9 +56,9 @@ ReNewNegationCondition >> violationMessageOn: aWriteStream [
 
 	"Remove 'not' apparitions from the message"
 	re := '[ ]+not[ ]*' asRegex.
-	message := re copy: message contents replacingMatchesWith: ' '.
-	aWriteStream nextPutAll: message
-
+	message2 := re copy: message contents replacingMatchesWith: ' '.
+	message2 == message ifTrue: [ message2 := 'NOT ' + message ].
+	aWriteStream nextPutAll: message2
 ]
 
 { #category : 'accessing' }
