@@ -330,9 +330,7 @@ MCWorkingCopy >> modified [
 { #category : 'accessing' }
 MCWorkingCopy >> modified: aBoolean [
 
-	modified = aBoolean ifTrue: [ ^ self ].
 	modified := aBoolean.
-	modified ifFalse: [ ChangesLog default logChange: '"' , self packageName , '"' ]
 ]
 
 { #category : 'accessing' }

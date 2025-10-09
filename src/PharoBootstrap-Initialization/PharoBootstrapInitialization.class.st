@@ -91,7 +91,7 @@ PharoBootstrapInitialization class >> initializeCommandLineHandlerAndErrorHandli
 	'Initializing basic command line behaviors' traceCr.
 	"Initialize basic command line behaviour"
 	NonInteractiveTranscript initialize.
-	BasicCommandLineHandler initialize.
+	PerformMessageCommandLineHandler initialize.
 
 	Smalltalk snapshot: true andQuit: true.
 	Processor terminateActive

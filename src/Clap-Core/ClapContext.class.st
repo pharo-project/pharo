@@ -45,6 +45,30 @@ ClapContext class >> defaultRoot [
 		yourself
 ]
 
+{ #category : 'private' }
+ClapContext class >> ensureBoostrapCommandsIn: aCommandList [
+	"In early stages of the bootsrap, pragmas cannot be used.
+	Perform command should always be usable, so ensure it is present in the list."
+	
+	| class |
+	class := Smalltalk globals at: #ClapPerformCommand ifAbsent: [ ^ aCommandList ].
+	
+	aCommandList 
+		detect: [ :commandSpec | commandSpec identifier =  class commandSpecification identifier ]
+		ifNone: [ aCommandList add: class commandSpecification ].
+	^ aCommandList
+]
+
+{ #category : 'instance creation' }
+ClapContext class >> executeWithPragmaCommandsAndArguments: arguments [
+
+	(self withPragmaCommands)
+			beObeyingExits;
+			setStdio: Stdio;
+			arguments: arguments;
+			execute
+]
+
 { #category : 'accessing' }
 ClapContext class >> pragmaCommands [
 	^ (Pragma allNamed: #commandline) collect: [ :pragma |
@@ -65,7 +89,7 @@ ClapContext class >> withAll: commandCandidates [
 { #category : 'instance creation' }
 ClapContext class >> withPragmaCommands [ 
 
-	^ self withAll: self pragmaCommands
+	^ self withAll: (self ensureBoostrapCommandsIn: self pragmaCommands asOrderedCollection)
 ]
 
 { #category : 'validation' }
@@ -108,7 +132,12 @@ ClapContext >> command [
 	| commandClass |
 	self match. "ensure command is matched"
 	
-	commandClass := self lastSubcommand specification commandClass ifNil: [ ClapApplication ].
+	commandClass := [ self lastSubcommand specification commandClass ]
+							on: ClapUnmatchCommand do: [ self match specification commandClass ].
+							
+	"In case no command class was specified"
+	commandClass := commandClass ifNil: [ ClapApplication ].							
+							
 	^ commandClass with: self
 ]
 
@@ -276,7 +305,7 @@ ClapContext >> lastSubcommand [
 
 	^ self
 		ifMatch: [ :aMatch | aMatch subcommands last ]
-		ifMismatch: [ self ]
+		ifMismatch: [ ClapUnmatchCommand signalClapContext: self ]
 ]
 
 { #category : 'accessing' }

@@ -30,9 +30,9 @@ Class {
 	#classVars : [
 		'Instance'
 	],
-	#category : 'System-BasicCommandLineHandler-Management',
+	#category : 'System-BasicCommandLineHandler-Utilities',
 	#package : 'System-BasicCommandLineHandler',
-	#tag : 'Management'
+	#tag : 'Utilities'
 }
 
 { #category : 'accessing' }

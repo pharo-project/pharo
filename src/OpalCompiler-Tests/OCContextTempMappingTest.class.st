@@ -128,7 +128,9 @@ OCContextTempMappingTest >> testAccessingTempsVectorInBlock2 [
 
 	a := [ r := 'failure' ].
 	[ b := 'success'.
-	r := thisContext ]
+	"Copy the context, otherwise it will be dead.
+	We cannot access temps of a dead context."
+	r := thisContext copy ]
 		on: Error
 		do: a.
 

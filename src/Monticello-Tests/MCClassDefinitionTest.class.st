@@ -16,16 +16,6 @@ MCClassDefinitionTest class >> classACommentStamp [
 	^  'cwp 8/10/2003 16:43'
 ]
 
-{ #category : 'utilities' }
-MCClassDefinitionTest class >> restoreClassAComment [
-	"This is an utility class to restore the class comment in a mock class used by the test"
-	<script>
-	
-	self environment
-		at: #MCMockClassA
-		ifPresent: [ :a | a comment: self classAComment stamp: self classACommentStamp ]
-]
-
 { #category : 'private' }
 MCClassDefinitionTest >> classAComment [
 	^ self class classAComment

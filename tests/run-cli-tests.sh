@@ -91,4 +91,7 @@ export IMAGE
 export OS_TYPE
 echo ">> Running tests with bats-core"
 # To enable debug information, you can add these options: --show-output-of-passing-tests --verbose-run
-"$BATS_DIR/bin/bats" --print-output-on-failure --report-formatter junit "$ROOT_DIR"
+BATS_OPTIONS="--print-output-on-failure --report-formatter junit"
+COMMAND_LINE_HANDLER=ClapCommandLineHandler "$BATS_DIR/bin/bats" $BATS_OPTIONS "$ROOT_DIR"/pharo-cli-perform/pharo-cli-perform.bats
+COMMAND_LINE_HANDLER=PerformMessageCommandLineHandler "$BATS_DIR/bin/bats" $BATS_OPTIONS "$ROOT_DIR"/pharo-cli-perform/pharo-cli-perform.bats
+"$BATS_DIR/bin/bats" $BATS_OPTIONS "$ROOT_DIR"

@@ -777,11 +777,6 @@ EncoderForSistaV1 class >> nonExtensionBytecodeAt: pc in: method [
 	^ byte
 ]
 
-{ #category : 'compiled method support' }
-EncoderForSistaV1 class >> prepareMethod: compiledMethod forSimulationWith: numArgs [
-	self shouldBeImplemented
-]
-
 { #category : 'bytecode decoding' }
 EncoderForSistaV1 class >> pushNilByte [
 	^ 79

@@ -126,6 +126,7 @@ DebugPoint >> disable [
 { #category : 'reflective operations' }
 DebugPoint >> doesNotUnderstand: message [
 	"forward not understood messages to behaviors, 'delegation complements composition' "
+	<debuggerCompleteToSender>
 
 	self behaviors do: [ :bh |
 		(bh respondsTo: message selector) ifTrue: [

@@ -71,6 +71,13 @@ TraitedClass >> allTraits [
 	^ self traitComposition allTraits
 ]
 
+{ #category : 'organization' }
+TraitedClass >> dependencies [
+	"Return the (transitive) set of behaviors that I depend on"
+	
+	^ super dependencies copyWithAll: self traitComposition allTraits
+]
+
 { #category : 'initialization' }
 TraitedClass >> doRebuildMethodDictionary [
 

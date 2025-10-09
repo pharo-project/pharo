@@ -164,7 +164,7 @@ MCClassDefinition >> comment [
 { #category : 'accessing' }
 MCClassDefinition >> comment: aString [
 
-	comment := aString withInternalLineEndings
+	comment := aString
 ]
 
 { #category : 'accessing' }

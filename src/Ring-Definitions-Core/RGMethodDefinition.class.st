@@ -503,6 +503,14 @@ RGMethodDefinition >> origin [
 ]
 
 { #category : 'accessing' }
+RGMethodDefinition >> originMethod [
+	"Return the original version of this method."
+	^ self compiledMethod
+		ifNil: [ self ]
+		ifNotNil: [ :compileMethod| compileMethod originMethod ]
+]
+
+{ #category : 'accessing' }
 RGMethodDefinition >> package [
 	"Retrieves the package in which this class is contained, if exists"
 

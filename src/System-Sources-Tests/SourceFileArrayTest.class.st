@@ -15,15 +15,22 @@ Class {
 	#package : 'System-Sources-Tests'
 }
 
-{ #category : 'running' }
+{ #category : 'tests' }
 SourceFileArrayTest >> ensureChangesFileOpenedInProcess [
 	"Ensure the changes file is open"
 
-	| remoteString |
-	remoteString := SourceFiles remoteStringAt: thisContext method sourcePointer.
+	| sourcePointer fileIndex filePosition string |
+	sourcePointer :=  thisContext method sourcePointer.
+	fileIndex := SourceFiles fileIndexFromSourcePointer: sourcePointer.
+	filePosition := SourceFiles filePositionFromSourcePointer: sourcePointer.
+	
+	string := SourceFiles
+		readStreamAtFileIndex: fileIndex
+		atPosition: filePosition
+		ifPresent: [ :readStream | (ChunkReadStream on: readStream) next ]
+		ifAbsent: [ nil ].
 
-	self deny: remoteString string isNil.
-	"self deny: ProcessAndSessionLocalSourcesFileArray value isNil."
+	self deny: string isNil.
 ]
 
 { #category : 'tests' }
@@ -74,7 +81,7 @@ SourceFileArrayTest >> testFilePositionFromSourcePointer [
 { #category : 'tests' }
 SourceFileArrayTest >> testForkedRead [
 
-	| originalString remoteString readSemaphore readString testSemaphore |
+	| originalString remoteString readSemaphore readString testSemaphore position |
 	originalString := '"test"'.
 	remoteString := nil.
 	readSemaphore := Semaphore new.
@@ -87,12 +94,20 @@ SourceFileArrayTest >> testForkedRead [
 		readSemaphore wait.
 
 		"Read the string that was written in other process."
-		readString := remoteString string.
+		readString := SourceFiles
+			readStreamAtFileIndex: 2 "changes"
+			atPosition: position
+			ifPresent: [ :readStream | (ChunkReadStream on: readStream) next ]
+			ifAbsent: [ nil ].
 		testSemaphore signal
 		] fork.
 
 	"Write the string, that will be read in other process."
-	remoteString := SourceFiles remoteStringForNewString: originalString.
+	SourceFiles changesWriteStreamDo: [ :theFile |
+		theFile cr.
+		position := theFile position.
+		(ChunkWriteStream on: theFile) nextPut: originalString.
+	].
 
 	readSemaphore signal.
 	testSemaphore wait.
@@ -103,7 +118,7 @@ SourceFileArrayTest >> testForkedRead [
 { #category : 'tests' }
 SourceFileArrayTest >> testForkedWrite [
 
-	| originalString remoteString readSemaphore readString testSemaphore |
+	| originalString remoteString readSemaphore readString testSemaphore position |
 	originalString := '"test"'.
 	remoteString := nil.
 	readSemaphore := Semaphore new.
@@ -116,7 +131,11 @@ SourceFileArrayTest >> testForkedWrite [
 		readSemaphore wait.
 
 		"Write the string, that will be read in other process."
-		remoteString := SourceFiles remoteStringForNewString: originalString.
+		SourceFiles changesWriteStreamDo: [ :theFile |
+			theFile cr.
+			position := theFile position.
+			(ChunkWriteStream on: theFile) nextPut: originalString.
+		].
 
 		testSemaphore signal
 		] fork.
@@ -125,7 +144,11 @@ SourceFileArrayTest >> testForkedWrite [
 	testSemaphore wait.
 
 	"Read the string that was written in other process."
-	readString := remoteString string.
+	readString := SourceFiles
+		readStreamAtFileIndex: 2 "changes"
+		atPosition: position
+		ifPresent: [ :readStream | (ChunkReadStream on: readStream) next ]
+		ifAbsent: [ nil ].
 
 	self assert: readString equals: originalString
 ]
@@ -186,38 +209,6 @@ SourceFileArrayTest >> testProtocol [
 ]
 
 { #category : 'tests' }
-SourceFileArrayTest >> testRemoteStringReadsInGivenSourceFileArray [
-	| fs array remoteString readStream |
-	fs := FileSystem memory.
-	array := SourceFileArray new.
-	array changesFileStream: (SourceFile on: 'changes.chunk' potentialLocations: {fs root}) tryOpen.
-	array sourcesFileStream: (SourceFile on: 'sources.chunk' potentialLocations: {fs root}) tryOpen.
-	remoteString := array remoteStringForNewString: 'test'.
-	self assert: remoteString string equals: 'test'.
-	self assert: (array fileAt: remoteString sourceFileNumber) equals: array changesFileStream.
-	readStream := (fs / 'changes.chunk') readStream.
-	readStream position: remoteString position.
-	self assert: (ChunkReadStream on: readStream) next equals: 'test'
-]
-
-{ #category : 'tests' }
-SourceFileArrayTest >> testRemoteStringWritesInGivenSourceFileArray [
-	| fs array |
-	fs := FileSystem memory.
-	array := SourceFileArray new.
-	array
-		changesFileStream: (SourceFile on: 'changes.chunk' potentialLocations: {fs root}) tryOpen.
-	array
-		sourcesFileStream: (SourceFile on: 'sources.chunk' potentialLocations: {fs root}) tryOpen.
-	array remoteStringForNewString: 'test'.
-	self
-		assert: (fs / 'changes.chunk') contents
-		equals:
-			'
-test!'
-]
-
-{ #category : 'tests' }
 SourceFileArrayTest >> testSourcePointerFromFileIndexAndPosition [
 
 	| sf |
@@ -242,84 +233,99 @@ SourceFileArrayTest >> testSourcesFileStream [
 
 { #category : 'tests' }
 SourceFileArrayTest >> testWriteSourceWritesInGivenSourceFileArray [
+
 	| fs array |
 	fs := FileSystem memory.
 	array := SourceFileArray new.
+	array changesFileStream: (SourceFile on: 'changes.chunk' potentialLocations: { fs root }) tryOpen.
+	array sourcesFileStream: (SourceFile on: 'sources.chunk' potentialLocations: { fs root }) tryOpen.
+
 	array
-		changesFileStream: (SourceFile on: 'changes.chunk' potentialLocations: {fs root}) tryOpen.
-	array
-		sourcesFileStream: (SourceFile on: 'sources.chunk' potentialLocations: {fs root}) tryOpen.
-	array
-		writeSource: 'some source'
-		preamble: 'some preamble'
+		writeChangesDuring: [ :file |
+				file nextPutAll: '
+!some preamble!
+some source!
+ !'.
+				file position ]
 		onSuccess: [ :sourcePointer | "continue with assertions" ]
 		onFail: [ "fail the test" self fail ].
-	self assert: (fs / 'changes.chunk') contents equals: 'some preamblesome source!'
+
+	self assert: (fs / 'changes.chunk') contents equals: '
+!some preamble!
+some source!
+ !'
 ]
 
 { #category : 'tests' }
 SourceFileArrayTest >> testWriteSourceWritesInGivenSourceFileArrayWithFlushDefering [
+
 	| fs array |
 	fs := FileSystem memory.
 	array := SourceFileArray new.
 	array
-		changesFileStream:
-			(SourceFile on: 'changes.chunk' potentialLocations: { fs root })
-				tryOpen;
-		sourcesFileStream:
-			(SourceFile on: 'sources.chunk' potentialLocations: { fs root })
-				tryOpen;
+		changesFileStream: (SourceFile on: 'changes.chunk' potentialLocations: { fs root }) tryOpen;
+		sourcesFileStream: (SourceFile on: 'sources.chunk' potentialLocations: { fs root }) tryOpen;
 		deferFlushDuring: [
-			array
-				writeSource: 'some source'
-				preamble: 'some preamble'
-				onSuccess: [ :arg1 |  ]
-				onFail: [ self fail ] ].
-	self
-		assert: (fs / 'changes.chunk') contents
-		equals: 'some preamblesome source!'
+				array
+					writeChangesDuring: [ :file |
+							file nextPutAll: '
+!some preamble!
+some source!
+ !'.
+							file position ]
+					onSuccess: [ :sourcePointer | "continue with assertions" ]
+					onFail: [ "fail the test" self fail ] ].
+	self assert: (fs / 'changes.chunk') contents equals: '
+!some preamble!
+some source!
+ !'
 ]
 
 { #category : 'tests' }
 SourceFileArrayTest >> testWriteToBufferedStream [
+
 	| fs array |
 	fs := FileSystem memory.
 	array := SourceFileArray new.
 
-	array changesFileStream:
-		(SourceFileCharacterReadWriteStream on: (SourceFileBufferedReadWriteStream on: (fs binaryWriteStreamOn: (fs / 'changes.chunk') path)) encoding: #utf8).
+	array changesFileStream: (SourceFileCharacterReadWriteStream
+			 on: (SourceFileBufferedReadWriteStream on: (fs binaryWriteStreamOn: (fs / 'changes.chunk') path))
+			 encoding: #utf8).
 
-	array sourcesFileStream:
-		(SourceFileCharacterReadWriteStream on: (SourceFileBufferedReadWriteStream on: (fs binaryWriteStreamOn: (fs / 'sources.chunk') path)) encoding: #utf8).
-
+	array sourcesFileStream: (SourceFileCharacterReadWriteStream
+			 on: (SourceFileBufferedReadWriteStream on: (fs binaryWriteStreamOn: (fs / 'sources.chunk') path))
+			 encoding: #utf8).
 	array
-		writeSource: 'some source'
-		preamble: 'some preamble'
+		writeChangesDuring: [ :file |
+				file nextPutAll: '
+!some preamble!
+some source!
+ !'.
+				file position ]
 		onSuccess: [ :sourcePointer | "continue with assertions" ]
 		onFail: [ "fail the test" self fail ].
-	self assert: (fs / 'changes.chunk') contents equals: 'some preamblesome source!'
+
+	self assert: (fs / 'changes.chunk') contents equals: '
+!some preamble!
+some source!
+ !'
 ]
 
 { #category : 'tests' }
 SourceFileArrayTest >> testWriteToChangesFileInGivenSourceFileArray [
+
 	| fs array |
 	fs := FileSystem memory.
 	array := SourceFileArray new.
-	array
-		changesFileStream: (SourceFile on: 'changes.chunk' potentialLocations: {fs root}) tryOpen.
-	array
-		sourcesFileStream: (SourceFile on: 'sources.chunk' potentialLocations: {fs root}) tryOpen.
-	array
-		changesWriteStreamDo: [ :changesFile |
+	array changesFileStream: (SourceFile on: 'changes.chunk' potentialLocations: { fs root }) tryOpen.
+	array sourcesFileStream: (SourceFile on: 'sources.chunk' potentialLocations: { fs root }) tryOpen.
+	array changesWriteStreamDo: [ :changesFile |
 			changesFile
 				cr;
-				cr;
-				nextChunkPut: 'test';
-				cr ].
-	self
-		assert: (fs / 'changes.chunk') contents
-		equals:
-			'
+				cr.
+			(ChunkWriteStream on: changesFile) nextPut: 'test'.
+			changesFile cr ].
+	self assert: (fs / 'changes.chunk') contents equals: '
 
 test!'
 ]

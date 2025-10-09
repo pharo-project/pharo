@@ -16,3 +16,13 @@ CompiledCode >> compilerClass [
 		ifNil: [Smalltalk compilerClass]
 		ifNotNil: [:class | class compilerClass]
 ]
+
+{ #category : '*OpalCompiler-Core' }
+CompiledCode >> sourceNode [
+	^ self subclassResponsibility
+]
+
+{ #category : '*OpalCompiler-Core' }
+CompiledCode >> sourceNodeForPC: arg1 [
+	^ self subclassResponsibility
+]

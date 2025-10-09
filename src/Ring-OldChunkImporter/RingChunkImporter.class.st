@@ -17,15 +17,6 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'examples' }
-RingChunkImporter class >> example [
-
-	| internalStream |
-	internalStream := (String new: 1000) writeStream.
-	((self packageOrganizer packageNamed: 'Ring-OldChunkImporter') tagNamed: #Base) fileOutOn: internalStream.
-	(self fromStream: internalStream contents readStream) inspect
-]
-
 { #category : 'instance creation' }
 RingChunkImporter class >> fromFileNamed: fileName [
 

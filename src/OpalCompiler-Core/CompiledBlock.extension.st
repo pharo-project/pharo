@@ -24,6 +24,11 @@ CompiledBlock >> bcToASTCacheKey [
 ]
 
 { #category : '*OpalCompiler-Core' }
+CompiledBlock >> methodNode [
+	^ self outerCode methodNode
+]
+
+{ #category : '*OpalCompiler-Core' }
 CompiledBlock >> sourceNode [
 	^ self sourceNodeInOuter
 ]

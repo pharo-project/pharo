@@ -96,16 +96,6 @@ OCVariableNode >> equalTo: anObject withMapping: aDictionary [
 		  = anObject name ]
 ]
 
-{ #category : 'testing' }
-OCVariableNode >> hasIncompleteIdentifier [
-	"check if there is any variable declared in my scope that starts with my name"
-
-	"declared vars are never incomplete"
-	variable isUndeclaredVariable ifFalse: [ ^false ].
-	"for the others we have to search from the current scope"
-	^self scope hasBindingThatBeginsWith: self name
-]
-
 { #category : 'comparing' }
 OCVariableNode >> hash [
 	^self name hash

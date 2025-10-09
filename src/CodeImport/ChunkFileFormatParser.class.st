@@ -1,5 +1,5 @@
 "
-I represent the chunk file format.  Right now I know how to parse chunks from a readStream, but not how to write them.
+I represent the chunk file format.  Right now I know how to parse chunks from a readStream, but not how to write them. 
 "
 Class {
 	#name : 'ChunkFileFormatParser',
@@ -143,15 +143,15 @@ ChunkFileFormatParser >> parseClassOrganization: classOrganizationPreamble [
 	#(#CodeImportTestCaseTestClass #class #reorganize)
 	"
 
-	| behaviorName isMeta |
+	| behaviorName isMeta organizationContents metadata |
 	behaviorName := classOrganizationPreamble first.
 	isMeta := classOrganizationPreamble second ~= self reorganizeSelector.
-	self
-		addDeclaration:
-			(self classOrganisationChunkClass
-				contents: readStream next
-				behaviorName: behaviorName
-				isMeta: isMeta)
+	organizationContents := readStream next.
+	metadata := readStream next.
+	self addDeclaration:
+		((self classOrganisationChunkClass contents: organizationContents behaviorName: behaviorName isMeta: isMeta)
+			 metadata: metadata;
+			 yourself)
 ]
 
 { #category : 'parsing' }
@@ -166,25 +166,28 @@ ChunkFileFormatParser >> parseCommentDeclaration: commentPreamble [
 	allButFirst:
 	"
 
-	| behaviorName isMeta stamp |
+	| behaviorName isMeta stamp commentContents metadata |
 	behaviorName := commentPreamble first asSymbol.
 	isMeta := commentPreamble second ~= self commentStampSelector.
 	stamp := isMeta
-		ifTrue: [ commentPreamble at: 4 ]
-		ifFalse: [ commentPreamble at: 3 ].
-	self
-		addDeclaration:
-			(self classCommentChunkClass
-				contents: readStream next
-				behaviorName: behaviorName
-				isMeta: isMeta
-				stamp: stamp)
+		         ifTrue: [ commentPreamble at: 4 ]
+		         ifFalse: [ commentPreamble at: 3 ].
+
+	commentContents := readStream next.
+	metadata := ' '.
+	self addDeclaration: ((self classCommentChunkClass
+			  contents: commentContents
+			  behaviorName: behaviorName
+			  isMeta: isMeta
+			  stamp: stamp)
+			 metadata: metadata;
+			 yourself)
 ]
 
 { #category : 'parsing' }
 ChunkFileFormatParser >> parseMethodDeclarations: methodsPreamble [
 
-	| behaviorName isMeta protocol stamp methodSource |
+	| behaviorName isMeta protocol stamp methodSource methodMetadata |
 	"The method preable is an array with the following structure:
 	If instance side method:
 
@@ -194,7 +197,7 @@ ChunkFileFormatParser >> parseMethodDeclarations: methodsPreamble [
 
 	#(#CodeImportTestCaseTestClass #class #methodsFor: 'some protocol' #stamp: 'GuillermoPolito 5/2/2012 13:35')
 
-	Sometimes there is no timestamp:
+	Sometimes there is no timestamp: 
 
 	#(#CodeImportTestCaseTestClass #methodsFor: 'some protocol')
 
@@ -206,18 +209,20 @@ ChunkFileFormatParser >> parseMethodDeclarations: methodsPreamble [
 		            ifFalse: [ methodsPreamble at: 3 ].
 	stamp := ''.
 	methodsPreamble size > 4 ifTrue: [
-		stamp := isMeta
-			         ifTrue: [ methodsPreamble at: 6 ]
-			         ifFalse: [ methodsPreamble at: 5 ] ].
-	[
+			stamp := isMeta
+				         ifTrue: [ methodsPreamble at: 6 ]
+				         ifFalse: [ methodsPreamble at: 5 ] ].
+
 	methodSource := readStream next.
-	methodSource isNotEmpty ] whileTrue: [
-		self addDeclaration: (self methodChunkClass
-				 contents: methodSource
-				 behaviorName: behaviorName asSymbol
-				 isMeta: isMeta
-				 protocol: protocol
-				 stamp: stamp) ]
+	methodMetadata := readStream next.
+	self addDeclaration: ((self methodChunkClass
+			  contents: methodSource
+			  behaviorName: behaviorName asSymbol
+			  isMeta: isMeta
+			  protocol: protocol
+			  stamp: stamp)
+			 metadata: methodMetadata;
+			 yourself)
 ]
 
 { #category : 'parsing' }

@@ -607,19 +607,6 @@ FLBasicSerializationTest >> testRecursiveArray [
 	self assert: materialized third identicalTo: materialized
 ]
 
-{ #category : 'tests-strings' }
-FLBasicSerializationTest >> testRemoteString [
-	"Tests that the materialized RemoteString has *the same* location on file."
-
-	| aRemoteString materializedRemoteString |
-	aRemoteString := SourceFiles remoteStringAt: thisContext method sourcePointer.
-
-	materializedRemoteString := self resultOfSerializeAndMaterialize: aRemoteString.
-
-	self assert: aRemoteString string equals: materializedRemoteString string.
-	self assert: aRemoteString sourcePointer identicalTo: materializedRemoteString sourcePointer
-]
-
 { #category : 'tests-collections' }
 FLBasicSerializationTest >> testRunArray [
 

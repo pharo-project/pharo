@@ -9,13 +9,24 @@ Class {
 	#tag : 'Integration'
 }
 
-{ #category : 'tests' }
+{ #category : 'helpers' }
 ClapApplicationTest >> assertStdOutIncludes: aString [
 
 	self 
 		assert: (self stdoutString includesSubstring: aString)
 		description: (aString surroundedBy: '"') , ' not found in ', (self stdoutString surroundedBy: '"')
 
+]
+
+{ #category : 'tests - data' }
+ClapApplicationTest >> specWithFlagWithMultiplePositionals [
+
+	^ (ClapCommandSpec id: #test_command)
+		addFlag: #shout description: 'shout flag';
+		addPositional: #who description: 'who flag';
+		addFlag: #language description: 'desc' positionalSpec: [ :positional |
+			positional multiple: true ];
+		yourself
 ]
 
 { #category : 'helpers' }
@@ -34,6 +45,42 @@ ClapApplicationTest >> testCanGetFlags [
 	self 
 		assertCollection: command flags 
 		hasSameElements: #('shout' 'language')
+]
+
+{ #category : 'tests' }
+ClapApplicationTest >> testCanGetMultiplePositional [
+
+	| command |
+	context := self specWithFlagWithMultiplePositionals activationWith: #('test_command' 'world' '--shout' '--language' 'fr' 'it').
+	command := context command.
+
+	self 
+		assert: (command positional: #language) asArray
+		equals: #('fr' 'it')
+]
+
+{ #category : 'tests' }
+ClapApplicationTest >> testCanGetPositional [
+
+	| command |
+	context := ClapCommandLineExamples hello activateWith: #('hello' 'world' '--shout' '--language' 'fr').
+	command := context command.
+
+	self 
+		assert: (command positional: #who) asArray
+		equals: #('world')
+]
+
+{ #category : 'tests' }
+ClapApplicationTest >> testCanGetPositionalWithFlag [
+
+	| command |
+	context := ClapCommandLineExamples hello activateWith: #('hello' 'world' '--shout' '--language' 'fr').
+	command := context command.
+
+	self 
+		assert: (command positional: #language)
+		equals: 'fr'
 ]
 
 { #category : 'tests' }

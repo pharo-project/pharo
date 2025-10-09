@@ -140,6 +140,14 @@ ClapApplication >> printHelp [
 ]
 
 { #category : 'private' }
+ClapApplication >> rawFlagPositionalOf: aMatch [
+
+	^ aMatch child specification isMultiple 
+		ifTrue: [ aMatch occurrencesOf: aMatch child specification collect: #value ]
+		ifFalse: [ aMatch child value ]
+]
+
+{ #category : 'private' }
 ClapApplication >> rawPositional: anIdentifier [
 	"We get positionals but a NotFound error can be signaled."
 	
@@ -147,7 +155,7 @@ ClapApplication >> rawPositional: anIdentifier [
 	matches := self context positional: anIdentifier asSymbol.
 	values := matches collect: [ :match |
 		          match specification isFlag
-			          ifTrue: [ match child value ]
+			          ifTrue: [ self rawFlagPositionalOf: match ]
 			          ifFalse: [ match value ] ].
 		
 	^ matches first specification isMultiple

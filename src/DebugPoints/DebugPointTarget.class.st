@@ -42,6 +42,13 @@ DebugPointTarget >> install: aLink [
 	self subclassResponsibility
 ]
 
+{ #category : 'accessing' }
+DebugPointTarget >> node [
+
+	"For polymorphism with DebugPointNodeTarget"
+	^ nil
+]
+
 { #category : 'removing' }
 DebugPointTarget >> removeFromMethod: aMethod for: aDebugPoint [
 

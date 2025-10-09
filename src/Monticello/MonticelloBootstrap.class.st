@@ -53,6 +53,10 @@ MonticelloBootstrap >> bootstrap [
 	self createWorkingCopies.
 	self loadBootstrapPackages.
 
+	"Package loading reinstalled PeformCommandLineHandler as default command line handler.
+	We need to use ClapCommandLineHandler"
+	ClapCommandLineHandler initialize.
+
 	SessionManager default registerSystemClassNamed: #SmalltalkImage
 ]
 

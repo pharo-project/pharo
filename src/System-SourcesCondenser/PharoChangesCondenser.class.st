@@ -31,16 +31,11 @@ PharoChangesCondenser >> backupOldChanges [
 
 { #category : 'private' }
 PharoChangesCondenser >> basicCondense [
+
 	self
 		condenseClassesAndTraits;
-		swapSourcePointers;
-    updateQuitPosition.
-  stream flush
-]
-
-{ #category : 'private' }
-PharoChangesCondenser >> commentRemoteStringFor: org [
-	^ org commentSourcePointer ifNotNil: [:ptr | SourceFiles remoteStringAt: ptr]
+		swapSourcePointers.
+	stream flush
 ]
 
 { #category : 'public' }
@@ -139,12 +134,26 @@ PharoChangesCondenser >> shouldCondenseMethod: aMethod [
 	^ (SourceFiles fileIndexFromSourcePointer: aMethod sourcePointer) == 2
 ]
 
+{ #category : 'private - 1 writing' }
+PharoChangesCondenser >> shouldWriteClassComment: commentRemoteString [
+
+	^ commentRemoteString notNil
+		and: [ (SourceFiles fileIndexFromSourcePointer: commentRemoteString) ~= 1 ]
+]
+
+{ #category : 'private - 2 swapping' }
+PharoChangesCondenser >> sourcePointerFor: remoteString [
+
+	^ SourceFiles sourcePointerFromFileIndex: remoteString first andPosition: remoteString second
+]
+
 { #category : 'private - 2 swapping' }
 PharoChangesCondenser >> swapClassComment: classOrTrait [
-	remoteStringMap
-		at: classOrTrait
-		ifPresent: [ :remoteString |
-			classOrTrait commentSourcePointer: remoteString sourcePointer]
+
+	remoteStringMap at: classOrTrait ifPresent: [ :remoteString |
+			| sourcePointer |
+			sourcePointer := self sourcePointerFor: remoteString.
+			classOrTrait commentSourcePointer: sourcePointer ]
 ]
 
 { #category : 'private - 2 swapping' }
@@ -163,7 +172,9 @@ PharoChangesCondenser >> swapSourcePointerOfClassOrTrait: classOrTrait [
 PharoChangesCondenser >> swapSourcePointerOfMethod: method [
 
 	remoteStringMap at: method ifPresent: [ :remoteString |
-		method setSourcePointer: remoteString sourcePointer ]
+			| sourcePointer |
+			sourcePointer := self sourcePointerFor: remoteString.
+			method setSourcePointer: sourcePointer ]
 ]
 
 { #category : 'private - 2 swapping' }
@@ -182,32 +193,22 @@ PharoChangesCondenser >> temporaryFile [
 	^ (Smalltalk changesFile, 'new') nextVersion
 ]
 
-{ #category : 'private - 3 installing' }
-PharoChangesCondenser >> updateQuitPosition [
-
-	Smalltalk lastQuitLogPosition: stream position
-]
-
 { #category : 'private - 1 writing' }
 PharoChangesCondenser >> writeClassComment: aClass [
-	| commentRemoteString stamp |
 
-	commentRemoteString := self commentRemoteStringFor: aClass.
+	| commentSourcePointer stamp |
+	commentSourcePointer := aClass commentSourcePointer.
 
-	(commentRemoteString isNil or: [ commentRemoteString sourceFileNumber = 1 ])
-		ifTrue: [ ^ self ].
+	(self shouldWriteClassComment: commentSourcePointer) ifFalse: [ ^ self ].
 
 	self nextCommentChunkDo: [ :strm |
-		strm
-			nextPutAll: aClass name;
-			nextPutAll: ' commentStamp: '.
-		stamp := aClass commentStamp
-			ifNil: ['<historical>'].
-		stamp storeOn: strm ].
+			strm
+				nextPutAll: aClass name;
+				nextPutAll: ' commentStamp: '.
+			stamp := aClass commentStamp ifNil: [ '<historical>' ].
+			stamp storeOn: strm ].
 
-	self
-		writeRemoteString: aClass comment
-		for: aClass
+	self writeRemoteString: aClass comment for: aClass
 ]
 
 { #category : 'private - 1 writing' }
@@ -229,16 +230,14 @@ PharoChangesCondenser >> writeMethodSource: aMethod [
 ]
 
 { #category : 'private - 1 writing' }
-PharoChangesCondenser >> writeRemoteString: aString for: reference [
+PharoChangesCondenser >> writeRemoteString: aString for: owner [
 
-	| remoteString |
-	remoteString :=
-		RemoteString
-			newString: aString
-			onFileNumber: self fileIndex
-			toFile: stream.
-
-	remoteStringMap at: reference put: remoteString.
+	| remoteString position |
+	
+	position := stream position.
+	remoteString := {self fileIndex .  position}.
+	(ChunkWriteStream on: stream) nextPut: aString.
+	remoteStringMap at: owner put: remoteString.
 
 	^ remoteString
 ]

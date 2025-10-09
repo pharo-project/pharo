@@ -154,11 +154,6 @@ FFIStructure class >> compileFields: specArray withAccessors: aSymbol [
 { #category : 'private' }
 FFIStructure class >> compileMethodNamed: aSymbol code: aString classified: protocol [
 
-	"If we detect we have a method in the class with the right code but an equivalent is already in a superclass we can remove it to clean."
-	self
-		compiledMethodAt: aSymbol
-		ifPresent: [ :method | method sourceCode = aString and: [ method hasEquivalentMethodInSuperclass ifTrue: [ ^ method removeFromSystem ] ] ].
-
 	"If we already have the method we do not need to compile it. The method can come from a superclass having the same fields"
 	(self lookupSelector: aSymbol) ifNotNil: [ :method | method sourceCode = aString ifTrue: [ ^ self ] ].
 

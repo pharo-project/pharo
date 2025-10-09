@@ -118,6 +118,8 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'System-Hashing'.
 		spec package: 'System-Platforms'.
 		spec package: 'System-SessionManager'.
+		
+		spec package: 'CodeExport'.
 		spec package: 'System-Sources'.
 		spec package: 'System-Support'.
 
@@ -125,10 +127,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Zinc-Character-Encoding-Core'.
 		
 		spec package: 'FFI-Kernel'.
-		
-		"Minimal command line handler for bootstrap.
-		Only using perform and environment #at:"
-		spec package: 'PerformMessageCommandLineHandler'.
 		
 		spec package: 'CodeImport'.
 		
@@ -175,9 +173,10 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'System-Finalization'.
 			'System-Platforms'.
 			'System-SessionManager'.
+
+			'CodeExport'.
 			'System-Sources'.
 			
-			'PerformMessageCommandLineHandler'.
 			'System-Support'.
 			'NumberParser'.
 

@@ -228,7 +228,7 @@ ReleaseTest >> testInstanceSideMethodsWithNilKeyInLastLiteral [
 { #category : 'tests' }
 ReleaseTest >> testKeyClassesArePresentInStartupList [
 	| keyClasses registeredHandlers |
-	keyClasses := #(#Delay #ProcessorScheduler #Stdio #OSPlatform #UUIDGenerator #DiskStore #FinalizationProcess #BasicCommandLineHandler).
+	keyClasses := #(#Delay #ProcessorScheduler #Stdio #OSPlatform #UUIDGenerator #DiskStore #FinalizationProcess).
 	registeredHandlers := SessionManager default startupList
 		collect: [:each | each handledId].
 
@@ -236,7 +236,8 @@ ReleaseTest >> testKeyClassesArePresentInStartupList [
 		self assert: (registeredHandlers includes: className).
 		self assert: (self hasStartUpOrShutDownMethod: (testingEnvironment at: className)) ].
 
-	self assert: (registeredHandlers includes: #ErrorHandlerSessionHandler)
+	self assert: (registeredHandlers includes: #commandLineHandler) description: 'No Command-line handler found!'.
+	self assert: (registeredHandlers includes: #ErrorHandlerSessionHandler) description: 'No Error handler found!'.
 ]
 
 { #category : 'tests' }

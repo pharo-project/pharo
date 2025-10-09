@@ -141,12 +141,6 @@ SourceFile >> nextChunk [
 	^ (ChunkReadStream on: stream) next
 ]
 
-{ #category : 'file in/out' }
-SourceFile >> nextChunkPut: aChunk [
-
-	^ (ChunkWriteStream on: stream) nextPut: aChunk
-]
-
 { #category : 'accessing' }
 SourceFile >> nextPut: aCharacter [
 

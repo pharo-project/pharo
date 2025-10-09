@@ -191,16 +191,6 @@ Context >> send: selector super: superFlag numArgs: numArgs [
 ]
 
 { #category : '*Debugging-Core' }
-Context class >> simulatePrimitive: primName module: moduleName with: simulator [
-	^ self specialPrimitiveSimulators at: {primName. moduleName} put: simulator
-]
-
-{ #category : '*Debugging-Core' }
-Context class >> simulatePrimitiveNumber: num with: simulator [
-	^ self specialPrimitiveSimulators at: num put: simulator
-]
-
-{ #category : '*Debugging-Core' }
 Context >> stepIntoQuickMethod [
 	^self compiledCode stepIntoQuickMethods
 ]
@@ -357,18 +347,6 @@ Context >> temporaryVariableNamed: aName [
 { #category : '*Debugging-Core' }
 Context >> temporaryVariables [
 	^self sourceNode temporaries collect: [ :each | each binding ]
-]
-
-{ #category : '*Debugging-Core' }
-Context >> tempsAndValues [
-	"Return a string of the temporary variabls and their current values"
-	
-	^ String streamContents: [ :aStream |
-		self tempNames 
-			do: [ :name  |
-			 aStream nextPutAll: name; nextPut: $:; space; tab.
-			 self print: (self tempNamed: name) on: aStream]
-			separatedBy: [aStream cr ]]
 ]
 
 { #category : '*Debugging-Core' }

@@ -31,7 +31,8 @@ ClapNamedMatch >> completeMatchOn: aStream [
 ClapNamedMatch >> isFullMatch [
 
 	^ (self specification isFlag and: [ self specification hasPositional ])
-		ifTrue: [ children size = self specification positionals size ]
+		ifTrue: [ "When positional is multiple, there is only one positional spec but potentially many positionals" 
+					children size >= self specification positionals size ]
 		ifFalse: [ true ]
 ]
 

@@ -52,7 +52,6 @@ EpChunkExporter >> fileOut: epiceaEntries in: aDirectory [
 	| internalStream |
 
 	internalStream := (String new: 1000) writeStream.
-	internalStream timeStamp; cr.
 	epiceaEntries do: [ : epEntryItem |
 		self 
 			fileOutSelectedEntry: epEntryItem 

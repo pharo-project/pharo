@@ -659,11 +659,11 @@ Package >> removeTag: aTag [
 		       ifTrue: [ self tagNamed: aTag ifAbsent: [ ^ self ] ]
 		       ifFalse: [ aTag ].
 
-	"The #asArray is there to not remove elements from the #classes inst var while iterating it."
-	tag classes asArray do: [ :class | class removeFromSystem ].
+	"Make a topo sort of traits and classes"
+	(self sortTopologically: tag classes)
+		do: [ :class | class removeFromSystem ].
 
 	tags remove: tag ifAbsent: [ ^ self ].
-
 	self codeChangeAnnouncer announce: (PackageTagRemoved to: tag)
 ]
 
@@ -738,6 +738,30 @@ Package >> selectorsForClass: aClass [
 	^ (self includesClass: aClass)
 		ifFalse: [self extensionSelectorsForClass: aClass]
 		ifTrue: [self definedSelectorsForClass: aClass]
+]
+
+{ #category : 'private' }
+Package >> sortTopologically: allBehaviors [
+
+	| toSort sorted changed |
+	toSort := allBehaviors copy asOrderedCollection.
+	sorted := OrderedCollection new.
+	changed := true.
+
+	[ changed ] whileTrue: [
+		| behaviorsWithoutInternalDependencies |
+		behaviorsWithoutInternalDependencies := toSort select: [ :e |
+			e dependencies noneSatisfy: [ :d | toSort includes: d ] ].
+		sorted addAllFirst: behaviorsWithoutInternalDependencies.
+		toSort removeAll: behaviorsWithoutInternalDependencies.
+
+		behaviorsWithoutInternalDependencies ifEmpty: [ changed := false ].
+	].
+
+	"If the final set is not empty, this means we have cycles"
+	self assert: toSort isEmpty.
+
+	^ sorted
 ]
 
 { #category : 'tags' }

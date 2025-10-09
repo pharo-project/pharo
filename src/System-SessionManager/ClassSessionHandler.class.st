@@ -31,6 +31,11 @@ ClassSessionHandler >> registeredClass [
 ]
 
 { #category : 'accessing' }
+ClassSessionHandler >> registeredClassName [
+	^ registeredClassName
+]
+
+{ #category : 'accessing' }
 ClassSessionHandler >> registeredClassName: aClassName [
 	registeredClassName := aClassName
 ]
