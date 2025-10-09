@@ -44,17 +44,3 @@ ReReifiedCondition >> violators [
 
 	^ self subclassResponsibility
 ]
-
-{ #category : 'accessing' }
-ReReifiedCondition >> wrapper [
-	^ wrapper ifNil: [ self ]
-]
-
-{ #category : 'accessing' }
-ReReifiedCondition >> wrapper: aCondition [
-	"A wrapper is a NegationCondition I am part of.
-	Wrappers are always nil, except during the execution of `violationMessageOn:`.
-	Without wrappers, violation messages are empty for negated conditions (because violators are empty too!)"
-
-	wrapper := aCondition	
-]
