@@ -14,16 +14,14 @@ BaselineOfEpicea >> baseline: spec [
 			package: 'Ombu';
 			package: 'Epicea' with: [ spec requires: 'Ombu' ];
 			package: 'Hiedra';
-			package: 'Hiedra-Examples';
-			package: 'EpiceaBrowsers' with: [ spec requires: #( 'Epicea' 'Hiedra') ].
+			package: 'Hiedra-Examples'.
 
 		spec
 			package: 'Ombu-Tests' with: [ spec requires: 'Ombu' ];
 			package: 'Epicea-Tests' with: [ spec requires: 'Epicea' ];
-			package: 'Hiedra-Tests' with: [ spec requires: 'Hiedra' ];
-			package: 'EpiceaBrowsers-Tests' with: [ spec requires: 'EpiceaBrowsers' ].
+			package: 'Hiedra-Tests' with: [ spec requires: 'Hiedra' ].
 
 		spec
-			group: #Browsers with: #( #EpiceaBrowsers #'Hiedra-Examples' );
-			group: #Tests with: #( 'Ombu-Tests' 'Epicea-Tests' 'Hiedra-Tests' 'EpiceaBrowsers-Tests' ) ]
+			group: #Browsers with: #( #'Hiedra-Examples' );
+			group: #Tests with: #( 'Ombu-Tests' 'Epicea-Tests' 'Hiedra-Tests') ]
 ]
