@@ -245,7 +245,6 @@ BaselineOfMorphic >> loadBitmapSourcePro [
 { #category : 'actions' }
 BaselineOfMorphic >> postload: loader package: packageSpec [
 
-	| array |
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
 
