@@ -31,25 +31,25 @@ SycFileOutPackageCommand >> defaultMenuItemName [
 
 { #category : 'execution' }
 SycFileOutPackageCommand >> execute [
-
+		
+	| fileRef dialog ok |
 	StSaveFilePresenter new
 		defaultFolder: FileLocator workingDirectory;
-		nameText: 'fileout.st';
+		nameText: 'packagefileout.st';
 		okAction: [ :fileReference |
 				| fileouter |
+				fileRef := fileReference.
 				fileouter := Fileouter new.
 				packages do: [ :each | fileouter addFullPackage: each ].
 				fileouter fileoutOnFileReference: fileReference.
-				
-				UIManager default
-					inform: (String streamContents: [ :s |
-									 s
-										 nextPutAll: 'Filed out to: ';
-										 cr;
-										 nextPutAll: fileReference pathString;
-										 cr;
-										 cr;
-										 nextPutAll: 'Click to open location' ])
-					actionOnClick: [ fileReference openInOSFileBrowser ] ];
-		openModal
+				];
+		openModal.
+	dialog := SpConfirmDialog new.
+	ok := dialog
+		      title: 'Do you want to browse natively the fileout?';
+		      label: 'Are you sure?';
+		      acceptLabel: 'Sure!';
+		      cancelLabel: 'No, forget it';
+		      openModal.
+	ok ifTrue: [ fileRef openInOSFileBrowser ]
 ]

@@ -71,7 +71,7 @@ RBRenameAndDeprecateClassTransformation >> applicabilityPreconditions [
 	| class |
 	class := self model classNamed: className.
 	^ {
-		  (ReClassesExistCondition new classes: { class }).
+		  (ReClassesExistCondition new classes: { class name -> class } asDictionary).
 		  (ReClassesAreNotMetaClassCondition new classes: { class }).
 		  (ReNameIsGlobalCondition new
 			   model: self model

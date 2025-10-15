@@ -1,17 +1,10 @@
 Class {
 	#name : 'ReUpToRootDefinesMethodTest',
-	#superclass : 'TestCase',
+	#superclass : 'ReClassesConditionTest',
 	#category : 'Refactoring-Core-Tests-Conditions',
 	#package : 'Refactoring-Core-Tests',
 	#tag : 'Conditions'
 }
-
-{ #category : 'tests' }
-ReUpToRootDefinesMethodTest >> model [
-
-	^ RBNamespace onEnvironment:
-		  (RBClassEnvironment classes: {MyClassARoot . MySubAccessingSuperclassState} )
-]
 
 { #category : 'tests' }
 ReUpToRootDefinesMethodTest >> testUpToRootDefinesByCheckingInRootDefiningTheMethod [
@@ -34,7 +27,8 @@ ReUpToRootDefinesMethodTest >> testUpToRootDefinesByCheckingInRootDefiningTheMet
 	self deny: hier check. 
 	
 	self assert: hier violators isNotEmpty.
-	self assert: hier violators size equals: 1
+	self assert: hier violators size equals: 1.
+	self assert: hier nonViolators isEmpty
 ]
 
 { #category : 'tests' }
@@ -105,6 +99,7 @@ ReUpToRootDefinesMethodTest >> testUpToRootNotDefineTheMethod [
 	self assert: hier check. 
 	
 	self assert: hier violators isEmpty.
+	self assert: hier nonViolators equals: { myClassARoot }
 ]
 
 { #category : 'tests' }

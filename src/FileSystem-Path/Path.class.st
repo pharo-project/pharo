@@ -287,13 +287,15 @@ Path >> base [
 
 { #category : 'accessing' }
 Path >> basename [
-	"Returns the base of the basename,
-		i.e.
-		/foo/gloops.taz basename is 'gloops.taz'
-		If empty, it is the emptyPathString"
+	"Returns the base of the basename. If empty, it is the emptyPathString"
 
-	self isEmpty ifTrue:
-		[ ^ self emptyPathString ].
+	"(Path / 'foo' / 'gloops.taz') basename >>> 'gloops.taz'"
+
+	"Path workingDirectory basename >>> '.'"
+
+	"Path root basename >>> '/'"
+
+	self isEmpty ifTrue: [ ^ self emptyPathString ].
 	^ self at: self size
 ]
 
@@ -308,10 +310,13 @@ Path >> basename: newBasename [
 
 { #category : 'accessing' }
 Path >> basenameWithoutExtension [
-	"Returns the base of the basename but without its extension,
-		i.e.
-		/foo/gloops.taz basenameWithoutExtension is 'gloops'
-		/ basenameWithoutExtension is '/'"
+	"Returns the base of the basename but without its extension"
+
+	"(Path / 'foo' / 'gloops.taz') basenameWithoutExtension >>> 'gloops'"
+
+	"Path workingDirectory basenameWithoutExtension >>> ''"
+
+	"Path root basenameWithoutExtension >>> '/'"
 
 	^ self basename copyUpToLast: self extensionDelimiter
 ]
@@ -395,7 +400,9 @@ Path >> emptyPathString [
 
 { #category : 'accessing' }
 Path >> extension [
-	"Return the extension of path basename i.e., /foo/gloops.taz extension is 'taz'"
+	"Return the extension of path basename"
+
+	"(Path / 'foo' / 'gloops.taz') extension >>> 'taz'"
 
 	^ self basename copyAfterLast: self extensionDelimiter
 ]
@@ -408,7 +415,9 @@ Path >> extensionDelimiter [
 { #category : 'accessing' }
 Path >> extensions [
 	"Return the extensions of the receiver in order of appearance"
-	"(Path from: '/foo/bar.tar.gz') extensions"
+
+	"(Path from: '/foo/bar.tar.gz') extensions >>> (OrderedCollection with: 'tar' with: 'gz')"
+
 	^ (self extensionDelimiter split: self basename) allButFirst
 ]
 
@@ -557,9 +566,7 @@ Path >> relativeTo: anObject [
 Path >> relativeToPath: aPath [
 	"Return the receiver as relative to the argument aPath"
 
-	"(Path / 'griffle' / 'plonk' / 'nurp')
-		relativeToPath: (Path / 'griffle')
-			returns  plonk/nurp"
+	"((Path / 'griffle' / 'plonk' / 'nurp') relativeToPath: (Path / 'griffle')) >>> (Path * 'plonk' / 'nurp')"
 
 	| prefix relative |
 	prefix := self lengthOfStemWith: aPath.

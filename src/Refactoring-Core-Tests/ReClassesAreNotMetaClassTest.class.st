@@ -2,22 +2,15 @@
 A ReClassesAreNotMetaClassConditionTest is a test class for testing the behavior of ReClassesAreNotMetaClassCondition
 "
 Class {
-	#name : 'ReClassesAreNotMetaClassConditionTest',
-	#superclass : 'TestCase',
+	#name : 'ReClassesAreNotMetaClassTest',
+	#superclass : 'ReClassesConditionTest',
 	#category : 'Refactoring-Core-Tests-Conditions',
 	#package : 'Refactoring-Core-Tests',
 	#tag : 'Conditions'
 }
 
-{ #category : 'accessing' }
-ReClassesAreNotMetaClassConditionTest >> model [
-
-	^ RBNamespace onEnvironment:
-		  (RBClassEnvironment classes: {MyClassARoot . MySubAccessingSuperclassState} )
-]
-
-{ #category : 'accessing' }
-ReClassesAreNotMetaClassConditionTest >> testClassIsAMetaclass [
+{ #category : 'tests' }
+ReClassesAreNotMetaClassTest >> testClassIsAMetaclass [
 
 	| myClassARoot cond |
 	myClassARoot := self model classNamed: #MyClassARoot.
@@ -27,11 +20,12 @@ ReClassesAreNotMetaClassConditionTest >> testClassIsAMetaclass [
 		
 	self deny: cond check. 
 	self deny: cond violators isEmpty.
+	self assert: cond nonViolators isEmpty
 	
 ]
 
-{ #category : 'accessing' }
-ReClassesAreNotMetaClassConditionTest >> testClassIsAMetaclassWithMessages [
+{ #category : 'tests' }
+ReClassesAreNotMetaClassTest >> testClassIsAMetaclassWithMessages [
 
 	| myClassARoot cond |
 	myClassARoot := self model classNamed: #MyClassARoot.
@@ -45,8 +39,8 @@ ReClassesAreNotMetaClassConditionTest >> testClassIsAMetaclassWithMessages [
 	
 ]
 
-{ #category : 'accessing' }
-ReClassesAreNotMetaClassConditionTest >> testClassIsAMetaclassWithoutMessages [
+{ #category : 'tests' }
+ReClassesAreNotMetaClassTest >> testClassIsAMetaclassWithoutMessages [
 
 	| myClassARoot cond |
 	myClassARoot := self model classNamed: #MyClassARoot.
@@ -60,8 +54,8 @@ ReClassesAreNotMetaClassConditionTest >> testClassIsAMetaclassWithoutMessages [
 	
 ]
 
-{ #category : 'accessing' }
-ReClassesAreNotMetaClassConditionTest >> testClassIsNotAMetaclass [
+{ #category : 'tests' }
+ReClassesAreNotMetaClassTest >> testClassIsNotAMetaclass [
 
 	| myClassARoot cond |
 	myClassARoot := self model classNamed: #MyClassARoot.
@@ -71,5 +65,6 @@ ReClassesAreNotMetaClassConditionTest >> testClassIsNotAMetaclass [
 		
 	self assert: cond check. 
 	self assert: cond violators isEmpty.
+	self assert: cond nonViolators equals: { myClassARoot }
 	
 ]

@@ -743,61 +743,6 @@ BlockClosure >> valueNoContextSwitch: anArg [
 	self primitiveFailed
 ]
 
-{ #category : 'evaluating' }
-BlockClosure >> valueSupplyingAnswer: anObject [
-	^ (anObject isCollection and: [anObject isString not])
-		ifTrue: [self valueSupplyingAnswers: {anObject}]
-		ifFalse: [self valueSupplyingAnswers: {{'*'. anObject}}]
-]
-
-{ #category : 'evaluating' }
-BlockClosure >> valueSupplyingAnswers: aListOfPairs [
-	"evaluate the block using a list of questions / answers that might be called upon to
-	automatically respond to Object>>confirm: or FillInTheBlank requests"
-
-	^ self
-		on: ProvideAnswerNotification
-		do: [ :notify |
-			| caption |
-			caption := notify messageText withSeparatorsCompacted.	"to remove new lines"
-			aListOfPairs
-				detect: [ :each |
-					caption = each first
-						or: [ (caption includesSubstring: each first caseSensitive: false)
-								or: [ (each first match: caption)
-										or: [ (String includesSelector: #matchesRegex:)
-												and: [ [ caption matchesRegex: each first ]
-														on: Error
-														do: [ :ignored | false ] ] ] ] ] ]
-				ifFound: [ :answer | notify resume: answer second ]
-				ifNone: [ | outerAnswer |
-					outerAnswer := ProvideAnswerNotification
-						signal: notify messageText.
-					outerAnswer
-						ifNil: [ notify resume ]
-						ifNotNil: [ notify resume: outerAnswer ] ] ]
-]
-
-{ #category : 'evaluating' }
-BlockClosure >> valueSuppressingAllMessages [
-
-	^ self valueSuppressingMessages: #('*')
-]
-
-{ #category : 'evaluating' }
-BlockClosure >> valueSuppressingMessages: aListOfStrings [
-
-	^ self
-		valueSuppressingMessages: aListOfStrings
-		supplyingAnswers: #()
-]
-
-{ #category : 'evaluating' }
-BlockClosure >> valueSuppressingMessages: aListOfStrings supplyingAnswers: aListOfPairs [
-
-	^ self valueSupplyingAnswers: aListOfPairs, (aListOfStrings collect: [:each | {each . true}])
-]
-
 { #category : 'exceptions' }
 BlockClosure >> valueUninterruptably [
 	"Prevent remote returns from escaping the sender.  Even attempts to terminate (unwind) this process will be halted and the process will resume here.  A terminate message is needed for every one of these in the sender chain to get the entire process unwound."

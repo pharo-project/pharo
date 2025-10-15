@@ -19,5 +19,5 @@ ReHasSameExitPointAsItsMethodCondition >> check [
 { #category : 'displaying' }
 ReHasSameExitPointAsItsMethodCondition >> violationMessageOn: aStream [ 
 
-	^ aStream nextPutAll: 'Extracting guard clauses and other expressions that directly affect a method’s execution flow may result in unreachable code in the original method.'
+	^ aStream nextPutAll: 'Extracting guard clauses and other expressions that directly affect a method’s execution flow may cause unexpected behavior in the original method.'
 ]

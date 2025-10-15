@@ -1,6 +1,3 @@
-"
-This condition checks in the class and its superclasses if a class defines a given selector
-"
 Class {
 	#name : 'ReUpToRootDoesNotDefinesMethod',
 	#superclass : 'ReClassesCondition',
@@ -15,7 +12,8 @@ Class {
 { #category : 'instance creation' }
 ReUpToRootDoesNotDefinesMethod >> class: aRBClass [ 
 
-	classes := { aRBClass }
+	classes := { aRBClass }.
+	subjects := classes
 ]
 
 { #category : 'checking' }

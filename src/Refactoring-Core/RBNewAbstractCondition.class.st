@@ -1,6 +1,9 @@
 Class {
 	#name : 'RBNewAbstractCondition',
 	#superclass : 'Object',
+	#instVars : [
+		'subjects'
+	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
@@ -42,6 +45,12 @@ RBNewAbstractCondition >> nonViolators [
 { #category : 'logical operations' }
 RBNewAbstractCondition >> not [
 	^ReNewNegationCondition on: self
+]
+
+{ #category : 'accessing - private' }
+RBNewAbstractCondition >> subjects [
+	"Complex conditions require this method to compute their own subjects"
+	^ subjects
 ]
 
 { #category : 'displaying' }

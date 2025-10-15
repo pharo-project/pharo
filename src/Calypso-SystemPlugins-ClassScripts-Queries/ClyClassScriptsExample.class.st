@@ -9,40 +9,56 @@ Class {
 	#package : 'Calypso-SystemPlugins-ClassScripts-Queries'
 }
 
-{ #category : 'class initialization' }
-ClyClassScriptsExample class >> initialize [
-	self inform: 'it is class initialization example from ', self name
-]
-
 { #category : 'methods with examples' }
 ClyClassScriptsExample class >> methodWithExample [
+	"
+	Don't use self inform: it does not exist anymore
+	But you can get the logic of the pragma.
+	
 	<example>
-	self inform: 'it is example string from ', self name.
-
-	^'it is example string'
+	^ 'it is example string from ', self name.
+"
 ]
 
 { #category : 'methods with samples' }
 ClyClassScriptsExample class >> methodWithSample [
+	"
+Don't use self inform: it does not exist anymore
+	But you can get the logic of the pragma.
+	
 	<sampleInstance>
 
-	^'it is string sample instance from ', self name
+	^'it is string sample instance from ', self name"
 ]
 
 { #category : 'methods with scripts' }
 ClyClassScriptsExample class >> methodWithScript [
+	"
+	Don't use self inform: it does not exist anymore
+	But you can get the logic of the pragma.
+	
 	<script>
-	self inform: 'It is example method with script from ', self name
+	self inform: 'It is example method with script from ', self name"
 ]
 
 { #category : 'methods with scripts' }
 ClyClassScriptsExample class >> methodWithScriptWithArgument [
-	<script: 'self inform: ''It is example method with script with argument from '', self name'>
+	"
+	Don't use self inform: it does not exist anymore
+	But you can get the logic of the pragma.
+	
+	<script: 'self inform: ''It is example method with script with argument from '', self name'>"
 ]
 
 { #category : 'methods with script' }
 ClyClassScriptsExample >> instSideMethodWithScriptWithArgument [
+	"
+	Don't use self inform: it does not exist anymore
+	But you can get the logic of the pragma.
+	
+	
 	<script: 'self inform: ''It is example inst side method with script with argument from '', self name'>
+	"
 ]
 
 { #category : 'see class side' }

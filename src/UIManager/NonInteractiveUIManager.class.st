@@ -136,8 +136,6 @@ NonInteractiveUIManager >> chooseOrRequestFrom: labelList values: valueList line
 
 { #category : 'ui requests' }
 NonInteractiveUIManager >> confirm: queryString [
-	(ProvideAnswerNotification signal: queryString) ifNotNil: [:answer |
-		^ answer].
 
 	^  self nonInteractiveWarning: 'Confirming: ', queryString
 ]
@@ -249,10 +247,6 @@ NonInteractiveUIManager >> handleWarningDebugRequest: aDebugRequest fromDebugger
 NonInteractiveUIManager >> inform: aString [
 
 	| logBlock |
-
-	"Just log notifications"
-	(ProvideAnswerNotification signal: aString) ifNotNil: [:answer | ^true].
-
 	logBlock := [:logger |
 		logger cr;
 			nextPutAll: (String new: 79 withAll: $= ); cr;
@@ -329,7 +323,7 @@ NonInteractiveUIManager >> nonInteractiveRequest: aStringOrText title: aTitle [
 
 { #category : 'errors' }
 NonInteractiveUIManager >> nonInteractiveWarning: aWarnMessage [
-	^ ProvideAnswerNotification signal: aWarnMessage
+	^ self
 ]
 
 { #category : 'events' }
@@ -422,11 +416,6 @@ NonInteractiveUIManager >> request: aStringOrText initialAnswer: defaultAnswer t
 
 { #category : 'ui requests' }
 NonInteractiveUIManager >> request: aStringOrText initialAnswer: defaultAnswer title: aTitle entryCompletion: anEntryCompletion [
-
-	(ProvideAnswerNotification signal: aStringOrText) ifNotNil: [ :answer |
-		^ answer = #default
-			  ifTrue: [ defaultAnswer ]
-			  ifFalse: [ answer ] ].
 
 	^ self nonInteractiveRequest: aStringOrText title: aTitle
 ]

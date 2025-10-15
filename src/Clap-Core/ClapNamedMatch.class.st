@@ -46,3 +46,8 @@ ClapNamedMatch >> isValid: aValidation [
 ClapNamedMatch >> word [
 	^ keyword
 ]
+
+{ #category : 'matching' }
+ClapNamedMatch >> words [
+	^ { self word }
+]

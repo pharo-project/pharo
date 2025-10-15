@@ -25,6 +25,12 @@ ClapExplicit >> completeMatchOn: aStream [
 ]
 
 { #category : 'testing' }
+ClapExplicit >> hasChild [
+
+	^ false
+]
+
+{ #category : 'testing' }
 ClapExplicit >> isExplicit [
 	^ true
 ]

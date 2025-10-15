@@ -910,9 +910,7 @@ Class >> rename: aString [
 		ifTrue: [^ self error: newName , ' already exists'].
 	self setName: newName.
 	self environment renameClass: self from: oldName.
-	(self undeclaredRegistry includesKey: newName)
-		ifTrue: [self inform: 'There are references to, ' , aString printString , '
-from the undeclared registry. Check them after this change.']
+	
 ]
 
 { #category : 'private' }
