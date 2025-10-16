@@ -134,6 +134,8 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		
 		spec package: 'Debugging-Utils'.
 		spec package: 'OpalCompiler-Core'.
+		spec package: 'DebugInfo'
+			with: [ spec requires: #( 'OpalCompiler-Core' ) ].
 		
 		spec package: 'FileSystem-Core'.
 		spec package: 'FileSystem-Disk'.
@@ -206,6 +208,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'CodeImport'.
 			'CodeImport-Commands'.
 			'Debugging-Utils'.
+			'DebugInfo'.
 			'OpalCompiler-Core'}.
 		
 		spec group: 'FileSystemGroup' with: {

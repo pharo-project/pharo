@@ -391,6 +391,7 @@ ReleaseTest >> testNoShadowedVariablesInMethods [
 			m ast variableDefinitionNodes anySatisfy: [ :node | node variable isShadowing ] ]].
 	"No other exceptions beside the ones mentioned here should be allowed"
 	validExceptions := {
+		DebugInfoTest>>#testListShadowedVariablesAreNotDuplicated.
 		RBSmalllintTestObject>>#tempVarOverridesInstVar.
 		ReTempVarOverridesInstVarRuleTest>>#sampleMethod: . OCClosureCompilerTest>>#testInlineBlockShadowVariableTwoBlocksTemporary .  OCClosureCompilerTest>>#testInlineBlockShadowVariableUsedInBlock . OCClosureCompilerTest>>#testInlineBlockShadowVariableAssignedInside . OCClosureCompilerTest>>#testInlineBlockShadowVariableTemporary . OCClosureCompilerTest>>#testInlineBlockShadowVariableUsedInInnerBlock . OCClosureCompilerTest>>#testInlineBlockShadowVariableUsedInInnerInnerBlock . OCClosureCompilerTest>>#testInlineBlockShadowVariableInnerBlocks . OCClosureCompilerTest>>#testInlineBlockShadowVariableParameter}.
 

@@ -23,6 +23,15 @@ CompiledCode >> sourceNode [
 ]
 
 { #category : '*OpalCompiler-Core' }
-CompiledCode >> sourceNodeForPC: arg1 [
-	^ self subclassResponsibility
+CompiledCode >> sourceNodeForPC: aPC [
+
+	| sourceNode |
+	sourceNode := self sourceNode.
+
+	self method
+		propertyAt: self bcToASTCacheKey asSymbol
+		ifPresent: [ :bcToASTCache |
+			^ bcToASTCache nodeForPC: aPC ].
+
+	^ sourceNode sourceNodeForPC: aPC
 ]

@@ -323,6 +323,13 @@ Symbol >> = aSymbol [
 	^ super = aSymbol
 ]
 
+{ #category : 'accessing' }
+Symbol >> argumentCount [
+    "This method refers to block arguments [:acc :x | ...] has two arguments so argumentCount of a selector that could be used in place of a block
+	should return the same amount of argument than the block."
+	^ self numArgs + 1
+]
+
 { #category : 'converting' }
 Symbol >> asAccessor [
 	"Return a accessor (getter) message from a setter message.
@@ -643,6 +650,18 @@ Symbol >> uncapitalized [
 { #category : 'evaluating' }
 Symbol >> value: anObject [
 	^anObject perform: self
+]
+
+{ #category : 'evaluating' }
+Symbol >> value: anObject value: arg [
+
+	^ anObject perform: self with: arg
+]
+
+{ #category : 'evaluating' }
+Symbol >> valueWithArguments: aCollection [
+
+	^ aCollection first perform: self withArguments: aCollection allButFirst
 ]
 
 { #category : 'copying' }

@@ -156,8 +156,9 @@ CompiledMethod >> classBinding [
 
 { #category : 'accessing' }
 CompiledMethod >> classBinding: aBinding [
-       "sets the association to the class that I am installed in"
-       ^self literalAt: self numLiterals put: aBinding
+	"sets the association to the class that I am installed in"
+
+	^ self literalAt: self numLiterals put: aBinding
 ]
 
 { #category : 'source code management' }

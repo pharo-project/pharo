@@ -44,12 +44,6 @@ ExternalDropHandler class >> defaultHandler: externalDropHandler [
 	DefaultHandler := externalDropHandler
 ]
 
-{ #category : 'class initialization' }
-ExternalDropHandler class >> initialize [
-
-	self resetRegisteredHandlers
-]
-
 { #category : 'accessing' }
 ExternalDropHandler class >> lookupExternalDropHandler: aFileReference [
 

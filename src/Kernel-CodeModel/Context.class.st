@@ -442,6 +442,15 @@ Context >> copyTo: aContext [
 	^ copy
 ]
 
+{ #category : 'accessing' }
+Context >> currentPC [
+
+	"we need to guard for dead contexts (pc is nil)"
+	^ self isDead
+		  ifTrue: [ self endPC ]
+		  ifFalse: [ pc ]
+]
+
 { #category : 'private' }
 Context >> cut: aContext [
 	"Cut aContext and its senders from my sender chain"
@@ -691,15 +700,10 @@ Context >> exceptionsToCaptureWhenStepping [
 
 { #category : 'accessing' }
 Context >> executedPC [
-	"Deeper in the stack the pc was already advanced one bytecode, so we need to go back
-	this one bytecode, which can consist of multiple bytes. But on IR, we record the *last*
-	bytecode offset as the offset of the IR instruction, which means we can just go back one"
 
-	"if we are at the start, return the startpc"
-	(pc == self startpc) ifTrue: [ ^self startpc ].
-
-	"we need to guard for dead contexts (pc is nil)"
-	^self isDead ifTrue: [ self endPC - 1] ifFalse: [ pc - 1]
+	"Return the PC of the previous instruction.
+	Heuristic (maybe wrong) we just go back one byte"
+	^ self currentPC - 1 max: method initialPC
 ]
 
 { #category : 'system simulation' }
@@ -832,11 +836,6 @@ Context >> hasSender: context [
 				ifTrue: [^true].
 			senderContext := senderContext sender].
 	^false
-]
-
-{ #category : 'testing' }
-Context >> hasTemporaryVariableNamed: aName [
-	^ self tempNames includes: aName
 ]
 
 { #category : 'accessing' }

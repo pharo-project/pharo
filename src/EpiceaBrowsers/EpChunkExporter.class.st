@@ -71,10 +71,9 @@ EpChunkExporter >> fileOut: epiceaEntries in: aDirectory [
 		nameText:  self outputFilename; 
 		okAction: [ :fileReference |
 				fileRef := fileReference.
-				self internalFileleOutOf: epiceaEntries in: fileReference writeStream 
-				];
-		openModal.
-	dialog := SpConfirmDialog new.
+				fileRef writeStreamDo: [ :s | 
+					self internalFileOutOf: epiceaEntries in: s ].
+				dialog := SpConfirmDialog new.
 	ok := dialog
 		      title: 'Do you want to browse natively the fileout?';
 		      label: 'Are you sure?';
@@ -82,10 +81,13 @@ EpChunkExporter >> fileOut: epiceaEntries in: aDirectory [
 		      cancelLabel: 'No, forget it';
 		      openModal.
 	ok ifTrue: [ fileRef openInOSFileBrowser ]
+				];
+		openModal.
+	
 ]
 
 { #category : 'private' }
-EpChunkExporter >> internalFileleOutOf: epiceaEntries in: aStream [
+EpChunkExporter >> internalFileOutOf: epiceaEntries in: aStream [
 
 	epiceaEntries do: [ :epEntryItem | epEntryItem fileOutEntryOn: aStream ] 
 ]

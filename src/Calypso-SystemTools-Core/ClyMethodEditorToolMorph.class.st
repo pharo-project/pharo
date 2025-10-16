@@ -231,9 +231,7 @@ ClyMethodEditorToolMorph >> textChanged: aTextChanged [
 	textMorph segments copy do: #delete.
 	ast := self currentEditedAST.
 	IconStyler new
-		stylerClasses: {
-				ErrorNodeStyler.
-				SemanticWarningIconStyler };
+	   stylerClasses: {ErrorNodeStyler. SemanticWarningIconStyler };
 		styleText: textModel withAst: ast.
 	^ ast
 ]

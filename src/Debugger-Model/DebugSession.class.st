@@ -529,12 +529,43 @@ DebugSession >> stepToFirstInterestingBytecodeIn: aProcess [
 
 	"If we are are stepping into a quick method,
 	make sure that we step correctly over the first primitive bytecode"
+
 	| suspendedContext |
 	suspendedContext := aProcess suspendedContext.
-	(suspendedContext method isQuick and: [ suspendedContext pc == suspendedContext method initialPC ])
+	(suspendedContext method isQuick and: [
+		 suspendedContext pc == suspendedContext method initialPC ])
 		ifTrue: [ ^ suspendedContext updatePCForQuickPrimitiveRestart ].
 
-	^ aProcess stepToSendOrReturn
+	^ Processor activeProcess
+		  evaluate: [
+			  | newContext |
+			  newContext := self stepToFirstInterestingBytecodeInContext: aProcess suspendedContext.
+			  aProcess suspendedContext: newContext.
+			  newContext ]
+		  onBehalfOf: aProcess
+]
+
+{ #category : 'private' }
+DebugSession >> stepToFirstInterestingBytecodeInContext: aContext [
+
+	| bytecodeInterpreter context debugInfo |
+	aContext isDead ifTrue: [
+		self error: 'Cannot step into dead context' ].
+
+	debugInfo := aContext method debugInfo.
+	bytecodeInterpreter := InstructionStream
+		                       on: aContext method
+		                       pc: aContext pc.
+	[ debugInfo shouldStopAt: aContext pc ] whileFalse: [
+			context := bytecodeInterpreter interpretNextInstructionFor:
+				           aContext.
+			context == aContext ifFalse: [ "Caused all non-send, non-store, non-return instructions
+				that may activate a method. This is today the case of mustBeBoolean.
+				
+				If a mustBeBoolean has been activated, we need to change contexts"
+				^ context ] ].
+
+	^ aContext
 ]
 
 { #category : 'debugging actions' }

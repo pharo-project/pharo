@@ -95,7 +95,7 @@ TraitedMetaclass >> findOriginClassOf: aMethod [
 	<reflection: 'Class structural inspection - Selectors and methods inspection'>
 
 	(aMethod hasProperty: #traitSource)
-		ifTrue: [ ^ aMethod traitSource innerClass ].
+		ifTrue: [ ^ (aMethod propertyAt: #traitSource) innerClass ].
 
 	(self isLocalSelector: aMethod selector)
 		ifTrue: [ ^ self ].

@@ -27,7 +27,10 @@ OCContextTempMappingTest >> fetchArgFromOptimizedBlockInsideFullBlock: anArg ext
 
 	| result |
 	self class withAllSubclassesDo: [ :each |
-		result := anArg = anArg ifTrue: [ anotherArg value. thisContext tempNamed: #anArg ]].
+		"Inside full block"
+		result := anArg = anArg ifTrue: [ 
+			"Inside optimized block"
+			thisContext tempNamed: #anArg ]].
 	^result
 ]
 
@@ -58,7 +61,7 @@ OCContextTempMappingTest >> testAccessingBlockArgumentNoneOptimizedBlock [
 	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
 
 	a := 1.
-	b := a in: [ :x | thisContext tempNames ].
+	b := a in: [ :x | thisContext temporaryVariableNames ].
 	self assert: b equals:#(a b x)
 ]
 
@@ -73,7 +76,7 @@ OCContextTempMappingTest >> testAccessingBlockArgumentOptimizedBlock [
 	thisContext method hasSourceCode ifFalse: [ ^ self skip ].
 
 	a := 1.
-	b := a ifNotNil: [ :x | thisContext tempNames ].
+	b := a ifNotNil: [ :x | thisContext temporaryVariableNames ].
 	self assert: b equals: #(#a #b #x)
 ]
 

@@ -280,6 +280,36 @@ SymbolTest >> subCollectionNotIn [
 ]
 
 { #category : 'tests' }
+SymbolTest >> testArgumentCountInfixSymbol [
+
+	| symbol |
+
+	symbol := #+.
+
+	self assert: symbol argumentCount equals: 2
+]
+
+{ #category : 'tests' }
+SymbolTest >> testArgumentCountManyArgs [
+
+	| symbol |
+
+	symbol := #test:bla123:.
+
+	self assert: symbol argumentCount equals: 3
+]
+
+{ #category : 'tests' }
+SymbolTest >> testArgumentCountOneArg [
+
+	| symbol |
+
+	symbol := #test.
+
+	self assert: symbol argumentCount equals: 1
+]
+
+{ #category : 'tests' }
 SymbolTest >> testAsAccessor [
 	self assert: #x: asAccessor equals: #x.
 	self assert: #x asAccessor equals: #x.
@@ -567,6 +597,37 @@ SymbolTest >> testUncapitalized [
 	lc := #mElViN.
 	self assert: uc uncapitalized equals: lc.
 	self assert: lc uncapitalized equals: lc
+]
+
+{ #category : 'tests' }
+SymbolTest >> testValueValue [
+
+	| symbol |
+	
+	symbol := #+.
+	
+	self assert: (symbol value: 1 value: 4) equals: 5
+]
+
+{ #category : 'tests' }
+SymbolTest >> testValueWithArguments [
+
+	| symbol |
+	
+	symbol := #+.
+	
+	self assert: (symbol valueWithArguments: {1. 4}) equals: 5
+]
+
+{ #category : 'tests' }
+SymbolTest >> testValueWithOneArg [
+
+	| symbol rcvr |
+	
+	symbol := #abs.
+	rcvr := -1.
+	
+	self assert: (symbol value: rcvr) equals: 1
 ]
 
 { #category : 'requirements' }

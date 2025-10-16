@@ -37,6 +37,7 @@ BaselineOfKernelTests >> baseline: spec [
 			package: 	'Jobs-Tests' ;
 			package: 	'AST-Core-Tests';
 			package: 	'OpalCompiler-Tests' with: [ spec requires: #('AST-Core-Tests') ];
+			package: 	'DebugInfo-Tests' with: [ spec requires: #('AST-Core-Tests') ];
 			package: 	'CodeImport-Tests'	 with: [ spec requires: #('AST-Core-Tests') ];
 			package: 	'Random-Tests';
 			package: 	'Ring-Definitions-Core-Tests';

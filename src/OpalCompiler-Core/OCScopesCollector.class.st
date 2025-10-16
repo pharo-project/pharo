@@ -15,9 +15,9 @@ Class {
 	#instVars : [
 		'scopes'
 	],
-	#category : 'OpalCompiler-Tests-AST',
-	#package : 'OpalCompiler-Tests',
-	#tag : 'AST'
+	#category : 'OpalCompiler-Core-IR-Manipulation',
+	#package : 'OpalCompiler-Core',
+	#tag : 'IR-Manipulation'
 }
 
 { #category : 'initialization' }

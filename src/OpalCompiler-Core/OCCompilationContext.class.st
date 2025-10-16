@@ -29,7 +29,8 @@ Class {
 		'bindings',
 		'compiledMethodClass',
 		'semanticScope',
-		'compiledBlockClass'
+		'compiledBlockClass',
+		'semanticAnalysisNeeded'
 	],
 	#classVars : [
 		'DefaultOptions',
@@ -509,6 +510,12 @@ OCCompilationContext >> isScripting: aBoolean [
 		semanticScope := OCReceiverDoItSemanticScope targetingNilReceiver ]
 ]
 
+{ #category : 'testing' }
+OCCompilationContext >> isSemanticAnalysisNeeded [
+
+	^ semanticAnalysisNeeded == true
+]
+
 { #category : 'options' }
 OCCompilationContext >> optionBlockClosureOptionalOuter [
 	^ options includes: #optionBlockClosureOptionalOuter
@@ -679,6 +686,18 @@ OCCompilationContext >> requestorScopeClass [
 OCCompilationContext >> requestorScopeClass: anObject [
 	"clients can set their own subclass of OCRequestorScope if needed"
 	requestorScopeClass := anObject
+]
+
+{ #category : 'accessing' }
+OCCompilationContext >> requireSemanticAnalysis [
+
+	semanticAnalysisNeeded := true
+]
+
+{ #category : 'accessing' }
+OCCompilationContext >> semanticAnalysisDone [
+
+	semanticAnalysisNeeded := false
 ]
 
 { #category : 'accessing' }

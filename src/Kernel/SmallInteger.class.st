@@ -556,13 +556,6 @@ SmallInteger >> pointsTo: anObject [
 ]
 
 { #category : 'printing' }
-SmallInteger >> printOn: stream base: base [
-	"Append a representation of this number in base b on aStream."
-
-	self printOn: stream base: base length: 0 padded: false
-]
-
-{ #category : 'printing' }
 SmallInteger >> printOn: stream base: base length: minimumLength padded: padWithZeroes [
 	"Return a String representation of this number in base b with a minimum length and padded by 0 if zeroFlag is set"
 
