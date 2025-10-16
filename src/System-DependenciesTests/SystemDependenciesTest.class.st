@@ -149,7 +149,7 @@ SystemDependenciesTest >> knownUIDependencies [
 	"ideally this list should be empty"
 
 	^ #(#'AST-Core-Tests'  #'Athens-Cairo' #'Athens-Core'
-	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers' #'HeuristicCompletion-Model' #'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets')
+	#'Athens-Morphic' #'Refactoring-Critics' #'Refactoring-Environment' #'Reflectivity-Tools' #Shout #'Tool-Diff' #'Tool-FileList' #'Tool-Profilers' #'HeuristicCompletion-Model' #'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets' "#'Reflectivity'")
 ]
 
 { #category : #accessing }
