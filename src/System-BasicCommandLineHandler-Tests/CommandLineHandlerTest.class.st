@@ -6,27 +6,52 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'utilities' }
-CommandLineHandlerTest >> argumentsWith: aCollection [
-	^ CommandLineArguments withArguments: aCollection
+{ #category : 'tests' }
+CommandLineHandlerTest >> testCanHandleInteractiveFlag [
+
+	| arguments handler |
+	arguments := #('--interactive' 'foo' '--help').
+	handler := PharoOptionsHandler forArguments: arguments.
+	
+	self assert: handler filteredArguments equals: #('foo' '--help')
 ]
 
 { #category : 'tests' }
-CommandLineHandlerTest >> testBasicCommandlineHandler [
+CommandLineHandlerTest >> testCanHandleNoDefaultPreferences [
 
-	| args |
-	args := self argumentsWith: #().
-	"BasicCommandLineHandler gets activated by default on image startup, so there is no need to activate it in a nother case"
-	self deny: (BasicCommandLineHandler isResponsibleFor: args).
-	"The BasicCommandLineHandler should always delegate to the PharoCommandLineHandler if it is present"
-	self
-		assert: BasicCommandLineHandler new selectedHandler
-		equals: PharoCommandLineHandler
+	| arguments handler |
+	arguments := #('--no-default-preferences' 'foo' '--help').
+	handler := PharoOptionsHandler forArguments: arguments.
+	
+
+	self assert: handler isOmittingPreferences.
+	self deny: handler isOverridingPreferences.
+	self assert: handler filteredArguments equals: #('foo' '--help')
 ]
 
 { #category : 'tests' }
-CommandLineHandlerTest >> testResponsibilityDefault [
-	| args |
-	args := self argumentsWith: #('--help').
-	self assert: (PharoCommandLineHandler isResponsibleFor: args)
+CommandLineHandlerTest >> testCanHandlePreferencesFile [
+
+	| arguments handler |
+	arguments := #('--preferences-file=prefs.file' 'foo' '--help').
+	handler := PharoOptionsHandler forArguments: arguments.
+	
+
+	self deny: handler isOmittingPreferences.
+	self assert: handler isOverridingPreferences.
+	self assert: handler preferencesFile basename equals: 'prefs.file'.
+	self assert: handler filteredArguments equals: #('foo' '--help')
+]
+
+{ #category : 'tests' }
+CommandLineHandlerTest >> testPharoCommandLineHandlerDoesNotRemoveArgumentsIfNoPreferencesArgument [
+
+	| arguments handler |
+	arguments := #('foo' '--help').
+	handler := PharoOptionsHandler forArguments: arguments.
+	
+
+	self deny: handler isOmittingPreferences.
+	self deny: handler isOverridingPreferences.
+	self assert: handler filteredArguments equals: #('foo' '--help')
 ]

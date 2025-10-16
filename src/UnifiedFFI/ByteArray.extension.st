@@ -1,6 +1,12 @@
 Extension { #name : 'ByteArray' }
 
 { #category : '*UnifiedFFI' }
+ByteArray >> isNullOrNil [
+
+	^ self isNull
+]
+
+{ #category : '*UnifiedFFI' }
 ByteArray >> packAsDoubleToArity: arity [
 	"In case I sending a buffer to get the contents I need to understand this message.
 	 See AthensCairoCanvas>>getCurrentPoint as an example."

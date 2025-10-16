@@ -161,11 +161,20 @@ ReInteractionDriver >> handleBreakingChanges [
 	select ifNotNil: [ select action ]
 ]
 
+{ #category : 'ui requests' }
+ReInteractionDriver >> inform: aString [
+
+	self informDialog
+				label: aString;
+				title: 'Watch out!';
+				openModal 
+]
+
 { #category : 'private' }
 ReInteractionDriver >> informConditions: conditions [ 
 	"The receiver has multiple failed applicability conditions and more than one could fail, inform all failures"
 
-	conditions do: [ : cond | self inform: cond errorString ].
+	conditions do: [ :cond | self inform: cond errorString ].
 ]
 
 { #category : 'private' }

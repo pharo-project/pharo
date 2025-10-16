@@ -31,8 +31,8 @@ ReRemoveClassChange >> asUndoOperation [
 	self changeClass withAllSubclasses do: [ :class |
 		classChanges defineClass: [ :aBuilder | aBuilder fillFor: class ].
 		class class instVarNames do: [ :varName | classChanges addInstanceVariable: varName to: class class ].
-		class selectors do: [ :selector | classChanges compile: (class sourceCodeAt: selector) in: class ].
-		class class selectors do: [ :selector | classChanges compile: (class class sourceCodeAt: selector) in: class class ] ].
+		class selectors do: [ :selector | classChanges compile: (class >> selector) sourceCode in: class ].
+		class class selectors do: [ :selector | classChanges compile: (class class >> selector) sourceCode in: class class ] ].
 	^ classChanges
 ]
 

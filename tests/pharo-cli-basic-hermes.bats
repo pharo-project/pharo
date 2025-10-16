@@ -18,7 +18,7 @@ teardown() {
   assert_success
   assert_output "false"
 
-  run_pharo perform --save BasicHermesTool load: -- $ROOT_DIR/exported-empty-package.hermes
+  run_pharo perform --save BasicHermesTool load: --as-array $ROOT_DIR/exported-empty-package.hermes
   assert_success
 
   run_pharo eval PackageOrganizer default hasPackage: "#empty"

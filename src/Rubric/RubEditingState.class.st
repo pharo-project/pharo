@@ -13,7 +13,8 @@ Class {
 		'startOfTyping',
 		'previousInterval',
 		'scrollPivot',
-		'textArea'
+		'textArea',
+		'currentVirtualColumn'
 	],
 	#category : 'Rubric-Editing-Core',
 	#package : 'Rubric',
@@ -50,6 +51,12 @@ RubEditingState >> hasFocus [
 { #category : 'accessing' }
 RubEditingState >> hasFocus: aBoolean [
 	hasFocus := aBoolean
+]
+
+{ #category : 'accessing' }
+RubEditingState >> invalidateVirtualColumn [ 
+
+	currentVirtualColumn := nil
 ]
 
 { #category : 'accessing' }
@@ -195,4 +202,16 @@ RubEditingState >> unplug [
 { #category : 'accessing' }
 RubEditingState >> unselect [
 	self markBlock: self pointBlock copy
+]
+
+{ #category : 'accessing' }
+RubEditingState >> visualColumn [
+
+	^ currentVirtualColumn 
+]
+
+{ #category : 'accessing' }
+RubEditingState >> visualColumn: visualColumn [
+
+	currentVirtualColumn := visualColumn
 ]

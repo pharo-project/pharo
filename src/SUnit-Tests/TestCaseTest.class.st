@@ -11,8 +11,8 @@ Class {
 
 { #category : 'events' }
 TestCaseTest >> testAnnouncement [
-
 	| announcements oldCollection suite unitTest result |
+	
 	unitTest := ClassFactoryForTestCaseTest.
 	announcements := Dictionary new.
 	unitTest resetAnnouncer.
@@ -20,7 +20,10 @@ TestCaseTest >> testAnnouncement [
 	self deny: unitTest shouldAnnounce.
 	self deny: unitTest new shouldAnnounce.
 
-	unitTest announcer when: TestCaseAnnouncement do: [ :ann | (announcements at: ann class ifAbsentPut: [ OrderedCollection new ]) add: ann ] for: self.
+	unitTest announcer 
+		when: TestCaseAnnouncement 
+		do: [ :ann | (announcements at: ann class ifAbsentPut: [ OrderedCollection new ]) add: ann ] 
+		for: self.
 
 	self assert: unitTest shouldAnnounce.
 	self assert: unitTest new shouldAnnounce.
@@ -33,11 +36,12 @@ TestCaseTest >> testAnnouncement [
 	self assertEmpty: result errors.
 
 	self
-		assert: (announcements at: TestCaseStarted ifAbsent: [ self fail: 'We should have received some TestCaseStarted announcements.' ]) size
+		assert: (announcements at: TestCaseStarted ifAbsent: [ #() ]) size
 		equals: suite tests size.
 	self
-		assert: (announcements at: TestCaseEnded ifAbsent: [ self fail: 'We should have received some TestCaseEnded announcements.' ]) size
+		assert: (announcements at: TestCaseEnded ifAbsent: [ #() ]) size
 		equals: suite tests size.
+	
 	self assertCollection: announcements keys hasSameElements: {
 			TestCaseStarted.
 			TestCaseEnded }.

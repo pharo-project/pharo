@@ -31,7 +31,6 @@ Class {
 	#classVars : [
 		'CompilerClass',
 		'LastImagePath',
-		'LastQuitLogPosition',
 		'LogFileName',
 		'LowSpaceProcess',
 		'LowSpaceSemaphore',
@@ -264,12 +263,6 @@ SmalltalkImage >> bindingOf: varName [
 	^globals bindingOf: varName
 ]
 
-{ #category : 'sources - date' }
-SmalltalkImage >> buildDateString [
-
-	^ 'Build date: ' , SystemVersion current date asString
-]
-
 { #category : 'memory space' }
 SmalltalkImage >> bytesLeft [
 	"Answer the number of bytes of space available. Does a full garbage collection."
@@ -461,13 +454,6 @@ SmalltalkImage >> createStackOverflow [
 	"Smalltalk installLowSpaceWatcher; createStackOverflow"
 
 	self createStackOverflow.  "infinite recursion"
-]
-
-{ #category : 'sources, change log' }
-SmalltalkImage >> datedVersion [
-	"Answer the version of this release."
-
-	^SystemVersion current datedVersion
 ]
 
 { #category : 'log' }
@@ -853,27 +839,6 @@ SmalltalkImage >> isSelfEvaluating [
 { #category : 'accessing' }
 SmalltalkImage >> lastImagePath [
 	^ LastImagePath
-]
-
-{ #category : 'sources, change log' }
-SmalltalkImage >> lastQuitLogPosition [
-	^ LastQuitLogPosition
-]
-
-{ #category : 'sources, change log' }
-SmalltalkImage >> lastQuitLogPosition: aNumber [
-	"should be only use to ensure the transition from SystemEnvironment to SmalltalkImage, then be removed"
-
-	LastQuitLogPosition := aNumber
-]
-
-{ #category : 'sources, change log' }
-SmalltalkImage >> lastUpdateString [
-	"SmalltalkImage current lastUpdateString"
-
-	^ 'Build information: ' , (SystemVersion current
-		   ifNil: [ 'No version set yet' ]
-		   ifNotNil: [ :version | version asString ])
 ]
 
 { #category : 'sources, change log' }
@@ -1436,55 +1401,6 @@ SmalltalkImage >> registerExternalObject: anObject [
 	^ExternalSemaphoreTable registerExternalObject: anObject
 ]
 
-{ #category : 'housekeeping' }
-SmalltalkImage >> removeAllLineFeedsQuietly [
-	"Smalltalk removeAllLineFeedsQuietly"
-	"Scan all methods for source code with lineFeeds.
-	Replaces all occurrences of <CR><LF> or <LF> by <CR>.
-	Answer a Dictionary keyed by author name containing sets of affected method names,
-	as well as (at the key 'OK') a list of methods that still contain LF characters inside literal strings or characters."
-	^self removeAllLineFeedsQuietlyCalling: []
-]
-
-{ #category : 'housekeeping' }
-SmalltalkImage >> removeAllLineFeedsQuietlyCalling: aBlock [
-	"Smalltalk removeAllLineFeedsQuietly"
-	"Scan all methods for source code with lineFeeds.
-	Replaces all occurrences of <CR><LF> or <LF> by <CR>.
-	Answer a Dictionary keyed by author name containing sets of affected method names,
-	as well as (at the key 'OK') a list of methods that still contain LF characters inside literal strings or characters.
-	Evaluate aBlock for each method so that status can be updated."
-	| authors |
-	authors := Dictionary new.
-	authors at: 'OK' put: Set new.
-	self systemNavigation
-		allBehaviorsDo: [:cls | cls selectorsAndMethodsDo: [:selector :method |
-					| oldStamp newCodeString oldCodeString oldProtocolName nameString |
-					aBlock cull: cls cull: selector.
-					oldCodeString := cls sourceCodeAt: selector.
-					(oldCodeString includes: Character lf)
-						ifTrue: [
-							newCodeString := oldCodeString withInternalLineEndings.
-							nameString := cls name , '>>' , selector.
-							((cls compiledMethodAt: selector) hasLiteralSuchThat: [ :lit | lit asString includes: Character lf ])
-								ifTrue: [(authors at: 'OK')
-										add: nameString]
-								ifFalse: [oldStamp := (method timeStamp)
-												copy replaceAll: Character cr
-												with: Character space.
-									(authors
-										at: (oldStamp copyFrom: 1 to: (oldStamp findFirst: [ :c | c isAlphaNumeric not ]))
-										ifAbsentPut: [Set new])
-										add: nameString.
-									oldProtocolName := cls protocolNameOfSelector: selector.
-									cls
-										compile: newCodeString
-										classified: oldProtocolName
-										withStamp: oldStamp
-										notifying: nil ]]]].
-	^ authors
-]
-
 { #category : 'class and trait names' }
 SmalltalkImage >> removeClassNamed: aName [
 	"Invoked from fileouts:  if there is currently a class in the system named aName, then remove it.  If anything untoward happens, report it in the Transcript.  "
@@ -1794,26 +1710,6 @@ SmalltalkImage >> supportsQueueingFinalization: aBoolean [
 	"SmalltalkImage current supportsQueueingFinalization: true"
 
 	self vm parameterAt: 48 put: ((self vm parameterAt: 48) bitClear: 16) + (aBoolean ifTrue: [16] ifFalse: [0])
-]
-
-{ #category : 'sources, change log' }
-SmalltalkImage >> systemInformationString [
-
-	^ String cr , 'Pharo ' , SystemVersion current dottedMajorMinorPatch
-	  , String cr , self lastUpdateString , String cr
-	  , self buildDateString , String cr , String cr , self licenseString
-]
-
-{ #category : 'sources, change log' }
-SmalltalkImage >> timeStamp: aStream [
-	"Writes system version and current time on stream aStream."
-
-	| dateTime |
-	dateTime := DateAndTime now.
-	aStream
-		nextPutAll: 'From ' , self datedVersion , ' [' , self lastUpdateString , '] on ' , dateTime asDate printString;
-		nextPutAll: ' at ';
-		nextPutAll: dateTime asTime printString
 ]
 
 { #category : 'class and trait names' }

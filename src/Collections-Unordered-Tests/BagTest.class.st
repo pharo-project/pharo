@@ -397,6 +397,17 @@ BagTest >> testCopyNonEmptyWithoutAllNotIncluded [
 ]
 
 { #category : 'tests' }
+BagTest >> testCounts [
+	| bag  |
+	bag := Bag new.
+	bag add: '1' withOccurrences: 50.
+	bag add: '2' withOccurrences: 40.
+	bag add: '3' withOccurrences: 10.
+
+	self assert: bag counts equals: #(50 40 10)
+]
+
+{ #category : 'tests' }
 BagTest >> testCreation [
 	| bag |
 	bag := Bag new.
@@ -406,6 +417,8 @@ BagTest >> testCreation [
 
 { #category : 'tests' }
 BagTest >> testCumulativeCounts [
+	"Pay attention this is not the nymber of elements but the percent it represents"
+
 	| bag cumulativeCounts |
 	bag := Bag new.
 	bag add: '1' withOccurrences: 50.
@@ -413,6 +426,22 @@ BagTest >> testCumulativeCounts [
 	bag add: '3' withOccurrences: 10.
 
 	cumulativeCounts := bag cumulativeCounts.
+
+	self assert: cumulativeCounts size equals: 3.
+	self assert: cumulativeCounts first equals: (50 -> '1').
+	self assert: cumulativeCounts second equals: (90 -> '2').
+	self assert: cumulativeCounts third equals: (100 -> '3')
+]
+
+{ #category : 'tests' }
+BagTest >> testCumulativePercents [
+	| bag cumulativeCounts |
+	bag := Bag new.
+	bag add: '1' withOccurrences: 50.
+	bag add: '2' withOccurrences: 40.
+	bag add: '3' withOccurrences: 10.
+
+	cumulativeCounts := bag cumulativePercents.
 
 	self assert: cumulativeCounts size equals: 3.
 	self assert: cumulativeCounts first equals: (50 -> '1').

@@ -14,6 +14,14 @@ Class {
 	#tag : 'Base'
 }
 
+{ #category : 'accessing' }
+FFIFunctionParser class >> parserClass [
+	"Sets one time for system the parser class to be used. 
+	 This is needed to have compatibility with older versions of Pharo"
+	
+	^ OCParser
+]
+
 { #category : 'requestor callbacks' }
 FFIFunctionParser >> argName: argName indirectIndex: anIndex type: aTypeName ptrArity: arity [
 
@@ -273,6 +281,12 @@ FFIFunctionParser >> parseWord [
 ]
 
 { #category : 'accessing' }
+FFIFunctionParser >> parserClass [
+
+	^ self class parserClass
+]
+
+{ #category : 'accessing' }
 FFIFunctionParser >> requestor [
 	^ requestor
 ]
@@ -292,7 +306,7 @@ FFIFunctionParser >> setOn: aStreamSource [
 
 	| functionDeclarationArray |
 	functionDeclarationArray := aStreamSource isString ifTrue: [ | node |
-			node := OCParser parseExpression: '#(', aStreamSource, ')'.
+			node := self parserClass parseExpression: '#(', aStreamSource, ')'.
 			node evaluate
 		] ifFalse: [ aStreamSource ].
 

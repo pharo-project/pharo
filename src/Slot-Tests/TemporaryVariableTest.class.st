@@ -27,20 +27,6 @@ TemporaryVariableTest >> testDefiningNode [
 ]
 
 { #category : 'tests' }
-TemporaryVariableTest >> testHasTemporaryVariablesBlock [
-	| block |
-	block := [ | b | b := 2. b +2  ].
-	self assert: (block hasTemporaryVariableNamed: #b)
-]
-
-{ #category : 'tests' }
-TemporaryVariableTest >> testHasTemporaryVariablesMethod [
-	| method |
-	method := self class >> #testTemporaryVariablesMethod.
-	self assert: (method hasTemporaryVariableNamed: #method)
-]
-
-{ #category : 'tests' }
 TemporaryVariableTest >> testIsReferenced [
 	| method notReferenced |
 	"The temp notReferenced is not used as we test exactly that here"
@@ -107,9 +93,7 @@ TemporaryVariableTest >> testTemporaryVariablesMethod [
 
 	"On the level of CompiledMethod, args include temps. This needs to be fixed"
 	method := OrderedCollection >> #do:.
-	self assert: method temporaryVariables first name equals: #aBlock.
-	self assert: (method hasTemporaryVariableNamed: #aBlock).
-	self assert: (method lookupVar: #aBlock) class equals: ArgumentVariable
+	self assert: method temporaryVariables first name equals: #aBlock
 ]
 
 { #category : 'tests' }

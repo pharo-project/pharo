@@ -26,11 +26,6 @@ CompiledMethod >> destroyTwin [
 ]
 
 { #category : '*Reflectivity' }
-CompiledMethod >> hasBreakpoint [
-	^ Breakpoint isInstalledIn: self
-]
-
-{ #category : '*Reflectivity' }
 CompiledMethod >> hasMetaLinks [
 	self reflectiveMethod ifNil: [ ^false ].
 	^self reflectiveMethod hasMetaLinks
@@ -90,17 +85,6 @@ CompiledMethod >> metaLinkOptions [
 	#literalAt: -> #( + optionCompileOnLinkInstallation).
 	#metaLinkOptions -> #( + optionCompileOnLinkInstallation)
 	}
-]
-
-{ #category : '*Reflectivity' }
-CompiledMethod >> newBreakpointForVariable: aVariableName [
-	^ (self tempNames includes: aVariableName)
-		ifTrue: [ VariableBreakpoint
-				newBreakpointForVariable: aVariableName
-				forMethod: self ]
-		ifFalse: [ VariableBreakpoint
-				newBreakpointForVariable: aVariableName
-				inClass: self methodClass ]
 ]
 
 { #category : '*Reflectivity' }

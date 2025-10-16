@@ -57,7 +57,7 @@ HDLintReport >> generateClass: aClass selector: aSelector source: sourceStream o
 		lineAndColumn: sourceStream contents
 		at: sourceStream position.
 	sourceStream
-		nextPutAll: (source := self convert: (aClass sourceCodeAt: aSelector));
+		nextPutAll: (source := self convert: (aClass >> aSelector) sourceCode);
 		nextPut: Character lf; nextPut: Character lf.
 	matching := rules select: [ :each | 
 		(self isSelectorEnvironment: each result)

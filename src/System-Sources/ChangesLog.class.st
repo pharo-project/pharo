@@ -56,11 +56,18 @@ ChangesLog >> assureStartupStampLogged [
 	startupStamp ifNil: [ ^ self ].
 
 	SourceFiles changesWriteStreamDo: [ :changesFile |
-		changesFile
-			cr; cr;
-			nextChunkPut: startupStamp asString;
-			cr.
-		startupStamp := nil ].
+			(ChunkWriteStream on: changesFile)
+				cr;
+				cr;
+				nextPut: startupStamp asString;
+				cr.
+			startupStamp := nil ].
+
+	SourceFiles forceChangesToDisk
+]
+
+{ #category : 'logging' }
+ChangesLog >> forceChangesToDisk [
 
 	SourceFiles forceChangesToDisk
 ]
@@ -112,42 +119,16 @@ ChangesLog >> logMethodRemoved: announcement [
 	self logChange: announcement methodClass name , ' removeSelector: #' , announcement selector
 ]
 
-{ #category : 'logging' }
-ChangesLog >> logSnapshot: save andQuit: quit [
-	"Log into the changes file the fact that the session will be either snapshoted, quit, or both."
+{ #category : 'event-listening' }
+ChangesLog >> logRemovedClassAnnouncement: announcement [
 
-	| message |
-	(SourceFiles changesFileStream isNil or: [ SourceFiles changesFileStream closed ])
-    ifTrue: [ ^ self ].
+	self logRemovedClassNamed: announcement classRemoved name
+]
 
-	message := String
-		streamContents: [ :s |
-			s
-				nextPutAll: '----';
-				nextPutAll:
-						(save
-								ifTrue: [
-									quit
-										ifTrue: [ 'QUIT' ]
-										ifFalse: [ 'SNAPSHOT' ] ]
-								ifFalse: [
-									quit
-										ifTrue: [ 'QUIT/NOSAVE' ]
-										ifFalse: [ 'NOP' ] ]);
-				nextPutAll: '----';
-				print: DateAndTime now;
-				space;
-				nextPutAll: (Smalltalk imageFile basename);
-				nextPutAll: ' priorSource: ';
-				print: Smalltalk lastQuitLogPosition ].
+{ #category : 'event-listening' }
+ChangesLog >> logRemovedClassNamed: removedClassName [
 
-	self assureStartupStampLogged.
-
-	save ifTrue: [
-		Smalltalk lastQuitLogPosition:
-			SourceFiles changesFileStream size ].
-
-	self logChange: message
+	self logChange: 'Smalltalk globals removeClassNamed: #' , removedClassName
 ]
 
 { #category : 'accessing' }
@@ -160,7 +141,7 @@ ChangesLog >> recordStartupStamp [
 ChangesLog >> registerToAnnouncements [
 
 	self class codeChangeAnnouncer weak
-		when: ClassRemoved send: #logClassRemoved: to: self;
+		when: ClassRemoved send: #logRemovedClassAnnouncement: to: self;
 		when: ClassRenamed send: #logClassRenamed: to: self;
 		when: MethodRemoved send: #logMethodRemoved: to: self.
 	self class codeSupportAnnouncer weak 

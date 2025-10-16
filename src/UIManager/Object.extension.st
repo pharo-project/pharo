@@ -6,15 +6,17 @@ Object >> confirm: queryString [
 	response is yes, false if no. This is a modal question--the user must
 	respond yes or no."
 
-	"nil confirm: 'Are you hungry?'"
-
+	self halt.
+	"DO NOT CALL THIS METHOD!"
 	^ UIManager default confirm: queryString
 ]
 
 { #category : '*UIManager' }
 Object >> inform: aString [
 	"Display a message for the user to read and then dismiss."
-
+	
+	self halt.
+	"DO NOT CALL THIS METHOD!"
 	aString isEmptyOrNil
 		ifFalse: [ UIManager default inform: aString ]
 ]
@@ -29,5 +31,7 @@ Object >> primitiveError: aString [
 
 { #category : '*UIManager' }
 Object >> uiManager [
+
+	self halt.
 	^ UIManager default
 ]

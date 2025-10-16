@@ -69,11 +69,8 @@ GroupWindowMorph >> changePropotionalLayout [
 { #category : 'initialization' }
 GroupWindowMorph >> closeTopWindow [
 
-	self okToChange ifTrue: [
-			[ self removeWindow: self activeWindow ]
-				on: ProvideAnswerNotification
-				do: [ :notification | "We already got answer from okToChange check above"
-					notification resume: true ] ]
+	self okToChange ifTrue: [ self removeWindow: self activeWindow ]
+			
 ]
 
 { #category : 'initialize' }

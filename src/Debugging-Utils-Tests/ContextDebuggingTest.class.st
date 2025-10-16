@@ -134,15 +134,6 @@ ContextDebuggingTest >> testClosureRestart [
 ]
 
 { #category : 'tests' }
-ContextDebuggingTest >> testStepToSendOrReturn [
-	| context |
-	context := self deadContext.
-	self assert: context isDead.
-	context := context stepToSendOrReturn.
-	self assert: context isDead
-]
-
-{ #category : 'tests' }
 ContextDebuggingTest >> testUpdatePCForQuickPrimitiveRestart [
 
 	|method newContext  |

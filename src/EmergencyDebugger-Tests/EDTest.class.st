@@ -40,57 +40,8 @@ EDTest >> configureDebugSession [
 	[ EDMockObjectForTests new m: 20 ] in UndefinedObject>>DoIt"
 
 	session stepThrough.
-	session stepOver.
-	session stepInto.
-	session stepOver.
-	session stepOver.
-	session stepInto.
-	session stepOver.
-	session stepOver.
-	session stepInto.
-	session stepOver.
-	session stepOver.
-	session stepInto.
-
-	session stepOver.
-	session stepOver.
-	session stepInto.
-	session stepOver.
-	session stepOver.
-	session stepInto.
-	session stepOver.
-	session stepOver.
-	session stepInto.
-
-	session stepOver.
-	session stepOver.
-	session stepInto.
-	session stepOver.
-	session stepOver.
-	session stepInto.
-	session stepOver.
-	session stepOver.
-	session stepInto.
-
-	session stepOver.
-	session stepOver.
-	session stepInto.
-	session stepOver.
-	session stepOver.
-	session stepInto.
-	session stepOver.
-	session stepOver.
-	session stepInto.
-
-	session stepOver.
-	session stepOver.
-	session stepInto.
-	session stepOver.
-	session stepOver.
-	session stepInto.
-	session stepOver.
-	session stepOver.
-	session stepInto
+	[ | arg | (arg := session interruptedContext tempAt: 1) = 5 ] whileFalse: [
+		session stepInto ]
 ]
 
 { #category : 'instance creation' }

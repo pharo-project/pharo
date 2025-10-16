@@ -62,7 +62,7 @@ PerformMessageCommandLineHandlerTest >> testCanGetTargetAndSelectorWithArguments
 PerformMessageCommandLineHandlerTest >> testCanGetTargetAndSelectorWithArrayOfArguments [
 
 	| command |
-	command := self performCommandWithArguments: #('Object' 'foo' '--' '1' 'bar').
+	command := self performCommandWithArguments: #('Object' 'foo' '--as-array' '1' 'bar').
 	
 	command parseArguments.
 	
@@ -75,7 +75,7 @@ PerformMessageCommandLineHandlerTest >> testCanGetTargetAndSelectorWithArrayOfAr
 PerformMessageCommandLineHandlerTest >> testMessageArgumentsFollowingArrayWrappingFlagAreWrappedInAnArray [
 
 	| command |
-	command := self performCommandWithArguments: #('Object' 'foo' '1' '--' '2' 'bar').
+	command := self performCommandWithArguments: #('Object' 'foo' '1' '--as-array' '2' 'bar').
 	
 	command parseArguments.
 	
@@ -108,7 +108,7 @@ PerformMessageCommandLineHandlerTest >> testMessageArgumentsIsAnEmptyArrayWhenNo
 PerformMessageCommandLineHandlerTest >> testMessageArgumentsIsAnEmptyArrayWhenNoArgumentProvidedAndArrayWrappingFlagPresent [
 
 	| command |
-	command := self performCommandWithArguments: #('--bar' 'Object' 'foo' '--').
+	command := self performCommandWithArguments: #('--bar' 'Object' 'foo' '--as-array').
 	
 	command parseArguments.
 	

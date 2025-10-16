@@ -46,9 +46,11 @@ StepThroughTest >> testStepThrough [
 	self settingUpSessionAndProcessAndContextForBlock: [ self stepA1 ].
 	session stepInto.
 	session stepInto.
+
 	"Reached node 'self evalBlockThenReturnOne: [self stepA2]' of method stepA1"
 	"Checking that the execution is indeed at this node"
 	self assert: (session interruptedContext method) equals: (self class>>#stepA1).
+
 	node := self class>>#stepA1 sourceNodeForPC: session interruptedContext pc.
 	self assert: node isMessage.
 	self assert: node receiver isSelfVariable.

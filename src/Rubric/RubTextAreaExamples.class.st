@@ -373,7 +373,7 @@ WorldState
 
 { #category : 'accessing' }
 RubTextAreaExamples class >> someSmalltalkCode [
-	^ self class sourceCodeAt: #show:while:
+	^ (self class >> #show:while:) sourceCode
 ]
 
 { #category : 'accessing' }

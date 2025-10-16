@@ -61,6 +61,12 @@ TaAbstractComposition >> = anotherTrait [
 	^ self shouldBeImplemented
 ]
 
+{ #category : 'accessing' }
+TaAbstractComposition >> >> aSelector [
+	
+	^ self compiledMethodAt: aSelector
+]
+
 { #category : 'operations' }
 TaAbstractComposition >> @ anArrayOfAssociations [
 	"I return a new trait composition with the aliases passed as parameters. It is an array of associations, the keys are the new selectors and the values are the original selectors"
@@ -144,13 +150,12 @@ TaAbstractComposition >> compile: selector into: aClass [
 		
 	selector == newMethod selector ifFalse: [ self error: 'selector changed!' ].
 
+	aClass addSelectorSilently: selector withMethod: newMethod.
+
+	aClass classify: selector under: (self protocolForMethod: method).
 	(selector ~= method selector or: [ self changesSourceCode: selector ])
 		ifTrue: [ self saveSourceCode: sourceCode ofMethod: newMethod ]
 		ifFalse: [ newMethod sourcePointer: method sourcePointer ].
-
-	aClass classify: selector under: (self protocolForMethod: method).
-
-	aClass addSelectorSilently: selector withMethod: newMethod.
 
 	aClass >> selector propertyAt: #traitSource put: traitDefining.
 	^ true
@@ -390,12 +395,19 @@ TaAbstractComposition >> reverseAlias: aSelector [
 
 { #category : 'compiling' }
 TaAbstractComposition >> saveSourceCode: sourceCode ofMethod: newMethod [
-
 	"I have to check because during bootstrap there is no SouceFiles"
-	(sourceCode isNotNil and: [((Smalltalk globals includesKey: #SourceFiles)
-		and: [ (Smalltalk globals at: #SourceFiles) isNotNil])]) ifTrue: [
-			newMethod putSource: sourceCode
-					withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Trait method'; cr]].
+
+	(sourceCode isNotNil and: [ (Smalltalk globals includesKey: #SourceFiles) and: [ (Smalltalk globals at: #SourceFiles) isNotNil ] ])
+		ifFalse: [ ^ self ].
+
+	"Preamble was 'Trait method'.
+	But that looks like it breaks everything!"
+	newMethod
+		putSource: sourceCode
+		withFooter: ''
+		protocol: newMethod protocol name asString
+		timestamp: DateAndTime new asString
+		priorSourcePointer: 0
 ]
 
 { #category : 'accessing' }

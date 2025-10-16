@@ -7,42 +7,43 @@ Class {
 	#instVars : [
 		'commandLine'
 	],
-	#category : 'System-BasicCommandLineHandler-Tests-Utilities',
+	#category : 'System-BasicCommandLineHandler-Tests-Base',
 	#package : 'System-BasicCommandLineHandler-Tests',
-	#tag : 'Utilities'
+	#tag : 'Base'
 }
+
+{ #category : 'accessing' }
+CommandLineArgumentsTest >> arguments [
+	^ #('noOpt1' 'noOpt2.txt' 'noOpt3.avi' '--option1' 'opt11' 'opt12.txt' 'opt13.avi' '--option2' '--option3' 'opt31.st' 'opt32' '--option4' '--option5=option5Value' '-o' 'oValue')
+]
 
 { #category : 'accessing' }
 CommandLineArgumentsTest >> commandLine [
 	^ commandLine
 ]
 
-{ #category : 'accessing' }
-CommandLineArgumentsTest >> parameters [
-	^ #('noOpt1' 'noOpt2.txt' 'noOpt3.avi' '--option1' 'opt11' 'opt12.txt' 'opt13.avi' '--option2' '--option3' 'opt31.st' 'opt32' '--option4' '--option5=option5Value' '-o' 'oValue')
-]
-
 { #category : 'running' }
 CommandLineArgumentsTest >> setUp [
 	super setUp.
-	commandLine := CommandLineArguments withArguments: self parameters
+	commandLine := CommandLineArguments withArguments: self arguments
 ]
 
 { #category : 'tests' }
-CommandLineArgumentsTest >> testAllFileTyped [
-	self assert: (self commandLine allFilesWithExtension: #txt) equals: #('noOpt2.txt' 'opt12.txt').
-	self assertEmpty: (self commandLine allFilesWithExtension: #foo)
+CommandLineArgumentsTest >> testAllArguments [
+	self assertCollection: self commandLine arguments equals: self arguments
 ]
 
 { #category : 'tests' }
-CommandLineArgumentsTest >> testAllParameters [
-	self assertCollection: self commandLine arguments equals: self parameters
+CommandLineArgumentsTest >> testArgumentAt [
+	self assert: (self commandLine argumentAt: 1) equals: 'noOpt1'.
+	self assert: (self commandLine argumentAt: 4) equals: '--option1'.
+	self deny: (self commandLine argumentAt: 5) equals: 'foo'.
+	self deny: (self commandLine argumentAt: 1) isNil
 ]
 
 { #category : 'tests' }
-CommandLineArgumentsTest >> testHasFilesTyped [
-	self assert: (self commandLine hasFileWithExtension: #txt).
-	self deny: (self commandLine hasFileWithExtension: #foo)
+CommandLineArgumentsTest >> testHasArguments [
+	self assert: (self commandLine hasArguments)
 ]
 
 { #category : 'tests' }
@@ -53,11 +54,6 @@ CommandLineArgumentsTest >> testHasOption [
 	self assert: (self commandLine hasOption: #o).
 	self deny: (self commandLine hasOption: #foo).
 	self deny: (self commandLine hasOption: #option5Value)
-]
-
-{ #category : 'tests' }
-CommandLineArgumentsTest >> testHasParameters [
-	self assert: (self commandLine hasArguments)
 ]
 
 { #category : 'tests' }
@@ -80,12 +76,4 @@ CommandLineArgumentsTest >> testOptionAtifAbsent [
 	self assert: (self commandLine optionAt: #foo ifAbsent: [ nil ]) equals: nil.
 	self assert: (self commandLine optionAt: #o) equals: 'oValue'.
 	self assert: (self commandLine optionAt: #x ifAbsent: [ nil ]) equals: nil
-]
-
-{ #category : 'tests' }
-CommandLineArgumentsTest >> testParameterAt [
-	self assert: (self commandLine argumentAt: 1) equals: 'noOpt1'.
-	self assert: (self commandLine argumentAt: 4) equals: '--option1'.
-	self deny: (self commandLine argumentAt: 5) equals: 'foo'.
-	self deny: (self commandLine argumentAt: 1) isNil
 ]

@@ -11,9 +11,9 @@ Class {
 	#instVars : [
 		'nextChar'
 	],
-	#category : 'System-Sources-Utilities',
+	#category : 'System-Sources-Streams',
 	#package : 'System-Sources',
-	#tag : 'Utilities'
+	#tag : 'Streams'
 }
 
 { #category : 'decorated' }
@@ -42,31 +42,6 @@ ChunkReadStream >> basicNextChunk [
 	^ out contents
 ]
 
-{ #category : 'decorated' }
-ChunkReadStream >> decodeString: string andRuns: runsRaw [
-	| strm runLength runValues newString index |
-	strm := ReadStream on: runsRaw from: 1 to: runsRaw size.
-	(strm peekFor: $()
-		ifFalse: [ ^ nil ].
-	runLength := OrderedCollection new.
-	[
-	strm skipSeparators.
-	strm peekFor: $) ] whileFalse: [ runLength add: (Number readFrom: strm) ].
-	runValues := OrderedCollection new.
-	[ strm atEnd ]
-		whileFalse: [
-			runValues add: (Number readFrom: strm).
-			strm next ].
-	newString := WideString new: string size.
-	index := 1.
-	runLength
-		with: runValues
-		do: [ :length :leadingChar |
-			index to: index + length - 1 do: [ :pos | newString at: pos put: (string at: pos) ].
-			index := index + length ].
-	^ newString
-]
-
 { #category : 'testing' }
 ChunkReadStream >> isNextChunkMetaData [
 	| isMetaData |
@@ -78,26 +53,7 @@ ChunkReadStream >> isNextChunkMetaData [
 { #category : 'decorated' }
 ChunkReadStream >> next [
 
-    ^ self parseLangTagFor: self basicNextChunk
-]
-
-{ #category : 'decorated' }
-ChunkReadStream >> parseLangTagFor: aString [
-
-	| string peek runsRaw foundTag |
-	string := aString.
-	"Test for ]lang[ tag"
-	peek := self skipSeparators; peek.
-	peek = $] ifFalse: [ ^ string ].  "no tag"
-	foundTag := (decoratedStream upTo: $[).
-	foundTag = ']lang' ifTrue: [
-		runsRaw := self basicNextChunk.
-		string := self decodeString: aString andRuns: runsRaw
-	] ifFalse: [
-		"If we find a ] but not a lang tag, there is something really wrong and we are not ready to parse that"
-		^ string , self basicNextChunk
-	].
-	^ string
+    ^ self basicNextChunk
 ]
 
 { #category : 'decorated' }

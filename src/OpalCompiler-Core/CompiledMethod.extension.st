@@ -1,17 +1,18 @@
 Extension { #name : 'CompiledMethod' }
 
 { #category : '*OpalCompiler-Core' }
+CompiledMethod >> bcToASTCacheKey [
+
+	^ #bcToASTCache
+]
+
+{ #category : '*OpalCompiler-Core' }
 CompiledMethod >> decompile [
 	^Smalltalk globals
 		at: #FBDDecompiler
 		ifPresent: [ :decompiler | decompiler new  decompile: self]
 		ifAbsent: [ OCParser parseMethod: self selector asMethodSignature, '
 	self noSourceAvailable' ]
-]
-
-{ #category : '*OpalCompiler-Core' }
-CompiledMethod >> hasTemporaryVariableNamed: aName [
-	^ self tempNames includes: aName
 ]
 
 { #category : '*OpalCompiler-Core' }
@@ -56,17 +57,6 @@ CompiledMethod >> saveBcToASTCacheWithAST: aMethodAST [
 { #category : '*OpalCompiler-Core' }
 CompiledMethod >> sourceNode [
 	^self ast
-]
-
-{ #category : '*OpalCompiler-Core' }
-CompiledMethod >> sourceNodeForPC: aPC [
-
-	| sourceNode |
-	sourceNode := self sourceNode.
-
-	self propertyAt: #bcToASTCache ifPresent: [ :bcToASTCache |
-		^ bcToASTCache nodeForPC: aPC ].
-	^ sourceNode sourceNodeForPC: aPC
 ]
 
 { #category : '*OpalCompiler-Core' }

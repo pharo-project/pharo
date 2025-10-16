@@ -438,6 +438,15 @@ SystemDependenciesTest >> testFilesShouldNotDependOnRandom [
 	self deny: (dependencies includes: 'Random-Core')
 ]
 
+{ #category : 'tests' }
+SystemDependenciesTest >> testNoDependencyToDeprecatedPackages [
+
+	| dependencies |
+	dependencies := self externalDependendiesOf: (self class packageOrganizer packageNames reject: [ :name | name includesSubstring: 'Deprecated' ]).
+
+	self assertEmpty: dependencies
+]
+
 { #category : 'accessing' }
 SystemDependenciesTest >> tonelCorePackageNames [
 

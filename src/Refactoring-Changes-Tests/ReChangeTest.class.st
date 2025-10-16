@@ -414,12 +414,12 @@ ReChangeTest >> testPerformChangeMethod [
 
 	| change source |
 	change := changes compile: 'one ^ 2' in: self changeMockClass.
-	source := change changeClass sourceCodeAt: #one.
-	self performAndUndoChange: change do: [ self assert: (change changeClass sourceCodeAt: #one) equals: 'one ^ 2' ].
+	source := (change changeClass >> #one) sourceCode.
+	self performAndUndoChange: change do: [ self assert: (change changeClass >> #one) sourceCode equals: 'one ^ 2' ].
 	self assert: (ReChangeMock >> #one) sourceCode equals: 'one
 
 	^ 1'.
-	self assert: (change changeClass sourceCodeAt: #one) equals: source
+	self assert: (change changeClass >> #one) sourceCode equals: source
 ]
 
 { #category : 'tests - perform' }

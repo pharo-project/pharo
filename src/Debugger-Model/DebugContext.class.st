@@ -84,7 +84,8 @@ DebugContext >> checkSelectorUnchanged: aSelector [
 
 { #category : 'ui requests' }
 DebugContext >> confirm: message trueChoice: trueChoice falseChoice: falseChoice [
-
+	self halt.
+	"YOU SHOULD NOT CALL UIMANAGER"
 	^ UIManager default
 		confirm: message
 		trueChoice: trueChoice

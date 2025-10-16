@@ -18,7 +18,7 @@ OCSimpleFormatterTest >> formatClass: aClass [
 { #category : 'private' }
 OCSimpleFormatterTest >> formatClass: aClass selector: aSymbol [
 	| source tree1 tree2 |
-	source := aClass sourceCodeAt: aSymbol.
+	source := (aClass >> aSymbol) sourceCode.
 	tree1 := self parserClass parseMethod: source.
 	tree2 := self parserClass
 		parseMethod: (self formatterClass new format: tree1)

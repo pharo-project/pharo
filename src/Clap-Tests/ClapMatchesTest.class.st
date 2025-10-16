@@ -84,6 +84,23 @@ ClapMatchesTest >> testFlagValue [
 ]
 
 { #category : 'tests' }
+ClapMatchesTest >> testMultipleFlagWithPositional [
+	| match |
+	clap add: ((ClapFlag id: #flag) add: ((ClapPositional id: #list) multiple: true); yourself).
+	
+	match := clap match: #('clap' '--flag' 'foo' 'bar' 'baz' '-d' 'a/b/c').
+	
+	self deny: match isMismatch.
+	self assert: (match includesMatchOf: #directory).
+	self assert: (match includesMatchOf: #flag).
+	
+	
+	self
+		assertCollection: ((match at: #flag) occurrencesOf: #list collect: #value) asArray
+		equals: #('foo' 'bar' 'baz').
+]
+
+{ #category : 'tests' }
 ClapMatchesTest >> testMultiplePositional [
 	| match |
 	clap add: ((ClapPositional id: #list) multiple: true).

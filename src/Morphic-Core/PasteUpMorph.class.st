@@ -229,7 +229,7 @@ PasteUpMorph >> closeAllUnchangedWindows [
 
 { #category : 'Morphic-Base-Windows' }
 PasteUpMorph >> closeAllWindowsDiscardingChanges [
-	self world systemWindows do: [:w | [w delete] valueSupplyingAnswer: false]
+	self world systemWindows do: [:w | w delete ]
 ]
 
 { #category : 'Morphic-Base-Windows' }

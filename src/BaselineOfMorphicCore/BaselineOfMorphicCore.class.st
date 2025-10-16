@@ -87,14 +87,12 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	MorphicCoreUIManager new spawnNewProcess.
 	
 	world cleanseOtherworldlySteppers.
-	ExternalDropHandler resetRegisteredHandlers.
 
 	(world instVarNamed: #worldState) invalidate.
 
 	hand instVarNamed: #targetOffset put: 0@0.
 
 	WorldMorph initialize.
-	ExternalDropHandler initialize.
 	PasteUpMorph initialize.
 	DefaultExternalDropHandler initialize.
 
