@@ -1,18 +1,16 @@
 "
 A DebugSession models a debugging session. It contains the interrupted context and process. Its main goal is to handle debugger actions such as restart or stepInto, as well as recompilation of methods. It is the model used as an input to a ui.
-
 As it is just a model it does not contain any information related to the ui. For example, it does not know what a selection in the ui is. It is the job of the ui to maintain the selection and call this session with the proper context.
 
 To create sessions use the method 'process: aProcess context: aContext'. aContext must be a context belonging to aProcess, and aProcess must be an interrupted process.
 
-Instance Variables
-	name:
+Instance Variables name:
 	interruptedContext: Context
 	interruptedProcess: Process
 	errorWasInUIProcess: Boolean
 	
 interruptedContext
-is the context which sent the signal message that eventually raised the exception that invoked the debugger. It can be different from the suspendedContext of the interruptedProcess, which is the top (“hot”) context the interruptedProcess’s context chain.
+is the context which sent the signal message that eventually raised the exception that invoked the debugger. It can be different from the suspendedContext of the interruptedProcess, which is the top (Ã¢â‚¬Å“hotÃ¢â‚¬Â) context the interruptedProcessÃ¢â‚¬â„¢s context chain.
 Why interruptedContext is different from the suspendedContext of the interruptedProcess:
 Because the exception system is implemented in Pharo, the handling of the initial signal (eg in Object>>#halt), all the way to opening a debugger, is itself Pharo code, and exists as activations from suspendedContext to interruptedContext.  The debugger, with help from the exception system, carefully hides this processing from the programmer.  If it did not we would have to wade through many activations before we found where the exception occurred. When a process is interrupted by control period things are different.  Here, another process handles opening the debugger and suspendedContext and interruptedContext are the same.
 
@@ -26,10 +24,12 @@ Class {
 		'name',
 		'interruptedContext',
 		'interruptedProcess',
+		'exception',
 		'errorWasInUIProcess',
-		'exception'
+		'stepThroughController'
 	],
 	#classVars : [
+		'FastStepThroughMode',
 		'LogDebuggerStackToFile'
 	],
 	#classInstVars : [
@@ -54,6 +54,31 @@ DebugSession class >> contextModelClass: anObject [
 DebugSession class >> defaultContextModelClass [
 
 	^ DebugContext
+]
+
+{ #category : #accessing }
+DebugSession class >> fastStepThroughMode [
+
+	^ FastStepThroughMode ifNil: [ FastStepThroughMode := false ]
+]
+
+{ #category : #accessing }
+DebugSession class >> fastStepThroughMode: aBoolean [
+
+	^ FastStepThroughMode := aBoolean
+]
+
+{ #category : #settings }
+DebugSession class >> fastStepThroughModeSettingOn: aBuilder [
+
+	<systemsettings>
+	(aBuilder setting: #fastStepThroughMode)
+		label: 'Enable the fast step through mode';
+		target: self;
+		parent: #debugging;
+		default: false;
+		description:
+			'If enabled, the debugger will perform step through operations using halting blocks. This implementation is more efficient than the original one based on interpreter steps'
 ]
 
 { #category : #settings }
@@ -127,6 +152,37 @@ DebugSession >> exception [
 { #category : #accessing }
 DebugSession >> exception: anObject [
 	exception := anObject
+]
+
+{ #category : #'debugging actions' }
+DebugSession >> fastStepThrough: aContext [
+	"Send messages until you return to aContext.
+	 Used to step into a block in the method."
+	|  ctrl originContext targetContext |
+	ctrl := self stepThroughController.	
+		
+	aContext stepIntoQuickMethod: false.
+	(self isContextPostMortem: aContext) ifTrue: [ ^ self ].
+	"Wrap blocks in aContext with HaltingBlocks"
+	ctrl prepareContextForStepThrough: aContext.
+	
+	originContext := ctrl class completeStep: aContext inProcess: interruptedProcess.
+	targetContext := ctrl findNextContext: originContext 
+								 having: aContext home 
+					  			 fixing: interruptedProcess suspendedContext .
+	
+	targetContext == originContext 
+		ifTrue: [ "Step through is equivalent to Step over"
+			interruptedProcess suspendedContext: originContext.
+			interruptedProcess isTerminated
+					ifTrue: [ aContext terminateTo: nil ]
+					ifFalse: [ self updateContextTo: 
+									(self stepToFirstInterestingBytecodeIn: interruptedProcess) ] ]
+		ifFalse: [ "Step through either enters of exits the block"
+			interruptedProcess suspendedContext: targetContext.
+			self updateContextTo: targetContext ].
+			
+	self triggerEvent: #stepThrough
 ]
 
 { #category : #evaluating }
@@ -582,6 +638,9 @@ DebugSession >> stepThrough [
 DebugSession >> stepThrough: aContext [
 	"Send messages until you return to selectedContext.
 	 Used to step into a block in the method."
+	
+	self class fastStepThroughMode ifTrue: [ ^ self fastStepThrough: aContext ].
+	
 	aContext stepIntoQuickMethod: false.
 	(self isContextPostMortem: aContext) ifTrue: [^ self].
 
@@ -589,6 +648,12 @@ DebugSession >> stepThrough: aContext [
 	self updateContextTo: (self stepToFirstInterestingBytecodeIn: interruptedProcess).
 
 	self triggerEvent: #stepThrough
+]
+
+{ #category : #accessing }
+DebugSession >> stepThroughController [
+	^ stepThroughController ifNil: [
+		  stepThroughController := FastStepThroughController new ]
 ]
 
 { #category : #private }

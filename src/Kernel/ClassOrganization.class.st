@@ -5,9 +5,9 @@ Class {
 	#name : #ClassOrganization,
 	#superclass : #Object,
 	#instVars : [
-		#protocolOrganizer,
-		#organizedClass,
-		#commentSourcePointer
+		'protocolOrganizer',
+		'organizedClass',
+		'commentSourcePointer'
 	],
 	#category : #'Kernel-Protocols'
 }
