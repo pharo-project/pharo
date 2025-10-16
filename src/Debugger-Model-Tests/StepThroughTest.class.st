@@ -20,8 +20,8 @@ StepThroughTest >> evalBlock: aBlockClosure afterLoop: remainingCount [
 ]
 
 { #category : 'helper' }
-StepThroughTest >> evalBlockThenReturnOne: aBlock [
-	aBlock value.
+StepThroughTest >> evalBlockThenReturnOne: block [
+	block value.
 	^1
 ]
 
