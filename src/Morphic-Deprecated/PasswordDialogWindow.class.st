@@ -15,9 +15,8 @@ Class {
 		'textEditor',
 		'showPassword'
 	],
-	#category : 'Morphic-Base-Windows',
-	#package : 'Morphic-Base',
-	#tag : 'Windows'
+	#category : 'Morphic-Deprecated',
+	#package : 'Morphic-Deprecated'
 }
 
 { #category : 'protocol' }

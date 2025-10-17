@@ -4,9 +4,8 @@ I am a tab which can be locked/unlocked with according action and icon
 Class {
 	#name : 'LockableTabMorph',
 	#superclass : 'TabMorph',
-	#category : 'Morphic-Widgets-Tabs-Morphs',
-	#package : 'Morphic-Widgets-Tabs',
-	#tag : 'Morphs'
+	#category : 'Morphic-Deprecated',
+	#package : 'Morphic-Deprecated'
 }
 
 { #category : 'icons' }

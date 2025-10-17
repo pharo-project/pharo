@@ -7,8 +7,8 @@ Class {
 		'setValueSelector',
 		'getEnabledSelector'
 	],
-	#category : 'Morphic-Widgets-Scrolling',
-	#package : 'Morphic-Widgets-Scrolling'
+	#category : 'Morphic-Deprecated',
+	#package : 'Morphic-Deprecated'
 }
 
 { #category : 'instance creation' }

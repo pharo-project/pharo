@@ -10,9 +10,8 @@ Class {
 		'menuButton',
 		'numberOfSelectedTabs'
 	],
-	#category : 'Morphic-Widgets-Tabs-Morphs',
-	#package : 'Morphic-Widgets-Tabs',
-	#tag : 'Morphs'
+	#category : 'Morphic-Deprecated',
+	#package : 'Morphic-Deprecated'
 }
 
 { #category : 'private - constants' }

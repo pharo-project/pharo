@@ -420,11 +420,6 @@ NonInteractiveUIManager >> request: aStringOrText initialAnswer: defaultAnswer t
 	^ self nonInteractiveRequest: aStringOrText title: aTitle
 ]
 
-{ #category : 'ui requests' }
-NonInteractiveUIManager >> requestPassword: queryString [
-	^self nonInteractiveWarning: 'Requesting Password'
-]
-
 { #category : 'accessing' }
 NonInteractiveUIManager >> stderr [
 

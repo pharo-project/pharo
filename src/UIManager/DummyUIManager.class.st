@@ -125,12 +125,6 @@ DummyUIManager >> request: aStringOrText initialAnswer: defaultAnswer title: aTi
 	self error: 'No user response possible'
 ]
 
-{ #category : 'ui requests' }
-DummyUIManager >> requestPassword: queryString [
-
-	^ self request: queryString initialAnswer: ''
-]
-
 { #category : 'default actions' }
 DummyUIManager >> traceCr: aString [
 
