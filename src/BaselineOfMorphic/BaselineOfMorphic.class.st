@@ -264,9 +264,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	#( #ProgressBarMorph #BalloonEngineConstants #BalloonEngine
 	   #CornerRounder #DigitalSignatureAlgorithm
-	   #FT2Types #FT2FFILibrary #FreeTypeCacheConstants
-	   #FreeTypeCache #FreeTypeSettings #FreeTypeSubPixelAntiAliasedGlyphRenderer
-	   #FT2Constants #GIFReadWriter #GlobalIdentifier #HaloMorph
+	   #GIFReadWriter #GlobalIdentifier #HaloMorph
 	   #CharacterScanner #ImageMorph #JPEGHuffmanTable #JPEGReadStream
 	   #Locale #MczInstaller #MD5NonPrimitive #MenuItemMorph
 	   #MenuMorph #RxMatcher #RxParser #RxsPredicate #SHA1 #ShortIntegerArray
@@ -303,7 +301,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	PolymorphSystemSettings desktopColor: Color white.
 
 	#( #AbstractFont #BalloonMorph #Clipboard #EmbeddedFreeTypeFontInstaller
-	   #FLCompiledMethodCluster #FreeTypeFontProvider
+	   #FLCompiledMethodCluster
 	   #GradientFillStyle #IconicButtonMorph #KMLog #LogicalFont
 	   #LucidaGrandeRegular #OSEnvironment #ScrollBarMorph
 	   #StrikeFont #SystemSettingsPersistence #TabMorph #TaskbarMorph
