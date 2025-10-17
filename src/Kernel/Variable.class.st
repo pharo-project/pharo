@@ -25,10 +25,10 @@ Class {
 	#name : #Variable,
 	#superclass : #Object,
 	#instVars : [
-		#name
+		'name'
 	],
 	#classVars : [
-		#Properties
+		'Properties'
 	],
 	#category : #'Kernel-Variables'
 }
