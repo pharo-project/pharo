@@ -10,7 +10,7 @@ Instance Variables name:
 	errorWasInUIProcess: Boolean
 	
 interruptedContext
-is the context which sent the signal message that eventually raised the exception that invoked the debugger. It can be different from the suspendedContext of the interruptedProcess, which is the top (Ã¢â‚¬Å“hotÃ¢â‚¬Â) context the interruptedProcessÃ¢â‚¬â„¢s context chain.
+is the context which sent the signal message that eventually raised the exception that invoked the debugger. It can be different from the suspendedContext of the interruptedProcess, which is the top (""hot"") context the interruptedProcessÃ¢â‚¬â„¢s context chain.
 Why interruptedContext is different from the suspendedContext of the interruptedProcess:
 Because the exception system is implemented in Pharo, the handling of the initial signal (eg in Object>>#halt), all the way to opening a debugger, is itself Pharo code, and exists as activations from suspendedContext to interruptedContext.  The debugger, with help from the exception system, carefully hides this processing from the programmer.  If it did not we would have to wade through many activations before we found where the exception occurred. When a process is interrupted by control period things are different.  Here, another process handles opening the debugger and suspendedContext and interruptedContext are the same.
 
