@@ -61,12 +61,8 @@ MetacelloScriptExecutor >> configurationArg: anObject [
 ]
 
 { #category : 'execution' }
-MetacelloScriptExecutor >> execute: statements [
+MetacelloScriptExecutor >> execute [
 
-	statements do: [ :assoc |
-		assoc value
-			ifNil: [ self perform: assoc key ]
-			ifNotNil: [ self perform: assoc key withArguments: assoc value ] ].
 	projectSpecGenerator := self projectSpecGenerator.
 	self executeString: projectSpecGenerator target do: [ :projectReferenceSpec |
 		| engine |
@@ -82,25 +78,11 @@ MetacelloScriptExecutor >> execute: statements [
 ]
 
 { #category : 'execution callback' }
-MetacelloScriptExecutor >> executeBlock: selectBlock do: projectSpecBlock [
-    ((projectSpecGenerator projectSpecListBlock value select: selectBlock) select: self projectSpecSelectBlock)
-        do: [ :projectSpec | projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ]
-]
-
-{ #category : 'execution callback' }
-MetacelloScriptExecutor >> executeCollection: aCollection do: projectSpecBlock [
-    aCollection
-        do: [ :projectName | 
-            ((projectSpecGenerator projectSpecLookupBlock value: projectName) select: self projectSpecSelectBlock)
-                do: [ :projectSpec | projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ] ]
-]
-
-{ #category : 'execution callback' }
 MetacelloScriptExecutor >> executeString: aString do: projectSpecBlock [
-  singleRoot ifNil: [ self singleRoot: true ].
-  ((projectSpecGenerator projectSpecLookupBlock value: aString)
-    select: self projectSpecSelectBlock)
-    do: [ :projectSpec | projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ]
+
+	singleRoot ifNil: [ self singleRoot: true ].
+	((projectSpecGenerator projectSpecLookupBlock value: aString) select: self projectSpecSelectBlock) do: [ :projectSpec |
+		projectSpecBlock value: (self applyArgsToProjectSpec: projectSpec copy) ]
 ]
 
 { #category : 'actions api' }
@@ -171,6 +153,13 @@ MetacelloScriptExecutor >> options [
     ^ options
 ]
 
+{ #category : 'copying' }
+MetacelloScriptExecutor >> postCopy [
+
+	super postCopy.
+	options := options copy
+]
+
 { #category : 'args' }
 MetacelloScriptExecutor >> projectArg [
     ^ projectArg
@@ -234,8 +223,8 @@ MetacelloScriptExecutor >> repositoryArg: anObject [
 
 { #category : 'accessing' }
 MetacelloScriptExecutor >> roots [
-    roots ifNil: [ roots := OrderedCollection new ].
-    ^ roots
+
+	^ roots ifNil: [ roots := OrderedCollection new ]
 ]
 
 { #category : 'options api' }
@@ -245,13 +234,14 @@ MetacelloScriptExecutor >> silently: aBool [
 
 { #category : 'accessing' }
 MetacelloScriptExecutor >> singleRoot [
-  singleRoot ifNil: [ singleRoot := false ].
-  ^ singleRoot
+
+	^ singleRoot ifNil: [ singleRoot := false ]
 ]
 
 { #category : 'accessing' }
-MetacelloScriptExecutor >> singleRoot: aBool [
-  singleRoot := aBool
+MetacelloScriptExecutor >> singleRoot: aBoolean [
+
+	singleRoot := aBoolean
 ]
 
 { #category : 'actions api' }

@@ -14,9 +14,8 @@ Class {
 		'icon',
 		'label'
 	],
-	#category : 'Morphic-Widgets-Tabs-Base',
-	#package : 'Morphic-Widgets-Tabs',
-	#tag : 'Base'
+	#category : 'Morphic-Deprecated',
+	#package : 'Morphic-Deprecated'
 }
 
 { #category : 'instance creation' }

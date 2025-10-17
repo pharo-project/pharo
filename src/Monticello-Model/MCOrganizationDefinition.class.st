@@ -96,11 +96,6 @@ MCOrganizationDefinition >> packageName: anObject [
 	packageName := anObject
 ]
 
-{ #category : 'installing' }
-MCOrganizationDefinition >> postloadOver: oldDefinition [
-	"Nothing to do"
-]
-
 { #category : 'accessing' }
 MCOrganizationDefinition >> sortKey [
 	^ '<organization>'

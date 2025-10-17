@@ -1,12 +1,9 @@
 "
 # Metacello User Guide
 
-In this guide we'll take a walk through a couple of common development
-scenarios and highlight some of the features of the *Metacello Scripting
-API*.
+In this guide we'll take a walk through a couple of common development scenarios and highlight some of the features of the *Metacello Scripting API*.
 
-*For installatation and more detailed documentation on the Metacello
-Scripting API, see the [Metacello Scripting API Documentation][1].*
+*For installatation and more detailed documentation on the Metacello Scripting API, see the [Metcello Scripting API Documentation][1].*
 
 ## Introduction
 
@@ -22,9 +19,7 @@ Metacello new
 
 ## Loading
 
-In this example of the [`load` command][5] we are leveraging a couple of
-default values, namely the `version` of the project and the `repository` where the
-**BaselineOfSeaside** package can be found:
+In this example of the [`load` command][5] we are leveraging a couple of default values, namely the `version` of the project and the `repository` where the **BaselineOfSeaside** package can be found:
 
 ```Smalltalk
 Metacello new
@@ -44,8 +39,7 @@ Metacello new
 
 ##Listing
 
-Once you've loaded one or more projects into your image, you may want to
-list them. The following is an example of the [`list` command][6]:
+Once you've loaded one or more projects into your image, you may want to list them. The following is an example of the [`list` command][6]:
 
 ```Smalltalk
 Metacello image
@@ -53,17 +47,13 @@ Metacello image
 	list.
 ```
 
-The `image` message tells Metacello that you'd like to look
-at only loaded baselines. 
+The `image` message tells Metacello that you'd like to look at only loaded baselines. 
 
-The *block* argument to the
-`baseline:` message is used to *select* against the list of loaded
-[MetacelloProjectSpec][7] instances in the [registry][8].
+The *block* argument to the `baseline:` message is used to *select* against the list of loaded [MetacelloProjectSpec][7] instances in the [registry][8].
 
 The `list` command itself returns a list of [MetacelloProjectSpec][7] instances that can be printed, inspected or otherwise manipulated.
 
-In addition to a *select block*, you can specify a *select collection*
-specifying the names of the projects you'd like to select:
+In addition to a *select block*, you can specify a *select collection* specifying the names of the projects you'd like to select:
 
 ```Smalltalk
 Metacello registry
@@ -71,27 +61,22 @@ Metacello registry
 	list.
 ```
 
-The `registry` message tells Metacello that you'd like to
-look at all projects in the [registry][8] whether or not they are loaded.
+The `registry` message tells Metacello that you'd like to look at all projects in the [registry][8] whether or not they are loaded.
 
-The *collection* argument to the `baseline:` message is used to
-*select* against the list of project names in the [registry][8].
+The *collection* argument to the `baseline:` message is used to *select* against the list of project names in the [registry][8].
 
 ## Getting
 
-Once you've loaded a project into your image the next logical step is
-upgrading your project to a new version. 
+Once you've loaded a project into your image the next logical step is upgrading your project to a new version. 
 
-Let's say that a new `#stable` version of Seaside has been released
-and that you want to upgrade. This is a two step process: 
+Let's say that a new `#stable` version of Seaside has been released and that you want to upgrade. This is a two step process: 
 
 * [get a new version of the configuration][11]
 * [load the new version][12]
 
 ### Get a new version of the configuration
 
-The following expression gets the latest version of the
-baseline:
+The following expression gets the latest version of the baseline:
 
 ```Smalltalk
 Metacello image
@@ -99,11 +84,9 @@ Metacello image
 	get.
 ```
 
-By using the `image` message, you can leverage the fact that the [registry][8] remembers
-from which repository you loaded the original version of the baseline.
+By using the `image` message, you can leverage the fact that the [registry][8] remembers from which repository you loaded the original version of the baseline.
 
-The `get` command simply downloads the latest version of the
-configuration package from the repository.
+The `get` command simply downloads the latest version of the configuration package from the repository.
 
 You may download the configuration from a different repository:
 
@@ -114,11 +97,9 @@ Metacello image
 	get.
 ```
 
-The `get` command will update the [registry][8] with the new
-repository location information.
+The `get` command will update the [registry][8] with the new repository location information.
 
-You may also use the `get` command to load a baseline for a project
-into your image without actually loading the project itself:
+You may also use the `get` command to load a baseline for a project into your image without actually loading the project itself:
 
 ```Smalltalk
 Metacello image
@@ -127,13 +108,11 @@ Metacello image
 	get.
 ```
 
-The 'SeasideRest' project information will be registered in the [registry][8] and marked
-as *unloaded*.
+The 'SeasideRest' project information will be registered in the [registry][8] and marked as *unloaded*.
 
 ### Load the new version
 
-Once you've got a new copy of the Seaside30 configuration loaded into your image, you may
-upgrade your image with the following expression:
+Once you've got a new copy of the Seaside30 configuration loaded into your image, you may upgrade your image with the following expression:
 
 ```Smalltalk
 Metacello image
@@ -141,33 +120,21 @@ Metacello image
 	load.
 ```
 
-By using the `image` message, you are asking Metacello to look the
-project up in the [registry][8] before performing the
-operation, so it isn't necessary to supply all of the project details for every
-command operation.
+By using the `image` message, you are asking Metacello to look the project up in the [registry][8] before performing the operation, so it isn't necessary to supply all of the project details for every command operation.
 
 Of course, the `load` command updates the [registry][8].
 
-In this case you use the `registry` message to indicate that you are
-interested in both *loaded* and *unloaded* projects.
+In this case you use the `registry` message to indicate that you are interested in both *loaded* and *unloaded* projects.
 
 ##Locking
 
-Let's say that you are using an older version of Seaside (say 3.0.5)
-instead of the #stable version (3.0.7) and that your application doesn't
-work with newer versions of Seaside (you've tried and it's more work
-to get you application to work with the newer version of Seaside than
-it's worth).
+Let's say that you are using an older version of Seaside (say 3.0.5) instead of the #stable version (3.0.7) and that your application doesn't work with newer versions of Seaside (you've tried and it's more work to get you application to work with the newer version of Seaside than it's worth).
 
-Let's also say that you want to try out something in the
-SeasideRest project, but when you try loading SeasideRest, you end up
-having Seaside 3.0.7 loaded as well. 
+Let's also say that you want to try out something in the SeasideRest project, but when you try loading SeasideRest, you end up having Seaside 3.0.7 loaded as well. 
 
-This is an unfortunate side effect of Metacello trying to *do the right
-thing*, only in your case it is the wrong thing.
+This is an unfortunate side effect of Metacello trying to *do the right thing*, only in your case it is the wrong thing.
 
-Fortunately, the [`lock` command][9] can give you control. First you
-need to `lock` the Seaside project:
+Fortunately, the [`lock` command][9] can give you control. First you need to `lock` the Seaside project:
 
 ```Smalltalk
 Metacello image
@@ -175,11 +142,9 @@ Metacello image
   lock.
 ```
 
-The `image` message tells Metacello to do a lookup in the list of loaded
-projects and then to put a lock on the loaded version of the project.
+The `image` message tells Metacello to do a lookup in the list of loaded projects and then to put a lock on the loaded version of the project.
 
-After a project is locked, a project trying to load it will just skip it.
-Notice that you are responsible for any problem product of this lock.
+After a project is locked, a project trying to load it will just skip it. Notice that you are responsible for any problem product of this lock.
 
 ## Unlocking
 
@@ -208,8 +173,7 @@ Class {
 	#name : 'Metacello',
 	#superclass : 'Object',
 	#instVars : [
-		'statements',
-		'scriptExecutorClass'
+		'scriptExecutor'
 	],
 	#category : 'Metacello-Base',
 	#package : 'Metacello-Base'
@@ -242,14 +206,10 @@ Metacello class >> scriptExecutorClass [
 	^ MetacelloScriptApiExecutor
 ]
 
-{ #category : 'private' }
-Metacello >> addStatement: selector args: args [
-    self statements add: selector -> args
-]
-
 { #category : 'api projectSpec' }
 Metacello >> baseline: projectName [
-    self addStatement: #'baselineArg:' args: {projectName}
+
+	self scriptExecutor baselineArg: projectName
 ]
 
 { #category : 'api repository shortcuts' }
@@ -260,30 +220,36 @@ Metacello >> bitbucketUser: userName project: projectName commitish: commitish p
 
 { #category : 'api projectSpec' }
 Metacello >> className: className [
-    self addStatement: #'classNameArg:' args: {className}
+
+	self scriptExecutor classNameArg: className
 ]
 
 { #category : 'api projectSpec' }
 Metacello >> configuration: projectName [
-    self addStatement: #'configurationArg:' args: {projectName}
+
+	self scriptExecutor configurationArg: projectName
 ]
 
 { #category : 'private' }
-Metacello >> execute: selector args: args [
-  | script |
-  script := self statements copy.
-  script add: selector -> args.
-  ^ self scriptExecutor execute: script
+Metacello >> execute: aBlock [
+	"I'm doing a copy of the script executor so that we can execute different commands with the same setup of our Metacello instance."
+
+	| executor |
+	executor := self scriptExecutor copy.
+	aBlock value: executor.
+	^ executor execute
 ]
 
 { #category : 'api actions' }
 Metacello >> fetch [
-  ^ self execute: #'fetch:' args: #(#())
+
+	^ self execute: [ :executor | executor fetch: #(  ) ]
 ]
 
 { #category : 'api actions' }
 Metacello >> fetch: required [
-  ^ self execute: #'fetch:' args: {required}
+
+	^ self execute: [ :executor | executor fetch: required ]
 ]
 
 { #category : 'api repository shortcuts' }
@@ -298,9 +264,9 @@ Metacello >> gemsource: projectName [
 
 { #category : 'api actions' }
 Metacello >> get [
-  "resolve project name in given repository and return an instance of MetacelloProject resolved from a ConfigurationOf or BaselineOf"
+	"resolve project name in given repository and return an instance of MetacelloProject resolved from a ConfigurationOf or BaselineOf"
 
-  ^ self execute: #'get' args: #()
+	^ self execute: [ :executor | executor get ]
 ]
 
 { #category : 'api repository shortcuts' }
@@ -311,39 +277,41 @@ Metacello >> githubUser: userName project: projectName commitish: commitish path
 
 { #category : 'api options' }
 Metacello >> ignoreImage [
-    "ignore image state"
+	"ignore image state"
 
-    self addStatement: #'ignoreImage:' args: {true}
+	self scriptExecutor ignoreImage: true
 ]
 
 { #category : 'api actions' }
 Metacello >> list [
-  "list projects in registry"
+	"list projects in registry"
 
-  ^ self execute: #'list' args: #()
+	^ self execute: [ :executor | executor list ]
 ]
 
 { #category : 'api actions' }
 Metacello >> load [
-  ^ self execute: #'load:' args: #(#())
+
+	^ self execute: [ :executor | executor load: #(  ) ]
 ]
 
 { #category : 'api actions' }
 Metacello >> load: required [
-  ^ self execute: #'load:' args: {required}
+
+	^ self execute: [ :executor | executor load: required ]
 ]
 
 { #category : 'api options' }
 Metacello >> loader: aLoader [
 
-	self addStatement: #loader: args: { aLoader }
+	self scriptExecutor loader: aLoader
 ]
 
 { #category : 'api actions' }
 Metacello >> lock [
-  "lock projects in registry"
+	"lock projects in registry"
 
-  ^ self execute: #'lock' args: #()
+	^ self execute: [ :executor | executor lock ]
 ]
 
 { #category : 'api actions' }
@@ -357,7 +325,8 @@ Metacello >> locked [
 
 { #category : 'api options' }
 Metacello >> onConflict: aBlock [
-    self addStatement: #'onConflict:' args: {aBlock}
+
+	self scriptExecutor onConflict: aBlock
 ]
 
 { #category : 'api options' }
@@ -384,7 +353,8 @@ Metacello >> onConflictUseLoaded [
 
 { #category : 'api options' }
 Metacello >> onDowngrade: aBlock [
-    self addStatement: #'onDowngrade:' args: {aBlock}
+
+	self scriptExecutor onDowngrade: aBlock
 ]
 
 { #category : 'api options' }
@@ -403,7 +373,8 @@ Metacello >> onDowngradeUseIncoming: projectNames [
 
 { #category : 'api options' }
 Metacello >> onLock: aBlock [
-  self addStatement: #'onLock:' args: {aBlock}
+
+	self scriptExecutor onLock: aBlock
 ]
 
 { #category : 'api options' }
@@ -422,7 +393,8 @@ Metacello >> onLockBreak: projectNames [
 
 { #category : 'api options' }
 Metacello >> onUpgrade: aBlock [
-    self addStatement: #'onUpgrade:' args: {aBlock}
+
+	self scriptExecutor onUpgrade: aBlock
 ]
 
 { #category : 'api options' }
@@ -441,7 +413,8 @@ Metacello >> onUpgradeUseLoaded: projectNames [
 
 { #category : 'api options' }
 Metacello >> onWarning: aBlock [
-  self addStatement: #'onWarning:' args: {aBlock}
+
+	self scriptExecutor onWarning: aBlock
 ]
 
 { #category : 'api options' }
@@ -454,54 +427,54 @@ Metacello >> onWarningLog [
 
 { #category : 'api projectSpec' }
 Metacello >> project: projectName [
-    self addStatement: #'projectArg:' args: {projectName}
+
+	self scriptExecutor projectArg: projectName
 ]
 
 { #category : 'api actions' }
 Metacello >> record [
-  ^ self execute: #'record:' args: #(#())
+
+	^ self execute: [ :executor | executor record: #(  ) ]
 ]
 
 { #category : 'api actions' }
 Metacello >> record: required [
-  ^ self execute: #'record:' args: {required}
+
+	^ self execute: [ :executor | executor record: required ]
 ]
 
 { #category : 'api actions' }
 Metacello >> register [
-  "change registered project"
+	"change registered project"
 
-  ^ self execute: #'register' args: #()
+	^ self execute: [ :executor | executor register ]
 ]
 
 { #category : 'api projectSpec' }
 Metacello >> repository: repositoryDescription [
-    self addStatement: #'repositoryArg:' args: {repositoryDescription}
+
+	self scriptExecutor repositoryArg: repositoryDescription
 ]
 
 { #category : 'accessing' }
 Metacello >> scriptExecutor [
 
-	^ self scriptExecutorClass new
-]
-
-{ #category : 'accessing' }
-Metacello >> scriptExecutorClass [
-
-	^ scriptExecutorClass ifNil: [ scriptExecutorClass := MetacelloScriptApiExecutor ]
+	^ scriptExecutor ifNil: [ scriptExecutor := MetacelloScriptApiExecutor new ]
 ]
 
 { #category : 'accessing' }
 Metacello >> scriptExecutorClass: anObject [
 
-	scriptExecutorClass := anObject
+	scriptExecutor ifNotNil: [ self error: 'The script executor class should be the first thing to parametrize and only once..' ].
+
+	scriptExecutor := anObject new
 ]
 
 { #category : 'api options' }
 Metacello >> silently [
-    "no progress bars"
+	"no progress bars"
 
-    self addStatement: #'silently:' args: {true}
+	self scriptExecutor silently: true
 ]
 
 { #category : 'api repository shortcuts' }
@@ -525,32 +498,22 @@ Metacello >> ss3: projectName [
     self squeaksource3: projectName
 ]
 
-{ #category : 'accessing' }
-Metacello >> statements [
-
-	^ statements ifNil: [ statements := OrderedCollection new ]
-]
-
-{ #category : 'accessing' }
-Metacello >> statements: anObject [
-	statements := anObject
-]
-
 { #category : 'api actions' }
 Metacello >> unlock [
-  "unlock projects in registry"
+	"unlock projects in registry"
 
-  ^ self execute: #'unlock' args: #()
+	^ self execute: [ :executor | executor unlock ]
 ]
 
 { #category : 'api actions' }
 Metacello >> unregister [
-  "unlock projects in registry"
+	"unlock projects in registry"
 
-  ^ self execute: #'unregister' args: #()
+	^ self execute: [ :executor | executor unregister ]
 ]
 
 { #category : 'api projectSpec' }
 Metacello >> version: versionString [
-    self addStatement: #'versionArg:' args: {versionString}
+
+	self scriptExecutor versionArg: versionString
 ]

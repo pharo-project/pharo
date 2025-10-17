@@ -28,10 +28,26 @@ Class {
 		'originalUndeclareds',
 		'hasTraits'
 	],
+	#classVars : [
+		'EnableClassInitialization'
+	],
 	#category : 'Hermes-ClassInstaller',
 	#package : 'Hermes',
 	#tag : 'ClassInstaller'
 }
+
+{ #category : 'accessing' }
+HEInstaller class >> enableClassInitialization [
+	"When true, Hermes will call the class side initialize methods after loading"
+
+	^ EnableClassInitialization ifNil: [ EnableClassInitialization := true ]
+]
+
+{ #category : 'accessing' }
+HEInstaller class >> enableClassInitialization: anObject [
+
+	EnableClassInitialization := anObject
+]
 
 { #category : 'creating classes' }
 HEInstaller >> build: aHEClass [
@@ -100,26 +116,25 @@ HEInstaller >> doInstallPackage: aHEPackage [
 	self packageOrganizer ensurePackage: aHEPackage packageName.
 
 	"2. Install the traits"
-	newTraits := aHEPackage traits collect: [ :exportedTrait |
-		             self buildTrait: exportedTrait ].
+	newTraits := aHEPackage traits collect: [ :exportedTrait | self buildTrait: exportedTrait ].
 
 	"3. Install traits methods"
-	aHEPackage traits with: newTraits do: [ :exportedTrait :newTrait |
-		self installMethods: exportedTrait into: newTrait ].
+	aHEPackage traits with: newTraits do: [ :exportedTrait :newTrait | self installMethods: exportedTrait into: newTrait ].
 
 	"4. Install classes"
-	newClasses := aHEPackage classes collect: [ :exportedClass |
-		              self build: exportedClass ].
+	newClasses := aHEPackage classes collect: [ :exportedClass | self build: exportedClass ].
 
 	"5. Install class methods"
-	aHEPackage classes with: newClasses do: [ :exportedClass :newClass |
-		self installMethods: exportedClass into: newClass ].
+	aHEPackage classes with: newClasses do: [ :exportedClass :newClass | self installMethods: exportedClass into: newClass ].
 
 	"6. Install extension methods"
-	aHEPackage extensionMethods do: [ :e |
-		self installExtensionMethod: e ].
+	aHEPackage extensionMethods do: [ :method | self installExtensionMethod: method ].
+	
+	"7. Initialize classes if the option is enabled"
+	self class enableClassInitialization ifTrue: [
+		newClasses do: [ :newClass | (newClass class isLocalSelector: #initialize) ifTrue: [ newClass initialize ] ] ].
 
-	"7. After all I validate if there are no new undeclared variables created in the environment.
+	"8. After all I validate if there are no new undeclared variables created in the environment.
 	A new undeclared is a sign of an improper modularization."
 	self validateNoNewUndeclared
 ]

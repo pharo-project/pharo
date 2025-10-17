@@ -18,6 +18,22 @@ TEasilyThemed >> deny: aStringOrText title: aString [
 ]
 
 { #category : '*Morphic-Deprecated' }
+TEasilyThemed >> newBracketSliderFor: aModel getValue: getSel setValue: setSel min: minValue max: maxValue quantum: quantum getEnabled: enabledSel help: helpText [
+	"Answer a bracket slider with the given selectors."
+
+	^self theme
+		newBracketSliderIn: self
+		for: aModel
+		getValue: getSel
+		setValue: setSel
+		min: minValue
+		max: maxValue
+		quantum: quantum
+		getEnabled: enabledSel
+		help: helpText
+]
+
+{ #category : '*Morphic-Deprecated' }
 TEasilyThemed >> newBracketSliderFor: aModel getValue: getSel setValue: setSel min: minValue max: maxValue quantum: quantum help: helpText [
 	"Answer a bracket slider with the given selectors."
 
@@ -99,6 +115,22 @@ TEasilyThemed >> newFuzzyLabelFor: aModel label: aString offset: offset alpha: a
 		offset: offset
 		alpha: alpha
 		getEnabled: enabledSel
+]
+
+{ #category : '*Morphic-Deprecated' }
+TEasilyThemed >> newIncrementalSliderFor: aModel getValue: getSel setValue: setSel min: min max: max quantum: quantum getEnabled: enabledSel help: helpText [
+	"Answer an inremental slider with the given selectors."
+
+	^self theme
+		newIncrementalSliderIn: self
+		for: aModel
+		getValue: getSel
+		setValue: setSel
+		min: min
+		max: max
+		quantum: quantum
+		getEnabled: enabledSel
+		help: helpText
 ]
 
 { #category : '*Morphic-Deprecated' }

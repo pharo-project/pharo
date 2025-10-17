@@ -11,6 +11,23 @@ UITheme >> denyIn: aThemedMorph text: aStringOrText title: aString [
 ]
 
 { #category : '*Morphic-Deprecated' }
+UITheme >> newBracketSliderIn: aThemedMorph for: aModel getValue: getSel setValue: setSel min: minValue max: maxValue quantum: quantum getEnabled: enabledSel help: helpText [
+	"Answer a bracket slider."
+
+	^(BracketSliderMorph
+			on: aModel
+			getValue: getSel
+			setValue: setSel
+			min: minValue
+			max: maxValue
+			quantum: quantum)
+		getEnabledSelector: enabledSel;
+		hResizing: #spaceFill;
+		vResizing: #spaceFill;
+		setBalloonText: helpText
+]
+
+{ #category : '*Morphic-Deprecated' }
 UITheme >> newExpanderIn: aThemedMorph label: aString forAll: controls [
 	"Answer an expander with the given label and controls."
 
@@ -35,6 +52,23 @@ UITheme >> newFuzzyLabelIn: aThemedMorph for: aModel label: aString offset: offs
 		alpha: alpha;
 		model: aModel;
 		getEnabledSelector: enabledSel
+]
+
+{ #category : '*Morphic-Deprecated' }
+UITheme >> newIncrementalSliderIn: aThemedMorph for: aModel getValue: getSel setValue: setSel min: min max: max quantum: quantum getEnabled: enabledSel help: helpText [
+	"Answer a slider inrement/decrement buttons."
+
+	^(IncrementalSliderMorph
+			on: aModel
+			getValue: getSel
+			setValue: setSel
+			min: min
+			max: max
+			quantum: quantum)
+		getEnabledSelector: enabledSel;
+		hResizing: #spaceFill;
+		vResizing: #spaceFill;
+		setBalloonText: helpText
 ]
 
 { #category : '*Morphic-Deprecated' }
@@ -160,4 +194,16 @@ UITheme >> newTreeIn: aThemedMorph for: aModel list: listSelector selected: getS
 		vResizing: #spaceFill;
 		autoDeselect: false;
 		yourself
+]
+
+{ #category : '*Morphic-Deprecated' }
+UITheme >> passwordEntryIn: aThemedMorph text: aStringOrText title: aString entryText: defaultEntryText [
+	"Answer the result of a password entry dialog (a string or nil if cancelled)
+	with the given label and title."
+
+	^((PasswordDialogWindow newWithTheme: aThemedMorph theme)
+			textFont: self textFont;
+			title: aString;
+			text: aStringOrText;
+			entryText: defaultEntryText) openModal entryText
 ]

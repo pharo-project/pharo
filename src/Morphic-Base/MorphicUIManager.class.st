@@ -532,21 +532,6 @@ MorphicUIManager >> request: aStringOrText initialAnswer: defaultAnswer title: a
 		entryCompletion: anEntryCompletion)
 ]
 
-{ #category : 'ui requests' }
-MorphicUIManager >> requestPassword: aStringOrText [
-	"Request for a password.
-	Allow for interception with a ProvideAnswerNotification handler.
-	Answer nil if the user cancels."
-
-	|modalMorph|
-	modalMorph := self modalMorph.
-	^modalMorph theme
-		passwordEntryIn: modalMorph
-		text: aStringOrText
-		title: 'Password Required' translated
-		entryText: ''
-]
-
 { #category : 'ui process' }
 MorphicUIManager >> resumeUIProcess: aProcess [
 	"Adopt aProcess as the project process -- probably because of proceeding from a debugger"
