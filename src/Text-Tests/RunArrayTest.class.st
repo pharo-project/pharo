@@ -9,8 +9,8 @@ Class {
 	#instVars : [
 		'collectionWith5Elements'
 	],
-	#category : 'Collections-Support-Tests',
-	#package : 'Collections-Support-Tests'
+	#category : 'Text-Tests',
+	#package : 'Text-Tests'
 }
 
 { #category : 'requirements' }

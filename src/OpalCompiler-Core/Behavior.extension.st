@@ -16,6 +16,26 @@ Behavior >> compile: code [
 ]
 
 { #category : '*OpalCompiler-Core' }
+Behavior >> compile: selector from: oldClass [
+	"Compile the method associated with selector in the receiver's method dictionary."
+
+	| method newMethod |
+	method := oldClass compiledMethodAt: selector.
+	newMethod := oldClass compiler
+		             source: method sourceCode;
+		             priorMethod: method;
+		             class: self;
+		             permitFaulty: true;
+		             "No need to log recompilation in the sources,
+					 	 We are going to reuse the original source pointer."
+		             logged: false;
+		             install.
+	newMethod sourcePointer: method sourcePointer.
+	selector == newMethod selector ifFalse: [
+		self error: 'selector changed!' ]
+]
+
+{ #category : '*OpalCompiler-Core' }
 Behavior >> compile: code notifying: requestor [
 	"Compile the argument, code, as source code in the context of the
 	receiver and insEtall the result in the receiver's method dictionary. The
@@ -36,7 +56,7 @@ Behavior >> compileAllFrom: oldClass [
 	"Compile all the methods in the receiver's method dictionary.
 	This validates sourceCode and variable references and forces
 	all methods to use the current bytecode set"
-	oldClass localSelectors do: [:sel | self recompile: sel from: oldClass]
+	oldClass localSelectors do: [:sel | self compile: sel from: oldClass]
 ]
 
 { #category : '*OpalCompiler-Core' }
@@ -73,24 +93,9 @@ Behavior >> recompile: selector [
 
 { #category : '*OpalCompiler-Core' }
 Behavior >> recompile: selector from: oldClass [
-	"Compile the method associated with selector in the receiver's method dictionary."
-
-	| method newMethod |
 
 	"Recompilation should be done silently, to avoid putting noise in the system"
 	self codeChangeAnnouncer suspendAllWhile: [
-		method := oldClass compiledMethodAt: selector.
-		newMethod := oldClass compiler
-			             source: (oldClass >> selector) sourceCode;
-			             priorMethod: method;
-			             class: self;
-			             permitFaulty: true;
-			             "No need to log recompilation in the sources,
-						 	 We are going to reuse the original source pointer."
-			             logged: false;
-			             install ].
-
-	newMethod sourcePointer: method sourcePointer.
-	selector == newMethod selector ifFalse: [
-		self error: 'selector changed!' ]
+		self compile: selector from: oldClass 
+	]
 ]

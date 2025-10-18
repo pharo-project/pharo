@@ -99,6 +99,13 @@ OpalCompiler class >> evaluate: textOrString [
 		evaluate
 ]
 
+{ #category : 'class initialization' }
+OpalCompiler class >> initialize [
+	"If no compiler is register when I'm loaded, I'll set myself as the compiler of the image."
+
+	SmalltalkImage current compilerClass ifNil: [ self register ]
+]
+
 { #category : 'public' }
 OpalCompiler class >> isActive [
 	^Smalltalk compilerClass == self

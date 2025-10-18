@@ -53,9 +53,7 @@ SmalltalkImage class >> cleanUp [
 { #category : 'settings' }
 SmalltalkImage class >> compilerClass [
 
-	^CompilerClass ifNil: [
-		"use OpalCompiler as the fallback compiler if installed"
-		self class environment at: #OpalCompiler ifAbsent: [ nil ] ]
+	^ CompilerClass
 ]
 
 { #category : 'settings' }
