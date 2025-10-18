@@ -20,6 +20,32 @@ Object >> canDiscardEdits [
 ]
 
 { #category : '*System-Model' }
+Object >> changed [
+	"Receiver changed in a general way; inform all the dependents by
+	sending each dependent an update: message."
+
+	self changed: self
+]
+
+{ #category : '*System-Model' }
+Object >> changed: aParameter [
+	"Receiver changed. The change is denoted by the argument aParameter.
+	Usually the argument is a Symbol that is part of the dependent's change
+	protocol. Inform all of the dependents."
+
+	self dependents do: [:aDependent | aDependent update: aParameter]
+]
+
+{ #category : '*System-Model' }
+Object >> changed: anAspect with: anObject [
+	"Receiver changed. The change is denoted by the argument anAspect.
+	Usually the argument is a Symbol that is part of the dependent's change
+	protocol. Inform all of the dependents. Also pass anObject for additional information."
+
+	self dependents do: [:aDependent | aDependent update: anAspect with: anObject]
+]
+
+{ #category : '*System-Model' }
 Object >> dependents [
 	"Answer a collection of objects that are 'dependent' on the receiver;
 	 that is, all objects that should be notified if the receiver changes."
@@ -51,6 +77,25 @@ Object >> removeDependent: anObject [
 	"Remove the given object as one of the receiver's dependents."
 
 	^ DependentsManager removeDependent: anObject of: self
+]
+
+{ #category : '*System-Model' }
+Object >> update: aParameter [
+	"Receive a change notice from an object of whom the receiver is a
+	dependent. The default behavior is to do nothing; a subclass might want
+	to change itself in some way."
+
+	^ self
+]
+
+{ #category : '*System-Model' }
+Object >> update: anAspect with: anObject [
+	"Receive a change notice from an object of whom the receiver is a
+	dependent. The default behavior is to call update:,
+	which by default does nothing; a subclass might want
+	to change itself in some way."
+
+	^ self update: anAspect
 ]
 
 { #category : '*System-Model' }
