@@ -14,7 +14,7 @@ Class {
 
 { #category : 'class initialization' }
 KMLog class >> initialize [
-	debug := false
+	self removeDebug
 ]
 
 { #category : 'logging' }

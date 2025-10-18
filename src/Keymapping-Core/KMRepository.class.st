@@ -41,7 +41,7 @@ KMRepository class >> reset [
 	KMCategory allSubclasses
 		select: [ :c | c isGlobalCategory ]
 		thenDo: [ :c | c new installAsGlobalCategory ].
-	KMPragmaKeymapBuilder uniqueInstance reset
+	KMPragmaKeymapBuilder initialize
 ]
 
 { #category : 'associating' }
