@@ -498,20 +498,43 @@ OrderedDictionaryTest >> testAtAtIfAbsent [
 { #category : 'tests' }
 OrderedDictionaryTest >> testAtAtIfAbsentPut [
 
-	self assert: (OrderedDictionary new 
-						at: #key1 at: #key2 ifAbsentPut: [ 33 ]; at: #key1 at: #key2) equals: 33.
-	self assert: (OrderedDictionary new 
-						at: #key1 at: #key2 put: 22; 
-						at: #key1 at: #key2 ifAbsentPut: [ 33 ]; at: #key1 at: #key2) equals: 22.
+	| dictionary |
+	dictionary := OrderedDictionary new.
+
+	self
+		assert: (dictionary
+				 at: #key1 at: #key2 ifAbsentPut: [ 33 ];
+				 at: #key1 at: #key2)
+		equals: 33.
+	dictionary keysAndValuesDo: [ :key :value |
+		self
+			assert: key equals: #key1;
+			assert: (value at: #key2) equals: 33 ].
+	self
+		assert: (dictionary
+				 at: #key1 at: #key2 put: 22;
+				 at: #key1 at: #key2 ifAbsentPut: [ 33 ];
+				 at: #key1 at: #key2)
+		equals: 22
 ]
 
 { #category : 'tests' }
 OrderedDictionaryTest >> testAtAtPut [
 
-	self assert: (OrderedDictionary new 
-						at: #key1 at: #key2 put: 22;
-						at: #key1 at: #key2 put: 23;
-						at: #key1 at: #key2 ) equals: 23.
+	| dictionary |
+	dictionary := OrderedDictionary new.
+
+	self
+		assert: (dictionary
+				 at: #key1 at: #key2 put: 22;
+				 at: #key1 at: #key2 put: 23;
+				 at: #key1 at: #key2)
+		equals: 23.
+
+	dictionary keysAndValuesDo: [ :key :value |
+		self
+			assert: key equals: #key1;
+			assert: (value at: #key2) equals: 23 ]
 ]
 
 { #category : 'tests' }

@@ -311,7 +311,7 @@ RBSelectorEnvironment >> selectorsForClass: aClass do: aBlock [
 		  (aClass includesSelector: each) ifTrue: [ aBlock value: each ] ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBSelectorEnvironment >> storeOn: aStream [
 	| classBlock |
 	aStream

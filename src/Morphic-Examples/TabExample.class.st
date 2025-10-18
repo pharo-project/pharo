@@ -63,7 +63,7 @@ TabExample >> freshListTab [
 	^ (TabMorph
 		label: 'Fresh List'
 		icon: nil
-		retrievingBlock: [ 1 second asDelay wait.
+		retrievingBlock: [ (Delay forSeconds: 1) wait.
 			SpListPresenter new
 				items: (1 to: 50) asOrderedCollection;
 				build ]

@@ -17,7 +17,7 @@ Class {
 
 { #category : 'class initialization' }
 OSTouchGestureNeedingThresholdDetector class >> initialize [
-	super initialize.
+
 	MinDistanceBeforeDetection := 0.05
 ]
 

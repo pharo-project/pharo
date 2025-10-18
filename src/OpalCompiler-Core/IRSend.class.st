@@ -25,7 +25,8 @@ IRSend >> isSend [
 
 { #category : 'testing' }
 IRSend >> isSuperSend [
-    ^superOf notNil
+
+    ^ superOf isNotNil
 ]
 
 { #category : 'accessing' }

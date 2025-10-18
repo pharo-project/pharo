@@ -464,7 +464,7 @@ RGBehaviorDefinition >> soleInstance [
 	^self instanceSide
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RGBehaviorDefinition >> storeOn: aStream [
 	self name storeOn: aStream
 ]
@@ -515,28 +515,6 @@ RGBehaviorDefinition >> superclassName: aSymbol [
 
 	self annotationNamed: self class superclassNameKey
 		put: aSymbol
-]
-
-{ #category : 'accessing - deprecated parallel hierarchy' }
-RGBehaviorDefinition >> theMetaClass [
-	"This method is deprecated so consider to migrate."
-
-	self
-		deprecated: 'Please use #classSide instead'
-		transformWith: '`@receiver theMetaClass' -> '`@receiver classSide'.
-
-	^ self classSide
-]
-
-{ #category : 'accessing - deprecated parallel hierarchy' }
-RGBehaviorDefinition >> theNonMetaClass [
-	"This method is deprecated so consider to migrate."
-
-	self
-		deprecated: 'Please use #instanceSide instead'
-		transformWith: '`@receiver theNonMetaClass' -> '`@receiver instanceSide'.
-
-	^ self instanceSide
 ]
 
 { #category : 'annotations' }

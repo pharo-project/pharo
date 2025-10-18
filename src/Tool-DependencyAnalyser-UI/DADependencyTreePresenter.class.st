@@ -17,7 +17,8 @@ Class {
 		'buttonReverseAnalysis',
 		'buttonSave',
 		'buttonMakeDiff',
-		'relationGraph'
+		'relationGraph',
+		'actionBar'
 	],
 	#category : 'Tool-DependencyAnalyser-UI-Core',
 	#package : 'Tool-DependencyAnalyser-UI',
@@ -28,21 +29,14 @@ Class {
 DADependencyTreePresenter class >> defaultLayout [
 	<spec: #default>
 	^ SpBoxLayout newVertical
-		add: ( SpBoxLayout newHorizontal
-					add: #textPackageField;
-					add: #buttonBrowseCycles;
-					add: #buttonRefresh;
-					add: #buttonDefault;
+		add: (SpBoxLayout newHorizontal
+					add: #textPackageField expand: true;
+					add: #buttonDefault expand: false;
 					yourself)
 			expand: false;
 		add: #packageLabel expand: false;
 		add: #tree;
-		add: (SpBoxLayout newHorizontal
-				add: #buttonAddPackage;
-				add: #buttonRemovePackage;
-				add: #buttonReverseAnalysis;
-				yourself)
-			expand: false;
+		add: #actionBar expand: false;
 		yourself
 ]
 
@@ -90,7 +84,6 @@ DADependencyTreePresenter >> actionOnButtons [
 		actionOnDefaultSettings;
 		actionOnRemovePackage;
 		actionOnAddPackage;
-		 actionOnGenerateGraphViz;
 		actionOnReverseAnalysis;
 		actionOnSave
 ]
@@ -116,16 +109,6 @@ DADependencyTreePresenter >> actionOnFindCycles [
 	systemCycles
 		updateWithFilter: selectedPackages;
 		open
-]
-
-{ #category : 'protocol' }
-DADependencyTreePresenter >> actionOnGenerateGraphViz [
-	| graphvizGenerator |
-	buttonGenerateGraphViz
-		action: [
-			self ifGraphVizAbsent: [ self error: 'Please install Graphviz Support' ].
-			graphvizGenerator := DAPackageRelationGraphGenerator newWith: self relationGraph named: 'PackageDependencyGraph'.
-			self saveGraphAndOpenWith: graphvizGenerator ]
 ]
 
 { #category : 'protocol' }
@@ -223,31 +206,41 @@ DADependencyTreePresenter >> filter: aString [
 
 { #category : 'initialization' }
 DADependencyTreePresenter >> initializeButtons [
+
+	buttonRefresh
+		icon: (self iconNamed: #glamorousRefresh);
+		label: ''.
 	buttonBrowseCycles := self newButton
 		help: 'Find all the cycles where the package is in the system';
-		label: 'Find cycles'.
+		icon: (self iconNamed: #objects).
 	buttonDefault := self newButton
-		help: 'Back to the default settings';
-		label: 'Default settings'.
+		help: 'Restore default settings';
+		label: 'Reset'.
 	buttonAddPackage := self newButton
-		help: 'Add package to the current analysis';
-		label: 'Add packages';
+		help: 'Add packages to the current analysis';
 		icon: (self iconNamed: #add).
 	buttonRemovePackage := self newButton
-		help: 'Remove package to the current analysis';
-		label: 'Remove packages';
+		help: 'Remove packages to the current analysis';
 		icon: (self iconNamed: #remove).
 	buttonGenerateGraphViz := self newButton
 		help: 'Open the graph in world';
 		label: 'Open the graph'.
 	buttonReverseAnalysis := self newButton
 		help: 'Reverse the analysis : set the dependent packages as root packages';
-		label: 'Reverse the analysis'.
+		icon: (self iconNamed: #refresh).
 	buttonSave := self newButton
 		help: 'Serialize the current object relation graph dependencies';
 		label: 'Save current analysis'.
 	buttonMakeDiff := self newButton
-		label: 'Make diff'
+		label: 'Make diff'.
+	
+	actionBar := self newActionBar
+		add: buttonAddPackage;
+		add: buttonRemovePackage;
+		addLast: buttonRefresh;
+		addLast: buttonReverseAnalysis;
+		addLast: buttonBrowseCycles;
+		yourself.
 ]
 
 { #category : 'initialization' }

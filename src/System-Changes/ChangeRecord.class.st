@@ -234,7 +234,7 @@ ChangeRecord >> timeStamp [
 		ifTrue: [
 			[
 			| time date |
-			date := Date fromString: (tokens at: tokens size - 1).
+			date := Date readFrom: (tokens at: tokens size - 1) pattern: 'dd-mm-yyyy'.
 			time := Time fromString: tokens last.
 			DateAndTime date: date time: time ]
 				on: Error

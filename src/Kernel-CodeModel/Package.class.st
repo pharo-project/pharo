@@ -361,12 +361,6 @@ Package >> includesExtensionSelector: aSelector ofClass: aClass [
 	^ (self extensionSelectorsForClass: aClass) includes: aSelector asSymbol
 ]
 
-{ #category : 'testing' }
-Package >> includesMethodsAffectedBy: aSystemAnnouncement [
-
-	^aSystemAnnouncement affectsMethodsDefinedInPackage: self
-]
-
 { #category : 'system compatibility' }
 Package >> includesProtocol: protocol ofClass: aClass [
 
@@ -522,13 +516,6 @@ Package >> packageManifestOrNil [
 	^ self definedClasses
 		detect: [ :each | each isManifest ]
 		ifNone: [ nil ]
-]
-
-{ #category : 'accessing' }
-Package >> packageName [
-
-	self deprecated: 'Use #name instead.' transformWith: '`@rcv packageName' -> '`@rcv name'.
-	^ self name
 ]
 
 { #category : 'system compatibility' }

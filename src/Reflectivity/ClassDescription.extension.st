@@ -21,6 +21,11 @@ ClassDescription >> instanceVariableWriteNodes [
 ]
 
 { #category : '*Reflectivity' }
+ClassDescription >> link: aMetaLink toAST: aNode [
+	aNode link: aMetaLink
+]
+
+{ #category : '*Reflectivity' }
 ClassDescription >> sendNodes [
 	^self methods flatCollect: [ :each | each sendNodes ]
 ]

@@ -109,7 +109,7 @@ RBReplaceSubtreeTransformation >> replace: anOldString to: aNewString inMethod: 
 	newSourceCode := aNewString
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBReplaceSubtreeTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

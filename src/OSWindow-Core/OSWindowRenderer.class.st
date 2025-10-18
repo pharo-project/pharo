@@ -34,7 +34,7 @@ OSWindowRenderer >> exposed [
 
 { #category : 'updating screen' }
 OSWindowRenderer >> exposed: exposeTime [
-	(lastExposeTime notNil and: [ exposeTime <= lastExposeTime]) ifTrue: [ ^ self ].
+	(lastExposeTime isNotNil and: [ exposeTime <= lastExposeTime]) ifTrue: [ ^ self ].
 	lastExposeTime := exposeTime.
 	self exposed
 ]

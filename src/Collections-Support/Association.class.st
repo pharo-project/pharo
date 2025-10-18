@@ -82,7 +82,7 @@ Association >> printOn: aStream [
 	value printOn: aStream
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Association >> storeOn: aStream [
 	"Store in the format (key->value)"
 	aStream nextPut: $(.

@@ -134,6 +134,13 @@ RGBehavior >> traitCompositionIncludes: aTrait [
 ]
 
 { #category : '*Calypso-Ring' }
+RGBehavior >> visibleMethods [
+	"Answer a <Collection> of <RGMethod> in the receiver"
+
+	^ self methods
+]
+
+{ #category : '*Calypso-Ring' }
 RGBehavior >> withAllSubclasses [
 
 	^ self subclasses asOrderedCollection

@@ -97,7 +97,7 @@ MCGitHubRepository class >> resetCacheDirectoryIfInvalid [
 
   "Reset if invalid"
 
-  CacheDirectory notNil
+  CacheDirectory isNotNil
     and: [ 
       (MCFileTreeFileUtils current directoryExists: CacheDirectory)
         ifFalse: [ CacheDirectory := nil ] ]

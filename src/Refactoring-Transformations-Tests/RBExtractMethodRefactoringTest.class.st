@@ -88,7 +88,10 @@ RBExtractMethodRefactoringTest >> testExtractMethodThatNeedsTemporaryVariable [
 { #category : 'tests' }
 RBExtractMethodRefactoringTest >> testExtractMethodToSuperclass [
 	| refactoring class |
-	refactoring := RBExtractMethodRefactoring extract: (143 to: 340) from: #checkMethod: in: RBTransformationRuleTestData.
+	refactoring := RBExtractMethodRefactoring extractSource: '(RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false) ifFalse:
+		[builder compile: rewriteRule tree printString
+		in: class
+		classified: aSmalllintContext protocols]' from: #checkMethod: in: RBTransformationRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self setupExtractionClassFor: refactoring toReturn: RBFooLintRuleTestData.
 	self executeRefactoring: refactoring.
@@ -151,6 +154,18 @@ RBExtractMethodRefactoringTest >> testFailureExtract [
 	self shouldFail: (RBExtractMethodRefactoring extract: (80 to: 269) from: #subclassOf:overrides: in: RBBasicLintRuleTestData class ).
 	self shouldFail: (RBExtractMethodRefactoring extract: (53 to: 56) from: #subclassOf:overrides: in: RBBasicLintRuleTestData class).
 	self shouldFail: (RBExtractMethodRefactoring extract: (77 to: 222) from: #subclassResponsibilityNotDefined in: RBBasicLintRuleTestData class )
+]
+
+{ #category : 'failure tests' }
+RBExtractMethodRefactoringTest >> testFailureExtractMethodWhenGivenSourceIsNotInTheMethod [
+
+	self
+		should: [
+			RBExtractMethodRefactoring
+				extractSource: 'some source that is not from the method'
+				from: #subclassOf:overrides:
+				in: RBBasicLintRuleTestData class ]
+		raise: RBRefactoringError
 ]
 
 { #category : 'failure tests' }

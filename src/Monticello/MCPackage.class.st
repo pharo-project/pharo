@@ -27,7 +27,7 @@ MCPackage >> = other [
 	^ other species = self species and: [other name = name]
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 MCPackage >> displayStringOn: aStream [
 	aStream nextPutAll: self name
 ]
@@ -95,7 +95,7 @@ MCPackage >> snapshot [
 					   yourself ])
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 MCPackage >> storeOn: aStream [
 	aStream
 		nextPutAll: 'MCPackage';

@@ -98,26 +98,30 @@ ReflectiveMethod >> flushCache [
 
 { #category : 'evaluation' }
 ReflectiveMethod >> generatePrimitiveWrapper [
+
 	| wrappedMethod send wrapperMethod assignmentNode |
 	wrappedMethod := self compileAST.
 
 	send := RBMessageNode
-		receiver: RBVariableNode selfNode
-		selector:  #rFwithArgs:executeMethod:
-		arguments: {RBArrayNode statements: ast arguments . (RBLiteralNode value: wrappedMethod)}.
+		        receiver: RBVariableNode selfNode
+		        selector: #rFwithArgs:executeMethod:
+		        arguments: {
+				        (RBArrayNode statements: ast arguments).
+				        (RBLiteralNode value: self compiledMethod) }.
 
 	assignmentNode := RBAssignmentNode
-		variable: (RBVariableNode named: #RFReifyValueVar)
-		value: send.
+		                  variable: (RBVariableNode named: #RFReifyValueVar)
+		                  value: send.
 
 	wrapperMethod := RBMethodNode
-		selector: ast selector
-		arguments: ast arguments
-		body: assignmentNode asSequenceNode.
+		                 selector: ast selector
+		                 arguments: ast arguments
+		                 body: assignmentNode asSequenceNode.
 
 	wrapperMethod methodClass: ast methodClass.
 	wrapperMethod propertyAt: #wrapperMethod put: true.
-	ast hasMetalink ifTrue: [wrapperMethod propertyAt: #links put: (ast propertyAt: #links)].
+	ast hasMetalink ifTrue: [
+		wrapperMethod propertyAt: #links put: (ast propertyAt: #links) ].
 	ast := wrapperMethod
 ]
 
@@ -224,6 +228,10 @@ ReflectiveMethod >> printOn: aStream [
 ReflectiveMethod >> recompileAST [
 
 	compiledMethod := self compileAST.
+	"This is bad.
+	Reflectivity has its own method installation process
+	This makes us duplicate behavior in here to pass the properties of old methods to ones"
+	ast compiledMethod migratePersistingPropertiesIn: compiledMethod.
 	ast compiledMethod: compiledMethod.
 	compiledMethod reflectiveMethod: self
 ]

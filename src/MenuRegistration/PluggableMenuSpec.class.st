@@ -69,9 +69,9 @@ PluggableMenuSpec >> addList: aList [
 								target: model
 								selector: tuple second
 								argumentList: #().
-					(tuple size > 2 and: [ tuple third notNil ])
+					(tuple size > 2 and: [ tuple third isNotNil ])
 						ifTrue: [ item help: tuple third ].
-					(tuple size > 3 and: [ tuple fourth notNil ])
+					(tuple size > 3 and: [ tuple fourth isNotNil ])
 						ifTrue: [ item icon: (self theme iconNamed: tuple fourth) ] ] ]
 ]
 

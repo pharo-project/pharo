@@ -1,7 +1,7 @@
 "
 I am an abstract class to silence certain parts of the system while running tests in my subclasses.
 
-Currently this class silences the SystemAnnouncer and sets the Author to the class name when a test is run. 
+Currently this class silences the SystemAnnouncer when a test is run. 
 
 "
 Class {
@@ -40,7 +40,5 @@ SlotSilentTest >> compileAccessorsFor: aSlot [
 { #category : 'running' }
 SlotSilentTest >> runCase [
 
-	SystemAnnouncer uniqueInstance suspendAllWhile: [
-		Author useAuthor: self class name asString during: [ super runCase ]
-	]
+	self class codeChangeAnnouncer suspendAllWhile: [ super runCase ]
 ]

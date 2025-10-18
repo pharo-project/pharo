@@ -285,7 +285,7 @@ SimpleButtonMorph >> mouseUp: evt [
 SimpleButtonMorph >> setActWhen [
 	| selections |
 	selections := #(#buttonDown #buttonUp #whilePressed #startDrag ).
-	actWhen := UIManager default
+	actWhen := self morphicUIManager
 				chooseFrom: (selections collect: [:t | t translated])
 				values: selections
 				title: 'Choose one of the following conditions' translated
@@ -295,7 +295,7 @@ SimpleButtonMorph >> setActWhen [
 SimpleButtonMorph >> setActionSelector [
 
 	| newSel |
-	newSel := UIManager default
+	newSel := self morphicUIManager
 		request:
 'Please type the selector to be sent to
 the target when this button is pressed' translated
@@ -306,7 +306,7 @@ the target when this button is pressed' translated
 { #category : 'menu' }
 SimpleButtonMorph >> setArguments [
 	| newArgs newArgsArray |
-	newArgs := UIManager default
+	newArgs := self morphicUIManager
 		request:
 			'Please type the arguments to be sent to the target
 when this button is pressed separated by periods' translated
@@ -328,7 +328,7 @@ SimpleButtonMorph >> setDefaultLabel [
 SimpleButtonMorph >> setLabel [
 
 	| newLabel |
-	newLabel := UIManager default
+	newLabel := self morphicUIManager
 		request: 'Please enter a new label for this button' translated
 		initialAnswer: self label.
 	newLabel isEmptyOrNil ifFalse: [self labelString: newLabel]

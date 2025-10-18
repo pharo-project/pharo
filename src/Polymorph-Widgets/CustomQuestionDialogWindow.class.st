@@ -86,7 +86,11 @@ CustomQuestionDialogWindow >> initialize [
 CustomQuestionDialogWindow >> newButtons [
 	"Answer new buttons as appropriate."
 
-	^{self yesButton. self noButton. self cancelButton}
+	^{
+		self cancelButton.
+		self noButton.
+		self yesButton isDefault: true 
+	}
 ]
 
 { #category : 'accessing' }

@@ -7,8 +7,3 @@ Class {
 	#category : 'MonticelloMocks',
 	#package : 'MonticelloMocks'
 }
-
-{ #category : 'as yet unclassified' }
-MCMock class >> wantsChangeSetLogging [
-	^ false
-]

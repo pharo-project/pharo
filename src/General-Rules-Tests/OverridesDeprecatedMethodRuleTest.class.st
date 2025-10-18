@@ -5,8 +5,9 @@ Class {
 		'testClass',
 		'testSubclass'
 	],
-	#category : 'General-Rules-Tests',
-	#package : 'General-Rules-Tests'
+	#category : 'General-Rules-Tests-Base',
+	#package : 'General-Rules-Tests',
+	#tag : 'Base'
 }
 
 { #category : 'properties' }

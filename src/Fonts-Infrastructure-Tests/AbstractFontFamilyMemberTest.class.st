@@ -10,7 +10,7 @@ Class {
 }
 
 { #category : 'tests' }
-AbstractFontFamilyMemberTest >> testIsAbstractClass [
+AbstractFontFamilyMemberTest >> testIsAbstract [
 
 	self
 		assert: AbstractFontFamilyMember isAbstract;

@@ -250,7 +250,7 @@ OSWindowRenderThread >> waitMoreOperations [
 	hasAnimatedWindowsInThisPeriod ifTrue:  [
 		"TODO: Compute a better time for the Delay. Thedelay is required to give time to threads with a lower priority."
 		(Delay forMilliseconds: self animationStep) wait.
-		operationAvailableSemaphore waitTimeoutMSecs: self animationStep.
+		operationAvailableSemaphore waitTimeoutMilliseconds: self animationStep.
 	] ifFalse: [
 		operationAvailableSemaphore wait.
 	]

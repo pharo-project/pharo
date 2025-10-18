@@ -106,7 +106,7 @@ RBAddTemporaryVariableTransformation >> skippingPreconditions [
 			  , ' already defines a temporary variable named ' , variableName
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBAddTemporaryVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

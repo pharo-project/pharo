@@ -114,16 +114,6 @@ ClassDefinitionPrinter >> classDefinitionString [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
-ClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName [
-	^ self classDefinitionTemplateInPackage: aPackageName named: #MyClass
-]
-
-{ #category : 'template' }
-ClassDefinitionPrinter >> classDefinitionTemplateInPackage: aPackageName named: aClassName [
-	^ self subclassResponsibility
-]
-
 { #category : 'printing' }
 ClassDefinitionPrinter >> definitionString [
 	"The method is part of the double dispatch. It is an extra starting point.
@@ -150,23 +140,8 @@ ClassDefinitionPrinter >> metaclassDefinitionString [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'template' }
-ClassDefinitionPrinter >> testClassDefinitionTemplateInPackage: aString [
-	^ self subclassResponsibility
-]
-
 { #category : 'public api' }
 ClassDefinitionPrinter >> traitDefinitionString [
-	^ self subclassResponsibility
-]
-
-{ #category : 'template' }
-ClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aString [
-	^ self traitDefinitionTemplateInPackage: aString named: #TMyTrait
-]
-
-{ #category : 'template' }
-ClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aPackageName named: aTraitName [ 
 	^ self subclassResponsibility
 ]
 

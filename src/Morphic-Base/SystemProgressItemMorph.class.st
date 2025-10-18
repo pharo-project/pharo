@@ -140,7 +140,7 @@ SystemProgressItemMorph >> max: aNumber [
 SystemProgressItemMorph >> refresh [
 
 	lastRefresh := Time millisecondClockValue.
-	UIManager default uiProcess == Processor activeProcess
+	self morphicUIManager uiProcess == Processor activeProcess
 		ifTrue: [ self currentWorld doOneCycleNow ]
 ]
 

@@ -24,5 +24,7 @@ SycSuperclassImplementorsCommand class >> sourceCodeMenuActivation [
 SycSuperclassImplementorsCommand class >> sourceCodeShortcutActivation [
 	<classAnnotation>
 
-	^CmdShortcutActivation renamingFor: ClyMethodSourceCodeContext
+	^ CmdShortcutActivation 
+		by: $y meta
+		for: ClyMethodSourceCodeContext
 ]

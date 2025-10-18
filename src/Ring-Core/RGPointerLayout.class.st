@@ -65,7 +65,8 @@ RGPointerLayout >> makeResolved [
 
 	super makeResolved.
 
-	slots := self slots asOrderedCollection markAsRingResolved
+	"We want to ensure we have an ordered collection because we can add slocts to the model and we cannot do it if it's an array"
+	slots := self slots asOrderedCollection do: [ :each | each markAsRingResolved ]
 ]
 
 { #category : 'private - backend access' }

@@ -6,21 +6,16 @@ Class {
 	#tag : 'Directives'
 }
 
-{ #category : 'actions' }
-MetacelloLinearLoadDirective >> loadUsing: aLoaderDirective gofer: aGofer [
-
-	self loadDirectives isEmpty ifTrue: [ ^self ].
-	aLoaderDirective loadLinearLoadDirective: self gofer: aGofer.
+{ #category : 'visiting' }
+MetacelloLinearLoadDirective >> acceptVisitor: aVisitor [
+	
+	^ aVisitor visitLinearLoadDirective: self
 ]
 
-{ #category : 'actions' }
-MetacelloLinearLoadDirective >> loadWithPolicy: aLoadPolicy [
-
-	| gofer |
-	gofer := MetacelloGofer new.
-	gofer disablePackageCache.
-	gofer repository: aLoadPolicy cacheRepository.
-	self loadUsing: self gofer: gofer
+{ #category : 'testing' }
+MetacelloLinearLoadDirective >> includes: aDirective [ 
+	
+	^ self loadDirectives includes: aDirective
 ]
 
 { #category : 'accessing' }

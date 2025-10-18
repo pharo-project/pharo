@@ -9,7 +9,7 @@ Class {
 { #category : 'failure tests' }
 RBRemoveClassVariableRefactoringTest >> testShouldWarnWhenVariableReferenced [
 
-	self shouldWarn: (RBRemoveSharedVariableRefactoring
+	self shouldWarn: (ReRemoveSharedVariableRefactoring
 			 variable: #RecursiveSelfRule
 			 class: #RBTransformationRuleTestData)
 ]

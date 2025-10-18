@@ -71,6 +71,13 @@ OSSDL2Driver >> afterSetWindowTitle: windowTitle onWindow: osWindow [
 		afterSetWindowTitle: windowTitle onWindow: osWindow
 ]
 
+{ #category : 'events' }
+OSSDL2Driver >> beforeMainPharoWindowClosed: osWindow [
+
+	OSPlatform current sdlPlatform
+		beforeMainPharoWindowClosed: osWindow
+]
+
 { #category : 'private' }
 OSSDL2Driver >> closeRemovedController: index [
 	"TODO: What should I do here?"
@@ -289,13 +296,13 @@ OSSDL2Driver >> primitiveSetVMSDL2Input: semaIndex [
 
 { #category : 'events-processing' }
 OSSDL2Driver >> processEvent: sdlEvent [
-	| mappedEvent |
 
+	| mappedEvent |
 	[
 		mappedEvent := sdlEvent mapped.
 		self evaluateUserInterrupt: mappedEvent.
 		self eventFilter dispatchEvent: mappedEvent
-	] on: Error do: [ :err |
+	] on: UnhandledException do: [ :err |
 		"It is critical, that event handling keep running despite errors.
 		Normally, any errors in event handling requires immediate attention and fixing"
 		err freeze.
@@ -378,9 +385,7 @@ OSSDL2Driver >> setupEventLoop [
 					[ self eventLoopProcessWithoutPlugin ]
 					forkAt: Processor lowIOPriority ] ].
 
-	EventLoopProcess
-		name: 'SDL2 Event loop';
-		resume
+	EventLoopProcess name: 'SDL2 Event loop'
 ]
 
 { #category : 'system startup' }
@@ -596,5 +601,23 @@ OSSDL2Driver >> visitJoyDeviceRemovedEvent: joyEvent [
 
 { #category : 'global events' }
 OSSDL2Driver >> visitQuitEvent: quitEvent [
+	^ nil
+]
+
+{ #category : 'global events' }
+OSSDL2Driver >> visitSystemWindowEvent: systemWindowEvent [
+
+	systemWindowEvent isWindows ifFalse: [ ^ nil ].	
+
+	systemWindowEvent windowsMessage isWTSessionChange 
+		ifTrue: [ 
+			^ OSPlatform current sdlPlatform handleWTSessionChange: 
+				systemWindowEvent windowsMessage].
+
+
+	systemWindowEvent windowsMessage isSysCommand ifTrue: [
+			^ OSPlatform current sdlPlatform handleSystemCommand:
+				systemWindowEvent windowsMessage ].
+
 	^ nil
 ]

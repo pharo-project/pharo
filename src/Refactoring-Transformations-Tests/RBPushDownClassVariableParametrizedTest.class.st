@@ -97,8 +97,7 @@ RBPushDownClassVariableParametrizedTest >> testModelPushDownVariableToClassDownT
 RBPushDownClassVariableParametrizedTest >> testModelPushDownVariableToMultipleClassesInSameHierarchy [
 
 	| class1 class2 |
-	"this test passes for the transformation but fails for the refactoring."
-	self skip.
+
 	model
 		defineClass: [ :aBuilder |
 			aBuilder
@@ -147,7 +146,7 @@ RBPushDownClassVariableParametrizedTest >> testModelRemoveUnusedVariable [
 ]
 
 { #category : 'tests' }
-RBPushDownClassVariableParametrizedTest >> testPushDownClassVariable [
+RBPushDownClassVariableParametrizedTest >> testPushDownUnusedClassVariable [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments:
 		{ #Foo1 . #RBLintRuleTestData }.
@@ -157,8 +156,6 @@ RBPushDownClassVariableParametrizedTest >> testPushDownClassVariable [
 
 	self executeRefactoring: refactoring.
 
-	self flag: #FixMe. 
-	"I do not get the following because at least some classes should define Foo1 since it was pushed down."
 	class withAllSubclasses
 			do: [ :each | self deny: (each directlyDefinesClassVariable: #Foo1) ]
 ]

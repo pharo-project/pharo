@@ -191,7 +191,7 @@ ClyNotebookManager >> initialize [
 ClyNotebookManager >> okToChange [
 
 	(tools anySatisfy: #hasUnacceptedEdits) ifFalse: [ ^ true ].
-	^browser confirmDiscardChanges
+	^browser confirmDiscardChanges ifNil: [ ^ false ]
 ]
 
 { #category : 'private' }

@@ -38,7 +38,6 @@ TFExternalSemaphore >> initialize [
 { #category : 'initialization' }
 TFExternalSemaphore >> release [
 
-	super release.
 	Smalltalk unregisterExternalObject: semaphore
 ]
 

@@ -68,12 +68,12 @@ SycCopyClassUsingPatternPresenter >> defaultLayout [
 SycCopyClassUsingPatternPresenter >> initializeDialogWindow: aModalPresenter [
 
 	aModalPresenter
-		addButton: 'Ok' do: [ :presenter |
-			self replaceClassPattern: presenter.
-			 presenter close ];
-		addButton: 'Cancel' do: [ :presenter | presenter beCancel; close ];
 		initialExtent: 350 @ 500 ;
-		title: 'Copy classes applying class pattern'
+		title: 'Copy classes applying class pattern';		
+		addButton: 'Cancel' do: [ :presenter | presenter beCancel; close ];		
+		addDefaultButton: 'Ok' do: [ :presenter |
+			self replaceClassPattern: presenter.
+			 presenter close ]
 ]
 
 { #category : 'initialization' }
@@ -101,8 +101,12 @@ SycCopyClassUsingPatternPresenter >> initializePresenters [
 SycCopyClassUsingPatternPresenter >> replaceClassPattern: presenter [
 	"Instantiate and execute a refactoring environment to perform changes according to receiver's current regex class patterns"
 
-	(RBCopyPackageRefactoring copyPackage: sourcePackage packageName in: newPackageName)
-		classMappings: (Dictionary newFromKeys: sourcePreviewPresenter items andValues: targetPreviewPresenter items);
+	(RBCopyPackageRefactoring
+		 copyPackage: sourcePackage name
+		 in: newPackageName)
+		classMappings: (Dictionary
+				 newFromKeys: sourcePreviewPresenter items
+				 andValues: targetPreviewPresenter items);
 		execute
 ]
 

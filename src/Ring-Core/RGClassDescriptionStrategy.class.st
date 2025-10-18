@@ -129,7 +129,7 @@ RGClassDescriptionStrategy >> pvtResolvableProperties [
      	}
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RGClassDescriptionStrategy >> storeOn: aStream [
 	aStream
 		nextPutAll: '(';

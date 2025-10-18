@@ -2151,7 +2151,7 @@ Color >> storeArrayValuesOn: aStream [
 	(self alpha roundTo: 0.001) storeOn: aStream
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Color >> storeOn: aStream [
 	self isTransparent
 		ifTrue: [ ^ aStream nextPutAll: '(Color transparent)' ].

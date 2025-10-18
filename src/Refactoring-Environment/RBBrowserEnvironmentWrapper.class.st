@@ -138,7 +138,7 @@ RBBrowserEnvironmentWrapper >> selectionIntervalFor: aString [
 		ifNil: [environment selectionIntervalFor: aString]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBBrowserEnvironmentWrapper >> storeOn: aStream [
 	aStream
 		nextPutAll: '(';

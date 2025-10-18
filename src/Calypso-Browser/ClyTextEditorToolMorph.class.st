@@ -133,10 +133,9 @@ ClyTextEditorToolMorph >> changesAccepted [
 				  textMorph hasUnacceptedEdits: true.
 				  err pass ].
 
-		  textModel setText: self editingText.
-
 		  applied
 			  ifTrue: [
+				  textModel setText: self editingText.
 				  textMorph hasUnacceptedEdits: false.
 				  self textUpdated.
 				  browser focusActiveTab ]
@@ -204,8 +203,8 @@ ClyTextEditorToolMorph >> findAnyString: strings in: text [
 
 	| index |
 	strings do: [ :each |
-		index := text findString: each startingAt: 1.
-		index > 0 ifTrue: [^index to: index + each size]].
+		index := text indexOfSubCollection: each startingAt: 1.
+		index > 0 ifTrue: [ ^ index to: index + each size - 1 ] ].
 
 	^0 to: -1
 ]

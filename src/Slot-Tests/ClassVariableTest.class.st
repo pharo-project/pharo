@@ -168,7 +168,7 @@ ClassVariableTest >> testScope [
 
 { #category : 'tests' }
 ClassVariableTest >> testUsingClasses [
-	self assert: (Object classVariableNamed: #DependentsFields) usingClasses anyOne identicalTo: DeepCopier
+	self assert: (Character classVariableNamed: #CharSet) usingClasses anyOne identicalTo: Character class
 ]
 
 { #category : 'tests' }

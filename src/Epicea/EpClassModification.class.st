@@ -42,13 +42,14 @@ EpClassModification >> behaviorAffectedName [
 EpClassModification >> fileOutEntryOn: aWriteStream [
 	"Write out class definition for the given class on the given stream, if the class definition was added or changed."
 
-	| realClass |
-	
-	realClass := self newClass realClass.
-	aWriteStream
-		nextChunkPut: realClass definitionString;
-		cr.
+	| defString |
+	defString := self newClass realClass
+		ifNotNil: [ : realClass | realClass definitionString ]
+		ifNil: [ self newClass definitionSource ].
 
+	aWriteStream
+		nextChunkPut: defString;
+		cr
 ]
 
 { #category : 'testing' }

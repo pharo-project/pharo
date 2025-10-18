@@ -35,14 +35,19 @@ TextEntryDialogWindow >> initialExtent [
 
 { #category : 'accessing' }
 TextEntryDialogWindow >> minimumWidth [
-	^ (super minimumWidth max: self class minimumWidth) min: (Display width)
+
+	^ (super minimumWidth max: self class minimumWidth) min:
+		  self currentWorld width
 ]
 
 { #category : 'accessing' }
 TextEntryDialogWindow >> newButtons [
 	"Answer new buttons as appropriate."
 
-	^{self newOKButton isDefault: true. self newCancelButton}
+	^ {
+		self newCancelButton.
+		self newOKButton isDefault: true
+	}
 ]
 
 { #category : 'creation' }

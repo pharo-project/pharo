@@ -32,7 +32,7 @@ FFILibrary class >> new [
 { #category : 'options' }
 FFILibrary class >> options [
 
-	^ #()
+	^ #( #+ optStrict )
 ]
 
 { #category : 'instance creation' }
@@ -74,11 +74,8 @@ FFILibrary >> libraryName [
 
 { #category : 'accessing - platform' }
 FFILibrary >> macLibraryName [
-	"Calling by default #macModuleName for backwards compatibility.
-	The system complains that this method is not implemented as it will only exist
-	in subclasses that use the old API.
-	Please redefine #macLibraryName"
-	^ self macModuleName
+
+	^ self subclassResponsibility
 ]
 
 { #category : 'accessing - platform' }
@@ -103,30 +100,25 @@ FFILibrary >> uniqueInstance [
 
 { #category : 'accessing - platform' }
 FFILibrary >> unix32LibraryName [
-	"Use to #unixLibraryName to keep backward compatibility."
+
 	^ self unixLibraryName
 ]
 
 { #category : 'accessing - platform' }
 FFILibrary >> unix64LibraryName [
-	"Point to #unixLibraryName to keep backward compatibility."
+
 	^ self unixLibraryName
 ]
 
 { #category : 'accessing - platform' }
 FFILibrary >> unixLibraryName [
-	"Kept for backward compatibility.
-	The system complains that this method is not implemented as it will only exist
-	in subclasses that use the old API.
-	 Users should use unix32* or unix64*"
-	^ self unixModuleName
+	"Users should use unix32* or unix64*"
+
+	^ self subclassResponsibility
 ]
 
 { #category : 'accessing - platform' }
 FFILibrary >> win32LibraryName [
-	"Calling by default #win32ModuleName for backwards compatibility.
-	The system complains that this method is not implemented as it will only exist
-	in subclasses that use the old API.
-	Please redefine #win32LibraryName"
-	^ self win32ModuleName
+
+	^ self subclassResponsibility
 ]

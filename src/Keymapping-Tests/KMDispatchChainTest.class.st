@@ -31,5 +31,5 @@ KMDispatchChainTest >> testPassesOnTheTarget [
 KMDispatchChainTest >> testTargetDoesNotIterateTheNil [
 	| chain |
 	chain := KMDispatchChain from: (KMGlobalDispatcher new) andDispatcher: (KMDispatcher new).
-	chain do: [ :target | self assert: target notNil ]
+	chain do: [ :target | self assert: target isNotNil ]
 ]

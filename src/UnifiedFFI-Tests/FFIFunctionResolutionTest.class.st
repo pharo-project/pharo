@@ -110,7 +110,7 @@ FFIFunctionResolutionTest >> testResolveClassVariableShouldBeInt32Type [
 	context := Context
 		sender: nil
 		receiver: receiver
-		method: String>>#asDate
+		method: String>>#asDuration
 		arguments: #().
 	resolver := FFICallout new
 		sender: context;
@@ -134,7 +134,7 @@ FFIFunctionResolutionTest >> testResolveClassVariableShouldSetClassVariableLoade
 	context := Context
 		sender: nil
 		receiver: receiver
-		method: String>>#asDate
+		method: String>>#asDuration
 		arguments: #().
 	resolver := FFICallout new
 		sender: context;

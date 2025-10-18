@@ -68,7 +68,7 @@ TextContainer >> computeShadow [
 	| canvas bounds theText |
 	bounds := self bounds.
 	theText := textMorph.
-	canvas := (Display defaultCanvasClass extent: bounds extent depth: 1)
+	canvas := (FormCanvas extent: bounds extent depth: 1)
 		asShadowDrawingCanvas: Color black.
 	canvas translateBy: bounds topLeft negated during:[:tempCanvas| | back |
 		self fillsOwner

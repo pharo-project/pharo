@@ -36,9 +36,9 @@ RBAddPackageChange >> generateChanges [
 
 { #category : 'printing' }
 RBAddPackageChange >> printOn: aStream [
+
 	aStream
 		nextPutAll: 'self packageOrganizer ';
 		nextPutAll: #ensurePackage:;
-		nextPutAll: packageName;
-		nextPut: $!
+		nextPutAll: packageName
 ]

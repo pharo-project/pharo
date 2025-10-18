@@ -96,7 +96,7 @@ RBRemoveReturnStatementTransformation >> return: anExpression inMethod: aSelecto
 	returnValue := anExpression
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRemoveReturnStatementTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

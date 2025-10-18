@@ -58,6 +58,20 @@ RBInlineMethodFromComponentRefactoring >> addSelfReferenceToSourceMessage [
 ]
 
 { #category : 'transforming' }
+RBInlineMethodFromComponentRefactoring >> checkSelectedMessage [
+
+	sourceParseTree := class parseTreeForSelector: sourceSelector.
+	sourceParseTree ifNil: [ self refactoringError: 'Could not parse sources' ].
+	sourceMessage := sourceParseTree whichNodeIsContainedBy: sourceInterval.
+	sourceMessage
+		ifNil: [ self refactoringError: 'The selection doesn''t appear to be a message send' ].
+	sourceMessage isCascade
+		ifTrue: [ sourceMessage := sourceMessage messages last ].
+	sourceMessage isMessage
+		ifFalse: [ self refactoringError: 'The selection doesn''t appear to be a message send' ]
+]
+
+{ #category : 'transforming' }
 RBInlineMethodFromComponentRefactoring >> checkSuperMessages [
 	inlineParseTree superMessages isEmpty
 		ifFalse:
@@ -78,20 +92,6 @@ RBInlineMethodFromComponentRefactoring >> classOfTheMethodToInline [
 	classOfTheMethodToInline := self requestImplementorToInline: imps.
 	classOfTheMethodToInline ifNil: [ self refactoringError: 'No implementor selected' ].
 	^ classOfTheMethodToInline
-]
-
-{ #category : 'transforming' }
-RBInlineMethodFromComponentRefactoring >> findSelectedMessage [
-
-	sourceParseTree := class parseTreeForSelector: sourceSelector.
-	sourceParseTree ifNil: [ self refactoringError: 'Could not parse sources' ].
-	sourceMessage := sourceParseTree whichNodeIsContainedBy: sourceInterval.
-	sourceMessage
-		ifNil: [ self refactoringError: 'The selection doesn''t appear to be a message send' ].
-	sourceMessage isCascade
-		ifTrue: [ sourceMessage := sourceMessage messages last ].
-	sourceMessage isMessage
-		ifFalse: [ self refactoringError: 'The selection doesn''t appear to be a message send' ]
 ]
 
 { #category : 'testing' }

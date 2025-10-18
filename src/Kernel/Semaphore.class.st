@@ -194,6 +194,13 @@ Semaphore >> signal [
 		ifFalse: [Processor resume: self removeFirstLink]"
 ]
 
+{ #category : 'communication' }
+Semaphore >> signalAll [
+
+	[ self isEmpty ]
+	whileFalse: [ self signal ]
+]
+
 { #category : 'initialize-release' }
 Semaphore >> terminateProcess [
 	"Terminate the process waiting on this semaphore, if any."
@@ -217,26 +224,7 @@ Semaphore >> wait [
 ]
 
 { #category : 'communication' }
-Semaphore >> wait: aDuration [
-	"Wait on this semaphore for up to the given time duration, then timeout.
-	Return true if the deadline expired, false otherwise."
-	| d |
-	d := DelayWaitTimeout new setDelay: aDuration asMilliSeconds forSemaphore: self.
-	^d wait
-]
-
-{ #category : 'communication' }
-Semaphore >> wait: aDuration onCompletion: completionBlock onTimeout: timeoutBlock [
-	"Wait on this semaphore for up to the given time duration, then timeout.
-	If the deadline expired execute timeoutBlock, otherwise execute completionBlock.
-	Return the value returned by the executed block."
-	| d |
-	d := DelayWaitTimeout new setDelay: aDuration asMilliSeconds forSemaphore: self.
-	^d waitOnCompletion: completionBlock onTimeout: timeoutBlock
-]
-
-{ #category : 'communication' }
-Semaphore >> waitTimeoutMSecs: anInteger [
+Semaphore >> waitTimeoutMilliseconds: anInteger [
 	"Wait on this semaphore for up to the given number of milliseconds, then timeout.
 	Return true if the deadline expired, false otherwise."
 	| d |
@@ -245,10 +233,20 @@ Semaphore >> waitTimeoutMSecs: anInteger [
 ]
 
 { #category : 'communication' }
+Semaphore >> waitTimeoutMilliseconds: anInteger onCompletion: completionBlock onTimeout: timeoutBlock [
+	"Wait on this semaphore for up to the given number of seconds, then timeout.
+	If the deadline expired execute timeoutBlock, otherwise execute completionBlock.
+	Return the value returned by the executed block."
+	| d |
+	d := DelayWaitTimeout new setDelay: (anInteger max: 0) forSemaphore: self.
+	^d waitOnCompletion: completionBlock onTimeout: timeoutBlock
+]
+
+{ #category : 'communication' }
 Semaphore >> waitTimeoutSeconds: anInteger [
 	"Wait on this semaphore for up to the given number of seconds, then timeout.
 	Return true if the deadline expired, false otherwise."
-	^self waitTimeoutMSecs: anInteger * 1000
+	^self waitTimeoutMilliseconds: anInteger * 1000
 ]
 
 { #category : 'communication' }
@@ -256,7 +254,9 @@ Semaphore >> waitTimeoutSeconds: anInteger onCompletion: completionBlock onTimeo
 	"Wait on this semaphore for up to the given number of seconds, then timeout.
 	If the deadline expired execute timeoutBlock, otherwise execute completionBlock.
 	Return the value returned by the executed block."
-	| d |
-	d := DelayWaitTimeout new setDelay: (anInteger * 1000 max: 0) forSemaphore: self.
-	^d waitOnCompletion: completionBlock onTimeout: timeoutBlock
+
+	^ self
+		  waitTimeoutMilliseconds: anInteger * 1000
+		  onCompletion: completionBlock
+		  onTimeout: timeoutBlock
 ]

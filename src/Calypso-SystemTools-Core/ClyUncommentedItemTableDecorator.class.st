@@ -12,12 +12,18 @@ Class {
 }
 
 { #category : 'decoration' }
+ClyUncommentedItemTableDecorator class >> balloonText [
+
+	^ 'There is no comment!'
+]
+
+{ #category : 'decoration' }
 ClyUncommentedItemTableDecorator class >> decorateMainTableCell: anItemCellMorph of: aDataSourceItem [
 	| noCommentWarn |
 	super decorateMainTableCell: anItemCellMorph of: aDataSourceItem.
 
 	noCommentWarn := anItemCellMorph addExtraIcon: #uncommentedClass.
-	noCommentWarn setBalloonText: 'There is no comment!'
+	noCommentWarn setBalloonText: self balloonText
 ]
 
 { #category : 'decoration' }

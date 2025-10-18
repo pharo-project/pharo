@@ -256,10 +256,11 @@ TaAbstractComposition >> hash [
 	^ self subclassResponsibility
 ]
 
-{ #category : 'querying' }
+{ #category : 'testing' }
 TaAbstractComposition >> includesTrait: aTrait [
 	"Checks if the trait is used in the trait composition"
-	^ self allTraits includes: aTrait
+
+	^ self subclassResponsibility
 ]
 
 { #category : 'operations' }
@@ -335,7 +336,7 @@ TaAbstractComposition >> isNotEmpty [
 { #category : 'operations' }
 TaAbstractComposition >> isSourcesPresentInSystem [
 
-	^ ((Smalltalk globals includesKey: #SourceFiles) and: [ (Smalltalk globals at: #SourceFiles) notNil])
+	^ ((Smalltalk globals includesKey: #SourceFiles) and: [ (Smalltalk globals at: #SourceFiles) isNotNil])
 ]
 
 { #category : 'testing' }
@@ -392,7 +393,7 @@ TaAbstractComposition >> saveSourceCode: sourceCode ofMethod: newMethod [
 
 	"I have to check because during bootstrap there is no SouceFiles"
 	(sourceCode isNotNil and: [((Smalltalk globals includesKey: #SourceFiles)
-		and: [ (Smalltalk globals at: #SourceFiles) notNil])]) ifTrue: [
+		and: [ (Smalltalk globals at: #SourceFiles) isNotNil])]) ifTrue: [
 			newMethod putSource: sourceCode
 					withPreamble: [:f | f cr; nextPut: $!; nextChunkPut: 'Trait method'; cr]].
 ]

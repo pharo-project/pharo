@@ -247,6 +247,25 @@ ScalingCanvas class >> exampleLine2 [
 							width: width color: Color blue translucent ] ] ] ]
 ]
 
+{ #category : 'examples' }
+ScalingCanvas class >> exampleRubScrolledTextMorph [
+
+	| source |
+
+	source := String streamContents: [ :stream |
+		stream nextPutAll: 'OrderedCollection new'; cr.
+		(1 to: 100) groupsOf: 5 atATimeDo: [ :numbers |
+			stream tab; nextPutAll: ('addAll: {1};' format: { numbers printString }); cr ].
+		stream tab; nextPutAll: 'yourself'; cr ].
+	^ self privateExampleWithMorph:
+		(RubScrolledTextMorph new
+			model: (RubScrolledTextModel new text: source; yourself);
+			beForSmalltalkCode;
+			withCodeSizeFeedback;
+			extent: 320@200;
+			yourself)
+]
+
 { #category : 'instance creation' }
 ScalingCanvas class >> formCanvas: formCanvas scale: scale [
 
@@ -256,13 +275,9 @@ ScalingCanvas class >> formCanvas: formCanvas scale: scale [
 { #category : 'class initialization' }
 ScalingCanvas class >> initialize [
 
-	| theme icons iconFormsScale2 |
+	| icons iconFormsScale2 |
 
 	FormMapping := IdentityDictionary new.
-
-	theme := Smalltalk ui theme.
-	(theme formSetsForScale: 1) keysAndValuesDo: [ :formSetName :formSet |
-		FormMapping at: formSet asForm put: (formSet asFormAtScale: 2) ].
 
 	icons := Smalltalk ui icons.
 	icons scale = 1 ifFalse: [ ^ self ].
@@ -285,12 +300,12 @@ ScalingCanvas class >> privateExampleWithExtent: extent fillColor: fillColor sca
 
 	| baseForm form1 form2 |
 	
-	(baseForm := Form extent: extent depth: Display depth)
+	(baseForm := Form extent: extent depth: 32)
 		fillColor: fillColor.
 	drawBlock value: baseForm getCanvas.
 	form1 := baseForm scaledToSize: extent * scale.
 	
-	(form2 := Form extent: extent * scale depth: Display depth)
+	(form2 := Form extent: extent * scale depth: 32)
 		fillColor: fillColor.
 	drawBlock value: (self formCanvas: form2 getCanvas scale: scale).
 	
@@ -332,7 +347,7 @@ ScalingCanvas >> applyClippingTo: clipRect during: aBlock [
 			sourceForm := Form extent: scaledClipRect extent / scale depth: 32.
 			(FormCanvas on: sourceForm) translateBy: scaledClipRect origin negated / scale during: aBlock.
 			(formCanvas warpFrom: sourceForm boundingBox innerCorners toRect: scaledClipRect)
-				combinationRule: Form blend;
+				combinationRule: Form blendAlphaScaled;
 				sourceForm: sourceForm;
 				warpBits
 		] ifFalse: [
@@ -380,13 +395,7 @@ ScalingCanvas >> depth [
 { #category : 'drawing - images' }
 ScalingCanvas >> drawFormSet: formSet at: point [
 
-	| form scaledForm |
-
-	form := formSet asForm.
-	scaledForm := (scale = 2 and: [ FormMapping includesKey: form ])
-		ifTrue: [ FormMapping at: form ]
-		ifFalse: [ formSet asFormAtScale: scale ].
-	formCanvas drawImage: scaledForm at: point * scale
+	formCanvas drawImage: (self scaledFormForFormSet: formSet) at: point * scale
 ]
 
 { #category : 'drawing - polygons' }
@@ -399,6 +408,17 @@ ScalingCanvas >> drawPolygon: vertices color: aColor borderWidth: bw borderColor
 	self applyClippingTo: (vertices min floor corner: vertices max floor + 1)
 		during: [ :transformedCanvas |
 			transformedCanvas drawPolygon: vertices color: aColor borderWidth: bw borderColor: bc ]
+]
+
+{ #category : 'drawing - polygons' }
+ScalingCanvas >> drawPolygon: vertices fillStyle: aFillStyle borderWidth: bw borderColor: bc [
+
+	aFillStyle isColor ifTrue: [
+		self drawPolygon: vertices color: aFillStyle borderWidth: bw borderColor: bc.
+		^ self ].
+	self applyClippingTo: (vertices min floor corner: vertices max floor + 1)
+		during: [ :transformedCanvas |
+			transformedCanvas drawPolygon: vertices fillStyle: aFillStyle borderWidth: bw borderColor: bc ]
 ]
 
 { #category : 'drawing - text' }
@@ -482,6 +502,13 @@ ScalingCanvas >> formCanvas: initialFormCanvas scale: initialScale [
 	formCanvas := initialFormCanvas.
 	scale := initialScale.
 
+]
+
+{ #category : 'private' }
+ScalingCanvas >> formSet: aFormSet at: aPoint sourceRect: sourceRect rule: rule [
+
+	formCanvas image: (self scaledFormForFormSet: aFormSet) at: aPoint truncated * scale
+		sourceRect: (sourceRect scaleBy: scale) rule: rule
 ]
 
 { #category : 'drawing - rectangles' }
@@ -590,6 +617,15 @@ ScalingCanvas >> scalePolygon: vertices [
 		point truncated * scale ]
 ]
 
+{ #category : 'private' }
+ScalingCanvas >> scaledFormForFormSet: formSet [
+
+	scale = 2 ifTrue: [
+		formSet mappableFormForScalingCanvas ifNotNil: [ :mappableForm |
+			FormMapping at: mappableForm ifPresent: [ :mappedForm | ^ mappedForm ] ] ].
+	^ formSet asFormAtScale: scale
+]
+
 { #category : 'accessing' }
 ScalingCanvas >> shadowColor [
 
@@ -648,11 +684,5 @@ ScalingCanvas >> translateBy: delta during: aBlock [
 { #category : 'drawing - images' }
 ScalingCanvas >> translucentFormSet: formSet at: point [
 
-	| form scaledForm |
-
-	form := formSet asForm.
-	scaledForm := (scale = 2 and: [ FormMapping includesKey: form ])
-		ifTrue: [ FormMapping at: form ]
-		ifFalse: [ formSet asFormAtScale: scale ].
-	formCanvas translucentImage: scaledForm at: point * scale
+	formCanvas translucentImage: (self scaledFormForFormSet: formSet) at: point * scale
 ]

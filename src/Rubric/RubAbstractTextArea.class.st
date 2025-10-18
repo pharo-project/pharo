@@ -1744,7 +1744,13 @@ RubAbstractTextArea >> recomputeSelection [
 
 { #category : 'multi level undo' }
 RubAbstractTextArea >> redoTypeIn: aText interval: anInterval [
-	self handleEdit: [self editor redoTypeIn: aText interval: anInterval]
+	
+	^ self redoTypeIn: aText interval: anInterval selection: anInterval
+]
+
+{ #category : 'multi level undo' }
+RubAbstractTextArea >> redoTypeIn: aText interval: anInterval selection: selection [
+	self handleEdit: [self editor redoTypeIn: aText interval: anInterval selection: selection]
 ]
 
 { #category : 'caching' }
@@ -2105,7 +2111,13 @@ RubAbstractTextArea >> undoRedoExchange: aninterval with: anotherInterval [
 
 { #category : 'multi level undo' }
 RubAbstractTextArea >> undoTypeIn: aText interval: anInterval [
-	self handleEdit: [self editor undoTypeIn: aText interval: anInterval]
+
+	^ self undoTypeIn: aText interval: anInterval selection: anInterval
+]
+
+{ #category : 'multi level undo' }
+RubAbstractTextArea >> undoTypeIn: aText interval: anInterval selection: aSelection [
+	self handleEdit: [self editor undoTypeIn: aText interval: anInterval selection: aSelection]
 ]
 
 { #category : 'private' }
@@ -2152,15 +2164,23 @@ RubAbstractTextArea >> updateMarginsWith: aMargin [
 
 { #category : 'accessing - text' }
 RubAbstractTextArea >> updateTextWith: aStringOrText [
-	self
-		handleEdit: [ self
-				beEditableWhile: [
-					| s |
-					s := self validateTextFrom: aStringOrText.
-					s = self text
-						ifFalse: [ self selectAll.
-							self editor replaceSelectionWith: s.
-							self deselect ] ] ]
+
+	self handleEdit: [
+		self beEditableWhile: [
+			| s |
+			s := self validateTextFrom: aStringOrText.
+			"Text can = String, but String never = Text"
+			s = self text asString ifFalse: [
+				| wasAtEnd |
+				wasAtEnd := self hasSelection not and: [
+					            self markIndex > self text size ].
+				self selectAll.
+				self editor replaceSelectionWith: s.
+				self deselect.
+				wasAtEnd ifTrue: [ "Keep cursor at end if it was already there"
+					| atEnd |
+					atEnd := self text size + 1.
+					self markIndex: atEnd pointIndex: atEnd ] ] ] ]
 ]
 
 { #category : 'accessing - text' }

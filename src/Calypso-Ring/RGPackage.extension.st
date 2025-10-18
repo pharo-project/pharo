@@ -12,6 +12,12 @@ RGPackage >> calypsoEnvironmentType [
 ]
 
 { #category : '*Calypso-Ring' }
+RGPackage >> calypsoName [
+
+	^ self name
+]
+
+{ #category : '*Calypso-Ring' }
 RGPackage >> classTags [
 
 	self isRingResolved not ifTrue: [ ^ '' ].

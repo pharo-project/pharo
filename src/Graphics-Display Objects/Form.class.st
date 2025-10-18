@@ -50,6 +50,13 @@ Form class >> blendAlpha [
 	^ 30
 ]
 
+{ #category : 'mode constants' }
+Form class >> blendAlphaScaled [
+	"Answer the integer denoting BitBlt's blend-with-scaled-alpha rule."
+
+	^ 34
+]
+
 { #category : 'instance creation' }
 Form class >> dotOfSize: diameter [
 	"Create a form which contains a round black dot."
@@ -170,18 +177,8 @@ Form class >> fromDisplay: aRectangle [
 	"Answer an instance of me with bitmap initialized from the area of the
 	display screen defined by aRectangle."
 
-	^ (self extent: aRectangle extent depth: Display depth)
+	^ (self extent: aRectangle extent depth: 32)
 		fromDisplay: aRectangle
-]
-
-{ #category : 'instance creation' }
-Form class >> fromDisplay: aRectangle using: oldForm [
-	"Like fromDisplay: only if oldForm is the right size, copy into it and answer it instead."
-
-	^ (oldForm ~~ nil and: [ oldForm extent = aRectangle extent ])
-		ifTrue: [ oldForm fromDisplay: aRectangle.
-			oldForm ]
-		ifFalse: [ self fromDisplay: aRectangle ]
 ]
 
 { #category : 'class initialization' }
@@ -2236,13 +2233,13 @@ Form >> storeHexBitsOn:aStream [
 	^self storeBits:28 to:0 on:aStream
 ]
 
-{ #category : 'file in/out' }
+{ #category : 'storing' }
 Form >> storeOn: aStream [
 
 	self storeOn: aStream base: 10
 ]
 
-{ #category : 'file in/out' }
+{ #category : 'storing' }
 Form >> storeOn: aStream base: anInteger [
 	"Store the receiver out as an expression that can be evaluated to recreate a Form with the same contents as the original."
 

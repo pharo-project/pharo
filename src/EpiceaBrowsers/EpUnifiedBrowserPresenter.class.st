@@ -41,7 +41,7 @@ EpUnifiedBrowserPresenter class >> worldMenuItemOn: aBuilder [
 	(aBuilder item: 'Code Changes')
 		parent: #Changes;
 		action: [ self open ];
-		icon: (aBuilder iconNamed: self taskbarIconName);
+		iconName: self taskbarIconName;
 		help: 'Browse recorded change logs during from Pharo coding sessions and replay changes.';
 		order: 1
 ]
@@ -51,10 +51,27 @@ EpUnifiedBrowserPresenter >> freshLogFromSelection: selection [
 	^ selection selectedItems
 		ifEmpty: [ EpLog newNull ]
 		ifNotEmpty: [ :items |
-			| entries |
+			| entries entriesPerLog entryPerOriginalReference newLog |
+			entries := OrderedCollection new.
+			entriesPerLog := IdentityDictionary new.
+			entryPerOriginalReference := Dictionary new.
 			"Needed to reverse the selected logs to have the expected order (as user)."
-			entries := items reversed flatCollect: [:each | each log entries ].
-			EpLog newWithEntries: entries ]
+			items reversed reverseDo: [ :item |
+				entries addAll: ((entriesPerLog at: item log put: item log entries)
+					do: [ :entry |
+						entryPerOriginalReference at: (item log referenceTo: entry) put: entry ];
+					yourself) ].
+			newLog := EpLog newWithEntries: entries.
+			entriesPerLog keysAndValuesDo: [ :log :logEntries |
+				logEntries do: [ :entry |
+					log triggererReferenceOf: entry
+						ifPresent: [ :originalTriggerReference |
+							log triggererReferenceOf: entry put: (entryPerOriginalReference
+								at: originalTriggerReference
+								ifPresent: [ :triggerEntry | newLog referenceTo: triggerEntry ]
+								ifAbsent: [ newLog nullReference ]) ]
+						ifAbsent: [ ] ] ].
+			newLog ]
 ]
 
 { #category : 'initialization' }

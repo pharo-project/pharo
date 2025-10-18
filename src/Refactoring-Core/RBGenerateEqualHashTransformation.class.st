@@ -84,6 +84,18 @@ RBGenerateEqualHashTransformation >> accessorForVariable: aString [
 	^ refactoring getterMethodName
 ]
 
+{ #category : 'preconditions' }
+RBGenerateEqualHashTransformation >> applicabilityPreconditions [
+	"Checks that the class actually defines all the variables that will be part of the hash."
+
+	^ variables
+		  inject: self trueCondition
+		  into: [ :condition :variable |
+			  condition
+			  &
+			  (RBCondition definesInstanceVariable: variable in: self theClass) ]
+]
+
 { #category : 'transforming' }
 RBGenerateEqualHashTransformation >> compileEqual [
 	| method statement comparison |
@@ -155,18 +167,6 @@ RBGenerateEqualHashTransformation >> compileHash [
 			sourceCode: method formattedCode
 			in: self theClass
 			withProtocol: #comparing)
-]
-
-{ #category : 'preconditions' }
-RBGenerateEqualHashTransformation >> preconditions [
-	"Checks that the class actually defines all the variables that will be part of the hash."
-
-	^ variables
-		  inject: self trueCondition
-		  into: [ :condition :variable |
-			  condition
-			  &
-			  (RBCondition definesInstanceVariable: variable in: self theClass) ]
 ]
 
 { #category : 'transforming' }

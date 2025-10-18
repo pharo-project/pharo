@@ -58,31 +58,6 @@ RBTransformation >> asRefactoring [
 	^ self yourself
 ]
 
-{ #category : 'accessing' }
-RBTransformation >> copyOptionsFrom: aDictionary [
-	| dict |
-	dict := self options.
-	dict == self class refactoringOptions
-		ifTrue: [^self options: aDictionary copy].
-	dict keysAndValuesDo:
-			[:key :value |
-			value == (self class refactoringOptions at: key)
-				ifTrue: [dict at: key put: (aDictionary at: key)]].
-	self options: dict
-]
-
-{ #category : 'preconditions' }
-RBTransformation >> preconditions [
-
-	^ self applicabilityPreconditions 
-]
-
-{ #category : 'accessing' }
-RBTransformation >> setOption: aSymbol toUse: aBlock [
-
-	self options at: aSymbol put: aBlock
-]
-
 { #category : 'transforming' }
 RBTransformation >> transform [
 

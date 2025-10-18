@@ -380,7 +380,7 @@ RBRefactoringChangeTest >> testPerformChangeClass [
 		self assert: change changeClass superclass equals: self class.
 		self assertEmpty: change changeClass instVarNames.
 		self assertEmpty: change changeClass classVarNames ].
-	self assert: change changeClass superclass equals: Object.
+	self assert: change changeClass superclass equals: RBRefactoryChange.
 	self denyEmpty: change changeClass instVarNames.
 	self denyEmpty: change changeClass classVarNames.
 	self assert: change definedClass equals: self changeMockClass

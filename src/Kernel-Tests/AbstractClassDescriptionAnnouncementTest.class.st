@@ -26,7 +26,7 @@ AbstractClassDescriptionAnnouncementTest >> tearDown [
 { #category : 'running' }
 AbstractClassDescriptionAnnouncementTest >> when: anAnnouncement do: aBlock [
 
-	SystemAnnouncer uniqueInstance
+	self class codeChangeAnnouncer
 		when: anAnnouncement
 		do: [ :ann |
 			numberOfAnnouncements := numberOfAnnouncements + 1.

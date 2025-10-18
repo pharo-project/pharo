@@ -19,12 +19,12 @@ RBNewAbstractCondition >> check [
 { #category : 'accessing' }
 RBNewAbstractCondition >> errorString [ 
 
-	^ ' please redefine me '
+	^ String streamContents: [ :stream | self violationMessageOn: stream ] 
 ]
 
 { #category : 'logical operations' }
 RBNewAbstractCondition >> not [
-	^RBNewNegationCondition on: self
+	^ReNewNegationCondition on: self
 ]
 
 { #category : 'displaying' }

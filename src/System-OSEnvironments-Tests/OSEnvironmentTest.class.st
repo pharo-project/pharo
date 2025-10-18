@@ -109,9 +109,11 @@ OSEnvironmentTest >> testSettingEnvValueDuringRevertsValueAfterDuringBlock [
 	envName := self envNameForTest.
 	self instance setEnv: envName value: 'Before'.
 	expected := 'After'.
-	self instance setEnv: envName value: expected during: [  ].
+	self instance setEnv: envName value: expected during: [
+		actual := self instance at: envName.
+		self assert: actual equals: expected ].
 	actual := self instance at: envName.
-	self assert: actual equals: expected
+	self assert: actual equals: 'Before'
 ]
 
 { #category : 'tests' }

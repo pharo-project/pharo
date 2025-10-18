@@ -8,7 +8,7 @@ UIManager >> request: aTitleString regex: initialRegexString [
 	regex := initialRegexString.
 	"loop until we get a valid regex string back"
 	[
-		regex := UIManager default
+		regex := self
 			multiLineRequest: aTitleString
 			initialAnswer: regex
 			answerHeight: 200.

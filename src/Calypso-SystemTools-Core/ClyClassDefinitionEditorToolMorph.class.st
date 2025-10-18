@@ -98,7 +98,9 @@ ClyClassDefinitionEditorToolMorph >> decorateContainerTab [
 
 { #category : 'initialization' }
 ClyClassDefinitionEditorToolMorph >> defaultIconName [
-	^#class
+
+	self editingClass isTrait ifTrue: [ ^ #trait ].
+	^ #class
 ]
 
 { #category : 'to sort' }

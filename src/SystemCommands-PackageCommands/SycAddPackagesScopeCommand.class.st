@@ -14,19 +14,22 @@ Class {
 
 { #category : 'accessing' }
 SycAddPackagesScopeCommand >> defaultMenuIconName [
-	^ #add
+	^ #smallPushpin
 ]
 
 { #category : 'accessing' }
 SycAddPackagesScopeCommand >> defaultMenuItemName [
-	^ 'Add to scope list'
+	^ 'Create scope from selected package(s)'
 ]
 
 { #category : 'execution' }
 SycAddPackagesScopeCommand >> execute [
+
 	| scope |
-	scope := RBBrowserEnvironment new forPackages: packages.
-	RefactoringSettings addScope: scope
+	
+	scope := ScopesManager newScopeFrom: packages.
+	ScopesManager addScope: scope.
+	ScopesPresenter openSelecting: scope
 ]
 
 { #category : 'accessing' }

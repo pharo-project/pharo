@@ -377,10 +377,3 @@ Metaclass >> veryDeepCopyWith: deepCopier [
 
 	"Return self.  Must be created, not copied.  Do not record me."
 ]
-
-{ #category : 'compiling' }
-Metaclass >> wantsChangeSetLogging [
-	"Answer whether code submitted for the receiver should be remembered by the changeSet mechanism.The metaclass follows the rule of the class itself."
-
-	^ self instanceSide wantsChangeSetLogging
-]

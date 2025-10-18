@@ -12,12 +12,25 @@ Class {
 		'previousFrameRenderingTime'
 	],
 	#classInstVars : [
-		'canvasScaleFactor'
+		'canvasScaleFactor',
+		'autoSetCanvasScaleFactor'
 	],
 	#category : 'OSWindow-Core-Morphic',
 	#package : 'OSWindow-Core',
 	#tag : 'Morphic'
 }
+
+{ #category : 'accessing' }
+OSWorldRenderer class >> autoSetCanvasScaleFactor [
+
+	^ autoSetCanvasScaleFactor ifNil: [ autoSetCanvasScaleFactor := true ]
+]
+
+{ #category : 'accessing' }
+OSWorldRenderer class >> autoSetCanvasScaleFactor: boolean [
+
+	autoSetCanvasScaleFactor := boolean
+]
 
 { #category : 'accessing' }
 OSWorldRenderer class >> canvasScaleFactor [
@@ -49,17 +62,37 @@ OSWorldRenderer class >> priority [
 	^ 2
 ]
 
+{ #category : 'start' }
+OSWorldRenderer class >> restart [
+
+	UIManager default deactivate.
+	self shutDown: true.
+	OSSDL2Driver shutDown: true.
+
+	self startUp: true.
+	UIManager default activate.
+	
+	self inform: self class name , ' restarted'
+]
+
 { #category : 'settings' }
 OSWorldRenderer class >> settingsOn: aBuilder [
 
 	<systemsettings>
 
-	(aBuilder pickOne: #canvasScaleFactor)
+	(aBuilder group: #canvasScaleFactorGroup)
 		parent: #appearance;
-		label: 'Canvas scale factor for OSWorldRenderer';
-		target: self;
-		domainValues: (1 to: 5);
-		default: 1
+		label: 'World renderer canvas scaling';
+		with: [
+			(aBuilder pickOne: #canvasScaleFactor)
+				label: 'Canvas scale factor';
+				target: self;
+				domainValues: (1 to: 5);
+				default: 1.
+			(aBuilder setting: #autoSetCanvasScaleFactor)
+				label: 'Set canvas scale factor automatically';
+				target: self;
+				default: true ]
 ]
 
 { #category : 'accessing' }
@@ -98,6 +131,9 @@ OSWorldRenderer >> checkForNewScreenSize [
 	 skip the check. "
 	windowRenderer := self osWindowRenderer.
 	windowRenderer ifNil: [ ^ self ].
+
+	(world == World and: [ self class autoSetCanvasScaleFactor ]) ifTrue: [
+		self class canvasScaleFactor: (windowRenderer outputExtent / self windowExtent) min * self screenScaleFactor ].
 
 	(display isNil or: [ display extent = self actualDisplaySize and: [ world worldState realWindowExtent = self actualScreenSize ] ])
 		ifTrue: [ ^ self ].
@@ -148,10 +184,12 @@ OSWorldRenderer >> copyRectangle: aRectangle into: aForm [
 	^ aForm
 ]
 
-{ #category : 'private' }
+{ #category : 'activation' }
 OSWorldRenderer >> deactivate [
 
-	osWindow ifNotNil: [ osWindow destroy. osWindow := nil ].
+	osWindow ifNotNil: [ 
+		driver beforeMainPharoWindowClosed: osWindow.
+		osWindow destroy. osWindow := nil ].
 	display := nil
 ]
 
@@ -171,6 +209,17 @@ OSWorldRenderer >> defaultWindowTitle [
 OSWorldRenderer >> deferUpdatesDuring: aBlock [
 
 	self osWindowRenderer ifNotNil: [:renderer | renderer deferUpdatesWhile: aBlock ]
+]
+
+{ #category : 'screenshot' }
+OSWorldRenderer >> depth [
+
+	^ display depth
+]
+
+{ #category : 'accessing' }
+OSWorldRenderer >> display [
+	^ display
 ]
 
 { #category : 'private' }

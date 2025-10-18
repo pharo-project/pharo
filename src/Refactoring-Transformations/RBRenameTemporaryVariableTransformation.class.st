@@ -104,7 +104,7 @@ RBRenameTemporaryVariableTransformation >> privateTransform [
 	class compileTree: parseTree
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRenameTemporaryVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

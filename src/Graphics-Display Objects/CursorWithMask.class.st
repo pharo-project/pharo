@@ -57,7 +57,7 @@ CursorWithMask >> setMaskForm: aForm [
 	maskForm := aForm
 ]
 
-{ #category : 'mask' }
+{ #category : 'storing' }
 CursorWithMask >> storeOn: aStream base: anInteger [
 
 	aStream nextPut: $(.

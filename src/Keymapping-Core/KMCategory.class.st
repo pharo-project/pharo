@@ -64,7 +64,7 @@ KMCategory >> commonEntries [
 	^self entriesAt: #all
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 KMCategory >> displayStringOn: stream [
 	super displayStringOn: stream.
 	^ stream

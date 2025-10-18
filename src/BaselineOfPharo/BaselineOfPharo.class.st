@@ -12,23 +12,6 @@ Class {
 	#tag : 'Base'
 }
 
-{ #category : 'accessing - external projects' }
-BaselineOfPharo class >> beautifulComments [
-	<externalProject>
-
-	^ PharoExternalProject 
-		newName: 'BeautifulComments' 
-		owner: 'pillar-markup' 
-		project: 'BeautifulComments' 
-		version: 'Pharo12'
-]
-
-{ #category : 'repository urls' }
-BaselineOfPharo class >> beautifulCommentsRepository [
-
-	^ (self externalProjectNamed: 'BeautifulComments') repository
-]
-
 { #category : 'private' }
 BaselineOfPharo class >> declareExternalProjects [
 
@@ -45,7 +28,7 @@ BaselineOfPharo class >> documentBrowser [
 		newName: 'DocumentBrowser' 
 		owner: 'pharo-spec' 
 		project: 'NewTools-DocumentBrowser' 
-		version: 'Pharo12'
+		version: 'v1.1.0'
 ]
 
 { #category : 'repository urls' }
@@ -76,8 +59,8 @@ BaselineOfPharo class >> iceberg [
 	^ PharoExternalProject 
 		newName: 'Iceberg' 
 		owner: 'pharo-vcs' 
-		project: 'iceberg' 
-		version: 'dev-2.0' 
+		project: 'iceberg'
+		version: 'v2.3.4' 
 		sourceDir: nil
 ]
 
@@ -95,7 +78,7 @@ BaselineOfPharo class >> microdown [
 		newName: 'Microdown' 
 		owner: 'pillar-markup' 
 		project: 'Microdown' 
-		version: 'Pharo12'
+		version: 'v2.6.0'
 ]
 
 { #category : 'repository urls' }
@@ -112,7 +95,7 @@ BaselineOfPharo class >> newTools [
 		newName: 'NewTools' 
 		owner: 'pharo-spec' 
 		project: 'NewTools' 
-		version: 'Pharo12'
+		version: 'v0.9.3'
 ]
 
 { #category : 'repository urls' }
@@ -129,7 +112,7 @@ BaselineOfPharo class >> roassal [
 		  newName: 'Roassal'
 		  owner: 'pharo-graphics'
 		  project: 'Roassal'
-		  version: 'v1.05b'
+		  version: 'v1.06b'
 ]
 
 { #category : 'repository urls' }
@@ -146,13 +129,30 @@ BaselineOfPharo class >> spec [
 		newName: 'Spec2' 
 		owner: 'pharo-spec' 
 		project:'Spec' 
-		version: 'Pharo12'
+		version: 'v1.3.6'
 ]
 
 { #category : 'repository urls' }
 BaselineOfPharo class >> specRepository [
 
 	^ (self externalProjectNamed: 'Spec2') repository
+]
+
+{ #category : 'accessing - external projects' }
+BaselineOfPharo class >> toplo [
+	<externalProject>
+	
+	^ PharoExternalProject 
+		newName: 'Toplo' 
+		owner: 'pharo-graphics' 
+		project: 'Toplo' 
+		version: 'Pharo12'
+]
+
+{ #category : 'repository urls' }
+BaselineOfPharo class >> toploRepository [
+
+	^ (self externalProjectNamed: 'Toplo') repository
 ]
 
 { #category : 'accessing - external projects' }
@@ -163,7 +163,7 @@ BaselineOfPharo class >> welcomeBrowser [
 		newName: 'WelcomeBrowser' 
 		owner: 'pharo-spec' 
 		project: 'NewTools-WelcomeBrowser' 
-		version: 'Pharo12'
+		version: 'v1.1.0'
 ]
 
 { #category : 'repository urls' }

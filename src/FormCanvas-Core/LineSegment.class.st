@@ -111,32 +111,6 @@ LineSegment >> asTangentSegment [
 ]
 
 { #category : 'bezier clipping' }
-LineSegment >> bezierClipCurve: aCurve [
-	^self bezierClipCurve: aCurve epsilon: 1
-]
-
-{ #category : 'bezier clipping' }
-LineSegment >> bezierClipCurve: aCurve epsilon: eps [
-	"Compute the intersection of the receiver (a line) with the given curve using bezier clipping."
-	| tMin tMax clip newCurve |
-	clip := self bezierClipInterval: aCurve.
-	clip ifNil:[^#()]. "no overlap"
-	tMin := clip at: 1.
-	tMax := clip at: 2.
-	newCurve := aCurve curveFrom: tMin to: tMax.
-	newCurve length < eps ifTrue:[^Array with: (aCurve valueAt: tMin + tMax * 0.5)].
-	(tMin < 0.001 and:[tMax > 0.999]) ifTrue:[
-		"Need to split aCurve before proceeding"
-		| curve1 curve2 |
-		curve1 := aCurve curveFrom: 0.0 to: 0.5.
-		curve2 := aCurve curveFrom: 0.5 to: 1.0.
-		^(curve1 bezierClipCurve: self epsilon: eps),
-			(curve2 bezierClipCurve: self epsilon: eps).
-	].
-	^newCurve bezierClipCurve: self epsilon: eps
-]
-
-{ #category : 'bezier clipping' }
 LineSegment >> bezierClipInterval: aCurve [
 	"Compute the new bezier clip interval for the argument,
 	based on the fat line (the direction aligned bounding box) of the receiver.
@@ -186,7 +160,6 @@ LineSegment >> bezierClipInterval: aCurve [
 	1 to: pts size do: [ :i |
 		next := pts at: i.
 		nextV := nrm x * next x + (nrm y * next y).	"nrm dotProduct: next."
-		false ifTrue: [ ((nextV - vMin) / (vMax - vMin)) printString displayAt: 0 @ ((i - 1) * 20) ].
 		nextT := (i - 1) * tStep.
 		nextInside := nextV + eps < vMin
 			ifTrue: [ -1 ]
@@ -242,22 +215,6 @@ LineSegment >> curveFrom: parameter1 to: parameter2 [
 	| delta |
 	delta := end - start.
 	^self shallowCopy from: delta * parameter1 + start to: delta * parameter2 + start
-]
-
-{ #category : 'private' }
-LineSegment >> debugDraw [
-	^self debugDrawAt: 0@0
-]
-
-{ #category : 'private' }
-LineSegment >> debugDrawAt: offset [
-	| canvas |
-	canvas := Display getCanvas.
-	canvas translateBy: offset during:[:aCanvas|
-		self lineSegmentsDo:[:p1 :p2|
-			aCanvas line: p1 rounded to: p2 rounded width: 1 color: Color black.
-		].
-	]
 ]
 
 { #category : 'accessing' }

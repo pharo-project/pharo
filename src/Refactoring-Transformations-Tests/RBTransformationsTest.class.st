@@ -340,7 +340,7 @@ RBTransformationsTest >> testRenameClassTransform [
 	| transformation class newClassName oldClassName |
 	newClassName := #RBNewDummyClassName.
 	oldClassName := RBClassToRename name asSymbol.
-	transformation := (RBRenameClassRefactoring
+	transformation := (ReRenameClassRefactoring
 		                   rename: oldClassName
 		                   to: newClassName) generateChanges.
 

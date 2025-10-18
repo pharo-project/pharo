@@ -23,6 +23,15 @@ MethodConstantTest >> sumOfTwoConsts: firstBlock and: secondBlock [
 	^firstBlock asMethodConstant + secondBlock asMethodConstant
 ]
 
+{ #category : 'running' }
+MethodConstantTest >> tearDown [
+	"recompile method to remove the caching"
+	(self class>>#constFromReceiverExpression) recompile.
+	(self class>>#sumOfTwoConsts:and:) recompile.
+	(self class>>#constFromBlock:) recompile.
+	super tearDown
+]
+
 { #category : 'tests' }
 MethodConstantTest >> testAPIFromBlock [
 	| constInitialResult constSecondResult |
@@ -48,8 +57,10 @@ MethodConstantTest >> testConstPlaceInTransformedMethod [
 	const := self constFromReceiverExpression.
 
 	transformedMethod := self class >> #constFromReceiverExpression.
+	self assert: const identicalTo: self constFromReceiverExpression.
 
-	self assert: (transformedMethod literals anySatisfy:  [ :each | each == const ])
+	self assert:
+		(transformedMethod allLiterals anySatisfy: [ :each | each == const ])
 ]
 
 { #category : 'tests' }
@@ -65,9 +76,8 @@ MethodConstantTest >> testTwoConstsInSameMethod [
 { #category : 'tests' }
 MethodConstantTest >> testUsingConstJustInSameMethod [
 	| values |
-	self skip.	"not working for the first call: would need on stack replacement"
 	values := OrderedCollection new.
-	2 timesRepeat: [ values add: DateAndTime now asMethodConstant ].
+	2 timesRepeat: [ values add: self constFromReceiverExpression ].
 
 	self assert: values first identicalTo: values last
 ]

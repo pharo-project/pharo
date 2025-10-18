@@ -456,7 +456,7 @@ PasteUpMorph >> expandAll [
 PasteUpMorph >> findWindow: evt [
 	"Present a menu names of windows and naked morphs, and activate the one that gets chosen.  Collapsed windows appear below line, expand if chosen; naked morphs appear below second line; if any of them has been given an explicit name, that is what's shown, else the class-name of the morph shows; if a naked morph is chosen, bring it to front and have it don a halo."
 	| menu expanded collapsed nakedMorphs |
-	menu := UIManager default newMenuIn: self for: self.
+	menu := self morphicUIManager newMenuIn: self for: self.
 	expanded := self  windowsSatisfying: [:w | w isCollapsed not].
 	collapsed := self  windowsSatisfying: [:w | w isCollapsed].
 	nakedMorphs := self submorphsSatisfying:[:m | m isSystemWindow not].
@@ -475,31 +475,13 @@ PasteUpMorph >> findWindow: evt [
 	menu popUpEvent: evt in: self
 ]
 
-{ #category : 'world state' }
-PasteUpMorph >> flashRects: rectangleList color: aColor [
-	"For testing. Flashes the given list of rectangles on the Display so you can watch incremental redisplay at work."
-	"Details: Uses two reverses so that the display is restored to its original state. This is necessary when in deferred update mode."
-
-	| blt |
-	blt := (BitBlt toForm: Display)
-		sourceForm: nil;
-		sourceOrigin: 0@0;
-		clipRect: self viewBox;
-		combinationRule: Form reverse.
-	rectangleList do: [:r | | screenRect |
-		screenRect := r translateBy: self viewBox origin.
-		blt destRect: screenRect; copyBits.
-		(Delay forMilliseconds: 15) wait.
-		blt destRect: screenRect; copyBits ]
-]
-
 { #category : 'drawing' }
 PasteUpMorph >> gridFormOrigin: origin grid: smallGrid background: backColor line: lineColor [
 
 	| bigGrid gridForm gridOrigin |
 	gridOrigin := origin \\ smallGrid.
 	bigGrid := (smallGrid asPoint x) @ (smallGrid asPoint y).
-	gridForm := Form extent: bigGrid depth: Display depth.
+	gridForm := Form extent: bigGrid depth: self currentWorld worldState worldRenderer depth.
 	backColor ifNotNil: [gridForm fillWithColor: backColor].
 	gridOrigin x to: gridForm width by: smallGrid x do:
 		[:x | gridForm fill: (x@0 extent: 1@gridForm height) fillColor: lineColor].
@@ -806,7 +788,7 @@ PasteUpMorph >> osWindow [
 PasteUpMorph >> popUpContentsMenu: evt [
 	"Present a menu names of windows and naked morphs, and activate the one that gets chosen.  Collapsed windows appear below line, expand if chosen; naked morphs appear below second line; if any of them has been given an explicit name, that is what's shown, else the class-name of the morph shows; if a naked morph is chosen, bring it to front and have it don a halo."
 	| menu |
-	menu := UIManager default newMenuIn: self for: self.
+	menu := self morphicUIManager newMenuIn: self for: self.
 	self contentsMenu: menu.
 	menu buildTitle: [ :titleMorph |
 		titleMorph bigTitle: self contentsMenuTitle
@@ -878,12 +860,6 @@ PasteUpMorph >> resizeToFitString [
 ]
 
 { #category : 'world state' }
-PasteUpMorph >> restoreDisplay [
-
-	self world restoreMorphicDisplay.	"I don't actually expect this to be called"
-]
-
-{ #category : 'world state' }
 PasteUpMorph >> restoreMainDockingBarDisplay [
 	"Restore the display of docking bars"
 	self dockingBars
@@ -894,7 +870,7 @@ PasteUpMorph >> restoreMainDockingBarDisplay [
 PasteUpMorph >> setGridSpec [
 	"Gridding rectangle provides origin and modulus"
 	| response result |
-	response := UIManager default
+	response := self morphicUIManager
 			request: 'New grid origin (usually 0@0):' translated
 			initialAnswer: self gridOrigin printString.
 	response isEmpty ifTrue: [^ self].
@@ -903,7 +879,7 @@ PasteUpMorph >> setGridSpec [
 		ifTrue: [self gridOrigin: result]
 		ifFalse: [self inform: ('Must be a Point with coordinates (for example 10@10)' translated )].
 
-	response := UIManager default
+	response := self morphicUIManager
 			request: 'New grid spacing:' translated
 			initialAnswer: self gridModulus printString.
 	response isEmptyOrNil ifTrue: [^ self].
@@ -926,13 +902,6 @@ PasteUpMorph >> toggleResizeToFit [
 	"Toggle whether the receiver is set to resize-to-fit"
 
 	self vResizeToFit: self resizeToFit not
-]
-
-{ #category : 'accessing' }
-PasteUpMorph >> useRoundedCorners [
-	"Somewhat special cased because we do have to fill Display for this"
-	super useRoundedCorners.
-	self == self world ifTrue:[Display bits primFill: 0]. "done so that we *don't* get a flash"
 ]
 
 { #category : 'project state' }

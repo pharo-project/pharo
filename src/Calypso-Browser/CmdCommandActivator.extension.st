@@ -9,14 +9,6 @@ CmdCommandActivator >> buildBrowserNotebookActions [
 ]
 
 { #category : '*Calypso-Browser' }
-CmdCommandActivator >> buildBrowserTabActions [
-
-	self canExecuteCommand ifFalse: [ ^#() ].
-
-	^command buildBrowserTabActionsUsing: self
-]
-
-{ #category : '*Calypso-Browser' }
 CmdCommandActivator >> buildBrowserToolbar: toolbarMorph [
 
 	self canExecuteCommand ifFalse: [ ^self ].

@@ -5,9 +5,9 @@ I execute specific operations on SDL for Linux 64 (Unix term is used to keep OSP
 Class {
 	#name : 'SDLUnixPlatform',
 	#superclass : 'SDLAbstractPlatform',
-	#category : 'OSWindow-SDL2-Bindings',
+	#category : 'OSWindow-SDL2-Platforms',
 	#package : 'OSWindow-SDL2',
-	#tag : 'Bindings'
+	#tag : 'Platforms'
 }
 
 { #category : 'operations' }
@@ -16,6 +16,10 @@ SDLUnixPlatform >> afterMainPharoWindowCreated: aOSSDLWindow [
 
 { #category : 'operations' }
 SDLUnixPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
+]
+
+{ #category : 'operations' }
+SDLUnixPlatform >> beforeMainPharoWindowClosed: aOSSDLWindow [
 ]
 
 { #category : 'initialization' }

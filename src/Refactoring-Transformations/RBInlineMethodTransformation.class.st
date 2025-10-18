@@ -425,7 +425,7 @@ RBInlineMethodTransformation >> rewriteInlinedTree [
 				addSelfReturn]
 ]
 
-{ #category : 'adding' }
+{ #category : 'storing' }
 RBInlineMethodTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

@@ -84,26 +84,6 @@ OldPharoClassDefinitionPrinter >> classDefinitionString [
 		  ifFalse: [ self basicClassDefinitionString ]
 ]
 
-{ #category : 'template' }
-OldPharoClassDefinitionPrinter >> classDefinitionTemplateInPackage: aString named: aClassName [
-
-	^ String streamContents: [ :s |
-		  s 
-			nextPutAll: 'Object subclass: ';
-		  	print: aClassName asSymbol; 
-		  	crtab.
-		  s
-			  nextPutAll: 'instanceVariableNames: '''' ';
-			  crtab.
-		  s
-			  nextPutAll: 'classVariableNames: ''''';
-			  crtab.
-		  s
-			  nextPutAll: 'package: ''';
-			  nextPutAll: aString;
-			  nextPutAll: '''' ]
-]
-
 { #category : 'low-level elements' }
 OldPharoClassDefinitionPrinter >> classVariablesOn: stream [
 
@@ -112,12 +92,6 @@ OldPharoClassDefinitionPrinter >> classVariablesOn: stream [
 		nextPutAll: 'classVariableNames: '''.
 	forClass classVariablesOn: stream.
 	stream nextPut: $'
-]
-
-{ #category : 'template' }
-OldPharoClassDefinitionPrinter >> compactTraitDefinitionTemplateInPackage: aString [
-
-	^ self traitDefinitionTemplateInPackage: aString
 ]
 
 { #category : 'low-level elements' }
@@ -159,16 +133,6 @@ OldPharoClassDefinitionPrinter >> poolOn: stream [
 			store: poolString ]
 ]
 
-{ #category : 'template' }
-OldPharoClassDefinitionPrinter >> testClassDefinitionTemplateInPackage: aString [
-
-	^ String streamContents: [ :s |
-			s nextPutAll: 'TestCase subclass: #MyTest' ; crtab.
-			s nextPutAll: 'instanceVariableNames: '''' '; crtab.
-			s nextPutAll: 'classVariableNames: '''''; crtab.
-			s nextPutAll: 'package: ''', aString, '''' ]
-]
-
 { #category : 'low-level elements' }
 OldPharoClassDefinitionPrinter >> traitCompositionOn: stream [
 
@@ -185,20 +149,6 @@ OldPharoClassDefinitionPrinter >> traitDefinitionString [
 	^ forClass needsSlotClassDefinition
 		ifTrue: [ (ClassDefinitionPrinter fluid for: forClass) traitDefinitionString ]
 		ifFalse: [ self basicTraitDefinitionString ]
-]
-
-{ #category : 'template' }
-OldPharoClassDefinitionPrinter >> traitDefinitionTemplateInPackage: aString named: aTraitName [
-
-	^ String streamContents: [ :s |
-		  s
-			  nextPutAll: 'Trait named: ';
-			  print: aTraitName asSymbol;
-			  nextPutAll: ' uses: {}
-	 package: '''.
-		  s
-			  nextPutAll: aString;
-			  nextPut: $' ]
 ]
 
 { #category : 'public API' }

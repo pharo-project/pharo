@@ -168,14 +168,9 @@ RBAbstractVariablesTransformation >> parseTree [
 	^tree
 ]
 
-{ #category : 'executing' }
+{ #category : 'transforming' }
 RBAbstractVariablesTransformation >> privateTransform [
-	self flag: #popUp.
-	self hasVariablesToAbstract
-		ifTrue:
-			[self
-				refactoringWarning: 'This method has direct variable references which<n>will need to be converted to getter/setters.<n>Proceed anyway?'
-						expandMacros].
+
 	self abstractInstanceVariables.
 	self abstractClassVariables
 ]

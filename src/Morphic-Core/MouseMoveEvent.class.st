@@ -77,7 +77,7 @@ MouseMoveEvent >> startPoint [
 	^startPoint
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 MouseMoveEvent >> storeOn: aStream [
 	super storeOn: aStream.
 	aStream space.

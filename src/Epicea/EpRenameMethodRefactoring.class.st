@@ -25,7 +25,7 @@ EpRenameMethodRefactoring class >> renameMethod: oldSelector in: affectedClassNa
 
 { #category : 'converting' }
 EpRenameMethodRefactoring >> asRBRefactoring [
-	^ RBRenameMethodRefactoring
+	^ ReRenameMethodRefactoring
 		renameMethod: oldSelector
 		in: affectedClassName
 		to: newSelector

@@ -265,7 +265,7 @@ SparseLargeTable >> speciesNew: newSize [
 		arrayClass: self arrayClass
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 SparseLargeTable >> storeOn: aStream [
 
 	| x |

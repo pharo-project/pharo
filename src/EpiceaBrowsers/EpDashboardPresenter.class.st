@@ -153,10 +153,10 @@ EpDashboardPresenter >> openSettingsBrowser [
 
 	| settingsBrowser settingsWindow |
 	settingsBrowser := SettingBrowser new
-		                   changePackageSet: (self packageOrganizer packageNamed: 'EpiceaBrowsers') asOrderedCollection;
+		                   changePackageSet:
+			                   {self packageOrganizer packageNamed: 'EpiceaBrowsers'};
 		                   yourself.
 	settingsWindow := settingsBrowser open.
-	settingsWindow position: Display extent - settingsWindow extent // 2.
 	settingsBrowser expandAll
 ]
 

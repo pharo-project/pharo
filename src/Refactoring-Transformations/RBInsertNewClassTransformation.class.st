@@ -91,7 +91,7 @@ RBInsertNewClassTransformation >> privateTransform [
 		reparentClasses: (subclasses collect: [ :subclass | self model classObjectFor: subclass ]) to: (self model classNamed: className asSymbol)
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBInsertNewClassTransformation >> storeOn: aStream [
 
 	aStream nextPutAll: '(('.

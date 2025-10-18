@@ -64,7 +64,9 @@ RBBlockNodeTest >> testIsConstant [
 	self assert: [  ] sourceNode isConstant.
 	self assert: [ 1 ] sourceNode isConstant.
 	self deny: [ ^1 ] sourceNode isConstant.
-	self deny: [ 1 sin. 1 ] sourceNode isConstant
+	"only one statement is allowed, even if the first is constant"
+ 	self deny: [ 1 sin. 1 ] sourceNode isConstant.
+ 	self deny: [ 1 . 1 ] sourceNode isConstant
 ]
 
 { #category : 'tests' }

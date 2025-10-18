@@ -65,6 +65,20 @@ RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryWithDuplicates [
 ]
 
 { #category : 'tests' }
+RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryWithDuplicatesInEarlierNestedScopes [
+	| refactoring |
+	refactoring := self createRefactoringWithArguments:
+		{ (130 to: 145) . 'someValue' . #demoMethodWithDuplicatesInEarlierBlocks . RBClassDataForRefactoringTest }.
+	self executeRefactoring: refactoring.
+	self assert: ((refactoring model classNamed: #RBClassDataForRefactoringTest) parseTreeForSelector: #demoMethodWithDuplicatesInEarlierBlocks) equals: (self parseMethod: 'demoMethodWithDuplicatesInEarlierBlocks
+	|someValue|
+	someValue := self someMethod.
+	(3 to: 10) do: [ :i |
+		someValue \\ i = 0 ifTrue: [ self performAction: i ] ].
+	someValue odd ifTrue: [ self performAction ]')
+]
+
+{ #category : 'tests' }
 RBExtractToTemporaryParametrizedTest >> testExtractToTemporaryWithDuplicatesInOtherScopes [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments:

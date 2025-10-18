@@ -51,15 +51,15 @@ MessageDialogWindow >> initialExtent [
 	"Answer the initial extent for the receiver.
 	Adjust the text if the text	would be wider than 1/4 the display width."
 
-	|ext|
+	| ext |
 	ext := super initialExtent.
-	self textMorph width > (Display width - 50) ifTrue: [
+	self textMorph width > (self currentWorld width - 50) ifTrue: [
 		self textMorph
 			wrapFlag: true;
 			hResizing: #rigid;
-			extent: (Display width - 50) @ 0.
-		ext := super initialExtent].
-	^ext
+			extent: self currentWorld width - 50 @ 0.
+		ext := super initialExtent ].
+	^ ext
 ]
 
 { #category : 'initialization' }
@@ -77,14 +77,14 @@ MessageDialogWindow >> lineLengths [
 { #category : 'accessing' }
 MessageDialogWindow >> minimumWidth [
 
-	^ (self lineLengths max + 100) min: Display width
+	^ (self lineLengths max + 100) min: self currentWorld width
 ]
 
 { #category : 'actions' }
 MessageDialogWindow >> newButtons [
 	"Answer new buttons as appropriate."
 
-	^{self newOKButton isDefault: true}
+	^ { self newOKButton isDefault: true }
 ]
 
 { #category : 'actions' }

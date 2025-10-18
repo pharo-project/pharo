@@ -96,10 +96,23 @@ SystemVersion class >> major: major minor: minor patch: patch suffix: aString bu
 		yourself
 ]
 
+{ #category : 'instance creation' }
+SystemVersion class >> setMajor: major minor: minor patch: patch suffix: aString build: build commitHash: hashString [
+	"Create a SystemVersion instance  and set it as current"
+
+	^ Current := self
+		             major: major
+		             minor: minor
+		             patch: patch
+		             suffix: aString
+		             build: build
+		             commitHash: hashString
+]
+
 { #category : 'accessing - properties' }
 SystemVersion >> build [
 
-	 ^build
+	^ build asInteger
 ]
 
 { #category : 'accessing - properties' }
@@ -111,8 +124,8 @@ SystemVersion >> build: aBuildNumber [
 { #category : 'private' }
 SystemVersion >> calculateHighestUpdate [
 	|result|
-	result := (major * 10000) + (minor * 1000).
-	self hasValidBuildNumber ifTrue: [ result := result + build ].
+	result := (self major * 10000) + (self minor * 1000).
+	self hasValidBuildNumber ifTrue: [ result := result + self build ].
 	^result
 ]
 
@@ -229,7 +242,7 @@ SystemVersion >> initialize [
 SystemVersion >> major [
 	"Answer the major number of a version. 1 in '1.2'"
 
-	^ major
+	^ major asInteger
 ]
 
 { #category : 'accessing - properties' }
@@ -277,7 +290,7 @@ SystemVersion >> majorMinorVersion [
 SystemVersion >> minor [
 	"Answer the minor number of a version. 2 in '1.2'"
 
-	^ minor
+	^ minor asInteger
 ]
 
 { #category : 'accessing - properties' }
@@ -289,7 +302,8 @@ SystemVersion >> minor: anInteger [
 
 { #category : 'accessing' }
 SystemVersion >> patch [
-	^ patch
+
+	^ patch asInteger
 ]
 
 { #category : 'accessing' }

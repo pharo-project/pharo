@@ -66,16 +66,20 @@ DummyUIManager >> edit: aText label: labelString accept: aBlockOrNil [
 	^ nil
 ]
 
-{ #category : 'ui requests' }
-DummyUIManager >> fontFromUser: priorFont [
-
-	self error: 'No user response possible'
-]
-
 { #category : 'error handling' }
 DummyUIManager >> handleError: anError log: shouldLog [
 
-	"NOOP"
+	self traceCr: '*** EXCEPTION ***'.
+	self traceCr: anError.
+	self trace: (String streamContents: [ :stream |
+			 anError signalerContext errorReportOn: stream ]).
+	Smalltalk exitFailure
+]
+
+{ #category : 'error handling' }
+DummyUIManager >> handleWarning: aWarning [
+
+	^ self handleError: aWarning
 ]
 
 { #category : 'ui requests' }
@@ -114,7 +118,11 @@ DummyUIManager >> progressBarEnabled: aBoolean [
 { #category : 'ui requests' }
 DummyUIManager >> request: queryString initialAnswer: defaultAnswer [
 
-	^ self request: queryString initialAnswer: defaultAnswer title: 'Provide the following information' entryCompletion: nil
+	^ self
+		  request: queryString
+		  initialAnswer: defaultAnswer
+		  title: 'Provide the following information'
+		  entryCompletion: nil
 ]
 
 { #category : 'ui requests' }
@@ -138,17 +146,6 @@ DummyUIManager >> requestPassword: queryString [
 	^ self request: queryString initialAnswer: ''
 ]
 
-{ #category : 'display' }
-DummyUIManager >> restoreDisplay [
-]
-
-{ #category : 'display' }
-DummyUIManager >> restoreDisplayAfter: aBlock [
-
-	aBlock value.
-	self restoreDisplay
-]
-
 { #category : 'default actions' }
 DummyUIManager >> traceCr: aString [
 
@@ -166,10 +163,4 @@ DummyUIManager >> unhandledErrorDefaultAction: anException [
 			(String
 				streamContents: [ :stream | anException signalerContext errorReportOn: stream ]).
 	Smalltalk exitFailure
-]
-
-{ #category : 'default actions' }
-DummyUIManager >> warningDefaultAction: anException [
-
-	^ self unhandledErrorDefaultAction: anException
 ]

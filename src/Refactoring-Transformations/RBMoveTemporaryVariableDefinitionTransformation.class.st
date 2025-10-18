@@ -166,7 +166,7 @@ RBMoveTemporaryVariableDefinitionTransformation >> definingBlock [
 	^ definingNode
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBMoveTemporaryVariableDefinitionTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

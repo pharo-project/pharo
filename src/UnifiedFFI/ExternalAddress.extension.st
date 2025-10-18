@@ -8,6 +8,20 @@ ExternalAddress >> adoptAddress: anExternalAddress [
 ]
 
 { #category : '*UnifiedFFI' }
+ExternalAddress class >> arrayOfStringsFrom: aCollection [
+	"answer a char**, terminated with nil"
+	| stringArray index |
+
+	stringArray := self allocate: (FFIExternalType pointerSize * (aCollection size + 1)).
+	index := 1.
+	aCollection do: [ :each | 
+		stringArray pointerAt: index put: (self fromString: each).
+		index := index + FFIExternalType pointerSize ].
+	stringArray pointerAt: index put: self null.
+	^ stringArray
+]
+
+{ #category : '*UnifiedFFI' }
 ExternalAddress >> asExternalAddress [
 
 	^ self
@@ -145,6 +159,21 @@ ExternalAddress >> floatAt: byteIndex [
 ExternalAddress >> floatAt: byteIndex put: value [
 	"This method is duplicated in this subclass with the purpose of ensuring a monomorphic inline cache in the following message send."
 	^ self float32AtOffset: byteIndex - 1 put: value
+]
+
+{ #category : '*UnifiedFFI' }
+ExternalAddress >> freeArrayOfStrings [
+	"this is used to free an array created with `arrayOfStringsFrom:`"
+	| string index |
+	
+	index := 1.
+	[ 
+		(string := self pointerAt: index) isNull ]
+	whileFalse: [ 
+		string free.
+		index := index + FFIExternalType pointerSize ].
+	
+	self free 
 ]
 
 { #category : '*UnifiedFFI' }

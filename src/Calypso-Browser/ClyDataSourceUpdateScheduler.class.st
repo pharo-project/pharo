@@ -68,6 +68,6 @@ ClyDataSourceUpdateScheduler >> register: aDataSource [
 { #category : 'controlling' }
 ClyDataSourceUpdateScheduler >> runUpdateFor: dataSources [
 
-	UIManager default defer: [
+	MorphicUIManager new defer: [
 		dataSources do: [ :each | each runUpdate ] ]
 ]

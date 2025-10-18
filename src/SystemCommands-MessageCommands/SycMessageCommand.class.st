@@ -56,3 +56,23 @@ SycMessageCommand >> prepareFullExecutionInContext: aToolContext [
 
 	messages := aToolContext selectedMessages
 ]
+
+{ #category : 'accessing' }
+SycMessageCommand >> selectedClass [
+	"Answer the receiver's selected <Class>"
+
+	^ self selectedMessage methodClass
+]
+
+{ #category : 'accessing' }
+SycMessageCommand >> selectedMessage [
+	"Answer a <SycMessageDescription> describing the selected message"
+
+	^ self messages anyOne
+]
+
+{ #category : 'execution' }
+SycMessageCommand >> selectedSelector [
+
+	^ self selectedMessage selector
+]

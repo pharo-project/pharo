@@ -171,7 +171,7 @@ RBVariableNode >> isPseudoVariable [
 
 { #category : 'testing' }
 RBVariableNode >> isRead [
-	^ self isWrite not and: [ self isUsed ]
+	^ self isWrite not and: [ self isUsedAsReturnValue ]
 ]
 
 { #category : 'testing' }
@@ -217,7 +217,7 @@ RBVariableNode >> isWorkspaceVariable [
 
 { #category : 'testing' }
 RBVariableNode >> isWrite [
-	^ self parent notNil and: [ self parent isAssignment and: [ self parent variable == self ] ]
+	^ self parent isNotNil and: [ self parent isAssignment and: [ self parent variable == self ] ]
 ]
 
 { #category : 'accessing' }

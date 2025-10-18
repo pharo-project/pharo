@@ -103,7 +103,7 @@ RBAddMessageSendTransformation >> privateTransform [
 	class compileTree: methodTree
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBAddMessageSendTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

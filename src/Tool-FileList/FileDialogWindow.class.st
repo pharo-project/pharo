@@ -529,7 +529,7 @@ FileDialogWindow >> newContentMorph [
 		self newGroupbox: 'File' translated forAll: {
 			self fileListMorph.
 			self newActionButtonRow}},
-		(self previewMorph notNil
+		(self previewMorph isNotNil
 			ifTrue: [{self newGroupbox: 'Preview' translated for: self previewMorph}]
 			ifFalse: [#()]))
 		vResizing: #spaceFill
@@ -716,8 +716,8 @@ FileDialogWindow >> okEnabled [
 	((#(saveSelectedFile saveForcedSelectedFile)
 			includes: self actionSelector) and: [self fileNameText notEmpty]) ifTrue: [^true].
 	(self actionSelector = #selectedFileName and: [
-		self selectedFileName notNil]) ifTrue: [^true].
-	^self selectedFileName notNil and: [self selectedFileEntry isDirectory not]
+		self selectedFileName isNotNil]) ifTrue: [^true].
+	^self selectedFileName isNotNil and: [self selectedFileEntry isDirectory not]
 ]
 
 { #category : 'open/close' }
@@ -801,7 +801,7 @@ FileDialogWindow >> saveSelectedFile [
 	f ifEmpty: [ ^ nil ].
 
 	f := d asFileReference / f.
-	(f extension isEmpty and: [self defaultExtension notNil])
+	(f extension isEmpty and: [self defaultExtension isNotNil])
 		 ifTrue: [ f := f, self defaultExtension].
 	f exists
 		ifFalse: [ ^ f ].

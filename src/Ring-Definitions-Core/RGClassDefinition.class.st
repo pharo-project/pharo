@@ -114,15 +114,6 @@ RGClassDefinition >> classSide [
 ]
 
 { #category : 'class variables' }
-RGClassDefinition >> classVarNamed: aString [
-	self 
-		deprecated: 'Use #classVariableNamed: instead.' 
-		transformWith: '`@rcv classVarNamed: `@arg' -> '`@rcv classVariableNamed: `@arg'.
-
-	^self classVariableNamed: aString
-]
-
-{ #category : 'class variables' }
 RGClassDefinition >> classVarNames [
 	"Answer a collection of the names of the class variables defined in the receiver."
 

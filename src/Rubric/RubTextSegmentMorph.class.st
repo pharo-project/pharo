@@ -5,7 +5,7 @@ Class {
 		'textArea',
 		'firstIndex',
 		'lastIndex',
-		'icon',
+		'iconFormSet',
 		'iconBlock',
 		'label',
 		'changeable'
@@ -34,7 +34,7 @@ RubTextSegmentMorph >> addItemToMenu: aMenu [
 		target: self iconBlock;
 		selector: #cull:;
 		arguments: {self};
-		icon: self icon;
+		iconFormSet: self iconFormSet;
 		segment: self.
 
 		^ aMenu addMenuItem: item
@@ -117,8 +117,9 @@ RubTextSegmentMorph >> computeSmoothVertices [
 
 { #category : 'private' }
 RubTextSegmentMorph >> computeStraightVertices [
-	| firstCB lastCB firstLineIndex lastLineIndex firstLine lastLine 
-	verts lines textarea margins segmentGap textAreaLeft |
+
+	| firstCB lastCB firstLineIndex lastLineIndex firstLine lastLine verts lines textarea margins segmentGap textAreaLeft |
+	self lines ifEmpty: [ ^ self ].
 	firstCB := self characterBlockForIndex: firstIndex.
 	lastCB := self characterBlockForIndex: lastIndex.
 	lines := self lines.
@@ -129,32 +130,32 @@ RubTextSegmentMorph >> computeStraightVertices [
 	firstLine := lines at: firstLineIndex.
 	lastLine := lines at: lastLineIndex.
 	verts := OrderedCollection new.
-	segmentGap := 1@0.
-	firstLine = lastLine ifTrue: [
-		verts add: firstCB bottomLeft.
-		verts add: firstCB topLeft.
-		firstIndex ~= lastIndex ifTrue: [
-			verts add: lastCB topLeft.
-			verts add: lastCB bottomLeft.
-			verts add: firstCB bottomLeft ] ]
-	ifFalse: [ 
-		textAreaLeft := textArea left + margins left.
-		verts 
-			add: firstCB bottomLeft - segmentGap;
-			add: firstCB topLeft - segmentGap.
-		firstLineIndex to: lastLineIndex - 1 do: [ :index | | line |
-			line := lines at: index.
-			verts 
-				add: line actualWidth + margins left @ line top + segmentGap;
-				add: line actualWidth + margins left @ line bottom + segmentGap.
-		].
-		
-		verts
-			add: lastCB topLeft + segmentGap;
-			add: lastCB bottomLeft + segmentGap;
-			add: textAreaLeft @ lastLine bottom - segmentGap;
-			add: textAreaLeft @ firstLine bottom - segmentGap.
-	].
+	segmentGap := 1 @ 0.
+	firstLine = lastLine
+		ifTrue: [
+			verts add: firstCB bottomLeft.
+			verts add: firstCB topLeft.
+			firstIndex ~= lastIndex ifTrue: [
+				verts add: lastCB topLeft.
+				verts add: lastCB bottomLeft.
+				verts add: firstCB bottomLeft ] ]
+		ifFalse: [
+			textAreaLeft := textArea left + margins left.
+			verts
+				add: firstCB bottomLeft - segmentGap;
+				add: firstCB topLeft - segmentGap.
+			firstLineIndex to: lastLineIndex - 1 do: [ :index |
+				| line |
+				line := lines at: index.
+				verts
+					add: line actualWidth + margins left @ line top + segmentGap;
+					add: line actualWidth + margins left @ line bottom + segmentGap ].
+
+			verts
+				add: lastCB topLeft + segmentGap;
+				add: lastCB bottomLeft + segmentGap;
+				add: textAreaLeft @ lastLine bottom - segmentGap;
+				add: textAreaLeft @ firstLine bottom - segmentGap ].
 	self setVertices: verts
 ]
 
@@ -179,8 +180,8 @@ RubTextSegmentMorph >> delete [
 
 { #category : 'drawing' }
 RubTextSegmentMorph >> displayIconAt: aPosition on: aCanvas [
-	self icon ifNil: [ ^self ].
-	aCanvas translucentImage: self icon at: aPosition
+	self iconFormSet ifNil: [ ^self ].
+	aCanvas translucentFormSet: self iconFormSet at: aPosition
 ]
 
 { #category : 'drawing' }
@@ -228,12 +229,12 @@ RubTextSegmentMorph >> handlesMouseOver: evt [
 
 { #category : 'accessing' }
 RubTextSegmentMorph >> icon [
-	^ icon
+	^ self iconFormSet ifNotNil: [ :formSet | formSet asForm ]
 ]
 
 { #category : 'accessing' }
 RubTextSegmentMorph >> icon: aForm [
-	icon := aForm
+	self iconFormSet: (aForm ifNotNil: [ FormSet form: aForm ])
 ]
 
 { #category : 'accessing' }
@@ -244,6 +245,16 @@ RubTextSegmentMorph >> iconBlock [
 { #category : 'accessing' }
 RubTextSegmentMorph >> iconBlock: aBlock [
 	iconBlock := aBlock
+]
+
+{ #category : 'accessing' }
+RubTextSegmentMorph >> iconFormSet [
+	^ iconFormSet
+]
+
+{ #category : 'accessing' }
+RubTextSegmentMorph >> iconFormSet: aFormSet [
+	iconFormSet := aFormSet
 ]
 
 { #category : 'accessing' }

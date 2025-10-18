@@ -205,15 +205,6 @@ Variable >> isReferenced [
 ]
 
 { #category : 'testing' }
-Variable >> isReservedVariable [
-	self
-		deprecated: 'Please use #isPseudoVariable instead'
-		transformWith: '`@receiver isReservedVariable' -> '`@receiver isPseudoVariable'.
-
-	^ self isPseudoVariable
-]
-
-{ #category : 'testing' }
 Variable >> isSelfOrSuperVariable [
 	^ self isSelfVariable or: [ self isSuperVariable ]
 ]

@@ -22,3 +22,13 @@ SycBrowseClassCommand >> defaultMenuItemName [
 SycBrowseClassCommand >> execute [
 	targetClass browse
 ]
+
+{ #category : 'execution' }
+SycBrowseClassCommand >> prepareFullExecutionInContext: aToolContext [
+
+	| scope |
+	scope := RBBrowserEnvironment new.
+	super prepareFullExecutionInContext: aToolContext.
+	targetClass := (scope at: aToolContext selectedSourceNode name) 
+		ifNil: [ aToolContext lastSelectedClass ]
+]

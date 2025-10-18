@@ -3,7 +3,7 @@ I represent a class Variable
 "
 Class {
 	#name : 'NECClassVarEntry',
-	#superclass : 'NECCVariableEntry',
+	#superclass : 'NECVariableEntry',
 	#category : 'NECompletion-Model',
 	#package : 'NECompletion',
 	#tag : 'Model'

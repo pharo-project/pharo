@@ -209,7 +209,7 @@ UndefinedObject >> shallowCopy [
 	with self."
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 UndefinedObject >> storeOn: aStream [
 	"Refer to the comment in Object|storeOn:."
 

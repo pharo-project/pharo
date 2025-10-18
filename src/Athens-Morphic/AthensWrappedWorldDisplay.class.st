@@ -11,7 +11,6 @@ Class {
 	#name : 'AthensWrappedWorldDisplay',
 	#superclass : 'Object',
 	#instVars : [
-		'realDisplay',
 		'wrapMorph'
 	],
 	#category : 'Athens-Morphic',
@@ -29,24 +28,8 @@ AthensWrappedWorldDisplay >> boundingBox [
 ]
 
 { #category : 'display protocol' }
-AthensWrappedWorldDisplay >> doesNotUnderstand: aMessage [
-	"delegate all not implemented methods to the real display"
-
-	^ (realDisplay respondsTo: aMessage selector)
-		ifTrue: [ realDisplay perform: aMessage selector withEnoughArguments: aMessage arguments ]
-		ifFalse: [ super doesNotUnderstand: aMessage ]
-]
-
-{ #category : 'display protocol' }
 AthensWrappedWorldDisplay >> extent [
 	^ wrapMorph ifNotNil: [ wrapMorph extent ] ifNil: [ 0 @ 0 ]
-]
-
-{ #category : 'initialization' }
-AthensWrappedWorldDisplay >> initialize [
-	super initialize.
-
-	realDisplay := Display
 ]
 
 { #category : 'accessing' }

@@ -66,18 +66,35 @@ RBRemoveSenderRefactoring class >> remove: anInterval inMethod: aSelector forCla
 		forClass: aClass
 ]
 
+{ #category : 'preconditions' }
+RBRemoveSenderRefactoring >> applicabilityPreconditions [ 
+	^ (RBCondition withBlock: [class ifNil:
+			[self refactoringError: 'Invalid class name']. true]) &
+	(RBCondition definesSelector: sourceSelector in: class)
+		& (RBCondition withBlock:
+					[self checkSelectedMessage.
+					"self parseInlineMethod."
+					self rewriteInlinedTree.
+					(sourceMessage parent isReturn or: [self hasMultipleReturns not])
+						ifFalse:
+							[self
+								refactoringError: 'Cannot inline method since it contains multiple returns that cannot be rewritten'].
+					true])
+]
+
 { #category : 'transforming' }
-RBRemoveSenderRefactoring >> findSelectedMessage [
-	super findSelectedMessage.
-	sourceMessage isDirectlyUsed
-		ifTrue: [ self refactoringError: 'The sender is directly used' ]
+RBRemoveSenderRefactoring >> checkSelectedMessage [
+
+	super checkSelectedMessage.
+	sourceMessage isEssential ifTrue: [
+		self refactoringError: 'The sender is directly used' ]
 ]
 
 { #category : 'accessing' }
 RBRemoveSenderRefactoring >> inlineParseTree [
 
 	| aSymbol |
-	aSymbol := sourceMessage selector.
+	aSymbol := self inlineSelector.
 	^ inlineParseTree ifNil: [inlineParseTree := RBMethodNode
 		selector:  aSymbol
 		arguments: ( (1 to: aSymbol numArgs) collect: [ :e | RBVariableNode named: 'arg', e asString ])
@@ -92,18 +109,8 @@ RBRemoveSenderRefactoring >> nameOfTheClassOfTheMethodToInline [
 
 { #category : 'preconditions' }
 RBRemoveSenderRefactoring >> preconditions [
-	^ (RBCondition withBlock: [class ifNil:
-			[self refactoringError: 'Invalid class name']. true]) &
-	(RBCondition definesSelector: sourceSelector in: class)
-		& (RBCondition withBlock:
-					[self findSelectedMessage.
-					"self parseInlineMethod."
-					self rewriteInlinedTree.
-					(sourceMessage parent isReturn or: [self hasMultipleReturns not])
-						ifFalse:
-							[self
-								refactoringError: 'Cannot inline method since it contains multiple returns that cannot be rewritten'].
-					true])
+
+	^ self applicabilityPreconditions
 ]
 
 { #category : 'transforming' }
@@ -124,7 +131,7 @@ RBRemoveSenderRefactoring >> remove: anInterval inMethod: aSelector forClass: aC
 	sourceInterval := anInterval
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRemoveSenderRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

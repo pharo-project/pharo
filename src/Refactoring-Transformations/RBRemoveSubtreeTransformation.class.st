@@ -113,7 +113,7 @@ RBRemoveSubtreeTransformation >> removeSubtree: aTree in: aMethodTree [
 				onInterval: aTree sourceInterval ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRemoveSubtreeTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

@@ -12,7 +12,13 @@ Class {
 }
 
 { #category : 'preconditions' }
-RBPushDownInstanceVariableRefactoring >> preconditions [
+RBPushDownInstanceVariableRefactoring >> applicabilityPreconditions [
+
+	^ RBCondition definesInstanceVariable: variableName in: class
+]
+
+{ #category : 'preconditions' }
+RBPushDownInstanceVariableRefactoring >> breakingChangePreconditions [ 
 
 	| references |
 	references := RBCondition referencesInstanceVariable: variableName in: class.
@@ -23,7 +29,13 @@ RBPushDownInstanceVariableRefactoring >> preconditions [
 				errorBlock:
 						[ self openBrowserOn: ( RBBrowserEnvironment new instVarRefsTo: variableName in: class realClass ) ]
 			].
-	^ ( RBCondition definesInstanceVariable: variableName in: class ) & references not
+	^ references not
+]
+
+{ #category : 'preconditions' }
+RBPushDownInstanceVariableRefactoring >> preconditions [ 
+
+	^ self applicabilityPreconditions & self breakingChangePreconditions 
 ]
 
 { #category : 'transforming' }

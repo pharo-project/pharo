@@ -18,7 +18,7 @@ ReEqualNotUsedRule class >> uniqueIdentifierName [
 
 { #category : 'running' }
 ReEqualNotUsedRule >> basicCheck: node [
-	^ node isMessage and: [ node isUsed not and: [ #(#= #== #~= #~~ #< #> #<= #>=) includes: node selector ] ]
+	^ node isMessage and: [ node isUsedAsReturnValue not and: [ #(#= #== #~= #~~ #< #> #<= #>=) includes: node selector ] ]
 ]
 
 { #category : 'accessing' }

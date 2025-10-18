@@ -41,10 +41,11 @@ UpdatingMenuItemMorph >> contents [
 ]
 
 { #category : 'accessing' }
-UpdatingMenuItemMorph >> icon [
+UpdatingMenuItemMorph >> iconFormSet [
 
 	^ (target perform: iconSelector)
-		ifNil: [ super icon ]
+		ifNotNil: [ :form | FormSet form: form ]
+		ifNil: [ super iconFormSet ]
 ]
 
 { #category : 'accessing' }

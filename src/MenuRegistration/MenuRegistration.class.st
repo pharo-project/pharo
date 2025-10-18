@@ -299,6 +299,12 @@ MenuRegistration >> icon: aForm [
 	self spec icon: aForm
 ]
 
+{ #category : 'spec accessing' }
+MenuRegistration >> iconFormSet: aFormSet [
+	"set the icon that is shown in the menu"
+	self spec iconFormSet: aFormSet
+]
+
 { #category : 'initialization' }
 MenuRegistration >> initialize [
 	super initialize.
@@ -337,7 +343,7 @@ MenuRegistration >> itemNamed: aName [
 	result := self itemList
 		ifNotNil: [ :l |
 			l
-				detect: [ :item | (item itemNamed: aName) notNil ]
+				detect: [ :item | (item itemNamed: aName) isNotNil ]
 				ifNone: [  ] ].
 	^ result ifNotNil: [ result itemNamed: aName ]
 ]

@@ -34,6 +34,12 @@ ClyFileOutCommand >> defaultMenuItemName [
 	^'File Out'
 ]
 
+{ #category : 'accessing' }
+ClyFileOutCommand >> description [
+
+	^ 'Requests to save a textual version of the selected class to a new file in chunk format and .st extension. Instance and class side methods are both saved'
+]
+
 { #category : 'execution' }
 ClyFileOutCommand >> execute [
 

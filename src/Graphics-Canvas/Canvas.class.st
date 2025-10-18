@@ -64,7 +64,7 @@ Canvas >> contentsOfArea: aRectangle into: aForm [
 { #category : 'accessing' }
 Canvas >> depth [
 
-	^ Display depth
+	^ self subclassResponsibility
 ]
 
 { #category : 'testing' }
@@ -264,7 +264,13 @@ Canvas >> flush [
 { #category : 'accessing' }
 Canvas >> form [
 
-	^ Display
+	^ self subclassResponsibility
+]
+
+{ #category : 'private' }
+Canvas >> formSet: aFormSet at: aPoint sourceRect: sourceRect rule: rule [
+
+	^ self image: aFormSet asForm at: aPoint sourceRect: sourceRect rule: rule
 ]
 
 { #category : 'drawing - rectangles' }

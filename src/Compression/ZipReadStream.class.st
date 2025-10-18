@@ -43,7 +43,7 @@ ZipReadStream >> verifyCrc [
 
 	| invertedCrc |
 	invertedCrc := crc bitXor: 16rFFFFFFFF.
-	(expectedCrc notNil and: [ expectedCrc ~= invertedCrc ])
+	(expectedCrc isNotNil and: [ expectedCrc ~= invertedCrc ])
 		ifTrue: [ ^ self crcError: ('Wrong CRC-32 (expected {1} got {2}) (proceed to ignore)' format: { expectedCrc printStringHex. invertedCrc printStringHex }) ].
 	^invertedCrc
 ]

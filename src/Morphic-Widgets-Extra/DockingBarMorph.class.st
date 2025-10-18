@@ -39,19 +39,19 @@ DockingBarMorph class >> example [
 
 	DockingBarMorph new
 		addMorph: (SimpleButtonMorph new
-                                           label: 'Say hello';
-                                           target: [UIManager inform: 'Hello'];
-                                           actionSelector: #value);
+				 label: 'Say hello';
+				 target: [ MorphicUIManager new inform: 'Hello' ];
+				 actionSelector: #value);
 		addMorph: (SimpleButtonMorph new
-                                           label: 'Say bonjour';
-                                           target: [UIManager inform: 'Bonjour'];
-                                           actionSelector: #value);
+				 label: 'Say bonjour';
+				 target: [ MorphicUIManager new inform: 'Bonjour' ];
+				 actionSelector: #value);
 		addMorph: (SimpleButtonMorph new
-                                           label: 'Close';
-                                           target: [DockingBarMorph allInstances last delete];
-                                           actionSelector: #value);
-	adhereToBottom;
-	openInWorld
+				 label: 'Close';
+				 target: [ DockingBarMorph allInstances last delete ];
+				 actionSelector: #value);
+		adhereToBottom;
+		openInWorld
 ]
 
 { #category : 'examples' }

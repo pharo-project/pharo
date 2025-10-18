@@ -171,11 +171,17 @@ PragmaMenuAndShortcutRegistration >> icon: anIcon [
 ]
 
 { #category : 'menu protocol' }
+PragmaMenuAndShortcutRegistration >> iconFormSet: aFormSet [
+
+	self currentItem iconFormSet: aFormSet
+]
+
+{ #category : 'menu protocol' }
 PragmaMenuAndShortcutRegistration >> iconName: aSymbol [
 	"instead of forcing clients to refer to an icon builder such Smalltalk ui icons
 	this message encapsulates it inside the builder itself. When removing uses of Smalltalk ui icons it avoid to force to subclass class with menu to inherit from Model."
 
-	self icon: (Smalltalk ui icons iconNamed: aSymbol)
+	self iconFormSet: (Smalltalk ui icons iconFormSetNamed: aSymbol)
 ]
 
 { #category : 'initialization' }

@@ -361,6 +361,18 @@ RBCondition class >> methodDefiningTemporary: aString in: aClass ignore: aBlock 
 ]
 
 { #category : 'instance creation' }
+RBCondition class >> referencesClassVariable: aString in: aClass [
+
+	^ self new
+		  block: [
+		  	(aClass whichSelectorsReferToClassVariable: aString) isNotEmpty and: 
+			[ (aClass classSide whichSelectorsReferToClassVariable: aString) isNotEmpty ] ]
+		  errorString:
+			  aClass printString
+			  , ' <1?:does not >reference<1?s:> class variable ' , aString
+]
+
+{ #category : 'instance creation' }
 RBCondition class >> referencesInstanceVariable: aString in: aClass [
 
 	^ self new

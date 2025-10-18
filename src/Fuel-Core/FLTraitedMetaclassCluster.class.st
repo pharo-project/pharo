@@ -43,18 +43,17 @@ FLTraitedMetaclassCluster >> referencesOf: aMetaclass do: aBlock [
 		value: aMetaclass baseLocalMethods;
 		value: aMetaclass localMethodDict;
 		value: aMetaclass baseComposition;
-		value: aMetaclass traitComposition
+		value: aMetaclass basicTraitComposition
 ]
 
 { #category : 'serialize/materialize' }
 FLTraitedMetaclassCluster >> serializeReferencesOf: aMetaclass with: anEncoder [
-	super
-		serializeReferencesOf: aMetaclass
-		with: anEncoder.
-		
+
+	super serializeReferencesOf: aMetaclass with: anEncoder.
+
 	anEncoder
 		encodeReferenceTo: aMetaclass baseLocalMethods;
 		encodeReferenceTo: aMetaclass localMethodDict;
 		encodeReferenceTo: aMetaclass baseComposition;
-		encodeReferenceTo: aMetaclass traitComposition
+		encodeReferenceTo: aMetaclass basicTraitComposition
 ]

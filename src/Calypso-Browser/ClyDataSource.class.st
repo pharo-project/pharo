@@ -383,8 +383,8 @@ ClyDataSource >> newDataSourceMatching: anItemFilter [
 		"This is hackish solution to the current fast table problem with filter process.
 		Filter process is not managed by anybody
 		and will continue work after table is removed from the world"
-		(Processor activeProcess == UIManager default uiProcess) ifTrue: [
-			self error: 'Should not happens'].
+		(Processor activeProcess == self morphicUIManager uiProcess) ifTrue: [
+			self error: 'Should not happen'].
 		^Processor terminateActive].
 	lastFilteredDataSource := self class on: (query filteredBy: anItemFilter).
 	lastFilteredDataSource openOn: queryView.

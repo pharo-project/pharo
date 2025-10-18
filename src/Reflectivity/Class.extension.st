@@ -13,11 +13,6 @@ Class >> isInClassHierarchyOf: aClass [
 ]
 
 { #category : '*Reflectivity' }
-Class >> link: aMetaLink toAST: aNode [
-	aNode link: aMetaLink
-]
-
-{ #category : '*Reflectivity' }
 Class >> link: aMetaLink toClassVariable: aClassVariable [
 	aClassVariable link: aMetaLink
 ]

@@ -16,13 +16,6 @@ ReSuperSendsRule class >> uniqueIdentifierName [
 	^'SuperSendsRule'
 ]
 
-{ #category : 'hooks' }
-ReSuperSendsRule >> afterCheck: aNode mappings: mappingDict [
-
-	^aNode methodNode methodClass withAllSubclasses noneSatisfy: [: class |
-		class includesSelector: aNode selector ]
-]
-
 { #category : 'accessing' }
 ReSuperSendsRule >> group [
 	^ 'Design Flaws'
@@ -39,4 +32,10 @@ ReSuperSendsRule >> initialize [
 { #category : 'accessing' }
 ReSuperSendsRule >> name [
 	^ 'Rewrite super messages to self messages'
+]
+
+{ #category : 'testing' }
+ReSuperSendsRule >> shouldCheckMethod: aMethod [
+
+	^ aMethod methodClass withAllSubclasses noneSatisfy: [ :class | class includesSelector: aMethod selector ]
 ]

@@ -155,6 +155,12 @@ Morph >> minExtent [
 ]
 
 { #category : '*Polymorph-Widgets' }
+Morph >> morphicUIManager [
+
+	^ MorphicUIManager new
+]
+
+{ #category : '*Polymorph-Widgets' }
 Morph >> myDependents [
 	"Improved performance dependents."
 

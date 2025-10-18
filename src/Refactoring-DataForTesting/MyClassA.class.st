@@ -17,6 +17,12 @@ Class {
 	#tag : 'StaticModel'
 }
 
+{ #category : 'tests - test data' }
+MyClassA >> methodForPushDown [
+
+	^ 42
+]
+
 { #category : 'dummy methods' }
 MyClassA >> stupidMethodForStupidRule [
 

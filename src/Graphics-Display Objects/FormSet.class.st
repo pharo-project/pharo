@@ -93,6 +93,14 @@ FormSet >> initializeWithExtent: initialExtent depth: initialDepth forms: initia
 	forms := initialForms.
 ]
 
+{ #category : 'converting' }
+FormSet >> mappableFormForScalingCanvas [
+
+	forms detect: [ :form | form extent = extent ]
+		ifFound: [ :form | form depth = depth ifTrue: [ ^ form ] ].
+	^ nil
+]
+
 { #category : 'copying' }
 FormSet >> veryDeepCopyWith: deepCopier [
 	"Return self.  I am immutable in the Morphic world.  Do not record me."

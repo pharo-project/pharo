@@ -114,7 +114,7 @@ RBMessageNode >> isInlineToDo [
 	].
 	self arguments size = 3 "to:by:do:" ifTrue: [
 		step := self arguments second.
-		step isLiteralNode ifFalse: [^ false].
+		(step isLiteralNode and: [step value isNumber])ifFalse: [^ false].
 		step value = 0 ifTrue: [^ false].
 	].
 	^ true

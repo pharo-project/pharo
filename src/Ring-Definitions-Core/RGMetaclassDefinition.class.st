@@ -88,7 +88,7 @@ RGMetaclassDefinition >> realClass [
 	^baseClass realClass classSide
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RGMetaclassDefinition >> storeOn: aStream [
 
 	aStream nextPut: $(.

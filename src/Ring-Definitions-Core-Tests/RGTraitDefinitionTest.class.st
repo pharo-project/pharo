@@ -42,7 +42,7 @@ RGTraitDefinitionTest >> testAddingMethods [
 	newMethod := newClass methodNamed: #size.
 	self assert: newMethod parent equals: newClass.
 
-	self assert: (newClass compiledMethodNamed: #sort) notNil.
+	self assert: (newClass compiledMethodNamed: #sort) isNotNil.
 	self assert: (newClass compiledMethodNamed: #foo) isNil
 ]
 

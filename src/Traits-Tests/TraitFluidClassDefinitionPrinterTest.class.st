@@ -127,8 +127,7 @@ TraitFluidClassDefinitionPrinterTest >> testExpandedTrait3ClassTrait [
 { #category : 'tests - template' }
 TraitFluidClassDefinitionPrinterTest >> testFullTraitTemplate [
 
-	self
-		assert: (FluidClassDefinitionPrinter new traitDefinitionTemplateInPackage: 'Traits') equals: 'Trait << #TMyTrait
+	self assert: (FluidClassDefinitionPrinter new traitDefinitionTemplateInPackage: 'Traits' tag: nil named: #TMyTrait) equals: 'Trait << #TMyTrait
 	traits: {};
 	slots: {};
 	tag: '''' ;

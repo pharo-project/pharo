@@ -457,13 +457,6 @@ SimpleHierarchicalListMorph >> expandRoots [
 	self adjustSubmorphPositions
 ]
 
-{ #category : 'accessing' }
-SimpleHierarchicalListMorph >> expandedForm [
-	"Answer the form to use for expanded items."
-
-	^self theme treeExpandedForm
-]
-
 { #category : 'actions' }
 SimpleHierarchicalListMorph >> expandedFormSetForMorph: aMorph [
 	"Answer the form set to use for expanded items."
@@ -796,13 +789,6 @@ SimpleHierarchicalListMorph >> mouseUp: event [
 		ifTrue: [ self setSelectedMorph: nil ]
 		ifFalse: [ self setSelectedMorph: aMorph ].
 	Cursor normal show
-]
-
-{ #category : 'accessing' }
-SimpleHierarchicalListMorph >> notExpandedForm [
-	"Answer the form to use for unexpanded items."
-
-	^self theme treeUnexpandedForm
 ]
 
 { #category : 'accessing' }

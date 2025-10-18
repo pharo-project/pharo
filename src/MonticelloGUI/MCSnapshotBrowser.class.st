@@ -202,7 +202,7 @@ MCSnapshotBrowser >> methodList [
 { #category : 'menus' }
 MCSnapshotBrowser >> methodListMenu: aMenu [ 
 	super methodListMenu: aMenu.
-	( self selectedMessageName notNil and: [ methodSelection isLoadable ] )
+	( self selectedMessageName isNotNil and: [ methodSelection isLoadable ] )
 		ifTrue: [ aMenu addLine; add: 'Load method' selector: #loadMethodSelection ].
 	^ aMenu
 ]

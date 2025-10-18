@@ -403,21 +403,6 @@ SmallDictionary >> collect: aBlock [
 	^newCollection
 ]
 
-{ #category : 'adding' }
-SmallDictionary >> declare: key from: aDictionary [
-	"Add key to the receiver. If key already exists, do nothing. If aDictionary
-	includes key, then remove it from aDictionary and use its association as
-	the element of the receiver."
-
-	(self includesKey: key) ifTrue: [^ self].
-	(aDictionary includesKey: key)
-		ifTrue:
-			[self add: (aDictionary associationAt: key).
-			aDictionary removeKey: key]
-		ifFalse:
-			[self add: key -> nil]
-]
-
 { #category : 'enumerating' }
 SmallDictionary >> difference: aCollection [
 	"Answer the set theoretic difference of two collections. This is a specialized version for Dictionaries keeping the keys of the objects. At a slightly higher price of an additional Set to track duplicates."
@@ -658,7 +643,7 @@ SmallDictionary >> keysSortedSafely [
 			ifFalse: [x class == y class
 				ifTrue: [x printString < y printString]
 				ifFalse: [x class name < y class name]]].
-	self keysDo: [:each | sortedKeys addLast: each].
+	self keysDo: [:each | sortedKeys addNoSort: each].
 	^ sortedKeys reSort
 ]
 
@@ -783,7 +768,7 @@ SmallDictionary >> size [
 	^size
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 SmallDictionary >> storeOn: aStream [
 	| noneYet |
 	aStream nextPutAll: '(('.

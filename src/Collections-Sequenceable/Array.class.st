@@ -69,17 +69,6 @@ Array class >> empty [
 	^ #()
 ]
 
-{ #category : 'instance creation' }
-Array class >> new: sizeRequested [
-	"Answer an instance of this class with the number of indexable
-	variables specified by the argument, sizeRequested.
-
-	This is a shortcut (direct call of primitive, no #initialize, for performance"
-
-	<primitive: 71>  "This method runs primitively if successful"
-	^ self basicNew: sizeRequested  "Exceptional conditions will be handled in basicNew:"
-]
-
 { #category : 'converting' }
 Array >> as: aSimilarClass [
 
@@ -151,6 +140,12 @@ Array >> copyWithDependent: newElement [
 
 	self isEmpty ifTrue: [ ^ DependentsArray with: newElement ].
 	^ self copyWith: newElement
+]
+
+{ #category : 'displaying' }
+Array >> displayString [
+
+	^ super displayString contractTo: 200
 ]
 
 { #category : 'converting' }
@@ -349,7 +344,7 @@ Array >> shouldBePrintedAsLiteral: alreadyVisited [
 	^ self allSatisfy: [ :each | each shouldBePrintedAsLiteral: alreadyVisited , { self } ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Array >> storeOn: aStream [
 
 	"Use the literal form if possible."

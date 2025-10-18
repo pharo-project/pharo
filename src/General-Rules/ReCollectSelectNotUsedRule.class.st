@@ -22,7 +22,7 @@ ReCollectSelectNotUsedRule class >> uniqueIdentifierName [
 ReCollectSelectNotUsedRule >> basicCheck: aNode [
 	aNode isMessage ifFalse: [ ^ false ].
 	(#(#select: #collect: #reject:) includes: aNode selector) ifFalse: [ ^ false ].
-	^ aNode isUsed not
+	^ aNode isUsedAsReturnValue not
 ]
 
 { #category : 'accessing' }

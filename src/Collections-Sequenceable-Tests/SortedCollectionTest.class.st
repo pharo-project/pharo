@@ -503,6 +503,14 @@ SortedCollectionTest >> testAddAll2 [
 ]
 
 { #category : 'tests - basic' }
+SortedCollectionTest >> testAddLast [
+
+	self
+		should: [ #( 10 9 8 ) asSortedCollection addLast: 11 ]
+		raise: ShouldNotImplement
+]
+
+{ #category : 'tests - basic' }
 SortedCollectionTest >> testCollect [
 
 	|result aSortedCollection|
@@ -804,6 +812,11 @@ SortedCollectionTest >> testRemoveAll [
 
 	c1 add: 13; add: 14.
 	self assert: (c1 first = 14 and: [c1 second = 13]) description: 'the sortBlock has been preserved'
+]
+
+{ #category : 'tests - basic' }
+SortedCollectionTest >> testReversedIsOrdered [
+	self assert: self nonEmpty reversed class equals: OrderedCollection
 ]
 
 { #category : 'tests - basic' }

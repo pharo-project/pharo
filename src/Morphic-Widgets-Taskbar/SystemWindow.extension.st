@@ -136,7 +136,7 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 		getStateSelector: nil
 		enablementSelector: #isNotRestored.
 	menu lastItem
-		icon: self theme windowMaximizeForm;
+		iconFormSet: self theme windowMaximizeFormSet;
 		font: theme menuFont.
 
 	menu
@@ -146,7 +146,7 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 		getStateSelector: nil
 		enablementSelector: #isNotMinimized.
 	menu lastItem
-		icon: self theme windowMinimizeForm;
+		iconFormSet: self theme windowMinimizeFormSet;
 		font: theme menuFont.
 
 	menu
@@ -156,7 +156,7 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 		getStateSelector: nil
 		enablementSelector: #canBeMaximized.
 	menu lastItem
-		icon: self theme windowMaximizeForm;
+		iconFormSet: self theme windowMaximizeFormSet;
 		font: theme menuFont.
 
 	menu addLine.
@@ -164,7 +164,7 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 	moveSubmenu := theme newMenuIn: self for: self.
 	menu
 		add: 'Move'
-		icon: (self iconNamed: #blank)
+		iconFormSet: (self iconFormSetNamed: #blank)
 		subMenu: moveSubmenu.
 	moveSubmenu
 		addToggle: 'Move left' translated
@@ -183,7 +183,7 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 	submenu := theme newMenuIn: self for: self.
 	menu
 		add: 'Close all'
-		icon: self theme windowCloseForm
+		iconFormSet: self theme windowCloseFormSet
 		subMenu: submenu.
 	submenu
 		addToggle: 'all windows' translated
@@ -229,7 +229,7 @@ SystemWindow >> taskbarButtonMenu: aMenu [
 		getStateSelector: nil
 		enablementSelector: #allowedToClose.
 	menu lastItem
-		icon: self theme windowCloseForm;
+		iconFormSet: self theme windowCloseFormSet;
 		font: theme menuFont.
 
 	^menu

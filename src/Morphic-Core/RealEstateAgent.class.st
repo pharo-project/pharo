@@ -71,7 +71,7 @@ RealEstateAgent class >> cascadeFor: aView initialExtent: initialExtent world: a
 	| position allowedArea |
 	allowedArea := self maximumUsableAreaInWorld: aWorld.
 	position := aWorld currentWindow isMorph
-		ifFalse: [ aWorld center - (initialExtent / 2)]
+		ifFalse: [ aWorld center - (initialExtent // 2)]
 		ifTrue: [ aWorld currentWindow position + 20].
 	^ (position extent: initialExtent)
 		translatedAndSquishedToBeWithin: allowedArea
@@ -106,9 +106,11 @@ RealEstateAgent class >> initialize [
 RealEstateAgent class >> maximumUsableArea [
 
 	| allowedArea |
-	allowedArea := Display usableArea.
-	allowedArea := allowedArea intersect: self currentWorld visibleClearArea ifNone: [ allowedArea ].
-	^allowedArea
+	allowedArea := self currentWorld bounds.
+	allowedArea := allowedArea
+		               intersect: self currentWorld visibleClearArea
+		               ifNone: [ allowedArea ].
+	^ allowedArea
 ]
 
 { #category : 'accessing' }

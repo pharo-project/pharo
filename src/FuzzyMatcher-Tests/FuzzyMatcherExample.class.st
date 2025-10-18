@@ -216,10 +216,10 @@ FuzzyMatcherExample >> updatePattern: newPattern [
 		ifTrue: [ elements ]
 		ifFalse: [ matchedElements ].
 
-	t := [ matchedElements := self match: newPattern for: searchPool ] timeToRun.
+	t := [ matchedElements := self match: newPattern for: searchPool ] millisecondsToRun.
 
 	text := 'Checked {1} items, found {2} matching | {3} ms' format: {
-		elements size . matchedElements size. t asMilliSeconds }.
+		elements size . matchedElements size. t }.
 
 	stringMorph contents: text.
 	pattern := newPattern.

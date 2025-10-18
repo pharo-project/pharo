@@ -59,7 +59,7 @@ RBMoveInstanceVariableToClassTransformation >> buildTransformations [
 				class: oldClass)
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBMoveInstanceVariableToClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

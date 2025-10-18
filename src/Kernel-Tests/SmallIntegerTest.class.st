@@ -120,6 +120,46 @@ SmallIntegerTest >> testGcd [
    self assert: (624129 gcd: 2061517) equals: 18913
 ]
 
+{ #category : 'tests - arithmetic' }
+SmallIntegerTest >> testInferior [
+
+	self deny: 1 < 0.
+	self assert: 1 < 2.
+	self deny: -1 < -2.
+	self assert: -2 < -1.
+	self deny: 1 < 1
+]
+
+{ #category : 'tests - arithmetic' }
+SmallIntegerTest >> testInferiorOrEquals [
+
+	self deny: 1 <= 0.
+	self assert: 1 <= 2.
+	self deny: -1 <= -2.
+	self assert: -2 <= -1.
+	self assert: 1 <= 1
+]
+
+{ #category : 'tests - arithmetic' }
+SmallIntegerTest >> testInferiorOrEqualsWithFloat [
+
+	self deny: 1 <= 0.0.
+	self assert: 1 <= 2.0.
+	self deny: -1 <= -2.0.
+	self assert: -2 <= -1.0.
+	self assert: 1 <= 1.0
+]
+
+{ #category : 'tests - arithmetic' }
+SmallIntegerTest >> testInferiorWithFloat [
+
+	self deny: 1 < 0.0.
+	self assert: 1 < 2.0.
+	self deny: -1 < -2.0.
+	self assert: -2 < -1.0.
+	self deny: 1 < 1.0
+]
+
 { #category : 'tests - other' }
 SmallIntegerTest >> testIsNotAbstract [
 
@@ -192,4 +232,44 @@ SmallIntegerTest >> testQuo [
 	self assert: (-4 quo: 2) equals: -2.
 	self assert: (-5 quo: 2) equals: -2.
 	self assert: ( 5 quo: 2) equals:  2
+]
+
+{ #category : 'tests - arithmetic' }
+SmallIntegerTest >> testSuperior [
+
+	self assert: 1 > 0.
+	self deny: 1 > 2.
+	self assert: -1 > -2.
+	self deny: -2 > -1.
+	self deny: 1 > 1
+]
+
+{ #category : 'tests - arithmetic' }
+SmallIntegerTest >> testSuperiorOrEquals [
+
+	self assert: 1 >= 0.
+	self deny: 1 >= 2.
+	self assert: -1 >= -2.
+	self deny: -2 >= -1.
+	self assert: 1 >= 1
+]
+
+{ #category : 'tests - arithmetic' }
+SmallIntegerTest >> testSuperiorOrEqualsWithFloat [
+
+	self assert: 1 >= 0.0.
+	self deny: 1 >= 2.0.
+	self assert: -1 >= -2.0.
+	self deny: -2 >= -1.0.
+	self assert: 1 >= 1.0
+]
+
+{ #category : 'tests - arithmetic' }
+SmallIntegerTest >> testSuperiorWithFloat [
+
+	self assert: 1 > 0.0.
+	self deny: 1 > 2.0.
+	self assert: -1 > -2.0.
+	self deny: -2 > -1.0.
+	self deny: 1 > 1.0
 ]

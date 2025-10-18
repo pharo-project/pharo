@@ -11,9 +11,9 @@ Class {
 		'SDL2Constants',
 		'SDL2ConstantsHint'
 	],
-	#category : 'OSWindow-SDL2-Bindings',
+	#category : 'OSWindow-SDL2-Platforms',
 	#package : 'OSWindow-SDL2',
-	#tag : 'Bindings'
+	#tag : 'Platforms'
 }
 
 { #category : 'operations' }
@@ -26,6 +26,19 @@ SDLAbstractPlatform >> afterMainPharoWindowCreated: aOSSDLWindow [
 SDLAbstractPlatform >> afterSetWindowTitle: aString onWindow: aOSSDLWindow [
 
 	self subclassResponsibility
+]
+
+{ #category : 'operations' }
+SDLAbstractPlatform >> beforeMainPharoWindowClosed: aOSSDLWindow [
+
+	self subclassResponsibility
+]
+
+{ #category : 'configuration' }
+SDLAbstractPlatform >> defaultRendererFlags [
+	"We have no special flags for the renderer.
+	SDL_RENDERER_PRESENTVSYNC was shown to crash on certain windows machines with external screens"
+	^ 0
 ]
 
 { #category : 'initialization' }

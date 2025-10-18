@@ -389,6 +389,12 @@ ClyMethodCodeEditorToolMorph >> update [
 { #category : 'updating' }
 ClyMethodCodeEditorToolMorph >> updateProtocolAndPackage [
 
-	self methodProtocol: editingMethod protocolName.
-	editingMethod isExtension ifTrue: [ extendingPackage := editingMethod package ]
+	| realMethod |
+	
+	realMethod := editingMethod isRGObject 
+		ifTrue: [ editingMethod realMethod ]
+		ifFalse: [ editingMethod ].
+
+	self methodProtocol: realMethod protocolName.
+	realMethod isExtension ifTrue: [ extendingPackage := realMethod package ]
 ]

@@ -11,12 +11,6 @@ Class {
 	#tag : 'Transformation-Unused'
 }
 
-{ #category : 'preconditions' }
-RBPrettyPrintCodeTransformation >> preconditions [
-
-	^ self trueCondition
-]
-
 { #category : 'transforming' }
 RBPrettyPrintCodeTransformation >> privateTransform [
 	| source tree formatted |

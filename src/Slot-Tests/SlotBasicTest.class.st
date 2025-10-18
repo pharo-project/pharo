@@ -138,7 +138,7 @@ SlotBasicTest >> testNewWeakClass [
 	self deny: aClass isFixed.
 	self assert: aClass isVariable.
 	self assert: aClass classLayout isVariable.
-	self assert: aClass isWords.
+	self deny: aClass isWords.
 	self assert: aClass isWeak
 ]
 

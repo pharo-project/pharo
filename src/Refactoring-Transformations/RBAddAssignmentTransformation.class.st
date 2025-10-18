@@ -102,7 +102,7 @@ RBAddAssignmentTransformation >> privateTransform [
 	class compileTree: methodTree
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBAddAssignmentTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

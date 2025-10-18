@@ -25,17 +25,6 @@ CmdCommand >> buildBrowserNotebookActionsUsing: aCommandActivator [
 ]
 
 { #category : '*Calypso-Browser' }
-CmdCommand >> buildBrowserTabActionsUsing: aCommandActivator [
-
-	^{
-		TabAction
-			action: [ aCommandActivator executeCommand ]
-			icon: self browserTabActionIcon
-			label: aCommandActivator commandDescription
-	}
-]
-
-{ #category : '*Calypso-Browser' }
 CmdCommand >> createTableCellButtonUsing: aCommandActivator [
 
 	| icon |
@@ -84,8 +73,8 @@ CmdCommand >> decorateToolbarItem: aBrowserToolbarItem [
 	self description ifNotNil: [ :d |
 		aBrowserToolbarItem setBalloonText: d ].
 
-	self defaultMenuIcon ifNotNil: [:icon |
-		aBrowserToolbarItem addIcon: icon asMorph]
+	self defaultMenuIconFormSet ifNotNil: [:iconFormSet |
+		aBrowserToolbarItem addIcon: iconFormSet asMorph]
 ]
 
 { #category : '*Calypso-Browser' }

@@ -643,6 +643,19 @@ RGMethodDefinition >> stampAtPointer [
 		  ifNil: [ nil ]
 ]
 
+{ #category : 'storing' }
+RGMethodDefinition >> storeOn: aStream [
+	aStream nextPut: $(.
+	aStream nextPutAll: self class asString.
+	aStream nextPutAll: ' className: '''.
+	aStream nextPutAll: self parentName.
+	aStream nextPutAll: ''' selector: '.
+	aStream nextPutAll: self selector printString.
+	aStream nextPutAll: ' isMeta: '.
+	aStream nextPutAll: self isMeta printString.
+	aStream nextPut: $)
+]
+
 { #category : 'backward compatibility' }
 RGMethodDefinition >> symbolic [
 

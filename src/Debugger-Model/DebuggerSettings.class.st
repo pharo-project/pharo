@@ -95,7 +95,7 @@ DebuggerSettings class >> generalDebuggingSettingsOn: aBuilder [
 			(aBuilder setting: #logDebuggerStackToFile)
 				label: 'Write message to debug log file when fall into debugger';
 				target: DebugSession;
-				default: true;
+				default: false;
 				description:
 					'If true, whenever you fall into a debugger a summary of its stack will be written to a file named'.
 

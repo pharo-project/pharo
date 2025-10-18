@@ -74,24 +74,6 @@ TransferMorph >> aboutToBeGrabbedBy: aHand [
 	aHand newKeyboardFocus: self
 ]
 
-{ #category : 'dropping/grabbing' }
-TransferMorph >> animationForMoveSuccess: success [
-	| start stop slideForm |
-	success
-		ifTrue: [^ self]
-		ifFalse: [
-			start := self fullBounds origin.
-			stop := self formerPosition ifNil: [ self source bounds origin ]].
-	start = stop ifTrue: [^ self].
-
-	slideForm := self imageForm offset: 0@0.
-	slideForm
-		slideWithFirstFrom: start
-		to: stop
-		nSteps: 12
-		delay: 20
-]
-
 { #category : 'initialization' }
 TransferMorph >> defaultColor [
 	"answer the default color/fill style for the receiver"
@@ -191,15 +173,16 @@ TransferMorph >> isTransferable [
 { #category : 'dropping/grabbing' }
 TransferMorph >> justDroppedInto: targetMorph event: anEvent [
 	"If only world wants this TransferMorph, treat it as unaccepted (see also >>delete)."
+
 	| formerPosition |
 	formerPosition := self formerPosition.
 	super justDroppedInto: targetMorph event: anEvent.
 	self formerPosition: formerPosition.
 	accepted := targetMorph ~= self world.
-	self animationForMoveSuccess: accepted.
+
 	accepted ifTrue: [
 		self dropNotifyRecipient ifNotNil: [
-			self dropNotifyRecipient dropAcceptedMorph: self from: targetMorph ]].
+			self dropNotifyRecipient dropAcceptedMorph: self from: targetMorph ] ].
 	self delete
 ]
 

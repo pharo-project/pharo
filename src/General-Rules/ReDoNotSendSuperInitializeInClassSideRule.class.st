@@ -26,18 +26,6 @@ ReDoNotSendSuperInitializeInClassSideRule class >> uniqueIdentifierName [
 	^'DoNotSendSuperInitializeInClassSideRule'
 ]
 
-{ #category : 'hooks' }
-ReDoNotSendSuperInitializeInClassSideRule >> afterCheck: aNode mappings: mappingDict [
-
-	aNode methodNode ifNotNil: [ :methNode |
-		methNode compiledMethod ifNotNil: [ :method |
-			(method selector = #initialize and: [
-			method methodClass isMeta ])
-				ifTrue: [ ^ true ] ] ].
-
-	^ false
-]
-
 { #category : 'accessing' }
 ReDoNotSendSuperInitializeInClassSideRule >> group [
 	^ 'Potential Bugs'
@@ -54,4 +42,10 @@ ReDoNotSendSuperInitializeInClassSideRule >> initialize [
 { #category : 'accessing' }
 ReDoNotSendSuperInitializeInClassSideRule >> name [
 	^ 'Class-side #initialize should not send "super initialize".'
+]
+
+{ #category : 'testing' }
+ReDoNotSendSuperInitializeInClassSideRule >> shouldCheckMethod: aMethod [
+
+	^ aMethod selector = #initialize and: [ aMethod methodClass isMeta ]
 ]

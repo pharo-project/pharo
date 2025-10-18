@@ -46,7 +46,7 @@ ReSearchStringSourceAnchor >> interval [
 { #category : 'testing' }
 ReSearchStringSourceAnchor >> providesInterval [
 
-	^ searchString notNil
+	^ searchString isNotNil
 ]
 
 { #category : 'accessing' }

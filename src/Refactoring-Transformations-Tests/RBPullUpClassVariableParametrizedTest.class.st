@@ -26,9 +26,8 @@ RBPullUpClassVariableParametrizedTest >> testFailureMetaClassFailure [
 { #category : 'failure tests' }
 RBPullUpClassVariableParametrizedTest >> testFailureNonExistantName [
 
-	self skip.
-	"self shouldFail: (self createRefactoringWithArguments:
-		{ #Foo . #RBLintRuleTestData })"
+	self shouldFail:
+		(self createRefactoringWithArguments: { #Foo. #RBLintRuleTestData })
 ]
 
 { #category : 'tests' }

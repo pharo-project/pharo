@@ -26,5 +26,8 @@ QuestionWithoutCancelDialogWindow >> escapePressed [
 QuestionWithoutCancelDialogWindow >> newButtons [
 	"Answer new buttons as appropriate."
 
-	^{self newYesButton isDefault: true. self newNoButton}
+	^ {
+		self newNoButton.
+		self newYesButton isDefault: true
+	}
 ]

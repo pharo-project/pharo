@@ -81,19 +81,18 @@ RBExpandReferencedPoolsTransformation >> movePoolVariables [
 ]
 
 { #category : 'transforming' }
+RBExpandReferencedPoolsTransformation >> prepareForExecution [
+
+	self computePoolsToMove
+]
+
+{ #category : 'transforming' }
 RBExpandReferencedPoolsTransformation >> privateTransform [
 
-	self computePoolsToMove.
-	self flag: #popUp.
-	self hasPoolsToMove
-		ifTrue:
-			[self
-				refactoringWarning: 'This method contains references to pools<n>which may need to be moved.<n>Proceed anyway?'
-						expandMacros].
 	self movePoolVariables
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBExpandReferencedPoolsTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

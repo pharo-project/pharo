@@ -58,14 +58,16 @@ UndeclaredVariable >> emitStore: aMethodBuilder [
 		popTop;
 		pushLiteral: self;
 		pushTemp: tempName;
-		send: #runtimeUndeclaredWrite:
+		pushThisContext;
+		send: #runtimeUndeclaredWrite:inContext:
 ]
 
 { #category : 'code generation' }
 UndeclaredVariable >> emitValue: aMethodBuilder [
 	aMethodBuilder
 		pushLiteral: self;
-		send: #runtimeUndeclaredRead
+		pushThisContext;
+		send: #runtimeUndeclaredReadInContext:
 ]
 
 { #category : 'registry' }
@@ -106,7 +108,7 @@ UndeclaredVariable >> registeredMethods [
 ]
 
 { #category : 'code generation' }
-UndeclaredVariable >> runtimeUndeclaredRead [
+UndeclaredVariable >> runtimeUndeclaredReadInContext: aContext [
 
 	<debuggerCompleteToSender>
 	^ UndeclaredVariableRead new
@@ -116,7 +118,7 @@ UndeclaredVariable >> runtimeUndeclaredRead [
 ]
 
 { #category : 'code generation' }
-UndeclaredVariable >> runtimeUndeclaredWrite: anObject [
+UndeclaredVariable >> runtimeUndeclaredWrite: anObject inContext: aContext [
 
 	<debuggerCompleteToSender>
 	^ UndeclaredVariableWrite new

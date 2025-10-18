@@ -44,6 +44,25 @@ RBCreateCascadeRefactoring >> addStatementNode: aNode [
 	self refactoringError: aNode formattedCode , ' is not a valid message'
 ]
 
+{ #category : 'preconditions' }
+RBCreateCascadeRefactoring >> applicabilityPreconditions [
+
+	^ (RBCondition definesSelector: selector in: class)
+	  & (RBCondition withBlock: [
+			   self
+				   findSequenceNode;
+				   findStatementNodes.
+			   true ])
+]
+
+{ #category : 'preconditions' }
+RBCreateCascadeRefactoring >> breakingChangePreconditions [
+
+	^ RBCondition withBlock: [
+		  self findReceiverNode.
+		  true ]
+]
+
 { #category : 'initialization' }
 RBCreateCascadeRefactoring >> combine: anInterval from: aSelector in: aClass [
 	class := self classObjectFor: aClass.
@@ -127,9 +146,8 @@ RBCreateCascadeRefactoring >> parseTree [
 
 { #category : 'preconditions' }
 RBCreateCascadeRefactoring >> preconditions [
-	^ (RBCondition definesSelector: selector in: class) & (RBCondition withBlock: [
-		self findSequenceNode; findStatementNodes; findReceiverNode.
-		true ])
+
+	^ self applicabilityPreconditions & self breakingChangePreconditions
 ]
 
 { #category : 'transforming' }

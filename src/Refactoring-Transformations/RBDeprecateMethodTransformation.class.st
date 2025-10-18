@@ -143,7 +143,7 @@ RBDeprecateMethodTransformation >> newSelector: aSymbol [
 	newSelector := aSymbol
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBDeprecateMethodTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

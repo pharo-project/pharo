@@ -35,6 +35,12 @@ RBRefactoryVariableChange >> = aRefactoryVariableChange [
 		  self variable = aRefactoryVariableChange variable ]
 ]
 
+{ #category : 'converting' }
+RBRefactoryVariableChange >> asText [
+
+	^ self textToDisplay
+]
+
 { #category : 'private' }
 RBRefactoryVariableChange >> changeObject [
 
@@ -70,10 +76,11 @@ RBRefactoryVariableChange >> hash [
 RBRefactoryVariableChange >> printOn: aStream [
 
 	aStream
-		nextPutAll: self displayClassName; nextPut: $ ;
-		nextPutAll: self changeSymbol; nextPut: $ ;
-		print: self variable;
-		nextPut: $!
+		nextPutAll: self displayClassName;
+		nextPut: $ ;
+		nextPutAll: self changeSymbol;
+		nextPut: $ ;
+		print: self variable
 ]
 
 { #category : 'private' }

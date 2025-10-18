@@ -52,14 +52,16 @@ ExceptionTest >> runCaseManaged [
 ExceptionTest >> runWithNoHandlers: aBlock [
 	"Executing the given block directly would go through all handlers of SUnit machinery.
 	Here we simulate the clean environment with no outer handlers for possible block errors"
+
 	| synchSemaphore result |
 	synchSemaphore := Semaphore new.
-	[result := aBlock ensure: [synchSemaphore signal]] forkNamed: 'Test process'.
+	[ result := aBlock ensure: [ synchSemaphore signal ] ] forkNamed:
+		'Test process'.
 	"we should not wait forever in case of wrong behaviour
 	(general test timeout is disabled in #runCaseManaged)"
-	(synchSemaphore wait: 2 seconds)
-		ifTrue: [ self error: 'Timeout for block execution' ].
-	^result
+	(synchSemaphore waitTimeoutSeconds: 2) ifTrue: [
+		self error: 'Timeout for block execution' ].
+	^ result
 ]
 
 { #category : 'tests - handling' }

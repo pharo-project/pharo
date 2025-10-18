@@ -20,7 +20,7 @@ PSMCMergePatchMorph >> allConflictsMenu [
 	"Answer the all conflicts menu."
 
 	| menu |
-	menu := UIManager default newMenuIn: self for: self.
+	menu := self morphicUIManager newMenuIn: self for: self.
 	menu
 		addToggle: 'Keep current version of all' translated
 		target: self
@@ -257,7 +257,7 @@ PSMCMergePatchMorph >> selectNextConflict [
 { #category : 'actions' }
 PSMCMergePatchMorph >> selectionIsNotNil [
 
-	^ self selectedChange notNil
+	^ self selectedChange isNotNil
 ]
 
 { #category : 'testing' }
@@ -282,7 +282,7 @@ PSMCMergePatchMorph >> updateSource [
 
 	|sel|
 	sel := self selectedChangeWrapper.
-	self diffMorph allowJoinClicks: (sel notNil and: [
+	self diffMorph allowJoinClicks: (sel isNotNil and: [
 		sel isConflict and: [sel operation isModification]]).
 	super updateSource.
 	(sel isNil or: [sel isConflict not]) ifTrue: [^self].

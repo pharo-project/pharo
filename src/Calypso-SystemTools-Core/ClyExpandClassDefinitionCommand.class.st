@@ -7,9 +7,16 @@ Class {
 }
 
 { #category : 'activation' }
+ClyExpandClassDefinitionCommand class >> contextMenuActivation [
+	<classAnnotation>
+
+	^CmdContextMenuActivation byRootGroupItemOrder: -20 for: ClyClassDefinitionContext 
+]
+
+{ #category : 'activation' }
 ClyExpandClassDefinitionCommand class >> sourceCodeMenuActivation [
    <classAnnotation>
-   ^SycSourceCodeMenuActivation byRootGroupItemOrder: 1.2 for: ClyClassDefinitionContext
+   ^SycSourceCodeMenuActivation byRootGroupItemOrder: -100 for: ClyClassDefinitionContext
 ]
 
 { #category : 'activation' }
@@ -33,7 +40,14 @@ ClyExpandClassDefinitionCommand >> defaultMenuIconName [
 
 { #category : 'accessing' }
 ClyExpandClassDefinitionCommand >> defaultMenuItemName [
-	^'Expand'
+
+	^ 'Expand class definition'
+]
+
+{ #category : 'accessing' }
+ClyExpandClassDefinitionCommand >> description [
+
+	^ 'Expands the fluid definition to include all possible elements and shows the default values'
 ]
 
 { #category : 'accessing' }

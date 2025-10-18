@@ -362,7 +362,7 @@ EpFileOutModificationsTest >> testFileOutSingleProtocolRemoval [
 	self assert: chunks last isDoItDeclaration.
 
 	methodNode := RBParser parseExpression: chunks last contents.
-	self assert: methodNode selector equals: #removeProtocolNamed:stamp:.
+	self assert: methodNode selector equals: #removeProtocolNamed:.
 
 ]
 
@@ -371,7 +371,6 @@ EpFileOutModificationsTest >> testFileOutSingleTraitAddition [
 
 	| aTrait outputFileReference chunks literalNodes |
 	aTrait := classFactory newTrait.
-	aTrait.
 
 	chunkExporter fileOut: (self allLogEntriesWith: EpTraitAddition).
 	outputFileReference := chunkExporter outputFileReference.

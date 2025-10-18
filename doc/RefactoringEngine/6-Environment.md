@@ -82,8 +82,8 @@ A more generic way to create an environment by giving an explicit 'test'-block t
 ```st
 | implementedByMe |
 implementedByMe := RBBrowserEnvironment new 
-			selectMethods: [:m | m author = Author fullName ].
+			selectMethods: [:m | m selector size > 10 ].
 implementedByMe browse.
 ```
 
-This opens (may be slow) a browser with all classes with methods having my (current Author) name for its current methods version author stamp.
+This opens (may be slow) a browser with all classes with methods having a selector larger than 10 characters.

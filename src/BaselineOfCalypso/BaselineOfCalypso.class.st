@@ -121,6 +121,10 @@ BaselineOfCalypso >> baseline: spec [
 				spec requires: #( #'Calypso-SystemPlugins-Reflectivity-Queries'
 						   #'Calypso-SystemTools-FullBrowser'
 						   #'Calypso-SystemTools-QueryBrowser' ) ];
+			package: #'Calypso-SystemPlugins-DebugPoints-Browser' with: [
+				spec requires: #( #'Calypso-SystemTools-FullBrowser'
+						   #'Calypso-SystemTools-QueryBrowser'
+						   'Calypso-SystemPlugins-Reflectivity-Browser' ) ];
 			package: #'Calypso-SystemPlugins-Reflectivity-Browser-Tests'
 			with: [
 				spec requires: #( #'Calypso-SystemPlugins-Reflectivity-Browser' ) ];
@@ -234,6 +238,7 @@ BaselineOfCalypso >> baseline: spec [
 				   #'Calypso-SystemPlugins-MethodDiffTool'
 				   #'Calypso-SystemPlugins-Deprecation-Browser'
 				   #'Calypso-SystemPlugins-Reflectivity-Browser'
+				   #'Calypso-SystemPlugins-DebugPoints-Browser'
 				   #'Calypso-SystemPlugins-Undeclared-Browser'
 				   #'Calypso-SystemPlugins-FFI-Browser'
 				   #'Calypso-SystemPlugins-Flags-Browser'

@@ -62,7 +62,7 @@ RBAddMethodCommentTransformation >> privateTransform [
 		(self parserClass parseMethod: sourceCode)
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBAddMethodCommentTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

@@ -24,6 +24,7 @@ MetacelloMCConfigurationOfProjectSpec >> constructClassName [
 { #category : 'mutability' }
 MetacelloMCConfigurationOfProjectSpec >> copyForRegistration: aMetacelloProjectRegistration onWrite: aBlock [
   | copy |
+
   aMetacelloProjectRegistration
     configurationProjectSpecIfPresent: [ :spec | 
       copy := spec copy.

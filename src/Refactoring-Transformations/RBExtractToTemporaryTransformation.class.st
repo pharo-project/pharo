@@ -91,11 +91,16 @@ RBExtractToTemporaryTransformation >> extract: anInterval to: aString from: aSel
 RBExtractToTemporaryTransformation >> insertTemporary [
 
 	^ { (RBCustomTransformation model: self model with: [ :rbMode |
-		   | node statementNode nodeReferences |
+		   | node statementNode nodeReferences scope |
 		   node := self nodeContainedBy: sourceInterval.
-		   nodeReferences := self referencesTo: node.
-		   statementNode := node statementNode.
-		   statementNode parent
+		   scope := node methodOrBlockNode.
+		   nodeReferences := scope allChildren select: [ :each |
+			                     each = node ].
+		   "Insert the assignment before the first occurrence to be replaced,
+			but in the same scope as the selected expression,
+			even if that first occurrence is in a nested block."
+		   statementNode := nodeReferences first statementNodeIn: scope.
+		   scope body
 			   addNode: (self constructAssignmentFrom: node)
 			   before: statementNode;
 			   addTemporaryNamed: newVariableName.
@@ -143,7 +148,7 @@ RBExtractToTemporaryTransformation >> selectedSource [
 	^ source copyFrom: sourceInterval first to: sourceInterval last
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBExtractToTemporaryTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

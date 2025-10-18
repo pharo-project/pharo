@@ -3,6 +3,9 @@ Class {
 	#superclass : 'RGBackendTest',
 	#traits : 'TRGReadOnlyTest',
 	#classTraits : 'TRGReadOnlyTest classTrait',
+	#classVars : [
+		'SharedVariableToTest'
+	],
 	#category : 'Ring-Core-Tests',
 	#package : 'Ring-Core-Tests'
 }
@@ -11,6 +14,13 @@ Class {
 RGReadOnlyImageBackendTest >> backendClass [
 
 	^ RGReadOnlyImageBackend
+]
+
+{ #category : 'initialization' }
+RGReadOnlyImageBackendTest >> initialize [
+
+	<ignoreUnusedClassVariables: #( #SharedVariableToTest )>
+	super initialize
 ]
 
 { #category : 'accessing' }
@@ -106,10 +116,10 @@ RGReadOnlyImageBackendTest >> testClassVariable [
 	env := RGEnvironment new.
 	env backend: (RGReadOnlyImageBackend for: env).
 
-	classVariable := (UIManager classVariableNamed: #Default) asRingMinimalDefinitionIn: env.
+	classVariable := (self class classVariableNamed: #SharedVariableToTest) asRingMinimalDefinitionIn: env.
 	self assert: classVariable isClassVariable.
-	self assert: classVariable name equals: #Default.
-	self assert: classVariable parent name equals: #UIManager
+	self assert: classVariable name equals: #SharedVariableToTest.
+	self assert: classVariable parent name equals: self class name
 ]
 
 { #category : 'accessing' }

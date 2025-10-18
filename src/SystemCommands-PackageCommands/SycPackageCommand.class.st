@@ -26,6 +26,12 @@ SycPackageCommand class >> isAbstract [
 	^self = SycPackageCommand
 ]
 
+{ #category : 'private' }
+SycPackageCommand >> morphicUIManager [
+
+	^ MorphicUIManager new
+]
+
 { #category : 'accessing' }
 SycPackageCommand >> packages [
 	^ packages

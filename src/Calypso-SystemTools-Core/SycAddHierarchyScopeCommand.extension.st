@@ -4,7 +4,7 @@ Extension { #name : 'SycAddHierarchyScopeCommand' }
 SycAddHierarchyScopeCommand class >> browserContextMenuActivation [
 	<classAnnotation>
 
-	^ CmdContextMenuActivation byRootGroupItemOrder: 1.5 for: ClyClass asCalypsoItemContext
+	^ SycScopesMenuActivation byRootGroupItemOrder: 1.5 for: ClyClass asCalypsoItemContext
 ]
 
 { #category : '*Calypso-SystemTools-Core' }

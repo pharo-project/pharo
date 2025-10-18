@@ -288,6 +288,12 @@ RubSmalltalkEditor >> browseIt: aKeyboardEvent [
 	^true
 ]
 
+{ #category : 'accessing' }
+RubSmalltalkEditor >> characterAt: anInteger [ 
+	
+	^ self text at: anInteger
+]
+
 { #category : 'menu messages' }
 RubSmalltalkEditor >> classCommentsContainingIt [
 	"Open a browser class comments which contain the current selection somewhere in them."
@@ -804,19 +810,20 @@ RubSmalltalkEditor >> isSmalltalkEditor [
 ]
 
 { #category : 'private' }
-RubSmalltalkEditor >> isWordCharacterAt: index in: aString [
+RubSmalltalkEditor >> isWordCharacterAt: index in: aString except: aBlock [
 	"By default, group alphanumeric and non-alphanumeric separately"
+
 	| character |
 	character := aString at: index.
+	(aBlock value: character) ifTrue: [ ^ false ].
 	"In smalltalk code, colons make part of selectors too and are part of a word"
-	^ character isAlphaNumeric or: [
-		"Check that it is a keyword selector.
+	^ character isAlphaNumeric or: [ 
+		"Check that it is a keyword selector:
 		 - followed by a colon
 		 - but not by an assignment "
-		(character = $_) or: [
-			(character = $:) and: [
-				aString size = index
-					or: [  (aString at: index + 1) ~= $= ] ] ] ]
+		  character = $_ or: [
+			  character = $: and: [
+				  aString size = index or: [ (aString at: index + 1) ~= $= ] ] ] ]
 ]
 
 { #category : 'menu messages' }
@@ -976,15 +983,6 @@ RubSmalltalkEditor >> paste [
 
 	self replace: self selectionInterval with: escapedText and:
 		[self selectAt: self pointIndex]
-]
-
-{ #category : 'editing keys' }
-RubSmalltalkEditor >> pasteInitials: aKeyboardEvent [
-	"Replace the current text selection by an authorship name/date stamp; invoked by cmd-shift-v, easy way to put an authorship stamp in the comments of an editor."
-
-	self closeTypeIn.
-	self replace: self selectionInterval with: (Text fromString: Author changeStamp) and: [self selectAt: self stopIndex].
-	^ true
 ]
 
 { #category : 'do-its' }
@@ -1153,41 +1151,6 @@ RubSmalltalkEditor >> sendersOfIt: aKeyboardEvent [
 
 	self sendersOfIt.
 	^ true
-]
-
-{ #category : 'do-its' }
-RubSmalltalkEditor >> tally: aStream [
-	"Treat the current selection as an expression; evaluate and tally it."
-	| receiver context v compiledMethod profiler |
-	receiver := self doItReceiver.
-	context := self doItContext.
-	
-	compiledMethod := self compile: aStream for: receiver in: context.
-	compiledMethod ifNil: [^ self].
-	profiler := TimeProfiler spyOn: [ v:= compiledMethod valueWithReceiver: receiver].
-	profiler showResult: v
-]
-
-{ #category : 'do-its' }
-RubSmalltalkEditor >> tallyHighlight [
-	"Treat the current highlight as an expression; evaluate and tally it."
-
-	self highlightAndEmptyCheck: [ ^ self ].
-	self tally: self highlightedTextAsStream
-]
-
-{ #category : 'do-its' }
-RubSmalltalkEditor >> tallyIt [
-
-	^ self tallySelection
-]
-
-{ #category : 'do-its' }
-RubSmalltalkEditor >> tallySelection [
-	"Treat the current selection as an expression; evaluate and tally it."
-
-	self expressionSelectAndEmptyCheck: [ ^ self ].
-	self tally: self selection
 ]
 
 { #category : 'completion engine' }

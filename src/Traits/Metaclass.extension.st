@@ -6,6 +6,13 @@ Metaclass >> baseLocalMethods [
 ]
 
 { #category : '*Traits' }
+Metaclass >> basicTraitComposition [
+	"Compatibility method to match TraitedMetaclass."
+
+	^ self traitComposition
+]
+
+{ #category : '*Traits' }
 Metaclass >> initializeBasicMethods [
 
 	"Nothing to do in the metaclass"

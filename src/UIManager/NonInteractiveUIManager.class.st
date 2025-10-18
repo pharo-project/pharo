@@ -116,23 +116,8 @@ NonInteractiveUIManager >> edit: aText label: labelString accept: aBlockOrNil [
 ]
 
 { #category : 'ui requests' }
-NonInteractiveUIManager >> fontFromUser: priorFont [
-	^self nonInteractiveWarning: 'Font Choose Request'
-]
-
-{ #category : 'ui requests' }
 NonInteractiveUIManager >> multiLineRequest: queryString initialAnswer: defaultAnswer answerHeight: answerHeight [
 	^  self nonInteractiveRequest: queryString
-]
-
-{ #category : 'errors' }
-NonInteractiveUIManager >> nonInteractive [
-	^ ErrorNonInteractive signal
-]
-
-{ #category : 'errors' }
-NonInteractiveUIManager >> nonInteractive: anException [
-	^ ErrorNonInteractive signalForException: anException
 ]
 
 { #category : 'non-interactive' }
@@ -166,7 +151,12 @@ NonInteractiveUIManager >> nonInteractiveWarning: aWarnMessage [
 
 { #category : 'ui requests' }
 NonInteractiveUIManager >> request: queryString initialAnswer: defaultAnswer [
-	^ self request: queryString initialAnswer: defaultAnswer title: nil entryCompletion: nil.
+
+	^ self
+		  request: queryString
+		  initialAnswer: defaultAnswer
+		  title: 'Provide the following information'
+		  entryCompletion: nil
 ]
 
 { #category : 'ui requests' }
@@ -176,14 +166,21 @@ NonInteractiveUIManager >> request: queryString initialAnswer: defaultAnswer ent
 
 { #category : 'ui requests' }
 NonInteractiveUIManager >> request: aStringOrText initialAnswer: defaultAnswer title: aTitle [
-	^ self request: aStringOrText initialAnswer: defaultAnswer title: aTitle entryCompletion: nil.
+
+	^ self
+		  request: aStringOrText
+		  initialAnswer: defaultAnswer
+		  title: aTitle
+		  entryCompletion: nil
 ]
 
 { #category : 'ui requests' }
 NonInteractiveUIManager >> request: aStringOrText initialAnswer: defaultAnswer title: aTitle entryCompletion: anEntryCompletion [
-	(ProvideAnswerNotification signal: aStringOrText)
-		ifNotNil: [:answer |
-			^ answer = #default ifTrue: [ defaultAnswer ] ifFalse: [ answer ]].
+
+	(ProvideAnswerNotification signal: aStringOrText) ifNotNil: [ :answer |
+		^ answer = #default
+			  ifTrue: [ defaultAnswer ]
+			  ifFalse: [ answer ] ].
 
 	^ self nonInteractiveRequest: aStringOrText title: aTitle
 ]

@@ -22,8 +22,9 @@ DAPackageDependency class >> from: aSourcePackage to: aDestinationPackage [
 	^ self new initializeFrom: aSourcePackage to: aDestinationPackage
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 DAPackageDependency >> displayString [
+
 	^ String streamContents: [ :stream | self printReasonOn: stream ]
 ]
 

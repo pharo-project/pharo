@@ -14,6 +14,12 @@ MetacelloProjectReferenceSpec >> aboutToCopy [
     self projectReference className
 ]
 
+{ #category : 'visiting' }
+MetacelloProjectReferenceSpec >> acceptVisitor: aVisitor [
+	
+	^ aVisitor visitProjectReference: self
+]
+
 { #category : 'accessing' }
 MetacelloProjectReferenceSpec >> answers: aListOfPairs [
 
@@ -63,15 +69,6 @@ MetacelloProjectReferenceSpec >> includes: aCollection [
 	self shouldNotImplement
 ]
 
-{ #category : 'loading' }
-MetacelloProjectReferenceSpec >> loadUsing: aLoader gofer: ignored [
-
-	| required |
-	required := self resolveToLoadableSpec.
-	required loader: aLoader.
-	^required load
-]
-
 { #category : 'importing' }
 MetacelloProjectReferenceSpec >> mergeImportLoads: aLoadList [
     self projectReference mergeImportLoads: aLoadList
@@ -103,6 +100,28 @@ MetacelloProjectReferenceSpec >> mergeSpec: anotherSpec [
 MetacelloProjectReferenceSpec >> nonOverridable [
 
 	^super nonOverridable, #( projectReference )
+]
+
+{ #category : 'loading' }
+MetacelloProjectReferenceSpec >> packageSpecsInLoadOrder [
+
+	| specs loadedSpecs loads |
+	specs := self projectReference version spec packageSpecsInLoadOrder.
+	loads := self projectReference loadListForVersion:
+		         self projectReference version.
+	loadedSpecs := specs select: [ :each | loads includes: each name ].
+	^ loadedSpecs flatCollect: [ :e | e packageSpecsInLoadOrder ]
+]
+
+{ #category : 'loading' }
+MetacelloProjectReferenceSpec >> packageSpecsInLoadOrderWithEngine: anEngine [
+
+	| specs loadedSpecs loads |
+	specs := self projectReference version spec packageSpecsInLoadOrder.
+	loads := self projectReference loadListForVersion:
+		         self projectReference version.
+	loadedSpecs := specs select: [ :each | loads includes: each name ].
+	^ loadedSpecs flatCollect: [ :e | e packageSpecsInLoadOrder ]
 ]
 
 { #category : 'copying' }
@@ -145,12 +164,6 @@ MetacelloProjectReferenceSpec >> referencedSpec [
 ]
 
 { #category : 'querying' }
-MetacelloProjectReferenceSpec >> relativeCurrentVersion [
-
-	^self projectReference relativeCurrentVersion
-]
-
-{ #category : 'querying' }
 MetacelloProjectReferenceSpec >> repositories [
     ^ self referencedSpec repositories
 ]
@@ -172,16 +185,10 @@ MetacelloProjectReferenceSpec >> requires: aCollection [
 	self shouldNotImplement
 ]
 
-{ #category : 'accessing' }
-MetacelloProjectReferenceSpec >> resolveProjectSpec [
-
-	^self projectReference
-]
-
 { #category : 'private' }
 MetacelloProjectReferenceSpec >> resolveToLoadableSpec [
 
-	^self resolveProjectSpec resolveToLoadableSpec
+	^self projectReference resolveToLoadableSpec
 ]
 
 { #category : 'private' }
@@ -205,7 +212,7 @@ MetacelloProjectReferenceSpec >> version [
 { #category : 'querying' }
 MetacelloProjectReferenceSpec >> versionOrNil [
 
-	^self projectReference versionOrNil
+	^ self projectReference versionOrNil
 ]
 
 { #category : 'accessing' }

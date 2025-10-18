@@ -297,13 +297,14 @@ SycMethodNameEditorPresenter >> getParametersOrder [
 
 { #category : 'initialization' }
 SycMethodNameEditorPresenter >> initializeDialogWindow: aModalPresenter [
+
 	aModalPresenter
-		addButton: 'Rename' do: [ :presenter | self renameMethodAndClose: presenter ];
-		addButton: 'Cancel' do: [ :presenter | presenter beCancel; close ];
-		initialExtent: 600 @ 300 ;
+		initialExtent: 600 @ 300;
 		title: 'Method name editor', (methodName selector
 					ifNil: [ '' ]
-					ifNotNil: [ :selector | ' : "', selector, '"' ])
+					ifNotNil: [ :selector | ' : "', selector, '"' ]);	
+		addButton: 'Cancel' do: [ :presenter | presenter beCancel; close ];
+		addDefaultButton: 'Rename' do: [ :presenter | self renameMethodAndClose: presenter ]
 ]
 
 { #category : 'initialization' }

@@ -26,5 +26,5 @@ RGEnvironment >> hasBindingThatBeginsWith: aString [
 	aName := self nonClassNames
 		findBinary: searchBlock
 		ifNone: [nil].
-	^aName notNil
+	^aName isNotNil
 ]

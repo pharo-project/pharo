@@ -77,11 +77,15 @@ BalloonMorph class >> getTextMorph: aStringOrMorph for: balloonOwner [
 	| m text |
 	aStringOrMorph isMorph
 		ifTrue: [m := aStringOrMorph]
-		ifFalse: [balloonOwner balloonFont
+		ifFalse: [
+			balloonOwner balloonFont
 				ifNil: [text := aStringOrMorph]
-				ifNotNil: [text := Text
+				ifNotNil: [text := 
+					aStringOrMorph isText 
+						ifTrue: [ aStringOrMorph ]
+						ifFalse: [Text
 								string: aStringOrMorph
-								attribute: (TextFontReference toFont: balloonOwner balloonFont)].
+								attribute: (TextFontReference toFont: balloonOwner balloonFont)]].
 			m := (TextMorph new contents: text) centered; color: UITheme current balloonTextColor].
 	m setToAdhereToEdge: #adjustedCenter.
 	^ m

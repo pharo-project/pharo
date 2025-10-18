@@ -30,7 +30,11 @@ QuestionDialogWindow >> answer: anObject [
 QuestionDialogWindow >> newButtons [
 	"Answer new buttons as appropriate."
 
-	^{self newYesButton. self newNoButton. self newCancelButton isDefault: true}
+	^ {
+		self newCancelButton.
+		self newNoButton. 
+		self newYesButton isDefault: true 
+	}
 ]
 
 { #category : 'accessing' }

@@ -37,7 +37,7 @@ ThreadSafeTranscript class >> menuCommandOn: aBuilder [
 		help: 'Transcript';
 		keyText: 'o, t';
 		help: 'Window on the Transcript output stream, which is useful for writing log messages.';
-		icon: (aBuilder iconNamed: self taskbarIconName).
+		iconName: self taskbarIconName.
 	aBuilder withSeparatorAfter
 ]
 

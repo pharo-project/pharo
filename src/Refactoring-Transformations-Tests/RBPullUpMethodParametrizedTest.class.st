@@ -72,20 +72,6 @@ RBPullUpMethodParametrizedTest >> constructor [
 ]
 
 { #category : 'failure tests' }
-RBPullUpMethodParametrizedTest >> testFailureDoesntPullUpReferencesInstVar [
-
-	| refactoring class |
-	class := model classNamed:
-		         ('RBTransformation' , 'RuleTestData1') asSymbol.
-	refactoring := self
-		               createRefactoringWithModel: model
-		               andArguments: {
-				               #( #foo ).
-				               class }.
-	[ self shouldFail: refactoring ] valueSupplyingAnswer: false
-]
-
-{ #category : 'failure tests' }
 RBPullUpMethodParametrizedTest >> testFailurePullUpClassMethod [
 
 	| class |
@@ -284,4 +270,18 @@ RBPullUpMethodParametrizedTest >> testPullUpReferencesInstVar [
 	self assert: (superClass directlyDefinesInstanceVariable: #foo).
 	self deny: (class directlyDefinesMethod: #foo).
 	self deny: (class directlyDefinesInstanceVariable: #foo)
+]
+
+{ #category : 'failure tests' }
+RBPullUpMethodParametrizedTest >> testWarnDoesntPullUpReferencesInstVar [
+
+	| refactoring class |
+	class := model classNamed:
+		         ('RBTransformation' , 'RuleTestData1') asSymbol.
+	refactoring := self
+		               createRefactoringWithModel: model
+		               andArguments: {
+				               #( #foo ).
+				               class }.
+	[ self shouldWarn: refactoring ] valueSupplyingAnswer: false
 ]

@@ -232,7 +232,7 @@ RBParseTreeSearcher >> context [
 { #category : 'accessing' }
 RBParseTreeSearcher >> executeMethod: aParseTree initialAnswer: anObject [
 	answer := anObject.
-	searches detect: [:each | (each performOn: aParseTree) notNil] ifNone: [].
+	searches detect: [:each | (each performOn: aParseTree) isNotNil] ifNone: [].
 	^answer
 ]
 

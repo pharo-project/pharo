@@ -121,7 +121,7 @@ RBPatternVariableNode >> matchLiteral: aNode inContext: aDictionary [
 
 { #category : 'matching' }
 RBPatternVariableNode >> matchStatement: aNode inContext: aDictionary [
-	(aNode parent notNil and: [aNode parent isSequence]) ifFalse: [^false].
+	(aNode parent isNotNil and: [aNode parent isSequence]) ifFalse: [^false].
 	^ self compare: (aDictionary at: self ifAbsentPut: [aNode]) with: aNode
 ]
 

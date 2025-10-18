@@ -100,7 +100,7 @@ RBAddReturnStatementTransformation >> return: anExpression inMethod: aSelector i
 	returnValue := anExpression
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBAddReturnStatementTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

@@ -30,9 +30,10 @@ AllocationTest >> testOneGWordAllocation [
 
 	| sz array failed |
 	"This takes too much time to run"
-	self timeLimit: 1 minutes.
+	self timeLimit: 1 minute.
 	"There is currently a bug in the latest VM opening a native window blocking the execution on Windows. This skip is to make the CI pass again. BUT this is an important issue and should be fixed soon."
-	Smalltalk os isWindows ifTrue: [ self skipOnPharoCITestingEnvironment ].
+	Smalltalk os isWindows ifTrue: [
+		self skipOnPharoCITestingEnvironment ].
 	failed := false.
 	sz := 1024 * 1024 * 1024.
 	array := [ Array new: sz ]

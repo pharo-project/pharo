@@ -25,28 +25,15 @@ ClyTestCommand >> applyResultInContext: aToolContext [
 ]
 
 { #category : 'context menu support' }
-ClyTestCommand >> defaultMenuIcon [
+ClyTestCommand >> defaultMenuIconName [
 
-	^self testResult createIcon
+	^self testResult iconName
 ]
 
 { #category : 'execution' }
 ClyTestCommand >> notifyUserAboutResults: testResult with: message [
 
-	| color |
-	color := Color gray.
-	testResult hasPassed
-		ifTrue: [ color := TestResult defaultColorBackGroundForPassingTest ].
-	testResult hasFailures
-		ifTrue: [ color := TestResult defaultColorBackGroundForFailureTest ].
-	testResult hasErrors
-		ifTrue: [ color := TestResult defaultColorBackGroundForErrorTest ].
-
-	GrowlMorph
-		openWithLabel: message
-		contents: testResult printString
-		backgroundColor: color
-		labelColor: Color black
+	GrowlMorph showTestResult: testResult with: message
 ]
 
 { #category : 'tests' }

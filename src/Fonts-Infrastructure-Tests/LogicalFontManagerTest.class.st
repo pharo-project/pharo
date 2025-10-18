@@ -13,7 +13,7 @@ Class {
 LogicalFontManagerTest >> currentProviderOrError [
 	| provider |
 	provider := FreeTypeFontProvider readSlotNamed: #current.
-	self assert: provider notNil.
+	self assert: provider isNotNil.
 	^ provider
 ]
 

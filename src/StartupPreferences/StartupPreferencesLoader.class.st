@@ -5,7 +5,6 @@ StartupPreferencesLoader looks within such locations for a 'pharo' folder. This 
 
 .../some/folders/pharo/Content/Resources/pharo.image.
 .../some/folders/pharo/Content/Resources/startup.st
-.../some/folders/.config/pharo/author.st
 .../some/folders/.config/pharo/useSharedCache.st
 .../some/folders/.config/pharo/1.4/mystartupFor14only.st
 .../some/folders/.config/pharo/2.0/mystartupFor20only.st
@@ -54,10 +53,6 @@ EXAMPLE 2
 	"" it's my personal script provided as example""
 	| items |
 	items := OrderedCollection new.
-	items add: (StartupAction name: 'Set the Author' code: [ Author fullName: Author fullName printString ]). ""replace it by your name""
-	
-	StartupPreferencesLoader default addAtStartupInPreferenceVersionFolder: items named: 'author.st'.
-	items removeAll.
 	
 	items add: (StartupAction name: 'Dragging Option' code: [ UITheme defaultSettings fastDragging: true ]).
 	items add: (StartupAction name: 'Dialog Auto Accept' code: [ TextEditorDialogWindow autoAccept: true ]).

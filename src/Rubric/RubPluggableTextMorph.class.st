@@ -145,7 +145,7 @@ RubPluggableTextMorph >> promptForCancel [
 	would be overwritten."
 
 	| choice |
-	choice := UIManager default
+	choice := self morphicUIManager
 		confirm: 'Contents has been modified.\What do you want to do?' translated withCRs
 		trueChoice: 'Accept' translated
 		falseChoice: 'Discard' translated

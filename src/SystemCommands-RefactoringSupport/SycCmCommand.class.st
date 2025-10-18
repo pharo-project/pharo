@@ -55,6 +55,13 @@ SycCmCommand class >> addMenuItemsTo: menuMorph onContext: context [
 	^ menuMorph
 ]
 
+{ #category : 'default' }
+SycCmCommand class >> defaultDescription [
+	"Answer a <String> describing the receiver, useful for instance in menu items pop-ups"
+
+	^ self comment
+]
+
 { #category : 'execution' }
 SycCmCommand >> applyCommandResult [
 ]

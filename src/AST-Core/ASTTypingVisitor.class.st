@@ -43,7 +43,7 @@ Class {
 { #category : 'benchmarking' }
 ASTTypingVisitor class >> bench: trees [
 
-	| report valueNodes duration count visitor steps moreTrees knownMethods |
+	| report valueNodes milliseconds count visitor steps moreTrees knownMethods |
 	report := WriteStream on: ''.
 	report
 		nextPutAll: 'Number of AST: ';
@@ -57,12 +57,12 @@ ASTTypingVisitor class >> bench: trees [
 		cr.
 
 	valueNodes do: [ :node | node removeProperty: #type ifAbsent: [  ] ].
-	duration := [ trees do: [ :tree | self new visit: tree ] ] timeToRun.
+	milliseconds := [ trees do: [ :tree | self new visit: tree ] ] millisecondsToRun.
 	report
 		nextPutAll: 'Individual typing';
 		cr;
-		nextPutAll: '  duration:';
-		print: duration;
+		nextPutAll: '  milliseconds ';
+		print: milliseconds;
 		cr;
 		nextPutAll: '  typed nodes: ';
 		nextPutAll: (self printTypedNodeCount: valueNodes);
@@ -70,13 +70,13 @@ ASTTypingVisitor class >> bench: trees [
 
 	valueNodes do: [ :node | node removeProperty: #type ifAbsent: [  ] ].
 	visitor := self new.
-	duration := [ trees do: [ :tree | visitor visit: tree ] ] timeToRun.
+	milliseconds := [ trees do: [ :tree | visitor visit: tree ] ] millisecondsToRun.
 	count := valueNodes count: [ :x | x hasProperty: #type ].
 	report
-		nextPutAll: 'Agretated typing';
+		nextPutAll: 'Agregated typing';
 		cr;
-		nextPutAll: '  duration:';
-		print: duration;
+		nextPutAll: '  milliseconds:';
+		print: milliseconds;
 		cr;
 		nextPutAll: '  typed nodes: ';
 		nextPutAll: (self printTypedNodeCount: valueNodes);
@@ -85,18 +85,18 @@ ASTTypingVisitor class >> bench: trees [
 	valueNodes do: [ :node | node removeProperty: #type ifAbsent: [  ] ].
 	visitor := self new.
 	steps := 0.
-	duration := [
+	milliseconds := [
 	            [
 	            steps := steps + 1.
 	            visitor dirty: false.
 	            trees do: [ :tree | visitor visit: tree ].
-	            visitor dirty ] whileTrue ] timeToRun.
+	            visitor dirty ] whileTrue ] millisecondsToRun.
 	count := valueNodes count: [ :x | x hasProperty: #type ].
 	report
 		nextPutAll: '+fixed point typing';
 		cr;
 		nextPutAll: '  duration:';
-		print: duration;
+		print: milliseconds;
 		cr;
 		nextPutAll: '  steps:';
 		print: steps;
@@ -109,18 +109,18 @@ ASTTypingVisitor class >> bench: trees [
 	visitor := self new.
 	visitor cha: true.
 	steps := 0.
-	duration := [
+	milliseconds := [
 	            [
 	            steps := steps + 1.
 	            visitor dirty: false.
 	            trees do: [ :tree | visitor visit: tree ].
-	            visitor dirty ] whileTrue ] timeToRun.
+	            visitor dirty ] whileTrue ] millisecondsToRun.
 	count := valueNodes count: [ :x | x hasProperty: #type ].
 	report
 		nextPutAll: '+CHA';
 		cr;
-		nextPutAll: '  duration:';
-		print: duration;
+		nextPutAll: '  milliseconds:';
+		print: milliseconds;
 		cr;
 		nextPutAll: '  steps:';
 		print: steps;
@@ -139,18 +139,18 @@ ASTTypingVisitor class >> bench: trees [
 	visitor := self new.
 	visitor cha: true.
 	steps := 0.
-	duration := [
+	milliseconds := [
 	            [
 	            steps := steps + 1.
 	            visitor dirty: false.
 	            moreTrees do: [ :tree | visitor visit: tree ].
-	            visitor dirty ] whileTrue ] timeToRun.
+	            visitor dirty ] whileTrue ] millisecondsToRun.
 	count := valueNodes count: [ :x | x hasProperty: #type ].
 	report
 		nextPutAll: '+CHA';
 		cr;
-		nextPutAll: '  duration:';
-		print: duration;
+		nextPutAll: '  milliseconds:';
+		print: milliseconds;
 		cr;
 		nextPutAll: '  steps:';
 		print: steps;

@@ -131,7 +131,7 @@ FFIExternalEnumerationType >> readFieldAt: byteOffset [
 
 { #category : 'accessing' }
 FFIExternalEnumerationType >> representationType [
-	^ representationType
+	^ representationType ifNil: [ representationType := FFIUInt32 new ]
 ]
 
 { #category : 'accessing' }

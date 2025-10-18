@@ -31,14 +31,6 @@ LoadableProject class >> allProjects [
 				group: #default;
 				yourself.
 			self new
-				name: 'Beautiful Comments';
-				baselineName: 'BeautifulComments';
-				repository: 'pillar-markup/BeautifulComments';
-				version: 'master';
-				summary: 'A nice extension of Pharo to support class comments in Microdown and nice rendering.';
-				group: #default;
-				yourself.
-			self new
 				name: 'Serial Port Support';
 				baselineName: 'SerialPort';
 				repository: 'tesonep/SerialPort';

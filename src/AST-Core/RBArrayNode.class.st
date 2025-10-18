@@ -98,9 +98,10 @@ RBArrayNode >> addNodesFirst: aCollection [
 
 { #category : 'accessing' }
 RBArrayNode >> allStatements [
-	^ statements asOrderedCollection copy
-			addAll: super allStatements;
-			yourself
+
+	^ (OrderedCollection withAll: statements)
+		  addAll: super allStatements;
+		  yourself
 ]
 
 { #category : 'accessing' }
@@ -125,6 +126,12 @@ RBArrayNode >> equalTo: anObject withMapping: aDictionary [
 	aDictionary values asSet size = aDictionary size
 		ifFalse: [ ^ false ].
 	^ true
+]
+
+{ #category : 'testing' }
+RBArrayNode >> hasBlock [
+
+	^ statements anySatisfy: [ :stm | stm hasBlock ]
 ]
 
 { #category : 'comparing' }
@@ -166,9 +173,16 @@ RBArrayNode >> isFaulty [
 ]
 
 { #category : 'testing' }
+RBArrayNode >> isUsingAsReturnValue: aNode [
+	^ (statements anySatisfy: [ :each | each == aNode ]) or: [ self isUsedAsReturnValue ]
+]
+
+{ #category : 'testing' }
 RBArrayNode >> lastIsReturn [
-	statements isEmpty ifTrue:[ ^false ].
-	^statements last lastIsReturn
+
+	^ statements isEmpty
+		  ifTrue: [ false ]
+		  ifFalse: [ statements last lastIsReturn ]
 ]
 
 { #category : 'accessing - token' }
@@ -260,9 +274,4 @@ RBArrayNode >> statements: statements0 [
 { #category : 'accessing' }
 RBArrayNode >> stopWithoutParentheses [
 	^ right
-]
-
-{ #category : 'testing' }
-RBArrayNode >> uses: aNode [
-	^ (statements anySatisfy: [ :each | each == aNode ]) or: [ self isUsed ]
 ]

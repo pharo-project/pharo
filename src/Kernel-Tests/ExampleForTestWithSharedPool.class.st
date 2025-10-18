@@ -3,9 +3,9 @@ I am class for testing
 "
 Class {
 	#name : 'ExampleForTestWithSharedPool',
-	#superclass : 'ArrayedCollection',
+	#superclass : 'Object',
 	#pools : [
-		'ChronologyConstants'
+		'PoolDefiner'
 	],
 	#category : 'Kernel-Tests-Classes',
 	#package : 'Kernel-Tests',

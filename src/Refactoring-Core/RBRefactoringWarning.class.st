@@ -6,7 +6,8 @@ Class {
 	#name : 'RBRefactoringWarning',
 	#superclass : 'Notification',
 	#instVars : [
-		'actionBlock'
+		'actionBlock',
+		'failedPreconditions'
 	],
 	#category : 'Refactoring-Core-Support',
 	#package : 'Refactoring-Core',
@@ -20,6 +21,19 @@ RBRefactoringWarning class >> signal: aString with: aBlock [
 		signal: aString
 ]
 
+{ #category : 'signalling' }
+RBRefactoringWarning class >> signalFor: failingConditions [
+	| errorStrings |
+	errorStrings := String streamContents: [ :aStream |
+		                failingConditions do: [ :cond |
+			                cond violationMessageOn: aStream ] ].
+	
+	^ self new
+		failedPreconditions: failingConditions;
+		messageText: errorStrings;
+		signal	
+]
+
 { #category : 'accessing' }
 RBRefactoringWarning >> actionBlock [
 
@@ -30,4 +44,16 @@ RBRefactoringWarning >> actionBlock [
 RBRefactoringWarning >> actionBlock: anObject [
 
 	actionBlock := anObject
+]
+
+{ #category : 'accessing' }
+RBRefactoringWarning >> failedPreconditions [
+
+	^ failedPreconditions
+]
+
+{ #category : 'accessing' }
+RBRefactoringWarning >> failedPreconditions: anObject [
+
+	failedPreconditions := anObject
 ]

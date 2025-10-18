@@ -44,6 +44,13 @@ ByteArray class >> readHexFrom: aString [
 	^(self new: aString size // 2) readHexFrom: aString readStream
 ]
 
+{ #category : 'comparing' }
+ByteArray >> = anotherByteArray [
+
+	<primitive: 156>
+	^ super = anotherByteArray
+]
+
 { #category : 'converting' }
 ByteArray >> asByteArray [
 	^ self
@@ -256,6 +263,12 @@ ByteArray >> isLiteral [
 	^ self class == ByteArray
 ]
 
+{ #category : 'comparing' }
+ByteArray >> literalEqual: other [
+
+	^ self class == other class and: [self = other]
+]
+
 { #category : 'platform independent access' }
 ByteArray >> longAt: index bigEndian: aBool [
 	"Return a 32bit integer quantity starting from the given byte index"
@@ -369,7 +382,7 @@ ByteArray >> shortAt: index put: value bigEndian: aBool [
 	^value
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 ByteArray >> storeOn: aStream [
 	aStream nextPutAll: '#['.
 	self

@@ -29,6 +29,12 @@ EpPackageTagChange class >> tagName: aName packageName: aPackageName [
 ]
 
 { #category : 'accessing' }
+EpPackageTagChange >> affectedName [
+
+	^ self packageName
+]
+
+{ #category : 'accessing' }
 EpPackageTagChange >> affectedPackageName [
 
 	^ packageName

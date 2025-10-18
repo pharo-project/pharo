@@ -26,7 +26,7 @@ SycCmAddSubclassCommand >> icon [
 { #category : 'testing' }
 SycCmAddSubclassCommand >> isApplicable [
 
-	^ true
+	^ context lastSelectedClass isTrait not
 ]
 
 { #category : 'accessing' }

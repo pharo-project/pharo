@@ -359,7 +359,7 @@ WidgetExample class >> exampleTextEntryWithCompletionDialog [
 			                   currText size > 3 and: [
 					                   currApplicant asUppercase includesSubstring:
 							                   currText asString asUppercase ] ].
-	UIManager default
+	MorphicUIManager new
 		request: 'Enter a class name fragment (at least 4 characters)'
 		initialAnswer: ''
 		title: 'Text entry with completion example: simple find a class'

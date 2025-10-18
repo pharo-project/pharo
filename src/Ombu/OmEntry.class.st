@@ -60,6 +60,16 @@ OmEntry >> isEmpty [
 	^ false
 ]
 
+{ #category : 'testing' }
+OmEntry >> matches: aString [ 
+	"Answer <true> if the receiver is a code change and its contents name matches aString"
+	
+	| epEvent |
+	
+	epEvent := self content.
+	^ epEvent isCodeChange and: [ epEvent matches: aString ]
+]
+
 { #category : 'printing' }
 OmEntry >> printOn: aStream [
 	super printOn: aStream.

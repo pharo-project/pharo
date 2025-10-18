@@ -13,6 +13,11 @@ Class {
 }
 
 { #category : 'accessing' }
+AuthorNameRequest class >> isDeprecated [
+	^ true
+]
+
+{ #category : 'accessing' }
 AuthorNameRequest class >> messagePrompt [
 	^
 'Please type your full name.
@@ -23,10 +28,7 @@ Spaces, accents, dashes, underscore and similar characters are not allowed
 
 { #category : 'exception handling' }
 AuthorNameRequest >> defaultAction [
-	^ UIManager default
-			request: self messagePrompt
-			initialAnswer: initialAnswer
-			title: 'Author identification'
+	^ nil
 ]
 
 { #category : 'accessing' }

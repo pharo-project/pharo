@@ -61,7 +61,6 @@ MCMockDependency >> mockVersionInfo [
 		message: ''
 		date: nil
 		time: nil
-		author: ''
 		ancestors: #()
 ]
 

@@ -61,7 +61,7 @@ SocketAddress class >> zero [
 SocketAddress >> asSocketAddress [
 ]
 
-{ #category : 'printing' }
+{ #category : 'displaying' }
 SocketAddress >> displayStringOn: stream [
 	"Overwrite to get standard object behaviour"
 

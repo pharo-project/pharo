@@ -1,6 +1,6 @@
 Class {
 	#name : 'MetacelloNameNotDefinedError',
-	#superclass : 'Error',
+	#superclass : 'MetacelloError',
 	#category : 'Metacello-Core-Exceptions-Errors',
 	#package : 'Metacello-Core',
 	#tag : 'Exceptions-Errors'

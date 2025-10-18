@@ -360,7 +360,7 @@ ColorForm >> setExtent: extent depth: bitsPerPixel [
 	super setExtent: extent depth: bitsPerPixel
 ]
 
-{ #category : 'file in/out' }
+{ #category : 'storing' }
 ColorForm >> storeOn: aStream [
 	aStream nextPut: $(.
 	super storeOn: aStream.

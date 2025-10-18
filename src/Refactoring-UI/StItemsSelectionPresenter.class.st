@@ -44,7 +44,8 @@ StItemsSelectionPresenter class >> defaultLayout [
 StItemsSelectionPresenter class >> label: aString withItems: items selecting: selectedItems [
 	^ self new
 		label: aString withItems: items selecting: selectedItems;
-		openBlockedDialog
+		openBlockedDialog;
+		yourself 
 ]
 
 { #category : 'actions' }
@@ -59,6 +60,12 @@ StItemsSelectionPresenter >> accept: presenter [
 	presenter
 				beOk;
 				close
+]
+
+{ #category : 'TOREMOVE' }
+StItemsSelectionPresenter >> cancelled [ 
+
+	^ self window cancelled 
 ]
 
 { #category : 'attributes' }
@@ -88,12 +95,10 @@ StItemsSelectionPresenter >> connectPresenters [
 
 { #category : 'initialization' }
 StItemsSelectionPresenter >> initializeDialogWindow: aModalPresenter [
+	
 	aModalPresenter
-		addButton: 'Refactor' do: [ :presenter | self accept: presenter ];
-		addButton: 'Cancel' do: [ :presenter |
-			presenter
-				beCancel;
-				close ]
+		addButton: 'Cancel' do: [ :presenter | presenter beCancel; close ];
+		addDefaultButton: 'Refactor' do: [ :presenter | self accept: presenter ]
 ]
 
 { #category : 'initialization - deprecated' }

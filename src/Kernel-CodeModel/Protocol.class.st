@@ -17,13 +17,6 @@ Class {
 }
 
 { #category : 'instance creation' }
-Protocol class >> name: aString [
-
-	self deprecated: 'Use #named: instead' transformWith: '`@rcv name: `@arg' -> '`@rcv named: `@arg'.
-	^ self named: aString
-]
-
-{ #category : 'instance creation' }
 Protocol class >> name: aString methodSelectors: methods [
 
 	^ (self named: aString)

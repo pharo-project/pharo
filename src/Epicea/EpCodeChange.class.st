@@ -16,6 +16,11 @@ EpCodeChange class >> isAbstract [
 ]
 
 { #category : 'accessing' }
+EpCodeChange >> affectedName [
+	^ self behaviorAffectedName.
+]
+
+{ #category : 'accessing' }
 EpCodeChange >> affectedPackageName [
 
 	^ self subclassResponsibility
@@ -31,4 +36,11 @@ EpCodeChange >> doesOverride: aCodeChange [
 EpCodeChange >> isCodeChange [
 
 	^ true
+]
+
+{ #category : 'testing' }
+EpCodeChange >> matches: aString [ 
+	"Answer <true> if the receiver affected name matches aString"
+	
+	^ self affectedName asLowercase beginsWith: aString asLowercase
 ]

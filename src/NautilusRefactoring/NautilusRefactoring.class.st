@@ -31,7 +31,7 @@ NautilusRefactoring >> chooseFrom: anArray title: aString lines: aCollection [
 		ifTrue: [ ^ nil ].
 	anArray size = 1
 		ifTrue: [ ^ anArray first ].
-	^ UIManager default chooseOrRequestFrom: anArray lines: aCollection title: aString
+	^ self morphicUIManager chooseOrRequestFrom: anArray lines: aCollection title: aString
 ]
 
 { #category : 'display' }
@@ -60,6 +60,12 @@ NautilusRefactoring >> model [
 { #category : 'accessing' }
 NautilusRefactoring >> model: aNautilusUI [
 	model := aNautilusUI
+]
+
+{ #category : 'display' }
+NautilusRefactoring >> morphicUIManager [
+
+	^ MorphicUIManager new
 ]
 
 { #category : 'option' }
@@ -92,9 +98,12 @@ NautilusRefactoring >> request: aString [
 
 { #category : 'display' }
 NautilusRefactoring >> request: requestString initialAnswer: initialAnswerString [
+
 	| answer |
-	answer := UIManager default request: requestString initialAnswer: initialAnswerString.
-	answer isEmptyOrNil ifTrue:  [ RefactoringAborted signal ].
+	answer := self morphicUIManager
+		          request: requestString
+		          initialAnswer: initialAnswerString.
+	answer isEmptyOrNil ifTrue: [ RefactoringAborted signal ].
 	^ answer
 ]
 
@@ -167,10 +176,12 @@ NautilusRefactoring >> shouldOverride: aSelector in: aClass [
 
 { #category : 'option' }
 NautilusRefactoring >> shouldSearchInHierarchy: class [
+
 	^ class subclasses
-		ifNotEmpty: [
-			UIManager default
-				confirm: 'Do you want to search occurrences in the whole hierarchy?'
-				label: 'Warning'
-		] ifEmpty: [ false ]
+		  ifNotEmpty: [
+			  self morphicUIManager
+				  confirm:
+				  'Do you want to search occurrences in the whole hierarchy?'
+				  label: 'Warning' ]
+		  ifEmpty: [ false ]
 ]

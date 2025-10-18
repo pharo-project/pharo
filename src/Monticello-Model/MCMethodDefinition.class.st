@@ -218,7 +218,7 @@ MCMethodDefinition >> isInitializer [
 
 { #category : 'testing' }
 MCMethodDefinition >> isLoadable [
-	^self actualClass notNil
+	^self actualClass isNotNil
 ]
 
 { #category : 'testing' }

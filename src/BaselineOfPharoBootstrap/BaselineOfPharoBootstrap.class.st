@@ -94,7 +94,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Kernel'.
 		spec package: 'Kernel-CodeModel'.
 		spec package: 'Kernel-BytecodeEncoders'.
-		spec package: 'Kernel-Chronology-Extras'.
+		spec package: 'System-Time'.
 		spec package: 'NumberParser'.
 
 		spec package: 'Math-Operations-Extensions'.
@@ -124,7 +124,11 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Zinc-Character-Encoding-Core'.
 		
 		spec package: 'FFI-Kernel'.
-				
+		
+		"Minimal command line handler for bootstrap.
+		Only using perform and environment #at:"
+		spec package: 'PerformMessageCommandLineHandler'.
+		
 		spec package: 'CodeImport'.
 		
 		spec package: 'CodeImportCommandLineHandlers'.
@@ -135,10 +139,12 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'FileSystem-Core'.
 		spec package: 'FileSystem-Disk'.
 
+		spec package: 'System-NumberPrinting'.
 		spec package: 'SUnit-Core'.
 		spec package: 'SUnit-Tests'.
 		spec package: 'Kernel-Tests'.
 		spec package: 'JenkinsTools-Core'.
+		spec package: 'System-Model'.
 		spec package: 'InitializePackagesCommandLineHandler'.
 		
 
@@ -172,6 +178,8 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'System-Platforms'.
 			'System-SessionManager'.
 			'System-Sources'.
+			
+			'PerformMessageCommandLineHandler'.
 			'System-Support'.
 			'NumberParser'.
 
@@ -183,9 +191,10 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec group: 'AdditionalPackages' with: {
 			'ReflectionMirrors-Primitives'.
 			'InitializePackagesCommandLineHandler'.
-			'Kernel-Chronology-Extras'.
+			'System-Time'.
 			'Math-Operations-Extensions'.
 			'Debugging-Core'.
+			'System-NumberPrinting'.
 		}.
 
 		spec group: 'MultilingualGroup' with: {
@@ -219,6 +228,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		}.
 
 		spec group: 'SUnitGroup' with: {
+			'System-Model'.
 			'SUnit-Core'.
 			'SUnit-Tests'.
 			'Kernel-Tests'.

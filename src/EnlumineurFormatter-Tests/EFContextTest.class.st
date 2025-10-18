@@ -6,6 +6,16 @@ Class {
 }
 
 { #category : 'tests' }
+EFContextTest >> testMultiLineMessagesClassSide [
+
+	| messageList |
+	
+	messageList := self class compiler evaluate: EFFormatter multiLineMessages.
+	self assert: (messageList includes: #ifTrue:).  
+	self assert: (messageList includes: #ifFalse:).
+]
+
+{ #category : 'tests' }
 EFContextTest >> testNumberOfSpaces [
 
 	| context |
@@ -25,6 +35,10 @@ EFContextTest >> testOneLineMessage [
 { #category : 'tests' }
 EFContextTest >> testOneLineMessageClassSide [
 
-	self assert: (EFFormatter oneLineMessages includes: #to:).  
-	self assert: (EFFormatter oneLineMessages includes: #to:do:).
+	| messageList |
+	
+	messageList := self class compiler evaluate: EFFormatter oneLineMessages.
+	self assert: (messageList includes: #to:).  
+	self assert: (messageList includes: #to:do:).
+
 ]

@@ -33,40 +33,69 @@ OSWindowMorphicEventHandler class >> initialize [
 	"
 	self initialize
 	"
-	super initialize.
+
 	SymbolCharacterMapping := Dictionary new.
 	{
-	 OSK_RETURN . Character cr.
-	 OSK_BACKSPACE . Character backspace.
-	 OSK_TAB . Character tab.
-	 OSK_HOME . Character home.
-	 OSK_LEFT . Character arrowLeft.
-	 OSK_UP . Character arrowUp.
-	 OSK_RIGHT . Character arrowRight.
-	 OSK_DOWN . Character arrowDown.
-	 OSK_END . Character end.
-	 OSK_INSERT . Character insert.
-	 OSK_PAGEUP . Character pageUp.
-	 OSK_PAGEDOWN . Character pageDown.
-	 OSK_DELETE. Character delete.
+		OSK_RETURN.
+		Character cr.
+		OSK_BACKSPACE.
+		Character backspace.
+		OSK_TAB.
+		Character tab.
+		OSK_HOME.
+		Character home.
+		OSK_LEFT.
+		Character arrowLeft.
+		OSK_UP.
+		Character arrowUp.
+		OSK_RIGHT.
+		Character arrowRight.
+		OSK_DOWN.
+		Character arrowDown.
+		OSK_END.
+		Character end.
+		OSK_INSERT.
+		Character insert.
+		OSK_PAGEUP.
+		Character pageUp.
+		OSK_PAGEDOWN.
+		Character pageDown.
+		OSK_DELETE.
+		Character delete.
 
-	 OSK_KP_0 . $0.
-	 OSK_KP_1 . $1.
-	 OSK_KP_2 . $2.
-	 OSK_KP_3 . $3.
-	 OSK_KP_4 . $4.
-	 OSK_KP_5 . $5.
-	 OSK_KP_6 . $6.
-	 OSK_KP_7 . $7.
-	 OSK_KP_8 . $8.
-	 OSK_KP_9 . $9.
-	 OSK_KP_DIVIDE . $/.
-	 OSK_KP_MULTIPLY . $*.
-	 OSK_KP_PLUS . $+.
-	 OSK_KP_MINUS . $-.
-	 OSK_KP_ENTER . Character cr.
-	 OSK_KP_PERIOD . $..
-	} pairsDo: [ :key :val | SymbolCharacterMapping at: key put: val charCode ]
+		OSK_KP_0.
+		$0.
+		OSK_KP_1.
+		$1.
+		OSK_KP_2.
+		$2.
+		OSK_KP_3.
+		$3.
+		OSK_KP_4.
+		$4.
+		OSK_KP_5.
+		$5.
+		OSK_KP_6.
+		$6.
+		OSK_KP_7.
+		$7.
+		OSK_KP_8.
+		$8.
+		OSK_KP_9.
+		$9.
+		OSK_KP_DIVIDE.
+		$/.
+		OSK_KP_MULTIPLY.
+		$*.
+		OSK_KP_PLUS.
+		$+.
+		OSK_KP_MINUS.
+		$-.
+		OSK_KP_ENTER.
+		Character cr.
+		OSK_KP_PERIOD.
+		$. } pairsDo: [ :key :val |
+		SymbolCharacterMapping at: key put: val charCode ]
 ]
 
 { #category : 'event testing' }
@@ -126,6 +155,16 @@ OSWindowMorphicEventHandler >> convertModifiers: modifiers [
 OSWindowMorphicEventHandler >> convertPosition: aPosition [
 	morphicWorld ifNil: [ ^ aPosition ].
 	^ morphicWorld worldState worldRenderer convertWindowMouseEventPosition: aPosition
+]
+
+{ #category : 'converting' }
+OSWindowMorphicEventHandler >> convertText: aString [
+
+	"I convert the string if some well-known problematic characters are found.
+	Currently I am converting the 'Modifier Letter Circumflex Accent (U+02C6) without a modifying character to the circunflex (U+005E).
+	See issue #16132'"
+	
+	^ aString copy replaceAll: (Character value: 16r02C6) with: $^.
 ]
 
 { #category : 'events' }
@@ -294,6 +333,7 @@ OSWindowMorphicEventHandler >> visitTextEditingEvent: anEvent [
 { #category : 'visiting' }
 OSWindowMorphicEventHandler >> visitTextInputEvent: anEvent [
 	anEvent text ifNil: [ ^ nil ].
+	
 	(anEvent text size = 1 and: [ anEvent text first codePoint < 128 ])
 		ifTrue: [
 			| char mods |
@@ -315,7 +355,7 @@ OSWindowMorphicEventHandler >> visitTextInputEvent: anEvent [
 			^ TextInputEvent new
 				  setHand: self activeHand;
 				  setPosition: (self convertPosition: anEvent position);
-				  text: anEvent text;
+				  text: (self convertText: anEvent text);
 				  wasHandled: false ]
 ]
 

@@ -16,7 +16,7 @@ SycInlineMethodCommand class >> canBeExecutedInContext: aSourceCodeContext [
 			  aSourceCodeContext isMessageSelected ] ]
 ]
 
-{ #category : 'execution' }
+{ #category : 'converting' }
 SycInlineMethodCommand >> asRefactorings [
 
 	^ { ((RBInlineMethodRefactoring
@@ -24,9 +24,7 @@ SycInlineMethodCommand >> asRefactorings [
 		    inMethod: method selector
 		    forClass: method origin)
 		   setOption: #inlineExpression toUse: [ :ref :aString |
-			   (self confirm:
-					('Do you want to extract the expression ''<1s>'' into a variable in the current method?'
-					 	expandMacrosWith: aString)) not ];
+			   (self 	confirm: 	('Do you want to inline the expression ''<1s>'' in the current method?' expandMacrosWith: aString)) not ];
 		   yourself) }
 ]
 

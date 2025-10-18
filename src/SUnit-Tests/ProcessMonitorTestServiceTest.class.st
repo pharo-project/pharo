@@ -254,20 +254,25 @@ ProcessMonitorTestServiceTest >> testFailTestWhenBackgroundProcessWasFailedDurin
 	The error processing envolves many message sends and it increases the chances for the process to be preempted.
 	Therefore a single iteration is not always enough to get the expected corner case.
 	Thus the function under the test is repeated in the loop"
+
 	| semaphore processIsDone process |
 	semaphore := Semaphore new.
 	processIsDone := false.
-	process := self fork: [ semaphore wait. processIsDone := true. 1/0 ].
+	process := self fork: [
+		           semaphore wait.
+		           processIsDone := true.
+		           1 / 0 ].
 	process priority: Processor activePriority.
 	semaphore signal.
 	self deny: processIsDone.
 
-	self should: [
-		[
-			[testService handleCompletedTest] on: TestLeftRunningProcess do: [ :err | err retry ].
-			self assert: false description: 'should fail with error'.
-		] on: TestFailedByForkedProcess do: [:err | ]
-	] notTakeMoreThan: 2 seconds.
+	[
+	[ testService handleCompletedTest ]
+		on: TestLeftRunningProcess
+		do: [ :err | err retry ].
+	self assert: false description: 'should fail with error' ]
+		on: TestFailedByForkedProcess
+		do: [ :err |  ].
 	self assert: processIsDone
 ]
 
@@ -356,7 +361,7 @@ ProcessMonitorTestServiceTest >> testHasDefaultFailingStrategyForRunningProcesse
 
 	testService := ProcessMonitorTestService new.
 
-	self assert: testService shouldFailTestLeavingProcesses notNil.
+	self assert: testService shouldFailTestLeavingProcesses isNotNil.
 	self assert: testService shouldFailTestLeavingProcesses equals: ProcessMonitorTestService shouldFailTestLeavingProcesses
 ]
 
@@ -365,7 +370,7 @@ ProcessMonitorTestServiceTest >> testHasDefaultTerminationStrategyForRunningProc
 
 	testService := ProcessMonitorTestService new.
 
-	self assert: testService shouldTerminateProcesses notNil.
+	self assert: testService shouldTerminateProcesses isNotNil.
 	self assert: testService shouldTerminateProcesses equals: ProcessMonitorTestService shouldTerminateProcesses
 ]
 

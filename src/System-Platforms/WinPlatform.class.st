@@ -86,7 +86,7 @@ WinPlatform >> getTempPath [
 { #category : 'file paths' }
 WinPlatform >> getTempPath: bufferLength buffer: buffer [
 
-    self ffiCall: #(long GetTempPath2W(long bufferLength,
+    self ffiCall: #(long GetTempPathW(long bufferLength,
                             void*  buffer))
 ]
 

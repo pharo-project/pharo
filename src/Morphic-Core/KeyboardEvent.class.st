@@ -227,7 +227,7 @@ KeyboardEvent >> setType: aSymbol buttons: anInteger position: pos keyValue: aVa
 	timeStamp := stamp
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 KeyboardEvent >> storeOn: aStream [
 
 	aStream nextPutAll: type.

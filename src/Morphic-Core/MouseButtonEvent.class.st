@@ -63,7 +63,7 @@ MouseButtonEvent >> setType: evtType position: evtPos which: button buttons: evt
 	timeStamp := stamp
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 MouseButtonEvent >> storeOn: aStream [
 	super storeOn: aStream.
 	aStream space.

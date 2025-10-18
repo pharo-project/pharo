@@ -261,7 +261,7 @@ FT2Face >> ffiGetCharIndex: charIndex [
 { #category : 'private - ffi' }
 FT2Face >> ffiGetKerningLeft: left_glyph right: right_glyph result: akerning [
 
-	self ffiCall: #(FT_Error FT_Get_Kerning(self, FT_UInt left_glyph, FT_UInt right_glyph, 2, FT_Vector *akerning ))
+	self ffiCall: #(FT_Error FT_Get_Kerning(self, FT_UInt left_glyph, FT_UInt right_glyph, FT_UInt 2, FT_Vector *akerning ))
 ]
 
 { #category : 'private - ffi' }

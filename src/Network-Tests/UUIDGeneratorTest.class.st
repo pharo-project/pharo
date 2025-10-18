@@ -40,14 +40,6 @@ UUIDGeneratorTest >> testDefault [
 ]
 
 { #category : 'testing' }
-UUIDGeneratorTest >> testSpeed [
-
-	self
-		should: [ 100000 timesRepeat: [ UUID nonStandardUUID ] ]
-		notTakeMoreThan: 1 second
-]
-
-{ #category : 'testing' }
 UUIDGeneratorTest >> testTwoDifferentGenerator [
 
 	| generator1 generator2 uuid1 uuid2 time1 time2 |

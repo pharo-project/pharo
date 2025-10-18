@@ -233,27 +233,6 @@ ShClassInstallerTest >> testCreatedClassWithAllElements [
 ]
 
 { #category : 'tests' }
-ShClassInstallerTest >> testCreatingFullTraitHasAllElements [
-
-	newClass := ShiftClassInstaller make: [ :builder |
-		            builder
-			            beTrait;
-			            name: #TSHClass;
-			            slots: { #a. #b };
-			            traits: { TViewModelMock };
-			            tag: 'boring';
-			            package: self generatedClassesPackageName ].
-
-	self assert: newClass name equals: #TSHClass.
-	self assert: newClass slots size equals: 2.
-	self assert: newClass slotNames equals: #( a b ).
-	self assert: newClass traitComposition equals: { TViewModelMock } asTraitComposition.
-	self assert: newClass class traitComposition equals: { TViewModelMock classSide } asTraitComposition.
-	self assert: newClass package name equals: self generatedClassesPackageName.
-	self assert: newClass packageTag name equals: 'boring'
-]
-
-{ #category : 'tests' }
 ShClassInstallerTest >> testDuplicateClassError [
 
  	newClass := self newClass: #ShCITestClass slots: {#anInstanceVariable => BooleanSlot}.

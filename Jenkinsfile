@@ -34,9 +34,9 @@ def runTests(architecture, prefix=''){
         unstash "bootstrap${architecture}"
         shell "bash -c 'bootstrap/scripts/run${prefix}Tests.sh ${architecture} ${env.STAGE_NAME}${prefix}'"
         junit allowEmptyResults: true, testResults: "${env.STAGE_NAME}${prefix}*.xml"
+    } finally {
         archiveArtifacts allowEmptyArchive: true, artifacts: "${env.STAGE_NAME}${prefix}*.xml", fingerprint: true
         archiveArtifacts allowEmptyArchive: true, artifacts: "*.fuel", fingerprint: true
-    } finally {
         // I am archiving the logs to check for crashes and errors.
         if(fileExists('PharoDebug.log')){
             shell "mv PharoDebug.log PharoDebug-${env.STAGE_NAME}${prefix}.log"
@@ -159,7 +159,7 @@ def bootstrapImage(architectures){
             stage("Upload to files.pharo.org-${architecture}") {
               dir("build/bootstrap-cache") {
                   shell "BUILD_NUMBER=${env.BUILD_ID} bash ../../bootstrap/scripts/prepare_for_upload.sh ${architecture}"
-                sshagent (credentials: ['b5248b59-a193-4457-8459-e28e9eb29ed7']) {
+                sshagent (credentials: ['files-pharo-org-inria']) {
                   shell "bash ../../bootstrap/scripts/upload_to_files.pharo.org.sh"
                 }
               }

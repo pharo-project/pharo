@@ -35,13 +35,8 @@ ClyRunClassScriptCommand class >> methodTableIconActivation [
 ]
 
 { #category : 'accessing' }
-ClyRunClassScriptCommand >> defaultMenuIcon [
-	^Smalltalk ui iconNamed: script iconName
-]
-
-{ #category : 'accessing' }
 ClyRunClassScriptCommand >> defaultMenuIconName [
-	^#scriptManager
+	^ script iconName
 ]
 
 { #category : 'accessing' }

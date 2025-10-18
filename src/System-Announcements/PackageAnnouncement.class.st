@@ -23,12 +23,6 @@ PackageAnnouncement class >> to: aPackage [
 	^ self new package: aPackage
 ]
 
-{ #category : 'testing' }
-PackageAnnouncement >> affectsPackages [
-
-	^true
-]
-
 { #category : 'accessing' }
 PackageAnnouncement >> package [
 

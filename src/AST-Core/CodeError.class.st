@@ -20,26 +20,6 @@ CodeError >> description [
 	^ self class name , ':' , self notice description
 ]
 
-{ #category : 'accessing' }
-CodeError >> errorCode [
-
-	self
-		deprecated: 'errorCode is so misleading'
-		transformWith: '`@receiver errorCode' -> '`@receiver sourceCode'.
-
-	^ self sourceCode
-]
-
-{ #category : 'accessing' }
-CodeError >> errorMessage [
-
-	self
-		deprecated: 'As with exceptions, prefer messageText'
-		transformWith: '`@receiver errorMessage' -> '`@receiver messageText'.
-
-	^ messageText
-]
-
 { #category : 'private - testing' }
 CodeError >> isResumable [
 

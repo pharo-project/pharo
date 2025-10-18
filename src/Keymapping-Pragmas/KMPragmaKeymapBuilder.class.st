@@ -39,19 +39,16 @@ KMPragmaKeymapBuilder class >> pragmas [
 
 { #category : 'system-events' }
 KMPragmaKeymapBuilder class >> registerInterestToSystemAnnouncement [
+
 	<systemEventRegistration>
-	SystemAnnouncer uniqueInstance
-		unsubscribe: self.
-	SystemAnnouncer uniqueInstance weak
-		when: MethodAdded, MethodModified, MethodRemoved
-		send: #methodAnnouncementReceived:
-		to: self
+	self release.
+	self codeChangeAnnouncer weak when: MethodAdded , MethodModified , MethodRemoved send: #methodAnnouncementReceived: to: self
 ]
 
 { #category : 'instance creation' }
 KMPragmaKeymapBuilder class >> release [
-	SystemAnnouncer uniqueInstance unsubscribe: self.
-	self uniqueInstance release
+
+	self codeChangeAnnouncer unsubscribe: self
 ]
 
 { #category : 'instance creation' }
@@ -132,8 +129,8 @@ KMPragmaKeymapBuilder >> pragmas [
 
 { #category : 'dependencies' }
 KMPragmaKeymapBuilder >> release [
-	model := nil.
-	super release
+
+	model := nil
 ]
 
 { #category : 'initialization' }

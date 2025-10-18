@@ -2,20 +2,28 @@
 I'm useful when classes needs to be created during the execution of the test. This avoid polluting your unit tests with dummy and mock classes.
 A typical usage of it is:
 
-TestCase subclass: #YourTest
-       instanceVariableNames: 'classFactory'
+```
+TestCase << #YourTest
+    slots: { #classFactory};
+	  package: 'YourPackage'
+```
+```
+YourTest >> setUp
+	  super setUp. 
+    classFactory := ClassFactoryForTestCase new
+```
+```
+YourTest >> tearDown
+    classFactory deleteClasses.
+    super tearDown 
+```
 
-YourTest>>setUp
-       classFactory := ClassFactoryForTestCase new
-
-YourTest>>tearDown
-       classFactory deleteClasses.
-
-YourTest>>testIsBehavior
-       | cls |
-       cls := classFactory newClass.
-       self assert: cls isBehavior
-
+```
+YourTest >> testIsBehavior
+    | cls |
+    cls := classFactory newClass.
+    self assert: cls isBehavior
+```
 "
 Class {
 	#name : 'ClassFactoryForTestCase',
@@ -241,13 +249,12 @@ ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior protocol: anot
 ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior protocol: anotherString storingSource: aBoolean [
 
 	^ self silentlyDo: [
-		  Author useAuthor: 'TestsAuthor' during: [
-			  aBehavior
-				  compile: aString
-				  classified: anotherString
-				  withStamp: nil
-				  notifying: nil
-				  logSource: aBoolean ] ]
+		  aBehavior
+			  compile: aString
+			  classified: anotherString
+			  withStamp: nil
+			  notifying: nil
+			  logSource: aBoolean ]
 ]
 
 { #category : 'compiling - silently' }

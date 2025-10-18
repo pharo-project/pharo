@@ -53,6 +53,12 @@ CleanBlockClosure >> hasLiteralSuchThat: aLiteral [
 	^self compiledBlock hasLiteralSuchThat: aLiteral
 ]
 
+{ #category : 'testing' }
+CleanBlockClosure >> hasPrimitive [
+	
+	^ self compiledBlock hasPrimitive
+]
+
 { #category : 'accessing' }
 CleanBlockClosure >> innerCompiledBlocksAnySatisfy: aBlock [
 	^self compiledBlock innerCompiledBlocksAnySatisfy: aBlock

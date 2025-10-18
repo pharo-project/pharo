@@ -537,16 +537,6 @@ SmallInteger >> nextObject [
 	self shouldNotImplement
 ]
 
-{ #category : 'printing' }
-SmallInteger >> numberOfDigitsInBase: b [
-	"Return how many digits are necessary to print this number in base b.
-	Mostly same as super but an optimized version for base 10 case"
-
-	b = 10 ifFalse: [^super numberOfDigitsInBase: b].
-	self < 0 ifTrue: [^self negated numberOfDigitsInBase: b].
-	^self decimalDigitLength
-]
-
 { #category : 'testing' }
 SmallInteger >> odd [
 	" 0 odd >>> false"
@@ -612,61 +602,6 @@ SmallInteger >> printOn: aStream base: b nDigits: n [
 	self must be positive."
 
 	self printOn: aStream base: b length: n padded: true
-]
-
-{ #category : 'printing' }
-SmallInteger >> printString [
-	"Highly optimized version for base 10
-	and that we know it is a SmallInteger.
-	Don't follow this example. It breaks the
-	rule that printOn: is where strings are usually built."
-
-	| integer next result len |
-	self = 0 ifTrue: [^'0'].
-	self < 0 ifTrue: [^'-', self negated printString].
-	len := self decimalDigitLength.
-	result := String new: len.
-	integer := self.
-	len to: 1 by: -1 do: [:i |
-		next := integer // 10.
-		result byteAt: i put: 48 + (integer - (next * 10)).
-		integer := next].
-	^result
-]
-
-{ #category : 'printing' }
-SmallInteger >> printStringBase: b [
-	"Return a String representation of this number in base b.
-	For SmallIntegers, it is more efficient to print directly in a String,
-	rather than using a Stream like super."
-
-	"(10 printStringBase: 10) >>> '10'"
-	"(-10 printStringBase: 10) >>> '-10'"
-	"(10 printStringBase: 2) >>> '1010'"
-	"(10 printStringBase: 16) >>> 'A'"
-
-	self < 0
-		ifTrue: [^ '-'
-				, (self negated printStringBase: b)].
-	self < b
-		ifTrue: [^ String
-				with: (Character digitValue: self)].
-	^ self printStringBase: b nDigits: (self numberOfDigitsInBase: b)
-]
-
-{ #category : 'printing' }
-SmallInteger >> printStringBase: b nDigits: n [
-	"Return a string representation of this number in base b with n digits (left padded with 0).
-	Should be invoked with: 0 <= self < (b raisedToInteger: n)."
-
-	| integer next result |
-	result := String new: n.
-	integer := self.
-	n to: 1 by: -1 do: [:i |
-		next := integer // b.
-		result byteAt: i put: (Character digitValue: (integer - (next * b))).
-		integer := next].
-	^result
 ]
 
 { #category : 'arithmetic' }

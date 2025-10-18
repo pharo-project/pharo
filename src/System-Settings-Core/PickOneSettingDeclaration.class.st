@@ -14,13 +14,13 @@ Class {
 
 { #category : 'user interface' }
 PickOneSettingDeclaration >> chooseValue [
+
 	| chosen |
-	chosen := UIManager default
-				chooseFrom: self domainValuesLabels
-				values: self domainValues
-				title: self label translated, ' choices' translated.
-	chosen
-		ifNotNil: [self realValue: chosen realValue]
+	chosen := MorphicUIManager new
+		          chooseFrom: self domainValuesLabels
+		          values: self domainValues
+		          title: self label translated , ' choices' translated.
+	chosen ifNotNil: [ self realValue: chosen realValue ]
 ]
 
 { #category : 'user interface' }

@@ -48,7 +48,7 @@ PointerUtils class >> primOopForObject: anObject [
 
 	<primitive: 'primitiveGetAddressOfOOP'>
 
-	anObject isPinned ifFalse: [ self error: 'Objects passed by reference should be pinned' ].
+	anObject isPinnedInMemory ifFalse: [ self error: 'Objects passed by reference should be pinned' ].
 
 	^ self primitiveFailed
 ]

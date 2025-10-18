@@ -215,13 +215,6 @@ Number >> squared [
 ]
 
 { #category : '*Math-Operations-Extensions' }
-Number >> strictlyPositive [
-	"Answer whether the receiver is mathematically positive."
-
-	^ self > 0
-]
-
-{ #category : '*Math-Operations-Extensions' }
 Number >> tan [
 	"The receiver represents an angle measured in radians. Answer its
 	tangent."

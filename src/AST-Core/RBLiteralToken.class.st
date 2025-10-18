@@ -75,7 +75,7 @@ RBLiteralToken >> stop: anObject [
 	stopPosition := anObject
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBLiteralToken >> storeOn: aStream [
 	value isSymbol
 		ifTrue:

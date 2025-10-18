@@ -20,24 +20,23 @@ POP3Client class >> defaultPortNumber [
 
 { #category : 'examples' }
 POP3Client class >> example [
-
 	"POP3Client example"
-	"download a user's messages into an OrderedCollection and inspect the OrderedCollection"
+
+	"download a user's messages into an OrderedCollection"
 
 	| ps messages userName password |
-	userName := (UIManager default request: 'POP username').
-	password := (UIManager default request: 'POP password').
-	ps := POP3Client openOnHostNamed: (UIManager default request: 'POP server').
+	userName := 'exampleUsername'.
+	password := 'examplePassword'.
+	ps := POP3Client openOnHostNamed: 'pop3.host'.
 	[
 	ps loginUser: userName password: password.
 	ps logProgressToTranscript.
 
 	messages := OrderedCollection new.
 	1 to: ps messageCount do: [ :messageNr |
-		messages add: (ps retrieveMessage: messageNr) ]]
-		ensure: [ps close].
+	messages add: (ps retrieveMessage: messageNr) ] ] ensure: [ ps close ].
 
-	messages inspect
+	^ messages
 ]
 
 { #category : 'accessing' }

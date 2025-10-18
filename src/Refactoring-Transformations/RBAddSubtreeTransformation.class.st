@@ -109,7 +109,7 @@ RBAddSubtreeTransformation >> privateTransform [
 	self definingClass compileTree: parseTree
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBAddSubtreeTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

@@ -12,13 +12,15 @@ CmdMenuGroup >> buildContextMenu: aMenu [
 CmdMenuGroup >> buildContextSubMenuIn: aMenu [
 
 	| submenu |
-	submenu := UIManager default newMenuIn: aMenu defaultTarget for: aMenu defaultTarget.
+	submenu := MorphicUIManager new
+		           newMenuIn: aMenu defaultTarget
+		           for: aMenu defaultTarget.
 
 	contents do: [ :each | each buildContextMenu: submenu ].
 
 	submenu hasItems ifTrue: [
 		aMenu add: self name icon: self icon subMenu: submenu.
-		self description ifNotNil: [:d | aMenu lastItem setBalloonText: d] ]
+		self description ifNotNil: [ :d | aMenu lastItem setBalloonText: d ] ]
 ]
 
 { #category : '*Commander-Activators-ContextMenu' }

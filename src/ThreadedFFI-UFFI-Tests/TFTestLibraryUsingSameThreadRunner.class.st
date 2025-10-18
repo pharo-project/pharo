@@ -21,7 +21,7 @@ TFTestLibraryUsingSameThreadRunner >> macLibraryName [
 ]
 
 { #category : 'accessing - platform' }
-TFTestLibraryUsingSameThreadRunner >> unixModuleName [
+TFTestLibraryUsingSameThreadRunner >> unix64LibraryName [
 
 	^ 'libTestLibrary.so'
 ]

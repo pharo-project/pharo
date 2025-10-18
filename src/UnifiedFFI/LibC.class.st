@@ -6,6 +6,9 @@ Under windows I provide similar functionality through the functions defined in m
 Class {
 	#name : 'LibC',
 	#superclass : 'FFILibrary',
+	#pools : [
+		'LibCTypes'
+	],
 	#category : 'UnifiedFFI-Libraries',
 	#package : 'UnifiedFFI',
 	#tag : 'Libraries'
@@ -57,11 +60,17 @@ LibC class >> system: command [
 	^ self uniqueInstance system: command
 ]
 
+{ #category : 'api - input/output' }
+LibC >> close: fildes [
+
+	^ self ffiCall: #(int close(int fildes))
+]
+
 { #category : 'api - processes' }
 LibC >> currentProcessId [
 	"Returns the process identifier (PID) of the calling process."
 
-	 ^self ffiCall: #(int getpid(void))
+	 ^self ffiCall: #(pid_t getpid(void))
 ]
 
 { #category : 'api - accessing' }
@@ -75,7 +84,13 @@ LibC >> fgetc: stream [
 LibC >> getpid [
 	"Get PID of current process."
 
-	 ^self ffiCall: #(int getpid(void))
+	 ^self ffiCall: #(pid_t getpid(void))
+]
+
+{ #category : 'api - pseudo-terminals' }
+LibC >> grantpt: fildes [
+
+	^ self ffiCall: #(int grantpt(int fildes))
 ]
 
 { #category : 'private - accessing' }
@@ -89,11 +104,17 @@ LibC >> memCopy: src to: dest size: n [
 		ffiCall: #(#void #* #memcpy #(#void #* #dest #, #const #void #* #src #, #size_t #n))
 ]
 
+{ #category : 'api - misc' }
+LibC >> mkstemp: template [
+
+	^ self ffiCall: #(int mkstemp #(char* template))
+]
+
 { #category : 'api - processes' }
 LibC >> parentProcessId [
 	"Returns the process ID of the parent of the calling process."
 
-	 ^self ffiCall: #(int getppid(void))
+	 ^self ffiCall: #(pid_t getppid(void))
 ]
 
 { #category : 'api - piping' }
@@ -112,6 +133,18 @@ LibC >> pipeClose: stream [
 	^self ffiCall: (Smalltalk os isWindows
 							ifTrue: [ #(int* _pclose(void* stream)) ]
 							ifFalse: [ #(int* pclose(void* stream)) ])
+]
+
+{ #category : 'api - pseudo-terminals' }
+LibC >> posix_openpt: oflag [
+
+	^ self ffiCall: #(int posix_openpt(int oflag))
+]
+
+{ #category : 'api - input/output' }
+LibC >> read: fildes buffer: buf size: nbyte [
+
+	^ self ffiCall: #(ssize_t read(int fildes, void* buf, size_t nbyte))
 ]
 
 { #category : 'process actions' }
@@ -142,8 +175,26 @@ LibC >> unixLibraryName [
 	^ 'libc.so.6'
 ]
 
+{ #category : 'api - pseudo-terminals' }
+LibC >> unlockpt: fildes [
+
+	^ self ffiCall: #(int unlockpt(int fildes))
+]
+
+{ #category : 'api - processes' }
+LibC >> waitpid: pid status: stat_loc options: options [
+
+	^ self ffiCall: #(pid_t waitpid(pid_t pid, int* stat_loc, int options))
+]
+
 { #category : 'private - accessing' }
 LibC >> win32LibraryName [
 	"While this is not a 'libc' properly, msvcrt has the functions we are defining here"
 	^ 'msvcrt.dll'
+]
+
+{ #category : 'api - input/output' }
+LibC >> write: fildes buffer: buf size: nbyte [
+
+	^ self ffiCall: #(ssize_t write(int fildes, const void* buf, size_t nbyte))
 ]

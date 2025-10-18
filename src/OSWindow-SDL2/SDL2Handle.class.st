@@ -22,3 +22,9 @@ SDL2Handle class >> ffiLibraryName [
 SDL2Handle >> ffiLibraryName [
 	^self class ffiLibraryName
 ]
+
+{ #category : 'testing' }
+SDL2Handle >> isValid [
+
+	^ handle isNotNil and: [ handle isNull not ]
+]

@@ -13,9 +13,12 @@ Class {
 ClyDebuggingCommand class >> canBeExecutedInContext: aBrowserContext [
 
 	| node |
+	
+	aBrowserContext hasUnacceptedEdits ifTrue: [ ^ false ].
+	
 	^ self isAbstract not and: [
 		  node := aBrowserContext lastSelectedSourceNode.
-
+			
 		  node isNotNil and: [
 			  node isCommentNode not and: [
 				  node isPragma not and: [

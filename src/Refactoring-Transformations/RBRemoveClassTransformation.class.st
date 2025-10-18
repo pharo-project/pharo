@@ -96,7 +96,7 @@ RBRemoveClassTransformation >> reparentSubclasses [
 		to: self definingClass superclass
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBRemoveClassTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

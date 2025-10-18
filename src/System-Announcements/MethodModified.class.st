@@ -24,24 +24,6 @@ MethodModified class >> methodChangedFrom: oldMethod to: newMethod oldProtocol: 
 		yourself
 ]
 
-{ #category : 'testing' }
-MethodModified >> affectsMethod: aMethod [
-	^(super affectsMethod: aMethod) or: [oldMethod == aMethod]
-]
-
-{ #category : 'testing' }
-MethodModified >> affectsMethodsDefinedInPackage: aPackage [
-
-	^(super affectsMethodsDefinedInPackage: aPackage) or: [
-		oldMethod package == aPackage ]
-]
-
-{ #category : 'testing' }
-MethodModified >> affectsMethodsInProtocol: protocol [
-
-	^ (super affectsMethodsInProtocol: protocol) or: [ self oldProtocol name = protocol ]
-]
-
 { #category : 'accessing' }
 MethodModified >> newMethod [
 

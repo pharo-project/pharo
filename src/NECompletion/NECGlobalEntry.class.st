@@ -3,7 +3,7 @@ I represent a global variable.
 "
 Class {
 	#name : 'NECGlobalEntry',
-	#superclass : 'NECCVariableEntry',
+	#superclass : 'NECVariableEntry',
 	#category : 'NECompletion-Model',
 	#package : 'NECompletion',
 	#tag : 'Model'

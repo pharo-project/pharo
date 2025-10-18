@@ -68,7 +68,7 @@ SystemVersionTest >> testInstanceCreation [
 		assertEmpty: version commitHash;
 		assertEmpty: version commitHashShort;
 		assertEmpty: version commitHashShort;
-		assert: version date notNil;
+		assert: version date isNotNil;
 		assert: (version printString beginsWith: 'Pharo-0.0')
 ]
 
@@ -86,7 +86,7 @@ SystemVersionTest >> testInstanceCreationMajorMinor [
 		assert: version build equals: SystemVersion invalidBuildNumber;
 		assertEmpty: version commitHash;
 		assertEmpty: version commitHashShort;
-		assert: version date notNil;
+		assert: version date isNotNil;
 		assert: (version printString beginsWith: 'Pharo-6.1.199')
 ]
 
@@ -108,7 +108,7 @@ SystemVersionTest >> testInstanceCreationMajorMinorSuffix [
 		assert: version build equals: SystemVersion invalidBuildNumber;
 		assertEmpty: version commitHash;
 		assertEmpty: version commitHashShort;
-		assert: version date notNil;
+		assert: version date isNotNil;
 		assert: (version printString beginsWith: 'Pharo-7.0.199+alpha')
 ]
 
@@ -131,7 +131,7 @@ SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuild [
 		assert: version build equals: 142;
 		assertEmpty: version commitHash;
 		assertEmpty: version commitHashShort;
-		assert: version date notNil;
+		assert: version date isNotNil;
 		assert: (version printString beginsWith: 'Pharo-7.0.199+alpha.build.142')
 ]
 
@@ -149,7 +149,7 @@ SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuildCommitHash [
 		assert: version build equals: 148;
 		assert: version commitHash equals: '368dcda1b1ba81215fb7355cfc1e901d45395bd8';
 		assert: version commitHashShort equals: '368dcda';
-		assert: version date notNil;
+		assert: version date isNotNil;
 		assert: (version printString beginsWith: 'Pharo-7.0.199+alpha.build.148.sha.368dcda1b1ba81215fb7355cfc1e901d45395bd8')
 ]
 
@@ -172,7 +172,7 @@ SystemVersionTest >> testInstanceCreationMajorMinorSuffixBuildWithoutSuffix [
 		assert: version build equals: 142;
 		assertEmpty: version commitHash;
 		assertEmpty: version commitHashShort;
-		assert: version date notNil;
+		assert: version date isNotNil;
 		assert: (version printString beginsWith: 'Pharo-7.0.199+build.142')
 ]
 
@@ -229,7 +229,7 @@ SystemVersionTest >> testSmalltalkVersionEqualsCurrentVersion [
 { #category : 'tests' }
 SystemVersionTest >> testSystemVersion [
 
-	self assert: SystemVersion current notNil
+	self assert: SystemVersion current isNotNil
 ]
 
 { #category : 'tests' }

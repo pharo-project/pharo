@@ -19,11 +19,34 @@ ExternalAddress class >> allocate: byteSize [
 ]
 
 { #category : 'instance creation' }
+ExternalAddress class >> allocate: firstByteSize allocate: secondByteSize during: aBlock [
+
+	| firstAddress secondAddress |
+	firstAddress := self allocate: firstByteSize.
+	secondAddress := self allocate: secondByteSize.
+
+	^ [ aBlock value: firstAddress value: secondAddress ] ensure: [
+		  firstAddress free.
+		  secondAddress free ]
+]
+
+{ #category : 'instance creation' }
 ExternalAddress class >> allocate: byteSize bytesDuring: aBlock [
 
 	| address |
 	address := self allocate: byteSize.
 	^ [ aBlock value: address ] ensure: [ address free ]
+]
+
+{ #category : 'instance creation' }
+ExternalAddress class >> allocateMemoryOfSizes: aCollectionOfSizes during: aBlock [
+
+	| addresses |
+
+	addresses := aCollectionOfSizes collect: [ :aSize | self allocate: aSize ] as: Array.
+
+	^ [ aBlock valueWithArguments: addresses ]
+		  ensure: [ addresses do: [ :anAddress | anAddress free ] ]
 ]
 
 { #category : 'instance creation' }
@@ -174,23 +197,6 @@ ExternalAddress >> finalize [
 ExternalAddress >> free [
 
 	^ FFIBackend current free: self
-]
-
-{ #category : 'converting' }
-ExternalAddress >> fromCString [
-	| index aByte |
-
-	self
-		deprecated:  'Please use #bytesFromCString instead'
-		transformWith:  '`@receiver fromCString'
-						-> '`@receiver bytesFromCString utf8Decoded'.
-
-	^ (ByteArray streamContents: [ :aStream |
-			index := 1.
-			[(aByte := self unsignedByteAt: index) = 0]
-				whileFalse: [
-					aStream nextPut: aByte.
-					index := index + 1]]) utf8Decoded
 ]
 
 { #category : 'converting' }

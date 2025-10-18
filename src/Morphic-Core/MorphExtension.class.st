@@ -169,7 +169,7 @@ MorphExtension >> inspectElement [
 	"Create and schedule an Inspector on the otherProperties and the
 	named properties."
 	| key obj |
-	key := UIManager default
+	key := self morphicUIManager
 				chooseFrom: self sortedPropertyNames
 				values: self sortedPropertyNames
 				title: 'Inspect which property?' translated.

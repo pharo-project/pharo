@@ -180,7 +180,7 @@ MouseEvent >> setType: evtType position: evtPos buttons: evtButtons hand: evtHan
 	wasHandled := false
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 MouseEvent >> storeOn: aStream [
 
 	aStream nextPutAll: type.

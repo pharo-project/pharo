@@ -68,10 +68,10 @@ EpMorphFactory >> secondaryTextColor [
 ]
 
 { #category : 'generic' }
-EpMorphFactory >> semiTransparent: aForm [
+EpMorphFactory >> semiTransparent: aFormSet [
 
 	^ AlphaImageMorph new
-		image: aForm;
+		formSet: aFormSet;
 		alpha: 0.5;
 		yourself
 ]

@@ -135,7 +135,7 @@ RGTraitV2DescriptionStrategy >> pvtResolvableProperties [
      	}
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RGTraitV2DescriptionStrategy >> storeOn: aStream [
 	aStream
 		nextPutAll: '(';

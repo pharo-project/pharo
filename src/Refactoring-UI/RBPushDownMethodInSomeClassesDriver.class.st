@@ -13,13 +13,13 @@ You can create my instance and execute the refactoring by running:
 "
 Class {
 	#name : 'RBPushDownMethodInSomeClassesDriver',
-	#superclass : 'RBPushDownMethodDriver',
+	#superclass : 'RePushDownMethodDriver',
 	#instVars : [
 		'classes'
 	],
-	#category : 'Refactoring-UI-Drivers to migrate to new architecture',
+	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
-	#tag : 'Drivers to migrate to new architecture'
+	#tag : 'Drivers'
 }
 
 { #category : 'resources' }
@@ -30,6 +30,22 @@ RBPushDownMethodInSomeClassesDriver >> configureRefactoring [
 		pushDown: (methods collect: [ :each | each selector ])
 		from: class
 		in: classes.
+]
+
+{ #category : 'execution' }
+RBPushDownMethodInSomeClassesDriver >> gatherUserInput [
+
+	super gatherUserInput.
+	classes := self selectClasses
+]
+
+{ #category : 'initialization' }
+RBPushDownMethodInSomeClassesDriver >> model: aRBNamespace scopes: refactoringScopes pushDownMethods: methodsList [
+
+	model := aRBNamespace.
+	scopes := refactoringScopes.
+	methods := methodsList.
+	class := methods first origin
 ]
 
 { #category : 'resources' }
@@ -45,24 +61,11 @@ RBPushDownMethodInSomeClassesDriver >> refactoring [
 { #category : 'execution' }
 RBPushDownMethodInSomeClassesDriver >> runRefactoring [
 
-	| changes  |
-	methods := self selectMethods.
+	self gatherUserInput.
 	methods ifNil: [ ^ self ].
-	classes := self selectClasses.
 	classes ifNil: [ ^ self ].
 	
-	self configureRefactoring.
-	changes := [
-	           [ refactoring generateChanges ]
-		           on: RBApplicabilityChecksFailedError
-		           do: [ :err |
-		           ^ RBRefactoringError signal: err messageText ] ]
-		           on: RBBreakingChangeChecksFailedWarning
-		           do: [ :err |
-			           RBRefactoringWarning signal: err messageText.
-			           "If user answers no, error is being propagated."
-			           err resume ].
-	self openPreviewWithChanges: changes
+	self configureAndRunRefactoring 
 ]
 
 { #category : 'execution' }
@@ -76,5 +79,5 @@ RBPushDownMethodInSomeClassesDriver >> selectClasses [
 				          asOrderedCollection
 		          selecting: class subclasses.
 	dialog cancelled ifTrue: [ ^ nil ].
-	^ dialog presenter selectedItems collect: [ :each | each name ]
+	^ dialog selectedItems collect: [ :each | each name ]
 ]

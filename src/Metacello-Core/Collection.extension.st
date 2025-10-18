@@ -12,23 +12,6 @@ Collection >> addToMetacelloRepositories: aMetacelloRepositoriesSpec [
 	self do: [:each | each addToMetacelloRepositories: aMetacelloRepositoriesSpec ]
 ]
 
-{ #category : '*Metacello-Core-scripting' }
-Collection >> execute: projectSpecBlock against: aScriptExecutor [
-    aScriptExecutor executeCollection: self do: projectSpecBlock
-]
-
-{ #category : '*Metacello-Core' }
-Collection >> fetchRequiredForMetacelloMCVersion: aMetacelloMCVersion [
-
-	^aMetacelloMCVersion doFetchRequiredFromArray: self.
-]
-
-{ #category : '*Metacello-Core' }
-Collection >> loadRequiredForMetacelloMCVersion: aMetacelloMCVersion [
-
-	^aMetacelloMCVersion doLoadRequiredFromArray: self.
-]
-
 { #category : '*Metacello-Core' }
 Collection >> mergeIntoMetacelloPackages: aMetacelloPackagesSpec [
 
@@ -39,12 +22,6 @@ Collection >> mergeIntoMetacelloPackages: aMetacelloPackagesSpec [
 Collection >> mergeIntoMetacelloRepositories: aMetacelloRepositoriesSpec [
 
 	self do: [:each | each mergeIntoMetacelloRepositories: aMetacelloRepositoriesSpec ]
-]
-
-{ #category : '*Metacello-Core' }
-Collection >> recordRequiredForMetacelloMCVersion: aMetacelloMCVersion [
-
-	^aMetacelloMCVersion doRecordRequiredFromArray: self.
 ]
 
 { #category : '*Metacello-Core' }

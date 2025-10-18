@@ -61,7 +61,7 @@ FTExampleMethodListDataSource >> menuColumn: column row: rowIndex [
 		^ nil ].
 
 	method := (self elementAt: rowIndex) method.
-	menu := UIManager default newMenuIn: self table for: self.
+	menu := self morphicUIManager newMenuIn: self table for: self.
 	menu add: ('Browse ', (method methodClass name), '>>#', method selector)
 		target: method
 		selector: #browse.

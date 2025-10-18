@@ -475,7 +475,7 @@ RBVariableEnvironment >> selectorCacheFor: aClass [
 	^self selectorCache at: aClass name ifAbsentPut: [ self computeSelectorCacheFor: aClass ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBVariableEnvironment >> storeOn: aStream [
 	aStream
 		nextPut: $(;

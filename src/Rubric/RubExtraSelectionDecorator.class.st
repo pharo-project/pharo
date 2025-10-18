@@ -99,7 +99,7 @@ RubExtraSelectionDecorator >> drawAllSelectionShapesOnAthensCanvas: anAthensCanv
 { #category : 'drawing' }
 RubExtraSelectionDecorator >> drawOn: aCanvas [
 
-	(Display depth < 3 or: [ aCanvas isShadowDrawing ]) ifTrue: [ ^ self ].
+	aCanvas isShadowDrawing ifTrue: [ ^ self ].
 
 	self computeSelectionShapesFor: aCanvas clipRect.
 	self cleanUpText.

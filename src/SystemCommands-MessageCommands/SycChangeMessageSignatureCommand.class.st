@@ -102,7 +102,8 @@ SycChangeMessageSignatureCommand >> originalMessage: anObject [
 SycChangeMessageSignatureCommand >> prepareFullExecutionInContext: aToolContext [
 	super prepareFullExecutionInContext: aToolContext.
 	self setUpModelFromContext: aToolContext.
-	refactoredClass := aToolContext lastSelectedClass.
+	
+	refactoredClass := aToolContext lastSelectedMessage methodClass.
 	refactoringScopes := aToolContext refactoringScopes.
 	originalMessage := aToolContext lastSelectedMessage
 ]

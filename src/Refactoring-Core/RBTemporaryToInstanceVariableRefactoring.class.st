@@ -69,7 +69,8 @@ Class {
 	#superclass : 'RBMethodRefactoring',
 	#instVars : [
 		'selector',
-		'temporaryVariableName'
+		'temporaryVariableName',
+		'parseTree'
 	],
 	#category : 'Refactoring-Core-Refactorings',
 	#package : 'Refactoring-Core',
@@ -95,9 +96,31 @@ RBTemporaryToInstanceVariableRefactoring class >> model: aRBSmalltalk class: aCl
 ]
 
 { #category : 'preconditions' }
-RBTemporaryToInstanceVariableRefactoring >> checkForValidTemporaryVariable [
-	| parseTree |
-	parseTree := class parseTreeForSelector: selector.
+RBTemporaryToInstanceVariableRefactoring >> applicabilityPreconditions [ 
+	^(RBCondition definesSelector: selector in: class)
+		& (RBCondition definesInstanceVariable: temporaryVariableName asString in: class) not
+		& (RBCondition withBlock:
+				[self checkForValidTemporaryVariable.
+				true])
+]
+
+{ #category : 'preconditions' }
+RBTemporaryToInstanceVariableRefactoring >> breakingChangePreconditions [
+
+	^ (RBCondition withBlock: [
+		   (class allSubclasses anySatisfy: [ :cls |
+			    cls definesInstanceVariable: temporaryVariableName asString ])
+			   ifTrue: [
+				   self refactoringWarning:
+					   ('One or more subclasses of <1p> already defines an<n>instance variable with the same name. Proceed anyway?'
+						    expandMacrosWith: class name) ].
+			true ])
+	& (ReVariablesNotReadBeforeWrittenCondition new subtree: parseTree; variables: temporaryVariableName)
+]
+
+{ #category : 'preconditions' }
+RBTemporaryToInstanceVariableRefactoring >> checkForValidTemporaryVariable [ 
+
 	(parseTree allTemporaryVariables includes: temporaryVariableName)
 		ifFalse:
 			[self refactoringError: temporaryVariableName
@@ -105,12 +128,7 @@ RBTemporaryToInstanceVariableRefactoring >> checkForValidTemporaryVariable [
 	(parseTree allArgumentVariables includes: temporaryVariableName)
 		ifTrue:
 			[self refactoringError: temporaryVariableName , ' is a block parameter'].
-	(RBReadBeforeWrittenTester isVariable: temporaryVariableName
-		readBeforeWrittenIn: parseTree)
-			ifTrue:
-				[self
-					refactoringWarning: ('<1s> is read before it is written.<n>Proceed anyway?'
-							expandMacrosWith: temporaryVariableName)]
+
 ]
 
 { #category : 'initialization' }
@@ -122,17 +140,14 @@ RBTemporaryToInstanceVariableRefactoring >> class: aClass selector: aSelector va
 
 { #category : 'preconditions' }
 RBTemporaryToInstanceVariableRefactoring >> preconditions [
-	^(RBCondition definesSelector: selector in: class)
-		& (RBCondition definesInstanceVariable: temporaryVariableName asString in: class) not
-		& (RBCondition withBlock: [
-			(class allSubclasses anySatisfy:
-				[ :cls | cls definesInstanceVariable: temporaryVariableName asString ])
-			ifTrue: [ self refactoringWarning:
-				('One or more subclasses of <1p> already defines an<n>instance variable with the same name. Proceed anyway?' expandMacrosWith: class name) ].
-			true ])
-			& (RBCondition withBlock:
-						[self checkForValidTemporaryVariable.
-						true])
+
+	^ self applicabilityPreconditions & self breakingChangePreconditions
+]
+
+{ #category : 'transforming' }
+RBTemporaryToInstanceVariableRefactoring >> prepareForExecution [ 
+
+	parseTree := class parseTreeForSelector: selector.
 ]
 
 { #category : 'transforming' }
@@ -154,16 +169,16 @@ RBTemporaryToInstanceVariableRefactoring >> removeTemporaryOfClass: aClass [
 { #category : 'removing' }
 RBTemporaryToInstanceVariableRefactoring >> removeTemporaryOfMethod: aSelector in: aClass [
 
-	| parseTree matcher method |
+	| methodParseTree matcher method |
 	method := aClass methodFor: aSelector.
-	parseTree := method parseTree.
-	parseTree ifNil: [ self refactoringError: 'Could not parse method' ].
+	methodParseTree := method parseTree.
+	methodParseTree ifNil: [ self refactoringError: 'Could not parse method' ].
 	( matcher := self parseTreeRewriterClass removeTemporaryNamed: temporaryVariableName )
-		executeTree: parseTree.
+		executeTree: methodParseTree.
 	method compileTree: matcher tree
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBTemporaryToInstanceVariableRefactoring >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

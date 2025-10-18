@@ -659,7 +659,7 @@ Array2D >> size [
 	^ contents size
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Array2D >> storeOn: aStream [
 	aStream nextPut: $(; nextPutAll: self class name;
 		nextPutAll: ' rows: '; store: numberOfRows;

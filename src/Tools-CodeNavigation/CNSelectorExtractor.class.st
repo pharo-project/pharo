@@ -79,7 +79,7 @@ CNSelectorExtractor >> extractSelectorFromNode: aNode [
 
 		"
 		(node ~= originalNode and: [
-			 node parent notNil and: [ node parent isCascade ] ]) ifTrue: [
+			 node parent isNotNil and: [ node parent isCascade ] ]) ifTrue: [
 			node := node parent messages first ] ].
 
 	"In the case of doIt methods"

@@ -25,7 +25,7 @@ RBPushDownMethodParametrizedTest >> testFailurePushDownNonExistantMenu [
 	| refactoring |
 	refactoring := self createRefactoringWithArguments: {
 			               #( #someMethodThatDoesNotExist ).
-			               RBLintRuleTestData }.
+			               'RBLintRuleTestData' }.
 	self shouldFail: refactoring
 ]
 
@@ -35,7 +35,7 @@ RBPushDownMethodParametrizedTest >> testPushDownMethod [
 	| refactoring class |
 	refactoring := self createRefactoringWithArguments: {
 			               #( #name: ).
-			               RBLintRuleTestData }.
+			               'RBLintRuleTestData' }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBLintRuleTestData.
 	self deny: (class directlyDefinesMethod: #name:).
@@ -52,7 +52,7 @@ RBPushDownMethodParametrizedTest >> testPushDownMethodThatReferencesPoolDictiona
 	parseTree := RBLintRuleTestData parseTreeForSelector: #junk.
 	refactoring := self createRefactoringWithArguments: {
 			               #( #junk ).
-			               RBLintRuleTestData }.
+			               'RBLintRuleTestData' }.
 	self proceedThroughWarning: [ self executeRefactoring: refactoring ].
 	class := refactoring model classNamed: #RBLintRuleTestData.
 	self deny: (class directlyDefinesMethod: #junk).

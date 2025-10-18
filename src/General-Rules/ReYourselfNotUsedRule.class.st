@@ -20,7 +20,7 @@ ReYourselfNotUsedRule class >> uniqueIdentifierName [
 ReYourselfNotUsedRule >> basicCheck: aNode [
 	aNode isMessage ifFalse: [ ^ false ].
 	aNode selector = #yourself ifFalse: [ ^ false ].
-	^ aNode isUsed not
+	^ aNode isUsedAsReturnValue not
 ]
 
 { #category : 'accessing' }

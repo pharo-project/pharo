@@ -76,19 +76,16 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	Smalltalk at: #World put: world.
 	Smalltalk at: #ActiveWorld put: world.
 
-	world viewBox: Display boundingBox.
+	world viewBox: world bounds.
 	
 	world handsDo: [:h | h initForEvents].
 	world borderWidth: 0.
 	
-	Display newDepth: 32.
 	world displayWorldSafely.
 	MorphicCoreUIManager new spawnNewProcess.
 	
 	world cleanseOtherworldlySteppers.
 	ExternalDropHandler resetRegisteredHandlers.
-
-	Display newDepth: 32.
 
 	(world instVarNamed: #worldState) invalidate.
 

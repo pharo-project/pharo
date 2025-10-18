@@ -83,7 +83,7 @@ RBInlineTemporaryTransformation >> replaceReferences [
 	class compileTree: sourceTree ]
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBInlineTemporaryTransformation >> storeOn: aStream [
 	aStream nextPut: $(.
 	self class storeOn: aStream.

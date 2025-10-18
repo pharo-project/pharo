@@ -37,7 +37,7 @@ ReClassVariableCapitalizationRule >> critiqueFor: aClass about: aVarName [
 	crit
 		tinyHint: aVarName;
 		refactoring: (
-			RBRenameClassVariableRefactoring
+			ReRenameSharedVariableRefactoring
 				rename: aVarName
 				to: aVarName capitalized
 				in: aClass).

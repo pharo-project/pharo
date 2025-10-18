@@ -76,7 +76,7 @@ MCPackageLoader >> basicLoadDefinitions [
 	self loadClassDefinitions.
 
 	"We want to announce the addition of the methods only once all methods are loaded because the system might react to the annoucements and execute code requirement other methods from the classes we are loading."
-	SystemAnnouncer uniqueInstance delayAnnouncementsAfter: [ additions select: [ :aDefinition | aDefinition isMethodDefinition ] thenDo: [ :definition | definition load ] ].
+	self class codeChangeAnnouncer delayAnnouncementsAfter: [ additions select: [ :aDefinition | aDefinition isMethodDefinition ] thenDo: [ :definition | definition load ] ].
 
 	removals do: [ :each | each unload ] displayingProgress: 'Cleaning up...'.
 
@@ -144,12 +144,13 @@ MCPackageLoader >> loadClassDefinitions [
 	"Here we are loading the class definitions.
 	
 	When loading a class it is possible that it fails. The reason is that a class can use a trait from this package, but the dependency sorter of Monticello does not sort those traits before the classes using it.
-	In that case we are implementing a retry mechanisme."
+	In that case we are implementing a retry mechanism. If error persist, the exception message is logged to the Transcript"
 
 	| errorDefinitions |
 	errorDefinitions := OrderedCollection new.
 
 	"We first load the class definitions and store the potential errors"
+	[
 	(additions select: [ :aDefinition | aDefinition isClassDefinition ])
 		do: [ :aDefinition |
 			[ aDefinition load ]
@@ -166,12 +167,11 @@ MCPackageLoader >> loadClassDefinitions [
 			errorDefinitions remove: aClassDefinition.
 			[ aClassDefinition load ]
 				on: Error
-				do: [ errorDefinitions add: aClassDefinition ] ]
+				do: [ :ex | errorDefinitions add: aClassDefinition ] ]
 		displayingProgress: 'Reloading erroneous definitions...'.
-	previousErrors size = errorDefinitions size ] whileFalse.
-
-	"Finally we warn about the errors we could not fix."
-	errorDefinitions ifNotEmpty: [ self warnAboutErrors: errorDefinitions ]
+	previousErrors size = errorDefinitions size ] whileFalse ] ensure: [ "Finally we warn about the errors we could not fix."
+		errorDefinitions ifNotEmpty: [
+			self warnAboutErrors: errorDefinitions ] ]
 ]
 
 { #category : 'patch ops' }

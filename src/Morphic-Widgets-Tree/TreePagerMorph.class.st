@@ -103,7 +103,7 @@ TreePagerMorph >> choosePage [
 			choiceString := idx asString, ': ', (self nodeList at: assoc key) asString, ' ... ', (self nodeList at: assoc value) asString.
 			choiceList add: idx -> choiceString].
 	chosen :=
-		UIManager default
+		self morphicUIManager
 			chooseFrom: (choiceList collect: [:c | c value])
 			values: (choiceList collect: [:c | c key])
 			lines: nil

@@ -133,6 +133,16 @@ RBAbstractVariablesRefactoring >> abstractVariablesIn: aBRProgramNode from: from
 	self computeVariablesToAbstract
 ]
 
+{ #category : 'preconditions' }
+RBAbstractVariablesRefactoring >> breakingChangePreconditions [
+
+	^ RBCondition withBlock: [ self hasVariablesToAbstract ifTrue: [
+		self refactoringWarning:
+			'This method has direct variable references which<n>will need to be converted to getter/setters.<n>Proceed anyway?'
+				expandMacros ].
+		true ]
+]
+
 { #category : 'transforming' }
 RBAbstractVariablesRefactoring >> classVariableNames [
 	| nonMetaClass |
@@ -174,19 +184,9 @@ RBAbstractVariablesRefactoring >> parseTree [
 	^tree
 ]
 
-{ #category : 'preconditions' }
-RBAbstractVariablesRefactoring >> preconditions [
-
-	^ self trueCondition
-]
-
 { #category : 'transforming' }
 RBAbstractVariablesRefactoring >> privateTransform [
-	self hasVariablesToAbstract
-		ifTrue:
-			[self
-				refactoringWarning: 'This method has direct variable references which<n>will need to be converted to getter/setters.<n>Proceed anyway?'
-						expandMacros].
+
 	self abstractInstanceVariables.
 	self abstractClassVariables
 ]

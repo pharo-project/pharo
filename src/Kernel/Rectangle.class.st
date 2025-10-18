@@ -896,7 +896,7 @@ Rectangle >> squishedWithin: aRectangle [
 "(50 @ 50 corner: 160 @ 100) squishedWithin:  (20 @ 10 corner: 90 @ 85)"
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 Rectangle >> storeOn: aStream [
 	"printed form is good for storing too"
 

@@ -801,7 +801,7 @@ Unicode class >> parseUnicodeDataFrom: stream [
 	16r4E00 to: 16r9FA5 do: [:i | GeneralCategory at: i+1 put: loValue].
 	16rAC00 to: 16rD7FF do: [:i | GeneralCategory at: i+1 put: loValue].
 
-	[(line := stream nextLine) notNil and: [line size > 0 ]] whileTrue: [
+	[(line := stream nextLine) isNotNil and: [line size > 0 ]] whileTrue: [
 		fieldEnd := line indexOf: $; startingAt: 1.
 		point := toNumber value: (line copyFrom: 1 to: fieldEnd - 1).
 		point > 16rE007F ifTrue: [

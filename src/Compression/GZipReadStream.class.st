@@ -71,16 +71,6 @@ GZipReadStream class >> unzip: fullFileName to: pathName [
 	^ newName
 ]
 
-{ #category : 'file in/out' }
-GZipReadStream class >> viewContents: fullFileName [
-	"Open the decompressed contents of the .gz file with the given name."
-
-	| file |
-	(file := fullFileName asFileReference) binaryReadStreamDo:
-		[ :aStream | self with: aStream do:
-			[ :aGzStream | UIManager default edit: aGzStream upToEnd label: 'Decompressed contents of: ' , file basename ] ]
-]
-
 { #category : 'initialization' }
 GZipReadStream >> on: aCollection from: firstIndex to: lastIndex [
 	"Check the header of the GZIP stream."

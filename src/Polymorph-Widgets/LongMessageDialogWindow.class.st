@@ -51,18 +51,18 @@ LongMessageDialogWindow >> newContentMorph [
 LongMessageDialogWindow >> newTextMorph [
 	"Answer a new text editor morph."
 
-	|tm|
+	| tm |
 	tm := (self
-		newTextEditorFor: self
-		getText: #entryText
-		setText: #entryText:
-		getEnabled: nil)
-			beForPlainText;
-			minWidth: Display width // 4;
-			minHeight: Display height // 4;
-			wrapped: true;
-			beReadOnly.
-	^tm
+		       newTextEditorFor: self
+		       getText: #entryText
+		       setText: #entryText:
+		       getEnabled: nil)
+		      beForPlainText;
+		      minWidth: self currentWorld width // 4;
+		      minHeight: self currentWorld height // 4;
+		      wrapped: true;
+		      beReadOnly.
+	^ tm
 ]
 
 { #category : 'accessing' }

@@ -101,17 +101,17 @@ SystemSettingsPersistenceTest >> testAllStoredSettings [
 
 { #category : 'tests - storing - defaults' }
 SystemSettingsPersistenceTest >> testDefaultImageDoesNotStoreAnySetting [
+
 	| nodesToStore |
 	"An image with all default values should not save any setting.
 	The settings only should be saved if changed from default value"
-	Author
-		useAuthor: ''
-		during: [
-			nodesToStore :=  StoredSettingsFactory new fromSettingNodes:
-				(MockSettings settingTree nodeList select: [ :aNode | aNode item hasDefault ]).
-			nodesToStore := nodesToStore reject: [ :aNode | aNode hasDefaultValue ] ].
+	nodesToStore := StoredSettingsFactory new fromSettingNodes:
+		                (MockSettings settingTree nodeList select: [ :aNode |
+			                 aNode item hasDefault ]).
+	nodesToStore := nodesToStore reject: [ :aNode |
+		                aNode hasDefaultValue ].
 
-	self assertCollection: nodesToStore hasSameElements: #()
+	self assertCollection: nodesToStore hasSameElements: #(  )
 ]
 
 { #category : 'tests - storing - defaults' }

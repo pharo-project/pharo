@@ -5,23 +5,12 @@ Class {
 	#name : 'FullscreenAnnouncement',
 	#superclass : 'SystemAnnouncement',
 	#instVars : [
-		'displayScreen',
 		'fullscreen'
 	],
 	#category : 'Graphics-Display Objects-Utilities',
 	#package : 'Graphics-Display Objects',
 	#tag : 'Utilities'
 }
-
-{ #category : 'accessing' }
-FullscreenAnnouncement >> displayScreen [
-	^ displayScreen
-]
-
-{ #category : 'accessing' }
-FullscreenAnnouncement >> displayScreen: anObject [
-	displayScreen := anObject
-]
 
 { #category : 'accessing' }
 FullscreenAnnouncement >> fullscreen [

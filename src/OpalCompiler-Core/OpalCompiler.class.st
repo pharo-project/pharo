@@ -111,7 +111,7 @@ OpalCompiler class >> overlayEnvironment [
 
 { #category : 'overlay' }
 OpalCompiler class >> overlayIsActive [
-	^overlayEnvironment notNil
+	^overlayEnvironment isNotNil
 ]
 
 { #category : 'overlay' }
@@ -545,13 +545,6 @@ OpalCompiler >> generateMethod [
 	method propertyAt: #source put: source.
 	self isScripting ifTrue: [ method propertyAt: #ast put: ast ]. "Keep AST for scripts (for the moment)"
 
-	"If the prior method was not set explicitly, we set it because we will need it if we are not in the first compilation"
-	self priorMethod ifNil: [
-		self methodClass ifNotNil: [ :class | "In case the method comes from a trait, we ignore it because it means we are overriding the trait method in the class"
-			class compiledMethodAt: method selector ifPresent: [ :aMethod | aMethod isFromTrait ifFalse: [ self priorMethod: aMethod ] ] ] ].
-
-	"In case we are not compiling the method for the first time, we want to ensure that some properties are kept."
-	self priorMethod ifNotNil: [ priorMethod migratePersistingPropertiesIn: method ].
 	^ method
 ]
 
@@ -565,20 +558,39 @@ OpalCompiler >> install [
 
 	method := self compile ifNil: [ ^ nil ].
 
-	changeStamp ifNil: [ changeStamp := Author changeStamp ].
+	"If the prior method was not set explicitly, we set it because we will need it if we are not in the first compilation"
+	self priorMethod ifNil: [ "In case the method comes from a trait, we ignore it because it means we are overriding the trait method in the class"
+		class compiledMethodAt: method selector ifPresent: [ :aMethod |
+			aMethod isFromTrait ifFalse: [ self priorMethod: aMethod ] ] ].
+
+	"In case we are not compiling the method for the first time, we want to ensure that some properties are kept."
+	self priorMethod ifNotNil: [
+		priorMethod migratePersistingPropertiesIn: method ].
+
+	changeStamp ifNil: [
+		changeStamp := Date today mmddyyyy , ' '
+		               ,
+			               ((String streamContents: [ :s |
+				                 Time now print24: true on: s ]) copyFrom: 1 to: 5) ].
 	logSource := self logged ifNil: [ true ].
-	protocol := protocol ifNil: [ self priorMethod ifNotNil: [ self priorMethod protocol ] ].
+	protocol := protocol ifNil: [
+		            self priorMethod ifNotNil: [ self priorMethod protocol ] ].
 
 	logSource ifTrue: [
-		method putSource: source withPreamble: [ :file | "It is possible the protocol might be wrong, fro example if the protocol is nil or and extension to the package of the class containing the method. But to fix this problem it would require to find the right protocol before classification and this is some work to do... And this logged protocol is not really used."
-			class
-				printProtocolChunk: protocol 
-				on: file
-				withStamp: changeStamp
-				priorMethod: self priorMethod.
-			file cr ] ].
+		method
+			putSource: source
+			withPreamble: [ :file | "It is possible the protocol might be wrong, fro example if the protocol is nil or and extension to the package of the class containing the method. But to fix this problem it would require to find the right protocol before classification and this is some work to do... And this logged protocol is not really used."
+				class
+					printProtocolChunk: protocol
+					on: file
+					withStamp: changeStamp
+					priorMethod: self priorMethod.
+				file cr ] ].
 
-	class addAndClassifySelector: method selector withMethod: method inProtocol: protocol.
+	class
+		addAndClassifySelector: method selector
+		withMethod: method
+		inProtocol: protocol.
 
 	class instanceSide noteCompilationOf: method meta: class isClassSide.
 

@@ -16,7 +16,7 @@ SycDeprecateClassCmCommand >> executeRefactoring [
 { #category : 'testing' }
 SycDeprecateClassCmCommand >> isApplicable [
 
-	^ context lastSelectedClass isDeprecated not
+	^ context lastSelectedClass realClass isDeprecated not
 ]
 
 { #category : 'accessing' }

@@ -31,7 +31,7 @@ ReLocalMethodsSameThanTraitRule >> check: aClass forCritiquesDo: aCriticBlock [
 		select: [ :method |
 			| traitCompositionMethod |
 			traitCompositionMethod := aClass traitComposition compiledMethodAt: method selector ifAbsent: [ nil ].
-			traitCompositionMethod notNil and: [ traitCompositionMethod ast = method ast ] ]
+			traitCompositionMethod isNotNil and: [ traitCompositionMethod ast = method ast ] ]
 		thenDo: [ :duplicatedMethod |
 			aCriticBlock cull:
 				(ReRemoveMethodCritique for: aClass selector: duplicatedMethod selector by: self) ]

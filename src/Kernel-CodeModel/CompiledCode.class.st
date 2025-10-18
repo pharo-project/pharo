@@ -121,18 +121,12 @@ CompiledCode class >> newFrom: aCompiledMethod [
 
 { #category : 'instance creation' }
 CompiledCode class >> newMethod: numberOfBytes header: headerWord [
-	"Primitive. Answer an instance of me. The number of literals (and other
-	 information) is specified by the headerWord (see my class comment).
-	 The first argument specifies the number of fields for bytecodes in the
-	 method. Fail if either argument is not a SmallInteger, or if numberOfBytes
-	 is negative, or if memory is low. Once the header of a method is set by
-	 this primitive, it cannot be changed to change the number of literals.
-	 Essential. See Object documentation whatIsAPrimitive."
 
-	<primitive: 79 error: ec>
-	ec == #'insufficient object memory' ifTrue:
-		[^self handleFailingNew: numberOfBytes header: headerWord].
-	^self primitiveFailed
+	self 
+		deprecated: 'Use #basicNew:header: instead.' 
+		transformWith: '`@rcv newMethod: `@numberOfBytes header: `@headerWord' -> '`@rcv basicNew: `@numberOfBytes header: `@headerWord'.
+	
+	^ self basicNew: numberOfBytes header: headerWord
 ]
 
 { #category : 'comparing' }
@@ -233,15 +227,6 @@ CompiledCode >> author [
 		subS := s substrings first.
 		subS first isLetter ifTrue:[^subS]].
 	^''
-]
-
-{ #category : 'accessing' }
-CompiledCode >> bytecode [
-	self
-		deprecated: 'Changed selector for coherency'
-		transformWith: '`@receiver bytecode'
-						-> '`@receiver bytecodes'.
-	^ self bytecodes
 ]
 
 { #category : 'accessing' }
@@ -385,6 +370,14 @@ CompiledCode >> hasLiteralSuchThat: litBlock [
 CompiledCode >> hasPragmaNamed: arg1 [
 	<reflection: 'Class structural inspection - Pragma'>
 	^ self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+CompiledCode >> hasPrimitive [
+	"Answer the primitive index associated with the receiver.
+	 Zero indicates that this is not a primitive method."
+
+	^ self header anyMask: 65536
 ]
 
 { #category : 'literals' }
@@ -800,10 +793,13 @@ CompiledCode >> pragmas [
 CompiledCode >> primitive [
 	"Answer the primitive index associated with the receiver.
 	 Zero indicates that this is not a primitive method."
+
 	| initialPC |
-	^(self header anyMask: 65536) "Is the hasPrimitive? flag set?"
-		ifTrue: [(self at: (initialPC := self initialPC) + 1) + ((self at: initialPC + 2) bitShift: 8)]
-		ifFalse: [0]
+	^ self hasPrimitive
+		  ifTrue: [
+			  (self at: (initialPC := self initialPC) + 1)
+			  + ((self at: initialPC + 2) bitShift: 8) ]
+		  ifFalse: [ 0 ]
 ]
 
 { #category : 'printing' }

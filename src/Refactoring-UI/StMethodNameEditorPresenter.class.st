@@ -1,3 +1,34 @@
+"
+It provides a presenter for editing a method name. The editor also handles arguments and currently can:
+
+- Add an argument by clicking in `+` button. 
+- Remove an argument (currently selecting the argument, right-click to bring a contextual menu and then choose `Remove` option).
+- Re-order arguments by clicking on each argument and using up and down arrows.
+
+## Example
+
+To edit a method with one argument:
+```
+StMethodNameEditorPresenter
+	openOn: (RBMethodName
+		selector: (ObjectMockForTest >> #variable:) selector
+		arguments: #(#arg1))
+		canRenameArgs: true
+		canRemoveArgs: true
+		canAddArgs: true.
+```
+
+To edit a method without arguments:
+```
+StMethodNameEditorPresenter
+	openOn: (RBMethodName
+		selector: (ObjectMockForTest >> #variable) selector
+		arguments: #())
+		canRenameArgs: true
+		canRemoveArgs: true
+		canAddArgs: true.
+```
+"
 Class {
 	#name : 'StMethodNameEditorPresenter',
 	#superclass : 'SpPresenter',
@@ -267,36 +298,8 @@ StMethodNameEditorPresenter >> inform: aString [
 ]
 
 { #category : 'initialization' }
-StMethodNameEditorPresenter >> initializeDialogWindow: aModalPresenter [
-	aModalPresenter
-		addButton: 'Rename' do: [ :presenter | self renameMethodAndClose: presenter ];
-		addButton: 'Cancel' do: [ :presenter | presenter beCancel; close ];
-		initialExtent: 600 @ 300 ;
-		title: 'Method name editor', (methodName selector
-					ifNil: [ '' ]
-					ifNotNil: [ :selector | ' : "', selector, '"' ])
-]
+StMethodNameEditorPresenter >> initializeAddButton [
 
-{ #category : 'initialization' }
-StMethodNameEditorPresenter >> initializePresenters [
-
-	selectorInput := self newTextInput.
-	selectorInput whenTextChangedDo: [ :text | self updateLabel ].
-	selectorInput editable: self canEditName.
-	selectorInput editable: self canEditName.
-
-	previewResult := self newLabel.
-
-	upButton := self newButton.
-	upButton
-		addStyle: 'small';
-		label: 'Up';
-		action: [ self pushUpSelectedArgument ].
-	downButton := self newButton.
-	downButton
-		addStyle: 'small';
-		label: 'Dn';
-		action: [ self pushDownSelectedArgument ].
 	addButton := self newButton.
 	addButton
 		addStyle: 'small';
@@ -304,7 +307,12 @@ StMethodNameEditorPresenter >> initializePresenters [
 		action: [
 			argumentsList items
 				ifEmpty: [ self addArgument ]
-				ifNotEmpty: [ self addArgumentAfter: argumentsList items last ] ].
+				ifNotEmpty: [ self addArgumentAfter: argumentsList items last ].
+			self updateReorderButtonStatus. ].
+]
+
+{ #category : 'initialization' }
+StMethodNameEditorPresenter >> initializeArgumentsList [
 
 	argumentsList := self newList.
 	argumentsList addStyle: 'rows8'.
@@ -317,6 +325,53 @@ StMethodNameEditorPresenter >> initializePresenters [
 	argumentsList items ifNotEmpty: [ argumentsList selectIndex: 1 ]
 ]
 
+{ #category : 'initialization' }
+StMethodNameEditorPresenter >> initializeButtons [
+
+	upButton := self newButton.
+	upButton
+		addStyle: 'small';
+		label: 'Up';
+		action: [ self pushUpSelectedArgument ].
+	downButton := self newButton.
+	downButton
+		addStyle: 'small';
+		label: 'Dn';
+		action: [ self pushDownSelectedArgument ].
+
+	args size < 2 ifFalse: [ ^ self ].
+	upButton disable.
+	downButton disable
+]
+
+{ #category : 'initialization' }
+StMethodNameEditorPresenter >> initializeDialogWindow: aModalPresenter [
+
+	aModalPresenter
+		initialExtent: 600 @ 300 ;
+		title: 'Method name editor', (methodName selector
+					ifNil: [ '' ]
+					ifNotNil: [ :selector | ' : "', selector, '"' ]);		
+		addButton: 'Cancel' do: [ :presenter | presenter beCancel; close ];
+		addDefaultButton: 'Rename' do: [ :presenter | self renameMethodAndClose: presenter ]
+]
+
+{ #category : 'initialization' }
+StMethodNameEditorPresenter >> initializePresenters [
+
+	selectorInput := self newTextInput.
+	selectorInput whenTextChangedDo: [ :text | self updateLabel ].
+	selectorInput editable: self canEditName.
+	selectorInput editable: self canEditName.
+
+	previewResult := self newLabel.
+
+	self 
+		initializeButtons;
+		initializeArgumentsList;
+		initializeAddButton.
+]
+
 { #category : 'accessing' }
 StMethodNameEditorPresenter >> invalidArgNames [
 	^ invalidArgNames ifNil: [ invalidArgNames := { } ]
@@ -325,6 +380,12 @@ StMethodNameEditorPresenter >> invalidArgNames [
 { #category : 'accessing' }
 StMethodNameEditorPresenter >> invalidArgNames: aSet [
 	invalidArgNames := aSet
+]
+
+{ #category : 'accessing' }
+StMethodNameEditorPresenter >> methodName [
+
+	^ methodName
 ]
 
 { #category : 'utilities' }
@@ -377,11 +438,15 @@ StMethodNameEditorPresenter >> pushUpSelectedArgument [
 
 { #category : 'accessing' }
 StMethodNameEditorPresenter >> removeArgument: anItem [
+
 	| selectedIndex |
+
 	selectedIndex := argumentsList selection selectedIndex.
 	argumentsList items: (argumentsList items copyUpTo: anItem), (argumentsList items copyAfter: anItem).
 	argumentsList selectIndex: selectedIndex - 1.
-	self updateLabel
+	self updateLabel.
+	self updateReorderButtonStatus.
+
 ]
 
 { #category : 'action' }
@@ -465,4 +530,18 @@ StMethodNameEditorPresenter >> updatePresenter [
 
 	selectorInput text: methodName selector.
 	previewResult label: methodName methodName
+]
+
+{ #category : 'initialization' }
+StMethodNameEditorPresenter >> updateReorderButtonStatus [
+	"Method name editor dialog up/down buttons should be disabled with < 2 arguments"
+
+	argumentsList items size < 2 
+		ifTrue: [
+			upButton disable.
+			downButton disable ]
+		ifFalse: [  
+			upButton enable.
+			downButton enable ]
+
 ]

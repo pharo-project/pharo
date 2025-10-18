@@ -306,11 +306,8 @@ FFIStructure class >> offsetVariableNameFor: fieldName [
 { #category : 'private' }
 FFIStructure class >> rebuildFieldAccessors [
 
-	Author useAuthor: 'UFFIGenerator' during: [
-		self removeAllOffsetVariables.
-		self
-			compileFields: self fields
-			withAccessors: #always]
+	self removeAllOffsetVariables.
+	self compileFields: self fields withAccessors: #always
 ]
 
 { #category : 'private' }

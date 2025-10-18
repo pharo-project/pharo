@@ -10,6 +10,6 @@ Class {
 }
 
 { #category : 'testing' }
-RGDoubleWordLayout >> isWordLayout [
+RGDoubleWordLayout >> isDoubleWordLayout [
 	^ true
 ]

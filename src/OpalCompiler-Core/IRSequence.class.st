@@ -214,12 +214,6 @@ IRSequence >> nonBodySuccessorSequences [
 	^ sequence last nonBodySuccessorSequences
 ]
 
-{ #category : 'testing' }
-IRSequence >> notEmpty [
-	self deprecated: 'Use #isNotEmpty instead.' transformWith: '`@rcv notEmpty' -> '`@rcv isNotEmpty'.
-	^self isNotEmpty
-]
-
 { #category : 'accessing' }
 IRSequence >> orderNumber [
 	"Sequences are sorted by this number"

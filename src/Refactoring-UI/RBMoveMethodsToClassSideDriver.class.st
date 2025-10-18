@@ -56,7 +56,7 @@ RBMoveMethodsToClassSideDriver >> scopes: scopesList methods: methods [
 
 	scopes := scopesList.
 	model := self refactoringScopeOn: scopesList first.
-	refactoring := RBCompositeRefactoring new
+	refactoring := ReCompositeRefactoring new
 		               model: model;
 		               refactorings: (methods collect: [ :m |
 					                RBMoveMethodToClassSideRefactoring

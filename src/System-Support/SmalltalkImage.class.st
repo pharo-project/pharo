@@ -215,12 +215,11 @@ SmalltalkImage >> backupImageInFileNamed: aFileReference [
 	Unlike #saveImageInFileNamed: this method continues evaluation in the original image after saving a backup copy.
 	Note: This method does not save the .changes file, use #saveAs:"
 
-	| imageFile previousFullImageName isNewSession |
+	| imageFile previousFullImageName snapshotReturn |
 
 	imageFile := aFileReference asFileReference.
 	imageFile parent ensureCreateDirectory.
 	previousFullImageName := self imagePath.
-	isNewSession := false.
 
 	[
 		"change to the new image name "
@@ -229,9 +228,9 @@ SmalltalkImage >> backupImageInFileNamed: aFileReference [
 			closeSourceFiles;
 			openSourceFiles.  "so SNAPSHOT appears in new changes file"
 
-		isNewSession := self snapshot: true andQuit: false.
+		snapshotReturn := self snapshot: true andQuit: false.
 	] ensure: [
-		isNewSession ifFalse: [
+		snapshotReturn isImageStarting ifFalse: [
 			"unlike #saveImageInFileNamed: we do NOT continue in the new image"
 			"switch back to the old image"
 			self
@@ -239,7 +238,7 @@ SmalltalkImage >> backupImageInFileNamed: aFileReference [
 				closeSourceFiles;
 				openSourceFiles ]].
 
-	^ isNewSession
+	^ snapshotReturn
 ]
 
 { #category : 'saving' }
@@ -327,7 +326,7 @@ SmalltalkImage >> cleanOutUndeclared [
 					unreferenced
 						remove: lit key
 						ifAbsent: [ "Sanity check--a binding with more than one reference may already be gone from the unreferenced set, but should be present in Undeclared itself"
-							self at: lit key ] ] ] ] ].
+							Undeclared at: lit key ] ] ] ] ].
 
 	unreferenced do: [ :key | Undeclared removeKey: key ]
 ]
@@ -342,7 +341,7 @@ SmalltalkImage >> cleanUp [
 
 { #category : 'cleanup' }
 SmalltalkImage >> cleanUp: aggressive [
-	"Clean up. When aggressive is true, this will destroy change sets, etc."
+	"Clean up. When aggressive is true, this will destroy resources, etc."
 	"Smalltalk cleanUp: false"
 	"Smalltalk cleanUp: true"
 
@@ -351,20 +350,20 @@ SmalltalkImage >> cleanUp: aggressive [
 
 { #category : 'cleanup' }
 SmalltalkImage >> cleanUp: aggressive except: exclusions [
-	"Clean up. When aggressive is true, this will destroy resources, change sets, etc.
+	"Clean up. When aggressive is true, this will destroy resources, etc.
 	Leave out any classes specifically listed in exclusions."
 
-	"Smalltalk cleanUp: true except: {Point . ChangeSet}"
+	"Smalltalk cleanUp: true except: {Point}"
 
 	^self cleanUp: aggressive except: exclusions confirming: aggressive
 ]
 
 { #category : 'cleanup' }
 SmalltalkImage >> cleanUp: aggressive except: exclusions confirming: aBool [
-	"Clean up. When aggressive is true, this will destroy resources, change sets, etc.
+	"Clean up. When aggressive is true, this will destroy resources, etc.
 	Leave out any classes specifically listed in exclusions."
 
-	"Smalltalk cleanUp: true except: {Point . ChangeSet}
+	"Smalltalk cleanUp: true except: {Point}
 		- will ask for confirmation"
 	"SmalltalkImage current cleanUp: true except: {} confirming: false
 		- will not ask for confirmation"
@@ -681,8 +680,8 @@ SmalltalkImage >> fullNameForImageNamed: aString [
 { #category : 'memory space' }
 SmalltalkImage >> garbageCollect [
 	"Primitive. Reclaims all garbage and answers the size of the largest free chunk in old space."
-	Object flushDependents.
-	^self primitiveGarbageCollect
+
+	^ self primitiveGarbageCollect
 ]
 
 { #category : 'memory space' }
@@ -1279,10 +1278,8 @@ SmalltalkImage >> openLog [
 { #category : 'sources, change log' }
 SmalltalkImage >> openSourceFiles [
 
-	self imagePath = LastImagePath
-		ifFalse: ["Reset the author full name to blank when the image gets moved"
-			LastImagePath := self imagePath.
-			Author reset].
+	self imagePath = LastImagePath ifFalse: [ "Reset the author full name to blank when the image gets moved"
+		LastImagePath := self imagePath ].
 
 	SourceFiles ensureOpen
 ]
@@ -1690,21 +1687,6 @@ SmalltalkImage >> signalLowSpace [
 SmalltalkImage >> snapshot: save andQuit: quit [
 	DefaultExecutionEnvironment beActiveDuring:
 		 [^SessionManager default snapshot: save andQuit: quit]
-]
-
-{ #category : 'snapshot and quit' }
-SmalltalkImage >> snapshotPrimitive [
-	"Primitive. Write the current state of the object memory on a file in the
-	same format as the Smalltalk-80 release. The file can later be resumed,
-	returning you to this exact state. Return normally after writing the file.
-	Essential. See Object documentation whatIsAPrimitive."
-
-	"I will return
-		true if the image is starting or
-		false if the image is just resuming"
-
-	<primitive: 97>
-	^nil "indicates error writing image file"
 ]
 
 { #category : 'image, changes name' }

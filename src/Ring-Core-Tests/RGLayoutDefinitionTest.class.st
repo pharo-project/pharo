@@ -124,7 +124,9 @@ RGLayoutDefinitionTest >> testNewLayouts [
 { #category : 'tests' }
 RGLayoutDefinitionTest >> testResolvingConsistency [
 
-	| anObject |
-	anObject := RGPointerLayout unnamed.
-	self checkClassesConsistency: anObject and: anObject makeResolved
+	| layout |
+	layout := RGPointerLayout unnamed.
+	
+	layout addSlot: ((RGInstanceVariableSlot unnamed) propertyNamed: #environment put: layout environment).
+	self checkClassesConsistency: layout and: layout makeResolved
 ]

@@ -248,7 +248,7 @@ DiffMorph >> applyMap [
 DiffMorph >> applyPrettyPrinter [
 	"Apply pretty printer if check box is on"
 
-	(self prettyPrint and: [ self contextClass notNil ])
+	(self prettyPrint and: [ self contextClass isNotNil ])
 		ifTrue: [
 			self sourceTextModel getString isEmpty
 				ifFalse: [ self sourceTextModel formatSourceCodeInView ].
@@ -1124,7 +1124,7 @@ DiffMorph >> setOptionsPanel: aBoolean [
 { #category : 'user interface' }
 DiffMorph >> shoutAboutToStyle: aPluggableShoutMorphOrView [
 	aPluggableShoutMorphOrView classOrMetaClass: self contextClass.
-	^ self contextClass notNil
+	^ self contextClass isNotNil
 ]
 
 { #category : 'accessing' }
@@ -1267,7 +1267,7 @@ DiffMorph >> updateMorphs [
 DiffMorph >> updateText [
 	"Reset the text if we have some."
 
-	(self sourceTextModel getString notNil and: [ self destTextModel getString notNil ])
+	(self sourceTextModel getString isNotNil and: [ self destTextModel getString isNotNil ])
 		ifTrue: [ self from: self sourceTextModel getString to: self destTextModel getString ]
 ]
 

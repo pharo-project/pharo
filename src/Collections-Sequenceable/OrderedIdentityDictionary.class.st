@@ -25,11 +25,6 @@ Class {
 }
 
 { #category : 'accessing' }
-OrderedIdentityDictionary >> dictionaryClass [
-	^ IdentityDictionary
-]
-
-{ #category : 'accessing' }
 OrderedIdentityDictionary >> indexOfKey: aKey ifAbsent: aBlock [
 	^ self identityIndexOfKey: aKey ifAbsent: aBlock
 ]

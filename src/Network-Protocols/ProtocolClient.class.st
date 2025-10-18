@@ -158,7 +158,7 @@ ProtocolClient >> host: hostId [
 
 { #category : 'testing' }
 ProtocolClient >> isConnected [
-	^stream notNil
+	^stream isNotNil
 		and: [stream isConnected]
 ]
 

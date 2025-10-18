@@ -1,3 +1,6 @@
+"
+Retrieves the selected class traits.
+"
 Class {
 	#name : 'ClyShowTraitUsersCommand',
 	#superclass : 'SycClassCommand',

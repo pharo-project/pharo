@@ -53,13 +53,6 @@ MetacelloMCBaselineProject >> bleedingEdge [
 ]
 
 { #category : 'versions' }
-MetacelloMCBaselineProject >> currentVersion [
-    ^ self version isSomethingLoaded
-        ifTrue: [ self version ]
-        ifFalse: [ nil ]
-]
-
-{ #category : 'versions' }
 MetacelloMCBaselineProject >> currentVersionAgainst: resolvedPackageAndProjectNames [
     ^ nil
 ]
@@ -87,14 +80,6 @@ MetacelloMCBaselineProject >> latestVersion [
 { #category : 'versions' }
 MetacelloMCBaselineProject >> latestVersion: blessing [
     ^ nil
-]
-
-{ #category : 'scripting' }
-MetacelloMCBaselineProject >> projectForScriptEngine: aMetacelloScriptEngine unconditionalLoad: aBool [
-  "see https://github.com/dalehenrich/metacello-work/issues/244 ... uncoditionally load
-   baseline"
-
-  ^ aMetacelloScriptEngine getBaselineProjectUnconditionalLoad: true
 ]
 
 { #category : 'accessing' }

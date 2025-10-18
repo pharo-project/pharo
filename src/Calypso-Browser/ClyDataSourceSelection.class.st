@@ -156,6 +156,14 @@ ClyDataSourceSelection >> detachedItems [
 ]
 
 { #category : 'controlling' }
+ClyDataSourceSelection >> ensureVisibleFirstItem [
+	
+	rootDataSource table
+		selectIndexes: #();
+	 	selectFirst
+]
+
+{ #category : 'controlling' }
 ClyDataSourceSelection >> ensureVisibleLastItem [
 
 	"in fact first selection index is last selected item"

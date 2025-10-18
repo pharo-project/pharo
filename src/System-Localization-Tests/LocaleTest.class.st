@@ -12,5 +12,5 @@ Class {
 { #category : 'tests' }
 LocaleTest >> testCurrent [
 
-	self assert: Locale current notNil
+	self assert: Locale current isNotNil
 ]

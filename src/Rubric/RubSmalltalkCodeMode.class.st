@@ -68,10 +68,7 @@ RubSmalltalkCodeMode class >> menuOn: aBuilder [
 		keyText: 'D';
 		selector: #debugIt;
 		help: nil;
-		iconName: #smallDebug.
-	(aBuilder item: #'Profile it' translated)
-		selector: #tallyIt;
-		iconName: #smallProfile;
+		iconName: #smallDebug;
 		withSeparatorAfter.
 	(aBuilder item: #'Find...' translated)
 		keyText: 'f';
@@ -177,7 +174,8 @@ RubSmalltalkCodeMode >> formatMethodCode [
 	tree checkFaulty: [ :msg :pos |
 		^ self editor notify: msg at: pos + 1 in: source ].
 	formatted := tree formattedCodeIn: classOrMetaclass.
-	formatted = source ifTrue: [ ^ self ].
+	"Text can = String, but String never = Text"
+	formatted = source asString ifTrue: [ ^ self ].
 	self textArea hasSelection
 		ifTrue: [ self textArea replaceSelectionWith: formatted ]
 		ifFalse: [ self textArea updateTextWith: formatted ]

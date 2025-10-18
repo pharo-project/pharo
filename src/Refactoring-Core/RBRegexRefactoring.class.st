@@ -72,12 +72,6 @@ RBRegexRefactoring >> initialize [
 	matchers := OrderedCollection new
 ]
 
-{ #category : 'preconditions' }
-RBRegexRefactoring >> preconditions [
-
-	^ self trueCondition
-]
-
 { #category : 'searching' }
 RBRegexRefactoring >> replace: aFindString with: aReplaceString [
 	"Replace all matches of aFindString (regular expression) with aReplaceString, where $0 references the whole match, and $1..$9 the matched groups.

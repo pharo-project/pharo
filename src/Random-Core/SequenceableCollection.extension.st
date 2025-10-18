@@ -32,3 +32,11 @@ SequenceableCollection >> shuffleBy: aRandom [
 SequenceableCollection >> shuffled [
 	^ self copy shuffle
 ]
+
+{ #category : '*Random-Core' }
+SequenceableCollection >> shuffledBy: aRandom [
+	"Durstenfeld's version of the Fisher-Yates shuffle"
+	"({1. 2. 3. 4. 5} shuffleBy: (Random seed: 42)) >>> #(1 2 5 4 3)"
+
+	^ self copy shuffleBy: aRandom
+]

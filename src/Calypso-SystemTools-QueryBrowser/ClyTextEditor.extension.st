@@ -44,6 +44,7 @@ ClyTextEditor >> methodSourceContainingIt [
 	"Open a browser class comments which contain the current selection somewhere in them."
 
 	| query pattern |
+	
 	self lineSelectAndEmptyCheck: [^ self].
 	pattern := self selection string.
 	query := (ClyMethodSourcesQuery withString: pattern), (ClyClassCommentsQuery withString: pattern).

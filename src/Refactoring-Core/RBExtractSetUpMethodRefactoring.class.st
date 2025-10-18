@@ -54,6 +54,23 @@ Class {
 	#tag : 'Refactorings'
 }
 
+{ #category : 'preconditions' }
+RBExtractSetUpMethodRefactoring >> applicabilityPreconditions [ 
+
+	^ (RBCondition definesSelector: selector in: class)
+	& (self requestExistingSelector 
+		ifNil: [ (RBCondition definesSelector: #setUp in: class) not ]
+		ifNotNil: [ self trueCondition ]) 
+	& (RBCondition withBlock: [ class allSuperclasses anySatisfy: [ :e | e name = #TestCase ] ])
+	& (RBCondition withBlock:
+		[self extractMethod.
+		self checkSpecialExtractions.
+		self checkReturn.
+		needsReturn ifTrue: [extractedParseTree addReturn].
+		self checkTemporaries.
+		true])
+]
+
 { #category : 'transforming' }
 RBExtractSetUpMethodRefactoring >> checkAssignments: variableNames [
 	| node outsideVars removeAssigned |
@@ -93,21 +110,6 @@ RBExtractSetUpMethodRefactoring >> nameNewMethod: aSymbol [
 	args := parameters collect: [ :parm | RBVariableNode named: parm ].
 	extractedParseTree renameSelector: aSymbol andArguments: args asArray.
 	modifiedParseTree := RBParseTreeRewriter replace: self methodDelimiter with: '#callToSetUp' in: modifiedParseTree
-]
-
-{ #category : 'preconditions' }
-RBExtractSetUpMethodRefactoring >> preconditions [
-	^(RBCondition definesSelector: selector in: class) &
-	(self requestExistingSelector ifNil: [ (RBCondition definesSelector: #setUp in: class) not ]
-	ifNotNil: [ self trueCondition ]) &
-	(RBCondition withBlock: [ class allSuperclasses anySatisfy: [ :e | e name = #TestCase ] ])
-		& (RBCondition withBlock:
-			[self extractMethod.
-			self checkSpecialExtractions.
-			self checkReturn.
-			needsReturn ifTrue: [extractedParseTree addReturn].
-			self checkTemporaries.
-			true])
 ]
 
 { #category : 'transforming' }

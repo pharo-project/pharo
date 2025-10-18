@@ -47,7 +47,7 @@ RBCustomTransformation >> privateTransform [
 	transformationBlock value: self model
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBCustomTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.

@@ -10,7 +10,7 @@ RBMaxOneAssignmentWithReferencesConditionTest >> testFailureMaxOneAssignmentWhen
 
 	| precondition |
 	
-	precondition := RBMaxOneAssignmentWithReferencesCondition new assignments: #(class #model).
+	precondition := ReMaxOneAssignmentWithReferencesCondition new assignments: #(class #model).
 	
 	self deny: precondition check
 ]
@@ -20,7 +20,7 @@ RBMaxOneAssignmentWithReferencesConditionTest >> testFailureWhenAssignmentsIsNil
 
 	| precondition |
 	
-	precondition := RBMaxOneAssignmentWithReferencesCondition new assignments: nil.
+	precondition := ReMaxOneAssignmentWithReferencesCondition new assignments: nil.
 
 	self deny: precondition check
 ]
@@ -30,7 +30,7 @@ RBMaxOneAssignmentWithReferencesConditionTest >> testMaxOneAssignmentWhenNoAssig
 
 	| precondition  |
 	
-	precondition := RBMaxOneAssignmentWithReferencesCondition new assignments: #().
+	precondition := ReMaxOneAssignmentWithReferencesCondition new assignments: #().
 	
 	self assert: precondition check
 ]
@@ -40,7 +40,7 @@ RBMaxOneAssignmentWithReferencesConditionTest >> testMaxOneAssignmentWhenOneAssi
 
 	| precondition |
 	
-	precondition := RBMaxOneAssignmentWithReferencesCondition new assignments: #(#model).
+	precondition := ReMaxOneAssignmentWithReferencesCondition new assignments: #(#model).
 	
 	self assert: precondition check
 ]

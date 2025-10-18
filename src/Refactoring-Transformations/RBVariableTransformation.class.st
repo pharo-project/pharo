@@ -73,7 +73,7 @@ RBVariableTransformation class >> variable: aVariableName class: aClassName clas
 		yourself
 ]
 
-{ #category : 'printing' }
+{ #category : 'storing' }
 RBVariableTransformation >> storeOn: aStream [
 
 	aStream nextPut: $(.
