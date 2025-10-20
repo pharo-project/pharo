@@ -95,6 +95,8 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	WorldMorph initialize.
 	PasteUpMorph initialize.
 	DefaultExternalDropHandler initialize.
+	BalloonEngineConstants initialize.
+	BalloonEngine initialize.
 
 	Initialized := true.
 ]

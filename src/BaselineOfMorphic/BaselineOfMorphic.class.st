@@ -262,7 +262,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 		nextPutAll: 'bitmap fonts loaded' asString;
 		lf.
 
-	#( #ProgressBarMorph #BalloonEngineConstants #BalloonEngine
+	#( #ProgressBarMorph
 	   #CornerRounder #DigitalSignatureAlgorithm
 	   #FT2Types #FT2FFILibrary #FreeTypeCacheConstants
 	   #FreeTypeCache #FreeTypeSettings #FreeTypeSubPixelAntiAliasedGlyphRenderer
