@@ -305,7 +305,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	#( #AbstractFont #BalloonMorph #Clipboard #EmbeddedFreeTypeFontInstaller
 	   #FLCompiledMethodCluster #FreeTypeFontProvider
 	   #GradientFillStyle #IconicButtonMorph #LogicalFont
-	   #LucidaGrandeRegular #OSEnvironment #ScrollBarMorph
+	   #LucidaGrandeRegular #ScrollBarMorph
 	   #StrikeFont #SystemSettingsPersistence #TabMorph #TaskbarMorph
 	   #TextAction #TextConstants #TextStyle ) do: [ :each |
 		(Smalltalk globals at: each) initialize ].
