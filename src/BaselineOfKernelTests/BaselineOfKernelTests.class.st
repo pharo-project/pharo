@@ -42,10 +42,8 @@ BaselineOfKernelTests >> baseline: spec [
 			package: 	'Random-Tests';
 			package: 	'Ring-Definitions-Core-Tests';
 			package: 	'Ring-Definitions-Tests-Containers'; 
-			package: 	'System-Object Events-Tests';
 			package: 	'System-OSEnvironments-Tests';
 			package: 	'Zinc-Character-Encoding-Tests' ;
 			package: 	'System-Platforms-Tests';
-			package: 'System-Finalization-Tests';
-			package: 	'Text-Tests' ]
+			package: 'System-Finalization-Tests' ]
 ]

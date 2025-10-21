@@ -324,17 +324,19 @@ PBBootstrap >> monticelloNetworkPackageNames [
 	^ #('Network-Kernel'
 		 'Network-MIME'
 		 'Network-Protocols'
+		 
+		 'Zinc-Resource-Meta-Core'
+		 'Zinc-HTTP'
 
 		 'MonticelloRemoteRepositories'
-
-		 'Zinc-HTTP'
+		 
 		 'Zodiac-Core')
 ]
 
 { #category : 'package-names' }
 PBBootstrap >> monticelloPackageNames [
 
-	^ #('Ring-OldChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Definitions-Core' 'Jobs' 'Compression' 'Monticello-Model' 'Monticello' 'Ring-Definitions-Monticello' )
+	^ #('Ring-OldChunkImporter'  'System-Changes' 'Ring-Definitions-Core' 'Jobs' 'Compression' 'Monticello-Model' 'Monticello' 'Ring-Definitions-Monticello' )
 ]
 
 { #category : 'accessing' }

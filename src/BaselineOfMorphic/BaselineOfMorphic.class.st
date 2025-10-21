@@ -238,7 +238,6 @@ BaselineOfMorphic >> loadBitmapSourcePro [
 { #category : 'actions' }
 BaselineOfMorphic >> postload: loader package: packageSpec [
 
-	| array |
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
 
@@ -262,15 +261,12 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 		nextPutAll: 'bitmap fonts loaded' asString;
 		lf.
 
-	#( #ProgressBarMorph #BalloonEngineConstants #BalloonEngine
-	   #CornerRounder #DigitalSignatureAlgorithm
-	   #GIFReadWriter #GlobalIdentifier #HaloMorph
+	#( #ProgressBarMorph #GIFReadWriter #GlobalIdentifier #HaloMorph
 	   #CharacterScanner #ImageMorph #JPEGHuffmanTable #JPEGReadStream
 	   #Locale #MczInstaller #MD5NonPrimitive #MenuItemMorph
-	   #MenuMorph #RxMatcher #RxParser #RxsPredicate #SHA1 #ShortIntegerArray
-	   #SystemProgressMorph #SystemWindow #TestCase #TextContainer
-	   #TextDiffBuilder #ThumbnailMorph #TransferMorph #UITheme #ZnByteEncoder
-	   #ZnConstants #ZnMimeType #ZnNetworkingUtils #ZnServer #ZnSingleThreadedServer )
+	   #MenuMorph #RxMatcher #RxParser #RxsPredicate #SHA1
+	   #SystemProgressMorph #SystemWindow #TextContainer
+	   #TextDiffBuilder #ThumbnailMorph #TransferMorph #UITheme )
 		do: [ :each | (Smalltalk globals at: each) initialize ].
 
 	UIManager default terminateUIProcess.
@@ -303,17 +299,13 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	#( #AbstractFont #BalloonMorph #Clipboard #EmbeddedFreeTypeFontInstaller
 	   #FLCompiledMethodCluster
 	   #GradientFillStyle #IconicButtonMorph #KMLog #LogicalFont
-	   #LucidaGrandeRegular #OSEnvironment #ScrollBarMorph
+	   #LucidaGrandeRegular #ScrollBarMorph
 	   #StrikeFont #SystemSettingsPersistence #TabMorph #TaskbarMorph
 	   #TextAction #TextConstants #TextStyle ) do: [ :each |
 		(Smalltalk globals at: each) initialize ].
 
 	LogicalFontManager current addFontProvider:
 		FreeTypeFontProvider current.
-
-	array := Smalltalk specialObjectsArray copy.
-	array at: 5 put: Bitmap.
-	Smalltalk specialObjectsArray becomeForward: array.
 
 	MCMethodDefinition initializersEnabled: initializersEnabled.
 

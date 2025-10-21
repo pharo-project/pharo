@@ -36,6 +36,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'FileSystem-Memory-Tests';
 			package: 'Fonts-Infrastructure-Tests';
 			package: 'Graphics-Tests';
+			package: 'Text-Tests';
 			package: 'Morphic-Tests';
 			package: 'Morphic-Widgets-FastTable-Tests';
 			package: 'NECompletion-Tests';
@@ -45,6 +46,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Rubric-Tests';
 			package: 'ScriptingExtensions-Tests';
 			package: 'STON-Tests';
+			package: 'System-Object Events-Tests';
 			package: 'System-Caching-Tests';
 			package: 'System-Utilities-Tests';
 			package: 'System-Hashing-Tests';

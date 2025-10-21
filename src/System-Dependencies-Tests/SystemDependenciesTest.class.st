@@ -67,7 +67,7 @@ SystemDependenciesTest >> knownKernelDependencies [
 SystemDependenciesTest >> knownMorphicCoreDependencies [
 	"ideally this list should be empty"
 
-	^ #(#'Fonts-Infrastructure' #'FreeType' #'Keymapping-KeyCombinations' #'Morphic-Base' #'Refactoring-Critics' #'Refactoring-Environment' #'Rubric' 
+	^ #(#'Fonts-Infrastructure' #'FreeType' #'Keymapping-KeyCombinations' #'Morphic-Base' #'Refactoring-Critics' #'Refactoring-Environment'
 	  'Morphic-Widgets-ColorPicker')
 ]
 
