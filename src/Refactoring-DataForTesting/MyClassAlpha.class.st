@@ -33,6 +33,11 @@ MyClassAlpha >> methodOverriden [
 ]
 
 { #category : 'dummy methods' }
+MyClassAlpha >> methodWithNoSenders [
+	^ self
+]
+
+{ #category : 'dummy methods' }
 MyClassAlpha >> methodWithSuperSend [
 	"One of my subclass has the same implementation and its sibling not"
 	^ super class

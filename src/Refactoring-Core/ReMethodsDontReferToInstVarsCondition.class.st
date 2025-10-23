@@ -1,10 +1,6 @@
 Class {
 	#name : 'ReMethodsDontReferToInstVarsCondition',
 	#superclass : 'ReMethodsCondition',
-	#instVars : [
-		'class',
-		'selectors'
-	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
@@ -15,6 +11,16 @@ ReMethodsDontReferToInstVarsCondition >> class: aRBClass selectors: aCollection 
 
 	class := aRBClass.
 	selectors := aCollection 
+]
+
+{ #category : 'accessing' }
+ReMethodsDontReferToInstVarsCondition >> nonViolators [
+	"I override nonViolators because my violators differ in type from my candidates.
+	My violators are pairs of the form {selector, instVarName}, while my candidates are selectors."
+	^ (
+		 (self candidates difference: (self violators collect: [ :assoc | assoc first ])) 
+			collect: [ :nonViolator | { nonViolator. nil } ]
+		) asSet
 ]
 
 { #category : 'accessing' }
@@ -45,7 +51,7 @@ ReMethodsDontReferToInstVarsCondition >> violators [
 	violators ifNotNil: [ ^ violators ].
 	
 	violators := Set new.
-	selectors do: [ :selector |
+	self candidates do: [ :selector |
 		class instanceVariableNames do: [ :instVar |
 			((class methodFor: selector) refersToVariable: instVar)
 				ifTrue: [ violators add: { selector . instVar } ] ] ].

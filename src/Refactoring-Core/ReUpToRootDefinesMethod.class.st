@@ -12,8 +12,7 @@ Class {
 { #category : 'instance creation' }
 ReUpToRootDefinesMethod >> class: aRBClass [ 
 
-	classes := { aRBClass }.
-	subjects := classes
+	classes := { aRBClass }
 ]
 
 { #category : 'checking' }

@@ -9,6 +9,11 @@ Class {
 	#tag : 'Conditions'
 }
 
+{ #category : 'as yet unclassified' }
+ReValidClassNameCondition >> candidates [
+	^ self shouldBeImplemented
+]
+
 { #category : 'checking' }
 ReValidClassNameCondition >> check [ 
 

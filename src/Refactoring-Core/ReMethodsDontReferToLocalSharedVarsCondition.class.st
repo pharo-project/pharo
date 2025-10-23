@@ -5,10 +5,6 @@ I do not check for shared variables defined in my class superclasses
 Class {
 	#name : 'ReMethodsDontReferToLocalSharedVarsCondition',
 	#superclass : 'ReMethodsCondition',
-	#instVars : [
-		'class',
-		'selectors'
-	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
@@ -19,6 +15,16 @@ ReMethodsDontReferToLocalSharedVarsCondition >> class: aRBClass selectors: aColl
 
 	class := aRBClass.
 	selectors := aCollection 
+]
+
+{ #category : 'accessing' }
+ReMethodsDontReferToLocalSharedVarsCondition >> nonViolators [
+	"I override nonViolators because my violators differ in type from my candidates.
+	My violators are pairs of the form {selector, instVarName}, while my candidates are selectors."
+	^ (
+		 (self candidates difference: (self violators collect: [ :assoc | assoc first ])) 
+			collect: [ :nonViolator | { nonViolator. nil } ]
+		) asSet
 ]
 
 { #category : 'accessing' }
@@ -47,7 +53,7 @@ ReMethodsDontReferToLocalSharedVarsCondition >> violators [
 	violators ifNotNil: [ ^ violators ].
 
 	violators := Set new.
-	selectors do: [ :selector |
+	self candidates do: [ :selector |
 		class classVariableNames do: [ :classVar |
 			((class methodFor: selector) refersToVariable: classVar)
 				ifTrue: [ violators add: { selector . classVar } ] ] ].

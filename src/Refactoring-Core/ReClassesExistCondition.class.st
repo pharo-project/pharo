@@ -6,12 +6,12 @@ Class {
 	#tag : 'Conditions'
 }
 
-{ #category : 'accessing' }
-ReClassesExistCondition >> classes: aCollection [
-	"I must override `classes:` because violators are symbols instead of classes.
-	To correctly compute `nonViolators`, subjects and violators must have matching types."
-	classes := aCollection.
-	subjects := classes keys 
+{ #category : 'accessing - private' }
+ReClassesExistCondition >> candidates [
+	"I must override `candidates` because my violators are symbols instead of classes.
+	To correctly compute `nonViolators`, candidates and violators must have matching types."
+	^ classes keys
+	
 ]
 
 { #category : 'displaying' }

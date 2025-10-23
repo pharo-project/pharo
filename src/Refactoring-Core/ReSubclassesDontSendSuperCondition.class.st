@@ -1,10 +1,6 @@
 Class {
 	#name : 'ReSubclassesDontSendSuperCondition',
 	#superclass : 'ReMethodsCondition',
-	#instVars : [
-		'class',
-		'selectors'
-	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
@@ -39,7 +35,7 @@ ReSubclassesDontSendSuperCondition >> violators [
 	violators := Dictionary new.
 
 	class subclasses do: [ :each |
-		selectors do: [ :aSelector |
+		self candidates do: [ :aSelector |
 			each selectors
 				detect: [ :sel |
 					| method tree |

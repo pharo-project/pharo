@@ -17,8 +17,6 @@ Class {
 	#name : 'ReMethodsHaveNoSuperCallInSiblingsCondition',
 	#superclass : 'ReMethodsCondition',
 	#instVars : [
-		'class',
-		'selectors',
 		'targetSuperclass'
 	],
 	#category : 'Refactoring-Core-Conditions',

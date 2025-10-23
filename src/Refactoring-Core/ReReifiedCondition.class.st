@@ -1,13 +1,16 @@
 Class {
 	#name : 'ReReifiedCondition',
 	#superclass : 'RBCondition',
-	#instVars : [
-		'subjects'
-	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
 }
+
+{ #category : 'accessing - private' }
+ReReifiedCondition >> candidates [
+	"Candidates are all objects evaluated against the defined conditions. Any object that fails to meet those conditions is considered a violator."
+	self subclassResponsibility 
+]
 
 { #category : 'accessing' }
 ReReifiedCondition >> errorString [
@@ -30,19 +33,13 @@ ReReifiedCondition >> isTrue [
 { #category : 'accessing' }
 ReReifiedCondition >> nonViolators [
 
-	^ subjects difference: self violators
+	^ self candidates difference: self violators
 ]
 
 { #category : 'logical operations' }
 ReReifiedCondition >> not [ 
 
 	^ ReNewNegationCondition on: self
-]
-
-{ #category : 'accessing - private' }
-ReReifiedCondition >> subjects [
-	"Complex conditions require this method to compute their own subjects"
-	^ subjects
 ]
 
 { #category : 'displaying' }

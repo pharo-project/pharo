@@ -30,6 +30,19 @@ ReDefinesSelectorsConditionTest >> testClassDirectlyDefinesSelector [
 	" the class MyClassARoot defines the methods #accessing and #accessingSharedVariable"
 	self assert: def check. 	
 	self assert: def violators isEmpty.
+	self assert: def nonViolators equals: {#accessing . #accessingSharedVariable}
+]
+
+{ #category : 'accessing' }
+ReDefinesSelectorsConditionTest >> testClassDirectlyDefinesSelectorWithMessage [
+
+	| myClassARoot def |
+	myClassARoot := self model classNamed: #MyClassARoot.
+	
+	def := ReDefinesSelectorsCondition new definesSelectors: {#accessing . #accessingSharedVariable}  in: myClassARoot.
+		
+	" the class MyClassARoot defines the methods #accessing and #accessingSharedVariable"
+	self assert: def errorString isEmpty
 
 ]
 
@@ -44,7 +57,8 @@ ReDefinesSelectorsConditionTest >> testClassDoesNotDirectlyDefinesSelector [
 	" the class MyClassARoot does not define method #accessingZZZ"
 	self deny: def check. 	
 	self assert: def violators isNotEmpty.
-	self assert: def violators size equals: 1
+	self assert: def violators size equals: 1.
+	self assert: def nonViolators equals: { #accessingSharedVariable }
 
 ]
 
@@ -59,8 +73,35 @@ ReDefinesSelectorsConditionTest >> testClassDoesNotDirectlyDefinesSelectorEvenIf
 	" the class MyClassBetaSub does not define method #fooAccessor"
 	self deny: def check. 	
 	self assert: def violators isNotEmpty.
-	self assert: def violators size equals: 1
+	self assert: def violators size equals: 1.
+	self assert: def nonViolators isEmpty
 
+]
+
+{ #category : 'accessing' }
+ReDefinesSelectorsConditionTest >> testClassDoesNotDirectlyDefinesSelectorEvenIfSuperClassDoesWithMessage [
+
+	| myClassARoot def |
+	myClassARoot := self model classNamed: #MyClassBetaSub.
+	
+	def := ReDefinesSelectorsCondition new definesSelectors: { #fooAccessor }  in: myClassARoot.
+		
+	" the class MyClassBetaSub does not define method #fooAccessor"
+	self assert: ('*fooAccessor*' match: def errorString)
+]
+
+{ #category : 'accessing' }
+ReDefinesSelectorsConditionTest >> testClassDoesNotDirectlyDefinesSelectorWithMessage [
+
+	| myClassARoot def defined undefined |
+	myClassARoot := self model classNamed: #MyClassARoot.
+	undefined := #accessingZZZ.
+	defined := #accessingSharedVariable.
+	def := ReDefinesSelectorsCondition new definesSelectors: { defined . undefined }  in: myClassARoot.
+		
+	" the class MyClassARoot does not define method #accessingZZZ"
+	self assert: ('*' , undefined , '*' match: def errorString).
+	self deny: ('*' , defined , '*' match: def errorString)
 ]
 
 { #category : 'accessing' }
@@ -75,5 +116,6 @@ ReDefinesSelectorsConditionTest >> testMetaClassDirectlyDefinesSelector [
 	" the class MyClassARoot defines the methods #accessing and #accessingSharedVariable"
 	self assert: def check. 	
 	self assert: def violators isEmpty.
+	self assert: def nonViolators equals: { #accessingFromClassSide }
 
 ]

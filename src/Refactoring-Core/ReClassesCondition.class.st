@@ -10,6 +10,11 @@ Class {
 	#tag : 'Conditions'
 }
 
+{ #category : 'accessing - private' }
+ReClassesCondition >> candidates [
+	^ classes
+]
+
 { #category : 'checking' }
 ReClassesCondition >> check [ 
 
@@ -19,6 +24,5 @@ ReClassesCondition >> check [
 { #category : 'accessing' }
 ReClassesCondition >> classes: aRBClassCollection [
 
-	classes := aRBClassCollection.
-	subjects := classes.
+	classes := aRBClassCollection
 ]

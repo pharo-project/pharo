@@ -1,10 +1,12 @@
+"
+I fail when a method is sent from any method in the model, except for those that are among my candidates.
+"
 Class {
 	#name : 'ReMethodsHaveNoSendersCondition',
 	#superclass : 'ReMethodsCondition',
 	#instVars : [
 		'classSelectorsMapping',
-		'model',
-		'allSelectors'
+		'model'
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
@@ -12,15 +14,16 @@ Class {
 }
 
 { #category : 'accessing' }
-ReMethodsHaveNoSendersCondition >> allSelectors [
+ReMethodsHaveNoSendersCondition >> candidates [
 
-	^ allSelectors ifNil: [ allSelectors := classSelectorsMapping flatCollect: #value ]
+	^ classSelectorsMapping flatCollect: [ :assoc | assoc value collect: [ :selector | assoc key -> (assoc key ifNotNil: [ :cls | cls methodFor: selector ] ifNil: [ nil ] ) ] ]
 ]
 
 { #category : 'initialization' }
 ReMethodsHaveNoSendersCondition >> classSelectorsMapping: aDictionary [
 
-	classSelectorsMapping := aDictionary 
+	classSelectorsMapping := aDictionary.
+	selectors := classSelectorsMapping flatCollect: #value
 ]
 
 { #category : 'initialization' }
@@ -31,7 +34,8 @@ ReMethodsHaveNoSendersCondition >> model: aRBNamespace [
 
 { #category : 'displaying' }
 ReMethodsHaveNoSendersCondition >> violationMessageOn: aStream [
-
+	self violators ifEmpty: [ ^ self ].
+	
 	aStream nextPutAll: 'Method(s) have senders:'.
 	self violators do: [ :violator |
 		aStream
@@ -46,10 +50,12 @@ ReMethodsHaveNoSendersCondition >> violators [
 	violators ifNotNil: [ ^ violators ].
 
 	violators := OrderedCollection new.
-	self allSelectors do: [ :aSelector |
-		model allReferencesTo: aSelector do: [ :aRBMethod |
-			(self allSelectors includes: aRBMethod selector) ifFalse: [
-				violators add: aSelector -> aRBMethod ] ] ].
+	self candidates do: [ :aSelector | | externalSenders |
+			model allReferencesTo: aSelector do: [ :aRBMethod |
+					externalSenders := classSelectorsMapping select: [ :assoc |
+						 assoc key = aRBMethod methodClass and: [ assoc value includes: aRBMethod selector ] ].
+					externalSenders ifEmpty: [
+						violators add: aSelector -> aRBMethod ] ] ].
 
 	^ violators
 ]
