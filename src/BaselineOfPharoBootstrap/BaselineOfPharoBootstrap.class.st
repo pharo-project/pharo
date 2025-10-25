@@ -166,7 +166,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Kernel-CodeModel'.
 			'Kernel-BytecodeEncoders'.
 			'Transcript-NonInteractive'.
-			'PharoBootstrap-Initialization'.
 			'Shift-ClassBuilder'.
 			'System-Announcements'.
 			'System-BasicCommandLineHandler'.
@@ -192,6 +191,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Clap-CommandLine'.
 			'Clap-Commands-Pharo'.
 			'ReflectionMirrors-Primitives'.
+			'PharoBootstrap-Initialization'.
 			'System-Time'.
 			'Math-Operations-Extensions'.
 			'Debugging-Core'.
