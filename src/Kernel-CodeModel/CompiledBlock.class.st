@@ -22,6 +22,7 @@ CompiledBlock class >> trailerSize [
 
 { #category : 'displaying' }
 CompiledBlock >> displayStringOn: stream [
+
 	self printOn: stream
 ]
 
@@ -31,7 +32,7 @@ CompiledBlock >> endPC [
 	^ self size
 ]
 
-{ #category : 'scanning' }
+{ #category : 'testing' }
 CompiledBlock >> hasMethodReturn [
 	"Answer whether the receiver has a method-return ('^') in its code."
 	^ (InstructionStream on: self) scanFor: [:byte |
@@ -49,7 +50,7 @@ CompiledBlock >> hasProperties [
 	^false
 ]
 
-{ #category : 'properties' }
+{ #category : 'accessing - pragmas & properties' }
 CompiledBlock >> hasProperty: aString [
 
 	^ false
@@ -87,6 +88,7 @@ CompiledBlock >> indexInOuter [
 	index := self outerCode literals indexOf: self.
 	index > 0 ifTrue: [ ^ index ].
 
+	"If not found, look for clean blocks with myself as their code"
 	^ self outerCode literals detectIndex: [ :lit |
 		  lit isBlock and: [ lit compiledBlock == self ] ]
 ]
@@ -98,6 +100,8 @@ CompiledBlock >> indexesInOuter [
 	index := self outerCode literals indexOf: self.
 	index > 0 ifTrue: [ ^ ByteArray with: index ].
 
+	"If not found, look for clean blocks with myself as their code.
+	Use a final zero marker to indicate this is a clean block"
 	index := self outerCode literals detectIndex: [ :lit |
 		         lit isBlock and: [ lit compiledBlock == self ] ].
 	^ ByteArray with: index with: 0
@@ -126,11 +130,13 @@ CompiledBlock >> isTestMethod [
 
 { #category : 'comparing' }
 CompiledBlock >> literalEqual: other [
-	"when there are two blocks with the same code, we want to still have both in the literal array"
-	^self == other
+	"Two compiled blocks should be unified in the literal frame only if they are the same block.
+	If they are two different blocks with the same code, do not unify them: we want to have both in the literal array"
+
+	^ self == other
 ]
 
-{ #category : 'literals' }
+{ #category : 'accessing - literals' }
 CompiledBlock >> literalsToSkip [
 
 	^ 1
@@ -149,20 +155,6 @@ CompiledBlock >> methodClass [
 ]
 
 { #category : 'accessing' }
-CompiledBlock >> methodNode [
-	^ self outerCode methodNode
-]
-
-{ #category : 'initialization' }
-CompiledBlock >> needsFrameSize: newFrameSize [
-	"Set the largeFrameBit to accomodate the newFrameSize"
-
-	self numTemps + newFrameSize > LargeFrame ifTrue: [
-		^ self error: 'Cannot compile -- stack including temps is too deep' ].
-	self setFrameBit: self numTemps + newFrameSize > SmallFrame
-]
-
-{ #category : 'accessing' }
 CompiledBlock >> outerCode [
 	"answer the compiled code that I am installed in, or nil if none."
 	^self literalAt: self numLiterals
@@ -176,10 +168,15 @@ CompiledBlock >> outerCode: aCompiledCode [
 { #category : 'accessing' }
 CompiledBlock >> pathOfLiteralIndexes [
 	
+	"Return the path of this compiled block inside the method literal frame.
+	The path is a list of indexes.
+	The user must interpret this list as a tree path, where nodes are methods/blocks and edges are literal indexes.
+	
+	This is useful among other things to serialize a symbolic version of this block"
 	^ self outerCode pathOfLiteralIndexes copyWithAll: self indexesInOuter
 ]
 
-{ #category : 'scanning' }
+{ #category : 'accessing' }
 CompiledBlock >> pcInOuter [
 	| outer end instructionStream |
 	outer := self outerCode.
@@ -203,7 +200,7 @@ CompiledBlock >> pcInOuter [
 	self error: 'block not installed in outer code'
 ]
 
-{ #category : 'accessing' }
+{ #category : 'accessing - pragmas & properties' }
 CompiledBlock >> pragmas [
 	<reflection: 'Class structural inspection - Pragma'>
 	^ #()
@@ -222,7 +219,7 @@ CompiledBlock >> properties [
 	^ nil->nil
 ]
 
-{ #category : 'properties' }
+{ #category : 'accessing - pragmas & properties' }
 CompiledBlock >> propertyAt: aString [
 
 	^ nil
@@ -252,7 +249,7 @@ CompiledBlock >> selector [
 	^ self outerCode selector
 ]
 
-{ #category : 'accessing' }
+{ #category : 'source code management' }
 CompiledBlock >> sourceCode [
 	^ self outerCode sourceCode
 ]

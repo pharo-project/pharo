@@ -55,7 +55,7 @@ NoUnusedVariablesLeftTest >> testNoUnusedTemporaryVariablesLeft [
 		m hasTemporaries and: [m ast temporaries anySatisfy: [ :x | x binding isUsed not] ] ].
 
 	"No other exceptions beside the ones mentioned here should be allowed"
-	validExceptions := { MFClassA>>#method. MFClassB>>#method3. MFClassB>>#method2 . TemporaryVariableTest>>#testIsReferenced }.
+	validExceptions := { MFClassA>>#method. MFClassB>>#method3. MFClassB>>#method2. TemporaryVariableTest>>#testIsReferenced }.
 	found removeAll: validExceptions.
 
 	self assert: found isEmpty description: ('the following methods have unused temporary variables and should be cleaned: ', found asString)

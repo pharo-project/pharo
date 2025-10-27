@@ -51,24 +51,6 @@ Trait class >> initialize [
 	If you remove this method, the method Behavior >> initialize will be executed and the trait will be nuked because reinitialized."
 ]
 
-{ #category : 'file in/out' }
-Trait class >> traitDependencyOrder: traitsToSort [
-	"Given a collection of traits, return a the collection sorted so that traits used by other traits are before them."
-
-	| visited result depthFirstSearch |
-	visited := OrderedCollection new.
-	result := OrderedCollection new.
-
-	depthFirstSearch := [ :trait |
-	                    visited add: trait.
-	                    trait traitComposition traits do: [ :usedTrait | (visited includes: usedTrait) ifFalse: [ depthFirstSearch value: usedTrait ] ].
-	                    result add: trait ].
-
-	traitsToSort do: [ :trait | (visited includes: trait) ifFalse: [ depthFirstSearch value: trait ] ].
-
-	^ result
-]
-
 { #category : 'accessing' }
 Trait >> + anotherTrait [
 	"I return my self in a sequence with anotherTrait"
@@ -126,6 +108,12 @@ Trait >> classTrait [
 Trait >> definitionStringFor: aConfiguredPrinter [
 
 	^ aConfiguredPrinter traitDefinitionString
+]
+
+{ #category : 'organization updating' }
+Trait >> dependencies [
+	"Return the (transitive) set of behaviors that I depend on"
+	^ self traitComposition allTraits
 ]
 
 { #category : 'fileout' }

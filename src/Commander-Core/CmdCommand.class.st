@@ -186,6 +186,12 @@ CmdCommand >> execute [
 	self subclassResponsibility
 ]
 
+{ #category : 'ui requests' }
+CmdCommand >> inform: aString [
+
+	StPharoApplication current inform: aString
+]
+
 { #category : 'accessing' }
 CmdCommand >> morphicUIManager [
 

@@ -64,7 +64,8 @@ ReRemoveClassDriver >> configureRefactoring [
 { #category : 'configuration' }
 ReRemoveClassDriver >> defaultSelectDialog [
 
-	^ self class defaultSelectDialog
+	^ super defaultSelectDialog
+		  extent: 400@1200;
 		  title: 'There are potential breaking changes!';
 		  label: self labelBasedOnBreakingChanges;
 		  items: self breakingChoices;

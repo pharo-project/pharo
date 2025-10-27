@@ -17,8 +17,7 @@ Behavior >> inspectAllInstances [
 
 	| all allSize prefix |
 	all := self allInstances.
-	(allSize := all size) isZero ifTrue: [^ self inform: 'There are no
-instances of ', self name].
+	allSize := all size.
 	prefix := allSize = 1
 		ifTrue: 	['The lone instance']
 		ifFalse:	['The ', allSize printString, ' instances'].
@@ -32,9 +31,7 @@ Behavior >> inspectSubInstances [
 
 	| all allSize prefix |
 	all := self allSubInstances.
-	(allSize := all size) isZero ifTrue: [^ self inform: 'There are no
-instances of ', self name, '
-or any of its subclasses'].
+	allSize := all size.
 	prefix := allSize = 1
 		ifTrue: 	['The lone instance']
 		ifFalse:	['The ', allSize printString, ' instances'].

@@ -5,7 +5,8 @@ Class {
 	#name : 'EpChunkExporter',
 	#superclass : 'Object',
 	#instVars : [
-		'outputFilename'
+		'outputFilename',
+		'application'
 	],
 	#category : 'EpiceaBrowsers-Exporter',
 	#package : 'EpiceaBrowsers',
@@ -28,15 +29,26 @@ EpChunkExporter class >> fileOut: entries in: aFileReference [
 		in: aFileReference
 ]
 
+{ #category : 'accessing' }
+EpChunkExporter >> application: anApp [
+
+	application := anApp
+]
+
 { #category : 'defaults' }
 EpChunkExporter >> defaultOutputFilename [
 	"Answer a default <String> which will be the file name when a file out is requested"
 	
-	^ String streamContents: [ : stream |
+	^ String streamContents: [ :stream |
+		| dateAndTime |
+		dateAndTime := DateAndTime now.
 		stream 
-			nextPutAll: 'EpLog-';
-			nextPutAll: DateAndTime now asFileNameCompatibleString;
-			nextPutAll: '.st' ].
+			nextPutAll: 'EpLog-'.
+		dateAndTime printYMDOn: stream.
+		stream print: dateAndTime hours.
+		stream nextPut: $-.
+		stream print: dateAndTime minutes.
+		stream nextPutAll: '.st' ].
 ]
 
 { #category : 'accessing' }
@@ -48,26 +60,36 @@ EpChunkExporter >> fileOut: epiceaEntries [
 
 { #category : 'accessing' }
 EpChunkExporter >> fileOut: epiceaEntries in: aDirectory [
-
-	| internalStream |
-
-	internalStream := (String new: 1000) writeStream.
-	internalStream timeStamp; cr.
-	epiceaEntries do: [ : epEntryItem |
-		self 
-			fileOutSelectedEntry: epEntryItem 
-			on: internalStream ].
-
-	CodeExporter 
-		writeSourceCodeFrom: internalStream 
-		toFileReference: aDirectory / self outputFilename.
+	
+	"(application newPresenter: StSaveFilePresenter) is probably the iconic way to create a presenter
+	but it did not work and I have no idea why."
+	
+	| fileRef dialog ok |
+	self flag: #todo. 
+	StSaveFilePresenter new
+		defaultFolder: aDirectory;
+		nameText:  self outputFilename; 
+		okAction: [ :fileReference |
+				fileRef := fileReference.
+				fileRef writeStreamDo: [ :s | 
+					self internalFileOutOf: epiceaEntries in: s ].
+				dialog := SpConfirmDialog new.
+	ok := dialog
+		      title: 'Do you want to browse natively the fileout?';
+		      label: 'Are you sure?';
+		      acceptLabel: 'Sure!';
+		      cancelLabel: 'No, forget it';
+		      openModal.
+	ok ifTrue: [ fileRef openInOSFileBrowser ]
+				];
+		openModal.
+	
 ]
 
 { #category : 'private' }
-EpChunkExporter >> fileOutSelectedEntry: anOmEntry on: aWriteStream [ 
-	"Write the contents of the method modification to aWriteStream in chunk format"
+EpChunkExporter >> internalFileOutOf: epiceaEntries in: aStream [
 
-	anOmEntry fileOutEntryOn: aWriteStream
+	epiceaEntries do: [ :epEntryItem | epEntryItem fileOutEntryOn: aStream ] 
 ]
 
 { #category : 'accessing' }

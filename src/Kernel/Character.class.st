@@ -845,13 +845,6 @@ Character >> printOn: aStream [
 	available at: https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-2/#G14527"
 ]
 
-{ #category : 'printing' }
-Character >> printStringHex [
-	"$A printStringHex >>> '41'"
-
-	^ self asInteger printStringBase: 16
-]
-
 { #category : 'comparing' }
 Character >> sameAs: aCharacter [
 	"Answer whether the receiver is equal to aCharacter, ignoring case"

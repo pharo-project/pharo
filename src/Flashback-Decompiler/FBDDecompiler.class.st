@@ -274,18 +274,6 @@ FBDDecompiler >> incrTempCount [
 ]
 
 { #category : 'initialize' }
-FBDDecompiler >> initializeErrorCode: cm [
-	| index |
-	cm isPrimitive
-		ifFalse: [ ^ self ].
-	instructionStream willStore
-		ifFalse: [ ^ self ].
-	index := instructionStream decodeNextInstruction arguments first.
-	currentSequence removeTemporaryNamed: (simulatedStack at: index + 1) name.
-	simulatedStack at: index + 1 put: (builder codeTemp: (self errorCodeNameFor: cm))
-]
-
-{ #category : 'initialize' }
 FBDDecompiler >> initializeForMethod: aCompiledMethod [
 	method := aCompiledMethod.
 	loopsArray := FBDLoopScanner scan: method.
@@ -350,12 +338,11 @@ FBDDecompiler >> interpret: seq1 then: seq2 distance: distance [
 
 { #category : 'private' }
 FBDDecompiler >> interpretMethod: aCompiledMethod [
+
 	self maybeSkipCallPrimitiveBytecode: aCompiledMethod.
 	aCompiledMethod isQuick
 		ifTrue: [ self quickMethod ]
-		ifFalse: [
-			self initializeErrorCode: aCompiledMethod.
-			self interpret: aCompiledMethod endPC ]
+		ifFalse: [ self interpret: aCompiledMethod endPC ]
 ]
 
 { #category : 'control flow instructions' }
@@ -402,8 +389,22 @@ FBDDecompiler >> jump: distance if: boolean [
 FBDDecompiler >> maybeSkipCallPrimitiveBytecode: aCompiledMethod [
 	"If the method's bytecode set uses the callPrimitive bytecode, ignore it.
 	The primitive is handled specifically before bytecode interpretation."
-	instructionStream peekByte = aCompiledMethod encoderClass callPrimitiveCode
-		ifTrue: [ instructionStream advanceToFollowingPc ]
+
+	| index |
+	aCompiledMethod isPrimitive ifFalse: [ ^ self ].
+
+	"Skip primitive"
+	instructionStream advanceToFollowingPc.
+
+	"Skip bytecode storing error code if any"
+	instructionStream willStore ifFalse: [ ^ self ].
+
+	index := instructionStream decodeNextInstruction arguments first.
+	currentSequence removeTemporaryNamed:
+		(simulatedStack at: index + 1) name.
+	simulatedStack
+		at: index + 1
+		put: (builder codeTemp: (self errorCodeNameFor: aCompiledMethod))
 ]
 
 { #category : 'instruction decoding forward' }

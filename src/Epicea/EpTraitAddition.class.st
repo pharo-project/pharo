@@ -41,13 +41,11 @@ EpTraitAddition >> behaviorAffectedName [
 EpTraitAddition >> fileOutEntryOn: aWriteStream [
 	"Write a code chunk to create the receiver's trait on aWriteStream"
 
-	| realClass |
-	
+	| realClass exporter |
 	realClass := self traitAdded realClass.
-	aWriteStream
-		nextChunkPut: realClass definitionString;
-		cr.
-	realClass instanceSide putCommentOnFile: aWriteStream.
+	exporter := CodeExporter onStream: aWriteStream.
+	exporter writeClassDefinition: realClass.
+	exporter writeClassCommentOf: realClass.
 	aWriteStream cr
 ]
 

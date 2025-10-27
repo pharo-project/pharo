@@ -16,3 +16,22 @@ CompiledCode >> compilerClass [
 		ifNil: [Smalltalk compilerClass]
 		ifNotNil: [:class | class compilerClass]
 ]
+
+{ #category : '*OpalCompiler-Core' }
+CompiledCode >> sourceNode [
+	^ self subclassResponsibility
+]
+
+{ #category : '*OpalCompiler-Core' }
+CompiledCode >> sourceNodeForPC: aPC [
+
+	| sourceNode |
+	sourceNode := self sourceNode.
+
+	self method
+		propertyAt: self bcToASTCacheKey asSymbol
+		ifPresent: [ :bcToASTCache |
+			^ bcToASTCache nodeForPC: aPC ].
+
+	^ sourceNode sourceNodeForPC: aPC
+]

@@ -10,13 +10,8 @@ Class {
 }
 
 { #category : 'meta-data - dependency analyser' }
-ManifestSystemSupport class >> ignoredDependencies [
-	^ #(#'System-Settings-Core' #'Graphics-Primitives')
-]
-
-{ #category : 'meta-data - dependency analyser' }
 ManifestSystemSupport class >> manuallyResolvedDependencies [
-	^ #(#'Collections-Support' #'System-Settings-Core' #'System-Platforms')
+	^ #(#'System-Platforms')
 ]
 
 { #category : 'code-critics' }

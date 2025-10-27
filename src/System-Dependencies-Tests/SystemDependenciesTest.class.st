@@ -67,7 +67,7 @@ SystemDependenciesTest >> knownKernelDependencies [
 SystemDependenciesTest >> knownMorphicCoreDependencies [
 	"ideally this list should be empty"
 
-	^ #(#'Fonts-Infrastructure' #'FreeType' #'Keymapping-KeyCombinations' #'Morphic-Base' #'Refactoring-Critics' #'Refactoring-Environment' #'Rubric' 
+	^ #(#'Keymapping-KeyCombinations' #'Morphic-Base' #'Refactoring-Critics' #'Refactoring-Environment'
 	  'Morphic-Widgets-ColorPicker')
 ]
 
@@ -436,6 +436,15 @@ SystemDependenciesTest >> testFilesShouldNotDependOnRandom [
 	| dependencies |
 	dependencies := self externalDependendiesOf: #( 'Files' ).
 	self deny: (dependencies includes: 'Random-Core')
+]
+
+{ #category : 'tests' }
+SystemDependenciesTest >> testNoDependencyToDeprecatedPackages [
+
+	| dependencies |
+	dependencies := self externalDependendiesOf: (self class packageOrganizer packageNames reject: [ :name | name includesSubstring: 'Deprecated' ]).
+
+	self assertEmpty: dependencies
 ]
 
 { #category : 'accessing' }

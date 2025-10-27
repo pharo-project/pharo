@@ -1,6 +1,11 @@
 Extension { #name : 'Number' }
 
 { #category : '*System-NumberPrinting' }
+Number >> printOn: aStream [
+	self printOn: aStream base: 10
+]
+
+{ #category : '*System-NumberPrinting' }
 Number >> printOn: aStream base: base [
 	"This method should print a representation of the number for the given base,
 	excluding the base prefix (and the letter r for radix)"
@@ -42,6 +47,23 @@ Number >> printShowingDecimalPlaces: placesDesired [
 
 	^String new: placesDesired + 10 streamContents: [:aStream |
 		self printOn: aStream showingDecimalPlaces: placesDesired]
+]
+
+{ #category : '*System-NumberPrinting' }
+Number >> printString [
+
+	^ self printStringBase: 10
+]
+
+{ #category : '*System-NumberPrinting' }
+Number >> printStringBase: base [
+	"Return a String representation of this number in base b."
+	"(10 printStringBase: 10) >>> '10'"
+	"(-10 printStringBase: 10) >>> '-10'"
+	"(10 printStringBase: 2) >>> '1010'"
+	"(10 printStringBase: 16) >>> 'A'"
+
+	^ String streamContents: [:strm | self printOn: strm base: base]
 ]
 
 { #category : '*System-NumberPrinting' }

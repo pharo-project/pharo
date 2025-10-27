@@ -463,19 +463,6 @@ UIManager >> logError: anError [
 		inContext: anError signalerContext
 ]
 
-{ #category : 'default actions' }
-UIManager >> lowSpaceWatcherDefaultAction: preemptedProcess [
-
-	"When there is a signal from the VM, we signal an exception in the preempted process.
-	If we don't have preemptedProcess we are in an error state. We will throw an error"
-
-	preemptedProcess
-		ifNotNil: [ preemptedProcess signalException: OutOfMemory new.
-						^ self ].
-
-	self error: 'We have a lowSpaceWatcher signal, but there is no ctx... how we arrive here'
-]
-
 { #category : 'ui requests' }
 UIManager >> multiLineRequest: queryString initialAnswer: defaultAnswer answerHeight: answerHeight [
 	"Create a multi-line instance of me whose question is queryString with
@@ -605,15 +592,6 @@ UIManager >> request: aStringOrText initialAnswer: defaultAnswer title: aTitle e
 	"Create an instance of me whose question is queryString with the given
 	 initial answer. Invoke it centered at the given point, and answer the
 	 string the user accepts. Answer the empty string if the user cancels."
-
-	^self subclassResponsibility
-]
-
-{ #category : 'ui requests' }
-UIManager >> requestPassword: queryString [
-	"Create an instance of me whose question is queryString. Invoke it centered
-	 at the cursor, and answer the string the user accepts. Answer the empty
-	 string if the user cancels."
 
 	^self subclassResponsibility
 ]

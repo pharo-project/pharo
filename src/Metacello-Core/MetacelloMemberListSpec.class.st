@@ -43,15 +43,6 @@ MetacelloMemberListSpec >> copy: aMemberSpec [
 	self addMember: aMemberSpec
 ]
 
-{ #category : 'toolbox support' }
-MetacelloMemberListSpec >> deleteSpec: aSpec [
-	"remove the spec from list"
-
-	self list
-		detect: [ :aMember | aMember spec = aSpec ]
-		ifFound: [ :member | self list remove: member ]
-]
-
 { #category : 'enumeration' }
 MetacelloMemberListSpec >> detect: aBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument. 

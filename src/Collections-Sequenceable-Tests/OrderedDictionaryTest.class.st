@@ -804,7 +804,7 @@ OrderedDictionaryTest >> testEquals [
 
 	"For equality, order will not matter"
 	self orderedAssociations
-		with: self orderedAssociations reversed
+		with: self orderedAssociations
 		do: [:firstAssociation :secondAssociation |
 			dictionaryOne add: firstAssociation.
 			dictionaryTwo add: secondAssociation.
@@ -814,11 +814,7 @@ OrderedDictionaryTest >> testEquals [
 			self
 				assertDictionary: dictionaryTwo
 				doesNotEqual: self emptyDictionary.
-			dictionaryOne size < self orderedAssociations size
-				ifTrue: [
-					self
-						assertDictionary: dictionaryOne
-						doesNotEqual: dictionaryTwo]].
+			].
 
 	self
 		assertDictionary: dictionaryOne
@@ -845,6 +841,37 @@ OrderedDictionaryTest >> testEqualsOtherOrderedDictionaries [
 		self
 			assertDictionary: self dictionaryWithOrderedAssociations
 			doesNotEqual: (each newFrom: self orderedAssociations)]
+]
+
+{ #category : 'accessing' }
+OrderedDictionaryTest >> testEqualsWhenKeyArentInTheSameOrder [
+	| dictionaryOne dictionaryTwo |
+
+	dictionaryOne := self emptyDictionary.
+	dictionaryTwo := self emptyDictionary.
+	self
+		assertDictionary: dictionaryOne
+		equals: dictionaryTwo.
+
+	self orderedAssociations
+		with: self orderedAssociations reversed
+		do: [:firstAssociation :secondAssociation |
+			dictionaryOne add: firstAssociation.
+			dictionaryTwo add: secondAssociation.
+			self
+				assertDictionary: dictionaryOne
+				doesNotEqual: self emptyDictionary.
+			self
+				assertDictionary: dictionaryTwo
+				doesNotEqual: self emptyDictionary.
+			dictionaryOne size < self orderedAssociations size
+				ifTrue: [
+					self
+						assertDictionary: dictionaryOne
+						doesNotEqual: dictionaryTwo]].
+
+	self
+		assertDictionary: dictionaryOne doesNotEqual: dictionaryTwo.
 ]
 
 { #category : 'tests' }

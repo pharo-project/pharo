@@ -44,6 +44,12 @@ ClapPharoApplication >> execute [
 	self shouldQuit ifFalse: [ self doNotQuitImage ]
 ]
 
+{ #category : 'private - printing' }
+ClapPharoApplication >> inform: aString [
+
+	self outputStreamDo: [ :out | out << aString << OSPlatform current lineEnding ]
+]
+
 { #category : 'execution' }
 ClapPharoApplication >> prepareImage [
 	self positional: #rename ifPresent: [ :rename | 

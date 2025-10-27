@@ -34,20 +34,3 @@ ErrorHandlerSessionHandler class >> uniqueInstance [
 ErrorHandlerSessionHandler >> handledId [
 	^ self class name
 ]
-
-{ #category : 'handlers' }
-ErrorHandlerSessionHandler >> shutdown: isImageQuitting [
-
-	"Prepare the shutdown and the next startup"
-
-	UIManager default: StartupUIManager new.
-	ErrorHandler defaultErrorHandler: UIManager default.
-]
-
-{ #category : 'handlers' }
-ErrorHandlerSessionHandler >> startup: isImageStarting [
-	"Install the right UIManager"
-
-	UIManager default: UIManager forCurrentSystemConfiguration.
-	ErrorHandler defaultErrorHandler: UIManager default.
-]

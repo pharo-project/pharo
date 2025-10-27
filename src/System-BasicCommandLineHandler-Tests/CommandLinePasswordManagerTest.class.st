@@ -7,9 +7,9 @@ Class {
 	#instVars : [
 		'passwordManager'
 	],
-	#category : 'System-BasicCommandLineHandler-Tests-Management',
+	#category : 'System-BasicCommandLineHandler-Tests-Utilities',
 	#package : 'System-BasicCommandLineHandler-Tests',
-	#tag : 'Management'
+	#tag : 'Utilities'
 }
 
 { #category : 'running' }

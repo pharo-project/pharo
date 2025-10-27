@@ -128,16 +128,9 @@ BaselineOfMorphic >> baseline: spec [
 BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 
 	MCDataStream initialize.
-	GradientFillStyle initPixelRampCache.
 	FreeTypeCache clearCurrent.
-	ImageMorph
-		writeClassVariableNamed: #DefaultForm
-		value: (Form extent: 1 @ 1 depth: 1).
 	World cleanseOtherworldlySteppers.
-	MCFileBasedRepository flushAllCaches.
-	MCMethodDefinition shutDown.
-	ExternalDropHandler resetRegisteredHandlers.
-	ScrollBarMorph initializeImagesCache
+	MCFileBasedRepository flushAllCaches
 ]
 
 { #category : 'fonts' }
@@ -245,7 +238,6 @@ BaselineOfMorphic >> loadBitmapSourcePro [
 { #category : 'actions' }
 BaselineOfMorphic >> postload: loader package: packageSpec [
 
-	| array |
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
 
@@ -265,26 +257,19 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	self loadBitmapDejaVuSans.
 	self loadBitmapSourcePro.
 
-	(Smalltalk globals at: #TextStyle) initialize.
-
 	Stdio stdout
 		nextPutAll: 'bitmap fonts loaded' asString;
 		lf.
 
-	#( #ProgressBarMorph #BalloonEngineConstants #BalloonEngine
-	   #CornerRounder #DigitalSignatureAlgorithm
-	   #FT2Types #FT2FFILibrary #FreeTypeCacheConstants
+	#( #ProgressBarMorph #FT2Types #FT2FFILibrary #FreeTypeCacheConstants
 	   #FreeTypeCache #FreeTypeSettings #FreeTypeSubPixelAntiAliasedGlyphRenderer
 	   #FT2Constants #GIFReadWriter #GlobalIdentifier #HaloMorph
 	   #CharacterScanner #ImageMorph #JPEGHuffmanTable #JPEGReadStream
 	   #Locale #MczInstaller #MD5NonPrimitive #MenuItemMorph
-	   #MenuMorph #RxMatcher #RxParser #RxsPredicate #SHA1 #ShortIntegerArray
-	   #SystemProgressMorph #SystemWindow #TestCase #TextContainer
-	   #TextDiffBuilder #ThumbnailMorph #TransferMorph #UITheme #ZnByteEncoder
-	   #ZnConstants #ZnMimeType #ZnNetworkingUtils #ZnServer #ZnSingleThreadedServer )
+	   #MenuMorph #RxMatcher #RxParser #RxsPredicate #SHA1
+	   #SystemProgressMorph #SystemWindow #TextContainer
+	   #TextDiffBuilder #ThumbnailMorph #TransferMorph #UITheme )
 		do: [ :each | (Smalltalk globals at: each) initialize ].
-
-	BalloonMorph setBalloonColorTo: Color yellow.
 
 	UIManager default terminateUIProcess.
 	MorphicUIManager new spawnNewProcess.
@@ -294,8 +279,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	ErrorHandler defaultErrorHandler: UIManager default.
 
-	PharoLightTheme beCurrent.
-	ScalingCanvas initialize.
 	self cleanUpAfterMorphicInitialization.
 
 	GraphicFontSettings setFontsToStyleNamed: #small.
@@ -314,20 +297,15 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	PolymorphSystemSettings showDesktopLogo: true.
 	PolymorphSystemSettings desktopColor: Color white.
 
-	#( #AbstractFont #BalloonMorph #Clipboard #EmbeddedFreeTypeFontInstaller
+	#( #BalloonMorph #EmbeddedFreeTypeFontInstaller
 	   #FLCompiledMethodCluster #FreeTypeFontProvider
-	   #GradientFillStyle #IconicButtonMorph #KMLog #LogicalFont
-	   #LucidaGrandeRegular #OSEnvironment #ScrollBarMorph
-	   #StrikeFont #SystemSettingsPersistence #TabMorph #TaskbarMorph
-	   #TextAction #TextConstants #TextStyle ) do: [ :each |
+	   #IconicButtonMorph #KMLog #LogicalFont
+	   #LucidaGrandeRegular #ScrollBarMorph
+	   #StrikeFont #SystemSettingsPersistence #TabMorph #TaskbarMorph ) do: [ :each |
 		(Smalltalk globals at: each) initialize ].
 
 	LogicalFontManager current addFontProvider:
 		FreeTypeFontProvider current.
-
-	array := Smalltalk specialObjectsArray copy.
-	array at: 5 put: Bitmap.
-	Smalltalk specialObjectsArray becomeForward: array.
 
 	MCMethodDefinition initializersEnabled: initializersEnabled.
 
@@ -339,12 +317,6 @@ BaselineOfMorphic >> preload: loader package: packageSpec [
 
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
-
-	SystemNotification signal: 'Starting preload action'.
-
-	"Declare global variables"
-	Smalltalk globals at: #World put: nil.
-	Smalltalk globals at: #ActiveWorld put: nil.
 	
 	initializersEnabled := MCMethodDefinition initializersEnabled.
 	MCMethodDefinition initializersEnabled: false.

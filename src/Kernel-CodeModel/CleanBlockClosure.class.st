@@ -110,6 +110,8 @@ CleanBlockClosure >> outerCode: aCompiledCode [
 { #category : 'accessing' }
 CleanBlockClosure >> pathOfLiteralIndexes [
 	
+	"Return the path of this compiled block inside the method literal frame.
+	See CompiledBlock>>#pathOfLiteralIndexes for more details"
 	^ self compiledBlock pathOfLiteralIndexes allButLast
 ]
 

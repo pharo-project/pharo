@@ -8,8 +8,3 @@ Class {
 	#package : 'System-SessionManager',
 	#tag : 'Manifest'
 }
-
-{ #category : 'meta-data - dependency analyser' }
-ManifestSystemSessionManager class >> manuallyResolvedDependencies [
-	^ #(#'System-Support')
-]

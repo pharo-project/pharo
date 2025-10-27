@@ -29,11 +29,3 @@ Process >> step: aContext [
 				ifFalse: [self complete: (self calleeOf: aContext)]]
 		onBehalfOf: self
 ]
-
-{ #category : '*Debugging-Core' }
-Process >> stepToSendOrReturn [
-
-	^Processor activeProcess
-		evaluate: [suspendedContext := suspendedContext stepToSendOrReturn]
-		onBehalfOf: self
-]

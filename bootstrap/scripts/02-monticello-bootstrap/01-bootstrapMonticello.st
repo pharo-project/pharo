@@ -26,3 +26,5 @@ compileMethods
 
 (MonticelloBootstrap inDirectory: (CommandLineArguments new optionAt: 'BOOTSTRAP_PACKAGE_CACHE_DIR' ifAbsent: [ MonticelloBootstrap defaultDirectory ])) bootstrap.
 MCCacheRepository reset.
+
+MCMethodDefinition initializersEnabled: true.

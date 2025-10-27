@@ -249,8 +249,9 @@ EpLogBrowserPresenter >> fileOutSelection [
 
 	| entries |
 	entries := self selectedCodeChanges collect: [ :each | each content ].
-
-	EpChunkExporter fileOut: entries.
+	EpChunkExporter new
+		application: StPharoApplication current; 
+		fileOut: entries.
 
 ]
 

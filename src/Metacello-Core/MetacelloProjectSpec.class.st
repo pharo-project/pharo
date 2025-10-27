@@ -342,11 +342,10 @@ MetacelloProjectSpec >> copyForScriptingInto: aProjectSpec [
         file: file
 ]
 
-{ #category : 'enumerating' }
+{ #category : 'accessing' }
 MetacelloProjectSpec >> currentlyLoadedClassesInVersion [
 
-	self versionOrNil ifNotNil: [ :vrsn |
-		^ vrsn spec currentlyLoadedClassesInVersion ].
+	self versionOrNil ifNotNil: [ :vrsn | ^ vrsn spec currentlyLoadedClassesInVersion ].
 	^ #(  )
 ]
 

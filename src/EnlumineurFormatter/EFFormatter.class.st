@@ -374,25 +374,25 @@ EFFormatter class >> oneLineMessages: aString [
 ]
 
 { #category : 'accessing' }
+EFFormatter class >> periodAtEndOfBlock [
+	^ DefaultPrettyPrintContext periodAtEndOfBlock
+]
+
+{ #category : 'accessing' }
 EFFormatter class >> periodAtEndOfBlock: aBoolean [
 	DefaultPrettyPrintContext periodAtEndOfBlock: aBoolean.
 	self announceASettingChange
 ]
 
 { #category : 'accessing' }
+EFFormatter class >> periodAtEndOfMethod [
+	^ DefaultPrettyPrintContext periodAtEndOfMethod
+]
+
+{ #category : 'accessing' }
 EFFormatter class >> periodAtEndOfMethod: aBoolean [
 	DefaultPrettyPrintContext periodAtEndOfMethod: aBoolean.
 	self announceASettingChange
-]
-
-{ #category : 'accessing' }
-EFFormatter class >> periodsAtEndOfBlock [
-	^ DefaultPrettyPrintContext periodsAtEndOfBlock
-]
-
-{ #category : 'accessing' }
-EFFormatter class >> periodsAtEndOfMethod [
-	^ DefaultPrettyPrintContext periodsAtEndOfMethod
 ]
 
 { #category : 'priority' }
@@ -781,8 +781,8 @@ EFFormatter class >> settingsOn: aBuilder [
 				settingsNewLinesAfterMethodSignatureWithMethodComment: aBuilder;
 				settingsNewLinesAfterTemporaries: aBuilder;
 				settingsNumberOfArgumentsForMultiLine: aBuilder;
-				settingsPeriodsAtEndOfBlock: aBuilder;
-				settingsPeriodsAtEndOfMethod: aBuilder;
+				settingsPeriodAtEndOfBlock: aBuilder;
+				settingsPeriodAtEndOfMethod: aBuilder;
 				settingsRetainBlankLinesBeforeComments: aBuilder;
 				settingsRetainBlankLinesBetweenStatements: aBuilder;
 				settingsSelectorAndArgumentCombinedMaxSize: aBuilder;
@@ -807,9 +807,9 @@ If we include #todo: in the oneLineMessages we get
 ]
 
 { #category : 'settings' }
-EFFormatter class >> settingsPeriodsAtEndOfBlock: aBuilder [
+EFFormatter class >> settingsPeriodAtEndOfBlock: aBuilder [
 
-	(aBuilder setting: #periodsAtEndOfBlock)
+	(aBuilder setting: #periodAtEndOfBlock)
 		label: 'Period at end of block body';
 		default: false;
 		description: 'This settings puts a period after the last expression of a block.
@@ -822,9 +822,9 @@ Example: when set to true
 ]
 
 { #category : 'settings' }
-EFFormatter class >> settingsPeriodsAtEndOfMethod: aBuilder [
+EFFormatter class >> settingsPeriodAtEndOfMethod: aBuilder [
 
-	(aBuilder setting: #periodsAtEndOfMethod)
+	(aBuilder setting: #periodAtEndOfMethod)
 		label: 'Period at end of method';
 		default: false;
 		description: 'This setting puts a period after the last expression of a method.
@@ -1359,11 +1359,11 @@ EFFormatter >> formatSequenceNodeStatementsFor: aSequenceNode [
 		(i < statements size
 			or: [ 
 				aSequenceNode parent
-					ifNil: [ self periodsAtEndOfBlock or:[ self periodsAtEndOfMethod ] ]
+					ifNil: [ self periodAtEndOfBlock or:[ self periodAtEndOfMethod ] ]
 					ifNotNil: [ :parent | 
 						parent isBlock
-							ifTrue: [ self periodsAtEndOfBlock ]
-							ifFalse: [ self periodsAtEndOfMethod ] ] ])
+							ifTrue: [ self periodAtEndOfBlock ]
+							ifFalse: [ self periodAtEndOfMethod ] ] ])
 			ifTrue: [ codeStream nextPut: $. ].
 		self formatStatementCommentsFor: statement.
 		i < statements size
@@ -1968,23 +1968,23 @@ EFFormatter >> oneLineMessages: anArray [
 ]
 
 { #category : 'accessing' }
+EFFormatter >> periodAtEndOfBlock [
+	^ context periodAtEndOfBlock
+]
+
+{ #category : 'accessing' }
 EFFormatter >> periodAtEndOfBlock: aBoolean [
 	context periodAtEndOfBlock: aBoolean
 ]
 
 { #category : 'accessing' }
+EFFormatter >> periodAtEndOfMethod [
+	^ context periodAtEndOfMethod
+]
+
+{ #category : 'accessing' }
 EFFormatter >> periodAtEndOfMethod: aBoolean [
 	context periodAtEndOfMethod: aBoolean
-]
-
-{ #category : 'accessing' }
-EFFormatter >> periodsAtEndOfBlock [
-	^ context periodsAtEndOfBlock
-]
-
-{ #category : 'accessing' }
-EFFormatter >> periodsAtEndOfMethod [
-	^ context periodsAtEndOfMethod
 ]
 
 { #category : 'private' }

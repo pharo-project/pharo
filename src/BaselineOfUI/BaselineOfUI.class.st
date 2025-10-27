@@ -60,7 +60,6 @@ BaselineOfUI >> postload: loader package: packageSpec [
 	Initialized = true ifTrue: [ ^ self ].
 
 	Smalltalk ui theme settings preferGradientFill: true.
-	PharoCommonTools initialize.
 
 	Initialized := true
 ]

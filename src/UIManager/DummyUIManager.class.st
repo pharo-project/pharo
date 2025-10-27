@@ -33,24 +33,17 @@ DummyUIManager >> chooseFrom: labelList values: valueList lines: linesArray titl
 { #category : 'ui requests' }
 DummyUIManager >> confirm: queryString [
 
-	(ProvideAnswerNotification signal: queryString) ifNotNil: [:answer |
-		^answer].
-
 	self error: 'No user response possible'
 ]
 
 { #category : 'ui requests' }
 DummyUIManager >> confirm: queryString label: title trueChoice: trueChoice falseChoice: falseChoice cancelChoice: cancelChoice default: defaultOption [
-	(ProvideAnswerNotification signal: queryString) ifNotNil: [:answer | ^ answer].
 
 	self error: 'No user response possible'
 ]
 
 { #category : 'ui requests' }
 DummyUIManager >> confirm: aString orCancel: cancelBlock [
-
-	(ProvideAnswerNotification signal: aString) ifNotNil: [:answer |
-		^answer == #cancel ifTrue: [cancelBlock value] ifFalse: [answer]].
 
 	self error: 'No user response possible'
 ]
@@ -129,16 +122,7 @@ DummyUIManager >> request: aStringOrText initialAnswer: defaultAnswer entryCompl
 { #category : 'ui requests' }
 DummyUIManager >> request: aStringOrText initialAnswer: defaultAnswer title: aTitle entryCompletion: anEntryCompletion [
 
-	(ProvideAnswerNotification signal: aStringOrText) ifNotNil: [:answer |
-		^ answer == #default ifTrue: [defaultAnswer] ifFalse: [answer]].
-
 	self error: 'No user response possible'
-]
-
-{ #category : 'ui requests' }
-DummyUIManager >> requestPassword: queryString [
-
-	^ self request: queryString initialAnswer: ''
 ]
 
 { #category : 'default actions' }

@@ -10,6 +10,11 @@ Class {
 }
 
 { #category : 'meta-data - dependency analyser' }
+ManifestSystemBasicCommandLineHandler class >> ignoredDependencies [
+	^ #(#'System-Settings-Core' #StartupPreferences #'System-Hashing')
+]
+
+{ #category : 'meta-data - dependency analyser' }
 ManifestSystemBasicCommandLineHandler class >> manuallyResolvedDependencies [
-	^ #( #'Collections-Strings' #'Collections-Abstract')
+	^ #( #'Collections-Abstract' #'FileSystem-Core' #'System-Support' #'Kernel-CodeModel' #'System-Settings-Core' #'Collections-Streams' #'System-Hashing')
 ]

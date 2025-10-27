@@ -66,17 +66,17 @@ RBMoveMethodToClassRefactoring >> privateTransform [
 	| oldClass newClass rbMethod originalProtocol |
 	oldClass := self classModelOf: method methodClass.
 	newClass := self classModelOf: class.
-	rbMethod := model rbMethodClass for: newClass source: method sourceCode selector: method selector.
+	rbMethod := RBMethod for: newClass source: method sourceCode selector: method selector.
 	originalProtocol := method protocolName.
-	self generateChangesFor: 
-		(RBRemoveMethodTransformation 
-			selector: method selector
-			from: oldClass).
 	self generateChangesFor:
 		(RBAddMethodTransformation
 			sourceCode: rbMethod source
 			in: newClass
-			withProtocol: originalProtocol)
+			withProtocol: originalProtocol).
+	self generateChangesFor: 
+		(RBRemoveMethodTransformation 
+			selector: method selector
+			from: oldClass)
 ]
 
 { #category : 'storing' }

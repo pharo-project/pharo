@@ -266,12 +266,6 @@ MetacelloPackageSpec >> packageSpecsInLoadOrder [
 	^ { self }
 ]
 
-{ #category : 'loading' }
-MetacelloPackageSpec >> packageSpecsInLoadOrderWithEngine: anObject [
-
-	^ { self }
-]
-
 { #category : 'copying' }
 MetacelloPackageSpec >> postCopy [
 
@@ -342,17 +336,6 @@ MetacelloPackageSpec >> repositoryDescriptions [
 MetacelloPackageSpec >> repositorySpecs [
 
 	^self repositories map values
-]
-
-{ #category : 'accessing' }
-MetacelloPackageSpec >> requiredPackageSpecsWithEngine: anEngine [
-
-	| specs requiredSpec |
-	self project ifNil: [ ^ #(  ) ].
-	specs := self project version spec packageSpecsInLoadOrder.
-	^ self requires flatCollect: [ :required |
-		  requiredSpec := specs detect: [ :e | e name = required ].
-		  requiredSpec packageSpecsInLoadOrder ]
 ]
 
 { #category : 'private' }

@@ -158,7 +158,6 @@ SessionManager class >> initializeKernelRegistrations [
 		registerSystemClassNamed: #File atPriority: 90;
 		registerSystemClassNamed: #FinalizationProcess;
 		registerSystemClassNamed: #Stdio;
-		registerSystemClassNamed: #EndianDetector;
 		registerSystemClassNamed: #Symbol
 ]
 
@@ -250,7 +249,6 @@ SessionManager >> installSession: aWorkingSession [
 { #category : 'snapshot and quit' }
 SessionManager >> launchSnapshot: save andQuit: quit [
 	| snapshotOperation |
-	ChangesLog default logSnapshot: save andQuit: quit.
 	snapshotOperation := SnapshotOperation save: save andQuit: quit withSessionManager: self.
 
 	snapshotOperation performSnapshot.
@@ -287,6 +285,7 @@ SessionManager >> register: aSessionHandler [
 
 { #category : 'registration' }
 SessionManager >> register: aSessionHandler inCategory: aCategory [
+	self unregisterHandler: aSessionHandler handledId.
 	aCategory
 		register: aSessionHandler
 		atPriority: aCategory defaultPriority

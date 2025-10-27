@@ -42,7 +42,7 @@ BaselineOfMorphicCore >> baseline: spec [
 		spec package: 'FormCanvas-Core'.
 		spec package: 'Tool-Registry'.
 		spec package: 'Fonts-Abstract'.
-		spec package: 'Text-Core'.
+		spec package: 'Text-Core' with: [ spec requires: #( 'System-Model' 'Fonts-Abstract') ].
 		spec package: 'Morphic-Core'.
 		spec package: 'System-Model' with: [ spec requires: #( 'Morphic-Core' ) ].
 		spec package: 'System-FileRegistry' with: [ spec requires: #( 'System-Model' ) ] ]
@@ -50,8 +50,6 @@ BaselineOfMorphicCore >> baseline: spec [
 
 { #category : 'actions' }
 BaselineOfMorphicCore >> postload: loader package: packageSpec [
-
-	| world hand |
 
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
@@ -62,41 +60,24 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	WorldState initialize.
 	Morph initialize.
 	HandMorph initialize.
-	
 	AbstractWorldRenderer initialize.	
-
-	Cursor initTarget.
 	EventManager initialize.
 	UserInputEvent initialize.
-
-	world := WorldMorph new.
-	world instVarNamed: #worldState put: WorldState new.
-	hand := HandMorph new.
-	world addHand: hand.
-	world activeHand: hand.
-
-	Smalltalk at: #World put: world.
-	Smalltalk at: #ActiveWorld put: world.
-
-	world viewBox: world bounds.
-	
-	world handsDo: [:h | h initForEvents].
-	world borderWidth: 0.
-	
-	world displayWorldSafely.
-	MorphicCoreUIManager new spawnNewProcess.
-	
-	world cleanseOtherworldlySteppers.
-	ExternalDropHandler resetRegisteredHandlers.
-
-	(world instVarNamed: #worldState) invalidate.
-
-	hand instVarNamed: #targetOffset put: 0@0.
-
-	WorldMorph initialize.
-	ExternalDropHandler initialize.
 	PasteUpMorph initialize.
+	WorldMorph initialize.
 	DefaultExternalDropHandler initialize.
+	BalloonEngineConstants initialize.
+	BalloonEngine initialize.
+	CornerRounder initialize.
+	ShortIntegerArray initialize.
+	Clipboard initialize.
+	GradientFillStyle initialize.
+	TextAction initialize.
+	TextConstants initialize.
+	TextStyle initialize.
+	PharoCommonTools initialize.
+	
+	Cursor initTarget.
 
 	Initialized := true.
 ]

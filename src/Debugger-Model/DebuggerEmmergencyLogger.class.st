@@ -28,7 +28,6 @@ DebuggerEmmergencyLogger >> logError: anError forSession: aDebugSession [
 		                  on: Error
 		                  do: [ 'a ' , anError class printString ].
 
-	self inform: errDescription.
 	[
 	Smalltalk
 		logError: errDescription contents

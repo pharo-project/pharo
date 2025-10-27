@@ -53,7 +53,7 @@ ReRemoveMethodDriver >> configureRefactoring [
 { #category : 'configuration' }
 ReRemoveMethodDriver >> defaultSelectDialog [
 
-	^ self class defaultSelectDialog
+	^ super defaultSelectDialog
 		  title: 'There are ' , haveNoSenders violators size asString
 			  , ' methods calling method(s) you want to delete';
 		  label: 'Select a strategy';

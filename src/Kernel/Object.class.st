@@ -540,32 +540,6 @@ Object >> caseOf: aBlockAssociationCollection otherwise: aBlock [
 "#b caseOf: {[#a]->[1+1]. ['d' asSymbol]->[2+2]. [#c]->[3+3]} otherwise: [0]"
 ]
 
-{ #category : 'updating' }
-Object >> changed [
-	"Receiver changed in a general way; inform all the dependents by
-	sending each dependent an update: message."
-
-	self changed: self
-]
-
-{ #category : 'updating' }
-Object >> changed: aParameter [
-	"Receiver changed. The change is denoted by the argument aParameter.
-	Usually the argument is a Symbol that is part of the dependent's change
-	protocol. Inform all of the dependents."
-
-	self dependents do: [:aDependent | aDependent update: aParameter]
-]
-
-{ #category : 'updating' }
-Object >> changed: anAspect with: anObject [
-	"Receiver changed. The change is denoted by the argument anAspect.
-	Usually the argument is a Symbol that is part of the dependent's change
-	protocol. Inform all of the dependents. Also pass anObject for additional information."
-
-	self dependents do: [:aDependent | aDependent update: anAspect with: anObject]
-]
-
 { #category : 'introspection' }
 Object >> className [
 	"Answer a string characterizing the receiver's class, for use in list views for example"
@@ -1875,25 +1849,6 @@ Object >> unpinInMemory [
 	 it easier to pass objects out through the FFI.  Objects are unpinnned when created.
 	 This method ensures an object is unpinned, and answers whether it was pinned."
 	^self setPinnedInMemory: false
-]
-
-{ #category : 'updating' }
-Object >> update: aParameter [
-	"Receive a change notice from an object of whom the receiver is a
-	dependent. The default behavior is to do nothing; a subclass might want
-	to change itself in some way."
-
-	^ self
-]
-
-{ #category : 'updating' }
-Object >> update: anAspect with: anObject [
-	"Receive a change notice from an object of whom the receiver is a
-	dependent. The default behavior is to call update:,
-	which by default does nothing; a subclass might want
-	to change itself in some way."
-
-	^ self update: anAspect
 ]
 
 { #category : 'evaluating' }

@@ -1,23 +1,10 @@
 Class {
 	#name : 'ReClassHasSubclassesTest',
-	#superclass : 'TestCase',
-	#instVars : [
-		'model'
-	],
+	#superclass : 'ReClassesConditionTest',
 	#category : 'Refactoring-Core-Tests-Conditions',
 	#package : 'Refactoring-Core-Tests',
 	#tag : 'Conditions'
 }
-
-{ #category : 'tests' }
-ReClassHasSubclassesTest >> model [
-
-	^ model ifNil: [ model := RBNamespace onEnvironment: (RBClassEnvironment classes: {
-				   MyClassAlpha.
-				   MyClassBeta.
-				   MyClassBetaSibling.
-				   Object })]
-]
 
 { #category : 'tests' }
 ReClassHasSubclassesTest >> testClassDoesNotHaveSubclass [
@@ -29,7 +16,9 @@ ReClassHasSubclassesTest >> testClassDoesNotHaveSubclass [
 		subclassesList: { #myClassAlpha . #Object }.
 		
 	" MyClassAlpha is not a subclass of MyClassBeta "
-	self deny: cond check
+	self deny: cond check.
+	self assert: cond violators equals: { myClassBeta }.
+	self assert: cond nonViolators isEmpty
 ]
 
 { #category : 'tests' }
@@ -42,7 +31,9 @@ ReClassHasSubclassesTest >> testClassHasSubclass [
 		subclassesList: { #MyClassBeta . #MyClassBetaSibling }.
 		
 	" MyClassBeta and MyClassBetaSibling ares subclasses of MyClassAlpha "
-	self assert: cond check
+	self assert: cond check.
+	self assert: cond violators isEmpty.
+	self assert: cond nonViolators equals: { myClassAlpha }
 ]
 
 { #category : 'tests' }

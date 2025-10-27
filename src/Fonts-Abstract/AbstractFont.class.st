@@ -33,12 +33,6 @@ AbstractFont class >> emphasisStringFor: emphasisCode [
 		s position isZero ifFalse: [ s skip: -1 ]]
 ]
 
-{ #category : 'class initialization' }
-AbstractFont class >> initialize [
-
-	TextStyle addDependent: self
-]
-
 { #category : 'testing' }
 AbstractFont class >> isAbstract [
 
@@ -209,12 +203,6 @@ AbstractFont >> lineGrid [
 	^self subclassResponsibility
 ]
 
-{ #category : 'accessing' }
-AbstractFont >> pixelSize [
-	"Make sure that we don't return a Fraction"
-	^ TextStyle pointsToPixels: self pointSize
-]
-
 { #category : 'notifications' }
 AbstractFont >> pixelsPerInchChanged [
 	"The definition of TextStyle class>>pixelsPerInch has changed. Do whatever is necessary."
@@ -237,12 +225,6 @@ AbstractFont >> strikeoutThickness [
 { #category : 'metrics' }
 AbstractFont >> strikeoutTop [
 	^ 0
-]
-
-{ #category : 'accessing' }
-AbstractFont >> textStyle [
-	^ TextStyle actualTextStyles detect:
-		[:aStyle | aStyle fontArray includes: self] ifNone: [ TextStyle fontArray: { self } ]
 ]
 
 { #category : 'accessing' }

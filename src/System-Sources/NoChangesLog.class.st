@@ -31,7 +31,3 @@ NoChangesLog class >> install [
 { #category : 'logging' }
 NoChangesLog >> logChange: aStringOrText [
 ]
-
-{ #category : 'logging' }
-NoChangesLog >> logSnapshot: save andQuit: quit [
-]

@@ -165,7 +165,7 @@ def bootstrapImage(architectures){
 
           stage ("Full Image-${architecture}") {
             shell "BUILD_NUMBER=${BUILD_NUMBER} BOOTSTRAP_ARCH=${architecture} bash ./bootstrap/scripts/4-build.sh"
-            stash includes: "build/bootstrap-cache/*.zip,build/bootstrap-cache/*.sources,bootstrap/scripts/**,tests/*", name: "bootstrap${architecture}"
+            stash includes: "build/bootstrap-cache/*.zip,build/bootstrap-cache/*.sources,bootstrap/scripts/**,tests/**", name: "bootstrap${architecture}"
           }
 
           if( isDevelopmentBranch() ) {

@@ -66,12 +66,6 @@ ClapTestRunner >> execute [
 ]
 
 { #category : 'private - printing' }
-ClapTestRunner >> inform: aString [
-
-	self outputStreamDo: [ :out | out << aString << OSPlatform current lineEnding ]
-]
-
-{ #category : 'private - printing' }
 ClapTestRunner >> informResults: results [
 
 	self outputStreamDo: [ :out |

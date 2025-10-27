@@ -17,7 +17,7 @@ ClyActiveBreakpointsQueryTest >> createQuery [
 { #category : 'running' }
 ClyActiveBreakpointsQueryTest >> installBreakpointInto: aMethod [
 	| breakpoint |
-	breakpoint := Breakpoint new node: aMethod ast.
+	breakpoint := DebugPointManager installNew: BreakDebugPoint on: aMethod ast.
 	installedBreakpoints add: breakpoint.
 	breakpoint install
 ]
@@ -61,35 +61,6 @@ ClyActiveBreakpointsQueryTest >> testComparison [
 	self assert: ClyActiveBreakpointsQuery newIncludingHaltsForTesting equals: ClyActiveBreakpointsQuery newIncludingHaltsForTesting.
 
 	self deny: ClyActiveBreakpointsQuery new equals: ClyActiveBreakpointsQuery newIncludingHaltsForTesting
-]
-
-{ #category : 'tests' }
-ClyActiveBreakpointsQueryTest >> testDecoratingMethodWithBreakpoint [
-
-	| plugin method methodItem |
-	plugin := ClyReflectiveEnvironmentPlugin new.
-	self installBreakpointInto: (ClyClassWithBreakpointsMock >> #methodWithBreakpoints).
-	method := ClyClassWithBreakpointsMock >> #methodWithBreakpoints.
-	methodItem := method asCalypsoBrowserItem.
-
-	plugin decorateBrowserItem: methodItem ofMethod: method.
-
-	self assert: (methodItem isMarkedWith: ClyMethodWithBreakpointTag).
-	self deny: (methodItem isMarkedWith: ClyMethodWithHaltTag)
-]
-
-{ #category : 'tests' }
-ClyActiveBreakpointsQueryTest >> testDecoratingMethodWithHalt [
-
-	| plugin method methodItem |
-	plugin := ClyReflectiveEnvironmentPlugin new.
-	method := ClyClassWithHaltsMock >> #methodWithHalts1.
-	methodItem := method asCalypsoBrowserItem.
-
-	plugin decorateBrowserItem: methodItem ofMethod: method.
-
-	self assert: (methodItem isMarkedWith: ClyMethodWithHaltTag).
-	self deny: (methodItem isMarkedWith: ClyMethodWithBreakpointTag)
 ]
 
 { #category : 'tests' }

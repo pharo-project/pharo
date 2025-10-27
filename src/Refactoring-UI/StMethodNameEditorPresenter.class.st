@@ -228,6 +228,12 @@ StMethodNameEditorPresenter >> canRenameArgs: anObject [
 	argumentsList items do: [ :arg | arg canBeRenamed: anObject ]
 ]
 
+{ #category : 'accessing' }
+StMethodNameEditorPresenter >> cancelled [
+	
+	^ self withWindowDo: #cancelled
+]
+
 { #category : 'action' }
 StMethodNameEditorPresenter >> computePermutation [
 

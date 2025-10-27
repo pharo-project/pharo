@@ -163,7 +163,9 @@ TextStyle class >> fontSizesFor: aName [
 
 { #category : 'class initialization' }
 TextStyle class >> initialize [
-	self initializeStyleDecoder
+
+	self initializeStyleDecoder.
+	self addDependent: AbstractFont "This code was originaly in AbstractFont class>>initialize but this was creating a cyclic dependency"
 ]
 
 { #category : 'private - initialization' }

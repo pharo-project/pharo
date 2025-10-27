@@ -4,8 +4,6 @@
 unicodeData := CommandLineArguments new arguments last , 'UnicodeData.txt'.
 caseFolding := CommandLineArguments new arguments last , 'CaseFolding-8.0.0.txt'.
 
-EncodedCharSet initialize.
-
 Unicode initializeTagConstants.
 
 Unicode 

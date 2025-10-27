@@ -113,17 +113,6 @@ MetacelloProjectReferenceSpec >> packageSpecsInLoadOrder [
 	^ loadedSpecs flatCollect: [ :e | e packageSpecsInLoadOrder ]
 ]
 
-{ #category : 'loading' }
-MetacelloProjectReferenceSpec >> packageSpecsInLoadOrderWithEngine: anEngine [
-
-	| specs loadedSpecs loads |
-	specs := self projectReference version spec packageSpecsInLoadOrder.
-	loads := self projectReference loadListForVersion:
-		         self projectReference version.
-	loadedSpecs := specs select: [ :each | loads includes: each name ].
-	^ loadedSpecs flatCollect: [ :e | e packageSpecsInLoadOrder ]
-]
-
 { #category : 'copying' }
 MetacelloProjectReferenceSpec >> postCopy [
 

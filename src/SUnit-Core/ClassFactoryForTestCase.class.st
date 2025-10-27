@@ -247,7 +247,8 @@ ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior protocol: anot
 
 { #category : 'compiling - silently' }
 ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior protocol: anotherString storingSource: aBoolean [
-
+	"Retruns the selector of the compiled method." 
+	
 	^ self silentlyDo: [
 		  aBehavior
 			  compile: aString
@@ -269,7 +270,8 @@ ClassFactoryForTestCase >> silentlyCompile: aString in: aBehavior storingSource:
 
 { #category : 'private' }
 ClassFactoryForTestCase >> silentlyDo: aBlock [
-
+	"Returns the result of the block execution."
+	
 	^ self class codeChangeAnnouncer suspendAllWhile: aBlock
 ]
 
