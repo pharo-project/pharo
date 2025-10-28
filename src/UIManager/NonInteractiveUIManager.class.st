@@ -220,14 +220,6 @@ NonInteractiveUIManager >> handleWarning: aWarning [
 	aWarning resume
 ]
 
-{ #category : 'handle debug requests' }
-NonInteractiveUIManager >> handleWarningDebugRequest: aDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
-
-	anOupsDebuggerSystem
-		warningRequest: aDebugRequest
-		withUIManager: self
-]
-
 { #category : 'ui requests' }
 NonInteractiveUIManager >> inform: aString [
 
