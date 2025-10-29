@@ -50,7 +50,7 @@ BaselineOfMorphicCore >> baseline: spec [
 			spec baseline: 'FreeType' with: [
 					spec
 						repository: repository;
-						loads: #Ccore ].
+						loads: #Core ].
 			spec package: 'System-FileRegistry' with: [ spec requires: #( 'System-Model' ) ] ]
 ]
 
