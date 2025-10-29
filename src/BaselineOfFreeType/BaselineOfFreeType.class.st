@@ -1,6 +1,9 @@
 Class {
 	#name : 'BaselineOfFreeType',
 	#superclass : 'BaselineOf',
+	#instVars : [
+		'initializersEnabled'
+	],
 	#category : 'BaselineOfFreeType',
 	#package : 'BaselineOfFreeType'
 }
@@ -12,12 +15,24 @@ BaselineOfFreeType >> baseline: spec [
 	spec for: #common do: [ 
 		spec package: 'FreeType'.
 		spec package: 'FreeType-Graphics' with: [ spec requires: #('FreeType') ].		
-		spec package: 'FreeType-Morphic' with: [ spec requires: #('FreeType-Graphics') ].
 		spec package: 'FreeType-Tests' with: [ spec requires: #('FreeType') ].
 
-		spec group: 'core' with: #('FreeType').
-		spec group: 'ui' with: #('core' 'FreeType-Graphics' 'FreeType-Morphic').
+		spec group: 'Core' with: #('FreeType' 'FreeType-Graphics').
 		spec group: 'tests' with: #('core' 'FreeType-Tests') ]
+]
+
+{ #category : 'actions' }
+BaselineOfFreeType >> postload: loader package: packageSpec [
+
+	MCMethodDefinition initializersEnabled: initializersEnabled
+]
+
+{ #category : 'actions' }
+BaselineOfFreeType >> preload: loader package: packageSpec [
+	"For now we ensure the class initialization but in the future it should be true by default"
+
+	initializersEnabled := MCMethodDefinition initializersEnabled.
+	MCMethodDefinition initializersEnabled: true
 ]
 
 { #category : 'accessing' }

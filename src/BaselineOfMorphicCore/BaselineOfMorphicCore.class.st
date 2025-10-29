@@ -28,26 +28,30 @@ BaselineOfMorphicCore >> baseline: spec [
 	repository := self packageRepositoryURLForSpec: spec.
 
 	spec for: #common do: [
-		spec postLoadDoIt: #postload:package:.
+			spec postLoadDoIt: #postload:package:.
 
-		spec baseline: 'Traits' with: [ spec repository: repository ].
-		spec baseline: 'SUnit' with: [ spec repository: repository ].
-		spec baseline: 'Display' with: [ spec repository: repository ].
-		spec baseline: 'UnifiedFFI' with: [ spec repository: repository ].
+			spec baseline: 'Traits' with: [ spec repository: repository ].
+			spec baseline: 'SUnit' with: [ spec repository: repository ].
+			spec baseline: 'Display' with: [ spec repository: repository ].
+			spec baseline: 'UnifiedFFI' with: [ spec repository: repository ].
 
-		spec package: 'System-Object Events'.
-		spec package: 'System-Caching'.
-		spec package: 'System-Utilities'.
-		spec package: 'Graphics-Canvas'.
-		spec package: 'FormCanvas-Core'.
-		spec package: 'Tool-Registry'.
-		spec package: 'Morphic-Core'.
-		spec package: 'System-Model' with: [ spec requires: #( 'Morphic-Core' ) ].
-		spec baseline: 'Fonts' with: [
-				spec
-					repository: repository;
-					loads: #Core ].
-		spec package: 'System-FileRegistry' with: [ spec requires: #( 'System-Model' ) ] ]
+			spec package: 'System-Object Events'.
+			spec package: 'System-Caching'.
+			spec package: 'System-Utilities'.
+			spec package: 'Graphics-Canvas'.
+			spec package: 'FormCanvas-Core'.
+			spec package: 'Tool-Registry'.
+			spec package: 'Morphic-Core'.
+			spec package: 'System-Model' with: [ spec requires: #( 'Morphic-Core' ) ].
+			spec baseline: 'Fonts' with: [
+					spec
+						repository: repository;
+						loads: #Core ].
+			spec baseline: 'FreeType' with: [
+					spec
+						repository: repository;
+						loads: #Ccore ].
+			spec package: 'System-FileRegistry' with: [ spec requires: #( 'System-Model' ) ] ]
 ]
 
 { #category : 'actions' }

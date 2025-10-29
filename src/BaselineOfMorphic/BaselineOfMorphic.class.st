@@ -53,11 +53,7 @@ BaselineOfMorphic >> baseline: spec [
 
 		spec package: 'System-Localization'.
 
-		spec baseline: 'FreeType' with: [
-			spec
-				repository: repository;
-				loads: 'ui' ].
-		spec package: 'EmbeddedFreeType' with: [ spec requires: 'FreeType' ].
+		spec package: 'EmbeddedFreeType'.
 		spec package: 'FileSystem-Zip'.
 
 		spec package: 'Graphics-Shapes'.
@@ -136,7 +132,6 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	SystemNotification signal: 'Starting postload action'.
 
-	ShortIntegerArray initialize.
 	TextConstants initialize.
 
 	Stdio stdout
@@ -147,9 +142,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 		nextPutAll: Smalltalk ui asString;
 		lf.
 
-	#( #ProgressBarMorph #FT2Types #FT2FFILibrary #FreeTypeCacheConstants
-	   #FreeTypeCache #FreeTypeSettings #FreeTypeSubPixelAntiAliasedGlyphRenderer
-	   #FT2Constants #GlobalIdentifier #HaloMorph
+	#( #ProgressBarMorph #GlobalIdentifier #HaloMorph
 	   #CharacterScanner #ImageMorph
 	   #Locale #MczInstaller #MD5NonPrimitive #MenuItemMorph
 	   #MenuMorph #RxMatcher #RxParser #RxsPredicate #SHA1
@@ -181,7 +174,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	PolymorphSystemSettings desktopColor: Color white.
 
 	#( #BalloonMorph #EmbeddedFreeTypeFontInstaller
-	   #FLCompiledMethodCluster #FreeTypeFontProvider
+	   #FLCompiledMethodCluster
 	   #IconicButtonMorph #KMLog
 	   #LucidaGrandeRegular #ScrollBarMorph
 	   #SystemSettingsPersistence #TabMorph #TaskbarMorph ) do: [ :each |
