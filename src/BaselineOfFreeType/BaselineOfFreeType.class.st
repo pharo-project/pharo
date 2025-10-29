@@ -18,7 +18,7 @@ BaselineOfFreeType >> baseline: spec [
 		spec package: 'FreeType-Tests' with: [ spec requires: #('FreeType') ].
 
 		spec group: 'Core' with: #('FreeType' 'FreeType-Graphics').
-		spec group: 'tests' with: #('core' 'FreeType-Tests') ]
+		spec group: 'tests' with: #('Core' 'FreeType-Tests') ]
 ]
 
 { #category : 'actions' }
