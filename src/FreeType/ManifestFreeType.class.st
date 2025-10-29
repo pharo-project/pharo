@@ -9,6 +9,11 @@ Class {
 	#tag : 'Manifest'
 }
 
+{ #category : 'meta-data - dependency analyser' }
+ManifestFreeType class >> manuallyResolvedDependencies [
+	^ #(#'Graphics-Transformations')
+]
+
 { #category : 'code-critics' }
 ManifestFreeType class >> ruleLiteralArrayContainsSuspiciousTrueFalseOrNilRuleV1FalsePositive [
 	^ #(#(#(#RGMetaclassDefinition #(#'ManifestFreeType class' #ManifestFreeType)) #'2022-09-02T11:20:02.557122+02:00') )

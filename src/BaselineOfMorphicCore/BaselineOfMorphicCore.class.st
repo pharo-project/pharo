@@ -71,7 +71,6 @@ BaselineOfMorphicCore >> postload: loader package: packageSpec [
 	BalloonEngineConstants initialize.
 	BalloonEngine initialize.
 	CornerRounder initialize.
-	ShortIntegerArray initialize.
 	Clipboard initialize.
 	GradientFillStyle initialize.
 	TextAction initialize.

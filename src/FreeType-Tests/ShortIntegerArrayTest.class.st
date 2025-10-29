@@ -7,8 +7,8 @@ Class {
 	#instVars : [
 		'shortIntegerArray'
 	],
-	#category : 'FormCanvas-Tests',
-	#package : 'FormCanvas-Tests'
+	#category : 'FreeType-Tests',
+	#package : 'FreeType-Tests'
 }
 
 { #category : 'running' }

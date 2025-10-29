@@ -8,9 +8,9 @@ Class {
 	#classVars : [
 		'LastSaveOrder'
 	],
-	#category : 'FormCanvas-Core-BalloonEngine',
-	#package : 'FormCanvas-Core',
-	#tag : 'BalloonEngine'
+	#category : 'FreeType-Base',
+	#package : 'FreeType',
+	#tag : 'Base'
 }
 
 { #category : 'class initialization' }

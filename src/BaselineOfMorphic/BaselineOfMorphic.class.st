@@ -136,6 +136,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 
 	SystemNotification signal: 'Starting postload action'.
 
+	ShortIntegerArray initialize.
 	TextConstants initialize.
 
 	Stdio stdout
