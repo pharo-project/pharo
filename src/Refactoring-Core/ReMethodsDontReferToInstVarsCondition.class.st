@@ -30,12 +30,12 @@ ReMethodsDontReferToInstVarsCondition >> referencedInstanceVariables [
 ]
 
 { #category : 'displaying' }
-ReMethodsDontReferToInstVarsCondition >> violationMessageOn: aStream [
-
+ReMethodsDontReferToInstVarsCondition >> violationMessageOn: aStream [ 
+	self deprecated: 'Use violationMessageOn:violators: instead'.
 	self violators do: [ :violator |
 		| selector instVar |
-		selector := violator at: 1.
-		instVar := violator at: 2.
+		selector := violator first.
+		instVar := violator second.
 		aStream
 			nextPutAll: 'Method ''';
 			nextPutAll: selector;
@@ -43,6 +43,29 @@ ReMethodsDontReferToInstVarsCondition >> violationMessageOn: aStream [
 			nextPutAll: instVar;
 			nextPutAll: ' defined in class ';
 			nextPutAll: class name ]
+]
+
+{ #category : 'displaying' }
+ReMethodsDontReferToInstVarsCondition >> violationMessageOn: aStream violators: theViolators [
+
+	theViolators ifEmpty: [ ^ self ].
+
+	theViolators do: [ :violator |
+			| selector instVar |
+			selector := violator first.
+			instVar := violator second.
+			aStream
+				nextPutAll: 'Method ''';
+				nextPutAll: selector;
+				nextPutAll: ''''.
+			theViolators = self violators
+				ifTrue: [
+						aStream
+							nextPutAll: ' refers to the inst var #';
+							nextPutAll: instVar;
+							nextPutAll: ' defined in class ';
+							nextPutAll: class name ]
+				ifFalse: [ aStream nextPutAll: ' does not refer any instVar' ] ]
 ]
 
 { #category : 'accessing' }

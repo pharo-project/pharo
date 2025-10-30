@@ -29,6 +29,33 @@ ReDefinesSelectorsCondition >> violationMessageOn: aStream [
 	self violators ifNotEmpty: [ aStream nextPutAll: 'Selectors must be defined in the class.' ]
 ]
 
+{ #category : 'displaying' }
+ReDefinesSelectorsCondition >> violationMessageOn: aStream violators: theViolators [
+
+	| verb1 verb2 |
+	theViolators ifEmpty: [ ^ self ].
+	theViolators = self violators
+		ifTrue: [
+				verb1 := ' is not'.
+				verb2 := ' must' ]
+		ifFalse: [
+				verb1 := ' is'.
+				verb2 := ' must not' ].
+	theViolators do: [ :violator |
+			aStream
+				nextPutAll: violator;
+				nextPutAll: verb1;
+				nextPutAll: ' defined in the class ';
+				nextPutAll: class name;
+				nextPutAll: '.';
+				space ].
+	theViolators ifNotEmpty: [
+			aStream
+				nextPutAll: 'Selectors ';
+				nextPutAll: verb2;
+				nextPutAll: ' be defined in the class.' ]
+]
+
 { #category : 'accessing' }
 ReDefinesSelectorsCondition >> violators [
 

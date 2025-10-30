@@ -11,19 +11,17 @@ Class {
 	#tag : 'Conditions'
 }
 
-{ #category : 'checking' }
-ReInstanceVariableHasReferences >> check [
-	
-	aClass withAllSubclasses do: [ :each |
-			| res |
-			res := (each whichMethodsReferToInstanceVariable: instanceVariable).
-			res isNotEmpty
-				ifTrue: [ violators addAll: res ].
-			].
-	^ violators isNotEmpty
+{ #category : 'accessing - private' }
+ReInstanceVariableHasReferences >> candidates [
+
+	| candidates |
+	candidates := #(  ) asSet.
+
+	aClass withAllSubclasses do: [ :each | candidates addAll: (each newMethods collect: [ :meth | meth value ]) ].
+	^ candidates
 ]
 
-{ #category : 'accessing' }
+{ #category : 'displaying' }
 ReInstanceVariableHasReferences >> errorString [ 
 
 	^ ' Variable ', instanceVariable , ' is still referenced'
@@ -42,6 +40,14 @@ ReInstanceVariableHasReferences >> initialize [
 ]
 
 { #category : 'accessing' }
-ReInstanceVariableHasReferences >> violators [ 
+ReInstanceVariableHasReferences >> violators [
+	violators := #() asSet.
+	 
+	aClass withAllSubclasses do: [ :each |
+		| res |
+		res := (each whichMethodsReferToInstanceVariable: instanceVariable).
+		res isNotEmpty
+			ifTrue: [ violators addAll: res ].
+		].
 	^ violators
 ]

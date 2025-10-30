@@ -12,10 +12,16 @@ ReReifiedCondition >> candidates [
 	self subclassResponsibility 
 ]
 
+{ #category : 'checking' }
+ReReifiedCondition >> check [ 
+
+	^ self violators isEmpty
+]
+
 { #category : 'accessing' }
 ReReifiedCondition >> errorString [
 
-	^ String streamContents: [ :aStream | self violationMessageOn: aStream ]
+	^ String streamContents: [ :s | self violationMessageOn: s violators: self violators ]
 ]
 
 { #category : 'checking' }
@@ -43,9 +49,9 @@ ReReifiedCondition >> not [
 ]
 
 { #category : 'displaying' }
-ReReifiedCondition >> violationMessageOn: aStream [
+ReReifiedCondition >> violationMessageOn: aStream violators: aCollection [
 
-	self subclassResponsibility 
+	self subclassResponsibility
 ]
 
 { #category : 'accessing' }

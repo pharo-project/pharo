@@ -10,6 +10,12 @@ Class {
 	#tag : 'Conditions'
 }
 
+{ #category : 'accessing - private' }
+RBAndCondition >> candidates [ 
+
+	^ left candidates , right candidates
+]
+
 { #category : 'checking' }
 RBAndCondition >> check [
 	left check
@@ -41,6 +47,18 @@ RBAndCondition >> printOn: aStream [
 		print: left;
 		nextPutAll: ' & ';
 		print: right
+]
+
+{ #category : 'displaying' }
+RBAndCondition >> violationMessageOn: aStream violators: theViolators [
+	| violatorsLeft violatorsRight |
+	self flag: 'This implementation wont work for conditions whose candidates cannot be compared by sending =. Fix me!'.
+	violatorsLeft := left candidates select: [ :each | theViolators includes: each ].
+	violatorsRight := right candidates select: [ :each | theViolators includes: each ].
+	
+	left violationMessageOn: aStream violators: violatorsLeft.
+	aStream nextPutAll: ' & '.
+	right violationMessageOn: aStream violators: violatorsRight
 ]
 
 { #category : 'accessing' }

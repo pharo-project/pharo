@@ -14,48 +14,38 @@ ReNewNegationCondition class >> on: aRBInstanceVariableHasReferences [
 	^ self new condition: aRBInstanceVariableHasReferences ; yourself.
 ]
 
+{ #category : 'accessing - private' }
+ReNewNegationCondition >> candidates [ 
+	^ condition candidates
+]
+
 { #category : 'checking' }
 ReNewNegationCondition >> check [
-	^condition check not
+	" `condition check not` does not work if the condition checks several candidates. "
+	^ condition nonViolators isEmpty
 ]
 
 { #category : 'accessing' }
 ReNewNegationCondition >> condition: aCondition [
 
-	condition := aCondition.
-	subjects := condition candidates
+	condition := aCondition
 ]
 
-{ #category : 'accessing' }
+{ #category : 'displaying' }
 ReNewNegationCondition >> errorString [ 
 
-	^ condition errorString
+	^ String streamContents: [ :s | self violationMessageOn: s violators: self violators ]
 ]
 
 { #category : 'accessing' }
 ReNewNegationCondition >> nonViolators [
 
-	^ subjects difference: self violators
+	^ condition violators
 ]
 
 { #category : 'displaying' }
-ReNewNegationCondition >> violationMessageOn: aWriteStream [
-	| method re message message2 |
-	"If my condition is a negation, return its condition violation message"
-	condition class == self class 
-		ifTrue: [ ^ condition condition violationMessageOn: aWriteStream ].
-
-	"Otherwise, send the method defined in the condition to self.
-	In this way, violators return nonViolators"
-	method := condition class lookupSelector: #violationMessageOn:.
-	message := String streamContents: [:s | 
-		method valueWithReceiver: self arguments: { s }].
-
-	"Remove 'not' apparitions from the message"
-	re := '[ ]+not[ ]*' asRegex.
-	message2 := re copy: message contents replacingMatchesWith: ' '.
-	message2 == message ifTrue: [ message2 := 'NOT ' + message ].
-	aWriteStream nextPutAll: message2
+ReNewNegationCondition >> violationMessageOn: aStream violators: theViolators [ 
+	condition violationMessageOn: aStream violators: theViolators
 ]
 
 { #category : 'accessing' }

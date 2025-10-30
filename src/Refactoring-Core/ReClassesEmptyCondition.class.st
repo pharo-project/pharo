@@ -27,6 +27,19 @@ ReClassesEmptyCondition >> violationMessageOn: aStream [
 			space ]
 ]
 
+{ #category : 'displaying' }
+ReClassesEmptyCondition >> violationMessageOn: aStream violators: theViolators [
+	| verb |
+	theViolators ifEmpty:[^self].
+	verb := self violators = theViolators ifTrue: [ ' is not' ] ifFalse: [ ' is' ].
+	theViolators do: [ :violator |
+		aStream
+			nextPutAll: violator name;
+			nextPutAll: verb;
+			nextPutAll: ' empty.';
+			space ]
+]
+
 { #category : 'accessing' }
 ReClassesEmptyCondition >> violators [
 

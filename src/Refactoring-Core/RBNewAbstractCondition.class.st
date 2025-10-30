@@ -1,9 +1,6 @@
 Class {
 	#name : 'RBNewAbstractCondition',
 	#superclass : 'Object',
-	#instVars : [
-		'subjects'
-	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
@@ -16,19 +13,20 @@ RBNewAbstractCondition >> & aCondition [
 
 { #category : 'accessing - private' }
 RBNewAbstractCondition >> candidates [
-	"Complex conditions require this method to compute their own subjects"
-	^ subjects
+
+	self subclassResponsibility
 ]
 
 { #category : 'checking' }
 RBNewAbstractCondition >> check [
-	self subclassResponsibility
+
+	^ self violators isEmpty
 ]
 
-{ #category : 'accessing' }
+{ #category : 'displaying' }
 RBNewAbstractCondition >> errorString [ 
 
-	^ String streamContents: [ :stream | self violationMessageOn: stream ] 
+	^ String streamContents: [ :s | self violationMessageOn: s violators: self violators ]
 ]
 
 { #category : 'testing' }
@@ -43,6 +41,12 @@ RBNewAbstractCondition >> isTrue [
 	^ self check
 ]
 
+{ #category : 'accessing' }
+RBNewAbstractCondition >> nonViolators [
+
+	^ self candidates difference: self violators
+]
+
 { #category : 'logical operations' }
 RBNewAbstractCondition >> not [
 	^ReNewNegationCondition on: self
@@ -50,7 +54,20 @@ RBNewAbstractCondition >> not [
 
 { #category : 'displaying' }
 RBNewAbstractCondition >> violationMessageOn: aStream [
-	self subclassResponsibility 
+
+	aStream nextPutAll: self errorString
+]
+
+{ #category : 'displaying' }
+RBNewAbstractCondition >> violationMessageOn: aStream violators: aCollection [
+
+	self subclassResponsibility
+]
+
+{ #category : 'accessing' }
+RBNewAbstractCondition >> violators [
+
+	self subclassResponsibility
 ]
 
 { #category : 'logical operations' }

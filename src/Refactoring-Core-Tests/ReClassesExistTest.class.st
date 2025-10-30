@@ -18,7 +18,7 @@ ReClassesExistTest >> testClassDoesNotExist [
 ]
 
 { #category : 'tests' }
-ReClassesExistTest >> testClassDoesNotExistWithMessage [
+ReClassesExistTest >> testClassDoesNotExistMessage [
 	| nonexistent cond |
 	nonexistent := #Imaginary.
 	cond := ReClassesExistCondition new 
@@ -42,7 +42,7 @@ ReClassesExistTest >> testClassExists [
 ]
 
 { #category : 'tests' }
-ReClassesExistTest >> testClassExistsWithMessage [
+ReClassesExistTest >> testClassExistsMessage [
 	| existing cond existingClass |
 	existing := #MyClassAlpha.
 	existingClass := self model classNamed: existing.
@@ -71,7 +71,7 @@ ReClassesExistTest >> testSomeClassesDoNotExist [
 ]
 
 { #category : 'tests' }
-ReClassesExistTest >> testSomeClassesDoNotExistWithMessage [
+ReClassesExistTest >> testSomeClassesDoNotExistMessage [
 
 	| nonexistent existing existingClass cond |
 	nonexistent := #Imaginary.

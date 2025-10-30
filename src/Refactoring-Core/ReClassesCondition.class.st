@@ -15,12 +15,6 @@ ReClassesCondition >> candidates [
 	^ classes
 ]
 
-{ #category : 'checking' }
-ReClassesCondition >> check [ 
-
-	^ self violators isEmpty
-]
-
 { #category : 'accessing' }
 ReClassesCondition >> classes: aRBClassCollection [
 

@@ -16,11 +16,23 @@ ReClassesExistCondition >> candidates [
 
 { #category : 'displaying' }
 ReClassesExistCondition >> violationMessageOn: aStream [
-
+	self deprecated: 'Use violationMessageOn:violators: instead'.
 	self violators do: [ :violator |
 		aStream
 			nextPutAll: violator;
 			nextPutAll: ' does not exist.';
+			space ]
+]
+
+{ #category : 'displaying' }
+ReClassesExistCondition >> violationMessageOn: aStream violators: theViolators [
+	| verb |
+	theViolators ifEmpty: [ ^self ].
+	verb := theViolators = self violators ifTrue: [ ' does not exist' ] ifFalse: [ ' exists' ].
+	theViolators do: [ :violator |
+		aStream
+			nextPutAll: violator;
+			nextPutAll: verb;
 			space ]
 ]
 

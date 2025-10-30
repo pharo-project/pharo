@@ -7,11 +7,16 @@ Class {
 }
 
 { #category : 'displaying' }
-ReClassesAreAbstractCondition >> violationMessageOn: aStream [
-
-	self violators ifEmpty: [ ^ self ].
-	aStream nextPutAll: (', ' join: (self violators collect: #name)).
-	aStream nextPutAll: ' is not an abstract class.'
+ReClassesAreAbstractCondition >> violationMessageOn: aStream violators: theViolators [
+	| verb |
+	theViolators = self violators 
+		ifTrue: [ verb := 'is not' ] 
+		ifFalse: [ self assert: theViolators = self nonViolators. verb := 'is' ].
+	theViolators ifEmpty: [ ^ self ] ifNotEmpty: [
+			aStream nextPutAll: (', ' join: (theViolators collect: #name)).
+			aStream nextPutAll: ' '.
+			aStream nextPutAll: verb.
+			aStream nextPutAll: ' an abstract class.' ]
 ]
 
 { #category : 'accessing' }

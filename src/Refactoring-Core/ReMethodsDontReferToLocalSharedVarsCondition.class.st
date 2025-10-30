@@ -35,15 +35,34 @@ ReMethodsDontReferToLocalSharedVarsCondition >> referencedSharedVariables [
 
 { #category : 'displaying' }
 ReMethodsDontReferToLocalSharedVarsCondition >> violationMessageOn: aStream [
-
+	self deprecated: 'Use violationMessage:violators: instead'.
 	self violators do: [ :violator |
 		| selector instVar |
-		selector := violator at: 1.
-		instVar := violator at: 2.
+		selector := violator first.
+		instVar := violator second.
 		aStream
 			nextPutAll: '''';
 			nextPutAll: selector;
 			nextPutAll: ''' refers to the shared var #';
+			nextPutAll: instVar ]
+]
+
+{ #category : 'displaying' }
+ReMethodsDontReferToLocalSharedVarsCondition >> violationMessageOn: aStream violators: theViolators [
+	| verb |
+	theViolators ifEmpty: [ ^self ].
+	verb := self violators = theViolators ifTrue: [ ' refers' ] ifFalse: [ ' does not refer' ].
+	
+	theViolators do: [ :violator |
+		| selector instVar |
+		selector := violator first.
+		instVar := violator second.
+		aStream
+			nextPutAll: '''';
+			nextPutAll: selector;
+			nextPutAll: '''';
+			nextPutAll: verb;
+			nextPutAll: ' to the shared var #';
 			nextPutAll: instVar ]
 ]
 

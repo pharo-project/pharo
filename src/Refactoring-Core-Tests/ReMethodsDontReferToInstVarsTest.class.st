@@ -86,7 +86,7 @@ ReMethodsDontReferToInstVarsTest >> testMethodReferencingNoInstVars [
 ]
 
 { #category : 'tests' }
-ReMethodsDontReferToInstVarsTest >> testMethodReferencingNoInstVarsWithMessage [
+ReMethodsDontReferToInstVarsTest >> testMethodReferencingNoInstVarsMessage [
 	| myClassBeta cond |
 	myClassBeta := self model classNamed: #MyClassBeta.
 	
@@ -95,4 +95,18 @@ ReMethodsDontReferToInstVarsTest >> testMethodReferencingNoInstVarsWithMessage [
 		
 	" the method does not refer to any instance variable therefore the condition succeeds "
 	self assert: cond errorString isEmpty
+]
+
+{ #category : 'tests' }
+ReMethodsDontReferToInstVarsTest >> testMethodReferencingNoInstVarsWithNegationMessage [
+	| myClassBeta cond |
+	myClassBeta := self model classNamed: #MyClassBeta.
+	
+	cond := ReMethodsDontReferToInstVarsCondition new 
+		class: myClassBeta selectors: { #methodForPullUp }.
+
+	cond := cond not.
+	self deny: cond check.
+	" the method does not refer to any instance variable therefore the condition succeeds "
+	self assert: cond errorString equals: 'Method ''methodForPullUp'' does not refer any instVar'
 ]

@@ -31,7 +31,7 @@ ReMethodsDontReferToSharedVarsTest >> testMethodReferencingInstVarDefinedInItsOw
 ]
 
 { #category : 'tests' }
-ReMethodsDontReferToSharedVarsTest >> testMethodReferencingInstVarDefinedInItsOwnClassAndAnotherOneDefinedInItsSuperclassWithMessage [
+ReMethodsDontReferToSharedVarsTest >> testMethodReferencingInstVarDefinedInItsOwnClassAndAnotherOneDefinedInItsSuperclassMessage [
 	| myClassBeta cond |
 	myClassBeta := self model classNamed: #MyClassBeta.
 	
@@ -57,7 +57,7 @@ ReMethodsDontReferToSharedVarsTest >> testMethodReferencingNoSharedVariables [
 ]
 
 { #category : 'tests' }
-ReMethodsDontReferToSharedVarsTest >> testMethodReferencingNoSharedVariablesWithMessage [
+ReMethodsDontReferToSharedVarsTest >> testMethodReferencingNoSharedVariablesMessage [
 	| myClassBeta cond |
 	myClassBeta := self model classNamed: #MyClassBeta.
 	
