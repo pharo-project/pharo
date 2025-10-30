@@ -56,6 +56,20 @@ SystemDictionaryTest >> supportsNilKey [
 	^ false
 ]
 
+{ #category : 'tests' }
+SystemDictionaryTest >> testAddFlushesCaches [
+	"we add to the environemnt with #add: and the cache is reset"
+	| enviroment |
+	enviroment := SystemDictionary new.
+	
+	enviroment add: (GlobalVariable key: #Object value: Object).
+	enviroment allBehaviors.
+	enviroment add: (GlobalVariable key: #Class value: Class).
+	"check that the cache was reset and we can find Class"
+	self assert: (enviroment instVarNamed: 'cachedBehaviors') isNil. 
+	self assert:( enviroment allBehaviors includes: Class).
+]
+
 { #category : 'tests - DictionaryIndexAccessing' }
 SystemDictionaryTest >> testAtPutNil [
 
