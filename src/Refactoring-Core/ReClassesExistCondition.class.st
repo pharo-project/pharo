@@ -16,7 +16,6 @@ ReClassesExistCondition >> candidates [
 
 { #category : 'displaying' }
 ReClassesExistCondition >> violationMessageOn: aStream [
-	self deprecated: 'Use violationMessageOn:violators: instead'.
 	self violators do: [ :violator |
 		aStream
 			nextPutAll: violator;

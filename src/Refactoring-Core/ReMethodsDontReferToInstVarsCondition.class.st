@@ -31,7 +31,6 @@ ReMethodsDontReferToInstVarsCondition >> referencedInstanceVariables [
 
 { #category : 'displaying' }
 ReMethodsDontReferToInstVarsCondition >> violationMessageOn: aStream [ 
-	self deprecated: 'Use violationMessageOn:violators: instead'.
 	self violators do: [ :violator |
 		| selector instVar |
 		selector := violator first.

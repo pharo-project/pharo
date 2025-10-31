@@ -43,6 +43,11 @@ ReNewNegationCondition >> nonViolators [
 	^ condition violators
 ]
 
+{ #category : 'logical operations' }
+ReNewNegationCondition >> not [
+	^condition
+]
+
 { #category : 'displaying' }
 ReNewNegationCondition >> violationMessageOn: aStream violators: theViolators [ 
 	condition violationMessageOn: aStream violators: theViolators
