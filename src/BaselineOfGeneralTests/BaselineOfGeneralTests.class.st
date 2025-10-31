@@ -28,7 +28,6 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Metacello-CommandLine-Tests';
 			package: 'Debugger-Model-Tests';
 			package: 'Debugger-Oups-Tests';
-			package: 'EmbeddedFreeType-Tests';
 			baseline: 'Epicea' with: [
 				spec
 					repository: repository;
@@ -40,6 +39,7 @@ BaselineOfGeneralTests >> baseline: spec [
 					loads: #Tests ];
 			package: 'Graphics-Tests';
 			package: 'Text-Tests';
+			package: 'Morphic-Testing-Support';
 			package: 'Morphic-Tests';
 			package: 'Morphic-Widgets-FastTable-Tests';
 			package: 'NECompletion-Tests';

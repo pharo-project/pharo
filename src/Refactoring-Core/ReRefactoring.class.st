@@ -43,13 +43,6 @@ ReRefactoring class >> preconditionSignal [
 	^ RBRefactoringError , RBRefactoringWarning
 ]
 
-{ #category : 'converting' }
-ReRefactoring >> asRefactoring [
-
-	self deprecated: 'This method is a no-op and can be removed' transformWith: '`@rec asRefactoring' -> '`@rec'.
-	^ self
-]
-
 { #category : 'preconditions' }
 ReRefactoring >> breakingChangePreconditions [
 
@@ -157,12 +150,6 @@ ReRefactoring >> safeVariableNameFor: aClass temporaries: allTempAndArgs basedOn
 			i := i + 1.
 			newString := baseString , i printString ].
 	^ newString
-]
-
-{ #category : 'transforming' }
-ReRefactoring >> transform [ 
-
-	self deprecated: 'Use privateTransform instead' transformWith: '`@rec transform' -> '`@rec privateTransform'
 ]
 
 { #category : 'utilities' }

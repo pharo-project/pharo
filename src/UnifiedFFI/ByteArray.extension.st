@@ -145,18 +145,6 @@ ByteArray >> readString [
 ]
 
 { #category : '*UnifiedFFI' }
-ByteArray >> readStringUTF8 [
-
-	self
-		deprecated: 'Please use #utf8StringFromCString instead'
-		transformWith: '`@receiver readStringUTF8'
-						-> '`@receiver utf8StringFromCString'.
-
-	^ (ExternalData fromHandle: self type: ExternalType string)
-		  utf8StringFromCString
-]
-
-{ #category : '*UnifiedFFI' }
 ByteArray >> referenceStructAt: byteOffset length: length [
 	^ FFIExternalStructureReferenceHandle
 		handle: self

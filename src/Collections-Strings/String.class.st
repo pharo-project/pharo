@@ -630,13 +630,6 @@ String >> asComment [
 ]
 
 { #category : 'converting' }
-String >> asDate [
-	"Many allowed forms, see Date>>#readFrom:"
-	self deprecated: 'Use Date>>#readFrom:pattern: specifying a concrete pattern instead.'.
-	^ Date fromString: self
-]
-
-{ #category : 'converting' }
 String >> asDateAndTime [
  	"Convert from UTC format"
 

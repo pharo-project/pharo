@@ -13,12 +13,6 @@ Installs:
 Class {
 	#name : 'BaselineOfDisplay',
 	#superclass : 'BaselineOf',
-	#instVars : [
-		'initializersEnabled'
-	],
-	#classVars : [
-		'Initialized'
-	],
 	#category : 'BaselineOfDisplay',
 	#package : 'BaselineOfDisplay'
 }
@@ -28,36 +22,12 @@ BaselineOfDisplay >> baseline: spec [
 
 	<baseline>
 	spec for: #common do: [
-			spec preLoadDoIt: #preload:package:.
-			spec postLoadDoIt: #postload:package:.
-
 			spec
 				package: 'Colors';
 				package: 'Graphics-Display Objects';
 				package: 'Graphics-Primitives' with: [ spec requires: 'Graphics-Display Objects' ];
 				package: 'Graphics-Transformations';
 				package: 'Graphics-Files' ]
-]
-
-{ #category : 'actions' }
-BaselineOfDisplay >> postload: loader package: packageSpec [
-	"Ignore pre and post loads if already executed"
-	Initialized = true ifTrue: [ ^ self ].
-
-	MCMethodDefinition initializersEnabled: initializersEnabled.
-
-	Initialized := true
-]
-
-{ #category : 'actions' }
-BaselineOfDisplay >> preload: loader package: packageSpec [
-	"Ignore pre and post loads if already executed"
-
-	Initialized = true ifTrue: [ ^ self ].
-
-	"For now we ensure the class initialization but in the future it should be true by default"
-	initializersEnabled := MCMethodDefinition initializersEnabled.
-	MCMethodDefinition initializersEnabled: true
 ]
 
 { #category : 'accessing' }

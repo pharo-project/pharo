@@ -407,14 +407,6 @@ Rectangle >> encompass: aPoint [
 		corner: (corner max:  aPoint)
 ]
 
-{ #category : 'rectangle functions' }
-Rectangle >> expandBy: delta [
-	"Answer a Rectangle that is outset from the receiver by delta. delta is a
-	Rectangle, Point, or scalar."
-
-	^ delta asMargin expandRectangle: self
-]
-
 { #category : 'truncation and round off' }
 Rectangle >> expandTo: grid [
 	"Answer a Rectangle whose origin and corner are rounded to grid x and grid y.
@@ -432,13 +424,6 @@ Rectangle >> expanded [
 	self is inside rounded rectangle."
 
 	^Rectangle origin: origin floor corner: corner ceiling
-]
-
-{ #category : 'rectangle functions' }
-Rectangle >> extendBy: deltaMargin [
-	"Answer a Rectangle with the same origin as the receiver, but whose corner is offset by deltaMargin."
-
-	^ deltaMargin asMargin extendRectangle: self
 ]
 
 { #category : 'accessing' }
@@ -547,14 +532,6 @@ Rectangle >> innerCorners [
 		with: r1 bottomLeft
 		with: r1 bottomRight
 		with: r1 topRight
-]
-
-{ #category : 'rectangle functions' }
-Rectangle >> insetBy: delta [
-	"Answer a Rectangle that is inset from the receiver by delta. delta is a
-	Rectangle, Point, or scalar."
-
-	^ delta asMargin insetRectangle: self
 ]
 
 { #category : 'rectangle functions' }

@@ -1,6 +1,14 @@
 Extension { #name : 'MCClassDefinition' }
 
 { #category : '*Monticello' }
+MCClassDefinition >> accept: aVisitor [
+	aVisitor visitClassDefinition: self.
+	(self hasClassInstanceVariables or: [self hasClassTraitComposition])
+		ifTrue: [aVisitor visitMetaclassDefinition: self].
+
+]
+
+{ #category : '*Monticello' }
 MCClassDefinition >> storeDataOn: aDataStream [
 	| instVarSize |
 	instVarSize := (self hasTraitComposition or: [ self hasClassTraitComposition ])

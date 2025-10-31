@@ -585,11 +585,6 @@ SmallInteger >> quo: aNumber [
 SmallInteger >> shallowCopy [
 ]
 
-{ #category : 'copying' }
-SmallInteger >> veryDeepCopyWith: deepCopier [
-	"Return self.  I can't be copied.  Do not record me."
-]
-
 { #category : 'comparing' }
 SmallInteger >> ~= aNumber [
 	"Primitive. Compare the receiver with the argument and answer true if

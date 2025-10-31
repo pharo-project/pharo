@@ -209,11 +209,6 @@ Boolean >> storeOn: aStream [
 	self printOn: aStream
 ]
 
-{ #category : 'copying' }
-Boolean >> veryDeepCopyWith: deepCopier [
-	"Return self.  I can't be copied.  Do not record me."
-]
-
 { #category : 'controlling' }
 Boolean >> xor: alternativeBlock [
 	"Nonevaluating conjunction. If the receiver is true, answer the opposite of the

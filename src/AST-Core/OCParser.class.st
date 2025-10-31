@@ -182,18 +182,6 @@ OCParser >> englobingErrorNodeClass [
 ]
 
 { #category : 'error handling' }
-OCParser >> errorBlock [
-
-	self deprecated: 'see errorBlock:'
-]
-
-{ #category : 'accessing' }
-OCParser >> errorBlock: aBlock [
-
-	self deprecated: 'RBParser instances offer no more errorBlock facility. Use helpers methods on the class side, or `checkFaulty: aBlock` on a parsed AST'
-]
-
-{ #category : 'error handling' }
 OCParser >> errorPosition [
 	^currentToken ifNotNil: [ :token | token start] ifNil:[1]
 ]

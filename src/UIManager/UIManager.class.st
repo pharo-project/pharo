@@ -401,28 +401,6 @@ UIManager >> inform: aString [
 	^self subclassResponsibility
 ]
 
-{ #category : 'ui requests' }
-UIManager >> informUser: aString during: aBlock [
-	"Display a message above (or below if insufficient room) the cursor
-	 during execution of the given block.
-		UIManager default informUser: 'Just a sec!' during: [(Delay forSeconds: 1) wait].
-	"
-
-	^self informUserDuring: [:bar | bar label: aString. aBlock value]
-]
-
-{ #category : 'ui requests' }
-UIManager >> informUserDuring: aBlock [
-	"Display a message above (or below if insufficient room) the cursor
-	during execution of the given block.
-		UIManager default informUserDuring:[:bar|
-			#(one two three) do:[:info|
-				bar label: info.
-				(Delay forSeconds: 1) wait]]"
-
-	^self subclassResponsibility
-]
-
 { #category : 'ui process' }
 UIManager >> interruptName: labelString preemptedProcess: theInterruptedProcess [
 	"Create a Notifier on the active scheduling process with the given label."
@@ -464,10 +442,6 @@ UIManager >> nonInteractiveManager [
 	 We put it here, so subclasses can override it."
 
 	^NonInteractiveUIManager beDefault
-]
-
-{ #category : 'default actions' }
-UIManager >> onFontsChanged [
 ]
 
 { #category : 'ui TEasilyThemed' }

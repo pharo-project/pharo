@@ -35,11 +35,6 @@ MCOrganizationDefinition >> = aDefinition [
 ]
 
 { #category : 'accessing' }
-MCOrganizationDefinition >> accept: aVisitor [
-	^ aVisitor visitOrganizationDefinition: self
-]
-
-{ #category : 'accessing' }
 MCOrganizationDefinition >> categories [
 
 	^ self packageName

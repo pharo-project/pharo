@@ -71,7 +71,7 @@ export PHARO_CI_TESTING_ENVIRONMENT=1
 ./pharo bootstrap.image loadHermes Traits.hermes --save
 
 #Loading Tests
-./pharo bootstrap.image loadHermes Debugging-Utils.hermes SUnit-Core.hermes JenkinsTools-Core.hermes JenkinsTools-Core.hermes SUnit-Tests.hermes --save --no-fail-on-undeclared --on-duplication ignore
+./pharo bootstrap.image loadHermes Debugging-Utils.hermes Deprecation.hermes SUnit-Core.hermes SUnit-Basic-CLI.hermes SUnit-Tests.hermes --save --no-fail-on-undeclared --on-duplication ignore
 ./pharo bootstrap.image perform --save Pragma buildCache
 
 #Running tests

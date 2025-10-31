@@ -77,11 +77,6 @@ SystemAnnouncer >> classModificationAppliedTo: aClassOrTrait [
 ]
 
 { #category : 'triggering' }
-SystemAnnouncer >> classParentOf: aClass renamedFrom: oldName to: newName [
-	self announce: (ClassParentRenamed classParentOf: aClass renamedFrom: oldName to: newName)
-]
-
-{ #category : 'triggering' }
 SystemAnnouncer >> classRenamed: aClass from: oldClassName to: newClassName [
 
 	self announce: (ClassRenamed class: aClass oldName: oldClassName newName: newClassName)

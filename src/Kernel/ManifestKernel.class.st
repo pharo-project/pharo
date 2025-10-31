@@ -16,13 +16,13 @@ ManifestKernel class >> dependencies [
 
 { #category : 'meta-data - dependency analyser' }
 ManifestKernel class >> ignoredDependencies [
-	^ #('Reflectivity' 'Regex-Core' 'FFI-Kernel')
+	^ #('FFI-Kernel')
 ]
 
 { #category : 'meta-data - dependency analyser' }
 ManifestKernel class >> manuallyResolvedDependencies [
 
-	^ #( #Reflectivity #'Shift-ClassBuilder' )
+	^ #( #'Shift-ClassBuilder' )
 ]
 
 { #category : 'meta-data' }
@@ -33,11 +33,6 @@ ManifestKernel class >> packageName [
 { #category : 'code-critics' }
 ManifestKernel class >> ruleRBBadMessageRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#'Delay class' #delaySchedulerClass: #true)) #'2016-12-07T10:58:09.403079+08:00') #(#(#RGMethodDefinition #(#'Character class' #constantNameFor: #true)) #'2019-01-28T20:56:52.112604+01:00') )
-]
-
-{ #category : 'code-critics' }
-ManifestKernel class >> ruleRBClassNameInSelectorRuleV1FalsePositive [
-	^ #(#(#(#RGMethodDefinition #(#'Character class' #allCharacters #true)) #'2019-01-28T20:55:17.784869+01:00') #(#(#RGMethodDefinition #(#'Character class' #allByteCharacters #true)) #'2019-01-28T20:55:32.378368+01:00') )
 ]
 
 { #category : 'code-critics' }

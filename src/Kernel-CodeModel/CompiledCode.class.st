@@ -126,16 +126,6 @@ CompiledCode class >> newFrom: aCompiledMethod [
 	^ inst
 ]
 
-{ #category : 'instance creation' }
-CompiledCode class >> newMethod: numberOfBytes header: headerWord [
-
-	self 
-		deprecated: 'Use #basicNew:header: instead.' 
-		transformWith: '`@rcv newMethod: `@numberOfBytes header: `@headerWord' -> '`@rcv basicNew: `@numberOfBytes header: `@headerWord'.
-	
-	^ self basicNew: numberOfBytes header: headerWord
-]
-
 { #category : 'constants' }
 CompiledCode class >> trailerSize [
 	^ self subclassResponsibility

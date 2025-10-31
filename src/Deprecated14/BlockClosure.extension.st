@@ -1,6 +1,22 @@
 Extension { #name : 'BlockClosure' }
 
 { #category : '*Deprecated14' }
+BlockClosure >> durationToRun [
+	"Answer the duration taken to execute this block."
+
+	self
+		deprecated: 'Use #timeToRun instead'
+		transformWith: '`@x durationToRun' -> '`@x timeToRun'.
+	^ self timeToRun
+]
+
+{ #category : '*Deprecated14' }
+BlockClosure >> sender [	
+	self deprecated: 'Blocks do not have senders. As the outerContext or home context instead, but take care: clean blocks do not know the context!'.
+	^ self subclassResponsibility
+]
+
+{ #category : '*Deprecated14' }
 BlockClosure >> valueSupplyingAnswer: anObject [
 	
 	self deprecated: 'Do not use this anymore! This is a bad idea.'.

@@ -17,27 +17,27 @@ teardown() {
 }
 
 @test "test can run tests on a package" {
-  run_pharo test JenkinsTools-Tests
+  run_pharo test SUnit-UI-Tests
   assert_success
   assert_line "Finished running 16 Tests"
-  assert_line --partial "Finished to run tests of JenkinsTools-Tests in"
+  assert_line --partial "Finished to run tests of SUnit-UI-Tests in"
   assert_line "16 run, 16 passes, 0 failures, 0 errors."
 }
 
 @test "test can run tests on a regex" {
-  run_pharo test JenkinsTools.*
+  run_pharo test SUnit-UI.*
   assert_success
-  assert_line "Running tests in 3 Packages"
+  assert_line "Running tests in 2 Packages"
   assert_line "Finished running 16 Tests"
-  assert_line --partial "Finished to run tests of JenkinsTools-Tests in"
+  assert_line --partial "Finished to run tests of SUnit-UI-Tests in"
   assert_line "16 run, 16 passes, 0 failures, 0 errors."
 }
 
 @test "test can run tests with junit XML output" {
-  run_pharo test --junit-xml-output JenkinsTools-Tests
+  run_pharo test --junit-xml-output SUnit-UI-Tests
   assert_success
-  assert_line --partial "Finished to run tests of JenkinsTools-Tests"
-  assert_file_exists "JenkinsTools-Tests-Test.xml"
+  assert_line --partial "Finished to run tests of SUnit-UI-Tests"
+  assert_file_exists "SUnit-UI-Tests-Test.xml"
 }
 
 @test "test runner fails if a test fails with flag --fail-on-failure" {
@@ -45,7 +45,7 @@ teardown() {
   run_pharo eval --save "ClapTestRunnerTest compile: 'testThatFails self assert: 1 equals: 0'"
   assert_success
 
-  run_pharo test --fail-on-failure JenkinsTools-Tests
+  run_pharo test --fail-on-failure SUnit-UI-Tests
   assert_failure
   assert_line --partial "17 run, 16 passes, 1 failures, 0 errors."
 }
@@ -55,7 +55,7 @@ teardown() {
   run_pharo eval --save "ClapTestRunnerTest compile: 'testThatFails self assert: 1 equals: 0'"
   assert_success
 
-  run_pharo test --fail-on-error JenkinsTools-Tests
+  run_pharo test --fail-on-error SUnit-UI-Tests
   assert_success
   assert_line --partial "17 run, 16 passes, 1 failures, 0 errors."
 }
@@ -65,7 +65,7 @@ teardown() {
   run_pharo eval --save "ClapTestRunnerTest compile: 'testThatFailsWithError 1 / 0'"
   assert_success
 
-  run_pharo test --fail-on-error JenkinsTools-Tests
+  run_pharo test --fail-on-error SUnit-UI-Tests
   assert_failure
   assert_line --partial "17 run, 16 passes, 0 failures, 1 errors."
 }

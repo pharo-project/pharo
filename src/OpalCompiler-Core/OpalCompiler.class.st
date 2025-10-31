@@ -74,16 +74,6 @@ OpalCompiler class >> createAndEnableOverlay: aBoolean [
 		ifFalse: [ self stopUsingOverlayForDevelopment   ]
 ]
 
-{ #category : 'old - deprecated' }
-OpalCompiler class >> evaluate: textOrString [
-	self
-		deprecated: 'Please use new compiler API instead'
-		transformWith: '`@receiver evaluate: `@statements1 ' -> '`@receiver new source: `@statements1; evaluate'.
-	^ self new
-		source: textOrString;
-		evaluate
-]
-
 { #category : 'class initialization' }
 OpalCompiler class >> initialize [
 	"If no compiler is register when I'm loaded, I'll set myself as the compiler of the image."
@@ -395,11 +385,6 @@ OpalCompiler >> compiledMethodClass: aClass [
 ]
 
 { #category : 'accessing' }
-OpalCompiler >> compiledMethodTrailer: bytes [
-	self deprecated: 'CompiledMethodTrailer has been removed in Pharo12. Just set the sourcePointer after compiling, see class comment of the deprecated class CompiledMethodTrailer'
-]
-
-{ #category : 'accessing' }
 OpalCompiler >> context: aContext [
 	"Prepare self to parse/compile/evaluate according to a context.
 	This impacts the scope (for name resolutions) and toggles `isScripting` to true.
@@ -638,16 +623,6 @@ OpalCompiler >> needRequestorScope [
 	"Because requestor do not have a real API, introspection is used."
 	(self requestor respondsTo: #needRequestorScope) ifFalse: [ ^ false ].
 	^ self requestor needRequestorScope
-]
-
-{ #category : 'accessing' }
-OpalCompiler >> noPattern: aBoolean [
-
-	self
-		deprecated: 'Use #isScripting: instead'
-		transformWith: '`@receiver noPattern: `@arg' -> '`@receiver isScripting: `@arg'.
-
-	self isScripting: aBoolean
 ]
 
 { #category : 'public access' }

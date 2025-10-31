@@ -222,14 +222,6 @@ OCBlockNode >> hasBlock [
 ]
 
 { #category : 'testing' }
-OCBlockNode >> hasBlockReturn [
-
-	self deprecated: 'This method is deprecated, don''t use it. Use on your own responsibility.'.
-
-	^ self body lastIsReturn
-]
-
-{ #category : 'testing' }
 OCBlockNode >> hasSameExitPoint [
 
 	^ body hasSameExitPoint 

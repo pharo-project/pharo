@@ -46,18 +46,17 @@ Delay class >> delaySchedulerClass [
 
 { #category : 'settings' }
 Delay class >> delaySchedulerClass: aSchedulerClass [
+
 	| newScheduler oldScheduler |
-	self delaySchedulerClass = aSchedulerClass ifTrue:[ ^self ].
+	self delaySchedulerClass = aSchedulerClass ifTrue: [ ^ self ].
 	newScheduler := aSchedulerClass new.
-	(newScheduler respondsTo: #startTimerEventLoop)
-		ifFalse: [ self error: 'New delay scheduler must respond to #startTimerEventLoop' ].
+	(newScheduler respondsTo: #startTimerEventLoop) ifFalse: [ self error: 'New delay scheduler must respond to #startTimerEventLoop' ].
 	newScheduler startTimerEventLoop.
 	"To avoid lockup if a higher priority process preempts this method to schedule a delay,
 	the newScheduler needs to be in place before oldScheduler is stopped"
 	oldScheduler := self scheduler.
 	self scheduler: newScheduler.
-	oldScheduler stopTimerEventLoop.
-	self inform: 'Delay scheduler set to ' , aSchedulerClass printString
+	oldScheduler stopTimerEventLoop
 ]
 
 { #category : 'instance creation' }

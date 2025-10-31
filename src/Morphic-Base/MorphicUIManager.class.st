@@ -333,22 +333,6 @@ MorphicUIManager >> inform: aStringOrText [
 		contents: aStringOrText
 ]
 
-{ #category : 'ui requests' }
-MorphicUIManager >> informUserDuring: aBlock [
-	"Display a message as progress	during execution of the given block."
-	"UIManager default informUserDuring: [:bar|
-		#('one' 'two' 'three') do: [:info|
-			bar label: info.
-			1 to: 100 do: [:v |
-				bar current: v.
-				(Delay forMilliseconds: 20) wait]]]"
-
-	self
-		displayProgress: ''
-		from: 1 to: 100
-		during: [:bar | aBlock value: bar]
-]
-
 { #category : 'debug' }
 MorphicUIManager >> lowSpaceWarningMessage [
 	"Return a notifier message string to be presented when space is running low."
@@ -418,15 +402,6 @@ MorphicUIManager >> newMenuIn: aThemedMorph for: aModel [
 	"UIManager default"
 	^self theme
 		newMenuIn: aThemedMorph for: aModel
-]
-
-{ #category : 'ui requests' }
-MorphicUIManager >> onFontsChanged [
-
-	StringMorph allSubInstancesDo: [ :s | s layoutChanged ].
-	TextMorph allSubInstancesDo: [ :s | s layoutChanged ].
-	SystemWindow allInstancesDo: [ :w | [ w update: #relabel ] on: Error do: [ :ex | ] ].
-	self currentWorld ifNotNil: [ :w | w changed ]
 ]
 
 { #category : 'accessing' }

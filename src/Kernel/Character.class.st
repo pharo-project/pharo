@@ -265,13 +265,6 @@ Character class >> specialCharacters [
 		   with: self times)
 ]
 
-{ #category : 'queries' }
-Character class >> supportsNonASCII [
-
-	^ (self environment includesKey: #Unicode) and: [
-		((self environment  at: #EncodedCharSet) charsetAt: 255) name = #Unicode ]
-]
-
 { #category : 'constants' }
 Character class >> syntaxCharacters [
 
@@ -867,13 +860,6 @@ Character >> shouldBePrintedAsLiteral [
 	^ self asInteger between: 33 and: 255
 ]
 
-{ #category : 'printing' }
-Character >> storeBinaryOn: aStream [
-	self asInteger < 256
-		ifTrue: [ aStream nextPut: self asInteger ]
-		ifFalse: [ aStream nextInt32Put: self asInteger ]
-]
-
 { #category : 'storing' }
 Character >> storeOn: aStream [
 	"Common character literals are preceded by '$', however special need to be encoded differently: for some this might be done by using one of the shortcut constructor methods for the rest we have to create them by ascii-value."
@@ -912,10 +898,4 @@ Character >> tokenish [
 { #category : 'converting' }
 Character >> uppercase [
 	^ self asUppercase
-]
-
-{ #category : 'copying' }
-Character >> veryDeepCopyWith: deepCopier [
-	"Answer the receiver, because Characters are unique."
-	^self
 ]

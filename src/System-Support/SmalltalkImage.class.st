@@ -1721,11 +1721,6 @@ SmalltalkImage >> version [
 		  ifNotNil: [ :version | version version ]
 ]
 
-{ #category : 'copying' }
-SmalltalkImage >> veryDeepCopyWith: deepCopier [
-	"Return self.  I can't be copied.  Do not record me."
-]
-
 { #category : 'accessing' }
 SmalltalkImage >> vm [
 	"Answer the object to query about virtual machine."

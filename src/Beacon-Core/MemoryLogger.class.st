@@ -178,18 +178,6 @@ MemoryLogger >> nextPut: aSignal [
 	self announcer announce: aSignal
 ]
 
-{ #category : 'accessing' }
-MemoryLogger >> recordings [
-
-	self
-		deprecated: 'Use entries'
-		on: '28/03/2025'
-		in: 'pharo13'
-		transformWith: '`@receiver recordings'
-						-> '`@receiver entries'.
-	^ self entries 
-]
-
 { #category : 'initialization' }
 MemoryLogger >> reset [
 	"it simply removes all entries without

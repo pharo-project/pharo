@@ -59,12 +59,6 @@ DummyUIManager >> inform: aString [
 	"Nothing to be done here"
 ]
 
-{ #category : 'ui requests' }
-DummyUIManager >> informUserDuring: aBlock [
-
-	aBlock value: DummySystemProgressItem new
-]
-
 { #category : 'default actions' }
 DummyUIManager >> lowSpaceWatcherDefaultAction [
 

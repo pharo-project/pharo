@@ -292,17 +292,6 @@ Process >> isActive [
 ]
 
 { #category : 'testing' }
-Process >> isActiveProcess [
-	"A process is #active if it is currently executing.
-	There can be only one such process, held in a slot on the Processor."
-
-	self
-		deprecated: 'Please use #isActive instead'
-		transformWith: '`@receiver isActiveProcess' -> '`@receiver isActive'.
-	^ self isActive
-]
-
-{ #category : 'testing' }
 Process >> isReady [
 	"A #ready process is one that is waiting on one of the priority lists
 	on the Processor, and will run as soon as there are no others ahead of it

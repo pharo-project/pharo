@@ -28,8 +28,3 @@ ManifestSystemSupport class >> ruleClassNameInSelectorRuleV1FalsePositive [
 ManifestSystemSupport class >> ruleInconsistentMethodClassificationRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#SystemEnvironment #at:put: #false)) #'2021-11-02T18:04:16.398839+01:00') #(#(#RGMethodDefinition #(#SystemEnvironment #removeKey:ifAbsent: #false)) #'2021-11-02T18:06:16.506535+01:00') )
 ]
-
-{ #category : 'code-critics' }
-ManifestSystemSupport class >> ruleUtilityMethodsRuleV1FalsePositive [
-	^ #(#(#(#RGMethodDefinition #(#SystemEnvironment #veryDeepCopyWith: #false)) #'2021-11-02T18:14:26.131262+01:00') )
-]

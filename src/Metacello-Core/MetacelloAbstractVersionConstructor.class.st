@@ -590,54 +590,10 @@ MetacelloAbstractVersionConstructor >> root: aMetacelloSpec [
     root := aMetacelloSpec
 ]
 
-{ #category : 'api callbacks' }
-MetacelloAbstractVersionConstructor >> setAuthorWithBlock: aBlock [
-
-	| spec |
-	self deprecated: 'Author should be provided as a string and not a block since it brind not value.'.
-	(spec := self root getAuthor) ifNil: [
-		spec := self project valueHolderSpec.
-		self root author: spec ].
-	self with: spec during: aBlock
-]
-
-{ #category : 'api callbacks' }
-MetacelloAbstractVersionConstructor >> setBlessingWithBlock: aBlock [
-
-	| spec |
-	self deprecated: 'Blessing should be provided as a string and not a block since it brind not value.'.
-	(spec := self root getBlessing) ifNil: [
-		spec := self project valueHolderSpec.
-		self root blessing: spec ].
-	self with: spec during: aBlock
-]
-
-{ #category : 'api callbacks' }
-MetacelloAbstractVersionConstructor >> setDescriptionWithBlock: aBlock [
-
-	| spec |
-	self deprecated: 'Description should be provided as a string and not a block since it brind not value.'.
-	(spec := self root getDescription) ifNil: [
-		spec := self project valueHolderSpec.
-		self root description: spec ].
-	self with: spec during: aBlock
-]
-
 { #category : 'accessing' }
 MetacelloAbstractVersionConstructor >> setProject: aProject [
 
 	project := aProject
-]
-
-{ #category : 'api callbacks' }
-MetacelloAbstractVersionConstructor >> setTimestampWithBlock: aBlock [
-
-	| spec |
-	self deprecated: 'Timestamp should be provided as a string and not a block since it brind not value.'.
-	(spec := self root getTimestamp) ifNil: [
-		spec := self project valueHolderSpec.
-		self root timestamp: spec ].
-	self with: spec during: aBlock
 ]
 
 { #category : 'api' }
