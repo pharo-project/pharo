@@ -122,7 +122,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'System-Sources'.
 		spec package: 'System-Support'.
 
-		spec package: 'UIManager'.
 		spec package: 'Zinc-Character-Encoding-Core'.
 		
 		spec package: 'FFI-Kernel'.
@@ -196,7 +195,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Multilingual-Encodings' }.
 
 		spec group: 'CompilerGroup' with: {
-			'UIManager'.
 			'AST-Core'.
 			'Collections-Arithmetic'.
 			'Collections-Atomic'.

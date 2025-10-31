@@ -38,6 +38,9 @@ BaselineOfUI >> baseline: spec [
 	repository := self packageRepositoryURLForSpec: spec.
 	spec for: #common do: [
 		spec postLoadDoIt: #postload:package:.
+		
+		"This should go to Morphic but for now Debugger-Model still depends on it"
+		spec package: 'UIManager'.
 
 		"Loading the debugger model and infrastructure before the UI"
 		spec package: 'Debugger-Model'.
