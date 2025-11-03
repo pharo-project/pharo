@@ -36,12 +36,6 @@ BaselineOfPharoBootstrap class >> kernelPackageNames [
 	^ self packagesOfGroupNamed: #KernelGroup
 ]
 
-{ #category : 'accessing' }
-BaselineOfPharoBootstrap class >> multilingualPackageNames [
-
-	^ self packagesOfGroupNamed: #MultilingualGroup
-]
-
 { #category : 'traversing' }
 BaselineOfPharoBootstrap class >> packagesRecursiveIn: aGroupName [
 
@@ -98,8 +92,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'NumberParser'.
 
 		spec package: 'Math-Operations-Extensions'.
-
-		spec package: 'Multilingual-Encodings'.
 
 		spec package: 'Network-UUID'.
 		
@@ -192,9 +184,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'System-NumberPrinting'.
 		}.
 
-		spec group: 'MultilingualGroup' with: {
-			'Multilingual-Encodings' }.
-
 		spec group: 'CompilerGroup' with: {
 			'UIManager'.
 			'AST-Core'.
@@ -218,7 +207,6 @@ BaselineOfPharoBootstrap >> baseline: spec [
 
 		spec group: 'ToLoadByHermes' with: {
 			'AdditionalPackages'.
-			'MultilingualGroup'.
 			'CompilerGroup'.
 			'FileSystemGroup'.
 			'Hermes-Extensions'.

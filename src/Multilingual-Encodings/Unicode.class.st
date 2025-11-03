@@ -472,6 +472,7 @@ Unicode class >> initialize [
 	2) unicode data
 	3) case mappings
 	"
+
 	"If you are in a full image, you can try the following Zinc scripts to download the file automatically:
 
 	UIManager default informUserDuring: [ :bar| | result |
@@ -489,8 +490,25 @@ Unicode class >> initialize [
 		self parseCaseMappingFrom: result contents readStream ].
 	"
 
-	EncodedCharSet declareEncodedCharSet: self atIndex: 0+1.
-	EncodedCharSet declareEncodedCharSet: self atIndex: 256
+	EncodedCharSet declareEncodedCharSet: self atIndex: 0 + 1.
+	EncodedCharSet declareEncodedCharSet: self atIndex: 256.
+
+	self initializeTagConstants.
+
+	Smalltalk os environment
+		at: #BOOTSTRAP_REPOSITORY
+		ifPresent: [ :path |
+				| dataFilePath caseFolding unicodeData |
+				dataFilePath := path , '/resources/unicode/'.
+				unicodeData := dataFilePath , 'UnicodeData.txt'.
+				caseFolding := dataFilePath , 'CaseFolding-8.0.0.txt'.
+
+				self
+					parseUnicodeDataFrom: (ZnCharacterReadStream on: (File named: unicodeData) readStream encoding: 'utf8');
+					parseCaseMappingFrom: (ZnCharacterReadStream on: (File named: caseFolding) readStream encoding: 'utf8').
+
+				Character characterSet: self ]
+		ifAbsent: [ Warning signal: 'Cannot initialize Unicode outside the Pharo bootstrap' ]
 ]
 
 { #category : 'class initialization' }

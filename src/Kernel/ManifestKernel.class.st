@@ -39,8 +39,3 @@ ManifestKernel class >> ruleRBBadMessageRuleV1FalsePositive [
 ManifestKernel class >> ruleRBRefersToClassRuleV1FalsePositive [
 	^ #(#(#(#RGMethodDefinition #(#'Character class' #allByteCharacters #true)) #'2019-01-28T20:55:28.683846+01:00') )
 ]
-
-{ #category : 'code-critics' }
-ManifestKernel class >> ruleReDeadMethodV1FalsePositive [
-	^ #(#(#(#RGMethodDefinition #(#'Character class' #characterSet: #true)) #'2019-01-28T20:56:23.286894+01:00') )
-]

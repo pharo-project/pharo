@@ -50,7 +50,7 @@ SystemDependenciesTest >> externalDependendiesOf: packagesCollection [
 { #category : 'packages' }
 SystemDependenciesTest >> kernelLayerPackages [
 
-	^ (BaselineOfPharoBootstrap kernelPackageNames , BaselineOfPharoBootstrap multilingualPackageNames , BaselineOfPharoBootstrap kernelAdditionalPackagesNames)
+	^ (BaselineOfPharoBootstrap kernelPackageNames , BaselineOfPharoBootstrap kernelAdditionalPackagesNames)
 		  asSet
 ]
 
@@ -111,7 +111,6 @@ SystemDependenciesTest >> metacelloPackageNames [
 	^ BaselineOfPharoBootstrap kernelPackageNames,
 	  BaselineOfPharoBootstrap compilerPackageNames,
 	  BaselineOfPharoBootstrap fileSystemPackageNames,
-	  BaselineOfPharoBootstrap multilingualPackageNames,
 	  BaselineOfPharoBootstrap kernelAdditionalPackagesNames,
 	  BaselineOfMonticello corePackageNames,
 	  BaselineOfMonticello remoteRepositoriesPackageNames,
@@ -224,7 +223,7 @@ SystemDependenciesTest >> testExternalFileSystemDependencies [
 
 	| dependencies |
 	dependencies := self externalDependendiesOf:
-		                BaselineOfPharoBootstrap kernelPackageNames , BaselineOfPharoBootstrap multilingualPackageNames
+		                BaselineOfPharoBootstrap kernelPackageNames
 		                , BaselineOfPharoBootstrap kernelAdditionalPackagesNames , BaselineOfPharoBootstrap compilerPackageNames
 		                , BaselineOfPharoBootstrap fileSystemPackageNames.
 
@@ -244,7 +243,7 @@ If you will break or weaken this test, a puppy will die!!!
 	| dependencies |
 
 	dependencies := self
-		externalDependendiesOf: BaselineOfPharoBootstrap kernelPackageNames , BaselineOfPharoBootstrap multilingualPackageNames, BaselineOfPharoBootstrap kernelAdditionalPackagesNames.
+		externalDependendiesOf: BaselineOfPharoBootstrap kernelPackageNames, BaselineOfPharoBootstrap kernelAdditionalPackagesNames.
 
 	self assertCollection: dependencies hasSameElements: self knownKernelDependencies
 ]
