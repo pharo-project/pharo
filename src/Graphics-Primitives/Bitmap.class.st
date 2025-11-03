@@ -529,6 +529,13 @@ Bitmap >> storeBits: startBit to: stopBit on: aStream [
 	lineWidth > 0 ifTrue: [ aStream cr ]
 ]
 
+{ #category : 'converting' }
+Bitmap >> tfPointerAddress [
+
+	self pinInMemory.
+	^ PointerUtils oopForObject: self
+]
+
 { #category : 'filing' }
 Bitmap >> writeOn: aStream [
 	"Store the array of bits onto the argument, aStream. A leading byte of 16r80 identifies this as compressed by compressToByteArray (qv)."

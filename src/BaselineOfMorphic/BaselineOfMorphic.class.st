@@ -39,9 +39,7 @@ BaselineOfMorphic >> baseline: spec [
 		spec preLoadDoIt: #preload:package:.
 		spec postLoadDoIt: #postload:package:.
 
-		spec
-			baseline: 'MorphicCore' with: [ spec repository: repository ];
-			baseline: 'MenuRegistration' with: [ spec repository: repository ].
+		spec baseline: 'MorphicCore' with: [ spec repository: repository ].
 			
 		spec package: 'System-Identification'.
 		spec package: 'System-Settings-Core' with: [ spec requires: #( 'MorphicCore' 'System-Identification' ) ].

@@ -36,64 +36,63 @@ BaselineOfBasicTools >> baseline: spec [
 	| repository |
 	repository := self packageRepositoryURLForSpec: spec.
 	spec for: #common do: [
-		spec postLoadDoIt: #postload:package:.
+			spec postLoadDoIt: #postload:package:.
 
-		spec
-				baseline: 'SUnit' with: [
+			spec
+				baseline: 'SUnit' with: [ spec loads: 'Core' from: repository ];
+				baseline: 'UnifiedFFI' with: [ spec repository: repository ];
+				baseline: 'ThreadedFFI' with: [ spec repository: repository ];
+				baseline: 'UIInfrastructure' with: [ spec repository: repository ];
+				baseline: 'UI' with: [ spec repository: repository ];
+				baseline: 'Reflectivity' with: [ spec repository: repository ];
+				baseline: 'DebugPoints' with: [ spec repository: repository ];
+				baseline: 'Athens' with: [
 						spec
-							loads: 'Core';
-							repository: repository ];
-			baseline: 'UnifiedFFI' with: [ spec repository: repository ];
-			baseline: 'UI' with: [ spec repository: repository ];
-			baseline: 'Reflectivity' with: [ spec repository: repository ];
-			baseline: 'DebugPoints' with: [ spec repository: repository ];
-			baseline: 'Athens' with: [
-				spec
-					loads: 'Cairo-core';
-					repository: repository ].
-		spec package: 'Tool-ExternalBrowser'.
-		spec baseline: 'EnlumineurFormatter' with: [
-			spec
-				loads: 'Core';
-				repository: repository ].
-		
-		spec package: 'ClassDefinitionPrinters'.
-		spec package: 'Tool-Profilers'.
-		spec package: 'NECompletion'.
-		spec package: 'NECompletion-Morphic'.
-		spec package: 'NECompletion-Preferences'.
-		spec package: 'Metacello-FileTree'.
-		spec package: 'Metacello-Cypress'.
-		spec package: 'CodeExport'.
-		spec package: 'System-Sources-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."
+							loads: 'Cairo-core';
+							repository: repository ].
+			spec package: 'Tool-ExternalBrowser'.
+			spec baseline: 'EnlumineurFormatter' with: [
+					spec
+						loads: 'Core';
+						repository: repository ].
 
-		spec package: 'ClassDefinitionPrinters-Tests'.
-		spec package: 'Kernel-CodeModel-Tests'.
-		spec package: 'Monticello-Tests'.
-		spec package: 'MonticelloMocks'.
-		spec package: 'Network-Mail'.
-		spec package: 'Network-Mail-Tests'.
-		
-		spec package: 'StartupPreferences'.
+			spec package: 'ClassDefinitionPrinters'.
+			spec package: 'Tool-Profilers'.
+			spec package: 'NECompletion'.
+			spec package: 'NECompletion-Morphic'.
+			spec package: 'NECompletion-Preferences'.
+			spec package: 'Metacello-FileTree'.
+			spec package: 'Metacello-Cypress'.
+			spec package: 'CodeExport'.
+			spec package: 'System-Sources-Tests'. "<= Not sure this one should be here but it is where the classes were loaded before been extracted from Tests package."
+
+			spec package: 'ClassDefinitionPrinters-Tests'.
+			spec package: 'Kernel-CodeModel-Tests'.
+			spec package: 'Monticello-Tests'.
+			spec package: 'MonticelloMocks'.
+			spec package: 'Network-Mail'.
+			spec package: 'Network-Mail-Tests'.
+
+			spec package: 'StartupPreferences'.
 
 
 
-		spec package: 'OpalCompiler-ToolFeatures'.
-		spec package: 'OpalCompiler-ToolFeatures-Tests'.
-		spec baseline: 'Refactoring' with: [
-			spec
-				repository: repository;
-				loads: #( 'Core' ) ].
+			spec package: 'OpalCompiler-ToolFeatures'.
+			spec package: 'OpalCompiler-ToolFeatures-Tests'.
+			spec baseline: 'Refactoring' with: [
+					spec
+						repository: repository;
+						loads: #( 'Core' ) ].
 
-		spec package: 'Monticello-BackwardCompatibility'.
-		spec package: 'MonticelloFileServices'.
+			spec package: 'Monticello-BackwardCompatibility'.
+			spec package: 'MonticelloFileServices'.
 
-		self specRefactoring: spec.
+			self specRefactoring: spec.
 
-		spec package: 'Tools-CodeNavigation'.
-		spec package: 'Tool-Diff'.
-		spec package: 'Tool-ImageCleaner'.
-		spec package: 'Tools' ]
+			spec package: 'Tools-CodeNavigation'.
+			spec package: 'Tool-Diff'.
+			spec package: 'Tool-ImageCleaner'.
+			spec package: 'Tools' ]
 ]
 
 { #category : 'actions' }

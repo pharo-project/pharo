@@ -14,13 +14,12 @@ BaselineOfKeymapping >> baseline: spec [
 			package: 'Keymapping-Core';
 			package: 'Keymapping-KeyCombinations';
 			package: 'Keymapping-Pragmas';
-			package: 'Keymapping-Settings';
 			package: 'Keymapping-Tests'.
 		
 		spec 
 			group: 'default' with: #('core' 'ui' 'tests'); 
 			group: 'core' with: #('Keymapping-Core' 'Keymapping-KeyCombinations' );
-			group: 'morphic' with: #('core' 'Keymapping-Pragmas' 'Keymapping-Settings');
+			group: 'morphic' with: #('core' 'Keymapping-Pragmas');
 			group: 'ui' with: #('core' 'morphic');
 			group: 'tests' with: #(
 				'core' 
