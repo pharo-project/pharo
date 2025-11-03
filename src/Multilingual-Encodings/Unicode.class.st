@@ -500,6 +500,7 @@ Unicode class >> initialize [
 		ifPresent: [ :path |
 				| dataFilePath caseFolding unicodeData |
 				dataFilePath := path , '/resources/unicode/'.
+				('Initializing Unicode with path ', dataFilePath) traceCr.
 				unicodeData := dataFilePath , 'UnicodeData.txt'.
 				caseFolding := dataFilePath , 'CaseFolding-8.0.0.txt'.
 
