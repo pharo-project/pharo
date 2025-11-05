@@ -931,7 +931,7 @@ PBAbstractImageBuilder >> newSpecialObjectsArray [
 	newSpecialObjectsArray
 		at: 4
 		put: espellBackend processorAssociation.
-	newSpecialObjectsArray at: 5 put: espellBackend nilObject.
+	newSpecialObjectsArray at: 5 put: espellBackend nilObject. "5 was for Bitmap but the VM does not need that anymore"
 	newSpecialObjectsArray at: 6 put: espellBackend smallIntegerClass.
 	newSpecialObjectsArray at: 7 put: espellBackend byteStringClass.
 	newSpecialObjectsArray at: 8 put: espellBackend arrayClass.
