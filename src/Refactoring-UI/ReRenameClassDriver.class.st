@@ -54,7 +54,7 @@ ReRenameClassDriver >> requestNewNameBasedOn: aName [
 
 	newName := self defaultRequestDialog
 		           title: 'Please provide a new class name';
-		           message: 'The new name should be valid and not the one of an existing class.';
+		           label: 'The new name should be valid and not the one of an existing class.';
 		           validateAnswer: [ :string :presenter | self validateName: string onPresenter: presenter ];
 		           text: aName;
 		           openModal.
