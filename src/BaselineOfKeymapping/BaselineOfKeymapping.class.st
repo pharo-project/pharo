@@ -29,8 +29,8 @@ BaselineOfKeymapping >> baseline: spec [
 { #category : 'actions' }
 BaselineOfKeymapping >> postload: loader package: packageSpec [
 
-	"Once everything is initialized we can reset the keymap"
-	KMPragmaKeymapBuilder uniqueInstance reset
+	"Once everything is initialized we can reset the keymap if the class is in the system"
+	self class environment at: #KMPragmaKeymapBuilder ifPresent: [ :builder | builder uniqueInstance reset ]
 ]
 
 { #category : 'accessing' }
