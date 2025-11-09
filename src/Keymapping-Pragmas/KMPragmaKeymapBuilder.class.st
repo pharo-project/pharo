@@ -16,12 +16,6 @@ Class {
 	#package : 'Keymapping-Pragmas'
 }
 
-{ #category : 'class initialization' }
-KMPragmaKeymapBuilder class >> initialize [
-
-	self uniqueInstance reset
-]
-
 { #category : 'private' }
 KMPragmaKeymapBuilder class >> methodAnnouncementReceived: anAnnouncement [
 	| method |
