@@ -96,11 +96,6 @@ WinPlatform >> isWindows [
 ]
 
 { #category : 'accessing' }
-WinPlatform >> keyForValue: aKeyValue [
-	^KeyboardKey valueForWindowsPlatform: aKeyValue
-]
-
-{ #category : 'accessing' }
 WinPlatform >> lastError [
 
 	^ self ffiCall: #(ulong GetLastError())

@@ -43,9 +43,9 @@ Class {
 		'UnixVirtualKeyTable',
 		'WindowsVirtualKeyTable'
 	],
-	#category : 'System-Platforms-Utilities',
-	#package : 'System-Platforms',
-	#tag : 'Utilities'
+	#category : 'Keymapping-Core-Base',
+	#package : 'Keymapping-Core',
+	#tag : 'Base'
 }
 
 { #category : 'accessing - keys - letters' }

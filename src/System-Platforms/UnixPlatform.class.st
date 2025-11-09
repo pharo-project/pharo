@@ -77,11 +77,6 @@ UnixPlatform >> isUnix [
 ]
 
 { #category : 'accessing' }
-UnixPlatform >> keyForValue: aKeyValue [
-	^KeyboardKey valueForUnixPlatform: aKeyValue
-]
-
-{ #category : 'accessing' }
 UnixPlatform >> lineEnding [
 
 	^ String lf

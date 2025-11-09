@@ -39,11 +39,6 @@ MacOSPlatform >> isMacOS [
 ]
 
 { #category : 'accessing' }
-MacOSPlatform >> keyForValue: aKeyValue [
-	^KeyboardKey valueForMacOSXPlatform: aKeyValue
-]
-
-{ #category : 'accessing' }
 MacOSPlatform >> lineEnding [
 
 	^ String lf
