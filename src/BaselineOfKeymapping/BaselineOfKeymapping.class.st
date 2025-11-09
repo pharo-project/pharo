@@ -10,7 +10,7 @@ BaselineOfKeymapping >> baseline: spec [
 
 	<baseline>
 	spec for: #common do: [
-			spec preLoadDoIt: #preload:package:.
+			spec postLoadDoIt: #postload:package:.
 
 			spec
 				package: 'Keymapping-Core';
