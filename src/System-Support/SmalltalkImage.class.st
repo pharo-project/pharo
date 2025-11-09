@@ -781,7 +781,7 @@ SmalltalkImage >> informSpaceLeftAfterGarbageCollection [
 
 	"SmalltalkImage current informSpaceLeftAfterGarbageCollection"
 
-	self inform: self spaceLeftAfterGarbageCollection
+	InformativeNotification signal: self spaceLeftAfterGarbageCollection
 ]
 
 { #category : 'memory space' }
@@ -998,7 +998,7 @@ SmalltalkImage >> lowSpaceWatcher [
 		ifTrue: [self garbageCollect <= self lowSpaceThreshold
 				ifTrue: ["free space must be above threshold before
 					starting low space watcher"
-					^ self inform: 'Not enough memory to launch the lowSpaceWatcher.']].
+					^ InformativeNotification signal:  'Not enough memory to launch the lowSpaceWatcher.']].
 	self specialObjectsArray at: 23 put: nil.
 	"process causing low space will be saved here"
 	LowSpaceSemaphore := Semaphore new.
@@ -1475,11 +1475,8 @@ SmalltalkImage >> saveAsNewVersion [
 
 	| newImageFile strippedName |
 	newImageFile := self imageFile nextVersion.
-	(newImageFile withExtension: self changesSuffix)
-		ifExists: [ :newChangesFile |
-			^ self
-				inform:
-					'There is already .changes file of the desired name,
+	(newImageFile withExtension: self changesSuffix) ifExists: [ :newChangesFile |
+			^ InformativeNotification signal: 'There is already .changes file of the desired name,
 ' , newChangesFile fullName , '
 curiously already present, even though there is
 no corresponding .' , self imageSuffix , ' file.   Please remedy

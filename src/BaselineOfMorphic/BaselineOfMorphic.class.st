@@ -38,11 +38,10 @@ BaselineOfMorphic >> baseline: spec [
 	spec for: #common do: [
 		spec preLoadDoIt: #preload:package:.
 		spec postLoadDoIt: #postload:package:.
-
-		spec baseline: 'MorphicCore' with: [ spec repository: repository ].
 			
 		spec package: 'System-Identification'.
-		spec package: 'System-Settings-Core' with: [ spec requires: #( 'MorphicCore' 'System-Identification' ) ].
+		spec package: 'System-Settings-Core' with: [ spec requires: #( 'System-Identification' ) ].
+		spec package: 'StartupPreferences'. "This should move out of Morphic but currently there is a cyclic dependency with System-Settings-Core..."
 
 		spec package: 'System-Localization'.
 
@@ -110,7 +109,6 @@ BaselineOfMorphic >> baseline: spec [
 { #category : 'actions' }
 BaselineOfMorphic >> cleanUpAfterMorphicInitialization [
 
-	MCDataStream initialize.
 	FreeTypeCache clearCurrent.
 	World cleanseOtherworldlySteppers.
 	MCFileBasedRepository flushAllCaches
@@ -160,7 +158,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	PolymorphSystemSettings desktopColor: Color white.
 
 	#( #BalloonMorph #IconicButtonMorph #KMLog #ScrollBarMorph
-	   #SystemSettingsPersistence #TabMorph #TaskbarMorph ) do: [ :each |
+	   #SystemSettingsPersistence #TabMorph #TaskbarMorph PharoOptionsHandler) do: [ :each |
 		(Smalltalk globals at: each) initialize ].
 
 	MCMethodDefinition initializersEnabled: initializersEnabled.

@@ -329,14 +329,16 @@ RGElementDefinition >> realClass [
 { #category : 'generic parent api' }
 RGElementDefinition >> realParent [
 	"Retrieves the Class/Trait/.. object in the System corresponding to the class of the this element."
+	| realParent |
 
-	parent := self parent
-		          ifNotNil: [ self parent realClass ]
+	realParent := parent
+		          ifNotNil: [ parent realClass ]
 		          ifNil: [ self rootEnvironment classNamed: self parentName ].
-	parent ifNil: [ ^ nil ].
+	realParent ifNil: [ ^ nil ].
 
-	self isMeta ifTrue: [ parent := parent classSide ].
-	^ parent
+	self isMeta ifTrue: [ realParent := realParent classSide ].
+
+	^ realParent
 ]
 
 { #category : 'class element specific api' }

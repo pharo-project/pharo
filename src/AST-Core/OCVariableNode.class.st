@@ -242,7 +242,9 @@ OCVariableNode >> precedence [
 
 { #category : 'testing' }
 OCVariableNode >> references: aVariableName [
-	^self name = aVariableName
+	"Return wether the variable named aVariable is accessed in read or write with the receiver."
+	
+	^ self name = aVariableName
 ]
 
 { #category : 'replacing' }

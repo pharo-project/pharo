@@ -3,8 +3,8 @@ I am a trait defining the basic methods for visiting a chunk object.
 "
 Trait {
 	#name : 'TChunkVisitor',
-	#category : 'CodeImport-Traits',
-	#package : 'CodeImport-Traits'
+	#category : 'Kernel-Traits',
+	#package : 'Kernel-Traits'
 }
 
 { #category : 'visitor' }

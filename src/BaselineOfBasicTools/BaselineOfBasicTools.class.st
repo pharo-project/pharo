@@ -39,6 +39,7 @@ BaselineOfBasicTools >> baseline: spec [
 			spec postLoadDoIt: #postload:package:.
 
 			spec
+				baseline: 'Traits' with: [ spec loads: 'core-traits' from: repository ];
 				baseline: 'SUnit' with: [ spec loads: 'Core' from: repository ];
 				baseline: 'UnifiedFFI' with: [ spec repository: repository ];
 				baseline: 'ThreadedFFI' with: [ spec repository: repository ];
@@ -72,8 +73,6 @@ BaselineOfBasicTools >> baseline: spec [
 			spec package: 'MonticelloMocks'.
 			spec package: 'Network-Mail'.
 			spec package: 'Network-Mail-Tests'.
-
-			spec package: 'StartupPreferences'.
 
 
 

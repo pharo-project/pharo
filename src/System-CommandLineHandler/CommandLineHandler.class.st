@@ -97,13 +97,10 @@ CommandLineHandler >> exitSuccess [
 { #category : 'activation' }
 CommandLineHandler >> handleExit: exit [
 
-	Smalltalk isInteractive ifFalse: [ ^ exit pass ].
-	
-	"We are in interactive mode"
-	exit isSuccess
-		ifFalse: [ ^ Error signal: exit messageText ].
-		
-	self inform: 'Command line successfully finished'.
+	Smalltalk isInteractive ifFalse: [ ^ exit pass ]. "We are in interactive mode"
+	exit isSuccess ifFalse: [ ^ Error signal: exit messageText ].
+
+	InformativeNotification signal: 'Command line successfully finished'
 ]
 
 { #category : 'testing' }
@@ -130,7 +127,7 @@ CommandLineHandler >> isInteractiveAndNoArguments [
 CommandLineHandler >> parseGeneralOptions [
 
 	| filteredArguments |
-	filteredArguments := PharoOptionsHandler handle: self commandLine arguments.
+	filteredArguments := BasicPharoOptionsHandler currentOptionHandler handle: self commandLine arguments.
 	self commandLine arguments: filteredArguments
 ]
 

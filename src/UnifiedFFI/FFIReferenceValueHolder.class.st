@@ -21,6 +21,14 @@ FFIReferenceValueHolder class >> newType: aType [
 ]
 
 { #category : 'instance creation' }
+FFIReferenceValueHolder class >> newType: aType handle: aHandle size: aSize [
+
+	^ (self newType: aType handle: aHandle)
+		typeSize: aSize;
+		yourself
+]
+
+{ #category : 'instance creation' }
 FFIReferenceValueHolder class >> newType: aType size: aNumber [
 
 	^ (self newType: aType)

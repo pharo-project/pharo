@@ -11,8 +11,9 @@ Class {
 
 { #category : 'initialization' }
 FFIExternalObjectType >> initialize [
+
 	super initialize.
-	pointerArity := self class naturalPointerArity
+	pointerArity := self naturalPointerArity
 ]
 
 { #category : 'accessing' }

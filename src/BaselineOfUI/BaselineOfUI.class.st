@@ -43,6 +43,7 @@ BaselineOfUI >> baseline: spec [
 		spec package: 'UIManager'.
 
 		"Loading the debugger model and infrastructure before the UI"
+		spec package: 'Debugging-Core'.
 		spec package: 'Debugger-Model'.
 		spec package: 'Debugger-Oups'.
 
@@ -57,12 +58,12 @@ BaselineOfUI >> baseline: spec [
 							repository: repository ].
 		
 		"Load morphic before Spec"
+		spec baseline: 'MorphicCore' with: [ spec repository: repository ].
 		spec baseline: 'Morphic' with: [ spec repository: repository ].
 		spec baseline: 'Commander2' with: [ spec repository: repository ].
 		"Spec 2 (base), using external configuration"
 		self specBase: spec.
 
-		spec package: 'StartupPreferences'.
 		spec package: 'Morphic-Widgets-Tree'.
 
 		spec baseline: 'Keymapping' with: [
@@ -71,7 +72,7 @@ BaselineOfUI >> baseline: spec [
 				loads: 'ui' ].
 		spec package: 'WebBrowser-Core'.
 		
-		spec group: 'Debugger-Base-UI' with: #( 'Debugger-Model' 'Debugger-Oups') ]
+		spec group: 'Debugger-Base-UI' with: #('Debugging-Core' 'Debugger-Model' 'Debugger-Oups') ]
 ]
 
 { #category : 'actions' }

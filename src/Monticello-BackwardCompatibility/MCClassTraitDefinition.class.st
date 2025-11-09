@@ -144,9 +144,9 @@ MCClassTraitDefinition >> packageName [
 ]
 
 { #category : 'accessing' }
-MCClassTraitDefinition >> packageName: anObject [
+MCClassTraitDefinition >> packageName: anString [
 
-	packageName := anObject
+	packageName := anString ifNotNil: [ :package | package asSymbol ]
 ]
 
 { #category : 'printing' }
@@ -192,5 +192,5 @@ MCClassTraitDefinition >> tagName: aString [
 
 	tagName := aString = Package rootTagName
 		           ifTrue: [ nil ]
-		           ifFalse: [ aString asSymbol ]
+		           ifFalse: [ aString ifNotNil: [ aString asSymbol ] ]
 ]
