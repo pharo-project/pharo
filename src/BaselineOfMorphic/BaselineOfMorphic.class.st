@@ -38,7 +38,16 @@ BaselineOfMorphic >> baseline: spec [
 	spec for: #common do: [
 		spec preLoadDoIt: #preload:package:.
 		spec postLoadDoIt: #postload:package:.
-			
+		
+		spec
+			baseline: 'MorphicCore' with: [ spec repository: repository ];
+			baseline: 'MenuRegistration' with: [ spec repository: repository ].
+
+		spec baseline: 'Fuel' with: [
+			spec
+				repository: repository;
+					loads: #( 'Core' ) ].
+
 		spec package: 'System-Identification'.
 		spec package: 'System-Settings-Core' with: [ spec requires: #( 'System-Identification' ) ].
 		spec package: 'StartupPreferences'. "This should move out of Morphic but currently there is a cyclic dependency with System-Settings-Core..."

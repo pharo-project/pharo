@@ -368,12 +368,6 @@ DropListMorph >> initialize [
 	self listMorph fillStyle: (self theme dropListNormalListFillStyleFor: self)
 ]
 
-{ #category : 'initialization' }
-DropListMorph >> initializeShortcuts: aKMDispatcher [
-	super initializeShortcuts: aKMDispatcher.
-	aKMDispatcher attachCategory: #MorphFocusNavigation
-]
-
 { #category : 'event handling' }
 DropListMorph >> keyDown: event [
 

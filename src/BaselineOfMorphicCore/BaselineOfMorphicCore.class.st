@@ -25,6 +25,11 @@ BaselineOfMorphicCore >> baseline: spec [
 	repository := self packageRepositoryURLForSpec: spec.
 
 	spec for: #common do: [
+	
+		spec baseline: 'Traits' with: [ spec repository: repository ].
+		spec baseline: 'SUnit' with: [ spec repository: repository ].
+		spec baseline: 'Display' with: [ spec repository: repository ].
+		spec baseline: 'UnifiedFFI' with: [ spec repository: repository ].
 
 		spec package: 'System-Object Events'.
 		spec package: 'System-Caching'.

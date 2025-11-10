@@ -63,7 +63,7 @@ MenuRegistrationExample class >> pharoItemsOn: aBuilder [
 				{'Save'. {Smalltalk. #saveSession}. 'save the current version of the image on disk'}.
 				{'Save as...'. {self. #saveAs}. 'save the current version of the image on disk under a new name.'}.
 				{'Save and quit'. {self. #saveAndQuit}. 'save the current image on disk, and quit Pharo.'}.
-	 			{'Quit'. {self. #quitSessionWithoutSaving}. 'quit Pharo.'}
+	 			{'Quit'. {self. #quitSession}. 'quit Pharo.'}
 			} do: [:triplet |
 					(aBuilder item: triplet first asSymbol)
 						target: triplet second first;
@@ -77,9 +77,13 @@ MenuRegistrationExample class >> pragmaKeyword [
 ]
 
 { #category : 'menu actions' }
-MenuRegistrationExample class >> quitSessionWithoutSaving [
+MenuRegistrationExample class >> quitSession [
 
-	Smalltalk snapshot: false andQuit: true
+	Smalltalk
+		snapshot: (MorphicUIManager new
+				 confirm: 'Save changes before quitting?' translated
+				 orCancel: [ ^ self ])
+		andQuit: true
 ]
 
 { #category : 'menu actions' }
