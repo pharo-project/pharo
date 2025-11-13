@@ -43,7 +43,7 @@ RBAndCondition >> left: aCondition right: aCondition2 [
 
 { #category : 'accessing' }
 RBAndCondition >> nonViolators [ 
-	(left nonViolators isEmpty or: [ right nonViolators isEmpty ])
+	(left nonViolators isEmpty and: [ right nonViolators isEmpty ])
 		ifTrue: [ ^ #() ].
 	^ left nonViolators , right nonViolators 
 ]
