@@ -31,7 +31,7 @@ ReGenerateMethodDriver >> configureRefactoring [
 ReGenerateMethodDriver >> defaultSelectDialog [
 
 	| dialog |
-	dialog := self class defaultSelectDialog.
+	dialog := super defaultSelectDialog.
 	dialog
 	  	title: self dialogTitle;
 	  	label: 'Please select the variable(s)';

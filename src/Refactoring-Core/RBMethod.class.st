@@ -108,19 +108,6 @@ RBMethod >> literal: anObject containsReferenceTo: aSymbol [
 ]
 
 { #category : 'accessing' }
-RBMethod >> method [
-	self deprecated: 'Use compiledMethod' transformWith: '`@rec method' -> '`@rec compiledMethod'.
-	^compiledMethod
-]
-
-{ #category : 'accessing' }
-RBMethod >> method: aCompiledMethod [
-	self deprecated: 'Use compiledMethod' transformWith: '`@rec method: `@arg' -> '`@rec compiledMethod: `@arg'.
-	
-	self compiledMethod: aCompiledMethod
-]
-
-{ #category : 'accessing' }
 RBMethod >> methodClass [
 
 	^ class

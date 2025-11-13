@@ -44,11 +44,6 @@ MCScriptDefinition >> = aDefinition [
 		and: [script = aDefinition script]
 ]
 
-{ #category : 'visiting' }
-MCScriptDefinition >> accept: aVisitor [
-	aVisitor visitScriptDefinition: self
-]
-
 { #category : 'accessing' }
 MCScriptDefinition >> description [
 	^ Array with: packageName with: self scriptSelector
@@ -123,7 +118,7 @@ MCScriptDefinition >> summary [
 MCScriptDefinition >> systemPackage [
 	"Return the corresponding system package. Return nil if no package in the system has this name."
 
-	^ self class environment organization packageNamed: self packageName ifAbsent: [ nil ]
+	^ self class packageOrganizer packageNamed: self packageName ifAbsent: [ nil ]
 ]
 
 { #category : 'installing' }

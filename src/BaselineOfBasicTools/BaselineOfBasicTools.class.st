@@ -38,24 +38,19 @@ BaselineOfBasicTools >> baseline: spec [
 	spec for: #common do: [
 		spec postLoadDoIt: #postload:package:.
 
-		"Load first SUnit core"
-		spec baseline: 'SUnitCore' with: [
-			spec
-				loads: 'Core';
-				className: 'BaselineOfSUnit';
-				repository: repository ].
 		spec
+				baseline: 'SUnit' with: [
+						spec
+							loads: 'Core';
+							repository: repository ];
+			baseline: 'UnifiedFFI' with: [ spec repository: repository ];
 			baseline: 'UI' with: [ spec repository: repository ];
 			baseline: 'Reflectivity' with: [ spec repository: repository ];
 			baseline: 'DebugPoints' with: [ spec repository: repository ];
 			baseline: 'Athens' with: [
 				spec
 					loads: 'Cairo-core';
-					repository: repository ];
-			baseline: 'SUnit' with: [
-			spec
-				loads: #( 'UI' 'JenkinsSupport' );
-				repository: repository ].
+					repository: repository ].
 		spec package: 'Tool-ExternalBrowser'.
 		spec baseline: 'EnlumineurFormatter' with: [
 			spec

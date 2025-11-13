@@ -436,8 +436,7 @@ SystemEnvironment >> renameClass: aClass from: oldName [
 	oldref key: aClass name.
 	self add: oldref. "Old association preserves old refs"
 	self flushClassNameCache.
-	self class codeChangeAnnouncer classRenamed: aClass from: oldName to: aClass name.
-	aClass subclassesDo: [ :subclass | self class codeChangeAnnouncer classParentOf: subclass renamedFrom: oldName to: aClass name ]
+	self class codeChangeAnnouncer classRenamed: aClass from: oldName to: aClass name
 ]
 
 { #category : 'renaming' }
@@ -477,9 +476,4 @@ SystemEnvironment >> undeclaredRegistry [
 	"For now we are referencing a global variable of the default environment of Pharo. But in the future each environments should have their undeclared registry, else we have memory leaks of the environments."
 
 	^ Undeclared
-]
-
-{ #category : 'copying' }
-SystemEnvironment >> veryDeepCopyWith: deepCopier [
-	"Return self. I can't be copied. Do not record me."
 ]

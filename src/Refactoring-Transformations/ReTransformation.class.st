@@ -51,31 +51,9 @@ ReTransformation class >> initializeRefactoringOptions [
 		put: [ :ref :env |  self error: #openBrowser ]
 ]
 
-{ #category : 'converting' }
-ReTransformation >> asRefactoring [
-
-	self deprecated: 'This method is a no-op and can be removed' transformWith: '`@rec asRefactoring' -> '`@rec'.
-	^ self yourself
-]
-
 { #category : 'displaying' }
 ReTransformation >> changesToDisplayIn: aBrowser [
 
 	^ self changes changes
 		flatCollect: [ :e | e changesToDisplayIn: aBrowser ]
-]
-
-{ #category : 'transforming' }
-ReTransformation >> transform [
-
-	self deprecated: 'Use generateChanges instead' transformWith: '`@rec transform' -> '`@rec generateChanges'.
-	
-	"Performs this transformation in a model,
-	 then it adds the refactoring to the manager"
-
-	self checkPreconditions.
-	self privateTransform
-
-	"below executes the refactoring without prompt"
-	"RBRefactoringManager instance addRefactoring: self"
 ]

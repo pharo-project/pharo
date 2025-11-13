@@ -837,15 +837,6 @@ OCProgramNode >> isPseudoVariable [
 ]
 
 { #category : 'testing' }
-OCProgramNode >> isReservedVariable [
-	self
-		deprecated: 'Please use #isPseudoVariable instead'
-		transformWith: '`@receiver isReservedVariable' -> '`@receiver isPseudoVariable'.
-
-	^ self isPseudoVariable
-]
-
-{ #category : 'testing' }
 OCProgramNode >> isReturn [
 	^false
 ]

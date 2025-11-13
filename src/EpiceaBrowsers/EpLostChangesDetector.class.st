@@ -59,8 +59,9 @@ EpLostChangesDetector class >> startUp: isImageStarting [
 	detector := self new.
 
 	SessionManager default addDeferredStartupAction: [
-			(detector hasLostChanges and: [ self confirm: 'It seems your last Pharo session exited without saving some code. Do you want to recover it?' ]) ifTrue: [
-				detector openBrowserIfLostChanges ] ]
+			(detector hasLostChanges and: [ StPharoApplication current 
+					confirm: 'It seems your last Pharo session exited without saving some code. Do you want to recover it?' ]) 
+				ifTrue: [ detector openBrowserIfLostChanges ] ]
 ]
 
 { #category : 'testing' }

@@ -11,10 +11,10 @@ Class {
 
 { #category : 'meta-data - dependency analyser' }
 ManifestUIManager class >> ignoredDependencies [
-	^ #(#CodeImport #'FileSystem-Core' #Files #'Graphics-Display Objects' #'Transcript-NonInteractive' #'System-Settings-Core')
+	^ #(#CodeImport #'FileSystem-Core' #Files #'Graphics-Display Objects' #'Transcript-NonInteractive')
 ]
 
 { #category : 'meta-data - dependency analyser' }
 ManifestUIManager class >> manuallyResolvedDependencies [
-	^ #(#'Collections-Streams' #'System-Support' #'System-Settings-Core')
+	^ #(#'Collections-Streams' #'System-Support')
 ]

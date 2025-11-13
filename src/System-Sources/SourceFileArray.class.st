@@ -211,19 +211,6 @@ SourceFileArray >> initialize [
 ]
 
 { #category : 'public - string reading' }
-SourceFileArray >> metadataAt: sourcePointer [
-	"Retrieves the source code for the pointer received as argument"
-
-	^ self
-		  readStreamAt: sourcePointer
-		  ifPresent: [ :stream |
-				  (ChunkReadStream on: stream)
-					  next;
-					  next ]
-		  ifAbsent: [ nil ]
-]
-
-{ #category : 'public - string reading' }
 SourceFileArray >> protocolAt: sourcePointer [
 	"Answer the protocol for a given method, retrieved from the sources or changes file. Answer unfound protocol if no protocol is available"
 
@@ -486,20 +473,6 @@ SourceFileArray >> writeComment: aComment ofClass: aClass metadata: metadata tim
 					priorSourcePointer: priorSourcePointer ]
 		onSuccess: successBlock
 		onFail: failBlock
-]
-
-{ #category : 'public - string writing' }
-SourceFileArray >> writeSource: source ofMethod: method metadata: metadata priorSourcePointer: priorSourcePointer onSuccess: successBlock onFail: failBlock [
-
-	^ self
-		  writeSource: source
-		  ofMethod: method
-		  protocol: nil
-		  metadata: metadata
-		  timestamp: DateAndTime now asString
-		  priorSourcePointer: priorSourcePointer
-		  onSuccess: successBlock
-		  onFail: failBlock
 ]
 
 { #category : 'public - string writing' }

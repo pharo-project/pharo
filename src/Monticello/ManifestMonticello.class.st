@@ -11,11 +11,11 @@ Class {
 
 { #category : 'meta-data - dependency analyser' }
 ManifestMonticello class >> ignoredDependencies [
-	^ #(#'Graphics-Primitives' #'FFI-Kernel' #'System-Settings-Core')
+	^ #(#'Graphics-Primitives' #'FFI-Kernel')
 ]
 
 { #category : 'meta-data - dependency analyser' }
 ManifestMonticello class >> manuallyResolvedDependencies [
 
-	^ #( #'Graphics-Primitives' #Jobs #'System-Settings-Core' )
+	^ #( #'Graphics-Primitives' #Jobs )
 ]

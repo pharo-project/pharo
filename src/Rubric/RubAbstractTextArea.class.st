@@ -2086,7 +2086,9 @@ RubAbstractTextArea >> themeChanged [
 	(self decoratorNamed: #shoutStyler) ifNotNil: [ :styler |
 		styler refreshStyling
 	].
-	self color: self theme backgroundColor.
+
+	self class backgroundColor: self theme backgroundColor.
+	self color: self defaultColor.
 	super themeChanged
 ]
 

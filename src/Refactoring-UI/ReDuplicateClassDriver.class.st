@@ -32,6 +32,25 @@ ReDuplicateClassDriver class >> className: aClassName [
 		yourself
 ]
 
+{ #category : 'private' }
+ReDuplicateClassDriver >> acceptClassRequest: dialog [
+
+	self
+		packageName: dialog presenter packageName;
+		tagName: dialog presenter tagName;
+		newClassName: dialog presenter newClassName;
+		superclassName: dialog presenter selectedSuperclass.
+	
+	refactoring
+		packageName: dialog presenter packageName;
+		className: dialog presenter newClassName;
+		superclassName: dialog presenter selectedSuperclassName;					
+		sourceClass: className;
+		instanceMethods: dialog presenter selectedInstanceMethods;
+		classMethods: dialog presenter selectedClassMethods;
+		packageTagName: dialog presenter tagName.
+]
+
 { #category : 'introspection' }
 ReDuplicateClassDriver >> className [
 	"Answer a <String> representing the class to be copied"
@@ -78,36 +97,30 @@ ReDuplicateClassDriver >> newClassName: anObject [
 	newClassName := anObject
 ]
 
-{ #category : 'execution' }
+{ #category : 'private' }
+ReDuplicateClassDriver >> newRequestClassDialog [
+
+	^ (StClassAndMethodsSelectionPresenter newApplication: self application model: self)
+		withInstanceMethods: rbClass localMethods
+		withClassMethods: rbMetaclass localMethods;
+		baseClassName: self className;
+		basePackageName: (self model environment at: self className) packageName;
+		basePackageTagName: (self model environment at: self className) packageTag name;
+		onCancel: [ : dialog | dialog close ];
+		onAccept: [ :dialog |
+			self acceptClassRequest: dialog.
+			dialog close ];
+		yourself
+]
+
+{ #category : 'private' }
 ReDuplicateClassDriver >> requestNewClass [
 
-	^ requestDialog ifNil: [
-		requestDialog := (StClassAndMethodsSelectionPresenter on: self)
-			withInstanceMethods: rbClass localMethods
-			withClassMethods: rbMetaclass localMethods;
-			baseClassName: self className;
-			basePackageName: (self model environment at: self className) packageName;
-			basePackageTagName: (self model environment at: self className) packageTag name;
-			onCancel: [ : dialog | dialog close ];
-			onAccept: [ :dialog |
-				self
-					packageName: dialog presenter packageName;
-					tagName: dialog presenter tagName;
-					newClassName: dialog presenter newClassName;
-					superclassName: dialog presenter selectedSuperclass.
-				refactoring
-					packageName: dialog presenter packageName;
-					className: dialog presenter newClassName;
-					superclassName: dialog presenter selectedSuperclassName;					
-					sourceClass: className;
-					instanceMethods: dialog presenter selectedInstanceMethods;
-					classMethods: dialog presenter selectedClassMethods;
-					packageTagName: dialog presenter tagName.
-
-				dialog close ];
-			selectAll;
-			openModal;
-			yourself ]
+	requestDialog ifNil: [ requestDialog := self newRequestClassDialog ].
+	requestDialog selectAll.
+	^ requestDialog
+		openModal;
+		yourself
 ]
 
 { #category : 'execution' }

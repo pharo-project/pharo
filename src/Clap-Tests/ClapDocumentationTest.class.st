@@ -44,3 +44,30 @@ ClapDocumentationTest >> testHelloShortUsage [
 	self assert: (lines third includesSubstring: '[--language <language-value>]').
 	self assert: (lines third endsWith: '[<who>]').
 ]
+
+{ #category : 'tests' }
+ClapDocumentationTest >> testLongDescription [
+
+	| commandSpec doc lines |
+	commandSpec := ClapCommandLineExamples hello.
+	commandSpec longDescription: 'I''m a very long description
+	
+	that is spread over 
+	several 
+	lines!'.
+
+	doc := ClapDocumenter stringFrom: [ :documenter | documenter explain: commandSpec ].
+	lines := doc lines.
+
+	self assert: (doc endsWith: OSPlatform current lineEnding).
+	self assert: lines first equals: 'Provides greetings'.
+	self assert: lines second isEmpty.
+	self assert: lines third equals: 'I''m a very long description'.
+	self assert: lines fourth trimBoth isEmpty.
+	self assert: lines sixth trimBoth equals: 'several'.
+	self assert: lines seventh trimmed equals: 'lines!'.
+	self assert: lines eighth isEmpty.
+	self assert: (lines ninth beginsWith: 'Usage: hello').
+	self assert: (lines ninth includesSubstring: '[--language <language-value>]').
+	self assert: (lines ninth endsWith: '[<who>]')
+]

@@ -374,28 +374,6 @@ Number >> positive [
 	^ self >= 0
 ]
 
-{ #category : 'printing' }
-Number >> printOn: aStream [
-	self printOn: aStream base: 10
-]
-
-{ #category : 'printing' }
-Number >> printString [
-
-	^ self printStringBase: 10
-]
-
-{ #category : 'printing' }
-Number >> printStringBase: base [
-	"Return a String representation of this number in base b."
-	"(10 printStringBase: 10) >>> '10'"
-	"(-10 printStringBase: 10) >>> '-10'"
-	"(10 printStringBase: 2) >>> '1010'"
-	"(10 printStringBase: 16) >>> 'A'"
-
-	^ String streamContents: [:strm | self printOn: strm base: base]
-]
-
 { #category : 'arithmetic' }
 Number >> quo: aNumber [
 	"Integer quotient defined by division with truncation toward zero.

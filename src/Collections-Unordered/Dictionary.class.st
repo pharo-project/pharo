@@ -852,16 +852,6 @@ Dictionary >> removeKey: key ifAbsent: aBlock [
 	^ assoc value
 ]
 
-{ #category : 'undeclared' }
-Dictionary >> removeUnreferencedKeys [
-	"This is private code for the Undeclared handling, not a general API."
-
-	self
-		deprecated: 'Use "Smalltalk image cleanOutUndeclared" instead'
-		transformWith: '`@rcv removeUnreferencedKeys' -> 'Smalltalk image cleanOutUndeclared'.
-	Smalltalk image cleanOutUndeclared
-]
-
 { #category : 'private' }
 Dictionary >> scanFor: anObject [
 	"Scan the key array for the first slot containing either a nil (indicating an empty slot) or an element that matches anObject. Answer the index of that slot or zero if no slot is found. This method will be overridden in various subclasses that have different interpretations for matching elements."

@@ -28,14 +28,18 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Metacello-CommandLine-Tests';
 			package: 'Debugger-Model-Tests';
 			package: 'Debugger-Oups-Tests';
-			package: 'EmbeddedFreeType-Tests';
 			baseline: 'Epicea' with: [
 				spec
 					repository: repository;
 					loads: #Tests ];
 			package: 'FileSystem-Memory-Tests';
-			package: 'Fonts-Infrastructure-Tests';
+			baseline: 'Fonts' with: [
+				spec
+					repository: repository;
+					loads: #Tests ];
 			package: 'Graphics-Tests';
+			package: 'Text-Tests';
+			package: 'Morphic-Testing-Support';
 			package: 'Morphic-Tests';
 			package: 'Morphic-Widgets-FastTable-Tests';
 			package: 'NECompletion-Tests';
@@ -45,6 +49,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			package: 'Rubric-Tests';
 			package: 'ScriptingExtensions-Tests';
 			package: 'STON-Tests';
+			package: 'System-Object Events-Tests';
 			package: 'System-Caching-Tests';
 			package: 'System-Utilities-Tests';
 			package: 'System-Hashing-Tests';
@@ -65,7 +70,7 @@ BaselineOfGeneralTests >> baseline: spec [
 			"requires Zinc-Resource-Meta-Tests"package:
 			'System-Identification-Tests';
 			package: 'System-Dependencies-Tests';
-			package: 'System-BasicCommandLineHandler-Tests';
+			package: 'System-CommandLineHandler-Tests';
 			package: 'Transcript-NonInteractive-Tests';
 			package: 'PharoDocComment-Tests' "standalone" ]
 ]

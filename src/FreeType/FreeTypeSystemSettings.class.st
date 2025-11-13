@@ -3,7 +3,7 @@ Settings for the FreeType system
 "
 Class {
 	#name : 'FreeTypeSystemSettings',
-	#superclass : 'Model',
+	#superclass : 'Object',
 	#classVars : [
 		'LoadFT2Library'
 	],

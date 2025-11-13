@@ -26,23 +26,7 @@ Class {
 
 { #category : 'accessing' }
 ClapContext class >> defaultRoot [
-	^ (ClapRoot id: #clap)
-		description: 'Entry point for commands implemented with Clap';
-		addHelp;
-		add: ClapCommandSpec forHelp;
-
-		addFlag: #save description: 'Save the image after the command terminates';
-		addFlag: #noSave description: 'Do not save the image even if the command is stateful';
-		addFlag: #rename 
-			description: 'Rename the image as <NAME> before running the command' 
-			positionalSpec: [ :spec | spec identifier: #NAME];
-		addFlag: #keepAlive description: 'Keep the image running after the command terminates';
-
-		meaning: [ :args |
-			args at: #helpFlag ifPresent: [ :help |
-				help value; exitSuccess ].
-			args validateAll ];
-		yourself
+	^ ClapPharoApplication commandSpecification
 ]
 
 { #category : 'private' }
@@ -304,8 +288,9 @@ ClapContext >> isValid: aValidation [
 ClapContext >> lastSubcommand [
 
 	^ self
-		ifMatch: [ :aMatch | aMatch subcommands last ]
-		ifMismatch: [ ClapUnmatchCommand signalClapContext: self ]
+		  ifMatch: [ :aMatch | 
+						aMatch subcommands ifEmpty: [ aMatch ] ifNotEmpty: [ :subcommands | subcommands last ] ]
+		  ifMismatch: [ ClapUnmatchCommand signalClapContext: self ]
 ]
 
 { #category : 'accessing' }

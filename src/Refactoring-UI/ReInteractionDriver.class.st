@@ -13,6 +13,7 @@ Class {
 	#name : 'ReInteractionDriver',
 	#superclass : 'Object',
 	#instVars : [
+		'application',
 		'model',
 		'scopes',
 		'refactoring',
@@ -34,13 +35,13 @@ Class {
 { #category : 'configuration' }
 ReInteractionDriver class >> defaultRequestDialog [ 
 
-	^ DefaultRequestDialog ifNil: [ SpRequestDialog new ]
+	^ DefaultRequestDialog ifNil: [ SpRequestDialog ]
 ]
 
 { #category : 'configuration' }
 ReInteractionDriver class >> defaultSelectDialog [ 
 
-	^ DefaultSelectDialog ifNil: [ SpSelectDialog new ]
+	^ DefaultSelectDialog ifNil: [ SpSelectDialog ]
 ]
 
 { #category : 'testing' }
@@ -54,6 +55,14 @@ ReInteractionDriver class >> menuItemString [
 	"Make sure that the user knows that this is a transformation by adding (T) in front of the menu item name."
 
 	^ self refactoringClass menuItemString
+]
+
+{ #category : 'instance creation' }
+ReInteractionDriver class >> newApplication: anApplication [
+
+	^ self new 
+		application: anApplication;
+		yourself
 ]
 
 { #category : 'displaying' }
@@ -80,12 +89,16 @@ ReInteractionDriver class >> useSelectDialog: aSelectDialog during: aBlock [
 	^ aBlock ensure: [ DefaultSelectDialog := old ]
 ]
 
-{ #category : 'execution' }
+{ #category : 'accessing' }
 ReInteractionDriver >> application [
 	"For now use the singleton. Normally the application should be passed from Calypso and the command"
 	
-	^ StPharoApplication current
+	^ application ifNil: [ StPharoApplication current ]
+]
 
+{ #category : 'accessing' }
+ReInteractionDriver >> application: anApplication [
+	application := anApplication
 ]
 
 { #category : 'execution' }
@@ -108,6 +121,12 @@ ReInteractionDriver >> changes [
 
 ]
 
+{ #category : 'ui - requests' }
+ReInteractionDriver >> confirm: aString [
+
+	^ self application confirm: aString
+]
+
 { #category : 'private' }
 ReInteractionDriver >> defaultInformDialog [
 
@@ -118,15 +137,14 @@ ReInteractionDriver >> defaultInformDialog [
 ReInteractionDriver >> defaultRequestDialog [
 	"We do not use a subclassResponsibility because all the drivers do not have to."
 
-	^ self class defaultRequestDialog
+	^ self class defaultRequestDialog newApplication: self application
 ]
 
 { #category : 'configuration' }
 ReInteractionDriver >> defaultSelectDialog [
 	"We do not use a subclassResponsibility because all the drivers do not have to."
 	
-	^ self
-	
+	^ self class defaultSelectDialog newApplication: self application
 ]
 
 { #category : 'ui - dialogs' }
@@ -153,13 +171,12 @@ ReInteractionDriver >> furtherActionFor: aReport [
 	aReport browse
 ]
 
-{ #category : 'ui requests' }
+{ #category : 'ui - requests' }
 ReInteractionDriver >> inform: aString [
+	"Display a message for the user to read and then dismiss."
 
-	self informDialog
-				label: aString;
-				title: 'Watch out!';
-				openModal 
+	aString isEmptyOrNil ifTrue: [ ^ self ].
+	self application inform: aString
 ]
 
 { #category : 'private' }
@@ -205,10 +222,10 @@ ReInteractionDriver >> model: aRBBrowserEnvironment [
 { #category : 'execution' }
 ReInteractionDriver >> openPreviewWithChanges: changes [
 
-	^ (self previewPresenterClass withChanges: changes scopes: scopes)
-		  application: self application;
-		  refactoring: self refactoring;
-		  openModal
+	^ (self previewPresenterClass newApplication: self application)
+		changesFrom: changes scopes: scopes;
+		refactoring: self refactoring;
+		openModal
 ]
 
 { #category : 'configuration' }

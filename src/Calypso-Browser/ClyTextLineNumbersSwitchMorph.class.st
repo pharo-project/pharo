@@ -55,9 +55,9 @@ ClyTextLineNumbersSwitchMorph >> attachToTextMorph [
 	label := self theme
 		         newCheckboxIn: self
 		         for: self
-		         getSelected: #isRuleActive
+		         getSelected: #isRuleActive  
 		         setSelected: #toggle
-		         getEnabled: nil
+		         getEnabled: #isEnabled
 		         label: 'Line numbers'
 		         help:
 		         'Let you decide if the code pane should show the line numbers at the left of the code pane or not. Toggle the check box to add line numbers/hide them.'.
@@ -66,7 +66,16 @@ ClyTextLineNumbersSwitchMorph >> attachToTextMorph [
 		changeTableLayout;
 		vResizing: #shrinkWrap;
 		hResizing: #shrinkWrap.
+	label update: #isRuleActive.  
 	self addMorph: label
+]
+
+{ #category : 'testing' }
+ClyTextLineNumbersSwitchMorph >> isEnabled [
+
+	self class showLineNumbers ifTrue: [ textMorph withLineNumbers ].
+
+	^ self class showLineNumbers
 ]
 
 { #category : 'testing' }

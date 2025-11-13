@@ -14,12 +14,6 @@ You can replace the default UI Manager with my instance in cases, when you need 
 Class {
 	#name : 'NonInteractiveUIManager',
 	#superclass : 'UIManager',
-	#instVars : [
-		'doNotQuitOnRestart'
-	],
-	#classVars : [
-		'SnapshotErrorImage'
-	],
 	#category : 'UIManager-Base',
 	#package : 'UIManager',
 	#tag : 'Base'
@@ -29,31 +23,6 @@ Class {
 NonInteractiveUIManager class >> isValidForCurrentSystemConfiguration [
 
 	^ Smalltalk isInteractive not
-]
-
-{ #category : 'accessing' }
-NonInteractiveUIManager class >> snapshotErrorImage [
-	^ SnapshotErrorImage == true
-]
-
-{ #category : 'accessing' }
-NonInteractiveUIManager class >> snapshotErrorImage: aBoolean [
-	SnapshotErrorImage := aBoolean
-]
-
-{ #category : 'settings' }
-NonInteractiveUIManager class >> uiSettingsOn: aBuilder [
-	<systemsettings>
-	(aBuilder group: #nonInteractive)
-		label: 'Headless mode';
-		parent: #pharoSystem;
-		description: 'Settings related to mode without UI';
-		with: [
-			(aBuilder setting: #snapshotErrorImage)
-				label: 'Snapshot before quitting' ;
-				default: false;
-				target: NonInteractiveUIManager;
-				description: 'On unhandled exception, save a new version of the image before quitting']
 ]
 
 { #category : 'ui TEasilyThemed' }
@@ -184,65 +153,6 @@ NonInteractiveUIManager >> edit: aText label: labelString accept: aBlockOrNil [
 		s cr; nextPutAll: aText])
 ]
 
-{ #category : 'utilities' }
-NonInteractiveUIManager >> exitFailure [
-	[
-		self class snapshotErrorImage ifTrue: [
-			doNotQuitOnRestart := true.
-			"make a new image version snapshot before leaving"
-			Smalltalk saveAsNewVersion  ].
-	] ensure: [
-		doNotQuitOnRestart ifFalse: [ Smalltalk exitFailure ].
-		doNotQuitOnRestart := false.
-	]
-]
-
-{ #category : 'error handling' }
-NonInteractiveUIManager >> handleError: anError log: shouldLog [
-
-	self
-		quitFrom: anError signalerContext
-		withMessage: anError description
-]
-
-{ #category : 'error handling' }
-NonInteractiveUIManager >> handleNotification: aNotification [
-
-	Smalltalk logStdOutDuring: [:logger |
-		logger nextPutAll: aNotification class name;
-				 nextPutAll: ': ';
-				 nextPutAll: aNotification messageText;
-				 cr ].
-
-	aNotification resume
-]
-
-{ #category : 'error handling' }
-NonInteractiveUIManager >> handleWarning: aWarning [
-	| logBlock |
-	"Pass all warnings, but log them"
-
-	logBlock := [:logger |
-		logger
-			cr;
-			nextPutAll: '*** Warning: ';
-			nextPutAll: aWarning description;
-			cr ].
-
-	Smalltalk logDuring: logBlock.
-	self logYellowDuring: logBlock.
-
-	aWarning resume
-]
-
-{ #category : 'handle debug requests' }
-NonInteractiveUIManager >> handleWarningDebugRequest: aDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
-
-	anOupsDebuggerSystem
-		warningRequest: aDebugRequest
-		withUIManager: self
-]
-
 { #category : 'ui requests' }
 NonInteractiveUIManager >> inform: aString [
 
@@ -257,25 +167,6 @@ NonInteractiveUIManager >> inform: aString [
 	Smalltalk logDuring: logBlock
 ]
 
-{ #category : 'initialization' }
-NonInteractiveUIManager >> initialize [
-	doNotQuitOnRestart := false
-]
-
-{ #category : 'utilities' }
-NonInteractiveUIManager >> logColored: anAnsiiColorCode during: aBlock [
-
-	Smalltalk logStdErrorDuring: [:stderr |
-		stderr
-			nextPut: Character escape;
-			nextPut: $[; nextPutAll: anAnsiiColorCode; nextPut: $m.
-
-		aBlock value: stderr.
-
-		stderr nextPut: Character escape; nextPutAll: '[0m'
-	]
-]
-
 { #category : 'private' }
 NonInteractiveUIManager >> logTitle: aString andDescription: aStringOrText to: aStream [
 
@@ -284,12 +175,6 @@ NonInteractiveUIManager >> logTitle: aString andDescription: aStringOrText to: a
 		nextPutAll: ': ';
 		nextPutAll: aStringOrText asString;
 		cr
-]
-
-{ #category : 'utilities' }
-NonInteractiveUIManager >> logYellowDuring: aBlock [
-
-	^ self logColored: '33' during: aBlock
 ]
 
 { #category : 'ui requests' }
@@ -324,13 +209,6 @@ NonInteractiveUIManager >> nonInteractiveRequest: aStringOrText title: aTitle [
 { #category : 'errors' }
 NonInteractiveUIManager >> nonInteractiveWarning: aWarnMessage [
 	^ self
-]
-
-{ #category : 'events' }
-NonInteractiveUIManager >> onPrimitiveError: aString [
-
-	" log error and quit "
-	^ self quitFrom: thisContext sender withMessage: aString
 ]
 
 { #category : 'ui TEasilyThemed' }

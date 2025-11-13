@@ -11,9 +11,7 @@ Class {
 { #category : 'accessing' }
 ClapCodeEvaluator class >> commandDescription [ 
 
-	^ 'A command that evaluates a Pharo expression, outputs the evaluated result and quits the image. 
-
-This command either evaluates the arguments passed to the image:
+	^ 'This command either evaluates the arguments passed to the image:
 	pharo Pharo.image eval  1 + 2
 	
 or it can read directly from stdin:
@@ -30,7 +28,8 @@ ClapCodeEvaluator class >> commandSpecification [
 	spec := (ClapCommandSpec id: #evaluate)
 		aliases: #('eval');
 		commandClass: self;
-		description: self commandDescription;
+		description: 'A command that evaluates a Pharo expression, outputs the evaluated result and quits the image.';
+		longDescription: self commandDescription;
 		addHelp;
 		addPositional: #EXPR spec: [ :positional |
 			positional
@@ -110,7 +109,7 @@ ClapCodeEvaluator >> execute [
 	| result |
 	
 	self validateParameters.
-	super execute.
+	self prepareImageAndExit.
 	
 	result := self evaluate.
 	self saveSessionIfAsked.

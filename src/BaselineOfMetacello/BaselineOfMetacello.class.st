@@ -32,7 +32,7 @@ BaselineOfMetacello >> baseline: spec [
 			package: 'Metacello-Gitlab-Tests'.
 
 		spec 
-			group: 'Core' with: #('ScriptingExtensions' 'System-FileRegistry' 'FileSystem-Memory' 'Regex-Core' 'StartupPreferences' 'PragmaCollector' 'System-FileRegistry' 'Metacello-Base' 'Metacello-Core' 'MonticelloFileTree-Core' 'MonticelloFileTree-FileSystem-Utilities' 'STON-Core' 'Metacello-GitBasedRepository' 'Metacello-GitHub' 'Metacello-Gitlab' 'Metacello-Bitbucket' 'Metacello-CommandLine');
+			group: 'Core' with: #('ScriptingExtensions' 'System-FileRegistry' 'FileSystem-Memory' 'StartupPreferences' 'PragmaCollector' 'System-FileRegistry' 'Metacello-Base' 'Metacello-Core' 'MonticelloFileTree-Core' 'MonticelloFileTree-FileSystem-Utilities' 'STON-Core' 'Metacello-GitBasedRepository' 'Metacello-GitHub' 'Metacello-Gitlab' 'Metacello-Bitbucket' 'Metacello-CommandLine');
 			group: 'Tests' with: #( 'Metacello-TestsCore' 'Metacello-TestsMCCore' 'Metacello-TestsReference' 'Metacello-Gitlab-Tests');
 			group: 'default' with: #('Core') ]
 ]

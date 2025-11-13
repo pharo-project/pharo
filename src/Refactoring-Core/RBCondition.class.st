@@ -57,6 +57,25 @@ RBCondition class >> checkInstanceVariableName: aName in: aClass [
 ]
 
 { #category : 'instance creation' }
+RBCondition class >> checkNotMultipleTemporaryDefinitionsOf: aString in: aClass [
+
+	| condition |
+	condition := self new.
+	condition
+		block: [
+				| methods |
+				methods := self multipleMethodsDefiningTemporary: aString in: aClass ignore: [ :class :selector | false ].
+				methods size > 1
+					ifTrue: [
+							condition errorMacro:
+								'More than one method defines temporary variable ' , aString , ': ' , (methods collect: [ :m | m selector ]) asString.
+							false ]
+					ifFalse: [ true ] ]
+		errorString: aClass printString , ' <1?:does not >define<1?s:> temporary variable ' , aString.
+	^ condition
+]
+
+{ #category : 'instance creation' }
 RBCondition class >> definesClassVariable: aString in: aClass [
 	^self new
 		block: [aClass definesClassVariable: aString]
@@ -353,6 +372,25 @@ RBCondition class >> methodDefiningTemporary: aString in: aClass ignore: aBlock 
 				parseTree := class parseTreeForSelector: each.
 				parseTree ifNotNil: [ searcher executeTree: parseTree ] ] ] ].
 	^ nil
+]
+
+{ #category : 'utilities' }
+RBCondition class >> multipleMethodsDefiningTemporary: aString in: aClass ignore: aBlock [
+
+	| searcher methods method |
+	searcher := OCParseTreeSearcher new.
+	methods := Set new.
+	method := nil.
+
+	searcher matches: aString do: [ :aNode :answer | methods add: method ].
+	aClass withAllSubclasses do: [ :class |
+			class selectors do: [ :each |
+					(aBlock value: class value: each) ifFalse: [
+							| parseTree  |
+							method := class methodFor: each.
+							parseTree := class parseTreeForSelector: each.
+							parseTree ifNotNil: [ searcher executeTree: parseTree ] ] ] ].
+	^ methods
 ]
 
 { #category : 'instance creation' }

@@ -24,6 +24,12 @@ Class {
 	#package : 'BaselineOfUI'
 }
 
+{ #category : 'loading' }
+BaselineOfUI class >> debuggerBaseUIPackageNames [
+
+	^ self packagesOfGroupNamed: #'Debugger-Base-UI'
+]
+
 { #category : 'baseline' }
 BaselineOfUI >> baseline: spec [
 
@@ -37,6 +43,25 @@ BaselineOfUI >> baseline: spec [
 		spec package: 'Debugger-Model'.
 		spec package: 'Debugger-Oups'.
 
+		spec baseline: 'Display' with: [ spec repository: repository ].
+		spec baseline: 'Fonts' with: [
+				spec
+					repository: repository;
+					loads: #Core ].
+		spec baseline: 'FreeType' with: [
+			spec
+				repository: repository;
+				loads: 'ui' ].
+		spec baseline: 'Fuel' with: [
+			spec
+				repository: repository;
+				loads: #( 'Core' ) ].
+		spec
+				baseline: 'SUnit' with: [
+						spec
+							loads: 'UI';
+							repository: repository ].
+		
 		"Load morphic before Spec"
 		spec baseline: 'Morphic' with: [ spec repository: repository ].
 		spec baseline: 'Commander2' with: [ spec repository: repository ].
@@ -50,7 +75,9 @@ BaselineOfUI >> baseline: spec [
 			spec
 				repository: repository;
 				loads: 'ui' ].
-		spec package: 'WebBrowser-Core' ]
+		spec package: 'WebBrowser-Core'.
+		
+		spec group: 'Debugger-Base-UI' with: #( 'Debugger-Model' 'Debugger-Oups') ]
 ]
 
 { #category : 'actions' }
@@ -60,7 +87,6 @@ BaselineOfUI >> postload: loader package: packageSpec [
 	Initialized = true ifTrue: [ ^ self ].
 
 	Smalltalk ui theme settings preferGradientFill: true.
-	PharoCommonTools initialize.
 
 	Initialized := true
 ]

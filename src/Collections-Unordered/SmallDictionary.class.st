@@ -374,17 +374,6 @@ SmallDictionary >> bindingOf: varName [
 	^self associationAt: varName ifAbsent:[nil]
 ]
 
-{ #category : 'enumerating' }
-SmallDictionary >> bindingsDo: aBlock [
-
-	self
-		deprecated:
-		'use classVariables do: instead'
-		transformWith: '`@receiver bindingsDo: `@arg1' -> '`@receiver associationsDo: `@arg1'.
-
-	self associationsDo: aBlock
-]
-
 { #category : 'accessing' }
 SmallDictionary >> capacity [
 	^keys size

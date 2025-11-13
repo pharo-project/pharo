@@ -45,7 +45,7 @@ SystemDependenciesTest >> externalDependendiesOf: packagesCollection [
 SystemDependenciesTest >> knownBasicToolsDependencies [
 	"ideally this list should be empty"
 
-	^ #( 'Athens-Cairo' 'Athens-Core' #'Refactoring-Critics' #'Commander-Core' #Reflectivity #'Reflectivity-Tools' #Shout 'HeuristicCompletion-Model'
+	^ #( 'Athens-Cairo' 'Athens-Core' #'Commander-Core' #Reflectivity #'Reflectivity-Tools' #Shout 'HeuristicCompletion-Model'
 	     #VariablesLibrary #'Spec2-CommonWidgets' #'NewTools-Scopes' #'Traits-Tests' 'NewTools-Scopes' 'NewTools-Transcript' #'NewTools-FileBrowser' #EnlumineurFormatter )
 ]
 
@@ -67,45 +67,22 @@ SystemDependenciesTest >> knownKernelDependencies [
 SystemDependenciesTest >> knownMorphicCoreDependencies [
 	"ideally this list should be empty"
 
-	^ #(#'Fonts-Infrastructure' #'FreeType' #'Keymapping-KeyCombinations' #'Morphic-Base' #'Refactoring-Critics' #'Refactoring-Environment' #'Rubric' 
-	  'Morphic-Widgets-ColorPicker')
+	^ #(#'Keymapping-KeyCombinations' #'Morphic-Base' 'Morphic-Widgets-ColorPicker')
 ]
 
 { #category : 'known dependencies' }
 SystemDependenciesTest >> knownMorphicDependencies [
 	"ideally this list should be empty"
 
-	^ #( #'Refactoring-Critics' #'Refactoring-Environment' #'NewTools-FileBrowser' #'Tools-CodeNavigation' 'Debugger-Oups' #EnlumineurFormatter ) "Rubric has a dependency on It"
+	^ #(#'NewTools-FileBrowser' #'Tools-CodeNavigation' #EnlumineurFormatter ) "Rubric has a dependency on It"
 
-]
-
-{ #category : 'known dependencies' }
-SystemDependenciesTest >> knownSUnitDependencies [
-	"ideally this list should be empty"
-
-	^ #( #'Refactoring-Critics' #'Refactoring-Environment' )
-]
-
-{ #category : 'known dependencies' }
-SystemDependenciesTest >> knownSpec2Dependencies [
-
-	^ #(
-		'WebBrowser-Core' "Spec's Link adapter"
-		)
-]
-
-{ #category : 'known dependencies' }
-SystemDependenciesTest >> knownUFFIDependencies [
-	"ideally this list should be empty"
-
-	^ #( #'Refactoring-Critics' #'Refactoring-Environment' )
 ]
 
 { #category : 'known dependencies' }
 SystemDependenciesTest >> knownUIDependencies [
 	"ideally this list should be empty"
 
-	^ #( 'Athens-Cairo' 'Athens-Core' #'Refactoring-Critics' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'HeuristicCompletion-Model'
+	^ #( 'Athens-Cairo' 'Athens-Core' #'Refactoring-Environment' 'Reflectivity-Tools' #Shout #'Tool-Diff' #'HeuristicCompletion-Model'
 	     'NECompletion-Morphic' #VariablesLibrary #'Tools-CodeNavigation' #'Spec2-CommonWidgets' #'NewTools-Scopes' #'NewTools-FileBrowser' #EnlumineurFormatter )
 ]
 
@@ -158,6 +135,7 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		BaselineOfSUnit withAllPackageNames, "ALL"
 		BaselineOfDisplay withAllPackageNames,
 		BaselineOfUnifiedFFI withAllPackageNames,
+		BaselineOfFonts allPackageNames,
 		{ BaselineOfFreeType name }, (BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
 		{ BaselineOfKeymapping name }, (BaselineOfKeymapping deepPackagesOfGroupNamed: #ui),
 		BaselineOfMorphicCore withAllPackageNames,
@@ -283,10 +261,13 @@ SystemDependenciesTest >> testExternalMorphicCoreDependencies [
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
+		BaselineOfUI debuggerBaseUIPackageNames,
 		BaselineOfTraits corePackages,
-		BaselineOfSUnit defaultPackageNames,
+		BaselineOfSUnit corePackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
+		BaselineOfFonts allPackageNames,
+		(BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfThreadedFFI corePackageNames ).
 
@@ -301,10 +282,12 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 	dependencies := self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
+		BaselineOfUI debuggerBaseUIPackageNames,
 		BaselineOfTraits corePackages,
-		BaselineOfSUnit defaultPackageNames,
+		BaselineOfSUnit corePackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
+		BaselineOfFonts allPackageNames,
 		(BaselineOfKeymapping deepPackagesOfGroupNamed: #morphic),
 		(BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
 		BaselineOfMorphicCore allPackageNames,
@@ -326,9 +309,9 @@ SystemDependenciesTest >> testExternalSUnitDependencies [
 		BaselineOfTraits corePackages,
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
-		BaselineOfSUnit defaultPackageNames).
+		BaselineOfSUnit corePackageNames).
 
-	self assertCollection: dependencies hasSameElements: self knownSUnitDependencies
+	self assertEmpty: dependencies
 ]
 
 { #category : 'tests' }
@@ -357,8 +340,10 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		"Language"
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
+		BaselineOfUI allPackageNames,
 		BaselineOfTraits corePackages,
 		BaselineOfUnifiedFFI allPackageNames,
+		BaselineOfFonts allPackageNames,
 
 		"Morphic - for Morphic backend"
 		BaselineOfDisplay allPackageNames,
@@ -376,11 +361,10 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 		(BaselineOfSpec2 deepPackagesOfGroupNamed: #default),
 		BaselineOfThreadedFFI corePackageNames,
 
-		"Tests"
-		BaselineOfSUnit defaultPackageNames))
+		BaselineOfSUnit corePackageNames))
 			copyWithoutAll: self knownMorphicDependencies, self knownBasicToolsDependencies, self knownUIDependencies.
 
-	self assertCollection: dependencies hasSameElements: self knownSpec2Dependencies
+	self assertEmpty: dependencies
 ]
 
 { #category : 'tests' }
@@ -392,11 +376,11 @@ SystemDependenciesTest >> testExternalUFFIDependencies [
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
 		BaselineOfTraits corePackages,
-		BaselineOfSUnit defaultPackageNames,
+		BaselineOfSUnit corePackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
 		BaselineOfThreadedFFI corePackageNames).
 
-	self assertCollection: dependencies hasSameElements: self knownUFFIDependencies
+	self assertEmpty: dependencies 
 ]
 
 { #category : 'tests' }
@@ -407,10 +391,12 @@ SystemDependenciesTest >> testExternalUIDependencies [
 	dependencies := (self externalDependendiesOf: (
 		self metacelloPackageNames,
 		self tonelCorePackageNames,
+		BaselineOfUI allPackageNames,
 		BaselineOfTraits corePackages,
-		BaselineOfSUnit defaultPackageNames,
+		BaselineOfSUnit corePackageNames,
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
+		BaselineOfFonts allPackageNames,
 		(BaselineOfKeymapping deepPackagesOfGroupNamed: #ui),
 		(BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
 		BaselineOfMorphicCore allPackageNames,

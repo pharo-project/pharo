@@ -212,13 +212,6 @@ ReCreateAccessorsForVariableTransformation >> findSetterMethod [
 ]
 
 { #category : 'client refactoring API' }
-ReCreateAccessorsForVariableTransformation >> getterMethod [
-
-	self deprecated: 'Use getterMethodName' transformWith: '`@arg getterMethod' -> '`@arg getterMethodName'.
-	^ self getterMethodName
-]
-
-{ #category : 'client refactoring API' }
 ReCreateAccessorsForVariableTransformation >> getterMethodName [
 
 	^getterMethodName
@@ -277,13 +270,6 @@ ReCreateAccessorsForVariableTransformation >> selector [
 	^ selector ifNil: [
 		selector := self safeMethodNameFor: self definingClass
 				basedOn: variableName asString. ]
-]
-
-{ #category : 'client refactoring API' }
-ReCreateAccessorsForVariableTransformation >> setterMethod [
-	self deprecated: 'Use getterMethodName' transformWith: '`@arg setterMethod' -> '`@arg setterMethodName'.
-
-	^ self setterMethodName
 ]
 
 { #category : 'client refactoring API' }

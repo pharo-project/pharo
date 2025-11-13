@@ -85,6 +85,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Collections-Unordered'.
 		spec package: 'Collections-Weak'.
 		spec package: 'Debugging-Core'.
+		spec package: 'Deprecation'.
 		spec package: 'Files'.
 		spec package: 'FileSystem-Path'.
 		spec package: 'Hermes'.
@@ -108,12 +109,10 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'ReflectionMirrors-Primitives'.
 		spec package: 'Shift-ClassBuilder'.
 		spec package: 'System-Announcements'.
-		spec package: 'System-BasicCommandLineHandler'.
+		spec package: 'System-CommandLineHandler'.
 		spec package: 'Clap-Core'.
-		spec package: 'Clap-CommandLine'.
 		spec package: 'Clap-Commands-Pharo' .
 		spec package: 'System-CommandLine'.
-		spec package: 'System-CommandLineHandler'.
 		spec package: 'System-Finalization'.
 		spec package: 'System-Hashing'.
 		spec package: 'System-Platforms'.
@@ -144,7 +143,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'SUnit-Core'.
 		spec package: 'SUnit-Tests'.
 		spec package: 'Kernel-Tests'.
-		spec package: 'JenkinsTools-Core'.		
+		spec package: 'SUnit-Basic-CLI'.		
 
 		spec group: 'KernelGroup' with: {
 			'FFI-Kernel'.
@@ -153,14 +152,12 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Collections-DoubleLinkedList'.
 			'Collections-Native'.
 			'Collections-Sequenceable'.
-			'Collections-Stack'.
 			'Collections-Streams'.
 			'Collections-Strings'.
 			'Collections-Support'.
 			'Collections-Unordered'.
 			'Collections-Weak'.
 			'Files'.
-			'FileSystem-Path'.
 			'Hermes'.
 			'Kernel'.
 			'Kernel-CodeModel'.
@@ -169,9 +166,8 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'PharoBootstrap-Initialization'.
 			'Shift-ClassBuilder'.
 			'System-Announcements'.
-			'System-BasicCommandLineHandler'.
-			'System-CommandLine'.
 			'System-CommandLineHandler'.
+			'System-CommandLine'.
 			'System-Finalization'.
 			'System-Platforms'.
 			'System-SessionManager'.
@@ -180,17 +176,15 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'System-Sources'.
 			
 			'System-Support'.
-			'NumberParser'.
 
-			'UIManager'.
 			'Zinc-Character-Encoding-Core' }.
 
 		"These packages are added using hermes after bootstrap"
 
 		spec group: 'AdditionalPackages' with: {
 			'Clap-Core'.
-			'Clap-CommandLine'.
 			'Clap-Commands-Pharo'.
+			'FileSystem-Path'.
 			'ReflectionMirrors-Primitives'.
 			'System-Time'.
 			'Math-Operations-Extensions'.
@@ -202,14 +196,18 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'Multilingual-Encodings' }.
 
 		spec group: 'CompilerGroup' with: {
+			'UIManager'.
 			'AST-Core'.
 			'Collections-Arithmetic'.
 			'Collections-Atomic'.
+			'Collections-Stack'.
 			'CodeImport'.
 			'CodeImport-Commands'.
 			'Debugging-Utils'.
 			'DebugInfo'.
-			'OpalCompiler-Core'}.
+			'NumberParser'.
+			'OpalCompiler-Core'.
+			'Deprecation'}.
 		
 		spec group: 'FileSystemGroup' with: {
 			'Random-Core'.
@@ -228,10 +226,11 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		}.
 
 		spec group: 'SUnitGroup' with: {
+			'Deprecation'.
 			'SUnit-Core'.
 			'SUnit-Tests'.
 			'Kernel-Tests'.
-			'JenkinsTools-Core'}.
+			'SUnit-Basic-CLI'}.
 
 	]
 ]

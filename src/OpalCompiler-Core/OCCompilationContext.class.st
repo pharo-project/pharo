@@ -68,21 +68,6 @@ OCCompilationContext class >> cleanOptionString: string [
 	^ ws contents
 ]
 
-{ #category : 'options' }
-OCCompilationContext class >> compilerSettingsOn: aBuilder [
-	self optionsDescription withIndexDo: [ :description :index |
-		| optionStringCleaned option |
-		option := description second.
-		optionStringCleaned := self cleanOptionString: option.
-		(aBuilder setting: option)
-			order: index;
-			target: self;
-			label: optionStringCleaned;
-			description: description third;
-			default: (self defaultOptions includes: option).
-		 ]
-]
-
 { #category : 'instance creation' }
 OCCompilationContext class >> default [
 	^ self new

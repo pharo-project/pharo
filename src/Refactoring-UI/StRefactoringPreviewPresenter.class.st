@@ -84,19 +84,6 @@ StRefactoringPreviewPresenter >> closeWindow [
 ]
 
 { #category : 'initialization' }
-StRefactoringPreviewPresenter >> columns [
-
-	^ { (SpCompositeTableColumn new
-		   addColumn:
-			   ((SpCheckBoxTableColumn evaluated: [ :change | selectedChanges includes: change ])
-				    onActivation: [ :change | selectedChanges add: change ];
-				    onDeactivation: [ :change | selectedChanges remove: change ];
-				    width: 20);
-		   addColumn: (SpStringTableColumn evaluated: #name);
-		   yourself) }
-]
-
-{ #category : 'initialization' }
 StRefactoringPreviewPresenter >> connectPresenters [
 
 	table whenSelectionChangedDo: [ :selection |
@@ -111,6 +98,12 @@ StRefactoringPreviewPresenter >> connectPresenters [
 
 	buttonCancel action: [ self closeWindow ].
 	buttonOk action: [ self accept ]
+]
+
+{ #category : 'api - focus' }
+StRefactoringPreviewPresenter >> defaultKeyboardFocus [
+
+	^ buttonOk
 ]
 
 { #category : 'layout' }
@@ -154,27 +147,29 @@ StRefactoringPreviewPresenter >> initializeDialogWindow: aDialogWindowPresenter 
 StRefactoringPreviewPresenter >> initializePresenters [
 
 	diffPresenter := self newDiff.
-	diffPresenter disable.
 
-	table := self newTable.
-	table
-		columns: self columns;
-		hideColumnHeaders.
+	table := self newTable
+		hideColumnHeaders;
+		addColumn: (SpCompositeTableColumn new
+			addColumn: ((SpCheckBoxTableColumn evaluated: [ :change | selectedChanges includes: change ])
+				onActivation: [ :change | selectedChanges add: change ];
+				onDeactivation: [ :change | selectedChanges remove: change ];
+				beNotExpandable);
+			addColumn: (SpStringTableColumn evaluated: #name);
+			yourself);
+	yourself.
 
 	scopeLabel := self newLabel label: 'Scope '.
 	scopeDropList := self newDropList.
 	scopeDropList display: [ :scope | scope description ].
 	
 	buttonOk := self newButton
-		            label: 'Ok';
-		            icon: (self iconNamed: #smallOk).
+		label: 'Ok';
+		icon: (self iconNamed: #smallOk).
 
 	buttonCancel := self newButton
-		                label: 'Cancel';
-		                icon: (self iconNamed: #smallCancel).
-	self focusOrder
-		add: buttonOk;
-		add: buttonCancel
+		label: 'Cancel';
+		icon: (self iconNamed: #smallCancel)
 ]
 
 { #category : 'action' }
@@ -219,7 +214,9 @@ StRefactoringPreviewPresenter >> updateGlobalActiveScope [
 StRefactoringPreviewPresenter >> updateScopeList [
 
 	scopeDropList items: scopes.
-	self globalActiveScope ifNotNil: [ :scope | scopeDropList selectItem: scope ]
+	self globalActiveScope 
+		ifNotNil: [ :scope | scopeDropList selectItem: scope ]
+		ifNil: [ scopeDropList selectFirst ]
 ]
 
 { #category : 'update' }

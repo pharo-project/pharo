@@ -47,13 +47,13 @@ ReDuplicateClassDriverTest >> tearDown [
 
 { #category : 'tests' }
 ReDuplicateClassDriverTest >> testDuplicateClass [
-
 	| driver rbClass driverChanges methodChanges |
+	
 	testingEnvironment := RBClassEnvironment classes: {
 			                      ReClassToBeDuplicated.
 			                      ReClassToBeDuplicated superclass }.
-	driver := ReDuplicateClassDriver className:
-		          ReClassToBeDuplicated name.
+	
+	driver := ReDuplicateClassDriver className: ReClassToBeDuplicated name.
 
 	self setUpMocksOn: driver.
 

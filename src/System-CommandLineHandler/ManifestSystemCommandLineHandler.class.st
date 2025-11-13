@@ -1,5 +1,5 @@
 "
-Default command line handling
+Package to provide basic command line handling.
 "
 Class {
 	#name : 'ManifestSystemCommandLineHandler',
@@ -11,10 +11,10 @@ Class {
 
 { #category : 'meta-data - dependency analyser' }
 ManifestSystemCommandLineHandler class >> ignoredDependencies [
-	^ #(#'System-Settings-Core' #StartupPreferences)
+	^ #(#StartupPreferences #'System-Hashing')
 ]
 
 { #category : 'meta-data - dependency analyser' }
 ManifestSystemCommandLineHandler class >> manuallyResolvedDependencies [
-	^ #(#'FileSystem-Core' #'System-Settings-Core' #'System-Support')
+	^ #( #'Collections-Abstract' #'FileSystem-Core' #'System-Support' #'Kernel-CodeModel' #'Collections-Streams' #'System-Hashing')
 ]

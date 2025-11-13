@@ -54,31 +54,9 @@ DummyUIManager >> edit: aText label: labelString accept: aBlockOrNil [
 	^ nil
 ]
 
-{ #category : 'error handling' }
-DummyUIManager >> handleError: anError log: shouldLog [
-
-	self traceCr: '*** EXCEPTION ***'.
-	self traceCr: anError.
-	self trace: (String streamContents: [ :stream |
-			 anError signalerContext errorReportOn: stream ]).
-	Smalltalk exitFailure
-]
-
-{ #category : 'error handling' }
-DummyUIManager >> handleWarning: aWarning [
-
-	^ self handleError: aWarning
-]
-
 { #category : 'ui requests' }
 DummyUIManager >> inform: aString [
 	"Nothing to be done here"
-]
-
-{ #category : 'ui requests' }
-DummyUIManager >> informUserDuring: aBlock [
-
-	aBlock value: DummySystemProgressItem new
 ]
 
 { #category : 'default actions' }

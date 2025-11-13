@@ -265,13 +265,6 @@ Character class >> specialCharacters [
 		   with: self times)
 ]
 
-{ #category : 'queries' }
-Character class >> supportsNonASCII [
-
-	^ (self environment includesKey: #Unicode) and: [
-		((self environment  at: #EncodedCharSet) charsetAt: 255) name = #Unicode ]
-]
-
 { #category : 'constants' }
 Character class >> syntaxCharacters [
 
@@ -845,13 +838,6 @@ Character >> printOn: aStream [
 	available at: https://www.unicode.org/versions/Unicode17.0.0/core-spec/chapter-2/#G14527"
 ]
 
-{ #category : 'printing' }
-Character >> printStringHex [
-	"$A printStringHex >>> '41'"
-
-	^ self asInteger printStringBase: 16
-]
-
 { #category : 'comparing' }
 Character >> sameAs: aCharacter [
 	"Answer whether the receiver is equal to aCharacter, ignoring case"
@@ -872,13 +858,6 @@ Character >> shallowCopy [
 { #category : 'testing - kind' }
 Character >> shouldBePrintedAsLiteral [
 	^ self asInteger between: 33 and: 255
-]
-
-{ #category : 'printing' }
-Character >> storeBinaryOn: aStream [
-	self asInteger < 256
-		ifTrue: [ aStream nextPut: self asInteger ]
-		ifFalse: [ aStream nextInt32Put: self asInteger ]
 ]
 
 { #category : 'storing' }
@@ -919,10 +898,4 @@ Character >> tokenish [
 { #category : 'converting' }
 Character >> uppercase [
 	^ self asUppercase
-]
-
-{ #category : 'copying' }
-Character >> veryDeepCopyWith: deepCopier [
-	"Answer the receiver, because Characters are unique."
-	^self
 ]

@@ -46,7 +46,7 @@ ReRemoveInstanceVariablesDriver >> configureRefactoring [
 { #category : 'configuration' }
 ReRemoveInstanceVariablesDriver >> defaultSelectDialog [
 
-	^ self class defaultSelectDialog
+	^ super defaultSelectDialog
 		  title: 'There are references to variables!';
 		  items: self breakingChoices;
 		  display: [ :each | each description ];

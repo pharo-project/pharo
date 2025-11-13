@@ -963,11 +963,6 @@ CompiledMethod >> valueWithReceiver: aReceiver arguments: anArray [
 	^self receiver: aReceiver withArguments: anArray executeMethod: self
 ]
 
-{ #category : 'copying' }
-CompiledMethod >> veryDeepCopyWith: deepCopier [
-	"Return self.  I am always shared.  Do not record me.  Only use this for blocks.  Normally methodDictionaries should not be copied this way."
-]
-
 { #category : 'runtime system' }
 CompiledMethod >> voidCogVMState [
 	"Tell the VM to remove all references to any machine code form of the method.

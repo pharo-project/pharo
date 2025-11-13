@@ -962,23 +962,16 @@ Class >> sharedPoolsDo: aBlockClosure [
 ]
 
 { #category : 'initialization' }
-Class >> sharing: sharedPoolNames [
-	"Set up sharedPools. Answer whether recompilation is advisable."
+Class >> sharingSharedPoolNames: sharedPoolNames [
+	"Set up sharedPools. Answer whether recompilation is advisable. Raises an error if a sharePool named does not exist."
 
 	| oldPools |
 	oldPools := self sharedPools.
 	self sharedPools: OrderedCollection new.
 	sharedPoolNames do: [ :poolName |
-		self sharedPools add: (self environment at: poolName asSymbol ifAbsent: [
-				 (self confirm: 'The pool dictionary ' , poolName , ' does not exist.' , '\Do you want it automatically created?' withCRs)
-					 ifTrue: [
-						 self classInstaller make: [ :builder |
-							 builder
-								 superclass: SharedPool;
-								 name: poolName;
-								 package: self package name;
-								 tag: self packageTag name ] ]
-					 ifFalse: [ ^ self inform: poolName , ' does not exist' ] ]) ].
+		| shared | 
+		shared := self environment at: poolName asSymbol ifAbsent: [ self error: 'The pool dictionary ' , poolName , ' does not exist.' ].
+		self sharedPools add: shared ].
 	self sharedPools ifEmpty: [ self sharedPools: nil ].
 	oldPools do: [ :pool |
 		| found |

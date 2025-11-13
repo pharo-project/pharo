@@ -8,6 +8,7 @@ Class {
 	#name : 'WorldMorph',
 	#superclass : 'PasteUpMorph',
 	#instVars : [
+		'worldState',
 		'zoomFactor'
 	],
 	#classVars : [
@@ -170,7 +171,38 @@ WorldMorph class >> initialize [
 	ExtraWorldListMutex := Semaphore forMutualExclusion.
 	dropActionBlock := nil.
 	dragActionBlock := nil.
-	resizeActionBlock := nil
+	resizeActionBlock := nil.
+	
+	self initializeWorldAndActiveWorld
+]
+
+{ #category : 'class initialization' }
+WorldMorph class >> initializeWorldAndActiveWorld [
+	"This method is creating the World and ActiveWorld global variables.
+	Waybe some of the initialization code could go directly in WorldMorph and other classes normal initialization?"
+
+	| world hand |
+	world := self new.
+	hand := HandMorph new.
+	world addHand: hand.
+	world activeHand: hand.
+
+	Smalltalk at: #World put: world.
+	Smalltalk at: #ActiveWorld put: world.
+
+	world viewBox: world bounds.
+
+	world handsDo: [ :h | h initForEvents ].
+	world borderWidth: 0.
+
+	world displayWorldSafely.
+	MorphicCoreUIManager new spawnNewProcess.
+
+	world cleanseOtherworldlySteppers.
+
+	world worldState invalidate.
+
+	hand targetOffset: 0 @ 0
 ]
 
 { #category : 'settings' }
@@ -197,24 +229,6 @@ WorldMorph class >> resizeActionBlock [
 WorldMorph class >> resizeActionBlock: aBlock [
 
 	resizeActionBlock := aBlock
-]
-
-{ #category : 'setting' }
-WorldMorph class >> scaleFactor [
-
-	self
-		deprecated: 'Use #zoomFactor instead.'
-		transformWith: '`@rcv scaleFactor' -> '`@rcv zoomFactor'.
-	^ self zoomFactor
-]
-
-{ #category : 'setting' }
-WorldMorph class >> scaleFactor: aValue [
-
-	self
-		deprecated: 'Use #zoomFactor: instead.'
-		transformWith: '`@rcv scaleFactor: `@arg1' -> '`@rcv zoomFactor: `@arg1'.
-	^ self zoomFactor: aValue
 ]
 
 { #category : 'settings' }
@@ -392,6 +406,16 @@ WorldMorph >> contentsMenuTitle [
 WorldMorph >> copyRectangle: aRectangle into: aForm [
 
 	^ worldState worldRenderer copyRectangle: aRectangle into: aForm
+]
+
+{ #category : 'cursor' }
+WorldMorph >> currentCursor [
+	^ worldState currentCursor
+]
+
+{ #category : 'cursor' }
+WorldMorph >> currentCursor: aCursor [
+	^ worldState currentCursor: aCursor
 ]
 
 { #category : 'world state' }
@@ -639,18 +663,6 @@ WorldMorph >> runStepMethods [
 	worldState runStepMethodsIn: self
 ]
 
-{ #category : 'accessing' }
-WorldMorph >> scaleFactor: newZoomFactor [
-
-	self
-		deprecated: 'Use #zoomFactor: instead'
-		on: '20/12/2024'
-		in: 'pharo13'
-		transformWith:
-		'`@receiver scaleFactor: `@arg' -> '`@receiver zoomFactor: `@arg'.
-	self zoomFactor: newZoomFactor
-]
-
 { #category : 'stepping' }
 WorldMorph >> startStepping: aMorph [
 	"Add the given morph to the step list. Do nothing if it is already being stepped."
@@ -773,6 +785,12 @@ WorldMorph >> worldMenu [
 WorldMorph >> worldState [
 
 	^ worldState
+]
+
+{ #category : 'accessing' }
+WorldMorph >> worldState: anObject [
+
+	worldState := anObject
 ]
 
 { #category : 'accessing' }

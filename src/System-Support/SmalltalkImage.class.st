@@ -682,23 +682,6 @@ SmalltalkImage >> garbageCollectMost [
 	^ self primBytesLeft
 ]
 
-{ #category : 'snapshot and quit' }
-SmalltalkImage >> getFileNameFromUser [
-
-	| givenName strippedName imageFile changesFile |
-	givenName := UIManager default
-		request: 'New File Name?'
-		initialAnswer: (self imageFile basename copyUpToLast:  Path extensionDelimiter).
-	strippedName := self stripImageExtensionFrom: givenName.
-	strippedName isEmptyOrNil ifTrue: [^nil].
-	imageFile := self fileForImageNamed: strippedName.
-	changesFile := self fileForChangesNamed: strippedName.
-	((imageFile exists or: [changesFile exists]) and:
-		[(self confirm: ('{1} already exists. Overwrite?' format: {strippedName})) not])
-			ifTrue: [^nil].
-	^strippedName
-]
-
 { #category : 'accessing' }
 SmalltalkImage >> globals [
 	"Answer the global SystemEnvironment"
@@ -1037,7 +1020,12 @@ SmalltalkImage >> lowSpaceWatcher [
 			self bytesLeft > free
 				ifTrue: [^ self installLowSpaceWatcher]].
 
-	UIManager default lowSpaceWatcherDefaultAction: preemptedProcess.
+	 "When there is a signal from the VM, we signal an exception in the preempted process.
+	If we don't have preemptedProcess we are in an error state. We will throw an error"
+	preemptedProcess
+		ifNotNil: [ preemptedProcess signalException: OutOfMemory new ]
+		ifNil: [ self error: 'We have a lowSpaceWatcher signal, but there is no ctx... how we arrive here' ].
+
 	"We need to reinstall the lowSpaceWatcher"
 	Smalltalk installLowSpaceWatcher
 ]
@@ -1464,13 +1452,6 @@ SmalltalkImage >> restartMethods [
 ]
 
 { #category : 'saving' }
-SmalltalkImage >> saveAs [
-	"Put up the 'saveAs' prompt, obtain a name, and save the image  under that new name."
-
-	self saveAs: self getFileNameFromUser
-]
-
-{ #category : 'saving' }
 SmalltalkImage >> saveAs: newNameWithoutSuffix [
 	"Results:
 		true  when continuing in the new session
@@ -1738,11 +1719,6 @@ SmalltalkImage >> version [
 	^ SystemVersion current
 		  ifNil: [ 'No version set yet' ]
 		  ifNotNil: [ :version | version version ]
-]
-
-{ #category : 'copying' }
-SmalltalkImage >> veryDeepCopyWith: deepCopier [
-	"Return self.  I can't be copied.  Do not record me."
 ]
 
 { #category : 'accessing' }

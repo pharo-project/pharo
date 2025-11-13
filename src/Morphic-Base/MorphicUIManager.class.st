@@ -324,33 +324,6 @@ MorphicUIManager >> enterOrRequestFrom: labelList values: valueList lines: lines
 		lines: linesArray
 ]
 
-{ #category : 'error handling' }
-MorphicUIManager >> handleError: anError log: shouldLog [
-
-	shouldLog ifTrue: [ self logError: anError ].
-	(OupsDebugRequest newForException: anError) submit
-]
-
-{ #category : 'error handling' }
-MorphicUIManager >> handleNotification: aNotification [
-
-	aNotification messageText traceCr.
-	aNotification resume
-]
-
-{ #category : 'error handling' }
-MorphicUIManager >> handleWarning: aWarning [
-	"The user should be notified of the occurrence of an exceptional occurrence and given an option of continuing or aborting the computation. The description of the occurrence should include any text specified as the argument of the #signal: message."
-
-	(OupsWarningRequest newForException: aWarning) submit
-]
-
-{ #category : 'handle debug requests' }
-MorphicUIManager >> handleWarningDebugRequest: aWarningDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
-	<debuggerCompleteToSender>
-	anOupsDebuggerSystem openDebuggerOnRequest: aWarningDebugRequest
-]
-
 { #category : 'ui requests' }
 MorphicUIManager >> inform: aStringOrText [
 	"Display a message for the user to read and then dismiss."
@@ -358,22 +331,6 @@ MorphicUIManager >> inform: aStringOrText [
 	GrowlMorph
 		openWithLabel: 'Information' translated
 		contents: aStringOrText
-]
-
-{ #category : 'ui requests' }
-MorphicUIManager >> informUserDuring: aBlock [
-	"Display a message as progress	during execution of the given block."
-	"UIManager default informUserDuring: [:bar|
-		#('one' 'two' 'three') do: [:info|
-			bar label: info.
-			1 to: 100 do: [:v |
-				bar current: v.
-				(Delay forMilliseconds: 20) wait]]]"
-
-	self
-		displayProgress: ''
-		from: 1 to: 100
-		during: [:bar | aBlock value: bar]
 ]
 
 { #category : 'debug' }
@@ -445,36 +402,6 @@ MorphicUIManager >> newMenuIn: aThemedMorph for: aModel [
 	"UIManager default"
 	^self theme
 		newMenuIn: aThemedMorph for: aModel
-]
-
-{ #category : 'ui requests' }
-MorphicUIManager >> onFontsChanged [
-
-	StringMorph allSubInstancesDo: [ :s | s layoutChanged ].
-	TextMorph allSubInstancesDo: [ :s | s layoutChanged ].
-	SystemWindow allInstancesDo: [ :w | [ w update: #relabel ] on: Error do: [ :ex | ] ].
-	self currentWorld ifNotNil: [ :w | w changed ]
-]
-
-{ #category : 'events' }
-MorphicUIManager >> onPrimitiveError: aString [
-
-	| message |
-	message := String streamContents: [ :s |
-		           | context |
-		           s nextPutAll: '*** System error handling failed ***'.
-		           s
-			           cr;
-			           nextPutAll: aString.
-		           context := thisContext sender sender.
-		           20 timesRepeat: [
-			           context ifNotNil: [
-				           s
-					           cr;
-					           print: (context := context sender) ] ] ].
-	Stdio stderr << message.
-	"init hands and redisplay"
-	self currentWorld install
 ]
 
 { #category : 'accessing' }

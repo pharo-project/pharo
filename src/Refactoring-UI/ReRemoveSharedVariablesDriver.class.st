@@ -44,7 +44,7 @@ ReRemoveSharedVariablesDriver >> configureRefactoring [
 { #category : 'configuration' }
 ReRemoveSharedVariablesDriver >> defaultSelectDialog [
 
-	^ self class defaultSelectDialog
+	^ super defaultSelectDialog
 		  title: 'There are references to variables!';
 		  items: self breakingChoices;
 		  display: [ :each | each description ];

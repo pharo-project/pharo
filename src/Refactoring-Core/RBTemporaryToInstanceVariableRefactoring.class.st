@@ -106,7 +106,7 @@ RBTemporaryToInstanceVariableRefactoring >> applicabilityPreconditions [
 			   in: class) not.
 		  (RBCondition withBlock: [
 				parseTree ifNotNil: [ .
-				   self checkForValidTemporaryVariable ].
+				   self isTemporaryVariableNameValid ].
 			   true ]) }
 ]
 
@@ -115,29 +115,16 @@ RBTemporaryToInstanceVariableRefactoring >> breakingChangePreconditions [
 
 	^ {
 		  (RBCondition withBlock: [
-			   (class allSubclasses anySatisfy: [ :cls |
-				    cls definesInstanceVariable: temporaryVariableName asString ])
-				   ifTrue: [
-					   self refactoringWarning:
-						   ('One or more subclasses of <1p> already defines an<n>instance variable with the same name. Proceed anyway?'
-							    expandMacrosWith: class name) ].
-			   true ]).
+				   (class allSubclasses anySatisfy: [ :cls | cls definesInstanceVariable: temporaryVariableName asString ]) ifTrue: [
+						   self refactoringWarning:
+							   ('One or more subclasses of <1p> already defines an<n>instance variable with the same name. Proceed anyway?'
+								    expandMacrosWith: class name) ].
+				   true ]).
+		  (RBCondition checkNotMultipleTemporaryDefinitionsOf: temporaryVariableName in: class).
 		  (ReVariablesNotReadBeforeWrittenCondition new
 			   subtree: parseTree;
-			   variables: temporaryVariableName) }
-]
-
-{ #category : 'preconditions' }
-RBTemporaryToInstanceVariableRefactoring >> checkForValidTemporaryVariable [ 
-
-	(parseTree allTemporaryVariables includes: temporaryVariableName)
-		ifFalse:
-			[self refactoringError: temporaryVariableName
-						, ' isn''t a valid temporary variable name'].
-	(parseTree allArgumentVariables includes: temporaryVariableName)
-		ifTrue:
-			[self refactoringError: temporaryVariableName , ' is a block parameter'].
-
+			   variables: temporaryVariableName;
+			   checkForTemporaryVariables: true) }
 ]
 
 { #category : 'initialization' }
@@ -145,6 +132,15 @@ RBTemporaryToInstanceVariableRefactoring >> class: aClass selector: aSelector va
 	class := self classObjectFor: aClass.
 	selector := aSelector.
 	temporaryVariableName := aVariableName
+]
+
+{ #category : 'preconditions' }
+RBTemporaryToInstanceVariableRefactoring >> isTemporaryVariableNameValid [
+
+	(parseTree allTemporaryVariables includes: temporaryVariableName) ifFalse: [
+		self refactoringError: temporaryVariableName , ' isn''t a valid temporary variable name' ].
+	(parseTree allArgumentVariables includes: temporaryVariableName) ifTrue: [
+		self refactoringError: temporaryVariableName , ' is a block parameter' ]
 ]
 
 { #category : 'preconditions' }

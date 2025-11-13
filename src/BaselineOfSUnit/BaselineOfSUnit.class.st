@@ -18,9 +18,9 @@ Class {
 }
 
 { #category : 'accessing' }
-BaselineOfSUnit class >> defaultPackageNames [
+BaselineOfSUnit class >> corePackageNames [
 
-	^ self packagesOfGroupNamed: #default
+	^ self packagesOfGroupNamed: #Core
 ]
 
 { #category : 'baselines' }
@@ -41,25 +41,20 @@ BaselineOfSUnit >> baseline: spec [
 				package: 'SUnit-Visitor-Tests' with: [ spec requires: #('SUnit-Visitor') ];
 				package: 'SUnit-MockObjects' with: [ spec requires: #('SUnit-Core') ];
 				package: 'SUnit-MockObjects-Tests' with: [ spec requires: #('SUnit-MockObjects') ];
-				package: 'SUnit-UI' with: [ spec requires: #('Coverage') ];
-				package: 'SUnit-Support-UITesting-Tests';
-				package: 'SUnit-Support-UITesting';
+				package: 'SUnit-UI' with: [ spec requires: #('Coverage' 'SUnit-Basic-CLI') ];
 				package: 'Coverage';
 				package: 'Coverage-Tests' with: [ spec requires: #('Coverage') ];				
-				package: 'JenkinsTools-Core';
-				package: 'JenkinsTools-ExtraReports';
-				package: 'JenkinsTools-Tests' with: [ spec requires: #('JenkinsTools-Core') ].
+				package: 'SUnit-Basic-CLI' with: [ spec requires: #('SUnit-Core') ];
+				package: 'SUnit-UI-Tests' with: [ spec requires: #('SUnit-UI') ].
 
 			"Custom groups"				
 			spec
-				group: 'Core' with: #('SUnit-Core' 'SUnit-Core-Traits' 'SUnit-Visitor');
-				group: 'MockObjects' with: #('SUnit-MockObjects');
-				group: 'UI' with: #('SUnit-UI' 'SUnit-Support-UITesting' 'Coverage');
-				group: 'Tests' with: #('SUnit-Tests' 'SUnit-Support-UITesting-Tests' 'SUnit-Visitor-Tests' 'SUnit-MockObjects-Tests' 'Coverage-Tests' 'JenkinsTools-Tests');
-				group: 'JenkinsSupport' with: #('JenkinsTools-Core' 'JenkinsTools-ExtraReports').
+				group: 'Core' with: #('SUnit-Core' 'SUnit-Core-Traits' 'SUnit-Visitor' 'SUnit-MockObjects' 'SUnit-Basic-CLI');
+				group: 'UI' with: #('SUnit-UI' 'Coverage');
+				group: 'Tests' with: #('SUnit-Tests' 'SUnit-Visitor-Tests' 'SUnit-MockObjects-Tests' 'Coverage-Tests' 'SUnit-UI-Tests').
 
 			"Virtual groups"	
 			spec
-				group: 'all' with: #('Core' 'MockObjects' 'UI' 'Tests' 'JenkinsSupport');
-				group: 'default' with: #('SUnit-Core' 'SUnit-Core-Traits' 'SUnit-Tests' 'JenkinsTools-Core' 'JenkinsTools-ExtraReports' 'SUnit-MockObjects') ]
+				group: 'all' with: #('Core' 'UI' 'Tests');
+				group: 'default' with: #('Core') ]
 ]

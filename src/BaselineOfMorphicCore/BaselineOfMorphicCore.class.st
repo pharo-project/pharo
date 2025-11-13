@@ -30,71 +30,50 @@ BaselineOfMorphicCore >> baseline: spec [
 	spec for: #common do: [
 		spec postLoadDoIt: #postload:package:.
 
-		spec baseline: 'Traits' with: [ spec repository: repository ].
-		spec baseline: 'SUnit' with: [ spec repository: repository ].
-		spec baseline: 'Display' with: [ spec repository: repository ].
-		spec baseline: 'UnifiedFFI' with: [ spec repository: repository ].
-
 		spec package: 'System-Object Events'.
 		spec package: 'System-Caching'.
 		spec package: 'System-Utilities'.
 		spec package: 'Graphics-Canvas'.
 		spec package: 'FormCanvas-Core'.
 		spec package: 'Tool-Registry'.
-		spec package: 'Fonts-Abstract'.
-		spec package: 'Text-Core'.
-		spec package: 'Morphic-Core'.
-		spec package: 'System-Model' with: [ spec requires: #( 'Morphic-Core' ) ].
+		spec package: 'System-Model'.
+		spec baseline: 'Fonts' with: [
+				spec
+					repository: repository;
+					loads: #Core ].
+		spec baseline: 'FreeType' with: [
+			spec
+				repository: repository;
+				loads: 'ui' ].
+		spec package: 'Morphic-Core' with: [ spec requires: #( 'System-Model' ) ].
 		spec package: 'System-FileRegistry' with: [ spec requires: #( 'System-Model' ) ] ]
 ]
 
 { #category : 'actions' }
 BaselineOfMorphicCore >> postload: loader package: packageSpec [
 
-	| world hand |
-
 	"Ignore pre and post loads if already executed"
 	Initialized = true ifTrue: [ ^ self ].
-	
-	IdentityTransform initialize.
 
 	RealEstateAgent initialize.
 	WorldState initialize.
 	Morph initialize.
 	HandMorph initialize.
-	
 	AbstractWorldRenderer initialize.	
-
-	Cursor initTarget.
 	EventManager initialize.
 	UserInputEvent initialize.
-
-	world := WorldMorph new.
-	world instVarNamed: #worldState put: WorldState new.
-	hand := HandMorph new.
-	world addHand: hand.
-	world activeHand: hand.
-
-	Smalltalk at: #World put: world.
-	Smalltalk at: #ActiveWorld put: world.
-
-	world viewBox: world bounds.
-	
-	world handsDo: [:h | h initForEvents].
-	world borderWidth: 0.
-	
-	world displayWorldSafely.
-	MorphicCoreUIManager new spawnNewProcess.
-	
-	world cleanseOtherworldlySteppers.
-
-	(world instVarNamed: #worldState) invalidate.
-
-	hand instVarNamed: #targetOffset put: 0@0.
-
-	WorldMorph initialize.
 	PasteUpMorph initialize.
+	WorldMorph initialize.
 	DefaultExternalDropHandler initialize.
+	BalloonEngineConstants initialize.
+	BalloonEngine initialize.
+	CornerRounder initialize.
+	Clipboard initialize.
+	GradientFillStyle initialize.
+	TextAction initialize.
+	TextConstants initialize.
+	TextStyle initialize.
+	PharoCommonTools initialize.
 
 	Initialized := true.
 ]

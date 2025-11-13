@@ -144,13 +144,6 @@ CleanBlockClosure >> refersToLiteral: aLiteral [
 	^self compiledBlock refersToLiteral: aLiteral
 ]
 
-{ #category : 'debugger access' }
-CleanBlockClosure >> sender [
-	" clean blocks do not know the sender"
-	self deprecated: 'Blocks do not have senders. As the outerContext or home context instead, but take care: clean blocks do not know the context!'.
-	^nil
-]
-
 { #category : 'accessing' }
 CleanBlockClosure >> sendsAnySelectorOf: aCollection [
 	^self compiledBlock sendsAnySelectorOf: aCollection

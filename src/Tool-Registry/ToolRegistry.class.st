@@ -186,19 +186,6 @@ ToolRegistry >> register: anObject as: aNameSelector [
 	self announcer announce: (ToolRegistryToolRegistered tool: anObject name: aNameSelector)
 ]
 
-{ #category : 'registration' }
-ToolRegistry >> remove: aName [
-
-	self 
-		deprecated: 'Use unregisterToolWithRole:' 
-		on: '17/11/2024'  
-		in: 'pharo13' 
-		transformWith:  '`@receiver remove: `@arg'
-						-> '`@receiver unregisterToolWithRole: `@arg'.
-	self unregisterToolWithRole: aName
-
-]
-
 { #category : 'announcer' }
 ToolRegistry >> resetAnnouncer [
 	"unregister all current weak subscriptions because it can cause a memory leak"

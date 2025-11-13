@@ -145,6 +145,7 @@ PBBootstrap >> createImage [
 PBBootstrap >> ensureBaselineOfPharoBootstrap [
 	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfPharoBootstrap')) load.
 	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfTraits')) load.
+	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfMonticello')) load.
 	(self originRepository versionWithInfo: (self originRepository versionInfoFromVersionNamed: 'BaselineOfMetacello')) load.	
 ]
 
@@ -321,20 +322,15 @@ PBBootstrap >> mczCache [
 { #category : 'package-names' }
 PBBootstrap >> monticelloNetworkPackageNames [
 
-	^ #('Network-Kernel'
-		 'Network-MIME'
-		 'Network-Protocols'
-
-		 'MonticelloRemoteRepositories'
-
-		 'Zinc-HTTP'
-		 'Zodiac-Core')
+	self ensureBaselineOfPharoBootstrap.
+	^ #BaselineOfMonticello asClass remoteRepositoriesPackageNames
 ]
 
 { #category : 'package-names' }
 PBBootstrap >> monticelloPackageNames [
 
-	^ #('Ring-OldChunkImporter' 'Zinc-Resource-Meta-Core' 'System-Changes' 'Ring-Definitions-Core' 'Jobs' 'Compression' 'Monticello-Model' 'Monticello' 'Ring-Definitions-Monticello' )
+	self ensureBaselineOfPharoBootstrap.
+	^ #BaselineOfMonticello asClass corePackageNames
 ]
 
 { #category : 'accessing' }

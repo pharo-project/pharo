@@ -25,6 +25,13 @@ Class {
 	#tag : 'Public'
 }
 
+{ #category : 'class initialization' }
+FileSystem class >> initialize [
+	"The initialization is done here because the startup of SourceFileArray needs to use the File system to work."
+
+	SessionManager default registerSystemClassNamed: #SourceFileArray
+]
+
 { #category : 'system startup' }
 FileSystem class >> startUp: aBoolean [
 	"This is only here to deal with migration from older versions of

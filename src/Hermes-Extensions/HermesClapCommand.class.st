@@ -87,7 +87,7 @@ HermesClapCommand >> duplicationMode [
 { #category : 'execution' }
 HermesClapCommand >> execute [ 
 
-	super execute.
+	self prepareImageAndExit.
 	
 	self validateParameters.
 	self processFiles.

@@ -52,7 +52,7 @@ ReMoveMethodsToClassSideDriver >> changes [
 { #category : 'configuration' }
 ReMoveMethodsToClassSideDriver >> defaultSelectDialog [
 
-	^ self class defaultSelectDialog
+	^ super defaultSelectDialog
 		  title: 'Warning you may break your code';
 		  label:
 			  'One or more methods are already defined on the class side!';

@@ -137,13 +137,13 @@ echo $(date -u) "[Compiler] Initializing Bootstraped Image"
 ${VM} "${COMPILER_IMAGE_NAME}.image" # I have to run once the image so the next time it starts the CommandLineHandler.
 
 echo $(date -u) "[Compiler] Adding more Kernel packages"
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" perform --save BasicHermesTool load: --as-array Clap-Core.hermes Clap-CommandLine.hermes Clap-Commands-Pharo.hermes Hermes-Extensions.hermes
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Math-Operations-Extensions.hermes Debugging-Core.hermes System-NumberPrinting.hermes System-Time.hermes Multilingual-Encodings.hermes ReflectionMirrors-Primitives.hermes --save --no-fail-on-undeclared
+${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" perform --save BasicHermesTool load: --as-array Clap-Core.hermes Clap-Commands-Pharo.hermes Hermes-Extensions.hermes
+${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Math-Operations-Extensions.hermes Debugging-Core.hermes System-NumberPrinting.hermes System-Time.hermes Multilingual-Encodings.hermes ReflectionMirrors-Primitives.hermes NumberParser.hermes --save --no-fail-on-undeclared
 
 # Now that System-Time is loaded, we can initialize the version
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" perform  --save SystemVersion setMajor:minor:patch:suffix:build:commitHash: ${PHARO_MAJOR} ${PHARO_MINOR} ${PHARO_PATCH} ${PHARO_SUFFIX} ${BUILD_NUMBER} ${PHARO_COMMIT_HASH}
 
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Collections-Atomic.hermes AST-Core.hermes Collections-Arithmetic.hermes  --save --no-fail-on-undeclared
+${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Collections-Atomic.hermes Collections-Stack.hermes AST-Core.hermes Collections-Arithmetic.hermes  --save --no-fail-on-undeclared
 
 echo $(date -u) "[Compiler] Initializing the packages in the Kernel"
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" perform --save PharoBootstrapFixMethodsTool fixMethodsIn: protocolsKernel.txt
@@ -151,15 +151,14 @@ ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" perform --save PharoBootst
 
 # Installing compiler through Hermes 
 echo $(date -u) "[Compiler] Installing compiler through Hermes"
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Debugging-Utils.hermes OpalCompiler-Core.hermes DebugInfo.hermes CodeImport.hermes CodeImport-Commands.hermes --save --no-fail-on-undeclared
+${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes UIManager.hermes Debugging-Utils.hermes OpalCompiler-Core.hermes Deprecation.hermes DebugInfo.hermes CodeImport.hermes CodeImport-Commands.hermes --save --no-fail-on-undeclared
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "SystemEnvironment deprecatedAliases: { #SystemDictionary }." # This line should be removed in Pharo 14 since it is for backward compatibility.
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/01-initialization/01-init.st --no-source --save --quit
 
 echo $(date -u) "[Compiler] Initializing Unicode"
 ${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/01-initialization/02-initUnicode.st --no-source --save --quit "${BOOTSTRAP_REPOSITORY}/resources/unicode/"
 
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Random-Core.hermes System-Hashing.hermes Network-UUID.hermes FileSystem-Core.hermes FileSystem-Disk.hermes --save --no-fail-on-undeclared
-${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" eval --save "PharoBootstrapInitialization initializeFileSystem"
+${VM} "${COMPILER_IMAGE_NAME}.image" "${IMAGE_FLAGS}" loadHermes Random-Core.hermes System-Hashing.hermes Network-UUID.hermes FileSystem-Path.hermes FileSystem-Core.hermes FileSystem-Disk.hermes --save --no-fail-on-undeclared
 zip "${COMPILER_IMAGE_NAME}.zip" "${COMPILER_IMAGE_NAME}.image"
 
 # Installing Traits through Hermes 
