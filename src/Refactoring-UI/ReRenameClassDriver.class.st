@@ -54,19 +54,17 @@ ReRenameClassDriver >> requestNewNameBasedOn: aName [
 
 	newName := self defaultRequestDialog
 		           title: 'Please provide a new class name';
-		           label:
-			           'The new name should be valid and not the one of an existing class.';
-		           validateAnswer: [ :string :presenter |
-			           self validateName: string onPresenter: presenter ];
+		           message: 'The new name should be valid and not the one of an existing class.';
+		           validateAnswer: [ :string :presenter | self validateName: string onPresenter: presenter ];
 		           text: aName;
 		           openModal.
 
 	newName ifNil: [
-		shouldEscape := true.
-		^ self ].
+			shouldEscape := true.
+			^ self ].
 	newName = oldName ifTrue: [
-		shouldEscape := true.
-		^ self ].
+			shouldEscape := true.
+			^ self ].
 
 	refactoring newName: newName.
 	^ newName
@@ -96,15 +94,15 @@ ReRenameClassDriver >> runRefactoring [
 ]
 
 { #category : 'validation' }
-ReRenameClassDriver >> validateName: aName onPresenter: presenter [ 
-	
+ReRenameClassDriver >> validateName: aName onPresenter: presenter [
+
 	| condition result |
 	condition := RBCondition isValidClassName: aName.
 	result := condition check.
 
-	result 
-		ifFalse: [ presenter setErrorText: condition errorString  ]
-		ifTrue: [ presenter setErrorText: '' ].
-		
+	result
+		ifFalse: [ presenter setErrorText: condition errorString ]
+		ifTrue: [ presenter errorText: '' ].
+
 	^ result
 ]

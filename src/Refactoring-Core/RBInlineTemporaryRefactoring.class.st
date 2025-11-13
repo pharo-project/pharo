@@ -72,7 +72,7 @@ RBInlineTemporaryRefactoring >> prepareForExecution [
 	assignmentNode isAssignment
 		ifFalse: [ self refactoringError: 'The selected node is not an assignment statement' ].
 		
-	definingNode := assignmentNode whoDefines:
+	definingNode := assignmentNode whichUpNodeDefines:
 		                assignmentNode variable name.
 ]
 

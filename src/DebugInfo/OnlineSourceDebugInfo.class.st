@@ -250,7 +250,11 @@ OnlineSourceDebugInfo >> rangeForPC: aPC [
 { #category : 'api' }
 OnlineSourceDebugInfo >> readVariableNamed: aName fromContext: aContext [
 
-	^ (self debugScopeAt: aContext pc) readVariableNamed: aName fromContext: aContext
+    | currentPC |
+    "If the context is dead (pc = nil) then we really cannot know how to interpret the temp slots, as it could have been killed in any state.
+    For backwards compatibility, assume that the dead context has all the temps available at the beginning of the method -- i.e., at its initial PC"
+    currentPC := aContext pc ifNil: [ compiledCode initialPC ].
+	^ (self debugScopeAt: currentPC) readVariableNamed: aName fromContext: aContext
 ]
 
 { #category : 'api' }

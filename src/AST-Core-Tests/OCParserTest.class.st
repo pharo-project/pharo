@@ -1081,10 +1081,10 @@ OCParserTest >> testModifying [
 	self assert: tree body statements last arguments first isUsedAsReturnValue.
 	self assert: (tree isLast: tree body statements last).
 	self deny: (tree isLast: tree body statements first).
-	self assert: (tree defines: 'a').
-	self deny: (tree defines: 'c').
-	self assert: (tree body defines: 'c').
-	self deny: (tree body defines: 'a').
+	self assert: (tree exactNodeDefines: 'a').
+	self deny: (tree exactNodeDefines: 'c').
+	self assert: (tree body exactNodeDefines: 'c').
+	self deny: (tree body exactNodeDefines: 'a').
 	tree
 		addReturn;
 		selector: #bar:foo:.
@@ -1797,9 +1797,9 @@ OCParserTest >> testQuerying [
 	self assert: (arg1Node statementNodeIn: tree) equals: tree body statements last.
 	self assert: (arg1Node statementNodeIn: tree body) equals: tree body statements last.
 	self should: [ arg1Node statementNodeIn: OCSequenceNode new ] raise: NotFound.
-	self assert: (arg1Node whoDefines: 'arg1') isBlock.
-	self assert: (aNode whoDefines: 'a') isMethod.
-	self assert: (aNode whoDefines: 'b') isSequence.
+	self assert: (arg1Node whichUpNodeDefines: 'arg1') isBlock.
+	self assert: (aNode whichUpNodeDefines: 'a') isMethod.
+	self assert: (aNode whichUpNodeDefines: 'b') isSequence.
 	self assert: (tree whichNodeIsContainedBy: (91 to: 119)) selector value equals: #foo:foo:foo:.
 	self assert: (tree whichNodeIsContainedBy: (69 to: 121)) isBlock.
 	self assert: (tree whichNodeIsContainedBy: (69 to: 118)) isNil.
@@ -1823,9 +1823,9 @@ OCParserTest >> testQueryingPrimitiveErrorVar [
 		^ noting].
    copy := nil.
 	^ copy'.
-	self assert: (tree body whoDefines:'copy') equals: tree body.
-	self assert: (tree blockNodes first body whoDefines: 'nothing') equals: tree blockNodes first body.
-	self assert: (tree body whoDefines: 'ec') equals: tree
+	self assert: (tree body whichUpNodeDefines:'copy') equals: tree body.
+	self assert: (tree blockNodes first body whichUpNodeDefines: 'nothing') equals: tree blockNodes first body.
+	self assert: (tree body whichUpNodeDefines: 'ec') equals: tree
 ]
 
 { #category : 'tests' }

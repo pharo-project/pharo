@@ -101,6 +101,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 		spec package: 'Multilingual-Encodings'.
 		
 		spec package: 'Transcript-NonInteractive'.
+		spec package: 'ParseTreeRewriter'.
 		spec package: 'PharoBootstrap-Initialization'.
 		spec package: 'Random-Core'.
 		spec package: 'ReflectionMirrors-Primitives'.
@@ -201,6 +202,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 			'DebugInfo'.
 			'NumberParser'.
 			'OpalCompiler-Core'.
+			'ParseTreeRewriter'.
 			'Deprecation'}.
 		
 		spec group: 'FileSystemGroup' with: {
@@ -220,6 +222,7 @@ BaselineOfPharoBootstrap >> baseline: spec [
 
 		spec group: 'SUnitGroup' with: {
 			'Deprecation'.
+			'ParseTreeRewriter'.
 			'SUnit-Core'.
 			'SUnit-Tests'.
 			'Kernel-Tests'.

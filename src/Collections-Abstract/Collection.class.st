@@ -702,20 +702,6 @@ Collection >> difference: aCollection [
 	^ self species withAll: set asArray
 ]
 
-{ #category : 'displaying' }
-Collection >> displayStringOn: stream [
-	self printNameOn: stream.
-	stream
-		space;
-		nextPut: $[;
-		nextPutAll: self size asStringWithCommas;
-		nextPutAll: (' item' asPluralBasedOn: self size);
-		nextPut: $];
-		space.
-	self size <= self collectionSizeThreshold
-		ifTrue: [ self printElementsOn: stream ]
-]
-
 { #category : 'enumerating' }
 Collection >> do: aBlock [
 	"Evaluate aBlock with each of the receiver's elements as the argument.

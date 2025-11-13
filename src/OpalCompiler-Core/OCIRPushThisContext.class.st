@@ -14,6 +14,12 @@ OCIRPushThisContext >> accept: aVisitor [
 	^ aVisitor visitPushThisContext: self
 ]
 
+{ #category : 'stack' }
+OCIRPushThisContext >> deltaStack [
+
+	^ 1
+]
+
 { #category : 'testing' }
 OCIRPushThisContext >> isRemovableByPop [
 

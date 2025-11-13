@@ -50,11 +50,6 @@ BaselineOfMorphic >> baseline: spec [
 		spec package: 'Graphics-Shapes'.
 		spec package: 'Growl'.
 
-		spec baseline: 'Keymapping' with: [
-			spec
-				repository: repository;
-				loads: 'core' ].
-
 		spec package: 'Native-Browser'.
 
 		spec package: 'Regex-Core'.
@@ -157,7 +152,7 @@ BaselineOfMorphic >> postload: loader package: packageSpec [
 	PolymorphSystemSettings showDesktopLogo: true.
 	PolymorphSystemSettings desktopColor: Color white.
 
-	#( #BalloonMorph #IconicButtonMorph #KMLog #ScrollBarMorph
+	#( #BalloonMorph #IconicButtonMorph #ScrollBarMorph
 	   #SystemSettingsPersistence #TabMorph #TaskbarMorph PharoOptionsHandler) do: [ :each |
 		(Smalltalk globals at: each) initialize ].
 

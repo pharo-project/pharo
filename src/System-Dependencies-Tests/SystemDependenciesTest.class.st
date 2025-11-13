@@ -174,7 +174,7 @@ SystemDependenciesTest >> testExternalBasicToolsDependencies [
 		BaselineOfUnifiedFFI withAllPackageNames,
 		BaselineOfFonts allPackageNames,
 		{ BaselineOfFreeType name }, (BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
-		{ BaselineOfKeymapping name }, (BaselineOfKeymapping deepPackagesOfGroupNamed: #ui),
+		BaselineOfKeymapping corePackageNames,
 		BaselineOfMorphicCore withAllPackageNames,
 		BaselineOfMorphic withAllPackageNames,
 		BaselineOfMenuRegistration withAllPackageNames,
@@ -322,7 +322,7 @@ SystemDependenciesTest >> testExternalMorphicDependencies [
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
 		BaselineOfFonts allPackageNames,
-		(BaselineOfKeymapping deepPackagesOfGroupNamed: #morphic),
+		BaselineOfKeymapping corePackageNames,
 		(BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
@@ -359,7 +359,7 @@ SystemDependenciesTest >> testExternalSpec2Dependencies [
 
 		"Morphic - for Morphic backend"
 		BaselineOfDisplay allPackageNames,
-		(BaselineOfKeymapping deepPackagesOfGroupNamed: #ui),
+		BaselineOfKeymapping corePackageNames,
 		(BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
@@ -409,7 +409,7 @@ SystemDependenciesTest >> testExternalUIDependencies [
 		BaselineOfDisplay allPackageNames,
 		BaselineOfUnifiedFFI allPackageNames,
 		BaselineOfFonts allPackageNames,
-		(BaselineOfKeymapping deepPackagesOfGroupNamed: #ui),
+		BaselineOfKeymapping corePackageNames,
 		(BaselineOfFreeType deepPackagesOfGroupNamed: #ui),
 		BaselineOfMorphicCore allPackageNames,
 		BaselineOfMorphic allPackageNames,
@@ -464,5 +464,5 @@ SystemDependenciesTest >> tonelCorePackageNames [
 SystemDependenciesTest >> uiInfrastructureCoreLayerPackages [
 
 	^ self sunitCoreLayerPackages , BaselineOfUnifiedFFI allPackageNames , BaselineOfThreadedFFI allPackageNames , BaselineOfDisplay allPackageNames
-	  , BaselineOfFonts allPackageNames , BaselineOfFreeType allPackageNames , BaselineOfMenuRegistration allPackageNames
+	  , BaselineOfFonts allPackageNames , BaselineOfFreeType allPackageNames , BaselineOfMenuRegistration allPackageNames , BaselineOfKeymapping corePackageNames
 ]

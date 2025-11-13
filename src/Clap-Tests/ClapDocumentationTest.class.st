@@ -65,7 +65,7 @@ ClapDocumentationTest >> testLongDescription [
 	self assert: lines third equals: 'I''m a very long description'.
 	self assert: lines fourth trimBoth isEmpty.
 	self assert: lines sixth trimBoth equals: 'several'.
-	self assert: lines seventh trimmed equals: 'lines!'.
+	self assert: lines seventh trimBoth equals: 'lines!'.
 	self assert: lines eighth isEmpty.
 	self assert: (lines ninth beginsWith: 'Usage: hello').
 	self assert: (lines ninth includesSubstring: '[--language <language-value>]').

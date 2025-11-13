@@ -66,10 +66,6 @@ BaselineOfUI >> baseline: spec [
 
 		spec package: 'Morphic-Widgets-Tree'.
 
-		spec baseline: 'Keymapping' with: [
-			spec
-				repository: repository;
-				loads: 'ui' ].
 		spec package: 'WebBrowser-Core'.
 		
 		spec group: 'Debugger-Base-UI' with: #('Debugging-Core' 'Debugger-Model' 'Debugger-Oups') ]

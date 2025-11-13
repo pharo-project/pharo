@@ -74,13 +74,13 @@ RBExtractSetUpMethodRefactoring >> checkAssignments: variableNames [
 	removeAssigned := variableNames copy.
 	node := self placeholderNode.
 	outsideVars := variableNames
-				select: [:each | (node whoDefines: each) references: each].
+				select: [:each | (node whichUpNodeDefines: each) references: each].
 	outsideVars do: [ :var | self checkSingleAssignment: var ].
 	removeAssigned removeAll: outsideVars.
 	(OCReadBeforeWrittenTester readBeforeWritten: removeAssigned
 		in: extractedParseTree) ifNotEmpty:
 			[self refactoringError: 'Cannot extract assignment if read before written.'].
-	removeAssigned do: [:each | (node whoDefines: each) removeTemporaryNamed: each].
+	removeAssigned do: [:each | (node whichUpNodeDefines: each) removeTemporaryNamed: each].
 	self updateTemporariesInExtractedMethodFor: variableNames
 ]
 

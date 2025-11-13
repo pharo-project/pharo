@@ -138,7 +138,7 @@ ClapCodeEvaluator >> handleError: error reference: aReference [
 
 	"put out a warning if in headless mode, otherwise a debugger will popup"
 	(aReference isNotNil and: [ Smalltalk isInteractive not ]) 
-		ifTrue: [ self inform: 'Errors in script loaded from ' , aReference name ].
+		ifTrue: [ InformativeNotification signal: 'Errors in script loaded from ' , aReference name ].
 
 	error pass
 ]

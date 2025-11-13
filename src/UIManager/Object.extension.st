@@ -14,7 +14,7 @@ Object >> confirm: queryString [
 { #category : '*UIManager' }
 Object >> inform: aString [
 	"Display a message for the user to read and then dismiss."
-	
+
 	self halt.
 	"DO NOT CALL THIS METHOD!"
 	aString isEmptyOrNil

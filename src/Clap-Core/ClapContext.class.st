@@ -250,7 +250,18 @@ ClapContext >> handleExit: exit [
 { #category : 'testing' }
 ClapContext >> hasFlag: anIdentifier [
 
-		^ (self lastSubcommand occurrencesOf: anIdentifier) isNotEmpty
+		^ self hasFlag: anIdentifier in: self lastSubcommand
+]
+
+{ #category : 'private' }
+ClapContext >> hasFlag: anIdentifier in: aMatch [
+
+	^ (aMatch occurrencesOf: anIdentifier)
+		  ifEmpty: [
+				  aMatch parent isClapContext
+					  ifTrue: [ false ]
+					  ifFalse: [ self hasFlag: anIdentifier in: aMatch parent ] ]
+		  ifNotEmpty: [ true ]
 ]
 
 { #category : 'private' }
@@ -276,6 +287,12 @@ ClapContext >> ifMatch: matchBlock ifMismatch: failBlock [
 ClapContext >> initialize [
 	arguments := #().
 	obeyingExits := false
+]
+
+{ #category : 'testing' }
+ClapContext >> isClapContext [
+
+	^ true
 ]
 
 { #category : 'validation' }
@@ -311,14 +328,23 @@ ClapContext >> noneMatched [
 { #category : 'accessing' }
 ClapContext >> positional: anIdentifier [ 
 		
+	^ self positional: anIdentifier in: self lastSubcommand
+]
+
+{ #category : 'private' }
+ClapContext >> positional: anIdentifier in: aMatch [
+		
 	| identifierMatches |
 	
-	identifierMatches := (self lastSubcommand occurrencesOf: anIdentifier)
+	identifierMatches := (aMatch occurrencesOf: anIdentifier)
 		select: [ :identifierMatch | 
 			identifierMatch specification isPositional
 				or: [ identifierMatch specification isFlag and: [ self hasPositional: identifierMatch ] ] ].
 	^ identifierMatches
-		ifEmpty: [ NotFound signal: 'No positional found with id: ', anIdentifier  ] 
+		ifEmpty: [ 
+			aMatch parent isClapContext
+				ifTrue: [ NotFound signal: 'No positional found with id: ', anIdentifier  ]
+				ifFalse: [ self positional: anIdentifier in: aMatch parent ] ]
 ]
 
 { #category : 'printing' }

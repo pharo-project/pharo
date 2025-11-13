@@ -151,7 +151,7 @@ ${VM} "${COMPILER_IMAGE_NAME}.image" perform --save PharoBootstrapFixMethodsTool
 
 # Installing compiler through Hermes 
 echo $(date -u) "[Compiler] Installing compiler through Hermes"
-${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes Debugging-Utils.hermes OpalCompiler-Core.hermes Deprecation.hermes DebugInfo.hermes CodeImport.hermes CodeImport-Commands.hermes --save --no-fail-on-undeclared
+${VM} "${COMPILER_IMAGE_NAME}.image" loadHermes Debugging-Utils.hermes OpalCompiler-Core.hermes ParseTreeRewriter.hermes Deprecation.hermes DebugInfo.hermes CodeImport.hermes CodeImport-Commands.hermes --save --no-fail-on-undeclared
 ${VM} "${COMPILER_IMAGE_NAME}.image" eval --save "SystemEnvironment deprecatedAliases: { #SystemDictionary }." # This line should be removed in Pharo 14 since it is for backward compatibility.
 ${VM} "${COMPILER_IMAGE_NAME}.image" st ${BOOTSTRAP_REPOSITORY}/bootstrap/scripts/01-initialization/01-init.st --no-source --save --quit
 

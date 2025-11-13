@@ -826,6 +826,24 @@ DebugInfoTest >> testReadLocalMethodTemporaryVariable [
 ]
 
 { #category : 'tests - read variables' }
+DebugInfoTest >> testReadLocalMethodTemporaryVariableFromDeadContext [
+
+	| debugInfo contextWithArguments |
+	contextWithArguments := thisContext copy
+		pc: nil;
+		yourself.
+	self assert: contextWithArguments isDead.
+	debugInfo := self newDebugInfoFor: contextWithArguments method.
+
+	self
+		shouldnt: [
+			debugInfo
+				 readVariableNamed: #contextWithArguments
+				 fromContext: contextWithArguments ]
+		raise: MessageNotUnderstood
+]
+
+{ #category : 'tests - read variables' }
 DebugInfoTest >> testReadLocalOptimizedBlockArgumentVariable [
 
 	| debugInfo context |

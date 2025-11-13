@@ -39,6 +39,12 @@ Class {
 	#tag : 'Methods'
 }
 
+{ #category : 'class initialization' }
+CompiledCode class >> LargeFrame [
+
+	^ LargeFrame
+]
+
 { #category : 'instance creation' }
 CompiledCode class >> basicNew [
 

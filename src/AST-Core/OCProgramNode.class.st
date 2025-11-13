@@ -474,11 +474,6 @@ OCProgramNode >> debugHighlightStop [
 	^ self stop
 ]
 
-{ #category : 'testing' }
-OCProgramNode >> defines: aName [
-	^false
-]
-
 { #category : 'enumeration' }
 OCProgramNode >> do: aBlock [
 	"Hacked to fit collection protocols"
@@ -532,6 +527,11 @@ OCProgramNode >> evaluatedFirst: aNode [
 			[:each |
 			each == aNode ifTrue: [^true].
 			each isImmediateNode ifFalse: [^false]].
+	^false
+]
+
+{ #category : 'testing' }
+OCProgramNode >> exactNodeDefines: aName [
 	^false
 ]
 
@@ -1396,11 +1396,12 @@ OCProgramNode >> whichNodeIsContainedBy: anInterval [
 ]
 
 { #category : 'querying' }
-OCProgramNode >> whoDefines: aName [
-
-	^ (self defines: aName)
+OCProgramNode >> whichUpNodeDefines: aName [
+	"Returns the node that defines a variable starting bottom up. It can be either a method, a block."
+	
+	^ (self exactNodeDefines: aName)
 		  ifTrue: [ self ]
-		  ifFalse: [ parent ifNotNil: [ parent whoDefines: aName ] ]
+		  ifFalse: [ parent ifNotNil: [ parent whichUpNodeDefines: aName ] ]
 ]
 
 { #category : 'accessing' }

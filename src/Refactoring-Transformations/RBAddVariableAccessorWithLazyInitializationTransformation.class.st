@@ -73,7 +73,7 @@ RBAddVariableAccessorWithLazyInitializationTransformation >> checkVariableRefere
 			| name |
 
 			name := aNode name.
-			( aNode whoDefines: name ) ifNil: [ self canReferenceVariable: name in: class  ]
+			( aNode whichUpNodeDefines: name ) ifNil: [ self canReferenceVariable: name in: class  ]
 			].
 	searcher executeTree: aParseTree
 ]
