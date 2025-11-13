@@ -23,29 +23,18 @@ It first checks if another handler is available. If so it will activate the foun
 "
 Class {
 	#name : 'PharoOptionsHandler',
-	#superclass : 'Object',
-	#instVars : [
-		'arguments'
-	],
+	#superclass : 'BasicPharoOptionsHandler',
 	#classVars : [
 		'ShouldIgnorePreferences'
 	],
-	#category : 'System-CommandLineHandler',
-	#package : 'System-CommandLineHandler'
+	#category : 'StartupPreferences',
+	#package : 'StartupPreferences'
 }
 
-{ #category : 'accessing' }
-PharoOptionsHandler class >> forArguments: arguments [
+{ #category : 'class initialization' }
+PharoOptionsHandler class >> initialize [
 
-	^ self new
-		arguments: arguments;
-		yourself
-]
-
-{ #category : 'accessing' }
-PharoOptionsHandler class >> handle: arguments [
-
-	^ (self forArguments: arguments) handlePharoArguments
+	CurrentOptionsHandler := self
 ]
 
 { #category : 'accessing' }
@@ -58,17 +47,6 @@ PharoOptionsHandler class >> shouldIgnorePreferences [
 { #category : 'accessing' }
 PharoOptionsHandler class >> shouldIgnorePreferences: anObject [
 	ShouldIgnorePreferences := anObject
-]
-
-{ #category : 'accessing' }
-PharoOptionsHandler >> arguments [
-	^ arguments
-]
-
-{ #category : 'accessing' }
-PharoOptionsHandler >> arguments: aCollection [ 
-	
-	arguments := aCollection 
 ]
 
 { #category : 'private - preferences' }
@@ -98,17 +76,14 @@ PharoOptionsHandler >> filteredArguments [
 
 { #category : 'execution' }
 PharoOptionsHandler >> handlePharoArguments [
-	
 	"If the command line is configured to force the omission of preferences, we should skip them in any case. To ensure the command line works perfectly, we should still ensure that there is no unneeded parameters as 'preferences-file' of 'no-default-preferences'."
 
-	self shouldIgnorePreferences
-		ifFalse: [
+	self shouldIgnorePreferences ifFalse: [
 			self isChangingPreferences
 				ifTrue: [ self changePreferences ]
-				ifFalse: [ self runPreferences ]
-		].
-	
-	^ self filteredArguments
+				ifFalse: [ self runPreferences ] ].
+
+	^ super handlePharoArguments
 ]
 
 { #category : 'private - preferences' }
@@ -156,10 +131,8 @@ PharoOptionsHandler >> preferencesFileArgument [
 { #category : 'private - preferences' }
 PharoOptionsHandler >> runPreferences [
 
-	Smalltalk at: #SystemSettingsPersistence ifPresent: [:persistence |
-		persistence resumeSystemSettings].
-	Smalltalk at: #StartupPreferencesLoader ifPresent: [:loader |
-		loader default loadFromDefaultLocations ]
+	SystemSettingsPersistence resumeSystemSettings.
+	StartupPreferencesLoader default loadFromDefaultLocations
 ]
 
 { #category : 'accessing' }

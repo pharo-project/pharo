@@ -12,8 +12,8 @@ Class {
 		'initialShortcut',
 		'edited'
 	],
-	#category : 'Keymapping-Settings',
-	#package : 'Keymapping-Settings'
+	#category : 'Morphic-Testing-Support',
+	#package : 'Morphic-Testing-Support'
 }
 
 { #category : 'instance creation' }

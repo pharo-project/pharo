@@ -18,6 +18,12 @@ OCIRSend >> accept: aVisitor [
 	^ aVisitor visitSend: self
 ]
 
+{ #category : 'stack' }
+OCIRSend >> deltaStack [
+
+	^ (selector occurrencesOf: $:) negated
+]
+
 { #category : 'testing' }
 OCIRSend >> isSend [
 	^true

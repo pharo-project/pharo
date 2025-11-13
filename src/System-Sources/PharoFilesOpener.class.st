@@ -100,7 +100,8 @@ PharoFilesOpener >> inform: msg withChangesRef: fileRef [
 
 { #category : 'user interaction' }
 PharoFilesOpener >> inform: msg withRef: fileRef [
-	self inform: (msg copyReplaceAll: '&fileRef' with: fileRef)
+
+	InformativeNotification signal: (msg copyReplaceAll: '&fileRef' with: fileRef)
 ]
 
 { #category : 'user interaction' }

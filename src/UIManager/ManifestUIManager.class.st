@@ -11,7 +11,7 @@ Class {
 
 { #category : 'meta-data - dependency analyser' }
 ManifestUIManager class >> ignoredDependencies [
-	^ #(#CodeImport #'FileSystem-Core' #Files #'Graphics-Display Objects' #'Transcript-NonInteractive')
+	^ #(#CodeImport #Files #'Graphics-Display Objects' #'Transcript-NonInteractive')
 ]
 
 { #category : 'meta-data - dependency analyser' }

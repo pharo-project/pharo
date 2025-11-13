@@ -5,16 +5,25 @@ Class {
 	#name : 'FileException',
 	#superclass : 'Error',
 	#instVars : [
-		'fileName'
+		'entity'
 	],
 	#category : 'Files-Core',
 	#package : 'Files',
 	#tag : 'Core'
 }
 
-{ #category : 'exceptioninstantiator' }
+{ #category : 'instance creation' }
 FileException class >> fileName: aFileName [
-	^self new fileName: aFileName
+
+	^ self new entity: aFileName
+]
+
+{ #category : 'instance creation' }
+FileException class >> reference: aReference [
+
+	^ self new
+		  entity: aReference;
+		  messageText: aReference printString
 ]
 
 { #category : 'instance creation' }
@@ -28,17 +37,28 @@ FileException class >> signalWith: aReference [
 	"Signal a new instance of the receiver with the supplied reference.
 	aReference is something that can be converted to a path, e.g. a String, Path or FileReference"
 
-	^(self fileName: aReference asPath pathString) signal
+	^ (self reference: aReference) signal
 ]
 
-{ #category : 'exceptiondescription' }
+{ #category : 'accessing' }
+FileException >> entity [
+
+	^ entity
+]
+
+{ #category : 'accessing' }
+FileException >> entity: anObject [
+
+	entity := anObject
+]
+
+{ #category : 'accessing' }
 FileException >> fileName [
-	^fileName
-]
+	"If the entity is a string we return it. Else we ask it to the file reference."
 
-{ #category : 'exceptionbuilder' }
-FileException >> fileName: aFileName [
-	fileName := aFileName
+	^ entity isString
+		  ifTrue: [ entity ]
+		  ifFalse: [ entity asPath pathString ]
 ]
 
 { #category : 'testing' }
@@ -48,10 +68,9 @@ FileException >> isResumable [
 	^ true
 ]
 
-{ #category : 'exceptiondescription' }
+{ #category : 'accessing' }
 FileException >> messageText [
-
 	"Return an exception's message text."
 
-	^ messageText ifNil: [ fileName printString ] ifNotNil: [ messageText ]
+	^ messageText ifNil: [ self entity printString ]
 ]

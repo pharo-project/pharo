@@ -150,7 +150,8 @@ AutomaticRewriting >> raiseWarning [
 
 { #category : 'private' }
 AutomaticRewriting >> rewriterClass [
-	^ self class environment at: #OCParseTreeRewriter ifAbsent: [ nil ]
+
+	^ OCParseTreeRewriter
 ]
 
 { #category : 'accessing' }

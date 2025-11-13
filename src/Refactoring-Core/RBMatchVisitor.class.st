@@ -21,16 +21,17 @@ RBMatchVisitor >> difference [
 
 { #category : 'initialization' }
 RBMatchVisitor >> initialize [
-	super initialize .
-	arguments := 0 .
+	super initialize.
+	arguments := 0.
 	temporaries := 0.
 	difference := 0
 ]
 
 { #category : 'accessing' }
 RBMatchVisitor >> replace: temp with: aString [
-	|definingNode|
-	definingNode := temp whoDefines: temp name.
+
+	| definingNode |
+	definingNode := temp whichUpNodeDefines: temp name.
 	(OCParseTreeRewriter rename: temp name to: aString) executeTree: definingNode
 ]
 

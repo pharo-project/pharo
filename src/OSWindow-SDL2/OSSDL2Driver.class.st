@@ -354,7 +354,9 @@ OSSDL2Driver >> shutdownEventLoop [
 { #category : 'system startup' }
 OSSDL2Driver >> startUp: resuming [
 
-	self ensureEventLoop
+	resuming 
+		ifTrue: [ self forceNewEventLoop ]
+		ifFalse: [ self ensureEventLoop ]
 ]
 
 { #category : 'global events' }

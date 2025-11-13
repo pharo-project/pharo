@@ -233,7 +233,8 @@ SessionManager >> initialize [
 	networkCategory := self createCategory: 'Network'.
 	guiCategory := self createCategory: 'Graphical User Interface'.
 	toolsCategory := self createCategory: 'Tools'.
-	userCategory := self createCategory: 'User'
+	userCategory := self createCategory: 'User'.
+	self installNewSession
 ]
 
 { #category : 'session management' }

@@ -33,7 +33,8 @@ Class {
 		'jumpAheadStacks',
 		'currentSequence',
 		'sourceMapNodes',
-		'sourceMapByteIndex'
+		'sourceMapByteIndex',
+		'stackSize'
 	],
 	#category : 'OpalCompiler-Core-IR-Manipulation',
 	#package : 'OpalCompiler-Core',
@@ -56,6 +57,8 @@ OCIRBuilder >> add: instr [
 	"Associate instr with current parse node or byte range"
 	instr sourceNode: self sourceNode.
 	instr bytecodeIndex: self sourceByteIndex.
+
+	stackSize := stackSize + instr deltaStack.	
 	^ currentSequence add: instr
 ]
 
@@ -175,6 +178,7 @@ OCIRBuilder >> initialize [
 	jumpBackTargetStacks := IdentityDictionary new.
 	sourceMapNodes := OrderedCollection new.	"stack"
 	currentScope := Stack new.
+	stackSize := 0.
 	self pushScope: ir.
 
 	"Leave an empty sequence up front (guaranteed not to be in loop)"
@@ -423,6 +427,12 @@ OCIRBuilder >> sourceNode [
 	^ sourceMapNodes
 		ifEmpty: [nil]
 		ifNotEmpty: [sourceMapNodes last]
+]
+
+{ #category : 'accessing' }
+OCIRBuilder >> stackSize [
+
+	^ stackSize
 ]
 
 { #category : 'private' }

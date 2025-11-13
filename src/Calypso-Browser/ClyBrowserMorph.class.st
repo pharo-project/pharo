@@ -305,8 +305,8 @@ ClyBrowserMorph >> close [
 	currentWindow := self window.
 
 	(currentWindow ownerThatIsA: GroupWindowMorph) ifNotNil: [ :group |
-		^self okToChange ifTrue: [
-			[group removeWindow: currentWindow]]].
+		^ self okToChange ifTrue: [
+			  group removeWindow: currentWindow ]].
 
 	currentWindow close
 ]

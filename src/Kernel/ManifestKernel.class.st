@@ -15,11 +15,6 @@ ManifestKernel class >> dependencies [
 ]
 
 { #category : 'meta-data - dependency analyser' }
-ManifestKernel class >> ignoredDependencies [
-	^ #('FFI-Kernel')
-]
-
-{ #category : 'meta-data - dependency analyser' }
 ManifestKernel class >> manuallyResolvedDependencies [
 
 	^ #( #'Shift-ClassBuilder' )

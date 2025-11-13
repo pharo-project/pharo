@@ -81,7 +81,7 @@ RBMoveVariableDefinitionToSmallestValidScopeRefactoring >> checkParseTree [
 	blockNodes := OrderedCollection new.
 	node := self whichVariableNode: parseTree inInterval: interval name: name.
 	node ifNil: [ self refactoringError: 'Unable to locate node in parse tree' ].
-	definingNode := node whoDefines: name.
+	definingNode := node whichUpNodeDefines: name.
 	definingNode ifNil: [ self refactoringError: 'Cannot locate variable definition' ].
 	definingNode isSequence
 		ifFalse: [ self refactoringError: 'Variable is an argument' ].

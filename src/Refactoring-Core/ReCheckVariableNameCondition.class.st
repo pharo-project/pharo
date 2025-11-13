@@ -34,7 +34,7 @@ ReCheckVariableNameCondition >> check [
    		violators add: ('<1p> defines a class variable named <2s>'
       		expandMacrosWith: class
          with: variableName)].
-	(parseTree whoDefines: variableName)
+	(parseTree whichUpNodeDefines: variableName)
 		ifNotNil: [ 
 			violators add: ('<1s> is already defined' expandMacrosWith: variableName) ].
 	(parseTree allDefinedVariables includes: variableName ) ifTrue: [

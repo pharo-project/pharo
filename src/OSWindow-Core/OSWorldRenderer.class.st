@@ -72,7 +72,7 @@ OSWorldRenderer class >> restart [
 	self startUp: true.
 	UIManager default activate.
 	
-	self inform: self class name , ' restarted'
+	InformativeNotification signal: self class name , ' restarted'
 ]
 
 { #category : 'settings' }

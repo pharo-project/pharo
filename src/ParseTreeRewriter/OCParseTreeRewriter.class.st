@@ -1,42 +1,48 @@
 "
-ParseTreeRewriter walks over and transforms its ASTProgramNode (tree). If the tree is modified, then the answer is set to true, and the modified tree can be retrieved by the #tree method.
+ParseTreeRewriter walks over and transforms its tree (instance of ProgramNode). If the tree is modified, then the answer is set to true, and the modified tree can be retrieved by sending the message `tree`.
 
 
 Here is a little script to rewrite a self halt into self dormantHalt. 
 
+```
 	| rewriter node |
-	rewriter := ASTParseTreeRewriter new.
+	rewriter := OCParseTreeRewriter new.
 	rewriter replace: 'self halt' with: 'self dormatHalt'.
 	node := (ProtoObjectTest>>#testIfNil) parseTree.
 	rewriter executeTree: node.
 	^ node formattedCode
+```
 
 Note how do we get the transformed code. You can access the rewritten tree as follows:
-rewriter tree.
+`rewriter tree`.
 
 Now here is a full script showing how to compile the method back. 
 
+```
    | rewriter ok method |
-	rewriter := ASTParseTreeRewriter new.
+	rewriter := OCParseTreeRewriter new.
 	rewriter replaceMethod: self searchPattern with: self targetPattern.
-	method := (BIArrayExpressionTest>>#testNoExtraSpaceAroundPeriod).
+	method := (BIArrayExpressionTest >> #testNoExtraSpaceAroundPeriod).
 	ok := rewriter executeTree: method parseTree.
 	ok ifFalse: [ ^ 'did not work' ].
 	method origin 
 		compile: rewriter tree formattedCode 
 		classified: method protocol
+```
 
 
 Have a look at the users of deprecated:
 
+```
 		deprecated: 'Please use #isPinnedInMemory instead'
 		transformWith: '`@receiver isPinned' -> '`@receiver isPinnedInMemory'.
+```
 
-You can also have a look at the ParseTreeRewriterTest class.
+You can also have a look at the `ParseTreeRewriterTest` class.
 
 
 Instance Variables:
-	tree	<ASTProgramNode>	the parse tree we're transforming
+	tree	<OCProgramNode>	the parse tree we're transforming
 			
 	
 "
@@ -46,8 +52,8 @@ Class {
 	#instVars : [
 		'tree'
 	],
-	#category : 'AST-Core-Matching',
-	#package : 'AST-Core',
+	#category : 'ParseTreeRewriter-Matching',
+	#package : 'ParseTreeRewriter',
 	#tag : 'Matching'
 }
 

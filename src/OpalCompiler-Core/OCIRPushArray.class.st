@@ -30,6 +30,14 @@ OCIRPushArray >> cons: aBool [
 	cons := aBool
 ]
 
+{ #category : 'stack' }
+OCIRPushArray >> deltaStack [
+
+	^ cons
+		  ifTrue: [ (size - 1) negated ]
+		  ifFalse: [ 1 ]
+]
+
 { #category : 'initialization' }
 OCIRPushArray >> initialize [
 	size := 0.

@@ -176,7 +176,7 @@ RBMoveTemporaryVariableDefinitionTransformation >> definingBlock [
 		ifNotNil: [ :methodNode | methodNode variableWith: variableName ].
 	node ifNil: [self refactoringError: 'Unable to locate temporary variable in parse tree'].
 
-	definingNode := node whoDefines: variableName.
+	definingNode := node whichUpNodeDefines: variableName.
 	definingNode
 		ifNil: [self refactoringError: 'Cannot locate variable definition'].
 	definingNode isSequence

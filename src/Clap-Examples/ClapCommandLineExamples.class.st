@@ -32,6 +32,8 @@ ClapCommandLineExamples class >> git [
 		description: 'The stupid content tracker';
 		commandClass: self;
 		add: ClapCommandSpec forHelp;
+		addFlagWithPositional: #C description: 'Run as if git was started in <path> instead of the current working directory.';
+		addFlag: #paginate description: ' Pipe all output into less if standard output is a terminal';
 		add: ((ClapCommandSpec id: 'add')
 			description: 'Add file contents to the index';
 			commandClass: ClapGitAddCommandExample);

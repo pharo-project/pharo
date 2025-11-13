@@ -182,6 +182,9 @@ WorldMorph class >> initializeWorldAndActiveWorld [
 	Waybe some of the initialization code could go directly in WorldMorph and other classes normal initialization?"
 
 	| world hand |
+	"Ensure Morph is initialized."
+	Morph initialize.
+	
 	world := self new.
 	hand := HandMorph new.
 	world addHand: hand.

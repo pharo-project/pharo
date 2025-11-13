@@ -11,7 +11,7 @@ Class {
 
 { #category : 'meta-data - dependency analyser' }
 ManifestMonticello class >> ignoredDependencies [
-	^ #(#'Graphics-Primitives' #'FFI-Kernel')
+	^ #(#'Graphics-Primitives')
 ]
 
 { #category : 'meta-data - dependency analyser' }

@@ -6,18 +6,10 @@ Class {
 	#superclass : 'EpLogBrowserOperationVisitor',
 	#traits : 'EpTCodeChangeVisitor',
 	#classTraits : 'EpTCodeChangeVisitor classTrait',
-	#instVars : [
-		'application'
-	],
 	#category : 'EpiceaBrowsers-Visitors',
 	#package : 'EpiceaBrowsers',
 	#tag : 'Visitors'
 }
-
-{ #category : 'accessing' }
-EpBrowseVisitor >> application: anApplication [ 
-	application := anApplication
-]
 
 { #category : 'visitor' }
 EpBrowseVisitor >> browseClass: aClass [

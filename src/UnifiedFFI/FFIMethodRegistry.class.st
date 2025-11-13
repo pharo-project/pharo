@@ -17,8 +17,9 @@ Class {
 }
 
 { #category : 'cleanup' }
-FFIMethodRegistry class >> cleanUp: aggressive [
+FFIMethodRegistry class >> cleanUp [
 	"Only delete change sets when being aggressive"
+
 	self uniqueInstance reset.
 	uniqueInstance := nil
 ]
@@ -43,24 +44,33 @@ FFIMethodRegistry class >> resetAll [
 		- working directory change (and then libraries not found)
 		- indirect functions needs to be recalculated.
 	I am not supposed to be performed when image is just saved to avoid possible problem which can happen when we reset all caches and continue to work"
-	self uniqueInstance reset.
+
 	FFICallbackFunctionResolution reset.
 	FFIStructure resetAllStructures.
-	uniqueInstance := nil
+	self cleanUp
 ]
 
 { #category : 'system startup' }
-FFIMethodRegistry class >> shutDown: quitting [
-	quitting ifFalse: [ ^ self ].
+FFIMethodRegistry class >> softResetAll [
+	"I'm reseting each shutdown and startup because like that I can be sure a complete cleanup is done,
+	 because many things can change:
+		- platform change
+		- working directory change (and then libraries not found)
+		- indirect functions needs to be recalculated.
+	I am not supposed to be performed when image is just saved to avoid possible problem which can happen when we reset all caches and continue to work
+	
+	The soft version is not reseting structures if the platform did not change."
 
-	self resetAll
+	FFICallbackFunctionResolution reset.
+	FFIStructure resetAllStructuresIfPlatformChanged.
+	self cleanUp
 ]
 
 { #category : 'system startup' }
 FFIMethodRegistry class >> startUp: isImageStarting [
 	isImageStarting ifFalse: [ ^ self ].
 
-	self resetAll
+	self softResetAll
 ]
 
 { #category : 'instance creation' }

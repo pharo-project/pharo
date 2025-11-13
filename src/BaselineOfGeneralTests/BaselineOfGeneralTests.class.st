@@ -33,10 +33,8 @@ BaselineOfGeneralTests >> baseline: spec [
 					repository: repository;
 					loads: #Tests ];
 			package: 'FileSystem-Memory-Tests';
-			baseline: 'Fonts' with: [
-				spec
-					repository: repository;
-					loads: #Tests ];
+			baseline: 'Fonts' with: [ spec loads: #Tests from: repository ];
+			baseline: 'FreeType' with: [ spec loads: #tests from: repository ];
 			package: 'Graphics-Tests';
 			package: 'Text-Tests';
 			package: 'Morphic-Testing-Support';

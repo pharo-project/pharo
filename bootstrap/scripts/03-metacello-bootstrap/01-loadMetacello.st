@@ -2,7 +2,6 @@
 mcPackages := #(
  'ScriptingExtensions'
  'FileSystem-Memory'
- 'StartupPreferences'
  'STON-Core'
  'MonticelloFileTree-Core'
  'MonticelloFileTree-FileSystem-Utilities'

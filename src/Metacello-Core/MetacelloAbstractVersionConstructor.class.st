@@ -370,6 +370,14 @@ MetacelloAbstractVersionConstructor >> loads: aStringOrCollection [
 ]
 
 { #category : 'api' }
+MetacelloAbstractVersionConstructor >> loads: aCollection from: aString [
+
+	self
+		loads: aCollection;
+		repository: aString
+]
+
+{ #category : 'api' }
 MetacelloAbstractVersionConstructor >> name: anObject [
 
 	self root name: anObject

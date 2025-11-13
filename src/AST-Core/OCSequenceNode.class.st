@@ -257,11 +257,6 @@ OCSequenceNode >> copyInContext: aDictionary [
 		yourself
 ]
 
-{ #category : 'testing' }
-OCSequenceNode >> defines: aName [
-	^temporaries anySatisfy: [:each | each name = aName]
-]
-
 { #category : 'comparing' }
 OCSequenceNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class ifFalse: [^false].
@@ -273,6 +268,13 @@ OCSequenceNode >> equalTo: anObject withMapping: aDictionary [
 	self temporaries
 		do: [:each | aDictionary removeKey: each name ifAbsent: []].
 	^true
+]
+
+{ #category : 'testing' }
+OCSequenceNode >> exactNodeDefines: aName [
+	"Returns true whether the receiver dedfines a name as temporaries."
+	
+	^temporaries anySatisfy: [:each | each name = aName]
 ]
 
 { #category : 'testing' }
@@ -435,7 +437,9 @@ OCSequenceNode >> postCopy [
 
 { #category : 'testing' }
 OCSequenceNode >> references: aVariableName [
-	^statements anySatisfy: [:each | each references: aVariableName]
+	"Return wether the variable named aVariable is accessed in read or write with the receiver."
+	
+	^ statements anySatisfy: [:each | each references: aVariableName]
 ]
 
 { #category : 'replacing' }

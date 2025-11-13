@@ -129,7 +129,7 @@ EpLogNodeGraphPresenter >> refreshLogNodesTreePresenter [
 	nodes := #().
 	[ nodes := EpFileLogNode fromAllLogsIn: self directory.
 	nodes := nodes sorted: [ :a :b | a modificationTime >= b modificationTime ] ]
-		on: FileSystemError
+		on: FileException
 		do: [ :error | self inform: error asString ].
 
 	self isMonitorDirectory

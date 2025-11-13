@@ -5,7 +5,8 @@ Class {
 	#name : 'EpLogBrowserOperationVisitor',
 	#superclass : 'Object',
 	#instVars : [
-		'environment'
+		'environment',
+		'application'
 	],
 	#category : 'EpiceaBrowsers-Visitors',
 	#package : 'EpiceaBrowsers',
@@ -25,11 +26,16 @@ EpLogBrowserOperationVisitor class >> new [
 	^ self inEnvironment: self environment
 ]
 
+{ #category : 'accessing' }
+EpLogBrowserOperationVisitor >> application: anApplication [ 
+	application := anApplication
+]
+
 { #category : 'private' }
 EpLogBrowserOperationVisitor >> behaviorNamed: aSymbol ifPresent: presentBlock [
 
 	^ (environment classOrTraitNamed: aSymbol)
-		ifNil: [ self inform: 'Cannot find ', aSymbol ]
+		ifNil: [ application inform: 'Cannot find ', aSymbol ]
 		ifNotNil: presentBlock
 ]
 

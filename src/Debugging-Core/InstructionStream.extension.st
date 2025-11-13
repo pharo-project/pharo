@@ -60,13 +60,6 @@ InstructionStream >> interpretWithClient: aClient [
 ]
 
 { #category : '*Debugging-Core' }
-InstructionStream >> nextPc: currentByte [
-	"Answer the pc of the next bytecode following the current one, given the current bytecode.
-	 Skips the extension bytecodes."
-	^ pc + (self method encoderClass instructionSizeAt: pc of: self method)
-]
-
-{ #category : '*Debugging-Core' }
 InstructionStream >> peekByte [
 	"Answer the first byte of the current bytecode."
 
@@ -78,23 +71,6 @@ InstructionStream >> previousPc [
 
 	"Return the PC of the instruction preceding the current one"
 	^self method pcPreviousTo: pc
-]
-
-{ #category : '*Debugging-Core' }
-InstructionStream >> scanFor: scanBlock [
-	"Check all bytecode instructions with scanBlock, answer true if scanBlock answers true.
-	This can be used to, e.g., check whether a method contains 'push closure' bytecodes like this:
-	aMethod scanFor: [ :b | b = 143 ]"
-
-	| method encoderClass end byte |
-	method := self method.
-	end := method endPC.
-	encoderClass := method encoderClass.
-	[pc <= end] whileTrue: 
-		[(scanBlock value: (byte := method at: pc)) ifTrue:
-			[^true].
-		 pc := pc + (encoderClass bytecodeSize: byte)].
-	^false
 ]
 
 { #category : '*Debugging-Core' }
