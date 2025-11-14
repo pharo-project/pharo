@@ -15,8 +15,8 @@ Class {
 	#instVars : [
 		'registry',
 		'preventedAnnouncements',
-		'suspended',
-		'storedAnnouncements'
+		'storedAnnouncements',
+		'suspendedCount'
 	],
 	#category : 'Announcements-Core-Base',
 	#package : 'Announcements-Core',
@@ -68,13 +68,16 @@ Announcer >> hasSubscriber: anObject [
 
 { #category : 'initialization' }
 Announcer >> initialize [
+
 	super initialize.
-	registry := SubscriptionRegistry new
+	registry := SubscriptionRegistry new.
+	suspendedCount := 0.
 ]
 
 { #category : 'testing' }
 Announcer >> isSuspended [
-	^suspended ifNil: [ suspended := false ]
+
+	^ suspendedCount > 0
 ]
 
 { #category : 'statistics' }
@@ -126,10 +129,11 @@ Announcer >> subscriptionsForClass: subscriberClass [
 
 { #category : 'announce' }
 Announcer >> suspendAllWhile: aBlock [
-	| oldSuspended |
-	oldSuspended := self isSuspended.
-	suspended := true.
-	^aBlock ensure: [ suspended := oldSuspended ]
+	"Returns the result of the block execution."
+	
+	suspendedCount := suspendedCount + 1.
+	^aBlock ensure: [ 
+		suspendedCount := suspendedCount - 1 ]
 ]
 
 { #category : 'announce' }
@@ -151,6 +155,17 @@ Announcer >> suspendAllWhileStoring: aBlock [
 			storedAnnouncements := nil.
 		]
 	]
+]
+
+{ #category : 'accessing' }
+Announcer >> suspendedCount [
+
+	^ suspendedCount
+]
+
+{ #category : 'accessing' }
+Announcer >> suspendedCount: anInteger [ 
+	suspendedCount := anInteger
 ]
 
 { #category : 'subscription' }
