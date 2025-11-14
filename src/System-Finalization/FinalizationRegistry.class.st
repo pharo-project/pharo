@@ -130,7 +130,15 @@ FinalizationRegistry >> handleErrorsDuring: aBlock [
 	aBlock on: Error fork: [ :e | e pass ]
 ]
 
-{ #category : #testing }
+{ #category : 'testing' }
+FinalizationRegistry >> hasIntegrity [
+	"Answer a boolean indicating the receiver looks OK.
+	Assumes that the receiver is not modified while running the check."
+
+	^ ephemeronList hasIntegrity
+]
+
+{ #category : 'testing' }
 FinalizationRegistry >> includes: aKey [
 
 	^ ephemeronList anySatisfy: [ :e | e key = aKey ]
@@ -193,7 +201,7 @@ FinalizationRegistry >> remove: aKey ifAbsent: aBlock [
 { #category : #adding }
 FinalizationRegistry >> removeEphemeron: anEphemeron [
 
-	self protected: [ ephemeronList removeLink: anEphemeron link ]
+	self protected: [ ephemeronList removeMaybeNotExistingLink: anEphemeron link ]
 ]
 
 { #category : #accessing }
