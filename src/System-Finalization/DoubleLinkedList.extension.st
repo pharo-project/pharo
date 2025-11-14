@@ -60,7 +60,7 @@ DoubleLinkedList >> removeMaybeNotExistingLink: link [
 			predecessor nextLink = link 
 				ifFalse: [ 
 				 link clearLinks.
-				 false ].
+				 ^ false ].
 			predecessor nextLink: successor ].
 	successor
 		ifNil: [ tail := predecessor ]
