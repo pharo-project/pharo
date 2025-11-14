@@ -8,6 +8,8 @@ Users can create subclasses of Announcement, then objects can register to an ann
 The implementation uses a threadsafe subscription registry, in the sense that registering, unregistering, and announcing from an announcer at the same time in different threads should never cause failures.
 
 The method #prevent:during: allows one to prevent the firing of some announcements during the execution of a block wile letting the other announcements go throuht.
+
+It is also possible to suspend the announcements during the execution of a block (either to prevent all announcements, or to announce them as a bulk after the bloc execution). This feature was originaly implemented using a boolean, but we are now using a counter because it is possible to do concurent calls to the announcer. See #testConcurrentSuspendAllWhile for an example.
 "
 Class {
 	#name : 'Announcer',
