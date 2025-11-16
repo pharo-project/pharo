@@ -9,10 +9,16 @@ To get the behavior I define, my users should implement:
 "
 Trait {
 	#name : 'TSortable',
-	#category : 'Kernel-Traits-Base',
-	#package : 'Kernel-Traits',
-	#tag : 'Base'
+	#category : 'Deprecated13',
+	#package : 'Deprecated13'
 }
+
+{ #category : 'testing' }
+TSortable classSide >> isDeprecated [
+	"This trait has no user and will be removed from Pharo."
+
+	^ true
+]
 
 { #category : 'sorting' }
 TSortable >> isSorted [

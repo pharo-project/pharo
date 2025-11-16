@@ -51,11 +51,11 @@ RGMonticelloTest >> testConvertingMCMethodDefinition [
 { #category : 'testing' }
 RGMonticelloTest >> testConvertingMCTraitDefinition [
 	| mcClass ringClass |
-	mcClass := TSortable asClassDefinition.
+	mcClass := TEmpty asClassDefinition.
 	ringClass := mcClass asRingDefinition.
 
 	self assert: ringClass isTrait.
-	self assert: ringClass classSide realClass equals: TSortable classSide.
-	self assert: (ringClass isSameRevisionAs: TSortable asRingDefinition).
+	self assert: ringClass classSide realClass equals: TEmpty classSide.
+	self assert: (ringClass isSameRevisionAs: TEmpty asRingDefinition).
 	self deny: (ringClass isSameRevisionAs: TAssertable asRingDefinition)
 ]
