@@ -75,6 +75,15 @@ MCGitHubRepository class >> flushETagsCache [
   ETagsCache := nil
 ]
 
+{ #category : 'class initialization' }
+MCGitHubRepository class >> initialize [
+	"This class needs to be initialized the same way that its superclass"
+
+	self flushDownloadCache.
+	self resetCacheDirectoryIfInvalid.
+	SessionManager default registerNetworkClassNamed: self name
+]
+
 { #category : 'testing' }
 MCGitHubRepository class >> isAvailableFor: type [
 	^ type = 'github'

@@ -120,7 +120,7 @@ RBRenameArgumentOrTemporaryRefactoring >> prepareForExecution [
 		self refactoringError: oldName asString , ' isn''t a valid variable' ].
 	variableNode name = oldName ifFalse: [
 		self refactoringError: 'Invalid selection' ].
-	definingNode := variableNode whoDefines: oldName.
+	definingNode := variableNode whichUpNodeDefines: oldName.
 	definingNode ifNil: [
 		self refactoringError:
 			oldName asString , ' isn''t defined by the method' ]

@@ -7,6 +7,7 @@ This implementation extends the source pointer address space using bit 25 of the
 
 The use of bit 25 of the source pointer for file references permits backward compatibility with StandardSourceFileArray, with essentially unlimited address space expansion for the sources and changes files.
 
+
 "
 Class {
 	#name : 'SourceFileArray',
@@ -16,10 +17,38 @@ Class {
 		'readOnlyQueue',
 		'flushChanges'
 	],
+	#classVars : [
+		'Default'
+	],
 	#category : 'System-Sources-Sources',
 	#package : 'System-Sources',
 	#tag : 'Sources'
 }
+
+{ #category : 'accessing' }
+SourceFileArray class >> default [
+
+	^ Default
+]
+
+{ #category : 'accessing' }
+SourceFileArray class >> default: anInstance [
+
+	Default := anInstance
+]
+
+{ #category : 'class initialization' }
+SourceFileArray class >> initialize [
+
+	"Guard since initializing twice would create bugs."
+	self default ifNotNil: [ ^ self ].
+	
+	self default: self new.
+	
+	"This next line is to add a deprecated global variable. The deprecation happened in Pharo 14 development. We can remove it completly in the future."
+	self class environment at: #SourceFiles put: self default.
+	(self class environment bindingOf: #SourceFiles) isDeprecated: true
+]
 
 { #category : 'system startup' }
 SourceFileArray class >> startUp: resuming [
@@ -159,7 +188,10 @@ SourceFileArray >> fileIndexFromSourcePointer: anInteger [
 
 { #category : 'private - sourcepointer conversion' }
 SourceFileArray >> filePositionFromSourcePointer: anInteger [
-	"Return the position of the source chunk addressed by anInteger, just shift by one"
+	
+	"Return the position of the source chunk addressed by anInteger"
+	"The source pointer is composed of 63 bits offset + 1 bit of file identifier in the least significant bit.
+	Thus, shift by one to remove the file identifier"
 
 	^ anInteger >> 1
 ]
@@ -325,25 +357,6 @@ SourceFileArray >> readStreamAtFileIndex: index atPosition: position ifPresent: 
     ^ result
 ]
 
-{ #category : 'public - string reading' }
-SourceFileArray >> remoteStringAt: sourcePointer [
-
-	| filePosition fileIndex |
-	fileIndex := self fileIndexFromSourcePointer: sourcePointer.
-	filePosition := self filePositionFromSourcePointer: sourcePointer.
-
-	^ RemoteString newFileNumber: fileIndex position: filePosition
-]
-
-{ #category : 'public - string writing' }
-SourceFileArray >> remoteStringForNewString: aString [
-
-	^ RemoteString new
-		sourceFileArray: self;
-		string: aString;
-		yourself
-]
-
 { #category : 'printing' }
 SourceFileArray >> reportString [
 
@@ -460,20 +473,49 @@ SourceFileArray >> timeStampFromPreamble: preamble for: sourceDataPointers [
 ]
 
 { #category : 'public - string writing' }
-SourceFileArray >> writeSource: aString preamble: preamble onSuccess: successBlock onFail: failBlock [
+SourceFileArray >> writeChangesDuring: aBlock onSuccess: successBlock onFail: failBlock [
 
-	| file position |
+	| file sourceCodePosition |
 	file := self changesFileStream.
-	(file isNil or: [file closed or: [ file isReadOnly ] ]) ifTrue: [ ^ failBlock value ].
+	(file isNil or: [ file closed or: [ file isReadOnly ] ]) ifTrue: [ ^ failBlock value ].
 
 	ChangesLog default assureStartupStampLogged.
 
 	file setToEnd.
-	file nextPutAll: preamble.
-	position := file position.
-	(SourceChunkWriteStream on: file) nextChunkPut: aString.
-
-	successBlock cull: (self sourcePointerFromFileIndex: 2 andPosition: position) cull: file.
+	sourceCodePosition := aBlock value: file.
+	successBlock value: (self sourcePointerFromFileIndex: 2 andPosition: sourceCodePosition).
 
 	self flushChangesFile
+]
+
+{ #category : 'public - string writing' }
+SourceFileArray >> writeComment: aComment ofClass: aClass metadata: metadata timestamp: aTimeStamp priorSourcePointer: priorSourcePointer onSuccess: successBlock onFail: failBlock [
+
+	self
+		writeChangesDuring: [ :file |
+				(CodeExporter onStream: file)
+					writeComment: aComment
+					ofClass: aClass
+					stamp: aTimeStamp
+					withMetadata: metadata
+					priorSourcePointer: priorSourcePointer ]
+		onSuccess: successBlock
+		onFail: failBlock
+]
+
+{ #category : 'public - string writing' }
+SourceFileArray >> writeSource: source ofMethod: method protocol: protocol metadata: metadata timestamp: timestamp priorSourcePointer: priorSourcePointer onSuccess: successBlock onFail: failBlock [
+
+	self
+		writeChangesDuring: [ :file |
+				(CodeExporter onStream: file)
+					writeMethodWithClass: method methodClass
+					selector: method selector
+					source: source
+					protocol: protocol
+					stamp: timestamp
+					withMetadata: metadata
+					priorSourcePointer: priorSourcePointer ]
+		onSuccess: successBlock
+		onFail: failBlock
 ]

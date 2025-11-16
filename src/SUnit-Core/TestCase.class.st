@@ -86,12 +86,12 @@ Class {
 		'expectedFails'
 	],
 	#classVars : [
-		'Announcers',
 		'DefaultTimeLimit',
 		'HistoryAnnouncer'
 	],
 	#classInstVars : [
-		'history'
+		'history',
+		'announcer'
 	],
 	#category : 'SUnit-Core-Kernel',
 	#package : 'SUnit-Core',
@@ -143,12 +143,8 @@ TestCase class >> allTestSelectors [
 
 { #category : 'events' }
 TestCase class >> announcer [
-	^ self announcers at: self ifAbsentPut: [ Announcer new ]
-]
 
-{ #category : 'events' }
-TestCase class >> announcers [
-	^ Announcers ifNil: [ Announcers := Dictionary new ]
+	^ announcer ifNil: [ announcer := Announcer new ]
 ]
 
 { #category : 'building suites' }
@@ -274,22 +270,6 @@ TestCase class >> defaultTimeLimitSecs [
 { #category : 'settings' }
 TestCase class >> defaultTimeLimitSecs: aNumber [
 	self defaultTimeLimit: aNumber seconds
-]
-
-{ #category : 'settings' }
-TestCase class >> defaultTimeLimitSettingOn: aBuilder [
-	<systemsettings>
-
-	(aBuilder group: #sunit)
-		label: 'SUnit';
-		parent: #pharoSystem;
-		description: 'SUnit';
-		with: [
-			(aBuilder setting: #defaultTimeLimitSecs)
-				target: self;
-				default: 10.0;
-				label: 'Default time limit for tests (secs)' ;
-				description: 'Detault time limit in seconds for test execution']
 ]
 
 { #category : 'history' }
@@ -520,8 +500,19 @@ TestCase class >> newTestDictionary [
 ]
 
 { #category : 'events' }
+TestCase class >> removeSubscription: aSubscriber [
+
+	announcer ifNil: [ ^ self ].
+
+	announcer subscriptions removeSubscriber: aSubscriber.
+	announcer subscriptions isEmpty 
+		ifTrue: [ self resetAnnouncer ]
+]
+
+{ #category : 'events' }
 TestCase class >> resetAnnouncer [
-	self announcers removeKey: self ifAbsent: []
+
+	announcer := nil
 ]
 
 { #category : 'history' }
@@ -558,7 +549,9 @@ TestCase class >> selector: aSymbol [
 
 { #category : 'events' }
 TestCase class >> shouldAnnounce [
-	^ self announcers includesKey: self
+
+	^ announcer isNotNil 
+		and: [ announcer subscriptions isEmpty not ]
 ]
 
 { #category : 'history' }
@@ -621,16 +614,18 @@ TestCase >> addDependentToHierachy: anObject [
 	"an empty method. for Composite compatibility with TestSuite"
 ]
 
-{ #category : 'events' }
+{ #category : 'announcing' }
 TestCase >> announce: anAnnouncementClass [
+
 	^ self announce: anAnnouncementClass withResult: nil
 ]
 
-{ #category : 'events' }
+{ #category : 'announcing' }
 TestCase >> announce: anAnnouncementClass withResult: result [
 	| event |
-	self shouldAnnounce ifFalse: [ ^ self ].
 
+	self shouldAnnounce ifFalse: [ ^ self ].
+	
 	event := anAnnouncementClass asAnnouncement.
 	event testCase: self.
 	event testSelector: testSelector.
@@ -638,8 +633,9 @@ TestCase >> announce: anAnnouncementClass withResult: result [
 	self announcer announce: event
 ]
 
-{ #category : 'events' }
+{ #category : 'announcing' }
 TestCase >> announcer [
+
 	^ self class announcer
 ]
 
@@ -655,13 +651,23 @@ TestCase >> debug [
 	"During the execution, if the receiver fails
 	due to an error or an assertion failure,
 	I open the debuger so user can see the context of failure"
-
 	| result |
+
 	result := self classForTestResult new.
-	[ result runCaseForDebug: self ] ensure: [
-		self classForTestResource resetResources: self resources.
+	^ [ self debug: result ] 
+	ensure: [ 
 		result updateResultsInHistory ].
-	^ result
+]
+
+{ #category : 'running' }
+TestCase >> debug: aResult [
+	"During the execution, if the receiver fails
+	due to an error or an assertion failure,
+	I open the debuger so user can see the context of failure"
+
+	^ [ aResult runCaseForDebug: self ] 
+	ensure: [
+		self classForTestResource resetResources: self resources ]
 ]
 
 { #category : 'running' }
@@ -874,8 +880,9 @@ TestCase >> setUp [
 	"Hooks that subclasses may override to define the fixture of test."
 ]
 
-{ #category : 'events' }
+{ #category : 'announcing' }
 TestCase >> shouldAnnounce [
+
 	^ self class shouldAnnounce
 ]
 

@@ -115,6 +115,92 @@ Float >> asIEEE64BitWord [
 ]
 
 { #category : '*Math-Operations-Extensions' }
+Float >> asMinimalDecimalFraction [
+	"Answer the shortest decimal Fraction that will equal self when converted back asFloat.
+	A decimal Fraction has only powers of 2 and 5 as decnominator.
+	For example, 0.1 asMinimalDecimalFraction = (1/10)."
+
+	| significand exp baseExpEstimate r s mPlus mMinus scale roundingIncludesLimits d tc1 tc2 fixedFormat decPointCount slowbit shead denominator numerator |
+	self isFinite ifFalse: [self error: 'Only finite Float can be converted to a Fraction'].
+	self = 0.0 ifTrue: [^0].
+	self < 0.0 ifTrue: [^self negated asMinimalDecimalFraction negated].
+	numerator := 0.
+	denominator := 0.
+	significand := self significandAsInteger.
+	roundingIncludesLimits := significand even.
+	exp := (self exponent - 52) max: MinValLogBase2.
+	baseExpEstimate := (self exponent * 10 asFloat reciprocalLogBase2 - 1.0e-10) ceiling.
+	exp >= 0
+		ifTrue:
+			[significand ~= 16r10000000000000
+				ifTrue:
+					[r := significand bitShift: 1 + exp.
+					s := 2.
+					mPlus := mMinus := 1 bitShift: exp]
+				ifFalse:
+					[r := significand bitShift: 2 + exp.
+					s := 4.
+					mPlus := 2 * (mMinus := 1 bitShift: exp)]]
+		ifFalse:
+			[(exp = MinValLogBase2 or: [significand ~= 16r10000000000000])
+				ifTrue:
+					[r := significand bitShift: 1.
+					s := 1 bitShift: 1 - exp.
+					mPlus := mMinus := 1]
+				ifFalse:
+					[r := significand bitShift: 2.
+					s := 1 bitShift: 2 - exp.
+					mPlus := 2.
+					mMinus := 1]].
+	baseExpEstimate >= 0
+		ifTrue: [s := s * (10 raisedToInteger: baseExpEstimate)]
+		ifFalse:
+			[scale := 10 raisedToInteger: baseExpEstimate negated.
+			r := r * scale.
+			mPlus := mPlus * scale.
+			mMinus := mMinus * scale].
+	((r + mPlus < s) not and: [roundingIncludesLimits or: [r + mPlus > s]])
+		ifTrue: [baseExpEstimate := baseExpEstimate + 1]
+		ifFalse:
+			[r := r * 10.
+			mPlus := mPlus * 10.
+			mMinus := mMinus * 10].
+	(fixedFormat := baseExpEstimate between: -3 and: 6)
+		ifTrue:
+			[decPointCount := baseExpEstimate.
+			baseExpEstimate <= 0
+				ifTrue: [denominator := 10 raisedTo: baseExpEstimate negated]]
+		ifFalse:
+			[decPointCount := 1].
+	slowbit := 1 - s lowBit .
+	shead := s bitShift: slowbit.
+	[d := (r bitShift: slowbit) // shead.
+	r := r - (d * s).
+	(tc1 := r <= mMinus and: [roundingIncludesLimits or: [r < mMinus]]) |
+	(tc2 := r + mPlus >= s and: [roundingIncludesLimits or: [r + mPlus > s]])] whileFalse:
+		[numerator := 10 * numerator + d.
+		denominator := 10 * denominator.
+		r := r * 10.
+		mPlus := mPlus * 10.
+		mMinus := mMinus * 10.
+		decPointCount := decPointCount - 1.
+		decPointCount = 0 ifTrue: [denominator := 1]].
+	tc2 ifTrue:
+		[(tc1 not or: [r * 2 >= s]) ifTrue: [d := d + 1]].
+	numerator := 10 * numerator + d.
+	denominator := 10 * denominator.
+	decPointCount > 0
+		ifTrue:
+		[numerator := (10 raisedTo: decPointCount - 1) * numerator].
+	fixedFormat ifFalse:
+		[(baseExpEstimate - 1) > 0
+			ifTrue: [numerator := (10 raisedTo: baseExpEstimate - 1) * numerator]
+			ifFalse: [denominator := (10 raisedTo: 1 - baseExpEstimate) * (denominator max: 1)]].
+	denominator < 2 ifTrue: [^numerator].
+	^numerator / denominator
+]
+
+{ #category : '*Math-Operations-Extensions' }
 Float >> closeTo: num [
  	"Tell whether the receiver and arguments are close from each."
 
@@ -158,15 +244,6 @@ Float >> degreesToRadians [
 	"Answer the receiver in radians. Assumes the receiver is in degrees."
 
 	^self * RadiansPerDegree
-]
-
-{ #category : '*Math-Operations-Extensions' }
-Float class >> epsilon [
-
-	self
-		deprecated: 'Use machineEpsilon instead'
-		transformWith: '`@receiver epsilon' -> '`@receiver machineEpsilon'.
-	^ self machineEpsilon
 ]
 
 { #category : '*Math-Operations-Extensions' }
@@ -276,6 +353,30 @@ Float >> reciprocal [
 ]
 
 { #category : '*Math-Operations-Extensions' }
+Float >> reciprocalFloorLog: radix [
+	"Quick computation of (self log: radix) floor, when self < 1.0.
+	Avoids infinite recursion problems with denormalized numbers"
+
+	| adjust scale n |
+	adjust := 0.
+	scale := 1.0.
+	[(n := radix / (self * scale)) isInfinite]
+		whileTrue:
+			[scale := scale * radix.
+			adjust := adjust + 1].
+	^ ((n floorLog: radix) + adjust) negated
+]
+
+{ #category : '*Math-Operations-Extensions' }
+Float >> reciprocalLogBase2 [
+	"optimized for self = 10, for use in conversion for printing"
+
+	^ self = 10.0
+		ifTrue: [Ln2 / Ln10]
+		ifFalse: [Ln2 / self ln]
+]
+
+{ #category : '*Math-Operations-Extensions' }
 Float >> reduce [
     "If self is close to an integer, return that integer"
 
@@ -309,6 +410,22 @@ Float >> safeArcCos [
 	^ (self between: -1.0 and: 1.0)
 		ifTrue: [ self arcCos ]
 		ifFalse: [ self sign arcCos ]
+]
+
+{ #category : '*Math-Operations-Extensions' }
+Float >> significand [
+
+	^ self timesTwoPower: (self exponent negated)
+]
+
+{ #category : '*Math-Operations-Extensions' }
+Float >> significandAsInteger [
+	"Answer the mantissa of a Float shifted so as to have the ulp equal to 1.
+	For exceptional values, infinity and nan, just answer the bit pattern."
+
+	self isFinite ifTrue:
+		[^(self timesTwoPower: self class precision - 1 - (self exponent max: self class emin)) truncated abs].
+	^(((self basicAt: 1) bitAnd: 16r000FFFFF) bitShift: 32) bitOr: (self basicAt: 2)
 ]
 
 { #category : '*Math-Operations-Extensions' }

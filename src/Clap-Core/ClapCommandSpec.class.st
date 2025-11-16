@@ -29,7 +29,8 @@ Class {
 	#instVars : [
 		'flags',
 		'subcommands',
-		'commandClass'
+		'commandClass',
+		'longDescription'
 	],
 	#category : 'Clap-Core-Specification',
 	#package : 'Clap-Core',
@@ -83,6 +84,12 @@ ClapCommandSpec >> addFlag: anIdentifier description: aString positionalSpec: aP
 	flag add: positional.
 	^ flag
 	
+]
+
+{ #category : 'api' }
+ClapCommandSpec >> addFlag: flagIdentifier withPositional: positiionalIdentifier description: aString [
+	
+	^ self addFlag: flagIdentifier description: aString positionalSpec: [ :positional | positional identifier: positiionalIdentifier ]
 ]
 
 { #category : 'api' }
@@ -162,6 +169,18 @@ ClapCommandSpec >> initialize [
 ClapCommandSpec >> isCommand [
 
 	^ true
+]
+
+{ #category : 'accessing' }
+ClapCommandSpec >> longDescription [
+
+	^ longDescription
+]
+
+{ #category : 'accessing' }
+ClapCommandSpec >> longDescription: aString [
+
+	longDescription := aString
 ]
 
 { #category : 'accessing' }

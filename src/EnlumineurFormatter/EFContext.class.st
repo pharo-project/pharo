@@ -394,23 +394,23 @@ EFContext >> oneLineMessages: anArray [
 ]
 
 { #category : 'accessing' }
+EFContext >> periodAtEndOfBlock [
+	^ periodAtEndOfBlock
+]
+
+{ #category : 'accessing' }
 EFContext >> periodAtEndOfBlock: aBoolean [
 	periodAtEndOfBlock := aBoolean
 ]
 
 { #category : 'accessing' }
+EFContext >> periodAtEndOfMethod [
+	^ periodAtEndOfMethod
+]
+
+{ #category : 'accessing' }
 EFContext >> periodAtEndOfMethod: aBoolean [
 	periodAtEndOfMethod := aBoolean
-]
-
-{ #category : 'accessing' }
-EFContext >> periodsAtEndOfBlock [
-	^ periodAtEndOfBlock
-]
-
-{ #category : 'accessing' }
-EFContext >> periodsAtEndOfMethod [
-	^ periodAtEndOfMethod
 ]
 
 { #category : 'accessing' }

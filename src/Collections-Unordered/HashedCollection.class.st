@@ -271,12 +271,3 @@ HashedCollection >> union: aCollection [
 
 	^ self copy addAll: aCollection; yourself
 ]
-
-{ #category : 'copying' }
-HashedCollection >> veryDeepCopyWith: deepCopier [
-	| copyOfSelf|
-	copyOfSelf := super veryDeepCopyWith: deepCopier.
-	"force Sets and Dictionaries to rehash"
-	copyOfSelf rehash.
-		^ copyOfSelf
-]

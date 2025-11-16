@@ -257,11 +257,6 @@ OCSequenceNode >> copyInContext: aDictionary [
 		yourself
 ]
 
-{ #category : 'testing' }
-OCSequenceNode >> defines: aName [
-	^temporaries anySatisfy: [:each | each name = aName]
-]
-
 { #category : 'comparing' }
 OCSequenceNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class ifFalse: [^false].
@@ -273,6 +268,13 @@ OCSequenceNode >> equalTo: anObject withMapping: aDictionary [
 	self temporaries
 		do: [:each | aDictionary removeKey: each name ifAbsent: []].
 	^true
+]
+
+{ #category : 'testing' }
+OCSequenceNode >> exactNodeDefines: aName [
+	"Returns true whether the receiver dedfines a name as temporaries."
+	
+	^temporaries anySatisfy: [:each | each name = aName]
 ]
 
 { #category : 'testing' }
@@ -293,19 +295,9 @@ OCSequenceNode >> hasNonLocalReturn [
 { #category : 'testing' }
 OCSequenceNode >> hasSameExitPoint [
 
-	statements last isReturn ifTrue: [ ^ true ].
-	^ self hasSameExitPoint: false
-]
-
-{ #category : 'testing' }
-OCSequenceNode >> hasSameExitPoint: aBoolean [ 
-
-	| statementsWithBlocks |
-	aBoolean ifTrue: [ ^ true ].
 	statements ifEmpty: [ ^ true ].
-	statementsWithBlocks := statements select: [ :stm | stm hasBlock ].
-	^ (statements last isReturn not and: [
-		statementsWithBlocks allSatisfy: [ :stm | stm hasSameExitPoint: false ] ]).
+	statements last isReturn ifTrue: [ ^ true ].
+	^ self hasNonLocalReturn not
 ]
 
 { #category : 'testing' }
@@ -431,11 +423,6 @@ OCSequenceNode >> postCopy [
 	super postCopy.
 	self temporaries: (self temporaries collect: [ :each | each copy ]).
 	self statements: (self statements collect: [ :each | each copy ])
-]
-
-{ #category : 'testing' }
-OCSequenceNode >> references: aVariableName [
-	^statements anySatisfy: [:each | each references: aVariableName]
 ]
 
 { #category : 'replacing' }

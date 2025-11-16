@@ -37,22 +37,22 @@ ReRenameMethodDriver >> browseOverrides [
 		asImplementorsOf: newMessage selector
 ]
 
-{ #category : 'private testing' }
+{ #category : 'private - testing' }
 ReRenameMethodDriver >> canAddArgs [
 	^ false
 ]
 
-{ #category : 'private testing' }
+{ #category : 'private - testing' }
 ReRenameMethodDriver >> canEditName [
 	^ true
 ]
 
-{ #category : 'private testing' }
+{ #category : 'private - testing' }
 ReRenameMethodDriver >> canRemoveArgs [
 	^ false
 ]
 
-{ #category : 'private testing' }
+{ #category : 'private - testing' }
 ReRenameMethodDriver >> canRenameArgs [
 	^ true
 ]
@@ -73,25 +73,16 @@ ReRenameMethodDriver >> configureMessage [
 	refactoring renameMap: newMessage renameMap.
 ]
 
-{ #category : 'execution' }
-ReRenameMethodDriver >> configureRefactoring [
-
-	"here we do not fully configure the refactoring because we are missing information such as the signature.
-	Since we want to let the refactoring validate input we need to create it upfront then configure later."
-	
-	refactoring := ReRenameMethodRefactoring new renameMethod: originalMessage selector in: class 
-]
-
 { #category : 'configuration' }
 ReRenameMethodDriver >> defaultSelectDialog [ 
 
-	^ self class defaultSelectDialog
-		    title: 'There are potential breaking changes!';
-		          label: 'Watchout potential override detected!';
-		          items: self breakingChoices;
-		          display: [ :each | each description ];
-		          displayIcon: [ :each | self iconNamed: each systemIconName ];
-		          openModal
+	^ super defaultSelectDialog
+		title: 'There are potential breaking changes!';
+		label: 'Watchout potential override detected!';
+		items: self breakingChoices;
+		display: [ :each | each description ];
+		displayIcon: [ :each | self iconNamed: each systemIconName ];
+		openModal
 ]
 
 { #category : 'execution' }
@@ -107,6 +98,16 @@ ReRenameMethodDriver >> initialize [
 	
 	super initialize.
 	shouldEscape := false.
+]
+
+{ #category : 'configuration' }
+ReRenameMethodDriver >> instantiateRefactoring [
+	"here we do not fully configure the refactoring because we are missing information such as the signature.
+	Since we want to let the refactoring validate input we need to create it upfront then configure later."
+
+	^ ReRenameMethodRefactoring new 
+		renameMethod: originalMessage selector 
+		in: class
 ]
 
 { #category : 'for mocks' }
@@ -130,6 +131,20 @@ ReRenameMethodDriver >> model: aModel renameMethodSignature: aMessage in: aClass
 	class := aClass
 ]
 
+{ #category : 'private - factory' }
+ReRenameMethodDriver >> newRequestMethodDialogOn: methodName [
+	
+	^ (self methodNameEditorPresenterClass newApplication: self application model: methodName)
+		invalidArgNames: (RBCondition
+			invalidArgumentNamesForSelector:
+			originalMessage selector
+			in: model);
+		canRenameArgs: self canRenameArgs;
+		canRemoveArgs: self canRemoveArgs;
+		canAddArgs: self canAddArgs;
+		canEditName: self canEditName
+]
+
 { #category : 'actions' }
 ReRenameMethodDriver >> renameMethod [
 
@@ -141,21 +156,13 @@ ReRenameMethodDriver >> requestDialogWith: methodName [
 	"This is lazy loaded and tests expect lazy loading, because they set `requestDialog`
 	and thus side-step methodNameEditorPresenter"
 
-	^ requestDialog := (self methodNameEditorPresenterClass
-		                    openOn: methodName
-		                    withInvalidArgs: (RBCondition
-				                     invalidArgumentNamesForSelector:
-				                     originalMessage selector
-				                     in: model)
-		                    canRenameArgs: self canRenameArgs
-		                    canRemoveArgs: self canRemoveArgs
-		                    canAddArgs: self canAddArgs
-		                    canEditName: self canEditName) presenter
+	requestDialog ifNil: [ requestDialog := self newRequestMethodDialogOn: methodName ].
+	requestDialog openModal.
+	^ requestDialog
 ]
 
 { #category : 'interaction' }
 ReRenameMethodDriver >> requestNewMessage [
-
 	| methodName dialog parameters |
 	
 	"when we rename from a method list or clicking on the method signature in the method body

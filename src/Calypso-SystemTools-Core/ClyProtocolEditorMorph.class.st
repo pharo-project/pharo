@@ -22,8 +22,7 @@ Class {
 	#instVars : [
 		'extensionCheckbox',
 		'editButton',
-		'label',
-		'resetButton'
+		'label'
 	],
 	#category : 'Calypso-SystemTools-Core-Editors-Methods',
 	#package : 'Calypso-SystemTools-Core',
@@ -32,8 +31,6 @@ Class {
 
 { #category : 'building' }
 ClyProtocolEditorMorph >> build [
-	self buildResetButton.
-	self addMorphBack: resetButton.
 
 	self buildEditButton.
 	self addMorphBack: editButton.
@@ -43,31 +40,34 @@ ClyProtocolEditorMorph >> build [
 
 	self buildExtensionCheckBoxButton.
 	self addMorphBack: extensionCheckbox.
-
+	self addMorphBack: ClyToolbarSeparatorMorph new.
 	self update
 ]
 
 { #category : 'building' }
 ClyProtocolEditorMorph >> buildEditButton [
+
 	editButton := IconicButtonMorph new
-		target: self;
-		actionSelector: #openEditor;
-		arguments: #();
-		labelFormSet: (self iconFormSetNamed: #edit);
-		color: Color transparent;
-		borderWidth: 0
+		              target: self;
+		              actionSelector: #openEditor;
+		              arguments: #(  );
+		              labelFormSet: (self iconFormSetNamed: #edit);
+		              color: Color transparent;
+		              borderWidth: 0
 ]
 
 { #category : 'building' }
 ClyProtocolEditorMorph >> buildExtensionCheckBoxButton [
+
 	extensionCheckbox := self theme
-		newCheckboxIn: self
-		for: self
-		getSelected: #isExtensionActive
-		setSelected: #toggleExtension
-		getEnabled: nil
-		label: 'extension'
-		help: 'toggle check box to choose/reset package of method'.
+		                     newCheckboxIn: self
+		                     for: self
+		                     getSelected: #isExtensionActive
+		                     setSelected: #toggleExtension
+		                     getEnabled: nil
+		                     label: 'Extension'
+		                     help:
+		                     'Toggle check box to choose/reset package of current method'.
 	extensionCheckbox
 		changeTableLayout;
 		vResizing: #shrinkWrap;
@@ -79,20 +79,6 @@ ClyProtocolEditorMorph >> buildLabel [
 
 	label := self theme newLabelIn: self label: self printProtocolOrPackage.
 	label on: #click send: #openEditor to: self
-]
-
-{ #category : 'building' }
-ClyProtocolEditorMorph >> buildResetButton [
-
-	resetButton := IconicButtonMorph new
-		target: self;
-		actionSelector: #resetProtocolAndPackage;
-		arguments: #();
-		labelFormSet: (self iconFormSetNamed: #close);
-		color: Color transparent;
-		borderWidth: 0;
-		hResizing: #shinkWrap;
-		layoutInset: 4@0
 ]
 
 { #category : 'initialization' }
@@ -186,9 +172,14 @@ ClyProtocolEditorMorph >> toggleExtension [
 
 { #category : 'building' }
 ClyProtocolEditorMorph >> update [
+
 	label color: label defaultColor.
-	label contents: self printProtocolOrPackage.
+
 	self isExtensionActive
-		ifTrue: [ editButton helpText: 'Choose package for method']
-		ifFalse: [ editButton helpText: 'Classify method']
+		ifTrue: [
+			label contents:
+				'Edit package: ' , self printProtocolOrPackage ]
+		ifFalse: [
+			label contents:
+				'Edit protocol: ' , self printProtocolOrPackage ]
 ]

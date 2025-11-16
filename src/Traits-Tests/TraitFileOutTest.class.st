@@ -59,50 +59,6 @@ TraitFileOutTest >> tearDown [
 ]
 
 { #category : 'tests' }
-TraitFileOutTest >> testFileOutCategory [
-	"File out whole system category, delete all classes and traits and then
-	file them in again."
-
-	self timeLimit: 30 seconds.
-	"Tempaprary hack because the old class definition builder does not manages yet classes with nil as superclass."
-	{ c3 . c5 . c4 . c6 . c7 . c8 } do: [ :class | class removeFromSystem ].
-	(self packageOrganizer packageNamed: self packageNameForTests)
-		fileOut;
-		removeFromSystem.
-	self deny: (self class environment keys asSet includesAnyOf: #( #CA #CB #TA #TB #TC #TD )).
-
-	CodeImporter evaluateFileNamed: self packageNameForTests , '.st'.
-	self assertCollection: self class environment keys asSet includesAll: #( #CA #CB #TA #TB #TC #TD ).
-	ta := self class environment at: #TA.
-	self assert: ta traitComposition asString equals: '((TB + TC) @ {#cc->#c}) - {#c}'.
-	self assertCollection: ta selectors asSet includesAll: #( #a #b #cc ).
-	cb := self class environment at: #CB.
-	self assert: cb traitComposition asString equals: 'TA'.
-	self assertCollection: cb selectors asSet includesAll: #( #cb #a #b #cc ). "test classSide traitComposition of CB"
-	self assert: cb classSide traitComposition asString equals: 'TA classTrait + TC'.
-	self assertCollection: cb classSide selectors asSet includesAll: #( #d #c )
-]
-
-{ #category : 'tests' }
-TraitFileOutTest >> testFileOutTrait [
-	"fileOut trait T6, remove it from system and then file it in again"
-
-	| fileName |
-	self t6 compile: 'localMethod: argument ^argument'.
-	self t6 classSide compile: 'localClassSideMethod: argument ^argument'.
-	self t6 fileOut.
-	fileName := self t6 asString , '.st'.
-	self t6 removeFromSystem.
-
-	CodeImporter evaluateFileNamed: fileName.
-	self assert: (self class environment includesKey: #T6).
-	self assert: self t6 traitComposition asString equals: 'T1 + (T2 @ {#m22Alias->#m22})'.
-	self assertCollection: self t6 selectors asSet includesAll: #( #localMethod: #m11 #m12 #m13 #m21 #m22Alias ).
-	self assert: self t6 classSide localMethods size equals: 1.
-	self assertCollection: self t6 classSide selectors asSet includesAll: #( #localClassSideMethod: #m2ClassSide: )
-]
-
-{ #category : 'tests' }
 TraitFileOutTest >> testRecompiling [
 
 	| traitSrcPtr methodSrcPtr |

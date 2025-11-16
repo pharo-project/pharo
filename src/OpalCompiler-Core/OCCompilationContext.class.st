@@ -29,7 +29,8 @@ Class {
 		'bindings',
 		'compiledMethodClass',
 		'semanticScope',
-		'compiledBlockClass'
+		'compiledBlockClass',
+		'semanticAnalysisNeeded'
 	],
 	#classVars : [
 		'DefaultOptions',
@@ -65,21 +66,6 @@ OCCompilationContext class >> cleanOptionString: string [
 		 ws nextPut: rs next.
 		 rs atEnd ] whileFalse ].
 	^ ws contents
-]
-
-{ #category : 'options' }
-OCCompilationContext class >> compilerSettingsOn: aBuilder [
-	self optionsDescription withIndexDo: [ :description :index |
-		| optionStringCleaned option |
-		option := description second.
-		optionStringCleaned := self cleanOptionString: option.
-		(aBuilder setting: option)
-			order: index;
-			target: self;
-			label: optionStringCleaned;
-			description: description third;
-			default: (self defaultOptions includes: option).
-		 ]
 ]
 
 { #category : 'instance creation' }
@@ -509,6 +495,12 @@ OCCompilationContext >> isScripting: aBoolean [
 		semanticScope := OCReceiverDoItSemanticScope targetingNilReceiver ]
 ]
 
+{ #category : 'testing' }
+OCCompilationContext >> isSemanticAnalysisNeeded [
+
+	^ semanticAnalysisNeeded == true
+]
+
 { #category : 'options' }
 OCCompilationContext >> optionBlockClosureOptionalOuter [
 	^ options includes: #optionBlockClosureOptionalOuter
@@ -679,6 +671,18 @@ OCCompilationContext >> requestorScopeClass [
 OCCompilationContext >> requestorScopeClass: anObject [
 	"clients can set their own subclass of OCRequestorScope if needed"
 	requestorScopeClass := anObject
+]
+
+{ #category : 'accessing' }
+OCCompilationContext >> requireSemanticAnalysis [
+
+	semanticAnalysisNeeded := true
+]
+
+{ #category : 'accessing' }
+OCCompilationContext >> semanticAnalysisDone [
+
+	semanticAnalysisNeeded := false
 ]
 
 { #category : 'accessing' }

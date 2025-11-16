@@ -13,3 +13,9 @@ Class {
 OCIRPushLiteralVariable >> accept: aVisitor [
 	^ aVisitor visitPushLiteralVariable: self
 ]
+
+{ #category : 'stack' }
+OCIRPushLiteralVariable >> deltaStack [
+
+	^ 1
+]

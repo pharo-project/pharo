@@ -13,5 +13,5 @@ Class {
 ManifestMonticelloModel class >> manuallyResolvedDependencies [
 
 	<ignoreForCoverage>
-	^ #(#'OpalCompiler-Core' #'Collections-Abstract' #'Collections-Streams' #'System-Support' #'Shift-ClassBuilder' #'FFI-Kernel' #'System-Changes')
+	^ #(#'OpalCompiler-Core' #'Collections-Abstract' #'Collections-Streams' #'System-Support' #'Shift-ClassBuilder' #'FFI-Kernel')
 ]

@@ -39,7 +39,7 @@ RBDeprecateClassTransformation class >> model: aRBModel className: aClassName [
 RBDeprecateClassTransformation >> applicabilityPreconditions [
 
 	^ {
-		  (ReClassesExistCondition new classes: { class }).
+		  (ReClassesExistCondition new classes: { class name -> class } asDictionary).
 		  (ReClassesAreNotMetaClassCondition new classes: { class }) }
 ]
 

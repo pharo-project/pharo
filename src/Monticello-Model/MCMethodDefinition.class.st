@@ -75,11 +75,6 @@ MCMethodDefinition >> = aDefinition [
 		and: [ aDefinition source withInternalLineEndings = self source withInternalLineEndings ] ]
 ]
 
-{ #category : 'visiting' }
-MCMethodDefinition >> accept: aVisitor [
-	^ aVisitor visitMethodDefinition: self
-]
-
 { #category : 'accessing' }
 MCMethodDefinition >> actualClass [
 

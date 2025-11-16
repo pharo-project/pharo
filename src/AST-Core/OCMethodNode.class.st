@@ -282,12 +282,6 @@ OCMethodNode >> copyInContext: aDictionary [
 		yourself
 ]
 
-{ #category : 'testing' }
-OCMethodNode >> defines: aName [
-	^ (arguments anySatisfy: [ :each | each name = aName ])
-		or: [ self pragmas anySatisfy: [ :pragma | pragma defines: aName ] ]
-]
-
 { #category : 'comparing' }
 OCMethodNode >> equalTo: anObject withMapping: aDictionary [
 	self class = anObject class ifFalse: [ ^ false ].
@@ -303,6 +297,16 @@ OCMethodNode >> equalTo: anObject withMapping: aDictionary [
 		(first equalTo: second	withMapping: aDictionary)
 			ifFalse: [ ^ false ] ].
 	^ true
+]
+
+{ #category : 'testing' }
+OCMethodNode >> exactNodeDefines: aName [
+	"Returns true whether the method node dedfines a name as arguments.
+	If you want to know whether the mpethod node has temps you should ask 
+	its body."
+
+	^ (arguments anySatisfy: [ :each | each name = aName ])
+		or: [ self pragmas anySatisfy: [ :pragma | pragma exactNodeDefines: aName ] ]
 ]
 
 { #category : 'accessing' }
@@ -531,11 +535,6 @@ OCMethodNode >> printOn: aStream [
 	aStream nextPutAll: self formattedCode
 ]
 
-{ #category : 'testing' }
-OCMethodNode >> references: aVariableName [
-	^body references: aVariableName
-]
-
 { #category : 'private' }
 OCMethodNode >> reformatSource [
 	| stream newSource newTree |
@@ -569,20 +568,6 @@ OCMethodNode >> removePragma: aPragmaNode [
 OCMethodNode >> removePragmaNamed: aPragmaName [
 
 	self pragmaNamed: aPragmaName ifPresent: [ :pragma | self removePragma: pragma ]
-]
-
-{ #category : 'adding-removing' }
-OCMethodNode >> removeSubtree: aTree [
-
-	^ aTree isReturn
-		ifTrue: [ OCParseTreeRewriter
-					 replace: aTree formattedCode
-					 with: '' in: self
-					 onInterval: aTree sourceInterval ]
-		ifFalse: [ OCParseTreeRewriter
-					  replaceStatements: aTree formattedCode
-		 			  with: '' in: self
-					  onInterval: aTree sourceInterval ]
 ]
 
 { #category : 'accessing' }
@@ -701,17 +686,4 @@ OCMethodNode >> temporaries [
 { #category : 'accessing' }
 OCMethodNode >> temporaryNames [
 	^ self body temporaryNames
-]
-
-{ #category : 'tree accessing' }
-OCMethodNode >> variableWith: aSymbol [
-
-	| matcher block |
-	matcher := OCParseTreeSearcher new.
-	block := [ :aNode :answer | aNode ].
-
-	matcher
-		matches: aSymbol do: block;
-		matchesArgument: aSymbol do: block.
-	^ matcher executeTree: self initialAnswer: nil
 ]

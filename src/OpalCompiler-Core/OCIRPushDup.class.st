@@ -16,6 +16,12 @@ OCIRPushDup >> accept: aVisitor [
 	^ aVisitor visitPushDup: self
 ]
 
+{ #category : 'stack' }
+OCIRPushDup >> deltaStack [
+
+	^ 1
+]
+
 { #category : 'testing' }
 OCIRPushDup >> isRemovableByPop [
 

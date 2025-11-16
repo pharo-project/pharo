@@ -3,7 +3,7 @@ I am raised when I an operation is attempted inside a directory that does not ex
 "
 Class {
 	#name : 'DirectoryDoesNotExist',
-	#superclass : 'FileSystemError',
+	#superclass : 'FileException',
 	#category : 'FileSystem-Core-Kernel-Errors',
 	#package : 'FileSystem-Core',
 	#tag : 'Kernel-Errors'

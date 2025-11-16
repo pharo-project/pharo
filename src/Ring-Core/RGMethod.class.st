@@ -259,14 +259,6 @@ RGMethod >> isMeta [
 ]
 
 { #category : 'testing' }
-RGMethod >> isMetaSide [
-	self
-		deprecated: 'Use isMeta instead'
-		transformWith: '`@receiver isMetaSide' -> '`@receiver isMeta'.
-	^ self isMeta
-]
-
-{ #category : 'testing' }
 RGMethod >> isMethod [
 
 	^true

@@ -37,17 +37,14 @@ ErrorHandlerSessionHandler >> handledId [
 
 { #category : 'handlers' }
 ErrorHandlerSessionHandler >> shutdown: isImageQuitting [
-
 	"Prepare the shutdown and the next startup"
 
-	UIManager default: StartupUIManager new.
-	ErrorHandler defaultErrorHandler: UIManager default.
+	ErrorHandler default: SessionManagerErrorHandler new
 ]
 
 { #category : 'handlers' }
 ErrorHandlerSessionHandler >> startup: isImageStarting [
-	"Install the right UIManager"
+	"Install the right error Manager"
 
-	UIManager default: UIManager forCurrentSystemConfiguration.
-	ErrorHandler defaultErrorHandler: UIManager default.
+	ErrorHandler default: ErrorHandler forCurrentSystemConfiguration
 ]

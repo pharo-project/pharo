@@ -59,7 +59,7 @@ ChainBehavior >> checkCircularChain: aDebugPoint withParent: aParent [
 	"should return true if there is a circular dependency so that the child will not be added"
 	| parent |
 	(aParent = aDebugPoint) ifTrue: [ 
-		self circularChainPopup.
+		self notifyCircularChain.
 		^true ].
 	
 	parent := (self class parentFor: aParent) ifNil: [ ^false ].
@@ -75,17 +75,17 @@ ChainBehavior >> child [
 
 ]
 
-{ #category : 'private' }
-ChainBehavior >> circularChainPopup [
-		SpInformDialog new title: 'Circular Dependency';label: 'Adding this child would result in a circular chain, which is not allowed.'; openModal.
-
-]
-
 { #category : 'execution' }
 ChainBehavior >> execute [
 	self child ifNotNil: [:child | child enabled: true].
 	self debugPoint enabled: false.
 	^true
+]
+
+{ #category : 'private' }
+ChainBehavior >> notifyCircularChain [
+
+	InformativeNotification signal: 'Circular Dependency: Adding this child would result in a circular chain, which is not allowed.'
 ]
 
 { #category : 'accessing' }

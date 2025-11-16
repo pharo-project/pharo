@@ -14,15 +14,14 @@ Class {
 	#tag : 'Drivers'
 }
 
-{ #category : 'execution' }
-RePushUpVariableDriver >> configureRefactoring [
+{ #category : 'configuration' }
+RePushUpVariableDriver >> instantiateRefactoring [
 
 	" we should manage multiple instance variables"
-	
-	refactoring := self refactoringClass
-		               model: model
-		               variable: variable
-		               class: class
+	^ self refactoringClass
+       model: model
+       variable: variable
+       class: class
 ]
 
 { #category : 'factory method' }

@@ -1,6 +1,9 @@
 Class {
 	#name : 'ReReifiedCondition',
 	#superclass : 'RBCondition',
+	#instVars : [
+		'subjects'
+	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
@@ -24,10 +27,22 @@ ReReifiedCondition >> isTrue [
 	^ self check
 ]
 
+{ #category : 'accessing' }
+ReReifiedCondition >> nonViolators [
+
+	^ subjects difference: self violators
+]
+
 { #category : 'logical operations' }
 ReReifiedCondition >> not [ 
 
 	^ ReNewNegationCondition on: self
+]
+
+{ #category : 'accessing - private' }
+ReReifiedCondition >> subjects [
+	"Complex conditions require this method to compute their own subjects"
+	^ subjects
 ]
 
 { #category : 'displaying' }

@@ -85,17 +85,6 @@ SystemProgressMorph class >> exampleChangeLabel [
 				(Delay forMilliseconds: 100) wait]]
 ]
 
-{ #category : 'examples' }
-SystemProgressMorph class >> exampleLabelOnly [
-	"SystemProgressMorph exampleLabelOnly"
-	| words |
-	words := #(zero one two three four five six seven eight nine ten) reversed.
-	MorphicUIManager new informUserDuring: [:bar |
-		words do: [:each|
-			bar label: 'Countdown: ', each.
-			(Delay forSeconds: 0.2) wait]]
-]
-
 { #category : 'accessing' }
 SystemProgressMorph class >> horizontalPosition [
 	^ horizontalPosition ifNil: [ horizontalPosition := 0 ]

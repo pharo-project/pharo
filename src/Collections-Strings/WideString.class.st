@@ -85,7 +85,10 @@ WideString >> asLowercase [
 	"Answer a copy of self with all characters in a lower case.
 	This might be a difficult task, ask Unicode."
 
-	^ Unicode toLowercaseString: self
+	^ self class environment
+		  at: #Unicode
+		  ifPresent: [ :class | class toLowercaseString: self ]
+		  ifAbsent: [ self error: 'In order to do this operation you need the Unicode support in Pharo but it is currently not present.' ]
 ]
 
 { #category : 'converting' }
@@ -93,7 +96,10 @@ WideString >> asUppercase [
 	"Answer a copy of self with all characters in an upper case.
 	This might be a difficult task, ask Unicode."
 
-	^ Unicode toUppercaseString: self
+	^ self class environment
+		  at: #Unicode
+		  ifPresent: [ :class | class toUppercaseString: self ]
+		  ifAbsent: [ self error: 'In order to do this operation you need the Unicode support in Pharo but it is currently not present.' ]
 ]
 
 { #category : 'converting' }

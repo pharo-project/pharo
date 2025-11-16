@@ -122,10 +122,6 @@ MorphicUIManager >> chooseFrom: labelList values: valueList lines: linesArray ti
 	"Choose an item from the given list. Answer the selected item."
 
 	|modalMorph|
-
-	(ProvideAnswerNotification signal: aString) ifNotNil: [:answer |
-		^answer].
-
 	modalMorph := self modalMorph.
 	^modalMorph theme
 		chooseIn: modalMorph
@@ -196,8 +192,6 @@ MorphicUIManager >> confirm: questionStringOrText label: labelStringOrText [
 	This is a modal question--the user must respond yes or no."
 
 	|modalMorph|
-	(ProvideAnswerNotification signal: questionStringOrText) ifNotNil: [:answer |
-		^answer].
 	modalMorph := self modalMorph.
 	^modalMorph theme
 		questionWithoutCancelIn: modalMorph
@@ -212,8 +206,6 @@ MorphicUIManager >> confirm: queryString label: title trueChoice: trueChoice fal
 	Answer true if the response is the true-choice, false if it's the false-choice, nil if the cancelChoice.
 	This is a modal question -- the user must respond."
 
-	(ProvideAnswerNotification signal: queryString) ifNotNil: [:answer |
-		^answer].
 	^ self theme
 		customQuestionIn: self modalMorph
 		text: queryString
@@ -232,8 +224,6 @@ MorphicUIManager >> confirm: aStringOrText orCancel: cancelBlock [
 	This is a modal question--the user must respond yes or no or cancel."
 
 	|modalMorph|
-	(ProvideAnswerNotification signal: aStringOrText) ifNotNil: [:answer |
-		^answer == #cancel ifTrue: [cancelBlock value] ifFalse: [answer]].
 	modalMorph := self modalMorph.
 	^(modalMorph theme
 		questionIn: modalMorph
@@ -334,58 +324,13 @@ MorphicUIManager >> enterOrRequestFrom: labelList values: valueList lines: lines
 		lines: linesArray
 ]
 
-{ #category : 'error handling' }
-MorphicUIManager >> handleError: anError log: shouldLog [
-
-	shouldLog ifTrue: [ self logError: anError ].
-	(OupsDebugRequest newForException: anError) submit
-]
-
-{ #category : 'error handling' }
-MorphicUIManager >> handleNotification: aNotification [
-
-	aNotification messageText traceCr.
-	aNotification resume
-]
-
-{ #category : 'error handling' }
-MorphicUIManager >> handleWarning: aWarning [
-	"The user should be notified of the occurrence of an exceptional occurrence and given an option of continuing or aborting the computation. The description of the occurrence should include any text specified as the argument of the #signal: message."
-
-	(OupsWarningRequest newForException: aWarning) submit
-]
-
-{ #category : 'handle debug requests' }
-MorphicUIManager >> handleWarningDebugRequest: aWarningDebugRequest fromDebuggerSystem: anOupsDebuggerSystem [
-	<debuggerCompleteToSender>
-	anOupsDebuggerSystem openDebuggerOnRequest: aWarningDebugRequest
-]
-
 { #category : 'ui requests' }
 MorphicUIManager >> inform: aStringOrText [
 	"Display a message for the user to read and then dismiss."
 
-	(ProvideAnswerNotification signal: aStringOrText) ifNotNil: [:answer |
-		^true].
 	GrowlMorph
 		openWithLabel: 'Information' translated
 		contents: aStringOrText
-]
-
-{ #category : 'ui requests' }
-MorphicUIManager >> informUserDuring: aBlock [
-	"Display a message as progress	during execution of the given block."
-	"UIManager default informUserDuring: [:bar|
-		#('one' 'two' 'three') do: [:info|
-			bar label: info.
-			1 to: 100 do: [:v |
-				bar current: v.
-				(Delay forMilliseconds: 20) wait]]]"
-
-	self
-		displayProgress: ''
-		from: 1 to: 100
-		during: [:bar | aBlock value: bar]
 ]
 
 { #category : 'debug' }
@@ -441,8 +386,6 @@ MorphicUIManager >> multiLineRequest: queryString  initialAnswer: defaultAnswer 
 	submit; that way, the return key can be typed to move to the next line."
 
 	|modalMorph|
-	(ProvideAnswerNotification signal: queryString) ifNotNil: [:answer |
-		^answer == #default ifTrue: [defaultAnswer] ifFalse: [answer]].
 	modalMorph := self modalMorph.
 	^(modalMorph theme
 		textEditorIn: modalMorph
@@ -459,36 +402,6 @@ MorphicUIManager >> newMenuIn: aThemedMorph for: aModel [
 	"UIManager default"
 	^self theme
 		newMenuIn: aThemedMorph for: aModel
-]
-
-{ #category : 'ui requests' }
-MorphicUIManager >> onFontsChanged [
-
-	StringMorph allSubInstancesDo: [ :s | s layoutChanged ].
-	TextMorph allSubInstancesDo: [ :s | s layoutChanged ].
-	SystemWindow allInstancesDo: [ :w | [ w update: #relabel ] on: Error do: [ :ex | ] ].
-	self currentWorld ifNotNil: [ :w | w changed ]
-]
-
-{ #category : 'events' }
-MorphicUIManager >> onPrimitiveError: aString [
-
-	| message |
-	message := String streamContents: [ :s |
-		           | context |
-		           s nextPutAll: '*** System error handling failed ***'.
-		           s
-			           cr;
-			           nextPutAll: aString.
-		           context := thisContext sender sender.
-		           20 timesRepeat: [
-			           context ifNotNil: [
-				           s
-					           cr;
-					           print: (context := context sender) ] ] ].
-	Stdio stderr << message.
-	"init hands and redisplay"
-	self currentWorld install
 ]
 
 { #category : 'accessing' }
@@ -520,8 +433,6 @@ MorphicUIManager >> request: aStringOrText initialAnswer: defaultAnswer title: a
 	Allow for interception with a ProvideAnswerNotification handler."
 
 	|modalMorph|
-	(ProvideAnswerNotification signal: aStringOrText) ifNotNil: [:answer |
-		^answer == #default ifTrue: [defaultAnswer] ifFalse: [answer]].
 	modalMorph := self modalMorph.
 	^(modalMorph theme
 		textEntryIn: modalMorph
@@ -539,8 +450,6 @@ MorphicUIManager >> request: aStringOrText initialAnswer: defaultAnswer title: a
 	Allow for interception with a ProvideAnswerNotification handler."
 
 	|modalMorph|
-	(ProvideAnswerNotification signal: aStringOrText) ifNotNil: [:answer |
-		^answer == #default ifTrue: [defaultAnswer] ifFalse: [answer]].
 	modalMorph := self modalMorph.
 	^(modalMorph theme
 		textEntryIn: modalMorph
@@ -548,23 +457,6 @@ MorphicUIManager >> request: aStringOrText initialAnswer: defaultAnswer title: a
 		title: aTitle
 		entryText: defaultAnswer
 		entryCompletion: anEntryCompletion)
-]
-
-{ #category : 'ui requests' }
-MorphicUIManager >> requestPassword: aStringOrText [
-	"Request for a password.
-	Allow for interception with a ProvideAnswerNotification handler.
-	Answer nil if the user cancels."
-
-	|modalMorph|
-	(ProvideAnswerNotification signal: aStringOrText) ifNotNil: [:answer |
-		^answer == #default ifTrue: [''] ifFalse: [answer]].
-	modalMorph := self modalMorph.
-	^modalMorph theme
-		passwordEntryIn: modalMorph
-		text: aStringOrText
-		title: 'Password Required' translated
-		entryText: ''
 ]
 
 { #category : 'ui process' }

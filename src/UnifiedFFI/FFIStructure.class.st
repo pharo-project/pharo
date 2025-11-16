@@ -154,11 +154,6 @@ FFIStructure class >> compileFields: specArray withAccessors: aSymbol [
 { #category : 'private' }
 FFIStructure class >> compileMethodNamed: aSymbol code: aString classified: protocol [
 
-	"If we detect we have a method in the class with the right code but an equivalent is already in a superclass we can remove it to clean."
-	self
-		compiledMethodAt: aSymbol
-		ifPresent: [ :method | method sourceCode = aString and: [ method hasEquivalentMethodInSuperclass ifTrue: [ ^ method removeFromSystem ] ] ].
-
 	"If we already have the method we do not need to compile it. The method can come from a superclass having the same fields"
 	(self lookupSelector: aSymbol) ifNotNil: [ :method | method sourceCode = aString ifTrue: [ ^ self ] ].
 
@@ -317,9 +312,12 @@ FFIStructure class >> newBuffer [
 
 { #category : 'instance creation' }
 FFIStructure class >> newValueHolder [
-
+	| struct |
+	
+	struct := self new.
 	^ FFIReferenceValueHolder 
-		newType: self new 
+		newType: struct
+		handle: struct getHandle
 		size: self structureSize
 ]
 
@@ -361,14 +359,27 @@ FFIStructure class >> resetAllStructures [
 	Manage nested structures with a recursive approach.
 	Stop recursing using a tracking collection of already reset structures."
 
-	| alreadyReset currentCompilationPlatform |
-	currentCompilationPlatform := { OSPlatform current family . Smalltalk vm wordSize }.
-	LastCompilationPlatform = currentCompilationPlatform
-		ifTrue: [ ^ self ].
-
-	LastCompilationPlatform := currentCompilationPlatform.
+	| alreadyReset |
 	alreadyReset := IdentitySet new.
 	self allSubclassesDo: [ :each | each resetStructureIfNotIn: alreadyReset ]
+]
+
+{ #category : 'class management' }
+FFIStructure class >> resetAllStructuresIfPlatformChanged [
+	"Reset the offsets of all structures.
+	This is required when there is a platform change since type sizes and padding rules change.
+
+	Manage nested structures with a recursive approach.
+	Stop recursing using a tracking collection of already reset structures."
+
+	| currentCompilationPlatform |
+	currentCompilationPlatform := {
+		                              OSPlatform current family.
+		                              Smalltalk vm wordSize }.
+	LastCompilationPlatform = currentCompilationPlatform ifTrue: [ ^ self ].
+
+	LastCompilationPlatform := currentCompilationPlatform.
+	self resetAllStructures
 ]
 
 { #category : 'class management' }
@@ -450,4 +461,14 @@ FFIStructure >> printOn: aStream [
 			(self perform: field ) printOn: aStream.
 			] separatedBy: [ aStream cr ].
 	aStream cr; nextPut: $)"
+]
+
+{ #category : 'converting' }
+FFIStructure >> referenceTo [
+	"In fact, structures in uFFI are always passed by reference, then a referenceTo 
+	 it will always be itself"
+	 
+	 ^ FFIValueHolder 
+	 	newType: self
+	 	handle: self getHandle
 ]

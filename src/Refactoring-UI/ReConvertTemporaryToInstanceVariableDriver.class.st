@@ -19,11 +19,13 @@ ReConvertTemporaryToInstanceVariableDriver >> class: aClass selector: aSelector 
 	class := aClass
 ]
 
-{ #category : 'resources' }
-ReConvertTemporaryToInstanceVariableDriver >> configureRefactoring [
+{ #category : 'configuration' }
+ReConvertTemporaryToInstanceVariableDriver >> instantiateRefactoring [
 
-	refactoring := RBTemporaryToInstanceVariableTransformation class: class selector: selector variable: variable.
-	refactoring prepareForExecution
+	^ RBTemporaryToInstanceVariableTransformation 
+		class: class 
+		selector: selector 
+		variable: variable
 ]
 
 { #category : 'execution' }

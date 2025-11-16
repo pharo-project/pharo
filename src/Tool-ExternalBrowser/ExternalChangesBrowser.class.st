@@ -29,7 +29,7 @@ Class {
 ExternalChangesBrowser class >> browseRecentLog [
 	<example>
 
-	^ self openOnStream: SourceFiles changesFileStream
+	^ self openOnStream: SourceFileArray default changesFileStream
 ]
 
 { #category : 'layout' }

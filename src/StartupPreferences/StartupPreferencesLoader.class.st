@@ -286,7 +286,7 @@ StartupPreferencesLoader >> addTemplateForStartupInDirectory: aFileReference nam
 				aFileReference ensureCreateDirectory.
 				aFileReference / fileName writeStreamDo: [ :stream |
 					stream nextPutAll: self templateString ] ]
-		ifTrue: [ self inform: 'This file already exists' ].
+		ifTrue: [ InformativeNotification signal: 'This file already exists' ].
 	(aFileReference / fileName) inspect
 ]
 

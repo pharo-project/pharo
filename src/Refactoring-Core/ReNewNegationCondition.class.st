@@ -21,13 +21,21 @@ ReNewNegationCondition >> check [
 
 { #category : 'accessing' }
 ReNewNegationCondition >> condition: aCondition [
+
 	condition := aCondition.
+	subjects := condition subjects
 ]
 
 { #category : 'accessing' }
 ReNewNegationCondition >> errorString [ 
 
 	^ condition errorString
+]
+
+{ #category : 'accessing' }
+ReNewNegationCondition >> nonViolators [
+
+	^ subjects difference: self violators
 ]
 
 { #category : 'displaying' }
@@ -40,6 +48,6 @@ ReNewNegationCondition >> violationMessageOn: aWriteStream [
 
 { #category : 'accessing' }
 ReNewNegationCondition >> violators [
-	"This is probably wrong because of the negation"
+
 	^ condition nonViolators
 ]

@@ -26,23 +26,31 @@ Class {
 
 { #category : 'accessing' }
 ClapContext class >> defaultRoot [
-	^ (ClapRoot id: #clap)
-		description: 'Entry point for commands implemented with Clap';
-		addHelp;
-		add: ClapCommandSpec forHelp;
+	^ ClapPharoApplication commandSpecification
+]
 
-		addFlag: #save description: 'Save the image after the command terminates';
-		addFlag: #noSave description: 'Do not save the image even if the command is stateful';
-		addFlag: #rename 
-			description: 'Rename the image as <NAME> before running the command' 
-			positionalSpec: [ :spec | spec identifier: #NAME];
-		addFlag: #keepAlive description: 'Keep the image running after the command terminates';
+{ #category : 'private' }
+ClapContext class >> ensureBoostrapCommandsIn: aCommandList [
+	"In early stages of the bootsrap, pragmas cannot be used.
+	Perform command should always be usable, so ensure it is present in the list."
+	
+	| class |
+	class := Smalltalk globals at: #ClapPerformCommand ifAbsent: [ ^ aCommandList ].
+	
+	aCommandList 
+		detect: [ :commandSpec | commandSpec identifier =  class commandSpecification identifier ]
+		ifNone: [ aCommandList add: class commandSpecification ].
+	^ aCommandList
+]
 
-		meaning: [ :args |
-			args at: #helpFlag ifPresent: [ :help |
-				help value; exitSuccess ].
-			args validateAll ];
-		yourself
+{ #category : 'instance creation' }
+ClapContext class >> executeWithPragmaCommandsAndArguments: arguments [
+
+	(self withPragmaCommands)
+			beObeyingExits;
+			setStdio: Stdio;
+			arguments: arguments;
+			execute
 ]
 
 { #category : 'accessing' }
@@ -65,7 +73,7 @@ ClapContext class >> withAll: commandCandidates [
 { #category : 'instance creation' }
 ClapContext class >> withPragmaCommands [ 
 
-	^ self withAll: self pragmaCommands
+	^ self withAll: (self ensureBoostrapCommandsIn: self pragmaCommands asOrderedCollection)
 ]
 
 { #category : 'validation' }
@@ -108,7 +116,12 @@ ClapContext >> command [
 	| commandClass |
 	self match. "ensure command is matched"
 	
-	commandClass := self lastSubcommand specification commandClass ifNil: [ ClapApplication ].
+	commandClass := [ self lastSubcommand specification commandClass ]
+							on: ClapUnmatchCommand do: [ self match specification commandClass ].
+							
+	"In case no command class was specified"
+	commandClass := commandClass ifNil: [ ClapApplication ].							
+							
 	^ commandClass with: self
 ]
 
@@ -237,7 +250,18 @@ ClapContext >> handleExit: exit [
 { #category : 'testing' }
 ClapContext >> hasFlag: anIdentifier [
 
-		^ (self lastSubcommand occurrencesOf: anIdentifier) isNotEmpty
+		^ self hasFlag: anIdentifier in: self lastSubcommand
+]
+
+{ #category : 'private' }
+ClapContext >> hasFlag: anIdentifier in: aMatch [
+
+	^ (aMatch occurrencesOf: anIdentifier)
+		  ifEmpty: [
+				  aMatch parent isClapContext
+					  ifTrue: [ false ]
+					  ifFalse: [ self hasFlag: anIdentifier in: aMatch parent ] ]
+		  ifNotEmpty: [ true ]
 ]
 
 { #category : 'private' }
@@ -265,6 +289,12 @@ ClapContext >> initialize [
 	obeyingExits := false
 ]
 
+{ #category : 'testing' }
+ClapContext >> isClapContext [
+
+	^ true
+]
+
 { #category : 'validation' }
 ClapContext >> isValid: aValidation [
 
@@ -275,8 +305,9 @@ ClapContext >> isValid: aValidation [
 ClapContext >> lastSubcommand [
 
 	^ self
-		ifMatch: [ :aMatch | aMatch subcommands last ]
-		ifMismatch: [ self ]
+		  ifMatch: [ :aMatch | 
+						aMatch subcommands ifEmpty: [ aMatch ] ifNotEmpty: [ :subcommands | subcommands last ] ]
+		  ifMismatch: [ ClapUnmatchCommand signalClapContext: self ]
 ]
 
 { #category : 'accessing' }
@@ -297,14 +328,23 @@ ClapContext >> noneMatched [
 { #category : 'accessing' }
 ClapContext >> positional: anIdentifier [ 
 		
+	^ self positional: anIdentifier in: self lastSubcommand
+]
+
+{ #category : 'private' }
+ClapContext >> positional: anIdentifier in: aMatch [
+		
 	| identifierMatches |
 	
-	identifierMatches := (self lastSubcommand occurrencesOf: anIdentifier)
+	identifierMatches := (aMatch occurrencesOf: anIdentifier)
 		select: [ :identifierMatch | 
 			identifierMatch specification isPositional
 				or: [ identifierMatch specification isFlag and: [ self hasPositional: identifierMatch ] ] ].
 	^ identifierMatches
-		ifEmpty: [ NotFound signal: 'No positional found with id: ', anIdentifier  ] 
+		ifEmpty: [ 
+			aMatch parent isClapContext
+				ifTrue: [ NotFound signal: 'No positional found with id: ', anIdentifier  ]
+				ifFalse: [ self positional: anIdentifier in: aMatch parent ] ]
 ]
 
 { #category : 'printing' }

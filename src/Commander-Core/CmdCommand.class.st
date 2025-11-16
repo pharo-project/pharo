@@ -126,6 +126,12 @@ CmdCommand class >> isAbstract [
 	^self = CmdCommand
 ]
 
+{ #category : 'ui requests' }
+CmdCommand >> application [
+
+	^ StPharoApplication current
+]
+
 { #category : 'execution' }
 CmdCommand >> applyResultInContext: aToolContext [
 ]
@@ -136,6 +142,12 @@ CmdCommand >> asCommandActivator [
 		command: self;
 		context: CmdNullToolContext new;
 		activationStrategy: (CmdManualActivationStrategy withAnnotatedClass: self class)
+]
+
+{ #category : 'ui requests' }
+CmdCommand >> confirm: aString [
+
+	self application confirm: aString
 ]
 
 { #category : 'accessing' }
@@ -184,6 +196,12 @@ CmdCommand >> description [
 { #category : 'execution' }
 CmdCommand >> execute [
 	self subclassResponsibility
+]
+
+{ #category : 'ui requests' }
+CmdCommand >> inform: aString [
+
+	self application inform: aString
 ]
 
 { #category : 'accessing' }

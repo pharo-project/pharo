@@ -104,7 +104,7 @@ ShDefaultBuilderEnhancer >> migrateToClass: aClass installer: aShiftClassInstall
 ShDefaultBuilderEnhancer >> on: newClass declareClassVariables: sharedVariables sharing: sharedPoolNames [
 	newClass
 		declareClassVariables: sharedVariables;
-		sharing:sharedPoolNames
+		sharingSharedPoolNames:sharedPoolNames
 ]
 
 { #category : 'class modifications' }

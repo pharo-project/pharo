@@ -49,3 +49,24 @@ FTTableMorphTest >> testCanAlternateRowColors [
 		equals: 1.
 	self deny: oddColor equals: evenColor
 ]
+
+{ #category : 'tests' }
+FTTableMorphTest >> testResizeContainer [
+
+	| expectedRightSide borderWidth widgetWidth widgetHeight |
+	widgetWidth := 800.
+	widgetHeight := 600.
+	self assert: table bounds equals: (0@0 corner: widgetWidth @ widgetHeight).
+	self assert: table borderWidth equals: 0.
+	expectedRightSide := widgetWidth - table verticalScrollBarWidth.
+	self assert: table container bounds equals: (0@0 corner: expectedRightSide @ widgetHeight).
+
+	widgetWidth := 500.
+	widgetHeight := 300.
+	borderWidth := 10.
+	table borderWidth: borderWidth.
+	table extent: widgetWidth @ widgetHeight. "Trigger #resizeContainer."
+	self assert: table bounds equals: (0@0 corner: widgetWidth @ widgetHeight).
+	expectedRightSide := widgetWidth - table verticalScrollBarWidth - borderWidth.
+	self assert: table container bounds equals: (borderWidth @ borderWidth corner: expectedRightSide @ (widgetHeight - borderWidth))
+]

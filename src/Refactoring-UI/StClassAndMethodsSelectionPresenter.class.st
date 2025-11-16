@@ -29,11 +29,11 @@ StClassAndMethodsSelectionPresenter class >> buildStMethodsSelectionContextualGr
 		register: ((CmCommandGroup named: 'StClassAndMethodsSelectionOperationsMenu') asSpecGroup
 			register: ((StClassAndMethodsSelectAllCommand
 				forSpecWithIconNamed: #checkedBox
-				shortcutKey: 'A' asShortcut) 
+				shortcutKey: $a actionModifier) 
 					context: presenterInstance);			
 			register: ((StClassAndMethodsSelectNoneCommand 
 				forSpecWithIconNamed: #checkboxUnselected
-				shortcutKey: 'N' asShortcut)
+				shortcutKey: $n actionModifier)
 					context: presenterInstance);
 			beDisplayedAsGroup;
 			yourself);
@@ -138,17 +138,12 @@ StClassAndMethodsSelectionPresenter >> initializeClassTablePresenter [
 	^ self newTable
 		beMultipleSelection;
 		addColumn: ((SpCheckBoxTableColumn title: '' evaluated: [ : im | self selectedClassMethods includes: im ])
-			onActivation: [ : cv | ];
-			onDeactivation: [ : cv |  ];
 			beNotExpandable;
-			width: 20;
 			yourself);
-		addColumn: ((SpStringTableColumn title: 'Name' evaluated: [ : im | im selector asString ])
-			width: 180;
-			yourself);
+		addColumn: (SpStringTableColumn title: 'Name' evaluated: [ : im | im selector asString ]);
 		sortingBlock: [ :a :b | a selector < b selector ];
 		whenSelectionChangedDo: [ : selection | self handleMethodChange: selection selectedItem compiledMethod ];
-		contextMenu: [ (self rootCommandsGroup / 'StClassAndMethodsSelectionMenu') beRoot asMenuPresenter ];
+		actions: (self rootCommandsGroup / 'StClassAndMethodsSelectionMenu');
 		yourself
 ]
 
@@ -176,17 +171,12 @@ StClassAndMethodsSelectionPresenter >> initializeInstanceTablePresenter [
 	^ self newTable	
 		beMultipleSelection;
 		addColumn: ((SpCheckBoxTableColumn title: '' evaluated: [ : im | self selectedInstanceMethods includes: im ])
-			onActivation: [ : cv | ];
-			onDeactivation: [ : cv |  ];
 			beNotExpandable;
-			width: 20;
 			yourself);
-		addColumn: ((SpStringTableColumn title: 'Name' evaluated: [ : im | im selector asString ])
-			width: 180;
-			yourself);
+		addColumn: (SpStringTableColumn title: 'Name' evaluated: [ : im | im selector asString ]);
 		sortingBlock: [ :a :b | a selector < b selector ];
 		whenSelectionChangedDo: [ : selection | self handleMethodChange: selection selectedItem compiledMethod ];
-		contextMenu: [ (self rootCommandsGroup / 'StClassAndMethodsSelectionMenu') beRoot asMenuPresenter ];			
+		actions: (self rootCommandsGroup / 'StClassAndMethodsSelectionMenu');			
 		"searchMatching: [ :selFormula :textToSearch | selFormula selector beginsWith: textToSearch ];"
 		yourself.
 ]
@@ -195,16 +185,18 @@ StClassAndMethodsSelectionPresenter >> initializeInstanceTablePresenter [
 StClassAndMethodsSelectionPresenter >> initializeNotebookPresenter [
 
 	methodsNotebookPresenter := self newNotebook
-		addPage: ((SpNotebookPage 
-			title: 'Instance' 
-			icon: (self iconNamed: #smallObjects) 
-			provider: [ self initializeInstanceTablePresenter ])
-				whenRetrievedDo: [ :presenter | self instanceMethods ifNotNil: [ : iMthds | presenter items: iMthds ] ]);
-		addPage: ((SpNotebookPage 
-			title: 'Class' 
-			icon: (self iconNamed: #class) 
-			provider: [ self initializeClassTablePresenter ])
-				whenRetrievedDo: [ :presenter | self classMethods ifNotNil: [ : iMthds | presenter items: iMthds ] ]);
+		addPage: (SpNotebookPage new 
+			title: 'Instance';
+			icon: (self iconNamed: #smallObjects); 
+			presenterProvider: [ self initializeInstanceTablePresenter ];
+			whenRetrievedDo: [ :presenter | self instanceMethods ifNotNil: [ : iMthds | presenter items: iMthds ] ];
+			yourself);
+		addPage: (SpNotebookPage new
+			title: 'Class';
+			icon: (self iconNamed: #class); 
+			presenterProvider: [ self initializeClassTablePresenter ];
+			whenRetrievedDo: [ :presenter | self classMethods ifNotNil: [ : iMthds | presenter items: iMthds ] ];
+			yourself);
 		yourself
 ]
 
@@ -231,10 +223,12 @@ StClassAndMethodsSelectionPresenter >> initializeSuperclassPresenter [
 	| modelEnvironment modelEnvironmentClasses |
 	
 	modelEnvironment := driver model environment.
-	modelEnvironmentClasses := modelEnvironment allClasses collect: [ : c | c superclass ].
+	modelEnvironmentClasses := (modelEnvironment allClasses 
+		collect: [ : each | each superclass ])
+		reject: [ :each | each isNil ].
 	selectedSuperclassPresenter := self newDropList
 		startWithSelection;
-		items: (modelEnvironmentClasses sortedAs: #name);
+		items: (modelEnvironmentClasses sorted: #name ascending);
 		displayIcon: [ : className | self iconNamed: #class ];
 		yourself.
 ]
@@ -324,6 +318,12 @@ StClassAndMethodsSelectionPresenter >> selectedSuperclassName [
 	"Answer a <Symbol> representing the receiver's selected superclass name"
 
 	^ self selectedSuperclass name
+]
+
+{ #category : 'initialization' }
+StClassAndMethodsSelectionPresenter >> updatePresenter [
+
+	selectedSuperclassPresenter selectFirst
 ]
 
 { #category : 'accessing' }

@@ -73,19 +73,10 @@ RePushDownMethodDriver >> configureAndRunRefactoring [
 		ifNotEmpty: [ self handleBreakingChanges ]
 ]
 
-{ #category : 'resources' }
-RePushDownMethodDriver >> configureRefactoring [
-
-	refactoring :=  RBPushDownMethodRefactoring
-		  model: model
-		  pushDown: (methods collect: [ :each | each selector ])
-		  from: class name
-]
-
 { #category : 'configuration' }
 RePushDownMethodDriver >> defaultSelectDialog [
 
-	^ self class defaultSelectDialog
+	^ super defaultSelectDialog
 		  title: 'There are potential breaking changes!';
 		  label: self labelBasedOnBreakingChanges;
 		  items: self breakingChoices;
@@ -106,6 +97,15 @@ RePushDownMethodDriver >> handleBreakingChanges [
 	| select |
 	select := self selectDialog.
 	select ifNotNil: [ select action ]
+]
+
+{ #category : 'configuration' }
+RePushDownMethodDriver >> instantiateRefactoring [
+
+	^ RBPushDownMethodRefactoring
+		  model: model
+		  pushDown: (methods collect: [ :each | each selector ])
+		  from: class name
 ]
 
 { #category : 'ui - dialogs' }

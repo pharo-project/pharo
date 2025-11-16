@@ -6,8 +6,8 @@ Object >> confirm: queryString [
 	response is yes, false if no. This is a modal question--the user must
 	respond yes or no."
 
-	"nil confirm: 'Are you hungry?'"
-
+	self halt.
+	"DO NOT CALL THIS METHOD!"
 	^ UIManager default confirm: queryString
 ]
 
@@ -15,19 +15,15 @@ Object >> confirm: queryString [
 Object >> inform: aString [
 	"Display a message for the user to read and then dismiss."
 
+	self halt.
+	"DO NOT CALL THIS METHOD!"
 	aString isEmptyOrNil
 		ifFalse: [ UIManager default inform: aString ]
 ]
 
 { #category : '*UIManager' }
-Object >> primitiveError: aString [
-	"This method is called when the error handling results in a recursion in
-	calling on error: or halt or halt:."
-
-	UIManager default onPrimitiveError: aString
-]
-
-{ #category : '*UIManager' }
 Object >> uiManager [
+
+	self halt.
 	^ UIManager default
 ]

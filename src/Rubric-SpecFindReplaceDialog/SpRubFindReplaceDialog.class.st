@@ -136,24 +136,16 @@ SpRubFindReplaceDialog >> findInput: anObject [
 { #category : 'initialization' }
 SpRubFindReplaceDialog >> initializeDialogWindow: aDialogWindowPresenter [
 
-	findButton := aDialogWindowPresenter
-		              addButton: 'Find'
-		              do: [ :presenter |
+	findButton := aDialogWindowPresenter addButton: 'Find' do: [ :presenter |
 			              self find.
 			              self textToFind: findInput text ].
-	replaceButton := aDialogWindowPresenter
-		                 addButton: 'Replace'
-		                 do: [ :presenter |
+	replaceButton := aDialogWindowPresenter addButton: 'Replace' do: [ :presenter |
 			                 self replace.
 			                 self replacingText: replaceTextInput text ].
-	replaceAllButton := aDialogWindowPresenter
-		                    addButton: 'Replace All'
-		                    do: [ :presenter |
+	replaceAllButton := aDialogWindowPresenter addButton: 'Replace All' do: [ :presenter |
 			                    self replaceAll.
 			                    self replacingText: replaceTextInput text ].
-	closeButton := aDialogWindowPresenter
-		               addButton: 'Close'
-		               do: [ :presenter |
+	closeButton := aDialogWindowPresenter addButton: 'Close' do: [ :presenter |
 			               presenter triggerCancelAction.
 			               presenter close ].
 
@@ -168,8 +160,9 @@ SpRubFindReplaceDialog >> initializeDialogWindow: aDialogWindowPresenter [
 		initialExtent: 430 @ 220.
 
 	aDialogWindowPresenter whenClosedDo: [
-		service findText: ''.
-		service discardDialog ]
+			service findText: ''.
+			service discardDialog.
+			self updateService ]
 ]
 
 { #category : 'initialization' }
@@ -190,12 +183,12 @@ SpRubFindReplaceDialog >> initializePresenters [
 	caseCheckBox := self newCheckBox label: 'Case sensitive'.
 	wrapCheckBox := self newCheckBox label: 'Wrap around'.
 	entireCheckBox := self newCheckBox label: 'Entire words only'.
-
+	self updateFromService.
 	replaceTextInput := self newTextInput autoAccept: true.
 	self closeWindowOnEscIn: replaceTextInput.
 
 	replaceTextInput text: self replacingText.
-	service replaceText: replaceTextInput text .
+	service replaceText: replaceTextInput text.
 
 	replaceLabel := self newLabel label: 'Replace with:'.
 
@@ -206,8 +199,7 @@ SpRubFindReplaceDialog >> initializePresenters [
 		add: backwardsCheckBox;
 		add: caseCheckBox;
 		add: wrapCheckBox;
-		add: entireCheckBox.
-	
+		add: entireCheckBox
 ]
 
 { #category : 'private' }
@@ -289,6 +281,16 @@ SpRubFindReplaceDialog >> updateFromModel [
 	findInput text: (self service findText
 		ifEmpty: [ '' ]
 		ifNotEmpty: [ :aText | aText asString lines first ])
+]
+
+{ #category : 'initialization' }
+SpRubFindReplaceDialog >> updateFromService [
+
+	caseCheckBox state: service caseSensitive.
+	regExpCheckBox state: service isRegex.
+	entireCheckBox state: service entireWordsOnly.
+	wrapCheckBox state: service wrapAround.
+	backwardsCheckBox state: service searchBackwards
 ]
 
 { #category : 'private' }

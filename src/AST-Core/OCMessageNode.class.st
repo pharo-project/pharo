@@ -151,13 +151,6 @@ OCMessageNode >> hasBlock [
 	^ receiver hasBlock | (arguments anySatisfy: [ :arg | arg hasBlock ])
 ]
 
-{ #category : 'testing' }
-OCMessageNode >> hasSameExitPoint: aBoolean [
-
-	^ (receiver hasSameExitPoint: aBoolean )
-	& (arguments allSatisfy: [ :arg | arg hasSameExitPoint: aBoolean ])
-]
-
 { #category : 'comparing' }
 OCMessageNode >> hash [
 	^ (self receiver hash bitXor: self selector hash) bitXor: (self hashForCollection: self arguments)

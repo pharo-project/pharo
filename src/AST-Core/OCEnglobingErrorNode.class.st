@@ -3,9 +3,9 @@ I am a node representing a source code segment that parsed but never used in a n
 This node also propose a reparation research.
 
 Parsing faulty code without raising a syntax error is done by 
-RBParser parseFaultyExpression:
+OCParser parseFaultyExpression:
 or
-RBParser parseFaultyMethod: 
+OCParser parseFaultyMethod: 
 
 Accessing to the parsed nodes contained inside the node is the method 'content'.
 

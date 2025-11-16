@@ -38,43 +38,56 @@ ClyTextLineNumbersSwitchMorph class >> showLineNumbers [
 
 { #category : 'settings' }
 ClyTextLineNumbersSwitchMorph class >> showLineNumbers: aBoolean [
+
 	showLineNumbers := aBoolean.
 	self allInstancesDo: [ :inst |
-		| textMorph |
-		textMorph := inst textMorph.
-		(showLineNumbers and: [textMorph lineNumbersRuler isNil])
-			ifTrue: [ textMorph withLineNumbers ].
-		(showLineNumbers not and: [ textMorph lineNumbersRuler isNotNil ])
-			ifTrue: [ textMorph withoutLineNumbers ].
-		inst updateLabel ]
+			| textMorph |
+			textMorph := inst textMorph.
+			(showLineNumbers and: [ textMorph lineNumbersRuler isNil ]) ifTrue: [ textMorph withLineNumbers ].
+			(showLineNumbers not and: [ textMorph lineNumbersRuler isNotNil ]) ifTrue: [ textMorph withoutLineNumbers ] ]
 ]
 
 { #category : 'controlling' }
 ClyTextLineNumbersSwitchMorph >> attachToTextMorph [
+
 	super attachToTextMorph.
 
-	label := StringMorph new.
-	label setBalloonText:
-			'Let you decide if the code pane should show the line numbers at the left of the code pane or not. +L: Click to add the lines number/L: Click to hide them.'.
-	label on: #mouseDown send: #toggle to: self.
-	self updateLabel.
-	self addMorph: label.
-	self class showLineNumbers
-		ifTrue: [ textMorph withLineNumbers ]
+	label := self theme
+		         newCheckboxIn: self
+		         for: self
+		         getSelected: #isRuleActive  
+		         setSelected: #toggle
+		         getEnabled: #isEnabled
+		         label: 'Line numbers'
+		         help:
+		         'Let you decide if the code pane should show the line numbers at the left of the code pane or not. Toggle the check box to add line numbers/hide them.'.
+
+	label
+		changeTableLayout;
+		vResizing: #shrinkWrap;
+		hResizing: #shrinkWrap.
+	label update: #isRuleActive.  
+	self addMorph: label
+]
+
+{ #category : 'testing' }
+ClyTextLineNumbersSwitchMorph >> isEnabled [
+
+	self class showLineNumbers ifTrue: [ textMorph withLineNumbers ].
+
+	^ self class showLineNumbers
+]
+
+{ #category : 'testing' }
+ClyTextLineNumbersSwitchMorph >> isRuleActive [
+
+	^ textMorph lineNumbersRuler notNil
 ]
 
 { #category : 'operations' }
 ClyTextLineNumbersSwitchMorph >> toggle [
+
 	textMorph lineNumbersRuler
 		ifNil: [ textMorph withLineNumbers ]
-		ifNotNil: [ textMorph withoutLineNumbers ].
-	self updateLabel
-]
-
-{ #category : 'updating' }
-ClyTextLineNumbersSwitchMorph >> updateLabel [
-
-	| newValue |
-	newValue := textMorph lineNumbersRuler ifNil: [ '+L' ] ifNotNil: [ 'L' ].
-	label contents: newValue
+		ifNotNil: [ textMorph withoutLineNumbers ] 
 ]

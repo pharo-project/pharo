@@ -1,8 +1,9 @@
 "
-I am a refactoring for protecting instance variable access.
+I am a refactoring for protecting instance variable access.  
 
-If a class defines methods for reading and writing instance variables, they are removed and all calls on this methods.
-Omit method that are redefined in subclasses.
+When doing a transformation on the source code, I will check for accessors of instance variable and inline all calls to the method calling them. 
+I take subclasses and sibling classes into account, preventing breaking changes.
+Also if any subclass redefines an accessor for the variable, I will not apply changes for it. 
 "
 Class {
 	#name : 'RBProtectInstanceVariableRefactoring',
@@ -20,6 +21,8 @@ RBProtectInstanceVariableRefactoring >> applicabilityPreconditions [
 
 { #category : 'private - accessing' }
 RBProtectInstanceVariableRefactoring >> getterSetterMethods [
+	"Getter/setters are methods are accessors that are not redefined in subclasses."
+	
 	| matcher |
 	matcher := self parseTreeSearcher.
 	matcher

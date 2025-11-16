@@ -741,8 +741,7 @@ RGBehavior >> name: aString [
 
 	subclassesWithOldDefinitions do: [ :assoc |
 		self announcer behaviorDefinitionChangedFrom: assoc value to: assoc key.
-		self announcer behaviorModificationAppliedTo: assoc key.
-		self announcer behaviorParentRenamed: assoc key from: oldName ]
+		self announcer behaviorModificationAppliedTo: assoc key ]
 ]
 
 { #category : 'testing' }
@@ -1194,8 +1193,7 @@ RGBehavior >> unresolveName [
 
 	subclassesWithOldDefinitions do: [ :assoc |
 		self announcer behaviorDefinitionChangedFrom: assoc value to: assoc key.
-		self announcer behaviorModificationAppliedTo: assoc key.
-		self announcer behaviorParentRenamed: assoc key from: oldName ]
+		self announcer behaviorModificationAppliedTo: assoc key ]
 ]
 
 { #category : 'accessing - backend' }

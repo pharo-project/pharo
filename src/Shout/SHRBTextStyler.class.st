@@ -710,23 +710,6 @@ SHRBTextStyler class >> vintageStyleTable [
 			(pragma 						(cyan muchDarker)))
 ]
 
-{ #category : 'accessing' }
-SHRBTextStyler >> isForWorkspace [
-
-	self
-		deprecated: 'use isScripting'
-		transformWith: '`@receiver isForWorkspace' -> '`@receiver isScripting'.
-	^ self isScripting
-]
-
-{ #category : 'accessing' }
-SHRBTextStyler >> isForWorkspace: aBoolean [
-		self
-		deprecated: 'use isScripting:'
-		transformWith: '`@receiver isForWorkspace: `@argument' -> '`@receiver isScripting: `@argument'.
-	^ self isScripting: aBoolean
-]
-
 { #category : 'private' }
 SHRBTextStyler >> resolveTextLinkFor: aVariableNode [
 

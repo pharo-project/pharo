@@ -94,6 +94,9 @@ OrderedDictionary >> = anObject [
 	(self species == anObject species
 		and: [self size = anObject size])
 		ifFalse: [^ false].
+	
+	dictionary keysDo: [:key | 
+        ((self indexOfKey: key) = (anObject indexOfKey: key)) ifFalse: [ ^ false ] ].
 
 	dictionary associationsDo: [:each |
 		(anObject at: each key ifAbsent: [^ false]) = each value

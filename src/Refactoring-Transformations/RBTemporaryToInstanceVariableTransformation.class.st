@@ -113,12 +113,19 @@ RBTemporaryToInstanceVariableTransformation >> applicabilityPreconditions [
 			   definesInstanceVariable: temporaryVariableName asString
 			   in: class) not.
 		  (RBCondition withBlock: [
-			   self checkForValidTemporaryVariable.
+			   self isTemporaryVariableNameValid.
 			   true ]) }
 ]
 
+{ #category : 'instance creation' }
+RBTemporaryToInstanceVariableTransformation >> class: aClass selector: aSelector variable: aVariableName [
+	class := self model classObjectFor: aClass.
+	selector := aSelector.
+	temporaryVariableName := aVariableName
+]
+
 { #category : 'preconditions' }
-RBTemporaryToInstanceVariableTransformation >> checkForValidTemporaryVariable [
+RBTemporaryToInstanceVariableTransformation >> isTemporaryVariableNameValid [
 	| parseTree |
 	parseTree := class parseTreeForSelector: selector.
 	parseTree ifNil: [ self refactoringError: 'Could not create parse tree for ' class name , '>>' , selector ].
@@ -135,13 +142,6 @@ RBTemporaryToInstanceVariableTransformation >> checkForValidTemporaryVariable [
 				[self
 					refactoringWarning: ('<1s> is read before it is written.<n>Proceed anyway?'
 							expandMacrosWith: temporaryVariableName)]
-]
-
-{ #category : 'instance creation' }
-RBTemporaryToInstanceVariableTransformation >> class: aClass selector: aSelector variable: aVariableName [
-	class := self model classObjectFor: aClass.
-	selector := aSelector.
-	temporaryVariableName := aVariableName
 ]
 
 { #category : 'executing' }
@@ -161,12 +161,12 @@ RBTemporaryToInstanceVariableTransformation >> removeTemporaryOfClass: aClass [
 
 { #category : 'removing' }
 RBTemporaryToInstanceVariableTransformation >> removeTemporaryOfMethod: aSelector in: aClass [
+
 	| parseTree matcher aMethod |
 	aMethod := aClass methodFor: aSelector.
 	parseTree := aMethod parseTree.
 	parseTree ifNil: [ self refactoringError: 'Could not parse method' ].
-	( matcher := self parseTreeRewriterClass removeTemporaryNamed: temporaryVariableName )
-		executeTree: parseTree.
+	(matcher := self parseTreeRewriterClass removeTemporaryNamed: temporaryVariableName) executeTree: parseTree.
 	aMethod compileTree: matcher tree
 ]
 

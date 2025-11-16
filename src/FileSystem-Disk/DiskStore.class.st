@@ -34,7 +34,7 @@ DiskStore class >> activeClass [
 DiskStore class >> checkVMVersion [
 	"Display a warning if the VM is too old"
 	| displayError |
-	displayError := [ ^ self inform: 'Your VM is too old for this image. Please download the latest VM.' ].
+	displayError := [ ^ InformativeNotification signal: 'Your VM is too old for this image. Please download the latest VM.' ].
 	[(Smalltalk vm interpreterSourceDate >= (Date readFrom: '5-1-2019' pattern: 'd-m-y'))
 		ifFalse: [ displayError value ]
 	] on: Error do: [ :e| displayError value ]

@@ -8,6 +8,9 @@ Class {
 		'targetClass',
 		'selectedVariables'
 	],
+	#classVars : [
+		'DefaultSelectDialog'
+	],
 	#category : 'Refactoring-UI-Drivers',
 	#package : 'Refactoring-UI',
 	#tag : 'Drivers'
@@ -29,9 +32,9 @@ ReGenerateMethodDriver >> configureRefactoring [
 
 { #category : 'configuration' }
 ReGenerateMethodDriver >> defaultSelectDialog [
-
 	| dialog |
-	dialog := self class defaultSelectDialog.
+	
+	dialog := SpSelectMultipleDialog newApplication: self application.
 	dialog
 	  	title: self dialogTitle;
 	  	label: 'Please select the variable(s)';
@@ -39,6 +42,7 @@ ReGenerateMethodDriver >> defaultSelectDialog [
 		display: [ :each | each asString ];
 		displayIcon: [ :each | self iconNamed: each systemIconName ];
 	  	openModal.
+
 	^ dialog
 ]
 
@@ -46,6 +50,14 @@ ReGenerateMethodDriver >> defaultSelectDialog [
 ReGenerateMethodDriver >> dialogTitle [
 
 	self subclassResponsibility 
+]
+
+{ #category : 'configuration' }
+ReGenerateMethodDriver >> instantiateRefactoring [
+
+	^ self refactoringClass 
+		className: self targetClass name
+		variables: selectedVariables
 ]
 
 { #category : 'execution' }

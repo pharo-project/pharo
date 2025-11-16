@@ -84,7 +84,7 @@ SourceFileBufferedReadWriteStreamTest >> testEnsureWrittenPositionFlushesComplet
 	preambleLength := 2 + trait name size + 13 + 3 + 9 + changestampsize
 	                  + 3.
 
-	SourceFiles changesWriteStreamDo: [ :sourceFile |
+	SourceFileArray default changesWriteStreamDo: [ :sourceFile |
 		| stream |
 		[ "We want the internal buffer to be flushed after
 				writing the first two characters of the method selector"
@@ -93,7 +93,7 @@ SourceFileBufferedReadWriteStreamTest >> testEnsureWrittenPositionFlushesComplet
 		stream sizeBuffer: preambleLength + 2.
 
 		"This happens in MCPackageLoader>>basicLoad:"
-		SourceFiles deferFlushDuring: [ "Compiling a method in a trait with users will lead to
+		SourceFileArray default deferFlushDuring: [ "Compiling a method in a trait with users will lead to
 					the source of the compiled method being read again for
 					compilation in the using class which would read an incomplete
 					chunk and lead to an error.""It's difficult to align the buffer properly to the file size, as

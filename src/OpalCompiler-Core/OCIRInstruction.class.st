@@ -250,6 +250,18 @@ OCIRInstruction >> delete [
 	sequence remove: self
 ]
 
+{ #category : 'stack' }
+OCIRInstruction >> deltaStack [
+
+	"This method indicates the number of elements that the current instruction introduces or removes from the execution stack.
+		n > 0 -> push n elements to the stack
+		n = 0 -> the stack does not change
+		n < 0 -> pop n elements from the stack
+	"
+
+	^ 0
+]
+
 { #category : 'testing' }
 OCIRInstruction >> isBlockReturnTop [
 

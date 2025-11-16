@@ -5,6 +5,7 @@ I add a number of facilities to those in ClassDescription:
 	A classPool for class variables shared between this class and its metaclass
 	A list of sharedPools which probably should be supplanted by some better mechanism.
 
+
 My instances describe the representation and behavior of objects. I add more comprehensive programming support facilities to the basic attributes of Behavior and the descriptive facilities of ClassDescription.
 
 The slot 'subclasses' is a redundant structure.  It is never used during execution, but is used by the development system to simplify or speed certain operations.
@@ -371,9 +372,10 @@ Class >> classVariablesNeedFullDefinition [
 
 { #category : 'accessing - comment' }
 Class >> comment [
-    ^ self commentSourcePointer
+
+	^ self commentSourcePointer
 		  ifNil: [ '' ]
-		  ifNotNil: [ :ptr | SourceFiles sourceCodeAt: ptr ]
+		  ifNotNil: [ :ptr | SourceFileArray default sourceCodeAt: ptr ]
 ]
 
 { #category : 'accessing - comment' }
@@ -386,38 +388,29 @@ Class >> comment: aString [
 Class >> comment: aString stamp: aStamp [
 	"Store the comment, aString or Text or RemoteString, associated with the class we are organizing.  Empty string gets stored only if had a non-empty one before."
 
-	| pointer header oldComment oldStamp preamble |
+	| pointer oldComment oldStamp |
 	oldComment := self comment.
 	oldStamp := self commentStamp.
 
 	aString string = oldComment string ifTrue: [ ^ self ].
 
-	pointer := self commentSourcePointer ifNil: [0].
+	pointer := self commentSourcePointer ifNil: [ 0 ].
 
-
-	preamble := String streamContents: [ :file |
-		file cr; nextPut: $!.
-		header := String streamContents: [:strm |
-			strm
-				nextPutAll: self name;
-				nextPutAll: ' commentStamp: '.
-			aStamp storeOn: strm.
-			strm nextPutAll: ' prior: '; nextPutAll: pointer printString ].
-		file nextChunkPut: header; cr ].
-
-	SourceFiles
-		writeSource: aString
-		preamble: preamble
-		onSuccess: [ :newSourcePointer |
-			self commentSourcePointer: newSourcePointer]
+	SourceFileArray default
+		writeComment: aString
+		ofClass: self
+		metadata: ' '
+		timestamp: aStamp
+		priorSourcePointer: pointer
+		onSuccess: [ :newSourcePointer | self commentSourcePointer: newSourcePointer ]
 		onFail: [ "ignore" ].
 
-	self codeChangeAnnouncer 
+	self codeChangeAnnouncer
 		class: self
 		oldComment: oldComment
 		newComment: aString
 		oldStamp: oldStamp
-		newStamp: aStamp
+		newStamp: self commentStamp
 ]
 
 { #category : 'accessing - comment' }
@@ -435,7 +428,7 @@ Class >> commentStamp [
 
 	^ self commentSourcePointer
 		  ifNil: [ '' ]
-		  ifNotNil: [:sourcePointer | SourceFiles commentTimeStampAt: sourcePointer ]
+		  ifNotNil: [:sourcePointer | SourceFileArray default commentTimeStampAt: sourcePointer ]
 ]
 
 { #category : 'accessing - comment' }
@@ -519,6 +512,14 @@ Class >> definesClassVariableNamed: aString [
 	"Return whether the receiver has a class variables (shared variables among its class and subclasses) named: aString"
 	<reflection: 'Class structural inspection - Class variable inspection'>
 	^ self classVarNames includes: aString
+]
+
+{ #category : 'meta-data' }
+Class >> dependencies [
+	"Return the (transitive) set of behaviors that I depend on"
+	
+	superclass ifNil: [ ^ #() ].
+	^ superclass dependencies copyWith: superclass
 ]
 
 { #category : 'copying' }
@@ -910,9 +911,7 @@ Class >> rename: aString [
 		ifTrue: [^ self error: newName , ' already exists'].
 	self setName: newName.
 	self environment renameClass: self from: oldName.
-	(self undeclaredRegistry includesKey: newName)
-		ifTrue: [self inform: 'There are references to, ' , aString printString , '
-from the undeclared registry. Check them after this change.']
+	
 ]
 
 { #category : 'private' }
@@ -964,23 +963,16 @@ Class >> sharedPoolsDo: aBlockClosure [
 ]
 
 { #category : 'initialization' }
-Class >> sharing: sharedPoolNames [
-	"Set up sharedPools. Answer whether recompilation is advisable."
+Class >> sharingSharedPoolNames: sharedPoolNames [
+	"Set up sharedPools. Answer whether recompilation is advisable. Raises an error if a sharePool named does not exist."
 
 	| oldPools |
 	oldPools := self sharedPools.
 	self sharedPools: OrderedCollection new.
 	sharedPoolNames do: [ :poolName |
-		self sharedPools add: (self environment at: poolName asSymbol ifAbsent: [
-				 (self confirm: 'The pool dictionary ' , poolName , ' does not exist.' , '\Do you want it automatically created?' withCRs)
-					 ifTrue: [
-						 self classInstaller make: [ :builder |
-							 builder
-								 superclass: SharedPool;
-								 name: poolName;
-								 package: self package name;
-								 tag: self packageTag name ] ]
-					 ifFalse: [ ^ self inform: poolName , ' does not exist' ] ]) ].
+		| shared | 
+		shared := self environment at: poolName asSymbol ifAbsent: [ self error: 'The pool dictionary ' , poolName , ' does not exist.' ].
+		self sharedPools add: shared ].
 	self sharedPools ifEmpty: [ self sharedPools: nil ].
 	oldPools do: [ :pool |
 		| found |

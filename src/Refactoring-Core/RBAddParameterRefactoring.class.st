@@ -93,7 +93,7 @@ RBAddParameterRefactoring >> checkVariableReferencesIn: aParseTree [
 		do: [ :aNode :answer |
 			| name |
 			name := aNode name.
-			(aNode whoDefines: name) ifNil: [ self checkSendersAccessTo: name ] ].
+			(aNode whichUpNodeDefines: name) ifNil: [ self checkSendersAccessTo: name ] ].
 	searcher executeTree: aParseTree
 ]
 

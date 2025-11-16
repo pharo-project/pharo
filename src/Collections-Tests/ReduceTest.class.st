@@ -183,3 +183,15 @@ ReduceTest >> testReduceRightSpecial [
 	self assert: ((1 to: 100) reduceRight: [ :a :b | a - b ]) equals: -50.
 	self assert: ('abc' reduceRight: [ :a :b | Array with: a with: b ]) equals: #($a #($b $c))
 ]
+
+{ #category : 'tests' }
+ReduceTest >> testReduceWithInfixSymbol [
+
+	self assert: ((1 to: 4) reduceLeft: #+) equals: 10
+]
+
+{ #category : 'tests' }
+ReduceTest >> testReduceWithSymbol [
+
+	self assert: ((1 to: 4) reduceLeft: #max:) equals: 4
+]

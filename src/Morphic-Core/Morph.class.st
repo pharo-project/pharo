@@ -107,11 +107,9 @@ Morph class >> halosEnabled: aBoolean [
 
 { #category : 'class initialization' }
 Morph class >> initialize [
-	"Morph initialize"
-
 	"this empty array object is shared by all morphs with no submorphs:"
 
-	EmptyArray := Array new
+	EmptyArray ifNil: [ EmptyArray := Array new ]
 ]
 
 { #category : 'settings' }
@@ -4550,6 +4548,22 @@ Morph >> moveOrResizeFromKeystroke: anEvent [
 			ifFalse: [ self position: self position + dir ] ]
 ]
 
+{ #category : 'dependents-private' }
+Morph >> myDependents [
+	"Improved performance dependents."
+
+	^ (self valueOfProperty: #myDependents) ifNil: [ #() ]
+]
+
+{ #category : 'dependents-private' }
+Morph >> myDependents: aCollectionOrNil [
+	"Improved performance dependents."
+
+	aCollectionOrNil
+		ifNil: [self removeProperty: #myDependents]
+		ifNotNil: [self setProperty: #myDependents toValue: aCollectionOrNil]
+]
+
 { #category : 'naming' }
 Morph >> name: aName [
 	(aName isString) ifTrue: [self setNameTo: aName]
@@ -4640,22 +4654,6 @@ Morph >> okayToRotateEasily [
 	"Answer whether it is appropriate for a rotation handle to be shown for the receiver.  This is a hook -- at present nobody declines."
 
 	^ self respondsTo: #prepareForRotating
-]
-
-{ #category : 'convenience' }
-Morph >> on: aShortcut do: anAction [
-
-	self
-		deprecated: 'Use bindKeyCombination:toAction:'
-		on: '16/11/2024'
-		in: 'pharo13'
-		transformWith: '`@receiver on: `@aShortcut do: `@anAction'
-						-> '`@receiver bindKeyCombination: `@aShortcut toAction: `@anAction'.
-						
-	^ self bindKeyCombination: aShortcut toAction: anAction
-	
-
-
 ]
 
 { #category : 'announcements' }

@@ -10,26 +10,6 @@ SourceFileArray >> changeRecordsFor: aMethod [
 ]
 
 { #category : '*System-Changes' }
-SourceFileArray >> changeRecordsFor: aMethod detect: aUnaryBlock [
-	"Try to detect the most recent ChangeRecord that satisfies aUnaryBlock. Answer nil if none satisfies."
-
-	self changeRecordsFor: aMethod do: [ :changeRecord |
-		(aUnaryBlock value: changeRecord protocol) ifTrue: [ ^ changeRecord ] ].
-	^ nil
-]
-
-{ #category : '*System-Changes' }
-SourceFileArray >> changeRecordsFor: aMethod do: aUnaryBlock [
-	"Evaluate aUnaryBlock with each of the ChangeRecords of aMethodDefinition. Most recent changes are evaluated first."
-
-	^ self
-		changeRecordsFrom: aMethod sourcePointer
-		className: aMethod methodClass instanceSide name
-		isMeta: aMethod methodClass isMeta
-		do: aUnaryBlock
-]
-
-{ #category : '*System-Changes' }
 SourceFileArray >> changeRecordsFrom: initialSourcePointer className: theNonMetaClassName isMeta: classIsMeta [
 	"Answer the ChangeRecords of a method or class comment, starting from the initialSourcePointer.
 	Most recent changes go first."

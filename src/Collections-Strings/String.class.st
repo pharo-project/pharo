@@ -630,13 +630,6 @@ String >> asComment [
 ]
 
 { #category : 'converting' }
-String >> asDate [
-	"Many allowed forms, see Date>>#readFrom:"
-	self deprecated: 'Use Date>>#readFrom:pattern: specifying a concrete pattern instead.'.
-	^ Date fromString: self
-]
-
-{ #category : 'converting' }
 String >> asDateAndTime [
  	"Convert from UTC format"
 
@@ -648,16 +641,6 @@ String >> asDuration [
  	"Convert from [-]D:HH:MM:SS[.S] format. What is between [] implies optional elements"
 
  	^ Duration fromString: self
-]
-
-{ #category : 'accessing' }
-String >> asFileName [
-	"Answer a String made up from the receiver that is an acceptable file name."
-
-	| string checkedString |
-	string := FileSystem disk checkName: self fixErrors: true.
-	checkedString := FilePathEncoder encode: string.
-	^ FilePathEncoder decode: checkedString
 ]
 
 { #category : 'converting' }

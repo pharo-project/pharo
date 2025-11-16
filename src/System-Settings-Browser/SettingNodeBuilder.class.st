@@ -107,11 +107,6 @@ SettingNodeBuilder >> node: aSettingTreeNode [
 ]
 
 { #category : 'declaration accessing' }
-SettingNodeBuilder >> notInStyle [
-	node item notInStyle
-]
-
-{ #category : 'declaration accessing' }
 SettingNodeBuilder >> order: aNumber [
 	node item order: aNumber
 ]

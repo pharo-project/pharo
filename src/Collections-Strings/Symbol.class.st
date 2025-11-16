@@ -323,6 +323,13 @@ Symbol >> = aSymbol [
 	^ super = aSymbol
 ]
 
+{ #category : 'accessing' }
+Symbol >> argumentCount [
+    "This method refers to block arguments [:acc :x | ...] has two arguments so argumentCount of a selector that could be used in place of a block
+	should return the same amount of argument than the block."
+	^ self numArgs + 1
+]
+
 { #category : 'converting' }
 Symbol >> asAccessor [
 	"Return a accessor (getter) message from a setter message.
@@ -484,18 +491,6 @@ Symbol >> isOrientedFill [
 ]
 
 { #category : 'testing' }
-Symbol >> isSelectorSymbol [
-
-	self deprecated:  'Use isUsedAsSelectorSymbol'
-		on: '02/02/2025' 
-		in:  'pharo13'
-		transformWith: 
-			'`@rec isSelectorSymbol' -> '`@rec isUsedAsSelectorSymbol'.
-
-	^ self isUsedAsSelectorSymbol
-]
-
-{ #category : 'testing' }
 Symbol >> isSymbol [
 	^ true
 ]
@@ -645,7 +640,14 @@ Symbol >> value: anObject [
 	^anObject perform: self
 ]
 
-{ #category : 'copying' }
-Symbol >> veryDeepCopyWith: deepCopier [
-	"Return self.  I am immutable in the Morphic world.  Do not record me."
+{ #category : 'evaluating' }
+Symbol >> value: anObject value: arg [
+
+	^ anObject perform: self with: arg
+]
+
+{ #category : 'evaluating' }
+Symbol >> valueWithArguments: aCollection [
+
+	^ aCollection first perform: self withArguments: aCollection allButFirst
 ]

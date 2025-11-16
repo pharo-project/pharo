@@ -38,12 +38,9 @@ EpMethodModification >> affectedPackageName [
 EpMethodModification >> fileOutEntryOn: aWriteStream [
 	"File out the receiver into aWriteStream if its affected method was not already deleted"
 
-	self methodAffected realParent
-		ifNotNil: [  
-			self methodAffected origin 
-				printMethodChunk: self methodAffected selector 
-				on: aWriteStream ]
-
+	self methodAffected realParent ifNotNil: [ 
+		(CodeExporter onStream: aWriteStream)
+			writeMethod: self methodAffected originMethod ]
 ]
 
 { #category : 'initialization' }

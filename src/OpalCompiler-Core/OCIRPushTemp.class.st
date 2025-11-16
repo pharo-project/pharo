@@ -14,6 +14,12 @@ OCIRPushTemp >> accept: aVisitor [
 	^ aVisitor visitPushTemp: self
 ]
 
+{ #category : 'stack' }
+OCIRPushTemp >> deltaStack [
+
+	^ 1
+]
+
 { #category : 'testing' }
 OCIRPushTemp >> isRemovableByPop [
 

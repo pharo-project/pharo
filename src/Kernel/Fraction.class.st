@@ -296,38 +296,6 @@ Fraction >> numerator [
 	^numerator
 ]
 
-{ #category : 'printing' }
-Fraction >> printOn: aStream base: base [
-
-	aStream nextPut: $(.
-	numerator printOn: aStream base: base.
-	aStream nextPut: $/.
-	denominator printOn: aStream base: base.
-	aStream nextPut: $)
-]
-
-{ #category : 'printing' }
-Fraction >> printOn: aStream showingDecimalPlaces: placesDesired [
-	"Same as super, but provides a faster implementation by inlining some Fraction protocol thus avoiding intermediate Fraction creation."
-
-	| roundedFractionPart integerPart scaling |
-	placesDesired <= 0
-		ifTrue: [self rounded printOn: aStream]
-		ifFalse:
-			[scaling := 10 raisedToInteger: placesDesired.
-			integerPart := numerator abs quo: denominator.
-			roundedFractionPart := (numerator abs - (integerPart * denominator)) * scaling * 2 + denominator quo: denominator * 2.
-			roundedFractionPart = scaling
-				ifTrue:
-					[integerPart := integerPart + 1.
-					roundedFractionPart := 0].
-			"Don't print minus sign if result is rouded to zero"
-			(numerator negative and: [integerPart > 0 or: [roundedFractionPart > 0]]) ifTrue: [aStream nextPut: $-].
-			integerPart printOn: aStream.
-			aStream nextPut: $..
-			roundedFractionPart printOn: aStream base: 10 length: placesDesired padded: true]
-]
-
 { #category : 'private' }
 Fraction >> reciprocal [
 
@@ -345,15 +313,6 @@ Fraction >> reduced [
 	denom := denominator // gcd.
 	denom = 1 ifTrue: [^numer].
 	^Fraction numerator: numer denominator: denom
-]
-
-{ #category : 'truncation and round off' }
-Fraction >> round: numberOfWishedDecimal [
-	"Round the decimal part of the receiver to be limited to the number of wished decimal. Only leave a fixed amount of decimal"
-   "(1/3 round: 2) >>> (33/100) "
-	"(111/100 round: 2) >>> (111/100) "
-
-	^self roundTo: (10 raisedTo: numberOfWishedDecimal negated)
 ]
 
 { #category : 'private' }

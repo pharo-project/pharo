@@ -13,3 +13,9 @@ Class {
 OCIRPopIntoRemoteTemp >> accept: aVisitor [
 	^ aVisitor visitPopIntoRemoteTemp: self
 ]
+
+{ #category : 'stack' }
+OCIRPopIntoRemoteTemp >> deltaStack [
+
+	^ -1
+]

@@ -20,7 +20,7 @@ ClyBrowserMorph >> confirmEmptySystemQuery: aQuery [
 	result := aQuery execute.
 	result isEmpty ifTrue: [ ^true ].
 
-	showResult := self morphicUIManager confirm: 'There are '
+	showResult := self application confirm: 'There are '
 		, result size asString, ' ', aQuery description, '. Show them?'.
 	showResult ifTrue: [self spawnQueryBrowserOn: aQuery].
 	^false

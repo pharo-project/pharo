@@ -44,6 +44,18 @@ DebuggerModelTest >> testCorrectlyCreateDebugSession [
 ]
 
 { #category : 'tests' }
+DebuggerModelTest >> testStepDeadContextThrowsException [
+
+	session interruptedContext terminate.
+	
+	[ session stepToFirstInterestingBytecodeInContext: session interruptedContext.
+		"fail the test if there is no exception"
+		self fail ]
+			on: Error
+			do: [ :err | self assert: err messageText equals: 'Cannot step into dead context' ]
+]
+
+{ #category : 'tests' }
 DebuggerModelTest >> testStepInto [
 
 	self deny: (session isContextPostMortem: context).

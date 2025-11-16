@@ -1205,6 +1205,12 @@ RubAbstractTextArea >> initializeShortcuts: aKMDispatcher [
 	self editor initializeShortcuts: aKMDispatcher
 ]
 
+{ #category : 'accessing - cursor' }
+RubAbstractTextArea >> invalidateVirtualColumn [ 
+
+	editingState invalidateVirtualColumn
+]
+
 { #category : 'testing' }
 RubAbstractTextArea >> isReadOnly [
 	^ self readOnly
@@ -2080,7 +2086,9 @@ RubAbstractTextArea >> themeChanged [
 	(self decoratorNamed: #shoutStyler) ifNotNil: [ :styler |
 		styler refreshStyling
 	].
-	self color: self theme backgroundColor.
+
+	self class backgroundColor: self theme backgroundColor.
+	self color: self defaultColor.
 	super themeChanged
 ]
 
@@ -2198,6 +2206,18 @@ RubAbstractTextArea >> veryDeepInner: deepCopier [
 	paragraph := paragraph veryDeepCopyWith: deepCopier.
 	textColor := textColor veryDeepCopyWith: deepCopier.
 	editor := editor veryDeepCopyWith: deepCopier
+]
+
+{ #category : 'accessing - cursor' }
+RubAbstractTextArea >> visualColumn [
+
+	^ editingState visualColumn 
+]
+
+{ #category : 'accessing - cursor' }
+RubAbstractTextArea >> visualColumn: virtualColumn [
+
+	editingState visualColumn: virtualColumn 
 ]
 
 { #category : 'menu' }

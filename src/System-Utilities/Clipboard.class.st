@@ -49,8 +49,9 @@ Clipboard class >> hasRecentClippings [
 { #category : 'class initialization' }
 Clipboard class >> initialize [
 
-	self startUp: true.
-	SessionManager default registerSystemClassNamed: self name
+	self startUp: true. 
+	"The priority is set because I need to be initialized before the UIManager. The UIManager will launch the world and this will install another clipboard, so this need to be done after I initialize myself."
+	SessionManager default registerSystemClassNamed: self name atPriority: 90
 ]
 
 { #category : 'accessing' }

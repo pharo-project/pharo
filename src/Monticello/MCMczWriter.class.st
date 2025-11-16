@@ -70,14 +70,6 @@ MCMczWriter >> serializeDefinitions: aCollection [
 ]
 
 { #category : 'serializing' }
-MCMczWriter >> serializeInBinary: aSnapshot [
-	
-	^ ByteArray streamContents: [ :str | | writer |
-		writer := MCDataStream on: str.
-		writer nextPut: aSnapshot ]
-]
-
-{ #category : 'serializing' }
 MCMczWriter >> serializePackage: aPackage [
 	^ '(name ''', aPackage name, ''')'
 ]
@@ -113,8 +105,10 @@ MCMczWriter >> writePackage: aPackage [
 { #category : 'visiting' }
 MCMczWriter >> writeSnapshot: aSnapshot [
 
-	self addString: (self serializeDefinitions: aSnapshot definitions) at: 'snapshot/source.' , self snapshotWriterClass extension encodedTo: 'utf8'.
-	self addString: (self serializeInBinary: aSnapshot) at: 'snapshot.bin'
+	self
+		addString: (self serializeDefinitions: aSnapshot definitions)
+		at: 'snapshot/source.' , self snapshotWriterClass extension
+		encodedTo: 'utf8'
 ]
 
 { #category : 'visiting' }

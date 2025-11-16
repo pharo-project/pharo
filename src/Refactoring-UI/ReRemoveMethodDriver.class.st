@@ -39,24 +39,12 @@ ReRemoveMethodDriver >> changes [
 	^ refactoring removeMethodChanges
 ]
 
-{ #category : 'resources' }
-ReRemoveMethodDriver >> configureRefactoring [
-
-	| classSelectorMapping |
-	classSelectorMapping := methods collect: [ :m | m origin -> m selector ].
-
-	refactoring := ReRemoveMethodsRefactoring
-			            model: model
-			            classSelectorMapping: classSelectorMapping
-]
-
 { #category : 'configuration' }
 ReRemoveMethodDriver >> defaultSelectDialog [
 
-	^ self class defaultSelectDialog
-		  title: 'There are ' , haveNoSenders violators size asString
-			  , ' methods calling method(s) you want to delete';
-		  label: 'Select a strategy';
+	^ super defaultSelectDialog
+		  title: 'There are ' , haveNoSenders violators size asString , ' methods calling method(s) you want to delete';
+		  message: 'Select a strategy';
 		  items: self breakingChoices;
 		  display: [ :each | each description ];
 		  displayIcon: [ :each | self iconNamed: each systemIconName ];
@@ -69,6 +57,17 @@ ReRemoveMethodDriver >> handleBreakingChanges [
 	| select |
 	select := self selectDialog.
 	select ifNotNil: [ select action ]
+]
+
+{ #category : 'configuration' }
+ReRemoveMethodDriver >> instantiateRefactoring [
+
+	| classSelectorMapping |
+	classSelectorMapping := methods collect: [ :m | m origin -> m selector ].
+
+	^ ReRemoveMethodsRefactoring
+       model: model
+       classSelectorMapping: classSelectorMapping
 ]
 
 { #category : 'execution' }

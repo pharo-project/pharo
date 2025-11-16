@@ -301,28 +301,6 @@ ExternalStructure class >> fields [
 	^#()
 ]
 
-{ #category : 'class management' }
-ExternalStructure class >> fileOutInitializerOn: aFileStream [
-	super fileOutInitializerOn: aFileStream.
-	aFileStream cr.
-	aFileStream cr.
-	aFileStream nextChunkPut: self name , ' compileFields'.
-	aFileStream cr
-]
-
-{ #category : 'class management' }
-ExternalStructure class >> fileOutOn: aFileStream moveSource: moveSource toFile: fileIndex initializing: aBool [
-	super fileOutOn: aFileStream
-		moveSource: moveSource
-		toFile: fileIndex
-		initializing: aBool.
-	(aBool and:[moveSource not]) ifTrue:
-		[aFileStream cr.
-		aFileStream cr.
-		aFileStream nextChunkPut: self name , ' compileFields'.
-		aFileStream cr]
-]
-
 { #category : 'instance creation' }
 ExternalStructure class >> fromHandle: aHandle [
 	^self basicNew setHandle: aHandle

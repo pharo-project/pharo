@@ -51,6 +51,21 @@ OCAbstractScope >> lookupVar: name [
 	^ outerScope ifNotNil: [ :it | it lookupVar: name ]
 ]
 
+{ #category : 'testing' }
+OCAbstractScope >> nonOptimizedDistanceTo: aDefiningScope [
+	
+	| currentScope distance |
+	currentScope := self.
+	distance := 0.
+
+	[ currentScope ~= aDefiningScope ] whileTrue: [
+		(currentScope isBlockScope and: [ currentScope isOptimized not ])
+			ifTrue: [ distance := distance + 1 ].
+		currentScope := currentScope outerScope ].
+
+	^ distance
+]
+
 { #category : 'lookup' }
 OCAbstractScope >> outerScope [
 

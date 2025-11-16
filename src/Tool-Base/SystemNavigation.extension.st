@@ -10,7 +10,7 @@ SystemNavigation >> allMethodsWithSourceString: aString matchCase: caseSensitive
 	addComment := [ :mrClass | list add: (RGCommentDefinition realClass: mrClass)].
 	self allBehaviorsDo: [:each |
 		each selectorsDo: [:sel |
-			((each sourceCodeAt: sel) includesSubstring: aString caseSensitive: caseSensitive)
+			((each >> sel) sourceCode includesSubstring: aString caseSensitive: caseSensitive)
 					ifTrue: [ addMethod value: each value: sel ]].
 			(each comment includesSubstring: aString caseSensitive: caseSensitive) ifTrue: [ addComment value: each]	].
 	^ list

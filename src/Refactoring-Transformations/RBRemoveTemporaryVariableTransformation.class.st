@@ -90,7 +90,7 @@ RBRemoveTemporaryVariableTransformation >> privateTransform [
 	methodTree := self definingMethod.
 
 	modifiedNode := (methodTree allChildren select: [:each | each isSequence])
-						detect: [ :sequence | sequence defines: variableName ]
+						detect: [ :sequence | sequence exactNodeDefines: variableName ]
 						ifNone: [ nil ].
 
 	modifiedNode ifNotNil: [ modifiedNode removeTemporaryNamed: variableName ].

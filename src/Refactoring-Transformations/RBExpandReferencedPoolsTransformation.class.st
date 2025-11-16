@@ -44,7 +44,7 @@ RBExpandReferencedPoolsTransformation >> computePoolsToMove [
 			| varName pool |
 
 			varName := aNode name.
-			( aNode whoDefines: varName )
+			( aNode whichUpNodeDefines: varName )
 				ifNil: [ ( poolVariables includes: varName )
 						ifTrue: [ pool := self whichPoolDefines: varName.
 							pool ifNotNil: [ pools add: pool ]
