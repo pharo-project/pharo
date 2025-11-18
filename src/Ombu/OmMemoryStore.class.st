@@ -56,12 +56,12 @@ OmMemoryStore >> entriesDo: aBlockClosure [
 OmMemoryStore >> entryFor: aReference ifPresent: presentBlockClosure ifAbsent: absentBlockClosure [
 
 	| entry |
-	(aReference isNull or: [ aReference globalName ~= self globalName])
+	(aReference isNull or: [ aReference globalName ~= self globalName ])
 		ifTrue: [ ^ absentBlockClosure value ].
 
 	entry := entries
-		at: aReference localName asInteger
-		ifAbsent: [ ^ absentBlockClosure value ].
+		         at: aReference localName extractIntegerPart
+		         ifAbsent: [ ^ absentBlockClosure value ].
 
 	^ presentBlockClosure cull: entry
 ]

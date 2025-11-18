@@ -18,27 +18,6 @@ WideStringTest >> classToBeTested [
 	^  WideString
 ]
 
-{ #category : 'tests - converting' }
-WideStringTest >> testAsInteger [
-	self assert: '1796exportFixes-tkMX' asWideString asInteger equals: 1796.
-	self assert: 'donald' asWideString asInteger isNil.
-	self assert: 'abc234def567' asWideString asInteger equals: 234.
-	self assert: '-94' asWideString asInteger equals: -94.
-	self assert: 'foo-bar-92' asWideString asInteger equals: -92.
-
-	self assert: '1796exportFixes-tkMX' asWideString asSignedInteger equals: 1796.
-	self assert: 'donald' asWideString asSignedInteger isNil.
-	self assert: 'abc234def567' asWideString asSignedInteger equals: 234.
-	self assert: '-94' asWideString asSignedInteger equals: -94.
-	self assert: 'foo-bar-92' asWideString asSignedInteger equals: -92.
-
-	self assert: '1796exportFixes-tkMX' asWideString asUnsignedInteger equals: 1796.
-	self assert: 'donald' asWideString asUnsignedInteger isNil.
-	self assert: 'abc234def567' asWideString asUnsignedInteger equals: 234.
-	self assert: '-94' asWideString asUnsignedInteger equals: 94.
-	self assert: 'foo-bar-92' asWideString asUnsignedInteger equals: 92
-]
-
 { #category : 'testing' }
 WideStringTest >> testAtPut [
 	"Non regression test for http://bugs.squeak.org/view.php?id=6998"

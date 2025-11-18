@@ -124,7 +124,7 @@ SystemVersion class >> useCurrent: aSystemVersion during: aBlock [
 { #category : 'accessing - properties' }
 SystemVersion >> build [
 
-	^ build asInteger
+	^ build extractIntegerPart
 ]
 
 { #category : 'accessing - properties' }
@@ -247,7 +247,7 @@ SystemVersion >> initialize [
 SystemVersion >> major [
 	"Answer the major number of a version. 1 in '1.2'"
 
-	^ major asInteger
+	^ major extractIntegerPart
 ]
 
 { #category : 'accessing - properties' }
@@ -295,7 +295,7 @@ SystemVersion >> majorMinorVersion [
 SystemVersion >> minor [
 	"Answer the minor number of a version. 2 in '1.2'"
 
-	^ minor asInteger
+	^ minor extractIntegerPart
 ]
 
 { #category : 'accessing - properties' }
@@ -308,7 +308,7 @@ SystemVersion >> minor: anInteger [
 { #category : 'accessing' }
 SystemVersion >> patch [
 
-	^ patch asInteger
+	^ patch extractIntegerPart
 ]
 
 { #category : 'accessing' }

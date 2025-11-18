@@ -16,6 +16,6 @@ FFICalloutMethodBuilderTestRequestor >> loaderFromMethodArgsNamed: argName [
 		ifTrue: [ ^
 			FFIMethodArgument new
 				argName: argName;
-				index: (argName allButFirst: 3) asInteger ].
+				index: (argName allButFirst: 3) extractIntegerPart ].
 	^ nil
 ]
