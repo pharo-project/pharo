@@ -35,9 +35,10 @@ RBAndCondition >> errorBlock [
 
 { #category : 'accessing' }
 RBAndCondition >> errorString [ 
-	"I doubt because I thought it was lazy"
 	
-	^ right errorString, ' and ', left errorString
+	left check ifFalse: [ ^ left errorString ].
+	right check ifFalse: [ ^ right errorString ].
+	^ ''
 ]
 
 { #category : 'initialization' }

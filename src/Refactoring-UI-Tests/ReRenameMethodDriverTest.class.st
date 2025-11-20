@@ -46,7 +46,7 @@ ReRenameMethodDriverTest >> testInvalidNameFollowedByAValidNameExpectSuccess [
 	self setUpMocksOn: driver.
 	
 	driver runRefactoring.
-	self assert: driver refactoring model changes changes size equals: 6
+	self assert: driver refactoring model changes changes size equals: 8
 ]
 
 { #category : 'tests' }
@@ -77,5 +77,5 @@ ReRenameMethodDriverTest >> testValidNameExpectSuccess [
 
 	driver runRefactoring.
 
-	self assert: driver refactoring model changes changes size equals: 6
+	self assert: driver refactoring model changes changes size equals: 8
 ]

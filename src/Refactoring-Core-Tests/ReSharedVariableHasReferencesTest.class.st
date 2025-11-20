@@ -29,12 +29,12 @@ ReSharedVariableHasReferencesTest >> testHierarchyOfDoesNotReferencesSharedVaria
 	root := self model classNamed: self class name.
 	self assert: (root definesClassVariable: #UnreferencedVar).
 	
-	condInst := self classToTest new
+	condInst := (self classToTest new
 			 				hierarchyOf: root
-			 				referencesSharedVariable: #UnreferencedVar.
-	condClss := self classToTest new
+			 				referencesSharedVariable: #UnreferencedVar) not.
+	condClss := (self classToTest new
 			 				hierarchyOf: root classSide
-			 				referencesSharedVariable: #UnreferencedVar.
+			 				referencesSharedVariable: #UnreferencedVar) not.
 							
 	self deny: condInst check.
 	self deny: condClss check.
