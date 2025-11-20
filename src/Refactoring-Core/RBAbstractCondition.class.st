@@ -15,7 +15,8 @@ Class {
 	#name : 'RBAbstractCondition',
 	#superclass : 'Object',
 	#instVars : [
-		'errorMacro'
+		'errorMacro',
+		'model'
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
@@ -24,7 +25,7 @@ Class {
 
 { #category : 'logical operations' }
 RBAbstractCondition >> & aCondition [
-	^RBConjunctiveCondition new left: self right: aCondition
+	^RBAndCondition new left: self right: aCondition
 ]
 
 { #category : 'checking' }
@@ -54,8 +55,19 @@ RBAbstractCondition >> errorStringFor: aBoolean [
 ]
 
 { #category : 'logical operations' }
+RBAbstractCondition >> model [
+	^ model ifNil: [ model := RBNamespace new ]
+]
+
+{ #category : 'accessing' }
+RBAbstractCondition >> model: aRBNamespace [
+
+	model := aRBNamespace
+]
+
+{ #category : 'logical operations' }
 RBAbstractCondition >> not [
-	^RBNegationCondition on: self
+	^ReNewNegationCondition on: self
 ]
 
 { #category : 'logical operations' }

@@ -49,9 +49,17 @@ ReReifiedCondition >> not [
 ]
 
 { #category : 'displaying' }
-ReReifiedCondition >> violationMessageOn: aStream violators: aCollection [
-
-	self subclassResponsibility
+ReReifiedCondition >> violationMessageOn: aStream violators: theViolators [
+	| isNegated |
+	theViolators ifEmpty:[^self].
+	isNegated := self violators ~= theViolators.
+	
+	theViolators do: [ :violator |
+		aStream
+			nextPutAll: violator name;
+			nextPutAll: ('<1? is not:is>' expandMacrosWith: isNegated);
+			nextPutAll: ' empty.';
+			space ]
 ]
 
 { #category : 'accessing' }

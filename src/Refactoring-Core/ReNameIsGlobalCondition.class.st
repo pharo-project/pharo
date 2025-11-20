@@ -2,8 +2,7 @@ Class {
 	#name : 'ReNameIsGlobalCondition',
 	#superclass : 'ReReifiedCondition',
 	#instVars : [
-		'className',
-		'model'
+		'className'
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
@@ -51,7 +50,7 @@ ReNameIsGlobalCondition >> violationMessageOn: aStream violators: theViolators [
 { #category : 'accessing' }
 ReNameIsGlobalCondition >> violators [
 
-	^ (model includesGlobal: className ) 
-		ifFalse: [ { className } ] 
-		ifTrue: [ #() ]
+	^ (model includesGlobal: className asSymbol) 
+		ifTrue: [ #() ] 
+		ifFalse: [ { className } ]
 ]

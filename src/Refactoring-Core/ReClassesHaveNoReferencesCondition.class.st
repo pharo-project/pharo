@@ -8,19 +8,12 @@ Class {
 	#name : 'ReClassesHaveNoReferencesCondition',
 	#superclass : 'ReClassesCondition',
 	#instVars : [
-		'model',
 		'referencingClassesDictionary'
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
 }
-
-{ #category : 'accessing' }
-ReClassesHaveNoReferencesCondition >> model: aRBNamespace [
-
-	model := aRBNamespace
-]
 
 { #category : 'displaying' }
 ReClassesHaveNoReferencesCondition >> violationMessageOn: aStream [

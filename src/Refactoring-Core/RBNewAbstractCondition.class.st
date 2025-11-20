@@ -1,6 +1,9 @@
 Class {
 	#name : 'RBNewAbstractCondition',
 	#superclass : 'Object',
+	#instVars : [
+		'model'
+	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',
 	#tag : 'Conditions'
@@ -42,6 +45,11 @@ RBNewAbstractCondition >> isTrue [
 ]
 
 { #category : 'accessing' }
+RBNewAbstractCondition >> model [
+	^ model ifNil: [ model := RBNamespace new ]
+]
+
+{ #category : 'accessing' }
 RBNewAbstractCondition >> nonViolators [
 
 	^ self candidates difference: self violators
@@ -59,9 +67,18 @@ RBNewAbstractCondition >> violationMessageOn: aStream [
 ]
 
 { #category : 'displaying' }
-RBNewAbstractCondition >> violationMessageOn: aStream violators: aCollection [
+RBNewAbstractCondition >> violationMessageOn: aStream violators: theViolators [
 
-	self subclassResponsibility
+	| isNegated |
+	theViolators ifEmpty:[^self].
+	isNegated := self violators ~= theViolators.
+	
+	theViolators do: [ :violator |
+		aStream
+			nextPutAll: violator;
+			nextPutAll: '<1? is not:is>';
+			nextPutAll: ' a valid package name.';
+			space ]
 ]
 
 { #category : 'accessing' }

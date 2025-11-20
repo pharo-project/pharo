@@ -457,6 +457,12 @@ RBCondition >> block: aBlock errorString: aString [
 	self errorMacro: aString
 ]
 
+{ #category : 'accessing - private' }
+RBCondition >> candidates [
+	" Temporary fix for compatibility with reified and newAbstract conditions. "
+	^ self check ifTrue: [ { self } ] ifFalse: [ #() ]
+]
+
 { #category : 'checking' }
 RBCondition >> check [
 	^block value
@@ -473,10 +479,30 @@ RBCondition >> errorBlock: anObject [
 	errorBlock := anObject
 ]
 
+{ #category : 'accessing' }
+RBCondition >> nonViolators [
+
+	^ self candidates difference: self violators
+]
+
 { #category : 'displaying' }
 RBCondition >> violationMessageOn: aWriteStream [ 
 
 	aWriteStream nextPutAll: self errorString
+]
+
+{ #category : 'displaying' }
+RBCondition >> violationMessageOn: aWriteStream violators: aCollection [ 
+	
+	aWriteStream nextPutAll: self errorString
+]
+
+{ #category : 'accessing' }
+RBCondition >> violators [
+
+	^ self check
+		  ifTrue: [ #(  ) ]
+		  ifFalse: [ { self } ]
 ]
 
 { #category : 'initialization' }

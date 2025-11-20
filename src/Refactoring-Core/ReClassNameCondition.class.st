@@ -3,7 +3,6 @@ Class {
 	#superclass : 'RBNewAbstractCondition',
 	#instVars : [
 		'violators',
-		'model',
 		'className'
 	],
 	#category : 'Refactoring-Core-Conditions',

@@ -6,8 +6,7 @@ Class {
 	#name : 'ReMethodsHaveSendersCondition',
 	#superclass : 'ReMethodsCondition',
 	#instVars : [
-		'classSelectorsMapping',
-		'model'
+		'classSelectorsMapping'
 	],
 	#category : 'Refactoring-Core-Conditions',
 	#package : 'Refactoring-Core',

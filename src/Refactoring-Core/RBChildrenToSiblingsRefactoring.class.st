@@ -25,7 +25,8 @@ Class {
 	#superclass : 'RBClassRefactoring',
 	#instVars : [
 		'parent',
-		'subclasses'
+		'subclasses',
+		'class'
 	],
 	#category : 'Refactoring-Core-Refactorings-Unused',
 	#package : 'Refactoring-Core',
@@ -72,15 +73,17 @@ RBChildrenToSiblingsRefactoring >> applicabilityPreconditions [
 
 	| conds |
 	conds := {
-		         ((RBCondition isMetaclass: parent) errorMacro:
-			          'Superclass must not be a metaclass') not.
+		         (ReClassesAreNotMetaClassCondition new
+			          classes: { className };
+			          message: 'Superclass must not be a metaclass').
 		         (RBCondition isValidClassName: className).
 		         (RBCondition isGlobal: className in: self model) not }.
 	subclasses do: [ :each |
-		conds := conds , { 
-			((RBCondition isMetaclass: each) errorMacro:
-				 'Subclass must <1?not :>be a metaclass') not.
-			(RBCondition isImmediateSubclass: each of: parent) } ].
+			conds := conds , {
+				(ReClassesAreNotMetaClassCondition new
+			          classes: { each };
+			          message: 'Subclass must not be a metaclass').
+			         (RBCondition isImmediateSubclass: each of: parent) } ].
 	^ conds
 ]
 
@@ -123,9 +126,19 @@ RBChildrenToSiblingsRefactoring >> createSubclassResponsibilityFor: aSelector in
 { #category : 'initialization' }
 RBChildrenToSiblingsRefactoring >> name: aClassName class: aClass subclasses: subclassCollection [
 	className := aClassName asSymbol.
-	parent := self model classFor: aClass.
+	parent := aClass.
 	subclasses := subclassCollection
-				collect: [:each | self model classFor: each]
+]
+
+{ #category : 'transforming' }
+RBChildrenToSiblingsRefactoring >> prepareForExecution [
+
+	class := self model classObjectFor: className.
+	parent := self model classObjectFor: parent.
+	subclasses := subclasses collect: [ :each | self model classObjectFor: each ].
+
+	(class isNil or: [ parent isNil or: [ subclasses anySatisfy: [ :each | each isNil ] ] ]) ifTrue: [
+		self refactoringError: 'The model is incomplete' ]
 ]
 
 { #category : 'transforming' }

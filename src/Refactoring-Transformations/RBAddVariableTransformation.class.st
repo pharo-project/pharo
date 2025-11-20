@@ -32,7 +32,8 @@ RBAddVariableTransformation >> applicabilityPreconditions [
 	conds := isClassVariable
 		         ifTrue: [
 			         {
-				         (RBCondition isMetaclass: class) not.
+				         (ReClassesAreNotMetaClassCondition new
+			          		classes: { class }).
 				         (RBCondition isValidClassVarName: variableName for: class) } ]
 		         ifFalse: [
 			         { (RBCondition

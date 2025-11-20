@@ -11,7 +11,7 @@ Class {
 
 { #category : 'as yet unclassified' }
 ReValidClassNameCondition >> candidates [
-	^ self shouldBeImplemented
+	^  { className }
 ]
 
 { #category : 'checking' }

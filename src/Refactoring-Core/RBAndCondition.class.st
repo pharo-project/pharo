@@ -27,6 +27,12 @@ RBAndCondition >> check [
 	^true
 ]
 
+{ #category : 'private' }
+RBAndCondition >> errorBlock [
+
+	^ [  ]
+]
+
 { #category : 'accessing' }
 RBAndCondition >> errorString [ 
 	"I doubt because I thought it was lazy"
@@ -43,9 +49,9 @@ RBAndCondition >> left: aCondition right: aCondition2 [
 
 { #category : 'accessing' }
 RBAndCondition >> nonViolators [ 
-	(left nonViolators isEmpty and: [ right nonViolators isEmpty ])
-		ifTrue: [ ^ #() ].
-	^ left nonViolators , right nonViolators 
+   ^ self check 
+		ifTrue: [ left nonViolators , right nonViolators ]
+		ifFalse: [ ^ #() ] 
 ]
 
 { #category : 'printing' }
@@ -69,7 +75,9 @@ RBAndCondition >> violationMessageOn: aStream violators: theViolators [
 ]
 
 { #category : 'accessing' }
-RBAndCondition >> violators [ 
+RBAndCondition >> violators [
 
-	^ left violators , right violators
+	^ self check
+		  ifFalse: [ left violators , right violators ]
+		  ifTrue: [ #(  ) ]
 ]

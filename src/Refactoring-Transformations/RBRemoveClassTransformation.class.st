@@ -72,8 +72,7 @@ RBRemoveClassTransformation >> applicabilityPreconditions [
 { #category : 'preconditions' }
 RBRemoveClassTransformation >> preconditionIsNotMetaclass: aClass [
 
-	^ ((RBCondition isMetaclass: aClass)
-		errorMacro: 'Cannot remove just the metaclass') not
+	^ (ReClassesAreNotMetaClassCondition new classes: { aClass }) 
 ]
 
 { #category : 'executing' }

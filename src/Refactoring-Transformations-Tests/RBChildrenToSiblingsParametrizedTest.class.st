@@ -18,7 +18,7 @@ RBChildrenToSiblingsParametrizedTest >> setUp [
 	rbClass := RBChildrenToSiblingsRefactoring.
 
 	(model := RBNamespace onEnvironment: ((RBClassEnvironment onEnvironment: RBBrowserEnvironment new) classes:
-			           (#( #ConcreteSubclass #ConcreteSuperclass #NoMoveSubclass ) inject: OrderedCollection new into: [ :sum :each |
+			           (#( #ConcreteSubclass #ConcreteSuperclass #NoMoveSubclass #AbstractSuperclass) inject: OrderedCollection new into: [ :sum :each |
 				            Smalltalk at: each ifPresent: [ :class | sum add: class ].
 				            sum ]) , (#( #ConcreteSubclass #ConcreteSuperclass #NoMoveSubclass ) inject: OrderedCollection new into: [ :sum :each |
 				            Smalltalk at: each ifPresent: [ :class | sum add: class class ].

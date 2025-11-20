@@ -247,9 +247,7 @@ RBPullUpMethodTransformation >> copyDownMethods [
 { #category : 'preconditions' }
 RBPullUpMethodTransformation >> preconditionNoOverrides [
 
-	^ (ReDefinesSelectorsCondition new
-		   definesSelectors: selectors
-		   in: targetSuperclass) not
+	^ (ReDefinesSelectorsCondition new definesSelectors: selectors in: targetSuperclass) not
 	  | (ReClassesAreAbstractCondition new classes: { targetSuperclass })
 ]
 
